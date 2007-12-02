@@ -74,11 +74,12 @@ protected:
 		{
 			if ( CTransfer::OnRead() )
 			{
-				if ( m_pInput->m_nLength > 0 )
+				CLockedBuffer pInput( GetInput() );
+				if ( pInput->m_nLength > 0 )
 				{
-					m_sData.Append( CA2CT( (char*) m_pInput->m_pBuffer ),
-						m_pInput->m_nLength );
-					m_pInput->Clear();
+					m_sData.Append( CA2CT( (char*) pInput->m_pBuffer ),
+						pInput->m_nLength );
+					pInput->Clear();
 				}
 				return TRUE;
 			}
@@ -168,26 +169,28 @@ protected:
 		{
 			if ( CTransfer::OnRead() )
 			{
-				if ( m_pOwner && m_pInput->m_nLength > 0 )
+				CLockedBuffer pInput( GetInput() );
+
+				if ( m_pOwner && pInput->m_nLength > 0 )
 				{
-					DWORD nLength = min( m_pInput->m_nLength,
+					DWORD nLength = min( pInput->m_nLength,
 						m_pOwner->m_nLength - m_pOwner->m_nPosition );
 					m_pOwner->m_pDownload->SubmitData(
 						m_pOwner->m_nOffset + m_pOwner->m_nPosition,
-						m_pInput->m_pBuffer, nLength );		
+						pInput->m_pBuffer, nLength );		
 					m_pOwner->m_nPosition += nLength;
 					m_pOwner->m_nDownloaded += nLength;
 					// Measuring speed
 					DWORD nCurrent = GetTickCount();
 					if ( nCurrent - m_tContent != 0) {
 						m_pOwner->m_pSource->m_nSpeed =
-							(DWORD) ( ( ( m_pInput->m_nLength + m_nTotal ) /
+							(DWORD) ( ( ( pInput->m_nLength + m_nTotal ) /
 							( nCurrent - m_tContent ) ) * 1000 );
 						m_tContent = nCurrent;	
 						m_nTotal = 0;
 					} else
-						m_nTotal += m_pInput->m_nLength;
-					m_pInput->Clear();
+						m_nTotal += pInput->m_nLength;
+					pInput->Clear();
 					if ( m_pOwner->m_nPosition >= m_pOwner->m_nLength )
 					{
 						m_pOwner->m_pSource->AddFragment( m_pOwner->m_nOffset,

@@ -277,6 +277,20 @@ CString CBuffer::ReadString(const size_t nBytes, const UINT nCodePage)
 }
 
 ///////////////////////////////////////////////////////////////////////////////
+// CBuffer read helper
+
+BOOL CBuffer::Read(void* pData, const size_t nLength)
+{
+	if ( nLength > m_nLength )
+		return FALSE;
+
+	CopyMemory( pData, m_pBuffer, nLength );
+	Remove( nLength );
+
+	return TRUE;
+}
+
+///////////////////////////////////////////////////////////////////////////////
 // CBuffer read line helper
 
 // Takes access to a string, default peek false to move a line from the buffer to the string, and default CP_ACP to read ASCII text
@@ -326,7 +340,7 @@ BOOL CBuffer::ReadLine(CString& strLine, BOOL bPeek, UINT nCodePage)
 // Takes a pointer to ASCII text, and the option to remove these characters from the start of the buffer if they are found there
 // Looks at the bytes at the start of the buffer, and determines if they are the same as the given ASCII text
 // Returns true if the text matches, false if it doesn't
-BOOL CBuffer::StartsWith(LPCSTR pszString, const size_t nLength, const BOOL bRemove)
+BOOL CBuffer::StartsWith(LPCSTR pszString, const size_t nLength, const BOOL bRemove) throw()
 {
 	// If the buffer isn't long enough to contain the given string, report the buffer doesn't start with it
 	if ( m_nLength < nLength ) return FALSE;

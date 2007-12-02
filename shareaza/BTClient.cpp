@@ -167,7 +167,7 @@ void CBTClient::Send(CBTPacket* pPacket, BOOL bRelease)
 	{
 		ASSERT( pPacket->m_nProtocol == PROTOCOL_BT );
 		
-		pPacket->ToBuffer( m_pOutput );
+		Write( pPacket );
 		if ( bRelease ) pPacket->Release();
 	}
 	
@@ -212,7 +212,7 @@ BOOL CBTClient::OnRun()
 		/*else if ( tNow - m_mOutput.tLast > Settings.BitTorrent.LinkPing / 2 && m_pOutput->m_nLength == 0 )
 		{
 			DWORD dwZero = 0;
-			m_pOutput->Add( &dwZero, 4 );			// wtf???
+			Write( &dwZero, 4 );			// wtf???
 			OnWrite();
 		}*/
 		else if ( tNow - m_tLastKeepAlive > Settings.BitTorrent.LinkPing )
@@ -275,9 +275,11 @@ BOOL CBTClient::OnRead()
 
 	CTransfer::OnRead();
 	
+	CLockedBuffer pInput( GetInput() );
+
 	if ( m_bOnline )
 	{
-		while ( CBTPacket* pPacket = CBTPacket::ReadBuffer( m_pInput ) )
+		while ( CBTPacket* pPacket = CBTPacket::ReadBuffer( pInput ) )
 		{
 			try
 			{
@@ -295,12 +297,12 @@ BOOL CBTClient::OnRead()
 	}
 	else
 	{
-        if ( ! m_bShake && m_pInput->m_nLength >= BT_PROTOCOL_HEADER_LEN + 8 + Hashes::Sha1Hash::byteCount )
+        if ( ! m_bShake && pInput->m_nLength >= BT_PROTOCOL_HEADER_LEN + 8 + Hashes::Sha1Hash::byteCount )
 		{
 			bSuccess = OnHandshake1();
 		}
 		
-		if ( bSuccess && m_bShake && m_pInput->m_nLength >= Hashes::Sha1Hash::byteCount )
+		if ( bSuccess && m_bShake && pInput->m_nLength >= Hashes::Sha1Hash::byteCount )
 		{
 			bSuccess = OnHandshake2();
 		}/*
@@ -329,15 +331,15 @@ void CBTClient::SendHandshake(BOOL bPart1, BOOL bPart2)
 	if ( bPart1 )
 	{
 		DWORD dwZero = 0;
-		m_pOutput->Print( _P(BT_PROTOCOL_HEADER) );
-		m_pOutput->Add( &dwZero, 4 );
-		m_pOutput->Add( &dwZero, 4 );
-		m_pOutput->Add( m_pDownload->m_oBTH );
+		Write( _P(BT_PROTOCOL_HEADER) );
+		Write( &dwZero, 4 );
+		Write( &dwZero, 4 );
+		Write( m_pDownload->m_oBTH );
 	}
 	
 	if ( bPart2 )
 	{
-        m_pOutput->Add( m_pDownload->m_pPeerID );
+        Write( m_pDownload->m_pPeerID );
 	}
 	
 	OnWrite();
@@ -351,24 +353,20 @@ BOOL CBTClient::OnHandshake1()
 	ASSERT( ! m_bOnline );
 	ASSERT( ! m_bShake );
 
-	LPBYTE pIn = m_pInput->m_pBuffer;
-
 	// Read in the BT protocol header
-	if ( memcmp( pIn, BT_PROTOCOL_HEADER, BT_PROTOCOL_HEADER_LEN ) != 0 )
+	if ( ! StartsWith( BT_PROTOCOL_HEADER, BT_PROTOCOL_HEADER_LEN ) )
 	{
 		theApp.Message( MSG_ERROR, _T("BitTorrent coupling from %s had invalid header"), (LPCTSTR)m_sAddress );
 		Close();
 		return FALSE;
 	}
 
-	pIn += BT_PROTOCOL_HEADER_LEN + 8;
+	Bypass( BT_PROTOCOL_HEADER_LEN + 8 );
 
 	// Read in the file ID
-	Hashes::BtHash oFileHash( reinterpret_cast<
-			const Hashes::BtHash::RawStorage& >( *pIn ) );
-	pIn += Hashes::BtHash::byteCount;
-
-	m_pInput->Remove( BT_PROTOCOL_HEADER_LEN + 8 + Hashes::Sha1Hash::byteCount );
+	Hashes::BtHash oFileHash;
+	Read( oFileHash );
+	oFileHash.validate();
 
 	if ( m_pDownload != NULL )	// If we initiated download (download has associated, which means we initiated download)
 	{
@@ -452,8 +450,8 @@ BOOL CBTClient::OnHandshake2()
 	if ( m_bClosing ) return FALSE;
 
 	// Second part of the handshake - Peer ID
-	m_oGUID = reinterpret_cast< const Hashes::BtGuid::RawStorage& >( *m_pInput->m_pBuffer );
-	m_pInput->Remove( Hashes::BtGuid::byteCount );
+	Read( m_oGUID );
+	m_oGUID.validate();
 
 	m_bExtended = isExtendedBtGuid( m_oGUID );
 

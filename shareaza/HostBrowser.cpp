@@ -180,7 +180,7 @@ BOOL CHostBrowser::OnConnected()
 
 BOOL CHostBrowser::OnRead()
 {
-	if ( m_pInput == NULL || m_pOutput == NULL ) return TRUE;
+	if ( ! IsInputExist() || ! IsOutputExist() ) return TRUE;
 
 	CTransfer::OnRead();
 
@@ -215,7 +215,7 @@ void CHostBrowser::OnDropped(BOOL /*bError*/)
 	{
 		if ( m_nLength == 0xFFFFFFFF )
 		{
-			m_nLength = m_pInput->m_nLength;
+			m_nLength = GetInputLength();
 			ReadContent();
 			return;
 		}
@@ -311,32 +311,32 @@ void CHostBrowser::SendRequest()
 
 	if ( m_bNewBrowse )
 	{
-		m_pOutput->Print( _P("GET /gnutella/browse/v1 HTTP/1.1\r\n") );
+		Write( _P("GET /gnutella/browse/v1 HTTP/1.1\r\n") );
 	}
 	else
 	{
 		if ( Settings.Downloads.RequestHTTP11 )
-			m_pOutput->Print( _P("GET / HTTP/1.1\r\n") );
+			Write( _P("GET / HTTP/1.1\r\n") );
 		else
-			m_pOutput->Print( _P("GET / HTTP/1.0\r\n") );
+			Write( _P("GET / HTTP/1.0\r\n") );
 	}
 
 	CString strHeader = Settings.SmartAgent();
 
 	if ( strHeader.GetLength() )
 	{
-		m_pOutput->Print( _P("User-Agent: ") );
-		m_pOutput->Print( strHeader );
-		m_pOutput->Print( _P("\r\n") );
+		Write( _P("User-Agent: ") );
+		Write( strHeader );
+		Write( _P("\r\n") );
 	}
 
-	m_pOutput->Print( _P("Accept: text/html, application/x-gnutella-packets, application/x-gnutella2\r\n"
+	Write( _P("Accept: text/html, application/x-gnutella-packets, application/x-gnutella2\r\n"
 						 "Accept-Encoding: deflate\r\n"
 						 "Connection: close\r\n") );
 
 	strHeader.Format( _T("Host: %s:%lu\r\n\r\n"),
 		(LPCTSTR)m_sAddress, htons( m_pHost.sin_port ) );
-	m_pOutput->Print( strHeader );
+	Write( strHeader );
 
 	CTransfer::OnWrite();
 
@@ -358,7 +358,7 @@ BOOL CHostBrowser::ReadResponseLine()
 {
 	CString strLine, strCode, strMessage;
 
-	if ( ! m_pInput->ReadLine( strLine ) ) return TRUE;
+	if ( ! Read( strLine ) ) return TRUE;
 	if ( strLine.IsEmpty() ) return TRUE;
 
 	if ( strLine.GetLength() > 512 ) strLine = _T("#LINE_TOO_LONG#");
@@ -499,7 +499,9 @@ BOOL CHostBrowser::ReadContent()
 {
 	if ( m_nReceived < m_nLength )
 	{
-		DWORD nVolume = min( m_nLength - m_nReceived, m_pInput->m_nLength );
+		CLockedBuffer pInput( GetInput() );
+
+		DWORD nVolume = min( m_nLength - m_nReceived, pInput->m_nLength );
 		m_nReceived += nVolume;
 
 		if ( m_bDeflate && m_pInflate != NULL )
@@ -510,15 +512,15 @@ BOOL CHostBrowser::ReadContent()
 			{
 				m_pBuffer->EnsureBuffer( 1024 );
 
-				pStream->next_in	= m_pInput->m_pBuffer;
-				pStream->avail_in	= m_pInput->m_nLength;
+				pStream->next_in	= pInput->m_pBuffer;
+				pStream->avail_in	= pInput->m_nLength;
 				pStream->next_out	= m_pBuffer->m_pBuffer + m_pBuffer->m_nLength;
 				pStream->avail_out	= m_pBuffer->m_nBuffer - m_pBuffer->m_nLength;
 
 				inflate( pStream, Z_SYNC_FLUSH );
 
-				nVolume -= ( m_pInput->m_nLength - pStream->avail_in );
-				m_pInput->Remove( m_pInput->m_nLength - pStream->avail_in );
+				nVolume -= ( pInput->m_nLength - pStream->avail_in );
+				pInput->Remove( pInput->m_nLength - pStream->avail_in );
 
 				DWORD nBlock = ( m_pBuffer->m_nBuffer - m_pBuffer->m_nLength ) - pStream->avail_out;
 				m_pBuffer->m_nLength += nBlock;
@@ -527,7 +529,7 @@ BOOL CHostBrowser::ReadContent()
 		}
 		else if ( m_pBuffer )
 		{
-			m_pBuffer->AddBuffer( m_pInput, nVolume );
+			m_pBuffer->AddBuffer( pInput, nVolume );
 		}
 		else
 			return FALSE;

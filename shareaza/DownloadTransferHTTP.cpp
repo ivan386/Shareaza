@@ -195,7 +195,7 @@ BOOL CDownloadTransferHTTP::StartNextFragment()
 	m_bTigerFetch		= FALSE;
 	m_bMetaFetch		= FALSE;
 	
-	if ( m_pInput == NULL || m_pOutput == NULL /* ||
+	if ( ! IsInputExist() || ! IsOutputExist() /* ||
 		 m_pDownload->GetTransferCount( dtsDownloading ) >= Settings.Downloads.MaxFileTransfers */ )
 	{
 		theApp.Message( MSG_DEFAULT, IDS_DOWNLOAD_CLOSING_EXTRA, (LPCTSTR)m_sAddress );
@@ -205,7 +205,7 @@ BOOL CDownloadTransferHTTP::StartNextFragment()
 	
 	// this needs to go for pipeline
 	
-	if ( m_pInput->m_nLength > 0 && m_nRequests > 0 )
+	if ( GetInputLength() > 0 && m_nRequests > 0 )
 	{
 		theApp.Message( MSG_ERROR, IDS_DOWNLOAD_CLOSING_OVERFLOW, (LPCTSTR)m_sAddress );
 		Close( TRI_TRUE );
@@ -298,31 +298,31 @@ BOOL CDownloadTransferHTTP::SendRequest()
 	if ( Settings.Downloads.RequestHTTP11 )
 	{
 		strLine.Format( _T("GET %s HTTP/1.1\r\n"), (LPCTSTR)pURL.m_sPath );
-		m_pOutput->Print( strLine );
+		Write( strLine );
 		
 		strLine.Format( _T("Host: %s\r\n"), (LPCTSTR)pURL.m_sAddress );
-		m_pOutput->Print( strLine );
+		Write( strLine );
 	}
 	else
 	{
 		strLine.Format( _T("GET %s HTTP/1.0\r\n"), (LPCTSTR)m_pSource->m_sURL );
-		m_pOutput->Print( strLine );
+		Write( strLine );
 	}
 	
 	theApp.Message( MSG_DEBUG, _T("%s: DOWNLOAD REQUEST: %s"),
 		(LPCTSTR)m_sAddress, (LPCTSTR)pURL.m_sPath );
 	
-	m_pOutput->Print( _P("Connection: Keep-Alive\r\n") ); //BearShare assumes close
+	Write( _P("Connection: Keep-Alive\r\n") ); //BearShare assumes close
 
-	if ( Settings.Gnutella2.EnableToday ) m_pOutput->Print( _P("X-Features: g2/1.0\r\n") );
+	if ( Settings.Gnutella2.EnableToday ) Write( _P("X-Features: g2/1.0\r\n") );
 	
 	if ( m_bTigerFetch )
 	{
-		m_pOutput->Print( _P("Accept: application/dime, application/tigertree-breadthfirst\r\n") );
+		Write( _P("Accept: application/dime, application/tigertree-breadthfirst\r\n") );
 	}
 	else if ( m_bMetaFetch )
 	{
-		m_pOutput->Print( _P("Accept: text/xml\r\n") );
+		Write( _P("Accept: text/xml\r\n") );
 	}
 	
 	if ( m_nOffset != SIZE_UNKNOWN && ! m_bTigerFetch && ! m_bMetaFetch )
@@ -335,25 +335,25 @@ BOOL CDownloadTransferHTTP::SendRequest()
 		{
 			strLine.Format( _T("Range: bytes=%I64i-%I64i\r\n"), m_nOffset, m_nOffset + m_nLength - 1 );
 		}
-		m_pOutput->Print( strLine );
+		Write( strLine );
 	}
 	else
 	{
-		m_pOutput->Print( _P("Range: bytes=0-\r\n") );
+		Write( _P("Range: bytes=0-\r\n") );
 	}
 	
 	if ( m_bWantBackwards && Settings.Downloads.AllowBackwards )
 	{
-		m_pOutput->Print( _P("Accept-Encoding: backwards\r\n") );
+		Write( _P("Accept-Encoding: backwards\r\n") );
 	}
 	
 	strLine = Settings.SmartAgent();
 	
 	if ( strLine.GetLength() )
 	{
-		m_pOutput->Print( _P("User-Agent: ") );
-		m_pOutput->Print( strLine );
-		m_pOutput->Print( _P("\r\n") );
+		Write( _P("User-Agent: ") );
+		Write( strLine );
+		Write( _P("\r\n") );
 	}
 	
 	if ( m_nRequests == 0 )
@@ -364,9 +364,9 @@ BOOL CDownloadTransferHTTP::SendRequest()
 		
 		if ( strLine.GetLength() > 0 )
 		{
-			m_pOutput->Print( _P("X-Nick: ") );
-			m_pOutput->Print( URLEncode( strLine ) );
-			m_pOutput->Print( _P("\r\n") );
+			Write( _P("X-Nick: ") );
+			Write( URLEncode( strLine ) );
+			Write( _P("\r\n") );
 		}
 	}
 	
@@ -375,39 +375,39 @@ BOOL CDownloadTransferHTTP::SendRequest()
 		int nSlash = m_pSource->m_sURL.ReverseFind( '/' );
 		if ( nSlash > 0 )
 		{
-			m_pOutput->Print( _P("Referrer: ") );
-			m_pOutput->Print( m_pSource->m_sURL.Left( nSlash + 1 ) );
-			m_pOutput->Print( _P("\r\n") );
+			Write( _P("Referrer: ") );
+			Write( m_pSource->m_sURL.Left( nSlash + 1 ) );
+			Write( _P("\r\n") );
 		}
 	}
 	
-	m_pOutput->Print( _P("X-Queue: 0.1\r\n") );
+	Write( _P("X-Queue: 0.1\r\n") );
 	
 	if ( ! m_bTigerFetch && ! m_bMetaFetch )
 	{
 		if ( m_pDownload->m_oSHA1 )
 		{
-			m_pOutput->Print( _P("X-Content-URN: ") );
-			m_pOutput->Print( m_pDownload->m_oSHA1.toUrn() );
-			m_pOutput->Print( _P("\r\n") );
+			Write( _P("X-Content-URN: ") );
+			Write( m_pDownload->m_oSHA1.toUrn() );
+			Write( _P("\r\n") );
 		}
 		if ( m_pDownload->m_oED2K )
 		{
-			m_pOutput->Print( _P("X-Content-URN: ") );
-			m_pOutput->Print( m_pDownload->m_oED2K.toUrn() );
-			m_pOutput->Print( _P("\r\n") );
+			Write( _P("X-Content-URN: ") );
+			Write( m_pDownload->m_oED2K.toUrn() );
+			Write( _P("\r\n") );
 		}
 		if ( m_pDownload->m_oBTH )
 		{
-			m_pOutput->Print( _P("X-Content-URN: ") );
-			m_pOutput->Print( m_pDownload->m_oBTH.toUrn() );
-			m_pOutput->Print( _P("\r\n") );
+			Write( _P("X-Content-URN: ") );
+			Write( m_pDownload->m_oBTH.toUrn() );
+			Write( _P("\r\n") );
 		}
 		if ( m_pDownload->m_oMD5 )
 		{
-			m_pOutput->Print( _P("X-Content-URN: ") );
-			m_pOutput->Print( m_pDownload->m_oMD5.toUrn() );
-			m_pOutput->Print( _P("\r\n") );
+			Write( _P("X-Content-URN: ") );
+			Write( m_pDownload->m_oMD5.toUrn() );
+			Write( _P("\r\n") );
 		}
 		if ( m_pSource->m_bSHA1 && Settings.Library.SourceMesh )
 		{
@@ -419,11 +419,11 @@ BOOL CDownloadTransferHTTP::SendRequest()
 			if ( strLine.GetLength() )
 			{
 				if ( m_pSource->m_nGnutella < 2 )
-					m_pOutput->Print( _P("X-Alt: ") );
+					Write( _P("X-Alt: ") );
 				else
-					m_pOutput->Print( _P("Alt-Location: ") );
-				m_pOutput->Print( strLine );
-				m_pOutput->Print( _P("\r\n") );
+					Write( _P("Alt-Location: ") );
+				Write( strLine );
+				Write( _P("\r\n") );
 			}
 			
 			if ( m_pDownload->IsShared() && m_pDownload->IsStarted() && Network.IsStable() )
@@ -432,7 +432,7 @@ BOOL CDownloadTransferHTTP::SendRequest()
 				{
 					strLine.Format( _T("%s:%i"), (LPCTSTR)CString( inet_ntoa( Network.m_pHost.sin_addr ) ),
 						htons( Network.m_pHost.sin_port ) );
-					m_pOutput->Print( _P("X-Alt: ") );
+					Write( _P("X-Alt: ") );
 				}
 				else
 				{
@@ -441,26 +441,26 @@ BOOL CDownloadTransferHTTP::SendRequest()
 						htons( Network.m_pHost.sin_port ),
 						(LPCTSTR)m_pDownload->m_oSHA1.toUrn() );
 					strLine += TimeToString( static_cast< DWORD >( time( NULL ) - 180 ) );
-					m_pOutput->Print( _P("Alt-Location: ") );
+					Write( _P("Alt-Location: ") );
 				}
-				m_pOutput->Print( strLine );
-				m_pOutput->Print( _P("\r\n") );
+				Write( strLine );
+				Write( _P("\r\n") );
 				
 				if ( m_pSource->m_nGnutella < 2 )
 				{
 					strLine = m_pDownload->GetTopFailedSources( 15, PROTOCOL_G1 );
 					if ( strLine.GetLength() )
 					{
-						m_pOutput->Print( _P("X-NAlt: ") );
-						m_pOutput->Print( strLine );
-						m_pOutput->Print( _P("\r\n") );
+						Write( _P("X-NAlt: ") );
+						Write( strLine );
+						Write( _P("\r\n") );
 					}
 				}
 			}
 		}
 	}
 	
-	m_pOutput->Print( _P("\r\n") );
+	Write( _P("\r\n") );
 	
 	SetState( dtsRequesting );
 	m_tRequest			= GetTickCount();
@@ -595,7 +595,7 @@ BOOL CDownloadTransferHTTP::ReadResponseLine()
 {
 	CString strLine, strCode, strMessage;
 
-	if ( ! m_pInput->ReadLine( strLine ) ) return TRUE;
+	if ( ! Read( strLine ) ) return TRUE;
 	if ( strLine.IsEmpty() ) return TRUE;
 
 	if ( strLine.GetLength() > 512 ) strLine = _T("#LINE_TOO_LONG#");
@@ -1286,11 +1286,13 @@ BOOL CDownloadTransferHTTP::OnHeadersComplete()
 
 BOOL CDownloadTransferHTTP::ReadContent()
 {
-	while ( m_pInput->m_nLength > 0 )
+	CLockedBuffer pInput( GetInput() );
+
+	while ( pInput->m_nLength > 0 )
 	{
 		m_pSource->SetValid();
 
-		DWORD nLength	= min( m_pInput->m_nLength, m_nLength - m_nPosition );
+		DWORD nLength	= min( pInput->m_nLength, m_nLength - m_nPosition );
 		BOOL bSubmit	= FALSE;
 
 		if ( m_bChunked )
@@ -1299,21 +1301,21 @@ BOOL CDownloadTransferHTTP::ReadContent()
 			switch( m_ChunkState )
 			{
 			case Header:
-				if ( m_pInput->m_nLength >= 3 )
+				if ( pInput->m_nLength >= 3 )
 				{
 					// Looking for "Length<CR><LF>"
 					DWORD i = 1;
-					for ( ; i < m_pInput->m_nLength - 1; i++ )
+					for ( ; i < pInput->m_nLength - 1; i++ )
 					{
-						if ( m_pInput->m_pBuffer[ i ]     == 0x0d &&
-							 m_pInput->m_pBuffer[ i + 1 ] == 0x0a )
+						if ( pInput->m_pBuffer[ i ]     == 0x0d &&
+							 pInput->m_pBuffer[ i + 1 ] == 0x0a )
 						{
 							break;
 						}
 					}
-					if ( i < m_pInput->m_nLength - 1 )
+					if ( i < pInput->m_nLength - 1 )
 					{
-						if ( sscanf( (LPCSTR)m_pInput->m_pBuffer, "%I64x",
+						if ( sscanf( (LPCSTR)pInput->m_pBuffer, "%I64x",
 							&m_nChunkLength ) == 1 )
 						{
 							if ( m_nChunkLength == 0 )
@@ -1332,7 +1334,7 @@ BOOL CDownloadTransferHTTP::ReadContent()
 								m_ChunkState = Body;
 	                        
 							// Cut header
-							m_pInput->Remove( i + 2 );
+							pInput->Remove( i + 2 );
 
 							// Process rest of data
 							continue;
@@ -1340,7 +1342,7 @@ BOOL CDownloadTransferHTTP::ReadContent()
 						else
 						{
 							// Bad format
-							m_pInput->Clear();
+							pInput->Clear();
 							Close( TRI_FALSE );
 							return FALSE;
 						}
@@ -1371,15 +1373,15 @@ BOOL CDownloadTransferHTTP::ReadContent()
 				ASSERT( m_nChunkLength == SIZE_UNKNOWN );
 
 				// Looking for "<CR><LF>"
-				if ( m_pInput->m_nLength >= 2 )
+				if ( pInput->m_nLength >= 2 )
 				{
-					if ( m_pInput->m_pBuffer[ 0 ] == 0x0d &&
-						 m_pInput->m_pBuffer[ 1 ] == 0x0a )
+					if ( pInput->m_pBuffer[ 0 ] == 0x0d &&
+						 pInput->m_pBuffer[ 1 ] == 0x0a )
 					{
 						m_ChunkState = Header;
 						
 						// Cut <CR><LF>
-						m_pInput->Remove( 2 );
+						pInput->Remove( 2 );
 
 						// Process rest of data
 						continue;
@@ -1387,7 +1389,7 @@ BOOL CDownloadTransferHTTP::ReadContent()
 					else
 					{
 						// Bad Format
-						m_pInput->Clear();
+						pInput->Clear();
 						Close( TRI_FALSE );
 						return FALSE;
 					}
@@ -1399,7 +1401,7 @@ BOOL CDownloadTransferHTTP::ReadContent()
 				ASSERT( m_nChunkLength == 0 );
 
 				// Bypass footer
-				m_pInput->Clear();
+				pInput->Clear();
 				bBreak = TRUE;
 				break;
 			}
@@ -1410,7 +1412,7 @@ BOOL CDownloadTransferHTTP::ReadContent()
 		if ( m_bRecvBackwards )
 		{
 			BYTE* pBuffer = new BYTE[ nLength ];
-			CBuffer::ReverseBuffer( m_pInput->m_pBuffer, pBuffer, nLength );
+			CBuffer::ReverseBuffer( pInput->m_pBuffer, pBuffer, nLength );
 			bSubmit = m_pDownload->SubmitData(
 				m_nOffset + m_nLength - m_nPosition - nLength, pBuffer, nLength );
 			delete [] pBuffer;
@@ -1418,13 +1420,13 @@ BOOL CDownloadTransferHTTP::ReadContent()
 		else
 		{
 			bSubmit = m_pDownload->SubmitData(
-				m_nOffset + m_nPosition, m_pInput->m_pBuffer, nLength );
+				m_nOffset + m_nPosition, pInput->m_pBuffer, nLength );
 		}
 
 		if ( m_bChunked )
-			m_pInput->Remove( nLength );
+			pInput->Remove( nLength );
 		else
-			m_pInput->Clear();
+			pInput->Clear();
 
 		m_nPosition += nLength;
 		m_nDownloaded += nLength;
@@ -1457,9 +1459,11 @@ BOOL CDownloadTransferHTTP::ReadContent()
 
 BOOL CDownloadTransferHTTP::ReadMetadata()
 {
-	if ( m_pInput->m_nLength < m_nLength ) return TRUE;
+	CLockedBuffer pInput( GetInput() );
+
+	if ( pInput->m_nLength < m_nLength ) return TRUE;
 	
-	CString strXML = m_pInput->ReadString( (DWORD)m_nLength, CP_UTF8 );
+	CString strXML = pInput->ReadString( (DWORD)m_nLength, CP_UTF8 );
 	
 	if ( CXMLElement* pXML = CXMLElement::FromString( strXML, TRUE ) )
 	{
@@ -1473,7 +1477,7 @@ BOOL CDownloadTransferHTTP::ReadMetadata()
 		}
 	}
 	
-	m_pInput->Remove( (DWORD)m_nLength );
+	pInput->Remove( (DWORD)m_nLength );
 	
 	return StartNextFragment();
 }
@@ -1490,12 +1494,14 @@ BOOL CDownloadTransferHTTP::ReadTiger()
     // until the connection drops, if no content length specified and not keep-alive.
     if ( !m_bKeepAlive && m_nContentLength == SIZE_UNKNOWN ) return TRUE;
 
-    if ( m_pInput->m_nLength < m_nLength ) return TRUE;
+	CLockedBuffer pInput( GetInput() );
+
+    if ( pInput->m_nLength < m_nLength ) return TRUE;
 	
 	if ( m_sContentType.CompareNoCase( _T("application/tigertree-breadthfirst") ) == 0 )
 	{
-		m_pDownload->SetTigerTree( m_pInput->m_pBuffer, (DWORD)m_nLength );
-		m_pInput->Remove( (DWORD)m_nLength );
+		m_pDownload->SetTigerTree( pInput->m_pBuffer, (DWORD)m_nLength );
+		pInput->Remove( (DWORD)m_nLength );
 	}
 	else if ( m_sContentType.CompareNoCase( _T("application/dime") ) == 0 ||
 			  m_sContentType.CompareNoCase( _T("application/binary") ) == 0 )
@@ -1503,7 +1509,7 @@ BOOL CDownloadTransferHTTP::ReadTiger()
 		CString strID, strType, strUUID = _T("x");
 		DWORD nFlags, nBody;
 		
-		while ( m_pInput->ReadDIME( &nFlags, &strID, &strType, &nBody ) )
+		while ( pInput->ReadDIME( &nFlags, &strID, &strType, &nBody ) )
 		{
 			theApp.Message( MSG_DEBUG, _T("THEX DIME: %i, '%s', '%s', %i"),
 				nFlags, (LPCTSTR)strID, (LPCTSTR)strType, nBody );
@@ -1513,7 +1519,7 @@ BOOL CDownloadTransferHTTP::ReadTiger()
 				BOOL bSize = FALSE, bDigest = FALSE, bEncoding = FALSE;
 				CString strXML;
 				
-				strXML = m_pInput->ReadString( nBody, CP_UTF8 );
+				strXML = pInput->ReadString( nBody, CP_UTF8 );
 				
 				if ( CXMLElement* pXML = CXMLElement::FromString( strXML ) )
 				{
@@ -1548,18 +1554,18 @@ BOOL CDownloadTransferHTTP::ReadTiger()
 			}
 			else if ( ( strID == strUUID || strID.IsEmpty() ) && strType.CompareNoCase( _T("http://open-content.net/spec/thex/breadthfirst") ) == 0 )
 			{
-				m_pDownload->SetTigerTree( m_pInput->m_pBuffer, nBody );
+				m_pDownload->SetTigerTree( pInput->m_pBuffer, nBody );
 			}
 			else if ( strType.CompareNoCase( _T("http://edonkey2000.com/spec/md4-hashset") ) == 0 )
 			{
-				m_pDownload->SetHashset( m_pInput->m_pBuffer, nBody );
+				m_pDownload->SetHashset( pInput->m_pBuffer, nBody );
 			}
 			
-			m_pInput->Remove( ( nBody + 3 ) & ~3 );
+			pInput->Remove( ( nBody + 3 ) & ~3 );
 			if ( nFlags & 2 ) break;
 		}
 		
-		m_pInput->Clear();
+		pInput->Clear();
 	}
 
     // m_bKeepAlive == FALSE means that it was not keep-alive, so should just get disconnected.
@@ -1577,12 +1583,14 @@ BOOL CDownloadTransferHTTP::ReadTiger()
 
 BOOL CDownloadTransferHTTP::ReadFlush()
 {
+	CLockedBuffer pInput( GetInput() );
+
 	if ( m_nContentLength == SIZE_UNKNOWN ) m_nContentLength = 0;
 	
-	DWORD nRemove = min( m_pInput->m_nLength, m_nContentLength );
+	DWORD nRemove = min( pInput->m_nLength, m_nContentLength );
 	m_nContentLength -= nRemove;
 	
-	m_pInput->Remove( nRemove );
+	pInput->Remove( nRemove );
 	
 	if ( m_nContentLength == 0 )
 	{
@@ -1646,8 +1654,7 @@ void CDownloadTransferHTTP::OnDropped(BOOL /*bError*/)
 		// It was closed connection with no content length, so assume the content length is equal to the 
 		// size of buffer when the connection gets cut. It is important to set it because the DIME decoding 
 		// code check if the content length is equals to size of buffer.
-		m_nContentLength = m_pInput->m_nLength;
-		m_nLength = m_pInput->m_nLength;
+		m_nLength = m_nContentLength = GetInputLength();
 		ReadTiger();
 		// CDownloadTransfer::Close will resume the closed connection
         m_pSource->m_bCloseConn = TRUE;

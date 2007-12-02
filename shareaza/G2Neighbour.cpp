@@ -122,7 +122,9 @@ BOOL CG2Neighbour::OnRead()
 
 BOOL CG2Neighbour::OnWrite()
 {
-	CBuffer* pOutput = m_pZOutput ? m_pZOutput : m_pOutput;
+	CLockedBuffer pOutputLocked( GetOutput() );
+
+	CBuffer* pOutput = m_pZOutput ? m_pZOutput : pOutputLocked;
 
 	while ( pOutput->m_nLength == 0 && m_nOutbound > 0 )
 	{
@@ -250,7 +252,10 @@ BOOL CG2Neighbour::Send(CPacket* pPacket, BOOL bRelease, BOOL bBuffered)
 		}
 		else
 		{
-			pPacket->ToBuffer( m_pZOutput ? m_pZOutput : m_pOutput );
+			if ( m_pZOutput )
+				pPacket->ToBuffer( m_pZOutput );
+			else
+				Write( pPacket );
 		}
 
 		QueueRun();
@@ -293,7 +298,9 @@ void CG2Neighbour::SendStartups()
 
 BOOL CG2Neighbour::ProcessPackets()
 {
-	CBuffer* pInput = m_pZInput ? m_pZInput : m_pInput;
+	CLockedBuffer pInputLocked( GetInput() );
+
+	CBuffer* pInput = m_pZInput ? m_pZInput : pInputLocked;
 
     BOOL bSuccess = TRUE;
 	for ( ; bSuccess && pInput->m_nLength ; )

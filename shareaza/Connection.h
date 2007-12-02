@@ -27,6 +27,8 @@
 #include "Buffer.h"
 #include "Packet.h"
 
+typedef boost::shared_ptr< CCriticalSection > CCriticalSectionPtr;
+
 // A socket connection to a remote compueter on the Internet running peer-to-peer software
 class CConnection
 {
@@ -46,11 +48,68 @@ public:
 	BOOL		m_bConnected;	// True when the socket is connected
 	DWORD		m_tConnected;	// The tick count when the socket connection was made
 	SOCKET		m_hSocket;		// The actual Windows socket for the Internet connection to the remote computer
-	CBuffer*	m_pInput;		// Data from the remote computer, will be compressed if the remote computer is sending compressed data
-	CBuffer*	m_pOutput;		// Data to send to the remote computer, will be compressed if we are sending the remote computer compressed data
 	CString		m_sUserAgent;	// The name of the program the remote computer is running
 	CString		m_sLastHeader;	// The handshake header that ReadHeaders most recently read
 	int			m_nQueuedRun;	// The queued run state of 0, 1, or 2 (do)
+
+// Buffers access
+protected:
+	// Class that looks like CBuffer* but with syncronization
+	class __declspec(novtable) CLockedBuffer
+	{
+	public:
+		inline CLockedBuffer(const CLockedBuffer& pGB) :
+			m_pBuffer( pGB.m_pBuffer ),
+			m_pLock( pGB.m_pLock )
+		{
+			m_pLock->Lock();
+		}
+
+		inline ~CLockedBuffer()
+		{
+			m_pLock->Unlock();
+		}
+		
+		inline operator CBuffer*() const throw()
+		{
+			return m_pBuffer;
+		}
+
+		inline CBuffer* operator->() const throw()
+		{
+			return m_pBuffer;
+		}
+
+	protected:
+		inline explicit CLockedBuffer(CBuffer* pBuffer, CCriticalSectionPtr pLock) :
+			m_pBuffer( pBuffer ),
+			m_pLock( pLock )
+		{
+			m_pLock->Lock();
+		}
+
+		CBuffer*			m_pBuffer;
+		CCriticalSectionPtr	m_pLock;
+
+		friend class CConnection;
+	};
+
+private:
+	CCriticalSectionPtr	m_pInputSection;
+	CBuffer*			m_pInput;			// Data from the remote computer, will be compressed if the remote computer is sending compressed data
+	CCriticalSectionPtr	m_pOutputSection;
+	CBuffer*			m_pOutput;			// Data to send to the remote computer, will be compressed if we are sending the remote computer compressed data
+
+public:
+	inline CLockedBuffer GetInput() const throw()
+	{
+		return CLockedBuffer( m_pInput, m_pInputSection );
+	}
+
+	inline CLockedBuffer GetOutput() const throw()
+	{
+		return CLockedBuffer( m_pOutput, m_pOutputSection );
+	}
 
 // Operations
 public:
@@ -64,6 +123,178 @@ public:
 	BOOL SendMyAddress();	// If we are listening on a port, tell the other computer our IP address and port number
 	BOOL IsAgentBlocked();	// Check the other computer's software title against our list of programs not to talk to
 	void UpdateCountry();	// Call whenever the IP address is set
+
+	inline bool IsOutputExist() const throw()
+	{
+		CQuickLock oOutputLock( *m_pOutputSection );
+
+		return ( m_pOutput != NULL );
+	}
+
+	inline bool IsInputExist() const throw()
+	{
+		CQuickLock oOutputLock( *m_pInputSection );
+
+		return ( m_pInput != NULL );
+	}
+
+	inline DWORD GetOutputLength() const throw()
+	{
+		CQuickLock oOutputLock( *m_pOutputSection );
+
+		ASSERT( m_pOutput );
+		return m_pOutput->m_nLength;
+	}
+
+	inline DWORD GetInputLength() const throw()
+	{
+		CQuickLock oOutputLock( *m_pInputSection );
+
+		ASSERT( m_pInput );
+		return m_pInput->m_nLength;
+	}
+
+	inline void WriteReversed(const void* pData, const size_t nLength) throw()
+	{
+		CQuickLock oOutputLock( *m_pOutputSection );
+
+		ASSERT( m_pOutput );
+		m_pOutput->AddReversed( pData, nLength );
+	}
+
+	inline void Write(const void* pData, const size_t nLength) throw()
+	{
+		CQuickLock oOutputLock( *m_pOutputSection );
+
+		ASSERT( m_pOutput );
+		m_pOutput->Add( pData, nLength );
+	}
+
+	inline void Write(const CString& strData) throw()
+	{
+		CQuickLock oOutputLock( *m_pOutputSection );
+
+		ASSERT( m_pOutput );
+		m_pOutput->Print( strData );
+	}
+
+	inline DWORD Write(CBuffer* pBuffer) throw()
+	{
+		CQuickLock oOutputLock( *m_pOutputSection );
+
+		ASSERT( m_pOutput );
+		return m_pOutput->AddBuffer( pBuffer );
+	}
+
+	inline void Write(const CPacket* pPacket) throw()
+	{
+		CQuickLock oOutputLock( *m_pOutputSection );
+
+		ASSERT( m_pOutput );
+		CBuffer pBuffer;
+		pPacket->ToBuffer( &pBuffer );
+		Write( &pBuffer );
+	}
+
+	template
+		<
+		typename Descriptor,
+		template< typename > class StoragePolicy,
+		template< typename > class CheckingPolicy,
+		template< typename > class ValidationPolicy
+		>
+	inline void Write(Hashes::Hash< Descriptor, StoragePolicy,
+		CheckingPolicy, ValidationPolicy >& oHash) throw()
+	{
+		CQuickLock oOutputLock( *m_pOutputSection );
+
+		ASSERT( m_pOutput );
+		m_pOutput->Add( oHash );
+	}
+
+	template
+		<
+		typename Descriptor,
+		template< typename > class StoragePolicy,
+		template< typename > class CheckingPolicy,
+		template< typename > class ValidationPolicy
+		>
+	inline void Read(Hashes::Hash< Descriptor, StoragePolicy,
+		CheckingPolicy, ValidationPolicy >& oHash) throw()
+	{
+		CQuickLock oInputLock( *m_pInputSection );
+
+		ASSERT( m_pInput );
+		m_pInput->Read( oHash );
+	}
+
+	inline BOOL Read(CString& strData, BOOL bPeek = FALSE, UINT nCodePage = CP_ACP) throw()
+	{
+		CQuickLock oInputLock( *m_pInputSection );
+
+		ASSERT( m_pInput );
+		return m_pInput->ReadLine( strData, bPeek, nCodePage );
+	}
+
+	inline void Bypass(const size_t nLength) throw()
+	{
+		CQuickLock oInputLock( *m_pInputSection );
+
+		ASSERT( m_pInput );
+		return m_pInput->Remove( nLength );
+	}
+
+	inline void Prefix(LPCSTR pszText, const size_t nLength) throw()
+	{
+		CQuickLock oInputLock( *m_pInputSection );
+
+		ASSERT( m_pInput );
+		m_pInput->Prefix( pszText, nLength );
+	}
+
+	inline BYTE PeekAt(const size_t nPos) const throw()
+	{
+		CQuickLock oInputLock( *m_pInputSection );
+
+		ASSERT( m_pInput );
+		return m_pInput->m_pBuffer[ nPos ];
+	}
+
+	inline BOOL StartsWith(LPCSTR pszString, const size_t nLength)
+	{
+		CQuickLock oInputLock( *m_pInputSection );
+
+		ASSERT( m_pInput );
+		return m_pInput->StartsWith( pszString, nLength, FALSE );
+	}
+
+	inline void CreateBuffers() throw()
+	{
+		{
+			CQuickLock oInputLock( *m_pInputSection );
+			if ( ! m_pInput )
+				m_pInput = new CBuffer();
+		}
+		{
+			CQuickLock oOutputLock( *m_pOutputSection );
+			if ( ! m_pOutput )
+				m_pOutput = new CBuffer();
+		}
+	}
+
+	inline void DestroyBuffers() throw()
+	{
+		{
+			CQuickLock oInputLock( *m_pInputSection );
+			delete m_pInput;
+			m_pInput = NULL;
+		}
+		{
+			CQuickLock oOutputLock( *m_pOutputSection );
+			delete m_pOutput;
+			m_pOutput = NULL;
+		}
+	}
 
 // Overrides
 public:

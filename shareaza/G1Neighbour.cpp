@@ -71,6 +71,8 @@ static char THIS_FILE[]=__FILE__;
 CG1Neighbour::CG1Neighbour(CNeighbour* pBase)
 	: CNeighbour( PROTOCOL_G1, pBase ) // First, call the CNeighbour constructor
 {
+	CLockedBuffer pOutput( GetOutput() );
+
 	// The member variable m_nPongNeeded is just an array of 32 bytes, start them each out as 0
 	ZeroMemory( m_nPongNeeded, PONG_NEEDED_BUFFER );
 	// Say we sent a ping packet when we last got any packet from the remote computer (do)
@@ -81,7 +83,7 @@ CG1Neighbour::CG1Neighbour(CNeighbour* pBase)
 	m_nHopsFlow = 0xFF;
 
 	// Create a new packet buffer for sending packets, giving it the m_pZOutput buffer if we're compressing, or just m_pOutput if we're not
-	m_pOutbound = new CG1PacketBuffer( m_pZOutput ? m_pZOutput : m_pOutput ); // m_pZOutput is where to write data the program will compress
+	m_pOutbound = new CG1PacketBuffer( m_pZOutput ? m_pZOutput : pOutput ); // m_pZOutput is where to write data the program will compress
 
 	// Report that a Gnutella connection with the remote computer has been successfully established
 	theApp.Message( MSG_DEFAULT, IDS_HANDSHAKE_ONLINE, (LPCTSTR)m_sAddress, 0, 6, m_sUserAgent.IsEmpty() ? _T("Unknown") : (LPCTSTR)m_sUserAgent );
@@ -150,8 +152,10 @@ BOOL CG1Neighbour::OnRead()
 // Always returns true
 BOOL CG1Neighbour::OnWrite()
 {
+	CLockedBuffer pOutputLocked( GetOutput() );
+
 	// Point pOutput at the buffer where we should write data for the remote computer
-	CBuffer* pOutput = m_pZOutput ? m_pZOutput : m_pOutput; // If we're sending compressed data, we'll put readable bytes in m_pZOutput and then compress them to m_pOutput
+	CBuffer* pOutput = m_pZOutput ? m_pZOutput : pOutputLocked; // If we're sending compressed data, we'll put readable bytes in m_pZOutput and then compress them to m_pOutput
 
 	// Record when OnWrite was called
 	DWORD nExpire = GetTickCount();
@@ -249,8 +253,10 @@ BOOL CG1Neighbour::Send(CPacket* pPacket, BOOL bRelease, BOOL bBuffered)
 // Returns false if the remote computer did something weird and we closed the connection, true to keep talking
 BOOL CG1Neighbour::ProcessPackets()
 {
+	CLockedBuffer pInputLocked( GetInput() );
+
 	// Point pInput at the buffer that has readable data from the remote computer
-	CBuffer* pInput = m_pZInput ? m_pZInput : m_pInput;
+	CBuffer* pInput = m_pZInput ? m_pZInput : pInputLocked;
 
 	// Start out with bSuccess true and loop until it gets set to false
     BOOL bSuccess = TRUE;

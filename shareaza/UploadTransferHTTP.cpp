@@ -127,7 +127,7 @@ BOOL CUploadTransferHTTP::ReadRequest()
 {
 	CString strLine;
 	
-	if ( ! m_pInput->ReadLine( strLine ) ) return TRUE;
+	if ( ! Read( strLine ) ) return TRUE;
 	if ( strLine.GetLength() > 512 ) strLine = _T("#LINE_TOO_LONG#");
 	
 	if ( m_nState == upsQueued && m_pQueue != NULL )
@@ -372,14 +372,14 @@ BOOL CUploadTransferHTTP::OnHeadersComplete()
 	CString sHeader;
 	if ( ResourceRequest( m_sRequest, pResponse, sHeader ) )
 	{
-		m_pOutput->Print( _P("HTTP/1.1 200 OK\r\n") );
+		Write( _P("HTTP/1.1 200 OK\r\n") );
 		CString strLength;
 		strLength.Format( _T("Content-Length: %i\r\n"), pResponse.m_nLength );
-		m_pOutput->Print( strLength );
+		Write( strLength );
 		if ( ! sHeader.IsEmpty() )
-			m_pOutput->Print( sHeader );
-		m_pOutput->Print( _P("\r\n") );
-		m_pOutput->AddBuffer( &pResponse );
+			Write( sHeader );
+		Write( _P("\r\n") );
+		Write( &pResponse );
 		StartSending( upsResponse );
 		return TRUE;
 	}
@@ -413,7 +413,7 @@ BOOL CUploadTransferHTTP::OnHeadersComplete()
 		
 		if ( Settings.Remote.Enable )
 		{
-			m_pInput->Prefix( _P("GET /remote/ HTTP/1.0\r\n\r\n") );
+			Prefix( _P("GET /remote/ HTTP/1.0\r\n\r\n") );
 			new CRemote( this );
 			Remove( FALSE );
 			return FALSE;
@@ -758,7 +758,7 @@ BOOL CUploadTransferHTTP::RequestPartialFile(CDownload* pDownload)
 	{
 		if ( GetTickCount() - pDownload->m_tCompleted < 30000 )
 		{
-			m_pOutput->Print( _P("HTTP/1.1 503 Range Temporarily Unavailable\r\n") );
+			Write( _P("HTTP/1.1 503 Range Temporarily Unavailable\r\n") );
 		}
 		else
 		{
@@ -769,18 +769,18 @@ BOOL CUploadTransferHTTP::RequestPartialFile(CDownload* pDownload)
 	}
 	else if ( pDownload->HasActiveTransfers() )
 	{
-		m_pOutput->Print( _P("HTTP/1.1 503 Range Temporarily Unavailable\r\n") );
+		Write( _P("HTTP/1.1 503 Range Temporarily Unavailable\r\n") );
 	}
 	else
 	{
-		m_pOutput->Print( _P("HTTP/1.1 416 Requested Range Unavailable\r\n") );
+		Write( _P("HTTP/1.1 416 Requested Range Unavailable\r\n") );
 	}
 	
 	SendDefaultHeaders();
 	SendFileHeaders();
 	
-	m_pOutput->Print( _P("Content-Length: 0\r\n") );
-	m_pOutput->Print( _P("\r\n") );
+	Write( _P("Content-Length: 0\r\n") );
+	Write( _P("\r\n") );
 	
 	StartSending( upsResponse );
 	
@@ -883,7 +883,7 @@ BOOL CUploadTransferHTTP::QueueRequest()
 	{
 		CString strHeader, strName;
 		
-		m_pOutput->Print( _P("HTTP/1.1 503 Busy Queued\r\n") );
+		Write( _P("HTTP/1.1 503 Busy Queued\r\n") );
 		
 		SendDefaultHeaders();
 		SendFileHeaders();
@@ -914,9 +914,9 @@ BOOL CUploadTransferHTTP::QueueRequest()
 		
 		pLock.Unlock();
 		
-		m_pOutput->Print( strHeader );
-		m_pOutput->Print( _P("Content-Length: 0\r\n") );
-		m_pOutput->Print( _P("\r\n") );
+		Write( strHeader );
+		Write( _P("Content-Length: 0\r\n") );
+		Write( _P("\r\n") );
 		
 		StartSending( upsPreQueue );
 	}
@@ -941,40 +941,40 @@ void CUploadTransferHTTP::SendDefaultHeaders()
 	if ( strLine.GetLength() )
 	{
 		strLine = _T("Server: ") + strLine + _T("\r\n");
-		m_pOutput->Print( strLine );
+		Write( strLine );
 	}
 	
 	if ( ! m_bInitiated )
 	{
 		strLine.Format( _T("Remote-IP: %s\r\n"),
 			(LPCTSTR)CString( inet_ntoa( m_pHost.sin_addr ) ) );
-		m_pOutput->Print( strLine );
+		Write( strLine );
 	}
 	
 	if ( IsNetworkDisabled() )
 	{
 		// Ask to retry after some delay in seconds
-		m_pOutput->Print( strLine + _T("Retry-After: 7200\r\n") );
+		Write( strLine + _T("Retry-After: 7200\r\n") );
 	}
 	else if ( m_bKeepAlive )
 	{
-		m_pOutput->Print( _P("Connection: Keep-Alive\r\n") );
+		Write( _P("Connection: Keep-Alive\r\n") );
 	}
 	
-	m_pOutput->Print( _P("Accept-Ranges: bytes\r\n") );
+	Write( _P("Accept-Ranges: bytes\r\n") );
 	
 	if ( m_nRequests <= 1 )
 	{
 		if ( m_bInitiated ) SendMyAddress();
 		strLine.Format( _T("X-PerHost: %lu\r\n"), Settings.Uploads.MaxPerHost );
-		m_pOutput->Print( strLine );
+		Write( strLine );
 		
 		strLine = MyProfile.GetNick().Left( 255 );
 		
 		if ( strLine.GetLength() > 0 )
 		{
 			strLine = _T("X-Nick: ") + URLEncode( strLine ) + _T("\r\n");
-			m_pOutput->Print( strLine );
+			Write( strLine );
 		}
 	}
 }
@@ -988,79 +988,79 @@ void CUploadTransferHTTP::SendFileHeaders()
 	
 	if ( m_oSHA1 )
 	{
-		m_pOutput->Print( _P("X-Content-URN: ") );
+		Write( _P("X-Content-URN: ") );
 		if ( m_oTiger )
 		{
-			m_pOutput->Print( _P("urn:bitprint:") );
-			m_pOutput->Print( m_oSHA1.toString() );
-			m_pOutput->Print( _P(".") );
-			m_pOutput->Print( m_oTiger.toString() );
+			Write( _P("urn:bitprint:") );
+			Write( m_oSHA1.toString() );
+			Write( _P(".") );
+			Write( m_oTiger.toString() );
 		}
 		else
 		{
-			m_pOutput->Print( m_oSHA1.toUrn() );
+			Write( m_oSHA1.toUrn() );
 		}		
-		m_pOutput->Print( _P("\r\n") );
+		Write( _P("\r\n") );
 	}
 	else if ( m_oTiger )
 	{
-		m_pOutput->Print( _P("X-Content-URN: ") );
-		m_pOutput->Print( m_oTiger.toUrn() );
-		m_pOutput->Print( _P("\r\n") );
+		Write( _P("X-Content-URN: ") );
+		Write( m_oTiger.toUrn() );
+		Write( _P("\r\n") );
 	}
 	
 	if ( m_oED2K )
 	{
-		m_pOutput->Print( _P("X-Content-URN: ") );
-		m_pOutput->Print( m_oED2K.toUrn() );
-		m_pOutput->Print( _P("\r\n") );
+		Write( _P("X-Content-URN: ") );
+		Write( m_oED2K.toUrn() );
+		Write( _P("\r\n") );
 	}
 
 	if ( m_oBTH )
 	{
-		m_pOutput->Print( _P("X-Content-URN: ") );
-		m_pOutput->Print( m_oBTH.toUrn() );
-		m_pOutput->Print( _P("\r\n") );
+		Write( _P("X-Content-URN: ") );
+		Write( m_oBTH.toUrn() );
+		Write( _P("\r\n") );
 	}
 
 	if ( m_oMD5 )
 	{
-		m_pOutput->Print( _P("X-Content-URN: ") );
-		m_pOutput->Print( m_oMD5.toUrn() );
-		m_pOutput->Print( _P("\r\n") );
+		Write( _P("X-Content-URN: ") );
+		Write( m_oMD5.toUrn() );
+		Write( _P("\r\n") );
 	}
 	
 	if ( m_bTigerTree && Settings.Uploads.ShareTiger )
 	{
-		m_pOutput->Print( _P("X-Thex-URI: /gnutella/thex/v1?") );
-		m_pOutput->Print( m_oTiger.toUrn() );
-		m_pOutput->Print( _P("&depth=9&ed2k=0;") );
-		m_pOutput->Print(  m_oTiger.toString() );
-		m_pOutput->Print( _P("\r\n") );
+		Write( _P("X-Thex-URI: /gnutella/thex/v1?") );
+		Write( m_oTiger.toUrn() );
+		Write( _P("&depth=9&ed2k=0;") );
+		Write(  m_oTiger.toString() );
+		Write( _P("\r\n") );
 	}
 	
 	if ( m_bMetadata )
 	{
-		m_pOutput->Print( _P("X-Metadata-Path: /gnutella/metadata/v1?") );
-		m_pOutput->Print( m_oTiger.toUrn() );
-		m_pOutput->Print( _P("\r\n") );
+		Write( _P("X-Metadata-Path: /gnutella/metadata/v1?") );
+		Write( m_oTiger.toUrn() );
+		Write( _P("\r\n") );
 	}
 	
 	if ( m_sRanges.GetLength() )
 	{
-		m_pOutput->Print( _P("X-Available-Ranges: ") );
-		m_pOutput->Print( m_sRanges );
-		m_pOutput->Print( _P("\r\n") );
+		Write( _P("X-Available-Ranges: ") );
+		Write( m_sRanges );
+		Write( _P("\r\n") );
 	}
 
 	if ( m_sLocations.GetLength() )
 	{
 		if ( m_sLocations.Find( _T("://") ) < 0 )
-			m_pOutput->Print( _P("X-Alt: ") );
+			Write( _P("X-Alt: ") );
 		else
-			m_pOutput->Print( _P("Alt-Location: ") );
-		m_pOutput->Print( m_sLocations );
-		m_pOutput->Print( _P("\r\n") );
+			Write( _P("Alt-Location: ") );
+		Write( m_sLocations );
+		Write( _P("\r\n") );
 	}
 
 	if ( m_nGnutella < 2 )
@@ -1071,9 +1071,9 @@ void CUploadTransferHTTP::SendFileHeaders()
 		// Send X-NAlt for partial transfers only
 		if ( CDownload* pDownload = Downloads.FindByURN( pszURN ) )
 		{
-			m_pOutput->Print( _P("X-NAlt: ") );
-			m_pOutput->Print( pDownload->GetTopFailedSources( 15, PROTOCOL_G1 ) );
-			m_pOutput->Print( _P("\r\n") );
+			Write( _P("X-NAlt: ") );
+			Write( pDownload->GetTopFailedSources( 15, PROTOCOL_G1 ) );
+			Write( _P("\r\n") );
 		}
 	}
 }
@@ -1107,9 +1107,9 @@ BOOL CUploadTransferHTTP::OpenFileSendHeaders()
 	pLock.Unlock();
 	
 	if ( m_nLength != m_nFileSize )
-		m_pOutput->Print( _P("HTTP/1.1 206 OK\r\n") );
+		Write( _P("HTTP/1.1 206 OK\r\n") );
 	else
-		m_pOutput->Print( _P("HTTP/1.1 200 OK\r\n") );
+		Write( _P("HTTP/1.1 200 OK\r\n") );
 	
 	SendDefaultHeaders();
 	
@@ -1121,31 +1121,31 @@ BOOL CUploadTransferHTTP::OpenFileSendHeaders()
 	
 	if ( strResponse.IsEmpty() )
 	{
-		m_pOutput->Print( _P("Content-Type: application/x-binary\r\n") );
+		Write( _P("Content-Type: application/x-binary\r\n") );
 	}
 	else
 	{
 		strResponse = _T("Content-Type: ") + strResponse + _T("\r\n");
-		m_pOutput->Print( strResponse );
+		Write( strResponse );
 	}
 	
 	strResponse.Format( _T("Content-Length: %I64i\r\n"), m_nLength );
-	m_pOutput->Print( strResponse );
+	Write( strResponse );
 	
 	if ( m_nLength != m_nFileSize )
 	{
 		strResponse.Format( _T("Content-Range: bytes=%I64i-%I64i/%I64i\r\n"), m_nOffset, m_nOffset + m_nLength - 1, m_nFileSize );
-		m_pOutput->Print( strResponse );
+		Write( strResponse );
 	}
 	
 	if ( ! m_bHead && m_bBackwards )
 	{
-		m_pOutput->Print( _P("Content-Encoding: backwards\r\n") );
+		Write( _P("Content-Encoding: backwards\r\n") );
 	}
 	
 	if ( m_oSHA1 || m_oTiger || m_oED2K || m_oBTH  || m_oMD5 ) SendFileHeaders();
 	
-	m_pOutput->Print( _P("\r\n") );
+	Write( _P("\r\n") );
 	
 	if ( m_bHead )
 	{
@@ -1190,7 +1190,7 @@ BOOL CUploadTransferHTTP::OpenFileSendHeaders()
 
 BOOL CUploadTransferHTTP::OnWrite()
 {
-	if ( m_nState == upsUploading && m_pDiskFile != NULL && m_pOutput->m_nLength == 0 )
+	if ( m_nState == upsUploading && m_pDiskFile != NULL && GetOutputLength() == 0 )
 	{
 		if ( m_nPosition >= m_nLength )
 		{
@@ -1207,13 +1207,13 @@ BOOL CUploadTransferHTTP::OnWrite()
 			QWORD nRead = 0;
 			m_pDiskFile->Read( m_nFileBase + m_nOffset + m_nLength - m_nPosition - nPacket, pBuffer, nPacket, &nRead );
 			if ( nRead != nPacket ) return TRUE;
-			m_pOutput->AddReversed( pBuffer, (DWORD)nPacket );
+			WriteReversed( pBuffer, (DWORD)nPacket );
 		}
 		else
 		{
 			m_pDiskFile->Read( m_nFileBase + m_nOffset + m_nPosition, pBuffer, nPacket, &nPacket );
 			if ( nPacket == 0 ) return TRUE;
-			m_pOutput->Add( pBuffer, (DWORD)nPacket );
+			Write( pBuffer, (DWORD)nPacket );
 		}
 		
 		m_nPosition += nPacket;
@@ -1224,7 +1224,7 @@ BOOL CUploadTransferHTTP::OnWrite()
 	
 	CUploadTransfer::OnWrite();
 	
-	if ( m_nState >= upsResponse && m_pOutput->m_nLength == 0 )
+	if ( m_nState >= upsResponse && GetOutputLength() == 0 )
 	{
 		m_nState	= ( m_nState == upsPreQueue ) ? upsQueued : upsRequest;
 		m_tRequest	= GetTickCount();
@@ -1260,7 +1260,7 @@ BOOL CUploadTransferHTTP::OnRun()
 	switch ( m_nState )
 	{
 	case upsRequest:
-		if ( ! m_bKeepAlive && m_pOutput->m_nLength == 0 )
+		if ( ! m_bKeepAlive && GetOutputLength() == 0 )
 		{
 			theApp.Message( MSG_DEFAULT, IDS_UPLOAD_DROPPED, (LPCTSTR)m_sAddress );
 			Close();
@@ -1342,16 +1342,16 @@ BOOL CUploadTransferHTTP::RequestMetadata(CXMLElement* pMetadata)
 	LPSTR pszXML = new CHAR[ nXML ];
 	WideCharToMultiByte( CP_UTF8, 0, strXML, strXML.GetLength(), pszXML, nXML, NULL, NULL );
 	
-	m_pOutput->Print( _P("HTTP/1.1 200 OK\r\n") );
+	Write( _P("HTTP/1.1 200 OK\r\n") );
 	SendDefaultHeaders();
-	m_pOutput->Print( _P("Content-Type: text/xml\r\n") );
+	Write( _P("Content-Type: text/xml\r\n") );
 	
 	CString strHeader;
 	strHeader.Format( _T("Content-Length: %lu\r\n"), nXML );
-	m_pOutput->Print( strHeader );
-	m_pOutput->Print( _P("\r\n") );
+	Write( strHeader );
+	Write( _P("\r\n") );
 	
-	if ( ! m_bHead ) m_pOutput->Add( pszXML, nXML );
+	if ( ! m_bHead ) Write( pszXML, nXML );
 	delete [] pszXML;
 	
 	StartSending( upsMetadata );
@@ -1400,25 +1400,25 @@ BOOL CUploadTransferHTTP::RequestTigerTreeRaw(CTigerTree* pTigerTree, BOOL bDele
 		CString strHeader;
 		
 		if ( m_nLength != nSerialTree )
-			m_pOutput->Print( _P("HTTP/1.1 206 OK\r\n") );
+			Write( _P("HTTP/1.1 206 OK\r\n") );
 		else
-			m_pOutput->Print( _P("HTTP/1.1 200 OK\r\n") );
+			Write( _P("HTTP/1.1 200 OK\r\n") );
 		
 		SendDefaultHeaders();
 		
-		m_pOutput->Print( _P("Content-Type: application/tigertree-breadthfirst\r\n") );
+		Write( _P("Content-Type: application/tigertree-breadthfirst\r\n") );
 		strHeader.Format( _T("Content-Length: %I64i\r\n"), m_nLength );
-		m_pOutput->Print( strHeader );
+		Write( strHeader );
 		
 		if ( m_nLength != nSerialTree )
 		{
 			strHeader.Format( _T("Content-Range: %I64i-%I64i\r\n"), m_nOffset, m_nOffset + m_nLength - 1 );
-			m_pOutput->Print( strHeader );
+			Write( strHeader );
 		}
 		
-		m_pOutput->Print( _P("\r\n") );
+		Write( _P("\r\n") );
 		
-		if ( ! m_bHead ) m_pOutput->Add( pSerialTree + m_nOffset, (DWORD)m_nLength );
+		if ( ! m_bHead ) Write( pSerialTree + m_nOffset, (DWORD)m_nLength );
 		
 		StartSending( upsTigerTree );
 		
@@ -1530,27 +1530,27 @@ BOOL CUploadTransferHTTP::RequestTigerTreeDIME(CTigerTree* pTigerTree, int nDept
 		CString strHeader;
 		
 		if ( m_nLength != pDIME.m_nLength )
-			m_pOutput->Print( _P("HTTP/1.1 206 OK\r\n") );
+			Write( _P("HTTP/1.1 206 OK\r\n") );
 		else
-			m_pOutput->Print( _P("HTTP/1.1 200 OK\r\n") );
+			Write( _P("HTTP/1.1 200 OK\r\n") );
 		
 		SendDefaultHeaders();
 		
-		m_pOutput->Print( _P("Content-Type: application/dime\r\n") );
+		Write( _P("Content-Type: application/dime\r\n") );
 		strHeader.Format( _T("Content-Length: %I64i\r\n"), m_nLength );
-		m_pOutput->Print( strHeader );
+		Write( strHeader );
 		
 		if ( m_nLength != pDIME.m_nLength )
 		{
 			strHeader.Format( _T("Content-Range: %I64i-%I64i\r\n"), m_nOffset, m_nOffset + m_nLength - 1 );
-			m_pOutput->Print( strHeader );
+			Write( strHeader );
 		}
 		
-		m_pOutput->Print( _P("\r\n") );
+		Write( _P("\r\n") );
 		
 		if ( ! m_bHead )
 		{
-			m_pOutput->Add( pDIME.m_pBuffer + m_nOffset, (DWORD)m_nLength );
+			Write( pDIME.m_pBuffer + m_nOffset, (DWORD)m_nLength );
 		}
 		
 		StartSending( upsTigerTree );
@@ -1595,7 +1595,7 @@ BOOL CUploadTransferHTTP::RequestPreview(CLibraryFile* pFile, CSingleLock& oLibr
 	if ( nExisting >= Settings.Uploads.PreviewTransfers )
 	{
 		theApp.Message( MSG_ERROR, IDS_UPLOAD_PREVIEW_BUSY, (LPCTSTR)m_sFileName, (LPCTSTR)m_sAddress );
-		m_pOutput->Print( _P("HTTP/1.1 503 Busy\r\n") );
+		Write( _P("HTTP/1.1 503 Busy\r\n") );
 		SendDefaultHeaders();
 		StartSending( upsResponse );
 		return TRUE;
@@ -1688,7 +1688,7 @@ BOOL CUploadTransferHTTP::RequestPreview(CLibraryFile* pFile, CSingleLock& oLibr
 		return TRUE;
 	}
 	
-	m_pOutput->Print( _P("HTTP/1.1 200 OK\r\n") );
+	Write( _P("HTTP/1.1 200 OK\r\n") );
 	SendDefaultHeaders();
 	
 	CString strHeader;
@@ -1709,18 +1709,18 @@ BOOL CUploadTransferHTTP::RequestPreview(CLibraryFile* pFile, CSingleLock& oLibr
             (LPCTSTR)m_oED2K.toUrn() );
 	}
 	
-	m_pOutput->Print( strHeader );
+	Write( strHeader );
 	
-	m_pOutput->Print( _P("Content-Type: image/jpeg\r\n") );
+	Write( _P("Content-Type: image/jpeg\r\n") );
 	
 	strHeader.Format( _T("Content-Length: %lu\r\n"), nLength );
-	m_pOutput->Print( strHeader );
+	Write( strHeader );
 	
-	m_pOutput->Print( _P("\r\n") );
+	Write( _P("\r\n") );
 	
 	if ( ! m_bHead )
 	{
-		m_pOutput->Add( pBuffer, nLength );
+		Write( pBuffer, nLength );
 	}
 	
 	delete [] pBuffer;
@@ -1745,7 +1745,7 @@ BOOL CUploadTransferHTTP::RequestHostBrowse()
 	if ( nExisting >= Settings.Uploads.PreviewTransfers )
 	{
 		theApp.Message( MSG_ERROR, IDS_UPLOAD_BROWSE_BUSY, (LPCTSTR)m_sAddress );
-		m_pOutput->Print( _P("HTTP/1.1 503 Busy\r\n") );
+		Write( _P("HTTP/1.1 503 Busy\r\n") );
 		SendDefaultHeaders();
 		StartSending( upsResponse );
 		return TRUE;
@@ -1788,27 +1788,27 @@ BOOL CUploadTransferHTTP::RequestHostBrowse()
 		}
 	}
 	
-	m_pOutput->Print( _P("HTTP/1.1 200 OK\r\n") );
+	Write( _P("HTTP/1.1 200 OK\r\n") );
 	SendDefaultHeaders();
 	
 	if ( m_bHostBrowse < 2 )
 	{
-		m_pOutput->Print( _P("Content-Type: application/x-gnutella-packets\r\n") );
+		Write( _P("Content-Type: application/x-gnutella-packets\r\n") );
 	}
 	else
 	{
-		m_pOutput->Print( _P("Content-Type: application/x-gnutella2\r\n") );
+		Write( _P("Content-Type: application/x-gnutella2\r\n") );
 	}
 	
 	m_bDeflate = m_bDeflate && pBuffer.Deflate( TRUE );
 	
-	if ( m_bDeflate ) m_pOutput->Print( _P("Content-Encoding: deflate\r\n") );
+	if ( m_bDeflate ) Write( _P("Content-Encoding: deflate\r\n") );
 	
 	CString strLength;
 	strLength.Format( _T("Content-Length: %lu\r\n\r\n"), pBuffer.m_nLength );
-	m_pOutput->Print( strLength );
+	Write( strLength );
 	
-	if ( ! m_bHead ) m_pOutput->AddBuffer( &pBuffer );
+	if ( ! m_bHead ) Write( &pBuffer );
 	
 	StartSending( upsBrowse );
 	
@@ -1874,19 +1874,19 @@ void CUploadTransferHTTP::SendResponse(UINT nResourceID, BOOL bFileHeaders)
 		strBody = strBody.Left( nStart ) + strReplace + strBody.Mid( nEnd + 2 );
 	}
 	
-	m_pOutput->Print( _T("HTTP/1.1 ") + strResponse );
+	Write( _T("HTTP/1.1 ") + strResponse );
 	SendDefaultHeaders();
 	if ( bFileHeaders ) SendFileHeaders();
-	m_pOutput->Print( _P("Content-Type: text/html\r\n") );
+	Write( _P("Content-Type: text/html\r\n") );
 	
 	int nBody = WideCharToMultiByte( CP_UTF8, 0, strBody, strBody.GetLength(), NULL, 0, NULL, NULL );
 	LPSTR pszBody = new CHAR[ nBody ];
 	WideCharToMultiByte( CP_UTF8, 0, strBody, strBody.GetLength(), pszBody, nBody, NULL, NULL );
 	
 	strResponse.Format( _T("Content-Length: %lu\r\n\r\n"), nBody );
-	m_pOutput->Print( strResponse );
+	Write( strResponse );
 	
-	if ( ! m_bHead ) m_pOutput->Add( pszBody, nBody );
+	if ( ! m_bHead ) Write( pszBody, nBody );
 	
 	delete [] pszBody;
 	

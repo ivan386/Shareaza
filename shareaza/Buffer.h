@@ -55,10 +55,28 @@ public:
  	// Convert Unicode text to ASCII and add it to the buffer
 	void	Print(const LPCWSTR pszText, const size_t nLength, const UINT nCodePage = CP_ACP);
 
+	inline DWORD ReadDWORD() const throw()
+	{
+		return ( m_nLength >= 4 ) ? *reinterpret_cast< DWORD* >( m_pBuffer ) : 0;
+	}
+
 	// Read the data in the buffer as text
-	CString	ReadString(const size_t nBytes, const UINT nCodePage = CP_ACP);				// Reads nBytes of ASCII characters as a string
-	BOOL	ReadLine(CString& strLine, BOOL bPeek = FALSE, UINT nCodePage = CP_ACP);	// Reads until "\r\n"
-	BOOL	StartsWith(LPCSTR pszString, size_t nLength, BOOL bRemove = FALSE);			// Returns true if the buffer starts with this text
+	CString ReadString(const size_t nBytes, const UINT nCodePage = CP_ACP);          // Reads nBytes of ASCII characters as a string
+	template
+		<
+		typename Descriptor,
+		template< typename > class StoragePolicy,
+		template< typename > class CheckingPolicy,
+		template< typename > class ValidationPolicy
+		>
+	inline void Read(Hashes::Hash< Descriptor, StoragePolicy,
+		CheckingPolicy, ValidationPolicy >& oHash) throw()
+	{
+		Read( &oHash[ 0 ], oHash.byteCount );
+	}
+	BOOL	Read(void* pData, const size_t nLength);
+	BOOL    ReadLine(CString& strLine, BOOL bPeek = FALSE, UINT nCodePage = CP_ACP); // Reads until "\r\n"
+	BOOL    StartsWith(LPCSTR pszString, const size_t nLength, const BOOL bRemove = FALSE) throw();// Returns true if the buffer starts with this text
 
 	// Use the buffer with a socket
 	DWORD	Receive(SOCKET hSocket, DWORD nSpeedLimit = ~0ul);	// Move incoming data from the socket to this buffer
@@ -104,9 +122,6 @@ public:
 
 	// Add ASCII text to the start of this buffer, shifting everything else forward
 	void	Prefix(LPCSTR pszText, const size_t nLength) { Insert( 0, (void*)pszText, nLength ); }
-
-	// Read a DWORD from the start of the buffer
-	DWORD	ReadDWORD() const { return ( m_nLength >= 4 ) ? *reinterpret_cast< DWORD* >( m_pBuffer ) : 0; }
 
 // Statics
 public:

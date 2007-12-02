@@ -277,7 +277,7 @@ BOOL CUploadTransferBT::ServeRequests()
 	ASSERT( m_nLength == SIZE_UNKNOWN );
 	
 	if ( m_bChoked ) return TRUE;
-	if ( m_pClient->m_pOutput->m_nLength > Settings.BitTorrent.RequestSize / 3 ) return TRUE;
+	if ( m_pClient->GetOutputLength() > Settings.BitTorrent.RequestSize / 3 ) return TRUE;
 	
 	while ( !m_oRequested.empty() && m_nLength == SIZE_UNKNOWN )
 	{
@@ -301,10 +301,10 @@ BOOL CUploadTransferBT::ServeRequests()
 			m_nOffset, m_nOffset + m_nLength - 1,
 			(LPCTSTR)m_sFileName, (LPCTSTR)m_sAddress, _T("BT") );
 		
-		CBuffer* pBuffer = m_pClient->m_pOutput;
-		pBuffer->EnsureBuffer( sizeof(BT_PIECE_HEADER) + (DWORD)m_nLength );
+		CBuffer pBuffer;
+		pBuffer.EnsureBuffer( sizeof(BT_PIECE_HEADER) + (DWORD)m_nLength );
 		
-		BT_PIECE_HEADER* pHeader = (BT_PIECE_HEADER*)( pBuffer->m_pBuffer + pBuffer->m_nLength );
+		BT_PIECE_HEADER* pHeader = (BT_PIECE_HEADER*)( pBuffer.m_pBuffer + pBuffer.m_nLength );
 		
 		if ( ! m_pDiskFile->Read( m_nOffset + m_nPosition, &pHeader[1], m_nLength, &m_nLength ) ) return FALSE;
 
@@ -315,7 +315,9 @@ BOOL CUploadTransferBT::ServeRequests()
 		pHeader->nPiece		= swapEndianess( pHeader->nPiece );
 		pHeader->nOffset	= swapEndianess( pHeader->nOffset );
 		
-		pBuffer->m_nLength += sizeof(BT_PIECE_HEADER) + (DWORD)m_nLength;
+		pBuffer.m_nLength += sizeof(BT_PIECE_HEADER) + (DWORD)m_nLength;
+
+		m_pClient->Write( &pBuffer );
 		m_pClient->Send( NULL );
 		
 		m_nPosition += m_nLength;

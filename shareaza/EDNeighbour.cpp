@@ -109,8 +109,12 @@ BOOL CEDNeighbour::Send(CPacket* pPacket, BOOL bRelease, BOOL /*bBuffered*/)
 	{
 		m_nOutputCount++;
 		Statistics.Current.eDonkey.Outgoing++;
-		
-		pPacket->ToBuffer( m_pZOutput ? m_pZOutput : m_pOutput );
+
+		if ( m_pZOutput )
+			pPacket->ToBuffer( m_pZOutput );
+		else
+			Write( pPacket );
+
 		QueueRun();
 		
 		pPacket->SmartDump( &m_pHost, FALSE, TRUE, m_nUnique );
@@ -246,8 +250,10 @@ BOOL CEDNeighbour::OnRead()
 	BOOL bSuccess = TRUE;
 	
 	CNeighbour::OnRead();
-	
-	while ( CEDPacket* pPacket = CEDPacket::ReadBuffer( m_pZInput ? m_pZInput : m_pInput, ED2K_PROTOCOL_EDONKEY ) )
+
+	CLockedBuffer pInput( GetInput() );
+
+	while ( CEDPacket* pPacket = CEDPacket::ReadBuffer( m_pZInput ? m_pZInput : pInput, ED2K_PROTOCOL_EDONKEY ) )
 	{
 		try
 		{

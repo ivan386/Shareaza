@@ -450,8 +450,8 @@ BOOL CUploadTransferED2K::ServeRequests()
 	if ( m_nState != upsUploading && m_nState != upsRequest ) return TRUE;
 	ASSERT( m_pBaseFile != NULL );
 	
-	if ( m_pClient == NULL || m_pClient->m_pOutput == NULL ) return TRUE;
-	if ( m_pClient->m_pOutput->m_nLength > Settings.eDonkey.FrameSize ) return TRUE;
+	if ( m_pClient == NULL || ! m_pClient->IsOutputExist() ) return TRUE;
+	if ( m_pClient->GetOutputLength() > Settings.eDonkey.FrameSize ) return TRUE;
 	
 	if ( m_nLength == SIZE_UNKNOWN )
 	{
@@ -665,10 +665,10 @@ BOOL CUploadTransferED2K::DispatchNextChunk()
 	// Raw write
 	if (bI64Offset)
 	{
-		CBuffer* pBuffer = m_pClient->m_pOutput;
-		pBuffer->EnsureBuffer( sizeof(ED2K_PART_HEADER_I64) + (DWORD)nChunk );
+		CBuffer pBuffer;
+		pBuffer.EnsureBuffer( sizeof(ED2K_PART_HEADER_I64) + (DWORD)nChunk );
 
-		ED2K_PART_HEADER_I64* pHeader = (ED2K_PART_HEADER_I64*)( pBuffer->m_pBuffer + pBuffer->m_nLength );
+		ED2K_PART_HEADER_I64* pHeader = (ED2K_PART_HEADER_I64*)( pBuffer.m_pBuffer + pBuffer.m_nLength );
 
 		if ( ! m_pDiskFile->Read( m_nFileBase + m_nOffset + m_nPosition, &pHeader[1], nChunk, &nChunk ) ) return FALSE;
 		// SetFilePointer( hFile, m_nFileBase + m_nOffset + m_nPosition, NULL, FILE_BEGIN );
@@ -682,16 +682,17 @@ BOOL CUploadTransferED2K::DispatchNextChunk()
 		pHeader->nOffset1	= (QWORD)m_nOffset + m_nPosition;
 		pHeader->nOffset2	= (QWORD)m_nOffset + m_nPosition + nChunk;
 
-		pBuffer->m_nLength += sizeof(ED2K_PART_HEADER_I64) + (DWORD)nChunk;
-		m_pClient->Send( NULL );
+		pBuffer.m_nLength += sizeof(ED2K_PART_HEADER_I64) + (DWORD)nChunk;
 
+		m_pClient->Write( &pBuffer );
+		m_pClient->Send( NULL );
 	}
 	else
 	{
-		CBuffer* pBuffer = m_pClient->m_pOutput;
-		pBuffer->EnsureBuffer( sizeof(ED2K_PART_HEADER) + (DWORD)nChunk );
+		CBuffer pBuffer;
+		pBuffer.EnsureBuffer( sizeof(ED2K_PART_HEADER) + (DWORD)nChunk );
 
-		ED2K_PART_HEADER* pHeader = (ED2K_PART_HEADER*)( pBuffer->m_pBuffer + pBuffer->m_nLength );
+		ED2K_PART_HEADER* pHeader = (ED2K_PART_HEADER*)( pBuffer.m_pBuffer + pBuffer.m_nLength );
 
 		if ( ! m_pDiskFile->Read( m_nFileBase + m_nOffset + m_nPosition, &pHeader[1], nChunk, &nChunk ) ) return FALSE;
 		// SetFilePointer( hFile, m_nFileBase + m_nOffset + m_nPosition, NULL, FILE_BEGIN );
@@ -705,7 +706,9 @@ BOOL CUploadTransferED2K::DispatchNextChunk()
 		pHeader->nOffset1	= (DWORD)( m_nOffset + m_nPosition );
 		pHeader->nOffset2	= (DWORD)( m_nOffset + m_nPosition + nChunk );
 
-		pBuffer->m_nLength += sizeof(ED2K_PART_HEADER) + (DWORD)nChunk;
+		pBuffer.m_nLength += sizeof(ED2K_PART_HEADER) + (DWORD)nChunk;
+
+		m_pClient->Write( &pBuffer );
 		m_pClient->Send( NULL );
 	}
 	

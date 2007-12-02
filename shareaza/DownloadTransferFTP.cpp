@@ -218,7 +218,7 @@ BOOL CDownloadTransferFTP::StartNextFragment()
 	m_bWantBackwards	= FALSE;
 	m_bRecvBackwards	= FALSE;
 	
-	if ( m_pInput == NULL || m_pOutput == NULL )
+	if ( ! IsInputExist() || ! IsOutputExist() )
 	{
 		theApp.Message( MSG_DEFAULT, IDS_DOWNLOAD_CLOSING_EXTRA, (LPCTSTR)m_sAddress );
 		Close();
@@ -349,7 +349,7 @@ BOOL CDownloadTransferFTP::OnRead()
 	
 	CString strLine;
 	CString Number;
-	while ( m_pInput->ReadLine( strLine ) )
+	while ( Read( strLine ) )
 	{
 		BOOL bNumber = ( strLine.GetLength() >= 3 ) &&
 			_istdigit( strLine[0] ) && _istdigit( strLine[1] ) && _istdigit( strLine[2] );
@@ -820,8 +820,7 @@ BOOL CDownloadTransferFTP::SendCommand(LPCTSTR /*args*/)
 	TRACE( _T("%s << %s\n"), (LPCTSTR) m_sAddress, (LPCTSTR) strLine );
 
 	m_tRequest = GetTickCount();
-	m_pOutput->Clear ();
-	m_pOutput->Print( strLine  + _T("\r\n") );
+	Write( strLine + _T("\r\n") );
 
 	return TRUE;
 }

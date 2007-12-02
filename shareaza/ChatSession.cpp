@@ -164,7 +164,11 @@ void CChatSession::OnED2KMessage(CEDPacket* pPacket)
 	PostOpenWindow();
 
 	// Put the packet into the input buffer so it can be 'received' (and displayed) later.
-	if ( pPacket && m_pInput ) pPacket->ToBuffer( m_pInput );
+	if ( pPacket && IsInputExist() )
+	{
+		CLockedBuffer pInput( GetInput() );
+		pPacket->ToBuffer( pInput );
+	}
 
 	// If this client wasn't active, it is now.
 	if ( m_nState != cssActive )
@@ -267,13 +271,13 @@ BOOL CChatSession::OnConnected()
 	{
 		CConnection::OnConnected();
 
-		m_pOutput->Print( _P("CHAT CONNECT/0.2\r\n"
+		Write( _P("CHAT CONNECT/0.2\r\n"
 							 "Accept: text/plain,application/x-gnutella2\r\n"
 							 "User-Agent: ") );
-		m_pOutput->Print( Settings.SmartAgent() );
-		m_pOutput->Print( _P("\r\n") );
+		Write( Settings.SmartAgent() );
+		Write( _P("\r\n") );
 		if ( m_bInitiated ) SendMyAddress();
-		m_pOutput->Print( _P("\r\n") );
+		Write( _P("\r\n") );
 		
 		m_nState		= cssRequest2;
 		m_tConnected	= GetTickCount();
@@ -369,7 +373,7 @@ BOOL CChatSession::ReadHandshake()
 {
 	CString strLine;
 
-	if ( ! m_pInput->ReadLine( strLine ) ) return TRUE;
+	if ( ! Read( strLine ) ) return TRUE;
 	if ( strLine.IsEmpty() ) return TRUE;
 	
 	theApp.Message( MSG_DEBUG, _T("CHAT HANDSHAKE: %s: %s"),
@@ -457,23 +461,23 @@ BOOL CChatSession::OnHeadersComplete()
 {
 	if ( m_nState != cssHeaders3 )
 	{
-		m_pOutput->Print( _P("CHAT/0.2 200 OK\r\n") );
+		Write( _P("CHAT/0.2 200 OK\r\n") );
 		
 		if ( m_nProtocol == PROTOCOL_G2 )
 		{
-			m_pOutput->Print( _P("Accept: application/x-gnutella2\r\n"
+			Write( _P("Accept: application/x-gnutella2\r\n"
 								 "Content-Type: application/x-gnutella2\r\n") );
 		}
 		else if ( MyProfile.IsValid() )
 		{
-			m_pOutput->Print( _P("X-Nickname: ") );
-			m_pOutput->Print( MyProfile.GetNick().Left( 255 ) );
-			m_pOutput->Print( _P("\r\n") );
+			Write( _P("X-Nickname: ") );
+			Write( MyProfile.GetNick().Left( 255 ) );
+			Write( _P("\r\n") );
 		}
 		
-		m_pOutput->Print( _P("User-Agent: ") );
-		m_pOutput->Print( Settings.SmartAgent() );
-		m_pOutput->Print( _P("\r\n\r\n") );
+		Write( _P("User-Agent: ") );
+		Write( Settings.SmartAgent() );
+		Write( _P("\r\n\r\n") );
 		
 		OnWrite();
 	}
@@ -538,9 +542,11 @@ BOOL CChatSession::ReadPacketsED2K()
 {
 	BOOL bSuccess = TRUE;
 
-	ASSERT( m_pInput != NULL );
+	ASSERT( IsInputExist() );
+
+	CLockedBuffer pInput( GetInput() );
 	
-	while ( CEDPacket* pPacket = CEDPacket::ReadBuffer( m_pInput, ED2K_PROTOCOL_EMULE ) )
+	while ( CEDPacket* pPacket = CEDPacket::ReadBuffer( pInput, ED2K_PROTOCOL_EMULE ) )
 	{
 		try
 		{
@@ -574,9 +580,11 @@ BOOL CChatSession::ReadPacketsED2K()
 
 BOOL CChatSession::SendPacketsED2K()
 {
-	ASSERT( m_pOutput != NULL );
+	ASSERT( IsOutputExist() );
 
-	while ( CEDPacket* pPacket = CEDPacket::ReadBuffer( m_pOutput, ED2K_PROTOCOL_EMULE ) )
+	CLockedBuffer pOutput( GetOutput() );
+
+	while ( CEDPacket* pPacket = CEDPacket::ReadBuffer( pOutput, ED2K_PROTOCOL_EMULE ) )
 	{
 		ASSERT ( pPacket != NULL );
 
@@ -593,7 +601,7 @@ BOOL CChatSession::SendPacketsED2K()
 			// client is currently connecting.
 
 			// Put the packet back into the buffer until we are ready to deal with it
-			pPacket->ToBuffer( m_pOutput );
+			Write( pPacket );
 			// We're done with the packet (for now), so release it.
 			pPacket->Release();
 			// Exit this function now. We can't do anything futher, so would get stuck in a loop
@@ -739,7 +747,7 @@ void CChatSession::Print(LPCTSTR pszString, size_t nLength)
 	ASSERT( m_nProtocol != PROTOCOL_G2  );
 	ASSERT( m_nState >= cssHandshake );
 	
-	m_pOutput->Print( pszString, nLength );
+	Write( pszString, nLength );
 	OnWrite();
 }
 
@@ -747,7 +755,7 @@ BOOL CChatSession::ReadText()
 {
 	CString strLine;
 	
-	while ( m_pInput->ReadLine( strLine ) )
+	while ( Read( strLine ) )
 	{
 		if ( ! OnText( strLine ) )
 		{
@@ -802,7 +810,7 @@ void CChatSession::Send(CG2Packet* pPacket, BOOL bRelease)
 	ASSERT( pPacket != NULL );
 	ASSERT( m_nState >= cssHandshake );
 	
-	pPacket->ToBuffer( m_pOutput );
+	Write( pPacket );
 	if ( bRelease ) pPacket->Release();
 	
 	OnWrite();
@@ -810,14 +818,16 @@ void CChatSession::Send(CG2Packet* pPacket, BOOL bRelease)
 
 BOOL CChatSession::ReadPackets()
 {
-    BOOL bSuccess = TRUE;
-	for ( ; bSuccess && m_pInput->m_nLength ; )
+	CLockedBuffer pInput( GetInput() );
+
+	BOOL bSuccess = TRUE;
+	for ( ; bSuccess && pInput->m_nLength ; )
 	{
-		BYTE nInput = *( m_pInput->m_pBuffer );
+		BYTE nInput = *( pInput->m_pBuffer );
 		
 		if ( nInput == 0 )
 		{
-			m_pInput->Remove( 1 );
+			pInput->Remove( 1 );
 			continue;
 		}
 		
@@ -831,13 +841,13 @@ BOOL CChatSession::ReadPackets()
 			return FALSE;
 		}
 		
-		if ( (DWORD)m_pInput->m_nLength < (DWORD)nLenLen + nTypeLen + 2 ) break;
+		if ( (DWORD)pInput->m_nLength < (DWORD)nLenLen + nTypeLen + 2 ) break;
 		
 		DWORD nLength = 0;
 		
 		if ( nFlags & G2_FLAG_BIG_ENDIAN )
 		{
-			BYTE* pLenIn = m_pInput->m_pBuffer + 1;
+			BYTE* pLenIn = pInput->m_pBuffer + 1;
 			
 			for ( BYTE nIt = nLenLen ; nIt ; nIt-- )
 			{
@@ -847,7 +857,7 @@ BOOL CChatSession::ReadPackets()
 		}
 		else
 		{
-			BYTE* pLenIn	= m_pInput->m_pBuffer + 1;
+			BYTE* pLenIn	= pInput->m_pBuffer + 1;
 			BYTE* pLenOut	= (BYTE*)&nLength;
 			for ( BYTE nLenCnt = nLenLen ; nLenCnt-- ; ) *pLenOut++ = *pLenIn++;
 		}
@@ -858,11 +868,11 @@ BOOL CChatSession::ReadPackets()
 			return FALSE;
 		}
 		
-		if ( (DWORD)m_pInput->m_nLength < (DWORD)nLength + nLenLen + nTypeLen + 2 ) break;
+		if ( (DWORD)pInput->m_nLength < (DWORD)nLength + nLenLen + nTypeLen + 2 ) break;
 		
-		CG2Packet* pPacket = CG2Packet::New( m_pInput->m_pBuffer );
+		CG2Packet* pPacket = CG2Packet::New( pInput->m_pBuffer );
 		
-		m_pInput->Remove( nLength + nLenLen + nTypeLen + 2 );
+		pInput->Remove( nLength + nLenLen + nTypeLen + 2 );
 		
 		try
 		{
@@ -1157,7 +1167,7 @@ BOOL CChatSession::SendPrivateMessage(BOOL bAction, LPCTSTR pszText)
 		ASSERT( pPacket->m_nEdProtocol == ED2K_PROTOCOL_EDONKEY );
 
 		// Put the packet into the output buffer
-		pPacket->ToBuffer( m_pOutput );
+		Write( pPacket );
 		pPacket->Release();
 	}
 	else // PROTOCOL_G1

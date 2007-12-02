@@ -379,9 +379,9 @@ BOOL CUploads::OnAccept(CConnection* pConnection)
 	if ( ! pLock.Lock( 250 ) ) return FALSE;
 
 	if ( Settings.Remote.Enable &&
-		( memcmp( pConnection->m_pInput->m_pBuffer, "GET /remote/", 12 ) == 0 ||
+		( pConnection->StartsWith( _P("GET /remote/") ) ||
 		// The user entered the remote page into a browser, but forgot the trailing '/'
-		  memcmp( pConnection->m_pInput->m_pBuffer, "GET /remote HTTP", 16 ) ) == 0 )
+		  pConnection->StartsWith( _P("GET /remote HTTP") ) ) )
 	{
 		new CRemote( pConnection );
 		return TRUE;

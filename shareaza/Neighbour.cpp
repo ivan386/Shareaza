@@ -359,9 +359,11 @@ BOOL CNeighbour::OnRead()
 	// Read the bytes waiting in our end of the socket into the input buffer
 	CConnection::OnRead();
 
+	CLockedBuffer pInput( GetInput() );
+
 	// If compression is off, we're done, return true now
 	// Otherwise, compression is on, the bytes we read into the input buffer are compressed, and we have to decompress them
-	if ( m_pZInput == NULL || m_pInput->m_nLength == 0 ) return TRUE;
+	if ( m_pZInput == NULL || pInput->m_nLength == 0 ) return TRUE;
 
 	// Start or continue using zlib with m_pZSInput and pStream pointers
 	BOOL bNew = ( m_pZSInput == NULL );			// If the zlib input pointer is null, make bNew true, otherwise it's false
@@ -385,7 +387,7 @@ BOOL CNeighbour::OnRead()
 	}
 
 	// Loop until there is no more data for zlib to decompress
-	while ( m_pInput->m_nLength ||							// While the input buffer has data in it
+	while ( pInput->m_nLength ||							// While the input buffer has data in it
 			m_pZInput->m_nLength == m_pZInput->m_nBuffer || // Or the zlib buffer length is the same as the buffer (do)
 			pStream->avail_out == 0 )						// Or there is no more data availiable for zlib to decompress
 	{
@@ -394,8 +396,8 @@ BOOL CNeighbour::OnRead()
 		if ( m_pZInput->m_nBuffer < 1024 ) return FALSE;
 
 		// Tell zlib where the compressed data is, how much is there, where it can output bytes, and how much space it has there
-		pStream->next_in	= m_pInput->m_pBuffer;							// Point zlib at the start of the input buffer
-		pStream->avail_in	= m_pInput->m_nLength;							// Give it the entire block there
+		pStream->next_in	= pInput->m_pBuffer;							// Point zlib at the start of the input buffer
+		pStream->avail_in	= pInput->m_nLength;							// Give it the entire block there
 		pStream->next_out	= m_pZInput->m_pBuffer + m_pZInput->m_nLength;	// Have it put decompressed bytes in the empty space of the ZInput buffer
 		pStream->avail_out	= m_pZInput->m_nBuffer - m_pZInput->m_nLength;	// This is how much space is left there
 
@@ -403,10 +405,10 @@ BOOL CNeighbour::OnRead()
 		inflate( pStream, Z_SYNC_FLUSH ); // Zlib adjusts next in, avail in, next out, and avail out to record what it did
 
 		// Zlib decompressed something
-		if ( pStream->avail_in < m_pInput->m_nLength ) // We set avail_in to nLength, but zlib shrunk it smaller
+		if ( pStream->avail_in < pInput->m_nLength ) // We set avail_in to nLength, but zlib shrunk it smaller
 		{
 			// Remove the portion in the start of the input buffer that zlib decompressed
-			m_pInput->Remove( m_pInput->m_nLength - pStream->avail_in ); // nLength - avail_in is the size of the block that zlib decompressed
+			pInput->Remove( pInput->m_nLength - pStream->avail_in ); // nLength - avail_in is the size of the block that zlib decompressed
 		}
 
 		// Calculate the size of nBlock, the block of data in ZInput that Zlib just decompressed
@@ -454,12 +456,14 @@ BOOL CNeighbour::OnWrite()
 		}
 	}
 
+	CLockedBuffer pOutput( GetOutput() );
+
 	// If there is data in the output buffer already
-	if ( m_pOutput->m_nLength ) 
+	if ( pOutput->m_nLength ) 
 	{
 		// Send it to the other computer
 		CConnection::OnWrite();
-		if ( m_pOutput->m_nLength ) return TRUE; // Return true if there is still more to send after this (do)
+		if ( pOutput->m_nLength ) return TRUE; // Return true if there is still more to send after this (do)
 	}
 
 	// If it's been more than 2 seconds since we've flushed the compressed output buffer to the remote computer, set the flag to do it next
@@ -467,18 +471,18 @@ BOOL CNeighbour::OnWrite()
 	if ( tNow - m_tZOutput >= Z_TIMER ) m_bZFlush = TRUE;
 
 	// Loop until all the data in ZOutput has been compressed into Output
-	while ( ( m_pZOutput->m_nLength && ! m_pOutput->m_nLength )	// ZOutput has data to compress and Output is empty
+	while ( ( m_pZOutput->m_nLength && ! pOutput->m_nLength )	// ZOutput has data to compress and Output is empty
 		|| pStream->avail_out == 0 )							// Or, zlib says it has no more room left (do)
 	{
 		// Make sure the output buffer is 1 KB (do)
-		m_pOutput->EnsureBuffer( 1024 );
-		if ( m_pOutput->m_nBuffer < 1024 ) return FALSE;
+		pOutput->EnsureBuffer( 1024 );
+		if ( pOutput->m_nBuffer < 1024 ) return FALSE;
 
 		// Tell zlib where the data to compress is, and where it should put the compressed data
 		pStream->next_in	= m_pZOutput->m_pBuffer; // Start next_in and avail_in on the data in ZOutput
 		pStream->avail_in	= m_pZOutput->m_nLength;
-		pStream->next_out	= m_pOutput->m_pBuffer + m_pOutput->m_nLength; // Start next_out and avail_out on the empty space in Output
-		pStream->avail_out	= m_pOutput->m_nBuffer - m_pOutput->m_nLength;
+		pStream->next_out	= pOutput->m_pBuffer + pOutput->m_nLength; // Start next_out and avail_out on the empty space in Output
+		pStream->avail_out	= pOutput->m_nBuffer - pOutput->m_nLength;
 
 		// Call zlib inflate to decompress the contents of m_pInput into the end of m_pZInput
 		deflate( pStream, m_bZFlush ? Z_SYNC_FLUSH : 0 ); // Zlib adjusts next in, avail in, next out, and avail out to record what it did
@@ -490,13 +494,13 @@ BOOL CNeighbour::OnWrite()
 		m_pZOutput->Remove( m_pZOutput->m_nLength - pStream->avail_in );
 
 		// Set nOutput to the size of the new compressed block in the output buffer between the data already there, and the empty space afterwards
-		int nOutput = ( m_pOutput->m_nBuffer - m_pOutput->m_nLength ) - pStream->avail_out;
+		int nOutput = ( pOutput->m_nBuffer - pOutput->m_nLength ) - pStream->avail_out;
 
 		// Zlib compressed something
 		if ( nOutput )
 		{
 			// Add the new block to the length, and record when this happened
-			m_pOutput->m_nLength += nOutput;
+			pOutput->m_nLength += nOutput;
 			m_tZOutput = tNow;
 
 		// Zlib didn't compress anything, and the flush flag is true

@@ -1,7 +1,7 @@
 //
 // Handshake.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -176,7 +176,7 @@ BOOL CHandshake::OnConnected()
 		int( oID[12] ), int( oID[13] ), int( oID[14] ), int( oID[15] ) );
 
 	// Print the string into the output buffer, and write the output buffer to the remote computer
-	m_pOutput->Print( strGIV );
+	Write( strGIV );
 	OnWrite();
 
 	// Record that we uploaded the giv, and report success
@@ -206,13 +206,13 @@ BOOL CHandshake::OnRead()
 	CConnection::OnRead();
 
 	// We need at least 7 bytes of headers from the remote compuer to figure out what network its talking about
-	if ( m_pInput->m_nLength < 7 ) return TRUE; // Not enough information yet, leave now returning true
+	if ( GetInputLength() < 7 ) return TRUE; // Not enough information yet, leave now returning true
 
 	// Determine if the remote computer has sent an eDonkey2000 hello packet
-	if ( m_pInput->m_nLength >= 7							&& // 7 or more bytes have arrived
-		 m_pInput->m_pBuffer[0] == ED2K_PROTOCOL_EDONKEY	&& // The first byte is "e3", indicating eDonkey2000
-		 m_pInput->m_pBuffer[5] == ED2K_C2C_HELLO			&& // 5 bytes in is "01", a hello for that network
-		 m_pInput->m_pBuffer[6] == 0x10 )					   // And after that is "10"
+	if ( GetInputLength() >= 7							&& // 7 or more bytes have arrived
+		 PeekAt( 0 ) == ED2K_PROTOCOL_EDONKEY	&& // The first byte is "e3", indicating eDonkey2000
+		 PeekAt( 5 ) == ED2K_C2C_HELLO			&& // 5 bytes in is "01", a hello for that network
+		 PeekAt( 6 ) == 0x10 )					   // And after that is "10"
 	{
 		// Have the EDClients object accept this CHandshake as a new eDonkey2000 computer
 		EDClients.OnAccept( this );
@@ -220,8 +220,8 @@ BOOL CHandshake::OnRead()
 	}
 
 	// See if the remote computer is speaking BitTorrent
-	if ( m_pInput->m_nLength >= BT_PROTOCOL_HEADER_LEN && // We have at least 20 bytes
-		 memcmp( m_pInput->m_pBuffer, BT_PROTOCOL_HEADER, BT_PROTOCOL_HEADER_LEN ) == 0 ) // They are "\023BitTorrent protocol"
+	if ( GetInputLength() >= BT_PROTOCOL_HEADER_LEN && // We have at least 20 bytes
+		 StartsWith( BT_PROTOCOL_HEADER, BT_PROTOCOL_HEADER_LEN ) ) // They are "\023BitTorrent protocol"
 	{
 		// Have the BTClients object accept this CHandshake as a new BitTorrent computer
 		BTClients.OnAccept( this );
@@ -232,17 +232,17 @@ BOOL CHandshake::OnRead()
 
 	// Read the first header line
 	CString strLine;
-	if ( ! m_pInput->ReadLine( strLine, TRUE ) ) // Read characters until \n, returning false if there is no \n
+	if ( ! Read( strLine, TRUE ) ) // Read characters until \n, returning false if there is no \n
 	{
 		// The remote computer hasn't sent a \n yet, if there are more than 2048 bytes in the first line, abort
-		return ( m_pInput->m_nLength < 2048 ) ? TRUE : FALSE; // Return false to signal we are done sorting the handshake
+		return ( GetInputLength() < 2048 ) ? TRUE : FALSE; // Return false to signal we are done sorting the handshake
 	}
 
 	// The first line the remote computer sent was blank
 	if ( strLine.IsEmpty() )
 	{
 		// Eat blank lines, just read the next line into strLine and return true
-		m_pInput->ReadLine( strLine ); // But strLine is never used? (do)
+		Read( strLine ); // But strLine is never used? (do)
 		return TRUE; // Keep trying to sort the handshake
 	}
 
@@ -250,28 +250,28 @@ BOOL CHandshake::OnRead()
 	theApp.Message( MSG_DEBUG, _T("%s: HANDSHAKE: %s"), (LPCTSTR)m_sAddress, (LPCTSTR)strLine );
 
 	// The first header starts "GET" or "HEAD"
-	if (      memcmp( m_pInput->m_pBuffer, "GET ",    4 ) == 0 ||
-		      memcmp( m_pInput->m_pBuffer, "HEAD ",   5 ) == 0 )
+	if (     StartsWith( _P("GET ") ) ||
+		     StartsWith( _P("HEAD ") ) )
 	{
 		// The remote computer wants a file from us, accept the connection as an upload
 		Uploads.OnAccept( this );
 	}
-	else if ( memcmp( m_pInput->m_pBuffer, "GNUTELLA", 8 ) == 0 )
+	else if ( StartsWith( _P("GNUTELLA") ) )
 	{
 		// Gnutella handshake
 		Neighbours.OnAccept( this );
 	}
-	else if ( memcmp( m_pInput->m_pBuffer, "PUSH ",    5 ) == 0 )
+	else if ( StartsWith( _P("PUSH ") ) )
 	{
 		// Gnutella2-style push
 		OnAcceptPush();
 	}
-	else if ( memcmp( m_pInput->m_pBuffer, "GIV ",     4 ) == 0 )
+	else if ( StartsWith( _P("GIV ") ) )
 	{
 		// Gnutella giv
 		OnAcceptGive();
 	}
-	else if ( memcmp( m_pInput->m_pBuffer, "CHAT",     4 ) == 0 )									// Chat
+	else if ( StartsWith( _P("CHAT") ) )
 	{
 		// If the user has setup a valid profile and enabeled chat in the program settings
 		if ( MyProfile.IsValid() && Settings.Community.ChatEnable )
@@ -282,7 +282,7 @@ BOOL CHandshake::OnRead()
 		else
 		{
 			// Otherwise, tell the other computer we can't chat
-			m_pOutput->Print( _P("CHAT/0.2 404 Unavailable\r\n\r\n") );
+			Write( _P("CHAT/0.2 404 Unavailable\r\n\r\n") );
 			OnWrite();
 		}
 	}
@@ -309,7 +309,7 @@ BOOL CHandshake::OnAcceptPush()
 	Hashes::Guid oGUID;
 
 	// Read the first line from the input buffer, this doesn't remove it so we can call it over and over again
-	if ( ! m_pInput->ReadLine( strLine ) ) return FALSE;
+	if ( ! Read( strLine ) ) return FALSE;
 
 	// Make sure the line has the format "PUSH guid:GUIDinHEXguidINhexGUIDinHEXguidI", which has 10 characters before the 32 for the guid
 	if ( strLine.GetLength() != 10 + 32 )
@@ -351,7 +351,7 @@ BOOL CHandshake::OnAcceptGive()
 	int nPos;								// The distance from the start of the string to a colon or slash we will look for
 
 	// The first line should be like "GIV 124:d51dff817f895598ff0065537c09d503/my%20song.mp3"
-	if ( ! m_pInput->ReadLine( strLine ) ) return FALSE; // If the line isn't all there yet, return false to try again later
+	if ( ! Read( strLine ) ) return FALSE; // If the line isn't all there yet, return false to try again later
 
 	// If there is a slash in the line
 	if ( ( nPos = strLine.Find( '/' ) ) > 0 ) // Find returns the 0-based index in the string, -1 if not found

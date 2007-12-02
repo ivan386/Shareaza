@@ -282,8 +282,7 @@ void CEDClient::Send(CEDPacket* pPacket, BOOL bRelease)
 		
 		if ( m_hSocket != INVALID_SOCKET )
 		{
-			// pPacket->Debug( _T("CEDClient::Send") );
-			pPacket->ToBuffer( m_pOutput );
+			Write( pPacket );
 			OnWrite();
 		}
 		
@@ -499,8 +498,10 @@ BOOL CEDClient::OnRead()
 	BOOL bSuccess = TRUE;
 	
 	CTransfer::OnRead();
+
+	CLockedBuffer pInput( GetInput() );
 	
-	while ( CEDPacket* pPacket = CEDPacket::ReadBuffer( m_pInput, ED2K_PROTOCOL_EMULE ) )
+	while ( CEDPacket* pPacket = CEDPacket::ReadBuffer( pInput, ED2K_PROTOCOL_EMULE ) )
 	{
 		try
 		{

@@ -116,13 +116,13 @@ BOOL CRemote::OnRead()
 	
 	if ( m_sHandshake.IsEmpty() )
 	{
-		if ( m_pInput->m_nLength > 4096 || ! Settings.Remote.Enable )
+		if ( GetInputLength() > 4096 || ! Settings.Remote.Enable )
 		{
 			Close();
 			return FALSE;
 		}
 		
-		m_pInput->ReadLine( m_sHandshake );
+		Read( m_sHandshake );
 	}
 	
 	if ( ! m_sHandshake.IsEmpty() )
@@ -159,12 +159,12 @@ BOOL CRemote::OnHeadersComplete()
 	
 	if ( ! m_sRedirect.IsEmpty() )
 	{
-		m_pOutput->Print( _P("HTTP/1.1 302 Found\r\n") );
-		m_pOutput->Print( _P("Content-Length: 0\r\n") );
-		if ( ! m_sHeader.IsEmpty() ) m_pOutput->Print( m_sHeader );
-		m_pOutput->Print( _P("Location: ") );
-		m_pOutput->Print( m_sRedirect );
-		m_pOutput->Print( _P("\r\n\r\n") );
+		Write( _P("HTTP/1.1 302 Found\r\n") );
+		Write( _P("Content-Length: 0\r\n") );
+		if ( ! m_sHeader.IsEmpty() ) Write( m_sHeader );
+		Write( _P("Location: ") );
+		Write( m_sRedirect );
+		Write( _P("\r\n\r\n") );
 	}
 	else if ( ! m_sResponse.IsEmpty() )
 	{
@@ -173,30 +173,30 @@ BOOL CRemote::OnHeadersComplete()
 		Output( _T("commonFooter") );
 		int nBytes = WideCharToMultiByte( CP_UTF8, 0, m_sResponse, m_sResponse.GetLength(), NULL, 0, NULL, NULL );
 		strLength.Format( _T("Content-Length: %i\r\n"), nBytes );
-		m_pOutput->Print( _P("HTTP/1.1 200 OK\r\n") );
-		m_pOutput->Print( _P("Content-Type: text/html; charset=UTF-8\r\n") );
-		m_pOutput->Print( strLength );
-		if ( ! m_sHeader.IsEmpty() ) m_pOutput->Print( m_sHeader );
-		m_pOutput->Print( _P("\r\n") );
-		m_pOutput->Print( m_sResponse, CP_UTF8 );
+		Write( _P("HTTP/1.1 200 OK\r\n") );
+		Write( _P("Content-Type: text/html; charset=UTF-8\r\n") );
+		Write( strLength );
+		if ( ! m_sHeader.IsEmpty() ) Write( m_sHeader );
+		Write( _P("\r\n") );
+		Write( m_sResponse, CP_UTF8 );
 		m_sResponse.Empty();
 	}
 	else if ( m_pResponse.m_nLength > 0 )
 	{
 		CString strLength;
 		strLength.Format( _T("Content-Length: %i\r\n"), m_pResponse.m_nLength );
-		m_pOutput->Print( _P("HTTP/1.1 200 OK\r\n") );
-		m_pOutput->Print( strLength );
-		if ( ! m_sHeader.IsEmpty() ) m_pOutput->Print( m_sHeader );
-		m_pOutput->Print( _P("\r\n") );
-		m_pOutput->AddBuffer( &m_pResponse );
+		Write( _P("HTTP/1.1 200 OK\r\n") );
+		Write( strLength );
+		if ( ! m_sHeader.IsEmpty() ) Write( m_sHeader );
+		Write( _P("\r\n") );
+		Write( &m_pResponse );
 	}
 	else
 	{
-		m_pOutput->Print( _P("HTTP/1.1 404 Not Found\r\n") );
-		m_pOutput->Print( _P("Content-Length: 0\r\n") );
-		m_pOutput->Print( _P("Content-Type: text/html\r\n") );
-		m_pOutput->Print( _P("\r\n") );
+		Write( _P("HTTP/1.1 404 Not Found\r\n") );
+		Write( _P("Content-Length: 0\r\n") );
+		Write( _P("Content-Type: text/html\r\n") );
+		Write( _P("\r\n") );
 	}
 	
 	m_sHandshake.Empty();

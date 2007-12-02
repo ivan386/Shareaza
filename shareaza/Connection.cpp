@@ -53,6 +53,8 @@ CConnection::CConnection() :
 	ZeroMemory( &m_pHost, sizeof( m_pHost ) );
 	ZeroMemory( &m_mInput, sizeof( m_mInput ) );
 	ZeroMemory( &m_mOutput, sizeof( m_mOutput ) );
+	m_pInputSection.reset( new CCriticalSection() );
+	m_pOutputSection.reset( new CCriticalSection() );
 }
 
 // make a destructive copy (similar to AttachTo)
@@ -65,8 +67,10 @@ CConnection::CConnection(CConnection& other)
 	, m_bConnected(   other.m_bConnected )
 	, m_tConnected(   other.m_tConnected )
 	, m_hSocket(      other.m_hSocket )
-	, m_pInput(       other.m_pInput )		// transfered
-	, m_pOutput(      other.m_pOutput )		// transfered
+	, m_pInputSection( other.m_pInputSection )		// transfered
+	, m_pInput(       other.m_pInput )				// transfered
+	, m_pOutputSection( other.m_pOutputSection )	// transfered
+	, m_pOutput(      other.m_pOutput )				// transfered
 	, m_sUserAgent(   other.m_sUserAgent )
 	, m_nQueuedRun(   0 )
 {
@@ -169,11 +173,7 @@ BOOL CConnection::ConnectTo(IN_ADDR* pAddress, WORD nPort)
 		}
 	}
 
-	// Delete the input and output CBuffer objects if they exist, and then create new ones
-	if ( m_pInput ) delete m_pInput;
-	if ( m_pOutput ) delete m_pOutput;
-	m_pInput = NULL;
-	m_pOutput = NULL;
+	DestroyBuffers();
 
 	// Try to connect to the remote computer
 	if ( WSAConnect(
@@ -205,8 +205,7 @@ BOOL CConnection::ConnectTo(IN_ADDR* pAddress, WORD nPort)
 		}
 	}
 
-	m_pInput		= new CBuffer();
-	m_pOutput		= new CBuffer();
+	CreateBuffers();
 
 	// Record that we initiated this connection, and when it happened
 	m_bInitiated	= TRUE;
@@ -237,9 +236,8 @@ void CConnection::AcceptFrom(SOCKET hSocket, SOCKADDR_IN* pHost)
 
 	// Make new input and output buffer objects
 	ASSERT( m_pInput == NULL );
-	m_pInput		= new CBuffer();
 	ASSERT( m_pOutput == NULL );
-	m_pOutput		= new CBuffer();
+	CreateBuffers();
 
 	// Facts about the connection
 	m_bInitiated	= FALSE;			// We didn't initiate this connection
@@ -267,6 +265,9 @@ void CConnection::AttachTo(CConnection* pConnection)
 	ASSERT( AfxIsValidAddress( pConnection, sizeof( *pConnection ) ) );
 	ASSERT( pConnection->m_hSocket != INVALID_SOCKET ); // And make sure its socket exists
 
+	CQuickLock oOutputLock( *pConnection->m_pOutputSection );
+	CQuickLock oInputLock( *pConnection->m_pInputSection );
+
 	// Copy values from the given CConnection object to this one
 	m_pHost			= pConnection->m_pHost;
 	m_sAddress		= pConnection->m_sAddress;
@@ -277,8 +278,10 @@ void CConnection::AttachTo(CConnection* pConnection)
 	m_bConnected	= pConnection->m_bConnected;
 	m_tConnected	= pConnection->m_tConnected;
 	ASSERT( m_pInput == NULL );
+	m_pInputSection	= pConnection->m_pInputSection;
 	m_pInput		= pConnection->m_pInput;
 	ASSERT( m_pOutput == NULL );
+	m_pOutputSection= pConnection->m_pOutputSection;
 	m_pOutput		= pConnection->m_pOutput;
 	m_sUserAgent	= pConnection->m_sUserAgent; // But, we don't also copy across m_mInput and m_mOutput
 
@@ -319,10 +322,7 @@ void CConnection::Close()
 	}
 
 	// Delete and mark null the input and output buffers
-	if ( m_pOutput ) delete m_pOutput;
-	m_pOutput = NULL;
-	if ( m_pInput ) delete m_pInput;
-	m_pInput = NULL;
+	DestroyBuffers();
 
 	// This connection object isn't connected any longer
 	m_bConnected = FALSE;
@@ -434,6 +434,8 @@ BOOL CConnection::OnRun()
 // Read data waiting in the socket into the input buffer
 BOOL CConnection::OnRead()
 {
+	CQuickLock oInputLock( *m_pInputSection );
+
 	// Make sure the socket is valid
 	if ( m_hSocket == INVALID_SOCKET ) return FALSE;
 
@@ -465,6 +467,8 @@ BOOL CConnection::OnRead()
 // Call to send the contents of the output buffer to the remote computer
 BOOL CConnection::OnWrite()
 {
+	CQuickLock oOutputLock( *m_pOutputSection );
+
 	// Make sure the socket is valid
 	if ( m_hSocket == INVALID_SOCKET ) return FALSE;
 
@@ -535,7 +539,7 @@ BOOL CConnection::ReadHeaders()
 {
 	// Move the first line from the m_pInput buffer to strLine and do the contents of the while loop
 	CString strLine;
-	while ( m_pInput->ReadLine( strLine ) ) // ReadLine will return false when there are no more lines
+	while ( Read( strLine ) ) // ReadLine will return false when there are no more lines
 	{
 		// If the line is more than 20 KB, change it to the line too long error code 
 		if ( strLine.GetLength() > 20480 ) strLine = _T("#LINE_TOO_LONG#");
@@ -660,7 +664,7 @@ BOOL CConnection::SendMyAddress()
 			htons( Network.m_pHost.sin_port ) );						// Our port number in big endian
 
 		// Print the line into the bottom of the output buffer
-		m_pOutput->Print( strHeader ); // It will be sent to the remote computer on the next write
+		Write( strHeader ); // It will be sent to the remote computer on the next write
 
 		// Report that we are listening on a port, and the header is sent
 		return TRUE;
