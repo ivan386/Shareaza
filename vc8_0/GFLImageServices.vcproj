@@ -367,11 +367,11 @@
 			Name="Library Files"
 			>
 			<File
-				RelativePath="..\plugins\GFLLibraryBuilder\libgfl.lib"
+				RelativePath="..\plugins\GFLImageServices\libgfl.lib"
 				>
 			</File>
 			<File
-				RelativePath="..\plugins\GFLLibraryBuilder\libgfle.lib"
+				RelativePath="..\plugins\GFLImageServices\libgfle.lib"
 				>
 			</File>
 		</Filter>
