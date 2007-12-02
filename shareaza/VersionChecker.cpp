@@ -1,7 +1,7 @@
 //
 // VersionChecker.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -167,9 +167,9 @@ void CVersionChecker::BuildRequest(CString& strRequest)
 
 BOOL CVersionChecker::UndertakeRequest(CString& strPost)
 {
-	CString strVendorCode(VENDOR_CODE);
+	bool bRelease = FALSE;
 
-	if ( strVendorCode == _T("RA")_T("ZA") )
+	if ( bRelease )
 		m_pRequest.SetURL( _T("http://update.shareaza.com/version/update.php?") + strPost );
 	else
 		m_pRequest.SetURL( _T("http://update.trillinux.org/version/beta.php?") + strPost );

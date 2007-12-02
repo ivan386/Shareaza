@@ -332,6 +332,7 @@ public:
 		DWORD		HAWPeriod;
 		DWORD		HostCurrent;
 		DWORD		HostExpire;
+		DWORD		PingRate;
 		DWORD		QueryGlobalThrottle;		// Max G2 query rate (Cannot exceed 8/sec)
 		DWORD		QueryHostThrottle;
 		DWORD		QueryHostDeadline;

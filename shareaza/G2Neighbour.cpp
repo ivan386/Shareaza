@@ -160,7 +160,7 @@ BOOL CG2Neighbour::OnRun()
 	}
 
 	// Is it time to send TCP ping?
-	if ( tNow - m_tLastPingOut >= Settings.Gnutella1.PingRate &&
+	if ( tNow - m_tLastPingOut >= Settings.Gnutella2.PingRate &&
 	// But don't ping neighbour if we recently got any packets
 		tNow - m_tLastPacket >= Settings.Connection.TimeoutTraffic / 2 )
 	{
@@ -173,7 +173,7 @@ BOOL CG2Neighbour::OnRun()
 	// we perform limited "two hop" ping ourself using this neighbour
 	if ( Network.IsListening() && Network.IsFirewalled(CHECK_UDP) &&
 		m_nCountRelayPingOut < 3 &&
-		tNow - m_tLastRelayPingOut >= Settings.Gnutella1.PingRate )
+		tNow - m_tLastRelayPingOut >= Settings.Gnutella2.PingRate )
 	{
 		CG2Packet* pPing = CG2Packet::New( G2_PACKET_PING, TRUE );
 		pPing->WritePacket( G2_PACKET_UDP, 6 );
@@ -537,7 +537,7 @@ BOOL CG2Neighbour::OnPing(CG2Packet* pPacket, BOOL bTCP)
 				if ( pNeighbour2->m_nState == nrsConnected &&
 					 pNeighbour2 != this &&
 					 !pNeighbour2->m_bFirewalled &&
-					 tNow - pNeighbour2->m_tLastRelayedPingOut >= Settings.Gnutella1.PingRate )
+					 tNow - pNeighbour2->m_tLastRelayedPingOut >= Settings.Gnutella2.PingRate )
 				{
 					pG2Nodes.Add(  pNeighbour2 );
  				}

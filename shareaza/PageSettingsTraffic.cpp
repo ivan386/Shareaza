@@ -164,6 +164,7 @@ BOOL CAdvancedSettingsPage::OnInitDialog()
 	AddSetting( &Settings.Gnutella2.HAWPeriod, 1000, 1, 60 * 60, _T(" s") );
 	AddSetting( &Settings.Gnutella2.HostCurrent, 60, 1, 24*60, _T(" m") );
 	AddSetting( &Settings.Gnutella2.HostExpire, 24 * 60 * 60, 1, 100, _T(" d") );
+	AddSetting( &Settings.Gnutella2.PingRate, 1000, 5, 180, _T(" s") );
 	AddSetting( &Settings.Gnutella2.QueryGlobalThrottle, 1, 1, 60*1000, _T(" ms") );
 	AddSetting( &Settings.Gnutella2.QueryHostThrottle, 1, 1, 10*60, _T(" s") );
 	AddSetting( &Settings.Gnutella2.QueryHostDeadline, 1, 1, 120*60, _T(" s") );

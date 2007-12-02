@@ -294,6 +294,7 @@ void CSettings::Setup()
 	Add( _T("Gnutella2.HAWPeriod"), &Gnutella2.HAWPeriod, 300000 );
 	Add( _T("Gnutella2.HostExpire"), &Gnutella2.HostExpire, 2 * 24 * 60 * 60 );
 	Add( _T("Gnutella2.HostCurrent"), &Gnutella2.HostCurrent, 10 * 60 );
+	Add( _T("Gnutella2.PingRate"), &Gnutella2.PingRate, 15000 );
 	Add( _T("Gnutella2.QueryGlobalThrottle"), &Gnutella2.QueryGlobalThrottle, 125 );
 	Add( _T("Gnutella2.QueryHostThrottle"), &Gnutella2.QueryHostThrottle, 120 );
 	Add( _T("Gnutella2.QueryHostDeadline"), &Gnutella2.QueryHostDeadline, 10*60 );
@@ -557,7 +558,7 @@ void CSettings::LoadSet(string_set* pSet, LPCTSTR pszString)
 //////////////////////////////////////////////////////////////////////
 // CSettings load
 
-#define SMART_VERSION	50
+#define SMART_VERSION	51
 
 void CSettings::Load()
 {
@@ -981,6 +982,12 @@ void CSettings::SmartUpgrade()
 			strExts = L"|.asf||.asx||.avi||.divx||.m2v||.m2p||.mkv||.mov||.mpeg||.mpg||.ogm||.qt||.ram||.rm||.vob||.wmv||.xvid||.mp4||.rmvb||.3gp||.3gpp||.3g2||.dv||.flv||.ivf||.gvi||.mpe||.nsv||.wm|";
 			theApp.WriteProfileString( L"Plugins", L"{570C197C-FE9C-4D1F-B6E0-EFA44D36399F}", strExts );
 		}
+	}
+
+	if ( nVersion < 51 )
+	{
+		Library.HashWindow = TRUE;
+		Gnutella1.PingRate = 30000u;
 	}
 }
 
