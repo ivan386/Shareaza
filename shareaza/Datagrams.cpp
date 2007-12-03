@@ -666,9 +666,9 @@ BOOL CDatagrams::OnDatagram(SOCKADDR_IN* pHost, BYTE* pBuffer, DWORD nLength)
 		case ED2K_PROTOCOL_REVCONNECT_PACKED:
 			{
 				CEDPacket* pPacket = CEDPacket::New( pMULE, nLength );
-				if ( ! pPacket->InflateOrRelease() )
+				if ( pPacket && !pPacket->InflateOrRelease() )
 				{
-					bHandled = EDClients.OnUDP( pHost, pPacket );					
+					bHandled = EDClients.OnUDP( pHost, pPacket );
 
 					pPacket->Release();
 
