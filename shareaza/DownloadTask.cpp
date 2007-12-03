@@ -529,8 +529,10 @@ void CDownloadTask::RunMerge()
 	}
 	pLock.Unlock();
 
+	int nBufferLength = 65536;
+
 	// Read missing file fragments from selected file
-	auto_array< BYTE > Buf( new BYTE [65536] );
+	auto_array< BYTE > Buf( new BYTE [nBufferLength] );
 	DWORD dwToRead, dwReaded;
 	for ( Fragments::List::const_iterator pFragment = oList.begin();
 		pFragment != oList.end(); ++pFragment )
@@ -542,7 +544,7 @@ void CDownloadTask::RunMerge()
 		SetFilePointer( m_hSelectedFile, nOffsetLow, &nOffsetHigh, FILE_BEGIN );
 		if ( GetLastError() == NO_ERROR )
 		{
-			while ( ( dwToRead = (DWORD)min( qwLength, (QWORD)65536 ) ) != 0 )
+			while ( ( dwToRead = (DWORD)min( qwLength, (QWORD)nBufferLength ) ) != 0 )
 			{
 				if ( ReadFile( m_hSelectedFile, Buf.get(), dwToRead, &dwReaded, NULL ) && dwReaded != 0 )
 				{

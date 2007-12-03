@@ -636,7 +636,7 @@ BOOL CDatagrams::OnDatagram(SOCKADDR_IN* pHost, BYTE* pBuffer, DWORD nLength)
 
 	// Detect Gnutella 1 packets
 
-	if ( nLength >= sizeof(GNUTELLAPACKET) &&
+	if ( nLength >= sizeof(GNUTELLAPACKET) && pG1UDP &&
 		( sizeof(GNUTELLAPACKET) + pG1UDP->m_nLength ) == nLength )
 	{
 		CG1Packet* pG1Packet = CG1Packet::New( pG1UDP );
@@ -653,7 +653,7 @@ BOOL CDatagrams::OnDatagram(SOCKADDR_IN* pHost, BYTE* pBuffer, DWORD nLength)
 
 	// Detect ED2K and KAD packets
 
-	if ( nLength > sizeof(ED2K_UDP_HEADER) )
+	if ( nLength > sizeof(ED2K_UDP_HEADER) && pMULE )
 	{
 		switch ( pMULE->nProtocol )
 		{
@@ -681,7 +681,7 @@ BOOL CDatagrams::OnDatagram(SOCKADDR_IN* pHost, BYTE* pBuffer, DWORD nLength)
 
 	// Detect Gnutella 2 packets
 
-	if ( nLength >= sizeof(SGP_HEADER) &&
+	if ( nLength >= sizeof(SGP_HEADER) && pSGP &&
 		( *(DWORD*)pSGP->szTag & 0x00ffffff ) == ( *(DWORD*)SGP_TAG_2 & 0x00ffffff ) &&
 		pSGP->nPart && ( ! pSGP->nCount || pSGP->nPart <= pSGP->nCount ) )
 	{
