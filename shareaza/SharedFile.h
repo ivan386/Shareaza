@@ -57,7 +57,7 @@ public:
 	DWORD			m_nSelectCookie;
 	DWORD			m_nListCookie;
 public:
-	CLibraryFolder*	m_pFolder;
+	CLibraryFolder*	m_pFolder;	// NULL for Ghost files
 	DWORD			m_nIndex;
 	FILETIME		m_pTime;
 	TRISTATE		m_bShared;

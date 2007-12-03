@@ -745,12 +745,13 @@ void CLibraryFileView::OnLibraryShared()
 					CString str = pFile->m_pMetadata->GetAttributeValue( L"privateflag", L"true" );
 					bPrivate = str == L"true";
 				}
+				bool bFolderShared = pFile->m_pFolder ? pFile->m_pFolder->IsShared() != TRI_UNKNOWN : true;
 				if ( bPrivate )
 					pFile->m_bShared = TRI_FALSE;
 				else if ( pFile->IsShared() )
-					pFile->m_bShared = pFile->m_pFolder->IsShared() ? TRI_FALSE : TRI_UNKNOWN;
+					pFile->m_bShared = bFolderShared ? TRI_FALSE : TRI_UNKNOWN;
 				else
-					pFile->m_bShared = pFile->m_pFolder->IsShared() ? TRI_UNKNOWN : TRI_TRUE;
+					pFile->m_bShared = bFolderShared ? TRI_UNKNOWN : TRI_TRUE;
 
 				pFile->m_nUpdateCookie++;
 			}
