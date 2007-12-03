@@ -923,12 +923,11 @@ void CRichViewCtrl::CopySelection()
 
 	if ( str.GetLength() && AfxGetMainWnd()->OpenClipboard() )
 	{
-		USES_CONVERSION;
 		EmptyClipboard();
 
 		if ( theApp.m_bNT )
 		{
-			LPCWSTR pszWide = T2CW( (LPCTSTR)str );
+			CT2W pszWide( (LPCTSTR)str );
 			HANDLE hMem = GlobalAlloc( GMEM_MOVEABLE|GMEM_DDESHARE, ( wcslen(pszWide) + 1 ) * sizeof(WCHAR) );
 			LPVOID pMem = GlobalLock( hMem );
 			CopyMemory( pMem, pszWide, ( wcslen(pszWide) + 1 ) * sizeof(WCHAR) );
@@ -937,7 +936,7 @@ void CRichViewCtrl::CopySelection()
 		}
 		else
 		{
-			LPCSTR pszASCII = T2CA( (LPCTSTR)str );
+			CT2A pszASCII( (LPCTSTR)str );
 			HANDLE hMem = GlobalAlloc( GMEM_MOVEABLE|GMEM_DDESHARE, strlen(pszASCII) + 1 );
 			LPVOID pMem = GlobalLock( hMem );
 			CopyMemory( pMem, pszASCII, strlen(pszASCII) + 1 );

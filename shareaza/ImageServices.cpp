@@ -72,30 +72,25 @@ BOOL CImageServices::LoadFromMemory(CImageFile* pFile, LPCTSTR pszType, LPCVOID 
 					CopyMemory( pTarget, pData, nLength );
 					VERIFY( SUCCEEDED( SafeArrayUnaccessData( pInput ) ) );
 					
-					BSTR bstrType = SysAllocString( CT2CW( pszType ) );
-					if ( bstrType )
+					CComBSTR bstrType( pszType );
+					HINSTANCE hRes = AfxGetResourceHandle();
+
+					SAFEARRAY* pArray = NULL;
+					IMAGESERVICEDATA pParams = {};
+					pParams.cbSize = sizeof( pParams );
+					if ( bScanOnly ) pParams.nFlags |= IMAGESERVICE_SCANONLY;
+					if ( bPartialOk ) pParams.nFlags |= IMAGESERVICE_PARTIAL_IN;
+					if ( SUCCEEDED( pService->LoadFromMemory( bstrType, pInput,
+						&pParams, &pArray ) ) )
 					{
-						HINSTANCE hRes = AfxGetResourceHandle();
-
-						SAFEARRAY* pArray = NULL;
-						IMAGESERVICEDATA pParams = {};
-						pParams.cbSize = sizeof( pParams );
-						if ( bScanOnly ) pParams.nFlags |= IMAGESERVICE_SCANONLY;
-						if ( bPartialOk ) pParams.nFlags |= IMAGESERVICE_PARTIAL_IN;
-						if ( SUCCEEDED( pService->LoadFromMemory( bstrType, pInput,
-							&pParams, &pArray ) ) )
-						{
-							bSuccess = PostLoad( pFile, &pParams, pArray );
-						}
-						if ( pArray )
-						{
-							VERIFY( SUCCEEDED( SafeArrayDestroy( pArray ) ) );
-						}
-
-						AfxSetResourceHandle( hRes );
-
-						SysFreeString( bstrType );
+						bSuccess = PostLoad( pFile, &pParams, pArray );
 					}
+					if ( pArray )
+					{
+						VERIFY( SUCCEEDED( SafeArrayDestroy( pArray ) ) );
+					}
+
+					AfxSetResourceHandle( hRes );
 				}
 				VERIFY( SUCCEEDED( SafeArrayDestroyData( pInput ) ) );
 			}
@@ -116,29 +111,24 @@ BOOL CImageServices::LoadFromFile(CImageFile* pFile, LPCTSTR szFilename, BOOL bS
 	IImageServicePlugin* pService = GetService( szFilename ).first;
 	if ( pService )
 	{
-		BSTR bstrFile = SysAllocString( CT2CW( szFilename ) );
-		if ( bstrFile )
+		CComBSTR bstrFile( szFilename );
+		HINSTANCE hRes = AfxGetResourceHandle();
+
+		SAFEARRAY* pArray = NULL;
+		IMAGESERVICEDATA pParams = {};
+		pParams.cbSize = sizeof( pParams );
+		if ( bScanOnly ) pParams.nFlags |= IMAGESERVICE_SCANONLY;
+		if ( bPartialOk ) pParams.nFlags |= IMAGESERVICE_PARTIAL_IN;
+		if ( SUCCEEDED( pService->LoadFromFile( bstrFile, &pParams, &pArray ) ) )
 		{
-			HINSTANCE hRes = AfxGetResourceHandle();
-
-			SAFEARRAY* pArray = NULL;
-			IMAGESERVICEDATA pParams = {};
-			pParams.cbSize = sizeof( pParams );
-			if ( bScanOnly ) pParams.nFlags |= IMAGESERVICE_SCANONLY;
-			if ( bPartialOk ) pParams.nFlags |= IMAGESERVICE_PARTIAL_IN;
-			if ( SUCCEEDED( pService->LoadFromFile( bstrFile, &pParams, &pArray ) ) )
-			{
-				bSuccess = PostLoad( pFile, &pParams, pArray );
-			}
-			if ( pArray )
-			{
-				VERIFY( SUCCEEDED( SafeArrayDestroy( pArray ) ) );
-			}
-
-			AfxSetResourceHandle( hRes );
-
-			SysFreeString( bstrFile );
+			bSuccess = PostLoad( pFile, &pParams, pArray );
 		}
+		if ( pArray )
+		{
+			VERIFY( SUCCEEDED( SafeArrayDestroy( pArray ) ) );
+		}
+
+		AfxSetResourceHandle( hRes );
 
 		// Second chance - load from memory
 		if ( ! bSuccess )

@@ -620,31 +620,30 @@ BOOL CDownloadWithFile::AppendMetadata()
 
 BOOL CDownloadWithFile::AppendMetadataID3v1(HANDLE hFile, CXMLElement* pXML)
 {
-	USES_CONVERSION;
 	DWORD nBytes;
 	CString str;
 	
 	ID3V1 pID3 = {};
 	SetFilePointer( hFile, 0, NULL, FILE_BEGIN );
-	ReadFile( hFile, &pID3, 3, &nBytes, NULL );
+	if ( ! ReadFile( hFile, &pID3, 3, &nBytes, NULL ) ) return FALSE;
 	if ( memcmp( pID3.szTag, ID3V2_TAG, 3 ) == 0 ) return FALSE;
 	
 	ZeroMemory( &pID3, sizeof(pID3) );
 	SetFilePointer( hFile, -(int)sizeof(pID3), NULL, FILE_END );
-	ReadFile( hFile, &pID3, sizeof(pID3), &nBytes, NULL );
+	if ( ! ReadFile( hFile, &pID3, sizeof(pID3), &nBytes, NULL ) ) return FALSE;
 	if ( memcmp( pID3.szTag, ID3V1_TAG, 3 ) == 0 ) return FALSE;
 	
 	ZeroMemory( &pID3, sizeof(pID3) );
 	std::memcpy( pID3.szTag, ID3V1_TAG, 3 );
 	
 	str = pXML->GetAttributeValue( _T("title") );
-	if ( str.GetLength() > 0 ) strncpy( pID3.szSongname, T2CA( (LPCTSTR)str ), 30 );
+	if ( str.GetLength() > 0 ) strncpy( pID3.szSongname, CT2CA( (LPCTSTR)str ), 30 );
 	str = pXML->GetAttributeValue( _T("artist") );
-	if ( str.GetLength() > 0 ) strncpy( pID3.szArtist, T2CA( (LPCTSTR)str ), 30 );
+	if ( str.GetLength() > 0 ) strncpy( pID3.szArtist, CT2CA( (LPCTSTR)str ), 30 );
 	str = pXML->GetAttributeValue( _T("album") );
-	if ( str.GetLength() > 0 ) strncpy( pID3.szAlbum, T2CA( (LPCTSTR)str ), 30 );
+	if ( str.GetLength() > 0 ) strncpy( pID3.szAlbum, CT2CA( (LPCTSTR)str ), 30 );
 	str = pXML->GetAttributeValue( _T("year") );
-	if ( str.GetLength() > 0 ) strncpy( pID3.szYear, T2CA( (LPCTSTR)str ), 4 );
+	if ( str.GetLength() > 0 ) strncpy( pID3.szYear, CT2CA( (LPCTSTR)str ), 4 );
 	
 	str = pXML->GetAttributeValue( _T("genre") );
 	

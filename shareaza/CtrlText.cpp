@@ -349,7 +349,7 @@ void CTextCtrl::CopyText() const
 
 		if ( theApp.m_bNT )
 		{
-			LPCWSTR pszWide = CT2CW( (LPCTSTR)str );
+			CT2W pszWide( (LPCTSTR)str );
 			DWORD nSize = ( lstrlenW(pszWide) + 1 ) * sizeof(WCHAR);
 			HANDLE hMem = GlobalAlloc( GMEM_MOVEABLE|GMEM_DDESHARE, nSize );
 			LPVOID pMem = GlobalLock( hMem );
@@ -359,7 +359,7 @@ void CTextCtrl::CopyText() const
 		}
 		else
 		{
-			LPCSTR pszASCII = CT2CA( (LPCTSTR)str );
+			CT2A pszASCII( (LPCTSTR)str );
 			DWORD nSize = lstrlenA(pszASCII) + 1;
 			HANDLE hMem = GlobalAlloc( GMEM_MOVEABLE|GMEM_DDESHARE, nSize );
 			LPVOID pMem = GlobalLock( hMem );

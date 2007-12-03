@@ -830,8 +830,8 @@ BOOL CSkin::Translate(LPCTSTR pszName, CHeaderCtrl* pCtrl)
 
 	if ( ! m_pLists.Lookup( pszName, strEdit ) ) return FALSE;
 
-	TCHAR szColumn[128];
-	HD_ITEM pColumn;
+	TCHAR szColumn[128] = {};
+	HD_ITEM pColumn = {};
 	
 	if ( theApp.m_bRTL ) 
 		pCtrl->ModifyStyleEx( 0, WS_EX_LAYOUTRTL, 0 );
@@ -841,6 +841,7 @@ BOOL CSkin::Translate(LPCTSTR pszName, CHeaderCtrl* pCtrl)
 
 	for ( int nItem = 0 ; nItem < pCtrl->GetItemCount() ; nItem++ )
 	{
+		*szColumn = _T('\0');
 		pCtrl->GetItem( nItem, &pColumn );
 
 		_tcscat( szColumn, _T("=") );
@@ -952,8 +953,6 @@ BOOL CSkin::Apply(LPCTSTR pszName, CDialog* pDialog, UINT nIconID, CToolTipCtrl*
 	
 	if ( theApp.GetProfileInt( _T(""), _T("DialogScan"), FALSE ) )
 	{
-		//USES_CONVERSION;
-		//LPCSTR pszOutput;
 		CFile pFile;
 		
 		if ( pFile.Open( _T("\\Dialog.xml"), CFile::modeReadWrite ) )
@@ -992,20 +991,6 @@ BOOL CSkin::Apply(LPCTSTR pszName, CDialog* pDialog, UINT nIconID, CToolTipCtrl*
 
 		pFile.Write( "\">\r\n", 4 );
 
-		/*
-		pFile.Write( "<dialog name=\"", 14 );
-		pszOutput = T2A(strName);
-		pFile.Write( pszOutput, strlen(pszOutput) );
-		pFile.Write( "\" cookie=\"", 10 );
-		pszOutput = T2A(strCaption);
-		pFile.Write( pszOutput, strlen(pszOutput) );
-		pFile.Write( "\" caption=\"", 11 );
-		pDialog->GetWindowText( strCaption );
-		pszOutput = T2A(strCaption);
-		pFile.Write( pszOutput, strlen(pszOutput) );
-		pFile.Write( "\">\r\n", 4 );
-		*/
-		
 		for ( pWnd = pDialog->GetWindow( GW_CHILD ) ; pWnd ; pWnd = pWnd->GetNextWindow() )
 		{
 			TCHAR szClass[64];
@@ -1748,7 +1733,7 @@ UINT CSkin::TrackPopupMenu(LPCTSTR pszMenu, const CPoint& point, UINT nDefaultID
 {
 	CMenu* pPopup = GetMenu( pszMenu );
 	if ( pPopup == NULL ) return 0;
-	
+
 	if ( nDefaultID != 0 )
 	{
 		MENUITEMINFO pInfo;
@@ -1850,11 +1835,11 @@ void CSkin::DrawWrappedText(CDC* pDC, CRect* pBox, LPCTSTR pszText, CPoint ptSta
 	unsigned short nLenFull = static_cast< unsigned short >( _tcslen( pszText ) );
 
 	// Collect stats about the text from the start
-	BOOL bIsRTLStart, bNormalFlow;
+	BOOL bIsRTLStart = FALSE;
 	int nTestStart	= GetTextFlowChange( pszText, &bIsRTLStart );
 
 	// Guess text direction ( not always works )
-	bNormalFlow = theApp.m_bRTL ? bIsRTLStart : !bIsRTLStart;
+	BOOL bNormalFlow = theApp.m_bRTL ? bIsRTLStart : !bIsRTLStart;
 
 	TCHAR* pszSource = NULL;
 	LPCTSTR pszWord	 = NULL;
@@ -1894,7 +1879,8 @@ void CSkin::DrawWrappedText(CDC* pDC, CRect* pBox, LPCTSTR pszText, CPoint ptSta
 
 	if ( !bNormalFlow ) 
 	{
-		if ( bIsRTLStart != theApp.m_bRTL ) pDC->SetTextAlign( TA_RTLREADING );
+		if ( bIsRTLStart != theApp.m_bRTL )
+			pDC->SetTextAlign( nAlignOptionsOld ^ TA_RTLREADING );
 		pszScan += nLenFull - 1;
 		pszWord += nLenFull;
 		for ( int nEnd = nLenFull - 1; nEnd >= 0 ; nEnd-- )

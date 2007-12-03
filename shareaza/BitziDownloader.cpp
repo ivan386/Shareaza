@@ -295,8 +295,8 @@ BOOL CBitziDownloader::ExecuteRequest()
 	if ( ! HttpQueryInfo( m_hRequest, HTTP_QUERY_STATUS_CODE, szStatusCode,
 		&nStatusLen, NULL ) ) return FALSE;
 
-	_stscanf( szStatusCode, _T("%u"), &nStatusCode );
-	if ( nStatusCode < 200 || nStatusCode > 299 ) return FALSE;
+	if ( _stscanf( szStatusCode, _T("%u"), &nStatusCode ) != 1 ||
+		nStatusCode < 200 || nStatusCode > 299 ) return FALSE;
 
 	LPBYTE pResponse = NULL;
 	DWORD nRemaining, nResponse = 0;

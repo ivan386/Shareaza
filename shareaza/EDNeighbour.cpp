@@ -781,14 +781,18 @@ void CEDNeighbour::SendSharedFiles()
 							{
 								// Bitrate
 								if ( pFile->m_pMetadata->GetAttributeValue( _T("bitrate") ).GetLength() )	//And has a bitrate
-								{	//Read in the bitrate
+								{
+									//Read in the bitrate
+									nBitrate = 0;
 									_stscanf( pFile->m_pMetadata->GetAttributeValue( _T("bitrate") ), _T("%i"), &nBitrate );
 									if ( nBitrate ) nTags ++;
 								}
 
 								// Length
 								if ( pFile->m_pMetadata->GetAttributeValue( _T("seconds") ).GetLength() )	//And has seconds
-								{	//Read in the no. seconds
+								{
+									//Read in the no. seconds
+									nLength = 0;
 									_stscanf( pFile->m_pMetadata->GetAttributeValue( _T("seconds") ), _T("%i"), &nLength );
 									if ( nLength ) nTags ++;
 								}
@@ -807,7 +811,7 @@ void CEDNeighbour::SendSharedFiles()
 								// Length
 								if ( pFile->m_pMetadata->GetAttributeValue( _T("minutes") ).GetLength() )	//And has minutes
 								{	
-									double nMins;
+									double nMins = 0.0;
 									//Read in the no. seconds
 									_stscanf( pFile->m_pMetadata->GetAttributeValue( _T("minutes") ), _T("%.3lf"), &nMins );
 									nLength = (DWORD)( nMins * (double)60 );	//Convert to seconds

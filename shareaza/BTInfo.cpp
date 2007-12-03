@@ -400,11 +400,7 @@ BOOL CBTInfo::LoadTorrentFile(LPCTSTR pszFile)
 			}
 		}
 	}
-	else
-	{
-		/*DWORD nError =*/ GetLastError();
-	}
-	
+
 	return FALSE;
 }
 

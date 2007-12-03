@@ -3119,9 +3119,9 @@ CString	CLibraryBuilderInternals::DecodePDFText(CString& strInput)
 
 	if ( bHex )
 	{
-		int nChar = 0;
 		for ( DWORD nHex = 0 ; nHex < nByte / ( bWide ? 2 : 1 ); nHex++ )
 		{
+			int nChar = 0;
 			if ( bWide )
 			{
 				_stscanf( strInput.Mid( nHex * 4, 4 ), _T("%x"), &nChar );
@@ -3431,7 +3431,7 @@ BOOL CLibraryBuilderInternals::ReadCHM(DWORD nIndex, HANDLE hFile, LPCTSTR pszPa
 
 	// Read no more than 8192 bytes to find "HHA Version" string
 	CHAR szByte[1];
-	CHAR szFragment[10] = {}; // // "HA Version" string
+	CHAR szFragment[16] = {}; // // "HA Version" string
 	BOOL bCorrupted = FALSE;
 	BOOL bHFound = FALSE;
 	int nFragmentPos = 0;

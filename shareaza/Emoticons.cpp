@@ -523,7 +523,7 @@ void CEmoticons::FormatText(CRichDocument* pDocument, LPCTSTR pszBody, BOOL bNew
 		{
 			_tcsncpy( str.GetBuffer( 6 ), pszBody + 4, 6 );
 			str.ReleaseBuffer( 6 );
-			int nRed, nGreen, nBlue;
+			int nRed = 0, nGreen = 0, nBlue = 0;
 			_stscanf( str.Mid( 0, 2 ), _T("%x"), &nRed );
 			_stscanf( str.Mid( 2, 2 ), _T("%x"), &nGreen );
 			_stscanf( str.Mid( 4, 2 ), _T("%x"), &nBlue );

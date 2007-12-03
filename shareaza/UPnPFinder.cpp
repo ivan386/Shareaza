@@ -605,13 +605,12 @@ CString CUPnPFinder::GetLocalRoutableIP(ServicePointer pService)
 	if ( FAILED( hr ) || strExternalIP.IsEmpty() )
 		return CString();
 
-	USES_CONVERSION;
-	LPCSTR pszExternalIP = CT2CA( (LPCTSTR)strExternalIP );
+	CT2A pszExternalIP( (LPCTSTR)strExternalIP );
 	DWORD nInterfaceIndex = 0;
 	DWORD ip = inet_addr( pszExternalIP );
 
 	// Get the interface through which the UPnP device has a route
-	HRESULT hrRes = -1;
+	HRESULT hrRes = E_FAIL;
 	if ( m_pfGetBestInterface != NULL )
 	{
 		try {	// just to be sure; another call from iphlpapi used earlier in eMule seemed to crash on some systems according to dumps
@@ -627,7 +626,7 @@ CString CUPnPFinder::GetLocalRoutableIP(ServicePointer pService)
 
 	MIB_IFROW ifRow = {};
 	ifRow.dwIndex = nInterfaceIndex;
-	hrRes = -1;
+	hrRes = E_FAIL;
 	if ( m_pfGetIfEntry != NULL )
 	{
 		try {	// just to be sure; another call from iphlpapi used earlier in eMule seemed to crash on some systems according to dumps
@@ -645,7 +644,7 @@ CString CUPnPFinder::GetLocalRoutableIP(ServicePointer pService)
 	ULONG nSize = sizeof(mib);
 	PMIB_IPADDRTABLE ipAddr = (PMIB_IPADDRTABLE)mib;
 
-	hrRes = -1;
+	hrRes = E_FAIL;
 	if ( m_pfGetIpAddrTable != NULL )
 	{
 		try {	// just to be sure; another call from iphlpapi used earlier in eMule seemed to crash on some systems according to dumps
@@ -709,7 +708,7 @@ void CUPnPFinder::DeleteExistingPortMappings(ServicePointer pService)
 	CString strActionResult;
 	do
 	{
-		HRESULT hrDel = -1;
+		HRESULT hrDel = E_FAIL;
 		strInArgs.Format( _T("|VT_UI2=%hu|"), nEntry );
 		hr = InvokeAction( pService, 
 			 L"GetGenericPortMappingEntry", strInArgs, strActionResult );
@@ -874,7 +873,8 @@ HRESULT CUPnPFinder::InvokeAction(ServicePointer pService,
 	for( INT_PTR nArg = 0 ; nArg < nArgs ; nArg++ )
 	{
 		nPos = nArg + 1;
-		SafeArrayPutElement( psaArgs, &nPos, ppVars[ nArg ] );
+		hr = SafeArrayPutElement( psaArgs, &nPos, ppVars[ nArg ] );
+		if ( FAILED( hr ) ) return hr;
 	}
 
 	hr = pService->InvokeAction( action, vaActionArgs, &vaOutArgs, &vaRet);
@@ -1211,8 +1211,7 @@ HRESULT CServiceCallback::StateVariableChanged(IUPnPService* pService,
 		}
 		else if ( _wcsicmp( pszStateVarName, L"ExternalIPAddress" ) == 0 )
 		{
-			USES_CONVERSION;
-			theApp.m_nUPnPExternalAddress = inet_addr( T2CA( strValue.Trim() ) );
+			theApp.m_nUPnPExternalAddress = inet_addr( CT2CA( strValue.Trim() ) );
 		}
 	}
 

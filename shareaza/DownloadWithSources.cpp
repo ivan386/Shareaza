@@ -539,8 +539,7 @@ int CDownloadWithSources::AddSourceURLs(LPCTSTR pszURLs, BOOL bURN, BOOL bFailed
 			int nPort = 0;
 			_stscanf( strURL.Mid( nPos + 1 ), _T("%i"), &nPort );
 			strURL.Truncate( nPos );
-			USES_CONVERSION;
-			DWORD nAddress = inet_addr( T2CA( strURL ) );
+			DWORD nAddress = inet_addr( CT2CA( strURL ) );
 			strURL.Empty();
 			
 			if ( ! Network.IsFirewalledAddress( &nAddress, TRUE ) && 

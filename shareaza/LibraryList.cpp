@@ -272,7 +272,7 @@ STDMETHODIMP CLibraryList::XGenericView::get_Count(LONG FAR* pnCount)
 		CLibraryListItem Item = pThis->GetNext( pos );
 		if ( Item.Type == CLibraryListItem::LibraryFile )
 		{
-			*pnCount++;
+			(*pnCount) ++;
 		}
 	}
 

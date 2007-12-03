@@ -87,7 +87,7 @@ BOOL CCoolMenu::AddMenu(CMenu* pMenu, BOOL bChild)
 		else
 			mii.fMask	= MIIM_DATA|MIIM_ID|MIIM_TYPE|MIIM_SUBMENU;
 		mii.dwTypeData	= szBuffer;
-		mii.cch			= sizeof(szBuffer) / sizeof(TCHAR);
+		mii.cch			= sizeof(szBuffer) / sizeof(TCHAR) - 1;
 
 		GetMenuItemInfo( pMenu->GetSafeHmenu(), i, TRUE, &mii );
 

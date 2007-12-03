@@ -171,7 +171,8 @@ void CPluginWnd::OnSkinChange()
 HRESULT CPluginWnd::GetGenericView(IGenericView** ppView)
 {
 	if ( m_pOwner == NULL ) return S_FALSE;
-	return m_pOwner->QueryInterface( IID_IGenericView, (void**)ppView ) ? S_OK : S_FALSE;
+	return SUCCEEDED( m_pOwner->QueryInterface( IID_IGenericView, (void**)ppView ) ) ?
+		S_OK : S_FALSE;
 }
 
 /////////////////////////////////////////////////////////////////////////////

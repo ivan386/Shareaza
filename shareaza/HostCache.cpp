@@ -293,8 +293,7 @@ BOOL CHostCacheList::Add(LPCTSTR pszHost, DWORD tSeen, LPCTSTR pszVendor, DWORD 
 	if ( _stscanf( strHost.Mid( nPos + 1 ), _T("%i"), &nPort ) != 1 ) return FALSE;
 	strHost = strHost.Left( nPos );
 	
-	USES_CONVERSION;
-	DWORD nAddress = inet_addr( T2CA( (LPCTSTR)strHost ) );
+	DWORD nAddress = inet_addr( CT2CA( (LPCTSTR)strHost ) );
 
 	// Don't add invalid addresses
 	if ( ! nPort ) 

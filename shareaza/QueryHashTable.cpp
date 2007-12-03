@@ -789,13 +789,13 @@ BOOL CQueryHashTable::OnPatch(CPacket* pPacket)
 					{
 						m_nCount++;
 						*pHash &= ~nMask;
-						if ( bGroup ) *pGroup ++;
+						if ( bGroup ) (*pGroup) ++;
 					}
 					else
 					{
 						m_nCount--;
 						*pHash |= nMask;
-						if ( bGroup ) *pGroup --;
+						if ( bGroup ) (*pGroup) --;
 					}
 				}
 			}

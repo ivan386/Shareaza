@@ -709,7 +709,8 @@ BOOL CDownloadTransferHTTP::OnHeaderLine(CString& strHeader, CString& strValue)
 	}
 	else if ( strHeader.CompareNoCase( _T("Content-Length") ) == 0 )
 	{
-		_stscanf( strValue, _T("%I64i"), &m_nContentLength );
+		if ( _stscanf( strValue, _T("%I64i"), &m_nContentLength ) != 1 )
+			m_nContentLength = SIZE_UNKNOWN;
 	}
 	else if ( strHeader.CompareNoCase( _T("Content-Range") ) == 0 )
 	{

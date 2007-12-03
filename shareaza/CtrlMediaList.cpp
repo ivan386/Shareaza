@@ -771,8 +771,7 @@ void CMediaListCtrl::OnMediaSave()
 
 	if ( ! pFile.Open( dlg.GetPathName(), CFile::modeWrite|CFile::modeCreate ) ) return;
 
-	USES_CONVERSION;
-	LPCSTR pszFile = T2CA( (LPCTSTR)strFile );
+	CT2CA pszFile( (LPCTSTR)strFile );
 	
 	pFile.Write( pszFile, static_cast< UINT >( strlen(pszFile) ) );
 	pFile.Close();

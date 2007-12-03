@@ -428,8 +428,7 @@ CQueryHit* CQueryHit::FromPacket(CG2Packet* pPacket, int* pnHops)
 					if ( nInnerType == G2_PACKET_NICK )
 					{
 						strNick = pPacket->ReadString( nInner );
-						USES_CONVERSION;
-						LPCSTR pszIP = CT2CA( (LPCTSTR)strNick );
+						CT2A pszIP( (LPCTSTR)strNick );
 						ip = inet_addr( pszIP );
 						if ( ip != INADDR_NONE && strcmp( inet_ntoa( *(IN_ADDR*)&ip ), pszIP ) == 0 &&
 							 nAddress != ip )

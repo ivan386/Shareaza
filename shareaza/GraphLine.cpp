@@ -330,7 +330,7 @@ void CLineGraph::PaintGrid(CDC* pDC, CRect* pRect)
 void CLineGraph::PaintLegend(CDC* pDC, CRect* pRect)
 {
 	int nHeight	= pDC->GetTextExtent( _T("Cy") ).cy;
-	int nLeft	= pRect->left + ( pRect->Width() > 128 ) ? 64 : 0;
+	int nLeft	= pRect->left + ( ( pRect->Width() > 128 ) ? 64 : 0 );
 	int nTop	= pRect->top + 1;
 
 	for ( POSITION pos = GetItemIterator() ; pos ; nTop += nHeight )

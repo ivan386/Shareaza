@@ -449,8 +449,7 @@ BOOL CNetwork::Resolve(LPCTSTR pszHost, int nPort, SOCKADDR_IN* pHost, BOOL bNam
 		strHost = strHost.Left( nColon );
 	}
 	
-	USES_CONVERSION;
-	LPCSTR pszaHost = T2CA( (LPCTSTR)strHost );
+	CT2CA pszaHost( (LPCTSTR)strHost );
 	
 	DWORD dwIP = inet_addr( pszaHost );
 	
@@ -479,10 +478,8 @@ BOOL CNetwork::AsyncResolve(LPCTSTR pszAddress, WORD nPort, PROTOCOLID nProtocol
 	
 	ResolveStruct* pResolve = new ResolveStruct;
 	
-	USES_CONVERSION;
-	
 	HANDLE hAsync = WSAAsyncGetHostByName( AfxGetMainWnd()->GetSafeHwnd(), WM_WINSOCK,
-		T2CA(pszAddress), pResolve->m_pBuffer, MAXGETHOSTSTRUCT );
+		CT2CA(pszAddress), pResolve->m_pBuffer, MAXGETHOSTSTRUCT );
 	
 	if ( hAsync != NULL )
 	{

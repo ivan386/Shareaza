@@ -825,8 +825,7 @@ void CLibraryDetailView::OnEndLabelEditA(NMHDR* pNotify, LRESULT* pResult)
 
 void CLibraryDetailView::OnFindItemW(NMHDR* pNotify, LRESULT* pResult)
 {
-	USES_CONVERSION;
-	LPCTSTR pszFind = W2CT( (LPCWSTR)((NMLVFINDITEM*) pNotify)->lvfi.psz );
+	CW2T pszFind( (LPCWSTR)((NMLVFINDITEM*) pNotify)->lvfi.psz );
 	
 	GET_LIST();
 	CQuickLock oLock( Library.m_pSection );
@@ -855,8 +854,7 @@ void CLibraryDetailView::OnFindItemW(NMHDR* pNotify, LRESULT* pResult)
 
 void CLibraryDetailView::OnFindItemA(NMHDR* pNotify, LRESULT* pResult)
 {
-	USES_CONVERSION;
-	LPCTSTR pszFind = A2CT( (LPCSTR)((NMLVFINDITEM*) pNotify)->lvfi.psz );
+	CA2T pszFind( (LPCSTR)((NMLVFINDITEM*) pNotify)->lvfi.psz );
 	
 	GET_LIST();
 	CQuickLock oLock( Library.m_pSection );

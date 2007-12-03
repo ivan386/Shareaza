@@ -732,10 +732,9 @@ BOOL CFileExecutor::DisplayURL(LPCTSTR pszURL)
 	if ( HCONV hConv = DdeConnect( hInstance, hszService, hszTopic, NULL ) )
 	{
 		CString strCommand;
-		USES_CONVERSION;
 
 		strCommand.Format( _T("\"%s\",,0"), pszURL );
-		LPCSTR pszCommand = T2CA( (LPCTSTR)strCommand );
+		CT2A pszCommand( (LPCTSTR)strCommand );
 
 		DdeClientTransaction( (LPBYTE)pszCommand, pszCommand,
 			 hConv, 0, 0, XTYP_EXECUTE, 4000, NULL );

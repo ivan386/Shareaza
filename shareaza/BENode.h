@@ -169,9 +169,8 @@ public:
 	
 	inline void SetString(LPCWSTR psz)
 	{
-		USES_CONVERSION;
-		LPCSTR pszASCII = W2CA(psz);
-		SetString( pszASCII, strlen(pszASCII), TRUE );
+		CW2A pszASCII( psz );
+		SetString( (LPCSTR)pszASCII, strlen(pszASCII), TRUE );
 	}
 	
 	inline void SetString(LPCVOID pString, size_t nLength, BOOL bNull = FALSE)

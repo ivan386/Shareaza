@@ -61,8 +61,6 @@ CDDEServer::~CDDEServer()
 
 BOOL CDDEServer::Create()
 {
-	USES_CONVERSION;
-
 	// Used transactions XTYP_CONNECT and XTYP_EXECUTE only, all others filtered
 	UINT uiResult = DdeInitialize( &m_hInstance, DDECallback, APPCLASS_STANDARD |
 		CBF_FAIL_ADVISES | CBF_FAIL_POKES | CBF_FAIL_REQUESTS | CBF_FAIL_SELFCONNECTIONS |

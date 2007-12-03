@@ -327,7 +327,8 @@ BOOL CCollectionFile::File::Parse(CXMLElement* pRoot)
 			}
 			if ( CXMLElement* pSize = pXML->GetElementByName( _T("size") ) )
 			{
-				_stscanf( pSize->GetValue(), _T("%I64i"), &m_nSize );
+				if ( _stscanf( pSize->GetValue(), _T("%I64i"), &m_nSize ) != 1 )
+					return FALSE;
 			}
 		}
 		else if ( pXML->IsNamed( _T("metadata") ) )

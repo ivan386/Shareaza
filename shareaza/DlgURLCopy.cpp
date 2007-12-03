@@ -292,12 +292,11 @@ BOOL CURLCopyDlg::SetClipboardText(CString& strText)
 {
 	if ( ! AfxGetMainWnd()->OpenClipboard() ) return FALSE;
 
-	USES_CONVERSION;
 	EmptyClipboard();
 
 	if ( theApp.m_bNT )
 	{
-		LPCWSTR pszWide = T2CW( (LPCTSTR)strText );
+		CT2CW pszWide( (LPCTSTR)strText );
 		HANDLE hMem = GlobalAlloc( GMEM_MOVEABLE|GMEM_DDESHARE, ( wcslen(pszWide) + 1 ) * sizeof(WCHAR) );
 		LPVOID pMem = GlobalLock( hMem );
 		CopyMemory( pMem, pszWide, ( wcslen(pszWide) + 1 ) * sizeof(WCHAR) );
@@ -306,7 +305,7 @@ BOOL CURLCopyDlg::SetClipboardText(CString& strText)
 	}
 	else
 	{
-		LPCSTR pszASCII = T2CA( (LPCTSTR)strText );
+		CT2CA pszASCII( (LPCTSTR)strText );
     	HANDLE hMem = GlobalAlloc( GMEM_MOVEABLE|GMEM_DDESHARE, strlen(pszASCII) + 1 );
 		LPVOID pMem = GlobalLock( hMem );
 		CopyMemory( pMem, pszASCII, strlen(pszASCII) + 1 );
