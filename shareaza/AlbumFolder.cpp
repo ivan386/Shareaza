@@ -1064,7 +1064,20 @@ void CAlbumFolder::Serialize(CArchive& ar, int nVersion)
 		{
             SerializeIn( ar, m_oCollSHA1, nVersion );
             pCollection = LibraryMaps.LookupFileBySHA1( m_oCollSHA1, FALSE, TRUE );
-            if ( !pCollection ) m_oCollSHA1.clear();
+			// Needs better validation. Some collections are bount to URIs which assign the whole
+			// library as one big collection.
+			if ( pCollection == NULL || 
+				 m_pSchema && ( m_pSchema->m_sURI == CSchema::uriAllFiles || 
+								m_pSchema->m_sURI == CSchema::uriGhostFolder ||
+								m_pSchema->m_sURI == CSchema::uriApplicationRoot ||
+								m_pSchema->m_sURI == CSchema::uriImageRoot ||
+								m_pSchema->m_sURI == CSchema::uriBookRoot ||
+								m_pSchema->m_sURI == CSchema::uriDocumentRoot ||
+								m_pSchema->m_sURI == CSchema::uriMusicRoot ||
+								m_pSchema->m_sURI == CSchema::uriVideoRoot ||
+								m_pSchema->m_sURI == CSchema::uriLibrary
+							  ) )
+				m_oCollSHA1.clear();
 		}
 
 		if ( nVersion >= 24 )
@@ -1097,7 +1110,8 @@ void CAlbumFolder::Serialize(CArchive& ar, int nVersion)
 			if ( CLibraryFile* pFile = Library.LookupFile( nIndex ) )
 			{
 				m_pFiles.AddTail( pFile );
-				if ( pCollection != NULL ) pFile->m_nCollIndex = pCollection->m_nIndex;
+				if ( pCollection != NULL ) 
+					pFile->m_nCollIndex = pCollection->m_nIndex;
 			}
 		}
 	}
