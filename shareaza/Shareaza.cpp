@@ -1598,8 +1598,8 @@ HICON CreateMirroredIcon(HICON hIconOrig, BOOL bDestroyOriginal)
 				}
 			}
 		}
+		ReleaseDC( NULL, hdcScreen );
 	}
-	ReleaseDC( NULL, hdcScreen );
 
 	if ( hdcBitmap ) DeleteDC( hdcBitmap );
 	if ( hdcMask ) DeleteDC( hdcMask );
