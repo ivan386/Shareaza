@@ -701,8 +701,8 @@ BOOL CDownload::Save(BOOL bFlush)
 		CFile::modeReadWrite|CFile::modeCreate|CFile::osWriteThrough ) ) return FALSE;
 	
 	{
-		BYTE pBuffer[ 65536 ];
-		CArchive ar( &pFile, CArchive::store, sizeof( pBuffer ), pBuffer );
+		auto_array< BYTE > pBuffer( new BYTE[ 65536 ] );
+		CArchive ar( &pFile, CArchive::store, 65536, pBuffer.get() );
 		try
 		{
 			Serialize( ar, 0 );

@@ -650,14 +650,15 @@ void CMediaListCtrl::OnMediaAdd()
 		OFN_HIDEREADONLY|OFN_ALLOWMULTISELECT|OFN_ENABLESIZING,
 		strFilter, this );
 
-	TCHAR szFiles[81920] = { 0 };
-	dlg.m_ofn.lpstrFile	= szFiles;
+	auto_array< TCHAR > szFiles( new TCHAR[ 81920 ] );
+	ZeroMemory( szFiles.get(), 81920 * sizeof( TCHAR ) );
+	dlg.m_ofn.lpstrFile	= szFiles.get();
 	dlg.m_ofn.nMaxFile	= 81920;
 
 	if ( dlg.DoModal() != IDOK ) return;
 	
-	CString strFolder	= CString( szFiles );
-	LPCTSTR pszFile		= szFiles + strFolder.GetLength() + 1;
+	CString strFolder( szFiles.get() );
+	LPCTSTR pszFile = szFiles.get() + strFolder.GetLength() + 1;
 
 	BOOL bWasEmpty = ( GetItemCount() == 0 );
 

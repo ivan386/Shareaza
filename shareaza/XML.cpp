@@ -656,14 +656,11 @@ CXMLElement* CXMLElement::FromFile(HANDLE hFile, BOOL bHeader)
 	DWORD nByte = GetFileSize( hFile, NULL );
 	if ( nByte > 4096*1024 ) return FALSE;
 
-	BYTE* pByte = new BYTE[ nByte ];
-	ReadFile( hFile, pByte, nByte, &nByte, NULL );
+	auto_array< BYTE > pByte( new BYTE[ nByte ] );
 
-	CXMLElement* pXML = FromBytes( pByte, nByte, bHeader );
+	if ( ! ReadFile( hFile, pByte.get(), nByte, &nByte, NULL ) ) return FALSE;
 
-	delete [] pByte;
-
-	return pXML;
+	return FromBytes( pByte.get(), nByte, bHeader );
 }
 
 //////////////////////////////////////////////////////////////////////

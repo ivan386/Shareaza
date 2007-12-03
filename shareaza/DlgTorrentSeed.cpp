@@ -418,15 +418,16 @@ BOOL CTorrentSeedDlg::VerifySingle()
 	m_nBlockNumber	= 0;
 	m_nBlockLength	= m_pInfo.m_nBlockSize;
 	
-	BYTE* pBuffer	= new BYTE[ BUFFER_SIZE ];
+	auto_array< BYTE > pBuffer( new BYTE[ BUFFER_SIZE ] );
 	
 	for ( m_nVolume = 0 ; m_nVolume < m_nTotal ; )
 	{
 		DWORD nBuffer	= min( ( m_nTotal - m_nVolume ), BUFFER_SIZE );
 		DWORD tStart	= GetTickCount();
 		
-		ReadFile( hTarget, pBuffer, nBuffer, &nBuffer, NULL );
-		if ( ! VerifyData( pBuffer, nBuffer, m_sTarget ) ) break;
+		if ( ! ReadFile( hTarget, pBuffer.get(), nBuffer, &nBuffer, NULL ) ||
+			 ! VerifyData( pBuffer.get(), nBuffer, m_sTarget ) )
+			 break;
 		
 		m_nVolume += nBuffer;
 		m_nScaled = (int)( (double)m_nVolume / (double)m_nTotal * 1000.0f );
@@ -438,7 +439,6 @@ BOOL CTorrentSeedDlg::VerifySingle()
 		if ( m_bCancel ) break;
 	}
 	
-	delete [] pBuffer;
 	CloseHandle( hTarget );
 	
 	return ( m_nVolume >= m_nTotal ) && VerifyData( NULL, 0, m_sTarget );
@@ -525,7 +525,7 @@ BOOL CTorrentSeedDlg::BuildFiles(HANDLE hTarget)
 
 BOOL CTorrentSeedDlg::CopyFile(HANDLE hTarget, HANDLE hSource, QWORD nLength, LPCTSTR pszPath)
 {
-	BYTE* pBuffer = new BYTE[ BUFFER_SIZE ];
+	auto_array< BYTE > pBuffer( new BYTE[ BUFFER_SIZE ] );
 	
 	while ( nLength )
 	{
@@ -533,16 +533,13 @@ BOOL CTorrentSeedDlg::CopyFile(HANDLE hTarget, HANDLE hSource, QWORD nLength, LP
 		DWORD nSuccess	= 0;
 		DWORD tStart	= GetTickCount();
 		
-		ReadFile( hSource, pBuffer, nBuffer, &nBuffer, NULL );
-		
-		if ( ! VerifyData( pBuffer, nBuffer, pszPath ) )
+		if ( ! ReadFile( hSource, pBuffer.get(), nBuffer, &nBuffer, NULL ) ||
+			 ! VerifyData( pBuffer.get(), nBuffer, pszPath ) ||
+			 ! WriteFile( hTarget, pBuffer.get(), nBuffer, &nSuccess, NULL ) )
 		{
-			delete [] pBuffer;
 			return FALSE;
 		}
-		
-		WriteFile( hTarget, pBuffer, nBuffer, &nSuccess, NULL );
-		
+
 		if ( nSuccess == nBuffer )
 		{
 			nLength -= nBuffer;
@@ -561,8 +558,6 @@ BOOL CTorrentSeedDlg::CopyFile(HANDLE hTarget, HANDLE hSource, QWORD nLength, LP
 		Sleep( min( tStart, 50ul ) );
 		if ( m_bCancel ) break;
 	}
-	
-	delete [] pBuffer;
 	
 	if ( nLength == 0 )
 	{
