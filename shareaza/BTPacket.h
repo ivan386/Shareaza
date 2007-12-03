@@ -106,6 +106,7 @@ inline void CBTPacket::CBTPacketPool::FreePoolImpl(CPacket* pPacket)
 #define BT_PACKET_REQUEST			6
 #define BT_PACKET_PIECE				7
 #define BT_PACKET_CANCEL			8
+#define BT_PACKET_DHT_PORT			9
 
 #define BT_PACKET_HANDSHAKE			128
 #define BT_PACKET_SOURCE_REQUEST	129

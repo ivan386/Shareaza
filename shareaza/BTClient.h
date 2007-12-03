@@ -76,5 +76,6 @@ protected:
 	void			SendBeHandshake();							// Send extended client handshake
 	BOOL			OnBeHandshake(CBTPacket* pPacket);			// Process extended client handshake
 	BOOL			OnSourceRequest(CBTPacket* pPacket);
+	BOOL			OnDHTPort(CBTPacket* pPacket);
 	void			DetermineUserAgent();						// Figure out the other client name/version from the peer ID
 };

@@ -37,6 +37,7 @@
 #include "UploadTransferBT.h"
 #include "ShareazaURL.h"
 #include "GProfile.h"
+#include "Datagrams.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -856,7 +857,8 @@ BOOL CBTClient::OnPacket(CBTPacket* pPacket)
 		return m_pDownloadTransfer == NULL || m_pDownloadTransfer->OnPiece( pPacket );
 	case BT_PACKET_CANCEL:
 		return m_pUpload->OnCancel( pPacket );
-	
+	case BT_PACKET_DHT_PORT:
+		return OnDHTPort( pPacket );
 	case BT_PACKET_HANDSHAKE:
 		if ( ! m_bExtended ) break;
 		return OnBeHandshake( pPacket );
@@ -1015,5 +1017,20 @@ BOOL CBTClient::OnSourceRequest(CBTPacket* /*pPacket*/)
 	pResponse->Write( pOutput.m_pBuffer, pOutput.m_nLength );
 	Send( pResponse );
 	
+	return TRUE;
+}
+
+//////////////////////////////////////////////////////////////////////
+// CBTClient DHT
+
+BOOL CBTClient::OnDHTPort(CBTPacket* pPacket)
+{
+	if ( pPacket && pPacket->GetRemaining() == 2 )
+	{
+//		WORD nPort = pPacket->ReadShortBE();
+//		SOCKADDR_IN addr = m_pHost;
+//		addr.sin_port = nPort;
+//		Datagrams.DHTPing( &addr );
+	}
 	return TRUE;
 }
