@@ -47,6 +47,8 @@
 #include "G2Packet.h"
 #include "EDClients.h"
 #include "EDPacket.h"
+#include "BENode.h"
+#include "BTClient.h"
 #include "Security.h"
 #include "HostCache.h"
 #include "DiscoveryServices.h"
@@ -627,72 +629,291 @@ BOOL CDatagrams::TryRead()
 
 BOOL CDatagrams::OnDatagram(SOCKADDR_IN* pHost, BYTE* pBuffer, DWORD nLength)
 {
+	BOOL bHandled = FALSE;
 	GNUTELLAPACKET* pG1UDP = (GNUTELLAPACKET*)pBuffer;
-	
-	// if it is Gnutella UDP packet, packet size is 23 bytes or bigger.
-	if ( nLength >= sizeof(GNUTELLAPACKET)
-		// if it is Gnutella packet, packet header size + payload length written in length field = UDP packet size
-		&& ( sizeof(GNUTELLAPACKET) + pG1UDP->m_nLength ) == nLength )
-	{
-		CG1Packet* pG1Packet = CG1Packet::New( (GNUTELLAPACKET*)pG1UDP );
-		pG1Packet->SmartDump( pHost, TRUE, FALSE );
-		if ( OnPacket( pHost, pG1Packet ) )
-		{
-			pG1Packet->Release();
-			return TRUE;
-		}
-		else
-		{
-			pG1Packet->Release();
-			/* should put setting define if the packet should go through all packet handlers or not */
-			return TRUE;
-		}
-	}
-
 	ED2K_UDP_HEADER* pMULE = (ED2K_UDP_HEADER*)pBuffer;
-
-	if ( nLength > sizeof(*pMULE) && (
-		 pMULE->nProtocol == ED2K_PROTOCOL_EDONKEY ||
-		 pMULE->nProtocol == ED2K_PROTOCOL_EMULE ||
-		 pMULE->nProtocol == ED2K_PROTOCOL_EMULE_PACKED ) )
-	{
-		CEDPacket* pPacket = CEDPacket::New( pMULE, nLength );
-
-		if ( ! pPacket->InflateOrRelease( ED2K_PROTOCOL_EMULE ) )
-		{
-			pPacket->SmartDump( pHost, TRUE, FALSE );
-			EDClients.OnUDP( pHost, pPacket );
-			pPacket->Release();
-		}
-
-		return TRUE;
-	}
-
 	SGP_HEADER* pSGP = (SGP_HEADER*)pBuffer;
 
-	if ( nLength >= sizeof(*pSGP) && strncmp( pSGP->szTag, SGP_TAG_2, 3 ) == 0 )
+	// Detect Gnutella 1 packets
+
+	if ( nLength >= sizeof(GNUTELLAPACKET) &&
+		( sizeof(GNUTELLAPACKET) + pG1UDP->m_nLength ) == nLength )
 	{
-		if ( pSGP->nPart == 0 ) return FALSE;
-		if ( pSGP->nCount && pSGP->nPart > pSGP->nCount ) return FALSE;
+		CG1Packet* pG1Packet = CG1Packet::New( pG1UDP );
+		if ( pG1Packet )
+		{
+			bHandled = OnPacket( pHost, pG1Packet );
 
-		nLength -= sizeof(*pSGP);
+			pG1Packet->Release();
 
+			if ( bHandled )
+				return TRUE;
+		}
+	}
+
+	// Detect ED2K and KAD packets
+
+	if ( nLength > sizeof(ED2K_UDP_HEADER) )
+	{
+		switch ( pMULE->nProtocol )
+		{
+		case ED2K_PROTOCOL_EDONKEY:
+		case ED2K_PROTOCOL_EMULE:
+		case ED2K_PROTOCOL_EMULE_PACKED:
+		case ED2K_PROTOCOL_KAD:
+		case ED2K_PROTOCOL_KAD_PACKED:
+		case ED2K_PROTOCOL_REVCONNECT:
+		case ED2K_PROTOCOL_REVCONNECT_PACKED:
+			{
+				CEDPacket* pPacket = CEDPacket::New( pMULE, nLength );
+				if ( ! pPacket->InflateOrRelease() )
+				{
+					bHandled = EDClients.OnUDP( pHost, pPacket );					
+
+					pPacket->Release();
+
+					if ( bHandled )
+						return TRUE;
+				}
+			}
+		}
+	}
+
+	// Detect Gnutella 2 packets
+
+	if ( nLength >= sizeof(SGP_HEADER) &&
+		( *(DWORD*)pSGP->szTag & 0x00ffffff ) == ( *(DWORD*)SGP_TAG_2 & 0x00ffffff ) &&
+		pSGP->nPart && ( ! pSGP->nCount || pSGP->nPart <= pSGP->nCount ) )
+	{
 		if ( pSGP->nCount )
 		{
-			OnReceiveSGP( pHost, pSGP, nLength );
+			bHandled = OnReceiveSGP( pHost, pSGP, nLength - sizeof(SGP_HEADER) );
 		}
 		else
 		{
-			OnAcknowledgeSGP( pHost, pSGP, nLength );
+			bHandled = OnAcknowledgeSGP( pHost, pSGP, nLength - sizeof(SGP_HEADER) );
 		}
 
-		return TRUE;
+		if ( bHandled )
+			return TRUE;
 	}
-	// We do not handle BT UDP packets.
-	// theApp.Message( MSG_DEBUG, _T("Recieved unknown UDP packet type"));
+
+	// Detect BitTorrent packets
+
+	if ( nLength > 16 )
+	{
+		CBuffer pInput;
+		pInput.Add( pBuffer, nLength );
+		CBENode* pRoot = CBENode::Decode( &pInput );
+		if ( pRoot )
+		{
+			bHandled = OnReceiveBT( pHost, pRoot );
+
+			delete pRoot;
+
+			if ( bHandled )
+				return TRUE;
+		}
+	}
+
+	// Report unknown packets
+
+	CString strText, strTmp;
+	strText.Format( _T("UDP: Recieved unknown packet (%i bytes) from %s"),
+		nLength, (LPCTSTR)CString( inet_ntoa( pHost->sin_addr ) ) );
+	for ( DWORD i = 0; i < nLength && i < 80; i++ )
+	{
+		if ( ! i )
+			strText += _T(": ");
+		strText += ( ( pBuffer[ i ] < ' ' ) ? '.' : (char)pBuffer[ i ] );
+	}
+	theApp.Message( MSG_DEBUG, _T("%s"), strText );
 
 	return FALSE;
 }
+
+//////////////////////////////////////////////////////////////////////
+// CDatagrams BitTorrent receive handler
+
+BOOL CDatagrams::OnReceiveBT(const SOCKADDR_IN* pHost, const CBENode* pRoot)
+{
+	theApp.Message( MSG_DEBUG, _T("Recieved UDP BitTorrent packet from %s: %s"),
+		(LPCTSTR)CString( inet_ntoa( pHost->sin_addr ) ), (LPCTSTR)pRoot->Encode() );
+
+	m_nInPackets++;
+
+	// TODO: pPacket->SmartDump( pHost, TRUE, FALSE );
+
+	BOOL bHandled = FALSE;
+	CBENode pReply;
+	
+	if ( pRoot->IsType( CBENode::beDict ) )
+	{
+		// Get version
+		CBENode* pVersion = pRoot->GetNode( "v" );
+		if ( pVersion && pVersion->IsType( CBENode::beString ) )
+		{
+		}
+
+		// Get packet type and transaction id
+		CBENode* pType = pRoot->GetNode( "y" );
+		CBENode* pTransID = pRoot->GetNode( "t" );
+		if ( pType && pType->IsType( CBENode::beString ) &&
+			pTransID && pTransID->IsType( CBENode::beString ) )
+		{
+			if ( pType->GetString() == "q" )
+			{
+				// Query message
+				CBENode* pQueryMethod = pRoot->GetNode( "q" );
+				CBENode* pQueryData = pRoot->GetNode( "a" );
+				if ( pQueryMethod && pQueryMethod->IsType( CBENode::beString ) &&
+					pQueryData && pQueryData->IsType( CBENode::beDict ) )
+				{
+					if ( pQueryMethod->GetString() == "ping" )
+					{
+						// Ping
+						CBENode* pNodeID = pQueryData->GetNode( "id" );
+						if ( pNodeID && pNodeID->IsType( CBENode::beString ) &&
+							pNodeID->m_nValue == 20 )
+						{
+							Hashes::BtGuid oNodeGUID;
+							CopyMemory( &oNodeGUID[0], pNodeID->m_pValue, 20 );
+							oNodeGUID.validate();
+
+							// Send "Pong" reply
+							CBENode* pReplyData = pReply.Add( "r" );
+							Hashes::BtGuid oMyGUID( MyProfile.oGUIDBT );
+							pReplyData->Add( "id" )->SetString( &oMyGUID[0], oMyGUID.byteCount );
+							pReply.Add( "y" )->SetString( "r" );
+							pReply.Add( "t" )->SetString( pTransID->m_pValue, (size_t)pTransID->m_nValue );
+
+							bHandled = TRUE;
+						}
+					}
+					else if ( pQueryMethod->GetString() == "find_node" )
+					{
+						// Find node
+					}
+					else if ( pQueryMethod->GetString() == "get_peers" )
+					{
+						// Get peers
+					}
+					else if ( pQueryMethod->GetString() == "announce_peer" )
+					{
+						// Announce peer
+					}
+					// else if ( pQueryMethod->GetString() == "error" ) - ???
+					// else Reply: "204 Method Unknown"
+				}
+			}
+			else if ( pType->GetString() == "r" )
+			{
+				// Response message
+				CBENode* pResponse = pRoot->GetNode( "r" );
+				if ( pResponse && pResponse->IsType( CBENode::beDict ) )
+				{
+					CBENode* pNodeID = pResponse->GetNode( "id" );
+					if ( pNodeID && pNodeID->IsType( CBENode::beString ) &&
+						pNodeID->m_nValue == 20 )
+					{
+						Hashes::BtGuid oNodeGUID;
+						CopyMemory( &oNodeGUID[0], pNodeID->m_pValue, 20 );
+						oNodeGUID.validate();
+
+						// Check queries pool for pTransID
+
+						// Save access token
+						CBENode* pToken = pResponse->GetNode( "token" );
+						if ( pToken && pToken->IsType( CBENode::beString ) )
+						{
+						}
+
+						CBENode* pPeers = pResponse->GetNode( "values" );
+						if ( pPeers && pPeers->IsType( CBENode::beList) )
+						{
+						}
+
+						CBENode* pNodes = pResponse->GetNode( "nodes" );
+						if ( pNodes && pNodes->IsType( CBENode::beString ) )
+						{
+						}
+
+						bHandled = TRUE;
+					}
+				}
+			}
+			else if ( pType->GetString() == "e" )
+			{
+				// Error message
+				CBENode* pError = pRoot->GetNode( "e" );
+				if ( pError && pError->IsType( CBENode::beList ) )
+				{
+				}
+			}
+		}
+	}
+
+	if ( bHandled )
+	{
+		// Send reply if any
+		if ( ! pReply.IsType( CBENode::beNull ) )
+		{
+			pReply.Add( "v" )->SetString( theApp.m_pBTVersion, 4 );
+
+			CBuffer pOutput;
+			pReply.Encode( &pOutput );
+			sendto( m_hSocket, (LPSTR)pOutput.m_pBuffer, pOutput.m_nLength, 0,
+				(SOCKADDR*)pHost, sizeof(SOCKADDR_IN) );
+
+			theApp.Message( MSG_DEBUG, _T("UDP: Sended BitTorrent packet to %s: %s"),
+				(LPCTSTR)CString( inet_ntoa( pHost->sin_addr ) ), (LPCTSTR)pReply.Encode() );
+		}
+		return TRUE;
+	}
+	// else reply "203 Protocol Error"
+
+	return FALSE;
+}
+
+/*void CDatagrams::DHTPing(const SOCKADDR_IN* pHost)
+{
+	CBENode pPing;
+	CBENode* pPingData = pPing.Add( "a" );
+	Hashes::BtGuid oMyGUID( MyProfile.oGUIDBT );
+	pPingData->Add( "id" )->SetString( &oMyGUID[0], oMyGUID.byteCount );
+	pPing.Add( "y" )->SetString( "q" );
+	pPing.Add( "t" )->SetString( "1234" ); // TODO
+	pPing.Add( "q" )->SetString( "ping" );
+	pPing.Add( "v" )->SetString( theApp.m_pBTVersion, 4 );
+	CBuffer pPingOutput;
+	pPing.Encode( &pPingOutput );
+
+	sendto( m_hSocket, (LPSTR)pPingOutput.m_pBuffer, pPingOutput.m_nLength, 0,
+		(SOCKADDR*)pHost, sizeof(SOCKADDR_IN) );
+
+	theApp.Message( MSG_DEBUG, _T("UDP: Sended BitTorrent ping packet to %s: %s"),
+		(LPCTSTR)CString( inet_ntoa( pHost->sin_addr ) ), (LPCTSTR)pPing.Encode() );
+}*/
+
+/*void CDatagrams::DHTGetPeers(const SOCKADDR_IN* pHost, const Hashes::BtGuid& oNodeGUID, const Hashes::BtHash& oGUID)
+{
+	CBENode pGetPeers;
+	CBENode* pGetPeersData = pGetPeers.Add( "a" );
+	pGetPeersData->Add( "id" )->SetString( &oNodeGUID[0], oNodeGUID.byteCount );
+	pGetPeersData->Add( "info_hash" )->SetString( &oGUID[0], oGUID.byteCount );
+	pGetPeers.Add( "y" )->SetString( "q" );
+	pGetPeers.Add( "t" )->SetString( "4567" ); // TODO
+	pGetPeers.Add( "q" )->SetString( "get_peers" );
+	pGetPeers.Add( "v" )->SetString( theApp.m_pBTVersion, 4 );
+	CBuffer pGetPeersOutput;
+	pGetPeers.Encode( &pGetPeersOutput );
+
+	sendto( m_hSocket, (LPSTR)pGetPeersOutput.m_pBuffer, pGetPeersOutput.m_nLength, 0,
+		(SOCKADDR*)pHost, sizeof(SOCKADDR_IN) );
+
+	theApp.Message( MSG_DEBUG, _T("UDP: Sended BitTorrent get peers packet to %s: %s"),
+		(LPCTSTR)CString( inet_ntoa( pHost->sin_addr ) ), (LPCTSTR)pGetPeers.Encode() );
+}*/
 
 //////////////////////////////////////////////////////////////////////
 // CDatagrams SGP receive handler
@@ -915,6 +1136,8 @@ void CDatagrams::Remove(CDatagramIn* pDG, BOOL bReclaimOnly)
 
 BOOL CDatagrams::OnPacket(SOCKADDR_IN* pHost, CG1Packet* pPacket)
 {
+	pPacket->SmartDump( pHost, TRUE, FALSE );
+
 	m_nInPackets++;
 
 	switch ( pPacket->m_nType )

@@ -60,6 +60,7 @@ class CG1Packet;
 class CG2Packet;
 class CDatagramIn;
 class CDatagramOut;
+class CBENode;
 
 
 class CDatagrams
@@ -120,6 +121,8 @@ public:
 	BOOL	Send(SOCKADDR_IN* pHost, CPacket* pPacket, BOOL bRelease = TRUE, LPVOID pToken = NULL, BOOL bAck = TRUE);
 	void	PurgeToken(LPVOID pToken);
 	void	OnRun();
+//	void	DHTPing(const SOCKADDR_IN* pHost);
+//	void	DHTGetPeers(const SOCKADDR_IN* pHost, const Hashes::BtGuid& oNodeGUID, const Hashes::BtHash& oGUID);
 protected:
 	void	Measure();
 	BOOL	TryWrite();
@@ -128,6 +131,7 @@ protected:
 protected:
 	BOOL	TryRead();
 	BOOL	OnDatagram(SOCKADDR_IN* pHost, BYTE* pBuffer, DWORD nLength);
+	BOOL	OnReceiveBT(const SOCKADDR_IN* pHost, const CBENode* pRoot);
 	BOOL	OnReceiveSGP(SOCKADDR_IN* pHost, SGP_HEADER* pHeader, DWORD nLength);
 	BOOL	OnAcknowledgeSGP(SOCKADDR_IN* pHost, SGP_HEADER* pHeader, DWORD nLength);
 	void	ManagePartials();

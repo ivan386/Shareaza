@@ -1,7 +1,7 @@
 //
 // GProfile.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2006.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -38,6 +38,7 @@ public:
 // Attributes
 public:
 	CGuarded< Hashes::Guid > oGUID;
+	CGuarded< Hashes::BtGuid > oGUIDBT;
 protected:
 	CXMLElement*	m_pXML;
 protected:

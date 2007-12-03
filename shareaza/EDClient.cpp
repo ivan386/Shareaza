@@ -501,7 +501,7 @@ BOOL CEDClient::OnRead()
 
 	CLockedBuffer pInput( GetInput() );
 	
-	while ( CEDPacket* pPacket = CEDPacket::ReadBuffer( pInput, ED2K_PROTOCOL_EMULE ) )
+	while ( CEDPacket* pPacket = CEDPacket::ReadBuffer( pInput ) )
 	{
 		try
 		{

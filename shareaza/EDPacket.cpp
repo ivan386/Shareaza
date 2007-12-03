@@ -153,7 +153,7 @@ void CEDPacket::ToBufferUDP(CBuffer* pBuffer) const
 	pBuffer->Add( m_pBuffer, m_nLength );
 }
 
-CEDPacket* CEDPacket::ReadBuffer(CBuffer* pBuffer, BYTE nEdProtocol)
+CEDPacket* CEDPacket::ReadBuffer(CBuffer* pBuffer)
 {
 	if ( pBuffer->m_nLength < sizeof( ED2K_TCP_HEADER ) ) return NULL;
 	ED2K_TCP_HEADER* pHeader = reinterpret_cast<ED2K_TCP_HEADER*>(pBuffer->m_pBuffer);
@@ -163,7 +163,7 @@ CEDPacket* CEDPacket::ReadBuffer(CBuffer* pBuffer, BYTE nEdProtocol)
 	if ( pBuffer->m_nLength - sizeof(*pHeader) + 1 < pHeader->nLength ) return NULL;
 	CEDPacket* pPacket = CEDPacket::New( pHeader );
 	pBuffer->Remove( sizeof(*pHeader) + pHeader->nLength - 1 );
-	if ( pPacket->InflateOrRelease( nEdProtocol ) ) return NULL;
+	if ( pPacket->InflateOrRelease() ) return NULL;
 	return pPacket;
 }
 
@@ -192,7 +192,7 @@ BOOL CEDPacket::Deflate()
 	return TRUE;
 }
 
-BOOL CEDPacket::InflateOrRelease(BYTE nEdProtocol)
+BOOL CEDPacket::InflateOrRelease()
 {
 	if ( m_nEdProtocol != ED2K_PROTOCOL_EMULE_PACKED &&
 		 m_nEdProtocol != ED2K_PROTOCOL_KAD_PACKED &&
@@ -204,7 +204,18 @@ BOOL CEDPacket::InflateOrRelease(BYTE nEdProtocol)
 
 	if ( pOutput.get() != NULL )
 	{
-		m_nEdProtocol = nEdProtocol;
+		switch ( m_nEdProtocol )
+		{
+		case ED2K_PROTOCOL_EMULE_PACKED:
+			m_nEdProtocol = ED2K_PROTOCOL_EMULE;
+			break;
+		case ED2K_PROTOCOL_KAD_PACKED:
+			m_nEdProtocol = ED2K_PROTOCOL_KAD;
+			break;
+		case ED2K_PROTOCOL_REVCONNECT_PACKED:
+			m_nEdProtocol = ED2K_PROTOCOL_REVCONNECT;
+			break;
+		}
 
 		if ( m_nBuffer >= nOutput )
 		{

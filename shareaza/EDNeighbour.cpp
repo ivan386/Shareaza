@@ -253,7 +253,7 @@ BOOL CEDNeighbour::OnRead()
 
 	CLockedBuffer pInput( GetInput() );
 
-	while ( CEDPacket* pPacket = CEDPacket::ReadBuffer( m_pZInput ? m_pZInput : pInput, ED2K_PROTOCOL_EDONKEY ) )
+	while ( CEDPacket* pPacket = CEDPacket::ReadBuffer( m_pZInput ? m_pZInput : pInput ) )
 	{
 		try
 		{

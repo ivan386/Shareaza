@@ -197,6 +197,7 @@ CShareazaApp::CShareazaApp()
 , m_pFontManager( NULL )
 {
 	ZeroMemory( m_nVersion, sizeof( m_nVersion ) );
+	ZeroMemory( m_pBTVersion, sizeof( m_pBTVersion ) );
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -689,6 +690,11 @@ void CShareazaApp::GetVersionNumber()
 	m_sSmartAgent = _T( CLIENT_NAME );
 	m_sSmartAgent += _T(" ");
 	m_sSmartAgent += m_sVersion;
+
+	m_pBTVersion[ 0 ] = BT_ID1;
+	m_pBTVersion[ 1 ] = BT_ID2;
+	m_pBTVersion[ 2 ] = (BYTE)m_nVersion[ 0 ];
+	m_pBTVersion[ 3 ] = (BYTE)m_nVersion[ 1 ];
 }
 
 /////////////////////////////////////////////////////////////////////////////

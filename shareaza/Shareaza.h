@@ -59,6 +59,7 @@ public:
 	HANDLE				m_pMutex;
 	CMutex				m_pSection;
 	WORD				m_nVersion[4];
+	BYTE				m_pBTVersion[4];			// SZxx
 	CString				m_sVersion;					// x.x.x.x
 	CString				m_sSmartAgent;				// Shareaza x.x.x.x
 	CString				m_sBuildDate;
@@ -126,7 +127,6 @@ public:
 
 	HINSTANCE	m_hLibGFL;
 
-public:
 	HINSTANCE			CustomLoadLibrary(LPCTSTR);
 	CMainWnd*			SafeMainWnd() const;
 	void				Message(int nType, UINT nID, ...) const;

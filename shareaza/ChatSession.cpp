@@ -546,7 +546,7 @@ BOOL CChatSession::ReadPacketsED2K()
 
 	CLockedBuffer pInput( GetInput() );
 	
-	while ( CEDPacket* pPacket = CEDPacket::ReadBuffer( pInput, ED2K_PROTOCOL_EMULE ) )
+	while ( CEDPacket* pPacket = CEDPacket::ReadBuffer( pInput ) )
 	{
 		try
 		{
@@ -584,7 +584,7 @@ BOOL CChatSession::SendPacketsED2K()
 
 	CLockedBuffer pOutput( GetOutput() );
 
-	while ( CEDPacket* pPacket = CEDPacket::ReadBuffer( pOutput, ED2K_PROTOCOL_EMULE ) )
+	while ( CEDPacket* pPacket = CEDPacket::ReadBuffer( pOutput ) )
 	{
 		ASSERT ( pPacket != NULL );
 

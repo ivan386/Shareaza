@@ -364,6 +364,8 @@ BOOL CEDClients::OnUDP(SOCKADDR_IN* pHost, CEDPacket* pPacket)
 		 pPacket->m_nEdProtocol != ED2K_PROTOCOL_EMULE )
 		 return FALSE;
 
+	pPacket->SmartDump( pHost, TRUE, FALSE );
+
 	CSingleLock pLock( &Transfers.m_pSection );
 	
 	switch ( pPacket->m_nType )

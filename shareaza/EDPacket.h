@@ -107,11 +107,11 @@ public:
 	BOOL				Deflate();
 	// Unzip packet if any.
 	//	Returns: FALSE - ok; TRUE - unzip error and packed was released
-	BOOL				InflateOrRelease(BYTE nEdProtocol);
+	BOOL				InflateOrRelease();
 public:
 	virtual	void		ToBuffer(CBuffer* pBuffer) const;
 	virtual	void		ToBufferUDP(CBuffer* pBuffer) const;
-	static	CEDPacket*	ReadBuffer(CBuffer* pBuffer, BYTE nEdProtocol);
+	static	CEDPacket*	ReadBuffer(CBuffer* pBuffer);
 public:
 	virtual LPCTSTR	GetType() const;
 	virtual void	Debug(LPCTSTR pszReason) const;
@@ -240,6 +240,7 @@ inline void CEDPacket::CEDPacketPool::FreePoolImpl(CPacket* pPacket)
 #define ED2K_C2C_ASKSHAREDFILES			0x4A
 #define ED2K_C2C_ASKSHAREDFILESANSWER	0x4B
 #define ED2K_C2C_MESSAGE				0x4E
+#define ED2K_C2C_CHANGECLIENTID			0x4D
 #define ED2K_C2C_ASKSHAREDDIRS			0x5D
 #define ED2K_C2C_ASKSHAREDDIRSANSWER	0x5F
 #define ED2K_C2C_VIEWSHAREDDIR			0x5E

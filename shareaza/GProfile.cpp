@@ -1,7 +1,7 @@
 //
 // GProfile.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2006.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -89,17 +89,32 @@ void CGProfile::Create()
 	Clear();
 
 	Hashes::Guid tmp;
-	
-	for ( int nByte = 0 ; nByte < 16 ; nByte++ ) tmp[ nByte ] = uchar( ( tmp[ nByte ] + rand() ) & 0xff );
-	tmp.validate();
+	Hashes::BtGuid tmp_bt;
+
+	VERIFY( SUCCEEDED( CoCreateGuid( reinterpret_cast< GUID* > ( &tmp[0] ) ) ) );
+
+	// Convert Gnutella GUID (128 bits) to BitTorrent GUID (160 bits)
+	CopyMemory( &tmp_bt[0], &tmp[0], tmp.byteCount );
+	for ( int nByte = tmp.byteCount ; nByte < tmp_bt.byteCount ; nByte++ )
+		tmp_bt[ nByte ] = uchar( rand() & 0xff );
+
+	VERIFY( tmp.validate() );
+	VERIFY( tmp_bt.validate() );
 
 	oGUID = tmp;
+	oGUIDBT = tmp_bt;
 
 	m_pXML = new CXMLElement( NULL, _T("gProfile") );
-	m_pXML->AddAttribute( _T("xmlns"), xmlns );
+	ASSERT( m_pXML );
+	VERIFY( m_pXML->AddAttribute( _T("xmlns"), xmlns ) );
 
 	CXMLElement* pGnutella = m_pXML->AddElement( _T("gnutella") );
-	pGnutella->AddAttribute( _T("guid"), tmp.toString() );
+	ASSERT( pGnutella );
+	VERIFY( pGnutella->AddAttribute( _T("guid"), tmp.toString() ) ) ;
+
+	CXMLElement* pBitTorrent = m_pXML->AddElement( _T("bittorrent") );
+	ASSERT( pBitTorrent );
+	VERIFY( pBitTorrent->AddAttribute( _T("guid"), tmp_bt.toString() ) );
 }
 
 void CGProfile::Clear()
@@ -182,6 +197,27 @@ BOOL CGProfile::FromXML(CXMLElement* pXML)
 	Hashes::Guid tmp;
 	if ( ! tmp.fromString( strGUID ) ) return FALSE;
 	oGUID = tmp;
+
+	// Loading BitTorrent GUID
+	Hashes::BtGuid tmp_bt;
+	CXMLElement* pBitTorrent = pXML->GetElementByName( _T("bittorrent") );
+	if ( pBitTorrent )
+	{
+		CString strGUID = pBitTorrent->GetAttributeValue( _T("guid") );
+		if ( ! tmp_bt.fromString( strGUID )) return FALSE;
+	}
+	else
+	{
+		// Convert Gnutella GUID (128 bits) to BitTorrent GUID (160 bits)
+		CopyMemory( &tmp_bt[0], &tmp[0], tmp.byteCount );
+		for ( int nByte = tmp.byteCount ; nByte < tmp_bt.byteCount ; nByte++ )
+			tmp_bt[ nByte ] = uchar( rand() & 0xff );
+		VERIFY( tmp_bt.validate() );
+
+		pBitTorrent = pXML->AddElement( _T("bittorrent") );
+		pBitTorrent->AddAttribute( _T("guid"), tmp_bt.toString() );
+	}
+	oGUIDBT = tmp_bt;
 
 	m_pXML = pXML;
 
