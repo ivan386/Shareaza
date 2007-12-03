@@ -1834,8 +1834,9 @@ void CloseThread(HANDLE* phThread, DWORD dwTimeout)
 				CRazaThread::Terminate( *phThread );
 			}
 		}
-		__except( EXCEPTION_CONTINUE_EXECUTION )
+		__except( EXCEPTION_EXECUTE_HANDLER )
 		{
+			// Thread already ended
 		}
 
 		CRazaThread::Remove( *phThread );

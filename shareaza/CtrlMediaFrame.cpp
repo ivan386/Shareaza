@@ -1663,16 +1663,16 @@ BOOL CMediaFrame::OpenFile(LPCTSTR pszFile)
 HRESULT CMediaFrame::PluginPlay(BSTR bsFilePath)
 {
 	HRESULT hr = E_FAIL;
-	try
+	__try
 	{
 		hr = m_pPlayer->Stop();
 		hr = m_pPlayer->Open( bsFilePath );
 	} 
-	catch(...)
+	__except( EXCEPTION_EXECUTE_HANDLER )
 	{ 
-		theApp.Message( MSG_ERROR, _T("Media Player failed to open file: %s"), bsFilePath );
+//		theApp.Message( MSG_ERROR, _T("Media Player failed to open file: %s"), bsFilePath );
 		Cleanup(); 
-		return EXCEPTION_CONTINUE_EXECUTION;
+		return E_FAIL;
 	}
 
 	return hr;
@@ -1686,17 +1686,22 @@ void CMediaFrame::Cleanup()
 	if ( m_pPlayer != NULL )
 	{
 		HINSTANCE hRes = AfxGetResourceHandle();
-		m_pPlayer->Close();
+		__try
+		{
+			m_pPlayer->Close();
+		}
+		__except( EXCEPTION_EXECUTE_HANDLER  )
+		{
+		}
 		__try
 		{
 			m_pPlayer->Destroy();
 		}
-		__except( GetExceptionCode() != EXCEPTION_CONTINUE_EXECUTION )
+		__except( EXCEPTION_EXECUTE_HANDLER )
 		{
 			// Some buggy visualizations crash Shareaza.
 			// Restore screen saver and power settings before
 			EnableScreenSaver();
-			throw;
 		}
 		CoLockObjectExternal( m_pPlayer, FALSE, TRUE );
 		m_pPlayer = NULL;

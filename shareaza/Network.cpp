@@ -137,8 +137,10 @@ BOOL CNetwork::IsAvailable() const
 				if ( ! ( dwState & INTERNET_CONNECTION_OFFLINE ) ) bIsAvailable = TRUE;
 			}
 		}
-		__except( EXCEPTION_CONTINUE_EXECUTION )
+		__except( EXCEPTION_EXECUTE_HANDLER )
 		{
+			// Something blocked WinAPI (for example application level firewall)
+			bIsAvailable = FALSE;
 		}
 	}
 	else
