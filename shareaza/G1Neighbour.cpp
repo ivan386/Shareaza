@@ -710,8 +710,6 @@ BOOL CG1Neighbour::OnPong(CG1Packet* pPacket)
 
 	CString strVendorCode;
 	DWORD nUptime = 0;
-	bool bUpdateNeeded = GetTickCount() - m_tLastOutPing > Settings.Gnutella1.PongUpdate || 
-						 Neighbours.m_pPongCache->Lookup( this ) == NULL;
 	bool bUltrapeer = false;
 	bool bGDNA = false;
 
@@ -795,7 +793,7 @@ BOOL CG1Neighbour::OnPong(CG1Packet* pPacket)
 	}
 
 	// If the IP address and port number in the pong is reachable
-	if (  bUpdateNeeded && ! bLocal && ! Network.IsFirewalledAddress( &nAddress, TRUE ) )
+	if ( ! bLocal && ! Network.IsFirewalledAddress( &nAddress, TRUE ) )
 	{
 		// If the pong hasn't hopped at all yet, and the address in it is the address of this remote computer
 		if ( pPacket->m_nHops == 0 && nAddress == m_pHost.sin_addr.S_un.S_addr )

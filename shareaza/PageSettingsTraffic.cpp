@@ -143,7 +143,6 @@ BOOL CAdvancedSettingsPage::OnInitDialog()
 	AddSetting( &Settings.Gnutella1.PingRate, 1000, 15, 180, _T(" s") );
 	AddSetting( &Settings.Gnutella1.PongCache, 1000, 1, 180, _T(" s") );
 	AddSetting( &Settings.Gnutella1.PongCount, 1, 1, 64 );
-	AddSetting( &Settings.Gnutella1.PongUpdate, 1000, 5, 180, _T(" s") );
 	AddSetting( &Settings.Gnutella1.QuerySearchUTF8, 1, 0, 1 );
 	AddSetting( &Settings.Gnutella1.QueryHitUTF8, 1, 0, 1 );
 	AddSetting( &Settings.Gnutella1.MaxHostsInPongs, 1, 5, 30 );
