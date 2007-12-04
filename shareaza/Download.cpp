@@ -701,7 +701,7 @@ BOOL CDownload::Save(BOOL bFlush)
 		CFile::modeReadWrite|CFile::modeCreate|CFile::osWriteThrough ) ) return FALSE;
 	
 	{
-		int nBufferLength = 65536;
+		const int nBufferLength = 65536;
 
 		auto_array< BYTE > pBuffer( new BYTE[ nBufferLength ] );
 		CArchive ar( &pFile, CArchive::store, nBufferLength, pBuffer.get() );

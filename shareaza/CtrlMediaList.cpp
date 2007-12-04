@@ -650,7 +650,7 @@ void CMediaListCtrl::OnMediaAdd()
 		OFN_HIDEREADONLY|OFN_ALLOWMULTISELECT|OFN_ENABLESIZING,
 		strFilter, this );
 
-	int nLimit = 81920;
+	const int nLimit = 81920;
 
 	auto_array< TCHAR > szFiles( new TCHAR[ nLimit ] );
 	ZeroMemory( szFiles.get(), nLimit * sizeof( TCHAR ) );

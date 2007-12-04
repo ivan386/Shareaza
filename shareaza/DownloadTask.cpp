@@ -529,7 +529,7 @@ void CDownloadTask::RunMerge()
 	}
 	pLock.Unlock();
 
-	int nBufferLength = 65536;
+	const int nBufferLength = 65536;
 
 	// Read missing file fragments from selected file
 	auto_array< BYTE > Buf( new BYTE [nBufferLength] );
