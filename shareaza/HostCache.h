@@ -35,37 +35,36 @@ public:
 	CHostCacheHost(PROTOCOLID nProtocol = PROTOCOL_NULL);
 
 	// Attributes: Host Information
-	PROTOCOLID	m_nProtocol;
-	IN_ADDR		m_pAddress;
-	WORD		m_nPort;
-	CVendor*	m_pVendor;
-	BOOL		m_bPriority;
-	DWORD		m_nUserCount;
-	DWORD		m_nUserLimit;
-	DWORD		m_nFileLimit;
-	CString		m_sName;
-	CString		m_sDescription;
-	DWORD		m_nTCPFlags;
-	DWORD		m_nUDPFlags;
-	BOOL		m_bCheckedLocally;
-	CString		m_sCountry;
+	PROTOCOLID	m_nProtocol;		// Host protocol (PROTOCOL_*)
+	IN_ADDR		m_pAddress;			// Host IP address
+	WORD		m_nPort;			// Host port number
+	CVendor*	m_pVendor;			// Vendor handler from VendorCache
+	BOOL		m_bPriority;		// Host cannot be removed on failure
+	DWORD		m_nUserCount;		// G2 leaf count / ED2K user count
+	DWORD		m_nUserLimit;		// G2 leaf limit / ED2K user limit
+	DWORD		m_nFileLimit;		// ED2K-server file limit
+	CString		m_sName;			// Host name
+	CString		m_sDescription;		// Host description
+	DWORD		m_nTCPFlags;		// ED2K TCP flags (ED2K_SERVER_TCP_*)
+	DWORD		m_nUDPFlags;		// ED2K UDP flags (ED2K_SERVER_UDP_*)
+	BOOL		m_bCheckedLocally;	// Host was successfully accessed via TCP or UDP
+	CString		m_sCountry;			// Country code
 
 	// Attributes: Contact Times
-	DWORD		m_tAdded;
-	DWORD		m_tRetryAfter;
-	DWORD		m_tConnect;
-	DWORD		m_tQuery;
-	DWORD		m_tAck;
+	DWORD		m_tAdded;			// Time when host was constructed (in ticks)
+	DWORD		m_tRetryAfter;		// G2 retry time according G2_PACKET_RETRY_AFTER packet (in seconds)
+	DWORD		m_tConnect;			// TCP connect time (in seconds)
+	DWORD		m_tQuery;			// G2 / ED2K query time (in seconds)
+	DWORD		m_tAck;				// Time when we sent something requires acknowledgement (0 - not required)
 	DWORD		m_tStats;			// ED2K stats UDP request
-	DWORD		m_tFailure;
-	DWORD		m_nFailures;
-	DWORD		m_nDailyUptime;
-	DWORD		m_tCheckTime;
+	DWORD		m_tFailure;			// Last failure time
+	DWORD		m_nFailures;		// Failures counter
+	DWORD		m_nDailyUptime;		// Daily uptime
 
 	// Attributes: Query Keys
-	DWORD		m_tKeyTime;
-	DWORD		m_nKeyValue;
-	DWORD		m_nKeyHost;
+	DWORD		m_tKeyTime;			// G2 time when query key was received
+	DWORD		m_nKeyValue;		// G2 query key
+	DWORD		m_nKeyHost;			// G2 query key host
 
 	CNeighbour*	ConnectTo(BOOL bAutomatic = FALSE);
 	CString		ToString() const;
@@ -124,6 +123,7 @@ struct std::less< CHostCacheHostPtr > : public std::binary_function< CHostCacheH
 typedef std::multiset< CHostCacheHostPtr > CHostCacheIndex;
 typedef std::pair < CHostCacheIndex::iterator, CHostCacheIndex::iterator > CHostCacheTimeItPair;
 typedef CHostCacheIndex::const_iterator CHostCacheIterator;
+typedef CHostCacheIndex::const_reverse_iterator CHostCacheRIterator;
 
 struct good_host : public std::binary_function< CHostCacheMapPair, BOOL, bool>
 {
@@ -146,6 +146,7 @@ public:
 	mutable CCriticalSection	m_pSection;
 
 	CHostCacheHostPtr	Add(IN_ADDR* pAddress, WORD nPort, DWORD tSeen = 0, LPCTSTR pszVendor = NULL, DWORD nUptime = 0);
+	// Add host in form "IP:Port SeenTime"
 	BOOL				Add(LPCTSTR pszHost, DWORD tSeen = 0, LPCTSTR pszVendor = NULL, DWORD nUptime = 0);
 	void				Update(CHostCacheHostPtr pHost, WORD nPort = 0, DWORD tSeen = 0, LPCTSTR pszVendor = NULL, DWORD nUptime = 0);
 	bool				Remove(CHostCacheHostPtr pHost);
@@ -175,9 +176,24 @@ public:
 		return m_HostsTime.end();
 	}
 
+	inline CHostCacheRIterator RBegin() const throw()
+	{
+		return m_HostsTime.rbegin();
+	}
+
+	inline CHostCacheRIterator REnd() const throw()
+	{
+		return m_HostsTime.rend();
+	}
+
 	inline const CHostCacheHostPtr GetNewest() const throw()
 	{
 		return IsEmpty() ? NULL : *Begin();
+	}
+
+	inline const CHostCacheHostPtr GetOldest() const throw()
+	{
+		return IsEmpty() ? NULL : *( End()-- );
 	}
 
 	inline bool IsEmpty() const throw()

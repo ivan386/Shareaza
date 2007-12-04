@@ -295,32 +295,7 @@ BOOL CHostCacheList::Add(LPCTSTR pszHost, DWORD tSeen, LPCTSTR pszVendor, DWORD 
 	
 	DWORD nAddress = inet_addr( CT2CA( (LPCTSTR)strHost ) );
 
-	// Don't add invalid addresses
-	if ( ! nPort ) 
-		 return TRUE;
-	if ( ! nAddress ) 
-		 return TRUE;
-	
-	// Don't add own firewalled IPs
-	if ( Network.IsFirewalledAddress( &nAddress, TRUE, TRUE ) ) 
-		return TRUE;
-
-	// Don't add own IP if set not to. (Above check may not run if not ignoring local IPs)
-	if ( ( Settings.Connection.IgnoreOwnIP ) && Network.IsSelfIP( *(IN_ADDR*)&nAddress ) )
-		 return TRUE;
-
-	// check against IANA Reserved address.
-	if ( Network.IsReserved( (IN_ADDR*)&nAddress ) )
-		 return TRUE;
-
-	// Check security settings, don't add blocked IPs
-	if ( Security.IsDenied( (IN_ADDR*)&nAddress ) )
-		 return TRUE;
-
-	// Try adding it to the cache. (duplicates will be rejected)
-	AddInternal( (IN_ADDR*)&nAddress, (WORD)nPort, tSeen, pszVendor, nUptime );
-	
-	return TRUE;
+	return ( Add( (IN_ADDR*)&nAddress, (WORD)nPort, tSeen, pszVendor, nUptime ) != NULL );
 }
 
 // This function actually add the remote client to the host cache. Private, but used by the public 
