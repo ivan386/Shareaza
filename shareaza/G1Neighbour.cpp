@@ -682,8 +682,9 @@ int CG1Neighbour::WriteRandomCache(CGGEPItem* pItem)
 BOOL CG1Neighbour::OnPong(CG1Packet* pPacket)
 {
 	Statistics.Current.Gnutella1.PongsReceived++;
+
 	// If the pong is too short, or the pong is too long and settings say we should watch that
-	if ( pPacket->m_nLength < 14 || ( pPacket->m_nLength > 14 && Settings.Gnutella1.StrictPackets ) )
+	if ( pPacket->m_nLength < 14 || ( pPacket->m_nLength > 14 && Settings.Gnutella1.StrictPackets && ! m_bGGEP ) )
 	{
 		// Pong packets should be 14 bytes long, drop this strangely sized one
 		theApp.Message( MSG_ERROR, IDS_PROTOCOL_SIZE_PONG, (LPCTSTR)m_sAddress );
@@ -711,82 +712,48 @@ BOOL CG1Neighbour::OnPong(CG1Packet* pPacket)
 	DWORD nUptime = 0;
 	bool bUpdateNeeded = GetTickCount() - m_tLastOutPing > Settings.Gnutella1.PongUpdate || 
 						 Neighbours.m_pPongCache->Lookup( this ) == NULL;
+	bool bUltrapeer = false;
+	bool bGDNA = false;
 
 	// If the pong is bigger than 14 bytes, and the remote computer told us in the handshake it supports GGEP blocks
 	if ( pPacket->m_nLength > 14 && m_bGGEP )
 	{
-		CGGEPBlock pGGEP;
 		// There is a GGEP block here, and checking and adjusting the TTL and hops counts worked
+		CGGEPBlock pGGEP;
 		if ( pGGEP.ReadFromPacket( pPacket ) )
 		{
-			CGGEPItem* pUP = pGGEP.Find( GGEP_HEADER_UP_SUPPORT );
-
-			if ( pUP ) // Catch pongs and update host cache only from ultrapeers
+			// Read vendor code
+			if ( CGGEPItem* pVC = pGGEP.Find( GGEP_HEADER_VENDOR_INFO, 4 ) )
 			{
-				// Read vendor code
-				if ( CGGEPItem* pVC = pGGEP.Find( GGEP_HEADER_VENDOR_INFO, 4 ) )
-				{
-					CHAR szaVendor[ 4 ];
-					pVC->Read( szaVendor, 4 );
-					TCHAR szVendor[ 5 ] = { szaVendor[0], szaVendor[1], szaVendor[2], szaVendor[3], 0 };
-					strVendorCode.Format( _T("%s"), (LPCTSTR)szVendor);
-				}
+				CHAR szaVendor[ 4 ] = {};
+				pVC->Read( szaVendor, 4 );
+				TCHAR szVendor[ 5 ] = { szaVendor[0], szaVendor[1], szaVendor[2], szaVendor[3], 0 };
+				strVendorCode = szVendor;
+				strVendorCode.Trim();
+			}
 
-				// Read daily uptime
-				if ( CGGEPItem* pDU = pGGEP.Find( GGEP_HEADER_DAILY_AVERAGE_UPTIME, 1 ) )
-				{
-					pDU->Read( (void*)&nUptime, 4 );
-				}
+			// Read daily uptime
+			if ( CGGEPItem* pDU = pGGEP.Find( GGEP_HEADER_DAILY_AVERAGE_UPTIME, 4 ) )
+			{
+				pDU->Read( (void*)&nUptime, 4 );
+			}
 
-				CGGEPItem* pIPPs = NULL;
-				CGGEPItem* pGDNAs = NULL;
-				if ( Settings.Experimental.EnableDIPPSupport )
-				{
-					pIPPs = pGGEP.Find( GGEP_HEADER_PACKED_IPPORTS, 6 );
-					// GDNA has a bug in their code; they send DIP but receive DIPP (fixed in the latest versions)
-					pGDNAs = pGGEP.Find( GGEP_HEADER_GDNA_PACKED_IPPORTS, 6 );
-					if ( ! pGDNAs )
-						pGDNAs = pGGEP.Find( GGEP_HEADER_GDNA_PACKED_IPPORTS_x, 6 );
-				}
+			CG1Packet::GGEPReadCachedHosts( pGGEP );
 
-				// We got a response to SCP extension, add hosts to cache if IPP extension exists
-				while ( bUpdateNeeded && ( pIPPs || pGDNAs ) )
-				{
-					CGGEPItem* pItem = pIPPs ? pIPPs : pGDNAs;
-					CString str = pGDNAs ? L"GDNA" : L"G1";
-					// The first four bytes represent the IP address and the last two represent the port
-					// The length of the number of bytes of IPP must be divisible by 6
-					if ( ( pItem->m_nLength - pItem->m_nPosition ) % 6 == 0 )
-					{
-						while ( pItem->m_nPosition != pItem->m_nLength )
-						{
-							DWORD nAddress = 0;
-							WORD nPort = 0;
-							pItem->Read( (void*)&nAddress, 4 );
-							pItem->Read( (void*)&nPort, 2 );
-							if ( ! Network.IsFirewalledAddress( (IN_ADDR*)&nAddress, TRUE ) && 
-								 ! Network.IsReserved( (IN_ADDR*)&nAddress ) && nPort != 0 )
-							{
-								theApp.Message( MSG_DEBUG, _T("Got %s host through pong (%s:%i)"), 
-									(LPCTSTR)str, (LPCTSTR)CString( inet_ntoa( *(IN_ADDR*)&nAddress ) ), nPort ); 
-								HostCache.Gnutella1.Add( (IN_ADDR*)&nAddress, nPort, 0, pGDNAs ? (LPCTSTR)str : NULL );
-								// Add to separate cache to have a quick access only to GDNAs
-								if ( pGDNAs )
-									HostCache.G1DNA.Add( (IN_ADDR*)&nAddress, nPort, 0, (LPCTSTR)str );
-							}
-						}
-					}
-					if ( pIPPs )
-						pIPPs = NULL;
-					else if ( pGDNAs )
-						pGDNAs = NULL;
-				}
+			if ( CGGEPItem* pUP = pGGEP.Find( GGEP_HEADER_UP_SUPPORT ) )
+			{
+				bUltrapeer = true;
+			}
+
+			if ( CGGEPItem* pGDNA = pGGEP.Find( GGEP_HEADER_SUPPORT_GDNA ) )
+			{
+				bGDNA = true;
 			}
 
 			if ( pPacket->Hop() ) // Calling Hop makes sure TTL is 2+ and then moves a count from TTL to hops
 			{
 				// Find the CG1Neighbour object that created this pong packet (do)
-				CG1Neighbour* pOrigin;
+				CG1Neighbour* pOrigin = NULL;
 				Neighbours.m_pPingRoute->Lookup( pPacket->m_oGUID, (CNeighbour**)&pOrigin );
 
 				// If we're connected to that computer, and it supports GGEP extension blocks
@@ -838,14 +805,24 @@ BOOL CG1Neighbour::OnPong(CG1Packet* pPacket)
 			m_nFileVolume = nVolume;
 
 			// Add the IP address and port number to the Gnutella host cache of computers we can try to connect to
-			HostCache.Gnutella1.Add( (IN_ADDR*)&nAddress, nPort, time(NULL), 
-									 m_bShareaza ? SHAREAZA_VENDOR_T : (LPCTSTR)strVendorCode, nUptime );
+			HostCache.Gnutella1.Add( (IN_ADDR*)&nAddress, nPort, 0, 
+				( ( m_bShareaza && strVendorCode.IsEmpty() ) ? SHAREAZA_VENDOR_T :
+					(LPCTSTR)strVendorCode ), nUptime );
+
+			if ( bGDNA )
+				HostCache.G1DNA.Add( (IN_ADDR*)&nAddress, nPort, 0,
+				( strVendorCode.IsEmpty() ? NULL : (LPCTSTR)strVendorCode ), nUptime );
 
 		} // This pong packet wasn't made by the remote computer, just sent to us by it
-		else
+		else if ( bUltrapeer )
 		{
 			// Add the IP address and port number to the Gnutella host cache of computers we can try to connect to
-			HostCache.Gnutella1.Add( (IN_ADDR*)&nAddress, nPort, time(NULL), (LPCTSTR)strVendorCode, nUptime );
+			HostCache.Gnutella1.Add( (IN_ADDR*)&nAddress, nPort, 0,
+				( strVendorCode.IsEmpty() ? NULL : (LPCTSTR)strVendorCode ), nUptime );
+
+			if ( bGDNA )
+				HostCache.G1DNA.Add( (IN_ADDR*)&nAddress, nPort, 0,
+					( strVendorCode.IsEmpty() ? NULL : (LPCTSTR)strVendorCode ), nUptime );
 		}
 	}
 

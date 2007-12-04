@@ -1328,8 +1328,9 @@ BOOL CDatagrams::OnPing(SOCKADDR_IN* pHost, CG2Packet* /*pPacket*/)
 BOOL CDatagrams::OnPong(SOCKADDR_IN* pHost, CG1Packet* pPacket)
 {
 	Statistics.Current.Gnutella1.PongsReceived++;
+
 	// If the pong is too short, or the pong is too long and settings say we should watch that
-	if ( pPacket->m_nLength < 14 || ( pPacket->m_nLength > 14 && Settings.Gnutella1.StrictPackets && !Settings.Gnutella1.EnableGGEP ) )
+	if ( pPacket->m_nLength < 14 || ( pPacket->m_nLength > 14 && Settings.Gnutella1.StrictPackets && ! Settings.Gnutella1.EnableGGEP ) )
 	{
 		// Pong packets should be 14 bytes long, drop this strangely sized one
 		theApp.Message( MSG_ERROR, IDS_PROTOCOL_SIZE_PONG, (LPCTSTR)inet_ntoa( pHost->sin_addr ) );
@@ -1345,7 +1346,8 @@ BOOL CDatagrams::OnPong(SOCKADDR_IN* pHost, CG1Packet* pPacket)
 	UNUSED_ALWAYS(nFiles);
 	UNUSED_ALWAYS(nVolume);
 
-	CDiscoveryService * pService = DiscoveryServices.GetByAddress( &(pHost->sin_addr) , ntohs(pHost->sin_port), 3 );
+	CDiscoveryService* pService = DiscoveryServices.GetByAddress(
+		&(pHost->sin_addr) , ntohs( pHost->sin_port ), 3 );
 
 	// If that IP address is in our list of computers to not talk to, except ones in UHC list in discovery
 	if ( pService == NULL && Security.IsDenied( (IN_ADDR*)&nAddress ) )
@@ -1358,66 +1360,51 @@ BOOL CDatagrams::OnPong(SOCKADDR_IN* pHost, CG1Packet* pPacket)
 	// If the pong is bigger than 14 bytes, and the remote compuer told us in the handshake it supports GGEP blocks
 	if ( pPacket->m_nLength > 14 && Settings.Gnutella1.EnableGGEP )
 	{
-		CGGEPBlock pGGEP;
 		// There is a GGEP block here, and checking and adjusting the TTL and hops counts worked
+		CGGEPBlock pGGEP;
 		if ( pGGEP.ReadFromPacket( pPacket ) )
 		{
-
-			CGGEPItem* pUP = pGGEP.Find( GGEP_HEADER_UP_SUPPORT );
-			CGGEPItem* pVC = pGGEP.Find( GGEP_HEADER_VENDOR_INFO, 4 );
-			CString sVendorCode;
-			if ( pVC != NULL )
+			// Read vendor code
+			CString strVendorCode;
+			if ( CGGEPItem* pVC = pGGEP.Find( GGEP_HEADER_VENDOR_INFO, 4 ) )
 			{
-				CHAR szaVendor[ 4 ];
+				CHAR szaVendor[ 4 ] = {};
 				pVC->Read( szaVendor,4 );
 				TCHAR szVendor[5] = { szaVendor[0], szaVendor[1], szaVendor[2], szaVendor[3], 0 };
-
-				sVendorCode.Format( _T("%s"), (LPCTSTR)szVendor);
+				strVendorCode = szVendor;
+				strVendorCode.Trim();
 			}
 
-			if ( pUP != NULL )
+			// Read daily uptime
+			DWORD nUptime = 0;
+			if ( CGGEPItem* pDU = pGGEP.Find( GGEP_HEADER_DAILY_AVERAGE_UPTIME, 4 ) )
 			{
-				sVendorCode.Trim( _T(" ") );
-				HostCache.Gnutella1.Add( (IN_ADDR*)&nAddress, nPort, 0, (LPCTSTR)sVendorCode );
+				pDU->Read( (void*)&nUptime, 4 );
 			}
 
-
-			int nCount = 0;
-			CGGEPItem* pIPPs = pGGEP.Find( GGEP_HEADER_PACKED_IPPORTS, 6 );
-
-			// We got a response to SCP extension, add hosts to cache if IPP extension exists
-			if ( pIPPs != NULL )
+			// Catch pongs and update host cache only from ultrapeers
+			if ( CGGEPItem* pUP = pGGEP.Find( GGEP_HEADER_UP_SUPPORT ) )
 			{
-				// The first four bytes represent the IP address and the last two represent the port
-				// The length of the number of bytes of IPP must be divisible by 6
-				if ( ( pIPPs->m_nLength - pIPPs->m_nPosition ) % 6 == 0 )
-				{
-					while ( pIPPs->m_nPosition != pIPPs->m_nLength )
-					{
-						DWORD nIPPAddress = 0;
-						WORD nIPPPort = 0;
-						pIPPs->Read( (void*)&nIPPAddress, 4 );
-						pIPPs->Read( (void*)&nIPPPort, 2 );
-						if ( nPort != 0 )
-						{
-							CHostCacheHost * pCachedHost;
-							theApp.Message( MSG_DEBUG, _T("Got Gnutella hosts through UDP pong (%s:%i)"), 
-								(LPCTSTR)CString( inet_ntoa( *(IN_ADDR*)&nIPPAddress ) ), nIPPPort ); 
-							pCachedHost = HostCache.Gnutella1.Add( (IN_ADDR*)&nIPPAddress, nIPPPort, 0, NULL );
-							// Add to separate cache to have a quick access only to GDNAs
+				HostCache.Gnutella1.Add( (IN_ADDR*)&nAddress, nPort, 0,
+					( strVendorCode.IsEmpty() ? NULL : (LPCTSTR)strVendorCode ),
+					nUptime );
 
-							if ( pCachedHost != NULL ) nCount++;
-						}
-					}
-				}
-
-				if ( pService != NULL )
+				if ( CGGEPItem* pGDNA = pGGEP.Find( GGEP_HEADER_SUPPORT_GDNA ) )
 				{
-					pService->OnSuccess();
-					pService->m_nHosts = nCount;
+					HostCache.G1DNA.Add( (IN_ADDR*)&nAddress, nPort, 0,
+						( strVendorCode.IsEmpty() ? NULL : (LPCTSTR)strVendorCode ),
+						nUptime );
 				}
 			}
 
+			int nCount = CG1Packet::GGEPReadCachedHosts( pGGEP );
+
+			// Update Gnutella UDPHC state
+			if ( nCount != -1 && pService )
+			{
+				pService->OnSuccess();
+				pService->m_nHosts = nCount;
+			}
 		}
 		else
 		{
