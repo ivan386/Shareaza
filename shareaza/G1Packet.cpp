@@ -1,7 +1,7 @@
 //
 // G1Packet.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -30,6 +30,7 @@
 #include "Network.h"
 #include "Buffer.h"
 #include "SHA.h"
+#include "HostCache.h"
 
 // If we are compiling in debug mode, replace the text "THIS_FILE" in the code with the name of this file
 #ifdef _DEBUG
@@ -255,4 +256,54 @@ void CG1Packet::Debug(LPCTSTR pszReason) const
 // Go back to including all the lines in the program
 #endif
 
+}
+
+int CG1Packet::GGEPReadCachedHosts(const CGGEPBlock& pGGEP)
+{
+	int nCount = -1;
+
+	CGGEPItem* pIPPs = pGGEP.Find( GGEP_HEADER_PACKED_IPPORTS, 6 );
+	if ( pIPPs && ( pIPPs->m_nLength - pIPPs->m_nPosition ) % 6 == 0 )
+	{
+		nCount = 0;
+		while ( pIPPs->m_nPosition != pIPPs->m_nLength )
+		{
+			DWORD nAddress = 0;
+			WORD nPort = 0;
+			pIPPs->Read( (void*)&nAddress, 4 );
+			pIPPs->Read( (void*)&nPort, 2 );
+			theApp.Message( MSG_DEBUG, _T("Got G1 host %s:%i"), 
+				(LPCTSTR)CString( inet_ntoa( *(IN_ADDR*)&nAddress ) ), nPort ); 
+			CHostCacheHostPtr pCachedHost =
+				HostCache.Gnutella1.Add( (IN_ADDR*)&nAddress, nPort );
+			if ( pCachedHost ) nCount++;
+		}
+	}
+
+	if ( Settings.Experimental.EnableDIPPSupport )
+	{
+		CGGEPItem* pGDNAs = pGGEP.Find( GGEP_HEADER_GDNA_PACKED_IPPORTS, 6 );
+		if ( ! pGDNAs )
+			// GDNA has a bug in their code; they send DIP but receive DIPP (fixed in the latest versions)
+			pGDNAs = pGGEP.Find( GGEP_HEADER_GDNA_PACKED_IPPORTS_x, 6 );
+		if ( pGDNAs && ( pGDNAs->m_nLength - pGDNAs->m_nPosition ) % 6 == 0 )
+		{
+			if ( nCount == -1 ) nCount = 0;
+			while ( pGDNAs->m_nPosition != pGDNAs->m_nLength )
+			{
+				DWORD nAddress = 0;
+				WORD nPort = 0;
+				pGDNAs->Read( (void*)&nAddress, 4 );
+				pGDNAs->Read( (void*)&nPort, 2 );
+				theApp.Message( MSG_DEBUG, _T("Got GDNA host %s:%i"), 
+					(LPCTSTR)CString( inet_ntoa( *(IN_ADDR*)&nAddress ) ), nPort ); 
+				CHostCacheHostPtr pCachedHost =
+					HostCache.Gnutella1.Add( (IN_ADDR*)&nAddress, nPort );
+				if ( pCachedHost ) nCount++;
+				HostCache.G1DNA.Add( (IN_ADDR*)&nAddress, nPort, 0, _T("GDNA") );
+			}
+		}
+	}
+
+	return nCount;
 }

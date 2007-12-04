@@ -1,7 +1,7 @@
 //
 // G1Packet.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -31,6 +31,7 @@
 
 // Copy in the contents of these files here before compiling
 #include "Packet.h"
+#include "GGEP.h"
 
 // Instruct the compiler to align bytes and DWORDs in a structure on a 1 byte boundary
 #pragma pack(1) // This means, don't put any space between anything
@@ -92,6 +93,10 @@ public:
 	// Convert between the various ways the program expresses packet types, like ping and pong
 	static int     GnutellaTypeToIndex(BYTE nType); // Turn a type byte, like 0x30, into index 4, both describe a query route packet
 	static LPCTSTR m_pszPackets[9];                 // Turn a type index, like 4, into text like "QRP" for query route packet
+
+	// Read IP/IPP/DIP/DIPP hosts from GGEP and add to cache.
+	// Returns amount of successfully added or updated hosts and -1 on errors.
+	static int GGEPReadCachedHosts(const CGGEPBlock& pGGEP);
 
 protected:
 
