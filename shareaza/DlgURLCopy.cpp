@@ -298,19 +298,31 @@ BOOL CURLCopyDlg::SetClipboardText(CString& strText)
 	{
 		CT2CW pszWide( (LPCTSTR)strText );
 		HANDLE hMem = GlobalAlloc( GMEM_MOVEABLE|GMEM_DDESHARE, ( wcslen(pszWide) + 1 ) * sizeof(WCHAR) );
-		LPVOID pMem = GlobalLock( hMem );
-		CopyMemory( pMem, pszWide, ( wcslen(pszWide) + 1 ) * sizeof(WCHAR) );
-		GlobalUnlock( hMem );
-		SetClipboardData( CF_UNICODETEXT, hMem );
+		if ( hMem )
+		{
+			LPVOID pMem = GlobalLock( hMem );
+			if ( pMem )
+			{
+				CopyMemory( pMem, pszWide, ( wcslen(pszWide) + 1 ) * sizeof(WCHAR) );
+				GlobalUnlock( hMem );
+				SetClipboardData( CF_UNICODETEXT, hMem );
+			}
+		}
 	}
 	else
 	{
 		CT2CA pszASCII( (LPCTSTR)strText );
     	HANDLE hMem = GlobalAlloc( GMEM_MOVEABLE|GMEM_DDESHARE, strlen(pszASCII) + 1 );
-		LPVOID pMem = GlobalLock( hMem );
-		CopyMemory( pMem, pszASCII, strlen(pszASCII) + 1 );
-		GlobalUnlock( hMem );
-		SetClipboardData( CF_TEXT, hMem );
+		if ( hMem )
+		{
+			LPVOID pMem = GlobalLock( hMem );
+			if ( pMem )
+			{
+				CopyMemory( pMem, pszASCII, strlen(pszASCII) + 1 );
+				GlobalUnlock( hMem );
+				SetClipboardData( CF_TEXT, hMem );
+			}
+		}
 	}
 
 	CloseClipboard();
