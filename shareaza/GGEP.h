@@ -74,7 +74,7 @@ const LPCTSTR GGEP_HEADER_MULTICAST_RESPONSE	= _T("MCAST");
 const LPCTSTR GGEP_HEADER_PUSH_PROXY			= _T("PUSH");
 // AlternateLocation support
 const LPCTSTR GGEP_HEADER_ALTS					= _T("ALT");
-// The extention header (key) for IpPort request
+// IpPort request
 const LPCTSTR GGEP_HEADER_IPPORT				= _T("IP");
 // UDP HostCache pongs
 const LPCTSTR GGEP_HEADER_UDP_HOST_CACHE		= _T("UDPHC");
@@ -106,7 +106,7 @@ const LPCTSTR GGEP_HEADER_CREATE_TIME			= _T("CT");
 const LPCTSTR GGEP_HEADER_FW_TRANS				= _T("FW");
 // The extension header (key) indicating the GGEP block is the 'secure' block
 const LPCTSTR GGEP_HEADER_SECURE_BLOCK			= _T("SB");
-// The extension header (key) indiciating the value has a signature in it
+// The extension header (key) indicating the value has a signature in it
 const LPCTSTR GGEP_HEADER_SIGNATURE				= _T("SIG");
 // Chat support
 const LPCTSTR GGEP_HEADER_CHAT					= _T("CHAT");
@@ -147,7 +147,7 @@ public:
 public:
 	void		Clear();
 	CGGEPItem*	Add(LPCTSTR pszID);
-	CGGEPItem*	Find(LPCTSTR pszID, DWORD nMinLength = 0);
+	CGGEPItem*	Find(LPCTSTR pszID, DWORD nMinLength = 0) const;
 public:
 	BOOL		ReadFromPacket(CPacket* pPacket);
 	BOOL		ReadFromString(LPCTSTR pszData);
@@ -159,7 +159,7 @@ protected:
 	BOOL		ReadInternal();
 	BYTE		ReadByte();
 public:
-	inline BOOL	IsEmpty()
+	inline BOOL	IsEmpty() const
 	{
 		return ( m_nItemCount == 0 );
 	}
@@ -187,12 +187,12 @@ public:
 
 // Operations
 public:
-	BOOL		IsNamed(LPCTSTR pszID);
+	BOOL		IsNamed(LPCTSTR pszID) const;
 	void		Read(LPVOID pData, int nLength);
 	BYTE		ReadByte();
 	void		Write(LPCVOID pData, int nLength);
 	void		WriteByte(BYTE nValue);
-	CString		ToString();
+	CString		ToString() const;
 	void		WriteUTF8( LPCWSTR pszText);
 
 protected:

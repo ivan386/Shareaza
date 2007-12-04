@@ -92,7 +92,7 @@ CGGEPItem* CGGEPBlock::Add(LPCTSTR pszID)
 //////////////////////////////////////////////////////////////////////
 // CGGEPBlock find
 
-CGGEPItem* CGGEPBlock::Find(LPCTSTR pszID, DWORD nMinLength)
+CGGEPItem* CGGEPBlock::Find(LPCTSTR pszID, DWORD nMinLength) const
 {
 	if ( ! pszID || ! *pszID ) return NULL;
 
@@ -251,7 +251,7 @@ CGGEPItem::~CGGEPItem()
 //////////////////////////////////////////////////////////////////////
 // CGGEPItem ID check
 
-BOOL CGGEPItem::IsNamed(LPCTSTR pszID)
+BOOL CGGEPItem::IsNamed(LPCTSTR pszID) const
 {
 	return m_sID == pszID;
 }
@@ -312,7 +312,7 @@ void CGGEPItem::WriteUTF8( LPCWSTR pszText )
 //////////////////////////////////////////////////////////////////////
 // CGGEPItem string conversion
 
-CString CGGEPItem::ToString()
+CString CGGEPItem::ToString() const
 {
 	CString strValue;
 
