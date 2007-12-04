@@ -113,20 +113,19 @@ void CDecodeMetadataDlg::OnOK()
 
 			int nLength = strAttribute.GetLength();
 			LPTSTR pszSource = strAttribute.GetBuffer( nLength );
-			CHAR* pszDest = new CHAR[ nLength + 1 ];
+			auto_array< CHAR > pszDest( new CHAR[ nLength + 1 ] );
 
 			{
 				const TCHAR* source = pszSource;
-				CHAR* dest = pszDest;
+				CHAR* dest = pszDest.get();
 				while ( *dest++ = static_cast< CHAR >( *source ), *source++ );
 			}
 
-			int nWide = MultiByteToWideChar( nCodePage, 0, pszDest, nLength, NULL, 0 );
+			int nWide = MultiByteToWideChar( nCodePage, 0, pszDest.get(), nLength, NULL, 0 );
 			LPTSTR pszOutput = strAttribute.GetBuffer( nWide + 1 );
-			MultiByteToWideChar( nCodePage, 0, pszDest, nLength, pszOutput, nWide );
+			MultiByteToWideChar( nCodePage, 0, pszDest.get(), nLength, pszOutput, nWide );
 			pszOutput[ nWide ] = 0;
 
-			delete pszDest;
 			strAttribute.ReleaseBuffer();
 
 			pAttribute->SetValue( strAttribute );

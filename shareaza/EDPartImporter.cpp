@@ -385,19 +385,21 @@ void CEDPartImporter::Message(UINT nMessageID, ...)
 	CEdit* pCtrl = m_pTextCtrl;
 	if ( pCtrl == NULL ) return;
 
-	TCHAR szBuffer[2048] = { 0 };
+	const DWORD nBufferLength = 2048;
+	auto_array< TCHAR > szBuffer( new TCHAR[ nBufferLength ] );
+	ZeroMemory( szBuffer.get(), nBufferLength * sizeof( TCHAR ) );
 	CString strFormat;
 	va_list pArgs;
 
 	LoadString( strFormat, nMessageID );
 	va_start( pArgs, nMessageID );
-	_vsntprintf( szBuffer, 2040, strFormat, pArgs );
-	_tcscat( szBuffer, _T("\r\n") );
+	_vsntprintf( szBuffer.get(), nBufferLength - 8, strFormat, pArgs );
+	_tcscat( szBuffer.get(), _T("\r\n") );
 	va_end( pArgs );
 
 	int nLen = pCtrl->GetWindowTextLength();
 	pCtrl->SetSel( nLen, nLen );
-	pCtrl->ReplaceSel( szBuffer );
-	nLen += static_cast< int >( _tcslen( szBuffer ) );
+	pCtrl->ReplaceSel( szBuffer.get() );
+	nLen += static_cast< int >( _tcslen( szBuffer.get() ) );
 	pCtrl->SetSel( nLen, nLen );
 }

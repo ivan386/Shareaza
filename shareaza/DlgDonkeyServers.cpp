@@ -157,7 +157,8 @@ void CDonkeyServersDlg::OnRun()
 
 	DWORD nLength, nlLength = 4;
 	DWORD nRemaining = 0;
-	BYTE pBuffer[1024];
+	const DWORD nBufferLength = 1024;
+	auto_array< BYTE > pBuffer( new BYTE[ nBufferLength ] );
 	CMemFile pFile;
 
 	if ( HttpQueryInfo( hRequest, HTTP_QUERY_CONTENT_LENGTH|HTTP_QUERY_FLAG_NUMBER,
@@ -175,9 +176,9 @@ void CDonkeyServersDlg::OnRun()
 
 		while ( nRemaining > 0 )
 		{
-			DWORD nBuffer = min( nRemaining, 1024u );
-			InternetReadFile( hRequest, pBuffer, nBuffer, &nBuffer );
-			pFile.Write( pBuffer, nBuffer );
+			DWORD nBuffer = min( nRemaining, nBufferLength );
+			InternetReadFile( hRequest, pBuffer.get(), nBuffer, &nBuffer );
+			pFile.Write( pBuffer.get(), nBuffer );
 			nRemaining -= nBuffer;
 		}
 	}
