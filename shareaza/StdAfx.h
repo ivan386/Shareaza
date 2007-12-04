@@ -34,7 +34,11 @@
 //
 
 #if 1
-#if _MSC_VER > 1310
+
+#if _MSC_VER >= 1500	// VS 2008
+
+#elif _MSC_VER >= 1400	// VS 2005
+
 // Warnings that are normally ON by default
 #pragma warning ( disable : 4311 )	// (Level 1)	'variable' : pointer truncation from 'type' to 'type'
 #pragma warning ( disable : 4312 )	// (Level 1)	'operation' : conversion from 'type1' to 'type2' of greater size
