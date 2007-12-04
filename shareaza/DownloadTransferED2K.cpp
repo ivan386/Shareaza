@@ -610,7 +610,7 @@ BOOL CDownloadTransferED2K::OnCompressedPart(CEDPacket* pPacket)
 
 	m_pInflateBuffer->Add( pPacket->m_pBuffer + pPacket->m_nPosition, pPacket->GetRemaining() );
 
-	BYTE pBuffer[ BUFFER_SIZE ];
+	auto_array< BYTE > pBuffer( new BYTE[ BUFFER_SIZE ] );
 
 	if ( m_pInflateBuffer->m_nLength > 0 && m_nInflateRead < m_nInflateLength )
 	{
@@ -619,7 +619,7 @@ BOOL CDownloadTransferED2K::OnCompressedPart(CEDPacket* pPacket)
 
 		do
 		{
-			pStream->next_out	= pBuffer;
+			pStream->next_out	= pBuffer.get();
 			pStream->avail_out	= BUFFER_SIZE;
 
 			inflate( pStream, Z_SYNC_FLUSH );
@@ -629,7 +629,7 @@ BOOL CDownloadTransferED2K::OnCompressedPart(CEDPacket* pPacket)
 				QWORD nOffset = m_nInflateOffset + m_nInflateWritten;
 				QWORD nLength = BUFFER_SIZE - pStream->avail_out;
 
-				/*BOOL bUseful =*/ m_pDownload->SubmitData( nOffset, pBuffer, nLength );
+				m_pDownload->SubmitData( nOffset, pBuffer.get(), nLength );
 
 				m_oRequested.erase( Fragments::Fragment( nOffset, nOffset + nLength ) );
 
@@ -1176,7 +1176,7 @@ BOOL CDownloadTransferED2K::OnCompressedPart64(CEDPacket* pPacket)
 
 	m_pInflateBuffer->Add( pPacket->m_pBuffer + pPacket->m_nPosition, pPacket->GetRemaining() );
 
-	BYTE pBuffer[ BUFFER_SIZE ];
+	auto_array< BYTE > pBuffer( new BYTE[ BUFFER_SIZE ] );
 
 	if ( m_pInflateBuffer->m_nLength > 0 && m_nInflateRead < m_nInflateLength )
 	{
@@ -1185,7 +1185,7 @@ BOOL CDownloadTransferED2K::OnCompressedPart64(CEDPacket* pPacket)
 
 		do
 		{
-			pStream->next_out	= pBuffer;
+			pStream->next_out	= pBuffer.get();
 			pStream->avail_out	= BUFFER_SIZE;
 
 			inflate( pStream, Z_SYNC_FLUSH );
@@ -1195,7 +1195,7 @@ BOOL CDownloadTransferED2K::OnCompressedPart64(CEDPacket* pPacket)
 				QWORD nOffset = m_nInflateOffset + m_nInflateWritten;
 				QWORD nLength = BUFFER_SIZE - pStream->avail_out;
 
-				/*BOOL bUseful =*/ m_pDownload->SubmitData( nOffset, pBuffer, nLength );
+				m_pDownload->SubmitData( nOffset, pBuffer.get(), nLength );
 
 				m_oRequested.erase( Fragments::Fragment( nOffset, nOffset + nLength ) );
 
