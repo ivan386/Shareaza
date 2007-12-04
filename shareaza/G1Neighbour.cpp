@@ -733,7 +733,7 @@ BOOL CG1Neighbour::OnPong(CG1Packet* pPacket)
 			}
 
 			// Read daily uptime
-			if ( CGGEPItem* pDU = pGGEP.Find( GGEP_HEADER_DAILY_AVERAGE_UPTIME, 4 ) )
+			if ( CGGEPItem* pDU = pGGEP.Find( GGEP_HEADER_DAILY_AVERAGE_UPTIME, 1 ) )
 			{
 				pDU->Read( (void*)&nUptime, 4 );
 			}

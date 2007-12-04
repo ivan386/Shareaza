@@ -86,11 +86,13 @@ const LPCTSTR GGEP_HEADER_PACKED_IPPORTS		= _T("IPP");
 const LPCTSTR GGEP_HEADER_PACKED_HOSTCACHES		= _T("PHC");
 // SHA1 URNs
 const LPCTSTR GGEP_HEADER_SHA1					= _T("S1");
-// Determine if a SHA1 is valid.
+// Determine if a SHA1 is valid
 const LPCTSTR GGEP_HEADER_SHA1_VALID			= _T("SV");
-// DHT support.
+// TLS support
+const LPCTSTR GGEP_HEADER_TLS_SUPPORT			= _T("TLS");
+// DHT support
 const LPCTSTR GGEP_HEADER_DHT_SUPPORT			= _T("DHT");
-// DHT IPP requests.
+// DHT IPP requests
 const LPCTSTR GGEP_HEADER_DHT_IPPORTS			= _T("DHTIPP");
 // A feature query. This is 'WH' for legacy reasons, because 'What is New' was the first
 const LPCTSTR GGEP_HEADER_FEATURE_QUERY			= _T("WH");
@@ -113,7 +115,7 @@ const LPCTSTR GGEP_HEADER_CHAT					= _T("CHAT");
 // Equivalent of GGEP SCP but for GnucDNA peers only
 // Unlike SCP, it's also used as acknowledgment
 const LPCTSTR GGEP_HEADER_SUPPORT_GDNA			= _T("DNA");
-// Legacy buggy version of GnucDNA DIPP.
+// Legacy buggy version of GnucDNA DIPP
 const LPCTSTR GGEP_HEADER_GDNA_PACKED_IPPORTS_x	= _T("DIP");
 // Equivalent of GGEP IPP but contains GnucDNA peers only
 const LPCTSTR GGEP_HEADER_GDNA_PACKED_IPPORTS	= _T("DIPP");

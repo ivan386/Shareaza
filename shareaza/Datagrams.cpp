@@ -1377,7 +1377,7 @@ BOOL CDatagrams::OnPong(SOCKADDR_IN* pHost, CG1Packet* pPacket)
 
 			// Read daily uptime
 			DWORD nUptime = 0;
-			if ( CGGEPItem* pDU = pGGEP.Find( GGEP_HEADER_DAILY_AVERAGE_UPTIME, 4 ) )
+			if ( CGGEPItem* pDU = pGGEP.Find( GGEP_HEADER_DAILY_AVERAGE_UPTIME, 1 ) )
 			{
 				pDU->Read( (void*)&nUptime, 4 );
 			}
