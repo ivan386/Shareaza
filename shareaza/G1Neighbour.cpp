@@ -450,8 +450,8 @@ BOOL CG1Neighbour::OnPing(CG1Packet* pPacket)
 	// If this ping packet strangely has length, and the remote computer does GGEP blocks
 	if ( pPacket->m_nLength && m_bGGEP )
 	{
-		CGGEPBlock pGGEP;
 		// There is a GGEP block here, and checking and adjusting the TTL and hops counts worked
+		CGGEPBlock pGGEP;
 		if ( pGGEP.ReadFromPacket( pPacket ) )
 		{
 			// If the neighbour sent
@@ -489,12 +489,12 @@ BOOL CG1Neighbour::OnPing(CG1Packet* pPacket)
 	}
 
 	CGGEPBlock pGGEP;
+	if ( bSCP )
+	{
+		WriteRandomCache( pGGEP.Add( GGEP_HEADER_PACKED_IPPORTS ) );
+	}
 	if ( Settings.Experimental.EnableDIPPSupport )
 	{
-		if ( bSCP )
-		{
-			WriteRandomCache( pGGEP.Add( GGEP_HEADER_PACKED_IPPORTS ) );
-		}
 		if ( bDNA )
 		{
 			WriteRandomCache( pGGEP.Add( GGEP_HEADER_GDNA_PACKED_IPPORTS ) );
@@ -530,6 +530,7 @@ BOOL CG1Neighbour::OnPing(CG1Packet* pPacket)
 			// Tell the remote computer it's IP address and port number in the payload bytes of the pong packet
 			pPong->WriteShortLE( htons( pConnection->m_pHost.sin_port ) );   // Port number, 2 bytes reversed
 			pPong->WriteLongLE( pConnection->m_pHost.sin_addr.S_un.S_addr ); // IP address, 4 bytes
+
 			// Then, write in the information about how many files we are sharing
 			pPong->WriteLongLE( nMyFiles );
 			pPong->WriteLongLE( (DWORD)nMyVolume );

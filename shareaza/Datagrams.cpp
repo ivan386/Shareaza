@@ -1151,7 +1151,7 @@ BOOL CDatagrams::OnPacket(SOCKADDR_IN* pHost, CG1Packet* pPacket)
 				CString( inet_ntoa( pHost->sin_addr ) ) );
 	}
 
-	return FALSE;
+	return TRUE;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -1214,7 +1214,7 @@ BOOL CDatagrams::OnPacket(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 			CString( inet_ntoa( pHost->sin_addr ) ) );
 	}
 
-	return FALSE;
+	return TRUE;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -1222,18 +1222,52 @@ BOOL CDatagrams::OnPacket(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 
 BOOL CDatagrams::OnPing(SOCKADDR_IN* pHost, CG1Packet* pPacket)
 {
-	BOOL bSCP = FALSE;
-	// If this ping packet strangely has length, and the remote computer does GGEP blocks
-	if ( pPacket->m_nLength )
+	Statistics.Current.Gnutella1.PingsReceived++;
+
+	CString strAddress( inet_ntoa( pHost->sin_addr ) );
+
+	// A ping packet is just a header, and shouldn't have length, if it does, and settings say to worry about stuff like this
+	if ( pPacket->m_nLength != 0 && Settings.Gnutella1.StrictPackets )
 	{
-		CGGEPBlock pGGEP;
+		// Record the error, drop the packet, but stay connected
+		theApp.Message( MSG_ERROR, IDS_PROTOCOL_SIZE_PING, (LPCTSTR)strAddress );
+		Statistics.Current.Gnutella1.Dropped++;
+		return TRUE;
+
+	} // The ping is just a header, or settings don't care, and the length is bigger than settings allow
+	else if ( pPacket->m_nLength > Settings.Gnutella1.MaximumQuery )
+	{
+		// Record the error, drop the packet, but stay connected
+		theApp.Message( MSG_ERROR, IDS_PROTOCOL_TOO_LARGE, (LPCTSTR)strAddress );
+		Statistics.Current.Gnutella1.Dropped++;
+		return TRUE;
+	}
+
+	bool bSCP = false;
+	bool bDNA = false;
+
+	// If this ping packet strangely has length, and the remote computer does GGEP blocks
+	if ( pPacket->m_nLength && Settings.Gnutella1.EnableGGEP )
+	{
 		// There is a GGEP block here, and checking and adjusting the TTL and hops counts worked
+		CGGEPBlock pGGEP;
 		if ( pGGEP.ReadFromPacket( pPacket ) )
 		{
 			if ( CGGEPItem* pItem = pGGEP.Find( GGEP_HEADER_SUPPORT_CACHE_PONGS ) )
 			{
-				bSCP = TRUE;
+				bSCP = true;
 			}
+			if ( CGGEPItem* pItem = pGGEP.Find( GGEP_HEADER_SUPPORT_GDNA ) )
+			{
+				bDNA = true;
+			}
+		}
+		else
+		{
+			// It's not, drop the packet, but stay connected
+			theApp.Message( MSG_ERROR, IDS_PROTOCOL_GGEP_REQUIRED, (LPCTSTR)strAddress );
+			Statistics.Current.Gnutella1.Dropped++;
+			return TRUE;
 		}
 	}
 
@@ -1282,7 +1316,8 @@ BOOL CDatagrams::OnPing(SOCKADDR_IN* pHost, CG1Packet* pPacket)
 			if ( nCount == 0 ) break;
 		}
 
-		if ( nCount == (DWORD)Settings.Gnutella1.MaxHostsInPongs ) bSCP = FALSE; // the cache is empty
+		if ( nCount == (DWORD)Settings.Gnutella1.MaxHostsInPongs )
+			bSCP = false; // the cache is empty
 	}
 
 	// Make a new pong packet, the response to a ping
@@ -1292,8 +1327,8 @@ BOOL CDatagrams::OnPing(SOCKADDR_IN* pHost, CG1Packet* pPacket)
 		pPacket->m_oGUID);						// Give it the same GUID as the ping
 
 	// Get statistics about how many files we are sharing
-	QWORD nMyVolume;
-	DWORD nMyFiles;
+	QWORD nMyVolume = 0;
+	DWORD nMyFiles = 0;
 	LibraryMaps.GetStatistics( &nMyFiles, &nMyVolume );
 
 	// Start the pong's payload with the IP address and port number from the Network object (do)
@@ -1304,11 +1339,12 @@ BOOL CDatagrams::OnPing(SOCKADDR_IN* pHost, CG1Packet* pPacket)
 	pPong->WriteLongLE( nMyFiles );
 	pPong->WriteLongLE( (DWORD)nMyVolume );
 
-	if ( !pGGEP.IsEmpty() ) pGGEP.Write( pPong );
+	if ( ! pGGEP.IsEmpty() )
+		pGGEP.Write( pPong );
 
 	// Send the pong packet to the remote computer we are currently looping on
 	Send( pHost, pPong );
-	theApp.Message( MSG_DEBUG, _T("G1UDP: Sent Pong to %s"), (LPCTSTR)CString( inet_ntoa( pHost->sin_addr ) ) );
+	Statistics.Current.Gnutella1.PongsSent++;
 
 	return TRUE;
 }
