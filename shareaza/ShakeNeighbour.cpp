@@ -1436,18 +1436,20 @@ BOOL CShakeNeighbour::OnHeadersCompleteG2()
 		// If it's a leaf, check version, etc
 		if ( m_nNodeType == ntLeaf ) 
 		{
+			const CString strWebSite(WEB_SITE);
+
 			if ( m_bBadClient ) 
 			{
 				// We don't allow these to act as a leaf. (resource use, etc)
 				if ( m_bObsoleteClient ) 
 				{
 					theApp.Message( MSG_ERROR, _T("Rejecting obsolete leaf client %s") , (LPCTSTR)m_sUserAgent );
-					Write( _P("GNUTELLA/0.6 503 Update your client. www.shareaza.com\r\n") );
+					Write( _P("GNUTELLA/0.6 503 Update your client. " + strWebSite + "\r\n") );
 				}
 				else 
 				{
 					theApp.Message( MSG_ERROR, _T("Rejecting bad leaf client %s") , (LPCTSTR)m_sUserAgent );
-					Write( _P("GNUTELLA/0.6 503 Refused\r\n") );
+					Write( _P("GNUTELLA/0.6 503 Refused. " + strWebSite + "\r\n") );
 				}
 				SendMinimalHeaders();  
 				DelayClose( IDS_HANDSHAKE_SURPLUS );
@@ -1459,7 +1461,7 @@ BOOL CShakeNeighbour::OnHeadersCompleteG2()
 				if ( Neighbours.GetCount(PROTOCOL_G2, nrsConnected ,ntLeaf ) > ( Settings.Gnutella2.NumLeafs / 2 ) )
 				{
 					theApp.Message( MSG_ERROR, _T("Rejecting obsolete leaf %s (We are too full)") , (LPCTSTR)m_sUserAgent );
-					Write( _P("GNUTELLA/0.6 503 Old client version, please update. www.shareaza.com\r\n") );
+					Write( _P("GNUTELLA/0.6 503 Old client version, please update. " + strWebSite + "\r\n") );
 					SendMinimalHeaders();  
 					DelayClose( IDS_HANDSHAKE_SURPLUS );
 					return FALSE;

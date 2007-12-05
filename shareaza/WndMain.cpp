@@ -2423,58 +2423,76 @@ void CMainWnd::OnHelpAbout()
 
 void CMainWnd::OnHelpHomepage() 
 {
+	const CString strWebSite(WEB_SITE_T);
+
 	ShellExecute( GetSafeHwnd(), _T("open"),
-		_T("http://shareaza.sourceforge.net/?Version=") + theApp.m_sVersion,
+		strWebSite + _T("?Version=") + theApp.m_sVersion,
 		NULL, NULL, SW_SHOWNORMAL );
 }
 
 void CMainWnd::OnHelpWeb1() 
 {
-	ShellExecute( GetSafeHwnd(), _T("open"), _T("http://shareaza.sourceforge.net/help/external/?link1"),
+	const CString strWebSite(WEB_SITE_T);
+
+	ShellExecute( GetSafeHwnd(), _T("open"), strWebSite + _T("help/external/?link1"),
 		NULL, NULL, SW_SHOWNORMAL );
 }
 
 void CMainWnd::OnHelpWeb2() 
 {
-	ShellExecute( GetSafeHwnd(), _T("open"), _T("http://shareaza.sourceforge.net/help/external/?link2"),
+	const CString strWebSite(WEB_SITE_T);
+
+	ShellExecute( GetSafeHwnd(), _T("open"), strWebSite + _T("help/external/?link2"),
 		NULL, NULL, SW_SHOWNORMAL );
 }
 
 void CMainWnd::OnHelpWeb3() 
 {
-	ShellExecute( GetSafeHwnd(), _T("open"), _T("http://shareaza.sourceforge.net/help/external/?link3"),
+	const CString strWebSite(WEB_SITE_T);
+
+	ShellExecute( GetSafeHwnd(), _T("open"), strWebSite + _T("help/external/?link3"),
 		NULL, NULL, SW_SHOWNORMAL );
 }
 
 void CMainWnd::OnHelpWeb4() 
 {
-	ShellExecute( GetSafeHwnd(), _T("open"), _T("http://shareaza.sourceforge.net/help/external/?link4"),
+	const CString strWebSite(WEB_SITE_T);
+
+	ShellExecute( GetSafeHwnd(), _T("open"), strWebSite + _T("help/external/?link4"),
 		NULL, NULL, SW_SHOWNORMAL );
 }
 
 void CMainWnd::OnHelpWeb5() 
 {
-	ShellExecute( GetSafeHwnd(), _T("open"), _T("http://shareaza.sourceforge.net/help/external/?link5"),
+	const CString strWebSite(WEB_SITE_T);
+
+	ShellExecute( GetSafeHwnd(), _T("open"), strWebSite + _T("help/external/?link5"),
 		NULL, NULL, SW_SHOWNORMAL );
 }
 
 void CMainWnd::OnHelpWeb6() 
 {
-	ShellExecute( GetSafeHwnd(), _T("open"), _T("http://shareaza.sourceforge.net/help/external/?link6"),
+	const CString strWebSite(WEB_SITE_T);
+
+	ShellExecute( GetSafeHwnd(), _T("open"), strWebSite + _T("help/external/?link6"),
 		NULL, NULL, SW_SHOWNORMAL );
 }
 
 void CMainWnd::OnHelpFaq() 
 {
+	const CString strWebSite(WEB_SITE_T);
+
 	ShellExecute( GetSafeHwnd(), _T("open"),
-		_T("http://shareaza.sourceforge.net/help/?faq"),
+		strWebSite + _T("help/?faq"),
 		NULL, NULL, SW_SHOWNORMAL );
 }
 
 void CMainWnd::OnHelpConnectiontest()
 {
+	const CString strWebSite(WEB_SITE_T);
 	CString strTestUrl;
-	strTestUrl.Format( _T("http://shareaza.sourceforge.net/help/test/?port=%d&lang=%s&Version=") + theApp.m_sVersion, Settings.Connection.InPort, Settings.General.Language );
+
+	strTestUrl.Format( strWebSite + _T("help/test/?port=%d&lang=%s&Version=") + theApp.m_sVersion, Settings.Connection.InPort, Settings.General.Language );
 	ShellExecute( GetSafeHwnd(), _T("open"),
 		strTestUrl,
 		NULL, NULL, SW_SHOWNORMAL );
@@ -2482,40 +2500,52 @@ void CMainWnd::OnHelpConnectiontest()
 
 void CMainWnd::OnHelpGuide() 
 {
+	const CString strWebSite(WEB_SITE_T);
+
 	ShellExecute( GetSafeHwnd(), _T("open"),
-		_T("http://shareaza.sourceforge.net/help/?guide"),
+		strWebSite + _T("help/?guide"),
 		NULL, NULL, SW_SHOWNORMAL );
 }
 
 void CMainWnd::OnHelpForums() 
 {
+	const CString strWebSite(WEB_SITE_T);
+
 	ShellExecute( GetSafeHwnd(), _T("open"),
-		_T("http://shareaza.sourceforge.net/help/?forum"),
+		strWebSite + _T("help/?forum"),
 		NULL, NULL, SW_SHOWNORMAL );
 }
 
 void CMainWnd::OnHelpUpdate() 
 {
+	const CString strWebSite(WEB_SITE_T);
+
 	ShellExecute( GetSafeHwnd(), _T("open"),
-		_T("http://shareaza.sourceforge.net/help/update/?Version=") + theApp.m_sVersion,
+		strWebSite + _T("help/update/?Version=") + theApp.m_sVersion,
 		NULL, NULL, SW_SHOWNORMAL );
 }
 
 void CMainWnd::OnHelpRouter()
 {
-	ShellExecute( GetSafeHwnd(), _T("open"), _T("http://shareaza.sourceforge.net/help/?router"),
+	const CString strWebSite(WEB_SITE_T);
+
+	ShellExecute( GetSafeHwnd(), _T("open"), strWebSite + _T("help/?router"),
 		NULL, NULL, SW_SHOWNORMAL );
 }
 
 void CMainWnd::OnHelpSecurity()
 {
-	ShellExecute( GetSafeHwnd(), _T("open"), _T("http://shareaza.sourceforge.net/help/?security"),
+	const CString strWebSite(WEB_SITE_T);
+
+	ShellExecute( GetSafeHwnd(), _T("open"), strWebSite + _T("help/?security"),
 		NULL, NULL, SW_SHOWNORMAL );
 }
 
 void CMainWnd::OnHelpCodec()
 {
-	ShellExecute( GetSafeHwnd(), _T("open"), _T("http://shareaza.sourceforge.net/help/?codec"),
+	const CString strWebSite(WEB_SITE_T);
+
+	ShellExecute( GetSafeHwnd(), _T("open"), strWebSite + _T("help/?codec"),
 		NULL, NULL, SW_SHOWNORMAL );
 }
 

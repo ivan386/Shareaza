@@ -395,6 +395,10 @@ inline void IsType(LPCTSTR pszString, size_t nStart, size_t nLength, bool& bWord
 #define BT_ID1				'S'
 #define BT_ID2				'Z'
 
+#define WEB_SITE			"http://shareaza.sourceforge.net/"
+#define WEB_SITE_T			_T( WEB_SITE )
+
+
 // Drag-n-drop stuff
 
 #define MAX_DRAG_SIZE		256

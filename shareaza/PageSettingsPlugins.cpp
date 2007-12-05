@@ -218,8 +218,10 @@ void CPluginsSettingsPage::OnPluginsSetup()
 
 void CPluginsSettingsPage::OnPluginsWeb()
 {
+	const CString strWebSite(WEB_SITE_T);
+
 	ShellExecute( GetSafeHwnd(), _T("open"),
-		_T("http://shareaza.sourceforge.net/plugins/?Version=") + theApp.m_sVersion,
+		strWebSite + _T("?id=addon&Version=") + theApp.m_sVersion,
 		NULL, NULL, SW_SHOWNORMAL );
 }
 

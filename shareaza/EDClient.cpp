@@ -723,9 +723,9 @@ void CEDClient::SendHello(BYTE nType)
 	if ( Settings.eDonkey.TagNames )
 	{
 		if ( strNick.GetLength() )
-			strNick += _T(" (shareaza.com)");
+			strNick += _T(" (Shareaza)");
 		else
-			strNick = _T("www.shareaza.com");
+			strNick = _T("Shareaza");
 	}
 	strNick.Left( 255 );
 	
