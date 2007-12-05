@@ -557,7 +557,7 @@ void CSettings::LoadSet(string_set* pSet, LPCTSTR pszString)
 //////////////////////////////////////////////////////////////////////
 // CSettings load
 
-#define SMART_VERSION	51
+#define SMART_VERSION	52
 
 void CSettings::Load()
 {
@@ -863,7 +863,6 @@ void CSettings::SmartUpgrade()
 	{
 		Gnutella2.NumHubs = 2;
 		General.ItWasLimited = TRUE;
-		OnChangeConnectionSpeed();
 	}
 
 	if ( nVersion < 43 )
@@ -988,6 +987,12 @@ void CSettings::SmartUpgrade()
 		Library.HashWindow = TRUE;
 		Gnutella1.PingRate = 30000u;
 	}
+
+	if ( nVersion < 52 )
+	{
+		WINE.MenuFix = TRUE;
+		OnChangeConnectionSpeed();
+	}
 }
 
 void CSettings::OnChangeConnectionSpeed()
@@ -1009,7 +1014,7 @@ void CSettings::OnChangeConnectionSpeed()
 		Downloads.SourcesWanted			= 200;	// Don't bother requesting so many sources
 		Search.GeneralThrottle			= 300;	// Slow searches a little so we don't get flooded
 
-		Gnutella2.NumLeafs				= 200;
+		Gnutella2.NumLeafs				= 100;
 		BitTorrent.DownloadTorrents		= 1;	// Best not to try too many torrents
 	}
 	else if ( !theApp.m_bNT )
@@ -1022,7 +1027,7 @@ void CSettings::OnChangeConnectionSpeed()
 		Downloads.SourcesWanted			= 200;	// Don't bother requesting so many sources
 		Search.GeneralThrottle			= 250;	// Slow searches a little so we don't get flooded
 
-		Gnutella2.NumLeafs				= 200;
+		Gnutella2.NumLeafs				= 150;
 		BitTorrent.DownloadTorrents		= 1;	// Best not to try too many torrents
 	}
 	else if ( Connection.InSpeed <= 256 )
@@ -1035,7 +1040,7 @@ void CSettings::OnChangeConnectionSpeed()
 		Downloads.SourcesWanted			= 500;
 		Search.GeneralThrottle			= 250;	// Slow searches a little so we don't get flooded
 
-		Gnutella2.NumLeafs				= 300;
+		Gnutella2.NumLeafs				= 200;
 		BitTorrent.DownloadTorrents		= 3;
 	}
 	else if ( Connection.InSpeed <= 768 )
@@ -1062,7 +1067,7 @@ void CSettings::OnChangeConnectionSpeed()
 		Search.GeneralThrottle			= 200;
 
 		Gnutella2.NumLeafs				= 300;
-		BitTorrent.DownloadTorrents		= 3;
+		BitTorrent.DownloadTorrents		= 4;
 	}
 	else if ( Connection.InSpeed <= 5000 )
 	{	// Very high capacity connection
@@ -1075,7 +1080,7 @@ void CSettings::OnChangeConnectionSpeed()
 		Search.GeneralThrottle			= 200;
 
 		Gnutella2.NumLeafs				= 400;	//Can probably support more leaves
-		BitTorrent.DownloadTorrents		= 4;	// Should be able to handle several torrents
+		BitTorrent.DownloadTorrents		= 5;	// Should be able to handle several torrents
 	}
 	else
 	{
@@ -1087,8 +1092,16 @@ void CSettings::OnChangeConnectionSpeed()
 		Downloads.SourcesWanted			= 500;
 		Search.GeneralThrottle			= 200;
 
-		Gnutella2.NumLeafs				= 450;	//Can probably support more leaves
-		BitTorrent.DownloadTorrents		= 4;	// Should be able to handle several torrents
+		if ( Connection.InSpeed <= 10000 )
+		{
+			Gnutella2.NumLeafs				= 450;	//Can probably support more leaves
+			BitTorrent.DownloadTorrents		= 7;	// Should be able to handle several torrents
+		}
+		else
+		{
+			Gnutella2.NumLeafs				= 500;	//Can probably support more leaves
+			BitTorrent.DownloadTorrents		= 10;	// Should be able to handle several torrents
+		}
 	}
 
 	if( bLimited )
