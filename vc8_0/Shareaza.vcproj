@@ -2537,6 +2537,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\shareaza\res_hack_def.h"
+				>
+			</File>
+			<File
 				RelativePath="..\shareaza\Resource.h"
 				>
 			</File>
@@ -2606,6 +2610,10 @@
 			</File>
 			<File
 				RelativePath="..\shareaza\ShareazaDataSource.h"
+				>
+			</File>
+			<File
+				RelativePath="..\shareaza\ShareazaFile.h"
 				>
 			</File>
 			<File
