@@ -209,8 +209,9 @@ STDMETHODIMP C7ZipBuilder::Process (
 	bool bEncrypted = false;		// Archive itself or selective files are encrypted
 	ULONGLONG nUnpackedSize = 0;	// Total size of unpacked files
 
+	USES_CONVERSION;
 	CInStream oInStream;
-	if ( ! oInStream.Open( sFile ) )
+	if ( ! oInStream.Open( OLE2CT( sFile ) ) )
 		// Cannot open file
 		return E_FAIL;
 
