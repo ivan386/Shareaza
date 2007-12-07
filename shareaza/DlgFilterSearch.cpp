@@ -41,6 +41,8 @@ BEGIN_MESSAGE_MAP(CFilterSearchDlg, CSkinDialog)
 	ON_CBN_SELCHANGE(IDC_FILTERS, OnCbnSelChangeFilters)
 	ON_BN_CLICKED(IDC_DELETE_FILTER, OnBnClickedDeleteFilter)
 	ON_BN_CLICKED(IDC_SET_DEFAULT_FILTER, OnBnClickedSetDefaultFilter)
+	ON_EN_KILLFOCUS(IDC_MIN_SIZE, OnEnKillFocusMinMaxSize)
+	ON_EN_KILLFOCUS(IDC_MAX_SIZE, OnEnKillFocusMinMaxSize)
 END_MESSAGE_MAP()
 
 
@@ -316,4 +318,44 @@ void CFilterSearchDlg::OnBnClickedSetDefaultFilter()
 	UpdateList();
 	m_Filters.SetCurSel( sel );
 	m_pResultFilters->Save();
+}
+
+void CFilterSearchDlg::OnEnKillFocusMinMaxSize()
+{
+	// Abort if there is no matchlist
+	if ( !m_pMatches ) return;
+
+	// Retrieve changed values from the dialog box
+	UpdateData(TRUE);
+
+	// Use Bytes for MinSize if not specified
+	if ( !m_sMinSize.IsEmpty() && !_tcsstr( m_sMinSize, _T("B") ) && !_tcsstr( m_sMinSize, _T("b") ) )
+		m_sMinSize += _T("B");
+	m_pMatches->m_nFilterMinSize = Settings.ParseVolume( m_sMinSize );
+
+	// Use Bytes for MaxSize if not specified
+	if ( !m_sMaxSize.IsEmpty() && !_tcsstr( m_sMaxSize, _T("B") ) && !_tcsstr( m_sMaxSize, _T("b") ) )
+		m_sMaxSize += _T("B");
+	m_pMatches->m_nFilterMaxSize = Settings.ParseVolume( m_sMaxSize );
+
+	// Ensure MaxSize is greater than MinSize. Re-generate MaxSize string
+	if ( m_pMatches->m_nFilterMaxSize )
+	{
+		if ( m_pMatches->m_nFilterMinSize > m_pMatches->m_nFilterMaxSize )
+			m_pMatches->m_nFilterMinSize = m_pMatches->m_nFilterMaxSize;
+		m_sMaxSize	= Settings.SmartVolume( m_pMatches->m_nFilterMaxSize );
+	}
+	else
+		m_sMaxSize.Empty();
+
+	// Re-generate MinSize string
+	if ( m_pMatches->m_nFilterMinSize )
+		m_sMinSize	= Settings.SmartVolume( m_pMatches->m_nFilterMinSize );
+	else
+		m_sMinSize.Empty();
+
+	// Update the dialog box
+	UpdateData(FALSE);
+
+	return;
 }

@@ -60,9 +60,8 @@ public:
 	CResultFilters * m_pResultFilters;
 
 // Overrides
-public:
+protected:
 	//{{AFX_VIRTUAL(CFilterSearchDlg)
-	protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	//}}AFX_VIRTUAL
 
@@ -76,15 +75,15 @@ protected:
 
 public:
 	afx_msg void OnBnClickedSaveFilter();
+	afx_msg void OnBnClickedDeleteFilter();
+	afx_msg void OnBnClickedSetDefaultFilter();
+	afx_msg void OnCbnSelChangeFilters();
+	afx_msg void OnEnKillFocusMinMaxSize();
 
 private:
 	void UpdateFields();
 	void UpdateList();
 	CComboBox m_Filters;
-public:
-	afx_msg void OnCbnSelChangeFilters();
-	afx_msg void OnBnClickedDeleteFilter();
-	afx_msg void OnBnClickedSetDefaultFilter();
 };
 
 //{{AFX_INSERT_LOCATION}}
