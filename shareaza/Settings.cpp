@@ -1479,6 +1479,9 @@ QWORD CSettings::ParseVolume(CString& strVolume, int nReturnUnits) const
 	if ( _tcsstr( strSize, _T("B") ) )
 		// Convert to bits if Bytes were passed in
 		val *= 8.0f;
+	else if ( !_tcsstr( strSize, _T("b") ) )
+		// If bits or Bytes are not indicated return 0
+		return 0ul;
 
 	// Work out what units are represented in the string
 	if ( _tcsstr( strSize, _T("K") ) || _tcsstr( strSize, _T("k") ) )		// Kilo
