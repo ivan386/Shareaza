@@ -36,6 +36,8 @@
 #define _ATL_CSTRING_NO_CRT
 #define _ATL_ALL_WARNINGS
 
+#pragma warning( push, 0 )
+
 #include <atlbase.h>
 #include <atlcom.h>
 #include <atlstr.h>
@@ -44,3 +46,5 @@ using namespace ATL;
 
 #define ZLIB_WINAPI
 #include <unzip.h>
+
+#pragma warning( pop )
