@@ -161,7 +161,6 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				RegisterOutput="true"
 				OutputFile="$(OutDir)$(ProjectName).dll"
 				GenerateManifest="false"
 				ModuleDefinitionFile="&quot;$(SolutionDir)..\plugins\RatDVDPlugin\$(ProjectName).def&quot;"
@@ -339,7 +338,6 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				RegisterOutput="true"
 				OutputFile="$(OutDir)$(ProjectName).dll"
 				ModuleDefinitionFile="&quot;$(SolutionDir)..\plugins\RatDVDPlugin\$(ProjectName).def&quot;"
 				OptimizeReferences="2"

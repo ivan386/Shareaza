@@ -162,7 +162,6 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				RegisterOutput="true"
 				AdditionalDependencies="strmiids.lib"
 				OutputFile="$(OutDir)$(ProjectName).dll"
 				GenerateManifest="false"
@@ -341,7 +340,6 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				RegisterOutput="true"
 				AdditionalDependencies="strmiids.lib"
 				OutputFile="$(OutDir)$(ProjectName).dll"
 				ModuleDefinitionFile="&quot;$(SolutionDir)..\plugins\$(ProjectName)\$(ProjectName).def&quot;"

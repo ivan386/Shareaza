@@ -156,6 +156,7 @@
 				BasicRuntimeChecks="3"
 				SmallerTypeCheck="true"
 				RuntimeLibrary="1"
+				DefaultCharIsUnsigned="true"
 				UsePrecompiledHeader="2"
 				ProgramDataBaseFileName="$(TargetDir)$(TargetName).pdb"
 				WarningLevel="4"
@@ -174,7 +175,6 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				RegisterOutput="true"
 				OutputFile="$(OutDir)$(ProjectName).dll"
 				GenerateManifest="false"
 				ModuleDefinitionFile="&quot;$(SolutionDir)..\plugins\$(ProjectName)\$(ProjectName).def&quot;"
@@ -365,7 +365,6 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				RegisterOutput="true"
 				OutputFile="$(OutDir)$(ProjectName).dll"
 				ModuleDefinitionFile="&quot;$(SolutionDir)..\plugins\$(ProjectName)\$(ProjectName).def&quot;"
 				OptimizeReferences="2"

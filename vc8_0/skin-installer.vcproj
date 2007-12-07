@@ -178,8 +178,6 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				Description="Installing $(TargetFileName)..."
-				CommandLine="&quot;$(OutDir)Skin.exe&quot; /install"
 			/>
 		</Configuration>
 		<Configuration
@@ -342,8 +340,6 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				Description="Installing $(TargetFileName)..."
-				CommandLine="&quot;$(OutDir)\Skin.exe&quot; /install"
 			/>
 		</Configuration>
 	</Configurations>

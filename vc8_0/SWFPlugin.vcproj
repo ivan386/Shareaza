@@ -164,7 +164,6 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				RegisterOutput="true"
 				OutputFile="$(OutDir)$(ProjectName).dll"
 				GenerateManifest="false"
 				ModuleDefinitionFile="&quot;$(SolutionDir)..\plugins\$(ProjectName)\$(ProjectName).def&quot;"
@@ -344,7 +343,6 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				RegisterOutput="true"
 				OutputFile="$(OutDir)$(ProjectName).dll"
 				ModuleDefinitionFile="&quot;$(SolutionDir)..\plugins\$(ProjectName)\$(ProjectName).def&quot;"
 				OptimizeReferences="2"
