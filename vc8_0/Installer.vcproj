@@ -10,54 +10,99 @@
 		<Platform
 			Name="Win32"
 		/>
+		<Platform
+			Name="x64"
+		/>
 	</Platforms>
 	<ToolFiles>
 	</ToolFiles>
 	<Configurations>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="$(SolutionDir)\Installer\"
-			IntermediateDirectory="$(SolutionDir)\Installer\"
+			OutputDirectory="$(SolutionDir)$(ProjectName)\"
+			IntermediateDirectory="$(OutDir)"
 			ConfigurationType="10"
-			BuildLogFile=""
+			BuildLogFile="$(IntDir)\BuildLog_$(ConfigurationName)$(PlatformName).htm"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
-				Description=""
-				CommandLine="&#x0D;&#x0A;"
-				Outputs=""
 			/>
 			<Tool
 				Name="VCMIDLTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				Description="Making $(ConfigurationName) Installer..."
+				CommandLine="call MakeInstaller.bat &quot;$(ConfigurationName)&quot; &quot;$(PlatformName)&quot;&#x0D;&#x0A;"
+			/>
+		</Configuration>
+		<Configuration
+			Name="Release|x64"
+			OutputDirectory="$(SolutionDir)$(ProjectName)\"
+			IntermediateDirectory="$(OutDir)"
+			ConfigurationType="10"
+			BuildLogFile="$(IntDir)\BuildLog_$(ConfigurationName)$(PlatformName).htm"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+				Description="Making $(ConfigurationName) Installer..."
+				CommandLine="call MakeInstaller.bat &quot;$(ConfigurationName)&quot; &quot;$(PlatformName)&quot;&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="$(SolutionDir)\Installer\"
-			IntermediateDirectory="$(SolutionDir)\Installer\"
+			OutputDirectory="$(SolutionDir)$(ProjectName)\"
+			IntermediateDirectory="$(OutDir)"
 			ConfigurationType="10"
-			BuildLogFile=""
+			BuildLogFile="$(IntDir)\BuildLog_$(ConfigurationName)$(PlatformName).htm"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
-				Description=""
-				CommandLine="&#x0D;&#x0A;"
-				Outputs=""
 			/>
 			<Tool
 				Name="VCMIDLTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				Description="Making $(ConfigurationName) Installer..."
+				CommandLine="call MakeInstaller.bat &quot;$(ConfigurationName)&quot; &quot;$(PlatformName)&quot;&#x0D;&#x0A;"
+			/>
+		</Configuration>
+		<Configuration
+			Name="Debug|x64"
+			OutputDirectory="$(SolutionDir)$(ProjectName)\"
+			IntermediateDirectory="$(OutDir)"
+			ConfigurationType="10"
+			BuildLogFile="$(IntDir)\BuildLog_$(ConfigurationName)$(PlatformName).htm"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+				Description="Making $(ConfigurationName) Installer..."
+				CommandLine="call MakeInstaller.bat &quot;$(ConfigurationName)&quot; &quot;$(PlatformName)&quot;&#x0D;&#x0A;"
 			/>
 		</Configuration>
 	</Configurations>
@@ -71,26 +116,6 @@
 		<File
 			RelativePath=".\MakeInstaller.bat"
 			>
-			<FileConfiguration
-				Name="Release|Win32"
-				>
-				<Tool
-					Name="VCCustomBuildTool"
-					Description="Making Release Installer..."
-					CommandLine="call MakeInstaller.bat &quot;$(ConfigurationName)&quot; &quot;$(PlatformName)&quot;"
-					Outputs="$(SolutionDir)\Installer\Shareaza_*.exe"
-				/>
-			</FileConfiguration>
-			<FileConfiguration
-				Name="Debug|Win32"
-				>
-				<Tool
-					Name="VCCustomBuildTool"
-					Description="Making Debug Installer..."
-					CommandLine="call MakeInstaller.bat &quot;$(ConfigurationName)&quot; &quot;$(PlatformName)&quot;"
-					Outputs="$(SolutionDir)\Installer\Shareaza_Debug_*.exe"
-				/>
-			</FileConfiguration>
 		</File>
 	</Files>
 	<Globals>
