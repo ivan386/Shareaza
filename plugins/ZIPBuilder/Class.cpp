@@ -31,12 +31,12 @@ class ATL_NO_VTABLE CZipHandler
 public:
 	inline CZipHandler( LPCTSTR szFilename ) throw()
 	{
-		hArchive = unzOpen( CW2A( szFilename ) );
+		hArchive = unzOpen( CT2CA( szFilename ) );
 		if ( ! hArchive )
 		{
 			TCHAR szFileShort[ MAX_PATH ];
 			if ( GetShortPathName( szFilename, szFileShort, MAX_PATH ) )
-				hArchive = unzOpen( CW2A( szFileShort ) );
+				hArchive = unzOpen( CT2CA( szFileShort ) );
 		}
 	}
 
@@ -104,7 +104,8 @@ STDMETHODIMP CZIPBuilder::Process (
 	bool bEncrypted = false;		// Archive itself or selective files are encrypted
 	ULONGLONG nUnpackedSize = 0;	// Total size of unpacked files
 
-	CZipHandler pFile( sFile );
+	USES_CONVERSION;
+	CZipHandler pFile( OLE2CT( sFile ) );
 	if ( ! pFile )
 		return E_FAIL;
 
