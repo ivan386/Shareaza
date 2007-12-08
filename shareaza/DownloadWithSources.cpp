@@ -95,9 +95,10 @@ int CDownloadWithSources::GetSourceCount(BOOL bNoPush, BOOL bSane) const
 	{
 		if ( ! bNoPush || ! pSource->m_bPushOnly )
 		{
-			if ( ! bSane ||
-				 pSource->m_tAttempt < tNow ||
-				 pSource->m_tAttempt - tNow <= 900000 )
+			if ( ! bSane || (
+			   ( pSource->m_tAttempt < tNow ||
+				 pSource->m_tAttempt - tNow <= 900000 ) &&
+				 ! pSource->m_bKeep ) )
 			{
 				nCount++;
 			}

@@ -26,8 +26,8 @@
 
 #include "FileFragments.hpp"
 #include "DownloadTransfer.h"
+#include "Download.h"
 
-class CDownload;
 class CQueryHit;
 class CEDClient;
 
@@ -89,6 +89,7 @@ public:
 	DWORD				m_nSortOrder;			// How should this source be sorted in the list?
 	int					m_nColour;
 	DWORD				m_tAttempt;
+	BOOL				m_bKeep;				// Source keeped by NeverDrop == TRUE flag
 	int					m_nFailures;			// failure count.
 	int					m_nBusyCount;			// busy count. (used for incrementing RetryDelay)
 	int					m_nRedirectionCount;
@@ -106,7 +107,9 @@ public:
 public:
 	BOOL		CanInitiate(BOOL bNetwork, BOOL bEstablished);
 	void		Remove(BOOL bCloseTransfer, BOOL bBan);
+	void		RemoveIf(BOOL bCloseTransfer, BOOL bBan);
 	void		OnFailure(BOOL bNondestructive, DWORD nRetryAfter = 0);
+	DWORD		CalcFailureDelay(DWORD nRetryAfter = 0) const;
 	void		OnResume();
 	void		OnResumeClosed();
 public:

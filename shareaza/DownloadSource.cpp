@@ -97,6 +97,7 @@ void CDownloadSource::Construct(const CDownload* pDownload)
 	m_nSortOrder	= 0xFFFFFFFF;
 	m_nColour		= -1;
 	m_tAttempt		= 0;
+	m_bKeep			= FALSE;
 	m_nFailures		= 0;
 	m_nBusyCount	= 0;
 	m_nRedirectionCount = 0;
@@ -505,11 +506,11 @@ BOOL CDownloadSource::CanInitiate(BOOL bNetwork, BOOL bEstablished)
 		}
 	}
 
-	if ( ! bEstablished && ! Settings.Downloads.NeverDrop && m_pDownload->LookupFailedSource( m_sURL ) != NULL )
+	if ( ! bEstablished && m_pDownload->LookupFailedSource( m_sURL ) != NULL )
 	{
 		// Don't try to connect to sources which we determined were bad
 		// We will check them later after 2 hours cleanup
-		m_pDownload->RemoveSource( (CDownloadSource*)this, !m_pDownload->IsSeeding() );
+		RemoveIf( TRUE, !m_pDownload->IsSeeding() );
 		return FALSE;
 	}
 
@@ -552,7 +553,59 @@ void CDownloadSource::OnFailure(BOOL bNondestructive, DWORD nRetryAfter)
 		m_pTransfer->m_pSource = NULL;
 		m_pTransfer = NULL;
 	}
-	
+
+	DWORD nDelay = CalcFailureDelay(nRetryAfter);
+
+	// This is not too good because if the source has Uploaded even 1Byte data, Max failure gets set to 40
+	//int nMaxFailures = ( m_bReadContent ? 40 : 3 );
+
+	int nMaxFailures = Settings.Downloads.MaxAllowedFailures;
+
+	if ( nMaxFailures < 20 && m_pDownload->GetSourceCount() > 20 ) nMaxFailures = 0;
+
+	if ( bNondestructive || ( ++m_nFailures < nMaxFailures ) )
+	{
+		m_tAttempt = max( m_tAttempt, nDelay );
+		m_pDownload->SetModified();
+	}
+	else
+	{
+		RemoveIf( TRUE, ! m_pDownload->IsSeeding() );
+	}
+}
+
+void CDownloadSource::RemoveIf(BOOL bCloseTransfer, BOOL bBan)
+{
+	if ( m_pTransfer != NULL )
+	{
+		if ( bCloseTransfer )
+		{
+			m_pTransfer->Close( TRI_TRUE );
+			ASSERT( m_pTransfer == NULL );
+		}
+		else
+		{
+			m_pTransfer->m_pSource = NULL;
+			m_pTransfer = NULL;
+		}
+	}
+
+	if ( Settings.Downloads.NeverDrop )
+	{
+		m_bKeep = TRUE;
+		m_tAttempt = CalcFailureDelay();
+
+		m_pDownload->SetModified();
+	}
+	else
+	{
+		// Add to the bad sources list (X-NAlt) if bBan == TRUE
+		m_pDownload->RemoveSource( this, bBan );
+	}
+}
+
+DWORD CDownloadSource::CalcFailureDelay(DWORD nRetryAfter) const
+{
 	DWORD nDelayFactor = max( ( m_nBusyCount != 0 ) ? (m_nBusyCount - 1) : 0, m_nFailures );
 
 	DWORD nDelay = Settings.Downloads.RetryDelay * ( 1u << nDelayFactor );
@@ -575,31 +628,7 @@ void CDownloadSource::OnFailure(BOOL bNondestructive, DWORD nRetryAfter)
 
 	nDelay += GetTickCount();
 
-	// This is not too good because if the source has Uploaded even 1Byte data, Max failure gets set to 40
-	//int nMaxFailures = ( m_bReadContent ? 40 : 3 );
-
-	int nMaxFailures = Settings.Downloads.MaxAllowedFailures;
-
-	if ( nMaxFailures < 20 && m_pDownload->GetSourceCount() > 20 ) nMaxFailures = 0;
-
-	m_pDownload->SetModified();
-
-	if ( bNondestructive || ( ++m_nFailures < nMaxFailures ) )
-	{
-		m_tAttempt = max( m_tAttempt, nDelay );
-	}
-	else
-	{
-		if ( Settings.Downloads.NeverDrop )
-		{
-			m_tAttempt = nDelay;
-		}
-		else
-		{
-			// Add to the bad sources list (X-NAlt)
-			m_pDownload->RemoveSource( this, !m_pDownload->IsSeeding() );
-		}
-	}
+	return nDelay;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -633,6 +662,7 @@ void CDownloadSource::SetValid()
 {
 	m_bReadContent = TRUE;
 	m_nFailures = 0;
+	m_bKeep = FALSE;
 	m_pDownload->SetModified();
 }
 
@@ -641,6 +671,7 @@ void CDownloadSource::SetLastSeen()
 	SYSTEMTIME pTime;
 	GetSystemTime( &pTime );
 	SystemTimeToFileTime( &pTime, &m_tLastSeen );
+	m_bKeep = FALSE;
 	m_pDownload->SetModified();
 }
 
