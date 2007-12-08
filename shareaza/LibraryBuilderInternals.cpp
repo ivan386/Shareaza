@@ -1113,7 +1113,7 @@ BOOL CLibraryBuilderInternals::GetLanguageId(LPVOID pBuffer, UINT nSize, WORD nL
 
 BOOL CLibraryBuilderInternals::ReadMSI(DWORD nIndex, LPCTSTR pszPath)
 {
-	MSIHANDLE hSummaryInfo;
+	PMSIHANDLE hSummaryInfo;
 
 	int nError = MsiGetSummaryInformation( NULL, pszPath, 0, &hSummaryInfo );
 
