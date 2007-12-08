@@ -2004,8 +2004,6 @@ BOOL CShakeNeighbour::IsClientBanned()
 	// i2hub - leecher client. (Tested, does not upload)
 	if ( _tcsistr( m_sUserAgent, _T("i2hub 2.0") ) )	return TRUE;
 
-	// Unknown- Assume OK
-	return FALSE;
+	// Check by content filter
+	return Security.IsDenied( NULL, m_sUserAgent );
 }
-
-
