@@ -521,7 +521,7 @@ BOOL CBTClient::OnHandshake2()
 
 CString CBTClient::GetAzureusStyleUserAgent(LPBYTE pVendor, size_t nVendor)
 {
-	//Azureus style
+	// Azureus style: "-SSVVVV"
 	struct azureusStyleEntry
 	{
 		uchar signature[ 2 ];
@@ -590,7 +590,7 @@ CString CBTClient::GetAzureusStyleUserAgent(LPBYTE pVendor, size_t nVendor)
 		sizeof azureusStyleClients / sizeof azureusStyleEntry;
 
 	CString sUserAgent;
-	if ( pVendor && nVendor >= 2 )
+	if ( pVendor )
 	{
 		for ( size_t i = 0; i < azureusClients; ++i )
 		{
@@ -605,16 +605,12 @@ CString CBTClient::GetAzureusStyleUserAgent(LPBYTE pVendor, size_t nVendor)
 						azureusStyleClients[ i ].client,
 						( pVendor[ 2 ] - '0' ), ( pVendor[ 3 ] - '0' ),
 						( pVendor[ 4 ] - '0' ), ( pVendor[ 5 ] - '0' ) );
-				else if ( nVendor >= 2 )
-					sUserAgent = azureusStyleClients[ i ].client;
 				break;
 			}
-			if ( sUserAgent.IsEmpty() ) 
-			{
-				// If we don't want the version, etc.
-				sUserAgent.Format( _T("BitTorrent (%c%c)"), pVendor[ 0 ], pVendor[ 1 ] );
-			}
 		}
+		if ( sUserAgent.IsEmpty() ) 
+			// If we don't want the version, etc.
+			sUserAgent.Format( _T("BitTorrent (%c%c)"), pVendor[ 0 ], pVendor[ 1 ] );
 	}
 	return sUserAgent;
 }
@@ -624,7 +620,7 @@ void CBTClient::DetermineUserAgent()
 	int nNickStart = 0, nNickEnd = 13;
 	CString strVer, strNick;
 
-	if ( m_oGUID[ 0 ] == '-' && m_oGUID[ 7 ] == '-' )	
+	if ( m_oGUID[ 0 ] == '-' && m_oGUID[ 7 ] == '-' )
 	{
 		m_sUserAgent = GetAzureusStyleUserAgent( &(m_oGUID[ 1 ]), 6 );
 	}
