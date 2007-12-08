@@ -68,12 +68,11 @@ CDownloadGroup* CDownloadGroups::GetSuperGroup()
 //////////////////////////////////////////////////////////////////////
 // CDownloadGroups add group
 
-CDownloadGroup* CDownloadGroups::Add(LPCTSTR pszName)
+CDownloadGroup* CDownloadGroups::Add(const LPCTSTR pszName, const BOOL bTemporary)
 {
 	CQuickLock pLock( m_pSection );
 
-	CDownloadGroup* pGroup = new CDownloadGroup();
-	if ( pszName != NULL ) pGroup->m_sName = pszName;
+	CDownloadGroup* pGroup = new CDownloadGroup( pszName, bTemporary );
 	m_pList.AddTail( pGroup );
 
 	m_nBaseCookie ++;
@@ -251,7 +250,9 @@ BOOL CDownloadGroups::Save(BOOL bForce)
 //////////////////////////////////////////////////////////////////////
 // CDownloadGroups serialize
 
-#define GROUPS_SER_VERSION	3
+#define GROUPS_SER_VERSION	4
+// History:
+// 4 - Added m_bTemporary (ryo-oh-ki)
 
 void CDownloadGroups::Serialize(CArchive& ar)
 {
@@ -260,6 +261,8 @@ void CDownloadGroups::Serialize(CArchive& ar)
 
 	if ( ar.IsStoring() )
 	{
+		CleanTemporary();
+
 		ar << nVersion;
 
 		ar.WriteCount( Downloads.GetCount() );
@@ -313,6 +316,27 @@ void CDownloadGroups::Serialize(CArchive& ar)
 		for ( POSITION pos = Downloads.GetIterator() ; pos ; )
 		{
 			m_pSuper->Add( Downloads.GetNext( pos ) );
+		}
+	}
+}
+
+void CDownloadGroups::CleanTemporary()
+{
+	for ( POSITION pos = GetIterator() ; pos ; )
+	{
+		POSITION posCurrent = pos;
+		CDownloadGroup* pGroup = GetNext( pos );
+		if ( pGroup->IsTemporary() )
+		{
+			ASSERT( pGroup != m_pSuper );
+
+			m_pList.RemoveAt( posCurrent );
+			delete pGroup;
+			
+			m_nBaseCookie ++;
+			m_nGroupCookie ++;
+
+			pos = GetIterator();
 		}
 	}
 }

@@ -28,20 +28,25 @@ class CDownloadGroup
 {
 // Construction
 public:
-	CDownloadGroup();
+	CDownloadGroup(const LPCTSTR szName = NULL, const BOOL bTemporary = FALSE);
 	virtual ~CDownloadGroup();
 
 // Attributes
 protected:
-	CList< CDownload* > m_pDownloads;
+	CList< CDownload* >	m_pDownloads;
+	// Temporary group:
+	//	TRI_UNKNOWN	- Persistent group;
+	//	TRI_FALSE	- Temporary group, not completed yet;
+	//	TRI_TRUE	- Temporary group, feel free to delete.
+	TRISTATE			m_bTemporary;
+
 public:
-	CString		m_sName;
-	CString		m_sSchemaURI;
-	CString		m_sFolder;
+	CString				m_sName;
+	CString				m_sSchemaURI;
+	CString				m_sFolder;
 	CList< CString >	m_pFilters;
-public:
-	int			m_nImage;
-	BOOL		m_bRemoteSelected;
+	int					m_nImage;
+	BOOL				m_bRemoteSelected;
 
 // Operations
 public:
@@ -54,7 +59,8 @@ public:
 	int			LinkAll();
 	void		AddFilter(LPCTSTR pszFilter);
 	void		SetSchema(LPCTSTR pszURI);
-	void		Serialize(CArchive& ar, int nVersion);
+	void		Serialize(CArchive& ar, const int nVersion);
+	BOOL		IsTemporary();
 
 // Inlines
 public:

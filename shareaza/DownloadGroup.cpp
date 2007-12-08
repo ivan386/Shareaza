@@ -41,10 +41,12 @@ static char THIS_FILE[]=__FILE__;
 //////////////////////////////////////////////////////////////////////
 // CDownloadGroup construction
 
-CDownloadGroup::CDownloadGroup()
+CDownloadGroup::CDownloadGroup(const LPCTSTR szName, const BOOL bTemporary) :
+	m_sName				( szName ? szName : _T("") ),
+	m_nImage			( SHI_FOLDER_OPEN ),
+	m_bRemoteSelected	( TRUE ),
+	m_bTemporary		( bTemporary ? TRI_FALSE : TRI_UNKNOWN )
 {
-	m_nImage			= SHI_FOLDER_OPEN;
-	m_bRemoteSelected	= TRUE;
 }
 
 CDownloadGroup::~CDownloadGroup()
@@ -59,7 +61,7 @@ void CDownloadGroup::Add(CDownload* pDownload)
 	if ( m_pDownloads.Find( pDownload ) == NULL )
 	{
 		m_pDownloads.AddTail( pDownload );
-		DownloadGroups.m_nBaseCookie ++;
+		DownloadGroups.IncBaseCookie();
 	}
 }
 
@@ -68,14 +70,14 @@ void CDownloadGroup::Remove(CDownload* pDownload)
 	if ( POSITION pos = m_pDownloads.Find( pDownload ) )
 	{
 		m_pDownloads.RemoveAt( pos );
-		DownloadGroups.m_nBaseCookie ++;
+		DownloadGroups.IncBaseCookie();
 	}
 }
 
 void CDownloadGroup::Clear()
 {
 	m_pDownloads.RemoveAll();
-	DownloadGroups.m_nBaseCookie ++;
+	DownloadGroups.IncBaseCookie();
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -207,6 +209,9 @@ void CDownloadGroup::Serialize(CArchive& ar, int nVersion)
 			DWORD nDownload = GetNext( pos )->m_nSerID;
 			ar << nDownload;
 		}
+
+		ASSERT( m_bTemporary == TRI_UNKNOWN || m_bTemporary == TRI_FALSE );
+		ar << m_bTemporary;
 	}
 	else
 	{
@@ -245,7 +250,31 @@ void CDownloadGroup::Serialize(CArchive& ar, int nVersion)
 				Add( pDownload );
 		}
 
+		if ( nVersion >= 4 )
+		{
+			ar >> m_bTemporary;
+			ASSERT( m_bTemporary == TRI_UNKNOWN || m_bTemporary == TRI_FALSE );
+		}
+
 		SetSchema( m_sSchemaURI );
 	}
 }
 
+BOOL CDownloadGroup::IsTemporary()
+{
+	if ( m_bTemporary == TRI_FALSE )
+	{
+		BOOL bAllCompleted = TRUE;
+		for ( POSITION pos = GetIterator() ; bAllCompleted && pos ; )
+		{
+			CDownload* pDownload = GetNext( pos );
+			if ( Downloads.Check( pDownload ) && ! pDownload->IsCompleted() )
+				bAllCompleted = FALSE;
+		}
+		if ( bAllCompleted )
+		{
+			m_bTemporary = TRI_TRUE;
+		}
+	}
+	return ( m_bTemporary == TRI_TRUE );
+}

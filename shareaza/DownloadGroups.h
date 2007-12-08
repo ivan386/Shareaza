@@ -48,7 +48,7 @@ protected:
 // Operations
 public:
 	CDownloadGroup*		GetSuperGroup();
-	CDownloadGroup*		Add(LPCTSTR pszName = NULL);
+	CDownloadGroup*		Add(const LPCTSTR pszName = NULL, const BOOL bTemporary = FALSE);
 	void				Remove(CDownloadGroup* pGroup);
 	void				Link(CDownload* pDownload);
 	void				Unlink(CDownload* pDownload, BOOL bAndSuper = TRUE);
@@ -60,6 +60,7 @@ public:
 	BOOL				Save(BOOL bForce = TRUE);
 protected:
 	void				Serialize(CArchive& ar);
+	void				CleanTemporary();
 
 // Inlines
 public:
@@ -92,8 +93,6 @@ public:
 	{
 		m_nBaseCookie ++;
 	}
-
-	friend class CDownloadGroup;
 };
 
 extern CDownloadGroups DownloadGroups;
