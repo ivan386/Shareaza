@@ -305,7 +305,7 @@ BOOL CDownloadSource::ResolveURL()
 //////////////////////////////////////////////////////////////////////
 // CDownloadSource serialize
 
-void CDownloadSource::Serialize(CArchive& ar, int nVersion)
+void CDownloadSource::Serialize(CArchive& ar, int nVersion /* DOWNLOAD_SER_VERSION */)
 {
 	if ( ar.IsStoring() )
 	{
@@ -339,6 +339,8 @@ void CDownloadSource::Serialize(CArchive& ar, int nVersion)
 		ar.Write( &m_tLastSeen, sizeof(FILETIME) );
 		
         SerializeOut2( ar, m_oPastFragments );
+
+		ar << m_bClientExtended;
 	}
 	else if ( nVersion >= 21 )
 	{
@@ -385,8 +387,10 @@ void CDownloadSource::Serialize(CArchive& ar, int nVersion)
 		
         SerializeIn2( ar, m_oPastFragments, nVersion );
 
-		// Should probably save this instead...
-		m_bClientExtended = VendorCache.IsExtended( m_sServer );
+		if ( nVersion >= 39 )
+			ar >> m_bClientExtended;
+		else
+			m_bClientExtended = VendorCache.IsExtended( m_sServer );
 	}
 	else
 	{
