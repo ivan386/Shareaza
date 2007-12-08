@@ -284,6 +284,7 @@ void CPluginsSettingsPage::InsertPlugin(LPCTSTR pszCLSID, LPCTSTR pszName, int n
 				if ( strCurrAssoc.Find( strAssocAdd ) == -1 )
 				{
 					strCurrAssoc.Append( strAssocAdd );
+					strCurrAssoc.Replace( _T("||"), _T("|") );
 					m_wndList.SetItemText( nItem, 2, strCurrAssoc );
 				}
 			}
@@ -427,6 +428,7 @@ void CPluginsSettingsPage::EnumerateMiscPlugins(LPCTSTR pszType, HKEY hRoot)
 				else strCurrExt = strEnabledExt;
 			}
 
+			strExts.Replace( _T("||"), _T("|") );
             pCLSIDs.SetAt( szValue, strExts );
 			if ( ! strExts.IsEmpty() ) theApp.WriteProfileString( _T("Plugins"), szValue, strExts );
 			strCurrExt.Replace( _T("|"), _T("") );

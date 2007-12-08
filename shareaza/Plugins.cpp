@@ -181,9 +181,8 @@ BOOL CPlugins::LookupEnable(REFCLSID pCLSID, BOOL bDefault, LPCTSTR pszExt) cons
 	}
 
 	// For Settings page
-	CArray< CString > oTokens;
-
-	Split( strExtensions, _T("|"), oTokens, FALSE );
+	CStringArray oTokens;
+	Split( strExtensions, _T('|'), oTokens );
 	INT_PTR nTotal = oTokens.GetCount();
 	INT_PTR nChecked = 0;
 

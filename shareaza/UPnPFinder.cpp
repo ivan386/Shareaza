@@ -734,8 +734,8 @@ void CUPnPFinder::DeleteExistingPortMappings(ServicePointer pService)
 			if ( _tcsistr( strActionResult, L"|VT_BSTR=Shareaza TCP|" ) != NULL ||
 				_tcsistr( strActionResult, L"|VT_BSTR=Shareaza UDP|" ) != NULL )
 			{
-				CArray< CString > oTokens;
-				Split( strActionResult, L"|", oTokens, FALSE );
+				CStringArray oTokens;
+				Split( strActionResult, _T('|'), oTokens );
 
 				if ( oTokens.GetCount() != 8 )
 					break;
@@ -959,11 +959,11 @@ INT_PTR CUPnPFinder::CreateVarFromString(const CString& strArgs, VARIANT*** pppV
 		return 0;
 	}
 	
-	CArray< CString > oTokens;
+	CStringArray oTokens;
 	CString strToken, strType, strValue;
 	BOOL bInvalid = FALSE;
 
-	Split( strArgs, _T("|"), oTokens, FALSE );
+	Split( strArgs, _T('|'), oTokens );
 
 	INT_PTR nArgs = oTokens.GetCount();
 	*pppVars = new VARIANT* [ nArgs ]();

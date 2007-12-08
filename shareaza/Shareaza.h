@@ -181,7 +181,7 @@ CRuntimeClass* AfxClassForName(LPCTSTR pszClass);
 BOOL LoadString(CString& str, UINT nID);
 LPCTSTR _tcsistr(LPCTSTR pszString, LPCTSTR pszPattern);
 LPCTSTR _tcsnistr(LPCTSTR pszString, LPCTSTR pszPattern, size_t plen);
-void Split(CString strSource, LPCTSTR strDelimiter, CArray< CString >& pAddIt, BOOL bAddFirstEmpty);
+void Split(const CString& strSource, TCHAR cDelimiter, CStringArray& pAddIt, BOOL bAddFirstEmpty = FALSE);
 BOOL LoadSourcesString(CString& str, DWORD num, bool bFraction=false);
 
 DWORD	TimeFromString(LPCTSTR psz);

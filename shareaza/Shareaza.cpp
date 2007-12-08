@@ -1254,41 +1254,21 @@ CRuntimeClass* AfxClassForName(LPCTSTR pszClass)
 /////////////////////////////////////////////////////////////////////////////
 // String functions
 
-void Split(CString strSource, LPCTSTR pszDelimiter, CArray< CString >& pAddIt, BOOL bAddFirstEmpty)
+void Split(const CString& strSource, TCHAR cDelimiter, CStringArray& pAddIt, BOOL bAddFirstEmpty)
 {
-	CString		strNew = strSource;
-	CString		strTemp = strSource;
-	CString		strAdd;
-	BOOL		bFirstChecked = FALSE;
-
-	int nPos1;
-	int nPos = 0;
-
-	if ( ! _tcslen( pszDelimiter ) )
-		pszDelimiter = _T("|"); 
-
-	do
+	for( LPCTSTR start = strSource; *start; start++ )
 	{
-		nPos1 = 0;
-		nPos = strNew.Find( pszDelimiter, nPos1 );
-		if ( nPos != -1 ) 
-		{
-			CString strAdd = strTemp = strNew.Left( nPos );
-			if ( ! strAdd.IsEmpty() && ! strTemp.Trim().IsEmpty() ) 
-			{
-				pAddIt.Add( strAdd );
-			}
-			else if ( bAddFirstEmpty && ! bFirstChecked ) 
-			{
-				pAddIt.Add( strAdd.Trim() );
-			}
-			strNew = strTemp = strNew.Mid( nPos + static_cast< int >( _tcslen( pszDelimiter ) ) );
-		}
-		bFirstChecked = TRUE; // Allow only the first item empty and ignore trailing empty items 
-	} while ( nPos != -1 );
-	
-	if ( ! strTemp.Trim().IsEmpty() )
-		pAddIt.Add( strNew );
+		LPCTSTR c = _tcschr( start, cDelimiter );
+		int len = c ? (int) ( c - start ) : (int) _tcslen( start );
+		if ( len > 0 )
+			pAddIt.Add( CString( start, len ) );
+		else
+			if ( bAddFirstEmpty && ( start == strSource ) )
+				pAddIt.Add( CString() );
+		if ( ! c )
+			break;
+		start = c;
+	}
 }
 
 BOOL LoadString(CString& str, UINT nID)

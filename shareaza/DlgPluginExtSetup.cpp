@@ -73,8 +73,8 @@ BOOL CPluginExtSetupDlg::OnInitDialog()
 		LVS_EX_FULLROWSELECT|LVS_EX_CHECKBOXES|LVS_EX_LABELTIP, 
 		LVS_EX_FULLROWSELECT|LVS_EX_CHECKBOXES|LVS_EX_LABELTIP );
 
-	CArray< CString > oTokens;
-	Split( m_sExtensions, _T("|"), oTokens, FALSE );
+	CStringArray oTokens;
+	Split( m_sExtensions, _T('|'), oTokens );
 
 	m_bRunning = FALSE;
 
@@ -144,8 +144,9 @@ void CPluginExtSetupDlg::OnOK()
 		// invert the order since the extension map becomes inversed
 		strCurrExt.Insert( 0, _T("|") );
 		strCurrExt.Insert( 0, strExt );
-		strCurrExt.Insert( 0, _T("|") );
 	}
+	if ( strCurrExt.GetLength() )
+		strCurrExt.Insert( 0, _T("|") );
 
 	if ( nChecked == nTotal ) bCurrState = TRI_TRUE;
 	else if ( nChecked == 0 ) bCurrState = TRI_FALSE;

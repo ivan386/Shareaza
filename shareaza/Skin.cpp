@@ -1074,11 +1074,11 @@ BOOL CSkin::Apply(LPCTSTR pszName, CDialog* pDialog, UINT nIconID, CToolTipCtrl*
 				}
 				else
 				{
-					CArray< CString > pItems;
+					CStringArray pItems;
 					CString strTemp;
 					int nNum;
 
-					Split( strCaption, _T("|"), pItems, TRUE );
+					Split( strCaption, _T('|'), pItems, TRUE );
 					CComboBox* pCombo = (CComboBox*) pWnd;
 					nNum = pCombo->GetCount();
 					if ( nNum == pItems.GetSize() ) 
