@@ -1,7 +1,7 @@
 //
 // HttpRequest.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2006.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -34,54 +34,45 @@ public:
 // Operations
 public:
 	void		Clear();
-public:
-	CString		GetURL();
+	CString		GetURL() const;
 	BOOL		SetURL(LPCTSTR pszURL);
 	void		SetUserAgent(LPCTSTR pszUserAgent);
 	void		AddHeader(LPCTSTR pszKey, LPCTSTR pszValue);
 	void		SetPostData(LPCVOID pBody, DWORD nBody);
 	void		LimitContentLength(DWORD nLimit);
 	void		SetNotify(HWND hWnd, UINT nMsg, WPARAM wParam = 0);
-public:
-	int			GetStatusCode();
-	BOOL		GetStatusSuccess();
-	CString		GetStatusString();
-	CString		GetHeader(LPCTSTR pszName);
-	CString		GetResponseString(UINT nCodePage = CP_UTF8);
-	CBuffer*	GetResponseBuffer();
+	int			GetStatusCode() const;
+	BOOL		GetStatusSuccess() const;
+	CString		GetStatusString() const;
+	CString		GetHeader(LPCTSTR pszName) const;
+	CString		GetResponseString(UINT nCodePage = CP_UTF8) const;
+	CBuffer*	GetResponseBuffer() const;
 	BOOL		InflateResponse();
-public:
 	BOOL		Execute(BOOL bBackground);
-	BOOL		IsPending();
-	BOOL		IsFinished();
+	BOOL		IsPending() const;
+	BOOL		IsFinished() const;
 	void		Cancel();
 
 // Data
 protected:
-	CCriticalSection	m_pSection;
-	HANDLE				m_hThread;
-	HINTERNET			m_hInternet;
-	BOOL				m_bCancel;
-protected:
-	CString				m_sURL;
-	CString				m_sUserAgent;
-	CString				m_sRequestHeaders;
-	DWORD				m_nLimit;
-	int					m_nStatusCode;
-	CString				m_sStatusString;
-	CBuffer*			m_pPost;
-	CBuffer*			m_pResponse;
-	CMap< CString, const CString&, CString, CString& > m_pResponseHeaders;
-protected:
-	HWND				m_hNotifyWnd;
-	UINT				m_nNotifyMsg;
-	WPARAM				m_nNotifyParam;
+	HANDLE		m_hThread;
+	HINTERNET	m_hInternet;
+	BOOL		m_bCancel;
+	CString		m_sURL;
+	CString		m_sUserAgent;
+	CString		m_sRequestHeaders;
+	DWORD		m_nLimit;
+	int			m_nStatusCode;
+	CString		m_sStatusString;
+//	CBuffer*	m_pPost;
+	CBuffer*	m_pResponse;
+	typedef CMap< CString, const CString&, CString, CString& > Map;
+	Map			m_pResponseHeaders;
+	HWND		m_hNotifyWnd;
+	UINT		m_nNotifyMsg;
+	WPARAM		m_nNotifyParam;
 
-// Implementation
 protected:
 	static UINT ThreadStart(LPVOID lpParameter);
-protected:
-	int		Run();
-	void	RunRequest();
-	void	RunResponse(HINTERNET hURL);
+	void		Run();
 };

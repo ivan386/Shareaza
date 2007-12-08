@@ -1,7 +1,7 @@
 //
 // HttpRequest.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2006.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -35,14 +35,17 @@ static char THIS_FILE[]=__FILE__;
 //////////////////////////////////////////////////////////////////////
 // CHttpRequest construction
 
-CHttpRequest::CHttpRequest()
-: m_hInternet(NULL)
-, m_hThread(NULL)
-, m_nLimit(0)
-, m_nStatusCode(0)
-, m_pPost(NULL)
-, m_pResponse(NULL)
-, m_hNotifyWnd(NULL)
+CHttpRequest::CHttpRequest() :
+	m_hThread( NULL ),
+	m_hInternet( NULL ),
+	m_bCancel( FALSE ),
+	m_nLimit( 0 ),
+	m_nStatusCode( 0 ),
+//	m_pPost( NULL ),
+	m_pResponse( NULL ),
+	m_hNotifyWnd( NULL ),
+	m_nNotifyMsg( NULL ),
+	m_nNotifyParam( NULL )
 {
 }
 
@@ -58,8 +61,6 @@ void CHttpRequest::Clear()
 {
 	Cancel();
 	
-	CSingleLock pLock( &m_pSection );
-	
 	m_sURL.Empty();
 	m_sRequestHeaders.Empty();
 	
@@ -69,8 +70,8 @@ void CHttpRequest::Clear()
 	m_sStatusString.Empty();
 	m_pResponseHeaders.RemoveAll();
 	
-	if ( m_pPost != NULL ) delete m_pPost;
-	m_pPost = NULL;
+//	if ( m_pPost != NULL ) delete m_pPost;
+//	m_pPost = NULL;
 	
 	if ( m_pResponse != NULL ) delete m_pResponse;
 	m_pResponse = NULL;
@@ -81,23 +82,19 @@ void CHttpRequest::Clear()
 
 BOOL CHttpRequest::SetURL(LPCTSTR pszURL)
 {
-	CSingleLock pLock( &m_pSection );
 	if ( IsPending() ) return FALSE;
 	if ( pszURL == NULL || _tcsncmp( pszURL, _T("http"), 4 ) ) return FALSE;
 	m_sURL = pszURL;
 	return TRUE;
 }
 
-CString CHttpRequest::GetURL()
+CString CHttpRequest::GetURL() const
 {
-	CSingleLock pLock( &m_pSection );
-	CString strURL = m_sURL;
-	return strURL;
+	return m_sURL;
 }
 
 void CHttpRequest::AddHeader(LPCTSTR pszKey, LPCTSTR pszValue)
 {
-	CSingleLock pLock( &m_pSection );
 	if ( IsPending() ) return;
 	
 	m_sRequestHeaders += pszKey;
@@ -106,9 +103,8 @@ void CHttpRequest::AddHeader(LPCTSTR pszKey, LPCTSTR pszValue)
 	m_sRequestHeaders += _T("\r\n");
 }
 
-void CHttpRequest::SetPostData(LPCVOID pBody, DWORD nBody)
+/*void CHttpRequest::SetPostData(LPCVOID pBody, DWORD nBody)
 {
-	CSingleLock pLock( &m_pSection );
 	if ( IsPending() ) return;
 	
 	if ( m_pPost != NULL ) delete m_pPost;
@@ -119,25 +115,23 @@ void CHttpRequest::SetPostData(LPCVOID pBody, DWORD nBody)
 		m_pPost = new CBuffer();
 		m_pPost->Add( pBody, nBody );
 	}
-}
+}*/
 
 void CHttpRequest::SetUserAgent(LPCTSTR pszUserAgent)
 {
-	CSingleLock pLock( &m_pSection );
 	if ( IsPending() ) return;
 	m_sUserAgent = pszUserAgent;
 }
 
 void CHttpRequest::LimitContentLength(DWORD nLimit)
 {
-	CSingleLock pLock( &m_pSection );
 	if ( IsPending() ) return;
 	m_nLimit = nLimit;
 }
 
 void CHttpRequest::SetNotify(HWND hWnd, UINT nMsg, WPARAM wParam)
 {
-	CSingleLock pLock( &m_pSection );
+	if ( IsPending() ) return;
 	m_hNotifyWnd	= hWnd;
 	m_nNotifyMsg	= nMsg;
 	m_nNotifyParam	= wParam;
@@ -146,78 +140,54 @@ void CHttpRequest::SetNotify(HWND hWnd, UINT nMsg, WPARAM wParam)
 //////////////////////////////////////////////////////////////////////
 // CHttpRequest response attributes
 
-int CHttpRequest::GetStatusCode()
+int CHttpRequest::GetStatusCode() const
 {
-	CSingleLock pLock( &m_pSection );
 	return IsPending() ? 0 : m_nStatusCode;
 }
 
-BOOL CHttpRequest::GetStatusSuccess()
+BOOL CHttpRequest::GetStatusSuccess() const
 {
-	CSingleLock pLock( &m_pSection );
-	if ( IsPending() ) return FALSE;
-	return m_nStatusCode >= 200 && m_nStatusCode < 300;
+	return ! IsPending() && m_nStatusCode >= 200 && m_nStatusCode < 300;
 }
 
-CString CHttpRequest::GetStatusString()
+CString CHttpRequest::GetStatusString() const
 {
-	CSingleLock pLock( &m_pSection );
-	return m_sStatusString;
+	return IsPending() ? _T("") : m_sStatusString;
 }
 
-CString CHttpRequest::GetHeader(LPCTSTR pszName)
+CString CHttpRequest::GetHeader(LPCTSTR pszName) const
 {
-	CSingleLock pLock( &m_pSection );
-	CString strIn, strOut;
-	
-	if ( IsPending() ) return strOut;
-	
-	strIn = pszName;
+	CString strIn( pszName ), strOut;
 	ToLower( strIn );
-
-	m_pResponseHeaders.Lookup( strIn, strOut );
-	
-	return strOut;
+	return ( ! IsPending() && m_pResponseHeaders.Lookup( strIn, strOut ) ) ? strOut : _T("");
 }
 
-CString CHttpRequest::GetResponseString(UINT nCodePage)
+CString CHttpRequest::GetResponseString(UINT nCodePage) const
 {
-	CSingleLock pLock( &m_pSection );
-	CString str;
-	
-	if ( ! IsPending() && m_pResponse != NULL )
-	{
-		str = m_pResponse->ReadString( m_pResponse->m_nLength, nCodePage );
-	}
-	
-	return str;
+	return ( ! IsPending() && m_pResponse ) ?
+		m_pResponse->ReadString( m_pResponse->m_nLength, nCodePage ) : _T("");
 }
 
-CBuffer* CHttpRequest::GetResponseBuffer()
+CBuffer* CHttpRequest::GetResponseBuffer() const
 {
-	CSingleLock pLock( &m_pSection );
-	if ( IsPending() ) return NULL;
-	return m_pResponse;
+	return IsPending() ? NULL : m_pResponse;
 }
 
 BOOL CHttpRequest::InflateResponse()
 {
-	CSingleLock pLock( &m_pSection, TRUE );
-	
 	if ( IsPending() || m_pResponse == NULL ) return FALSE;
-	
-	CString strEncoding = GetHeader( _T("Content-Encoding") );
-	
+
+	CString strEncoding( GetHeader( _T("Content-Encoding") ) );
+
 	if ( strEncoding.CompareNoCase( _T("deflate") ) == 0 )
 	{
 		return m_pResponse->Inflate();
 	}
-	
-	if ( strEncoding.CompareNoCase( _T("gzip") ) == 0 )
+	else if ( strEncoding.CompareNoCase( _T("gzip") ) == 0 )
 	{
 		return m_pResponse->Ungzip();
 	}
-	
+
 	return TRUE;
 }
 
@@ -227,53 +197,53 @@ BOOL CHttpRequest::InflateResponse()
 BOOL CHttpRequest::Execute(BOOL bBackground)
 {
 	if ( IsPending() ) return FALSE;
-	Cancel();
-	
-	ASSERT( m_sURL.GetLength() > 0 );
-	ASSERT( m_pPost == NULL );
-	
+
+	ASSERT( m_sURL.GetLength() );
+
+	m_hInternet = NULL;
 	m_bCancel = FALSE;
 	m_nStatusCode = 0;
+	m_sStatusString.Empty();
 	m_pResponseHeaders.RemoveAll();
-	if ( m_pResponse != NULL ) delete m_pResponse;
+	if ( m_pResponse ) delete m_pResponse;
 	m_pResponse = NULL;
-	
+	if ( m_sUserAgent.IsEmpty() ) m_sUserAgent = Settings.SmartAgent();
+
+	m_hThread = BeginThread( "HTTPRequest", (AFX_THREADPROC)ThreadStart, this );
+	if ( ! m_hThread )
+		return FALSE;
+
 	if ( bBackground )
 	{
-		m_hThread = BeginThread( "HTTPRequest", (AFX_THREADPROC)ThreadStart, this );
 		return TRUE;
 	}
 	else
 	{
-		Run();
-		ASSERT( ! IsPending() );
-		return ( m_nStatusCode >= 200 && m_nStatusCode < 300 );
+		CloseThread( &m_hThread );
+		return GetStatusSuccess();
 	}
 }
 
-BOOL CHttpRequest::IsPending()
+BOOL CHttpRequest::IsPending() const
 {
-	return ( m_hInternet != NULL );
+	return m_hThread && ( WaitForSingleObject( m_hThread, 0 ) == WAIT_TIMEOUT );
 }
 
-BOOL CHttpRequest::IsFinished()
+BOOL CHttpRequest::IsFinished() const
 {
-	return ( m_hInternet == NULL ) && ( m_nStatusCode != 0 );
+	return ! IsPending() && m_nStatusCode;
 }
 
 void CHttpRequest::Cancel()
 {
-	m_pSection.Lock();
-	m_bCancel = TRUE;
-	HINTERNET hInternet = m_hInternet;
-	m_hInternet = NULL;
-	m_pSection.Unlock();
+	if ( ! IsPending() ) return;
 
-	if ( hInternet != NULL ) InternetCloseHandle( hInternet );
+	m_bCancel = TRUE;
+	if ( m_hInternet ) InternetCloseHandle( m_hInternet );
 
 	CloseThread( &m_hThread );
 
-	m_bCancel = FALSE;
+	m_hInternet = NULL;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -281,115 +251,89 @@ void CHttpRequest::Cancel()
 
 UINT CHttpRequest::ThreadStart(LPVOID lpParameter)
 {
-	CHttpRequest* pRequest = reinterpret_cast<CHttpRequest*>(lpParameter);
-	return (DWORD)pRequest->Run();
-}
-
-int CHttpRequest::Run()
-{
-	CSingleLock pLock( &m_pSection, FALSE );
-	
-	if ( m_sUserAgent.GetLength() == 0 ) m_sUserAgent = Settings.SmartAgent();
-
-	HINTERNET hInternet = InternetOpen( m_sUserAgent, INTERNET_OPEN_TYPE_DIRECT, NULL, NULL, 0 );
-	
-	if ( hInternet != NULL )
-	{
-		m_hInternet = hInternet;
-		
-		RunRequest();
-		// RunDebugRequest();
-		
-		pLock.Lock();
-		if ( m_bCancel ) m_nStatusCode = 0;
-		hInternet = m_hInternet;
-		m_hInternet = NULL;
-		pLock.Unlock();
-		
-		if ( hInternet != NULL ) InternetCloseHandle( hInternet );
-	}
-	
-	pLock.Lock();
-	if ( m_hNotifyWnd != NULL ) 
-		PostMessage( m_hNotifyWnd, m_nNotifyMsg, m_nNotifyParam, 0 );
-	pLock.Unlock();
-
+	reinterpret_cast< CHttpRequest* >( lpParameter )->Run();
 	return 0;
 }
 
-void CHttpRequest::RunRequest()
+void CHttpRequest::Run()
 {
-	m_pSection.Lock();
-	HINTERNET hURL = InternetOpenUrl( m_hInternet, m_sURL, m_sRequestHeaders,
-		m_sRequestHeaders.GetLength(), INTERNET_FLAG_KEEP_CONNECTION | INTERNET_FLAG_RELOAD | 
-		INTERNET_FLAG_PRAGMA_NOCACHE | INTERNET_FLAG_NO_CACHE_WRITE , NULL );
-	m_pSection.Unlock();
-	
-	if ( hURL != NULL )
-	{
-		RunResponse( hURL );
-		InternetCloseHandle( hURL );
-	}
-}
+	ASSERT( m_sUserAgent.GetLength() );
+	ASSERT( m_sURL.GetLength() );
+	ASSERT( m_pResponse == NULL );
 
-void CHttpRequest::RunResponse(HINTERNET hURL)
-{
-	DWORD nLength = 255;
-	BYTE nNull = 0;
-	
-	if ( ! HttpQueryInfo( hURL, HTTP_QUERY_STATUS_TEXT,
-		m_sStatusString.GetBuffer( nLength ), &nLength, 0 ) ) nLength = 0;
-	m_sStatusString.ReleaseBuffer( nLength );
-	if ( m_sStatusString.IsEmpty() ) return;
-	
-	if ( m_pResponse != NULL ) delete m_pResponse;
-	m_pResponse = new CBuffer();
-	
-    DWORD nRemaining;
-	for ( ; InternetQueryDataAvailable( hURL, &nRemaining, 0, 0 ) && nRemaining > 0 && ! m_bCancel ; )
+	m_hInternet = InternetOpen( m_sUserAgent, INTERNET_OPEN_TYPE_DIRECT, NULL, NULL, 0 );
+	if ( m_hInternet )
 	{
-		m_pResponse->EnsureBuffer( nRemaining );
-		if ( ! InternetReadFile( hURL, m_pResponse->m_pBuffer + m_pResponse->m_nLength,
-			nRemaining, &nRemaining ) ) break;
-		m_pResponse->m_nLength += nRemaining;
-		if ( m_nLimit > 0 && m_pResponse->m_nLength > m_nLimit ) break;
-	}
-	
-	if ( nRemaining > 0 ) return;
-	
-	nLength = 0;
-	HttpQueryInfo( hURL, HTTP_QUERY_RAW_HEADERS, &nNull, &nLength, 0 );
-	if ( nLength == 0 ) return;
-	
-	LPTSTR pszHeaders = new TCHAR[ nLength + 1 ];
-	pszHeaders[0] = pszHeaders[1] = 0;
-	HttpQueryInfo( hURL, HTTP_QUERY_RAW_HEADERS, pszHeaders, &nLength, 0 );
-	
-	for ( LPTSTR pszHeader = pszHeaders ; *pszHeader ; )
-	{
-		CString strHeader( pszHeader );
-		pszHeader += strHeader.GetLength() + 1;
-		
-		int nColon = strHeader.Find( ':' );
-		
-		if ( nColon > 0 )
+		HINTERNET hURL = InternetOpenUrl( m_hInternet, m_sURL, m_sRequestHeaders,
+			m_sRequestHeaders.GetLength(), INTERNET_FLAG_KEEP_CONNECTION |
+			INTERNET_FLAG_RELOAD | INTERNET_FLAG_PRAGMA_NOCACHE |
+			INTERNET_FLAG_NO_CACHE_WRITE, NULL );
+		if ( hURL )
 		{
-			CString strValue, strName = strHeader.Left( nColon );
-			strName.Trim(); 
-			ToLower( strName );
-			
-			while ( m_pResponseHeaders.Lookup( strName, strValue ) ) strName += _T('_');
+			DWORD nLength = 255;
+			BYTE nNull = 0;
+			if ( m_bCancel || ! HttpQueryInfo( hURL, HTTP_QUERY_STATUS_TEXT,
+				m_sStatusString.GetBuffer( nLength ), &nLength, 0 ) ) nLength = 0;
+			m_sStatusString.ReleaseBuffer( nLength );
+			if ( m_sStatusString.GetLength() )
+			{
+				m_pResponse = new CBuffer();
+				DWORD nRemaining = 0;
+				for ( ; ! m_bCancel &&
+					InternetQueryDataAvailable( hURL, &nRemaining, 0, 0 ) &&
+					nRemaining > 0 &&
+					m_pResponse->EnsureBuffer( nRemaining ); )
+				{
+					if ( ! InternetReadFile( hURL, m_pResponse->m_pBuffer +
+						m_pResponse->m_nLength, nRemaining, &nRemaining ) ) break;
+					m_pResponse->m_nLength += nRemaining;
+					if ( m_nLimit > 0 && m_pResponse->m_nLength > m_nLimit ) break;
+				}
+				if ( ! m_bCancel && nRemaining == 0 )
+				{
+					nLength = 0;
+					HttpQueryInfo( hURL, HTTP_QUERY_RAW_HEADERS, &nNull, &nLength, 0 );
+					if ( nLength )
+					{
+						LPTSTR pszHeaders = new TCHAR[ nLength + 1 ];
+						pszHeaders[ 0 ] = pszHeaders[ 1 ] = 0;
+						HttpQueryInfo( hURL, HTTP_QUERY_RAW_HEADERS, pszHeaders, &nLength, 0 );
+						for ( LPTSTR pszHeader = pszHeaders ; *pszHeader ; )
+						{
+							CString strHeader( pszHeader );
+							pszHeader += strHeader.GetLength() + 1;
+							int nColon = strHeader.Find( ':' );
+							if ( nColon > 0 )
+							{
+								CString strValue, strName = strHeader.Left( nColon );
+								strName.Trim(); 
+								ToLower( strName );
+								while ( m_pResponseHeaders.Lookup( strName, strValue ) )
+									strName += _T('_');
+								strValue = strHeader.Mid( nColon + 1 );
+								strValue.Trim();
+								m_pResponseHeaders.SetAt( strName, strValue );
+							}
+						}
+						delete [] pszHeaders;
 
-			strValue = strHeader.Mid( nColon + 1 );
-			strValue.Trim();
-			m_pResponseHeaders.SetAt( strName, strValue );
+						nLength = 4;
+						HttpQueryInfo( hURL, HTTP_QUERY_STATUS_CODE | HTTP_QUERY_FLAG_NUMBER,
+							&m_nStatusCode, &nLength, 0 );
+					}
+				}
+			}
+			InternetCloseHandle( hURL );
 		}
+		if ( ! m_bCancel )
+			InternetCloseHandle( m_hInternet );
+		m_hInternet = NULL;
 	}
-	
-	delete [] pszHeaders;
-	
-	nLength = 4;
-	m_nStatusCode = 0;
-	HttpQueryInfo( hURL, HTTP_QUERY_STATUS_CODE|HTTP_QUERY_FLAG_NUMBER,
-		&m_nStatusCode, &nLength, 0 );
+
+	if ( m_hNotifyWnd )
+	{
+		PostMessage( m_hNotifyWnd, m_nNotifyMsg, m_nNotifyParam, 0 );
+	}
+
+	m_hThread = NULL;
 }
