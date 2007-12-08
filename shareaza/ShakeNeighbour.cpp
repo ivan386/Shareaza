@@ -1441,13 +1441,13 @@ BOOL CShakeNeighbour::OnHeadersCompleteG2()
 				// We don't allow these to act as a leaf. (resource use, etc)
 				if ( m_bObsoleteClient ) 
 				{
-					theApp.Message( MSG_ERROR, _T("Rejecting obsolete leaf client %s") , (LPCTSTR)m_sUserAgent );
-					Write( _P("GNUTELLA/0.6 503 Update your client\r\n") );
+					theApp.Message( MSG_ERROR, _T("Rejecting bad and obsolete leaf client %s") , (LPCTSTR)m_sUserAgent );
+					Write( _P("GNUTELLA/0.6 503 Update your client. http://sourceforge.net/projects/shareaza/\r\n") );
 				}
 				else 
 				{
 					theApp.Message( MSG_ERROR, _T("Rejecting bad leaf client %s") , (LPCTSTR)m_sUserAgent );
-					Write( _P("GNUTELLA/0.6 503 Refused\r\n") );
+					Write( _P("GNUTELLA/0.6 503 Refused. http://sourceforge.net/projects/shareaza/\r\n") );
 				}
 				SendMinimalHeaders();  
 				DelayClose( IDS_HANDSHAKE_SURPLUS );
@@ -1456,10 +1456,10 @@ BOOL CShakeNeighbour::OnHeadersCompleteG2()
 			else if ( m_bObsoleteClient ) 
 			{
 				// Check our loading. Old clients consume more resources, so we might not be able to accept it
-				if ( Neighbours.GetCount(PROTOCOL_G2, nrsConnected ,ntLeaf ) > ( Settings.Gnutella2.NumLeafs / 2 ) )
+				if ( Neighbours.GetCount(PROTOCOL_G2, nrsConnected, ntLeaf ) > ( Settings.Gnutella2.NumLeafs / 2 ) )
 				{
 					theApp.Message( MSG_ERROR, _T("Rejecting obsolete leaf %s (We are too full)") , (LPCTSTR)m_sUserAgent );
-					Write( _P("GNUTELLA/0.6 503 Old client version, please update\r\n") );
+					Write( _P("GNUTELLA/0.6 503 Old client version, please update. http://sourceforge.net/projects/shareaza/\r\n") );
 					SendMinimalHeaders();  
 					DelayClose( IDS_HANDSHAKE_SURPLUS );
 					return FALSE;
@@ -1468,7 +1468,7 @@ BOOL CShakeNeighbour::OnHeadersCompleteG2()
 			else if ( ! m_bShareaza )
 			{
 				// Check to see if we have enough free leaf slots.
-				if ( Neighbours.GetCount(PROTOCOL_G2, nrsConnected ,ntLeaf ) > ( Settings.Gnutella2.NumLeafs - 5 ) )
+				if ( Neighbours.GetCount(PROTOCOL_G2, nrsConnected, ntLeaf ) > ( Settings.Gnutella2.NumLeafs - 5 ) )
 				{
 					SendHostHeaders( _PT("GNUTELLA/0.6 503 Maximum connections reached") );
 					DelayClose( IDS_HANDSHAKE_SURPLUS );
