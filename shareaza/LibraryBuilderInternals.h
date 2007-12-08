@@ -23,6 +23,8 @@
 #define AFX_LIBRARYBUILDERINTERNALS_H__5CAE40BD_1963_4A30_A333_89DBB6899803__INCLUDED_
 
 #pragma once
+
+#define _MSI_NO_CRYPTO
 #include <MsiQuery.h>
 
 class CLibraryBuilder;
