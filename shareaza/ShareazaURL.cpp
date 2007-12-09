@@ -1206,6 +1206,7 @@ BOOL CShareazaURL::RegisterShellType(LPCTSTR pszProtocol, LPCTSTR pszName, LPCTS
 	DWORD nDisposition;
 	TCHAR szPath[MAX_PATH];
 
+	ASSERT( Settings.m_bSettingsLoaded );
 	if ( theApp.m_dwWindowsVersion >= 5 && theApp.m_bMultiUserInstallation == TRUE )	
 		hMainKey = HKEY_CURRENT_USER;
 	else

@@ -456,12 +456,14 @@ void CSettings::Setup()
 //////////////////////////////////////////////////////////////////////
 // CSettings construction
 
-CSettings::CSettings()
+CSettings::CSettings() :
+	m_bSettingsLoaded( FALSE )
 {
 	CRegistry pRegistry;
 
 	theApp.m_bMultiUserInstallation = pRegistry.GetBool( _T(""), _T("MultiUser"), FALSE, HKEY_LOCAL_MACHINE );
 
+	// Set default program and user paths
 	{
 		TCHAR szPath[MAX_PATH];
 
@@ -595,7 +597,7 @@ void CSettings::Load()
 			|| ( !pItem->m_pDword && !pItem->m_pFloat && !pItem->m_pString && pItem->m_pSet ) );
 	}
 
-	if ( pRegistry.GetInt( _T("Settings"), _T("FirstRun"), TRUE ) )
+	if ( pRegistry.GetBool( _T("Settings"), _T("FirstRun"), TRUE ) )
 	{
 		Live.FirstRun = TRUE;
 		pRegistry.SetInt( _T("Settings"), _T("FirstRun"), FALSE );
@@ -603,14 +605,10 @@ void CSettings::Load()
 
 	SmartUpgrade();
 
-	if ( pRegistry.GetInt( _T("Settings"), _T("Running"), FALSE ) )
-	{
-		//pRegistry.SetInt( _T("VersionCheck"), _T("NextCheck"), 0 );
-	}
+	if ( pRegistry.GetBool( _T("Settings"), _T("Running"), FALSE ) )
+		;	// Shareaza is restarted after a crash
 	else
-	{
 		pRegistry.SetInt( _T("Settings"), _T("Running"), TRUE );
-	}
 
 	// Set current networks
 	Gnutella1.EnableToday		= Gnutella1.EnableAlways;
@@ -707,6 +705,8 @@ void CSettings::Load()
 		Connection.EnableFirewallException = FALSE;
 		Connection.DeleteFirewallException = FALSE;
 	}
+
+	m_bSettingsLoaded = TRUE;
 }
 
 void CSettings::Save(BOOL bShutdown)

@@ -37,6 +37,8 @@ public:
 	
 // Attributes
 public:
+	BOOL m_bSettingsLoaded;
+
 	struct sGeneral
 	{
 		CString		Path;						// Installation path for Shareaza

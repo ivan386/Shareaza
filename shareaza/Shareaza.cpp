@@ -705,6 +705,12 @@ void CShareazaApp::GetVersionNumber()
 
 void CShareazaApp::InitResources()
 {
+	{
+		CRegistry pRegistry;
+		// ToDO: READ => It is already set in CSettings::CSettings, executed before CShareazaApp::InitResources, but if I don't set it here, the value is wrong when read from CShareazaURL::RegisterShellType, WTF
+		m_bMultiUserInstallation = pRegistry.GetBool( _T(""), _T("MultiUser"), FALSE, HKEY_LOCAL_MACHINE );
+	}
+
 	//Determine the version of Windows
 	OSVERSIONINFOEX pVersion;
 	pVersion.dwOSVersionInfoSize = sizeof(OSVERSIONINFOEX);
@@ -1951,7 +1957,7 @@ CString GetLocalAppDataFolder()
 		strLocalAppDataPath = pRegistry.GetString( _T("Shell Folders"), _T("Local AppData"), _T(""), HKEY_CURRENT_USER, _T("Software\\Microsoft\\Windows\\CurrentVersion\\Explorer") );
 
 		if ( !strLocalAppDataPath.GetLength() )
-			strLocalAppDataPath = GetAppDataFolder();
+			return GetAppDataFolder();
 	}	
 	ASSERT( strLocalAppDataPath.GetLength() );
 
