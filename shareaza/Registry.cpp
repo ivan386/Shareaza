@@ -121,9 +121,9 @@ int CRegistry::GetInt(LPCTSTR pszSection, LPCTSTR pszName, int nDefault, HKEY hM
 	return nValue;
 }
 
-BOOL CRegistry::GetBool(LPCTSTR pszSection, LPCTSTR pszName, BOOL nDefault, HKEY hMainKey, LPCTSTR pszSubKey)
+BOOL CRegistry::GetBool(LPCTSTR pszSection, LPCTSTR pszName, BOOL bDefault, HKEY hMainKey, LPCTSTR pszSubKey)
 {
-	if ( GetInt(pszSection, pszName, (int)nDefault, hMainKey, pszSubKey) == 0 )
+	if ( GetInt(pszSection, pszName, (int)bDefault, hMainKey, pszSubKey) == 0 )
 		return FALSE;
 
 	return TRUE;

@@ -33,7 +33,7 @@ public:
 public:
 	CString GetString(LPCTSTR pszSection, LPCTSTR pszName, LPCTSTR pszDefault = NULL, HKEY hMainKey = HKEY_CURRENT_USER, LPCTSTR pszSubKey = NULL);
 	int		GetInt(LPCTSTR pszSection, LPCTSTR pszName, int nDefault = 0, HKEY hMainKey = HKEY_CURRENT_USER, LPCTSTR pszSubKey = NULL);
-	BOOL	GetBool(LPCTSTR pszSection, LPCTSTR pszName, BOOL nDefault = FALSE, HKEY hMainKey = HKEY_CURRENT_USER, LPCTSTR pszSubKey = NULL);
+	BOOL	GetBool(LPCTSTR pszSection, LPCTSTR pszName, BOOL bDefault = FALSE, HKEY hMainKey = HKEY_CURRENT_USER, LPCTSTR pszSubKey = NULL);
 	DWORD	GetDword(LPCTSTR pszSection, LPCTSTR pszName, DWORD dwDefault = 0);
 	double	GetFloat(LPCTSTR pszSection, LPCTSTR pszName, double fDefault = 0.0f);
 public:
