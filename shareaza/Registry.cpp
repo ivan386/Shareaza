@@ -121,6 +121,14 @@ int CRegistry::GetInt(LPCTSTR pszSection, LPCTSTR pszName, int nDefault, HKEY hM
 	return nValue;
 }
 
+BOOL CRegistry::GetBool(LPCTSTR pszSection, LPCTSTR pszName, BOOL nDefault, HKEY hMainKey, LPCTSTR pszSubKey)
+{
+	if ( GetInt(pszSection, pszName, (int)nDefault, hMainKey, pszSubKey) == 0 )
+		return FALSE;
+
+	return TRUE;
+}
+
 DWORD CRegistry::GetDword(LPCTSTR pszSection, LPCTSTR pszName, DWORD dwDefault)
 {
 	return (int)GetInt( pszSection, pszName, (int)dwDefault );

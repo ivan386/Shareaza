@@ -103,6 +103,9 @@ public:
 	HINSTANCE	m_hKernel;
 	BOOL		(WINAPI *m_pfnGetDiskFreeSpaceExW)(LPCWSTR, PULARGE_INTEGER, PULARGE_INTEGER, PULARGE_INTEGER);
 
+	HINSTANCE	m_hShellFolder;
+	HRESULT		(WINAPI *m_pfnSHGetFolderPathW)(HWND, int, HANDLE, DWORD, LPWSTR);
+
 	// For RTL layout support
 	HINSTANCE	m_hGDI32;
 	DWORD		(WINAPI *m_pfnSetLayout)(HDC, DWORD);
@@ -214,8 +217,12 @@ void CloseThread(HANDLE* phThread, DWORD dwTimeout = ALMOST_INFINITE);
 LRESULT CALLBACK KbdHook(int nCode, WPARAM wParam, LPARAM lParam);
 LRESULT CALLBACK MouseHook(int nCode, WPARAM wParam, LPARAM lParam);
 
+CString GetFolderPath( int nFolder );
 CString GetWindowsFolder();
 CString GetProgramFilesFolder();
+CString GetDocumentsFolder();
+CString GetAppDataFolder();
+CString GetLocalAppDataFolder();
 
 // Loads RT_HTML or RT_GZIP resource as string
 CString LoadHTML(HINSTANCE hInstance, UINT nResourceID);

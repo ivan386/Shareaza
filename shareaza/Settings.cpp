@@ -61,7 +61,7 @@ void CSettings::Setup()
 	Add( _T("Settings.RatesInBytes"), &General.RatesInBytes, TRUE );
 	Add( _T("Settings.RatesUnit"), &General.RatesUnit, 0 );
 	Add( _T("Settings.AlwaysOpenURLs"), &General.AlwaysOpenURLs, FALSE );
-	Add( _T("Settings.Language"), &General.Language, _T("en") );
+	Add( _T("Settings.Language"), &General.Language, General.Language );
 	Add( _T("Settings.IgnoreXPsp2"), &General.IgnoreXPsp2, FALSE );
 	Add( _T("Settings.ItWasLimited"), &General.ItWasLimited, FALSE );
 
@@ -364,8 +364,8 @@ void CSettings::Setup()
 	Add( _T("BitTorrent.StandardPeerID"), &BitTorrent.StandardPeerID, TRUE );
 	Add( _T("BitTorrent.PreferenceBTSources"), &BitTorrent.PreferenceBTSources, TRUE );
 
-	Add( _T("Downloads.IncompletePath"), &Downloads.IncompletePath, General.UserPath + _T("\\Incomplete") );
-	Add( _T("Downloads.CompletePath"), &Downloads.CompletePath, General.UserPath + _T("\\Downloads") );
+	Add( _T("Downloads.IncompletePath"), &Downloads.IncompletePath, Downloads.IncompletePath );
+	Add( _T("Downloads.CompletePath"), &Downloads.CompletePath, Downloads.CompletePath );
 	Add( _T("Downloads.TorrentPath"), &Downloads.TorrentPath, General.UserPath + _T("\\Torrents") );
 	Add( _T("Downloads.CollectionPath"), &Downloads.CollectionPath, General.UserPath + _T("\\Collections") );
 	Add( _T("Downloads.BufferSize"), &Downloads.BufferSize, 81920 );
@@ -448,7 +448,7 @@ void CSettings::Setup()
 
 	Add( _T("Experimental.EnableDIPPSupport"), &Experimental.EnableDIPPSupport, FALSE );
 
-	Add( _T("WINE.MenuFix"), &WINE.MenuFix, FALSE );
+	Add( _T("WINE.MenuFix"), &WINE.MenuFix, TRUE );
 }
 
 
@@ -458,16 +458,38 @@ void CSettings::Setup()
 
 CSettings::CSettings()
 {
-	TCHAR szPath[MAX_PATH];
 	CRegistry pRegistry;
-	GetModuleFileName( NULL, szPath, MAX_PATH );
 
-	// Set default program and user paths
-	General.Path = szPath;
-	if ( General.Path.ReverseFind( '\\' ) >= 0 )
-		General.Path = General.Path.Left( General.Path.ReverseFind( '\\' ) );
-	General.Path = pRegistry.GetString( _T(""), _T("Path"), General.Path );	// This line is needed otherwise the value is readed too late.
-	General.UserPath = General.Path;
+	theApp.m_bMultiUserInstallation = pRegistry.GetBool( _T(""), _T("MultiUser"), FALSE, HKEY_LOCAL_MACHINE );
+
+	{
+		TCHAR szPath[MAX_PATH];
+
+		GetModuleFileName( NULL, szPath, MAX_PATH );
+		General.Path = szPath;
+		if ( General.Path.ReverseFind( '\\' ) >= 0 )
+			General.Path = General.Path.Left( General.Path.ReverseFind( '\\' ) );
+	}
+	// This line is needed here otherwise the value is readed too late.
+	General.Path = pRegistry.GetString( _T(""), _T("Path"), General.Path );
+
+	if ( !theApp.m_bMultiUserInstallation )
+	{
+		General.UserPath = General.Path;
+		Downloads.IncompletePath = General.Path + _T("\\Incomplete");
+		Downloads.CompletePath = General.Path + _T("\\Downloads");
+	}
+	else
+	{
+		General.UserPath = GetAppDataFolder() + _T("\\Shareaza");
+		Downloads.IncompletePath = GetLocalAppDataFolder() + _T("\\Shareaza\\Incomplete");
+		Downloads.CompletePath = GetDocumentsFolder() + _T("\\Shareaza Downloads");
+	}
+
+	// ToDO: Fix it, General.Language is set correctly but Shareaza is executed in English
+	General.Language = pRegistry.GetString( _T(""), _T("DefaultLanguage"), _T("en"), HKEY_LOCAL_MACHINE );
+	// DefaultLanguageRTL => pRegistry.GetBool( _T(""), _T("DefaultLanguageRTL"), FALSE, HKEY_LOCAL_MACHINE );
+
 
 	// Reset 'live' values.
 	Live.DiskSpaceWarning			= FALSE;
@@ -488,7 +510,7 @@ CSettings::CSettings()
 
 	// Add all settings
 	Setup();
-	if ( Settings.Live.FirstRun ) OnChangeConnectionSpeed();	// This helps if the QuickStart Wizard is skipped.
+	if ( Live.FirstRun ) OnChangeConnectionSpeed();	// This helps if the QuickStart Wizard is skipped.
 }
 
 CSettings::~CSettings()
@@ -599,6 +621,13 @@ void CSettings::Load()
 	CreateDirectory( General.Path + _T("\\Data"), NULL );
 	CreateDirectory( General.UserPath, NULL );
 	CreateDirectory( General.UserPath + _T("\\Data"), NULL );
+	{	// It create C:\Documents and Settings\[UserName]\Local Settings\Application Data\Shareaza
+		CString strTemp( Downloads.IncompletePath );
+		if ( strTemp.ReverseFind( '\\' ) >= 0 )
+			strTemp = strTemp.Left( strTemp.ReverseFind( '\\' ) );
+
+		 CreateDirectory( strTemp, NULL );
+	}
 	CreateDirectory( Downloads.IncompletePath, NULL );
 
 	// Set interface

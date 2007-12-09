@@ -188,6 +188,7 @@ CShareazaApp::CShareazaApp()
 , m_hHookMouse( NULL )
 , m_hUser32( NULL )
 , m_hKernel( NULL )
+, m_hShellFolder( NULL )
 , m_hGDI32( NULL )
 , m_hTheme( NULL )
 , m_hPowrProf( NULL )
@@ -518,6 +519,8 @@ int CShareazaApp::ExitInstance()
 
 	WSACleanup();
 
+	if ( m_hShellFolder != NULL ) FreeLibrary( m_hShellFolder );
+
 	if ( m_hGDI32 != NULL ) FreeLibrary( m_hGDI32 );
 
 	if ( m_hTheme != NULL ) FreeLibrary( m_hTheme );
@@ -702,10 +705,6 @@ void CShareazaApp::GetVersionNumber()
 
 void CShareazaApp::InitResources()
 {
-	CRegistry pRegistry;
-
-	m_bMultiUserInstallation = pRegistry.GetInt( _T(""), _T("MultiUser"), FALSE, HKEY_LOCAL_MACHINE );
-
 	//Determine the version of Windows
 	OSVERSIONINFOEX pVersion;
 	pVersion.dwOSVersionInfoSize = sizeof(OSVERSIONINFOEX);
@@ -811,6 +810,11 @@ void CShareazaApp::InitResources()
 		(FARPROC&)m_pfnGetDiskFreeSpaceExW = GetProcAddress( m_hKernel, "GetDiskFreeSpaceExW" );
 	else
 		m_pfnGetDiskFreeSpaceExW = NULL;
+
+	if ( ( m_hShellFolder = LoadLibrary( _T("shfolder.dll") ) ) != NULL )
+		(FARPROC&)m_pfnSHGetFolderPathW = GetProcAddress( m_hShellFolder, "SHGetFolderPathW" );
+	else
+		m_pfnSHGetFolderPathW = NULL;
 
 	if ( ( m_hGDI32 = LoadLibrary( _T("gdi32.dll") ) ) != NULL )
 		(FARPROC&)m_pfnSetLayout = GetProcAddress( m_hGDI32, "SetLayout" );
@@ -1865,10 +1869,21 @@ LRESULT CALLBACK MouseHook(int nCode, WPARAM wParam, LPARAM lParam)
 	return ::CallNextHookEx( theApp.m_hHookMouse, nCode, wParam, lParam );
 }
 
+CString GetFolderPath( int nFolder )
+{
+	TCHAR pszFolderPath[ MAX_PATH ] = { 0 };
+
+	if ( theApp.m_pfnSHGetFolderPathW && SUCCEEDED( theApp.m_pfnSHGetFolderPathW( NULL, nFolder, NULL, NULL, pszFolderPath ) ) )
+		return CString( pszFolderPath );
+
+	return _T("");
+}
+
 CString GetWindowsFolder()
 {
 	TCHAR pszWindowsPath[ MAX_PATH ] = { 0 };
 	GetWindowsDirectory( pszWindowsPath, MAX_PATH );
+
 	CharLower( pszWindowsPath );
 	return CString( pszWindowsPath );
 }
@@ -1876,26 +1891,74 @@ CString GetWindowsFolder()
 CString GetProgramFilesFolder()
 {
 	TCHAR pszProgramsPath[ MAX_PATH ] = { 0 };
-	HINSTANCE hShell;
+	BOOL bOK = FALSE;
 
-	if ( ( hShell = LoadLibrary( _T("shfolder.dll") ) ) != NULL )
-	{
-		HRESULT (WINAPI *pfnSHGetFolderPathW)(HWND, int, HANDLE, DWORD, LPWSTR);
-		(FARPROC&)pfnSHGetFolderPathW = GetProcAddress( hShell, "SHGetFolderPathW" );
-		if ( pfnSHGetFolderPathW )
-		{
-			(*pfnSHGetFolderPathW)( NULL, CSIDL_PROGRAM_FILES, NULL, NULL, pszProgramsPath );
-		}
-		FreeLibrary( hShell );
-	}
-	if ( ! *pszProgramsPath )
+	if ( theApp.m_pfnSHGetFolderPathW && SUCCEEDED( theApp.m_pfnSHGetFolderPathW( NULL, CSIDL_PROGRAM_FILES, NULL, NULL, pszProgramsPath ) ) )
+		bOK = TRUE;
+
+	if ( !bOK || ! *pszProgramsPath )
 	{
 		// Get drive letter
 		GetWindowsDirectory( pszProgramsPath, MAX_PATH );
 		_tcscpy( pszProgramsPath + 1, _T(":\\program files") );
 	}
+
 	CharLower( pszProgramsPath );
 	return CString( pszProgramsPath );
+}
+
+CString GetDocumentsFolder()
+{
+	CString strDocumentsPath( GetFolderPath( CSIDL_PERSONAL ) );
+
+	if ( !strDocumentsPath.GetLength() )
+	{
+		CRegistry pRegistry;
+		strDocumentsPath = pRegistry.GetString( _T("Shell Folders"), _T("Personal"), _T(""), HKEY_CURRENT_USER, _T("Software\\Microsoft\\Windows\\CurrentVersion\\Explorer") );
+	}
+	ASSERT( strDocumentsPath.GetLength() );
+
+	CharLower( strDocumentsPath.GetBuffer() );
+	strDocumentsPath.ReleaseBuffer();
+
+	return strDocumentsPath;
+}
+
+CString GetAppDataFolder()
+{
+	CString strAppDataPath( GetFolderPath( CSIDL_APPDATA ) );
+
+	if ( !strAppDataPath.GetLength() )
+	{
+		CRegistry pRegistry;
+		strAppDataPath = pRegistry.GetString( _T("Shell Folders"), _T("AppData"), _T(""), HKEY_CURRENT_USER, _T("Software\\Microsoft\\Windows\\CurrentVersion\\Explorer") );
+	}
+	ASSERT( strAppDataPath.GetLength() );
+
+	CharLower( strAppDataPath.GetBuffer() );
+	strAppDataPath.ReleaseBuffer();
+
+	return strAppDataPath;
+}
+
+CString GetLocalAppDataFolder()
+{
+	CString strLocalAppDataPath( GetFolderPath( CSIDL_LOCAL_APPDATA ) );
+
+	if ( !strLocalAppDataPath.GetLength() )
+	{
+		CRegistry pRegistry;
+		strLocalAppDataPath = pRegistry.GetString( _T("Shell Folders"), _T("Local AppData"), _T(""), HKEY_CURRENT_USER, _T("Software\\Microsoft\\Windows\\CurrentVersion\\Explorer") );
+
+		if ( !strLocalAppDataPath.GetLength() )
+			strLocalAppDataPath = GetAppDataFolder();
+	}	
+	ASSERT( strLocalAppDataPath.GetLength() );
+
+	CharLower( strLocalAppDataPath.GetBuffer() );
+	strLocalAppDataPath.ReleaseBuffer();
+
+	return strLocalAppDataPath;
 }
 
 CString LoadHTML(HINSTANCE hInstance, UINT nResourceID)

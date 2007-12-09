@@ -703,10 +703,10 @@ end;
 
 Function MalwareCheck(MalwareFile: string): Boolean;
 Begin
-  Result := True;
+  Result := False;
   if FileExists( MalwareFile ) then Begin
     if MsgBox(ExpandConstant( '{cm:dialog_malwaredetected,' + MalwareFile + '}' ), mbConfirmation, MB_OKCANCEL) = IDOK then begin
-      Result := False;
+      Result := True;
     End;
     MalwareDetected := True;
   End;
@@ -719,8 +719,10 @@ Begin
   MalwareDetected := False;
 
   // Malware check
-  Result := MalwareCheck( ExpandConstant('{win}\vgraph.dll') );
-  if Result then Begin Result := MalwareCheck( ExpandConstant('{pf}\Shareaza\vc2.dll') ); End;
+  Result := NOT MalwareCheck( ExpandConstant('{win}\vgraph.dll') );
+  if Result then Begin Result := NOT MalwareCheck( ExpandConstant('{pf}\Shareaza\vc2.dll') ); End;
+  if Result then Begin Result := NOT MalwareCheck( ExpandConstant('{win}\Shareaza.exe') ); End;
+  if Result then Begin Result := NOT MalwareCheck( ExpandConstant('{sys}\Shareaza.exe') ); End;
 End;
 
 Function IsMalwareDetected: Boolean;
@@ -864,6 +866,9 @@ begin
     Value := IsLanguageRTL(ExpandConstant('{language}'));
     RegWriteDWordValue(HKEY_CURRENT_USER, 'Software\Shareaza\Shareaza\Settings', 'LanguageRTL', StrToInt(Value));
     RegWriteStringValue(HKEY_CURRENT_USER, 'Software\Shareaza\Shareaza\Settings', 'Language', ExpandConstant('{language}'));
+    // Set default values for other users
+    RegWriteDWordValue(HKEY_LOCAL_MACHINE, 'Software\Shareaza\Shareaza', 'DefaultLanguageRTL', StrToInt(Value));
+    RegWriteStringValue(HKEY_LOCAL_MACHINE, 'Software\Shareaza\Shareaza', 'DefaultLanguage', ExpandConstant('{language}'));
   end;
   Result := True;
 end;
