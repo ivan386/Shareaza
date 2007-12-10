@@ -185,15 +185,15 @@ void CCoolTipCtrl::ShowImpl()
 	rc.right = rc.left + m_sz.cx + TIP_MARGIN * 2;
 	rc.bottom = rc.top + m_sz.cy + TIP_MARGIN * 2;
 
-	if ( ( theApp.m_dwWindowsVersion >= 5 ) && (GetSystemMetrics( SM_CMONITORS ) > 1) && (theApp.m_pfnMonitorFromRect) )
+	if ( theApp.m_dwWindowsVersion >= 5 && GetSystemMetrics( SM_CMONITORS ) > 1 && theApp.m_pfnMonitorFromRect )
 	{
 		mi.cbSize = sizeof(MONITORINFO);
 
 		hMonitor = theApp.m_pfnMonitorFromRect( rc, MONITOR_DEFAULTTONEAREST );
 		//hMonitor = MonitorFromPoint( m_pOpen, MONITOR_DEFAULTTONEAREST );
-		if (NULL != hMonitor)
+		if ( hMonitor != NULL )
 		{
-			if ( theApp.m_pfnGetMonitorInfoA(hMonitor, &mi) )
+			if ( theApp.m_pfnGetMonitorInfoA && theApp.m_pfnGetMonitorInfoA(hMonitor, &mi) )
 				rcMonitor = mi.rcWork;
 			else
 				hMonitor = NULL; // Fall back to GetSystemMetrics
@@ -201,7 +201,7 @@ void CCoolTipCtrl::ShowImpl()
 
 	}
 
-	if ( NULL == hMonitor )
+	if ( hMonitor == NULL )
 	{
 		// Unimon system or something is wrong with multimon
 

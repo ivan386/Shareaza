@@ -233,22 +233,22 @@ void CMatchTipCtrl::ShowInternal()
 	rc.bottom = rc.top + sz.cy;
 
 
-	if ( ( theApp.m_dwWindowsVersion >= 5 ) && (GetSystemMetrics( SM_CMONITORS ) > 1) && (theApp.m_pfnMonitorFromRect) )
+	if ( theApp.m_dwWindowsVersion >= 5 && GetSystemMetrics( SM_CMONITORS ) > 1 && theApp.m_pfnMonitorFromRect )
 	{
 		mi.cbSize = sizeof(MONITORINFO);
 
 		hMonitor = theApp.m_pfnMonitorFromRect( rc, MONITOR_DEFAULTTONEAREST );
-		if (NULL != hMonitor)
+		if ( hMonitor != NULL )
 		{
-		if ( theApp.m_pfnGetMonitorInfoA(hMonitor, &mi) )
-			rcMonitor = mi.rcWork;
-		else
-			hMonitor = NULL; // Fall back to GetSystemMetrics
+			if ( theApp.m_pfnGetMonitorInfoA && theApp.m_pfnGetMonitorInfoA(hMonitor, &mi) )
+				rcMonitor = mi.rcWork;
+			else
+				hMonitor = NULL; // Fall back to GetSystemMetrics
 		}
 
 	}
 
-	if ( NULL == hMonitor )
+	if ( hMonitor == NULL )
 	{
 		// Unimon system or something is wrong with multimon
 		rcMonitor.right = GetSystemMetrics( SM_CXSCREEN );

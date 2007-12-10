@@ -92,7 +92,7 @@ BOOL CSplashDlg::OnInitDialog()
 	SetWindowPos( NULL, 0, 0, SPLASH_WIDTH, SPLASH_HEIGHT, SWP_NOMOVE );
 	CenterWindow();
 
-	if ( theApp.m_bNT && theApp.m_hUser32 != 0 && 
+	if ( theApp.m_bNT && theApp.m_hUser32 != NULL && 
 		 theApp.m_dwWindowsVersion >= 5 && GetSystemMetrics( SM_REMOTESESSION ) == 0 )
 	{
 		(FARPROC&)m_pfnAnimateWindow = GetProcAddress( theApp.m_hUser32, "AnimateWindow" );

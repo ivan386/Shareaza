@@ -608,7 +608,7 @@ BOOL CShareazaApp::OpenTorrent(LPCTSTR lpszFileName, BOOL bDoIt)
 			pTorrent = NULL;	// Deleted inside CShareazaURL::Clear()
 		}
 	}
-	delete pTorrent;
+	if ( pTorrent ) delete pTorrent;
 
 	if ( bDoIt )
 		theApp.Message( MSG_DISPLAYED_ERROR, IDS_BT_PREFETCH_ERROR, lpszFileName );
@@ -639,13 +639,16 @@ BOOL CShareazaApp::OpenURL(LPCTSTR lpszFileName, BOOL bDoIt, BOOL bSilent)
 		theApp.Message( MSG_SYSTEM, IDS_URL_RECEIVED, lpszFileName );
 
 	CShareazaURL* pURL = new CShareazaURL();
-	if ( pURL && pURL->Parse( lpszFileName ) )
+	if ( pURL )
 	{
-		if ( bDoIt )
-			AfxGetMainWnd()->PostMessage( WM_URL, (WPARAM)pURL );
-		return TRUE;
+		if ( pURL->Parse( lpszFileName ) )
+		{
+			if ( bDoIt )
+				AfxGetMainWnd()->PostMessage( WM_URL, (WPARAM)pURL );
+			return TRUE;
+		}
+		delete pURL;
 	}
-	delete pURL;
 
 	if ( bDoIt && ! bSilent )
 		theApp.Message( MSG_SYSTEM, IDS_URL_PARSE_ERROR );
@@ -670,20 +673,23 @@ void CShareazaApp::GetVersionNumber()
 	{
 		BYTE* pBuffer = new BYTE[ dwSize ];
 
-		if ( GetFileVersionInfo( szPath, NULL, dwSize, pBuffer ) )
+		if ( pBuffer )
 		{
-			VS_FIXEDFILEINFO* pTable;
-
-			if ( VerQueryValue( pBuffer, _T("\\"), (VOID**)&pTable, (UINT*)&dwSize ) )
+			if ( GetFileVersionInfo( szPath, NULL, dwSize, pBuffer ) )
 			{
-				m_nVersion[0] = (WORD)( pTable->dwFileVersionMS >> 16 );
-				m_nVersion[1] = (WORD)( pTable->dwFileVersionMS & 0xFFFF );
-				m_nVersion[2] = (WORD)( pTable->dwFileVersionLS >> 16 );
-				m_nVersion[3] = (WORD)( pTable->dwFileVersionLS & 0xFFFF );
-			}
-		}
+				VS_FIXEDFILEINFO* pTable;
 
-		delete [] pBuffer;
+				if ( VerQueryValue( pBuffer, _T("\\"), (VOID**)&pTable, (UINT*)&dwSize ) )
+				{
+					m_nVersion[0] = (WORD)( pTable->dwFileVersionMS >> 16 );
+					m_nVersion[1] = (WORD)( pTable->dwFileVersionMS & 0xFFFF );
+					m_nVersion[2] = (WORD)( pTable->dwFileVersionLS >> 16 );
+					m_nVersion[3] = (WORD)( pTable->dwFileVersionLS & 0xFFFF );
+				}
+			}
+
+			delete [] pBuffer;
+		}
 	}
 
 	m_sVersion.Format( _T("%i.%i.%i.%i"),
@@ -751,9 +757,9 @@ void CShareazaApp::InitResources()
 		// Windows 2003 or Win XP x64
 		m_bLimitedConnections = TRUE;
 	}
-	else if ( m_dwWindowsVersion == 6 && m_dwWindowsVersionMinor == 0 )
+	else if ( m_dwWindowsVersion >= 6 )
 	{
-		// Windows Vista
+		// Windows Vista or higher
 		m_bLimitedConnections = TRUE;
 	}
 
@@ -857,6 +863,11 @@ void CShareazaApp::InitResources()
 
 		m_pGeoIP = pfnGeoIP_new( GEOIP_MEMORY_CACHE );
 	}
+	else
+	{
+		m_pfnGeoIP_country_code_by_addr = NULL;
+		m_pfnGeoIP_country_name_by_addr = NULL;
+	}
 
 	// We load it in a custom way, so Shareaza plugins can use this library also when it isn't in its search path but loaded by CustomLoadLibrary (very useful when running Shareaza inside Visual Studio)
 	m_hLibGFL = CustomLoadLibrary( _T("libgfl267.dll") );
@@ -867,7 +878,7 @@ void CShareazaApp::InitResources()
 	ReleaseDC( 0, screen );
 
 	// Get the fonts from the registry
-	CString strFont = ( m_dwWindowsVersion == 6 && m_dwWindowsVersionMinor == 0 ) ?
+	CString strFont = ( m_dwWindowsVersion >= 6 ) ?
 					  L"Segoe UI" : L"Tahoma" ;
 	theApp.m_sDefaultFont		= theApp.GetProfileString( _T("Fonts"), _T("DefaultFont"), strFont );
 	theApp.m_sPacketDumpFont	= theApp.GetProfileString( _T("Fonts"), _T("PacketDumpFont"), _T("Lucida Console") );
@@ -1002,11 +1013,14 @@ void CShareazaApp::PrintMessage(int nType, CString& strLog) const
 		// Allocate a new character array on the heap (including null terminator)
 		LPTSTR pszLog = new TCHAR[ strLog.GetLength() + 1 ];	// Released by CMainWnd::OnLog()
 
-		// Make a copy of the log message into the heap array
-		_tcscpy( pszLog, strLog );
+		if ( pszLog )
+		{
+			// Make a copy of the log message into the heap array
+			_tcscpy( pszLog, strLog );
 
-		// Send to the message pump for processing
-		m_pMainWnd->PostMessage( WM_LOG, nType, (LPARAM)pszLog );
+			// Send to the message pump for processing
+			m_pMainWnd->PostMessage( WM_LOG, nType, (LPARAM)pszLog );
+		}
 	}
 	else if ( Settings.General.DebugLog )
 	{
@@ -1092,14 +1106,14 @@ CString CShareazaApp::GetErrorString() const
 
 CString CShareazaApp::GetCountryCode(IN_ADDR pAddress) const
 {
-	if ( m_pGeoIP )
+	if ( m_pfnGeoIP_country_code_by_addr && m_pGeoIP )
 		return CString( m_pfnGeoIP_country_code_by_addr( m_pGeoIP, inet_ntoa( pAddress ) ) );
 	return _T("");
 }
 
 CString CShareazaApp::GetCountryName(IN_ADDR pAddress) const
 {
-	if ( m_pGeoIP )
+	if ( m_pfnGeoIP_country_name_by_addr && m_pGeoIP )
 		return CString( m_pfnGeoIP_country_name_by_addr( m_pGeoIP, inet_ntoa( pAddress ) ) );
 	return _T("");
 }
@@ -1228,9 +1242,7 @@ BOOL CShareazaApp::InternalURI(LPCTSTR pszURI)
 		pMainWnd->PostMessage( WM_COMMAND, ID_LIBRARY_TREE_VIRTUAL );
 	}
 	else
-	{
 		return FALSE;
-	}
 
 	return TRUE;
 }
@@ -1554,8 +1566,11 @@ HICON CreateMirroredIcon(HICON hIconOrig, BOOL bDestroyOriginal)
 		hdcMask = CreateCompatibleDC( NULL );
 		if( hdcMask )
 		{
-			theApp.m_pfnSetLayout( hdcBitmap, LAYOUT_RTL );
-			theApp.m_pfnSetLayout( hdcMask, LAYOUT_RTL );
+			if ( theApp.m_pfnSetLayout )
+			{
+				theApp.m_pfnSetLayout( hdcBitmap, LAYOUT_RTL );
+				theApp.m_pfnSetLayout( hdcMask, LAYOUT_RTL );
+			}
 		}
 		else
 		{
@@ -1577,20 +1592,26 @@ HICON CreateMirroredIcon(HICON hIconOrig, BOOL bDestroyOriginal)
 					DeleteObject( ii.hbmColor );
 					ii.hbmMask = ii.hbmColor = NULL;
 					hbm = CreateCompatibleBitmap( hdcScreen, bm.bmWidth, bm.bmHeight );
-					hbmMask = CreateBitmap( bm.bmWidth, bm.bmHeight, 1, 1, NULL );
-					hbmOld = (HBITMAP)SelectObject( hdcBitmap, hbm );
-					hbmOldMask = (HBITMAP)SelectObject( hdcMask,hbmMask );
-					DrawIconEx( hdcBitmap, 0, 0, hIconOrig, bm.bmWidth, bm.bmHeight, 0, NULL, DI_IMAGE );
-					DrawIconEx( hdcMask, 0, 0, hIconOrig, bm.bmWidth, bm.bmHeight, 0, NULL, DI_MASK );
-					SelectObject( hdcBitmap, hbmOld );
-					SelectObject( hdcMask, hbmOldMask );
-					// Create the new mirrored icon and delete bitmaps
+					if ( hbm != NULL )
+					{
+						hbmMask = CreateBitmap( bm.bmWidth, bm.bmHeight, 1, 1, NULL );
+						if ( hbmMask != NULL )
+						{
+							hbmOld = (HBITMAP)SelectObject( hdcBitmap, hbm );
+							hbmOldMask = (HBITMAP)SelectObject( hdcMask,hbmMask );
+							DrawIconEx( hdcBitmap, 0, 0, hIconOrig, bm.bmWidth, bm.bmHeight, 0, NULL, DI_IMAGE );
+							DrawIconEx( hdcMask, 0, 0, hIconOrig, bm.bmWidth, bm.bmHeight, 0, NULL, DI_MASK );
+							SelectObject( hdcBitmap, hbmOld );
+							SelectObject( hdcMask, hbmOldMask );
+							// Create the new mirrored icon and delete bitmaps
 
-					ii.hbmMask = hbmMask;
-					ii.hbmColor = hbm;
-					hIcon = CreateIconIndirect( &ii );
-					DeleteObject( hbm );
-					DeleteObject( hbmMask );
+							ii.hbmMask = hbmMask;
+							ii.hbmColor = hbm;
+							hIcon = CreateIconIndirect( &ii );
+							DeleteObject( hbmMask );
+						}
+						DeleteObject( hbm );
+					}
 				}
 			}
 		}
@@ -1631,9 +1652,9 @@ HBITMAP CreateMirroredBitmap(HBITMAP hbmOrig)
 		hbm = CreateCompatibleBitmap( hdc, bm.bmWidth, bm.bmHeight );
 		if (!hbm)
 		{
-			ReleaseDC( NULL, hdc );
 			DeleteDC( hdcMem1 );
 			DeleteDC( hdcMem2 );
+			ReleaseDC( NULL, hdc );
 			return NULL;
 		}
 		// Flip the bitmap.
@@ -1706,7 +1727,9 @@ public:
 
 		bool bCOM = SUCCEEDED( OleInitialize( NULL ) );
 
-		int nResult = ( *m_pfnThreadProcExt )( m_pThreadParams );
+		int nResult = 0;
+		if ( m_pfnThreadProcExt )
+			nResult = ( *m_pfnThreadProcExt )( m_pThreadParams );
 
 		if ( bCOM )
 			OleUninitialize();
@@ -1888,7 +1911,8 @@ CString GetFolderPath( int nFolder )
 CString GetWindowsFolder()
 {
 	TCHAR pszWindowsPath[ MAX_PATH ] = { 0 };
-	GetWindowsDirectory( pszWindowsPath, MAX_PATH );
+	UINT nReturnValue = GetWindowsDirectory( pszWindowsPath, MAX_PATH );
+	if ( nReturnValue == 0 || nReturnValue > MAX_PATH ) return CString( _T("c:\\windows") );
 
 	CharLower( pszWindowsPath );
 	return CString( pszWindowsPath );
@@ -1905,7 +1929,9 @@ CString GetProgramFilesFolder()
 	if ( !bOK || ! *pszProgramsPath )
 	{
 		// Get drive letter
-		GetWindowsDirectory( pszProgramsPath, MAX_PATH );
+		UINT nReturnValue = GetWindowsDirectory( pszProgramsPath, MAX_PATH );
+		if ( nReturnValue == 0 || nReturnValue > MAX_PATH ) return CString( _T("c:\\program files") );
+
 		_tcscpy( pszProgramsPath + 1, _T(":\\program files") );
 	}
 
@@ -2068,28 +2094,33 @@ bool ResourceRequest(const CString& strPath, CBuffer& pResponse, CString& sHeade
 								// Load subicon
 								HRSRC hResIcon = FindResource( hModule, MAKEINTRESOURCE(
 									piDirEntry[ i ].nID ), RT_ICON );
-								DWORD nSizeIcon = SizeofResource( hModule, hResIcon );
-								HGLOBAL hMemoryIcon = LoadResource( hModule, hResIcon );
-								BITMAPINFOHEADER* piImage = (BITMAPINFOHEADER*)
-									LockResource( hMemoryIcon );
+								if ( hResIcon )
+								{
+									DWORD nSizeIcon = SizeofResource( hModule, hResIcon );
+									HGLOBAL hMemoryIcon = LoadResource( hModule, hResIcon );
+									if ( hMemoryIcon )
+									{
+										BITMAPINFOHEADER* piImage = (BITMAPINFOHEADER*)LockResource( hMemoryIcon );
 
-								// Fill subicon header
-								piEntry[ i ].bWidth = piDirEntry[ i ].bWidth;
-								piEntry[ i ].bHeight = piDirEntry[ i ].bHeight;
-								piEntry[ i ].wPlanes = piDirEntry[ i ].wPlanes;
-								piEntry[ i ].bColorCount = piDirEntry[ i ].bColorCount;
-								piEntry[ i ].bReserved = 0;
-								piEntry[ i ].wBitCount = piDirEntry[ i ].wBitCount;
-								piEntry[ i ].dwBytesInRes = nSizeIcon;
-								piEntry[ i ].dwImageOffset = dwTotalSize;
+										// Fill subicon header
+										piEntry[ i ].bWidth = piDirEntry[ i ].bWidth;
+										piEntry[ i ].bHeight = piDirEntry[ i ].bHeight;
+										piEntry[ i ].wPlanes = piDirEntry[ i ].wPlanes;
+										piEntry[ i ].bColorCount = piDirEntry[ i ].bColorCount;
+										piEntry[ i ].bReserved = 0;
+										piEntry[ i ].wBitCount = piDirEntry[ i ].wBitCount;
+										piEntry[ i ].dwBytesInRes = nSizeIcon;
+										piEntry[ i ].dwImageOffset = dwTotalSize;
 
-								// Save subicon
-								pResponse.EnsureBuffer( dwTotalSize + nSizeIcon );
-								CopyMemory( pResponse.m_pBuffer + dwTotalSize,
-									piImage, nSizeIcon );
-								dwTotalSize += nSizeIcon;
+										// Save subicon
+										pResponse.EnsureBuffer( dwTotalSize + nSizeIcon );
+										CopyMemory( pResponse.m_pBuffer + dwTotalSize,
+											piImage, nSizeIcon );
+										dwTotalSize += nSizeIcon;
 
-								FreeResource( hMemoryIcon );
+										FreeResource( hMemoryIcon );
+									}
+								}
 							}
 							pResponse.m_nLength = dwTotalSize;
 						}

@@ -86,7 +86,8 @@ public:
 		if ( m_nType != beString ) return str;
 		str = (LPCSTR)m_pValue;
 
-		const DWORD nFlags = ( theApp.m_dwWindowsVersion == 4 ) ? 0 : MB_ERR_INVALID_CHARS;
+		// ToDO: MB_ERR_INVALID_CHARS probably don't work if Service Pack 4 isn't installed on Windows 2000
+		const DWORD nFlags = ( theApp.m_dwWindowsVersion <= 4 ) ? 0 : MB_ERR_INVALID_CHARS;
 
 		int nLength = MultiByteToWideChar( CP_UTF8, nFlags, (LPCSTR)m_pValue, -1, NULL, 0 );
 		if ( nLength > 0 )
@@ -111,7 +112,8 @@ public:
 		str = (LPCSTR)m_pValue;
 		int nSource = str.GetLength();
 		if ( nSource == 0 ) return str;
-		const DWORD nFlags = ( theApp.m_dwWindowsVersion == 4 ) ? 0 : MB_ERR_INVALID_CHARS;
+		// ToDO: MB_ERR_INVALID_CHARS probably don't work if Service Pack 4 isn't installed on Windows 2000
+		const DWORD nFlags = ( theApp.m_dwWindowsVersion <= 4 ) ? 0 : MB_ERR_INVALID_CHARS;
 		int nLength = 0;
 
 		// Use the torrent code page (if present)

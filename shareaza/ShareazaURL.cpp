@@ -124,7 +124,7 @@ void CShareazaURL::Clear()
 	// CShareazaURL
 	m_nProtocol				= PROTOCOL_NULL;
 	m_nAction				= uriNull;
-	delete m_pTorrent;
+	if ( m_pTorrent ) delete m_pTorrent;
 	m_pTorrent				= NULL;
 	m_sAddress.Empty();
 	m_pAddress.s_addr		= 0;
