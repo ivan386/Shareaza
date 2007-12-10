@@ -282,7 +282,7 @@ void CWizardSheet::OnLButtonUp(UINT nFlags, CPoint point)
 {
 	if ( point.y <= 50 )
 	{
-		ShellExecute( NULL, NULL, _T("http://www.torrentaid.com/?TorrentWizard"), NULL, NULL, SW_SHOWNORMAL );
+		ShellExecute( NULL, NULL, _T("http://shareaza.sourceforge.net/TorrentAid/"), NULL, NULL, SW_SHOWNORMAL );
 	}
 }
 
