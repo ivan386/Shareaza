@@ -67,8 +67,8 @@ th	{
 	padding-bottom: 8px;
 	background-color: white;
 	}
-.lrow { border-left: solid #999999 1px;}
-.rrow { border-right: solid #999999 1px;}
+.lcol { border-left: solid #999999 1px;}
+.rcol { border-right: solid #999999 1px;}
 
 table.nodeinfo tr td {
 	background-color: #F7F7F7;
@@ -106,10 +106,10 @@ table.nodeinfo tr td {
 			  
 				<% Neighbours 
 				<tr>
-					<td class="lrow"><a href="gnutella:host:%s:%lu">%s:%lu</a></td>
+					<td class="lcol"><a href="gnutella:host:%s:%lu">%s:%lu</a></td>
 					<td>%i:%.2i:%.2i</td><td>%s</td>
 					<td>%s</td>
-					<td class="rrow"><a href="http://%s:%lu/">Browse</a></td>
+					<td class="rcol"><a href="http://%s:%lu/">Browse</a></td>
 				</tr> 
 				%>
 				
