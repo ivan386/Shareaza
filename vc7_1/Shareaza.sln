@@ -55,15 +55,15 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GeoIP", "GeoIP.vcproj", "{1
 	ProjectSection(ProjectDependencies) = postProject
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RARBuilder", "..\plugins\RARBuilder\RARBuilder.vcproj", "{F801DAD7-F08D-48EF-B0DF-6B120377E835}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RARBuilder", "RARBuilder.vcproj", "{F801DAD7-F08D-48EF-B0DF-6B120377E835}"
 	ProjectSection(ProjectDependencies) = postProject
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ZIPBuilder", "..\plugins\ZIPBuilder\ZIPBuilder.vcproj", "{2F74AA28-2498-4805-911A-04C39858D529}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ZIPBuilder", "ZIPBuilder.vcproj", "{2F74AA28-2498-4805-911A-04C39858D529}"
 	ProjectSection(ProjectDependencies) = postProject
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "7ZipBuilder", "..\plugins\7ZipBuilder\7ZipBuilder.vcproj", "{B69F80CD-FB15-45E8-B359-92A41CC571A7}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "7ZipBuilder", "7ZipBuilder.vcproj", "{B69F80CD-FB15-45E8-B359-92A41CC571A7}"
 	ProjectSection(ProjectDependencies) = postProject
 	EndProjectSection
 EndProject

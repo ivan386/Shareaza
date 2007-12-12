@@ -35,6 +35,9 @@
 
 #ifexist "..\..\vc8_0\" + type + PlatformName + "\Shareaza.exe"
   #define root "vc8_0\" + type + PlatformName
+  #if PlatformName == "Win32"
+    #define PlatformName ""
+  #endif
 #endif
 
 #ifndef root
@@ -68,10 +71,14 @@ DirExistsWarning=no
 DefaultGroupName={#internal_name}
 AllowNoIcons=yes
 OutputDir=setup\builds
-#ifndef Debug
-OutputBaseFilename={#internal_name}_{#version}
+#ifdef Debug
+OutputBaseFilename={#internal_name}_Debug_{#date}{#PlatformName}
 #else
-OutputBaseFilename={#internal_name}_Debug_{#date}
+#ifdef alpha
+OutputBaseFilename={#internal_name}_Release_{#date}{#PlatformName}
+#else
+OutputBaseFilename={#internal_name}_{#version}{#PlatformName}
+#endif
 #endif
 SolidCompression=yes
 Compression=lzma/max
@@ -90,8 +97,12 @@ WizardSmallImageFile=setup\misc\corner.bmp
 AppModifyPath="{app}\Uninstall\setup.exe"
 ChangesAssociations=yes
 ChangesEnvironment=yes
-OutputManifestFile=Manifest.txt
+OutputManifestFile=Manifest_{#type}{#PlatformName}.txt
 MinVersion=4.0,4.0sp6
+#if PlatformName == "x64"
+ArchitecturesAllowed=x64
+ArchitecturesInstallIn64BitMode=x64
+#endif
 
 ; Set the CVS root as source dir (up 2 levels)
 SourceDir=..\..
@@ -119,70 +130,68 @@ Name: "deleteoldsetup"; Description: "{cm:tasks_deleteoldsetup}"; Check: EnableD
 Name: "resetdiscoveryhostcache"; Description: "{cm:tasks_resetdiscoveryhostcache}"; Flags: unchecked
 
 [Files]
-; Install unicows.dll on Win 9X
+;--== Executables ==--
+; Main files
+Source: "{#root}\Shareaza.exe"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+Source: "{#root}\skin.exe";     DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+
+;--== Dynamic Link Libraries ==--
+; Unicows: Install on Win 9X
 Source: "setup\builds\unicows.dll"; DestDir: "{sys}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension sharedfile uninsnosharedfileprompt; MinVersion: 4.0,0
-#ifdef Debug
-Source: "setup\builds\unicows.pdb"; DestDir: "{sys}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension; MinVersion: 4.0,0
-#endif
 
 ; Main files
-#ifndef Debug
-Source: "setup\builds\zlibwapi.dll"; DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion uninsremovereadonly sortfilesbyextension deleteafterinstall
-Source: "setup\builds\zlibwapi.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
-#else
-Source: "{#root}\plugins\zlibwapi.dll"; DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion uninsremovereadonly sortfilesbyextension deleteafterinstall
-Source: "{#root}\zlibwapi.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
-#endif
-Source: "{#root}\plugins\libgfl267.dll"; DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion uninsremovereadonly sortfilesbyextension deleteafterinstall
-Source: "{#root}\libgfl267.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
-Source: "{#root}\sqlite3.dll"; DestDir: "{app}"; Flags: skipifsourcedoesntexist overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
-Source: "{#root}\Shareaza.exe"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
-Source: "{#root}\skin.exe"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
-#ifdef Debug
-Source: "{#root}\Shareaza\Shareaza.pdb"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
-Source: "{#root}\skin.pdb"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
-Source: "{#root}\zlibwapi.pdb"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
-#endif
-Source: "Schemas\*"; DestDir: "{app}\Schemas"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension
-
-; Set up data dir in {app}
-Source: "Data\*.*"; DestDir: "{app}\Data"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Excludes: "*.bak,*.url"
-
-; Copy repair installer
-;Source: "setup\builds\repair.exe"; DestDir: "{app}\Uninstall"; Flags: overwritereadonly replacesameversion uninsremovereadonly sortfilesbyextension; Check: not WizardSilent
-
-; GeoIP
-Source: "GeoIP\geoip.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
-Source: "GeoIP\data\GeoIP.dat"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
-Source: "setup\misc\LICENSE-GeoIP.txt"; DestDir: "{app}"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension
+Source: "{#root}\*.dll"; DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion uninsremovereadonly sortfilesbyextension deleteafterinstall
+Source: "{#root}\*.dll"; DestDir: "{app}";         Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 
 ; Plugins
-; Don't register RazaWebHook.dll since it will setup Shareaza as download manager
-Source: "{#root}\plugins\*.dll";                     DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver; Excludes: "RazaWebHook.dll,libgfl*.dll,zlibwapi.dll"
-Source: "plugins\MediaPlayer.dll";                   DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
-Source: "plugins\RazaWebHook.dll";                   DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
-Source: "plugins\ZIPBuilder\{#type}\ZIPBuilder.dll"; DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
-Source: "plugins\RARBuilder\unrar.dll";              DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
-Source: "plugins\RARBuilder\{#type}\RARBuilder.dll"; DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
-;Source: "plugins\7ZipBuilder\7zxr.dll";              DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
-;Source: "plugins\7ZipBuilder\{#type}\7ZipBuilder.dll"; DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
+Source: "{#root}\plugins\*.dll";   DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver; Excludes: "libgfl*.dll,zlibwapi.dll,unrar.dll,7zxr.dll"
+Source: "{#root}\plugins\*.dll";   DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension;           Excludes: "libgfl*.dll,zlibwapi.dll"
+Source: "plugins\MediaPlayer.dll"; DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
+Source: "plugins\RazaWebHook.dll"; DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+#if PlatformName == "x64"
+Source: "vc8_0\{#type}Win32\plugins\GFL*.dll"; DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver 32bit
+#endif
 
-; Uninstall icon for software panel
+#ifdef Debug
+;--== Debug Databases ==--
+; Unicows: Install on Win 9X
+Source: "setup\builds\unicows.pdb"; DestDir: "{sys}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension; MinVersion: 4.0,0
+
+; Main files
+Source: "{#root}\shareaza.pdb"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+; ** The next line can be uncommented to include geoip, skin & zlipwapi debug database files
+;Source: "{#root}\*.pdb"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+
+; Plugins
+; ** This section can be uncommented to include the debug database files for all the plugins
+;Source: "{#root}\plugins\*.pdb"; DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+;#if PlatformName == "x64"
+;Source: "vc8_0\{#type}Win32\plugins\GFL*.pdb"; DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
+;#endif
+#endif
+
+;--== Data Files ==--
+; Main files
+Source: "Data\*.*"; DestDir: "{app}\Data"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Excludes: "*.bak,*.url"
+
+; Plugins
+Source: "GeoIP\data\GeoIP.dat"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+
+;--== Misc Files ==--
+; Icon files
 Source: "setup\misc\uninstall.ico"; DestDir: "{app}\Uninstall"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension
 
+; Schemas
+Source: "Schemas\*"; DestDir: "{app}\Schemas"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension
+
+; Plugins
+Source: "setup\misc\LICENSE-GeoIP.txt"; DestDir: "{app}"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension
+
 ; Skins
-Source: "Skins\Corona\*"; DestDir: "{app}\Skins\Corona"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Excludes: ".svn"
-Source: "Skins\Shareaza2\*"; DestDir: "{app}\Skins\Shareaza2"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Excludes: ".svn"
-Source: "Skins\ShareazaOS\*"; DestDir: "{app}\Skins\ShareazaOS"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Excludes: ".svn"
-Source: "Skins\BlueStreak\*"; DestDir: "{app}\Skins\BlueStreak"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Excludes: ".svn"
-Source: "Skins\Skin+\*"; DestDir: "{app}\Skins\Skin+"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Excludes: ".svn"
-Source: "Skins\CleanBlue\*"; DestDir: "{app}\Skins\CleanBlue"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Excludes: ".svn"
+Source: "Skins\*"; DestDir: "{app}\Skins"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Excludes: ".svn,\Arcadia's Call\*,\Green Moon\*,\LiquidMetal*\*,\NucleoX\*,\Raza-Ablaze\*"
 
 ; Templates
-Source: "Templates\Audio Collection\*"; DestDir: "{app}\Templates\Audio Collection"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Excludes: ".svn"
-Source: "Templates\Basic Collection\*"; DestDir: "{app}\Templates\Basic Collection"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Excludes: ".svn"
-Source: "Templates\General Purple Collection\*"; DestDir: "{app}\Templates\General Purple Collection"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Excludes: ".svn"
-Source: "Templates\Video Collection\*"; DestDir: "{app}\Templates\Video Collection"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Excludes: ".svn"
+Source: "Templates\*"; DestDir: "{app}\Templates"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Excludes: ".svn"
 
 ; Languages
 Source: "Languages\*"; DestDir: "{app}\Skins\Languages"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Tasks: "language"; Excludes: "default-en.xml,*.bak"
