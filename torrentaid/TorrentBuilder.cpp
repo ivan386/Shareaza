@@ -316,19 +316,19 @@ BOOL CTorrentBuilder::ScanFiles()
 		m_nPieceSize = 1;
 		QWORD nCompare = 1 << 20;
 		if ( m_nTotalSize <= 50 * nCompare )
-			m_nPieceSize <<= 5;
+			m_nPieceSize <<= 15;
 		else if ( m_nTotalSize <= 150i64 * nCompare )
-			m_nPieceSize <<= 6;
+			m_nPieceSize <<= 16;
 		else if ( m_nTotalSize <= 350i64 * nCompare )
-			m_nPieceSize <<= 7;
+			m_nPieceSize <<= 17;
 		else if ( m_nTotalSize <= 512i64 * nCompare )
-			m_nPieceSize <<= 8;
+			m_nPieceSize <<= 18;
 		else if ( m_nTotalSize <= 1024i64 * nCompare )
-			m_nPieceSize <<= 9;
+			m_nPieceSize <<= 19;
 		else if ( m_nTotalSize <= 2048i64 * nCompare )
-			m_nPieceSize <<= 10;
+			m_nPieceSize <<= 20;
 		else
-			m_nPieceSize <<= 11;
+			m_nPieceSize <<= 21;
 	}
 
 	m_nBuffer = m_nPieceSize;
