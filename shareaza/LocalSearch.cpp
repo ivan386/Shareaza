@@ -824,7 +824,7 @@ void CLocalSearch::CreatePacketG2()
 	pPacket->WritePacket( G2_PACKET_NODE_GUID, 16 );
 	pPacket->Write( Hashes::Guid( MyProfile.oGUID ) );
 	
-	if ( TRUE /* Network.IsListening() */ )
+	//if ( Network.IsListening() )
 	{
 		pPacket->WritePacket( G2_PACKET_NODE_ADDRESS, 6 );
 		pPacket->WriteLongLE( Network.m_pHost.sin_addr.S_un.S_addr );
