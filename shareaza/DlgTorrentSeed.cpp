@@ -187,11 +187,6 @@ void CTorrentSeedDlg::OnSeed()
 		if ( m_pInfo.HasEncodingError() )		// Check the torrent is valid
 		{
 			CHelpDlg::Show( _T("GeneralHelp.BadTorrentEncoding") );
-			if ( ! Settings.BitTorrent.TorrentIgnoreErrors ) 
-			{
-				m_bCancel = TRUE;
-				return;
-			}
 		}
 		if ( Downloads.FindByBTH( m_pInfo.m_oBTH ) == NULL )
 		{

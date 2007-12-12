@@ -9,6 +9,7 @@
 //
 #include "afxres.h"
 #include "res_hack_def.h"
+
 /////////////////////////////////////////////////////////////////////////////
 #undef APSTUDIO_READONLY_SYMBOLS
 
@@ -2476,28 +2477,29 @@ STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Torrent Information"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
-    GROUPBOX        "Torrent &Information:",-1,5,3,280,92
+    GROUPBOX        "Torrent &Information:",-1,7,3,278,173
     LTEXT           "Name:",-1,14,13,44,12,SS_CENTERIMAGE
-    EDITTEXT        IDC_TORRENT_NAME,60,13,215,12,ES_AUTOHSCROLL | 
+    EDITTEXT        IDC_TORRENT_NAME,60,13,217,12,ES_AUTOHSCROLL | 
                     ES_READONLY
     LTEXT           "Created:",-1,14,27,44,12,SS_CENTERIMAGE
     EDITTEXT        IDC_TORRENT_CREATIONDATE,60,27,74,12,ES_AUTOHSCROLL | 
                     ES_READONLY
     LTEXT           "By:",-1,136,27,35,12,SS_CENTERIMAGE,WS_EX_RIGHT
-    EDITTEXT        IDC_TORRENT_CREATEDBY,173,27,102,12,ES_AUTOHSCROLL | 
+    EDITTEXT        IDC_TORRENT_CREATEDBY,173,27,104,12,ES_AUTOHSCROLL | 
                     ES_READONLY
     LTEXT           "Comments:",-1,14,42,44,12,SS_CENTERIMAGE
-    EDITTEXT        IDC_TORRENT_COMMENTS,60,41,215,36,ES_AUTOHSCROLL | 
-                    ES_READONLY
-    GROUPBOX        "Transfers:",-1,5,104,280,43
-    RTEXT           "Start new download transfers:",-1,15,115,138,9
-    COMBOBOX        IDC_TORRENT_STARTDOWNLOADS,161,113,114,66,
+    EDITTEXT        IDC_TORRENT_COMMENTS,60,41,217,113,ES_MULTILINE | 
+                    ES_AUTOVSCROLL | ES_AUTOHSCROLL | ES_READONLY | 
+                    WS_VSCROLL
+    GROUPBOX        "Transfers:",-1,7,180,278,43
+    RTEXT           "Start new download transfers:",-1,14,192,141,9
+    COMBOBOX        IDC_TORRENT_STARTDOWNLOADS,163,190,114,66,
                     CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
-    EDITTEXT        IDC_TORRENT_UPLOADTOTAL,161,128,114,12,ES_AUTOHSCROLL | 
+    EDITTEXT        IDC_TORRENT_UPLOADTOTAL,163,204,114,12,ES_AUTOHSCROLL | 
                     ES_READONLY | NOT WS_TABSTOP
-    RTEXT           "Total Uploaded:",-1,15,130,138,9,SS_CENTERIMAGE
-    LTEXT           "Notes:",-1,14,80,44,12,SS_CENTERIMAGE
-    EDITTEXT        IDC_TORRENT_OTHER,60,80,215,12,ES_AUTOHSCROLL | 
+    RTEXT           "Total Uploaded:",-1,14,206,141,9,SS_CENTERIMAGE
+    LTEXT           "Notes:",-1,14,156,46,12,SS_CENTERIMAGE
+    EDITTEXT        IDC_TORRENT_OTHER,60,156,217,12,ES_AUTOHSCROLL | 
                     ES_READONLY
 END
 
@@ -3215,6 +3217,13 @@ BEGIN
     BEGIN
         LEFTMARGIN, 7
         RIGHTMARGIN, 285
+        VERTGUIDE, 14
+        VERTGUIDE, 60
+        VERTGUIDE, 134
+        VERTGUIDE, 155
+        VERTGUIDE, 163
+        VERTGUIDE, 173
+        VERTGUIDE, 277
         TOPMARGIN, 7
         BOTTOMMARGIN, 223
     END
@@ -5278,22 +5287,20 @@ END
 
 STRINGTABLE 
 BEGIN
-	// Parsing error prompts
-	AFX_IDP_PARSE_INT,              "Please enter an integer."
-	AFX_IDP_PARSE_REAL,             "Please enter a number."
-	AFX_IDP_PARSE_INT_RANGE,        "Please enter an integer between %1 and %2."
-	AFX_IDP_PARSE_REAL_RANGE,       "Please enter a number between %1 and %2."
-	AFX_IDP_PARSE_STRING_SIZE,      "Please enter no more than %1 characters."
-	AFX_IDP_PARSE_RADIO_BUTTON,     "Please select a button."
-	AFX_IDP_PARSE_BYTE,             "Please enter an integer between 0 and 255."
-	AFX_IDP_PARSE_UINT,             "Please enter a positive integer."
-	AFX_IDP_PARSE_DATETIME,         "Please enter a date and/or time."
-	AFX_IDP_PARSE_CURRENCY,         "Please enter a currency."
-	AFX_IDP_PARSE_GUID,             "Please enter a GUID."
-	AFX_IDP_PARSE_TIME,             "Please enter a time."
-	AFX_IDP_PARSE_DATE,             "Please enter a date."
+    AFX_IDP_PARSE_INT       "Please enter an integer."
+    AFX_IDP_PARSE_REAL      "Please enter a number."
+    AFX_IDP_PARSE_INT_RANGE "Please enter an integer between %1 and %2."
+    AFX_IDP_PARSE_REAL_RANGE "Please enter a number between %1 and %2."
+    AFX_IDP_PARSE_STRING_SIZE "Please enter no more than %1 characters."
+    AFX_IDP_PARSE_RADIO_BUTTON "Please select a button."
+    AFX_IDP_PARSE_BYTE      "Please enter an integer between 0 and 255."
+    AFX_IDP_PARSE_UINT      "Please enter a positive integer."
+    AFX_IDP_PARSE_DATETIME  "Please enter a date and/or time."
+    AFX_IDP_PARSE_CURRENCY  "Please enter a currency."
+    AFX_IDP_PARSE_GUID      "Please enter a GUID."
+    AFX_IDP_PARSE_TIME      "Please enter a time."
+    AFX_IDP_PARSE_DATE      "Please enter a date."
 END
-
 
 #endif    // English (Australia) resources
 /////////////////////////////////////////////////////////////////////////////

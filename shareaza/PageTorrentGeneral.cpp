@@ -95,7 +95,7 @@ BOOL CTorrentGeneralPage::OnInitDialog()
 		m_sTorrentOther += str;
 		m_sTorrentOther += _T(", ");
 	}
-	if ( m_pInfo->m_bEncodingError )
+	if ( m_pInfo->HasEncodingError() )
 	{
 		CString str;
 		LoadString( str, IDS_BT_ENCODING );

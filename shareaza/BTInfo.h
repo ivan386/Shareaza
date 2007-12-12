@@ -75,7 +75,6 @@ public:
 	
 // Attributes
 public:
-	BOOL		m_bEncodingError;
 	CList< CString >	m_sURLs;	// Add sources from torrents - DWK
 	QWORD		m_nTotalSize;
 	DWORD		m_nBlockSize;
@@ -98,6 +97,7 @@ public:
 	int			m_nStartDownloads;				// When do we start downloads for this torrent
 
 private:
+	BOOL		m_bEncodingError;
 	CSHA		m_pTestSHA1;
 	DWORD		m_nTestByte;
 	CBuffer		m_pSource;

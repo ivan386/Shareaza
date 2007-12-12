@@ -344,7 +344,6 @@ void CSettings::Setup()
 	Add( _T("BitTorrent.MaxTrackerRetry"), &BitTorrent.MaxTrackerRetry, 3 );
 	Add( _T("BitTorrent.TorrentCodePage"), &BitTorrent.TorrentCodePage, 0 );
 	Add( _T("BitTorrent.TorrentExtraKeys"), &BitTorrent.TorrentExtraKeys, TRUE );
-	Add( _T("BitTorrent.TorrentIgnoreErrors"), &BitTorrent.TorrentIgnoreErrors, FALSE );
 	Add( _T("BitTorrent.LinkTimeout"), &BitTorrent.LinkTimeout, 180000 );
 	Add( _T("BitTorrent.LinkPing"), &BitTorrent.LinkPing, 120000 );
 	Add( _T("BitTorrent.RequestPipe"), &BitTorrent.RequestPipe, 4 );

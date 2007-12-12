@@ -201,7 +201,6 @@ BOOL CAdvancedSettingsPage::OnInitDialog()
 	AddSetting( &Settings.BitTorrent.MaxTrackerRetry, 1, 1, 8 );
 	AddSetting( &Settings.BitTorrent.TorrentCodePage, 1, 0, 9999999 );
 	AddSetting( &Settings.BitTorrent.TorrentExtraKeys, 1, 0, 1 );
-	AddSetting( &Settings.BitTorrent.TorrentIgnoreErrors, 1, 0, 1 );
 	AddSetting( &Settings.BitTorrent.LinkTimeout, 1000, 10, 60*10, _T(" s") );
 	AddSetting( &Settings.BitTorrent.LinkPing, 1000, 10, 60*10, _T(" s") );
 	AddSetting( &Settings.BitTorrent.RequestPipe, 1, 1, 10 );

@@ -391,7 +391,6 @@ public:
 		int			MaxTrackerRetry;			// Number of times to retry a tracker if it doesn't respond
 		int			TorrentCodePage;			// The code page to assume for a .torrent file if it isn't UTF-8
 		int			TorrentExtraKeys;			// Check for '.utf8' keys if there is an encoding error
-		BOOL		TorrentIgnoreErrors;		// Ignore encoding errors in torrents
 		DWORD		LinkTimeout;
 		DWORD		LinkPing;
 		DWORD		RequestPipe;

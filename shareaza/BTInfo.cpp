@@ -538,13 +538,20 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 					CBENode* pTracker = pSubList->GetNode( nTracker );
 					if ( ( pTracker ) &&  ( pTracker->IsType( CBENode::beString )  ) )
 					{
+						// Get the tracker
 						CString strTracker = pTracker->GetString();
+
 						// Check tracker is valid
-						if ( strTracker.Find( _T("http") ) == 0 ) 
+						if ( _tcsncicmp( (LPCTSTR)strTracker, _T("http://"), 7 ) == 0 )
 						{
-							// Store tracker
+							// Store HTTP tracker
 							pTrackers.AddTail( strTracker );
 						}
+						//else if ( _tcsncicmp( (LPCTSTR)strTracker, _T("udp://"), 6 ) == 0 )
+						//{
+							// TODO: UDP tracker
+						//}
+						//else unknown tracker
 					}
 				}
 
@@ -595,7 +602,7 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 		CString strTracker = pAnnounce->GetString();
 
 		// Store it if it's valid. (Some torrents have invalid trackers)
-		if ( strTracker.Find( _T("http") ) == 0 ) 
+		if ( _tcsncicmp( (LPCTSTR)strTracker, _T("http://"), 7 ) == 0 ) 
 		{
 			// Announce node is ignored by multi-tracker torrents
 			if ( !IsMultiTracker() )
@@ -607,12 +614,14 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 				m_pAnnounceTracker->m_sAddress = strTracker;
 			}
 		}
-		else 
-		{
-			// Torrents should always have a valid announce node. They can work without them, but
-			// not on all clients- so we should warn the user.
-			m_bEncodingError = TRUE;
-		}
+		// else if ( _tcsncicmp( (LPCTSTR)strTracker, _T("udp://"), 6 ) == 0 )
+		//{
+			// TODO: UDP Tracker
+		//}
+		//else 
+		//{
+			// TODO: Torrents should always have a valid announce node.
+		//}
 	}
 
 	// Get the info node
@@ -778,7 +787,8 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 				{
 					// Check the path matches the .utf path
 					CString strCheck =  pPart->GetString();
-					if ( strPath != strCheck ) m_bEncodingError = TRUE;
+					if ( strPath != strCheck )
+						m_bEncodingError = TRUE;
 					// Switch back to the UTF-8 path
 					pPath = pFile->GetNode( "path.utf-8" );
 				}
@@ -802,8 +812,6 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 			if ( ! pPath->IsType( CBENode::beList ) ) return FALSE;
 			if ( pPath->GetCount() > 32 ) return FALSE;
 			if ( _tcsicmp( strPath.GetString() , _T("#ERROR#") ) == 0 ) return FALSE;
-			// 
-
 
 			// Hack to prefix all
 			m_pFiles[ nFile ].m_sPath = CDownloadTask::SafeFilename( m_sName );

@@ -219,7 +219,8 @@ CString CBENode::GetStringFromSubNode(LPCSTR pszKey, UINT nEncoding, BOOL* pEnco
 		{
 			// We already have a value - check it's valid
 			CString strCheck = pSubNode->GetString();
-			if ( strCheck != strValue ) *pEncodingError = TRUE;
+			if ( strCheck != strValue )
+				*pEncodingError = TRUE;
 		}
 	}
 
@@ -229,9 +230,8 @@ CString CBENode::GetStringFromSubNode(LPCSTR pszKey, UINT nEncoding, BOOL* pEnco
 		pSubNode = GetNode( pszKey );
 		if ( ( pSubNode ) && ( pSubNode->m_nType == CBENode::beString ) )
 		{
+			*pEncodingError = TRUE;
 			strValue = pSubNode->DecodeString( nEncoding );
-
-			if ( IsValid( strValue ) ) *pEncodingError = TRUE;
 		}
 	}
 
