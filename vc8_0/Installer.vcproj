@@ -22,7 +22,7 @@
 			OutputDirectory="$(SolutionDir)$(ProjectName)\"
 			IntermediateDirectory="$(OutDir)"
 			ConfigurationType="10"
-			BuildLogFile="$(IntDir)\BuildLog_$(ConfigurationName)$(PlatformName).htm"
+			BuildLogFile="$(IntDir)\BuildLog_$(ConfigurationName).htm"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -66,7 +66,7 @@
 			OutputDirectory="$(SolutionDir)$(ProjectName)\"
 			IntermediateDirectory="$(OutDir)"
 			ConfigurationType="10"
-			BuildLogFile="$(IntDir)\BuildLog_$(ConfigurationName)$(PlatformName).htm"
+			BuildLogFile="$(IntDir)\BuildLog_$(ConfigurationName).htm"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
