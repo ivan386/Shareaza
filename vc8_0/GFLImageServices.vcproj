@@ -81,7 +81,6 @@
 				GenerateManifest="false"
 				IgnoreDefaultLibraryNames="kernel32.lib;advapi32.lib;user32.lib;gdi32.lib;shell32.lib;comdlg32.lib;version.lib;mpr.lib;rasapi32.lib;winmm.lib;winspool.lib;vfw32.lib;secur32.lib;oleacc.lib;oledlg.lib;sensapi.lib"
 				ModuleDefinitionFile="&quot;$(SolutionDir)..\plugins\$(ProjectName)\$(ProjectName).def&quot;"
-				DelayLoadDLLs="libgfl267.dll"
 				GenerateDebugInformation="true"
 			/>
 			<Tool
@@ -175,7 +174,6 @@
 				OutputFile="$(OutDir)$(ProjectName).dll"
 				IgnoreDefaultLibraryNames="kernel32.lib;advapi32.lib;user32.lib;gdi32.lib;shell32.lib;comdlg32.lib;version.lib;mpr.lib;rasapi32.lib;winmm.lib;winspool.lib;vfw32.lib;secur32.lib;oleacc.lib;oledlg.lib;sensapi.lib"
 				ModuleDefinitionFile="&quot;$(SolutionDir)..\plugins\$(ProjectName)\$(ProjectName).def&quot;"
-				DelayLoadDLLs="libgfl267.dll"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				OptimizeForWindows98="1"
