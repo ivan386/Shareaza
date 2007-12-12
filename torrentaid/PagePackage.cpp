@@ -231,7 +231,9 @@ void CPackagePage::AddFolder(LPCTSTR pszPath, int nRecursive)
 	{
 		do
 		{
-			if ( pFind.cFileName[0] == '.' ) continue;
+			if ( pFind.cFileName[0] == '.' ||
+				 pFind.dwFileAttributes & FILE_ATTRIBUTE_HIDDEN ) 
+				 continue;
 			
 			strPath.Format( _T("%s\\%s"), pszPath, pFind.cFileName );
 			

@@ -239,7 +239,7 @@ LRESULT COutputPage::OnWizardNext()
 	
 	CString strPath = m_sFolder + '\\' + m_sName;
 	
-	if ( GetFileAttributes( strPath ) != 0xFFFFFFFF )
+	if ( GetFileAttributes( strPath ) != INVALID_FILE_ATTRIBUTES )
 	{
 		CString strFormat, strMessage;
 		
