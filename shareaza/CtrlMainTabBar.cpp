@@ -241,13 +241,13 @@ INT_PTR CMainTabBarCtrl::OnToolHitTest(CPoint point, TOOLINFO* pTI) const
 
 	pTI->uFlags		= 0;
 	pTI->hwnd		= GetSafeHwnd();
-	pTI->uId		= (UINT)pItem->m_nID;
+	pTI->uId		= pItem->m_nID;
 	pTI->rect		= pItem->m_rc;
 	pTI->lpszText	= LPSTR_TEXTCALLBACK;
 
 	CString strTip;
 
-	if ( LoadString( strTip, static_cast< UINT >( pTI->uId ) ) )
+	if ( LoadString( strTip, pItem->m_nID ) )
 	{
 		if ( LPCTSTR pszBreak = _tcschr( strTip, '\n' ) )
 		{
@@ -260,7 +260,7 @@ INT_PTR CMainTabBarCtrl::OnToolHitTest(CPoint point, TOOLINFO* pTI) const
 		}
 	}
 
-	return static_cast< int >( pTI->uId );
+	return pTI->uId;
 }
 
 void CMainTabBarCtrl::DoPaint(CDC* pDC)
