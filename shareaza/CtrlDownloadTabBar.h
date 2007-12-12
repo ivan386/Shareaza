@@ -94,7 +94,7 @@ protected:
 public:
 	virtual BOOL	Create(CWnd* pParentWnd, DWORD dwStyle = WS_CHILD|WS_VISIBLE|CBRS_BOTTOM, UINT nID = AFX_IDW_STATUS_BAR);
 	virtual CSize	CalcFixedLayout(BOOL bStretch, BOOL bHorz);
-	virtual INT_PTR	OnToolHitTest(CPoint point, TOOLINFO* pTI) const;
+//	virtual INT_PTR	OnToolHitTest(CPoint point, TOOLINFO* pTI) const;
 	virtual void	DoPaint(CDC* pDC);
 	virtual void	OnUpdateCmdUI(CFrameWnd* /*pTarget*/, BOOL /*bDisableIfNoHndler*/) {};
 
