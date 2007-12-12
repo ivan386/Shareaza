@@ -24,6 +24,7 @@
 
 #pragma once
 #include "WizardSheet.h"
+#include "afxwin.h"
 
 class COutputPage : public CWizardPage
 {
@@ -42,6 +43,8 @@ public:
 	CString	m_sFolder;
 	CString	m_sName;
 	BOOL m_bAutoPieces;
+	CComboBox m_wndPieceSize;
+	int m_nPieceIndex;
 
 // Overrides
 protected:
@@ -57,6 +60,7 @@ protected:
 	afx_msg void OnClearFolders();
 	afx_msg void OnBrowseFolder();
 	afx_msg void OnClickedAutoPieceSize();
+	afx_msg void OnCloseupPieceSize();
 
 	DECLARE_MESSAGE_MAP()
 };

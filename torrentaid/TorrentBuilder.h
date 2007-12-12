@@ -41,7 +41,7 @@ public:
 public:
 	BOOL	SetName(LPCTSTR pszName);
 	BOOL	SetOutputFile(LPCTSTR pszPath);
-	void	SetPieceSize(BOOL bAutoPieces);
+	void	SetPieceSize(int nPieceIndex);
 	BOOL	AddFile(LPCTSTR pszPath);
 	BOOL	AddTrackerURL(LPCTSTR pszURL);
 	BOOL	SetComment(LPCTSTR pszComment);

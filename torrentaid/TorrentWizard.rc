@@ -342,8 +342,8 @@ BEGIN
                     IDC_STATIC,15,189,300,10
     CONTROL         "Automatic piece size selection.",IDC_AUTO_PIECE_SIZE,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,160,113,10
-    LTEXT           "Please note: Not all clients support such torrents, so be careful when using this option!",
-                    IDC_STATIC,28,171,287,12
+    COMBOBOX        IDC_PIECE_SIZE,131,158,48,30,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
 END
 
 IDD_FINISHED_PAGE DIALOGEX 0, 0, 322, 225
@@ -422,6 +422,31 @@ BEGIN
                     ES_READONLY | NOT WS_VISIBLE
     LTEXT           "Click Finish to close the Torrent Wizard.",IDC_DONE_2,
                     15,185,300,20,NOT WS_VISIBLE
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog Info
+//
+
+IDD_OUTPUT_PAGE DLGINIT
+BEGIN
+    IDC_PIECE_SIZE, 0x403, 7, 0
+0x3320, 0x2032, 0x424b, "\000" 
+    IDC_PIECE_SIZE, 0x403, 7, 0
+0x3620, 0x2034, 0x424b, "\000" 
+    IDC_PIECE_SIZE, 0x403, 8, 0
+0x3120, 0x3832, 0x4b20, 0x0042, 
+    IDC_PIECE_SIZE, 0x403, 8, 0
+0x3220, 0x3635, 0x4b20, 0x0042, 
+    IDC_PIECE_SIZE, 0x403, 8, 0
+0x3520, 0x3231, 0x4b20, 0x0042, 
+    IDC_PIECE_SIZE, 0x403, 9, 0
+0x3120, 0x3230, 0x2034, 0x424b, "\000" 
+    IDC_PIECE_SIZE, 0x403, 9, 0
+0x3220, 0x3430, 0x2038, 0x424b, "\000" 
+    0
 END
 
 #endif    // Neutral (Default) resources

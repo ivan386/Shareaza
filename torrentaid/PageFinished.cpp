@@ -107,7 +107,10 @@ void CFinishedPage::Start()
 
 	GET_PAGE( COutputPage, pOutput );
 	m_pBuilder->SetOutputFile( pOutput->m_sFolder + '\\' + pOutput->m_sName );
-	m_pBuilder->SetPieceSize( pOutput->m_bAutoPieces );
+	if ( pOutput->m_bAutoPieces )
+		m_pBuilder->SetPieceSize( -1 );
+	else
+		m_pBuilder->SetPieceSize( pOutput->m_nPieceIndex );
 
 	GET_PAGE( CTrackerPage, pTracker );
 	m_pBuilder->AddTrackerURL( pTracker->m_sTracker );

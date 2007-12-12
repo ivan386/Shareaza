@@ -35,11 +35,10 @@ static char THIS_FILE[] = __FILE__;
 IMPLEMENT_DYNCREATE(COutputPage, CWizardPage)
 
 BEGIN_MESSAGE_MAP(COutputPage, CWizardPage)
-	//{{AFX_MSG_MAP(COutputPage)
 	ON_BN_CLICKED(IDC_CLEAR_FOLDERS, OnClearFolders)
 	ON_BN_CLICKED(IDC_BROWSE_FOLDER, OnBrowseFolder)
-	//}}AFX_MSG_MAP
 	ON_BN_CLICKED(IDC_AUTO_PIECE_SIZE, OnClickedAutoPieceSize)
+	ON_CBN_CLOSEUP(IDC_PIECE_SIZE, OnCloseupPieceSize)
 END_MESSAGE_MAP()
 
 
@@ -50,6 +49,7 @@ COutputPage::COutputPage() : CWizardPage(COutputPage::IDD)
 , m_sFolder( _T("") )
 , m_sName( _T("") )
 , m_bAutoPieces( FALSE )
+, m_nPieceIndex(0)
 {
 }
 
@@ -66,6 +66,8 @@ void COutputPage::DoDataExchange(CDataExchange* pDX)
 	DDX_CBString(pDX, IDC_FOLDER, m_sFolder);
 	DDX_Text(pDX, IDC_TORRENT_NAME, m_sName);
 	DDX_Check(pDX, IDC_AUTO_PIECE_SIZE, m_bAutoPieces);
+	DDX_CBIndex(pDX, IDC_PIECE_SIZE, m_nPieceIndex);
+	DDX_Control(pDX, IDC_PIECE_SIZE, m_wndPieceSize);
 	//}}AFX_DATA_MAP
 }
 
@@ -78,6 +80,7 @@ BOOL COutputPage::OnInitDialog()
 	
 	int nCount = theApp.GetProfileInt( _T("Folders"), _T("Count"), 0 );
 	m_bAutoPieces = theApp.GetProfileInt( _T("Folders"), _T("AutoPieceSize"), 0 );
+	m_nPieceIndex = theApp.GetProfileInt( _T("Folders"), _T("PieceSize"), 0 );
 
 	for ( int nItem = 0 ; nItem < nCount ; nItem++ )
 	{
@@ -97,6 +100,7 @@ void COutputPage::OnReset()
 {
 	m_sName.Empty();
 	m_sFolder.Empty();
+	m_wndPieceSize.EnableWindow( !m_bAutoPieces );
 	UpdateData( FALSE );
 }
 
@@ -163,6 +167,8 @@ void COutputPage::OnBrowseFolder()
 void COutputPage::OnClearFolders() 
 {
 	theApp.WriteProfileInt( _T("Folders"), _T("Count"), 0 );
+	theApp.WriteProfileInt( _T("Folders"), _T("AutoPieceSize"), m_bAutoPieces ? 1 : 0 );
+	theApp.WriteProfileInt( _T("Folders"), _T("PieceSize"), m_nPieceIndex );
 	m_sFolder.Empty();
 	UpdateData( FALSE );
 	m_wndFolders.ResetContent();
@@ -259,11 +265,18 @@ LRESULT COutputPage::OnWizardNext()
 	
 	theApp.WriteProfileString( _T("Folders"), _T("Last"), m_sFolder );
 	theApp.WriteProfileInt( _T("Folders"), _T("AutoPieceSize"), m_bAutoPieces ? 1 : 0 );
-	
+	theApp.WriteProfileInt( _T("Folders"), _T("PieceSize"), m_nPieceIndex );
+
 	return IDD_FINISHED_PAGE;
 }
 
 void COutputPage::OnClickedAutoPieceSize()
+{
+	UpdateData( TRUE );
+	m_wndPieceSize.EnableWindow( !m_bAutoPieces );	
+}
+
+void COutputPage::OnCloseupPieceSize()
 {
 	UpdateData( TRUE );
 }

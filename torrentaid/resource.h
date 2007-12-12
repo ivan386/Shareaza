@@ -44,6 +44,7 @@
 #define IDC_COMMENT                     1025
 #define IDC_AUTO_PIECE_SIZE             1026
 #define IDC_EDIT1                       1027
+#define IDC_PIECE_SIZE                  1028
 #define IDS_WELCOME_NEED_TYPE           8000
 #define IDS_SINGLE_NEED_FILE            8001
 #define IDS_PACKAGE_NEED_FILES          8002
@@ -65,9 +66,9 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
-#define _APS_NEXT_RESOURCE_VALUE        132
+#define _APS_NEXT_RESOURCE_VALUE        133
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1028
+#define _APS_NEXT_CONTROL_VALUE         1029
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

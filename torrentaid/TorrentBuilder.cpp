@@ -50,7 +50,7 @@ CTorrentBuilder::CTorrentBuilder()
 , m_nPieceSize( 0 )
 , m_nBuffer( 0 )
 , m_pBuffer( NULL )
-, m_bAutoPieces( FALSE )
+, m_bAutoPieces( true )
 {
 	m_bAutoDelete = FALSE;
 }
@@ -71,10 +71,13 @@ BOOL CTorrentBuilder::SetName(LPCTSTR pszName)
 	return TRUE;
 }
 
-void CTorrentBuilder::SetPieceSize(BOOL bAutoPieces)
+void CTorrentBuilder::SetPieceSize(int nPieceIndex)
 {
 	CSingleLock pLock( &m_pSection, TRUE );
-	m_nPieceSize = bAutoPieces ? 0 : 0x40000;
+	if ( nPieceIndex == -1 )
+		m_nPieceSize = 0;
+	else
+		m_nPieceSize = 1 << ( nPieceIndex + 15 );
 }
 
 BOOL CTorrentBuilder::SetOutputFile(LPCTSTR pszPath)
