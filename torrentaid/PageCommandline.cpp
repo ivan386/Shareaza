@@ -1,21 +1,21 @@
 //
 // PageCommandline.cpp
 //
-// Copyright (c) Shareaza Pty. Ltd., 2003.
-// This file is part of TorrentAid Torrent Wizard (www.torrentaid.com).
+// Copyright (c) Shareaza Development Team, 2007.
+// This file is part of Shareaza Torrent Wizard (shareaza.sourceforge.net).
 //
-// TorrentAid Torrent Wizard is free software; you can redistribute it
+// Shareaza Torrent Wizard is free software; you can redistribute it
 // and/or modify it under the terms of the GNU General Public License
 // as published by the Free Software Foundation; either version 2 of
 // the License, or (at your option) any later version.
 //
-// TorrentAid is distributed in the hope that it will be useful,
+// Torrent Wizard is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with TorrentAid; if not, write to the Free Software
+// along with Shareaza; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
@@ -23,9 +23,6 @@
 #include "TorrentWizard.h"
 #include "TorrentBuilder.h"
 #include "PageCommandline.h"
-//#include "PagePackage.h"
-
-
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -36,27 +33,23 @@ static char THIS_FILE[] = __FILE__;
 IMPLEMENT_DYNCREATE(CCommandlinePage, CWizardPage)
 
 BEGIN_MESSAGE_MAP(CCommandlinePage, CWizardPage)
-	//{{AFX_MSG_MAP(CCommandlinePage)
 	ON_BN_CLICKED(IDC_ABORT, OnAbort)
 	ON_WM_TIMER()
 	ON_WM_HSCROLL()
-	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 
 /////////////////////////////////////////////////////////////////////////////
 // CCommandlinePage property page
 
-CCommandlinePage::CCommandlinePage() : CWizardPage(CCommandlinePage::IDD)
+CCommandlinePage::CCommandlinePage() : CWizardPage(CCommandlinePage::IDD), m_pBuilder( NULL )
 {
-	//{{AFX_DATA_INIT(CCommandlinePage)
-	//}}AFX_DATA_INIT
-	m_pBuilder = NULL;
 }
 
 CCommandlinePage::~CCommandlinePage()
 {
-	if ( m_pBuilder ) delete m_pBuilder;
+	if ( m_pBuilder ) 
+		delete m_pBuilder;
 }
 
 void CCommandlinePage::DoDataExchange(CDataExchange* pDX)

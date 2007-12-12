@@ -1,21 +1,21 @@
 //
 // Buffer.cpp
 //
-// Copyright (c) Shareaza Pty. Ltd., 2003.
-// This file is part of TorrentAid Torrent Wizard (www.torrentaid.com).
+// Copyright (c) Shareaza Development Team, 2007.
+// This file is part of Shareaza Torrent Wizard (shareaza.sourceforge.net).
 //
-// TorrentAid Torrent Wizard is free software; you can redistribute it
+// Shareaza Torrent Wizard is free software; you can redistribute it
 // and/or modify it under the terms of the GNU General Public License
 // as published by the Free Software Foundation; either version 2 of
 // the License, or (at your option) any later version.
 //
-// TorrentAid is distributed in the hope that it will be useful,
+// Torrent Wizard is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with TorrentAid; if not, write to the Free Software
+// along with Shareaza; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
@@ -98,7 +98,7 @@ void CBuffer::Insert(DWORD nOffset, const void * pData, DWORD nLength)
 		m_nBuffer = ( m_nBuffer + BLOCK_SIZE - 1 ) & BLOCK_MASK;
 		m_pBuffer = (BYTE*)realloc( m_pBuffer, m_nBuffer );
 	}
-	else if ( m_nBuffer > 0x80000 && m_nLength + nLength < 0x40000 )
+	else if ( m_nBuffer > 0x80000 && m_nLength + nLength < 0x40000 ) // No idea what that range means
 	{
 		m_nBuffer = 0x40000;
 		m_pBuffer = (BYTE*)realloc( m_pBuffer, m_nBuffer );

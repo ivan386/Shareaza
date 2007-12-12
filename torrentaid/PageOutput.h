@@ -1,31 +1,29 @@
 //
 // PageOutput.h
 //
-// Copyright (c) Shareaza Pty. Ltd., 2003.
-// This file is part of TorrentAid Torrent Wizard (www.torrentaid.com).
+// Copyright (c) Shareaza Development Team, 2007.
+// This file is part of Shareaza Torrent Wizard (shareaza.sourceforge.net).
 //
-// TorrentAid Torrent Wizard is free software; you can redistribute it
+// Shareaza Torrent Wizard is free software; you can redistribute it
 // and/or modify it under the terms of the GNU General Public License
 // as published by the Free Software Foundation; either version 2 of
 // the License, or (at your option) any later version.
 //
-// TorrentAid is distributed in the hope that it will be useful,
+// Torrent Wizard is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with TorrentAid; if not, write to the Free Software
+// along with Shareaza; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_PAGEOUTPUT_H__60840A43_2BE4_48D2_BBA7_5D0FF2DFADA5__INCLUDED_)
-#define AFX_PAGEOUTPUT_H__60840A43_2BE4_48D2_BBA7_5D0FF2DFADA5__INCLUDED_
+#if !defined(PAGEOUTPUT_H)
+#define PAGEOUTPUT_H
 
 #pragma once
-
 #include "WizardSheet.h"
-
 
 class COutputPage : public CWizardPage
 {
@@ -38,38 +36,29 @@ public:
 
 // Dialog Data
 public:
-	//{{AFX_DATA(COutputPage)
 	enum { IDD = IDD_OUTPUT_PAGE };
 	CEdit	m_wndName;
 	CComboBox	m_wndFolders;
 	CString	m_sFolder;
 	CString	m_sName;
-	//}}AFX_DATA
+	BOOL m_bAutoPieces;
 
 // Overrides
-public:
-	//{{AFX_VIRTUAL(COutputPage)
-	public:
+protected:
 	virtual void OnReset();
 	virtual BOOL OnSetActive();
 	virtual LRESULT OnWizardBack();
 	virtual LRESULT OnWizardNext();
-	protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
 
 // Implementation
 protected:
-	//{{AFX_MSG(COutputPage)
 	virtual BOOL OnInitDialog();
 	afx_msg void OnClearFolders();
 	afx_msg void OnBrowseFolder();
-	//}}AFX_MSG
+	afx_msg void OnClickedAutoPieceSize();
 
 	DECLARE_MESSAGE_MAP()
-
 };
 
-//{{AFX_INSERT_LOCATION}}
-
-#endif // !defined(AFX_PAGEOUTPUT_H__60840A43_2BE4_48D2_BBA7_5D0FF2DFADA5__INCLUDED_)
+#endif // !defined(PAGEOUTPUT_H)

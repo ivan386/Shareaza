@@ -1,21 +1,21 @@
 //
 // PageOutput.cpp
 //
-// Copyright (c) Shareaza Pty. Ltd., 2003.
-// This file is part of TorrentAid Torrent Wizard (www.torrentaid.com).
+// Copyright (c) Shareaza Development Team, 2007.
+// This file is part of Shareaza Torrent Wizard (shareaza.sourceforge.net).
 //
-// TorrentAid Torrent Wizard is free software; you can redistribute it
+// Shareaza Torrent Wizard is free software; you can redistribute it
 // and/or modify it under the terms of the GNU General Public License
 // as published by the Free Software Foundation; either version 2 of
 // the License, or (at your option) any later version.
 //
-// TorrentAid is distributed in the hope that it will be useful,
+// Torrent Wizard is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with TorrentAid; if not, write to the Free Software
+// along with Shareaza; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
@@ -39,6 +39,7 @@ BEGIN_MESSAGE_MAP(COutputPage, CWizardPage)
 	ON_BN_CLICKED(IDC_CLEAR_FOLDERS, OnClearFolders)
 	ON_BN_CLICKED(IDC_BROWSE_FOLDER, OnBrowseFolder)
 	//}}AFX_MSG_MAP
+	ON_BN_CLICKED(IDC_AUTO_PIECE_SIZE, OnClickedAutoPieceSize)
 END_MESSAGE_MAP()
 
 
@@ -46,11 +47,10 @@ END_MESSAGE_MAP()
 // COutputPage property page
 
 COutputPage::COutputPage() : CWizardPage(COutputPage::IDD)
+, m_sFolder( _T("") )
+, m_sName( _T("") )
+, m_bAutoPieces( FALSE )
 {
-	//{{AFX_DATA_INIT(COutputPage)
-	m_sFolder = _T("");
-	m_sName = _T("");
-	//}}AFX_DATA_INIT
 }
 
 COutputPage::~COutputPage()
@@ -65,6 +65,7 @@ void COutputPage::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_FOLDER, m_wndFolders);
 	DDX_CBString(pDX, IDC_FOLDER, m_sFolder);
 	DDX_Text(pDX, IDC_TORRENT_NAME, m_sName);
+	DDX_Check(pDX, IDC_AUTO_PIECE_SIZE, m_bAutoPieces);
 	//}}AFX_DATA_MAP
 }
 
@@ -76,13 +77,15 @@ BOOL COutputPage::OnInitDialog()
 	CWizardPage::OnInitDialog();
 	
 	int nCount = theApp.GetProfileInt( _T("Folders"), _T("Count"), 0 );
-	
+	m_bAutoPieces = theApp.GetProfileInt( _T("Folders"), _T("AutoPieceSize"), 0 );
+
 	for ( int nItem = 0 ; nItem < nCount ; nItem++ )
 	{
 		CString strName, strURL;
 		strName.Format( _T("%.3i.Path"), nItem + 1 );
 		strURL = theApp.GetProfileString( _T("Folders"), strName );
-		if ( strURL.GetLength() ) m_wndFolders.AddString( strURL );
+		if ( strURL.GetLength() ) 
+			m_wndFolders.AddString( strURL );
 	}
 	
 	OnReset();
@@ -114,12 +117,14 @@ BOOL COutputPage::OnSetActive()
 				m_sName = pszSlash + 1;
 				m_sName += _T(".torrent");
 				
-				if ( m_sFolder.IsEmpty() ) m_sFolder = strFile.Left( pszSlash - strFile );
+				if ( m_sFolder.IsEmpty() ) 
+					m_sFolder = strFile.Left( pszSlash - strFile );
 			}
 		}
 		else
 		{
-			if ( m_sFolder.IsEmpty() ) m_sFolder = theApp.GetProfileString( _T("Folders"), _T("Last") );
+			if ( m_sFolder.IsEmpty() ) 
+				m_sFolder = theApp.GetProfileString( _T("Folders"), _T("Last") );
 		}
 		
 		UpdateData( FALSE );
@@ -253,7 +258,12 @@ LRESULT COutputPage::OnWizardNext()
 	}
 	
 	theApp.WriteProfileString( _T("Folders"), _T("Last"), m_sFolder );
+	theApp.WriteProfileInt( _T("Folders"), _T("AutoPieceSize"), m_bAutoPieces ? 1 : 0 );
 	
 	return IDD_FINISHED_PAGE;
 }
 
+void COutputPage::OnClickedAutoPieceSize()
+{
+	UpdateData( TRUE );
+}

@@ -1,21 +1,21 @@
 //
 // TorrentBuilder.cpp
 //
-// Copyright (c) Shareaza Pty. Ltd., 2003.
-// This file is part of TorrentAid Torrent Wizard (www.torrentaid.com).
+// Copyright (c) Shareaza Development Team, 2007.
+// This file is part of Shareaza Torrent Wizard (shareaza.sourceforge.net).
 //
-// TorrentAid Torrent Wizard is free software; you can redistribute it
+// Shareaza Torrent Wizard is free software; you can redistribute it
 // and/or modify it under the terms of the GNU General Public License
 // as published by the Free Software Foundation; either version 2 of
 // the License, or (at your option) any later version.
 //
-// TorrentAid is distributed in the hope that it will be useful,
+// Torrent Wizard is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with TorrentAid; if not, write to the Free Software
+// along with Shareaza; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
@@ -36,8 +36,6 @@ static char THIS_FILE[] = __FILE__;
 IMPLEMENT_DYNCREATE(CTorrentBuilder, CWinThread)
 
 BEGIN_MESSAGE_MAP(CTorrentBuilder, CWinThread)
-	//{{AFX_MSG_MAP(CTorrentBuilder)
-	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 
@@ -45,22 +43,21 @@ END_MESSAGE_MAP()
 // CTorrentBuilder construction
 
 CTorrentBuilder::CTorrentBuilder()
+: m_bActive( FALSE )
+, m_bFinished ( FALSE )
+, m_bAbort( FALSE )
+, m_nTotalSize( 0 )
+, m_nPieceSize( 0 )
+, m_nBuffer( 0 )
+, m_pBuffer( NULL )
+, m_bAutoPieces( FALSE )
 {
-	m_bAutoDelete	= FALSE;
-	m_bActive		= FALSE;
-	m_bFinished		= FALSE;
-	m_bAbort		= FALSE;
-	
-	m_nTotalSize	= 0;
-	m_nPieceSize	= 0x40000;
-	m_nBuffer		= m_nPieceSize;
-	m_pBuffer		= new BYTE[ m_nBuffer ];
+	m_bAutoDelete = FALSE;
 }
 
 CTorrentBuilder::~CTorrentBuilder()
 {
 	Stop();
-	delete [] m_pBuffer;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -72,6 +69,12 @@ BOOL CTorrentBuilder::SetName(LPCTSTR pszName)
 	if ( m_bActive ) return FALSE;
 	m_sName = pszName;
 	return TRUE;
+}
+
+void CTorrentBuilder::SetPieceSize(BOOL bAutoPieces)
+{
+	CSingleLock pLock( &m_pSection, TRUE );
+	m_nPieceSize = bAutoPieces ? 0 : 0x40000;
 }
 
 BOOL CTorrentBuilder::SetOutputFile(LPCTSTR pszPath)
@@ -163,6 +166,11 @@ void CTorrentBuilder::Stop()
 	m_bActive	= FALSE;
 	m_bFinished	= FALSE;
 	m_bAbort	= FALSE;
+
+	if ( m_pBuffer != NULL ) {
+		delete [] m_pBuffer;
+		m_pBuffer = NULL;
+	}
 }
 
 BOOL CTorrentBuilder::SetPriority(int nPriority)
@@ -266,6 +274,8 @@ BOOL CTorrentBuilder::ScanFiles()
 {
 	m_pSection.Lock();
 	m_nTotalSize = 0;
+	if ( m_pBuffer != NULL )
+		delete [] m_pBuffer;
 	m_sThisFile = _T(" Prescanning files...");
 	m_pSection.Unlock();
 	
@@ -300,6 +310,29 @@ BOOL CTorrentBuilder::ScanFiles()
 	
 	m_pSection.Lock();
 	m_sThisFile.Empty();
+
+	if ( m_nPieceSize == 0 )
+	{
+		m_nPieceSize = 1;
+		QWORD nCompare = 1 << 20;
+		if ( m_nTotalSize <= 50 * nCompare )
+			m_nPieceSize <<= 5;
+		else if ( m_nTotalSize <= 150i64 * nCompare )
+			m_nPieceSize <<= 6;
+		else if ( m_nTotalSize <= 350i64 * nCompare )
+			m_nPieceSize <<= 7;
+		else if ( m_nTotalSize <= 512i64 * nCompare )
+			m_nPieceSize <<= 8;
+		else if ( m_nTotalSize <= 1024i64 * nCompare )
+			m_nPieceSize <<= 9;
+		else if ( m_nTotalSize <= 2048i64 * nCompare )
+			m_nPieceSize <<= 10;
+		else
+			m_nPieceSize <<= 11;
+	}
+
+	m_nBuffer = m_nPieceSize;
+	m_pBuffer = new BYTE[ m_nBuffer ];
 	m_pSection.Unlock();
 	
 	return m_bAbort == FALSE;
@@ -537,7 +570,7 @@ BOOL CTorrentBuilder::WriteOutput()
 	}
 	
 	CBENode* pAgent = pRoot.Add( "created by" );
-	CString strAgent = _T("TorrentAid ") + theApp.m_sVersion;
+	CString strAgent = _T("Shareaza ") + theApp.m_sVersion;
 	pAgent->SetString( strAgent );
 	
 	if ( m_sComment.GetLength() > 0 )

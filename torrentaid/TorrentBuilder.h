@@ -1,26 +1,26 @@
 //
 // TorrentBuilder.h
 //
-// Copyright (c) Shareaza Pty. Ltd., 2003.
-// This file is part of TorrentAid Torrent Wizard (www.torrentaid.com).
+// Copyright (c) Shareaza Development Team, 2007.
+// This file is part of Shareaza Torrent Wizard (shareaza.sourceforge.net).
 //
-// TorrentAid Torrent Wizard is free software; you can redistribute it
+// Shareaza Torrent Wizard is free software; you can redistribute it
 // and/or modify it under the terms of the GNU General Public License
 // as published by the Free Software Foundation; either version 2 of
 // the License, or (at your option) any later version.
 //
-// TorrentAid is distributed in the hope that it will be useful,
+// Torrent Wizard is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with TorrentAid; if not, write to the Free Software
+// along with Shareaza; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_TORRENTBUILDER_H__C2729D4C_3E12_41D2_9E64_E59508F7B812__INCLUDED_)
-#define AFX_TORRENTBUILDER_H__C2729D4C_3E12_41D2_9E64_E59508F7B812__INCLUDED_
+#if !defined(TORRENTBUILDER_H)
+#define TORRENTBUILDER_H
 
 #pragma once
 
@@ -41,6 +41,7 @@ public:
 public:
 	BOOL	SetName(LPCTSTR pszName);
 	BOOL	SetOutputFile(LPCTSTR pszPath);
+	void	SetPieceSize(BOOL bAutoPieces);
 	BOOL	AddFile(LPCTSTR pszPath);
 	BOOL	AddTrackerURL(LPCTSTR pszURL);
 	BOOL	SetComment(LPCTSTR pszComment);
@@ -88,6 +89,7 @@ protected:
 	DWORD				m_nPieceCount;
 	DWORD				m_nPiecePos;
 	DWORD				m_nPieceUsed;
+	BOOL				m_bAutoPieces;
 protected:
 	BYTE*				m_pBuffer;
 	DWORD				m_nBuffer;
@@ -99,20 +101,10 @@ protected:
 	
 // Overrides
 public:
-	//{{AFX_VIRTUAL(CTorrentBuilder)
-	public:
 	virtual BOOL InitInstance() { return TRUE; }
 	virtual int Run();
-	//}}AFX_VIRTUAL
-	
-// Implementation
-protected:
-	//{{AFX_MSG(CTorrentBuilder)
-	//}}AFX_MSG
 	
 	DECLARE_MESSAGE_MAP()
 };
 
-//{{AFX_INSERT_LOCATION}}
-
-#endif // !defined(AFX_TORRENTBUILDER_H__C2729D4C_3E12_41D2_9E64_E59508F7B812__INCLUDED_)
+#endif // !defined(ATORRENTBUILDER_H)
