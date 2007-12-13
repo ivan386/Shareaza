@@ -1877,27 +1877,27 @@ BOOL CShakeNeighbour::IsClientObsolete()
 {
 	if ( m_sUserAgent.IsEmpty() ) return TRUE;
 
-	if ( _tcsistr( m_sUserAgent, _T("Shareaza") ) )
+	if ( _tcsistr( m_sUserAgent, _T("shareaza") ) )
 	{
 		// Shareaza client
 
 		// Check for fakes / version hacks.
-		if (( _tcsistr( m_sUserAgent, _T("Shareaza 0."   ) ) ) ||
-			( _tcsistr( m_sUserAgent, _T("Shareaza 1."   ) ) ) ||	// There can be some 1.x versions of the real Shareaza but most are fakes
-			( _tcsistr( m_sUserAgent, _T("Shareaza 3.0"  ) ) ) ||
-			( _tcsistr( m_sUserAgent, _T("Shareaza 3.1"  ) ) ) ||
-			( _tcsistr( m_sUserAgent, _T("Shareaza 3.2"  ) ) ) ||
-			( _tcsistr( m_sUserAgent, _T("Shareaza 3.3"  ) ) ) ||
-			( _tcsistr( m_sUserAgent, _T("Shareaza 3.4"  ) ) ) ||
-			( _tcsistr( m_sUserAgent, _T("Shareaza 6."   ) ) ) ||
-			( _tcsistr( m_sUserAgent, _T("Shareaza 7."   ) ) ) ||
-			( _tcsistr( m_sUserAgent, _T("Shareaza pro"  ) ) ) )
+		if (( _tcsistr( m_sUserAgent, _T("shareaza 0."   ) ) ) ||
+			( _tcsistr( m_sUserAgent, _T("shareaza 1."   ) ) ) ||	// There can be some 1.x versions of the real Shareaza but most are fakes
+			( _tcsistr( m_sUserAgent, _T("shareaza 3.0"  ) ) ) ||
+			( _tcsistr( m_sUserAgent, _T("shareaza 3.1"  ) ) ) ||
+			( _tcsistr( m_sUserAgent, _T("shareaza 3.2"  ) ) ) ||
+			( _tcsistr( m_sUserAgent, _T("shareaza 3.3"  ) ) ) ||
+			( _tcsistr( m_sUserAgent, _T("shareaza 3.4"  ) ) ) ||
+			( _tcsistr( m_sUserAgent, _T("shareaza 6."   ) ) ) ||
+			( _tcsistr( m_sUserAgent, _T("shareaza 7."   ) ) ) ||
+			( _tcsistr( m_sUserAgent, _T("shareaza pro"  ) ) ) )
 			return TRUE;
 
 		// Check for old version and betas
-		if (( _tcsistr( m_sUserAgent, _T("Shareaza 2.0"  ) ) ) ||	// There is also a Shareaza rip-off that identify as Shareaza 2.0.0.0 (The real Shareaza 2.0.0.0 is so old and bad)
-			( _tcsistr( m_sUserAgent, _T("Shareaza 2.1"  ) ) ) ||
-			( _tcsistr( m_sUserAgent, _T("Shareaza 2.2") ) ) )
+		if (( _tcsistr( m_sUserAgent, _T("shareaza 2.0"  ) ) ) ||	// There is also a Shareaza rip-off that identify as Shareaza 2.0.0.0 (The real Shareaza 2.0.0.0 is so old and bad)
+			( _tcsistr( m_sUserAgent, _T("shareaza 2.1"  ) ) ) ||
+			( _tcsistr( m_sUserAgent, _T("shareaza 2.2") ) ) )
 			return TRUE;
 
 		// Assumed to be reasonably current
@@ -1960,6 +1960,12 @@ BOOL CShakeNeighbour::IsClientBad()
 		if ( _tcsistr( m_sUserAgent, _T("shareaza 6.") ) )	return TRUE;
 		if ( _tcsistr( m_sUserAgent, _T("shareaza 7.") ) )	return TRUE;
 		if ( _tcsistr( m_sUserAgent, _T("shareaza pro") ) )	return TRUE;
+
+		if ( _tcsistr( m_sUserAgent, _T("shareaza 2.1") ) ||
+			 ( _tcsistr( m_sUserAgent, _T("shareaza 2.2") ) && !_tcsistr( m_sUserAgent, _T("shareaza 2.2.5.7") ) )
+		)
+			if ( !_tcsistr( m_sUserAgent + _T("|"), _T(".0|") ) )	// Block old alpha versions
+				return TRUE;
 		// Current versions okay
 		return FALSE;
 	}
