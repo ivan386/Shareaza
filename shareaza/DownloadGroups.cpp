@@ -1,7 +1,7 @@
 //
 // DownloadGroups.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -144,8 +144,14 @@ void CDownloadGroups::CreateDefault()
 	pGroup = Add( _T("Video") );
 	pGroup->SetSchema( CSchema::uriVideo );
 
+	pGroup = Add( _T("Image") );
+	pGroup->SetSchema( CSchema::uriImage );
+
 	pGroup = Add( _T("BitTorrent") );
 	pGroup->SetSchema( CSchema::uriBitTorrent );
+
+	pGroup = Add( _T("Collection") );
+	pGroup->SetSchema( CSchema::uriCollectionsFolder );
 }
 
 //////////////////////////////////////////////////////////////////////
