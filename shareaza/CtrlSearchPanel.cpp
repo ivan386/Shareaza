@@ -557,7 +557,7 @@ void CSearchInputBox::OnSize(UINT nType, int cx, int cy)
 	HDWP hDWP = BeginDeferWindowPos( 4 );
 
 	DeferWindowPos( hDWP, m_wndSearch, NULL, BOX_MARGIN, 27,
-		cx - BOX_MARGIN * 2 - 10, 19,
+		cx - BOX_MARGIN * 2, 19,
 		SWP_SHOWWINDOW | SWP_NOACTIVATE | SWP_NOZORDER );
 	DeferWindowPos( hDWP, m_wndSchemas, NULL, BOX_MARGIN, 67,
 		cx - BOX_MARGIN * 2, 256,
@@ -566,7 +566,7 @@ void CSearchInputBox::OnSize(UINT nType, int cx, int cy)
 		SWP_SHOWWINDOW | SWP_NOACTIVATE | SWP_NOZORDER );
 	DeferWindowPos( hDWP, m_wndStop, NULL, cx - BOX_MARGIN - 60, 102, 60, 24,
 		SWP_SHOWWINDOW | SWP_NOACTIVATE | SWP_NOZORDER );
-	DeferWindowPos( hDWP, m_wndPrefix, NULL, cx - BOX_MARGIN - 8, 28, 8, 8,
+	DeferWindowPos( hDWP, m_wndPrefix, NULL, cx - BOX_MARGIN - 8, 13, 8, 8,
 		SWP_SHOWWINDOW | SWP_NOACTIVATE | SWP_NOZORDER );
 	
 	EndDeferWindowPos( hDWP );
@@ -602,7 +602,7 @@ void CSearchInputBox::OnPaint()
 	pDC->SetTextColor( 0 );
 	
 	LoadString( str, IDS_SEARCH_PANEL_INPUT_1 );
-	rct.SetRect( BOX_MARGIN + 1, BOX_MARGIN, rc.right - BOX_MARGIN, BOX_MARGIN + 16 );
+	rct.SetRect( BOX_MARGIN + 1, BOX_MARGIN, rc.right - BOX_MARGIN - 8, BOX_MARGIN + 16 );
 	pDC->ExtTextOut( rct.left, rct.top, nFlags, &rct, str, NULL );
 	pDC->ExcludeClipRect( &rct );
 
@@ -868,15 +868,15 @@ void CSearchAdvancedBox::OnSize(UINT nType, int cx, int cy)
 	HDWP hDWP = BeginDeferWindowPos( 3 );
 
 	if ( m_wndCheckBoxG2.m_hWnd != NULL )
-		DeferWindowPos( hDWP, m_wndCheckBoxG2, NULL, BOX_MARGIN + 20, 28, 
+		DeferWindowPos( hDWP, m_wndCheckBoxG2, NULL, BOX_MARGIN + 21, 28, 
 			( cx - BOX_MARGIN * 3 ) / 2 - 20, 14,
 			SWP_SHOWWINDOW | SWP_NOACTIVATE | SWP_NOZORDER );
 	if ( m_wndCheckBoxG1.m_hWnd != NULL )
-		DeferWindowPos( hDWP, m_wndCheckBoxG1, NULL, ( cx / 2 ) + BOX_MARGIN / 2 + 20, 28, 
+		DeferWindowPos( hDWP, m_wndCheckBoxG1, NULL, BOX_MARGIN + 21, 48, 
 			( cx - BOX_MARGIN * 3 ) / 2 - 20, 14,
 			SWP_SHOWWINDOW | SWP_NOACTIVATE | SWP_NOZORDER );
 	if ( m_wndCheckBoxED2K.m_hWnd != NULL )
-		DeferWindowPos( hDWP, m_wndCheckBoxED2K, NULL, BOX_MARGIN + 20, 48, 
+		DeferWindowPos( hDWP, m_wndCheckBoxED2K, NULL, ( cx / 2 ) + BOX_MARGIN / 2 + 26, 28, 
 			( cx - BOX_MARGIN * 3 ) / 2 - 20, 14,
 			SWP_SHOWWINDOW | SWP_NOACTIVATE | SWP_NOZORDER );
 	if ( m_wndSizeMin.m_hWnd != NULL )
@@ -955,8 +955,8 @@ void CSearchAdvancedBox::OnPaint()
 
 	int nStartPos = theApp.m_bRTL ? -m_gdiImageList.GetImageCount() + 1 : 0;
 	m_gdiImageList.Draw( pDC, abs( nStartPos + 2 ), CPoint( BOX_MARGIN, 26 ), ILD_NORMAL );
-	m_gdiImageList.Draw( pDC, abs( nStartPos + 1 ), CPoint( PANEL_WIDTH / 2 - BOX_MARGIN, 26 ), ILD_NORMAL );
-	m_gdiImageList.Draw( pDC, abs( nStartPos + 3 ), CPoint( BOX_MARGIN, 46 ), ILD_NORMAL );
+	m_gdiImageList.Draw( pDC, abs( nStartPos + 1 ), CPoint( BOX_MARGIN, 46 ), ILD_NORMAL );
+	m_gdiImageList.Draw( pDC, abs( nStartPos + 3 ), CPoint( PANEL_WIDTH / 2 - 3, 26 ), ILD_NORMAL );
 }
 
 LRESULT CSearchAdvancedBox::OnCtlColorStatic(WPARAM wParam, LPARAM /*lParam*/)
