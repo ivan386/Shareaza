@@ -359,7 +359,11 @@ IDB_CHILDFRAME          BITMAP                  "Res\\ChildFrame.bmp"
 // RT_MANIFEST
 //
 
+#ifdef WIN64
+1                       RT_MANIFEST             "Res\\Manifest64.xml"
+#else
 1                       RT_MANIFEST             "Res\\Manifest.xml"
+#endif
 
 /////////////////////////////////////////////////////////////////////////////
 //

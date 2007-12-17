@@ -410,6 +410,7 @@ void CSettings::Setup()
 	Add( _T("Downloads.SortSources"), &Downloads.SortSources, TRUE );
 	Add( _T("Downloads.SourcesWanted"), &Downloads.SourcesWanted, 500 );
 	Add( _T("Downloads.MaxReviews"), &Downloads.MaxReviews, 64 );
+	Add( _T("Downloads.StartDroppingFailedSourcesNumber"), &Downloads.StartDroppingFailedSourcesNumber, 20 );
 
 	Add( _T("Uploads.MaxPerHost"), &Uploads.MaxPerHost, 2 );
 	Add( _T("Uploads.FreeBandwidthValue"), &Uploads.FreeBandwidthValue, 2560 );
@@ -755,271 +756,276 @@ void CSettings::SmartUpgrade()
 		}
 	}
 
+	if ( nVersion > SMART_VERSION )
+		nVersion = 1;
 	if ( nVersion != SMART_VERSION )
 		Uploads.SharePartials = TRUE;
 
-	// 'SmartUpgrade' settings updates- change any settings that were mis-set in previous versions
-	if ( nVersion < 20 )
+	if ( nVersion < SMART_VERSION )
 	{
-		Gnutella2.UdpOutResend			= 6000;
-		Gnutella2.UdpOutExpire			= 26000;
-		Library.TigerHeight		= 9;
-
-		Downloads.AutoExpand			= FALSE;
-
-		Uploads.MaxPerHost				= 2;
-		Uploads.ShareTiger				= TRUE;
-
-		Library.PrivateTypes.erase( _T("nfo") );
-		Library.SafeExecute.Replace( _T("|."), _T("|") );
-	}
-
-	if ( nVersion < 21 )
-	{
-		Library.ThumbSize				= 96;
-		Library.SourceExpire			= 86400;
-
-		Gnutella1.TranslateTTL			= 2;
-	}
-
-	if ( nVersion < 24 )
-	{
-		General.CloseMode				= 0;
-
-		Connection.TimeoutConnect		= 16000;
-		Connection.TimeoutHandshake		= 45000;
-
-		Downloads.RetryDelay			= 10*60000;
-
-		Uploads.FilterMask				= 0xFFFFFFFD;
-	}
-
-	if ( nVersion < 25 )
-	{
-		Connection.TimeoutTraffic		= 140000;
-
-		Gnutella2.NumPeers				= 6;
-	}
-
-	if ( nVersion < 28 )
-	{
-		BitTorrent.Endgame		= TRUE;		// Endgame on
-	}
-
-	if ( nVersion < 29 )
-	{
-		Downloads.MinSources	= 1;		// Lower Max value- should reset it in case
-		Downloads.StarveTimeout = 2700;		// Increased due to ed2k queues (Tripping too often)
-
-		Gnutella2.RequeryDelay	= 4*3600;	// Longer delay between sending same search to G2 hub
-	}
-
-	if ( nVersion < 30 )
-	{
-		BitTorrent.RequestSize	= 16384;	// Other BT clients have changed this value (undocumented)
-	}
-
-	if ( nVersion < 31 )
-	{
-		Downloads.SearchPeriod			= 120000;
-
-		Gnutella1.MaximumTTL			= 10;
-
-		Gnutella2.QueryGlobalThrottle	= 125;
-
-		Uploads.QueuePollMin	= 45000;	// Lower values for re-ask times- a dynamic multiplier
-		Uploads.QueuePollMax	= 120000;	//  Is now applied based on Q# (from 1x to 5x)
-		eDonkey.PacketThrottle	= 500;		// Second throttle added for finer control
-	}
-
-	if ( nVersion < 32 )
-	{
-		Library.BitziWebView	= _T("http://bitzi.com/lookup/(URN)?v=detail&ref=shareaza");
-		Library.BitziWebSubmit	= _T("http://bitzi.com/lookup/(SHA1).(TTH)?fl=(SIZE)&ff=(FIRST20)&fn=(NAME)&tag.ed2k.ed2khash=(ED2K)&(INFO)&a=(AGENT)&v=Q0.4&ref=shareaza");
-		Library.BitziXML		= _T("http://ticket.bitzi.com/rdf/(SHA1).(TTH)");
-
-		theApp.WriteProfileString( _T("Interface"), _T("SchemaColumns.audio"), _T("(EMPTY)") );
-	}
-
-	if ( nVersion < 33 )
-	{
-		RegDeleteKey( HKEY_CURRENT_USER, _T("Software\\Shareaza\\Shareaza\\Plugins\\LibraryBuilder") );
-	}
-
-	if ( nVersion < 34 )
-		BitTorrent.LinkPing				= 120 * 1000;
-
-	if ( nVersion < 35 )
-	{
-		Gnutella1.QuerySearchUTF8 = TRUE;
-		Gnutella1.QueryHitUTF8 = TRUE;
-	}
-
-	if ( nVersion < 36 )
-	{
-		//Library.VirtualFiles	= TRUE;		// Virtual files (stripping) on
-		Library.VirtualFiles = FALSE;
-	}
-
-	if ( nVersion < 37 )
-	{
-		Downloads.RequestHash = TRUE;
-		Gnutella.SpecifyProtocol = TRUE;
-		Search.FilterMask = Search.FilterMask | 0x140; // Turn on DRM and Suspicious filters
-	}
-
-	if ( nVersion < 39 )
-	{
-		General.RatesInBytes = TRUE;
-		General.VerboseMode = FALSE;
-	}
-
-	if ( nVersion < 40 )
-	{
-		eDonkey.ForceHighID = TRUE;
-		eDonkey.FastConnect = FALSE;
-	}
-
-	if ( nVersion < 41 )
-	{
-		eDonkey.ExtendedRequest = 2;
-		Community.ChatAllNetworks = TRUE;
-		Community.ChatFilter = TRUE;
-	}
-
-	if ( nVersion < 42 )
-	{
-		Gnutella2.NumHubs = 2;
-		General.ItWasLimited = TRUE;
-	}
-
-	if ( nVersion < 43 )
-	{	
-		eDonkey.MetAutoQuery = TRUE;
-	}
-
-	if ( nVersion < 44 )
-	{	
-		BitTorrent.AutoSeed = TRUE;
-	}
-
-	if ( nVersion < 45 )
-	{
-		Library.PrivateTypes.erase( _T("dat") );
-
-		// FlashGet
-		if ( ! IsIn( Library.PrivateTypes, _T("jc!") ) )
-			Library.PrivateTypes.insert( _T("jc!") );
-		// FlashGet torrent
-		if ( ! IsIn( Library.PrivateTypes, _T("fb!") ) )
-			Library.PrivateTypes.insert( _T("fb!") );
-		// BitComet
-		if ( ! IsIn( Library.PrivateTypes, _T("bc!") ) )
-			Library.PrivateTypes.insert( _T("bc!") );
-	}
-
-	if ( nVersion < 46 )
-	{
-		// ReGet
-		if ( ! IsIn( Library.PrivateTypes, _T("reget") ) )
-			Library.PrivateTypes.insert( _T("reget") );
-	}
-
-	if ( nVersion < 47 )
-	{
-		// Changed from minutes to seconds
-		Gnutella1.QueryThrottle = 30u;
-		Gnutella1.RequeryDelay = 30u;
-
-		Gnutella.MaxResults = 150;
-	}
-
-	if ( nVersion < 49 )
-	{
-		eDonkey.SendPortServer = FALSE;
-	}
-
-	if ( nVersion < 50 )
-	{
-		CString strExts =
-			theApp.GetProfileString( L"Plugins", L"{04CC76C7-1ED7-4CAE-9762-B8664ED008ED}" );
-		if ( strExts.GetLength() > 0 && strExts.GetAt( 0 ) == '|' )
+		// 'SmartUpgrade' settings updates- change any settings that were mis-set in previous versions
+		if ( nVersion < 20 )
 		{
-			if ( _tcsistr( strExts, L"|.3gp|" ) == NULL && _tcsistr( strExts, L"|-.3gp|" ) == NULL )
-				strExts += L"|.3gp|";
-			if ( _tcsistr( strExts, L"|.3gpp|" ) == NULL && _tcsistr( strExts, L"|-.3gpp|" ) == NULL )
-				strExts += L"|.3gpp|";
-			if ( _tcsistr( strExts, L"|.3g2|" ) == NULL && _tcsistr( strExts, L"|-.3g2|" ) == NULL )
-				strExts += L"|.3g2|";
-			if ( _tcsistr( strExts, L"|.dv|" ) == NULL && _tcsistr( strExts, L"|-.dv|" ) == NULL )
-				strExts += L"|.dv|";
-			if ( _tcsistr( strExts, L"|.flv|" ) == NULL && _tcsistr( strExts, L"|-.flv|" ) == NULL )
-				strExts += L"|.flv|";
-			if ( _tcsistr( strExts, L"|.ivf|" ) == NULL && _tcsistr( strExts, L"|-.ivf|" ) == NULL )
-				strExts += L"|.ivf|";
-			if ( _tcsistr( strExts, L"|.gvi|" ) == NULL && _tcsistr( strExts, L"|-.gvi|" ) == NULL )
-				strExts += L"|.gvi|";
-			if ( _tcsistr( strExts, L"|.mpe|" ) == NULL && _tcsistr( strExts, L"|-.mpe|" ) == NULL )
-				strExts += L"|.mpe|";
-			if ( _tcsistr( strExts, L"|.wm|" ) == NULL && _tcsistr( strExts, L"|-.wm|" ) == NULL )
-				strExts += L"|.wm|";
-			if ( _tcsistr( strExts, L"|.rmvb|" ) == NULL && _tcsistr( strExts, L"|-.rmvb|" ) == NULL )
-				strExts += L"|.rmvb|";
-			if ( _tcsistr( strExts, L"|.mp4|" ) == NULL && _tcsistr( strExts, L"|-.mp4|" ) == NULL )
-				strExts += L"|.mp4|";
-			theApp.WriteProfileString( L"Plugins", L"{04CC76C7-1ED7-4CAE-9762-B8664ED008ED}", strExts );
-		}
-		else
-		{
-			// the value is missing or it was REG_DWORD as in earlier versions
-			strExts = L"|.asf||.asx||.avi||.divx||.m2v||.m2p||.mkv||.mov||.mpeg||.mpg||.ogm||.qt||.ram||.rm||.vob||.wmv||.xvid||.mp4||.rmvb||.3gp||.3gpp||.3g2||.dv||.flv||.ivf||.gvi||.mpe||.nsv||.wm|";
-			theApp.WriteProfileString( L"Plugins", L"{04CC76C7-1ED7-4CAE-9762-B8664ED008ED}", strExts );
-		}
-		strExts =
-			theApp.GetProfileString( L"Plugins", L"{570C197C-FE9C-4D1F-B6E0-EFA44D36399F}" );
-		if ( strExts.GetLength() > 0 && strExts.GetAt( 0 ) == '|' )
-		{
-			if ( _tcsistr( strExts, L"|.3gp|" ) == NULL && _tcsistr( strExts, L"|-.3gp|" ) == NULL )
-				strExts += L"|.3gp|";
-			if ( _tcsistr( strExts, L"|.3gpp|" ) == NULL && _tcsistr( strExts, L"|-.3gpp|" ) == NULL )
-				strExts += L"|.3gpp|";
-			if ( _tcsistr( strExts, L"|.3g2|" ) == NULL && _tcsistr( strExts, L"|-.3g2|" ) == NULL )
-				strExts += L"|.3g2|";
-			if ( _tcsistr( strExts, L"|.dv|" ) == NULL && _tcsistr( strExts, L"|-.dv|" ) == NULL )
-				strExts += L"|.dv|";
-			if ( _tcsistr( strExts, L"|.flv|" ) == NULL && _tcsistr( strExts, L"|-.flv|" ) == NULL )
-				strExts += L"|.flv|";
-			if ( _tcsistr( strExts, L"|.ivf|" ) == NULL && _tcsistr( strExts, L"|-.ivf|" ) == NULL )
-				strExts += L"|.ivf|";
-			if ( _tcsistr( strExts, L"|.gvi|" ) == NULL && _tcsistr( strExts, L"|-.gvi|" ) == NULL )
-				strExts += L"|.gvi|";
-			if ( _tcsistr( strExts, L"|.mpe|" ) == NULL && _tcsistr( strExts, L"|-.mpe|" ) == NULL )
-				strExts += L"|.mpe|";
-			if ( _tcsistr( strExts, L"|.wm|" ) == NULL && _tcsistr( strExts, L"|-.wm|" ) == NULL )
-				strExts += L"|.wm|";
-			if ( _tcsistr( strExts, L"|.rmvb|" ) == NULL && _tcsistr( strExts, L"|-.rmvb|" ) == NULL )
-				strExts += L"|.rmvb|";
-			if ( _tcsistr( strExts, L"|.mp4|" ) == NULL && _tcsistr( strExts, L"|-.mp4|" ) == NULL )
-				strExts += L"|.mp4|";
-			theApp.WriteProfileString( L"Plugins", L"{570C197C-FE9C-4D1F-B6E0-EFA44D36399F}", strExts );
-		}
-		else
-		{
-			strExts = L"|.asf||.asx||.avi||.divx||.m2v||.m2p||.mkv||.mov||.mpeg||.mpg||.ogm||.qt||.ram||.rm||.vob||.wmv||.xvid||.mp4||.rmvb||.3gp||.3gpp||.3g2||.dv||.flv||.ivf||.gvi||.mpe||.nsv||.wm|";
-			theApp.WriteProfileString( L"Plugins", L"{570C197C-FE9C-4D1F-B6E0-EFA44D36399F}", strExts );
-		}
-	}
+			Gnutella2.UdpOutResend			= 6000;
+			Gnutella2.UdpOutExpire			= 26000;
+			Library.TigerHeight		= 9;
 
-	if ( nVersion < 51 )
-	{
-		Library.HashWindow = TRUE;
-		Gnutella1.PingRate = 30000u;
-	}
+			Downloads.AutoExpand			= FALSE;
 
-	if ( nVersion < 52 )
-	{
-		WINE.MenuFix = TRUE;
-		OnChangeConnectionSpeed();
+			Uploads.MaxPerHost				= 2;
+			Uploads.ShareTiger				= TRUE;
+
+			Library.PrivateTypes.erase( _T("nfo") );
+			Library.SafeExecute.Replace( _T("|."), _T("|") );
+		}
+
+		if ( nVersion < 21 )
+		{
+			Library.ThumbSize				= 96;
+			Library.SourceExpire			= 86400;
+
+			Gnutella1.TranslateTTL			= 2;
+		}
+
+		if ( nVersion < 24 )
+		{
+			General.CloseMode				= 0;
+
+			Connection.TimeoutConnect		= 16000;
+			Connection.TimeoutHandshake		= 45000;
+
+			Downloads.RetryDelay			= 10*60000;
+
+			Uploads.FilterMask				= 0xFFFFFFFD;
+		}
+
+		if ( nVersion < 25 )
+		{
+			Connection.TimeoutTraffic		= 140000;
+
+			Gnutella2.NumPeers				= 6;
+		}
+
+		if ( nVersion < 28 )
+		{
+			BitTorrent.Endgame		= TRUE;		// Endgame on
+		}
+
+		if ( nVersion < 29 )
+		{
+			Downloads.MinSources	= 1;		// Lower Max value- should reset it in case
+			Downloads.StarveTimeout = 2700;		// Increased due to ed2k queues (Tripping too often)
+
+			Gnutella2.RequeryDelay	= 4*3600;	// Longer delay between sending same search to G2 hub
+		}
+
+		if ( nVersion < 30 )
+		{
+			BitTorrent.RequestSize	= 16384;	// Other BT clients have changed this value (undocumented)
+		}
+
+		if ( nVersion < 31 )
+		{
+			Downloads.SearchPeriod			= 120000;
+
+			Gnutella1.MaximumTTL			= 10;
+
+			Gnutella2.QueryGlobalThrottle	= 125;
+
+			Uploads.QueuePollMin	= 45000;	// Lower values for re-ask times- a dynamic multiplier
+			Uploads.QueuePollMax	= 120000;	//  Is now applied based on Q# (from 1x to 5x)
+			eDonkey.PacketThrottle	= 500;		// Second throttle added for finer control
+		}
+
+		if ( nVersion < 32 )
+		{
+			Library.BitziWebView	= _T("http://bitzi.com/lookup/(URN)?v=detail&ref=shareaza");
+			Library.BitziWebSubmit	= _T("http://bitzi.com/lookup/(SHA1).(TTH)?fl=(SIZE)&ff=(FIRST20)&fn=(NAME)&tag.ed2k.ed2khash=(ED2K)&(INFO)&a=(AGENT)&v=Q0.4&ref=shareaza");
+			Library.BitziXML		= _T("http://ticket.bitzi.com/rdf/(SHA1).(TTH)");
+
+			theApp.WriteProfileString( _T("Interface"), _T("SchemaColumns.audio"), _T("(EMPTY)") );
+		}
+
+		if ( nVersion < 33 )
+		{
+			RegDeleteKey( HKEY_CURRENT_USER, _T("Software\\Shareaza\\Shareaza\\Plugins\\LibraryBuilder") );
+		}
+
+		if ( nVersion < 34 )
+			BitTorrent.LinkPing				= 120 * 1000;
+
+		if ( nVersion < 35 )
+		{
+			Gnutella1.QuerySearchUTF8 = TRUE;
+			Gnutella1.QueryHitUTF8 = TRUE;
+		}
+
+		if ( nVersion < 36 )
+		{
+			//Library.VirtualFiles	= TRUE;		// Virtual files (stripping) on
+			Library.VirtualFiles = FALSE;
+		}
+
+		if ( nVersion < 37 )
+		{
+			Downloads.RequestHash = TRUE;
+			Gnutella.SpecifyProtocol = TRUE;
+			Search.FilterMask = Search.FilterMask | 0x140; // Turn on DRM and Suspicious filters
+		}
+
+		if ( nVersion < 39 )
+		{
+			General.RatesInBytes = TRUE;
+			General.VerboseMode = FALSE;
+		}
+
+		if ( nVersion < 40 )
+		{
+			eDonkey.ForceHighID = TRUE;
+			eDonkey.FastConnect = FALSE;
+		}
+
+		if ( nVersion < 41 )
+		{
+			eDonkey.ExtendedRequest = 2;
+			Community.ChatAllNetworks = TRUE;
+			Community.ChatFilter = TRUE;
+		}
+
+		if ( nVersion < 42 )
+		{
+			Gnutella2.NumHubs = 2;
+			General.ItWasLimited = TRUE;
+		}
+
+		if ( nVersion < 43 )
+		{	
+			eDonkey.MetAutoQuery = TRUE;
+		}
+
+		if ( nVersion < 44 )
+		{	
+			BitTorrent.AutoSeed = TRUE;
+		}
+
+		if ( nVersion < 45 )
+		{
+			Library.PrivateTypes.erase( _T("dat") );
+
+			// FlashGet
+			if ( ! IsIn( Library.PrivateTypes, _T("jc!") ) )
+				Library.PrivateTypes.insert( _T("jc!") );
+			// FlashGet torrent
+			if ( ! IsIn( Library.PrivateTypes, _T("fb!") ) )
+				Library.PrivateTypes.insert( _T("fb!") );
+			// BitComet
+			if ( ! IsIn( Library.PrivateTypes, _T("bc!") ) )
+				Library.PrivateTypes.insert( _T("bc!") );
+		}
+
+		if ( nVersion < 46 )
+		{
+			// ReGet
+			if ( ! IsIn( Library.PrivateTypes, _T("reget") ) )
+				Library.PrivateTypes.insert( _T("reget") );
+		}
+
+		if ( nVersion < 47 )
+		{
+			// Changed from minutes to seconds
+			Gnutella1.QueryThrottle = 30u;
+			Gnutella1.RequeryDelay = 30u;
+
+			Gnutella.MaxResults = 150;
+		}
+
+		if ( nVersion < 49 )
+		{
+			eDonkey.SendPortServer = FALSE;
+		}
+
+		if ( nVersion < 50 )
+		{
+			CString strExts =
+				theApp.GetProfileString( L"Plugins", L"{04CC76C7-1ED7-4CAE-9762-B8664ED008ED}" );
+			if ( strExts.GetLength() > 0 && strExts.GetAt( 0 ) == '|' )
+			{
+				if ( _tcsistr( strExts, L"|.3gp|" ) == NULL && _tcsistr( strExts, L"|-.3gp|" ) == NULL )
+					strExts += L"|.3gp|";
+				if ( _tcsistr( strExts, L"|.3gpp|" ) == NULL && _tcsistr( strExts, L"|-.3gpp|" ) == NULL )
+					strExts += L"|.3gpp|";
+				if ( _tcsistr( strExts, L"|.3g2|" ) == NULL && _tcsistr( strExts, L"|-.3g2|" ) == NULL )
+					strExts += L"|.3g2|";
+				if ( _tcsistr( strExts, L"|.dv|" ) == NULL && _tcsistr( strExts, L"|-.dv|" ) == NULL )
+					strExts += L"|.dv|";
+				if ( _tcsistr( strExts, L"|.flv|" ) == NULL && _tcsistr( strExts, L"|-.flv|" ) == NULL )
+					strExts += L"|.flv|";
+				if ( _tcsistr( strExts, L"|.ivf|" ) == NULL && _tcsistr( strExts, L"|-.ivf|" ) == NULL )
+					strExts += L"|.ivf|";
+				if ( _tcsistr( strExts, L"|.gvi|" ) == NULL && _tcsistr( strExts, L"|-.gvi|" ) == NULL )
+					strExts += L"|.gvi|";
+				if ( _tcsistr( strExts, L"|.mpe|" ) == NULL && _tcsistr( strExts, L"|-.mpe|" ) == NULL )
+					strExts += L"|.mpe|";
+				if ( _tcsistr( strExts, L"|.wm|" ) == NULL && _tcsistr( strExts, L"|-.wm|" ) == NULL )
+					strExts += L"|.wm|";
+				if ( _tcsistr( strExts, L"|.rmvb|" ) == NULL && _tcsistr( strExts, L"|-.rmvb|" ) == NULL )
+					strExts += L"|.rmvb|";
+				if ( _tcsistr( strExts, L"|.mp4|" ) == NULL && _tcsistr( strExts, L"|-.mp4|" ) == NULL )
+					strExts += L"|.mp4|";
+				theApp.WriteProfileString( L"Plugins", L"{04CC76C7-1ED7-4CAE-9762-B8664ED008ED}", strExts );
+			}
+			else
+			{
+				// the value is missing or it was REG_DWORD as in earlier versions
+				strExts = L"|.asf||.asx||.avi||.divx||.m2v||.m2p||.mkv||.mov||.mpeg||.mpg||.ogm||.qt||.ram||.rm||.vob||.wmv||.xvid||.mp4||.rmvb||.3gp||.3gpp||.3g2||.dv||.flv||.ivf||.gvi||.mpe||.nsv||.wm|";
+				theApp.WriteProfileString( L"Plugins", L"{04CC76C7-1ED7-4CAE-9762-B8664ED008ED}", strExts );
+			}
+			strExts =
+				theApp.GetProfileString( L"Plugins", L"{570C197C-FE9C-4D1F-B6E0-EFA44D36399F}" );
+			if ( strExts.GetLength() > 0 && strExts.GetAt( 0 ) == '|' )
+			{
+				if ( _tcsistr( strExts, L"|.3gp|" ) == NULL && _tcsistr( strExts, L"|-.3gp|" ) == NULL )
+					strExts += L"|.3gp|";
+				if ( _tcsistr( strExts, L"|.3gpp|" ) == NULL && _tcsistr( strExts, L"|-.3gpp|" ) == NULL )
+					strExts += L"|.3gpp|";
+				if ( _tcsistr( strExts, L"|.3g2|" ) == NULL && _tcsistr( strExts, L"|-.3g2|" ) == NULL )
+					strExts += L"|.3g2|";
+				if ( _tcsistr( strExts, L"|.dv|" ) == NULL && _tcsistr( strExts, L"|-.dv|" ) == NULL )
+					strExts += L"|.dv|";
+				if ( _tcsistr( strExts, L"|.flv|" ) == NULL && _tcsistr( strExts, L"|-.flv|" ) == NULL )
+					strExts += L"|.flv|";
+				if ( _tcsistr( strExts, L"|.ivf|" ) == NULL && _tcsistr( strExts, L"|-.ivf|" ) == NULL )
+					strExts += L"|.ivf|";
+				if ( _tcsistr( strExts, L"|.gvi|" ) == NULL && _tcsistr( strExts, L"|-.gvi|" ) == NULL )
+					strExts += L"|.gvi|";
+				if ( _tcsistr( strExts, L"|.mpe|" ) == NULL && _tcsistr( strExts, L"|-.mpe|" ) == NULL )
+					strExts += L"|.mpe|";
+				if ( _tcsistr( strExts, L"|.wm|" ) == NULL && _tcsistr( strExts, L"|-.wm|" ) == NULL )
+					strExts += L"|.wm|";
+				if ( _tcsistr( strExts, L"|.rmvb|" ) == NULL && _tcsistr( strExts, L"|-.rmvb|" ) == NULL )
+					strExts += L"|.rmvb|";
+				if ( _tcsistr( strExts, L"|.mp4|" ) == NULL && _tcsistr( strExts, L"|-.mp4|" ) == NULL )
+					strExts += L"|.mp4|";
+				theApp.WriteProfileString( L"Plugins", L"{570C197C-FE9C-4D1F-B6E0-EFA44D36399F}", strExts );
+			}
+			else
+			{
+				strExts = L"|.asf||.asx||.avi||.divx||.m2v||.m2p||.mkv||.mov||.mpeg||.mpg||.ogm||.qt||.ram||.rm||.vob||.wmv||.xvid||.mp4||.rmvb||.3gp||.3gpp||.3g2||.dv||.flv||.ivf||.gvi||.mpe||.nsv||.wm|";
+				theApp.WriteProfileString( L"Plugins", L"{570C197C-FE9C-4D1F-B6E0-EFA44D36399F}", strExts );
+			}
+		}
+
+		if ( nVersion < 51 )
+		{
+			Library.HashWindow = TRUE;
+			Gnutella1.PingRate = 30000u;
+		}
+
+		if ( nVersion < 52 )
+		{
+			WINE.MenuFix = TRUE;
+			OnChangeConnectionSpeed();
+		}
 	}
 }
 
@@ -1155,6 +1161,18 @@ void CSettings::OnChangeConnectionSpeed()
 
 		General.ItWasLimited			= FALSE;
 	}
+}
+
+BOOL CSettings::CheckSettingsLoaded(CString strCalledFrom)
+{
+	if ( !m_bSettingsLoaded )
+	{
+		theApp.Message( MSG_DISPLAYED_ERROR, _T("The settings are used in %s before they are loaded."), strCalledFrom );
+		ASSERT( FALSE );
+		return FALSE;
+	}
+
+	return TRUE;
 }
 
 //////////////////////////////////////////////////////////////////////

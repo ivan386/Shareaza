@@ -37,7 +37,6 @@ public:
 	
 // Attributes
 public:
-	BOOL m_bSettingsLoaded;
 
 	struct sGeneral
 	{
@@ -460,6 +459,7 @@ public:
 		BOOL		SortSources;				// Automatically sort sources (Status, protocol, queue)
 		INT			SourcesWanted;				// Number of sources Shareaza 'wants'. (Will not request more than this number of sources from ed2k)
 		INT			MaxReviews;					// Maximum number of reviews to store per download
+		INT			StartDroppingFailedSourcesNumber;	// The number of sources where Shareaza start dropping failed sources after only one attempt
 	} Downloads;
 	
 	struct sUploads
@@ -553,6 +553,9 @@ public:
 protected:
 	CList< Item* >	m_pItems;
 
+private:
+	BOOL m_bSettingsLoaded;
+
 // Operations
 public:
 	void	Load();
@@ -573,6 +576,7 @@ public:
 	void	SetStartup(BOOL bStartup);
 
 	void	OnChangeConnectionSpeed();
+	BOOL	CheckSettingsLoaded(CString strCalledFrom);
 
 protected:
 	void	Setup();

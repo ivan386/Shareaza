@@ -565,7 +565,7 @@ void CDownloadSource::OnFailure(BOOL bNondestructive, DWORD nRetryAfter)
 
 	int nMaxFailures = Settings.Downloads.MaxAllowedFailures;
 
-	if ( nMaxFailures < 20 && m_pDownload->GetSourceCount() > 20 ) nMaxFailures = 0;
+	if ( nMaxFailures < 20 && m_pDownload->GetSourceCount() > Settings.Downloads.StartDroppingFailedSourcesNumber ) nMaxFailures = 0;
 
 	if ( bNondestructive || ( ++m_nFailures < nMaxFailures ) )
 	{

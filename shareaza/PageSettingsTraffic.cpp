@@ -263,6 +263,7 @@ BOOL CAdvancedSettingsPage::OnInitDialog()
 	AddSetting( &Settings.Downloads.SortColumns, 1, 0, 1 );
 	AddSetting( &Settings.Downloads.SortSources, 1, 0, 1 );
 	AddSetting( &Settings.Downloads.MaxReviews, 1, 0, 256 );
+	AddSetting( &Settings.Downloads.StartDroppingFailedSourcesNumber, 1, 0, 50 );
 
 	AddSetting( &Settings.Uploads.FreeBandwidthValue, 128, 0, 4096, _T(" Kb/s") );
 	AddSetting( &Settings.Uploads.FreeBandwidthFactor, 1, 0, 100, _T("%") );

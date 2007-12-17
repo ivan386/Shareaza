@@ -313,7 +313,7 @@ BOOL CShareazaApp::InitInstance()
 		L"It is NOT FOR GENERAL USE, and is only for testing specific features in a controlled "
 		L"environment. It will frequently stop running, or display debug information to assist testing.\n\n"
 		L"If you wish to actually use this software, you should download "
-		L"the current stable release from www.shareaza.com\n"
+		L"the current stable release from http://shareaza.sourceforge.net/\n"
 		L"If you continue past this point, you may experience system instability, lose downloads, "
 		L"or corrupt system files. Corrupted downloads/files may not be recoverable. "
 		L"Do you wish to continue?", MB_SYSTEMMODAL|MB_ICONEXCLAMATION|MB_YESNO ) == IDNO )
@@ -594,21 +594,24 @@ BOOL CShareazaApp::OpenTorrent(LPCTSTR lpszFileName, BOOL bDoIt)
 
 	BOOL bResult = FALSE;
 	CBTInfo* pTorrent = new CBTInfo();
-	if ( pTorrent && pTorrent->LoadTorrentFile( lpszFileName ) )
+	if ( pTorrent )
 	{
-		if ( bDoIt && pTorrent->HasEncodingError() )
-			theApp.Message( MSG_SYSTEM, IDS_BT_ENCODING );
-		CShareazaURL* pURL = new CShareazaURL( pTorrent );
-		if ( pURL )
+		if ( pTorrent->LoadTorrentFile( lpszFileName ) )
 		{
-			bResult = TRUE;
-			if ( bDoIt )
-				return AfxGetMainWnd()->PostMessage( WM_URL, (WPARAM)pURL );
-			delete pURL;
-			pTorrent = NULL;	// Deleted inside CShareazaURL::Clear()
+			if ( bDoIt && pTorrent->HasEncodingError() )
+				theApp.Message( MSG_SYSTEM, IDS_BT_ENCODING );
+			CShareazaURL* pURL = new CShareazaURL( pTorrent );
+			if ( pURL )
+			{
+				bResult = TRUE;
+				if ( bDoIt )
+					return AfxGetMainWnd()->PostMessage( WM_URL, (WPARAM)pURL );
+				delete pURL;
+				pTorrent = NULL;	// Deleted inside CShareazaURL::Clear()
+			}
 		}
+		delete pTorrent;
 	}
-	if ( pTorrent ) delete pTorrent;
 
 	if ( bDoIt )
 		theApp.Message( MSG_DISPLAYED_ERROR, IDS_BT_PREFETCH_ERROR, lpszFileName );
