@@ -962,40 +962,6 @@ BOOL CCollectionExportDlg::PreTranslateMessage(MSG* pMsg)
 	return CSkinDialog::PreTranslateMessage( pMsg );
 }
 
-int CCollectionExportDlg::CreateDirectory(const CString& strPath)
-{
-	_ASSERTE( ! strPath.IsEmpty() );
-
-	int nReturn(ERROR_SUCCESS);
-
-	CString strDir( DirFromPath( strPath ) );
-	DWORD dwAtt = GetFileAttributes( strDir );
-
-	// If it doesn't already exist.
-	if ( dwAtt == 0xFFFFFFFF ) 
-	{
-		// If it has a backslash, we recursively call this function again on just
-		// the parent tree, and then create this child.
-		if ( strPath.Find('\\') != -1 ) 
-		{
-			nReturn = CreateDirectory( strDir );
-
-			if ( nReturn == ERROR_SUCCESS )
-			{
-				nReturn = ::CreateDirectory( strDir, /* lpSecurity */ NULL ) ?
-				  ERROR_SUCCESS : ERROR_INVALID_FUNCTION;
-			}
-		}
-		else 
-		{
-			// Otherwise, we create the directory.
-			nReturn = ::CreateDirectory( strDir, NULL) ?
-			  ERROR_SUCCESS : ERROR_INVALID_FUNCTION;
-		}
-	}
-	return nReturn;
-}
-
 CString CCollectionExportDlg::DirFromPath(LPCTSTR szPath)
 {
 	CString strDir(szPath);

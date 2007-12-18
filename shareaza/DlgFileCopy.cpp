@@ -350,7 +350,7 @@ BOOL CFileCopyDlg::ProcessFile(CString& strName, CString& strPath, BOOL bMetaDat
 		sSource = strMetaFolder + _T("\\") + strName + _T(".xml");
 
 		sTarget = m_sTarget + _T("\\Metadata");
-		CreateDirectory( sTarget, NULL );
+		CreateDirectory( sTarget );
 		sTarget += _T("\\") + strName + _T(".xml");
 
 		if ( sSource.CompareNoCase( sTarget ) == 0 ) return FALSE;

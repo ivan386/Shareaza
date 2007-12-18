@@ -120,13 +120,13 @@ void CDownloadTask::Construct(CDownload* pDownload)
 		if ( ( sExtention == ".collection" ) || ( sExtention == ".co" ) )
 		{
 			m_sPath	= Settings.Downloads.CollectionPath;
-			CreateDirectory( Settings.Downloads.CollectionPath, NULL );
+			CreateDirectory( Settings.Downloads.CollectionPath );
 			LibraryFolders.AddFolder( Settings.Downloads.CollectionPath );
 		}
 		else if ( sExtention == ".torrent" )
 		{
 			m_sPath	= Settings.Downloads.TorrentPath;
-			CreateDirectory( Settings.Downloads.TorrentPath, NULL );
+			CreateDirectory( Settings.Downloads.TorrentPath );
 			LibraryFolders.AddFolder( Settings.Downloads.TorrentPath, FALSE );
 		}
 	}
@@ -659,14 +659,14 @@ CString CDownloadTask::SafeFilename(LPCTSTR pszName)
 
 void CDownloadTask::CreatePathForFile(const CString& strBase, const CString& strPath)
 {
-	CreateDirectory( strBase, NULL );
+	CreateDirectory( strBase );
 	
 	for ( int nPos = 0 ; nPos < strPath.GetLength() ; nPos++ )
 	{
 		if ( strPath.GetAt( nPos ) == '\\' )
 		{
 			CString strFolder = strBase + '\\' + strPath.Left( nPos );
-			CreateDirectory( strFolder, NULL );
+			CreateDirectory( strFolder );
 		}
 	}
 }

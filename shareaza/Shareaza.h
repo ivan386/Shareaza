@@ -224,6 +224,9 @@ CString GetDocumentsFolder();
 CString GetAppDataFolder();
 CString GetLocalAppDataFolder();
 
+// Create directory. If one or more of the intermediate folders do not exist, they are created as well.
+BOOL CreateDirectory(LPCTSTR szPath);
+
 // Loads RT_HTML or RT_GZIP resource as string
 CString LoadHTML(HINSTANCE hInstance, UINT nResourceID);
 

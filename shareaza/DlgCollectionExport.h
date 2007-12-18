@@ -83,7 +83,6 @@ public:
 	//{{AFX_VIRTUAL(CCollectionExportDlg)
 	public:
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
-	int		CreateDirectory(const CString& strPath);
 	//}}AFX_VIRTUAL
 
 // Implementation

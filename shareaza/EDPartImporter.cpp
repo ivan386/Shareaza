@@ -103,7 +103,7 @@ int CEDPartImporter::Run()
 	Message( IDS_ED2K_EPI_START );
 	m_nCount = 0;
 
-	CreateDirectory( Settings.Downloads.IncompletePath, NULL );
+	CreateDirectory( Settings.Downloads.IncompletePath );
 
 	for ( POSITION pos = m_pFolders.GetHeadPosition() ; pos && m_pTextCtrl != NULL ; )
 	{

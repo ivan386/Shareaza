@@ -560,7 +560,7 @@ BOOL CDownloadWithFile::WriteMetadata(LPCTSTR pszPath)
 	CString strMetadata;
 	
 	strMetadata.Format( _T("%s\\Metadata"), pszPath );
-	CreateDirectory( strMetadata, NULL );
+	CreateDirectory( strMetadata );
 	SetFileAttributes( strMetadata, FILE_ATTRIBUTE_HIDDEN );
 	
 	strMetadata += m_sDiskName.Mid( m_sDiskName.ReverseFind( '\\' ) );

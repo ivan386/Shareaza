@@ -128,7 +128,7 @@ void CDownloadBase::GenerateDiskName(bool bTorrent)
 	// Add a .partial extension
 	m_sDiskName += _T(".partial");
 	// Create download directory if it doesn't exist
-		CreateDirectory( Settings.Downloads.IncompletePath, NULL );
+	CreateDirectory( Settings.Downloads.IncompletePath );
 	// Add the path
 	m_sDiskName = Settings.Downloads.IncompletePath + _T("\\") + m_sDiskName;
 

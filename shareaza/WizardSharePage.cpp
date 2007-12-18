@@ -105,13 +105,13 @@ BOOL CWizardSharePage::OnInitDialog()
 
 		CString strPrograms( GetProgramFilesFolder() ), strFolder;
 
-		CreateDirectory( Settings.Downloads.CompletePath, NULL );
+		CreateDirectory( Settings.Downloads.CompletePath );
 		AddPhysicalFolder( Settings.Downloads.CompletePath );
 
-		CreateDirectory( Settings.Downloads.CollectionPath, NULL );
+		CreateDirectory( Settings.Downloads.CollectionPath );
 		AddPhysicalFolder( Settings.Downloads.CollectionPath );
 
-		CreateDirectory( Settings.Downloads.TorrentPath, NULL );
+		CreateDirectory( Settings.Downloads.TorrentPath );
 		AddPhysicalFolder( Settings.Downloads.TorrentPath );
 
 		strFolder = strPrograms + _T("\\Piolet\\My Shared Folder");

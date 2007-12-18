@@ -333,9 +333,9 @@ void CDownloadsSettingsPage::OnOK()
 	Settings.Bandwidth.Downloads			= static_cast< DWORD >( Settings.ParseVolume( m_sBandwidthLimit ) );
 	Settings.Connection.RequireForTransfers	= m_bRequireConnect;
 	
-	CreateDirectory( m_sDownloadsPath, NULL );
-	CreateDirectory( m_sIncompletePath, NULL );
-	//CreateDirectory( m_sTorrentPath, NULL );
+	CreateDirectory( m_sDownloadsPath );
+	CreateDirectory( m_sIncompletePath );
+	// CreateDirectory( m_sTorrentPath );
 	
 	if ( m_bDownloadsChanged )
 	{

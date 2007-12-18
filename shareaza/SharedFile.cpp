@@ -1096,7 +1096,7 @@ BOOL CLibraryFile::SaveMetadata()
 		VERIFY_FILE_ACCESS( hFile, strMetaFile )	
 		if ( hFile == INVALID_HANDLE_VALUE )
 		{
-			CreateDirectory( strMetaFolder, NULL );
+			CreateDirectory( strMetaFolder );
 			SetFileAttributes( strMetaFolder, FILE_ATTRIBUTE_HIDDEN );
 			
 			hFile = CreateFile( strMetaFile, GENERIC_WRITE, 0, NULL,

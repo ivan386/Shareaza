@@ -172,7 +172,7 @@ BOOL CLibraryWnd::OnCollection(LPCTSTR pszPath)
 	{	//The specified collection is valid
 
 		//Create the collection folder (in case it doesn't exist)
-		CreateDirectory( Settings.Downloads.CollectionPath, NULL );
+		CreateDirectory( Settings.Downloads.CollectionPath );
 		//Add the collection folder to the library (in case it isn't there)
 		pLibFolder = LibraryFolders.AddFolder( Settings.Downloads.CollectionPath );
 		//Force a scan of it (in case watch library folders is disabled)

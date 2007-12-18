@@ -374,13 +374,13 @@ BOOL CLibrary::Load()
 	}
 	else
 	{
-		CreateDirectory( Settings.Downloads.CompletePath, NULL );
+		CreateDirectory( Settings.Downloads.CompletePath );
 		LibraryFolders.AddFolder( Settings.Downloads.CompletePath );
 
-		CreateDirectory( Settings.Downloads.CollectionPath, NULL );
+		CreateDirectory( Settings.Downloads.CollectionPath );
 		LibraryFolders.AddFolder( Settings.Downloads.CollectionPath );
 
-		//CreateDirectory( Settings.Downloads.TorrentPath, NULL );
+		//CreateDirectory( Settings.Downloads.TorrentPath );
 		//LibraryFolders.AddFolder( Settings.Downloads.TorrentPath, FALSE );
 	}
 

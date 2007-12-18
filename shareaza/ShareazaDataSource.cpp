@@ -142,7 +142,7 @@ UINT AsyncFileOperationThread(LPVOID param)
 	}
 	if ( ! sMetadataFrom.IsEmpty() )
 	{
-		CreateDirectory( sMetadataTo, NULL );
+		CreateDirectory( sMetadataTo );
 		SetFileAttributes( sMetadataTo, FILE_ATTRIBUTE_HIDDEN );
 
 		sMetadataFrom.Append( _T(""), 1 );		// double null terminated
