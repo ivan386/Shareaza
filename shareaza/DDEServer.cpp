@@ -180,8 +180,7 @@ CString CDDEServer::ReadArgument(LPCTSTR& pszMessage)
 BOOL CDDEServer::CheckAccept(LPCTSTR pszTopic)
 {
 	return	_tcsicmp( pszTopic, _T("URL") ) == 0 ||
-			_tcsicmp( pszTopic, _T("TORRENT") ) == 0 ||
-			_tcsicmp( pszTopic, _T("COLLECTION") ) == 0;
+			_tcsicmp( pszTopic, _T("RAZAFORMAT") ) == 0;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -247,13 +246,19 @@ BOOL CDDEServer::Execute(LPCTSTR pszTopic, LPCTSTR pszMessage)
 	{
 		return CShareazaApp::OpenURL( pszMessage, TRUE );
 	}
-	else if ( _tcscmp( pszTopic, _T("TORRENT") ) == 0 )
+	else if ( _tcscmp( pszTopic, _T("RAZAFORMAT") ) == 0 )
 	{
-		return CShareazaApp::OpenTorrent( pszMessage, TRUE );
-	}
-	else if ( _tcscmp( pszTopic, _T("COLLECTION") ) == 0 )
-	{
-		return CShareazaApp::OpenCollection( pszMessage, TRUE );
+		LPCTSTR pszType = _tcsrchr( pszMessage, '.' );
+		if ( _tcsicmp( pszType, _T(".torrent") ) == 0 ) 
+		{
+			return CShareazaApp::OpenTorrent( pszMessage, TRUE );
+		}
+		else if ( _tcsicmp( pszType, _T(".co") ) == 0 ||
+				  _tcsicmp( pszType, _T(".collection") ) == 0 )
+		{
+			return CShareazaApp::OpenCollection( pszMessage, TRUE );
+		}
+		
 	}
 
 	return FALSE;

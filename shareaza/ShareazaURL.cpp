@@ -1123,75 +1123,82 @@ auto_ptr< CQuerySearch > CShareazaURL::ToQuery()
 
 void CShareazaURL::Register(BOOL bOnStartup)
 {
-	RegisterShellType( _T("shareaza"), _T("URL:Shareaza P2P"), NULL, _T("Shareaza"), _T("URL"), IDR_MAINFRAME );
+	RegisterShellType( _T("Classes"), _T("shareaza"), _T("URL:Shareaza P2P"), NULL, _T("Shareaza"), _T("URL"), IDR_MAINFRAME );
 	RegisterMagnetHandler( _T("Shareaza"), _T("Shareaza Peer to Peer"), _T("Shareaza can automatically search for and download the selected content its peer-to-peer networks."), _T("Shareaza"), IDR_MAINFRAME );
 
 	if ( Settings.Web.Magnet )
 	{
-		RegisterShellType( _T("magnet"), _T("URL:Magnet Protocol"), NULL, _T("Shareaza"), _T("URL"), IDR_MAINFRAME );
+		RegisterShellType( _T("Classes"), _T("magnet"), _T("URL:Magnet Protocol"), NULL, _T("Shareaza"), _T("URL"), IDR_MAINFRAME );
 	}
 	else
 	{
-		UnregisterShellType( _T("magnet") );
+		UnregisterShellType( _T("Classes"), _T("magnet") );
 	}
 
 	if ( Settings.Web.Gnutella )
 	{
-		RegisterShellType( _T("gnutella"), _T("URL:Gnutella Protocol"), NULL, _T("Shareaza"), _T("URL"), IDR_MAINFRAME );
-		RegisterShellType( _T("gnet"), _T("URL:Gnutella Protocol"), NULL, _T("Shareaza"), _T("URL"), IDR_MAINFRAME );
-		RegisterShellType( _T("uhc"), _T("URL:Gnutella1 UDP Host Cache"), NULL, _T("Shareaza"), _T("URL"), IDR_MAINFRAME );
-		RegisterShellType( _T("ukhl"), _T("URL:Gnutella2 UDP known Hub Cache"), NULL, _T("Shareaza"), _T("URL"), IDR_MAINFRAME );
-		RegisterShellType( _T("gnutella1"), _T("URL:Gnutella1 Bootstrap"), NULL, _T("Shareaza"), _T("URL"), IDR_MAINFRAME );
-		RegisterShellType( _T("gnutella2"), _T("URL:Gnutella2 Bootstrap"), NULL, _T("Shareaza"), _T("URL"), IDR_MAINFRAME );
-		RegisterShellType( _T("gwc"), _T("URL:GWC Protocol"), NULL, _T("Shareaza"), _T("URL"), IDR_MAINFRAME );
+		RegisterShellType( _T("Classes"), _T("gnutella"), _T("URL:Gnutella Protocol"), NULL, _T("Shareaza"), _T("URL"), IDR_MAINFRAME );
+		RegisterShellType( _T("Classes"), _T("gnet"), _T("URL:Gnutella Protocol"), NULL, _T("Shareaza"), _T("URL"), IDR_MAINFRAME );
+		RegisterShellType( _T("Classes"), _T("uhc"), _T("URL:Gnutella1 UDP Host Cache"), NULL, _T("Shareaza"), _T("URL"), IDR_MAINFRAME );
+		RegisterShellType( _T("Classes"), _T("ukhl"), _T("URL:Gnutella2 UDP known Hub Cache"), NULL, _T("Shareaza"), _T("URL"), IDR_MAINFRAME );
+		RegisterShellType( _T("Classes"), _T("gnutella1"), _T("URL:Gnutella1 Bootstrap"), NULL, _T("Shareaza"), _T("URL"), IDR_MAINFRAME );
+		RegisterShellType( _T("Classes"), _T("gnutella2"), _T("URL:Gnutella2 Bootstrap"), NULL, _T("Shareaza"), _T("URL"), IDR_MAINFRAME );
+		RegisterShellType( _T("Classes"), _T("gwc"), _T("URL:GWC Protocol"), NULL, _T("Shareaza"), _T("URL"), IDR_MAINFRAME );
 	}
 	else
 	{
-		UnregisterShellType( _T("gnutella") );
-		UnregisterShellType( _T("gnet") );
-		UnregisterShellType( _T("uhc") );
-		UnregisterShellType( _T("ukhl") );
-		UnregisterShellType( _T("gnutella1") );
-		UnregisterShellType( _T("gnutella2") );
-		UnregisterShellType( _T("gwc") );
+		UnregisterShellType( _T("Classes"), _T("gnutella") );
+		UnregisterShellType( _T("Classes"), _T("gnet") );
+		UnregisterShellType( _T("Classes"), _T("uhc") );
+		UnregisterShellType( _T("Classes"), _T("ukhl") );
+		UnregisterShellType( _T("Classes"), _T("gnutella1") );
+		UnregisterShellType( _T("Classes"), _T("gnutella2") );
+		UnregisterShellType( _T("Classes"), _T("gwc") );
 	}
 
 	if ( Settings.Web.ED2K )
 	{
-		RegisterShellType( _T("ed2k"), _T("URL:eDonkey2000 Protocol"), NULL, _T("Shareaza"), _T("URL"), IDR_MAINFRAME );
+		RegisterShellType( _T("Classes"), _T("ed2k"), _T("URL:eDonkey2000 Protocol"), NULL, _T("Shareaza"), _T("URL"), IDR_MAINFRAME );
 	}
 	else
 	{
-		UnregisterShellType( _T("ed2k") );
+		UnregisterShellType( _T("Classes"), _T("ed2k") );
 	}
 
 	if ( Settings.Web.Piolet )
 	{
-		RegisterShellType( _T("mp2p"), _T("URL:Piolet Protocol"), NULL, _T("Shareaza"), _T("URL"), IDR_MAINFRAME );
+		RegisterShellType( _T("Classes"), _T("mp2p"), _T("URL:Piolet Protocol"), NULL, _T("Shareaza"), _T("URL"), IDR_MAINFRAME );
 	}
 	else
 	{
-		UnregisterShellType( _T("mp2p") );
+		UnregisterShellType( _T("Classes"), _T("mp2p") );
 	}
 
 	if ( ( ! bOnStartup ) || ( ! Settings.Live.FirstRun ) )
 	{
 		if ( Settings.Web.Torrent )
 		{
-			RegisterShellType( _T("bittorrent"), _T("TORRENT File"), _T(".torrent"),
-				_T("Shareaza"), _T("TORRENT"), IDR_MAINFRAME );
+			RegisterShellType( _T("Classes"), _T("bittorrent"), _T("TORRENT File"), _T(".torrent"),
+				_T("Shareaza"), _T("RAZAFORMAT"), IDR_MAINFRAME );
+			RegisterShellType( _T("Classes\\Applications\\Shareaza.exe"), NULL, _T("TORRENT File"), _T(".torrent"),
+				_T("Shareaza"), _T("RAZAFORMAT"), IDR_MAINFRAME );
 		}
 		else
 		{
-			UnregisterShellType( _T("bittorrent") );
+			UnregisterShellType( _T("Classes"), _T("bittorrent") );
+			UnregisterShellType( _T("Classes\\Applications\\Shareaza.exe"), NULL );
 		}
 	}
 
-	RegisterShellType( _T("Shareaza.Collection"), _T("Shareaza Collection File"),
-		_T(".co"), _T("Shareaza"), _T("COLLECTION"), IDI_COLLECTION );
+	RegisterShellType( _T("Classes"), _T("Shareaza.Collection"), _T("Shareaza Collection File"),
+		_T(".co"), _T("Shareaza"), _T("RAZAFORMAT"), IDI_COLLECTION );
+	RegisterShellType( _T("Classes\\Applications\\Shareaza.exe"), NULL, _T("Shareaza Collection File"),
+		_T(".co"), _T("Shareaza"), _T("RAZAFORMAT"), IDI_COLLECTION );
 
-	RegisterShellType( _T("Shareaza.Collection"), _T("Shareaza Collection File"),
-		_T(".collection"), _T("Shareaza"), _T("COLLECTION"), IDI_COLLECTION );
+	RegisterShellType( _T("Classes"), _T("Shareaza.Collection"), _T("Shareaza Collection File"),
+		_T(".collection"), _T("Shareaza"), _T("RAZAFORMAT"), IDI_COLLECTION );
+	RegisterShellType( _T("Classes\\Applications\\Shareaza.exe"), NULL, _T("Shareaza Collection File"),
+		_T(".collection"), _T("Shareaza"), _T("RAZAFORMAT"), IDI_COLLECTION );
 
 	SHChangeNotify( SHCNE_ASSOCCHANGED, SHCNF_IDLIST, NULL, NULL );
 }
@@ -1199,7 +1206,9 @@ void CShareazaURL::Register(BOOL bOnStartup)
 /////////////////////////////////////////////////////////////////////////////
 // CShareazaURL shell registration helper
 
-BOOL CShareazaURL::RegisterShellType(LPCTSTR pszProtocol, LPCTSTR pszName, LPCTSTR pszType, LPCTSTR pszApplication, LPCTSTR pszTopic, UINT nIDIcon, BOOL bOverwrite)
+BOOL CShareazaURL::RegisterShellType(LPCTSTR pszRoot, LPCTSTR pszProtocol, LPCTSTR pszName, 
+									 LPCTSTR pszType, LPCTSTR pszApplication, LPCTSTR pszTopic, 
+									 UINT nIDIcon, BOOL bOverwrite)
 {
 	HKEY hMainKey, hKey, hSub1, hSub2, hSub3, hSub4;
 	CString strProgram, strSubKey, strValue;
@@ -1207,12 +1216,18 @@ BOOL CShareazaURL::RegisterShellType(LPCTSTR pszProtocol, LPCTSTR pszName, LPCTS
 	TCHAR szPath[MAX_PATH];
 
 	Settings.CheckSettingsLoaded( _T("CShareazaURL::RegisterShellType()") );
-	if ( theApp.m_dwWindowsVersion >= 5 && theApp.m_bMultiUserInstallation == TRUE )	
+	if ( pszRoot == NULL ) return FALSE;
+
+	if ( theApp.m_dwWindowsVersion >= 5 && theApp.m_bMultiUserInstallation == TRUE )
 		hMainKey = HKEY_CURRENT_USER;
 	else
 		hMainKey = HKEY_LOCAL_MACHINE;
 
-	strSubKey.Format( _T("Software\\Classes\\%s"), pszProtocol );
+	if ( pszProtocol == NULL )
+		strSubKey.Format( _T("Software\\%s"), pszRoot );
+	else
+		strSubKey.Format( _T("Software\\%s\\%s"), pszRoot, pszProtocol );
+
 	if ( RegCreateKeyEx( hMainKey, (LPCTSTR)strSubKey, 0, NULL, 0,
 		KEY_ALL_ACCESS, NULL, &hKey, &nDisposition ) ) return FALSE;
 
@@ -1225,21 +1240,35 @@ BOOL CShareazaURL::RegisterShellType(LPCTSTR pszProtocol, LPCTSTR pszName, LPCTS
 	BOOL bProtocol = _tcsncmp( pszName, _T("URL:"), 4 ) == 0;
 	GetModuleFileName( NULL, szPath, MAX_PATH );
 	strProgram = szPath;
-	
-	RegSetValueEx( hKey, NULL, 0, REG_SZ, (LPBYTE)pszName, static_cast< DWORD >( sizeof(TCHAR) * ( _tcslen( pszName ) + 1 ) ) );
-	
-	if ( bProtocol )
+
+	if ( _tcscmp( pszRoot, _T("Classes\\Applications\\Shareaza.exe") ) != 0 )
 	{
-		RegSetValueEx( hKey, _T("URL Protocol"), 0, REG_SZ, (LPBYTE)(LPCTSTR)strValue, sizeof(TCHAR) );
+		RegSetValueEx( hKey, NULL, 0, REG_SZ, (LPBYTE)pszName, 
+			static_cast< DWORD >( sizeof(TCHAR) * ( _tcslen( pszName ) + 1 ) ) );
+
+		if ( bProtocol )
+		{
+			RegSetValueEx( hKey, _T("URL Protocol"), 0, REG_SZ, (LPBYTE)(LPCTSTR)strValue, sizeof(TCHAR) );
+		}
+		
+		if ( ! RegCreateKey( hKey, _T("DefaultIcon"), &hSub1 ) )
+		{
+			strValue.Format( _T("\"%s\",-%u"), (LPCTSTR)strProgram, nIDIcon );
+			RegSetValueEx( hSub1, NULL, 0, REG_SZ, 
+				(LPBYTE)(LPCTSTR)strValue, sizeof(TCHAR) * ( strValue.GetLength() + 1 ) );
+			RegCloseKey( hSub1 );
+		}
 	}
-	
-	if ( ! RegCreateKey( hKey, _T("DefaultIcon"), &hSub1 ) )
+	else if ( pszType != NULL )
 	{
-		strValue.Format( _T("\"%s\",-%u"), (LPCTSTR)strProgram, nIDIcon );
-		RegSetValueEx( hSub1, NULL, 0, REG_SZ, (LPBYTE)(LPCTSTR)strValue, sizeof(TCHAR) * ( strValue.GetLength() + 1 ) );
-		RegCloseKey( hSub1 );
+		HKEY hKeySupported;
+		if ( ! RegCreateKey( hKey, _T("SupportedTypes"), &hKeySupported ) ) 
+		{
+			RegSetValueEx( hKeySupported, pszType, 0, REG_SZ, NULL, 0 );
+			RegCloseKey( hKeySupported );
+		}
 	}
-	
+
 	if ( ! RegCreateKey( hKey, _T("shell"), &hSub1 ) )
 	{
 		if ( ! RegCreateKey( hSub1, _T("open"), &hSub2 ) )
@@ -1278,17 +1307,17 @@ BOOL CShareazaURL::RegisterShellType(LPCTSTR pszProtocol, LPCTSTR pszName, LPCTS
 		RegCloseKey( hSub1 );
 	}
 	
-	if ( pszType != NULL && _tcscmp( pszType, _T(".torrent") ) == 0 )
+	if ( pszType != NULL && _tcsncmp( pszType, _T("."), 1 ) == 0 )
 	{
-		BYTE pData[4] = { 0x00, 0x00, 0x01, 0x00 };
+		BYTE pData[4] = { 0x00, 0x11, 0x21, 0x00 };
 		RegSetValueEx( hKey, _T("EditFlags"), 0, REG_BINARY, pData, 4 );
 	}
 	
 	RegCloseKey( hKey );
 	
-	if ( pszType != NULL )
+	if ( pszType != NULL && pszProtocol != NULL )
 	{
-		strSubKey.Format( _T("Software\\Classes\\%s"), pszType );
+		strSubKey.Format( _T("Software\\%s\\%s"), pszRoot, pszType );
 		if ( !	RegCreateKeyEx( hMainKey, (LPCTSTR)strSubKey, 0, NULL, 0,
 				KEY_ALL_ACCESS, NULL, &hKey, &nDisposition ) )
 		{
@@ -1337,15 +1366,20 @@ BOOL CShareazaURL::IsRegistered(LPCTSTR pszProtocol, HKEY hMainKey)
 	return _tcsistr( szApp, szPath ) != NULL;
 }
 
-BOOL CShareazaURL::UnregisterShellType(LPCTSTR pszProtocol)
+BOOL CShareazaURL::UnregisterShellType(LPCTSTR pszRoot, LPCTSTR pszProtocol)
 {
+	if ( pszRoot == NULL ) return FALSE;
+
 	BOOL bRegisteredUser = IsRegistered( pszProtocol, HKEY_CURRENT_USER );
 	BOOL bRegisteredMachine = IsRegistered( pszProtocol, HKEY_LOCAL_MACHINE );
 
 	if ( !bRegisteredUser && !bRegisteredMachine ) return FALSE;
 
 	CString strSubKey;
-	strSubKey.Format( _T("Software\\Classes\\%s"), pszProtocol );
+	if ( pszProtocol == NULL )
+		strSubKey.Format( _T("Software\\%s"), pszRoot );
+	else
+		strSubKey.Format( _T("Software\\%s\\%s"), pszRoot, pszProtocol );
 
 	if ( bRegisteredUser )
 	{

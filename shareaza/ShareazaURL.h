@@ -95,10 +95,11 @@ protected:
 // Registration Operations
 public:
 	static void	Register(BOOL bOnStartup = FALSE);
-	static BOOL	RegisterShellType(LPCTSTR pszProtocol, LPCTSTR pszName, LPCTSTR pszType, LPCTSTR pszApplication, LPCTSTR pszTopic, UINT nIDIcon, BOOL bOverwrite = TRUE);
+	static BOOL	RegisterShellType(LPCTSTR pszRoot, LPCTSTR pszProtocol, 
+		LPCTSTR pszName, LPCTSTR pszType, LPCTSTR pszApplication, LPCTSTR pszTopic, UINT nIDIcon, BOOL bOverwrite = TRUE);
 	static BOOL	RegisterMagnetHandler(LPCTSTR pszID, LPCTSTR pszName, LPCTSTR pszDescription, LPCTSTR pszApplication, UINT nIDIcon);
 	static BOOL	IsRegistered(LPCTSTR pszProtocol, HKEY hMainKey);
-	static BOOL	UnregisterShellType(LPCTSTR pszProtocol);
+	static BOOL	UnregisterShellType(LPCTSTR pszRoot, LPCTSTR pszProtocol);
 	static void DeleteKey(HKEY hParent, LPCTSTR pszKey);
 };
 
