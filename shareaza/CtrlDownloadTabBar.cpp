@@ -161,7 +161,8 @@ void CDownloadTabBar::UpdateGroups(int nCookie)
 		CDownloadGroup* pGroup = DownloadGroups.GetNext( pos );
 		m_pItems.AddTail( new TabItem( pGroup, nCookie ) );
 
-		if ( ! bFoundHot && pGroup == m_pHot->m_pGroup ) bFoundHot = TRUE;
+		if ( ! bFoundHot && pGroup == m_pHot->m_pGroup ) 
+			bFoundHot = TRUE;
 	}
 
 	if ( ! bFoundHot ) m_pHot = NULL;
@@ -519,7 +520,10 @@ void CDownloadTabBar::NotifySelection()
 
 void CDownloadTabBar::OnDownloadGroupNew()
 {
-	CDownloadGroup* pGroup = DownloadGroups.Add( _T("New Group") );
+	CString strCaption;
+	LoadString( strCaption, IDS_DOWNLOAD_NEW_GROUP );
+
+	CDownloadGroup* pGroup = DownloadGroups.Add( (LPCTSTR)strCaption );
 	NotifySelection();
 
 	CDownloadGroupDlg dlg( pGroup );

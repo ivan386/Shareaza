@@ -1106,7 +1106,7 @@
 #define IDS_LIBRARY_SUBFOLDER_IN_LIBRARY 16410
 #define IDS_LIBRARY_MOVE_FAIL           16411
 #define IDS_LIBRARY_GHOST_FILE          16412
-#define IDS_LIBRARY_ADD_FOLDER          16413
+#define IDS_DOWNLOAD_NEW_GROUP          16413
 #define IDS_CHAT_CONNECTED_X            16448
 #define IDS_CHAT_ONLINE_X               16449
 #define IDS_CHAT_CLOSED_X               16450
@@ -1365,6 +1365,7 @@
 #define IDS_GENERAL_BACK                20010
 #define IDS_GENERAL_NEXT                20011
 #define IDS_GENERAL_FINISH              20012
+#define IDS_GENERAL_ALL                 20013
 #define IDS_STATUS_CONNECTING           20100
 #define IDS_STATUS_REQUESTING           20101
 #define IDS_STATUS_RESPONSE             20102

@@ -60,9 +60,17 @@ CDownloadGroup* CDownloadGroups::GetSuperGroup()
 {
 	CQuickLock pLock( m_pSection );
 
-	if ( m_pSuper != NULL ) return m_pSuper;
+	CString strCaption;
+	LoadString( strCaption, IDS_GENERAL_ALL );
 
-	return m_pSuper = Add( _T("All") );
+	if ( m_pSuper != NULL )
+	{
+		if ( m_pSuper->m_sName != strCaption )
+			m_pSuper->m_sName = strCaption;
+		return m_pSuper;
+	}
+
+	return m_pSuper = Add( (LPCTSTR)strCaption );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -256,9 +264,10 @@ BOOL CDownloadGroups::Save(BOOL bForce)
 //////////////////////////////////////////////////////////////////////
 // CDownloadGroups serialize
 
-#define GROUPS_SER_VERSION	4
+#define GROUPS_SER_VERSION	5
 // History:
 // 4 - Added m_bTemporary (ryo-oh-ki)
+// 5 - New download groups added
 
 void CDownloadGroups::Serialize(CArchive& ar)
 {
@@ -315,6 +324,15 @@ void CDownloadGroups::Serialize(CArchive& ar)
 			if ( nState == 1 ) m_pSuper = pGroup;
 
 			pGroup->Serialize( ar, nVersion );
+		}
+
+		if ( nVersion < 5 )
+		{
+			CDownloadGroup* pGroup = Add( _T("Image") );
+			pGroup->SetSchema( CSchema::uriImage );
+
+			pGroup = Add( _T("Collection") );
+			pGroup->SetSchema( CSchema::uriCollectionsFolder );
 		}
 
 		GetSuperGroup();

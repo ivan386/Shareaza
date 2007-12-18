@@ -160,6 +160,10 @@ void CDownloadGroup::SetSchema(LPCTSTR pszURI)
 	if ( CSchema* pSchema = SchemaCache.Get( pszURI ) )
 	{
 		m_nImage = pSchema->m_nIcon16;
+		if ( pSchema->m_sHeaderTitle.IsEmpty() )
+			m_sName = pSchema->m_sTitle;
+		else
+			m_sName = pSchema->m_sHeaderTitle;
 
 		for ( LPCTSTR start = pSchema->m_sTypeFilter; *start; start++ )
 		{
