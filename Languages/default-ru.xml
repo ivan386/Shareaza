@@ -17,7 +17,7 @@
 		description="Shareaza Default Russian Skin File"
 		link="http://shareaza.sourceforge.net/"
 		email=""
-		version="2.3.0.0"
+		version="2.3.0.1"
 		type="Language"
 		language="ru"
 		prompt="Щелкните здесь для смены языка на Русский (от dAbserver)"
@@ -2860,6 +2860,7 @@
 	<string id="16410" value="Подпапка выбранной папки «%s» уже находится в Вашем хранилище.\nЕсли Вы добавите эту папку, хеши некоторых файлов будут перерасчитанны заново.\n\nУверены, что хотите продолжить?"/>
 	<string id="16411" value="Невозможно переместить файл «%s». Файл, наверное, используется другой программой.\nХотите ли Вы файл скопировать вместо этого?"/>
 	<string id="16412" value="Теневой файл"/>
+	<string id="16413" value="Новая группа"/>
 	<string id="16448" value="Установлена связь с %s, идет подтверждение связи..."/>
 	<string id="16449" value="Сейчас идет беседа с %s (%s)."/>
 	<string id="16450" value="Соединение с %s закрыто."/>
@@ -3116,6 +3117,7 @@
 	<string id="20010" value="&amp;Назад"/>
 	<string id="20011" value="&amp;Далее"/>
 	<string id="20012" value="Закончить"/>
+	<string id="20013" value="Все"/>
 	<string id="20100" value="Соединение"/>
 	<string id="20101" value="Запрос"/>
 	<string id="20102" value="Ответ"/>

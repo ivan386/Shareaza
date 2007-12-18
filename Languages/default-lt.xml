@@ -17,7 +17,7 @@
 		description="Shareaza Default Lithuanian Skin File"
 		link="http://shareaza.sourceforge.net/"
 		email="rrol2002(at)hotmail(dot)com"
-		version="2.3.0.0"
+		version="2.3.0.1"
 		type="Language"
 		language="lt"
 		prompt="Paspauskite čia, jei Jūsų gimtoji kalba lietuvių."
@@ -2863,6 +2863,7 @@
 	<string id="16410" value="Pasirinkto aplanko „%s“ poaplankis jau yra Jūsų kolekcijoje.\nPridėjus šį aplanką, kai kurių failų maišos bus perskaičiuotos.\n\n\n\nAr norite tęsti?"/>
 	<string id="16411" value="Neįmanoma perkelti failo „%s“. Failą turbūt naudoja kita programa.\nAr norėtumėte šį failą nukopijuoti užuot perkėlus?"/>
 	<string id="16412" value="Šešėlinis failas"/>
+	<string id="16413" value="Nauja grupė"/>
 	<string id="16448" value="Susijungta su %s, patvirtinama..."/>
 	<string id="16449" value="Kalbamasi su adresatu %s (%s)."/>
 	<string id="16450" value="Ryšys su %s nutrauktas."/>
@@ -3119,6 +3120,7 @@
 	<string id="20010" value="&amp;Atgal"/>
 	<string id="20011" value="&amp;Toliau"/>
 	<string id="20012" value="Baigti"/>
+	<string id="20013" value="Visi"/>
 	<string id="20100" value="Jungiamasi"/>
 	<string id="20101" value="Užklausiama"/>
 	<string id="20102" value="Atsakas"/>
