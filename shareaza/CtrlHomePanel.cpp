@@ -575,12 +575,17 @@ BOOL CHomeDownloadsBox::ExecuteDownload(CDownload* pDownload)
 	else if ( pDownload->IsStarted() && ! pDownload->IsMoving() )
 	{
 		CString strType;
+		bool bDangerous = false;
 		
 		int nExtPos = pDownload->m_sSafeName.ReverseFind( '.' );
-		if ( nExtPos > 0 ) strType = pDownload->m_sSafeName.Mid( nExtPos + 1 );
+		if ( nExtPos > 0 )
+		{
+			strType = pDownload->m_sSafeName.Mid( nExtPos + 1 );
+			bDangerous = theApp.m_pfnAssocIsDangerous( "." + strType );
+		}
 		strType = _T("|") + strType + _T("|");
 		
-		if ( _tcsistr( Settings.Library.SafeExecute, strType ) == NULL )
+		if ( _tcsistr( Settings.Library.SafeExecute, strType ) == NULL || bDangerous )
 		{
 			CString strFormat, strPrompt;
 			
@@ -941,6 +946,7 @@ void CHomeLibraryBox::OnLButtonUp(UINT nFlags, CPoint point)
 			{
 				CString strPath = pFile->GetPath();
 				oLock.Unlock();
+				// TODO: Should check Zone.Identifier stream for safety
 				CFileExecutor::Execute( strPath, FALSE );
 			}
 			else

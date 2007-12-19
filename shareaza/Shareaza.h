@@ -121,6 +121,7 @@ public:
 	BOOLEAN		(WINAPI *m_pfnSetActivePwrScheme)(UINT, PGLOBAL_POWER_POLICY, PPOWER_POLICY);
 
 	HINSTANCE	m_hShlWapi;
+	BOOL		(WINAPI *m_pfnAssocIsDangerous)(LPCWSTR);
 
 	// GeoIP - IP to Country lookup
 	HINSTANCE	m_hGeoIP;

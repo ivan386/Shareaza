@@ -854,7 +854,14 @@ void CShareazaApp::InitResources()
 		m_pfnSetActivePwrScheme = NULL;
 	}
 
-	m_hShlWapi = LoadLibrary( _T("shlwapi.dll") );
+	if ( ( m_hShlWapi = LoadLibrary( _T("shlwapi.dll") ) ) != NULL )
+	{
+		(FARPROC&)m_pfnAssocIsDangerous = GetProcAddress( m_hShlWapi, "AssocIsDangerous" );
+	}
+	else
+	{
+		m_pfnAssocIsDangerous = NULL;
+	}
 
 	// Load the GeoIP library for mapping IPs to countries
 	m_hGeoIP = CustomLoadLibrary( _T("geoip.dll") );
@@ -2173,13 +2180,27 @@ bool ResourceRequest(const CString& strPath, CBuffer& pResponse, CString& sHeade
 
 bool MarkFileAsDownload(const CString& sFilename)
 {
+	LPCTSTR pszExt = PathFindExtension( (LPCTSTR)sFilename );
+	if ( pszExt == NULL ) return false;
+	
+	CString strExt;
+	strExt.Format( L"|%s|", pszExt + 1 );
+
 	bool bSuccess = false;
+
 	if ( theApp.m_bNT && Settings.Library.MarkFileAsDownload )
 	{
+		// TODO: pFile->m_bVerify and IDS_LIBRARY_VERIFY_FIX warning features could be merged 
+		// with this function, because they resemble the security warning.
+		// Should raza unblock files from the application without forcing user to do that manually?
+		if ( _tcsistr( Settings.Library.SafeExecute, strExt ) != NULL || 
+			 !theApp.m_pfnAssocIsDangerous( pszExt ) )
+			return false;
+
 		// Temporary clear R/O attribute
 		BOOL bChanged = FALSE;
 		DWORD dwOrigAttr = GetFileAttributes( sFilename );
-		if ( dwOrigAttr != 0xffffffff && ( dwOrigAttr & FILE_ATTRIBUTE_READONLY ) )
+		if ( dwOrigAttr != INVALID_FILE_ATTRIBUTES && ( dwOrigAttr & FILE_ATTRIBUTE_READONLY ) )
 			bChanged = SetFileAttributes( sFilename, dwOrigAttr & ~FILE_ATTRIBUTE_READONLY );
 
 		HANDLE hFile = CreateFile( sFilename + _T(":Zone.Identifier"),

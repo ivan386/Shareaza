@@ -119,13 +119,15 @@ BOOL CFileExecutor::Execute(LPCTSTR pszFile, BOOL bForce, BOOL bHasThumbnail, LP
 	BOOL bShiftKey = ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 ) != 0;
 	BOOL bPreviewEnabled = FALSE;
 
+	CString strPureExtension( strType ); 
+	strPureExtension.Replace( _T("|"), _T("") );
+	strPureExtension.Insert( 0, '.' );
+
 	// If thumbnailing and Image Viewer are enabled, do not warn about safety
 	if ( ! bShiftKey )
 	{
 		CLSID clsid;
-		CString strPureExtension( strType ); 
-		strPureExtension.Replace( _T("|"), _T("") );
-		strPureExtension.Insert( 0, '.' );
+
 		bPreviewEnabled = Plugins.LookupCLSID( _T("ImageService"), strPureExtension, clsid );
 		Hashes::fromGuid( _T("{2EE9D739-7726-41cf-8F18-4B1B8763BC63}"), &clsid );
 
@@ -136,7 +138,8 @@ BOOL CFileExecutor::Execute(LPCTSTR pszFile, BOOL bForce, BOOL bHasThumbnail, LP
 	}
 
 	if ( bForce == NULL && strType.GetLength() &&
-		_tcsistr( Settings.Library.SafeExecute, strType ) == NULL && ! bPreviewEnabled )
+		( _tcsistr( Settings.Library.SafeExecute, strType ) == NULL && 
+		  theApp.m_pfnAssocIsDangerous( (LPCTSTR)strPureExtension ) ) && ! bPreviewEnabled )
 	{
 		CString strFormat, strPrompt;
 
