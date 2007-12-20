@@ -102,7 +102,7 @@ void CGnutellaSettingsPage::DoDataExchange(CDataExchange* pDX)
 BOOL CGnutellaSettingsPage::OnInitDialog() 
 {
 	CSettingsPage::OnInitDialog();
-	
+
 	//Load initial values from the settings variables
 	m_bG2Today			= Settings.Gnutella2.EnableToday;
 	m_bG1Today			= Settings.Gnutella1.EnableToday;
@@ -116,15 +116,15 @@ BOOL CGnutellaSettingsPage::OnInitDialog()
 	m_nG2Hubs			= Settings.Gnutella2.NumHubs;
 	m_nG2Leafs			= Settings.Gnutella2.NumLeafs;
 	m_nG2Peers			= Settings.Gnutella2.NumPeers;
-	
-	m_wndG1Peers.SetRange( 0, 64 );
-	m_wndG1Leafs.SetRange( 0, 1024 );
-	m_wndG1Hubs.SetRange( 0, 5 );
-	
-	m_wndG2Peers.SetRange( 0, 64 );
-	m_wndG2Leafs.SetRange( 0, 1024 );
-	m_wndG2Hubs.SetRange( 0, 3 );
-	
+
+	m_wndG1Hubs.SetRange( 1, 5 );
+	m_wndG1Leafs.SetRange( 10, 1024 );
+	m_wndG1Peers.SetRange( 15, 64 );
+
+	m_wndG2Hubs.SetRange( 1, 3 );
+	m_wndG2Leafs.SetRange( 50, 1024 );
+	m_wndG2Peers.SetRange( 4, 64 );
+
 	m_wndG1ClientMode.SetItemData( 0, MODE_AUTO );
 	m_wndG1ClientMode.SetItemData( 1, MODE_LEAF );
 	m_wndG1ClientMode.SetItemData( 2, MODE_ULTRAPEER );

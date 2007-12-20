@@ -247,7 +247,7 @@ void CSettings::Setup()
 	Add( _T("Gnutella1.ClientMode"), &Gnutella1.ClientMode, MODE_LEAF );
 	Add( _T("Gnutella1.EnableAlways"), &Gnutella1.EnableAlways, FALSE );
 	Add( _T("Gnutella1.NumHubs"), &Gnutella1.NumHubs, 3 );
-	Add( _T("Gnutella1.NumLeafs"), &Gnutella1.NumLeafs, 0 );
+	Add( _T("Gnutella1.NumLeafs"), &Gnutella1.NumLeafs, 50 );
 	Add( _T("Gnutella1.NumPeers"), &Gnutella1.NumPeers, 32 ); // For X-Degree
 	Add( _T("Gnutella1.PacketBufferSize"), &Gnutella1.PacketBufferSize, 64 );
 	Add( _T("Gnutella1.PacketBufferTime"), &Gnutella1.PacketBufferTime, 60000 );
@@ -661,7 +661,7 @@ void CSettings::Load()
 
 	// Set client links
 	Gnutella1.NumHubs			= max( min( Gnutella1.NumHubs,  5    ), 1 );
-	Gnutella1.NumLeafs			= max( min( Gnutella1.NumLeafs, 1024 ), 5 );
+	Gnutella1.NumLeafs			= max( min( Gnutella1.NumLeafs, 1024 ), 10 );
 	Gnutella1.NumPeers			= max( min( Gnutella1.NumPeers, 64   ), 15 );
 	Gnutella2.NumHubs			= max( min( Gnutella2.NumHubs,  3    ), 1 );
 	Gnutella2.NumLeafs			= max( min( Gnutella2.NumLeafs, 1024 ), 50 );
@@ -758,11 +758,11 @@ void CSettings::SmartUpgrade()
 
 	if ( nVersion > SMART_VERSION )
 		nVersion = 1;
-	if ( nVersion != SMART_VERSION )
-		Uploads.SharePartials = TRUE;
 
 	if ( nVersion < SMART_VERSION )
 	{
+		Uploads.SharePartials = TRUE;
+
 		// 'SmartUpgrade' settings updates- change any settings that were mis-set in previous versions
 		if ( nVersion < 20 )
 		{
@@ -1033,11 +1033,6 @@ void CSettings::OnChangeConnectionSpeed()
 {
 	BOOL bLimited = theApp.m_bLimitedConnections && !General.IgnoreXPsp2;
 
-	if ( Connection.InSpeed > 750 )
-	{
-		Gnutella2.NumPeers = max( Gnutella2.NumPeers, 4 );
-	}
-
 	if ( Connection.InSpeed <= 80 )
 	{	// NT Modem users / Win9x Modem users
 		Downloads.MaxFiles				= 8;
@@ -1048,7 +1043,7 @@ void CSettings::OnChangeConnectionSpeed()
 		Downloads.SourcesWanted			= 200;	// Don't bother requesting so many sources
 		Search.GeneralThrottle			= 300;	// Slow searches a little so we don't get flooded
 
-		Gnutella2.NumLeafs				= 100;
+		Gnutella2.NumLeafs				= 50;
 		BitTorrent.DownloadTorrents		= 1;	// Best not to try too many torrents
 	}
 	else if ( !theApp.m_bNT )
@@ -1061,7 +1056,7 @@ void CSettings::OnChangeConnectionSpeed()
 		Downloads.SourcesWanted			= 200;	// Don't bother requesting so many sources
 		Search.GeneralThrottle			= 250;	// Slow searches a little so we don't get flooded
 
-		Gnutella2.NumLeafs				= 150;
+		Gnutella2.NumLeafs				= 100;
 		BitTorrent.DownloadTorrents		= 1;	// Best not to try too many torrents
 	}
 	else if ( Connection.InSpeed <= 256 )
