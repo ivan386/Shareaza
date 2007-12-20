@@ -47,8 +47,8 @@ protected:
 // Operations
 public:
 	void		Clear(BOOL bMessage = TRUE);
-	INT_PTR		GetCount(CUploadTransfer* pExcept, int nState = -1) const;
-	int			GetTorrentCount(int nState) const;
+	DWORD		GetCount(CUploadTransfer* pExcept, int nState = -1) const;
+	DWORD		GetTorrentCount(int nState) const;
 public:
 	BOOL		AllowMoreTo(IN_ADDR* pAddress) const;
 	BOOL		CanUploadFileTo(IN_ADDR* pAddress, const Hashes::Sha1Hash& oSHA1) const;
@@ -85,12 +85,12 @@ public:
 		return GetCount( NULL, -2 );
 	}
 
-	inline int GetTorrentTransferCount() const
+	inline DWORD GetTorrentTransferCount() const
 	{
 		return GetTorrentCount( -2 );
 	}
 
-	inline int GetTorrentUploadCount() const
+	inline DWORD GetTorrentUploadCount() const
 	{
 		return GetTorrentCount( -3 );
 	}

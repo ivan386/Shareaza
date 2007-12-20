@@ -1215,10 +1215,9 @@ BOOL CShareazaURL::RegisterShellType(LPCTSTR pszRoot, LPCTSTR pszProtocol, LPCTS
 	DWORD nDisposition;
 	TCHAR szPath[MAX_PATH];
 
-	Settings.CheckSettingsLoaded( _T("CShareazaURL::RegisterShellType()") );
 	if ( pszRoot == NULL ) return FALSE;
 
-	if ( theApp.m_dwWindowsVersion >= 5 && theApp.m_bMultiUserInstallation == TRUE )
+	if ( theApp.m_dwWindowsVersion >= 5 && Settings.General.MultiUser == TRUE )	
 		hMainKey = HKEY_CURRENT_USER;
 	else
 		hMainKey = HKEY_LOCAL_MACHINE;

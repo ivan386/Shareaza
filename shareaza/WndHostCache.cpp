@@ -117,7 +117,7 @@ int CHostCacheWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	
 	CBitmap bmImages;
 	bmImages.LoadBitmap( IDB_PROTOCOLS );
-	if ( theApp.m_bRTL ) 
+	if ( Settings.General.LanguageRTL ) 
 		bmImages.m_hObject = CreateMirroredBitmap( (HBITMAP)bmImages.m_hObject );
 
 	m_gdiImageList.Create( 16, 16, ILC_COLOR32|ILC_MASK, 7, 1 ) ||
@@ -188,7 +188,7 @@ void CHostCacheWnd::Update(BOOL bForce)
 		
 		CLiveItem* pItem = m_wndList.Add( pHost );
 		
-		pItem->SetImage( theApp.m_bRTL ?
+		pItem->SetImage( Settings.General.LanguageRTL ?
 			nProtocolRev - pHost->m_nProtocol : pHost->m_nProtocol );
 		pItem->SetMaskOverlay( pHost->m_bPriority );
 		
@@ -372,7 +372,6 @@ void CHostCacheWnd::OnUpdateHostCacheDisconnect(CCmdUI* pCmdUI)
 			}
 		}
 	}
-
 	pCmdUI->Enable( FALSE );
 }
 

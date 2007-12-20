@@ -21,6 +21,7 @@
 
 #include "StdAfx.h"
 #include "Shareaza.h"
+#include "Settings.h"
 #include "ShellIcons.h"
 
 #ifdef _DEBUG
@@ -62,7 +63,7 @@ void CShellIcons::Clear()
 	CBitmap bmBase;
 	HICON hTemp;
 	
-	if ( theApp.m_bRTL ) 
+	if ( Settings.General.LanguageRTL ) 
 		bmBase.LoadBitmap( IDB_SHELL_BASE_RTL );
 	else
 		bmBase.LoadBitmap( IDB_SHELL_BASE );
@@ -126,7 +127,7 @@ int CShellIcons::Get(LPCTSTR pszFile, int nSize)
 		if ( ! hIcon && SHGetFileInfo( pszFile, FILE_ATTRIBUTE_NORMAL, &sfi, sizeof( SHFILEINFO ),
 			SHGFI_USEFILEATTRIBUTES | SHGFI_ICON | SHGFI_SMALLICON ) )
 		{
-			hIcon = theApp.m_bRTL ? CreateMirroredIcon( sfi.hIcon ) : sfi.hIcon;
+			hIcon = Settings.General.LanguageRTL ? CreateMirroredIcon( sfi.hIcon ) : sfi.hIcon;
 		}
 		nIndex = hIcon ? m_i16.Add( hIcon ) : 0;
 		m_m16.SetAt( strType, nIndex );
@@ -137,7 +138,7 @@ int CShellIcons::Get(LPCTSTR pszFile, int nSize)
 		if ( ! hIcon && SHGetFileInfo( pszFile, FILE_ATTRIBUTE_NORMAL, &sfi, sizeof( SHFILEINFO ),
 			SHGFI_USEFILEATTRIBUTES | SHGFI_ICON ) )
 		{
-			hIcon = theApp.m_bRTL ? CreateMirroredIcon( sfi.hIcon ) : sfi.hIcon;
+			hIcon = Settings.General.LanguageRTL ? CreateMirroredIcon( sfi.hIcon ) : sfi.hIcon;
 		}
 		nIndex = hIcon ? m_i32.Add( hIcon ) : 0;
 		m_m32.SetAt( strType, nIndex );
@@ -148,7 +149,7 @@ int CShellIcons::Get(LPCTSTR pszFile, int nSize)
 		if ( ! hIcon && SHGetFileInfo( pszFile, FILE_ATTRIBUTE_NORMAL, &sfi, sizeof( SHFILEINFO ),
 			SHGFI_USEFILEATTRIBUTES | SHGFI_ICON | SHGFI_LARGEICON ) )
 		{
-			hIcon = theApp.m_bRTL ? CreateMirroredIcon( sfi.hIcon ) : sfi.hIcon;
+			hIcon = Settings.General.LanguageRTL ? CreateMirroredIcon( sfi.hIcon ) : sfi.hIcon;
 		}
 		nIndex = hIcon ? m_i48.Add( hIcon ) : 0;
 		m_m48.SetAt( strType, nIndex );
@@ -190,15 +191,15 @@ HICON CShellIcons::ExtractIcon(int nIndex, int nSize)
 	{
 	case 16:
 		hIcon = m_i16.ExtractIcon( nIndex );
-		if ( theApp.m_bRTL ) hIcon = CreateMirroredIcon( hIcon );
+		if ( Settings.General.LanguageRTL ) hIcon = CreateMirroredIcon( hIcon );
 		return hIcon;
 	case 32:
 		hIcon = m_i32.ExtractIcon( nIndex );
-		if ( theApp.m_bRTL ) hIcon = CreateMirroredIcon( hIcon );
+		if ( Settings.General.LanguageRTL ) hIcon = CreateMirroredIcon( hIcon );
 		return hIcon;
 	case 48:
 		hIcon = m_i48.ExtractIcon( nIndex );
-		if ( theApp.m_bRTL ) hIcon = CreateMirroredIcon( hIcon );
+		if ( Settings.General.LanguageRTL ) hIcon = CreateMirroredIcon( hIcon );
 		return hIcon;
 	default:
 		return NULL;
@@ -352,7 +353,7 @@ BOOL CShellIcons::Lookup(LPCTSTR pszType, HICON* phSmallIcon, HICON* phLargeIcon
 		if ( ExtractIconEx( strIcon, nIcon, phLargeIcon, phSmallIcon, 1 ) )
 		{
 			bSuccess |= ( phLargeIcon && *phLargeIcon ) || ( phSmallIcon && *phSmallIcon );
-			if ( theApp.m_bRTL ) 
+			if ( Settings.General.LanguageRTL ) 
 			{
 				if ( phLargeIcon && *phLargeIcon ) 
 					*phLargeIcon = CreateMirroredIcon( *phLargeIcon );
@@ -369,7 +370,7 @@ BOOL CShellIcons::Lookup(LPCTSTR pszType, HICON* phSmallIcon, HICON* phLargeIcon
 		if ( theApp.m_pfnPrivateExtractIconsW( strIcon, nIcon, 48, 48, phHugeIcon, &nLoadedID, 1, 0 ) )
 		{
 			bSuccess = TRUE;
-			if ( phHugeIcon && *phHugeIcon && theApp.m_bRTL )
+			if ( phHugeIcon && *phHugeIcon && Settings.General.LanguageRTL )
 				*phHugeIcon = CreateMirroredIcon( *phHugeIcon );
 		}
 	}

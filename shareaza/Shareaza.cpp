@@ -169,7 +169,6 @@ CShareazaApp::CShareazaApp()
 , m_pSafeWnd( NULL )
 , m_bLive( FALSE )
 , m_bInteractive( FALSE )
-, m_bMultiUserInstallation( FALSE )
 , m_bNT( FALSE )
 , m_bServer( FALSE )
 , m_bWinME( FALSE )
@@ -177,7 +176,6 @@ CShareazaApp::CShareazaApp()
 , m_dwWindowsVersion( 0 )
 , m_dwWindowsVersionMinor( 0 )
 , m_nPhysicalMemory( 0 )
-, m_bRTL( FALSE )
 , m_bMenuWasVisible( FALSE )
 , m_nDefaultFontSize( 0 )
 , m_bUPnPPortsForwarded( TRI_UNKNOWN )
@@ -212,6 +210,7 @@ BOOL CShareazaApp::InitInstance()
 
 	SetRegistryKey( _T("Shareaza") );
 	GetVersionNumber();
+	Settings.Load();
 	InitResources();
 
 	AfxOleInit();
@@ -320,8 +319,6 @@ BOOL CShareazaApp::InitInstance()
 		return FALSE;
 	//*/
 	// ***********
-
-	Settings.Load();
 
 	CSplashDlg* dlgSplash = m_ocmdInfo.m_bNoSplash ? NULL : new CSplashDlg( 17 +
 		( ( Settings.Connection.EnableFirewallException ) ? 1 : 0 ) +
@@ -714,12 +711,6 @@ void CShareazaApp::GetVersionNumber()
 
 void CShareazaApp::InitResources()
 {
-	{
-		CRegistry pRegistry;
-		// ToDO: READ => It is already set in CSettings::CSettings, executed before CShareazaApp::InitResources, but if I don't set it here, the value is wrong when read from CShareazaURL::RegisterShellType, WTF
-		m_bMultiUserInstallation = pRegistry.GetBool( _T(""), _T("MultiUser"), FALSE, HKEY_LOCAL_MACHINE );
-	}
-
 	//Determine the version of Windows
 	OSVERSIONINFOEX pVersion;
 	pVersion.dwOSVersionInfoSize = sizeof(OSVERSIONINFOEX);
@@ -907,8 +898,6 @@ void CShareazaApp::InitResources()
 	m_gdiFontLine.CreateFontW( -theApp.m_nDefaultFontSize, 0, 0, 0, FW_NORMAL, FALSE, TRUE, FALSE,
 		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
 		DEFAULT_PITCH|FF_DONTCARE, theApp.m_sDefaultFont );
-
-	theApp.m_bRTL = theApp.GetProfileInt( _T("Settings"), _T("LanguageRTL"), 0 );
 
 	srand( GetTickCount() );
 
@@ -1555,7 +1544,7 @@ int AddIcon(HICON hIcon, CImageList& gdiImageList)
 	int num = -1;
 	if ( hIcon )
 	{
-		if ( theApp.m_bRTL )
+		if ( Settings.General.LanguageRTL )
 			hIcon = CreateMirroredIcon( hIcon );
 		num = gdiImageList.Add( hIcon );
 		VERIFY( DestroyIcon( hIcon ) );
@@ -1955,8 +1944,7 @@ CString GetDocumentsFolder()
 
 	if ( !strDocumentsPath.GetLength() )
 	{
-		CRegistry pRegistry;
-		strDocumentsPath = pRegistry.GetString( _T("Shell Folders"), _T("Personal"), _T(""), HKEY_CURRENT_USER, _T("Software\\Microsoft\\Windows\\CurrentVersion\\Explorer") );
+		strDocumentsPath = CRegistry::GetString( _T("Shell Folders"), _T("Personal"), _T(""), _T("Software\\Microsoft\\Windows\\CurrentVersion\\Explorer") );
 	}
 	ASSERT( strDocumentsPath.GetLength() );
 
@@ -1972,8 +1960,7 @@ CString GetAppDataFolder()
 
 	if ( !strAppDataPath.GetLength() )
 	{
-		CRegistry pRegistry;
-		strAppDataPath = pRegistry.GetString( _T("Shell Folders"), _T("AppData"), _T(""), HKEY_CURRENT_USER, _T("Software\\Microsoft\\Windows\\CurrentVersion\\Explorer") );
+		strAppDataPath = CRegistry::GetString( _T("Shell Folders"), _T("AppData"), _T(""), _T("Software\\Microsoft\\Windows\\CurrentVersion\\Explorer") );
 	}
 	ASSERT( strAppDataPath.GetLength() );
 
@@ -1989,8 +1976,7 @@ CString GetLocalAppDataFolder()
 
 	if ( !strLocalAppDataPath.GetLength() )
 	{
-		CRegistry pRegistry;
-		strLocalAppDataPath = pRegistry.GetString( _T("Shell Folders"), _T("Local AppData"), _T(""), HKEY_CURRENT_USER, _T("Software\\Microsoft\\Windows\\CurrentVersion\\Explorer") );
+		strLocalAppDataPath = CRegistry::GetString( _T("Shell Folders"), _T("Local AppData"), _T(""), _T("Software\\Microsoft\\Windows\\CurrentVersion\\Explorer") );
 
 		if ( !strLocalAppDataPath.GetLength() )
 			return GetAppDataFolder();

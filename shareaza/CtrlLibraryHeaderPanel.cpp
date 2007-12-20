@@ -265,7 +265,7 @@ void CLibraryHeaderPanel::DoPaint(CDC* pDC, CRect& rcClient)
 			CMetaItem* pItem = m_pMetadata.GetNext( pos );
 
 			pDC->SelectObject( &CoolInterface.m_fntNormal );
-			DrawText( pDC, rcMeta.left, nY, theApp.m_bRTL ? ':' + pItem->m_sKey : pItem->m_sKey + ':' );
+			DrawText( pDC, rcMeta.left, nY, Settings.General.LanguageRTL ? ':' + pItem->m_sKey : pItem->m_sKey + ':' );
 
 			if ( pItem->m_bLink ) pDC->SelectObject( &CoolInterface.m_fntUnder );
 			DrawText( pDC, rcMeta.left + m_nKeyWidth, nY, pItem->m_sValue );
@@ -290,7 +290,7 @@ void CLibraryHeaderPanel::DrawText(CDC* pDC, int nX, int nY, LPCTSTR pszText)
 
 	CRect rc( nX - 2, nY - 2, nX + sz.cx + 2, nY + sz.cy + 2 );
 
-	UINT nOptions = ETO_CLIPPED | ( theApp.m_bRTL ? ETO_RTLREADING : 0 );
+	UINT nOptions = ETO_CLIPPED | ( Settings.General.LanguageRTL ? ETO_RTLREADING : 0 );
 	pDC->ExtTextOut( nX, nY, nOptions, &rc, pszText, static_cast< UINT >( _tcslen( pszText ) ), NULL );
 }
 

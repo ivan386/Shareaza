@@ -804,7 +804,7 @@ int CSearchAdvancedBox::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	CBitmap bmProtocols;
 	bmProtocols.LoadBitmap( IDB_PROTOCOLS );
-	if ( theApp.m_bRTL )
+	if ( Settings.General.LanguageRTL )
 		bmProtocols.m_hObject = CreateMirroredBitmap( (HBITMAP)bmProtocols.m_hObject );
 
 	m_gdiImageList.Create( 16, 16, ILC_COLOR32|ILC_MASK, 6, 1 ) ||
@@ -855,7 +855,7 @@ void CSearchAdvancedBox::OnSkinChange()
 		HICON hIcon = CoolInterface.ExtractIcon( (UINT)protocolCmdMap[ nImage ].commandID, FALSE );
 		if ( hIcon )
 		{
-			m_gdiImageList.Replace( theApp.m_bRTL ? nRevStart - nImage : nImage, hIcon );
+			m_gdiImageList.Replace( Settings.General.LanguageRTL ? nRevStart - nImage : nImage, hIcon );
 			DestroyIcon( hIcon );
 		}
 	}
@@ -953,7 +953,7 @@ void CSearchAdvancedBox::OnPaint()
 		pDC->FillSolidRect( &rc, CoolInterface.m_crTaskBoxClient );
 	}
 
-	int nStartPos = theApp.m_bRTL ? -m_gdiImageList.GetImageCount() + 1 : 0;
+	int nStartPos = Settings.General.LanguageRTL ? -m_gdiImageList.GetImageCount() + 1 : 0;
 	m_gdiImageList.Draw( pDC, abs( nStartPos + 2 ), CPoint( BOX_MARGIN, 26 ), ILD_NORMAL );
 	m_gdiImageList.Draw( pDC, abs( nStartPos + 1 ), CPoint( BOX_MARGIN, 46 ), ILD_NORMAL );
 	m_gdiImageList.Draw( pDC, abs( nStartPos + 3 ), CPoint( PANEL_WIDTH / 2 - 3, 26 ), ILD_NORMAL );

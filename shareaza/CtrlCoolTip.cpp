@@ -78,11 +78,11 @@ CCoolTipCtrl::~CCoolTipCtrl()
 /////////////////////////////////////////////////////////////////////////////
 // CCoolTipCtrl operations
 
-BOOL CCoolTipCtrl::Create(CWnd* pParentWnd, BOOL* pbEnable)
+BOOL CCoolTipCtrl::Create(CWnd* pParentWnd, bool* pbEnable)
 {
 	CRect rc( 0, 0, 0, 0 );
 
-	DWORD dwStyleEx = WS_EX_TOPMOST | ( theApp.m_bRTL ? WS_EX_LAYOUTRTL : 0 );
+	DWORD dwStyleEx = WS_EX_TOPMOST | ( Settings.General.LanguageRTL ? WS_EX_LAYOUTRTL : 0 );
 	if ( ! CWnd::CreateEx( dwStyleEx, m_hClass, NULL, WS_POPUP|WS_DISABLED,
 		rc, pParentWnd, 0, NULL ) ) return FALSE;
 
@@ -276,7 +276,7 @@ void CCoolTipCtrl::GetPaintRect(RECT* pRect)
 
 void CCoolTipCtrl::DrawText(CDC* pDC, POINT* pPoint, LPCTSTR pszText, int nBase)
 {
-	DWORD dwFlags = ( theApp.m_bRTL ? ETO_RTLREADING : 0 );
+	DWORD dwFlags = ( Settings.General.LanguageRTL ? ETO_RTLREADING : 0 );
 	CSize sz = pDC->GetTextExtent( pszText, static_cast< int >( _tcslen( pszText ) ) );
 
 	if ( nBase ) pPoint->x += nBase;

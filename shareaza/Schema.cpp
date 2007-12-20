@@ -572,7 +572,7 @@ BOOL CSchema::LoadIcon()
 
 		if ( hIcon48 )
 		{
-			if ( theApp.m_bRTL ) hIcon48 = CreateMirroredIcon( hIcon48 );
+			if ( Settings.General.LanguageRTL ) hIcon48 = CreateMirroredIcon( hIcon48 );
 			m_nIcon48 = ShellIcons.Add( hIcon48, 48 );
 			DestroyIcon( hIcon48 );
 		}
@@ -582,14 +582,14 @@ BOOL CSchema::LoadIcon()
 	{
 		if ( hIcon16 )
 		{
-			if ( theApp.m_bRTL ) hIcon16 = CreateMirroredIcon( hIcon16 );
+			if ( Settings.General.LanguageRTL ) hIcon16 = CreateMirroredIcon( hIcon16 );
 			m_nIcon16 = ShellIcons.Add( hIcon16, 16 );
 			DestroyIcon( hIcon16 );
 		}
 
 		if ( hIcon32 )
 		{
-			if ( theApp.m_bRTL ) hIcon32 = CreateMirroredIcon( hIcon32 );
+			if ( Settings.General.LanguageRTL ) hIcon32 = CreateMirroredIcon( hIcon32 );
 			m_nIcon32 = ShellIcons.Add( hIcon32, 32 );
 			DestroyIcon( hIcon32 );
 		}

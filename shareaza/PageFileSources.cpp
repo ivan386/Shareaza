@@ -112,7 +112,7 @@ BOOL CFileSourcesPage::OnInitDialog()
 void CFileSourcesPage::AddSource(CSharedSource* pSource)
 {
 	CString strURL = pSource->m_sURL;
-	if ( theApp.m_bRTL ) strURL = _T("\x202A") + strURL;
+	if ( Settings.General.LanguageRTL ) strURL = _T("\x202A") + strURL;
 
 	LV_ITEM pItem = {};
 	pItem.mask		= LVIF_TEXT|LVIF_PARAM|LVIF_IMAGE;

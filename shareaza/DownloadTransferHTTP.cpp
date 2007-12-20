@@ -980,9 +980,9 @@ BOOL CDownloadTransferHTTP::OnHeaderLine(CString& strHeader, CString& strValue)
 	else if (	strHeader.CompareNoCase( _T("X-PerHost") ) == 0 ||
 				strHeader.CompareNoCase( _T("X-Gnutella-maxSlotsPerHost") ) == 0 )
 	{
-		int nLimit = 0;
+		DWORD nLimit = 0;
 		
-		if ( _stscanf( strValue, _T("%i"), &nLimit ) != 1 )
+		if ( _stscanf( strValue, _T("%u"), &nLimit ) != 1 )
 		{
 			Downloads.SetPerHostLimit( &m_pHost.sin_addr, nLimit );
 		}

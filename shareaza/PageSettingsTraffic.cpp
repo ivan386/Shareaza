@@ -41,6 +41,7 @@ BEGIN_MESSAGE_MAP(CAdvancedSettingsPage, CSettingsPage)
 	ON_EN_CHANGE(IDC_VALUE, OnChangeValue)
 	ON_NOTIFY(LVN_COLUMNCLICK, IDC_PROPERTIES, OnColumnClickProperties)
 	//}}AFX_MSG_MAP
+	ON_BN_CLICKED(IDC_DEFAULT_VALUE, OnBnClickedDefaultValue)
 END_MESSAGE_MAP()
 
 
@@ -85,249 +86,255 @@ BOOL CAdvancedSettingsPage::OnInitDialog()
 	m_wndList.SendMessage( LVM_SETEXTENDEDLISTVIEWSTYLE,
 		LVS_EX_FULLROWSELECT, LVS_EX_FULLROWSELECT );
 
-	AddSetting( &Settings.General.Debug, 1, 0, 1 );
-	AddSetting( &Settings.General.DebugLog, 1, 0, 1 );
-//	AddSetting( &Settings.General.DebugUPnP, 1, 0, 1 );
-	AddSetting( &Settings.General.DebugBTSources, 1, 0, 1 );
-	AddSetting( &Settings.General.MaxDebugLogSize, 1024*1024, 0, 100, _T(" MB") );
-	AddSetting( &Settings.General.UpdateCheck, 1, 0, 1 );
-	AddSetting( &Settings.General.DiskSpaceWarning, 1, 5, 2000 , _T(" M") );
-	AddSetting( &Settings.General.DiskSpaceStop, 1, 0, 1000 , _T(" M") );
-	AddSetting( &Settings.General.HashIntegrity, 1, 0, 1 );
-	AddSetting( &Settings.General.MinTransfersRest, 1, 1, 100, _T(" ms") );
+	AddSetting( &Settings.General.Debug );
+	AddSetting( &Settings.General.DebugLog );
+	AddSetting( &Settings.General.SearchLog );
+	AddSetting( &Settings.General.DebugBTSources );
+	AddSetting( &Settings.General.MaxDebugLogSize );
+	AddSetting( &Settings.General.UpdateCheck );
+	AddSetting( &Settings.General.DiskSpaceWarning );
+	AddSetting( &Settings.General.DiskSpaceStop );
+	AddSetting( &Settings.General.HashIntegrity );
+	AddSetting( &Settings.General.MinTransfersRest );
 
-	AddSetting( &Settings.Community.ChatFilterED2K, 1, 0, 1 );
-	AddSetting( &Settings.Community.AwayMessageIdleTime, 60, 5, 60, _T(" m") );
+	AddSetting( &Settings.Community.ChatFilterED2K );
+	AddSetting( &Settings.Community.AwayMessageIdleTime );
 
-	AddSetting( &Settings.Connection.IgnoreOwnIP, 1, 0, 1 );
-	AddSetting( &Settings.Connection.SendBuffer, 1, 64, 10240 );
-	AddSetting( &Settings.Connection.TimeoutTraffic, 1000, 10, 60*60, _T(" s") );
-	AddSetting( &Settings.Connection.ConnectThrottle, 1, 0, 500, _T(" ms") );
-	AddSetting( &Settings.Connection.FailurePenalty, 1, 30, 3600, _T(" s") );
-	AddSetting( &Settings.Connection.FailureLimit, 1, 1, 512 );
-	AddSetting( &Settings.Connection.DetectConnectionLoss, 1, 0, 1 );
-	AddSetting( &Settings.Connection.DetectConnectionReset, 1, 0, 1 );
-	AddSetting( &Settings.Connection.ForceConnectedState, 1, 0, 1 );
-	AddSetting( &Settings.Connection.SlowConnect, 1, 0, 1 );
-	AddSetting( &Settings.Connection.EnableFirewallException, 1, 0, 1 );
-	AddSetting( &Settings.Connection.DeleteFirewallException, 1, 0, 1 );
-	AddSetting( &Settings.Connection.DeleteUPnPPorts, 1, 0, 1 );
-	AddSetting( &Settings.Connection.SkipWANPPPSetup, 1, 0, 1 );
-	AddSetting( &Settings.Connection.SkipWANIPSetup, 1, 0, 1 );
+	AddSetting( &Settings.Connection.IgnoreOwnIP );
+	AddSetting( &Settings.Connection.SendBuffer );
+	AddSetting( &Settings.Connection.TimeoutTraffic );
+	AddSetting( &Settings.Connection.ConnectThrottle );
+	AddSetting( &Settings.Connection.FailurePenalty );
+	AddSetting( &Settings.Connection.FailureLimit );
+	AddSetting( &Settings.Connection.DetectConnectionLoss );
+	AddSetting( &Settings.Connection.DetectConnectionReset );
+	AddSetting( &Settings.Connection.ForceConnectedState );
+	AddSetting( &Settings.Connection.SlowConnect );
+	AddSetting( &Settings.Connection.EnableFirewallException );
+	AddSetting( &Settings.Connection.DeleteFirewallException );
+	AddSetting( &Settings.Connection.DeleteUPnPPorts );
+	AddSetting( &Settings.Connection.SkipWANPPPSetup );
+	AddSetting( &Settings.Connection.SkipWANIPSetup );
 
-	AddSetting( &Settings.Gnutella.ConnectFactor, 1, 1, 20, _T("x") );
-	AddSetting( &Settings.Gnutella.ConnectThrottle, 1, 60, 3600, _T(" s") );
-	AddSetting( &Settings.Gnutella.MaxResults, 1, 1, 300 );
-	AddSetting( &Settings.Gnutella.MaxHits, 1, 0, 4096 );
-	AddSetting( &Settings.Gnutella.HitsPerPacket, 1, 0, 1024 );
-	AddSetting( &Settings.Gnutella.RouteCache, 60, 1, 120, _T(" m") );
-	AddSetting( &Settings.Gnutella.HostCacheSize, 1, 32, 16384 );
-	AddSetting( &Settings.Gnutella.BlockBlankClients, 1, 0, 1 );
-	AddSetting( &Settings.Gnutella.SpecifyProtocol, 1, 0, 1 );
+	AddSetting( &Settings.Gnutella.ConnectFactor );
+	AddSetting( &Settings.Gnutella.ConnectThrottle );
+	AddSetting( &Settings.Gnutella.MaxResults );
+	AddSetting( &Settings.Gnutella.MaxHits );
+	AddSetting( &Settings.Gnutella.HitsPerPacket );
+	AddSetting( &Settings.Gnutella.RouteCache );
+	AddSetting( &Settings.Gnutella.HostCacheSize );
+	AddSetting( &Settings.Gnutella.BlockBlankClients );
+	AddSetting( &Settings.Gnutella.SpecifyProtocol );
 
-	AddSetting( &Settings.Gnutella1.PacketBufferSize, 1, 1, 1024 );
-	AddSetting( &Settings.Gnutella1.PacketBufferTime, 1000, 10, 180, _T(" s") );
-	AddSetting( &Settings.Gnutella1.DefaultTTL, 1, 1, 3 );
-	AddSetting( &Settings.Gnutella1.SearchTTL, 1, 1, 3 );
-	AddSetting( &Settings.Gnutella1.TranslateTTL, 1, 1, 2 );
-	AddSetting( &Settings.Gnutella1.MaximumTTL, 1, 1, 10 );
-	AddSetting( &Settings.Gnutella1.MaximumPacket, 1, 32, 262144 );
-	AddSetting( &Settings.Gnutella1.MaximumQuery, 1, 32, 262144 );
-	AddSetting( &Settings.Gnutella1.StrictPackets, 1, 0, 1 );
-	AddSetting( &Settings.Gnutella1.EnableGGEP, 1, 0, 1 );
-	AddSetting( &Settings.Gnutella1.VendorMsg, 1, 0, 1 );
-	AddSetting( &Settings.Gnutella1.QueryThrottle, 1, 5, 60, _T(" s") );
-	AddSetting( &Settings.Gnutella1.RequeryDelay, 1, 5, 60, _T(" s") );
-	AddSetting( &Settings.Gnutella1.HostExpire, 24 * 60 * 60, 1, 100, _T(" d") );
-	AddSetting( &Settings.Gnutella1.PingFlood, 1000, 0, 30, _T(" s") );
-	AddSetting( &Settings.Gnutella1.PingRate, 1000, 15, 180, _T(" s") );
-	AddSetting( &Settings.Gnutella1.PongCache, 1000, 1, 180, _T(" s") );
-	AddSetting( &Settings.Gnutella1.PongCount, 1, 1, 64 );
-	AddSetting( &Settings.Gnutella1.QuerySearchUTF8, 1, 0, 1 );
-	AddSetting( &Settings.Gnutella1.QueryHitUTF8, 1, 0, 1 );
-	AddSetting( &Settings.Gnutella1.MaxHostsInPongs, 1, 5, 30 );
+	AddSetting( &Settings.Gnutella1.PacketBufferSize );
+	AddSetting( &Settings.Gnutella1.PacketBufferTime );
+	AddSetting( &Settings.Gnutella1.DefaultTTL );
+	AddSetting( &Settings.Gnutella1.SearchTTL );
+	AddSetting( &Settings.Gnutella1.TranslateTTL );
+	AddSetting( &Settings.Gnutella1.MaximumTTL );
+	AddSetting( &Settings.Gnutella1.MaximumPacket );
+	AddSetting( &Settings.Gnutella1.MaximumQuery );
+	AddSetting( &Settings.Gnutella1.StrictPackets );
+	AddSetting( &Settings.Gnutella1.EnableGGEP );
+	AddSetting( &Settings.Gnutella1.VendorMsg );
+	AddSetting( &Settings.Gnutella1.QueryThrottle );
+	AddSetting( &Settings.Gnutella1.RequeryDelay );
+	AddSetting( &Settings.Gnutella1.HostExpire );
+	AddSetting( &Settings.Gnutella1.PingFlood );
+	AddSetting( &Settings.Gnutella1.PingRate );
+	AddSetting( &Settings.Gnutella1.PongCache );
+	AddSetting( &Settings.Gnutella1.PongCount );
+	AddSetting( &Settings.Gnutella1.QuerySearchUTF8 );
+	AddSetting( &Settings.Gnutella1.QueryHitUTF8 );
+	AddSetting( &Settings.Gnutella1.MaxHostsInPongs );
 
-	AddSetting( &Settings.Gnutella2.EnableAlways, 1, 0, 1 );
-	AddSetting( &Settings.Gnutella2.PingRelayLimit, 1, 10, 30);
-	AddSetting( &Settings.Gnutella2.UdpMTU, 1, 16, 10240 );
-	AddSetting( &Settings.Gnutella2.UdpBuffers, 1, 16, 2048 );
-	AddSetting( &Settings.Gnutella2.UdpInFrames, 1, 16, 2048 );
-	AddSetting( &Settings.Gnutella2.UdpOutFrames, 1, 16, 2048 );
-	AddSetting( &Settings.Gnutella2.UdpGlobalThrottle, 1, 0, 10000 );
-	AddSetting( &Settings.Gnutella2.UdpOutExpire, 1000, 1, 300, _T(" s") );
-	AddSetting( &Settings.Gnutella2.UdpOutResend, 1000, 1, 300, _T(" s") );
-	AddSetting( &Settings.Gnutella2.UdpInExpire, 1000, 1, 300, _T(" s") );
-	AddSetting( &Settings.Gnutella2.LNIPeriod, 1000, 1, 60 * 60, _T(" s") );
-	AddSetting( &Settings.Gnutella2.KHLPeriod, 1000, 1, 60 * 60, _T(" s") );
-	AddSetting( &Settings.Gnutella2.KHLHubCount, 1, 1, 256 );
-	AddSetting( &Settings.Gnutella2.HAWPeriod, 1000, 1, 60 * 60, _T(" s") );
-	AddSetting( &Settings.Gnutella2.HostCurrent, 60, 1, 24*60, _T(" m") );
-	AddSetting( &Settings.Gnutella2.HostExpire, 24 * 60 * 60, 1, 100, _T(" d") );
-	AddSetting( &Settings.Gnutella2.PingRate, 1000, 5, 180, _T(" s") );
-	AddSetting( &Settings.Gnutella2.QueryGlobalThrottle, 1, 1, 60*1000, _T(" ms") );
-	AddSetting( &Settings.Gnutella2.QueryHostThrottle, 1, 1, 10*60, _T(" s") );
-	AddSetting( &Settings.Gnutella2.QueryHostDeadline, 1, 1, 120*60, _T(" s") );
-	AddSetting( &Settings.Gnutella2.RequeryDelay, 60*60, 1, 24, _T(" h") );
-	AddSetting( &Settings.Gnutella2.HubHorizonSize, 1, 32, 512 );
-	AddSetting( &Settings.Gnutella2.QueryLimit, 1, 0, 10000 );
+	AddSetting( &Settings.Gnutella2.EnableAlways );
+	AddSetting( &Settings.Gnutella2.HAWPeriod );
+	AddSetting( &Settings.Gnutella2.HostCurrent );
+	AddSetting( &Settings.Gnutella2.HostExpire );
+	AddSetting( &Settings.Gnutella2.HubHorizonSize );
+	AddSetting( &Settings.Gnutella2.KHLHubCount );
+	AddSetting( &Settings.Gnutella2.KHLPeriod );
+	AddSetting( &Settings.Gnutella2.LNIPeriod );
+	AddSetting( &Settings.Gnutella2.PingRate );
+	AddSetting( &Settings.Gnutella2.PingRelayLimit);
+	AddSetting( &Settings.Gnutella2.QueryGlobalThrottle );
+	AddSetting( &Settings.Gnutella2.QueryHostDeadline );
+	AddSetting( &Settings.Gnutella2.QueryHostThrottle );
+	AddSetting( &Settings.Gnutella2.QueryLimit );
+	AddSetting( &Settings.Gnutella2.RequeryDelay );
+	AddSetting( &Settings.Gnutella2.UdpBuffers );
+	AddSetting( &Settings.Gnutella2.UdpGlobalThrottle );
+	AddSetting( &Settings.Gnutella2.UdpInExpire );
+	AddSetting( &Settings.Gnutella2.UdpInFrames );
+	AddSetting( &Settings.Gnutella2.UdpMTU );
+	AddSetting( &Settings.Gnutella2.UdpOutExpire );
+	AddSetting( &Settings.Gnutella2.UdpOutFrames );
+	AddSetting( &Settings.Gnutella2.UdpOutResend );
 
-	AddSetting( &Settings.eDonkey.FastConnect, 1, 0, 1 );
-	AddSetting( &Settings.eDonkey.ForceHighID, 1, 0, 1 );
-	AddSetting( &Settings.eDonkey.MaxShareCount, 1, 0, 20000 );
-	AddSetting( &Settings.eDonkey.StatsGlobalThrottle, 60*1000, 30, 120, _T(" m") );
-	AddSetting( &Settings.eDonkey.QueryGlobalThrottle, 1, 1000, 20000, _T(" ms") );
-	AddSetting( &Settings.eDonkey.StatsServerThrottle, 24*60*60, 7, 28, _T(" d") );
-	AddSetting( &Settings.eDonkey.QueryServerThrottle, 60, 1, 300, _T(" m") );
-	AddSetting( &Settings.eDonkey.QueryFileThrottle, 60*1000, 30, 120, _T(" m") );
-	AddSetting( &Settings.eDonkey.GetSourcesThrottle, 60*60*1000, 1, 24, _T(" h") );
-	AddSetting( &Settings.eDonkey.QueueRankThrottle, 1000, 60, 600, _T(" s") );
-	AddSetting( &Settings.eDonkey.PacketThrottle, 1, 250, 5000, _T(" ms") );
-	AddSetting( &Settings.eDonkey.SourceThrottle, 1, 250, 5000, _T(" ms") );
-	AddSetting( &Settings.eDonkey.LearnNewServersClient, 1, 0, 1 );
-	AddSetting( &Settings.eDonkey.RequestPipe, 1, 1, 10 );
-	AddSetting( &Settings.eDonkey.RequestSize, 1024, 10, 1000, _T(" KB") );
-	AddSetting( &Settings.eDonkey.FrameSize, 1024, 1, 500, _T(" KB") );
-	AddSetting( &Settings.eDonkey.ReAskTime, 60, 20, 360, _T(" m") );
-	AddSetting( &Settings.eDonkey.DequeueTime, 60, 2, 512, _T(" m") );
-	AddSetting( &Settings.eDonkey.ExtendedRequest, 1, 0, 2 );
-	AddSetting( &Settings.eDonkey.SendPortServer, 1, 0, 1 );
-	AddSetting( &Settings.eDonkey.MagnetSearch, 1, 0, 1 );
-	AddSetting( &Settings.eDonkey.MinServerFileSize, 1, 0, 50, _T(" MB") );
-	AddSetting( &Settings.eDonkey.TagNames, 1, 0, 1 );
-	AddSetting( &Settings.eDonkey.Endgame, 1, 0, 1 );
-	AddSetting( &Settings.eDonkey.LargeFileSupport, 1, 0, 1 );
+	AddSetting( &Settings.eDonkey.DequeueTime );
+	AddSetting( &Settings.eDonkey.Endgame );
+	AddSetting( &Settings.eDonkey.ExtendedRequest );
+	AddSetting( &Settings.eDonkey.FastConnect );
+	AddSetting( &Settings.eDonkey.ForceHighID );
+	AddSetting( &Settings.eDonkey.FrameSize );
+	AddSetting( &Settings.eDonkey.GetSourcesThrottle );
+	AddSetting( &Settings.eDonkey.LargeFileSupport );
+	AddSetting( &Settings.eDonkey.LearnNewServersClient );
+	AddSetting( &Settings.eDonkey.MagnetSearch );
+	AddSetting( &Settings.eDonkey.MaxShareCount );
+	AddSetting( &Settings.eDonkey.MinServerFileSize );
+	AddSetting( &Settings.eDonkey.PacketThrottle );
+	AddSetting( &Settings.eDonkey.QueryFileThrottle );
+	AddSetting( &Settings.eDonkey.QueryGlobalThrottle );
+	AddSetting( &Settings.eDonkey.QueryServerThrottle );
+	AddSetting( &Settings.eDonkey.QueueRankThrottle );
+	AddSetting( &Settings.eDonkey.ReAskTime );
+	AddSetting( &Settings.eDonkey.RequestPipe );
+	AddSetting( &Settings.eDonkey.RequestSize );
+	AddSetting( &Settings.eDonkey.SendPortServer );
+	AddSetting( &Settings.eDonkey.SourceThrottle );
+	AddSetting( &Settings.eDonkey.StatsGlobalThrottle );
+	AddSetting( &Settings.eDonkey.StatsServerThrottle );
+	AddSetting( &Settings.eDonkey.TagNames );
 
-	AddSetting( &Settings.BitTorrent.DefaultTrackerPeriod, 60000, 5, 120, _T(" m") );
-	AddSetting( &Settings.BitTorrent.MaxTrackerRetry, 1, 1, 8 );
-	AddSetting( &Settings.BitTorrent.TorrentCodePage, 1, 0, 9999999 );
-	AddSetting( &Settings.BitTorrent.TorrentExtraKeys, 1, 0, 1 );
-	AddSetting( &Settings.BitTorrent.LinkTimeout, 1000, 10, 60*10, _T(" s") );
-	AddSetting( &Settings.BitTorrent.LinkPing, 1000, 10, 60*10, _T(" s") );
-	AddSetting( &Settings.BitTorrent.RequestPipe, 1, 1, 10 );
-	AddSetting( &Settings.BitTorrent.RequestSize, 1024, 8, 128, _T(" KB") );
-	AddSetting( &Settings.BitTorrent.RequestLimit, 1024, 1, 1024, _T(" KB") );
-	AddSetting( &Settings.BitTorrent.RandomPeriod, 1000, 1, 60*5, _T(" s") );
-	AddSetting( &Settings.BitTorrent.SourceExchangePeriod, 1, 1, 60*5, _T(" m") );
-	AddSetting( &Settings.BitTorrent.UploadCount, 1, 2, 16 );
-	AddSetting( &Settings.BitTorrent.AutoSeed, 1, 0, 1 );
-	AddSetting( &Settings.BitTorrent.BandwidthPercentage, 1, 50, 95, _T("%") );
-	AddSetting( &Settings.BitTorrent.TrackerKey, 1, 0, 1 );
-	AddSetting( &Settings.BitTorrent.StandardPeerID, 1, 0, 1 );
+	AddSetting( &Settings.BitTorrent.AutoSeed );
+	AddSetting( &Settings.BitTorrent.BandwidthPercentage );
+	AddSetting( &Settings.BitTorrent.DefaultTrackerPeriod );
+	AddSetting( &Settings.BitTorrent.LinkPing );
+	AddSetting( &Settings.BitTorrent.LinkTimeout );
+	AddSetting( &Settings.BitTorrent.MaxTrackerRetry );
+	AddSetting( &Settings.BitTorrent.RandomPeriod );
+	AddSetting( &Settings.BitTorrent.RequestLimit );
+	AddSetting( &Settings.BitTorrent.RequestPipe );
+	AddSetting( &Settings.BitTorrent.RequestSize );
+	AddSetting( &Settings.BitTorrent.SourceExchangePeriod );
+	AddSetting( &Settings.BitTorrent.StandardPeerID );
+	AddSetting( &Settings.BitTorrent.TorrentCodePage );
+	AddSetting( &Settings.BitTorrent.TorrentExtraKeys );
+	AddSetting( &Settings.BitTorrent.TrackerKey );
+	AddSetting( &Settings.BitTorrent.UploadCount );
 
-	AddSetting( &Settings.Discovery.AccessThrottle, 60, 1, 180, _T(" m") );
-	AddSetting( &Settings.Discovery.Lowpoint, 1, 1, 512 );
-	AddSetting( &Settings.Discovery.FailureLimit, 1, 1, 512 );
-	AddSetting( &Settings.Discovery.UpdatePeriod, 60, 1, 60 * 24, _T(" m") );
-	AddSetting( &Settings.Discovery.DefaultUpdate, 60, 1, 60 * 24, _T(" m") );
-	AddSetting( &Settings.Discovery.BootstrapCount, 1, 0, 20 );
-	AddSetting( &Settings.Discovery.CacheCount, 1, 1, 256 );
-	AddSetting( &Settings.Discovery.EnableG1GWC, 1, 0, 1 );
+	AddSetting( &Settings.Discovery.AccessThrottle );
+	AddSetting( &Settings.Discovery.BootstrapCount );
+	AddSetting( &Settings.Discovery.CacheCount );
+	AddSetting( &Settings.Discovery.DefaultUpdate );
+	AddSetting( &Settings.Discovery.EnableG1GWC );
+	AddSetting( &Settings.Discovery.FailureLimit );
+	AddSetting( &Settings.Discovery.Lowpoint );
+	AddSetting( &Settings.Discovery.UpdatePeriod );
 
-	AddSetting( &Settings.Search.HighlightNew, 1, 0, 1);
-	AddSetting( &Settings.Search.SchemaTypes, 1, 0, 1 );
-	AddSetting( &Settings.Search.ShowNames, 1, 0, 1 );
-	AddSetting( &Settings.Search.MonitorQueue, 1, 1, 4096 );
-	AddSetting( &Settings.Search.MaxPreviewLength, 1024, 1, 4096, _T(" KB") );
-	AddSetting( &Settings.Search.AdvancedPanel, 1, 0, 1 );
-	AddSetting( &Settings.Search.GeneralThrottle, 1, 200, 1000 );
-	AddSetting( &Settings.Search.SpamFilterThreshold, 1, 0, 100, _T("%") );
+	AddSetting( &Settings.Search.AdvancedPanel );
+	AddSetting( &Settings.Search.GeneralThrottle );
+	AddSetting( &Settings.Search.HighlightNew );
+	AddSetting( &Settings.Search.MaxPreviewLength );
+	AddSetting( &Settings.Search.MonitorQueue );
+	AddSetting( &Settings.Search.SchemaTypes );
+	AddSetting( &Settings.Search.ShowNames );
+	AddSetting( &Settings.Search.SpamFilterThreshold );
 
-	AddSetting( &Settings.Downloads.BufferSize, 1024, 0, 512, _T(" KB") );
-	AddSetting( &Settings.Downloads.SparseThreshold, 1024, 0, 256, _T(" MB") );
-	AddSetting( &Settings.Downloads.MaxAllowedFailures, 1, 3, 40 );
-	AddSetting( &Settings.Downloads.MaxFileSearches, 1, 0, 5 );
-	AddSetting( &Settings.Downloads.MaxConnectingSources, 1, 5, 50 );
-	AddSetting( &Settings.Downloads.MinSources, 1, 0, 6 );
-	AddSetting( &Settings.Downloads.ConnectThrottle, 1, 0, 5000, _T(" ms") );
-	AddSetting( &Settings.Downloads.PushTimeout, 1000, 5, 180, _T(" s") );
-	AddSetting( &Settings.Downloads.StarveTimeout, 60, 45, 1440, _T(" m") );
-	AddSetting( &Settings.Downloads.StarveGiveUp, 1, 3, 120, _T(" h") );
-	AddSetting( &Settings.Downloads.ChunkSize, 1024, 0, 10240, _T(" KB") );
-	AddSetting( &Settings.Downloads.ChunkStrap, 1024, 0, 10240, _T(" KB") );
-	AddSetting( &Settings.Downloads.AllowBackwards, 1, 0, 1 );
-	AddSetting( &Settings.Downloads.NeverDrop, 1, 0, 1 );
-	AddSetting( &Settings.Downloads.RequestHash, 1, 0, 1 );
-	AddSetting( &Settings.Downloads.RequestHTTP11, 1, 0, 1 );
-	AddSetting( &Settings.Downloads.RequestURLENC, 1, 0, 1 );
-	AddSetting( &Settings.Downloads.SaveInterval, 1000, 1, 120, _T(" s") );
-	AddSetting( &Settings.Downloads.FlushSD, 1, 0, 1 );
-	AddSetting( &Settings.Downloads.ShowPercent, 1, 0, 1 );
-	AddSetting( &Settings.Downloads.AutoClear, 1, 0, 1 );
-	AddSetting( &Settings.Downloads.ClearDelay, 1000, 1, 1800, _T(" s") );
-	AddSetting( &Settings.Downloads.RetryDelay, 1000, 120, 60*60, _T(" s") );
-	AddSetting( &Settings.Downloads.SearchPeriod, 1000, 10, 4*60 );
-	AddSetting( &Settings.Downloads.StaggardStart, 1, 0, 1 );
-	AddSetting( &Settings.Downloads.VerifyFiles, 1, 0, 1 );
-	AddSetting( &Settings.Downloads.VerifyTiger, 1, 0, 1 );
-	AddSetting( &Settings.Downloads.Metadata, 1, 0, 1 );
-	AddSetting( &Settings.Downloads.SortColumns, 1, 0, 1 );
-	AddSetting( &Settings.Downloads.SortSources, 1, 0, 1 );
-	AddSetting( &Settings.Downloads.MaxReviews, 1, 0, 256 );
-	AddSetting( &Settings.Downloads.StartDroppingFailedSourcesNumber, 1, 0, 50 );
+	AddSetting( &Settings.Downloads.AllowBackwards );
+	AddSetting( &Settings.Downloads.AutoClear );
+	AddSetting( &Settings.Downloads.BufferSize );
+	AddSetting( &Settings.Downloads.ChunkSize );
+	AddSetting( &Settings.Downloads.ChunkStrap );
+	AddSetting( &Settings.Downloads.ClearDelay );
+	AddSetting( &Settings.Downloads.ConnectThrottle );
+	AddSetting( &Settings.Downloads.FlushSD );
+	AddSetting( &Settings.Downloads.MaxAllowedFailures );
+	AddSetting( &Settings.Downloads.MaxConnectingSources );
+	AddSetting( &Settings.Downloads.MaxFileSearches );
+	AddSetting( &Settings.Downloads.MaxReviews );
+	AddSetting( &Settings.Downloads.Metadata );
+	AddSetting( &Settings.Downloads.MinSources );
+	AddSetting( &Settings.Downloads.NeverDrop );
+	AddSetting( &Settings.Downloads.PushTimeout );
+	AddSetting( &Settings.Downloads.RequestHTTP11 );
+	AddSetting( &Settings.Downloads.RequestHash );
+	AddSetting( &Settings.Downloads.RequestURLENC );
+	AddSetting( &Settings.Downloads.RetryDelay );
+	AddSetting( &Settings.Downloads.SaveInterval );
+	AddSetting( &Settings.Downloads.SearchPeriod );
+	AddSetting( &Settings.Downloads.ShowPercent );
+	AddSetting( &Settings.Downloads.SortColumns );
+	AddSetting( &Settings.Downloads.SortSources );
+	AddSetting( &Settings.Downloads.SparseThreshold );
+	AddSetting( &Settings.Downloads.StaggardStart );
+	AddSetting( &Settings.Downloads.StartDroppingFailedSourcesNumber );
+	AddSetting( &Settings.Downloads.StarveGiveUp );
+	AddSetting( &Settings.Downloads.StarveTimeout );
+	AddSetting( &Settings.Downloads.VerifyFiles );
+	AddSetting( &Settings.Downloads.VerifyTiger );
 
-	AddSetting( &Settings.Uploads.FreeBandwidthValue, 128, 0, 4096, _T(" Kb/s") );
-	AddSetting( &Settings.Uploads.FreeBandwidthFactor, 1, 0, 100, _T("%") );
-	AddSetting( &Settings.Uploads.ClampdownFactor, 1, 0, 100, _T("%") );
-	AddSetting( &Settings.Uploads.ClampdownFloor, 128, 0, 4096, _T(" Kb/s") );
-	AddSetting( &Settings.Uploads.QueuePollMin, 1000, 0, 60, _T(" s") );
-	AddSetting( &Settings.Uploads.QueuePollMax, 1000, 30, 180, _T(" s") );
-	AddSetting( &Settings.Uploads.RotateChunkLimit, 1024, 0, 10240, _T(" KB") );
-	AddSetting( &Settings.Uploads.AutoClear, 1, 0, 1 );
-	AddSetting( &Settings.Uploads.ClearDelay, 1000, 1, 1800, _T(" s") );
-	AddSetting( &Settings.Uploads.AllowBackwards, 1, 0, 1 );
-	AddSetting( &Settings.Uploads.DynamicPreviews, 1, 0, 1 );
-	AddSetting( &Settings.Uploads.PreviewQuality, 1, 5, 100, _T("%") );
-	AddSetting( &Settings.Uploads.PreviewTransfers, 1, 1, 64 );
-	AddSetting( &Settings.Uploads.RewardQueuePercentage, 1, 0, 99, _T("%") );
+	AddSetting( &Settings.Uploads.AllowBackwards );
+	AddSetting( &Settings.Uploads.AutoClear );
+	AddSetting( &Settings.Uploads.ClampdownFactor );
+	AddSetting( &Settings.Uploads.ClampdownFloor );
+	AddSetting( &Settings.Uploads.ClearDelay );
+	AddSetting( &Settings.Uploads.DynamicPreviews );
+	AddSetting( &Settings.Uploads.FreeBandwidthFactor );
+	AddSetting( &Settings.Uploads.FreeBandwidthValue );
+	AddSetting( &Settings.Uploads.PreviewQuality );
+	AddSetting( &Settings.Uploads.PreviewTransfers );
+	AddSetting( &Settings.Uploads.QueuePollMax );
+	AddSetting( &Settings.Uploads.QueuePollMin );
+	AddSetting( &Settings.Uploads.RewardQueuePercentage );
+	AddSetting( &Settings.Uploads.RotateChunkLimit );
 
-	AddSetting( &Settings.Interface.LowResMode, 1, 0, 1 );
+	AddSetting( &Settings.Interface.LowResMode );
 
-	AddSetting( &Settings.Library.SourceExpire, 60, 60, 604800, _T(" m") );
-	AddSetting( &Settings.Library.WatchFoldersTimeout, 1, 1, 60, _T(" s") );
-	AddSetting( &Settings.Library.SourceMesh, 1, 0, 1);
-	AddSetting( &Settings.Library.TigerHeight, 1, 1, 64 );
-	AddSetting( &Settings.Library.QueryRouteSize, 1, 8, 24 );
-	AddSetting( &Settings.Library.ThumbSize, 1, 16, 256 );
-	AddSetting( &Settings.Library.VirtualFiles, 1, 0, 1);
-	AddSetting( &Settings.Library.HashWindow, 1, 0, 1);
-	AddSetting( &Settings.Library.MaxMaliciousFileSize, 1, 1024, 1024*5, _T(" B") );
-	AddSetting( &Settings.Library.HighPriorityHashing, 1, 1, 100, _T(" MB/s"));
-	AddSetting( &Settings.Library.LowPriorityHashing, 1, 1, 100, _T(" MB/s"));
-	AddSetting( &Settings.Library.PreferAPETags, 1, 0, 1);
-	AddSetting( &Settings.Library.UseFolderGUID, 1, 0, 1);
-	AddSetting( &Settings.Library.MarkFileAsDownload, 1, 0, 1);
-	AddSetting( &Settings.Library.UseCustomFolders, 1, 0, 1);
+	AddSetting( &Settings.Library.HashWindow );
+	AddSetting( &Settings.Library.HighPriorityHashing );
+	AddSetting( &Settings.Library.LowPriorityHashing );
+	AddSetting( &Settings.Library.MarkFileAsDownload );
+	AddSetting( &Settings.Library.MaxMaliciousFileSize );
+	AddSetting( &Settings.Library.PreferAPETags );
+	AddSetting( &Settings.Library.QueryRouteSize );
+	AddSetting( &Settings.Library.SourceExpire );
+	AddSetting( &Settings.Library.SourceMesh );
+	AddSetting( &Settings.Library.ThumbSize );
+	AddSetting( &Settings.Library.TigerHeight );
+	AddSetting( &Settings.Library.UseCustomFolders );
+	AddSetting( &Settings.Library.UseFolderGUID );
+	AddSetting( &Settings.Library.VirtualFiles );
+	AddSetting( &Settings.Library.WatchFoldersTimeout );
 
-	AddSetting( &Settings.MediaPlayer.ShortPaths, 1, 0, 1 );
+	AddSetting( &Settings.MediaPlayer.ShortPaths );
 
-	AddSetting( &Settings.Bandwidth.Request, 128, 0, 8192, _T(" Kb/s") );
-	AddSetting( &Settings.Bandwidth.HubIn, 128, 0, 8192, _T(" Kb/s") );
-	AddSetting( &Settings.Bandwidth.HubOut, 128, 0, 8192, _T(" Kb/s") );
-	AddSetting( &Settings.Bandwidth.LeafIn, 128, 0, 8192, _T(" Kb/s") );
-	AddSetting( &Settings.Bandwidth.LeafOut, 128, 0, 8192, _T(" Kb/s") );
-	AddSetting( &Settings.Bandwidth.PeerIn, 128, 0, 8192, _T(" Kb/s") );
-	AddSetting( &Settings.Bandwidth.PeerOut, 128, 0, 8192, _T(" Kb/s") );
-	AddSetting( &Settings.Bandwidth.UdpOut, 128, 0, 8192, _T(" Kb/s") );
-	AddSetting( &Settings.Bandwidth.HubUploads, 128, 0, 4096, _T(" Kb/s") );
+	AddSetting( &Settings.Bandwidth.HubIn );
+	AddSetting( &Settings.Bandwidth.HubOut );
+	AddSetting( &Settings.Bandwidth.HubUploads );
+	AddSetting( &Settings.Bandwidth.LeafIn );
+	AddSetting( &Settings.Bandwidth.LeafOut );
+	AddSetting( &Settings.Bandwidth.PeerIn );
+	AddSetting( &Settings.Bandwidth.PeerOut );
+	AddSetting( &Settings.Bandwidth.Request );
+	AddSetting( &Settings.Bandwidth.UdpOut );
 
-	AddSetting( &Settings.Experimental.EnableDIPPSupport, 1, 0, 1 );
+	AddSetting( &Settings.Experimental.EnableDIPPSupport );
 
-	AddSetting( &Settings.WINE.MenuFix, 1, 0, 1 );
+	AddSetting( &Settings.WINE.MenuFix );
 
 	CLiveList::Sort( &m_wndList, 0 );
 	CLiveList::Sort( &m_wndList, 0 );
 
 	Skin.Translate( _T("CAdvancedSettingsList"), m_wndList.GetHeaderCtrl() );
+
+	UpdateAll();
+
 	return TRUE;
 }
 
-void CAdvancedSettingsPage::AddSetting(LPVOID pValue, DWORD nScale, DWORD nMin, DWORD nMax, LPCTSTR pszSuffix)
+void CAdvancedSettingsPage::AddSetting(LPVOID pValue)
 {
-	CSettings::Item* pItem = Settings.GetSetting( (DWORD*)pValue );
+	CSettings::Item* pItem = Settings.GetSetting( pValue );
+	ASSERT( pItem != NULL );
 	if ( pItem == NULL ) return;
-	
-	EditItem* pEdit = new EditItem( pItem, nScale, nMin, nMax, pszSuffix );
-	
+
+	EditItem* pEdit = new EditItem( pItem );
+	ASSERT( pEdit != NULL );
+	if ( pEdit == NULL ) return;
+
 	LV_ITEM pList = {};
 	
 	pList.mask		= LVIF_PARAM|LVIF_TEXT|LVIF_IMAGE;
@@ -345,17 +352,21 @@ void CAdvancedSettingsPage::UpdateItem(int nItem)
 	EditItem* pItem = (EditItem*)m_wndList.GetItemData( nItem );
 	CString strValue;
 		
-	if ( pItem->m_nMin == 0 && pItem->m_nMax == 1 )
+	if ( pItem->m_pItem->m_pBool )
 	{
-		strValue = pItem->m_nValue ? _T("True") : _T("False");
+		ASSERT( pItem->m_pItem->m_nScale == 1 &&
+			pItem->m_pItem->m_nMin == 0 && pItem->m_pItem->m_nMax == 1 );
+		strValue = pItem->m_bValue ? _T("True") : _T("False");
 	}
-	else
+	else if ( pItem->m_pItem->m_pDword )
 	{
-		strValue.Format( _T("%lu"), pItem->m_nValue / pItem->m_nScale );
-		if ( theApp.m_bRTL )
-			strValue = _T("\x200E") + strValue + pItem->m_sSuffix;
+		ASSERT( pItem->m_pItem->m_nScale &&
+			pItem->m_pItem->m_nMin < pItem->m_pItem->m_nMax );
+		strValue.Format( _T("%lu"), pItem->m_nValue / pItem->m_pItem->m_nScale );
+		if ( Settings.General.LanguageRTL )
+			strValue = _T("\x200E") + strValue + pItem->m_pItem->m_szSuffix;
 		else
-			strValue += pItem->m_sSuffix;
+			strValue += pItem->m_pItem->m_szSuffix;
 	}
 	
 	m_wndList.SetItemText( nItem, 1, strValue );
@@ -364,7 +375,14 @@ void CAdvancedSettingsPage::UpdateItem(int nItem)
 void CAdvancedSettingsPage::OnItemChangedProperties(NMHDR* /*pNMHDR*/, LRESULT* pResult) 
 {
 //	NM_LISTVIEW* pNMListView = (NM_LISTVIEW*)pNMHDR;
-	
+
+	UpdateAll();
+
+	*pResult = 0;
+}
+
+void CAdvancedSettingsPage::UpdateAll()
+{
 	int nItem = m_wndList.GetNextItem( -1, LVNI_SELECTED );
 	
 	if ( nItem >= 0 )
@@ -372,22 +390,28 @@ void CAdvancedSettingsPage::OnItemChangedProperties(NMHDR* /*pNMHDR*/, LRESULT* 
 		EditItem* pItem = (EditItem*)m_wndList.GetItemData( nItem );
 		CString strValue;
 		
-		m_wndValueSpin.SendMessage( UDM_SETRANGE32, pItem->m_nMin, pItem->m_nMax );
-		
-		strValue.Format( _T("%lu"), pItem->m_nValue / pItem->m_nScale );
-		
+		if ( pItem->m_pItem->m_pDword )
+		{
+			m_wndValueSpin.SendMessage( UDM_SETRANGE32, pItem->m_pItem->m_nMin, pItem->m_pItem->m_nMax );
+			strValue.Format( _T("%lu"), pItem->m_nValue / pItem->m_pItem->m_nScale );
+		}
+		else
+		{
+			m_wndValueSpin.SendMessage( UDM_SETRANGE32, 0, 1 );
+			strValue = pItem->m_bValue ? _T("1") : _T("0");
+		}
 		m_wndValue.SetWindowText( strValue );
 		m_wndValue.EnableWindow( TRUE );
 		m_wndValueSpin.EnableWindow( TRUE );
+		GetDlgItem( IDC_DEFAULT_VALUE )->EnableWindow( ! pItem->IsDefault() );
 	}
 	else
 	{
 		m_wndValue.SetWindowText( _T("") );
 		m_wndValue.EnableWindow( FALSE );
 		m_wndValueSpin.EnableWindow( FALSE );
-	}
-	
-	*pResult = 0;
+		GetDlgItem( IDC_DEFAULT_VALUE )->EnableWindow( FALSE );
+	}	
 }
 
 void CAdvancedSettingsPage::OnChangeValue() 
@@ -403,11 +427,18 @@ void CAdvancedSettingsPage::OnChangeValue()
 		
 		m_wndValue.GetWindowText( strValue );
 		
-		if ( _stscanf( strValue, _T("%lu"), &pItem->m_nValue ) == 1 )
+		DWORD nValue = 0;
+		if ( _stscanf( strValue, _T("%lu"), &nValue ) == 1 )
 		{
-			pItem->m_nValue = max( pItem->m_nMin, min( pItem->m_nMax, pItem->m_nValue ) );
-			pItem->m_nValue *= pItem->m_nScale;
+			if ( pItem->m_pItem->m_pDword )
+				pItem->m_nValue = max( pItem->m_pItem->m_nMin,
+					min( pItem->m_pItem->m_nMax, nValue ) ) * pItem->m_pItem->m_nScale;
+			else
+				pItem->m_bValue = ( nValue == 1 );
+
 			UpdateItem( nItem );
+
+			GetDlgItem( IDC_DEFAULT_VALUE )->EnableWindow( ! pItem->IsDefault() );
 		}
 	}
 }
@@ -440,30 +471,55 @@ void CAdvancedSettingsPage::OnDestroy()
 	CSettingsPage::OnDestroy();
 }
 
+void CAdvancedSettingsPage::OnBnClickedDefaultValue()
+{
+	int nItem = m_wndList.GetNextItem( -1, LVNI_SELECTED );
+	if ( nItem >= 0 )
+	{
+		EditItem* pItem = (EditItem*)m_wndList.GetItemData( nItem );
+		pItem->Default();
+
+		UpdateItem( nItem );
+		UpdateAll();
+	}
+}
 
 /////////////////////////////////////////////////////////////////////////////
 // CSettingEdit construction
 
-CAdvancedSettingsPage::EditItem::EditItem(CSettings::Item* pItem, DWORD nScale, DWORD nMin, DWORD nMax, LPCTSTR pszSuffix)
+CAdvancedSettingsPage::EditItem::EditItem(CSettings::Item* pItem) :
+	m_pItem( pItem ),
+	m_nValue( pItem->m_pDword ? *pItem->m_pDword : 0 ),
+	m_bValue( pItem->m_pBool ? *pItem->m_pBool : false ),
+	m_sName( pItem->m_szName )
 {
-	m_pItem		= pItem;
-	m_nValue	= *pItem->m_pDword;
-	m_sName		= pItem->m_sName;
-	m_nScale	= nScale;
-	m_nMin		= nMin;
-	m_nMax		= nMax;
-	
-	if ( m_sName.GetAt( 0 ) == '.' ) m_sName = _T("razacore") + m_sName;
-	
-	if ( pszSuffix ) m_sSuffix = pszSuffix;
-}
-
-CAdvancedSettingsPage::EditItem::~EditItem()
-{
+	if ( ! *pItem->m_szSection ||							// Settings.Name -> General.Name
+		! lstrcmp( pItem->m_szSection, _T("Settings.") ) )	// .Name -> General.Name
+		m_sName.Insert( 0, _T("General") );
+	else
+		m_sName.Insert( 0, pItem->m_szSection );
 }
 
 void CAdvancedSettingsPage::EditItem::Commit()
 {
-	*(m_pItem->m_pDword) = m_nValue;
+	if ( m_pItem->m_pDword )
+		*m_pItem->m_pDword = m_nValue;
+	else
+		*m_pItem->m_pBool= m_bValue;
 }
 
+bool CAdvancedSettingsPage::EditItem::IsDefault() const
+{
+	if ( m_pItem->m_pDword )
+		return ( m_pItem->m_DwordDefault == m_nValue );
+	else
+		return ( m_pItem->m_BoolDefault == m_bValue );
+}
+
+void CAdvancedSettingsPage::EditItem::Default()
+{
+	if ( m_pItem->m_pDword )
+		m_nValue = m_pItem->m_DwordDefault;
+	else
+		m_bValue = m_pItem->m_BoolDefault;
+}

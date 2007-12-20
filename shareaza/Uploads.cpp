@@ -81,11 +81,11 @@ void CUploads::Clear(BOOL bMessage)
 //////////////////////////////////////////////////////////////////////
 // CUploads counting
 
-INT_PTR CUploads::GetCount(CUploadTransfer* pExcept, int nState) const
+DWORD CUploads::GetCount(CUploadTransfer* pExcept, int nState) const
 {
-	if ( pExcept == NULL && nState == -1 ) return m_pList.GetCount();
+	if ( pExcept == NULL && nState == -1 ) return (DWORD)m_pList.GetCount();
 	
-	INT_PTR nCount = 0;
+	DWORD nCount = 0;
 	
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
@@ -111,9 +111,9 @@ INT_PTR CUploads::GetCount(CUploadTransfer* pExcept, int nState) const
 	return nCount;
 }
 
-int CUploads::GetTorrentCount(int nState) const
+DWORD CUploads::GetTorrentCount(int nState) const
 {
-	int nCount = 0;
+	DWORD nCount = 0;
 	
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
@@ -168,7 +168,7 @@ DWORD CUploads::GetBandwidth() const
 
 BOOL CUploads::AllowMoreTo(IN_ADDR* pAddress) const
 {
-	int nCount = 0;
+	DWORD nCount = 0;
 	
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
@@ -187,7 +187,7 @@ BOOL CUploads::AllowMoreTo(IN_ADDR* pAddress) const
 
 BOOL CUploads::CanUploadFileTo(IN_ADDR* pAddress, const Hashes::Sha1Hash& oSHA1) const
 {
-	int nCount = 0;
+	DWORD nCount = 0;
 	
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
@@ -212,7 +212,7 @@ BOOL CUploads::CanUploadFileTo(IN_ADDR* pAddress, const Hashes::Sha1Hash& oSHA1)
 
 BOOL CUploads::EnforcePerHostLimit(CUploadTransfer* pHit, BOOL bRequest)
 {
-	int nCount = 0;
+	DWORD nCount = 0;
 	
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{

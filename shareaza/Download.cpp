@@ -347,7 +347,7 @@ void CDownload::OnRun()
 			if ( ( ! m_bComplete ) && ( tNow - GetStartTimer() ) > ( 3 * 60 * 60 * 1000 )  )	
 			{	//If it's not complete, and we've been trying for at least 3 hours
 
-				DWORD tHoursToTry = min ( ( GetEffectiveSourceCount() + 49 ) / 50 , 9 ) + Settings.Downloads.StarveGiveUp;
+				DWORD tHoursToTry = min( ( GetEffectiveSourceCount() + 49u ) / 50u, 9u ) + Settings.Downloads.StarveGiveUp;
 
 				if (  ( tNow - m_tReceived ) > ( tHoursToTry * 60 * 60 * 1000 ) )
 				{	//And have had no new data for 5-14 hours	

@@ -239,7 +239,7 @@ BOOL CPanelWnd::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)
 		CPoint pt;
 		GetCursorPos( &pt );
 
-		if ( theApp.m_bRTL )
+		if ( Settings.General.LanguageRTL )
 		{
 			CRect rc;
 			pWnd->GetWindowRect( &rc );
@@ -265,7 +265,7 @@ void CPanelWnd::OnNcLButtonDown(UINT nHitTest, CPoint point)
 	}
 	else if ( nHitTest == HTCAPTION && m_bPanelClose && m_pSkin == NULL )
 	{
-		if ( theApp.m_bRTL )
+		if ( Settings.General.LanguageRTL )
 		{
 			CRect rc;
 			GetWindowRect( &rc );

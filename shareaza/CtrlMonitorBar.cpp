@@ -161,9 +161,9 @@ void CMonitorBarCtrl::OnSkinChange()
 	if ( hWatermark != NULL ) m_bmWatermark.Attach( hWatermark );
 	
 	if ( m_hTab ) DestroyIcon( m_hTab );
-	m_hTab    = CoolInterface.ExtractIcon( IDI_POINTER_ARROW, theApp.m_bRTL );
+	m_hTab    = CoolInterface.ExtractIcon( IDI_POINTER_ARROW, Settings.General.LanguageRTL );
 	if ( m_hUpDown ) DestroyIcon( m_hUpDown );
-	m_hUpDown = CoolInterface.ExtractIcon( IDI_UPDOWN_ARROW, theApp.m_bRTL );
+	m_hUpDown = CoolInterface.ExtractIcon( IDI_UPDOWN_ARROW, Settings.General.LanguageRTL );
 
 	m_pRxItem->m_nColour = CoolInterface.m_crMonitorDownloadBar;
 	m_pTxItem->m_nColour = CoolInterface.m_crMonitorUploadBar;
@@ -182,7 +182,7 @@ void CMonitorBarCtrl::DoPaint(CDC* pDC)
 
 	CSize size = rcClient.Size();
 	CDC* pMemDC = CoolInterface.GetBuffer( *pDC, size );
-	if ( theApp.m_bRTL ) theApp.m_pfnSetLayout( pMemDC->m_hDC, 0 );
+	if ( Settings.General.LanguageRTL ) theApp.m_pfnSetLayout( pMemDC->m_hDC, 0 );
 
 	if ( ! CoolInterface.DrawWatermark( pMemDC, &rcClient, &m_bmWatermark ) )
 		pMemDC->FillSolidRect( &rcClient, CoolInterface.m_crMidtone );
@@ -213,7 +213,7 @@ void CMonitorBarCtrl::DoPaint(CDC* pDC)
 	GetClientRect( &rcClient );
 	pDC->BitBlt( rcClient.left, rcClient.top, rcClient.Width(), rcClient.Height(),
 		pMemDC, 0, 0, SRCCOPY );
-	if ( theApp.m_bRTL ) theApp.m_pfnSetLayout( pMemDC->m_hDC, LAYOUT_RTL );
+	if ( Settings.General.LanguageRTL ) theApp.m_pfnSetLayout( pMemDC->m_hDC, LAYOUT_RTL );
 }
 
 /////////////////////////////////////////////////////////////////////////////

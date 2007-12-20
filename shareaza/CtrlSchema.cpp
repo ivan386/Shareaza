@@ -21,6 +21,7 @@
 
 #include "StdAfx.h"
 #include "Shareaza.h"
+#include "Settings.h"
 #include "CtrlSchema.h"
 #include "Schema.h"
 #include "XML.h"
@@ -75,7 +76,7 @@ CSchemaCtrl::CSchemaCtrl()
 
 BOOL CSchemaCtrl::Create(DWORD dwStyle, const RECT& rect, CWnd* pParentWnd, UINT nID) 
 {
-	return CreateEx( WS_EX_CONTROLPARENT | ( theApp.m_bRTL ? WS_EX_LAYOUTRTL : 0 ),
+	return CreateEx( WS_EX_CONTROLPARENT | ( Settings.General.LanguageRTL ? WS_EX_LAYOUTRTL : 0 ),
 		NULL, NULL, dwStyle | WS_CHILD | WS_VSCROLL | WS_CLIPCHILDREN,
 		rect, pParentWnd, nID );
 }
@@ -249,7 +250,7 @@ void CSchemaCtrl::Layout()
 
 		if ( m_nCaptionWidth )
 		{
-			if ( theApp.m_bRTL )
+			if ( Settings.General.LanguageRTL )
 			{
 				rcNew.left		= m_nCaptionWidth;
 				rcNew.right		= rcClient.right - 10;

@@ -319,7 +319,7 @@ BOOL CMainWnd::PreCreateWindow(CREATESTRUCT& cs)
 
 int CMainWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
-	if ( theApp.m_bRTL )
+	if ( Settings.General.LanguageRTL )
 		lpCreateStruct->dwExStyle |= WS_EX_LAYOUTRTL;
 
 	SetWindowLongPtr( GetSafeHwnd(), GWL_EXSTYLE, lpCreateStruct->dwExStyle );

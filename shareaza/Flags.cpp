@@ -168,7 +168,7 @@ void CFlags::AddFlag(CImageFile* pImage, CRect* pRect, COLORREF crBack)
 		pDC2->SetBkMode( TRANSPARENT );
 		pDC2->FillSolidRect( 0, 0, IMAGELIST_FLAG_WIDTH, IMAGELIST_FLAG_HEIGHT, crBack );
 
-		if ( theApp.m_bRTL )
+		if ( Settings.General.LanguageRTL )
 			theApp.m_pfnSetLayout( hDCMem2, LAYOUT_RTL );
 		StretchBlt( hDCMem2, 0, 3, REAL_FLAG_WIDTH, REAL_FLAG_HEIGHT, 
 					hDCMem1, 0, 0, REAL_FLAG_WIDTH, REAL_FLAG_HEIGHT, SRCCOPY );

@@ -83,8 +83,8 @@ private:
 public:
 	CString				GetSourceURLs(CList< CString >* pState, int nMaximum, PROTOCOLID nProtocol, CDownloadSource* pExcept);
 	CString				GetTopFailedSources(int nMaximum, PROTOCOLID nProtocol);
-	int					GetEffectiveSourceCount() const;
-	int					GetSourceCount(BOOL bNoPush = FALSE, BOOL bSane = FALSE) const;
+	DWORD				GetEffectiveSourceCount() const;
+	DWORD				GetSourceCount(BOOL bNoPush = FALSE, BOOL bSane = FALSE) const;
 	int					GetBTSourceCount(BOOL bNoPush = FALSE) const;
 	int					GetED2KCompleteSourceCount() const;
 	BOOL				CheckSource(CDownloadSource* pSource) const;

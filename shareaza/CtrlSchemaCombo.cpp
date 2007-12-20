@@ -21,6 +21,7 @@
 
 #include "StdAfx.h"
 #include "Shareaza.h"
+#include "Settings.h"
 #include "Schema.h"
 #include "SchemaCache.h"
 #include "ShellIcons.h"
@@ -216,7 +217,7 @@ void CSchemaCombo::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 	CDC dc;
 	
 	dc.Attach( lpDrawItemStruct->hDC );
-	if ( theApp.m_bRTL ) theApp.m_pfnSetLayout( dc.m_hDC, LAYOUT_RTL );
+	if ( Settings.General.LanguageRTL ) theApp.m_pfnSetLayout( dc.m_hDC, LAYOUT_RTL );
 	
 	dc.SetTextColor( ( lpDrawItemStruct->itemState & ODS_SELECTED )
 		? CoolInterface.m_crHiText : CoolInterface.m_crDropdownText );

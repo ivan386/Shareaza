@@ -69,7 +69,7 @@ public:
 	CNeighbour* Get(IN_ADDR* pAddress) const; // By the remote computer's IP address
 
 	// Count how many computers we are connected to, specifying various filtering characteristics
-	int  GetCount(PROTOCOLID nProtocol, int nState, int nNodeType)        const; // Pass -1 to not filter by protocol, state, or node type
+	DWORD GetCount(PROTOCOLID nProtocol, int nState, int nNodeType)        const; // Pass -1 to not filter by protocol, state, or node type
 	BOOL NeighbourExists(PROTOCOLID nProtocol, int nState, int nNodeType) const; // Use this if you just want to know if there are any or not
 
 public:

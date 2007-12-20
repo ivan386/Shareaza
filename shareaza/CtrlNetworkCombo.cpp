@@ -21,6 +21,7 @@
 
 #include "StdAfx.h"
 #include "Shareaza.h"
+#include "Settings.h"
 #include "CtrlNetworkCombo.h"
 #include "CoolInterface.h"
 
@@ -85,7 +86,7 @@ int CNetworkCombo::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	CBitmap bmProtocols;
 	bmProtocols.LoadBitmap( IDB_PROTOCOLS );
-	if ( theApp.m_bRTL )
+	if ( Settings.General.LanguageRTL )
 		bmProtocols.m_hObject = CreateMirroredBitmap( (HBITMAP)bmProtocols.m_hObject );
 
 	m_gdiImageList.Create( 16, 16, ILC_COLOR32|ILC_MASK, 6, 1 ) ||
@@ -114,7 +115,7 @@ void CNetworkCombo::OnSkinChange()
 		HICON hIcon = CoolInterface.ExtractIcon( (UINT)protocolCmdMap[ nImage ].commandID, FALSE );
 		if ( hIcon )
 		{
-			m_gdiImageList.Replace( theApp.m_bRTL ? nRevStart - nImage : nImage + 1, hIcon );
+			m_gdiImageList.Replace( Settings.General.LanguageRTL ? nRevStart - nImage : nImage + 1, hIcon );
 			DestroyIcon( hIcon );
 		}
 	}
@@ -145,7 +146,7 @@ void CNetworkCombo::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 	CDC dc;
 
 	dc.Attach( lpDrawItemStruct->hDC );
-	if ( theApp.m_bRTL ) theApp.m_pfnSetLayout( dc.m_hDC, LAYOUT_RTL );
+	if ( Settings.General.LanguageRTL ) theApp.m_pfnSetLayout( dc.m_hDC, LAYOUT_RTL );
 
 	CFont* pOldFont = (CFont*)dc.SelectObject( lpDrawItemStruct->itemData == 0 ?
 		&theApp.m_gdiFontBold : &theApp.m_gdiFont );
@@ -171,7 +172,7 @@ void CNetworkCombo::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 	int nImage = (int)lpDrawItemStruct->itemData;
 	if ( nImage ) nImage ++;
 
-	if ( theApp.m_bRTL && nImage ) nImage = m_gdiImageList.GetImageCount() - nImage;
+	if ( Settings.General.LanguageRTL && nImage ) nImage = m_gdiImageList.GetImageCount() - nImage;
 	m_gdiImageList.Draw( &dc, nImage, pt,
 		( lpDrawItemStruct->itemState & ODS_SELECTED ) ? ILD_SELECTED : ILD_NORMAL );
 

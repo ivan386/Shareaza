@@ -21,6 +21,7 @@
 
 #include "StdAfx.h"
 #include "Shareaza.h"
+#include "Settings.h"
 #include "MetaPanel.h"
 #include "CoolInterface.h"
 #include "SchemaMember.h"
@@ -166,7 +167,7 @@ void CMetaPanel::Paint(CDC* pDC, const CRect* prcArea)
 	}
 
 	POSITION pos = GetIterator();
-	DWORD dwFlags = ( theApp.m_bRTL ? ETO_RTLREADING : 0 );
+	DWORD dwFlags = ( Settings.General.LanguageRTL ? ETO_RTLREADING : 0 );
 	
 	for ( int nRow = 0 ; pos ; nRow++ )
 	{

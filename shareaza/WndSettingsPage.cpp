@@ -21,6 +21,7 @@
 
 #include "StdAfx.h"
 #include "Shareaza.h"
+#include "Settings.h"
 #include "WndSettingsSheet.h"
 #include "WndSettingsPage.h"
 
@@ -116,7 +117,7 @@ BOOL CSettingsPage::Create(CRect& rcPage, CWnd* pSheetWnd)
 	if ( ! pTemplate.Load( m_lpszTemplateName ) ) return FALSE;
 	pData = (LPDLGTEMPLATE)GlobalLock( pTemplate.m_hTemplate );
 
-	DWORD dwExStyle = theApp.m_bRTL ? WS_EX_RTLREADING|WS_EX_RIGHT|WS_EX_LEFTSCROLLBAR|WS_EX_LAYOUTRTL : 
+	DWORD dwExStyle = Settings.General.LanguageRTL ? WS_EX_RTLREADING|WS_EX_RIGHT|WS_EX_LEFTSCROLLBAR|WS_EX_LAYOUTRTL : 
 		WS_EX_LTRREADING|WS_EX_LEFT|WS_EX_RIGHTSCROLLBAR;
 
 	if ( ((DLGTEMPLATEEX*)pData)->signature == 0xFFFF )

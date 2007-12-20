@@ -486,7 +486,7 @@ void CChildWnd::OnSkinChange()
 
 	if ( m_nResID )
 	{
-		CoolInterface.SetIcon( m_nResID, theApp.m_bRTL, FALSE, this );
+		CoolInterface.SetIcon( m_nResID, Settings.General.LanguageRTL, FALSE, this );
 
 		CString strCaption;
 		LoadString( strCaption, m_nResID );

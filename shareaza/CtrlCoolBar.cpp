@@ -21,6 +21,7 @@
 
 #include "StdAfx.h"
 #include "Shareaza.h"
+#include "Settings.h"
 #include "CtrlCoolBar.h"
 #include "CoolInterface.h"
 #include "Skin.h"
@@ -294,7 +295,7 @@ UINT CCoolBarCtrl::ThrowMenu(UINT nID, CMenu* pMenu, CWnd* pParent, BOOL bComman
 	if ( bCommand ) nFlags |= TPM_RETURNCMD;
 
 #if 1
-	CoolMenu.RegisterEdge( theApp.m_bRTL ? rcButton.right : rcButton.left, 
+	CoolMenu.RegisterEdge( Settings.General.LanguageRTL ? rcButton.right : rcButton.left, 
 		rcButton.bottom, rcButton.Width() );
 	bRight = FALSE;
 #endif
@@ -302,7 +303,7 @@ UINT CCoolBarCtrl::ThrowMenu(UINT nID, CMenu* pMenu, CWnd* pParent, BOOL bComman
 	nFlags |= ( bRight ? TPM_RIGHTALIGN : TPM_LEFTALIGN );
 
 	UINT nCmd = TrackPopupMenuEx( pMenu->GetSafeHmenu(), nFlags,
-		bRight || theApp.m_bRTL ? rcButton.right : rcButton.left, rcButton.bottom,
+		bRight || Settings.General.LanguageRTL ? rcButton.right : rcButton.left, rcButton.bottom,
 		pParent->GetSafeHwnd(), &tpm );
 
 	m_bMenuGray = FALSE;
@@ -534,7 +535,7 @@ INT_PTR CCoolBarCtrl::OnToolHitTest(CPoint point, TOOLINFO* pTI) const
 			else
 			{
 				BOOL bRTL = FALSE;
-				if ( theApp.m_bRTL )
+				if ( Settings.General.LanguageRTL )
 				{
 					Skin.GetTextFlowChange( strTip, &bRTL );
 					if ( bRTL ) strTip.MakeReverse();

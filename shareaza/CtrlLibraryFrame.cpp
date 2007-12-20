@@ -392,10 +392,10 @@ BOOL CLibraryFrame::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)
 	ClientToScreen( &rcClient );
 
 
-	rc.SetRect(	theApp.m_bRTL ? rcClient.right - m_nTreeSize - SPLIT_SIZE :
+	rc.SetRect(	Settings.General.LanguageRTL ? rcClient.right - m_nTreeSize - SPLIT_SIZE :
 				rcClient.left + m_nTreeSize,
 				rcClient.top,
-				theApp.m_bRTL ? rcClient.right - m_nTreeSize :
+				Settings.General.LanguageRTL ? rcClient.right - m_nTreeSize :
 				rcClient.left + m_nTreeSize + SPLIT_SIZE,
 				rcClient.bottom );
 
@@ -407,10 +407,10 @@ BOOL CLibraryFrame::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)
 
 	if ( m_pPanel != NULL )
 	{
-		rc.SetRect(	theApp.m_bRTL ? rcClient.left :
+		rc.SetRect(	Settings.General.LanguageRTL ? rcClient.left :
 					rcClient.left + m_nTreeSize + SPLIT_SIZE,
 					rcClient.bottom - BAR_HEIGHT - m_nPanelSize - SPLIT_SIZE,
-					theApp.m_bRTL ? rcClient.right - m_nTreeSize : rcClient.right,
+					Settings.General.LanguageRTL ? rcClient.right - m_nTreeSize : rcClient.right,
 					rcClient.bottom - BAR_HEIGHT - m_nPanelSize );
 
 		if ( rc.PtInRect( point ) )

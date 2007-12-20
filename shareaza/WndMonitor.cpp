@@ -689,7 +689,7 @@ void CRemoteWnd::PaintStatus(CDC* pDC)
 		pDC->DrawText( m_sStatus, &m_rcsStatusText, 
 			DT_SINGLELINE|DT_CENTER|DT_VCENTER|DT_NOPREFIX|DT_END_ELLIPSIS );
 
-		if ( theApp.m_bRTL ) 
+		if ( Settings.General.LanguageRTL ) 
 		{
 			CRect rcSrc;
 			rcSrc.top = 0; rcSrc.left = 0;

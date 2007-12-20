@@ -21,6 +21,7 @@
 
 #include "StdAfx.h"
 #include "Shareaza.h"
+#include "Settings.h"
 #include "CoolInterface.h"
 #include "WndSettingsSheet.h"
 #include "WndSettingsPage.h"
@@ -216,7 +217,7 @@ INT_PTR CSettingsSheet::DoModal()
 	}
 	ZeroMemory( m_pTemplate, sizeof(DLGTEMPLATE) + 6 );
 
-	DWORD dwExStyle = theApp.m_bRTL ? WS_EX_RTLREADING|WS_EX_RIGHT|WS_EX_LEFTSCROLLBAR|WS_EX_LAYOUTRTL : 
+	DWORD dwExStyle = Settings.General.LanguageRTL ? WS_EX_RTLREADING|WS_EX_RIGHT|WS_EX_LEFTSCROLLBAR|WS_EX_LAYOUTRTL : 
 		WS_EX_LEFT|WS_EX_LTRREADING|WS_EX_RIGHTSCROLLBAR;
 
 	m_pTemplate->style				= WS_POPUPWINDOW|WS_VISIBLE|WS_CLIPSIBLINGS|WS_DLGFRAME|WS_OVERLAPPED|DS_MODALFRAME;

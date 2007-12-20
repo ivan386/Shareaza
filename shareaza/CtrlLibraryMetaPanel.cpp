@@ -224,7 +224,7 @@ void CLibraryMetaPanel::Update()
 	m_pMetadata.Clean( 4096 );
 	
 	CClientDC dc( this );
-	if ( theApp.m_bRTL ) theApp.m_pfnSetLayout( dc.m_hDC, LAYOUT_BITMAPORIENTATIONPRESERVED );
+	if ( Settings.General.LanguageRTL ) theApp.m_pfnSetLayout( dc.m_hDC, LAYOUT_BITMAPORIENTATIONPRESERVED );
 	SCROLLINFO pInfo;
 	CRect rc;
 	
@@ -298,7 +298,7 @@ void CLibraryMetaPanel::OnPaint()
 	CPaintDC dc( this );
 	CRect rcClient;
 	CString str;
-	DWORD dwFlags = ( theApp.m_bRTL ? ETO_RTLREADING : 0 );
+	DWORD dwFlags = ( Settings.General.LanguageRTL ? ETO_RTLREADING : 0 );
 
 	GetClientRect( &rcClient );
 	
@@ -367,7 +367,7 @@ void CLibraryMetaPanel::OnPaint()
 	
 	dc.SelectObject( &CoolInterface.m_fntBold );
 	LoadString( str, IDS_TIP_LOCATION );
-	if ( theApp.m_bRTL )
+	if ( Settings.General.LanguageRTL )
 		DrawText( &dc, rcWork.left, rcWork.top, ':' + str );
 	else
 		DrawText( &dc, rcWork.left, rcWork.top, str + ':' );
@@ -411,7 +411,7 @@ void CLibraryMetaPanel::OnPaint()
 
 void CLibraryMetaPanel::DrawText(CDC* pDC, int nX, int nY, LPCTSTR pszText, RECT* pRect)
 {
-	DWORD dwFlags = ( theApp.m_bRTL ? ETO_RTLREADING : 0 );
+	DWORD dwFlags = ( Settings.General.LanguageRTL ? ETO_RTLREADING : 0 );
 	CSize sz = pDC->GetTextExtent( pszText, static_cast< int >( _tcslen( pszText ) ) );
 	CRect rc( nX - 2, nY - 2, nX + sz.cx + 2, nY + sz.cy + 2 );
 	

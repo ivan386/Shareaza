@@ -281,7 +281,7 @@ int CEmoticons::AddEmoticon(LPCTSTR pszText, CImageFile* pImage, CRect* pRect, C
 		hOld_bm1 = (HBITMAP)SelectObject( hDCMem1, bmOriginal.m_hObject );
 		hOld_bm2 = (HBITMAP)SelectObject( hDCMem2, bmMoved.m_hObject );
 
-		if ( theApp.m_bRTL )
+		if ( Settings.General.LanguageRTL )
 			theApp.m_pfnSetLayout( hDCMem2, LAYOUT_RTL );
 		StretchBlt( hDCMem2, 0, 0, EMOTICON_SIZE, EMOTICON_SIZE, hDCMem1, 0, 0, EMOTICON_SIZE, EMOTICON_SIZE, SRCCOPY );
 

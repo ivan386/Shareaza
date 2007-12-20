@@ -232,7 +232,7 @@ BOOL CEDClients::Merge(CEDClient* pClient)
 
 BOOL CEDClients::IsFull(CEDClient* pCheckThis)
 {
-	int nCount = 0;
+	DWORD nCount = 0;
 	DWORD tNow = GetTickCount();
 
 	// Count the number of connected clients
@@ -278,7 +278,7 @@ BOOL CEDClients::IsFull(CEDClient* pCheckThis)
 
 BOOL CEDClients::IsOverloaded()
 {
-	int nCount = 0;
+	DWORD nCount = 0;
 
 	for ( CEDClient* pClient = m_pFirst ; pClient ; pClient = pClient->m_pEdNext )
 	{

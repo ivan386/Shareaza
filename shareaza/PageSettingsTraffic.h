@@ -40,31 +40,23 @@ public:
 
 // Operations
 public:
-	void	AddSetting(LPVOID pValue, DWORD nScale = 1, DWORD nMin = 0, DWORD nMax = 0, LPCTSTR pszSuffix = NULL);
+	void	AddSetting(LPVOID pValue);
 	void	UpdateItem(int nItem);
+	void	UpdateAll();
 
 	class EditItem
 	{
-	// Construction
 	public:
-		EditItem(CSettings::Item* pItem, DWORD nScale = 1, DWORD nMin = 0, DWORD nMax = 0, LPCTSTR pszSuffix = NULL);
-		virtual ~EditItem();
+		EditItem(CSettings::Item* pItem);
 
-	// Attributes
-	public:
-		CSettings::Item* m_pItem;
-	public:
-		CString		m_sName;
-		DWORD		m_nScale;
-		DWORD		m_nMin;
-		DWORD		m_nMax;
-		CString		m_sSuffix;
-		DWORD		m_nValue;
+		CSettings::Item*	m_pItem;	// Parent item
+		CString				m_sName;	// Item name
+		DWORD				m_nValue;	// Current value for DWORD
+		bool				m_bValue;	// Current value for bool
 
-	// Operations
-	public:
-		void		Commit();
-
+		void	Commit();				// Update parent item
+		bool	IsDefault() const;		// Check if value is equal to default value
+		void	Default();				// Restore default value
 	};
 
 // Dialog Data
@@ -93,9 +85,9 @@ protected:
 	afx_msg void OnItemChangedProperties(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnChangeValue();
 	afx_msg void OnColumnClickProperties(NMHDR* pNMHDR, LRESULT* pResult);
+	afx_msg void OnBnClickedDefaultValue();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
-
 };
 
 //{{AFX_INSERT_LOCATION}}

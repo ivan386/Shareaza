@@ -194,7 +194,7 @@ BOOL CDownloadMonitorDlg::OnInitDialog()
 
 			if ( ShellIcons.Lookup( strType, NULL, &hIcon, NULL, NULL ) )
 			{
-				if ( theApp.m_bRTL ) hIcon = CreateMirroredIcon( hIcon );
+				if ( Settings.General.LanguageRTL ) hIcon = CreateMirroredIcon( hIcon );
 				m_wndIcon.SetIcon( hIcon );
 			}
 		}
@@ -286,7 +286,7 @@ void CDownloadMonitorDlg::OnTimer(UINT_PTR /*nIDEvent*/)
 
 	if ( m_pDownload->IsStarted() )
 	{
-		if ( theApp.m_bRTL )
+		if ( Settings.General.LanguageRTL )
 		{
 			strText.Format( _T("%s %s %.2f%% : Shareaza"),
 				(LPCTSTR)m_pDownload->m_sDisplayName, strOf, m_pDownload->GetProgress() );
@@ -413,7 +413,7 @@ void CDownloadMonitorDlg::OnTimer(UINT_PTR /*nIDEvent*/)
 		Update( &m_wndSpeed, strText );
 
 		strText.Format( _T("%i %s %i"), nTransferCount, strOf, nSourceCount );
-		if ( theApp.m_bRTL ) strText = _T("\x202B") + strText;
+		if ( Settings.General.LanguageRTL ) strText = _T("\x202B") + strText;
 		Update( &m_wndSources, strText );
 	}
 	else if ( nSourceCount )
@@ -437,7 +437,7 @@ void CDownloadMonitorDlg::OnTimer(UINT_PTR /*nIDEvent*/)
 
 	if ( m_pDownload->IsStarted() )
 	{
-		if ( theApp.m_bRTL )
+		if ( Settings.General.LanguageRTL )
 		{
 			strText.Format( _T("(%.2f%%) %s %s %s"),
 				m_pDownload->GetProgress(),

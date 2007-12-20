@@ -36,485 +36,437 @@ static char THIS_FILE[]=__FILE__;
 
 CSettings Settings;
 
-
-//////////////////////////////////////////////////////////////////////
-// CSettings setup
-
-void CSettings::Setup()
-{
-	Add( _T(".Path"), &General.Path, General.Path );
-	Add( _T(".UserPath"), &General.UserPath, General.UserPath );
-	Add( _T(".Debug"), &General.Debug, FALSE );
-	Add( _T(".DebugLog"), &General.DebugLog, FALSE );
-//	Add( _T(".DebugUPnP"), &General.DebugUPnP, FALSE );
-	Add( _T(".DebugBTSources"), &General.DebugBTSources, FALSE );
-	Add( _T(".MaxDebugLogSize"), &General.MaxDebugLogSize, 10*1024*1024 );
-	Add( _T(".UpdateCheck"), &General.UpdateCheck, TRUE );
-	Add( _T(".HashIntegrity"), &General.HashIntegrity, TRUE );
-	Add( _T(".DiskSpaceWarning"), &General.DiskSpaceWarning, 500 );
-	Add( _T(".DiskSpaceStop"), &General.DiskSpaceStop, 25 );
-	Add( _T(".MinTransfersRest"), &General.MinTransfersRest, 15 );
-	Add( _T("Settings.GUIMode"), &General.GUIMode, GUI_BASIC );
-	Add( _T("Settings.CloseMode"), &General.CloseMode, 0 );
-	Add( _T("Settings.TrayMinimise"), &General.TrayMinimise, FALSE );
-	Add( _T("Settings.VerboseMode"), &General.VerboseMode, FALSE );
-	Add( _T("Settings.ShowTimestamp"), &General.ShowTimestamp, TRUE );
-	Add( _T("Settings.SizeLists"), &General.SizeLists, FALSE );
-	Add( _T("Settings.RatesInBytes"), &General.RatesInBytes, TRUE );
-	Add( _T("Settings.RatesUnit"), &General.RatesUnit, 0 );
-	Add( _T("Settings.AlwaysOpenURLs"), &General.AlwaysOpenURLs, FALSE );
-	Add( _T("Settings.Language"), &General.Language, General.Language );
-	Add( _T("Settings.IgnoreXPsp2"), &General.IgnoreXPsp2, FALSE );
-	Add( _T("Settings.ItWasLimited"), &General.ItWasLimited, FALSE );
-
-	Add( _T("Interface.TipDelay"), &Interface.TipDelay, 600 );
-	Add( _T("Interface.TipAlpha"), &Interface.TipAlpha, 230 );
-	Add( _T("Interface.TipSearch"), &Interface.TipSearch, TRUE );
-	Add( _T("Interface.TipLibrary"), &Interface.TipLibrary, TRUE );
-	Add( _T("Interface.TipDownloads"), &Interface.TipDownloads, TRUE );
-	Add( _T("Interface.TipUploads"), &Interface.TipUploads, TRUE );
-	Add( _T("Interface.TipNeighbours"), &Interface.TipNeighbours, TRUE );
-	Add( _T("Interface.TipMedia"), &Interface.TipMedia, TRUE );
-	Add( _T("Interface.LowResMode"), &Interface.LowResMode, FALSE );
-
-	Add( _T("Library.WatchFolders"), &Library.WatchFolders, TRUE );
-	Add( _T("Library.WatchFoldersTimeout"), &Library.WatchFoldersTimeout, 5 );
-	Add( _T("Library.PartialMatch"), &Library.PartialMatch, TRUE );
-	Add( _T("Library.VirtualFiles"), &Library.VirtualFiles, FALSE );
-	Add( _T("Library.SourceMesh"), &Library.SourceMesh, TRUE );
-	Add( _T("Library.SourceExpire"), &Library.SourceExpire, 86400 );
-	Add( _T("Library.TigerHeight"), &Library.TigerHeight, 9 );
-	Add( _T("Library.QueryRouteSize"), &Library.QueryRouteSize, 20 );
-	Add( _T("Library.HistoryTotal"), &Library.HistoryTotal, 32 );
-	Add( _T("Library.HistoryDays"), &Library.HistoryDays, 3 );
-	Add( _T("Library.ShowVirtual"), &Library.ShowVirtual, TRUE );
-	Add( _T("Library.TreeSize"), &Library.TreeSize, 200 );
-	Add( _T("Library.PanelSize"), &Library.PanelSize, 120 );
-	Add( _T("Library.ShowPanel"), &Library.ShowPanel, TRUE );
-	Add( _T("Library.StoreViews"), &Library.StoreViews, TRUE );
-	Add( _T("Library.ShowCoverArt"), &Library.ShowCoverArt, TRUE );
-	Add( _T("Library.SchemaURI"), &Library.SchemaURI, CSchema::uriAudio );
-	Add( _T("Library.FilterURI"), &Library.FilterURI, NULL );
-	Add( _T("Library.SafeExecute"), &Library.SafeExecute, _T("|3gp|aac|ace|ape|avi|bmp|flv|gif|iso|jpg|jpeg|mid|mov|m1v|m2v|m3u|m4a|mkv|mp2|mp3|mp4|mpa|mpe|mpg|mpeg|ogg|ogm|pdf|png|qt|rar|rm|sks|tar|tgz|torrent|txt|wav|wma|wmv|zip|co|collection|lit|") );
-	Add( _T("Library.PrivateTypes"), &Library.PrivateTypes, _T("|vbs|js|jc!|fb!|bc!|dbx|part|partial|pst|reget|getright|pif|lnk|sd|url|wab|m4p|infodb|racestats|chk|tmp|temp|ini|inf|log|old|manifest|met|bak|$$$|---|~~~|###|__incomplete___|") );
-	Add( _T("Library.ThumbSize"), &Library.ThumbSize, 96 );
-	Add( _T("Library.BitziAgent"), &Library.BitziAgent, _T(".") );
-	Add( _T("Library.BitziWebView"), &Library.BitziWebView, _T("http://bitzi.com/lookup/(URN)?v=detail&ref=shareaza") );
-	Add( _T("Library.BitziWebSubmit"), &Library.BitziWebSubmit, _T("http://bitzi.com/lookup/(SHA1).(TTH)?fl=(SIZE)&ff=(FIRST20)&fn=(NAME)&tag.ed2k.ed2khash=(ED2K)&(INFO)&a=(AGENT)&v=Q0.4&ref=shareaza") );
-	Add( _T("Library.BitziXML"), &Library.BitziXML, _T("http://ticket.bitzi.com/rdf/(SHA1).(TTH)") );
-	Add( _T("Library.BitziOkay"), &Library.BitziOkay, FALSE );
-	Add( _T("Library.HighPriorityHash"), &Library.HighPriorityHash, FALSE );
-	Add( _T("Library.HashWindow"), &Library.HashWindow, TRUE );
-	Add( _T("Library.CreateGhosts"), &Library.CreateGhosts, TRUE );
-//	Add( _T("Library.BufferSize"), &Library.BufferSize, 0 );
-//	Add( _T("Library.Parallel"), &Library.Parallel, 0 );
-	Add( _T("Library.HighPriorityHashing"), &Library.HighPriorityHashing, 20);
-	Add( _T("Library.LowPriorityHashing"), &Library.LowPriorityHashing, 2 );
-	Add( _T("Library.MaxMaliciousFileSize"), &Library.MaxMaliciousFileSize, 1024 );
-	Add( _T("Library.PreferAPETags"), &Library.PreferAPETags, 1 );
-	Add( _T("Library.UseFolderGUID"), &Library.UseFolderGUID, 1 );
-	Add( _T("Library.MarkFileAsDownload"), &Library.MarkFileAsDownload, 1 );
-	Add( _T("Library.UseCustomFolders"), &Library.UseCustomFolders, 1 );
-
-	Add( _T("Search.LastSchemaURI"), &Search.LastSchemaURI, _T("") );
-	Add( _T("Search.BlankSchemaURI"), &Search.BlankSchemaURI, CSchema::uriAudio );
-	Add( _T("Search.HideSearchPanel"), &Search.HideSearchPanel, FALSE );
-	Add( _T("Search.SearchPanel"), &Search.SearchPanel, TRUE );
-	Add( _T("Search.ExpandMatches"), &Search.ExpandMatches, FALSE );
-	Add( _T("Search.HighlightNew"), &Search.HighlightNew, TRUE );
-	Add( _T("Search.SwitchToTransfers"), &Search.SwitchToTransfers, TRUE );
-	Add( _T("Search.SchemaTypes"), &Search.SchemaTypes, TRUE );
-	Add( _T("Search.ShowNames"), &Search.ShowNames, TRUE );
-	Add( _T("Search.FilterMask"), &Search.FilterMask, 0x168 );
-	Add( _T("Search.MonitorSchemaURI"), &Search.MonitorSchemaURI, CSchema::uriAudio );
-	Add( _T("Search.MonitorFilter"), &Search.MonitorFilter, NULL );
-	Add( _T("Search.MonitorQueue"), &Search.MonitorQueue, 128 );
-	Add( _T("Search.BrowseTreeSize"), &Search.BrowseTreeSize, 180 );
-	Add( _T("Search.DetailPanelVisible"), &Search.DetailPanelVisible, TRUE );
-	Add( _T("Search.DetailPanelSize"), &Search.DetailPanelSize, 100 );
-	Add( _T("Search.MaxPreviewLength"), &Search.MaxPreviewLength, 20*1024 );
-	Add( _T("Search.AdultFilter"), &Search.AdultFilter, FALSE );
-	Add( _T("Search.AdvancedPanel"), &Search.AdvancedPanel, TRUE );
-	Add( _T("Search.GeneralThrottle"), &Search.GeneralThrottle, 200 );
-	Add( _T("Search.SpamFilterThreshold"), &Search.SpamFilterThreshold, 20 );
-
-	Add( _T("MediaPlayer.EnablePlay"), &MediaPlayer.EnablePlay, TRUE );
-	Add( _T("MediaPlayer.EnableEnqueue"), &MediaPlayer.EnableEnqueue, TRUE );
-	Add( _T("MediaPlayer.FileTypes"), &MediaPlayer.FileTypes, _T("|asx|wax|m3u|wvx|wmx|asf|wav|snd|au|aif|aifc|aiff|wma|mp3|cda|mid|rmi|midi|avi|mpeg|mpg|m1v|mp2|mpa|mpe|wmv|") );
-	Add( _T("MediaPlayer.Repeat"), &MediaPlayer.Repeat, FALSE );
-	Add( _T("MediaPlayer.Random"), &MediaPlayer.Random, FALSE );
-	Add( _T("MediaPlayer.Zoom"), (DWORD*)&MediaPlayer.Zoom, smzFill );
-	Add( _T("MediaPlayer.Aspect"), &MediaPlayer.Aspect, smaDefault );
-	Add( _T("MediaPlayer.Volume"), &MediaPlayer.Volume, 1.0f );
-	Add( _T("MediaPlayer.ListVisible"), &MediaPlayer.ListVisible, TRUE );
-	Add( _T("MediaPlayer.ListSize"), &MediaPlayer.ListSize, 240 );
-	Add( _T("MediaPlayer.StatusVisible"), &MediaPlayer.StatusVisible, TRUE );
-	Add( _T("MediaPlayer.MediaServicesCLSID"), &MediaPlayer.MediaServicesCLSID, _T("{3DC28AA6-A597-4E03-96DF-ADA19155B0BE}") );
-	Add( _T("MediaPlayer.Mpeg1PreviewCLSID"), &MediaPlayer.Mpeg1PreviewCLSID, _T("{9AA8DF47-B8FE-47da-AB1A-2DAA0DA0B646}") );
-	Add( _T("MediaPlayer.Mp3PreviewCLSID"), &MediaPlayer.Mp3PreviewCLSID, _T("{BF00DBCC-90A2-4f46-8171-7D4F929D035F}") );
-	Add( _T("MediaPlayer.AviPreviewCLSID"), &MediaPlayer.AviPreviewCLSID, _T("{394011F0-6D5C-42a3-96C6-24B9AD6B010C}") );
-	Add( _T("MediaPlayer.VisWrapperCLSID"), &MediaPlayer.VisWrapperCLSID, _T("{C3B7B25C-6B8B-481A-BC48-59F9A6F7B69A}") );
-	Add( _T("MediaPlayer.VisSoniqueCLSID"), &MediaPlayer.VisSoniqueCLSID, _T("{D07E630D-A850-4f11-AD29-3D3848B67EFE}") );
-	Add( _T("MediaPlayer.VisCLSID"), &MediaPlayer.VisCLSID, _T("{591A5CFF-3172-4020-A067-238542DDE9C2}") );
-	Add( _T("MediaPlayer.VisPath"), &MediaPlayer.VisPath, _T("") );
-	Add( _T("MediaPlayer.VisSize"), &MediaPlayer.VisSize, 1 );
-	Add( _T("MediaPlayer.ServicePath"), &MediaPlayer.ServicePath, _T("") );
-	Add( _T("MediaPlayer.ShortPaths"), &MediaPlayer.ShortPaths, FALSE );
-
-	Add( _T("Web.Magnet"), &Web.Magnet, TRUE );
-	Add( _T("Web.Gnutella"), &Web.Gnutella, TRUE );
-	Add( _T("Web.ED2K"), &Web.ED2K, TRUE );
-	Add( _T("Web.Piolet"), &Web.Piolet, TRUE );
-	Add( _T("Web.Torrent"), &Web.Torrent, TRUE );
-
-	Add( _T("Connection.AutoConnect"), &Connection.AutoConnect, TRUE );
-	Add( _T("Connection.FirewallState"), &Connection.FirewallState, CONNECTION_AUTO );
-	Add( _T("Connection.OutHost"), &Connection.OutHost, NULL );
-	Add( _T("Connection.InHost"), &Connection.InHost, NULL );
-	Add( _T("Connection.InPort"), &Connection.InPort, GNUTELLA_DEFAULT_PORT );
-	Add( _T("Connection.InBind"), &Connection.InBind, FALSE );
-	Add( _T("Connection.RandomPort"), &Connection.RandomPort, FALSE );
-	Add( _T("Connection.InSpeed"), &Connection.InSpeed, 2048 );
-	Add( _T("Connection.OutSpeed"), &Connection.OutSpeed, 256 );
-	Add( _T("Connection.IgnoreLocalIP"), &Connection.IgnoreLocalIP, TRUE );
-	Add( _T("Connection.IgnoreOwnIP"), &Connection.IgnoreOwnIP, TRUE );
-	Add( _T("Connection.TimeoutConnect"), &Connection.TimeoutConnect, 16000 );
-	Add( _T("Connection.TimeoutHandshake"), &Connection.TimeoutHandshake, 45000 );
-	Add( _T("Connection.TimeoutTraffic"), &Connection.TimeoutTraffic, 140000 );
-	Add( _T("Connection.SendBuffer"), &Connection.SendBuffer, 2048 );
-//	Add( _T("Connection.AsyncIO"), &Connection.AsyncIO, TRUE );
-	Add( _T("Connection.RequireForTransfers"), &Connection.RequireForTransfers, TRUE );
-	Add( _T("Connection.ConnectThrottle"), &Connection.ConnectThrottle, 0 );
-	Add( _T("Connection.FailurePenalty"), &Connection.FailurePenalty, 300 );
-	Add( _T("Connection.FailureLimit"), &Connection.FailureLimit, 3 );
-	Add( _T("Connection.DetectConnectionLoss"), &Connection.DetectConnectionLoss, TRUE );
-	Add( _T("Connection.DetectConnectionReset"), &Connection.DetectConnectionReset, FALSE );
-	Add( _T("Connection.ForceConnectedState"), &Connection.ForceConnectedState, TRUE );
-	Add( _T("Connection.SlowConnect"), &Connection.SlowConnect, FALSE );
-	Add( _T("Connection.EnableFirewallException"), &Connection.EnableFirewallException, TRUE );
-	Add( _T("Connection.DeleteFirewallException"), &Connection.DeleteFirewallException, FALSE );
-	Add( _T("Connection.EnableUPnP"), &Connection.EnableUPnP, FALSE );
-	Add( _T("Connection.DeleteUPnPPorts"), &Connection.DeleteUPnPPorts, TRUE );
-	Add( _T("Connection.SkipWANPPPSetup"), &Connection.SkipWANPPPSetup, FALSE );
-	Add( _T("Connection.SkipWANIPSetup"), &Connection.SkipWANIPSetup, FALSE );
-
-	Add( _T("Bandwidth.Request"), &Bandwidth.Request, 4096 );
-	Add( _T("Bandwidth.HubIn"), &Bandwidth.HubIn, 0 );
-	Add( _T("Bandwidth.HubOut"), &Bandwidth.HubOut, 0 );
-	Add( _T("Bandwidth.LeafIn"), &Bandwidth.LeafIn, 0 );
-	Add( _T("Bandwidth.LeafOut"), &Bandwidth.LeafOut, 0 );
-	Add( _T("Bandwidth.PeerIn"), &Bandwidth.PeerIn, 0 );
-	Add( _T("Bandwidth.PeerOut"), &Bandwidth.PeerOut, 0 );
-	Add( _T("Bandwidth.UdpOut"), &Bandwidth.UdpOut, 0 );
-	Add( _T("Bandwidth.Downloads"), &Bandwidth.Downloads, 0 );
-	Add( _T("Bandwidth.Uploads"), &Bandwidth.Uploads, 0 );
-	Add( _T("Bandwidth.HubUploads"), &Bandwidth.HubUploads, 5120 );
-
-	Add( _T("Community.ChatEnable"), &Community.ChatEnable, TRUE );
-	Add( _T("Community.ChatAllNetworks"), &Community.ChatAllNetworks, TRUE );
-	Add( _T("Community.ChatFilter"), &Community.ChatFilter, TRUE );
-	Add( _T("Community.ChatFilterED2K"), &Community.ChatFilterED2K, TRUE );
-	Add( _T("Community.ChatCensor"), &Community.ChatCensor, FALSE );
-
-	Add( _T("Community.Timestamp"), &Community.Timestamp, TRUE );
-	Add( _T("Community.ServeProfile"), &Community.ServeProfile, TRUE );
-	Add( _T("Community.ServeFiles"), &Community.ServeFiles, TRUE );
-	Add( _T("Community.AwayMessageIdleTime"), &Community.AwayMessageIdleTime, 20*60 );
-
-	Add( _T("Discovery.AccessThrottle"), &Discovery.AccessThrottle, 3600 );
-	Add( _T("Discovery.Lowpoint"), &Discovery.Lowpoint, 10 );
-	Add( _T("Discovery.FailureLimit"), &Discovery.FailureLimit, 2 );
-	Add( _T("Discovery.UpdatePeriod"), &Discovery.UpdatePeriod, 1800 );
-	Add( _T("Discovery.DefaultUpdate"), &Discovery.DefaultUpdate, 3600 );
-	Add( _T("Discovery.BootstrapCount"), &Discovery.BootstrapCount, 10 );
-	Add( _T("Discovery.G2DAddress"), &Discovery.G2DAddress, _T("stats.shareaza.com:6446") );
-	Add( _T("Discovery.G2DRetryAfter"), &Discovery.G2DRetryAfter, 0 );
-	Add( _T("Discovery.CacheCount"), &Discovery.CacheCount, 50 );
-	Add( _T("Discovery.EnableG1GWC"), &Discovery.EnableG1GWC, FALSE );
-
-	Add( _T("Gnutella.ConnectFactor"), &Gnutella.ConnectFactor, 4 );
-	Add( _T("Gnutella.DeflateHub2Hub"), &Gnutella.DeflateHub2Hub, TRUE );
-	Add( _T("Gnutella.DeflateLeaf2Hub"), &Gnutella.DeflateLeaf2Hub, FALSE );
-	Add( _T("Gnutella.DeflateHub2Leaf"), &Gnutella.DeflateHub2Leaf, TRUE );
-	Add( _T("Gnutella.MaxResults"), &Gnutella.MaxResults, 150 );
-	Add( _T("Gnutella.MaxHits"), &Gnutella.MaxHits, 64 );
-	Add( _T("Gnutella.HitsPerPacket"), &Gnutella.HitsPerPacket, 64 );
-	Add( _T("Gnutella.RouteCache"), &Gnutella.RouteCache, 600 );
-	Add( _T("Gnutella.HostCacheCount"), &Gnutella.HostCacheSize, 1024 );
-	Add( _T("Gnutella.HostCacheView"), &Gnutella.HostCacheView, PROTOCOL_ED2K );
-	Add( _T("Gnutella.ConnectThrottle"), &Gnutella.ConnectThrottle, 120 );
-	Add( _T("Gnutella.BlockBlankClients"), &Gnutella.BlockBlankClients, TRUE );
-	Add( _T("Gnutella.SpecifyProtocol"), &Gnutella.SpecifyProtocol, TRUE );
-
-	Add( _T("Gnutella1.ClientMode"), &Gnutella1.ClientMode, MODE_LEAF );
-	Add( _T("Gnutella1.EnableAlways"), &Gnutella1.EnableAlways, FALSE );
-	Add( _T("Gnutella1.NumHubs"), &Gnutella1.NumHubs, 3 );
-	Add( _T("Gnutella1.NumLeafs"), &Gnutella1.NumLeafs, 50 );
-	Add( _T("Gnutella1.NumPeers"), &Gnutella1.NumPeers, 32 ); // For X-Degree
-	Add( _T("Gnutella1.PacketBufferSize"), &Gnutella1.PacketBufferSize, 64 );
-	Add( _T("Gnutella1.PacketBufferTime"), &Gnutella1.PacketBufferTime, 60000 );
-	Add( _T("Gnutella1.DefaultTTL"), &Gnutella1.DefaultTTL, 3 );
-	Add( _T("Gnutella1.SearchTTL"), &Gnutella1.SearchTTL, 3 );
-	Add( _T("Gnutella1.TranslateTTL"), &Gnutella1.TranslateTTL, 2 );
-	Add( _T("Gnutella1.MaximumTTL"), &Gnutella1.MaximumTTL, 10 );
-	Add( _T("Gnutella1.MaximumPacket"), &Gnutella1.MaximumPacket, 65535 );
-	Add( _T("Gnutella1.MaximumQuery"), &Gnutella1.MaximumQuery, 256 );
-	Add( _T("Gnutella1.StrictPackets"), &Gnutella1.StrictPackets, FALSE );
-	Add( _T("Gnutella1.EnableGGEP"), &Gnutella1.EnableGGEP, TRUE );
-	Add( _T("Gnutella1.VendorMsg"), &Gnutella1.VendorMsg, TRUE );
-	Add( _T("Gnutella1.QueryThrottle"), &Gnutella1.QueryThrottle, 30 );
-	Add( _T("Gnutella1.RequeryDelay"), &Gnutella1.RequeryDelay, 30 );
-	Add( _T("Gnutella1.HostExpire"), &Gnutella1.HostExpire, 2 * 24 * 60 * 60 );
-	Add( _T("Gnutella1.PingFlood"), &Gnutella1.PingFlood, 3000 );
-	Add( _T("Gnutella1.PingRate"), &Gnutella1.PingRate, 30000 );
-	Add( _T("Gnutella1.PongCache"), &Gnutella1.PongCache, 10000 );
-	Add( _T("Gnutella1.PongCount"), &Gnutella1.PongCount, 10 );
-	Add( _T("Gnutella1.QueueLimter"), &Gnutella1.HitQueueLimit, 50 );
-	Add( _T("Gnutella1.QuerySearchUTF8"), &Gnutella1.QuerySearchUTF8, TRUE );
-	Add( _T("Gnutella1.QueryHitUTF8"), &Gnutella1.QueryHitUTF8, TRUE );
-	Add( _T("Gnutella1.MaxHostsInPongs"), &Settings.Gnutella1.MaxHostsInPongs, 10 );
-
-	Add( _T("Gnutella2.ClientMode"), &Gnutella2.ClientMode, MODE_AUTO );
-	Add( _T("Gnutella2.HubVerified"), &Gnutella2.HubVerified, FALSE );
-	Add( _T("Gnutella2.EnableAlways"), &Gnutella2.EnableAlways, TRUE );
-	Add( _T("Gnutella2.NumHubs"), &Gnutella2.NumHubs, 2 );
-	Add( _T("Gnutella2.NumLeafs"), &Gnutella2.NumLeafs, 300 );
-	Add( _T("Gnutella2.NumPeers"), &Gnutella2.NumPeers, 6 );
-	Add( _T("Gnutella2.PingRelayLimit"), &Gnutella2.PingRelayLimit, 10);
-	Add( _T("Gnutella2.UdpMTU"), &Gnutella2.UdpMTU, 500 );
-	Add( _T("Gnutella2.UdpBuffers"), &Gnutella2.UdpBuffers, 512 );
-	Add( _T("Gnutella2.UdpInFrames"), &Gnutella2.UdpInFrames, 256 );
-	Add( _T("Gnutella2.UdpOutFrames"), &Gnutella2.UdpOutFrames, 256 );
-	Add( _T("Gnutella2.UdpGlobalThrottle"), &Gnutella2.UdpGlobalThrottle, 1 );
-	Add( _T("Gnutella2.UdpOutExpire"), &Gnutella2.UdpOutExpire, 26000 );
-	Add( _T("Gnutella2.UdpOutResend"), &Gnutella2.UdpOutResend, 6000 );
-	Add( _T("Gnutella2.UdpInExpire"), &Gnutella2.UdpInExpire, 30000 );
-	Add( _T("Gnutella2.LNIPeriod"), &Gnutella2.LNIPeriod, 60000 );
-	Add( _T("Gnutella2.KHLPeriod"), &Gnutella2.KHLPeriod, 60000 );
-	Add( _T("Gnutella2.KHLHubCount"), &Gnutella2.KHLHubCount, 50 );
-	Add( _T("Gnutella2.HAWPeriod"), &Gnutella2.HAWPeriod, 300000 );
-	Add( _T("Gnutella2.HostExpire"), &Gnutella2.HostExpire, 2 * 24 * 60 * 60 );
-	Add( _T("Gnutella2.HostCurrent"), &Gnutella2.HostCurrent, 10 * 60 );
-	Add( _T("Gnutella2.PingRate"), &Gnutella2.PingRate, 15000 );
-	Add( _T("Gnutella2.QueryGlobalThrottle"), &Gnutella2.QueryGlobalThrottle, 125 );
-	Add( _T("Gnutella2.QueryHostThrottle"), &Gnutella2.QueryHostThrottle, 120 );
-	Add( _T("Gnutella2.QueryHostDeadline"), &Gnutella2.QueryHostDeadline, 10*60 );
-	Add( _T("Gnutella2.RequeryDelay"), &Gnutella2.RequeryDelay, 4*60*60 );
-	Add( _T("Gnutella2.HubHorizonSize"), &Gnutella2.HubHorizonSize, 128 );
-	Add( _T("Gnutella2.QueryLimit"), &Gnutella2.QueryLimit, 2400 );
-
-	Add( _T("eDonkey.EnableAlways"), &eDonkey.EnableAlways, FALSE );
-	Add( _T("eDonkey.FastConnect"), &eDonkey.FastConnect, FALSE );
-	Add( _T("eDonkey.ForceHighID"), &eDonkey.ForceHighID, TRUE );
-	Add( _T("eDonkey.NumServers"), &eDonkey.NumServers, 1 );
-	Add( _T("eDonkey.MaxLinks"), &eDonkey.MaxLinks, 200 );
-	Add( _T("eDonkey.MaxResults"), &eDonkey.MaxResults, 100 );
-	Add( _T("eDonkey.MaxShareCount"), &eDonkey.MaxShareCount, 1000 );
-	Add( _T("eDonkey.ServerWalk"), &eDonkey.ServerWalk, TRUE );
-	Add( _T("eDonkey.StatsServerThrottle"), &eDonkey.StatsServerThrottle, 7*24*60*60 );
-	Add( _T("eDonkey.StatsGlobalThrottle"), &eDonkey.StatsGlobalThrottle, 30*60*1000 );
-	Add( _T("eDonkey.QueryGlobalThrottle"), &eDonkey.QueryGlobalThrottle, 1000 );
-	Add( _T("eDonkey.QueryServerThrottle"), &eDonkey.QueryServerThrottle, 120 );
-	Add( _T("eDonkey.QueryFileThrottle"), &eDonkey.QueryFileThrottle, 60*60*1000 );
-	Add( _T("eDonkey.GetSourcesThrottle"), &eDonkey.GetSourcesThrottle, 8*60*60*1000 );
-	Add( _T("eDonkey.QueueRankThrottle"), &eDonkey.QueueRankThrottle, 2*60*1000 );
-	Add( _T("eDonkey.PacketThrottle"), &eDonkey.PacketThrottle, 500 );
-	Add( _T("eDonkey.SourceThrottle"), &eDonkey.SourceThrottle, 1000 );
-	Add( _T("eDonkey.MetAutoQuery"), &eDonkey.MetAutoQuery, TRUE );
-	Add( _T("eDonkey.LearnNewServers"), &eDonkey.LearnNewServers, TRUE );
-	Add( _T("eDonkey.LearnNewServersClient"), &eDonkey.LearnNewServersClient, FALSE );
-	Add( _T("eDonkey.ServerListURL"), &eDonkey.ServerListURL, _T("http://ocbmaurice.no-ip.org/pl/slist.pl/server.met?download/server-good.met") );
-	Add( _T("eDonkey.RequestPipe"), &eDonkey.RequestPipe, 3 );
-	Add( _T("eDonkey.RequestSize"), &eDonkey.RequestSize, 180*1024/2 );
-	Add( _T("eDonkey.FrameSize"), &eDonkey.FrameSize, 10240 );
-	Add( _T("eDonkey.ReAskTime"), &eDonkey.ReAskTime, 1740 );
-	Add( _T("eDonkey.DequeueTime"), &eDonkey.DequeueTime, 3610 );
-	Add( _T("eDonkey.TagNames"), &eDonkey.TagNames, TRUE );
-	Add( _T("eDonkey.ExtendedRequest"), &eDonkey.ExtendedRequest, 2 );
-	Add( _T("eDonkey.SendPortServer"), &eDonkey.SendPortServer, FALSE );
-	Add( _T("eDonkey.MagnetSearch"), &eDonkey.MagnetSearch, TRUE );
-	Add( _T("eDonkey.MinServerFileSize"), &eDonkey.MinServerFileSize, 0 );
-	Add( _T("eDonkey.DefaultServerFlags"), &eDonkey.DefaultServerFlags, 0xFFFFFFFF );
-	Add( _T("eDonkey.Endgame"), &eDonkey.Endgame, TRUE );
-	Add( _T("eDonkey.LargeFileSupport"), &eDonkey.LargeFileSupport, FALSE );
-
-	Add( _T("BitTorrent.AdvancedInterface"), &BitTorrent.AdvancedInterface, FALSE );
-	Add( _T("BitTorrent.AdvancedInterfaceSet"), &BitTorrent.AdvancedInterfaceSet, FALSE );
-	Add( _T("BitTorrent.TorrentCreatorPath"), &BitTorrent.TorrentCreatorPath, _T("") );
-	Add( _T("BitTorrent.DefaultTracker"), &BitTorrent.DefaultTracker, _T("") );
-	Add( _T("BitTorrent.DefaultTrackerPeriod"), &BitTorrent.DefaultTrackerPeriod, 5*60000 );
-	Add( _T("BitTorrent.MaxTrackerRetry"), &BitTorrent.MaxTrackerRetry, 3 );
-	Add( _T("BitTorrent.TorrentCodePage"), &BitTorrent.TorrentCodePage, 0 );
-	Add( _T("BitTorrent.TorrentExtraKeys"), &BitTorrent.TorrentExtraKeys, TRUE );
-	Add( _T("BitTorrent.LinkTimeout"), &BitTorrent.LinkTimeout, 180000 );
-	Add( _T("BitTorrent.LinkPing"), &BitTorrent.LinkPing, 120000 );
-	Add( _T("BitTorrent.RequestPipe"), &BitTorrent.RequestPipe, 4 );
-	Add( _T("BitTorrent.RequestSize"), &BitTorrent.RequestSize, 16384 );
-	Add( _T("BitTorrent.RequestLimit"), &BitTorrent.RequestLimit, 131072 );
-	Add( _T("BitTorrent.RandomPeriod"), &BitTorrent.RandomPeriod, 30000 );
-	Add( _T("BitTorrent.SourceExchangePeriod"), &BitTorrent.SourceExchangePeriod, 10 );
-	Add( _T("BitTorrent.UploadCount"), &BitTorrent.UploadCount, 4 );
-	Add( _T("BitTorrent.DownloadConnections"), &BitTorrent.DownloadConnections, 40 );
-	Add( _T("BitTorrent.DownloadTorrents"), &BitTorrent.DownloadTorrents, 3 );
-	Add( _T("BitTorrent.Endgame"), &BitTorrent.Endgame, TRUE );
-	Add( _T("BitTorrent.AutoClear"), &BitTorrent.AutoClear, FALSE );
-	Add( _T("BitTorrent.ClearRatio"), &BitTorrent.ClearRatio, 120 );
-	Add( _T("BitTorrent.AutoSeed"), &BitTorrent.AutoSeed, TRUE );
-	Add( _T("BitTorrent.BandwidthPercentage"), &BitTorrent.BandwidthPercentage, 80 );
-	Add( _T("BitTorrent.TrackerKey"), &BitTorrent.TrackerKey, TRUE );
-	Add( _T("BitTorrent.StandardPeerID"), &BitTorrent.StandardPeerID, TRUE );
-	Add( _T("BitTorrent.PreferenceBTSources"), &BitTorrent.PreferenceBTSources, TRUE );
-
-	Add( _T("Downloads.IncompletePath"), &Downloads.IncompletePath, Downloads.IncompletePath );
-	Add( _T("Downloads.CompletePath"), &Downloads.CompletePath, Downloads.CompletePath );
-	Add( _T("Downloads.TorrentPath"), &Downloads.TorrentPath, General.UserPath + _T("\\Torrents") );
-	Add( _T("Downloads.CollectionPath"), &Downloads.CollectionPath, General.UserPath + _T("\\Collections") );
-	Add( _T("Downloads.BufferSize"), &Downloads.BufferSize, 81920 );
-	Add( _T("Downloads.SparseThreshold"), &Downloads.SparseThreshold, 8 * 1024 );
-	Add( _T("Downloads.MaxAllowedFailures"), &Downloads.MaxAllowedFailures, 10 );
-	Add( _T("Downloads.MaxFiles"), &Downloads.MaxFiles, 26 );
-	Add( _T("Downloads.MaxTransfers"), &Downloads.MaxTransfers, 100 );
-	Add( _T("Downloads.MaxFileTransfers"), &Downloads.MaxFileTransfers, 10 );
-	Add( _T("Downloads.MaxFileSearches"), &Downloads.MaxFileSearches, 2 );
-	Add( _T("Downloads.MaxConnectingSources"), &Downloads.MaxConnectingSources, 28 );
-	Add( _T("Downloads.MinSources"), &Downloads.MinSources, 1 );
-	Add( _T("Downloads.ConnectThrottle"), &Downloads.ConnectThrottle, 250 );
-	Add( _T("Downloads.QueueLimit"), &Downloads.QueueLimit, 0 );
-	Add( _T("Downloads.SearchPeriod"), &Downloads.SearchPeriod, 120000 );
-	Add( _T("Downloads.StarveTimeout"), &Downloads.StarveTimeout, 2700 );
-	Add( _T("Downloads.StarveGiveUp"), &Downloads.StarveGiveUp, 3 );
-	Add( _T("Downloads.RetryDelay"), &Downloads.RetryDelay, 10*60000 );
-	Add( _T("Downloads.PushTimeout"), &Downloads.PushTimeout, 45000 );
-	Add( _T("Downloads.StaggardStart"), &Downloads.StaggardStart, FALSE );
-	Add( _T("Downloads.AllowBackwards"), &Downloads.AllowBackwards, TRUE );
-	Add( _T("Downloads.ChunkSize"), &Downloads.ChunkSize, 512*1024 );
-	Add( _T("Downloads.ChunkStrap"), &Downloads.ChunkStrap, 128*1024 );
-	Add( _T("Downloads.Metadata"), &Downloads.Metadata, TRUE );
-	Add( _T("Downloads.VerifyFiles"), &Downloads.VerifyFiles, TRUE );
-	Add( _T("Downloads.VerifyTiger"), &Downloads.VerifyTiger, TRUE );
-	Add( _T("Downloads.VerifyED2K"), &Downloads.VerifyED2K, TRUE );
-	Add( _T("Downloads.NeverDrop"), &Downloads.NeverDrop, FALSE );
-	Add( _T("Downloads.RequestHash"), &Downloads.RequestHash, TRUE );
-	Add( _T("Downloads.RequestHTTP11"), &Downloads.RequestHTTP11, TRUE );
-	Add( _T("Downloads.RequestURLENC"), &Downloads.RequestURLENC, TRUE );
-	Add( _T("Downloads.SaveInterval"), &Downloads.SaveInterval, 60000 );
-	Add( _T("Downloads.FlushSD"), &Downloads.FlushSD, TRUE );
-	Add( _T("Downloads.ShowSources"), &Downloads.ShowSources, FALSE );
-	Add( _T("Downloads.SimpleBar"), &Downloads.SimpleBar, FALSE );
-	Add( _T("Downloads.ShowPercent"), &Downloads.ShowPercent, FALSE );
-	Add( _T("Downloads.ShowGroups"), &Downloads.ShowGroups, TRUE );
-	Add( _T("Downloads.AutoExpand"), &Downloads.AutoExpand, FALSE );
-	Add( _T("Downloads.AutoClear"), &Downloads.AutoClear, FALSE );
-	Add( _T("Downloads.ClearDelay"), &Downloads.ClearDelay, 30000 );
-	Add( _T("Downloads.FilterMask"), &Downloads.FilterMask, 0xFFFFFFFF );
-	Add( _T("Downloads.ShowMonitorURLs"), &Downloads.ShowMonitorURLs, TRUE );
-	Add( _T("Downloads.SortColumns"), &Downloads.SortColumns, TRUE );
-	Add( _T("Downloads.SortSources"), &Downloads.SortSources, TRUE );
-	Add( _T("Downloads.SourcesWanted"), &Downloads.SourcesWanted, 500 );
-	Add( _T("Downloads.MaxReviews"), &Downloads.MaxReviews, 64 );
-	Add( _T("Downloads.StartDroppingFailedSourcesNumber"), &Downloads.StartDroppingFailedSourcesNumber, 20 );
-
-	Add( _T("Uploads.MaxPerHost"), &Uploads.MaxPerHost, 2 );
-	Add( _T("Uploads.FreeBandwidthValue"), &Uploads.FreeBandwidthValue, 2560 );
-	Add( _T("Uploads.FreeBandwidthFactor"), &Uploads.FreeBandwidthFactor, 15 );
-	Add( _T("Uploads.ClampdownFactor"), &Uploads.ClampdownFactor, 20 );
-	Add( _T("Uploads.ClampdownFloor"), &Uploads.ClampdownFloor, 1024 );
-	Add( _T("Uploads.ThrottleMode"), &Uploads.ThrottleMode, TRUE );
-	Add( _T("Uploads.QueuePollMin"), &Uploads.QueuePollMin, 45000 );
-	Add( _T("Uploads.QueuePollMax"), &Uploads.QueuePollMax, 120000 );
-	Add( _T("Uploads.RotateChunkLimit"), &Uploads.RotateChunkLimit, 1024*1024 );
-	Add( _T("Uploads.SharePartials"), &Uploads.SharePartials, TRUE );
-	Add( _T("Uploads.ShareTiger"), &Uploads.ShareTiger, TRUE );
-	Add( _T("Uploads.ShareHashset"), &Uploads.ShareHashset, TRUE );
-	Add( _T("Uploads.ShareMetadata"), &Uploads.ShareMetadata, TRUE );
-	Add( _T("Uploads.SharePreviews"), &Uploads.SharePreviews, TRUE );
-	Add( _T("Uploads.DynamicPreviews"), &Uploads.DynamicPreviews, TRUE );
-	Add( _T("Uploads.PreviewQuality"), &Uploads.PreviewQuality, 40 );
-	Add( _T("Uploads.PreviewTransfers"), &Uploads.PreviewTransfers, 3 );
-	Add( _T("Uploads.AllowBackwards"), &Uploads.AllowBackwards, TRUE );
-	Add( _T("Uploads.HubUnshare"), &Uploads.HubUnshare, TRUE );
-	Add( _T("Uploads.BlockAgents"), &Uploads.BlockAgents, _T("|Mozilla|") );
-	Add( _T("Uploads.AutoClear"), &Uploads.AutoClear, FALSE );
-	Add( _T("Uploads.ClearDelay"), &Uploads.ClearDelay, 30000 );
-	Add( _T("Uploads.FilterMask"), &Uploads.FilterMask, 0xFFFFFFFD );
-	Add( _T("Uploads.RewardQueuePercentage"), &Uploads.RewardQueuePercentage, 10 );
-
-	Add( _T("Remote.Enable"), &Remote.Enable, FALSE );
-	Add( _T("Remote.Username"), &Remote.Username, _T("") );
-	Add( _T("Remote.Password"), &Remote.Password, _T("") );
-
-	Add( _T("Scheduler.Enable"), &Scheduler.Enable, FALSE );
-	Add( _T("Scheduler.LimitedBandwidth"), &Scheduler.LimitedBandwidth, 50 );
-	Add( _T("Scheduler.LimitedNetworks"), &Scheduler.LimitedNetworks, TRUE );
-	Add( _T("Scheduler.AllowHub"), &Scheduler.AllowHub, TRUE );
-
-	Add( _T("Experimental.EnableDIPPSupport"), &Experimental.EnableDIPPSupport, FALSE );
-
-	Add( _T("WINE.MenuFix"), &WINE.MenuFix, TRUE );
-}
-
-
-
 //////////////////////////////////////////////////////////////////////
 // CSettings construction
 
-CSettings::CSettings() :
-	m_bSettingsLoaded( FALSE )
+CSettings::CSettings()
 {
-	CRegistry pRegistry;
-
-	theApp.m_bMultiUserInstallation = pRegistry.GetBool( _T(""), _T("MultiUser"), FALSE, HKEY_LOCAL_MACHINE );
-
-	// Set default program and user paths
-	{
-		TCHAR szPath[MAX_PATH];
-
-		GetModuleFileName( NULL, szPath, MAX_PATH );
-		General.Path = szPath;
-		if ( General.Path.ReverseFind( '\\' ) >= 0 )
-			General.Path = General.Path.Left( General.Path.ReverseFind( '\\' ) );
-	}
-	// This line is needed here otherwise the value is readed too late.
-	General.Path = pRegistry.GetString( _T(""), _T("Path"), General.Path );
-
-	if ( !theApp.m_bMultiUserInstallation )
-	{
-		General.UserPath = General.Path;
-		Downloads.IncompletePath = General.Path + _T("\\Incomplete");
-		Downloads.CompletePath = General.Path + _T("\\Downloads");
-	}
-	else
-	{
-		General.UserPath = GetAppDataFolder() + _T("\\Shareaza");
-		Downloads.IncompletePath = GetLocalAppDataFolder() + _T("\\Shareaza\\Incomplete");
-		Downloads.CompletePath = GetDocumentsFolder() + _T("\\Shareaza Downloads");
-	}
-
-	// ToDO: Fix it, General.Language is set correctly but Shareaza is executed in English
-	General.Language = pRegistry.GetString( _T(""), _T("DefaultLanguage"), _T("en"), HKEY_LOCAL_MACHINE );
-	// DefaultLanguageRTL => pRegistry.GetBool( _T(""), _T("DefaultLanguageRTL"), FALSE, HKEY_LOCAL_MACHINE );
-
-
 	// Reset 'live' values.
-	Live.DiskSpaceWarning			= FALSE;
-	Live.DiskWriteWarning			= FALSE;
-	Live.AdultWarning				= FALSE;
-	Live.QueueLimitWarning			= FALSE;
-	Live.DefaultED2KServersLoaded	= FALSE;
-	Live.DonkeyServerWarning		= FALSE;
-	Live.UploadLimitWarning			= FALSE;
-	Live.DiskSpaceStop				= FALSE;
+	Live.DiskSpaceWarning			= false;
+	Live.DiskWriteWarning			= false;
+	Live.AdultWarning				= false;
+	Live.QueueLimitWarning			= false;
+	Live.DefaultED2KServersLoaded	= false;
+	Live.DonkeyServerWarning		= false;
+	Live.UploadLimitWarning			= false;
+	Live.DiskSpaceStop				= false;
 	Live.BandwidthScale				= 100;
-	Live.LoadWindowState			= FALSE;
-	Live.AutoClose					= FALSE;
-	Live.FirstRun					= FALSE;
+	Live.LoadWindowState			= false;
+	Live.AutoClose					= false;
+	Live.FirstRun					= false;
 	Live.LastDuplicateHash			= L"";
-	Live.NewFile					= FALSE;
-	Live.MaliciousWarning			= FALSE;
+	Live.NewFile					= false;
+	Live.MaliciousWarning			= false;
 
 	// Add all settings
-	Setup();
-	if ( Live.FirstRun ) OnChangeConnectionSpeed();	// This helps if the QuickStart Wizard is skipped.
+	Add( _T(""), _T("Debug"), &General.Debug, false );
+	Add( _T(""), _T("DebugBTSources"), &General.DebugBTSources, false );
+	Add( _T(""), _T("DebugLog"), &General.DebugLog, false );
+	Add( _T(""), _T("DiskSpaceStop"), &General.DiskSpaceStop, 25, 1, 0, 1000 , _T(" M") );
+	Add( _T(""), _T("DiskSpaceWarning"), &General.DiskSpaceWarning, 500, 1, 5, 2000 , _T(" M") );
+	Add( _T(""), _T("HashIntegrity"), &General.HashIntegrity, true );
+	Add( _T(""), _T("ItWasLimited"), &General.ItWasLimited, false );
+	Add( _T(""), _T("MaxDebugLogSize"), &General.MaxDebugLogSize, 10*1024*1024, 1024*1024, 0, 100, _T(" MB") );
+	Add( _T(""), _T("MinTransfersRest"), &General.MinTransfersRest, 15, 1, 1, 100, _T(" ms") );
+	Add( _T(""), _T("MultiUser"), &General.MultiUser, false );
+	Add( _T(""), _T("Path"), &General.Path, _T("") );
+	Add( _T(""), _T("SearchLog"), &General.SearchLog, true );
+	Add( _T(""), _T("UpdateCheck"), &General.UpdateCheck, true );
+	Add( _T(""), _T("UserPath"), &General.UserPath, _T("") );
+	Add( _T("Settings"), _T("AlwaysOpenURLs"), &General.AlwaysOpenURLs, false );
+	Add( _T("Settings"), _T("CloseMode"), &General.CloseMode, 0, 1, 0, 3 );
+	Add( _T("Settings"), _T("FirstRun"), &General.FirstRun, true );
+	Add( _T("Settings"), _T("GUIMode"), &General.GUIMode, GUI_BASIC );
+	Add( _T("Settings"), _T("IgnoreXPsp2"), &General.IgnoreXPsp2, false );
+	Add( _T("Settings"), _T("Language"), &General.Language, _T("en") );
+	Add( _T("Settings"), _T("LanguageRTL"), &General.LanguageRTL, false );
+	Add( _T("Settings"), _T("RatesInBytes"), &General.RatesInBytes, true );
+	Add( _T("Settings"), _T("RatesUnit"), &General.RatesUnit, 0 );
+	Add( _T("Settings"), _T("Running"), &General.Running, false );
+	Add( _T("Settings"), _T("ShowTimestamp"), &General.ShowTimestamp, true );
+	Add( _T("Settings"), _T("SizeLists"), &General.SizeLists, false );
+	Add( _T("Settings"), _T("SmartVersion"), &General.SmartVersion, SMART_VERSION );
+	Add( _T("Settings"), _T("TrayMinimise"), &General.TrayMinimise, false );
+	Add( _T("Settings"), _T("VerboseMode"), &General.VerboseMode, false );
+
+	Add( _T("Interface"), _T("LowResMode"), &Interface.LowResMode, false );
+	Add( _T("Interface"), _T("TipAlpha"), &Interface.TipAlpha, 230 );
+	Add( _T("Interface"), _T("TipDelay"), &Interface.TipDelay, 600 );
+	Add( _T("Interface"), _T("TipDownloads"), &Interface.TipDownloads, true );
+	Add( _T("Interface"), _T("TipLibrary"), &Interface.TipLibrary, true );
+	Add( _T("Interface"), _T("TipMedia"), &Interface.TipMedia, true );
+	Add( _T("Interface"), _T("TipNeighbours"), &Interface.TipNeighbours, true );
+	Add( _T("Interface"), _T("TipSearch"), &Interface.TipSearch, true );
+	Add( _T("Interface"), _T("TipUploads"), &Interface.TipUploads, true );
+
+	Add( _T("Library"), _T("BitziAgent"), &Library.BitziAgent, _T(".") );
+	Add( _T("Library"), _T("BitziOkay"), &Library.BitziOkay, false );
+	Add( _T("Library"), _T("BitziWebSubmit"), &Library.BitziWebSubmit, _T("http://bitzi.com/lookup/(SHA1).(TTH)?fl=(SIZE)&ff=(FIRST20)&fn=(NAME)&tag.ed2k.ed2khash=(ED2K)&(INFO)&a=(AGENT)&v=Q0.4&ref=shareaza") );
+	Add( _T("Library"), _T("BitziWebView"), &Library.BitziWebView, _T("http://bitzi.com/lookup/(URN)?v=detail&ref=shareaza") );
+	Add( _T("Library"), _T("BitziXML"), &Library.BitziXML, _T("http://ticket.bitzi.com/rdf/(SHA1).(TTH)") );
+	Add( _T("Library"), _T("CreateGhosts"), &Library.CreateGhosts, true );
+	Add( _T("Library"), _T("FilterURI"), &Library.FilterURI, NULL );
+	Add( _T("Library"), _T("HashWindow"), &Library.HashWindow, true );
+	Add( _T("Library"), _T("HighPriorityHash"), &Library.HighPriorityHash, false );
+	Add( _T("Library"), _T("HighPriorityHashing"), &Library.HighPriorityHashing, 20, 1, 1, 100, _T(" MB/s") );
+	Add( _T("Library"), _T("HistoryDays"), &Library.HistoryDays, 3 );
+	Add( _T("Library"), _T("HistoryTotal"), &Library.HistoryTotal, 32 );
+	Add( _T("Library"), _T("LowPriorityHashing"), &Library.LowPriorityHashing, 2, 1, 1, 100, _T(" MB/s") );
+	Add( _T("Library"), _T("MarkFileAsDownload"), &Library.MarkFileAsDownload, true );
+	Add( _T("Library"), _T("MaxMaliciousFileSize"), &Library.MaxMaliciousFileSize, 1024, 1, 1024, 1024*5, _T(" B") );
+	Add( _T("Library"), _T("PanelSize"), &Library.PanelSize, 120 );
+	Add( _T("Library"), _T("PartialMatch"), &Library.PartialMatch, true );
+	Add( _T("Library"), _T("PreferAPETags"), &Library.PreferAPETags, 1 );
+	Add( _T("Library"), _T("PrivateTypes"), &Library.PrivateTypes, _T("|vbs|js|jc!|fb!|bc!|dbx|part|partial|pst|reget|getright|pif|lnk|sd|url|wab|m4p|infodb|racestats|chk|tmp|temp|ini|inf|log|old|manifest|met|bak|$$$|---|~~~|###|__incomplete___|") );
+	Add( _T("Library"), _T("QueryRouteSize"), &Library.QueryRouteSize, 20, 1, 8, 24 );
+	Add( _T("Library"), _T("SafeExecute"), &Library.SafeExecute, _T("|3gp|aac|ace|ape|avi|bmp|flv|gif|iso|jpg|jpeg|mid|mov|m1v|m2v|m3u|m4a|mkv|mp2|mp3|mp4|mpa|mpe|mpg|mpeg|ogg|ogm|pdf|png|qt|rar|rm|sks|tar|tgz|torrent|txt|wav|wma|wmv|zip|co|collection|lit|") );
+	Add( _T("Library"), _T("SchemaURI"), &Library.SchemaURI, CSchema::uriAudio );
+	Add( _T("Library"), _T("ShowCoverArt"), &Library.ShowCoverArt, true );
+	Add( _T("Library"), _T("ShowPanel"), &Library.ShowPanel, true );
+	Add( _T("Library"), _T("ShowVirtual"), &Library.ShowVirtual, true );
+	Add( _T("Library"), _T("SourceExpire"), &Library.SourceExpire, 24*60*60, 60, 60, 7*24*60*60, _T(" m") );
+	Add( _T("Library"), _T("SourceMesh"), &Library.SourceMesh, true );
+	Add( _T("Library"), _T("StoreViews"), &Library.StoreViews, true );
+	Add( _T("Library"), _T("ThumbSize"), &Library.ThumbSize, 96, 1, 16, 256, _T(" px") );
+	Add( _T("Library"), _T("TigerHeight"), &Library.TigerHeight, 9, 1, 1, 64 );
+	Add( _T("Library"), _T("TreeSize"), &Library.TreeSize, 200 );
+	Add( _T("Library"), _T("UseCustomFolders"), &Library.UseCustomFolders, true );
+	Add( _T("Library"), _T("UseFolderGUID"), &Library.UseFolderGUID, true );
+	Add( _T("Library"), _T("VirtualFiles"), &Library.VirtualFiles, false );
+	Add( _T("Library"), _T("WatchFolders"), &Library.WatchFolders, true );
+	Add( _T("Library"), _T("WatchFoldersTimeout"), &Library.WatchFoldersTimeout, 5, 1, 1, 60, _T(" s") );
+
+	Add( _T("Search"), _T("AdultFilter"), &Search.AdultFilter, false );
+	Add( _T("Search"), _T("AdvancedPanel"), &Search.AdvancedPanel, true );
+	Add( _T("Search"), _T("BlankSchemaURI"), &Search.BlankSchemaURI, CSchema::uriAudio );
+	Add( _T("Search"), _T("BrowseTreeSize"), &Search.BrowseTreeSize, 180 );
+	Add( _T("Search"), _T("DetailPanelSize"), &Search.DetailPanelSize, 100 );
+	Add( _T("Search"), _T("DetailPanelVisible"), &Search.DetailPanelVisible, true );
+	Add( _T("Search"), _T("ExpandMatches"), &Search.ExpandMatches, false );
+	Add( _T("Search"), _T("FilterMask"), &Search.FilterMask, 0x168 );
+	Add( _T("Search"), _T("GeneralThrottle"), &Search.GeneralThrottle, 200, 1, 200, 1000, _T(" ms") );
+	Add( _T("Search"), _T("HideSearchPanel"), &Search.HideSearchPanel, false );
+	Add( _T("Search"), _T("HighlightNew"), &Search.HighlightNew, true );
+	Add( _T("Search"), _T("LastSchemaURI"), &Search.LastSchemaURI, _T("") );
+	Add( _T("Search"), _T("MaxPreviewLength"), &Search.MaxPreviewLength, 20*1024, 1024, 1, 4096, _T(" KB") );
+	Add( _T("Search"), _T("MonitorFilter"), &Search.MonitorFilter, NULL );
+	Add( _T("Search"), _T("MonitorQueue"), &Search.MonitorQueue, 128, 1, 1, 4096 );
+	Add( _T("Search"), _T("MonitorSchemaURI"), &Search.MonitorSchemaURI, CSchema::uriAudio );
+	Add( _T("Search"), _T("SchemaTypes"), &Search.SchemaTypes, true );
+	Add( _T("Search"), _T("SearchPanel"), &Search.SearchPanel, true );
+	Add( _T("Search"), _T("ShowNames"), &Search.ShowNames, true );
+	Add( _T("Search"), _T("SpamFilterThreshold"), &Search.SpamFilterThreshold, 20, 1, 0, 100, _T("%") );
+	Add( _T("Search"), _T("SwitchToTransfers"), &Search.SwitchToTransfers, true );
+
+	Add( _T("MediaPlayer"), _T("Aspect"), &MediaPlayer.Aspect, smaDefault );
+	Add( _T("MediaPlayer"), _T("AviPreviewCLSID"), &MediaPlayer.AviPreviewCLSID, _T("{394011F0-6D5C-42a3-96C6-24B9AD6B010C}") );
+	Add( _T("MediaPlayer"), _T("EnableEnqueue"), &MediaPlayer.EnableEnqueue, true );
+	Add( _T("MediaPlayer"), _T("EnablePlay"), &MediaPlayer.EnablePlay, true );
+	Add( _T("MediaPlayer"), _T("FileTypes"), &MediaPlayer.FileTypes, _T("|asx|wax|m3u|wvx|wmx|asf|wav|snd|au|aif|aifc|aiff|wma|mp3|cda|mid|rmi|midi|avi|mpeg|mpg|m1v|mp2|mpa|mpe|wmv|") );
+	Add( _T("MediaPlayer"), _T("ListSize"), &MediaPlayer.ListSize, 240 );
+	Add( _T("MediaPlayer"), _T("ListVisible"), &MediaPlayer.ListVisible, true );
+	Add( _T("MediaPlayer"), _T("MediaServicesCLSID"), &MediaPlayer.MediaServicesCLSID, _T("{3DC28AA6-A597-4E03-96DF-ADA19155B0BE}") );
+	Add( _T("MediaPlayer"), _T("Mp3PreviewCLSID"), &MediaPlayer.Mp3PreviewCLSID, _T("{BF00DBCC-90A2-4f46-8171-7D4F929D035F}") );
+	Add( _T("MediaPlayer"), _T("Mpeg1PreviewCLSID"), &MediaPlayer.Mpeg1PreviewCLSID, _T("{9AA8DF47-B8FE-47da-AB1A-2DAA0DA0B646}") );
+	Add( _T("MediaPlayer"), _T("Random"), &MediaPlayer.Random, false );
+	Add( _T("MediaPlayer"), _T("Repeat"), &MediaPlayer.Repeat, false );
+	Add( _T("MediaPlayer"), _T("ServicePath"), &MediaPlayer.ServicePath, _T("") );
+	Add( _T("MediaPlayer"), _T("ShortPaths"), &MediaPlayer.ShortPaths, false );
+	Add( _T("MediaPlayer"), _T("StatusVisible"), &MediaPlayer.StatusVisible, true );
+	Add( _T("MediaPlayer"), _T("VisCLSID"), &MediaPlayer.VisCLSID, _T("{591A5CFF-3172-4020-A067-238542DDE9C2}") );
+	Add( _T("MediaPlayer"), _T("VisPath"), &MediaPlayer.VisPath, _T("") );
+	Add( _T("MediaPlayer"), _T("VisSize"), &MediaPlayer.VisSize, 1 );
+	Add( _T("MediaPlayer"), _T("VisSoniqueCLSID"), &MediaPlayer.VisSoniqueCLSID, _T("{D07E630D-A850-4f11-AD29-3D3848B67EFE}") );
+	Add( _T("MediaPlayer"), _T("VisWrapperCLSID"), &MediaPlayer.VisWrapperCLSID, _T("{C3B7B25C-6B8B-481A-BC48-59F9A6F7B69A}") );
+	Add( _T("MediaPlayer"), _T("Volume"), &MediaPlayer.Volume, 1.0f );
+	Add( _T("MediaPlayer"), _T("Zoom"), (DWORD*)&MediaPlayer.Zoom, smzFill );
+
+	Add( _T("Web"), _T("ED2K"), &Web.ED2K, true );
+	Add( _T("Web"), _T("Gnutella"), &Web.Gnutella, true );
+	Add( _T("Web"), _T("Magnet"), &Web.Magnet, true );
+	Add( _T("Web"), _T("Piolet"), &Web.Piolet, true );
+	Add( _T("Web"), _T("Torrent"), &Web.Torrent, true );
+
+	Add( _T("Connection"), _T("AutoConnect"), &Connection.AutoConnect, true );
+	Add( _T("Connection"), _T("ConnectThrottle"), &Connection.ConnectThrottle, 0, 1, 0, 500, _T(" ms") );
+	Add( _T("Connection"), _T("DeleteFirewallException"), &Connection.DeleteFirewallException, false );
+	Add( _T("Connection"), _T("DeleteUPnPPorts"), &Connection.DeleteUPnPPorts, true );
+	Add( _T("Connection"), _T("DetectConnectionLoss"), &Connection.DetectConnectionLoss, true );
+	Add( _T("Connection"), _T("DetectConnectionReset"), &Connection.DetectConnectionReset, false );
+	Add( _T("Connection"), _T("EnableFirewallException"), &Connection.EnableFirewallException, true );
+	Add( _T("Connection"), _T("EnableUPnP"), &Connection.EnableUPnP, false );
+	Add( _T("Connection"), _T("FailureLimit"), &Connection.FailureLimit, 3, 1, 1, 512 );
+	Add( _T("Connection"), _T("FailurePenalty"), &Connection.FailurePenalty, 300, 1, 30, 3600, _T(" s") );
+	Add( _T("Connection"), _T("FirewallState"), &Connection.FirewallState, CONNECTION_AUTO );
+	Add( _T("Connection"), _T("ForceConnectedState"), &Connection.ForceConnectedState, true );
+	Add( _T("Connection"), _T("IgnoreLocalIP"), &Connection.IgnoreLocalIP, true );
+	Add( _T("Connection"), _T("IgnoreOwnIP"), &Connection.IgnoreOwnIP, true );
+	Add( _T("Connection"), _T("InBind"), &Connection.InBind, false );
+	Add( _T("Connection"), _T("InHost"), &Connection.InHost, NULL );
+	Add( _T("Connection"), _T("InPort"), &Connection.InPort, GNUTELLA_DEFAULT_PORT );
+	Add( _T("Connection"), _T("InSpeed"), &Connection.InSpeed, 2048 );
+	Add( _T("Connection"), _T("OutHost"), &Connection.OutHost, NULL );
+	Add( _T("Connection"), _T("OutSpeed"), &Connection.OutSpeed, 256 );
+	Add( _T("Connection"), _T("RandomPort"), &Connection.RandomPort, false );
+	Add( _T("Connection"), _T("RequireForTransfers"), &Connection.RequireForTransfers, true );
+	Add( _T("Connection"), _T("SendBuffer"), &Connection.SendBuffer, 2048, 1, 64, 10240 );
+	Add( _T("Connection"), _T("SkipWANIPSetup"), &Connection.SkipWANIPSetup, false );
+	Add( _T("Connection"), _T("SkipWANPPPSetup"), &Connection.SkipWANPPPSetup, false );
+	Add( _T("Connection"), _T("SlowConnect"), &Connection.SlowConnect, false );
+	Add( _T("Connection"), _T("TimeoutConnect"), &Connection.TimeoutConnect, 16*1000, 1000, 1, 2*60, _T(" s") );
+	Add( _T("Connection"), _T("TimeoutHandshake"), &Connection.TimeoutHandshake, 45*1000, 1000, 1, 5*60, _T(" s") );
+	Add( _T("Connection"), _T("TimeoutTraffic"), &Connection.TimeoutTraffic, 140*1000, 1000, 10, 60*60, _T(" s") );
+
+	Add( _T("Bandwidth"), _T("Downloads"), &Bandwidth.Downloads, 0 );
+	Add( _T("Bandwidth"), _T("HubIn"), &Bandwidth.HubIn, 0, 128, 0, 8192, _T(" Kb/s") );
+	Add( _T("Bandwidth"), _T("HubOut"), &Bandwidth.HubOut, 0, 128, 0, 8192, _T(" Kb/s") );
+	Add( _T("Bandwidth"), _T("HubUploads"), &Bandwidth.HubUploads, 40*128, 128, 0, 4096, _T(" Kb/s") );
+	Add( _T("Bandwidth"), _T("LeafIn"), &Bandwidth.LeafIn, 0, 128, 0, 8192, _T(" Kb/s") );
+	Add( _T("Bandwidth"), _T("LeafOut"), &Bandwidth.LeafOut, 0, 128, 0, 8192, _T(" Kb/s") );
+	Add( _T("Bandwidth"), _T("PeerIn"), &Bandwidth.PeerIn, 0, 128, 0, 8192, _T(" Kb/s") );
+	Add( _T("Bandwidth"), _T("PeerOut"), &Bandwidth.PeerOut, 0, 128, 0, 8192, _T(" Kb/s") );
+	Add( _T("Bandwidth"), _T("Request"), &Bandwidth.Request, 32*128, 128, 0, 8192, _T(" Kb/s") );
+	Add( _T("Bandwidth"), _T("UdpOut"), &Bandwidth.UdpOut, 0, 128, 0, 8192, _T(" Kb/s") );
+	Add( _T("Bandwidth"), _T("Uploads"), &Bandwidth.Uploads, 0 );
+
+	Add( _T("Community"), _T("AwayMessageIdleTime"), &Community.AwayMessageIdleTime, 20*60, 60, 5, 60, _T(" m") );
+	Add( _T("Community"), _T("ChatAllNetworks"), &Community.ChatAllNetworks, true );
+	Add( _T("Community"), _T("ChatCensor"), &Community.ChatCensor, false );
+	Add( _T("Community"), _T("ChatEnable"), &Community.ChatEnable, true );
+	Add( _T("Community"), _T("ChatFilter"), &Community.ChatFilter, true );
+	Add( _T("Community"), _T("ChatFilterED2K"), &Community.ChatFilterED2K, true );
+	Add( _T("Community"), _T("ServeFiles"), &Community.ServeFiles, true );
+	Add( _T("Community"), _T("ServeProfile"), &Community.ServeProfile, true );
+	Add( _T("Community"), _T("Timestamp"), &Community.Timestamp, true );
+
+	Add( _T("Discovery"), _T("AccessThrottle"), &Discovery.AccessThrottle, 60*60, 60, 1, 180, _T(" m") );
+	Add( _T("Discovery"), _T("BootstrapCount"), &Discovery.BootstrapCount, 10, 1, 0, 20 );
+	Add( _T("Discovery"), _T("CacheCount"), &Discovery.CacheCount, 50, 1, 1, 256 );
+	Add( _T("Discovery"), _T("DefaultUpdate"), &Discovery.DefaultUpdate, 60*60, 60, 1, 60*24, _T(" m") );
+	Add( _T("Discovery"), _T("EnableG1GWC"), &Discovery.EnableG1GWC, false );
+	Add( _T("Discovery"), _T("FailureLimit"), &Discovery.FailureLimit, 2, 1, 1, 512 );
+	Add( _T("Discovery"), _T("Lowpoint"), &Discovery.Lowpoint, 10, 1, 1, 512 );
+	Add( _T("Discovery"), _T("UpdatePeriod"), &Discovery.UpdatePeriod, 30*60, 60, 1, 60*24, _T(" m") );
+
+	Add( _T("Gnutella"), _T("BlockBlankClients"), &Gnutella.BlockBlankClients, true );
+	Add( _T("Gnutella"), _T("ConnectFactor"), &Gnutella.ConnectFactor, 4, 1, 1, 20, _T("x") );
+	Add( _T("Gnutella"), _T("ConnectThrottle"), &Gnutella.ConnectThrottle, 120, 1, 60, 3600, _T(" s") );
+	Add( _T("Gnutella"), _T("DeflateHub2Hub"), &Gnutella.DeflateHub2Hub, true );
+	Add( _T("Gnutella"), _T("DeflateHub2Leaf"), &Gnutella.DeflateHub2Leaf, true );
+	Add( _T("Gnutella"), _T("DeflateLeaf2Hub"), &Gnutella.DeflateLeaf2Hub, false );
+	Add( _T("Gnutella"), _T("HitsPerPacket"), &Gnutella.HitsPerPacket, 64, 1, 0, 1024 );
+	Add( _T("Gnutella"), _T("HostCacheSize"), &Gnutella.HostCacheSize, 1024, 1, 32, 16384 );
+	Add( _T("Gnutella"), _T("HostCacheView"), &Gnutella.HostCacheView, PROTOCOL_ED2K );
+	Add( _T("Gnutella"), _T("MaxHits"), &Gnutella.MaxHits, 64, 1, 0, 4096 );
+	Add( _T("Gnutella"), _T("MaxResults"), &Gnutella.MaxResults, 150, 1, 1, 300 );
+	Add( _T("Gnutella"), _T("RouteCache"), &Gnutella.RouteCache, 600, 60, 1, 120, _T(" m") );
+	Add( _T("Gnutella"), _T("SpecifyProtocol"), &Gnutella.SpecifyProtocol, true );
+
+	Add( _T("Gnutella1"), _T("ClientMode"), &Gnutella1.ClientMode, MODE_LEAF );
+	Add( _T("Gnutella1"), _T("DefaultTTL"), &Gnutella1.DefaultTTL, 3, 1, 1, 3 );
+	Add( _T("Gnutella1"), _T("EnableAlways"), &Gnutella1.EnableAlways, false );
+	Add( _T("Gnutella1"), _T("EnableGGEP"), &Gnutella1.EnableGGEP, true );
+	Add( _T("Gnutella1"), _T("HostExpire"), &Gnutella1.HostExpire, 2*24*60*60, 24*60*60, 1, 100, _T(" d") );
+	Add( _T("Gnutella1"), _T("MaxHostsInPongs"), &Gnutella1.MaxHostsInPongs, 10, 1, 5, 30 );
+	Add( _T("Gnutella1"), _T("MaximumPacket"), &Gnutella1.MaximumPacket, 65535, 1, 32, 262144 );
+	Add( _T("Gnutella1"), _T("MaximumQuery"), &Gnutella1.MaximumQuery, 256, 1, 32, 262144 );
+	Add( _T("Gnutella1"), _T("MaximumTTL"), &Gnutella1.MaximumTTL, 10, 1, 1, 10 );
+	Add( _T("Gnutella1"), _T("NumHubs"), &Gnutella1.NumHubs, 3, 1, 1, 5 );
+	Add( _T("Gnutella1"), _T("NumLeafs"), &Gnutella1.NumLeafs, 50, 1, 5, 1024 );
+	Add( _T("Gnutella1"), _T("NumPeers"), &Gnutella1.NumPeers, 32, 1, 15, 64 ); // For X-Degree
+	Add( _T("Gnutella1"), _T("PacketBufferSize"), &Gnutella1.PacketBufferSize, 64, 1, 1, 1024 );
+	Add( _T("Gnutella1"), _T("PacketBufferTime"), &Gnutella1.PacketBufferTime, 60000, 1000, 10, 180, _T(" s") );
+	Add( _T("Gnutella1"), _T("PingFlood"), &Gnutella1.PingFlood, 3000, 1000, 0, 30, _T(" s") );
+	Add( _T("Gnutella1"), _T("PingRate"), &Gnutella1.PingRate, 30000, 1000, 15, 180, _T(" s") );
+	Add( _T("Gnutella1"), _T("PongCache"), &Gnutella1.PongCache, 10000, 1000, 1, 180, _T(" s") );
+	Add( _T("Gnutella1"), _T("PongCount"), &Gnutella1.PongCount, 10, 1, 1, 64 );
+	Add( _T("Gnutella1"), _T("QueryHitUTF8"), &Gnutella1.QueryHitUTF8, true );
+	Add( _T("Gnutella1"), _T("QuerySearchUTF8"), &Gnutella1.QuerySearchUTF8, true );
+	Add( _T("Gnutella1"), _T("QueryThrottle"), &Gnutella1.QueryThrottle, 30, 1, 5, 60, _T(" s") );
+	Add( _T("Gnutella1"), _T("QueueLimter"), &Gnutella1.HitQueueLimit, 50 );
+	Add( _T("Gnutella1"), _T("RequeryDelay"), &Gnutella1.RequeryDelay, 30, 1, 5, 60, _T(" s") );
+	Add( _T("Gnutella1"), _T("SearchTTL"), &Gnutella1.SearchTTL, 3, 1, 1, 3 );
+	Add( _T("Gnutella1"), _T("StrictPackets"), &Gnutella1.StrictPackets, false );
+	Add( _T("Gnutella1"), _T("TranslateTTL"), &Gnutella1.TranslateTTL, 2, 1, 1, 2 );
+	Add( _T("Gnutella1"), _T("VendorMsg"), &Gnutella1.VendorMsg, true );
+
+	Add( _T("Gnutella2"), _T("ClientMode"), &Gnutella2.ClientMode, MODE_AUTO );
+	Add( _T("Gnutella2"), _T("EnableAlways"), &Gnutella2.EnableAlways, true );
+	Add( _T("Gnutella2"), _T("HAWPeriod"), &Gnutella2.HAWPeriod, 300000, 1000, 1, 60*60, _T(" s") );
+	Add( _T("Gnutella2"), _T("HostCurrent"), &Gnutella2.HostCurrent, 10*60, 60, 1, 24*60, _T(" m") );
+	Add( _T("Gnutella2"), _T("HostExpire"), &Gnutella2.HostExpire, 2*24*60*60, 24*60*60, 1, 100, _T(" d") );
+	Add( _T("Gnutella2"), _T("HubHorizonSize"), &Gnutella2.HubHorizonSize, 128, 1, 32, 512 );
+	Add( _T("Gnutella2"), _T("HubVerified"), &Gnutella2.HubVerified, false );
+	Add( _T("Gnutella2"), _T("KHLHubCount"), &Gnutella2.KHLHubCount, 50, 1, 1, 256 );
+	Add( _T("Gnutella2"), _T("KHLPeriod"), &Gnutella2.KHLPeriod, 60000, 1000, 1, 60*60, _T(" s") );
+	Add( _T("Gnutella2"), _T("LNIPeriod"), &Gnutella2.LNIPeriod, 60000, 1000, 1, 60*60, _T(" s") );
+	Add( _T("Gnutella2"), _T("NumHubs"), &Gnutella2.NumHubs, 2, 1, 1, 3 );
+	Add( _T("Gnutella2"), _T("NumLeafs"), &Gnutella2.NumLeafs, 300, 1, 50, 1024 );
+	Add( _T("Gnutella2"), _T("NumPeers"), &Gnutella2.NumPeers, 6, 1, 4, 64 );
+	Add( _T("Gnutella2"), _T("PingRate"), &Gnutella2.PingRate, 15000, 1000, 5, 180, _T(" s") );
+	Add( _T("Gnutella2"), _T("PingRelayLimit"), &Gnutella2.PingRelayLimit, 10, 1, 10, 30 );
+	Add( _T("Gnutella2"), _T("QueryGlobalThrottle"), &Gnutella2.QueryGlobalThrottle, 125, 1, 1, 60*1000, _T(" ms") );
+	Add( _T("Gnutella2"), _T("QueryHostDeadline"), &Gnutella2.QueryHostDeadline, 10*60, 1, 1, 120*60, _T(" s") );
+	Add( _T("Gnutella2"), _T("QueryHostThrottle"), &Gnutella2.QueryHostThrottle, 120, 1, 1, 10*60, _T(" s") );
+	Add( _T("Gnutella2"), _T("QueryLimit"), &Gnutella2.QueryLimit, 2400, 1, 0, 10000 );
+	Add( _T("Gnutella2"), _T("RequeryDelay"), &Gnutella2.RequeryDelay, 4*60*60, 60*60, 1, 24, _T(" h") );
+	Add( _T("Gnutella2"), _T("UdpBuffers"), &Gnutella2.UdpBuffers, 512, 1, 16, 2048 );
+	Add( _T("Gnutella2"), _T("UdpGlobalThrottle"), &Gnutella2.UdpGlobalThrottle, 1, 1, 0, 10000 );
+	Add( _T("Gnutella2"), _T("UdpInExpire"), &Gnutella2.UdpInExpire, 30000, 1000, 1, 300, _T(" s") );
+	Add( _T("Gnutella2"), _T("UdpInFrames"), &Gnutella2.UdpInFrames, 256, 1, 16, 2048 );
+	Add( _T("Gnutella2"), _T("UdpMTU"), &Gnutella2.UdpMTU, 500, 1, 16, 10240 );
+	Add( _T("Gnutella2"), _T("UdpOutExpire"), &Gnutella2.UdpOutExpire, 26000, 1000, 1, 300, _T(" s") );
+	Add( _T("Gnutella2"), _T("UdpOutFrames"), &Gnutella2.UdpOutFrames, 256, 1, 16, 2048 );
+	Add( _T("Gnutella2"), _T("UdpOutResend"), &Gnutella2.UdpOutResend, 6000, 1000, 1, 300, _T(" s") );
+
+	Add( _T("eDonkey"), _T("DefaultServerFlags"), &eDonkey.DefaultServerFlags, 0xFFFFFFFF );
+	Add( _T("eDonkey"), _T("DequeueTime"), &eDonkey.DequeueTime, 3600, 60, 2, 512, _T(" m") );
+	Add( _T("eDonkey"), _T("EnableAlways"), &eDonkey.EnableAlways, false );
+	Add( _T("eDonkey"), _T("Endgame"), &eDonkey.Endgame, true );
+	Add( _T("eDonkey"), _T("ExtendedRequest"), &eDonkey.ExtendedRequest, 2, 1, 0, 2 );
+	Add( _T("eDonkey"), _T("FastConnect"), &eDonkey.FastConnect, false );
+	Add( _T("eDonkey"), _T("ForceHighID"), &eDonkey.ForceHighID, true );
+	Add( _T("eDonkey"), _T("FrameSize"), &eDonkey.FrameSize, 10240, 1024, 1, 500, _T(" KB") );
+	Add( _T("eDonkey"), _T("GetSourcesThrottle"), &eDonkey.GetSourcesThrottle, 8*60*60*1000, 60*60*1000, 1, 24, _T(" h") );
+	Add( _T("eDonkey"), _T("LargeFileSupport"), &eDonkey.LargeFileSupport, false );
+	Add( _T("eDonkey"), _T("LearnNewServers"), &eDonkey.LearnNewServers, true );
+	Add( _T("eDonkey"), _T("LearnNewServersClient"), &eDonkey.LearnNewServersClient, false );
+	Add( _T("eDonkey"), _T("MagnetSearch"), &eDonkey.MagnetSearch, true );
+	Add( _T("eDonkey"), _T("MaxLinks"), &eDonkey.MaxLinks, 200 );
+	Add( _T("eDonkey"), _T("MaxResults"), &eDonkey.MaxResults, 100 );
+	Add( _T("eDonkey"), _T("MaxShareCount"), &eDonkey.MaxShareCount, 1000, 1, 0, 20000 );
+	Add( _T("eDonkey"), _T("MetAutoQuery"), &eDonkey.MetAutoQuery, true );
+	Add( _T("eDonkey"), _T("MinServerFileSize"), &eDonkey.MinServerFileSize, 0, 1, 0, 50, _T(" MB") );
+	Add( _T("eDonkey"), _T("NumServers"), &eDonkey.NumServers, 1 );
+	Add( _T("eDonkey"), _T("PacketThrottle"), &eDonkey.PacketThrottle, 500, 1, 250, 5000, _T(" ms") );
+	Add( _T("eDonkey"), _T("QueryFileThrottle"), &eDonkey.QueryFileThrottle, 60*60*1000, 60*1000, 30, 120, _T(" m") );
+	Add( _T("eDonkey"), _T("QueryGlobalThrottle"), &eDonkey.QueryGlobalThrottle, 1000, 1, 1000, 20000, _T(" ms") );
+	Add( _T("eDonkey"), _T("QueryServerThrottle"), &eDonkey.QueryServerThrottle, 120, 60, 1, 300, _T(" m") );
+	Add( _T("eDonkey"), _T("QueueRankThrottle"), &eDonkey.QueueRankThrottle, 2*60*1000, 1000, 60, 600, _T(" s") );
+	Add( _T("eDonkey"), _T("ReAskTime"), &eDonkey.ReAskTime, 29*60, 60, 20, 360, _T(" m") );
+	Add( _T("eDonkey"), _T("RequestPipe"), &eDonkey.RequestPipe, 3, 1, 1, 10 );
+	Add( _T("eDonkey"), _T("RequestSize"), &eDonkey.RequestSize, 180*1024/2, 1024, 10, 1000, _T(" KB") );
+	Add( _T("eDonkey"), _T("SendPortServer"), &eDonkey.SendPortServer, false );
+	Add( _T("eDonkey"), _T("ServerListURL"), &eDonkey.ServerListURL, _T("http://ocbmaurice.no-ip.org/pl/slist.pl/server.met?download/server-good.met") );
+	Add( _T("eDonkey"), _T("ServerWalk"), &eDonkey.ServerWalk, true );
+	Add( _T("eDonkey"), _T("SourceThrottle"), &eDonkey.SourceThrottle, 1000, 1, 250, 5000, _T(" ms") );
+	Add( _T("eDonkey"), _T("StatsGlobalThrottle"), &eDonkey.StatsGlobalThrottle, 30*60*1000, 60*1000, 30, 120, _T(" m") );
+	Add( _T("eDonkey"), _T("StatsServerThrottle"), &eDonkey.StatsServerThrottle, 7*24*60*60, 24*60*60, 7, 28, _T(" d") );
+	Add( _T("eDonkey"), _T("TagNames"), &eDonkey.TagNames, true );
+
+	Add( _T("BitTorrent"), _T("AdvancedInterface"), &BitTorrent.AdvancedInterface, false );
+	Add( _T("BitTorrent"), _T("AdvancedInterfaceSet"), &BitTorrent.AdvancedInterfaceSet, false );
+	Add( _T("BitTorrent"), _T("AutoClear"), &BitTorrent.AutoClear, false );
+	Add( _T("BitTorrent"), _T("AutoSeed"), &BitTorrent.AutoSeed, true );
+	Add( _T("BitTorrent"), _T("BandwidthPercentage"), &BitTorrent.BandwidthPercentage, 80, 1, 50, 95, _T("%") );
+	Add( _T("BitTorrent"), _T("ClearRatio"), &BitTorrent.ClearRatio, 120 );
+	Add( _T("BitTorrent"), _T("DefaultTracker"), &BitTorrent.DefaultTracker, _T("") );
+	Add( _T("BitTorrent"), _T("DefaultTrackerPeriod"), &BitTorrent.DefaultTrackerPeriod, 5*60000, 60000, 5, 120, _T(" m") );
+	Add( _T("BitTorrent"), _T("DownloadConnections"), &BitTorrent.DownloadConnections, 40 );
+	Add( _T("BitTorrent"), _T("DownloadTorrents"), &BitTorrent.DownloadTorrents, 3 );
+	Add( _T("BitTorrent"), _T("Endgame"), &BitTorrent.Endgame, true );
+	Add( _T("BitTorrent"), _T("LinkPing"), &BitTorrent.LinkPing, 120*1000, 1000, 10, 60*10, _T(" s") );
+	Add( _T("BitTorrent"), _T("LinkTimeout"), &BitTorrent.LinkTimeout, 180*1000, 1000, 10, 60*10, _T(" s") );
+	Add( _T("BitTorrent"), _T("MaxTrackerRetry"), &BitTorrent.MaxTrackerRetry, 3, 1, 1, 8 );
+	Add( _T("BitTorrent"), _T("PreferenceBTSources"), &BitTorrent.PreferenceBTSources, true );
+	Add( _T("BitTorrent"), _T("RandomPeriod"), &BitTorrent.RandomPeriod, 30*1000, 1000, 1, 60*5, _T(" s") );
+	Add( _T("BitTorrent"), _T("RequestLimit"), &BitTorrent.RequestLimit, 128*1024, 1024, 1, 1024, _T(" KB") );
+	Add( _T("BitTorrent"), _T("RequestPipe"), &BitTorrent.RequestPipe, 4, 1, 1, 10 );
+	Add( _T("BitTorrent"), _T("RequestSize"), &BitTorrent.RequestSize, 16*1024, 1024, 8, 128, _T(" KB") );
+	Add( _T("BitTorrent"), _T("SourceExchangePeriod"), &BitTorrent.SourceExchangePeriod, 10, 1, 1, 60*5, _T(" m") );
+	Add( _T("BitTorrent"), _T("StandardPeerID"), &BitTorrent.StandardPeerID, true );
+	Add( _T("BitTorrent"), _T("TorrentCodePage"), &BitTorrent.TorrentCodePage, 0, 1, 0, 9999999 );
+	Add( _T("BitTorrent"), _T("TorrentCreatorPath"), &BitTorrent.TorrentCreatorPath, _T("") );
+	Add( _T("BitTorrent"), _T("TorrentExtraKeys"), &BitTorrent.TorrentExtraKeys, true );
+	Add( _T("BitTorrent"), _T("TrackerKey"), &BitTorrent.TrackerKey, true );
+	Add( _T("BitTorrent"), _T("UploadCount"), &BitTorrent.UploadCount, 4, 1, 2, 16 );
+
+	Add( _T("Downloads"), _T("AllowBackwards"), &Downloads.AllowBackwards, true );
+	Add( _T("Downloads"), _T("AutoClear"), &Downloads.AutoClear, false );
+	Add( _T("Downloads"), _T("AutoExpand"), &Downloads.AutoExpand, false );
+	Add( _T("Downloads"), _T("BufferSize"), &Downloads.BufferSize, 80*1024, 1024, 0, 512, _T(" KB") );
+	Add( _T("Downloads"), _T("ChunkSize"), &Downloads.ChunkSize, 512*1024, 1024, 0, 10240, _T(" KB") );
+	Add( _T("Downloads"), _T("ChunkStrap"), &Downloads.ChunkStrap, 128*1024, 1024, 0, 10240, _T(" KB") );
+	Add( _T("Downloads"), _T("ClearDelay"), &Downloads.ClearDelay, 30*1000, 1000, 1, 30*60, _T(" s") );
+	Add( _T("Downloads"), _T("CollectionPath"), &Downloads.CollectionPath, _T("") );
+	Add( _T("Downloads"), _T("CompletePath"), &Downloads.CompletePath, _T("") );
+	Add( _T("Downloads"), _T("ConnectThrottle"), &Downloads.ConnectThrottle, 250, 1, 0, 5000, _T(" ms") );
+	Add( _T("Downloads"), _T("FilterMask"), &Downloads.FilterMask, 0xFFFFFFFF );
+	Add( _T("Downloads"), _T("FlushSD"), &Downloads.FlushSD, true );
+	Add( _T("Downloads"), _T("IncompletePath"), &Downloads.IncompletePath, _T("") );
+	Add( _T("Downloads"), _T("MaxAllowedFailures"), &Downloads.MaxAllowedFailures, 10, 1, 3, 40 );
+	Add( _T("Downloads"), _T("MaxConnectingSources"), &Downloads.MaxConnectingSources, 28, 1, 5, 50 );
+	Add( _T("Downloads"), _T("MaxFileSearches"), &Downloads.MaxFileSearches, 2, 1, 0, 5 );
+	Add( _T("Downloads"), _T("MaxFileTransfers"), &Downloads.MaxFileTransfers, 10 );
+	Add( _T("Downloads"), _T("MaxFiles"), &Downloads.MaxFiles, 20, 1, 1, 100 );
+	Add( _T("Downloads"), _T("MaxReviews"), &Downloads.MaxReviews, 64, 1, 0, 256 );
+	Add( _T("Downloads"), _T("MaxTransfers"), &Downloads.MaxTransfers, 100 );
+	Add( _T("Downloads"), _T("Metadata"), &Downloads.Metadata, true );
+	Add( _T("Downloads"), _T("MinSources"), &Downloads.MinSources, 1, 1, 0, 6 );
+	Add( _T("Downloads"), _T("NeverDrop"), &Downloads.NeverDrop, false );
+	Add( _T("Downloads"), _T("PushTimeout"), &Downloads.PushTimeout, 45*1000, 1000, 5, 180, _T(" s") );
+	Add( _T("Downloads"), _T("QueueLimit"), &Downloads.QueueLimit, 0 );
+	Add( _T("Downloads"), _T("RequestHTTP11"), &Downloads.RequestHTTP11, true );
+	Add( _T("Downloads"), _T("RequestHash"), &Downloads.RequestHash, true );
+	Add( _T("Downloads"), _T("RequestURLENC"), &Downloads.RequestURLENC, true );
+	Add( _T("Downloads"), _T("RetryDelay"), &Downloads.RetryDelay, 10*60*1000, 1000, 120, 60*60, _T(" s") );
+	Add( _T("Downloads"), _T("SaveInterval"), &Downloads.SaveInterval, 60*1000, 1000, 1, 120, _T(" s") );
+	Add( _T("Downloads"), _T("SearchPeriod"), &Downloads.SearchPeriod, 120*1000, 1000, 10, 4*60, _T(" s") );
+	Add( _T("Downloads"), _T("ShowGroups"), &Downloads.ShowGroups, true );
+	Add( _T("Downloads"), _T("ShowMonitorURLs"), &Downloads.ShowMonitorURLs, true );
+	Add( _T("Downloads"), _T("ShowPercent"), &Downloads.ShowPercent, false );
+	Add( _T("Downloads"), _T("ShowSources"), &Downloads.ShowSources, false );
+	Add( _T("Downloads"), _T("SimpleBar"), &Downloads.SimpleBar, false );
+	Add( _T("Downloads"), _T("SortColumns"), &Downloads.SortColumns, true );
+	Add( _T("Downloads"), _T("SortSources"), &Downloads.SortSources, true );
+	Add( _T("Downloads"), _T("SourcesWanted"), &Downloads.SourcesWanted, 500 );
+	Add( _T("Downloads"), _T("SparseThreshold"), &Downloads.SparseThreshold, 8*1024, 1024, 0, 256, _T(" MB") );
+	Add( _T("Downloads"), _T("StaggardStart"), &Downloads.StaggardStart, false );
+	Add( _T("Downloads"), _T("StartDroppingFailedSourcesNumber"), &Downloads.StartDroppingFailedSourcesNumber, 20, 1, 0, 50 );
+	Add( _T("Downloads"), _T("StarveGiveUp"), &Downloads.StarveGiveUp, 3, 1, 3, 120, _T(" h") );
+	Add( _T("Downloads"), _T("StarveTimeout"), &Downloads.StarveTimeout, 45*60, 60, 45, 24*60, _T(" m") );
+	Add( _T("Downloads"), _T("TorrentPath"), &Downloads.TorrentPath, _T("") );
+	Add( _T("Downloads"), _T("VerifyED2K"), &Downloads.VerifyED2K, true );
+	Add( _T("Downloads"), _T("VerifyFiles"), &Downloads.VerifyFiles, true );
+	Add( _T("Downloads"), _T("VerifyTiger"), &Downloads.VerifyTiger, true );
+
+	Add( _T("Uploads"), _T("AllowBackwards"), &Uploads.AllowBackwards, true );
+	Add( _T("Uploads"), _T("AutoClear"), &Uploads.AutoClear, false );
+	Add( _T("Uploads"), _T("BlockAgents"), &Uploads.BlockAgents, _T("|Mozilla|") );
+	Add( _T("Uploads"), _T("ClampdownFactor"), &Uploads.ClampdownFactor, 20, 1, 0, 100, _T("%") );
+	Add( _T("Uploads"), _T("ClampdownFloor"), &Uploads.ClampdownFloor, 8*128, 128, 0, 4096, _T(" Kb/s") );
+	Add( _T("Uploads"), _T("ClearDelay"), &Uploads.ClearDelay, 30*1000, 1000, 1, 1800, _T(" s") );
+	Add( _T("Uploads"), _T("DynamicPreviews"), &Uploads.DynamicPreviews, true );
+	Add( _T("Uploads"), _T("FilterMask"), &Uploads.FilterMask, 0xFFFFFFFD );
+	Add( _T("Uploads"), _T("FreeBandwidthFactor"), &Uploads.FreeBandwidthFactor, 15, 1, 0, 100, _T("%") );
+	Add( _T("Uploads"), _T("FreeBandwidthValue"), &Uploads.FreeBandwidthValue, 20*128, 128, 0, 4096, _T(" Kb/s") );
+	Add( _T("Uploads"), _T("HubUnshare"), &Uploads.HubUnshare, true );
+	Add( _T("Uploads"), _T("MaxPerHost"), &Uploads.MaxPerHost, 2 );
+	Add( _T("Uploads"), _T("PreviewQuality"), &Uploads.PreviewQuality, 70, 1, 5, 100, _T("%") );
+	Add( _T("Uploads"), _T("PreviewTransfers"), &Uploads.PreviewTransfers, 3, 1, 1, 64 );
+	Add( _T("Uploads"), _T("QueuePollMax"), &Uploads.QueuePollMax, 120*1000, 1000, 30, 180, _T(" s") );
+	Add( _T("Uploads"), _T("QueuePollMin"), &Uploads.QueuePollMin, 45*1000, 1000, 0, 60, _T(" s") );
+	Add( _T("Uploads"), _T("RewardQueuePercentage"), &Uploads.RewardQueuePercentage, 10, 1, 0, 99, _T("%") );
+	Add( _T("Uploads"), _T("RotateChunkLimit"), &Uploads.RotateChunkLimit, 1024*1024, 1024, 0, 10*1024, _T(" KB") );
+	Add( _T("Uploads"), _T("ShareHashset"), &Uploads.ShareHashset, true );
+	Add( _T("Uploads"), _T("ShareMetadata"), &Uploads.ShareMetadata, true );
+	Add( _T("Uploads"), _T("SharePartials"), &Uploads.SharePartials, true );
+	Add( _T("Uploads"), _T("SharePreviews"), &Uploads.SharePreviews, true );
+	Add( _T("Uploads"), _T("ShareTiger"), &Uploads.ShareTiger, true );
+	Add( _T("Uploads"), _T("ThrottleMode"), &Uploads.ThrottleMode, true );
+
+	Add( _T("Remote"), _T("Enable"), &Remote.Enable, false );
+	Add( _T("Remote"), _T("Password"), &Remote.Password, _T("") );
+	Add( _T("Remote"), _T("Username"), &Remote.Username, _T("") );
+
+	Add( _T("Scheduler"), _T("AllowHub"), &Scheduler.AllowHub, true );
+	Add( _T("Scheduler"), _T("Enable"), &Scheduler.Enable, false );
+	Add( _T("Scheduler"), _T("LimitedBandwidth"), &Scheduler.LimitedBandwidth, 50 );
+	Add( _T("Scheduler"), _T("LimitedNetworks"), &Scheduler.LimitedNetworks, true );
+
+	Add( _T("Experimental"), _T("EnableDIPPSupport"), &Experimental.EnableDIPPSupport, false );
+
+	Add( _T("WINE"), _T("MenuFix"), &WINE.MenuFix, true );
 }
 
 CSettings::~CSettings()
@@ -526,89 +478,57 @@ CSettings::~CSettings()
 }
 
 //////////////////////////////////////////////////////////////////////
-// CSettings add items
-
-void CSettings::Add(LPCTSTR pszName, DWORD* pDword, DWORD nDefault)
-{
-	m_pItems.AddTail( new Item( pszName, pDword, NULL, NULL, NULL ) );
-	*pDword = nDefault;
-}
-
-void CSettings::Add(LPCTSTR pszName, int* pDword, DWORD nDefault)
-{
-	m_pItems.AddTail( new Item( pszName, (DWORD*)pDword, NULL, NULL, NULL ) );
-	*pDword = nDefault;
-}
-
-void CSettings::Add(LPCTSTR pszName, DOUBLE* pFloat, DOUBLE nDefault)
-{
-	m_pItems.AddTail( new Item( pszName, NULL, pFloat, NULL, NULL ) );
-	*pFloat = nDefault;
-}
-
-void CSettings::Add(LPCTSTR pszName, CString* pString, LPCTSTR pszDefault)
-{
-	m_pItems.AddTail( new Item( pszName, NULL, NULL, pString, NULL ) );
-	if ( pszDefault ) *pString = pszDefault;
-}
-
-void CSettings::Add(LPCTSTR pszName, string_set* pSet, LPCTSTR pszDefault)
-{
-	m_pItems.AddTail( new Item( pszName, NULL, NULL, NULL, pSet ) );
-	if ( pszDefault )
-	{
-		LoadSet( pSet, pszDefault );
-	}
-}
-
-void CSettings::LoadSet(string_set* pSet, LPCTSTR pszString)
-{
-	pSet->clear();
-	for( LPCTSTR start = pszString; *start; start++ )
-	{
-		LPCTSTR c = _tcschr( start, _T('|') );
-		int len = c ? (int) ( c - start ) : (int) _tcslen( start );
-		if ( len > 0 )
-		{
-			CString tmp;
-			tmp.Append( start, len );
-			pSet->insert( tmp );
-		}
-		if ( ! c )
-			break;
-		start = c;
-	}
-}
-
-//////////////////////////////////////////////////////////////////////
 // CSettings load
 
 void CSettings::Load()
 {
-	CRegistry pRegistry;
-
+	// Load settings
 	for ( POSITION pos = m_pItems.GetHeadPosition() ; pos ; )
 	{
 		Item* pItem = m_pItems.GetNext( pos );
 		pItem->Load();
-		ASSERT( ( pItem->m_pDword && !pItem->m_pFloat && !pItem->m_pString && !pItem->m_pSet ) \
-			|| ( !pItem->m_pDword && pItem->m_pFloat && !pItem->m_pString && !pItem->m_pSet ) \
-			|| ( !pItem->m_pDword && !pItem->m_pFloat && pItem->m_pString && !pItem->m_pSet ) \
-			|| ( !pItem->m_pDword && !pItem->m_pFloat && !pItem->m_pString && pItem->m_pSet ) );
 	}
 
-	if ( pRegistry.GetBool( _T("Settings"), _T("FirstRun"), TRUE ) )
+	// Set default program and user paths
+	if ( General.Path.IsEmpty() || ! PathFileExists( General.Path ) )
 	{
-		Live.FirstRun = TRUE;
-		pRegistry.SetInt( _T("Settings"), _T("FirstRun"), FALSE );
+		GetModuleFileName( NULL, General.Path.GetBuffer( MAX_PATH ), MAX_PATH );
+		General.Path.ReleaseBuffer();
+		if ( General.Path.ReverseFind( '\\' ) >= 0 )
+			General.Path = General.Path.Left( General.Path.ReverseFind( '\\' ) );
 	}
+
+	if ( ! General.MultiUser )
+	{
+		if ( General.UserPath.IsEmpty() )
+			General.UserPath = General.Path;
+		if ( Downloads.IncompletePath.IsEmpty() )
+			Downloads.IncompletePath = General.Path + _T("\\Incomplete");
+		if ( Downloads.CompletePath.IsEmpty() )
+			Downloads.CompletePath = General.Path + _T("\\Downloads");
+	}
+	else
+	{
+		if ( General.UserPath.IsEmpty() )
+			General.UserPath = GetAppDataFolder() + _T("\\Shareaza");
+		if ( Downloads.IncompletePath.IsEmpty() )
+			Downloads.IncompletePath = GetLocalAppDataFolder() + _T("\\Shareaza\\Incomplete");
+		if ( Downloads.CompletePath.IsEmpty() )
+			Downloads.CompletePath = GetDocumentsFolder() + _T("\\Shareaza Downloads");
+	}
+
+	if ( Downloads.TorrentPath.IsEmpty() )
+		Downloads.TorrentPath = General.UserPath + _T("\\Torrents");
+	if ( Downloads.CollectionPath.IsEmpty() )
+		Downloads.CollectionPath = General.UserPath + _T("\\Collections");
+
+	Live.FirstRun = General.FirstRun;
+	General.FirstRun = false;
 
 	SmartUpgrade();
 
-	if ( pRegistry.GetBool( _T("Settings"), _T("Running"), FALSE ) )
-		;	// Shareaza is restarted after a crash
-	else
-		pRegistry.SetInt( _T("Settings"), _T("Running"), TRUE );
+	//if ( General.Running )
+	// TODO: Shareaza is restarted after a crash
 
 	// Set current networks
 	Gnutella1.EnableToday		= Gnutella1.EnableAlways;
@@ -616,17 +536,12 @@ void CSettings::Load()
 	eDonkey.EnableToday			= eDonkey.EnableAlways;
 
 	// Make sure some needed paths exist
-	CreateDirectory( General.Path + _T("\\Data"), NULL );
-	CreateDirectory( General.UserPath, NULL );
-	CreateDirectory( General.UserPath + _T("\\Data"), NULL );
-	{	// It create C:\Documents and Settings\[UserName]\Local Settings\Application Data\Shareaza
-		CString strTemp( Downloads.IncompletePath );
-		if ( strTemp.ReverseFind( '\\' ) >= 0 )
-			strTemp = strTemp.Left( strTemp.ReverseFind( '\\' ) );
-
-		 CreateDirectory( strTemp, NULL );
-	}
-	CreateDirectory( Downloads.IncompletePath, NULL );
+	CreateDirectory( General.Path + _T("\\Data") );
+	CreateDirectory( General.UserPath + _T("\\Data") );
+	CreateDirectory( Downloads.IncompletePath );
+	CreateDirectory( Downloads.CompletePath );
+	CreateDirectory( Downloads.TorrentPath );
+	CreateDirectory( Downloads.CollectionPath );
 
 	// Set interface
 	Interface.LowResMode		= ! ( GetSystemMetrics( SM_CYSCREEN ) > 600 );
@@ -636,44 +551,16 @@ void CSettings::Load()
 	// Set ed2k and G1
 	if ( GetOutgoingBandwidth() < 2 )
 	{
-		eDonkey.EnableToday		= FALSE;
-		eDonkey.EnableAlways	= FALSE;
-		Gnutella1.EnableToday	= FALSE;
-		Gnutella1.EnableAlways	= FALSE;
+		eDonkey.EnableToday		= false;
+		eDonkey.EnableAlways	= false;
+		Gnutella1.EnableToday	= false;
+		Gnutella1.EnableAlways	= false;
 	}
 	// Set number of torrents
-	BitTorrent.DownloadTorrents = min( BitTorrent.DownloadTorrents, (int)( ( GetOutgoingBandwidth() / 2 ) + 2 ) );
+	BitTorrent.DownloadTorrents = min( BitTorrent.DownloadTorrents, ( GetOutgoingBandwidth() / 2u + 2u ) );
 
 	// Enforce a few sensible values to avoid being banned/dropped/etc (in case of registry fiddling)
-	Downloads.SearchPeriod		= min( Downloads.SearchPeriod, 4*60*1000u );
-	Downloads.StarveTimeout		= max( Downloads.StarveTimeout, 45*60u );
-	Downloads.ConnectThrottle	= max( Downloads.ConnectThrottle, Connection.ConnectThrottle + 50 );
-	Downloads.MaxFiles			= min( Downloads.MaxFiles, 100 );
-	eDonkey.QueryGlobalThrottle = max( eDonkey.QueryGlobalThrottle, 1000u );
-	Gnutella1.PingRate			= max( min( Gnutella1.PingRate, 180000u ), 15000u );
-	Gnutella1.RequeryDelay		= max( min( Gnutella1.RequeryDelay, 60u ), 5u );
-	Gnutella2.RequeryDelay		= max( Gnutella2.RequeryDelay, 60*60u );
-	Gnutella1.SearchTTL			= max( min( Gnutella1.SearchTTL, 3u ), 1u );
-	Gnutella1.DefaultTTL		= max( min( Gnutella1.DefaultTTL, 3u ), 1u );
-	Gnutella1.QueryThrottle		= max( min( Gnutella1.QueryThrottle, 60u ), 5u );
-	Gnutella.MaxResults			= max( min( Gnutella.MaxResults, 300u ), 1u );
-	Gnutella.MaxHits			= max( min( Gnutella.MaxHits, 4096u ), 0u );
-
-	// Set client links
-	Gnutella1.NumHubs			= max( min( Gnutella1.NumHubs,  5    ), 1 );
-	Gnutella1.NumLeafs			= max( min( Gnutella1.NumLeafs, 1024 ), 10 );
-	Gnutella1.NumPeers			= max( min( Gnutella1.NumPeers, 64   ), 15 );
-	Gnutella2.NumHubs			= max( min( Gnutella2.NumHubs,  3    ), 1 );
-	Gnutella2.NumLeafs			= max( min( Gnutella2.NumLeafs, 1024 ), 50 );
-	Gnutella2.NumPeers			= max( min( Gnutella2.NumPeers, 64   ), 4 );
-
-	// Enforce HostCache Expire time to be minimum 1 day.
-	Gnutella1.HostExpire		= max( Gnutella1.HostExpire, 24 * 60 * 60u );
-	Gnutella2.HostExpire		= max( Gnutella2.HostExpire, 24 * 60 * 60u );
-
-	// Get TorrentCreatorPath from HKEY_LOCAL_MACHINE if that value in HKEY_CURRENT_USER is empty or too short.
-	if ( BitTorrent.TorrentCreatorPath.GetLength() <= 5 )
-		BitTorrent.TorrentCreatorPath = pRegistry.GetString( _T("BitTorrent"), _T("TorrentCreatorPath"), _T(""), HKEY_LOCAL_MACHINE );
+	Downloads.ConnectThrottle	= max( Downloads.ConnectThrottle, Connection.ConnectThrottle + 50u );
 	
 	// Make sure download/incomplete folders aren't the same
 	if ( _tcsicmp( Downloads.IncompletePath, Downloads.CompletePath ) == 0 )
@@ -684,45 +571,53 @@ void CSettings::Load()
 		// Downloads.IncompletePath = General.Path + _T("\\Incomplete");
 	}
 
-	//Temporary- until G1 ultrapeer has been updated
-	Gnutella1.ClientMode		= MODE_LEAF;
+	// Temporary until G1 ultrapeer has been updated
+	Gnutella1.ClientMode = MODE_LEAF;
 
 	// UPnP is not supported in servers and Win9x
 	if ( theApp.m_bServer || theApp.m_dwWindowsVersion < 5 && !theApp.m_bWinME )
 	{
-		Connection.EnableUPnP = FALSE;
-		Connection.DeleteUPnPPorts = FALSE;
+		Connection.EnableUPnP = false;
+		Connection.DeleteUPnPPorts = false;
 	}
 
 	// UPnP will setup a random port, so we need to reset values after it sets Connection.InPort
 	if ( Connection.RandomPort )
 		Connection.InPort = 0;
 	else if ( Connection.InPort == 0 )
-		Connection.RandomPort = TRUE;
+		Connection.RandomPort = true;
 
 	if ( !theApp.m_bNT )
 	{
-		Connection.EnableFirewallException = FALSE;
-		Connection.DeleteFirewallException = FALSE;
+		Connection.EnableFirewallException = false;
+		Connection.DeleteFirewallException = false;
 	}
 
-	m_bSettingsLoaded = TRUE;
+#ifdef LAN_MODE
+	Connection.IgnoreLocalIP = false;
+	Gnutella2.EnableToday = Gnutella2.EnableAlways = true;
+	eDonkey.EnableToday = eDonkey.EnableAlways = false;
+	Gnutella1.EnableToday = Gnutella1.EnableAlways = false;
+	Gnutella.MaxResults = 100000u;
+	Gnutella.MaxHits = 4096u;
+	Uploads.HubUnshare = false;
+#endif // LAN_MODE
+
+	if ( Live.FirstRun )
+		OnChangeConnectionSpeed();	// This helps if the QuickStart Wizard is skipped.
+
+	Save();
 }
 
 void CSettings::Save(BOOL bShutdown)
 {
-	CRegistry pRegistry;
-
-	if ( Connection.TimeoutConnect == 0 ) return;
+	General.Running = ! bShutdown;
 
 	for ( POSITION pos = m_pItems.GetHeadPosition() ; pos ; )
 	{
 		Item* pItem = m_pItems.GetNext( pos );
-		if ( pItem->m_sName != _T(".Path") ) pItem->Save();
+		pItem->Save();
 	}
-
-	pRegistry.SetInt( _T("Settings"), _T("SmartVersion"), SMART_VERSION );
-	pRegistry.SetInt( _T("Settings"), _T("Running"), bShutdown ? FALSE : TRUE );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -730,11 +625,9 @@ void CSettings::Save(BOOL bShutdown)
 
 void CSettings::SmartUpgrade()
 {	//This function resets certain values when upgrading, depending on version.
-	CRegistry pRegistry;
-	int nVersion = pRegistry.GetInt( _T("Settings"), _T("SmartVersion"), SMART_VERSION );
 
 /*	// Set next update check
-	if ( nVersion < SMART_VERSION )
+	if ( General.SmartVersion < SMART_VERSION )
 	{
 		// Don't check for a week if we've just upgraded
 		CTimeSpan tPeriod( 7, 0, 0, 0 );
@@ -743,7 +636,7 @@ void CSettings::SmartUpgrade()
 	}
 */
 	// Add OGG handling if needed
-	if ( ( nVersion < SMART_VERSION || Live.FirstRun ) &&
+	if ( ( General.SmartVersion < SMART_VERSION || Live.FirstRun ) &&
 		_tcsistr( MediaPlayer.FileTypes, _T("|ogg|") ) == NULL )
 	{
 		LONG nReg = 0;
@@ -756,24 +649,24 @@ void CSettings::SmartUpgrade()
 		}
 	}
 
-	if ( nVersion > SMART_VERSION )
-		nVersion = 1;
+	if ( General.SmartVersion > SMART_VERSION )
+		General.SmartVersion = 1;
 
-	if ( nVersion < SMART_VERSION )
+	if ( General.SmartVersion < SMART_VERSION )
 	{
-		Uploads.SharePartials = TRUE;
+		Uploads.SharePartials = true;
 
 		// 'SmartUpgrade' settings updates- change any settings that were mis-set in previous versions
-		if ( nVersion < 20 )
+		if ( General.SmartVersion < 20 )
 		{
 			Gnutella2.UdpOutResend			= 6000;
 			Gnutella2.UdpOutExpire			= 26000;
 			Library.TigerHeight		= 9;
 
-			Downloads.AutoExpand			= FALSE;
+			Downloads.AutoExpand			= false;
 
 			Uploads.MaxPerHost				= 2;
-			Uploads.ShareTiger				= TRUE;
+			Uploads.ShareTiger				= true;
 
 			Library.PrivateTypes.erase( _T("nfo") );
 
@@ -787,7 +680,7 @@ void CSettings::SmartUpgrade()
 			Library.SafeExecute = tmp;
 		}
 
-		if ( nVersion < 21 )
+		if ( General.SmartVersion < 21 )
 		{
 			Library.ThumbSize				= 96;
 			Library.SourceExpire			= 86400;
@@ -795,7 +688,7 @@ void CSettings::SmartUpgrade()
 			Gnutella1.TranslateTTL			= 2;
 		}
 
-		if ( nVersion < 24 )
+		if ( General.SmartVersion < 24 )
 		{
 			General.CloseMode				= 0;
 
@@ -807,19 +700,19 @@ void CSettings::SmartUpgrade()
 			Uploads.FilterMask				= 0xFFFFFFFD;
 		}
 
-		if ( nVersion < 25 )
+		if ( General.SmartVersion < 25 )
 		{
 			Connection.TimeoutTraffic		= 140000;
 
 			Gnutella2.NumPeers				= 6;
 		}
 
-		if ( nVersion < 28 )
+		if ( General.SmartVersion < 28 )
 		{
-			BitTorrent.Endgame		= TRUE;		// Endgame on
+			BitTorrent.Endgame		= true;		// Endgame on
 		}
 
-		if ( nVersion < 29 )
+		if ( General.SmartVersion < 29 )
 		{
 			Downloads.MinSources	= 1;		// Lower Max value- should reset it in case
 			Downloads.StarveTimeout = 2700;		// Increased due to ed2k queues (Tripping too often)
@@ -827,12 +720,12 @@ void CSettings::SmartUpgrade()
 			Gnutella2.RequeryDelay	= 4*3600;	// Longer delay between sending same search to G2 hub
 		}
 
-		if ( nVersion < 30 )
+		if ( General.SmartVersion < 30 )
 		{
 			BitTorrent.RequestSize	= 16384;	// Other BT clients have changed this value (undocumented)
 		}
 
-		if ( nVersion < 31 )
+		if ( General.SmartVersion < 31 )
 		{
 			Downloads.SearchPeriod			= 120000;
 
@@ -845,7 +738,7 @@ void CSettings::SmartUpgrade()
 			eDonkey.PacketThrottle	= 500;		// Second throttle added for finer control
 		}
 
-		if ( nVersion < 32 )
+		if ( General.SmartVersion < 32 )
 		{
 			Library.BitziWebView	= _T("http://bitzi.com/lookup/(URN)?v=detail&ref=shareaza");
 			Library.BitziWebSubmit	= _T("http://bitzi.com/lookup/(SHA1).(TTH)?fl=(SIZE)&ff=(FIRST20)&fn=(NAME)&tag.ed2k.ed2khash=(ED2K)&(INFO)&a=(AGENT)&v=Q0.4&ref=shareaza");
@@ -854,69 +747,69 @@ void CSettings::SmartUpgrade()
 			theApp.WriteProfileString( _T("Interface"), _T("SchemaColumns.audio"), _T("(EMPTY)") );
 		}
 
-		if ( nVersion < 33 )
+		if ( General.SmartVersion < 33 )
 		{
 			RegDeleteKey( HKEY_CURRENT_USER, _T("Software\\Shareaza\\Shareaza\\Plugins\\LibraryBuilder") );
 		}
 
-		if ( nVersion < 34 )
+		if ( General.SmartVersion < 34 )
 			BitTorrent.LinkPing				= 120 * 1000;
 
-		if ( nVersion < 35 )
+		if ( General.SmartVersion < 35 )
 		{
-			Gnutella1.QuerySearchUTF8 = TRUE;
-			Gnutella1.QueryHitUTF8 = TRUE;
+			Gnutella1.QuerySearchUTF8 = true;
+			Gnutella1.QueryHitUTF8 = true;
 		}
 
-		if ( nVersion < 36 )
+		if ( General.SmartVersion < 36 )
 		{
-			//Library.VirtualFiles	= TRUE;		// Virtual files (stripping) on
-			Library.VirtualFiles = FALSE;
+			//Library.VirtualFiles	= true;		// Virtual files (stripping) on
+			Library.VirtualFiles = false;
 		}
 
-		if ( nVersion < 37 )
+		if ( General.SmartVersion < 37 )
 		{
-			Downloads.RequestHash = TRUE;
-			Gnutella.SpecifyProtocol = TRUE;
+			Downloads.RequestHash = true;
+			Gnutella.SpecifyProtocol = true;
 			Search.FilterMask = Search.FilterMask | 0x140; // Turn on DRM and Suspicious filters
 		}
 
-		if ( nVersion < 39 )
+		if ( General.SmartVersion < 39 )
 		{
-			General.RatesInBytes = TRUE;
-			General.VerboseMode = FALSE;
+			General.RatesInBytes = true;
+			General.VerboseMode = false;
 		}
 
-		if ( nVersion < 40 )
+		if ( General.SmartVersion < 40 )
 		{
-			eDonkey.ForceHighID = TRUE;
-			eDonkey.FastConnect = FALSE;
+			eDonkey.ForceHighID = true;
+			eDonkey.FastConnect = false;
 		}
 
-		if ( nVersion < 41 )
+		if ( General.SmartVersion < 41 )
 		{
 			eDonkey.ExtendedRequest = 2;
-			Community.ChatAllNetworks = TRUE;
-			Community.ChatFilter = TRUE;
+			Community.ChatAllNetworks = true;
+			Community.ChatFilter = true;
 		}
 
-		if ( nVersion < 42 )
+		if ( General.SmartVersion < 42 )
 		{
 			Gnutella2.NumHubs = 2;
-			General.ItWasLimited = TRUE;
+			General.ItWasLimited = true;
 		}
 
-		if ( nVersion < 43 )
+		if ( General.SmartVersion < 43 )
 		{	
-			eDonkey.MetAutoQuery = TRUE;
+			eDonkey.MetAutoQuery = true;
 		}
 
-		if ( nVersion < 44 )
+		if ( General.SmartVersion < 44 )
 		{	
-			BitTorrent.AutoSeed = TRUE;
+			BitTorrent.AutoSeed = true;
 		}
 
-		if ( nVersion < 45 )
+		if ( General.SmartVersion < 45 )
 		{
 			Library.PrivateTypes.erase( _T("dat") );
 
@@ -931,14 +824,14 @@ void CSettings::SmartUpgrade()
 				Library.PrivateTypes.insert( _T("bc!") );
 		}
 
-		if ( nVersion < 46 )
+		if ( General.SmartVersion < 46 )
 		{
 			// ReGet
 			if ( ! IsIn( Library.PrivateTypes, _T("reget") ) )
 				Library.PrivateTypes.insert( _T("reget") );
 		}
 
-		if ( nVersion < 47 )
+		if ( General.SmartVersion < 47 )
 		{
 			// Changed from minutes to seconds
 			Gnutella1.QueryThrottle = 30u;
@@ -947,12 +840,12 @@ void CSettings::SmartUpgrade()
 			Gnutella.MaxResults = 150;
 		}
 
-		if ( nVersion < 49 )
+		if ( General.SmartVersion < 49 )
 		{
-			eDonkey.SendPortServer = FALSE;
+			eDonkey.SendPortServer = false;
 		}
 
-		if ( nVersion < 50 )
+		if ( General.SmartVersion < 50 )
 		{
 			CString strExts =
 				theApp.GetProfileString( L"Plugins", L"{04CC76C7-1ED7-4CAE-9762-B8664ED008ED}" );
@@ -1023,19 +916,19 @@ void CSettings::SmartUpgrade()
 			}
 		}
 
-		if ( nVersion < 51 )
+		if ( General.SmartVersion < 51 )
 		{
-			Library.HashWindow = TRUE;
+			Library.HashWindow = true;
 			Gnutella1.PingRate = 30000u;
 		}
 
-		if ( nVersion < 52 )
+		if ( General.SmartVersion < 52 )
 		{
-			WINE.MenuFix = TRUE;
+			WINE.MenuFix = true;
 			OnChangeConnectionSpeed();
 		}
 
-		if ( nVersion < 53 )
+		if ( General.SmartVersion < 53 )
 		{
 			Gnutella1.NumLeafs = 50;
 			if ( ! IsIn( Library.SafeExecute, _T("co") ) )
@@ -1046,11 +939,13 @@ void CSettings::SmartUpgrade()
 				Library.SafeExecute.insert( _T("lit") );
 		}
 	}
+
+	General.SmartVersion = SMART_VERSION;
 }
 
 void CSettings::OnChangeConnectionSpeed()
 {
-	BOOL bLimited = theApp.m_bLimitedConnections && !General.IgnoreXPsp2;
+	bool bLimited = theApp.m_bLimitedConnections && !General.IgnoreXPsp2;
 
 	if ( Connection.InSpeed <= 80 )
 	{	// NT Modem users / Win9x Modem users
@@ -1157,46 +1052,35 @@ void CSettings::OnChangeConnectionSpeed()
 		Connection.ConnectThrottle		= max( Connection.ConnectThrottle, 250u );
 		Downloads.ConnectThrottle		= max( Downloads.ConnectThrottle, 800u );
 		Gnutella.ConnectFactor			= min( Gnutella.ConnectFactor, 3u );
-		Connection.SlowConnect			= TRUE;
-		Connection.RequireForTransfers	= TRUE;
+		Connection.SlowConnect			= true;
+		Connection.RequireForTransfers	= true;
 		Downloads.MaxConnectingSources	= 8;
-		Gnutella1.EnableAlways			= FALSE;
-		Gnutella1.EnableToday			= FALSE;
+		Gnutella1.EnableAlways			= false;
+		Gnutella1.EnableToday			= false;
 
-		General.ItWasLimited			= TRUE;
+		General.ItWasLimited			= true;
 	}
 	else if( General.ItWasLimited )	// We change the settings back if the user path the half-open connection limit
 	{
 		Connection.ConnectThrottle		= 0;
 		Downloads.ConnectThrottle		= 250;
 		Gnutella.ConnectFactor			= 4;
-		Connection.SlowConnect			= FALSE;
+		Connection.SlowConnect			= false;
 
-		General.ItWasLimited			= FALSE;
+		General.ItWasLimited			= false;
 	}
-}
-
-BOOL CSettings::CheckSettingsLoaded(CString strCalledFrom)
-{
-	if ( !m_bSettingsLoaded )
-	{
-		theApp.Message( MSG_DISPLAYED_ERROR, _T("The settings are used in %s before they are loaded."), strCalledFrom );
-		ASSERT( FALSE );
-		return FALSE;
-	}
-
-	return TRUE;
 }
 
 //////////////////////////////////////////////////////////////////////
 // CSettings settings lookup
 
-CSettings::Item* CSettings::GetSetting(LPCTSTR pszName) const
+CSettings::Item* CSettings::GetSetting(LPCTSTR szSection, LPCTSTR szName) const
 {
 	for ( POSITION pos = m_pItems.GetHeadPosition() ; pos ; )
 	{
 		Item* pItem = m_pItems.GetNext( pos );
-		if ( pItem->m_sName.CompareNoCase( pszName ) == 0 ) return pItem;
+		if ( lstrcmpi( pItem->m_szSection, szSection ) == 0 &&
+			 lstrcmpi( pItem->m_szName, szName ) == 0 ) return pItem;
 	}
 
 	return NULL;
@@ -1207,7 +1091,8 @@ CSettings::Item* CSettings::GetSetting(LPVOID pValue) const
 	for ( POSITION pos = m_pItems.GetHeadPosition() ; pos ; )
 	{
 		Item* pItem = m_pItems.GetNext( pos );
-		if ( pItem->m_pDword == pValue ||
+		if ( pItem->m_pBool == pValue ||
+			 pItem->m_pDword == pValue ||
 			 pItem->m_pFloat == pValue ||
 			 pItem->m_pString == pValue ||
 			 pItem->m_pSet == pValue ) return pItem;
@@ -1221,7 +1106,6 @@ CSettings::Item* CSettings::GetSetting(LPVOID pValue) const
 
 BOOL CSettings::LoadWindow(LPCTSTR pszName, CWnd* pWindow)
 {
-	CRegistry pRegistry;
 	CString strEntry;
 
 	if ( pszName != NULL )
@@ -1229,16 +1113,16 @@ BOOL CSettings::LoadWindow(LPCTSTR pszName, CWnd* pWindow)
 	else
 		strEntry = pWindow->GetRuntimeClass()->m_lpszClassName;
 
-	int nShowCmd = pRegistry.GetInt( _T("Windows"), strEntry + _T(".ShowCmd"), -1 );
+	int nShowCmd = CRegistry::GetInt( _T("Windows"), strEntry + _T(".ShowCmd"), -1 );
 	if ( nShowCmd == -1 ) return FALSE;
 
 	WINDOWPLACEMENT pPos = {};
 	pPos.length = sizeof(pPos);
 
-	pPos.rcNormalPosition.left		= pRegistry.GetInt( _T("Windows"), strEntry + _T(".Left"), 0 );
-	pPos.rcNormalPosition.top		= pRegistry.GetInt( _T("Windows"), strEntry + _T(".Top"), 0 );
-	pPos.rcNormalPosition.right		= pRegistry.GetInt( _T("Windows"), strEntry + _T(".Right"), 0 );
-	pPos.rcNormalPosition.bottom	= pRegistry.GetInt( _T("Windows"), strEntry + _T(".Bottom"), 0 );
+	pPos.rcNormalPosition.left		= CRegistry::GetInt( _T("Windows"), strEntry + _T(".Left"), 0 );
+	pPos.rcNormalPosition.top		= CRegistry::GetInt( _T("Windows"), strEntry + _T(".Top"), 0 );
+	pPos.rcNormalPosition.right		= CRegistry::GetInt( _T("Windows"), strEntry + _T(".Right"), 0 );
+	pPos.rcNormalPosition.bottom	= CRegistry::GetInt( _T("Windows"), strEntry + _T(".Bottom"), 0 );
 
 	if ( pPos.rcNormalPosition.right && pPos.rcNormalPosition.bottom )
 	{
@@ -1261,7 +1145,6 @@ BOOL CSettings::LoadWindow(LPCTSTR pszName, CWnd* pWindow)
 void CSettings::SaveWindow(LPCTSTR pszName, CWnd* pWindow)
 {
 	WINDOWPLACEMENT pPos;
-	CRegistry pRegistry;
 	CString strEntry;
 
 	if ( pszName != NULL )
@@ -1271,15 +1154,14 @@ void CSettings::SaveWindow(LPCTSTR pszName, CWnd* pWindow)
 
 	pWindow->GetWindowPlacement( &pPos );
 
-	pRegistry.SetInt(  _T("Windows"), strEntry + _T(".ShowCmd"), pPos.showCmd );
+	CRegistry::SetInt(  _T("Windows"), strEntry + _T(".ShowCmd"), pPos.showCmd );
 
 	if ( pPos.showCmd != SW_SHOWNORMAL ) return;
 
-	pRegistry.SetInt(  _T("Windows"), strEntry + _T(".Left"), pPos.rcNormalPosition.left );
-	pRegistry.SetInt(  _T("Windows"), strEntry + _T(".Top"), pPos.rcNormalPosition.top );
-	pRegistry.SetInt(  _T("Windows"), strEntry + _T(".Right"), pPos.rcNormalPosition.right );
-	pRegistry.SetInt(  _T("Windows"), strEntry + _T(".Bottom"), pPos.rcNormalPosition.bottom );
-
+	CRegistry::SetInt(  _T("Windows"), strEntry + _T(".Left"), pPos.rcNormalPosition.left );
+	CRegistry::SetInt(  _T("Windows"), strEntry + _T(".Top"), pPos.rcNormalPosition.top );
+	CRegistry::SetInt(  _T("Windows"), strEntry + _T(".Right"), pPos.rcNormalPosition.right );
+	CRegistry::SetInt(  _T("Windows"), strEntry + _T(".Bottom"), pPos.rcNormalPosition.bottom );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -1287,7 +1169,6 @@ void CSettings::SaveWindow(LPCTSTR pszName, CWnd* pWindow)
 
 BOOL CSettings::LoadList(LPCTSTR pszName, CListCtrl* pCtrl, int nSort)
 {
-	CRegistry pRegistry;
 	LV_COLUMN pColumn;
 
 	pColumn.mask = LVCF_FMT;
@@ -1298,11 +1179,11 @@ BOOL CSettings::LoadList(LPCTSTR pszName, CListCtrl* pCtrl, int nSort)
 	BOOL bSuccess = FALSE;
 
 	strItem.Format( _T("%s.Ordering"), pszName );
-	strOrdering = pRegistry.GetString( _T("ListStates"), strItem, _T("") );
+	strOrdering = CRegistry::GetString( _T("ListStates"), strItem );
 	strItem.Format( _T("%s.Widths"), pszName );
-	strWidths = pRegistry.GetString( _T("ListStates"), strItem, _T("") );
+	strWidths = CRegistry::GetString( _T("ListStates"), strItem );
 	strItem.Format( _T("%s.Sort"), pszName );
-	nSort = pRegistry.GetInt( _T("ListStates"), strItem, nSort );
+	nSort = CRegistry::GetInt( _T("ListStates"), strItem, nSort );
 
 	if ( strOrdering.GetLength() == nColumns * 2 &&
 		 strWidths.GetLength() == nColumns * 4 )
@@ -1331,7 +1212,6 @@ BOOL CSettings::LoadList(LPCTSTR pszName, CListCtrl* pCtrl, int nSort)
 
 void CSettings::SaveList(LPCTSTR pszName, CListCtrl* pCtrl)
 {
-	CRegistry pRegistry;
 	LV_COLUMN pColumn;
 
 	pColumn.mask = LVCF_FMT;
@@ -1357,11 +1237,11 @@ void CSettings::SaveList(LPCTSTR pszName, CListCtrl* pCtrl)
 	int nSort = (int)GetWindowLongPtr( pCtrl->GetSafeHwnd(), GWLP_USERDATA );
 
 	strItem.Format( _T("%s.Ordering"), pszName );
-	pRegistry.SetString( _T("ListStates"), strItem, strOrdering);
+	CRegistry::SetString( _T("ListStates"), strItem, strOrdering);
 	strItem.Format( _T("%s.Widths"), pszName );
-	pRegistry.SetString( _T("ListStates"), strItem, strWidths);
+	CRegistry::SetString( _T("ListStates"), strItem, strWidths);
 	strItem.Format( _T("%s.Sort"), pszName );
-	pRegistry.SetInt( _T("ListStates"), strItem, nSort );
+	CRegistry::SetInt( _T("ListStates"), strItem, nSort );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -1455,7 +1335,7 @@ CString CSettings::SmartSpeed(QWORD nVolume, int nVolumeUnits, bool bTruncate) c
 		TRACE( _T("Unknown RatesUnit - %i"), General.RatesUnit );
 		break;
 	}
-	return theApp.m_bRTL ? _T("\x200E") + strVolume : strVolume;
+	return Settings.General.LanguageRTL ? _T("\x200E") + strVolume : strVolume;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -1519,7 +1399,7 @@ CString CSettings::SmartVolume(QWORD nVolume, int nVolumeUnits, bool bTruncate) 
 		}
 	}
 
-	return theApp.m_bRTL ? _T("\x200E") + strVolume : strVolume;
+	return Settings.General.LanguageRTL ? _T("\x200E") + strVolume : strVolume;
 }
 
 QWORD CSettings::ParseVolume(LPCTSTR szVolume, int nReturnUnits) const
@@ -1593,73 +1473,108 @@ DWORD CSettings::GetOutgoingBandwidth() const
 //////////////////////////////////////////////////////////////////////
 // CSettings::Item construction and operations
 
-CSettings::Item::Item(LPCTSTR pszName, DWORD* pDword, DOUBLE* pFloat, CString* pString, string_set* pSet) :
-	m_sName		( pszName ),
-	m_pDword	( pDword ),
-	m_pFloat	( pFloat ),
-	m_pString	( pString ),
-	m_pSet		( pSet )
-{
-}
-
 void CSettings::Item::Load()
 {
-	CRegistry pRegistry;
-
-	int nPos = m_sName.Find( '.' );
-	if ( nPos < 0 ) return;
-
-	if ( m_pDword )
+	if ( m_pBool )
 	{
-		*m_pDword = pRegistry.GetDword( m_sName.Left( nPos ), m_sName.Mid( nPos + 1 ), *m_pDword );
+		ASSERT( ! m_pDword && ! m_pFloat && ! m_pString && ! m_pSet );
+		ASSERT( m_nScale == 1 && m_nMin == 0 && m_nMax == 1 );
+		*m_pBool = CRegistry::GetBool( m_szSection, m_szName,
+			m_BoolDefault );
+	}
+	else if ( m_pDword )
+	{
+		ASSERT( ! m_pFloat && ! m_pString && ! m_pSet );
+		ASSERT( ( m_nScale == 0 && m_nMin == 0 && m_nMax == 0 ) \
+			|| ( m_nScale && m_nMin < m_nMax ) );
+		*m_pDword = CRegistry::GetDword( m_szSection, m_szName,
+			m_DwordDefault );
+		if ( m_nScale && m_nMin < m_nMax )
+		{
+			ASSERT( ( m_DwordDefault >= m_nMin * m_nScale ) \
+				&& ( m_DwordDefault <= m_nMax * m_nScale ) );
+			ASSERT( ( *m_pDword >= m_nMin * m_nScale ) \
+				&& ( *m_pDword <= m_nMax * m_nScale ) );
+			*m_pDword = max( min( *m_pDword, m_nMax * m_nScale ), m_nMin * m_nScale );
+		}
 	}
 	else if ( m_pFloat )
 	{
-		*m_pFloat = pRegistry.GetFloat( m_sName.Left( nPos ), m_sName.Mid( nPos + 1 ), *m_pFloat );
+		ASSERT( ! m_pString && ! m_pSet );
+		ASSERT( m_nScale == 0 && m_nMin == 0 && m_nMax == 0 );
+		*m_pFloat = CRegistry::GetFloat( m_szSection, m_szName,
+			m_FloatDefault );
 	}
 	else if ( m_pString )
 	{
-		*m_pString = pRegistry.GetString( m_sName.Left( nPos ), m_sName.Mid( nPos + 1 ), *m_pString );
+		ASSERT( ! m_pSet );
+		ASSERT( m_nScale == 0 && m_nMin == 0 && m_nMax == 0 );
+		*m_pString = CRegistry::GetString( m_szSection, m_szName,
+			m_StringDefault );
 	}
-	else if ( m_pSet )
+	else
 	{
-		CString foo( pRegistry.GetString( m_sName.Left( nPos ), m_sName.Mid( nPos + 1 ), _T("") ) );
-		if ( foo.GetLength() )
-		{
-			LoadSet( m_pSet, foo );
-		}
+		ASSERT( m_pSet );
+		ASSERT( m_nScale == 0 && m_nMin == 0 && m_nMax == 0 );
+		CString tmp( CRegistry::GetString( m_szSection, m_szName ) );
+		LoadSet( m_pSet, tmp.IsEmpty() ? m_StringDefault : (LPCTSTR)tmp );
 	}
 }
 
-void CSettings::Item::Save()
+void CSettings::Item::Save() const
 {
-	CRegistry pRegistry;
-
-	int nPos = m_sName.Find( '.' );
-	if ( nPos < 0 ) return;
-
-	if ( m_pDword )
+	if ( m_pBool )
 	{
-		pRegistry.SetInt( m_sName.Left( nPos ), m_sName.Mid( nPos + 1 ), *m_pDword );
+		CRegistry::SetBool( m_szSection, m_szName, *m_pBool );
+	}
+	else if ( m_pDword )
+	{
+		CRegistry::SetDword( m_szSection, m_szName, *m_pDword );
 	}
 	else if ( m_pFloat )
 	{
-		CString str;
-		str.Format( _T("%e"), *m_pFloat );
-		pRegistry.SetString( m_sName.Left( nPos ), m_sName.Mid( nPos + 1 ), str );
+		CRegistry::SetFloat( m_szSection, m_szName, *m_pFloat );
 	}
 	else if ( m_pString )
 	{
-		pRegistry.SetString( m_sName.Left( nPos ), m_sName.Mid( nPos + 1 ), *m_pString );
+		CRegistry::SetString( m_szSection, m_szName, *m_pString );
 	}
-	else if ( m_pSet )
+	else
 	{
-		CString foo( _T("|") );
-		for( string_set::const_iterator i = m_pSet->begin(); i != m_pSet->end(); i++ )
-		{
-			foo += *i;
-			foo += _T('|');
-		}
-		pRegistry.SetString( m_sName.Left( nPos ), m_sName.Mid( nPos + 1 ), foo );
+		CRegistry::SetString( m_szSection, m_szName,
+			SaveSet( m_pSet ) );
 	}
+}
+
+void CSettings::LoadSet(string_set* pSet, LPCTSTR pszString)
+{
+	pSet->clear();
+	for( LPCTSTR start = pszString; start && *start; start++ )
+	{
+		LPCTSTR c = _tcschr( start, _T('|') );
+		int len = c ? (int) ( c - start ) : (int) _tcslen( start );
+		if ( len > 0 )
+		{
+			CString tmp;
+			tmp.Append( start, len );
+			pSet->insert( tmp );
+		}
+		if ( ! c )
+			break;
+		start = c;
+	}
+}
+
+CString CSettings::SaveSet(const string_set* pSet)
+{
+	if ( pSet->begin() == pSet->end() )
+		return CString();
+
+	CString tmp( _T("|") );
+	for( string_set::const_iterator i = pSet->begin(); i != pSet->end(); i++ )
+	{
+		tmp += *i;
+		tmp += _T('|');
+	}
+	return tmp;
 }

@@ -21,6 +21,7 @@
 
 #include "StdAfx.h"
 #include "Shareaza.h"
+#include "Settings.h"
 #include "RichFragment.h"
 #include "RichElement.h"
 #include "RichViewCtrl.h"
@@ -102,7 +103,7 @@ void CRichFragment::Paint(CDC* pDC, CRichViewCtrl* pCtrl, int nFragment)
 
 		if ( bClean )
 		{
-			pDC->ExtTextOut( m_pt.x - ( theApp.m_bRTL ? 1 : 0 ), m_pt.y, ETO_OPAQUE, 
+			pDC->ExtTextOut( m_pt.x - ( Settings.General.LanguageRTL ? 1 : 0 ), m_pt.y, ETO_OPAQUE, 
 				NULL, pszText, m_nLength, NULL );
 		}
 		else if ( bSelect )

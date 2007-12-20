@@ -88,7 +88,7 @@ BOOL CDownloadGroupDlg::OnInitDialog()
 	m_wndImages.SetImageList( ShellIcons.GetObject( 16 ), LVSIL_SMALL );
 	m_wndImages.SetColumnWidth( 0, 36 );
 	m_wndImages.SetExtendedStyle( LVS_EX_CHECKBOXES );
-	m_wndBrowse.SetCoolIcon( IDI_BROWSE, theApp.m_bRTL );
+	m_wndBrowse.SetCoolIcon( IDI_BROWSE, Settings.General.LanguageRTL );
 
 	CSingleLock pLock( &DownloadGroups.m_pSection, TRUE );
 

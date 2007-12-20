@@ -271,9 +271,9 @@ void CBrowseHostWnd::UpdateMessages(BOOL /*bActive*/)
 	m_wndHeader.Update( m_pBrowser );
 
 	LoadString( strCaption, IDR_BROWSEHOSTFRAME );
-	if ( theApp.m_bRTL ) strCaption = _T("\x200F") + strCaption + _T("\x202E");
+	if ( Settings.General.LanguageRTL ) strCaption = _T("\x200F") + strCaption + _T("\x202E");
 	strCaption += _T(" : ");
-	if ( theApp.m_bRTL ) strCaption += _T("\x202A\x200E");
+	if ( Settings.General.LanguageRTL ) strCaption += _T("\x202A\x200E");
 
 	if ( m_pBrowser->m_pProfile != NULL && m_pBrowser->m_pProfile->IsValid() )
 	{
@@ -295,7 +295,7 @@ void CBrowseHostWnd::UpdateMessages(BOOL /*bActive*/)
 	{
 		strOld.Format( _T(" [%lu/%lu]"),
 			m_pMatches->m_nFilteredFiles, m_pMatches->m_nFilteredHits );
-		if ( theApp.m_bRTL ) strOld = _T("\x202D") + strOld + _T(" ");
+		if ( Settings.General.LanguageRTL ) strOld = _T("\x202D") + strOld + _T(" ");
 		strCaption += strOld;
 	}
 

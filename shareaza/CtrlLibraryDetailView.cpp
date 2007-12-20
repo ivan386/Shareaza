@@ -118,7 +118,7 @@ BOOL CLibraryDetailView::Create(CWnd* pParentWnd)
 {
 	CRect rect( 0, 0, 0, 0 );
 	SelClear( FALSE );
-	return CWnd::CreateEx( ( theApp.m_bRTL ? WS_EX_RTLREADING : 0 ), WC_LISTVIEW,
+	return CWnd::CreateEx( ( Settings.General.LanguageRTL ? WS_EX_RTLREADING : 0 ), WC_LISTVIEW,
 		_T("CLibraryDetailView"), m_nStyle | WS_CHILD | WS_TABSTOP | WS_GROUP | LVS_ICON |
 		LVS_AUTOARRANGE | LVS_SHOWSELALWAYS | LVS_SHAREIMAGELISTS | LVS_EDITLABELS |
 		LVS_OWNERDATA, rect, pParentWnd, IDC_LIBRARY_VIEW );

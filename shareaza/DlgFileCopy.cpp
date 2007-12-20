@@ -111,7 +111,7 @@ BOOL CFileCopyDlg::OnInitDialog()
 		}
 	}
 
-	if ( theApp.m_bRTL ) 
+	if ( Settings.General.LanguageRTL ) 
 	{
 		m_wndProgress.ModifyStyleEx( WS_EX_LAYOUTRTL, 0, 0 );
 		m_wndFileProg.ModifyStyleEx( WS_EX_LAYOUTRTL, 0, 0 );

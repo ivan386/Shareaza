@@ -137,7 +137,7 @@ BOOL CQueuePropertiesDlg::OnInitDialog()
 
 	CBitmap bmProtocols;
 	bmProtocols.LoadBitmap( IDB_PROTOCOLS );
-	if ( theApp.m_bRTL ) 
+	if ( Settings.General.LanguageRTL ) 
 		bmProtocols.m_hObject = CreateMirroredBitmap( (HBITMAP)bmProtocols.m_hObject );
 
 	m_gdiProtocols.Create( 16, 16, ILC_COLOR32|ILC_MASK, 7, 1 ) ||

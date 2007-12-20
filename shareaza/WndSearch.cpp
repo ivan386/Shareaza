@@ -347,7 +347,7 @@ BOOL CSearchWnd::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)
 		
 		if ( m_bPanel ) 
 		{
-			if ( theApp.m_bRTL )
+			if ( Settings.General.LanguageRTL )
 				rc.right -= PANEL_WIDTH;
 			else
 				rc.left += PANEL_WIDTH;
@@ -472,7 +472,7 @@ void CSearchWnd::OnSearchSearch()
 		m_nMaxQueryCount = m_oSearches.back().m_nQueryCount + min( Settings.Gnutella2.QueryLimit, 10000u );
 
 		//Resume ED2K search
-		m_nMaxED2KResults = m_pMatches->m_nED2KHits + min( 201, Settings.eDonkey.MaxResults );
+		m_nMaxED2KResults = m_pMatches->m_nED2KHits + min( 201u, Settings.eDonkey.MaxResults );
 		oSearch.m_tLastED2K = GetTickCount();
 		oSearch.m_tMoreResults = 0;
 
@@ -700,7 +700,7 @@ void CSearchWnd::ExecuteSearch()
 				pManaged->Start();
 
 				m_nMaxResults		= m_pMatches->m_nGnutellaHits + Settings.Gnutella.MaxResults;
-				m_nMaxED2KResults	= m_pMatches->m_nED2KHits + min( 201, Settings.eDonkey.MaxResults );
+				m_nMaxED2KResults	= m_pMatches->m_nED2KHits + min( 201u, Settings.eDonkey.MaxResults );
 				m_nMaxQueryCount	= pManaged->m_nQueryCount + min( Settings.Gnutella2.QueryLimit, 10000u );
 
 				m_wndPanel.ShowSearch( pManaged );
@@ -748,12 +748,12 @@ void CSearchWnd::UpdateMessages(BOOL bActive, CManagedSearch* pManaged)
 	
 	CString strCaption;
 	Skin.LoadString( strCaption, IDR_SEARCHFRAME );
-	if ( theApp.m_bRTL ) strCaption = _T("\x200F") + strCaption + _T("\x202E");
+	if ( Settings.General.LanguageRTL ) strCaption = _T("\x200F") + strCaption + _T("\x202E");
 
 	if ( pSearch != NULL )
 	{
 		strCaption += _T(" : ");
-		if ( theApp.m_bRTL ) strCaption += _T("\x202B");
+		if ( Settings.General.LanguageRTL ) strCaption += _T("\x202B");
 
 		if ( pSearch->m_sSearch.GetLength() )
 		{
@@ -793,7 +793,7 @@ void CSearchWnd::UpdateMessages(BOOL bActive, CManagedSearch* pManaged)
 		{
 			CString strStats;
 			strStats.Format( _T(" [%lu/%lu]"), m_pMatches->m_nFilteredFiles, m_pMatches->m_nFilteredHits );
-			if ( theApp.m_bRTL ) strStats = _T("\x200F") + strStats;
+			if ( Settings.General.LanguageRTL ) strStats = _T("\x200F") + strStats;
 			strCaption += strStats;
 			pManaged->m_nHits = m_pMatches->m_nFilteredHits;
 		}

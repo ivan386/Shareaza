@@ -105,7 +105,7 @@ BOOL CMatchTipCtrl::Create(CWnd* pParentWnd)
 {
 	CRect rc( 0, 0, 0, 0 );
 	m_pOwner = pParentWnd;
-	DWORD dwStylesEx = WS_EX_TOPMOST | ( theApp.m_bRTL ? WS_EX_LAYOUTRTL : 0 );
+	DWORD dwStylesEx = WS_EX_TOPMOST | ( Settings.General.LanguageRTL ? WS_EX_LAYOUTRTL : 0 );
 	return CWnd::CreateEx( dwStylesEx, m_hClass, NULL, WS_POPUP|WS_DISABLED, rc, pParentWnd, 0, NULL );
 }
 
@@ -956,7 +956,7 @@ void CMatchTipCtrl::OnPaint()
 		{
 			CMetaItem* pItem = m_pMetadata.GetNext( pos );
 
-			DrawText( dc, pt, theApp.m_bRTL ? ':' + pItem->m_sKey : pItem->m_sKey + ':' );
+			DrawText( dc, pt, Settings.General.LanguageRTL ? ':' + pItem->m_sKey : pItem->m_sKey + ':' );
 			pt.x += m_nKeyWidth;
 			DrawText( dc, pt, pItem->m_sValue );
 			pt.x -= m_nKeyWidth;
@@ -970,8 +970,8 @@ void CMatchTipCtrl::OnPaint()
 
 void CMatchTipCtrl::DrawText(CDC& dc, CPoint& pt, LPCTSTR pszText)
 {
-	DWORD dwFlags = ( theApp.m_bRTL ? ETO_RTLREADING : 0 );
-	short nExtraPoint = ( theApp.m_bRTL ? 1 : 0 );
+	DWORD dwFlags = ( Settings.General.LanguageRTL ? ETO_RTLREADING : 0 );
+	short nExtraPoint = ( Settings.General.LanguageRTL ? 1 : 0 );
 	CSize sz = dc.GetTextExtent( pszText, static_cast< int >( _tcslen( pszText ) ) );
 	CRect rc( pt.x, pt.y, pt.x + sz.cx + nExtraPoint, pt.y + sz.cy );
 

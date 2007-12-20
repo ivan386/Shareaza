@@ -21,6 +21,7 @@
 
 #include "stdafx.h"
 #include "Shareaza.h"
+#include "Settings.h"
 #include "PagePropertyAdv.h"
 #include "CoolInterface.h"
 #include "ShellIcons.h"
@@ -97,7 +98,7 @@ BOOL CPropertyPageAdv::PreTranslateMessage(MSG* pMsg)
 void CPropertyPageAdv::OnPaint()
 {
 	CPaintDC dc( this );
-	if ( theApp.m_bRTL ) theApp.m_pfnSetLayout( dc.m_hDC, LAYOUT_RTL );
+	if ( Settings.General.LanguageRTL ) theApp.m_pfnSetLayout( dc.m_hDC, LAYOUT_RTL );
 
 	if ( m_nIcon >= 0 )
 	{

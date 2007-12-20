@@ -703,9 +703,8 @@ void CLanguageDlg::Execute(int nSelected)
 	// required to have schemas reloaded after restart
 	Settings.General.Language = strLangCode;
 
-	if ( theApp.m_bRTL == bRTL ) 
+	if ( Settings.General.LanguageRTL == bRTL ) 
 	{
-		theApp.WriteProfileInt( _T("Settings"), _T("LanguageRTL"), bRTL );
 		EndDialog( IDOK );
 	}
 	else
@@ -713,7 +712,7 @@ void CLanguageDlg::Execute(int nSelected)
 		CString str;
 		LoadString( str, IDS_GENERAL_RTL_WARNING );
 
-		theApp.WriteProfileInt( _T("Settings"), _T("LanguageRTL"), bRTL );
+		Settings.General.LanguageRTL = bRTL;
 
 		if ( AfxMessageBox( str, MB_SYSTEMMODAL|MB_ICONQUESTION|MB_YESNO ) == IDYES )
 		{

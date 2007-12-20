@@ -218,7 +218,7 @@ void CHomeDownloadsBox::OnSkinChange()
 	if ( pXML == NULL ) return;
 	
 	SetCaption( pXML->GetAttributeValue( _T("title"), _T("Downloads") ) );
-	HICON hIcon = CoolInterface.ExtractIcon( IDR_DOWNLOADSFRAME, theApp.m_bRTL );
+	HICON hIcon = CoolInterface.ExtractIcon( IDR_DOWNLOADSFRAME, Settings.General.LanguageRTL );
 	if ( hIcon )
 		SetIcon( hIcon );
 
@@ -656,7 +656,7 @@ void CHomeLibraryBox::OnSkinChange()
 	if ( pXML == NULL ) return;
 	
 	SetCaption( pXML->GetAttributeValue( _T("title"), _T("Library") ) );
-	HICON hIcon = CoolInterface.ExtractIcon( IDR_LIBRARYFRAME, theApp.m_bRTL );
+	HICON hIcon = CoolInterface.ExtractIcon( IDR_LIBRARYFRAME, Settings.General.LanguageRTL );
 	if ( hIcon )
 		SetIcon( hIcon );
 	
@@ -1016,7 +1016,7 @@ void CHomeUploadsBox::OnSkinChange()
 	if ( pXML == NULL ) return;
 	
 	SetCaption( pXML->GetAttributeValue( _T("title"), _T("Uploads") ) );
-	HICON hIcon = CoolInterface.ExtractIcon( IDR_UPLOADSFRAME, theApp.m_bRTL );
+	HICON hIcon = CoolInterface.ExtractIcon( IDR_UPLOADSFRAME, Settings.General.LanguageRTL );
 	if ( hIcon )
 		SetIcon( hIcon );
 	
@@ -1150,7 +1150,7 @@ void CHomeConnectionBox::OnSkinChange()
 	if ( pXML == NULL ) return;
 	
 	SetCaption( pXML->GetAttributeValue( _T("title"), _T("Connection") ) );
-	HICON hIcon = CoolInterface.ExtractIcon( IDR_NEIGHBOURSFRAME, theApp.m_bRTL );
+	HICON hIcon = CoolInterface.ExtractIcon( IDR_NEIGHBOURSFRAME, Settings.General.LanguageRTL );
 	if ( hIcon )
 		SetIcon( hIcon );
 	
@@ -1221,7 +1221,7 @@ void CHomeConnectionBox::Update()
 	m_pDocument->ShowGroup( 1, ! bConnected );
 	m_pDocument->ShowGroup( 2, bConnected );
 	
-	BOOL* pEnable[4] =
+	bool* pEnable[4] =
 	{
 		NULL, &Settings.Gnutella1.EnableToday, &Settings.Gnutella2.EnableToday,
 		&Settings.eDonkey.EnableToday
@@ -1344,7 +1344,7 @@ void CHomeTorrentsBox::OnSkinChange()
 	if ( pXML == NULL ) return;
 	
 	SetCaption( pXML->GetAttributeValue( _T("title"), _T("Torrents") ) );
-	HICON hIcon = CoolInterface.ExtractIcon( IDR_BITTORRENT_ICON, theApp.m_bRTL );
+	HICON hIcon = CoolInterface.ExtractIcon( IDR_BITTORRENT_ICON, Settings.General.LanguageRTL );
 	if ( hIcon )
 		SetIcon( hIcon );
 	

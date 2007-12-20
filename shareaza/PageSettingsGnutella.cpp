@@ -149,7 +149,7 @@ BOOL CGnutellaSettingsPage::OnInitDialog()
 	m_wndG2ClientMode.SetCurSel( Settings.Gnutella2.ClientMode );
 
 	m_wndG2Always.SetCheck( BST_INDETERMINATE );
-	
+
 	UpdateData( FALSE );
 	
 	return TRUE;
@@ -274,10 +274,10 @@ void CGnutellaSettingsPage::OnOK()
 
 	if ( Settings.Gnutella1.ClientMode == MODE_ULTRAPEER )
 	{	// Enforce some minimum values for G1 ultrapeers
-		Settings.Gnutella1.NumLeafs		= max( Settings.Gnutella1.NumLeafs, 5 );
+		Settings.Gnutella1.NumLeafs		= max( Settings.Gnutella1.NumLeafs, 5u );
 		// From http://www.limewire.org/wiki/index.php?title=Ultrapeers
 		// "A Gnutella program always sends X-Degree: 32, even when it's a leaf."
-		Settings.Gnutella1.NumPeers		= max( Settings.Gnutella1.NumPeers, 32 );
+		Settings.Gnutella1.NumPeers		= max( Settings.Gnutella1.NumPeers, 32u );
 	}
 
 	Settings.Gnutella2.ClientMode = m_wndG2ClientMode.GetCurSel(); // Mode is equal to select position
@@ -285,8 +285,8 @@ void CGnutellaSettingsPage::OnOK()
 	
 	if ( Settings.Gnutella2.ClientMode == MODE_HUB )
 	{	// Enforce some minimum values for G2 hubs
-		Settings.Gnutella2.NumLeafs		= max( Settings.Gnutella2.NumLeafs, 50 );
-		Settings.Gnutella2.NumPeers		= max( Settings.Gnutella2.NumPeers, 4 );
+		Settings.Gnutella2.NumLeafs		= max( Settings.Gnutella2.NumLeafs, 50u );
+		Settings.Gnutella2.NumPeers		= max( Settings.Gnutella2.NumPeers, 4u );
 	}
 
 	// Update display in case settings were changed

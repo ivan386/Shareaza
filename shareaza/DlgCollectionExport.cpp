@@ -111,7 +111,7 @@ BOOL CCollectionExportDlg::OnInitDialog()
 	//Translate window
 	SkinMe( _T("CCollectionExportDlg"), IDI_COLLECTION );
 
-	if ( theApp.m_bRTL ) 
+	if ( Settings.General.LanguageRTL ) 
 		m_wndDesc.ModifyStyleEx( WS_EX_RTLREADING|WS_EX_RIGHT|WS_EX_LEFTSCROLLBAR, 
 			WS_EX_LTRREADING|WS_EX_LEFT|WS_EX_RIGHTSCROLLBAR, 0 );
 
@@ -246,7 +246,7 @@ BOOL CCollectionExportDlg::AddTemplate(LPCTSTR pszPath, LPCTSTR pszName)
 	
 	delete pXML;
 
-	if ( theApp.m_bRTL )
+	if ( Settings.General.LanguageRTL )
 	{
 		strName = _T("\x202A") + strName;
 		strAuthor = _T("\x202A") + strAuthor;

@@ -118,7 +118,7 @@ int CNeighboursWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	
 	CBitmap bmImages;
 	bmImages.LoadBitmap( IDB_PROTOCOLS );
-	if ( theApp.m_bRTL ) 
+	if ( Settings.General.LanguageRTL ) 
 		bmImages.m_hObject = CreateMirroredBitmap( (HBITMAP)bmImages.m_hObject );
 
 	//Redrawn Protocol Icon Workaround
@@ -268,7 +268,7 @@ void CNeighboursWnd::Update()
 				}
 				
 				pItem->Set( 8, str );
-				pItem->m_nImage = theApp.m_bRTL ? m_nProtocolRev - PROTOCOL_G1 : PROTOCOL_G1;
+				pItem->m_nImage = Settings.General.LanguageRTL ? m_nProtocolRev - PROTOCOL_G1 : PROTOCOL_G1;
 			}
 			else if ( pNeighbour->m_nProtocol == PROTOCOL_G2 )
 			{
@@ -304,13 +304,13 @@ void CNeighboursWnd::Update()
 					pItem->Set( 7, _T("?") );
 				}
 				
-				pItem->m_nImage = theApp.m_bRTL ? m_nProtocolRev - PROTOCOL_G2 : PROTOCOL_G2;
+				pItem->m_nImage = Settings.General.LanguageRTL ? m_nProtocolRev - PROTOCOL_G2 : PROTOCOL_G2;
 			}
 			else if ( pNeighbour->m_nProtocol == PROTOCOL_ED2K )
 			{
 				CEDNeighbour* pED2K = static_cast<CEDNeighbour*>(pNeighbour);
 				
-				pItem->m_nImage = theApp.m_bRTL ? m_nProtocolRev - PROTOCOL_ED2K : PROTOCOL_ED2K;
+				pItem->m_nImage = Settings.General.LanguageRTL ? m_nProtocolRev - PROTOCOL_ED2K : PROTOCOL_ED2K;
 				pItem->Set( 8, _T("eDonkey") );
 				pItem->Set( 10, pED2K->m_sServerName );
 				
@@ -336,12 +336,12 @@ void CNeighboursWnd::Update()
 			}
 			else
 			{
-				pItem->m_nImage = theApp.m_bRTL ? m_nProtocolRev : PROTOCOL_NULL;
+				pItem->m_nImage = Settings.General.LanguageRTL ? m_nProtocolRev : PROTOCOL_NULL;
 			}
 		}
 		else
 		{
-			pItem->m_nImage = theApp.m_bRTL ? m_nProtocolRev : PROTOCOL_NULL;
+			pItem->m_nImage = Settings.General.LanguageRTL ? m_nProtocolRev : PROTOCOL_NULL;
 		}
 		
 		if ( pNeighbour->m_pProfile != NULL )
@@ -379,8 +379,8 @@ void CNeighboursWnd::OnSkinChange()
 		HICON hIcon = CoolInterface.ExtractIcon( (UINT)protocolCmdMap[ nImage ].commandID, FALSE );
 		if ( hIcon )
 		{
-			m_gdiImageList.Replace( theApp.m_bRTL ? m_nProtocolRev - nImage : nImage, hIcon );
-			m_gdiImageListFix.Replace( theApp.m_bRTL ? m_nProtocolRev - nImage : nImage, hIcon );
+			m_gdiImageList.Replace( Settings.General.LanguageRTL ? m_nProtocolRev - nImage : nImage, hIcon );
+			m_gdiImageListFix.Replace( Settings.General.LanguageRTL ? m_nProtocolRev - nImage : nImage, hIcon );
 			DestroyIcon( hIcon );
 		}
 	}
@@ -653,7 +653,7 @@ void CNeighboursWnd::OnCustomDrawList(NMHDR* pNMHDR, LRESULT* pResult)
 		LV_ITEM pItem = { LVIF_IMAGE, static_cast< int >( pDraw->nmcd.dwItemSpec ) };
 		m_wndList.GetItem( &pItem );
 				
-		int nImage = theApp.m_bRTL ? m_nProtocolRev - pItem.iImage : pItem.iImage;
+		int nImage = Settings.General.LanguageRTL ? m_nProtocolRev - pItem.iImage : pItem.iImage;
 		switch ( nImage )
 		{
 		case PROTOCOL_NULL:

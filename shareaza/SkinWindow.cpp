@@ -356,9 +356,9 @@ BOOL CSkinWindow::Parse(CXMLElement* pBase, const CString& strPath)
 			{
 				UINT nResID = 0;
 				if ( _stscanf( strRes, _T("%lu"), &nResID ) != 1 ) return FALSE;
-				if ( nResID == IDB_NAVBAR_IMAGE && theApp.m_bRTL )
+				if ( nResID == IDB_NAVBAR_IMAGE && Settings.General.LanguageRTL )
 					 nResID = IDB_NAVBAR_IMAGE_RTL;
-				else if ( nResID == IDB_NAVBAR_ALPHA && theApp.m_bRTL )
+				else if ( nResID == IDB_NAVBAR_ALPHA && Settings.General.LanguageRTL )
 					 nResID = IDB_NAVBAR_ALPHA_RTL;
 				hBitmap = (HBITMAP)LoadImage( AfxGetInstanceHandle(),
 					MAKEINTRESOURCE(nResID), IMAGE_BITMAP, 0, 0, 0 );
@@ -555,7 +555,7 @@ UINT CSkinWindow::OnNcHitTest(CWnd* pWnd, CPoint point, BOOL bResizable)
 	int nPointX = 0;
 
 	pWnd->GetWindowRect( &rc );
-	if ( theApp.m_bRTL )
+	if ( Settings.General.LanguageRTL )
 	{
 		nPointX = point.x;
 		point.x = 2 * rc.left + rc.Width() - point.x;
@@ -585,7 +585,7 @@ UINT CSkinWindow::OnNcHitTest(CWnd* pWnd, CPoint point, BOOL bResizable)
 		if ( rcAnchor.PtInRect( point ) ) return HTCLOSE;
 	}
 
-	if ( theApp.m_bRTL ) point.x = nPointX;
+	if ( Settings.General.LanguageRTL ) point.x = nPointX;
 	if ( bResizable && ! pWnd->IsZoomed() )
 	{
 		if ( point.x >= rc.right - SIZEBOX_WIDTH && point.y >= rc.bottom - SIZEBOX_WIDTH )
@@ -627,7 +627,7 @@ UINT CSkinWindow::OnNcHitTest(CWnd* pWnd, CPoint point, BOOL bResizable)
 void CSkinWindow::OnNcPaint(CWnd* pWnd)
 {
 	CWindowDC dc( pWnd );
-	if ( theApp.m_bRTL ) theApp.m_pfnSetLayout( dc.m_hDC, LAYOUT_RTL ); 
+	if ( Settings.General.LanguageRTL ) theApp.m_pfnSetLayout( dc.m_hDC, LAYOUT_RTL ); 
 	Paint( pWnd, dc, FALSE );
 	dc.SelectObject( GetStockObject( ANSI_VAR_FONT ) ); // Comctl32.dll font leak fix
 }
@@ -635,7 +635,7 @@ void CSkinWindow::OnNcPaint(CWnd* pWnd)
 BOOL CSkinWindow::OnNcActivate(CWnd* pWnd, BOOL bActive)
 {
 	CWindowDC dc( pWnd );
-	if ( theApp.m_bRTL ) theApp.m_pfnSetLayout( dc.m_hDC, LAYOUT_RTL ); 
+	if ( Settings.General.LanguageRTL ) theApp.m_pfnSetLayout( dc.m_hDC, LAYOUT_RTL ); 
 	Paint( pWnd, dc, TRUE, bActive ? TRI_TRUE : TRI_FALSE );
 	dc.SelectObject( GetStockObject( ANSI_VAR_FONT ) ); // Comctl32.dll font leak fix
 	return FALSE;
@@ -644,7 +644,7 @@ BOOL CSkinWindow::OnNcActivate(CWnd* pWnd, BOOL bActive)
 void CSkinWindow::OnSetText(CWnd* pWnd)
 {
 	CWindowDC dc( pWnd );
-	if ( theApp.m_bRTL ) theApp.m_pfnSetLayout( dc.m_hDC, LAYOUT_RTL ); 
+	if ( Settings.General.LanguageRTL ) theApp.m_pfnSetLayout( dc.m_hDC, LAYOUT_RTL ); 
 	Paint( pWnd, dc, TRUE );
 	dc.SelectObject( GetStockObject( ANSI_VAR_FONT ) ); // Comctl32.dll font leak fix
 }
@@ -733,7 +733,7 @@ void CSkinWindow::OnNcMouseMove(CWnd* pWnd, UINT nHitTest, CPoint /*point*/)
 	{
 		m_nHoverAnchor = nAnchor;
 		CWindowDC dc( pWnd );
-		if ( theApp.m_bRTL ) theApp.m_pfnSetLayout( dc.m_hDC, LAYOUT_RTL ); 
+		if ( Settings.General.LanguageRTL ) theApp.m_pfnSetLayout( dc.m_hDC, LAYOUT_RTL ); 
 		Paint( pWnd, dc, TRUE );
 		dc.SelectObject( GetStockObject( ANSI_VAR_FONT ) ); // Comctl32.dll font leak fix
 	}	
@@ -759,13 +759,13 @@ BOOL CSkinWindow::OnNcLButtonDown(CWnd* pWnd, UINT nHitTest, CPoint point)
 		CMenu* pPopup = pWnd->GetSystemMenu( FALSE );
 
 		CWindowDC dc( pWnd );
-		if ( theApp.m_bRTL ) theApp.m_pfnSetLayout( dc.m_hDC, LAYOUT_RTL );
+		if ( Settings.General.LanguageRTL ) theApp.m_pfnSetLayout( dc.m_hDC, LAYOUT_RTL );
 		Paint( pWnd, dc, TRUE );
 
 		DWORD nTime = GetTickCount();
 
 		UINT nCmdID = pPopup->TrackPopupMenu( TPM_LEFTALIGN|TPM_TOPALIGN|TPM_RETURNCMD,
-			theApp.m_bRTL ? rcWindow.right - rcSystem.left + rcWindow.left : rcSystem.left, 
+			Settings.General.LanguageRTL ? rcWindow.right - rcSystem.left + rcWindow.left : rcSystem.left, 
 			rcSystem.bottom, pWnd, NULL );
 
 		m_nHoverAnchor = m_nDownAnchor = 0;
@@ -785,7 +785,7 @@ BOOL CSkinWindow::OnNcLButtonDown(CWnd* pWnd, UINT nHitTest, CPoint point)
 	}
 
 	CWindowDC dc( pWnd );
-	if ( theApp.m_bRTL ) theApp.m_pfnSetLayout( dc.m_hDC, LAYOUT_RTL );
+	if ( Settings.General.LanguageRTL ) theApp.m_pfnSetLayout( dc.m_hDC, LAYOUT_RTL );
 	Paint( pWnd, dc, TRUE );
 	dc.SelectObject( GetStockObject( ANSI_VAR_FONT ) ); // Comctl32.dll font leak fix
 
@@ -816,7 +816,7 @@ BOOL CSkinWindow::OnNcLButtonUp(CWnd* pWnd, UINT /*nHitTest*/, CPoint /*point*/)
 	m_nDownAnchor = 0;
 
 	CWindowDC dc( pWnd );
-	if ( theApp.m_bRTL ) theApp.m_pfnSetLayout( dc.m_hDC, LAYOUT_RTL );
+	if ( Settings.General.LanguageRTL ) theApp.m_pfnSetLayout( dc.m_hDC, LAYOUT_RTL );
 	Paint( pWnd, dc, TRUE );
 	dc.SelectObject( GetStockObject( ANSI_VAR_FONT ) ); // Comctl32.dll font leak fix
 
@@ -843,7 +843,7 @@ void CSkinWindow::Prepare(CDC* pDC)
 		m_dcSkin.CreateCompatibleDC( pDC );
 	if ( m_hoSkin == NULL )
 		m_hoSkin = (HBITMAP)m_dcSkin.SelectObject( &m_bmSkin )->GetSafeHandle();
-	if ( theApp.m_bRTL ) theApp.m_pfnSetLayout( m_dcSkin.m_hDC, LAYOUT_BITMAPORIENTATIONPRESERVED ); 
+	if ( Settings.General.LanguageRTL ) theApp.m_pfnSetLayout( m_dcSkin.m_hDC, LAYOUT_BITMAPORIENTATIONPRESERVED ); 
 }
 
 void CSkinWindow::Paint(CWnd* pWnd, CDC& dc, BOOL bCaption, TRISTATE bActive)
@@ -914,7 +914,7 @@ void CSkinWindow::Paint(CWnd* pWnd, CDC& dc, BOOL bCaption, TRISTATE bActive)
 				// should be used instead? Small design flaws appear sometimes with the
 				// current implementation if all buttons in caption are mirrored although
 				// they are barely noticeable.
-				if ( m_bPart[ SKINPART_TOP ] && theApp.m_bRTL && nAnchor == SKINANCHOR_CLOSE )
+				if ( m_bPart[ SKINPART_TOP ] && Settings.General.LanguageRTL && nAnchor == SKINANCHOR_CLOSE )
 					pDC->StretchBlt( m_rcPart[ nPart ].Width() + rcItem.left - 1, rcItem.top,
 					-m_rcPart[ nPart ].Width(), m_rcPart[ nPart ].Height(),
 					&m_dcSkin, m_rcPart[ nPart ].left, m_rcPart[ nPart ].top,
@@ -949,7 +949,7 @@ void CSkinWindow::Paint(CWnd* pWnd, CDC& dc, BOOL bCaption, TRISTATE bActive)
 		nRestOffset = nTotalWidth - nSystemWidth - nSystemOffset - nCaptionWidth - nCaptionOffset;
 
 		// Inactive main window caption mirroring for RTL
-		if ( theApp.m_bRTL && m_sTargets == "|CMainWnd|" && m_nMirror != 0 )
+		if ( Settings.General.LanguageRTL && m_sTargets == "|CMainWnd|" && m_nMirror != 0 )
 		{
 			pDC->StretchBlt( nTotalWidth - nCaptionOffset, 0, -nCaptionWidth, 
 				m_rcPart[ SKINPART_IA_TOP_LEFT ].Height(), &m_dcSkin,
@@ -974,7 +974,7 @@ void CSkinWindow::Paint(CWnd* pWnd, CDC& dc, BOOL bCaption, TRISTATE bActive)
 			m_rcPart[ SKINPART_TOP_LEFT ].top, SRCCOPY );
 
 		// Active main window caption mirroring for RTL
-		if ( theApp.m_bRTL && m_sTargets == "|CMainWnd|" && m_nMirror != 0 )
+		if ( Settings.General.LanguageRTL && m_sTargets == "|CMainWnd|" && m_nMirror != 0 )
 		{
 			nTotalWidth = m_rcPart[ SKINPART_TOP_LEFT ].Width();
 			nRestOffset = nTotalWidth - nSystemWidth - nSystemOffset - nCaptionWidth - nCaptionOffset;
@@ -1436,7 +1436,7 @@ BOOL CSkinWindow::PreBlend(CBitmap* pbmTarget, const CRect& rcTarget, const CRec
 	pAlphaInfo.bmiHeader.biSize	= sizeof(BITMAPINFOHEADER);
 	
 	HDC hDC = ::GetDC( 0 );
-	if ( theApp.m_bRTL ) theApp.m_pfnSetLayout( hDC, LAYOUT_BITMAPORIENTATIONPRESERVED );
+	if ( Settings.General.LanguageRTL ) theApp.m_pfnSetLayout( hDC, LAYOUT_BITMAPORIENTATIONPRESERVED );
 	
 	if ( 0 == GetDIBits( hDC, m_bmSkin, 0, 0, NULL, &pImageInfo, DIB_RGB_COLORS ) ||
 		 0 == GetDIBits( hDC, *pbmTarget, 0, 0, NULL, &pTargeInfo, DIB_RGB_COLORS ) )

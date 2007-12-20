@@ -724,6 +724,7 @@
 #define IDC_FILE_TIGER                  1532
 #define IDC_FILE_MODIFIED               1533
 #define IDC_ULTRAPEER_ENABLE            1534
+#define IDC_DEFAULT_VALUE               1535
 #define IDS_FILTER_DELETE_CONFIRM       7000
 #define IDS_SCHEMAS                     7001
 #define IDS_MULTIPLE_VALUES             7002
@@ -1755,7 +1756,7 @@
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        287
 #define _APS_NEXT_COMMAND_VALUE         33203
-#define _APS_NEXT_CONTROL_VALUE         1535
+#define _APS_NEXT_CONTROL_VALUE         1536
 #define _APS_NEXT_SYMED_VALUE           104
 #endif
 #endif

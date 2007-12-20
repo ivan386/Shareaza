@@ -30,209 +30,91 @@ static char THIS_FILE[]=__FILE__;
 #endif
 
 //////////////////////////////////////////////////////////////////////
-// CRegistry construction
-
-CRegistry::CRegistry()
-{
-}
-
-CRegistry::~CRegistry()
-{
-}
-
-//////////////////////////////////////////////////////////////////////
 // CRegistry read a string value
 
-CString CRegistry::GetString(LPCTSTR pszSection, LPCTSTR pszName, LPCTSTR pszDefault, HKEY hMainKey, LPCTSTR pszSubKey)
+CString CRegistry::GetString(LPCTSTR pszSection, LPCTSTR pszName, LPCTSTR pszDefault, LPCTSTR pszSubKey)
 {
-	CString strTemp, strValue;
-	DWORD nErrorCode;
-	HKEY hKey;
-
-	if ( pszDefault != NULL ) strValue = pszDefault;
-
-	if ( pszSubKey == NULL )
-		strTemp.Format( _T("Software\\Shareaza\\Shareaza\\%s"), pszSection );
-	else
-		strTemp.Format( _T("%s\\%s"), pszSubKey, pszSection );
-
-	pszSubKey = strTemp;
-	nErrorCode = RegOpenKeyEx( hMainKey, pszSubKey, 0, KEY_READ, &hKey );
-
-	if ( nErrorCode == ERROR_SUCCESS )
+	CString strSection( pszSubKey ? pszSubKey : _T("Software\\Shareaza\\Shareaza") );
+	if ( pszSection && *pszSection )
 	{
-		DWORD nType = 0, nSize = 0;
-
-		nErrorCode = RegQueryValueEx( hKey, pszName, 0, &nType, NULL, &nSize );
-
-		if ( nErrorCode == ERROR_SUCCESS && nType == REG_SZ && nSize >= sizeof(TCHAR) )
-		{
-			LPTSTR pszValue = strValue.GetBuffer( nSize / sizeof(TCHAR) - 1 );
-			nErrorCode = RegQueryValueEx( hKey, pszName, 0, &nType, (PBYTE)pszValue, &nSize );
-			strValue.ReleaseBuffer( nSize / sizeof(TCHAR) - 1 );
-		}
-
-		RegCloseKey( hKey );
+		strSection += _T("\\");
+		strSection += pszSection;
 	}
 
-	//if ( nErrorCode != ERROR_SUCCESS ) 
-	//	DisplayErrorMessageBox( pszName, nErrorCode );
+	// Read from HKCU then from HKLM
+	DWORD nType = 0, nSize = 0;
+	LONG nErrorCode = SHRegGetUSValue( (LPCTSTR)strSection, pszName, &nType,
+		NULL, &nSize, FALSE, NULL, 0 );
+	if ( nErrorCode == ERROR_SUCCESS && nType == REG_SZ && nSize >= sizeof( TCHAR ) &&
+		( nSize & 1 ) == 0 )
+	{
+		CString strValue;
+		nErrorCode = SHRegGetUSValue( (LPCTSTR)strSection, pszName, &nType,
+			strValue.GetBuffer( nSize / sizeof( TCHAR ) ), &nSize, FALSE, NULL, 0 );
+		strValue.ReleaseBuffer( nSize / sizeof( TCHAR ) - 1 );
+		if ( nErrorCode == ERROR_SUCCESS )
+			return strValue;
+	}
 
-	return strValue.GetLength() ? strValue : pszDefault;
+	return pszDefault ? CString( pszDefault ) : CString();
 }
 
 //////////////////////////////////////////////////////////////////////
 // CRegistry read an integer value
 
-int CRegistry::GetInt(LPCTSTR pszSection, LPCTSTR pszName, int nDefault, HKEY hMainKey, LPCTSTR pszSubKey)
+DWORD CRegistry::GetDword(LPCTSTR pszSection, LPCTSTR pszName, DWORD nDefault, LPCTSTR pszSubKey)
 {
-	int nValue = nDefault;
-	DWORD nErrorCode;
-	CString strTemp;
-	HKEY hKey;
-
-	if ( pszSubKey == NULL )
-		strTemp.Format( _T("Software\\Shareaza\\Shareaza\\%s"), pszSection );
-	else
-		strTemp.Format( _T("%s\\%s"), pszSubKey, pszSection );
-
-	pszSubKey = strTemp;
-	nErrorCode = RegOpenKeyEx( hMainKey, pszSubKey, 0, KEY_READ, &hKey );
-
-	if ( nErrorCode == ERROR_SUCCESS )
+	CString strSection( pszSubKey ? pszSubKey : _T("Software\\Shareaza\\Shareaza") );
+	if ( pszSection && *pszSection )
 	{
-		DWORD nType = 0, nSize = sizeof(nValue);
-
-		nErrorCode = RegQueryValueEx( hKey, pszName, 0, &nType, (PBYTE)&nValue, &nSize );
-
-		if ( nType != REG_DWORD || nSize != sizeof(nValue) )
-		{
-			nErrorCode = ERROR_MORE_DATA;
-			nValue = nDefault;
-		}
-
-		RegCloseKey( hKey );
+		strSection += _T("\\");
+		strSection += pszSection;
 	}
 
-	//if ( nErrorCode != ERROR_SUCCESS ) 
-	//	DisplayErrorMessageBox( pszName, nErrorCode );
+	// Read from HKCU then from HKLM
+	DWORD nValue = 0;
+	DWORD nType = 0, nSize = sizeof( nValue );
+	LONG nErrorCode = SHRegGetUSValue( (LPCTSTR)strSection, pszName, &nType,
+		(PBYTE)&nValue, &nSize, FALSE, NULL, 0 );
+	if ( nErrorCode == ERROR_SUCCESS && nType == REG_DWORD && nSize == sizeof( nValue ) )
+	{
+		return nValue;
+	}
 
-
-	return nValue;
-}
-
-BOOL CRegistry::GetBool(LPCTSTR pszSection, LPCTSTR pszName, BOOL bDefault, HKEY hMainKey, LPCTSTR pszSubKey)
-{
-	if ( GetInt(pszSection, pszName, (int)bDefault, hMainKey, pszSubKey) == 0 )
-		return FALSE;
-
-	return TRUE;
-}
-
-DWORD CRegistry::GetDword(LPCTSTR pszSection, LPCTSTR pszName, DWORD dwDefault)
-{
-	return (int)GetInt( pszSection, pszName, (int)dwDefault );
-}
-
-//////////////////////////////////////////////////////////////////////
-// CRegistry read a float value
-
-double CRegistry::GetFloat(LPCTSTR pszSection, LPCTSTR pszName, double fDefault)
-{
-	double fValue = fDefault;
-	_stscanf( GetString( pszSection, pszName ), _T("%lf"), &fValue );
-	return fValue;
+	return nDefault;
 }
 
 //////////////////////////////////////////////////////////////////////
 // CRegistry write a string value
 
-BOOL CRegistry::SetString(LPCTSTR pszSection, LPCTSTR pszName, LPCTSTR pszValue, HKEY hMainKey, LPCTSTR pszSubKey)
+BOOL CRegistry::SetString(LPCTSTR pszSection, LPCTSTR pszName, LPCTSTR pszValue, LPCTSTR pszSubKey)
 {
-	DWORD nErrorCode;
-	CString strTemp;
-	HKEY hKey;
-
-	if ( pszSubKey == NULL )
-		strTemp.Format( _T("Software\\Shareaza\\Shareaza\\%s"), pszSection );
-	else
-		strTemp.Format( _T("%s\\%s"), pszSubKey, pszSection );
-
-	pszSubKey = strTemp;
-	nErrorCode = RegCreateKeyEx( hMainKey, pszSubKey, 0, NULL, 0, KEY_WRITE, NULL, &hKey, NULL );
-
-	if ( nErrorCode == ERROR_SUCCESS )
+	CString strSection( pszSubKey ? pszSubKey : _T("Software\\Shareaza\\Shareaza") );
+	if ( pszSection && *pszSection )
 	{
-		nErrorCode = RegSetValueEx( hKey, pszName, 0, REG_SZ, (const BYTE *)pszValue,
-								static_cast< DWORD >( _tcslen(pszValue) * sizeof(TCHAR) + sizeof(TCHAR) ) );
-
-		RegCloseKey( hKey );
+		strSection += _T("\\");
+		strSection += pszSection;
 	}
 
-	if ( nErrorCode == ERROR_SUCCESS )
-	{
-		return TRUE;
-	}
-	else
-	{
-		DisplayErrorMessageBox( pszName, nErrorCode );
-		return FALSE;
-	}
+	LONG nErrorCode = SHRegSetUSValue( (LPCTSTR)strSection, pszName, REG_SZ,
+		(LPCVOID)pszValue, ( lstrlen( pszValue ) + 1 ) * sizeof( TCHAR ),
+		SHREGSET_FORCE_HKCU );
+	return ( nErrorCode == ERROR_SUCCESS );
 }
 
 //////////////////////////////////////////////////////////////////////
 // CRegistry write an int value
 
-BOOL CRegistry::SetInt(LPCTSTR pszSection, LPCTSTR pszName, int nValue, HKEY hMainKey, LPCTSTR pszSubKey)
+BOOL CRegistry::SetDword(LPCTSTR pszSection, LPCTSTR pszName, DWORD nValue, LPCTSTR pszSubKey)
 {
-	DWORD nErrorCode;
-	CString strTemp;
-	HKEY hKey;
-
-	if ( pszSubKey == NULL )
-		strTemp.Format( _T("Software\\Shareaza\\Shareaza\\%s"), pszSection );
-	else
-		strTemp.Format( _T("%s\\%s"), pszSubKey, pszSection );
-
-	pszSubKey = strTemp;
-	nErrorCode = RegCreateKeyEx( hMainKey, pszSubKey, 0, NULL, 0, KEY_WRITE, NULL, &hKey, NULL );
-
-	if ( nErrorCode == ERROR_SUCCESS )
+	CString strSection( pszSubKey ? pszSubKey : _T("Software\\Shareaza\\Shareaza") );
+	if ( pszSection && *pszSection )
 	{
-		nErrorCode = RegSetValueEx( hKey, pszName, 0, REG_DWORD,
-							(const BYTE *)&nValue, sizeof(nValue) );
-
-		RegCloseKey( hKey );
+		strSection += _T("\\");
+		strSection += pszSection;
 	}
 
-	if ( nErrorCode == ERROR_SUCCESS )
-	{
-		return TRUE;
-	}
-	else
-	{
-		DisplayErrorMessageBox( pszName, nErrorCode );
-		return FALSE;
-	}
-}
-
-//////////////////////////////////////////////////////////////////////
-// Helper function to display a message box holding an error code
-
-void CRegistry::DisplayErrorMessageBox(LPCTSTR pszName, DWORD nErrorCode)
-{
-#ifdef _DEBUG
-	CString sMessage;
-	LPVOID lpMsgBuf;
-	FormatMessage( FORMAT_MESSAGE_ALLOCATE_BUFFER |
-		FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
-		NULL, nErrorCode, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
-		(LPTSTR) &lpMsgBuf,	0, NULL );
-	sMessage.Format( _T("%s returned error: %s"), pszName, (LPCTSTR)lpMsgBuf );
-	LocalFree( lpMsgBuf );
-	MessageBox( NULL, sMessage, _T("Warning"), MB_OK | MB_ICONINFORMATION );
-#else
-	pszName;
-	nErrorCode; // sink
-#endif
+	LONG nErrorCode = SHRegSetUSValue( (LPCTSTR)strSection, pszName, REG_DWORD,
+		(LPCVOID)&nValue, sizeof( nValue ), SHREGSET_FORCE_HKCU );
+	return ( nErrorCode == ERROR_SUCCESS );
 }

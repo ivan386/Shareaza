@@ -160,7 +160,7 @@ int CDownloadsCtrl::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	
 	CBitmap bmImages;
 	bmImages.LoadBitmap( IDB_PROTOCOLS );
-	if ( theApp.m_bRTL ) 
+	if ( Settings.General.LanguageRTL ) 
 		bmImages.m_hObject = CreateMirroredBitmap( (HBITMAP)bmImages.m_hObject );
 	m_pProtocols.Create( 16, 16, ILC_COLOR32|ILC_MASK, 7, 1 ) ||
 	m_pProtocols.Create( 16, 16, ILC_COLOR24|ILC_MASK, 7, 1 ) ||
@@ -837,7 +837,7 @@ void CDownloadsCtrl::OnPaint()
 		m_bShowSearching = !m_bShowSearching;
 	}
 
-	if ( theApp.m_bRTL ) dc.SetTextAlign( TA_RTLREADING );
+	if ( Settings.General.LanguageRTL ) dc.SetTextAlign( TA_RTLREADING );
 
 	GetClientRect( &rcClient );
 	rcClient.top += HEADER_HEIGHT;
@@ -1411,7 +1411,7 @@ void CDownloadsCtrl::OnSkinChange()
 		HICON hIcon = CoolInterface.ExtractIcon( (UINT)protocolCmdMap[ nImage ].commandID, FALSE );
 		if ( hIcon )
 		{
-			m_pProtocols.Replace( theApp.m_bRTL ? /*nRevStart -*/ nImage : nImage, hIcon );
+			m_pProtocols.Replace( Settings.General.LanguageRTL ? /*nRevStart -*/ nImage : nImage, hIcon );
 			DestroyIcon( hIcon );
 		}
 	}

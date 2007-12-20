@@ -84,12 +84,12 @@ CDownloadWithSources::~CDownloadWithSources()
 //////////////////////////////////////////////////////////////////////
 // CDownloadWithSources list access
 
-int CDownloadWithSources::GetSourceCount(BOOL bNoPush, BOOL bSane) const
+DWORD CDownloadWithSources::GetSourceCount(BOOL bNoPush, BOOL bSane) const
 {
 	if ( ! bNoPush && ! bSane ) return m_nSourceCount;
 	
 	DWORD tNow = GetTickCount();
-	int nCount = 0;
+	DWORD nCount = 0;
 	
 	for ( CDownloadSource* pSource = m_pSourceFirst ; pSource ; pSource = pSource->m_pNext )
 	{
@@ -108,9 +108,9 @@ int CDownloadWithSources::GetSourceCount(BOOL bNoPush, BOOL bSane) const
 	return nCount;
 }
 
-int	CDownloadWithSources::GetEffectiveSourceCount() const
+DWORD CDownloadWithSources::GetEffectiveSourceCount() const
 {
-	int nResult = 0;
+	DWORD nResult = 0;
 	if ( Settings.IsG1Allowed() )
 		nResult += m_nG1SourceCount;
 	if ( Settings.IsG2Allowed() )

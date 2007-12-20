@@ -424,11 +424,11 @@ int CDownloads::GetActiveTorrentCount() const
 	return nCount;
 }
 
-INT_PTR CDownloads::GetCount(BOOL bActiveOnly) const
+DWORD CDownloads::GetCount(BOOL bActiveOnly) const
 {
-	if ( ! bActiveOnly ) return m_pList.GetCount();
+	if ( ! bActiveOnly ) return (DWORD)m_pList.GetCount();
 	
-	INT_PTR nCount = 0;
+	DWORD nCount = 0;
 	
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
@@ -442,9 +442,9 @@ INT_PTR CDownloads::GetCount(BOOL bActiveOnly) const
 	return nCount;
 }
 
-int CDownloads::GetTransferCount() const
+DWORD CDownloads::GetTransferCount() const
 {
-	int nCount = 0;
+	DWORD nCount = 0;
 	
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
@@ -454,9 +454,9 @@ int CDownloads::GetTransferCount() const
 	return nCount;
 }
 
-int CDownloads::GetTryingCount(BOOL bTorrentsOnly) const
+DWORD CDownloads::GetTryingCount(BOOL bTorrentsOnly) const
 {
-	int nCount = 0;
+	DWORD nCount = 0;
 	
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
@@ -472,9 +472,9 @@ int CDownloads::GetTryingCount(BOOL bTorrentsOnly) const
 	return nCount;
 }
 
-int CDownloads::GetConnectingTransferCount() const
+DWORD CDownloads::GetConnectingTransferCount() const
 {
-	int nCount = 0;
+	DWORD nCount = 0;
 	
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
@@ -789,8 +789,8 @@ DWORD CDownloads::GetBandwidth() const
 
 void CDownloads::UpdateAllows(BOOL bNew)
 {
-	int nDownloads	= 0;
-	int nTransfers	= 0;
+	DWORD nDownloads	= 0;
+	DWORD nTransfers	= 0;
 	
 	if ( bNew ) m_tLastConnect = GetTickCount();
 	
@@ -812,7 +812,7 @@ void CDownloads::UpdateAllows(BOOL bNew)
 
 BOOL CDownloads::AllowMoreDownloads() const
 {
-	int nCount = 0;
+	DWORD nCount = 0;
 
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
@@ -825,7 +825,7 @@ BOOL CDownloads::AllowMoreDownloads() const
 
 BOOL CDownloads::AllowMoreTransfers(IN_ADDR* pAddress) const
 {
-	int nCount = 0, nLimit = 0;
+	DWORD nCount = 0, nLimit = 0;
 	
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
@@ -844,7 +844,7 @@ BOOL CDownloads::AllowMoreTransfers(IN_ADDR* pAddress) const
 	}
 }
 
-void CDownloads::SetPerHostLimit(IN_ADDR* pAddress, int nLimit)
+void CDownloads::SetPerHostLimit(IN_ADDR* pAddress, DWORD nLimit)
 {
 	m_pHostLimits.SetAt( pAddress->S_un.S_addr, nLimit );
 }

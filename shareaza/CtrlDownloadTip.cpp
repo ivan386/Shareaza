@@ -355,7 +355,7 @@ void CDownloadTipCtrl::OnPaint(CDC* pDC, CDownload* pDownload)
 		strSpeed = Settings.SmartSpeed( pDownload->GetAverageSpeed() );
 
 		strSources.Format( _T("%i %s %i"), nTransferCount, strOf, nSourceCount );
-		if ( theApp.m_bRTL ) strSources = _T("\x202B") + strSources;
+		if ( Settings.General.LanguageRTL ) strSources = _T("\x202B") + strSources;
 	}
 	else if ( nSourceCount )
 	{
@@ -377,7 +377,7 @@ void CDownloadTipCtrl::OnPaint(CDC* pDC, CDownload* pDownload)
 
 	if ( pDownload->IsStarted() && pDownload->m_nSize < SIZE_UNKNOWN )
 	{
-		if ( theApp.m_bRTL )
+		if ( Settings.General.LanguageRTL )
 		{
 			strVolume.Format( _T("(%.2f%%) %s %s %s"),
 				pDownload->GetProgress(),
@@ -401,7 +401,7 @@ void CDownloadTipCtrl::OnPaint(CDC* pDC, CDownload* pDownload)
 
 	if ( pDownload->IsTorrent() )
 	{
-		if ( theApp.m_bRTL )
+		if ( Settings.General.LanguageRTL )
 		{
 			strTorrentUpload.Format( _T("(%.2f%%) %s %s %s"),
 				pDownload->GetRatio(),

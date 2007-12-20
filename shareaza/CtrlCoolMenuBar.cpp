@@ -174,11 +174,11 @@ void CCoolMenuBarCtrl::ShowMenu()
 	m_pMenuBar = this;
 	m_hMsgHook = SetWindowsHookEx( WH_MSGFILTER, MenuFilter, NULL, GetCurrentThreadId() );
 
-	CoolMenu.RegisterEdge( theApp.m_bRTL ? rc.right : rc.left, rc.bottom, rc.Width() );
+	CoolMenu.RegisterEdge( Settings.General.LanguageRTL ? rc.right : rc.left, rc.bottom, rc.Width() );
 	
 	UINT nCmd = TrackPopupMenuEx( pMenu->GetSafeHmenu(),
 		TPM_LEFTALIGN|TPM_LEFTBUTTON|TPM_VERTICAL|TPM_RETURNCMD,
-		theApp.m_bRTL ? rc.right : rc.left, rc.bottom, GetSafeHwnd(), &tpm );
+		Settings.General.LanguageRTL ? rc.right : rc.left, rc.bottom, GetSafeHwnd(), &tpm );
 
 	UnhookWindowsHookEx( m_hMsgHook );
 

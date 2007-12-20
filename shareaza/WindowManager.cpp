@@ -338,7 +338,7 @@ void CWindowManager::SetGUIMode(int nMode, BOOL bSaveState)
 	Close();
 
 	Settings.General.GUIMode = nMode;
-	theApp.WriteProfileInt( _T("Settings"), _T("GUIMode"), nMode );
+	Settings.Save();
 
 	if ( Settings.General.GUIMode != GUI_WINDOWED )
 	{

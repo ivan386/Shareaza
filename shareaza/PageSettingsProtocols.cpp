@@ -21,6 +21,7 @@
 
 #include "StdAfx.h"
 #include "Shareaza.h"
+#include "Settings.h"
 #include "PageSettingsProtocols.h"
 
 #ifdef _DEBUG
@@ -135,19 +136,19 @@ BOOL CProtocolsSettingsPage::OnInitDialog()
 
 HTREEITEM CProtocolsSettingsPage::AddItem(HTREEITEM hParent, LPCTSTR pszText, LPCTSTR pszValue)
 {
-	if ( theApp.m_bRTL ) m_wndTree.ModifyStyleEx( 0, TVS_RTLREADING, 0 );
+	if ( Settings.General.LanguageRTL ) m_wndTree.ModifyStyleEx( 0, TVS_RTLREADING, 0 );
 	if ( pszValue != NULL )
 	{
 		CString str;
 		str.Format( _T("%s = %s"), pszText, pszValue );
-		if ( theApp.m_bRTL ) str = _T("\x202A") + str;
+		if ( Settings.General.LanguageRTL ) str = _T("\x202A") + str;
 		return m_wndTree.InsertItem( TVIF_TEXT|TVIF_STATE,
 			str, 0, 0, 0, 0, 0, hParent, TVI_LAST );
 	}
 	else
 	{
 		CString str(pszText);
-		if ( theApp.m_bRTL ) str = _T("\x202A") + str;
+		if ( Settings.General.LanguageRTL ) str = _T("\x202A") + str;
 		return m_wndTree.InsertItem( TVIF_TEXT|TVIF_STATE,
 			str, 0, 0, TVIS_EXPANDED|TVIS_BOLD,
 			TVIS_EXPANDED|TVIS_BOLD, 0, hParent, TVI_LAST );

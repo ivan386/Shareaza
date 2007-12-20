@@ -349,10 +349,9 @@ BOOL CSkin::LoadFromXML(CXMLElement* pXML, const CString& strPath)
 			if ( strType == _T("language") )
 			{
 				Settings.General.Language = pSub->GetAttributeValue( _T("language"), _T("en") );
-				theApp.m_bRTL = ( pSub->GetAttributeValue( _T("dir"), _T("ltr") ) == "rtl" );
-				theApp.WriteProfileInt( _T("Settings"), _T("LanguageRTL"), theApp.m_bRTL );
+				Settings.General.LanguageRTL = ( pSub->GetAttributeValue( _T("dir"), _T("ltr") ) == "rtl" );
 				TRACE( _T("Loading language: %s\r\n"), Settings.General.Language );
-				TRACE( _T("RTL: %d\r\n"), theApp.m_bRTL );
+				TRACE( _T("RTL: %d\r\n"), Settings.General.LanguageRTL );
 			}
 			else if ( strType == _T("skin") )
 			{
@@ -833,7 +832,7 @@ BOOL CSkin::Translate(LPCTSTR pszName, CHeaderCtrl* pCtrl)
 	TCHAR szColumn[128] = {};
 	HD_ITEM pColumn = {};
 	
-	if ( theApp.m_bRTL ) 
+	if ( Settings.General.LanguageRTL ) 
 		pCtrl->ModifyStyleEx( 0, WS_EX_LAYOUTRTL, 0 );
 	pColumn.mask		= HDI_TEXT;
 	pColumn.pszText		= szColumn;
@@ -1050,7 +1049,7 @@ BOOL CSkin::Apply(LPCTSTR pszName, CDialog* pDialog, UINT nIconID, CToolTipCtrl*
 		GetClassName( pWnd->GetSafeHwnd(), szClass, 3 );
 
 		// Needed for some controls like Schema combo box
-		if ( theApp.m_bRTL && (CString)szClass != "Ed" ) 
+		if ( Settings.General.LanguageRTL && (CString)szClass != "Ed" ) 
 			pWnd->ModifyStyleEx( 0, WS_EX_LAYOUTRTL|WS_EX_RTLREADING, 0 );
 
 		if ( pXML->IsNamed( _T("control") ) )
@@ -1572,7 +1571,7 @@ BOOL CSkin::LoadCommandImages(CXMLElement* pBase, const CString& strPath)
 			{
 				if ( ExtractIconEx( strFile, 0, NULL, &hIcon, 1 ) != NULL && hIcon != NULL )
 				{
-					if ( theApp.m_bRTL ) hIcon = CreateMirroredIcon( hIcon );
+					if ( Settings.General.LanguageRTL ) hIcon = CreateMirroredIcon( hIcon );
 					CoolInterface.AddIcon( nID, hIcon );
 					VERIFY( DestroyIcon( hIcon ) );
 				}
@@ -1589,7 +1588,7 @@ BOOL CSkin::LoadCommandImages(CXMLElement* pBase, const CString& strPath)
 				hIcon = (HICON)LoadImage( hInstance, MAKEINTRESOURCE(nIconID), IMAGE_ICON, 16, 16, 0 );
 				if ( hIcon != NULL )
 				{
-					if ( theApp.m_bRTL ) hIcon = CreateMirroredIcon( hIcon );
+					if ( Settings.General.LanguageRTL ) hIcon = CreateMirroredIcon( hIcon );
 					CoolInterface.AddIcon( nID, hIcon );
 					VERIFY( DestroyIcon( hIcon ) );
 				}
@@ -1626,7 +1625,7 @@ BOOL CSkin::LoadCommandBitmap(CXMLElement* pBase, const CString& strPath)
 
 	HBITMAP hBitmap = LoadBitmap( strFile );
 	if ( hBitmap == NULL ) return TRUE;
-	if ( theApp.m_bRTL ) hBitmap = CreateMirroredBitmap( hBitmap );
+	if ( Settings.General.LanguageRTL ) hBitmap = CreateMirroredBitmap( hBitmap );
 
 	strFile = pBase->GetAttributeValue( _T("mask") );
 	COLORREF crMask = RGB( 0, 255, 0 );
@@ -1678,7 +1677,7 @@ void CSkin::CreateDefault()
 	HICON hIcon = theApp.LoadIcon( IDI_CHECKMARK );
 	if ( hIcon )
 	{
-		if ( theApp.m_bRTL ) hIcon = CreateMirroredIcon( hIcon );
+		if ( Settings.General.LanguageRTL ) hIcon = CreateMirroredIcon( hIcon );
 		CoolInterface.AddIcon( ID_CHECKMARK, hIcon );
 		VERIFY( DestroyIcon( hIcon ) );
 	}
@@ -1839,7 +1838,7 @@ void CSkin::DrawWrappedText(CDC* pDC, CRect* pBox, LPCTSTR pszText, CPoint ptSta
 	int nTestStart	= GetTextFlowChange( pszText, &bIsRTLStart );
 
 	// Guess text direction ( not always works )
-	BOOL bNormalFlow = theApp.m_bRTL ? bIsRTLStart : !bIsRTLStart;
+	BOOL bNormalFlow = Settings.General.LanguageRTL ? bIsRTLStart : !bIsRTLStart;
 
 	TCHAR* pszSource = NULL;
 	LPCTSTR pszWord	 = NULL;
@@ -1879,7 +1878,7 @@ void CSkin::DrawWrappedText(CDC* pDC, CRect* pBox, LPCTSTR pszText, CPoint ptSta
 
 	if ( !bNormalFlow ) 
 	{
-		if ( bIsRTLStart != theApp.m_bRTL )
+		if ( bIsRTLStart != Settings.General.LanguageRTL )
 			pDC->SetTextAlign( nAlignOptionsOld ^ TA_RTLREADING );
 		pszScan += nLenFull - 1;
 		pszWord += nLenFull;
@@ -1901,7 +1900,7 @@ void CSkin::DrawWrappedText(CDC* pDC, CRect* pBox, LPCTSTR pszText, CPoint ptSta
 				}
 
 				// Add extra point in x-axis; it cuts off the 1st word character otherwise
-				const short nExtraPoint = ( theApp.m_bRTL ) ? 1 : 0;
+				const short nExtraPoint = ( Settings.General.LanguageRTL ) ? 1 : 0;
 				CRect rc( ptStart.x, ptStart.y, ptStart.x + sz.cx + nExtraPoint, ptStart.y + sz.cy );
 				
 				pDC->ExtTextOut( ptStart.x, ptStart.y, nFlags, &rc,
@@ -1933,7 +1932,7 @@ void CSkin::DrawWrappedText(CDC* pDC, CRect* pBox, LPCTSTR pszText, CPoint ptSta
 				}
 
 				// Add extra point in x-axis; it cuts off the 1st word character otherwise
-				const short nExtraPoint = ( theApp.m_bRTL ) ? 1 : 0;
+				const short nExtraPoint = ( Settings.General.LanguageRTL ) ? 1 : 0;
 
 				CRect rc( ptStart.x, ptStart.y, ptStart.x + sz.cx + nExtraPoint, ptStart.y + sz.cy );
 

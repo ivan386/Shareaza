@@ -21,6 +21,7 @@
 
 #include "StdAfx.h"
 #include "Shareaza.h"
+#include "Settings.h"
 #include "GProfile.h"
 #include "XML.h"
 #include "PageProfileFavourites.h"
@@ -105,7 +106,7 @@ BOOL CFavouritesProfilePage::OnInitDialog()
 			{
 				CString strTitle	= pBookmark->GetAttributeValue( _T("title") );
 				CString strURL		= pBookmark->GetAttributeValue( _T("url") );
-				if ( theApp.m_bRTL ) strURL = _T("\x202A") + strURL;
+				if ( Settings.General.LanguageRTL ) strURL = _T("\x202A") + strURL;
 
 				int nItem = m_wndList.InsertItem( LVIF_TEXT|LVIF_IMAGE,
 					m_wndList.GetItemCount(), strTitle, 0, 0, 0, 0 );
@@ -146,7 +147,7 @@ void CFavouritesProfilePage::OnWebAdd()
 
 	int nItem = m_wndList.InsertItem( LVIF_TEXT|LVIF_IMAGE,
 		m_wndList.GetItemCount(), m_sTitle, 0, 0, 0, 0 );
-	m_wndList.SetItemText( nItem, 1, theApp.m_bRTL ? _T("\x202A") + m_sURL : m_sURL );
+	m_wndList.SetItemText( nItem, 1, Settings.General.LanguageRTL ? _T("\x202A") + m_sURL : m_sURL );
 
 	m_sTitle.Empty();
 	m_sURL.Empty();

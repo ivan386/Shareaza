@@ -146,7 +146,7 @@ void CPluginWnd::OnSkinChange()
 
 	if ( m_nResID )
 	{
-		CoolInterface.SetIcon( m_nResID, theApp.m_bRTL, FALSE, this );
+		CoolInterface.SetIcon( m_nResID, Settings.General.LanguageRTL, FALSE, this );
 
 		CString strCaption;
 		Skin.LoadString( strCaption, m_nResID );

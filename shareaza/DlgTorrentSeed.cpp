@@ -87,7 +87,7 @@ BOOL CTorrentSeedDlg::OnInitDialog()
 	
 	SkinMe( NULL, IDR_MAINFRAME );
 	
-	if ( theApp.m_bRTL ) m_wndProgress.ModifyStyleEx( WS_EX_LAYOUTRTL, 0, 0 );
+	if ( Settings.General.LanguageRTL ) m_wndProgress.ModifyStyleEx( WS_EX_LAYOUTRTL, 0, 0 );
 	m_wndProgress.SetRange( 0, 1000 );
 	m_wndProgress.SetPos( 0 );
 	

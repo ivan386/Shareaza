@@ -1122,7 +1122,7 @@ void CNeighboursWithConnect::Maintain()
 	} // We're a leaf on the Gnutella network
 	else if ( m_bG1Leaf )
 	{
-		nLimit[ PROTOCOL_G1 ][ ntHub ] = min( Settings.Gnutella1.NumHubs, 5 );
+		nLimit[ PROTOCOL_G1 ][ ntHub ] = min( Settings.Gnutella1.NumHubs, 5u );
 
 	} // We're an ultrapeer on the Gnutella network
 	else
@@ -1142,7 +1142,7 @@ void CNeighboursWithConnect::Maintain()
 	else if ( m_bG2Leaf )
 	{	// We're a leaf on the Gnutella2 network
 		// Set the limit for Gnutella2 hub connections as whichever is smaller, the number from settings, or 3
-		nLimit[ PROTOCOL_G2 ][ ntHub ] = min( Settings.Gnutella2.NumHubs, 3 ); // NumHubs is 2 by default
+		nLimit[ PROTOCOL_G2 ][ ntHub ] = min( Settings.Gnutella2.NumHubs, 3u ); // NumHubs is 2 by default
 
 	} 
 	else
@@ -1184,7 +1184,7 @@ void CNeighboursWithConnect::Maintain()
 			CHostCacheList* pCache = HostCache.ForProtocol( nProtocol );
 
 			// We are going to try to connect to a computer running Gnutella or Gnutella2 software
-			int nAttempt;
+			DWORD nAttempt;
 			if ( nProtocol != PROTOCOL_ED2K )
 			{
 				// For Gnutella and Gnutella2, try connection to the number of free slots multiplied by the connect factor from settings

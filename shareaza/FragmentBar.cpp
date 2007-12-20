@@ -51,7 +51,7 @@ void CFragmentBar::DrawFragment(CDC* pDC, CRect* prcBar, QWORD nTotal, QWORD nOf
 {
 	CRect rcArea;
 	
-	if ( theApp.m_bRTL )
+	if ( Settings.General.LanguageRTL )
 		nOffset = nTotal - nOffset - nLength;
 
 	rcArea.left		= prcBar->left + (int)( (double)( prcBar->Width() + 1 ) / (double)nTotal * (double)nOffset );
@@ -92,7 +92,7 @@ void CFragmentBar::DrawStateBar(CDC* pDC, CRect* prcBar, QWORD nTotal, QWORD nOf
 	if ( nLength > nTotal - nOffset )
 		nLength = nTotal - nOffset;
 
-	if ( theApp.m_bRTL )
+	if ( Settings.General.LanguageRTL )
 		nOffset = nTotal - nOffset - nLength;
 
 	rcArea.left		= prcBar->left + (int)( (double)( prcBar->Width() + 1 ) / (double)nTotal * (double)nOffset );

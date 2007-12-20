@@ -220,7 +220,7 @@ void CWizardCtrl::OnPaint()
 						if ( nDashPos != -1 ) 
 							strFileName = _T("\x2026") + strFileName.Right( strFileName.GetLength() - nDashPos - 1 );
 					}
-					DWORD dwOptions = theApp.m_bRTL ? ETO_RTLREADING : 0;
+					DWORD dwOptions = Settings.General.LanguageRTL ? ETO_RTLREADING : 0;
 					dc.ExtTextOut( rcFileName.left + 24, rcFileName.top + nOffsetY, ETO_CLIPPED|dwOptions,
 						&rcFileName, strFileName, NULL );
 				}
@@ -490,7 +490,7 @@ BOOL CWizardCtrl::MakeControls(CXMLElement* pBase, std::vector< CLibraryFile* > 
 								if ( bPickers ) dwStyle |= ES_READONLY;
 								pEdit->Create( dwStyle, rc, this, IDC_WIZARD_CONTROL + nItemCount );
 								pEdit->ModifyStyleEx( 0, WS_EX_CLIENTEDGE );
-								if ( bPickers && theApp.m_bRTL ) 
+								if ( bPickers && Settings.General.LanguageRTL ) 
 									pEdit->ModifyStyleEx( WS_EX_RTLREADING, WS_EX_RIGHT, 0 );
 
 								CString strText = pItem->GetAttributeValue( _T("default") );
@@ -527,10 +527,10 @@ BOOL CWizardCtrl::MakeControls(CXMLElement* pBase, std::vector< CLibraryFile* > 
 									{
 										// a kind of hack to store button type
 										pButton->SetText( _T(" ") );
-										pButton->SetCoolIcon( IDI_BROWSE, theApp.m_bRTL );
+										pButton->SetCoolIcon( IDI_BROWSE, Settings.General.LanguageRTL );
 									}
 									else if (strType == "colorpicker")
-										pButton->SetCoolIcon( IDI_COLORS, theApp.m_bRTL );
+										pButton->SetCoolIcon( IDI_COLORS, Settings.General.LanguageRTL );
 									pControl = pButton;
 									// store file name which will be displayed for each multipicker row
 									strCaption = pList[ pos ]->m_sName;

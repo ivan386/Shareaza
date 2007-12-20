@@ -97,9 +97,9 @@ public:
 		return m_nCapacity;
 	}
 
-	inline INT_PTR GetQueuedCount() const
+	inline DWORD GetQueuedCount() const
 	{
-		return m_pQueued.GetSize();
+		return (DWORD)m_pQueued.GetSize();
 	}
 
 	inline INT_PTR GetQueueRemaining() const

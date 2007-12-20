@@ -411,8 +411,8 @@ void CDownloadTabBar::OnRButtonUp(UINT /*nFlags*/, CPoint point)
 		if ( Select( pItem ) ) NotifySelection();
 		Invalidate();
 		ClientToScreen( &rcItem );
-		CoolMenu.RegisterEdge( theApp.m_bRTL ? rcItem.right : rcItem.left, rcItem.bottom - 1, rcItem.Width() );
-		Skin.TrackPopupMenu( _T("CDownloadTabBar"), CPoint( theApp.m_bRTL ? rcItem.right : rcItem.left,
+		CoolMenu.RegisterEdge( Settings.General.LanguageRTL ? rcItem.right : rcItem.left, rcItem.bottom - 1, rcItem.Width() );
+		Skin.TrackPopupMenu( _T("CDownloadTabBar"), CPoint( Settings.General.LanguageRTL ? rcItem.right : rcItem.left,
 			rcItem.bottom - 1 ), ID_DOWNLOAD_GROUP_PROPERTIES );
 		m_bMenuGray = FALSE;
 		Invalidate();
@@ -860,7 +860,7 @@ void CDownloadTabBar::TabItem::Paint(CDownloadTabBar* pBar, CDC* pDC, CRect* pRe
 	rc.left += 20;
 
 	CString strText = m_sCaption;
-	if ( theApp.m_bRTL ) strText = _T("\x202A") + strText;
+	if ( Settings.General.LanguageRTL ) strText = _T("\x202A") + strText;
 
 	if ( pDC->GetTextExtent( strText ).cx > rc.Width() )
 	{

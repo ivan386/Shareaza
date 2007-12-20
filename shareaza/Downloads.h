@@ -60,7 +60,7 @@ public:
 	DWORD			m_tLastConnect;
 protected:
 	CList< CDownload* > m_pList;
-	CMap< ULONG, ULONG, int, int > m_pHostLimits;
+	CMap< ULONG, ULONG, DWORD, DWORD > m_pHostLimits;
 	int				m_nRunCookie;
 public:
 	enum
@@ -82,10 +82,10 @@ public:
 public:
 	int			GetSeedCount() const;
 	int			GetActiveTorrentCount() const;
-	INT_PTR		GetCount(BOOL bActiveOnly = FALSE) const;
-	int			GetTransferCount() const;
-	int			GetTryingCount(BOOL bTorrentsOnly = FALSE) const;
-	int			GetConnectingTransferCount() const;
+	DWORD		GetCount(BOOL bActiveOnly = FALSE) const;
+	DWORD		GetTransferCount() const;
+	DWORD		GetTryingCount(BOOL bTorrentsOnly = FALSE) const;
+	DWORD		GetConnectingTransferCount() const;
 	BOOL		Check(CDownloadSource* pSource) const;
 	BOOL		CheckActive(CDownload* pDownload, int nScope) const;
 	BOOL		Move(CDownload* pDownload, int nDelta);
@@ -110,7 +110,7 @@ public:
 	BOOL		OnDonkeyCallback(CEDClient* pClient, CDownloadSource* pExcept = NULL);
 	void		OnQueryHits(CQueryHit* pHits);
 	void		OnVerify(LPCTSTR pszPath, BOOL bVerified);
-	void		SetPerHostLimit(IN_ADDR* pAddress, int nLimit);
+	void		SetPerHostLimit(IN_ADDR* pAddress, DWORD nLimit);
 	BOOL		IsSpaceAvailable(QWORD nVolume, int nPath = dlPathNull);
 protected:
 	void		UpdateAllows(BOOL bNew);

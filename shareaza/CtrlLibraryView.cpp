@@ -101,7 +101,7 @@ void CLibraryView::GetHeaderContent(int& nImage, CString& str)
 		}
 
 		LoadString( strFormat, IDS_LIBHEAD_EXPLORE_FOLDER );
-		if ( theApp.m_bRTL ) 
+		if ( Settings.General.LanguageRTL ) 
 			str =  _T("\x202A") + str + _T(" \x200E") + strFormat;
 		else
 			str = strFormat + str;
@@ -124,7 +124,7 @@ void CLibraryView::GetHeaderContent(int& nImage, CString& str)
 		nImage = pSchema->m_nIcon16;
 		LoadString( str, IDS_LIBHEAD_EXPLORE_FOLDER );
 		LPCTSTR psz = _tcschr( pSchema->m_sTitle, ':' );
-		if ( theApp.m_bRTL )
+		if ( Settings.General.LanguageRTL )
 		{
 			CString strCaption( psz ? psz + 1 : pSchema->m_sTitle );
 			str = _T("\x202A") + strCaption + _T(" \x200E") + str;

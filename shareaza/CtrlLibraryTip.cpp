@@ -253,7 +253,7 @@ void CLibraryTipCtrl::OnPaint(CDC* pDC)
 		CMetaItem* pItem = m_pMetadata.GetNext( pos );
 		if ( pItem->m_pMember && pItem->m_pMember->m_bHidden ) continue;
 
-		DrawText( pDC, &pt, theApp.m_bRTL ? ':' + pItem->m_sKey : pItem->m_sKey + ':', 100 );
+		DrawText( pDC, &pt, Settings.General.LanguageRTL ? ':' + pItem->m_sKey : pItem->m_sKey + ':', 100 );
 		DrawText( pDC, &pt, pItem->m_sValue, 100 + m_nKeyWidth );
 		pt.y += TIP_TEXTHEIGHT;
 

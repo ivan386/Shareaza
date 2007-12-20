@@ -617,15 +617,15 @@ void CWndTabBar::OnRButtonUp(UINT nFlags, CPoint point)
 		if ( rcItem.bottom > GetSystemMetrics( SM_CYSCREEN ) / 2 )
 		{
 			nCommand = pMenu->TrackPopupMenu( TPM_RETURNCMD|TPM_RIGHTBUTTON|
-				TPM_LEFTALIGN|TPM_BOTTOMALIGN, theApp.m_bRTL ? rcItem.right : rcItem.left, 
+				TPM_LEFTALIGN|TPM_BOTTOMALIGN, Settings.General.LanguageRTL ? rcItem.right : rcItem.left, 
 				rcItem.top + 1, this );
 		}
 		else
 		{
-			CoolMenu.RegisterEdge( theApp.m_bRTL ? rcItem.right : rcItem.left, 
+			CoolMenu.RegisterEdge( Settings.General.LanguageRTL ? rcItem.right : rcItem.left, 
 				rcItem.bottom - 1, rcItem.Width() );
 			nCommand = pMenu->TrackPopupMenu( TPM_RETURNCMD|TPM_RIGHTBUTTON|
-				TPM_LEFTALIGN|TPM_TOPALIGN, theApp.m_bRTL ? rcItem.right : rcItem.left, 
+				TPM_LEFTALIGN|TPM_TOPALIGN, Settings.General.LanguageRTL ? rcItem.right : rcItem.left, 
 				rcItem.bottom - 1, this );
 		}
 

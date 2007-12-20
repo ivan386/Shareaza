@@ -141,10 +141,10 @@ CNeighbour* CNeighboursBase::Get(IN_ADDR* pAddress) const // Saying const here m
 // Takes a protocol, like Gnutella, a state, like connecting, and a node connection type, like we are both ultrapeers
 // Counts the number of neighbours in the list that match these criteria, pass -1 to count them all
 // Returns the number found
-int CNeighboursBase::GetCount(PROTOCOLID nProtocol, int nState, int nNodeType) const
+DWORD CNeighboursBase::GetCount(PROTOCOLID nProtocol, int nState, int nNodeType) const
 {
 	// Start out the count at 0
-	int nCount = 0;
+	DWORD nCount = 0;
 
 	// Get exclusive access to the network object (do)
 	if ( ( Network.m_pSection.Lock( 200 ) ) ) // If we're waiting more than a fifth of a second for it, give up

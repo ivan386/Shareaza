@@ -555,8 +555,8 @@ void CDownloadWithTorrent::ChokeTorrent(DWORD tNow)
 	if ( IsSeeding() )
 	{
 		// We might need to 'push' a connection if we don't have enough upload connections
-		if ( m_pTorrentUploads.GetCount() < Settings.BitTorrent.UploadCount * 2 &&
-			m_pTorrentUploads.GetCount() != GetBTSourceCount() &&
+		if ( (DWORD)m_pTorrentUploads.GetCount() < Settings.BitTorrent.UploadCount * 2 &&
+			(DWORD)m_pTorrentUploads.GetCount() != GetBTSourceCount() &&
 			CanStartTransfers( tNow ) )
 		{
 			theApp.Message( MSG_DEBUG, _T("Attempting to push-start a BitTorrent upload")  ); 
@@ -612,7 +612,7 @@ void CDownloadWithTorrent::ChokeTorrent(DWORD tNow)
 		}
 	}
 	
-	while ( pSelected.GetCount() < Settings.BitTorrent.UploadCount )
+	while ( (DWORD)pSelected.GetCount() < Settings.BitTorrent.UploadCount )
 	{
 		CUploadTransferBT* pBest = NULL;
 		DWORD nBest = 0;
@@ -635,7 +635,7 @@ void CDownloadWithTorrent::ChokeTorrent(DWORD tNow)
 		pSelected.AddTail( pBest->m_pClient );
 	}
 	
-	while ( pSelected.GetCount() < Settings.BitTorrent.UploadCount )
+	while ( (DWORD)pSelected.GetCount() < Settings.BitTorrent.UploadCount )
 	{
 		CDownloadTransferBT* pBest = NULL;
 		DWORD nBest = 0;
@@ -681,7 +681,7 @@ BOOL CDownloadWithTorrent::FindMoreSources()
 		{
 			m_tTorrentTracker = GetTickCount() + Settings.BitTorrent.DefaultTrackerPeriod;
 			m_tTorrentSources = GetTickCount();
-			CBTTrackerRequest::SendUpdate( (CDownload*)this, WORD( min( Settings.BitTorrent.DownloadConnections * 2, 100 ) ) );
+			CBTTrackerRequest::SendUpdate( (CDownload*)this, WORD( min( Settings.BitTorrent.DownloadConnections * 2u, 100u ) ) );
 			return TRUE;
 		}
 	}

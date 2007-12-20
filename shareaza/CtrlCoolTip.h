@@ -38,7 +38,7 @@ public:
 
 // Attributes
 protected:
-	BOOL*	m_pbEnable;
+	bool*	m_pbEnable;
 	void*	m_pContext;
 	HWND	m_hAltWnd;
 	BOOL	m_bTimer;
@@ -73,7 +73,7 @@ protected:
 // Overrides
 public:
 	//{{AFX_VIRTUAL(CCoolTipCtrl)
-	virtual BOOL Create(CWnd* pParentWnd, BOOL* pbEnable = NULL);
+	virtual BOOL Create(CWnd* pParentWnd, bool* pbEnable = NULL);
 	//}}AFX_VIRTUAL
 
 // Implementation

@@ -21,6 +21,7 @@
 
 #include "StdAfx.h"
 #include "Shareaza.h"
+#include "Settings.h"
 #include "ImageServices.h"
 #include "DlgSplash.h"
 #include "FragmentBar.h"
@@ -193,7 +194,7 @@ void CSplashDlg::DoPaint(CDC* pDC)
 	m_dcBuffer2.FillSolidRect( &rc, RGB( 0x25, 0x25, 0x25 ) );
 
 	int nOffset;
-	if ( theApp.m_bRTL )
+	if ( Settings.General.LanguageRTL )
 		nOffset = m_nMax - min( m_nPos, m_nMax );
 	else
 		nOffset = 0;

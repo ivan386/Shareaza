@@ -197,7 +197,7 @@ int CLibraryCollectionView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		// Disable cool menu because in RTL mode the text is drawn mirrored
 		// It worked before, but somehow was broken and nothing helps.
 		// TODO: fix it
-		if ( !theApp.m_bRTL ) 
+		if ( !Settings.General.LanguageRTL ) 
 			m_pWebCtrl->EnableCoolMenu();
 		m_pWebCtrl->EnableSandbox();
 		m_pWebCtrl->SetExternal( m_xExternal.GetDispatch() );

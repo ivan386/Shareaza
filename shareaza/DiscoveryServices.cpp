@@ -84,9 +84,9 @@ BOOL CDiscoveryServices::Check(CDiscoveryService* pService, int nType) const
 	return ( nType < 0 ) || ( pService->m_nType == nType );
 }
 
-int CDiscoveryServices::GetCount(int nType, PROTOCOLID nProtocol) const
+DWORD CDiscoveryServices::GetCount(int nType, PROTOCOLID nProtocol) const
 {
-	int nCount = 0;
+	DWORD nCount = 0;
 	CDiscoveryService* ptr;
 
 	for ( POSITION pos = GetIterator() ; pos ; )

@@ -603,7 +603,7 @@ void CMatchCtrl::OnPaint()
 	
 	CRect rcClient, rcItem;
 	CPaintDC dc( this );
-	if ( theApp.m_bRTL ) dc.SetTextAlign( TA_RTLREADING );
+	if ( Settings.General.LanguageRTL ) dc.SetTextAlign( TA_RTLREADING );
 	
 	GetClientRect( &rcClient );
 	rcClient.top += HEADER_HEIGHT;

@@ -1296,7 +1296,7 @@ void CRemote::PageNetwork()
 	Output( _T("networkFooter") );
 }
 
-void CRemote::PageNetworkNetwork(int nID, BOOL* pbConnect, LPCTSTR pszName)
+void CRemote::PageNetworkNetwork(int nID, bool* pbConnect, LPCTSTR pszName)
 {
 	CString str;
 	

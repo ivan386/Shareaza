@@ -394,7 +394,7 @@ BOOL CUploadQueues::CanUpload(PROTOCOLID nProtocol, CLibraryFile const * const p
 	return FALSE;	//This file is not uploadable with the current queue setup
 }
 
-int CUploadQueues::QueueRank(PROTOCOLID nProtocol, CLibraryFile const * const pFile )
+DWORD CUploadQueues::QueueRank(PROTOCOLID nProtocol, CLibraryFile const * const pFile )
 { 	// if the specified file was requested now, what queue position would it be in?
 	// 0x7FFF (max int) indicates the file cannot be downloaded
 
@@ -420,7 +420,7 @@ int CUploadQueues::QueueRank(PROTOCOLID nProtocol, CLibraryFile const * const pF
 		{	// If this queue will accept this file
 
 			if ( pQueue->GetQueueRemaining() > 0 )
-				return static_cast< int >( pQueue->GetQueuedCount() );
+				return pQueue->GetQueuedCount();
 		}
 	}
 

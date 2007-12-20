@@ -237,7 +237,7 @@ void CRichElement::PrePaintIcon(CDC* /*pDC*/)
 	_stscanf( m_sText, _T("%lu.%i.%i"), &nID, &nWidth, &nHeight );
 	ASSERT( ( nWidth == 16 && nHeight == 16 ) || ( nWidth == 32 && nHeight == 32 ) );
 
-	m_hImage = CoolInterface.ExtractIcon( nID, theApp.m_bRTL,
+	m_hImage = CoolInterface.ExtractIcon( nID, Settings.General.LanguageRTL,
 		( nWidth == 16 ) ? LVSIL_SMALL : LVSIL_NORMAL );
 	ASSERT( m_hImage != NULL );
 }

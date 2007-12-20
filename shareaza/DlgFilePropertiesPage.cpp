@@ -21,6 +21,7 @@
 
 #include "StdAfx.h"
 #include "Shareaza.h"
+#include "Settings.h"
 #include "Library.h"
 #include "SharedFile.h"
 #include "ShellIcons.h"
@@ -93,7 +94,7 @@ BOOL CFilePropertiesPage::OnInitDialog()
 	{
 		if ( CWnd* pNameWnd = GetDlgItem( IDC_FILE_NAME ) )
 		{
-			if ( theApp.m_bRTL )
+			if ( Settings.General.LanguageRTL )
 			{
 				CRect rc, rcPage;
 				pNameWnd->GetWindowRect( &rc );
@@ -115,7 +116,7 @@ BOOL CFilePropertiesPage::OnInitDialog()
 		{
 			if ( CWnd* pNameWnd = GetDlgItem( IDC_FILE_NAME ) )
 			{
-				if ( theApp.m_bRTL )
+				if ( Settings.General.LanguageRTL )
 				{
 					CRect rc, rcPage;
 					pNameWnd->GetWindowRect( &rc );

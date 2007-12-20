@@ -87,7 +87,7 @@ BOOL CAlbumTipCtrl::OnPrepare()
 		m_sType = pszColon ? pszColon + 1 : pFolder->m_pSchema->m_sTitle;
 		LoadString( strText, IDS_TIP_FOLDER );
 
-		if ( theApp.m_bRTL )
+		if ( Settings.General.LanguageRTL )
 			m_sType = _T("\x202A") + m_sType + _T(" \x200E") + strText;
 		else
 			m_sType += " " + strText;

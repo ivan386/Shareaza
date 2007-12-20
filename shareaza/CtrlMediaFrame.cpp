@@ -217,7 +217,7 @@ int CMediaFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_wndVolume.SetTic( 0 );
 	m_wndVolume.SetTic( 100 );
 
-	if ( theApp.m_bRTL )
+	if ( Settings.General.LanguageRTL )
 	{
 		m_wndPosition.ModifyStyleEx( WS_EX_LAYOUTRTL, 0, 0 );
 		m_wndSpeed.ModifyStyleEx( WS_EX_LAYOUTRTL, 0, 0 );
@@ -614,7 +614,7 @@ void CMediaFrame::PaintStatus(CDC& dc, CRect& rcBar)
 	COLORREF crText = CoolInterface.m_crMediaStatusText;
 	
 	dc.SelectObject( &m_pFontValue );
-	DWORD dwOptions = theApp.m_bRTL ? ETO_RTLREADING : 0;
+	DWORD dwOptions = Settings.General.LanguageRTL ? ETO_RTLREADING : 0;
 
 	int nY = ( rcBar.top + rcBar.bottom ) / 2 - dc.GetTextExtent( _T("Cy") ).cy / 2;
 	CRect rcPart( &rcBar );
@@ -637,7 +637,7 @@ void CMediaFrame::PaintStatus(CDC& dc, CRect& rcBar)
 	if ( CMetaItem* pItem = m_pMetadata.GetFirst() )
 	{
 		dc.SelectObject( &m_pFontKey );
-		CString str = theApp.m_bRTL ? ':' + pItem->m_sKey : pItem->m_sKey + ':';
+		CString str = Settings.General.LanguageRTL ? ':' + pItem->m_sKey : pItem->m_sKey + ':';
 		sz				= dc.GetTextExtent( str );
 		rcPart.left		= rcBar.left + 20;
 		rcPart.right	= rcPart.left + sz.cx + 8;
@@ -675,7 +675,7 @@ void CMediaFrame::PaintStatus(CDC& dc, CRect& rcBar)
 		CString strFormat;
 		LoadString( strFormat, IDS_GENERAL_OF );
 		strFormat = _T("%.2i:%.2i ") + strFormat + _T(" %.2i:%.2i");
-		if ( theApp.m_bRTL ) strFormat = _T("\x200F") + strFormat;
+		if ( Settings.General.LanguageRTL ) strFormat = _T("\x200F") + strFormat;
 
 		str.Format( strFormat,
 			(int)( ( m_nPosition / ONE_SECOND ) / 60 ),
@@ -706,13 +706,13 @@ BOOL CMediaFrame::PaintStatusMicro(CDC& dc, CRect& rcBar)
 	CSize size = rcBar.Size();
 	CDC* pMemDC = CoolInterface.GetBuffer( dc, size );
 
-	DWORD dwOptions = theApp.m_bRTL ? DT_RTLREADING : 0;
+	DWORD dwOptions = Settings.General.LanguageRTL ? DT_RTLREADING : 0;
 	if ( m_nState >= smsOpen )
 	{
 		CString strFormat;
 		LoadString( strFormat, IDS_GENERAL_OF );
 		strFormat = _T("%.2i:%.2i ") + strFormat + _T(" %.2i:%.2i");
-		if ( theApp.m_bRTL ) strFormat = _T("\x200F") + strFormat;
+		if ( Settings.General.LanguageRTL ) strFormat = _T("\x200F") + strFormat;
 
 		str.Format( strFormat,
 			(int)( ( m_nPosition / ONE_SECOND ) / 60 ),
@@ -730,7 +730,7 @@ BOOL CMediaFrame::PaintStatusMicro(CDC& dc, CRect& rcBar)
 	
 	if ( CMetaItem* pItem = m_pMetadata.GetFirst() )
 	{
-		CString str = theApp.m_bRTL ? ':' + pItem->m_sKey : pItem->m_sKey + ':';
+		CString str = Settings.General.LanguageRTL ? ':' + pItem->m_sKey : pItem->m_sKey + ':';
 		sz				= pMemDC->GetTextExtent( str );
 		rcPart.left		= rcStatus.left;
 		rcPart.right	= rcPart.left + sz.cx + 2;
@@ -750,7 +750,7 @@ BOOL CMediaFrame::PaintStatusMicro(CDC& dc, CRect& rcBar)
 		pMemDC->DrawText( str, &rcStatus, DT_SINGLELINE|DT_VCENTER|DT_LEFT|DT_NOPREFIX|DT_END_ELLIPSIS|dwOptions );
 	}
 
-	if ( theApp.m_bRTL ) 
+	if ( Settings.General.LanguageRTL ) 
 		dc.StretchBlt( rcBar.Width() + rcBar.left, rcBar.top, -rcBar.Width(), rcBar.Height(),
 			pMemDC, rcBar.left, rcBar.top, rcBar.Width(), rcBar.Height(), SRCCOPY );
 	else
@@ -818,10 +818,10 @@ BOOL CMediaFrame::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)
 		GetClientRect( &rcClient );
 		ClientToScreen( &rcClient );
 		
-		rc.SetRect(	theApp.m_bRTL ? rcClient.left + m_nListSize : 
+		rc.SetRect(	Settings.General.LanguageRTL ? rcClient.left + m_nListSize : 
 					rcClient.right - m_nListSize - SPLIT_SIZE,
 					rcClient.top,
-					theApp.m_bRTL ? rcClient.left + m_nListSize + SPLIT_SIZE :
+					Settings.General.LanguageRTL ? rcClient.left + m_nListSize + SPLIT_SIZE :
 					rcClient.right - m_nListSize,
 					rcClient.bottom );
 		
@@ -1519,7 +1519,7 @@ BOOL CMediaFrame::Prepare()
 	CoLockObjectExternal( m_pPlayer, TRUE, TRUE );
 	ModifyStyleEx( WS_EX_LAYOUTRTL, 0, 0 );
 	m_pPlayer->Create( GetSafeHwnd() );
-	if ( theApp.m_bRTL ) ModifyStyleEx( 0, WS_EX_LAYOUTRTL, 0 );
+	if ( Settings.General.LanguageRTL ) ModifyStyleEx( 0, WS_EX_LAYOUTRTL, 0 );
 	m_pPlayer->SetZoom( Settings.MediaPlayer.Zoom );
 	m_pPlayer->SetAspect( Settings.MediaPlayer.Aspect );
 	m_pPlayer->SetVolume( m_bMute ? 0 : Settings.MediaPlayer.Volume );
@@ -1974,8 +1974,7 @@ void CMediaFrame::UpdateNowPlaying(BOOL bEmpty)
 		}
 	}
 
-	CRegistry pRegistry;
-	pRegistry.SetString( _T("MediaPlayer"), _T("NowPlaying"), m_sNowPlaying );
+	CRegistry::SetString( _T("MediaPlayer"), _T("NowPlaying"), m_sNowPlaying );
 
 	//Plugins.OnEvent(EVENT_CHANGEDSONG);	// ToDO: Maybe plug-ins can be alerted in some way
 }

@@ -481,8 +481,8 @@ BOOL CQuerySearch::WriteHashesToEDPacket(CEDPacket* pPacket, BOOL bUDP)
 			if ( tNow > tNextQuery )
 			{
 				// If we want more sources for this file
-				int nSources = pDownload->GetSourceCount( FALSE, TRUE );
-				if ( nSources < ( Settings.Downloads.SourcesWanted / 4 ) )
+				DWORD nSources = pDownload->GetSourceCount( FALSE, TRUE );
+				if ( nSources < ( Settings.Downloads.SourcesWanted / 4u ) )
 				{
 					BOOL bFewSources = nSources < Settings.Downloads.MinSources;
 					BOOL bDataStarve = ( tNow > pDownload->m_tReceived ? tNow - pDownload->m_tReceived : 0 ) > Settings.Downloads.StarveTimeout * 1000;

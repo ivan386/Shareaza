@@ -21,6 +21,7 @@
 
 #include "StdAfx.h"
 #include "Shareaza.h"
+#include "Settings.h"
 #include "DlgSkinDialog.h"
 #include "CoolInterface.h"
 #include "Skin.h"
@@ -97,7 +98,7 @@ BOOL CSkinDialog::SkinMe(LPCTSTR pszSkin, UINT nIcon, BOOL bLanguage)
 	}
 	if ( nIcon )
 	{
-		CoolInterface.SetIcon( nIcon, m_pSkin && theApp.m_bRTL, FALSE, this );
+		CoolInterface.SetIcon( nIcon, m_pSkin && Settings.General.LanguageRTL, FALSE, this );
 	}
 
 	if ( m_pSkin != NULL )
@@ -295,7 +296,7 @@ int CSkinDialog::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	if (CDialog::OnCreate(lpCreateStruct) == -1)
 		return -1;
 
-	if ( theApp.m_bRTL ) ModifyStyleEx( 0, WS_EX_LAYOUTRTL|WS_EX_RTLREADING, 0 );
+	if ( Settings.General.LanguageRTL ) ModifyStyleEx( 0, WS_EX_LAYOUTRTL|WS_EX_RTLREADING, 0 );
 	return 0;
 }
 
@@ -309,7 +310,7 @@ BOOL CSkinDialog::OnInitDialog()
 	// Show the tooltip for 20 seconds
 	m_wndToolTip.SetDelayTime( TTDT_AUTOPOP, 20 * 1000 );
 
-	if ( theApp.m_bRTL )
+	if ( Settings.General.LanguageRTL )
 	{
 		CStatic* pBanner = (CStatic*)GetDlgItem( IDC_BANNER );
 		if ( pBanner )

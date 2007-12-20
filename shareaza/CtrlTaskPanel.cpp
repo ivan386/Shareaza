@@ -21,6 +21,7 @@
 
 #include "StdAfx.h"
 #include "Shareaza.h"
+#include "Settings.h"
 #include "CoolInterface.h"
 #include "CtrlTaskPanel.h"
 
@@ -319,7 +320,7 @@ BOOL CTaskBox::Create(CTaskPanel* pPanel, int nHeight, LPCTSTR pszCaption, UINT 
 
 	if ( nIDIcon )
 	{
-		CoolInterface.SetIcon( nIDIcon, theApp.m_bRTL, FALSE, this );
+		CoolInterface.SetIcon( nIDIcon, Settings.General.LanguageRTL, FALSE, this );
 	}
 	
 	CString strKey;

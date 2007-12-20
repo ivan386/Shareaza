@@ -21,6 +21,7 @@
 
 #include "StdAfx.h"
 #include "Shareaza.h"
+#include "Settings.h"
 #include "CoolInterface.h"
 #include "XML.h"
 
@@ -297,7 +298,7 @@ BOOL CCoolInterface::DrawWatermark(CDC* pDC, CRect* pRect, CBitmap* pMark, int n
 		return FALSE;
 	
 	dcMark.CreateCompatibleDC( pDC );
-	if ( theApp.m_bRTL ) theApp.m_pfnSetLayout( dcMark.m_hDC, LAYOUT_BITMAPORIENTATIONPRESERVED );
+	if ( Settings.General.LanguageRTL ) theApp.m_pfnSetLayout( dcMark.m_hDC, LAYOUT_BITMAPORIENTATIONPRESERVED );
 	pOldMark = (CBitmap*)dcMark.SelectObject( pMark );
 	pMark->GetBitmap( &pWatermark );
 	
@@ -585,9 +586,9 @@ BOOL CCoolInterface::Add(CSkin* pSkin, CXMLElement* pBase, HBITMAP hbmImage, COL
 			if ( nID ) 
 			{
 				if ( nImageListType == LVSIL_SMALL )
-					m_pImageMap16.SetAt( nID, theApp.m_bRTL ? nIndexRev : nIndex );
+					m_pImageMap16.SetAt( nID, Settings.General.LanguageRTL ? nIndexRev : nIndex );
 				else
-					m_pImageMap32.SetAt( nID, theApp.m_bRTL ? nIndexRev : nIndex );
+					m_pImageMap32.SetAt( nID, Settings.General.LanguageRTL ? nIndexRev : nIndex );
 			}
 			if ( nName && ! nID ) break;
 		}
