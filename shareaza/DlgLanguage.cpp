@@ -124,7 +124,7 @@ BOOL CLanguageDlg::OnInitDialog()
 	pScroll.cbSize	= sizeof(pScroll);
 	pScroll.fMask	= SIF_RANGE|SIF_PAGE|SIF_DISABLENOSCROLL;
 	pScroll.nMin	= 0;
-	pScroll.nMax	= ( m_pPaths.GetSize() / 3 ) + ( ( m_pPaths.GetSize() ) % 3 ? 1 : 0 );
+	pScroll.nMax	= ( m_pPaths.GetSize() / 3 ) + ( m_pPaths.GetSize() % 3 ? 1 : 0 );
 	pScroll.nPage	= m_nRows + 1;
 	SetScrollInfo( SB_VERT, &pScroll, TRUE );
 
