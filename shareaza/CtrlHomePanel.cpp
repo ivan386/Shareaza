@@ -581,10 +581,11 @@ BOOL CHomeDownloadsBox::ExecuteDownload(CDownload* pDownload)
 		if ( nExtPos > 0 )
 		{
 			strType = pDownload->m_sSafeName.Mid( nExtPos + 1 );
-			bDangerous = theApp.m_pfnAssocIsDangerous( "." + strType );
+			if ( theApp.m_pfnAssocIsDangerous )
+				bDangerous = theApp.m_pfnAssocIsDangerous( "." + strType );
 		}
 		strType = _T("|") + strType + _T("|");
-		
+
 		if ( _tcsistr( Settings.Library.SafeExecute, strType ) == NULL || bDangerous )
 		{
 			CString strFormat, strPrompt;

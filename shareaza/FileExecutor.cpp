@@ -138,8 +138,9 @@ BOOL CFileExecutor::Execute(LPCTSTR pszFile, BOOL bForce, BOOL bHasThumbnail, LP
 	}
 
 	if ( bForce == NULL && strType.GetLength() &&
-		( _tcsistr( Settings.Library.SafeExecute, strType ) == NULL && 
-		  theApp.m_pfnAssocIsDangerous( (LPCTSTR)strPureExtension ) ) && ! bPreviewEnabled )
+		( _tcsistr( Settings.Library.SafeExecute, strType ) == NULL ||
+		 ( theApp.m_pfnAssocIsDangerous && theApp.m_pfnAssocIsDangerous( (LPCTSTR)strPureExtension ) )
+		) && ! bPreviewEnabled )
 	{
 		CString strFormat, strPrompt;
 
