@@ -32,6 +32,8 @@ static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
 #endif
 
+#define SMART_VERSION	53
+
 CSettings Settings;
 
 
@@ -580,8 +582,6 @@ void CSettings::LoadSet(string_set* pSet, LPCTSTR pszString)
 
 //////////////////////////////////////////////////////////////////////
 // CSettings load
-
-#define SMART_VERSION	53
 
 void CSettings::Load()
 {
@@ -1142,19 +1142,18 @@ void CSettings::OnChangeConnectionSpeed()
 
 		if ( Connection.InSpeed <= 10000 )
 		{
-			Gnutella2.NumLeafs				= 450;	//Can probably support more leaves
-			BitTorrent.DownloadTorrents		= 7;	// Should be able to handle several torrents
+			Gnutella2.NumLeafs			= 450;	//Can probably support more leaves
+			BitTorrent.DownloadTorrents	= 7;	// Should be able to handle several torrents
 		}
 		else
 		{
-			Gnutella2.NumLeafs				= 500;	//Can probably support more leaves
-			BitTorrent.DownloadTorrents		= 10;	// Should be able to handle several torrents
+			Gnutella2.NumLeafs			= 500;	//Can probably support more leaves
+			BitTorrent.DownloadTorrents	= 10;	// Should be able to handle several torrents
 		}
 	}
 
 	if( bLimited )
 	{	// Window XP Service Pack 2
-		theApp.Message( MSG_ERROR, _T("Warning - Windows XP Service Pack 2 detected. Performance may be reduced.") );
 		Connection.ConnectThrottle		= max( Connection.ConnectThrottle, 250u );
 		Downloads.ConnectThrottle		= max( Downloads.ConnectThrottle, 800u );
 		Gnutella.ConnectFactor			= min( Gnutella.ConnectFactor, 3u );
@@ -1523,42 +1522,58 @@ CString CSettings::SmartVolume(QWORD nVolume, int nVolumeUnits, bool bTruncate) 
 	return theApp.m_bRTL ? _T("\x200E") + strVolume : strVolume;
 }
 
-QWORD CSettings::ParseVolume(CString& strVolume, int nReturnUnits) const
+QWORD CSettings::ParseVolume(LPCTSTR szVolume, int nReturnUnits) const
 {
 	double val = 0;
-	CString strSize( strVolume );
+	TCHAR szSize[ 4 ] = {};
 
-	if ( strSize.Left( 1 ) == _T("\x200E") ) strSize = strSize.Mid( 1 );
+	if ( szVolume[ 0 ] == _T('\x200E') ) szVolume ++;
 
 	// Return early if there is no number in the string
-	if ( _stscanf( strSize, _T("%lf"), &val ) != 1 ) return 0ul;
+	int nReaded = _stscanf( szVolume, _T("%lf %3s"), &val, szSize );
+	if ( nReaded != 1 && nReaded != 2 ) return 0ul;
 
 	// Return early if the number is negative
 	if ( val < 0 ) return 0ul;
 
-	if ( _tcsstr( strSize, _T("B") ) )
-		// Convert to bits if Bytes were passed in
+	// First letter
+	if ( *szSize == _T('K') || *szSize == _T('k') )			// Kilo
+		val *= 1024.0f;
+	else if ( *szSize == _T('M') || *szSize == _T('m') )	// Mega
+		val *= 1024.0f * 1024.0f;
+	else if ( *szSize == _T('G') || *szSize == _T('g') )	// Giga
+		val *= 1024.0f * 1024.0f * 1024.0f;
+	else if ( *szSize == _T('T') || *szSize == _T('t') )	// Tera
+		val *= 1024.0f * 1024.0f * 1024.0f * 1024.0f;
+	else if ( *szSize == _T('P') || *szSize == _T('p') )	// Peta
+		val *= 1024.0f * 1024.0f * 1024.0f * 1024.0f * 1024.0f;
+	else if ( *szSize == _T('E') || *szSize == _T('e') )	// Exa
+		val *= 1024.0f * 1024.0f * 1024.0f * 1024.0f * 1024.0f * 1024.0f;
+	else if ( *szSize == _T('B') && szSize[ 1 ] == 0 )		// bytes
 		val *= 8.0f;
-	else if ( !_tcsstr( strSize, _T("b") ) )
-		// If bits or Bytes are not indicated return 0
+	else if ( *szSize == _T('b') && szSize[ 1 ] == 0 )		// bits
+		;
+	else
+		// Unknown suffix
 		return 0ul;
 
-	// Work out what units are represented in the string
-	if ( _tcsstr( strSize, _T("K") ) || _tcsstr( strSize, _T("k") ) )		// Kilo
-		val *= 1024.0f;
-	else if ( _tcsstr( strSize, _T("M") ) || _tcsstr( strSize, _T("m") ) )	// Mega
-		val *= pow( 1024.0f, 2 );
-	else if ( _tcsstr( strSize, _T("G") ) || _tcsstr( strSize, _T("g") ) )	// Giga
-		val *= pow( 1024.0f, 3 );
-	else if ( _tcsstr( strSize, _T("T") ) || _tcsstr( strSize, _T("t") ) )	// Tera
-		val *= pow( 1024.0f, 4 );
-	else if ( _tcsstr( strSize, _T("P") ) || _tcsstr( strSize, _T("p") ) )	// Peta
-		val *= pow( 1024.0f, 5 );
-	else if ( _tcsstr( strSize, _T("E") ) || _tcsstr( strSize, _T("e") ) )	// Exa
-		val *= pow( 1024.0f, 6 );
+	// Second letter
+	if ( *szSize == _T('B') || *szSize == _T('b') )			// Already parsed
+		;
+	else if ( szSize[ 1 ] == _T('B') && (
+		szSize[ 2 ] == 0 || szSize[ 2 ] == _T('/') ||
+		szSize[ 2 ] == _T('\\') || szSize[ 2 ] == _T(' ') ) )	// bytes
+		val *= 8.0f;
+	else if ( szSize[ 1 ] == _T('b') && (
+		szSize[ 2 ] == 0 || szSize[ 2 ] == _T('/') ||
+		szSize[ 2 ] == _T('\\') || szSize[ 2 ] == _T(' ') ) )	// bits
+		;
+	else
+		// Unknown suffix
+		return 0ul;
 
 	// Convert to required Units
-	val /= nReturnUnits;
+	val /= (double)nReturnUnits;
 
 	// Convert double to DWORD and return
 	return static_cast< QWORD >( val );

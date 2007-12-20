@@ -28,7 +28,7 @@ enum
 
 class CSettingsItem;
 
-class CSettings : private boost::noncopyable
+class CSettings
 {
 // Construction
 public:
@@ -570,7 +570,7 @@ public:
 
 	CString	SmartSpeed(QWORD nVolume, int nVolumeUnits = Bytes, bool bTruncate = false) const;	// Convert speeds into formatted strings
 	CString	SmartVolume(QWORD nVolume, int nVolumeUnits = Bytes, bool bTruncate = false) const;	// Convert sizes into formatted strings
-	QWORD	ParseVolume(CString& strVolume, int nReturnUnits = Bytes) const;					// Convert size string into desired units
+	QWORD	ParseVolume(LPCTSTR szVolume, int nReturnUnits = Bytes) const;					// Convert size string into desired units
 	DWORD	GetOutgoingBandwidth() const;														// Returns available outgoing bandwidth in KB/s
 	BOOL	CheckStartup();
 	void	SetStartup(BOOL bStartup);
@@ -586,6 +586,7 @@ protected:
 	void	Add(LPCTSTR pszName, CString* pString, LPCTSTR pszDefault);
 	void	Add(LPCTSTR pszName, string_set* pSet, LPCTSTR pszDefault);
 	void	SmartUpgrade();
+
 	static void LoadSet(string_set* pSet, LPCTSTR pszString);
 
 // Inlines
