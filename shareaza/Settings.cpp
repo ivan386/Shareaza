@@ -93,7 +93,7 @@ void CSettings::Setup()
 	Add( _T("Library.ShowCoverArt"), &Library.ShowCoverArt, TRUE );
 	Add( _T("Library.SchemaURI"), &Library.SchemaURI, CSchema::uriAudio );
 	Add( _T("Library.FilterURI"), &Library.FilterURI, NULL );
-	Add( _T("Library.SafeExecute"), &Library.SafeExecute, _T("|3gp|aac|ace|ape|avi|bmp|flv|gif|iso|jpg|jpeg|mid|mov|m1v|m2v|m3u|m4a|mkv|mp2|mp3|mp4|mpa|mpe|mpg|mpeg|ogg|ogm|pdf|png|qt|rar|rm|sks|tar|tgz|torrent|txt|wav|wma|wmv|zip|") );
+	Add( _T("Library.SafeExecute"), &Library.SafeExecute, _T("|3gp|aac|ace|ape|avi|bmp|flv|gif|iso|jpg|jpeg|mid|mov|m1v|m2v|m3u|m4a|mkv|mp2|mp3|mp4|mpa|mpe|mpg|mpeg|ogg|ogm|pdf|png|qt|rar|rm|sks|tar|tgz|torrent|txt|wav|wma|wmv|zip|co|collection|lit|") );
 	Add( _T("Library.PrivateTypes"), &Library.PrivateTypes, _T("|vbs|js|jc!|fb!|bc!|dbx|part|partial|pst|reget|getright|pif|lnk|sd|url|wab|m4p|infodb|racestats|chk|tmp|temp|ini|inf|log|old|manifest|met|bak|$$$|---|~~~|###|__incomplete___|") );
 	Add( _T("Library.ThumbSize"), &Library.ThumbSize, 96 );
 	Add( _T("Library.BitziAgent"), &Library.BitziAgent, _T(".") );
@@ -581,7 +581,7 @@ void CSettings::LoadSet(string_set* pSet, LPCTSTR pszString)
 //////////////////////////////////////////////////////////////////////
 // CSettings load
 
-#define SMART_VERSION	52
+#define SMART_VERSION	53
 
 void CSettings::Load()
 {
@@ -776,7 +776,6 @@ void CSettings::SmartUpgrade()
 			Uploads.ShareTiger				= TRUE;
 
 			Library.PrivateTypes.erase( _T("nfo") );
-			Library.SafeExecute.Replace( _T("|."), _T("|") );
 		}
 
 		if ( nVersion < 21 )
@@ -1025,6 +1024,12 @@ void CSettings::SmartUpgrade()
 		{
 			WINE.MenuFix = TRUE;
 			OnChangeConnectionSpeed();
+		}
+
+		if ( nVersion < 53 )
+		{
+			Gnutella1.NumLeafs = 50;
+			Library.SafeExecute = _T("|3gp|aac|ace|ape|avi|bmp|flv|gif|iso|jpg|jpeg|mid|mov|m1v|m2v|m3u|m4a|mkv|mp2|mp3|mp4|mpa|mpe|mpg|mpeg|ogg|ogm|pdf|png|qt|rar|rm|sks|tar|tgz|torrent|txt|wav|wma|wmv|zip|co|collection|lit|");
 		}
 	}
 }
