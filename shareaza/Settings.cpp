@@ -1038,11 +1038,11 @@ void CSettings::SmartUpgrade()
 		if ( nVersion < 53 )
 		{
 			Gnutella1.NumLeafs = 50;
-			if ( ! IsIn( Library.PrivateTypes, _T("co") ) )
+			if ( ! IsIn( Library.SafeExecute, _T("co") ) )
 				Library.SafeExecute.insert( _T("co") );
-			if ( ! IsIn( Library.PrivateTypes, _T("collection") ) )
+			if ( ! IsIn( Library.SafeExecute, _T("collection") ) )
 				Library.SafeExecute.insert( _T("collection") );
-			if ( ! IsIn( Library.PrivateTypes, _T("lit") ) )
+			if ( ! IsIn( Library.SafeExecute, _T("lit") ) )
 				Library.SafeExecute.insert( _T("lit") );
 		}
 	}
