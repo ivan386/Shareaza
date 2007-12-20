@@ -1047,9 +1047,8 @@ void CDownloadsWnd::OnDownloadsLaunchCopy()
 				
 				int nExtPos = pDownload->m_sSafeName.ReverseFind( '.' );
 				if ( nExtPos > 0 ) strType = pDownload->m_sSafeName.Mid( nExtPos + 1 );
-				strType = _T("|") + strType + _T("|");
 				
-				if ( _tcsistr( Settings.Library.SafeExecute, strType ) == NULL ||
+				if ( ! IsIn( Settings.Library.SafeExecute, strType ) ||
 					 pDownload->CanPreview() )
 				{
 					CString strFormat, strPrompt;

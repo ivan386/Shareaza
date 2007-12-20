@@ -138,7 +138,7 @@ BOOL CFileExecutor::Execute(LPCTSTR pszFile, BOOL bForce, BOOL bHasThumbnail, LP
 	}
 
 	if ( bForce == NULL && strType.GetLength() &&
-		( _tcsistr( Settings.Library.SafeExecute, strType ) == NULL ||
+		( ! IsIn( Settings.Library.SafeExecute, (LPCTSTR)strPureExtension + 1 ) ||
 		 ( theApp.m_pfnAssocIsDangerous && theApp.m_pfnAssocIsDangerous( (LPCTSTR)strPureExtension ) )
 		) && ! bPreviewEnabled )
 	{

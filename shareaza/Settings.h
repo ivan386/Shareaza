@@ -100,7 +100,7 @@ public:
 		BOOL		ShowCoverArt;
 		CString		SchemaURI;
 		CString		FilterURI;
-		CString		SafeExecute;
+		string_set	SafeExecute;
 		string_set	PrivateTypes;
 		DWORD		ThumbSize;
 		CString		BitziAgent;

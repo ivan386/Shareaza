@@ -575,7 +575,7 @@ BOOL CHomeDownloadsBox::ExecuteDownload(CDownload* pDownload)
 	else if ( pDownload->IsStarted() && ! pDownload->IsMoving() )
 	{
 		CString strType;
-		bool bDangerous = false;
+		BOOL bDangerous = FALSE;
 		
 		int nExtPos = pDownload->m_sSafeName.ReverseFind( '.' );
 		if ( nExtPos > 0 )
@@ -584,9 +584,7 @@ BOOL CHomeDownloadsBox::ExecuteDownload(CDownload* pDownload)
 			if ( theApp.m_pfnAssocIsDangerous )
 				bDangerous = theApp.m_pfnAssocIsDangerous( "." + strType );
 		}
-		strType = _T("|") + strType + _T("|");
-
-		if ( _tcsistr( Settings.Library.SafeExecute, strType ) == NULL || bDangerous )
+		if ( ! IsIn( Settings.Library.SafeExecute, strType ) || bDangerous )
 		{
 			CString strFormat, strPrompt;
 			

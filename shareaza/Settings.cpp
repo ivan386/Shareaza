@@ -776,6 +776,15 @@ void CSettings::SmartUpgrade()
 			Uploads.ShareTiger				= TRUE;
 
 			Library.PrivateTypes.erase( _T("nfo") );
+
+			// Remove dots
+			string_set tmp;
+			for ( string_set::const_iterator i = Library.SafeExecute.begin() ;
+				i != Library.SafeExecute.end(); i++ )
+			{
+				tmp.insert( ( (*i).GetAt( 0 ) == _T('.') ) ? (*i).Mid( 1 ) : (*i) );
+			}
+			Library.SafeExecute = tmp;
 		}
 
 		if ( nVersion < 21 )
@@ -1029,7 +1038,12 @@ void CSettings::SmartUpgrade()
 		if ( nVersion < 53 )
 		{
 			Gnutella1.NumLeafs = 50;
-			Library.SafeExecute = _T("|3gp|aac|ace|ape|avi|bmp|flv|gif|iso|jpg|jpeg|mid|mov|m1v|m2v|m3u|m4a|mkv|mp2|mp3|mp4|mpa|mpe|mpg|mpeg|ogg|ogm|pdf|png|qt|rar|rm|sks|tar|tgz|torrent|txt|wav|wma|wmv|zip|co|collection|lit|");
+			if ( ! IsIn( Library.PrivateTypes, _T("co") ) )
+				Library.SafeExecute.insert( _T("co") );
+			if ( ! IsIn( Library.PrivateTypes, _T("collection") ) )
+				Library.SafeExecute.insert( _T("collection") );
+			if ( ! IsIn( Library.PrivateTypes, _T("lit") ) )
+				Library.SafeExecute.insert( _T("lit") );
 		}
 	}
 }

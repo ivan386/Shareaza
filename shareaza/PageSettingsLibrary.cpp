@@ -114,19 +114,12 @@ BOOL CLibrarySettingsPage::OnInitDialog()
 
 	m_sCollectionPath	= Settings.Downloads.CollectionPath;
 
-	
-
-	CString strList;
-	
-	for ( strList = Settings.Library.SafeExecute + '|' ; strList.GetLength() ; )
+	for ( string_set::const_iterator i = Settings.Library.SafeExecute.begin() ;
+		i != Settings.Library.SafeExecute.end(); i++ )
 	{
-		CString strType = strList.SpanExcluding( _T(" |") );
-		strList = strList.Mid( strType.GetLength() + 1 );
-		strType.TrimLeft();
-		strType.TrimRight();
-		if ( strType.GetLength() ) m_wndSafeList.AddString( strType );
+		m_wndSafeList.AddString( *i );
 	}
-	
+
 	for ( string_set::const_iterator i = Settings.Library.PrivateTypes.begin() ;
 		i != Settings.Library.PrivateTypes.end(); i++ )
 	{
@@ -265,22 +258,18 @@ void CLibrarySettingsPage::OnOK()
 	//Set current hashing speed to requested
 	LibraryBuilder.BoostPriority( m_bHighPriorityHash );
 
-	Settings.Library.SafeExecute.Empty();
+	Settings.Library.SafeExecute.clear();
 
 	for ( int nItem = 0 ; nItem < m_wndSafeList.GetCount() ; nItem++ )
 	{
 		CString str;
 		m_wndSafeList.GetLBText( nItem, str );
-
 		if ( str.GetLength() )
 		{
-			if ( Settings.Library.SafeExecute.IsEmpty() )
-				Settings.Library.SafeExecute += '|';
-			Settings.Library.SafeExecute += str;
-			Settings.Library.SafeExecute += '|';
+			Settings.Library.SafeExecute.insert( str );
 		}
 	}
-	
+
 	Settings.Library.PrivateTypes.clear();
 
 	for ( int nItem = 0 ; nItem < m_wndPrivateList.GetCount() ; nItem++ )
