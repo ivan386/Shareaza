@@ -179,8 +179,12 @@ CString CDDEServer::ReadArgument(LPCTSTR& pszMessage)
 
 BOOL CDDEServer::CheckAccept(LPCTSTR pszTopic)
 {
-	return	_tcsicmp( pszTopic, _T("URL") ) == 0 ||
+	BOOL bResult = _tcsicmp( pszTopic, _T("URL") ) == 0 ||
 			_tcsicmp( pszTopic, _T("RAZAFORMAT") ) == 0;
+	if ( !bResult )
+		theApp.Message( MSG_ERROR, _T("Received an unsupported topic in the DDE message: %s"), pszTopic );
+
+	return bResult;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -258,7 +262,8 @@ BOOL CDDEServer::Execute(LPCTSTR pszTopic, LPCTSTR pszMessage)
 		{
 			return CShareazaApp::OpenCollection( pszMessage, TRUE );
 		}
-		
+		else
+			theApp.Message( MSG_DISPLAYED_ERROR, _T("Received a file with a unknown extension: %s"), pszType );
 	}
 
 	return FALSE;
