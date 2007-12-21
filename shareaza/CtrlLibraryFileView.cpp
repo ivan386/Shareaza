@@ -23,6 +23,7 @@
 #include "Shareaza.h"
 #include "Settings.h"
 #include "Library.h"
+#include "LibraryBuilder.h"
 #include "LibraryFolders.h"
 #include "SharedFolder.h"
 #include "SharedFile.h"
@@ -81,6 +82,8 @@ BEGIN_MESSAGE_MAP(CLibraryFileView, CLibraryView)
 	ON_COMMAND(ID_LIBRARY_BITZI_WEB, OnLibraryBitziWeb)
 	ON_UPDATE_COMMAND_UI(ID_LIBRARY_BITZI_DOWNLOAD, OnUpdateLibraryBitziDownload)
 	ON_COMMAND(ID_LIBRARY_BITZI_DOWNLOAD, OnLibraryBitziDownload)
+	ON_UPDATE_COMMAND_UI(ID_LIBRARY_REFRESH_METADATA, OnUpdateLibraryRefreshMetadata)
+	ON_COMMAND(ID_LIBRARY_REFRESH_METADATA, OnLibraryRefreshMetadata)
 	ON_UPDATE_COMMAND_UI(ID_LIBRARY_SHARED_FILE, OnUpdateLibraryShared)
 	ON_COMMAND(ID_LIBRARY_SHARED_FILE, OnLibraryShared)
 	ON_UPDATE_COMMAND_UI(ID_LIBRARY_PROPERTIES, OnUpdateLibraryProperties)
@@ -672,6 +675,23 @@ void CLibraryFileView::OnLibraryBitziDownload()
 	pLock.Unlock();
 
 	dlg.DoModal();
+}
+
+void CLibraryFileView::OnUpdateLibraryRefreshMetadata(CCmdUI* pCmdUI) 
+{
+	pCmdUI->Enable( ! m_bGhostFolder && GetSelectedCount() > 0 );
+}
+
+void CLibraryFileView::OnLibraryRefreshMetadata() 
+{
+	CQuickLock pLock( Library.m_pSection );
+
+	StartSelectedFileLoop();
+
+	for ( CLibraryFile* pFile = GetNextSelectedFile(); pFile; pFile = GetNextSelectedFile() )
+	{
+		LibraryBuilder.RefreshMetadata( pFile->GetPath() );
+	}
 }
 
 void CLibraryFileView::OnUpdateLibraryProperties(CCmdUI* pCmdUI) 

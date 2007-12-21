@@ -1529,6 +1529,7 @@
 #define ID_DOWNLOADS_URL                32891
 #define ID_LIBRARY_BITZI_WEB            32892
 #define ID_LIBRARY_BITZI_DOWNLOAD       32893
+#define ID_LIBRARY_REFRESH_METADATA     32894
 #define ID_VIEW_SECURITY                32895
 #define ID_SECURITY_EDIT                32896
 #define ID_SECURITY_REMOVE              32897

@@ -84,6 +84,8 @@ protected:
 	afx_msg void OnLibraryBitziWeb();
 	afx_msg void OnUpdateLibraryBitziDownload(CCmdUI* pCmdUI);
 	afx_msg void OnLibraryBitziDownload();
+	afx_msg void OnUpdateLibraryRefreshMetadata(CCmdUI* pCmdUI);
+	afx_msg void OnLibraryRefreshMetadata();
 	afx_msg void OnUpdateLibraryShared(CCmdUI* pCmdUI);
 	afx_msg void OnLibraryShared();
 	afx_msg void OnUpdateLibraryProperties(CCmdUI* pCmdUI);
