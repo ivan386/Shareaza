@@ -1149,6 +1149,7 @@
 			<item id="ID_LIBRARY_COPY" text="_Copy Files..."/>
 		</menu>
 		<item id="ID_LIBRARY_REBUILD_ANSI" text="_Localise Metadata"/>
+		<item id="ID_LIBRARY_REFRESH_METADATA" text="_Refresh Metadata"/>
 		<separator/>
 		<item id="ID_LIBRARY_PROPERTIES" text="_Properties"/>
 	</menu>
@@ -1171,7 +1172,7 @@
 		</menu>
 		<menu text="_Web Services">
 			<item id="ID_LIBRARY_BITZI_WEB" text="View _Bitzi Ticket"/>
-			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Acquire Metadata"/>
+			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Download Metadata"/>
 			<separator/>
 			<item id="ID_LIBRARY_CREATETORRENT" text="Create ._torrent File"/>
 		</menu>
@@ -1181,6 +1182,7 @@
 			<item id="ID_LIBRARY_COPY" text="_Copy Files..."/>
 		</menu>
 		<item id="ID_LIBRARY_REBUILD_ANSI" text="_Localise Metadata"/>
+		<item id="ID_LIBRARY_REFRESH_METADATA" text="_Refresh Metadata"/>
 		<separator/>
 		<item id="ID_LIBRARY_COLUMNS" text="Choose _Columns..."/>
 		<separator/>
@@ -1205,7 +1207,7 @@
 		</menu>
 		<menu text="_Web Services">
 			<item id="ID_LIBRARY_BITZI_WEB" text="View _Bitzi Ticket"/>
-			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Acquire Metadata"/>
+			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Download Metadata"/>
 			<separator/>
 			<item id="ID_LIBRARY_URL" text=""/>
 		</menu>
@@ -1217,6 +1219,7 @@
 			<item id="ID_LIBRARY_COPY" text="_Copy Files..."/>
 		</menu>
 		<item id="ID_LIBRARY_REBUILD_ANSI" text="_Localise Metadata"/>
+		<item id="ID_LIBRARY_REFRESH_METADATA" text="_Refresh Metadata"/>
 		<separator/>
 		<item id="ID_LIBRARY_PROPERTIES" text="_Properties"/>
 	</menu>
@@ -1239,7 +1242,7 @@
 		</menu>
 		<menu text="_Web Services">
 			<item id="ID_LIBRARY_BITZI_WEB" text="View _Bitzi Ticket"/>
-			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Acquire Metadata"/>
+			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Download Metadata"/>
 			<separator/>
 			<item id="ID_LIBRARY_CREATETORRENT" text="Create ._torrent File"/>
 		</menu>
@@ -1251,6 +1254,7 @@
 			<item id="ID_LIBRARY_COPY" text="_Copy Files..."/>
 		</menu>
 		<item id="ID_LIBRARY_REBUILD_ANSI" text="_Localise Metadata"/>
+		<item id="ID_LIBRARY_REFRESH_METADATA" text="_Refresh Metadata"/>
 		<separator/>
 		<item id="ID_LIBRARY_COLUMNS" text="Choose _Columns..."/>
 		<separator/>
