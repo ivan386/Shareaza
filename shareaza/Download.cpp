@@ -405,8 +405,10 @@ void CDownload::OnRun()
 					}
 					else if ( CheckTorrentRatio() )
 					{
-						StartTransfersIfNeeded( tNow );
-						m_tBegan = 0;
+						if ( Network.IsConnected() )
+							StartTransfersIfNeeded( tNow );
+						else
+							m_tBegan = 0;
 					}
 				}
 				else if ( m_pFile == NULL && ! m_bComplete && m_pTask == NULL )
