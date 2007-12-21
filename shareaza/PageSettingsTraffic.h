@@ -40,7 +40,7 @@ public:
 
 // Operations
 public:
-	void	AddSetting(LPVOID pValue);
+	void	AddSettings();
 	void	UpdateItem(int nItem);
 	void	UpdateAll();
 

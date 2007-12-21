@@ -1091,36 +1091,6 @@ void CSettings::OnChangeConnectionSpeed()
 }
 
 //////////////////////////////////////////////////////////////////////
-// CSettings settings lookup
-
-CSettings::Item* CSettings::GetSetting(LPCTSTR szSection, LPCTSTR szName) const
-{
-	for ( POSITION pos = m_pItems.GetHeadPosition() ; pos ; )
-	{
-		Item* pItem = m_pItems.GetNext( pos );
-		if ( lstrcmpi( pItem->m_szSection, szSection ) == 0 &&
-			 lstrcmpi( pItem->m_szName, szName ) == 0 ) return pItem;
-	}
-
-	return NULL;
-}
-
-CSettings::Item* CSettings::GetSetting(LPVOID pValue) const
-{
-	for ( POSITION pos = m_pItems.GetHeadPosition() ; pos ; )
-	{
-		Item* pItem = m_pItems.GetNext( pos );
-		if ( pItem->m_pBool == pValue ||
-			 pItem->m_pDword == pValue ||
-			 pItem->m_pFloat == pValue ||
-			 pItem->m_pString == pValue ||
-			 pItem->m_pSet == pValue ) return pItem;
-	}
-
-	return NULL;
-}
-
-//////////////////////////////////////////////////////////////////////
 // CSettings window position persistance
 
 BOOL CSettings::LoadWindow(LPCTSTR pszName, CWnd* pWindow)

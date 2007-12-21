@@ -670,8 +670,14 @@ protected:
 public:
 	void	Load();
 	void	Save(BOOL bShutdown = FALSE);
-	Item*	GetSetting(LPCTSTR szSection, LPCTSTR szName) const;
-	Item*	GetSetting(LPVOID pValue) const;
+	inline POSITION	GetHeadPosition() const
+	{
+		return m_pItems.GetHeadPosition();
+	}
+	inline Item*	GetNext(POSITION& rPosition) const
+	{
+		return m_pItems.GetNext( rPosition );
+	}
 
 	BOOL	LoadWindow(LPCTSTR pszName, CWnd* pWindow);
 	void	SaveWindow(LPCTSTR pszName, CWnd* pWindow);
