@@ -17,10 +17,11 @@
 		description="Shareaza Default Brazilian Portuguese Skin File"
 		link="http://shareaza.sourceforge.net/"
 		email=""
-		version="2.2.5.6"
+		version="2.3.0.0"
 		type="Language"
 		language="pt-br"
 		prompt="Clique aqui para traduzir o Shareaza para o português do Brasil."
+		dir="ltr"
 />
 
 <!-- Toolbar Definitions -->
@@ -2862,6 +2863,7 @@
 	<string id="16410" value="Uma sub-pasta do diretório selecionado &quot;%s&quot; já é parte da sua biblioteca.\nAdicionar esta pasta causará o re-hashing de alguns arquivos.\n\nVocê quer continuar ?"/>
 	<string id="16411" value="Incapaz de mover o arquivo %s. O arquivo pode estar sendo usado por outra aplicação.\n\nVocê deseja tentar copiar o arquivo ao invés disto?"/>
 	<string id="16412" value="Arquivo Ghost"/>
+	<string id="16413" value="Novo Grupo"/>
 	<string id="16448" value="Conectado a %s, inicializando..."/>
 	<string id="16449" value="Agora conversando com %s (%s)."/>
 	<string id="16450" value="A conexão com %s foi fechada."/>
@@ -3118,6 +3120,7 @@
 	<string id="20010" value="&amp;Voltar"/>
 	<string id="20011" value="&amp;Próximo"/>
 	<string id="20012" value="Terminar"/>
+	<string id="20013" value="Todos"/>
 	<string id="20100" value="Conectando"/>
 	<string id="20101" value="Pedindo"/>
 	<string id="20102" value="Resposta"/>
@@ -4098,7 +4101,7 @@
 		<control caption="até"/>
 		<control/>
 		<control caption="Apagar"/>
-		<control caption="Info do Torrent"/>
+		<control caption="Info do Torrent..."/>
 		<control caption="OK"/>
 		<control caption="Cancelar"/>
 	</dialog>
