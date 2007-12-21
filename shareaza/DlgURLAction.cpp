@@ -339,8 +339,8 @@ void CURLActionDlg::OnUrlDownload()
 {
 	UpdateData();
 
-	Settings.General.AlwaysOpenURLs		= m_bAlwaysOpen;
-	Settings.Downloads.ShowMonitorURLs	= m_bNewWindow;
+	Settings.General.AlwaysOpenURLs		= m_bAlwaysOpen != FALSE;
+	Settings.Downloads.ShowMonitorURLs	= m_bNewWindow != FALSE;
 
 	for ( POSITION pos = m_pURLs.GetHeadPosition() ; pos ; )
 	{
@@ -421,7 +421,7 @@ void CURLActionDlg::OnUrlDownload()
 
 void CURLActionDlg::OnUrlSearch()
 {
-	Settings.General.AlwaysOpenURLs = m_bAlwaysOpen;
+	Settings.General.AlwaysOpenURLs = m_bAlwaysOpen != FALSE;
 
 	for ( POSITION pos = m_pURLs.GetHeadPosition() ; pos ; )
 	{

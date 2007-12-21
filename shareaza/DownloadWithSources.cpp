@@ -122,10 +122,10 @@ DWORD CDownloadWithSources::GetEffectiveSourceCount() const
 	return nResult + m_nBTSourceCount + m_nFTPSourceCount;
 }
 
-int CDownloadWithSources::GetBTSourceCount(BOOL bNoPush) const
+DWORD CDownloadWithSources::GetBTSourceCount(BOOL bNoPush) const
 {
 	DWORD tNow = GetTickCount();
-	int nCount = 0;
+	DWORD nCount = 0;
 	
 	for ( CDownloadSource* pSource = m_pSourceFirst ; pSource ; pSource = pSource->m_pNext )
 	{
@@ -136,20 +136,15 @@ int CDownloadWithSources::GetBTSourceCount(BOOL bNoPush) const
 			nCount++;
 		}
 	}
-	
-	/*
-	CString strT;
-	strT.Format(_T("BT sources: %i"), nCount);
-	theApp.Message( MSG_DEBUG, strT );
-	*/
+
 	return nCount;
 }
 
-int CDownloadWithSources::GetED2KCompleteSourceCount() const
+DWORD CDownloadWithSources::GetED2KCompleteSourceCount() const
 {
 
 	DWORD tNow = GetTickCount();
-	int nCount = 0;
+	DWORD nCount = 0;
 	
 	for ( CDownloadSource* pSource = m_pSourceFirst ; pSource ; pSource = pSource->m_pNext )
 	{
@@ -162,12 +157,7 @@ int CDownloadWithSources::GetED2KCompleteSourceCount() const
 			nCount++;
 		}
 	}
-	
-	/*
-	CString strT;
-	strT.Format(_T("Complete ed2k sources: %i"), nCount);
-	theApp.Message( MSG_DEBUG, strT );
-	*/
+
 	return nCount;
 }
 

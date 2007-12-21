@@ -73,7 +73,7 @@ private:
 protected:
 	CDownloadReview*	m_pReviewFirst;
 	CDownloadReview*	m_pReviewLast;
-	int					m_nReviewCount;
+	DWORD				m_nReviewCount;
 
 public:
 	BOOL				m_bRemotePreviewCapable;

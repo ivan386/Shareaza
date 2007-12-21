@@ -242,20 +242,16 @@ BOOL CEDPacket::InflateOrRelease()
 //////////////////////////////////////////////////////////////////////
 // CEDPacket debug tools
 
-LPCTSTR CEDPacket::GetType() const
+CString CEDPacket::GetType() const
 {
-	static TCHAR szTypeBuffer[16];
-	_stprintf( szTypeBuffer, _T("0x%x"), int( m_nType ) );
-	return szTypeBuffer;
-
-	/*
 	for ( ED2K_PACKET_DESC* pType = m_pszTypes ; pType->nType ; pType++ )
 	{
 		if ( pType->nType == m_nType ) return pType->pszName;
 	}
 
-	return NULL;
-	*/
+	CString tmp;
+	tmp.Format( _T("0x%x"), int( m_nType ) );
+	return tmp;
 }
 
 void CEDPacket::Debug(LPCTSTR pszReason) const

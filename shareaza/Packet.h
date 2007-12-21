@@ -111,7 +111,7 @@ public:
 public:
 
 	// Inheriting classes will override this to return text describing what type of packet this is
-	virtual LPCTSTR GetType() const;
+	virtual CString GetType() const;
 
 	// Encode the bytes of the packet into text
 	CString ToHex()   const; // Express the bytes of the packet in base 16 with spaces, like "08 C0 12 AF"

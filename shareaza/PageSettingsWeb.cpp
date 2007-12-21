@@ -162,11 +162,11 @@ void CWebSettingsPage::OnOK()
 {
 	UpdateData();
 	
-	Settings.Web.Magnet		= m_bUriMagnet;
-	Settings.Web.Gnutella	= m_bUriGnutella;
-	Settings.Web.ED2K		= m_bUriED2K;
-	Settings.Web.Piolet		= m_bUriPiolet;
-	Settings.Web.Torrent	= m_bUriTorrent;
+	Settings.Web.Magnet		= m_bUriMagnet != FALSE;
+	Settings.Web.Gnutella	= m_bUriGnutella != FALSE;
+	Settings.Web.ED2K		= m_bUriED2K != FALSE;
+	Settings.Web.Piolet		= m_bUriPiolet != FALSE;
+	Settings.Web.Torrent	= m_bUriTorrent != FALSE;
 	
 	CShareazaURL::Register();
 	

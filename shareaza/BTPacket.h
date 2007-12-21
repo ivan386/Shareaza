@@ -46,7 +46,7 @@ public:
 	virtual	void		ToBuffer(CBuffer* pBuffer) const;
 	static	CBTPacket*	ReadBuffer(CBuffer* pBuffer);
 public:
-	virtual LPCTSTR		GetType() const;
+	virtual CString		GetType() const;
 
 // Packet Pool
 protected:

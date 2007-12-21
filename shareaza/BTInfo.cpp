@@ -688,7 +688,7 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 		else if ( pMD5->m_nValue == Hashes::Md5Hash::byteCount * 2 )
 		{
 			CStringA tmp;
-			tmp.Append( (const char*)pMD5->m_pValue, pMD5->m_nValue );
+			tmp.Append( (const char*)pMD5->m_pValue, (int)pMD5->m_nValue );
 			m_oMD5.fromString( CA2W( tmp ) );
 		}
 		else
@@ -861,7 +861,7 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 				else if ( pMD5->m_nValue == Hashes::Md5Hash::byteCount * 2 )
 				{
 					CStringA tmp;
-					tmp.Append( (const char*)pMD5->m_pValue, pMD5->m_nValue );
+					tmp.Append( (const char*)pMD5->m_pValue, (int)pMD5->m_nValue );
 					m_pFiles[ nFile ].m_oMD5.fromString( CA2W( tmp ) );
 				}
 				else
@@ -1073,7 +1073,7 @@ void CBTInfo::SetTrackerNext(DWORD tNow)
 	return;
 }
 
-INT CBTInfo::GetTrackerFailures() const
+DWORD CBTInfo::GetTrackerFailures() const
 {
 	if ( m_nTrackerMode <= tCustom ) return 0;
 

@@ -508,10 +508,16 @@ CG2Packet* CG2Packet::ReadBuffer(CBuffer* pBuffer)
 //////////////////////////////////////////////////////////////////////
 // CG2Packet debug
 
+CString CG2Packet::GetType() const
+{
+	CStringA tmp;
+	tmp.Append( (LPCSTR)&m_nType, G2_TYPE_LEN( m_nType ) );
+	return CString( tmp );
+}
+
 void CG2Packet::Debug(LPCTSTR pszReason) const
 {
 #ifdef _DEBUG
-
 	CString strOutput;
 	strOutput.Format( L"[G2] %s Type: %s", pszReason, GetType() );
 	CPacket::Debug( strOutput );

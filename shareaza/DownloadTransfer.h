@@ -46,8 +46,8 @@ public:
 	CDownloadSource*	m_pSource;
 public:
 	int			m_nState;
-	int			m_nQueuePos;
-	int			m_nQueueLen;
+	DWORD		m_nQueuePos;
+	DWORD		m_nQueueLen;
 	CString		m_sQueueName;
 	DWORD		m_nBandwidth;			// Bandwidth allocated
 public:

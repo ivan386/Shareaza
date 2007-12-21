@@ -180,7 +180,6 @@ protected:
 public:
 	G2_PACKET	m_nType;
 	BOOL		m_bCompound;
-	CString		m_sTypeCache;
 
 // Operations
 public:
@@ -211,16 +210,7 @@ public:
 		return nType == m_nType;
 	}
 
-	virtual inline LPCTSTR GetType() const
-	{
-		if ( m_sTypeCache.IsEmpty() )
-		{
-			CStringA tmp;
-			tmp.Append( (LPCSTR)&m_nType, G2_TYPE_LEN( m_nType ) );
-			((CG2Packet*)this)->m_sTypeCache = CA2CT( tmp );
-		}
-		return m_sTypeCache;
-	}
+	virtual CString GetType() const;
 
 // Packet Pool
 protected:
@@ -247,7 +237,6 @@ public:
 		}
 
 		pPacket->m_bCompound = bCompound;
-		pPacket->m_sTypeCache.Empty();
 
 		return pPacket;
 	}

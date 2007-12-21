@@ -932,10 +932,10 @@ BOOL CDownloadTransferHTTP::OnHeaderLine(CString& strHeader, CString& strValue)
 		ToLower( strValue );
 		
 		int nPos = strValue.Find( _T("position=") );
-		if ( nPos >= 0 ) _stscanf( strValue.Mid( nPos + 9 ), _T("%i"), &m_nQueuePos );
+		if ( nPos >= 0 ) _stscanf( strValue.Mid( nPos + 9 ), _T("%u"), &m_nQueuePos );
 		
 		nPos = strValue.Find( _T("length=") );
-		if ( nPos >= 0 ) _stscanf( strValue.Mid( nPos + 7 ), _T("%i"), &m_nQueueLen );
+		if ( nPos >= 0 ) _stscanf( strValue.Mid( nPos + 7 ), _T("%u"), &m_nQueueLen );
 		
 		DWORD nLimit = 0;
 		
@@ -1293,7 +1293,7 @@ BOOL CDownloadTransferHTTP::ReadContent()
 	{
 		m_pSource->SetValid();
 
-		DWORD nLength	= min( pInput->m_nLength, m_nLength - m_nPosition );
+		QWORD nLength	= min( pInput->m_nLength, m_nLength - m_nPosition );
 		BOOL bSubmit	= FALSE;
 
 		if ( m_bChunked )

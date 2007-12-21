@@ -81,7 +81,7 @@ public:
 	virtual BOOL GetRazaHash(Hashes::Sha1Hash& oHash, DWORD nLength = 0) const; // Compute the SHA hash of the packet GUID, type byte, and payload
 
 	// Get the packet's type, GUID, and all its bytes
-	virtual LPCTSTR GetType()                  const; // Returns a pointer to a text literal like "Ping" or "Pong"
+	virtual CString GetType()                  const; // Returns a pointer to a text literal like "Ping" or "Pong"
 	CString         GetGUID()                  const; // Returns the packet's GUID encoded into text in base 16
 	virtual void    ToBuffer(CBuffer* pBuffer) const; // Adds the Gnutella packet header and payload into the given CBuffer object
 

@@ -174,7 +174,7 @@ void CLibraryFrame::OnDestroy()
 
 	Settings.Library.TreeSize	= m_nTreeSize;
 	Settings.Library.PanelSize	= m_nPanelSize;
-	Settings.Library.ShowPanel	= m_bPanelShow;
+	Settings.Library.ShowPanel	= m_bPanelShow != FALSE;
 
 	CWnd::OnDestroy();
 }

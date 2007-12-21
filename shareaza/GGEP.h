@@ -199,8 +199,8 @@ public:
 
 protected:
 	BOOL		ReadFrom(CGGEPBlock* pBlock, BYTE nFlags);
-	void		WriteTo(CPacket* pPacket, bool bSmall=true, bool bNeedCOBS=true);
-	void		WriteTo(CString& str, bool bSmall=true, bool bNeedCOBS=true);
+	void		WriteTo(CPacket* pPacket, bool bSmall, bool bNeedCOBS);
+	void		WriteTo(CString& str, bool bSmall, bool bNeedCOBS);
 protected:
 	BOOL		Encode(BOOL bIfZeros = FALSE);
 	BOOL		Decode();

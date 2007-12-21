@@ -85,8 +85,8 @@ public:
 	CString				GetTopFailedSources(int nMaximum, PROTOCOLID nProtocol);
 	DWORD				GetEffectiveSourceCount() const;
 	DWORD				GetSourceCount(BOOL bNoPush = FALSE, BOOL bSane = FALSE) const;
-	int					GetBTSourceCount(BOOL bNoPush = FALSE) const;
-	int					GetED2KCompleteSourceCount() const;
+	DWORD				GetBTSourceCount(BOOL bNoPush = FALSE) const;
+	DWORD				GetED2KCompleteSourceCount() const;
 	BOOL				CheckSource(CDownloadSource* pSource) const;
 	void				AddFailedSource(CDownloadSource* pSource, bool bLocal = true, bool bOffline = false);
 	void				AddFailedSource(LPCTSTR pszUrl, bool bLocal = true, bool bOffline = false);

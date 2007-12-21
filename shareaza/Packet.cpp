@@ -357,10 +357,10 @@ BYTE* CPacket::WriteGetPointer(DWORD nLength, DWORD nOffset)
 
 // Ask this packet what type it is
 // Returns text
-LPCTSTR	CPacket::GetType() const // Saying const indicates this method doesn't change the values of any member variables
+CString	CPacket::GetType() const // Saying const indicates this method doesn't change the values of any member variables
 {
 	// This is just a CPacket, not a G1Packet which would have a type
-	return NULL; // Return blank
+	return CString(); // Return blank
 }
 
 // Express all the bytes of the packet as base 16 digits separated by spaces, like "08 C0 12 AF"

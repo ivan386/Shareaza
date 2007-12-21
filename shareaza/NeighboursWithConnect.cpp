@@ -786,7 +786,7 @@ BOOL CNeighboursWithConnect::NeedMoreHubs(PROTOCOLID nProtocol)
 	if ( ! Network.IsConnected() ) return FALSE;
 
 	// Make an array to count the number of hub connections we have for each network
-	int nConnected[4] = { 0, 0, 0, 0 }; // Unknown network, Gnutella, Gnutella2, eDonkey2000
+	DWORD nConnected[4] = { 0, 0, 0, 0 }; // Unknown network, Gnutella, Gnutella2, eDonkey2000
 
 	// Count the number of hubs we are connected to
 	for ( POSITION pos = GetIterator() ; pos ; ) // Loop for each neighbour in the list
@@ -848,7 +848,7 @@ BOOL CNeighboursWithConnect::NeedMoreLeafs(PROTOCOLID nProtocol)
 	if ( ! Network.IsConnected() ) return FALSE;
 
 	// Make an array to count the number of leaf connections we have for each network
-	int nConnected[4] = { 0, 0, 0, 0 }; // Unknown network, Gnutella, Gnutella2, eDonkey2000
+	DWORD nConnected[4] = { 0, 0, 0, 0 }; // Unknown network, Gnutella, Gnutella2, eDonkey2000
 
 	// Count the number of leaf connections we have
 	for ( POSITION pos = GetIterator() ; pos ; ) // Loop for each neighbour in the list
@@ -912,7 +912,7 @@ BOOL CNeighboursWithConnect::IsHubLoaded(PROTOCOLID nProtocol)
 	if ( ! Network.IsConnected() ) return FALSE;
 
 	// Make an array to count connections for each network the program connects to
-	int nConnected[4] = {
+	DWORD nConnected[4] = {
 		0,   // No unknown network connections counted yet
 		0,   // No Gnutella connections counted yet
 		0,   // No Gnutella2 connections counted yet
@@ -1000,7 +1000,7 @@ void CNeighboursWithConnect::OnRun()
 void CNeighboursWithConnect::Maintain()
 {
 	// Make 4-by-3 arrays that count how many connections of each network and role we have and need
-	int nCount[4][3], nLimit[4][3];
+	DWORD nCount[4][3], nLimit[4][3];
 
 	// Get the time
 	DWORD tTimer = GetTickCount();							// The tick count (milliseconds)

@@ -199,7 +199,7 @@ LPCTSTR CG1Packet::m_pszPackets[ G1_PACKTYPE_MAX ] = // There are 9 packet types
 
 // Uses the packet type index in this packet to look up text that describes that type
 // Returns text like "Ping" or "Pong"
-LPCTSTR CG1Packet::GetType() const
+CString CG1Packet::GetType() const
 {
 	// Return the pointer to the text literal defined above this method
 	return m_pszPackets[ m_nTypeIndex ];

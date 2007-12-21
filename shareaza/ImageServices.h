@@ -53,7 +53,6 @@ protected:
 	BOOL		PostLoad(CImageFile* pFile, const IMAGESERVICEDATA* pParams, SAFEARRAY* pArray);
 	SAFEARRAY*	ImageToArray(CImageFile* pFile);
 	PluginInfo	GetService(const CString& strFile);
-	PluginInfo	LoadService(const CString& strType);
 
 // Attributes
 	services_map	m_services;

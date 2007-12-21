@@ -233,20 +233,20 @@ BOOL CDownloadWithTorrent::RunTorrent(DWORD tNow)
 	if ( !m_pPeerID )
 		GenerateTorrentDownloadID();
 
-	WORD wSourcesWanted = 0;
+	DWORD nSourcesWanted = 0;
 	if ( !m_bTorrentStarted )
 	{
 		if ( !IsPaused() && IsTrying() && !m_bTorrentRequested && tNow > m_tTorrentTracker )
 		{
 			// Initial announce to tracker
-			wSourcesWanted = WORD( GetBTSourceCount( TRUE ) );
+			nSourcesWanted = GetBTSourceCount( TRUE );
 			
 			// Expect a high failure rate
-			if ( wSourcesWanted < Settings.BitTorrent.DownloadConnections * 4 )
-				wSourcesWanted = Settings.BitTorrent.DownloadConnections * 4 - wSourcesWanted;
+			if ( nSourcesWanted < Settings.BitTorrent.DownloadConnections * 4 )
+				nSourcesWanted = Settings.BitTorrent.DownloadConnections * 4 - nSourcesWanted;
 			else
-				wSourcesWanted = 0;
-			CBTTrackerRequest::SendStarted( (CDownload*)this, wSourcesWanted );
+				nSourcesWanted = 0;
+			CBTTrackerRequest::SendStarted( (CDownload*)this, (WORD)nSourcesWanted );
 		}
 	}
 	else if ( tNow > m_tTorrentTracker )
@@ -254,43 +254,43 @@ BOOL CDownloadWithTorrent::RunTorrent(DWORD tNow)
 		// Regular tracker update
 		if ( IsSeeding() )
 		{
-			wSourcesWanted = WORD( Uploads.GetTorrentUploadCount() );
-			if ( wSourcesWanted < Settings.BitTorrent.UploadCount * 4 )
-				wSourcesWanted = Settings.BitTorrent.UploadCount * 4 - wSourcesWanted;
+			nSourcesWanted = Uploads.GetTorrentUploadCount();
+			if ( nSourcesWanted < Settings.BitTorrent.UploadCount * 4 )
+				nSourcesWanted = Settings.BitTorrent.UploadCount * 4 - nSourcesWanted;
 			else
-				wSourcesWanted = 0;
+				nSourcesWanted = 0;
 		}
 		else
 		{
-			wSourcesWanted = WORD( GetBTSourceCount() );
-			if ( wSourcesWanted < Settings.BitTorrent.DownloadConnections * 4 )
-				wSourcesWanted = Settings.BitTorrent.DownloadConnections * 4 - wSourcesWanted;
+			nSourcesWanted = GetBTSourceCount();
+			if ( nSourcesWanted < Settings.BitTorrent.DownloadConnections * 4 )
+				nSourcesWanted = Settings.BitTorrent.DownloadConnections * 4 - nSourcesWanted;
 			else
-				wSourcesWanted = 0;
+				nSourcesWanted = 0;
 		}
-		CBTTrackerRequest::SendUpdate( (CDownload*)this, wSourcesWanted );
+		CBTTrackerRequest::SendUpdate( (CDownload*)this, (WORD)nSourcesWanted );
 	}
 	else if ( tNow - m_tTorrentSources > Settings.BitTorrent.DefaultTrackerPeriod )
 	{
 		// Check for source starvation and send tracker update if required
 		if ( IsSeeding() )
 		{
-			wSourcesWanted = WORD( Uploads.GetTorrentUploadCount() );
-			if ( wSourcesWanted < Settings.BitTorrent.UploadCount )
-				wSourcesWanted = Settings.BitTorrent.UploadCount * 4 - wSourcesWanted;
+			nSourcesWanted = Uploads.GetTorrentUploadCount();
+			if ( nSourcesWanted < Settings.BitTorrent.UploadCount )
+				nSourcesWanted = Settings.BitTorrent.UploadCount * 4 - nSourcesWanted;
 			else
-				wSourcesWanted = 0;
+				nSourcesWanted = 0;
 		}
 		else
 		{
-			wSourcesWanted = WORD( GetBTSourceCount() );
-			if ( wSourcesWanted < Settings.BitTorrent.DownloadConnections )
-				wSourcesWanted = Settings.BitTorrent.DownloadConnections * 4 - wSourcesWanted;
+			nSourcesWanted = GetBTSourceCount();
+			if ( nSourcesWanted < Settings.BitTorrent.DownloadConnections )
+				nSourcesWanted = Settings.BitTorrent.DownloadConnections * 4 - nSourcesWanted;
 			else
-				wSourcesWanted = 0;
+				nSourcesWanted = 0;
 		}
-		if ( wSourcesWanted )
-			CBTTrackerRequest::SendUpdate( (CDownload*)this, wSourcesWanted );
+		if ( nSourcesWanted )
+			CBTTrackerRequest::SendUpdate( (CDownload*)this, (WORD)nSourcesWanted );
 		m_tTorrentSources = tNow;
 	}
 	return TRUE;
@@ -429,10 +429,10 @@ void CDownloadWithTorrent::OnTrackerEvent(BOOL bSuccess, LPCTSTR pszReason)
 
 DWORD CDownloadWithTorrent::GetRetryTime() const
 {
-	DWORD tRetryTime = pow( (float)m_pTorrent.GetTrackerFailures() / 3 + 1, 2 );
-	tRetryTime += int( m_pTorrent.GetTrackerFailures() / 3 + 1 );
-	tRetryTime *= 10000;
-	return tRetryTime > 60 * 60 * 1000 ? 60 * 60 * 1000 : tRetryTime;
+	// 0..2 - 20 sec, 3..5 - 60 sec, 6..8 - 2 min, ..., > 24 - 1 hour
+	DWORD tRetryTime = m_pTorrent.GetTrackerFailures() / 3 + 1;
+	tRetryTime = tRetryTime * ( tRetryTime + 1 ) * 10 * 1000;
+	return ( tRetryTime > 60 * 60 * 1000 ) ? ( 60 * 60 * 1000 ) : tRetryTime;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -726,7 +726,7 @@ BOOL CDownloadWithTorrent::SeedTorrent(LPCTSTR pszTarget)
 	m_sDiskName = pszTarget;
 	SetModified();
 	
-	CBTTrackerRequest::SendStarted( (CDownload*)this, Settings.BitTorrent.UploadCount * 4 );	
+	CBTTrackerRequest::SendStarted( (CDownload*)this, (WORD)( Settings.BitTorrent.UploadCount * 4 ) );	
 
 	return TRUE;
 }

@@ -1878,7 +1878,7 @@ void CSkin::DrawWrappedText(CDC* pDC, CRect* pBox, LPCTSTR pszText, CPoint ptSta
 
 	if ( !bNormalFlow ) 
 	{
-		if ( bIsRTLStart != Settings.General.LanguageRTL )
+		if ( ( bIsRTLStart != FALSE ) != Settings.General.LanguageRTL )
 			pDC->SetTextAlign( nAlignOptionsOld ^ TA_RTLREADING );
 		pszScan += nLenFull - 1;
 		pszWord += nLenFull;

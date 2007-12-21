@@ -68,7 +68,7 @@ public:
 		DWORD		m_tLastAccess;
 		DWORD		m_tLastSuccess;
 		DWORD		m_tNextTry;
-		INT			m_nFailures;
+		DWORD		m_nFailures;
 		INT			m_nTier;
 		INT			m_nType;
 	};
@@ -121,7 +121,7 @@ public:
 	void		SetTrackerSucceeded(DWORD tNow);
 	void		SetTrackerRetry(DWORD tNow);
 	void		SetTrackerNext(DWORD tNow = 0);
-	INT			GetTrackerFailures() const;
+	DWORD		GetTrackerFailures() const;
 protected:
 	BOOL		CheckFiles();
 

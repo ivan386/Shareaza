@@ -74,9 +74,9 @@ bool CDownloadWithTransfers::HasActiveTransfers() const
 	return false;
 }
 
-int CDownloadWithTransfers::GetTransferCount() const
+DWORD CDownloadWithTransfers::GetTransferCount() const
 {
-	int nCount = 0;
+	DWORD nCount = 0;
 
 	for ( CDownloadTransfer* pTransfer = m_pTransferFirst; pTransfer; pTransfer = pTransfer->m_pDlNext )
 	{
@@ -98,7 +98,7 @@ int CDownloadWithTransfers::GetTransferCount() const
 						   static_cast< CDownloadTransferED2K* >( pTransfer )->m_pClient->m_bConnected ) )
 
 
-int CDownloadWithTransfers::GetTransferCount(int nState, IN_ADDR* pAddress) const
+DWORD CDownloadWithTransfers::GetTransferCount(int nState, IN_ADDR* pAddress) const
 {
     int nCount = 0;
 
@@ -222,7 +222,7 @@ BOOL CDownloadWithTransfers::StartTransfersIfNeeded(DWORD tNow)
 		if ( ( GetTransferCount( dtsCountTorrentAndActive ) ) > Settings.BitTorrent.DownloadConnections ) return FALSE;	
 	}
 
-	int nTransfers = GetTransferCount( dtsDownloading );
+	DWORD nTransfers = GetTransferCount( dtsDownloading );
 
 	if ( nTransfers < Settings.Downloads.MaxFileTransfers &&
 		 ( ! Settings.Downloads.StaggardStart ||

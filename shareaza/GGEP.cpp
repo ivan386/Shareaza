@@ -37,13 +37,13 @@ static char THIS_FILE[]=__FILE__;
 //////////////////////////////////////////////////////////////////////
 // CGGEPBlock construction
 
-CGGEPBlock::CGGEPBlock()
+CGGEPBlock::CGGEPBlock() :
+	m_pFirst	( NULL ),
+	m_pLast		( NULL ),
+	m_pInput	( NULL ),
+	m_nInput	( 0 ),
+	m_nItemCount( 0 )
 {
-	m_pFirst = m_pLast = NULL;
-
-	m_pInput = NULL;
-	m_nInput = 0;
-	m_nItemCount = 0;
 }
 
 CGGEPBlock::~CGGEPBlock()
@@ -231,16 +231,15 @@ void CGGEPBlock::Write(CString& str)
 //////////////////////////////////////////////////////////////////////
 // CGGEPItem construction
 
-CGGEPItem::CGGEPItem(LPCTSTR pszID)
+CGGEPItem::CGGEPItem(LPCTSTR pszID) :
+	m_pNext		( NULL ),
+	m_sID		( pszID ? pszID : _T("") ),
+	m_pBuffer	( NULL ),
+	m_nLength	( 0 ),
+	m_nPosition	( 0 ),
+	m_bCOBS		( false ),
+	m_bSmall	( false )
 {
-	m_pNext		= NULL;
-	m_pBuffer	= NULL;
-	m_nLength	= 0;
-	m_nPosition	= 0;
-	m_bCOBS		= true;
-	m_bSmall	= false;
-
-	if ( pszID ) m_sID = pszID;
 }
 
 CGGEPItem::~CGGEPItem()

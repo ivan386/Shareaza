@@ -113,7 +113,7 @@ public:
 	virtual	void		ToBufferUDP(CBuffer* pBuffer) const;
 	static	CEDPacket*	ReadBuffer(CBuffer* pBuffer);
 public:
-	virtual LPCTSTR	GetType() const;
+	virtual CString GetType() const;
 	virtual void	Debug(LPCTSTR pszReason) const;
 
 // Utility

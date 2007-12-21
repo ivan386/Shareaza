@@ -240,9 +240,9 @@ int CMediaFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 void CMediaFrame::OnDestroy() 
 {
-	Settings.MediaPlayer.ListVisible	= m_bListVisible;
+	Settings.MediaPlayer.ListVisible	= m_bListVisible != FALSE;
 	Settings.MediaPlayer.ListSize		= m_nListSize;
-	Settings.MediaPlayer.StatusVisible	= m_bStatusVisible;
+	Settings.MediaPlayer.StatusVisible	= m_bStatusVisible != FALSE;
 	
 	KillTimer( 2 );
 	KillTimer( 1 );

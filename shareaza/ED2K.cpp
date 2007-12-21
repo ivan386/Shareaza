@@ -282,7 +282,7 @@ BOOL CED2K::FromBytes(BYTE* pOutput, DWORD nOutput, QWORD nSize)
         if ( nSize % ED2K_PART_SIZE == 0 && nSize ) 
 			m_bNullBlock = true;
 
-		DWORD nValidBlocks = ( nSize + ED2K_PART_SIZE - 1 ) / ED2K_PART_SIZE;
+		QWORD nValidBlocks = ( nSize + ED2K_PART_SIZE - 1 ) / ED2K_PART_SIZE;
 		if ( m_bNullBlock )
 			nValidBlocks++;
 

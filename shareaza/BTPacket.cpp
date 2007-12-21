@@ -117,9 +117,9 @@ CBTPacket* CBTPacket::ReadBuffer(CBuffer* pBuffer)
 //////////////////////////////////////////////////////////////////////
 // CBTPacket debugging
 
-LPCTSTR CBTPacket::GetType() const
+CString CBTPacket::GetType() const
 {
-	static TCHAR szTypeBuffer[16];
-	_stprintf( szTypeBuffer, _T("%i"), int( m_nType ) );
-	return szTypeBuffer;
+	CString tmp;
+	tmp.Format( _T("%i"), int( m_nType ) );
+	return tmp;
 }
