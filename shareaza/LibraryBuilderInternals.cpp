@@ -22,6 +22,9 @@
 #include "StdAfx.h"
 #include "Shareaza.h"
 #include "Settings.h"
+#include "Library.h"
+#include "LibraryMaps.h"
+#include "SharedFile.h"
 #include "LibraryFolders.h"
 #include "LibraryBuilder.h"
 #include "LibraryBuilderInternals.h"
@@ -32,7 +35,6 @@
 #include "XML.h"
 #include "ID3.h"
 #include "CollectionFile.h"
-#include <MsiDefs.h>
 #include "BTInfo.h"
 
 #ifdef _DEBUG
@@ -41,51 +43,10 @@ static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
 #endif
 
-
-//////////////////////////////////////////////////////////////////////
-// CLibraryBuilderInternals construction
-
-CLibraryBuilderInternals::CLibraryBuilderInternals()
-{
-}
-
-CLibraryBuilderInternals::~CLibraryBuilderInternals()
-{
-}
-
-//////////////////////////////////////////////////////////////////////
-// CLibraryBuilderInternals load settings
-
-void CLibraryBuilderInternals::LoadSettings()
-{
-	m_bEnableMP3	= theApp.GetProfileInt( _T("Library"), _T("ScanMP3"), TRUE );
-	m_bEnableEXE	= theApp.GetProfileInt( _T("Library"), _T("ScanEXE"), TRUE );
-
-	// Check if Windows installer library is present
-	HINSTANCE hMSI = LoadLibrary( _T("Msi.dll") );
-
-	if ( !hMSI )
-		m_bEnableMSI = FALSE;
-	else
-	{
-		m_bEnableMSI	= theApp.GetProfileInt( _T("Library"), _T("ScanMSI"), TRUE );
-		FreeLibrary( hMSI );
-	}
-
-	m_bEnableImage	= theApp.GetProfileInt( _T("Library"), _T("ScanImage"), TRUE );
-	m_bEnableASF	= theApp.GetProfileInt( _T("Library"), _T("ScanASF"), TRUE );
-	m_bEnableOGG	= theApp.GetProfileInt( _T("Library"), _T("ScanOGG"), TRUE );
-	m_bEnableAPE	= theApp.GetProfileInt( _T("Library"), _T("ScanAPE"), TRUE );
-	m_bEnableMPC	= theApp.GetProfileInt( _T("Library"), _T("ScanMPC"), TRUE );
-	m_bEnableAVI	= theApp.GetProfileInt( _T("Library"), _T("ScanAVI"), TRUE );
-	m_bEnablePDF	= theApp.GetProfileInt( _T("Library"), _T("ScanPDF"), TRUE );
-	m_bEnableCHM	= theApp.GetProfileInt( _T("Library"), _T("ScanCHM"), TRUE );
-}
-
 //////////////////////////////////////////////////////////////////////
 // CLibraryBuilderInternals extract metadata (threaded)
 
-BOOL CLibraryBuilderInternals::ExtractMetadata(DWORD nIndex, CString& strPath, HANDLE hFile, Hashes::Sha1Hash& oSHA1, Hashes::Md5Hash& oMD5)
+BOOL CLibraryBuilderInternals::ExtractMetadata(DWORD nIndex, const CString& strPath, HANDLE hFile)
 {
 	CString strType;
 
@@ -96,16 +57,16 @@ BOOL CLibraryBuilderInternals::ExtractMetadata(DWORD nIndex, CString& strPath, H
 
 	if ( strType == _T(".mp3") )
 	{
-		if ( ! m_bEnableMP3 ) return FALSE;
+		if ( ! Settings.Library.ScanMP3 ) return FALSE;
 		if ( Settings.Library.PreferAPETags )
 		{
-			if ( ReadAPE( nIndex, hFile, oMD5, true ) ) return TRUE;
+			if ( ReadAPE( nIndex, hFile, true ) ) return TRUE;
 			if ( ReadID3v2( nIndex, hFile ) ) return TRUE;
 		}
 		else
 		{
 			if ( ReadID3v2( nIndex, hFile ) ) return TRUE;
-			if ( ReadAPE( nIndex, hFile, oMD5, true ) ) return TRUE;
+			if ( ReadAPE( nIndex, hFile, true ) ) return TRUE;
 		}
 		if ( ReadID3v1( nIndex, hFile ) ) return TRUE;
 		if ( ReadMP3Frames( nIndex, hFile ) ) return TRUE;
@@ -113,86 +74,86 @@ BOOL CLibraryBuilderInternals::ExtractMetadata(DWORD nIndex, CString& strPath, H
 	}
 	else if ( strType == _T(".exe") || strType == _T(".dll") )
 	{
-		if ( ! m_bEnableEXE ) return FALSE;
+		if ( ! Settings.Library.ScanEXE ) return FALSE;
 		return ReadVersion( nIndex, strPath );
 	}
 	else if ( strType == _T(".msi") )
 	{
-		if ( ! m_bEnableMSI ) return FALSE;
+		if ( ! Settings.Library.ScanMSI ) return FALSE;
 		return ReadMSI( nIndex, strPath );
 	}
 	else if ( strType == _T(".asf") || strType == _T(".wma") || strType == _T(".wmv") )
 	{
-		if ( ! m_bEnableASF ) return FALSE;
+		if ( ! Settings.Library.ScanASF ) return FALSE;
 		return ReadASF( nIndex, hFile );
 	}
 	else if ( strType == _T(".avi") )
 	{
-		if ( ! m_bEnableAVI ) return FALSE;
+		if ( ! Settings.Library.ScanAVI ) return FALSE;
 		return ReadAVI( nIndex, hFile );
 	}
 	else if ( strType == _T(".mpg") || strType == _T(".mpeg") )
 	{
-		if ( ! m_bEnableASF ) return FALSE;
+		if ( ! Settings.Library.ScanMPEG ) return FALSE;
 		return ReadMPEG( nIndex, hFile );
 	}
 	else if ( strType == _T(".ogg") )
 	{
-		if ( ! m_bEnableOGG ) return FALSE;
+		if ( ! Settings.Library.ScanOGG ) return FALSE;
 		return ReadOGG( nIndex, hFile );
 	}
 	else if ( strType == _T(".ape") || strType == _T(".mac") || strType == _T(".apl") )
 	{
-		if ( ! m_bEnableAPE ) return FALSE;
-		return ReadAPE( nIndex, hFile, oMD5 );
+		if ( ! Settings.Library.ScanAPE ) return FALSE;
+		return ReadAPE( nIndex, hFile );
 	}
 	else if ( strType == _T(".mpc") || strType == _T(".mpp") || strType == _T(".mp+") )
 	{
-		if ( ! m_bEnableMPC ) return FALSE;
+		if ( ! Settings.Library.ScanMPC ) return FALSE;
 		if ( Settings.Library.PreferAPETags )
 		{
-			if ( ReadMPC( nIndex, hFile, oMD5 ) ) return TRUE;
+			if ( ReadMPC( nIndex, hFile ) ) return TRUE;
 			if ( ReadID3v2( nIndex, hFile ) ) return TRUE;
 		}
 		else
 		{
 			if ( ReadID3v2( nIndex, hFile ) ) return TRUE;
-			if ( ReadMPC( nIndex, hFile, oMD5 ) ) return TRUE;
+			if ( ReadMPC( nIndex, hFile ) ) return TRUE;
 		}
 		return ReadID3v1( nIndex, hFile );
 	}
 	else if ( strType == _T(".jpg") || strType == _T(".jpeg") )
 	{
-		if ( ! m_bEnableImage ) return FALSE;
+		if ( ! Settings.Library.ScanImage ) return FALSE;
 		return ReadJPEG( nIndex, hFile );
 	}
 	else if ( strType == _T(".gif") )
 	{
-		if ( ! m_bEnableImage ) return FALSE;
+		if ( ! Settings.Library.ScanImage ) return FALSE;
 		return ReadGIF( nIndex, hFile );
 	}
 	else if ( strType == _T(".png") )
 	{
-		if ( ! m_bEnableImage ) return FALSE;
+		if ( ! Settings.Library.ScanImage ) return FALSE;
 		return ReadPNG( nIndex, hFile );
 	}
 	else if ( strType == _T(".bmp") )
 	{
-		if ( ! m_bEnableImage ) return FALSE;
+		if ( ! Settings.Library.ScanImage ) return FALSE;
 		return ReadBMP( nIndex, hFile );
 	}
 	else if ( strType == _T(".pdf") )
 	{
-		if ( ! m_bEnablePDF ) return FALSE;
+		if ( ! Settings.Library.ScanPDF ) return FALSE;
 		return ReadPDF( nIndex, hFile, strPath );
 	}
 	else if ( strType == _T(".co") || strType == _T(".collection") )
 	{
-		return ReadCollection( nIndex, hFile, oSHA1 );
+		return ReadCollection( nIndex, hFile );
 	}
 	else if ( strType == _T(".chm") )
 	{
-		if ( ! m_bEnableCHM ) return FALSE;
+		if ( ! Settings.Library.ScanCHM ) return FALSE;
 		return ReadCHM( nIndex, hFile, strPath );
 	}
 	else if ( strType == _T(".torrent") )
@@ -829,8 +790,6 @@ BOOL CLibraryBuilderInternals::ScanMP3Frame(CXMLElement* pXML, HANDLE hFile, DWO
 
 	for ( DWORD nSeek = 0 ; bVariable || ( nFrameCount < 16 && nSeek < 4096 * 2  ) ; nSeek++ )
 	{
-		DWORD nTime = GetTickCount();
-
 		// "frame sync"
 		// First 11 bits must have bit 1 for MPEG 2.5 extension
 		// For other versions--first 12 bits
@@ -919,11 +878,6 @@ BOOL CLibraryBuilderInternals::ScanMP3Frame(CXMLElement* pXML, HANDLE hFile, DWO
 			ReadFile( hFile, &nHeader, 1, &nRead, NULL );
 			if ( nRead != 1 ) break;
 		}
-
-		m_nSleep = ( GetTickCount() - nTime ) * 3;
-		if ( m_nSleep > 0 ) Sleep( m_nSleep );
-		if ( ! LibraryBuilder.IsAlive() )
-			return FALSE;
 	}
 
 	if ( nFrameCount < 16 || ! nFrameSize ) return FALSE;
@@ -1926,12 +1880,8 @@ BOOL CLibraryBuilderInternals::ReadOGG(DWORD nIndex, HANDLE hFile)
 
 	for ( nComments = 2 ; ; nComments++ )
 	{
-		DWORD nTime = GetTickCount();
 		if ( ! ReadOGGPage( hFile, nOGG, 0xFF, nComments, 0xFFFFFFFF ) ) break;
 		nLength = max( nLength, nOGG );
-		m_nSleep = ( GetTickCount() - nTime ) * 3;
-		if ( m_nSleep > 0 ) Sleep( m_nSleep );
-		if ( ! LibraryBuilder.IsAlive() ) break;
 	}
 
 	if ( ! LibraryBuilder.IsAlive() )
@@ -2039,15 +1989,15 @@ BOOL CLibraryBuilderInternals::ReadOGGString(BYTE*& pOGG, DWORD& nOGG, CString& 
 	return TRUE;
 }
 
-BOOL CLibraryBuilderInternals::ReadMPC(DWORD nIndex, HANDLE hFile, Hashes::Md5Hash& oMD5)
+BOOL CLibraryBuilderInternals::ReadMPC(DWORD nIndex, HANDLE hFile)
 {
-	return ReadAPE( nIndex, hFile, oMD5, true );
+	return ReadAPE( nIndex, hFile, true );
 }
 
 //////////////////////////////////////////////////////////////////////
 // CLibraryBuilderInternals APE Monkey's Audio (threaded)
 
-BOOL CLibraryBuilderInternals::ReadAPE(DWORD nIndex, HANDLE hFile, Hashes::Md5Hash& /*oMD5*/, bool bPreferFooter)
+BOOL CLibraryBuilderInternals::ReadAPE(DWORD nIndex, HANDLE hFile, bool bPreferFooter)
 {
 	DWORD nFileSize = GetFileSize( hFile, NULL );
 	if ( nFileSize < sizeof(APE_TAG_FOOTER) ) return CLibraryBuilder::SubmitCorrupted( nIndex );
@@ -3356,10 +3306,19 @@ CString CLibraryBuilderInternals::ReadLineReverse(HANDLE hFile, LPCTSTR pszSepar
 //////////////////////////////////////////////////////////////////////
 // CLibraryBuilderInternals Collection (threaded)
 
-BOOL CLibraryBuilderInternals::ReadCollection(DWORD nIndex, HANDLE hFile, const Hashes::Sha1Hash& oSHA1)
+BOOL CLibraryBuilderInternals::ReadCollection(DWORD nIndex, HANDLE hFile)
 {
 	CCollectionFile pCollection;
 	if ( ! pCollection.Attach( hFile ) ) return FALSE;
+
+	Hashes::Sha1Hash oSHA1;
+	{
+		CQuickLock oLibraryLock( Library.m_pSection );
+		CLibraryFile* pFile = LibraryMaps.LookupFile( nIndex );
+		if ( ! pFile || ! pFile->m_oSHA1 )
+			return FALSE;
+		oSHA1 = pFile->m_oSHA1;
+	}
 
 	LibraryFolders.MountCollection( oSHA1, &pCollection );
 

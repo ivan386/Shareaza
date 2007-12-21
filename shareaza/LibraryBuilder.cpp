@@ -349,11 +349,6 @@ UINT CLibraryBuilder::ThreadStart(LPVOID pParam)
 
 void CLibraryBuilder::OnRun()
 {
-	CLibraryBuilderInternals Internals;
-	CLibraryBuilderPlugins Plugins;
-	
-	Internals.LoadSettings();
-
 	while ( IsAlive() )
 	{
 		Sleep( 100 );	// Max 10 files per second
@@ -375,16 +370,14 @@ void CLibraryBuilder::OnRun()
 			{
 				theApp.Message( MSG_DEBUG, _T("Hashing: %s"), (LPCTSTR)sPath );
 
-				Hashes::Sha1Hash oSHA1;
-				Hashes::Md5Hash oMD5;
 				// ToDo: We need MD5 hash of the audio file without tags...
-				if ( HashFile( sPath, hFile, oSHA1, oMD5, nIndex ) )
+				if ( HashFile( sPath, hFile, nIndex ) )
 				{
 					SetFilePointer( hFile, 0, NULL, FILE_BEGIN );
-					Internals.ExtractMetadata( nIndex, sPath, hFile, oSHA1, oMD5 );
+					CLibraryBuilderInternals::ExtractMetadata( nIndex, sPath, hFile );
 
 					SetFilePointer( hFile, 0, NULL, FILE_BEGIN );
-					Plugins.ExtractMetadata( nIndex, sPath, hFile );
+					CLibraryBuilderPlugins::ExtractMetadata( nIndex, sPath, hFile );
 
 					CSize Size( Settings.Library.ThumbSize, Settings.Library.ThumbSize );
 					CThumbCache::Cache( sPath, &Size, nIndex );
@@ -426,7 +419,7 @@ void CLibraryBuilder::OnRun()
 
 #define MAX_HASH_BUFFER_SIZE	1024ul*256ul	// 256 Kb
 
-BOOL CLibraryBuilder::HashFile(LPCTSTR szPath, HANDLE hFile, Hashes::Sha1Hash& oOutSHA1, Hashes::Md5Hash& oOutMD5, DWORD nIndex)
+BOOL CLibraryBuilder::HashFile(LPCTSTR szPath, HANDLE hFile, DWORD nIndex)
 {
 	DWORD nSizeHigh	= 0;
 	DWORD nSizeLow	= GetFileSize( hFile, &nSizeHigh );
@@ -538,9 +531,7 @@ BOOL CLibraryBuilder::HashFile(LPCTSTR szPath, HANDLE hFile, Hashes::Sha1Hash& o
 		pFile->m_nVirtualSize	= bVirtual ? nFileSize : 0;
 		
 		pSHA1.GetHash( pFile->m_oSHA1 );
-		oOutSHA1 = pFile->m_oSHA1;
 		pMD5.GetHash( pFile->m_oMD5 );
-		oOutMD5 = pFile->m_oMD5;
 		pTiger.GetRoot( pFile->m_oTiger );
 		pED2K.GetRoot( pFile->m_oED2K );
 		
@@ -704,4 +695,40 @@ BOOL CLibraryBuilder::DetectVirtualID3v2(HANDLE hFile, QWORD& nOffset, QWORD& nL
 	nLength -= nTagSize;
 
 	return TRUE;
+}
+
+BOOL CLibraryBuilder::RefreshMetadata(const CString& sPath)
+{
+	CWaitCursor wc;
+	DWORD nIndex;
+
+	{
+		CQuickLock oLibraryLock( Library.m_pSection );
+		CLibraryFile* pFile = LibraryMaps.LookupFileByPath( sPath );
+		if ( ! pFile )
+			return FALSE;
+		nIndex = pFile->m_nIndex;
+	}
+
+	BOOL bResult = FALSE;
+	HANDLE hFile = CreateFile( sPath, GENERIC_READ,
+		 FILE_SHARE_READ | ( theApp.m_bNT ? FILE_SHARE_DELETE : 0 ), NULL,
+		 OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL | FILE_FLAG_SEQUENTIAL_SCAN, NULL );
+	VERIFY_FILE_ACCESS( hFile, sPath )
+	if ( hFile != INVALID_HANDLE_VALUE )
+	{
+		theApp.Message( MSG_DEBUG, _T("Refreshing: %s"), (LPCTSTR)sPath );
+
+		SetFilePointer( hFile, 0, NULL, FILE_BEGIN );
+		bResult = CLibraryBuilderInternals::ExtractMetadata( nIndex, sPath, hFile ) ||
+			bResult;
+
+		SetFilePointer( hFile, 0, NULL, FILE_BEGIN );
+		bResult = CLibraryBuilderPlugins::ExtractMetadata( nIndex, sPath, hFile ) ||
+			bResult;
+
+		CloseHandle( hFile );
+	}
+
+	return bResult;
 }

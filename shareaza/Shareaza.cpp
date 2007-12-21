@@ -36,6 +36,7 @@
 #include "EDClients.h"
 #include "BTClients.h"
 #include "Library.h"
+#include "LibraryBuilderPlugins.h"
 #include "Transfers.h"
 #include "DownloadGroups.h"
 #include "Downloads.h"
@@ -509,6 +510,7 @@ int CShareazaApp::ExitInstance()
 		if ( dlgSplash )
 			dlgSplash->Hide();
 
+		CLibraryBuilderPlugins::Cleanup();
 		Plugins.Clear();
 	}
 

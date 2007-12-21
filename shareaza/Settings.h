@@ -122,6 +122,18 @@ public:
 		bool		UseFolderGUID;				// Save/Load folder GUID using NTFS stream
 		bool		MarkFileAsDownload;			// Mark downloaded file using NTFS stream as Internet Explorer
 		bool		UseCustomFolders;			// Use desktop.ini
+		bool		ScanAPE;					// Enable .ape,.mac,.apl metadata extraction by internals
+		bool		ScanASF;					// Enable .asf,.wma,.wmv metadata extraction by internals
+		bool		ScanAVI;					// Enable .avi metadata extraction by internals
+		bool		ScanCHM;					// Enable .chm metadata extraction by internals
+		bool		ScanEXE;					// Enable .exe,.dll metadata extraction by internals
+		bool		ScanImage;					// Enable .jpg,.jpeg,.gif,.png,.bmp metadata extraction by internals
+		bool		ScanMP3;					// Enable .mp3 metadata extraction by internals
+		bool		ScanMPC;					// Enable .mpc,.mpp,.mp+ metadata extraction by internals
+		bool		ScanMPEG;					// Enable .mpeg,.mpg metadata extraction by internals
+		bool		ScanMSI;					// Enable .msi metadata extraction by internals
+		bool		ScanOGG;					// Enable .ogg metadata extraction by internals
+		bool		ScanPDF;					// Enable .pdf metadata extraction by internals
 	} Library;
 
 	struct sSearch

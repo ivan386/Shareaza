@@ -19,81 +19,51 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_LIBRARYBUILDERINTERNALS_H__5CAE40BD_1963_4A30_A333_89DBB6899803__INCLUDED_)
-#define AFX_LIBRARYBUILDERINTERNALS_H__5CAE40BD_1963_4A30_A333_89DBB6899803__INCLUDED_
-
 #pragma once
 
-#define _MSI_NO_CRYPTO
-#include <MsiQuery.h>
-
-class CLibraryBuilder;
 
 class CLibraryBuilderInternals
 {
-// Construction
-public:
-	CLibraryBuilderInternals();
-	virtual ~CLibraryBuilderInternals();
-
-protected:
-	BOOL		m_bEnableMP3;
-	BOOL		m_bEnableEXE;
-	BOOL		m_bEnableMSI;
-	BOOL		m_bEnableImage;
-	BOOL		m_bEnableASF;
-	BOOL		m_bEnableOGG;
-	BOOL		m_bEnableAPE;
-	BOOL		m_bEnableMPC;
-	BOOL		m_bEnableAVI;
-	BOOL		m_bEnablePDF;
-	BOOL		m_bEnableCHM;
-protected:
-	DWORD		m_nSleep;
 public:
 	static LPCTSTR	pszID3Genre[];
 
-// Operations
 public:
-	void		LoadSettings();
-	BOOL		ExtractMetadata(DWORD nIndex, CString& strPath, HANDLE hFile, Hashes::Sha1Hash& oSHA1, Hashes::Md5Hash& oMD5);
+	static BOOL		ExtractMetadata(DWORD nIndex, const CString& strPath, HANDLE hFile);
 protected:		// ID3v1 and ID3v2 and MP3
-	BOOL		ReadID3v1(DWORD nIndex, HANDLE hFile, CXMLElement* pXML = NULL);
-	BOOL		CopyID3v1Field(CXMLElement* pXML, LPCTSTR pszAttribute, LPCSTR pszValue, int nLength);
-	BOOL		ReadID3v2(DWORD nIndex, HANDLE hFile);
-	BOOL		CopyID3v2Field(CXMLElement* pXML, LPCTSTR pszAttribute, BYTE* pBuffer, DWORD nLength, BOOL bSkipLanguage = FALSE);
-	BOOL		ReadMP3Frames(DWORD nIndex, HANDLE hFile);
-	BOOL		ScanMP3Frame(CXMLElement* pXML, HANDLE hFile, DWORD nIgnore);
+	static BOOL		ReadID3v1(DWORD nIndex, HANDLE hFile, CXMLElement* pXML = NULL);
+	static BOOL		CopyID3v1Field(CXMLElement* pXML, LPCTSTR pszAttribute, LPCSTR pszValue, int nLength);
+	static BOOL		ReadID3v2(DWORD nIndex, HANDLE hFile);
+	static BOOL		CopyID3v2Field(CXMLElement* pXML, LPCTSTR pszAttribute, BYTE* pBuffer, DWORD nLength, BOOL bSkipLanguage = FALSE);
+	static BOOL		ReadMP3Frames(DWORD nIndex, HANDLE hFile);
+	static BOOL		ScanMP3Frame(CXMLElement* pXML, HANDLE hFile, DWORD nIgnore);
 protected:		// Module Version
-	BOOL		ReadVersion(DWORD nIndex, LPCTSTR pszPath);
-	BOOL		CopyVersionField(CXMLElement* pXML, LPCTSTR pszAttribute, BYTE* pBuffer, LPCTSTR pszKey, DWORD nLangId, BOOL bCommaToDot = FALSE);
-	CString		GetVersionKey(BYTE* pBuffer, LPCTSTR pszKey, DWORD nLangId);
-	DWORD		GetBestLanguageId(LPVOID pBuffer);
-	BOOL		GetLanguageId(LPVOID pBuffer, UINT nSize, WORD nLangId, DWORD &nId, bool bOnlyPrimary = false);
+	static BOOL		ReadVersion(DWORD nIndex, LPCTSTR pszPath);
+	static BOOL		CopyVersionField(CXMLElement* pXML, LPCTSTR pszAttribute, BYTE* pBuffer, LPCTSTR pszKey, DWORD nLangId, BOOL bCommaToDot = FALSE);
+	static CString	GetVersionKey(BYTE* pBuffer, LPCTSTR pszKey, DWORD nLangId);
+	static DWORD	GetBestLanguageId(LPVOID pBuffer);
+	static BOOL		GetLanguageId(LPVOID pBuffer, UINT nSize, WORD nLangId, DWORD &nId, bool bOnlyPrimary = false);
 protected:		// Windows Installer
-	BOOL		ReadMSI(DWORD nIndex, LPCTSTR pszPath);
-	CString		GetSummaryField(MSIHANDLE hSummaryInfo, UINT nProperty);
+	static BOOL		ReadMSI(DWORD nIndex, LPCTSTR pszPath);
+	static CString	GetSummaryField(MSIHANDLE hSummaryInfo, UINT nProperty);
 protected:		// Image Files
-	BOOL		ReadJPEG(DWORD nIndex, HANDLE hFile);
-	BOOL		ReadGIF(DWORD nIndex, HANDLE hFile);
-	BOOL		ReadPNG(DWORD nIndex, HANDLE hFile);
-	BOOL		ReadBMP(DWORD nIndex, HANDLE hFile);
+	static BOOL		ReadJPEG(DWORD nIndex, HANDLE hFile);
+	static BOOL		ReadGIF(DWORD nIndex, HANDLE hFile);
+	static BOOL		ReadPNG(DWORD nIndex, HANDLE hFile);
+	static BOOL		ReadBMP(DWORD nIndex, HANDLE hFile);
 protected:		// General Media
-	BOOL		ReadASF(DWORD nIndex, HANDLE hFile);
-	BOOL		ReadAVI(DWORD nIndex, HANDLE hFile);
-	BOOL		ReadMPEG(DWORD nIndex, HANDLE hFile);
-	BOOL		ReadOGG(DWORD nIndex, HANDLE hFile);
-	BYTE*		ReadOGGPage(HANDLE hFile, DWORD& nBuffer, BYTE nFlags, DWORD nSequence, DWORD nMinSize = 0);
-	BOOL		ReadOGGString(BYTE*& pOGG, DWORD& nOGG, CString& str);
-	BOOL		ReadAPE(DWORD nIndex, HANDLE hFile, Hashes::Md5Hash& oMD5, bool bPreferFooter = false);
-	BOOL		ReadMPC(DWORD nIndex, HANDLE hFile, Hashes::Md5Hash& oMD5);
-	BOOL		ReadPDF(DWORD nIndex, HANDLE hFile, LPCTSTR pszPath);
-	CString		ReadLine(HANDLE hFile, LPCTSTR pszSeparators = NULL);
-	CString		ReadLineReverse(HANDLE hFile, LPCTSTR pszSeparators = NULL);
-    BOOL		ReadCollection(DWORD nIndex, HANDLE hFile, const Hashes::Sha1Hash& oSHA1);
-	BOOL		ReadCHM(DWORD nIndex, HANDLE hFile, LPCTSTR pszPath);
-	CString		DecodePDFText(CString& strInput);
-	BOOL		ReadTorrent(DWORD nIndex, HANDLE hFile, LPCTSTR pszPath);
+	static BOOL		ReadASF(DWORD nIndex, HANDLE hFile);
+	static BOOL		ReadAVI(DWORD nIndex, HANDLE hFile);
+	static BOOL		ReadMPEG(DWORD nIndex, HANDLE hFile);
+	static BOOL		ReadOGG(DWORD nIndex, HANDLE hFile);
+	static BYTE*	ReadOGGPage(HANDLE hFile, DWORD& nBuffer, BYTE nFlags, DWORD nSequence, DWORD nMinSize = 0);
+	static BOOL		ReadOGGString(BYTE*& pOGG, DWORD& nOGG, CString& str);
+	static BOOL		ReadAPE(DWORD nIndex, HANDLE hFile, bool bPreferFooter = false);
+	static BOOL		ReadMPC(DWORD nIndex, HANDLE hFile);
+	static BOOL		ReadPDF(DWORD nIndex, HANDLE hFile, LPCTSTR pszPath);
+	static CString	ReadLine(HANDLE hFile, LPCTSTR pszSeparators = NULL);
+	static CString	ReadLineReverse(HANDLE hFile, LPCTSTR pszSeparators = NULL);
+    static BOOL		ReadCollection(DWORD nIndex, HANDLE hFile);
+	static BOOL		ReadCHM(DWORD nIndex, HANDLE hFile, LPCTSTR pszPath);
+	static CString	DecodePDFText(CString& strInput);
+	static BOOL		ReadTorrent(DWORD nIndex, HANDLE hFile, LPCTSTR pszPath);
 };
-
-#endif // !defined(AFX_LIBRARYBUILDERINTERNALS_H__5CAE40BD_1963_4A30_A333_89DBB6899803__INCLUDED_)

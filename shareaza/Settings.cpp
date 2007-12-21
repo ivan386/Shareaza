@@ -120,6 +120,18 @@ CSettings::CSettings()
 	Add( _T("Library"), _T("PrivateTypes"), &Library.PrivateTypes, _T("|vbs|js|jc!|fb!|bc!|dbx|part|partial|pst|reget|getright|pif|lnk|sd|url|wab|m4p|infodb|racestats|chk|tmp|temp|ini|inf|log|old|manifest|met|bak|$$$|---|~~~|###|__incomplete___|") );
 	Add( _T("Library"), _T("QueryRouteSize"), &Library.QueryRouteSize, 20, 1, 8, 24 );
 	Add( _T("Library"), _T("SafeExecute"), &Library.SafeExecute, _T("|3gp|aac|ace|ape|avi|bmp|flv|gif|iso|jpg|jpeg|mid|mov|m1v|m2v|m3u|m4a|mkv|mp2|mp3|mp4|mpa|mpe|mpg|mpeg|ogg|ogm|pdf|png|qt|rar|rm|sks|tar|tgz|torrent|txt|wav|wma|wmv|zip|co|collection|lit|") );
+	Add( _T("Library"), _T("ScanAPE"), &Library.ScanAPE, true );
+	Add( _T("Library"), _T("ScanASF"), &Library.ScanASF, true );
+	Add( _T("Library"), _T("ScanAVI"), &Library.ScanAVI, true );
+	Add( _T("Library"), _T("ScanCHM"), &Library.ScanCHM, true );
+	Add( _T("Library"), _T("ScanEXE"), &Library.ScanEXE, true );
+	Add( _T("Library"), _T("ScanImage"), &Library.ScanImage, true );
+	Add( _T("Library"), _T("ScanMP3"), &Library.ScanMP3, true );
+	Add( _T("Library"), _T("ScanMPC"), &Library.ScanMPC, true );
+	Add( _T("Library"), _T("ScanMPEG"), &Library.ScanMPEG, true );
+	Add( _T("Library"), _T("ScanMSI"), &Library.ScanMSI, true );
+	Add( _T("Library"), _T("ScanOGG"), &Library.ScanOGG, true );
+	Add( _T("Library"), _T("ScanPDF"), &Library.ScanPDF, true );
 	Add( _T("Library"), _T("SchemaURI"), &Library.SchemaURI, CSchema::uriAudio );
 	Add( _T("Library"), _T("ShowCoverArt"), &Library.ShowCoverArt, true );
 	Add( _T("Library"), _T("ShowPanel"), &Library.ShowPanel, true );
@@ -488,6 +500,13 @@ void CSettings::Load()
 		Item* pItem = m_pItems.GetNext( pos );
 		pItem->Load();
 	}
+
+	// Check if Windows installer library is present
+	HINSTANCE hMSI = LoadLibrary( _T("Msi.dll") );
+	if ( ! hMSI )
+		Library.ScanMSI = false;
+	else
+		FreeLibrary( hMSI );
 
 	// Set default program and user paths
 	if ( General.Path.IsEmpty() || ! PathFileExists( General.Path ) )

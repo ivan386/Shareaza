@@ -117,6 +117,7 @@ const bool SHAREAZA_ADVANCED_MIN_TEMPLATE = true;
 
 #define VC_EXTRALEAN
 #define _ATL_NO_COM_SUPPORT
+#define _MSI_NO_CRYPTO
 
 //
 // MFC
@@ -158,6 +159,8 @@ const bool SHAREAZA_ADVANCED_MIN_TEMPLATE = true;
 #include <upnp.h>
 #include <natupnp.h>
 #include <iphlpapi.h>
+#include <MsiQuery.h>
+#include <MsiDefs.h>
 
 //
 // Standard headers

@@ -119,7 +119,8 @@ BOOL CImageServices::LoadFromFile(CImageFile* pFile, LPCTSTR szFilename, BOOL bS
 		pParams.cbSize = sizeof( pParams );
 		if ( bScanOnly ) pParams.nFlags |= IMAGESERVICE_SCANONLY;
 		if ( bPartialOk ) pParams.nFlags |= IMAGESERVICE_PARTIAL_IN;
-		if ( SUCCEEDED( pService->LoadFromFile( bstrFile, &pParams, &pArray ) ) )
+		HRESULT hr = pService->LoadFromFile( bstrFile, &pParams, &pArray );
+		if ( SUCCEEDED( hr ) )
 		{
 			bSuccess = PostLoad( pFile, &pParams, pArray );
 		}
@@ -131,7 +132,7 @@ BOOL CImageServices::LoadFromFile(CImageFile* pFile, LPCTSTR szFilename, BOOL bS
 		AfxSetResourceHandle( hRes );
 
 		// Second chance - load from memory
-		if ( ! bSuccess )
+		if ( ! bSuccess && ( hr == E_NOTIMPL ) )
 		{
 			HANDLE hFile = CreateFile( szFilename, GENERIC_READ,
 				FILE_SHARE_READ | ( theApp.m_bNT ? FILE_SHARE_DELETE : 0 ),
@@ -139,18 +140,23 @@ BOOL CImageServices::LoadFromFile(CImageFile* pFile, LPCTSTR szFilename, BOOL bS
 			VERIFY_FILE_ACCESS( hFile, szFilename )
 			if ( hFile != INVALID_HANDLE_VALUE )
 			{
-				HANDLE hMap = CreateFileMapping( hFile, NULL, PAGE_READONLY, 0, 0, NULL );
-				if ( hMap )
-				{		
-					LPCVOID pBuffer = MapViewOfFile( hMap, FILE_MAP_READ, 0, 0, 0 );
-					if ( pBuffer )
-					{
-						bSuccess = LoadFromMemory( pFile, szFilename, pBuffer,
-							GetFileSize( hFile, NULL ), bScanOnly, bPartialOk );
+				if ( GetFileSize( hFile, NULL ) < 10*1024*1024 )	// Max size 10 MB
+				{
+					HANDLE hMap = CreateFileMapping( hFile, NULL, PAGE_READONLY,
+						0, 0, NULL );
+					if ( hMap )
+					{		
+						LPCVOID pBuffer = MapViewOfFile( hMap, FILE_MAP_READ,
+							0, 0, 0 );
+						if ( pBuffer )
+						{
+							bSuccess = LoadFromMemory( pFile, szFilename, pBuffer,
+								GetFileSize( hFile, NULL ), bScanOnly, bPartialOk );
 
-						VERIFY( UnmapViewOfFile( pBuffer ) );
+							VERIFY( UnmapViewOfFile( pBuffer ) );
+						}
+						VERIFY( CloseHandle( hMap ) );
 					}
-					VERIFY( CloseHandle( hMap ) );
 				}
 				VERIFY( CloseHandle( hFile ) );
 			}
@@ -349,29 +355,22 @@ CImageServices::PluginInfo CImageServices::GetService(const CString& strFile)
 	CString strType( strFile.Mid( dotPos ) );
 	ToLower( strType );
 
+	// Check cached one
 	{
 		const_iterator pService = m_services.find( strType );
 		if ( pService != m_services.end() )
 			return pService->second;
 	}
 
-	PluginInfo service = LoadService( strType );
-	m_services.insert( services_map::value_type( strType, service ) );
-
-	return service;
-}
-
-CImageServices::PluginInfo CImageServices::LoadService(const CString& strType)
-{
 	CLSID oCLSID;
 
-	if ( !Plugins.LookupCLSID( L"ImageService", strType, oCLSID ) )
+	if ( ! Plugins.LookupCLSID( L"ImageService", strType, oCLSID ) )
 		return PluginInfo();
 
 	HINSTANCE hRes = AfxGetResourceHandle();
 	AfxSetResourceHandle( hRes );
 
-	CComPtr< IImageServicePlugin > pService;
+	CComQIPtr< IImageServicePlugin > pService;
 	if ( FAILED( CoCreateInstance( oCLSID, NULL, CLSCTX_ALL,
 		IID_IImageServicePlugin, (void**)&pService ) ) )
 	{
@@ -382,17 +381,19 @@ CImageServices::PluginInfo CImageServices::LoadService(const CString& strType)
 	// Not a very nice solution but without checking all plugins
 	// Shareaza holds only 1 plugin in the Plugins collection... 
 
-    CPlugin* pPlugin = NULL;
-	if ( ( pPlugin = Plugins.Find( oCLSID ) ) == NULL ) 
+    CPlugin* pPlugin = Plugins.Find( oCLSID );
+	if ( ! pPlugin ) 
 	{
 		// Put an empty name, so it won't be displayed in the Settings
 		pPlugin = new CPlugin( oCLSID, L"" );
 		Plugins.m_pList.AddTail( pPlugin );
 	}
 
-	return PluginInfo(
-			CComQIPtr< IImageServicePlugin >( static_cast< IImageServicePlugin* >( pService ) ),
-			oCLSID );
+	PluginInfo service( pService, oCLSID );
+
+	m_services.insert( services_map::value_type( strType, service ) );
+
+	return service;
 }
 
 /////////////////////////////////////////////////////////////////////////////

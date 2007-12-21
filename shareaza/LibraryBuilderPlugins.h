@@ -19,30 +19,20 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_LIBRARYBUILDERPLUGINS_H__9D5B1BBA_DED4_42C9_89FE_FC3244779663__INCLUDED_)
-#define AFX_LIBRARYBUILDERPLUGINS_H__9D5B1BBA_DED4_42C9_89FE_FC3244779663__INCLUDED_
-
 #pragma once
-
-class CLibraryBuilder;
-interface ILibraryBuilderPlugin;
 
 
 class CLibraryBuilderPlugins
 {
 public:
-	CLibraryBuilderPlugins();
-	virtual ~CLibraryBuilderPlugins();
-
-public:
-	CMap< CString, const CString&, ILibraryBuilderPlugin*, ILibraryBuilderPlugin* > m_pMap;
-
-public:
-	BOOL	ExtractMetadata(DWORD nIndex, CString& strPath, HANDLE hFile);
-	void	Cleanup();
+	static BOOL	ExtractMetadata(DWORD nIndex, const CString& strPath, HANDLE hFile);
+	static void	Cleanup();
 
 protected:
-	ILibraryBuilderPlugin*	LoadPlugin(LPCTSTR pszType);
-};
+	typedef CMap< CString, const CString&, ILibraryBuilderPlugin*, ILibraryBuilderPlugin* > CPluginMap;
 
-#endif // !defined(AFX_LIBRARYBUILDERPLUGINS_H__9D5B1BBA_DED4_42C9_89FE_FC3244779663__INCLUDED_)
+	static CCriticalSection	m_pSection;
+	static CPluginMap		m_pMap;
+
+	static ILibraryBuilderPlugin* LoadPlugin(LPCTSTR pszType);
+};
