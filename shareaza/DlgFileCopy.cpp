@@ -409,7 +409,7 @@ BOOL CFileCopyDlg::CheckTarget(LPCTSTR pszTarget)
 
 	if ( DeleteFile( pszTarget ) ) return TRUE;
 
-	CString strError = theApp.GetErrorString();
+	CString strError = GetErrorString();
 
 	LoadString( strFormat, IDS_LIBRARY_DELETE_FAIL );
 	strMessage.Format( strFormat, pszTarget );

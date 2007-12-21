@@ -1084,25 +1084,52 @@ void CShareazaApp::LogMessage(LPCTSTR pszLog) const
 	pFile.Close();
 }
 
-/////////////////////////////////////////////////////////////////////////////
-// CShareazaApp get error string
-
-CString CShareazaApp::GetErrorString() const
+CString GetErrorString(DWORD dwError)
 {
-	LPTSTR pszMessage = NULL;
+	LPTSTR MessageBuffer = NULL;
 	CString strMessage;
-	
-	FormatMessage( FORMAT_MESSAGE_FROM_SYSTEM|FORMAT_MESSAGE_ALLOCATE_BUFFER,
-		NULL, GetLastError(), MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
-		(LPTSTR)&pszMessage, 0, NULL );
-	
-	if ( pszMessage != NULL )
+	if ( FormatMessage (
+		FORMAT_MESSAGE_ALLOCATE_BUFFER |
+		FORMAT_MESSAGE_IGNORE_INSERTS |
+		FORMAT_MESSAGE_FROM_SYSTEM,
+		NULL, dwError, 0, (LPTSTR)&MessageBuffer, 0, NULL ) )
 	{
-		strMessage = pszMessage;
-		LocalFree( pszMessage );
+		strMessage = MessageBuffer;
+		strMessage.Trim( _T(" \t\r\n") );
+		LocalFree( MessageBuffer );
+		return strMessage;
 	}
-	
-	return strMessage;
+
+	static LPCTSTR const szModules [] =
+	{
+		_T("netapi32.dll"),
+		_T("netmsg.dll"),
+		_T("wininet.dll"),
+		_T("ntdll.dll"),
+		_T("ntdsbmsg.dll"),
+		NULL
+	};
+	for ( int i = 0; szModules[ i ]; i++ )
+	{
+		HMODULE hModule = LoadLibraryEx( szModules[ i ], NULL, LOAD_LIBRARY_AS_DATAFILE );
+		if ( hModule )
+		{
+			DWORD bResult = FormatMessage(
+				FORMAT_MESSAGE_ALLOCATE_BUFFER |
+				FORMAT_MESSAGE_IGNORE_INSERTS |
+				FORMAT_MESSAGE_FROM_HMODULE,
+				hModule, dwError, 0, (LPTSTR)&MessageBuffer, 0, NULL );
+			FreeLibrary( hModule );
+			if ( bResult )
+			{
+				strMessage = MessageBuffer;
+				strMessage.Trim( _T(" \t\r\n") );
+				LocalFree( MessageBuffer );
+				return strMessage;
+			}
+		}
+	}	
+	return CString();
 }
 
 CString CShareazaApp::GetCountryCode(IN_ADDR pAddress) const

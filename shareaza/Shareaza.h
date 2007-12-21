@@ -133,7 +133,6 @@ public:
 	CMainWnd*			SafeMainWnd() const;
 	void				Message(int nType, UINT nID, ...) const;
 	void				Message(int nType, CString strFormat, ...) const;
-	CString				GetErrorString() const;
 	BOOL				InternalURI(LPCTSTR pszURI);
 	void				PrintMessage(int nType, CString& strLog) const;
 	void				LogMessage(LPCTSTR strLog) const;
@@ -243,6 +242,9 @@ bool SaveGUID(const CString& sFilename, const Hashes::Guid& oGUID);
 
 // Resolve shell shortcut (.lnk file)
 CString ResolveShortcut(LPCTSTR lpszFileName);
+
+// Get Win32 API error description
+CString GetErrorString(DWORD dwError = GetLastError());
 
 typedef enum
 {

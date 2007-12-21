@@ -500,12 +500,13 @@ extern const CLowerCaseTable ToLower;
 #ifdef _DEBUG
 	#define VERIFY_FILE_ACCESS(h,f) \
 	{ \
-		DWORD err = GetLastError(); \
-		if ( ( h ) == INVALID_HANDLE_VALUE && ( err == ERROR_ACCESS_DENIED || \
-			err == ERROR_SHARING_VIOLATION || err == ERROR_LOCK_VIOLATION ) ) \
+		if ( ( h ) == INVALID_HANDLE_VALUE ) \
 		{ \
-			theApp.Message( MSG_DEBUG, _T("Denied access to file \"%s\"..."), LPCTSTR( ( f ) ) ); \
-			TRACE( _T("Denied access to file \"%ls\"...\n"), LPCTSTR( ( f ) ) ); \
+			DWORD err = GetLastError(); \
+			theApp.Message( MSG_DEBUG, _T("File error \"%s\": %s (0x%08x)"), \
+				LPCTSTR((f)), LPCTSTR( GetErrorString( err ) ), err ); \
+			TRACE( _T("File error \"%ls\": %s (0x%08x)\n"), \
+				LPCTSTR((f)), LPCTSTR( GetErrorString( err ) ), err ); \
 		} \
 	}
 #else

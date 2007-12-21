@@ -780,7 +780,7 @@ void CLibraryDetailView::OnEndLabelEditW(NMHDR* pNotify, LRESULT* pResult)
 			
 			if ( *pResult == FALSE )
 			{
-				CString strFormat, strMessage, strError = theApp.GetErrorString();
+				CString strFormat, strMessage, strError = GetErrorString();
 				LoadString( strFormat, IDS_LIBRARY_RENAME_FAIL );
 				strMessage.Format( strFormat, (LPCTSTR)pFile->m_sName, (LPCTSTR)strName );
 				strMessage += _T("\r\n\r\n") + strError;
@@ -811,7 +811,7 @@ void CLibraryDetailView::OnEndLabelEditA(NMHDR* pNotify, LRESULT* pResult)
 			
 			if ( *pResult == FALSE )
 			{
-				CString strFormat, strMessage, strError = theApp.GetErrorString();
+				CString strFormat, strMessage, strError = GetErrorString();
 				LoadString( strFormat, IDS_LIBRARY_RENAME_FAIL );
 				strMessage.Format( strFormat, (LPCTSTR)pFile->m_sName, (LPCTSTR)strName );
 				strMessage += _T("\r\n\r\n") + strError;
