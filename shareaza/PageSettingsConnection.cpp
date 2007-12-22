@@ -291,12 +291,12 @@ void CConnectionSettingsPage::OnOK()
 	}
 
 	Settings.Connection.RandomPort			= ( m_bInRandom && m_nInPort == 0 );
-	Settings.Connection.EnableUPnP			= m_bEnableUPnP;
-	Settings.Connection.InBind				= m_bInBind;
+	Settings.Connection.EnableUPnP			= m_bEnableUPnP != FALSE;
+	Settings.Connection.InBind				= m_bInBind != FALSE;
 	Settings.Connection.OutHost				= m_sOutHost;
 	Settings.Connection.InSpeed				= Settings.ParseVolume( m_sInSpeed, Kilobits );
 	Settings.Connection.OutSpeed			= Settings.ParseVolume( m_sOutSpeed, Kilobits );
-	Settings.Connection.IgnoreLocalIP		= m_bIgnoreLocalIP;
+	Settings.Connection.IgnoreLocalIP		= m_bIgnoreLocalIP != FALSE;
 	Settings.Connection.TimeoutConnect		= m_nTimeoutConnection * 1000;
 	Settings.Connection.TimeoutHandshake	= m_nTimeoutHandshake  * 1000;
 

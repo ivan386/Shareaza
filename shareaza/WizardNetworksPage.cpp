@@ -99,12 +99,12 @@ LRESULT CWizardNetworksPage::OnWizardNext()
 {
 	UpdateData();
 
-	Settings.Gnutella2.EnableAlways	= m_bG2Enable;
-	Settings.Gnutella2.EnableToday	= m_bG2Enable;
-	Settings.Gnutella1.EnableAlways	= m_bG1Enable;
-	Settings.Gnutella1.EnableToday	= m_bG1Enable;
-	Settings.eDonkey.EnableAlways	= m_bEDEnable;
-	Settings.eDonkey.EnableToday	= m_bEDEnable;
+	Settings.Gnutella2.EnableAlways	= m_bG2Enable != FALSE;
+	Settings.Gnutella2.EnableToday	= m_bG2Enable != FALSE;
+	Settings.Gnutella1.EnableAlways	= m_bG1Enable != FALSE;
+	Settings.Gnutella1.EnableToday	= m_bG1Enable != FALSE;
+	Settings.eDonkey.EnableAlways	= m_bEDEnable != FALSE;
+	Settings.eDonkey.EnableToday	= m_bEDEnable != FALSE;
 
 	DoDonkeyImport();
 

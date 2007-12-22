@@ -305,7 +305,7 @@ void CDownloadsSettingsPage::OnOK()
 	Settings.Downloads.MaxFileTransfers		= m_nMaxFileTransfers;
 	Settings.Downloads.QueueLimit			= nQueueLimit;
 	Settings.Bandwidth.Downloads			= static_cast< DWORD >( Settings.ParseVolume( m_sBandwidthLimit ) );
-	Settings.Connection.RequireForTransfers	= m_bRequireConnect;
+	Settings.Connection.RequireForTransfers	= m_bRequireConnect != FALSE;
 	
 	CreateDirectory( m_sDownloadsPath );
 	CreateDirectory( m_sIncompletePath );

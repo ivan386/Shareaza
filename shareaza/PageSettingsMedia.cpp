@@ -188,8 +188,8 @@ void CMediaSettingsPage::OnOK()
 {
 	UpdateData();
 
-	Settings.MediaPlayer.EnablePlay		= m_bEnablePlay;
-	Settings.MediaPlayer.EnableEnqueue	= m_bEnableEnqueue;
+	Settings.MediaPlayer.EnablePlay		= m_bEnablePlay != FALSE;
+	Settings.MediaPlayer.EnableEnqueue	= m_bEnableEnqueue != FALSE;
 	Settings.MediaPlayer.ServicePath	= m_sServicePath;
 
 	CString strRegData;

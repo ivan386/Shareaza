@@ -253,7 +253,7 @@ void CDownloadTransfer::SetState(int nState)
 				m_pSource->m_nSortOrder <<=  16;								//Then protocol
 
 				if ( nState == dtsQueued )										//Then queue postion
-					m_pSource->m_nSortOrder += ( min( m_nQueuePos, 10000u ) & 0xFFFF );
+					m_pSource->m_nSortOrder += min( m_nQueuePos, 10000lu ) & 0xFFFFlu;
 				else															// or IP
 					m_pSource->m_nSortOrder += ( ( m_pSource->m_pAddress.S_un.S_un_b.s_b1 << 8 ) |
 												 ( m_pSource->m_pAddress.S_un.S_un_b.s_b2      ) );

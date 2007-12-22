@@ -117,7 +117,7 @@ void CRemoteSettingsPage::OnBnClickedRemoteEnable()
 {
 	UpdateData();
 
-	Settings.Remote.Enable		= m_bEnable;
+	Settings.Remote.Enable		= m_bEnable != FALSE;
 	Settings.Remote.Username	= m_sUsername;
 
 	m_wndUsername.EnableWindow( m_bEnable );
@@ -210,7 +210,7 @@ void CRemoteSettingsPage::OnLButtonUp(UINT nFlags, CPoint point)
 
 void CRemoteSettingsPage::OnCancel()
 {
-	Settings.Remote.Enable		= m_bOldEnable;
+	Settings.Remote.Enable		= m_bOldEnable != FALSE;
 	Settings.Remote.Username	= m_sOldUsername;
 	Settings.Remote.Password	= m_sOldPassword;
 

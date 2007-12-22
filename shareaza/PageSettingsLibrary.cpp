@@ -231,11 +231,11 @@ void CLibrarySettingsPage::OnOK()
 {
 	UpdateData();
 
-	Settings.Library.StoreViews		= m_bStoreViews;
-	Settings.Library.WatchFolders	= m_bWatchFolders;
-	Settings.Community.ServeFiles	= m_bBrowseFiles;
-	Settings.Library.HighPriorityHash=m_bHighPriorityHash;
-	Settings.Library.CreateGhosts	= m_bMakeGhosts;
+	Settings.Library.StoreViews		= m_bStoreViews != FALSE;
+	Settings.Library.WatchFolders	= m_bWatchFolders != FALSE;
+	Settings.Community.ServeFiles	= m_bBrowseFiles != FALSE;
+	Settings.Library.HighPriorityHash=m_bHighPriorityHash != FALSE;
+	Settings.Library.CreateGhosts	= m_bMakeGhosts != FALSE;
 
 	Settings.Library.HistoryTotal	= m_nRecentTotal;
 	Settings.Library.HistoryDays	= m_nRecentDays;

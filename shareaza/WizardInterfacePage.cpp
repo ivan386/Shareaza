@@ -126,11 +126,11 @@ LRESULT CWizardInterfacePage::OnWizardNext()
 {
 	UpdateData( TRUE );
 
-	Settings.Downloads.SimpleBar = m_bSimpleDownloadBars;
+	Settings.Downloads.SimpleBar = m_bSimpleDownloadBars != FALSE;
 
-	if ( Settings.Web.Torrent != m_bHandleTorrents )
+	if ( Settings.Web.Torrent != ( m_bHandleTorrents != FALSE ) )
 	{
-		Settings.Web.Torrent = m_bHandleTorrents;
+		Settings.Web.Torrent = m_bHandleTorrents != FALSE;
 		CShareazaURL::Register();
 	}
 

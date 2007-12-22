@@ -151,7 +151,7 @@ void CIdentityProfilePage::OnOK()
 {
 	UpdateData();
 
-	Settings.Community.ServeProfile = m_bBrowseUser;
+	Settings.Community.ServeProfile = m_bBrowseUser != FALSE;
 
 	if ( CXMLElement* pIdentity = MyProfile.GetXML( _T("identity"), TRUE ) )
 	{

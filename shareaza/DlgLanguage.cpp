@@ -703,7 +703,7 @@ void CLanguageDlg::Execute(int nSelected)
 	// required to have schemas reloaded after restart
 	Settings.General.Language = strLangCode;
 
-	if ( Settings.General.LanguageRTL == bRTL ) 
+	if ( Settings.General.LanguageRTL == ( bRTL != FALSE ) ) 
 	{
 		EndDialog( IDOK );
 	}
@@ -712,7 +712,7 @@ void CLanguageDlg::Execute(int nSelected)
 		CString str;
 		LoadString( str, IDS_GENERAL_RTL_WARNING );
 
-		Settings.General.LanguageRTL = bRTL;
+		Settings.General.LanguageRTL = bRTL != FALSE;
 
 		if ( AfxMessageBox( str, MB_SYSTEMMODAL|MB_ICONQUESTION|MB_YESNO ) == IDYES )
 		{

@@ -160,9 +160,9 @@ void CDonkeySettingsPage::OnOK()
 	Settings.eDonkey.EnableAlways	= m_bEnableAlways && ( Settings.GetOutgoingBandwidth() >= 2 );
 	Settings.eDonkey.EnableToday	= m_bEnableToday && ( Settings.GetOutgoingBandwidth() >= 2 );
 	Settings.eDonkey.MaxLinks		= m_nLinks;
-	Settings.eDonkey.ServerWalk		= m_bServerWalk;
+	Settings.eDonkey.ServerWalk		= m_bServerWalk != FALSE;
 	Settings.eDonkey.MaxResults		= m_nResults;
-	Settings.eDonkey.LearnNewServers = m_bLearnServers;
+	Settings.eDonkey.LearnNewServers = m_bLearnServers != FALSE;
 
 	CSettingsPage::OnOK();
 }

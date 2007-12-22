@@ -256,12 +256,12 @@ void CGnutellaSettingsPage::OnOK()
 	m_nG2Peers	= min( m_nG2Peers, 64 );
 	
 	//Load values into the settings variables
-	Settings.Gnutella2.EnableToday		= m_bG2Today;
-	Settings.Gnutella1.EnableToday		= m_bG1Today;
-	Settings.Gnutella1.EnableAlways		= m_bG1Always;
-	Settings.Gnutella.DeflateHub2Hub	= m_bDeflateHub2Hub;
-	Settings.Gnutella.DeflateLeaf2Hub	= m_bDeflateLeaf2Hub;
-	Settings.Gnutella.DeflateHub2Leaf	= m_bDeflateHub2Leaf;
+	Settings.Gnutella2.EnableToday		= m_bG2Today != FALSE;
+	Settings.Gnutella1.EnableToday		= m_bG1Today != FALSE;
+	Settings.Gnutella1.EnableAlways		= m_bG1Always != FALSE;
+	Settings.Gnutella.DeflateHub2Hub	= m_bDeflateHub2Hub != FALSE;
+	Settings.Gnutella.DeflateLeaf2Hub	= m_bDeflateLeaf2Hub != FALSE;
+	Settings.Gnutella.DeflateHub2Leaf	= m_bDeflateHub2Leaf != FALSE;
 	Settings.Gnutella1.NumHubs			= m_nG1Hubs;
 	Settings.Gnutella1.NumLeafs			= m_nG1Leafs;
 	Settings.Gnutella1.NumPeers			= m_nG1Peers;

@@ -311,7 +311,7 @@ void CMediaVisDlg::OnOK()
 
 	if ( Settings.MediaPlayer.VisCLSID != strCLSID ||
 		 Settings.MediaPlayer.VisPath != strPath ||
-		 Settings.MediaPlayer.VisSize != m_nSize - 1 )
+		 Settings.MediaPlayer.VisSize != (DWORD)( m_nSize - 1 ) )
 	{
 		Settings.MediaPlayer.VisCLSID	= strCLSID;
 		Settings.MediaPlayer.VisPath	= strPath;

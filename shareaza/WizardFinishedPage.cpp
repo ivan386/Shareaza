@@ -109,7 +109,7 @@ BOOL CWizardFinishedPage::OnWizardFinish()
 {
 	UpdateData();
 
-	Settings.Connection.AutoConnect = m_bAutoConnect;
+	Settings.Connection.AutoConnect = m_bAutoConnect != FALSE;
 
 	if ( Settings.eDonkey.EnableToday )
 	{

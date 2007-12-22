@@ -288,9 +288,9 @@ void CSchedulerSettingsPage::OnOK()
 {
 	UpdateData();
 
-	Settings.Scheduler.Enable			= m_bSchedulerEnable;
+	Settings.Scheduler.Enable			= m_bSchedulerEnable != FALSE;
 	Settings.Scheduler.LimitedBandwidth = m_nLimited;
-	Settings.Scheduler.LimitedNetworks	= m_bLimitedNetworks;
+	Settings.Scheduler.LimitedNetworks	= m_bLimitedNetworks != FALSE;
 
 	CopyMemory( Schedule.m_pSchedule , m_pSchedule, sizeof( Schedule.m_pSchedule ) );
 	Schedule.Save();

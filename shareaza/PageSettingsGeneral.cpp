@@ -179,18 +179,18 @@ void CGeneralSettingsPage::OnOK()
 	}
 	
 	Settings.SetStartup( m_bStartup );
-	Settings.Connection.AutoConnect		= m_bAutoConnect;
+	Settings.Connection.AutoConnect		= m_bAutoConnect != FALSE;
 	Settings.General.CloseMode			= m_nCloseMode;
-	Settings.General.TrayMinimise		= m_bTrayMinimise;
-	Settings.Search.ExpandMatches		= m_bExpandMatches;
-	Settings.Search.SwitchToTransfers	= m_bSwitchToTransfers;
-	Settings.Downloads.AutoExpand		= m_bExpandDownloads;
-	Settings.Downloads.SimpleBar		= m_bSimpleBar;
+	Settings.General.TrayMinimise		= m_bTrayMinimise != FALSE;
+	Settings.Search.ExpandMatches		= m_bExpandMatches != FALSE;
+	Settings.Search.SwitchToTransfers	= m_bSwitchToTransfers != FALSE;
+	Settings.Downloads.AutoExpand		= m_bExpandDownloads != FALSE;
+	Settings.Downloads.SimpleBar		= m_bSimpleBar != FALSE;
 	Settings.General.AlwaysOpenURLs		= ! m_bPromptURLs;
-	Settings.Search.HideSearchPanel		= m_bHideSearch;
-	Settings.Search.AdultFilter			= m_bAdultFilter;
+	Settings.Search.HideSearchPanel		= m_bHideSearch != FALSE;
+	Settings.Search.AdultFilter			= m_bAdultFilter != FALSE;
 	
-	Settings.General.RatesInBytes		= m_bRatesInBytes % 2;
+	Settings.General.RatesInBytes		= m_bRatesInBytes % 2 == 1;
 	Settings.General.RatesUnit			= m_bRatesInBytes / 2;
 	
 	Settings.Interface.TipSearch		= m_wndTips.GetItemState( 0, LVIS_STATEIMAGEMASK ) == ( 2 << 12 );

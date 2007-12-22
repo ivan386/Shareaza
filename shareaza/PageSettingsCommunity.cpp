@@ -95,10 +95,10 @@ void CCommunitySettingsPage::OnOK()
 {
 	UpdateData();
 
-	Settings.Community.ChatEnable		= m_bChatEnable;
-	Settings.Community.ChatAllNetworks	= m_bChatAllNetworks;
-	Settings.Community.ChatFilter		= m_bChatFilter;
-	Settings.Community.ChatCensor		= m_bChatCensor;
+	Settings.Community.ChatEnable		= m_bChatEnable != FALSE;
+	Settings.Community.ChatAllNetworks	= m_bChatAllNetworks != FALSE;
+	Settings.Community.ChatFilter		= m_bChatFilter != FALSE;
+	Settings.Community.ChatCensor		= m_bChatCensor != FALSE;
 
 	CSettingsPage::OnOK();
 }

@@ -198,15 +198,15 @@ void CBitTorrentSettingsPage::OnOK()
 
 	UpdateData( FALSE );
 
-	if ( Settings.BitTorrent.AdvancedInterface != m_bTorrentInterface ) bRedraw = TRUE;
+	if ( Settings.BitTorrent.AdvancedInterface != ( m_bTorrentInterface != FALSE ) ) bRedraw = TRUE;
 
-	Settings.BitTorrent.AdvancedInterface	= m_bTorrentInterface;
-	Settings.BitTorrent.Endgame				= m_bEndGame;
+	Settings.BitTorrent.AdvancedInterface	= m_bTorrentInterface != FALSE;
+	Settings.BitTorrent.Endgame				= m_bEndGame != FALSE;
 	Settings.BitTorrent.DownloadConnections	= m_nLinks;
 	Settings.BitTorrent.DownloadTorrents	= m_nDownloads;
-	Settings.BitTorrent.AutoClear			= m_bAutoClear;
+	Settings.BitTorrent.AutoClear			= m_bAutoClear != FALSE;
 	Settings.BitTorrent.ClearRatio			= m_nClearPercentage;
-	Settings.BitTorrent.PreferenceBTSources	= m_bPrefBTSources;
+	Settings.BitTorrent.PreferenceBTSources	= m_bPrefBTSources != FALSE;
 	Settings.BitTorrent.DefaultTracker		= m_sTracker;
 	Settings.Downloads.TorrentPath			= m_sTorrentPath;
 	Settings.BitTorrent.TorrentCreatorPath	= m_sMakerPath;

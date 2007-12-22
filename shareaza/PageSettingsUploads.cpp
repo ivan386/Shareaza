@@ -366,11 +366,11 @@ void CUploadsSettingsPage::OnOK()
 	DWORD nOldLimit = Settings.Bandwidth.Uploads;
 
 	Settings.Uploads.MaxPerHost			= m_nMaxPerHost;
-	Settings.Uploads.SharePartials		= m_bSharePartials;
-	Settings.Uploads.SharePreviews		= m_bSharePreviews;
-	Settings.Uploads.HubUnshare			= m_bHubUnshare;
+	Settings.Uploads.SharePartials		= m_bSharePartials != FALSE;
+	Settings.Uploads.SharePreviews		= m_bSharePreviews != FALSE;
+	Settings.Uploads.HubUnshare			= m_bHubUnshare != FALSE;
 	Settings.Bandwidth.Uploads			= static_cast< DWORD >( Settings.ParseVolume( m_sBandwidthLimit ) );
-	Settings.Uploads.ThrottleMode		= m_bThrottleMode;
+	Settings.Uploads.ThrottleMode		= m_bThrottleMode != FALSE;
 
 	// Warn the user about the effects of upload limiting
 	if ( !Settings.Live.UploadLimitWarning && Settings.Bandwidth.Uploads > 0 && Settings.Bandwidth.Uploads != nOldLimit )
