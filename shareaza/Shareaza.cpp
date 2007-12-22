@@ -422,8 +422,7 @@ BOOL CShareazaApp::InitInstance()
 	SplashStep( dlgSplash, L"Library" );
 		Library.Load();
 	SplashStep( dlgSplash, L"Upgrade Manager" );
-	if ( VersionChecker.NeedToCheck() ) 
-		VersionChecker.Start( m_pMainWnd->GetSafeHwnd() );
+		VersionChecker.Start(); 
 
 	pCursor.Restore();
 

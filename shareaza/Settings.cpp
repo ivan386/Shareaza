@@ -71,7 +71,6 @@ CSettings::CSettings()
 	Add( _T(""), _T("MultiUser"), &General.MultiUser, false );
 	Add( _T(""), _T("Path"), &General.Path, _T("") );
 	Add( _T(""), _T("SearchLog"), &General.SearchLog, true );
-	Add( _T(""), _T("UpdateCheck"), &General.UpdateCheck, true );
 	Add( _T(""), _T("UserPath"), &General.UserPath, _T("") );
 	Add( _T("Settings"), _T("AlwaysOpenURLs"), &General.AlwaysOpenURLs, false );
 	Add( _T("Settings"), _T("CloseMode"), &General.CloseMode, 0, 1, 0, 3 );
@@ -88,6 +87,18 @@ CSettings::CSettings()
 	Add( _T("Settings"), _T("SmartVersion"), &General.SmartVersion, SMART_VERSION );
 	Add( _T("Settings"), _T("TrayMinimise"), &General.TrayMinimise, false );
 	Add( _T("Settings"), _T("VerboseMode"), &General.VerboseMode, false );
+
+	Add( _T("VersionCheck"), _T("NextCheck"), &VersionCheck.NextCheck, 0 );
+	Add( _T("VersionCheck"), _T("Quote"), &VersionCheck.Quote, _T("") );
+	Add( _T("VersionCheck"), _T("UpdateCheck"), &VersionCheck.UpdateCheck, true );
+	Add( _T("VersionCheck"), _T("UpdateCheckURL"), &VersionCheck.UpdateCheckURL, _T("http://shareaza.sourceforge.net/version/") );
+	Add( _T("VersionCheck"), _T("UpgradeFile"), &VersionCheck.UpgradeFile, _T("") );
+	Add( _T("VersionCheck"), _T("UpgradePrompt"), &VersionCheck.UpgradePrompt, _T("") );
+	Add( _T("VersionCheck"), _T("UpgradeSHA1"), &VersionCheck.UpgradeSHA1, _T("") );
+	Add( _T("VersionCheck"), _T("UpgradeSize"), &VersionCheck.UpgradeSize, _T("") );
+	Add( _T("VersionCheck"), _T("UpgradeSources"), &VersionCheck.UpgradeSources, _T("") );
+	Add( _T("VersionCheck"), _T("UpgradeTiger"), &VersionCheck.UpgradeTiger, _T("") );
+	Add( _T("VersionCheck"), _T("UpgradeVersion"), &VersionCheck.UpgradeVersion, _T("") );
 
 	Add( _T("Interface"), _T("LowResMode"), &Interface.LowResMode, false );
 	Add( _T("Interface"), _T("TipAlpha"), &Interface.TipAlpha, 230 );
@@ -651,7 +662,7 @@ void CSettings::SmartUpgrade()
 		// Don't check for a week if we've just upgraded
 		CTimeSpan tPeriod( 7, 0, 0, 0 );
 		CTime tNextCheck = CTime::GetCurrentTime() + tPeriod;
-		theApp.WriteProfileInt( _T("VersionCheck"), _T("NextCheck"), (DWORD)tNextCheck.GetTime() );
+		VersionCheck.NextCheck = (DWORD)tNextCheck.GetTime();
 	}
 */
 	// Add OGG handling if needed

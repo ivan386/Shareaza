@@ -1,7 +1,7 @@
 //
 // VersionChecker.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -19,9 +19,6 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_VERSIONCHECKER_H__EB5F6233_9917_44C3_BE67_CACB43D929CA__INCLUDED_)
-#define AFX_VERSIONCHECKER_H__EB5F6233_9917_44C3_BE67_CACB43D929CA__INCLUDED_
-
 #pragma once
 
 #include "HttpRequest.h"
@@ -37,39 +34,27 @@ public:
 // Attributes
 public:
 	CString		m_sMessage;
-	CString		m_sQuote;
 	BOOL		m_bUpgrade;
-	CString		m_sUpgradePrompt;
-	CString		m_sUpgradeFile;
-	CString		m_sUpgradeSHA1;
-	CString		m_sUpgradeTiger;
-	CString		m_sUpgradeSize;
-	CString		m_sUpgradeSources;
 	CString		m_sUpgradePath;
-	CString		m_sUpgradeVersion;
 
 protected:
 	HANDLE				m_hThread;
 	CHttpRequest		m_pRequest;
 	CMap< CString, const CString&, CString, CString& >	m_pResponse;
-	HWND				m_hWndNotify;
 
 // Operations
 public:
-	BOOL		NeedToCheck();
-	BOOL		Start(HWND hWndNotify);
+	BOOL		Start();
 	void		Stop();
 	void		SetNextCheck(int nDays);
     BOOL		CheckUpgradeHash(const Hashes::Sha1Hash& oHash, LPCTSTR pszPath);
+	BOOL		CheckUpgradeHash();
 protected:
+	BOOL		NeedToCheck();
 	static UINT	ThreadStart(LPVOID pParam);
 	void		OnRun();
-	void		BuildRequest(CString& strRequest);
-	BOOL		UndertakeRequest(CString& strPost);
+	BOOL		ExecuteRequest();
 	void		ProcessResponse();
-
 };
 
 extern CVersionChecker VersionChecker;
-
-#endif // !defined(AFX_VERSIONCHECKER_H__EB5F6233_9917_44C3_BE67_CACB43D929CA__INCLUDED_)

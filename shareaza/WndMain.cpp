@@ -1164,6 +1164,10 @@ LRESULT CMainWnd::OnVersionCheck(WPARAM wParam, LPARAM /*lParam*/)
 	
 	if ( ( wParam == 0 || wParam == 1 ) && VersionChecker.m_bUpgrade )
 	{
+		// Check for already downloaded file
+		if ( VersionChecker.CheckUpgradeHash() )
+			return 0;
+
 		CUpgradeDlg dlg;
 		dlg.DoModal();
 	}
@@ -1171,16 +1175,17 @@ LRESULT CMainWnd::OnVersionCheck(WPARAM wParam, LPARAM /*lParam*/)
 	if ( wParam == 2 && VersionChecker.m_sUpgradePath.GetLength() )
 	{
 		CString strFormat, strMessage;
-		
 		LoadString( strFormat, IDS_UPGRADE_LAUNCH );
-		strMessage.Format( strFormat, (LPCTSTR)VersionChecker.m_sUpgradeFile );
-		
+		strMessage.Format( strFormat, (LPCTSTR)Settings.VersionCheck.UpgradeFile );
 		if ( AfxMessageBox( strMessage, MB_ICONQUESTION|MB_YESNO ) == IDYES )
 		{
 			ShellExecute( GetSafeHwnd(), _T("open"), VersionChecker.m_sUpgradePath,
 				_T("/launch"), NULL, SW_SHOWNORMAL );
 			PostMessage( WM_CLOSE );
 		}
+		else
+			// Postproned till next session
+			Settings.VersionCheck.NextCheck = 0;
 	}
 	
 	return 0;
@@ -1326,10 +1331,10 @@ void CMainWnd::UpdateMessages()
 		m_bNoNetWarningShowed = FALSE;
 	}
 
-	if ( VersionChecker.m_sQuote.GetLength() )
+	if ( Settings.VersionCheck.Quote.GetLength() )
 	{
 		strMessage += _T("  ");
-		strMessage += VersionChecker.m_sQuote;
+		strMessage += Settings.VersionCheck.Quote;
 	}
 
 	if ( m_nIDLastMessage == AFX_IDS_IDLEMESSAGE )

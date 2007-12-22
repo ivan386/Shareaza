@@ -23,6 +23,8 @@
 #include "Shareaza.h"
 #include "Settings.h"
 #include "VersionChecker.h"
+#include "Library.h"
+#include "SharedFile.h"
 #include "Transfer.h"
 #include "Network.h"
 #include "GProfile.h"
@@ -43,11 +45,10 @@ CVersionChecker VersionChecker;
 //////////////////////////////////////////////////////////////////////
 // CVersionChecker construction
 
-CVersionChecker::CVersionChecker()
+CVersionChecker::CVersionChecker() :
+	m_bUpgrade( FALSE ),
+	m_hThread( NULL )
 {
-	m_bUpgrade		= FALSE;
-	m_hThread		= NULL;
-	m_hWndNotify	= NULL;
 }
 
 CVersionChecker::~CVersionChecker()
@@ -60,52 +61,38 @@ CVersionChecker::~CVersionChecker()
 
 BOOL CVersionChecker::NeedToCheck()
 {
-	m_sUpgradeVersion	= theApp.GetProfileString( _T("VersionCheck"), _T("UpgradeVersion"), _T("") );
-	DWORD nNextCheck = theApp.GetProfileInt( _T("VersionCheck"), _T("NextCheck"), 0 );
-
-	if ( theApp.m_sVersion.Compare( m_sUpgradeVersion ) >= 0 ) // user manually upgraded
+	if ( theApp.m_sVersion.Compare( Settings.VersionCheck.UpgradeVersion ) >= 0 ) // user manually upgraded
 	{
-		theApp.WriteProfileString( _T("VersionCheck"), _T("UpgradePrompt"), NULL );
-		theApp.WriteProfileString( _T("VersionCheck"), _T("UpgradeFile"), NULL );
-		theApp.WriteProfileString( _T("VersionCheck"), _T("UpgradeSHA1"), NULL );
-		theApp.WriteProfileString( _T("VersionCheck"), _T("UpgradeTiger"), NULL);
-		theApp.WriteProfileString( _T("VersionCheck"), _T("UpgradeSize"), NULL );
-		theApp.WriteProfileString( _T("VersionCheck"), _T("UpgradeSources"), NULL );
-		theApp.WriteProfileString( _T("VersionCheck"), _T("UpgradeVersion"), NULL );
-		return (DWORD)CTime::GetCurrentTime().GetTime() >= nNextCheck;
+		Settings.VersionCheck.UpgradePrompt = _T("");
+		Settings.VersionCheck.UpgradeFile = _T("");
+		Settings.VersionCheck.UpgradeSHA1 = _T("");
+		Settings.VersionCheck.UpgradeTiger = _T("");
+		Settings.VersionCheck.UpgradeSize = _T("");
+		Settings.VersionCheck.UpgradeSources = _T("");
+		Settings.VersionCheck.UpgradeVersion = _T("");
+		return (DWORD)CTime::GetCurrentTime().GetTime() >= Settings.VersionCheck.NextCheck;
 	}
 
-	if ( !Settings.General.UpdateCheck ) return FALSE;
-	
-	m_sQuote = theApp.GetProfileString( _T("VersionCheck"), _T("Quote"), _T("") );
-	
-	m_sUpgradePrompt	= theApp.GetProfileString( _T("VersionCheck"), _T("UpgradePrompt"), _T("") );
-	m_sUpgradeFile		= theApp.GetProfileString( _T("VersionCheck"), _T("UpgradeFile"), _T("") );
-	m_sUpgradeSHA1		= theApp.GetProfileString( _T("VersionCheck"), _T("UpgradeSHA1"), _T("") );
-	m_sUpgradeTiger		= theApp.GetProfileString( _T("VersionCheck"), _T("UpgradeTiger"), _T("") );
-	m_sUpgradeSize		= theApp.GetProfileString( _T("VersionCheck"), _T("UpgradeSize"), _T("") );
-	m_sUpgradeSources	= theApp.GetProfileString( _T("VersionCheck"), _T("UpgradeSources"), _T("") );
-	m_bUpgrade			= ( m_sUpgradePrompt.GetLength() > 0 );
-	
-	if ( ! nNextCheck ) return TRUE;
-	if ( nNextCheck == 0xFFFFFFFF ) return FALSE;
-	
-	return (DWORD)CTime::GetCurrentTime().GetTime() >= nNextCheck;
+	if ( ! Settings.VersionCheck.UpdateCheck ) return FALSE;
+
+	m_bUpgrade = ! Settings.VersionCheck.UpgradePrompt.IsEmpty();
+
+	if ( ! Settings.VersionCheck.NextCheck ) return TRUE;
+	if ( Settings.VersionCheck.NextCheck == 0xFFFFFFFF ) return FALSE;
+
+	return (DWORD)CTime::GetCurrentTime().GetTime() >= Settings.VersionCheck.NextCheck;
 }
 
 //////////////////////////////////////////////////////////////////////
 // CVersionChecker start
 
-BOOL CVersionChecker::Start(HWND hWndNotify)
+BOOL CVersionChecker::Start()
 {
-	//return FALSE;
-	
 	Stop();
 	
 	m_pRequest.Clear();
 	
-	m_hWndNotify	= hWndNotify;
-	m_bUpgrade		= FALSE;
+	m_bUpgrade = FALSE;
 	
 	m_hThread = BeginThread( "VersionChecker", ThreadStart, this, THREAD_PRIORITY_IDLE );
 	
@@ -117,8 +104,11 @@ BOOL CVersionChecker::Start(HWND hWndNotify)
 
 void CVersionChecker::Stop()
 {
-	m_pRequest.Cancel();
-	CloseThread( &m_hThread );
+	if ( m_hThread )
+	{
+		m_pRequest.Cancel();
+		CloseThread( &m_hThread );
+	}
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -136,43 +126,28 @@ UINT CVersionChecker::ThreadStart(LPVOID pParam)
 
 void CVersionChecker::OnRun()
 {
-	CString strRequest;
-	
-	BuildRequest( strRequest );
-	
-	BOOL bRequest = UndertakeRequest( strRequest );
-	
-	if ( bRequest )
+	if ( NeedToCheck() && ! CheckUpgradeHash() )
 	{
-		ProcessResponse();
-		m_pResponse.RemoveAll();
+		if ( ExecuteRequest() )
+		{
+			ProcessResponse();
+			m_pResponse.RemoveAll();
+		}
+		else
+		{
+			SetNextCheck( VERSIONCHECKER_FREQUENCY );
+		}
 	}
-	else
-	{
-		SetNextCheck( VERSIONCHECKER_FREQUENCY );
-	}
-}
-
-//////////////////////////////////////////////////////////////////////
-// CVersionChecker build request
-
-void CVersionChecker::BuildRequest(CString& strRequest)
-{
-	strRequest += _T("Version=");
-	strRequest += theApp.m_sVersion;
+	m_hThread = NULL;
 }
 
 //////////////////////////////////////////////////////////////////////
 // CVersionChecker undertake request
 
-BOOL CVersionChecker::UndertakeRequest(CString& strPost)
+BOOL CVersionChecker::ExecuteRequest()
 {
-	bool bRelease = FALSE;
-
-	if ( bRelease )
-		m_pRequest.SetURL( _T("http://update.shareaza.com/version/update.php?") + strPost );
-	else
-		m_pRequest.SetURL( _T("http://update.trillinux.org/version/beta.php?") + strPost );
+	m_pRequest.SetURL( Settings.VersionCheck.UpdateCheckURL +
+		_T("?Version=") + theApp.m_sVersion );
 
 	if ( ! m_pRequest.Execute( FALSE ) ) return FALSE;
 
@@ -180,24 +155,21 @@ BOOL CVersionChecker::UndertakeRequest(CString& strPost)
 	if ( nStatusCode < 200 || nStatusCode > 299 ) return FALSE;
 
 	CString strResponse = m_pRequest.GetResponseString();
-	CString strHack = theApp.GetProfileString( _T("VersionCheck"), _T("TestResponse"), _T("") );
-	if ( strHack.GetLength() ) strResponse = strHack;
-
 	for ( strResponse += '&' ; strResponse.GetLength() ; )
 	{
 		CString strItem	= strResponse.SpanExcluding( _T("&") );
 		strResponse		= strResponse.Mid( strItem.GetLength() + 1 );
-		
+
 		CString strKey = strItem.SpanExcluding( _T("=") );
 		if ( strKey.GetLength() == strItem.GetLength() ) continue;
 		strItem = URLDecode( strItem.Mid( strKey.GetLength() + 1 ) );
 
 		strItem.TrimLeft();
 		strItem.TrimRight();
-		
+
 		m_pResponse.SetAt( strKey, strItem );
 	}
-	
+
 	return TRUE;
 }
 
@@ -209,15 +181,15 @@ void CVersionChecker::ProcessResponse()
 	int nDays = VERSIONCHECKER_FREQUENCY;
 	CString strValue;
 	
-	if ( m_pResponse.Lookup( _T("Message"), strValue ) || m_pResponse.Lookup( _T("MessageBox"), strValue ) )
+	if ( m_pResponse.Lookup( _T("Message"), strValue ) ||
+		 m_pResponse.Lookup( _T("MessageBox"), strValue ) )
 	{
 		m_sMessage = strValue;
 	}
 	
 	if ( m_pResponse.Lookup( _T("Quote"), strValue ) )
 	{
-		m_sQuote = strValue;
-		theApp.WriteProfileString( _T("VersionCheck"), _T("Quote"), m_sQuote );
+		Settings.VersionCheck.Quote = strValue;
 	}
 	
 	if ( m_pResponse.Lookup( _T("SystemMsg"), strValue ) )
@@ -232,32 +204,30 @@ void CVersionChecker::ProcessResponse()
 	
 	if ( m_pResponse.Lookup( _T("UpgradePrompt"), strValue ) )
 	{
-		m_sUpgradePrompt = strValue;
+		Settings.VersionCheck.UpgradePrompt = strValue;
 		
-		m_pResponse.Lookup( _T("UpgradeFile"), m_sUpgradeFile );
-		m_pResponse.Lookup( _T("UpgradeSHA1"), m_sUpgradeSHA1 );
-		m_pResponse.Lookup( _T("UpgradeTiger"), m_sUpgradeTiger );
-		m_pResponse.Lookup( _T("UpgradeSize"), m_sUpgradeSize );
-		m_pResponse.Lookup( _T("UpgradeSources"), m_sUpgradeSources );
-		m_pResponse.Lookup( _T("UpgradeVersion"), m_sUpgradeVersion );
+		m_pResponse.Lookup( _T("UpgradeFile"), Settings.VersionCheck.UpgradeFile );
+		m_pResponse.Lookup( _T("UpgradeSHA1"), Settings.VersionCheck.UpgradeSHA1 );
+		m_pResponse.Lookup( _T("UpgradeTiger"), Settings.VersionCheck.UpgradeTiger );
+		m_pResponse.Lookup( _T("UpgradeSize"), Settings.VersionCheck.UpgradeSize );
+		m_pResponse.Lookup( _T("UpgradeSources"), Settings.VersionCheck.UpgradeSources );
+		m_pResponse.Lookup( _T("UpgradeVersion"), Settings.VersionCheck.UpgradeVersion );
 
 		// Old name
-		if ( ! m_sUpgradeSHA1.GetLength() )
-			m_pResponse.Lookup( _T("UpgradeHash"), m_sUpgradeSHA1 );
-		
-		theApp.WriteProfileString( _T("VersionCheck"), _T("UpgradePrompt"), m_sUpgradePrompt );
-		theApp.WriteProfileString( _T("VersionCheck"), _T("UpgradeFile"), m_sUpgradeFile );
-		theApp.WriteProfileString( _T("VersionCheck"), _T("UpgradeSHA1"), m_sUpgradeSHA1 );
-		theApp.WriteProfileString( _T("VersionCheck"), _T("UpgradeTiger"), m_sUpgradeTiger);
-		theApp.WriteProfileString( _T("VersionCheck"), _T("UpgradeSize"), m_sUpgradeSize );
-		theApp.WriteProfileString( _T("VersionCheck"), _T("UpgradeSources"), m_sUpgradeSources );
-		theApp.WriteProfileString( _T("VersionCheck"), _T("UpgradeVersion"), m_sUpgradeVersion );
+		if ( ! Settings.VersionCheck.UpgradeSHA1.GetLength() )
+			m_pResponse.Lookup( _T("UpgradeHash"), Settings.VersionCheck.UpgradeSHA1 );
 		
 		m_bUpgrade = TRUE;
 	}
 	else
 	{
-		theApp.WriteProfileString( _T("VersionCheck"), _T("UpgradePrompt"), _T("") );
+		Settings.VersionCheck.UpgradePrompt = _T("");
+		Settings.VersionCheck.UpgradeFile = _T("");
+		Settings.VersionCheck.UpgradeSHA1 = _T("");
+		Settings.VersionCheck.UpgradeTiger = _T("");
+		Settings.VersionCheck.UpgradeSize = _T("");
+		Settings.VersionCheck.UpgradeSources = _T("");
+		Settings.VersionCheck.UpgradeVersion = _T("");
 		m_bUpgrade = FALSE;
 	}
 	
@@ -286,7 +256,7 @@ void CVersionChecker::ProcessResponse()
 	
 	SetNextCheck( nDays );
 	
-	PostMessage( m_hWndNotify, WM_VERSIONCHECK, 0, 0 );
+	AfxGetMainWnd()->PostMessage( WM_VERSIONCHECK, 0, 0 );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -296,7 +266,7 @@ void CVersionChecker::SetNextCheck(int nDays)
 {
 	CTimeSpan tPeriod( nDays, 0, 0, 0 );
 	CTime tNextCheck = CTime::GetCurrentTime() + tPeriod;
-	theApp.WriteProfileInt( _T("VersionCheck"), _T("NextCheck"), (DWORD)tNextCheck.GetTime() );
+	Settings.VersionCheck.NextCheck = (DWORD)tNextCheck.GetTime();
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -304,15 +274,40 @@ void CVersionChecker::SetNextCheck(int nDays)
 
 BOOL CVersionChecker::CheckUpgradeHash(const Hashes::Sha1Hash& oHash, LPCTSTR pszPath)
 {
-	if ( ! m_bUpgrade ) return FALSE;
+	if ( m_bUpgrade )
+	{
+		if ( oHash.toString() == Settings.VersionCheck.UpgradeSHA1 )
+		{
+			if ( _tcsstr( pszPath, _T(".exe") ) )
+			{
+				m_sUpgradePath = pszPath;
+				AfxGetMainWnd()->PostMessage( WM_VERSIONCHECK, 2 );
+				return TRUE;
+			}
+		}
+	}
+	return FALSE;
+}
 
-    if ( oHash.toString() != m_sUpgradeSHA1 ) return FALSE;
-
-	if ( _tcsstr( pszPath, _T(".exe") ) == NULL ) return FALSE;
-
-	m_sUpgradePath = pszPath;
-
-	AfxGetMainWnd()->PostMessage( WM_VERSIONCHECK, 2 );
-
-	return TRUE;
+BOOL CVersionChecker::CheckUpgradeHash()
+{
+	if ( m_bUpgrade )
+	{
+		Hashes::Sha1Hash oSHA1;
+		if ( oSHA1.fromString( Settings.VersionCheck.UpgradeSHA1 ) )
+		{
+			CQuickLock oLock( Library.m_pSection );
+			CLibraryFile* pFile = LibraryMaps.LookupFileBySHA1( oSHA1 );
+			if ( pFile )
+			{
+				if ( _tcsstr( pFile->GetPath(), _T(".exe") ) )
+				{
+					m_sUpgradePath = pFile->GetPath();
+					AfxGetMainWnd()->PostMessage( WM_VERSIONCHECK, 2 );
+					return TRUE;
+				}
+			}
+		}
+	}
+	return FALSE;
 }

@@ -132,7 +132,7 @@ void CHomeViewCtrl::Update()
 
 	if ( VersionChecker.m_bUpgrade )
 	{
-		if ( m_peUpgrade ) m_peUpgrade->SetText( VersionChecker.m_sUpgradePrompt );
+		if ( m_peUpgrade ) m_peUpgrade->SetText( Settings.VersionCheck.UpgradePrompt );
 		m_pDocument.ShowGroup( GROUP_UPGRADE, TRUE );
 	}
 	else

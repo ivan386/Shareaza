@@ -239,11 +239,13 @@ void CHttpRequest::Cancel()
 	if ( ! IsPending() ) return;
 
 	m_bCancel = TRUE;
-	if ( m_hInternet ) InternetCloseHandle( m_hInternet );
+	if ( m_hInternet )
+	{
+		InternetCloseHandle( m_hInternet );
+		m_hInternet = NULL;
+	}
 
 	CloseThread( &m_hThread );
-
-	m_hInternet = NULL;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -325,9 +327,11 @@ void CHttpRequest::Run()
 			}
 			InternetCloseHandle( hURL );
 		}
-		if ( ! m_bCancel )
+		if ( m_hInternet )
+		{
 			InternetCloseHandle( m_hInternet );
-		m_hInternet = NULL;
+			m_hInternet = NULL;
+		}
 	}
 
 	if ( m_hNotifyWnd )

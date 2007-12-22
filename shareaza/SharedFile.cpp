@@ -1229,7 +1229,7 @@ BOOL CLibraryFile::OnVerifyDownload(
 		}
 	}
 	
-	if ( m_oSHA1 && m_nVirtualSize == 0 && VersionChecker.m_bUpgrade )
+	if ( m_oSHA1 && m_nVirtualSize == 0 )
 	{
 		VersionChecker.CheckUpgradeHash( m_oSHA1, GetPath() );
 	}

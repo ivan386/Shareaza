@@ -21,6 +21,7 @@
 
 #include "StdAfx.h"
 #include "Shareaza.h"
+#include "Settings.h"
 #include "VersionChecker.h"
 #include "Network.h"
 #include "Downloads.h"
@@ -72,7 +73,7 @@ BOOL CUpgradeDlg::OnInitDialog()
 
 	SkinMe( _T("CUpgradeDlg"), IDR_MAINFRAME );
 
-	m_sMessage	= VersionChecker.m_sUpgradePrompt;
+	m_sMessage	= Settings.VersionCheck.UpgradePrompt;
 	m_bCheck	= FALSE;
 
 	UpdateData( FALSE );
@@ -87,15 +88,15 @@ void CUpgradeDlg::OnOK()
 	CShareazaURL pURL;
 
 	pURL.m_nAction		= CShareazaURL::uriDownload;
-	pURL.m_sName		= VersionChecker.m_sUpgradeFile;
-	pURL.m_sURL			= VersionChecker.m_sUpgradeSources;
-    pURL.m_oSHA1.fromString( VersionChecker.m_sUpgradeSHA1 );
-    pURL.m_oTiger.fromString( VersionChecker.m_sUpgradeTiger );
+	pURL.m_sName		= Settings.VersionCheck.UpgradeFile;
+	pURL.m_sURL			= Settings.VersionCheck.UpgradeSources;
+    pURL.m_oSHA1.fromString( Settings.VersionCheck.UpgradeSHA1 );
+    pURL.m_oTiger.fromString( Settings.VersionCheck.UpgradeTiger );
 
-	if ( VersionChecker.m_sUpgradeSize.GetLength() )
+	if ( Settings.VersionCheck.UpgradeSize.GetLength() )
 	{
 		QWORD nSize;
-		if ( ( _stscanf( VersionChecker.m_sUpgradeSize.GetString(), _T("%I64i"), &nSize ) == 1 ) && ( nSize > 0 ) )
+		if ( ( _stscanf( Settings.VersionCheck.UpgradeSize.GetString(), _T("%I64i"), &nSize ) == 1 ) && ( nSize > 0 ) )
 		{
 			pURL.m_bSize = TRUE;
 			pURL.m_nSize = nSize;

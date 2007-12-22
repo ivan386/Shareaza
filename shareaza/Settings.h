@@ -47,7 +47,6 @@ public:
 		bool		SearchLog;					// Display search facility log information
 		bool		DebugLog;					// Create a log file
 		DWORD		MaxDebugLogSize;			// Max size of the log file
-		bool		UpdateCheck;				// Does Shareaza check for new versions?
 		DWORD		DiskSpaceWarning;			// Value at which to warn the user about low disk space
 		DWORD		DiskSpaceStop;				// Value at which to pause all downloads due to low disk space
 		DWORD		MinTransfersRest;			// For how long at least to suspend Transfers each round
@@ -70,6 +69,21 @@ public:
 		DWORD		SmartVersion;				// Settings version
 		bool		Running;
 	} General;
+
+	struct sVersionCheck
+	{
+		DWORD		NextCheck;
+		CString		Quote;
+		bool		UpdateCheck;				// Does Shareaza check for new versions?
+		CString		UpdateCheckURL;
+		CString		UpgradePrompt;
+		CString		UpgradeFile;
+		CString		UpgradeSHA1;
+		CString		UpgradeTiger;
+		CString		UpgradeSize;
+		CString		UpgradeSources;
+		CString		UpgradeVersion;
+	} VersionCheck;
 
 	struct sInterface
 	{
