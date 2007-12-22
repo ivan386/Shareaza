@@ -246,6 +246,10 @@ CString ResolveShortcut(LPCTSTR lpszFileName);
 // Get Win32 API error description
 CString GetErrorString(DWORD dwError = GetLastError());
 
+// Displays a dialog box enabling the user to select a Shell folder
+CString BrowseForFolder(UINT nTitle, LPCTSTR szInitialPath = NULL, HWND hWnd = NULL);
+CString BrowseForFolder(LPCTSTR szTitle, LPCTSTR szInitialPath = NULL, HWND hWnd = NULL);
+
 typedef enum
 {
 	sNone = 0,

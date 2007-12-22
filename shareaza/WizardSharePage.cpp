@@ -192,25 +192,11 @@ void CWizardSharePage::OnItemChangedShareFolders(NMHDR* /*pNMHDR*/, LRESULT* pRe
 void CWizardSharePage::OnShareAdd()
 {
 	//Let user select path to share
-	TCHAR szPath[MAX_PATH];
-	LPITEMIDLIST pPath;
-	CComPtr< IMalloc > pMalloc;
+	CString strPath( BrowseForFolder( _T("Select folder to share:") ) );
+	if ( strPath.IsEmpty() )
+		return;
 
-	BROWSEINFO pBI = {};
-	pBI.hwndOwner		= AfxGetMainWnd()->GetSafeHwnd();
-	pBI.pszDisplayName	= szPath;
-	pBI.lpszTitle		= _T("Select folder to share:");
-	pBI.ulFlags			= BIF_RETURNONLYFSDIRS | BIF_NEWDIALOGSTYLE;
-
-	pPath = SHBrowseForFolder( &pBI );
-
-	if ( pPath == NULL ) return;
-
-	SHGetPathFromIDList( pPath, szPath );
-	if ( SUCCEEDED( SHGetMalloc( &pMalloc ) ) )
-		pMalloc->Free( pPath );
-
-	CString strPathLC( szPath );
+	CString strPathLC( strPath );
 	ToLower( strPathLC );
 
 	//Get system paths (to compare)
@@ -274,7 +260,7 @@ void CWizardSharePage::OnShareAdd()
 		{
 			CString strFormat, strMessage;
 			LoadString( strFormat, IDS_LIBRARY_SUBFOLDER_IN_LIBRARY );
-			strMessage.Format( strFormat, (LPCTSTR)szPath );
+			strMessage.Format( strFormat, (LPCTSTR)strPath );
 
 			if ( bForceAdd || AfxMessageBox( strMessage, MB_ICONQUESTION|MB_YESNO ) == IDYES )
 			{
@@ -302,7 +288,7 @@ void CWizardSharePage::OnShareAdd()
 
 	//Add path to shared list
 	m_wndList.InsertItem( LVIF_TEXT|LVIF_IMAGE, m_wndList.GetItemCount(),
-		szPath, 0, 0, SHI_FOLDER_OPEN, 0 );
+		strPath, 0, 0, SHI_FOLDER_OPEN, 0 );
 }
 
 void CWizardSharePage::OnShareRemove()

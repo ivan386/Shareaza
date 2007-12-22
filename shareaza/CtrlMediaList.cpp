@@ -683,28 +683,14 @@ void CMediaListCtrl::OnMediaAdd()
 void CMediaListCtrl::OnMediaAddFolder() 
 {
 	if ( ! AfxGetMainWnd()->IsWindowEnabled() ) return;
-	
-	TCHAR szPath[MAX_PATH];
-	LPITEMIDLIST pPath;
-	CComPtr< IMalloc > pMalloc;
-	BROWSEINFO pBI = {};
-		
-	pBI.hwndOwner		= AfxGetMainWnd()->GetSafeHwnd();
-	pBI.pszDisplayName	= szPath;
-	pBI.lpszTitle		= _T("Select folder to add to playlist:");
-	pBI.ulFlags			= BIF_RETURNONLYFSDIRS;
-	
-	pPath = SHBrowseForFolder( &pBI );
 
-	if ( pPath == NULL ) return;
+	CString strPath( BrowseForFolder( _T("Select folder to add to playlist:") ) );
+	if ( strPath.IsEmpty() )
+		return;
 
-	SHGetPathFromIDList( pPath, szPath );
-	if ( SUCCEEDED( SHGetMalloc( &pMalloc ) ) )
-		pMalloc->Free( pPath );
-	
 	BOOL bWasEmpty = ( GetItemCount() == 0 );
 	
-	RecursiveEnqueue( szPath );
+	RecursiveEnqueue( strPath );
 
 	if ( GetItemCount() > 0 && bWasEmpty ) GetNext();
 }

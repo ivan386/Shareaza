@@ -2311,3 +2311,94 @@ CString ResolveShortcut(LPCTSTR lpszFileName)
 	}
 	return CString();
 }
+
+// BrowseCallbackProc - BrowseForFolder callback function
+static int CALLBACK BrowseCallbackProc(HWND hWnd, UINT uMsg, LPARAM lParam, LPARAM lpData)
+{
+	switch ( uMsg )
+	{
+	case BFFM_INITIALIZED:
+		{
+			// Remove context help button from dialog caption
+			SetWindowLong( hWnd, GWL_STYLE,
+				GetWindowLong( hWnd, GWL_STYLE ) & ~DS_CONTEXTHELP );
+			SetWindowLong( hWnd, GWL_EXSTYLE,
+				GetWindowLong( hWnd, GWL_EXSTYLE ) & ~WS_EX_CONTEXTHELP );
+
+			// Set initial directory
+			SendMessage( hWnd, BFFM_SETSELECTION, TRUE, lpData );
+		}
+		break;
+
+	case BFFM_SELCHANGED:
+		{
+			// Fail if non-filesystem
+			TCHAR szDir[ MAX_PATH ] = {};
+			BOOL bResult = SHGetPathFromIDList( (LPITEMIDLIST)lParam, szDir );
+			if ( bResult )
+			{
+				// Fail if folder not accessible
+				bResult = ( _taccess( szDir, 4 ) == 0 );
+				if ( bResult )
+				{
+					// Fail if pidl is a link
+					SHFILEINFO sfi = {};
+					bResult = ( SHGetFileInfo( (LPCTSTR)lParam, 0, &sfi, sizeof( sfi ), 
+						SHGFI_PIDL | SHGFI_ATTRIBUTES ) &&
+						( sfi.dwAttributes & SFGAO_LINK ) == 0 );
+				}
+			}
+			SendMessage( hWnd, BFFM_ENABLEOK, 0, bResult );
+		}
+		break;
+	}
+	return 0;
+}
+
+// Displays a dialog box enabling the user to select a Shell folder
+CString BrowseForFolder(UINT nTitle, LPCTSTR szInitialPath, HWND hWnd)
+{
+	CString strTitle;
+	LoadString( strTitle, nTitle );
+	return BrowseForFolder( strTitle, szInitialPath, hWnd );
+}
+
+// Displays a dialog box enabling the user to select a Shell folder
+CString BrowseForFolder(LPCTSTR szTitle, LPCTSTR szInitialPath, HWND hWnd)
+{
+	// Get last used folder
+	static TCHAR szDefaultPath[ MAX_PATH ] = {};
+	if ( ! szInitialPath || ! *szInitialPath )
+	{
+		if ( ! *szDefaultPath )
+			lstrcpyn( szDefaultPath, (LPCTSTR)GetDocumentsFolder(), MAX_PATH );
+		szInitialPath = szDefaultPath;
+	}
+
+	TCHAR szDisplayName[ MAX_PATH ] = {};
+	BROWSEINFO pBI = {};
+	pBI.hwndOwner = hWnd ? hWnd : AfxGetMainWnd()->GetSafeHwnd();
+	pBI.pszDisplayName = szDisplayName;
+	pBI.lpszTitle = szTitle;
+	pBI.ulFlags = BIF_RETURNONLYFSDIRS | BIF_NEWDIALOGSTYLE;
+	pBI.lpfn = BrowseCallbackProc;
+	pBI.lParam = (LPARAM)szInitialPath;
+	LPITEMIDLIST pPath = SHBrowseForFolder( &pBI );
+	if ( pPath == NULL )
+		return CString();
+
+	TCHAR szPath[ MAX_PATH ] = {};
+	BOOL bResult = SHGetPathFromIDList( pPath, szPath );
+
+	CComPtr< IMalloc > pMalloc;
+	if ( SUCCEEDED( SHGetMalloc( &pMalloc ) ) )
+		pMalloc->Free( pPath );
+
+	if ( ! bResult )
+		return CString();
+
+	// Save last used folder
+	lstrcpyn( szDefaultPath, szPath, MAX_PATH );
+
+	return CString( szPath );
+}

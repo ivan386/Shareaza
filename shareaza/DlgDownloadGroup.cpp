@@ -264,26 +264,13 @@ void CDownloadGroupDlg::OnOK()
 
 void CDownloadGroupDlg::OnBrowse()
 {
-	TCHAR szPath[MAX_PATH];
-	LPITEMIDLIST pPath;
-	CComPtr< IMalloc > pMalloc;
-
-	BROWSEINFO pBI = {};
-	pBI.hwndOwner		= AfxGetMainWnd()->GetSafeHwnd();
-	pBI.pszDisplayName	= szPath;
-	pBI.lpszTitle		= _T("Select folder for downloads:");
-	pBI.ulFlags			= BIF_RETURNONLYFSDIRS;
-
-	pPath = SHBrowseForFolder( &pBI );
-
-	if ( pPath == NULL ) return;
-
-	SHGetPathFromIDList( pPath, szPath );
-	if ( SUCCEEDED( SHGetMalloc( &pMalloc ) ) )
-		pMalloc->Free( pPath );
+	CString strPath( BrowseForFolder( _T("Select folder for downloads:"),
+		m_sFolder ) );
+	if ( strPath.IsEmpty() )
+		return;
 
 	// Make sure download/incomplete folders aren't the same
-	if ( _tcsicmp( szPath, Settings.Downloads.IncompletePath ) == 0 )
+	if ( _tcsicmp( strPath, Settings.Downloads.IncompletePath ) == 0 )
 	{
 		CString strMessage;
 		LoadString( strMessage, IDS_SETTINGS_FILEPATH_NOT_SAME );
@@ -292,7 +279,7 @@ void CDownloadGroupDlg::OnBrowse()
 	}
 
 	// If the group folder and download folders are the same, use the default download folder
-	if ( _tcsicmp( szPath, Settings.Downloads.CompletePath ) == 0 )
+	if ( _tcsicmp( strPath, Settings.Downloads.CompletePath ) == 0 )
 	{
 		UpdateData( TRUE );
 		m_sFolder.Empty();
@@ -301,7 +288,7 @@ void CDownloadGroupDlg::OnBrowse()
 	}
 
 	UpdateData( TRUE );
-	m_sFolder = szPath;
+	m_sFolder = strPath;
 	UpdateData( FALSE );
 }
 

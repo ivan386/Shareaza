@@ -363,7 +363,7 @@ void CCollectionExportDlg::OnOK()
 		}
 		break;
 		case 2: // the second wizard screen
-			CString strPath = BrowseForFolder();
+			CString strPath = BrowseForFolder( _T("Select folder for output:") );
 			if ( strPath.IsEmpty() ) 
 			{
 				m_nStep--; // do not increment at the end of case
@@ -595,31 +595,6 @@ void CCollectionExportDlg::OnOK()
 		break;
 	}
 	m_nStep++;
-}
-
-CString CCollectionExportDlg::BrowseForFolder()
-{
-	TCHAR szPath[MAX_PATH];
-	LPITEMIDLIST pPath;
-	CComPtr< IMalloc > pMalloc;
-	CString str;
-
-	BROWSEINFO pBI = {};
-	pBI.hwndOwner		= GetSafeHwnd();
-	pBI.pszDisplayName	= szPath;
-	pBI.lpszTitle		= _T("Choose output folder:");
-	pBI.ulFlags			= BIF_RETURNONLYFSDIRS | BIF_NEWDIALOGSTYLE;
-
-	pPath = SHBrowseForFolder( &pBI );
-
-	if ( pPath == NULL ) return str;
-
-	SHGetPathFromIDList( pPath, szPath );
-	if ( SUCCEEDED( SHGetMalloc( &pMalloc ) ) )
-		pMalloc->Free( pPath );
-
-	str = szPath;
-	return str;
 }
 
 CXMLElement* CCollectionExportDlg::CreateXML(BOOL bMetadataAll)

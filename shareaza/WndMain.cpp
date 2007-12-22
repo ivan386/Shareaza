@@ -2160,28 +2160,12 @@ void CMainWnd::OnUpdateToolsImportDownloads(CCmdUI* pCmdUI)
 
 void CMainWnd::OnToolsImportDownloads() 
 {
-	TCHAR szPath[MAX_PATH];
-	LPITEMIDLIST pPath;
-	CComPtr< IMalloc > pMalloc;
-
-	CString strMessage;
-	LoadString( strMessage, IDS_SELECT_ED2K_TEMP_FOLDER );
-	BROWSEINFO pBI = {};
-	pBI.hwndOwner		= AfxGetMainWnd()->GetSafeHwnd();
-	pBI.pszDisplayName	= szPath;
-	pBI.lpszTitle		= strMessage;
-	pBI.ulFlags			= BIF_RETURNONLYFSDIRS;
-
-	pPath = SHBrowseForFolder( &pBI );
-
-	if ( pPath == NULL ) return;
-
-	SHGetPathFromIDList( pPath, szPath );
-	if ( SUCCEEDED( SHGetMalloc( &pMalloc ) ) )
-		pMalloc->Free( pPath );
+	CString strPath( BrowseForFolder( IDS_SELECT_ED2K_TEMP_FOLDER ) );
+	if ( strPath.IsEmpty() )
+		return;
 
 	CDonkeyImportDlg dlg;
-	dlg.m_pImporter.AddFolder( szPath );
+	dlg.m_pImporter.AddFolder( strPath );
 	dlg.DoModal();
 }
 

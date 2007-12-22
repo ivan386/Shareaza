@@ -146,26 +146,13 @@ void CBitTorrentSettingsPage::OnTorrentsAutoClear()
 
 void CBitTorrentSettingsPage::OnTorrentsBrowse() 
 {
-	TCHAR szPath[MAX_PATH];
-	LPITEMIDLIST pPath;
-	CComPtr< IMalloc > pMalloc;
-		
-	BROWSEINFO pBI = {};
-	pBI.hwndOwner		= AfxGetMainWnd()->GetSafeHwnd();
-	pBI.pszDisplayName	= szPath;
-	pBI.lpszTitle		= _T("Select folder for torrents:");
-	pBI.ulFlags			= BIF_RETURNONLYFSDIRS;
-	
-	pPath = SHBrowseForFolder( &pBI );
-
-	if ( pPath == NULL ) return;
-
-	SHGetPathFromIDList( pPath, szPath );
-	if ( SUCCEEDED( SHGetMalloc( &pMalloc ) ) )
-		pMalloc->Free( pPath );
+	CString strPath( BrowseForFolder( _T("Select folder for torrents:"),
+		m_sTorrentPath ) );
+	if ( strPath.IsEmpty() )
+		return;
 	
 	UpdateData( TRUE );
-	m_sTorrentPath = szPath;
+	m_sTorrentPath = strPath;
 	UpdateData( FALSE );
 }
 

@@ -1749,27 +1749,13 @@ void CLibraryTreeView::OnLibraryRemove()
 
 void CLibraryTreeView::OnLibraryAdd()
 {
-	TCHAR szPath[MAX_PATH];
-	LPITEMIDLIST pPath;
-	CComPtr< IMalloc > pMalloc;
-	BROWSEINFO pBI = {};
-
-	pBI.hwndOwner		= AfxGetMainWnd()->GetSafeHwnd();
-	pBI.pszDisplayName	= szPath;
-	pBI.lpszTitle		= _T("Select folder to share:");
-	pBI.ulFlags			= BIF_RETURNONLYFSDIRS | BIF_NEWDIALOGSTYLE;
-
-	pPath = SHBrowseForFolder( &pBI );
-
-	if ( pPath == NULL ) return;
-
-	SHGetPathFromIDList( pPath, szPath );
-	if ( SUCCEEDED( SHGetMalloc( &pMalloc ) ) )
-		pMalloc->Free( pPath );
+	CString strPath( BrowseForFolder( _T("Select folder to share:") ) );
+	if ( strPath.IsEmpty() )
+		return;
 
 	CFolderScanDlg dlgScan;
 
-	LibraryFolders.AddFolder( szPath );
+	LibraryFolders.AddFolder( strPath );
 
 	dlgScan.DoModal();
 }

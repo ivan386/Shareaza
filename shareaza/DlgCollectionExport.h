@@ -74,7 +74,6 @@ public:
 	CString DirFromPath(LPCTSTR szPath);
 
 protected:
-	CString			BrowseForFolder();
 	CXMLElement*	CreateXML(BOOL bMetadataAll = FALSE);
 	CXMLElement*	CopyMetadata(CXMLElement* pMetadata);
 

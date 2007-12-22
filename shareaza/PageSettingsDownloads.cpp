@@ -124,26 +124,13 @@ BOOL CDownloadsSettingsPage::OnInitDialog()
 
 void CDownloadsSettingsPage::OnDownloadsBrowse() 
 {
-	TCHAR szPath[MAX_PATH];
-	LPITEMIDLIST pPath;
-	CComPtr< IMalloc > pMalloc;
-		
-	BROWSEINFO pBI = {};
-	pBI.hwndOwner		= AfxGetMainWnd()->GetSafeHwnd();
-	pBI.pszDisplayName	= szPath;
-	pBI.lpszTitle		= _T("Select folder for downloads:");
-	pBI.ulFlags			= BIF_RETURNONLYFSDIRS;
-	
-	pPath = SHBrowseForFolder( &pBI );
-
-	if ( pPath == NULL ) return;
-
-	SHGetPathFromIDList( pPath, szPath );
-	if ( SUCCEEDED( SHGetMalloc( &pMalloc ) ) )
-		pMalloc->Free( pPath );
+	CString strPath( BrowseForFolder( _T("Select folder for downloads:"),
+		m_sDownloadsPath ) );
+	if ( strPath.IsEmpty() )
+		return;
 	
 	// Warn user about a path that's too long
-	if ( _tcslen( szPath ) > 256 - 33 )
+	if ( _tcslen( strPath ) > 256 - 33 )
 	{
 		CString strMessage;
 		LoadString( strMessage, IDS_SETTINGS_FILEPATH_TOO_LONG );
@@ -152,7 +139,7 @@ void CDownloadsSettingsPage::OnDownloadsBrowse()
 	}
 
 	// Make sure download/incomplete folders aren't the same
-	if ( _tcsicmp( szPath, m_sIncompletePath ) == 0 )
+	if ( _tcsicmp( strPath, m_sIncompletePath ) == 0 )
 	{
 		CString strMessage;
 		LoadString( strMessage, IDS_SETTINGS_FILEPATH_NOT_SAME );
@@ -161,33 +148,20 @@ void CDownloadsSettingsPage::OnDownloadsBrowse()
 	}
 	
 	UpdateData( TRUE );
-	m_sDownloadsPath = szPath;
+	m_sDownloadsPath = strPath;
 	m_bDownloadsChanged = TRUE;
 	UpdateData( FALSE );
 }
 
 void CDownloadsSettingsPage::OnIncompleteBrowse() 
 {
-	TCHAR szPath[MAX_PATH];
-	LPITEMIDLIST pPath;
-	CComPtr< IMalloc > pMalloc;
-		
-	BROWSEINFO pBI = {};
-	pBI.hwndOwner		= AfxGetMainWnd()->GetSafeHwnd();
-	pBI.pszDisplayName	= szPath;
-	pBI.lpszTitle		= _T("Select folder for incomplete files:");
-	pBI.ulFlags			= BIF_RETURNONLYFSDIRS;
-	
-	pPath = SHBrowseForFolder( &pBI );
-
-	if ( pPath == NULL ) return;
-
-	SHGetPathFromIDList( pPath, szPath );
-	if ( SUCCEEDED( SHGetMalloc( &pMalloc ) ) )
-		pMalloc->Free( pPath );
+	CString strPath( BrowseForFolder( _T("Select folder for incomplete files:"),
+		m_sIncompletePath ) );
+	if ( strPath.IsEmpty() )
+		return;
 
 	// Warn user about a path that's too long
-	if ( _tcslen( szPath ) > MAX_PATH - 60 )
+	if ( _tcslen( strPath ) > MAX_PATH - 60 )
 	{
 		CString strMessage;
 		LoadString( strMessage, IDS_SETTINGS_FILEPATH_TOO_LONG );
@@ -196,7 +170,7 @@ void CDownloadsSettingsPage::OnIncompleteBrowse()
 	}
 
 	// Make sure download/incomplete folders aren't the same
-	if ( _tcsicmp( szPath, m_sDownloadsPath ) == 0 )
+	if ( _tcsicmp( strPath, m_sDownloadsPath ) == 0 )
 	{
 		CString strMessage;
 		LoadString( strMessage, IDS_SETTINGS_FILEPATH_NOT_SAME );
@@ -205,7 +179,7 @@ void CDownloadsSettingsPage::OnIncompleteBrowse()
 	}
 
 	// Warn user about an incomplete folder in the library
-	if ( LibraryFolders.IsFolderShared( szPath ) )
+	if ( LibraryFolders.IsFolderShared( strPath ) )
 	{
 		CString strMessage;
 		LoadString( strMessage, IDS_SETTINGS_INCOMPLETE_LIBRARY );
@@ -214,7 +188,7 @@ void CDownloadsSettingsPage::OnIncompleteBrowse()
 	}
 
 	UpdateData( TRUE );
-	m_sIncompletePath = szPath;
+	m_sIncompletePath = strPath;
 	UpdateData( FALSE );
 }
 
