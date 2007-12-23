@@ -32,7 +32,7 @@ static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
 #endif
 
-#define SMART_VERSION	53
+#define SMART_VERSION	54
 
 CSettings Settings;
 
@@ -128,7 +128,7 @@ CSettings::CSettings()
 	Add( _T("Library"), _T("PanelSize"), &Library.PanelSize, 120 );
 	Add( _T("Library"), _T("PartialMatch"), &Library.PartialMatch, true );
 	Add( _T("Library"), _T("PreferAPETags"), &Library.PreferAPETags, 1 );
-	Add( _T("Library"), _T("PrivateTypes"), &Library.PrivateTypes, _T("|vbs|js|jc!|fb!|bc!|dbx|part|partial|pst|reget|getright|pif|lnk|sd|url|wab|m4p|infodb|racestats|chk|tmp|temp|ini|inf|log|old|manifest|met|bak|$$$|---|~~~|###|__incomplete___|") );
+	Add( _T("Library"), _T("PrivateTypes"), &Library.PrivateTypes, _T("|vbs|js|jc!|fb!|bc!|!ut|dbx|part|partial|pst|reget|getright|pif|lnk|sd|url|wab|m4p|infodb|racestats|chk|tmp|temp|ini|inf|log|old|manifest|met|bak|$$$|---|~~~|###|__incomplete___|") );
 	Add( _T("Library"), _T("QueryRouteSize"), &Library.QueryRouteSize, 20, 1, 8, 24 );
 	Add( _T("Library"), _T("SafeExecute"), &Library.SafeExecute, _T("|3gp|aac|ace|ape|avi|bmp|flv|gif|iso|jpg|jpeg|mid|mov|m1v|m2v|m3u|m4a|mkv|mp2|mp3|mp4|mpa|mpe|mpg|mpeg|ogg|ogm|pdf|png|qt|rar|rm|sks|tar|tgz|torrent|txt|wav|wma|wmv|zip|co|collection|lit|") );
 	Add( _T("Library"), _T("ScanAPE"), &Library.ScanAPE, true );
@@ -967,6 +967,13 @@ void CSettings::SmartUpgrade()
 				Library.SafeExecute.insert( _T("collection") );
 			if ( ! IsIn( Library.SafeExecute, _T("lit") ) )
 				Library.SafeExecute.insert( _T("lit") );
+		}
+
+		if ( General.SmartVersion < 54 )
+		{
+			// uTorrent
+			if ( ! IsIn( Library.PrivateTypes, _T("!ut") ) )
+				Library.PrivateTypes.insert( _T("!ut") );
 		}
 	}
 
