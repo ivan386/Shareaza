@@ -718,18 +718,7 @@ void CEDClient::SendHello(BYTE nType)
 	pPacket->WriteLongLE( 6 );	// Number of Tags
 	
 	// 1 - Nickname
-	CString strNick = MyProfile.GetNick();
-	
-	if ( Settings.eDonkey.TagNames )
-	{
-		if ( strNick.GetLength() )
-			strNick += _T(" (Shareaza)");
-		else
-			strNick = _T("Shareaza");
-	}
-	strNick.Left( 255 );
-	
-	CEDTag( ED2K_CT_NAME, strNick ).Write( pPacket, ED2K_SERVER_TCP_UNICODE );
+	CEDTag( ED2K_CT_NAME, MyProfile.GetNick().Left( 255 ) ).Write( pPacket, ED2K_SERVER_TCP_UNICODE );
 
 	// 2 - ED2K version
 	CEDTag( ED2K_CT_VERSION, ED2K_VERSION ).Write( pPacket );

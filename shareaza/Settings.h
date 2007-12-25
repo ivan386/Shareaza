@@ -398,7 +398,6 @@ public:
 		bool		SendPortServer;				// Send port in tag to ed2k servers. (not needed for newer servers)
 		bool		MagnetSearch;				// Search for magnets over ed2k (lower server load)
 		DWORD		MinServerFileSize;			// Minimum size a file in the library must be in order to be included in the server file list. (In KB)
-		bool		TagNames;					// Add (Shareaza.com) to user name over ed2k
 		DWORD		DefaultServerFlags;			// Default server flags (for UDP searches)
 		bool		Endgame;					// Allow endgame mode when completing downloads. (Download same chunk from multiple sources)
 		bool		LargeFileSupport;			// Allow 64 bit file sizes
