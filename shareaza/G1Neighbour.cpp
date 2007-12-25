@@ -387,7 +387,10 @@ BOOL CG1Neighbour::SendPing(DWORD dwNow, const Hashes::Guid& oGUID)
 	{
 		CGGEPBlock pBlock;
 		CGGEPItem* pItem = pBlock.Add( GGEP_HEADER_SUPPORT_CACHE_PONGS );
-		pItem = pBlock.Add( GGEP_HEADER_SUPPORT_GDNA );
+		if ( Settings.Experimental.EnableDIPPSupport )
+		{
+			pItem = pBlock.Add( GGEP_HEADER_SUPPORT_GDNA );
+		}
 		pBlock.Write( pPacket );
 	}
 	
@@ -1400,7 +1403,8 @@ BOOL CG1Neighbour::OnQuery(CG1Packet* pPacket)
 	Network.OnQuerySearch( pSearch );
 
 	// If the CQuerySearch object doesn't detect a firewall, or we're listening, do a local search (do)
-	if ( ! pSearch->m_bFirewall || Network.IsListening() ) pLocalSearch.Execute();
+	if ( ! pSearch->m_bFirewall || Network.IsListening() )
+		pLocalSearch.Execute();
 
 	// Delete the local object, and record another Gnutella query packet processed
 	delete pSearch;
