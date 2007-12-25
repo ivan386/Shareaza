@@ -69,6 +69,7 @@ CSkin::~CSkin()
 void CSkin::Apply()
 {
 	CreateDefault();
+	ApplyRecursive( L"Languages\\" );
 	ApplyRecursive( NULL );
 	Finalise();
 }
@@ -199,14 +200,14 @@ BOOL CSkin::SelectCaption(CString& strCaption, int nIndex)
 void CSkin::ApplyRecursive(LPCTSTR pszPath)
 {
 	WIN32_FIND_DATA pFind;
-	CString strPath;
 	HANDLE hSearch;
 
+	CString strPath;
 	strPath.Format( _T("%s\\Skins\\%s*.*"), (LPCTSTR)Settings.General.Path,
 		pszPath ? pszPath : _T("") );
 
 	hSearch = FindFirstFile( strPath, &pFind );
-
+	
 	if ( hSearch != INVALID_HANDLE_VALUE )
 	{
 		do
@@ -215,20 +216,21 @@ void CSkin::ApplyRecursive(LPCTSTR pszPath)
 
 			if ( pFind.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY )
 			{
-				strPath.Format( _T("%s%s\\"),
-					pszPath ? pszPath : _T(""), pFind.cFileName );
-
-				ApplyRecursive( strPath );
-			}
-			else if (	_tcsistr( pFind.cFileName, _T(".xml") ) != NULL &&
-						_tcsicmp( pFind.cFileName, _T("Definitions.xml") ) )
-			{
-				strPath.Format( _T("%s%s"),
-					pszPath ? pszPath : _T(""), pFind.cFileName );
-
-				if ( theApp.GetProfileInt( _T("Skins"), strPath, FALSE ) )
+				if ( pszPath == NULL && _tcsicmp( pFind.cFileName, L"languages" ) ||
+					 pszPath != NULL && _tcsistr( pszPath, L"languages" ) == NULL )
 				{
-					LoadFromFile( Settings.General.Path + _T("\\Skins\\") + strPath );
+					strPath.Format( L"%s%s\\", pszPath ? pszPath : L"", pFind.cFileName );
+					ApplyRecursive( strPath );
+				}
+			}
+			else if (	_tcsistr( pFind.cFileName, L".xml" ) != NULL &&
+						_tcsicmp( pFind.cFileName, L"Definitions.xml" ) )
+			{
+				strPath.Format( L"%s%s", pszPath ? pszPath : L"", pFind.cFileName );
+
+				if ( theApp.GetProfileInt( L"Skins", strPath, FALSE ) )
+				{
+					LoadFromFile( Settings.General.Path + L"\\Skins\\" + strPath );
 				}
 			}
 		}
