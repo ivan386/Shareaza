@@ -1178,6 +1178,8 @@ void CDiscoveryServices::OnRun()
 		m_hInternet	= NULL;
 		m_hRequest	= NULL;
 	}
+
+	m_hThread = NULL;
 }
 
 //////////////////////////////////////////////////////////////////////
