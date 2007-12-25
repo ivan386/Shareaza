@@ -172,7 +172,8 @@ void CHostCacheWnd::Update(BOOL bForce)
 	if ( ! bForce && ! m_bAllowUpdates ) return;
 
 	CHostCacheList* pCache = HostCache.ForProtocol( m_nMode ? m_nMode : PROTOCOL_G2 );
-	CQuickLock oLock( pCache->m_pSection );
+	CSingleLock oLock( &pCache->m_pSection, FALSE );
+	if ( ! oLock.Lock( 100 ) ) return;
 	
 	m_nCookie = pCache->m_nCookie;
 	int nProtocolRev = m_gdiImageList.GetImageCount() - 1;
@@ -338,37 +339,48 @@ void CHostCacheWnd::OnNcMouseMove(UINT /*nHitTest*/, CPoint /*point*/)
 void CHostCacheWnd::OnUpdateHostCacheConnect(CCmdUI* pCmdUI) 
 {
 	pCmdUI->Enable( ( m_wndList.GetSelectedCount() > 0 ) &&
-		( ( m_nMode != PROTOCOL_ED2K ) || ( Settings.GetOutgoingBandwidth() >= 2 ) ) );	
+		( m_nMode == PROTOCOL_NULL || m_nMode == PROTOCOL_G1 ||
+		m_nMode == PROTOCOL_G2 || m_nMode == PROTOCOL_ED2K ) );	
 }
 
 void CHostCacheWnd::OnHostCacheConnect() 
 {
-	POSITION pos = m_wndList.GetFirstSelectedItemPosition();	
-	while ( pos )
+	if ( m_nMode == PROTOCOL_NULL || m_nMode == PROTOCOL_G1 ||
+		m_nMode == PROTOCOL_G2 || m_nMode == PROTOCOL_ED2K )
 	{
-		int nItem = m_wndList.GetNextSelectedItem( pos );
-		if ( CHostCacheHost* pHost = GetItem( nItem ) )
+		POSITION pos = m_wndList.GetFirstSelectedItemPosition();	
+		while ( pos )
 		{
-			pHost->ConnectTo();
+			int nItem = m_wndList.GetNextSelectedItem( pos );
+			if ( CHostCacheHost* pHost = GetItem( nItem ) )
+			{
+				pHost->ConnectTo();
+			}
 		}
 	}
 }
 
 void CHostCacheWnd::OnUpdateHostCacheDisconnect(CCmdUI* pCmdUI) 
 {
-	CQuickLock oLock( HostCache.ForProtocol( m_nMode ? m_nMode : PROTOCOL_G2 )->m_pSection );
-
-	POSITION pos = m_wndList.GetFirstSelectedItemPosition();
-	while ( pos )
+	if ( m_nMode == PROTOCOL_NULL || m_nMode == PROTOCOL_G1 ||
+		m_nMode == PROTOCOL_G2 || m_nMode == PROTOCOL_ED2K )
 	{
-		int nItem = m_wndList.GetNextSelectedItem( pos );
-		if ( CHostCacheHost* pHost = GetItem( nItem ) )
+		CSingleLock oLock( &HostCache.ForProtocol(
+			m_nMode ? m_nMode : PROTOCOL_G2 )->m_pSection, FALSE );
+		if ( ! oLock.Lock( 100 ) ) return;
+
+		POSITION pos = m_wndList.GetFirstSelectedItemPosition();
+		while ( pos )
 		{
-			CNeighbour* pNeighbour = Neighbours.Get( &pHost->m_pAddress );
-			if ( pNeighbour )
-			{ 
-				pCmdUI->Enable( TRUE );
-				return;
+			int nItem = m_wndList.GetNextSelectedItem( pos );
+			if ( CHostCacheHost* pHost = GetItem( nItem ) )
+			{
+				CNeighbour* pNeighbour = Neighbours.Get( &pHost->m_pAddress );
+				if ( pNeighbour )
+				{ 
+					pCmdUI->Enable( TRUE );
+					return;
+				}
 			}
 		}
 	}
@@ -377,16 +389,20 @@ void CHostCacheWnd::OnUpdateHostCacheDisconnect(CCmdUI* pCmdUI)
 
 void CHostCacheWnd::OnHostCacheDisconnect() 
 {
-	CQuickLock oLock( HostCache.ForProtocol( m_nMode ? m_nMode : PROTOCOL_G2 )->m_pSection );
-
-	POSITION pos = m_wndList.GetFirstSelectedItemPosition();	
-	while ( pos )
+	if ( m_nMode == PROTOCOL_NULL || m_nMode == PROTOCOL_G1 ||
+		m_nMode == PROTOCOL_G2 || m_nMode == PROTOCOL_ED2K )
 	{
-		int nItem = m_wndList.GetNextSelectedItem( pos );
-		if ( CHostCacheHost* pHost = GetItem( nItem ) )
+		CQuickLock oLock( HostCache.ForProtocol( m_nMode ? m_nMode : PROTOCOL_G2 )->m_pSection );
+
+		POSITION pos = m_wndList.GetFirstSelectedItemPosition();	
+		while ( pos )
 		{
-			CNeighbour* pNeighbour = Neighbours.Get( &pHost->m_pAddress );
-			if ( pNeighbour ) pNeighbour->Close();
+			int nItem = m_wndList.GetNextSelectedItem( pos );
+			if ( CHostCacheHost* pHost = GetItem( nItem ) )
+			{
+				CNeighbour* pNeighbour = Neighbours.Get( &pHost->m_pAddress );
+				if ( pNeighbour ) pNeighbour->Close();
+			}
 		}
 	}
 }
