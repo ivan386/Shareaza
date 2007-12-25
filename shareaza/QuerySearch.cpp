@@ -56,31 +56,29 @@ static char THIS_FILE[]=__FILE__;
 // CQuerySearch construction
 
 CQuerySearch::CQuerySearch(BOOL bGUID) :
-	m_oWords()
+	m_pSchema	( NULL ),
+	m_pXML		( NULL ),
+	m_nMinSize	( 0x0000000000000000 ),
+	m_nMaxSize	( 0xFFFFFFFFFFFFFFFF ),
+	m_bWantURL	( TRUE ),
+	m_bWantDN	( TRUE ),
+	m_bWantXML	( TRUE ),
+	m_bWantCOM	( TRUE ),
+	m_bWantPFS	( TRUE ),
+	m_bAndG1	( Settings.Gnutella1.EnableToday ),
+	m_nTTL		( 0 ),
+	m_bUDP		( FALSE ),
+	m_nKey		( 0 ),
+	m_bFirewall	( FALSE ),
+	m_bOOBv3	( FALSE ),
+	m_nMeta		( 0 ),
+	m_oWords	(),
+	m_oNegWords	()
 {
 	if ( bGUID ) Network.CreateID( m_oGUID );
-	
-	m_pSchema	= NULL;
-	m_pXML		= NULL;
-	m_nMinSize	= 0x0000000000000000;
-	m_nMaxSize	= 0xFFFFFFFFFFFFFFFF;
-	
-	m_bWantURL	= TRUE;
-	m_bWantDN	= TRUE;
-	m_bWantXML	= TRUE;
-	m_bWantCOM	= TRUE;
-	m_bWantPFS	= TRUE;
-	m_bAndG1	= Settings.Gnutella1.EnableToday;
-	
-	m_bUDP		= FALSE;
-	m_nKey		= 0;
-	m_bFirewall	= FALSE;
-	m_bOOBv3	= FALSE;
-	m_nMeta		= 0;
 
-//	m_nWords	= 0;
-//	m_pWordPtr	= NULL;
-//	m_pWordLen	= NULL;
+	ZeroMemory( &m_pEndpoint, sizeof( m_pEndpoint ) );
+	m_pEndpoint.sin_family = AF_INET;
 }
 
 CQuerySearch::CQuerySearch(const CQuerySearch* pOrigin) :
@@ -100,15 +98,17 @@ CQuerySearch::CQuerySearch(const CQuerySearch* pOrigin) :
 	m_bWantCOM( pOrigin->m_bWantCOM ),
 	m_bWantPFS( pOrigin->m_bWantPFS ),
 	m_bAndG1( pOrigin->m_bAndG1 ),
+	m_nTTL( pOrigin->m_nTTL ),
 	m_bUDP( pOrigin->m_bUDP ),
+	m_pEndpoint( pOrigin->m_pEndpoint ),
 	m_nKey( pOrigin->m_nKey ),
 	m_bFirewall( pOrigin->m_bFirewall ),
 	m_bOOBv3( pOrigin->m_bOOBv3 ),
 	m_nMeta( pOrigin->m_nMeta ),
-	m_pEndpoint( pOrigin->m_pEndpoint ),
 	m_oURNs( pOrigin->m_oURNs ),
 	m_oKeywordHashList( pOrigin->m_oKeywordHashList )
 	//m_oWords()                //! \todo comment this - we copy the search string but not the word list
+	//m_oNegWords()
 {
 	m_oSHA1		= pOrigin->m_oSHA1;
 	m_oTiger	= pOrigin->m_oTiger;
@@ -539,7 +539,7 @@ CQuerySearch* CQuerySearch::FromPacket(CPacket* pPacket, SOCKADDR_IN* pEndpoint)
 //////////////////////////////////////////////////////////////////////
 // CQuerySearch from G1 packet
 
-BOOL CQuerySearch::ReadG1Packet(CPacket* pPacket)
+BOOL CQuerySearch::ReadG1Packet(CG1Packet* pPacket)
 {
 	Hashes::Sha1Hash	oSHA1;
 	Hashes::TigerHash	oTiger;
@@ -547,8 +547,9 @@ BOOL CQuerySearch::ReadG1Packet(CPacket* pPacket)
 	Hashes::BtHash		oBTH;
 	Hashes::Md5Hash		oMD5;
 
-	m_bWantCOM = m_bWantPFS = FALSE;
-	
+	m_nTTL = pPacket->m_nHops + 2;
+	if ( m_nTTL > 7 ) m_nTTL = 7;
+
 	if ( pPacket->m_nProtocol == PROTOCOL_G2 )
 	{
 		GNUTELLAPACKET pG1;
@@ -558,7 +559,7 @@ BOOL CQuerySearch::ReadG1Packet(CPacket* pPacket)
 	}
 	else
 	{
-		m_oGUID = ((CG1Packet*)pPacket)->m_oGUID;
+		m_oGUID = pPacket->m_oGUID;
 	}
 	
 	if ( pPacket->GetRemaining() < 4 ) return FALSE;

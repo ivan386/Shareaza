@@ -69,39 +69,38 @@ static char THIS_FILE[]=__FILE__;
 //////////////////////////////////////////////////////////////////////
 // CLocalSearch construction
 
-CLocalSearch::CLocalSearch(CQuerySearch* pSearch, CNeighbour* pNeighbour, BOOL bWrapped)
+CLocalSearch::CLocalSearch(CQuerySearch* pSearch, CNeighbour* pNeighbour, BOOL bWrapped) :
+	m_pSearch		( pSearch ),
+	m_pNeighbour	( pNeighbour ),
+	m_pEndpoint		( NULL ),
+	m_pBuffer		( NULL ),
+	m_nProtocol		( bWrapped ? PROTOCOL_G1 : pNeighbour->m_nProtocol ),
+	m_bWrapped		( bWrapped ),
+	m_pPacket		( NULL )
 {
-	m_pSearch		= pSearch;
-	m_pNeighbour	= pNeighbour;
-	m_pEndpoint		= NULL;
-	m_pBuffer		= NULL;
-	m_nProtocol		= pNeighbour->m_nProtocol;
-	m_bWrapped		= bWrapped;
-	m_pPacket		= NULL;
 
-	if ( m_bWrapped ) m_nProtocol = PROTOCOL_G1;
 }
 
-CLocalSearch::CLocalSearch(CQuerySearch* pSearch, SOCKADDR_IN* pEndpoint)
+CLocalSearch::CLocalSearch(CQuerySearch* pSearch, SOCKADDR_IN* pEndpoint) :
+	m_pSearch		( pSearch ),
+	m_pNeighbour	( NULL ),
+	m_pEndpoint		( pEndpoint ),
+	m_pBuffer		( NULL ),
+	m_nProtocol		( PROTOCOL_G2 ),
+	m_bWrapped		( FALSE ),
+	m_pPacket		( NULL )
 {
-	m_pSearch		= pSearch;
-	m_pNeighbour	= NULL;
-	m_pEndpoint		= pEndpoint;
-	m_pBuffer		= NULL;
-	m_nProtocol		= PROTOCOL_G2;
-	m_bWrapped		= FALSE;
-	m_pPacket		= NULL;
 }
 
-CLocalSearch::CLocalSearch(CQuerySearch* pSearch, CBuffer* pBuffer, PROTOCOLID nProtocol)
+CLocalSearch::CLocalSearch(CQuerySearch* pSearch, CBuffer* pBuffer, PROTOCOLID nProtocol) :
+	m_pSearch		( pSearch ),
+	m_pNeighbour	( NULL ),
+	m_pEndpoint		( NULL ),
+	m_pBuffer		( pBuffer ),
+	m_nProtocol		( nProtocol ),
+	m_bWrapped		( FALSE ),
+	m_pPacket		( NULL )
 {
-	m_pSearch		= pSearch;
-	m_pNeighbour	= NULL;
-	m_pEndpoint		= NULL;
-	m_pBuffer		= pBuffer;
-	m_nProtocol		= nProtocol;
-	m_bWrapped		= FALSE;
-	m_pPacket		= NULL;
 }
 
 CLocalSearch::~CLocalSearch()
@@ -800,8 +799,8 @@ void CLocalSearch::CreatePacket(int nCount)
 void CLocalSearch::CreatePacketG1(int nCount)
 {
 	m_pPacket = CG1Packet::New( G1_PACKET_HIT,
-		( m_pNeighbour ? m_pNeighbour->GetMaxTTL() : Settings.Gnutella1.SearchTTL ), m_oGUID );
-	
+		( m_pSearch ? m_pSearch->m_nTTL : Settings.Gnutella1.SearchTTL ), m_oGUID );
+
 	m_pPacket->WriteByte( BYTE( nCount ) );
 	m_pPacket->WriteShortLE( htons( Network.m_pHost.sin_port ) );
 	m_pPacket->WriteLongLE( Network.m_pHost.sin_addr.S_un.S_addr );

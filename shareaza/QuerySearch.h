@@ -48,28 +48,29 @@ public:
 	typedef std::vector<DWORD>					Hash32List;
 // Attributes
 public:
-	Hashes::Guid		m_oGUID;
+	Hashes::Guid		m_oGUID;		// G1,G2: Search ID
 	CString				m_sSearch;		// search string, transformed by lowercase table
 	CString				m_sKeywords;	// search keywords (stems, minus words, split asian phrase etc.)
 	CString				m_sPosKeywords;	// Positive keywords ( no minus, no quotes basically for Gnutella1 Query)
 	CString				m_sG2Keywords;	// Query string for G2, containing Positive keywords and Minus Prefixed negative keywords.
-	CSchema*			m_pSchema;
-	CXMLElement*		m_pXML;
-	QWORD				m_nMinSize;
-	QWORD				m_nMaxSize;
-	Hashes::Ed2kHash	m_oSimilarED2K;
-	BOOL				m_bWantURL;
-	BOOL				m_bWantDN;
-	BOOL				m_bWantXML;
-	BOOL				m_bWantCOM;
-	BOOL				m_bWantPFS;
+	CSchema*			m_pSchema;		// G1,G2,ED2K: Metadata schema
+	CXMLElement*		m_pXML;			// G1,G2,ED2K: Metadata
+	QWORD				m_nMinSize;		// G2,ED2K: Minimal file size
+	QWORD				m_nMaxSize;		// G2,ED2K: Maximal file size
+	Hashes::Ed2kHash	m_oSimilarED2K;	// ED2K: Search for Similar Files
+	BOOL				m_bWantURL;		// G2: Sources, preview URL request
+	BOOL				m_bWantDN;		// G2: Descriptive name request
+	BOOL				m_bWantXML;		// G1,G2: Metadata request
+	BOOL				m_bWantCOM;		// G2: Comments request
+	BOOL				m_bWantPFS;		// G2: Partial Files Search request
 	BOOL				m_bAndG1;
-	BOOL				m_bUDP;
-	SOCKADDR_IN			m_pEndpoint;
-	DWORD				m_nKey;
-	BOOL				m_bFirewall;
-	BOOL				m_bOOBv3;		// OOB v3 Security Token support
-	BYTE				m_nMeta;		// MetaType query mask
+	BYTE				m_nTTL;			// G1: Suggested TTL for answer
+	BOOL				m_bUDP;			// G2: Packet received over UDP
+	SOCKADDR_IN			m_pEndpoint;	// G2: Packet received from this host
+	DWORD				m_nKey;			// G2: Hub query key
+	BOOL				m_bFirewall;	// G1: Firewalled host
+	BOOL				m_bOOBv3;		// G1: OOB v3 Security Token support
+	BYTE				m_nMeta;		// G1: MetaType query mask
 
 	Hash32List			m_oURNs;			// Hashed URNs
 	Hash32List			m_oKeywordHashList;	// list of hashed keywords to BOOST QUery Routing.
@@ -125,7 +126,7 @@ public:
 	CG2Packet*				ToG2Packet(SOCKADDR_IN* pUDP, DWORD nKey);
 	CEDPacket*				ToEDPacket(BOOL bUDP, DWORD nServerFlags = 0);
 private:
-	BOOL					ReadG1Packet(CPacket* pPacket);
+	BOOL					ReadG1Packet(CG1Packet* pPacket);
 	BOOL					ReadG2Packet(CG2Packet* pPacket, SOCKADDR_IN* pEndpoint = NULL);
 
 // Operations
