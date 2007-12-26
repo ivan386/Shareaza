@@ -138,7 +138,7 @@ BOOL CFileExecutor::Execute(LPCTSTR pszFile, BOOL bForce, BOOL bHasThumbnail, LP
 	}
 
 	bool bDangerous = false;
-	if ( theApp.m_pfnAssocIsDangerous && theApp.m_pfnAssocIsDangerous( (LPCTSTR)strPureExtension )
+	if ( theApp.m_pfnAssocIsDangerous && theApp.m_pfnAssocIsDangerous( (LPCTSTR)strPureExtension ) )
 	{
 		bDangerous = true;
 	}
