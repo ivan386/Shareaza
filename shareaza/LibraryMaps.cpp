@@ -831,14 +831,33 @@ CList< CLibraryFile* >* CLibraryMaps::Search(CQuerySearch* pSearch, int nMaximum
 	}
 	else if ( pSearch->m_oMD5 )
 	{
-		if ( CLibraryFile* pFile = LookupFileByMD5( pSearch->m_oMD5, ! bLocal, bAvailableOnly ) )
+		if ( bLocal )
 		{
-			if ( ! pHits ) pHits = new CList< CLibraryFile* >( 64 );
-			pHits->AddTail( pFile );
-			if ( ! bLocal )
+			// Since MD5 is not commonly used for searches we use it for the duplicate file search
+			// which requires to get a list of files but not to return only 1 file.
+			// See CLibrary::CheckDuplicates function
+			for ( POSITION pos = GetFileIterator() ; pos ; )
 			{
-				pFile->m_nHitsToday++;
-				pFile->m_nHitsTotal++;
+				CLibraryFile* pFile = GetNextFile( pos );
+
+				if ( validAndEqual( pFile->m_oMD5, pSearch->m_oMD5 ) )
+				{
+					if ( ! pHits ) pHits = new CList< CLibraryFile* >( 64 );
+					pHits->AddTail( pFile );
+				}
+			}
+		}
+		else
+		{
+			if ( CLibraryFile* pFile = LookupFileByMD5( pSearch->m_oMD5, ! bLocal, bAvailableOnly ) )
+			{
+				if ( ! pHits ) pHits = new CList< CLibraryFile* >( 64 );
+				pHits->AddTail( pFile );
+				if ( ! bLocal )
+				{
+					pFile->m_nHitsToday++;
+					pFile->m_nHitsTotal++;
+				}
 			}
 		}
 	}

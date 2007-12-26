@@ -178,19 +178,19 @@ void CLibrary::CheckDuplicates(CLibraryFile* pFile, bool bForce)
 	{
 		CLibraryFile* pExisting = LibraryMaps.GetNextFile( pos );
 		
-		if ( validAndEqual( pFile->m_oED2K, pExisting->m_oED2K ) )
+		if ( validAndEqual( pFile->m_oMD5, pExisting->m_oMD5 ) )
 			nCount++;
 	}
 
 	if ( nCount >= 5 ) // if more than 4 the same files, it's suspicious
 	{
-		if ( Settings.Live.LastDuplicateHash == pFile->m_oED2K.toString() && !bForce )
+		if ( Settings.Live.LastDuplicateHash == pFile->m_oMD5.toString() && !bForce )
 		{
 			// we already warned about the same file
 			Settings.Live.NewFile = FALSE;
 			return;
 		}
-		Settings.Live.LastDuplicateHash = pFile->m_oED2K.toString();
+		Settings.Live.LastDuplicateHash = pFile->m_oMD5.toString();
 		if ( !theApp.m_bLive ) return;
 
 		// warn the user
@@ -210,7 +210,7 @@ void CLibrary::CheckDuplicates(CLibraryFile* pFile, bool bForce)
 			CMainWnd* pMainWnd = (CMainWnd*)AfxGetMainWnd();
 			if ( pMainWnd )
 			{
-				CString strHash = L"urn:ed2k:" + Settings.Live.LastDuplicateHash;
+				CString strHash = L"urn:md5:" + Settings.Live.LastDuplicateHash;
 				int nLen = strHash.GetLength() + 1;
 				LPTSTR pszHash = new TCHAR[ nLen ];
 
@@ -223,16 +223,16 @@ void CLibrary::CheckDuplicates(CLibraryFile* pFile, bool bForce)
 	else Settings.Live.LastDuplicateHash.Empty();
 }
 
-void CLibrary::CheckDuplicates(LPCTSTR pszED2KHash)
+void CLibrary::CheckDuplicates(LPCTSTR pszMD5Hash)
 {
-	Hashes::Ed2kHash oED2K;
-	oED2K.fromString( pszED2KHash );
+	Hashes::Md5Hash oMD5;
+	oMD5.fromString( pszMD5Hash );
 
-	if ( oED2K )
+	if ( oMD5 )
 	{
 		CSingleLock oLock( &m_pSection );
 		if ( !oLock.Lock( 50 ) ) return;
-		CLibraryFile* pFile = LibraryMaps.LookupFileByED2K( oED2K, FALSE, TRUE );
+		CLibraryFile* pFile = LibraryMaps.LookupFileByMD5( oMD5, FALSE, TRUE );
 		if ( pFile )
 		{
 			CheckDuplicates( pFile, true );

@@ -75,7 +75,7 @@ public:
 
 // File and Folder Operations
 public:
-	void			CheckDuplicates(LPCTSTR pszEd2kHash);
+	void			CheckDuplicates(LPCTSTR pszMD5Hash);
 	CLibraryFile*	LookupFile(DWORD_PTR nIndex, BOOL bSharedOnly = FALSE, BOOL bAvailableOnly = FALSE) const;
 	CAlbumFolder*	GetAlbumRoot();
 	void			AddFile(CLibraryFile* pFile);

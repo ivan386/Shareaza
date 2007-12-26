@@ -79,16 +79,6 @@ CExistingFileDlg::CExistingFileDlg(CLibraryFile* pFile, CWnd* pParent, bool bDup
 		m_sComments		= pFile->m_sComments;
 		m_bAvailable	= pFile->IsAvailable() ? TRI_FALSE : TRI_UNKNOWN;
 	}
-	else if ( pFile->m_oED2K )
-	{
-		m_sURN = pFile->m_oED2K.toUrn();
-		m_bAvailable	= TRI_TRUE;
-	}
-	else if ( pFile->m_oBTH )
-	{
-		m_sURN = pFile->m_oBTH.toUrn();
-		m_bAvailable	= TRI_TRUE;
-	}
 	else if ( pFile->m_oMD5 )
 	{
 		m_sURN = pFile->m_oMD5.toUrn();
