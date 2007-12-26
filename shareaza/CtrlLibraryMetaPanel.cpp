@@ -59,6 +59,7 @@ BEGIN_MESSAGE_MAP(CLibraryMetaPanel, CLibraryPanel)
 	ON_WM_LBUTTONUP()
 	ON_WM_LBUTTONDOWN()
 	ON_WM_MOUSEWHEEL()
+	ON_MESSAGE(WM_THUMBFAILED, OnThumbnailFailure)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -717,9 +718,23 @@ void CLibraryMetaPanel::OnRun()
 
 			m_pSection.Unlock();
 		}
+		else
+		{
+			m_pSection.Lock();
+			SendMessage( WM_THUMBFAILED, 0, m_nIndex );
+			m_pSection.Unlock();
+		}
 	}
 
 	m_bThread = FALSE;
 }
 
-
+LRESULT CLibraryMetaPanel::OnThumbnailFailure(WPARAM, LPARAM lParam)
+{
+	CSingleLock pLock( &Library.m_pSection, TRUE );
+	CLibraryFile* pFile = Library.LookupFile( (DWORD_PTR)lParam );
+	if ( pFile != NULL )
+		pFile->m_bCachedPreview = FALSE;
+	pLock.Unlock();
+	return 0;
+}

@@ -88,7 +88,6 @@ public:
 
 // Implementation
 protected:
-	//{{AFX_MSG(CLibraryMetaPanel)
 	afx_msg void OnPaint();
 	afx_msg void OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
 	afx_msg void OnSize(UINT nType, int cx, int cy);
@@ -98,7 +97,7 @@ protected:
 	afx_msg void OnLButtonUp(UINT nFlags, CPoint point);
 	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
 	afx_msg BOOL OnMouseWheel(UINT nFlags, short zDelta, CPoint pt);
-	//}}AFX_MSG
+	afx_msg LRESULT OnThumbnailFailure(WPARAM, LPARAM);
 
 	DECLARE_MESSAGE_MAP()
 
