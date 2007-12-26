@@ -48,8 +48,8 @@ private:
 public:
 	bool		HasActiveTransfers() const;
 	DWORD		GetTransferCount() const;
-	DWORD		GetTransferCount(int nState, IN_ADDR* pAddress = NULL) const;
-	QWORD		GetAmountDownloadedFrom(IN_ADDR* pAddress) const;
+	DWORD		GetTransferCount(int nState, IN_ADDR* const pAddress = NULL) const;
+	QWORD		GetAmountDownloadedFrom(IN_ADDR* const pAddress) const;
 	void		CloseTransfers();
 	DWORD		GetAverageSpeed() const;
 	DWORD		GetMeasuredSpeed() const;
@@ -65,6 +65,7 @@ private:
 
 // Inlines
 public:
+	inline bool			ValidTransfer(IN_ADDR* const pAddress, CDownloadTransfer* const pTransfer) const;
 	CDownloadTransfer*	GetFirstTransfer() const { return m_pTransferFirst; }
 
 	friend class CDownloadTransfer; // AddTransfer && RemoveTransfer

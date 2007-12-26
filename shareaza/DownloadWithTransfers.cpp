@@ -64,9 +64,8 @@ bool CDownloadWithTransfers::HasActiveTransfers() const
 {
 	for ( CDownloadTransfer* pTransfer = m_pTransferFirst; pTransfer; pTransfer = pTransfer->m_pDlNext )
 	{
-		if ( pTransfer->m_nProtocol != PROTOCOL_ED2K
-			|| ( static_cast< CDownloadTransferED2K* >( pTransfer )->m_nState > dtsNull
-				&& static_cast< CDownloadTransferED2K* >( pTransfer )->m_bConnected ) )
+		if ( static_cast< CDownloadTransfer* >( pTransfer )->m_nState > dtsNull &&
+			 static_cast< CConnection* >( pTransfer )->m_bConnected )
 		{
 			return true;
 		}
@@ -80,9 +79,8 @@ DWORD CDownloadWithTransfers::GetTransferCount() const
 
 	for ( CDownloadTransfer* pTransfer = m_pTransferFirst; pTransfer; pTransfer = pTransfer->m_pDlNext )
 	{
-		if ( pTransfer->m_nProtocol != PROTOCOL_ED2K
-			|| ( static_cast< CDownloadTransferED2K* >( pTransfer )->m_nState > dtsNull
-				&& static_cast< CDownloadTransferED2K* >( pTransfer )->m_bConnected ) )
+		if ( static_cast< CDownloadTransfer* >( pTransfer )->m_nState > dtsNull &&
+			 static_cast< CConnection* >( pTransfer )->m_bConnected )
 		{
 			++nCount;
 		}
@@ -90,15 +88,16 @@ DWORD CDownloadWithTransfers::GetTransferCount() const
 	return nCount;
 }
 
-// This macro is used to clean up the function below and make it more readable. It's the first 
+// This inline is used to clean up the function below and make it more readable. It's the first 
 // condition in any IF statement that checks if the current transfer should be counted
-#define VALID_TRANSFER ( ! pAddress || pAddress->S_un.S_addr == pTransfer->m_pHost.sin_addr.S_un.S_addr ) &&	\
-					   ( ( pTransfer->m_nProtocol != PROTOCOL_ED2K ) ||											\
-						 ( static_cast< CDownloadTransferED2K* >( pTransfer )->m_nState > dtsNull &&						\
-						   static_cast< CDownloadTransferED2K* >( pTransfer )->m_bConnected ) )
+bool CDownloadWithTransfers::ValidTransfer(IN_ADDR* const pAddress, CDownloadTransfer* const pTransfer) const
+{
+	return ( ! pAddress || pAddress->S_un.S_addr == pTransfer->m_pHost.sin_addr.S_un.S_addr ) &&
+			 static_cast< CDownloadTransfer* >( pTransfer )->m_nState > dtsNull &&
+			 static_cast< CConnection* >( pTransfer )->m_bConnected;
+}
 
-
-DWORD CDownloadWithTransfers::GetTransferCount(int nState, IN_ADDR* pAddress) const
+DWORD CDownloadWithTransfers::GetTransferCount(int nState, IN_ADDR* const pAddress) const
 {
     int nCount = 0;
 
@@ -107,7 +106,7 @@ DWORD CDownloadWithTransfers::GetTransferCount(int nState, IN_ADDR* pAddress) co
     case dtsCountAll:
         for ( CDownloadTransfer* pTransfer = m_pTransferFirst; pTransfer; pTransfer = pTransfer->m_pDlNext )
         {
-		    if ( VALID_TRANSFER )
+		    if ( ValidTransfer( pAddress, pTransfer ) )
             {
                 ++nCount;
             }
@@ -116,7 +115,7 @@ DWORD CDownloadWithTransfers::GetTransferCount(int nState, IN_ADDR* pAddress) co
     case dtsCountNotQueued:
 	    for ( CDownloadTransfer* pTransfer = m_pTransferFirst ; pTransfer ; pTransfer = pTransfer->m_pDlNext )
 	    {	
-		    if ( VALID_TRANSFER && ( ( pTransfer->m_nState != dtsQueued ) && 
+		    if ( ValidTransfer( pAddress, pTransfer ) && ( ( pTransfer->m_nState != dtsQueued ) && 
 				( ! ( pTransfer->m_nState == dtsTorrent && static_cast< CDownloadTransferBT* >(pTransfer)->m_bChoked ) ) ) )
                  
             {
@@ -137,7 +136,7 @@ DWORD CDownloadWithTransfers::GetTransferCount(int nState, IN_ADDR* pAddress) co
     case dtsCountTorrentAndActive:
 	    for ( CDownloadTransfer* pTransfer = m_pTransferFirst ; pTransfer ; pTransfer = pTransfer->m_pDlNext )
 	    {	
-		    if ( VALID_TRANSFER )
+		    if ( ValidTransfer( pAddress, pTransfer ) )
 		    {
                 switch( pTransfer->m_nState )
                 {
@@ -164,7 +163,7 @@ DWORD CDownloadWithTransfers::GetTransferCount(int nState, IN_ADDR* pAddress) co
 //////////////////////////////////////////////////////////////////////
 // GetAmountDownloadedFrom total volume from an IP
 
-QWORD CDownloadWithTransfers::GetAmountDownloadedFrom(IN_ADDR* pAddress) const
+QWORD CDownloadWithTransfers::GetAmountDownloadedFrom(IN_ADDR* const pAddress) const
 {
 	QWORD nTotal = 0;
 
