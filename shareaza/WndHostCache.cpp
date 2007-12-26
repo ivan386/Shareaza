@@ -43,7 +43,6 @@ static char THIS_FILE[] = __FILE__;
 IMPLEMENT_SERIAL(CHostCacheWnd, CPanelWnd, 0)
 
 BEGIN_MESSAGE_MAP(CHostCacheWnd, CPanelWnd)
-	//{{AFX_MSG_MAP(CHostCacheWnd)
 	ON_WM_CREATE()
 	ON_WM_SIZE()
 	ON_WM_NCMOUSEMOVE()
@@ -73,7 +72,6 @@ BEGIN_MESSAGE_MAP(CHostCacheWnd, CPanelWnd)
 	ON_COMMAND(ID_HOSTCACHE_PRIORITY, OnHostcachePriority)
 	ON_UPDATE_COMMAND_UI(ID_NEIGHBOURS_COPY, OnUpdateNeighboursCopy)
 	ON_COMMAND(ID_NEIGHBOURS_COPY, OnNeighboursCopy)
-	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 
@@ -150,7 +148,7 @@ int CHostCacheWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	CWaitCursor pCursor;
 	m_bAllowUpdates = TRUE;
 	Update( TRUE );
-		
+
 	return 0;
 }
 
@@ -172,9 +170,10 @@ void CHostCacheWnd::Update(BOOL bForce)
 	if ( ! bForce && ! m_bAllowUpdates ) return;
 
 	CHostCacheList* pCache = HostCache.ForProtocol( m_nMode ? m_nMode : PROTOCOL_G2 );
-	CSingleLock oLock( &pCache->m_pSection, FALSE );
-	if ( ! oLock.Lock( 100 ) ) return;
 	
+	CSingleLock oLock( &pCache->m_pSection, 100 );
+	if ( ! oLock.IsLocked() ) return;
+
 	m_nCookie = pCache->m_nCookie;
 	int nProtocolRev = m_gdiImageList.GetImageCount() - 1;
 	
@@ -366,8 +365,8 @@ void CHostCacheWnd::OnUpdateHostCacheDisconnect(CCmdUI* pCmdUI)
 		m_nMode == PROTOCOL_G2 || m_nMode == PROTOCOL_ED2K )
 	{
 		CSingleLock oLock( &HostCache.ForProtocol(
-			m_nMode ? m_nMode : PROTOCOL_G2 )->m_pSection, FALSE );
-		if ( ! oLock.Lock( 100 ) ) return;
+			m_nMode ? m_nMode : PROTOCOL_G2 )->m_pSection, 100 );
+		if ( ! oLock.IsLocked() ) return;
 
 		POSITION pos = m_wndList.GetFirstSelectedItemPosition();
 		while ( pos )

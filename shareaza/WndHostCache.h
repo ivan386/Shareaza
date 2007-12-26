@@ -19,8 +19,8 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_WNDHOSTCACHE_H__CF02C3BA_2D52_49F3_85C1_07365B714B3D__INCLUDED_)
-#define AFX_WNDHOSTCACHE_H__CF02C3BA_2D52_49F3_85C1_07365B714B3D__INCLUDED_
+#if !defined(WNDHOSTCACHE_H)
+#define WNDHOSTCACHE_H
 
 #pragma once
 
@@ -57,15 +57,11 @@ public:
 	virtual void	OnSkinChange();
 	
 // Overrides
-public:
-	//{{AFX_VIRTUAL(CHostCacheWnd)
-	public:
+protected:
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
-	//}}AFX_VIRTUAL
 
 // Implementation
 protected:
-	//{{AFX_MSG(CHostCacheWnd)
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg void OnSize(UINT nType, int cx, int cy);
 	afx_msg void OnCustomDrawList(NMHDR* pNMHDR, LRESULT* pResult);
@@ -95,15 +91,13 @@ protected:
 	afx_msg void OnHostcachePriority();
 	afx_msg void OnUpdateNeighboursCopy(CCmdUI *pCmdUI);
 	afx_msg void OnNeighboursCopy();
-	//}}AFX_MSG
+
 	DECLARE_MESSAGE_MAP()
 
 protected:
 	virtual void RecalcLayout(BOOL bNotify = TRUE);
 };
 
-//{{AFX_INSERT_LOCATION}}
-
 #define IDC_HOSTS		100
 
-#endif // !defined(AFX_WNDHOSTCACHE_H__CF02C3BA_2D52_49F3_85C1_07365B714B3D__INCLUDED_)
+#endif // !defined(WNDHOSTCACHE_H)
