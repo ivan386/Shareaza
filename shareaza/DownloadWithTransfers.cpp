@@ -64,8 +64,11 @@ bool CDownloadWithTransfers::HasActiveTransfers() const
 {
 	for ( CDownloadTransfer* pTransfer = m_pTransferFirst; pTransfer; pTransfer = pTransfer->m_pDlNext )
 	{
-		if ( static_cast< CDownloadTransfer* >( pTransfer )->m_nState > dtsNull &&
-			 static_cast< CConnection* >( pTransfer )->m_bConnected )
+		// Metadata, tiger fetch are also transfers, but since they are very short in time
+		// should we check that?
+		// TODO: find why static_cast< CConnection* >( pTransfer )->m_bConnected is FALSE
+		// when when the status is dtsDownloading.
+		if ( pTransfer->m_nState == dtsDownloading )
 		{
 			return true;
 		}
@@ -79,7 +82,7 @@ DWORD CDownloadWithTransfers::GetTransferCount() const
 
 	for ( CDownloadTransfer* pTransfer = m_pTransferFirst; pTransfer; pTransfer = pTransfer->m_pDlNext )
 	{
-		if ( static_cast< CDownloadTransfer* >( pTransfer )->m_nState > dtsNull &&
+		if ( pTransfer->m_nState > dtsNull &&
 			 static_cast< CConnection* >( pTransfer )->m_bConnected )
 		{
 			++nCount;
@@ -93,7 +96,7 @@ DWORD CDownloadWithTransfers::GetTransferCount() const
 bool CDownloadWithTransfers::ValidTransfer(IN_ADDR* const pAddress, CDownloadTransfer* const pTransfer) const
 {
 	return ( ! pAddress || pAddress->S_un.S_addr == pTransfer->m_pHost.sin_addr.S_un.S_addr ) &&
-			 static_cast< CDownloadTransfer* >( pTransfer )->m_nState > dtsNull &&
+			 pTransfer->m_nState > dtsNull &&
 			 static_cast< CConnection* >( pTransfer )->m_bConnected;
 }
 

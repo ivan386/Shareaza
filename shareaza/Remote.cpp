@@ -1012,7 +1012,7 @@ void CRemote::PageDownloads()
 					str.Format( _T("%i:%.2i:%.2i"), tNow / 3600, ( tNow / 60 ) % 60, tNow % 60 );
 			}
 		}
-		else if ( nSources > 0 )
+		else if ( nSources > 0 && !pDownload->IsDownloading() )
 			LoadString( str, IDS_STATUS_PENDING );
 		else if ( pDownload->IsTorrent() )
 		{

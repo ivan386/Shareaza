@@ -1569,6 +1569,8 @@ CString CDownloadsCtrl::GetDownloadStatus(CDownload *pDownload)
 	}
 	else if ( ! pDownload->IsTrying() )
 		LoadString( strText, IDS_STATUS_QUEUED );
+	else if ( pDownload->IsDownloading() )
+		LoadString( strText, IDS_STATUS_DOWNLOADING );
 	else if ( nSources > 0 )
 		LoadString( strText, IDS_STATUS_PENDING );
 	else if ( pDownload->IsTorrent() )
