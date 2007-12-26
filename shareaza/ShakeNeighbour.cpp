@@ -720,7 +720,7 @@ void CShakeNeighbour::SendPrivateHeaders()
 
 // Takes a line like "GNUTELLA/0.6 503 Need an Ultrapeer"
 // Sends it with the "X-Try-Ultrapeers:" header
-void CShakeNeighbour::SendHostHeaders(LPCTSTR pszMessage, size_t nLength)
+void CShakeNeighbour::SendHostHeaders(LPCSTR pszMessage, size_t nLength)
 {
 	// Local variables
 	DWORD nTime = static_cast< DWORD >( time( NULL ) );	// The number of seconds since midnight on January 1, 1970
@@ -1320,7 +1320,7 @@ BOOL CShakeNeighbour::OnHeadersCompleteG2()
 				if ( Neighbours.GetCount( PROTOCOL_G2, nrsConnected, ntLeaf ) > 0 )
 				{
 					// Tell the remote computer we can't connect (do)
-					SendHostHeaders( _PT("GNUTELLA/0.6 503 I have leaves") );
+					SendHostHeaders( _P("GNUTELLA/0.6 503 I have leaves") );
 					DelayClose( IDS_HANDSHAKE_CANTBEPEER ); // Send the buffer then close the socket
 					return FALSE; // Return false all the way back to CHandshakes::RunHandshakes, which will delete this object
 				}
@@ -1329,7 +1329,7 @@ BOOL CShakeNeighbour::OnHeadersCompleteG2()
 				if ( Settings.Gnutella2.ClientMode == MODE_HUB )
 				{
 					// We are a hub, and the remote computer doesn't need any more hub connections, tell it we can't connect
-					SendHostHeaders( _PT("GNUTELLA/0.6 503 Ultrapeer disabled") );
+					SendHostHeaders( _P("GNUTELLA/0.6 503 Ultrapeer disabled") );
 					DelayClose( IDS_HANDSHAKE_NOULTRAPEER ); // Send the buffer then close the socket
 					return FALSE; // Return false all the way back to CHandshakes::RunHandshakes, which will delete this object
 				}
@@ -1346,7 +1346,7 @@ BOOL CShakeNeighbour::OnHeadersCompleteG2()
 			if ( Settings.Gnutella2.ClientMode == MODE_HUB )
 			{
 				// (do)
-				SendHostHeaders( _PT("GNUTELLA/0.6 503 Ultrapeer disabled") );
+				SendHostHeaders( _P("GNUTELLA/0.6 503 Ultrapeer disabled") );
 				DelayClose( IDS_HANDSHAKE_NOULTRAPEER ); // Send the buffer then close the socket
 				return FALSE; // Return false all the way back to CHandshakes::RunHandshakes, which will delete this object
 			}
@@ -1361,7 +1361,7 @@ BOOL CShakeNeighbour::OnHeadersCompleteG2()
 			if ( Settings.Gnutella2.ClientMode == MODE_LEAF )
 			{
 				// Tell the remote computer we can't connect because we need a hub
-				SendHostHeaders( _PT("GNUTELLA/0.6 503 Need an Ultrapeer") );
+				SendHostHeaders( _P("GNUTELLA/0.6 503 Need an Ultrapeer") );
 				DelayClose( IDS_HANDSHAKE_NEEDAPEER ); // Send the buffer then close the socket
 				return FALSE; // Return false all the way back to CHandshakes::RunHandshakes, which will delete this object
 			}
@@ -1372,7 +1372,7 @@ BOOL CShakeNeighbour::OnHeadersCompleteG2()
 			if ( Settings.Gnutella2.ClientMode == MODE_LEAF )
 			{
 				// Tell the remote computer we can't connect because we need a hub
-				SendHostHeaders( _PT("GNUTELLA/0.6 503 Need an Ultrapeer") );
+				SendHostHeaders( _P("GNUTELLA/0.6 503 Need an Ultrapeer") );
 				DelayClose( IDS_HANDSHAKE_NEEDAPEER ); // Send the buffer then close the socket
 				return FALSE; // Return false all the way back to CHandshakes::RunHandshakes, which will delete this object
 			}
@@ -1401,7 +1401,7 @@ BOOL CShakeNeighbour::OnHeadersCompleteG2()
 				HostCache.Gnutella2.Remove( &m_pHost.sin_addr );
 			}
 			// Tell the remote computer we can't connect because we are a shielded leaf right now
-			SendHostHeaders( _PT("GNUTELLA/0.6 503 Shielded leaf node") );
+			SendHostHeaders( _P("GNUTELLA/0.6 503 Shielded leaf node") );
 			DelayClose( IDS_HANDSHAKE_IAMLEAF ); // Send the buffer then close the socket
 			return FALSE; // Return false all the way back to CHandshakes::RunHandshakes, which will delete this object
 
@@ -1470,7 +1470,7 @@ BOOL CShakeNeighbour::OnHeadersCompleteG2()
 				// Check to see if we have enough free leaf slots.
 				if ( Neighbours.GetCount(PROTOCOL_G2, nrsConnected, ntLeaf ) > ( Settings.Gnutella2.NumLeafs - 5 ) )
 				{
-					SendHostHeaders( _PT("GNUTELLA/0.6 503 Maximum connections reached") );
+					SendHostHeaders( _P("GNUTELLA/0.6 503 Maximum connections reached") );
 					DelayClose( IDS_HANDSHAKE_SURPLUS );
 					return FALSE;
 				}
@@ -1491,7 +1491,7 @@ BOOL CShakeNeighbour::OnHeadersCompleteG2()
 			))
 		{
 			// Tell the remote computer that we can't connect because we have too many connections already, and close the connection
-			SendHostHeaders( _PT("GNUTELLA/0.6 503 Maximum connections reached") ); // Send this error code along with some more IP addresses it can try
+			SendHostHeaders( _P("GNUTELLA/0.6 503 Maximum connections reached") ); // Send this error code along with some more IP addresses it can try
 			DelayClose( IDS_HANDSHAKE_SURPLUS ); // Close the connection, but not until we've written the buffered outgoing data first
 			return FALSE; // Return false all the way back to CHandshakes::RunHandshakes, which will delete this object
 
@@ -1500,7 +1500,7 @@ BOOL CShakeNeighbour::OnHeadersCompleteG2()
 				  ( m_nNodeType == ntLeaf && ( Settings.Gnutella2.ClientMode == MODE_LEAF ) ) ) // We're both leaves
 		{
 			// Tell the remote computer that we can't connect
-			SendHostHeaders( _PT("GNUTELLA/0.6 503 Ultrapeer disabled") ); // Send the error code along with more IP addresses the remote computer can try
+			SendHostHeaders( _P("GNUTELLA/0.6 503 Ultrapeer disabled") ); // Send the error code along with more IP addresses the remote computer can try
 			DelayClose( IDS_HANDSHAKE_NOULTRAPEER ); // Close the connection, but not until we've written the buffered outgoing data first
 			return FALSE; // Return false all the way back to CHandshakes::RunHandshakes, which will delete this object
 
@@ -1508,7 +1508,7 @@ BOOL CShakeNeighbour::OnHeadersCompleteG2()
 		else if ( m_nNodeType != ntHub && ( Settings.Gnutella2.ClientMode == MODE_LEAF ) )
 		{
 			// Tell the remote computer we can't connect because we need a hub
-			SendHostHeaders( _PT("GNUTELLA/0.6 503 Need an Ultrapeer") );
+			SendHostHeaders( _P("GNUTELLA/0.6 503 Need an Ultrapeer") );
 			DelayClose( IDS_HANDSHAKE_NEEDAPEER ); // Send the buffer then close the socket
 			return FALSE; // Return false all the way back to CHandshakes::RunHandshakes, which will delete this object
 
@@ -1605,7 +1605,7 @@ BOOL CShakeNeighbour::OnHeadersCompleteG1()
 				if ( Neighbours.GetCount( PROTOCOL_G1, nrsConnected, ntLeaf ) > 0 )
 				{
 					// Tell the remote computer we can't connect (do)
-					SendHostHeaders( _PT("GNUTELLA/0.6 503 I have leaves") );
+					SendHostHeaders( _P("GNUTELLA/0.6 503 I have leaves") );
 					DelayClose( IDS_HANDSHAKE_CANTBEPEER ); // Send the buffer then close the socket
 					return FALSE; // Return false all the way back to CHandshakes::RunHandshakes, which will delete this object
 				}
@@ -1614,7 +1614,7 @@ BOOL CShakeNeighbour::OnHeadersCompleteG1()
 				if ( Settings.Gnutella1.ClientMode == MODE_ULTRAPEER )
 				{
 					// Tell the remote computer we can't connect
-					SendHostHeaders( _PT("GNUTELLA/0.6 503 Ultrapeer disabled") );
+					SendHostHeaders( _P("GNUTELLA/0.6 503 Ultrapeer disabled") );
 					DelayClose( IDS_HANDSHAKE_NOULTRAPEER ); // Send the buffer then close the socket
 					return FALSE; // Return false all the way back to CHandshakes::RunHandshakes, which will delete this object
 				}
@@ -1631,7 +1631,7 @@ BOOL CShakeNeighbour::OnHeadersCompleteG1()
 			if ( Settings.Gnutella1.ClientMode == MODE_ULTRAPEER )
 			{
 				// Tell the remote computer we can't connect
-				SendHostHeaders( _PT("GNUTELLA/0.6 503 Ultrapeer disabled") );
+				SendHostHeaders( _P("GNUTELLA/0.6 503 Ultrapeer disabled") );
 				DelayClose( IDS_HANDSHAKE_NOULTRAPEER ); // Send the buffer then close the socket
 				return FALSE; // Return false all the way back to CHandshakes::RunHandshakes, which will delete this object
 			}
@@ -1646,7 +1646,7 @@ BOOL CShakeNeighbour::OnHeadersCompleteG1()
 			if ( Settings.Gnutella1.ClientMode == MODE_LEAF )
 			{
 				// Tell the remote computer that we can't connect because we're both leaves
-				SendHostHeaders( _PT("GNUTELLA/0.6 503 Need an Ultrapeer") );
+				SendHostHeaders( _P("GNUTELLA/0.6 503 Need an Ultrapeer") );
 				DelayClose( IDS_HANDSHAKE_NEEDAPEER ); // Send the buffer, close the socket, cite need a peer as the reason
 				return FALSE;                          // Return false all the way back to CHandshakes::RunHandshakes, which will delete this object
 			}
@@ -1678,7 +1678,7 @@ BOOL CShakeNeighbour::OnHeadersCompleteG1()
 				HostCache.Gnutella1.Remove( &m_pHost.sin_addr );
 			}
 			// Tell the remote computer we can't connect because we are a shielded leaf right now
-			SendHostHeaders( _PT("GNUTELLA/0.6 503 Shielded leaf node") );
+			SendHostHeaders( _P("GNUTELLA/0.6 503 Shielded leaf node") );
 			DelayClose( IDS_HANDSHAKE_IAMLEAF ); // Send the buffer and then close the socket citing our being a leaf as the reason
 			return FALSE; // Return false all the way back to CHandshakes::RunHandshakes, which will delete this object
 
@@ -1712,7 +1712,7 @@ BOOL CShakeNeighbour::OnHeadersCompleteG1()
 			 ( ( m_nNodeType != ntHub ) && ( m_bObsoleteClient || m_bBadClient ) ) )	// This is an obsolete version of Shareaza
 		{
 			// Tell the remote computer we can't connect because we already have too many connections
-			SendHostHeaders( _PT("GNUTELLA/0.6 503 Maximum connections reached") );
+			SendHostHeaders( _P("GNUTELLA/0.6 503 Maximum connections reached") );
 			DelayClose( IDS_HANDSHAKE_SURPLUS ); // Send the buffer then close the socket
 			return FALSE; // Return false all the way back to CHandshakes::RunHandshakes, which will delete this object
 
@@ -1721,7 +1721,7 @@ BOOL CShakeNeighbour::OnHeadersCompleteG1()
 				  ( m_nNodeType == ntLeaf && ( Settings.Gnutella1.ClientMode == MODE_LEAF ) ) )      // Or, this connection is down to a leaf like us
 		{
 			// Tell the remote computer we can't connect
-			SendHostHeaders( _PT("GNUTELLA/0.6 503 Ultrapeer disabled") );
+			SendHostHeaders( _P("GNUTELLA/0.6 503 Ultrapeer disabled") );
 			DelayClose( IDS_HANDSHAKE_NOULTRAPEER ); // Send the buffer then close the socket
 			return FALSE; // Return false all the way back to CHandshakes::RunHandshakes, which will delete this object
 
@@ -1729,7 +1729,7 @@ BOOL CShakeNeighbour::OnHeadersCompleteG1()
 		else if ( m_nNodeType != ntHub && ( Settings.Gnutella1.ClientMode == MODE_LEAF ) )
 		{
 			// Tell the remote computer we can't connect
-			SendHostHeaders( _PT("GNUTELLA/0.6 503 Need an Ultrapeer") );
+			SendHostHeaders( _P("GNUTELLA/0.6 503 Need an Ultrapeer") );
 			DelayClose( IDS_HANDSHAKE_NEEDAPEER ); // Send the buffer then close the socket
 			return FALSE; // Return false all the way back to CHandshakes::RunHandshakes, which will delete this object
 
@@ -1988,9 +1988,6 @@ BOOL CShakeNeighbour::IsClientBad()
 
 	// Clients that over-query or otherwise cause problems
 	//if ( _tcsistr( m_sUserAgent, _T("") ) )			return TRUE;
-
-
-
 
 	// Unknown- Assume OK
 	return FALSE;
