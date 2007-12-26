@@ -42,7 +42,6 @@
 #include "TigerTree.h"
 #include "QueryHashMaster.h"
 #include "VendorCache.h"
-#include "HostCache.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE

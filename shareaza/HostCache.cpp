@@ -405,6 +405,8 @@ bool CHostCacheList::Remove(const IN_ADDR* pAddress)
 
 void CHostCacheList::OnFailure(const IN_ADDR* pAddress, WORD nPort, bool bRemove)
 {
+	CQuickLock oLock( m_pSection );
+
 	CHostCacheHostPtr pHost = Find( pAddress );
 	if ( pHost && ( ! nPort || pHost->m_nPort == nPort ) )
 	{
@@ -427,7 +429,9 @@ void CHostCacheList::OnFailure(const IN_ADDR* pAddress, WORD nPort, bool bRemove
 
 void CHostCacheList::OnSuccess(const IN_ADDR* pAddress, WORD nPort, bool bUpdate)
 {
-	CHostCacheHostPtr pHost = Find( pAddress );
+	CQuickLock oLock( m_pSection );
+
+	CHostCacheHostPtr pHost = Add( const_cast< IN_ADDR* >( pAddress ), nPort );
 	if ( pHost && ( ! nPort || pHost->m_nPort == nPort ) )
 	{
 		m_nCookie++;
@@ -963,7 +967,8 @@ bool CHostCacheHost::Update(WORD nPort, DWORD tSeen, LPCTSTR pszVendor, DWORD nU
 CNeighbour* CHostCacheHost::ConnectTo(BOOL bAutomatic)
 {
 	m_tConnect = static_cast< DWORD >( time( NULL ) );
-
+	ASSERT( m_nProtocol == PROTOCOL_G1 || m_nProtocol == PROTOCOL_G2 ||
+		 m_nProtocol == PROTOCOL_ED2K );
 	return Neighbours.ConnectTo( &m_pAddress, m_nPort, m_nProtocol, bAutomatic );
 }
 

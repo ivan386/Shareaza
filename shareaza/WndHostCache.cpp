@@ -170,10 +170,9 @@ void CHostCacheWnd::Update(BOOL bForce)
 	if ( ! bForce && ! m_bAllowUpdates ) return;
 
 	CHostCacheList* pCache = HostCache.ForProtocol( m_nMode ? m_nMode : PROTOCOL_G2 );
+	CSingleLock oLock( &pCache->m_pSection, FALSE );
+	if ( ! oLock.Lock( 100 ) ) return;
 	
-	CSingleLock oLock( &pCache->m_pSection, 100 );
-	if ( ! oLock.IsLocked() ) return;
-
 	m_nCookie = pCache->m_nCookie;
 	int nProtocolRev = m_gdiImageList.GetImageCount() - 1;
 	
@@ -365,8 +364,8 @@ void CHostCacheWnd::OnUpdateHostCacheDisconnect(CCmdUI* pCmdUI)
 		m_nMode == PROTOCOL_G2 || m_nMode == PROTOCOL_ED2K )
 	{
 		CSingleLock oLock( &HostCache.ForProtocol(
-			m_nMode ? m_nMode : PROTOCOL_G2 )->m_pSection, 100 );
-		if ( ! oLock.IsLocked() ) return;
+			m_nMode ? m_nMode : PROTOCOL_G2 )->m_pSection, FALSE );
+		if ( ! oLock.Lock( 100 ) ) return;
 
 		POSITION pos = m_wndList.GetFirstSelectedItemPosition();
 		while ( pos )
