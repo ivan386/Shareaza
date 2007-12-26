@@ -175,6 +175,9 @@ void CShakeNeighbour::Close(UINT nError)
 		case IDS_HANDSHAKE_FAIL:
 			bRemove = true;
 			break;
+		case IDS_CONNECTION_PEERPRUNE:
+			bRemove = true;
+			break;
 	}
 
 	if ( bFail && m_bInitiated )
@@ -1810,10 +1813,21 @@ void CShakeNeighbour::OnHandshakeComplete()
 	// Make a pointer for a new object that will be a copy of this one, but in a different place on the CConnection inheritance tree
 	CNeighbour* pNeighbour = NULL;
 
+	// Remove leaf from host cache
+	if ( m_nNodeType == ntLeaf )
+	{
+		HostCache.OnFailure( &m_pHost.sin_addr, htons( m_pHost.sin_port ), m_nProtocol, true );
+	}
+
 	// If the remote computer is G2, or can send and understand Gnutella2 packets and isn't G1
 	if ( m_bG2Send && m_bG2Accept && m_nProtocol != PROTOCOL_G1 )
 	{
-		HostCache.OnSuccess( &m_pHost.sin_addr, htons( m_pHost.sin_port ), PROTOCOL_G2, true );
+		// Add good hub to host cache
+		if ( m_nNodeType == ntHub || m_nNodeType == ntNode )
+		{
+			HostCache.OnSuccess( &m_pHost.sin_addr, htons( m_pHost.sin_port ), m_nProtocol, true );
+		}
+
 		// check if this connection is still needed at this point
 		if ( !m_bAutomatic && ( ( m_nNodeType == ntHub || m_nNodeType == ntNode ) && !Neighbours.NeedMoreHubs( PROTOCOL_G2 ) ) ||
 			( m_nNodeType == ntLeaf && !Neighbours.NeedMoreLeafs( PROTOCOL_G2 ) ) )
@@ -1831,7 +1845,12 @@ void CShakeNeighbour::OnHandshakeComplete()
 	}
 	else if (  m_bG1Send && m_bG1Accept && m_nProtocol != PROTOCOL_G2 )
 	{
-		HostCache.OnSuccess( &m_pHost.sin_addr, htons( m_pHost.sin_port ), PROTOCOL_G1, true );
+		// Add good hub to host cache
+		if ( m_nNodeType == ntHub || m_nNodeType == ntNode )
+		{
+			HostCache.OnSuccess( &m_pHost.sin_addr, htons( m_pHost.sin_port ), m_nProtocol, true );
+		}
+
 		// check if this connection is still needed at this point
 		if ( !m_bAutomatic && ( ( m_nNodeType == ntHub || m_nNodeType == ntNode ) && !Neighbours.NeedMoreHubs( PROTOCOL_G1 ) ) ||
 			( m_nNodeType == ntLeaf && !Neighbours.NeedMoreLeafs( PROTOCOL_G1 ) ) )
