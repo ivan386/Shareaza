@@ -65,8 +65,8 @@ bool CDownloadWithTransfers::HasActiveTransfers() const
 	for ( CDownloadTransfer* pTransfer = m_pTransferFirst; pTransfer; pTransfer = pTransfer->m_pDlNext )
 	{
 		if ( pTransfer->m_nProtocol != PROTOCOL_ED2K
-			|| ( static_cast< CDownloadTransferED2K* >( pTransfer )->m_pClient
-				&& static_cast< CDownloadTransferED2K* >( pTransfer )->m_pClient->m_bConnected ) )
+			|| ( static_cast< CDownloadTransferED2K* >( pTransfer )->m_nState > dtsNull
+				&& static_cast< CDownloadTransferED2K* >( pTransfer )->m_bConnected ) )
 		{
 			return true;
 		}
@@ -81,8 +81,8 @@ DWORD CDownloadWithTransfers::GetTransferCount() const
 	for ( CDownloadTransfer* pTransfer = m_pTransferFirst; pTransfer; pTransfer = pTransfer->m_pDlNext )
 	{
 		if ( pTransfer->m_nProtocol != PROTOCOL_ED2K
-			|| ( static_cast< CDownloadTransferED2K* >( pTransfer )->m_pClient
-				&& static_cast< CDownloadTransferED2K* >( pTransfer )->m_pClient->m_bConnected ) )
+			|| ( static_cast< CDownloadTransferED2K* >( pTransfer )->m_nState > dtsNull
+				&& static_cast< CDownloadTransferED2K* >( pTransfer )->m_bConnected ) )
 		{
 			++nCount;
 		}
@@ -94,8 +94,8 @@ DWORD CDownloadWithTransfers::GetTransferCount() const
 // condition in any IF statement that checks if the current transfer should be counted
 #define VALID_TRANSFER ( ! pAddress || pAddress->S_un.S_addr == pTransfer->m_pHost.sin_addr.S_un.S_addr ) &&	\
 					   ( ( pTransfer->m_nProtocol != PROTOCOL_ED2K ) ||											\
-						 ( static_cast< CDownloadTransferED2K* >( pTransfer )->m_pClient &&						\
-						   static_cast< CDownloadTransferED2K* >( pTransfer )->m_pClient->m_bConnected ) )
+						 ( static_cast< CDownloadTransferED2K* >( pTransfer )->m_nState > dtsNull &&						\
+						   static_cast< CDownloadTransferED2K* >( pTransfer )->m_bConnected ) )
 
 
 DWORD CDownloadWithTransfers::GetTransferCount(int nState, IN_ADDR* pAddress) const
@@ -152,7 +152,7 @@ DWORD CDownloadWithTransfers::GetTransferCount(int nState, IN_ADDR* pAddress) co
     default:
 	    for ( CDownloadTransfer* pTransfer = m_pTransferFirst ; pTransfer ; pTransfer = pTransfer->m_pDlNext )
 	    {	
-		    if ( VALID_TRANSFER && ( pTransfer->m_nState == nState ) )
+		    if ( pTransfer->m_nState == nState )
             {
                 ++nCount;
 			}
