@@ -1980,12 +1980,6 @@ BOOL CShakeNeighbour::IsClientBad()
 		if ( _tcsistr( m_sUserAgent, _T("shareaza 7.") ) )	return TRUE;
 		if ( _tcsistr( m_sUserAgent, _T("shareaza pro") ) )	return TRUE;
 
-		if ( _tcsistr( m_sUserAgent, _T("shareaza 2.1") ) ||
-			 ( _tcsistr( m_sUserAgent, _T("shareaza 2.2") ) && !_tcsistr( m_sUserAgent, _T("shareaza 2.2.5.7") ) )
-		)
-			if ( !_tcsistr( m_sUserAgent + _T("|"), _T(".0|") ) )	// Block old alpha versions
-				return TRUE;
-		// Current versions okay
 		return FALSE;
 	}
 
