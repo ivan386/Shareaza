@@ -584,7 +584,8 @@ BOOL CHomeDownloadsBox::ExecuteDownload(CDownload* pDownload)
 			if ( theApp.m_pfnAssocIsDangerous )
 				bDangerous = theApp.m_pfnAssocIsDangerous( "." + strType );
 		}
-		if ( ! IsIn( Settings.Library.SafeExecute, strType ) || bDangerous )
+		// Not in the safe list and dangerous according to MS. Warn then.
+		if ( !IsIn( Settings.Library.SafeExecute, strType ) && bDangerous )
 		{
 			CString strFormat, strPrompt;
 			

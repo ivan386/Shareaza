@@ -137,10 +137,17 @@ BOOL CFileExecutor::Execute(LPCTSTR pszFile, BOOL bForce, BOOL bHasThumbnail, LP
 			bPreviewEnabled &= bHasThumbnail && Plugins.LookupEnable( clsid, FALSE, strPureExtension );
 	}
 
-	if ( bForce == NULL && strType.GetLength() &&
-		( ! IsIn( Settings.Library.SafeExecute, (LPCTSTR)strPureExtension + 1 ) ||
-		 ( theApp.m_pfnAssocIsDangerous && theApp.m_pfnAssocIsDangerous( (LPCTSTR)strPureExtension ) )
-		) && ! bPreviewEnabled )
+	bool bDangerous = false;
+	if ( theApp.m_pfnAssocIsDangerous && theApp.m_pfnAssocIsDangerous( (LPCTSTR)strPureExtension )
+	{
+		bDangerous = true;
+	}
+	// If we are not forcing opening and the extension is present, and if the file is absent
+	// in the safe list, and MS confirms it's indeed dangerous, open it with warning.
+	// And if the preview is available, we will open it in the Image Viewer, so no warning is needed.
+	if ( !bForce && strType.GetLength() > 2 &&
+		 !IsIn( Settings.Library.SafeExecute, (LPCTSTR)strPureExtension + 1 ) &&
+		 bDangerous && !bPreviewEnabled )
 	{
 		CString strFormat, strPrompt;
 
