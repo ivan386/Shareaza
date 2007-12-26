@@ -44,8 +44,6 @@ BEGIN_MESSAGE_MAP(CAdvancedSettingsPage, CSettingsPage)
 	ON_BN_CLICKED(IDC_DEFAULT_VALUE, OnBnClickedDefaultValue)
 END_MESSAGE_MAP()
 
-
-
 /////////////////////////////////////////////////////////////////////////////
 // CAdvancedSettingsPage property page
 
@@ -93,13 +91,15 @@ BOOL CAdvancedSettingsPage::OnInitDialog()
 	CLiveList::Sort( &m_wndList, 0 );
 	CLiveList::Sort( &m_wndList, 0 );
 
-	UpdateAll();
+	UpdateInputArea();
 
 	return TRUE;
 }
 
 void CAdvancedSettingsPage::AddSettings()
 {
+	m_wndList.DeleteAllItems();
+
 	for ( POSITION pos = Settings.GetHeadPosition() ; pos ; )
 	{
 		CSettings::Item* pItem = Settings.GetNext( pos );
@@ -117,12 +117,32 @@ void CAdvancedSettingsPage::AddSettings()
 			pList.pszText	= (LPTSTR)(LPCTSTR)pEdit->m_sName;
 			pList.iItem		= m_wndList.InsertItem( &pList );
 
-			UpdateItem( pList.iItem );
+			UpdateListItem( pList.iItem );
 		}
 	}
 }
+void CAdvancedSettingsPage::CommitAll()
+{
+	for ( int nItem = 0 ; nItem < m_wndList.GetItemCount() ; nItem++ )
+	{
+		EditItem* pItem = (EditItem*)m_wndList.GetItemData( nItem );
+		pItem->Commit();
+	}
+}
 
-void CAdvancedSettingsPage::UpdateItem(int nItem)
+void CAdvancedSettingsPage::UpdateAll()
+{
+	for ( int nItem = 0 ; nItem < m_wndList.GetItemCount() ; nItem++ )
+	{
+		EditItem* pItem = (EditItem*)m_wndList.GetItemData( nItem );
+		pItem->Update();
+		UpdateListItem( nItem );
+	}
+
+	UpdateInputArea();
+}
+
+void CAdvancedSettingsPage::UpdateListItem(int nItem)
 {
 	EditItem* pItem = (EditItem*)m_wndList.GetItemData( nItem );
 	CString strValue;
@@ -151,12 +171,12 @@ void CAdvancedSettingsPage::OnItemChangedProperties(NMHDR* /*pNMHDR*/, LRESULT* 
 {
 //	NM_LISTVIEW* pNMListView = (NM_LISTVIEW*)pNMHDR;
 
-	UpdateAll();
+	UpdateInputArea();
 
 	*pResult = 0;
 }
 
-void CAdvancedSettingsPage::UpdateAll()
+void CAdvancedSettingsPage::UpdateInputArea()
 {
 	int nItem = m_wndList.GetNextItem( -1, LVNI_SELECTED );
 	
@@ -211,7 +231,7 @@ void CAdvancedSettingsPage::OnChangeValue()
 			else
 				pItem->m_bValue = ( nValue == 1 );
 
-			UpdateItem( nItem );
+			UpdateListItem( nItem );
 
 			GetDlgItem( IDC_DEFAULT_VALUE )->EnableWindow( ! pItem->IsDefault() );
 		}
@@ -227,11 +247,9 @@ void CAdvancedSettingsPage::OnColumnClickProperties(NMHDR* pNMHDR, LRESULT* pRes
 
 void CAdvancedSettingsPage::OnOK() 
 {
-	for ( int nItem = 0 ; nItem < m_wndList.GetItemCount() ; nItem++ )
-	{
-		EditItem* pItem = (EditItem*)m_wndList.GetItemData( nItem );
-		pItem->Commit();
-	}
+	CommitAll();
+
+	UpdateAll();
 	
 	CSettingsPage::OnOK();
 }
@@ -254,9 +272,20 @@ void CAdvancedSettingsPage::OnBnClickedDefaultValue()
 		EditItem* pItem = (EditItem*)m_wndList.GetItemData( nItem );
 		pItem->Default();
 
-		UpdateItem( nItem );
-		UpdateAll();
+		UpdateListItem( nItem );
+		UpdateInputArea();
 	}
+}
+
+bool CAdvancedSettingsPage::IsModified() const
+{
+	for ( int nItem = 0 ; nItem < m_wndList.GetItemCount() ; nItem++ )
+	{
+		EditItem* pItem = (EditItem*)m_wndList.GetItemData( nItem );
+		if ( pItem->IsModified() )
+			return true;
+	}
+	return false;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -266,6 +295,8 @@ CAdvancedSettingsPage::EditItem::EditItem(CSettings::Item* pItem) :
 	m_pItem( pItem ),
 	m_nValue( pItem->m_pDword ? *pItem->m_pDword : 0 ),
 	m_bValue( pItem->m_pBool ? *pItem->m_pBool : false ),
+	m_nOriginalValue( pItem->m_pDword ? *pItem->m_pDword : 0 ),
+	m_bOriginalValue( pItem->m_pBool ? *pItem->m_pBool : false ),
 	m_sName(  ( ! *pItem->m_szSection ||					// Settings.Name -> General.Name
 		! lstrcmp( pItem->m_szSection, _T("Settings") ) )	// .Name -> General.Name
 		? _T("General") : pItem->m_szSection )
@@ -274,12 +305,34 @@ CAdvancedSettingsPage::EditItem::EditItem(CSettings::Item* pItem) :
 	m_sName += pItem->m_szName;
 }
 
+void CAdvancedSettingsPage::EditItem::Update()
+{
+	if ( m_pItem->m_pDword )
+		m_nOriginalValue = m_nValue = *m_pItem->m_pDword;
+	else
+		m_bOriginalValue = m_bValue = *m_pItem->m_pBool;
+}
+
 void CAdvancedSettingsPage::EditItem::Commit()
 {
 	if ( m_pItem->m_pDword )
-		*m_pItem->m_pDword = m_nValue;
+	{
+		if ( m_nValue != m_nOriginalValue )
+			*m_pItem->m_pDword = m_nOriginalValue = m_nValue;
+	}
 	else
-		*m_pItem->m_pBool= m_bValue;
+	{
+		if ( m_bValue != m_bOriginalValue )
+			*m_pItem->m_pBool= m_bOriginalValue = m_bValue;
+	}
+}
+
+bool CAdvancedSettingsPage::EditItem::IsModified() const
+{
+	if ( m_pItem->m_pDword )
+		return ( m_nValue != m_nOriginalValue );
+	else
+		return ( m_bValue != m_bOriginalValue );
 }
 
 bool CAdvancedSettingsPage::EditItem::IsDefault() const
