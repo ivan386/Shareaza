@@ -43,20 +43,21 @@ CDiscoveryServices DiscoveryServices;
 //////////////////////////////////////////////////////////////////////
 // CDiscoveryServices construction
 
-CDiscoveryServices::CDiscoveryServices()
+CDiscoveryServices::CDiscoveryServices() :
+	m_hThread		( NULL ),
+	m_hInternet		( NULL ),
+	m_hRequest		( NULL ),
+	m_pWebCache		( NULL ),
+	m_nWebCache		( 0 ),
+	m_pSubmit		( NULL ),
+	m_nLastQueryProtocol ( PROTOCOL_NULL ),
+	m_tUpdated		( 0 ),
+	m_nLastUpdateProtocol ( PROTOCOL_NULL ),
+	m_bFirstTime	( TRUE ),
+	m_tExecute		( 0 ),
+	m_tQueried		( 0 ),
+	m_tMetQueried	( 0 )
 {
-	m_hThread		= NULL;
-	m_hInternet		= NULL;
-	m_hRequest		= NULL;
-	m_pWebCache		= NULL;
-	m_nWebCache		= 0;
-	m_tQueried		= 0;
-	m_nLastQueryProtocol = PROTOCOL_NULL;
-	m_tUpdated		= 0;
-	m_nLastUpdateProtocol = PROTOCOL_NULL;
-	m_tExecute		= 0;
-	m_bFirstTime	= TRUE;
-	m_tMetQueried	= 0;
 }
 
 CDiscoveryServices::~CDiscoveryServices()
@@ -327,35 +328,10 @@ BOOL CDiscoveryServices::CheckMinimumServices()
 	return TRUE;
 }
 
-//////////////////////////////////////////////////////////////////////
-// CDiscoveryServices execute a service to get hosts
-
-/* THIS FUNCTION IS NO LONGER NEEDED */
-
-/*
-// WARNING: Way too agressive for general use- Be very careful where this is called!
-// This is a public function, and should be called once when setting up/installing the program. 
-// IE: In the Quickstart Wizard *only*
-// Using this for general querying would overload services and get you blacklisted.
-BOOL CDiscoveryServices::QueryForHosts( PROTOCOLID nProtocol )
-{
-	CSingleLock pLock( &Network.m_pSection );
-	if ( ! pLock.Lock( 250 ) ) return FALSE;
-
-	for ( int nLoop = 0 ; nLoop < 3 ; nLoop ++ )
-	{
-		if ( RequestRandomService( nProtocol ) )
-			return TRUE;
-	}
-
-	return FALSE;
-}
-*/
-
-DWORD CDiscoveryServices::MetQueried() const
-{
-	return m_tMetQueried;
-}
+//DWORD CDiscoveryServices::MetQueried() const
+//{
+//	return m_tMetQueried;
+//}
 
 DWORD CDiscoveryServices::LastExecute() const
 {
@@ -1464,7 +1440,7 @@ BOOL CDiscoveryServices::SendWebCacheRequest(CString strURL, CString& strOutput)
 {
 	strOutput.Empty();
 	
-	strURL += _T("&client=RAZA&version=");
+	strURL += _T("&client=")_T(VENDOR_CODE)_T("&version=");
 	strURL += theApp.m_sVersion;
 	
 	theApp.Message( MSG_DEBUG, _T("DiscoveryService URL: %s"), (LPCTSTR)strURL );
@@ -1568,27 +1544,24 @@ BOOL CDiscoveryServices::RunServerMet()
 //////////////////////////////////////////////////////////////////////
 // CDiscoveryService construction
 
-CDiscoveryService::CDiscoveryService(int nType, LPCTSTR pszAddress)
+CDiscoveryService::CDiscoveryService(int nType, LPCTSTR pszAddress) :
+	m_nType			( nType ),
+	m_sAddress		( pszAddress ? pszAddress : _T("") ),
+	m_bGnutella2	( FALSE ),
+	m_bGnutella1	( FALSE ),
+	m_tCreated		( (DWORD)time( NULL ) ),
+	m_tAccessed		( 0 ),
+	m_nAccesses		( 0 ),
+	m_tUpdated		( 0 ),
+	m_nUpdates		( 0 ),
+	m_nHosts		( 0 ),
+	m_nFailures		( 0 ),
+	m_nAccessPeriod	( max( Settings.Discovery.UpdatePeriod, 1800u ) ),
+	m_nUpdatePeriod	( Settings.Discovery.DefaultUpdate ),
+	m_nSubType		( 0 ),
+	m_pAddress		(),
+	m_nPort			( 0 )
 {
-	m_nType			= nType;
-	m_bGnutella2	= FALSE;
-	m_bGnutella1	= FALSE;
-	m_tCreated		= (DWORD)time( NULL );
-	m_tAccessed		= 0;
-	m_nAccesses		= 0;
-	m_tUpdated		= 0;
-	m_nUpdates		= 0;
-	m_nFailures		= 0;
-	m_nHosts		= 0;
-	m_nAccessPeriod	= max( Settings.Discovery.UpdatePeriod, 1800u );
-	m_nUpdatePeriod	= Settings.Discovery.DefaultUpdate;
-	
-	m_nSubType		= 0;
-	m_nPort			= 0;
-
-	m_pAddress.S_un.S_addr = 0;
-
-	if ( pszAddress != NULL ) m_sAddress = pszAddress;
 }
 
 CDiscoveryService::~CDiscoveryService()

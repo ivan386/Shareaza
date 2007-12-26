@@ -19,9 +19,6 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_DISCOVERYSERVICES_H__2AD74990_0834_4FE8_AE38_1DD609232BC7__INCLUDED_)
-#define AFX_DISCOVERYSERVICES_H__2AD74990_0834_4FE8_AE38_1DD609232BC7__INCLUDED_
-
 #pragma once
 
 class CDiscoveryService;
@@ -49,8 +46,6 @@ protected:
 	DWORD				m_tUpdated;					// Time a webcache was last updated
 	PROTOCOLID			m_nLastUpdateProtocol;		// Protocol that had a service update most recently
 	BOOL				m_bFirstTime;
-
-private:
 	DWORD				m_tExecute;					// Time the Execute() function was last run
 	DWORD				m_tQueried;					// Time a webcache/MET was last queried
 	DWORD				m_tMetQueried;				// Time a MET was last queried
@@ -60,44 +55,39 @@ public:
 	POSITION			GetIterator() const;
 	CDiscoveryService*	GetNext(POSITION& pos) const;
 	BOOL				Check(CDiscoveryService* pService, int nType = -1) const;
-	DWORD				GetCount(int nType = 0, PROTOCOLID nProtocol = PROTOCOL_NULL) const;
-	CDiscoveryService*	Add(LPCTSTR pszAddress, int nType, PROTOCOLID nProtocol = PROTOCOL_NULL);
 	CDiscoveryService*	Add(CDiscoveryService* pService);
-	void				Remove(CDiscoveryService* pService, BOOL bCheck = TRUE);
-	BOOL				CheckWebCacheValid(LPCTSTR pszAddress);
+	CDiscoveryService*	Add(LPCTSTR pszAddress, int nType, PROTOCOLID nProtocol = PROTOCOL_NULL);
 	BOOL				CheckMinimumServices();
-	/*BOOL				QueryForHosts(PROTOCOLID nProtocol);*/	/* THIS FUNCTION IS NO LONGER NEEDED */
-	DWORD				MetQueried() const;
+//	DWORD				MetQueried() const;
 	DWORD				LastExecute() const;
 	CDiscoveryService*	GetByAddress(LPCTSTR pszAddress) const;
 	CDiscoveryService*	GetByAddress( IN_ADDR* pAddress, WORD nPort, int nSubType );
-	void				Clear();
-
 	BOOL				Load();
 	BOOL				Save();
 	BOOL				Update();
 	BOOL				Execute(BOOL bDiscovery, PROTOCOLID nProtocol, USHORT nForceDiscovery);
-	int					ExecuteBootstraps( int nCount, BOOL bUDP = FALSE, PROTOCOLID nProtocol = PROTOCOL_NULL );
 	void				Stop();
 	void				OnGnutellaAdded(IN_ADDR* pAddress, int nCount);
 	void				OnGnutellaFailed(IN_ADDR* pAddress);
 
 protected:
+	void				Remove(CDiscoveryService* pService, BOOL bCheck = TRUE);
+	DWORD				GetCount(int nType = 0, PROTOCOLID nProtocol = PROTOCOL_NULL) const;
+	BOOL				CheckWebCacheValid(LPCTSTR pszAddress);
+	void				Clear();
+	int					ExecuteBootstraps( int nCount, BOOL bUDP = FALSE, PROTOCOLID nProtocol = PROTOCOL_NULL );
 	void				Serialize(CArchive& ar);
 	BOOL				RequestRandomService(PROTOCOLID nProtocol);	
 	CDiscoveryService*  GetRandomService(PROTOCOLID nProtocol);
 	CDiscoveryService*	GetRandomWebCache(PROTOCOLID nProtocol, BOOL bWorkingOnly, CDiscoveryService* pExclude = NULL, BOOL bForUpdate = FALSE);
 	BOOL				RequestWebCache(CDiscoveryService* pService, int nMode, PROTOCOLID nProtocol);
 	void				StopWebRequest();
-
 	static UINT			ThreadStart(LPVOID pParam);
 	void				OnRun();
 	BOOL				RunWebCacheGet(BOOL bCache);
 	BOOL				RunWebCacheUpdate();
 	BOOL				RunServerMet();
 	BOOL				SendWebCacheRequest(CString strURL, CString& strOutput);
-
-private:
 	BOOL				EnoughServices() const;
 	void				AddDefaults();
 
@@ -116,7 +106,6 @@ public:
 public:
 	int			m_nType;
 	CString		m_sAddress;
-
 	BOOL		m_bGnutella2;			// Webcache supports Gnutella 2
 	BOOL		m_bGnutella1;			// Webcache supports Gnutella
 	DWORD		m_tCreated;
@@ -141,20 +130,16 @@ public:
 public:
 	void		Remove(BOOL bCheck = TRUE);
 	BOOL		Execute(int nMode = 0);
-	void		OnAccess();
-	void		OnHostAdd(int nCount = 1);
 	void		OnSuccess();
 	void		OnFailure();
 
 protected:
+	void		OnAccess();
+	void		OnHostAdd(int nCount = 1);
 	void		Serialize(CArchive& ar, int nVersion);
 	BOOL		ResolveGnutella();
 	
-	friend class CDiscoveryServices;
-	
+	friend class CDiscoveryServices;	
 };
 
 extern CDiscoveryServices DiscoveryServices;
-
-
-#endif // !defined(AFX_DISCOVERYSERVICES_H__2AD74990_0834_4FE8_AE38_1DD609232BC7__INCLUDED_)
