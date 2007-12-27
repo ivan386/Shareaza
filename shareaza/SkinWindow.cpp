@@ -341,6 +341,10 @@ BOOL CSkinWindow::Parse(CXMLElement* pBase, const CString& strPath)
 				if ( str.CompareNoCase( Settings.General.Language ) != 0 ) continue;
 				m_sLanguage = str;
 			}
+			else
+			{
+				m_sLanguage = Settings.General.Language;
+			}
 			
 			CString strRes	= pGroup->GetAttributeValue( _T("res") );
 			CString strFile	= pGroup->GetAttributeValue( _T("path") );
