@@ -137,7 +137,8 @@ static LPCTSTR GetManifestValue(LPCTSTR manifest, LPCTSTR searchKey) {
 	TCHAR* info;
 	TCHAR* ret;
 	TCHAR* start;
-	size_t len = wcslen(manifest);
+	TCHAR* copy = _wcsdup( manifest );
+	size_t len = wcslen(copy);
 
 	info = (TCHAR*)malloc((len+1)*sizeof(TCHAR));
 	memcpy(info, manifest, len);
