@@ -19,9 +19,6 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_DOWNLOADS_H__0C075423_D022_4530_8B45_6B7EF79712CB__INCLUDED_)
-#define AFX_DOWNLOADS_H__0C075423_D022_4530_8B45_6B7EF79712CB__INCLUDED_
-
 #pragma once
 
 class CDownload;
@@ -46,9 +43,7 @@ public:
 	DWORD			m_tBandwidthLastCalc;		// The last time the bandwidth was calculated
 	DWORD			m_tBandwidthAtMax;			// The last time download bandwidth was all in use
 	DWORD			m_tBandwidthAtMaxED2K;		// The last time all ed2k bandwidth was used
-
-	DWORD			m_nLimitNew;				// Bandwidth assigned to new transfers
-
+//	DWORD			m_nLimitNew;				// Bandwidth assigned to new transfers
 	DWORD			m_nLimitGeneric;
 	DWORD			m_nLimitDonkey;
 	DWORD			m_nTransfers;
@@ -158,6 +153,3 @@ public:
 };
 
 extern CDownloads Downloads;
-
-
-#endif // !defined(AFX_DOWNLOADS_H__0C075423_D022_4530_8B45_6B7EF79712CB__INCLUDED_)

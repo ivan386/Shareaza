@@ -39,9 +39,6 @@ CCoolInterface CoolInterface;
 
 CCoolInterface::CCoolInterface()
 {
-	CreateFonts();
-	CalculateColours();
-	
 	m_czBuffer = CSize( 0, 0 );
 
 	// experimental values
@@ -63,6 +60,12 @@ CCoolInterface::~CCoolInterface()
 		VERIFY( DestroyIcon( hIcon ) );
 	}
 	m_pWindowIcons.RemoveAll();
+}
+
+void CCoolInterface::Load()
+{
+	CreateFonts();
+	CalculateColours();
 }
 
 //////////////////////////////////////////////////////////////////////

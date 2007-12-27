@@ -19,9 +19,6 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_COOLINTERFACE_H__B7C102E2_0267_4F3B_B9C2_BA1031758891__INCLUDED_)
-#define AFX_COOLINTERFACE_H__B7C102E2_0267_4F3B_B9C2_BA1031758891__INCLUDED_
-
 #pragma once
 
 #include "Skin.h"
@@ -171,7 +168,7 @@ public:
 	COLORREF	m_crSys3DHighlight;
 	COLORREF	m_crSysActiveCaption;	
 
-
+	void		Load();
 	void		Clear();
 	void		NameCommand(UINT nID, LPCTSTR pszName);
 	UINT		NameToID(LPCTSTR pszName) const;
@@ -228,5 +225,3 @@ typedef struct
 	WORD wItemCount;
 	WORD* items() { return (WORD*)(this+1); }
 } TOOLBAR_RES;
-
-#endif // !defined(AFX_COOLINTERFACE_H__B7C102E2_0267_4F3B_B9C2_BA1031758891__INCLUDED_)

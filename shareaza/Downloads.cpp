@@ -56,21 +56,22 @@ CDownloads Downloads;
 //////////////////////////////////////////////////////////////////////
 // CDownloads construction
 
-CDownloads::CDownloads()
+CDownloads::CDownloads() :
+	m_tBandwidthLastCalc	( 0 ),
+	m_tBandwidthAtMax		( 0 ),
+	m_tBandwidthAtMaxED2K	( 0 ),
+//	m_nLimitNew				( 0 ),
+	m_nLimitGeneric			( 0 ),
+	m_nLimitDonkey			( 0 ),
+	m_nTransfers			( 0 ),
+	m_nBandwidth			( 0 ),
+	m_nValidation			( 0 ),
+	m_bAllowMoreDownloads	( TRUE ),
+	m_bAllowMoreTransfers	( TRUE ),
+	m_bClosing				( FALSE ),
+	m_tLastConnect			( 0 ),
+	m_nRunCookie			( 0 )
 {
-	m_nLimitGeneric			= Settings.Bandwidth.Downloads;
-	m_nLimitDonkey			= Settings.Bandwidth.Downloads;
-	m_nTransfers			= 0;
-	m_nBandwidth			= 0;
-	m_nRunCookie			= 0;
-	m_bClosing				= FALSE;
-	m_tLastConnect			= 0;
-
-	m_tBandwidthLastCalc	= 0;
-	m_tBandwidthAtMax		= 0;
-	m_tBandwidthAtMaxED2K	= 0;
-
-	m_nLimitNew				= Settings.Bandwidth.Downloads;
 }
 
 CDownloads::~CDownloads()
@@ -78,7 +79,7 @@ CDownloads::~CDownloads()
 }
 
 //////////////////////////////////////////////////////////////////////
-// CDownloads add an empty download (privilaged)
+// CDownloads add an empty download (privileged)
 
 CDownload* CDownloads::Add()
 {
@@ -1071,10 +1072,10 @@ void CDownloads::OnRun()
 		} 	// End of transfers section lock
 
 		// Update limit assigned to new transfers
-		if ( nBandwidthAvailable > nTotalBandwidth )
-			m_nLimitNew = nBandwidthAvailable - nTotalBandwidth;
-		else
-			m_nLimitNew = Settings.Bandwidth.Request;
+//		if ( nBandwidthAvailable > nTotalBandwidth )
+//			m_nLimitNew = nBandwidthAvailable - nTotalBandwidth;
+//		else
+//			m_nLimitNew = Settings.Bandwidth.Request;
 
 		// Save bandwidth stats, Update allows
 		m_nTransfers = nActiveTransfers;
@@ -1166,6 +1167,10 @@ void CDownloads::OnVerify(LPCTSTR pszPath, BOOL bVerified)
 
 void CDownloads::Load()
 {
+//	m_nLimitNew = Settings.Bandwidth.Downloads;
+	m_nLimitGeneric = Settings.Bandwidth.Downloads;
+	m_nLimitDonkey = Settings.Bandwidth.Downloads;
+
 	CSingleLock pLock( &Transfers.m_pSection, TRUE );
 	WIN32_FIND_DATA pFind;
 	CString strPath;

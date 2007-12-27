@@ -627,9 +627,6 @@ void CSettings::Load()
 	Gnutella2.EnableToday = Gnutella2.EnableAlways = true;
 	eDonkey.EnableToday = eDonkey.EnableAlways = false;
 	Gnutella1.EnableToday = Gnutella1.EnableAlways = false;
-	Gnutella.MaxResults = 100000u;
-	Gnutella.MaxHits = 4096u;
-	Uploads.HubUnshare = false;
 #endif // LAN_MODE
 
 	if ( Live.FirstRun )

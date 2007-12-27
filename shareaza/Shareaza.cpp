@@ -211,8 +211,9 @@ BOOL CShareazaApp::InitInstance()
 
 	SetRegistryKey( _T("Shareaza") );
 	GetVersionNumber();
-	Settings.Load();
-	InitResources();
+	Settings.Load();			// Loads settings. Depends on GetVersionNumber()
+	InitResources();			// Loads theApp settings. Depends on Settings::Load()
+	CoolInterface.Load();		// Loads colors and fonts. Depends on InitResources()
 
 	AfxOleInit();
 	m_pFontManager = new CFontManager();
