@@ -365,7 +365,8 @@ DWORD CUploadQueue::GetBandwidthLimit(INT_PTR nTransfers) const
 	}
 	
 	DWORD nTotal = Settings.Connection.OutSpeed * 128;
-	DWORD nLimit = Neighbours.m_nLeafCount ? Settings.Bandwidth.HubUploads : Settings.Bandwidth.Uploads;
+	DWORD nLimit = ( Settings.Uploads.HubUnshare && Neighbours.IsG2Hub() ) ?
+		Settings.Bandwidth.HubUploads : Settings.Bandwidth.Uploads;
 	if ( nLimit == 0 || nLimit > nTotal ) nLimit = nTotal;
 	
 	// Limit if torrents are active
