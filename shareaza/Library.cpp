@@ -380,8 +380,8 @@ BOOL CLibrary::Load()
 		CreateDirectory( Settings.Downloads.CollectionPath );
 		LibraryFolders.AddFolder( Settings.Downloads.CollectionPath );
 
-		//CreateDirectory( Settings.Downloads.TorrentPath );
-		//LibraryFolders.AddFolder( Settings.Downloads.TorrentPath, FALSE );
+		CreateDirectory( Settings.Downloads.TorrentPath );
+		LibraryFolders.AddFolder( Settings.Downloads.TorrentPath );
 	}
 
 	LibraryFolders.CreateAlbumTree();

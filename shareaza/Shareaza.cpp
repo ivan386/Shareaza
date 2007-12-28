@@ -873,7 +873,7 @@ void CShareazaApp::InitResources()
 	}
 
 	// We load it in a custom way, so Shareaza plugins can use this library also when it isn't in its search path but loaded by CustomLoadLibrary (very useful when running Shareaza inside Visual Studio)
-	m_hLibGFL = CustomLoadLibrary( _T("libgfl267.dll") );
+	m_hLibGFL = CustomLoadLibrary( _T("libgfl280.dll") );
 
 	HDC screen = GetDC( 0 );
 	scaleX = GetDeviceCaps( screen, LOGPIXELSX ) / 96.0;
@@ -2380,7 +2380,7 @@ CString BrowseForFolder(LPCTSTR szTitle, LPCTSTR szInitialPath, HWND hWnd)
 	pBI.hwndOwner = hWnd ? hWnd : AfxGetMainWnd()->GetSafeHwnd();
 	pBI.pszDisplayName = szDisplayName;
 	pBI.lpszTitle = szTitle;
-	pBI.ulFlags = BIF_RETURNONLYFSDIRS | BIF_NEWDIALOGSTYLE;
+	pBI.ulFlags = BIF_RETURNONLYFSDIRS | BIF_EDITBOX | BIF_NEWDIALOGSTYLE;
 	pBI.lpfn = BrowseCallbackProc;
 	pBI.lParam = (LPARAM)szInitialPath;
 	LPITEMIDLIST pPath = SHBrowseForFolder( &pBI );

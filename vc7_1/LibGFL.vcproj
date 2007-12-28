@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="Windows-1252"?>
+<VisualStudioProject
+	ProjectType="Visual C++"
+	Version="7.10"
+	Name="LibGFL"
+	ProjectGUID="{5DFF8561-48FB-4D3E-88F2-4354F1527D29}"
+	RootNamespace="LibGFL"
+	Keyword="LibGFL">
+	<Platforms>
+		<Platform
+			Name="Win32"/>
+	</Platforms>
+	<Configurations>
+		<Configuration
+			Name="Debug Win32|Win32"
+			OutputDirectory="$(SolutionDir)..\plugins\LibGFL\$(ConfigurationName)\"
+			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)\$(ProjectName)\"
+			ConfigurationType="4">
+			<Tool
+				Name="VCCLCompilerTool"/>
+			<Tool
+				Name="VCCustomBuildTool"
+				Description="Copying the LibGFL dll..."
+				CommandLine="copy &quot;$(SolutionDir)..\plugins\LibGFL\$(ConfigurationName)\libgfl*.dll&quot; &quot;$(IntDir)..\&quot; /b /y
+copy &quot;$(SolutionDir)..\plugins\LibGFL\$(ConfigurationName)\libgfl*.dll&quot; &quot;$(IntDir)..\plugins\&quot; /b /y
+"
+				Outputs="&quot;$(IntDir)..\libgfl280.dll&quot;;&quot;$(IntDir)..\plugins\libgfl280.dll&quot;;&quot;$(IntDir)..\libgfle280.dll&quot;;&quot;$(IntDir)..\plugins\libgfle280.dll&quot;"/>
+			<Tool
+				Name="VCLibrarianTool"/>
+			<Tool
+				Name="VCMIDLTool"/>
+			<Tool
+				Name="VCPostBuildEventTool"/>
+			<Tool
+				Name="VCPreBuildEventTool"/>
+			<Tool
+				Name="VCPreLinkEventTool"/>
+			<Tool
+				Name="VCResourceCompilerTool"/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"/>
+			<Tool
+				Name="VCManagedWrapperGeneratorTool"/>
+			<Tool
+				Name="VCAuxiliaryManagedWrapperGeneratorTool"/>
+		</Configuration>
+		<Configuration
+			Name="Release Win32|Win32"
+			OutputDirectory="$(SolutionDir)..\plugins\LibGFL\$(ConfigurationName)\"
+			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)\$(ProjectName)\"
+			ConfigurationType="4"
+			ReferencesPath="">
+			<Tool
+				Name="VCCLCompilerTool"/>
+			<Tool
+				Name="VCCustomBuildTool"
+				Description="Copying the LibGFL dll..."
+				CommandLine="copy &quot;$(SolutionDir)..\plugins\LibGFL\$(ConfigurationName)\libgfl*.dll&quot; &quot;$(IntDir)..\&quot; /b /y
+copy &quot;$(SolutionDir)..\plugins\LibGFL\$(ConfigurationName)\libgfl*.dll&quot; &quot;$(IntDir)..\plugins\&quot; /b /y
+"
+				Outputs="&quot;$(IntDir)..\libgfl280.dll&quot;;&quot;$(IntDir)..\plugins\libgfl280.dll&quot;;&quot;$(IntDir)..\libgfle280.dll&quot;;&quot;$(IntDir)..\plugins\libgfle280.dll&quot;"/>
+			<Tool
+				Name="VCLibrarianTool"
+				AdditionalLibraryDirectories=""/>
+			<Tool
+				Name="VCMIDLTool"/>
+			<Tool
+				Name="VCPostBuildEventTool"/>
+			<Tool
+				Name="VCPreBuildEventTool"/>
+			<Tool
+				Name="VCPreLinkEventTool"/>
+			<Tool
+				Name="VCResourceCompilerTool"/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"/>
+			<Tool
+				Name="VCManagedWrapperGeneratorTool"/>
+			<Tool
+				Name="VCAuxiliaryManagedWrapperGeneratorTool"/>
+		</Configuration>
+		<Configuration
+			Name="Debug x64|Win32"
+			OutputDirectory="$(SolutionDir)..\plugins\LibGFL\$(ConfigurationName)\"
+			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)\$(ProjectName)\"
+			ConfigurationType="4">
+			<Tool
+				Name="VCCLCompilerTool"/>
+			<Tool
+				Name="VCCustomBuildTool"
+				Description="Copying the LibGFL dll..."
+				CommandLine="copy &quot;$(SolutionDir)..\plugins\LibGFL\$(ConfigurationName)\libgfl*.dll&quot; &quot;$(IntDir)..\&quot; /b /y
+copy &quot;$(SolutionDir)..\plugins\LibGFL\$(ConfigurationName)\libgfl*.dll&quot; &quot;$(IntDir)..\plugins\&quot; /b /y
+"
+				Outputs="&quot;$(IntDir)..\libgfl280.dll&quot;;&quot;$(IntDir)..\plugins\libgfl280.dll&quot;;&quot;$(IntDir)..\libgfle280.dll&quot;;&quot;$(IntDir)..\plugins\libgfle280.dll&quot;"/>
+			<Tool
+				Name="VCLibrarianTool"/>
+			<Tool
+				Name="VCMIDLTool"/>
+			<Tool
+				Name="VCPostBuildEventTool"/>
+			<Tool
+				Name="VCPreBuildEventTool"/>
+			<Tool
+				Name="VCPreLinkEventTool"/>
+			<Tool
+				Name="VCResourceCompilerTool"/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"/>
+			<Tool
+				Name="VCManagedWrapperGeneratorTool"/>
+			<Tool
+				Name="VCAuxiliaryManagedWrapperGeneratorTool"/>
+		</Configuration>
+		<Configuration
+			Name="Release x64|Win32"
+			OutputDirectory="$(SolutionDir)..\plugins\LibGFL\$(ConfigurationName)\"
+			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)\$(ProjectName)\"
+			ConfigurationType="4">
+			<Tool
+				Name="VCCLCompilerTool"/>
+			<Tool
+				Name="VCCustomBuildTool"
+				Description="Copying the LibGFL dll..."
+				CommandLine="copy &quot;$(SolutionDir)..\plugins\LibGFL\$(ConfigurationName)\libgfl*.dll&quot; &quot;$(IntDir)..\&quot; /b /y
+copy &quot;$(SolutionDir)..\plugins\LibGFL\$(ConfigurationName)\libgfl*.dll&quot; &quot;$(IntDir)..\plugins\&quot; /b /y
+"
+				Outputs="&quot;$(IntDir)..\libgfl280.dll&quot;;&quot;$(IntDir)..\plugins\libgfl280.dll&quot;;&quot;$(IntDir)..\libgfle280.dll&quot;;&quot;$(IntDir)..\plugins\libgfle280.dll&quot;"/>
+			<Tool
+				Name="VCLibrarianTool"/>
+			<Tool
+				Name="VCMIDLTool"/>
+			<Tool
+				Name="VCPostBuildEventTool"/>
+			<Tool
+				Name="VCPreBuildEventTool"/>
+			<Tool
+				Name="VCPreLinkEventTool"/>
+			<Tool
+				Name="VCResourceCompilerTool"/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"/>
+			<Tool
+				Name="VCManagedWrapperGeneratorTool"/>
+			<Tool
+				Name="VCAuxiliaryManagedWrapperGeneratorTool"/>
+		</Configuration>
+	</Configurations>
+	<References>
+	</References>
+	<Files>
+		<Filter
+			Name="Source Files"
+			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx"
+			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}">
+		</Filter>
+		<Filter
+			Name="Header Files"
+			Filter="h;hpp;hxx;hm;inl;inc;xsd"
+			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
+		</Filter>
+	</Files>
+	<Globals>
+	</Globals>
+</VisualStudioProject>

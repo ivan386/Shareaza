@@ -296,7 +296,7 @@ void CLibraryFolders::Maintain(CLibraryFolder* pFolder, BOOL bAdd)
 		if ( dwDesktopINIAttr != INVALID_FILE_ATTRIBUTES )
 		{
 			SetFileAttributes( sDesktopINI, dwDesktopINIAttr &
-				~( FILE_ATTRIBUTE_HIDDEN | FILE_ATTRIBUTE_READONLY ) );
+				~( FILE_ATTRIBUTE_HIDDEN | FILE_ATTRIBUTE_SYSTEM ) );
 		}
 
 		WritePrivateProfileString( _T(".ShellClassInfo"), _T("ConfirmFileOp"), _T("0"), sDesktopINI );
@@ -315,7 +315,7 @@ void CLibraryFolders::Maintain(CLibraryFolder* pFolder, BOOL bAdd)
 		if ( dwDesktopINIAttr != INVALID_FILE_ATTRIBUTES )
 		{
 			SetFileAttributes( sDesktopINI, dwDesktopINIAttr |
-				( FILE_ATTRIBUTE_HIDDEN | FILE_ATTRIBUTE_READONLY ) );
+				( FILE_ATTRIBUTE_HIDDEN | FILE_ATTRIBUTE_SYSTEM ) );
 
 			PathMakeSystemFolder( pFolder->m_sPath );
 		}
@@ -327,7 +327,7 @@ void CLibraryFolders::Maintain(CLibraryFolder* pFolder, BOOL bAdd)
 		if ( dwDesktopINIAttr != INVALID_FILE_ATTRIBUTES )
 		{
 			SetFileAttributes( sDesktopINI, dwDesktopINIAttr &
-				~( FILE_ATTRIBUTE_HIDDEN | FILE_ATTRIBUTE_READONLY ) );
+				~( FILE_ATTRIBUTE_HIDDEN | FILE_ATTRIBUTE_SYSTEM ) );
 
 			DeleteFile( sDesktopINI );
 		}

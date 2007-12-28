@@ -511,12 +511,15 @@ void CSettings::Load()
 		pItem->Load();
 	}
 
-	// Check if Windows installer library is present
-	HINSTANCE hMSI = LoadLibrary( _T("Msi.dll") );
-	if ( ! hMSI )
-		Library.ScanMSI = false;
-	else
-		FreeLibrary( hMSI );
+	if ( Library.ScanMSI )
+	{
+		// Check if Windows installer library is present
+		HINSTANCE hMSI = LoadLibrary( _T("Msi.dll") );
+		if ( ! hMSI )
+			Library.ScanMSI = false;
+		else
+			FreeLibrary( hMSI );
+	}
 
 	// Set default program and user paths
 	if ( General.Path.IsEmpty() || ! PathFileExists( General.Path ) )

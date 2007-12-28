@@ -12,9 +12,9 @@
 	</Platforms>
 	<Configurations>
 		<Configuration
-			Name="Debug|Win32"
-			OutputDirectory="$(SolutionDir)$(ConfigurationName)\plugins"
-			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)\plugins\$(ProjectName)"
+			Name="Debug Win32|Win32"
+			OutputDirectory="$(SolutionDir)$(ConfigurationName)\plugins\$(ProjectName)\"
+			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)\plugins\$(ProjectName)\"
 			ConfigurationType="2"
 			UseOfATL="1"
 			ATLMinimizesCRunTimeLibraryUsage="TRUE"
@@ -35,13 +35,16 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
+				RegisterOutput="TRUE"
 				IgnoreImportLibrary="TRUE"
 				AdditionalDependencies="unicows.lib zlibwapi.lib kernel32.lib advapi32.lib user32.lib gdi32.lib shell32.lib comdlg32.lib version.lib mpr.lib rasapi32.lib winmm.lib winspool.lib vfw32.lib secur32.lib oleacc.lib oledlg.lib sensapi.lib"
+				OutputFile="$(OutDir)..\$(ProjectName).dll"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="..\shareaza\zlib"
 				IgnoreDefaultLibraryNames="kernel32.lib;advapi32.lib;user32.lib;gdi32.lib;shell32.lib;comdlg32.lib;version.lib;mpr.lib;rasapi32.lib;winmm.lib;winspool.lib;vfw32.lib;secur32.lib;oleacc.lib;oledlg.lib;sensapi.lib"
 				ModuleDefinitionFile="..\plugins\$(ProjectName)\$(ProjectName).def"
 				GenerateDebugInformation="TRUE"
+				ProgramDatabaseFile="$(TargetDir)$(TargetName).pdb"
 				GenerateMapFile="FALSE"
 				SubSystem="2"
 				SetChecksum="FALSE"
@@ -52,16 +55,12 @@
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="_DEBUG"
 				AdditionalIncludeDirectories="..\shareaza"
-				HeaderFileName="$(IntDir)\$(InputName).h"
+				HeaderFileName="$(IntDir)$(InputName).h"
 				DLLDataFileName=""
-				InterfaceIdentifierFileName="$(IntDir)\$(InputName)_i.c"
+				InterfaceIdentifierFileName="$(IntDir)$(InputName)_i.c"
 				ProxyFileName=""/>
 			<Tool
-				Name="VCPostBuildEventTool"
-				Description="Performing registration"
-				CommandLine="copy &quot;..\setup\builds\zlibwapi.dll&quot; &quot;$(TargetDir)&quot; /b /y
-regsvr32 /s /c &quot;$(TargetPath)&quot;
-"/>
+				Name="VCPostBuildEventTool"/>
 			<Tool
 				Name="VCPreBuildEventTool"/>
 			<Tool
@@ -83,9 +82,9 @@ regsvr32 /s /c &quot;$(TargetPath)&quot;
 				Name="VCAuxiliaryManagedWrapperGeneratorTool"/>
 		</Configuration>
 		<Configuration
-			Name="Release|Win32"
-			OutputDirectory="$(SolutionDir)$(ConfigurationName)\plugins"
-			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)\plugins\$(ProjectName)"
+			Name="Release Win32|Win32"
+			OutputDirectory="$(SolutionDir)$(ConfigurationName)\plugins\$(ProjectName)\"
+			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)\plugins\$(ProjectName)\"
 			ConfigurationType="2"
 			UseOfATL="1"
 			ATLMinimizesCRunTimeLibraryUsage="TRUE"
@@ -111,13 +110,16 @@ regsvr32 /s /c &quot;$(TargetPath)&quot;
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
+				RegisterOutput="TRUE"
 				IgnoreImportLibrary="TRUE"
 				AdditionalDependencies="unicows.lib zlibwapi.lib kernel32.lib advapi32.lib user32.lib gdi32.lib shell32.lib comdlg32.lib version.lib mpr.lib rasapi32.lib winmm.lib winspool.lib vfw32.lib secur32.lib oleacc.lib oledlg.lib sensapi.lib"
+				OutputFile="$(OutDir)..\$(ProjectName).dll"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="..\shareaza\zlib"
 				IgnoreDefaultLibraryNames="kernel32.lib;advapi32.lib;user32.lib;gdi32.lib;shell32.lib;comdlg32.lib;version.lib;mpr.lib;rasapi32.lib;winmm.lib;winspool.lib;vfw32.lib;secur32.lib;oleacc.lib;oledlg.lib;sensapi.lib"
 				ModuleDefinitionFile="..\plugins\$(ProjectName)\$(ProjectName).def"
 				GenerateDebugInformation="FALSE"
+				ProgramDatabaseFile="$(TargetDir)$(TargetName).pdb"
 				SubSystem="2"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
@@ -130,16 +132,12 @@ regsvr32 /s /c &quot;$(TargetPath)&quot;
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="NDEBUG"
 				AdditionalIncludeDirectories="..\shareaza"
-				HeaderFileName="$(IntDir)\$(InputName).h"
+				HeaderFileName="$(IntDir)$(InputName).h"
 				DLLDataFileName=""
-				InterfaceIdentifierFileName="$(IntDir)\$(InputName)_i.c"
+				InterfaceIdentifierFileName="$(IntDir)$(InputName)_i.c"
 				ProxyFileName=""/>
 			<Tool
-				Name="VCPostBuildEventTool"
-				Description="Performing registration"
-				CommandLine="copy &quot;..\setup\builds\zlibwapi.dll&quot; &quot;$(TargetDir)&quot; /b /y
-regsvr32 /s /c &quot;$(TargetPath)&quot;
-"/>
+				Name="VCPostBuildEventTool"/>
 			<Tool
 				Name="VCPreBuildEventTool"/>
 			<Tool
@@ -147,6 +145,153 @@ regsvr32 /s /c &quot;$(TargetPath)&quot;
 			<Tool
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="NDEBUG"
+				Culture="1049"
+				AdditionalIncludeDirectories="$(IntDir)"/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"/>
+			<Tool
+				Name="VCWebDeploymentTool"/>
+			<Tool
+				Name="VCManagedWrapperGeneratorTool"/>
+			<Tool
+				Name="VCAuxiliaryManagedWrapperGeneratorTool"/>
+		</Configuration>
+		<Configuration
+			Name="Release x64|Win32"
+			OutputDirectory="$(SolutionDir)$(ConfigurationName)\plugins\$(ProjectName)\"
+			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)\plugins\$(ProjectName)\"
+			ConfigurationType="2"
+			UseOfATL="1"
+			ATLMinimizesCRunTimeLibraryUsage="TRUE"
+			CharacterSet="1"
+			WholeProgramOptimization="TRUE">
+			<Tool
+				Name="VCCLCompilerTool"
+				Optimization="3"
+				GlobalOptimizations="TRUE"
+				InlineFunctionExpansion="2"
+				EnableIntrinsicFunctions="TRUE"
+				FavorSizeOrSpeed="1"
+				OmitFramePointers="TRUE"
+				AdditionalIncludeDirectories="$(IntDir);..\shareaza\zlib"
+				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_USRDLL"
+				StringPooling="TRUE"
+				ExceptionHandling="FALSE"
+				RuntimeLibrary="0"
+				UsePrecompiledHeader="3"
+				WarningLevel="4"
+				Detect64BitPortabilityProblems="TRUE"/>
+			<Tool
+				Name="VCCustomBuildTool"/>
+			<Tool
+				Name="VCLinkerTool"
+				RegisterOutput="FALSE"
+				IgnoreImportLibrary="TRUE"
+				AdditionalDependencies="unicows.lib zlibwapi.lib kernel32.lib advapi32.lib user32.lib gdi32.lib shell32.lib comdlg32.lib version.lib mpr.lib rasapi32.lib winmm.lib winspool.lib vfw32.lib secur32.lib oleacc.lib oledlg.lib sensapi.lib"
+				OutputFile="$(OutDir)..\$(ProjectName).dll"
+				LinkIncremental="1"
+				AdditionalLibraryDirectories="..\shareaza\zlib"
+				IgnoreDefaultLibraryNames="kernel32.lib;advapi32.lib;user32.lib;gdi32.lib;shell32.lib;comdlg32.lib;version.lib;mpr.lib;rasapi32.lib;winmm.lib;winspool.lib;vfw32.lib;secur32.lib;oleacc.lib;oledlg.lib;sensapi.lib"
+				ModuleDefinitionFile="..\plugins\$(ProjectName)\$(ProjectName).def"
+				GenerateDebugInformation="FALSE"
+				ProgramDatabaseFile="$(TargetDir)$(TargetName).pdb"
+				SubSystem="2"
+				OptimizeReferences="2"
+				EnableCOMDATFolding="2"
+				OptimizeForWindows98="1"
+				SetChecksum="TRUE"
+				BaseAddress="0x1a700000"
+				ImportLibrary=""
+				TargetMachine="1"/>
+			<Tool
+				Name="VCMIDLTool"
+				PreprocessorDefinitions="NDEBUG"
+				AdditionalIncludeDirectories="..\shareaza"
+				HeaderFileName="$(IntDir)$(InputName).h"
+				DLLDataFileName=""
+				InterfaceIdentifierFileName="$(IntDir)$(InputName)_i.c"
+				ProxyFileName=""/>
+			<Tool
+				Name="VCPostBuildEventTool"/>
+			<Tool
+				Name="VCPreBuildEventTool"/>
+			<Tool
+				Name="VCPreLinkEventTool"/>
+			<Tool
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="NDEBUG"
+				Culture="1049"
+				AdditionalIncludeDirectories="$(IntDir)"/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"/>
+			<Tool
+				Name="VCWebDeploymentTool"/>
+			<Tool
+				Name="VCManagedWrapperGeneratorTool"/>
+			<Tool
+				Name="VCAuxiliaryManagedWrapperGeneratorTool"/>
+		</Configuration>
+		<Configuration
+			Name="Debug x64|Win32"
+			OutputDirectory="$(SolutionDir)$(ConfigurationName)\plugins\$(ProjectName)\"
+			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)\plugins\$(ProjectName)\"
+			ConfigurationType="2"
+			UseOfATL="1"
+			ATLMinimizesCRunTimeLibraryUsage="TRUE"
+			CharacterSet="1">
+			<Tool
+				Name="VCCLCompilerTool"
+				Optimization="0"
+				AdditionalIncludeDirectories="$(IntDir);..\shareaza\zlib"
+				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG;_USRDLL"
+				ExceptionHandling="FALSE"
+				BasicRuntimeChecks="3"
+				RuntimeLibrary="1"
+				UsePrecompiledHeader="3"
+				WarningLevel="4"
+				Detect64BitPortabilityProblems="TRUE"
+				DebugInformationFormat="4"/>
+			<Tool
+				Name="VCCustomBuildTool"/>
+			<Tool
+				Name="VCLinkerTool"
+				RegisterOutput="FALSE"
+				IgnoreImportLibrary="TRUE"
+				AdditionalDependencies="unicows.lib zlibwapi.lib kernel32.lib advapi32.lib user32.lib gdi32.lib shell32.lib comdlg32.lib version.lib mpr.lib rasapi32.lib winmm.lib winspool.lib vfw32.lib secur32.lib oleacc.lib oledlg.lib sensapi.lib"
+				OutputFile="$(OutDir)..\$(ProjectName).dll"
+				LinkIncremental="2"
+				AdditionalLibraryDirectories="..\shareaza\zlib"
+				IgnoreDefaultLibraryNames="kernel32.lib;advapi32.lib;user32.lib;gdi32.lib;shell32.lib;comdlg32.lib;version.lib;mpr.lib;rasapi32.lib;winmm.lib;winspool.lib;vfw32.lib;secur32.lib;oleacc.lib;oledlg.lib;sensapi.lib"
+				ModuleDefinitionFile="..\plugins\$(ProjectName)\$(ProjectName).def"
+				GenerateDebugInformation="TRUE"
+				ProgramDatabaseFile="$(TargetDir)$(TargetName).pdb"
+				GenerateMapFile="FALSE"
+				SubSystem="2"
+				SetChecksum="FALSE"
+				BaseAddress="0x1a700000"
+				ImportLibrary=""
+				TargetMachine="1"/>
+			<Tool
+				Name="VCMIDLTool"
+				PreprocessorDefinitions="_DEBUG"
+				AdditionalIncludeDirectories="..\shareaza"
+				HeaderFileName="$(IntDir)$(InputName).h"
+				DLLDataFileName=""
+				InterfaceIdentifierFileName="$(IntDir)$(InputName)_i.c"
+				ProxyFileName=""/>
+			<Tool
+				Name="VCPostBuildEventTool"/>
+			<Tool
+				Name="VCPreBuildEventTool"/>
+			<Tool
+				Name="VCPreLinkEventTool"/>
+			<Tool
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="_DEBUG"
 				Culture="1049"
 				AdditionalIncludeDirectories="$(IntDir)"/>
 			<Tool
@@ -174,30 +319,56 @@ regsvr32 /s /c &quot;$(TargetPath)&quot;
 			<File
 				RelativePath="..\shareaza\Shareaza.idl">
 				<FileConfiguration
-					Name="Debug|Win32">
+					Name="Debug Win32|Win32">
 					<Tool
 						Name="VCMIDLTool"
-						TypeLibraryName="$(IntDir)\ShareazaOM.tlb"
-						HeaderFileName="$(IntDir)\ShareazaOM.h"/>
+						TypeLibraryName="$(IntDir)ShareazaOM.tlb"
+						HeaderFileName="$(IntDir)ShareazaOM.h"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|Win32">
+					Name="Release Win32|Win32">
 					<Tool
 						Name="VCMIDLTool"
-						TypeLibraryName="$(IntDir)\ShareazaOM.tlb"
-						HeaderFileName="$(IntDir)\ShareazaOM.h"/>
+						TypeLibraryName="$(IntDir)ShareazaOM.tlb"
+						HeaderFileName="$(IntDir)ShareazaOM.h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release x64|Win32">
+					<Tool
+						Name="VCMIDLTool"
+						TypeLibraryName="$(IntDir)ShareazaOM.tlb"
+						HeaderFileName="$(IntDir)ShareazaOM.h"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug x64|Win32">
+					<Tool
+						Name="VCMIDLTool"
+						TypeLibraryName="$(IntDir)ShareazaOM.tlb"
+						HeaderFileName="$(IntDir)ShareazaOM.h"/>
 				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\plugins\ZIPBuilder\StdAfx.cpp">
 				<FileConfiguration
-					Name="Debug|Win32">
+					Name="Debug Win32|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|Win32">
+					Name="Release Win32|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="1"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release x64|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="1"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug x64|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="1"/>
@@ -211,6 +382,30 @@ regsvr32 /s /c &quot;$(TargetPath)&quot;
 			</File>
 			<File
 				RelativePath="..\plugins\ZIPBuilder\ZIPBuilder.idl">
+				<FileConfiguration
+					Name="Debug Win32|Win32">
+					<Tool
+						Name="VCMIDLTool"
+						AdditionalIncludeDirectories="..\shareaza"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release Win32|Win32">
+					<Tool
+						Name="VCMIDLTool"
+						AdditionalIncludeDirectories="..\shareaza"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release x64|Win32">
+					<Tool
+						Name="VCMIDLTool"
+						AdditionalIncludeDirectories="..\shareaza"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug x64|Win32">
+					<Tool
+						Name="VCMIDLTool"
+						AdditionalIncludeDirectories="..\shareaza"/>
+				</FileConfiguration>
 			</File>
 		</Filter>
 		<Filter
@@ -249,13 +444,25 @@ regsvr32 /s /c &quot;$(TargetPath)&quot;
 			<File
 				RelativePath="..\plugins\ZIPBuilder\ZIPBuilder_i.c">
 				<FileConfiguration
-					Name="Debug|Win32">
+					Name="Debug Win32|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|Win32">
+					Name="Release Win32|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release x64|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug x64|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"/>

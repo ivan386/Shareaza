@@ -1,5 +1,5 @@
-; Comment the next line if you don't compile an alpha build
-#define alpha
+; Change from "Yes" to "No" on the next line if you don't compile an alpha build
+#define alpha "Yes"
 
 ; Uncomment the next line to compile the setup with the debug version of shareaza (It is no longer used to debug the setup).
 ;#define Debug
@@ -16,6 +16,12 @@
   #undef Debug
 #endif
 
+; This is defined externally only when compiled inside Visual Studio
+#ifndef PlatformName
+  #define PlatformName "Win32"
+#endif
+
+
 ; This decide if it is a debug build or not
 #ifdef Debug
   #define type "Debug"
@@ -23,21 +29,13 @@
   #define type "Release"
 #endif
 
-; This is defined externally only when compiled inside Visual Studio
-#ifndef PlatformName
-  #define PlatformName ""
-#endif
-
 ; Select file source root
-#ifexist "..\..\vc7_1\" + type + PlatformName + "\Shareaza.exe"
-  #define root "vc7_1\" + type + PlatformName
+#ifexist "..\..\vc7_1\" + type + " " + PlatformName + "\Shareaza.exe"
+  #define root "vc7_1\" + type + " " + PlatformName
 #endif
 
-#ifexist "..\..\vc8_0\" + type + PlatformName + "\Shareaza.exe"
-  #define root "vc8_0\" + type + PlatformName
-  #if PlatformName == "Win32"
-    #define PlatformName ""
-  #endif
+#ifexist "..\..\vc8_0\" + type + " " + PlatformName + "\Shareaza.exe"
+  #define root "vc8_0\" + type + " " + PlatformName
 #endif
 
 #ifndef root
@@ -65,20 +63,18 @@ AppId={#internal_name}
 AppName={#name}
 AppVersion={#version}
 AppVerName={#name} {#version}
-AppMutex=Shareaza
+AppMutex={#internal_name}
 DefaultDirName={ini:{param:SETTINGS|},Locations,Path|{reg:HKLM\SOFTWARE\{#internal_name},|{pf}\{#internal_name}}}
 DirExistsWarning=no
 DefaultGroupName={#internal_name}
 AllowNoIcons=yes
 OutputDir=setup\builds
 #ifdef Debug
-OutputBaseFilename={#internal_name}_Debug_{#date}{#PlatformName}
+OutputBaseFilename={#internal_name}_Debug_{#date}
+#elif alpha == "Yes"
+OutputBaseFilename={#internal_name}_Release_{#date}
 #else
-#ifdef alpha
-OutputBaseFilename={#internal_name}_Release_{#date}{#PlatformName}
-#else
-OutputBaseFilename={#internal_name}_{#version}{#PlatformName}
-#endif
+OutputBaseFilename={#internal_name}_{#version}
 #endif
 SolidCompression=yes
 Compression=lzma/max
@@ -88,7 +84,7 @@ ShowLanguageDialog=yes
 ShowUndisplayableLanguages=yes
 LanguageDetectionMethod=locale
 UninstallDisplayIcon={app}\Uninstall\setup.exe
-UninstallDisplayName={cm:NameAndVersion,{#internal_name},{#version}}
+UninstallDisplayName={#internal_name} {#version}
 UninstallFilesDir={app}\Uninstall
 SetupIconFile=setup\misc\install.ico
 ShowComponentSizes=no
@@ -97,7 +93,7 @@ WizardSmallImageFile=setup\misc\corner.bmp
 AppModifyPath="{app}\Uninstall\setup.exe"
 ChangesAssociations=yes
 ChangesEnvironment=yes
-OutputManifestFile=Manifest_{#type}{#PlatformName}.txt
+OutputManifestFile=Manifest_{#type}_{#PlatformName}.txt
 MinVersion=4.0,4.0sp6
 #if PlatformName == "x64"
 ArchitecturesAllowed=x64
@@ -133,59 +129,50 @@ Name: "resetdiscoveryhostcache"; Description: "{cm:tasks_resetdiscoveryhostcache
 ;--== Executables ==--
 ; Main files
 Source: "{#root}\Shareaza.exe"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
-Source: "{#root}\skin.exe";     DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+Source: "{#root}\skin.exe"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+
 
 ;--== Dynamic Link Libraries ==--
-; Unicows: Install on Win 9X
+; Unicows.dll: Install on Win 9X
 Source: "setup\builds\unicows.dll"; DestDir: "{sys}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension sharedfile uninsnosharedfileprompt; MinVersion: 4.0,0
 
-; Main files
-Source: "{#root}\*.dll"; DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion uninsremovereadonly sortfilesbyextension deleteafterinstall
-Source: "{#root}\*.dll"; DestDir: "{app}";         Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
-
-; Plugins
-Source: "{#root}\plugins\*.dll";   DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver; Excludes: "libgfl*.dll,zlibwapi.dll,unrar.dll,7zxr.dll"
-Source: "{#root}\plugins\*.dll";   DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension;           Excludes: "libgfl*.dll,zlibwapi.dll"
-Source: "plugins\MediaPlayer.dll"; DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
-Source: "plugins\RazaWebHook.dll"; DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
-#if PlatformName == "x64"
-Source: "vc8_0\{#type}Win32\plugins\GFL*.dll"; DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver 32bit
-#endif
-
+; Main dlls
 #ifdef Debug
-;--== Debug Databases ==--
-; Unicows: Install on Win 9X
-Source: "setup\builds\unicows.pdb"; DestDir: "{sys}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension; MinVersion: 4.0,0
+Source: "{#root}\zlibwapi.dll"; DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion uninsremovereadonly sortfilesbyextension deleteafterinstall
+Source: "{#root}\zlibwapi.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+#elif PlatformName == "Win32"
+Source: "setup\builds\zlibwapi.dll"; DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion uninsremovereadonly sortfilesbyextension deleteafterinstall
+Source: "setup\builds\zlibwapi.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+#else
+Source: "setup\builds\zlibwapi_x64.dll"; DestName: "zlibwapi.dll"; DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion uninsremovereadonly sortfilesbyextension deleteafterinstall
+Source: "setup\builds\zlibwapi_x64.dll"; DestName: "zlibwapi.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+#endif
+Source: "plugins\LibGFL\{#type} {#PlatformName}\libgfl*.dll"; DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion uninsremovereadonly sortfilesbyextension deleteafterinstall; Excludes: "libgfle*.dll"
+Source: "plugins\LibGFL\{#type} {#PlatformName}\libgfl*.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension; Excludes: "libgfle*.dll"
+;Source: "{#root}\sqlite3.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 
-; Main files
-Source: "{#root}\shareaza.pdb"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
-; ** The next line can be uncommented to include geoip, skin & zlipwapi debug database files
-;Source: "{#root}\*.pdb"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+; GeoIP
+Source: "GeoIP\geoip.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+Source: "GeoIP\data\GeoIP.dat"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+Source: "setup\misc\LICENSE-GeoIP.txt"; DestDir: "{app}"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension
 
 ; Plugins
-; ** This section can be uncommented to include the debug database files for all the plugins
-;Source: "{#root}\plugins\*.pdb"; DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
-;#if PlatformName == "x64"
-;Source: "vc8_0\{#type}Win32\plugins\GFL*.pdb"; DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
-;#endif
-#endif
+; Don't register RazaWebHook.dll since it will setup Shareaza as download manager
+Source: "plugins\RARBuilder\unrar.dll";              DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+Source: "plugins\7ZipBuilder\7zxr.dll";              DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+Source: "{#root}\plugins\*.dll";                     DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver; Excludes: "MediaPlayer.dll,RazaWebHook.dll,libgfl*.dll,zlibwapi.dll,unrar.dll,7zxr.dll"
+Source: "plugins\MediaPlayer.dll";                   DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
+Source: "plugins\RazaWebHook.dll";                   DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+
 
 ;--== Data Files ==--
-; Main files
+; Set up data dir in {app}
 Source: "Data\*.*"; DestDir: "{app}\Data"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Excludes: "*.bak,*.url"
 
-; Plugins
-Source: "GeoIP\data\GeoIP.dat"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 
 ;--== Misc Files ==--
-; Icon files
-Source: "setup\misc\uninstall.ico"; DestDir: "{app}\Uninstall"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension
-
 ; Schemas
 Source: "Schemas\*"; DestDir: "{app}\Schemas"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension
-
-; Plugins
-Source: "setup\misc\LICENSE-GeoIP.txt"; DestDir: "{app}"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension
 
 ; Skins
 Source: "Skins\*"; DestDir: "{app}\Skins"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Excludes: ".svn,\Arcadia's Call\*,\Green Moon\*,\LiquidMetal*\*,\NucleoX\*,\Raza-Ablaze\*"
@@ -196,6 +183,25 @@ Source: "Templates\*"; DestDir: "{app}\Templates"; Flags: ignoreversion overwrit
 ; Languages
 Source: "Languages\*"; DestDir: "{app}\Skins\Languages"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Tasks: "language"; Excludes: "default-en.xml,*.bak"
 
+; Uninstall icon for software panel
+Source: "setup\misc\uninstall.ico"; DestDir: "{app}\Uninstall"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension
+
+
+;--== Debug Databases ==--
+#ifdef Debug
+; Main files
+Source: "{#root}\Shareaza.pdb"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+Source: "{#root}\skin.pdb"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+Source: "{#root}\zlibwapi.pdb"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+;Source: "{#root}\GeoIP.pdb"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+Source: "{#root}\plugins\*.pdb"; DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+
+; Install unicows.dll on Win 9X
+Source: "setup\builds\unicows.pdb"; DestDir: "{sys}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension; MinVersion: 4.0,0
+#endif
+
+
+;--== Copy files ==--
 ; Copy skins back from {userappdata}\Shareaza\Skins
 Source: "{userappdata}\Shareaza\Skins\*"; DestDir: "{app}\Skins"; Flags: ignoreversion uninsremovereadonly sortfilesbyextension external onlyifdoesntexist skipifsourcedoesntexist recursesubdirs; AfterInstall: DeleteFolder('{userappdata}\Shareaza\Skins')
 
@@ -248,26 +254,29 @@ Source: "{srcexe}"; DestDir: "{ini:{param:SETTINGS|},Locations,CompletePath|{reg
 #endif
 Source: "{srcexe}"; DestDir: "{app}\Uninstall"; DestName: "setup.exe"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension external
 
+; Copy repair installer
+;Source: "setup\builds\repair.exe"; DestDir: "{app}\Uninstall"; Flags: overwritereadonly replacesameversion uninsremovereadonly sortfilesbyextension; Check: not WizardSilent
+
 [Icons]
 ; Shareaza icons
-Name: "{userprograms}\{groupname}\Shareaza"; Filename: "{app}\Shareaza.exe"; WorkingDir: "{app}"; Comment: "{cm:reg_apptitle}"
-Name: "{userprograms}\{groupname}\GUI Mode\Shareaza ({cm:icons_basicmode})"; Filename: "{app}\Shareaza.exe"; Parameters: "-basic"; WorkingDir: "{app}"; Comment: "{cm:reg_apptitle}"
-Name: "{userprograms}\{groupname}\GUI Mode\Shareaza ({cm:icons_tabbedmode})"; Filename: "{app}\Shareaza.exe"; Parameters: "-tabbed"; WorkingDir: "{app}"; Comment: "{cm:reg_apptitle}"
-Name: "{userprograms}\{groupname}\GUI Mode\Shareaza ({cm:icons_windowedmode})"; Filename: "{app}\Shareaza.exe"; Parameters: "-windowed"; WorkingDir: "{app}"; Comment: "{cm:reg_apptitle}"
-Name: "{userdesktop}\Shareaza"; Filename: "{app}\Shareaza.exe"; WorkingDir: "{app}"; Comment: "{cm:reg_apptitle}"; Tasks: desktopicon
-Name: "{userappdata}\Microsoft\Internet Explorer\Quick Launch\Shareaza"; Filename: "{app}\Shareaza.exe"; WorkingDir: "{app}"; Comment: "{cm:reg_apptitle}"; Tasks: quicklaunch
+Name: "{group}\{#internal_name}"; Filename: "{app}\Shareaza.exe"; WorkingDir: "{app}"; Comment: "{cm:reg_apptitle}"
+Name: "{group}\GUI Mode\{#internal_name} ({cm:icons_basicmode})"; Filename: "{app}\Shareaza.exe"; Parameters: "-basic"; WorkingDir: "{app}"; Comment: "{cm:reg_apptitle}"
+Name: "{group}\GUI Mode\{#internal_name} ({cm:icons_tabbedmode})"; Filename: "{app}\Shareaza.exe"; Parameters: "-tabbed"; WorkingDir: "{app}"; Comment: "{cm:reg_apptitle}"
+Name: "{group}\GUI Mode\{#internal_name} ({cm:icons_windowedmode})"; Filename: "{app}\Shareaza.exe"; Parameters: "-windowed"; WorkingDir: "{app}"; Comment: "{cm:reg_apptitle}"
+Name: "{commondesktop}\{#internal_name}"; Filename: "{app}\Shareaza.exe"; WorkingDir: "{app}"; Comment: "{cm:reg_apptitle}"; Tasks: desktopicon
+Name: "{userappdata}\Microsoft\Internet Explorer\Quick Launch\{#internal_name}"; Filename: "{app}\Shareaza.exe"; WorkingDir: "{app}"; Comment: "{cm:reg_apptitle}"; Tasks: quicklaunch
 
 ; Other icons in user language
-Name: "{userprograms}\{groupname}\{cm:icons_license}"; Filename: "{app}\Uninstall\license.rtf"; WorkingDir: "{app}\Uninstall"; Comment: "{cm:icons_license}"
-Name: "{userprograms}\{groupname}\{cm:icons_uninstall}"; Filename: "{uninstallexe}"; WorkingDir: "{app}\Uninstall"; Comment: "{cm:UninstallProgram,Shareaza}"; IconFilename: "{app}\Uninstall\uninstall.ico"
+Name: "{group}\{cm:icons_license}"; Filename: "{app}\Uninstall\license.rtf"; WorkingDir: "{app}\Uninstall"; Comment: "{cm:icons_license}"
+Name: "{group}\{cm:icons_uninstall}"; Filename: "{uninstallexe}"; WorkingDir: "{app}\Uninstall"; Comment: "{cm:UninstallProgram,Shareaza}"; IconFilename: "{app}\Uninstall\uninstall.ico"
 ;Name: "{userprograms}\{groupname}\{cm:icons_downloads}"; Filename: "{ini:{param:SETTINGS|},Locations,CompletePath|{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CompletePath|{userdocs}\Shareaza Downloads}}"; WorkingDir: "{ini:{param:SETTINGS|},Locations,CompletePath|{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CompletePath|{userdocs}\Shareaza Downloads}}"; Comment: "{cm:icons_downloads}"; Tasks: multiuser; Check: not WizardNoIcons
-;Name: "{userprograms}\{groupname}\{cm:icons_downloads}"; Filename: "{ini:{param:SETTINGS|},Locations,CompletePath|{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CompletePath|{app}\Downloads}}"; WorkingDir: "{ini:{param:SETTINGS|},Locations,CompletePath|{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CompletePath|{app}\Downloads}}"; Comment: "{cm:icons_downloads}"; Tasks: not multiuser; Check: not WizardNoIcons
+;Name: "{group}\{cm:icons_downloads}"; Filename: "{ini:{param:SETTINGS|},Locations,CompletePath|{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CompletePath|{app}\Downloads}}"; WorkingDir: "{ini:{param:SETTINGS|},Locations,CompletePath|{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CompletePath|{app}\Downloads}}"; Comment: "{cm:icons_downloads}"; Tasks: not multiuser; Check: not WizardNoIcons
 
 [Messages]
 ; Overwrite standard ISL entries
 ; DO NOT use for localized messages
 BeveledLabel=Shareaza Development Team
-SetupAppTitle=Setup - Shareaza
+SetupAppTitle=Setup - {#internal_name}
 
 [Run]
 ; Run the skin installer at end of installation
@@ -297,6 +306,10 @@ Root: HKCU; Subkey: "AppEvents\Schemes\Apps\Shareaza"; ValueType: string; ValueN
 Root: HKCU; Subkey: "AppEvents\Schemes\Apps\Shareaza\RAZA_IncomingChat\.current"; ValueType: string; ValueName: ; ValueData: "%SystemRoot%\media\notify.wav"; Flags: uninsdeletekey
 Root: HKCU; Subkey: "AppEvents\Schemes\Apps\Shareaza\RAZA_IncomingChat\.default"; ValueType: string; ValueName: ; ValueData: "%SystemRoot%\media\notify.wav"; Flags: uninsdeletekey
 
+; Set UPNP as choosed during the setup
+Root: HKCU; Subkey: "Software\Shareaza\Shareaza\Connection"; ValueType: dword; ValueName: "EnableUPnP"; ValueData: 1; Flags: deletevalue; Tasks: upnp
+Root: HKCU; Subkey: "Software\Shareaza\Shareaza\Connection"; ValueType: dword; ValueName: "EnableUPnP"; ValueData: 0; Flags: deletevalue; Tasks: not upnp
+
 ; Set directory locations
 Root: HKCU; Subkey: "Software\Shareaza\Shareaza\Downloads"; ValueType: string; ValueName: "CompletePath"; ValueData: "{ini:{param:SETTINGS|},Locations,CompletePath|{userdocs}\Shareaza Downloads}"; Flags: uninsdeletekey createvalueifdoesntexist; Tasks: multiuser
 Root: HKCU; Subkey: "Software\Shareaza\Shareaza\Downloads"; ValueType: string; ValueName: "IncompletePath"; ValueData: "{ini:{param:SETTINGS|},Locations,IncompletePath|{localappdata}\Shareaza\Incomplete}"; Flags: uninsdeletekey createvalueifdoesntexist; Tasks: multiuser
@@ -325,6 +338,8 @@ Root: HKLM; Subkey: "SOFTWARE\Classes\mp2p"; Permissions: users-modify; Tasks: n
 Root: HKLM; Subkey: "SOFTWARE\Classes\gwc"; Permissions: users-modify; Tasks: not multiuser
 Root: HKLM; Subkey: "SOFTWARE\Classes\shareaza"; Permissions: users-modify; Tasks: not multiuser
 Root: HKLM; Subkey: "SOFTWARE\Classes\Shareaza.Collection"; Permissions: users-modify; Tasks: not multiuser
+Root: HKLM; Subkey: "SOFTWARE\Classes\Applications\Shareaza.exe"; Permissions: users-modify; Tasks: not multiuser
+
 
 ; Delete keys at uninstall
 Root: HKLM; Subkey: "SOFTWARE\Shareaza"; Flags: dontcreatekey uninsdeletekey
@@ -425,17 +440,15 @@ Type: files; Name: "{app}\Shareaza.exe"; Check: IsMalwareDetected
 Type: files; Name: "{app}\vc2.dll"
 
 ; Clean up old files from Shareaza
-Type: files; Name: "{app}\Shareaza.pdb"
-Type: files; Name: "{app}\skin-installer.pdb"
-Type: files; Name: "{app}\skin.pdb"
-Type: files; Name: "{app}\zlibwapi.pdb"
+Type: files; Name: "{app}\*.pdb"
+Type: files; Name: "{app}\Plugins\*.pdb"
 Type: files; Name: "{app}\zlib.dll"
 Type: files; Name: "{app}\zlib1.dll"
 Type: files; Name: "{app}\Plugins\zlib.dll"
 Type: files; Name: "{app}\Plugins\zlib1.dll"
 Type: files; Name: "{app}\Plugins\DivFix.dll"
-Type: files; Name: "{app}\Plugins\libgfl*.dll"
 Type: files; Name: "{app}\libgfl*.dll"
+Type: files; Name: "{app}\Plugins\libgfl*.dll"
 Type: files; Name: "{app}\Skins\skin.exe"
 Type: files; Name: "{app}\Schemas\VendorCache.xsd"
 Type: files; Name: "{app}\Schemas\SchemaDescriptor.xsd"
@@ -463,10 +476,13 @@ Type: files; Name: "{app}\Skins\Languages\default-jp.ico"
 Type: files; Name: "{app}\Skins\Languages\default-jp.xml"
 
 ; Clean up old Shareaza icons
-Type: files; Name: "{userdesktop}\Start Shareaza.lnk"; Check: NSISUsed
 Type: files; Name: "{userdesktop}\Shareaza.lnk"; Tasks: not desktopicon
+Type: files; Name: "{commondesktop}\Shareaza.lnk"; Tasks: not desktopicon
+Type: files; Name: "{userdesktop}\Start Shareaza.lnk"; Check: NSISUsed
 Type: filesandordirs; Name: "{userprograms}\Shareaza"; Check: NSISUsed
+Type: filesandordirs; Name: "{commonprograms}\Shareaza"; Check: NSISUsed
 Type: filesandordirs; Name: "{userprograms}\{reg:HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Shareaza_is1,Inno Setup: Icon Group|{groupname}}"; Check: InnoSetupUsed
+Type: filesandordirs; Name: "{commonprograms}\{reg:HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Shareaza_is1,Inno Setup: Icon Group|{groupname}}"; Check: InnoSetupUsed
 Type: files; Name: "{userappdata}\Microsoft\Internet Explorer\Quick Launch\Shareaza.lnk"; Tasks: not quicklaunch
 
 ; Delete extra components so installer can "uninstall" them

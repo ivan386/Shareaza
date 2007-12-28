@@ -130,7 +130,7 @@ void CDownloadsSettingsPage::OnDownloadsBrowse()
 		return;
 	
 	// Warn user about a path that's too long
-	if ( _tcslen( strPath ) > 256 - 33 )
+	if ( _tcslen( strPath ) > MAX_PATH - 33 )
 	{
 		CString strMessage;
 		LoadString( strMessage, IDS_SETTINGS_FILEPATH_TOO_LONG );
