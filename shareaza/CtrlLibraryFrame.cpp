@@ -574,9 +574,11 @@ void CLibraryFrame::SetView(CLibraryView* pView, BOOL bUpdate, BOOL bUser)
 {
 	CSingleLock pLock( &Library.m_pSection, TRUE );
 
+	CLibraryTreeItem* pFolderSelection	= m_wndTree.GetFirstSelected();
+
 	if ( bUser && pView != NULL )
 	{
-		for (	CLibraryTreeItem* pItem = m_pFolderSelection ; pItem ;
+		for (	CLibraryTreeItem* pItem = pFolderSelection; pItem ;
 				pItem = pItem->m_pSelNext )
 		{
 			if ( pItem->m_pVirtual != NULL )
@@ -586,12 +588,16 @@ void CLibraryFrame::SetView(CLibraryView* pView, BOOL bUpdate, BOOL bUser)
 		}
 	}
 
-	if ( m_pFolderSelection != NULL && pView != NULL )
+	if ( pFolderSelection && pFolderSelection->m_pVirtual && pView )
 	{
+		ASSERT_VALID( pFolderSelection );
+		ASSERT_VALID( pFolderSelection->m_pVirtual );
+		ASSERT_VALID( pView );
+
 		if ( Settings.Library.ShowVirtual && m_pView &&
-			 m_pFolderSelection->m_pVirtual->m_pSchema )
+			 pFolderSelection->m_pVirtual->m_pSchema )
 			pView->m_bGhostFolder = 
-				( m_pFolderSelection->m_pVirtual->m_pSchema->m_sURI == CSchema::uriGhostFolder );
+				( pFolderSelection->m_pVirtual->m_pSchema->m_sURI == CSchema::uriGhostFolder );
 		else 
 			pView->m_bGhostFolder = FALSE;
 	}
@@ -683,20 +689,24 @@ BOOL CLibraryFrame::Update(BOOL bForce, BOOL bBestView)
 
 	m_nFolderCookie		= GetTickCount();
 	m_wndTree.Update( m_nFolderCookie );
-	m_pFolderSelection	= m_wndTree.GetFirstSelected();
+	CLibraryTreeItem* pFolderSelection	= m_wndTree.GetFirstSelected();
 
 	CLibraryView* pFirstView	= NULL;
 	CLibraryView* pBestView		= NULL;
 	CString strBest;
 
-	if ( m_pFolderSelection != NULL && m_pFolderSelection->m_pVirtual != NULL )
-		strBest = m_pFolderSelection->m_pVirtual->GetBestView();
+	if ( pFolderSelection != NULL && pFolderSelection->m_pVirtual != NULL )
+	{
+		ASSERT_VALID( pFolderSelection );
+		ASSERT_VALID( pFolderSelection->m_pVirtual );
+		strBest = pFolderSelection->m_pVirtual->GetBestView();
+	}
 
 	for ( POSITION pos = m_pViews.GetHeadPosition() ; pos ; )
 	{
 		CLibraryView* pView = m_pViews.GetNext( pos );
 
-		if ( pView->CheckAvailable( m_pFolderSelection ) )
+		if ( pView->CheckAvailable( m_wndTree.GetFirstSelected() ) )
 		{
 			if ( pFirstView == NULL ) pFirstView = pView;
 			if ( strBest.CompareNoCase( CString( pView->GetRuntimeClass()->m_lpszClassName ) ) == 0 )
@@ -746,6 +756,8 @@ BOOL CLibraryFrame::Update(BOOL bForce, BOOL bBestView)
 
 void CLibraryFrame::UpdatePanel(BOOL bForce)
 {
+	CQuickLock oLock( Library.m_pSection );
+
 	if ( ! bForce && ! m_bViewSelection ) return;
 	m_bViewSelection = FALSE;
 
@@ -756,7 +768,7 @@ void CLibraryFrame::UpdatePanel(BOOL bForce)
 	{
 		CLibraryPanel* pPanel = m_pPanels.GetNext( pos );
 
-		if ( pPanel->CheckAvailable( m_pFolderSelection, m_pViewSelection )
+		if ( pPanel->CheckAvailable( m_wndTree.GetFirstSelected(), m_pViewSelection )
 			&& pFirstPanel == NULL ) pFirstPanel = pPanel;
 	}
 
@@ -815,16 +827,6 @@ BOOL CLibraryFrame::Select(DWORD nObject)
 
 /////////////////////////////////////////////////////////////////////////////
 // CLibraryFrame selection events
-
-CLibraryTreeItem* CLibraryFrame::GetFolderSelection() const
-{
-	return m_pFolderSelection;
-}
-
-CLibraryList* CLibraryFrame::GetViewSelection() const
-{
-	return m_pViewSelection;
-}
 
 void CLibraryFrame::OnTreeSelection(NMHDR* /*pNotify*/, LRESULT* pResult)
 {

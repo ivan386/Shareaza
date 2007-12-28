@@ -93,10 +93,14 @@ BOOL CLibraryMetaPanel::CheckAvailable(CLibraryTreeItem* pFolders, CLibraryList*
 	
 	if ( pFolders != NULL )
 	{
+		ASSERT_VALID( pFolders );
+
 		m_bAvailable = TRUE;
 		
 		if ( pFolders->m_pSelNext == NULL && pFolders->m_pVirtual != NULL )
 		{
+			ASSERT_VALID( pFolders->m_pVirtual );
+
 			// Do not display meta panel for the collection folder
 			if ( pFolders->m_pVirtual->m_oCollSHA1 &&
 				 pFolders->m_pVirtual->GetBestView().Find( _T("Collection") ) > 0 ||

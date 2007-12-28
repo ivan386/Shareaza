@@ -62,7 +62,6 @@ private:
 // Operations
 public:
 	void				SetToolTip(CCoolTipCtrl* pTip);
-	void				Clear();
 	BOOL				Expand(CLibraryTreeItem* pItem, TRISTATE bExpand = TRI_TRUE, BOOL bInvalidate = TRUE);
 	BOOL				Select(CLibraryTreeItem* pItem, TRISTATE bSelect = TRI_TRUE, BOOL bInvalidate = TRUE);
 	BOOL				SelectAll(CLibraryTreeItem* pParent = NULL, BOOL bInvalidate = TRUE);
@@ -79,6 +78,7 @@ public:
 	BOOL				SelectFolder(LPVOID pSearch);
 
 protected:
+	void				Clear();
 	void				UpdateScroll();
 	void				ScrollBy(int nDelta);
 	void				ScrollTo(int nPosition);
@@ -155,15 +155,14 @@ protected:
 
 class CLibraryTreeItem : public CObject
 {
-// Construction
 public:
 	CLibraryTreeItem(CLibraryTreeItem* pParent = NULL, const CString& name = CString());
 
-// Attributes
-private:
+protected:
 	CLibraryTreeItem* const m_pParent;
 	typedef boost::ptr_list< CLibraryTreeItem > Container;
 	Container m_oList;
+
 public:
 	typedef Container::iterator iterator;
 	typedef Container::const_iterator const_iterator;
@@ -194,18 +193,17 @@ public:
 	}
 	bool empty() const { return m_oList.empty(); }
 	void clear() { m_oList.clear(); }
-	iterator erase(iterator item) { return m_oList.erase( item ); }
 	CLibraryTreeItem* addItem(const CString& name);
+	iterator erase(iterator item) { return m_oList.erase( item ); }
+
 public:
 	CLibraryTreeItem*	m_pSelPrev;
 	CLibraryTreeItem*	m_pSelNext;
 	DWORD				m_nCleanCookie;
-public:
 	BOOL				m_bExpanded;
 	BOOL				m_bSelected;
 	BOOL				m_bContract1;
 	BOOL				m_bContract2;
-public:
 	CLibraryFolder*		m_pPhysical;
 	CAlbumFolder*		m_pVirtual;
 	DWORD				m_nCookie;
@@ -215,8 +213,6 @@ public:
 	BOOL				m_bCollection;
 	int					m_nIcon16;
 
-// Operations
-public:
 	BOOL				IsVisible() const;
 	void				Paint(CDC& dc, CRect& rc, BOOL bTarget, COLORREF crBack = CLR_NONE) const;
 	int					GetFileList(CLibraryList* pList, BOOL bRecursive = FALSE) const;

@@ -198,17 +198,17 @@ CLibraryFrame* CLibraryView::GetFrame() const
 
 CLibraryTipCtrl* CLibraryView::GetToolTip() const
 {
-	return &GetFrame()->m_wndViewTip;
+	return GetFrame()->GetToolTip();
 }
 
 DWORD CLibraryView::GetFolderCookie() const
 {
-	return GetFrame()->m_nFolderCookie;
+	return GetFrame()->GetFolderCookie();
 }
 
 CLibraryTreeItem* CLibraryView::GetFolderSelection() const
 {
-	return GetFrame()->m_pFolderSelection;
+	return GetFrame()->GetFolderSelection();
 }
 
 CAlbumFolder* CLibraryView::GetSelectedAlbum(CLibraryTreeItem* pSel) const

@@ -747,6 +747,12 @@ void CLibraryTileView::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 	case VK_RETURN:
 		PostMessage( WM_COMMAND, ID_LIBRARY_ALBUM_OPEN );
 		break;
+	case VK_INSERT:
+		GetParent()->PostMessage( WM_COMMAND, ID_LIBRARY_FOLDER_NEW );
+		break;
+	case VK_DELETE:
+		PostMessage( WM_COMMAND, ID_LIBRARY_ALBUM_DELETE );
+		break;
 	}
 
 	CLibraryView::OnKeyDown( nChar, nRepCnt, nFlags );
@@ -1031,10 +1037,19 @@ void CLibraryTileView::OnLibraryAlbumDelete()
 	{
 		CQuickLock oLock( Library.m_pSection );
 
+		CLibraryTreeItem* pItem = GetFrame()->GetFolderSelection();
+
 		for ( std::list< iterator >::iterator pTile = m_oSelTile.begin(); pTile != m_oSelTile.end(); ++pTile )
 		{
 			CAlbumFolder* pFolder = ( *pTile )->m_pFolder;
-			if ( LibraryFolders.CheckAlbum( pFolder ) ) pFolder->Delete();
+			if ( LibraryFolders.CheckAlbum( pFolder ) )
+			{
+				if ( pItem && pFolder == pItem->m_pVirtual )
+				{
+					GetParent()->SendMessage( WM_COMMAND, ID_LIBRARY_PARENT );
+				}
+				pFolder->Delete();
+			}
 		}
 		clear();
 	}

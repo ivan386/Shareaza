@@ -1243,7 +1243,7 @@ LRESULT CMainWnd::OnLibrarySearch(WPARAM wParam, LPARAM /*lParam*/)
 
 	if ( CLibraryWnd* pWnd = (CLibraryWnd*)m_pWindows.Find( RUNTIME_CLASS(CLibraryWnd) ) )
 	{
-		pWnd->m_wndFrame.m_wndSearch.SetWindowText( pszSearch );
+		pWnd->m_wndFrame.SetSearchText( pszSearch );
 		result = pWnd->m_wndFrame.SendMessage( WM_COMMAND, ID_LIBRARY_SEARCH_QUICK );
 	}
 	delete pszSearch;

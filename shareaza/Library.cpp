@@ -456,7 +456,6 @@ void CLibrary::Serialize(CArchive& ar)
 	}
 	else
 	{
-		Clear();
 		ar >> nVersion;
 		if ( nVersion < 1 || nVersion > LIBRARY_SER_VERSION ) AfxThrowUserException();
 	}

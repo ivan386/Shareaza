@@ -143,6 +143,8 @@ void CLibraryTreeView::SetVirtual(BOOL bVirtual)
 
 void CLibraryTreeView::Update(DWORD nSelectCookie)
 {
+	CQuickLock pLock( Library.m_pSection );
+
 	if ( m_bVirtual )
 	{
 		UpdateVirtual( nSelectCookie );
@@ -177,6 +179,8 @@ void CLibraryTreeView::SetToolTip(CCoolTipCtrl* pTip)
 
 void CLibraryTreeView::Clear()
 {
+	CQuickLock( Library.m_pSection );
+
 	if ( m_pRoot->empty() ) return;
 
 	m_pRoot->clear();
@@ -442,7 +446,6 @@ BOOL CLibraryTreeView::Highlight(CLibraryTreeItem* pItem)
 
 BOOL CLibraryTreeView::CleanItems(CLibraryTreeItem* pItem, DWORD nCookie, BOOL bVisible)
 {
-	
 	BOOL bChanged = FALSE;
 
 	for ( CLibraryTreeItem::iterator pChild = pItem->begin(); pChild != pItem->end(); )
@@ -1591,7 +1594,7 @@ void CLibraryTreeView::OnUpdateLibraryParent(CCmdUI* pCmdUI)
 	CLibraryFrame* pFrame = (CLibraryFrame*)GetParent();
 	ASSERT_KINDOF(CLibraryFrame, pFrame);
 
-	CCoolBarCtrl* pBar = &pFrame->m_wndViewTop;
+	CCoolBarCtrl* pBar = pFrame->GetViewTop();
 	CCoolBarItem* pItem = pBar->GetID( ID_LIBRARY_PARENT );
 
 	BOOL bAvailable = ( m_nSelected == 1 );
@@ -1849,6 +1852,8 @@ void CLibraryTreeView::OnLibraryFolderDelete()
 			CAlbumFolder* pFolder = pItem->m_pVirtual;
 			if ( LibraryFolders.CheckAlbum( pFolder ) ) pFolder->Delete();
 		}
+
+		DeselectAll();
 	}
 
 	NotifySelection();

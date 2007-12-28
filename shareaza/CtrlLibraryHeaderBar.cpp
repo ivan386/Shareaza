@@ -196,7 +196,7 @@ void CLibraryHeaderBar::OnLibraryView()
 	pMenu.CreatePopupMenu();
 
 	CLibraryFrame* pFrame	= (CLibraryFrame*)GetParent();
-	CList< CLibraryView* >* pViews		= &pFrame->m_pViews;
+	CList< CLibraryView* >* pViews = pFrame->GetViews();
 
 	for ( POSITION pos = pViews->GetHeadPosition() ; pos ; )
 	{
