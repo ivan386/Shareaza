@@ -601,7 +601,7 @@ CXMLElement* CCollectionExportDlg::CreateXML(BOOL bMetadataAll)
 {
 	//Collect wizard entries
 	CXMLElement* pRoot = new CXMLElement( NULL, _T("collection") );
-	pRoot->AddAttribute( _T("xmlns"), _T("http://shareaza.sourceforge.net/schemas/Collection.xsd") );
+	pRoot->AddAttribute( _T("xmlns"), _T("http://www.shareaza.com/schemas/Collection.xsd") );
 
 	CXMLElement* pProperties = pRoot->AddElement( _T("properties") );
 

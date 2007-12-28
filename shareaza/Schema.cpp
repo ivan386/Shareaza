@@ -296,7 +296,7 @@ BOOL CSchema::LoadDescriptor(LPCTSTR pszFile)
 	CXMLElement* pRoot = CXMLElement::FromFile( pszFile );
 	if ( NULL == pRoot ) return FALSE;
 	
-	if ( ! CheckURI( pRoot->GetAttributeValue( _T("location") ) ) ||
+	if ( m_sURI.CompareNoCase( pRoot->GetAttributeValue( _T("location") ) ) ||
 		 ! pRoot->IsNamed( _T("schemaDescriptor") ) )
 	{
 		delete pRoot;
@@ -643,7 +643,7 @@ BOOL CSchema::Validate(CXMLElement* pXML, BOOL bFix)
 	if ( pXML == NULL ) return FALSE;
 	
 	if ( ! pXML->IsNamed( m_sPlural ) ) return FALSE;
-	if ( ! CheckURI( pXML->GetAttributeValue( CXMLAttribute::schemaName ) ) ) return FALSE;
+	if ( pXML->GetAttributeValue( CXMLAttribute::schemaName ) != m_sURI ) return FALSE;
 	
 	CXMLElement* pBody = pXML->GetFirstElement();
 	if ( pBody == NULL ) return FALSE;

@@ -465,7 +465,7 @@ void CSecurity::Serialize(CArchive& ar)
 //////////////////////////////////////////////////////////////////////
 // CSecurity XML
 
-LPCTSTR CSecurity::xmlns = _T("http://shareaza.sourceforge.net/schemas/Security.xsd");
+LPCTSTR CSecurity::xmlns = _T("http://www.shareaza.com/schemas/Security.xsd");
 
 CXMLElement* CSecurity::ToXML(BOOL bRules)
 {

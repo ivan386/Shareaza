@@ -32,7 +32,7 @@ static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
 #endif
 
-LPCTSTR CGProfile::xmlns = _T("http://shareaza.sourceforge.net/schemas/GProfile.xsd");
+LPCTSTR CGProfile::xmlns = _T("http://www.shareaza.com/schemas/GProfile.xsd");
 
 BEGIN_INTERFACE_MAP(CGProfile, CComObject)
 END_INTERFACE_MAP()
