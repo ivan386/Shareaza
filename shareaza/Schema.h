@@ -106,29 +106,18 @@ protected:
 public:
 	inline BOOL Equals(CSchema* pSchema) const
 	{
-		if ( ! pSchema ) return FALSE;
-		if ( this == pSchema ) return TRUE;
-		
-		for ( POSITION pos = m_pExtends.GetHeadPosition() ; pos ; )
-		{
-			CString strURI = m_pExtends.GetNext( pos );
-			if ( strURI.CompareNoCase( pSchema->m_sURI ) == 0 ) return TRUE;
-		}
-		
-		return FALSE;
+		return ( pSchema && ( ( this == pSchema ) || CheckURI( pSchema->m_sURI ) ) );
 	}
 
 	inline BOOL CheckURI(LPCTSTR pszURI) const
 	{
-		if ( ! pszURI || ! this ) return FALSE;
+		if ( ! pszURI ) return FALSE;
 		if ( m_sURI.CompareNoCase( pszURI ) == 0 ) return TRUE;
-		
 		for ( POSITION pos = m_pExtends.GetHeadPosition() ; pos ; )
 		{
 			CString strURI = m_pExtends.GetNext( pos );
 			if ( strURI.CompareNoCase( pszURI ) == 0 ) return TRUE;
 		}
-		
 		return FALSE;
 	}
 
