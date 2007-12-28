@@ -786,56 +786,56 @@ BOOL CSchemaBitzi::Load(CXMLElement* pXML)
 //////////////////////////////////////////////////////////////////////
 // CSchema common schema URIs
 
-LPCTSTR	CSchema::uriApplication	= _T("http://shareaza.sourceforge.net/schemas/application.xsd");
+LPCTSTR	CSchema::uriApplication	= _T("http://www.shareaza.com/schemas/application.xsd");
 LPCTSTR	CSchema::uriAudio		= _T("http://www.limewire.com/schemas/audio.xsd");
 LPCTSTR	CSchema::uriBook		= _T("http://www.limewire.com/schemas/book.xsd");
-LPCTSTR	CSchema::uriImage		= _T("http://shareaza.sourceforge.net/schemas/image.xsd");
+LPCTSTR	CSchema::uriImage		= _T("http://www.shareaza.com/schemas/image.xsd");
 LPCTSTR	CSchema::uriVideo		= _T("http://www.limewire.com/schemas/video.xsd");
-LPCTSTR	CSchema::uriROM			= _T("http://shareaza.sourceforge.net/schemas/rom.xsd");
-LPCTSTR	CSchema::uriDocument	 = _T("http://shareaza.sourceforge.net/schemas/wordProcessing.xsd");
-LPCTSTR	CSchema::uriSpreadsheet	 = _T("http://shareaza.sourceforge.net/schemas/spreadsheet.xsd");
-LPCTSTR CSchema::uriPresentation = _T("http://shareaza.sourceforge.net/schemas/presentation.xsd");
+LPCTSTR	CSchema::uriROM			= _T("http://www.shareaza.com/schemas/rom.xsd");
+LPCTSTR	CSchema::uriDocument	 = _T("http://www.shareaza.com/schemas/wordProcessing.xsd");
+LPCTSTR	CSchema::uriSpreadsheet	 = _T("http://www.shareaza.com/schemas/spreadsheet.xsd");
+LPCTSTR CSchema::uriPresentation = _T("http://www.shareaza.com/schemas/presentation.xsd");
 
-LPCTSTR CSchema::uriLibrary					= _T("http://shareaza.sourceforge.net/schemas/libraryRoot.xsd");
+LPCTSTR CSchema::uriLibrary					= _T("http://www.shareaza.com/schemas/libraryRoot.xsd");
 
-LPCTSTR CSchema::uriFolder					= _T("http://shareaza.sourceforge.net/schemas/folder.xsd");
-LPCTSTR CSchema::uriCollectionsFolder		= _T("http://shareaza.sourceforge.net/schemas/collectionsFolder.xsd");
-LPCTSTR CSchema::uriFavouritesFolder		= _T("http://shareaza.sourceforge.net/schemas/favouritesFolder.xsd");
-LPCTSTR CSchema::uriSearchFolder			= _T("http://shareaza.sourceforge.net/schemas/searchFolder.xsd");
-LPCTSTR CSchema::uriAllFiles				= _T("http://shareaza.sourceforge.net/schemas/allFiles.xsd");
+LPCTSTR CSchema::uriFolder					= _T("http://www.shareaza.com/schemas/folder.xsd");
+LPCTSTR CSchema::uriCollectionsFolder		= _T("http://www.shareaza.com/schemas/collectionsFolder.xsd");
+LPCTSTR CSchema::uriFavouritesFolder		= _T("http://www.shareaza.com/schemas/favouritesFolder.xsd");
+LPCTSTR CSchema::uriSearchFolder			= _T("http://www.shareaza.com/schemas/searchFolder.xsd");
+LPCTSTR CSchema::uriAllFiles				= _T("http://www.shareaza.com/schemas/allFiles.xsd");
 
-LPCTSTR	CSchema::uriApplicationRoot			= _T("http://shareaza.sourceforge.net/schemas/applicationRoot.xsd");
-LPCTSTR	CSchema::uriApplicationAll			= _T("http://shareaza.sourceforge.net/schemas/applicationAll.xsd");
+LPCTSTR	CSchema::uriApplicationRoot			= _T("http://www.shareaza.com/schemas/applicationRoot.xsd");
+LPCTSTR	CSchema::uriApplicationAll			= _T("http://www.shareaza.com/schemas/applicationAll.xsd");
 
-LPCTSTR	CSchema::uriBookRoot				= _T("http://shareaza.sourceforge.net/schemas/bookRoot.xsd");
-LPCTSTR	CSchema::uriBookAll					= _T("http://shareaza.sourceforge.net/schemas/bookAll.xsd");
+LPCTSTR	CSchema::uriBookRoot				= _T("http://www.shareaza.com/schemas/bookRoot.xsd");
+LPCTSTR	CSchema::uriBookAll					= _T("http://www.shareaza.com/schemas/bookAll.xsd");
 
-LPCTSTR	CSchema::uriImageRoot				= _T("http://shareaza.sourceforge.net/schemas/imageRoot.xsd");
-LPCTSTR	CSchema::uriImageAll				= _T("http://shareaza.sourceforge.net/schemas/imageAll.xsd");
-LPCTSTR	CSchema::uriImageAlbum				= _T("http://shareaza.sourceforge.net/schemas/imageAlbum.xsd");
+LPCTSTR	CSchema::uriImageRoot				= _T("http://www.shareaza.com/schemas/imageRoot.xsd");
+LPCTSTR	CSchema::uriImageAll				= _T("http://www.shareaza.com/schemas/imageAll.xsd");
+LPCTSTR	CSchema::uriImageAlbum				= _T("http://www.shareaza.com/schemas/imageAlbum.xsd");
 
-LPCTSTR	CSchema::uriMusicRoot				= _T("http://shareaza.sourceforge.net/schemas/musicRoot.xsd");
-LPCTSTR	CSchema::uriMusicAll				= _T("http://shareaza.sourceforge.net/schemas/musicAll.xsd");
-LPCTSTR	CSchema::uriMusicAlbumCollection	= _T("http://shareaza.sourceforge.net/schemas/musicAlbumCollection.xsd");
-LPCTSTR	CSchema::uriMusicArtistCollection	= _T("http://shareaza.sourceforge.net/schemas/musicArtistCollection.xsd");
-LPCTSTR	CSchema::uriMusicGenreCollection	= _T("http://shareaza.sourceforge.net/schemas/musicGenreCollection.xsd");
-LPCTSTR	CSchema::uriMusicAlbum				= _T("http://shareaza.sourceforge.net/schemas/musicAlbum.xsd");
-LPCTSTR	CSchema::uriMusicArtist				= _T("http://shareaza.sourceforge.net/schemas/musicArtist.xsd");
-LPCTSTR	CSchema::uriMusicGenre				= _T("http://shareaza.sourceforge.net/schemas/musicGenre.xsd");
+LPCTSTR	CSchema::uriMusicRoot				= _T("http://www.shareaza.com/schemas/musicRoot.xsd");
+LPCTSTR	CSchema::uriMusicAll				= _T("http://www.shareaza.com/schemas/musicAll.xsd");
+LPCTSTR	CSchema::uriMusicAlbumCollection	= _T("http://www.shareaza.com/schemas/musicAlbumCollection.xsd");
+LPCTSTR	CSchema::uriMusicArtistCollection	= _T("http://www.shareaza.com/schemas/musicArtistCollection.xsd");
+LPCTSTR	CSchema::uriMusicGenreCollection	= _T("http://www.shareaza.com/schemas/musicGenreCollection.xsd");
+LPCTSTR	CSchema::uriMusicAlbum				= _T("http://www.shareaza.com/schemas/musicAlbum.xsd");
+LPCTSTR	CSchema::uriMusicArtist				= _T("http://www.shareaza.com/schemas/musicArtist.xsd");
+LPCTSTR	CSchema::uriMusicGenre				= _T("http://www.shareaza.com/schemas/musicGenre.xsd");
 
-LPCTSTR	CSchema::uriVideoRoot				= _T("http://shareaza.sourceforge.net/schemas/videoRoot.xsd");
-LPCTSTR	CSchema::uriVideoAll				= _T("http://shareaza.sourceforge.net/schemas/videoAll.xsd");
-LPCTSTR	CSchema::uriVideoSeriesCollection	= _T("http://shareaza.sourceforge.net/schemas/videoSeriesCollection.xsd");
-LPCTSTR	CSchema::uriVideoSeries				= _T("http://shareaza.sourceforge.net/schemas/videoSeries.xsd");
-LPCTSTR	CSchema::uriVideoFilmCollection		= _T("http://shareaza.sourceforge.net/schemas/videoFilmCollection.xsd");
-LPCTSTR	CSchema::uriVideoFilm				= _T("http://shareaza.sourceforge.net/schemas/videoFilm.xsd");
-LPCTSTR	CSchema::uriVideoMusicCollection	= _T("http://shareaza.sourceforge.net/schemas/videoMusicCollection.xsd");
+LPCTSTR	CSchema::uriVideoRoot				= _T("http://www.shareaza.com/schemas/videoRoot.xsd");
+LPCTSTR	CSchema::uriVideoAll				= _T("http://www.shareaza.com/schemas/videoAll.xsd");
+LPCTSTR	CSchema::uriVideoSeriesCollection	= _T("http://www.shareaza.com/schemas/videoSeriesCollection.xsd");
+LPCTSTR	CSchema::uriVideoSeries				= _T("http://www.shareaza.com/schemas/videoSeries.xsd");
+LPCTSTR	CSchema::uriVideoFilmCollection		= _T("http://www.shareaza.com/schemas/videoFilmCollection.xsd");
+LPCTSTR	CSchema::uriVideoFilm				= _T("http://www.shareaza.com/schemas/videoFilm.xsd");
+LPCTSTR	CSchema::uriVideoMusicCollection	= _T("http://www.shareaza.com/schemas/videoMusicCollection.xsd");
 
-LPCTSTR	CSchema::uriDocumentRoot			= _T("http://shareaza.sourceforge.net/schemas/documentRoot.xsd");
-LPCTSTR	CSchema::uriDocumentAll				= _T("http://shareaza.sourceforge.net/schemas/documentAll.xsd");
+LPCTSTR	CSchema::uriDocumentRoot			= _T("http://www.shareaza.com/schemas/documentRoot.xsd");
+LPCTSTR	CSchema::uriDocumentAll				= _T("http://www.shareaza.com/schemas/documentAll.xsd");
 
-LPCTSTR	CSchema::uriGhostFolder				= _T("http://shareaza.sourceforge.net/schemas/ghostFolder.xsd");
+LPCTSTR	CSchema::uriGhostFolder				= _T("http://www.shareaza.com/schemas/ghostFolder.xsd");
 
-LPCTSTR CSchema::uriComments				= _T("http://shareaza.sourceforge.net/schemas/comments.xsd");
+LPCTSTR CSchema::uriComments				= _T("http://www.shareaza.com/schemas/comments.xsd");
 
-LPCTSTR CSchema::uriBitTorrent				= _T("http://shareaza.sourceforge.net/schemas/bittorrent.xsd");
+LPCTSTR CSchema::uriBitTorrent				= _T("http://www.shareaza.com/schemas/bittorrent.xsd");
