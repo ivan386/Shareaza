@@ -2,7 +2,7 @@
 // Security.cpp
 //
 // Copyright (c) Shareaza Development Team, 2002-2007.
-// This file is part of SHAREAZA (www.shareaza.com)
+// This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
 // and/or modify it under the terms of the GNU General Public License
@@ -465,7 +465,7 @@ void CSecurity::Serialize(CArchive& ar)
 //////////////////////////////////////////////////////////////////////
 // CSecurity XML
 
-LPCTSTR CSecurity::xmlns = _T("http://www.shareaza.com/schemas/Security.xsd");
+LPCTSTR CSecurity::xmlns = _T("http://shareaza.sourceforge.net/schemas/Security.xsd");
 
 CXMLElement* CSecurity::ToXML(BOOL bRules)
 {

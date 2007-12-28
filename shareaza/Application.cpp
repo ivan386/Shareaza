@@ -1,8 +1,8 @@
 //
 // Application.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
-// This file is part of SHAREAZA (www.shareaza.com)
+// Copyright (c) Shareaza Development Team, 2002-2007.
+// This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
 // and/or modify it under the terms of the GNU General Public License

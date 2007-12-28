@@ -1,8 +1,8 @@
 //
 // DlgCollectionExport.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
-// This file is part of SHAREAZA (www.shareaza.com)
+// Copyright (c) Shareaza Development Team, 2002-2007.
+// This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
 // and/or modify it under the terms of the GNU General Public License
@@ -601,7 +601,7 @@ CXMLElement* CCollectionExportDlg::CreateXML(BOOL bMetadataAll)
 {
 	//Collect wizard entries
 	CXMLElement* pRoot = new CXMLElement( NULL, _T("collection") );
-	pRoot->AddAttribute( _T("xmlns"), _T("http://www.shareaza.com/schemas/Collection.xsd") );
+	pRoot->AddAttribute( _T("xmlns"), _T("http://shareaza.sourceforge.net/schemas/Collection.xsd") );
 
 	CXMLElement* pProperties = pRoot->AddElement( _T("properties") );
 

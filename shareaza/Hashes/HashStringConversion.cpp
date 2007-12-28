@@ -3,7 +3,7 @@
 // Hashes/HashStringConversion.cpp                                            //
 //                                                                            //
 // Copyright (c) Shareaza Development Team, 2005-2007.
-// This file is part of SHAREAZA (www.shareaza.com).                          //
+// This file is part of SHAREAZA (shareaza.sourceforge.net).                          //
 //                                                                            //
 // Shareaza is free software; you can redistribute it                         //
 // and/or modify it under the terms of the GNU General Public License         //

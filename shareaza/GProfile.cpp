@@ -2,7 +2,7 @@
 // GProfile.cpp
 //
 // Copyright (c) Shareaza Development Team, 2002-2007.
-// This file is part of SHAREAZA (www.shareaza.com)
+// This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
 // and/or modify it under the terms of the GNU General Public License
@@ -32,7 +32,7 @@ static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
 #endif
 
-LPCTSTR CGProfile::xmlns = _T("http://www.shareaza.com/schemas/GProfile.xsd");
+LPCTSTR CGProfile::xmlns = _T("http://shareaza.sourceforge.net/schemas/GProfile.xsd");
 
 BEGIN_INTERFACE_MAP(CGProfile, CComObject)
 END_INTERFACE_MAP()
