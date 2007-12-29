@@ -105,19 +105,22 @@ void CAdvancedSettingsPage::AddSettings()
 		CSettings::Item* pItem = Settings.GetNext( pos );
 		if ( pItem->m_pBool || ( pItem->m_pDword && pItem->m_nScale ) )
 		{
-			EditItem* pEdit = new EditItem( pItem );
-			ASSERT( pEdit != NULL );
-			if ( pEdit == NULL ) return;
+			if ( lstrcmp( pItem->m_szName, _T("ItWasLimited") ) != 0 )
+			{
+				EditItem* pEdit = new EditItem( pItem );
+				ASSERT( pEdit != NULL );
+				if ( pEdit == NULL ) return;
 
-			LV_ITEM pList = {};
-			pList.mask		= LVIF_PARAM|LVIF_TEXT|LVIF_IMAGE;
-			pList.iItem		= m_wndList.GetItemCount();
-			pList.lParam	= (LPARAM)pEdit;
-			pList.iImage	= 0;
-			pList.pszText	= (LPTSTR)(LPCTSTR)pEdit->m_sName;
-			pList.iItem		= m_wndList.InsertItem( &pList );
+				LV_ITEM pList = {};
+				pList.mask		= LVIF_PARAM|LVIF_TEXT|LVIF_IMAGE;
+				pList.iItem		= m_wndList.GetItemCount();
+				pList.lParam	= (LPARAM)pEdit;
+				pList.iImage	= 0;
+				pList.pszText	= (LPTSTR)(LPCTSTR)pEdit->m_sName;
+				pList.iItem		= m_wndList.InsertItem( &pList );
 
-			UpdateListItem( pList.iItem );
+				UpdateListItem( pList.iItem );
+			}
 		}
 	}
 }

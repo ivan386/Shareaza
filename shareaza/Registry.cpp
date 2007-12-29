@@ -32,7 +32,7 @@ static char THIS_FILE[]=__FILE__;
 //////////////////////////////////////////////////////////////////////
 // CRegistry read a string value
 
-CString CRegistry::GetString(LPCTSTR pszSection, LPCTSTR pszName, LPCTSTR pszDefault, LPCTSTR pszSubKey)
+CString CRegistry::GetString(LPCTSTR pszSection, LPCTSTR pszName, LPCTSTR pszDefault, LPCTSTR pszSubKey, BOOL bIgnoreHKCU)
 {
 	CString strSection( pszSubKey ? pszSubKey : _T("Software\\Shareaza\\Shareaza") );
 	if ( pszSection && *pszSection )
@@ -44,13 +44,13 @@ CString CRegistry::GetString(LPCTSTR pszSection, LPCTSTR pszName, LPCTSTR pszDef
 	// Read from HKCU then from HKLM
 	DWORD nType = 0, nSize = 0;
 	LONG nErrorCode = SHRegGetUSValue( (LPCTSTR)strSection, pszName, &nType,
-		NULL, &nSize, FALSE, NULL, 0 );
+		NULL, &nSize, bIgnoreHKCU, NULL, 0 );
 	if ( nErrorCode == ERROR_SUCCESS && nType == REG_SZ && nSize >= sizeof( TCHAR ) &&
 		( nSize & 1 ) == 0 )
 	{
 		CString strValue;
 		nErrorCode = SHRegGetUSValue( (LPCTSTR)strSection, pszName, &nType,
-			strValue.GetBuffer( nSize / sizeof( TCHAR ) ), &nSize, FALSE, NULL, 0 );
+			strValue.GetBuffer( nSize / sizeof( TCHAR ) ), &nSize, bIgnoreHKCU, NULL, 0 );
 		strValue.ReleaseBuffer( nSize / sizeof( TCHAR ) - 1 );
 		if ( nErrorCode == ERROR_SUCCESS )
 			return strValue;

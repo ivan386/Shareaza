@@ -22,6 +22,7 @@
 #include "StdAfx.h"
 #include "Shareaza.h"
 #include "Settings.h"
+#include "Registry.h"
 #include "ShareazaURL.h"
 #include "Transfer.h"
 #include "QuerySearch.h"
@@ -1331,48 +1332,20 @@ BOOL CShareazaURL::RegisterShellType(LPCTSTR pszRoot, LPCTSTR pszProtocol, LPCTS
 
 BOOL CShareazaURL::IsRegistered(LPCTSTR pszProtocol, HKEY hMainKey)
 {
-	HKEY hKey[4];
 	CString strSubKey;
 
 	strSubKey.Format( _T("Software\\Classes\\%s"), pszProtocol );
-	if ( RegOpenKeyEx( hMainKey, (LPCTSTR)strSubKey, 0, KEY_READ, &hKey[0] ) ) return FALSE;
+	CString strPath = CRegistry::GetString( _T("shell\\open\\command"), NULL, NULL, strSubKey, hMainKey == HKEY_LOCAL_MACHINE );
 
-	TCHAR szApp[MAX_PATH];
-	szApp[0] = 0;
-	
-	if ( RegOpenKeyEx( hKey[0], _T("shell"), 0, KEY_READ, &hKey[1] ) == 0 )
-	{
-		if ( RegOpenKeyEx( hKey[1], _T("open"), 0, KEY_READ, &hKey[2] ) == 0 )
-		{
-			if ( RegOpenKeyEx( hKey[2], _T("command"), 0, KEY_READ, &hKey[3] ) == 0 )
-			{
-				DWORD nType	= REG_SZ;
-				DWORD nApp	= sizeof(TCHAR) * ( MAX_PATH - 1 );
-				RegQueryValueEx( hKey[3], NULL, NULL, &nType, (LPBYTE)szApp, &nApp );
-				szApp[ nApp / sizeof(TCHAR) ] = 0;
-				RegCloseKey( hKey[3] );
-			}
-			RegCloseKey( hKey[2] );
-		}
-		RegCloseKey( hKey[1] );
-	}
-	
-	RegCloseKey( hKey[0] );
-	
 	TCHAR szPath[MAX_PATH];
 	GetModuleFileName( NULL, szPath, MAX_PATH );
-	
-	return _tcsistr( szApp, szPath ) != NULL;
+
+	return _tcsistr( strPath, szPath ) != NULL || CRegistry::GetString( _T("shell\\open\\ddeexec\\Application"), NULL, NULL, strSubKey, hMainKey == HKEY_LOCAL_MACHINE ) == _T("Shareaza");
 }
 
 BOOL CShareazaURL::UnregisterShellType(LPCTSTR pszRoot, LPCTSTR pszProtocol)
 {
 	if ( pszRoot == NULL ) return FALSE;
-
-	BOOL bRegisteredUser = IsRegistered( pszProtocol, HKEY_CURRENT_USER );
-	BOOL bRegisteredMachine = IsRegistered( pszProtocol, HKEY_LOCAL_MACHINE );
-
-	if ( !bRegisteredUser && !bRegisteredMachine ) return FALSE;
 
 	CString strSubKey;
 	if ( pszProtocol == NULL )
@@ -1380,16 +1353,21 @@ BOOL CShareazaURL::UnregisterShellType(LPCTSTR pszRoot, LPCTSTR pszProtocol)
 	else
 		strSubKey.Format( _T("Software\\%s\\%s"), pszRoot, pszProtocol );
 
-	if ( bRegisteredUser )
-	{
-		DeleteKey( HKEY_CURRENT_USER, (LPCTSTR)strSubKey );
-		RegDeleteKey( HKEY_CURRENT_USER, (LPCTSTR)strSubKey );
-	}
+	BOOL bRegisteredMachine = IsRegistered( pszProtocol, HKEY_LOCAL_MACHINE );
 	if ( bRegisteredMachine )
 	{
 		DeleteKey( HKEY_LOCAL_MACHINE, (LPCTSTR)strSubKey );
 		RegDeleteKey( HKEY_LOCAL_MACHINE, (LPCTSTR)strSubKey );
 	}
+
+	BOOL bRegisteredUser = IsRegistered( pszProtocol, HKEY_CURRENT_USER );
+	if ( bRegisteredUser )
+	{
+		DeleteKey( HKEY_CURRENT_USER, (LPCTSTR)strSubKey );
+		RegDeleteKey( HKEY_CURRENT_USER, (LPCTSTR)strSubKey );
+	}
+
+	if ( !bRegisteredUser && !bRegisteredMachine ) return FALSE;
 
 	return TRUE;
 }

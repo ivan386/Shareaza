@@ -24,7 +24,7 @@
 
 struct CRegistry
 {
-	static CString GetString(LPCTSTR pszSection, LPCTSTR pszName, LPCTSTR pszDefault = NULL, LPCTSTR pszSubKey = NULL);
+	static CString GetString(LPCTSTR pszSection, LPCTSTR pszName, LPCTSTR pszDefault = NULL, LPCTSTR pszSubKey = NULL, BOOL bIgnoreHKCU = FALSE);
 
 	static DWORD GetDword(LPCTSTR pszSection, LPCTSTR pszName, DWORD dwDefault = 0, LPCTSTR pszSubKey = NULL);
 
