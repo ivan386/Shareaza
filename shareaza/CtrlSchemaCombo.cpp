@@ -90,7 +90,7 @@ void CSchemaCombo::Load(LPCTSTR pszSelectURI, int nType, int nAvailability, BOOL
 	{
 		CSchema* pSchema = SchemaCache.GetNext( pos );
 		
-		BOOL bSelected = pszSelectURI && pSchema->m_sURI.CompareNoCase( pszSelectURI ) == 0;
+		BOOL bSelected = pSchema->CheckURI( pszSelectURI );
 		
 		if ( ! bReset )
 		{

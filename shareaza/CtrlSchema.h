@@ -24,6 +24,9 @@
 
 #pragma once
 
+#define NO_VALUE		(_T("(~ns~)"))
+#define MULTI_VALUE		(_T("(~mt~)"))
+
 class CSchema;
 class CXMLElement;
 

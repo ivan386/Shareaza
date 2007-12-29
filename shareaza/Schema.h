@@ -19,9 +19,6 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_SCHEMA_H__D6D5E129_7D37_4FBB_BBEA_320E4659D76D__INCLUDED_)
-#define AFX_SCHEMA_H__D6D5E129_7D37_4FBB_BBEA_320E4659D76D__INCLUDED_
-
 #pragma once
 
 #include "SchemaMember.h"
@@ -199,5 +196,3 @@ public:
 public:
 	BOOL		Load(CXMLElement* pXML);
 };
-
-#endif // !defined(AFX_SCHEMA_H__D6D5E129_7D37_4FBB_BBEA_320E4659D76D__INCLUDED_)

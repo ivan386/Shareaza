@@ -75,7 +75,7 @@ CString CSchemaMember::GetNextItem(POSITION& pos) const
 //////////////////////////////////////////////////////////////////////
 // CSchemaMember value lookup
 
-CString CSchemaMember::GetValueFrom(CXMLElement* pBase, LPCTSTR pszDefault, BOOL bFormat) const
+CString CSchemaMember::GetValueFrom(CXMLElement* pBase, LPCTSTR pszDefault, BOOL bFormat, BOOL bNoValidation) const
 {
 	// OPTIMIZE: This could all be done with LPCTSTR pointers instead of CString
 	CString strValue;
@@ -95,66 +95,81 @@ CString CSchemaMember::GetValueFrom(CXMLElement* pBase, LPCTSTR pszDefault, BOOL
 	{
 		strValue = pszDefault;
 	}
-	
-	// validate numeric value, empty if invalid
-	if ( m_bNumeric )
+
+	if ( ! bNoValidation )
 	{
-		float nNumber = 0.0;
-		_stscanf( strValue, L"%f", &nNumber );
-		if ( nNumber < (float)m_nMinOccurs || nNumber > (float)m_nMaxOccurs )
-			strValue.Empty();
-	}
-	else if ( m_bYear )
-	{
-		int nYear = 0;
-		if ( _stscanf( strValue, L"%i", &nYear ) != 1 || nYear < 1000 || nYear > 9999 ) 
-			strValue.Empty();
-	}
-	else if ( m_bGUID && strValue.GetLength() )
-	{
-		Hashes::Guid tmp;
-		if ( !( Hashes::fromGuid( strValue, &tmp[ 0 ] ) && tmp.validate() ) )
-			strValue.Empty();
-	}
-	else if ( m_bBoolean )
-	{
-		if ( strValue == L"1" || strValue.CompareNoCase( L"true" ) == 0 )
-			strValue = L"true";
-		else if ( strValue == L"0" || strValue.CompareNoCase( L"false" ) == 0 )
-			strValue = L"false";
-		else
-			strValue.Empty();
+		// validate numeric value, empty if invalid
+		if ( m_bNumeric )
+		{
+			float nNumber = 0.0;
+			_stscanf( strValue, L"%f", &nNumber );
+			if ( nNumber < (float)m_nMinOccurs || nNumber > (float)m_nMaxOccurs )
+				strValue = ( pszDefault ? pszDefault : _T("") );
+		}
+		else if ( m_bYear )
+		{
+			int nYear = 0;
+			if ( _stscanf( strValue, L"%i", &nYear ) != 1 || nYear < 1000 || nYear > 9999 ) 
+				strValue = ( pszDefault ? pszDefault : _T("") );
+		}
+		else if ( m_bGUID && strValue.GetLength() )
+		{
+			Hashes::Guid tmp;
+			if ( !( Hashes::fromGuid( strValue, &tmp[ 0 ] ) && tmp.validate() ) )
+				strValue = ( pszDefault ? pszDefault : _T("") );
+		}
+		else if ( m_bBoolean )
+		{
+			if ( strValue == L"1" ||
+				strValue.CompareNoCase( L"true" ) == 0 ||
+				strValue.CompareNoCase( L"yes" ) == 0 )
+				strValue = L"true";
+			else if ( strValue == L"0" ||
+				strValue.CompareNoCase( L"false" ) == 0 ||
+				strValue.CompareNoCase( L"no" ) == 0 )
+				strValue = L"false";
+			else
+				strValue = ( pszDefault ? pszDefault : _T("") );
+		}
 	}
 
-	if ( strValue.IsEmpty() ) return strValue;
-	
+	if ( strValue.IsEmpty() ) return CString();
+
 	if ( bFormat && m_bNumeric ) 
 	{
 		if ( m_nFormat == smfTimeMMSS )
 		{
 			DWORD nSeconds = 0;
-			_stscanf( strValue, L"%lu", &nSeconds );
-			strValue.Format( L"%.2u:%.2u", nSeconds / 60, nSeconds % 60 );
+			if ( _stscanf( strValue, L"%lu", &nSeconds ) == 1 )
+				strValue.Format( L"%.2u:%.2u", nSeconds / 60, nSeconds % 60 );
+			else
+				strValue = ( pszDefault ? pszDefault : _T("") );
 		}
 		else if ( m_nFormat == smfTimeHHMMSSdec )
 		{
 			float nMinutes = 0;
-			_stscanf( strValue, L"%f", &nMinutes );
-			strValue.Format( L"%.2u:%.2u:%.2u", (int)nMinutes / 60,
-				(int)nMinutes % 60, (int)( ( nMinutes - (int)nMinutes ) * 60 ) );
+			if ( _stscanf( strValue, L"%f", &nMinutes ) == 1 )
+				strValue.Format( L"%.2u:%.2u:%.2u", (int)nMinutes / 60,
+					(int)nMinutes % 60, (int)( ( nMinutes - (int)nMinutes ) * 60 ) );
+			else
+				strValue = ( pszDefault ? pszDefault : _T("") );
 		}
 		else if ( m_nFormat == smfFrequency )
 		{
 			DWORD nRate = 0;
-			_stscanf( strValue, L"%lu", &nRate );
-			strValue.Format( L"%.1f kHz", nRate / 1000.0 );
+			if ( _stscanf( strValue, L"%lu", &nRate ) == 1 )
+				strValue.Format( L"%.1f kHz", nRate / 1000.0 );
+			else
+				strValue = ( pszDefault ? pszDefault : _T("") );
 		}
 		else if ( m_nFormat == smfBitrate )
 		{
 			BOOL bVariable = _tcschr( strValue, '~' ) != NULL;
 			DWORD nBitrate = 0;
-			_stscanf( strValue, L"%lu", &nBitrate );
-			strValue.Format( bVariable ? L"%luk~" : L"%luk", nBitrate );
+			if ( _stscanf( strValue, L"%lu", &nBitrate ) == 1 )
+				strValue.Format( bVariable ? L"%luk~" : L"%luk", nBitrate );
+			else
+				strValue = ( pszDefault ? pszDefault : _T("") );
 		}
 	}
 	

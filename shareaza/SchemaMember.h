@@ -69,7 +69,7 @@ public:
 	POSITION	GetItemIterator() const;
 	CString		GetNextItem(POSITION& pos) const;
 	INT_PTR		GetItemCount() const { return m_pItems.GetCount(); }
-	CString		GetValueFrom(CXMLElement* pElement, LPCTSTR pszDefault = NULL, BOOL bFormat = FALSE) const;
+	CString		GetValueFrom(CXMLElement* pElement, LPCTSTR pszDefault = NULL, BOOL bFormat = FALSE, BOOL bNoValidation = FALSE) const;
 	void		SetValueTo(CXMLElement* pBase, LPCTSTR pszValue);
 protected:
 	BOOL		LoadSchema(CXMLElement* pRoot, CXMLElement* pElement);

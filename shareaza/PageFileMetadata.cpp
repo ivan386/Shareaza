@@ -136,18 +136,17 @@ BOOL CFileMetadataPage::OnInitDialog()
 						for ( POSITION pos2 = pSchema->GetMemberIterator() ; pos2 ; )
 						{
 							CSchemaMember* pMember = pSchema->GetNextMember( pos2 );
-							CString strOld = pMember->GetValueFrom( m_pXML, _T("(~ns~)") );
-							CString strNew = pMember->GetValueFrom( pFile->m_pMetadata /* , _T("(~ns~)") */ );
-
-							if ( strNew != _T("(~ns~)") && strOld != _T("(~mt~)") )
+							CString strOld = pMember->GetValueFrom( m_pXML, NO_VALUE, FALSE, TRUE );
+							if ( strOld != MULTI_VALUE )
 							{
-								if ( strOld == _T("(~ns~)") || strOld.IsEmpty() )
+								CString strNew = pMember->GetValueFrom( pFile->m_pMetadata, NO_VALUE );
+								if ( strOld == NO_VALUE && strNew != NO_VALUE )
 								{
 									m_pXML->AddAttribute( pMember->m_sName, strNew );
 								}
 								else if ( strOld != strNew )
 								{
-									m_pXML->AddAttribute( pMember->m_sName, _T("(~mt~)") );
+									m_pXML->AddAttribute( pMember->m_sName, MULTI_VALUE );
 								}
 							}
 						}
@@ -167,7 +166,7 @@ void CFileMetadataPage::OnSelChangeSchemas()
 	CSchema* pSchema = m_wndSchemas.GetSelected();
 	CString strSelectedURI = m_wndData.GetSchemaURI();
 
-	if ( pSchema && pSchema->m_sURI != strSelectedURI )
+	if ( pSchema && ! pSchema->CheckURI( strSelectedURI ) )
 	{
 		if ( strSelectedURI.IsEmpty() )
 		{
@@ -251,7 +250,7 @@ void CFileMetadataPage::AddCrossAttributes(CXMLElement* pXML, LPCTSTR pszTargetU
 					if ( strFrom.IsEmpty() || strTo.IsEmpty() ) continue;
 
 					CString strValue = m_pXML->GetAttributeValue( strFrom );
-					if ( strValue.GetLength() && strValue != L"(~mt~)" )
+					if ( strValue.GetLength() && strValue != MULTI_VALUE )
 						m_pXML->AddAttribute( strTo, strValue );
 				}
 			}

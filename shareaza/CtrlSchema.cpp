@@ -189,8 +189,6 @@ BOOL CSchemaCtrl::UpdateData(CXMLElement* pBase, BOOL bSaveAndValidate)
 	{
 		CWnd* pControl = m_pControls.GetAt( nControl );
 		CSchemaMember* pMember = NULL;
-		CString strValue;
-		
 		while ( pos )
 		{
 			pMember = m_pSchema->GetNextMember( pos );
@@ -202,20 +200,28 @@ BOOL CSchemaCtrl::UpdateData(CXMLElement* pBase, BOOL bSaveAndValidate)
 		
 		if ( bSaveAndValidate )
 		{
-			pControl->GetWindowText( strValue );
-			
-			if ( strValue != strMultipleString )
-				pMember->SetValueTo( pBase, strValue );
+			CString strNewValue;
+			pControl->GetWindowText( strNewValue );
+
+			CString strOldValue = pMember->GetValueFrom( pBase, NO_VALUE, FALSE, TRUE );
+
+			// If value was changed
+			if ( strNewValue != strMultipleString &&
+				// ... but don't set empty value if there is no original value
+				! ( strNewValue.IsEmpty() && ( strOldValue == NO_VALUE ) ) &&
+				( strNewValue != strOldValue ) )
+				// ... save it
+				pMember->SetValueTo( pBase, strNewValue );
 		}
 		else
 		{
-			strValue = pMember->GetValueFrom( pBase );
+			CString strValue = pMember->GetValueFrom( pBase, NO_VALUE, FALSE, TRUE );
 			
-			if ( strValue == _T("(~mt~)") )
+			if ( strValue == MULTI_VALUE )
 			{
 				pControl->SetWindowText( strMultipleString );
 			}
-			else
+			else if ( ! strValue.IsEmpty() && ( strValue != NO_VALUE ) )
 			{
 				pControl->SetWindowText( strValue );
 			}
