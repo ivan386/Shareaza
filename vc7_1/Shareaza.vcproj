@@ -198,7 +198,7 @@
 				OptimizeForProcessor="0"
 				OptimizeForWindowsApplication="TRUE"
 				AdditionalIncludeDirectories="$(IntDir);..\shareaza\zlib"
-				PreprocessorDefinitions="NDEBUG;WIN32;WIN64;_WINDOWS;_SHAREAZA;ZLIB_WINAPI"
+				PreprocessorDefinitions="NDEBUG;WIN64;_WINDOWS;_SHAREAZA;ZLIB_WINAPI"
 				StringPooling="TRUE"
 				RuntimeLibrary="0"
 				BufferSecurityCheck="TRUE"
@@ -280,7 +280,7 @@
 				AdditionalOptions="/Wall"
 				Optimization="0"
 				AdditionalIncludeDirectories="$(IntDir);..\shareaza\zlib"
-				PreprocessorDefinitions="_DEBUG;WIN32;WIN64;_WINDOWS;_SHAREAZA;ZLIB_WINAPI"
+				PreprocessorDefinitions="_DEBUG;WIN64;_WINDOWS;_SHAREAZA;ZLIB_WINAPI"
 				StringPooling="TRUE"
 				BasicRuntimeChecks="3"
 				SmallerTypeCheck="FALSE"
@@ -3837,35 +3837,6 @@
 				RelativePath="..\shareaza\Res\SchemaMappings.xml.gz">
 			</File>
 			<File
-				RelativePath="Debug x64\$(ProjectName)\Shareaza_i.c">
-				<FileConfiguration
-					Name="Debug Win32|Win32"
-					ExcludedFromBuild="TRUE">
-					<Tool
-						Name="VCCLCompilerTool"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release Win32|Win32"
-					ExcludedFromBuild="TRUE">
-					<Tool
-						Name="VCCLCompilerTool"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release x64|Win32"
-					ExcludedFromBuild="TRUE">
-					<Tool
-						Name="VCCLCompilerTool"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug x64|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-						ObjectFile="$(IntDir)$(InputName)1.obj"
-						DisableSpecificWarnings="4255;4668;4820"/>
-				</FileConfiguration>
-			</File>
-			<File
 				RelativePath="Release x64\$(ProjectName)\Shareaza_i.c">
 				<FileConfiguration
 					Name="Debug Win32|Win32"
@@ -3950,6 +3921,35 @@
 					ExcludedFromBuild="TRUE">
 					<Tool
 						Name="VCCLCompilerTool"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="Debug x64\$(ProjectName)\Shareaza_i.c">
+				<FileConfiguration
+					Name="Debug Win32|Win32"
+					ExcludedFromBuild="TRUE">
+					<Tool
+						Name="VCCLCompilerTool"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release Win32|Win32"
+					ExcludedFromBuild="TRUE">
+					<Tool
+						Name="VCCLCompilerTool"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release x64|Win32"
+					ExcludedFromBuild="TRUE">
+					<Tool
+						Name="VCCLCompilerTool"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug x64|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+						ObjectFile="$(IntDir)$(InputName)1.obj"
+						DisableSpecificWarnings="4255;4668;4820"/>
 				</FileConfiguration>
 			</File>
 		</Filter>

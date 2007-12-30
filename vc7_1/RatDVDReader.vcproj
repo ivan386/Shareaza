@@ -183,7 +183,7 @@
 				FavorSizeOrSpeed="1"
 				OmitFramePointers="TRUE"
 				AdditionalIncludeDirectories="$(IntDir)"
-				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_USRDLL"
+				PreprocessorDefinitions="WIN64;_WINDOWS;NDEBUG;_USRDLL"
 				StringPooling="TRUE"
 				ExceptionHandling="TRUE"
 				RuntimeLibrary="0"
@@ -217,6 +217,7 @@
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="NDEBUG"
 				MkTypLibCompatible="FALSE"
+				TargetEnvironment="2"
 				GenerateStublessProxies="TRUE"
 				TypeLibraryName="$(IntDir)$(InputName).tlb"
 				OutputDirectory="$(IntDir)"
@@ -259,7 +260,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="$(IntDir)"
-				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG;_USRDLL"
+				PreprocessorDefinitions="WIN64;_WINDOWS;_DEBUG;_USRDLL"
 				StringPooling="TRUE"
 				MinimalRebuild="TRUE"
 				BasicRuntimeChecks="3"
@@ -291,6 +292,7 @@
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="_DEBUG"
 				AdditionalIncludeDirectories=""
+				TargetEnvironment="2"
 				TypeLibraryName="$(IntDir)$(InputName).tlb"
 				OutputDirectory="$(IntDir)"
 				HeaderFileName="$(IntDir)$(InputName).h"
@@ -452,34 +454,6 @@
 			Name="Generated Files"
 			Filter="">
 			<File
-				RelativePath="Debug x64\plugins\$(ProjectName)\RatDVDReader_i.c">
-				<FileConfiguration
-					Name="Debug Win32|Win32"
-					ExcludedFromBuild="TRUE">
-					<Tool
-						Name="VCCLCompilerTool"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release Win32|Win32"
-					ExcludedFromBuild="TRUE">
-					<Tool
-						Name="VCCLCompilerTool"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release x64|Win32"
-					ExcludedFromBuild="TRUE">
-					<Tool
-						Name="VCCLCompilerTool"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug x64|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-						ObjectFile="$(IntDir)$(InputName)1.obj"/>
-				</FileConfiguration>
-			</File>
-			<File
 				RelativePath="Release x64\plugins\$(ProjectName)\RatDVDReader_i.c">
 				<FileConfiguration
 					Name="Debug Win32|Win32"
@@ -561,6 +535,34 @@
 					ExcludedFromBuild="TRUE">
 					<Tool
 						Name="VCCLCompilerTool"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="Debug x64\plugins\$(ProjectName)\RatDVDReader_i.c">
+				<FileConfiguration
+					Name="Debug Win32|Win32"
+					ExcludedFromBuild="TRUE">
+					<Tool
+						Name="VCCLCompilerTool"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release Win32|Win32"
+					ExcludedFromBuild="TRUE">
+					<Tool
+						Name="VCCLCompilerTool"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release x64|Win32"
+					ExcludedFromBuild="TRUE">
+					<Tool
+						Name="VCCLCompilerTool"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug x64|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+						ObjectFile="$(IntDir)$(InputName)1.obj"/>
 				</FileConfiguration>
 			</File>
 		</Filter>

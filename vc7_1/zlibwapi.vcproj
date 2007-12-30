@@ -30,7 +30,8 @@
 			<Tool
 				Name="VCCustomBuildTool"
 				Description=" "
-				CommandLine="rem"
+				CommandLine="rem
+"
 				Outputs="&quot;$(TargetDir)..\$(TargetFileName)&quot;;&quot;$(TargetDir)..\plugins\$(TargetFileName)&quot;"/>
 			<Tool
 				Name="VCLinkerTool"
@@ -92,7 +93,8 @@
 			<Tool
 				Name="VCCustomBuildTool"
 				Description=" "
-				CommandLine="rem"
+				CommandLine="rem
+"
 				Outputs="&quot;$(TargetDir)..\$(TargetFileName)&quot;;&quot;$(TargetDir)..\plugins\$(TargetFileName)&quot;"/>
 			<Tool
 				Name="VCLinkerTool"
@@ -149,7 +151,7 @@
 				FavorSizeOrSpeed="1"
 				OmitFramePointers="TRUE"
 				OptimizeForProcessor="2"
-				PreprocessorDefinitions="WIN32;NDEBUG;WIN32;ZLIB_WINAPI;ASMV;ASMINF"
+				PreprocessorDefinitions="WIN64;NDEBUG;ZLIB_WINAPI;ASMV;ASMINF"
 				StringPooling="TRUE"
 				ExceptionHandling="FALSE"
 				RuntimeLibrary="0"
@@ -158,7 +160,8 @@
 			<Tool
 				Name="VCCustomBuildTool"
 				Description=" "
-				CommandLine="rem"
+				CommandLine="rem
+"
 				Outputs="&quot;$(TargetDir)..\$(TargetFileName)&quot;;&quot;$(TargetDir)..\plugins\$(TargetFileName)&quot;"/>
 			<Tool
 				Name="VCLinkerTool"
@@ -207,7 +210,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				PreprocessorDefinitions="WIN32;_DEBUG;ZLIB_WINAPI"
+				PreprocessorDefinitions="WIN64;_DEBUG;ZLIB_WINAPI"
 				ExceptionHandling="FALSE"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="1"
@@ -217,7 +220,8 @@
 			<Tool
 				Name="VCCustomBuildTool"
 				Description=" "
-				CommandLine="rem"
+				CommandLine="rem
+"
 				Outputs="&quot;$(TargetDir)..\$(TargetFileName)&quot;;&quot;$(TargetDir)..\plugins\$(TargetFileName)&quot;"/>
 			<Tool
 				Name="VCLinkerTool"
