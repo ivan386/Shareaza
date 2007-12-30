@@ -422,8 +422,8 @@ BOOL CShareazaApp::InitInstance()
 		UploadQueues.Load();
 	SplashStep( dlgSplash, L"Library" );
 		Library.Load();
-//	SplashStep( dlgSplash, L"Upgrade Manager" );
-//		VersionChecker.Start(); 
+	SplashStep( dlgSplash, L"Upgrade Manager" );
+		VersionChecker.Start(); 
 
 	pCursor.Restore();
 
