@@ -24,7 +24,7 @@ GOTO error
 
   if exist "%ProgramFiles%\Inno Setup 5\ISCC.exe" (
     cd "..\setup\scripts"
-    "%ProgramFiles%\Inno Setup 5\ISCC.exe" main.iss /d%CONFIGNAME% /dPlatformName=%PLATFORMNAME% /o"%OLDDIR%\%CONFIGNAME% %PLATFORMNAME%\Installer\"
+    "%ProgramFiles%\Inno Setup 5\ISCC.exe" main.iss /d%CONFIGNAME% /dPlatformName=%PLATFORMNAME% /o"%OLDDIR%\%CONFIGNAME%%PLATFORMNAME%\Installer\"
   ) else (
     echo ERROR: You must have Inno Setup 5 QuickStart Pack installed before you can create the installer.
     GOTO error
