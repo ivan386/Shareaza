@@ -189,7 +189,7 @@ void CDownloadGroup::SetSchema(LPCTSTR pszURI)
 }
 
 //////////////////////////////////////////////////////////////////////
-// CDownloadGroup serialise
+// CDownloadGroup serialize
 
 void CDownloadGroup::Serialize(CArchive& ar, int nVersion)
 {
@@ -258,6 +258,12 @@ void CDownloadGroup::Serialize(CArchive& ar, int nVersion)
 		{
 			ar >> m_bTemporary;
 			ASSERT( m_bTemporary == TRI_UNKNOWN || m_bTemporary == TRI_FALSE );
+		}
+
+		if ( nVersion < 6 && m_sSchemaURI == CSchema::uriCollectionsFolder )
+		{
+			AddFilter( L".col" );
+			AddFilter( L".collection" );
 		}
 
 		SetSchema( m_sSchemaURI );

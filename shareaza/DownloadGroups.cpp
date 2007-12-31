@@ -264,7 +264,7 @@ BOOL CDownloadGroups::Save(BOOL bForce)
 //////////////////////////////////////////////////////////////////////
 // CDownloadGroups serialize
 
-#define GROUPS_SER_VERSION	5
+#define GROUPS_SER_VERSION	6
 // History:
 // 4 - Added m_bTemporary (ryo-oh-ki)
 // 5 - New download groups added
