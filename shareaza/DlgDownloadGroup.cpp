@@ -170,8 +170,19 @@ void CDownloadGroupDlg::OnFilterAdd()
 void CDownloadGroupDlg::OnFilterRemove()
 {
 	int nItem = m_wndFilterList.GetCurSel();
-	if ( nItem >= 0 ) m_wndFilterList.DeleteString( nItem );
-	m_wndFilterRemove.EnableWindow( FALSE );
+
+	int nNewSelected = CB_ERR;
+	if ( nItem > CB_ERR )
+	{
+		nNewSelected = m_wndFilterList.DeleteString( nItem );
+		if ( nItem == 0 && nNewSelected > 0 )
+			nNewSelected = 0; // first one
+		else
+			nNewSelected = nItem - 1;
+	}
+
+	m_wndFilterList.SetCurSel( nNewSelected );
+	m_wndFilterRemove.EnableWindow( nNewSelected != CB_ERR );
 }
 
 void CDownloadGroupDlg::OnOK()
