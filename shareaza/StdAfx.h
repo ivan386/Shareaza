@@ -3,7 +3,7 @@
 // StdAfx.h                                                                   //
 //                                                                            //
 // Copyright (C) 2002-2007 Shareaza Development Team.                         //
-// This file is part of SHAREAZA (shareaza.sourceforge.net).                          //
+// This file is part of SHAREAZA (shareaza.sourceforge.net).                  //
 //                                                                            //
 // Shareaza is free software; you can redistribute it                         //
 // and/or modify it under the terms of the GNU General Public License         //
@@ -40,45 +40,31 @@
 #elif _MSC_VER >= 1400	// VS 2005
 
 // Warnings that are normally ON by default
-#pragma warning ( disable : 4311 )	// (Level 1)	'variable' : pointer truncation from 'type' to 'type'
-#pragma warning ( disable : 4312 )	// (Level 1)	'operation' : conversion from 'type1' to 'type2' of greater size
 #pragma warning ( disable : 4350 )	// (Level 1)	behavior change: 'member1' called instead of 'member2'
 #pragma warning ( disable : 4351 )	// (Level 1)	new behavior: elements of array 'array' will be default initialized
 
 #pragma warning ( disable : 4244 )	// (Level 2)	'argument' : conversion from 'type1' to 'type2', possible loss of data
 
-#pragma warning ( disable : 4127 )	// (Level 4)	conditional expression is constant
 #pragma warning ( disable : 4347 )	// (Level 4)	behavior change: 'function template' is called instead of 'function'
 #pragma warning ( disable : 4512 )	// (Level 4)	'class' : assignment operator could not be generated
 
 // Warnings that are normally OFF by default (enabled by using /Wall)
 #pragma warning ( disable : 4264 )	// (Level 1)	'virtual_function' : no override available for virtual member function from base 'class'; function is hidden
-#pragma warning ( disable : 4548 )	// (Level 1)	expression before comma has no effect; expected expression with side-effect
 #pragma warning ( disable : 4555 )	// (Level 1)	expression has no effect; expected expression with side-effect
 #pragma warning ( disable : 4711 )	// (Level 1)	function 'function' selected for inline expansion
-#pragma warning ( disable : 4946 )	// (Level 1)	reinterpret_cast used between related classes: 'class1' and 'class2'
-
-#pragma warning ( disable : 4302 )	// (Level 2)	'conversion' : truncation from 'type 1' to 'type 2'
 
 #pragma warning ( disable : 4191 )	// (Level 3)	'operator/operation' : unsafe conversion from 'type of expression' to 'type required'
-#pragma warning ( disable : 4265 )	// (Level 3)	'class' : class has virtual functions, but destructor is not virtual
 #pragma warning ( disable : 4640 )	// (Level 3)	'instance' : construction of local static object is not thread-safe
-#pragma warning ( disable : 4686 )	// (Level 3)	'user-defined type' : possible change in behavior, change in UDT return calling convention
+#pragma warning ( disable : 4738 )	// (Level 3)	storing 32-bit float result in memory, possible loss of performance
 
 #pragma warning ( disable : 4061 )	// (Level 4)	enumerator 'identifier' in switch of enum 'enumeration' is not explicitly handled by a case label
 #pragma warning ( disable : 4263 )	// (Level 4)	'function' : member function does not override any base class virtual member function
 #pragma warning ( disable : 4266 )	// (Level 4)	'function' : no override available for virtual member function from base 'type'; function is hidden
-#pragma warning ( disable : 4296 )	// (Level 4)	'operator' : expression is always false
-
-#ifndef WIN64
 #pragma warning ( disable : 4365 )	// (Level 4)	'action' : conversion from 'type_1' to 'type_2', signed/unsigned mismatch
-#endif
-
 #pragma warning ( disable : 4514 )	// (Level 4)	'function' : unreferenced inline function has been removed
 #pragma warning ( disable : 4571 )	// (Level 4)	Informational: catch(...) semantics changed since Visual C++ 7.1; structured exceptions (SEH) are no longer caught
 #pragma warning ( disable : 4625 )	// (Level 4)	'derived class' : copy constructor could not be generated because a base class copy constructor is inaccessible
 #pragma warning ( disable : 4626 )	// (Level 4)	'derived class' : assignment operator could not be generated because a base class assignment operator is inaccessible
-#pragma warning ( disable : 4668 )	// (Level 4)	'symbol' is not defined as a preprocessor macro, replacing with '0' for 'directives'
 #pragma warning ( disable : 4710 )	// (Level 4)	'function' : function not inlined
 #pragma warning ( disable : 4820 )	// (Level 4)	'bytes' bytes padding added after construct 'member_name'
 
