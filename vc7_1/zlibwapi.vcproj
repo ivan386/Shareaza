@@ -11,7 +11,7 @@
 	</Platforms>
 	<Configurations>
 		<Configuration
-			Name="Debug Win32|Win32"
+			Name="DebugWin32|Win32"
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)\$(ProjectName)\"
 			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)\$(ProjectName)\"
 			ConfigurationType="2"
@@ -67,7 +67,7 @@
 				Name="VCAuxiliaryManagedWrapperGeneratorTool"/>
 		</Configuration>
 		<Configuration
-			Name="Release Win32|Win32"
+			Name="ReleaseWin32|Win32"
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)\$(ProjectName)\"
 			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)\$(ProjectName)\"
 			ConfigurationType="2"
@@ -134,7 +134,7 @@
 				Name="VCAuxiliaryManagedWrapperGeneratorTool"/>
 		</Configuration>
 		<Configuration
-			Name="Release x64|Win32"
+			Name="Releasex64|Win32"
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)\$(ProjectName)\"
 			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)\$(ProjectName)\"
 			ConfigurationType="2"
@@ -201,7 +201,7 @@
 				Name="VCAuxiliaryManagedWrapperGeneratorTool"/>
 		</Configuration>
 		<Configuration
-			Name="Debug x64|Win32"
+			Name="Debugx64|Win32"
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)\$(ProjectName)\"
 			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)\$(ProjectName)\"
 			ConfigurationType="2"
@@ -279,7 +279,7 @@
 			<File
 				RelativePath="..\shareaza\zlib\gvmat32.asm">
 				<FileConfiguration
-					Name="Release Win32|Win32">
+					Name="ReleaseWin32|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="Processing Assembler Source"
@@ -288,7 +288,7 @@
 						Outputs="&quot;$(IntDir)$(InputName).obj&quot;"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release x64|Win32">
+					Name="Releasex64|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="Processing Assembler Source"
@@ -300,13 +300,13 @@
 			<File
 				RelativePath="..\shareaza\zlib\gvmat32c.c">
 				<FileConfiguration
-					Name="Debug Win32|Win32"
+					Name="DebugWin32|Win32"
 					ExcludedFromBuild="TRUE">
 					<Tool
 						Name="VCCLCompilerTool"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Debug x64|Win32"
+					Name="Debugx64|Win32"
 					ExcludedFromBuild="TRUE">
 					<Tool
 						Name="VCCLCompilerTool"/>
@@ -321,7 +321,7 @@
 			<File
 				RelativePath="..\shareaza\zlib\inffas32.asm">
 				<FileConfiguration
-					Name="Release Win32|Win32">
+					Name="ReleaseWin32|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="Processing Assembler Source"
@@ -330,7 +330,7 @@
 						Outputs="&quot;$(IntDir)\$(InputName).obj&quot;"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release x64|Win32">
+					Name="Releasex64|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="Processing Assembler Source"

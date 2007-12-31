@@ -12,7 +12,7 @@
 	</Platforms>
 	<Configurations>
 		<Configuration
-			Name="Debug Win32|Win32"
+			Name="DebugWin32|Win32"
 			OutputDirectory="$(SolutionDir)..\plugins\LibGFL\$(ConfigurationName)\"
 			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)\$(ProjectName)\"
 			ConfigurationType="4">
@@ -47,7 +47,7 @@ copy &quot;$(SolutionDir)..\plugins\LibGFL\$(ConfigurationName)\libgfl*.dll&quot
 				Name="VCAuxiliaryManagedWrapperGeneratorTool"/>
 		</Configuration>
 		<Configuration
-			Name="Release Win32|Win32"
+			Name="ReleaseWin32|Win32"
 			OutputDirectory="$(SolutionDir)..\plugins\LibGFL\$(ConfigurationName)\"
 			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)\$(ProjectName)\"
 			ConfigurationType="4"
@@ -84,7 +84,7 @@ copy &quot;$(SolutionDir)..\plugins\LibGFL\$(ConfigurationName)\libgfl*.dll&quot
 				Name="VCAuxiliaryManagedWrapperGeneratorTool"/>
 		</Configuration>
 		<Configuration
-			Name="Debug x64|Win32"
+			Name="Debugx64|Win32"
 			OutputDirectory="$(SolutionDir)..\plugins\LibGFL\$(ConfigurationName)\"
 			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)\$(ProjectName)\"
 			ConfigurationType="4">
@@ -119,7 +119,7 @@ copy &quot;$(SolutionDir)..\plugins\LibGFL\$(ConfigurationName)\libgfl*.dll&quot
 				Name="VCAuxiliaryManagedWrapperGeneratorTool"/>
 		</Configuration>
 		<Configuration
-			Name="Release x64|Win32"
+			Name="Releasex64|Win32"
 			OutputDirectory="$(SolutionDir)..\plugins\LibGFL\$(ConfigurationName)\"
 			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)\$(ProjectName)\"
 			ConfigurationType="4">

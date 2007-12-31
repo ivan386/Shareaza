@@ -10,7 +10,7 @@
 	</Platforms>
 	<Configurations>
 		<Configuration
-			Name="Debug Win32|Win32"
+			Name="DebugWin32|Win32"
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)\$(ProjectName)\"
 			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)\$(ProjectName)\"
 			ConfigurationType="1"
@@ -83,7 +83,7 @@
 				Name="VCAuxiliaryManagedWrapperGeneratorTool"/>
 		</Configuration>
 		<Configuration
-			Name="Release Win32|Win32"
+			Name="ReleaseWin32|Win32"
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)\$(ProjectName)\"
 			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)\$(ProjectName)\"
 			ConfigurationType="1"
@@ -165,7 +165,7 @@
 				Name="VCAuxiliaryManagedWrapperGeneratorTool"/>
 		</Configuration>
 		<Configuration
-			Name="Release x64|Win32"
+			Name="Releasex64|Win32"
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)\$(ProjectName)\"
 			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)\$(ProjectName)\"
 			ConfigurationType="1"
@@ -247,7 +247,7 @@
 				Name="VCAuxiliaryManagedWrapperGeneratorTool"/>
 		</Configuration>
 		<Configuration
-			Name="Debug x64|Win32"
+			Name="Debugx64|Win32"
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)\$(ProjectName)\"
 			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)\$(ProjectName)\"
 			ConfigurationType="1"
@@ -345,7 +345,7 @@
 			<File
 				RelativePath="..\torrentaid\MD4_asm.asm">
 				<FileConfiguration
-					Name="Debug Win32|Win32">
+					Name="DebugWin32|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
 						CommandLine="ml.exe /c /Cx /coff /Zi /nologo /Fo &quot;$(IntDir)\$(InputName).obj&quot; &quot;$(InputPath)&quot;
@@ -353,7 +353,7 @@
 						Outputs="&quot;$(IntDir)\$(InputName).obj&quot;"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release Win32|Win32">
+					Name="ReleaseWin32|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
 						CommandLine="ml.exe /c /Cx /coff /Zi /nologo /Fo &quot;$(IntDir)\$(InputName).obj&quot; &quot;$(InputPath)&quot;
@@ -361,7 +361,7 @@
 						Outputs="&quot;$(IntDir)\$(InputName).obj&quot;"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release x64|Win32">
+					Name="Releasex64|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
 						CommandLine="ml.exe /c /Cx /coff /Zi /nologo /Fo &quot;$(IntDir)\$(InputName).obj&quot; &quot;$(InputPath)&quot;
@@ -369,7 +369,7 @@
 						Outputs="&quot;$(IntDir)\$(InputName).obj&quot;"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Debug x64|Win32">
+					Name="Debugx64|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
 						CommandLine="ml.exe /c /Cx /coff /Zi /nologo /Fo &quot;$(IntDir)\$(InputName).obj&quot; &quot;$(InputPath)&quot;
@@ -407,7 +407,7 @@
 			<File
 				RelativePath="..\torrentaid\SHA_asm.asm">
 				<FileConfiguration
-					Name="Debug Win32|Win32">
+					Name="DebugWin32|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
 						CommandLine="ml.exe /c /Cx /coff /Zi /nologo /Fo &quot;$(IntDir)\$(InputName).obj&quot; &quot;$(InputPath)&quot;
@@ -415,7 +415,7 @@
 						Outputs="&quot;$(IntDir)\$(InputName).obj&quot;"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release Win32|Win32">
+					Name="ReleaseWin32|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
 						CommandLine="ml.exe /c /Cx /coff /Zi /nologo /Fo &quot;$(IntDir)\$(InputName).obj&quot; &quot;$(InputPath)&quot;
@@ -423,7 +423,7 @@
 						Outputs="&quot;$(IntDir)\$(InputName).obj&quot;"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release x64|Win32">
+					Name="Releasex64|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
 						CommandLine="ml.exe /c /Cx /coff /Zi /nologo /Fo &quot;$(IntDir)\$(InputName).obj&quot; &quot;$(InputPath)&quot;
@@ -431,7 +431,7 @@
 						Outputs="&quot;$(IntDir)\$(InputName).obj&quot;"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Debug x64|Win32">
+					Name="Debugx64|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
 						CommandLine="ml.exe /c /Cx /coff /Zi /nologo /Fo &quot;$(IntDir)\$(InputName).obj&quot; &quot;$(InputPath)&quot;
@@ -442,25 +442,25 @@
 			<File
 				RelativePath="..\torrentaid\StdAfx.cpp">
 				<FileConfiguration
-					Name="Debug Win32|Win32">
+					Name="DebugWin32|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release Win32|Win32">
+					Name="ReleaseWin32|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release x64|Win32">
+					Name="Releasex64|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Debug x64|Win32">
+					Name="Debugx64|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="1"/>

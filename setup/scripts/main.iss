@@ -30,12 +30,17 @@
 #endif
 
 ; Select file source root
-#ifexist "..\..\vc7_1\" + type + " " + PlatformName + "\Shareaza.exe"
-  #define root "vc7_1\" + type + " " + PlatformName
+#ifexist "..\..\vc7_1\" + type + PlatformName + "\Shareaza.exe"
+  #define root "vc7_1\" + type + PlatformName
 #endif
 
-#ifexist "..\..\vc8_0\" + type + " " + PlatformName + "\Shareaza.exe"
-  #define root "vc8_0\" + type + " " + PlatformName
+#ifexist "..\..\vc8_0\" + type + PlatformName + "\Shareaza.exe"
+  #define root "vc8_0\" + type + PlatformName
+#endif
+
+; Redefine this as only x64 builds need to be distinguished as different
+#if PlatformName == "Win32"
+  #define PlatformName ""
 #endif
 
 #ifndef root
@@ -70,11 +75,11 @@ DefaultGroupName={#internal_name}
 AllowNoIcons=yes
 OutputDir=setup\builds
 #ifdef Debug
-OutputBaseFilename={#internal_name}_Debug_{#date}
+OutputBaseFilename={#internal_name}_Debug_{#date}{#PlatformName}
 #elif alpha == "Yes"
-OutputBaseFilename={#internal_name}_Release_{#date}
+OutputBaseFilename={#internal_name}_Release_{#date}{#PlatformName}
 #else
-OutputBaseFilename={#internal_name}_{#version}
+OutputBaseFilename={#internal_name}_{#version}{#PlatformName}
 #endif
 SolidCompression=yes
 Compression=lzma/max
@@ -93,7 +98,7 @@ WizardSmallImageFile=setup\misc\corner.bmp
 AppModifyPath="{app}\Uninstall\setup.exe"
 ChangesAssociations=yes
 ChangesEnvironment=yes
-OutputManifestFile=Manifest_{#type}_{#PlatformName}.txt
+OutputManifestFile=Manifest_{#type}{#PlatformName}.txt
 MinVersion=4.0,4.0sp6
 #if PlatformName == "x64"
 ArchitecturesAllowed=x64
@@ -129,50 +134,62 @@ Name: "resetdiscoveryhostcache"; Description: "{cm:tasks_resetdiscoveryhostcache
 ;--== Executables ==--
 ; Main files
 Source: "{#root}\Shareaza.exe"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
-Source: "{#root}\skin.exe"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+Source: "{#root}\skin.exe";     DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 
 
 ;--== Dynamic Link Libraries ==--
-; Unicows.dll: Install on Win 9X
+#if PlatformName != "x64"
+; Unicows: Install on Win 9X
 Source: "setup\builds\unicows.dll"; DestDir: "{sys}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension sharedfile uninsnosharedfileprompt; MinVersion: 4.0,0
-
-; Main dlls
-#ifdef Debug
-Source: "{#root}\zlibwapi.dll"; DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion uninsremovereadonly sortfilesbyextension deleteafterinstall
-Source: "{#root}\zlibwapi.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
-#elif PlatformName == "Win32"
-Source: "setup\builds\zlibwapi.dll"; DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion uninsremovereadonly sortfilesbyextension deleteafterinstall
-Source: "setup\builds\zlibwapi.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
-#else
-Source: "setup\builds\zlibwapi_x64.dll"; DestName: "zlibwapi.dll"; DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion uninsremovereadonly sortfilesbyextension deleteafterinstall
-Source: "setup\builds\zlibwapi_x64.dll"; DestName: "zlibwapi.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 #endif
-Source: "plugins\LibGFL\{#type} {#PlatformName}\libgfl*.dll"; DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion uninsremovereadonly sortfilesbyextension deleteafterinstall; Excludes: "libgfle*.dll"
-Source: "plugins\LibGFL\{#type} {#PlatformName}\libgfl*.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension; Excludes: "libgfle*.dll"
-;Source: "{#root}\sqlite3.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 
-; GeoIP
-Source: "GeoIP\geoip.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
-Source: "GeoIP\data\GeoIP.dat"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
-Source: "setup\misc\LICENSE-GeoIP.txt"; DestDir: "{app}"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension
+; Main files
+Source: "{#root}\*.dll"; DestDir: "{app}";         Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+Source: "{#root}\*.dll"; DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion uninsremovereadonly sortfilesbyextension deleteafterinstall
 
 ; Plugins
+Source: "{#root}\plugins\*.dll";   DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver; Excludes: "libgfl*.dll,zlibwapi.dll,unrar.dll,7zxr.dll"
+Source: "{#root}\plugins\*.dll";   DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension;           Excludes: "libgfl*.dll,zlibwapi.dll"
+Source: "plugins\MediaPlayer.dll"; DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
 ; Don't register RazaWebHook.dll since it will setup Shareaza as download manager
-Source: "plugins\RARBuilder\unrar.dll";              DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
-Source: "plugins\7ZipBuilder\7zxr.dll";              DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
-Source: "{#root}\plugins\*.dll";                     DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver; Excludes: "MediaPlayer.dll,RazaWebHook.dll,libgfl*.dll,zlibwapi.dll,unrar.dll,7zxr.dll"
-Source: "plugins\MediaPlayer.dll";                   DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
-Source: "plugins\RazaWebHook.dll";                   DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+Source: "plugins\RazaWebHook.dll"; DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+
+
+#ifdef Debug
+;--== Debug Databases ==--
+#if PlatformName != "x64"
+; Unicows: Install on Win 9X
+Source: "setup\builds\unicows.pdb"; DestDir: "{sys}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension; MinVersion: 4.0,0
+#endif
+
+; Main files
+Source: "{#root}\shareaza.pdb"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+; ** The next line can be uncommented to include geoip, skin & zlibwapi debug database files
+;Source: "{#root}\*.pdb"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+
+; Plugins
+; ** This section can be uncommented to include the debug database files for all the plugins
+;Source: "{#root}\plugins\*.pdb"; DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+#endif
 
 
 ;--== Data Files ==--
-; Set up data dir in {app}
+; Main Files
 Source: "Data\*.*"; DestDir: "{app}\Data"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Excludes: "*.bak,*.url"
+
+; Plugins
+Source: "GeoIP\data\GeoIP.dat"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 
 
 ;--== Misc Files ==--
+; Icon files
+Source: "setup\misc\uninstall.ico"; DestDir: "{app}\Uninstall"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension
+
 ; Schemas
 Source: "Schemas\*"; DestDir: "{app}\Schemas"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension
+
+; Plugins
+Source: "setup\misc\LICENSE-GeoIP.txt"; DestDir: "{app}"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension
 
 ; Skins
 Source: "Skins\*"; DestDir: "{app}\Skins"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Excludes: ".svn,\Arcadia's Call\*,\Green Moon\*,\LiquidMetal*\*,\NucleoX\*,\Raza-Ablaze\*"
@@ -182,23 +199,6 @@ Source: "Templates\*"; DestDir: "{app}\Templates"; Flags: ignoreversion overwrit
 
 ; Languages
 Source: "Languages\*"; DestDir: "{app}\Skins\Languages"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Tasks: "language"; Excludes: "default-en.xml,*.bak"
-
-; Uninstall icon for software panel
-Source: "setup\misc\uninstall.ico"; DestDir: "{app}\Uninstall"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension
-
-
-;--== Debug Databases ==--
-#ifdef Debug
-; Main files
-Source: "{#root}\Shareaza.pdb"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
-Source: "{#root}\skin.pdb"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
-Source: "{#root}\zlibwapi.pdb"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
-;Source: "{#root}\GeoIP.pdb"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
-Source: "{#root}\plugins\*.pdb"; DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
-
-; Install unicows.dll on Win 9X
-Source: "setup\builds\unicows.pdb"; DestDir: "{sys}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension; MinVersion: 4.0,0
-#endif
 
 
 ;--== Copy files ==--

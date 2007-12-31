@@ -30,9 +30,9 @@
 			>
 			<Tool
 				Name="VCCustomBuildTool"
-				Description="Copying LibGFL267 dll..."
-				CommandLine="xcopy &quot;$(SolutionDir)..\plugins\libGFL\$(ConfigurationName)\libgfl267.dll&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;"
-				Outputs="$(OutDir)libgfl267.dll"
+				Description="Copying LibGFL280 dll..."
+				CommandLine="xcopy &quot;$(SolutionDir)..\plugins\libGFL\$(ConfigurationName)$(PlatformName)\libgfl280.dll&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;"
+				Outputs="$(OutDir)libgfl280.dll"
 				ExecutionBucket="1"
 			/>
 			<Tool
@@ -128,9 +128,9 @@
 			>
 			<Tool
 				Name="VCCustomBuildTool"
-				Description="Copying LibGFL267 dll..."
-				CommandLine="xcopy &quot;$(SolutionDir)..\plugins\libGFL\$(ConfigurationName)\libgfl267.dll&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;"
-				Outputs="$(OutDir)libgfl267.dll"
+				Description="Copying LibGFL280 dll..."
+				CommandLine="xcopy &quot;$(SolutionDir)..\plugins\libGFL\$(ConfigurationName)$(PlatformName)\libgfl280.dll&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;"
+				Outputs="$(OutDir)libgfl280.dll"
 				ExecutionBucket="1"
 			/>
 			<Tool
@@ -225,9 +225,9 @@
 			>
 			<Tool
 				Name="VCCustomBuildTool"
-				Description="Copying LibGFL267 dll..."
-				CommandLine="xcopy &quot;$(SolutionDir)..\plugins\libGFL\$(ConfigurationName)\libgfl267.dll&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;"
-				Outputs="$(OutDir)libgfl267.dll"
+				Description="Copying LibGFL280 dll..."
+				CommandLine="xcopy &quot;$(SolutionDir)..\plugins\libGFL\$(ConfigurationName)$(PlatformName)\libgfl280.dll&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;"
+				Outputs="$(OutDir)libgfl280.dll"
 				ExecutionBucket="1"
 			/>
 			<Tool
@@ -321,9 +321,9 @@
 			>
 			<Tool
 				Name="VCCustomBuildTool"
-				Description="Copying LibGFL267 dll..."
-				CommandLine="xcopy &quot;$(SolutionDir)..\plugins\libGFL\$(ConfigurationName)\libgfl267.dll&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;"
-				Outputs="$(OutDir)libgfl267.dll"
+				Description="Copying LibGFL280 dll..."
+				CommandLine="xcopy &quot;$(SolutionDir)..\plugins\libGFL\$(ConfigurationName)$(PlatformName)\libgfl280.dll&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;"
+				Outputs="$(OutDir)libgfl280.dll"
 				ExecutionBucket="1"
 			/>
 			<Tool

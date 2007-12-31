@@ -11,7 +11,7 @@
 	</Platforms>
 	<Configurations>
 		<Configuration
-			Name="Release Win32|Win32"
+			Name="ReleaseWin32|Win32"
 			OutputDirectory="$(SolutionDir)\$(ConfigurationName)\Installer\"
 			IntermediateDirectory="$(SolutionDir)\$(ConfigurationName)\Installer\"
 			ConfigurationType="10">
@@ -25,7 +25,7 @@
 				Name="VCPreBuildEventTool"/>
 		</Configuration>
 		<Configuration
-			Name="Debug Win32|Win32"
+			Name="DebugWin32|Win32"
 			OutputDirectory="$(SolutionDir)\$(ConfigurationName)\Installer\"
 			IntermediateDirectory="$(SolutionDir)\$(ConfigurationName)\Installer\"
 			ConfigurationType="1">
@@ -57,7 +57,7 @@
 				Name="VCAuxiliaryManagedWrapperGeneratorTool"/>
 		</Configuration>
 		<Configuration
-			Name="Release x64|Win32"
+			Name="Releasex64|Win32"
 			OutputDirectory="$(SolutionDir)\$(ConfigurationName)\Installer\"
 			IntermediateDirectory="$(SolutionDir)\$(ConfigurationName)\Installer\"
 			ConfigurationType="10">
@@ -71,7 +71,7 @@
 				Name="VCPreBuildEventTool"/>
 		</Configuration>
 		<Configuration
-			Name="Debug x64|Win32"
+			Name="Debugx64|Win32"
 			OutputDirectory="$(SolutionDir)\$(ConfigurationName)\Installer\"
 			IntermediateDirectory="$(SolutionDir)\$(ConfigurationName)\Installer\"
 			ConfigurationType="1">
@@ -112,37 +112,37 @@
 		<File
 			RelativePath=".\MakeInstaller.bat">
 			<FileConfiguration
-				Name="Release Win32|Win32">
+				Name="ReleaseWin32|Win32">
 				<Tool
 					Name="VCCustomBuildTool"
-					Description="Making Release Win32 Installer..."
+					Description="Making ReleaseWin32 Installer..."
 					CommandLine="call MakeInstaller.bat &quot;$(ConfigurationName)&quot; &quot;$(PlatformName)&quot;
 "
 					Outputs="$(OutDir)\Manifest_Release_Win32.txt;$(OutDir)\*.exe"/>
 			</FileConfiguration>
 			<FileConfiguration
-				Name="Debug Win32|Win32">
+				Name="DebugWin32|Win32">
 				<Tool
 					Name="VCCustomBuildTool"
-					Description="Making Debug Win32 Installer..."
+					Description="Making DebugWin32 Installer..."
 					CommandLine="call MakeInstaller.bat &quot;$(ConfigurationName)&quot; &quot;$(PlatformName)&quot;
 "
 					Outputs="$(OutDir)\Manifest_Debug_Win32.txt;$(OutDir)\*.exe"/>
 			</FileConfiguration>
 			<FileConfiguration
-				Name="Release x64|Win32">
+				Name="Releasex64|Win32">
 				<Tool
 					Name="VCCustomBuildTool"
-					Description="Making Release x64 Installer..."
+					Description="Making Releasex64 Installer..."
 					CommandLine="call MakeInstaller.bat &quot;$(ConfigurationName)&quot; &quot;$(PlatformName)&quot;
 "
 					Outputs="$(OutDir)\Manifest_Release_x64.txt;$(OutDir)\*.exe"/>
 			</FileConfiguration>
 			<FileConfiguration
-				Name="Debug x64|Win32">
+				Name="Debugx64|Win32">
 				<Tool
 					Name="VCCustomBuildTool"
-					Description="Making Debug x64 Installer..."
+					Description="Making Debugx64 Installer..."
 					CommandLine="call MakeInstaller.bat &quot;$(ConfigurationName)&quot; &quot;$(PlatformName)&quot;
 "
 					Outputs="$(OutDir)\Manifest_Debug_x64.txt;$(OutDir)\*.exe"/>

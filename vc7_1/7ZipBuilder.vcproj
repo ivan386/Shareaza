@@ -12,7 +12,7 @@
 	</Platforms>
 	<Configurations>
 		<Configuration
-			Name="Debug Win32|Win32"
+			Name="DebugWin32|Win32"
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)\plugins\$(ProjectName)\"
 			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)\plugins\$(ProjectName)\"
 			ConfigurationType="2"
@@ -80,7 +80,7 @@
 				Name="VCAuxiliaryManagedWrapperGeneratorTool"/>
 		</Configuration>
 		<Configuration
-			Name="Release Win32|Win32"
+			Name="ReleaseWin32|Win32"
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)\plugins\$(ProjectName)\"
 			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)\plugins\$(ProjectName)\"
 			ConfigurationType="2"
@@ -155,7 +155,7 @@
 				Name="VCAuxiliaryManagedWrapperGeneratorTool"/>
 		</Configuration>
 		<Configuration
-			Name="Release x64|Win32"
+			Name="Releasex64|Win32"
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)\plugins\$(ProjectName)\"
 			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)\plugins\$(ProjectName)\"
 			ConfigurationType="2"
@@ -231,7 +231,7 @@
 				Name="VCAuxiliaryManagedWrapperGeneratorTool"/>
 		</Configuration>
 		<Configuration
-			Name="Debug x64|Win32"
+			Name="Debugx64|Win32"
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)\plugins\$(ProjectName)\"
 			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)\plugins\$(ProjectName)\"
 			ConfigurationType="2"
@@ -322,28 +322,28 @@
 			<File
 				RelativePath="..\shareaza\Shareaza.idl">
 				<FileConfiguration
-					Name="Debug Win32|Win32">
+					Name="DebugWin32|Win32">
 					<Tool
 						Name="VCMIDLTool"
 						TypeLibraryName="$(IntDir)\ShareazaOM.tlb"
 						HeaderFileName="$(IntDir)\ShareazaOM.h"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release Win32|Win32">
+					Name="ReleaseWin32|Win32">
 					<Tool
 						Name="VCMIDLTool"
 						TypeLibraryName="$(IntDir)\ShareazaOM.tlb"
 						HeaderFileName="$(IntDir)\ShareazaOM.h"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release x64|Win32">
+					Name="Releasex64|Win32">
 					<Tool
 						Name="VCMIDLTool"
 						TypeLibraryName="$(IntDir)\ShareazaOM.tlb"
 						HeaderFileName="$(IntDir)\ShareazaOM.h"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Debug x64|Win32">
+					Name="Debugx64|Win32">
 					<Tool
 						Name="VCMIDLTool"
 						TypeLibraryName="$(IntDir)\ShareazaOM.tlb"
@@ -353,25 +353,25 @@
 			<File
 				RelativePath="..\plugins\7ZipBuilder\StdAfx.cpp">
 				<FileConfiguration
-					Name="Debug Win32|Win32">
+					Name="DebugWin32|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release Win32|Win32">
+					Name="ReleaseWin32|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release x64|Win32">
+					Name="Releasex64|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Debug x64|Win32">
+					Name="Debugx64|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="1"/>
@@ -414,25 +414,25 @@
 			<File
 				RelativePath="..\plugins\7ZipBuilder\7ZipBuilder_i.c">
 				<FileConfiguration
-					Name="Debug Win32|Win32">
+					Name="DebugWin32|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release Win32|Win32">
+					Name="ReleaseWin32|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release x64|Win32">
+					Name="Releasex64|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Debug x64|Win32">
+					Name="Debugx64|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"/>
