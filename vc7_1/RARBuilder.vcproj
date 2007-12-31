@@ -52,6 +52,7 @@
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="_DEBUG"
 				AdditionalIncludeDirectories="..\shareaza"
+				OutputDirectory="$(IntDir)"
 				HeaderFileName="$(IntDir)$(InputName).h"
 				DLLDataFileName=""
 				InterfaceIdentifierFileName="$(IntDir)$(InputName)_i.c"
@@ -125,6 +126,7 @@
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="NDEBUG"
 				AdditionalIncludeDirectories="..\shareaza"
+				OutputDirectory="$(IntDir)"
 				HeaderFileName="$(IntDir)$(InputName).h"
 				DLLDataFileName=""
 				InterfaceIdentifierFileName="$(IntDir)$(InputName)_i.c"
@@ -199,6 +201,7 @@
 				PreprocessorDefinitions="NDEBUG"
 				AdditionalIncludeDirectories="..\shareaza"
 				TargetEnvironment="2"
+				OutputDirectory="$(IntDir)"
 				HeaderFileName="$(IntDir)$(InputName).h"
 				DLLDataFileName=""
 				InterfaceIdentifierFileName="$(IntDir)$(InputName)_i.c"
@@ -266,6 +269,7 @@
 				PreprocessorDefinitions="_DEBUG"
 				AdditionalIncludeDirectories="..\shareaza"
 				TargetEnvironment="2"
+				OutputDirectory="$(IntDir)"
 				HeaderFileName="$(IntDir)$(InputName).h"
 				DLLDataFileName=""
 				InterfaceIdentifierFileName="$(IntDir)$(InputName)_i.c"
@@ -410,27 +414,102 @@
 				RelativePath=".\ReleaseWin32\plugins\RARBuilder\RARBuilder_i.c">
 				<FileConfiguration
 					Name="DebugWin32|Win32"
-					ExcludedFromBuild="true">
+					ExcludedFromBuild="TRUE">
 					<Tool
-						Name="VCCLCompilerTool"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debugx64|Win32"
-					ExcludedFromBuild="true">
-					<Tool
-						Name="VCCLCompilerTool"/>
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+						ObjectFile="$(IntDir)/$(InputName)1.obj"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="ReleaseWin32|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"/>
+						UsePrecompiledHeader="0"
+						ObjectFile="$(IntDir)/$(InputName)1.obj"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Releasex64|Win32"
-					ExcludedFromBuild="true">
+					ExcludedFromBuild="TRUE">
 					<Tool
-						Name="VCCLCompilerTool"/>
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+						ObjectFile="$(IntDir)/$(InputName)1.obj"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debugx64|Win32"
+					ExcludedFromBuild="TRUE">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+						ObjectFile="$(IntDir)/$(InputName)1.obj"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\Debugx64\plugins\RARBuilder\RARBuilder_i.c">
+				<FileConfiguration
+					Name="DebugWin32|Win32"
+					ExcludedFromBuild="TRUE">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+						ObjectFile="$(IntDir)/$(InputName)2.obj"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="ReleaseWin32|Win32"
+					ExcludedFromBuild="TRUE">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+						ObjectFile="$(IntDir)/$(InputName)2.obj"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Releasex64|Win32"
+					ExcludedFromBuild="TRUE">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+						ObjectFile="$(IntDir)/$(InputName)2.obj"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debugx64|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+						ObjectFile="$(IntDir)/$(InputName)2.obj"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\Releasex64\plugins\RARBuilder\RARBuilder_i.c">
+				<FileConfiguration
+					Name="DebugWin32|Win32"
+					ExcludedFromBuild="TRUE">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+						ObjectFile="$(IntDir)/$(InputName)3.obj"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="ReleaseWin32|Win32"
+					ExcludedFromBuild="TRUE">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+						ObjectFile="$(IntDir)/$(InputName)3.obj"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Releasex64|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+						ObjectFile="$(IntDir)/$(InputName)3.obj"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debugx64|Win32"
+					ExcludedFromBuild="TRUE">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+						ObjectFile="$(IntDir)/$(InputName)3.obj"/>
 				</FileConfiguration>
 			</File>
 			<File
@@ -442,71 +521,22 @@
 						UsePrecompiledHeader="0"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Debugx64|Win32"
-					ExcludedFromBuild="true">
-					<Tool
-						Name="VCCLCompilerTool"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="ReleaseWin32|Win32">
-					<Tool
-						Name="VCCLCompilerTool"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Releasex64|Win32"
-					ExcludedFromBuild="true">
-					<Tool
-						Name="VCCLCompilerTool"/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath=".\Debugx64\plugins\RARBuilder\RARBuilder_i.c">
-				<FileConfiguration
-					Name="DebugWin32|Win32"
-					ExcludedFromBuild="true">
-					<Tool
-						Name="VCCLCompilerTool"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debugx64|Win32">
+					Name="ReleaseWin32|Win32"
+					ExcludedFromBuild="TRUE">
 					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="ReleaseWin32|Win32">
-					<Tool
-						Name="VCCLCompilerTool"/>
-				</FileConfiguration>
-				<FileConfiguration
 					Name="Releasex64|Win32"
-					ExcludedFromBuild="true">
+					ExcludedFromBuild="TRUE">
 					<Tool
-						Name="VCCLCompilerTool"/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath=".\Releasex64\plugins\RARBuilder\RARBuilder_i.c">
-				<FileConfiguration
-					Name="DebugWin32|Win32"
-					ExcludedFromBuild="true">
-					<Tool
-						Name="VCCLCompilerTool"/>
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Debugx64|Win32"
-					ExcludedFromBuild="true">
-					<Tool
-						Name="VCCLCompilerTool"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="ReleaseWin32|Win32">
-					ExcludedFromBuild="true">
-					<Tool
-						Name="VCCLCompilerTool"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Releasex64|Win32">
+					ExcludedFromBuild="TRUE">
 					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"/>
