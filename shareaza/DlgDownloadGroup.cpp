@@ -1,7 +1,7 @@
 //
 // DlgDownloadGroup.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -41,13 +41,11 @@ static char THIS_FILE[] = __FILE__;
 #endif
 
 BEGIN_MESSAGE_MAP(CDownloadGroupDlg, CSkinDialog)
-	//{{AFX_MSG_MAP(CDownloadGroupDlg)
 	ON_BN_CLICKED(IDC_FILTER_ADD, OnFilterAdd)
 	ON_BN_CLICKED(IDC_FILTER_REMOVE, OnFilterRemove)
 	ON_CBN_EDITCHANGE(IDC_FILTER_LIST, OnEditChangeFilterList)
 	ON_CBN_SELCHANGE(IDC_FILTER_LIST, OnSelChangeFilterList)
 	ON_BN_CLICKED(IDC_DOWNLOADS_BROWSE, OnBrowse)
-	//}}AFX_MSG_MAP
 	ON_NOTIFY(LVN_ITEMCHANGING, IDC_ICON_LIST, OnLvnItemchangingIconList)
 END_MESSAGE_MAP()
 
@@ -64,7 +62,6 @@ CDownloadGroupDlg::CDownloadGroupDlg(CDownloadGroup* pGroup, CWnd* pParent) :
 void CDownloadGroupDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CSkinDialog::DoDataExchange(pDX);
-	//{{AFX_DATA_MAP(CDownloadGroupDlg)
 	DDX_Control(pDX, IDC_DOWNLOADS_BROWSE, m_wndBrowse);
 	DDX_Control(pDX, IDC_ICON_LIST, m_wndImages);
 	DDX_Control(pDX, IDC_FOLDER, m_wndFolder);
@@ -73,7 +70,6 @@ void CDownloadGroupDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_FILTER_LIST, m_wndFilterList);
 	DDX_Text(pDX, IDC_NAME, m_sName);
 	DDX_Text(pDX, IDC_FOLDER, m_sFolder);
-	//}}AFX_DATA_MAP
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -82,12 +78,14 @@ void CDownloadGroupDlg::DoDataExchange(CDataExchange* pDX)
 BOOL CDownloadGroupDlg::OnInitDialog()
 {
 	CSkinDialog::OnInitDialog();
+	m_bInitializing = true;
 
 	SkinMe( _T("CDownloadGroupDlg") );
 
 	m_wndImages.SetImageList( ShellIcons.GetObject( 16 ), LVSIL_SMALL );
 	m_wndImages.SetColumnWidth( 0, 36 );
 	m_wndImages.SetExtendedStyle( LVS_EX_CHECKBOXES );
+	m_wndImages.SetItemCount( 28 );
 	m_wndBrowse.SetCoolIcon( IDI_BROWSE, Settings.General.LanguageRTL );
 
 	CSingleLock pLock( &DownloadGroups.m_pSection, TRUE );
@@ -140,6 +138,7 @@ BOOL CDownloadGroupDlg::OnInitDialog()
 	m_wndFilterAdd.EnableWindow( m_wndFilterList.GetWindowTextLength() > 0 );
 	m_wndFilterRemove.EnableWindow( m_wndFilterList.GetCurSel() >= 0 );
 
+	m_bInitializing = false;
 	return TRUE;
 }
 
@@ -313,6 +312,7 @@ void CDownloadGroupDlg::OnLvnItemchangingIconList(NMHDR *pNMHDR, LRESULT *pResul
 	LPNMLISTVIEW pNMLV = reinterpret_cast<LPNMLISTVIEW>(pNMHDR);
 	*pResult = 0;
 	
+	if ( m_bInitializing ) return;
 	int nLength = m_wndImages.GetItemCount();
 
 	// Set check and selection states on first mouse click

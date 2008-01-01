@@ -1,7 +1,7 @@
 //
 // DlgDownloadGroup.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -19,8 +19,8 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_DLGDOWNLOADGROUP_H__DFB60CF9_6E83_4C66_9A1A_EE60C40391BE__INCLUDED_)
-#define AFX_DLGDOWNLOADGROUP_H__DFB60CF9_6E83_4C66_9A1A_EE60C40391BE__INCLUDED_
+#if !defined(DLGDOWNLOADGROUP_H)
+#define DLGDOWNLOADGROUP_H
 
 #pragma once
 
@@ -38,30 +38,27 @@ public:
 
 // Dialog Data
 public:
-	//{{AFX_DATA(CDownloadGroupDlg)
 	enum { IDD = IDD_DOWNLOAD_GROUP };
 	CIconButtonCtrl	m_wndBrowse;
-	CListCtrl	m_wndImages;
-	CEdit	m_wndFolder;
-	CButton	m_wndFilterAdd;
-	CButton	m_wndFilterRemove;
-	CComboBox	m_wndFilterList;
-	CString	m_sName;
-	CString	m_sFolder;
-	//}}AFX_DATA
+	CListCtrl		m_wndImages;
+	CEdit			m_wndFolder;
+	CButton			m_wndFilterAdd;
+	CButton			m_wndFilterRemove;
+	CComboBox		m_wndFilterList;
+	CString			m_sName;
+	CString			m_sFolder;
 
 	CDownloadGroup*	m_pGroup;
 
+protected:
+	bool			m_bInitializing;
+
 // Overrides
-public:
-	//{{AFX_VIRTUAL(CDownloadGroupDlg)
-	protected:
+protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
 
 // Implementation
 protected:
-	//{{AFX_MSG(CDownloadGroupDlg)
 	virtual BOOL OnInitDialog();
 	afx_msg void OnFilterAdd();
 	afx_msg void OnFilterRemove();
@@ -70,11 +67,8 @@ protected:
 	virtual void OnOK();
 	afx_msg void OnBrowse();
 	afx_msg void OnLvnItemchangingIconList(NMHDR *pNMHDR, LRESULT *pResult);
-	//}}AFX_MSG
 
 	DECLARE_MESSAGE_MAP()
 };
 
-//{{AFX_INSERT_LOCATION}}
-
-#endif // !defined(AFX_DLGDOWNLOADGROUP_H__DFB60CF9_6E83_4C66_9A1A_EE60C40391BE__INCLUDED_)
+#endif // !defined(DLGDOWNLOADGROUP_H)
