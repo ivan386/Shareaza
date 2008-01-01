@@ -211,6 +211,11 @@ void CDownloadGroupDlg::OnOK()
 		{
 			CSchema* pSchema = (CSchema*)m_wndImages.GetItemData( nIndex );
 			m_pGroup->SetSchema( pSchema->m_sURI );
+			
+			// Why should we force users to have groups named after the schema?
+			// Because we add new schema related types without asking?
+			if ( m_sName.GetLength() && m_pGroup->m_sName != m_sName )
+				m_pGroup->m_sName = m_sName;
 		}
 		else
 		{
