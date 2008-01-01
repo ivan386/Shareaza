@@ -328,9 +328,11 @@ void CDownloadGroupDlg::OnLvnItemchangingIconList(NMHDR *pNMHDR, LRESULT *pResul
 				break;
 			}
 		}
+		m_bInitializing = true;
 		m_wndImages.SetCheck( pNMLV->iItem );
 		if ( nOldIndex != -1 )
 			m_wndImages.SetCheck( nOldIndex, FALSE );
+		m_bInitializing = false;
 		m_wndImages.SetItemState( pNMLV->iItem, LVIS_SELECTED, LVIS_SELECTED );
 	}
 	// Disable removing check on other mouse clicks
