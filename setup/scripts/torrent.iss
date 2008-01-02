@@ -1,11 +1,11 @@
 ; Select file source root
-#ifexist "..\..\vc7_1\release\TorrentWizard.exe"
-  #define root "vc7_1\release"
-  #define version GetFileVersion("..\..\vc7_1\release\TorrentWizard.exe")
+#ifexist "..\..\vc7_1\ReleaseWin32\TorrentWizard.exe"
+  #define root "vc7_1\ReleaseWin32"
+  #define version GetFileVersion("..\..\vc7_1\ReleaseWin32\TorrentWizard.exe")
 #endif
-#ifexist "..\..\vc8_0\release\TorrentWizard.exe"
-  #define root "vc8_0\release"
-  #define version GetFileVersion("..\..\vc8_0\release\TorrentWizard.exe")
+#ifexist "..\..\vc8_0\ReleaseWin32\TorrentWizard.exe"
+  #define root "vc8_0\ReleaseWin32"
+  #define version GetFileVersion("..\..\vc8_0\ReleaseWin32\TorrentWizard.exe")
 #endif
 
 #ifndef root
@@ -13,28 +13,28 @@
 #endif
 
 [Setup]
-AppName=TorrentAid
-AppVerName=TorrentAid {#version}
+AppName=TorrentWizard
+AppVerName=TorrentWizard {#version}
 AppPublisher=Shareaza Development Team
-DefaultDirName={pf}\TorrentAid
-DefaultGroupName=TorrentAid
+DefaultDirName={pf}\TorrentWizard
+DefaultGroupName=TorrentWizard
 DisableProgramGroupPage=yes
 Compression=lzma/max
 InternalCompressLevel=max
 SolidCompression=yes
-OutputBaseFilename=TorrentAid_{#version}
+OutputBaseFilename=TorrentWizard_{#version}
 OutputDir=setup\builds
 VersionInfoCompany=Shareaza Development Team
-VersionInfoDescription=TorrentAid
+VersionInfoDescription=TorrentWizard
 VersionInfoVersion={#version}
-AppId=TorrentAid
+AppId=TorrentWizard
 AppVersion={#version}
 DirExistsWarning=no
 PrivilegesRequired=poweruser
 LanguageDetectionMethod=locale
 ShowLanguageDialog=auto
 UninstallDisplayIcon={app}\TorrentWizard.exe
-UninstallDisplayName={cm:NameAndVersion,TorrentAid,{#version}}
+UninstallDisplayName={cm:NameAndVersion,TorrentWizard,{#version}}
 UninstallFilesDir={app}\Uninstall
 LicenseFile=setup\license\default.rtf
 SetupIconFile=torrentaid\Res\TorrentWizard.ico
@@ -60,15 +60,15 @@ Source: "{#root}\TorrentWizard.exe"; DestDir: "{app}"; Flags: ignoreversion over
 Source: "torrentaid\Res\uninstall.ico"; DestDir: "{app}\Uninstall"; Flags: ignoreversion sortfilesbyextension
 
 [Icons]
-Name: "{group}\Torrent Wizard"; Filename: "{app}\TorrentWizard.exe"; WorkingDir: "{app}"; Comment: "TorrentAid Torrent Wizard"
-Name: "{group}\Uninstall"; Filename: "{uninstallexe}"; WorkingDir: "{app}\Uninstall"; Comment: "{cm:UninstallProgram,TorrentAid}"; IconFilename: "{app}\Uninstall\uninstall.ico"
+Name: "{group}\Torrent Wizard"; Filename: "{app}\TorrentWizard.exe"; WorkingDir: "{app}"; Comment: "Shareaza Torrent Wizard"
+Name: "{group}\Uninstall"; Filename: "{uninstallexe}"; WorkingDir: "{app}\Uninstall"; Comment: "{cm:UninstallProgram,TorrentWizard}"; IconFilename: "{app}\Uninstall\uninstall.ico"
 
 [Registry]
 Root: HKLM; Subkey: "Software\Shareaza\Shareaza\BitTorrent"; ValueType: string; ValueName: "TorrentCreatorPath"; ValueData: "{app}\TorrentWizard.exe"; Flags: deletevalue uninsdeletevalue
 Root: HKCU; Subkey: "Software\Shareaza\Shareaza\BitTorrent"; ValueType: string; ValueName: "TorrentCreatorPath"; ValueData: "{app}\TorrentWizard.exe"; Flags: deletevalue uninsdeletevalue
-Root: HKCU; Subkey: "Software\TorrentAid\"; Flags: dontcreatekey uninsdeletekey
+Root: HKCU; Subkey: "Software\Shareaza\TorrentWizard\"; Flags: dontcreatekey uninsdeletekey
 
 [InstallDelete]
-Type: files; Name: "{userprograms}\TorrentAid.*"
+Type: files; Name: "{userprograms}\TorrentWizard.*"
 Type: filesandordirs; Name: "{group}"
 
