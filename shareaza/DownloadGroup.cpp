@@ -262,7 +262,7 @@ void CDownloadGroup::Serialize(CArchive& ar, int nVersion)
 
 		if ( m_sSchemaURI == CSchema::uriCollectionsFolder )
 		{
-			AddFilter( L".col" );
+			AddFilter( L".co" );
 			AddFilter( L".collection" );
 		}
 
