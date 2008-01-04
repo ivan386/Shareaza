@@ -223,12 +223,7 @@ void CDownloadGroup::Serialize(CArchive& ar, int nVersion)
 		ar >> m_sSchemaURI;
 		ar >> m_sFolder;
 
-		if ( m_sSchemaURI == CSchema::uriCollectionsFolder )
-		{
-			AddFilter( L".co" );
-			AddFilter( L".collection" );
-		} 
-		else if ( nVersion >= 3 )
+		if ( nVersion >= 3 )
 		{
 			for ( DWORD_PTR nCount = ar.ReadCount() ; nCount > 0 ; nCount-- )
 			{
@@ -263,6 +258,12 @@ void CDownloadGroup::Serialize(CArchive& ar, int nVersion)
 		{
 			ar >> m_bTemporary;
 			ASSERT( m_bTemporary == TRI_UNKNOWN || m_bTemporary == TRI_FALSE );
+		}
+
+		if ( m_sSchemaURI == CSchema::uriCollectionsFolder )
+		{
+			AddFilter( L".col" );
+			AddFilter( L".collection" );
 		}
 
 		SetSchema( m_sSchemaURI );
