@@ -1,7 +1,7 @@
 //
 // Uploads.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -355,14 +355,12 @@ void CUploads::OnRun()
 	}
 	
 	if ( nCountTorrent > 0 )	//If there are any active torrents
-	{	//Assign bandwidth to BT (4/5ths by default)
-		m_nTorrentSpeed = Settings.Bandwidth.Uploads;
-		if ( m_nTorrentSpeed == 0 ) m_nTorrentSpeed = 0xFFFFFFFF;
-		m_nTorrentSpeed = min( m_nTorrentSpeed, Settings.Connection.OutSpeed * 128 );
-		m_nTorrentSpeed = m_nTorrentSpeed * Settings.BitTorrent.BandwidthPercentage / 100;
-		
-		m_nTorrentSpeed = m_nTorrentSpeed / nCountTorrent;
-		m_nTorrentSpeed = max( m_nTorrentSpeed, Settings.Bandwidth.Request );
+	{
+		// Assign bandwidth to BT
+		m_nTorrentSpeed = ( ( min(
+			( Settings.Bandwidth.Uploads ? Settings.Bandwidth.Uploads : 0xFFFFFFFF ),
+			Settings.Connection.OutSpeed * 128 ) *
+			Settings.BitTorrent.BandwidthPercentage ) / 100 ) / nCountTorrent;
 	}
 	else
 	{	//If there are no torrents, set to zero
