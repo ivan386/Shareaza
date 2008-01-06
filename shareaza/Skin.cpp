@@ -484,9 +484,11 @@ CMenu* CSkin::GetMenu(LPCTSTR pszName) const
 	{
 		if ( m_pMenus.Lookup( strName +
 			m_pszModeSuffix[ Settings.General.GUIMode ][ nModeTry ], pMenu ) )
+		{
+			ASSERT( pMenu != NULL && ::IsMenu( pMenu->m_hMenu ) );
 			break;
+		}
 	}
-	ASSERT( pMenu != NULL && ::IsMenu( pMenu->m_hMenu ) );	
 	return pMenu;
 }
 
