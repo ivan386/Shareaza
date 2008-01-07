@@ -14,7 +14,8 @@
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)\plugins\$(ProjectName)\"
 			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)\plugins\$(ProjectName)\"
 			ConfigurationType="2"
-			ATLMinimizesCRunTimeLibraryUsage="TRUE">
+			ATLMinimizesCRunTimeLibraryUsage="TRUE"
+			CharacterSet="1">
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
@@ -233,7 +234,8 @@
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)\plugins\$(ProjectName)\"
 			IntermediateDirectory="$(SolutionDir)$(ConfigurationName)\plugins\$(ProjectName)\"
 			ConfigurationType="2"
-			ATLMinimizesCRunTimeLibraryUsage="TRUE">
+			ATLMinimizesCRunTimeLibraryUsage="TRUE"
+			CharacterSet="1">
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
@@ -409,34 +411,6 @@
 			Name="Generated Files"
 			Filter="">
 			<File
-				RelativePath="Debugx64\plugins\$(ProjectName)\MediaLibraryBuilder_i.c">
-				<FileConfiguration
-					Name="DebugWin32|Win32"
-					ExcludedFromBuild="TRUE">
-					<Tool
-						Name="VCCLCompilerTool"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="ReleaseWin32|Win32"
-					ExcludedFromBuild="TRUE">
-					<Tool
-						Name="VCCLCompilerTool"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Releasex64|Win32"
-					ExcludedFromBuild="TRUE">
-					<Tool
-						Name="VCCLCompilerTool"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debugx64|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-						ObjectFile="$(IntDir)$(InputName)1.obj"/>
-				</FileConfiguration>
-			</File>
-			<File
 				RelativePath="Releasex64\plugins\$(ProjectName)\MediaLibraryBuilder_i.c">
 				<FileConfiguration
 					Name="DebugWin32|Win32"
@@ -518,6 +492,34 @@
 					ExcludedFromBuild="TRUE">
 					<Tool
 						Name="VCCLCompilerTool"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="Debugx64\plugins\$(ProjectName)\MediaLibraryBuilder_i.c">
+				<FileConfiguration
+					Name="DebugWin32|Win32"
+					ExcludedFromBuild="TRUE">
+					<Tool
+						Name="VCCLCompilerTool"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="ReleaseWin32|Win32"
+					ExcludedFromBuild="TRUE">
+					<Tool
+						Name="VCCLCompilerTool"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Releasex64|Win32"
+					ExcludedFromBuild="TRUE">
+					<Tool
+						Name="VCCLCompilerTool"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debugx64|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+						ObjectFile="$(IntDir)$(InputName)1.obj"/>
 				</FileConfiguration>
 			</File>
 		</Filter>
