@@ -183,7 +183,7 @@ void CBrowseHostWnd::OnContextMenu(CWnd* pWnd, CPoint point)
 {
 	if ( m_bContextMenu )
 	{
-		TrackPopupMenu( _T("CBrowseHostWnd"), point, ID_SEARCH_DOWNLOAD );
+		Skin.TrackPopupMenu( _T("CBrowseHostWnd"), point, ID_SEARCH_DOWNLOAD );
 	}
 	else
 	{

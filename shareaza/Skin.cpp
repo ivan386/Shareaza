@@ -1,7 +1,7 @@
 //
 // Skin.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -1732,23 +1732,43 @@ void CSkin::Finalise()
 //////////////////////////////////////////////////////////////////////
 // CSkin popup menu helper
 
-UINT CSkin::TrackPopupMenu(LPCTSTR pszMenu, const CPoint& point, UINT nDefaultID, UINT nFlags) const
+UINT CSkin::TrackPopupMenu(LPCTSTR pszMenu, const CPoint& point,
+	UINT nDefaultID, UINT nFlags, LPCTSTR pszPath, CWnd* pWnd) const
 {
 	CMenu* pPopup = GetMenu( pszMenu );
 	if ( pPopup == NULL ) return 0;
 
 	if ( nDefaultID != 0 )
 	{
-		MENUITEMINFO pInfo;
-		pInfo.cbSize	= sizeof(pInfo);
-		pInfo.fMask		= MIIM_STATE;
-		GetMenuItemInfo( pPopup->GetSafeHmenu(), nDefaultID, FALSE, &pInfo );
-		pInfo.fState	|= MFS_DEFAULT;
-		SetMenuItemInfo( pPopup->GetSafeHmenu(), nDefaultID, FALSE, &pInfo );
+		pPopup->SetDefaultItem( nDefaultID );
 	}
-	
-	return pPopup->TrackPopupMenu( TPM_LEFTALIGN|TPM_LEFTBUTTON|TPM_RIGHTBUTTON|nFlags,
-		point.x, point.y, AfxGetMainWnd() );
+
+	if ( pszPath )
+	{
+		// Change ID_SHELL_MENU item to shell submenu
+		MENUITEMINFO pInfo = {};
+		pInfo.cbSize = sizeof( pInfo );
+		pInfo.fMask = MIIM_SUBMENU;
+		HMENU hSubMenu = pInfo.hSubMenu = ::CreatePopupMenu();
+		ASSERT( hSubMenu );
+		if( pPopup->SetMenuItemInfo( ID_SHELL_MENU, &pInfo ) )
+		{
+			UINT nCmd = CoolMenu.DoExplorerMenu( pWnd->GetSafeHwnd(), pszPath,
+				point, pPopup->GetSafeHmenu(), pInfo.hSubMenu,
+				TPM_LEFTALIGN | TPM_LEFTBUTTON | TPM_RIGHTBUTTON | nFlags );
+
+			// Change ID_SHELL_MENU back
+			pInfo.hSubMenu = NULL;
+			VERIFY( pPopup->SetMenuItemInfo( ID_SHELL_MENU, &pInfo ) );
+
+			return nCmd;
+		}
+		VERIFY( DestroyMenu( hSubMenu ) );
+	}
+
+	return pPopup->TrackPopupMenu(
+		TPM_LEFTALIGN | TPM_LEFTBUTTON | TPM_RIGHTBUTTON | nFlags,
+		point.x, point.y, pWnd );
 }
 
 //////////////////////////////////////////////////////////////////////

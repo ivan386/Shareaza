@@ -324,7 +324,7 @@ void CHostCacheWnd::OnContextMenu(CWnd* /*pWnd*/, CPoint point)
 {
 	// do not update the list while user navigates through context menu
 	m_bAllowUpdates = FALSE;
-	TrackPopupMenu( _T("CHostCacheWnd"), point, ID_HOSTCACHE_CONNECT );
+	Skin.TrackPopupMenu( _T("CHostCacheWnd"), point, ID_HOSTCACHE_CONNECT );
 	m_bAllowUpdates = TRUE;
 }
 

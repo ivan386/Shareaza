@@ -1,7 +1,7 @@
 //
 // WndMain.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -251,6 +251,8 @@ protected:
 	afx_msg void OnRemoteClose();
 	afx_msg void OnUpdateMediaCommand(CCmdUI *pCmdUI);
 	afx_msg void OnMediaCommand();
+	afx_msg void OnUpdateShell(CCmdUI* pCmdUI);
+	afx_msg LRESULT OnMenuChar(UINT nChar, UINT nFlags, CMenu* pMenu);
 
 	DECLARE_MESSAGE_MAP()
 	DECLARE_DROP()

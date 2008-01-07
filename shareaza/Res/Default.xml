@@ -1138,6 +1138,8 @@
 		<separator/>
 		<item id="ID_LIBRARY_COLUMNS" text="Choose _Columns..."/>
 		<separator/>
+		<item id="ID_SHELL_MENU" text="S_hell menu"/>
+		<separator/>
 		<item id="ID_LIBRARY_PROPERTIES" text="_Properties"/>
 	</menu>
 	<menu name="CLibraryFileView.Virtual.Basic">

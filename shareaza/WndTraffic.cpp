@@ -26,6 +26,7 @@
 #include "WndMain.h"
 #include "DlgGraphList.h"
 #include "GraphLine.h"
+#include "Skin.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -149,7 +150,7 @@ void CTrafficWnd::OnTimer(UINT_PTR nIDEvent)
 
 void CTrafficWnd::OnContextMenu(CWnd* /*pWnd*/, CPoint point)
 {
-	TrackPopupMenu( _T("CTrafficWnd"), point, ID_TRAFFIC_SETUP );
+	Skin.TrackPopupMenu( _T("CTrafficWnd"), point, ID_TRAFFIC_SETUP );
 }
 
 void CTrafficWnd::OnUpdateTrafficGrid(CCmdUI* pCmdUI)

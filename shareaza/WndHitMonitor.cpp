@@ -112,7 +112,7 @@ void CHitMonitorWnd::OnContextMenu(CWnd* pWnd, CPoint point)
 {
 	if ( m_bContextMenu )
 	{
-		TrackPopupMenu( _T("CHitMonitorWnd"), point, ID_SEARCH_DOWNLOAD );
+		Skin.TrackPopupMenu( _T("CHitMonitorWnd"), point, ID_SEARCH_DOWNLOAD );
 	}
 	else
 	{

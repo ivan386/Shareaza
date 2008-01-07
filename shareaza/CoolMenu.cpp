@@ -1,7 +1,7 @@
 //
 // CoolMenu.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -42,10 +42,10 @@ CCoolMenu CoolMenu;
 //////////////////////////////////////////////////////////////////////
 // CCoolMenu construction
 
-CCoolMenu::CCoolMenu()
+CCoolMenu::CCoolMenu() :
+	m_bEnable( TRUE ),
+	m_bUnhook( FALSE )
 {
-	m_bEnable		= TRUE;
-	m_bUnhook		= FALSE;
 }
 
 CCoolMenu::~CCoolMenu()
@@ -68,18 +68,48 @@ BOOL CCoolMenu::IsModernVersion()
 		( pVersion.dwMajorVersion == 4 && pVersion.dwMinorVersion >= 10 ) );
 }
 
+void CCoolMenu::OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu) 
+{
+	if ( bSysMenu )
+		return;
+
+	if ( m_pContextMenu2 )
+	{
+		MENUITEMINFO mii = {};
+		mii.cbSize = sizeof( mii );
+		mii.fMask = MIIM_ID;
+		for ( UINT i = 0; i < pPopupMenu->GetMenuItemCount(); i++ )
+		{
+			pPopupMenu->GetMenuItemInfo( i, &mii, TRUE );
+			if ( mii.wID == ID_SEPARATOR || mii.wID == -1 )
+				continue;
+			if ( mii.wID >= ID_SHELL_MENU_MIN && mii.wID <= ID_SHELL_MENU_MAX )
+			{
+				// Its shell menu
+				m_pContextMenu2->HandleMenuMsg( WM_INITMENUPOPUP,
+					(WPARAM)pPopupMenu->GetSafeHmenu(),
+					(LPARAM)MAKELONG( nIndex, TRUE ) );
+				return;
+			}
+			// Its regular menu
+			break;
+		}
+	}
+
+	AddMenu( pPopupMenu, TRUE );
+}
+
 //////////////////////////////////////////////////////////////////////
 // CCoolMenu add menu
 
 BOOL CCoolMenu::AddMenu(CMenu* pMenu, BOOL bChild)
 {
 	if ( ! m_bEnable ) return FALSE;
-	CString strText;
 
 	for ( int i = 0 ; i < (int)pMenu->GetMenuItemCount() ; i++ )
 	{
 		TCHAR szBuffer[128] = {};
-		strText.Empty();
+		CString strText;
 
 		MENUITEMINFO mii = {};
 		mii.cbSize		= sizeof(mii);
@@ -91,6 +121,10 @@ BOOL CCoolMenu::AddMenu(CMenu* pMenu, BOOL bChild)
 		mii.cch			= sizeof(szBuffer) / sizeof(TCHAR) - 1;
 
 		GetMenuItemInfo( pMenu->GetSafeHmenu(), i, TRUE, &mii );
+
+		if ( mii.wID >= ID_SHELL_MENU_MIN && mii.wID <= ID_SHELL_MENU_MAX )
+			// Bypass shell menu items
+			break;
 
 		// In Win98 the custom filter string can not be read with the mask set above.
 		// In WinXP subsequent GetMenuItemInfo calls do not work.
@@ -248,10 +282,30 @@ void CCoolMenu::SetSelectmark(HBITMAP hBitmap)
 		m_bSelectTest = TRUE;
 	}
 }
+
 //////////////////////////////////////////////////////////////////////
 // CCoolMenu measure item
 
 void CCoolMenu::OnMeasureItem(LPMEASUREITEMSTRUCT lpMeasureItemStruct)
+{
+	if ( m_pContextMenu2 &&
+		lpMeasureItemStruct->itemID >= ID_SHELL_MENU_MIN &&
+		lpMeasureItemStruct->itemID <= ID_SHELL_MENU_MAX )
+	{
+		__try
+		{
+			m_pContextMenu2->HandleMenuMsg( WM_MEASUREITEM, 0,
+				(LPARAM)lpMeasureItemStruct );
+		}
+		__except( EXCEPTION_EXECUTE_HANDLER )
+		{
+		}
+	}
+	else
+		OnMeasureItemInternal( lpMeasureItemStruct );
+}
+
+void CCoolMenu::OnMeasureItemInternal(LPMEASUREITEMSTRUCT lpMeasureItemStruct)
 {
 	if ( lpMeasureItemStruct->itemID == ID_SEPARATOR )
 	{
@@ -284,6 +338,25 @@ void CCoolMenu::OnMeasureItem(LPMEASUREITEMSTRUCT lpMeasureItemStruct)
 // CCoolMenu draw item
 
 void CCoolMenu::OnDrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
+{
+	if ( m_pContextMenu2 &&
+		lpDrawItemStruct->itemID >= ID_SHELL_MENU_MIN &&
+		lpDrawItemStruct->itemID <= ID_SHELL_MENU_MAX )
+	{
+		__try
+		{
+			m_pContextMenu2->HandleMenuMsg( WM_DRAWITEM, 0,
+				(LPARAM)lpDrawItemStruct );
+		}
+		__except( EXCEPTION_EXECUTE_HANDLER )
+		{
+		}
+	}
+	else
+		OnDrawItemInternal( lpDrawItemStruct );
+}
+
+void CCoolMenu::OnDrawItemInternal(LPDRAWITEMSTRUCT lpDrawItemStruct)
 {
 	CRect rcItem, rcText;
 	CString strText;
@@ -434,6 +507,18 @@ void CCoolMenu::OnDrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 	dc.Detach();
 }
 
+LRESULT CCoolMenu::OnMenuChar(UINT nChar, UINT /*nFlags*/, CMenu* pMenu)
+{
+	LRESULT result = 0;
+	if ( m_pContextMenu3 )
+	{
+		m_pContextMenu3->HandleMenuMsg2( WM_MENUCHAR,
+			(WPARAM)MAKELONG( nChar, MF_POPUP ),
+			(LPARAM)pMenu->GetSafeHmenu(), &result );
+	}
+	return result;
+}
+
 //////////////////////////////////////////////////////////////////////
 // CCoolMenu formatted text helper
 
@@ -518,6 +603,89 @@ void CCoolMenu::RegisterEdge(int nLeft, int nTop, int nLength)
 	m_nEdgeSize	= nLength;
 }
 
+UINT CCoolMenu::DoExplorerMenu(HWND hwnd, LPCTSTR pszPath, POINT point,
+	HMENU hMenu, HMENU hSubMenu, UINT nFlags)
+{
+	UINT nCmd = 0;
+
+	TCHAR szFullPath[ MAX_PATH ] = {};
+	GetFullPathName( pszPath, MAX_PATH, szFullPath, NULL );
+
+	CComPtr< IMalloc > pMalloc;
+	HRESULT hr = SHGetMalloc( &pMalloc );
+	if ( FAILED( hr ) )
+		return 0;
+
+	CComPtr< IShellFolder > pDesktop;
+	hr = ::SHGetDesktopFolder( &pDesktop );
+	if ( FAILED( hr ) )
+		return 0;
+
+	LPITEMIDLIST pidl = NULL;
+	hr = pDesktop->ParseDisplayName( hwnd, 0, CT2OLE( szFullPath ), NULL, &pidl, NULL );
+	if ( SUCCEEDED( hr ) )
+	{
+		CComPtr< IShellFolder > pFolder;
+		LPITEMIDLIST pLastId = pidl;
+		USHORT temp;
+		for (;;)
+		{
+			int offset = pLastId->mkid.cb;
+			temp = *(USHORT*)( (BYTE*)pLastId + offset );
+			if ( temp == 0 )
+				break;
+			pLastId = (LPITEMIDLIST)( (BYTE*)pLastId + offset );
+		}
+		temp = pLastId->mkid.cb;
+		pLastId->mkid.cb = 0;
+		hr = pDesktop->BindToObject( pidl, NULL, IID_IShellFolder, (void**)&pFolder );
+		pLastId->mkid.cb = temp;
+		if ( SUCCEEDED( hr ) )
+		{
+			hr = pFolder->GetUIObjectOf( hwnd, 1, (LPCITEMIDLIST*)&pLastId, 
+				IID_IContextMenu, NULL, (void**)&m_pContextMenu1 );
+			if ( SUCCEEDED( hr ) )
+			{
+				hr = m_pContextMenu1->QueryContextMenu( hSubMenu, 0,
+					ID_SHELL_MENU_MIN, ID_SHELL_MENU_MAX, CMF_NORMAL | CMF_EXPLORE );
+				if ( SUCCEEDED( hr ) )
+				{
+					hr = m_pContextMenu1.QueryInterface( &m_pContextMenu2 );
+					hr = m_pContextMenu1.QueryInterface( &m_pContextMenu3 );
+
+					::SetForegroundWindow( hwnd );
+					nCmd = ::TrackPopupMenu( hMenu, TPM_RETURNCMD | nFlags,
+						point.x, point.y, 0, hwnd, NULL );
+					::PostMessage( hwnd, WM_NULL, 0, 0 );
+
+					// If a command was selected from the shell menu, execute it.
+					if ( nCmd >= ID_SHELL_MENU_MIN && nCmd <= ID_SHELL_MENU_MAX )
+					{
+						CMINVOKECOMMANDINFOEX ici = {};
+						ici.cbSize = sizeof( CMINVOKECOMMANDINFOEX );
+						ici.hwnd = hwnd;
+						ici.lpVerb = (LPCSTR)( nCmd - ID_SHELL_MENU_MIN );
+						ici.lpVerbW = (LPCWSTR)( nCmd - ID_SHELL_MENU_MIN );
+						ici.nShow = SW_SHOWNORMAL;
+						HRESULT hr = m_pContextMenu1->InvokeCommand( (CMINVOKECOMMANDINFO*)&ici );
+						VERIFY( SUCCEEDED( hr ) );
+					}
+					else if ( ( TPM_RETURNCMD & nFlags ) == 0 )
+					{
+						// Emulate normal message handling
+						::PostMessage( hwnd, WM_COMMAND, nCmd, 0 );
+					}
+
+					m_pContextMenu3.Release();
+					m_pContextMenu2.Release();
+				}
+				m_pContextMenu1.Release();
+			}
+		}
+		pMalloc->Free( pidl );
+	}
+	return nCmd;
+}
 //////////////////////////////////////////////////////////////////////
 // CCoolMenu message hook and subclassed window procedure
 

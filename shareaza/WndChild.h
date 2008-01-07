@@ -64,7 +64,6 @@ public:
 	BOOL			IsActive(BOOL bFocused = FALSE);
 	BOOL			IsPartiallyVisible();
 	BOOL			TestPoint(const CPoint& ptScreen);
-	void			TrackPopupMenu(LPCTSTR pszMenu, const CPoint& point, UINT nDefaultID = 0);
 	BOOL			LoadState(LPCTSTR pszName = NULL, BOOL bDefaultMaximise = TRUE);
 	BOOL			SaveState(LPCTSTR pszName = NULL);
 	BOOL			SetAlert(BOOL bAlert = TRUE);

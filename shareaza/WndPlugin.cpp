@@ -293,7 +293,7 @@ STDMETHODIMP CPluginWnd::XPluginWindow::ThrowMenu(BSTR sName, LONG nDefaultID, P
 	CPoint pt;
 	if ( pPoint ) pt = *pPoint;
 	else GetCursorPos( &pt );
-	pThis->TrackPopupMenu( CString( sName ), pt, (UINT)nDefaultID );
+	Skin.TrackPopupMenu( CString( sName ), pt, (UINT)nDefaultID );
 	return S_OK;
 }
 

@@ -155,7 +155,7 @@ void CSystemWnd::OnSize(UINT nType, int cx, int cy)
 
 void CSystemWnd::OnContextMenu(CWnd* /*pWnd*/, CPoint point)
 {
-	TrackPopupMenu( _T("CSystemWnd"), point );
+	Skin.TrackPopupMenu( _T("CSystemWnd"), point );
 }
 
 BOOL CSystemWnd::PreTranslateMessage(MSG* pMsg)

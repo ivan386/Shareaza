@@ -1678,6 +1678,7 @@
 #define ID_LIBRARY_FOLDER_FILE_PROPERTIES 33056
 #define ID_LIBRARY_REBUILD              33057
 #define ID_NETWORK_NULL                 33058
+#define ID_SHELL_MENU                   33059
 #define ID_DOWNLOADS_COPY               33060
 #define ID_LIBRARY_VIEW_ALBUM           33061
 #define ID_SEARCH_DETAILS               33062

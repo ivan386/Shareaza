@@ -296,6 +296,7 @@
 	<resource code="33056" id="ID_LIBRARY_FOLDER_FILE_PROPERTIES"/>
 	<resource code="33057" id="ID_LIBRARY_REBUILD"/>
 	<resource code="33058" id="ID_NETWORK_NULL"/>
+	<resource code="33059" id="ID_SHELL_MENU"/>
 	<resource code="33060" id="ID_DOWNLOADS_COPY"/>
 	<resource code="33061" id="ID_LIBRARY_VIEW_ALBUM"/>
 	<resource code="33062" id="ID_SEARCH_DETAILS"/>

@@ -248,7 +248,7 @@ void CSearchWnd::OnContextMenu(CWnd* pWnd, CPoint point)
 {
 	if ( m_bContextMenu )
 	{
-		TrackPopupMenu( _T("CSearchWnd"), point, ID_SEARCH_DOWNLOAD );
+		Skin.TrackPopupMenu( _T("CSearchWnd"), point, ID_SEARCH_DOWNLOAD );
 	}
 	else
 	{

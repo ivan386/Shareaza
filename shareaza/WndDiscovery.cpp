@@ -27,6 +27,7 @@
 #include "LiveList.h"
 #include "WndDiscovery.h"
 #include "DlgDiscoveryService.h"
+#include "Skin.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -271,7 +272,7 @@ void CDiscoveryWnd::OnSortList(NMHDR* pNotifyStruct, LRESULT *pResult)
 
 void CDiscoveryWnd::OnContextMenu(CWnd* /*pWnd*/, CPoint point) 
 {
-	TrackPopupMenu( _T("CDiscoveryWnd"), point, ID_DISCOVERY_EDIT );
+	Skin.TrackPopupMenu( _T("CDiscoveryWnd"), point, ID_DISCOVERY_EDIT );
 }
 
 void CDiscoveryWnd::OnUpdateDiscoveryQuery(CCmdUI* pCmdUI) 

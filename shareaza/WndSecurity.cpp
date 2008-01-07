@@ -308,7 +308,7 @@ void CSecurityWnd::OnSortList(NMHDR* pNotifyStruct, LRESULT *pResult)
 
 void CSecurityWnd::OnContextMenu(CWnd* /*pWnd*/, CPoint point) 
 {
-	TrackPopupMenu( _T("CSecurityWnd"), point, ID_SECURITY_EDIT );
+	Skin.TrackPopupMenu( _T("CSecurityWnd"), point, ID_SECURITY_EDIT );
 }
 
 void CSecurityWnd::OnUpdateSecurityEdit(CCmdUI* pCmdUI) 

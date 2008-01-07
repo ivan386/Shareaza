@@ -30,6 +30,7 @@
 #include "SHA.h"
 #include "ED2K.h"
 #include "TigerTree.h"
+#include "Skin.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -138,7 +139,7 @@ void CSearchMonitorWnd::OnSize(UINT nType, int cx, int cy)
 
 void CSearchMonitorWnd::OnContextMenu(CWnd* /*pWnd*/, CPoint point) 
 {
-	TrackPopupMenu( _T("CSearchMonitorWnd"), point, ID_HITMONITOR_SEARCH );
+	Skin.TrackPopupMenu( _T("CSearchMonitorWnd"), point, ID_HITMONITOR_SEARCH );
 }
 
 void CSearchMonitorWnd::OnUpdateSearchMonitorSearch(CCmdUI* pCmdUI) 

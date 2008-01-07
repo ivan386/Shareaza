@@ -1,7 +1,7 @@
 //
 // CoolMenu.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2006.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -19,11 +19,15 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_COOLMENU_H__A1413F8B_7E02_4897_9C24_597CA8ACEE8F__INCLUDED_)
-#define AFX_COOLMENU_H__A1413F8B_7E02_4897_9C24_597CA8ACEE8F__INCLUDED_
-
 #pragma once
 
+#include <shlobj.h>
+
+struct __declspec(uuid("000214f4-0000-0000-c000-000000000046")) IContextMenu2;
+struct __declspec(uuid("bcfce0a0-ec17-11d0-8d10-00a0c90f2719")) IContextMenu3;
+
+#define ID_SHELL_MENU_MIN 40000
+#define ID_SHELL_MENU_MAX 41000
 
 class CCoolMenu
 {
@@ -37,9 +41,19 @@ public:
 	BOOL		AddMenu(CMenu* pMenu, BOOL bChild = FALSE);
 	BOOL		ReplaceMenuText(CMenu* pMenu, int nPosition, MENUITEMINFO FAR* mii, LPCTSTR pszText);
 	void		SetWatermark(HBITMAP hBitmap);
+	void		OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu);
 	void		OnMeasureItem(LPMEASUREITEMSTRUCT lpMeasureItemStruct);
 	void		OnDrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct);
+	LRESULT		OnMenuChar(UINT nChar, UINT nFlags, CMenu* pMenu);
+	UINT		DoExplorerMenu(HWND hwnd, LPCTSTR pszPath, POINT point, HMENU hMenu, HMENU hSubMenu, UINT nFlags);
+
 protected:
+	CComPtr< IContextMenu >		m_pContextMenu1;
+	CComPtr< IContextMenu2 >	m_pContextMenu2;
+	CComPtr< IContextMenu3 >	m_pContextMenu3;
+
+	void		OnMeasureItemInternal(LPMEASUREITEMSTRUCT lpMeasureItemStruct);
+	void		OnDrawItemInternal(LPDRAWITEMSTRUCT lpDrawItemStruct);
 	void		DrawMenuText(CDC* pDC, CRect* pRect, const CString& strText);
 	void		DrawWatermark(CDC* pDC, CRect* pRect, int nOffX, int nOffY);
 	void		SetSelectmark(HBITMAP hBitmap);
@@ -87,5 +101,3 @@ private:
 };
 
 extern CCoolMenu CoolMenu;
-
-#endif // !defined(AFX_COOLMENU_H__A1413F8B_7E02_4897_9C24_597CA8ACEE8F__INCLUDED_)

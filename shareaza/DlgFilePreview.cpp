@@ -336,6 +336,7 @@ void CFilePreviewDlg::OnRun()
 	
 	m_bThread = FALSE;
 	PostMessage( WM_TIMER, 3 );
+	m_hThread = NULL;
 }
 
 /////////////////////////////////////////////////////////////////////////////

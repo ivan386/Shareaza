@@ -1,7 +1,7 @@
 //
 // WndMain.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -262,8 +262,9 @@ BEGIN_MESSAGE_MAP(CMainWnd, CMDIFrameWnd)
 	ON_COMMAND(ID_MEDIA_ADD_FOLDER, OnMediaCommand)
 	ON_COMMAND(ID_HELP, OnHelpFaq)
 	ON_COMMAND(ID_HELP_TEST, OnHelpConnectiontest)
-	END_MESSAGE_MAP()
-
+	ON_UPDATE_COMMAND_UI_RANGE(ID_SHELL_MENU_MIN, ID_SHELL_MENU_MAX, OnUpdateShell)
+	ON_WM_MENUCHAR()
+END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
 // CMainWnd construction
@@ -621,10 +622,16 @@ void CMainWnd::OnUpdatePluginRange(CCmdUI* pCmdUI)
 /////////////////////////////////////////////////////////////////////////////
 // CMainWnd menu GUI
 
+void CMainWnd::OnUpdateShell(CCmdUI* pCmdUI)
+{
+	pCmdUI->Enable( TRUE );
+}
+
 void CMainWnd::OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu) 
 {
 	CMDIFrameWnd::OnInitMenuPopup( pPopupMenu, nIndex, bSysMenu );
-	if ( ! bSysMenu ) CoolMenu.AddMenu( pPopupMenu, TRUE );
+
+	CoolMenu.OnInitMenuPopup( pPopupMenu, nIndex, bSysMenu );
 }
 
 void CMainWnd::OnMeasureItem(int /*nIDCtl*/, LPMEASUREITEMSTRUCT lpMeasureItemStruct) 
@@ -635,6 +642,14 @@ void CMainWnd::OnMeasureItem(int /*nIDCtl*/, LPMEASUREITEMSTRUCT lpMeasureItemSt
 void CMainWnd::OnDrawItem(int /*nIDCtl*/, LPDRAWITEMSTRUCT lpDrawItemStruct) 
 {
 	CoolMenu.OnDrawItem( lpDrawItemStruct );
+}
+
+LRESULT CMainWnd::OnMenuChar(UINT nChar, UINT nFlags, CMenu* pMenu)
+{
+	if ( LRESULT lResult = CoolMenu.OnMenuChar( nChar, nFlags, pMenu ) )
+		return lResult;
+
+	return CMDIFrameWnd::OnMenuChar( nChar, nFlags, pMenu );
 }
 
 void CMainWnd::OnSysColorChange() 

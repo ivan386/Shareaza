@@ -424,28 +424,28 @@ void CDownloadsWnd::OnContextMenu(CWnd* /*pWnd*/, CPoint point)
 		if ( pSource != NULL )
 		{
 			pLock.Unlock();
-			TrackPopupMenu( _T("CDownloadsWnd.Source"), point, ID_TRANSFERS_CONNECT );
+			Skin.TrackPopupMenu( _T("CDownloadsWnd.Source"), point, ID_TRANSFERS_CONNECT );
 			return;
 		}
 		else if ( pDownload->IsSeeding() )
 		{
 			pLock.Unlock();
-			TrackPopupMenu( _T("CDownloadsWnd.Seeding"), point, ID_DOWNLOADS_LAUNCH );
+			Skin.TrackPopupMenu( _T("CDownloadsWnd.Seeding"), point, ID_DOWNLOADS_LAUNCH );
 			return;
 		}
 		else if ( pDownload->IsCompleted() )
 		{
 			pLock.Unlock();
-			TrackPopupMenu( _T("CDownloadsWnd.Completed"), point, ID_DOWNLOADS_LAUNCH );
+			Skin.TrackPopupMenu( _T("CDownloadsWnd.Completed"), point, ID_DOWNLOADS_LAUNCH );
 			return;
 		}
 	}
 	
 	if ( pDownload != NULL )
-		TrackPopupMenu( _T("CDownloadsWnd.Download"), point,
+		Skin.TrackPopupMenu( _T("CDownloadsWnd.Download"), point,
 			Settings.General.GUIMode == GUI_BASIC ? ID_DOWNLOADS_LAUNCH_COPY : ID_DOWNLOADS_LAUNCH );
 	else
-		TrackPopupMenu( _T("CDownloadsWnd.Nothing"), point, ID_DOWNLOADS_HELP );
+		Skin.TrackPopupMenu( _T("CDownloadsWnd.Nothing"), point, ID_DOWNLOADS_HELP );
 
 	pLock.Unlock();
 }

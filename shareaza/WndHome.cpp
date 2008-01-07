@@ -116,7 +116,7 @@ void CHomeWnd::OnSize(UINT nType, int cx, int cy)
 
 void CHomeWnd::OnContextMenu(CWnd* /*pWnd*/, CPoint point)
 {
-	TrackPopupMenu( _T("CHomeWnd"), point );
+	Skin.TrackPopupMenu( _T("CHomeWnd"), point );
 }
 
 void CHomeWnd::OnTimer(UINT_PTR nIDEvent)

@@ -428,7 +428,7 @@ void CNeighboursWnd::OnSortList(NMHDR* pNotifyStruct, LRESULT *pResult)
 
 void CNeighboursWnd::OnContextMenu(CWnd* /*pWnd*/, CPoint point) 
 {
-	TrackPopupMenu( _T("CNeighboursWnd"), point );
+	Skin.TrackPopupMenu( _T("CNeighboursWnd"), point );
 }
 
 void CNeighboursWnd::OnUpdateNeighboursDisconnect(CCmdUI* pCmdUI) 

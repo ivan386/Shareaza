@@ -163,11 +163,6 @@ BOOL CChildWnd::TestPoint(const CPoint& ptScreen)
 	return FALSE;
 }
 
-void CChildWnd::TrackPopupMenu(LPCTSTR pszMenu, const CPoint& point, UINT nDefaultID)
-{
-	Skin.TrackPopupMenu( pszMenu, point, nDefaultID );
-}
-
 BOOL CChildWnd::LoadState(LPCTSTR pszName, BOOL bDefaultMaximise)
 {
 	CRect rcParent, rcChild;
