@@ -1,7 +1,7 @@
 //
 // PageSettingsTraffic.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -103,24 +103,22 @@ void CAdvancedSettingsPage::AddSettings()
 	for ( POSITION pos = Settings.GetHeadPosition() ; pos ; )
 	{
 		CSettings::Item* pItem = Settings.GetNext( pos );
-		if ( pItem->m_pBool || ( pItem->m_pDword && pItem->m_nScale ) )
+		if ( ! pItem->m_bHidden &&
+			( pItem->m_pBool || ( pItem->m_pDword && pItem->m_nScale ) ) )
 		{
-			if ( lstrcmp( pItem->m_szName, _T("ItWasLimited") ) != 0 )
-			{
-				EditItem* pEdit = new EditItem( pItem );
-				ASSERT( pEdit != NULL );
-				if ( pEdit == NULL ) return;
+			EditItem* pEdit = new EditItem( pItem );
+			ASSERT( pEdit != NULL );
+			if ( pEdit == NULL ) return;
 
-				LV_ITEM pList = {};
-				pList.mask		= LVIF_PARAM|LVIF_TEXT|LVIF_IMAGE;
-				pList.iItem		= m_wndList.GetItemCount();
-				pList.lParam	= (LPARAM)pEdit;
-				pList.iImage	= 0;
-				pList.pszText	= (LPTSTR)(LPCTSTR)pEdit->m_sName;
-				pList.iItem		= m_wndList.InsertItem( &pList );
+			LV_ITEM pList = {};
+			pList.mask		= LVIF_PARAM|LVIF_TEXT|LVIF_IMAGE;
+			pList.iItem		= m_wndList.GetItemCount();
+			pList.lParam	= (LPARAM)pEdit;
+			pList.iImage	= 0;
+			pList.pszText	= (LPTSTR)(LPCTSTR)pEdit->m_sName;
+			pList.iItem		= m_wndList.InsertItem( &pList );
 
-				UpdateListItem( pList.iItem );
-			}
+			UpdateListItem( pList.iItem );
 		}
 	}
 }
@@ -188,14 +186,13 @@ void CAdvancedSettingsPage::UpdateInputArea()
 		EditItem* pItem = (EditItem*)m_wndList.GetItemData( nItem );
 		CString strValue;
 		
+		pItem->m_pItem->SetRange( m_wndValueSpin );
 		if ( pItem->m_pItem->m_pDword )
 		{
-			m_wndValueSpin.SendMessage( UDM_SETRANGE32, pItem->m_pItem->m_nMin, pItem->m_pItem->m_nMax );
 			strValue.Format( _T("%lu"), pItem->m_nValue / pItem->m_pItem->m_nScale );
 		}
 		else
 		{
-			m_wndValueSpin.SendMessage( UDM_SETRANGE32, 0, 1 );
 			strValue = pItem->m_bValue ? _T("1") : _T("0");
 		}
 		m_wndValue.SetWindowText( strValue );

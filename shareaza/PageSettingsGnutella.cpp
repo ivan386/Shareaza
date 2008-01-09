@@ -1,7 +1,7 @@
 //
 // PageSettingsGnutella.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -117,13 +117,12 @@ BOOL CGnutellaSettingsPage::OnInitDialog()
 	m_nG2Leafs			= Settings.Gnutella2.NumLeafs;
 	m_nG2Peers			= Settings.Gnutella2.NumPeers;
 
-	m_wndG1Hubs.SetRange( 1, 5 );
-	m_wndG1Leafs.SetRange( 10, 1024 );
-	m_wndG1Peers.SetRange( 15, 64 );
-
-	m_wndG2Hubs.SetRange( 1, 3 );
-	m_wndG2Leafs.SetRange( 50, 1024 );
-	m_wndG2Peers.SetRange( 4, 64 );
+	Settings.SetRange( &Settings.Gnutella1.NumHubs, m_wndG1Hubs );
+	Settings.SetRange( &Settings.Gnutella1.NumLeafs, m_wndG1Leafs );
+	Settings.SetRange( &Settings.Gnutella1.NumPeers, m_wndG1Peers );
+	Settings.SetRange( &Settings.Gnutella2.NumHubs, m_wndG2Hubs );
+	Settings.SetRange( &Settings.Gnutella2.NumLeafs, m_wndG2Leafs );
+	Settings.SetRange( &Settings.Gnutella2.NumPeers, m_wndG2Peers );
 
 	m_wndG1ClientMode.SetItemData( 0, MODE_AUTO );
 	m_wndG1ClientMode.SetItemData( 1, MODE_LEAF );
@@ -247,14 +246,6 @@ void CGnutellaSettingsPage::OnOK()
 		m_bG1Today = m_bG1Always = FALSE;
 	}
 	
-	// Verify good setting to prevent user killing their connection
-	m_nG1Hubs	= min( m_nG1Hubs, 5 );
-	m_nG1Leafs	= min( m_nG1Leafs, 1024 );
-	m_nG1Peers	= min( m_nG1Peers, 64 );
-	m_nG2Hubs	= min( m_nG2Hubs, 3 );
-	m_nG2Leafs	= min( m_nG2Leafs, 1024 );
-	m_nG2Peers	= min( m_nG2Peers, 64 );
-	
 	//Load values into the settings variables
 	Settings.Gnutella2.EnableToday		= m_bG2Today != FALSE;
 	Settings.Gnutella1.EnableToday		= m_bG1Today != FALSE;
@@ -272,24 +263,23 @@ void CGnutellaSettingsPage::OnOK()
 	Settings.Gnutella1.ClientMode = m_wndG1ClientMode.GetCurSel(); // Mode is equal to select position
 	if ( Settings.Gnutella1.ClientMode > MODE_ULTRAPEER ) Settings.Gnutella1.ClientMode = MODE_AUTO;
 
-	if ( Settings.Gnutella1.ClientMode == MODE_ULTRAPEER )
-	{	// Enforce some minimum values for G1 ultrapeers
-		Settings.Gnutella1.NumLeafs		= max( Settings.Gnutella1.NumLeafs, 5u );
-		// From http://www.limewire.org/wiki/index.php?title=Ultrapeers
-		// "A Gnutella program always sends X-Degree: 32, even when it's a leaf."
-		Settings.Gnutella1.NumPeers		= max( Settings.Gnutella1.NumPeers, 32u );
-	}
-
 	Settings.Gnutella2.ClientMode = m_wndG2ClientMode.GetCurSel(); // Mode is equal to select position
 	if ( Settings.Gnutella2.ClientMode > MODE_HUB ) Settings.Gnutella2.ClientMode = MODE_AUTO;
-	
-	if ( Settings.Gnutella2.ClientMode == MODE_HUB )
-	{	// Enforce some minimum values for G2 hubs
-		Settings.Gnutella2.NumLeafs		= max( Settings.Gnutella2.NumLeafs, 50u );
-		Settings.Gnutella2.NumPeers		= max( Settings.Gnutella2.NumPeers, 4u );
-	}
+
+	Settings.Normalize( &Settings.Gnutella1.NumHubs );
+	Settings.Normalize( &Settings.Gnutella1.NumLeafs );
+	Settings.Normalize( &Settings.Gnutella1.NumPeers );
+	Settings.Normalize( &Settings.Gnutella2.NumHubs );
+	Settings.Normalize( &Settings.Gnutella2.NumLeafs );
+	Settings.Normalize( &Settings.Gnutella2.NumPeers );
 
 	// Update display in case settings were changed
+	m_nG1Hubs			= Settings.Gnutella1.NumHubs;
+	m_nG1Leafs			= Settings.Gnutella1.NumLeafs;
+	m_nG1Peers			= Settings.Gnutella1.NumPeers;
+	m_nG2Hubs			= Settings.Gnutella2.NumHubs;
+	m_nG2Leafs			= Settings.Gnutella2.NumLeafs;
+	m_nG2Peers			= Settings.Gnutella2.NumPeers;
 	UpdateData( FALSE );
 
 	CSettingsPage::OnOK();

@@ -1,7 +1,7 @@
 //
 // Settings.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -562,7 +562,7 @@ public:
 	class Item
 	{
 	public:
-		inline Item(const LPCTSTR szSection, const LPCTSTR szName, bool* const pBool, const bool bDefault) throw() :
+		inline Item(const LPCTSTR szSection, const LPCTSTR szName, bool* const pBool, const bool bDefault, const bool bHidden) throw() :
 			m_szSection( szSection ),
 			m_szName( szName ),
 			m_pBool( pBool ),
@@ -577,10 +577,12 @@ public:
 			m_nScale( 1 ),
 			m_nMin( 0 ),
 			m_nMax( 1 ),
-			m_szSuffix( NULL )
+			m_szSuffix( NULL ),
+			m_bHidden( bHidden )
 		{
 		}
-		inline Item(const LPCTSTR szSection, const LPCTSTR szName, DWORD* const pDword, const DWORD nDefault, const DWORD nScale, const DWORD nMin, const DWORD nMax, const LPCTSTR szSuffix) throw() :
+
+		inline Item(const LPCTSTR szSection, const LPCTSTR szName, DWORD* const pDword, const DWORD nDefault, const DWORD nScale, const DWORD nMin, const DWORD nMax, const LPCTSTR szSuffix, const bool bHidden) throw() :
 			m_szSection( szSection ),
 			m_szName( szName ),
 			m_pBool( NULL ),
@@ -595,10 +597,12 @@ public:
 			m_nScale( nScale ),
 			m_nMin( nMin ),
 			m_nMax( nMax ),
-			m_szSuffix( szSuffix )
+			m_szSuffix( szSuffix ),
+			m_bHidden( bHidden )
 		{
 		}
-		inline Item(const LPCTSTR szSection, const LPCTSTR szName, DOUBLE* const pFloat, const DOUBLE dDefault) throw() :
+
+		inline Item(const LPCTSTR szSection, const LPCTSTR szName, DOUBLE* const pFloat, const DOUBLE dDefault, const bool bHidden) throw() :
 			m_szSection( szSection ),
 			m_szName( szName ),
 			m_pBool( NULL ),
@@ -613,10 +617,12 @@ public:
 			m_nScale( 0 ),
 			m_nMin( 0 ),
 			m_nMax( 0 ),
-			m_szSuffix( NULL )
+			m_szSuffix( NULL ),
+			m_bHidden( bHidden )
 		{
 		}
-		inline Item(const LPCTSTR szSection, const LPCTSTR szName, CString* const pString, const LPCTSTR szDefault) throw() :
+
+		inline Item(const LPCTSTR szSection, const LPCTSTR szName, CString* const pString, const LPCTSTR szDefault, const bool bHidden) throw() :
 			m_szSection( szSection ),
 			m_szName( szName ),
 			m_pBool( NULL ),
@@ -631,10 +637,12 @@ public:
 			m_nScale( 0 ),
 			m_nMin( 0 ),
 			m_nMax( 0 ),
-			m_szSuffix( NULL )
+			m_szSuffix( NULL ),
+			m_bHidden( bHidden )
 		{
 		}
-		inline Item(const LPCTSTR szSection, const LPCTSTR szName, string_set* const pSet, const LPCTSTR szDefault) throw() :
+
+		inline Item(const LPCTSTR szSection, const LPCTSTR szName, string_set* const pSet, const LPCTSTR szDefault, const bool bHidden) throw() :
 			m_szSection( szSection ),
 			m_szName( szName ),
 			m_pBool( NULL ),
@@ -649,12 +657,21 @@ public:
 			m_nScale( 0 ),
 			m_nMin( 0 ),
 			m_nMax( 0 ),
-			m_szSuffix( NULL )
+			m_szSuffix( NULL ),
+			m_bHidden( bHidden )
 		{
+		}
+
+		inline bool operator==(LPVOID p) const
+		{
+			return ( m_pBool == p || m_pDword == p || m_pFloat == p ||
+				m_pString == p || m_pSet == p );
 		}
 
 		void	Load();
 		void	Save() const;
+		void	Normalize();
+		void	SetRange(CSpinButtonCtrl& pCtrl) const;
 
 		const LPCTSTR		m_szSection;
 		const LPCTSTR		m_szName;
@@ -674,6 +691,8 @@ public:
 		const DWORD			m_nMin;
 		const DWORD			m_nMax;
 		const LPCTSTR		m_szSuffix;
+		
+		const bool			m_bHidden;
 	};
 
 protected:
@@ -691,6 +710,8 @@ public:
 	{
 		return m_pItems.GetNext( rPosition );
 	}
+	void	Normalize(LPVOID pSetting);
+	void	SetRange(LPVOID pSetting, CSpinButtonCtrl& pCtrl) const;
 
 	BOOL	LoadWindow(LPCTSTR pszName, CWnd* pWindow);
 	void	SaveWindow(LPCTSTR pszName, CWnd* pWindow);
@@ -707,29 +728,29 @@ public:
 	void	OnChangeConnectionSpeed();
 
 protected:
-	inline void Add(const LPCTSTR szSection, const LPCTSTR szName, bool* const pBool, const bool bDefault) throw()
+	inline void Add(const LPCTSTR szSection, const LPCTSTR szName, bool* const pBool, const bool bDefault, const bool bHidden = false) throw()
 	{
-		m_pItems.AddTail( new Item( szSection, szName, pBool, bDefault ) );
+		m_pItems.AddTail( new Item( szSection, szName, pBool, bDefault, bHidden ) );
 	}
 
-	inline void Add(const LPCTSTR szSection, const LPCTSTR szName, DWORD* const pDword, const DWORD nDefault, DWORD nScale = 0, DWORD nMin = 0, DWORD nMax = 0, LPCTSTR szSuffix = NULL) throw()
+	inline void Add(const LPCTSTR szSection, const LPCTSTR szName, DWORD* const pDword, const DWORD nDefault, DWORD nScale = 0, DWORD nMin = 0, DWORD nMax = 0, LPCTSTR szSuffix = NULL, const bool bHidden = false) throw()
 	{
-		m_pItems.AddTail( new Item( szSection, szName, pDword, nDefault, nScale, nMin, nMax, szSuffix ) );
+		m_pItems.AddTail( new Item( szSection, szName, pDword, nDefault, nScale, nMin, nMax, szSuffix, bHidden ) );
 	}
 
-	inline void Add(const LPCTSTR szSection, const LPCTSTR szName, DOUBLE* const pDouble, const DOUBLE dDefault) throw()
+	inline void Add(const LPCTSTR szSection, const LPCTSTR szName, DOUBLE* const pDouble, const DOUBLE dDefault, const bool bHidden = false) throw()
 	{
-		m_pItems.AddTail( new Item( szSection, szName, pDouble, dDefault ) );
+		m_pItems.AddTail( new Item( szSection, szName, pDouble, dDefault, bHidden ) );
 	}
 
-	inline void Add(const LPCTSTR szSection, const LPCTSTR szName, CString* const pString, const LPCTSTR szDefault) throw()
+	inline void Add(const LPCTSTR szSection, const LPCTSTR szName, CString* const pString, const LPCTSTR szDefault, const bool bHidden = false) throw()
 	{
-		m_pItems.AddTail( new Item( szSection, szName, pString, szDefault ) );
+		m_pItems.AddTail( new Item( szSection, szName, pString, szDefault, bHidden ) );
 	}
 
-	inline void Add(const LPCTSTR szSection, const LPCTSTR szName, string_set* const pSet, const LPCTSTR szDefault) throw()
+	inline void Add(const LPCTSTR szSection, const LPCTSTR szName, string_set* const pSet, const LPCTSTR szDefault, const bool bHidden = false) throw()
 	{
-		m_pItems.AddTail( new Item( szSection, szName, pSet, szDefault ) );
+		m_pItems.AddTail( new Item( szSection, szName, pSet, szDefault, bHidden ) );
 	}
 
 	void	SmartUpgrade();

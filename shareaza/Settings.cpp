@@ -1,7 +1,7 @@
 //
 // Settings.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -65,7 +65,7 @@ CSettings::CSettings()
 	Add( _T(""), _T("DiskSpaceStop"), &General.DiskSpaceStop, 25, 1, 0, 1000 , _T(" M") );
 	Add( _T(""), _T("DiskSpaceWarning"), &General.DiskSpaceWarning, 500, 1, 5, 2000 , _T(" M") );
 	Add( _T(""), _T("HashIntegrity"), &General.HashIntegrity, true );
-	Add( _T(""), _T("ItWasLimited"), &General.ItWasLimited, false );
+	Add( _T(""), _T("ItWasLimited"), &General.ItWasLimited, false, true );
 	Add( _T(""), _T("MaxDebugLogSize"), &General.MaxDebugLogSize, 10*1024*1024, 1024*1024, 0, 100, _T(" MB") );
 	Add( _T(""), _T("MinTransfersRest"), &General.MinTransfersRest, 15, 1, 1, 100, _T(" ms") );
 	Add( _T(""), _T("MultiUser"), &General.MultiUser, false );
@@ -646,6 +646,32 @@ void CSettings::Save(BOOL bShutdown)
 	{
 		Item* pItem = m_pItems.GetNext( pos );
 		pItem->Save();
+	}
+}
+
+void CSettings::Normalize(LPVOID pSetting)
+{
+	for ( POSITION pos = m_pItems.GetHeadPosition() ; pos ; )
+	{
+		Item* pItem = m_pItems.GetNext( pos );
+		if ( *pItem == pSetting )
+		{
+			pItem->Normalize();
+			break;
+		}
+	}
+}
+
+void CSettings::SetRange(LPVOID pSetting, CSpinButtonCtrl& pCtrl) const
+{
+	for ( POSITION pos = m_pItems.GetHeadPosition() ; pos ; )
+	{
+		Item* pItem = m_pItems.GetNext( pos );
+		if ( *pItem == pSetting )
+		{
+			pItem->SetRange( pCtrl );
+			break;
+		}
 	}
 }
 
@@ -1583,4 +1609,24 @@ CString CSettings::SaveSet(const string_set* pSet)
 		tmp += _T('|');
 	}
 	return tmp;
+}
+
+void CSettings::Item::Normalize()
+{
+	if ( m_pDword && m_nScale && m_nMin < m_nMax )
+	{
+		*m_pDword = max( min( *m_pDword, m_nMax * m_nScale ), m_nMin * m_nScale );
+	}
+}
+
+void CSettings::Item::SetRange(CSpinButtonCtrl& pCtrl) const
+{
+	if ( m_pBool )
+	{
+		pCtrl.SetRange32( 0, 1 );
+	}
+	else if ( m_pDword )
+	{
+		pCtrl.SetRange32( m_nMin, m_nMax );
+	}
 }
