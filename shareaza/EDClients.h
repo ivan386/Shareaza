@@ -1,7 +1,7 @@
 //
 // EDClients.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -19,13 +19,11 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_EDCLIENTS_H__CAA5D657_A66D_4F1E_97E7_64279D0B821D__INCLUDED_)
-#define AFX_EDCLIENTS_H__CAA5D657_A66D_4F1E_97E7_64279D0B821D__INCLUDED_
-
 #pragma once
 
+#include "EDClient.h"
+
 class CConnection;
-class CEDClient;
 class CEDPacket;
 
 
@@ -47,42 +45,30 @@ protected:
 	in_addr			m_pLastServer;
 	DWORD			m_nLastServerKey;
 	BOOL			m_bAllServersDone;
+	mutable CCriticalSection	m_pSection;
 
 // Operations
-protected:
+public:
 	void			Add(CEDClient* pClient);
 	void			Remove(CEDClient* pClient);
-public:
 	void			Clear();
 	BOOL			PushTo(DWORD nClientID, WORD nClientPort);
+	CEDClient*		GetByIP(IN_ADDR* pAddress) const;
 	CEDClient*		Connect(DWORD nClientID, WORD nClientPort, IN_ADDR* pServerAddress, WORD nServerPort, const Hashes::Guid& oGUID);
-	CEDClient*		GetByIP(IN_ADDR* pAddress);
-	CEDClient*		GetByID(DWORD nClientID, IN_ADDR* pServer, const Hashes::Guid& oGUID);
-	CEDClient*		GetByGUID(const Hashes::Guid& oGUID);
 	BOOL			Merge(CEDClient* pClient);
-	BOOL			IsFull(CEDClient* pCheckThis = NULL);
-	BOOL			IsOverloaded();
-public:
 	void			OnRun();
 	BOOL			OnAccept(CConnection* pConnection);
 	BOOL			OnUDP(SOCKADDR_IN* pHost, CEDPacket* pPacket);
-private:
+	BOOL			IsFull(const CEDClient* pCheckThis = NULL);
+	BOOL			IsOverloaded() const;
+	BOOL			IsMyDownload(const CDownloadTransferED2K* pDownload) const;
+
+protected:
+	CEDClient*		GetByID(DWORD nClientID, IN_ADDR* pServer, const Hashes::Guid& oGUID) const;
+	CEDClient*		GetByGUID(const Hashes::Guid& oGUID) const;
 	void			OnServerStatus(SOCKADDR_IN* pHost, CEDPacket* pPacket);
 	void			RequestServerStatus(IN_ADDR* pHost, WORD nPort);
 	void			RunGlobalStatsRequests(DWORD tNow);
-
-public:
-
-	inline CEDClient* GetFirst() const
-	{
-		return m_pFirst;
-	}
-
-	friend class CEDClient;
 };
 
-
 extern CEDClients EDClients;
-
-
-#endif // !defined(AFX_EDCLIENTS_H__CAA5D657_A66D_4F1E_97E7_64279D0B821D__INCLUDED_)

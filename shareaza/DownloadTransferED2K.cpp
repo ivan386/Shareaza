@@ -1,7 +1,7 @@
 //
 // DownloadTransferED2K.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -74,14 +74,8 @@ CDownloadTransferED2K::~CDownloadTransferED2K()
 	
 	if ( m_pAvailable != NULL ) delete [] m_pAvailable;
 	
-#ifdef _DEBUG
 	ASSERT( m_pClient == NULL );
-	
-	for ( CEDClient* pClient = EDClients.GetFirst() ; pClient ; pClient = pClient->m_pEdNext )
-	{
-		ASSERT( pClient->m_pDownload != this );
-	}
-#endif
+	ASSERT( ! EDClients.IsMyDownload( this ) );
 }
 
 //////////////////////////////////////////////////////////////////////

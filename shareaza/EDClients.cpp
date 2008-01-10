@@ -1,7 +1,7 @@
 //
 // EDClients.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -71,6 +71,8 @@ CEDClients::~CEDClients()
 
 void CEDClients::Add(CEDClient* pClient)
 {
+	CQuickLock oLock( m_pSection );
+
 	ASSERT( pClient->m_pEdPrev == NULL );
 	ASSERT( pClient->m_pEdNext == NULL );
 	
@@ -92,6 +94,8 @@ void CEDClients::Add(CEDClient* pClient)
 
 void CEDClients::Remove(CEDClient* pClient)
 {
+	CQuickLock oLock( m_pSection );
+
 	ASSERT( m_nCount > 0 );
 	
 	if ( pClient->m_pEdPrev != NULL )
@@ -112,6 +116,8 @@ void CEDClients::Remove(CEDClient* pClient)
 
 void CEDClients::Clear()
 {
+	CQuickLock oLock( m_pSection );
+
 	for ( CEDClient* pClient = m_pFirst ; pClient ; )
 	{
 		CEDClient* pNext = pClient->m_pEdNext;
@@ -139,40 +145,47 @@ BOOL CEDClients::PushTo(DWORD nClientID, WORD nClientPort)
 
 CEDClient* CEDClients::Connect(DWORD nClientID, WORD nClientPort, IN_ADDR* pServerAddress, WORD nServerPort, const Hashes::Guid& oGUID)
 {
-	if ( oGUID )
-	{
-		if ( CEDClient* pClient = GetByGUID( oGUID ) ) return pClient;
-	}
-	
-	if ( IsFull() ) return NULL;
-	
 	CEDClient* pClient = NULL;
-	
-	if ( CEDPacket::IsLowID( nClientID ) )
+
 	{
-		if ( pServerAddress == NULL || nServerPort == 0 ) return NULL;
-		pClient = GetByID( nClientID, pServerAddress, oGUID );
+		CQuickLock oLock( m_pSection );
+
+		if ( oGUID )
+		{
+			pClient = GetByGUID( oGUID );
+			if ( pClient ) return pClient;
+		}
+
+		if ( IsFull() ) return NULL;
+
+		if ( CEDPacket::IsLowID( nClientID ) )
+		{
+			if ( pServerAddress == NULL || nServerPort == 0 ) return NULL;
+			pClient = GetByID( nClientID, pServerAddress, oGUID );
+		}
+		else
+		{
+			if ( Security.IsDenied( (IN_ADDR*)&nClientID ) ) return NULL;
+			pClient = GetByID( nClientID, NULL, oGUID );
+		}
 	}
-	else
-	{
-		if ( Security.IsDenied( (IN_ADDR*)&nClientID ) ) return NULL;
-		pClient = GetByID( nClientID, NULL, oGUID );
-	}
-	
+
 	if ( pClient == NULL )
 	{
 		pClient = new CEDClient();
 		pClient->ConnectTo( nClientID, nClientPort, pServerAddress, nServerPort, oGUID );
 	}
-	
+
 	return pClient;
 }
 
 //////////////////////////////////////////////////////////////////////
 // CEDClients find by client ID and/or GUID
 
-CEDClient* CEDClients::GetByIP(IN_ADDR* pAddress)
+CEDClient* CEDClients::GetByIP(IN_ADDR* pAddress) const
 {
+	CQuickLock oLock( m_pSection );
+
 	for ( CEDClient* pClient = m_pFirst ; pClient ; pClient = pClient->m_pEdNext )
 	{
 		if ( pClient->m_pHost.sin_addr.S_un.S_addr == pAddress->S_un.S_addr )
@@ -182,7 +195,7 @@ CEDClient* CEDClients::GetByIP(IN_ADDR* pAddress)
 	return NULL;
 }
 
-CEDClient* CEDClients::GetByID(DWORD nClientID, IN_ADDR* pServer, const Hashes::Guid& oGUID)
+CEDClient* CEDClients::GetByID(DWORD nClientID, IN_ADDR* pServer, const Hashes::Guid& oGUID) const
 {
 	for ( CEDClient* pClient = m_pFirst ; pClient ; pClient = pClient->m_pEdNext )
 	{
@@ -197,7 +210,7 @@ CEDClient* CEDClients::GetByID(DWORD nClientID, IN_ADDR* pServer, const Hashes::
 	return NULL;
 }
 
-CEDClient* CEDClients::GetByGUID(const Hashes::Guid& oGUID)
+CEDClient* CEDClients::GetByGUID(const Hashes::Guid& oGUID) const
 {
 	for ( CEDClient* pClient = m_pFirst ; pClient ; pClient = pClient->m_pEdNext )
 	{
@@ -212,6 +225,8 @@ CEDClient* CEDClients::GetByGUID(const Hashes::Guid& oGUID)
 
 BOOL CEDClients::Merge(CEDClient* pClient)
 {
+	CQuickLock oLock( m_pSection );
+
 	ASSERT( pClient != NULL );
 
 	for ( CEDClient* pOther = m_pFirst ; pOther ; pOther = pOther->m_pEdNext )
@@ -230,8 +245,10 @@ BOOL CEDClients::Merge(CEDClient* pClient)
 //////////////////////////////////////////////////////////////////////
 // CEDClients full test
 
-BOOL CEDClients::IsFull(CEDClient* pCheckThis)
+BOOL CEDClients::IsFull(const CEDClient* pCheckThis)
 {
+	CQuickLock oLock( m_pSection );
+
 	DWORD nCount = 0;
 	DWORD tNow = GetTickCount();
 
@@ -253,31 +270,12 @@ BOOL CEDClients::IsFull(CEDClient* pCheckThis)
 
 	// We're too full to start new connections
 	return TRUE;
-
-
-/*
-	if ( pCheckThis != NULL )
-	{
-		for ( CEDClient* pClient = m_pFirst ; pClient ; pClient = pClient->m_pEdNext )
-		{
-			if ( pClient->m_hSocket != INVALID_SOCKET ) nCount++;
-			if ( pClient == pCheckThis ) pCheckThis = NULL;
-		}
-	}
-	else
-	{
-		for ( CEDClient* pClient = m_pFirst ; pClient ; pClient = pClient->m_pEdNext )
-		{
-			if ( pClient->m_hSocket != INVALID_SOCKET ) nCount++;
-		}
-	}
-	
-	ASSERT( pCheckThis == NULL );
-	return ( nCount >= Settings.eDonkey.MaxLinks ) || ( pCheckThis != NULL );*/
 }
 
-BOOL CEDClients::IsOverloaded()
+BOOL CEDClients::IsOverloaded() const
 {
+	CQuickLock oLock( m_pSection );
+
 	DWORD nCount = 0;
 
 	for ( CEDClient* pClient = m_pFirst ; pClient ; pClient = pClient->m_pEdNext )
@@ -288,18 +286,30 @@ BOOL CEDClients::IsOverloaded()
 	return ( nCount >= ( Settings.eDonkey.MaxLinks + 25 ) );
 }
 
+BOOL CEDClients::IsMyDownload(const CDownloadTransferED2K* pDownload) const
+{
+	CQuickLock oLock( m_pSection );
+
+	for ( CEDClient* pClient = m_pFirst ; pClient ; pClient = pClient->m_pEdNext )
+	{
+		if( pClient->m_pDownload == pDownload )
+			return TRUE;
+	}
+	return FALSE;
+}
 
 //////////////////////////////////////////////////////////////////////
 // CEDClients run
 
 void CEDClients::OnRun()
 {
-
 	// Delay to limit the rate of ed2k packets being sent.
 	// keep ed2k transfers under 10 KB/s per source
 	DWORD tNow = GetTickCount();
 	if ( tNow - m_tLastRun < Settings.eDonkey.PacketThrottle ) return;
 	m_tLastRun = tNow;
+
+	CQuickLock oLock( m_pSection );
 
 	if ( Settings.eDonkey.ServerWalk && Network.IsConnected() && Settings.eDonkey.EnableToday )
 	{
@@ -327,9 +337,16 @@ BOOL CEDClients::OnAccept(CConnection* pConnection)
 			(LPCTSTR)pConnection->m_sAddress );
 		return FALSE;
 	}
-	
+
 	CSingleLock pLock( &Transfers.m_pSection );
-	if ( ! pLock.Lock( 250 ) ) return FALSE;
+	if ( ! pLock.Lock( 250 ) )
+	{
+		theApp.Message( MSG_DEBUG, _T("Rejecting ed2k connection from %s, network core overloaded."),
+			(LPCTSTR)pConnection->m_sAddress );
+		return FALSE;
+	}
+
+	CQuickLock oLock( m_pSection );
 
 	if ( IsFull() )
 	{
@@ -344,10 +361,9 @@ BOOL CEDClients::OnAccept(CConnection* pConnection)
 		{
 			theApp.Message( MSG_DEBUG, _T("Accepting ed2k connection from %s despite client connection limit."),
 				(LPCTSTR)pConnection->m_sAddress );
-
 		}
 	}
-	
+
 	CEDClient* pClient = new CEDClient();
 	pClient->AttachTo( pConnection );
 	
@@ -367,11 +383,18 @@ BOOL CEDClients::OnUDP(SOCKADDR_IN* pHost, CEDPacket* pPacket)
 	pPacket->SmartDump( pHost, TRUE, FALSE );
 
 	CSingleLock pLock( &Transfers.m_pSection );
-	
+	if ( ! pLock.Lock( 250 ) )
+	{
+		theApp.Message( MSG_DEBUG, _T("Rejecting ed2k UDP from %s, network core overloaded."),
+			(LPCTSTR)CString( inet_ntoa( (IN_ADDR&)pHost->sin_addr ) ) );
+		return FALSE;
+	}
+
+	CQuickLock oLock( m_pSection );
+
 	switch ( pPacket->m_nType )
 	{
 	case ED2K_C2C_UDP_REASKFILEPING:
-		if ( ! pLock.Lock( 100 ) ) return FALSE;
 		if ( CEDClient* pClient = GetByIP( &pHost->sin_addr ) )
 		{
 			pClient->m_nUDP = ntohs( pHost->sin_port );
@@ -387,7 +410,6 @@ BOOL CEDClients::OnUDP(SOCKADDR_IN* pHost, CEDPacket* pPacket)
 		}
 		break;
 	case ED2K_C2C_UDP_REASKACK:
-		if ( ! pLock.Lock( 100 ) ) return FALSE;
 		if ( CEDClient* pClient = GetByIP( &pHost->sin_addr ) )
 		{
 			pClient->m_nUDP = ntohs( pHost->sin_port );
@@ -395,7 +417,6 @@ BOOL CEDClients::OnUDP(SOCKADDR_IN* pHost, CEDPacket* pPacket)
 		}
 		break;
 	case ED2K_C2C_UDP_QUEUEFULL:
-		if ( ! pLock.Lock( 100 ) ) return FALSE;
 		if ( CEDClient* pClient = GetByIP( &pHost->sin_addr ) )
 		{
 			pClient->m_nUDP = ntohs( pHost->sin_port );
@@ -403,7 +424,6 @@ BOOL CEDClients::OnUDP(SOCKADDR_IN* pHost, CEDPacket* pPacket)
 		}
 		break;
 	case ED2K_C2C_UDP_FILENOTFOUND:
-		if ( ! pLock.Lock( 100 ) ) return FALSE;
 		if ( CEDClient* pClient = GetByIP( &pHost->sin_addr ) )
 		{
 			pClient->m_nUDP = ntohs( pHost->sin_port );
