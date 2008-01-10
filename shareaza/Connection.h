@@ -1,7 +1,7 @@
 //
 // Connection.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -170,12 +170,12 @@ public:
 		m_pOutput->Add( pData, nLength );
 	}
 
-	inline void Write(const CString& strData) throw()
+	inline void Write(/*const*/ CString& strData, const UINT nCodePage = CP_ACP) throw()
 	{
 		CQuickLock oOutputLock( *m_pOutputSection );
 
 		ASSERT( m_pOutput );
-		m_pOutput->Print( strData );
+		m_pOutput->Print( strData, nCodePage );
 	}
 
 	inline DWORD Write(CBuffer* pBuffer) throw()
