@@ -1,7 +1,7 @@
 //
 // IEProtocol.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -38,14 +38,26 @@ static char THIS_FILE[]=__FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // System
 
-IMPLEMENT_DYNAMIC(CIEProtocol, CCmdTarget)
-IMPLEMENT_DYNAMIC(CIEProtocolRequest, CCmdTarget)
+IMPLEMENT_DYNCREATE(CIEProtocol, CComObject)
 
-BEGIN_INTERFACE_MAP(CIEProtocol, CCmdTarget)
+IMPLEMENT_DYNCREATE(CIEProtocolRequest, CComObject)
+
+// {18D11ED9-1264-48A1-9E14-20F2C633242B}
+IMPLEMENT_OLECREATE_FLAGS(CIEProtocol, "Shareaza.IEProtocol",
+	afxRegFreeThreading|afxRegApartmentThreading,
+	0x18d11ed9, 0x1264, 0x48a1, 0x9e, 0x14, 0x20, 0xf2, 0xc6, 0x33, 0x24, 0x2b);
+
+// {E1A67AE5-7041-4AE1-94F7-DE03EF759E27}
+IMPLEMENT_OLECREATE_FLAGS(CIEProtocolRequest, "Shareaza.IEProtocolRequest",
+	afxRegFreeThreading|afxRegApartmentThreading,
+	0xe1a67ae5, 0x7041, 0x4ae1, 0x94, 0xf7, 0xde, 0x03, 0xef, 0x75, 0x9e, 0x27);
+
+BEGIN_INTERFACE_MAP(CIEProtocol, CComObject)
 	INTERFACE_PART(CIEProtocol, IID_IClassFactory, ClassFactory)
 END_INTERFACE_MAP()
 
-BEGIN_INTERFACE_MAP(CIEProtocolRequest, CCmdTarget)
+BEGIN_INTERFACE_MAP(CIEProtocolRequest, CComObject)
+	INTERFACE_PART(CIEProtocolRequest, IID_IInternet, InternetProtocol)
 	INTERFACE_PART(CIEProtocolRequest, IID_IInternetProtocol, InternetProtocol)
 	INTERFACE_PART(CIEProtocolRequest, IID_IInternetProtocolRoot, InternetProtocol)
 	INTERFACE_PART(CIEProtocolRequest, IID_IInternetProtocolInfo, InternetProtocolInfo)
@@ -54,7 +66,6 @@ END_INTERFACE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // Global Instance
 
-CLSID	CIEProtocol::clsidProtocol	= { 0x18d11ed9, 0x1264, 0x48a1, { 0x9e, 0x14, 0x20, 0xf2, 0xc6, 0x33, 0x24, 0x2b } };
 LPCWSTR	CIEProtocol::pszProtocols[]	= { L"p2p-col", L"telnet", NULL };
 
 CIEProtocol IEProtocol;
@@ -63,12 +74,9 @@ CIEProtocol IEProtocol;
 /////////////////////////////////////////////////////////////////////////////
 // CIEProtocol construction
 
-CIEProtocol::CIEProtocol()
+CIEProtocol::CIEProtocol() :
+	m_pCollZIP( NULL )
 {
-	m_pShutdown = NULL;
-	m_nRequests = 0;
-
-	m_pCollZIP	= NULL;
 }
 
 CIEProtocol::~CIEProtocol()
@@ -91,7 +99,7 @@ BOOL CIEProtocol::Create()
 
 	for ( int nProtocol = 0 ; pszProtocols[ nProtocol ] != NULL ; nProtocol++ )
 	{
-		if ( FAILED( pSession->RegisterNameSpace( &m_xClassFactory, clsidProtocol,
+		if ( FAILED( pSession->RegisterNameSpace( &m_xClassFactory, CLSID_IEProtocol,
 			 pszProtocols[ nProtocol ], 0, NULL, 0 ) ) ) return FALSE;
 	}
 
@@ -104,59 +112,16 @@ void CIEProtocol::Close()
 {
 	CSingleLock pLock( &m_pSection, TRUE );
 
-	if ( m_nRequests > 0 )
-	{
-		m_pShutdown = new CEvent();
-
-		pLock.Unlock();
-		WaitForSingleObject( *m_pShutdown, 5000 );
-		pLock.Lock();
-
-		delete m_pShutdown;
-		m_pShutdown = NULL;
-
-		ASSERT( m_nRequests == 0 );
-		m_nRequests = 0;
-	}
-
 	if ( m_pSession )
 	{
 		for ( int nProtocol = 0 ; pszProtocols[ nProtocol ] != NULL ; nProtocol++ )
 		{
 			m_pSession->UnregisterNameSpace( &m_xClassFactory, pszProtocols[ nProtocol ] );
 		}
-
-		m_pSession = NULL;
+		m_pSession.Release();
 	}
 	
     SetCollection( Hashes::Sha1Hash(), NULL );
-}
-
-/////////////////////////////////////////////////////////////////////////////
-// CIEProtocol request management
-
-CIEProtocolRequest* CIEProtocol::CreateRequest()
-{
-	CSingleLock pLock( &m_pSection, TRUE );
-	return new CIEProtocolRequest( this );
-}
-
-void CIEProtocol::OnRequestConstruct(CIEProtocolRequest* /*pRequest*/)
-{
-	CSingleLock pLock( &m_pSection, TRUE );
-	m_nRequests ++;
-}
-
-void CIEProtocol::OnRequestDestruct(CIEProtocolRequest* /*pRequest*/)
-{
-	CSingleLock pLock( &m_pSection, TRUE );
-
-	ASSERT( m_nRequests > 0 );
-
-	if ( --m_nRequests == 0 )
-	{
-		if ( m_pShutdown != NULL ) m_pShutdown->SetEvent();
-	}
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -168,9 +133,10 @@ STDMETHODIMP CIEProtocol::XClassFactory::CreateInstance(IUnknown* pUnkOuter, REF
 {
 	METHOD_PROLOGUE(CIEProtocol, ClassFactory)
 
-	if ( pUnkOuter != NULL ) return CLASS_E_NOAGGREGATION;
+	if ( pUnkOuter != NULL )
+		return CLASS_E_NOAGGREGATION;
 
-	CIEProtocolRequest* pRequest = pThis->CreateRequest();
+	CIEProtocolRequest* pRequest = new CIEProtocolRequest();
 	HRESULT hr = pRequest->ExternalQueryInterface( &riid, ppvObject );
 	pRequest->ExternalRelease();
 
@@ -193,23 +159,12 @@ STDMETHODIMP CIEProtocol::XClassFactory::LockServer(BOOL fLock)
 /////////////////////////////////////////////////////////////////////////////
 // CIEProtocolRequest construction
 
-CIEProtocolRequest::CIEProtocolRequest(CIEProtocol* pProtocol)
+CIEProtocolRequest::CIEProtocolRequest()
 {
-	ASSERT( pProtocol != NULL );
-
-	m_pProtocol	= pProtocol;
-	m_pBuffer	= new CBuffer();
-
-	m_pProtocol->OnRequestConstruct( this );
 }
 
 CIEProtocolRequest::~CIEProtocolRequest()
 {
-	ASSERT( m_pSink == NULL );
-
-	m_pProtocol->OnRequestDestruct( this );
-
-	delete m_pBuffer;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -217,33 +172,40 @@ CIEProtocolRequest::~CIEProtocolRequest()
 
 HRESULT CIEProtocolRequest::OnStart(LPCTSTR pszURL, IInternetProtocolSink* pSink, IInternetBindInfo* /*pBindInfo*/, DWORD dwFlags)
 {
-	CSingleLock pLock( &m_pSection, TRUE );
-	CString strMimeType;
+	HRESULT hr = IEProtocol.OnRequest( pszURL, &m_oBuffer, &m_strMimeType,
+		( dwFlags & PI_PARSE_URL ) != 0 );
 
-	if ( m_pSink ) return E_UNEXPECTED;
-
-	HRESULT hr = m_pProtocol->OnRequest( pszURL, m_pBuffer, &strMimeType,
-					( dwFlags & PI_PARSE_URL ) != 0 );
-
-	if ( ( dwFlags & PI_PARSE_URL ) || ( hr == INET_E_INVALID_URL ) ) return hr;
+	if ( ( dwFlags & PI_PARSE_URL ) || ( hr == INET_E_INVALID_URL ) )
+	{
+		return hr;
+	}
 
 	m_pSink = pSink;
 
-	if ( SUCCEEDED(hr) )
+	if ( SUCCEEDED( hr ) )
 	{
-		if ( strMimeType.GetLength() > 0 )
+		hr = m_pSink->ReportData( BSCF_FIRSTDATANOTIFICATION,
+			0, m_oBuffer.m_nLength );
+		ASSERT( SUCCEEDED( hr ) );
+
+		if ( m_strMimeType.GetLength() > 0 )
 		{
-			BSTR bsMimeType = strMimeType.AllocSysString();
-			m_pSink->ReportProgress( BINDSTATUS_MIMETYPEAVAILABLE, bsMimeType );
-			SysFreeString( bsMimeType );
+			hr = m_pSink->ReportProgress( BINDSTATUS_MIMETYPEAVAILABLE,
+				CComBSTR( m_strMimeType ) );
+			ASSERT( SUCCEEDED( hr ) );
 		}
 
-		m_pSink->ReportData( BSCF_LASTDATANOTIFICATION, m_pBuffer->m_nLength, m_pBuffer->m_nLength );
-		m_pSink->ReportResult( S_OK, 200, L"OK" );
+		hr = m_pSink->ReportData( BSCF_LASTDATANOTIFICATION,
+			m_oBuffer.m_nLength, m_oBuffer.m_nLength );
+		ASSERT( SUCCEEDED( hr ) );
+
+		hr = m_pSink->ReportResult( S_OK, 200, NULL );
+		ASSERT( SUCCEEDED( hr ) );
 	}
 	else
 	{
-		m_pSink->ReportResult( INET_E_OBJECT_NOT_FOUND, 404, L"OK" );
+		hr = m_pSink->ReportResult( INET_E_OBJECT_NOT_FOUND, 404, NULL );
+		ASSERT( SUCCEEDED( hr ) );
 	}
 
 	return hr;
@@ -251,32 +213,16 @@ HRESULT CIEProtocolRequest::OnStart(LPCTSTR pszURL, IInternetProtocolSink* pSink
 
 HRESULT CIEProtocolRequest::OnRead(void* pv, ULONG cb, ULONG* pcbRead)
 {
-	CSingleLock pLock( &m_pSection, TRUE );
-
-	if ( m_pSink == NULL ) return E_UNEXPECTED;
-
-	cb = min( cb, m_pBuffer->m_nLength );
+	cb = min( cb, m_oBuffer.m_nLength );
 	if ( pcbRead != NULL ) *pcbRead = cb;
 
 	if ( cb > 0 )
 	{
-		CopyMemory( pv, m_pBuffer->m_pBuffer, cb );
-		m_pBuffer->Remove( cb );
+		CopyMemory( pv, m_oBuffer.m_pBuffer, cb );
+		m_oBuffer.Remove( cb );
 	}
 
-	return ( cb > 0 || m_pBuffer->m_nLength > 0 ) ? S_OK : S_FALSE;
-}
-
-HRESULT CIEProtocolRequest::OnTerminate()
-{
-	CSingleLock pLock( &m_pSection, TRUE );
-
-	if ( m_pSink == NULL ) return E_UNEXPECTED;
-
-	m_pSink = NULL;
-	m_pBuffer->Clear();
-
-	return S_OK;
+	return ( cb > 0 || m_oBuffer.m_nLength > 0 ) ? S_OK : S_FALSE;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -287,60 +233,71 @@ IMPLEMENT_UNKNOWN(CIEProtocolRequest, InternetProtocol)
 STDMETHODIMP CIEProtocolRequest::XInternetProtocol::Abort(HRESULT /*hrReason*/, DWORD /*dwOptions*/)
 {
 	METHOD_PROLOGUE(CIEProtocolRequest, InternetProtocol)
+	ASSERT_VALID( pThis );
 	return S_OK;
 }
 
 STDMETHODIMP CIEProtocolRequest::XInternetProtocol::Continue(PROTOCOLDATA* /*pProtocolData*/)
 {
 	METHOD_PROLOGUE(CIEProtocolRequest, InternetProtocol)
+	ASSERT_VALID( pThis );
 	return S_OK;
 }
 
 STDMETHODIMP CIEProtocolRequest::XInternetProtocol::Resume()
 {
 	METHOD_PROLOGUE(CIEProtocolRequest, InternetProtocol)
+	ASSERT_VALID( pThis );
 	return E_NOTIMPL;
 }
 
 STDMETHODIMP CIEProtocolRequest::XInternetProtocol::Start(LPCWSTR szUrl, IInternetProtocolSink *pOIProtSink, IInternetBindInfo *pOIBindInfo, DWORD grfPI, HANDLE_PTR /*dwReserved*/)
 {
 	METHOD_PROLOGUE(CIEProtocolRequest, InternetProtocol)
-	return pThis->OnStart( CString( szUrl ), pOIProtSink, pOIBindInfo, grfPI );
+	ASSERT_VALID( pThis );
+	return pThis->OnStart( CW2CT( szUrl ), pOIProtSink, pOIBindInfo, grfPI );
 }
 
 STDMETHODIMP CIEProtocolRequest::XInternetProtocol::Suspend()
 {
 	METHOD_PROLOGUE(CIEProtocolRequest, InternetProtocol)
+	ASSERT_VALID( pThis );
 	return E_NOTIMPL;
 }
 
 STDMETHODIMP CIEProtocolRequest::XInternetProtocol::Terminate(DWORD /*dwOptions*/)
 {
 	METHOD_PROLOGUE(CIEProtocolRequest, InternetProtocol)
-	return pThis->OnTerminate();
+	ASSERT_VALID( pThis );
+	return S_OK;
 }
 
 STDMETHODIMP CIEProtocolRequest::XInternetProtocol::LockRequest(DWORD /*dwOptions*/)
 {
 	METHOD_PROLOGUE(CIEProtocolRequest, InternetProtocol)
+	ASSERT_VALID( pThis );
 	return S_OK;
 }
 
 STDMETHODIMP CIEProtocolRequest::XInternetProtocol::Read(void *pv, ULONG cb, ULONG *pcbRead)
 {
 	METHOD_PROLOGUE(CIEProtocolRequest, InternetProtocol)
+	ASSERT_VALID( pThis );
 	return pThis->OnRead( pv, cb, pcbRead );
 }
 
 STDMETHODIMP CIEProtocolRequest::XInternetProtocol::Seek(LARGE_INTEGER /*dlibMove*/, DWORD /*dwOrigin*/, ULARGE_INTEGER* /*plibNewPosition*/)
 {
 	METHOD_PROLOGUE(CIEProtocolRequest, InternetProtocol)
+	ASSERT_VALID( pThis );
 	return E_FAIL;
 }
 
 STDMETHODIMP CIEProtocolRequest::XInternetProtocol::UnlockRequest()
 {
 	METHOD_PROLOGUE(CIEProtocolRequest, InternetProtocol)
+	ASSERT_VALID( pThis );
+	pThis->m_pSink = NULL;
 	return S_OK;
 }
 
@@ -361,32 +318,37 @@ STDMETHODIMP CIEProtocolRequest::XInternetProtocolInfo::CompareUrl(LPCWSTR /*pwz
 	return INET_E_DEFAULT_ACTION;
 }
 
-STDMETHODIMP CIEProtocolRequest::XInternetProtocolInfo::ParseUrl(LPCWSTR /*pwzUrl*/, PARSEACTION ParseAction, DWORD /*dwParseFlags*/, LPWSTR pwzResult, DWORD cchResult, DWORD *pcchResult, DWORD /*dwReserved*/)
+STDMETHODIMP CIEProtocolRequest::XInternetProtocolInfo::ParseUrl(LPCWSTR pwzUrl, PARSEACTION ParseAction, DWORD /*dwParseFlags*/, LPWSTR pwzResult, DWORD cchResult, DWORD *pcchResult, DWORD /*dwReserved*/)
 {
 	METHOD_PROLOGUE(CIEProtocolRequest, InternetProtocolInfo)
+	UNUSED_ALWAYS( pwzUrl );
+
+	// HACK: Security bypass
 	switch ( ParseAction )
 	{
 	case PARSE_SECURITY_URL:
-		// Substitute a known remote URL, to class this as an offsite/high-security zone
-		*pcchResult = static_cast< DWORD >( _tcslen( _T("http://p2p-col.shareaza.com/") ) + 1 );
-		if ( cchResult < *pcchResult ) return S_FALSE;
-		wcscpy( pwzResult, L"http://p2p-col.shareaza.com/" );
+	case PARSE_SECURITY_DOMAIN:
+		*pcchResult = lstrlen( _T(WEB_SITE) ) + 1;
+		if ( cchResult < *pcchResult || pwzResult == NULL ) return S_FALSE;
+		lstrcpy( pwzResult, _T(WEB_SITE) );
 		return S_OK;
 	default:
 		return INET_E_DEFAULT_ACTION;
 	}
 }
 
-STDMETHODIMP CIEProtocolRequest::XInternetProtocolInfo::QueryInfo(LPCWSTR /*pwzUrl*/, QUERYOPTION OueryOption, DWORD /*dwQueryFlags*/, LPVOID pBuffer, DWORD cbBuffer, DWORD *pcbBuf, DWORD /*dwReserved*/)
+STDMETHODIMP CIEProtocolRequest::XInternetProtocolInfo::QueryInfo(LPCWSTR pwzUrl, QUERYOPTION OueryOption, DWORD /*dwQueryFlags*/, LPVOID pBuffer, DWORD cbBuffer, DWORD *pcbBuf, DWORD /*dwReserved*/)
 {
 	METHOD_PROLOGUE(CIEProtocolRequest, InternetProtocolInfo)
+	UNUSED_ALWAYS( pwzUrl );
+
 	switch ( OueryOption )
 	{
 	case QUERY_USES_NETWORK:
 	case QUERY_IS_SECURE:
 	case QUERY_IS_SAFE:
-		*pcbBuf = 4;
-		if ( cbBuffer < 4 ) return S_FALSE;
+		*pcbBuf = sizeof( DWORD );
+		if ( cbBuffer < *pcbBuf || pBuffer == NULL ) return S_FALSE;
 		*(DWORD*)pBuffer = 0;
 		return S_OK;
 	default:

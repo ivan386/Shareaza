@@ -99,13 +99,11 @@ protected:
 	CComPtr < IDragSourceHelper >	m_pdsh;
 
 	BEGIN_INTERFACE_PART(DropSource, IDropSource)
-		virtual ~XDropSource() {}
 		STDMETHOD(QueryContinueDrag)(BOOL fEscapePressed, DWORD grfKeyState);
 		STDMETHOD(GiveFeedback)(DWORD dwEffect);
 	END_INTERFACE_PART(DropSource)
 
 	BEGIN_INTERFACE_PART(DataObject, IDataObject)
-		virtual ~XDataObject() {}
 		STDMETHOD(GetData)(FORMATETC *pformatetcIn, STGMEDIUM *pmedium);
 		STDMETHOD(GetDataHere)(FORMATETC* pformatetc, STGMEDIUM* pmedium);
 		STDMETHOD(QueryGetData)(FORMATETC* pformatetc);
@@ -119,7 +117,6 @@ protected:
 	END_INTERFACE_PART(DataObject)
 
 	BEGIN_INTERFACE_PART(DragSourceHelper, IDragSourceHelper)
-		virtual ~XDragSourceHelper() {}
 		STDMETHOD (InitializeFromBitmap)(LPSHDRAGIMAGE pshdi, IDataObject* pDataObject);
 		STDMETHOD (InitializeFromWindow)(HWND hwnd, POINT* ppt, IDataObject* pDataObject);
 	END_INTERFACE_PART(DragSourceHelper)
@@ -170,7 +167,6 @@ protected:
 public:\
 	virtual BOOL OnDrop(IDataObject* pDataObj, DWORD grfKeyState, POINT ptScreen, DWORD* pdwEffect, BOOL bDrop);\
 	BEGIN_INTERFACE_PART(DropTarget, IDropTarget) \
-		virtual ~XDropTarget(){} \
 		STDMETHOD(DragEnter)(IDataObject* pDataObj, DWORD grfKeyState, POINTL pt, DWORD* pdwEffect); \
 		STDMETHOD(DragOver)(DWORD grfKeyState, POINTL pt, DWORD* pdwEffect); \
 		STDMETHOD(DragLeave)(); \

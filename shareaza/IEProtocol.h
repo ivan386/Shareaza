@@ -1,7 +1,7 @@
 //
 // IEProtocol.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -26,42 +26,34 @@ class CIEProtocolRequest;
 
 class CZIPFile;
 
-
-class CIEProtocol : public CCmdTarget
+// {18D11ED9-1264-48A1-9E14-20F2C633242B}
+class CIEProtocol : public CComObject
 {
 // Construction
 public:
 	CIEProtocol();
 	virtual ~CIEProtocol();
 
-	DECLARE_DYNAMIC(CIEProtocol)
+	DECLARE_DYNCREATE(CIEProtocol)
 
 // Operations
 public:
 	BOOL		Create();
 	void		Close();
     BOOL		SetCollection(const Hashes::Sha1Hash& oSHA1, LPCTSTR pszPath, CString* psIndex = NULL);
+	HRESULT		OnRequest(LPCTSTR pszURL, CBuffer* pBuffer, CString* psMimeType, BOOL bParseOnly);
 	
 // Attributes
 protected:
 	CCriticalSection			m_pSection;
-	CComPtr<IInternetSession>	m_pSession;
-	CEvent*						m_pShutdown;
-	LONG						m_nRequests;
-protected:
+	CComQIPtr< IInternetSession >	m_pSession;
     Hashes::Sha1Hash            m_oCollSHA1;
 	CZIPFile*					m_pCollZIP;
-public:
-	static CLSID				clsidProtocol;
 	static LPCWSTR				pszProtocols[];
 
 // Implementation
 protected:
-	CIEProtocolRequest*	CreateRequest();
-	void				OnRequestConstruct(CIEProtocolRequest* pRequest);
-	void				OnRequestDestruct(CIEProtocolRequest* pRequest);
-	HRESULT				OnRequest(LPCTSTR pszURL, CBuffer* pBuffer, CString* psMimeType, BOOL bParseOnly);
-	HRESULT				OnRequestRAZACOL(LPCTSTR pszURL, CBuffer* pBuffer, CString* psMimeType, BOOL bParseOnly);
+	HRESULT		OnRequestRAZACOL(LPCTSTR pszURL, CBuffer* pBuffer, CString* psMimeType, BOOL bParseOnly);
 
 // COM
 protected:
@@ -70,33 +62,31 @@ protected:
 		STDMETHOD(LockServer)(BOOL fLock);
 	END_INTERFACE_PART(ClassFactory)
 
+	DECLARE_OLECREATE(CIEProtocol)
 	DECLARE_INTERFACE_MAP()
-
-	friend class CIEProtocolRequest;
 };
 
 
-class CIEProtocolRequest : public CCmdTarget
+// {E1A67AE5-7041-4AE1-94F7-DE03EF759E27}
+class CIEProtocolRequest : public CComObject
 {
 // Construction
-protected:
-	CIEProtocolRequest(CIEProtocol* pProtocol);
+public:
+	CIEProtocolRequest();
 	virtual ~CIEProtocolRequest();
 
-	DECLARE_DYNAMIC(CIEProtocolRequest)
+	DECLARE_DYNCREATE(CIEProtocolRequest)
 
 // Attributes
 protected:
-	CCriticalSection				m_pSection;
-	CIEProtocol*					m_pProtocol;
 	CComPtr<IInternetProtocolSink>	m_pSink;
-	CBuffer*						m_pBuffer;
+	CString				m_strMimeType;	// Data MIME type
+	CBuffer				m_oBuffer;		// Requested data
 
 // Implementation
 protected:
 	HRESULT		OnStart(LPCTSTR pszURL, IInternetProtocolSink* pSink, IInternetBindInfo* pBindInfo, DWORD dwFlags);
 	HRESULT		OnRead(void* pv, ULONG cb, ULONG* pcbRead);
-	HRESULT		OnTerminate();
 
 // COM
 protected:
@@ -120,6 +110,7 @@ protected:
 		STDMETHOD(QueryInfo)(LPCWSTR pwzUrl, QUERYOPTION OueryOption, DWORD dwQueryFlags, LPVOID pBuffer, DWORD cbBuffer, DWORD *pcbBuf, DWORD dwReserved);
 	END_INTERFACE_PART(InternetProtocolInfo )
 
+	DECLARE_OLECREATE(CIEProtocolRequest)
 	DECLARE_INTERFACE_MAP()
 
 	friend class CIEProtocol;

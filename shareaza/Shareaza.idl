@@ -20,6 +20,7 @@
 //
 
 import "ShObjIdl.idl";
+import "UrlMon.idl";
 
 [ uuid(E3481FE3-E062-4E1C-A23A-62A6D13CBFB8), version(1.0) ]
 library Shareaza
@@ -582,6 +583,27 @@ library Shareaza
 	{
 		[default] interface IDropSource;
 		interface IDataObject;
+	};
+
+	//
+	//  Shareaza IEProtocol
+	//
+
+	[ uuid(18D11ED9-1264-48A1-9E14-20F2C633242B) ]
+	coclass IEProtocol
+	{
+		[default] interface IClassFactory;
+	};
+
+	//
+	//  Shareaza IEProtocolRequest
+	//
+
+	[ uuid(E1A67AE5-7041-4AE1-94F7-DE03EF759E27) ]
+	coclass IEProtocolRequest
+	{
+		[default] interface IInternetProtocol;
+		interface IInternetProtocolInfo;
 	};
 
 };
