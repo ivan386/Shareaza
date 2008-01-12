@@ -103,7 +103,6 @@ public:
 	BOOL    m_bVendorMsg;      // True if the remote computer told us it supports vendor-specific messages
 	BOOL    m_bGGEP;
 	DWORD   m_tLastQuery;      // The time we last got a query packet, recorded as the number of seconds since 1970
-	BOOL    m_bObsoleteClient;	// Is the remote client running an 'old' version of software. (An old beta, etc)
 	BOOL    m_bBadClient;		// Is the remote client running a 'bad' client- GPL rip, buggy, etc. (not banned, though)
 
 	DWORD	m_nDegree;					// "X-Degree: n" (-1 if not set)

@@ -913,12 +913,6 @@ BOOL CShakeNeighbour::OnHeaderLine(CString& strHeader, CString& strValue)
 		// Record that the remote computer is running Shareaza
 		m_bShareaza = VendorCache.IsExtended( m_sUserAgent );
 
-		// Check if it's an old version of Shareaza
-		if ( IsClientObsolete() )
-		{
-			m_bObsoleteClient = TRUE;
-		}
-
 		// If the remote computer is running a client that is breaking GPL, causing problems, etc.
 		// We don't actually ban these clients, but we don't accept them as a leaf. Can still upload, though.
 		if ( IsClientBad() )
@@ -1143,7 +1137,7 @@ BOOL CShakeNeighbour::OnHeadersComplete()
 	}
 
 	// These codes for HostCache should be here and ones in HeaderLine should just store these info in String array for this part of Process.
-	if ( !m_bInitiated || m_bObsoleteClient || m_bBadClient )
+	if ( !m_bInitiated || m_bBadClient )
 	{
 		// We don't want accept Hubs or UltraPeers from clients that have bugs that pollute
 		// the host cache, not even the cache from incoming connections. this part should be 
@@ -1442,31 +1436,12 @@ BOOL CShakeNeighbour::OnHeadersCompleteG2()
 			if ( m_bBadClient ) 
 			{
 				// We don't allow these to act as a leaf. (resource use, etc)
-				if ( m_bObsoleteClient ) 
-				{
-					theApp.Message( MSG_ERROR, _T("Rejecting bad and obsolete leaf client %s") , (LPCTSTR)m_sUserAgent );
-					Write( _P("GNUTELLA/0.6 503 Update your client. http://sourceforge.net/projects/shareaza/\r\n") );
-				}
-				else 
-				{
-					theApp.Message( MSG_ERROR, _T("Rejecting bad leaf client %s") , (LPCTSTR)m_sUserAgent );
-					Write( _P("GNUTELLA/0.6 503 Refused. http://sourceforge.net/projects/shareaza/\r\n") );
-				}
+				theApp.Message( MSG_ERROR, _T("Rejecting bad leaf client %s") , (LPCTSTR)m_sUserAgent );
+				Write( _P("GNUTELLA/0.6 503 Refused. http://sourceforge.net/projects/shareaza/\r\n") );
+
 				SendMinimalHeaders();  
 				DelayClose( IDS_HANDSHAKE_SURPLUS );
 				return FALSE; 
-			}
-			else if ( m_bObsoleteClient ) 
-			{
-				// Check our loading. Old clients consume more resources, so we might not be able to accept it
-				if ( Neighbours.GetCount(PROTOCOL_G2, nrsConnected, ntLeaf ) > ( Settings.Gnutella2.NumLeafs / 2 ) )
-				{
-					theApp.Message( MSG_ERROR, _T("Rejecting obsolete leaf %s (We are too full)") , (LPCTSTR)m_sUserAgent );
-					Write( _P("GNUTELLA/0.6 503 Old client version, please update. http://sourceforge.net/projects/shareaza/\r\n") );
-					SendMinimalHeaders();  
-					DelayClose( IDS_HANDSHAKE_SURPLUS );
-					return FALSE;
-				}
 			}
 			else if ( ! m_bShareaza )
 			{
@@ -1712,7 +1687,7 @@ BOOL CShakeNeighbour::OnHeadersCompleteG1()
 		if ( ( m_nNodeType == ntLeaf && ! Neighbours.NeedMoreHubs( PROTOCOL_G1) &&		// This connection is to a leaf below us, and we don't need more hubs/leaves
 			 ! Neighbours.NeedMoreLeafs( PROTOCOL_G1 ) ) ||
 			 ( m_nNodeType != ntLeaf && ! Neighbours.NeedMoreHubs( PROTOCOL_G1 ) ) ||	// This connection is to a hub and we don't need more hubs
-			 ( ( m_nNodeType != ntHub ) && ( m_bObsoleteClient || m_bBadClient ) ) )	// This is an obsolete version of Shareaza
+			 ( m_nNodeType != ntHub && m_bBadClient ) )	// This is an obsolete version of Shareaza
 		{
 			// Tell the remote computer we can't connect because we already have too many connections
 			SendHostHeaders( _P("GNUTELLA/0.6 503 Maximum connections reached") );
@@ -1887,67 +1862,6 @@ void CShakeNeighbour::OnHandshakeComplete()
 	delete this;
 }
 
-
-//////////////////////////////////////////////////////////////////////
-// CShakeNeighbour IsClientObsolete
-
-// Checks the user agent to see if it's an outdated client. (An old Shareaza beta, or something)
-BOOL CShakeNeighbour::IsClientObsolete()
-{
-	if ( m_sUserAgent.IsEmpty() ) return TRUE;
-
-	if ( _tcsistr( m_sUserAgent, _T("shareaza") ) )
-	{
-		// Shareaza client
-
-		// Check for fakes / version hacks.
-		if (( _tcsistr( m_sUserAgent, _T("shareaza 0."   ) ) ) ||
-			( _tcsistr( m_sUserAgent, _T("shareaza 1."   ) ) ) ||	// There can be some 1.x versions of the real Shareaza but most are fakes
-			( _tcsistr( m_sUserAgent, _T("shareaza 3.0"  ) ) ) ||
-			( _tcsistr( m_sUserAgent, _T("shareaza 3.1"  ) ) ) ||
-			( _tcsistr( m_sUserAgent, _T("shareaza 3.2"  ) ) ) ||
-			( _tcsistr( m_sUserAgent, _T("shareaza 3.3"  ) ) ) ||
-			( _tcsistr( m_sUserAgent, _T("shareaza 3.4"  ) ) ) ||
-			( _tcsistr( m_sUserAgent, _T("shareaza 6."   ) ) ) ||
-			( _tcsistr( m_sUserAgent, _T("shareaza 7."   ) ) ) ||
-			( _tcsistr( m_sUserAgent, _T("shareaza pro"  ) ) ) )
-			return TRUE;
-
-		// Check for old version and betas
-		if (( _tcsistr( m_sUserAgent, _T("shareaza 2.0"  ) ) ) ||	// There is also a Shareaza rip-off that identify as Shareaza 2.0.0.0 (The real Shareaza 2.0.0.0 is so old and bad)
-			( _tcsistr( m_sUserAgent, _T("shareaza 2.1"  ) ) ) ||
-			( _tcsistr( m_sUserAgent, _T("shareaza 2.2") ) ) )
-			return TRUE;
-
-		// Assumed to be reasonably current
-		return FALSE;
-	}
-	else if ( _tcsistr( m_sUserAgent, _T("gnucdna") ) )
-	{
-		// DNA based client
-
-		// Assumed to be reasonably current
-		return FALSE;
-	}
-	else if ( _tcsistr( m_sUserAgent, _T("trustyfiles") ) )
-	{
-		// TrustyFiles- assume up to date
-		return FALSE;
-	}
-	else if ( _tcsistr( m_sUserAgent, _T("adagio") ) )
-	{
-		// Adagio- assume up to date
-		return FALSE;
-	}
-	else if ( _tcsistr( m_sUserAgent, _T("eTomi") ) )
-	{
-		// Uses outdated Shareaza code
-		return TRUE;
-	}
-
-	return FALSE;
-}
-
 //////////////////////////////////////////////////////////////////////
 // CShakeNeighbour IsClientBad
 
@@ -1955,8 +1869,8 @@ BOOL CShakeNeighbour::IsClientObsolete()
 // We don't ban them, but also don't offer leaf slots to them.
 BOOL CShakeNeighbour::IsClientBad()
 {
-	// No user agent- assume OK
-	if ( m_sUserAgent.IsEmpty() ) return FALSE;
+	// No user agent- assume bad
+	if ( m_sUserAgent.IsEmpty() ) return TRUE; // They allowed to connect but no searches were performed
 
 	// Bad/unapproved versions of Shareaza
 	// Really obsolete versions of Shareaza should be blocked. (they may have bad settings)
@@ -1978,7 +1892,7 @@ BOOL CShakeNeighbour::IsClientBad()
 	}
 
 	// Dianlei: Shareaza rip-off
-	if ( _tcsistr( m_sUserAgent, _T("Dianlei") ) )	
+	if ( _tcsistr( m_sUserAgent, _T("Dianlei") ) )	//  add only based on alpha code, need verification for others
 	{
 		if ( _tcsistr( m_sUserAgent, _T("Dianlei 1.") ) )				return TRUE;
 		if ( _tcsistr( m_sUserAgent, _T("Dianlei 0.") ) )				return TRUE;
@@ -2016,21 +1930,21 @@ BOOL CShakeNeighbour::IsClientBad()
 	if ( _tcsistr( m_sUserAgent, _T("Fastload.TV") ) )					return TRUE;
 	
 	//K-Lite Pro
-	if ( _tcsistr( m_sUserAgent, _T("K-Lite Pro") ) )					return TRUE;
+	if ( _tcsistr( m_sUserAgent, _T("K-Lite Pro") ) )					return TRUE; // Is it bad?
 	
 	// GPL breakers- Clients violating the GPL
 	// See http://www.gnu.org/copyleft/gpl.html
 	//Some other breakers outside the list
 	
-	if ( _tcsistr( m_sUserAgent, _T("K-Lite") ) )						return TRUE;
+	if ( _tcsistr( m_sUserAgent, _T("K-Lite") ) )						return TRUE; // Is it bad?
 
-	if ( _tcsistr( m_sUserAgent, _T("SlingerX") ) )						return TRUE;
+	if ( _tcsistr( m_sUserAgent, _T("SlingerX") ) )						return TRUE; // Rip-off with bad tweaks
 
 	if ( _tcsistr( m_sUserAgent, _T("C -3.0.1") ) )						return TRUE;
 
-	if ( _tcsistr( m_sUserAgent, _T("vagaa") ) )						return TRUE;
+	if ( _tcsistr( m_sUserAgent, _T("vagaa") ) )						return TRUE; // Not clear why it's bad
 
-	if ( _tcsistr( m_sUserAgent, _T("mxie") ) )							return TRUE;
+	if ( _tcsistr( m_sUserAgent, _T("mxie") ) )							return TRUE; // Leechers, do not allow to connect
 
 	if ( _tcsistr( m_sUserAgent, _T("BearShare MP3") ) ) 				return TRUE;
 	
@@ -2038,6 +1952,8 @@ BOOL CShakeNeighbour::IsClientBad()
 
 	if ( _tcsistr( m_sUserAgent, _T("WinMX") ) )						return TRUE;
 	
+	if ( _tcsistr( m_sUserAgent, _T("eTomi") ) )						return TRUE; // outdated rip-off
+
 	// Unknown- Assume OK
 	return FALSE;
 }

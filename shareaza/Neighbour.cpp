@@ -76,7 +76,6 @@ CNeighbour::CNeighbour(PROTOCOLID nProtocol) :
 	m_bPongCaching( FALSE ),	//
 	m_bVendorMsg( FALSE ),		// The remote computer hasn't told us it supports the vendor-specific messages yet
 	m_bGGEP( FALSE ),			// The remote computer hasn't told us it supports the GGEP block yet
-	m_bObsoleteClient( FALSE ),	//
 	m_bBadClient( FALSE ),		//
 	m_nDegree( (DWORD)-1 ),
 	m_nMaxTTL( (DWORD)-1 ),
@@ -131,7 +130,6 @@ CNeighbour::CNeighbour(PROTOCOLID nProtocol, CNeighbour* pBase)
 	, m_bVendorMsg(        pBase->m_bVendorMsg )
 	, m_bGGEP(             pBase->m_bGGEP )
 	, m_tLastQuery(        pBase->m_tLastQuery )
-	, m_bObsoleteClient(   pBase->m_bObsoleteClient )
 	, m_bBadClient(			pBase->m_bBadClient )
 	, m_nDegree(			pBase->m_nDegree )
 	, m_nMaxTTL(			pBase->m_nMaxTTL )
