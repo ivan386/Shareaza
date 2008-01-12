@@ -122,7 +122,7 @@ void CHomeViewCtrl::Update()
 	// BOOL bTCPFirewalled = Network.IsFirewalled(CHECK_TCP);
 	BOOL bUDPFirewalled = Network.IsFirewalled(CHECK_UDP);
 
-	m_pDocument.ShowGroup( GROUP_FIREWALLED, bOnG2 && bUDPFirewalled );
+	m_pDocument.ShowGroup( GROUP_FIREWALLED, bOnG2 && bUDPFirewalled && !theApp.m_bUPnPPortsForwarded );
 	m_pDocument.ShowGroup( GROUP_FIREWALLED_TCP, FALSE );
 	m_pDocument.ShowGroup( GROUP_FIREWALLED_UDP, FALSE );
 
