@@ -1,7 +1,7 @@
 //
 // SWFReader.cpp : Implementation of CSWFReader
 //
-// Copyright (c) Nikolay Raspopov, 2005.
+// Copyright (c) Nikolay Raspopov, 2005-2008.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // GFL Library, GFL SDK and XnView
@@ -112,6 +112,7 @@ HRESULT CreateSWF (HWND hWnd, IUnknown** ppControl) throw ()
 
 DWORD WINAPI LoadSWF (LPVOID filename) throw ()
 {
+	DWORD dwBegin = GetTickCount();
 	HRESULT hr = CoInitializeEx (NULL, COINIT_APARTMENTTHREADED);
 	if (SUCCEEDED (hr)) {
 		if (AtlAxWinInit ()) {
@@ -143,7 +144,8 @@ DWORD WINAPI LoadSWF (LPVOID filename) throw ()
 							UINT nArgErr = (UINT) -1;
 							hr = pIDispatch->Invoke (0x8e, IID_NULL, 0, DISPATCH_METHOD,
 								&dispparams, &varResult, NULL, &nArgErr);
-							for (LONG state = -1; SUCCEEDED (hr) && state != 4; ) {
+							for (LONG state = -1; SUCCEEDED (hr) && state != 4 &&
+								( GetTickCount() - dwBegin ) < 20000; ) {
 								// long get_ReadyState ()
 								dispparams.cArgs = 0;
 								VariantInit (&varResult);	
