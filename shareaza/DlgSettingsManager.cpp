@@ -44,6 +44,7 @@
 #include "PageSettingsPlugins.h"
 #include "PageSettingsTraffic.h"
 #include "PageSettingsProtocols.h"
+#include "PageSettingsIRC.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -125,12 +126,14 @@ INT_PTR CSettingsManagerDlg::DoModal(LPCTSTR pszWindow)
 	CPluginsSettingsPage	pPlugins;
 	CAdvancedSettingsPage	pAdvanced;
 	CProtocolsSettingsPage	pProtocols;
+	CIRCSettingsPage		pIRC;
 
 	AddGroup( &gGeneral );
 	AddPage( &pGeneral );
 	AddPage( &pLibrary );
 	AddPage( &pMedia );
 	AddPage( &pCommunity );
+	AddPage( &pIRC );
 	AddPage( &pWeb );
 	AddGroup( &gInternet );
 	AddPage( &pConnection );

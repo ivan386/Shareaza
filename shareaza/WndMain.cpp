@@ -67,6 +67,7 @@
 #include "WndSearch.h"
 #include "WndBrowseHost.h"
 #include "WndHome.h"
+#include "WndIRC.h"
 #include "WizardSheet.h"
 
 #include "DlgSettingsManager.h"
@@ -204,6 +205,8 @@ BEGIN_MESSAGE_MAP(CMainWnd, CMDIFrameWnd)
 	ON_UPDATE_COMMAND_UI(ID_TAB_LIBRARY, OnUpdateTabLibrary)
 	ON_COMMAND(ID_TAB_LIBRARY, OnTabLibrary)
 	ON_UPDATE_COMMAND_UI(ID_TAB_TRANSFERS, OnUpdateTabTransfers)
+	ON_COMMAND(ID_TAB_IRC, OnTabIRC)
+	ON_UPDATE_COMMAND_UI(ID_TAB_IRC, OnUpdateTabIRC)
 	ON_COMMAND(ID_TAB_TRANSFERS, OnTabTransfers)
 	ON_UPDATE_COMMAND_UI(ID_VIEW_TABBED, OnUpdateViewTabbed)
 	ON_COMMAND(ID_VIEW_TABBED, OnViewTabbed)
@@ -2119,6 +2122,17 @@ void CMainWnd::OnTabTransfers()
 	OpenFromTray();
 }
 
+void CMainWnd::OnUpdateTabIRC(CCmdUI* pCmdUI) 
+{
+	CChildWnd* pChild = m_pWindows.GetActive();
+	pCmdUI->SetCheck( pChild && pChild->IsKindOf( RUNTIME_CLASS(CIRCWnd) ) );
+} 
+
+void CMainWnd::OnTabIRC() 
+{
+	m_pWindows.Open( RUNTIME_CLASS(CIRCWnd) );
+	OpenFromTray();		
+}
 void CMainWnd::OnUpdateTabNetwork(CCmdUI* pCmdUI) 
 {
 	CChildWnd* pChild = m_pWindows.GetActive();

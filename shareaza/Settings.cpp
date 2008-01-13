@@ -489,6 +489,30 @@ CSettings::CSettings()
 	Add( _T("Experimental"), _T("EnableDIPPSupport"), &Experimental.EnableDIPPSupport, false );
 
 	Add( _T("WINE"), _T("MenuFix"), &WINE.MenuFix, true );
+
+	Add( _T("IRC"), _T("Colors[0]"), &IRC.Colors[0], RGB(244,0,0) );
+	Add( _T("IRC"), _T("Colors[1]"), &IRC.Colors[1], RGB(0,0,0) );
+	Add( _T("IRC"), _T("Colors[2]"), &IRC.Colors[2], RGB(0,0,244) );
+	Add( _T("IRC"), _T("Colors[3]"), &IRC.Colors[3], RGB(200,100,120) );
+	Add( _T("IRC"), _T("Colors[4]"), &IRC.Colors[4], RGB(0,144,0) );
+	Add( _T("IRC"), _T("Colors[5]"), &IRC.Colors[5], RGB(244,0,0) );
+	Add( _T("IRC"), _T("Colors[6]"), &IRC.Colors[6], RGB(230,230,230) );
+	Add( _T("IRC"), _T("Colors[7]"), &IRC.Colors[7], RGB(0xF8,0xF8,0xF8) );
+	Add( _T("IRC"), _T("Colors[8]"), &IRC.Colors[8], RGB(0,0,0) );
+	Add( _T("IRC"), _T("Colors[9]"), &IRC.Colors[9], RGB(200,30,30) );
+	Add( _T("IRC"), _T("Colors[10]"), &IRC.Colors[10], RGB(200,130,230) );
+	Add( _T("IRC"), _T("Show"), &IRC.Show, TRUE );
+	Add( _T("IRC"), _T("FloodEnable"), &IRC.FloodEnable, TRUE );
+	Add( _T("IRC"), _T("Nick"), &IRC.Nick, _T("") );
+	Add( _T("IRC"), _T("Alternate"), &IRC.Alternate, _T("") );
+	Add( _T("IRC"), _T("ServerName"), &IRC.ServerName, _T("irc.p2pchat.net") );
+	Add( _T("IRC"), _T("ServerPort"), &IRC.ServerPort, _T("6667") );
+	Add( _T("IRC"), _T("FloodLimit"), &IRC.FloodLimit, _T("24") );
+	Add( _T("IRC"), _T("Timestamp"), &IRC.Timestamp, FALSE );
+	Add( _T("IRC"), _T("UserName"), &IRC.UserName, _T("razaIRC") );
+	Add( _T("IRC"), _T("RealName"), &IRC.RealName, _T("razaIRC") );
+	Add( _T("IRC"), _T("ScreenFont"), &IRC.ScreenFont, _T("") );
+	Add( _T("IRC"), _T("Updated"), &IRC.Updated, FALSE );
 }
 
 CSettings::~CSettings()

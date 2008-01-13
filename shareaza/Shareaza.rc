@@ -123,6 +123,11 @@ IDR_BITTORRENT_ICON     ICON                    "res\\Bittorrent.ico"
 IDI_COLORS              ICON                    "res\\colors.ico"
 IDI_UPDOWN_ARROW        ICON                    "Res\\UpDownArrow.ico"
 IDI_HASH                ICON                    "Res\\Hash.ico"
+IDR_IRCFRAME            ICON                    "Res\\irc.ico"
+IDR_USERSFRAME          ICON                    "Res\\users.ico"
+IDR_CHANSFRAME          ICON                    "Res\\channel.ico"
+IDI_IRCHEADER           ICON                    "Res\\ChatHeader.ico"
+IDI_IRCHEADER32         ICON                    "Res\\ChatHeader32.ico"
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -348,6 +353,8 @@ IDB_NAVBAR_IMAGE_RTL    BITMAP                  "Res\\NavbarRTL.bmp"
 IDB_NAVBAR_ALPHA_RTL    BITMAP                  "Res\\NavbarAlphaRTL.bmp"
 IDB_MUSICBRAINZ_LOGO    BITMAP                  "Res\\MusicBrainz.bmp"
 IDB_CHILDFRAME          BITMAP                  "Res\\ChildFrame.bmp"
+IDB_IRCICONS            BITMAP                  "Res\\IrcIcons.bmp"
+IDB_FONT_SYMBOLS        BITMAP                  "Res\\FontSymbols.bmp"
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -2468,6 +2475,74 @@ BEGIN
                     WS_TABSTOP
 END
 
+IDD_SETTINGS_IRC DIALOGEX 0, 0, 282, 220
+STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
+CAPTION "Chat"
+FONT 8, "Tahoma", 0, 0, 0x0
+BEGIN
+    GROUPBOX        "Client &Options:",IDC_STATIC,7,6,145,100
+    CONTROL         "Show chat  integration",IDC_IRC_SHOW,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,13,19,122,9
+    CONTROL         "Flood protection:",IDC_IRC_FLOODENABLE,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,13,33,119,9
+    EDITTEXT        IDC_IRC_FLOODLIMIT,23,46,26,12,ES_AUTOHSCROLL
+    LTEXT           "Lines per second.",IDC_STATIC,53,48,59,12
+    CONTROL         "Show timestamp",IDC_IRC_TIMESTAMP,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,14,62,122,9
+    LTEXT           "Screen Font:",IDC_STATIC,14,75,56,11
+    COMBOBOX        IDC_IRC_TEXTFONT,23,87,121,15,CBS_DROPDOWNLIST | 
+                    CBS_OWNERDRAWFIXED | CBS_SORT | CBS_HASSTRINGS | 
+                    WS_VSCROLL | WS_TABSTOP
+    GROUPBOX        "&Colors:",IDC_STATIC,156,6,118,100,WS_GROUP
+    CONTROL         "",IDC_IRC_COLOR_SERVER,"Button",BS_OWNERDRAW | 
+                    WS_TABSTOP,165,22,8,8,WS_EX_STATICEDGE
+    LTEXT           "Server messages",IDC_STATIC,179,21,68,10
+    CONTROL         "",IDC_IRC_COLOR_TOPIC,"Button",BS_OWNERDRAW | 
+                    WS_TABSTOP,165,35,8,8,WS_EX_STATICEDGE
+    LTEXT           "Topics",IDC_STATIC,179,34,68,10
+    CONTROL         "",IDC_IRC_COLOR_ACTION,"Button",BS_OWNERDRAW | 
+                    WS_TABSTOP,165,48,8,8,WS_EX_STATICEDGE
+    LTEXT           "Channel Actions",IDC_STATIC,179,47,68,10
+    CONTROL         "",IDC_IRC_COLOR_NOTICE,"Button",BS_OWNERDRAW | 
+                    WS_TABSTOP,165,61,8,8,WS_EX_STATICEDGE
+    LTEXT           "Notices",IDC_STATIC,179,60,68,10
+    CONTROL         "",IDC_IRC_COLOR_BG,"Button",BS_OWNERDRAW | WS_TABSTOP,
+                    165,74,8,8,WS_EX_STATICEDGE
+    LTEXT           "Chat background",IDC_STATIC,179,73,68,10
+    CONTROL         "",IDC_IRC_COLOR_TEXT,"Button",BS_OWNERDRAW | WS_TABSTOP,
+                    165,87,8,8,WS_EX_STATICEDGE
+    LTEXT           "Text",IDC_STATIC,179,86,68,10
+    GROUPBOX        "Connection &Settings:",IDC_STATIC,7,111,267,69,WS_GROUP
+    LTEXT           "Nickname:",IDC_STATIC,14,127,67,9,0,WS_EX_TRANSPARENT
+    EDITTEXT        IDC_IRC_NICK,86,125,62,12,ES_AUTOHSCROLL | WS_GROUP
+    LTEXT           "User name:",IDC_STATIC,154,126,49,9,0,WS_EX_TRANSPARENT
+    EDITTEXT        IDC_IRC_USERNAME,205,124,62,12,ES_AUTOHSCROLL | WS_GROUP
+    LTEXT           "Alternate Nickname:",IDC_STATIC,14,144,67,9,0,
+                    WS_EX_TRANSPARENT
+    EDITTEXT        IDC_IRC_ALTERNATE,86,142,62,12,ES_AUTOHSCROLL | WS_GROUP
+    LTEXT           "Real name:",IDC_STATIC,154,143,49,9,0,WS_EX_TRANSPARENT
+    EDITTEXT        IDC_IRC_REALNAME,205,141,62,12,ES_AUTOHSCROLL | WS_GROUP
+    LTEXT           "Server:",IDC_STATIC,14,161,31,9,0,WS_EX_TRANSPARENT
+    EDITTEXT        IDC_IRC_SERVERNAME,50,159,97,12,ES_AUTOHSCROLL | 
+                    WS_GROUP
+    LTEXT           "Port:",IDC_STATIC,154,160,49,9,0,WS_EX_TRANSPARENT
+    EDITTEXT        IDC_IRC_SERVERPORT,205,158,35,12,ES_AUTOHSCROLL | 
+                    WS_GROUP
+END
+
+IDD_IRC_INPUTBOX DIALOGEX 0, 0, 205, 46
+STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_CAPTION | 
+    WS_SYSMENU
+CAPTION "Channel Name|Why reason"
+FONT 8, "Tahoma", 0, 0, 0x1
+BEGIN
+    EDITTEXT        IDC_IRC_INPUT,7,19,128,14,ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "OK",IDOK,148,7,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,148,24,50,14
+    LTEXT           "Enter channel you want to add:|Enter kick/ban reason:",
+                    IDC_IRC_PROMPT,7,7,129,8
+END
+
 IDD_TORRENT_GENERAL DIALOGEX 0, 0, 292, 230
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Torrent Information"
@@ -3754,6 +3829,11 @@ BEGIN
     IDR_MEDIAFRAME          "Media Player"
     IDR_SEARCHPADFRAME      "Search"
     IDR_HELPFRAME           "Shareaza Help"
+END
+
+STRINGTABLE 
+BEGIN
+    IDR_IRCFRAME            "Chat"
 END
 
 STRINGTABLE 
@@ -5263,6 +5343,17 @@ BEGIN
     ID_WINDOW_CASCADE       "Expand all open windows to fill the screen."
     ID_WINDOW_TILE_HORZ     "Arrange open windows as horizontal, non-overlapping tiles."
     ID_WINDOW_TILE_VERT     "Arrange open windows as vertical, non-overlapping tiles."
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_IRC_HEADERTITLE     "Welcome to Shareaza Chat!"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_IRC_HEADERSUBTITLE  "Please respect others while using this service"
+    IDS_IRC_HEADERCHAT      "Chat!"
 END
 
 STRINGTABLE 

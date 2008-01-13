@@ -1461,6 +1461,9 @@
 					RelativePath="..\shareaza\CtrlDragList.cpp">
 				</File>
 				<File
+					RelativePath="..\shareaza\CtrlFontCombo.cpp">
+				</File>
+				<File
 					RelativePath="..\shareaza\CtrlHomePanel.cpp">
 				</File>
 				<File
@@ -1471,6 +1474,12 @@
 				</File>
 				<File
 					RelativePath="..\shareaza\CtrlIconButton.cpp">
+				</File>
+				<File
+					RelativePath="..\shareaza\CtrlIRCFrame.cpp">
+				</File>
+				<File
+					RelativePath="..\shareaza\CtrlIRCPanel.cpp">
 				</File>
 				<File
 					RelativePath="..\shareaza\CtrlLibraryAlbumView.cpp">
@@ -1681,6 +1690,9 @@
 					RelativePath="..\shareaza\DlgHitColumns.cpp">
 				</File>
 				<File
+					RelativePath="..\shareaza\DlgIrcInput.cpp">
+				</File>
+				<File
 					RelativePath="..\shareaza\DlgLanguage.cpp">
 				</File>
 				<File
@@ -1776,6 +1788,9 @@
 				</File>
 				<File
 					RelativePath="..\shareaza\WndHostCache.cpp">
+				</File>
+				<File
+					RelativePath="..\shareaza\WndIRC.cpp">
 				</File>
 				<File
 					RelativePath="..\shareaza\WndLibrary.cpp">
@@ -2080,6 +2095,9 @@
 				</File>
 				<File
 					RelativePath="..\shareaza\PageSettingsGnutella.cpp">
+				</File>
+				<File
+					RelativePath="..\shareaza\PageSettingsIRC.cpp">
 				</File>
 				<File
 					RelativePath="..\shareaza\PageSettingsLibrary.cpp">
@@ -2728,6 +2746,9 @@
 					RelativePath="..\shareaza\CtrlDragList.h">
 				</File>
 				<File
+					RelativePath="..\shareaza\CtrlFontCombo.h">
+				</File>
+				<File
 					RelativePath="..\shareaza\CtrlHomePanel.h">
 				</File>
 				<File
@@ -2738,6 +2759,12 @@
 				</File>
 				<File
 					RelativePath="..\shareaza\CtrlIconButton.h">
+				</File>
+				<File
+					RelativePath="..\shareaza\CtrlIRCFrame.h">
+				</File>
+				<File
+					RelativePath="..\shareaza\CtrlIRCPanel.h">
 				</File>
 				<File
 					RelativePath="..\shareaza\CtrlLibraryAlbumView.h">
@@ -2894,6 +2921,9 @@
 					RelativePath="..\shareaza\WndHostCache.h">
 				</File>
 				<File
+					RelativePath="..\shareaza\WndIRC.h">
+				</File>
+				<File
 					RelativePath="..\shareaza\WndLibrary.h">
 				</File>
 				<File
@@ -3028,6 +3058,9 @@
 				</File>
 				<File
 					RelativePath="..\shareaza\DlgHitColumns.h">
+				</File>
+				<File
+					RelativePath="..\shareaza\DlgIrcInput.h">
 				</File>
 				<File
 					RelativePath="..\shareaza\DlgLanguage.h">
@@ -3241,6 +3274,9 @@
 					RelativePath="..\shareaza\PageSettingsGnutella.h">
 				</File>
 				<File
+					RelativePath="..\shareaza\PageSettingsIRC.h">
+				</File>
+				<File
 					RelativePath="..\shareaza\PageSettingsLibrary.h">
 				</File>
 				<File
@@ -3440,7 +3476,16 @@
 				RelativePath="..\shareaza\Res\Busy.htm">
 			</File>
 			<File
+				RelativePath="..\shareaza\Res\channel.ico">
+			</File>
+			<File
 				RelativePath="..\shareaza\Res\Chat.ico">
+			</File>
+			<File
+				RelativePath="..\shareaza\Res\ChatHeader.ico">
+			</File>
+			<File
+				RelativePath="..\shareaza\Res\ChatHeader32.ico">
 			</File>
 			<File
 				RelativePath="..\shareaza\Res\Checkmark.ico">
@@ -3591,6 +3636,9 @@
 				RelativePath="..\shareaza\Res\FlagEnglish.ico">
 			</File>
 			<File
+				RelativePath="..\shareaza\Res\FontSymbols.bmp">
+			</File>
+			<File
 				RelativePath="..\shareaza\Res\Hand.cur">
 			</File>
 			<File
@@ -3625,6 +3673,12 @@
 			</File>
 			<File
 				RelativePath="..\shareaza\Res\HostOut.ico">
+			</File>
+			<File
+				RelativePath="..\shareaza\Res\irc.ico">
+			</File>
+			<File
+				RelativePath="..\shareaza\Res\IrcIcons.bmp">
 			</File>
 			<File
 				RelativePath="..\shareaza\Res\Library.ico">
@@ -3803,6 +3857,9 @@
 				RelativePath="..\shareaza\Res\Uploads.ico">
 			</File>
 			<File
+				RelativePath="..\shareaza\Res\users.ico">
+			</File>
+			<File
 				RelativePath="..\shareaza\Res\WebURL.ico">
 			</File>
 			<File
@@ -3834,64 +3891,6 @@
 				RelativePath="..\shareaza\Res\SchemaMappings.xml.gz">
 			</File>
 			<File
-				RelativePath="DebugWin32\$(ProjectName)\Shareaza_i.c">
-				<FileConfiguration
-					Name="DebugWin32|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-						ObjectFile="$(IntDir)$(InputName)1.obj"
-						DisableSpecificWarnings="4255;4668;4820"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="ReleaseWin32|Win32"
-					ExcludedFromBuild="TRUE">
-					<Tool
-						Name="VCCLCompilerTool"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Releasex64|Win32"
-					ExcludedFromBuild="TRUE">
-					<Tool
-						Name="VCCLCompilerTool"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debugx64|Win32"
-					ExcludedFromBuild="TRUE">
-					<Tool
-						Name="VCCLCompilerTool"/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="ReleaseWin32\$(ProjectName)\Shareaza_i.c">
-				<FileConfiguration
-					Name="DebugWin32|Win32"
-					ExcludedFromBuild="TRUE">
-					<Tool
-						Name="VCCLCompilerTool"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="ReleaseWin32|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-						ObjectFile="$(IntDir)$(InputName)1.obj"
-						DisableSpecificWarnings="4255;4668;4820"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Releasex64|Win32"
-					ExcludedFromBuild="TRUE">
-					<Tool
-						Name="VCCLCompilerTool"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debugx64|Win32"
-					ExcludedFromBuild="TRUE">
-					<Tool
-						Name="VCCLCompilerTool"/>
-				</FileConfiguration>
-			</File>
-			<File
 				RelativePath="Debugx64\$(ProjectName)\Shareaza_i.c">
 				<FileConfiguration
 					Name="DebugWin32|Win32"
@@ -3918,6 +3917,64 @@
 						UsePrecompiledHeader="0"
 						ObjectFile="$(IntDir)$(InputName)1.obj"
 						DisableSpecificWarnings="4255;4668;4820"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="Releasex64\$(ProjectName)\Shareaza_i.c">
+				<FileConfiguration
+					Name="DebugWin32|Win32"
+					ExcludedFromBuild="TRUE">
+					<Tool
+						Name="VCCLCompilerTool"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="ReleaseWin32|Win32"
+					ExcludedFromBuild="TRUE">
+					<Tool
+						Name="VCCLCompilerTool"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Releasex64|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+						ObjectFile="$(IntDir)$(InputName)1.obj"
+						DisableSpecificWarnings="4255;4668;4820"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debugx64|Win32"
+					ExcludedFromBuild="TRUE">
+					<Tool
+						Name="VCCLCompilerTool"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="DebugWin32\$(ProjectName)\Shareaza_i.c">
+				<FileConfiguration
+					Name="DebugWin32|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+						ObjectFile="$(IntDir)$(InputName)1.obj"
+						DisableSpecificWarnings="4255;4668;4820"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="ReleaseWin32|Win32"
+					ExcludedFromBuild="TRUE">
+					<Tool
+						Name="VCCLCompilerTool"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Releasex64|Win32"
+					ExcludedFromBuild="TRUE">
+					<Tool
+						Name="VCCLCompilerTool"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debugx64|Win32"
+					ExcludedFromBuild="TRUE">
+					<Tool
+						Name="VCCLCompilerTool"/>
 				</FileConfiguration>
 			</File>
 			<File

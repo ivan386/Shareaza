@@ -99,6 +99,7 @@ void CMainTabBarCtrl::OnSkinChange()
 		m_pItems.AddTail( new TabItem( this, _T("_ID_TAB_SEARCH") ) );
 		m_pItems.AddTail( new TabItem( this, _T("_ID_TAB_TRANSFERS") ) );
 		m_pItems.AddTail( new TabItem( this, _T("_ID_TAB_NETWORK") ) );
+		m_pItems.AddTail( new TabItem( this, _T("_ID_TAB_IRC") ) );
 	}
 
 	if ( m_dcSkin.m_hDC != NULL )

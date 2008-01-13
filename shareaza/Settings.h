@@ -528,6 +528,23 @@ public:
 		bool		AllowHub;					// Allow hub mode while scheduler is active
 	} Scheduler;
 	
+	struct sIRC
+	{
+		COLORREF		Colors[11];
+		bool			Show;
+		bool			FloodEnable;
+		bool			Timestamp;
+		CString			UserName;
+		CString			RealName;
+		CString			Nick;
+		CString			Alternate;
+		CString			ServerName;
+		CString			ServerPort;
+		CString			FloodLimit;
+		bool			Updated;
+		CString			ScreenFont;
+	} IRC;
+	
 	struct sLive
 	{
 		bool		DiskSpaceWarning;			// Has the user been warned of low disk space?

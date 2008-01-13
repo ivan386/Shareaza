@@ -45,6 +45,8 @@
 	<resource code="261" id="IDI_ICON"/>
 	<resource code="263" id="IDR_BITTORRENT_ICON"/>
 	<resource code="281" id="IDI_UPDOWN_ARROW"/>
+	<resource code="994" id="WINDOW_IRC"/>
+	<resource code="999" id="IDB_IRCICONS"/>
 	<resource code="1293" id="IDC_IMPORT_DOWNLOADS"/>
 	<resource code="32772" id="ID_HELP_ABOUT"/>
 	<resource code="32774" id="ID_CHECKMARK"/>
@@ -364,6 +366,33 @@
 	<resource code="33200" id="ID_MEDIA_STATE_STOP"/>
 	<resource code="33201" id="ID_MEDIA_STATE_PAUSE"/>
 	<resource code="33202" id="ID_MEDIA_STATE_PLAY"/>
+	<resource code="33203" id="ID_IRC_CONNECT"/>
+	<resource code="33204" id="ID_IRC_DISCONNECT"/>
+	<resource code="33205" id="ID_IRC_ADD"/>
+	<resource code="33206" id="ID_IRC_REMOVE"/>
+	<resource code="33207" id="ID_IRC_EDITBOX"/>
+	<resource code="33208" id="ID_IRC_INFO"/>
+	<resource code="33209" id="ID_IRC_WHOIS"/>
+	<resource code="33210" id="ID_IRC_QUERY"/>
+	<resource code="33211" id="ID_IRC_PING"/>
+	<resource code="33212" id="ID_IRC_TIME"/>
+	<resource code="33213" id="ID_IRC_VERSION"/>
+	<resource code="33214" id="ID_IRC_IGNORE"/>
+	<resource code="33215" id="ID_IRC_UNIGNORE"/>
+	<resource code="33216" id="ID_IRC_OP"/>
+	<resource code="33217" id="ID_IRC_DEOP"/>
+	<resource code="33218" id="ID_IRC_VOICE"/>
+	<resource code="33219" id="ID_IRC_DEVOICE"/>
+	<resource code="33220" id="ID_IRC_KICK"/>
+	<resource code="33221" id="ID_IRC_KICKWHY"/>
+	<resource code="33222" id="ID_IRC_BAN"/>
+	<resource code="33223" id="ID_IRC_BANKICK"/>
+	<resource code="33224" id="ID_IRC_BANKICKWHY"/>
+	<resource code="33225" id="ID_IRC_UNBAN"/>
+	<resource code="33226" id="ID_IRC_SLAP"/>
+	<resource code="33227" id="ID_IRC_CLOSETAB"/>
+	<resource code="33228" id="ID_IRC_SETTINGS"/>
+	<resource code="33229" id="ID_TAB_IRC"/>
 	<resource code="57650" id="ID_WINDOW_CASCADE"/>
 	<resource code="57651" id="ID_WINDOW_TILE_HORZ"/>
 	<resource code="57652" id="ID_WINDOW_TILE_VERT"/>

@@ -49,6 +49,7 @@ BEGIN_MESSAGE_MAP(CRichViewCtrl, CWnd)
 	ON_WM_LBUTTONDOWN()
 	ON_WM_TIMER()
 	ON_WM_MOUSEWHEEL()
+	ON_WM_LBUTTONDBLCLK()
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -66,6 +67,7 @@ CRichViewCtrl::CRichViewCtrl()
 	m_nLength		= 0;
 	m_pHover		= NULL;
 	m_bSelecting	= FALSE;
+	m_szSign		= _T("\x200D");
 
 	// Try to get the number of lines to scroll when the mouse wheel is rotated
 	if( !SystemParametersInfo ( SPI_GETWHEELSCROLLLINES, 0, &m_nScrollWheelLines, 0) )
@@ -922,6 +924,19 @@ void CRichViewCtrl::CopySelection()
 		}
 	}
 
+	// the following block is required for IRC functionality
+	if ( _tcscmp( m_szSign, _T("\x200D") ) == 0 )
+	{
+		CString strTemp;
+		for ( int nPos = 1 ; nPos < str.GetLength() ; nPos++ )
+			if ( _tcscmp( str.Mid( nPos, 1 ), m_szSign ) != 0 )
+				strTemp += str.Mid( nPos, 1 );
+			else
+				nPos += 2;
+		str = strTemp;
+	}
+	// end of block
+
 	if ( str.GetLength() && AfxGetMainWnd()->OpenClipboard() )
 	{
 		EmptyClipboard();
@@ -947,4 +962,17 @@ void CRichViewCtrl::CopySelection()
 
 		CloseClipboard();
 	}
+}
+
+void CRichViewCtrl::OnLButtonDblClk(UINT nFlags, CPoint point)
+{
+	RVN_ELEMENTEVENT pNotify;
+	pNotify.hdr.hwndFrom	= GetSafeHwnd();
+	pNotify.hdr.idFrom		= GetDlgCtrlID();
+	pNotify.hdr.code		= RVN_DBLCLICK;
+	pNotify.pElement		= NULL;
+
+	GetOwner()->SendMessage( WM_NOTIFY, pNotify.hdr.idFrom, (LPARAM)&pNotify );
+
+	CWnd::OnLButtonDblClk(nFlags, point);
 }

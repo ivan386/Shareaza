@@ -228,6 +228,8 @@ protected:
 	afx_msg void OnViewMedia();
 	afx_msg void OnUpdateTabMedia(CCmdUI* pCmdUI);
 	afx_msg void OnTabMedia();
+	afx_msg void OnUpdateTabIRC(CCmdUI* pCmdUI);
+	afx_msg void OnTabIRC();
 	afx_msg void OnUpdateTabSearch(CCmdUI* pCmdUI);
 	afx_msg void OnTabSearch();
 	afx_msg void OnToolsProfile();

@@ -23,6 +23,7 @@
 		<button id="ID_TAB_SEARCH" text="Search"/>
 		<button id="ID_TAB_TRANSFERS" text="Transfers"/>
 		<button id="ID_TAB_NETWORK" text="Network"/>
+		<button id="ID_TAB_IRC" text="Chat"/>
 	</toolbar>
 	<toolbar name="CMainWnd.Windowed">
 		<button id="ID_NETWORK_CONNECT" text="Connect"/>
@@ -35,6 +36,7 @@
 		<button id="ID_VIEW_UPLOADS"/>
 		<button id="ID_VIEW_LIBRARY"/>
 		<button id="ID_VIEW_MEDIA"/>
+		<button id="ID_TAB_IRC"/>
 		<button id="ID_VIEW_SECURITY"/>
 		<button id="ID_VIEW_HOSTS"/>
 		<button id="ID_VIEW_DISCOVERY"/>
@@ -317,6 +319,13 @@
 		<button id="ID_MEDIA_CLEAR" text="Clear"/>
 		<button id="ID_MEDIA_SAVE" text="Save"/>
 	</toolbar>
+	<!-- IRC WINDOW -->
+	<toolbar name="CMainIrcBar">
+		<button id="ID_IRC_CONNECT" text="Connect" tip="Connect to IRC"/>
+		<button id="ID_IRC_DISCONNECT" text="Disconnect" tip="Disconnect from IRC"/>
+		<rightAlign/>
+		<button id="ID_IRC_SETTINGS" text="Settings" tip="Configure IRC Settings"/>
+	</toolbar>
 	<!-- NEIGHBOURS WINDOW -->
 	<toolbar name="CNeighboursWnd.Basic">
 		<button id="ID_BROWSE_LAUNCH" text="Browse User"/>
@@ -422,6 +431,7 @@
 			<item id="ID_TAB_SEARCH" text="_Search"/>
 			<item id="ID_TAB_TRANSFERS" text="_Downloads"/>
 			<item id="ID_WINDOW_REMOTE" text="_Remote"/>
+			<item id="ID_TAB_IRC" text="_Chat"/>
 			<separator/>
 			<menu text="_Advanced">
 				<item id="ID_VIEW_NEIGHBOURS" text="_Neighbours"/>
@@ -676,6 +686,7 @@
 		<item id="ID_TAB_SEARCH" text="_Search"/>
 		<item id="ID_TAB_TRANSFERS" text="_Transfers"/>
 		<item id="ID_TAB_NETWORK" text="_Network"/>
+		<item id="ID_TAB_IRC" text="_Chat"/>
 		<separator/>
 		<item id="ID_VIEW_SECURITY" text="Se_curity"/>
 		<item id="ID_VIEW_HOSTS" text="_Host Cache"/>
@@ -744,6 +755,7 @@
 		<item id="ID_TAB_SEARCH" text="_Search"/>
 		<item id="ID_TAB_TRANSFERS" text="_Transfers"/>
 		<item id="ID_TAB_NETWORK" text="_Network"/>
+		<item id="ID_TAB_IRC" text="_Chat"/>
 		<separator/>
 		<item id="ID_VIEW_SECURITY" text="Se_curity"/>
 		<item id="ID_VIEW_HOSTS" text="_Host Cache"/>
@@ -1436,6 +1448,34 @@
 		<item id="ID_CHAT_TIMESTAMP" text="_Timestamp"/>
 		<item id="ID_CHAT_CLEAR" text="C_lear Window"/>
 	</menu>
+	<!-- IRC WINDOW -->
+	<menu name="CIRCTabRClick">
+		<item id="ID_IRC_CLOSETAB" text="_Close"/>
+	</menu>
+	<menu name="CIRCUserList">
+		<item id="ID_IRC_WHOIS" text="_Whois"/>
+		<item id="ID_IRC_QUERY" text="_Query"/>
+		<separator/>
+		<menu text="Actions">
+			<item id="ID_IRC_TIME" text="_Time"/>
+			<item id="ID_IRC_VERSION" text="_Version"/>
+		</menu>
+		<separator/>
+		<menu text="Control">
+			<item id="ID_IRC_IGNORE" text="_Ignore"/>
+			<item id="ID_IRC_UNIGNORE" text="_Unignore"/>
+			<item id="ID_IRC_OP" text="_Op"/>
+			<item id="ID_IRC_DEOP" text="_Deop"/>
+			<item id="ID_IRC_VOICE" text="_Voice"/>
+			<item id="ID_IRC_DEVOICE" text="D_evoice"/>
+			<item id="ID_IRC_KICK" text="_Kick"/>
+			<item id="ID_IRC_KICKWHY" text="Kick (why?)"/>
+			<item id="ID_IRC_BAN" text="_Ban"/>
+			<item id="ID_IRC_UNBAN" text="_Unban"/>
+			<item id="ID_IRC_BANKICK" text="Kick+Ban"/>
+			<item id="ID_IRC_BANKICKWHY" text="Kick+Ban (why?)"/>
+		</menu>
+	</menu>
 </menus>
 
 <!-- Watermarks -->
@@ -1445,6 +1485,10 @@
 </watermarks>
 <!-- Documents -->
 <documents>
+	<!-- IRC View -->
+	<document name="CIRCUsersBox" title="Users" leftMargin="6" topMargin="6"></document>
+	<document name="CIRCChannelsBox" title="Channels" leftMargin="6" topMargin="6"></document>
+
 	<!-- Home View -->
 	<document name="CHomeViewCtrl" leftMargin="16" topMargin="0">
 		<styles>
@@ -2110,12 +2154,13 @@
 		<image type="alpha" language="en" res="246"/>
 		<target window="CMainTabBarCtrl.Basic"/>
 		<anchors>
-			<anchor name="Background"				rect="0,0,470,44"/>
+			<anchor name="Background"				rect="0,0,542,44"/>
 			<anchor name="_ID_TAB_HOME"				rect="4,1,80,38"/>
 			<anchor name="_ID_TAB_LIBRARY"			rect="86,1,90,38"/>
 			<anchor name="_ID_TAB_MEDIA"			rect="178,1,84,38"/>
 			<anchor name="_ID_TAB_SEARCH"			rect="264,1,90,38"/>
 			<anchor name="_ID_TAB_TRANSFERS"		rect="356,1,106,38"/>
+			<anchor name="_ID_TAB_IRC"				rect="464,1,77,38"/>
 		</anchors>
 		<parts>
 			<part name="_ID_TAB_HOME.Up"			rect="0,0,80,38"/>
@@ -2138,6 +2183,10 @@
 			<part name="_ID_TAB_TRANSFERS.Checked"	rect="344,38,106,38"/>
 			<part name="_ID_TAB_TRANSFERS.Hover"	rect="344,38,106,38"/>
 			<part name="_ID_TAB_TRANSFERS.Down"		rect="344,76,106,38"/>
+			<part name="_ID_TAB_IRC.Up"				rect="552,0,77,38"/>
+			<part name="_ID_TAB_IRC.Checked"		rect="552,38,77,38"/>
+			<part name="_ID_TAB_IRC.Hover"			rect="552,38,77,38"/>
+			<part name="_ID_TAB_IRC.Down"			rect="552,76,77,38"/>
 		</parts>
 	</windowSkin>
 	<windowSkin>
@@ -2145,13 +2194,14 @@
 		<image type="alpha" language="en" res="246"/>
 		<target window="CMainTabBarCtrl"/>
 		<anchors>
-			<anchor name="Background"				rect="0,0,574,44"/>
-			<anchor name="_ID_TAB_HOME"				rect="4,1,80,38"/>
-			<anchor name="_ID_TAB_LIBRARY"			rect="86,1,90,38"/>
-			<anchor name="_ID_TAB_MEDIA"			rect="178,1,84,38"/>
-			<anchor name="_ID_TAB_SEARCH"			rect="264,1,90,38"/>
-			<anchor name="_ID_TAB_TRANSFERS"		rect="356,1,106,38"/>
-			<anchor name="_ID_TAB_NETWORK"			rect="464,1,102,38"/>
+			<anchor name="Background"			rect="0,0,652,44"/>
+			<anchor name="_ID_TAB_HOME"			rect="4,1,80,38"/>
+			<anchor name="_ID_TAB_LIBRARY"		rect="86,1,90,38"/>
+			<anchor name="_ID_TAB_MEDIA"		rect="178,1,84,38"/>
+			<anchor name="_ID_TAB_SEARCH"		rect="264,1,90,38"/>
+			<anchor name="_ID_TAB_TRANSFERS"	rect="356,1,106,38"/>
+			<anchor name="_ID_TAB_NETWORK"		rect="464,1,102,38"/>
+			<anchor name="_ID_TAB_IRC"			rect="568,1,77,38"/>
 		</anchors>
 		<parts>
 			<part name="_ID_TAB_HOME.Up"			rect="0,0,80,38"/>
@@ -2178,6 +2228,10 @@
 			<part name="_ID_TAB_NETWORK.Checked"	rect="450,38,102,38"/>
 			<part name="_ID_TAB_NETWORK.Hover"		rect="450,38,102,38"/>
 			<part name="_ID_TAB_NETWORK.Down"		rect="450,76,102,38"/>
+			<part name="_ID_TAB_IRC.Up"				rect="552,0,77,38"/>
+			<part name="_ID_TAB_IRC.Checked"		rect="552,38,77,38"/>
+			<part name="_ID_TAB_IRC.Hover"			rect="552,38,77,38"/>
+			<part name="_ID_TAB_IRC.Down"			rect="552,76,77,38"/>
 		</parts>
 	</windowSkin>
 </windowSkins>
@@ -2188,11 +2242,11 @@
 		<image type="source" res="248"/>
 		<target window="CRemoteWnd"/>
 		<anchors> 
-			<anchor name="StatusText"		rect="24,33,236,17"/>
-			<anchor name="History"			rect="12,14,112,13"/>
-			<anchor name="MediaSeekTrack"	rect="10,99,162,11"/>
-			<anchor name="MediaVolTrack"	rect="190,99,72,11"/>
-			<anchor name="ScalerTrack"		rect="12,27,112,3"/>
+			<anchor name="StatusText"			rect="24,33,236,17"/>
+			<anchor name="History"				rect="12,14,112,13"/>
+			<anchor name="MediaSeekTrack"		rect="10,99,162,11"/>
+			<anchor name="MediaVolTrack"		rect="190,99,72,11"/>
+			<anchor name="ScalerTrack"			rect="12,27,112,3"/>
 			<anchor name="MediaStatePlaying"	rect="11,35,9,11"/>
 			<anchor name="MediaStatePaused"		rect="11,35,9,11"/>
 			<anchor name="MediaStateStopped"	rect="11,35,9,11"/>
@@ -2206,28 +2260,28 @@
 			<part name="MediaVolTab"		rect="271,18,19,11"/>
 			<part name="MediaVolBar"		rect="190,119,72,11"/>
 			<part name="ScalerTab"			rect="318,23,5,3"/>
-			<part name="MediaStatePlaying"		rect="430,16,9,11"/>
-			<part name="MediaStatePaused"		rect="439,16,9,11"/>
-			<part name="MediaStateStopped"		rect="448,16,9,11"/>
+			<part name="MediaStatePlaying"	rect="430,16,9,11"/>
+			<part name="MediaStatePaused"	rect="439,16,9,11"/>
+			<part name="MediaStateStopped"	rect="448,16,9,11"/>
 		</parts>
 		<anchors> 
-			<anchor name="_ID_MEDIA_ADD"				rect="208,60,32,35"/>
-			<anchor name="_ID_MEDIA_ADD_FOLDER"		rect="240,67,23,23" />
-			<anchor name="_ID_MEDIA_PLAY"				rect="43,59,35,35"/>
-			<anchor name="_ID_MEDIA_PAUSE"				rect="43,59,35,35"/>
-			<anchor name="_ID_MEDIA_STOP"				rect="86,65,25,25"/>
-			<anchor name="_ID_MEDIA_PREVIOUS"			rect="10,65,25,25"/>
-			<anchor name="_ID_MEDIA_NEXT"				rect="119,65,25,25"/>
-			<anchor name="_ID_MEDIA_MUTE"				rect="131,18,22,7"/>
-			<anchor name="_ID_MONITOR_CLOSE"			rect="247,2,15,15"/>
-			<anchor name="_ID_MEDIA_RANDOM"				rect="160,18,38,7"/>
-			<anchor name="_ID_MEDIA_REPEAT"				rect="205,18,33,7"/>
+			<anchor name="_ID_MEDIA_ADD"		rect="208,60,32,35"/>
+			<anchor name="_ID_MEDIA_ADD_FOLDER"	rect="240,67,23,23" />
+			<anchor name="_ID_MEDIA_PLAY"		rect="43,59,35,35"/>
+			<anchor name="_ID_MEDIA_PAUSE"		rect="43,59,35,35"/>
+			<anchor name="_ID_MEDIA_STOP"		rect="86,65,25,25"/>
+			<anchor name="_ID_MEDIA_PREVIOUS"	rect="10,65,25,25"/>
+			<anchor name="_ID_MEDIA_NEXT"		rect="119,65,25,25"/>
+			<anchor name="_ID_MEDIA_MUTE"		rect="131,18,22,7"/>
+			<anchor name="_ID_MONITOR_CLOSE"	rect="247,2,15,15"/>
+			<anchor name="_ID_MEDIA_RANDOM"		rect="160,18,38,7"/>
+			<anchor name="_ID_MEDIA_REPEAT"		rect="205,18,33,7"/>
 		</anchors>
 		<parts> 
 			<part name="_ID_MEDIA_ADD.Hover"			rect="369,126,32,35"/>
-			<part name="_ID_MEDIA_ADD.Down"			rect="430,126,33,35"/>
-			<part name="_ID_MEDIA_ADD_FOLDER.Hover"	rect="401,133,23,23"/>
-			<part name="_ID_MEDIA_ADD_FOLDER.Down"	rect="463,133,23,23"/>
+			<part name="_ID_MEDIA_ADD.Down"				rect="430,126,33,35"/>
+			<part name="_ID_MEDIA_ADD_FOLDER.Hover"		rect="401,133,23,23"/>
+			<part name="_ID_MEDIA_ADD_FOLDER.Down"		rect="463,133,23,23"/>
 			<part name="_ID_MONITOR_CLOSE.Hover"		rect="292,2,15,15"/>
 			<part name="_ID_MONITOR_CLOSE.Down"			rect="273,2,15,15"/>
 			<part name="_ID_MEDIA_PLAY.Up"				rect="319,39,35,35"/>
@@ -2366,7 +2420,7 @@
 		<image id="ID_VIEW_RESULTS_MONITOR"/>
 		<image id="ID_TOOLS_SKIN"/>
 		<image id="ID_TOOLS_WIZARD"/>
-		<image id="ID_TOOLS_SETTINGS" id1="ID_NEIGHBOURS_SETTINGS" id2="ID_DOWNLOADS_SETTINGS" id3="ID_UPLOADS_SETTINGS" id4="ID_MEDIA_SETTINGS" id5="ID_UPLOADS_EDIT_QUEUE"/>
+		<image id="ID_TOOLS_SETTINGS" id1="ID_NEIGHBOURS_SETTINGS" id2="ID_DOWNLOADS_SETTINGS" id3="ID_UPLOADS_SETTINGS" id4="ID_MEDIA_SETTINGS" id5="ID_UPLOADS_EDIT_QUEUE" id6="ID_IRC_SETTINGS"/>
 		<image id="ID_TOOLS_DOWNLOAD"/>
 		<image id="ID_TOOLS_LANGUAGE" id1="ID_LIBRARY_REBUILD_ANSI"/>
 		<!-- Messy Now -->
@@ -2423,6 +2477,30 @@
 		<image id="ID_NETWORK_HTTP"/>
 		<image id="ID_NETWORK_FTP"/>
 		<image id="ID_NETWORK_BT" id1="ID_DOWNLOADS_TORRENT_INFO"/>
+	</bitmap>
+	<bitmap id="IDB_IRCICONS">
+		<image id="ID_IRC_WHOIS"/>
+		<image id="ID_IRC_VOICE"/>
+		<image id="ID_IRC_UNIGNORE"/>
+		<image id="ID_IRC_TIME"/>
+		<image id="ID_TAB_IRC"/>
+		<image id="ID_IRC_REMOVE"/>
+		<image id="ID_IRC_QUERY"/>
+		<image id="ID_IRC_OP"/>
+		<image id="ID_IRC_KICKWHY"/>
+		<image id="ID_IRC_KICK"/>
+		<image id="ID_IRC_CLOSETAB"/>
+		<image id="ID_IRC_CONNECT"/>
+		<image id="ID_IRC_IGNORE"/>
+		<image id="ID_IRC_DISCONNECT"/>
+		<image id="ID_IRC_DEVOICE"/>
+		<image id="ID_IRC_DEOP"/>
+		<image id="ID_IRC_BANKICKWHY"/>
+		<image id="ID_IRC_BANKICK"/>
+		<image id="ID_IRC_BAN"/>
+		<image id="ID_IRC_ADD"/>
+		<image id="ID_IRC_VERSION"/>
+		<image id="ID_IRC_UNBAN"/>
 	</bitmap>
 	<icon res="IDI_ICON" id="ID_TRAY_OPEN"/>
 	<icon res="IDI_DOWNLOAD_MONITOR" id="ID_DOWNLOADS_MONITOR"/>

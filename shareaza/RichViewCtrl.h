@@ -43,6 +43,8 @@ public:
 	virtual ~CRichViewCtrl();
 
 // Attributes
+public:
+	TCHAR*			m_szSign;
 protected:
 	CSyncObject*	m_pSyncRoot;
 	BOOL			m_bSelectable;
@@ -113,11 +115,13 @@ protected:
 	afx_msg void OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
 	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
 	afx_msg void OnTimer(UINT_PTR nIDEvent);
+	afx_msg void OnLButtonDblClk(UINT nFlags, CPoint point);
 	afx_msg BOOL OnMouseWheel(UINT nFlags, short zDelta, CPoint pt);
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 
 	friend class CRichFragment;
+	friend class CIRCFrame;
 };
 
 typedef struct
@@ -127,6 +131,8 @@ typedef struct
 } RVN_ELEMENTEVENT;
 
 #define RVN_CLICK		100
+#define RVN_DBLCLICK	101
+#define RVN_SETCURSOR	102
 
 //{{AFX_INSERT_LOCATION}}
 
