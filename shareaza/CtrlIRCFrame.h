@@ -308,9 +308,9 @@ protected:
 #define	ID_COLOR_SERVERERROR			9
 #define	ID_COLOR_ME						10
 
-#define	ID_KIND_CLIENT					301
-#define	ID_KIND_PRIVATEMSG				302
-#define	ID_KIND_CHANNEL					303
+#define	ID_KIND_CLIENT					51
+#define	ID_KIND_PRIVATEMSG				52
+#define	ID_KIND_CHANNEL					53
 
 #define IDC_IRC_FRAME					400
 
