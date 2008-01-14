@@ -222,8 +222,7 @@ BEGIN
         MENUITEM "&Download URL...\tCtrl+D",    ID_TOOLS_DOWNLOAD
         MENUITEM "Seed Torrent...",             ID_TOOLS_SEEDTORRENT
         MENUITEM "Import eMule partial downloads...", IDC_IMPORT_DOWNLOADS
-        MENUITEM "&Open my folder of completed Downloads", 
-                                                ID_OPEN_DOWNLOADS_FOLDER
+        MENUITEM "&Open my folder of completed Downloads", ID_OPEN_DOWNLOADS_FOLDER
         MENUITEM SEPARATOR
         MENUITEM "My &Profile...",              ID_TOOLS_PROFILE
         MENUITEM "S&kin Shareaza...",           ID_TOOLS_SKIN
@@ -373,32 +372,23 @@ STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Connect To|Browse Host"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
-    GROUPBOX        "Initiate a new connection to host or server:|Browse this host:",
-                    IDC_CONNECT_PROMPT,5,5,230,40
-    COMBOBOX        IDC_CONNECT_HOST,15,20,170,140,CBS_DROPDOWN | CBS_SORT | 
-                    WS_VSCROLL | WS_TABSTOP
-    EDITTEXT        IDC_CONNECT_PORT,190,20,35,12,ES_CENTER | ES_AUTOHSCROLL | 
-                    ES_NUMBER
+    GROUPBOX        "Initiate a new connection to host or server:|Browse this host:",IDC_CONNECT_PROMPT,5,5,230,40
+    COMBOBOX        IDC_CONNECT_HOST,15,20,170,140,CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_CONNECT_PORT,190,20,35,12,ES_CENTER | ES_AUTOHSCROLL | ES_NUMBER
     GROUPBOX        "Network &Protocol:",IDC_CONNECT_ADVANCED,5,50,230,39
-    COMBOBOX        IDC_CONNECT_PROTOCOL,15,65,95,75,CBS_DROPDOWNLIST | 
-                    CBS_OWNERDRAWFIXED | CBS_HASSTRINGS | WS_VSCROLL | 
-                    WS_TABSTOP
-    CONTROL         "&Suppress Ultrapeer",IDC_CONNECT_ULTRAPEER,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,137,65,91,15
+    COMBOBOX        IDC_CONNECT_PROTOCOL,15,65,95,75,CBS_DROPDOWNLIST | CBS_OWNERDRAWFIXED | CBS_HASSTRINGS | WS_VSCROLL | WS_TABSTOP
+    CONTROL         "&Suppress Ultrapeer",IDC_CONNECT_ULTRAPEER,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,137,65,91,15
     DEFPUSHBUTTON   "Connect",IDOK,130,93,50,14
     PUSHBUTTON      "Cancel",IDCANCEL,185,93,50,14
 END
 
 IDD_NEW_SEARCH DIALOGEX 0, 0, 238, 60
-STYLE DS_SETFONT | WS_POPUP | WS_CLIPCHILDREN | WS_CAPTION | WS_SYSMENU | 
-    WS_THICKFRAME
+STYLE DS_SETFONT | WS_POPUP | WS_CLIPCHILDREN | WS_CAPTION | WS_SYSMENU | WS_THICKFRAME
 CAPTION "New Search|Search Again|Find in Library"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
     EDITTEXT        IDC_SEARCH,5,5,225,12,ES_AUTOHSCROLL
-    COMBOBOX        IDC_SCHEMAS,5,20,225,245,CBS_DROPDOWNLIST | 
-                    CBS_OWNERDRAWVARIABLE | CBS_SORT | CBS_HASSTRINGS | 
-                    WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_SCHEMAS,5,20,225,245,CBS_DROPDOWNLIST | CBS_OWNERDRAWVARIABLE | CBS_SORT | CBS_HASSTRINGS | WS_VSCROLL | WS_TABSTOP
     DEFPUSHBUTTON   "Search",IDOK,5,40,50,14
     PUSHBUTTON      "Cancel",IDCANCEL,60,40,50,14
 END
@@ -408,11 +398,9 @@ STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Filter Matches"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
-    GROUPBOX        "Only show matches which include the &words:",IDC_STATIC,
-                    5,5,210,45,WS_GROUP
+    GROUPBOX        "Only show matches which include the &words:",IDC_STATIC,5,5,210,45,WS_GROUP
     EDITTEXT        IDC_FILTER,14,20,190,12,ES_AUTOHSCROLL
-    CTEXT           "( you can also exclude words with -word )",IDC_STATIC,
-                    14,35,190,10
+    CTEXT           "( you can also exclude words with -word )",IDC_STATIC,14,35,190,10
     GROUPBOX        "And are of &size:",IDC_STATIC,5,50,210,50
     LTEXT           "Minimum:",IDC_STATIC,14,63,35,12,SS_CENTERIMAGE
     EDITTEXT        IDC_MIN_SIZE,55,63,45,12,ES_AUTOHSCROLL
@@ -420,55 +408,37 @@ BEGIN
     EDITTEXT        IDC_MAX_SIZE,159,63,45,12,ES_AUTOHSCROLL
     LTEXT           "With at least:",IDC_STATIC,14,80,50,12,SS_CENTERIMAGE
     EDITTEXT        IDC_SOURCES,70,80,35,12,ES_AUTOHSCROLL | ES_NUMBER
-    CONTROL         "Spin1",IDC_SOURCES_SPIN,"msctls_updown32",
-                    UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | 
-                    UDS_ARROWKEYS | UDS_NOTHOUSANDS,105,80,8,12
+    CONTROL         "Spin1",IDC_SOURCES_SPIN,"msctls_updown32",UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS | UDS_NOTHOUSANDS,105,80,8,12
     LTEXT           "sources.",IDC_STATIC,115,80,30,12,SS_CENTERIMAGE
     GROUPBOX        "&Hide:",IDC_STATIC,5,101,210,78,WS_GROUP
-    CONTROL         "Busy hosts",IDC_FILTER_BUSY,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,14,113,90,10
-    CONTROL         "Firewalled/push hosts",IDC_FILTER_PUSH,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,14,126,90,11
-    CONTROL         "Unstable hosts",IDC_FILTER_UNSTABLE,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,14,140,90,10
-    CONTROL         "Non-matching files",IDC_FILTER_REJECT,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,115,113,90,10
-    CONTROL         "Files you have already",IDC_FILTER_LOCAL,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,115,126,90,11
-    CONTROL         "Bogus results",IDC_FILTER_BOGUS,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,115,140,90,10
+    CONTROL         "Busy hosts",IDC_FILTER_BUSY,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,14,113,90,10
+    CONTROL         "Firewalled/push hosts",IDC_FILTER_PUSH,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,14,126,90,11
+    CONTROL         "Unstable hosts",IDC_FILTER_UNSTABLE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,14,140,90,10
+    CONTROL         "Non-matching files",IDC_FILTER_REJECT,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,115,113,90,10
+    CONTROL         "Files you have already",IDC_FILTER_LOCAL,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,115,126,90,11
+    CONTROL         "Bogus results",IDC_FILTER_BOGUS,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,115,140,90,10
     DEFPUSHBUTTON   "Filter",IDOK,110,237,50,14,WS_GROUP
     PUSHBUTTON      "Cancel",IDCANCEL,165,237,50,14
-    COMBOBOX        IDC_FILTERS,14,194,124,37,CBS_DROPDOWNLIST | WS_VSCROLL | 
-                    WS_TABSTOP
-    CONTROL         "Set as default",IDC_SET_DEFAULT_FILTER,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,14,213,124,10
+    COMBOBOX        IDC_FILTERS,14,194,124,37,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    CONTROL         "Set as default",IDC_SET_DEFAULT_FILTER,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,14,213,124,10
     PUSHBUTTON      "&Save as",IDC_SAVE_FILTER,145,193,61,14
     PUSHBUTTON      "&Delete",IDC_DELETE_FILTER,145,211,61,14
     GROUPBOX        "Filters:",IDC_STATIC,5,181,210,52
-    CONTROL         "DRM files",IDC_FILTER_DRM,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,14,153,90,10
-    CONTROL         "Suspicious files",IDC_FILTER_SUS,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,14,166,90,10
-    CONTROL         "Adult results",IDC_ADULT_FILTER,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,115,153,90,10
+    CONTROL         "DRM files",IDC_FILTER_DRM,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,14,153,90,10
+    CONTROL         "Suspicious files",IDC_FILTER_SUS,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,14,166,90,10
+    CONTROL         "Adult results",IDC_ADULT_FILTER,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,115,153,90,10
 END
 
 IDD_SCHEMA_COLUMNS DIALOG  0, 0, 238, 142
-STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CLIPCHILDREN | WS_CAPTION | 
-    WS_SYSMENU
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CLIPCHILDREN | WS_CAPTION | WS_SYSMENU
 CAPTION "Select Columns from Schema"
 FONT 8, "Tahoma"
 BEGIN
-    COMBOBOX        IDC_SCHEMAS,5,5,225,135,CBS_DROPDOWNLIST | 
-                    CBS_OWNERDRAWVARIABLE | CBS_SORT | CBS_HASSTRINGS | 
-                    WS_VSCROLL | WS_TABSTOP
-    CONTROL         "List1",IDC_COLUMNS,"SysListView32",LVS_REPORT | 
-                    LVS_NOCOLUMNHEADER | WS_BORDER | WS_TABSTOP,5,25,115,110
+    COMBOBOX        IDC_SCHEMAS,5,5,225,135,CBS_DROPDOWNLIST | CBS_OWNERDRAWVARIABLE | CBS_SORT | CBS_HASSTRINGS | WS_VSCROLL | WS_TABSTOP
+    CONTROL         "List1",IDC_COLUMNS,"SysListView32",LVS_REPORT | LVS_NOCOLUMNHEADER | WS_BORDER | WS_TABSTOP,5,25,115,110
     DEFPUSHBUTTON   "OK",IDOK,125,120,50,14
     PUSHBUTTON      "Cancel",IDCANCEL,180,120,50,14
-    CTEXT           "Select a schema from the list, then select the fields to display as columns.",
-                    IDC_STATIC,130,30,95,35
+    CTEXT           "Select a schema from the list, then select the fields to display as columns.",IDC_STATIC,130,30,95,35
 END
 
 IDD_SETTINGS_CONNECTION DIALOGEX 0, 0, 282, 220
@@ -478,48 +448,32 @@ FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
     GROUPBOX        "&Inbound Address:",IDC_STATIC,7,5,268,59
     LTEXT           "Address:",IDC_STATIC,15,22,35,12,SS_CENTERIMAGE
-    COMBOBOX        IDC_INBOUND_HOST,55,22,99,70,CBS_DROPDOWN | CBS_SORT | 
-                    WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_INBOUND_HOST,55,22,99,70,CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
     LTEXT           "Speed:",IDC_STATIC,165,22,35,12,SS_CENTERIMAGE
-    COMBOBOX        IDC_INBOUND_SPEED,205,22,60,80,CBS_DROPDOWN | WS_VSCROLL | 
-                    WS_TABSTOP
+    COMBOBOX        IDC_INBOUND_SPEED,205,22,60,80,CBS_DROPDOWN | WS_VSCROLL | WS_TABSTOP
     LTEXT           "Port:",IDC_STATIC,15,42,35,12,SS_CENTERIMAGE
     EDITTEXT        IDC_INBOUND_PORT,55,42,35,12,ES_AUTOHSCROLL | ES_NUMBER
-    CONTROL         "Random",IDC_INBOUND_RANDOM,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,100,42,50,12
-    CONTROL         "Force binding to this address",IDC_INBOUND_BIND,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,160,42,105,12
+    CONTROL         "Random",IDC_INBOUND_RANDOM,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,100,42,50,12
+    CONTROL         "Force binding to this address",IDC_INBOUND_BIND,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,160,42,105,12
     GROUPBOX        "&Outbound Address:",IDC_STATIC,7,67,268,44
     LTEXT           "Address:",IDC_STATIC,14,87,30,12,SS_CENTERIMAGE
-    COMBOBOX        IDC_OUTBOUND_HOST,56,87,99,70,CBS_DROPDOWN | CBS_SORT | 
-                    WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_OUTBOUND_HOST,56,87,99,70,CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
     LTEXT           "Speed:",IDC_STATIC,166,87,35,12,SS_CENTERIMAGE
-    COMBOBOX        IDC_OUTBOUND_SPEED,206,87,60,80,CBS_DROPDOWN | 
-                    WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_OUTBOUND_SPEED,206,87,60,80,CBS_DROPDOWN | WS_VSCROLL | WS_TABSTOP
     GROUPBOX        "O&ptions:",IDC_STATIC,7,114,268,62
-    RTEXT           "Can accept incoming connections",IDC_STATIC,14,125,147,
-                    12
-    COMBOBOX        IDC_CAN_ACCEPT,166,123,47,52,CBS_DROPDOWN | WS_VSCROLL | 
-                    WS_TABSTOP
+    RTEXT           "Can accept incoming connections",IDC_STATIC,14,125,147,12
+    COMBOBOX        IDC_CAN_ACCEPT,166,123,47,52,CBS_DROPDOWN | WS_VSCROLL | WS_TABSTOP
     CONTROL         "Ignore private/local IP addresses ",IDC_IGNORE_LOCAL,
-                    "Button",BS_AUTOCHECKBOX | BS_RIGHT | WS_TABSTOP,14,140,
-                    161,12,WS_EX_RIGHT
+                    "Button",BS_AUTOCHECKBOX | BS_RIGHT | WS_TABSTOP,14,140,161,12,WS_EX_RIGHT
     CONTROL         "Enable UPnP connection devices setup",IDC_ENABLE_UPNP,
-                    "Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | BS_RIGHT | 
-                    WS_TABSTOP,14,158,161,10
+                    "Button",BS_AUTOCHECKBOX | BS_LEFTTEXT | BS_RIGHT | WS_TABSTOP,14,158,161,10
     GROUPBOX        "&Timeouts:",IDC_STATIC,7,179,268,34
     LTEXT           "Connection:",IDC_STATIC,21,193,45,12,SS_CENTERIMAGE
-    EDITTEXT        IDC_TIMEOUT_CONNECTION,69,193,35,12,ES_AUTOHSCROLL | 
-                    ES_NUMBER
-    CONTROL         "Spin1",IDC_TIMEOUT_CONNECTION_SPIN,"msctls_updown32",
-                    UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | 
-                    UDS_ARROWKEYS | UDS_NOTHOUSANDS,105,193,11,12
+    EDITTEXT        IDC_TIMEOUT_CONNECTION,69,193,35,12,ES_AUTOHSCROLL | ES_NUMBER
+    CONTROL         "Spin1",IDC_TIMEOUT_CONNECTION_SPIN,"msctls_updown32",UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS | UDS_NOTHOUSANDS,105,193,11,12
     LTEXT           "Handshake:",IDC_STATIC,158,193,45,12,SS_CENTERIMAGE
-    EDITTEXT        IDC_TIMEOUT_HANDSHAKE,206,193,35,12,ES_AUTOHSCROLL | 
-                    ES_NUMBER
-    CONTROL         "Spin1",IDC_TIMEOUT_HANDSHAKE_SPIN,"msctls_updown32",
-                    UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | 
-                    UDS_ARROWKEYS | UDS_NOTHOUSANDS,243,193,11,12
+    EDITTEXT        IDC_TIMEOUT_HANDSHAKE,206,193,35,12,ES_AUTOHSCROLL | ES_NUMBER
+    CONTROL         "Spin1",IDC_TIMEOUT_HANDSHAKE_SPIN,"msctls_updown32",UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS | UDS_NOTHOUSANDS,243,193,11,12
 END
 
 IDD_SETTINGS_GNUTELLA DIALOGEX 0, 0, 282, 220
@@ -528,62 +482,39 @@ CAPTION "Gnutella"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
     GROUPBOX        "Gnutella2 Network:",IDC_STATIC,7,13,131,60,WS_GROUP
-    CONTROL         "Always connect to Gnutella2",IDC_G2_ALWAYS,"Button",
-                    BS_AUTO3STATE | WS_TABSTOP,10,25,127,8
-    CONTROL         "Connect to Gnutella2 today",IDC_G2_TODAY,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,10,38,127,8
+    CONTROL         "Always connect to Gnutella2",IDC_G2_ALWAYS,"Button",BS_AUTO3STATE | WS_TABSTOP,10,25,127,8
+    CONTROL         "Connect to Gnutella2 today",IDC_G2_TODAY,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,10,38,127,8
     LTEXT           "Mode: ",IDC_STATIC,16,56,55,8,0,WS_EX_RIGHT
-    COMBOBOX        IDC_G2_CLIENTMODE,75,53,54,54,CBS_DROPDOWNLIST | 
-                    WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_G2_CLIENTMODE,75,53,54,54,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
     GROUPBOX        "G&2 Connections:",IDC_STATIC,7,84,131,75,WS_GROUP
     LTEXT           "Leaf to Hub:",IDC_STATIC,18,95,65,12,SS_CENTERIMAGE
     EDITTEXT        IDC_G2_HUBS,90,95,35,12,ES_AUTOHSCROLL | ES_NUMBER
-    CONTROL         "Spin1",IDC_G2_HUBS_SPIN,"msctls_updown32",
-                    UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | 
-                    UDS_ARROWKEYS | UDS_NOTHOUSANDS,126,95,11,12
+    CONTROL         "Spin1",IDC_G2_HUBS_SPIN,"msctls_updown32",UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS | UDS_NOTHOUSANDS,126,95,11,12
     LTEXT           "Hub to Leaf:",IDC_STATIC,18,116,65,12,SS_CENTERIMAGE
     EDITTEXT        IDC_G2_LEAFS,90,116,35,12,ES_AUTOHSCROLL | ES_NUMBER
-    CONTROL         "Spin1",IDC_G2_LEAFS_SPIN,"msctls_updown32",
-                    UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | 
-                    UDS_ARROWKEYS | UDS_NOTHOUSANDS,126,116,11,12
+    CONTROL         "Spin1",IDC_G2_LEAFS_SPIN,"msctls_updown32",UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS | UDS_NOTHOUSANDS,126,116,11,12
     LTEXT           "Hub to Hub:",IDC_STATIC,18,137,65,12,SS_CENTERIMAGE
     EDITTEXT        IDC_G2_PEERS,90,137,35,12,ES_AUTOHSCROLL | ES_NUMBER
-    CONTROL         "Spin1",IDC_G2_PEERS_SPIN,"msctls_updown32",
-                    UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | 
-                    UDS_ARROWKEYS | UDS_NOTHOUSANDS,126,137,11,12
+    CONTROL         "Spin1",IDC_G2_PEERS_SPIN,"msctls_updown32",UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS | UDS_NOTHOUSANDS,126,137,11,12
     GROUPBOX        "Gnutella1 Network:",IDC_STATIC,142,13,133,60,WS_GROUP
-    CONTROL         "Always connect to Gnutella1",IDC_G1_ALWAYS,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,145,25,125,8
-    CONTROL         "Connect to Gnutella1 today",IDC_G1_TODAY,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,145,38,125,8
+    CONTROL         "Always connect to Gnutella1",IDC_G1_ALWAYS,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,145,25,125,8
+    CONTROL         "Connect to Gnutella1 today",IDC_G1_TODAY,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,145,38,125,8
     LTEXT           "Mode: ",IDC_STATIC,150,55,56,8,0,WS_EX_RIGHT
-    COMBOBOX        IDC_G1_CLIENTMODE,209,53,54,53,CBS_DROPDOWNLIST | 
-                    WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_G1_CLIENTMODE,209,53,54,53,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
     GROUPBOX        "G&1 Connections:",IDC_STATIC,142,84,133,75,WS_GROUP
-    LTEXT           "Leaf to Ultrapeer:",IDC_STATIC,160,95,65,12,
-                    SS_CENTERIMAGE
+    LTEXT           "Leaf to Ultrapeer:",IDC_STATIC,160,95,65,12,SS_CENTERIMAGE
     EDITTEXT        IDC_G1_HUBS,230,95,35,12,ES_AUTOHSCROLL | ES_NUMBER
-    CONTROL         "Spin1",IDC_G1_HUBS_SPIN,"msctls_updown32",
-                    UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | 
-                    UDS_ARROWKEYS | UDS_NOTHOUSANDS,266,95,8,12
-    LTEXT           "Ultrapeer to Leaf:",IDC_STATIC,160,116,65,12,
-                    SS_CENTERIMAGE
+    CONTROL         "Spin1",IDC_G1_HUBS_SPIN,"msctls_updown32",UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS | UDS_NOTHOUSANDS,266,95,8,12
+    LTEXT           "Ultrapeer to Leaf:",IDC_STATIC,160,116,65,12,SS_CENTERIMAGE
     EDITTEXT        IDC_G1_LEAFS,230,116,35,12,ES_AUTOHSCROLL | ES_NUMBER
-    CONTROL         "Spin1",IDC_G1_LEAFS_SPIN,"msctls_updown32",
-                    UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | 
-                    UDS_ARROWKEYS | UDS_NOTHOUSANDS,266,116,8,12
+    CONTROL         "Spin1",IDC_G1_LEAFS_SPIN,"msctls_updown32",UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS | UDS_NOTHOUSANDS,266,116,8,12
     LTEXT           "Peer to Peer:",IDC_STATIC,160,137,65,12,SS_CENTERIMAGE
     EDITTEXT        IDC_G1_PEERS,230,137,35,12,ES_AUTOHSCROLL | ES_NUMBER
-    CONTROL         "Spin1",IDC_G1_PEERS_SPIN,"msctls_updown32",
-                    UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | 
-                    UDS_ARROWKEYS | UDS_NOTHOUSANDS,266,137,8,12
+    CONTROL         "Spin1",IDC_G1_PEERS_SPIN,"msctls_updown32",UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS | UDS_NOTHOUSANDS,266,137,8,12
     GROUPBOX        "&Link Compression:",IDC_STATIC,5,172,270,33,WS_GROUP
-    CONTROL         "Hub to Leaf",IDC_DEFLATE_HUB2LEAF,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,15,183,80,17
-    CONTROL         "Leaf to Hub",IDC_DEFLATE_LEAF2HUB,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,100,183,80,17
-    CONTROL         "Hub to Hub",IDC_DEFLATE_HUB2HUB,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,185,183,80,17
+    CONTROL         "Hub to Leaf",IDC_DEFLATE_HUB2LEAF,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,183,80,17
+    CONTROL         "Leaf to Hub",IDC_DEFLATE_LEAF2HUB,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,100,183,80,17
+    CONTROL         "Hub to Hub",IDC_DEFLATE_HUB2HUB,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,185,183,80,17
 END
 
 IDD_SETTINGS_ADVANCED DIALOGEX 0, 0, 282, 220
@@ -591,21 +522,14 @@ STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Advanced"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
-    CONTROL         "List1",IDC_PROPERTIES,"SysListView32",LVS_REPORT | 
-                    LVS_SINGLESEL | LVS_SHOWSELALWAYS | WS_BORDER | 
-                    WS_TABSTOP,7,7,268,138
+    CONTROL         "List1",IDC_PROPERTIES,"SysListView32",LVS_REPORT | LVS_SINGLESEL | LVS_SHOWSELALWAYS | WS_BORDER | WS_TABSTOP,7,7,268,138
     EDITTEXT        IDC_VALUE,60,165,45,12,ES_AUTOHSCROLL | ES_NUMBER
-    CONTROL         "Spin1",IDC_VALUE_SPIN,"msctls_updown32",UDS_SETBUDDYINT | 
-                    UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS | 
-                    UDS_NOTHOUSANDS | WS_DISABLED,105,165,8,12
+    CONTROL         "Spin1",IDC_VALUE_SPIN,"msctls_updown32",UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS | UDS_NOTHOUSANDS | WS_DISABLED,105,165,8,12
     PUSHBUTTON      "Set Default",IDC_DEFAULT_VALUE,216,163,50,14
     GROUPBOX        "Setting Properties:",IDC_STATIC,7,150,268,63
     LTEXT           "Value:",IDC_STATIC,15,165,40,12,SS_CENTERIMAGE
-    LTEXT           "Description:",IDC_STATIC,15,180,40,12,SS_CENTERIMAGE | 
-                    NOT WS_VISIBLE
-    EDITTEXT        IDC_DESCRIPTION,60,180,206,25,ES_MULTILINE | 
-                    ES_AUTOVSCROLL | ES_READONLY | NOT WS_VISIBLE | 
-                    WS_VSCROLL
+    LTEXT           "Description:",IDC_STATIC,15,180,40,12,SS_CENTERIMAGE | NOT WS_VISIBLE
+    EDITTEXT        IDC_DESCRIPTION,60,180,206,25,ES_MULTILINE | ES_AUTOVSCROLL | ES_READONLY | NOT WS_VISIBLE | WS_VSCROLL
 END
 
 IDD_SETTINGS_DOWNLOADS DIALOGEX 0, 0, 282, 220
@@ -613,48 +537,30 @@ STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Downloads"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
-    GROUPBOX        "Save &Completed Files Here:",IDC_STATIC,5,5,270,35,
-                    WS_GROUP
-    EDITTEXT        IDC_DOWNLOADS_FOLDER,15,19,225,12,ES_AUTOHSCROLL | 
-                    ES_READONLY
+    GROUPBOX        "Save &Completed Files Here:",IDC_STATIC,5,5,270,35,WS_GROUP
+    EDITTEXT        IDC_DOWNLOADS_FOLDER,15,19,225,12,ES_AUTOHSCROLL | ES_READONLY
     PUSHBUTTON      "",IDC_DOWNLOADS_BROWSE,245,15,23,20
-    GROUPBOX        "Store Temporary &Incomplete Files Here:",IDC_STATIC,5,
-                    45,270,35,WS_GROUP
-    EDITTEXT        IDC_INCOMPLETE_FOLDER,16,59,225,12,ES_AUTOHSCROLL | 
-                    ES_READONLY
+    GROUPBOX        "Store Temporary &Incomplete Files Here:",IDC_STATIC,5,45,270,35,WS_GROUP
+    EDITTEXT        IDC_INCOMPLETE_FOLDER,16,59,225,12,ES_AUTOHSCROLL | ES_READONLY
     PUSHBUTTON      "",IDC_INCOMPLETE_BROWSE,245,55,23,20
     GROUPBOX        "&Number of Downloads:",IDC_STATIC,5,86,130,76,WS_GROUP
     LTEXT           "Maximum Files:",IDC_STATIC,15,102,70,12,SS_CENTERIMAGE
     EDITTEXT        IDC_MAX_FILES,90,102,36,12,ES_AUTOHSCROLL | ES_NUMBER
-    CONTROL         "Spin1",IDC_MAX_FILES_SPIN,"msctls_updown32",
-                    UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | 
-                    UDS_ARROWKEYS | UDS_NOTHOUSANDS,126,102,8,12
-    LTEXT           "Maximum Transfers:",IDC_STATIC,15,121,70,12,
-                    SS_CENTERIMAGE
-    EDITTEXT        IDC_MAX_TRANSFERS,90,121,36,12,ES_AUTOHSCROLL | 
-                    ES_NUMBER
-    CONTROL         "Spin1",IDC_MAX_TRANSFERS_SPIN,"msctls_updown32",
-                    UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | 
-                    UDS_ARROWKEYS | UDS_NOTHOUSANDS,126,121,8,12
-    LTEXT           "Transfers per File:",IDC_STATIC,15,140,70,12,
-                    SS_CENTERIMAGE
+    CONTROL         "Spin1",IDC_MAX_FILES_SPIN,"msctls_updown32",UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS | UDS_NOTHOUSANDS,126,102,8,12
+    LTEXT           "Maximum Transfers:",IDC_STATIC,15,121,70,12,SS_CENTERIMAGE
+    EDITTEXT        IDC_MAX_TRANSFERS,90,121,36,12,ES_AUTOHSCROLL | ES_NUMBER
+    CONTROL         "Spin1",IDC_MAX_TRANSFERS_SPIN,"msctls_updown32",UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS | UDS_NOTHOUSANDS,126,121,8,12
+    LTEXT           "Transfers per File:",IDC_STATIC,15,140,70,12,SS_CENTERIMAGE
     EDITTEXT        IDC_MAX_TPF,90,140,36,12,ES_AUTOHSCROLL | ES_NUMBER
-    CONTROL         "Spin1",IDC_MAX_TPF_SPIN,"msctls_updown32",
-                    UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | 
-                    UDS_ARROWKEYS | UDS_NOTHOUSANDS,126,140,8,12
+    CONTROL         "Spin1",IDC_MAX_TPF_SPIN,"msctls_updown32",UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS | UDS_NOTHOUSANDS,126,140,8,12
     GROUPBOX        "&Limits:",IDC_STATIC,145,86,130,76,WS_GROUP
-    LTEXT           "Total Download Bandwidth:",IDC_STATIC,155,101,109,8,
-                    SS_CENTERIMAGE
-    COMBOBOX        IDC_DOWNLOADS_BANDWIDTH_LIMIT,204,114,60,68,CBS_DROPDOWN | 
-                    WS_VSCROLL | WS_TABSTOP
-    LTEXT           "Maximum Queue Length:",IDC_STATIC,156,130,108,8,
-                    SS_CENTERIMAGE
-    COMBOBOX        IDC_DOWNLOADS_QUEUE_LIMIT,204,140,60,65,CBS_DROPDOWN | 
-                    WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Total Download Bandwidth:",IDC_STATIC,155,101,109,8,SS_CENTERIMAGE
+    COMBOBOX        IDC_DOWNLOADS_BANDWIDTH_LIMIT,204,114,60,68,CBS_DROPDOWN | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Maximum Queue Length:",IDC_STATIC,156,130,108,8,SS_CENTERIMAGE
+    COMBOBOX        IDC_DOWNLOADS_QUEUE_LIMIT,204,140,60,65,CBS_DROPDOWN | WS_VSCROLL | WS_TABSTOP
     GROUPBOX        "",IDC_STATIC,5,170,270,42,WS_GROUP
-    CONTROL         "Only download and upload to networks which are connected.",
-                    IDC_REQUIRE_CONNECT,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,15,186,245,15
+    CONTROL         "Only download and upload to networks which are connected.",IDC_REQUIRE_CONNECT,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,186,245,15
 END
 
 IDD_SETTINGS_GENERAL DIALOGEX 0, 0, 282, 220
@@ -664,53 +570,39 @@ FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
     GROUPBOX        "&General:",IDC_STATIC,7,5,160,85,WS_GROUP
     CONTROL         "Auto-connect on Shareaza startup",IDC_AUTO_CONNECT,
-                    "Button",BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,15,20,
-                    148,10
+                    "Button",BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,15,20,148,10
     CONTROL         "Start Shareaza at Windows startup",IDC_AUTO_START,
-                    "Button",BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,15,35,
-                    148,10
+                    "Button",BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,15,35,148,10
     CONTROL         "Show a prompt before opening URIs",IDC_PROMPT_URLS,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,50,148,10
     LTEXT           "Show rates in:",IDC_STATIC,15,70,56,12,SS_CENTERIMAGE
-    COMBOBOX        IDC_RATES_IN_BYTES,74,70,80,80,CBS_DROPDOWNLIST | 
-                    WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_RATES_IN_BYTES,74,70,80,80,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
     GROUPBOX        "&Downloads:",IDC_STATIC,7,93,160,38
     CONTROL         "Expand new downloads by default",IDC_EXPAND_DOWNLOAD,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,14,104,148,10
     CONTROL         "Display simple progress bar",IDC_DOWNLOADS_SIMPLEBAR,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,14,117,148,10
     GROUPBOX        "&Search:",IDC_STATIC,7,134,160,75
-    CONTROL         "Expand multi-source files by default",
-                    IDC_EXPAND_MATCHES,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
-                    16,150,148,10
-    CONTROL         "Switch to Transfers view on download",
-                    IDC_SWITCH_TO_TRANSFERS,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,15,165,148,10
+    CONTROL         "Expand multi-source files by default",IDC_EXPAND_MATCHES,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,16,150,148,10
+    CONTROL         "Switch to Transfers view on download",IDC_SWITCH_TO_TRANSFERS,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,165,148,10
     CONTROL         "Hide side bar when starting search",IDC_HIDE_SEARCH,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,179,148,10
     CONTROL         "Filter adult content from searches",IDC_ADULT_FILTER,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,16,193,148,10
     GROUPBOX        "&Tooltips:",IDC_STATIC,170,5,105,126,WS_GROUP
-    CONTROL         "List1",IDC_TIP_DISPLAY,"SysListView32",LVS_REPORT | 
-                    LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_NOCOLUMNHEADER | 
-                    WS_BORDER | WS_GROUP | WS_TABSTOP,180,20,85,70
+    CONTROL         "List1",IDC_TIP_DISPLAY,"SysListView32",LVS_REPORT | LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_NOCOLUMNHEADER | WS_BORDER | WS_GROUP | WS_TABSTOP,180,20,85,70
     LTEXT           "Delay (ms):",IDC_STATIC,180,94,45,12,SS_CENTERIMAGE
     EDITTEXT        IDC_TIP_DELAY,230,94,35,12,ES_AUTOHSCROLL | ES_NUMBER
-    CONTROL         "Spin1",IDC_TIP_DELAY_SPIN,"msctls_updown32",
-                    UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | 
-                    UDS_ARROWKEYS | UDS_NOTHOUSANDS,260,94,8,12
+    CONTROL         "Spin1",IDC_TIP_DELAY_SPIN,"msctls_updown32",UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS | UDS_NOTHOUSANDS,260,94,8,12
     LTEXT           "Opacity:",IDC_STATIC,180,109,30,12,SS_CENTERIMAGE
-    CONTROL         "Slider1",IDC_TIP_ALPHA,"msctls_trackbar32",TBS_TOP | 
-                    TBS_NOTICKS | WS_TABSTOP,210,109,60,15
+    CONTROL         "Slider1",IDC_TIP_ALPHA,"msctls_trackbar32",TBS_TOP | TBS_NOTICKS | WS_TABSTOP,210,109,60,15
     GROUPBOX        "&Tray:",IDC_STATIC,170,134,105,75,WS_GROUP
-    LTEXT           "When I click close:",IDC_STATIC,178,145,94,10,
-                    SS_CENTERIMAGE
-    COMBOBOX        IDC_CLOSE_MODE,180,160,85,55,CBS_DROPDOWNLIST | 
-                    WS_VSCROLL | WS_GROUP | WS_TABSTOP
-    LTEXT           "When I click minimise:",IDC_STATIC,178,180,94,10,
-                    SS_CENTERIMAGE
-    COMBOBOX        IDC_TRAY_MINIMISE,180,192,85,55,CBS_DROPDOWNLIST | 
-                    WS_VSCROLL | WS_TABSTOP
+    LTEXT           "When I click close:",IDC_STATIC,178,145,94,10,SS_CENTERIMAGE
+    COMBOBOX        IDC_CLOSE_MODE,180,160,85,55,CBS_DROPDOWNLIST | WS_VSCROLL | WS_GROUP | WS_TABSTOP
+    LTEXT           "When I click minimise:",IDC_STATIC,178,180,94,10,SS_CENTERIMAGE
+    COMBOBOX        IDC_TRAY_MINIMISE,180,192,85,55,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
 END
 
 IDD_ABOUT DIALOGEX 0, 0, 292, 162
@@ -719,18 +611,13 @@ CAPTION "About Shareaza"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
     CONTROL         154,IDC_STATIC,"Static",SS_BITMAP,0,0,367,31
-    LTEXT           "Shareaza File Sharing Client ",IDC_TITLE,20,45,262,10,
-                    SS_CENTERIMAGE
-    LTEXT           "Copyright © Shareaza Development Team, 2002-",
-                    IDC_COPYRIGHT,20,60,262,12
-    LTEXT           "Shareaza is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.",
-                    IDC_STATIC,20,75,262,24
-    LTEXT           "Logo by Kid at designhazard.com",IDC_STATIC,20,105,262,
-                    12
+    LTEXT           "Shareaza File Sharing Client ",IDC_TITLE,20,45,262,10,SS_CENTERIMAGE
+    LTEXT           "Copyright © Shareaza Development Team, 2002-",IDC_COPYRIGHT,20,60,262,12
+    LTEXT           "Shareaza is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.",IDC_STATIC,20,75,262,24
+    LTEXT           "Logo by Kid at designhazard.com",IDC_STATIC,20,105,262,12
     LTEXT           "http://shareaza.sourceforge.net/",IDC_WEB,20,142,125,10
     DEFPUSHBUTTON   "OK",IDOK,235,141,50,14
-    LTEXT           "This product includes GeoLite data created by MaxMind, available from http://maxmind.com/",
-                    IDC_STATIC,20,120,262,18
+    LTEXT           "This product includes GeoLite data created by MaxMind, available from http://maxmind.com/",IDC_STATIC,20,120,262,18
 END
 
 IDD_GRAPH_LIST DIALOG  0, 0, 247, 230
@@ -738,25 +625,18 @@ STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Traffic Graphs"
 FONT 8, "Tahoma"
 BEGIN
-    CONTROL         "List1",IDC_GRAPH_ITEMS,"SysListView32",LVS_LIST | 
-                    LVS_SHOWSELALWAYS | WS_BORDER | WS_TABSTOP,5,5,180,80
+    CONTROL         "List1",IDC_GRAPH_ITEMS,"SysListView32",LVS_LIST | LVS_SHOWSELALWAYS | WS_BORDER | WS_TABSTOP,5,5,180,80
     PUSHBUTTON      "&Add...",IDC_GRAPH_ADD,5,90,50,14
     PUSHBUTTON      "&Edit...",IDC_GRAPH_EDIT,70,90,50,14
     PUSHBUTTON      "&Remove",IDC_GRAPH_REMOVE,135,90,50,14
     GROUPBOX        "&Show:",IDC_STATIC,5,110,180,35
-    CONTROL         "Grid Lines",IDC_GRAPH_GRID,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,15,125,45,14
-    CONTROL         "Vertical Axis",IDC_GRAPH_AXIS,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,70,125,55,14
-    CONTROL         "Legend",IDC_GRAPH_LEGEND,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,135,125,40,14
+    CONTROL         "Grid Lines",IDC_GRAPH_GRID,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,125,45,14
+    CONTROL         "Vertical Axis",IDC_GRAPH_AXIS,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,70,125,55,14
+    CONTROL         "Legend",IDC_GRAPH_LEGEND,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,135,125,40,14
     GROUPBOX        "Sampling &Frequency:",IDC_STATIC,5,150,180,35
-    LTEXT           "Period between samples:",IDC_STATIC,15,165,85,12,
-                    SS_CENTERIMAGE
+    LTEXT           "Period between samples:",IDC_STATIC,15,165,85,12,SS_CENTERIMAGE
     EDITTEXT        IDC_GRAPH_SPEED,110,165,45,12,ES_AUTOHSCROLL
-    CONTROL         "Spin1",IDC_GRAPH_SPEED_SPIN,"msctls_updown32",
-                    UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | 
-                    UDS_ARROWKEYS | UDS_NOTHOUSANDS,155,165,8,12
+    CONTROL         "Spin1",IDC_GRAPH_SPEED_SPIN,"msctls_updown32",UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS | UDS_NOTHOUSANDS,155,165,8,12
     LTEXT           "ms",IDC_STATIC,160,165,20,12,SS_CENTERIMAGE
     GROUPBOX        "&Name:",IDC_STATIC,5,190,180,35
     EDITTEXT        IDC_NAME,15,205,160,12,ES_AUTOHSCROLL
@@ -772,17 +652,14 @@ BEGIN
     DEFPUSHBUTTON   "OK",IDOK,190,5,50,14,WS_DISABLED
     PUSHBUTTON      "Cancel",IDCANCEL,190,22,50,14
     GROUPBOX        "&Source:",IDC_STATIC,5,5,180,75
-    COMBOBOX        IDC_GRAPH_SOURCE,15,20,160,175,CBS_DROPDOWNLIST | 
-                    CBS_OWNERDRAWFIXED | CBS_SORT | CBS_HASSTRINGS | 
-                    WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_GRAPH_SOURCE,15,20,160,175,CBS_DROPDOWNLIST | CBS_OWNERDRAWFIXED | CBS_SORT | CBS_HASSTRINGS | WS_VSCROLL | WS_TABSTOP
     LTEXT           "Multiplier:",IDC_STATIC,15,40,65,12,SS_CENTERIMAGE
     EDITTEXT        IDC_GRAPH_PARAM,85,41,89,14,ES_AUTOHSCROLL
     LTEXT           "Units:",IDC_STATIC,15,60,65,12,SS_CENTERIMAGE
     EDITTEXT        IDC_GRAPH_UNITS,85,60,90,12,ES_AUTOHSCROLL | ES_READONLY
     GROUPBOX        "&Display:",IDC_STATIC,5,85,180,40
     PUSHBUTTON      "Select Colour...",IDC_GRAPH_COLOUR,15,100,70,14
-    CONTROL         "",IDC_GRAPH_COLOUR_BOX,"Static",SS_BLACKFRAME | NOT 
-                    WS_VISIBLE,95,100,80,14
+    CONTROL         "",IDC_GRAPH_COLOUR_BOX,"Static",SS_BLACKFRAME | NOT WS_VISIBLE,95,100,80,14
     PUSHBUTTON      "&Remove",IDC_GRAPH_REMOVE,190,40,50,14,WS_DISABLED
 END
 
@@ -792,24 +669,17 @@ CAPTION "Welcome to Shareaza"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
     LTEXT           "Welcome to Shareaza!",IDC_STATIC,10,10,265,10
-    LTEXT           "If you haven't used Shareaza or another P2P client before, this QuickStart wizard can help you configure your copy in a few simple steps.",
-                    IDC_STATIC,10,25,265,20
-    LTEXT           "If you're a more advanced user, you can access the full range of Shareaza's options via the Tools menu.  Click Exit to close the wizard at any time.",
-                    IDC_STATIC,10,50,265,25
-    LTEXT           "This wizard will assist you to:",IDC_STATIC,10,80,265,
-                    10
+    LTEXT           "If you haven't used Shareaza or another P2P client before, this QuickStart wizard can help you configure your copy in a few simple steps.",IDC_STATIC,10,25,265,20
+    LTEXT           "If you're a more advanced user, you can access the full range of Shareaza's options via the Tools menu.  Click Exit to close the wizard at any time.",IDC_STATIC,10,50,265,25
+    LTEXT           "This wizard will assist you to:",IDC_STATIC,10,80,265,10
     CONTROL         158,IDC_STATIC,"Static",SS_BITMAP,15,96,11,10
-    LTEXT           "Tell Shareaza about your Internet connection",
-                    IDC_STATIC,30,96,245,10,SS_CENTERIMAGE
+    LTEXT           "Tell Shareaza about your Internet connection",IDC_STATIC,30,96,245,10,SS_CENTERIMAGE
     CONTROL         158,IDC_STATIC,"Static",SS_BITMAP,15,111,11,10
-    LTEXT           "Choose which files to share",IDC_STATIC,30,111,245,10,
-                    SS_CENTERIMAGE
+    LTEXT           "Choose which files to share",IDC_STATIC,30,111,245,10,SS_CENTERIMAGE
     CONTROL         158,IDC_STATIC,"Static",SS_BITMAP,15,126,11,10
-    LTEXT           "Connect to your choice of P2P networks, and",IDC_STATIC,
-                    30,126,245,10,SS_CENTERIMAGE
+    LTEXT           "Connect to your choice of P2P networks, and",IDC_STATIC,30,126,245,10,SS_CENTERIMAGE
     CONTROL         158,IDC_STATIC,"Static",SS_BITMAP,15,140,11,10
-    LTEXT           "Get started using Shareaza.",IDC_STATIC,30,140,245,10,
-                    SS_CENTERIMAGE
+    LTEXT           "Get started using Shareaza.",IDC_STATIC,30,140,245,10,SS_CENTERIMAGE
 END
 
 IDD_WIZARD_CONNECTION DIALOGEX 0, 0, 277, 174
@@ -817,25 +687,17 @@ STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Welcome to Shareaza"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
-    LTEXT           "For optimum performance, Shareaza needs to know a little bit about your connection to the Internet.",
-                    IDC_STATIC,7,10,263,18
-    LTEXT           "Choose the type of your Internet connection:",
-                    IDC_STATIC,7,30,260,12
-    COMBOBOX        IDC_CONNECTION_TYPE,26,44,100,178,CBS_DROPDOWNLIST | 
-                    WS_VSCROLL | WS_TABSTOP
+    LTEXT           "For optimum performance, Shareaza needs to know a little bit about your connection to the Internet.",IDC_STATIC,7,10,263,18
+    LTEXT           "Choose the type of your Internet connection:",IDC_STATIC,7,30,260,12
+    COMBOBOX        IDC_CONNECTION_TYPE,26,44,100,178,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
     LTEXT           "Or choose the download speed:",IDC_STATIC,7,64,130,12
-    COMBOBOX        IDC_WIZARD_DOWNLOAD_SPEED,26,78,75,178,CBS_DROPDOWN | 
-                    WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_WIZARD_DOWNLOAD_SPEED,26,78,75,178,CBS_DROPDOWN | WS_VSCROLL | WS_TABSTOP
     LTEXT           "and the upload speed:",IDC_STATIC,165,64,100,12
-    COMBOBOX        IDC_WIZARD_UPLOAD_SPEED,166,78,75,178,CBS_DROPDOWN | 
-                    WS_VSCROLL | WS_TABSTOP
-    LTEXT           "Do you want to automatically setup port-forwarding by using UPnP?",
-                    IDC_STATIC,7,98,240,12
-    COMBOBOX        IDC_WIZARD_UPNP,26,112,75,178,CBS_DROPDOWNLIST | 
-                    WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_WIZARD_UPLOAD_SPEED,166,78,75,178,CBS_DROPDOWN | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Do you want to automatically setup port-forwarding by using UPnP?",IDC_STATIC,7,98,240,12
+    COMBOBOX        IDC_WIZARD_UPNP,26,112,75,178,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
     LTEXT           "Status:",IDC_CONNECTION_STATUS,9,132,261,8
-    CONTROL         "",IDC_CONNECTION_PROGRESS,"msctls_progress32",WS_BORDER,
-                    14,143,256,7
+    CONTROL         "",IDC_CONNECTION_PROGRESS,"msctls_progress32",WS_BORDER,14,143,256,7
 END
 
 IDD_WIZARD_SHARING DIALOGEX 0, 0, 277, 174
@@ -843,19 +705,13 @@ STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Welcome to Shareaza"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
-    LTEXT           "P2P networks are only as good as the people who use them.  All of the content available for download is being shared by another user.",
-                    IDC_STATIC,10,10,265,20
-    LTEXT           "You do not have to share content to use Shareaza, however some software will behave differently to users who are not sharing anything.",
-                    IDC_STATIC,10,35,265,20
-    LTEXT           "Please indicate which folders, if any, you wish to share.  Simply click the Add button to add a new folder.",
-                    IDC_STATIC,10,60,265,20
-    CONTROL         "List1",IDC_SHARE_FOLDERS,"SysListView32",LVS_REPORT | 
-                    LVS_SHAREIMAGELISTS | LVS_ALIGNLEFT | LVS_NOCOLUMNHEADER | 
-                    WS_BORDER | WS_TABSTOP,15,85,190,55
+    LTEXT           "P2P networks are only as good as the people who use them.  All of the content available for download is being shared by another user.",IDC_STATIC,10,10,265,20
+    LTEXT           "You do not have to share content to use Shareaza, however some software will behave differently to users who are not sharing anything.",IDC_STATIC,10,35,265,20
+    LTEXT           "Please indicate which folders, if any, you wish to share.  Simply click the Add button to add a new folder.",IDC_STATIC,10,60,265,20
+    CONTROL         "List1",IDC_SHARE_FOLDERS,"SysListView32",LVS_REPORT | LVS_SHAREIMAGELISTS | LVS_ALIGNLEFT | LVS_NOCOLUMNHEADER | WS_BORDER | WS_TABSTOP,15,85,190,55
     PUSHBUTTON      "&Add...",IDC_SHARE_ADD,215,90,45,15
     PUSHBUTTON      "&Remove",IDC_SHARE_REMOVE,215,118,45,15,WS_DISABLED
-    LTEXT           "WARNING: Distributing copyrighted works is an offence in most countries.",
-                    IDC_STATIC,10,140,265,15,SS_CENTERIMAGE
+    LTEXT           "WARNING: Distributing copyrighted works is an offence in most countries.",IDC_STATIC,10,140,265,15,SS_CENTERIMAGE
 END
 
 IDD_WIZARD_FINISHED DIALOGEX 0, 0, 277, 174
@@ -863,21 +719,15 @@ STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Welcome to Shareaza"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
-    LTEXT           "That's it!  Shareaza has been configured to work with your computer.",
-                    IDC_STATIC,10,10,265,10
-    LTEXT           "If you ever need to change your settings, you can re-run this QuickStart wizard by selecting it from the Tools menu.",
-                    IDC_STATIC,10,25,265,20
-    LTEXT           "After closing this wizard by clicking Finish, you can connect to the networks you selected and start searching and downloading content.",
-                    IDC_STATIC,10,50,265,20
-    CONTROL         "Connect to the network when I close this wizard",
-                    IDC_WIZARD_CONNECT,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
-                    20,80,224,10
-    CONTROL         "Connect to the network every time I start Shareaza",
-                    IDC_WIZARD_AUTO,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,20,
-                    95,225,10
-    CONTROL         "Start Shareaza every time Windows starts",
-                    IDC_WIZARD_STARTUP,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
-                    20,110,225,10
+    LTEXT           "That's it!  Shareaza has been configured to work with your computer.",IDC_STATIC,10,10,265,10
+    LTEXT           "If you ever need to change your settings, you can re-run this QuickStart wizard by selecting it from the Tools menu.",IDC_STATIC,10,25,265,20
+    LTEXT           "After closing this wizard by clicking Finish, you can connect to the networks you selected and start searching and downloading content.",IDC_STATIC,10,50,265,20
+    CONTROL         "Connect to the network when I close this wizard",IDC_WIZARD_CONNECT,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,20,80,224,10
+    CONTROL         "Connect to the network every time I start Shareaza",IDC_WIZARD_AUTO,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,20,95,225,10
+    CONTROL         "Start Shareaza every time Windows starts",IDC_WIZARD_STARTUP,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,20,110,225,10
     LTEXT           "Enjoy using Shareaza!",IDC_STATIC,10,130,265,10
 END
 
@@ -887,8 +737,7 @@ CAPTION "Scanning Folder..."
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
     ICON            IDI_SEARCH_FOLDER,IDC_STATIC,10,7,20,20
-    CONTROL         "...",IDC_SCAN_FILE,"Static",SS_LEFTNOWORDWRAP | 
-                    SS_PATHELLIPSIS | WS_GROUP,40,7,190,10
+    CONTROL         "...",IDC_SCAN_FILE,"Static",SS_LEFTNOWORDWRAP | SS_PATHELLIPSIS | WS_GROUP,40,7,190,10
     LTEXT           "Files:",IDC_STATIC,40,22,35,10
     LTEXT           "0",IDC_SCAN_FILES,80,22,80,10
     LTEXT           "Volume:",IDC_STATIC,40,32,35,10
@@ -897,40 +746,31 @@ BEGIN
 END
 
 IDD_DOWNLOAD DIALOGEX 0, 0, 292, 201
-STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_CAPTION | 
-    WS_SYSMENU
+STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Download File or Torrent"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
     CONTROL         154,IDC_BANNER,"Static",SS_BITMAP,0,0,292,31
     ICON            IDI_FILE,IDC_STATIC,6,36,20,20
-    LTEXT           "Downloading any file with Shareaza is easy.  Simply type or paste the URL or URI describing the file into the box below and press Enter.",
-                    IDC_STATIC,36,38,246,18
+    LTEXT           "Downloading any file with Shareaza is easy.  Simply type or paste the URL or URI describing the file into the box below and press Enter.",IDC_STATIC,36,38,246,18
     EDITTEXT        IDC_URL,6,66,276,30,ES_MULTILINE | ES_AUTOVSCROLL
     DEFPUSHBUTTON   "Download",IDOK,179,102,50,14,WS_DISABLED
     PUSHBUTTON      "Cancel",IDCANCEL,233,102,50,14
-    LTEXT           "Shareaza can download files from the web (HTTP), and automatically search and download P2P links (Magnet, Gnutella, eDonkey, mP2P).",
-                    IDC_STATIC,6,125,276,18
-    LTEXT           "Shareaza can also download BitTorrent files.  A torrent can be described by a .torrent file, or a HTTP link to the .torrent file.  To download a torrent HTTP link, paste it in the box above.  If you already have a .torrent file, click Open Torrent:",
-                    IDC_STATIC,6,149,276,26
+    LTEXT           "Shareaza can download files from the web (HTTP), and automatically search and download P2P links (Magnet, Gnutella, eDonkey, mP2P).",IDC_STATIC,6,125,276,18
+    LTEXT           "Shareaza can also download BitTorrent files.  A torrent can be described by a .torrent file, or a HTTP link to the .torrent file.  To download a torrent HTTP link, paste it in the box above.  If you already have a .torrent file, click Open Torrent:",IDC_STATIC,6,149,276,26
     PUSHBUTTON      "Open &Torrent...",IDC_TORRENT_FILE,213,180,70,14
 END
 
 IDD_BITZI_DOWNLOAD DIALOG  0, 0, 262, 124
-STYLE DS_SETFONT | DS_MODALFRAME | DS_CENTER | WS_POPUP | WS_CAPTION | 
-    WS_SYSMENU
+STYLE DS_SETFONT | DS_MODALFRAME | DS_CENTER | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Downloading Metadata..."
 FONT 8, "Tahoma"
 BEGIN
     ICON            IDR_MAINFRAME,IDC_STATIC,10,10,20,20
-    LTEXT           "Shareaza is attempting to download metadata from Bitzi(TM)...",
-                    IDC_STATIC,40,10,210,10
-    CONTROL         "Progress1",IDC_PROGRESS,"msctls_progress32",WS_BORDER,
-                    40,25,210,10
+    LTEXT           "Shareaza is attempting to download metadata from Bitzi(TM)...",IDC_STATIC,40,10,210,10
+    CONTROL         "Progress1",IDC_PROGRESS,"msctls_progress32",WS_BORDER,40,25,210,10
     PUSHBUTTON      "Cancel",IDCANCEL,200,105,50,14
-    CONTROL         "List1",IDC_FILES,"SysListView32",LVS_REPORT | 
-                    LVS_SHAREIMAGELISTS | LVS_NOCOLUMNHEADER | WS_BORDER | 
-                    WS_TABSTOP,40,40,210,60
+    CONTROL         "List1",IDC_FILES,"SysListView32",LVS_REPORT | LVS_SHAREIMAGELISTS | LVS_NOCOLUMNHEADER | WS_BORDER | WS_TABSTOP,40,40,210,60
     LTEXT           "www.bitzi.com",IDC_WEB,10,110,50,10
 END
 
@@ -940,54 +780,36 @@ CAPTION "Security Rule"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
     GROUPBOX        "&Rule:",IDC_STATIC,5,5,180,55,WS_GROUP
-    LTEXT           "Type:",IDC_STATIC,15,20,40,12,SS_CENTERIMAGE | NOT 
-                    WS_GROUP
-    COMBOBOX        IDC_RULE_TYPE,60,20,115,60,CBS_DROPDOWNLIST | WS_VSCROLL | 
-                    WS_TABSTOP
-    LTEXT           "Comment:",IDC_STATIC,15,40,40,12,SS_CENTERIMAGE | NOT 
-                    WS_GROUP
+    LTEXT           "Type:",IDC_STATIC,15,20,40,12,SS_CENTERIMAGE | NOT WS_GROUP
+    COMBOBOX        IDC_RULE_TYPE,60,20,115,60,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Comment:",IDC_STATIC,15,40,40,12,SS_CENTERIMAGE | NOT WS_GROUP
     EDITTEXT        IDC_RULE_COMMENT,60,40,115,12,ES_AUTOHSCROLL
-    GROUPBOX        "&Network Address:",IDC_GROUP_NETWORK,5,65,180,55,
-                    WS_GROUP
-    LTEXT           "IP Address:",IDC_STATIC,15,81,40,12,SS_CENTERIMAGE | 
-                    NOT WS_GROUP
+    GROUPBOX        "&Network Address:",IDC_GROUP_NETWORK,5,65,180,55,WS_GROUP
+    LTEXT           "IP Address:",IDC_STATIC,15,81,40,12,SS_CENTERIMAGE | NOT WS_GROUP
     EDITTEXT        IDC_IP_1,60,81,25,12,ES_CENTER | ES_AUTOHSCROLL
     EDITTEXT        IDC_IP_2,90,81,25,12,ES_CENTER | ES_AUTOHSCROLL
     EDITTEXT        IDC_IP_3,120,81,25,12,ES_CENTER | ES_AUTOHSCROLL
     EDITTEXT        IDC_IP_4,150,81,25,12,ES_CENTER | ES_AUTOHSCROLL
-    LTEXT           "Netmask:",IDC_STATIC,15,100,40,12,SS_CENTERIMAGE | NOT 
-                    WS_GROUP
+    LTEXT           "Netmask:",IDC_STATIC,15,100,40,12,SS_CENTERIMAGE | NOT WS_GROUP
     EDITTEXT        IDC_MASK_1,60,100,25,12,ES_CENTER | ES_AUTOHSCROLL
     EDITTEXT        IDC_MASK_2,90,100,25,12,ES_CENTER | ES_AUTOHSCROLL
     EDITTEXT        IDC_MASK_3,120,100,25,12,ES_CENTER | ES_AUTOHSCROLL
     EDITTEXT        IDC_MASK_4,150,100,25,12,ES_CENTER | ES_AUTOHSCROLL
-    GROUPBOX        "&Content Filter:",IDC_GROUP_CONTENT,5,65,180,55,
-                    WS_GROUP
+    GROUPBOX        "&Content Filter:",IDC_GROUP_CONTENT,5,65,180,55,WS_GROUP
     EDITTEXT        IDC_RULE_CONTENT,15,80,160,12,ES_AUTOHSCROLL
-    CONTROL         "Match Any",IDC_RULE_MATCH_0,"Button",BS_AUTORADIOBUTTON | 
-                    WS_GROUP,15,100,70,12
-    CONTROL         "Match All",IDC_RULE_MATCH_1,"Button",BS_AUTORADIOBUTTON,
-                    95,100,75,12
+    CONTROL         "Match Any",IDC_RULE_MATCH_0,"Button",BS_AUTORADIOBUTTON | WS_GROUP,15,100,70,12
+    CONTROL         "Match All",IDC_RULE_MATCH_1,"Button",BS_AUTORADIOBUTTON,95,100,75,12
     GROUPBOX        "&Options:",IDC_STATIC,5,126,180,69,WS_GROUP
-    LTEXT           "Action:",IDC_STATIC,15,140,40,12,SS_CENTERIMAGE | NOT 
-                    WS_GROUP
-    COMBOBOX        IDC_RULE_ACTION,60,140,115,60,CBS_DROPDOWNLIST | 
-                    WS_VSCROLL | WS_TABSTOP
-    LTEXT           "Expire:",IDC_STATIC,15,160,40,12,SS_CENTERIMAGE | NOT 
-                    WS_GROUP
-    COMBOBOX        IDC_RULE_EXPIRE,60,160,115,60,CBS_DROPDOWNLIST | 
-                    WS_VSCROLL | WS_TABSTOP
-    EDITTEXT        IDC_EXPIRE_D,60,175,25,12,ES_CENTER | ES_AUTOHSCROLL | 
-                    ES_NUMBER
+    LTEXT           "Action:",IDC_STATIC,15,140,40,12,SS_CENTERIMAGE | NOT WS_GROUP
+    COMBOBOX        IDC_RULE_ACTION,60,140,115,60,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Expire:",IDC_STATIC,15,160,40,12,SS_CENTERIMAGE | NOT WS_GROUP
+    COMBOBOX        IDC_RULE_EXPIRE,60,160,115,60,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_EXPIRE_D,60,175,25,12,ES_CENTER | ES_AUTOHSCROLL | ES_NUMBER
     LTEXT           "d",IDC_STATIC,90,175,8,12,SS_CENTERIMAGE | NOT WS_GROUP
-    EDITTEXT        IDC_EXPIRE_H,100,175,25,12,ES_CENTER | ES_AUTOHSCROLL | 
-                    ES_NUMBER
-    LTEXT           "h",IDC_STATIC,130,175,8,12,SS_CENTERIMAGE | NOT 
-                    WS_GROUP
-    EDITTEXT        IDC_EXPIRE_M,140,175,25,12,ES_CENTER | ES_AUTOHSCROLL | 
-                    ES_NUMBER
-    LTEXT           "m",IDC_STATIC,170,175,8,12,SS_CENTERIMAGE | NOT 
-                    WS_GROUP
+    EDITTEXT        IDC_EXPIRE_H,100,175,25,12,ES_CENTER | ES_AUTOHSCROLL | ES_NUMBER
+    LTEXT           "h",IDC_STATIC,130,175,8,12,SS_CENTERIMAGE | NOT WS_GROUP
+    EDITTEXT        IDC_EXPIRE_M,140,175,25,12,ES_CENTER | ES_AUTOHSCROLL | ES_NUMBER
+    LTEXT           "m",IDC_STATIC,170,175,8,12,SS_CENTERIMAGE | NOT WS_GROUP
     DEFPUSHBUTTON   "OK",IDOK,80,200,50,14,WS_GROUP
     PUSHBUTTON      "Cancel",IDCANCEL,135,200,50,14
 END
@@ -997,51 +819,37 @@ STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Copy Files|Move Files"
 FONT 8, "Tahoma"
 BEGIN
-    LTEXT           "You have selected %i file(s) to copy to the following folder:",
-                    IDC_MESSAGE_COPY,5,5,205,10,NOT WS_VISIBLE
-    CONTROL         "",IDC_PLACEHOLDER,"Static",SS_BLACKFRAME | NOT 
-                    WS_VISIBLE,5,20,205,105
-    CONTROL         "Progress1",IDC_PROGRESS,"msctls_progress32",WS_BORDER,5,
-                    130,205,10
+    LTEXT           "You have selected %i file(s) to copy to the following folder:",IDC_MESSAGE_COPY,5,5,205,10,NOT WS_VISIBLE
+    CONTROL         "",IDC_PLACEHOLDER,"Static",SS_BLACKFRAME | NOT WS_VISIBLE,5,20,205,105
+    CONTROL         "Progress1",IDC_PROGRESS,"msctls_progress32",WS_BORDER,5,130,205,10
     DEFPUSHBUTTON   "OK",IDOK,105,170,50,14
     PUSHBUTTON      "Cancel",IDCANCEL,161,170,50,14
-    CONTROL         "Progress1",IDC_PROGRESS_FILE,"msctls_progress32",
-                    WS_BORDER,5,155,205,10
+    CONTROL         "Progress1",IDC_PROGRESS_FILE,"msctls_progress32",WS_BORDER,5,155,205,10
     CTEXT           "Ready...",IDC_FILE_NAME,5,142,205,10,SS_CENTERIMAGE
-    LTEXT           "You have selected %i file(s) to move to the following folder:",
-                    IDC_MESSAGE_MOVE,5,5,205,10,NOT WS_VISIBLE
+    LTEXT           "You have selected %i file(s) to move to the following folder:",IDC_MESSAGE_MOVE,5,5,205,10,NOT WS_VISIBLE
 END
 
 IDD_URL_ACTION DIALOGEX 0, 0, 292, 154
-STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | DS_CENTER | WS_POPUP | 
-    WS_CAPTION | WS_SYSMENU
+STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | DS_CENTER | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Shareaza URI Manager"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
     CONTROL         154,IDC_BANNER,"Static",SS_BITMAP | WS_GROUP,0,0,293,172
-    LTEXT           "You have clicked on a Shareaza-powered URI which links to the following content on the network:",
-                    IDC_MESSAGE_1,20,40,250,20,NOT WS_VISIBLE
-    LTEXT           "You have clicked on a Shareaza-powered URL which will connect you to the following host or server:",
-                    IDC_MESSAGE_2,20,40,250,20,NOT WS_VISIBLE
-    LTEXT           "You have clicked on a Shareaza-powered URI which will allow you to browse the shared files available on the following host:",
-                    IDC_MESSAGE_3,20,40,250,20,NOT WS_VISIBLE
+    LTEXT           "You have clicked on a Shareaza-powered URI which links to the following content on the network:",IDC_MESSAGE_1,20,40,250,20,NOT WS_VISIBLE
+    LTEXT           "You have clicked on a Shareaza-powered URL which will connect you to the following host or server:",IDC_MESSAGE_2,20,40,250,20,NOT WS_VISIBLE
+    LTEXT           "You have clicked on a Shareaza-powered URI which will allow you to browse the shared files available on the following host:",IDC_MESSAGE_3,20,40,250,20,NOT WS_VISIBLE
     LTEXT           "Filename:",IDC_URL_NAME_TITLE,25,65,35,12
-    EDITTEXT        IDC_URL_NAME_VALUE,65,65,205,12,ES_AUTOHSCROLL | 
-                    ES_READONLY | NOT WS_BORDER
+    EDITTEXT        IDC_URL_NAME_VALUE,65,65,205,12,ES_AUTOHSCROLL | ES_READONLY | NOT WS_BORDER
     LTEXT           "URN:",IDC_URL_URN_TITLE,25,80,35,12
-    EDITTEXT        IDC_URL_URN_VALUE,65,80,205,12,ES_AUTOHSCROLL | 
-                    ES_READONLY | NOT WS_BORDER
-    LTEXT           "Please select the action you would like Shareaza to take:",
-                    IDC_STATIC,20,98,250,10
+    EDITTEXT        IDC_URL_URN_VALUE,65,80,205,12,ES_AUTOHSCROLL | ES_READONLY | NOT WS_BORDER
+    LTEXT           "Please select the action you would like Shareaza to take:",IDC_STATIC,20,98,250,10
     DEFPUSHBUTTON   "&Download Now",IDC_URL_DOWNLOAD,10,115,65,15,WS_GROUP
     PUSHBUTTON      "&Search for File",IDC_URL_SEARCH,80,115,65,15
     PUSHBUTTON      "Cancel",IDCANCEL,215,115,65,15
     CONTROL         "&Remember my selection next time",IDC_ALWAYS_OPEN,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,10,135,125,15
-    CONTROL         "Open a download &monitor window",IDC_NEW_WINDOW,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,155,135,125,15
-    LTEXT           "You have clicked on a Shareaza-powered URI which will add the following Discovery Service to your Discovery Services cache.",
-                    IDC_MESSAGE_4,20,40,250,20,NOT WS_VISIBLE
+    CONTROL         "Open a download &monitor window",IDC_NEW_WINDOW,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,155,135,125,15
+    LTEXT           "You have clicked on a Shareaza-powered URI which will add the following Discovery Service to your Discovery Services cache.",IDC_MESSAGE_4,20,40,250,20,NOT WS_VISIBLE
 END
 
 IDD_WIZARD_INTERFACE DIALOGEX 0, 0, 277, 174
@@ -1049,22 +857,15 @@ STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Welcome to Shareaza"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
-    LTEXT           "Shareaza supports a flexible user interface, so you can choose what is most comfortable for you. You can change these options at any time.",
-                    IDC_STATIC,12,7,258,20
+    LTEXT           "Shareaza supports a flexible user interface, so you can choose what is most comfortable for you. You can change these options at any time.",IDC_STATIC,12,7,258,20
     GROUPBOX        "Please select user interface:",IDC_STATIC,7,27,269,83
-    CONTROL         "Normal Mode",IDC_INTERFACE_0,"Button",
-                    BS_AUTORADIOBUTTON | WS_GROUP,14,39,250,10
-    CONTROL         "Power Mode",IDC_INTERFACE_1,"Button",BS_AUTORADIOBUTTON,
-                    14,75,250,10
-    LTEXT           "Simple, easy to use menus and buttons.\nFamiliar to users of other file sharing programs.",
-                    IDC_DESCRIPTION_0,27,51,243,21
-    LTEXT           "Power mode offers expert users lots of extra commands, windows, etc.\nIt may be a little confusing for new users!",
-                    IDC_DESCRIPTION_1,27,87,243,21
-    CONTROL         "Display simplified download progress bars. (Reduces CPU use)",
-                    IDC_DOWNLOADS_SIMPLEBAR,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,14,114,256,10
-    CONTROL         "Handle torrent links.",IDC_URI_TORRENT,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,14,127,256,10
+    CONTROL         "Normal Mode",IDC_INTERFACE_0,"Button",BS_AUTORADIOBUTTON | WS_GROUP,14,39,250,10
+    CONTROL         "Power Mode",IDC_INTERFACE_1,"Button",BS_AUTORADIOBUTTON,14,75,250,10
+    LTEXT           "Simple, easy to use menus and buttons.\nFamiliar to users of other file sharing programs.",IDC_DESCRIPTION_0,27,51,243,21
+    LTEXT           "Power mode offers expert users lots of extra commands, windows, etc.\nIt may be a little confusing for new users!",IDC_DESCRIPTION_1,27,87,243,21
+    CONTROL         "Display simplified download progress bars. (Reduces CPU use)",IDC_DOWNLOADS_SIMPLEBAR,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,14,114,256,10
+    CONTROL         "Handle torrent links.",IDC_URI_TORRENT,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,14,127,256,10
 END
 
 IDD_URL_COPY DIALOGEX 0, 0, 292, 149
@@ -1073,17 +874,12 @@ CAPTION "Copy URI"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
     CONTROL         154,IDC_BANNER,"Static",SS_BITMAP,0,0,293,172
-    LTEXT           "You can copy a URI for the selected item in a variety of different formats.  Please choose the format you wish to use by clicking one of the URIs below:",
-                    IDC_MESSAGE,10,40,270,30
-    CONTROL         "...",IDC_URL_MAGNET,"Static",SS_LEFTNOWORDWRAP | 
-                    SS_NOPREFIX | SS_WORDELLIPSIS | WS_GROUP,10,70,270,10
-    CONTROL         "...",IDC_URL_ED2K,"Static",SS_LEFTNOWORDWRAP | 
-                    SS_NOPREFIX | SS_WORDELLIPSIS | WS_GROUP,10,85,270,10
-    CONTROL         "...",IDC_URL_HOST,"Static",SS_LEFTNOWORDWRAP | 
-                    SS_NOPREFIX | SS_WORDELLIPSIS | WS_GROUP,10,100,270,10
-    CONTROL         "Include &myself as a fixed source in the URL",
-                    IDC_INCLUDE_SELF,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
-                    10,130,160,14
+    LTEXT           "You can copy a URI for the selected item in a variety of different formats.  Please choose the format you wish to use by clicking one of the URIs below:",IDC_MESSAGE,10,40,270,30
+    CONTROL         "...",IDC_URL_MAGNET,"Static",SS_LEFTNOWORDWRAP | SS_NOPREFIX | SS_WORDELLIPSIS | WS_GROUP,10,70,270,10
+    CONTROL         "...",IDC_URL_ED2K,"Static",SS_LEFTNOWORDWRAP | SS_NOPREFIX | SS_WORDELLIPSIS | WS_GROUP,10,85,270,10
+    CONTROL         "...",IDC_URL_HOST,"Static",SS_LEFTNOWORDWRAP | SS_NOPREFIX | SS_WORDELLIPSIS | WS_GROUP,10,100,270,10
+    CONTROL         "Include &myself as a fixed source in the URL",IDC_INCLUDE_SELF,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,10,130,160,14
     PUSHBUTTON      "Cancel",IDCANCEL,230,130,50,14
 END
 
@@ -1101,10 +897,8 @@ FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
     GROUPBOX        "Service &Address:",IDC_STATIC,5,5,245,60
     EDITTEXT        IDC_ADDRESS,15,20,225,12,ES_AUTOHSCROLL
-    LTEXT           "Discovery Service Type:",IDC_STATIC,15,40,90,12,
-                    SS_CENTERIMAGE
-    COMBOBOX        IDC_SERVICE_TYPE,110,40,130,70,CBS_DROPDOWNLIST | 
-                    WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Discovery Service Type:",IDC_STATIC,15,40,90,12,SS_CENTERIMAGE
+    COMBOBOX        IDC_SERVICE_TYPE,110,40,130,70,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
     DEFPUSHBUTTON   "OK",IDOK,145,72,50,14
     PUSHBUTTON      "Cancel",IDCANCEL,200,72,50,14
 END
@@ -1114,97 +908,63 @@ STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Bandwidth"
 FONT 8, "Tahoma"
 BEGIN
-    LTEXT           "Receive Bandwidth:",IDC_HEAD_RECEIVE,5,5,95,12,
-                    SS_CENTERIMAGE
+    LTEXT           "Receive Bandwidth:",IDC_HEAD_RECEIVE,5,5,95,12,SS_CENTERIMAGE
     CTEXT           "Per Connect",IDC_STATIC,110,5,56,12,SS_CENTERIMAGE
     CTEXT           "Max Connects",IDC_STATIC,170,5,50,12,SS_CENTERIMAGE
     CTEXT           "Total",IDC_STATIC,220,5,55,12,SS_CENTERIMAGE
-    LTEXT           "From Gnutella Hubs:",IDC_HEAD_UP_1,15,20,85,12,
-                    SS_CENTERIMAGE
+    LTEXT           "From Gnutella Hubs:",IDC_HEAD_UP_1,15,20,85,12,SS_CENTERIMAGE
     EDITTEXT        IDC_UPIN_LIMIT,110,20,56,12,ES_CENTER | ES_AUTOHSCROLL
-    CONTROL         "Spin1",IDC_UPIN_SPIN,"msctls_updown32",UDS_ALIGNRIGHT | 
-                    UDS_AUTOBUDDY | UDS_ARROWKEYS,165,20,8,12
-    EDITTEXT        IDC_UPIN_MAX,175,20,40,12,ES_CENTER | ES_AUTOHSCROLL | 
-                    ES_READONLY
+    CONTROL         "Spin1",IDC_UPIN_SPIN,"msctls_updown32",UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS,165,20,8,12
+    EDITTEXT        IDC_UPIN_MAX,175,20,40,12,ES_CENTER | ES_AUTOHSCROLL | ES_READONLY
     EDITTEXT        IDC_UPIN_TOTAL,220,20,55,12,ES_CENTER | ES_AUTOHSCROLL
-    CONTROL         "Spin1",IDC_UPIN_SPIN2,"msctls_updown32",UDS_ALIGNRIGHT | 
-                    UDS_AUTOBUDDY | UDS_ARROWKEYS,270,20,8,12
-    LTEXT           "From Gnutella Leafs:",IDC_STATIC,15,35,85,12,
-                    SS_CENTERIMAGE
+    CONTROL         "Spin1",IDC_UPIN_SPIN2,"msctls_updown32",UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS,270,20,8,12
+    LTEXT           "From Gnutella Leafs:",IDC_STATIC,15,35,85,12,SS_CENTERIMAGE
     EDITTEXT        IDC_LIN_LIMIT,110,35,56,12,ES_CENTER | ES_AUTOHSCROLL
-    CONTROL         "Spin1",IDC_LIN_SPIN,"msctls_updown32",UDS_ALIGNRIGHT | 
-                    UDS_AUTOBUDDY | UDS_ARROWKEYS,165,35,8,12
-    EDITTEXT        IDC_LIN_MAX,175,35,40,12,ES_CENTER | ES_AUTOHSCROLL | 
-                    ES_READONLY
+    CONTROL         "Spin1",IDC_LIN_SPIN,"msctls_updown32",UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS,165,35,8,12
+    EDITTEXT        IDC_LIN_MAX,175,35,40,12,ES_CENTER | ES_AUTOHSCROLL | ES_READONLY
     EDITTEXT        IDC_LIN_TOTAL,220,35,55,12,ES_CENTER | ES_AUTOHSCROLL
-    CONTROL         "Spin1",IDC_LIN_SPIN2,"msctls_updown32",UDS_ALIGNRIGHT | 
-                    UDS_AUTOBUDDY | UDS_ARROWKEYS,270,35,8,12
-    LTEXT           "Gnutella Peer to Peer:",IDC_STATIC,15,50,85,12,
-                    SS_CENTERIMAGE
+    CONTROL         "Spin1",IDC_LIN_SPIN2,"msctls_updown32",UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS,270,35,8,12
+    LTEXT           "Gnutella Peer to Peer:",IDC_STATIC,15,50,85,12,SS_CENTERIMAGE
     EDITTEXT        IDC_PIN_LIMIT,110,50,56,12,ES_CENTER | ES_AUTOHSCROLL
-    CONTROL         "Spin1",IDC_PIN_SPIN,"msctls_updown32",UDS_ALIGNRIGHT | 
-                    UDS_AUTOBUDDY | UDS_ARROWKEYS,165,50,8,12
-    EDITTEXT        IDC_PIN_MAX,175,50,40,12,ES_CENTER | ES_AUTOHSCROLL | 
-                    ES_READONLY
+    CONTROL         "Spin1",IDC_PIN_SPIN,"msctls_updown32",UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS,165,50,8,12
+    EDITTEXT        IDC_PIN_MAX,175,50,40,12,ES_CENTER | ES_AUTOHSCROLL | ES_READONLY
     EDITTEXT        IDC_PIN_TOTAL,220,50,55,12,ES_CENTER | ES_AUTOHSCROLL
-    CONTROL         "Spin1",IDC_PIN_SPIN2,"msctls_updown32",UDS_ALIGNRIGHT | 
-                    UDS_AUTOBUDDY | UDS_ARROWKEYS,270,50,8,12
-    LTEXT           "Download Transfers:",IDC_STATIC,15,65,85,12,
-                    SS_CENTERIMAGE
+    CONTROL         "Spin1",IDC_PIN_SPIN2,"msctls_updown32",UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS,270,50,8,12
+    LTEXT           "Download Transfers:",IDC_STATIC,15,65,85,12,SS_CENTERIMAGE
     EDITTEXT        IDC_DL_TOTAL,220,65,55,12,ES_CENTER | ES_AUTOHSCROLL
-    CONTROL         "Spin1",IDC_DL_SPIN2,"msctls_updown32",UDS_ALIGNRIGHT | 
-                    UDS_AUTOBUDDY | UDS_ARROWKEYS,270,65,8,12
-    RTEXT           "Total Receive: ",IDC_STATIC,110,80,105,12,
-                    SS_CENTERIMAGE
-    EDITTEXT        IDC_IN_TOTAL,220,80,55,12,ES_CENTER | ES_AUTOHSCROLL | 
-                    ES_READONLY
-    LTEXT           "Transmit Bandwidth:",IDC_HEAD_TRANSMIT,5,100,95,12,
-                    SS_CENTERIMAGE
+    CONTROL         "Spin1",IDC_DL_SPIN2,"msctls_updown32",UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS,270,65,8,12
+    RTEXT           "Total Receive: ",IDC_STATIC,110,80,105,12,SS_CENTERIMAGE
+    EDITTEXT        IDC_IN_TOTAL,220,80,55,12,ES_CENTER | ES_AUTOHSCROLL | ES_READONLY
+    LTEXT           "Transmit Bandwidth:",IDC_HEAD_TRANSMIT,5,100,95,12,SS_CENTERIMAGE
     CTEXT           "Per Connect",IDC_STATIC,110,100,56,12,SS_CENTERIMAGE
     CTEXT           "Max Connects",IDC_STATIC,170,100,50,12,SS_CENTERIMAGE
     CTEXT           "Total",IDC_STATIC,220,100,55,12,SS_CENTERIMAGE
-    LTEXT           "To Gnutella Hubs:",IDC_HEAD_UP_2,15,115,85,12,
-                    SS_CENTERIMAGE
+    LTEXT           "To Gnutella Hubs:",IDC_HEAD_UP_2,15,115,85,12,SS_CENTERIMAGE
     EDITTEXT        IDC_UPOUT_LIMIT,110,115,56,12,ES_CENTER | ES_AUTOHSCROLL
-    CONTROL         "Spin1",IDC_UPOUT_SPIN,"msctls_updown32",UDS_ALIGNRIGHT | 
-                    UDS_AUTOBUDDY | UDS_ARROWKEYS,165,116,8,12
-    EDITTEXT        IDC_UPOUT_MAX,175,116,40,12,ES_CENTER | ES_AUTOHSCROLL | 
-                    ES_READONLY
+    CONTROL         "Spin1",IDC_UPOUT_SPIN,"msctls_updown32",UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS,165,116,8,12
+    EDITTEXT        IDC_UPOUT_MAX,175,116,40,12,ES_CENTER | ES_AUTOHSCROLL | ES_READONLY
     EDITTEXT        IDC_UPOUT_TOTAL,220,116,55,12,ES_CENTER | ES_AUTOHSCROLL
-    CONTROL         "Spin1",IDC_UPOUT_SPIN2,"msctls_updown32",UDS_ALIGNRIGHT | 
-                    UDS_AUTOBUDDY | UDS_ARROWKEYS,270,116,8,12
-    LTEXT           "To Gnutella Leafs:",IDC_STATIC,15,130,85,12,
-                    SS_CENTERIMAGE
+    CONTROL         "Spin1",IDC_UPOUT_SPIN2,"msctls_updown32",UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS,270,116,8,12
+    LTEXT           "To Gnutella Leafs:",IDC_STATIC,15,130,85,12,SS_CENTERIMAGE
     EDITTEXT        IDC_LOUT_LIMIT,110,130,56,12,ES_CENTER | ES_AUTOHSCROLL
-    CONTROL         "Spin1",IDC_LOUT_SPIN,"msctls_updown32",UDS_ALIGNRIGHT | 
-                    UDS_AUTOBUDDY | UDS_ARROWKEYS,165,130,8,12
-    EDITTEXT        IDC_LOUT_MAX,175,130,40,12,ES_CENTER | ES_AUTOHSCROLL | 
-                    ES_READONLY
+    CONTROL         "Spin1",IDC_LOUT_SPIN,"msctls_updown32",UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS,165,130,8,12
+    EDITTEXT        IDC_LOUT_MAX,175,130,40,12,ES_CENTER | ES_AUTOHSCROLL | ES_READONLY
     EDITTEXT        IDC_LOUT_TOTAL,220,130,55,12,ES_CENTER | ES_AUTOHSCROLL
-    CONTROL         "Spin1",IDC_LOUT_SPIN2,"msctls_updown32",UDS_ALIGNRIGHT | 
-                    UDS_AUTOBUDDY | UDS_ARROWKEYS,270,130,8,12
-    LTEXT           "Gnutella Peer to Peer:",IDC_STATIC,15,145,85,12,
-                    SS_CENTERIMAGE
+    CONTROL         "Spin1",IDC_LOUT_SPIN2,"msctls_updown32",UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS,270,130,8,12
+    LTEXT           "Gnutella Peer to Peer:",IDC_STATIC,15,145,85,12,SS_CENTERIMAGE
     EDITTEXT        IDC_POUT_LIMIT,110,145,56,12,ES_CENTER | ES_AUTOHSCROLL
-    CONTROL         "Spin1",IDC_POUT_SPIN,"msctls_updown32",UDS_ALIGNRIGHT | 
-                    UDS_AUTOBUDDY | UDS_ARROWKEYS,165,145,8,12
-    EDITTEXT        IDC_POUT_MAX,175,145,40,12,ES_CENTER | ES_AUTOHSCROLL | 
-                    ES_READONLY
+    CONTROL         "Spin1",IDC_POUT_SPIN,"msctls_updown32",UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS,165,145,8,12
+    EDITTEXT        IDC_POUT_MAX,175,145,40,12,ES_CENTER | ES_AUTOHSCROLL | ES_READONLY
     EDITTEXT        IDC_POUT_TOTAL,220,145,55,12,ES_CENTER | ES_AUTOHSCROLL
-    CONTROL         "Spin1",IDC_POUT_SPIN2,"msctls_updown32",UDS_ALIGNRIGHT | 
-                    UDS_AUTOBUDDY | UDS_ARROWKEYS,270,145,8,12
+    CONTROL         "Spin1",IDC_POUT_SPIN2,"msctls_updown32",UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS,270,145,8,12
     LTEXT           "Uploading:",IDC_STATIC,15,160,85,12,SS_CENTERIMAGE
     EDITTEXT        IDC_UL_TOTAL,220,161,55,12,ES_CENTER | ES_AUTOHSCROLL
-    CONTROL         "Spin1",IDC_UL_SPIN2,"msctls_updown32",UDS_ALIGNRIGHT | 
-                    UDS_AUTOBUDDY | UDS_ARROWKEYS,270,160,8,12
+    CONTROL         "Spin1",IDC_UL_SPIN2,"msctls_updown32",UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS,270,160,8,12
     LTEXT           "Gnutella UDP:",IDC_STATIC,15,175,85,12,SS_CENTERIMAGE
     EDITTEXT        IDC_UDP_TOTAL,220,175,55,12,ES_CENTER | ES_AUTOHSCROLL
-    CONTROL         "Spin1",IDC_UDP_SPIN2,"msctls_updown32",UDS_ALIGNRIGHT | 
-                    UDS_AUTOBUDDY | UDS_ARROWKEYS,270,175,8,12
-    RTEXT           "Total Transmit: ",IDC_STATIC,110,190,105,12,
-                    SS_CENTERIMAGE
-    EDITTEXT        IDC_OUT_TOTAL,220,190,55,12,ES_CENTER | ES_AUTOHSCROLL | 
-                    ES_READONLY
+    CONTROL         "Spin1",IDC_UDP_SPIN2,"msctls_updown32",UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS,270,175,8,12
+    RTEXT           "Total Transmit: ",IDC_STATIC,110,190,105,12,SS_CENTERIMAGE
+    EDITTEXT        IDC_OUT_TOTAL,220,190,55,12,ES_CENTER | ES_AUTOHSCROLL | ES_READONLY
 END
 
 IDD_URL_EXPORT DIALOGEX 0, 0, 292, 129
@@ -1213,36 +973,28 @@ CAPTION "Export URIs"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
     CONTROL         154,IDC_BANNER,"Static",SS_BITMAP,0,0,293,172
-    LTEXT           "You have selected %lu files to export as Shareaza-powered URI references.  Please select the format for the URIs, and click Save:",
-                    IDC_MESSAGE,10,40,270,20
+    LTEXT           "You have selected %lu files to export as Shareaza-powered URI references.  Please select the format for the URIs, and click Save:",IDC_MESSAGE,10,40,270,20
     EDITTEXT        IDC_URL_FORMAT,10,65,270,12,ES_AUTOHSCROLL
     LTEXT           "Insert Token:",IDC_STATIC,10,85,45,12,SS_CENTERIMAGE
-    COMBOBOX        IDC_URL_TOKEN,60,85,85,140,CBS_DROPDOWNLIST | WS_VSCROLL | 
-                    WS_TABSTOP
+    COMBOBOX        IDC_URL_TOKEN,60,85,85,140,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
     LTEXT           "Select preset:",IDC_STATIC,160,85,45,12,SS_CENTERIMAGE
-    COMBOBOX        IDC_URL_PRESET,210,85,70,79,CBS_DROPDOWNLIST | 
-                    WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_URL_PRESET,210,85,70,79,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
     DEFPUSHBUTTON   "&Copy",IDC_COPY,10,105,45,14
     PUSHBUTTON      "&Save...",IDC_SAVE,60,105,45,14
-    CONTROL         "Progress2",IDC_PROGRESS,"msctls_progress32",WS_BORDER,
-                    110,107,120,10
+    CONTROL         "Progress2",IDC_PROGRESS,"msctls_progress32",WS_BORDER,110,107,120,10
     PUSHBUTTON      "Cancel",IDCANCEL,235,105,45,14
 END
 
 IDD_UPGRADE DIALOGEX 0, 0, 292, 154
-STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | DS_CENTER | WS_POPUP | 
-    WS_CAPTION | WS_SYSMENU
+STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | DS_CENTER | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Upgrade Alert"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
     CONTROL         154,IDC_BANNER,"Static",SS_BITMAP,0,0,293,172
-    LTEXT           "A new version of Shareaza is now available.  Would you like to upgrade?",
-                    IDC_MESSAGE,20,40,250,60
-    LTEXT           "If you select Upgrade Now, Shareaza will add the upgrade to your download queue and automatically begin downloading it.",
-                    IDC_STATIC,20,105,250,20
+    LTEXT           "A new version of Shareaza is now available.  Would you like to upgrade?",IDC_MESSAGE,20,40,250,60
+    LTEXT           "If you select Upgrade Now, Shareaza will add the upgrade to your download queue and automatically begin downloading it.",IDC_STATIC,20,105,250,20
     DEFPUSHBUTTON   "&Upgrade Now",IDOK,10,130,70,15
-    CONTROL         "Don't check for new versions",IDC_DONT_CHECK,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,90,130,110,15
+    CONTROL         "Don't check for new versions",IDC_DONT_CHECK,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,90,130,110,15
     PUSHBUTTON      "Don't Upgrade",IDCANCEL,210,130,70,15
 END
 
@@ -1252,55 +1004,39 @@ CAPTION "Community"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
     GROUPBOX        "My &Profile:",IDC_STATIC,5,5,270,50
-    LTEXT           "You can use your Gnutella User Profile to share information about yourself, your interests and recommended files and websites with others.",
-                    IDC_STATIC,15,20,170,25
+    LTEXT           "You can use your Gnutella User Profile to share information about yourself, your interests and recommended files and websites with others.",IDC_STATIC,15,20,170,25
     PUSHBUTTON      "Edit My Profile",IDC_EDIT_PROFILE,195,25,70,15
     GROUPBOX        "&Chat:",IDC_STATIC,5,60,270,101
-    CONTROL         "Enable peer to peer chat with compatible clients",
-                    IDC_CHAT_ENABLE,"Button",BS_AUTOCHECKBOX | WS_GROUP | 
-                    WS_TABSTOP,15,75,250,15
-    CONTROL         "Enable chat over other protocols (where possible)",
-                    IDC_CHAT_ALLNETWORKS,"Button",BS_AUTOCHECKBOX | WS_GROUP | 
-                    WS_TABSTOP,15,94,250,15
-    CONTROL         "Filter chat messages for spam",IDC_CHAT_FILTER,"Button",
-                    BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,15,113,250,15
-    CONTROL         "Censor profanity in chat",IDC_CHAT_CENSOR,"Button",
-                    BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,15,132,250,15
+    CONTROL         "Enable peer to peer chat with compatible clients",IDC_CHAT_ENABLE,
+                    "Button",BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,15,75,250,15
+    CONTROL         "Enable chat over other protocols (where possible)",IDC_CHAT_ALLNETWORKS,
+                    "Button",BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,15,94,250,15
+    CONTROL         "Filter chat messages for spam",IDC_CHAT_FILTER,"Button",BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,15,113,250,15
+    CONTROL         "Censor profanity in chat",IDC_CHAT_CENSOR,"Button",BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,15,132,250,15
 END
 
 IDD_DOWNLOAD_MONITOR DIALOGEX 0, 0, 252, 154
-STYLE DS_SETFONT | DS_MODALFRAME | WS_MINIMIZEBOX | WS_MAXIMIZEBOX | 
-    WS_POPUP | WS_CAPTION | WS_SYSMENU
+STYLE DS_SETFONT | DS_MODALFRAME | WS_MINIMIZEBOX | WS_MAXIMIZEBOX | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Download : Shareaza"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
-    LTEXT           "Shareaza is downloading:",IDC_DOWNLOAD_STATUS,5,5,240,
-                    10
-    CONTROL         "...",IDC_DOWNLOAD_FILE,"Static",SS_LEFTNOWORDWRAP | 
-                    SS_CENTERIMAGE | SS_WORDELLIPSIS | WS_GROUP,5,15,240,15
-    CONTROL         "",IDC_PROGRESS,"Static",SS_BLACKFRAME | NOT WS_VISIBLE,
-                    5,31,240,10
-    CONTROL         "",IDC_DOWNLOAD_GRAPH,"Static",SS_BLACKFRAME | NOT 
-                    WS_VISIBLE,5,45,240,25
+    LTEXT           "Shareaza is downloading:",IDC_DOWNLOAD_STATUS,5,5,240,10
+    CONTROL         "...",IDC_DOWNLOAD_FILE,"Static",SS_LEFTNOWORDWRAP | SS_CENTERIMAGE | SS_WORDELLIPSIS | WS_GROUP,5,15,240,15
+    CONTROL         "",IDC_PROGRESS,"Static",SS_BLACKFRAME | NOT WS_VISIBLE,5,31,240,10
+    CONTROL         "",IDC_DOWNLOAD_GRAPH,"Static",SS_BLACKFRAME | NOT WS_VISIBLE,5,45,240,25
     ICON            IDR_MAINFRAME,IDC_DOWNLOAD_ICON,10,85,20,20
     LTEXT           "Total transfer speed:",IDC_STATIC,40,75,100,10
-    CONTROL         "...",IDC_DOWNLOAD_SPEED,"Static",SS_LEFTNOWORDWRAP | 
-                    WS_GROUP,140,75,105,10
+    CONTROL         "...",IDC_DOWNLOAD_SPEED,"Static",SS_LEFTNOWORDWRAP | WS_GROUP,140,75,105,10
     LTEXT           "Estimated time remaining:",IDC_STATIC,40,85,100,10
-    CONTROL         "...",IDC_DOWNLOAD_TIME,"Static",SS_LEFTNOWORDWRAP | 
-                    WS_GROUP,140,85,105,10
+    CONTROL         "...",IDC_DOWNLOAD_TIME,"Static",SS_LEFTNOWORDWRAP | WS_GROUP,140,85,105,10
     LTEXT           "Volume downloaded:",IDC_STATIC,40,95,100,10
-    CONTROL         "...",IDC_DOWNLOAD_VOLUME,"Static",SS_LEFTNOWORDWRAP | 
-                    WS_GROUP,140,95,105,10
+    CONTROL         "...",IDC_DOWNLOAD_VOLUME,"Static",SS_LEFTNOWORDWRAP | WS_GROUP,140,95,105,10
     LTEXT           "Number of sources:",IDC_STATIC,40,104,100,10
-    CONTROL         "...",IDC_DOWNLOAD_SOURCES,"Static",SS_LEFTNOWORDWRAP | 
-                    WS_GROUP,140,104,105,10
-    CONTROL         "Close this window when the download completes",
-                    IDC_DOWNLOAD_CLOSE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
-                    10,115,205,15
+    CONTROL         "...",IDC_DOWNLOAD_SOURCES,"Static",SS_LEFTNOWORDWRAP | WS_GROUP,140,104,105,10
+    CONTROL         "Close this window when the download completes",IDC_DOWNLOAD_CLOSE,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,10,115,205,15
     PUSHBUTTON      "Open File",IDC_DOWNLOAD_LAUNCH,5,135,55,14,WS_GROUP
-    PUSHBUTTON      "View Library",IDC_DOWNLOAD_LIBRARY,65,135,55,14,NOT 
-                    WS_VISIBLE
+    PUSHBUTTON      "View Library",IDC_DOWNLOAD_LIBRARY,65,135,55,14,NOT WS_VISIBLE
     PUSHBUTTON      "Cancel Download",IDC_DOWNLOAD_STOP,65,135,65,14
     PUSHBUTTON      "Hide",IDC_DOWNLOAD_CANCEL,195,135,50,14
 END
@@ -1310,44 +1046,34 @@ STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Skins"
 FONT 8, "Tahoma"
 BEGIN
-    CONTROL         "List1",IDC_SKINS,"SysListView32",LVS_REPORT | 
-                    LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_SORTASCENDING | 
-                    LVS_NOCOLUMNHEADER | WS_BORDER | WS_GROUP | WS_TABSTOP,5,
-                    5,270,120
+    CONTROL         "List1",IDC_SKINS,"SysListView32",LVS_REPORT | LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_SORTASCENDING | LVS_NOCOLUMNHEADER | WS_BORDER | WS_GROUP | WS_TABSTOP,5,5,270,120
     GROUPBOX        "Skin Information:",IDC_STATIC,5,130,270,65,WS_GROUP
     LTEXT           "Name:",IDC_STATIC,15,145,40,10
     LTEXT           "...",IDC_SKIN_NAME,60,145,80,10
     LTEXT           "Author:",IDC_STATIC,150,145,30,10
     LTEXT           "...",IDC_SKIN_AUTHOR,180,145,85,10
     LTEXT           "Description:",IDC_STATIC,15,160,40,10
-    EDITTEXT        IDC_SKIN_DESC,60,160,205,25,ES_MULTILINE | 
-                    ES_AUTOVSCROLL | ES_READONLY | WS_VSCROLL
+    EDITTEXT        IDC_SKIN_DESC,60,160,205,25,ES_MULTILINE | ES_AUTOVSCROLL | ES_READONLY | WS_VSCROLL
     PUSHBUTTON      "Delete",IDC_SKINS_DELETE,5,200,55,15,WS_GROUP
     PUSHBUTTON      "Install...",IDC_SKINS_BROWSE,160,200,55,15
     PUSHBUTTON      "Get More",IDC_SKINS_WEB,220,200,55,15
 END
 
 IDD_FILE_PREVIEW DIALOGEX 0, 0, 257, 81
-STYLE DS_SETFONT | DS_MODALFRAME | WS_MINIMIZEBOX | WS_POPUP | WS_CAPTION | 
-    WS_SYSMENU
+STYLE DS_SETFONT | DS_MODALFRAME | WS_MINIMIZEBOX | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Smart Download Preview..."
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
     ICON            IDR_DOWNLOADSFRAME,IDC_STATIC,10,7,20,20
-    LTEXT           "Shareaza is creating a preview of the download:",
-                    IDC_STATIC,40,10,210,10
-    LTEXT           "Some File That I Downloaded.ext",IDC_FILE_NAME,40,20,
-                    210,12,SS_CENTERIMAGE
-    CONTROL         "Progress1",IDC_PROGRESS,"msctls_progress32",WS_BORDER,
-                    40,35,210,10
-    CTEXT           "(copying downloaded chunks to a new preview file)",
-                    IDC_PREVIEW_STATUS,40,48,210,11
+    LTEXT           "Shareaza is creating a preview of the download:",IDC_STATIC,40,10,210,10
+    LTEXT           "Some File That I Downloaded.ext",IDC_FILE_NAME,40,20,210,12,SS_CENTERIMAGE
+    CONTROL         "Progress1",IDC_PROGRESS,"msctls_progress32",WS_BORDER,40,35,210,10
+    CTEXT           "(copying downloaded chunks to a new preview file)",IDC_PREVIEW_STATUS,40,48,210,11
     PUSHBUTTON      "Cancel",IDCANCEL,200,61,50,14
 END
 
 IDD_LANGUAGE DIALOGEX 0, 0, 292, 154
-STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_VSCROLL | 
-    WS_SYSMENU
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_VSCROLL | WS_SYSMENU
 CAPTION "Select Language"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
@@ -1365,15 +1091,12 @@ STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Plugins"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
-    CONTROL         "List1",IDC_PLUGINS,"SysListView32",LVS_REPORT | 
-                    LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_NOCOLUMNHEADER | 
-                    WS_BORDER | WS_GROUP | WS_TABSTOP,5,5,270,120
+    CONTROL         "List1",IDC_PLUGINS,"SysListView32",LVS_REPORT | LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_NOCOLUMNHEADER | WS_BORDER | WS_GROUP | WS_TABSTOP,5,5,270,120
     GROUPBOX        "Plugin Information:",IDC_STATIC,5,130,270,65,WS_GROUP
     LTEXT           "Name:",IDC_STATIC,15,145,40,10
     LTEXT           "...",IDC_SKIN_NAME,60,145,205,10
     LTEXT           "Description:",IDC_STATIC,15,160,40,10
-    EDITTEXT        IDC_SKIN_DESC,60,160,205,25,ES_MULTILINE | 
-                    ES_AUTOVSCROLL | ES_READONLY | WS_VSCROLL
+    EDITTEXT        IDC_SKIN_DESC,60,160,205,25,ES_MULTILINE | ES_AUTOVSCROLL | ES_READONLY | WS_VSCROLL
     PUSHBUTTON      "&Setup...",IDC_PLUGINS_SETUP,160,200,55,15
     PUSHBUTTON      "Get More",IDC_PLUGINS_WEB,220,200,55,15
 END
@@ -1386,13 +1109,9 @@ BEGIN
     LTEXT           "Album Folder Title:",IDC_STATIC,75,7,155,10
     EDITTEXT        IDC_TITLE,75,17,155,12,ES_AUTOHSCROLL
     LTEXT           "Folder Type:",IDC_STATIC,75,32,155,10
-    COMBOBOX        IDC_SCHEMAS,75,42,155,208,CBS_DROPDOWNLIST | 
-                    CBS_OWNERDRAWVARIABLE | CBS_SORT | CBS_HASSTRINGS | 
-                    WS_VSCROLL | WS_TABSTOP
-    CONTROL         "All",IDC_SHOW_SYSTEM,"Button",BS_AUTOCHECKBOX | NOT 
-                    WS_VISIBLE | WS_TABSTOP,205,42,25,15
-    LTEXT           "Add this information to the files contained in the folder",
-                    IDC_APPLY_METADATA,5,165,225,10
+    COMBOBOX        IDC_SCHEMAS,75,42,155,208,CBS_DROPDOWNLIST | CBS_OWNERDRAWVARIABLE | CBS_SORT | CBS_HASSTRINGS | WS_VSCROLL | WS_TABSTOP
+    CONTROL         "All",IDC_SHOW_SYSTEM,"Button",BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_TABSTOP,205,42,25,15
+    LTEXT           "Add this information to the files contained in the folder",IDC_APPLY_METADATA,5,165,225,10
     DEFPUSHBUTTON   "OK",IDOK,126,179,50,14
     PUSHBUTTON      "Cancel",IDCANCEL,181,179,50,14
 END
@@ -1403,25 +1122,20 @@ CAPTION "Media Player"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
     GROUPBOX        "&Options:",IDC_STATIC,5,5,270,48,WS_GROUP
-    COMBOBOX        IDC_MEDIA_SERVICE,133,67,135,60,CBS_DROPDOWNLIST | 
-                    WS_VSCROLL | WS_TABSTOP
-    CONTROL         "Use the Shareaza Media Player to PLAY the file types listed below",
-                    IDC_MEDIA_PLAY,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,
-                    22,250,10
-    CONTROL         "Use the Shareaza Media Player to ENQUEUE the file types listed below",
-                    IDC_MEDIA_ENQUEUE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
-                    15,35,250,10
+    COMBOBOX        IDC_MEDIA_SERVICE,133,67,135,60,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    CONTROL         "Use the Shareaza Media Player to PLAY the file types listed below",IDC_MEDIA_PLAY,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,22,250,10
+    CONTROL         "Use the Shareaza Media Player to ENQUEUE the file types listed below",IDC_MEDIA_ENQUEUE,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,35,250,10
     GROUPBOX        "File &Types:",IDC_STATIC,5,107,125,108,WS_GROUP
-    COMBOBOX        IDC_MEDIA_TYPES,15,117,60,93,CBS_SIMPLE | CBS_SORT | 
-                    WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_MEDIA_TYPES,15,117,60,93,CBS_SIMPLE | CBS_SORT | WS_VSCROLL | WS_TABSTOP
     PUSHBUTTON      "&Add",IDC_MEDIA_ADD,79,117,40,15
     PUSHBUTTON      "&Remove",IDC_MEDIA_REMOVE,79,135,40,15
     GROUPBOX        "Audio &Visualisation Plugin:",IDC_STATIC,140,107,135,50
     PUSHBUTTON      "&Select Plugin...",IDC_MEDIA_VIS,160,126,95,15
     GROUPBOX        "&Media Handling",IDC_STATIC,6,56,270,48,WS_GROUP
     LTEXT           "Choose Media Handler:",IDC_STATIC,17,70,107,10
-    CTEXT           "Warning: Choosing an external Media Handler will automatically disable all Media and Visualisation Plugins!",
-                    IDC_STATIC,15,83,251,16
+    CTEXT           "Warning: Choosing an external Media Handler will automatically disable all Media and Visualisation Plugins!",IDC_STATIC,15,83,251,16
 END
 
 IDD_SETTINGS_LIBRARY DIALOGEX 0, 0, 282, 220
@@ -1430,44 +1144,30 @@ CAPTION "Library"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
     GROUPBOX        "&Options:",IDC_STATIC,5,5,139,85,WS_GROUP
-    CONTROL         "Remember folder views",IDC_STORE_VIEWS,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,15,17,126,12
-    CONTROL         "Watch library folders",IDC_WATCH_FOLDERS,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,15,31,126,12
-    CONTROL         "Quick hashing (Uses more CPU)",IDC_HIGH_HASH,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,15,59,126,12
-    CONTROL         "Allow others to browse shares",IDC_BROWSE_FILES,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,15,45,126,12
+    CONTROL         "Remember folder views",IDC_STORE_VIEWS,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,17,126,12
+    CONTROL         "Watch library folders",IDC_WATCH_FOLDERS,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,31,126,12
+    CONTROL         "Quick hashing (Uses more CPU)",IDC_HIGH_HASH,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,59,126,12
+    CONTROL         "Allow others to browse shares",IDC_BROWSE_FILES,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,45,126,12
     GROUPBOX        "&Recent Files:",IDC_STATIC,5,92,139,84,WS_GROUP
     LTEXT           "Remember:",IDC_STATIC,15,112,46,12,SS_CENTERIMAGE
     EDITTEXT        IDC_RECENT_TOTAL,65,112,35,12,ES_AUTOHSCROLL | ES_NUMBER
-    CONTROL         "Spin1",IDC_RECENT_TOTAL_SPIN,"msctls_updown32",
-                    UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | 
-                    UDS_ARROWKEYS | UDS_NOTHOUSANDS,101,112,8,12
+    CONTROL         "Spin1",IDC_RECENT_TOTAL_SPIN,"msctls_updown32",UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS | UDS_NOTHOUSANDS,101,112,8,12
     LTEXT           "files",IDC_STATIC,105,112,30,12,SS_CENTERIMAGE
     LTEXT           "For up to:",IDC_STATIC,15,132,46,12,SS_CENTERIMAGE
     EDITTEXT        IDC_RECENT_DAYS,65,132,35,12,ES_AUTOHSCROLL | ES_NUMBER
-    CONTROL         "Spin1",IDC_RECENT_DAYS_SPIN,"msctls_updown32",
-                    UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | 
-                    UDS_ARROWKEYS | UDS_NOTHOUSANDS,101,132,8,12
+    CONTROL         "Spin1",IDC_RECENT_DAYS_SPIN,"msctls_updown32",UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS | UDS_NOTHOUSANDS,101,132,8,12
     LTEXT           "days",IDC_STATIC,105,132,30,12,SS_CENTERIMAGE
     PUSHBUTTON      "Clear History Now",IDC_RECENT_CLEAR,34,153,75,15
     GROUPBOX        "&Safe to Open:",IDC_STATIC,150,5,125,85,WS_GROUP
-    COMBOBOX        IDC_SAFE_TYPES,160,18,60,63,CBS_SIMPLE | CBS_AUTOHSCROLL | 
-                    CBS_SORT | CBS_NOINTEGRALHEIGHT | WS_VSCROLL | 
-                    WS_TABSTOP
+    COMBOBOX        IDC_SAFE_TYPES,160,18,60,63,CBS_SIMPLE | CBS_AUTOHSCROLL | CBS_SORT | CBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
     PUSHBUTTON      "&Add",IDC_SAFE_ADD,225,18,40,15
     PUSHBUTTON      "&Remove",IDC_SAFE_REMOVE,225,38,40,15
     GROUPBOX        "&Never Share:",IDC_STATIC,150,92,125,84,WS_GROUP
-    COMBOBOX        IDC_PRIVATE_TYPES,160,106,60,63,CBS_SIMPLE | 
-                    CBS_AUTOHSCROLL | CBS_SORT | CBS_NOINTEGRALHEIGHT | 
-                    WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_PRIVATE_TYPES,160,106,60,63,CBS_SIMPLE | CBS_AUTOHSCROLL | CBS_SORT | CBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
     PUSHBUTTON      "&Add",IDC_PRIVATE_ADD,225,106,40,15
     PUSHBUTTON      "&Remove",IDC_PRIVATE_REMOVE,225,125,40,15
-    GROUPBOX        "Store &Collections Here:",IDC_STATIC,5,178,270,35,
-                    WS_GROUP
-    EDITTEXT        IDC_COLLECTIONS_FOLDER,15,192,225,12,ES_AUTOHSCROLL | 
-                    ES_READONLY
+    GROUPBOX        "Store &Collections Here:",IDC_STATIC,5,178,270,35,WS_GROUP
+    EDITTEXT        IDC_COLLECTIONS_FOLDER,15,192,225,12,ES_AUTOHSCROLL | ES_READONLY
     PUSHBUTTON      "",IDC_COLLECTIONS_BROWSE,245,188,23,20
     CONTROL         "Create ghost files when deleting",IDC_MAKE_GHOSTS,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,74,126,10
@@ -1478,11 +1178,8 @@ STYLE DS_SETFONT | WS_POPUP | WS_CLIPCHILDREN | WS_CAPTION | WS_SYSMENU
 CAPTION "Metadata"
 FONT 8, "Tahoma"
 BEGIN
-    COMBOBOX        IDC_SCHEMAS,5,40,235,245,CBS_DROPDOWNLIST | 
-                    CBS_OWNERDRAWVARIABLE | CBS_SORT | CBS_HASSTRINGS | 
-                    WS_VSCROLL | WS_TABSTOP
-    EDITTEXT        IDC_FILE_NAME,45,12,195,10,ES_AUTOHSCROLL | ES_READONLY | 
-                    NOT WS_BORDER
+    COMBOBOX        IDC_SCHEMAS,5,40,235,245,CBS_DROPDOWNLIST | CBS_OWNERDRAWVARIABLE | CBS_SORT | CBS_HASSTRINGS | WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_FILE_NAME,45,12,195,10,ES_AUTOHSCROLL | ES_READONLY | NOT WS_BORDER
 END
 
 IDD_FILE_GENERAL DIALOG  0, 0, 246, 218
@@ -1490,33 +1187,22 @@ STYLE DS_SETFONT | WS_POPUP | WS_CLIPCHILDREN | WS_CAPTION | WS_SYSMENU
 CAPTION "General"
 FONT 8, "Tahoma"
 BEGIN
-    LTEXT           "Universal Resource Names (URNs)",IDC_STATIC,5,40,235,11,
-                    NOT WS_VISIBLE
-    EDITTEXT        IDC_FILE_SHA1,10,56,230,10,ES_AUTOHSCROLL | ES_READONLY | 
-                    NOT WS_BORDER
-    EDITTEXT        IDC_FILE_TIGER,10,66,235,10,ES_AUTOHSCROLL | ES_READONLY | 
-                    NOT WS_BORDER
-    EDITTEXT        IDC_FILE_MD5,10,77,235,10,ES_AUTOHSCROLL | ES_READONLY | 
-                    NOT WS_BORDER
-    EDITTEXT        IDC_FILE_ED2K,10,88,235,10,ES_AUTOHSCROLL | ES_READONLY | 
-                    NOT WS_BORDER
+    LTEXT           "Universal Resource Names (URNs)",IDC_STATIC,5,40,235,11,NOT WS_VISIBLE
+    EDITTEXT        IDC_FILE_SHA1,10,56,230,10,ES_AUTOHSCROLL | ES_READONLY | NOT WS_BORDER
+    EDITTEXT        IDC_FILE_TIGER,10,66,235,10,ES_AUTOHSCROLL | ES_READONLY | NOT WS_BORDER
+    EDITTEXT        IDC_FILE_MD5,10,77,235,10,ES_AUTOHSCROLL | ES_READONLY | NOT WS_BORDER
+    EDITTEXT        IDC_FILE_ED2K,10,88,235,10,ES_AUTOHSCROLL | ES_READONLY | NOT WS_BORDER
     LTEXT           "File Attributes",IDC_STATIC,5,110,235,11,NOT WS_VISIBLE
     LTEXT           "Location:",IDC_STATIC,10,125,40,10
-    EDITTEXT        IDC_FILE_PATH,55,125,185,10,ES_AUTOHSCROLL | ES_READONLY | 
-                    NOT WS_BORDER
+    EDITTEXT        IDC_FILE_PATH,55,125,185,10,ES_AUTOHSCROLL | ES_READONLY | NOT WS_BORDER
     LTEXT           "Type:",IDC_STATIC,10,136,40,10
-    EDITTEXT        IDC_FILE_TYPE,55,136,185,10,ES_AUTOHSCROLL | ES_READONLY | 
-                    NOT WS_BORDER
+    EDITTEXT        IDC_FILE_TYPE,55,136,185,10,ES_AUTOHSCROLL | ES_READONLY | NOT WS_BORDER
     LTEXT           "Modified:",IDC_STATIC,10,147,41,10
-    EDITTEXT        IDC_FILE_MODIFIED,55,147,185,10,ES_AUTOHSCROLL | 
-                    ES_READONLY | NOT WS_BORDER
+    EDITTEXT        IDC_FILE_MODIFIED,55,147,185,10,ES_AUTOHSCROLL | ES_READONLY | NOT WS_BORDER
     LTEXT           "Size:",IDC_STATIC,10,158,40,10
-    EDITTEXT        IDC_FILE_SIZE,55,158,85,10,ES_AUTOHSCROLL | ES_READONLY | 
-                    NOT WS_BORDER
-    EDITTEXT        IDC_FILE_INDEX,170,158,65,10,ES_RIGHT | ES_AUTOHSCROLL | 
-                    ES_READONLY | NOT WS_BORDER
-    EDITTEXT        IDC_FILE_NAME,45,12,195,10,ES_AUTOHSCROLL | ES_READONLY | 
-                    NOT WS_BORDER
+    EDITTEXT        IDC_FILE_SIZE,55,158,85,10,ES_AUTOHSCROLL | ES_READONLY | NOT WS_BORDER
+    EDITTEXT        IDC_FILE_INDEX,170,158,65,10,ES_RIGHT | ES_AUTOHSCROLL | ES_READONLY | NOT WS_BORDER
+    EDITTEXT        IDC_FILE_NAME,45,12,195,10,ES_AUTOHSCROLL | ES_READONLY | NOT WS_BORDER
 END
 
 IDD_FILE_SOURCES DIALOG  0, 0, 246, 218
@@ -1526,14 +1212,11 @@ FONT 8, "Tahoma"
 BEGIN
     LTEXT           "Known Sources",IDC_STATIC,5,40,235,11,NOT WS_VISIBLE
     LTEXT           "Add New Source",IDC_STATIC,5,175,235,11,NOT WS_VISIBLE
-    EDITTEXT        IDC_FILE_SOURCE,5,190,235,20,ES_MULTILINE | 
-                    ES_AUTOVSCROLL
-    CONTROL         "List1",IDC_FILE_SOURCES,"SysListView32",LVS_REPORT | 
-                    WS_BORDER | WS_TABSTOP,5,55,235,95
+    EDITTEXT        IDC_FILE_SOURCE,5,190,235,20,ES_MULTILINE | ES_AUTOVSCROLL
+    CONTROL         "List1",IDC_FILE_SOURCES,"SysListView32",LVS_REPORT | WS_BORDER | WS_TABSTOP,5,55,235,95
     PUSHBUTTON      "&Add",IDC_SOURCE_NEW,5,155,50,15
     PUSHBUTTON      "&Remove",IDC_SOURCE_REMOVE,60,155,50,15
-    EDITTEXT        IDC_FILE_NAME,45,12,195,10,ES_AUTOHSCROLL | ES_READONLY | 
-                    NOT WS_BORDER
+    EDITTEXT        IDC_FILE_NAME,45,12,195,10,ES_AUTOHSCROLL | ES_READONLY | NOT WS_BORDER
 END
 
 IDD_SETTINGS_WEB DIALOGEX 0, 0, 282, 220
@@ -1541,31 +1224,20 @@ STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Web"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
-    GROUPBOX        "&Peer to Peer Link Handling:",IDC_STATIC,5,5,270,85,
-                    WS_GROUP
-    LTEXT           "Use Shareaza to open these types of links:",IDC_STATIC,
-                    15,20,250,10
-    CONTROL         "Magnet ( magnet: )",IDC_URI_MAGNET,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,20,35,105,12
-    CONTROL         "Gnutella ( gnutella: )",IDC_URI_GNUTELLA,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,20,50,105,12
-    CONTROL         "eDonkey ( ed2k: )",IDC_URI_ED2K,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,20,65,105,12
-    CONTROL         "Piolet ( mp2p: )",IDC_URI_PIOLET,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,150,35,105,12
-    CONTROL         "BitTorrent ( .torrent )",IDC_URI_TORRENT,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,150,50,105,12
+    GROUPBOX        "&Peer to Peer Link Handling:",IDC_STATIC,5,5,270,85,WS_GROUP
+    LTEXT           "Use Shareaza to open these types of links:",IDC_STATIC,15,20,250,10
+    CONTROL         "Magnet ( magnet: )",IDC_URI_MAGNET,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,20,35,105,12
+    CONTROL         "Gnutella ( gnutella: )",IDC_URI_GNUTELLA,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,20,50,105,12
+    CONTROL         "eDonkey ( ed2k: )",IDC_URI_ED2K,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,20,65,105,12
+    CONTROL         "Piolet ( mp2p: )",IDC_URI_PIOLET,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,150,35,105,12
+    CONTROL         "BitTorrent ( .torrent )",IDC_URI_TORRENT,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,150,50,105,12
     GROUPBOX        "&Download Manager:",IDC_STATIC,5,95,270,120,WS_GROUP
-    CONTROL         "Use Shareaza to manage all my web downloads:",
-                    IDC_WEB_HOOK,"Button",BS_AUTOCHECKBOX | BS_MULTILINE | 
-                    WS_TABSTOP,15,110,245,15
-    COMBOBOX        IDC_EXT_LIST,20,130,60,80,CBS_SIMPLE | CBS_AUTOHSCROLL | 
-                    CBS_SORT | CBS_NOINTEGRALHEIGHT | WS_VSCROLL | 
-                    WS_TABSTOP
+    CONTROL         "Use Shareaza to manage all my web downloads:",IDC_WEB_HOOK,
+                    "Button",BS_AUTOCHECKBOX | BS_MULTILINE | WS_TABSTOP,15,110,245,15
+    COMBOBOX        IDC_EXT_LIST,20,130,60,80,CBS_SIMPLE | CBS_AUTOHSCROLL | CBS_SORT | CBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
     PUSHBUTTON      "&Add",IDC_EXT_ADD,85,130,40,15
     PUSHBUTTON      "&Remove",IDC_EXT_REMOVE,85,148,40,15
-    LTEXT           "The download manager plugin will only attempt to download file types listed here.  Other file types will be handled by your web browser.  Shareaza must be running to manage downloads.",
-                    IDC_STATIC,135,130,130,70
+    LTEXT           "The download manager plugin will only attempt to download file types listed here.  Other file types will be handled by your web browser.  Shareaza must be running to manage downloads.",IDC_STATIC,135,130,130,70
 END
 
 IDD_PROFILE_IDENTITY DIALOG  0, 0, 282, 159
@@ -1580,11 +1252,9 @@ BEGIN
     EDITTEXT        IDC_PROFILE_FIRST,75,40,90,12,ES_AUTOHSCROLL
     EDITTEXT        IDC_PROFILE_LAST,175,40,90,12,ES_AUTOHSCROLL
     GROUPBOX        "&Vitals:",IDC_STATIC,5,70,105,60
-    COMBOBOX        IDC_PROFILE_GENDER,55,86,45,45,CBS_DROPDOWNLIST | 
-                    WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_PROFILE_GENDER,55,86,45,45,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
     LTEXT           "Gender:",IDC_STATIC,15,86,35,12,SS_CENTERIMAGE
-    COMBOBOX        IDC_PROFILE_AGE,55,105,45,45,CBS_DROPDOWN | WS_VSCROLL | 
-                    WS_TABSTOP
+    COMBOBOX        IDC_PROFILE_AGE,55,105,45,45,CBS_DROPDOWN | WS_VSCROLL | WS_TABSTOP
     LTEXT           "Age:",IDC_STATIC,15,105,35,12,SS_CENTERIMAGE
     CONTROL         "Allow others to browse my user profile",IDC_BROWSE_USER,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,5,140,260,12
@@ -1595,9 +1265,7 @@ STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Favourites"
 FONT 8, "Tahoma"
 BEGIN
-    CONTROL         "List1",IDC_WEB_LIST,"SysListView32",LVS_REPORT | 
-                    LVS_SORTASCENDING | WS_BORDER | WS_GROUP | WS_TABSTOP,5,
-                    5,270,90
+    CONTROL         "List1",IDC_WEB_LIST,"SysListView32",LVS_REPORT | LVS_SORTASCENDING | WS_BORDER | WS_GROUP | WS_TABSTOP,5,5,270,90
     GROUPBOX        "&Edit:",IDC_STATIC,5,100,270,55,WS_GROUP
     LTEXT           "Title:",IDC_STATIC,15,115,25,12,SS_CENTERIMAGE
     EDITTEXT        IDC_WEB_NAME,45,115,170,12,ES_AUTOHSCROLL
@@ -1614,25 +1282,19 @@ FONT 8, "Tahoma"
 BEGIN
     GROUPBOX        "&Location:",IDC_STATIC,5,5,155,60
     LTEXT           "Country:",IDC_STATIC,15,23,35,12,SS_CENTERIMAGE
-    COMBOBOX        IDC_LOC_COUNTRY,55,23,95,155,CBS_DROPDOWN | 
-                    CBS_AUTOHSCROLL | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_LOC_COUNTRY,55,23,95,155,CBS_DROPDOWN | CBS_AUTOHSCROLL | CBS_SORT | WS_VSCROLL | WS_TABSTOP
     LTEXT           "City:",IDC_STATIC,15,42,35,12,SS_CENTERIMAGE
-    COMBOBOX        IDC_LOC_CITY,55,42,95,155,CBS_DROPDOWN | CBS_AUTOHSCROLL | 
-                    CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_LOC_CITY,55,42,95,155,CBS_DROPDOWN | CBS_AUTOHSCROLL | CBS_SORT | WS_VSCROLL | WS_TABSTOP
     GROUPBOX        "&Mapping:",IDC_STATIC,170,5,105,60
     LTEXT           "Latitude:",IDC_STATIC,180,23,35,12,SS_CENTERIMAGE
     EDITTEXT        IDC_LOC_LAT,226,23,40,12,ES_AUTOHSCROLL
-    LTEXT           "Longitude:",IDC_STATIC,180,41,35,12,SS_CENTERIMAGE | 
-                    NOT WS_GROUP
+    LTEXT           "Longitude:",IDC_STATIC,180,41,35,12,SS_CENTERIMAGE | NOT WS_GROUP
     EDITTEXT        IDC_LOC_LONG,226,42,40,12,ES_AUTOHSCROLL
     GROUPBOX        "&Interests:",IDC_STATIC,5,70,270,85
-    LISTBOX         IDC_INTEREST_LIST,15,85,95,60,LBS_SORT | 
-                    LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
+    LISTBOX         IDC_INTEREST_LIST,15,85,95,60,LBS_SORT | LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
     PUSHBUTTON      "< Add",IDC_INTEREST_ADD,115,99,50,15
     PUSHBUTTON      "Remove >",IDC_INTEREST_REMOVE,115,119,50,15
-    COMBOBOX        IDC_INTEREST_ALL,170,85,95,60,CBS_SIMPLE | 
-                    CBS_AUTOHSCROLL | CBS_SORT | CBS_NOINTEGRALHEIGHT | 
-                    WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_INTEREST_ALL,170,85,95,60,CBS_SIMPLE | CBS_AUTOHSCROLL | CBS_SORT | CBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
 END
 
 IDD_PROFILE_CONTACT DIALOGEX 0, 0, 282, 159
@@ -1644,15 +1306,13 @@ BEGIN
     LTEXT           "Primary:",IDC_STATIC,15,22,40,12,SS_CENTERIMAGE
     EDITTEXT        IDC_PROFILE_EMAIL,65,22,200,12,ES_AUTOHSCROLL
     GROUPBOX        "&Instant Messaging:",IDC_STATIC,5,50,270,105
-    RTEXT           "MSN/.NET Passport:",IDC_STATIC,42,64,80,12,
-                    SS_CENTERIMAGE
+    RTEXT           "MSN/.NET Passport:",IDC_STATIC,42,64,80,12,SS_CENTERIMAGE
     EDITTEXT        IDC_PROFILE_MSN,132,64,90,12,ES_AUTOHSCROLL
     RTEXT           "Yahoo ID:",IDC_STATIC,42,82,80,12,SS_CENTERIMAGE
     EDITTEXT        IDC_PROFILE_YAHOO,132,82,90,12,ES_AUTOHSCROLL
     RTEXT           "ICQ UIN:",IDC_STATIC,42,100,80,12,SS_CENTERIMAGE
     EDITTEXT        IDC_PROFILE_ICQ,132,100,90,12,ES_AUTOHSCROLL | ES_NUMBER
-    RTEXT           "AOL Screen Name:",IDC_STATIC,42,118,80,12,
-                    SS_CENTERIMAGE
+    RTEXT           "AOL Screen Name:",IDC_STATIC,42,118,80,12,SS_CENTERIMAGE
     EDITTEXT        IDC_PROFILE_AOL,132,118,90,12,ES_AUTOHSCROLL
     RTEXT           "Jabber ID:",IDC_STATIC,42,136,80,12,SS_CENTERIMAGE
     EDITTEXT        IDC_PROFILE_JABBER,132,136,90,12,ES_AUTOHSCROLL
@@ -1663,8 +1323,7 @@ STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Bio"
 FONT 8, "Tahoma"
 BEGIN
-    EDITTEXT        IDC_PROFILE_BIO,5,5,270,150,ES_MULTILINE | 
-                    ES_AUTOVSCROLL | ES_WANTRETURN | WS_VSCROLL
+    EDITTEXT        IDC_PROFILE_BIO,5,5,270,150,ES_MULTILINE | ES_AUTOVSCROLL | ES_WANTRETURN | WS_VSCROLL
 END
 
 IDD_PROFILE_FILES DIALOG  0, 0, 282, 159
@@ -1673,11 +1332,8 @@ CAPTION "Files"
 FONT 8, "Tahoma"
 BEGIN
     GROUPBOX        "&Favourite Files:",IDC_STATIC,5,5,270,145
-    LTEXT           "Favourite files are recommended to users who browse your profile.  You can create favourite files by adding them to the ""Favourites"" library folder.",
-                    IDC_STATIC,15,20,250,20
-    CONTROL         "List1",IDC_FILE_LIST,"SysListView32",LVS_REPORT | 
-                    LVS_SHAREIMAGELISTS | LVS_ALIGNLEFT | LVS_NOCOLUMNHEADER | 
-                    WS_BORDER | WS_GROUP | WS_TABSTOP,15,45,250,95
+    LTEXT           "Favourite files are recommended to users who browse your profile.  You can create favourite files by adding them to the ""Favourites"" library folder.",IDC_STATIC,15,20,250,20
+    CONTROL         "List1",IDC_FILE_LIST,"SysListView32",LVS_REPORT | LVS_SHAREIMAGELISTS | LVS_ALIGNLEFT | LVS_NOCOLUMNHEADER | WS_BORDER | WS_GROUP | WS_TABSTOP,15,45,250,95
 END
 
 IDD_PROFILE_CERTIFICATE DIALOGEX 0, 0, 282, 159
@@ -1685,32 +1341,23 @@ STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Certificate"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
-    LTEXT           "Users are identified by a globally unique identifier and a corresponding public and private key pair.  Normally there is no need to generate a new ID, however Shareaza provides this option for advanced users.",
-                    IDC_STATIC,5,5,270,35,NOT WS_VISIBLE
-    GROUPBOX        "&Globally Unique Identification Certificate:",
-                    IDC_STATIC,5,45,270,50
+    LTEXT           "Users are identified by a globally unique identifier and a corresponding public and private key pair.  Normally there is no need to generate a new ID, however Shareaza provides this option for advanced users.",IDC_STATIC,5,5,270,35,NOT WS_VISIBLE
+    GROUPBOX        "&Globally Unique Identification Certificate:",IDC_STATIC,5,45,270,50
     LTEXT           "GUID:",IDC_STATIC,15,60,50,11,SS_CENTERIMAGE
-    LTEXT           "8A87AD8B-8511-418b-9ED6-BB7CAAE8CF4C",IDC_GUID,75,60,
-                    190,10,SS_CENTERIMAGE
-    LTEXT           "Created:",IDC_STATIC,15,75,50,11,SS_CENTERIMAGE | NOT 
-                    WS_VISIBLE
-    LTEXT           "12:45, 27 September 2002",IDC_GUID_TIME,75,75,190,11,
-                    SS_CENTERIMAGE | NOT WS_VISIBLE
+    LTEXT           "8A87AD8B-8511-418b-9ED6-BB7CAAE8CF4C",IDC_GUID,75,60,190,10,SS_CENTERIMAGE
+    LTEXT           "Created:",IDC_STATIC,15,75,50,11,SS_CENTERIMAGE | NOT WS_VISIBLE
+    LTEXT           "12:45, 27 September 2002",IDC_GUID_TIME,75,75,190,11,SS_CENTERIMAGE | NOT WS_VISIBLE
     PUSHBUTTON      "Generate New",IDC_GUID_CREATE,105,105,70,15
 END
 
 IDD_SHARE_MANAGER DIALOGEX 0, 0, 292, 180
-STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | DS_CENTER | WS_POPUP | 
-    WS_CAPTION | WS_SYSMENU
+STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | DS_CENTER | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Shared Folder Manager"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
     CONTROL         154,IDC_BANNER,"Static",SS_BITMAP,0,0,293,172
-    LTEXT           "This is a list of folders in your library.  You can add and remove folders using the buttons on the left.  When you add a new folder it is initially shared with other users, however you can unshare it from the Shareaza library if you wish.",
-                    IDC_STATIC,5,35,280,30
-    CONTROL         "List1",IDC_SHARE_FOLDERS,"SysListView32",LVS_REPORT | 
-                    LVS_SHAREIMAGELISTS | LVS_ALIGNLEFT | LVS_NOCOLUMNHEADER | 
-                    WS_BORDER | WS_TABSTOP,10,70,275,85
+    LTEXT           "This is a list of folders in your library.  You can add and remove folders using the buttons on the left.  When you add a new folder it is initially shared with other users, however you can unshare it from the Shareaza library if you wish.",IDC_STATIC,5,35,280,30
+    CONTROL         "List1",IDC_SHARE_FOLDERS,"SysListView32",LVS_REPORT | LVS_SHAREIMAGELISTS | LVS_ALIGNLEFT | LVS_NOCOLUMNHEADER | WS_BORDER | WS_TABSTOP,10,70,275,85
     PUSHBUTTON      "&Add...",IDC_SHARE_ADD,10,160,45,15
     PUSHBUTTON      "&Remove",IDC_SHARE_REMOVE,60,160,45,15,WS_DISABLED
     DEFPUSHBUTTON   "OK",IDOK,190,160,45,15
@@ -1723,30 +1370,22 @@ CAPTION "Avatar"
 FONT 8, "Tahoma"
 BEGIN
     GROUPBOX        "&Preview:",IDC_STATIC,5,5,115,105
-    CONTROL         "",IDC_PREVIEW,"Static",SS_BLACKFRAME | NOT WS_VISIBLE,
-                    20,20,85,79
+    CONTROL         "",IDC_PREVIEW,"Static",SS_BLACKFRAME | NOT WS_VISIBLE,20,20,85,79
     GROUPBOX        "&Select:",IDC_STATIC,130,5,145,105
-    LTEXT           "Other users browsing your profile and shared files will see your avatar.  Custom avatars should be 128x128 pixels, and can be in any supported image file on your PC.",
-                    IDC_STATIC,140,20,125,55
+    LTEXT           "Other users browsing your profile and shared files will see your avatar.  Custom avatars should be 128x128 pixels, and can be in any supported image file on your PC.",IDC_STATIC,140,20,125,55
     PUSHBUTTON      "&Browse...",IDC_AVATAR_BROWSE,140,85,55,15
     PUSHBUTTON      "&Remove",IDC_AVATAR_REMOVE,210,85,55,15
 END
 
 IDD_MEDIA_VIS DIALOGEX 0, 0, 292, 199
-STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | DS_CENTER | WS_POPUP | 
-    WS_CAPTION | WS_SYSMENU
+STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | DS_CENTER | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Select Visualisation"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
     CONTROL         154,IDC_BANNER,"Static",SS_BITMAP,0,0,293,172
-    GROUPBOX        "Select an audio visualisation from the list:",
-                    IDC_STATIC,5,35,280,140,WS_GROUP
-    CONTROL         "List1",IDC_PLUGINS,"SysListView32",LVS_REPORT | 
-                    LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_SORTASCENDING | 
-                    LVS_SHAREIMAGELISTS | LVS_ALIGNLEFT | LVS_NOCOLUMNHEADER | 
-                    WS_BORDER | WS_TABSTOP,15,50,260,95
-    COMBOBOX        IDC_VIS_SIZE,15,150,100,105,CBS_DROPDOWNLIST | 
-                    WS_VSCROLL | WS_TABSTOP
+    GROUPBOX        "Select an audio visualisation from the list:",IDC_STATIC,5,35,280,140,WS_GROUP
+    CONTROL         "List1",IDC_PLUGINS,"SysListView32",LVS_REPORT | LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_SORTASCENDING | LVS_SHAREIMAGELISTS | LVS_ALIGNLEFT | LVS_NOCOLUMNHEADER | WS_BORDER | WS_TABSTOP,15,50,260,95
+    COMBOBOX        IDC_VIS_SIZE,15,150,100,105,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
     PUSHBUTTON      "&Setup...",IDC_SETUP,220,150,55,15
     DEFPUSHBUTTON   "OK",IDOK,189,180,45,15,WS_GROUP
     PUSHBUTTON      "Cancel",IDCANCEL,239,180,45,15
@@ -1757,20 +1396,15 @@ STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Welcome to Shareaza"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
-    LTEXT           "Shareaza is a much friendlier place when everyone writes a few basic details about themselves.",
-                    IDC_STATIC,10,10,265,20
+    LTEXT           "Shareaza is a much friendlier place when everyone writes a few basic details about themselves.",IDC_STATIC,10,10,265,20
     RTEXT           "I use the name:",IDC_STATIC,12,48,60,12,SS_CENTERIMAGE
     EDITTEXT        IDC_PROFILE_NICK,84,48,168,12,ES_AUTOHSCROLL
     RTEXT           "and I'm a:",IDC_STATIC,6,72,66,12,SS_CENTERIMAGE
-    COMBOBOX        IDC_PROFILE_AGE,84,72,84,216,CBS_DROPDOWNLIST | 
-                    WS_VSCROLL | WS_TABSTOP
-    COMBOBOX        IDC_PROFILE_GENDER,174,72,78,216,CBS_DROPDOWNLIST | 
-                    WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_PROFILE_AGE,84,72,84,216,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_PROFILE_GENDER,174,72,78,216,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
     RTEXT           "from:",IDC_STATIC,12,97,60,12,SS_CENTERIMAGE
-    COMBOBOX        IDC_LOC_COUNTRY,84,96,168,155,CBS_DROPDOWN | 
-                    CBS_AUTOHSCROLL | CBS_SORT | WS_VSCROLL | WS_TABSTOP
-    COMBOBOX        IDC_LOC_CITY,84,120,168,155,CBS_DROPDOWN | 
-                    CBS_AUTOHSCROLL | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_LOC_COUNTRY,84,96,168,155,CBS_DROPDOWN | CBS_AUTOHSCROLL | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_LOC_CITY,84,120,168,155,CBS_DROPDOWN | CBS_AUTOHSCROLL | CBS_SORT | WS_VSCROLL | WS_TABSTOP
 END
 
 IDD_SETTINGS_UPLOADS DIALOGEX 0, 0, 282, 220
@@ -1779,40 +1413,27 @@ CAPTION "Uploads"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
     GROUPBOX        "&Options:",IDC_STATIC,5,5,135,96,WS_GROUP
-    CONTROL         "Share NEW partial downloads",IDC_SHARE_PARTIALS,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,15,20,120,12
-    CONTROL         "Limit sharing in hub mode",IDC_HUB_UNSHARE,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,15,38,120,13
-    CONTROL         "Share preview files",IDC_SHARE_PREVIEW,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,15,56,120,13
-    LTEXT           "Limit per unique host:",IDC_STATIC,15,80,80,12,
-                    SS_CENTERIMAGE
+    CONTROL         "Share NEW partial downloads",IDC_SHARE_PARTIALS,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,20,120,12
+    CONTROL         "Limit sharing in hub mode",IDC_HUB_UNSHARE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,38,120,13
+    CONTROL         "Share preview files",IDC_SHARE_PREVIEW,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,56,120,13
+    LTEXT           "Limit per unique host:",IDC_STATIC,15,80,80,12,SS_CENTERIMAGE
     EDITTEXT        IDC_MAX_HOST,100,80,30,12,ES_AUTOHSCROLL | ES_NUMBER
-    CONTROL         "Spin1",IDC_MAX_HOST_SPIN,"msctls_updown32",
-                    UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | 
-                    UDS_ARROWKEYS | UDS_NOTHOUSANDS,130,80,8,12
+    CONTROL         "Spin1",IDC_MAX_HOST_SPIN,"msctls_updown32",UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS | UDS_NOTHOUSANDS,130,80,8,12
     GROUPBOX        "&User-Agent Filter:",IDC_STATIC,150,5,125,40,WS_GROUP
-    COMBOBOX        IDC_AGENT_LIST,159,21,65,80,CBS_DROPDOWN | 
-                    CBS_AUTOHSCROLL | CBS_SORT | CBS_NOINTEGRALHEIGHT | 
-                    WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_AGENT_LIST,159,21,65,80,CBS_DROPDOWN | CBS_AUTOHSCROLL | CBS_SORT | CBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
     PUSHBUTTON      "+",IDC_AGENT_ADD,230,19,16,16
     PUSHBUTTON      "-",IDC_AGENT_REMOVE,250,19,16,16
     GROUPBOX        "&Bandwidth:",IDC_STATIC,150,48,125,53,WS_GROUP
     LTEXT           "Limit:",IDC_STATIC,162,63,40,12,SS_CENTERIMAGE
-    COMBOBOX        IDC_UPLOADS_BANDWIDTH_LIMIT,205,63,60,72,CBS_DROPDOWN | 
-                    WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_UPLOADS_BANDWIDTH_LIMIT,205,63,60,72,CBS_DROPDOWN | WS_VSCROLL | WS_TABSTOP
     LTEXT           "Mode:",IDC_STATIC,162,80,40,12,SS_CENTERIMAGE
-    COMBOBOX        IDC_THROTTLE_MODE,205,80,60,45,CBS_DROPDOWNLIST | 
-                    WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_THROTTLE_MODE,205,80,60,45,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
     GROUPBOX        "&Queues:",IDC_STATIC,5,105,270,110,WS_GROUP
-    CONTROL         "List1",IDC_QUEUES,"SysListView32",LVS_REPORT | 
-                    LVS_SHAREIMAGELISTS | WS_BORDER | WS_TABSTOP,15,120,250,
-                    70
+    CONTROL         "List1",IDC_QUEUES,"SysListView32",LVS_REPORT | LVS_SHAREIMAGELISTS | WS_BORDER | WS_TABSTOP,15,120,250,70
     PUSHBUTTON      "&New...",IDC_QUEUE_NEW,135,195,40,15,WS_GROUP
     PUSHBUTTON      "&Edit...",IDC_QUEUE_EDIT,181,195,40,15
     PUSHBUTTON      "&Delete",IDC_QUEUE_DELETE,225,195,40,15
-    LTEXT           "(changes take effect immediately)",IDC_STATIC,15,195,
-                    115,15,SS_CENTERIMAGE
+    LTEXT           "(changes take effect immediately)",IDC_STATIC,15,195,115,15,SS_CENTERIMAGE
 END
 
 IDD_FILE_COMMENTS DIALOGEX 0, 0, 246, 218
@@ -1821,17 +1442,11 @@ CAPTION "My Review"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
     LTEXT           "My Rating",IDC_STATIC,5,40,235,11,NOT WS_VISIBLE
-    LTEXT           "I rate this file:",IDC_STATIC,15,55,70,13,
-                    SS_CENTERIMAGE
-    COMBOBOX        IDC_FILE_RATING,90,54,135,100,CBS_DROPDOWNLIST | 
-                    CBS_OWNERDRAWFIXED | CBS_HASSTRINGS | WS_VSCROLL | 
-                    WS_TABSTOP
-    LTEXT           "My Review and Comments",IDC_STATIC,5,75,235,11,NOT 
-                    WS_VISIBLE
-    EDITTEXT        IDC_FILE_COMMENTS,5,90,235,120,ES_MULTILINE | 
-                    ES_AUTOVSCROLL | ES_WANTRETURN | WS_VSCROLL
-    EDITTEXT        IDC_FILE_NAME,45,12,195,10,ES_AUTOHSCROLL | ES_READONLY | 
-                    NOT WS_BORDER
+    LTEXT           "I rate this file:",IDC_STATIC,15,55,70,13,SS_CENTERIMAGE
+    COMBOBOX        IDC_FILE_RATING,90,54,135,100,CBS_DROPDOWNLIST | CBS_OWNERDRAWFIXED | CBS_HASSTRINGS | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "My Review and Comments",IDC_STATIC,5,75,235,11,NOT WS_VISIBLE
+    EDITTEXT        IDC_FILE_COMMENTS,5,90,235,120,ES_MULTILINE | ES_AUTOVSCROLL | ES_WANTRETURN | WS_VSCROLL
+    EDITTEXT        IDC_FILE_NAME,45,12,195,10,ES_AUTOHSCROLL | ES_READONLY | NOT WS_BORDER
 END
 
 IDD_WARNINGS DIALOGEX 0, 0, 292, 214
@@ -1840,14 +1455,10 @@ CAPTION "Shareaza Respects its Users"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
     CONTROL         154,IDC_BANNER,"Static",SS_BITMAP,0,0,293,172
-    LTEXT           "Did you know Shareaza is a 100% free product?",
-                    IDC_TITLE,15,34,265,19,SS_CENTERIMAGE
-    LTEXT           "Shareaza does NOT contain ANY ""spyware"", ""adware"" or other bundled software. It does NOT display any advertisements or ""popups"", ever.\n\nIf you ever see advertising or ""popups"" while using Shareaza, be assured that they are NOT coming from this program.",
-                    IDC_STATIC,15,56,265,50
-    LTEXT           "Unfortunately a lot of other software does come with undesirable adware or spyware, so if you see something suspicious you may wish to check your PC with an advertising or spyware removal program.",
-                    IDC_STATIC,15,107,265,33
-    LTEXT           "You should not have had to pay any money to obtain Shareaza.  Shareaza can be freely downloaded by anyone from http://shareaza.sourceforge.net/.  If you paid someone money for Shareaza, you should demand a full refund immediately.",
-                    IDC_STATIC,15,143,265,35
+    LTEXT           "Did you know Shareaza is a 100% free product?",IDC_TITLE,15,34,265,19,SS_CENTERIMAGE
+    LTEXT           "Shareaza does NOT contain ANY ""spyware"", ""adware"" or other bundled software. It does NOT display any advertisements or ""popups"", ever.\n\nIf you ever see advertising or ""popups"" while using Shareaza, be assured that they are NOT coming from this program.",IDC_STATIC,15,56,265,50
+    LTEXT           "Unfortunately a lot of other software does come with undesirable adware or spyware, so if you see something suspicious you may wish to check your PC with an advertising or spyware removal program.",IDC_STATIC,15,107,265,33
+    LTEXT           "You should not have had to pay any money to obtain Shareaza.  Shareaza can be freely downloaded by anyone from http://shareaza.sourceforge.net/.  If you paid someone money for Shareaza, you should demand a full refund immediately.",IDC_STATIC,15,143,265,35
     LTEXT           "Shareaza respects its users!",IDC_RESPECT,15,178,232,13
     LTEXT           "http://shareaza.sourceforge.net/",IDC_WEB,15,195,125,10
     DEFPUSHBUTTON   "Close",IDOK,245,190,39,14
@@ -1859,16 +1470,11 @@ CAPTION "Spread the Word"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
     CONTROL         154,IDC_BANNER,"Static",SS_BITMAP,0,0,293,172
-    LTEXT           "Help Us Spread the Word",IDC_TITLE,15,45,265,10,
-                    SS_CENTERIMAGE
-    LTEXT           "We hope you have enjoyed using Shareaza so far.  We believe it is the best file sharing application around.",
-                    IDC_STATIC,15,65,260,20
-    LTEXT           "Unfortunately, a lot of file sharers don't know what they're missing!",
-                    IDC_STATIC,15,90,260,20
-    LTEXT           "If you know someone who would like Shareaza, whether they're a new user or someone still putting up with an inferior product, why not let them know there is a better alternative?",
-                    IDC_STATIC,15,110,260,30
-    LTEXT           "This is the last message that will appear when starting Shareaza.",
-                    IDC_STATIC,15,145,260,10
+    LTEXT           "Help Us Spread the Word",IDC_TITLE,15,45,265,10,SS_CENTERIMAGE
+    LTEXT           "We hope you have enjoyed using Shareaza so far.  We believe it is the best file sharing application around.",IDC_STATIC,15,65,260,20
+    LTEXT           "Unfortunately, a lot of file sharers don't know what they're missing!",IDC_STATIC,15,90,260,20
+    LTEXT           "If you know someone who would like Shareaza, whether they're a new user or someone still putting up with an inferior product, why not let them know there is a better alternative?",IDC_STATIC,15,110,260,30
+    LTEXT           "This is the last message that will appear when starting Shareaza.",IDC_STATIC,15,145,260,10
     LTEXT           "http://shareaza.sourceforge.net/",IDC_WEB,15,165,125,10
     DEFPUSHBUTTON   "OK",IDOK,245,165,39,14
 END
@@ -1879,28 +1485,17 @@ CAPTION "Existing File"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
     CONTROL         154,IDC_BANNER,"Static",SS_BITMAP | WS_GROUP,0,0,292,31
-    CONTROL         "filename goes here",IDC_FILE_NAME,"Static",
-                    SS_LEFTNOWORDWRAP | SS_WORDELLIPSIS | WS_GROUP,15,40,260,
-                    10
-    CONTROL         "urn goes here",IDC_FILE_URN,"Static",SS_LEFTNOWORDWRAP | 
-                    SS_WORDELLIPSIS | WS_GROUP,15,51,260,10
-    CONTROL         "comments go here",IDC_FILE_COMMENTS,"Static",
-                    SS_LEFTNOWORDWRAP | SS_WORDELLIPSIS | WS_GROUP,15,62,260,
-                    10
-    LTEXT           "You already have this file in your library.  What would you like to do?",
-                    IDC_MESSAGE_AVAILABLE,15,78,260,18
-    CONTROL         "Show me the file in my library",IDC_ACTION_0,"Button",
-                    BS_AUTORADIOBUTTON | WS_GROUP,28,106,250,10
-    CONTROL         "Download the file again",IDC_ACTION_1,"Button",
-                    BS_AUTORADIOBUTTON,28,121,250,10
-    CONTROL         "Don't download this file",IDC_ACTION_2,"Button",
-                    BS_AUTORADIOBUTTON,28,136,250,10
+    CONTROL         "filename goes here",IDC_FILE_NAME,"Static",SS_LEFTNOWORDWRAP | SS_WORDELLIPSIS | WS_GROUP,15,40,260,10
+    CONTROL         "urn goes here",IDC_FILE_URN,"Static",SS_LEFTNOWORDWRAP | SS_WORDELLIPSIS | WS_GROUP,15,51,260,10
+    CONTROL         "comments go here",IDC_FILE_COMMENTS,"Static",SS_LEFTNOWORDWRAP | SS_WORDELLIPSIS | WS_GROUP,15,62,260,10
+    LTEXT           "You already have this file in your library.  What would you like to do?",IDC_MESSAGE_AVAILABLE,15,78,260,18
+    CONTROL         "Show me the file in my library",IDC_ACTION_0,"Button",BS_AUTORADIOBUTTON | WS_GROUP,28,106,250,10
+    CONTROL         "Download the file again",IDC_ACTION_1,"Button",BS_AUTORADIOBUTTON,28,121,250,10
+    CONTROL         "Don't download this file",IDC_ACTION_2,"Button",BS_AUTORADIOBUTTON,28,136,250,10
     DEFPUSHBUTTON   "OK",IDOK,180,150,50,14,WS_GROUP
     PUSHBUTTON      "Cancel",IDCANCEL,235,150,50,14
-    LTEXT           "You have downloaded and deleted this file before.  What would you like to do?",
-                    IDC_MESSAGE_DELETED,15,78,260,18
-    LTEXT           "Warning!!! Duplicate files detected. Some malicious software may infect your Library. Make sure that you downloaded this file or placed it manually. Otherwise, shutdown Shareaza and scan your computer with an antivirus program.",
-                    IDC_MESSAGE_DUPLICATES,15,74,262,28
+    LTEXT           "You have downloaded and deleted this file before.  What would you like to do?",IDC_MESSAGE_DELETED,15,78,260,18
+    LTEXT           "Warning!!! Duplicate files detected. Some malicious software may infect your Library. Make sure that you downloaded this file or placed it manually. Otherwise, shutdown Shareaza and scan your computer with an antivirus program.",IDC_MESSAGE_DUPLICATES,15,74,262,28
 END
 
 IDD_CLOSE_MODE DIALOGEX 0, 0, 292, 145
@@ -1909,14 +1504,11 @@ CAPTION "Close Button"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
     CONTROL         154,IDC_BANNER,"Static",SS_BITMAP | WS_GROUP,0,0,292,31
-    LTEXT           "This is the first time you have clicked Shareaza's close button.  Please choose what action you would like Shareaza to take when clicking the close button from now on:",
-                    IDC_STATIC,15,40,260,30
-    CONTROL         "Minimise to the tray area",IDC_CLOSE_0,"Button",
-                    BS_AUTORADIOBUTTON | WS_GROUP,30,75,245,10
-    CONTROL         "Shut down Shareaza immediately",IDC_CLOSE_1,"Button",
-                    BS_AUTORADIOBUTTON,30,90,245,10
-    CONTROL         "Shut down Shareaza after any downloads and uploads finish",
-                    IDC_CLOSE_2,"Button",BS_AUTORADIOBUTTON,30,105,245,10
+    LTEXT           "This is the first time you have clicked Shareaza's close button.  Please choose what action you would like Shareaza to take when clicking the close button from now on:",IDC_STATIC,15,40,260,30
+    CONTROL         "Minimise to the tray area",IDC_CLOSE_0,"Button",BS_AUTORADIOBUTTON | WS_GROUP,30,75,245,10
+    CONTROL         "Shut down Shareaza immediately",IDC_CLOSE_1,"Button",BS_AUTORADIOBUTTON,30,90,245,10
+    CONTROL         "Shut down Shareaza after any downloads and uploads finish",IDC_CLOSE_2,
+                    "Button",BS_AUTORADIOBUTTON,30,105,245,10
     DEFPUSHBUTTON   "OK",IDOK,180,126,50,14,WS_GROUP
     PUSHBUTTON      "Cancel",IDCANCEL,235,126,50,14
 END
@@ -1927,37 +1519,24 @@ CAPTION "eDonkey"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
     GROUPBOX        "&eDonkey Network:",IDC_STATIC,5,5,270,50,WS_GROUP
-    CONTROL         "Always connect to eDonkey",IDC_ENABLE_ALWAYS,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,15,20,126,12
-    CONTROL         "Connect to eDonkey today",IDC_ENABLE_TODAY,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,15,34,125,12
+    CONTROL         "Always connect to eDonkey",IDC_ENABLE_ALWAYS,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,20,126,12
+    CONTROL         "Connect to eDonkey today",IDC_ENABLE_TODAY,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,34,125,12
     GROUPBOX        "&Global Searching:",IDC_STATIC,5,58,270,65,WS_GROUP
-    CONTROL         "Search known remote servers in the server cache:",
-                    IDC_SERVER_WALK,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,
-                    72,250,12
-    RTEXT           "Stop searching after:",IDC_STATIC,15,87,95,12,
-                    SS_CENTERIMAGE
+    CONTROL         "Search known remote servers in the server cache:",IDC_SERVER_WALK,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,72,250,12
+    RTEXT           "Stop searching after:",IDC_STATIC,15,87,95,12,SS_CENTERIMAGE
     EDITTEXT        IDC_RESULTS,120,87,35,12,ES_AUTOHSCROLL | ES_NUMBER
-    CONTROL         "Spin1",IDC_RESULTS_SPIN,"msctls_updown32",
-                    UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | 
-                    UDS_ARROWKEYS | UDS_NOTHOUSANDS,156,87,8,12
-    LTEXT           "search results.",IDC_STATIC,165,87,100,12,
-                    SS_CENTERIMAGE
-    CONTROL         "Receive and update server list from the connected server",
-                    IDC_LEARN_ED2K_SERVERS,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,16,105,251,10
+    CONTROL         "Spin1",IDC_RESULTS_SPIN,"msctls_updown32",UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS | UDS_NOTHOUSANDS,156,87,8,12
+    LTEXT           "search results.",IDC_STATIC,165,87,100,12,SS_CENTERIMAGE
+    CONTROL         "Receive and update server list from the connected server",IDC_LEARN_ED2K_SERVERS,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,16,105,251,10
     GROUPBOX        "&Client Link Connections:",IDC_STATIC,5,127,270,37
-    RTEXT           "Connect to no more than:",IDC_STATIC,15,142,95,12,
-                    SS_CENTERIMAGE
+    RTEXT           "Connect to no more than:",IDC_STATIC,15,142,95,12,SS_CENTERIMAGE
     EDITTEXT        IDC_LINKS,120,142,35,12,ES_AUTOHSCROLL | ES_NUMBER
-    CONTROL         "Spin1",IDC_LINKS_SPIN,"msctls_updown32",UDS_SETBUDDYINT | 
-                    UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS | 
-                    UDS_NOTHOUSANDS,156,142,8,12
-    LTEXT           "other eDonkey clients.",IDC_STATIC,165,142,100,12,
-                    SS_CENTERIMAGE
+    CONTROL         "Spin1",IDC_LINKS_SPIN,"msctls_updown32",UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS | UDS_NOTHOUSANDS,156,142,8,12
+    LTEXT           "other eDonkey clients.",IDC_STATIC,165,142,100,12,SS_CENTERIMAGE
     GROUPBOX        "eDonkey &Tools:",IDC_STATIC,5,167,270,48,WS_GROUP
-    LTEXT           "Download eDonkey server list from the web:",IDC_STATIC,
-                    15,190,190,15,SS_CENTERIMAGE
+    LTEXT           "Download eDonkey server list from the web:",IDC_STATIC,15,190,190,15,SS_CENTERIMAGE
     PUSHBUTTON      "Download...",IDC_DISCOVERY_GO,213,190,53,15
 END
 
@@ -1966,26 +1545,18 @@ STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Networks"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
-    LTEXT           "Shareaza is a general-purpose file-sharing application that can access many P2P networks at the same time.  On this page you can select which P2P networks you want to connect to, and then adjust specific settings for each network.",
-                    IDC_STATIC,5,5,270,30
+    LTEXT           "Shareaza is a general-purpose file-sharing application that can access many P2P networks at the same time.  On this page you can select which P2P networks you want to connect to, and then adjust specific settings for each network.",IDC_STATIC,5,5,270,30
     GROUPBOX        "Gnutella2 Network:",IDC_STATIC,5,35,270,55,WS_GROUP
-    LTEXT           "The Gnutella2 network is Shareaza's premiere network, offering more features and performance than any other P2P net.  Highly recommended.",
-                    IDC_STATIC,15,50,250,18
-    CONTROL         "Connect to Gnutella2 (G2)",IDC_G2_ENABLE,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,15,73,145,10
+    LTEXT           "The Gnutella2 network is Shareaza's premiere network, offering more features and performance than any other P2P net.  Highly recommended.",IDC_STATIC,15,50,250,18
+    CONTROL         "Connect to Gnutella2 (G2)",IDC_G2_ENABLE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,73,145,10
     RTEXT           "Configure Gnutella2",IDC_G2_SETUP,165,73,100,10
     GROUPBOX        "eDonkey Network:",IDC_STATIC,5,95,270,55,WS_GROUP
-    LTEXT           "The eDonkey network is a popular server-based network.  While not as feature-rich as Gnutella2, eDonkey has an impressive file collection.",
-                    IDC_STATIC,15,110,250,18
-    CONTROL         "Connect to eDonkey",IDC_ED2K_ENABLE,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,15,132,145,10
+    LTEXT           "The eDonkey network is a popular server-based network.  While not as feature-rich as Gnutella2, eDonkey has an impressive file collection.",IDC_STATIC,15,110,250,18
+    CONTROL         "Connect to eDonkey",IDC_ED2K_ENABLE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,132,145,10
     RTEXT           "Configure eDonkey",IDC_ED2K_SETUP,165,132,100,10
-    GROUPBOX        "Original Gnutella Network:",IDC_STATIC,5,155,270,55,
-                    WS_GROUP
-    LTEXT           "Although the original Gnutella network is less feature-rich than Gnutella2, and has fewer files than eDonkey, it remains a valuable resource.",
-                    IDC_STATIC,15,170,250,18
-    CONTROL         "Connect to Original Gnutella",IDC_G1_ENABLE,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,15,193,145,10
+    GROUPBOX        "Original Gnutella Network:",IDC_STATIC,5,155,270,55,WS_GROUP
+    LTEXT           "Although the original Gnutella network is less feature-rich than Gnutella2, and has fewer files than eDonkey, it remains a valuable resource.",IDC_STATIC,15,170,250,18
+    CONTROL         "Connect to Original Gnutella",IDC_G1_ENABLE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,193,145,10
     RTEXT           "Configure Gnutella1",IDC_G1_SETUP,165,193,100,10
 END
 
@@ -1994,11 +1565,8 @@ STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Protocols"
 FONT 8, "Tahoma"
 BEGIN
-    GROUPBOX        "Shareaza Common Architecture Protocol Explorer:",
-                    IDC_STATIC,5,5,270,210,WS_GROUP
-    CONTROL         "Tree1",IDC_PROTOCOLS,"SysTreeView32",TVS_HASBUTTONS | 
-                    TVS_HASLINES | TVS_LINESATROOT | TVS_DISABLEDRAGDROP | 
-                    TVS_SHOWSELALWAYS | WS_BORDER | WS_TABSTOP,15,20,250,185
+    GROUPBOX        "Shareaza Common Architecture Protocol Explorer:",IDC_STATIC,5,5,270,210,WS_GROUP
+    CONTROL         "Tree1",IDC_PROTOCOLS,"SysTreeView32",TVS_HASBUTTONS | TVS_HASLINES | TVS_LINESATROOT | TVS_DISABLEDRAGDROP | TVS_SHOWSELALWAYS | WS_BORDER | WS_TABSTOP,15,20,250,185
 END
 
 IDD_QUEUE_PROPERTIES DIALOGEX 0, 0, 382, 252
@@ -2011,72 +1579,41 @@ BEGIN
     GROUPBOX        "&Entry Criteria:",IDC_STATIC,5,50,180,177,WS_GROUP
     CONTROL         "Partially downloaded files only",IDC_QUEUE_PARTIALONLY,
                     "Button",BS_AUTORADIOBUTTON | WS_TABSTOP,15,65,160,12
-    CONTROL         "Shared Library files only",IDC_QUEUE_LIBRARYONLY,"Button",
-                    BS_AUTORADIOBUTTON | WS_TABSTOP,15,80,160,10
-    CONTROL         "Both partial and library files",IDC_QUEUE_BOTH,"Button",
-                    BS_AUTORADIOBUTTON | WS_TABSTOP,15,94,159,10
-    CONTROL         "Minimum source file size:",IDC_MINIMUM_CHECK,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,15,110,110,12
+    CONTROL         "Shared Library files only",IDC_QUEUE_LIBRARYONLY,"Button",BS_AUTORADIOBUTTON | WS_TABSTOP,15,80,160,10
+    CONTROL         "Both partial and library files",IDC_QUEUE_BOTH,"Button",BS_AUTORADIOBUTTON | WS_TABSTOP,15,94,159,10
+    CONTROL         "Minimum source file size:",IDC_MINIMUM_CHECK,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,110,110,12
     EDITTEXT        IDC_MINIMUM_VALUE,130,110,45,12,ES_AUTOHSCROLL
-    CONTROL         "Maximum source file size:",IDC_MAXIMUM_CHECK,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,15,127,110,12
+    CONTROL         "Maximum source file size:",IDC_MAXIMUM_CHECK,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,127,110,12
     EDITTEXT        IDC_MAXIMUM_VALUE,130,127,45,12,ES_AUTOHSCROLL
-    CONTROL         "Marked files:",IDC_MARKED_CHECK,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,15,144,65,12
-    COMBOBOX        IDC_MARKED_LIST,90,144,85,90,CBS_DROPDOWN | 
-                    CBS_AUTOHSCROLL | CBS_SORT | WS_VSCROLL | WS_TABSTOP
-    CONTROL         "Filename match:",IDC_MATCH_CHECK,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,15,165,70,12
+    CONTROL         "Marked files:",IDC_MARKED_CHECK,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,144,65,12
+    COMBOBOX        IDC_MARKED_LIST,90,144,85,90,CBS_DROPDOWN | CBS_AUTOHSCROLL | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    CONTROL         "Filename match:",IDC_MATCH_CHECK,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,165,70,12
     EDITTEXT        IDC_MATCH_TEXT,90,165,85,12,ES_AUTOHSCROLL
-    CONTROL         "Protocols:",IDC_PROTOCOLS_CHECK,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,15,187,65,12
-    CONTROL         "List1",IDC_PROTOCOLS_LIST,"SysListView32",LVS_SMALLICON | 
-                    LVS_SINGLESEL | WS_BORDER | WS_TABSTOP,90,185,85,35
+    CONTROL         "Protocols:",IDC_PROTOCOLS_CHECK,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,187,65,12
+    CONTROL         "List1",IDC_PROTOCOLS_LIST,"SysListView32",LVS_SMALLICON | LVS_SINGLESEL | WS_BORDER | WS_TABSTOP,90,185,85,35
     GROUPBOX        "&Capacity:",IDC_STATIC,195,5,180,104,WS_GROUP
-    CONTROL         "Enable this queue",IDC_ENABLE,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,205,20,160,12
-    LTEXT           "Minimum number of transfers:",IDC_STATIC,205,40,115,12,
-                    SS_CENTERIMAGE
-    EDITTEXT        IDC_TRANSFERS_MIN,325,40,40,12,ES_AUTOHSCROLL | 
-                    ES_NUMBER
-    CONTROL         "Spin1",IDC_TRANSFERS_MIN_SPIN,"msctls_updown32",
-                    UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | 
-                    UDS_ARROWKEYS | UDS_NOTHOUSANDS,365,40,8,12
-    LTEXT           "Maximum number of transfers:",IDC_STATIC,205,63,115,12,
-                    SS_CENTERIMAGE
-    EDITTEXT        IDC_TRANSFERS_MAX,325,63,40,12,ES_AUTOHSCROLL | 
-                    ES_NUMBER
-    CONTROL         "Spin1",IDC_TRANSFERS_MAX_SPIN,"msctls_updown32",
-                    UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | 
-                    UDS_ARROWKEYS | UDS_NOTHOUSANDS,365,63,8,12
-    LTEXT           "Maximum number waiting in queue:",IDC_STATIC,205,85,115,
-                    12,SS_CENTERIMAGE
+    CONTROL         "Enable this queue",IDC_ENABLE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,205,20,160,12
+    LTEXT           "Minimum number of transfers:",IDC_STATIC,205,40,115,12,SS_CENTERIMAGE
+    EDITTEXT        IDC_TRANSFERS_MIN,325,40,40,12,ES_AUTOHSCROLL | ES_NUMBER
+    CONTROL         "Spin1",IDC_TRANSFERS_MIN_SPIN,"msctls_updown32",UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS | UDS_NOTHOUSANDS,365,40,8,12
+    LTEXT           "Maximum number of transfers:",IDC_STATIC,205,63,115,12,SS_CENTERIMAGE
+    EDITTEXT        IDC_TRANSFERS_MAX,325,63,40,12,ES_AUTOHSCROLL | ES_NUMBER
+    CONTROL         "Spin1",IDC_TRANSFERS_MAX_SPIN,"msctls_updown32",UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS | UDS_NOTHOUSANDS,365,63,8,12
+    LTEXT           "Maximum number waiting in queue:",IDC_STATIC,205,85,115,12,SS_CENTERIMAGE
     EDITTEXT        IDC_CAPACITY,325,85,40,12,ES_AUTOHSCROLL | ES_NUMBER
-    CONTROL         "Spin1",IDC_CAPACITY_SPIN,"msctls_updown32",
-                    UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | 
-                    UDS_ARROWKEYS | UDS_NOTHOUSANDS,365,85,8,12
-    GROUPBOX        "&Service Parameters:",IDC_STATIC,195,113,180,113,
-                    WS_GROUP
-    LTEXT           "Saturated bandwidth percentage:",IDC_STATIC,205,124,115,
-                    12,SS_CENTERIMAGE
-    EDITTEXT        IDC_BANDWIDTH_POINTS,325,124,40,12,ES_CENTER | 
-                    ES_AUTOHSCROLL | ES_READONLY
-    LTEXT           "Upload bandwidth for this queue:",IDC_STATIC,205,144,
-                    115,12,SS_CENTERIMAGE
-    EDITTEXT        IDC_BANDWIDTH_VALUE,325,144,40,12,ES_CENTER | 
-                    ES_AUTOHSCROLL | ES_READONLY
-    CONTROL         "Slider1",IDC_BANDWIDTH_SLIDER,"msctls_trackbar32",
-                    TBS_TOP | TBS_NOTICKS | WS_TABSTOP,200,163,170,15
-    CONTROL         "Rotate after N seconds:",IDC_ROTATE_ENABLE,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,205,204,115,12
+    CONTROL         "Spin1",IDC_CAPACITY_SPIN,"msctls_updown32",UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS | UDS_NOTHOUSANDS,365,85,8,12
+    GROUPBOX        "&Service Parameters:",IDC_STATIC,195,113,180,113,WS_GROUP
+    LTEXT           "Saturated bandwidth percentage:",IDC_STATIC,205,124,115,12,SS_CENTERIMAGE
+    EDITTEXT        IDC_BANDWIDTH_POINTS,325,124,40,12,ES_CENTER | ES_AUTOHSCROLL | ES_READONLY
+    LTEXT           "Upload bandwidth for this queue:",IDC_STATIC,205,144,115,12,SS_CENTERIMAGE
+    EDITTEXT        IDC_BANDWIDTH_VALUE,325,144,40,12,ES_CENTER | ES_AUTOHSCROLL | ES_READONLY
+    CONTROL         "Slider1",IDC_BANDWIDTH_SLIDER,"msctls_trackbar32",TBS_TOP | TBS_NOTICKS | WS_TABSTOP,200,163,170,15
+    CONTROL         "Rotate after N seconds:",IDC_ROTATE_ENABLE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,205,204,115,12
     EDITTEXT        IDC_ROTATE_TIME,325,204,40,12,ES_AUTOHSCROLL | ES_NUMBER
-    CONTROL         "Spin1",IDC_ROTATE_TIME_SPIN,"msctls_updown32",
-                    UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | 
-                    UDS_ARROWKEYS | UDS_NOTHOUSANDS,365,204,8,12
+    CONTROL         "Spin1",IDC_ROTATE_TIME_SPIN,"msctls_updown32",UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS | UDS_NOTHOUSANDS,365,204,8,12
     DEFPUSHBUTTON   "OK",IDOK,270,231,50,14
     PUSHBUTTON      "Cancel",IDCANCEL,325,231,50,14
-    CONTROL         "Reward uploaders",IDC_REWARD_ENABLE,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,205,185,115,12
+    CONTROL         "Reward uploaders",IDC_REWARD_ENABLE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,205,185,115,12
 END
 
 IDD_DONKEY_SERVERS DIALOGEX 0, 0, 292, 124
@@ -2085,11 +1622,9 @@ CAPTION "Download Server.met File"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
     CONTROL         154,IDC_BANNER,"Static",SS_BITMAP,0,0,292,31
-    LTEXT           "You can download an eDonkey server.met file from the web to refresh your local list of servers.",
-                    IDC_STATIC,10,40,270,20
+    LTEXT           "You can download an eDonkey server.met file from the web to refresh your local list of servers.",IDC_STATIC,10,40,270,20
     EDITTEXT        IDC_URL,10,65,270,12,ES_AUTOHSCROLL
-    CONTROL         "Progress1",IDC_PROGRESS,"msctls_progress32",WS_BORDER,
-                    10,85,270,10
+    CONTROL         "Progress1",IDC_PROGRESS,"msctls_progress32",WS_BORDER,10,85,270,10
     DEFPUSHBUTTON   "OK",IDOK,180,102,50,14
     PUSHBUTTON      "Cancel",IDCANCEL,235,102,50,14
 END
@@ -2099,21 +1634,14 @@ STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Welcome to Shareaza"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
-    LTEXT           "Shareaza is a general-purpose file-sharing application that can access many P2P networks at the same time.  Here you can select which networks you'd like to access.  Note that you can always select different networks later.",
-                    IDC_STATIC,10,10,265,30
-    CONTROL         "Connect to Gnutella2 (Highly Recommended)",
-                    IDC_G2_ENABLE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,10,
-                    45,260,10
-    LTEXT           "The Gnutella2 network is Shareaza's premiere network, offering more features and performance than any other P2P net.",
-                    IDC_STATIC,25,57,250,18
-    CONTROL         "Connect to eDonkey",IDC_ED2K_ENABLE,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,10,79,260,10
-    LTEXT           "The eDonkey network is a popular server-based network.  While not as feature-rich as Gnutella2, eDonkey has an impressive file collection.",
-                    IDC_STATIC,25,91,250,18
-    CONTROL         "Connect to Original Gnutella",IDC_G1_ENABLE,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,10,113,260,10
-    LTEXT           "Although the original Gnutella network is less feature-rich than Gnutella2, and has fewer files than eDonkey, it remains a valuable resource.",
-                    IDC_STATIC,25,126,250,18
+    LTEXT           "Shareaza is a general-purpose file-sharing application that can access many P2P networks at the same time.  Here you can select which networks you'd like to access.  Note that you can always select different networks later.",IDC_STATIC,10,10,265,30
+    CONTROL         "Connect to Gnutella2 (Highly Recommended)",IDC_G2_ENABLE,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,10,45,260,10
+    LTEXT           "The Gnutella2 network is Shareaza's premiere network, offering more features and performance than any other P2P net.",IDC_STATIC,25,57,250,18
+    CONTROL         "Connect to eDonkey",IDC_ED2K_ENABLE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,10,79,260,10
+    LTEXT           "The eDonkey network is a popular server-based network.  While not as feature-rich as Gnutella2, eDonkey has an impressive file collection.",IDC_STATIC,25,91,250,18
+    CONTROL         "Connect to Original Gnutella",IDC_G1_ENABLE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,10,113,260,10
+    LTEXT           "Although the original Gnutella network is less feature-rich than Gnutella2, and has fewer files than eDonkey, it remains a valuable resource.",IDC_STATIC,25,126,250,18
 END
 
 IDD_FILE_SHARING DIALOGEX 0, 0, 246, 218
@@ -2122,25 +1650,17 @@ CAPTION "Sharing"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
     LTEXT           "Simple Sharing",IDC_STATIC,5,40,235,11,NOT WS_VISIBLE
-    CONTROL         "Share this file if the parent folder is shared",
-                    IDC_SHARE_OVERRIDE_0,"Button",BS_AUTORADIOBUTTON | 
-                    WS_GROUP,10,54,220,10,WS_EX_TRANSPARENT
-    CONTROL         "Override sharing setting for this file:",
-                    IDC_SHARE_OVERRIDE_1,"Button",BS_AUTORADIOBUTTON,10,66,
-                    220,10,WS_EX_TRANSPARENT
+    CONTROL         "Share this file if the parent folder is shared",IDC_SHARE_OVERRIDE_0,
+                    "Button",BS_AUTORADIOBUTTON | WS_GROUP,10,54,220,10,WS_EX_TRANSPARENT
+    CONTROL         "Override sharing setting for this file:",IDC_SHARE_OVERRIDE_1,
+                    "Button",BS_AUTORADIOBUTTON,10,66,220,10,WS_EX_TRANSPARENT
     CONTROL         "Make this file available to other users",IDC_FILE_SHARE,
-                    "Button",BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,22,79,
-                    213,12
-    LTEXT           "Upload Queue Selection Tag(s)",IDC_STATIC,5,100,235,11,
-                    NOT WS_VISIBLE
-    COMBOBOX        IDC_FILE_TAGS,10,115,225,100,CBS_DROPDOWN | CBS_SORT | 
-                    WS_VSCROLL | WS_TABSTOP
-    LTEXT           "-Networks to Share On",IDC_STATIC,5,145,235,11,NOT 
-                    WS_VISIBLE
-    CONTROL         "List1",IDC_FILE_NETWORKS,"SysListView32",LVS_REPORT | 
-                    NOT WS_VISIBLE | WS_BORDER | WS_TABSTOP,10,160,225,50
-    EDITTEXT        IDC_FILE_NAME,45,12,195,10,ES_AUTOHSCROLL | ES_READONLY | 
-                    NOT WS_BORDER
+                    "Button",BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,22,79,213,12
+    LTEXT           "Upload Queue Selection Tag(s)",IDC_STATIC,5,100,235,11,NOT WS_VISIBLE
+    COMBOBOX        IDC_FILE_TAGS,10,115,225,100,CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "-Networks to Share On",IDC_STATIC,5,145,235,11,NOT WS_VISIBLE
+    CONTROL         "List1",IDC_FILE_NETWORKS,"SysListView32",LVS_REPORT | NOT WS_VISIBLE | WS_BORDER | WS_TABSTOP,10,160,225,50
+    EDITTEXT        IDC_FILE_NAME,45,12,195,10,ES_AUTOHSCROLL | ES_READONLY | NOT WS_BORDER
 END
 
 IDD_DONKEY_IMPORT DIALOGEX 0, 0, 292, 169
@@ -2149,12 +1669,10 @@ CAPTION "Import eDonkey Downloads"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
     CONTROL         154,IDC_BANNER,"Static",SS_BITMAP,0,0,292,31
-    LTEXT           "Shareaza has detected that you have another eDonkey program installed on your computer.  Would you like to import any unfinished downloads into Shareaza?",
-                    IDC_STATIC,15,40,260,30
+    LTEXT           "Shareaza has detected that you have another eDonkey program installed on your computer.  Would you like to import any unfinished downloads into Shareaza?",IDC_STATIC,15,40,260,30
     DEFPUSHBUTTON   "Yes",IDC_IMPORT,15,75,50,14
     PUSHBUTTON      "No|Cancel",IDCANCEL,70,75,50,14
-    EDITTEXT        IDC_LOG,15,95,260,65,ES_MULTILINE | ES_AUTOVSCROLL | 
-                    ES_READONLY | WS_VSCROLL
+    EDITTEXT        IDC_LOG,15,95,260,65,ES_MULTILINE | ES_AUTOVSCROLL | ES_READONLY | WS_VSCROLL
     PUSHBUTTON      "Close",IDC_CLOSE,225,75,50,14,NOT WS_VISIBLE
 END
 
@@ -2165,19 +1683,14 @@ FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
     GROUPBOX        "&Name:",IDC_STATIC,5,5,180,111,WS_GROUP
     EDITTEXT        IDC_NAME,15,20,160,12,ES_AUTOHSCROLL
-    CONTROL         "List1",IDC_ICON_LIST,"SysListView32",LVS_LIST | 
-                    LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_SHAREIMAGELISTS | 
-                    LVS_AUTOARRANGE | WS_BORDER | WS_TABSTOP,15,40,160,65
+    CONTROL         "List1",IDC_ICON_LIST,"SysListView32",LVS_LIST | LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_SHAREIMAGELISTS | LVS_AUTOARRANGE | WS_BORDER | WS_TABSTOP,15,40,160,65
     GROUPBOX        "&Filters:",IDC_STATIC,195,5,125,156,WS_GROUP
-    COMBOBOX        IDC_FILTER_LIST,205,20,60,131,CBS_SIMPLE | 
-                    CBS_AUTOHSCROLL | CBS_SORT | CBS_NOINTEGRALHEIGHT | 
-                    WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_FILTER_LIST,205,20,60,131,CBS_SIMPLE | CBS_AUTOHSCROLL | CBS_SORT | CBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
     PUSHBUTTON      "&Add",IDC_FILTER_ADD,271,20,40,15
     PUSHBUTTON      "&Remove",IDC_FILTER_REMOVE,271,39,40,15
     DEFPUSHBUTTON   "OK",IDOK,216,165,50,14
     PUSHBUTTON      "Cancel",IDCANCEL,271,165,50,14
-    GROUPBOX        "Completed File &Folder:",IDC_STATIC,5,121,180,40,
-                    WS_GROUP
+    GROUPBOX        "Completed File &Folder:",IDC_STATIC,5,121,180,40,WS_GROUP
     EDITTEXT        IDC_FOLDER,15,137,135,12,ES_AUTOHSCROLL | ES_READONLY
     PUSHBUTTON      "",IDC_DOWNLOADS_BROWSE,155,133,23,20
 END
@@ -2196,87 +1709,61 @@ STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Delete File"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
-    LTEXT           "Are you sure that you want to delete:",IDC_STATIC,12,6,
-                    264,12,SS_CENTERIMAGE
-    CONTROL         "Filename.ext",IDC_FILE_NAME,"Static",SS_LEFTNOWORDWRAP | 
-                    SS_CENTERIMAGE | SS_WORDELLIPSIS | WS_GROUP,19,22,266,12
+    LTEXT           "Are you sure that you want to delete:",IDC_STATIC,12,6,264,12,SS_CENTERIMAGE
+    CONTROL         "Filename.ext",IDC_FILE_NAME,"Static",SS_LEFTNOWORDWRAP | SS_CENTERIMAGE | SS_WORDELLIPSIS | WS_GROUP,19,22,266,12
     DEFPUSHBUTTON   "Delete",IDOK,124,39,50,14,WS_GROUP
-    PUSHBUTTON      "Delete All",IDC_DELETE_ALL,178,39,50,14,WS_DISABLED | 
-                    WS_GROUP
+    PUSHBUTTON      "Delete All",IDC_DELETE_ALL,178,39,50,14,WS_DISABLED | WS_GROUP
     PUSHBUTTON      "Cancel",IDCANCEL,232,39,50,14
     CONTROL         "",IDC_STATIC,"Static",SS_ETCHEDHORZ,8,59,276,1
-    LTEXT           "Shareaza can remember this file and warn you if you come across it again in another search.  It will create a ghost file with your comments and rating.",
-                    IDC_STATIC,12,63,264,25
-    CONTROL         "Create a ghost file",IDC_CREATE_GHOST,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,19,93,256,10
+    LTEXT           "Shareaza can remember this file and warn you if you come across it again in another search.  It will create a ghost file with your comments and rating.",IDC_STATIC,12,63,264,25
+    CONTROL         "Create a ghost file",IDC_CREATE_GHOST,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,19,93,256,10
     LTEXT           "The reason for deleting:",IDC_STATIC,31,110,90,8
-    COMBOBOX        IDC_DELETE_OPTIONS,127,107,151,100,CBS_DROPDOWNLIST | 
-                    WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_DELETE_OPTIONS,127,107,151,100,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
     LTEXT           "File rating:",IDC_STATIC,32,126,87,8
-    COMBOBOX        IDC_GHOST_RATING,127,124,151,100,CBS_DROPDOWNLIST | 
-                    CBS_OWNERDRAWFIXED | CBS_HASSTRINGS | WS_VSCROLL | 
-                    WS_TABSTOP
-    LTEXT           "You can type a short note describing why you are deleting the file:",
-                    IDC_RATE_PROMPT,12,144,264,8,WS_DISABLED
-    EDITTEXT        IDC_RATE_COMMENTS,15,156,261,38,ES_MULTILINE | 
-                    ES_AUTOHSCROLL | WS_DISABLED
+    COMBOBOX        IDC_GHOST_RATING,127,124,151,100,CBS_DROPDOWNLIST | CBS_OWNERDRAWFIXED | CBS_HASSTRINGS | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "You can type a short note describing why you are deleting the file:",IDC_RATE_PROMPT,12,144,264,8,WS_DISABLED
+    EDITTEXT        IDC_RATE_COMMENTS,15,156,261,38,ES_MULTILINE | ES_AUTOHSCROLL | WS_DISABLED
 END
 
 IDD_COLLECTION_EXPORT DIALOGEX 0, 0, 355, 249
-STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_CAPTION | 
-    WS_SYSMENU
+STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Collection Export"
 FONT 8, "Tahoma", 400, 0, 0x1
 BEGIN
-    LTEXT           "This feature is used to export the contents of a folder or playlist as a rich collection file.  Please select a template and press Next to continue.|Customize your collection by entering data below.",
-                    IDC_TEMPLATES_EXPLAIN,7,6,341,24
-    CONTROL         "",IDC_TEMPLATES,"SysListView32",LVS_REPORT | 
-                    LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_SORTASCENDING | 
-                    LVS_NOCOLUMNHEADER | WS_BORDER | WS_GROUP | WS_TABSTOP,7,
-                    31,193,186
-    GROUPBOX        "Template Information:",IDC_STATIC_GROUPBOX,209,27,139,
-                    190,WS_GROUP
+    LTEXT           "This feature is used to export the contents of a folder or playlist as a rich collection file.  Please select a template and press Next to continue.|Customize your collection by entering data below.",IDC_TEMPLATES_EXPLAIN,7,6,341,24
+    CONTROL         "",IDC_TEMPLATES,"SysListView32",LVS_REPORT | LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_SORTASCENDING | LVS_NOCOLUMNHEADER | WS_BORDER | WS_GROUP | WS_TABSTOP,7,31,193,186
+    GROUPBOX        "Template Information:",IDC_STATIC_GROUPBOX,209,27,139,190,WS_GROUP
     LTEXT           "Name:",IDC_STATIC_NAME,219,42,42,10,0,WS_EX_TRANSPARENT
     LTEXT           "...",IDC_TEMPLATE_NAME,264,42,78,10,0,WS_EX_TRANSPARENT
-    LTEXT           "Author:",IDC_STATIC_AUTHOR,219,61,41,10,0,
-                    WS_EX_TRANSPARENT
-    LTEXT           "...",IDC_TEMPLATE_AUTHOR,264,61,78,10,0,
-                    WS_EX_TRANSPARENT
-    LTEXT           "Description:",IDC_STATIC_DESC,219,80,113,10,0,
-                    WS_EX_TRANSPARENT
-    EDITTEXT        IDC_TEMPLATE_DESC,218,98,122,111,ES_MULTILINE | 
-                    ES_AUTOVSCROLL | ES_READONLY | WS_VSCROLL
+    LTEXT           "Author:",IDC_STATIC_AUTHOR,219,61,41,10,0,WS_EX_TRANSPARENT
+    LTEXT           "...",IDC_TEMPLATE_AUTHOR,264,61,78,10,0,WS_EX_TRANSPARENT
+    LTEXT           "Description:",IDC_STATIC_DESC,219,80,113,10,0,WS_EX_TRANSPARENT
+    EDITTEXT        IDC_TEMPLATE_DESC,218,98,122,111,ES_MULTILINE | ES_AUTOVSCROLL | ES_READONLY | WS_VSCROLL
     PUSHBUTTON      "Delete|&Back",IDC_TEMPLATES_DELETE,7,225,55,15,WS_GROUP
     DEFPUSHBUTTON   "&Next|&Export...",IDOK,234,226,50,14
     PUSHBUTTON      "&Cancel",IDCANCEL,298,226,50,14
 END
 
 IDD_TORRENT_SEED DIALOGEX 0, 0, 292, 129
-STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_CAPTION | 
-    WS_SYSMENU
+STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Open Torrent File"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
     CONTROL         154,IDC_BANNER,"Static",SS_BITMAP,0,0,292,31
-    LTEXT           "You have opened a BitTorrent torrent file.  Would you like to download its contents, or re-seed it?",
-                    IDC_STATIC,7,36,276,18
+    LTEXT           "You have opened a BitTorrent torrent file.  Would you like to download its contents, or re-seed it?",IDC_STATIC,7,36,276,18
     DEFPUSHBUTTON   "Download",IDC_DOWNLOAD,66,61,50,14,WS_GROUP
     PUSHBUTTON      "Seed",IDC_SEED,120,61,50,14
     PUSHBUTTON      "Cancel",IDCANCEL,174,61,50,14
-    LTEXT           "To share complete files using BitTorrent they must first be seeded.  Once this process is complete the Torrent will appear as a new item in your download list.",
-                    IDC_STATIC,8,84,276,18
-    CONTROL         "",IDC_PROGRESS,"msctls_progress32",WS_BORDER,7,109,276,
-                    11
+    LTEXT           "To share complete files using BitTorrent they must first be seeded.  Once this process is complete the Torrent will appear as a new item in your download list.",IDC_STATIC,8,84,276,18
+    CONTROL         "",IDC_PROGRESS,"msctls_progress32",WS_BORDER,7,109,276,11
 END
 
 IDD_DOWNLOAD_EDIT DIALOGEX 0, 0, 274, 294
-STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_CAPTION | 
-    WS_SYSMENU
+STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Edit Download"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
-    LTEXT           "WARNING: This dialog provides advanced download editing features for power users which if used incorrectly can and probably will cause corruption.",
-                    IDC_STATIC,6,6,258,18
+    LTEXT           "WARNING: This dialog provides advanced download editing features for power users which if used incorrectly can and probably will cause corruption.",IDC_STATIC,6,6,258,18
     GROUPBOX        "Filename and Si&ze:",IDC_STATIC,6,28,258,50,WS_GROUP
     LTEXT           "Filename:",IDC_STATIC,14,42,50,10
     EDITTEXT        IDC_NAME,69,40,186,12,ES_AUTOHSCROLL
@@ -2287,25 +1774,18 @@ BEGIN
     RTEXT           "Trusted",IDC_STATIC,162,85,97,11
     LTEXT           "SHA1:",IDC_STATIC,14,96,36,12,SS_CENTERIMAGE
     EDITTEXT        IDC_URN_SHA1,56,96,180,12,ES_AUTOHSCROLL
-    CONTROL         "",IDC_TRUST_SHA1,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
-                    245,98,16,8
+    CONTROL         "",IDC_TRUST_SHA1,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,245,98,16,8
     LTEXT           "Tiger-Root:",IDC_STATIC,14,114,36,12,SS_CENTERIMAGE
     EDITTEXT        IDC_URN_TIGER,56,114,180,12,ES_AUTOHSCROLL
-    CONTROL         "",IDC_TRUST_TIGER,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
-                    245,116,16,8
+    CONTROL         "",IDC_TRUST_TIGER,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,245,116,16,8
     LTEXT           "ED2K:",IDC_STATIC,14,132,36,12,SS_CENTERIMAGE
     EDITTEXT        IDC_URN_ED2K,56,132,180,12,ES_AUTOHSCROLL
-    CONTROL         "",IDC_TRUST_ED2K,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
-                    245,135,16,8
+    CONTROL         "",IDC_TRUST_ED2K,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,245,135,16,8
     GROUPBOX        "&Actions:",IDC_STATIC,6,156,258,61,WS_GROUP
-    LTEXT           "Forget current verification status and reverify",
-                    IDC_FORGET_VERIFY,14,167,236,8
-    LTEXT           "Assume file is 100% complete and reverify",
-                    IDC_COMPLETE_AND_VERIFY,14,179,236,8
-    LTEXT           "Forget all known sources",IDC_FORGET_SOURCES,14,191,236,
-                    8
-    LTEXT           "Merge with local file and verify",IDC_MERGE_AND_VERIFY,
-                    14,203,236,8
+    LTEXT           "Forget current verification status and reverify",IDC_FORGET_VERIFY,14,167,236,8
+    LTEXT           "Assume file is 100% complete and reverify",IDC_COMPLETE_AND_VERIFY,14,179,236,8
+    LTEXT           "Forget all known sources",IDC_FORGET_SOURCES,14,191,236,8
+    LTEXT           "Merge with local file and verify",IDC_MERGE_AND_VERIFY,14,203,236,8
     GROUPBOX        "Data &Eraser:",IDC_STATIC,6,221,258,38,WS_GROUP
     CTEXT           "Byte range:",IDC_STATIC,7,236,53,12,SS_CENTERIMAGE
     EDITTEXT        IDC_ERASE_FROM,59,236,65,12,ES_AUTOHSCROLL
@@ -2323,20 +1803,16 @@ CAPTION "Remote Access"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
     GROUPBOX        "&Guide:",IDC_STATIC,6,6,270,66,WS_GROUP
-    LTEXT           "Shareaza Remote Access allows you to leave Shareaza running on your PC, and control it remotely using a web browser.  You will need to be able to accept incoming connections to use this feature (i.e. properly configured router, etc).",
-                    IDC_STATIC,18,24,246,36
+    LTEXT           "Shareaza Remote Access allows you to leave Shareaza running on your PC, and control it remotely using a web browser.  You will need to be able to accept incoming connections to use this feature (i.e. properly configured router, etc).",IDC_STATIC,18,24,246,36
     GROUPBOX        "&Enable:",IDC_STATIC,6,78,270,66,WS_GROUP
     CONTROL         "Enable Shareaza Remote Access:",IDC_REMOTE_ENABLE,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,18,98,246,12
     LTEXT           "URL",IDC_REMOTE_URL,18,120,246,10
     GROUPBOX        "&Credentials:",IDC_STATIC,6,150,270,60,WS_GROUP
-    LTEXT           "Choose a Username:",IDC_STATIC,18,168,72,12,
-                    SS_CENTERIMAGE
+    LTEXT           "Choose a Username:",IDC_STATIC,18,168,72,12,SS_CENTERIMAGE
     EDITTEXT        IDC_REMOTE_USERNAME,96,168,96,12,ES_AUTOHSCROLL
-    LTEXT           "Choose a Password:",IDC_STATIC,18,186,72,12,
-                    SS_CENTERIMAGE
-    EDITTEXT        IDC_REMOTE_PASSWORD,96,186,96,12,ES_PASSWORD | 
-                    ES_AUTOHSCROLL
+    LTEXT           "Choose a Password:",IDC_STATIC,18,186,72,12,SS_CENTERIMAGE
+    EDITTEXT        IDC_REMOTE_PASSWORD,96,186,96,12,ES_PASSWORD | ES_AUTOHSCROLL
 END
 
 IDD_SETTINGS_BITTORRENT DIALOGEX 0, 0, 282, 220
@@ -2345,50 +1821,31 @@ CAPTION "BitTorrent"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
     GROUPBOX        "&Interface:",IDC_STATIC,5,5,270,25
-    CONTROL         "Display additional BitTorrent interface elements",
-                    IDC_TORRENT_INTERFACE,"Button",BS_AUTOCHECKBOX | 
-                    WS_GROUP | WS_TABSTOP,16,13,250,15
+    CONTROL         "Display additional BitTorrent interface elements",IDC_TORRENT_INTERFACE,
+                    "Button",BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,16,13,250,15
     GROUPBOX        "&Download Connections:",IDC_STATIC,5,30,270,70
-    EDITTEXT        IDC_TORRENT_DOWNLOADS,15,41,35,12,ES_AUTOHSCROLL | 
-                    ES_NUMBER
-    CONTROL         "",IDC_TORRENT_DOWNLOADS_SPIN,"msctls_updown32",
-                    UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | 
-                    UDS_ARROWKEYS | UDS_NOTHOUSANDS,51,42,11,12
-    LTEXT           "Torrents at once",IDC_STATIC,57,41,207,12,
-                    SS_CENTERIMAGE
-    EDITTEXT        IDC_TORRENT_CLIENTLINKS,15,57,35,12,ES_AUTOHSCROLL | 
-                    ES_NUMBER
-    CONTROL         "",IDC_TORRENT_LINKS_SPIN,"msctls_updown32",
-                    UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | 
-                    UDS_ARROWKEYS | UDS_NOTHOUSANDS,51,58,11,12
-    LTEXT           "Client connections",IDC_STATIC,57,57,211,12,
-                    SS_CENTERIMAGE
-    CONTROL         " Clear downloaded torrents        When the share ratio reaches",
-                    IDC_TORRENT_AUTOCLEAR,"Button",BS_AUTOCHECKBOX | 
-                    BS_VCENTER | WS_TABSTOP,15,73,212,11,WS_EX_TRANSPARENT
+    EDITTEXT        IDC_TORRENT_DOWNLOADS,15,41,35,12,ES_AUTOHSCROLL | ES_NUMBER
+    CONTROL         "",IDC_TORRENT_DOWNLOADS_SPIN,"msctls_updown32",UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS | UDS_NOTHOUSANDS,51,42,11,12
+    LTEXT           "Torrents at once",IDC_STATIC,57,41,207,12,SS_CENTERIMAGE
+    EDITTEXT        IDC_TORRENT_CLIENTLINKS,15,57,35,12,ES_AUTOHSCROLL | ES_NUMBER
+    CONTROL         "",IDC_TORRENT_LINKS_SPIN,"msctls_updown32",UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS | UDS_NOTHOUSANDS,51,58,11,12
+    LTEXT           "Client connections",IDC_STATIC,57,57,211,12,SS_CENTERIMAGE
+    CONTROL         " Clear downloaded torrents        When the share ratio reaches",IDC_TORRENT_AUTOCLEAR,
+                    "Button",BS_AUTOCHECKBOX | BS_VCENTER | WS_TABSTOP,15,73,212,11,WS_EX_TRANSPARENT
     EDITTEXT        IDC_TORRENT_CLEAR_PERCENTAGE,230,73,35,12,ES_AUTOHSCROLL
-    CONTROL         "",IDC_TORRENT_CLEAR_SPIN,"msctls_updown32",
-                    UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | 
-                    UDS_ARROWKEYS | UDS_NOTHOUSANDS,253,74,11,12
-    LTEXT           "%",IDC_STATIC,266,74,8,11,SS_CENTERIMAGE,
-                    WS_EX_TRANSPARENT
-    CONTROL         "Prefer torrent sources",IDC_TORRENT_PREFERENCE,"Button",
-                    BS_AUTOCHECKBOX | BS_VCENTER | WS_TABSTOP,15,86,205,11,
-                    WS_EX_TRANSPARENT
+    CONTROL         "",IDC_TORRENT_CLEAR_SPIN,"msctls_updown32",UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS | UDS_NOTHOUSANDS,253,74,11,12
+    LTEXT           "%",IDC_STATIC,266,74,8,11,SS_CENTERIMAGE,WS_EX_TRANSPARENT
+    CONTROL         "Prefer torrent sources",IDC_TORRENT_PREFERENCE,"Button",BS_AUTOCHECKBOX | BS_VCENTER | WS_TABSTOP,15,86,205,11,WS_EX_TRANSPARENT
     GROUPBOX        "&EndGame:",IDC_STATIC,5,102,270,27
-    CONTROL         "Enable EndGame mode when completing torrents",
-                    IDC_TORRENT_ENDGAME,"Button",BS_AUTOCHECKBOX | WS_GROUP | 
-                    WS_TABSTOP,16,112,250,15
+    CONTROL         "Enable EndGame mode when completing torrents",IDC_TORRENT_ENDGAME,
+                    "Button",BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,16,112,250,15
     GROUPBOX        "&Store Torrents Here:",IDC_STATIC,5,131,270,32,WS_GROUP
-    EDITTEXT        IDC_TORRENTS_FOLDER,15,143,225,12,ES_AUTOHSCROLL | 
-                    ES_READONLY | NOT WS_TABSTOP
+    EDITTEXT        IDC_TORRENTS_FOLDER,15,143,225,12,ES_AUTOHSCROLL | ES_READONLY | NOT WS_TABSTOP
     PUSHBUTTON      "",IDC_TORRENTS_BROWSE,245,139,23,20
     GROUPBOX        "&Torrent Creator:",IDC_STATIC,5,164,270,50,WS_GROUP
-    EDITTEXT        IDC_TORRENTS_TORRENTMAKER,15,176,225,12,ES_AUTOHSCROLL | 
-                    ES_READONLY | NOT WS_TABSTOP
+    EDITTEXT        IDC_TORRENTS_TORRENTMAKER,15,176,225,12,ES_AUTOHSCROLL | ES_READONLY | NOT WS_TABSTOP
     PUSHBUTTON      "",IDC_TORRENTS_TORRENTMAKERBROWSE,245,172,23,20
-    RTEXT           "Default Tracker: ",IDC_STATIC,14,197,69,11,
-                    SS_CENTERIMAGE
+    RTEXT           "Default Tracker: ",IDC_STATIC,14,197,69,11,SS_CENTERIMAGE
     EDITTEXT        IDC_TORRENT_DEFAULTTRACKER,83,197,184,12,ES_AUTOHSCROLL
 END
 
@@ -2398,17 +1855,11 @@ CAPTION "Scheduler"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
     GROUPBOX        "&Options:",IDC_STATIC,3,156,154,58
-    CONTROL         " &Enable scheduler",IDC_SCHEDULER_ENABLE,"Button",
-                    BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,10,165,144,15,
-                    WS_EX_TRANSPARENT
-    EDITTEXT        IDC_SCHEDULER_LIMITED,10,182,29,12,ES_AUTOHSCROLL | 
-                    ES_NUMBER
-    CONTROL         "",IDC_SCHEDULER_LIMITED_SPIN,"msctls_updown32",
-                    UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | 
-                    UDS_ARROWKEYS | UDS_NOTHOUSANDS,27,181,11,12
-    CONTROL         "&Connect to only G2 when limited",
-                    IDC_SCHEDULER_LIMITED_NETWORKS,"Button",BS_AUTOCHECKBOX | 
-                    WS_GROUP | WS_TABSTOP,10,196,142,15,WS_EX_TRANSPARENT
+    CONTROL         " &Enable scheduler",IDC_SCHEDULER_ENABLE,"Button",BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,10,165,144,15,WS_EX_TRANSPARENT
+    EDITTEXT        IDC_SCHEDULER_LIMITED,10,182,29,12,ES_AUTOHSCROLL | ES_NUMBER
+    CONTROL         "",IDC_SCHEDULER_LIMITED_SPIN,"msctls_updown32",UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS | UDS_NOTHOUSANDS,27,181,11,12
+    CONTROL         "&Connect to only G2 when limited",IDC_SCHEDULER_LIMITED_NETWORKS,
+                    "Button",BS_AUTOCHECKBOX | WS_GROUP | WS_TABSTOP,10,196,142,15,WS_EX_TRANSPARENT
     GROUPBOX        "Key:",IDC_STATIC,3,105,154,49
     RTEXT           "Sun",IDC_STATIC,0,26,21,8,0,WS_EX_TRANSPARENT
     RTEXT           "Mon",IDC_STATIC,0,36,21,8,0,WS_EX_TRANSPARENT
@@ -2417,25 +1868,17 @@ BEGIN
     RTEXT           "Thu",IDC_STATIC,0,66,21,8,0,WS_EX_TRANSPARENT
     RTEXT           "Fri",IDC_STATIC,0,76,21,8,0,WS_EX_TRANSPARENT
     RTEXT           "Sat",IDC_STATIC,0,86,21,8,0,WS_EX_TRANSPARENT
-    LTEXT           "Do not connect",IDC_STATIC,36,115,116,8,0,
-                    WS_EX_TRANSPARENT
-    LTEXT           "Limited connection",IDC_STATIC,36,128,116,8,0,
-                    WS_EX_TRANSPARENT
-    LTEXT           "Connect at full speed",IDC_STORE_VIEWS,36,140,116,8,0,
-                    WS_EX_TRANSPARENT
-    LTEXT           "% of &bandwidth when limited",IDC_STATIC,40,182,114,12,
-                    SS_CENTERIMAGE,WS_EX_TRANSPARENT
-    EDITTEXT        IDC_SCHEDULER_DISPLAY,35,96,187,11,ES_AUTOHSCROLL | 
-                    ES_READONLY | WS_DISABLED | NOT WS_BORDER | NOT 
-                    WS_TABSTOP,WS_EX_TRANSPARENT
+    LTEXT           "Do not connect",IDC_STATIC,36,115,116,8,0,WS_EX_TRANSPARENT
+    LTEXT           "Limited connection",IDC_STATIC,36,128,116,8,0,WS_EX_TRANSPARENT
+    LTEXT           "Connect at full speed",IDC_STORE_VIEWS,36,140,116,8,0,WS_EX_TRANSPARENT
+    LTEXT           "% of &bandwidth when limited",IDC_STATIC,40,182,114,12,SS_CENTERIMAGE,WS_EX_TRANSPARENT
+    EDITTEXT        IDC_SCHEDULER_DISPLAY,35,96,187,11,ES_AUTOHSCROLL | ES_READONLY | WS_DISABLED | NOT WS_BORDER | NOT WS_TABSTOP,WS_EX_TRANSPARENT
     GROUPBOX        "Help",IDC_STATIC,159,105,118,108,0,WS_EX_RIGHT
-    LTEXT           "The scheduler is designed to allow you to set times when Shareaza will connect and download files. \n\n\nNote: If you have Shareaza open while the scheduler is active, you may see it changing settings- This is normal!",
-                    IDC_STATIC,167,113,101,93
+    LTEXT           "The scheduler is designed to allow you to set times when Shareaza will connect and download files. \n\n\nNote: If you have Shareaza open while the scheduler is active, you may see it changing settings- This is normal!",IDC_STATIC,167,113,101,93
 END
 
 IDD_FILTER_SAVE_AS DIALOGEX 0, 0, 205, 46
-STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_CAPTION | 
-    WS_SYSMENU
+STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Save filter as"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
@@ -2446,33 +1889,25 @@ BEGIN
 END
 
 IDD_DOWNLOAD_REVIEWS DIALOGEX 0, 0, 362, 202
-STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_CAPTION | 
-    WS_SYSMENU
+STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Download Reviews"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
     CONTROL         154,IDC_BANNER,"Static",SS_BITMAP,0,0,367,31
     DEFPUSHBUTTON   "OK",IDOK,305,181,50,14
-    CONTROL         "",IDC_REVIEWS,"SysListView32",LVS_REPORT | 
-                    LVS_SHAREIMAGELISTS | WS_BORDER | WS_TABSTOP,7,39,348,
-                    134
-    EDITTEXT        IDC_REVIEW_FILENAME,7,183,289,12,ES_AUTOHSCROLL | 
-                    ES_READONLY | NOT WS_BORDER | NOT WS_TABSTOP,
-                    WS_EX_TRANSPARENT
+    CONTROL         "",IDC_REVIEWS,"SysListView32",LVS_REPORT | LVS_SHAREIMAGELISTS | WS_BORDER | WS_TABSTOP,7,39,348,134
+    EDITTEXT        IDC_REVIEW_FILENAME,7,183,289,12,ES_AUTOHSCROLL | ES_READONLY | NOT WS_BORDER | NOT WS_TABSTOP,WS_EX_TRANSPARENT
 END
 
 IDD_CODEPAGES DIALOGEX 0, 0, 186, 70
-STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | 
-    WS_SYSMENU
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Metadata Localisation"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
     DEFPUSHBUTTON   "OK",IDOK,39,49,50,14
     PUSHBUTTON      "Cancel",IDCANCEL,100,49,50,14
-    LTEXT           "Please select the method of re-encoding:",IDC_STATIC,7,
-                    7,172,18
-    COMBOBOX        IDC_CODEPAGES,7,26,172,141,CBS_DROPDOWNLIST | WS_VSCROLL | 
-                    WS_TABSTOP
+    LTEXT           "Please select the method of re-encoding:",IDC_STATIC,7,7,172,18
+    COMBOBOX        IDC_CODEPAGES,7,26,172,141,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
 END
 
 IDD_SETTINGS_IRC DIALOGEX 0, 0, 282, 220
@@ -2481,66 +1916,50 @@ CAPTION "Chat"
 FONT 8, "Tahoma", 0, 0, 0x0
 BEGIN
     GROUPBOX        "Client &Options:",IDC_STATIC,7,6,145,100
-    CONTROL         "Show chat  integration",IDC_IRC_SHOW,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,13,19,122,9
-    CONTROL         "Flood protection:",IDC_IRC_FLOODENABLE,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,13,33,119,9
+    CONTROL         "Show chat  integration",IDC_IRC_SHOW,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,13,19,122,9
+    CONTROL         "Flood protection:",IDC_IRC_FLOODENABLE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,13,33,119,9
     EDITTEXT        IDC_IRC_FLOODLIMIT,23,46,26,12,ES_AUTOHSCROLL
     LTEXT           "Lines per second.",IDC_STATIC,53,48,59,12
-    CONTROL         "Show timestamp",IDC_IRC_TIMESTAMP,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,14,62,122,9
+    CONTROL         "Show timestamp",IDC_IRC_TIMESTAMP,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,14,62,122,9
     LTEXT           "Screen Font:",IDC_STATIC,14,75,56,11
-    COMBOBOX        IDC_IRC_TEXTFONT,23,87,121,15,CBS_DROPDOWNLIST | 
-                    CBS_OWNERDRAWFIXED | CBS_SORT | CBS_HASSTRINGS | 
-                    WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_IRC_TEXTFONT,23,87,121,15,CBS_DROPDOWNLIST | CBS_OWNERDRAWFIXED | CBS_SORT | CBS_HASSTRINGS | WS_VSCROLL | WS_TABSTOP
     GROUPBOX        "&Colors:",IDC_STATIC,156,6,118,100,WS_GROUP
-    CONTROL         "",IDC_IRC_COLOR_SERVER,"Button",BS_OWNERDRAW | 
-                    WS_TABSTOP,165,22,8,8,WS_EX_STATICEDGE
+    CONTROL         "",IDC_IRC_COLOR_SERVER,"Button",BS_OWNERDRAW | WS_TABSTOP,165,22,8,8,WS_EX_STATICEDGE
     LTEXT           "Server messages",IDC_STATIC,179,21,68,10
-    CONTROL         "",IDC_IRC_COLOR_TOPIC,"Button",BS_OWNERDRAW | 
-                    WS_TABSTOP,165,35,8,8,WS_EX_STATICEDGE
+    CONTROL         "",IDC_IRC_COLOR_TOPIC,"Button",BS_OWNERDRAW | WS_TABSTOP,165,35,8,8,WS_EX_STATICEDGE
     LTEXT           "Topics",IDC_STATIC,179,34,68,10
-    CONTROL         "",IDC_IRC_COLOR_ACTION,"Button",BS_OWNERDRAW | 
-                    WS_TABSTOP,165,48,8,8,WS_EX_STATICEDGE
+    CONTROL         "",IDC_IRC_COLOR_ACTION,"Button",BS_OWNERDRAW | WS_TABSTOP,165,48,8,8,WS_EX_STATICEDGE
     LTEXT           "Channel Actions",IDC_STATIC,179,47,68,10
-    CONTROL         "",IDC_IRC_COLOR_NOTICE,"Button",BS_OWNERDRAW | 
-                    WS_TABSTOP,165,61,8,8,WS_EX_STATICEDGE
+    CONTROL         "",IDC_IRC_COLOR_NOTICE,"Button",BS_OWNERDRAW | WS_TABSTOP,165,61,8,8,WS_EX_STATICEDGE
     LTEXT           "Notices",IDC_STATIC,179,60,68,10
-    CONTROL         "",IDC_IRC_COLOR_BG,"Button",BS_OWNERDRAW | WS_TABSTOP,
-                    165,74,8,8,WS_EX_STATICEDGE
+    CONTROL         "",IDC_IRC_COLOR_BG,"Button",BS_OWNERDRAW | WS_TABSTOP,165,74,8,8,WS_EX_STATICEDGE
     LTEXT           "Chat background",IDC_STATIC,179,73,68,10
-    CONTROL         "",IDC_IRC_COLOR_TEXT,"Button",BS_OWNERDRAW | WS_TABSTOP,
-                    165,87,8,8,WS_EX_STATICEDGE
+    CONTROL         "",IDC_IRC_COLOR_TEXT,"Button",BS_OWNERDRAW | WS_TABSTOP,165,87,8,8,WS_EX_STATICEDGE
     LTEXT           "Text",IDC_STATIC,179,86,68,10
     GROUPBOX        "Connection &Settings:",IDC_STATIC,7,111,267,69,WS_GROUP
     LTEXT           "Nickname:",IDC_STATIC,14,127,67,9,0,WS_EX_TRANSPARENT
     EDITTEXT        IDC_IRC_NICK,86,125,62,12,ES_AUTOHSCROLL | WS_GROUP
     LTEXT           "User name:",IDC_STATIC,154,126,49,9,0,WS_EX_TRANSPARENT
     EDITTEXT        IDC_IRC_USERNAME,205,124,62,12,ES_AUTOHSCROLL | WS_GROUP
-    LTEXT           "Alternate Nickname:",IDC_STATIC,14,144,67,9,0,
-                    WS_EX_TRANSPARENT
+    LTEXT           "Alternate Nickname:",IDC_STATIC,14,144,67,9,0,WS_EX_TRANSPARENT
     EDITTEXT        IDC_IRC_ALTERNATE,86,142,62,12,ES_AUTOHSCROLL | WS_GROUP
     LTEXT           "Real name:",IDC_STATIC,154,143,49,9,0,WS_EX_TRANSPARENT
     EDITTEXT        IDC_IRC_REALNAME,205,141,62,12,ES_AUTOHSCROLL | WS_GROUP
     LTEXT           "Server:",IDC_STATIC,14,161,31,9,0,WS_EX_TRANSPARENT
-    EDITTEXT        IDC_IRC_SERVERNAME,50,159,97,12,ES_AUTOHSCROLL | 
-                    WS_GROUP
+    EDITTEXT        IDC_IRC_SERVERNAME,50,159,97,12,ES_AUTOHSCROLL | WS_GROUP
     LTEXT           "Port:",IDC_STATIC,154,160,49,9,0,WS_EX_TRANSPARENT
-    EDITTEXT        IDC_IRC_SERVERPORT,205,158,35,12,ES_AUTOHSCROLL | 
-                    WS_GROUP
+    EDITTEXT        IDC_IRC_SERVERPORT,205,158,35,12,ES_AUTOHSCROLL | WS_GROUP
 END
 
 IDD_IRC_INPUTBOX DIALOGEX 0, 0, 205, 46
-STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_CAPTION | 
-    WS_SYSMENU
+STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Channel Name|Why reason"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
     EDITTEXT        IDC_IRC_INPUT,7,19,128,14,ES_AUTOHSCROLL
     DEFPUSHBUTTON   "OK",IDOK,148,7,50,14
     PUSHBUTTON      "Cancel",IDCANCEL,148,24,50,14
-    LTEXT           "Enter channel you want to add:|Enter kick/ban reason:",
-                    IDC_IRC_PROMPT,7,7,129,8
+    LTEXT           "Enter channel you want to add:|Enter kick/ban reason:",IDC_IRC_PROMPT,7,7,129,8
 END
 
 IDD_TORRENT_GENERAL DIALOGEX 0, 0, 292, 230
@@ -2550,28 +1969,20 @@ FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
     GROUPBOX        "Torrent &Information:",-1,7,3,278,173
     LTEXT           "Name:",-1,14,13,44,12,SS_CENTERIMAGE
-    EDITTEXT        IDC_TORRENT_NAME,60,13,217,12,ES_AUTOHSCROLL | 
-                    ES_READONLY
+    EDITTEXT        IDC_TORRENT_NAME,60,13,217,12,ES_AUTOHSCROLL | ES_READONLY
     LTEXT           "Created:",-1,14,27,44,12,SS_CENTERIMAGE
-    EDITTEXT        IDC_TORRENT_CREATIONDATE,60,27,74,12,ES_AUTOHSCROLL | 
-                    ES_READONLY
+    EDITTEXT        IDC_TORRENT_CREATIONDATE,60,27,74,12,ES_AUTOHSCROLL | ES_READONLY
     LTEXT           "By:",-1,136,27,35,12,SS_CENTERIMAGE,WS_EX_RIGHT
-    EDITTEXT        IDC_TORRENT_CREATEDBY,173,27,104,12,ES_AUTOHSCROLL | 
-                    ES_READONLY
+    EDITTEXT        IDC_TORRENT_CREATEDBY,173,27,104,12,ES_AUTOHSCROLL | ES_READONLY
     LTEXT           "Comments:",-1,14,42,44,12,SS_CENTERIMAGE
-    EDITTEXT        IDC_TORRENT_COMMENTS,60,41,217,113,ES_MULTILINE | 
-                    ES_AUTOVSCROLL | ES_AUTOHSCROLL | ES_READONLY | 
-                    WS_VSCROLL
+    EDITTEXT        IDC_TORRENT_COMMENTS,60,41,217,113,ES_MULTILINE | ES_AUTOVSCROLL | ES_AUTOHSCROLL | ES_READONLY | WS_VSCROLL
     GROUPBOX        "Transfers:",-1,7,180,278,43
     RTEXT           "Start new download transfers:",-1,14,192,141,9
-    COMBOBOX        IDC_TORRENT_STARTDOWNLOADS,163,190,114,66,
-                    CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
-    EDITTEXT        IDC_TORRENT_UPLOADTOTAL,163,204,114,12,ES_AUTOHSCROLL | 
-                    ES_READONLY | NOT WS_TABSTOP
+    COMBOBOX        IDC_TORRENT_STARTDOWNLOADS,163,190,114,66,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_TORRENT_UPLOADTOTAL,163,204,114,12,ES_AUTOHSCROLL | ES_READONLY | NOT WS_TABSTOP
     RTEXT           "Total Uploaded:",-1,14,206,141,9,SS_CENTERIMAGE
     LTEXT           "Notes:",-1,14,156,46,12,SS_CENTERIMAGE
-    EDITTEXT        IDC_TORRENT_OTHER,60,156,217,12,ES_AUTOHSCROLL | 
-                    ES_READONLY
+    EDITTEXT        IDC_TORRENT_OTHER,60,156,217,12,ES_AUTOHSCROLL | ES_READONLY
 END
 
 IDD_TORRENT_TRACKERS DIALOGEX 0, 0, 292, 230
@@ -2581,26 +1992,19 @@ FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
     GROUPBOX        "Torrent &Information:",IDC_STATIC,5,3,280,28
     LTEXT           "Name:",IDC_STATIC,14,13,44,12,SS_CENTERIMAGE
-    EDITTEXT        IDC_TORRENT_NAME,60,13,215,12,ES_AUTOHSCROLL | 
-                    ES_READONLY | NOT WS_TABSTOP
+    EDITTEXT        IDC_TORRENT_NAME,60,13,215,12,ES_AUTOHSCROLL | ES_READONLY | NOT WS_TABSTOP
     LTEXT           "Tracker:",IDC_STATIC,14,50,44,12,SS_CENTERIMAGE
     EDITTEXT        IDC_TORRENT_TRACKER,60,49,215,12,ES_AUTOHSCROLL
     GROUPBOX        "&Current Tracker:",IDC_STATIC,5,33,280,66
-    LTEXT           "Completed (Seeds):",IDC_STATIC,15,65,80,12,
-                    SS_CENTERIMAGE
-    EDITTEXT        IDC_TORRENT_COMPLETED,100,65,40,12,ES_CENTER | 
-                    ES_AUTOHSCROLL | ES_READONLY | NOT WS_TABSTOP
+    LTEXT           "Completed (Seeds):",IDC_STATIC,15,65,80,12,SS_CENTERIMAGE
+    EDITTEXT        IDC_TORRENT_COMPLETED,100,65,40,12,ES_CENTER | ES_AUTOHSCROLL | ES_READONLY | NOT WS_TABSTOP
     RTEXT           "Incomplete:",IDC_STATIC,145,65,80,12,SS_CENTERIMAGE
-    EDITTEXT        IDC_TORRENT_INCOMPLETE,235,65,40,12,ES_CENTER | 
-                    ES_AUTOHSCROLL | ES_READONLY | NOT WS_TABSTOP
+    EDITTEXT        IDC_TORRENT_INCOMPLETE,235,65,40,12,ES_CENTER | ES_AUTOHSCROLL | ES_READONLY | NOT WS_TABSTOP
     PUSHBUTTON      "&Refresh",IDC_TORRENT_REFRESH,225,81,50,14
     GROUPBOX        "&Trackers:",IDC_STATIC,5,101,280,121
-    CONTROL         "",IDC_TORRENT_TRACKERS,"SysListView32",LVS_REPORT | 
-                    LVS_SHAREIMAGELISTS | WS_BORDER | WS_TABSTOP,15,112,260,
-                    107
+    CONTROL         "",IDC_TORRENT_TRACKERS,"SysListView32",LVS_REPORT | LVS_SHAREIMAGELISTS | WS_BORDER | WS_TABSTOP,15,112,260,107
     LTEXT           "Tracker Mode:",IDC_STATIC,16,83,77,9
-    COMBOBOX        IDC_TORRENT_TRACKERMODE,100,81,97,66,CBS_DROPDOWNLIST | 
-                    WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_TORRENT_TRACKERMODE,100,81,97,66,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
 END
 
 IDD_TORRENT_FILES DIALOGEX 0, 0, 292, 230
@@ -2610,25 +2014,18 @@ FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
     GROUPBOX        "Torrent &Information:",IDC_STATIC,5,3,280,28
     LTEXT           "Name:",IDC_STATIC,14,13,44,12,SS_CENTERIMAGE
-    EDITTEXT        IDC_TORRENT_NAME,60,13,215,12,ES_AUTOHSCROLL | 
-                    ES_READONLY | NOT WS_TABSTOP
+    EDITTEXT        IDC_TORRENT_NAME,60,13,215,12,ES_AUTOHSCROLL | ES_READONLY | NOT WS_TABSTOP
     GROUPBOX        "&Files:",IDC_STATIC,5,36,280,186
-    CONTROL         "",IDC_TORRENT_FILES,"SysListView32",LVS_REPORT | 
-                    LVS_SHAREIMAGELISTS | WS_BORDER | WS_TABSTOP,15,49,260,
-                    170
+    CONTROL         "",IDC_TORRENT_FILES,"SysListView32",LVS_REPORT | LVS_SHAREIMAGELISTS | WS_BORDER | WS_TABSTOP,15,49,260,170
 END
 
 IDD_PLUGIN_EXT_SETUP DIALOGEX 0, 0, 100, 147
-STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | 
-    WS_SYSMENU
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Setup"
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
     DEFPUSHBUTTON   "OK",IDOK,25,125,50,14
-    CONTROL         "",IDC_ASSOCIATIONS,"SysListView32",LVS_REPORT | 
-                    LVS_SINGLESEL | LVS_SORTASCENDING | LVS_ALIGNLEFT | 
-                    LVS_NOCOLUMNHEADER | WS_BORDER | WS_TABSTOP,19,7,60,112,
-                    WS_EX_CLIENTEDGE
+    CONTROL         "",IDC_ASSOCIATIONS,"SysListView32",LVS_REPORT | LVS_SINGLESEL | LVS_SORTASCENDING | LVS_ALIGNLEFT | LVS_NOCOLUMNHEADER | WS_BORDER | WS_TABSTOP,19,7,60,112,WS_EX_CLIENTEDGE
 END
 
 
@@ -3356,8 +2753,7 @@ BEGIN
     VK_F8,          ID_VIEW_HOSTS,          VIRTKEY, NOINVERT
     VK_F9,          ID_VIEW_DISCOVERY,      VIRTKEY, NOINVERT
     VK_UP,          ID_LIBRARY_PARENT,      VIRTKEY, ALT, NOINVERT
-    "Z",            ID_TOOLS_RESKIN,        VIRTKEY, SHIFT, CONTROL, 
-                                                    NOINVERT
+    "Z",            ID_TOOLS_RESKIN,        VIRTKEY, SHIFT, CONTROL, NOINVERT
 END
 
 
@@ -5371,6 +4767,11 @@ BEGIN
     IDS_LIBRARY_ALBUM_ALBUM "Album"
     IDS_LIBRARY_ALBUM_ARTIST "Artist"
     IDS_LIBRARY_ALBUM_RATING "Rating"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_TAB_IRC              "Show the IRC Chat window."
 END
 
 #endif    // English (Australia) resources
