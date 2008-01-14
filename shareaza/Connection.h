@@ -170,7 +170,7 @@ public:
 		m_pOutput->Add( pData, nLength );
 	}
 
-	inline void Write(/*const*/ CString& strData, const UINT nCodePage = CP_ACP) throw()
+	inline void Write(const CString& strData, const UINT nCodePage = CP_ACP) throw()
 	{
 		CQuickLock oOutputLock( *m_pOutputSection );
 
