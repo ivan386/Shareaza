@@ -276,7 +276,7 @@ void PASCAL DDX_FontCombo(CDataExchange* pDX, int nIDC, CString& strFontName)
 	HWND hWndCtrl = pDX->PrepareCtrl( nIDC );
 	_ASSERTE( hWndCtrl != NULL );
 	
-	CFontCombo* pCombo = reinterpret_cast<CFontCombo*>(CWnd::FromHandle( hWndCtrl ));	
+	CFontCombo* pCombo = static_cast<CFontCombo*>(CWnd::FromHandle( hWndCtrl ));	
 	// data from control
 
 	if ( pDX->m_bSaveAndValidate )
