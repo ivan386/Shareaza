@@ -135,8 +135,8 @@ IDI_IRCHEADER32         ICON                    "Res\\ChatHeader32.ico"
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 2,3,1,0
- PRODUCTVERSION 2,3,0,0
+ FILEVERSION 2,3,1,1
+ PRODUCTVERSION 2,3,0,1
  FILEFLAGSMASK 0x1fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -154,12 +154,12 @@ BEGIN
             VALUE "Comments", "Shareaza Ultimate File Sharing"
             VALUE "CompanyName", "Shareaza Development Team"
             VALUE "FileDescription", "Shareaza Ultimate File Sharing"
-            VALUE "FileVersion", "2, 3, 1, 0"
+            VALUE "FileVersion", "2, 3, 1, 1"
             VALUE "InternalName", "Shareaza"
             VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2002-2008. All rights reserved."
             VALUE "OriginalFilename", "Shareaza.exe"
             VALUE "ProductName", "Shareaza P2P"
-            VALUE "ProductVersion", "2, 3, 0, 0"
+            VALUE "ProductVersion", "2, 3, 0, 1"
         END
     END
     BLOCK "VarFileInfo"
@@ -1916,7 +1916,7 @@ CAPTION "Chat"
 FONT 8, "Tahoma", 0, 0, 0x0
 BEGIN
     GROUPBOX        "Client &Options:",IDC_STATIC,7,6,145,100
-    CONTROL         "Show chat  integration",IDC_IRC_SHOW,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,13,19,122,9
+    CONTROL         "Show chat  integration",IDC_IRC_SHOW,"Button",BS_AUTOCHECKBOX | WS_DISABLED | WS_TABSTOP,13,19,122,9
     CONTROL         "Flood protection:",IDC_IRC_FLOODENABLE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,13,33,119,9
     EDITTEXT        IDC_IRC_FLOODLIMIT,23,46,26,12,ES_AUTOHSCROLL
     LTEXT           "Lines per second.",IDC_STATIC,53,48,59,12
