@@ -31,7 +31,7 @@
 class CIRCNewMessage
 {
 public:
-	CIRCNewMessage::operator =(CIRCNewMessage &rhs );
+	BOOL operator =(const CIRCNewMessage &rhs );
 public:
 	int             nColorID;
 	CString         m_sTargetName;

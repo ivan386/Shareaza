@@ -136,7 +136,7 @@ CIRCFrame::~CIRCFrame()
 	if ( g_pIrcFrame == this ) g_pIrcFrame = NULL;
 }
 
-CIRCNewMessage::operator =(CIRCNewMessage &rhs)
+BOOL CIRCNewMessage::operator =(const CIRCNewMessage &rhs)
 {
 	m_sTargetName	= rhs.m_sTargetName;
 	nColorID		= rhs.nColorID;
