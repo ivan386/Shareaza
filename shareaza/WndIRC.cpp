@@ -99,7 +99,7 @@ BOOL CIRCWnd::OnCmdMsg(UINT nID, int nCode, void* pExtra, AFX_CMDHANDLERINFO* pH
 	return CPanelWnd::OnCmdMsg( nID, nCode, pExtra, pHandlerInfo );
 }
 
-LONG CIRCWnd::OnIdleUpdateCmdUI(WPARAM wParam, LPARAM lParam)
+LRESULT CIRCWnd::OnIdleUpdateCmdUI(WPARAM wParam, LPARAM lParam)
 {
 	if ( m_wndFrame.m_hWnd != NULL && m_wndFrame.GetParent() != this )
 	{
