@@ -145,7 +145,7 @@
 	</toolbar>
 	<!-- DOWNLOADS WINDOW -->
 	<toolbar name="CDownloadsWnd.Basic">
-		<button id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="Abrir ou Tocar"/>
+		<button id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="Abrir/Tocar"/>
 		<button id="ID_DOWNLOADS_LAUNCH" text="Prévia do Arquivo"/>
 		<button id="ID_DOWNLOADS_FILE_DELETE" text="Apagar Arquivo"/>
 		<separator/>
@@ -157,10 +157,10 @@
 		<button id="ID_DOWNLOADS_MONITOR" text="Mostrar Monitor"/>
 		<rightAlign/>
 		<button id="ID_TOOLS_DOWNLOAD" text="Adicionar Download/Torrent..."/>
-		<button id="ID_DOWNLOADS_CLEAR_COMPLETED" text="Limpar os Terminados"/>
+		<button id="ID_DOWNLOADS_CLEAR_COMPLETED" text="Limpar Terminados"/>
 	</toolbar>
 	<toolbar name="CDownloadsWnd">
-		<button id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="Abrir ou Tocar"/>
+		<button id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="Abrir/Tocar"/>
 		<button id="ID_DOWNLOADS_FILE_DELETE" text="Apagar Arquivo"/>
 		<button id="ID_DOWNLOADS_LAUNCH" text="Prévia do Arquivo"/>
 		<separator/>
@@ -173,7 +173,7 @@
 		<button id="ID_DOWNLOADS_TORRENT_INFO" text="Info do Torrent"/>
 		<rightAlign/>
 		<button id="ID_TOOLS_DOWNLOAD" text="Adicionar Download/Torrent..."/>
-		<button id="ID_DOWNLOADS_CLEAR_COMPLETED" text="Limpar os Terminados"/>
+		<button id="ID_DOWNLOADS_CLEAR_COMPLETED" text="Limpar Terminados"/>
 		<separator/>
 		<button id="ID_DOWNLOADS_FILTER_MENU" text="Filtrar"/>
 	</toolbar>
@@ -182,10 +182,10 @@
 		<button id="ID_BROWSE_LAUNCH" text="Navegar Usuário"/>
 		<button id="ID_UPLOADS_CHAT" text="Conversar com Usuário"/>
 		<rightAlign/>
-		<button id="ID_UPLOADS_CLEAR_COMPLETED" text="Limpar os Terminados"/>
+		<button id="ID_UPLOADS_CLEAR_COMPLETED" text="Limpar Terminados"/>
 	</toolbar>
 	<toolbar name="CUploadsWnd">
-		<button id="ID_UPLOADS_LAUNCH" text="Abrir ou Tocar"/>
+		<button id="ID_UPLOADS_LAUNCH" text="Abrir/Tocar"/>
 		<separator/>
 		<button id="ID_UPLOADS_START" text="Iniciar Agora"/>
 		<button id="ID_UPLOADS_CLEAR" text="Limpar Upload"/>
@@ -194,7 +194,7 @@
 		<button id="ID_UPLOADS_CHAT" text="Conversar com Usuário"/>
 		<button id="ID_SECURITY_BAN" text="Banir Usuário"/>
 		<rightAlign/>
-		<button id="ID_UPLOADS_CLEAR_COMPLETED" text="Limpar os Terminados"/>
+		<button id="ID_UPLOADS_CLEAR_COMPLETED" text="Limpar Terminados"/>
 		<separator/>
 		<button id="ID_UPLOADS_FILTER_MENU" text="Filtrar"/>
 	</toolbar>
@@ -241,7 +241,7 @@
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Encontrar"/>
 	</toolbar>
 	<toolbar name="CLibraryFileView.Physical.Basic">
-		<button id="ID_LIBRARY_LAUNCH" text="Abrir ou Tocar"/>
+		<button id="ID_LIBRARY_LAUNCH" text="Abrir/Tocar"/>
 		<button id="ID_LIBRARY_ENQUEUE" text="Adicionar a Lista de Execuções"/>
 		<rightAlign/>
 		<separator/>
@@ -249,7 +249,7 @@
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Encontrar"/>
 	</toolbar>
 	<toolbar name="CLibraryFileView.Physical">
-		<button id="ID_LIBRARY_LAUNCH" text="Abrir ou Tocar"/>
+		<button id="ID_LIBRARY_LAUNCH" text="Abrir/Tocar"/>
 		<button id="ID_LIBRARY_ENQUEUE" text="Adicionar a Lista de Execuções"/>
 		<separator/>
 		<button id="ID_LIBRARY_PROPERTIES" text="Propriedades"/>
@@ -263,7 +263,7 @@
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Encontrar"/>
 	</toolbar>
 	<toolbar name="CLibraryFileView.Virtual.Basic">
-		<button id="ID_LIBRARY_LAUNCH" text="Abrir ou Tocar"/>
+		<button id="ID_LIBRARY_LAUNCH" text="Abrir/Tocar"/>
 		<button id="ID_LIBRARY_ENQUEUE" text="Adicionar a Lista de Execuções"/>
 		<button id="ID_LIBRARY_FOLDER_ENQUEUE" text="Tocar Álbum"/>
 		<rightAlign/>
@@ -272,7 +272,7 @@
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Encontrar"/>
 	</toolbar>
 	<toolbar name="CLibraryFileView.Virtual">
-		<button id="ID_LIBRARY_LAUNCH" text="Abrir ou Tocar"/>
+		<button id="ID_LIBRARY_LAUNCH" text="Abrir/Tocar"/>
 		<button id="ID_LIBRARY_ENQUEUE" text="Adicionar a Lista de Execuções"/>
 		<button id="ID_LIBRARY_FOLDER_ENQUEUE" text="Tocar Álbum"/>
 		<separator/>
@@ -995,14 +995,14 @@
 		<item id="ID_TRANSFERS_FORGET" text="Esquecer"/>
 	</menu>
 	<menu name="CDownloadsWnd.Completed.Basic">
-		<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="Abrir ou Tocar"/>
+		<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="Abrir/Tocar"/>
 		<item id="ID_DOWNLOADS_ENQUEUE" text="Adicionar a lista de execuções"/>
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="Limpar"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_FILE_DELETE" text="Apagar Arquivo"/>
 	</menu>
 	<menu name="CDownloadsWnd.Completed">
-		<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="Abrir ou Tocar"/>
+		<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="Abrir/Tocar"/>
 		<item id="ID_DOWNLOADS_ENQUEUE" text="Adicionar a lista de execuções"/>
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="Limpar"/>
 		<separator/>
@@ -1122,7 +1122,7 @@
 		<item id="ID_LIBRARY_ALBUM_PROPERTIES" text="Propriedades"/>
 	</menu>
 	<menu name="CLibraryFileView.Physical.Basic">
-		<item id="ID_LIBRARY_LAUNCH" text="Abrir ou Tocar"/>
+		<item id="ID_LIBRARY_LAUNCH" text="Abrir/Tocar"/>
 		<item id="ID_LIBRARY_ENQUEUE" text="Adicionar a lista de execuções"/>
 		<separator/>
 		<item id="ID_LIBRARY_SHARED_FILE" text="Compartilhado"/>
@@ -1153,7 +1153,7 @@
 		<item id="ID_LIBRARY_PROPERTIES" text="Propriedades"/>
 	</menu>
 	<menu name="CLibraryFileView.Physical">
-		<item id="ID_LIBRARY_LAUNCH" text="Abrir ou Tocar"/>
+		<item id="ID_LIBRARY_LAUNCH" text="Abrir/Tocar"/>
 		<item id="ID_LIBRARY_ENQUEUE" text="Adicionar a lista de execuções"/>
 		<separator/>
 		<item id="ID_LIBRARY_SHARED_FILE" text="Compartilhado"/>
@@ -1187,7 +1187,7 @@
 		<item id="ID_LIBRARY_PROPERTIES" text="Propriedades"/>
 	</menu>
 	<menu name="CLibraryFileView.Virtual.Basic">
-		<item id="ID_LIBRARY_LAUNCH" text="Abrir ou Tocar"/>
+		<item id="ID_LIBRARY_LAUNCH" text="Abrir/Tocar"/>
 		<item id="ID_LIBRARY_ENQUEUE" text="Adicionar a lista de execuções"/>
 		<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Tocar Álbum"/>
 		<separator/>
@@ -1221,7 +1221,7 @@
 		<item id="ID_LIBRARY_PROPERTIES" text="Propriedades"/>
 	</menu>
 	<menu name="CLibraryFileView.Virtual">
-		<item id="ID_LIBRARY_LAUNCH" text="Abrir ou Tocar"/>
+		<item id="ID_LIBRARY_LAUNCH" text="Abrir/Tocar"/>
 		<item id="ID_LIBRARY_ENQUEUE" text="Adicionar a lista de execuções"/>
 		<separator/>
 		<item id="ID_LIBRARY_SHARED_FILE" text="Compartilhado"/>
