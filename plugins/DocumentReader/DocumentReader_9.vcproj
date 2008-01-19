@@ -76,10 +76,10 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				IgnoreImportLibrary="true"
 				AdditionalDependencies="zlibwapi.lib"
 				OutputFile="$(OutDir)/DocumentReader.dll"
 				LinkIncremental="2"
-				SuppressStartupBanner="true"
 				AdditionalLibraryDirectories="..\..\shareaza\zlib"
 				ModuleDefinitionFile="DocumentReader.def"
 				GenerateDebugInformation="true"
@@ -168,10 +168,10 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				IgnoreImportLibrary="true"
 				AdditionalDependencies="zlibwapi.lib"
 				OutputFile="$(OutDir)/DocumentReader.dll"
 				LinkIncremental="2"
-				SuppressStartupBanner="true"
 				AdditionalLibraryDirectories="..\..\shareaza\zlib"
 				ModuleDefinitionFile="DocumentReader.def"
 				GenerateDebugInformation="true"
@@ -263,6 +263,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				IgnoreImportLibrary="true"
 				AdditionalDependencies="Libcmt.lib zlibwapi.lib"
 				OutputFile="$(OutDir)/DocumentReader.dll"
 				LinkIncremental="1"
@@ -363,6 +364,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				IgnoreImportLibrary="true"
 				AdditionalDependencies="Libcmt.lib zlibwapi.lib"
 				OutputFile="$(OutDir)/DocumentReader.dll"
 				LinkIncremental="1"

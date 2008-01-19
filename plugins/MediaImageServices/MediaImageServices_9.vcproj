@@ -81,13 +81,11 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				RegisterOutput="false"
 				IgnoreImportLibrary="true"
 				AdditionalDependencies="Strmiids.lib Quartz.lib"
 				LinkIncremental="2"
 				ModuleDefinitionFile="MediaImageServices.def"
 				GenerateDebugInformation="true"
-				GenerateMapFile="false"
 				SubSystem="2"
 				SetChecksum="false"
 				BaseAddress="0x1af60000"
@@ -180,13 +178,11 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				RegisterOutput="false"
 				IgnoreImportLibrary="true"
 				AdditionalDependencies="Strmiids.lib Quartz.lib"
 				LinkIncremental="2"
 				ModuleDefinitionFile="MediaImageServices.def"
 				GenerateDebugInformation="true"
-				GenerateMapFile="false"
 				SubSystem="2"
 				SetChecksum="false"
 				BaseAddress="0x1af60000"

@@ -48,7 +48,6 @@
 				StringPooling="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="1"
-				BufferSecurityCheck="true"
 				RuntimeTypeInfo="false"
 				BrowseInformation="1"
 				WarningLevel="4"
@@ -66,6 +65,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				IgnoreImportLibrary="true"
 				AdditionalDependencies="comctl32.lib zlibwapi.lib"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="..\shareaza\zlib"
@@ -95,7 +95,7 @@
 			<Tool
 				Name="VCPostBuildEventTool"
 				Description="Performing registration"
-				CommandLine="copy &quot;..\setup\builds\zlibwapi.dll&quot; &quot;$(TargetDir)&quot; /b /y&#x0D;&#x0A;&quot;$(TargetPath)&quot; /installsilent"
+				CommandLine="copy &quot;..\setup\builds\zlibwapi.dll&quot; &quot;$(TargetDir)&quot; /b /y&#x0D;&#x0A;&quot;$(TargetPath)&quot; /installsilent&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
@@ -129,7 +129,6 @@
 				StringPooling="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="1"
-				BufferSecurityCheck="true"
 				RuntimeTypeInfo="false"
 				BrowseInformation="1"
 				WarningLevel="4"
@@ -147,6 +146,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				IgnoreImportLibrary="true"
 				AdditionalDependencies="comctl32.lib zlibwapi.lib"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="..\shareaza\zlib"
@@ -176,7 +176,7 @@
 			<Tool
 				Name="VCPostBuildEventTool"
 				Description="Performing registration"
-				CommandLine="copy &quot;..\setup\builds\zlibwapi.dll&quot; &quot;$(TargetDir)&quot; /b /y&#x0D;&#x0A;&quot;$(TargetPath)&quot; /installsilent"
+				CommandLine="copy &quot;..\setup\builds\zlibwapi.dll&quot; &quot;$(TargetDir)&quot; /b /y&#x0D;&#x0A;&quot;$(TargetPath)&quot; /installsilent&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
@@ -229,6 +229,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				IgnoreImportLibrary="true"
 				AdditionalDependencies="comctl32.lib zlibwapi.lib"
 				AdditionalLibraryDirectories="..\shareaza\zlib"
 				IgnoreDefaultLibraryNames=""
@@ -260,7 +261,7 @@
 			<Tool
 				Name="VCPostBuildEventTool"
 				Description="Performing registration"
-				CommandLine="copy &quot;..\setup\builds\zlibwapi.dll&quot; &quot;$(TargetDir)&quot; /b /y&#x0D;&#x0A;&quot;$(TargetPath)&quot; /installsilent"
+				CommandLine="copy &quot;..\setup\builds\zlibwapi.dll&quot; &quot;$(TargetDir)&quot; /b /y&#x0D;&#x0A;&quot;$(TargetPath)&quot; /installsilent&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
@@ -314,6 +315,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				IgnoreImportLibrary="true"
 				AdditionalDependencies="comctl32.lib zlibwapi.lib"
 				AdditionalLibraryDirectories="..\shareaza\zlib"
 				IgnoreDefaultLibraryNames=""
@@ -345,7 +347,7 @@
 			<Tool
 				Name="VCPostBuildEventTool"
 				Description="Performing registration"
-				CommandLine="copy &quot;..\setup\builds\zlibwapi.dll&quot; &quot;$(TargetDir)&quot; /b /y&#x0D;&#x0A;&quot;$(TargetPath)&quot; /installsilent"
+				CommandLine="copy &quot;..\setup\builds\zlibwapi.dll&quot; &quot;$(TargetDir)&quot; /b /y&#x0D;&#x0A;&quot;$(TargetPath)&quot; /installsilent&#x0D;&#x0A;"
 			/>
 		</Configuration>
 	</Configurations>

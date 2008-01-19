@@ -76,11 +76,11 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				IgnoreImportLibrary="true"
 				LinkIncremental="2"
 				IgnoreDefaultLibraryNames=""
 				ModuleDefinitionFile="$(ProjectName).def"
 				GenerateDebugInformation="true"
-				GenerateMapFile="false"
 				SubSystem="2"
 				BaseAddress="0x1aea0000"
 				ImportLibrary=""
@@ -168,11 +168,11 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				IgnoreImportLibrary="true"
 				LinkIncremental="2"
 				IgnoreDefaultLibraryNames=""
 				ModuleDefinitionFile="$(ProjectName).def"
 				GenerateDebugInformation="true"
-				GenerateMapFile="false"
 				SubSystem="2"
 				BaseAddress="0x1aea0000"
 				ImportLibrary=""
@@ -263,6 +263,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				IgnoreImportLibrary="true"
 				LinkIncremental="1"
 				IgnoreDefaultLibraryNames=""
 				ModuleDefinitionFile="$(ProjectName).def"
@@ -361,6 +362,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				IgnoreImportLibrary="true"
 				LinkIncremental="1"
 				IgnoreDefaultLibraryNames=""
 				ModuleDefinitionFile="$(ProjectName).def"
