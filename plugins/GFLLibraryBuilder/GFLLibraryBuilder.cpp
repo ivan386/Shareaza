@@ -65,40 +65,57 @@ inline void FillExtMap ()
 	}
 }
 
+BOOL SafeGFLInit() throw()
+{
+	__try
+	{
+		// Library initialization
+		if ( gflLibraryInit () != GFL_NO_ERROR )
+		{
+			ATLTRACE (_T("gflLibraryInit failed\n"));
+			return FALSE;
+		}
+		gflEnableLZW( GFL_TRUE );
+		FillExtMap ();
+		return TRUE;
+	}
+	__except ( EXCEPTION_EXECUTE_HANDLER )
+	{
+		ATLTRACE (_T("Exception in DLL_PROCESS_ATTACH\n"));
+		return FALSE;
+	}
+}
+
+void SafeGFLExit() throw()
+{
+	__try
+	{
+		gflLibraryExit ();
+	}
+	__except ( EXCEPTION_EXECUTE_HANDLER )
+	{
+		ATLTRACE (_T("Exception in DLL_PROCESS_DETACH\n"));
+	}
+}
+
 extern "C" BOOL WINAPI DllMain (HINSTANCE hInstance, DWORD dwReason, LPVOID lpReserved)
 {
-	if (_AtlModule.DllMain (dwReason, lpReserved)) {
-		switch (dwReason) {
-			case DLL_PROCESS_ATTACH:
-				_hModuleInstance = hInstance;
-				__try {
-					// Library initialization
-					GFL_ERROR err = gflLibraryInit ();
-					if (err != GFL_NO_ERROR) {
-						ATLTRACE (_T("gflLibraryInit failed\n"));
-						return FALSE;
-					}
-					gflEnableLZW (GFL_TRUE);
-					ATLTRACE (_T("gflLibraryInit : GFL Version %s\n"), CA2CT (gflGetVersion ()));
+	if (_AtlModule.DllMain( dwReason, lpReserved ) )
+	{
+		switch (dwReason)
+		{
+		case DLL_PROCESS_ATTACH:
+			_hModuleInstance = hInstance;
+			return SafeGFLInit();
 
-					FillExtMap ();
-
-				} __except (EXCEPTION_EXECUTE_HANDLER) {
-					ATLTRACE (_T("Exception in DLL_PROCESS_ATTACH\n"));
-					return FALSE;
-				}
-				break;
-
-			case DLL_PROCESS_DETACH:
-				__try {
-					gflLibraryExit ();
-				} __except (EXCEPTION_EXECUTE_HANDLER) {
-					ATLTRACE (_T("Exception in DLL_PROCESS_DETACH\n"));
-				}
-				break;
+		case DLL_PROCESS_DETACH:
+			SafeGFLExit();
+			break;
 		}
 		return TRUE;
-	} else {
+	}
+	else
+	{
 		ATLTRACE (_T("FALSE in _AtlModule.DllMain () call\n"));
 		return FALSE;
 	}

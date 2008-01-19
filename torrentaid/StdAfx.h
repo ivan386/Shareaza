@@ -19,13 +19,13 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_STDAFX_H__B26FAC77_146E_41B4_A688_35985BA9F7B8__INCLUDED_)
-#define AFX_STDAFX_H__B26FAC77_146E_41B4_A688_35985BA9F7B8__INCLUDED_
-
 #pragma once
 
 #define VC_EXTRALEAN		// Exclude rarely-used stuff from Windows headers
-#define WINVER 0x0400		// Windows Version
+#define WINVER 0x0400
+#define _WIN32_WINNT 0x0400
+#define _WIN32_WINDOWS 0x0410
+#define _WIN32_IE 0x0400
 
 #include <afxwin.h>         // MFC core and standard components
 #include <afxext.h>         // MFC extensions
@@ -34,11 +34,7 @@
 
 #include <shlobj.h>			// Shell objects
 
-//{{AFX_INSERT_LOCATION}}
-
 typedef unsigned __int64 QWORD;
 
 #define BIF_NEWDIALOGSTYLE	0x0040
 #define OFN_ENABLESIZING	0x00800000
-
-#endif // !defined(AFX_STDAFX_H__B26FAC77_146E_41B4_A688_35985BA9F7B8__INCLUDED_)

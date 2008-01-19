@@ -473,12 +473,13 @@ LRESULT CImageWindow::OnPaint(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*
 	{
 		// If there is no image, we couldn't load it.  Display an error message instead.
 		
-		CComBSTR bsText( _T("Unable to load: ") );
-		bsText.Append( m_pszFile );
-		ExtTextOut( hDC, 6, 6, ETO_OPAQUE, &rcClient, bsText, bsText.Length(), NULL );
+		TCHAR szText[ MAX_PATH + 16 ];
+		lstrcpy( szText, _T("Unable to load: ") );
+		lstrcat( szText, m_pszFile );
+		ExtTextOut( hDC, 6, 6, ETO_OPAQUE, &rcClient, szText, lstrlen( szText ), NULL );
 		rcClient.top += 24;
 		ExtTextOut( hDC, 6, 30, ETO_OPAQUE, &rcClient, 
-					CComBSTR( _T("Hold Shift key to open in the default application.") ), 
+					_T("Hold Shift key to open in the default application."), 
 					50, NULL );
 	}
 	

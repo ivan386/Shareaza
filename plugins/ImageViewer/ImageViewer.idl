@@ -29,5 +29,7 @@ library ImageViewerLib
 		interface IExecutePlugin;
 		interface ICommandPlugin;
 	};
+
+	interface IImageServicePlugin;
 };
 

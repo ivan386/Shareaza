@@ -453,7 +453,7 @@ IImageServicePlugin* CImage::LoadService(LPCTSTR pszFile)
 	if ( ! pszType ) return NULL;
 	
 	DWORD dwCLSID = 128;
-	TCHAR szCLSID[128];
+	WCHAR szCLSID[128];
 
 	CRegKey pKey;
 		
@@ -467,20 +467,12 @@ IImageServicePlugin* CImage::LoadService(LPCTSTR pszFile)
 	
 	pKey.Close();
 
-	CLSID pCLSID;
-
-	szCLSID[ 37 ] = 0;
-	USES_CONVERSION;
-	if ( UuidFromString( &szCLSID[1], (GUID*)&pCLSID ) != RPC_S_OK )
-	{
-		// If the normal call didn't work, try to call using an ANSI string. We might run on Win 9x.
-		// I think we don't even need to try the normal call first, because the ANSI version also works
-		// on Win NT/2k/XP, because a GUID always consists of numbers, but just to be sure...
-		if ( UuidFromStringA( (LPBYTE)&W2A(szCLSID)[1], (GUID*)&pCLSID ) != RPC_S_OK ) return NULL;
-	}
+	CLSID pCLSID = {};
+	if ( FAILED( CLSIDFromString( szCLSID, &pCLSID ) ) )
+		return NULL;
 
 	IImageServicePlugin* pService = NULL;
-	HRESULT hResult = CoCreateInstance( pCLSID, NULL, CLSCTX_INPROC_SERVER,
+	HRESULT hResult = CoCreateInstance( pCLSID, NULL, CLSCTX_ALL,
 		IID_IImageServicePlugin, (void**)&pService );
 	
 	return SUCCEEDED(hResult) ? pService : NULL;

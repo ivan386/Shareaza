@@ -11,9 +11,7 @@
 
 #include "StdAfx.h"
 #include "Resource.h"
-#include <initguid.h>
 #include "ImageViewer.h"
-#include "ImageViewer_i.c"
 #include "ImageViewerPlugin.h"
 
 CComModule _Module;

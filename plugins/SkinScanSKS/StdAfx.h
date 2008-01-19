@@ -44,6 +44,7 @@
 
 using namespace ATL;
 
+#define ZLIB_WINAPI
 #include <unzip.h>
 
 #pragma warning( pop )
