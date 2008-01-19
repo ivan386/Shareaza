@@ -452,8 +452,8 @@ IImageServicePlugin* CImage::LoadService(LPCTSTR pszFile)
 	LPCTSTR pszType = _tcsrchr( pszFile, '.' );
 	if ( ! pszType ) return NULL;
 	
-	DWORD dwCLSID = 128;
-	WCHAR szCLSID[128];
+	ULONG dwCLSID = 128;
+	TCHAR szCLSID[128];
 
 	CRegKey pKey;
 		
@@ -462,7 +462,8 @@ IImageServicePlugin* CImage::LoadService(LPCTSTR pszFile)
 		return NULL;
 	
 	bool bPartial = lstrcmpi( pszType, _T(".partial") ) == 0;
-	if ( pKey.QueryValue( bPartial ? _T(".jpg") : pszType, NULL, szCLSID, &dwCLSID ) != ERROR_SUCCESS )
+	if ( pKey.QueryStringValue( ( bPartial ? _T(".jpg") : pszType ), szCLSID, &dwCLSID )
+		!= ERROR_SUCCESS )
 		return NULL;
 	
 	pKey.Close();
