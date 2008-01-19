@@ -64,8 +64,7 @@ STDMETHODIMP CGFLReader::LoadFromFile (
 	/* [in,out] */ IMAGESERVICEDATA* pParams,
 	/* [out] */ SAFEARRAY** ppImage )
 {
-	ATLTRACE (L"LoadFromFile (\"%ls\", 0x%08x, 0x%08x)\n",
-		CW2T (sFile), pParams, ppImage);
+	ATLTRACE( _T("LoadFromFile (\"%s\", 0x%08x, 0x%08x)\n"), CW2T( sFile ), pParams, ppImage );
 
 	if (!pParams || !ppImage) {
 		ATLTRACE (L"LoadFromFile error: E_POINTER\n");
@@ -73,13 +72,6 @@ STDMETHODIMP CGFLReader::LoadFromFile (
 	}
 
 	*ppImage = NULL;
-
-	ATLTRACE (L"LoadFromFile Size=%d, Width=%d, Height=%d, Flags=%d%s%s%s, Components=%d, Quality=%d\n",
-		pParams->cbSize, pParams->nWidth, pParams->nHeight, pParams->nFlags,
-		((pParams->nFlags & IMAGESERVICE_SCANONLY) ? " ScanOnly" : "\0"),
-		((pParams->nFlags & IMAGESERVICE_PARTIAL_IN) ? " PartialIn" : "\0"),
-		((pParams->nFlags & IMAGESERVICE_PARTIAL_OUT) ? " PartialOut" : "\0"),
-		pParams->nComponents, pParams->nQuality);
 
 	GFL_BITMAP* hGflBitmap = NULL;
 
@@ -119,7 +111,7 @@ STDMETHODIMP CGFLReader::LoadFromFile (
 		}
 	} else {
 		hr = E_FAIL;
-		ATLTRACE (L"gflGetFileInformation error: %s\n", CA2T (gflGetErrorString (err)));
+		ATLTRACE( _T("gflGetFileInformation error: %s\n"), CA2T( gflGetErrorString( err ) ) );
 	}
 
 	if (hGflBitmap)
@@ -146,13 +138,6 @@ STDMETHODIMP CGFLReader::LoadFromMemory (
 	}
 
 	*ppImage = NULL;
-	
-	ATLTRACE (L"LoadFromMemory Size=%d, Width=%d, Height=%d, Flags=%d%s%s%s, Components=%d, Quality=%d\n",
-		pParams->cbSize, pParams->nWidth, pParams->nHeight, pParams->nFlags,
-		((pParams->nFlags & IMAGESERVICE_SCANONLY) ? " ScanOnly" : "\0"),
-		((pParams->nFlags & IMAGESERVICE_PARTIAL_IN) ? " PartialIn" : "\0"),
-		((pParams->nFlags & IMAGESERVICE_PARTIAL_OUT) ? " PartialOut" : "\0"),
-		pParams->nComponents, pParams->nQuality);
 
 	GFL_BITMAP* hGflBitmap = NULL;
 	LONG nSource = 0;
@@ -187,7 +172,7 @@ STDMETHODIMP CGFLReader::LoadFromMemory (
 				}
 			} else {
 				hr = E_FAIL;
-				ATLTRACE (L"gflGetFileInformationFromMemory error: %s\n", CA2T (gflGetErrorString (err)));
+				ATLTRACE( _T("gflGetFileInformationFromMemory error: %s\n"), CA2T( gflGetErrorString( err ) ) );
 			}
 			SafeArrayUnaccessData (pMemory);
 		} else
@@ -211,20 +196,12 @@ STDMETHODIMP CGFLReader::SaveToFile (
 	/* [in,out] */ IMAGESERVICEDATA* pParams,
 	/* [in] */ SAFEARRAY* pImage)
 {
-	ATLTRACE (L"SaveToFile (\"%ls\", 0x%08x, 0x%08x)\n",
-		CW2T (sFile), pParams, pImage);
+	ATLTRACE( _T("SaveToFile (\"%s\", 0x%08x, 0x%08x)\n"), CW2T( sFile ), pParams, pImage );
 
 	if (!pParams || !pImage) {
 		ATLTRACE (L"SaveToFile error: E_POINTER\n");
 		return E_POINTER;
 	}
-	
-	ATLTRACE (L"SaveToFile Size=%d, Width=%d, Height=%d, Flags=%d%s%s%s, Components=%d, Quality=%d\n",
-		pParams->cbSize, pParams->nWidth, pParams->nHeight, pParams->nFlags,
-		((pParams->nFlags & IMAGESERVICE_SCANONLY) ? " ScanOnly" : "\0"),
-		((pParams->nFlags & IMAGESERVICE_PARTIAL_IN) ? " PartialIn" : "\0"),
-		((pParams->nFlags & IMAGESERVICE_PARTIAL_OUT) ? " PartialOut" : "\0"),
-		pParams->nComponents, pParams->nQuality);
 
 	CString ext (sFile);
 	int dot = ext.ReverseFind ('.');
@@ -265,8 +242,7 @@ STDMETHODIMP CGFLReader::SaveToMemory (
 	/* [in,out] */ IMAGESERVICEDATA* pParams,
 	/* [in] */ SAFEARRAY* pImage)
 {
-	ATLTRACE (L"CGFLReader::SaveToMemory (\"%ls\", 0x%08x, 0x%08x, 0x%08x)\n",
-		CW2T (sType), ppMemory, pParams, pImage);
+	ATLTRACE( _T("SaveToMemory (\"%s\", 0x%08x, 0x%08x, 0x%08x)\n"), CW2T( sType ), ppMemory, pParams, pImage );
 
 	if (!ppMemory || !pParams || !pImage) {
 		ATLTRACE (L"CGFLReader::SaveToMemory error: E_POINTER\n");
@@ -274,13 +250,6 @@ STDMETHODIMP CGFLReader::SaveToMemory (
 	}
 
 	*ppMemory = NULL;
-	
-	ATLTRACE (L"Size=%d, Width=%d, Height=%d, Flags=%d%s%s%s, Components=%d, Quality=%d\n",
-		pParams->cbSize, pParams->nWidth, pParams->nHeight, pParams->nFlags,
-		((pParams->nFlags & IMAGESERVICE_SCANONLY) ? " ScanOnly" : "\0"),
-		((pParams->nFlags & IMAGESERVICE_PARTIAL_IN) ? " PartialIn" : "\0"),
-		((pParams->nFlags & IMAGESERVICE_PARTIAL_OUT) ? " PartialOut" : "\0"),
-		pParams->nComponents, pParams->nQuality);
 
 	CString ext (sType);
 	int dot = ext.ReverseFind ('.');

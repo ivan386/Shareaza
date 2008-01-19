@@ -45,22 +45,22 @@ inline void FillExtMap ()
 	CString tmp;
 	_ExtMap.RemoveAll ();
 	GFL_INT32 count = gflGetNumberOfFormat ();
-	ATLTRACE ("Total %d formats\n", count);
+	ATLTRACE( _T("Total %d formats:\n"), count );
 	for (GFL_INT32 i = 0; i < count; ++i) {
 		GFL_FORMAT_INFORMATION info;
 		GFL_ERROR err = gflGetFormatInformationByIndex (i, &info);
 		if (err == GFL_NO_ERROR && (info.Status & GFL_READ)) {
 			CString name (info.Name);
 			CString desc (info.Description);
-			ATLTRACE ("%3d. %7s %32s :", i, name, desc);
+			ATLTRACE( _T("%3d. %7s %32s :"), i, name, desc );
 			for (GFL_UINT32 j = 0; j < info.NumberOfExtension; ++j) {
 				CString ext (info.Extension [j]);
 				ext = ext.MakeLower ();
-				ATLTRACE (" .%s", ext);
+				ATLTRACE( _T(" .%s"), ext );
 				if (!_ExtMap.Lookup (ext, tmp))
 					_ExtMap.SetAt (ext, name);
 			}
-			ATLTRACE ("\n");
+			ATLTRACE( _T("\n") );
 		}
 	}
 }

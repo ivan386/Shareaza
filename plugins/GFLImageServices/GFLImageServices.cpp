@@ -45,60 +45,77 @@ inline void FillExtMap ()
 	CString tmp;
 	_ExtMap.RemoveAll ();
 	GFL_INT32 count = gflGetNumberOfFormat ();
-	ATLTRACE (L"Total %d formats\n", count);
+	ATLTRACE( _T("Total %d formats:\n"), count );
 	for (GFL_INT32 i = 0; i < count; ++i) {
 		GFL_FORMAT_INFORMATION info;
 		GFL_ERROR err = gflGetFormatInformationByIndex (i, &info);
 		if (err == GFL_NO_ERROR && (info.Status & GFL_READ)) {
 			CString name (info.Name);
 			CString desc (info.Description);
-			ATLTRACE (L"%3d. %7s %32s :", i, name, desc);
+			ATLTRACE( _T("%3d. %7s %32s :"), i, name, desc );
 			for (GFL_UINT32 j = 0; j < info.NumberOfExtension; ++j) {
 				CString ext (info.Extension [j]);
 				ext = ext.MakeLower ();
-				ATLTRACE (L" .%s", ext);
+				ATLTRACE( _T(" .%s"), ext );
 				if (!_ExtMap.Lookup (ext, tmp))
 					_ExtMap.SetAt (ext, name);
 			}
-			ATLTRACE (L"\n");
+			ATLTRACE( _T("\n") );
 		}
+	}
+}
+
+BOOL SafeGFLInit() throw()
+{
+	__try
+	{
+		// Library initialization
+		if ( gflLibraryInit () != GFL_NO_ERROR )
+		{
+			ATLTRACE (_T("gflLibraryInit failed\n"));
+			return FALSE;
+		}
+		gflEnableLZW( GFL_TRUE );
+		FillExtMap ();
+		return TRUE;
+	}
+	__except ( EXCEPTION_EXECUTE_HANDLER )
+	{
+		ATLTRACE (_T("Exception in DLL_PROCESS_ATTACH\n"));
+		return FALSE;
+	}
+}
+
+void SafeGFLExit() throw()
+{
+	__try
+	{
+		gflLibraryExit ();
+	}
+	__except ( EXCEPTION_EXECUTE_HANDLER )
+	{
+		ATLTRACE (_T("Exception in DLL_PROCESS_DETACH\n"));
 	}
 }
 
 extern "C" BOOL WINAPI DllMain (HINSTANCE hInstance, DWORD dwReason, LPVOID lpReserved)
 {
-	if (_AtlModule.DllMain (dwReason, lpReserved)) {
-		switch (dwReason) {
-			case DLL_PROCESS_ATTACH:
-				_hModuleInstance = hInstance;
-				__try {
-					// Library initialization
-					GFL_ERROR err = gflLibraryInit ();
-					if (err != GFL_NO_ERROR) {
-						ATLTRACE (_T("gflLibraryInit failed\n"));
-						return FALSE;
-					}
-					gflEnableLZW (GFL_TRUE);
-					ATLTRACE (_T("gflLibraryInit : GFL Version %s\n"), CA2CT (gflGetVersion ()));
+	if (_AtlModule.DllMain( dwReason, lpReserved ) )
+	{
+		switch (dwReason)
+		{
+		case DLL_PROCESS_ATTACH:
+			_hModuleInstance = hInstance;
+			return SafeGFLInit();
 
-					FillExtMap ();
-
-				} __except (EXCEPTION_EXECUTE_HANDLER) {
-					ATLTRACE (_T("Exception in DLL_PROCESS_ATTACH\n"));
-					return FALSE;
-				}
-				break;
-
-			case DLL_PROCESS_DETACH:
-				__try {
-					gflLibraryExit ();
-				} __except (EXCEPTION_EXECUTE_HANDLER) {
-					ATLTRACE (_T("Exception in DLL_PROCESS_DETACH\n"));
-				}
-				break;
+		case DLL_PROCESS_DETACH:
+			SafeGFLExit();
+			break;
 		}
 		return TRUE;
-	} else {
+	}
+	else
+	{
 		ATLTRACE (_T("FALSE in _AtlModule.DllMain () call\n"));
 		return FALSE;
 	}
