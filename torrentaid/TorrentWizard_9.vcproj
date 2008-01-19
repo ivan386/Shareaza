@@ -505,8 +505,8 @@
 					>
 					<Tool
 						Name="VCCustomBuildTool"
-						CommandLine="ml.exe /c /Cx /coff &quot;$(inputpath)&quot;&#x0D;&#x0A;"
-						Outputs="$(inputname).obj"
+						CommandLine="ml.exe /c /Cx /coff /Zi /nologo /Fo &quot;$(ProjectDir)$(IntDir)\$(InputName).obj&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;"
+						Outputs="&quot;$(ProjectDir)$(IntDir)\$(InputName).obj&quot;"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -514,8 +514,8 @@
 					>
 					<Tool
 						Name="VCCustomBuildTool"
-						CommandLine="ml.exe /c /Cx /coff &quot;$(inputpath)&quot;&#x0D;&#x0A;"
-						Outputs="$(inputname).obj"
+						CommandLine="ml.exe /c /Cx /coff /Zi /nologo /Fo &quot;$(ProjectDir)$(IntDir)\$(InputName).obj&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;"
+						Outputs="&quot;$(ProjectDir)$(IntDir)\$(InputName).obj&quot;"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -523,8 +523,8 @@
 					>
 					<Tool
 						Name="VCCustomBuildTool"
-						CommandLine="ml.exe /c /Cx /coff &quot;$(inputpath)&quot;&#x0D;&#x0A;"
-						Outputs="$(inputname).obj"
+						CommandLine="ml.exe /c /Cx /coff /Zi /nologo /Fo &quot;$(ProjectDir)$(IntDir)\$(InputName).obj&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;"
+						Outputs="&quot;$(ProjectDir)$(IntDir)\$(InputName).obj&quot;"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -532,8 +532,8 @@
 					>
 					<Tool
 						Name="VCCustomBuildTool"
-						CommandLine="ml.exe /c /Cx /coff &quot;$(inputpath)&quot;&#x0D;&#x0A;"
-						Outputs="$(inputname).obj"
+						CommandLine="ml.exe /c /Cx /coff /Zi /nologo /Fo &quot;$(ProjectDir)$(IntDir)\$(InputName).obj&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;"
+						Outputs="&quot;$(ProjectDir)$(IntDir)\$(InputName).obj&quot;"
 					/>
 				</FileConfiguration>
 			</File>
@@ -869,8 +869,8 @@
 					>
 					<Tool
 						Name="VCCustomBuildTool"
-						CommandLine="ml.exe /c /Cx /coff &quot;$(inputpath)&quot;&#x0D;&#x0A;"
-						Outputs="$(inputname).obj"
+						CommandLine="ml.exe /c /Cx /coff /Zi /nologo /Fo &quot;$(ProjectDir)$(IntDir)\$(InputName).obj&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;"
+						Outputs="&quot;$(ProjectDir)$(IntDir)\$(InputName).obj&quot;"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -878,8 +878,8 @@
 					>
 					<Tool
 						Name="VCCustomBuildTool"
-						CommandLine="ml.exe /c /Cx /coff &quot;$(inputpath)&quot;&#x0D;&#x0A;"
-						Outputs="$(inputname).obj"
+						CommandLine="ml.exe /c /Cx /coff /Zi /nologo /Fo &quot;$(ProjectDir)$(IntDir)\$(InputName).obj&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;"
+						Outputs="&quot;$(ProjectDir)$(IntDir)\$(InputName).obj&quot;"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -887,8 +887,8 @@
 					>
 					<Tool
 						Name="VCCustomBuildTool"
-						CommandLine="ml.exe /c /Cx /coff &quot;$(inputpath)&quot;&#x0D;&#x0A;"
-						Outputs="$(inputname).obj"
+						CommandLine="ml.exe /c /Cx /coff /Zi /nologo /Fo &quot;$(ProjectDir)$(IntDir)\$(InputName).obj&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;"
+						Outputs="&quot;$(ProjectDir)$(IntDir)\$(InputName).obj&quot;"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -896,8 +896,8 @@
 					>
 					<Tool
 						Name="VCCustomBuildTool"
-						CommandLine="ml.exe /c /Cx /coff &quot;$(inputpath)&quot;&#x0D;&#x0A;"
-						Outputs="$(inputname).obj"
+						CommandLine="ml.exe /c /Cx /coff /Zi /nologo /Fo &quot;$(ProjectDir)$(IntDir)\$(InputName).obj&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;"
+						Outputs="&quot;$(ProjectDir)$(IntDir)\$(InputName).obj&quot;"
 					/>
 				</FileConfiguration>
 			</File>
