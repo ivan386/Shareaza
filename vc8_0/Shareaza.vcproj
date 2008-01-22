@@ -4254,10 +4254,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\shareaza\Res\Splash.png"
-				>
-			</File>
-			<File
 				RelativePath="..\shareaza\Res\System.ico"
 				>
 			</File>
@@ -4328,43 +4324,6 @@
 			<File
 				RelativePath="..\shareaza\Res\SchemaMappings.xml.gz"
 				>
-			</File>
-			<File
-				RelativePath="Debugx64\shareaza\Shareaza_i.c"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|x64"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-						DisableSpecificWarnings="4255;4619;4668;4820;4826"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|x64"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="DebugWin32\shareaza\Shareaza_i.c"
@@ -4474,6 +4433,43 @@
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"
 						DisableSpecificWarnings="4255;4619;4668;4820;4826"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="Debugx64\shareaza\Shareaza_i.c"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|x64"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+						DisableSpecificWarnings="4255;4619;4668;4820;4826"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|x64"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
 					/>
 				</FileConfiguration>
 			</File>
