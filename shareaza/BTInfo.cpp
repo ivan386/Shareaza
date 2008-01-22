@@ -738,7 +738,7 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 
 		if ( ! pFiles->IsType( CBENode::beList ) ) return FALSE;
 		m_nFiles = pFiles->GetCount();
-		if ( ! m_nFiles || m_nFiles > 8192 ) return FALSE;
+		if ( ! m_nFiles || m_nFiles > 8192 * 8 ) return FALSE;
 		m_pFiles = new CBTFile[ m_nFiles ];
 		
 		m_nTotalSize = 0;
