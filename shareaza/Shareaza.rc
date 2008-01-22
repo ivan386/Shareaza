@@ -2486,7 +2486,7 @@ BEGIN
     CONTROL         "Flood protection:",IDC_IRC_FLOODENABLE,"Button",
                     BS_AUTOCHECKBOX | WS_TABSTOP,13,33,132,9
     EDITTEXT        IDC_IRC_FLOODLIMIT,23,46,26,12,ES_AUTOHSCROLL
-    LTEXT           "Lines per second.",IDC_STATIC,53,48,93,12
+    LTEXT           "lines per second",IDC_STATIC,53,48,93,12
     CONTROL         "Show timestamp",IDC_IRC_TIMESTAMP,"Button",
                     BS_AUTOCHECKBOX | WS_TABSTOP,14,62,132,9
     LTEXT           "Screen Font:",IDC_STATIC,14,75,132,11
