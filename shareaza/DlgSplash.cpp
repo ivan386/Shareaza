@@ -1,7 +1,7 @@
 //
 // DlgSplash.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -23,6 +23,7 @@
 #include "Shareaza.h"
 #include "Settings.h"
 #include "ImageServices.h"
+#include "ImageFile.h"
 #include "DlgSplash.h"
 #include "FragmentBar.h"
 
@@ -84,7 +85,11 @@ BOOL CSplashDlg::OnInitDialog()
 
 	CClientDC dcScreen( this );
 
-	CImageServices::LoadBitmap( &m_bmSplash, IDR_SPLASH, RT_PNG );
+	CImageFile pFile;
+	pFile.LoadFromFile( Settings.General.Path + L"\\Data\\Splash.png" );
+	pFile.EnsureRGB();
+	HBITMAP m_bmHandle = pFile.CreateBitmap();
+	m_bmSplash.Attach( m_bmHandle );
 
 	m_bmBuffer.CreateCompatibleBitmap( &dcScreen, SPLASH_WIDTH, SPLASH_HEIGHT );
 	m_dcBuffer1.CreateCompatibleDC( &dcScreen );

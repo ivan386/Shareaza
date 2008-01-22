@@ -3802,7 +3802,6 @@ IDR_LARGE_LOGO          JPEG                    "Res\\LogoLarge.jpg"
 
 IDR_HOME_HEADER_1       PNG                     "Res\\HomeHeader.1.png"
 IDR_HOME_HEADER_2       PNG                     "Res\\HomeHeader.2.png"
-IDR_SPLASH              PNG                     "Res\\Splash.png"
 
 /////////////////////////////////////////////////////////////////////////////
 //
