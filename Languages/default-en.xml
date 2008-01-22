@@ -3277,10 +3277,10 @@
 	</dialog>
 	<dialog name="CIRCSettingsPage" cookie="BuBuBuEdStBuStCoBuBuStBuStBuStBuStBuStBuStBuStEdStEdStEdStEdStEdStEd" caption="Chat">
 		<control caption="Client _Options:"/>
-		<control caption="Show chat  integration"/>
+		<control caption="Show chat integration"/>
 		<control caption="Flood protection:"/>
 		<control/>
-		<control caption="Lines per second."/>
+		<control caption="lines per second"/>
 		<control caption="Show timestamp"/>
 		<control caption="Screen Font:"/>
 		<control/>
