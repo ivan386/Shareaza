@@ -17,7 +17,7 @@
 		description="Shareaza Default Dutch Skin File"
 		link="http://shareaza.sourceforge.net/"
 		email="Neglacio@live.nl"
-		version="2.3.0.1"
+		version="2.3.1.1"
 		type="Language"
 		language="nl"
 		prompt="Klik hier om Nederlands als taal te kiezen."
@@ -3266,6 +3266,42 @@
 		<control caption="Chatten mogelijk maken op alle netwerken"/>
 		<control caption="Filter chatberichten op spam"/>
 		<control caption="Verberg scheldwoorden in chatberichten"/>
+	</dialog>
+	<dialog name="CIRCSettingsPage" cookie="BuBuBuEdStBuStCoBuBuStBuStBuStBuStBuStBuStBuStEdStEdStEdStEdStEdStEd" caption="IRC/Chat">
+		<control caption="Client _Opties:"/>
+		<control caption="Toon de chat integratie"/>
+		<control caption="Vloed verdediging:"/>
+		<control/>
+		<control caption="lijnen per seconde"/>
+		<control caption="Toon tijdsaanduiding"/>
+		<control caption="Scherm lettertype:"/>
+		<control/>
+		<control caption="_Kleuren:"/>
+		<control/>
+		<control caption="Server boodschappen"/>
+		<control/>
+		<control caption="Hoofdingen"/>
+		<control/>
+		<control caption="Kanaal acties"/>
+		<control/>
+		<control caption="Mededelingen"/>
+		<control/>
+		<control caption="Chat achtergrond"/>
+		<control/>
+		<control caption="Tekst"/>
+		<control caption="_Verbindingsinstellingen:"/>
+		<control caption="Pseudoniem:"/>
+		<control/>
+		<control caption="Gebruikersnaam:"/>
+		<control/>
+		<control caption="Alternatieve pseudoniem:"/>
+		<control/>
+		<control caption="Echte naam:"/>
+		<control/>
+		<control caption="Server:"/>
+		<control/>
+		<control caption="Poort:"/>
+		<control/>
 	</dialog>
 	<dialog name="CWebSettingsPage" cookie="BuStBuBuBuBuBuBuBuCoBuBuSt" caption="Internet">
 		<control caption="_Peer-To-Peer Snelkoppelingsverwerker:"/>
