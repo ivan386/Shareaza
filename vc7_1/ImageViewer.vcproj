@@ -433,115 +433,135 @@
 			Name="Generated Files"
 			Filter="">
 			<File
-				RelativePath="Debugx64\plugins\$(ProjectName)\Shareaza_i.c">
+				RelativePath=".\releasewin32\plugins\imageviewer\ImageViewer_i.c">
 				<FileConfiguration
 					Name="DebugWin32|Win32"
 					ExcludedFromBuild="TRUE">
 					<Tool
-						Name="VCCLCompilerTool"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="ReleaseWin32|Win32"
-					ExcludedFromBuild="TRUE">
-					<Tool
-						Name="VCCLCompilerTool"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Releasex64|Win32"
-					ExcludedFromBuild="TRUE">
-					<Tool
-						Name="VCCLCompilerTool"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debugx64|Win32">
-					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"
-						ObjectFile="$(IntDir)$(InputName)1.obj"/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="Releasex64\plugins\$(ProjectName)\Shareaza_i.c">
-				<FileConfiguration
-					Name="DebugWin32|Win32"
-					ExcludedFromBuild="TRUE">
-					<Tool
-						Name="VCCLCompilerTool"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="ReleaseWin32|Win32"
-					ExcludedFromBuild="TRUE">
-					<Tool
-						Name="VCCLCompilerTool"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Releasex64|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-						ObjectFile="$(IntDir)$(InputName)1.obj"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debugx64|Win32"
-					ExcludedFromBuild="TRUE">
-					<Tool
-						Name="VCCLCompilerTool"/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="DebugWin32\plugins\$(ProjectName)\Shareaza_i.c">
-				<FileConfiguration
-					Name="DebugWin32|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-						ObjectFile="$(IntDir)$(InputName)1.obj"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="ReleaseWin32|Win32"
-					ExcludedFromBuild="TRUE">
-					<Tool
-						Name="VCCLCompilerTool"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Releasex64|Win32"
-					ExcludedFromBuild="TRUE">
-					<Tool
-						Name="VCCLCompilerTool"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debugx64|Win32"
-					ExcludedFromBuild="TRUE">
-					<Tool
-						Name="VCCLCompilerTool"/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="ReleaseWin32\plugins\$(ProjectName)\Shareaza_i.c">
-				<FileConfiguration
-					Name="DebugWin32|Win32"
-					ExcludedFromBuild="TRUE">
-					<Tool
-						Name="VCCLCompilerTool"/>
+						ObjectFile="$(IntDir)/$(InputName)2.obj"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="ReleaseWin32|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"
-						ObjectFile="$(IntDir)$(InputName)1.obj"/>
+						ObjectFile="$(IntDir)/$(InputName)2.obj"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Releasex64|Win32"
 					ExcludedFromBuild="TRUE">
 					<Tool
-						Name="VCCLCompilerTool"/>
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+						ObjectFile="$(IntDir)/$(InputName)2.obj"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Debugx64|Win32"
 					ExcludedFromBuild="TRUE">
 					<Tool
-						Name="VCCLCompilerTool"/>
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+						ObjectFile="$(IntDir)/$(InputName)2.obj"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\releasex64\plugins\imageviewer\ImageViewer_i.c">
+				<FileConfiguration
+					Name="DebugWin32|Win32"
+					ExcludedFromBuild="TRUE">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+						ObjectFile="$(IntDir)/$(InputName)3.obj"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="ReleaseWin32|Win32"
+					ExcludedFromBuild="TRUE">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+						ObjectFile="$(IntDir)/$(InputName)3.obj"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Releasex64|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+						ObjectFile="$(IntDir)/$(InputName)3.obj"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debugx64|Win32"
+					ExcludedFromBuild="TRUE">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+						ObjectFile="$(IntDir)/$(InputName)3.obj"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\DebugWin32\plugins\ImageViewer\ImageViewer_i.c">
+				<FileConfiguration
+					Name="DebugWin32|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="ReleaseWin32|Win32"
+					ExcludedFromBuild="TRUE">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Releasex64|Win32"
+					ExcludedFromBuild="TRUE">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debugx64|Win32"
+					ExcludedFromBuild="TRUE">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\debugx64\plugins\imageviewer\ImageViewer_i.c">
+				<FileConfiguration
+					Name="DebugWin32|Win32"
+					ExcludedFromBuild="TRUE">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+						ObjectFile="$(IntDir)/$(InputName)1.obj"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="ReleaseWin32|Win32"
+					ExcludedFromBuild="TRUE">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+						ObjectFile="$(IntDir)/$(InputName)1.obj"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Releasex64|Win32"
+					ExcludedFromBuild="TRUE">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+						ObjectFile="$(IntDir)/$(InputName)1.obj"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debugx64|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+						ObjectFile="$(IntDir)/$(InputName)1.obj"/>
 				</FileConfiguration>
 			</File>
 		</Filter>
