@@ -3296,9 +3296,9 @@
 		<control caption="Susijungimo _nuostatos:"/>
 		<control caption="Slapyvardis:"/>
 		<control/>
-		<control caption="Prieigos vard.:"/>
+		<control caption="Prieigos vardas:"/>
 		<control/>
-		<control caption="Alternatyvus slap.:"/>
+		<control caption="Antras slapyvardis:"/>
 		<control/>
 		<control caption="Asmenvardis:"/>
 		<control/>
