@@ -17,7 +17,7 @@
 		description="Shareaza Default English Skin File"
 		link="http://shareaza.sourceforge.net/"
 		email="contact(at)shareaza(dot)com"
-		version="2.3.0.1"
+		version="2.3.1.1"
 		type="Language"
 		language="en"
 		prompt="Click here to select English as your natural language."
@@ -3274,6 +3274,42 @@
 		<control caption="Enable chat on all networks"/>
 		<control caption="Filter chat messages for spam"/>
 		<control caption="Censor profanity in chat"/>
+	</dialog>
+	<dialog name="CIRCSettingsPage" cookie="BuBuBuEdStBuStCoBuBuStBuStBuStBuStBuStBuStBuStEdStEdStEdStEdStEdStEd" caption="Chat">
+		<control caption="Client _Options:"/>
+		<control caption="Show chat  integration"/>
+		<control caption="Flood protection:"/>
+		<control/>
+		<control caption="Lines per second."/>
+		<control caption="Show timestamp"/>
+		<control caption="Screen Font:"/>
+		<control/>
+		<control caption="_Colors:"/>
+		<control/>
+		<control caption="Server messages"/>
+		<control/>
+		<control caption="Topics"/>
+		<control/>
+		<control caption="Channel Actions"/>
+		<control/>
+		<control caption="Notices"/>
+		<control/>
+		<control caption="Chat background"/>
+		<control/>
+		<control caption="Text"/>
+		<control caption="Connection _Settings:"/>
+		<control caption="Nickname:"/>
+		<control/>
+		<control caption="User name:"/>
+		<control/>
+		<control caption="Alternate Nickname:"/>
+		<control/>
+		<control caption="Real name:"/>
+		<control/>
+		<control caption="Server:"/>
+		<control/>
+		<control caption="Port:"/>
+		<control/>
 	</dialog>
 	<dialog name="CWebSettingsPage" cookie="BuStBuBuBuBuBuBuBuCoBuBuSt" caption="Web">
 		<control caption="_Peer to Peer Link Handling:"/>

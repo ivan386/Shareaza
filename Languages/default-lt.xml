@@ -17,7 +17,7 @@
 		description="Shareaza Default Lithuanian Skin File"
 		link="http://shareaza.sourceforge.net/"
 		email="rrol2002(at)hotmail(dot)com"
-		version="2.3.0.1"
+		version="2.3.1.1"
 		type="Language"
 		language="lt"
 		prompt="Paspauskite čia, jei Jūsų gimtoji kalba lietuvių."
@@ -3270,6 +3270,42 @@
 		<control caption="Įgalinti pokalbius visuose tinkluose"/>
 		<control caption="Filtruoti pokalbio tekstus nuo informacinių šiukšlių"/>
 		<control caption="Filtruoti nešvankybes pokalbiuose"/>
+	</dialog>
+	<dialog name="CIRCSettingsPage" cookie="BuBuBuEdStBuStCoBuBuStBuStBuStBuStBuStBuStBuStEdStEdStEdStEdStEdStEd" caption="Pokalbiai">
+		<control caption="_Kliento nuostatos:"/>
+		<control caption="Rodyti sąsajos integraciją"/>
+		<control caption="Srauto apsauga:"/>
+		<control/>
+		<control caption="Eilučių per sek."/>
+		<control caption="Rodyti laiką"/>
+		<control caption="Ekrano šriftas:"/>
+		<control/>
+		<control caption="_Spalvos:"/>
+		<control/>
+		<control caption="Serverio pranešimai"/>
+		<control/>
+		<control caption="Antraštės"/>
+		<control/>
+		<control caption="Kanalo veiksmai"/>
+		<control/>
+		<control caption="Pastabos"/>
+		<control/>
+		<control caption="Lango fonas"/>
+		<control/>
+		<control caption="Tekstas"/>
+		<control caption="Susijungimo _nuostatos:"/>
+		<control caption="Slapyvardis:"/>
+		<control/>
+		<control caption="Prieigos vard.:"/>
+		<control/>
+		<control caption="Alternatyvus slap.:"/>
+		<control/>
+		<control caption="Asmenvardis:"/>
+		<control/>
+		<control caption="Serveris:"/>
+		<control/>
+		<control caption="Prievadas:"/>
+		<control/>
 	</dialog>
 	<dialog name="CWebSettingsPage" cookie="BuStBuBuBuBuBuBuBuCoBuBuSt" caption="Žiniatinklis">
 		<control caption="_Lygiaverčio tarptinklinio ryšio nuorodos:"/>
