@@ -8,7 +8,7 @@
 <!-- Body element, don't touch -->
 <skin xmlns="http://www.shareaza.com/schemas/Skin.xsd" version="1.0">
   <!-- Manifest -->
-  <manifest name="عربي Arabic" author="Awadh A Al-Ghaamdi" updatedBy="Awadh A Al-Ghaamdi" description="Shareaza Default Arabic Skin File" link="http://www.shareaza.com/" email="awadh_al_ghaamdi@hotmail.com" version="2.3.0.1" type="Language" language="ar" prompt="Click here to select English as your natural language." dir="rtl" />
+  <manifest name="عربي Arabic" author="Awadh A Al-Ghaamdi" updatedBy="Awadh A Al-Ghaamdi" description="Shareaza Default Arabic Skin File" link="http://shareaza.sourceforge.net/" email="awadh_al_ghaamdi@hotmail.com" version="2.3.0.1" type="Language" language="ara" prompt="Click here to select English as your natural language." dir="rtl" />
   <!-- Toolbar Definitions -->
   <toolbars>
     <!-- MAIN WINDOW -->
@@ -68,7 +68,7 @@
       <button id="ID_SEARCH_DETAILS" text="إظهار التفاصيل" />
       <rightAlign />
       <label text="فرز:" tip="بعض الكلمات لفرز النتائج مع" />
-      <control id="107" width="130" />
+      <control id="IDC_FILTER_BOX" width="130" />
       <button id="ID_SEARCH_FILTER_RAW" text="المزيد..." />
     </toolbar>
     <toolbar name="CSearchWnd.Panel">
@@ -79,21 +79,21 @@
       <button id="ID_SEARCH_DETAILS" text="إظهار التفاصيل" />
       <rightAlign />
       <label text="فرز:" tip="بعض الكلمات لفرز النتائج مع" />
-      <control id="107" width="160" />
+      <control id="IDC_FILTER_BOX" width="160" />
       <button id="ID_SEARCH_FILTER_RAW" text="المزيد..." />
     </toolbar>
     <toolbar name="CSearchWnd.Full">
-      <button id="ID_SEARCH_DOWNLOAD" text="تحميل" />
-      <button id="ID_BROWSE_LAUNCH" text="معلومات عن المستخدم" />
+      <button id="ID_SEARCH_SEARCH" text="البحث ثانية ..." />
+      <button id="ID_SEARCH_STOP" text="إيقاف البحث" />
       <separator />
-      <button id="ID_SEARCH_SEARCH" text="البحث مره اخرى..." />
-      <button id="ID_SEARCH_STOP" text="إيقاف" />
+      <button id="ID_SEARCH_DOWNLOAD" text="تحميل" />
+      <button id="ID_BROWSE_LAUNCH" text="تصفح لمستخدم" />
       <separator />
       <button id="ID_SEARCH_PANEL" text="إظهار البحث" />
       <button id="ID_SEARCH_DETAILS" text="إظهار التفاصيل" />
       <rightAlign />
       <label text="فرز:" tip="بعض الكلمات لفرز النتائج مع" />
-      <control id="107" width="150" />
+      <control id="IDC_FILTER_BOX" width="150" />
       <button id="ID_SEARCH_FILTER_RAW" text="المزيد..." />
     </toolbar>
     <!--نافذة تصفج المضيف-->
@@ -283,9 +283,9 @@
       <button id="ID_MEDIA_STOP" text="إيقاف" />
       <separator />
       <label text="مسار العرض:" tip="انقل الؤشر الى المكان الذي تريد البدا منه" />
-      <control id="117" width="190" height="22" />
+      <control id="IDC_MEDIA_POSITION" width="190" height="22" />
       <label text="الصوت:" tip="ضبط التحكم بالصوت" />
-      <control id="119" width="50" height="22" />
+      <control id="IDC_MEDIA_VOLUME" width="50" height="22" />
       <separator />
       <button id="ID_MEDIA_OPEN" text="فتح ملف" />
       <rightAlign />
@@ -295,7 +295,7 @@
       <button id="ID_MEDIA_PLAYLIST" text="قائمة التشغيل" />
     </toolbar>
     <toolbar name="CMediaFrame">
-      <button id="ID_MEDIA_PLAY" text="تشغيل   " />
+      <button id="ID_MEDIA_PLAY" text="Play   " />
       <button id="ID_MEDIA_PAUSE" text="إيقاف مؤقت" visible="false" />
       <button id="ID_MEDIA_STOP" text="إيقاف" />
       <separator />
@@ -422,7 +422,7 @@
       <menu text="_شبكة">
         <item id="ID_NETWORK_CONNECT" text="_إتصال" shortcut="Ctrl+G" />
         <separator />
-        <menu text="إختر _الشبكات">
+        <menu text="تحديد _الشبكات">
           <item id="ID_NETWORK_G2" text="_الإتصال بـ Gnutella2" />
           <item id="ID_NETWORK_ED2K" text="_الإتصال بـ eDonkey2000" />
           <item id="ID_NETWORK_G1" text="الإتصال بـ Gnutella_1" />
@@ -449,19 +449,19 @@
         </menu>
         <separator />
         <item id="ID_VIEW_BASIC" text="_النمط العادي" />
-        <item id="ID_VIEW_TABBED" text="_النمط القوي" />
+        <item id="ID_VIEW_TABBED" text="_النمط المتقدم" />
       </menu>
       <menu text="_أدوات">
         <item id="ID_LIBRARY_FOLDERS" text="مشارك_ة الملفات..." />
         <item id="ID_TOOLS_DOWNLOAD" text="_تحميل ملف/Torrent..." />
         <separator />
-        <item id="ID_TOOLS_SKIN" text="إختر الغلا_ف..." />
-        <item id="ID_TOOLS_LANGUAGE" text="إختر ال_لغة..." />
+        <item id="ID_TOOLS_SKIN" text="تحديد الغلا_ف..." />
+        <item id="ID_TOOLS_LANGUAGE" text="تحديد ال_لغة..." />
         <separator />
-        <item id="ID_TOOLS_SKIN" text="إختر م_ظهر..." />
-        <item id="ID_TOOLS_LANGUAGE" text="إختر _ اللغه..." />
+        <item id="ID_TOOLS_SKIN" text="تحديد غ_لاف..." />
+        <item id="ID_TOOLS_LANGUAGE" text="تحديد _ اللغه..." />
         <separator />
-        <item id="ID_TOOLS_SETTINGS" text="_إعدادات Shareaza ..." />
+        <item id="ID_TOOLS_SETTINGS" text="إ_عدادات Shareaza" />
       </menu>
       <menu text="_تعليمات">
         <item id="ID_HELP_FAQ" text="مستخدمي _دليل Shareaza" />
@@ -478,10 +478,10 @@
           <item id="ID_HELP_HOMEPAGE" text="_Shareaza.com" />
           <separator />
           <item id="ID_HELP_FORUMS" text="_منتديات Shareaza" />
-          <item id="ID_HELP_UPDATE" text="آخر الأخبار" />
-          <item id="ID_HELP_WEB_1" text="Zeropaid.com" />
-          <item id="ID_HELP_WEB_2" text="P2PForums.com" /> --&gt;
-			</menu>
+          <!-- <item id="ID_HELP_UPDATE" text="آخر الأخبار"/>
+          <item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
+				<item id="ID_HELP_WEB_2" text="P2PForums.com"/> -->
+        </menu>
         <separator />
         <item id="ID_HELP_ABOUT" text="_معلومات عن Shareaza ..." />
       </menu>
@@ -491,7 +491,7 @@
         <item id="ID_NETWORK_CONNECT" text="_إتصال" shortcut="Ctrl+G" />
         <item id="ID_NETWORK_DISCONNECT" text="_قطع الإتصال" />
         <separator />
-        <menu text="إختر _الشبكات">
+        <menu text="تحديد _الشبكات">
           <item id="ID_NETWORK_G2" text="_الإتصال بـ Gnutella2" />
           <item id="ID_NETWORK_ED2K" text=" _الإتصال بـ eDonkey2000" />
           <item id="ID_NETWORK_G1" text="الإتصال بـ Gnutella_1" />
@@ -527,7 +527,7 @@
           <item id="ID_VIEW_DISCOVERY" text="اكت_شاف" shortcut="F9" />
           <item id="ID_VIEW_TRAFFIC" text="_مخطط" shortcut="F10" />
           <separator />
-          <item id="ID_VIEW_PACKETS" text="_Packet Dump" shortcut="Ctrl+F1" />
+          <item id="ID_VIEW_PACKETS" text="_تفريغ الحزمة" shortcut="Ctrl+F1" />
           <item id="ID_VIEW_SEARCH_MONITOR" text="شا_شة البحث" shortcut="Ctrl+F2" />
           <item id="ID_VIEW_RESULTS_MONITOR" text="ا_ختر شاشة" shortcut="Ctrl+F3" />
         </menu>
@@ -542,13 +542,13 @@
         <item id="IDC_IMPORT_DOWNLOADS" text="_إستيراد تحميلات eMule الجزئية" />
         <item id="ID_OPEN_DOWNLOADS_FOLDER" text="_فتح مجلدي للتحميلات المكتملة" />
         <separator />
-        <item id="ID_TOOLS_SKIN" text="إختر م_ظهر..." />
-        <item id="ID_TOOLS_LANGUAGE" text="إختر _ اللغه..." />
+        <item id="ID_TOOLS_SKIN" text="تحديد غ_لاف..." />
+        <item id="ID_TOOLS_LANGUAGE" text="تحديد _ اللغه..." />
         <separator />
         <item id="ID_TOOLS_PROFILE" text="تحرير _ملفي الخاص..." />
-        <item id="ID_TOOLS_WIZARD" text="تشغيل سريع _للمعالج..." />
+        <item id="ID_TOOLS_WIZARD" text="_معالج البدء السريع..." />
         <separator />
-        <item id="ID_TOOLS_SETTINGS" text="إعدادات _Shareaza..." />
+        <item id="ID_TOOLS_SETTINGS" text="إ_عدادات Shareaza" />
       </menu>
       <menu text="_نافذة">
         <item id="ID_WINDOW_NAVBAR" text="عرض _عامود التصفح" />
@@ -573,7 +573,7 @@
           <item id="ID_HELP_HOMEPAGE" text="_Shareaza.com" />
           <separator />
           <item id="ID_HELP_FORUMS" text="_منتديات Shareaza" />
-          <!-- <item id="ID_HELP_UPDATE" text="Latest news"/>
+          <!-- <item id="ID_HELP_UPDATE" text="آخر الأخبار"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
 				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
 			</menu>
@@ -591,7 +591,7 @@
 			<item id="ID_NETWORK_CONNECT_TO" text="الإتصال _بـ..." shortcut="Ctrl+T"/>
 			<item id="ID_NETWORK_BROWSE_TO" text="_إستعراض المضيف..."/>
 			<separator/>
-			<menu text="إختر _الشبكات">
+			<menu text="تحديد _الشبكات">
 				<item id="ID_NETWORK_G2" text="_Gnutella2 الإتصال بـ"/>
 				<item id="ID_NETWORK_ED2K" text="_eDonkey2000 الإتصال بـ "/>
 				<item id="ID_NETWORK_G1" text="Gnutella_1 الإتصال بـ "/>
@@ -613,7 +613,7 @@
 			<item id="ID_VIEW_DISCOVERY" text="اكت_شاف" shortcut="F9"/>
 			<item id="ID_VIEW_TRAFFIC" text="_مخطط" shortcut="F10"/>
 			<separator/>
-			<item id="ID_VIEW_PACKETS" text="_Packet Dump" shortcut="Ctrl+F1"/>
+			<item id="ID_VIEW_PACKETS" text="_تفريغ الحزمة" shortcut="Ctrl+F1"/>
 			<item id="ID_VIEW_SEARCH_MONITOR" text="شا_شة البحث" shortcut="Ctrl+F2"/>
 			<item id="ID_VIEW_RESULTS_MONITOR" text="ا_ختر شاشة" shortcut="Ctrl+F3"/>
 			<separator/>
@@ -627,13 +627,13 @@
 			<item id="IDC_IMPORT_DOWNLOADS" text="_إستيراد تحميلات eMule الجزئية"/>
 			<item id="ID_OPEN_DOWNLOADS_FOLDER" text="_فتح مجلدي للتحميلات المكتملة"/>
 			<separator/>
-			<item id="ID_TOOLS_SKIN" text="إختر م_ظهر..."/>
-			<item id="ID_TOOLS_LANGUAGE" text="إختر _ اللغه..."/>
+			<item id="ID_TOOLS_SKIN" text="تحديد غ_لاف..."/>
+			<item id="ID_TOOLS_LANGUAGE" text="تحديد _ اللغه..."/>
 			<separator/>
 			<item id="ID_TOOLS_PROFILE" text="تحرير _ملفي الخاص..."/>
 			<separator/>
-			<item id="ID_TOOLS_WIZARD" text="تشغيل سريع _للمعالج..."/>
-			<item id="ID_TOOLS_SETTINGS" text="_Shareaza إعدادات..."/>
+			<item id="ID_TOOLS_WIZARD" text="_معالج البدء السريع..."/>
+			<item id="ID_TOOLS_SETTINGS" text="إ_عدادات Shareaza"/>
 		</menu>
 		<menu text="_نافذة">
 			<item id="ID_WINDOW_CASCADE" text="_شاشة كاملة"/>
@@ -698,7 +698,7 @@
       <item id="ID_VIEW_DISCOVERY" text="اكت_شاف" />
       <item id="ID_VIEW_TRAFFIC" text="_مخطط" />
       <separator />
-      <item id="ID_VIEW_PACKETS" text="_Packet Dump" />
+      <item id="ID_VIEW_PACKETS" text="_تفريغ الحزمة" />
       <item id="ID_VIEW_SEARCH_MONITOR" text="شا_شة البحث" />
       <item id="ID_VIEW_RESULTS_MONITOR" text="ا_ختر شاشة" />
     </menu>
@@ -717,7 +717,7 @@
       <item id="ID_VIEW_DISCOVERY" text="اكت_شاف" />
       <item id="ID_VIEW_TRAFFIC" text="_مخطط" />
       <separator />
-      <item id="ID_VIEW_PACKETS" text="_Packet Dump" />
+      <item id="ID_VIEW_PACKETS" text="_تفريغ الحزمة" />
       <item id="ID_VIEW_SEARCH_MONITOR" text="شا_شة البحث" />
       <item id="ID_VIEW_RESULTS_MONITOR" text="ا_ختر شاشة" />
     </menu>
@@ -783,7 +783,7 @@
       <item id="ID_VIEW_DISCOVERY" text="اكت_شاف" />
       <item id="ID_VIEW_TRAFFIC" text="_مخطط" />
       <separator />
-      <item id="ID_VIEW_PACKETS" text="_Packet Dump" />
+      <item id="ID_VIEW_PACKETS" text="_تفريغ الحزمة" />
       <item id="ID_VIEW_SEARCH_MONITOR" text="شا_شة البحث" />
       <item id="ID_VIEW_RESULTS_MONITOR" text="ا_ختر شاشة" />
     </menu>
@@ -1167,7 +1167,7 @@
         <item id="ID_LIBRARY_COPY" text="_نسخ ملفات..." />
       </menu>
       <item id="ID_LIBRARY_REBUILD_ANSI" text="_توطين ملف تعريف" />
-      <item id="ID_LIBRARY_REFRESH_METADATA" text="_Refresh Metadata" />
+      <item id="ID_LIBRARY_REFRESH_METADATA" text="تحديث بيانات التعريف" />
       <separator />
       <item id="ID_LIBRARY_COLUMNS" text="أختيار الا_عمدة..." />
       <separator />
@@ -1204,7 +1204,7 @@
         <item id="ID_LIBRARY_COPY" text="_نسخ ملفات..." />
       </menu>
       <item id="ID_LIBRARY_REBUILD_ANSI" text="_توطين ملف تعريف" />
-      <item id="ID_LIBRARY_REFRESH_METADATA" text="_Refresh Metadata" />
+      <item id="ID_LIBRARY_REFRESH_METADATA" text="_تحديث بيانات التعريف" />
       <separator />
       <item id="ID_LIBRARY_PROPERTIES" text="_خصائص" />
     </menu>
@@ -1239,7 +1239,7 @@
         <item id="ID_LIBRARY_COPY" text="_نسخ ملفات..." />
       </menu>
       <item id="ID_LIBRARY_REBUILD_ANSI" text="_توطين ملف تعريف" />
-      <item id="ID_LIBRARY_REFRESH_METADATA" text="_Refresh Metadata" />
+      <item id="ID_LIBRARY_REFRESH_METADATA" text="_تحديث بيانات التعريف" />
       <separator />
       <item id="ID_LIBRARY_COLUMNS" text="أختيار الا_عمدة..." />
       <separator />
@@ -1275,7 +1275,7 @@
         <item id="ID_MEDIA_FULLSCREEN" text="_شاشة كاملة" />
       </menu>
       <menu text="إعدادات">
-        <item id="ID_MEDIA_VIS" text="إختر _المرئيات..." />
+        <item id="ID_MEDIA_VIS" text="تحديد _المرئيات..." />
         <separator />
         <item id="ID_MEDIA_PLAYLIST" text="إظهار _قائمة التشغيل" />
         <item id="ID_MEDIA_STATUS" text="عرض شريط_ الحالة" />
@@ -1313,7 +1313,7 @@
         <item id="ID_MEDIA_FULLSCREEN" text="_شاشة كاملة" />
       </menu>
       <menu text="إعدادات">
-        <item id="ID_MEDIA_VIS" text="إختر _المرئيات..." />
+        <item id="ID_MEDIA_VIS" text="تحديد _المرئيات..." />
         <separator />
         <item id="ID_MEDIA_PLAYLIST" text="إظهار _قائمة التشغيل" />
         <item id="ID_MEDIA_STATUS" text="عرض شريط_ الحالة" />
@@ -1401,7 +1401,7 @@
     </menu>
     <!-- GRAPH/TRAFFIC WINDOW -->
     <menu name="CTrafficWnd">
-      <item id="ID_TRAFFIC_SETUP" text="_إختر المخطط..." />
+      <item id="ID_TRAFFIC_SETUP" text="_تحديد المخطط..." />
       <separator />
       <item id="ID_TRAFFIC_GRID" text="_خطوط شبكية" />
       <item id="ID_TRAFFIC_AXIS" text="_المحور" />
@@ -1424,7 +1424,7 @@
       <item id="ID_SECURITY_IMPORT" text="_استيراد..." />
       <item id="ID_SECURITY_EXPORT" text="ت_صدير..." />
       <separator />
-      <menu text="Default P_olicy">
+      <menu text="ال_سياسة الإفتراضية">
         <item id="ID_SECURITY_POLICY_ACCEPT" text="_قبول" />
         <item id="ID_SECURITY_POLICY_DENY" text="_رفض" />
       </menu>
@@ -1487,19 +1487,19 @@
     <!-- Home View -->
     <document name="CHomeViewCtrl" leftMargin="16" topMargin="0">
       <styles>
-        <style name="default">
+        <style name="الإفتراضي">
           <font face="Tahoma" size="12" />
         </style>
         <style name="default">
           <font face="Tahoma" size="16" weight="800" />
         </style>
       </styles>
-      <anchor id="Header" width="32" height="172" />
+      <anchor id="المقدمة" width="32" height="172" />
       <newline gap="0" />
       <group id="1">
         <icon res="130" width="32" height="32" target="raza:command:ID_NETWORK_CONNECT" />
         <gap size="8" />
-        <heading align="middle">كن متصلا</heading>
+        <heading align="middle">كـن على إتـصـال</heading>
         <newline gap="8" indent="42" />
         <text>مرحبا مع Shareaza</text>
         <newline gap="8" indent="42" />
@@ -1509,15 +1509,14 @@
       </group>
       <group id="2">
         <icon res="136" width="32" height="32" target="raza:command:ID_TOOLS_DOWNLOAD" />
-        <gap size="8" />
         <heading align="middle"> ابدأ التحميل </heading>
         <newline gap="8" indent="42" />
         <link target="raza:command:ID_TOOLS_DOWNLOAD" format="bu">أنقر هنا لتبدأ</link>
-        <text align="middle">  في تحميل ملف جديد أو ملف torrent .</text>
+        <text align="middle">   - حمل ملف جديد أو حمل ملف torrent .</text>
         <newline gap="24" indent="0" />
         <icon res="134" width="32" height="32" target="raza:command:ID_TAB_SEARCH" />
         <gap size="8" />
-        <heading align="middle">أبحث عن أي ملف</heading>
+        <heading align="middle">إبــحــث عــن مــلــف</heading>
         <newline gap="8" indent="42" />
         <anchor id="SearchBox" width="256" height="80" />
         <newline gap="12" indent="0" />
@@ -1527,7 +1526,7 @@
         <gap size="8" />
         <heading align="middle">ملاحظة عن الترقية</heading>
         <newline gap="8" indent="42" />
-        <text id="Upgrade" />
+        <text id="ترقية" />
         <newline gap="6" />
         <link target="raza:upgrade">اضغط هنا للتحديث</link>
         <newline gap="18" indent="0" />
@@ -1537,10 +1536,11 @@
         <gap size="8" />
         <heading align="middle">تـــحـــذيـــر - أنـــت خـــلـــف جـــدار نـــاري</heading>
         <newline gap="8" indent="42" />
-        <text colour="FF0000">وجود جدار ناري و شير-ازا غير قادر على إستقبال الملفات </text>
-        <text colour="FF0000" format="b"> - قد يؤدي ذلك إلى بطء التحميل</text>
+        <text colour="FF0000">إكتشف Shareaza أنك خلف جهاز توجيه NAT أو جدار ناري ،
+			و لذلك يتعذر إستقبال الإتصالات من الإنترنت .  </text>
+        <text colour="FF0000" format="b">قد يسبب هذا ضعف في التحميل و ضعف في عملية البحث .</text>
         <newline gap="6" />
-        <link target="raza:command:ID_HELP_FIREWALLS">اضغط هنا لتتعلم عن كيفية التعامل مع جدار الحماية</link>
+        <link target="raza:command:ID_HELP_ROUTER">إنقر هنا لتتعلم عن كيفية تكوين جهاز الوجيه الخاص بك أو الجدار الناري</link>
         <newline gap="18" indent="0" />
       </group>
       <group id="6">
@@ -1574,17 +1574,17 @@
       <icon res="237" width="32" height="32" target="raza:command:ID_TOOLS_SKIN" />
       <gap size="8" />
       <link target="raza:command:ID_TOOLS_SKIN" format="bu" align="middle">الغلافات</link>
-      <text align="middle">  أنقر هنا لتغيير شكل Shareaza ................ ترجمة الأستاذ عوض الغامدي</text>
+      <text align="middle"> - تغيير غلاف Shareaza و سمته</text>
       <newline gap="8" />
       <icon res="236" width="32" height="32" target="raza:command:ID_TOOLS_WIZARD" />
       <gap size="8" />
       <link target="raza:command:ID_TOOLS_WIZARD" format="bu" align="middle">معالج الإعدادات</link>
-      <text align="middle">  إعدادات Shareaza</text>
+      <text align="middle"> - تحرير إعدادات Shareaza</text>
       <newline gap="8" />
       <icon res="147" width="32" height="32" target="raza:command:ID_HELP_FAQ" />
       <gap size="8" />
       <link target="raza:command:ID_HELP_FAQ" format="bu" align="middle">تعليمات سريعة</link>
-      <text align="middle">  إحصل على تعليمات سريعة حول إستخدام Shareaza</text>
+      <text align="middle"> - أحصل على بعض التعليمات الأساسية عن Shareaza</text>
       <newline gap="18" indent="0" />
       <group id="5">
         <icon res="128" width="32" height="32" />
@@ -1594,7 +1594,7 @@
         <text>إن الدخول عن بعد لهذا البرنامج هو قي وضع التمكين . قم بالتحكم بهذا البرنامج مستخدما متصفحك على :</text>
         <newline gap="6" />
         <link id="RemoteAccessURL1" />
-        <text> - أو - </text>
+        <text> - or - </text>
         <link id="RemoteAccessURL2" />
         <newline gap="16" indent="0" />
       </group>
@@ -1742,12 +1742,12 @@
       <text format="b">اهلا بك في مدير إعدادات Shareaza</text>
       <newline gap="16" />
       <text>
-			The Shareaza Settings Manager allows advanced users to completely customise how
-			Shareaza works. The settings in the 
+			يسمح مدير إعدادات Shareaza للمستخدمين المتقدمين بالتخصيص كيفية عمل
+			بالكامل . الإعدادات في قسم
 		</text>
-      <text format="b">General </text>
+      <text format="b">عام</text>
       <text>
-			section relate to the user experience.
+			يتعلق بتجربة المستخدم
 		</text>
       <newline gap="16" indent="16" />
       <link target="raza:page:CGeneralSettingsPage" format="b">عام:</link>
@@ -1781,17 +1781,17 @@
       <newline gap="16" />
       <text>
 			يسمح مدير إعدادات شير-أزا للمستخدمين المتقدمين بتخصيص كيفية
-			عمل شير-أزا بالكامل . الإعدادات في 
+			عمل شير-أزا بالكامل . الإعدادات في قسم
 </text>
       <text format="b">انترنت </text>
       <text>
-			section control how Shareaza interacts with other nodes within distributed peer-to-peer
-			networks.
+			للتحكم بكيفية تفاعل Shareaza مع العقد الأخرى ضمن شبكة نظير إلى
+			إلى نظير
 		</text>
       <newline gap="16" indent="16" />
-      <link target="raza:page:CConnectionSettingsPage" format="b">Connection:</link>
+      <link target="raza:page:CConnectionSettingsPage" format="b">الإتصال :</link>
       <gap size="4" />
-      <text>The speeds and capabilities of your Internet connection.</text>
+      <text>السرعة و إمكانات الإتصال بالإنترنت</text>
       <newline gap="10" />
       <link target="raza:page:CDownloadsSettingsPage" format="b">مكتبة الملفات:</link>
       <gap size="4" />
@@ -1806,7 +1806,7 @@
       <text>عملية القدرة للتحكم بالبرنامج عن بعد من خلال المتصفح الخاص بك</text>
       <newline gap="10" />
     </document>
-    <!-- Browse User Profile -->
+    <!--تصفح وضعية المستخدم-->
     <document name="CBrowseHostProfile.1">
       <heading id="اللقب" />
       <heading>ملفي الخاص</heading>
@@ -1891,7 +1891,7 @@
       <text format="b">ملفات المشاركة</text>
       <newline gap="4" indent="8" />
       <icon res="137" target="raza:command:ID_BROWSE_FILES" />
-      <link target="raza:command:ID_BROWSE_FILES" align="middle">View Shared Files</link>
+      <link target="raza:command:ID_BROWSE_FILES" align="middle">عرض الملفات المشاركة</link>
       <group id="2">
         <newline gap="16" indent="0" />
         <text format="b">المنتديات</text>
@@ -1909,7 +1909,7 @@
     </document>
     <!-- Download help documents -->
     <document name="DownloadHelp.Select">
-      <text format="b">Downloads Area</text>
+      <text format="b">منطقة التحميل</text>
       <newline gap="8" />
       <text>هذا هو مكان الملفات المحملة حاليا حيث يتم عرضها . يمكنك عرض
 		المصادر الفردية بتوسيع كل ملف بالعلامة + الصغيرة على اليسار</text>
@@ -2112,8 +2112,7 @@
       <newline gap="8" />
       <text>للبحث عن إمتدادات الملفات المشتركة
  (و الأعداد) يجب
-أن تدخل شروط أخرى أيضا مثل الفواصل و علامات
-التنقيط و كلمات البدل</text>
+أن تدخل شروط أخرى أيضا مثل الفواصل و علامات التنقيط و كلمات البدل</text>
     </document>
     <document name="SearchHelp.BadSearch3">
       <text format="b">الرجاء إعادة كتابة عبارة البحث</text>
@@ -2137,8 +2136,8 @@
 التي تحتوي على أمور للبالغين . علما أن ذلك الخيار مغلق في الإعدادات
 يجب أن تعيذ صياغة العبارة أو تقوم بتعطيل المرشح</text>
       <newline gap="8" />
-      <text>لتعطيل المرشح ، أنتقل إلى أدوات &gt; إعدادات &gt; عام
-ثم أزل التأشير من مرشح محتوى البالغين</text>
+      <text>لتعطيل المرشح ، أنتقل إلى أدوات &gt; إعدادات &gt; عام ثم قم بتأشير
+		مرشح المحتوى للبالغين</text>
     </document>
     <!-- Share help documents -->
     <document name="ShareHelp.AlreadyShared">
@@ -2154,8 +2153,14 @@
       <text>هذا المجلد يحتوي على ملفات للنظام أو أن المجلد نفسه للنظام
 يستحسن عدم المشاركة به بما أن أعلب الملفات التي فيه الناس في غنى عنها</text>
       <newline gap="8" />
-      <text>The Shareaza 'incomplete' folder should also not be shared through the
-		library, since attempting to hash downloads in progress may impact on performance.</text>
+      <text>المجلدات مثل مجلد Windows و Program Files و المجلدات المماثلة
+		لا تحتوي عادة على ملفات مناسب للمشاركة . أي ملفات مثيرة للإهتمام ستكون
+		في المجلدات الفرعية</text>
+      <text format="i">في داخلها</text>
+      <text>حيث أن هذه المجلدات يمكن المشاركة بها بدلا من ذلك</text>
+      <newline gap="8" />
+      <text>مجلد Shareaza 'للغير مكتملة' يجب أن أيضا عدم المشاركة به من خلال
+		المكتبة ، لأن تجزئة التحميلات مستمر مما قد يؤثر على الأداء</text>
     </document>
   </documents>
   <!-- Localised Command Tip Text.  The "message" is displayed in the status bar, while the "tip" is shown in a tooltip -->
@@ -2479,43 +2484,43 @@
     <string id="WINDOW_MAIN" value="Shareaza" />
     <string id="WINDOW_SYSTEM" value="نظام" />
     <string id="WINDOW_NEIGHBOURS" value="الإتصالات المجاوره" />
-    <string id="WINDOW_PACKET" value="Packet Dump" />
-    <string id="WINDOW_HOSTCACHE" value="Host Cache" />
-    <string id="WINDOW_SEARCHMONITOR" value="Search Monitor" />
-    <string id="WINDOW_SEARCH" value="Search" />
-    <string id="WINDOW_HITMONITOR" value="Hit Monitor" />
-    <string id="WINDOW_DOWNLOADS" value="Downloads" />
-    <string id="WINDOW_LIBRARY" value="Library" />
-    <string id="WINDOW_UPLOADS" value="Uploads" />
-    <string id="WINDOW_TRAFFIC" value="Graph" />
-    <string id="WINDOW_CHAT" value="Chat" />
-    <string id="WINDOW_SECURITY" value="Security" />
-    <string id="WINDOW_DISCOVERY" value="Discovery Services" />
-    <string id="WINDOW_BROWSEHOST" value="Browse" />
-    <string id="WINDOW_HOME" value="Shareaza Home" />
+    <string id="WINDOW_PACKET" value="تفريغ الحزمة" />
+    <string id="WINDOW_HOSTCACHE" value="مخزون المضيف المؤقت" />
+    <string id="WINDOW_SEARCHMONITOR" value="مراقبة البحث" />
+    <string id="WINDOW_SEARCH" value="بحث" />
+    <string id="WINDOW_HITMONITOR" value="مراقبة النقرات" />
+    <string id="WINDOW_DOWNLOADS" value="التحميلات" />
+    <string id="WINDOW_LIBRARY" value="المكتبة" />
+    <string id="WINDOW_UPLOADS" value="عمليات الإرسال" />
+    <string id="WINDOW_TRAFFIC" value="المخطط" />
+    <string id="WINDOW_CHAT" value="محادثة" />
+    <string id="WINDOW_SECURITY" value="الأمان" />
+    <string id="WINDOW_DISCOVERY" value="خدمات الإكتشاف" />
+    <string id="WINDOW_BROWSEHOST" value="تصفح" />
+    <string id="WINDOW_HOME" value="موقع Shareaza ـــــــــــــــــــــــــ ترجمة الأستاذ عوض الغامدي" />
     <string id="WINDOW_MEDIA" value="Media Player" />
-    <string id="WINDOW_SEARCHPAD" value="Search" />
-    <string id="WINDOW_HELP" value="Shareaza Help" />
-    <string id="7000" value="Are you sure you want to delete this filter ?" />
-    <string id="7001" value="&amp;Schemas" />
-    <string id="7002" value="Multiple Values" />
-    <string id="7003" value="Multiple" />
-    <string id="7004" value="There already is a filter called &quot;%s&quot;, do you want to replace it?" />
-    <string id="7005" value="Please give your filter a name." />
-    <string id="7100" value="This template is invalid." />
-    <string id="7101" value="This template does not have any customizations." />
-    <string id="7102" value="Are you sure you want to delete the &quot;%s&quot; template?\nThis cannot be undone." />
-    <string id="8000" value="Shareaza Settings" />
-    <string id="8001" value="Welcome to Shareaza" />
-    <string id="8002" value="File Properties" />
-    <string id="8003" value="Edit My Profile" />
-    <string id="8004" value="!Welcome to Shareaza (version) !\n.\nShareaza is completely free software.\nPlease use it responsibly and respect intellectual property law.\n." />
-    <string id="8005" value=" (closing after transfers)" />
-    <string id="8006" value="You're not connected.  Click the Connect button to get started." />
-    <string id="8007" value="There are no active searches.  Click here to search for files." />
-    <string id="8008" value="Shareaza has finished downloading the next Shareaza version (%s).  Would you like to upgrade now?\n\nIf you select Yes, Shareaza will close temporarily while the upgrade is installed." />
-    <string id="8009" value="Are you sure you want to delete the &quot;%s&quot; skin?  This cannot be undone." />
-    <string id="8010" value="This is a pre-release version of Shareaza, and the beta testing period has ended. Please download the full, official release from http://shareaza.sourceforge.net/." />
+    <string id="WINDOW_SEARCHPAD" value="بحث" />
+    <string id="WINDOW_HELP" value="تعليمات Shareaza" />
+    <string id="7000" value="هل تريد فعلا حذف هذا المرشح ؟" />
+    <string id="7001" value="ال&amp;مخطط" />
+    <string id="7002" value="قيم متعددة" />
+    <string id="7003" value="متعددة" />
+    <string id="7004" value="هناك مرشح بالإسم &quot;%s&quot; ، هل تريد إستبداله ؟" />
+    <string id="7005" value="الرجاء وضع إسم للمرشح" />
+    <string id="7100" value="هذا القالب غير صالح" />
+    <string id="7101" value="لا يوجد في هذا القالب أي تخصيص" />
+    <string id="7102" value="هل تريد فعلا حذف قالب &quot;%s&quot; ؟\nهذا لا يمكن التراجع عنه" />
+    <string id="8000" value="إعدادات شير-أزا" />
+    <string id="8001" value="مرحبا بك مع Shareaza" />
+    <string id="8002" value="خصائص الملف" />
+    <string id="8003" value="تحرير وضعيتي" />
+    <string id="8004" value="مرحبا بكم في Shareaza (version)\n.\nShareaza هو بالكامل برنامج مجاني\nالرجاء إستعماله باحترام لقانون حقوق الملكية الفكرية و العقلية\n."></string>
+    <string id="8005" value="(الإغلاق بعد عمليات النقل)" />
+    <string id="8006" value="أنت غير متصل . أنقر زر إتصال لتبدأ" />
+    <string id="8007" value="ليس هناك عمليات بحث نشطة . أنقر هنا للبحث عن ملفات" />
+    <string id="8008" value="أنتهى Shareaza من تحميل نسخة Shareaza التالية (%s) . هل تريد الترقية الآن ؟\n\nعند إختيار نعم ، Shareaza سيغلق بشكل مؤقت حتى يتم تثبيت الترقية" />
+    <string id="8009" value="هل تريد فعلا حذف غلاف &quot;%s&quot; ؟ هذا لا يمكن التراجع عنه" />
+    <string id="8010" value="هذا هي نسخة مبدئية من Shareaza ، و قد أنتهت فترة الإختبار لها . الرجاء حمل الإطلاق الرسمي الكامل من http://shareaza.sourceforge.net/." />
     <string id="8011" value="Changing view will close any windows you have open.  Would you like to change now?" />
     <string id="8012" value="Torrent Information" />
     <string id="8060" value="Hub/Ultrapeer mode with %lu neighbour(s).  %s in local library." />
@@ -3200,7 +3205,7 @@
   </strings>
   <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
   <dialogs>
-    <dialog name="CSettingSheet" cookie="SyBuBuBu#3" caption="Shareaza Settings">
+    <dialog name="CSettingSheet" cookie="SyBuBuBu#3" caption="إعدادات شير-أزا">
       <control />
       <control caption="حسنا" />
       <control caption="إلغاء الأمر" />
@@ -3208,394 +3213,394 @@
       <control />
     </dialog>
     <dialog name="CGeneralSettingsGroup" cookie="" caption="عام" />
-    <dialog name="CGeneralSettingsPage" cookie="BuBuBuBuStCoBuBuBuBuBuBuBuBuBuSyStEdmsStmsBuStCoStCo" caption="General">
-      <control caption="_General:" />
-      <control caption="Auto-connect on Shareaza startup" />
-      <control caption="Start Shareaza at Windows startup" />
-      <control caption="Show a prompt before opening URIs" />
-      <control caption="Show rates in:" />
-      <control caption="bits/second|bytes/second|b/s|B/s|Kb/s|KB/s|Mb/s|MB/s" />
-      <control caption="_Downloads:" />
-      <control caption="Expand new downloads by default" />
-      <control caption="Display simple progress bar" />
-      <control caption="_Search:" />
-      <control caption="Expand multi-source files by default" />
-      <control caption="Switch to Transfers view on download" />
-      <control caption="Hide side bar when starting search" />
-      <control caption="Filter adult content from searches" />
-      <control caption="T_ooltips:" />
+    <dialog name="CGeneralSettingsPage" cookie="BuBuBuBuStCoBuBuBuBuBuBuBuBuBuSyStEdmsStmsBuStCoStCo" caption="عام">
+      <control caption=":_عام" />
+      <control caption="Shareaza إتصال تلقائي عند بدء تشغيل" />
+      <control caption="Windows مع بدء الـ Shareaza تشغيل" />
+      <control caption="إظهار مطالبة قبل فتح الروابط" />
+      <control caption="إظهار التصنيفات بـ" />
+      <control caption="بت/ثانية|بايت/ثانية|بت/ث|ب/ث|كبت/ث|كب/ث|مبت/ث|مب/ث" />
+      <control caption=":_التحميلات" />
+      <control caption="توسيع التحميلات الجديدة إفتراضيا" />
+      <control caption="عرض شريط تقدم بسيط" />
+      <control caption="_بحث:" />
+      <control caption="توسيع الملفات المتعددة المصادر إفتراضيا" />
+      <control caption="التبديل إلى عرض عمليات النقل مع التحميل" />
+      <control caption="إخفاء الشريط الجانبي عند بدء البحث" />
+      <control caption="فرز مواد البالغين من عمليات البحث" />
+      <control caption=":الت_لميحات" />
       <control />
-      <control caption="Delay (ms):" />
+      <control caption=":(التأخر (مث" />
       <control />
       <control />
-      <control caption="Opacity:" />
+      <control caption=":العتامة" />
       <control />
-      <control caption="_Tray:" />
-      <control caption="When I click close:" />
-      <control caption="Ask Me|Close Immediately|Minimise to Tray|Close After Transfers" />
-      <control caption="When I click minimise:" />
-      <control caption="Normal|Minimise to Tray" />
+      <control caption="_جوار الساعة:" />
+      <control caption=":عند النقر على إغلاق" />
+      <control caption="السؤال|الإغلاق فورا|التصغير إلى جوار الساعة|الإغلاق بعد عمليات النقل" />
+      <control caption=":عند النقر على تصغير" />
+      <control caption="تصغير عادي|تصغير إلى جوار الساعة" />
     </dialog>
-    <dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBuBu" caption="Library">
-      <control caption="_Options:" />
-      <control caption="Remember folder views" />
-      <control caption="Watch library folders" />
-      <control caption="Quick hashing (Uses more CPU)" />
-      <control caption="Allow others to browse shares" />
-      <control caption="_Recent Files:" />
-      <control caption="Remember:" />
+    <dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBuBu" caption="المكتبة">
+      <control caption=":_خيارات" />
+      <control caption="تذكر طرق عرض المجلدات" />
+      <control caption="مشاهدة مجلدات المكتبة" />
+      <control caption="(CPU تجزئة سريعة (إستهلاك أكثر لـ" />
+      <control caption="السماح للآخرين بتصفح الملفات المشاركة" />
+      <control caption=":ال_ملفات الأخيرة" />
+      <control caption=":تذكر" />
       <control />
       <control />
-      <control caption="files" />
-      <control caption="For up to:" />
+      <control caption=":الملفات" />
+      <control caption=":العدد حتى" />
       <control />
       <control />
-      <control caption="days" />
-      <control caption="Clear History Now" />
-      <control caption="_Safe to Open:" />
+      <control caption="يوم" />
+      <control caption="مسح المحفوظات الآن" />
+      <control caption="_: أمان في فتح" />
       <control />
-      <control caption="_Add" />
-      <control caption="_Remove" />
-      <control caption="_Never Share:" />
+      <control caption="إ_ضافة" />
+      <control caption="إ_زالة" />
+      <control caption="_:بدون مشاركة" />
       <control />
-      <control caption="_Add" />
-      <control caption="_Remove" />
-      <control caption="Store _Collections Here:" />
+      <control caption="إ_ضافة" />
+      <control caption="إ_زالة" />
+      <control caption=":تخزين التجميعات _هنا" />
       <control />
       <control />
-      <control caption="Create ghost files when deleting" />
+      <control caption="إنشاء ملفات وهمية عند الحذف" />
     </dialog>
-    <dialog name="CMediaSettingsPage" cookie="BuCoBuBuBuCoBuBuBuBuBuStSt" caption="Media Player">
-      <control caption="_خصائص:" />
+    <dialog name="CMediaSettingsPage" cookie="BuCoBuBuBuCoBuBuBuBuBuStSt" caption="مشغل الوسائط">
+      <control caption="_:خصائص" />
       <control />
-      <control caption="Use the Shareaza Media Player to PLAY the file types listed below" />
-      <control caption="Use the Shareaza Media Player to ENQUEUE the file types listed below" />
-      <control caption="نوع _الملف:" />
+      <control caption="لتشغيل أنواع الملفات التالية Shareaza إستخدام مشغل" />
+      <control caption="لوضع أنواع الملفات التالية بالإنتظار Shareaza إستخدام مشغل" />
+      <control caption=":نوع _الملف" />
       <control />
       <control caption="_إضافة" />
       <control caption="_إزالة" />
-      <control caption="Audio _Visualisation Plugin:" />
+      <control caption="_:وظيفة المرئيات الصوتية الإضافية" />
       <control caption="_حدد الاضافات..." />
-      <control caption="_Media Handling" />
-      <control caption="Choose Media Handler:" />
-      <control caption="Warning: Choosing an external Media Handler will automatically disable all Media and Visualisation Plugins!" />
+      <control caption="_معالجة الوسائط" />
+      <control caption=":تحديد معالج الوسائط" />
+      <control caption="تحذير : عند إختيار معالج وسائط خارجي سيتم التعطيل تلقائيا لجميع وظائف المرئيات الصوتية الإضافية" />
     </dialog>
-    <dialog name="CCommunitySettingsPage" cookie="BuStBuBuBuBuBuBu" caption="Community">
-      <control caption="My _Profile:" />
-      <control caption="You can use your Gnutella User Profile to share information about yourself, your interests and recommended files and websites with others." />
-      <control caption="Edit My Profile" />
-      <control caption="_محادثة:" />
-      <control caption="Enable peer to peer chat with compatible clients" />
-      <control caption="Enable chat on all networks" />
-      <control caption="Filter chat messages for spam" />
-      <control caption="Censor profanity in chat" />
+    <dialog name="CCommunitySettingsPage" cookie="BuStBuBuBuBuBuBu" caption="المجتمع">
+      <control caption="_:وضعيتي" />
+      <control caption="يمكنك إستخدام وضعية جي.نيوتيللا الخاصة بك للمشاركة بالمعلومات عن نفسك و اهتماماتك و توصياتك عن الملفات و المواقع التي تنصح بها الآخرين" />
+      <control caption="تحرير وضعيتي" />
+      <control caption="_:محادثة" />
+      <control caption="تمكين محادثة النظير إلى النظر مع العملاء المتوافقين" />
+      <control caption="تمكين المحادثة على جميع الشبكات" />
+      <control caption="فرز رسائل المحادثة من الرسائل العشوائية" />
+      <control caption="حساسية عبارات المحادثة" />
     </dialog>
-    <dialog name="CWebSettingsPage" cookie="BuStBuBuBuBuBuBuBuCoBuBuSt" caption="Web">
-      <control caption="_P2P روابط:" />
-      <control caption="استخدم  Shareaza لفتح انواع الروابط:" />
+    <dialog name="CWebSettingsPage" cookie="BuStBuBuBuBuBuBuBuCoBuBuSt" caption="ويب">
+      <control caption="_: P2P روابط" />
+      <control caption="لفتح أنواع الروابط Shareaza إستخدم:" />
       <control caption="Magnet ( magnet: )" />
       <control caption="Gnutella ( gnutella: )" />
       <control caption="eDonkey ( ed2k: )" />
       <control caption="Piolet ( mp2p: )" />
       <control caption="BitTorrent ( .torrent )" />
-      <control caption="_مدير التحميل:" />
-      <control caption="الإستعمال Shareaza لإدارة كلّ برامج الانترنت:" />
+      <control caption="_:مدير التحميل" />
+      <control caption=":لإدارة جميع تحميلات إنترنت Shareaza إستخدام" />
       <control />
       <control caption="_إضافة" />
       <control caption="_إزالة" />
-      <control caption="The download manager plugin will only attempt to download file types listed here.  Other file types will be handled by your web browser.  Shareaza must be running to manage downloads." />
+      <control caption="وظيفة مدير التحميل الإضافية ستحاول فقط تحميل أنواع الملفات المدرجة هنا . أما أنواع الملفات الأخرى فستعالج بواسطة متصفحك . يجب أن يكون &quot;شير-أزا&quot; شغال لإدارة التحميلات" />
     </dialog>
     <dialog name="CInternetSettingsGroup" caption="انترنت" />
-    <dialog name="CConnectionSettingsPage" cookie="BuStCoStCoStEdBuBuBuStCoStCoBuStCoBuBuBuStEdmsStEdms" caption="Connection">
-      <control caption="_Inbound Address:" />
-      <control caption="Address:" />
-      <control caption="Automatic" />
-      <control caption="Speed:" />
+    <dialog name="CConnectionSettingsPage" cookie="BuStCoStCoStEdBuBuBuStCoStCoBuStCoBuBuBuStEdmsStEdms" caption="الإتصال">
+      <control caption="_:عنوان الوارد" />
+      <control caption=":العنوان" />
+      <control caption="تلقائي" />
+      <control caption=":السرعة" />
       <control />
-      <control caption="المنفذ:" />
+      <control caption=":المنفذ" />
       <control />
-      <control caption="Random" />
-      <control caption="Force binding to this address" />
-      <control caption="_Outbound Address:" />
-      <control caption="Address:" />
-      <control caption="Automatic" />
-      <control caption="Speed:" />
+      <control caption="عشوائي" />
+      <control caption="فرض إجباري إلى هذا العنوان" />
+      <control caption="عنوان ال_صادر:" />
+      <control caption=":العنوان" />
+      <control caption="تلقائي" />
+      <control caption=":السرعة" />
       <control />
-      <control caption="السرغة:" />
-      <control caption="Can accept incoming connections" />
+      <control caption=":المنفذ" />
+      <control caption="يمكن قبول الإتصالات الواردة" />
       <control />
-      <control caption="Ignore private/local IP addresses " />
-      <control caption="Enable UPnP connection devices setup" />
-      <control caption="_Timeouts:" />
-      <control caption="Connection:" />
+      <control caption="الخاصة/المحلية IP تجاهل عناوين الـ" />
+      <control caption="UPnP تمكين إعداد أجهزة إتصال" />
+      <control caption=":إنتهاء ال_مهلة" />
+      <control caption=":الإتصال" />
       <control />
       <control />
-      <control caption="Handshake:" />
+      <control caption=":المصافحة" />
       <control />
       <control />
     </dialog>
-    <dialog name="CDownloadsSettingsPage" cookie="BuEdBuBuEdBuBuStEdmsStEdmsStEdmsBuStCoStCoBuBu" caption="Downloads">
-      <control caption="Save _Completed Files Here:" />
+    <dialog name="CDownloadsSettingsPage" cookie="BuEdBuBuEdBuBuStEdmsStEdmsStEdmsBuStCoStCoBuBu" caption="التحميلات">
+      <control caption=":حفظ الملفات الم_كتملة هنا" />
       <control />
       <control />
-      <control caption="Store Temporary _Incomplete Files Here:" />
+      <control caption=":تخزين الملفات ال_غير مكتملة المؤقتة هنا" />
       <control />
       <control />
-      <control caption="_Number of Downloads:" />
-      <control caption="Maximum Files:" />
+      <control caption="_:عدد التحميلات" />
+      <control caption=":أقصى ملفات" />
       <control />
       <control />
-      <control caption="Maximum Downloads:" />
+      <control caption=":أقصى تحميلات" />
       <control />
       <control />
-      <control caption="Sources per file:" />
+      <control caption=":المصادر لكل ملف" />
       <control />
       <control />
-      <control caption="_Limits:" />
-      <control caption="Total Download Bandwidth:" />
+      <control caption=":ال_حدود" />
+      <control caption=":نطاق العرض الإجمالي للتحميل" />
       <control />
-      <control caption="Maximum Queue Length:" />
+      <control caption=":أقصى طول لقائمة الإنتظار" />
       <control />
       <control />
-      <control caption="Only download and upload to networks which are connected." />
+      <control caption="التحميل و الإرسال من و إلى الشبكات المتصلة فقط" />
     </dialog>
-    <dialog name="CUploadsSettingsPage" cookie="BuBuBuBuStEdmsBuCoBuBuBuStCoStCoBuSyBuBuBuSt" caption="Uploads">
-      <control caption="_Options:" />
-      <control caption="Share NEW partial downloads" />
-      <control caption="Limit sharing in hub mode" />
-      <control caption="Share preview files" />
-      <control caption="Limit per unique host:" />
+    <dialog name="CUploadsSettingsPage" cookie="BuBuBuBuStEdmsBuCoBuBuBuStCoStCoBuSyBuBuBuSt" caption="الإرسال">
+      <control caption="ال&amp;خيارات" />
+      <control caption="المشاركة في جزئيات التحميلات الجديدة" />
+      <control caption="حدود المشاركة في نمط النتوء" />
+      <control caption="مشاركة ملفات المعاينة" />
+      <control caption=":الحد لكل مضيف فريد" />
       <control />
       <control />
-      <control caption="_User-Agent Filter:" />
+      <control caption=":مرشح _عميل المستخدم" />
       <control />
       <control caption="+" />
       <control caption="-" />
-      <control caption="_Bandwidth:" />
-      <control caption="Limit:" />
+      <control caption="_:نطاق العرض" />
+      <control caption=":الحدود" />
       <control />
-      <control caption="Mode:" />
-      <control caption="Maximum|Average" />
-      <control caption="_Queues:" />
+      <control caption=":النمط" />
+      <control caption="الحد الأعلى|معتدل" />
+      <control caption=":قوائم الإ_نتظار" />
       <control />
       <control caption="_جديد..." />
       <control caption="_تحرير..." />
       <control caption="_حذف" />
-      <control caption="(changes take effect immediately)" />
+      <control caption="(التغييرات تصبح سارية المفعول فورا)" />
     </dialog>
-    <dialog name="CRemoteSettingsPage" cookie="BuStBuBuStBuStEdStEd" caption="التحكم عن بعد">
-      <control caption="_الدليل:" />
-      <control caption="Shareaza Remote Access allows you to leave Shareaza running on your PC, and control it remotely using a web browser.  You will need to be able to accept incoming connections to use this feature (i.e. properly configured router, etc)." />
-      <control caption="_مفعل:" />
-      <control caption=" لتحكم عن بعد Shareaza تفعيل:" />
+    <dialog name="CRemoteSettingsPage" cookie="BuStBuBuStBuStEdStEd" caption="الوصول البعيد">
+      <control caption="_:الدليل" />
+      <control caption="يسمح لك الوصول البعيد لشير-أزا بترك &quot;شير-أزا&quot; يعمل في كمبيوترك و من ثم التحكم فيه عن بعد عن طريق متصفح ويب . لكن يجب قبول الإتصالات الواردة لإستخدام هذه الميزة" />
+      <control caption="_:ممكن" />
+      <control caption=" :من التحكم عن بعد Shareaza تمكين" />
       <control />
-      <control caption="_بطاقة الاعتماد:" />
-      <control caption="إختر اسم المستخدم:" />
+      <control caption="_:بطاقة الاعتماد" />
+      <control caption=":إختر إسم المستخدم" />
       <control />
-      <control caption="إختر كلمة المرور:" />
+      <control caption=":إختر كلمة المرور" />
       <control />
     </dialog>
-    <dialog name="CSchedulerSettingsPage" cookie="BuBuEdmsBuBuStStStStStStStStStStStEdBuSt" caption="Scheduler">
-      <control caption="_Options:" />
-      <control caption="_Enable Scheduler" />
+    <dialog name="CSchedulerSettingsPage" cookie="BuBuEdmsBuBuStStStStStStStStStStStEdBuSt" caption="الجدولة">
+      <control caption=":ال_خيارات" />
+      <control caption=" ت_مكين الجدولة" />
       <control />
       <control />
-      <control caption="_Connect to G2 only when limited" />
-      <control caption="Key:" />
-      <control caption="Sun" />
-      <control caption="Mon" />
-      <control caption="Tue" />
-      <control caption="Wed" />
-      <control caption="Thu" />
-      <control caption="Fri" />
-      <control caption="Sat" />
-      <control caption="Do not connect" />
-      <control caption="Limited connection" />
-      <control caption="Connect at full speed" />
-      <control caption="% of _bandwidth under limit" />
+      <control caption="عند وجود حدود G2 ال_إتصال فقط إلى" />
+      <control caption=":المفتاح" />
+      <control caption="أحد" />
+      <control caption="إثنبن" />
+      <control caption="ثلاثاء" />
+      <control caption="أربعاء" />
+      <control caption="خميس" />
+      <control caption="جمعة" />
+      <control caption="سبت" />
+      <control caption="عدم إتصال" />
+      <control caption="إتصالات محدودة" />
+      <control caption="الإتصال بسرعة كاملة" />
+      <control caption="% إذا _نطاق العرض أقل من الحد" />
       <control />
-      <control caption="Help" />
-      <control caption="The scheduler is designed to allow you to set times when Shareaza will connect and download files. {n}{n}{n}Note: If you have Shareaza open while the scheduler is active, you may see it changing settings- This is normal!-" />
+      <control caption="تعليمات" />
+      <control caption="تم تصميم الجدولة للسماح لك بجدولة الإتصال و تحميل الملفات لشير-أزا{n}{n}{n}ملاحظة : إذا كان شير-أزا مفتوحا و الجدولة في الوضع النشط فقد ترى بأنه يقوم بتغيير الإعدادات - هذا طبيعي" />
     </dialog>
-    <dialog name="CNetworksSettingsPage" cookie="StBuStBuStBuStBuStBuStBuSt" caption="Networks">
-      <control caption="Shareaza is a general-purpose file-sharing application that can access many P2P networks at the same time.  On this page you can select which P2P networks you want to connect to, and then adjust specific settings for each network." />
-      <control caption="Gnutella2 شبكة:" />
-      <control caption="The Gnutella2 network is Shareaza's premiere network, offering more features and performance than any other P2P net.  Highly recommended." />
-      <control caption="الإتصال بـ Gnutella2 (G2)" />
-      <control caption="Configure Gnutella2" />
-      <control caption="eDonkey Network:" />
-      <control caption="The eDonkey network is a popular server-based network. While not as feature-rich as Gnutella2, eDonkey has an impressive file collection." />
-      <control caption="Connect to eDonkey" />
-      <control caption="Configure eDonkey" />
-      <control caption="Original Gnutella Network:" />
-      <control caption="Although the original Gnutella network is less feature-rich than Gnutella2, and has fewer files than eDonkey, it remains a valuable resource." />
-      <control caption="Connect to Original Gnutella" />
-      <control caption="Configure Gnutella1" />
+    <dialog name="CNetworksSettingsPage" cookie="StBuStBuStBuStBuStBuStBuSt" caption="الشبكات">
+      <control caption="شير-أزا هو تطبيق لمشاركة الملفات لأغراض عامة حيث يقوم بالدخول على العديد من شبكات &quot;النظير-إلى-النظير&quot; المختلفة في نفس الوقت . في هذه الصفحة يمكنك تحديد شبكات &quot;النظير-إلى-النظير&quot; المراد الإنصال بها و من ثم ضبط الإعدادات لكل شبكة" />
+      <control caption=":Gnutella2 شبكة" />
+      <control caption="نوتيللا-2 هي الشبكة رئيسية إفتتاحية لشبكة شير-أزا . حيث تقدم الكثير من الميزات و الأداء أكثر من أي شبكة أخرى . و هي مستحسنة جدا" />
+      <control caption="Gnutella2 (G2) الإتصال بـ" />
+      <control caption="Gnutella2 تكوين" />
+      <control caption=":eDonkey شبكة" />
+      <control caption="إ.دونكي هي شبكة تعتمد على ملقم عام لكن مميزاتها أقل من  شبكة نوتيللا-2 . و هذه الشبكة تمتلك مجموعة لا يستهان بها من الملفات" />
+      <control caption=":eDonkey الإتصال بـ" />
+      <control caption="eDonkey تكوين" />
+      <control caption=":الأصليةGnutella شبكة" />
+      <control caption="نوتيللا هي شبكة مميزاتها أقل من  شبكة نوتيللا-2 و ملفاتها أقل من إ.دونكي و لكن تبقى هذه الشبكة مصدر ثمين للملفات" />
+      <control caption="الأصليةGnutella الإتصال بشبكة" />
+      <control caption="Gnutella تكوين" />
     </dialog>
     <dialog name="CGnutellaSettingsPage" cookie="BuBuBuStCoBuStEdmsStEdmsStEdmsBuBuBuStCoBuStEdmsStEdmsStEdmsBuBuBuBu" caption="Gnutella">
-      <control caption="Gnutella2 Network:" />
-      <control caption="Always connect to Gnutella2" />
-      <control caption="Connect to Gnutella2 today" />
-      <control caption="Mode:" />
-      <control caption="Optimal|Leaf|Hub" />
+      <control caption=":Gnutella2 شبكة" />
+      <control caption="Gnutella2 الإتصال دائما بـ" />
+      <control caption="Gnutella2 الإتصال اليوم بـ" />
+      <control caption="النمط:" />
+      <control caption="مثالي|طرفي|محوري" />
       <control caption="G_2 Connections:" />
-      <control caption="Leaf to Hub:" />
+      <control caption=":طرفي إلى محوري" />
       <control />
       <control />
-      <control caption="Hub to Leaf:" />
+      <control caption=":محوري إلى طرفي" />
       <control />
       <control />
-      <control caption="Hub to Hub:" />
+      <control caption=":محوري إلى محوري" />
       <control />
       <control />
-      <control caption="Gnutella1 Network:" />
-      <control caption="Always connect to Gnutella1" />
-      <control caption="Connect to Gnutella1 today" />
-      <control caption="Mode:" />
-      <control caption="Optimal|Leaf|Ultrapeer" />
-      <control caption="G_1 Connections:" />
-      <control caption="Leaf to Ultrapeer:" />
+      <control caption=":Gnutella1 شبكة" />
+      <control caption="Gnutella1 الإتصال دائما بـ" />
+      <control caption="Gnutella1 الإتصال اليوم بـ" />
+      <control caption="النمط:" />
+      <control caption="مثالي|طرفي|نظير-فائق" />
+      <control caption=":G_1 إتصالات" />
+      <control caption=":طرفي إلى نظير-فائق" />
       <control />
       <control />
-      <control caption="Ultrapeer to Leaf:" />
+      <control caption=":نظير-فائق إلى طرفي" />
       <control />
       <control />
-      <control caption="Peer to Peer:" />
+      <control caption=":نظير إلى نظير" />
       <control />
       <control />
-      <control caption="_Link Compression:" />
-      <control caption="Hub to Leaf" />
-      <control caption="Leaf to Hub" />
-      <control caption="Hub to Hub" />
+      <control caption="_ :ضغط الرابط" />
+      <control caption="محوري إلى طرفي" />
+      <control caption="طرفي إلى محوري" />
+      <control caption="محوري إلى محوري" />
     </dialog>
     <dialog name="CDonkeySettingsPage" cookie="BuBuBuBuBuStEdmsStBuBuStEdmsStBuStBu" caption="eDonkey">
-      <control caption="_eDonkey Network:" />
-      <control caption="Always connect to eDonkey" />
-      <control caption="تشغيل لتلاقائي للسيرفر عن تشغيل البرنامج" />
-      <control caption="_البحث العالمي:" />
-      <control caption="البحث في السيرفرات البعيدة في ذاكرة السيرفر:" />
-      <control caption="توقف عن البحث بعد:" />
+      <control caption=":_eDonkey شبكة" />
+      <control caption="eDonkey الإتصال دائما بـ" />
+      <control caption="eDonkey الإتصال اليوم بـ" />
+      <control caption=":_البحث العالمي" />
+      <control caption="البحث في الملقمات البعيدة في مخزون الملقم المؤقت:" />
+      <control caption=":توقف عن البحث بعد" />
       <control />
       <control />
-      <control caption="نتائج البحث." />
-      <control caption="Receive and update server list from the connected server" />
-      <control caption="_رابط الإتصال للعملاء:" />
-      <control caption="الإتصال باكثر من :" />
+      <control caption="نتيجة بحث" />
+      <control caption="إستقبال و تحديث قائمة الملقم من الملقم المتصل" />
+      <control caption=":_إتصالات إرتباط العميل" />
+      <control caption=":الإتصال باكثر من" />
       <control />
       <control />
-      <control caption=" eDonkey عملاء اخرين لبرنامج." />
-      <control caption="eDonkey2000 _ادوات:" />
-      <control caption="من الانترنت eDonkey2000 تحميل قائمة السيرفرات لبرنامج:" />
+      <control caption=" eDonkey عميل آخر لبرنامج" />
+      <control caption=":eDonkey _أدوات" />
+      <control caption=":من الانترنت eDonkey تحميل قائمة ملقم" />
       <control caption="تحميل..." />
     </dialog>
     <dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsStEdmsStBuEdmsStBuBuBuBuEdBuBuEdBuStEd" caption="BitTorrent">
-      <control caption="_Interface:" />
-      <control caption="Display additional BitTorrent interface elements" />
-      <control caption="_Download Connections:" />
+      <control caption=":_الواجهة" />
+      <control caption="الإضافية BitTorrent عرض عناصر واجهة" />
+      <control caption=":إ_تصالات التحميل" />
       <control />
       <control />
-      <control caption="Torrents at once" />
+      <control caption="معا Torrents عمليات" />
       <control />
       <control />
-      <control caption="Client connections" />
-      <control caption=" Clear downloaded torrents        When the share ratio reaches" />
+      <control caption="إتصالات العميل" />
+      <control caption="المحملة        عندما يصل معدل المشاركة torrent مسح ملفات" />
       <control />
       <control />
       <control />
-      <control caption=" Prefer torrent sources" />
-      <control caption="_EndGame:" />
-      <control caption="Enable EndGame mode when completing torrents" />
-      <control caption="_Store Torrents Here:" />
+      <control caption=" المفضلة torrent مصادر" />
+      <control caption=":المرحلة ال_ختامية" />
+      <control caption="torrent تمكين نمط المرحلة الختامية عند إكتمال ملفات" />
+      <control caption=": هنا Torrent ت_خزين ملفات" />
       <control />
       <control />
-      <control caption="_Torrent Creator" />
+      <control caption="_Torrent صانع" />
       <control />
       <control />
-      <control caption="Default Tracker: " />
-      <control />
-    </dialog>
-    <dialog name="CProtocolsSettingsPage" cookie="BuSy" caption="بروتوكول">
-      <control caption="Shareaza Common Architecture Protocol Explorer:" />
+      <control caption="متتبع إفتراضي" />
       <control />
     </dialog>
-    <dialog name="CSkinsSettingsPage" cookie="SyBuStStStStStEdBuBuBu" caption="المظهر">
+    <dialog name="CProtocolsSettingsPage" cookie="مشغول" caption="بروتوكول">
+      <control caption=": المشترك Shareaza مستكشف بروتوكول بنية" />
       <control />
-      <control caption="معلومات المظهر:" />
-      <control caption="الاسم:" />
+    </dialog>
+    <dialog name="CSkinsSettingsPage" cookie="SyBuStStStStStEdBuBuBu" caption="الغلاف">
+      <control />
+      <control caption=":معلومات الغلاف" />
+      <control caption=":الاسم" />
       <control caption="..." />
-      <control caption="المصمم:" />
+      <control caption=":المصمم" />
       <control caption="..." />
-      <control caption="نبذة عنه:" />
+      <control caption=":نبذة عنه" />
       <control />
       <control caption="حذف" />
-      <control caption="تركيب..." />
+      <control caption="تثبيت..." />
       <control caption="أحضر المزيد" />
     </dialog>
     <dialog name="CPluginsSettingsPage" cookie="SyBuStStStEdBuBu" caption="الإضافات">
       <control />
-      <control caption="معلومات الإضافات:" />
-      <control caption="الاسم:" />
+      <control caption=":معلومات الإضافات" />
+      <control caption=":الاسم" />
       <control caption="..." />
-      <control caption="نبذة عنها:" />
+      <control caption=":نبذة عنها" />
       <control />
-      <control caption="_تركيب..." />
+      <control caption="_تثبيت..." />
       <control caption="احضر المزيد" />
     </dialog>
     <dialog name="CAdvancedSettingsPage" cookie="SyBuStEdmsStEd" caption="متقدم">
       <control />
-      <control caption="Setting Properties:" />
-      <control caption="Value:" />
+      <control caption=":إعداد الخصائص" />
+      <control caption=":القيمة" />
       <control />
       <control />
-      <control caption="Description:" />
+      <control caption=":الوصف" />
       <control />
     </dialog>
-    <dialog name="CQueuePropertiesDlg" cookie="BuEdBuBuBuBuBuEdBuEdBuCoBuEdBuSyBuBuStEdmsStEdmsStEdmsBuStEdStEdmsBuEdmsBuBuBu" caption="Upload Queue Properties">
-      <control caption="_الاسم:" />
+    <dialog name="CQueuePropertiesDlg" cookie="BuEdBuBuBuBuBuEdBuEdBuCoBuEdBuSyBuBuStEdmsStEdmsStEdmsBuStEdStEdmsBuEdmsBuBuBu" caption="خصائص قائمة إنتظار الإرسال">
+      <control caption=":_الاسم" />
       <control />
-      <control caption="_Entry Criteria:" />
-      <control caption="Partially downloaded files only" />
-      <control caption="Shared Library files only" />
-      <control caption="Both partial and library files" />
-      <control caption="Minimum source file size:" />
+      <control caption=":إ_دخال المعايير" />
+      <control caption="الملفات المحملة جزئيا فقط" />
+      <control caption="ملفات المكتبة المشاركة فقط" />
+      <control caption="كلا من الملفات الجزئية و ملفات المكتبة" />
+      <control caption=":أدنى حجم للملف المصدر" />
       <control />
-      <control caption="Maximum source file size:" />
+      <control caption=":أقصى حجم للملف المصدر" />
       <control />
-      <control caption="Marked files:" />
+      <control caption=":الملفات المؤشرة" />
       <control />
-      <control caption="Filename match:" />
+      <control caption=":مطابقة إسم الملف" />
       <control />
-      <control caption="بروتوكول:" />
+      <control caption=":بروتوكول" />
       <control />
-      <control caption="_Capacity:" />
-      <control caption="Enable this queue" />
-      <control caption="Minimum number of transfers:" />
-      <control />
-      <control />
-      <control caption="Maximum number of transfers:" />
+      <control caption=":ال_سعة" />
+      <control caption="تمكين قائمة الإنتظار هذه" />
+      <control caption=":أدنى عدد لعمليات النقل" />
       <control />
       <control />
-      <control caption="Maximum number waiting in queue:" />
+      <control caption=":أقصى عدد لعمليات النقل " />
       <control />
       <control />
-      <control caption="_Service Parameters:" />
-      <control caption="Saturated bandwidth percentage:" />
-      <control />
-      <control caption="Upload bandwidth for this queue:" />
+      <control caption=":أقصى عدد في قائمة الإنتظار" />
       <control />
       <control />
-      <control caption="Rotate after N seconds:" />
+      <control caption=":_معايير الخدمة" />
+      <control caption=":النسبة المئوية لنطاق العرض المشبع" />
+      <control />
+      <control caption=":نطاق العرض لإرسال قائمة الإنتظار هذه" />
       <control />
       <control />
-      <control caption="OK" />
-      <control caption="Cancel" />
-      <control caption="Reward uploaders" />
+      <control caption=": ثانية N تدوير بعد" />
+      <control />
+      <control />
+      <control caption="حسنا" />
+      <control caption="إلغاء الأمر" />
+      <control caption="أصحاب الإرسال الفائزون" />
     </dialog>
-    <dialog name="CWizardWelcomePage" cookie="StStStStStStStStStStStSt" caption="Welcome to Shareaza">
-      <control caption="Shareaza مرحبا بك في!" />
+    <dialog name="CWizardWelcomePage" cookie="StStStStStStStStStStStSt" caption="Shareaza مرحبا بك في">
+      <control caption="Shareaza مرحبا بك في" />
       <control caption="او اي برنامج مشاركة هذا المعالج سوف يساعدك على اعداد البرنامج و الإتصال به  Shareaza  اذا كنت تستخدم برنامج ." />
       <control caption="لعمل إعدادات الإتصال Shareaza اضغط على خروج  واضغط على ادوات ثم إعدادات  Shareaza اذا كنت مستخدم محترف اضغط  لبرنامج." />
-      <control caption="هذا المعالج سيساعدك في:" />
+      <control caption=":هذا المعالج سيساعدك في" />
       <control />
       <control caption="بالانترنت Shareaza طريقة إتصال " />
       <control />
@@ -3603,35 +3608,35 @@
       <control />
       <control caption="بالشبكة p2p إتصال " />
       <control />
-      <control caption="Shareaza إبدأ الإستعمال." />
+      <control caption="Shareaza إبدأ الإستعمال" />
     </dialog>
-    <dialog name="CWizardInterfacePage" cookie="StBuBuBuStStBuBu" caption="Welcome to Shareaza">
-      <control caption="Shareaza supports a flexible user interface, so you can choose what is most comfortable for you. You can change these options at any time." />
-      <control caption="Please select user interface:" />
-      <control caption="Normal Mode" />
-      <control caption="Power Mode" />
-      <control caption="Simple, easy to use menus and buttons.{n}Familiar to users of other file sharing programs." />
-      <control caption="Power mode offers expert users lots of extra commands, windows, etc.{n}It may be a little confusing for new users!" />
-      <control caption="Display simplified download progress bars. (Reduces CPU use)" />
-      <control caption="Handle torrent links." />
+    <dialog name="CWizardInterfacePage" cookie="StBuBuBuStStBuBu" caption="Shareaza مرحبا بك مع">
+      <control caption="شير-أزا يدعم واجهة المستخدم المرنة ، لذا يمكنك أن تختار الواجهة التي تريحك . يمكنك أن تغير هذه الخيارات في أي وقت كان" />
+      <control caption=":الرجاء تحديد الواجهة" />
+      <control caption="النمط العادي" />
+      <control caption="النمط المتقدم" />
+      <control caption="القوائم و الأزرار سهلة الإستعمال و بسيطة .{n}مألوفة للمستخدمين الذين لديهم برامج مشاركة أخرى" />
+      <control caption="النمط المتقدم للمستخدمين الخبراء بالأوامر المتعددة{n}ربما يكون هذا النمط صعبا نوعا للمستخدمين الجدد" />
+      <control caption="عرض أشرطة بسيطة لتقدم التحميل . (تخفض من إستعمال وحدة المعالج المركزية) ـ" />
+      <control caption="torrent معالجة روابط" />
     </dialog>
-    <dialog name="CWizardConnectionPage" cookie="StStCoStCoStCoStCoStms" caption="Welcome to Shareaza [3 of 7]">
-      <control caption="For optimum performance, Shareaza needs to know a little bit about your connection to the Internet." />
-      <control caption="Choose the type of your Internet connection:" />
-      <control caption="Dial up Modem|ISDN|ADSL (256K)|ADSL (512K)|ADSL (768K)|ADSL (1.5M)|ADSL (4.0M)|ADSL2 (8.0M)|ADSL2 (12.0M)|ADSL2+ (24.0M)|Cable Modem/SDSL|T1|T3|LAN|OC3" />
-      <control caption="Or choose the download speed:" />
+    <dialog name="CWizardConnectionPage" cookie="StStCoStCoStCoStCoStms" caption="[ـ [3 من 7 Shareaza مرحبا بكم في">
+      <control caption="للإتصال بالإنترنت Shareaza لأداء مثالي ، يجب إعداد" />
+      <control caption=":إختر نوع إتصال الإنترنت" />
+      <control caption="مودم طلب هاتفي|ISDN|ADSL (256ك)|ADSL (512ك)|ADSL (768ك)|ADSL (1.5م)|ADSL (4.0م)|ADSL2 (8.0م)|ADSL2 (12.0م)|ADSL2+ (24.0م)|مودم كيبل/SDSL|T1|T3|LAN|OC3" />
+      <control caption=":أو إختر سرعة التحميل" />
       <control />
-      <control caption="and the upload speed:" />
+      <control caption=":و سرعة الإرسال" />
       <control />
-      <control caption="Do you want to automatically setup port-forwarding by using UPnP?" />
+      <control caption="؟ UPnP هل تريد إعداد المنفذ تلقائيا بواسطة" />
       <control />
-      <control caption="Status:" />
+      <control caption=":الحالة" />
       <control />
     </dialog>
-    <dialog name="CWizardSharePage" cookie="StStStSyBuBuSt" caption="Shareaza مرحبا بك في [4 of 7]">
-      <control caption="P2P networks are only as good as the people who use them.  All of the content available for download is being shared by another user." />
-      <control caption="You do not have to share content to use Shareaza, however some software will behave differently to users who are not sharing anything." />
-      <control caption="Please indicate which folders, if any, you wish to share.  Simply click the Add button to add a new folder." />
+    <dialog name="CWizardSharePage" cookie="StStStSyBuBuSt" caption="[ـ [4 من 7 Shareaza مرحبا بكم في">
+      <control caption="شبكات النظير إلى النظير هي فقط صالحة إذا كان من يستخدمها إنسان صالح . كل المحتوبات المتوفر للتحميل يتم مشاركتها مع مستخدمين آخرين" />
+      <control caption="ليس من الضروري أن تشارك من أجل إستعمال شير-أزا و من ناحية أخرى فهناك بعض البرامج تتصرف بشكل مختلف مع المستخدمين الذين لا يشاركون بأي شئ" />
+      <control caption="الرجاء تعيين المجلدات المراد المشاركة بها إن وجدت . أنقر زر إضافة لإضافة أي مجلد جديد" />
       <control />
       <control caption="_إضافة..." />
       <control caption="_إزالة" />
@@ -3640,48 +3645,48 @@
     <dialog name="CFolderScanDlg" cookie="StStStStStStBu" caption="فحص المجلد...">
       <control />
       <control caption="..." />
-      <control caption="ملفات:" />
+      <control caption=":الملفات" />
       <control caption="0" />
-      <control caption="الحجم:" />
+      <control caption=":الحجم" />
       <control caption="0" />
       <control caption="إغلاق" />
     </dialog>
-    <dialog name="CWizardProfilePage" cookie="StStEdStCoCoStCoCo" caption="Shareaza مرحبا بك في [5 of 7]">
-      <control caption="Shareaza is a much friendlier place when everyone writes a few basic details about themselves." />
-      <control caption="I use the name:" />
+    <dialog name="CWizardProfilePage" cookie="StStEdStCoCoStCoCo" caption="[ـ [5 من 7 Shareaza مرحبا بكم في">
+      <control caption="يعتبر شير-أزا المكان الأكثر ودية عندما يكتب أي شخص بضعة تفاصيل أساسية حول نفسه" />
+      <control caption="أنا إسمي:" />
       <control />
-      <control caption="and I'm a:" />
-      <control caption=" (choose)" />
-      <control caption=" (choose)| guy| girl| man| woman" />
-      <control caption="from:" />
+      <control caption="الجنس:" />
+      <control caption=" (إختر)" />
+      <control caption=" إختر)|رويجل|بنت|رجل|إمرأة)" />
+      <control caption="من :" />
       <control />
       <control />
     </dialog>
-    <dialog name="CWizardNetworksPage" cookie="StBuStBuStBuSt" caption="Shareaza مرحبا بك في [6 of 7]">
-      <control caption="Shareaza is a general-purpose file-sharing application that can access many P2P networks at the same time.  Here you can select which networks you'd like to access.  Note that you can always select different networks later." />
-      <control caption="الإتصال بـ Gnutella2 (مهم جدا)" />
-      <control caption="The Gnutella2 network is Shareaza's premiere network, offering more features and performance than any other P2P net." />
-      <control caption="Connect to eDonkey" />
-      <control caption="The eDonkey network is a popular server-based network. While not as feature-rich as Gnutella2, eDonkey has an impressive file collection." />
-      <control caption="الإتصال بـ Original Gnutella" />
-      <control caption="Although the original Gnutella network is less feature-rich than Gnutella2, and has fewer files than eDonkey, it remains a valuable resource." />
+    <dialog name="CWizardNetworksPage" cookie="StBuStBuStBuSt" caption="[ـ [6 من 7 Shareaza مرحبا بكم في">
+      <control caption="شير-أزا هو تطبيق لمشاركة الملفات بشكا عام حيث يمكنه الدخول على العديد من شبكات النظير إلى النظبر في نفس الوقت . هنا يمكنك أن تختار الشبكات المراد الدخول إليها . ملاحظة : يمكنك أن تختار شبكات مختلفة دائما فيما بعد" />
+      <control caption="(مهم جدا) Gnutella2 الإتصال بـ" />
+      <control caption="شبكة نيتيللاGnutella هي الشبكة الرئيسية لبرنامج شير-أزا ، فهي تقدم مميزات و أداء أكثر من أي شبكة أخرى" />
+      <control caption="eDonkey الإتصال بـ" />
+      <control caption="شبكة إدونكي هي شبكة تعتمد على ملقم عام . لكنها ليست بمميزات نيتيللا2 . إدونكي تملك مجموعة ملفات لا يستهان بها" />
+      <control caption="الأصلية Gnutella الإتصال بـ" />
+      <control caption="أيضا شبكة نيتيللا الأصلية أقل من حيث المميزات من شبكة نيتيللا2 و ملفاتها أقل أيضا من أيدونكي و مع ذلك تبقى مصدر للملفات لا غنى عنه" />
     </dialog>
     <dialog name="CDonkeyImportDlg" cookie="StStBuBuEdBu" caption="eDonkey2000 تحميل و تصدير ">
       <control />
-      <control caption="Shareaza has detected that you have another eDonkey program installed on your computer. Would you like to import any unfinished downloads into Shareaza?" />
+      <control caption="إكتشف شير-أزا بأنه لديك برنامج إدونكي مثبت على كمبيوترك . هل تريد أن تستورد أي تحميلات غير منتهية إلى شير-أزا ؟" />
       <control caption="نعم" />
-      <control caption="لا|إلغاء" />
+      <control caption="لا|إلغاء الأمر" />
       <control />
       <control caption="إغلاق" />
     </dialog>
-    <dialog name="CWizardFinishedPage" cookie="StStStBuBuBuSt" caption="Shareaza مرحبا بك في [7 of 7]">
-      <control caption="That's it!  Shareaza has been configured to work with your computer." />
-      <control caption="If you ever need to change your settings, you can re-run this QuickStart wizard by selecting it from the Tools menu." />
-      <control caption="After closing this wizard by clicking Finish, you can connect to the networks you selected and start searching and downloading content." />
+    <dialog name="CWizardFinishedPage" cookie="StStStBuBuBuSt" caption="[ـ [7 من 7 Shareaza مرحبا بكم في">
+      <control caption="ليعمل على كمبيوترك Shareaza هذا كل شيء . تم تكوين" />
+      <control caption="عندما تحتاج إلى تغيير إعداداتك ، يمكنك تشغيل معالج البدء السريع هذا مرة أخرى من قائمة أدوات" />
+      <control caption="بعد إغلاق هذا المعالج بواسطة النقر على زر إنهاء ، يمكنك الإتصال بالشبكات التي قمت بتحديدها و تبدأ البحث عن الملفات و تحميلها" />
       <control caption="اتصل بالشبكة عن الإنتهاء من المعالج" />
       <control caption="عند تشغيل البرنامج Shareaza اتصل  بالشبكة " />
       <control caption="عند تشغيل نظام تشغيل الويندوز Shareaza بداء تشغيل" />
-      <control caption=" Shareaza تمتّع بإستعمال!" />
+      <control caption=" Shareaza تمتع بإستعمال" />
     </dialog>
     <dialog name="CProfileManagerDlg" cookie="SyBuBuBu#3" caption="تحرير ملفي الخاص">
       <control />
@@ -3691,47 +3696,47 @@
       <control />
     </dialog>
     <dialog name="CIdentityProfilePage" cookie="BuStEdStEdEdBuCoStCoStBu" caption="الهوية">
-      <control caption="_الاسم:" />
-      <control caption="اللقب:" />
+      <control caption=":الإ+سم" />
+      <control caption=":ال_لقب" />
       <control />
-      <control caption="الاسم الحقيقي:" />
+      <control caption=":الإ_سم الحقيقي" />
       <control />
       <control />
-      <control caption="_Vitals:" />
-      <control caption="|Male|Female" />
-      <control caption="Gender:" />
+      <control caption=":ت_فاصيل أخرى" />
+      <control caption="|ذكر|أنثى" />
+      <control caption=":الجنس" />
       <control />
-      <control caption="Age:" />
-      <control caption="Allow others to browse my user profile" />
+      <control caption=":العمر" />
+      <control caption="السمح للآخرين بتصفح التشكيل الجانبي لمواصفاتي" />
     </dialog>
     <dialog name="CContactProfilePage" cookie="BuStEdBuStEdStEdStEdStEdStEd" caption="الإتصال">
-      <control caption="_البريد الالكتروني:" />
-      <control caption="الاساسي:" />
+      <control caption=":ال_بريد الالكتروني" />
+      <control caption=":ال_أساسي" />
       <control />
-      <control caption="_ماسنجر الإتصال:" />
-      <control caption=" MSN ماسنجر:" />
+      <control caption=":_ماسنجر الإتصال" />
+      <control caption=":MSN ماسنجر" />
       <control />
-      <control caption="Yahoo ماسنجر:" />
+      <control caption=":Yahoo ماسنجر" />
       <control />
-      <control caption="ICQ رقم :" />
+      <control caption=":ICQ رقم" />
       <control />
-      <control caption="AOL اسم مستخدم:" />
+      <control caption=":AOL إسم مستخدم" />
       <control />
-      <control caption="Jabber ماسنجر:" />
+      <control caption=":Jabber ماسنجر" />
       <control />
     </dialog>
     <dialog name="CProfileProfilePage" cookie="BuStCoStCoBuStEdStEdBuLiBuBuCo" caption="الملف الخاص">
-      <control caption="_الموقع:" />
-      <control caption="الدولة:" />
+      <control caption=":_الموقع" />
+      <control caption=":ال_دولة" />
       <control />
-      <control caption="المدينة:" />
+      <control caption=":ال_مدينة" />
       <control />
-      <control caption="_الخريطة:" />
-      <control caption="خطّ العرض:" />
+      <control caption=":ال_خريطة" />
+      <control caption=":خطّ العرض" />
       <control />
       <control caption="خط الطول:" />
       <control />
-      <control caption="_المصالح:" />
+      <control caption="ال_هوايات" />
       <control />
       <control caption="&lt; إضافة" />
       <control caption="إزالة &gt;" />
@@ -3741,58 +3746,58 @@
       <control />
     </dialog>
     <dialog name="CAvatarProfilePage" cookie="BuStBuStBuBu" caption="الصور الرمزية">
-      <control caption="_عرض:" />
+      <control caption=":ال_عرض" />
       <control />
-      <control caption="_إختر:" />
-      <control caption="Other Gnutella users browsing your profile and shared files will see your avatar.  Custom avatars should be 128x128 pixels, and can be in any supported image file on your PC." />
+      <control caption=":إ_ختيار" />
+      <control caption="سيشاهد المستخدمون في شبكة نيتيللا الآخرون الذين يتصفحون التشكيل الجانبي لمعلوماتك الشخصية و ملفاتك المشاركة الصورة الرمزية الخاصة بك . الصور الرمزية المخصصة يجب أن تكون 128 × 128 بيكسل و يمكن أن تكون من نوع من أنواع الصور المعتمدة" />
       <control caption="_استعرض..." />
       <control caption="_إزالة" />
     </dialog>
     <dialog name="CFavouritesProfilePage" cookie="SyBuStEdStEdBuBu" caption="المفضلة">
       <control />
-      <control caption="_تحرير:" />
-      <control caption="الوصف:" />
+      <control caption=":ت_حرير" />
+      <control caption=":ال_وصف" />
       <control />
-      <control caption="الرابط:" />
+      <control caption=":ال_رابط" />
       <control />
       <control caption="جديد" />
       <control caption="إزالة" />
     </dialog>
     <dialog name="CFilesProfilePage" cookie="BuStSy" caption="الملفات">
-      <control caption="_ملفات المفضلة:" />
-      <control caption="Favourite files are recommended to users who browse your profile.  You can create favourite files by adding them to the &quot;Favourites&quot; library folder." />
+      <control caption=":م_لفات المفضلة" />
+      <control caption="الملفات المفضلة هي الملفات المستحسنة للمستخدمين الذين يتصفحون تشكيلك الجانبي . يمكنك وضع ملفات المفضلة بإضافتها إلى مجلد مكتبة &quot;المفضلة&quot; ـ" />
       <control />
     </dialog>
     <dialog name="CCertificateProfilePage" cookie="StBuStStStStBu" caption="شهادة">
-      <control caption="Gnutella users are identified by a globally unique identifier and a corresponding public and private key pair.  Normally there is no need to generate a new ID, however Shareaza provides this option for advanced users." />
-      <control caption="_Gnutella Globally Unique Identification Certificate:" />
-      <control caption="GUID:" />
+      <control caption="يتم تعريف مستخدمي نيتيللا من قبل معرف فريد عالميا و مفتاح عام و آخر خاص . عادة ليس هناك حاجة لتوليد هوية جديدة ، بالرغم من شير-أزا يقدم هذا الخيار للمستخدمين المتقدمين" />
+      <control caption=":Gnutella _شهادة التعريف الفريدة العالمية من" />
+      <control caption=":المعرف العالمي الفريد" />
       <control />
-      <control caption="إنشاء:" />
+      <control caption=":إنشاء" />
       <control />
-      <control caption="Generate New" />
+      <control caption="توليد الآن" />
     </dialog>
-    <dialog name="CLanguageDlg" cookie="" caption="إختر اللغة" />
+    <dialog name="CLanguageDlg" cookie="" caption="تحديد اللغة" />
     <dialog name="CConnectToDlg" cookie="BuCoEdBuCoBuBuBu" caption="الإتصال بـ|استعرض المستضيف">
-      <control caption="Initiate a new connection to host or server:|Browse this host:" />
+      <control caption=":تحضير إتصال جديد إلى مضيف أو ملقم|:تصفح هذا المضيف" />
       <control />
       <control />
-      <control caption="Network _Protocol:" />
-      <control caption="Gnutella1 (auto)|Gnutella2 (auto)|eDonkey" />
-      <control caption="_Suppress Ultrapeer" />
+      <control caption=":بر_وتوكول الشبكة" />
+      <control caption="Gnutella1 (تلقائي)|Gnutella2 (تلقائي)|eDonkey" />
+      <control caption="_منع نظير-فائق" />
       <control caption="إتصال" />
       <control caption="إلغاء الأمر" />
     </dialog>
-    <dialog name="CDownloadDlg" cookie="StStStEdBuBuStStBu" caption="Download File or Torrent">
+    <dialog name="CDownloadDlg" cookie="StStStEdBuBuStStBu" caption="تحميل ملف أو Torrent">
       <control />
       <control />
-      <control caption="Downloading any file with Shareaza is easy.  Simply type or paste the URL or URI describing the file into the box below and press Enter." />
+      <control caption="تحميل أي ملف بواسطة شير-أزا يعتبر أمر سهل . ببساطة أكتب أو ألصق الرابط للملف المراد تحميله أو وصفا عنه في الخانة بالأسفل ثم إضغط &quot;إنتر&quot; ـ" />
       <control />
       <control caption="تحميل" />
       <control caption="إلغاء الأمر" />
-      <control caption="Shareaza can download files from the web (HTTP), and automatically search and download P2P links (Magnet, Gnutella, eDonkey2000, mP2P)." />
-      <control caption="Shareaza can also download BitTorrent files.  A torrent can be described by an xyz.torrent file, or a HTTP link to the .torrent file.  To download a torrent HTTP link, paste it in the box above.  If you already have a .torrent file, click Open Torrent:" />
-      <control caption="فتح _Torrent..." />
+      <control caption="شير-أزا يمكنه تحميل الملفات من الويب و البحث تلقائيا عنها و تحميل روابط نظير إلى نظير{n}(Magnet و Gnutella و eDonkey2000 و mP2P)" />
+      <control caption="شير-أزا يمكنه أيضا تحميل ملفات بيت-تورينت . يمكن وصف أي ملف تورينت بملف{n}torrent لملف HTTP لتحميل رابط , torrent إلى ملف HTTP أو رابط xyz.torrent{n}:&quot;Torrent أنقر على زر &quot;فتح torrent ألصقه فوق . إذا كان لديك مسبقا ملف" />
+      <control caption="Torrent _فتح..." />
     </dialog>
     <dialog name="CNewSearchDlg" cookie="EdCoBuBu" caption="بحث جديد|البحث مره اخرى|البحث في المكتبة">
       <control />
@@ -3800,98 +3805,98 @@
       <control caption="بحث" />
       <control caption="إلغاء الأمر" />
     </dialog>
-    <dialog name="CFilterSearchDlg" cookie="BuEdStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuCoBuBuBuBuBuBuBu" caption="Filter Matches">
-      <control caption="Only show matches which include the _words:" />
+    <dialog name="CFilterSearchDlg" cookie="BuEdStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuCoBuBuBuBuBuBuBu" caption="فرز الملفات المطابقة">
+      <control caption=":فقط إظهار الملفات المطابقة التي تتضمن ال_كلمات" />
       <control />
-      <control caption="( you can also exclude words with -word )" />
-      <control caption="And are of _size:" />
-      <control caption="Minimum:" />
+      <control caption="(يمكنك أستبعاد الكلمات أيضا مع -كلمة)" />
+      <control caption=": و التي تطابق ال_حجم" />
+      <control caption=":الأدنى" />
       <control />
-      <control caption="Maximum:" />
+      <control caption=":الأقصى" />
       <control />
-      <control caption="With at least:" />
+      <control caption=":على الأقل" />
       <control />
       <control />
-      <control caption="sources." />
-      <control caption="_Hide:" />
-      <control caption="Busy hosts" />
-      <control caption="Firewalled/push hosts" />
-      <control caption="Unstable hosts" />
-      <control caption="Non-matching files" />
-      <control caption="Files you have already" />
-      <control caption="Bogus results" />
-      <control caption="Filter" />
-      <control caption="Cancel" />
+      <control caption="مصدر" />
+      <control caption=":إ_خفاء" />
+      <control caption="المضيفون المشغولون" />
+      <control caption="المضيفون المنهكون/أو خلف جدار ناري" />
+      <control caption="المضيفون الغير مستقرين" />
+      <control caption="الملفات الغير مطابقة" />
+      <control caption="الملفات التي لديك مسبقا" />
+      <control caption="النتائج المزيفة" />
+      <control caption="فرز الآن" />
+      <control caption="إلغاء الأمر" />
       <control />
-      <control caption="Set as default" />
-      <control caption="_Save as" />
-      <control caption="_Delete" />
-      <control caption="Filters:" />
-      <control caption="DRM files" />
-      <control caption="Suspicious files" />
-      <control caption="Adult results" />
+      <control caption="وضع كإفتراضي" />
+      <control caption="حفظ _باسم" />
+      <control caption="_حذف" />
+      <control caption="الفرز:" />
+      <control caption="DRM ملف" />
+      <control caption="الملفات المشبوهة" />
+      <control caption="نتائج مواد البالغين" />
     </dialog>
-    <dialog name="CSaveFilterAsDlg" cookie="EdBuBuSt" caption="Save filter as">
+    <dialog name="CSaveFilterAsDlg" cookie="EdBuBuSt" caption="حفظ المرشح باسم">
       <control />
-      <control caption="OK" />
-      <control caption="Cancel" />
-      <control caption="Save the current filter as" />
+      <control caption="حسنا" />
+      <control caption="إلغاء الأمر" />
+      <control caption="حفظ المرشح الحالي باسم" />
     </dialog>
-    <dialog name="CDiscoveryServiceDlg" cookie="BuEdStCoBuBu" caption="Discovery Service">
-      <control caption="Service _Address:" />
+    <dialog name="CDiscoveryServiceDlg" cookie="BuEdStCoBuBu" caption="خدمة الإكتشاف">
+      <control caption=":عنوان ال_خدمة" />
       <control />
-      <control caption="Discovery Service Type:" />
-      <control caption="Gnutella Bootstrap|GWebCache|Server.met URL|Blocked" />
-      <control caption="OK" />
-      <control caption="Cancel" />
+      <control caption=": نوع خدمة الإكتشاف" />
+      <control caption="Gnutella Bootstrap|GWebCache|Server.met رابط|المحجوبة" />
+      <control caption="حسنا" />
+      <control caption="إلغاء الأمر" />
     </dialog>
-    <dialog name="CDownloadMonitorDlg" cookie="StStStStStStStStStStStStStBuBuBuBuBu" caption="Download : Shareaza">
-      <control caption="Shareaza is downloading:" />
+    <dialog name="CDownloadMonitorDlg" cookie="StStStStStStStStStStStStStBuBuBuBuBu" caption="تحميل : Shareaza">
+      <control caption=":يقوم بالتحميل Shareaza" />
       <control caption="..." />
       <control />
       <control />
       <control />
-      <control caption="Total transfer speed:" />
+      <control caption=":السرعة الإجمالية للنقل" />
       <control caption="..." />
-      <control caption="Estimated time remaining:" />
+      <control caption=":الوقت المتبقي المقدر" />
       <control caption="..." />
-      <control caption="حجم التحميل:" />
+      <control caption=":حجم التحميل" />
       <control caption="..." />
-      <control caption="Number of sources:" />
+      <control caption=":عدد المصادر" />
       <control caption="..." />
-      <control caption="Close this window when the download completes" />
+      <control caption="إغلاق هذه النافذة عند إنتهاء التحميل" />
       <control caption="فتح ملف" />
       <control caption="عرض المكتبة" />
       <control caption="إلغاء التحميل" />
       <control caption="اخفاء" />
     </dialog>
     <dialog name="CFileGeneralPage" cookie="StEdEdEdEdStStEdStEdStEdStEdEdEd" caption="عام">
-      <control caption="أسماء المصدر العالمية (URNs)" />
+      <control caption="أسماء المصادر العالمية (URNs)" />
       <control />
       <control />
       <control />
       <control />
-      <control caption="File Attributes" />
-      <control caption="Location:" />
+      <control caption="خواص الملف" />
+      <control caption=":الموضع" />
       <control />
-      <control caption="Type:" />
+      <control caption=":النوع" />
       <control />
-      <control caption="Modified:" />
+      <control caption=":التعديل" />
       <control />
-      <control caption="Size:" />
+      <control caption=":الحجم" />
       <control />
       <control />
       <control />
     </dialog>
-    <dialog name="CFileMetadataPage" cookie="CoEd" caption="Metadata">
+    <dialog name="CFileMetadataPage" cookie="CoEd" caption="ملف تعريف">
       <control />
       <control />
     </dialog>
-    <dialog name="CFileCommentsPage" cookie="StStCoStEdEd" caption="مراجعتي">
-      <control caption="مراجعتي" />
-      <control caption="أقدّر هذا الملف:" />
-      <control caption="(No Rating)|Fake/Corrupt/Misleading|Poor|Average|Good|Very Good|Excellent" />
-      <control caption="My Review and Comments" />
+    <dialog name="CFileCommentsPage" cookie="StStCoStEdEd" caption="معاينتي">
+      <control caption="معاينتي" />
+      <control caption=":تصنيفي لهذا الملف" />
+      <control caption="(بدون تصنيق)|زائف/تالف/محتال|سيئ|معتدل|جيد|جيد جدا|ممتاز" />
+      <control caption="معاينتي و تعليقاتي" />
       <control />
       <control />
     </dialog>
@@ -3900,19 +3905,19 @@
       <control caption="وضع مشاركة على الملف اذا كان على المجلد الاصل عليه مشاركة" />
       <control caption="تجاز وضع مشاركة على إعدادات هذا الملف:" />
       <control caption="ضع هذا الملف متواجد للمستخدمين الاخرين" />
-      <control caption="بطاقة إختيار طابور ارسال " />
+      <control caption="بطاقة إختيار قائمة إنتظار الإرسال " />
       <control />
-      <control caption="-Networks to Share On" />
+      <control caption="ال_شبكات للمشاركة منها" />
       <control />
       <control />
     </dialog>
-    <dialog name="CFileSourcesPage" cookie="StStEdSyBuBuEd" caption="مصادر">
+    <dialog name="CFileSourcesPage" cookie="StStEdSyBuBuEd" caption="المصادر">
       <control caption="المصادر المعروفة" />
-      <control caption="أضف مصدرا جديدا" />
+      <control caption="إضافة مصدر جديد" />
       <control />
       <control />
-      <control caption="_Add" />
-      <control caption="_Remove" />
+      <control caption="إ_ضافة" />
+      <control caption="إ_زالة" />
       <control />
     </dialog>
     <dialog name="CFileCopyDlg" cookie="StStmsBuBumsStSt" caption="نسخ الملفات|نقل الملفات">
@@ -3920,10 +3925,10 @@
       <control />
       <control />
       <control caption="جاهز..." />
-      <control caption="Cancel" />
+      <control caption="إلغاء الأمر" />
       <control />
       <control caption="Ready..." />
-      <control caption="You have selected %i file(s) to move to the following folder:" />
+      <control caption=": لقد قمت بتحديد %i ملف(ات) للنسخ إلى المجلد التالي" />
     </dialog>
     <dialog name="CFolderPropertiesDlg" cookie="StEdStCoBuStBuBu" caption="خصائص مجلد الألبوم">
       <control caption="عنوان مجلد الألبوم:" />
@@ -3935,84 +3940,84 @@
       <control caption="حسنا" />
       <control caption="إلغاء الأمر" />
     </dialog>
-    <dialog name="CGraphListDlg" cookie="SyBuBuBuBuBuBuBuBuStEdmsStBuEdBuBu" caption="Traffic Graphs">
+    <dialog name="CGraphListDlg" cookie="SyBuBuBuBuBuBuBuBuStEdmsStBuEdBuBu" caption="مخطط حركة المرور">
       <control />
       <control caption="_إضافة..." />
       <control caption="_تحرير..." />
       <control caption="_إزالة" />
-      <control caption="_إظهار:" />
-      <control caption="خطوط الشبكة" />
-      <control caption="Vertical Axis" />
-      <control caption="Legend" />
-      <control caption="Sampling _Frequency:" />
-      <control caption="Period between samples:" />
+      <control caption=":إ_ظهار" />
+      <control caption="خطوط شبكة" />
+      <control caption="محاور رأسية" />
+      <control caption="إيضاح" />
+      <control caption=":تردد _أخذ العينات" />
+      <control caption=":الفترة بين العينات" />
       <control />
       <control />
-      <control caption="ms" />
-      <control caption="_الاسم:" />
+      <control caption="مث" />
+      <control caption=":ال_إسم" />
       <control />
       <control caption="حسنا" />
       <control caption="إلغاء الأمر" />
     </dialog>
-    <dialog name="CGraphItemDlg" cookie="BuBuBuCoStEdStEdBuBuStBu" caption="Graph Item Properties">
+    <dialog name="CGraphItemDlg" cookie="BuBuBuCoStEdStEdBuBuStBu" caption="خصائص مادة المخطط">
       <control caption="حسنا" />
       <control caption="إلغاء الأمر" />
-      <control caption="_المصادر:" />
+      <control caption=":ال_مصادر" />
       <control />
-      <control caption="Parameter:" />
+      <control caption=":المعيار" />
       <control />
-      <control caption="Units:" />
+      <control caption=":الوحدات" />
       <control />
-      <control caption="_العرض:" />
-      <control caption="إختر اللون..." />
+      <control caption=":ال_عرض" />
+      <control caption="تحديد اللون..." />
       <control />
       <control caption="_إزالة" />
     </dialog>
-    <dialog name="CSchemaColumnsDlg" cookie="CoSyBuBuSt" caption="Select Columns from Schema">
+    <dialog name="CSchemaColumnsDlg" cookie="CoSyBuBuSt" caption="تحديد الأعمدة من المخطط">
       <control />
       <control />
       <control caption="حسنا" />
       <control caption="إلغاء الأمر" />
-      <control caption="Select a schema from the list, then select the fields to display as columns." />
+      <control caption="قم بتحديد مخطط من القائمة ثم حدد الحقول لعرضها على شكل أعمدة" />
     </dialog>
-    <dialog name="CSecureRuleDlg" cookie="BuStCoStEdBuStEdEdEdEdStEdEdEdEdBuEdBuBuBuStCoStCoEdStEdStEdStBuBu" caption="Security Rule">
-      <control caption="_Rule:" />
-      <control caption="Type:" />
-      <control caption="Network (IP) Address|Content Filter" />
-      <control caption="Comment:" />
+    <dialog name="CSecureRuleDlg" cookie="BuStCoStEdBuStEdEdEdEdStEdEdEdEdBuEdBuBuBuStCoStCoEdStEdStEdStBuBu" caption="قاعدة الأمان">
+      <control caption=":ال_قاعدة" />
+      <control caption=":النوع" />
+      <control caption="الشبكة (IP) عنوان|مرشح المحتوى" />
+      <control caption=":التعليق" />
       <control />
-      <control caption="_Network Address:" />
-      <control caption="IP Address:" />
-      <control />
-      <control />
-      <control />
-      <control />
-      <control caption="Netmask:" />
+      <control caption=":عنوان ال_شبكة" />
+      <control caption=":IP عنوان" />
       <control />
       <control />
       <control />
       <control />
-      <control caption="_Content Filter:" />
+      <control caption=":قناع الشبكة" />
       <control />
-      <control caption="Match Any" />
-      <control caption="Match All" />
-      <control caption="_خيارات:" />
-      <control caption="Action:" />
-      <control caption="None|Accept|Deny" />
-      <control caption="Expire:" />
-      <control caption="Never (Indefinite)|At End of Session|After:" />
       <control />
-      <control caption="d" />
       <control />
-      <control caption="h" />
       <control />
-      <control caption="m" />
+      <control caption=":مرشح ال_محتوى" />
+      <control />
+      <control caption="مطابقة" />
+      <control caption="مطابقة الكل" />
+      <control caption="_:خيارات" />
+      <control caption=":الإجراء" />
+      <control caption="بدون|قبول|رفض" />
+      <control caption=":الإنتهاء" />
+      <control caption="(بدون (بغير تحديد|في نهاية الجلسة|: بعد" />
+      <control />
+      <control caption="ي" />
+      <control />
+      <control caption="س" />
+      <control />
+      <control caption="د" />
       <control caption="حسنا" />
       <control caption="إلغاء الأمر" />
     </dialog>
     <dialog name="CShareManagerDlg" cookie="StStSyBuBuBuBu" caption="إدارة مجلد المشاركة">
       <control />
-      <control caption="This is a list of folders in your library. You can add and remove folders using the buttons on the left. When you add a new folder it is initially shared with other users, however you can unshare it from the Shareaza library if you wish." />
+      <control caption="هذه هي قائمة المجلدات في مكتبتك . يمكنك أن تضيف و أن تزيل المجلدات باستخدام الأزرار التي على اليسار . عندما تضيف أي مجلد جديد هو أصلا للمشاركة مع المستخدمين الآخرين ، يمكنك أن تزيله من مكتبة شير-أزا متى ما تريد" />
       <control />
       <control caption="_إضافة..." />
       <control caption="_إزالة" />
@@ -4103,14 +4108,14 @@
       <control caption="Show me the file in my library" />
       <control caption="Download the file again" />
       <control caption="Don't download this file" />
-      <control caption="OK" />
-      <control caption="Cancel" />
+      <control caption="حسنا" />
+      <control caption="إلغاء الأمر" />
       <control caption="You have downloaded and deleted this file before. What would you like to do?" />
       <control caption="Warning!!! Duplicate files detected. Some malicious software may infect your Library. Make sure that you downloaded this file or placed it manually. Otherwise, shutdown Shareaza and scan your computer with an antivirus program." />
     </dialog>
     <dialog name="CCloseModeDlg" cookie="StStBuBuBuBuBu" caption="زر الإغلاق">
       <control />
-      <control caption="هذه اول مره تضغط على زر الإغلاق . رجاء إختر ماذا تريد انت تعمل لكي يتم تطبيقه على جميع الاحوال:" />
+      <control caption="هذه اول مره تضغط على زر الإغلاق . رجاء تحديد ماذا تريد انت تعمل لكي يتم تطبيقه على جميع الاحوال:" />
       <control caption="تصغير البرنامج في الاسفل مع امكانية استرجاعه" />
       <control caption="حالاً Shareaza إيقاف تشغيل " />
       <control caption="بعد الإنتهاء من تحميل الملفات او الإنتهاء من رفع الملفات Shareaza  إيقاف " />
@@ -4122,8 +4127,8 @@
       <control caption="You can download an eDonkey server.met file from the web to refresh your local list of servers." />
       <control />
       <control />
-      <control caption="OK" />
-      <control caption="Cancel" />
+      <control caption="حسنا" />
+      <control caption="إلغاء الأمر" />
     </dialog>
     <dialog name="CHelpDlg" cookie="StBuAf" caption="Shareaza تعليمات">
       <control />
@@ -4137,7 +4142,7 @@
       <control caption="حذف الكل" />
       <control caption="إلغاء الأمر" />
       <control />
-      <control caption="يمكن للاشيرازا ان يتذكر هذا الملف ويحذرك اذا صادفة في البحث مرة اخرى . رجاء إختر سبب لحذف هذا الملف:" />
+      <control caption="يمكن للاشيرازا ان يتذكر هذا الملف ويحذرك اذا صادفة في البحث مرة اخرى . رجاء تحديد سبب لحذف هذا الملف:" />
       <control caption="Create a ghost file" />
       <control caption="لا اريد إضافة اي تعليق." />
       <control caption="هذا الملف يسمى باسم خطاء . ويمكن ان يكون مظلل." />
@@ -4156,9 +4161,9 @@
       <control />
       <control caption="Description:" />
       <control />
-      <control caption="Delete|_Back" />
+      <control caption="حذف|_Back" />
       <control caption="_Next|Export..." />
-      <control caption="_Cancel" />
+      <control caption="_إلغاء الأمر" />
     </dialog>
     <dialog name="CDownloadEditDlg" cookie="StBuStEdEdStEdBuStStEdBuStEdBuStEdBuBuStStStStBuStEdStEdBuBuBuBu" caption="Edit Download">
       <control caption="WARNING: This dialog provides advanced download editing features for power users which if used incorrectly can and probably will cause corruption." />
@@ -4251,10 +4256,10 @@
       <control />
       <control caption="_Filters:" />
       <control />
-      <control caption="_Add" />
-      <control caption="_Remove" />
-      <control caption="OK" />
-      <control caption="Cancel" />
+      <control caption="إ_ضافة" />
+      <control caption="إ_زالة" />
+      <control caption="حسنا" />
+      <control caption="إلغاء الأمر" />
       <control caption="Completed File _Folder:" />
       <control />
     </dialog>
@@ -4264,8 +4269,8 @@
       <control />
       <control caption="Footer Display|Full Size Display|Large Display|Medium Display|Small Display" />
       <control caption="_Setup..." />
-      <control caption="OK" />
-      <control caption="Cancel" />
+      <control caption="حسنا" />
+      <control caption="إلغاء الأمر" />
     </dialog>
     <dialog name="CUpgradeDlg" cookie="StStStBuBuBu" caption="Upgrade Alert">
       <control />
@@ -4374,7 +4379,7 @@
       <column from="G1-ID" to="" />
     </list>
     <list name="CSearchMonitorWnd">
-      <column from="Search" to="بحث" />
+      <column from="بحث" to="بحث" />
       <column from="URN" to="" />
       <column from="Schema" to="" />
     </list>
