@@ -280,10 +280,8 @@
 			<Tool
 				Name="VCLinkerTool"
 				IgnoreImportLibrary="true"
-				AdditionalDependencies="unicows.lib kernel32.lib gdi32.lib user32.lib shell32.lib advapi32.lib odbc32.lib odbccp32.lib rpcrt4.lib"
 				LinkIncremental="1"
-				IgnoreAllDefaultLibraries="false"
-				IgnoreDefaultLibraryNames="kernel32.lib advapi32.lib user32.lib gdi32.lib"
+				IgnoreDefaultLibraryNames=""
 				ModuleDefinitionFile="ImageViewer.def"
 				ProgramDatabaseFile=".\ReleaseUMinSize/ImageViewer.pdb"
 				SubSystem="2"
@@ -386,10 +384,8 @@
 			<Tool
 				Name="VCLinkerTool"
 				IgnoreImportLibrary="true"
-				AdditionalDependencies="unicows.lib kernel32.lib gdi32.lib user32.lib shell32.lib advapi32.lib odbc32.lib odbccp32.lib rpcrt4.lib"
 				LinkIncremental="1"
-				IgnoreAllDefaultLibraries="false"
-				IgnoreDefaultLibraryNames="kernel32.lib advapi32.lib user32.lib gdi32.lib"
+				IgnoreDefaultLibraryNames=""
 				ModuleDefinitionFile="ImageViewer.def"
 				ProgramDatabaseFile=".\ReleaseUMinSize/ImageViewer.pdb"
 				SubSystem="2"

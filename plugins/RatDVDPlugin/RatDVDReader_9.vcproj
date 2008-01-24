@@ -246,8 +246,11 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				Optimization="1"
+				Optimization="3"
+				InlineFunctionExpansion="2"
+				EnableIntrinsicFunctions="true"
 				FavorSizeOrSpeed="1"
+				OmitFramePointers="true"
 				AdditionalIncludeDirectories="..\..\shareaza"
 				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_USRDLL"
 				ExceptionHandling="1"
@@ -273,10 +276,9 @@
 			<Tool
 				Name="VCLinkerTool"
 				IgnoreImportLibrary="true"
-				AdditionalDependencies="unicows.lib Libcmt.lib"
 				OutputFile="$(OutDir)/RatDVDReader.dll"
 				LinkIncremental="1"
-				IgnoreDefaultLibraryNames="User32.lib;GDI32.lib;ComDlg32.lib;WinSpool.lib;shell32.lib;version.lib"
+				IgnoreDefaultLibraryNames=""
 				ModuleDefinitionFile="RatDVDReader.def"
 				GenerateDebugInformation="true"
 				GenerateMapFile="true"
@@ -347,8 +349,11 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				Optimization="1"
+				Optimization="3"
+				InlineFunctionExpansion="2"
+				EnableIntrinsicFunctions="true"
 				FavorSizeOrSpeed="1"
+				OmitFramePointers="true"
 				AdditionalIncludeDirectories="..\..\shareaza"
 				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_USRDLL"
 				ExceptionHandling="1"
@@ -374,10 +379,9 @@
 			<Tool
 				Name="VCLinkerTool"
 				IgnoreImportLibrary="true"
-				AdditionalDependencies="unicows.lib Libcmt.lib"
 				OutputFile="$(OutDir)/RatDVDReader.dll"
 				LinkIncremental="1"
-				IgnoreDefaultLibraryNames="User32.lib;GDI32.lib;ComDlg32.lib;WinSpool.lib;shell32.lib;version.lib"
+				IgnoreDefaultLibraryNames=""
 				ModuleDefinitionFile="RatDVDReader.def"
 				GenerateDebugInformation="true"
 				GenerateMapFile="true"
