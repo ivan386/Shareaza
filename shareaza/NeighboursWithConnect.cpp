@@ -325,22 +325,6 @@ DWORD CNeighboursWithConnect::IsG2HubCapable(BOOL bDebug)
 		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("OK: not a leaf") );
 	}
 
-	// Make sure the connection limits for Gnutella2 in settings aren't too low
-	if ( Settings.Gnutella2.NumPeers < 4 ) // The user says we can't have 4 or more connections to hubs (do)
-	{
-		// If debugging, log the reason we can't be a hub, and return no
-		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("NO: less than 4x G2 hub to hub") );
-		return FALSE;
-	}
-
-	// The user says we can't have 50 or more connetions to leaves, as a hub, we would need more
-	if ( Settings.Gnutella2.NumLeafs < 50 )
-	{
-		// If debugging, log the reason we can't be a hub, and return no
-		if ( bDebug ) theApp.Message( MSG_DEBUG, _T("NO: less than 50x G2 hub to leaf") );
-		return FALSE;
-	}
-
 	// The user can check a box in settings to let the program become a hub without passing the additional tests below
 	if ( Settings.Gnutella2.ClientMode == MODE_HUB )
 	{
@@ -640,20 +624,6 @@ DWORD CNeighboursWithConnect::IsG1UltrapeerCapable(BOOL bDebug)
 		if ( ( Settings.Bandwidth.Uploads <= 4096 ) && ( Settings.Bandwidth.Uploads != 0 ) )
 		{
 			if ( bDebug ) theApp.Message( MSG_DEBUG, _T("NO: Upload limit set too low") );
-			return FALSE;
-		}
-
-		// Check other settings related to Gnutella ultrapeer mode, they should all be higher than these values
-		if ( Settings.Gnutella1.NumPeers < 4 ) // The user says we can't have 4 or more connections to ultrapeers (do)
-		{
-			if ( bDebug ) theApp.Message( MSG_DEBUG, _T("NO: less than 4x G1 peer to peer") );
-			return FALSE;
-		}
-
-		// Settings limit the number of leaf connetions to fewer than 5, as an ultrapeer, we would need more
-		if ( Settings.Gnutella1.NumLeafs < 5 )
-		{
-			if ( bDebug ) theApp.Message( MSG_DEBUG, _T("NO: less than 5x G1 ultrapeer to leaf") );
 			return FALSE;
 		}
 
