@@ -87,7 +87,7 @@
 				ModuleDefinitionFile="RatDVDReader.def"
 				GenerateDebugInformation="true"
 				SubSystem="2"
-				BaseAddress="0x25000000"
+				BaseAddress="0x22200000"
 				ImportLibrary="$(OutDir)/RatDVDReader.lib"
 				TargetMachine="1"
 			/>
@@ -183,7 +183,7 @@
 				ModuleDefinitionFile="RatDVDReader.def"
 				GenerateDebugInformation="true"
 				SubSystem="2"
-				BaseAddress="0x25000000"
+				BaseAddress="0x22200000"
 				ImportLibrary="$(OutDir)/RatDVDReader.lib"
 				TargetMachine="17"
 			/>
@@ -284,10 +284,8 @@
 				SubSystem="2"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
-				BaseAddress="0x22000000"
-				SupportUnloadOfDelayLoadedDLL="false"
-				ImportLibrary="$(OutDir)/RatDVDReader.lib"
-				MergeSections=".rdata=.text"
+				SetChecksum="true"
+				BaseAddress="0x22200000"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -387,10 +385,8 @@
 				SubSystem="2"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
-				BaseAddress="0x22000000"
-				SupportUnloadOfDelayLoadedDLL="false"
-				ImportLibrary="$(OutDir)/RatDVDReader.lib"
-				MergeSections=".rdata=.text"
+				SetChecksum="true"
+				BaseAddress="0x22200000"
 				TargetMachine="17"
 			/>
 			<Tool

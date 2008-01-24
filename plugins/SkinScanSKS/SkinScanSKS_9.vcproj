@@ -86,7 +86,7 @@
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				SetChecksum="false"
-				BaseAddress="0x1afa0000"
+				BaseAddress="0x1af00000"
 				ImportLibrary=""
 				TargetMachine="1"
 			/>
@@ -183,7 +183,7 @@
 				GenerateMapFile="false"
 				SubSystem="2"
 				SetChecksum="false"
-				BaseAddress="0x1afa0000"
+				BaseAddress="0x1af00000"
 				ImportLibrary=""
 				TargetMachine="17"
 			/>
@@ -282,7 +282,7 @@
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				SetChecksum="true"
-				BaseAddress="0x1afa0000"
+				BaseAddress="0x1af00000"
 				ImportLibrary=""
 				TargetMachine="1"
 			/>
@@ -382,7 +382,7 @@
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				SetChecksum="true"
-				BaseAddress="0x1afa0000"
+				BaseAddress="0x1af00000"
 				ImportLibrary=""
 				TargetMachine="17"
 			/>

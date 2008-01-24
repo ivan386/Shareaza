@@ -209,6 +209,7 @@
 			UseOfMFC="1"
 			UseOfATL="0"
 			CharacterSet="1"
+			WholeProgramOptimization="1"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -272,8 +273,7 @@
 				SubSystem="2"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
-				EntryPointSymbol="wWinMainCRTStartup"
-				MergeSections=".rdata=.text"
+				SetChecksum="true"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -307,6 +307,7 @@
 			UseOfMFC="1"
 			UseOfATL="0"
 			CharacterSet="1"
+			WholeProgramOptimization="1"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -370,8 +371,7 @@
 				SubSystem="2"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
-				EntryPointSymbol="wWinMainCRTStartup"
-				MergeSections=".rdata=.text"
+				SetChecksum="true"
 				TargetMachine="17"
 			/>
 			<Tool
