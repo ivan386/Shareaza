@@ -247,6 +247,7 @@
 				BrowseInformation="1"
 				WarningLevel="4"
 				DebugInformationFormat="0"
+				DisableSpecificWarnings="4710;4711;4738"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -262,7 +263,6 @@
 			<Tool
 				Name="VCLinkerTool"
 				IgnoreImportLibrary="true"
-				AdditionalOptions="/NODEFAULTLIB:LIBC /mapinfo:lines /mapinfo:exports"
 				AdditionalDependencies="winmm.lib version.lib ws2_32.lib wininet.lib Iphlpapi.lib msi.lib"
 				IgnoreDefaultLibraryNames=""
 				SubSystem="2"
@@ -342,6 +342,7 @@
 				BrowseInformation="1"
 				WarningLevel="4"
 				DebugInformationFormat="0"
+				DisableSpecificWarnings="4710;4711;4738"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -357,7 +358,6 @@
 			<Tool
 				Name="VCLinkerTool"
 				IgnoreImportLibrary="true"
-				AdditionalOptions="/NODEFAULTLIB:LIBC /mapinfo:lines /mapinfo:exports"
 				AdditionalDependencies="winmm.lib version.lib ws2_32.lib wininet.lib Iphlpapi.lib msi.lib"
 				IgnoreDefaultLibraryNames=""
 				SubSystem="2"
