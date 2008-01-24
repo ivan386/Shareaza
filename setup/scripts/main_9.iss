@@ -18,7 +18,7 @@
 #define date          GetDateTimeString('yyyy/mm/dd', '-', '')
 
 [Setup]
-AppComments={#internal_name} Ultimate File Sharing
+AppComments={#Description}
 AppId={#internal_name}
 AppName={#name}
 AppVersion={#version}
@@ -99,6 +99,9 @@ Source: "setup\builds\zlibwapi.dll"; DestDir: "{app}\Plugins"; DestName: "zlibwa
 Source: "setup\builds\zlibwapi_x64.dll"; DestDir: "{app}";         DestName: "zlibwapi.dll"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 Source: "setup\builds\zlibwapi_x64.dll"; DestDir: "{app}\Plugins"; DestName: "zlibwapi.dll"; Flags: overwritereadonly replacesameversion uninsremovereadonly sortfilesbyextension deleteafterinstall
 #endif
+
+; SQLite
+Source: "setup\builds\sqlite3.dll"; DestDir: "{app}"; DestName: "sqlite3.dll"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension skipifsourcedoesntexist
 
 ; GeoIP
 Source: "GeoIP\geoip.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
