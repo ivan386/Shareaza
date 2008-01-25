@@ -1149,6 +1149,7 @@
 			<item id="ID_LIBRARY_COPY" text="Copiar Arquivos..."/>
 		</menu>
 		<item id="ID_LIBRARY_REBUILD_ANSI" text="Localizar Metadata"/>
+		<item id="ID_LIBRARY_REFRESH_METADATA" text="Atualizar Metadata"/>
 		<separator/>
 		<item id="ID_LIBRARY_PROPERTIES" text="Propriedades"/>
 	</menu>
@@ -1181,6 +1182,7 @@
 			<item id="ID_LIBRARY_COPY" text="Copiar Arquivos..."/>
 		</menu>
 		<item id="ID_LIBRARY_REBUILD_ANSI" text="Localizar Metadata"/>
+		<item id="ID_LIBRARY_REFRESH_METADATA" text="Atualizar Metadata"/>
 		<separator/>
 		<item id="ID_LIBRARY_COLUMNS" text="Escolher Colunas..."/>
 		<separator/>
@@ -1217,6 +1219,7 @@
 			<item id="ID_LIBRARY_COPY" text="Copiar Arquivos..."/>
 		</menu>
 		<item id="ID_LIBRARY_REBUILD_ANSI" text="Localizar Metadata"/>
+		<item id="ID_LIBRARY_REFRESH_METADATA" text="Atualizar Metadata"/>
 		<separator/>
 		<item id="ID_LIBRARY_PROPERTIES" text="Propriedades"/>
 	</menu>
@@ -1251,6 +1254,7 @@
 			<item id="ID_LIBRARY_COPY" text="Copiar Arquivos..."/>
 		</menu>
 		<item id="ID_LIBRARY_REBUILD_ANSI" text="Localizar Metadata"/>
+		<item id="ID_LIBRARY_REFRESH_METADATA" text="Atualizar Metadata"/>
 		<separator/>
 		<item id="ID_LIBRARY_COLUMNS" text="Escolher Colunas..."/>
 		<separator/>
@@ -2591,7 +2595,7 @@
 	<string id="8231" value="Sem fontes"/>
 	<string id="8232" value="Abrir"/>
 	<string id="8233" value="Prévia"/>
-	<string id="8235" value="Velocidade de transferência total:"/>
+	<string id="8235" value="Velocidade total:"/>
 	<string id="8236" value="Tempo restante estimado:"/>
 	<string id="8237" value="Volume baixado:"/>
 	<string id="8238" value="Número de fontes:"/>
@@ -3271,13 +3275,49 @@
 		<control caption="Filtrar mensagens de chat com spam"/>
 		<control caption="Censurar obscenidades no chat"/>
 	</dialog>
-	<dialog name="CWebSettingsPage" cookie="BuStBuBuBuBuBuBuBuCoBuBuSt" caption="Rede">
-		<control caption="Gerenciamento de Links Peer-To-Peer:"/>
-		<control caption="Usar o Shareaza pra abrir estes tipos de links:"/>
-		<control caption="Magnet (magnet)"/>
-		<control caption="Gnutella (gnutella)"/>
-		<control caption="eDonkey (ed2k)"/>
-		<control caption="Piolet (mp2p)"/>
+	<dialog name="CIRCSettingsPage" cookie="BuBuBuEdStBuStCoBuBuStBuStBuStBuStBuStBuStBuStEdStEdStEdStEdStEdStEd" caption="Chat">
+		<control caption="Opções do Cliente:"/>
+		<control caption="Mostrar integração ao chat"/>
+		<control caption="Proteção contra flood:"/>
+		<control/>
+		<control caption="linhas por segundo"/>
+		<control caption="Mostrar tempo"/>
+		<control caption="Fonte da Tela:"/>
+		<control/>
+		<control caption="Cores:"/>
+		<control/>
+		<control caption="Mensagens do servidor"/>
+		<control/>
+		<control caption="Tópicos"/>
+		<control/>
+		<control caption="Ações no Canal"/>
+		<control/>
+		<control caption="Recados"/>
+		<control/>
+		<control caption="Cenário de Fundo do Chat"/>
+		<control/>
+		<control caption="Texto"/>
+		<control caption="Configurações da Conexão:"/>
+		<control caption="Apelido:"/>
+		<control/>
+		<control caption="Nome do usuário:"/>
+		<control/>
+		<control caption="Trocar de Apelido:"/>
+		<control/>
+		<control caption="Nome verdadeiro:"/>
+		<control/>
+		<control caption="Servidor:"/>
+		<control/>
+		<control caption="Porta:"/>
+		<control/>
+	</dialog>
+	<dialog name="CWebSettingsPage" cookie="BuStBuBuBuBuBuBuBuCoBuBuSt" caption="Web">
+		<control caption="Gerenciamento de Link_Peer to Peer:"/>
+		<control caption="Usar Shareaza para abrir estes tipos de links:"/>
+		<control caption="Magnet ( magnet: )"/>
+		<control caption="Gnutella ( gnutella: )"/>
+		<control caption="eDonkey ( ed2k: )"/>
+		<control caption="Piolet ( mp2p: )"/>
 		<control caption="BitTorrent (.torrent)"/>
 		<control caption="Gerenciador de Downloads:"/>
 		<control caption="Usar o Shareaza para gerenciar todos os meus downloads da rede:"/>
