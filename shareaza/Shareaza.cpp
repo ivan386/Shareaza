@@ -706,18 +706,16 @@ void CShareazaApp::GetVersionNumber()
 	m_pBTVersion[ 1 ] = BT_ID2;
 	m_pBTVersion[ 2 ] = (BYTE)m_nVersion[ 0 ];
 	m_pBTVersion[ 3 ] = (BYTE)m_nVersion[ 1 ];
-}
 
-/////////////////////////////////////////////////////////////////////////////
-// CShareazaApp resources
-
-void CShareazaApp::InitResources()
-{
 	//Determine the version of Windows
 	OSVERSIONINFOEX pVersion;
 	pVersion.dwOSVersionInfoSize = sizeof(OSVERSIONINFOEX);
 	GetVersionEx( (OSVERSIONINFO*)&pVersion );
-	
+
+	VER_PLATFORM_WIN32s;
+	VER_PLATFORM_WIN32_WINDOWS;
+	VER_PLATFORM_WIN32_NT;
+
 	//Networking is poor under Win9x based operating systems. (95/98/Me)
 	m_bNT = ( pVersion.dwPlatformId == VER_PLATFORM_WIN32_NT );
 
@@ -734,9 +732,6 @@ void CShareazaApp::InitResources()
 	m_bWinME = ( m_dwWindowsVersion == 4 && m_dwWindowsVersionMinor == 90 );
 
 	m_bLimitedConnections = FALSE;
-	VER_PLATFORM_WIN32s;
-	VER_PLATFORM_WIN32_WINDOWS;
-	VER_PLATFORM_WIN32_NT;
 
 	if ( m_dwWindowsVersion == 5 && m_dwWindowsVersionMinor == 1 )
 	{	//Windows XP - Test for SP2
@@ -758,7 +753,13 @@ void CShareazaApp::InitResources()
 		// Windows Vista or higher
 		m_bLimitedConnections = TRUE;
 	}
+}
 
+/////////////////////////////////////////////////////////////////////////////
+// CShareazaApp resources
+
+void CShareazaApp::InitResources()
+{
 	//Get pointers to some functions that don't exist under 95/NT
 	if ( ( m_hUser32 = LoadLibrary( _T("User32.dll") ) ) != NULL )
 	{
