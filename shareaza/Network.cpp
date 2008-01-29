@@ -171,7 +171,11 @@ int CNetwork::IsWellConnected() const
 
 BOOL CNetwork::IsStable() const
 {
+#ifdef LAN_MODE
+	return IsListening();
+#else // LAN_MODE
 	return IsListening() && ( Handshakes.m_nStableCount > 0 );
+#endif // LAN_MODE
 }
 
 BOOL CNetwork::IsFirewalled(int nCheck) const
@@ -506,12 +510,20 @@ BOOL CNetwork::IsFirewalledAddress(LPVOID pAddress, BOOL bIncludeSelf, BOOL bFor
 	if ( ! pAddress ) return TRUE;
 	if ( bIncludeSelf && IsSelfIP( *(IN_ADDR*)pAddress ) ) return TRUE;
 	if ( ! *(DWORD*)pAddress ) return TRUE;							// 0.0.0.0
+#ifdef LAN_MODE
+	UNUSED_ALWAYS( bForceCheck );
+	if ( ( *(DWORD*)pAddress & 0xFFFF ) == 0xA8C0 ) return FALSE;	// 192.168.0.0/16
+	if ( ( *(DWORD*)pAddress & 0xF0FF ) == 0x10AC ) return FALSE;	// 172.16.0.0/12
+	if ( ( *(DWORD*)pAddress & 0xFF ) == 0x0A ) return FALSE;		// 10.0.0.0/8
+	return TRUE;
+#else // LAN_MODE
 	if ( ! bForceCheck && ! Settings.Connection.IgnoreLocalIP ) return FALSE;
 	if ( ( *(DWORD*)pAddress & 0xFFFF ) == 0xA8C0 ) return TRUE;	// 192.168.0.0/16
 	if ( ( *(DWORD*)pAddress & 0xF0FF ) == 0x10AC ) return TRUE;	// 172.16.0.0/12
 	if ( ( *(DWORD*)pAddress & 0xFF ) == 0x0A ) return TRUE;		// 10.0.0.0/8
 	if ( ( *(DWORD*)pAddress & 0xFF ) == 0x7F ) return TRUE;		// 127.0.0.0/8
 	return FALSE;
+#endif // LAN_MODE
 }
 
 // Returns TRUE if the IP address is reserved.

@@ -368,11 +368,11 @@ CQueryHit* CQueryHit::FromPacket(CG2Packet* pPacket, int* pnHops)
 			}
 			else if ( nType == G2_PACKET_NEIGHBOUR_HUB && nLength >= 6 )
 			{
+#ifndef LAN_MODE
 				SOCKADDR_IN pHub;
 				
 				pHub.sin_addr.S_un.S_addr	= pPacket->ReadLongLE();
 				pHub.sin_port				= htons( pPacket->ReadShortBE() );
-				
 				nodeTested = pTestNodeList.insert( AddrPortPair( pHub.sin_addr.S_un.S_addr,
 					                                             pHub.sin_port ) );
 				if ( !nodeTested.second )
@@ -380,6 +380,7 @@ CQueryHit* CQueryHit::FromPacket(CG2Packet* pPacket, int* pnHops)
 					// Not a unique IP and port pair
 					bSpam = true;
 				}
+#endif // LAN_MODE
 			}
 			else if ( nType == G2_PACKET_NODE_GUID && nLength == 16 )
 			{
@@ -459,7 +460,9 @@ CQueryHit* CQueryHit::FromPacket(CG2Packet* pPacket, int* pnHops)
 			}
 			else if ( nType == G2_PACKET_PEER_FIREWALLED )
 			{
+#ifndef LAN_MODE
 				bPush = TRUE;
+#endif // LAN_MODE
 			}
 			else if ( nType == G2_PACKET_PEER_STATUS && nLength > 0 )
 			{
@@ -1128,7 +1131,9 @@ void CQueryHit::ReadG2Packet(CG2Packet* pPacket, DWORD nLength)
 		}
 		else if ( nType == G2_PACKET_BOGUS )
 		{
+#ifndef LAN_MODE
 			m_bBogus = TRUE;
+#endif // LAN_MODE
 		}
 		else if ( nType == G2_PACKET_COLLECTION )
 		{

@@ -323,9 +323,15 @@ CSettings::CSettings()
 	Add( _T("Gnutella2"), _T("KHLHubCount"), &Gnutella2.KHLHubCount, 50, 1, 1, 256 );
 	Add( _T("Gnutella2"), _T("KHLPeriod"), &Gnutella2.KHLPeriod, 60000, 1000, 1, 60*60, _T(" s") );
 	Add( _T("Gnutella2"), _T("LNIPeriod"), &Gnutella2.LNIPeriod, 60000, 1000, 1, 60*60, _T(" s") );
+#ifdef LAN_MODE
+	Add( _T("Gnutella2"), _T("NumHubs"), &Gnutella2.NumHubs, 1, 1, 1, 3 );
+	Add( _T("Gnutella2"), _T("NumLeafs"), &Gnutella2.NumLeafs, 300, 1, 50, 1024 );
+	Add( _T("Gnutella2"), _T("NumPeers"), &Gnutella2.NumPeers, 1, 1, 0, 64 );
+#else // LAN_MODE
 	Add( _T("Gnutella2"), _T("NumHubs"), &Gnutella2.NumHubs, 2, 1, 1, 3 );
 	Add( _T("Gnutella2"), _T("NumLeafs"), &Gnutella2.NumLeafs, 300, 1, 50, 1024 );
 	Add( _T("Gnutella2"), _T("NumPeers"), &Gnutella2.NumPeers, 6, 1, 4, 64 );
+#endif // LAN_MODE
 	Add( _T("Gnutella2"), _T("PingRate"), &Gnutella2.PingRate, 15000, 1000, 5, 180, _T(" s") );
 	Add( _T("Gnutella2"), _T("PingRelayLimit"), &Gnutella2.PingRelayLimit, 10, 1, 10, 30 );
 	Add( _T("Gnutella2"), _T("QueryGlobalThrottle"), &Gnutella2.QueryGlobalThrottle, 125, 1, 1, 60*1000, _T(" ms") );

@@ -671,6 +671,7 @@ int CHostCacheList::ImportMET(CFile* pFile)
 
 bool CHostCacheList::CheckMinimumED2KServers()
 {
+#ifndef LAN_MODE
 	// Load default ed2k server list (if necessary)
 	if ( ! EnoughED2KServers() )
 	{
@@ -678,6 +679,7 @@ bool CHostCacheList::CheckMinimumED2KServers()
 		DoED2KServersImport();
 		return false;
 	}
+#endif // LAN_MODE
 	return true;
 }
 

@@ -1218,7 +1218,7 @@ LRESULT CMainWnd::OnVersionCheck(WPARAM wParam, LPARAM /*lParam*/)
 			PostMessage( WM_CLOSE );
 		}
 		else
-			// Postproned till next session
+			// Postponed till next session
 			Settings.VersionCheck.NextCheck = 0;
 	}
 	
@@ -1679,11 +1679,16 @@ void CMainWnd::OnNetworkG2()
 void CMainWnd::OnUpdateNetworkG1(CCmdUI* pCmdUI) 
 {
 	pCmdUI->SetCheck( Settings.Gnutella1.EnableToday );
+#ifdef LAN_MODE
+	pCmdUI->Enable( FALSE );
+#else // LAN_MODE
 	pCmdUI->Enable( Settings.GetOutgoingBandwidth() >= 2 );
+#endif // LAN_MODE
 }
 
 void CMainWnd::OnNetworkG1() 
 {
+#ifndef LAN_MODE
 	Settings.Gnutella1.EnableToday = !Settings.Gnutella1.EnableToday;
 
 	if( Settings.Gnutella1.EnableToday )
@@ -1693,16 +1698,22 @@ void CMainWnd::OnNetworkG1()
 		else
 			DiscoveryServices.Execute( FALSE, PROTOCOL_G1, FALSE );
 	}
+#endif // LAN_MODE
 }
 
 void CMainWnd::OnUpdateNetworkED2K(CCmdUI* pCmdUI) 
 {
 	pCmdUI->SetCheck( Settings.eDonkey.EnableToday );
+#ifdef LAN_MODE
+	pCmdUI->Enable( FALSE );
+#else // LAN_MODE
 	pCmdUI->Enable( Settings.GetOutgoingBandwidth() >= 2 );
+#endif // LAN_MODE
 }
 
 void CMainWnd::OnNetworkED2K() 
 {
+#ifndef LAN_MODE
 	Settings.eDonkey.EnableToday = !Settings.eDonkey.EnableToday;
 
 	if( Settings.eDonkey.EnableToday )
@@ -1710,6 +1721,7 @@ void CMainWnd::OnNetworkED2K()
 		if( !Network.IsConnected() )
 			Network.Connect( TRUE );
 	}
+#endif // LAN_MODE
 }
 
 void CMainWnd::OnUpdateNetworkAutoClose(CCmdUI* pCmdUI) 

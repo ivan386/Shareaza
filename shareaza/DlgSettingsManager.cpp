@@ -145,8 +145,10 @@ INT_PTR CSettingsManagerDlg::DoModal(LPCTSTR pszWindow)
 		AddPage( &pScheduler );
 		AddGroup( &gNetworks );
 		AddPage( &pGnutella );
+#ifndef LAN_MODE
 		AddPage( &pDonkey );
 		AddPage( &pTorrent );
+#endif
 		AddPage( &pProtocols );
 	}
 	AddGroup( &pSkins );

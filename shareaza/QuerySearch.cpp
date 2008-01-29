@@ -1043,7 +1043,11 @@ BOOL CQuerySearch::CheckValid(bool bExpression)
 	m_oKeywordHashList.clear();
 	m_oWords.clear();
 
+#ifdef LAN_MODE
+	return TRUE;
+#else // LAN_MODE
 	return FALSE;
+#endif // LAN_MODE
 }
 
 //////////////////////////////////////////////////////////////////////

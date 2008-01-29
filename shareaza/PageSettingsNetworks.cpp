@@ -89,9 +89,15 @@ BOOL CNetworksSettingsPage::OnInitDialog()
 	m_bEDEnable		= Settings.eDonkey.EnableToday;
 
 	UpdateData( FALSE );
-	// m_wndG2Setup.EnableWindow( m_bG2Enable );
-	// m_wndG1Setup.EnableWindow( m_bG1Enable );
-	// m_wndEDSetup.EnableWindow( m_bEDEnable );
+	
+#ifdef LAN_MODE
+	GetDlgItem( IDC_G2_ENABLE )->EnableWindow( FALSE );
+	GetDlgItem( IDC_G1_ENABLE )->EnableWindow( FALSE );
+	GetDlgItem( IDC_ED2K_ENABLE )->EnableWindow( FALSE );
+	m_wndG2Setup.EnableWindow( FALSE );
+	m_wndG1Setup.EnableWindow( FALSE );
+	m_wndEDSetup.EnableWindow( FALSE );
+#endif // LAN_MODE
 
 	return TRUE;
 }
