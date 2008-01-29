@@ -63,7 +63,6 @@
 #define IDD_FOLDER_SCAN                 160
 #define IDB_SECURITY                    160
 #define IDI_BROWSE                      160
-#define IDR_HIDDEN                      161
 #define IDD_DOWNLOAD                    162
 #define IDD_BITZI_DOWNLOAD              163
 #define IDD_SECURE_RULE                 165

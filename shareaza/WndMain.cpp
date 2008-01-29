@@ -288,9 +288,25 @@ CMainWnd::CMainWnd() :
 
 	theApp.m_pMainWnd = this;
 
-	LoadFrame( IDR_MAINFRAME, WS_OVERLAPPEDWINDOW | WS_CLIPSIBLINGS );
+	// Bypass CMDIFrameWnd::LoadFrame
+	VERIFY( CFrameWnd::LoadFrame( IDR_MAINFRAME, WS_OVERLAPPEDWINDOW ) );
 
 	theApp.m_pSafeWnd = this;
+}
+
+BOOL CMainWnd::Create(LPCTSTR lpszClassName, LPCTSTR lpszWindowName, DWORD dwStyle,
+	const RECT& rect, CWnd* pParentWnd, LPCTSTR /* lpszMenuName */,
+	DWORD dwExStyle, CCreateContext* pContext)
+{
+	// Bypass menu creation
+	return CMDIFrameWnd::Create( lpszClassName, lpszWindowName, dwStyle, rect, pParentWnd,
+		NULL, dwExStyle, pContext );
+}
+
+BOOL CMainWnd::OnCreateClient(LPCREATESTRUCT lpcs, CCreateContext* /* pContext */)
+{
+	// Bypass menu creation
+	return CreateClient( lpcs, NULL );
 }
 
 CMainWnd::~CMainWnd()
