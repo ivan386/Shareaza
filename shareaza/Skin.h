@@ -65,9 +65,9 @@ protected:
 
 // Menus
 public:
-	CMenu*	GetMenu(LPCTSTR pszName) const;
-	UINT	TrackPopupMenu(LPCTSTR pszMenu, const CPoint& point, UINT nDefaultID = 0, UINT nFlags = 0, LPCTSTR pszPath = NULL, CWnd* pWnd = AfxGetMainWnd()) const;
-	CMenu*	CreatePopupMenu(LPCTSTR pszName);
+	CMenu*		GetMenu(LPCTSTR pszName) const;
+	UINT_PTR	TrackPopupMenu(LPCTSTR pszMenu, const CPoint& point, UINT nDefaultID = 0, UINT nFlags = 0, LPCTSTR pszPath = NULL, CWnd* pWnd = AfxGetMainWnd()) const;
+	CMenu*		CreatePopupMenu(LPCTSTR pszName);
 protected:
 	CMap< CString, const CString&, CMenu*, CMenu* > m_pMenus;
 	BOOL	LoadMenus(CXMLElement* pBase);

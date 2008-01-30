@@ -253,7 +253,7 @@ void CLibraryCollectionView::OnWebContextMenu(NMHDR* pNMHDR, LPARAM* pResult)
 
 		CString strName = _T("CLibraryFileView");
 		strName += Settings.Library.ShowVirtual ? _T(".Virtual") : _T(".Physical");
-		UINT nCmdID = Skin.TrackPopupMenu( strName, point, ID_LIBRARY_LAUNCH, TPM_RETURNCMD );
+		UINT_PTR nCmdID = Skin.TrackPopupMenu( strName, point, ID_LIBRARY_LAUNCH, TPM_RETURNCMD );
 
 		if ( nCmdID != 0 ) GetFrame()->SendMessage( WM_COMMAND, nCmdID );
 

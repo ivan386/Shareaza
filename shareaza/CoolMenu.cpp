@@ -603,10 +603,10 @@ void CCoolMenu::RegisterEdge(int nLeft, int nTop, int nLength)
 	m_nEdgeSize	= nLength;
 }
 
-UINT CCoolMenu::DoExplorerMenu(HWND hwnd, LPCTSTR pszPath, POINT point,
+UINT_PTR CCoolMenu::DoExplorerMenu(HWND hwnd, LPCTSTR pszPath, POINT point,
 	HMENU hMenu, HMENU hSubMenu, UINT nFlags)
 {
-	UINT nCmd = 0;
+	UINT_PTR nCmd = 0;
 
 	TCHAR szFullPath[ MAX_PATH ] = {};
 	GetFullPathName( pszPath, MAX_PATH, szFullPath, NULL );
@@ -664,8 +664,8 @@ UINT CCoolMenu::DoExplorerMenu(HWND hwnd, LPCTSTR pszPath, POINT point,
 						CMINVOKECOMMANDINFOEX ici = {};
 						ici.cbSize = sizeof( CMINVOKECOMMANDINFOEX );
 						ici.hwnd = hwnd;
-						ici.lpVerb = (LPCSTR)( nCmd - ID_SHELL_MENU_MIN );
-						ici.lpVerbW = (LPCWSTR)( nCmd - ID_SHELL_MENU_MIN );
+						ici.lpVerb = reinterpret_cast< LPCSTR >( nCmd - ID_SHELL_MENU_MIN );
+						ici.lpVerbW = reinterpret_cast< LPCWSTR >( nCmd - ID_SHELL_MENU_MIN );
 						ici.nShow = SW_SHOWNORMAL;
 						HRESULT hr = m_pContextMenu1->InvokeCommand( (CMINVOKECOMMANDINFO*)&ici );
 						VERIFY( SUCCEEDED( hr ) );

@@ -1732,7 +1732,7 @@ void CSkin::Finalise()
 //////////////////////////////////////////////////////////////////////
 // CSkin popup menu helper
 
-UINT CSkin::TrackPopupMenu(LPCTSTR pszMenu, const CPoint& point,
+UINT_PTR CSkin::TrackPopupMenu(LPCTSTR pszMenu, const CPoint& point,
 	UINT nDefaultID, UINT nFlags, LPCTSTR pszPath, CWnd* pWnd) const
 {
 	CMenu* pPopup = GetMenu( pszMenu );
@@ -1753,7 +1753,7 @@ UINT CSkin::TrackPopupMenu(LPCTSTR pszMenu, const CPoint& point,
 		ASSERT( hSubMenu );
 		if( pPopup->SetMenuItemInfo( ID_SHELL_MENU, &pInfo ) )
 		{
-			UINT nCmd = CoolMenu.DoExplorerMenu( pWnd->GetSafeHwnd(), pszPath,
+			UINT_PTR nCmd = CoolMenu.DoExplorerMenu( pWnd->GetSafeHwnd(), pszPath,
 				point, pPopup->GetSafeHmenu(), pInfo.hSubMenu,
 				TPM_LEFTALIGN | TPM_LEFTBUTTON | TPM_RIGHTBUTTON | nFlags );
 
