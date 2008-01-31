@@ -440,7 +440,7 @@ BOOL CBTClient::OnHandshake1()
 	ASSERT( validAndEqual( m_pDownload->m_oBTH, oFileHash ) );
 
 	// If we didn't start the connection, then send a handshake
-	if ( !m_bShake ) SendHandshake( TRUE, TRUE );
+	if ( !m_bInitiated ) SendHandshake( TRUE, TRUE );
 	m_bShake = TRUE;
 
 	return TRUE;
