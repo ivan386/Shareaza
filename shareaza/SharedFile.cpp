@@ -1060,15 +1060,12 @@ BOOL CLibraryFile::SaveMetadata()
 		pXML->AddElement( m_pMetadata->Clone() );
 	}
 	
+	if ( pXML == NULL )
+		return FALSE; // Don't save, we serialize comments and the rating anyway
+					  // Otherwise, it will produce an empty XML, containing only comments/rating
+
 	if ( m_nRating > 0 || m_sComments.GetLength() > 0 )
 	{
-		if ( pXML == NULL )
-		{
-			pXML = new CXMLElement( NULL, _T("comments") );
-			pXML->AddAttribute( _T("xmlns:xsi"), CXMLAttribute::xmlnsInstance );
-			pXML->AddAttribute( CXMLAttribute::schemaName, CSchema::uriComments );
-		}
-		
 		CXMLElement* pComment = pXML->AddElement( _T("comment") );
 		
 		if ( m_nRating > 0 )

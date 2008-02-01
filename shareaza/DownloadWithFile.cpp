@@ -553,6 +553,15 @@ BOOL CDownloadWithFile::WriteMetadata(LPCTSTR pszPath)
 {
 	ASSERT( m_pXML != NULL );
 	
+	CXMLElement* pElement = m_pXML->GetFirstElement();
+	if ( pElement == NULL || pElement->GetName() == L"comments" ||
+		 pElement->GetElementCount() == 0 ) // Only comments or an empty file, don't save it
+	{
+		delete m_pXML;
+		m_pXML = NULL;
+		return FALSE;
+	}
+
 	CString strXML = m_pXML->ToString( TRUE, TRUE );
 	delete m_pXML;
 	m_pXML = NULL;
