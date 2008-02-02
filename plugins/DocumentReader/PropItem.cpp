@@ -36,7 +36,7 @@
 //
 CDocProperty::CDocProperty()
 {
-	ODS("CDocProperty::CDocProperty()\n");
+	ODS(_T("CDocProperty::CDocProperty()\n"));
 	m_bstrName       = NULL;
 	m_ulPropID       = 0;
     m_vValue.vt      = VT_EMPTY;
@@ -50,7 +50,7 @@ CDocProperty::CDocProperty()
 
 CDocProperty::~CDocProperty(void)
 {
-    ODS("CDocProperty::~CDocProperty()\n");
+    ODS(_T("CDocProperty::~CDocProperty()\n"));
     FREE_BSTR(m_bstrName); VariantClear(&m_vValue);
 }
 
@@ -62,7 +62,7 @@ CDocProperty::~CDocProperty(void)
 //
 HRESULT CDocProperty::get_Name(BSTR *pbstrName)
 {
-    ODS("CDocProperty::get_Name\n");
+    ODS(_T("CDocProperty::get_Name\n"));
     if (pbstrName) *pbstrName = (m_bstrName ? SysAllocString(m_bstrName) : NULL);
     return S_OK;
 }
@@ -73,7 +73,7 @@ HRESULT CDocProperty::get_Name(BSTR *pbstrName)
 HRESULT CDocProperty::get_Type(dsoFilePropertyType *dsoType)
 {
 	dsoFilePropertyType lType;
-	ODS("CDocProperty::get_Type\n");
+	ODS(_T("CDocProperty::get_Type\n"));
     switch (m_vValue.vt & VT_TYPEMASK)
     {
       case VT_BSTR: lType = dsoPropertyTypeString; break;
@@ -94,7 +94,7 @@ HRESULT CDocProperty::get_Type(dsoFilePropertyType *dsoType)
 //
 HRESULT CDocProperty::get_Value(VARIANT *pvValue)
 {
-    ODS("CDocProperty::get_Value\n");
+    ODS(_T("CDocProperty::get_Value\n"));
     CHECK_NULL_RETURN(pvValue, E_POINTER);
     return VariantCopy(pvValue, &m_vValue);
 }
@@ -106,7 +106,7 @@ HRESULT CDocProperty::put_Value(VARIANT *pvValue)
 {
     VARIANT vtTmp; vtTmp.vt = VT_EMPTY;
 
-    ODS("CDocProperty::put_Value\n");
+    ODS(_T("CDocProperty::put_Value\n"));
     CHECK_NULL_RETURN(pvValue, E_POINTER);
     CHECK_FLAG_RETURN((m_fDeadObj || m_fRemovedItem), E_INVALIDOBJECT);
 
@@ -141,7 +141,7 @@ HRESULT CDocProperty::put_Value(VARIANT *pvValue)
 //
 HRESULT CDocProperty::Remove()
 {
-	ODS("CDocProperty::Remove\n");
+	ODS(_T("CDocProperty::Remove\n"));
     CHECK_FLAG_RETURN((m_fDeadObj || m_fRemovedItem), E_INVALIDOBJECT);
 	VariantClear(&m_vValue);
 	m_fRemovedItem = TRUE;

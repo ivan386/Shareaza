@@ -30,19 +30,22 @@ LPCWSTR	CRatDVDPlugin::uriVideo			= L"http://www.limewire.com/schemas/video.xsd"
 // RatDVDPlugin
 CRatDVDPlugin::CRatDVDPlugin()
 {
-	ODS("CRatDVDPlugin::CRatDVDPlugin\n");
+	ODS(_T("CRatDVDPlugin::CRatDVDPlugin\n"));
+
 }
 
 CRatDVDPlugin::~CRatDVDPlugin()
 {
-	ODS("CRatDVDPlugin::~CRatDVDPlugin\n");
+	ODS(_T("CRatDVDPlugin::~CRatDVDPlugin\n"));
+
 }
 
 // ILibraryBuilderPlugin Methods
 
 STDMETHODIMP CRatDVDPlugin::Process(HANDLE hFile, BSTR sFile, ISXMLElement* pXML)
 {
-	ODS("CRatDVDPlugin::Process\n");
+	ODS(_T("CRatDVDPlugin::Process\n"));
+
 	CHECK_NULL_RETURN(sFile, E_INVALIDARG);
 
 	EnterCritical();
@@ -66,7 +69,8 @@ STDMETHODIMP CRatDVDPlugin::Process(HANDLE hFile, BSTR sFile, ISXMLElement* pXML
 
 STDMETHODIMP CRatDVDPlugin::ProcessRatDVD(HANDLE hFile, ISXMLElement* pXML)
 {
-	ODS("CRatDVDPlugin::ProcessRatDVD\n");
+	ODS(_T("CRatDVDPlugin::ProcessRatDVD\n"));
+
 	CHECK_NULL_RETURN(hFile, E_INVALIDARG);
 
 	const DWORD MAX_LENGTH_ALLOWED = 1024;
@@ -402,7 +406,8 @@ CComBSTR CRatDVDPlugin::ReadXML(HANDLE hFile, DWORD nBytes)
 
 STDMETHODIMP CRatDVDPlugin::LoadFromFile(BSTR sFile, IMAGESERVICEDATA* pParams, SAFEARRAY** ppImage)
 {
-	ODS("CRatDVDPlugin::LoadFromFile\n");
+	ODS(_T("CRatDVDPlugin::LoadFromFile\n"));
+
 	EnterCritical();
 	DllAddRef();
 	
@@ -427,7 +432,8 @@ STDMETHODIMP CRatDVDPlugin::LoadFromFile(BSTR sFile, IMAGESERVICEDATA* pParams, 
 
 STDMETHODIMP CRatDVDPlugin::GetRatDVDThumbnail(BSTR bsFile, IMAGESERVICEDATA* pParams, SAFEARRAY** ppImage)
 {
-	ODS("CRatDVDPlugin::GetRatDVDThumbnail\n");
+	ODS(_T("CRatDVDPlugin::GetRatDVDThumbnail\n"));
+
 
 	CHECK_NULL_RETURN(bsFile, E_INVALIDARG);
 
@@ -607,19 +613,22 @@ STDMETHODIMP CRatDVDPlugin::GetRatDVDThumbnail(BSTR bsFile, IMAGESERVICEDATA* pP
 
 STDMETHODIMP CRatDVDPlugin::LoadFromMemory(BSTR /*sType*/, SAFEARRAY* /*pMemory*/, IMAGESERVICEDATA* /*pParams*/, SAFEARRAY** /*ppImage*/)
 {
-	ODS("CRatDVDPlugin::LoadFromMemory\n");
+	ODS(_T("CRatDVDPlugin::LoadFromMemory\n"));
+
 	return E_NOTIMPL;
 }
 
 STDMETHODIMP CRatDVDPlugin::SaveToFile(BSTR /*sFile*/, IMAGESERVICEDATA* /*pParams*/, SAFEARRAY* /*pImage*/)
 {
-	ODS("CRatDVDPlugin::SaveToFile\n");
+	ODS(_T("CRatDVDPlugin::SaveToFile\n"));
+
 	return E_NOTIMPL;
 }
 
 STDMETHODIMP CRatDVDPlugin::SaveToMemory(BSTR /*sType*/, SAFEARRAY** /*ppMemory*/, IMAGESERVICEDATA* /*pParams*/, SAFEARRAY* /*pImage*/)
 {
-	ODS("CRatDVDPlugin::SaveToMemory\n");
+	ODS(_T("CRatDVDPlugin::SaveToMemory\n"));
+
 	return E_NOTIMPL;
 }
 

@@ -61,7 +61,7 @@ extern "C" BOOL WINAPI DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID lpRes
 	switch ( dwReason )
 	{
 	case DLL_PROCESS_ATTACH:
-		ODS("DllMain - Attach\n");
+		ODS(_T("DllMain - Attach\n"));
 		v_hModule = hInstance; v_cLocks = 0;
         v_hPrivateHeap = HeapCreate(0, 0x1000, 0);
         v_fRunningOnNT = ( ( GetVersion() & 0x80000000 ) != 0x80000000 );
@@ -72,7 +72,7 @@ extern "C" BOOL WINAPI DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID lpRes
 		break;
 
 	case DLL_PROCESS_DETACH:
-		ODS("DllMain - Detach\n");
+		ODS(_T("DllMain - Detach\n"));
         if ( v_hPrivateHeap ) HeapDestroy( v_hPrivateHeap );
         DeleteCriticalSection( &v_csSynch );
 		break;
@@ -116,7 +116,7 @@ STDAPI DllUnregisterServer(void)
 }
 HRESULT CDocumentReaderModule::DllGetClassObject(REFCLSID rclsid, REFIID riid, LPVOID* ppv)
 {
-	ODS("CDocumentReaderModule::DllGetClassObject\n");
+	ODS(_T("CDocumentReaderModule::DllGetClassObject\n"));
 	HRESULT hr;
 
 	CDocumentClassFactory* pcf;

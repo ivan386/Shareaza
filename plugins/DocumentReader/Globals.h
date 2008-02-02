@@ -297,18 +297,18 @@ STDAPI_(BOOL) FGetIconForFile(LPCWSTR pwszFile, HICON *pico);
 #define ODS(x)	   OutputDebugString(x)
 
 #define TRACE1(sz, arg1) { \
-	CHAR ach[MAX_PATH]; \
-	wsprintf(ach, (sz), (arg1)); \
+	TCHAR ach[MAX_PATH]; \
+	wsprintf(ach, _T(sz), (arg1)); \
 	ODS(ach); }
 
 #define TRACE2(sz, arg1, arg2) { \
-	CHAR ach[MAX_PATH]; \
-	wsprintf(ach, (sz), (arg1), (arg2)); \
+	TCHAR ach[MAX_PATH]; \
+	wsprintf(ach, _T(sz), (arg1), (arg2)); \
 	ODS(ach); }
 
 #define TRACE3(sz, arg1, arg2, arg3) { \
-	CHAR ach[MAX_PATH]; \
-	wsprintf(ach, (sz), (arg1), (arg2), (arg3)); \
+	TCHAR ach[MAX_PATH]; \
+	wsprintf(ach, _T(sz), (arg1), (arg2), (arg3)); \
 	ODS(ach); }
 
 #else // !defined(_DEBUG)

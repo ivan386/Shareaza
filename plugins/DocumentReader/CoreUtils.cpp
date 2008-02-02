@@ -811,8 +811,8 @@ STDAPI_(UINT) CompareStrings(LPCWSTR pwsz1, LPCWSTR pwsz2)
 	else
 	{
 	 // If we are on Win9x, we don't have much of choice (thunk the call)...
-		LPSTR psz1 = ConvertToMBCS(pwsz1, CP_ACP);
-		LPSTR psz2 = ConvertToMBCS(pwsz2, CP_ACP);
+		LPTSTR psz1 = ConvertToMBCS(pwsz1, CP_ACP);
+		LPTSTR psz2 = ConvertToMBCS(pwsz2, CP_ACP);
 		iret = CompareString(lcid, NORM_IGNORECASE,	psz1, -1, psz2, -1);
 		CoTaskMemFree(psz2);
 		CoTaskMemFree(psz1);
@@ -842,7 +842,7 @@ STDAPI_(BOOL) FFindQualifiedFileName(LPCWSTR pwszFile, LPWSTR pwszPath, ULONG *p
 	}
 	else
 	{
-        CHAR szBuffer[MAX_PATH];
+        TCHAR szBuffer[MAX_PATH];
 		LPSTR lpszFilePart = NULL;
 
 		LPSTR szFile = ConvertToMBCS(pwszFile, CP_ACP);
@@ -887,7 +887,7 @@ STDAPI_(BOOL) FGetModuleFileName(HMODULE hModule, WCHAR** wzFileName)
 	else
 	{
 	 // If we are on Win9x, we don't have much of choice (thunk the call)...
-        dw = GetModuleFileName( hModule, (LPSTR)pwsz, MAX_PATH );
+        dw = GetModuleFileName( hModule, (LPTSTR)pwsz, MAX_PATH );
         if (dw == 0)
         {
             MemFree(pwsz);
@@ -932,7 +932,7 @@ STDAPI_(BOOL) FGetIconForFile(LPCWSTR pwszFile, HICON *pico)
 
     if (s_hShell32 == NULL)
     {
-        s_hShell32 = GetModuleHandle("shell32.dll");
+        s_hShell32 = GetModuleHandle(_T("shell32.dll"));
         CHECK_NULL_RETURN(s_hShell32, FALSE);
     }
 
@@ -952,7 +952,7 @@ STDAPI_(BOOL) FGetIconForFile(LPCWSTR pwszFile, HICON *pico)
     }
     else
 	{
-		LPSTR psz;
+		LPTSTR psz;
         if (s_pfnExtractAssociatedIconA == NULL)
         {
             s_pfnExtractAssociatedIconA = (PFN_ExtractAssociatedIconA)GetProcAddress(s_hShell32, "ExtractAssociatedIconA");

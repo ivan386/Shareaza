@@ -44,7 +44,8 @@
 
 STDMETHODIMP CDocumentClassFactory::QueryInterface(REFIID riid, void** ppv)
 {
-	ODS("CDocumentClassFactory::QueryInterface\n");
+	ODS(_T("CDocumentClassFactory::QueryInterface\n"));
+
 	CHECK_NULL_RETURN(ppv, E_POINTER);
 	
 	if ( CLSID_DocReader == riid )
@@ -74,7 +75,8 @@ STDMETHODIMP_(ULONG) CDocumentClassFactory::Release(void)
 	TRACE1("CDocumentClassFactory::Release - %d\n", m_cRef - 1);
     if ( 0 != --m_cRef ) return m_cRef;
 
-	ODS("CDocumentClassFactory delete\n");
+	ODS(_T("CDocumentClassFactory delete\n"));
+
     LockServer(FALSE);
     return 0;
 }
@@ -90,7 +92,8 @@ STDMETHODIMP CDocumentClassFactory::CreateInstance(LPUNKNOWN punk, REFIID riid, 
 	HRESULT hr;
 //	CComObject<CDocReader>*pDocReader = NULL;
 
-	ODS("CFileClassFactory::CreateInstance\n");
+	ODS(_T("CFileClassFactory::CreateInstance\n"));
+
 	CHECK_NULL_RETURN(ppv, E_POINTER);	*ppv = NULL;
 
  // This version does not support Aggregation...

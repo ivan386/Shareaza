@@ -44,7 +44,8 @@
 
 STDMETHODIMP CRatDVDClassFactory::QueryInterface(REFIID riid, void** ppv)
 {
-	ODS("CRatDVDClassFactory::QueryInterface\n");
+	ODS(_T("CRatDVDClassFactory::QueryInterface\n"));
+
 	CHECK_NULL_RETURN(ppv, E_POINTER);
 	
 	if ( CLSID_RatDVDReader == riid )
@@ -74,7 +75,8 @@ STDMETHODIMP_(ULONG) CRatDVDClassFactory::Release(void)
 	TRACE1("CRatDVDClassFactory::Release - %d\n", m_cRef - 1);
     if ( 0 != --m_cRef ) return m_cRef;
 
-	ODS("CRatDVDClassFactory delete\n");
+	ODS(_T("CRatDVDClassFactory delete\n"));
+
     LockServer(FALSE);
     return 0;
 }
@@ -89,7 +91,8 @@ STDMETHODIMP CRatDVDClassFactory::CreateInstance(LPUNKNOWN punk, REFIID riid, vo
 {
 	HRESULT hr;
 
-	ODS("CFileClassFactory::CreateInstance\n");
+	ODS(_T("CFileClassFactory::CreateInstance\n"));
+
 	CHECK_NULL_RETURN(ppv, E_POINTER);	*ppv = NULL;
 
  // This version does not support Aggregation...
