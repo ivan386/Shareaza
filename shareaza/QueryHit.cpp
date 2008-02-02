@@ -525,7 +525,22 @@ CQueryHit* CQueryHit::FromPacket(CG2Packet* pPacket, int* pnHops)
 			}
 			
 			pLastHit->Resolve();
-			if ( pXML ) pLastHit->ParseXML( pXML, nIndex );
+			if ( pXML ) 
+				pLastHit->ParseXML( pXML, nIndex );
+			else if ( pLastHit->m_sName.GetLength() > 0 )
+			{
+				// These files always must have metadata in Shareaza clients
+				LPCTSTR pszExt = PathFindExtension( (LPCTSTR)pLastHit->m_sName );
+				if ( _tcsicmp( pszExt, L".wma" ) == 0 || _tcsicmp( pszExt, L".wmw" ) == 0 )
+				{
+					CString strVendorCode( pLastHit->m_pVendor->m_sCode );
+					if ( strVendorCode == L"RAZA" || strVendorCode == L"RAZB" || 
+						strVendorCode == L"RZCB" )
+					{
+						bSpam = true;
+					}
+				}
+			}
 		}
 		
 		if ( bSpam )

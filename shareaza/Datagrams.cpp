@@ -1628,13 +1628,16 @@ BOOL CDatagrams::OnCommonHit(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 		return FALSE;
 	}
 
-	Network.NodeRoute->Add( pHits->m_oClientID, pHost );
-
-	// Don't route exceeded hits
-	if ( nHops <= (int)Settings.Gnutella1.MaximumTTL &&
-		SearchManager.OnQueryHits( pHits ) )
+	if ( !pHits->m_bBogus )
 	{
-		Network.RouteHits( pHits, pPacket );
+		Network.NodeRoute->Add( pHits->m_oClientID, pHost );
+
+		// Don't route exceeded hits
+		if ( nHops <= (int)Settings.Gnutella1.MaximumTTL &&
+			SearchManager.OnQueryHits( pHits ) )
+		{
+			Network.RouteHits( pHits, pPacket );
+		}
 	}
 
 	Network.OnQueryHits( pHits );
