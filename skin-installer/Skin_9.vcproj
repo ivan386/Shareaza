@@ -216,6 +216,7 @@
 				RuntimeTypeInfo="false"
 				BrowseInformation="1"
 				WarningLevel="4"
+				DebugInformationFormat="0"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -302,6 +303,7 @@
 				RuntimeTypeInfo="false"
 				BrowseInformation="1"
 				WarningLevel="4"
+				DebugInformationFormat="0"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"

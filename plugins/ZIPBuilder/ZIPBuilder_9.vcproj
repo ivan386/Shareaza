@@ -43,7 +43,7 @@
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="_DEBUG"
-				AdditionalIncludeDirectories=""
+				AdditionalIncludeDirectories="..\..\shareaza"
 				HeaderFileName="$(InputName).h"
 				DLLDataFileName=""
 				InterfaceIdentifierFileName="$(InputName)_i.c"
@@ -138,7 +138,7 @@
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="_DEBUG"
-				AdditionalIncludeDirectories=""
+				AdditionalIncludeDirectories="..\..\shareaza"
 				TargetEnvironment="3"
 				HeaderFileName="$(InputName).h"
 				DLLDataFileName=""
@@ -236,7 +236,7 @@
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="NDEBUG"
-				AdditionalIncludeDirectories=""
+				AdditionalIncludeDirectories="..\..\shareaza"
 				HeaderFileName="$(InputName).h"
 				DLLDataFileName=""
 				InterfaceIdentifierFileName="$(InputName)_i.c"
@@ -258,6 +258,7 @@
 				UsePrecompiledHeader="2"
 				BrowseInformation="1"
 				WarningLevel="4"
+				DebugInformationFormat="0"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -335,7 +336,7 @@
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="NDEBUG"
-				AdditionalIncludeDirectories=""
+				AdditionalIncludeDirectories="..\..\shareaza"
 				TargetEnvironment="3"
 				HeaderFileName="$(InputName).h"
 				DLLDataFileName=""
@@ -358,6 +359,7 @@
 				UsePrecompiledHeader="2"
 				BrowseInformation="1"
 				WarningLevel="4"
+				DebugInformationFormat="0"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -516,7 +518,7 @@
 					>
 					<Tool
 						Name="VCMIDLTool"
-						AdditionalIncludeDirectories="..\..\shareaza"
+						AdditionalIncludeDirectories=""
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -524,7 +526,7 @@
 					>
 					<Tool
 						Name="VCMIDLTool"
-						AdditionalIncludeDirectories="..\..\shareaza"
+						AdditionalIncludeDirectories=""
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -532,7 +534,7 @@
 					>
 					<Tool
 						Name="VCMIDLTool"
-						AdditionalIncludeDirectories="..\..\shareaza"
+						AdditionalIncludeDirectories=""
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -540,7 +542,7 @@
 					>
 					<Tool
 						Name="VCMIDLTool"
-						AdditionalIncludeDirectories="..\..\shareaza"
+						AdditionalIncludeDirectories=""
 					/>
 				</FileConfiguration>
 			</File>

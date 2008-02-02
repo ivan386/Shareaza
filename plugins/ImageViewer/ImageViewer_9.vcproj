@@ -48,7 +48,6 @@
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="_DEBUG"
 				AdditionalIncludeDirectories="..\..\shareaza"
-				MkTypLibCompatible="false"
 				TargetEnvironment="1"
 				HeaderFileName="$(InputName).h"
 				DLLDataFileName=""
@@ -84,7 +83,6 @@
 			<Tool
 				Name="VCLinkerTool"
 				IgnoreImportLibrary="true"
-				AdditionalDependencies="odbc32.lib odbccp32.lib rpcrt4.lib"
 				LinkIncremental="2"
 				ModuleDefinitionFile="ImageViewer.def"
 				GenerateDebugInformation="true"
@@ -143,7 +141,6 @@
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="_DEBUG"
 				AdditionalIncludeDirectories="..\..\shareaza"
-				MkTypLibCompatible="false"
 				TargetEnvironment="3"
 				HeaderFileName="$(InputName).h"
 				DLLDataFileName=""
@@ -162,7 +159,7 @@
 				UsePrecompiledHeader="2"
 				BrowseInformation="1"
 				WarningLevel="4"
-				DebugInformationFormat="3"
+				DebugInformationFormat="4"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -179,7 +176,6 @@
 			<Tool
 				Name="VCLinkerTool"
 				IgnoreImportLibrary="true"
-				AdditionalDependencies="odbc32.lib odbccp32.lib rpcrt4.lib"
 				LinkIncremental="2"
 				ModuleDefinitionFile="ImageViewer.def"
 				GenerateDebugInformation="true"
@@ -239,7 +235,6 @@
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="NDEBUG"
 				AdditionalIncludeDirectories="..\..\shareaza"
-				MkTypLibCompatible="false"
 				SuppressStartupBanner="true"
 				TargetEnvironment="1"
 				HeaderFileName="$(InputName).h"
@@ -264,6 +259,7 @@
 				UsePrecompiledHeader="2"
 				BrowseInformation="1"
 				WarningLevel="4"
+				DebugInformationFormat="0"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -343,7 +339,6 @@
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="NDEBUG"
 				AdditionalIncludeDirectories="..\..\shareaza"
-				MkTypLibCompatible="false"
 				SuppressStartupBanner="true"
 				TargetEnvironment="3"
 				HeaderFileName="$(InputName).h"
@@ -368,6 +363,7 @@
 				UsePrecompiledHeader="2"
 				BrowseInformation="1"
 				WarningLevel="4"
+				DebugInformationFormat="0"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"

@@ -44,7 +44,6 @@
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="_DEBUG"
 				AdditionalIncludeDirectories="..\..\shareaza"
-				MkTypLibCompatible="false"
 				TargetEnvironment="1"
 				HeaderFileName="$(InputName).h"
 				DLLDataFileName=""
@@ -54,7 +53,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\Shareaza;..\LibGFL"
+				AdditionalIncludeDirectories="$(InputDir);..\LibGFL"
 				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG;_USRDLL"
 				ExceptionHandling="0"
 				BasicRuntimeChecks="3"
@@ -141,7 +140,6 @@
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="_DEBUG"
 				AdditionalIncludeDirectories="..\..\shareaza"
-				MkTypLibCompatible="false"
 				TargetEnvironment="3"
 				HeaderFileName="$(InputName).h"
 				DLLDataFileName=""
@@ -151,7 +149,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\Shareaza;..\LibGFL"
+				AdditionalIncludeDirectories="$(InputDir);..\LibGFL"
 				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG;_USRDLL"
 				ExceptionHandling="0"
 				BasicRuntimeChecks="3"
@@ -161,7 +159,7 @@
 				UsePrecompiledHeader="2"
 				BrowseInformation="1"
 				WarningLevel="4"
-				DebugInformationFormat="3"
+				DebugInformationFormat="4"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -239,7 +237,6 @@
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="NDEBUG"
 				AdditionalIncludeDirectories="..\..\shareaza"
-				MkTypLibCompatible="false"
 				TargetEnvironment="1"
 				HeaderFileName="$(InputName).h"
 				DLLDataFileName=""
@@ -253,7 +250,7 @@
 				EnableIntrinsicFunctions="true"
 				FavorSizeOrSpeed="1"
 				OmitFramePointers="true"
-				AdditionalIncludeDirectories="..\..\Shareaza;..\LibGFL"
+				AdditionalIncludeDirectories="$(InputDir);..\LibGFL"
 				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_USRDLL"
 				StringPooling="true"
 				ExceptionHandling="0"
@@ -264,6 +261,7 @@
 				UsePrecompiledHeader="2"
 				BrowseInformation="1"
 				WarningLevel="4"
+				DebugInformationFormat="0"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -343,7 +341,6 @@
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="NDEBUG"
 				AdditionalIncludeDirectories="..\..\shareaza"
-				MkTypLibCompatible="false"
 				TargetEnvironment="3"
 				HeaderFileName="$(InputName).h"
 				DLLDataFileName=""
@@ -357,7 +354,7 @@
 				EnableIntrinsicFunctions="true"
 				FavorSizeOrSpeed="1"
 				OmitFramePointers="true"
-				AdditionalIncludeDirectories="..\..\Shareaza;..\LibGFL"
+				AdditionalIncludeDirectories="$(InputDir);..\LibGFL"
 				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_USRDLL"
 				StringPooling="true"
 				ExceptionHandling="0"
@@ -368,6 +365,7 @@
 				UsePrecompiledHeader="2"
 				BrowseInformation="1"
 				WarningLevel="4"
+				DebugInformationFormat="0"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -450,7 +448,7 @@
 					>
 					<Tool
 						Name="VCMIDLTool"
-						AdditionalIncludeDirectories="..\..\shareaza"
+						AdditionalIncludeDirectories=""
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -458,7 +456,7 @@
 					>
 					<Tool
 						Name="VCMIDLTool"
-						AdditionalIncludeDirectories="..\..\shareaza"
+						AdditionalIncludeDirectories=""
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -466,7 +464,7 @@
 					>
 					<Tool
 						Name="VCMIDLTool"
-						AdditionalIncludeDirectories="..\..\shareaza"
+						AdditionalIncludeDirectories=""
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -474,7 +472,47 @@
 					>
 					<Tool
 						Name="VCMIDLTool"
-						AdditionalIncludeDirectories="..\..\shareaza"
+						AdditionalIncludeDirectories=""
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\shareaza\Shareaza.idl"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCMIDLTool"
+						TypeLibraryName="$(IntDir)/ShareazaOM.tlb"
+						HeaderFileName="ShareazaOM.h"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|x64"
+					>
+					<Tool
+						Name="VCMIDLTool"
+						TypeLibraryName="$(IntDir)/ShareazaOM.tlb"
+						HeaderFileName="ShareazaOM.h"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCMIDLTool"
+						TypeLibraryName="$(IntDir)/ShareazaOM.tlb"
+						HeaderFileName="ShareazaOM.h"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|x64"
+					>
+					<Tool
+						Name="VCMIDLTool"
+						TypeLibraryName="$(IntDir)/ShareazaOM.tlb"
+						HeaderFileName="ShareazaOM.h"
 					/>
 				</FileConfiguration>
 			</File>

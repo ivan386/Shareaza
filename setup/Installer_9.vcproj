@@ -116,6 +116,7 @@
 					Name="VCCustomBuildTool"
 					Description="Performing Installer Build"
 					CommandLine="&quot;%ProgramFiles%\Inno Setup 5\ISCC.exe&quot; &quot;$(InputPath)&quot; &quot;/dConfigurationName=$(ConfigurationName)&quot; &quot;/dPlatformName=$(PlatformName)&quot; /v9&#x0D;&#x0A;"
+					AdditionalDependencies="..\shareaza\$(PlatformName)\$(ConfigurationName)\Shareaza.exe"
 					Outputs=".\builds\Preprocessed.iss"
 				/>
 			</FileConfiguration>
@@ -126,6 +127,7 @@
 					Name="VCCustomBuildTool"
 					Description="Performing Installer Build"
 					CommandLine="&quot;%ProgramFiles%\Inno Setup 5\ISCC.exe&quot; &quot;$(InputPath)&quot; &quot;/dConfigurationName=$(ConfigurationName)&quot; &quot;/dPlatformName=$(PlatformName)&quot; /v9&#x0D;&#x0A;"
+					AdditionalDependencies="..\shareaza\$(PlatformName)\$(ConfigurationName)\Shareaza.exe"
 					Outputs=".\builds\Preprocessed.iss"
 				/>
 			</FileConfiguration>
@@ -136,6 +138,7 @@
 					Name="VCCustomBuildTool"
 					Description="Performing Installer Build"
 					CommandLine="&quot;%ProgramFiles%\Inno Setup 5\ISCC.exe&quot; &quot;$(InputPath)&quot; &quot;/dConfigurationName=$(ConfigurationName)&quot; &quot;/dPlatformName=$(PlatformName)&quot; /v9&#x0D;&#x0A;"
+					AdditionalDependencies="..\shareaza\$(PlatformName)\$(ConfigurationName)\Shareaza.exe"
 					Outputs=".\builds\Preprocessed.iss"
 				/>
 			</FileConfiguration>
@@ -146,6 +149,7 @@
 					Name="VCCustomBuildTool"
 					Description="Performing Installer Build"
 					CommandLine="&quot;%ProgramFiles%\Inno Setup 5\ISCC.exe&quot; &quot;$(InputPath)&quot; &quot;/dConfigurationName=$(ConfigurationName)&quot; &quot;/dPlatformName=$(PlatformName)&quot; /v9&#x0D;&#x0A;"
+					AdditionalDependencies="..\shareaza\$(PlatformName)\$(ConfigurationName)\Shareaza.exe"
 					Outputs=".\builds\Preprocessed.iss"
 				/>
 			</FileConfiguration>
