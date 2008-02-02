@@ -525,8 +525,10 @@ CQueryHit* CQueryHit::FromPacket(CG2Packet* pPacket, int* pnHops)
 			}
 			
 			pLastHit->Resolve();
-			if ( pXML ) 
-				pLastHit->ParseXML( pXML, nIndex );
+			if ( pXML && pLastHit->ParseXML( pXML, nIndex ) ) 
+			{
+				// Everything is fine
+			}
 			else if ( pLastHit->m_sName.GetLength() > 0 )
 			{
 				// These files always must have metadata in Shareaza clients
