@@ -35,7 +35,6 @@
 #include "Buffer.h"
 #include "WndMain.h"
 #include "DlgIrcInput.h"
-#include ".\ctrlircframe.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -137,7 +136,7 @@ CIRCFrame::~CIRCFrame()
 	if ( g_pIrcFrame == this ) g_pIrcFrame = NULL;
 }
 
-BOOL CIRCNewMessage::operator =(const CIRCNewMessage &rhs)
+CIRCNewMessage::operator =(CIRCNewMessage &rhs)
 {
 	m_sTargetName	= rhs.m_sTargetName;
 	nColorID		= rhs.nColorID;
@@ -164,10 +163,8 @@ int CIRCFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	CRect rectDefault;
 	SetOwner( GetParent() );
 
-	EnableThemeDialogTexture( m_hWnd, ETDT_ENABLETAB );
-	m_wndTab.Create( WS_VISIBLE | TCS_HOTTRACK | TCS_TABS | TCS_RAGGEDRIGHT | TCS_FIXEDWIDTH | TCS_OWNERDRAWFIXED, 
+	m_wndTab.Create( WS_CHILD | WS_VISIBLE | TCS_FLATBUTTONS | TCS_OWNERDRAWFIXED, 
 		rectDefault, this, IDC_CHAT_TABS );
-	SetWindowTheme( m_wndTab.m_hWnd, NULL, NULL );
 
 	FillChanList();
 	m_wndView.Create( WS_CHILD|WS_VISIBLE, rectDefault, this, IDC_CHAT_TEXT );
@@ -2550,81 +2547,50 @@ BOOL CIRCFrame::ShowTrayPopup(LPCTSTR szText, LPCTSTR szTitle, DWORD dwIcon, UIN
 }
 
 BEGIN_MESSAGE_MAP(CIRCTabCtrl, CTabCtrl)
-//	ON_WM_ERASEBKGND()
-//	ON_WM_CTLCOLOR()
+	ON_WM_ERASEBKGND()
 END_MESSAGE_MAP()
 
-CIRCTabCtrl::CIRCTabCtrl()
+BOOL CIRCTabCtrl::OnEraseBkgnd(CDC* pDC)
 {
+	 CRect rect;
+ 	 COLORREF m_cBorder = Settings.IRC.Colors[ ID_COLOR_TABS ];
+	 CBrush cbr = m_cBorder;
+	 pDC->GetWindow()->GetWindowRect( &rect );
+     pDC->GetWindow()->ScreenToClient( &rect );
+ 	 pDC->SetBkMode( OPAQUE );
+	 pDC->SetBkColor( m_cBorder );
+	 pDC->FillRect( &rect, &cbr );
+	 return TRUE;
 }
 
-CIRCTabCtrl::~CIRCTabCtrl()
+void CIRCTabCtrl::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 {
+	if( lpDrawItemStruct->CtlType == ODT_TAB )
+	{
+		CRect rect = lpDrawItemStruct->rcItem;
+		int nTabIndex = lpDrawItemStruct->itemID;
+ 		COLORREF m_cBorder = Settings.IRC.Colors[ ID_COLOR_TABS ];
+		CBrush cbr = m_cBorder;
+		CDC* pOldDC = GetDC();
+		HDC hDC = lpDrawItemStruct->hDC;
+		CDC* pDC = CDC::FromHandle( hDC );
+		lpDrawItemStruct->itemAction = ODA_DRAWENTIRE;
+		pDC->SetBkMode( OPAQUE );
+		pDC->SetBkColor( m_cBorder );
+		pDC->FillRect( &rect, &cbr );
+		pDC->SetTextColor( GetTabColor( nTabIndex ) );
+
+		TC_ITEM tci;
+		TCHAR pszBuffer[ 40 ];
+		tci.mask = TCIF_TEXT|TCIF_IMAGE;
+		tci.pszText = pszBuffer;
+		tci.cchTextMax = 39;
+		if ( !GetItem( nTabIndex, &tci ) ) return;
+		pDC->DrawText( pszBuffer, rect, DT_SINGLELINE | DT_VCENTER | DT_CENTER );
+		pDC = pOldDC;
+	}
+	return;
 }
-
-//BOOL CIRCTabCtrl::OnEraseBkgnd(CDC* pDC)
-//{
-//	 CRect rect;
-// 	 COLORREF m_cBorder = Settings.IRC.Colors[ ID_COLOR_TABS ];
-//	 CBrush cbr = m_cBorder;
-//	 pDC->GetWindow()->GetWindowRect( &rect );
-//     pDC->GetWindow()->ScreenToClient( &rect );
-// 	 pDC->SetBkMode( OPAQUE );
-//	 pDC->SetBkColor( m_cBorder );
-//	 pDC->FillRect( &rect, &cbr );
-//	 return CTabCtrl::OnEraseBkgnd( pDC );
-//}
-
-//BOOL CIRCTabCtrl::OnChildNotify(UINT message, WPARAM wParam, LPARAM lParam, LRESULT* pResult)
-//{
-//	if ( message == WM_PARENTNOTIFY )
-//		return TRUE;
-//	else if ( message == WM_DRAWITEM )
-//	{
-//		DrawItem( (LPDRAWITEMSTRUCT)lParam );
-//		return TRUE;
-//	}
-//	else
-//	{
-//		return FALSE;
-//	}
-//}
-
-//void CIRCTabCtrl::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
-//{
-//	if( lpDrawItemStruct->CtlType == ODT_TAB )
-//	{
-//		lpDrawItemStruct->itemAction = ODA_DRAWENTIRE;
-//		CRect rect = lpDrawItemStruct->rcItem;
-//		int nTabIndex = lpDrawItemStruct->itemID;
-// 		COLORREF m_cBorder = Settings.IRC.Colors[ ID_COLOR_TABS ];
-//		CBrush cbr = m_cBorder;
-//		CDC* pOldDC = GetDC();
-//		HDC hDC = lpDrawItemStruct->hDC;
-//		CDC* pDC = CDC::FromHandle( hDC );
-//
-////		pDC->SetBkMode( OPAQUE );
-////		pDC->SetBkColor( m_cBorder );
-////		pDC->FillRect( &rect, &cbr );
-//		// theApp.m_pfnSetWindowTheme( m_hWnd, NULL, NULL );
-//		CRect rc;
-//		GetClientRect( &rc );
-//		//GetThemeBackgroundContentRect( theApp.m_hTheme, hDC,  )
-//		DrawThemeParentBackground( m_hWnd, hDC, NULL );
-//		DrawThemeBackground( theApp.m_hTheme, hDC, TABP_TABITEM, TIS_NORMAL, rc, NULL );
-//		pDC->SetTextColor( GetTabColor( nTabIndex ) );
-//
-//		TC_ITEM tci;
-//		TCHAR pszBuffer[ 40 ];
-//		tci.mask = TCIF_TEXT;
-//		tci.pszText = pszBuffer;
-//		tci.cchTextMax = 39;
-//		if ( !GetItem( nTabIndex, &tci ) ) return;
-//
-//		pDC->DrawText( pszBuffer, rect, DT_SINGLELINE | DT_VCENTER | DT_CENTER );
-//		pDC = pOldDC;
-//	}
-//}
 
 void CIRCTabCtrl::SetTabColor(int nItem, COLORREF cRGB)
 {
@@ -2752,64 +2718,4 @@ CString CIRCChannelList::GetDisplayOfIndex(int nIndex) const
 CString CIRCChannelList::GetNameOfIndex(int nIndex) const
 {
 	return m_sChannelName.GetAt( nIndex );
-}
-
-#define SelectFont(hdc, hfont) ((HFONT)SelectObject((hdc), (HGDIOBJ)(HFONT)(hfont)))
-
-LRESULT CIRCTabCtrl::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
-{
-	if ( message == WM_PAINT )
-	{
-		RECT client, contentrect;
-		TCHAR widetext[250];
-
-		::GetWindowRect( m_hWnd, &client );
-		::GetWindowTextW( m_hWnd, widetext, sizeof(widetext) );
-
-		// Themes use Unicode exclusively
-
-//		::MultiByteToWideChar( CP_ACP, 0, windowtext, -1, widetext, ::strlen(windowtext) + 1 );
-
-		// Retrieve the font set in your resource editor;
-		// otherwise, the font from the theme will be used,
-		// and it probably won't match
-
-		HFONT hfont = (HFONT)SendMessage( WM_GETFONT, 0, 0 ), hfontorig = NULL;
-
-		// Use Tab control's theme data, since static text has
-		// none
-
-		HTHEME statictheme = OpenThemeData( m_hWnd, L"Tab" ); 
-		HDC hdc = ::GetWindowDC( m_hWnd );
-
-		// set that juicy, XP Visual style bg color
-
-		DrawThemeParentBackground( m_hWnd, hdc, 0 );
-		DrawThemeBackground( statictheme, hdc, TABP_BODY, 0, &client, 0 );
-
-		// The next function needs client coordinates, not
-		// absolute coordinates
-
-		::GetClientRect( m_hWnd, &client );
-		GetThemeBackgroundContentRect( statictheme, hdc, TABP_BODY, 0, &client, &contentrect );
-
-		// Set that font before drawing!
-
-		hfontorig = SelectFont( hdc, theApp.m_gdiFont.m_hObject );
-		DrawThemeText( statictheme, hdc, TABP_TABITEM, TIS_NORMAL, widetext, _tcslen( widetext ),
-			DT_CENTER | DT_VCENTER | DT_SINGLELINE, 0, &contentrect );
-
-		// return things to normal
-
-		CloseThemeData( statictheme );
-
-		hfont = SelectFont( hdc, hfontorig );
-
-		::ReleaseDC( m_hWnd, hdc );
-		::ValidateRect( m_hWnd, 0 );
-
-		return 0;
-	}
-
-	return CTabCtrl::WindowProc( message, wParam, lParam );
 }
