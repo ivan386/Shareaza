@@ -218,6 +218,9 @@ void CTaskPanel::OnPaint()
 	if ( ! CoolInterface.DrawWatermark( &dc, &rc, &m_bmWatermark ) )
 	{
 		dc.FillSolidRect( &rc, CoolInterface.m_crTaskPanelBack );
+		CRect rcShadow( rc );
+		rcShadow.bottom = rcShadow.top + 1;
+		dc.FillSolidRect( &rcShadow, RGB( 92, 131, 200 ) ); // The top pixel row from BannerMark.bmp
 	}
 }
 
