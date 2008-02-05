@@ -359,8 +359,8 @@ void CIRCFrame::OnSkinChange()
 	}
 	else if ( Skin.m_crBannerBack == RGB( 122, 161, 230 ) )
 	{
-		m_wndPanel.m_boxUsers.m_bmWatermark.LoadBitmap( IDB_BANNER_MARK );
-		m_wndPanel.m_boxChans.m_bmWatermark.LoadBitmap( IDB_BANNER_MARK );
+		m_wndPanel.m_boxUsers.m_bmWatermark.LoadBitmap( IDB_BOX_MARK );
+		m_wndPanel.m_boxChans.m_bmWatermark.LoadBitmap( IDB_BOX_MARK );
 	}
 
 	m_wndPanel.m_boxChans.m_wndAddChannel.SetIcon( CoolInterface.ExtractIcon( ID_IRC_ADD, Settings.General.LanguageRTL ) );

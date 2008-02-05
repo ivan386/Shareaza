@@ -187,6 +187,7 @@
 #define IDB_MUSICBRAINZ_LOGO            284
 #define IDI_HASH                        285
 #define IDI_SEARCH_ARTIST               286
+#define IDB_BOX_MARK                    287
 #define IDR_CHANSFRAME                  991
 #define IDI_IRCHEADER                   992
 #define IDI_IRCHEADER32                 993
@@ -1816,7 +1817,7 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
-#define _APS_NEXT_RESOURCE_VALUE        287
+#define _APS_NEXT_RESOURCE_VALUE        288
 #define _APS_NEXT_COMMAND_VALUE         33230
 #define _APS_NEXT_CONTROL_VALUE         1536
 #define _APS_NEXT_SYMED_VALUE           104

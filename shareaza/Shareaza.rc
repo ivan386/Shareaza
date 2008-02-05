@@ -168,6 +168,7 @@ BEGIN
     END
 END
 
+
 /////////////////////////////////////////////////////////////////////////////
 //
 // Bitmap
@@ -200,6 +201,7 @@ IDB_MUSICBRAINZ_LOGO    BITMAP                  "Res\\MusicBrainz.bmp"
 IDB_CHILDFRAME          BITMAP                  "Res\\ChildFrame.bmp"
 IDB_IRCICONS            BITMAP                  "Res\\IrcIcons.bmp"
 IDB_FONT_SYMBOLS        BITMAP                  "Res\\FontSymbols.bmp"
+IDB_BOX_MARK            BITMAP                  "Res\\BoxMark.bmp"
 
 /////////////////////////////////////////////////////////////////////////////
 //
