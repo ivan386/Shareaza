@@ -1,7 +1,7 @@
 //
 // CoolInterface.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -20,6 +20,8 @@
 //
 
 #pragma once
+
+#define LVSIL_BIG             100	// 48x48 icons
 
 #include "Skin.h"
 
@@ -176,6 +178,7 @@ public:
 	void		AddIcon(UINT nID, HICON hIcon, int nImageListType = LVSIL_SMALL);
 	void		CopyIcon(UINT nFromID, UINT nToID, int nImageListType = LVSIL_SMALL);
 	HICON		ExtractIcon(UINT nID, BOOL bMirrored, int nImageListType = LVSIL_SMALL);
+	int			ExtractIconID(UINT nID, BOOL bMirrored, int nImageListType = LVSIL_SMALL);
 	// Set skinned icon to window i.e. pWnd->SetIcon( hIcon, bBigIcon )
 	void		SetIcon(UINT nID, BOOL bMirrored, BOOL bBigIcon, CWnd* pWnd);
 	// Set skinned icon to window i.e. pWnd->SetIcon( hIcon, bBigIcon )
@@ -206,6 +209,8 @@ protected:
 	CImageList		m_pImages16;		// Small images (LVSIL_SMALL)
 	CUINTintMap		m_pImageMap32;		// Normal images (LVSIL_NORMAL)
 	CImageList		m_pImages32;		// Normal images (LVSIL_NORMAL)
+	CUINTintMap		m_pImageMap48;		// Normal images (LVSIL_BIG)
+	CImageList		m_pImages48;		// Normal images (LVSIL_BIG)
 	CSize			m_czBuffer;
 	CDC				m_dcBuffer;
 	CBitmap			m_bmBuffer;
