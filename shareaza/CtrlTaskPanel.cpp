@@ -203,7 +203,7 @@ void CTaskPanel::OnPaint()
 	GetClientRect( &rc );
 	
 	if ( m_bLayout ) Layout( rc );
-	
+
 	if ( m_bmFooter.m_hObject != NULL )
 	{
 		BITMAP pInfo;
@@ -221,6 +221,13 @@ void CTaskPanel::OnPaint()
 		CRect rcShadow( rc );
 		rcShadow.bottom = rcShadow.top + 1;
 		dc.FillSolidRect( &rcShadow, RGB( 92, 131, 200 ) ); // The top pixel row from BannerMark.bmp
+
+		GetWindowRect( &rc );
+		ScreenToClient( &rc );
+
+		CRect rcVertLine( rc );
+		rcVertLine.left = rcVertLine.right - 1;
+		dc.FillSolidRect( &rcVertLine, RGB( 92, 131, 200 ) );
 	}
 }
 
