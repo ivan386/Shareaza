@@ -1,7 +1,7 @@
 //
 // CtrlIRCFrame.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -150,10 +150,8 @@ BOOL CIRCNewMessage::operator =(const CIRCNewMessage &rhs)
 BOOL CIRCFrame::Create(CWnd* pParentWnd) 
 {
 	CRect rect;
-	BOOL bResult = CWnd::Create( NULL, _T("CIRCFrame"), WS_CHILD|WS_VISIBLE|WS_CLIPCHILDREN,
-		rect, pParentWnd, IDC_IRC_FRAME, NULL );
-
-	return bResult;
+	return CWnd::Create( NULL, _T("CIRCFrame"), WS_CHILD|WS_VISIBLE|WS_CLIPCHILDREN,
+		rect, pParentWnd, IDC_IRC_FRAME );
 }
 
 int CIRCFrame::OnCreate(LPCREATESTRUCT lpCreateStruct) 
@@ -340,7 +338,8 @@ void CIRCFrame::OnDestroy()
 
 void CIRCFrame::OnSkinChange()
 {
-	m_wndPanel.Setup();
+	m_wndPanel.OnSkinChange();
+
 	Skin.CreateToolBar( _T("CMainIrcBar"), &m_wndMainBar );
 	if ( m_bmWatermark.m_hObject != NULL ) m_bmWatermark.DeleteObject();
 	if ( HBITMAP hMark = Skin.GetWatermark( _T("CIRCHeaderPanel") ) )
@@ -348,31 +347,7 @@ void CIRCFrame::OnSkinChange()
 	else if ( Skin.m_crBannerBack == RGB( 122, 161, 230 ) )
 		m_bmWatermark.LoadBitmap( IDB_BANNER_MARK );
 
-	if ( m_wndPanel.m_boxUsers.m_bmWatermark.m_hObject != NULL ) 
-		m_wndPanel.m_boxUsers.m_bmWatermark.DeleteObject();
-	if ( m_wndPanel.m_boxChans.m_bmWatermark.m_hObject != NULL ) 
-		m_wndPanel.m_boxChans.m_bmWatermark.DeleteObject();
-    if ( HBITMAP hMark = Skin.GetWatermark( _T("CIRCWaterMarkPanel") ) )
-	{
-		m_wndPanel.m_boxUsers.m_bmWatermark.Attach( hMark );
-		m_wndPanel.m_boxChans.m_bmWatermark.Attach( hMark );
-	}
-	else if ( Skin.m_crBannerBack == RGB( 122, 161, 230 ) )
-	{
-		m_wndPanel.m_boxUsers.m_bmWatermark.LoadBitmap( IDB_BOX_MARK );
-		m_wndPanel.m_boxChans.m_bmWatermark.LoadBitmap( IDB_BOX_MARK );
-	}
-
-	m_wndPanel.m_boxChans.m_wndAddChannel.SetIcon( CoolInterface.ExtractIcon( ID_IRC_ADD, Settings.General.LanguageRTL ) );
-	m_wndPanel.m_boxChans.m_wndRemoveChannel.SetIcon( CoolInterface.ExtractIcon( ID_IRC_REMOVE, Settings.General.LanguageRTL ) );
-
-	m_bHeaderIcon = (HICON)LoadImage( AfxGetResourceHandle(), MAKEINTRESOURCE(IDI_IRCHEADER),
-		IMAGE_ICON, 48, 48, 0 );
-	if ( m_bHeaderIcon == NULL )
-	{
-		m_bHeaderIcon = (HICON)LoadImage( AfxGetResourceHandle(),
-			MAKEINTRESOURCE(IDI_IRCHEADER32), IMAGE_ICON, 32, 32, 0 );
-	}
+	m_nHeaderIcon = CoolInterface.ExtractIconID( IDR_IRCFRAME, FALSE, LVSIL_BIG );
 }
 
 void CIRCFrame::OnUpdateCmdUI()
@@ -431,13 +406,16 @@ void CIRCFrame::OnPaint()
 	rcComponent.bottom = rcComponent.top + IRCHEADER_HEIGHT;
 	PaintHeader( rcComponent, dc );
 	rcComponent.DeflateRect( 14, 0 );
-	DrawIconEx( dc, rcComponent.left + 4, rcComponent.top + 4,
-		m_bHeaderIcon, 48, 48, 0, 0, DI_NORMAL );
+	CoolInterface.DrawEx( &dc, m_nHeaderIcon,
+		CPoint( rcComponent.left + 4, rcComponent.top + 4 ), CSize( 48, 48 ),
+		CLR_NONE, CLR_NONE, ILD_NORMAL, LVSIL_BIG );
 	rcComponent.DeflateRect( 44, 0 );
 	rcComponent.DeflateRect( 10, 12 );
 
-	CString pszTitle = _T("Welcome to Shareaza Chat!");
-	CString pszSubtitle = _T("Please respect others while using this service");
+	CString pszTitle;
+	LoadString( pszTitle, IDS_IRC_PANEL_TITLE );
+	CString pszSubtitle;
+	LoadString( pszSubtitle, IDS_IRC_PANEL_SUBTITLE );
 	dc.SelectObject( &CoolInterface.m_fntCaption );
 	DrawText( &dc, rcComponent.left, rcComponent.top, pszTitle );
 	rcComponent.DeflateRect( 0, 14 );

@@ -1,7 +1,7 @@
 //
 // WndIRC.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -20,9 +20,6 @@
 //
 // Author: peer_l_@hotmail.com
 //
-
-#if !defined(CIRCWND_H_INCLUDED)
-#define CIRCWND_H_INCLUDED
  
 #pragma once
 
@@ -35,7 +32,6 @@ class CIRCWnd : public CPanelWnd
 // Construction
 public:
 	CIRCWnd();
-	virtual ~CIRCWnd();
 
 	DECLARE_SERIAL(CIRCWnd)
 
@@ -69,8 +65,3 @@ protected:
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };
-
-//{{AFX_INSERT_LOCATION}}
-
-#endif // !defined(CIRCWND_H_INCLUDED)
-

@@ -1,7 +1,7 @@
 //
 // WndIRC.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -51,14 +51,9 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CIRCWnd construction
 
-CIRCWnd::CIRCWnd() : CPanelWnd( TRUE, FALSE )
+CIRCWnd::CIRCWnd() : CPanelWnd( TRUE )
 {
-	m_bPanelClose = FALSE;
 	Create( IDR_IRCFRAME );
-}
-
-CIRCWnd::~CIRCWnd()
-{
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -71,8 +66,11 @@ int CIRCWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if ( CPanelWnd::OnCreate( lpCreateStruct ) == -1 ) return -1;
 
-	m_wndFrame.Create( this );
+	if ( ! m_wndFrame.Create( this ) ) return -1;
+
 	LoadState();
+
+	OnSkinChange();
 
 	return 0;
 }

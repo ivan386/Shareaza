@@ -189,8 +189,6 @@
 #define IDI_SEARCH_ARTIST               286
 #define IDB_BOX_MARK                    287
 #define IDR_CHANSFRAME                  991
-#define IDI_IRCHEADER                   992
-#define IDI_IRCHEADER32                 993
 #define IDR_IRCFRAME                    994
 #define IDR_USERSFRAME                  995
 #define IDB_FONT_SYMBOLS                996
@@ -1243,6 +1241,12 @@
 #define IDS_MEDIA_EMPTY                 16997
 #define IDS_MEDIA_TITLE                 16998
 #define IDS_MEDIA_PLAYLIST              16999
+#define IDS_IRC_PANEL_TITLE             17018
+#define IDS_IRC_PANEL_SUBTITLE          17019
+#define IDS_IRC_PANEL_ADDCHANNEL        17020
+#define IDS_IRC_PANEL_REMOVECHANNEL     17021
+#define IDS_IRC_PANEL_USERS_CAPTION     17022
+#define IDS_IRC_PANEL_CHANS_CAPTION     17023
 #define IDS_CHAT_CONNECTING_TO          17024
 #define IDS_CHAT_CANT_CONNECT           17025
 #define IDS_CHAT_PUSH_SENT              17026

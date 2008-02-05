@@ -126,8 +126,6 @@ IDI_HASH                ICON                    "Res\\Hash.ico"
 IDR_IRCFRAME            ICON                    "Res\\irc.ico"
 IDR_USERSFRAME          ICON                    "Res\\users.ico"
 IDR_CHANSFRAME          ICON                    "Res\\channel.ico"
-IDI_IRCHEADER           ICON                    "Res\\ChatHeader.ico"
-IDI_IRCHEADER32         ICON                    "Res\\ChatHeader32.ico"
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -135,8 +133,8 @@ IDI_IRCHEADER32         ICON                    "Res\\ChatHeader32.ico"
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 2,3,1,1
- PRODUCTVERSION 2,3,0,1
+ FILEVERSION 2,3,1,2
+ PRODUCTVERSION 2,3,1,2
  FILEFLAGSMASK 0x1fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -151,15 +149,14 @@ BEGIN
     BEGIN
         BLOCK "000004b0"
         BEGIN
-            VALUE "Comments", "Shareaza Ultimate File Sharing"
             VALUE "CompanyName", "Shareaza Development Team"
             VALUE "FileDescription", "Shareaza Ultimate File Sharing"
-            VALUE "FileVersion", "2, 3, 1, 1"
+            VALUE "FileVersion", "2, 3, 1, 2"
             VALUE "InternalName", "Shareaza"
             VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2002-2008. All rights reserved."
             VALUE "OriginalFilename", "Shareaza.exe"
-            VALUE "ProductName", "Shareaza P2P"
-            VALUE "ProductVersion", "2, 3, 0, 1"
+            VALUE "ProductName", "Shareaza Ultimate File Sharing"
+            VALUE "ProductVersion", "2, 3, 1, 2"
         END
     END
     BLOCK "VarFileInfo"
@@ -3681,11 +3678,7 @@ BEGIN
     IDR_MEDIAFRAME          "Media Player"
     IDR_SEARCHPADFRAME      "Search"
     IDR_HELPFRAME           "Shareaza Help"
-END
-
-STRINGTABLE 
-BEGIN
-    IDR_IRCFRAME            "Chat"
+    IDR_IRCFRAME            "Shareaza Chat"
 END
 
 STRINGTABLE 
@@ -4498,6 +4491,12 @@ END
 
 STRINGTABLE 
 BEGIN
+    IDS_IRC_PANEL_TITLE     "Welcome to Shareaza Chat!"
+    IDS_IRC_PANEL_SUBTITLE  "Please respect others while using this service"
+    IDS_IRC_PANEL_ADDCHANNEL "Add"
+    IDS_IRC_PANEL_REMOVECHANNEL "Remove"
+    IDS_IRC_PANEL_USERS_CAPTION "Users"
+    IDS_IRC_PANEL_CHANS_CAPTION "Channels"
     IDS_CHAT_CONNECTING_TO  "Initiating a connection to %s..."
     IDS_CHAT_CANT_CONNECT   "Unable to create a connection to %s."
     IDS_CHAT_PUSH_SENT      "Requesting a firewalled push connection from %s..."

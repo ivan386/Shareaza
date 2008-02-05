@@ -1,7 +1,7 @@
 //
 // CtrlIRCPanel.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -41,34 +41,27 @@ static char THIS_FILE[] = __FILE__;
 
 IMPLEMENT_DYNAMIC(CIRCPanel, CTaskPanel)
 BEGIN_MESSAGE_MAP(CIRCPanel, CTaskPanel)
-	//{{AFX_MSG_MAP(CIRCPanel)
 	ON_WM_CREATE()
-	//}}AFX_MSG_MAP
-	ON_WM_SIZE()
 END_MESSAGE_MAP()
 
-IMPLEMENT_DYNAMIC(CIRCUsersBox, CRichTaskBox)
-BEGIN_MESSAGE_MAP(CIRCUsersBox, CRichTaskBox)
-	//{{AFX_MSG_MAP(CIRCUsersBox)
+IMPLEMENT_DYNAMIC(CIRCUsersBox, CTaskBox)
+BEGIN_MESSAGE_MAP(CIRCUsersBox, CTaskBox)
 	ON_WM_CREATE()
 	ON_WM_SIZE()
 	ON_WM_PAINT()
 	ON_WM_CONTEXTMENU()
 	ON_LBN_DBLCLK(IDC_IRC_USERS, OnUsersDoubleClick)
-	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 
-IMPLEMENT_DYNAMIC(CIRCChannelsBox, CRichTaskBox)
-BEGIN_MESSAGE_MAP(CIRCChannelsBox, CRichTaskBox)
-	//{{AFX_MSG_MAP(CIRCChannelsBox)
+IMPLEMENT_DYNAMIC(CIRCChannelsBox, CTaskBox)
+BEGIN_MESSAGE_MAP(CIRCChannelsBox, CTaskBox)
 	ON_WM_CREATE()
 	ON_WM_SIZE()
 	ON_WM_PAINT()
 	ON_NOTIFY(NM_DBLCLK, IDC_IRC_CHANNELS, OnChansDoubleClick)
 	ON_COMMAND(IDC_IRC_ADDCHANNEL, OnAddChannel)
 	ON_COMMAND(IDC_IRC_REMOVECHANNEL, OnRemoveChannel)
-	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -88,50 +81,52 @@ CIRCPanel::~CIRCPanel()
 
 BOOL CIRCPanel::Create(CWnd* pParentWnd)
 {
-	CRect rect( 0, 0, PANEL_WIDTH, 0 );
-	return CTaskPanel::Create( _T("CIRCPanel"), WS_VISIBLE, rect, pParentWnd, IDC_IRC_PANEL );
+	CRect rect( 0, 0, 0, 0 );
+	return CTaskPanel::Create( _T("CIRCPanel"), WS_VISIBLE, rect, pParentWnd, 0 );
 }
 
 int CIRCPanel::OnCreate(LPCREATESTRUCT lpCreateStruct) 
 {
 	if ( CTaskPanel::OnCreate( lpCreateStruct ) == -1 ) return -1;
 	
-	m_boxUsers.Create( this, _T("Users"), IDR_USERSFRAME );
-	m_boxChans.Create( this, _T("Channels"), IDR_CHANSFRAME );
-	m_pFont.Attach( theApp.m_gdiFontBold );
-	m_boxUsers.m_wndUserList.SetFont( &m_pFont );
-	m_boxChans.m_wndChanList.SetFont( &m_pFont );
+	m_boxChans.Create( this, 240, _T("Channels"), IDR_CHANSFRAME );
+	m_boxUsers.Create( this, 200, _T("Users"), IDR_USERSFRAME );
 
-	AddBox( &m_boxUsers );
+	m_pFont.Attach( theApp.m_gdiFontBold );
+	m_boxChans.m_wndChanList.SetFont( &m_pFont );
+	m_boxUsers.m_wndUserList.SetFont( &m_pFont );
+
 	AddBox( &m_boxChans );
+	AddBox( &m_boxUsers );
+
+	SetStretchBox( &m_boxUsers );
+
+	OnSkinChange();
 	
 	return 0;
 }
 
-void CIRCPanel::Setup()
+void CIRCPanel::OnSkinChange()
 {
+	CString strCaption;
+
+	LoadString( strCaption, IDS_IRC_PANEL_CHANS_CAPTION );
+	m_boxChans.SetCaption( strCaption );
+	LoadString( strCaption, IDS_IRC_PANEL_USERS_CAPTION );
+	m_boxUsers.SetCaption( strCaption );
+
 	SetWatermark( Skin.GetWatermark( _T("CIRCPanel") ) );
 	SetFooter( Skin.GetWatermark( _T("CIRCPanel.Footer") ), TRUE );
-	
-	m_boxUsers.Setup();
-	m_boxChans.Setup();
-	
+
+	m_boxChans.SetWatermark( Skin.GetWatermark( _T("CIRCChannelsBox") ) );
+	m_boxChans.SetCaptionmark( Skin.GetWatermark( _T("CIRCChannelsBox.Caption") ) );
+	m_boxChans.OnSkinChange();
+
+	m_boxUsers.SetWatermark( Skin.GetWatermark( _T("CIRCUsersBox") ) );
+	m_boxUsers.SetCaptionmark( Skin.GetWatermark( _T("CIRCUsersBox.Caption") ) );
+	m_boxUsers.OnSkinChange();
+
 	Invalidate();
-}
-
-void CIRCPanel::OnSize(UINT nType, int cx, int cy)
-{
-	CTaskPanel::OnSize( nType, cx, cy );
-
-	CRect rcClient;
-	GetOwner()->GetClientRect( &rcClient );
-	int nBoxWidth, nBoxChansHeight;
-	nBoxWidth = PANEL_WIDTH - BOX_HOFFSET;
-	nBoxChansHeight = rcClient.Height() - BOXUSERS_HEIGHT - BUTTON_HEIGHT - 1 - PANELOFFSET_HEIGHT;
-	if ( nBoxChansHeight < BOXCHANS_MINHEIGHT ) nBoxChansHeight = BOXCHANS_MINHEIGHT;
-	m_boxChans.m_wndChanList.SetWindowPos( NULL, BOX_HOFFSET, BOX_VOFFSET, nBoxWidth - BOX_HOFFSET * 4, 
-		nBoxChansHeight - BOX_VOFFSET * 2, SWP_NOZORDER | SWP_SHOWWINDOW );
-	m_boxChans.SetSize( nBoxChansHeight + BUTTON_HEIGHT );
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -139,7 +134,6 @@ void CIRCPanel::OnSize(UINT nType, int cx, int cy)
 
 CIRCUsersBox::CIRCUsersBox()
 {
-	SetPrimary();
 }
 
 CIRCUsersBox::~CIRCUsersBox()
@@ -151,97 +145,44 @@ CIRCUsersBox::~CIRCUsersBox()
 
 int CIRCUsersBox::OnCreate(LPCREATESTRUCT lpCreateStruct) 
 {
-	if ( CRichTaskBox::OnCreate( lpCreateStruct ) == -1 ) return -1;
-	CRect rectDefault;
-	m_wndUserList.Create(WS_CHILD|WS_VISIBLE|WS_VSCROLL|LBS_NOTIFY, rectDefault, this, IDC_IRC_USERS);
-	if ( Settings.General.LanguageRTL ) m_wndUserList.ModifyStyleEx(WS_EX_LAYOUTRTL,0,0);
+	if ( CTaskBox::OnCreate( lpCreateStruct ) == -1 ) return -1;
+
+	CRect rc( 0, 0, 0, 0 );
+	m_wndUserList.Create( WS_CHILD | WS_VISIBLE | WS_VSCROLL | WS_TABSTOP |
+		LBS_NOTIFY | LBS_NOINTEGRALHEIGHT, rc, this, IDC_IRC_USERS );
+	if ( Settings.General.LanguageRTL )
+		m_wndUserList.ModifyStyleEx( WS_EX_LAYOUTRTL, 0, 0 );
 	m_wndUserList.ModifyStyleEx( 0, WS_EX_CLIENTEDGE );
-	
-	m_hHand = theApp.LoadCursor( IDC_HAND );
-	
+
+	OnSkinChange();
+
 	return 0;
 }
 
-void CIRCUsersBox::Setup()
+void CIRCUsersBox::OnSkinChange()
 {
-	if ( m_pDocument ) delete m_pDocument;
-
-	m_pDocument = NULL;
-		
-	SetCaptionmark( Skin.GetWatermark( _T("CIRCUsersBox.Caption") ) );
-	
-	CXMLElement* pXML = Skin.GetDocument( _T("CIRCUsersBox") );
-	if ( pXML == NULL ) return;
-
-	m_sCaption = pXML->GetAttributeValue( _T("title"), _T("Users") );
-
-	SetCaption( m_sCaption );
-	
-	m_pDocument = new CRichDocument();
-	
-	CMap<CString, const CString &, CRichElement *, CRichElement *> pMap;
-	if ( ! m_pDocument->LoadXML( pXML, &pMap ) ) return;
 }
 
 void CIRCUsersBox::UpdateCaptionCount()
 {
 	CString strCaption;
-	strCaption.Format( _T("%d"), m_wndUserList.GetCount() );
-	strCaption += _T(")");
-	strCaption = _T(" (") + strCaption;
-	SetCaption( m_sCaption + strCaption );		
+	LoadString( strCaption, IDS_IRC_PANEL_USERS_CAPTION );
+	CString strCount;
+	strCount.Format( _T(" (%d)"), m_wndUserList.GetCount() );
+	SetCaption( strCaption + strCount );
 }
 
 void CIRCUsersBox::OnSize(UINT nType, int cx, int cy) 
 {
 	CTaskBox::OnSize( nType, cx, cy );
-	CRect rcBox;
-	m_wndUserList.SetWindowPos( NULL, BOX_HOFFSET, BOX_VOFFSET, PANEL_WIDTH - BOX_HOFFSET - BOX_HOFFSET * 4, 
-		BOXUSERS_HEIGHT - BOX_VOFFSET * 2, SWP_NOZORDER | SWP_SHOWWINDOW );
- 	m_wndUserList.GetClientRect(&rcBox);
-	SetSize( rcBox.Height() + BOX_VOFFSET * 2 + 4 );
-} 
+
+	m_wndUserList.SetWindowPos( NULL, 1, 1, cx - 2, cy - 2,
+		SWP_SHOWWINDOW | SWP_NOACTIVATE | SWP_NOZORDER );
+}
 
 void CIRCUsersBox::OnPaint() 
 {
-	CRect rcClient, rcIcon, rcText;
-	CPaintDC dc( this );
-	
-	GetClientRect( &rcClient );
-	m_wndView.GetClientRect( &rcIcon );
-	rcClient.bottom -= rcIcon.Height();
-	rcClient.top += 6;
-	
-	rcIcon.SetRect( 4, rcClient.top, 4 + 20, rcClient.top + 16 );
-	rcText.SetRect( rcIcon.right, rcIcon.top, rcClient.right - 4, rcIcon.bottom );
-	rcIcon.DeflateRect( 0, 2 );
-
-	dc.SetBkMode( OPAQUE );
-	dc.SetBkColor( CoolInterface.m_crWindow );
-	dc.SetTextColor( RGB( 0, 0, 255 ) );
-	
-	rcClient.top = 0;
-	dc.FillSolidRect( &rcClient, CoolInterface.m_crWindow );
-
-	CRect rcClient2;
-
-	GetClientRect( &rcClient2 );
-	if ( rcClient2.IsRectEmpty() ) return;
-	if ( m_bmBuffer.m_hObject != NULL )
-	{
-		m_dcBuffer.SelectObject( m_hBuffer );
-		m_dcBuffer.DeleteDC();
-		m_bmBuffer.DeleteObject();
-	}
-	m_bmBuffer.CreateCompatibleBitmap( &dc, rcClient2.Width(), rcClient2.Height() );
-	m_dcBuffer.CreateCompatibleDC( &dc );
-	m_hBuffer = (HBITMAP)m_dcBuffer.SelectObject( &m_bmBuffer )->m_hObject;
-	if ( ! CoolInterface.DrawWatermark( &m_dcBuffer, &rcClient2, &m_bmWatermark, 0, 0 ) )
-	{
-		m_dcBuffer.FillSolidRect( &rcClient, Skin.m_crBannerBack );
-	}
-	dc.BitBlt( rcClient.left, rcClient.top, rcClient.Width(),
-		rcClient.Height(), &m_dcBuffer, 0, 0, SRCCOPY );
+	CTaskBox::OnPaint();
 }
 
 void CIRCUsersBox::OnUsersDoubleClick() 
@@ -263,12 +204,12 @@ void CIRCUsersBox::OnContextMenu(CWnd* /* pWnd */, CPoint /* point */)
 	CWnd* m_wndFrame = GetOwner()->GetOwner();
 	m_wndFrame->PostMessage( WM_NOTIFY, pNotify.hdr.idFrom, (LPARAM)&pNotify );
 }
+
 /////////////////////////////////////////////////////////////////////////////
 // CIRCChannelsBox construction
 
 CIRCChannelsBox::CIRCChannelsBox()
 {
-	SetPrimary();
 }
 
 CIRCChannelsBox::~CIRCChannelsBox()
@@ -280,121 +221,71 @@ CIRCChannelsBox::~CIRCChannelsBox()
 
 int CIRCChannelsBox::OnCreate(LPCREATESTRUCT lpCreateStruct) 
 {
-	if ( CRichTaskBox::OnCreate( lpCreateStruct ) == -1 ) return -1;
-	CRect rectDefault;
+	if ( CTaskBox::OnCreate( lpCreateStruct ) == -1 ) return -1;
+
 	SetOwner( GetParent() );
-	DWORD dwStyle = WS_CHILD | WS_VSCROLL | LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_REPORT |
-		WS_VISIBLE | LVS_NOCOLUMNHEADER | LVS_SORTASCENDING | LVS_NOLABELWRAP;
- 	m_wndChanList.Create( dwStyle, rectDefault, this, IDC_IRC_CHANNELS );
-	m_wndChanList.ModifyStyleEx( 0, WS_EX_CLIENTEDGE );
 
 	CRect rc( 0, 0, 0, 0 );
-	m_wndAddChannel.Create( rc, this, IDC_IRC_ADDCHANNEL );
-	//LoadString( strCaption, IDS_IRC_ADDCHANNEL );
-	m_wndAddChannel.SetWindowText( _T(" Add ") );
-	m_wndAddChannel.SetIcon( CoolInterface.ExtractIcon( ID_IRC_ADD, Settings.General.LanguageRTL ) );
+
+	m_wndChanList.Create( WS_CHILD | WS_VSCROLL | WS_TABSTOP | WS_GROUP | WS_VISIBLE |
+		LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_REPORT |
+		LVS_NOCOLUMNHEADER | LVS_SORTASCENDING | LVS_NOLABELWRAP,
+		rc, this, IDC_IRC_CHANNELS );
+	m_wndChanList.ModifyStyleEx( 0, WS_EX_CLIENTEDGE );
+	m_wndChanList.InsertColumn( 0, _T("Channels"), LVCFMT_LEFT, 1 );
+	m_wndChanList.InsertColumn( 1, _T("UserCount"), LVCFMT_RIGHT, 1 );
+
+	m_wndAddChannel.Create( rc, this, IDC_IRC_ADDCHANNEL, WS_TABSTOP | BS_DEFPUSHBUTTON );
 	m_wndAddChannel.SetHandCursor( TRUE );
 
-	m_wndRemoveChannel.Create( rc, this, IDC_IRC_REMOVECHANNEL );
-	//LoadString( strCaption, IDS_IRC_REMOVECHANNEL );
-	m_wndRemoveChannel.SetWindowText( _T(" Remove ") );
-	m_wndRemoveChannel.SetIcon( CoolInterface.ExtractIcon( ID_IRC_REMOVE, Settings.General.LanguageRTL ) );
-	m_wndAddChannel.SetHandCursor( TRUE );
+	m_wndRemoveChannel.Create( rc, this, IDC_IRC_REMOVECHANNEL, WS_TABSTOP );
+	m_wndRemoveChannel.SetHandCursor( TRUE );
 
-	m_hHand = theApp.LoadCursor( IDC_HAND );
+	OnSkinChange();
+
+	SetPrimary( TRUE );
 	
 	return 0;
 }
 
-void CIRCChannelsBox::Setup()
+void CIRCChannelsBox::OnSkinChange()
 {
-	if ( m_pDocument ) delete m_pDocument;
+	CString strCaption;
 
-	m_pDocument = NULL;
-		
-	SetCaptionmark( Skin.GetWatermark( _T("CIRCChannelsBox.Caption") ) );
-	
-	CXMLElement* pXML = Skin.GetDocument( _T("CIRCChannelsBox") );
-	if ( pXML == NULL ) return;
-	
-	SetCaption( pXML->GetAttributeValue( _T("title"), _T("Channels") ) );
-	
-	m_pDocument = new CRichDocument();
-	
-	CMap<CString, const CString&, CRichElement *, CRichElement *> pMap;
-	if ( ! m_pDocument->LoadXML( pXML, &pMap ) ) return;
-	
-	GetView().SetDocument( m_pDocument );
+	LoadString( strCaption, IDS_IRC_PANEL_ADDCHANNEL );
+	m_wndAddChannel.SetWindowText( strCaption );
+	m_wndAddChannel.SetCoolIcon( ID_IRC_ADD, Settings.General.LanguageRTL );
 
-	CRect rcChanList;
-	m_wndChanList.GetClientRect(&rcChanList);
-	int nScrollbarWidth = 17;
-	int nUserCountWidth = 30;
-	int nChanCountWidth = rcChanList.Width() - nUserCountWidth - nScrollbarWidth;
-	m_wndChanList.InsertColumn( 0, _T("Channels"), LVCFMT_LEFT, nChanCountWidth, -1 );
-	m_wndChanList.InsertColumn( 1, _T("UserCount"), LVCFMT_RIGHT, nUserCountWidth, -1 );
+	LoadString( strCaption, IDS_IRC_PANEL_REMOVECHANNEL );
+	m_wndRemoveChannel.SetWindowText( strCaption );
+	m_wndRemoveChannel.SetCoolIcon( ID_IRC_REMOVE, Settings.General.LanguageRTL );
 }
 
 void CIRCChannelsBox::OnSize(UINT nType, int cx, int cy) 
 {
-	CRichTaskBox::OnSize( nType, cx, cy );
+	CTaskBox::OnSize( nType, cx, cy );
 
-	CRect rcClient;
-	GetOwner()->GetClientRect( &rcClient );
-	int nBoxWidth = PANEL_WIDTH - BOX_HOFFSET;
-	int nBoxChansHeight = rcClient.Height() - BOXUSERS_HEIGHT - BUTTON_HEIGHT - 1 - PANELOFFSET_HEIGHT;
-	if ( nBoxChansHeight < BOXCHANS_MINHEIGHT ) nBoxChansHeight = BOXCHANS_MINHEIGHT;
+	HDWP hDWP = BeginDeferWindowPos( 3 );
 
-	HDWP hDWP = BeginDeferWindowPos( 2 );
-
-	DeferWindowPos( hDWP, m_wndAddChannel, NULL, BOX_HOFFSET, nBoxChansHeight - BOX_VOFFSET + 1, 
-		(nBoxWidth - BOX_HOFFSET * 4) / 2 - 2, BUTTON_HEIGHT, SWP_SHOWWINDOW | SWP_NOZORDER );
-	DeferWindowPos( hDWP, m_wndRemoveChannel, NULL, BOX_HOFFSET + (nBoxWidth - BOX_HOFFSET * 4) / 2 + 2, 
-		nBoxChansHeight - BOX_VOFFSET + 1, (nBoxWidth - BOX_HOFFSET * 4) / 2 - 2, 
-		BUTTON_HEIGHT, SWP_SHOWWINDOW | SWP_NOZORDER );
+	DeferWindowPos( hDWP, m_wndChanList, NULL, 1, 1, cx - 2, cy - 24 - 10 - 10 - 2,
+		SWP_SHOWWINDOW | SWP_NOACTIVATE | SWP_NOZORDER );
+	DeferWindowPos( hDWP, m_wndAddChannel, NULL, 8, cy - 24 - 10, 76, 24,
+		SWP_SHOWWINDOW | SWP_NOACTIVATE | SWP_NOZORDER );
+	DeferWindowPos( hDWP, m_wndRemoveChannel, NULL, cx - 76 - 10, cy - 24 - 10, 76, 24,
+		SWP_SHOWWINDOW | SWP_NOACTIVATE | SWP_NOZORDER );
 	
 	EndDeferWindowPos( hDWP );
+
+	int nScrollbarWidth = 17;
+	int nUserCountWidth = 30;
+	int nChanCountWidth = cx - 2 - nUserCountWidth - nScrollbarWidth;
+	m_wndChanList.SetColumnWidth( 0, nChanCountWidth );
+	m_wndChanList.SetColumnWidth( 1, nUserCountWidth );
 }
 
 void CIRCChannelsBox::OnPaint() 
 {
-	CRect rcClient, rcIcon, rcText;
-	CPaintDC dc( this );
-	GetClientRect( &rcClient );
-	m_wndView.GetClientRect( &rcIcon );
-	rcClient.bottom -= rcIcon.Height();
-	rcClient.top += 6;
-	
-	rcIcon.SetRect( 4, rcClient.top, 4 + 20, rcClient.top + 16 );
-	rcText.SetRect( rcIcon.right, rcIcon.top, rcClient.right - 4, rcIcon.bottom );
-	rcIcon.DeflateRect( 0, 2 );
-
-	dc.SetBkMode( OPAQUE );
-	dc.SetBkColor( CoolInterface.m_crWindow );
-	dc.SetTextColor( RGB( 0, 0, 255 ) );
-	
-	rcClient.top = 0;
-	dc.FillSolidRect( &rcClient, CoolInterface.m_crWindow );
-
-	CRect rcClient2;
-
-	GetClientRect( &rcClient2 );
-	if ( rcClient2.IsRectEmpty() ) return;
-	if ( m_bmBuffer.m_hObject != NULL )
-	{
-		m_dcBuffer.SelectObject( m_hBuffer );
-		m_dcBuffer.DeleteDC();
-		m_bmBuffer.DeleteObject();
-	}
-	m_bmBuffer.CreateCompatibleBitmap( &dc, rcClient2.Width(), rcClient2.Height() );
-	m_dcBuffer.CreateCompatibleDC( &dc );
-	m_hBuffer = (HBITMAP)m_dcBuffer.SelectObject( &m_bmBuffer )->m_hObject;
-	if ( ! CoolInterface.DrawWatermark( &m_dcBuffer, &rcClient2, &m_bmWatermark, 0, 0 ) )
-	{
-		m_dcBuffer.FillSolidRect( &rcClient, Skin.m_crBannerBack );
-	}
-	dc.BitBlt( rcClient.left, rcClient.top, rcClient.Width(),
-		rcClient.Height(), &m_dcBuffer, 0, 0, SRCCOPY );
+	CTaskBox::OnPaint();
 }
 
 void CIRCChannelsBox::OnChansDoubleClick(NMHDR* /* pNMHDR */, LRESULT* pResult) 

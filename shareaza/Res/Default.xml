@@ -1485,10 +1485,6 @@
 </watermarks>
 <!-- Documents -->
 <documents>
-	<!-- IRC View -->
-	<document name="CIRCUsersBox" title="Users" leftMargin="6" topMargin="6"></document>
-	<document name="CIRCChannelsBox" title="Channels" leftMargin="6" topMargin="6"></document>
-
 	<!-- Home View -->
 	<document name="CHomeViewCtrl" leftMargin="16" topMargin="0">
 		<styles>

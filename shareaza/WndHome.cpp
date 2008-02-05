@@ -1,7 +1,7 @@
 //
 // WndHome.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -85,7 +85,7 @@ int CHomeWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	if ( ! m_wndView.Create( rectDefault, this ) ) return -1;
 	if ( ! m_wndPanel.Create( this ) ) return -1;
 
-	LoadState( NULL, TRUE );
+	LoadState();
 
 	OnSkinChange();
 
