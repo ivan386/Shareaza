@@ -92,6 +92,10 @@ Source: "Shareaza\{#PlatformName}\{#ConfigurationName}\Shareaza.exe"; DestDir: "
 Source: "Skin-Installer\{#PlatformName}\{#ConfigurationName}\Skin.exe";     DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 Source: "torrentaid\{#PlatformName}\{#ConfigurationName}\TorrentWizard.exe";     DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 
+; Save/Restore scripts
+Source: "setup\builds\SaveSettings.bat"; DestDir: "{app}"; DestName: "SaveSettings.bat"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension skipifsourcedoesntexist
+Source: "setup\builds\RestoreSettings.bat"; DestDir: "{app}"; DestName: "RestoreSettings.bat"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension skipifsourcedoesntexist
+
 ; ZLib
 #if PlatformName == "Win32"
 Source: "setup\builds\zlibwapi.dll"; DestDir: "{app}";         DestName: "zlibwapi.dll"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
