@@ -2687,7 +2687,7 @@ void CIRCTabCtrl::DrawTabItem(HDC dc, int nItem, const RECT& rcItem, UINT flags)
 		rc.left += 19;
 	}
 	else
-		OffsetRect( &rc, -2, 0 );
+		OffsetRect( &rc, -2, bSel ? 3 : 2 );
 
 	int nLen = (int)_tcslen( pszBuffer );
 	if ( nLen > 0 )
@@ -2700,7 +2700,7 @@ void CIRCTabCtrl::DrawTabItem(HDC dc, int nItem, const RECT& rcItem, UINT flags)
 		SetTextColor( dc, GetTabColor( nItem ) );
 		DrawText( dc, pszBuffer, nLen, &r, DT_CALCRECT | DT_SINGLELINE | DT_MODIFYSTRING | DT_END_ELLIPSIS );
 
-		OffsetRect( &rc, 0, bSel ? 1 : -1 );
+		OffsetRect( &rc, 0, 0 );
 		DrawText( dc, pszBuffer, nLen, &rc, DT_NOPREFIX | DT_CENTER );
 		SelectObject( dc, oldFont );
 	}
