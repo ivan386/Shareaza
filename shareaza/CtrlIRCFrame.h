@@ -40,15 +40,34 @@ public:
 
 class CIRCTabCtrl : public CTabCtrl
 {
+	enum ORIENTATION
+	{ 
+		TOP = 0,
+		BOTTOM, 
+		LEFT, 
+		RIGHT
+	};
+
+	// Construction
+public:
+	CIRCTabCtrl();
+	virtual ~CIRCTabCtrl();
+
+protected:
+	HANDLE	m_hTheme;
 public:
 	void			SetTabColor(int nItem, COLORREF cRGB);
 	COLORREF		GetTabColor(int nItem);
-	//{{AFX_VIRTUAL(CTabCtrl)
-	public:
-		virtual void DrawItem(LPDRAWITEMSTRUCT);
-		virtual BOOL OnEraseBkgnd(CDC* pDC);
-	//}}AFX_VIRTUAL
+
+	void DrawTabControl(CDC* pDC);
+	HRESULT DrawThemesPart(HDC dc, int nPartID, int nStateID, LPRECT prcBox);
+	void DrawXPTabItem(HDC dc, int nItem, const RECT& rcItem, UINT flags);
+	void DrawTabItem(HDC dc, int nItem, const RECT& rcItem, UINT flags);
+
 	DECLARE_MESSAGE_MAP()
+	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
+	virtual BOOL PreTranslateMessage(MSG* pMsg);
+	virtual LRESULT WindowProc(UINT message, WPARAM wParam, LPARAM lParam);
 };
 
 class CIRCChannelList
@@ -65,7 +84,7 @@ public:
 	void			Initialize();
 	CString			GetDisplayOfIndex(int nIndex) const;
 	CString			GetNameOfIndex(int nIndex) const;
-// Arrtibutes
+// Attributes
 protected:
 	int				m_nCountUserDefined;
 	int				m_nCount;
@@ -197,13 +216,9 @@ public:
 	virtual void OnLocalText(LPCTSTR pszText);
 // Overrides
 public:
-	// ClassWizard generated virtual function overrides
-
-	//{{AFX_VIRTUAL(CTabCtrl)
 	virtual BOOL Create(CWnd* pParentWnd);
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
 	virtual void OnStatusMessage(LPCTSTR pszText, int nFlags);
-	//}}AFX_VIRTUAL
 
 // Implementation
 protected:

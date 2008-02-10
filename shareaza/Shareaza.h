@@ -111,6 +111,15 @@ public:
 	// For themes functions
 	HINSTANCE	m_hTheme;
 	HRESULT		(WINAPI *m_pfnSetWindowTheme)(HWND, LPCWSTR, LPCWSTR);
+	BOOL		(WINAPI *m_pfnIsThemeActive)(VOID);
+	HANDLE		(WINAPI *m_pfnOpenThemeData)(HWND, LPCWSTR);
+	HRESULT		(WINAPI *m_pfnCloseThemeData)(HANDLE);
+	HRESULT		(WINAPI *m_pfnDrawThemeBackground)(HANDLE, HDC, int, int, const RECT*, const RECT*);
+	HRESULT		(WINAPI *m_pfnEnableThemeDialogTexture)(HWND, DWORD);
+	HRESULT		(WINAPI *m_pfnDrawThemeParentBackground)(HWND, HDC, RECT*);
+	HRESULT		(WINAPI *m_pfnGetThemeBackgroundContentRect)(HANDLE, HDC, int, int, const RECT*, RECT*);
+	HRESULT		(WINAPI *m_pfnGetThemeSysFont)(HANDLE, int, LOGFONT);
+	HRESULT		(WINAPI *m_pfnDrawThemeText)(HANDLE, HDC, int, int, LPCWSTR, int, DWORD, DWORD, const RECT*);
 
 	// Power schemes management
 	HINSTANCE	m_hPowrProf;

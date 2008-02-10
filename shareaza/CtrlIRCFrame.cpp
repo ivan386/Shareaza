@@ -2,7 +2,7 @@
 // CtrlIRCFrame.cpp
 //
 // Copyright (c) Shareaza Development Team, 2002-2008.
-// This file is part of SHAREAZA (shareaza.sourceforge.net)
+// This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
 // and/or modify it under the terms of the GNU General Public License
@@ -161,7 +161,8 @@ int CIRCFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	CRect rectDefault;
 	SetOwner( GetParent() );
 
-	m_wndTab.Create( WS_CHILD | WS_VISIBLE , rectDefault, this, IDC_CHAT_TABS );
+	m_wndTab.Create( WS_CHILD | WS_VISIBLE | TCS_FLATBUTTONS | TCS_HOTTRACK | TCS_OWNERDRAWFIXED, 
+		rectDefault, this, IDC_CHAT_TABS );
 
 	FillChanList();
 	m_wndView.Create( WS_CHILD|WS_VISIBLE, rectDefault, this, IDC_CHAT_TEXT );
@@ -657,7 +658,7 @@ void CIRCFrame::OnIrcChanCmdOpen()
 	CString strPath, strItem;
 	CFile pFile;
 	
-	strPath.Format( _T("%s\\Data\\ChatChanlist.dat"), (LPCTSTR)Settings.General.Path );
+	strPath = Settings.General.UserPath + _T("\\Data\\ChatChanlist.dat");
 	
 	if ( ! pFile.Open( strPath, CFile::modeRead ) ) return;
 	
@@ -687,7 +688,7 @@ void CIRCFrame::OnIrcChanCmdSave()
 	strFile.Empty();
 	int n_mpChanListIndex;
 	CListCtrl* pChannelList = (CListCtrl*)&(m_wndPanel.m_boxChans.m_wndChanList);
-	strPath.Format( _T("%s\\Data\\ChatChanlist.dat"), (LPCTSTR)Settings.General.Path );
+	strPath = Settings.General.UserPath + _T("\\Data\\ChatChanlist.dat");
 	for ( int nIndex = 0 ; nIndex < pChannelList->GetItemCount() ; nIndex++ )
 	{
 		n_mpChanListIndex = m_pChanList.GetIndexOfDisplay( pChannelList->GetItemText( nIndex, 0 ) );
@@ -2523,49 +2524,137 @@ BOOL CIRCFrame::ShowTrayPopup(LPCTSTR szText, LPCTSTR szTitle, DWORD dwIcon, UIN
 }
 
 BEGIN_MESSAGE_MAP(CIRCTabCtrl, CTabCtrl)
-	ON_WM_ERASEBKGND()
+	ON_WM_CREATE()
 END_MESSAGE_MAP()
 
-BOOL CIRCTabCtrl::OnEraseBkgnd(CDC* pDC)
+CIRCTabCtrl::CIRCTabCtrl() : m_hTheme( NULL )
 {
-	 CRect rect;
- 	 COLORREF m_cBorder = Settings.IRC.Colors[ ID_COLOR_TABS ];
-	 CBrush cbr = m_cBorder;
-	 pDC->GetWindow()->GetWindowRect( &rect );
-     pDC->GetWindow()->ScreenToClient( &rect );
- 	 pDC->SetBkMode( OPAQUE );
-	 pDC->SetBkColor( m_cBorder );
-	 pDC->FillRect( &rect, &cbr );
-	 return TRUE;
 }
 
-void CIRCTabCtrl::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
+CIRCTabCtrl::~CIRCTabCtrl()
 {
-	if( lpDrawItemStruct->CtlType == ODT_TAB )
-	{
-		CRect rect = lpDrawItemStruct->rcItem;
-		int nTabIndex = lpDrawItemStruct->itemID;
- 		COLORREF m_cBorder = Settings.IRC.Colors[ ID_COLOR_TABS ];
-		CBrush cbr = m_cBorder;
-		CDC* pOldDC = GetDC();
-		HDC hDC = lpDrawItemStruct->hDC;
-		CDC* pDC = CDC::FromHandle( hDC );
-		lpDrawItemStruct->itemAction = ODA_DRAWENTIRE;
-		pDC->SetBkMode( OPAQUE );
-		pDC->SetBkColor( m_cBorder );
-		pDC->FillRect( &rect, &cbr );
-		pDC->SetTextColor( GetTabColor( nTabIndex ) );
+	if ( m_hTheme && theApp.m_pfnCloseThemeData )
+		theApp.m_pfnCloseThemeData( m_hTheme );
+}
 
-		TC_ITEM tci;
-		TCHAR pszBuffer[ 40 ];
-		tci.mask = TCIF_TEXT|TCIF_IMAGE;
-		tci.pszText = pszBuffer;
-		tci.cchTextMax = 39;
-		if ( !GetItem( nTabIndex, &tci ) ) return;
-		pDC->DrawText( pszBuffer, rect, DT_SINGLELINE | DT_VCENTER | DT_CENTER );
-		pDC = pOldDC;
+int CIRCTabCtrl::OnCreate(LPCREATESTRUCT lpCreateStruct)
+{
+	if ( CTabCtrl::OnCreate( lpCreateStruct ) == -1 )
+		return -1;
+
+	if ( theApp.m_pfnOpenThemeData )
+		m_hTheme = theApp.m_pfnOpenThemeData( m_hWnd, L"Tab" );
+
+	return 0;
+}
+
+HRESULT CIRCTabCtrl::DrawThemesPart(HDC dc, int nPartID, int nStateID, LPRECT prcBox)
+{
+	HRESULT hr = E_FAIL;
+	if ( theApp.m_pfnIsThemeActive && theApp.m_pfnIsThemeActive() &&
+		 m_hTheme != NULL && theApp.m_pfnDrawThemeBackground )
+	{
+		hr = theApp.m_pfnDrawThemeBackground( m_hTheme, dc, nPartID, nStateID, prcBox, NULL );
 	}
-	return;
+	return hr;
+}
+
+void CIRCTabCtrl::DrawXPTabItem(HDC dc, int nItem, const RECT& rcItem, UINT flags)
+{
+	BOOL bBody		= flags & 1;
+	BOOL bSel		= flags & 2;
+	BOOL bHot		= flags & 4;
+
+	int nWidth = rcItem.right - rcItem.left;
+	INT nHeight = rcItem.bottom - rcItem.top;
+
+	// Draw the background
+	HDC dcMem = CreateCompatibleDC( dc );
+	HBITMAP bmpMem = CreateCompatibleBitmap( dc, nWidth, nHeight );
+	ASSERT( dcMem != NULL );
+	ASSERT( bmpMem != NULL );
+
+	HBITMAP oldBmp = (HBITMAP)SelectObject( dcMem, bmpMem );
+	RECT rcMem;
+	SetRect( &rcMem, 0, 0, nWidth, nHeight );
+
+	if ( bSel ) rcMem.bottom += 1;
+
+	// TABP_PANE = 9, 0, "TAB"
+	// TABP_TABITEM = 1, TIS_SELECTED = 3 : TIS_HOT = 2 : TIS_NORMAL = 1, "TAB"
+	if ( bBody )
+		DrawThemesPart( dcMem, 9, 0, &rcMem );
+	else
+		DrawThemesPart( dcMem, 1, bSel ? 3 : ( bHot ? 2 : 1 ), &rcMem );
+
+	BITMAPINFO bmiOut;
+	BITMAPINFOHEADER& bmihOut = bmiOut.bmiHeader;
+	ZeroMemory( &bmiOut, sizeof( BITMAPINFO ) );
+	bmihOut.biSize = sizeof( BITMAPINFOHEADER );
+	bmihOut.biCompression = BI_RGB;
+	bmihOut.biPlanes = 1;
+	bmihOut.biBitCount = 24;
+	bmihOut.biWidth = nWidth;
+	bmihOut.biHeight = nHeight;
+
+	if ( nItem >= 0 )
+	{
+		if ( bSel )
+			rcMem.bottom -= 1;
+		DrawTabItem( dcMem, nItem, rcMem, flags );
+	}
+
+	// Blit image to the screen.
+	BitBlt( dc, rcItem.left, rcItem.top, nWidth, nHeight, dcMem, 0, 0, SRCCOPY );
+	SelectObject( dcMem, oldBmp );
+
+	DeleteObject( bmpMem );
+	DeleteDC( dcMem );
+}
+
+void CIRCTabCtrl::DrawTabItem(HDC dc, int nItem, const RECT& rcItem, UINT flags)
+{
+	TC_ITEM item;
+	TCHAR pszBuffer[ 128 + 4 ];
+	item.mask = TCIF_TEXT | TCIF_IMAGE;
+	item.pszText = pszBuffer;
+	item.cchTextMax = 127;
+	TabCtrl_GetItem( m_hWnd, nItem, &item );
+
+	BOOL bSel = flags & 2;
+
+	RECT rc = rcItem;
+	rc.bottom -= bSel ? 1 : 2;
+	rc.left += 6;	// Text & icon.
+	rc.top += 2 + bSel ? 1 : 3;
+
+	int oldMode = SetBkMode( dc, TRANSPARENT );
+	HIMAGELIST imageList = (HIMAGELIST)TabCtrl_GetImageList( m_hWnd );
+	if ( imageList && item.iImage >= 0 )
+	{
+		ImageList_Draw( imageList, item.iImage, dc,
+			rc.left + bSel ? 2 : 0,
+			rc.top + bSel ? 0 : -2, ILD_TRANSPARENT );
+		rc.left += 19;
+	}
+	else
+		OffsetRect( &rc, -2, 0 );
+
+	int nLen = (int)_tcslen( pszBuffer );
+	if ( nLen > 0 )
+	{
+		HFONT oldFont = (HFONT)SelectObject( dc, (HFONT)SendMessage( WM_GETFONT, 0, 0 ) );
+		rc.right -= 3;
+		RECT r;
+		SetRect( &r, 0, 0, rc.right - rc.left, 20 );
+		SetTextColor( dc, GetTabColor( nItem ) );
+		DrawText( dc, pszBuffer, nLen, &r, DT_CALCRECT | DT_SINGLELINE | DT_MODIFYSTRING | DT_END_ELLIPSIS );
+
+		OffsetRect( &rc, 0, bSel ? 1 : -1 );
+		DrawText( dc, pszBuffer, nLen, &rc, DT_NOPREFIX | DT_CENTER );
+		SelectObject( dc, oldFont );
+	}
+	SetBkMode( dc, oldMode );
 }
 
 void CIRCTabCtrl::SetTabColor(int nItem, COLORREF cRGB)
@@ -2584,6 +2673,94 @@ COLORREF CIRCTabCtrl::GetTabColor(int nItem)
 	tci.mask = TCIF_PARAM;
 	GetItem( nItem, &tci );
 	return tci.lParam;
+}
+
+BOOL CIRCTabCtrl::PreTranslateMessage(MSG* pMsg)
+{
+	if ( pMsg->message == WM_THEMECHANGED )
+	{
+		if ( m_hTheme && theApp.m_pfnCloseThemeData )
+			theApp.m_pfnCloseThemeData( m_hTheme );
+
+		if ( theApp.m_pfnOpenThemeData )
+			m_hTheme = theApp.m_pfnOpenThemeData( m_hWnd, L"Tab" );
+
+		return TRUE;
+	}
+
+	return CTabCtrl::PreTranslateMessage(pMsg);
+}
+
+LRESULT CIRCTabCtrl::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
+{
+	PAINTSTRUCT ps;
+	CDC* pDC;
+	if ( message == WM_PAINT )
+	{
+		if ( ( pDC = BeginPaint( &ps ) ) != NULL ) 
+			DrawTabControl( pDC );
+		EndPaint( &ps );
+		return 0;
+	}
+
+	return CTabCtrl::WindowProc(message, wParam, lParam);
+}
+
+void CIRCTabCtrl::DrawTabControl(CDC* pDC)
+{
+	DWORD style = GetWindowLong( m_hWnd, GWL_STYLE );
+	ORIENTATION orientation = 
+		( style & TCS_VERTICAL ) ? ( ( style & TCS_RIGHT ) ? RIGHT : LEFT ) :
+	    ( ( style & TCS_BOTTOM ) ? BOTTOM : TOP );
+
+	// Paint the tab body.
+	RECT rcPage, rcItem, rcClient;
+	GetClientRect( &rcClient );
+	rcPage = rcClient;
+	TabCtrl_AdjustRect( m_hWnd, FALSE, &rcPage );
+
+	switch ( orientation )
+	{
+	case TOP:		rcClient.top = rcPage.top - 2;			break;
+	case BOTTOM:	rcClient.bottom = rcPage.bottom + 3;	break;
+	case LEFT:		rcClient.left = rcPage.left - 1;		break;
+	case RIGHT:		rcClient.right = rcPage.right + 3;		break;
+	}
+
+	UINT uVertBottom = orientation & 1 ? 8 : 0;		// 8 = body.
+	uVertBottom |= orientation & 2 ? 16 : 0;		// 16 = vertical.
+	UINT flags = 1 | uVertBottom;					// 1 = body.
+	DrawXPTabItem( pDC->m_hDC, -1, rcClient, flags );
+
+	int tabCount = TabCtrl_GetItemCount( m_hWnd );
+	if( tabCount == 0 ) return;
+
+	// Now paint inactive tabs.
+	TCHITTESTINFO hti;
+	hti.flags = 0;
+	GetCursorPos( &hti.pt );
+	ScreenToClient( &hti.pt );
+	int nHot = TabCtrl_HitTest( m_hWnd, &hti );
+	int nSel = TabCtrl_GetCurSel( m_hWnd );
+
+	for ( int nTab = 0; nTab < tabCount; nTab++ )
+	{
+		if ( nTab == nSel ) continue;
+		TabCtrl_GetItemRect( m_hWnd, nTab, &rcItem );
+
+		if ( orientation == LEFT )
+			rcItem.right += 1;
+		flags = uVertBottom | ( nTab == nHot ? 4 : 0 ); // 4 = hot.
+		DrawXPTabItem( pDC->m_hDC, nTab, rcItem, flags );
+	}
+
+	// Now paint the active selected tab.
+	TabCtrl_GetItemRect( m_hWnd, nSel, &rcItem );
+	InflateRect( &rcItem, 2, 2 );
+	if ( orientation == TOP )
+		rcItem.bottom -= 1;
+	flags = uVertBottom | 2; // 2 = selected.
+	DrawXPTabItem( pDC->m_hDC, nSel, rcItem, flags );
 }
 
 void CIRCChannelList::Initialize()

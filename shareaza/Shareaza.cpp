@@ -831,9 +831,31 @@ void CShareazaApp::InitResources()
 		m_pfnSetLayout = NULL;
 
 	if ( ( m_hTheme = LoadLibrary( _T("UxTheme.dll") ) ) != NULL )
+	{
 		(FARPROC&)m_pfnSetWindowTheme = GetProcAddress( m_hTheme, "SetWindowTheme" );
+		(FARPROC&)m_pfnIsThemeActive = GetProcAddress( m_hTheme, "IsThemeActive" );
+		(FARPROC&)m_pfnOpenThemeData = GetProcAddress( m_hTheme, "OpenThemeData" );
+		(FARPROC&)m_pfnCloseThemeData = GetProcAddress( m_hTheme, "CloseThemeData" );
+		(FARPROC&)m_pfnDrawThemeBackground = GetProcAddress( m_hTheme, "DrawThemeBackground" );
+		(FARPROC&)m_pfnEnableThemeDialogTexture = GetProcAddress( m_hTheme, "EnableThemeDialogTexture" );
+		(FARPROC&)m_pfnDrawThemeParentBackground = GetProcAddress( m_hTheme, "DrawThemeParentBackground" );
+		(FARPROC&)m_pfnGetThemeBackgroundContentRect = GetProcAddress( m_hTheme, "GetThemeBackgroundContentRect" );
+		(FARPROC&)m_pfnGetThemeSysFont = GetProcAddress( m_hTheme, "GetThemeSysFont" );
+		(FARPROC&)m_pfnDrawThemeText = GetProcAddress( m_hTheme, "DrawThemeText" );
+	}
 	else
+	{
 		m_pfnSetWindowTheme = NULL;
+		m_pfnIsThemeActive = NULL;
+		m_pfnOpenThemeData = NULL;
+		m_pfnCloseThemeData = NULL;
+		m_pfnDrawThemeBackground = NULL;
+		m_pfnEnableThemeDialogTexture = NULL;
+		m_pfnDrawThemeParentBackground = NULL;
+		m_pfnGetThemeBackgroundContentRect = NULL;
+		m_pfnGetThemeSysFont = NULL;
+		m_pfnDrawThemeText = NULL;
+	}
 
 	if ( ( m_hPowrProf = LoadLibrary( _T("PowrProf.dll") ) ) != NULL )
 	{
