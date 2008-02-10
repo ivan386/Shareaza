@@ -2,7 +2,7 @@
 // CtrlIRCFrame.cpp
 //
 // Copyright (c) Shareaza Development Team, 2002-2008.
-// This file is part of SHAREAZA (www.shareaza.com)
+// This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
 // and/or modify it under the terms of the GNU General Public License
@@ -230,7 +230,7 @@ void CIRCFrame::FillChanList()
 	m_pChanList.AddChannel( _T("^Support"), _T("#Shareaza") );
  	m_pChanList.AddChannel( _T("^Admins"), _T("#Shareaza-Admin") );
 	m_pChanList.AddChannel( _T("^English"), _T("#Shareaza-Chat") );
-	m_pChanList.AddChannel( _T("^Develop"), _T("#Shareaza-dev") );
+	m_pChanList.AddChannel( _T("^Developers"), _T("#Shareaza-dev") );
  	m_pChanList.AddChannel( _T("Afrikaans"), _T("#Shareaza-Afrikaans") );
 	m_pChanList.AddChannel( _T("Arabic"), _T("#Shareaza-Arabic") );
  	m_pChanList.AddChannel( _T("Chinese"), _T("#Shareaza-Chinese") );

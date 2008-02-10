@@ -2,7 +2,7 @@
 // CtrlIRCPanel.cpp
 //
 // Copyright (c) Shareaza Development Team, 2002-2008.
-// This file is part of SHAREAZA (www.shareaza.com)
+// This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
 // and/or modify it under the terms of the GNU General Public License
@@ -89,7 +89,7 @@ int CIRCPanel::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if ( CTaskPanel::OnCreate( lpCreateStruct ) == -1 ) return -1;
 	
-	m_boxChans.Create( this, 240, _T("Channels"), IDR_CHANSFRAME );
+	m_boxChans.Create( this, 200, _T("Channels"), IDR_CHANSFRAME );
 	m_boxUsers.Create( this, 200, _T("Users"), IDR_USERSFRAME );
 
 	m_pFont.Attach( theApp.m_gdiFontBold );
