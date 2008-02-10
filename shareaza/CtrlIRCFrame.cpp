@@ -2525,6 +2525,7 @@ BOOL CIRCFrame::ShowTrayPopup(LPCTSTR szText, LPCTSTR szTitle, DWORD dwIcon, UIN
 
 BEGIN_MESSAGE_MAP(CIRCTabCtrl, CTabCtrl)
 	ON_WM_CREATE()
+//	ON_WM_ERASEBKGND()
 END_MESSAGE_MAP()
 
 CIRCTabCtrl::CIRCTabCtrl() : m_hTheme( NULL )
@@ -2548,6 +2549,21 @@ int CIRCTabCtrl::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	return 0;
 }
 
+/*
+BOOL CIRCTabCtrl::OnEraseBkgnd(CDC* pDC)
+{
+	CRect rect;
+	COLORREF m_cBorder = Settings.IRC.Colors[ ID_COLOR_TABS ];
+	CBrush cbr = m_cBorder;
+	pDC->GetWindow()->GetWindowRect( &rect );
+	pDC->GetWindow()->ScreenToClient( &rect );
+	pDC->SetBkMode( OPAQUE );
+	pDC->SetBkColor( m_cBorder );
+	pDC->FillRect( &rect, &cbr );
+	return TRUE;
+}
+*/
+
 HRESULT CIRCTabCtrl::DrawThemesPart(HDC dc, int nPartID, int nStateID, LPRECT prcBox)
 {
 	HRESULT hr = E_FAIL;
@@ -2561,9 +2577,42 @@ HRESULT CIRCTabCtrl::DrawThemesPart(HDC dc, int nPartID, int nStateID, LPRECT pr
 
 void CIRCTabCtrl::DrawXPTabItem(HDC dc, int nItem, const RECT& rcItem, UINT flags)
 {
-	BOOL bBody		= flags & 1;
-	BOOL bSel		= flags & 2;
-	BOOL bHot		= flags & 4;
+	if ( m_hTheme == NULL || theApp.m_pfnIsThemeActive == NULL || !theApp.m_pfnIsThemeActive() ||
+		 theApp.m_pfnDrawThemeBackground == NULL )
+	{
+		COLORREF m_cBack = CoolInterface.m_crBackNormal;
+		COLORREF m_cBorder = CoolInterface.m_crSysBtnFace;
+		COLORREF m_cShadow = CoolInterface.m_crSys3DShadow;
+		CBrush cback = m_cBack;
+		CBrush cbr = m_cBorder;
+		CBrush cbsh = m_cShadow;
+		int oldMode = SetBkMode( dc, OPAQUE );
+		SetBkColor( dc, m_cBorder );
+		RECT rc = rcItem;
+		FillRect( dc, &rc, (HBRUSH)cback.m_hObject );
+		rc.left += 2;
+		rc.top += 2;
+		FillRect( dc, &rc, (HBRUSH)cbsh.m_hObject );
+		rc.right -= 2;
+		FillRect( dc, &rc, (HBRUSH)cbr.m_hObject );
+		SetTextColor( dc, GetTabColor( nItem ) );
+
+		TC_ITEM tci;
+		TCHAR pszBuffer[ 128 + 4 ];
+		tci.mask = TCIF_TEXT|TCIF_IMAGE;
+		tci.pszText = pszBuffer;
+		tci.cchTextMax = 127;
+		if ( !TabCtrl_GetItem( m_hWnd, nItem, &tci ) ) return;
+		HFONT oldFont = (HFONT)SelectObject( dc, (HFONT)SendMessage( WM_GETFONT, 0, 0 ) );
+		DrawText( dc, pszBuffer, (int)_tcslen( pszBuffer ), &rc, DT_SINGLELINE | DT_VCENTER | DT_CENTER );
+		SelectObject( dc, oldFont );
+		SetBkMode( dc, oldMode );
+		return;
+	}
+
+	BOOL bBody		= flags & paintBody;
+	BOOL bSel		= flags & paintSelected;
+	BOOL bHot		= flags & paintHotTrack;
 
 	int nWidth = rcItem.right - rcItem.left;
 	INT nHeight = rcItem.bottom - rcItem.top;
@@ -2621,7 +2670,7 @@ void CIRCTabCtrl::DrawTabItem(HDC dc, int nItem, const RECT& rcItem, UINT flags)
 	item.cchTextMax = 127;
 	TabCtrl_GetItem( m_hWnd, nItem, &item );
 
-	BOOL bSel = flags & 2;
+	BOOL bSel = flags & paintSelected;
 
 	RECT rc = rcItem;
 	rc.bottom -= bSel ? 1 : 2;
@@ -2647,6 +2696,7 @@ void CIRCTabCtrl::DrawTabItem(HDC dc, int nItem, const RECT& rcItem, UINT flags)
 		rc.right -= 3;
 		RECT r;
 		SetRect( &r, 0, 0, rc.right - rc.left, 20 );
+
 		SetTextColor( dc, GetTabColor( nItem ) );
 		DrawText( dc, pszBuffer, nLen, &r, DT_CALCRECT | DT_SINGLELINE | DT_MODIFYSTRING | DT_END_ELLIPSIS );
 
@@ -2664,7 +2714,6 @@ void CIRCTabCtrl::SetTabColor(int nItem, COLORREF cRGB)
 	tci.lParam = cRGB;
 	SetItem( nItem, &tci );
 	RedrawWindow();
-	PostMessage( WM_DRAWITEM );
 }
 
 COLORREF CIRCTabCtrl::GetTabColor(int nItem)
@@ -2701,36 +2750,21 @@ LRESULT CIRCTabCtrl::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 			DrawTabControl( pDC );
 		EndPaint( &ps );
 		return 0;
-	}
+	} 
 
 	return CTabCtrl::WindowProc(message, wParam, lParam);
 }
 
 void CIRCTabCtrl::DrawTabControl(CDC* pDC)
 {
-	DWORD style = GetWindowLong( m_hWnd, GWL_STYLE );
-	ORIENTATION orientation = 
-		( style & TCS_VERTICAL ) ? ( ( style & TCS_RIGHT ) ? RIGHT : LEFT ) :
-	    ( ( style & TCS_BOTTOM ) ? BOTTOM : TOP );
-
 	// Paint the tab body.
 	RECT rcPage, rcItem, rcClient;
 	GetClientRect( &rcClient );
 	rcPage = rcClient;
 	TabCtrl_AdjustRect( m_hWnd, FALSE, &rcPage );
+	rcClient.top = rcPage.top - 2;
 
-	switch ( orientation )
-	{
-	case TOP:		rcClient.top = rcPage.top - 2;			break;
-	case BOTTOM:	rcClient.bottom = rcPage.bottom + 3;	break;
-	case LEFT:		rcClient.left = rcPage.left - 1;		break;
-	case RIGHT:		rcClient.right = rcPage.right + 3;		break;
-	}
-
-	UINT uVertBottom = orientation & 1 ? 8 : 0;		// 8 = body.
-	uVertBottom |= orientation & 2 ? 16 : 0;		// 16 = vertical.
-	UINT flags = 1 | uVertBottom;					// 1 = body.
-	DrawXPTabItem( pDC->m_hDC, -1, rcClient, flags );
+	DrawXPTabItem( pDC->m_hDC, -1, rcClient, paintBody );
 
 	int tabCount = TabCtrl_GetItemCount( m_hWnd );
 	if( tabCount == 0 ) return;
@@ -2747,20 +2781,14 @@ void CIRCTabCtrl::DrawTabControl(CDC* pDC)
 	{
 		if ( nTab == nSel ) continue;
 		TabCtrl_GetItemRect( m_hWnd, nTab, &rcItem );
-
-		if ( orientation == LEFT )
-			rcItem.right += 1;
-		flags = uVertBottom | ( nTab == nHot ? 4 : 0 ); // 4 = hot.
-		DrawXPTabItem( pDC->m_hDC, nTab, rcItem, flags );
+		DrawXPTabItem( pDC->m_hDC, nTab, rcItem, nTab == nHot ? paintHotTrack : paintNone );
 	}
 
 	// Now paint the active selected tab.
 	TabCtrl_GetItemRect( m_hWnd, nSel, &rcItem );
 	InflateRect( &rcItem, 2, 2 );
-	if ( orientation == TOP )
-		rcItem.bottom -= 1;
-	flags = uVertBottom | 2; // 2 = selected.
-	DrawXPTabItem( pDC->m_hDC, nSel, rcItem, flags );
+	rcItem.bottom -= 1;
+	DrawXPTabItem( pDC->m_hDC, nSel, rcItem, paintSelected );
 }
 
 void CIRCChannelList::Initialize()

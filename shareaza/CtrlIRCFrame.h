@@ -40,12 +40,12 @@ public:
 
 class CIRCTabCtrl : public CTabCtrl
 {
-	enum ORIENTATION
+	enum
 	{ 
-		TOP = 0,
-		BOTTOM, 
-		LEFT, 
-		RIGHT
+		paintNone = 0,
+		paintBody = 0x1, 
+		paintSelected = 0x2, 
+		paintHotTrack = 0x4
 	};
 
 	// Construction
@@ -67,6 +67,7 @@ public:
 	DECLARE_MESSAGE_MAP()
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
+//	virtual BOOL OnEraseBkgnd(CDC* pDC);
 	virtual LRESULT WindowProc(UINT message, WPARAM wParam, LPARAM lParam);
 };
 
