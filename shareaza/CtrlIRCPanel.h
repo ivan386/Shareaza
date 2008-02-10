@@ -49,6 +49,7 @@ protected:
 	afx_msg void OnPaint();
 	afx_msg void OnUsersDoubleClick();
 	afx_msg void OnContextMenu(CWnd* pWnd, CPoint point);
+	int			 HitTest(const CPoint& pt) const;
 
 	DECLARE_MESSAGE_MAP()
 };

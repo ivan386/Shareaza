@@ -195,14 +195,33 @@ void CIRCUsersBox::OnUsersDoubleClick()
 	m_wndFrame->PostMessage( WM_NOTIFY, pNotify.hdr.idFrom, (LPARAM)&pNotify );
 }
 
-void CIRCUsersBox::OnContextMenu(CWnd* /* pWnd */, CPoint /* point */) 
+void CIRCUsersBox::OnContextMenu(CWnd* /* pWnd */, CPoint point) 
 {
-	IRC_PANELEVENT pNotify;
-	pNotify.hdr.hwndFrom	= GetSafeHwnd();
-	pNotify.hdr.idFrom		= IDC_IRC_MENUUSERS;
-	pNotify.hdr.code		= NM_DBLCLK;
-	CWnd* m_wndFrame = GetOwner()->GetOwner();
-	m_wndFrame->PostMessage( WM_NOTIFY, pNotify.hdr.idFrom, (LPARAM)&pNotify );
+	int nItem = HitTest( point );
+	if ( nItem > 0 )
+	{
+		m_wndUserList.SetCurSel( (int)nItem );
+
+		IRC_PANELEVENT pNotify;
+		pNotify.hdr.hwndFrom	= GetSafeHwnd();
+		pNotify.hdr.idFrom		= IDC_IRC_MENUUSERS;
+		pNotify.hdr.code		= NM_DBLCLK;
+		CWnd* m_wndFrame = GetOwner()->GetOwner();
+		m_wndFrame->PostMessage( WM_NOTIFY, pNotify.hdr.idFrom, (LPARAM)&pNotify );
+	}
+}
+
+int CIRCUsersBox::HitTest(const CPoint& pt) const
+{
+	if ( m_wndUserList.GetCount() != 0 )
+	{
+		BOOL bOutside = FALSE;
+		CPoint point( pt );
+		ScreenToClient( &point );
+		UINT nItem = m_wndUserList.ItemFromPoint( point, bOutside );
+		if ( !bOutside ) return nItem;
+	}
+	return -1;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -329,3 +348,4 @@ void CIRCChannelsBox::OnRemoveChannel()
 {
 	GetOwner()->GetOwner()->PostMessage( WM_REMOVECHANNEL, IDC_IRC_CHANNELS );
 }
+
