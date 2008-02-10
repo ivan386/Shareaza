@@ -198,7 +198,7 @@ void CIRCUsersBox::OnUsersDoubleClick()
 void CIRCUsersBox::OnContextMenu(CWnd* /* pWnd */, CPoint point) 
 {
 	int nItem = HitTest( point );
-	if ( nItem > 0 )
+	if ( nItem >= 0 )
 	{
 		m_wndUserList.SetCurSel( (int)nItem );
 
