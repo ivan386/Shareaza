@@ -214,7 +214,8 @@ DWORD CDownloadWithFile::GetTimeRemaining() const
 	QWORD nRemaining	= GetVolumeRemaining();
 	DWORD nSpeed		= GetAverageSpeed();
 	if ( nSpeed == 0 || nRemaining == SIZE_UNKNOWN ) return 0xFFFFFFFF;
-	return (DWORD)( nRemaining / nSpeed );
+	QWORD nTimeRemaining = nRemaining / nSpeed;
+	return ( ( nTimeRemaining > 0xFFFFFFFF ) ? 0xFFFFFFFF : (DWORD)nTimeRemaining );
 }
 
 CString CDownloadWithFile::GetDisplayName() const
