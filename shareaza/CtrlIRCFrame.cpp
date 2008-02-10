@@ -161,8 +161,7 @@ int CIRCFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	CRect rectDefault;
 	SetOwner( GetParent() );
 
-	m_wndTab.Create( WS_CHILD | WS_VISIBLE | TCS_FLATBUTTONS | TCS_OWNERDRAWFIXED, 
-		rectDefault, this, IDC_CHAT_TABS );
+	m_wndTab.Create( WS_CHILD | WS_VISIBLE , rectDefault, this, IDC_CHAT_TABS );
 
 	FillChanList();
 	m_wndView.Create( WS_CHILD|WS_VISIBLE, rectDefault, this, IDC_CHAT_TEXT );
@@ -181,8 +180,7 @@ int CIRCFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	if ( Settings.General.LanguageRTL )
 		m_wndMainBar.ModifyStyleEx( 0, WS_EX_LAYOUTRTL, 0 );
 
-	m_wndEdit.Create( WS_CHILD | WS_VISIBLE | ES_MULTILINE | ES_AUTOVSCROLL, 
-		rectDefault, this, IDC_CHAT_EDIT );
+	m_wndEdit.Create( WS_CHILD | WS_VISIBLE | ES_AUTOHSCROLL, rectDefault, this, IDC_CHAT_EDIT );
 	m_wndEdit.SetLimitText( m_nLocalTextLimit );
 	m_wndEdit.ModifyStyleEx( WS_EX_LAYOUTRTL, 0, 0 );
 	m_wndTab.ModifyStyleEx( WS_EX_LAYOUTRTL, 0, 0 );
