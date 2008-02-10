@@ -334,6 +334,17 @@ void CRichViewCtrl::OnMouseMove(UINT nFlags, CPoint point)
 				else if ( pHover == NULL && m_pHover != NULL )
 					KillTimer( 1 );
 
+				if ( m_pHover != pHover )
+				{
+					RVN_ELEMENTEVENT pNotify;
+					pNotify.hdr.hwndFrom	= GetSafeHwnd();
+					pNotify.hdr.idFrom		= GetDlgCtrlID();
+					pNotify.hdr.code		= RVN_SETCURSOR;
+					pNotify.pElement		= pFrag == NULL ? NULL : pFrag->m_pElement;
+
+					GetOwner()->SendMessage( WM_NOTIFY, pNotify.hdr.idFrom, (LPARAM)&pNotify );
+				}
+
 				m_pHover = pHover;
 
 				if ( bPaint ) Invalidate();
