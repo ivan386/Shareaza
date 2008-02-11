@@ -632,7 +632,7 @@ public:
 				m_pLastId->mkid.cb = temp;
 				if ( FAILED( hr ) )
 				{
-					SHFree( m_pidl );
+					CoTaskMemFree( m_pidl );
 					m_pidl = NULL;
 					m_pLastId = NULL;
 				}
