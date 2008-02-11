@@ -2,7 +2,7 @@
 // CtrlFontCombo.cpp
 //
 // Copyright (c) Shareaza Development Team, 2002-2008.
-// This file is part of SHAREAZA (www.shareaza.com)
+// This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
 // and/or modify it under the terms of the GNU General Public License
@@ -87,26 +87,26 @@ void CFontCombo::Initialize()
 
 	ResetContent();
 	DeleteAllFonts();
-	EnumFontFamilies( dc.m_hDC, NULL, (FONTENUMPROC)EnumFontProc, (LPARAM)this ); 
+	EnumFontFamiliesEx( dc.m_hDC, NULL, (FONTENUMPROC)EnumFontProc, (LPARAM)this, 0 ); 
 
     SetCurSel( 0 );
 }
 
-BOOL CALLBACK CFontCombo::EnumFontProc(LPLOGFONT lplf, LPNEWTEXTMETRIC lpntm, 
+BOOL CALLBACK CFontCombo::EnumFontProc(LPENUMLOGFONTEX lplf, NEWTEXTMETRICEX* lpntm, 
 									   DWORD dwFontType, LPVOID lpData) 
 { 
 	CFontCombo *pThis = reinterpret_cast<CFontCombo*>(lpData); 
  
-	if ( lpntm->tmCharSet != OEM_CHARSET && lpntm->tmCharSet != SYMBOL_CHARSET &&
-		 dwFontType != DEVICE_FONTTYPE && _tcsicmp( lplf->lfFaceName, _T("Small Fonts") ) != 0 )
+	if ( lpntm->ntmTm.tmCharSet != OEM_CHARSET && lpntm->ntmTm.tmCharSet != SYMBOL_CHARSET &&
+		 dwFontType != DEVICE_FONTTYPE && _tcsicmp( lplf->elfLogFont.lfFaceName, _T("Small Fonts") ) != 0 )
 	{
-		int nFamily = lplf->lfPitchAndFamily ? lplf->lfPitchAndFamily >> 4 : 6;
+		int nFamily = lplf->elfLogFont.lfPitchAndFamily ? lplf->elfLogFont.lfPitchAndFamily >> 4 : 6;
 		if ( nFamily < 4 ) // don't use unknown, decorative and script fonts
 		{
 			// Filter out vertical fonts starting with @
-			if ( lplf->lfFaceName[ 0 ] != '@' && pThis->AddFont( lplf->lfFaceName ) )
+			if ( lplf->elfLogFont.lfFaceName[ 0 ] != '@' && pThis->AddFont( lplf->elfLogFont.lfFaceName ) )
 			{
-				int nIndex = pThis->AddString( lplf->lfFaceName );
+				int nIndex = pThis->AddString( lplf->elfLogFont.lfFaceName );
 				if ( nIndex == -1 ) return FALSE;
 				if ( pThis->SetItemData( nIndex, dwFontType ) == 0 )
 					return FALSE;

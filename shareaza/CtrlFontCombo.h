@@ -6,8 +6,8 @@
 //	Revision:		"$Revision: 1.1.2.1 $"
 //  Last change by:	"$Author: rolandas $"
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
-// This file is part of SHAREAZA (www.shareaza.com)
+// Copyright (c) Shareaza Development Team, 2002-2008.
+// This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
 // and/or modify it under the terms of the GNU General Public License
@@ -62,7 +62,7 @@ protected:
 
 	BOOL AddFont(const CString& strFontName);
 	void DeleteAllFonts();
-	static BOOL CALLBACK EnumFontProc(LPLOGFONT lplf, LPNEWTEXTMETRIC lpntm, DWORD dwFontType, LPVOID lpData);
+	static BOOL CALLBACK EnumFontProc(LPENUMLOGFONTEX lplf, NEWTEXTMETRICEX* lpntm, DWORD dwFontType, LPVOID lpData);
 
 	// Generated message map functions
 	//{{AFX_MSG(CFontCombo)
