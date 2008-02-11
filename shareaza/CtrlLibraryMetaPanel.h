@@ -1,7 +1,7 @@
 //
 // CtrlLibraryMetaPanel.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -18,9 +18,6 @@
 // along with Shareaza; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
-
-#if !defined(AFX_CTRLLIBRARYMETAPANEL_H__A50ED736_E285_4656_903C_8C32D565ABD5__INCLUDED_)
-#define AFX_CTRLLIBRARYMETAPANEL_H__A50ED736_E285_4656_903C_8C32D565ABD5__INCLUDED_
 
 #pragma once
 
@@ -97,12 +94,7 @@ protected:
 	afx_msg void OnLButtonUp(UINT nFlags, CPoint point);
 	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
 	afx_msg BOOL OnMouseWheel(UINT nFlags, short zDelta, CPoint pt);
-	afx_msg LRESULT OnThumbnailFailure(WPARAM, LPARAM);
 
 	DECLARE_MESSAGE_MAP()
 
 };
-
-//{{AFX_INSERT_LOCATION}}
-
-#endif // !defined(AFX_CTRLLIBRARYMETAPANEL_H__A50ED736_E285_4656_903C_8C32D565ABD5__INCLUDED_)

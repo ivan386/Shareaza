@@ -1,7 +1,7 @@
 //
 // Shareaza.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -388,7 +388,6 @@ inline void IsType(LPCTSTR pszString, size_t nStart, size_t nLength, bool& bWord
 #define WM_PLAYFILE		(WM_APP+111)
 #define WM_ENQUEUEFILE	(WM_APP+112)
 #define WM_SETALPHA		(WM_APP+113)
-#define WM_THUMBFAILED	(WM_APP+114)
 
 #define WM_AFX_SETMESSAGESTRING 0x0362
 #define WM_AFX_POPMESSAGESTRING 0x0375
