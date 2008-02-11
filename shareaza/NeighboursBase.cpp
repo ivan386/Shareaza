@@ -1,7 +1,7 @@
 //
 // NeighboursBase.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -133,6 +133,31 @@ CNeighbour* CNeighboursBase::Get(IN_ADDR* pAddress) const // Saying const here m
 
 	// None of the neighbour objects in the map had the IP address we are looking for
 	return NULL; // Not found
+}
+
+// Finds the newest neighbour object
+// Returns it, or null if not found
+CNeighbour* CNeighboursBase::GetNewest(PROTOCOLID nProtocol, int nState, int nNodeType) const
+{
+	DWORD tCurrent = GetTickCount();
+	DWORD tMinTime = 0xffffffff;
+	CNeighbour* pMinNeighbour = NULL;
+	for ( POSITION pos = GetIterator() ; pos ; )
+	{
+		CNeighbour* pNeighbour = GetNext( pos );
+		if ( ( nProtocol == PROTOCOL_ANY || nProtocol == pNeighbour->m_nProtocol ) &&
+			 ( nState < 0 || nState == pNeighbour->m_nState ) &&
+			 ( nNodeType < 0 || nNodeType == pNeighbour->m_nNodeType ) )
+		{
+			DWORD tTime = tCurrent - pNeighbour->m_tConnected;
+			if ( tTime < tMinTime )
+			{
+				tMinTime = tTime;
+				pMinNeighbour = pNeighbour;
+			}
+		}
+	}
+	return pMinNeighbour;
 }
 
 //////////////////////////////////////////////////////////////////////

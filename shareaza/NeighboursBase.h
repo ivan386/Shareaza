@@ -1,7 +1,7 @@
 //
 // NeighboursBase.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -60,21 +60,19 @@ public:
 
 public:
 
-	// Loop through each neighbour in the list
-	POSITION    GetIterator()          const; // Call GetIterator to get the POSITION value
-	CNeighbour* GetNext(POSITION& pos) const; // Give the POSITION to GetNext to get the neighbour beneath it and move to the next one
-
-	// Lookup a neighbour in the list
-	CNeighbour* Get(DWORD_PTR nUnique)     const; // By its unique number, like 2, 3, 4, and so on
-	CNeighbour* Get(IN_ADDR* pAddress) const; // By the remote computer's IP address
-
+	POSITION    GetIterator()          const;	// Call GetIterator to get the POSITION value
+	CNeighbour* GetNext(POSITION& pos) const;	// Give the POSITION to GetNext to get the neighbour beneath it and move to the next one
+	CNeighbour* Get(DWORD_PTR nUnique) const;	// Lookup a neighbour by its unique number, like 2, 3, 4, and so on
+	CNeighbour* Get(IN_ADDR* pAddress) const;	// Lookup a neighbour by the remote computer's IP address
+	CNeighbour* GetNewest(PROTOCOLID nProtocol, int nState, int nNodeType) const;	// Finds the newest neighbour object
 	// Count how many computers we are connected to, specifying various filtering characteristics
-	DWORD GetCount(PROTOCOLID nProtocol, int nState, int nNodeType)        const; // Pass -1 to not filter by protocol, state, or node type
+	// pass -1 to not filter by protocol, state, or node type
+	DWORD GetCount(PROTOCOLID nProtocol, int nState, int nNodeType) const;
 	BOOL NeighbourExists(PROTOCOLID nProtocol, int nState, int nNodeType) const; // Use this if you just want to know if there are any or not
 
 public:
 
-	// Methods implimented by several classes in the CNeighbours inheritance column
+	// Methods implemented by several classes in the CNeighbours inheritance column
 	virtual void Connect(); // Does nothing, but inheriting classes have Connect methods with code in them
 	virtual void Close();   // Calls Close on all the neighbours in the list, and resets member variables back to 0
 	virtual void OnRun();   // Calls DoRun on each neighbour in the list, making them send and receive data

@@ -1804,8 +1804,16 @@ void CShakeNeighbour::OnHandshakeComplete()
 		}
 
 		// check if this connection is still needed at this point
-		if ( !m_bAutomatic && ( ( m_nNodeType == ntHub || m_nNodeType == ntNode ) && !Neighbours.NeedMoreHubs( PROTOCOL_G2 ) ) ||
-			( m_nNodeType == ntLeaf && !Neighbours.NeedMoreLeafs( PROTOCOL_G2 ) ) )
+		if ( ! m_bAutomatic &&
+			( m_nNodeType == ntHub || m_nNodeType == ntNode ) &&
+			! Neighbours.NeedMoreHubs( PROTOCOL_G2 ) )
+		{
+			// Free slot for this neighbour
+			CNeighbour* pOldNeighbour = Neighbours.GetNewest( PROTOCOL_G2, nrsConnected, m_nNodeType );
+			if ( pOldNeighbour )
+				pOldNeighbour->Close( IDS_CONNECTION_CLOSED );
+		}
+		if ( m_nNodeType == ntLeaf && ! Neighbours.NeedMoreLeafs( PROTOCOL_G2 ) )
 		{
 			delete this;
 			return;
@@ -1827,8 +1835,16 @@ void CShakeNeighbour::OnHandshakeComplete()
 		}
 
 		// check if this connection is still needed at this point
-		if ( !m_bAutomatic && ( ( m_nNodeType == ntHub || m_nNodeType == ntNode ) && !Neighbours.NeedMoreHubs( PROTOCOL_G1 ) ) ||
-			( m_nNodeType == ntLeaf && !Neighbours.NeedMoreLeafs( PROTOCOL_G1 ) ) )
+		if ( ! m_bAutomatic &&
+			( m_nNodeType == ntHub || m_nNodeType == ntNode ) &&
+			! Neighbours.NeedMoreHubs( PROTOCOL_G1 ) )
+		{
+			// Free slot for this neighbour
+			CNeighbour* pOldNeighbour = Neighbours.GetNewest( PROTOCOL_G1, nrsConnected, m_nNodeType );
+			if ( pOldNeighbour )
+				pOldNeighbour->Close( IDS_CONNECTION_CLOSED );
+		}
+		if ( m_nNodeType == ntLeaf && ! Neighbours.NeedMoreLeafs( PROTOCOL_G1 ) )
 		{
 			delete this;
 			return;
