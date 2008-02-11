@@ -1,7 +1,7 @@
 //
 // Shareaza.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -1260,7 +1260,7 @@ BOOL CShareazaApp::InternalURI(LPCTSTR pszURI)
 	}
 	else if ( strURI == _T("raza:upgrade") )
 	{
-		pMainWnd->PostMessage( WM_VERSIONCHECK, 1 );
+		pMainWnd->PostMessage( WM_VERSIONCHECK, VC_CONFIRM );
 	}
 	else if ( strURI == _T("raza:options") )
 	{

@@ -166,6 +166,7 @@ BEGIN_MESSAGE_MAP(CMainWnd, CMDIFrameWnd)
 	ON_COMMAND(ID_VIEW_UPLOADS, OnViewUploads)
 	ON_COMMAND(ID_TOOLS_SETTINGS, OnToolsSettings)
 	ON_COMMAND(ID_HELP_ABOUT, OnHelpAbout)
+	ON_COMMAND(ID_HELP_VERSION_CHECK, OnHelpVersionCheck)
 	ON_COMMAND(ID_HELP_HOMEPAGE, OnHelpHomepage)
 	ON_COMMAND(ID_HELP_WEB_1, OnHelpWeb1)
 	ON_COMMAND(ID_HELP_WEB_2, OnHelpWeb2)
@@ -1191,22 +1192,30 @@ LRESULT CMainWnd::OnHandleCollection(WPARAM wParam, LPARAM /*lParam*/)
 
 LRESULT CMainWnd::OnVersionCheck(WPARAM wParam, LPARAM /*lParam*/)
 {
-	if ( wParam == 0 && VersionChecker.m_sMessage.GetLength() )
+	if ( wParam == VC_MESSAGE_AND_CONFIRM && VersionChecker.m_sMessage.GetLength() )
 	{
 		AfxMessageBox( VersionChecker.m_sMessage, MB_ICONINFORMATION );
 	}
 	
-	if ( ( wParam == 0 || wParam == 1 ) && VersionChecker.m_bUpgrade )
+	if ( wParam == VC_MESSAGE_AND_CONFIRM || wParam == VC_CONFIRM )
 	{
 		// Check for already downloaded file
 		if ( VersionChecker.CheckUpgradeHash() )
-			return 0;
-
-		CUpgradeDlg dlg;
-		dlg.DoModal();
+			;
+		else if ( VersionChecker.IsUpgradeAvailable() )
+		{
+			CUpgradeDlg dlg;
+			dlg.DoModal();
+		}
+		else if ( VersionChecker.IsVerbose() )
+		{
+			CString strMessage;
+			LoadString( strMessage, IDS_UPGRADE_NO_NEW );
+			AfxMessageBox( strMessage, MB_ICONINFORMATION | MB_OK );
+		}
 	}
 	
-	if ( wParam == 2 && VersionChecker.m_sUpgradePath.GetLength() )
+	if ( wParam == VC_UPGRADE && VersionChecker.m_sUpgradePath.GetLength() )
 	{
 		CString strFormat, strMessage;
 		LoadString( strFormat, IDS_UPGRADE_LAUNCH );
@@ -2463,8 +2472,11 @@ void CMainWnd::OnHelpAbout()
 {
 	CAboutDlg dlg;
 	dlg.DoModal();
-	Neighbours.IsG1UltrapeerCapable( TRUE );
-	Neighbours.IsG2HubCapable( TRUE );
+}
+
+void CMainWnd::OnHelpVersionCheck()
+{
+	VersionChecker.ForceCheck();
 }
 
 void CMainWnd::OnHelpHomepage() 

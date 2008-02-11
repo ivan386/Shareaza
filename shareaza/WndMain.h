@@ -157,6 +157,7 @@ protected:
 	afx_msg void OnViewUploads();
 	afx_msg void OnToolsSettings();
 	afx_msg void OnHelpAbout();
+	afx_msg void OnHelpVersionCheck();
 	afx_msg void OnHelpHomepage();
 	afx_msg void OnHelpWeb1();
 	afx_msg void OnHelpWeb2();

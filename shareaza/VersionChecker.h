@@ -1,7 +1,7 @@
 //
 // VersionChecker.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -34,21 +34,34 @@ public:
 // Attributes
 public:
 	CString		m_sMessage;
-	BOOL		m_bUpgrade;
 	CString		m_sUpgradePath;
 
 protected:
-	HANDLE				m_hThread;
-	CHttpRequest		m_pRequest;
+	bool			m_bVerbose;
+	HANDLE			m_hThread;
+	CHttpRequest	m_pRequest;
 	CMap< CString, const CString&, CString, CString& >	m_pResponse;
 
 // Operations
 public:
 	BOOL		Start();
 	void		Stop();
+	static void ClearVersionCheck();
+	void		ForceCheck();
 	void		SetNextCheck(int nDays);
     BOOL		CheckUpgradeHash(const Hashes::Sha1Hash& oHash, LPCTSTR pszPath);
 	BOOL		CheckUpgradeHash();
+
+	inline bool	IsUpgradeAvailable() const throw()
+	{
+		return ! Settings.VersionCheck.UpgradePrompt.IsEmpty();
+	}
+
+	inline bool IsVerbose() const throw()
+	{
+		return m_bVerbose;
+	}
+
 protected:
 	BOOL		NeedToCheck();
 	static UINT	ThreadStart(LPVOID pParam);
@@ -58,3 +71,10 @@ protected:
 };
 
 extern CVersionChecker VersionChecker;
+
+enum VERSION_CHECK	// WM_VERSIONCHECK message wParam argument
+{
+	VC_MESSAGE_AND_CONFIRM = 0, // Show message and then ask to download new version
+	VC_CONFIRM = 1,				// Ask to download new version
+	VC_UPGRADE = 2				// Ask then start upgrading of already downloaded installer
+};

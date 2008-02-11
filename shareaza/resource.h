@@ -774,6 +774,7 @@
 #define IDS_BETA_EXPIRED                8010
 #define IDS_VIEW_MODE_CONFIRM           8011
 #define IDS_TORRENT_INFO                8012
+#define IDS_UPGRADE_NO_NEW              8013
 #define IDS_STATUS_BAR_CONNECTED_HUB_UP 8060
 #define IDS_STATUS_BAR_CONNECTED_UP     8061
 #define IDS_STATUS_BAR_CONNECTED_HUB    8062
@@ -1467,6 +1468,7 @@
 #define IDS_LIBRARY_ALBUM_ARTIST        20235
 #define IDS_LIBRARY_ALBUM_RATING        20236
 #define ID_HELP_ABOUT                   32772
+#define ID_HELP_VERSION_CHECK           32773
 #define ID_CHECKMARK                    32774
 #define ID_NETWORK_EXIT                 32776
 #define ID_NETWORK_CONNECT              32777

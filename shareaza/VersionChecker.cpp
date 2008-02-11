@@ -1,7 +1,7 @@
 //
 // VersionChecker.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -46,7 +46,7 @@ CVersionChecker VersionChecker;
 // CVersionChecker construction
 
 CVersionChecker::CVersionChecker() :
-	m_bUpgrade( FALSE ),
+	m_bVerbose( false ),
 	m_hThread( NULL )
 {
 }
@@ -56,6 +56,25 @@ CVersionChecker::~CVersionChecker()
 	Stop();
 }
 
+void CVersionChecker::ForceCheck()
+{
+	m_bVerbose = true;
+	Settings.VersionCheck.UpdateCheck = true;
+	Settings.VersionCheck.NextCheck = 0;
+	Start();
+}
+
+void CVersionChecker::ClearVersionCheck()
+{
+	Settings.VersionCheck.UpgradePrompt.Empty();
+	Settings.VersionCheck.UpgradeFile.Empty();
+	Settings.VersionCheck.UpgradeSHA1.Empty();
+	Settings.VersionCheck.UpgradeTiger.Empty();
+	Settings.VersionCheck.UpgradeSize.Empty();
+	Settings.VersionCheck.UpgradeSources.Empty();
+	Settings.VersionCheck.UpgradeVersion.Empty();
+}
+
 //////////////////////////////////////////////////////////////////////
 // CVersionChecker time check
 
@@ -63,20 +82,10 @@ BOOL CVersionChecker::NeedToCheck()
 {
 	if ( theApp.m_sVersion.Compare( Settings.VersionCheck.UpgradeVersion ) >= 0 ) // user manually upgraded
 	{
-		Settings.VersionCheck.UpgradePrompt = _T("");
-		Settings.VersionCheck.UpgradeFile = _T("");
-		Settings.VersionCheck.UpgradeSHA1 = _T("");
-		Settings.VersionCheck.UpgradeTiger = _T("");
-		Settings.VersionCheck.UpgradeSize = _T("");
-		Settings.VersionCheck.UpgradeSources = _T("");
-		Settings.VersionCheck.UpgradeVersion = _T("");
-		return (DWORD)CTime::GetCurrentTime().GetTime() >= Settings.VersionCheck.NextCheck;
+		ClearVersionCheck();
 	}
 
 	if ( ! Settings.VersionCheck.UpdateCheck ) return FALSE;
-
-	m_bUpgrade = ! Settings.VersionCheck.UpgradePrompt.IsEmpty();
-
 	if ( ! Settings.VersionCheck.NextCheck ) return TRUE;
 	if ( Settings.VersionCheck.NextCheck == 0xFFFFFFFF ) return FALSE;
 
@@ -88,11 +97,10 @@ BOOL CVersionChecker::NeedToCheck()
 
 BOOL CVersionChecker::Start()
 {
-	Stop();
-	
+	if ( m_hThread )
+		return TRUE;
+
 	m_pRequest.Clear();
-	
-	m_bUpgrade = FALSE;
 	
 	m_hThread = BeginThread( "VersionChecker", ThreadStart, this, THREAD_PRIORITY_IDLE );
 	
@@ -127,18 +135,20 @@ UINT CVersionChecker::ThreadStart(LPVOID pParam)
 
 void CVersionChecker::OnRun()
 {
-	if ( NeedToCheck() && ! CheckUpgradeHash() )
+	if ( NeedToCheck() )
 	{
 		if ( ExecuteRequest() )
 		{
 			ProcessResponse();
-			m_pResponse.RemoveAll();
 		}
 		else
 		{
 			SetNextCheck( VERSIONCHECKER_FREQUENCY );
 		}
+
+		AfxGetMainWnd()->PostMessage( WM_VERSIONCHECK, VC_MESSAGE_AND_CONFIRM );
 	}
+
 	m_hThread = NULL;
 }
 
@@ -217,19 +227,10 @@ void CVersionChecker::ProcessResponse()
 		// Old name
 		if ( ! Settings.VersionCheck.UpgradeSHA1.GetLength() )
 			m_pResponse.Lookup( _T("UpgradeHash"), Settings.VersionCheck.UpgradeSHA1 );
-		
-		m_bUpgrade = TRUE;
 	}
 	else
 	{
-		Settings.VersionCheck.UpgradePrompt = _T("");
-		Settings.VersionCheck.UpgradeFile = _T("");
-		Settings.VersionCheck.UpgradeSHA1 = _T("");
-		Settings.VersionCheck.UpgradeTiger = _T("");
-		Settings.VersionCheck.UpgradeSize = _T("");
-		Settings.VersionCheck.UpgradeSources = _T("");
-		Settings.VersionCheck.UpgradeVersion = _T("");
-		m_bUpgrade = FALSE;
+		ClearVersionCheck();
 	}
 	
 	if ( m_pResponse.Lookup( _T("AddDiscovery"), strValue ) )
@@ -256,8 +257,8 @@ void CVersionChecker::ProcessResponse()
 	}
 	
 	SetNextCheck( nDays );
-	
-	AfxGetMainWnd()->PostMessage( WM_VERSIONCHECK, 0, 0 );
+
+	m_pResponse.RemoveAll();
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -275,14 +276,14 @@ void CVersionChecker::SetNextCheck(int nDays)
 
 BOOL CVersionChecker::CheckUpgradeHash(const Hashes::Sha1Hash& oHash, LPCTSTR pszPath)
 {
-	if ( m_bUpgrade )
+	if ( IsUpgradeAvailable() )
 	{
 		if ( oHash.toString() == Settings.VersionCheck.UpgradeSHA1 )
 		{
 			if ( _tcsstr( pszPath, _T(".exe") ) )
 			{
 				m_sUpgradePath = pszPath;
-				AfxGetMainWnd()->PostMessage( WM_VERSIONCHECK, 2 );
+				AfxGetMainWnd()->PostMessage( WM_VERSIONCHECK, VC_UPGRADE );
 				return TRUE;
 			}
 		}
@@ -292,7 +293,7 @@ BOOL CVersionChecker::CheckUpgradeHash(const Hashes::Sha1Hash& oHash, LPCTSTR ps
 
 BOOL CVersionChecker::CheckUpgradeHash()
 {
-	if ( m_bUpgrade )
+	if ( IsUpgradeAvailable() )
 	{
 		Hashes::Sha1Hash oSHA1;
 		if ( oSHA1.fromString( Settings.VersionCheck.UpgradeSHA1 ) )
@@ -304,7 +305,7 @@ BOOL CVersionChecker::CheckUpgradeHash()
 				if ( _tcsstr( pFile->GetPath(), _T(".exe") ) )
 				{
 					m_sUpgradePath = pFile->GetPath();
-					AfxGetMainWnd()->PostMessage( WM_VERSIONCHECK, 2 );
+					AfxGetMainWnd()->PostMessage( WM_VERSIONCHECK, VC_UPGRADE );
 					return TRUE;
 				}
 			}

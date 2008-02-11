@@ -49,6 +49,7 @@
 	<resource code="999" id="IDB_IRCICONS"/>
 	<resource code="1293" id="IDC_IMPORT_DOWNLOADS"/>
 	<resource code="32772" id="ID_HELP_ABOUT"/>
+	<resource code="32773" id="ID_HELP_VERSION_CHECK"/>
 	<resource code="32774" id="ID_CHECKMARK"/>
 	<resource code="32776" id="ID_NETWORK_EXIT"/>
 	<resource code="32777" id="ID_NETWORK_CONNECT"/>

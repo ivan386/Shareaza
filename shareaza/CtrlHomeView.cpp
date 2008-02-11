@@ -130,7 +130,7 @@ void CHomeViewCtrl::Update()
 	m_pDocument.ShowGroup( GROUP_FIREWALLED_TCP, bOnG2 && bTCPFirewalled && !bUDPFirewalled );
 	m_pDocument.ShowGroup( GROUP_FIREWALLED_UDP, bOnG2 && !bTCPFirewalled && bUDPFirewalled );*/	// Temp disabled
 
-	if ( VersionChecker.m_bUpgrade )
+	if ( VersionChecker.IsUpgradeAvailable() )
 	{
 		if ( m_peUpgrade ) m_peUpgrade->SetText( Settings.VersionCheck.UpgradePrompt );
 		m_pDocument.ShowGroup( GROUP_UPGRADE, TRUE );

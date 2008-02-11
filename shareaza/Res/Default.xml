@@ -477,6 +477,8 @@
 				<item id="ID_HELP_WEB_2" text="P2PForums.com"/> -->
 			</menu>
 			<separator/>
+			<item id="ID_HELP_VERSION_CHECK" text="Check for new _version"/>
+			<separator/>
 			<item id="ID_HELP_ABOUT" text="_About Shareaza..."/>
 		</menu>
 	</menu>
@@ -572,6 +574,8 @@
 				<item id="ID_HELP_WEB_2" text="P2PForums.com"/> -->
 			</menu>
 			<separator/>
+			<item id="ID_HELP_VERSION_CHECK" text="Check for new _version"/>
+			<separator/>
 			<item id="ID_HELP_ABOUT" text="_About Shareaza..."/>
 		</menu>
 	</menu>
@@ -660,6 +664,8 @@
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
 				<item id="ID_HELP_WEB_2" text="P2PForums.com"/> -->
 			</menu>
+			<separator/>
+			<item id="ID_HELP_VERSION_CHECK" text="Check for new _version"/>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="_About Shareaza..."/>
 		</menu>
