@@ -1,7 +1,7 @@
 //
 // CtrlLibraryFileView.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -197,9 +197,19 @@ BOOL CLibraryFileView::PreTranslateMessage(MSG* pMsg)
 
 void CLibraryFileView::OnContextMenu(CWnd* /*pWnd*/, CPoint point) 
 {
+	CStringList oFiles;
+	{
+		CQuickLock pLock( Library.m_pSection );
+		StartSelectedFileLoop();
+		for ( CLibraryFile* pFile = GetNextSelectedFile(); pFile; pFile = GetNextSelectedFile() )
+		{
+			oFiles.AddTail( pFile->GetPath() );
+		}
+	}
+
 	CString strName( m_pszToolBar );
 	strName += Settings.Library.ShowVirtual ? _T(".Virtual") : _T(".Physical");
-	Skin.TrackPopupMenu( strName, point, ID_LIBRARY_LAUNCH );
+	Skin.TrackPopupMenu( strName, point, ID_LIBRARY_LAUNCH, 0, oFiles );
 }
 
 void CLibraryFileView::OnMouseMove(UINT /*nFlags*/, CPoint point) 

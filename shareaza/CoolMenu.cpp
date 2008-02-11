@@ -603,86 +603,168 @@ void CCoolMenu::RegisterEdge(int nLeft, int nTop, int nLength)
 	m_nEdgeSize	= nLength;
 }
 
-UINT_PTR CCoolMenu::DoExplorerMenu(HWND hwnd, LPCTSTR pszPath, POINT point,
+class CShellItem
+{
+public:
+	CShellItem(IShellFolder* pDesktop, HWND hWnd, LPCTSTR szFullPath, void** ppFolder = NULL) :
+		m_pidl( NULL ),
+		m_pLastId( NULL )
+	{
+		HRESULT hr = pDesktop->ParseDisplayName( hWnd, 0, CT2OLE( szFullPath ), NULL,
+		  &m_pidl, NULL );
+		if ( SUCCEEDED( hr ) )
+		{
+			m_pLastId = m_pidl;
+			USHORT temp;
+			for (;;)
+			{
+				USHORT offset = m_pLastId->mkid.cb;
+				temp = *(USHORT*)( (BYTE*)m_pLastId + offset );
+				if ( temp == 0 )
+					break;
+				m_pLastId = (LPITEMIDLIST)( (BYTE*)m_pLastId + offset );
+			}
+			if ( ppFolder )
+			{
+				temp = m_pLastId->mkid.cb;
+				m_pLastId->mkid.cb = 0;
+				hr = pDesktop->BindToObject( m_pidl, NULL, IID_IShellFolder, ppFolder );
+				m_pLastId->mkid.cb = temp;
+				if ( FAILED( hr ) )
+				{
+					SHFree( m_pidl );
+					m_pidl = NULL;
+					m_pLastId = NULL;
+				}
+			}
+		}
+	}
+
+	virtual ~CShellItem()
+	{
+		if ( m_pidl )
+		{
+			SHFree( m_pidl );
+		}
+	}
+
+public:
+	LPITEMIDLIST	m_pidl;		// Full path
+	LPITEMIDLIST	m_pLastId;	// Filename only
+};
+
+class CShellList : public CList< CShellItem* >
+{
+public:
+	CShellList() :
+		m_pID( NULL )
+	{
+		::SHGetDesktopFolder( &m_pDesktop );
+	}
+
+	virtual ~CShellList()
+	{
+		Clear();
+	}
+
+	// Creates menu from file paths list
+	bool GetMenu(HWND hWnd, const CStringList& oFiles, void** ppContextMenu)
+	{
+		Clear();
+
+		for ( POSITION pos = oFiles.GetHeadPosition(); pos; )
+		{
+			CString strPath = oFiles.GetNext( pos );
+			CShellItem* pItemIDList = new CShellItem(  m_pDesktop, hWnd, strPath,
+				( m_pFolder ? NULL : (void**)&m_pFolder ) );	// Get only one
+			if ( pItemIDList->m_pidl )
+				AddTail( pItemIDList );
+			else
+				// Bad path
+				delete pItemIDList;
+		}
+
+		if ( GetCount() == 0 )
+			// No files
+			return false;
+
+		m_pID = new LPCITEMIDLIST [ GetCount() ];
+		if ( ! m_pID )
+			// Out of memory
+			return false;
+
+		int i = 0;
+		for ( POSITION pos = GetHeadPosition(); pos; i++)
+		{
+			m_pID[ i ] = GetNext( pos )->m_pLastId;
+		}
+
+		return SUCCEEDED( m_pFolder->GetUIObjectOf( hWnd, GetCount(),
+			m_pID, IID_IContextMenu, NULL, ppContextMenu ) );
+	}
+
+protected:
+	CComPtr< IShellFolder > m_pDesktop;	// Desktop
+	CComPtr< IShellFolder >	m_pFolder;	// First file folder
+	LPCITEMIDLIST*			m_pID;		// File ItemID array
+
+	void Clear()
+	{
+		for ( POSITION pos = GetHeadPosition(); pos; )
+		{
+			delete GetNext( pos );
+		}
+		RemoveAll();
+
+		delete [] m_pID;
+		m_pID = NULL;
+
+		m_pFolder.Release();
+	}
+};
+
+UINT_PTR CCoolMenu::DoExplorerMenu(HWND hwnd, const CStringList& oFiles, POINT point,
 	HMENU hMenu, HMENU hSubMenu, UINT nFlags)
 {
 	UINT_PTR nCmd = 0;
 
-	TCHAR szFullPath[ MAX_PATH ] = {};
-	GetFullPathName( pszPath, MAX_PATH, szFullPath, NULL );
-
-	CComPtr< IMalloc > pMalloc;
-	HRESULT hr = SHGetMalloc( &pMalloc );
-	if ( FAILED( hr ) )
-		return 0;
-
-	CComPtr< IShellFolder > pDesktop;
-	hr = ::SHGetDesktopFolder( &pDesktop );
-	if ( FAILED( hr ) )
-		return 0;
-
-	LPITEMIDLIST pidl = NULL;
-	hr = pDesktop->ParseDisplayName( hwnd, 0, CT2OLE( szFullPath ), NULL, &pidl, NULL );
-	if ( SUCCEEDED( hr ) )
+	CShellList oItemIDListList;
+	if ( oItemIDListList.GetMenu( hwnd, oFiles, (void**)&m_pContextMenu1 ) )
 	{
-		CComPtr< IShellFolder > pFolder;
-		LPITEMIDLIST pLastId = pidl;
-		USHORT temp;
-		for (;;)
-		{
-			int offset = pLastId->mkid.cb;
-			temp = *(USHORT*)( (BYTE*)pLastId + offset );
-			if ( temp == 0 )
-				break;
-			pLastId = (LPITEMIDLIST)( (BYTE*)pLastId + offset );
-		}
-		temp = pLastId->mkid.cb;
-		pLastId->mkid.cb = 0;
-		hr = pDesktop->BindToObject( pidl, NULL, IID_IShellFolder, (void**)&pFolder );
-		pLastId->mkid.cb = temp;
+		HRESULT hr = m_pContextMenu1->QueryContextMenu( hSubMenu, 0,
+			ID_SHELL_MENU_MIN, ID_SHELL_MENU_MAX, CMF_NORMAL | CMF_EXPLORE );
 		if ( SUCCEEDED( hr ) )
 		{
-			hr = pFolder->GetUIObjectOf( hwnd, 1, (LPCITEMIDLIST*)&pLastId, 
-				IID_IContextMenu, NULL, (void**)&m_pContextMenu1 );
-			if ( SUCCEEDED( hr ) )
+			hr = m_pContextMenu1.QueryInterface( &m_pContextMenu2 );
+			hr = m_pContextMenu1.QueryInterface( &m_pContextMenu3 );
+
+			::SetForegroundWindow( hwnd );
+			nCmd = ::TrackPopupMenu( hMenu, TPM_RETURNCMD | nFlags,
+				point.x, point.y, 0, hwnd, NULL );
+			::PostMessage( hwnd, WM_NULL, 0, 0 );
+
+			// If a command was selected from the shell menu, execute it.
+			if ( nCmd >= ID_SHELL_MENU_MIN && nCmd <= ID_SHELL_MENU_MAX )
 			{
-				hr = m_pContextMenu1->QueryContextMenu( hSubMenu, 0,
-					ID_SHELL_MENU_MIN, ID_SHELL_MENU_MAX, CMF_NORMAL | CMF_EXPLORE );
-				if ( SUCCEEDED( hr ) )
-				{
-					hr = m_pContextMenu1.QueryInterface( &m_pContextMenu2 );
-					hr = m_pContextMenu1.QueryInterface( &m_pContextMenu3 );
-
-					::SetForegroundWindow( hwnd );
-					nCmd = ::TrackPopupMenu( hMenu, TPM_RETURNCMD | nFlags,
-						point.x, point.y, 0, hwnd, NULL );
-					::PostMessage( hwnd, WM_NULL, 0, 0 );
-
-					// If a command was selected from the shell menu, execute it.
-					if ( nCmd >= ID_SHELL_MENU_MIN && nCmd <= ID_SHELL_MENU_MAX )
-					{
-						CMINVOKECOMMANDINFOEX ici = {};
-						ici.cbSize = sizeof( CMINVOKECOMMANDINFOEX );
-						ici.hwnd = hwnd;
-						ici.lpVerb = reinterpret_cast< LPCSTR >( nCmd - ID_SHELL_MENU_MIN );
-						ici.lpVerbW = reinterpret_cast< LPCWSTR >( nCmd - ID_SHELL_MENU_MIN );
-						ici.nShow = SW_SHOWNORMAL;
-						HRESULT hr = m_pContextMenu1->InvokeCommand( (CMINVOKECOMMANDINFO*)&ici );
-						VERIFY( SUCCEEDED( hr ) );
-					}
-					else if ( ( TPM_RETURNCMD & nFlags ) == 0 )
-					{
-						// Emulate normal message handling
-						::PostMessage( hwnd, WM_COMMAND, nCmd, 0 );
-					}
-
-					m_pContextMenu3.Release();
-					m_pContextMenu2.Release();
-				}
-				m_pContextMenu1.Release();
+				CMINVOKECOMMANDINFOEX ici = {};
+				ici.cbSize = sizeof( CMINVOKECOMMANDINFOEX );
+				ici.hwnd = hwnd;
+				ici.lpVerb = reinterpret_cast< LPCSTR >( nCmd - ID_SHELL_MENU_MIN );
+				ici.lpVerbW = reinterpret_cast< LPCWSTR >( nCmd - ID_SHELL_MENU_MIN );
+				ici.nShow = SW_SHOWNORMAL;
+				HRESULT hr = m_pContextMenu1->InvokeCommand( (CMINVOKECOMMANDINFO*)&ici );
+				VERIFY( SUCCEEDED( hr ) );
 			}
+			else if ( ( TPM_RETURNCMD & nFlags ) == 0 )
+			{
+				// Emulate normal message handling
+				::PostMessage( hwnd, WM_COMMAND, nCmd, 0 );
+			}
+
+			m_pContextMenu3.Release();
+			m_pContextMenu2.Release();
 		}
-		pMalloc->Free( pidl );
+		m_pContextMenu1.Release();
 	}
 	return nCmd;
 }
