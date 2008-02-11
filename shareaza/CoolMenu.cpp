@@ -699,7 +699,7 @@ public:
 			m_pID[ i ] = GetNext( pos )->m_pLastId;
 		}
 
-		return SUCCEEDED( m_pFolder->GetUIObjectOf( hWnd, GetCount(),
+		return SUCCEEDED( m_pFolder->GetUIObjectOf( hWnd, (UINT)GetCount(),
 			m_pID, IID_IContextMenu, NULL, ppContextMenu ) );
 	}
 
