@@ -187,12 +187,18 @@ void CIRCUsersBox::OnPaint()
 
 void CIRCUsersBox::OnUsersDoubleClick() 
 {
-	IRC_PANELEVENT pNotify;
-	pNotify.hdr.hwndFrom	= GetSafeHwnd();
-	pNotify.hdr.idFrom		= IDC_IRC_DBLCLKUSERS;
-	pNotify.hdr.code		= NM_DBLCLK;
-	CWnd* m_wndFrame = GetOwner()->GetOwner();
-	m_wndFrame->PostMessage( WM_NOTIFY, pNotify.hdr.idFrom, (LPARAM)&pNotify );
+	CPoint pt; 
+	GetCursorPos( &pt );
+	int nItem = HitTest( pt );
+	if ( nItem >= 0 )
+	{
+		IRC_PANELEVENT pNotify;
+		pNotify.hdr.hwndFrom	= GetSafeHwnd();
+		pNotify.hdr.idFrom		= IDC_IRC_DBLCLKUSERS;
+		pNotify.hdr.code		= NM_DBLCLK;
+		CWnd* m_wndFrame = GetOwner()->GetOwner();
+		m_wndFrame->PostMessage( WM_NOTIFY, pNotify.hdr.idFrom, (LPARAM)&pNotify );
+	}
 }
 
 void CIRCUsersBox::OnContextMenu(CWnd* /* pWnd */, CPoint point) 
@@ -205,7 +211,7 @@ void CIRCUsersBox::OnContextMenu(CWnd* /* pWnd */, CPoint point)
 		IRC_PANELEVENT pNotify;
 		pNotify.hdr.hwndFrom	= GetSafeHwnd();
 		pNotify.hdr.idFrom		= IDC_IRC_MENUUSERS;
-		pNotify.hdr.code		= NM_DBLCLK;
+		pNotify.hdr.code		= NM_RCLICK;
 		CWnd* m_wndFrame = GetOwner()->GetOwner();
 		m_wndFrame->PostMessage( WM_NOTIFY, pNotify.hdr.idFrom, (LPARAM)&pNotify );
 	}
