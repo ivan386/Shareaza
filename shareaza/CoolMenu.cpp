@@ -644,7 +644,7 @@ public:
 	{
 		if ( m_pidl )
 		{
-			SHFree( m_pidl );
+			CoTaskMemFree( m_pidl );
 		}
 	}
 
