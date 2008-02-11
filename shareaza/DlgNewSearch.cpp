@@ -232,7 +232,7 @@ void CNewSearchDlg::OnOK()
 
 		m_wndSchema.UpdateData( m_pSearch->m_pXML->AddElement( pSchema->m_sSingular ), TRUE );
 
-		Settings.Search.LastSchemaURI = pSchema->m_sURI;
+		Settings.Search.LastSchemaURI = pSchema->GetURI();
 	}
 	else
 	{

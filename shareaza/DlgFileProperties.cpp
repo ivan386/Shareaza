@@ -167,7 +167,7 @@ void CFilePropertiesDlg::Update()
 
 	LoadString ( strText, IDS_SEARCH_NO_METADATA );
 	m_wndSchemas.m_sNoSchemaText = strText;
-	m_wndSchemas.Load( pFile->m_pSchema ? (LPCTSTR)pFile->m_pSchema->m_sURI : NULL );
+	m_wndSchemas.Load( pFile->m_pSchema ? (LPCTSTR)pFile->m_pSchema->GetURI() : NULL );
 
 	OnSelChangeSchemas();
 

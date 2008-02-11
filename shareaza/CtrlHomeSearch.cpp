@@ -252,7 +252,7 @@ void CHomeSearchCtrl::OnSearchStart()
 	if ( _tcscmp ( strClear , strText ) == 0 ) return;
 
 	CSchema* pSchema = m_wndSchema.GetSelected();
-	if ( pSchema != NULL ) strURI = pSchema->m_sURI;
+	if ( pSchema != NULL ) strURI = pSchema->GetURI();
 
 	Settings.Search.LastSchemaURI = strURI;
 

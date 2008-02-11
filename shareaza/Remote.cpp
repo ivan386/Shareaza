@@ -582,7 +582,7 @@ void CRemote::PageSearch()
 			CSchema* pSchema = SchemaCache.GetNext( pos );
 			if ( ! pSchema->m_bPrivate && pSchema->m_nType == CSchema::stFile )
 			{
-				str += _T("<option value=\"") + pSchema->m_sURI;
+				str += _T("<option value=\"") + pSchema->GetURI();
 				str += _T("\">") + pSchema->m_sTitle;
 				str += _T("</option>\r\n");
 			}
@@ -825,7 +825,7 @@ void CRemote::PageNewSearch()
 	pSearch->m_sSearch		= strSearch;
 	pSearch->m_pSchema		= SchemaCache.Get( strSchema );
 
-	if ( pSearch->m_pSchema != NULL ) strURI = pSearch->m_pSchema->m_sURI;
+	if ( pSearch->m_pSchema != NULL ) strURI = pSearch->m_pSchema->GetURI();
 	
 	Settings.Search.LastSchemaURI = strURI;
 	

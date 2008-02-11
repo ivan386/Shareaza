@@ -116,7 +116,7 @@ BOOL CFileMetadataPage::OnInitDialog()
 		}
 	}
 
-	m_wndSchemas.Load( pSchema != NULL ? pSchema->m_sURI : _T(""), bCollection ? -1 : 0 );
+	m_wndSchemas.Load( pSchema != NULL ? pSchema->GetURI() : _T(""), bCollection ? -1 : 0 );
 	OnSelChangeSchemas();
 
 	if ( pSchema != NULL )
@@ -192,7 +192,7 @@ void CFileMetadataPage::OnSelChangeSchemas()
 							// We don't need to delete the old ones because, after
 							// submitting new data, they will be ignored.
 							// It will also allow to save the old ones if we switch schema back.
-							AddCrossAttributes( pMapping, pSchema->m_sURI );
+							AddCrossAttributes( pMapping, pSchema->GetURI() );
 							break;
 						}
 					}

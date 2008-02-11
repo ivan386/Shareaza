@@ -469,7 +469,7 @@ void CBrowseFrameCtrl::OnTreeSelection(NMHDR* /*pNotify*/, LRESULT* pResult)
 		CString strURI = pTree->m_pSchema->GetContainedURI( CSchema::stFile );
 
 		if ( strURI.GetLength() &&
-			 ( m_wndList->m_pSchema == NULL || m_wndList->m_pSchema->m_sURI != strURI ) )
+			 ( m_wndList->m_pSchema == NULL || ! m_wndList->m_pSchema->CheckURI( strURI ) ) )
 		{
 			if ( CSchema* pSchema = SchemaCache.Get( strURI ) )
 			{

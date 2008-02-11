@@ -1058,7 +1058,7 @@ void CBaseMatchWnd::Serialize(CArchive& ar)
 	{
 		if ( m_pMatches->m_pSchema )
 		{
-			ar << m_pMatches->m_pSchema->m_sURI;
+			ar << m_pMatches->m_pSchema->GetURI();
 		}
 		else
 		{

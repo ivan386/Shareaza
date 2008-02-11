@@ -171,7 +171,7 @@ void CSchemaCtrl::SetSchema(CSchema* pSchema, BOOL bPromptOnly)
 
 CString CSchemaCtrl::GetSchemaURI() const
 {
-	return m_pSchema ? m_pSchema->m_sURI : L"";
+	return m_pSchema ? m_pSchema->GetURI() : CString();
 }
 
 /////////////////////////////////////////////////////////////////////////////

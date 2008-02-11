@@ -29,7 +29,7 @@
 #include "LibraryFolders.h"
 #include "CtrlLibraryTreeView.h"
 #include "ShareazaDataSource.h"
-#include "Schema.h"
+#include "SchemaCache.h"
 
 #include "HGlobal.h"
 #include "StreamArchive.h"
@@ -608,8 +608,8 @@ BOOL CShareazaDataSource::DropToAlbum(IDataObject* pIDataObject, DWORD grfKeySta
 
 	if ( ! pAlbumFolder ||
 		! LibraryFolders.CheckAlbum( pAlbumFolder ) ||
-		pAlbumFolder->m_sSchemaURI == CSchema::uriGhostFolder ||
-		pAlbumFolder->m_sSchemaURI == CSchema::uriSearchFolder )
+		CheckURI( pAlbumFolder->m_sSchemaURI, CSchema::uriGhostFolder ) ||
+		CheckURI( pAlbumFolder->m_sSchemaURI, CSchema::uriSearchFolder ) )
 	{
 		// Drop disabled to temporary/invalid, ghost or search albums
 		return FALSE;
@@ -1338,7 +1338,8 @@ void CShareazaDataSource::GetTotalLength(const CLibraryList* pList, size_t& size
 			{
 				CAlbumFolder* pAlbum = Item;
 				ASSERT( pAlbum != NULL );
-				if ( pAlbum && bRoot && pAlbum->m_sSchemaURI != CSchema::uriGhostFolder )
+				if ( pAlbum && bRoot &&
+					! CheckURI( pAlbum->m_sSchemaURI, CSchema::uriGhostFolder ) )
 				{
 					CLibraryList List;
 					pAlbum->GetFileList( &List, TRUE );
@@ -1379,7 +1380,8 @@ void CShareazaDataSource::GetTotalLength(const CLibraryTreeItem* pSelFirst, size
 
 	for ( const CLibraryTreeItem* pItem = pSelFirst ; pItem ; pItem = pItem->m_pSelNext )
 	{
-		if ( pItem->m_pVirtual && bRoot && pItem->m_pVirtual->m_sSchemaURI != CSchema::uriGhostFolder )
+		if ( pItem->m_pVirtual && bRoot &&
+			! CheckURI( pItem->m_pVirtual->m_sSchemaURI, CSchema::uriGhostFolder ) )
 		{
 			// Add all files within virtual folder (recursively)
 			CLibraryList List;
@@ -1456,7 +1458,8 @@ void CShareazaDataSource::FillBuffer(const CLibraryList* pList, LPTSTR& buf_HDRO
 			{
 				CAlbumFolder* pAlbum = Item;
 				ASSERT( pAlbum != NULL );
-				if ( pAlbum && bRoot && pAlbum->m_sSchemaURI != CSchema::uriGhostFolder )
+				if ( pAlbum && bRoot &&
+					! CheckURI( pAlbum->m_sSchemaURI, CSchema::uriGhostFolder ) )
 				{
 					CLibraryList List;
 					pAlbum->GetFileList( &List, TRUE );
@@ -1498,7 +1501,8 @@ void CShareazaDataSource::FillBuffer(const CLibraryTreeItem* pSelFirst, LPTSTR& 
 
 	for ( const CLibraryTreeItem* pItem = pSelFirst ; pItem ; pItem = pItem->m_pSelNext )
 	{
-		if ( pItem->m_pVirtual && bRoot && pItem->m_pVirtual->m_sSchemaURI != CSchema::uriGhostFolder )
+		if ( pItem->m_pVirtual && bRoot &&
+			! CheckURI( pItem->m_pVirtual->m_sSchemaURI, CSchema::uriGhostFolder ) )
 		{
 			// Add all files within virtual folder (recursively)
 			CLibraryList List;

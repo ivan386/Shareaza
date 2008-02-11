@@ -96,7 +96,7 @@ void CHitMonitorWnd::OnDestroy()
 
 	if ( m_wndList.m_pSchema )
 	{
-		Settings.Search.MonitorSchemaURI = m_wndList.m_pSchema->m_sURI;
+		Settings.Search.MonitorSchemaURI = m_wndList.m_pSchema->GetURI();
 	}
 	else
 	{

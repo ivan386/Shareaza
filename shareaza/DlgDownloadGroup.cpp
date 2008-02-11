@@ -111,7 +111,7 @@ BOOL CDownloadGroupDlg::OnInitDialog()
 		CSchema* pSchema = SchemaCache.GetNext( pos );
 
 		if ( pUsedIcons.Find( pSchema->m_sIcon ) == NULL ||
-			 pSchema->m_sURI == m_pGroup->m_sSchemaURI )
+			 pSchema->CheckURI( m_pGroup->m_sSchemaURI ) )
 		{
 			pUsedIcons.AddTail( pSchema->m_sIcon );
 
@@ -119,7 +119,7 @@ BOOL CDownloadGroupDlg::OnInitDialog()
 				m_wndImages.GetItemCount(), NULL, 0, 0, pSchema->m_nIcon16,
 				(LPARAM)pSchema );
 
-			if ( pSchema->m_sURI == m_pGroup->m_sSchemaURI )
+			if ( pSchema->CheckURI( m_pGroup->m_sSchemaURI ) )
 			{
 				m_wndImages.SetItemState( nIndex, LVIS_SELECTED, LVIS_SELECTED );
 				m_wndImages.SetCheck( nIndex );
@@ -209,7 +209,7 @@ void CDownloadGroupDlg::OnOK()
 		if ( nIndex >= 0 )
 		{
 			CSchema* pSchema = (CSchema*)m_wndImages.GetItemData( nIndex );
-			m_pGroup->SetSchema( pSchema->m_sURI );
+			m_pGroup->SetSchema( pSchema->GetURI() );
 			
 			// Why should we force users to have groups named after the schema?
 			// Because we add new schema related types without asking?

@@ -1034,6 +1034,9 @@ BOOL CQuerySearch::CheckValid(bool bExpression)
 
 		if ( nValidWords ) return TRUE;
 	}
+#ifdef LAN_MODE
+	return TRUE;
+#else // LAN_MODE
 	
 	if ( bHashOk )
 	{
@@ -1043,9 +1046,6 @@ BOOL CQuerySearch::CheckValid(bool bExpression)
 	m_oKeywordHashList.clear();
 	m_oWords.clear();
 
-#ifdef LAN_MODE
-	return TRUE;
-#else // LAN_MODE
 	return FALSE;
 #endif // LAN_MODE
 }
@@ -1720,7 +1720,7 @@ void CQuerySearch::Serialize(CArchive& ar)
 		
 		if ( m_pSchema != NULL && m_pXML != NULL )
 		{
-			ar << m_pSchema->m_sURI;
+			ar << m_pSchema->GetURI();
 			m_pXML->Serialize( ar );
 		}
 		else

@@ -69,7 +69,7 @@ BOOL CSchemaColumnsDlg::OnInitDialog()
 	ListView_SetExtendedListViewStyle( m_wndColumns.GetSafeHwnd(), LVS_EX_CHECKBOXES );
 
 	LoadString( m_wndSchemas.m_sNoSchemaText, IDS_SEARCH_NO_SCHEMA );
-	m_wndSchemas.Load( m_pSchema ? m_pSchema->m_sURI : _T("") );
+	m_wndSchemas.Load( m_pSchema ? m_pSchema->GetURI() : _T("") );
 	
 	OnSelChangeSchemas();
 

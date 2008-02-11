@@ -193,7 +193,7 @@ BOOL CLibraryFile::IsShared() const
 	if ( m_pFolder && m_pFolder->IsOffline() )
 		return FALSE;
 
-	if ( m_pSchema != NULL && m_pSchema->m_sURI == CSchema::uriBitTorrent &&
+	if ( m_pSchema != NULL && m_pSchema->CheckURI( CSchema::uriBitTorrent ) &&
 		 m_pMetadata != NULL )
 	{
 		CString str = m_pMetadata->GetAttributeValue( L"privateflag", L"true" );
@@ -662,7 +662,7 @@ void CLibraryFile::Serialize(CArchive& ar, int nVersion)
 		
 		if ( m_pSchema != NULL && m_pMetadata != NULL )
 		{
-			ar << m_pSchema->m_sURI;
+			ar << m_pSchema->GetURI();
 			m_pMetadata->Serialize( ar );
 		}
 		else
@@ -840,7 +840,7 @@ void CLibraryFile::Serialize(CArchive& ar, int nVersion)
 		
 		// Rehash pre-version-22 audio files
 		
-		if ( nVersion < 22 && m_pSchema != NULL && m_pSchema->m_sURI.CompareNoCase( CSchema::uriAudio ) == 0 )
+		if ( nVersion < 22 && m_pSchema != NULL && m_pSchema->CheckURI( CSchema::uriAudio ) )
 		{
 			m_oSHA1.clear();
             m_oTiger.clear();

@@ -80,7 +80,7 @@ int CSchemaCache::Load()
 		CSchema* pSchema = new CSchema();
 		if ( pSchema && pSchema->Load( strPath ) )
 		{
-			CString strURI( pSchema->m_sURI );
+			CString strURI( pSchema->GetURI() );
 			ToLower( strURI );
 
 			m_pURIs.SetAt( strURI, pSchema );

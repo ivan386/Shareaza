@@ -769,7 +769,7 @@ void CLibraryFileView::OnLibraryShared()
 			{
 				bool bPrivate = false;
 				if ( pFile->m_pSchema != NULL && 
-					pFile->m_pSchema->m_sURI == CSchema::uriBitTorrent &&
+					pFile->m_pSchema->CheckURI( CSchema::uriBitTorrent ) &&
 					pFile->m_pMetadata != NULL )
 				{
 					CString str = pFile->m_pMetadata->GetAttributeValue( L"privateflag", L"true" );

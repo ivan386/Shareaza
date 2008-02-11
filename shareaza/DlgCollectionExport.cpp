@@ -677,7 +677,7 @@ CXMLElement* CCollectionExportDlg::CreateXML(BOOL bMetadataAll)
 		if ( pFile->m_pMetadata != NULL && bMetadataAll && pFile->m_pSchema != NULL )
 		{
 			CXMLElement* pMetadata = pFileRoot->AddElement( _T("metadata") );
-			pMetadata->AddAttribute( _T("xmlns:s"), pFile->m_pSchema->m_sURI );
+			pMetadata->AddAttribute( _T("xmlns:s"), pFile->m_pSchema->GetURI() );
 			pMetadata->AddElement( CopyMetadata( pFile->m_pMetadata ) );
 		}
 	}

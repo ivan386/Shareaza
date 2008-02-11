@@ -40,7 +40,6 @@ public:
 public:
 	int			m_nType;
 	CString		m_sTitle;
-	CString		m_sURI;
 	CString		m_sPlural;
 	CString		m_sSingular;
 	int			m_nAvailability;
@@ -67,6 +66,9 @@ public:
 	
 	enum { stFile, stFolder };
 	enum { saDefault, saAdvanced, saSystem, saMax };
+
+protected:
+	CString		m_sURI;
 	
 // Operations
 public:
@@ -101,29 +103,34 @@ protected:
 
 // Inlines
 public:
-	inline BOOL Equals(CSchema* pSchema) const
+	inline CString GetURI() const
+	{
+		return m_sURI;
+	}
+
+	inline bool Equals(CSchema* pSchema) const
 	{
 		return ( pSchema && ( ( this == pSchema ) || CheckURI( pSchema->m_sURI ) ) );
 	}
 
-	inline BOOL CheckURI(LPCTSTR pszURI) const
+	inline bool CheckURI(LPCTSTR pszURI) const
 	{
-		if ( ! pszURI ) return FALSE;
-		if ( m_sURI.CompareNoCase( pszURI ) == 0 ) return TRUE;
+		if ( ! pszURI ) return false;
+		if ( m_sURI.CompareNoCase( pszURI ) == 0 ) return true;
 		for ( POSITION pos = m_pExtends.GetHeadPosition() ; pos ; )
 		{
 			CString strURI = m_pExtends.GetNext( pos );
-			if ( strURI.CompareNoCase( pszURI ) == 0 ) return TRUE;
+			if ( strURI.CompareNoCase( pszURI ) == 0 ) return true;
 		}
-		return FALSE;
+		return false;
 	}
 
-	inline BOOL FilterType(LPCTSTR pszFile, BOOL bDefault = FALSE) const
+	inline bool FilterType(LPCTSTR pszFile, bool bDefault = false) const
 	{
 		if ( m_sTypeFilter.IsEmpty() ) return bDefault;
 
 		LPCTSTR pszExt = _tcsrchr( pszFile, '.' );
-		if ( pszExt == NULL ) return FALSE;
+		if ( pszExt == NULL ) return false;
 
 		CString strExt = _T("|");
 		strExt += pszExt;

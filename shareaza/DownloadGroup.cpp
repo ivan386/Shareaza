@@ -26,7 +26,7 @@
 #include "Downloads.h"
 #include "Download.h"
 
-#include "Schema.h"
+#include "Settings.h"
 #include "SchemaCache.h"
 #include "ShellIcons.h"
 #include "QuerySearch.h"
@@ -113,8 +113,7 @@ BOOL CDownloadGroup::Link(CDownload* pDownload)
 	{
 		CString strFilter = m_pFilters.GetNext( pos );
 		
-		if ( ( pDownload->IsTorrent() && strFilter.CompareNoCase( _T(".torrent") ) == 0 ) ||
-				CQuerySearch::WordMatch( pDownload->m_sDisplayName, strFilter ) )
+		if ( CQuerySearch::WordMatch( pDownload->m_sDisplayName, strFilter ) )
 		{
 			Add( pDownload );
 			return TRUE;
@@ -260,10 +259,22 @@ void CDownloadGroup::Serialize(CArchive& ar, int nVersion)
 			ASSERT( m_bTemporary == TRI_UNKNOWN || m_bTemporary == TRI_FALSE );
 		}
 
-		if ( m_sSchemaURI == CSchema::uriCollectionsFolder )
+		if ( CheckURI( m_sSchemaURI, CSchema::uriCollectionsFolder ) )
 		{
 			AddFilter( L".co" );
 			AddFilter( L".collection" );
+
+			if ( m_sFolder.IsEmpty() || ! PathIsDirectory( m_sFolder ) )
+			{
+				m_sFolder = Settings.Downloads.CollectionPath;
+			}
+		}
+		else if ( CheckURI( m_sSchemaURI, CSchema::uriBitTorrent ) )
+		{
+			if ( m_sFolder.IsEmpty() || ! PathIsDirectory( m_sFolder ) )
+			{
+				m_sFolder = Settings.Downloads.TorrentPath;
+			}
 		}
 
 		SetSchema( m_sSchemaURI );

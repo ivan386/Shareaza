@@ -1,7 +1,7 @@
 //
 // SchemaCache.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -19,12 +19,9 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_SCHEMACACHE_H__45A0432F_B5D1_4196_BCDC_BC0AF9B2296A__INCLUDED_)
-#define AFX_SCHEMACACHE_H__45A0432F_B5D1_4196_BCDC_BC0AF9B2296A__INCLUDED_
-
 #pragma once
 
-class CSchema;
+#include "Schema.h"
 
 
 class CSchemaCache
@@ -89,4 +86,16 @@ public:
 
 extern CSchemaCache	SchemaCache;
 
-#endif // !defined(AFX_SCHEMACACHE_H__45A0432F_B5D1_4196_BCDC_BC0AF9B2296A__INCLUDED_)
+// Compare two schema URIs with schema mapping
+inline bool CheckURI(const CString& strURI1, LPCTSTR szURI2)
+{
+	if ( strURI1.CompareNoCase( szURI2 ) == 0 )
+		return true;
+	CSchema* pSchema1 = SchemaCache.Get( strURI1 );
+	if ( pSchema1 && pSchema1->CheckURI( szURI2 ) )
+		return true;
+	CSchema* pSchema2 = SchemaCache.Get( szURI2 );
+	if ( pSchema2 && pSchema2->CheckURI( strURI1 ) )
+		return true;
+	return false;
+}

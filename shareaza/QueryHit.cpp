@@ -1085,7 +1085,7 @@ void CQueryHit::ReadG2Packet(CG2Packet* pPacket, DWORD nLength)
 				{
 					m_pXML->Delete();
 					m_sSchemaPlural	= pSchema->m_sPlural;
-					m_sSchemaURI	= pSchema->m_sURI;
+					m_sSchemaURI	= pSchema->GetURI();
 					m_pXML			= pXML;
 					pXML			= NULL;
 				}

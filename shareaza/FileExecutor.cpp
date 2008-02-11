@@ -412,7 +412,7 @@ BOOL CFileExecutor::ShowBitziTicket(DWORD nIndex)
 
 			if ( str == "link" )
 				strINFO += _T("&tag.url.url=") + URLEncode( strReplace );
-			else if ( pFile->m_pSchema->m_sURI.CompareNoCase( CSchema::uriAudio ) == 0 )
+			else if ( pFile->m_pSchema->CheckURI( CSchema::uriAudio ) )
 			{
 				if ( str == "description" )
 					strINFO += _T("&tag.objective.description=") + URLEncode( strReplace.Trim() );
@@ -564,7 +564,7 @@ BOOL CFileExecutor::ShowBitziTicket(DWORD nIndex)
 					}
 				}
 			}
-			else if ( pFile->m_pSchema->m_sURI.CompareNoCase( CSchema::uriImage ) == 0 )
+			else if ( pFile->m_pSchema->CheckURI( CSchema::uriImage ) )
 			{
 				if ( str == "description" )
 					strINFO += _T("&tag.objective.description=") + URLEncode( strReplace.Trim() );
@@ -600,7 +600,7 @@ BOOL CFileExecutor::ShowBitziTicket(DWORD nIndex)
 					}
 				}
 			}
-			else if ( pFile->m_pSchema->m_sURI.CompareNoCase( CSchema::uriVideo ) == 0 )
+			else if ( pFile->m_pSchema->CheckURI( CSchema::uriVideo ) )
 			{
 				if ( str == "realdescription" )
 					strINFO += _T("&tag.objective.description=") + URLEncode( strReplace.Trim() );
@@ -646,7 +646,7 @@ BOOL CFileExecutor::ShowBitziTicket(DWORD nIndex)
 					strINFO += _T("&tag.video.codec=") + URLEncode( strReplace );
 				}
 			}
-			else if ( pFile->m_pSchema->m_sURI.CompareNoCase( CSchema::uriApplication ) == 0 )
+			else if ( pFile->m_pSchema->CheckURI( CSchema::uriApplication ) )
 			{
 				if ( str == "fileDescription" )
 					strDescription = URLEncode( strReplace.Trim() );
@@ -709,7 +709,7 @@ BOOL CFileExecutor::ShowBitziTicket(DWORD nIndex)
 		strINFO += _T("&tag.video.format=DVD");
 	else if ( strExt == "IVF" )
 		strINFO += _T("&tag.video.format=Indeo Video");
-	else if ( pFile->m_pSchema != NULL && pFile->m_pSchema->m_sURI.CompareNoCase( CSchema::uriVideo ) == 0 && strExt.GetLength() )
+	else if ( pFile->m_pSchema != NULL && pFile->m_pSchema->CheckURI( CSchema::uriVideo ) && strExt.GetLength() )
 		strINFO += _T("&tag.video.format=") + URLEncode( strExt );
 
 	strURL.Replace( _T("&(INFO)"), strINFO );

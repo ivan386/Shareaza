@@ -133,15 +133,15 @@ void CLibraryAlbumView::Update()
 	{
 		CAlbumFolder* pFolder = pFolders->m_pVirtual;
 		
-		if ( pFolder->m_sSchemaURI == CSchema::uriMusicAlbum )
+		if ( CheckURI( pFolder->m_sSchemaURI, CSchema::uriMusicAlbum ) )
 		{
 			m_pStyle = CSchema::uriMusicAlbum;
 		}
-		else if ( pFolder->m_sSchemaURI == CSchema::uriMusicArtist )
+		else if ( CheckURI( pFolder->m_sSchemaURI, CSchema::uriMusicArtist ) )
 		{
 			m_pStyle = CSchema::uriMusicArtist;
 		}
-		else if ( pFolder->m_sSchemaURI == CSchema::uriGhostFolder )
+		else if ( CheckURI( pFolder->m_sSchemaURI, CSchema::uriGhostFolder ) )
 		{
 			bGhostFolder = TRUE;
 		}

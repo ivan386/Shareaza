@@ -118,7 +118,7 @@ void CLibraryDictionary::ProcessFile(CLibraryFile* pFile, BOOL bAdd)
 	
 	if ( pFile->m_pMetadata && pFile->m_pSchema )
 	{
-		ProcessWord( pFile, pFile->m_pSchema->m_sURI, bAdd );
+		ProcessWord( pFile, pFile->m_pSchema->GetURI(), bAdd );
 		ProcessPhrase( pFile, pFile->GetMetadataWords(), bAdd, FALSE );
 	}
 }
@@ -577,7 +577,7 @@ CList< CLibraryFile* >* CLibraryDictionary::Search(CQuerySearch* pSearch, int nM
 		if ( pHit->m_nSearchCookie == nCookie && pHit->m_nSearchWords >= nLowerBound )
 		{
 			if ( pSearch->Match( pHit->GetSearchName(), pHit->m_nSize,
-					pHit->m_pSchema ? (LPCTSTR)pHit->m_pSchema->m_sURI : NULL,
+					pHit->m_pSchema ? (LPCTSTR)pHit->m_pSchema->GetURI() : NULL,
 					pHit->m_pMetadata,
 					pHit->m_oSHA1,
 					pHit->m_oTiger,

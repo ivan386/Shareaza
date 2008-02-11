@@ -103,7 +103,7 @@ BOOL CLibraryMetaPanel::CheckAvailable(CLibraryTreeItem* pFolders, CLibraryList*
 			// Do not display meta panel for the collection folder
 			if ( pFolders->m_pVirtual->m_oCollSHA1 &&
 				 pFolders->m_pVirtual->GetBestView().Find( _T("Collection") ) > 0 ||
-				 pFolders->m_pVirtual->m_sSchemaURI == CSchema::uriCollectionsFolder )
+				 CheckURI( pFolders->m_pVirtual->m_sSchemaURI, CSchema::uriCollectionsFolder ) )
 			{
 				 m_bAvailable = FALSE;
 				 return FALSE;

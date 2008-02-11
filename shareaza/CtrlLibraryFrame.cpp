@@ -597,7 +597,7 @@ void CLibraryFrame::SetView(CLibraryView* pView, BOOL bUpdate, BOOL bUser)
 		if ( Settings.Library.ShowVirtual && m_pView &&
 			 pFolderSelection->m_pVirtual->m_pSchema )
 			pView->m_bGhostFolder = 
-				( pFolderSelection->m_pVirtual->m_pSchema->m_sURI == CSchema::uriGhostFolder );
+				( pFolderSelection->m_pVirtual->m_pSchema->CheckURI( CSchema::uriGhostFolder ) );
 		else 
 			pView->m_bGhostFolder = FALSE;
 	}
@@ -850,7 +850,7 @@ void CLibraryFrame::OnFilterTypes()
 {
 	if ( CSchema* pSchema = m_wndTreeTypes.GetSelected() )
 	{
-		Settings.Library.FilterURI = pSchema->m_sURI;
+		Settings.Library.FilterURI = pSchema->GetURI();
 	}
 	else
 	{

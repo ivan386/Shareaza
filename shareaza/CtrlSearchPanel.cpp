@@ -368,7 +368,7 @@ auto_ptr< CManagedSearch > CSearchPanel::GetSearch()
 		m_boxSchema.m_wndSchema.UpdateData(
 			pSearch->m_pSearch->m_pXML->AddElement( pSchema->m_sSingular ), TRUE );
 
-		Settings.Search.LastSchemaURI = pSchema->m_sURI;
+		Settings.Search.LastSchemaURI = pSchema->GetURI();
 	}
 	else
 	{

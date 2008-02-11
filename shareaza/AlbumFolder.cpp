@@ -310,7 +310,7 @@ void CAlbumFolder::OnFileDelete(CLibraryFile* pFile, BOOL bDeleteGhost)
 		GetNextFolder( pos )->OnFileDelete( pFile, bDeleteGhost );
 	}
 
-	if ( ! bDeleteGhost && m_sSchemaURI == CSchema::uriGhostFolder )
+	if ( ! bDeleteGhost && CheckURI( m_sSchemaURI, CSchema::uriGhostFolder ) )
 	{
 		m_nUpdateCookie++;
 		Library.m_nUpdateCookie++;
@@ -435,7 +435,7 @@ BOOL CAlbumFolder::MetaFromFile(CLibraryFile* pFile)
 {
 	if ( m_pSchema == NULL || pFile->m_pMetadata == NULL ) return FALSE;
 
-	CSchemaChild* pChild = m_pSchema->GetContained( pFile->m_pSchema->m_sURI );
+	CSchemaChild* pChild = m_pSchema->GetContained( pFile->m_pSchema->GetURI() );
 	if ( pChild == NULL ) return FALSE;
 
 	if ( m_pXML == NULL ) m_pXML = new CXMLElement( NULL, m_pSchema->m_sSingular );
@@ -459,7 +459,7 @@ BOOL CAlbumFolder::MetaToFiles(BOOL bAggressive)
 
 		if ( pSchema == NULL ) continue;
 
-		if ( CSchemaChild* pChild = m_pSchema->GetContained( pSchema->m_sURI ) )
+		if ( CSchemaChild* pChild = m_pSchema->GetContained( pSchema->GetURI() ) )
 		{
 			CXMLElement* pXML = pFile->m_pMetadata->Clone();
 
@@ -518,14 +518,14 @@ BOOL CAlbumFolder::MountCollection(const Hashes::Sha1Hash& oSHA1, CCollectionFil
 
 	// If this folder is a collection or simple folder don't mount it
 	// (some collections are folder types which in turn can hold folders)
-	if ( m_oCollSHA1 || m_sSchemaURI == CSchema::uriFolder )
+	if ( m_oCollSHA1 || CheckURI( m_sSchemaURI, CSchema::uriFolder ) )
 		bMountHere = TRI_FALSE;
 
 	if ( bMountHere != TRI_FALSE &&
 	// If the folder schema allows to hold objects having URIs of the collection
 		 m_pSchema->GetContained( pCollection->GetThisURI() ) != NULL ||
 	// or when the folder URI is the root collection folder
-		 m_sSchemaURI == CSchema::uriCollectionsFolder ) 
+		 CheckURI( m_sSchemaURI, CSchema::uriCollectionsFolder ) ) 
 	{
 		CAlbumFolder* pFolder = NULL;
 
@@ -645,7 +645,7 @@ BOOL CAlbumFolder::OrganiseFile(CLibraryFile* pFile)
 
 	if ( pFile->IsGhost() )
 	{
-		if ( m_sSchemaURI == CSchema::uriGhostFolder )
+		if ( CheckURI( m_sSchemaURI, CSchema::uriGhostFolder ) )
 		{
 			AddFile( pFile );
 			return TRUE;
@@ -657,7 +657,7 @@ BOOL CAlbumFolder::OrganiseFile(CLibraryFile* pFile)
 		return bResult;
 	}
 
-	if ( m_sSchemaURI == CSchema::uriAllFiles )
+	if ( CheckURI( m_sSchemaURI, CSchema::uriAllFiles ) )
 	{
 		AddFile( pFile );
 		return TRUE;
@@ -680,11 +680,11 @@ BOOL CAlbumFolder::OrganiseFile(CLibraryFile* pFile)
 	if ( pFile->m_pMetadata == NULL && m_pParent != NULL ) 
 		return FALSE;
 
-	if ( m_sSchemaURI == CSchema::uriMusicRoot )
+	if ( CheckURI( m_sSchemaURI, CSchema::uriMusicRoot ) )
 	{
 		if ( ! pFile->IsSchemaURI( CSchema::uriAudio ) ) return FALSE;
 	}
-	else if ( m_sSchemaURI == CSchema::uriMusicAlbumCollection )
+	else if ( CheckURI( m_sSchemaURI, CSchema::uriMusicAlbumCollection ) )
 	{
 		if ( ! pFile->IsSchemaURI( CSchema::uriAudio ) ) return FALSE;
 
@@ -726,7 +726,7 @@ BOOL CAlbumFolder::OrganiseFile(CLibraryFile* pFile)
 
 		return pAlbum->OrganiseFile( pFile );
 	}
-	else if ( m_sSchemaURI == CSchema::uriMusicAlbum )
+	else if ( CheckURI( m_sSchemaURI, CSchema::uriMusicAlbum ) )
 	{
 		if ( ! pFile->IsSchemaURI( CSchema::uriAudio ) ) return FALSE;
 
@@ -750,7 +750,7 @@ BOOL CAlbumFolder::OrganiseFile(CLibraryFile* pFile)
 
 		return TRUE;
 	}
-	else if ( m_sSchemaURI == CSchema::uriMusicArtistCollection )
+	else if ( CheckURI( m_sSchemaURI, CSchema::uriMusicArtistCollection ) )
 	{
 		if ( ! pFile->IsSchemaURI( CSchema::uriAudio ) ) return FALSE;
 
@@ -780,7 +780,7 @@ BOOL CAlbumFolder::OrganiseFile(CLibraryFile* pFile)
 
 		return pAlbum->OrganiseFile( pFile );
 	}
-	else if ( m_sSchemaURI == CSchema::uriMusicArtist )
+	else if ( CheckURI( m_sSchemaURI, CSchema::uriMusicArtist ) )
 	{
 		if ( ! pFile->IsSchemaURI( CSchema::uriAudio ) ) return FALSE;
 
@@ -793,7 +793,7 @@ BOOL CAlbumFolder::OrganiseFile(CLibraryFile* pFile)
 
 		return TRUE;
 	}
-	else if ( m_sSchemaURI == CSchema::uriMusicGenreCollection )
+	else if ( CheckURI( m_sSchemaURI, CSchema::uriMusicGenreCollection ) )
 	{
 		if ( ! pFile->IsSchemaURI( CSchema::uriAudio ) ) return FALSE;
 
@@ -820,7 +820,7 @@ BOOL CAlbumFolder::OrganiseFile(CLibraryFile* pFile)
 
 		return pAlbum->OrganiseFile( pFile );
 	}
-	else if ( m_sSchemaURI == CSchema::uriMusicGenre )
+	else if ( CheckURI( m_sSchemaURI, CSchema::uriMusicGenre ) )
 	{
 		if ( ! pFile->IsSchemaURI( CSchema::uriAudio ) ) return FALSE;
 
@@ -832,17 +832,17 @@ BOOL CAlbumFolder::OrganiseFile(CLibraryFile* pFile)
 
 		return TRUE;
 	}
-	else if ( m_sSchemaURI == CSchema::uriMusicAll )
+	else if ( CheckURI( m_sSchemaURI, CSchema::uriMusicAll ) )
 	{
 		if ( ! pFile->IsSchemaURI( CSchema::uriAudio ) ) return FALSE;
 		AddFile( pFile );
 		return TRUE;
 	}
-	else if ( m_sSchemaURI == CSchema::uriVideoRoot )
+	else if ( CheckURI( m_sSchemaURI, CSchema::uriVideoRoot ) )
 	{
 		if ( ! pFile->IsSchemaURI( CSchema::uriVideo ) ) return FALSE;
 	}
-	else if ( m_sSchemaURI == CSchema::uriVideoSeriesCollection )
+	else if ( CheckURI( m_sSchemaURI, CSchema::uriVideoSeriesCollection ) )
 	{
 		if ( ! pFile->IsSchemaURI( CSchema::uriVideo ) ) return FALSE;
 
@@ -870,7 +870,7 @@ BOOL CAlbumFolder::OrganiseFile(CLibraryFile* pFile)
 
 		return pAlbum->OrganiseFile( pFile );
 	}
-	else if ( m_sSchemaURI == CSchema::uriVideoSeries )
+	else if ( CheckURI( m_sSchemaURI, CSchema::uriVideoSeries ) )
 	{
 		if ( ! pFile->IsSchemaURI( CSchema::uriVideo ) ) return FALSE;
 
@@ -883,7 +883,7 @@ BOOL CAlbumFolder::OrganiseFile(CLibraryFile* pFile)
 
 		return TRUE;
 	}
-	else if ( m_sSchemaURI == CSchema::uriVideoFilmCollection )
+	else if ( CheckURI( m_sSchemaURI, CSchema::uriVideoFilmCollection ) )
 	{
 		if ( ! pFile->IsSchemaURI( CSchema::uriVideo ) ) return FALSE;
 
@@ -914,7 +914,7 @@ BOOL CAlbumFolder::OrganiseFile(CLibraryFile* pFile)
 
 		return pAlbum->OrganiseFile( pFile );
 	}
-	else if ( m_sSchemaURI == CSchema::uriVideoFilm )
+	else if ( CheckURI( m_sSchemaURI, CSchema::uriVideoFilm ) )
 	{
 		if ( ! pFile->IsSchemaURI( CSchema::uriVideo ) ) return FALSE;
 
@@ -930,7 +930,7 @@ BOOL CAlbumFolder::OrganiseFile(CLibraryFile* pFile)
 
 		return TRUE;
 	}
-	else if ( m_sSchemaURI == CSchema::uriVideoMusicCollection )
+	else if ( CheckURI( m_sSchemaURI, CSchema::uriVideoMusicCollection ) )
 	{
 		if ( ! pFile->IsSchemaURI( CSchema::uriVideo ) ) return FALSE;
 
@@ -941,49 +941,49 @@ BOOL CAlbumFolder::OrganiseFile(CLibraryFile* pFile)
 
 		return TRUE;
 	}
-	else if ( m_sSchemaURI == CSchema::uriVideoAll )
+	else if ( CheckURI( m_sSchemaURI, CSchema::uriVideoAll ) )
 	{
 		if ( ! pFile->IsSchemaURI( CSchema::uriVideo ) ) return FALSE;
 		AddFile( pFile );
 		return TRUE;
 	}
-	else if ( m_sSchemaURI == CSchema::uriImageRoot )
+	else if ( CheckURI( m_sSchemaURI, CSchema::uriImageRoot ) )
 	{
 		if ( ! pFile->IsSchemaURI( CSchema::uriImage ) ) return FALSE;
 	}
-	else if ( m_sSchemaURI == CSchema::uriImageAll )
+	else if ( CheckURI( m_sSchemaURI, CSchema::uriImageAll ) )
 	{
 		if ( ! pFile->IsSchemaURI( CSchema::uriImage ) ) return FALSE;
 		AddFile( pFile );
 		return TRUE;
 	}
-	else if ( m_sSchemaURI == CSchema::uriApplicationRoot )
+	else if ( CheckURI( m_sSchemaURI, CSchema::uriApplicationRoot ) )
 	{
 		if ( ! pFile->IsSchemaURI( CSchema::uriApplication ) ) return FALSE;
 	}
-	else if ( m_sSchemaURI == CSchema::uriApplicationAll )
+	else if ( CheckURI( m_sSchemaURI, CSchema::uriApplicationAll ) )
 	{
 		if ( ! pFile->IsSchemaURI( CSchema::uriApplication ) ) return FALSE;
 		AddFile( pFile );
 		return TRUE;
 	}
-	else if ( m_sSchemaURI == CSchema::uriBookRoot )
+	else if ( CheckURI( m_sSchemaURI, CSchema::uriBookRoot ) )
 	{
 		if ( ! pFile->IsSchemaURI( CSchema::uriBook ) ) return FALSE;
 	}
-	else if ( m_sSchemaURI == CSchema::uriBookAll )
+	else if ( CheckURI( m_sSchemaURI, CSchema::uriBookAll ) )
 	{
 		if ( ! pFile->IsSchemaURI( CSchema::uriBook ) ) return FALSE;
 		AddFile( pFile );
 		return TRUE;
 	}
-	else if ( m_sSchemaURI == CSchema::uriDocumentRoot )
+	else if ( CheckURI( m_sSchemaURI, CSchema::uriDocumentRoot ) )
 	{
 		if ( ! pFile->IsSchemaURI( CSchema::uriDocument ) &&
 			 ! pFile->IsSchemaURI( CSchema::uriSpreadsheet ) &&
 			 ! pFile->IsSchemaURI( CSchema::uriPresentation ) ) return FALSE;
 	}
-	else if ( m_sSchemaURI == CSchema::uriDocumentAll )
+	else if ( CheckURI( m_sSchemaURI, CSchema::uriDocumentAll ) )
 	{
 		if ( ! pFile->IsSchemaURI( CSchema::uriDocument ) &&
 			 ! pFile->IsSchemaURI( CSchema::uriSpreadsheet ) &&
@@ -1067,15 +1067,15 @@ void CAlbumFolder::Serialize(CArchive& ar, int nVersion)
 			// Needs better validation. Some collections are bount to URIs which assign the whole
 			// library as one big collection.
 			if ( pCollection == NULL || 
-				 m_pSchema && ( m_pSchema->m_sURI == CSchema::uriAllFiles || 
-								m_pSchema->m_sURI == CSchema::uriGhostFolder ||
-								m_pSchema->m_sURI == CSchema::uriApplicationRoot ||
-								m_pSchema->m_sURI == CSchema::uriImageRoot ||
-								m_pSchema->m_sURI == CSchema::uriBookRoot ||
-								m_pSchema->m_sURI == CSchema::uriDocumentRoot ||
-								m_pSchema->m_sURI == CSchema::uriMusicRoot ||
-								m_pSchema->m_sURI == CSchema::uriVideoRoot ||
-								m_pSchema->m_sURI == CSchema::uriLibrary
+				 m_pSchema && ( m_pSchema->CheckURI( CSchema::uriAllFiles ) || 
+								m_pSchema->CheckURI( CSchema::uriGhostFolder ) ||
+								m_pSchema->CheckURI( CSchema::uriApplicationRoot ) ||
+								m_pSchema->CheckURI( CSchema::uriImageRoot ) ||
+								m_pSchema->CheckURI( CSchema::uriBookRoot ) ||
+								m_pSchema->CheckURI( CSchema::uriDocumentRoot ) ||
+								m_pSchema->CheckURI( CSchema::uriMusicRoot ) ||
+								m_pSchema->CheckURI( CSchema::uriVideoRoot ) ||
+								m_pSchema->CheckURI( CSchema::uriLibrary )
 							  ) )
 				m_oCollSHA1.clear();
 		}

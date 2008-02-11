@@ -164,7 +164,7 @@ CString CSchemaCombo::GetSelectedURI() const
 	int nSel = GetCurSel();
 	if ( nSel < 0 ) return str;
 	if ( CSchema* pSchema = (CSchema*)GetItemData( nSel ) )
-		return pSchema->m_sURI;
+		return pSchema->GetURI();
 	return str;
 }
 
@@ -246,7 +246,7 @@ void CSchemaCombo::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 		rcItem.left += 20; rcItem.right -= 2;
 		
 		CFont* pOldFont = (CFont*)dc.SelectObject( &theApp.m_gdiFont );
-		CString strURI = pSchema->m_sURI;
+		CString strURI = pSchema->GetURI();
 		
 		if ( dc.GetTextExtent( pSchema->m_sTitle + strURI ).cx > rcItem.Width() - 20
 			 && strURI.GetLength() > 8 )

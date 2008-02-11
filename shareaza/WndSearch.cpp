@@ -174,7 +174,7 @@ void CSearchWnd::OnDestroy()
 	{
 		if ( m_wndList.m_pSchema != NULL )
 		{
-			Settings.Search.BlankSchemaURI = m_wndList.m_pSchema->m_sURI;
+			Settings.Search.BlankSchemaURI = m_wndList.m_pSchema->GetURI();
 		}
 		else
 		{

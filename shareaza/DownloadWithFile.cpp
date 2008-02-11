@@ -36,7 +36,7 @@
 #include "TigerTree.h"
 #include "ED2K.h"
 #include "XML.h"
-#include "Schema.h"
+#include "SchemaCache.h"
 #include "LibraryBuilderInternals.h"
 
 #ifdef _DEBUG
@@ -615,7 +615,7 @@ BOOL CDownloadWithFile::AppendMetadata()
 	CString strURI = m_pXML->GetAttributeValue( CXMLAttribute::schemaName );
 	BOOL bSuccess = FALSE;
 	
-	if ( strURI == CSchema::uriAudio )
+	if ( CheckURI( strURI, CSchema::uriAudio ) )
 	{
 		if ( _tcsistr( m_sDiskName, _T(".mp3") ) != NULL )
 		{

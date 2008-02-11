@@ -279,13 +279,13 @@ void CLibraryDetailView::Update()
 			pTree->m_pVirtual->m_pSchema != NULL )
 	{
 		if ( Settings.Library.ShowVirtual )
-			bGhostFolder = ( pTree->m_pVirtual->m_pSchema->m_sURI == CSchema::uriGhostFolder );
+			bGhostFolder = ( pTree->m_pVirtual->m_pSchema->CheckURI( CSchema::uriGhostFolder ) );
 
 		if ( m_nStyle == LVS_REPORT )
 		{
 			CString strURI = pTree->m_pVirtual->m_pSchema->GetContainedURI( CSchema::stFile );
 			
-			if ( strURI.GetLength() && ( m_pSchema == NULL || m_pSchema->m_sURI != strURI ) )
+			if ( strURI.GetLength() && ( m_pSchema == NULL || ! m_pSchema->CheckURI( strURI ) ) )
 			{
 				if ( CSchema* pSchema = SchemaCache.Get( strURI ) )
 				{
@@ -1037,7 +1037,7 @@ void CLibraryDetailView::OnLibraryColumns()
 	if ( Settings.Library.FilterURI.IsEmpty() )
 	{
 		Settings.Library.SchemaURI.Empty();
-		if ( dlg.m_pSchema ) Settings.Library.SchemaURI = dlg.m_pSchema->m_sURI;
+		if ( dlg.m_pSchema ) Settings.Library.SchemaURI = dlg.m_pSchema->GetURI();
 	}
 
 	SetViewSchema( dlg.m_pSchema, &dlg.m_pColumns, TRUE, TRUE );

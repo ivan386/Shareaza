@@ -1145,7 +1145,7 @@ void CBrowseTreeItem::AddXML(CXMLElement* pXML)
 
 	if ( ( m_pSchema = SchemaCache.Get( strURI ) ) != NULL )
 	{
-		m_bBold		= strURI == CSchema::uriFavouritesFolder;
+		m_bBold		= CheckURI( strURI, CSchema::uriFavouritesFolder );
 		m_nIcon16	= m_pSchema->m_nIcon16;
 
 		if ( CXMLElement* pBody = pXML->GetFirstElement() )
