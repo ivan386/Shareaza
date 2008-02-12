@@ -1,7 +1,7 @@
 //
 // Library.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -282,6 +282,47 @@ void CLibrary::Clear()
 //////////////////////////////////////////////////////////////////////
 // CLibrary load from disk
 
+BOOL CLibrary::SafeReadTime(CFile& pFile, FILETIME* pFileTime) throw()
+{
+	__try
+	{
+		return pFile.Read( pFileTime, sizeof(FILETIME) ) == sizeof(FILETIME);
+	}
+	__except( EXCEPTION_EXECUTE_HANDLER )
+	{
+	}
+	return FALSE;
+}
+
+BOOL CLibrary::SafeSerialize(CArchive& ar) throw()
+{
+	CFile* fp = ar.GetFile();
+
+	__try
+	{
+		Serialize( ar );
+
+		ar.Close();
+		fp->Close();
+
+		return TRUE;
+	}
+	__except( EXCEPTION_EXECUTE_HANDLER )
+	{
+	}
+	__try
+	{
+		ar.Close();
+		fp->Close();
+
+		Clear();
+	}
+	__except( EXCEPTION_EXECUTE_HANDLER )
+	{
+	}
+	return FALSE;
+}
+
 BOOL CLibrary::Load()
 {
 	CSingleLock pLock( &m_pSection, TRUE );
@@ -302,27 +343,11 @@ BOOL CLibrary::Load()
 	{
 		if ( bFile1 )
 		{
-			try
-			{
-				bFile1 = pFile1.Read( &pFileTime1, sizeof(FILETIME) ) == sizeof(FILETIME);
-			}
-			catch ( CException* pException )
-			{
-				pException->Delete();
-				bFile1 = FALSE;
-			}
+			bFile1 = SafeReadTime( pFile1, &pFileTime1 );
 		}
 		if ( bFile2 )
 		{
-			try
-			{
-				bFile2 = pFile2.Read( &pFileTime2, sizeof(FILETIME) ) == sizeof(FILETIME);
-			}
-			catch ( CException* pException )
-			{
-				pException->Delete();
-				bFile2 = FALSE;
-			}
+			bFile2 = SafeReadTime( pFile2, &pFileTime2 );
 		}
 	}
 	else
@@ -337,17 +362,9 @@ BOOL CLibrary::Load()
 			( ( CompareFileTime( &pFileTime1, &pFileTime2 ) >= 0 ) ? &pFile1 : &pFile2 ) :
 			( bFile1 ? &pFile1 : &pFile2 );
 
-		try
+		CArchive ar( pNewest, CArchive::load, 40960 );
+		if ( ! SafeSerialize( ar ) )
 		{
-			CArchive ar( pNewest, CArchive::load, 40960 );
-			Serialize( ar );
-			ar.Close();
-		}
-		catch ( CException* pException )
-		{
-			pException->Delete();
-			Clear();
-
 			if ( pNewest == &pFile1 && bFile2 )
 				pNewest = &pFile2;
 			else if ( pNewest == &pFile2 && bFile1 )
@@ -357,20 +374,10 @@ BOOL CLibrary::Load()
 
 			if ( pNewest != NULL )
 			{
-				try
-				{
-					CArchive ar( pNewest, CArchive::load, 40960 );
-					Serialize( ar );
-					ar.Close();
-				}
-				catch ( CException* pException )
-				{
-					pException->Delete();
-				}
+				CArchive ar( pNewest, CArchive::load, 40960 );
+				SafeSerialize( ar );
 			}
 		}
-
-		pNewest->Close();
 	}
 	else
 	{
