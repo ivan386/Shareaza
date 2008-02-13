@@ -123,12 +123,7 @@ void CIconButtonCtrl::SetHandCursor(BOOL bCursor)
 
 BOOL CIconButtonCtrl::RemoveStyle()
 {
-	BOOL bSuccess = FALSE;
-
-	if ( theApp.m_pfnSetWindowTheme )
-		bSuccess = SUCCEEDED( theApp.m_pfnSetWindowTheme( GetSafeHwnd(), L" ", L" " ) );
-
-	return bSuccess;
+	return CoolInterface.EnableTheme( this, FALSE );
 }
 
 /////////////////////////////////////////////////////////////////////////////

@@ -430,7 +430,21 @@ int CMainWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 						iYSize * 1 / 10,
 						iXSize  * 8 / 10,
 						iYSize * 8 / 10, 0 );
-	
+
+	// Disable bars themes
+	if ( CWnd* pMDIClientWnd = GetWindow( GW_CHILD ) )
+	if ( CWnd* pStatusbarWnd = pMDIClientWnd->GetWindow( GW_HWNDNEXT ) )
+	if ( CWnd* pBar1 = pStatusbarWnd->GetWindow( GW_HWNDNEXT ) )
+	if ( CWnd* pBar2 = pBar1->GetWindow( GW_HWNDNEXT ) )
+	if ( CWnd* pBar3 = pBar2->GetWindow( GW_HWNDNEXT ) )
+	if ( CWnd* pBar4 = pBar3->GetWindow( GW_HWNDNEXT ) )
+	{
+		CoolInterface.EnableTheme( pBar1, FALSE );
+		CoolInterface.EnableTheme( pBar2, FALSE );
+		CoolInterface.EnableTheme( pBar3, FALSE );
+		CoolInterface.EnableTheme( pBar4, FALSE );
+	}
+
 	// Plugins
 	
 	Plugins.Enumerate();
