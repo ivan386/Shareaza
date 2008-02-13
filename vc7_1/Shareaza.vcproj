@@ -3693,9 +3693,6 @@
 				RelativePath="..\shareaza\Res\Manifest.xml">
 			</File>
 			<File
-				RelativePath="..\shareaza\Res\Manifest64.xml">
-			</File>
-			<File
 				RelativePath="..\shareaza\Res\Media.ico">
 			</File>
 			<File

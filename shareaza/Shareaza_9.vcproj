@@ -4797,10 +4797,6 @@
 				>
 			</File>
 			<File
-				RelativePath="Res\Manifest64.xml"
-				>
-			</File>
-			<File
 				RelativePath="Res\Media.ico"
 				>
 			</File>
