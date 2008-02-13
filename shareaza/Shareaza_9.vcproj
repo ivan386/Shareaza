@@ -78,7 +78,6 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				IgnoreImportLibrary="true"
 				AdditionalDependencies="winmm.lib version.lib ws2_32.lib wininet.lib Iphlpapi.lib msi.lib"
 				LinkIncremental="2"
 				IgnoreDefaultLibraryNames=""
@@ -91,7 +90,8 @@
 			/>
 			<Tool
 				Name="VCManifestTool"
-				AdditionalManifestFiles="res\Manifest.xml"
+				OutputManifestFile="$(TargetPath).manifest.foo"
+				EmbedManifest="false"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -169,7 +169,6 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				IgnoreImportLibrary="true"
 				AdditionalDependencies="winmm.lib version.lib ws2_32.lib wininet.lib Iphlpapi.lib msi.lib"
 				LinkIncremental="2"
 				IgnoreDefaultLibraryNames=""
@@ -182,7 +181,8 @@
 			/>
 			<Tool
 				Name="VCManifestTool"
-				AdditionalManifestFiles="res\Manifest64.xml"
+				OutputManifestFile="$(TargetPath).manifest.foo"
+				EmbedManifest="false"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -263,7 +263,6 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				IgnoreImportLibrary="true"
 				AdditionalDependencies="winmm.lib version.lib ws2_32.lib wininet.lib Iphlpapi.lib msi.lib"
 				IgnoreDefaultLibraryNames=""
 				SubSystem="2"
@@ -277,7 +276,8 @@
 			/>
 			<Tool
 				Name="VCManifestTool"
-				AdditionalManifestFiles="res\Manifest.xml"
+				OutputManifestFile="$(TargetPath).manifest.foo"
+				EmbedManifest="false"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -359,7 +359,6 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				IgnoreImportLibrary="true"
 				AdditionalDependencies="winmm.lib version.lib ws2_32.lib wininet.lib Iphlpapi.lib msi.lib"
 				IgnoreDefaultLibraryNames=""
 				SubSystem="2"
@@ -373,7 +372,8 @@
 			/>
 			<Tool
 				Name="VCManifestTool"
-				AdditionalManifestFiles="res\Manifest64.xml"
+				OutputManifestFile="$(TargetPath).manifest.foo"
+				EmbedManifest="false"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -4456,6 +4456,10 @@
 				>
 			</File>
 			<File
+				RelativePath="Res\BoxMark.bmp"
+				>
+			</File>
+			<File
 				RelativePath="Res\Browse.ico"
 				>
 			</File>
@@ -4507,6 +4511,10 @@
 			<File
 				RelativePath="Res\Busy.htm"
 				DeploymentContent="true"
+				>
+			</File>
+			<File
+				RelativePath="Res\channel.ico"
 				>
 			</File>
 			<File
@@ -4712,6 +4720,10 @@
 				>
 			</File>
 			<File
+				RelativePath="Res\FontSymbols.bmp"
+				>
+			</File>
+			<File
 				RelativePath="Res\Hand.cur"
 				>
 			</File>
@@ -4758,6 +4770,14 @@
 			</File>
 			<File
 				RelativePath="Res\HostOut.ico"
+				>
+			</File>
+			<File
+				RelativePath="Res\irc.ico"
+				>
+			</File>
+			<File
+				RelativePath="Res\IrcIcons.bmp"
 				>
 			</File>
 			<File
@@ -4990,6 +5010,10 @@
 			</File>
 			<File
 				RelativePath="Res\Uploads.ico"
+				>
+			</File>
+			<File
+				RelativePath="Res\users.ico"
 				>
 			</File>
 			<File
