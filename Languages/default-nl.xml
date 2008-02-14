@@ -44,6 +44,7 @@
 		<button id="ID_TAB_SEARCH" text="Zoeken"/>
 		<button id="ID_TAB_TRANSFERS" text="Verkeer"/>
 		<button id="ID_TAB_NETWORK" text="Netwerk"/>
+		<button id="ID_TAB_IRC" text="Chat"/>
 	</toolbar>
 	<toolbar name="CMainWnd.Windowed">
 		<button id="ID_NETWORK_CONNECT" text="Verbinden"/>
@@ -56,6 +57,7 @@
 		<button id="ID_VIEW_UPLOADS"/>
 		<button id="ID_VIEW_LIBRARY"/>
 		<button id="ID_VIEW_MEDIA"/>
+		<button id="ID_TAB_IRC"/>
 		<button id="ID_VIEW_SECURITY"/>
 		<button id="ID_VIEW_HOSTS"/>
 		<button id="ID_VIEW_DISCOVERY"/>
@@ -338,6 +340,13 @@
 		<button id="ID_MEDIA_CLEAR" text="Wissen"/>
 		<button id="ID_MEDIA_SAVE" text="Opslaan"/>
 	</toolbar>
+	 <!-- IRC WINDOW -->
+	<toolbar name="CMainIrcBar">
+		<button id="ID_IRC_CONNECT" text="Connect" tip="Connect to IRC"/>
+		<button id="ID_IRC_DISCONNECT" text="Disconnect" tip="Disconnect from IRC"/>
+		<rightAlign/>
+		<button id="ID_IRC_SETTINGS" text="Settings" tip="Configure IRC Settings"/>
+	</toolbar>
 	<!-- NEIGHBOURS WINDOW -->
 	<toolbar name="CNeighboursWnd.Basic">
 		<button id="ID_BROWSE_LAUNCH" text="Gebruiker bekijken"/>
@@ -452,6 +461,7 @@
 			<item id="ID_TAB_SEARCH" text="_Zoeken"/>
 			<item id="ID_TAB_TRANSFERS" text="_Downloads"/>
 			<item id="ID_WINDOW_REMOTE" text="_Afstandsbediening"/>
+			<item id="ID_TAB_IRC" text="_Chat"/>
 			<separator/>
 			<menu text="Uitg_ebreid">
 				<item id="ID_VIEW_NEIGHBOURS" text="_Netwerk"/>
@@ -495,6 +505,8 @@
 				<!-- <item id="ID_HELP_UPDATE" text="Laatste nieuws"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
 				<item id="ID_HELP_WEB_2" text="P2PForums.com"/> -->
+				<item id="ID_HELP_VERSION_CHECK" text="Check voor een beschikbare update"/>
+				<separator/>
 			</menu>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="_Over Shareaza..."/>
@@ -524,6 +536,7 @@
 			<item id="ID_TAB_SEARCH" text="_Zoeken"/>
 			<item id="ID_TAB_TRANSFERS" text="Ver_keer"/>
 			<item id="ID_TAB_NETWORK" text="_Netwerk"/>
+			<item id="ID_TAB_IRC" text="_Chat"/>
 			<separator/>
 			<item id="ID_VIEW_SECURITY" text="Be_veiliging"/>
 			<item id="ID_VIEW_HOSTS" text="Gastheer c_ache"/>
@@ -590,6 +603,8 @@
 				<!-- <item id="ID_HELP_UPDATE" text="Laatste nieuws"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
 				<item id="ID_HELP_WEB_2" text="P2PForums.com"/> -->
+				<item id="ID_HELP_VERSION_CHECK" text="Check voor een beschikbare update"/>
+				<separator/>
 			</menu>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="_Over Shareaza..."/>
@@ -679,6 +694,8 @@
 				<!-- <item id="ID_HELP_UPDATE" text="Laatste nieuws"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
 				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>	-->
+				<item id="ID_HELP_VERSION_CHECK" text="Check voor een beschikbare update"/>
+				<separator/>
 			</menu>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="_Over Shareaza..."/>
@@ -706,6 +723,7 @@
 		<item id="ID_TAB_SEARCH" text="_Zoeken"/>
 		<item id="ID_TAB_TRANSFERS" text="Ver_keer"/>
 		<item id="ID_TAB_NETWORK" text="_Netwerk"/>
+		<item id="ID_TAB_IRC" text="_Chat"/>
 		<separator/>
 		<item id="ID_VIEW_SECURITY" text="Be_veiliging"/>
 		<item id="ID_VIEW_HOSTS" text="Gastheer c_ache"/>
@@ -791,6 +809,7 @@
 		<item id="ID_TAB_SEARCH" text="_Zoeken"/>
 		<item id="ID_TAB_TRANSFERS" text="Ver_keer"/>
 		<item id="ID_TAB_NETWORK" text="_Netwerk"/>
+		<item id="ID_TAB_IRC" text="_Chat"/>
 		<separator/>
 		<item id="ID_VIEW_SECURITY" text="Be_veiliging"/>
 		<item id="ID_VIEW_HOSTS" text="Gastheer c_ache"/>
@@ -1181,6 +1200,8 @@
 		<separator/>
 		<item id="ID_LIBRARY_COLUMNS" text="Kolommen uit_kiezen..."/>
 		<separator/>
+		<item id="ID_SHELL_MENU" text="Conte_xtmenu"/>
+		<separator/>
 		<item id="ID_LIBRARY_PROPERTIES" text="_Eigenschappen"/>
 	</menu>
 	<menu name="CLibraryFileView.Virtual.Basic">
@@ -1475,14 +1496,33 @@
 		<item id="ID_CHAT_TIMESTAMP" text="_Tijdstempel"/>
 		<item id="ID_CHAT_CLEAR" text="_Wis venster"/>
 	</menu>
-	<!-- PLUGIN MENUS -->
-	<menu name="ImageViewer_Context">
-		<item id="ImageViewer_BestFit" text="_Passende grootte"/>
-		<item id="ImageViewer_ActualSize" text="_Echte grootte"/>
+	<!-- IRC WINDOW -->
+	<menu name="CIRCTabRClick">
+		<item id="ID_IRC_CLOSETAB" text="_Sluiten"/>
+	</menu>
+	<menu name="CIRCUserList">
+		<item id="ID_IRC_WHOIS" text="_Whois"/>
+		<item id="ID_IRC_QUERY" text="_Query"/>
 		<separator/>
-		<item id="ImageViewer_Refresh" text="_Vernieuwen"/>
+		<menu text="Actions">
+			<item id="ID_IRC_TIME" text="_Tijd"/>
+			<item id="ID_IRC_VERSION" text="_Versie"/>
+		</menu>
 		<separator/>
-		<item id="ImageViewer_Close" text="_Sluiten"/>
+		<menu text="Control">
+			<item id="ID_IRC_IGNORE" text="_Negeren"/>
+			<item id="ID_IRC_UNIGNORE" text="_Niet negeren"/>
+			<item id="ID_IRC_OP" text="_Op"/>
+			<item id="ID_IRC_DEOP" text="_Deop"/>
+			<item id="ID_IRC_VOICE" text="_Voice"/>
+			<item id="ID_IRC_DEVOICE" text="D_evoice"/>
+			<item id="ID_IRC_KICK" text="_Kick"/>
+			<item id="ID_IRC_KICKWHY" text="Kick (reden?)"/>
+			<item id="ID_IRC_BAN" text="_Ban"/>
+			<item id="ID_IRC_UNBAN" text="_Unban"/>
+			<item id="ID_IRC_BANKICK" text="Kick+Ban"/>
+			<item id="ID_IRC_BANKICKWHY" text="Kick+Ban (reden?)"/>
+		</menu>
 	</menu>
 </menus>
 
