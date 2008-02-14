@@ -13,11 +13,11 @@
 <!-- Manifest -->
 <manifest	name="Pусский"
 		author="dAbserver"
-		updatedBy="Rolandas Rudomanskis"
+		updatedBy="Rolandas Rudomanskis, ryo-oh-ki"
 		description="Shareaza Default Russian Skin File"
 		link="http://shareaza.sourceforge.net/"
-		email=""
-		version="2.3.0.1"
+		email="contact(at)shareaza(dot)com"
+		version="2.3.1.1"
 		type="Language"
 		language="ru"
 		prompt="Щелкните здесь для смены языка на Русский (от dAbserver)"
@@ -44,6 +44,7 @@
 		<button id="ID_TAB_SEARCH" text="Поиск"/>
 		<button id="ID_TAB_TRANSFERS" text="Пересылки"/>
 		<button id="ID_TAB_NETWORK" text="Сети"/>
+		<button id="ID_TAB_IRC" text="Чат"/>
 	</toolbar>
 	<toolbar name="CMainWnd.Windowed">
 		<button id="ID_NETWORK_CONNECT" text="Соединиться"/>
@@ -56,6 +57,7 @@
 		<button id="ID_VIEW_UPLOADS"/>
 		<button id="ID_VIEW_LIBRARY"/>
 		<button id="ID_VIEW_MEDIA"/>
+		<button id="ID_TAB_IRC"/>
 		<button id="ID_VIEW_SECURITY"/>
 		<button id="ID_VIEW_HOSTS"/>
 		<button id="ID_VIEW_DISCOVERY"/>
@@ -338,6 +340,13 @@
 		<button id="ID_MEDIA_CLEAR" text="Убрать"/>
 		<button id="ID_MEDIA_SAVE" text="Сохранить"/>
 	</toolbar>
+	<!-- IRC WINDOW -->
+	<toolbar name="CMainIrcBar">
+		<button id="ID_IRC_CONNECT" text="Подключиться" tip="Подключиться к IRC"/>
+		<button id="ID_IRC_DISCONNECT" text="Отключиться" tip="Отключиться от IRC"/>
+		<rightAlign/>
+		<button id="ID_IRC_SETTINGS" text="Настройки" tip="Настроить IRC"/>
+	</toolbar>
 	<!-- NEIGHBOURS WINDOW -->
 	<toolbar name="CNeighboursWnd.Basic">
 		<button id="ID_BROWSE_LAUNCH" text="Данные юзера"/>
@@ -406,15 +415,6 @@
 		<button id="ID_CHAT_CONNECT" text="Соединиться" visible="false"/>
 		<button id="ID_CHAT_DISCONNECT" text="Разъединить"/>
 	</toolbar>
-	<!-- IMAGE VIEWER WINDOW -->
-	<toolbar name="ImageViewer_Toolbar">
-		<button id="ImageViewer_BestFit" text="Лучший размер"/>
-		<button id="ImageViewer_ActualSize" text="Оригинальный размер"/>
-		<separator/>
-		<button id="ImageViewer_Refresh" text="Обновить"/>
-		<separator/>
-		<button id="ImageViewer_Close" text="Закрыть"/>
-	</toolbar>
 </toolbars>
 <!-- Menu Definitions -->
 <menus>
@@ -452,6 +452,7 @@
 			<item id="ID_TAB_SEARCH" text="_Поиск"/>
 			<item id="ID_TAB_TRANSFERS" text="_Загрузки"/>
 			<item id="ID_WINDOW_REMOTE" text="Пульт _управления"/>
+			<item id="ID_TAB_IRC" text="_Чат"/>
 			<separator/>
 			<menu text="_Опытным">
 				<item id="ID_VIEW_NEIGHBOURS" text="_Соединения"/>
@@ -488,14 +489,16 @@
 				<item id="ID_HELP_CODEC" text="О _кодеках"/>
 			</menu>
 			<separator/>
-			<menu text="_Вэб сайты">
-				<item id="ID_HELP_HOMEPAGE" text="_Shareaza site"/>
+			<menu text="_Веб сайты">
+				<item id="ID_HELP_HOMEPAGE" text="_Сайт Shareazы"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="_Форумы Shareaza"/>
 				<!-- <item id="ID_HELP_UPDATE" text="Последние новости"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
 				<item id="ID_HELP_WEB_2" text="P2PForums.com"/> -->
 			</menu>
+			<separator/>
+			<item id="ID_HELP_VERSION_CHECK" text="Проверить новую _версию"/>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="_О Shareaza..."/>
 		</menu>
@@ -524,6 +527,7 @@
 			<item id="ID_TAB_SEARCH" text="_Поиск"/>
 			<item id="ID_TAB_TRANSFERS" text="Пе_ресылки"/>
 			<item id="ID_TAB_NETWORK" text="_Сети"/>
+			<item id="ID_TAB_IRC" text="_Чат"/>
 			<separator/>
 			<item id="ID_VIEW_SECURITY" text="_Безопасность"/>
 			<item id="ID_VIEW_HOSTS" text="_Кэш хостов"/>
@@ -583,7 +587,7 @@
 				<item id="ID_HELP_CODEC" text="О _кодеках"/>
 			</menu>
 			<separator/>
-			<menu text="_Вэб сайты">
+			<menu text="_Веб сайты">
 				<item id="ID_HELP_HOMEPAGE" text="_Shareaza site"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="_Форумы Shareaza"/>
@@ -591,6 +595,8 @@
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
 				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>	-->
 			</menu>
+			<separator/>
+			<item id="ID_HELP_VERSION_CHECK" text="Проверить новую _версию"/>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="_О Shareaza..."/>
 		</menu>
@@ -672,7 +678,7 @@
 				<item id="ID_HELP_CODEC" text="О _кодеках"/>
 			</menu>
 			<separator/>
-			<menu text="_Вэб сайты">
+			<menu text="_Веб сайты">
 				<item id="ID_HELP_HOMEPAGE" text="_Shareaza site"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="_Форумы Shareaza"/>
@@ -680,6 +686,8 @@
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
 				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>	-->
 			</menu>
+			<separator/>
+			<item id="ID_HELP_VERSION_CHECK" text="Проверить новую _версию"/>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="_О Shareaza..."/>
 		</menu>
@@ -706,6 +714,7 @@
 		<item id="ID_TAB_SEARCH" text="_Поиск"/>
 		<item id="ID_TAB_TRANSFERS" text="Пере_сылки"/>
 		<item id="ID_TAB_NETWORK" text="Се_ти"/>
+		<item id="ID_TAB_IRC" text="_Чат"/>
 		<separator/>
 		<item id="ID_VIEW_SECURITY" text="_Безопасность"/>
 		<item id="ID_VIEW_HOSTS" text="_Кэш хостов"/>
@@ -774,6 +783,7 @@
 		<item id="ID_TAB_SEARCH" text="_Поиск"/>
 		<item id="ID_TAB_TRANSFERS" text="Пере_сылки"/>
 		<item id="ID_TAB_NETWORK" text="Се_ти"/>
+		<item id="ID_TAB_IRC" text="_Чат"/>
 		<separator/>
 		<item id="ID_VIEW_SECURITY" text="_Безопасность"/>
 		<item id="ID_VIEW_HOSTS" text="_Кэш хостов"/>
@@ -817,7 +827,7 @@
 			<item id="ID_SEARCH_FOR_ALBUM" text="Музыку из этого же альбома"/>
 			<item id="ID_SEARCH_FOR_SERIES" text="Серии из этого же сериала"/>
 		</menu>
-		<menu text="_Вэб услуги">
+		<menu text="_Веб услуги">
 			<item id="ID_LIBRARY_BITZI_WEB" text="Посмотреть _Bitzi этикетку"/>
 			<item id="ID_SEARCH_COPY" text="Копировать _ссылку..."/>
 		</menu>
@@ -839,7 +849,7 @@
 			<item id="ID_SEARCH_FOR_ALBUM" text="Музыку из этого же альбома"/>
 			<item id="ID_SEARCH_FOR_SERIES" text="Серии из этого же сериала"/>
 		</menu>
-		<menu text="_Вэб услуги">
+		<menu text="_Веб услуги">
 			<item id="ID_LIBRARY_BITZI_WEB" text="Посмотреть _Bitzi этикетку"/>
 		</menu>
 		<separator/>
@@ -863,7 +873,7 @@
 			<item id="ID_SEARCH_FOR_ALBUM" text="Музыку из этого же альбома"/>
 			<item id="ID_SEARCH_FOR_SERIES" text="Серии из этого же сериала"/>
 		</menu>
-		<menu text="_Вэб услуги">
+		<menu text="_Веб услуги">
 			<item id="ID_LIBRARY_BITZI_WEB" text="Посмотреть _Bitzi этикетку"/>
 			<item id="ID_SEARCH_COPY" text="Копировать _ссылку..."/>
 		</menu>
@@ -883,7 +893,7 @@
 			<item id="ID_SEARCH_FOR_ALBUM" text="Музыку из этого же альбома"/>
 			<item id="ID_SEARCH_FOR_SERIES" text="Серии этого же сериала"/>
 		</menu>
-		<menu text="_Вэб услуги">
+		<menu text="_Веб услуги">
 			<item id="ID_LIBRARY_BITZI_WEB" text="Посмотреть _Bitzi этикетку"/>
 		</menu>
 		<separator/>
@@ -908,7 +918,7 @@
 			<item id="ID_SEARCH_FOR_ALBUM" text="Музыку из этого же альбома"/>
 			<item id="ID_SEARCH_FOR_SERIES" text="Серии этого же сериала"/>
 		</menu>
-		<menu text="_Вэб услуги">
+		<menu text="_Веб услуги">
 			<item id="ID_LIBRARY_BITZI_WEB" text="Посмотреть _Bitzi этикетку"/>
 		</menu>
 		<separator/>
@@ -1119,9 +1129,9 @@
 			<item id="ID_SEARCH_FOR_ALBUM" text="Музыку из этого же альбома"/>
 			<item id="ID_SEARCH_FOR_SERIES" text="Серии из этого же сериала"/>
 		</menu>
-		<menu text="_Вэб услуги">
+		<menu text="_Веб услуги">
 			<item id="ID_LIBRARY_BITZI_WEB" text="Посмотреть _Bitzi этикетку"/>
-			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Загрузить мета данные"/>
+			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Загрузить метаданные"/>
 			<separator/>
 			<item id="ID_LIBRARY_URL" text="Копировать _ссылку"/>
 		</menu>
@@ -1130,7 +1140,8 @@
 			<item id="ID_LIBRARY_MOVE" text="П_ереместить файлы..."/>
 			<item id="ID_LIBRARY_COPY" text="_Копировать файлы..."/>
 		</menu>
-		<item id="ID_LIBRARY_REBUILD_ANSI" text="_Локализировать мета данные"/>
+		<item id="ID_LIBRARY_REBUILD_ANSI" text="_Локализировать метаданные"/>
+		<item id="ID_LIBRARY_REFRESH_METADATA" text="_Обновить метаданные"/>
 		<separator/>
 		<item id="ID_LIBRARY_PROPERTIES" text="_Свойства"/>
 	</menu>
@@ -1151,9 +1162,9 @@
 			<item id="ID_SEARCH_FOR_ALBUM" text="Музыку из этого же альбома"/>
 			<item id="ID_SEARCH_FOR_SERIES" text="Серии из этого же сериала"/>
 		</menu>
-		<menu text="_Вэб услуги">
+		<menu text="_Веб услуги">
 			<item id="ID_LIBRARY_BITZI_WEB" text="Посмотреть _Bitzi этикетку"/>
-			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Загрузить мета данные"/>
+			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Загрузить метаданные"/>
 			<separator/>
 			<item id="ID_LIBRARY_CREATETORRENT" text="_Создать .torrent файл"/>
 		</menu>
@@ -1162,9 +1173,12 @@
 			<item id="ID_LIBRARY_MOVE" text="Пере_местить файлы..."/>
 			<item id="ID_LIBRARY_COPY" text="_Копировать файлы..."/>
 		</menu>
-		<item id="ID_LIBRARY_REBUILD_ANSI" text="_Локализировать мета данные"/>
+		<item id="ID_LIBRARY_REBUILD_ANSI" text="_Локализировать метаданные"/>
+		<item id="ID_LIBRARY_REFRESH_METADATA" text="_Обновить метаданные"/>
 		<separator/>
 		<item id="ID_LIBRARY_COLUMNS" text="Выбрать _колонки..."/>
+		<separator/>
+		<item id="ID_SHELL_MENU" text="Меню Windows"/>
 		<separator/>
 		<item id="ID_LIBRARY_PROPERTIES" text="_Свойства"/>
 	</menu>
@@ -1185,9 +1199,9 @@
 			<item id="ID_SEARCH_FOR_ALBUM" text="Музыку из этого же альбома"/>
 			<item id="ID_SEARCH_FOR_SERIES" text="Серии из этого же сериала"/>
 		</menu>
-		<menu text="_Вэб услуги">
+		<menu text="_Веб услуги">
 			<item id="ID_LIBRARY_BITZI_WEB" text="Посмотреть _Bitzi этикетку"/>
-			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Загрузить мета данные"/>
+			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Загрузить метаданные"/>
 			<separator/>
 			<item id="ID_LIBRARY_URL" text=""/>
 		</menu>
@@ -1198,7 +1212,8 @@
 			<item id="ID_LIBRARY_MOVE" text="Пере_местить файлы..."/>
 			<item id="ID_LIBRARY_COPY" text="_Копировать файлы..."/>
 		</menu>
-		<item id="ID_LIBRARY_REBUILD_ANSI" text="_Локализировать мета данные"/>
+		<item id="ID_LIBRARY_REBUILD_ANSI" text="_Локализировать метаданные"/>
+		<item id="ID_LIBRARY_REFRESH_METADATA" text="_Обновить метаданные"/>
 		<separator/>
 		<item id="ID_LIBRARY_PROPERTIES" text="_Свойства"/>
 	</menu>
@@ -1219,9 +1234,9 @@
 			<item id="ID_SEARCH_FOR_ALBUM" text="Музыку из этого же альбома"/>
 			<item id="ID_SEARCH_FOR_SERIES" text="Серии из этого же сериала"/>
 		</menu>
-		<menu text="_Вэб услуги">
+		<menu text="_Веб услуги">
 			<item id="ID_LIBRARY_BITZI_WEB" text="Посмотреть _Bitzi этикетку"/>
-			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Загрузить мета данные"/>
+			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Загрузить метаданные"/>
 			<separator/>
 			<item id="ID_LIBRARY_CREATETORRENT" text="_Создать .torrent файл"/>
 		</menu>
@@ -1232,7 +1247,8 @@
 			<item id="ID_LIBRARY_MOVE" text="Пере_местить файлы..."/>
 			<item id="ID_LIBRARY_COPY" text="_Копировать файлы..."/>
 		</menu>
-		<item id="ID_LIBRARY_REBUILD_ANSI" text="_Локализировать мета данные"/>
+		<item id="ID_LIBRARY_REBUILD_ANSI" text="_Локализировать метаданные"/>
+		<item id="ID_LIBRARY_REFRESH_METADATA" text="_Обновить метаданные"/>
 		<separator/>
 		<item id="ID_LIBRARY_COLUMNS" text="Выбрать ко_лонки..."/>
 		<separator/>
@@ -1460,20 +1476,40 @@
 		<item id="ID_CHAT_TIMESTAMP" text="_Временной штамп"/>
 		<item id="ID_CHAT_CLEAR" text="О_чистить окно"/>
 	</menu>
-	<!-- PLUGIN MENUS -->
-	<menu name="ImageViewer_Context">
-		<item id="ImageViewer_BestFit" text="_Лучший размер"/>
-		<item id="ImageViewer_ActualSize" text="_Оригинальный размер"/>
+	<!-- IRC WINDOW -->
+	<menu name="CIRCTabRClick">
+		<item id="ID_IRC_CLOSETAB" text="_Закрыть"/>
+	</menu>
+	<menu name="CIRCUserList">
+		<item id="ID_IRC_WHOIS" text="_КтоЭто"/>
+		<item id="ID_IRC_QUERY" text="_Приват"/>
 		<separator/>
-		<item id="ImageViewer_Refresh" text="Об_новить"/>
+		<menu text="Actions">
+			<item id="ID_IRC_TIME" text="_Время"/>
+			<item id="ID_IRC_VERSION" text="_Версия"/>
+		</menu>
 		<separator/>
-		<item id="ImageViewer_Close" text="_Закрыть"/>
+		<menu text="Control">
+			<item id="ID_IRC_IGNORE" text="_Ignore"/>
+			<item id="ID_IRC_UNIGNORE" text="_Unignore"/>
+			<item id="ID_IRC_OP" text="_Op"/>
+			<item id="ID_IRC_DEOP" text="_Deop"/>
+			<item id="ID_IRC_VOICE" text="_Voice"/>
+			<item id="ID_IRC_DEVOICE" text="D_evoice"/>
+			<item id="ID_IRC_KICK" text="_Kick"/>
+			<item id="ID_IRC_KICKWHY" text="Kick (причина?)"/>
+			<item id="ID_IRC_BAN" text="_Ban"/>
+			<item id="ID_IRC_UNBAN" text="_Unban"/>
+			<item id="ID_IRC_BANKICK" text="Kick+Ban"/>
+			<item id="ID_IRC_BANKICKWHY" text="Kick+Ban (причина?)"/>
+		</menu>
 	</menu>
 </menus>
+
 <!-- Watermarks -->
 <watermarks>
-	<watermark target="CHomeViewCtrl.Header" path="257.PNG"/>
-	<watermark target="CHomeViewCtrl.Header" path="258.PNG"/>
+	<watermark target="CHomeViewCtrl.Header1" path="257.PNG"/>
+	<watermark target="CHomeViewCtrl.Header2" path="258.PNG"/>
 </watermarks>
 <!-- Documents -->
 <documents>
@@ -1530,10 +1566,6 @@
 			<text colour="FF0000" format="b">Это может ограничить скорость Загрузок/Выгрузок.</text>
 			<newline gap="6"/>
 			<link target="raza:command:ID_HELP_ROUTER">Щелкните здесь, чтобы узнать, как настроить ваш маршрутизатор или брандмауэр</link>
-			<newline gap="8" indent="42"/>
-			<text colour="FF0000"> (коментарий от переводчика - на самом деле,
-			это также возможно пока не установлено соединение с каким нибудь сервером, или например
-			если вы ограничиваете трафик программами типа NetLimiter или DuSuperControler). </text>
 			<newline gap="18" indent="0"/>
 		</group>
 		<group id="6">
@@ -1545,10 +1577,6 @@
 			<text colour="FF0000" format="b">Это может ограничить скорость Загрузок/Выгрузок.</text>
 			<newline gap="6"/>
 			<link target="raza:command:ID_HELP_ROUTER">Щелкните здесь, чтобы узнать, как настроить ваш маршрутизатор или брандмауэр</link>
-			<newline gap="8" indent="42"/>
-			<text colour="FF0000"> (коментарий от переводчика - на самом деле,
-			это также возможно пока не установлено соединение с каким нибудь сервером, или например
-			если вы ограничиваете трафик программами типа NetLimiter или DuSuperControler). </text>
 			<newline gap="18" indent="0"/>
 		</group>
 		<group id="7">
@@ -1560,10 +1588,6 @@
 			<text colour="FF0000" format="b">Это может ограничить скорость Загрузок/Выгрузок.</text>
 			<newline gap="6"/>
 			<link target="raza:command:ID_HELP_ROUTER">Щелкните здесь, чтобы узнать, как настроить ваш маршрутизатор или брандмауэр</link>
-			<newline gap="8" indent="42"/>
-			<text colour="FF0000"> (коментарий от переводчика - на самом деле,
-			это также возможно пока не установлено соединение с каким нибудь сервером, или например
-			если вы ограничиваете трафик программами типа NetLimiter или DuSuperControler). </text>
 			<newline gap="18" indent="0"/>
 		</group>
 		<icon res="236" width="32" height="32"/><gap size="8"/>
@@ -1579,20 +1603,10 @@
 		<link target="raza:command:ID_TOOLS_WIZARD" format="bu" align="middle">Мaстер Устанoвок</link>
 		<text align="middle">&#160;- Пошaговый мaстер устанoвок Sharеaza</text>
 		<newline gap="8"/>
-		<icon res="147" width="32" height="32" target="http://wiki.shareaza.com/static/RuHome"/>
+		<icon res="147" width="32" height="32" target="raza:command:ID_HELP_FAQ"/>
 		<gap size="8"/>
-		<link target="http://wiki.shareaza.com/static/RuHome" format="bu" align="middle">Быстрaя Помoщь (RUS)</link>
+		<link target="raza:command:ID_HELP_FAQ" format="bu" align="middle">Быстрaя Помoщь</link>
 		<text align="middle">&#160;- Онлайновая Справочная Система Wiki</text>
-		<newline gap="8"/>
-		<icon res="147" width="32" height="32" target="http://forums.shareaza.com/forumdisplay.php?s=&amp;forumid=29"/>
-		<gap size="8"/>
-		<link target="http://forums.shareaza.com/forumdisplay.php?s=&amp;forumid=29" format="bu" align="middle">Форум SHAREAZA (RUS)</link>
-		<text align="middle">&#160;- Форумы SHAREAZA - Русская Секция</text>
-		<newline gap="8"/>
-		<icon res="147" width="32" height="32" target="http://forum.ru-board.com/topic.cgi?forum=5&amp;topic=4232#1"/>
-		<gap size="8"/>
-		<link target="http://forum.ru-board.com/topic.cgi?forum=5&amp;topic=4232#1" format="bu" align="middle">Форум RU-BOARD</link>
-		<text align="middle">&#160;- Обсуждение программы и работы с ней</text>
 		<newline gap="18" indent="0"/>
 		<group id="5">
 			<icon res="128" width="32" height="32"/><gap size="8"/>
@@ -1770,7 +1784,7 @@
 		<gap size="4"/>
 		<text>Ваш профиль, чат и установки быстрых сообщений (пейджер).</text>
 		<newline gap="10"/>
-		<link target="raza:page:CWebSettingsPage" format="b">Вэб:</link>
+		<link target="raza:page:CWebSettingsPage" format="b">Веб:</link>
 		<gap size="4"/>
 		<text>Интегрируйте Shareaza с вашим вэб обозревателем для приема P2P ссылок и другого содержимого.</text>
 		<newline gap="10"/>
@@ -1813,6 +1827,7 @@
 	<!-- Browse User Profile -->
 	<document name="CBrowseHostProfile.1">
 		<heading id="Nick"/>
+		<heading> Профиль</heading>
 		<newline gap="8"/>
 		<group id="1">
 			<newline gap="8" indent="0"/>
@@ -2009,7 +2024,6 @@
 		нажав на значок «+» слева, и можете фильтровать список, используя кнопку справа в
 		панели инструментов.</text>
 	</document>
-
 	<!-- General help documents -->
 	<document name="GeneralHelp.DiskSpace">
 		<text format="b">Мало места на диске</text>
@@ -2695,7 +2709,7 @@
 	<string id="16194" value="Хост %s отправил пакет c чрезмерным размером TTL, отклоняю (TTL=%i, Hops=%i)."/>
 	<string id="16195" value="Хост %s отправил ping пакет с недействительной длиной, игнорирую."/>
 	<string id="16196" value="Хост %s отправил pong пакет с недействительной длиной, игнорирую."/>
-
+	<string id="16197" value="%s -> %s [%i/%i] %s %s"/>
 	<string id="16198" value="Лепестковый узел %s пересылает запросы, соединение обрывается."/>
 	<string id="16199" value="Хост %s пересылает непонятный пакет (0x%.2x), игнорирую."/>
 	<string id="16200" value="Хост %s пересылает pong с неправильным адресом, игнорирую."/>
@@ -3019,7 +3033,7 @@
 	<string id="17130" value="eDonkey (высокий ID)"/>
 	<string id="17216" value="Инициализация соединения с eDonkey сервером %s..."/>
 	<string id="17217" value="Соединение с eDonkey сервером %s установлено, посылаю подтверждение..."/>
-
+	<string id="17218" value="ED2K[%s] %s"/>
 	<string id="17219" value="eDonkey сервер %s отказал соединению."/>
 	<string id="17220" value="eDonkey сервер %s доступен, ИД клиента - %lu."/>
 	<string id="17221" value="eDonkey сервер %s сменил свой ИД клиента с %lu в %lu."/>
@@ -3268,7 +3282,7 @@
 		<control caption="Фильтровать текст чата от спама"/>
 		<control caption="Фильтровать нецензурные слова в чате"/>
 	</dialog>
-	<dialog name="CWebSettingsPage" cookie="BuStBuBuBuBuBuBuBuCoBuBuSt" caption="Вэб">
+	<dialog name="CWebSettingsPage" cookie="BuStBuBuBuBuBuBuBuCoBuBuSt" caption="Веб">
 		<control caption="Обработка _пиринговых (P2P) ссылок:"/>
 		<control caption="Использовать Shareaza для перехвата следующих типов ссылок:"/>
 		<control caption="Magnet ( magnet: )"/>
