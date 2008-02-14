@@ -2157,7 +2157,7 @@
 		<image type="alpha" language="en" res="246"/>
 		<target window="CMainTabBarCtrl.Basic"/>
 		<anchors>
-			<anchor name="Background"				rect="0,0,542,44"/>
+			<anchor name="Background"				rect="0,0,548,44"/>
 			<anchor name="_ID_TAB_HOME"				rect="4,1,80,38"/>
 			<anchor name="_ID_TAB_LIBRARY"			rect="86,1,90,38"/>
 			<anchor name="_ID_TAB_MEDIA"			rect="178,1,84,38"/>
