@@ -415,6 +415,15 @@
 		<button id="ID_CHAT_CONNECT" text="Соединиться" visible="false"/>
 		<button id="ID_CHAT_DISCONNECT" text="Разъединить"/>
 	</toolbar>
+	<!-- IMAGE VIEWER WINDOW -->
+	<toolbar name="ImageViewer_Toolbar">
+		<button id="ImageViewer_BestFit" text="Лучший размер"/>
+		<button id="ImageViewer_ActualSize" text="Оригинальный размер"/>
+		<separator/>
+		<button id="ImageViewer_Refresh" text="Обновить"/>
+		<separator/>
+		<button id="ImageViewer_Close" text="Закрыть"/>
+	</toolbar>
 </toolbars>
 <!-- Menu Definitions -->
 <menus>
@@ -746,6 +755,23 @@
 	</menu>
 	<!-- TRAY MENU -->
 	<menu name="CMainWnd.Tray">
+		<item id="ID_TRAY_OPEN" text="_Открыть Shareaza"/>
+		<separator/>
+		<item id="ID_NETWORK_SEARCH" text="Новый _поиск..."/>
+		<item id="ID_TOOLS_DOWNLOAD" text="_Загрузить файл..."/>
+		<separator/>
+		<item id="ID_MEDIA_PLAY" text="_Воспроизводить"/>
+		<item id="ID_MEDIA_PAUSE" text="Приоста_новить"/>
+		<item id="ID_MEDIA_STOP" text="Ос_тановить"/>
+		<separator/>
+		<item id="ID_MEDIA_PREVIOUS" text="Пре_дыдущий трэк"/>
+		<item id="ID_MEDIA_NEXT" text="_Следующий трэк"/>
+		<separator/>
+		<item id="ID_NETWORK_AUTO_CLOSE" text="В_ыйти после пересылок"/>
+		<item id="ID_NETWORK_EXIT" text="Вы_ход"/>
+	</menu>
+	<!-- REMOTE MENU -->
+	<menu name="CRemoteWnd">
 		<item id="ID_TRAY_OPEN" text="_Открыть Shareaza"/>
 		<separator/>
 		<item id="ID_NETWORK_SEARCH" text="Новый _поиск..."/>
