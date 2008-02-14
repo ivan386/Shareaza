@@ -416,6 +416,15 @@
 		<button id="ID_CHAT_CONNECT" text="Connect" visible="false"/>
 		<button id="ID_CHAT_DISCONNECT" text="Disconnect"/>
 	</toolbar>
+	<!-- IMAGE VIEWER WINDOW -->
+	<toolbar name="ImageViewer_Toolbar">
+		<button id="ImageViewer_BestFit" text="Best Fit"/>
+		<button id="ImageViewer_ActualSize" text="Actual Size"/>
+		<separator/>
+		<button id="ImageViewer_Refresh" text="Refresh"/>
+		<separator/>
+		<button id="ImageViewer_Close" text="Close"/>
+	</toolbar>
 </toolbars>
 <!-- Menu Definitions -->
 <menus>
@@ -747,6 +756,23 @@
 	</menu>
 	<!-- TRAY MENU -->
 	<menu name="CMainWnd.Tray">
+		<item id="ID_TRAY_OPEN" text="_Open Shareaza"/>
+		<separator/>
+		<item id="ID_NETWORK_SEARCH" text="Ne_w Search..."/>
+		<item id="ID_TOOLS_DOWNLOAD" text="_Download File..."/>
+		<separator/>
+		<item id="ID_MEDIA_PLAY" text="_Play Media"/>
+		<item id="ID_MEDIA_PAUSE" text="Pa_use Media"/>
+		<item id="ID_MEDIA_STOP" text="_Stop Media"/>
+		<separator/>
+		<item id="ID_MEDIA_PREVIOUS" text="P_revious Track"/>
+		<item id="ID_MEDIA_NEXT" text="_Next Track"/>
+		<separator/>
+		<item id="ID_NETWORK_AUTO_CLOSE" text="Exit After _Transfers"/>
+		<item id="ID_NETWORK_EXIT" text="E_xit"/>
+	</menu>
+	<!-- REMOTE MENU -->
+	<menu name="CRemoteWnd">
 		<item id="ID_TRAY_OPEN" text="_Open Shareaza"/>
 		<separator/>
 		<item id="ID_NETWORK_SEARCH" text="Ne_w Search..."/>
