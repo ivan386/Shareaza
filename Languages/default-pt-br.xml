@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 
-<!-- Shareaza Default Brazilian Portuguese Skin File --> <!-- This translation is based on default-en.xml SVN rev.xxxx -->
+<!-- Shareaza Default Brazilian Portuguese Skin File --> <!-- This translation is based on default-en.xml SVN rev.6238 + ~1 -->
 
 <!-- This skin basically represents the current Shareaza defaults. You can use this file as -->
 <!-- a basis for creating new skins, however in a new skin be sure to ONLY include the sections -->
@@ -11,14 +11,14 @@
 <skin xmlns="http://www.shareaza.com/schemas/Skin.xsd" version="1.0">
 
 <!-- Manifest -->
-<manifest	name="Português"
+<manifest	name="Português Brasileiro"
 		author="Lukas Taves"
 		updatedBy="Felipe"
-		description="Shareaza Default Brazilian Portuguese Skin File"
+		description="Arquivo de Skin Padrão para o Português Brasileiro do Shareaza"
 		link="http://shareaza.sourceforge.net/"
-		email=""
-		version="2.3.0.0"
-		type="Language"
+		email="contact(at)shareaza(dot)com"
+		version="2.3.1.1"
+		type="Idioma"
 		language="pt-br"
 		prompt="Clique aqui para traduzir o Shareaza para o português do Brasil."
 		dir="ltr"
@@ -45,6 +45,7 @@
 		<button id="ID_TAB_SEARCH" text="Procurar"/>
 		<button id="ID_TAB_TRANSFERS" text="Transferências"/>
 		<button id="ID_TAB_NETWORK" text="Rede"/>
+		<button id="ID_TAB_IRC" text="Chat"/>
 	</toolbar>
 	<toolbar name="CMainWnd.Windowed">
 		<button id="ID_NETWORK_CONNECT" text="Conectar"/>
@@ -57,6 +58,7 @@
 		<button id="ID_VIEW_UPLOADS"/>
 		<button id="ID_VIEW_LIBRARY"/>
 		<button id="ID_VIEW_MEDIA"/>
+		<button id="ID_TAB_IRC"/>
 		<button id="ID_VIEW_SECURITY"/>
 		<button id="ID_VIEW_HOSTS"/>
 		<button id="ID_VIEW_DISCOVERY"/>
@@ -146,7 +148,7 @@
 	<!-- DOWNLOADS WINDOW -->
 	<toolbar name="CDownloadsWnd.Basic">
 		<button id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="Abrir/Tocar"/>
-		<button id="ID_DOWNLOADS_LAUNCH" text="Prévia do Arquivo"/>
+		<button id="ID_DOWNLOADS_LAUNCH" text="Prever Arquivo"/>
 		<button id="ID_DOWNLOADS_FILE_DELETE" text="Apagar Arquivo"/>
 		<separator/>
 		<button id="ID_DOWNLOADS_RESUME" text="Resumir Download"/>
@@ -162,7 +164,7 @@
 	<toolbar name="CDownloadsWnd">
 		<button id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="Abrir/Tocar"/>
 		<button id="ID_DOWNLOADS_FILE_DELETE" text="Apagar Arquivo"/>
-		<button id="ID_DOWNLOADS_LAUNCH" text="Prévia do Arquivo"/>
+		<button id="ID_DOWNLOADS_LAUNCH" text="Prever Arquivo"/>
 		<separator/>
 		<button id="ID_DOWNLOADS_RESUME" text="Resumir Download"/>
 		<button id="ID_DOWNLOADS_PAUSE" text="Pausar Download"/>
@@ -339,6 +341,13 @@
 		<button id="ID_MEDIA_CLEAR" text="Limpar"/>
 		<button id="ID_MEDIA_SAVE" text="Salvar"/>
 	</toolbar>
+	<!-- IRC WINDOW -->
+	<toolbar name="CMainIrcBar">
+		<button id="ID_IRC_CONNECT" text="Conectar" tip="Conectar ao IRC"/>
+		<button id="ID_IRC_DISCONNECT" text="Desconectar" tip="Desconectar do IRC"/>
+		<rightAlign/>
+		<button id="ID_IRC_SETTINGS" text="Configurações" tip="Configurar as Configurações do IRC"/>
+	</toolbar>
 	<!-- NEIGHBOURS WINDOW -->
 	<toolbar name="CNeighboursWnd.Basic">
 		<button id="ID_BROWSE_LAUNCH" text="Navegar Usuário"/>
@@ -453,6 +462,7 @@
 			<item id="ID_TAB_SEARCH" text="Procurar"/>
 			<item id="ID_TAB_TRANSFERS" text="Downloads"/>
 			<item id="ID_WINDOW_REMOTE" text="Remoto"/>
+			<item id="ID_TAB_IRC" text="Chat"/>
 			<separator/>
 			<menu text="Avançado">
 				<item id="ID_VIEW_NEIGHBOURS" text="Vizinhos"/>
@@ -498,6 +508,8 @@
 				<item id="ID_HELP_WEB_2" text="P2PForums.com"/> -->
 			</menu>
 			<separator/>
+			<item id="ID_HELP_VERSION_CHECK" text="Procurar nova versão"/>
+			<separator/>
 			<item id="ID_HELP_ABOUT" text="Sobre o Shareaza..."/>
 		</menu>
 	</menu>
@@ -525,6 +537,7 @@
 			<item id="ID_TAB_SEARCH" text="Procurar"/>
 			<item id="ID_TAB_TRANSFERS" text="Transferências"/>
 			<item id="ID_TAB_NETWORK" text="Rede"/>
+			<item id="ID_TAB_IRC" text="Chat"/>
 			<separator/>
 			<item id="ID_VIEW_SECURITY" text="Segurança"/>
 			<item id="ID_VIEW_HOSTS" text="Armazenamento de Hosts"/>
@@ -592,6 +605,8 @@
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
 				<item id="ID_HELP_WEB_2" text="P2PForums.com"/> -->
 			</menu>
+			<separator/>
+			<item id="ID_HELP_VERSION_CHECK" text="Procurar nova versão"/>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="Sobre o Shareaza..."/>
 		</menu>
@@ -682,6 +697,8 @@
 				<item id="ID_HELP_WEB_2" text="P2PForums.com"/> -->
 			</menu>
 			<separator/>
+			<item id="ID_HELP_VERSION_CHECK" text="Procurar nova versão"/>
+			<separator/>
 			<item id="ID_HELP_ABOUT" text="Sobre o Shareaza..."/>
 		</menu>
 	</menu>
@@ -707,6 +724,7 @@
 		<item id="ID_TAB_SEARCH" text="Procurar"/>
 		<item id="ID_TAB_TRANSFERS" text="Transferências"/>
 		<item id="ID_TAB_NETWORK" text="Rede"/>
+		<item id="ID_TAB_IRC" text="Chat"/>
 		<separator/>
 		<item id="ID_VIEW_SECURITY" text="Segurança"/>
 		<item id="ID_VIEW_HOSTS" text="Armazenamento de Hosts"/>
@@ -792,6 +810,7 @@
 		<item id="ID_TAB_SEARCH" text="Procurar"/>
 		<item id="ID_TAB_TRANSFERS" text="Transferências"/>
 		<item id="ID_TAB_NETWORK" text="Rede"/>
+		<item id="ID_TAB_IRC" text="Chat"/>
 		<separator/>
 		<item id="ID_VIEW_SECURITY" text="Segurança"/>
 		<item id="ID_VIEW_HOSTS" text="Armazenamento de Hosts"/>
@@ -1186,6 +1205,8 @@
 		<separator/>
 		<item id="ID_LIBRARY_COLUMNS" text="Escolher Colunas..."/>
 		<separator/>
+		<item id="ID_SHELL_MENU" text="Menu de contexto"/>
+		<separator/>
 		<item id="ID_LIBRARY_PROPERTIES" text="Propriedades"/>
 	</menu>
 	<menu name="CLibraryFileView.Virtual.Basic">
@@ -1482,14 +1503,33 @@
 		<item id="ID_CHAT_TIMESTAMP" text="Horário"/>
 		<item id="ID_CHAT_CLEAR" text="Limpar Janela"/>
 	</menu>
-	<!-- PLUGIN MENUS -->
-	<menu name="ImageViewer_Context">
-		<item id="ImageViewer_BestFit" text="Melhor Encaixe"/>
-		<item id="ImageViewer_ActualSize" text="Tamanho Real"/>
+	<!-- IRC WINDOW -->
+	<menu name="CIRCTabRClick">
+		<item id="ID_IRC_CLOSETAB" text="Fechar"/>
+	</menu>
+	<menu name="CIRCUserList">
+		<item id="ID_IRC_WHOIS" text="Whois"/>
+		<item id="ID_IRC_QUERY" text="Query"/>
 		<separator/>
-		<item id="ImageViewer_Refresh" text="Atualizar"/>
+		<menu text="Ações">
+			<item id="ID_IRC_TIME" text="Hora"/>
+			<item id="ID_IRC_VERSION" text="Versão"/>
+		</menu>
 		<separator/>
-		<item id="ImageViewer_Close" text="Fechar"/>
+		<menu text="Controle">
+			<item id="ID_IRC_IGNORE" text="Ignorar"/>
+			<item id="ID_IRC_UNIGNORE" text="Não ignorar"/>
+			<item id="ID_IRC_OP" text="Op"/>
+			<item id="ID_IRC_DEOP" text="Deop"/>
+			<item id="ID_IRC_VOICE" text="Voice"/>
+			<item id="ID_IRC_DEVOICE" text="Devoice"/>
+			<item id="ID_IRC_KICK" text="Chutar"/>
+			<item id="ID_IRC_KICKWHY" text="Chutar (porque?)"/>
+			<item id="ID_IRC_BAN" text="Banir"/>
+			<item id="ID_IRC_UNBAN" text="Des-banir"/>
+			<item id="ID_IRC_BANKICK" text="Chutar+Banir"/>
+			<item id="ID_IRC_BANKICKWHY" text="Chutar+Banir (porque?)"/>
+		</menu>
 	</menu>
 </menus>
 
