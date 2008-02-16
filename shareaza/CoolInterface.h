@@ -33,12 +33,13 @@ public:
 	virtual ~CCoolInterface();
 
 public:
-	CFont		m_fntNormal;
-	CFont		m_fntBold;
-	CFont		m_fntUnder;
-	CFont		m_fntCaption;
-	CFont		m_fntItalic;
-	CFont		m_fntBoldItalic;
+	CFont		m_fntNormal;		// system.plain
+	CFont		m_fntItalic;		// system.plain + italic
+	CFont		m_fntUnder;			// system.plain + underline
+	CFont		m_fntBold;			// system.bold
+	CFont		m_fntBoldItalic;	// system.bold + italic
+	CFont		m_fntCaption;		// panel.caption
+	CFont		m_fntNavBar;		// navbar.plain
 	BOOL		m_bCustom;
 
 	COLORREF	m_crWindow;
@@ -168,7 +169,7 @@ public:
 	COLORREF	m_crSysBtnFace;
 	COLORREF	m_crSys3DShadow;
 	COLORREF	m_crSys3DHighlight;
-	COLORREF	m_crSysActiveCaption;	
+	COLORREF	m_crSysActiveCaption;
 
 	void		Load();
 	void		Clear();

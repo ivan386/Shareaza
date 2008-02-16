@@ -155,6 +155,16 @@ protected:
 protected:
 	static LPCTSTR m_pszModeSuffix[3][4];
 
+// NavBar
+public:
+	COLORREF	m_crNavBarText;
+	COLORREF	m_crNavBarShadow;
+	COLORREF	m_crNavBarOutline;
+	CRect		m_rcNavBarOffset;
+	enum { NavBarNormal, NavBarUpper, NavBarLower } m_NavBarMode;
+protected:
+	BOOL	LoadNavBar(CXMLElement* pBase);
+
 private:
 	CSkin(const CSkin&);
 	CSkin& operator=(const CSkin&);

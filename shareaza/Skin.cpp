@@ -310,6 +310,10 @@ BOOL CSkin::LoadFromXML(CXMLElement* pXML, const CString& strPath)
 		{
 			if ( ! LoadToolbars( pSub ) ) break;
 		}
+		else if ( pSub->IsNamed( _T("navbar") ) )
+		{
+			if ( ! LoadNavBar( pSub ) ) break;
+		}
 		else if ( pSub->IsNamed( _T("dialogs") ) )
 		{
 			if ( ! LoadDialogs( pSub ) ) break;
@@ -599,6 +603,33 @@ BOOL CSkin::CreateMenu(CXMLElement* pRoot, HMENU hMenu)
 //////////////////////////////////////////////////////////////////////
 // CSkin toolbars
 
+BOOL CSkin::LoadNavBar(CXMLElement* pBase)
+{
+	CString strValue = pBase->GetAttributeValue( _T("offset") );
+	if ( strValue.GetLength() )
+	{
+		_stscanf( strValue, _T("%i,%i,%i,%i"),
+			&m_rcNavBarOffset.left, &m_rcNavBarOffset.top,
+			&m_rcNavBarOffset.right, &m_rcNavBarOffset.bottom );
+	}
+
+	strValue = pBase->GetAttributeValue( _T("mode") );
+	if ( strValue.CompareNoCase( _T("upper") ) == 0 )
+	{
+		m_NavBarMode = NavBarUpper;
+	}
+	else if ( strValue.CompareNoCase( _T("lower") ) == 0 )
+	{
+		m_NavBarMode = NavBarLower;
+	}
+	else
+	{
+		m_NavBarMode = NavBarNormal;
+	}
+
+	return TRUE;
+}
+
 BOOL CSkin::CreateToolBar(LPCTSTR pszName, CCoolBarCtrl* pBar)
 {
 	if ( pszName == NULL ) return FALSE;
@@ -649,8 +680,21 @@ BOOL CSkin::CreateToolBar(LPCTSTR pszName, CCoolBarCtrl* pBar)
 
 CCoolBarCtrl* CSkin::GetToolBar(LPCTSTR pszName) const
 {
-	CCoolBarCtrl* pBar;
-	return m_pToolbars.Lookup( pszName, pBar ) ? pBar : NULL;
+	ASSERT( Settings.General.GUIMode == GUI_WINDOWED || 
+		Settings.General.GUIMode == GUI_TABBED ||
+		Settings.General.GUIMode == GUI_BASIC );
+
+	LPCTSTR* pszModeSuffix = m_pszModeSuffix[ Settings.General.GUIMode ];
+	CCoolBarCtrl* pBar = NULL;
+	CString strName( pszName );
+
+	for ( int nModeTry = 0 ; nModeTry < 3 && pszModeSuffix[ nModeTry ] ; nModeTry++ )
+	{
+		if ( m_pToolbars.Lookup( strName + pszModeSuffix[ nModeTry ], pBar ) )
+			return pBar;
+	}
+
+	return NULL;
 }
 
 BOOL CSkin::LoadToolbars(CXMLElement* pBase)
@@ -1365,6 +1409,10 @@ BOOL CSkin::LoadColourScheme(CXMLElement* pBase)
 	pColours.SetAt( _T("system.environment.3dhighlight"), &CoolInterface.m_crSys3DHighlight );
 	pColours.SetAt( _T("system.environment.activecaption"), &CoolInterface.m_crSysActiveCaption );
 
+	pColours.SetAt( _T("navbar.text"), &m_crNavBarText );
+	pColours.SetAt( _T("navbar.shadow"), &m_crNavBarShadow );
+	pColours.SetAt( _T("navbar.outline"), &m_crNavBarOutline );
+
 	BOOL bSystem = FALSE, bNonBase = FALSE;
 	
 	for ( POSITION pos = pBase->GetElementIterator() ; pos ; )
@@ -1378,26 +1426,33 @@ BOOL CSkin::LoadColourScheme(CXMLElement* pBase)
 
 		COLORREF* pColour;
 
-		if ( pColours.Lookup( strName, (void*&)pColour ) && strValue.GetLength() == 6 )
+		if ( pColours.Lookup( strName, (void*&)pColour ) )
 		{
-			int nRed, nGreen, nBlue;
-
-			_stscanf( strValue.Mid( 0, 2 ), _T("%x"), &nRed );
-			_stscanf( strValue.Mid( 2, 2 ), _T("%x"), &nGreen );
-			_stscanf( strValue.Mid( 4, 2 ), _T("%x"), &nBlue );
-
-			if ( strName.Find( _T("system.") ) >= 0 )
+			if ( strValue.GetLength() == 6 )
 			{
-				bSystem = TRUE;
+				int nRed, nGreen, nBlue;
 
-				if ( ! bNonBase && strName.Find( _T(".base.") ) < 0 )
+				_stscanf( strValue.Mid( 0, 2 ), _T("%x"), &nRed );
+				_stscanf( strValue.Mid( 2, 2 ), _T("%x"), &nGreen );
+				_stscanf( strValue.Mid( 4, 2 ), _T("%x"), &nBlue );
+
+				if ( strName.Find( _T("system.") ) >= 0 )
 				{
-					bNonBase = TRUE;
-					CoolInterface.CalculateColours( TRUE );
-				}
-			}
+					bSystem = TRUE;
 
-			*pColour = RGB( nRed, nGreen, nBlue );
+					if ( ! bNonBase && strName.Find( _T(".base.") ) < 0 )
+					{
+						bNonBase = TRUE;
+						CoolInterface.CalculateColours( TRUE );
+					}
+				}
+
+				*pColour = RGB( nRed, nGreen, nBlue );
+			}
+			else if ( strValue.GetLength() == 0 )
+			{
+				*pColour = CLR_NONE;
+			}
 		}
 	}
 
@@ -1473,6 +1528,10 @@ BOOL CSkin::LoadFonts(CXMLElement* pBase, const CString& strPath)
 				{
 					pFont = &CoolInterface.m_fntCaption;
 				}
+				else if ( strName.CompareNoCase( _T("navbar.plain") ) == 0 )
+				{
+					pFont = &CoolInterface.m_fntNavBar;
+				}
 				else
 				{
 					continue;
@@ -1491,7 +1550,7 @@ BOOL CSkin::LoadFonts(CXMLElement* pBase, const CString& strPath)
 				_stscanf( strWeight, _T("%i"), &nFontWeight );
 
 				pFont->CreateFontW( -nFontSize, 0, 0, 0, nFontWeight, FALSE, FALSE, FALSE,
-					DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
+					DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, ANTIALIASED_QUALITY,
 					DEFAULT_PITCH|FF_DONTCARE, strFace );
 
 				if ( strName.CompareNoCase( _T("system.plain") ) == 0 )
@@ -1500,14 +1559,14 @@ BOOL CSkin::LoadFonts(CXMLElement* pBase, const CString& strPath)
 					if ( pFont->m_hObject ) pFont->DeleteObject();
 
 					pFont->CreateFontW( -nFontSize, 0, 0, 0, nFontWeight, FALSE, TRUE, FALSE,
-							DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
+							DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, ANTIALIASED_QUALITY,
 							DEFAULT_PITCH|FF_DONTCARE, strFace );
 
 					pFont = &CoolInterface.m_fntItalic;
 					if ( pFont->m_hObject ) pFont->DeleteObject();
 
 					pFont->CreateFontW( -nFontSize, 0, 0, 0, nFontWeight, TRUE, FALSE, FALSE,
-							DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
+							DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, ANTIALIASED_QUALITY,
 							DEFAULT_PITCH|FF_DONTCARE, strFace );
 				}
 				else if ( strName.CompareNoCase( _T("system.bold") ) == 0 )
@@ -1516,7 +1575,7 @@ BOOL CSkin::LoadFonts(CXMLElement* pBase, const CString& strPath)
 					if ( pFont->m_hObject ) pFont->DeleteObject();
 
 					pFont->CreateFontW( -nFontSize, 0, 0, 0, nFontWeight, TRUE, FALSE, FALSE,
-							DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
+							DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, ANTIALIASED_QUALITY,
 							DEFAULT_PITCH|FF_DONTCARE, strFace );
 				}
 			}
@@ -1675,7 +1734,14 @@ void CSkin::CreateDefault()
 	m_crBannerText				= RGB( 250, 250, 255 );
 	m_crSchemaRow[0]			= RGB( 245, 245, 255 );
 	m_crSchemaRow[1]			= RGB( 214, 223, 247 );
-	
+
+	// NavBar
+
+	m_crNavBarText				= CLR_NONE;
+	m_crNavBarShadow			= CLR_NONE;
+	m_crNavBarOutline			= CLR_NONE;
+	m_rcNavBarOffset			= CRect( 0, 0, 0, 0 );
+
 	// Command Icons
 	
 	HICON hIcon = theApp.LoadIcon( IDI_CHECKMARK );

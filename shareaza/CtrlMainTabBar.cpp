@@ -1,7 +1,7 @@
 //
 // CtrlMainTabBar.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -24,6 +24,7 @@
 #include "Settings.h"
 #include "CoolInterface.h"
 #include "CtrlMainTabBar.h"
+#include "CtrlCoolBar.h"
 #include "Skin.h"
 #include "SkinWindow.h"
 
@@ -129,15 +130,13 @@ void CMainTabBarCtrl::OnSkinChange()
 
 		m_hOldSkin = NULL;
 
-#ifndef _DEBUG
         for ( POSITION pos = m_pItems.GetHeadPosition() ; pos ; )
 		{
 			TabItem* pItem = m_pItems.GetNext( pos );
-			pItem->Skin( m_pSkin, &m_dcSkin, &m_bmSkin );
+			pItem->OnSkinChange( m_pSkin, &m_dcSkin, &m_bmSkin );
 		}
 
 		m_hOldSkin = (HBITMAP)m_dcSkin.SelectObject( &m_bmSkin )->GetSafeHandle();
-#endif
 	}
 
 	CMDIFrameWnd* pOwner = (CMDIFrameWnd*)GetOwner();
@@ -283,7 +282,7 @@ void CMainTabBarCtrl::DoPaint(CDC* pDC)
         for ( POSITION pos = m_pItems.GetHeadPosition() ; pos ; )
 		{
 			TabItem* pItem = m_pItems.GetNext( pos );
-			pItem->Skin( m_pSkin, &m_dcSkin, &m_bmSkin );
+			pItem->OnSkinChange( m_pSkin, &m_dcSkin, &m_bmSkin );
 		}
 
 		m_hOldSkin = (HBITMAP)m_dcSkin.SelectObject( &m_bmSkin )->GetSafeHandle();
@@ -466,12 +465,31 @@ CMainTabBarCtrl::TabItem::TabItem(CMainTabBarCtrl* pCtrl, LPCTSTR pszName)
 /////////////////////////////////////////////////////////////////////////////
 // CMainTabBarCtrl::TabItem skin change
 
-void CMainTabBarCtrl::TabItem::Skin(CSkinWindow* pSkin, CDC* pdcCache, CBitmap* pbmCache)
+void CMainTabBarCtrl::TabItem::OnSkinChange(CSkinWindow* pSkin, CDC* pdcCache, CBitmap* pbmCache)
 {
-	static LPCTSTR pszState[] = { _T(".Checked"), _T(".Down"), _T(".Hover"), _T(".Up"), _T(".Disabled"), NULL };
+	static LPCTSTR pszState[] =
+	{
+		_T(".Checked"), _T(".Down"), _T(".Hover"), _T(".Up"), _T(".Disabled"), NULL
+	};
 
 	m_rc.SetRectEmpty();
 	pSkin->GetAnchor( m_sName, m_rc );
+
+	// Mimic main window toolbar text
+	if ( CCoolBarCtrl* pBar = Skin.GetToolBar( _T("CMainWnd") ) )
+	if ( CCoolBarItem* pItem = pBar->GetID( m_nID ) )
+	{
+		m_sTitle = pItem->m_sText;
+		switch ( Skin.m_NavBarMode )
+		{
+		case CSkin::NavBarUpper:
+			m_sTitle.MakeUpper();
+			break;
+		case CSkin::NavBarLower:
+			m_sTitle.MakeLower();
+			break;
+		}
+	}
 
 	for ( int nState = 0 ; pszState[ nState ] != NULL ; nState++ )
 	{
@@ -540,11 +558,63 @@ void CMainTabBarCtrl::TabItem::Paint(CDC* pDstDC, CDC* pSrcDC, const CPoint& ptO
 	else
 		pPart = &m_rcSrc[3];
 
+	if ( m_rc.Width() == 0 || m_rc.Height() == 0 )
+		// No button
+		return;
+
 	CRect rcTarget( m_rc );
 	rcTarget += ptOffset;
 
 	pDstDC->BitBlt( rcTarget.left, rcTarget.top, rcTarget.Width(), rcTarget.Height(),
 		pSrcDC, pPart->left, pPart->top, SRCCOPY );
+
+	// Draw button label
+
+	if ( m_sTitle.IsEmpty() )
+		// No label
+		return;
+
+	if ( Settings.General.LanguageRTL )
+	{
+		rcTarget.left += Skin.m_rcNavBarOffset.right;
+		rcTarget.right -= Skin.m_rcNavBarOffset.left;
+	}
+	else
+	{
+		rcTarget.left += Skin.m_rcNavBarOffset.left;
+		rcTarget.right -= Skin.m_rcNavBarOffset.right;
+	}
+	rcTarget.top += Skin.m_rcNavBarOffset.top;
+	rcTarget.bottom -= Skin.m_rcNavBarOffset.bottom;
+
+	CFont* pOldFont = pDstDC->SelectObject( &CoolInterface.m_fntNavBar );
+	pDstDC->SetBkMode( TRANSPARENT );
+	if ( Skin.m_crNavBarShadow != CLR_NONE )
+	{
+		pDstDC->SetTextColor( Skin.m_crNavBarShadow );
+		pDstDC->DrawText( m_sTitle, rcTarget + CPoint( 2, 2 ),
+			DT_CENTER | DT_SINGLELINE | DT_VCENTER | DT_NOCLIP );
+	}
+	if ( Skin.m_crNavBarOutline != CLR_NONE )
+	{
+		pDstDC->SetTextColor( Skin.m_crNavBarOutline );
+		for ( int x = -1; x < 2; x++ )
+		{
+			for ( int y = -1; y < 2; y ++ )
+			{
+				if ( x || y )
+					pDstDC->DrawText( m_sTitle, rcTarget + CPoint( x, y ),
+						DT_CENTER | DT_SINGLELINE | DT_VCENTER | DT_NOCLIP );
+			}
+		}
+	}
+	if ( Skin.m_crNavBarText != CLR_NONE )
+	{
+		pDstDC->SetTextColor( Skin.m_crNavBarText );
+		pDstDC->DrawText( m_sTitle, rcTarget,
+			DT_CENTER | DT_SINGLELINE | DT_VCENTER | DT_NOCLIP );
+	}
+	pDstDC->SelectObject( pOldFont );
 }
 
 void CMainTabBarCtrl::TabItem::Enable(BOOL bEnable)

@@ -42,6 +42,7 @@ public:
 	public:
 		CMainTabBarCtrl* m_pCtrl;
 		CString	m_sName;
+		CString	m_sTitle;
 		CRect	m_rc;
 		CRect	m_rcSrc[5];
 		BOOL	m_bEnabled;
@@ -50,7 +51,7 @@ public:
 	public:
 		TabItem(CMainTabBarCtrl* pCtrl, LPCTSTR pszName);
 		virtual ~TabItem() {}
-		void	Skin(CSkinWindow* pSkin, CDC* pdcCache, CBitmap* pbmCache);
+		void	OnSkinChange(CSkinWindow* pSkin, CDC* pdcCache, CBitmap* pbmCache);
 		BOOL	Update(CFrameWnd* pTarget);
 		BOOL	HitTest(const CPoint& point) const;
 		void	Paint(CDC* pDstDC, CDC* pSrcDC, const CPoint& ptOffset, BOOL bHover, BOOL bDown);
