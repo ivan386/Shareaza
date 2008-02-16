@@ -10,7 +10,7 @@
 		<separator/>
 		<button id="ID_TAB_HOME" text="Home"/>
 		<button id="ID_TAB_LIBRARY" text="Library"/>
-		<button id="ID_TAB_MEDIA" text="Media"/>
+		<button id="ID_TAB_MEDIA" text="Media Player"/>
 		<button id="ID_TAB_SEARCH" text="Search"/>
 		<button id="ID_TAB_TRANSFERS" text="Downloads"/>
 	</toolbar>
@@ -19,7 +19,7 @@
 		<separator/>
 		<button id="ID_TAB_HOME" text="Home"/>
 		<button id="ID_TAB_LIBRARY" text="Library"/>
-		<button id="ID_TAB_MEDIA" text="Media"/>
+		<button id="ID_TAB_MEDIA" text="Media Player"/>
 		<button id="ID_TAB_SEARCH" text="Search"/>
 		<button id="ID_TAB_TRANSFERS" text="Transfers"/>
 		<button id="ID_TAB_NETWORK" text="Network"/>
@@ -517,7 +517,7 @@
 				<item id="ID_VIEW_DOWNLOADS" text="_Downloads" shortcut="F3"/>
 				<item id="ID_VIEW_UPLOADS" text="_Uploads" shortcut="F4"/>
 				<item id="ID_VIEW_LIBRARY" text="_Library" shortcut="F5"/>
-				<item id="ID_VIEW_MEDIA" text="_Media" shortcut="F6"/>
+				<item id="ID_VIEW_MEDIA" text="_Media Player" shortcut="F6"/>
 				<separator/>
 				<item id="ID_VIEW_SECURITY" text="Se_curity" shortcut="F7"/>
 				<item id="ID_VIEW_HOSTS" text="H_ost Cache" shortcut="F8"/>
@@ -605,7 +605,7 @@
 			<item id="ID_VIEW_DOWNLOADS" text="_Downloads" shortcut="F3"/>
 			<item id="ID_VIEW_UPLOADS" text="_Uploads" shortcut="F4"/>
 			<item id="ID_VIEW_LIBRARY" text="_Library" shortcut="F5"/>
-			<item id="ID_VIEW_MEDIA" text="_Media" shortcut="F6"/>
+			<item id="ID_VIEW_MEDIA" text="_Media Player" shortcut="F6"/>
 			<separator/>
 			<item id="ID_VIEW_SECURITY" text="Se_curity" shortcut="F7"/>
 			<item id="ID_VIEW_HOSTS" text="H_ost Cache" shortcut="F8"/>
@@ -675,7 +675,7 @@
 	<menu name="CMainWnd.View.Basic">
 		<item id="ID_TAB_HOME" text="_Home"/>
 		<item id="ID_TAB_LIBRARY" text="_Library"/>
-		<item id="ID_TAB_MEDIA" text="_Media"/>
+		<item id="ID_TAB_MEDIA" text="_Media Player"/>
 		<item id="ID_TAB_SEARCH" text="_Search"/>
 		<item id="ID_TAB_TRANSFERS" text="_Downloads"/>
 		<separator/>
@@ -689,7 +689,7 @@
 	<menu name="CMainWnd.View.Tabbed">
 		<item id="ID_TAB_HOME" text="_Home"/>
 		<item id="ID_TAB_LIBRARY" text="_Library"/>
-		<item id="ID_TAB_MEDIA" text="_Media"/>
+		<item id="ID_TAB_MEDIA" text="_Media Player"/>
 		<item id="ID_TAB_SEARCH" text="_Search"/>
 		<item id="ID_TAB_TRANSFERS" text="_Transfers"/>
 		<item id="ID_TAB_NETWORK" text="_Network"/>
@@ -744,7 +744,7 @@
 	<menu name="CHomeWnd.Basic">
 		<item id="ID_TAB_HOME" text="_Home"/>
 		<item id="ID_TAB_LIBRARY" text="_Library"/>
-		<item id="ID_TAB_MEDIA" text="_Media"/>
+		<item id="ID_TAB_MEDIA" text="_Media Player"/>
 		<item id="ID_TAB_SEARCH" text="_Search"/>
 		<item id="ID_TAB_TRANSFERS" text="_Downloads"/>
 		<separator/>
@@ -758,7 +758,7 @@
 	<menu name="CHomeWnd.Tabbed">
 		<item id="ID_TAB_HOME" text="_Home"/>
 		<item id="ID_TAB_LIBRARY" text="_Library"/>
-		<item id="ID_TAB_MEDIA" text="_Media"/>
+		<item id="ID_TAB_MEDIA" text="_Media Player"/>
 		<item id="ID_TAB_SEARCH" text="_Search"/>
 		<item id="ID_TAB_TRANSFERS" text="_Transfers"/>
 		<item id="ID_TAB_NETWORK" text="_Network"/>
