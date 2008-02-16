@@ -1532,11 +1532,6 @@
 	</menu>
 </menus>
 
-<!-- Watermarks -->
-<watermarks>
-	<watermark target="CHomeViewCtrl.Header1" path="257.PNG"/>
-	<watermark target="CHomeViewCtrl.Header2" path="258.PNG"/>
-</watermarks>
 <!-- Documents -->
 <documents>
 	<!-- Home View -->
