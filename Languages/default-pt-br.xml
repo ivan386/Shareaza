@@ -18,7 +18,7 @@
 		link="http://shareaza.sourceforge.net/"
 		email="contact(at)shareaza(dot)com"
 		version="2.3.1.1"
-		type="Idioma"
+		type="language"
 		language="pt-br"
 		prompt="Clique aqui para traduzir o Shareaza para o português do Brasil."
 		dir="ltr"
