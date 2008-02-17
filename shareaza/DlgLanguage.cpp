@@ -1,7 +1,7 @@
 //
 // DlgLanguage.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -52,7 +52,7 @@ BEGIN_MESSAGE_MAP(CLanguageDlg, CSkinDialog)
 END_MESSAGE_MAP()
 
 #define HEADING_HEIGHT	50
-#define ITEM_HEIGHT		40
+#define ITEM_HEIGHT		32
 #define ITEM_WIDTH		200
 #define TEXT_MARGIN		0
 
@@ -93,7 +93,7 @@ BOOL CLanguageDlg::OnInitDialog()
 		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
 		DEFAULT_PITCH|FF_DONTCARE, theApp.m_sDefaultFont );
 
-	m_fntBold.CreateFontW( -(theApp.m_nDefaultFontSize + 5), 0, 0, 0, FW_BOLD, FALSE, FALSE, FALSE,
+	m_fntBold.CreateFontW( -(theApp.m_nDefaultFontSize + 3), 0, 0, 0, FW_BOLD, FALSE, FALSE, FALSE,
 		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
 		DEFAULT_PITCH|FF_DONTCARE, theApp.m_sDefaultFont );
 
