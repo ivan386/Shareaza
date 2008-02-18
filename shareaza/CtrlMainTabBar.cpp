@@ -488,6 +488,8 @@ void CMainTabBarCtrl::TabItem::OnSkinChange(CSkinWindow* pSkin, CDC* pdcCache, C
 		case CSkin::NavBarLower:
 			m_sTitle.MakeLower();
 			break;
+		default:
+			break;
 		}
 	}
 
