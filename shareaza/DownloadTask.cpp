@@ -796,8 +796,7 @@ BOOL CDownloadTask::CopyFileToBatch(HANDLE hSource, QWORD nOffset, QWORD nLength
 {
 	auto_array< BYTE > pBuffer( new BYTE[ BUFFER_SIZE ] );
 	
-	QWORD nRead = 0;
-	do
+	while ( nLength )
 	{
 		DWORD nBuffer	= min( nLength, BUFFER_SIZE );
 		DWORD tStart	= GetTickCount();
@@ -809,13 +808,13 @@ BOOL CDownloadTask::CopyFileToBatch(HANDLE hSource, QWORD nOffset, QWORD nLength
 		}
 
 		nOffset += nBuffer;
-		nRead += nBuffer;
+		nLength -= nBuffer;
 
 		tStart = ( GetTickCount() - tStart ) / 2;
 		Sleep( min( tStart, 50ul ) );
-	} while ( nRead < nLength );
+	};
 	
-	if ( nRead == nLength )
+	if ( nLength == 0 )
 	{
 		return TRUE;
 	}

@@ -523,7 +523,6 @@ void CDownload::OnTaskComplete(CDownloadTask* pTask)
 	else if ( pTask->m_nTask == CDownloadTask::dtaskCreateBatch )
 	{
 		MakeComplete();
-		ResetVerification();
 		SetModified();
 	}
 	else
