@@ -317,7 +317,7 @@ void CTorrentSeedDlg::RunSingleFile()
 		return;
 	}
 	
-	if ( VerifySingle() && CreateDownload() )
+	if ( CreateDownload() )
 	{
 		PostMessage( WM_TIMER, 1 );
 	}
@@ -390,53 +390,6 @@ CString CTorrentSeedDlg::FindFile(LPVOID pVoid)
 
 	strFile.Empty();
 	return strFile;
-}
-
-BOOL CTorrentSeedDlg::VerifySingle()
-{
-	HANDLE hTarget = CreateFile( m_sTarget, GENERIC_READ, FILE_SHARE_READ, NULL,
-		OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL );
-	VERIFY_FILE_ACCESS( hTarget, m_sTarget )
-	if ( hTarget == INVALID_HANDLE_VALUE )
-	{
-		CString strFormat;
-		LoadString(strFormat, IDS_BT_SEED_SOURCE_LOST );
-		m_sMessage.Format( strFormat, (LPCTSTR)m_sTarget );
-		return FALSE;
-	}	
-	
-	DWORD nSizeHigh	= 0;
-	DWORD nSizeLow	= GetFileSize( hTarget, &nSizeHigh );
-	m_nTotal		= (QWORD)nSizeLow | ( (QWORD)nSizeHigh << 32 );
-	
-	m_pInfo.BeginBlockTest();
-	m_nBlockNumber	= 0;
-	m_nBlockLength	= m_pInfo.m_nBlockSize;
-	
-	auto_array< BYTE > pBuffer( new BYTE[ BUFFER_SIZE ] );
-	
-	for ( m_nVolume = 0 ; m_nVolume < m_nTotal ; )
-	{
-		DWORD nBuffer	= min( ( m_nTotal - m_nVolume ), BUFFER_SIZE );
-		DWORD tStart	= GetTickCount();
-		
-		if ( ! ReadFile( hTarget, pBuffer.get(), nBuffer, &nBuffer, NULL ) ||
-			 ! VerifyData( pBuffer.get(), nBuffer, m_sTarget ) )
-			 break;
-		
-		m_nVolume += nBuffer;
-		m_nScaled = (int)( (double)m_nVolume / (double)m_nTotal * 1000.0f );
-		if ( m_nScaled != m_nOldScaled ) PostMessage( WM_TIMER, 3 );
-		
-		if ( m_bCancel ) break;
-		tStart = ( GetTickCount() - tStart ) / 2;
-		Sleep( min( tStart, 50ul ) );
-		if ( m_bCancel ) break;
-	}
-	
-	CloseHandle( hTarget );
-	
-	return ( m_nVolume >= m_nTotal ) && VerifyData( NULL, 0, m_sTarget );
 }
 
 HANDLE CTorrentSeedDlg::CreateTarget()
@@ -631,6 +584,12 @@ BOOL CTorrentSeedDlg::CreateDownload()
 	
 	if ( pDownload != NULL && pDownload->SeedTorrent( m_sTarget ) )
 	{
+		if ( pInfo->m_nFiles == 1 )
+		{
+			pDownload->MakeComplete();
+			pDownload->ResetVerification();
+			pDownload->SetModified();
+		}
 		return TRUE;
 	}
 	else
