@@ -813,7 +813,7 @@ BOOL CDownloadTask::CopyFileToBatch(HANDLE hSource, QWORD nOffset, QWORD nLength
 
 		tStart = ( GetTickCount() - tStart ) / 2;
 		Sleep( min( tStart, 50ul ) );
-	} while ( nOffset < nLength );
+	} while ( nRead < nLength );
 	
 	if ( nRead == nLength )
 	{
