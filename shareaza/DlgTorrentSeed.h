@@ -66,7 +66,6 @@ protected:
 	BOOL		BuildFiles(HANDLE hTarget);
 	CString		FindFile(LPVOID pVoid);
 	BOOL		CopyFile(HANDLE hTarget, HANDLE hSource, QWORD nLength, LPCTSTR pszPath);
-	BOOL		VerifyData(BYTE* pBuffer, DWORD nLength, LPCTSTR pszPath);
 	BOOL		CreateDownload();
 
 // Message Map

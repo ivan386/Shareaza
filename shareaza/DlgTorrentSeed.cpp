@@ -468,7 +468,7 @@ BOOL CTorrentSeedDlg::BuildFiles(HANDLE hTarget)
 		if ( m_bCancel || ! bSuccess ) return FALSE;
 	}
 	
-	return VerifyData( NULL, 0, m_pInfo.m_pFiles[ m_pInfo.m_nFiles - 1 ].m_sPath );
+	return TRUE;
 }
 
 BOOL CTorrentSeedDlg::CopyFile(HANDLE hTarget, HANDLE hSource, QWORD nLength, LPCTSTR pszPath)
@@ -482,7 +482,6 @@ BOOL CTorrentSeedDlg::CopyFile(HANDLE hTarget, HANDLE hSource, QWORD nLength, LP
 		DWORD tStart	= GetTickCount();
 		
 		if ( ! ReadFile( hSource, pBuffer.get(), nBuffer, &nBuffer, NULL ) ||
-			 ! VerifyData( pBuffer.get(), nBuffer, pszPath ) ||
 			 ! WriteFile( hTarget, pBuffer.get(), nBuffer, &nSuccess, NULL ) )
 		{
 			return FALSE;
@@ -520,50 +519,6 @@ BOOL CTorrentSeedDlg::CopyFile(HANDLE hTarget, HANDLE hSource, QWORD nLength, LP
 	}
 }
 
-BOOL CTorrentSeedDlg::VerifyData(BYTE* pBuffer, DWORD nLength, LPCTSTR pszPath)
-{
-	if ( pBuffer == NULL )
-	{
-		if ( m_nBlockNumber >= m_pInfo.m_nBlockCount ) return TRUE;
-		if ( m_pInfo.FinishBlockTest( m_nBlockNumber++ ) ) return TRUE;
-		
-		CString strFormat;
-		LoadString(strFormat, IDS_BT_SEED_VERIFY_FAIL );
-		m_sMessage.Format( strFormat, (LPCTSTR)pszPath );
-		return FALSE;
-	}
-	
-	while ( nLength > 0 )
-	{
-		DWORD nBlock = min( nLength, m_nBlockLength );
-		
-		m_pInfo.AddToTest( pBuffer, nBlock );
-		
-		pBuffer += nBlock;
-		nLength -= nBlock;
-		m_nBlockLength -= nBlock;
-		
-		if ( m_nBlockLength == 0 )
-		{
-			if ( ! m_pInfo.FinishBlockTest( m_nBlockNumber++ ) )
-			{
-				CString strFormat;
-				LoadString(strFormat, IDS_BT_SEED_VERIFY_FAIL );
-				m_sMessage.Format( strFormat, (LPCTSTR)pszPath );
-				return FALSE;
-			}
-			
-			if ( m_nBlockNumber < m_pInfo.m_nBlockCount )
-			{
-				m_nBlockLength = m_pInfo.m_nBlockSize;
-				m_pInfo.BeginBlockTest();
-			}
-		}
-	}
-	
-	return TRUE;
-}
-
 BOOL CTorrentSeedDlg::CreateDownload()
 {
 	CSingleLock pTransfersLock( &Transfers.m_pSection );
@@ -584,12 +539,9 @@ BOOL CTorrentSeedDlg::CreateDownload()
 	
 	if ( pDownload != NULL && pDownload->SeedTorrent( m_sTarget ) )
 	{
-		if ( pInfo->m_nFiles == 1 )
-		{
-			pDownload->MakeComplete();
-			pDownload->ResetVerification();
-			pDownload->SetModified();
-		}
+		pDownload->MakeComplete();
+		pDownload->ResetVerification();
+		pDownload->SetModified();
 		return TRUE;
 	}
 	else
