@@ -33,6 +33,7 @@
 #include "LibraryMaps.h"
 #include "SharedFile.h"
 #include "HttpRequest.h"
+#include "FragmentedFile.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -221,6 +222,9 @@ int CDownloadTask::Run()
 		break;
 	case dtaskMergeFile:
 		RunMerge();
+		break;
+	case dtaskCreateBatch:
+		MakeBatchTorrent();
 		break;
 	}
 	
@@ -723,3 +727,104 @@ CBuffer* CDownloadTask::IsPreviewAnswerValid()
 	CBuffer* pBuffer = m_pRequest.GetResponseBuffer();
 	return pBuffer;
 }
+
+BOOL CDownloadTask::MakeBatchTorrent()
+{
+	QWORD nOffset = 0;
+	QWORD nTotal = 0;
+	ASSERT( m_pDownload->m_pFile == NULL );
+
+	for ( int nFile = 0 ; nFile < m_pDownload->m_pTorrent.m_nFiles ; nFile++ )
+	{
+		CBTInfo::CBTFile* pFile = &m_pDownload->m_pTorrent.m_pFiles[ nFile ];
+		nTotal += pFile->m_nSize;
+	}
+
+	m_pDownload->m_pFile = new CFragmentedFile();
+	m_pDownload->m_pFile->Create( m_pDownload->m_sDiskName, nTotal );
+
+   	for ( int nFile = 0 ; nFile < m_pDownload->m_pTorrent.m_nFiles ; nFile++ )
+	{
+		CBTInfo::CBTFile* pFile = &m_pDownload->m_pTorrent.m_pFiles[ nFile ];
+		CString strSource = m_pDownload->FindTorrentFile( pFile );
+		HANDLE hSource = INVALID_HANDLE_VALUE;
+		
+		if ( strSource.GetLength() > 0 )
+		{
+			hSource = CreateFile( strSource, GENERIC_READ,
+				FILE_SHARE_READ | ( theApp.m_bNT ? FILE_SHARE_DELETE : 0 ),
+				NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL );
+			VERIFY_FILE_ACCESS( hSource, strSource )
+		}
+		
+		if ( hSource == INVALID_HANDLE_VALUE )
+		{
+			CString strFormat;
+			LoadString(strFormat, IDS_BT_SEED_SOURCE_LOST );
+			// m_sMessage.Format( strFormat, (LPCTSTR)pFile->m_sPath );
+			return FALSE;
+		}
+		
+		DWORD nSizeHigh	= 0;
+		DWORD nSizeLow	= GetFileSize( hSource, &nSizeHigh );
+		QWORD nSize		= (QWORD)nSizeLow + ( (QWORD)nSizeHigh << 32 );
+		
+		if ( nSize != pFile->m_nSize )
+		{
+			CloseHandle( hSource );
+			//  m_sMessage.Format( IDS_BT_SEED_SOURCE_SIZE,
+			//	pFile->m_sPath,
+			//	Settings.SmartVolume( pFile->m_nSize ),
+			//	Settings.SmartVolume( nSize ) );
+			return FALSE;
+		}
+		
+		BOOL bSuccess = CopyFileToBatch( hSource, nOffset, pFile->m_nSize, pFile->m_sPath );
+		
+		CloseHandle( hSource );
+		
+		if ( ! bSuccess ) 
+			return FALSE;
+		else
+			nOffset += pFile->m_nSize;
+	}
+	
+	return TRUE;
+}
+
+BOOL CDownloadTask::CopyFileToBatch(HANDLE hSource, QWORD nOffset, QWORD nLength, LPCTSTR /*pszPath*/)
+{
+	auto_array< BYTE > pBuffer( new BYTE[ BUFFER_SIZE ] );
+	
+	QWORD nRead = 0;
+	do
+	{
+		DWORD nBuffer	= min( nLength, BUFFER_SIZE );
+		DWORD tStart	= GetTickCount();
+		
+		if ( ! ReadFile( hSource, pBuffer.get(), nBuffer, &nBuffer, NULL ) ||
+			 ! m_pDownload->m_pFile->WriteRange( nOffset, pBuffer.get(), nBuffer ) )
+		{
+			return FALSE;
+		}
+
+		nOffset += nBuffer;
+		nRead += nBuffer;
+
+		tStart = ( GetTickCount() - tStart ) / 2;
+		Sleep( min( tStart, 50ul ) );
+	} while ( nOffset < nLength );
+	
+	if ( nRead == nLength )
+	{
+		return TRUE;
+	}
+	else
+	{
+		// CString strFormat;
+		// LoadString(strFormat, IDS_BT_SEED_COPY_FAIL );
+		// m_sMessage.Format( strFormat, (LPCTSTR)pszPath );
+		return FALSE;
+	}
+}
+

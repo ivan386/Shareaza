@@ -1,7 +1,7 @@
 //
 // Download.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -519,6 +519,12 @@ void CDownload::OnTaskComplete(CDownloadTask* pTask)
 	else if ( pTask->m_nTask == CDownloadTask::dtaskMergeFile )
 	{
 		// Merge Complete.
+	}
+	else if ( pTask->m_nTask == CDownloadTask::dtaskCreateBatch )
+	{
+		MakeComplete();
+		ResetVerification();
+		SetModified();
 	}
 	else
 	{

@@ -1,7 +1,7 @@
 //
 // BTInfo.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -55,7 +55,6 @@ CBTInfo::CBTInfo() :
 ,	m_tCreationDate		( 0 )
 ,	m_bPrivate			( FALSE )
 ,	m_nStartDownloads	( dtAlways )
-
 ,	m_nTestByte			( 0 )
 {
 }
@@ -65,10 +64,14 @@ CBTInfo::~CBTInfo()
 	Clear();
 }
 
-CBTInfo::CBTFile::CBTFile() :
-	nFilePriority	( prNormal )
+CBTInfo::CBTFile::CBTFile(CBTInfo* pInfo) : m_pInfo( pInfo ), nFilePriority	( prNormal )
 {
-	m_nSize	= 0;
+	m_nSize = 0;
+}
+
+CBTInfo::CBTFile::CBTFile()	: m_pInfo( NULL ), nFilePriority ( prNormal )
+{
+	m_nSize = 0;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -159,7 +162,10 @@ void CBTInfo::Copy(CBTInfo* pSource)
 	{
 		m_pFiles = new CBTFile[ m_nFiles ];
 		for ( int nFile = 0 ; nFile < m_nFiles ; nFile++ )
+		{
 			m_pFiles[ nFile ].Copy( &pSource->m_pFiles[ nFile ] );
+			m_pFiles[ nFile ].m_pInfo = this;
+		}
 	}
 
 	// Copy announce trackers
@@ -286,7 +292,10 @@ void CBTInfo::Serialize(CArchive& ar)
 		m_nFiles = (int)ar.ReadCount();
 		m_pFiles = new CBTFile[ m_nFiles ];
 		for ( int nFile = 0 ; nFile < m_nFiles ; nFile++ )
+		{
 			m_pFiles[ nFile ].Serialize( ar, nVersion );
+			m_pFiles[ nFile ].m_pInfo = this;
+		}
 		
 		ar >> m_sTracker;
 
@@ -330,6 +339,7 @@ void CBTInfo::CBTFile::Copy(CBTFile* pSource)
 	m_oTiger		= pSource->m_oTiger;
 	m_oMD5			= pSource->m_oMD5;
 	nFilePriority	= pSource->nFilePriority;
+	m_pInfo			= NULL;	 // Clear it, needs reassigning
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -387,7 +397,8 @@ BOOL CBTInfo::LoadTorrentFile(LPCTSTR pszFile)
 	if ( pFile.Open( pszFile, CFile::modeRead|CFile::shareDenyNone ) )
 	{
 		DWORD nLength = (DWORD)pFile.GetLength();
-		
+		m_sPath = pszFile;
+
 		if ( nLength < 20 * 1024 * 1024 && nLength != 0 )
 		{
 			m_pSource.Clear();
@@ -718,6 +729,7 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 		m_pFiles[0].m_oTiger = m_oTiger;
 		m_pFiles[0].m_oED2K = m_oED2K;
 		m_pFiles[0].m_oMD5 = m_oMD5;
+		m_pFiles[0].m_pInfo = this;
 
 		// Add sources from torrents - DWK
 		CBENode* pSources = pRoot->GetNode( "sources" );
@@ -751,7 +763,7 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 			CBENode* pLength = pFile->GetNode( "length" );
 			if ( ! pLength || ! pLength->IsType( CBENode::beInt ) ) return FALSE;
 			m_pFiles[ nFile ].m_nSize = pLength->GetInt();
-	
+			m_pFiles[ nFile ].m_pInfo = this;
 
 			strPath.Empty();
 			CBENode* pPath;

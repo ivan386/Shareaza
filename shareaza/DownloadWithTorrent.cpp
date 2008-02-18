@@ -1,7 +1,7 @@
 //
 // DownloadWithTorrent.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -40,6 +40,9 @@
 #include "GProfile.h"
 #include "Uploads.h"
 #include "UploadTransfer.h"
+#include "Library.h"
+#include "LibraryMaps.h"
+#include "SharedFile.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -799,4 +802,44 @@ BOOL CDownloadWithTorrent::UploadExists(const Hashes::BtGuid& oGUID) const
 			return TRUE;
 	}
 	return FALSE;
+}
+
+CString CDownloadWithTorrent::FindTorrentFile(LPVOID pVoid)
+{
+	CBTInfo::CBTFile* pFile = reinterpret_cast<CBTInfo::CBTFile*>(pVoid);
+	CString strFile;
+	
+	CString strPath = pFile->m_pInfo->m_sPath;
+	int nSlash = strPath.ReverseFind( '\\' );
+	if ( nSlash >= 0 ) strPath = strPath.Left( nSlash + 1 );
+
+	if ( pFile->m_oSHA1 )
+	{
+		CSingleLock oLibraryLock( &Library.m_pSection, TRUE );
+		if ( CLibraryFile* pShared = LibraryMaps.LookupFileBySHA1( pFile->m_oSHA1, FALSE, TRUE ) )
+		{
+			strFile = pShared->GetPath();
+			oLibraryLock.Unlock();
+			if ( GetFileAttributes( strFile ) != INVALID_FILE_ATTRIBUTES ) return strFile;
+		}
+	}
+
+	strFile = Settings.Downloads.CompletePath + "\\" + pFile->m_sPath;
+	if ( GetFileAttributes( strFile ) != INVALID_FILE_ATTRIBUTES ) return strFile;
+
+	strFile = strPath + pFile->m_sPath;
+	if ( GetFileAttributes( strFile ) != INVALID_FILE_ATTRIBUTES ) return strFile;
+	
+	//Try removing the outer directory in case of multi-file torrent oddities
+	LPCTSTR pszName = _tcsrchr( pFile->m_sPath, '\\' );
+	if ( pszName == NULL ) pszName = pFile->m_sPath; else pszName ++;
+
+	strFile = Settings.Downloads.CompletePath + "\\" + pszName;
+	if ( GetFileAttributes( strFile ) != INVALID_FILE_ATTRIBUTES ) return strFile;
+
+	strFile = strPath + pszName;
+	if ( GetFileAttributes( strFile ) != INVALID_FILE_ATTRIBUTES ) return strFile;
+
+	strFile.Empty();
+	return strFile;
 }

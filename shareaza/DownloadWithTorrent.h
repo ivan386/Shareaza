@@ -1,7 +1,7 @@
 //
 // DownloadWithTorrent.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -19,8 +19,8 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_DOWNLOADWITHTORRENT_H__0F93FE22_BFCF_4B6E_8416_7C896432E65A__INCLUDED_)
-#define AFX_DOWNLOADWITHTORRENT_H__0F93FE22_BFCF_4B6E_8416_7C896432E65A__INCLUDED_
+#if !defined(DOWNLOADWITHTORRENT_H)
+#define DOWNLOADWITHTORRENT_H
 
 #pragma once
 
@@ -67,6 +67,7 @@ private:
 
 // Operations
 public:
+	static	CString	FindTorrentFile(LPVOID pVoid);
 	void			AddUpload(CUploadTransferBT* pUpload);
 	void			RemoveUpload(CUploadTransferBT* pUpload);
 	BOOL			SeedTorrent(LPCTSTR pszTarget);
@@ -105,4 +106,4 @@ private:
 	friend class CDownloads;	// m_bSeeding for Load()
 };
 
-#endif // !defined(AFX_DOWNLOADWITHTORRENT_H__0F93FE22_BFCF_4B6E_8416_7C896432E65A__INCLUDED_)
+#endif // !defined(DOWNLOADWITHTORRENT_H)

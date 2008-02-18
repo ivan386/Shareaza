@@ -62,10 +62,8 @@ protected:
 	void		OnRun();
 	void		RunSingleFile();
 	void		RunMultiFile();
+	BOOL		CheckFiles();
 	HANDLE		CreateTarget();
-	BOOL		BuildFiles(HANDLE hTarget);
-	CString		FindFile(LPVOID pVoid);
-	BOOL		CopyFile(HANDLE hTarget, HANDLE hSource, QWORD nLength, LPCTSTR pszPath);
 	BOOL		CreateDownload();
 
 // Message Map

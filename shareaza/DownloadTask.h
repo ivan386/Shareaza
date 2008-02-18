@@ -1,7 +1,7 @@
 //
 // DownloadTask.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -19,8 +19,8 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_DOWNLOADTASK_H__F90D6932_4D5C_4670_AA6D_9C8316A0172A__INCLUDED_)
-#define AFX_DOWNLOADTASK_H__F90D6932_4D5C_4670_AA6D_9C8316A0172A__INCLUDED_
+#if !defined(DOWNLOADTASK_H)
+#define DOWNLOADTASK_H
 
 #pragma once
 
@@ -60,7 +60,10 @@ protected:
 
 // Enumerations
 public:
-	enum { dtaskAllocate, dtaskCopySimple, dtaskCopyTorrent, dtaskPreviewRequest, dtaskCheckHash, dtaskMergeFile };
+	enum { dtaskAllocate, dtaskCopySimple, dtaskCopyTorrent, 
+		   dtaskPreviewRequest, dtaskCheckHash, dtaskMergeFile,
+		   dtaskCreateBatch
+		 };
 
 // Operations
 public:
@@ -73,6 +76,8 @@ protected:
 	void	RunMerge();
 	BOOL	CopyFile(HANDLE hSource, LPCTSTR pszTarget, QWORD nLength);
 	void	CreatePathForFile(const CString& strBase, const CString& strPath);
+	BOOL	MakeBatchTorrent();
+	BOOL	CopyFileToBatch(HANDLE hSource, QWORD nOffset, QWORD nLength, LPCTSTR pszPath);
 private:
 	void	Construct(CDownload* pDownload);
 
@@ -83,20 +88,14 @@ public:
 
 // Overrides
 public:
-	//{{AFX_VIRTUAL(CDownloadTask)
 	public:
 	virtual BOOL InitInstance();
 	virtual int Run();
-	//}}AFX_VIRTUAL
 
 // Implementation
 protected:
-	//{{AFX_MSG(CDownloadTask)
-	//}}AFX_MSG
 
 	DECLARE_MESSAGE_MAP()
 };
 
-//{{AFX_INSERT_LOCATION}}
-
-#endif // !defined(AFX_DOWNLOADTASK_H__F90D6932_4D5C_4670_AA6D_9C8316A0172A__INCLUDED_)
+#endif // !defined(DOWNLOADTASK_H)

@@ -1,7 +1,7 @@
 //
 // BTInfo.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -48,9 +48,11 @@ public:
 	{
 	public:
 		CBTFile();
+		CBTFile(CBTInfo* pInfo);
 		void		Copy(CBTFile* pSource);
 		void		Serialize(CArchive& ar, int nVersion);
 		int			nFilePriority;
+		CBTInfo*	m_pInfo;
 	};
 	enum { prNotWanted, prLow, prNormal, prHigh };
 
