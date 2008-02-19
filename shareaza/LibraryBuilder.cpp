@@ -1,7 +1,7 @@
 //
 // LibraryBuilder.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -58,7 +58,8 @@ CLibraryBuilder::CLibraryBuilder() :
 	m_bThread( FALSE ),
 	m_bPriority( FALSE ),
 	m_nReaded( 0 ),
-	m_nElapsed( 0 )
+	m_nElapsed( 0 ),
+	m_nProgress( 0 )
 {
 	QueryPerformanceFrequency( &m_nFreq );
 	QueryPerformanceCounter( &m_nLastCall );
@@ -122,16 +123,22 @@ void CLibraryBuilder::Remove(LPCTSTR szPath)
 	}
 }
 
-int CLibraryBuilder::GetRemaining() const
-{
-	CQuickLock oLock( m_pSection );
-	return (int)m_pFiles.size();
-}
-
 CString CLibraryBuilder::GetCurrent() const
 {
 	CQuickLock oLock( m_pSection );
 	return m_sPath;
+}
+
+DWORD CLibraryBuilder::GetRemaining() const
+{
+	CQuickLock oLock( m_pSection );
+	return m_pFiles.size();
+}
+
+DWORD CLibraryBuilder::GetProgress() const
+{
+	CQuickLock oLock( m_pSection );
+	return m_nProgress;
 }
 
 void CLibraryBuilder::RequestPriority(LPCTSTR pszPath)
@@ -403,6 +410,7 @@ void CLibraryBuilder::OnRun()
 			{
 				CQuickLock pLock( m_pSection );
 				m_sPath.Empty();
+				m_nProgress = 0;
 			}
 		}
 	}
@@ -461,6 +469,11 @@ BOOL CLibraryBuilder::HashFile(LPCTSTR szPath, HANDLE hFile, DWORD nIndex)
 	{
 		nBlock	= min( nLength, MAX_HASH_BUFFER_SIZE );
 
+		{
+			CQuickLock pLock( m_pSection );
+			m_nProgress = ( ( nFileSize - nLength ) * 100 ) / nFileSize;
+		}
+
 		if ( ! m_bThread )
 			// Termination request
 			break;
@@ -507,6 +520,11 @@ BOOL CLibraryBuilder::HashFile(LPCTSTR szPath, HANDLE hFile, DWORD nIndex)
 		pMD5.Add( pBuffer, nBlock );
 		pTiger.AddToFile( pBuffer, nBlock );
 		pED2K.AddToFile( pBuffer, nBlock );
+	}
+
+	{
+		CQuickLock pLock( m_pSection );
+		m_nProgress = 100;
 	}
 
 	VirtualFree( pBuffer, 0, MEM_RELEASE );

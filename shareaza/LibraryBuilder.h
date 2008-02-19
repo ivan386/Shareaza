@@ -1,7 +1,7 @@
 //
 // LibraryBuilder.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -18,9 +18,6 @@
 // along with Shareaza; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
-
-#if !defined(AFX_LIBRARYBUILDER_H__B2779061_437E_4C10_AC9F_1E2AC7885C40__INCLUDED_)
-#define AFX_LIBRARYBUILDER_H__B2779061_437E_4C10_AC9F_1E2AC7885C40__INCLUDED_
 
 #pragma once
 
@@ -39,7 +36,6 @@ public:
 	void		Remove(DWORD nIndex);				// Remove file from list
 	void		Remove(LPCTSTR szPath);				// Remove file from list
 	void		Remove(CLibraryFile* pFile);		// Remove file from list
-	int			GetRemaining() const;
 	void		RequestPriority(LPCTSTR pszPath);	// Place file to the begin of list
 	void		Skip(DWORD nIndex);					// Move file to the end of list
 	BOOL		IsAlive() const;
@@ -47,7 +43,10 @@ public:
 	void		StopThread();
 	void		BoostPriority(BOOL bPriority);
 	BOOL		GetBoostPriority() const;
-	CString		GetCurrent() const;
+
+	CString		GetCurrent() const;					// Hashing filename
+	DWORD		GetRemaining() const;				// Hashing queue size
+	DWORD		GetProgress() const;				// Hashing file progress (0..100%)
 
 	static int	SubmitMetadata(DWORD nIndex, LPCTSTR pszSchemaURI, CXMLElement*& pXML);
 	static BOOL	SubmitCorrupted(DWORD nIndex);
@@ -81,13 +80,14 @@ protected:
 	BOOL						m_bThread;			// FALSE - termination request
 	BOOL						m_bPriority;
 	CString						m_sPath;			// Hashing filename
+	DWORD						m_nProgress;		// Hashing file progress (0..100%)
 	LARGE_INTEGER				m_nLastCall;		// (ticks)
 	LARGE_INTEGER				m_nFreq;			// (Hz)
 	QWORD						m_nReaded;			// (bytes)
 	__int64						m_nElapsed;			// (mks)
 
 	// Get next file from list doing all possible tests
-	// Returns 0 if no file avaliable, sets m_bThread = FALSE if no files left.
+	// Returns 0 if no file available, sets m_bThread = FALSE if no files left.
 	DWORD		GetNextFileToHash(CString& sPath);
 	static UINT	ThreadStart(LPVOID pParam);
 	void		OnRun();
@@ -98,5 +98,3 @@ protected:
 };
 
 extern CLibraryBuilder LibraryBuilder;
-
-#endif // !defined(AFX_LIBRARYBUILDER_H__B2779061_437E_4C10_AC9F_1E2AC7885C40__INCLUDED_)
