@@ -1,7 +1,7 @@
 //
 // RichViewCtrl.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -261,6 +261,21 @@ BOOL CRichViewCtrl::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)
 		ScreenToClient( &pt );
 
 		CRichFragment* pFrag = m_bSelecting ? NULL : PointToFrag( pt );
+
+		RVN_ELEMENTEVENT pNotify = {};
+		pNotify.hdr.hwndFrom	= GetSafeHwnd();
+		pNotify.hdr.idFrom		= GetDlgCtrlID();
+		pNotify.hdr.code		= RVN_SETCURSOR;
+		pNotify.pElement		= pFrag == NULL ? NULL : pFrag->m_pElement;
+
+		LRESULT result = GetOwner()->SendMessage( WM_NOTIFY, pNotify.hdr.idFrom, (LPARAM)&pNotify );
+
+		HCURSOR hCursor = (HCURSOR)result;
+		if ( hCursor != NULL )
+		{
+			SetCursor( hCursor );
+			return TRUE;
+		}
 
 		if ( pFrag != NULL && pFrag->m_pElement->m_sLink.GetLength() )
 		{

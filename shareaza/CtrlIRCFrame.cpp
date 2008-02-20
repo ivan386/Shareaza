@@ -102,8 +102,6 @@ BEGIN_MESSAGE_MAP(CIRCFrame, CWnd)
 	ON_NOTIFY(RVN_DBLCLICK, IDC_CHAT_TEXT, OnRichDblClk)
 	ON_NOTIFY(RVN_SETCURSOR, IDC_CHAT_TEXT, OnRichCursorMove)
 	ON_NOTIFY(TCN_SELCHANGE, IDC_CHAT_TABS, OnClickTab)
-	ON_WM_SETCURSOR()
-	ON_WM_NCHITTEST()
 END_MESSAGE_MAP()
 
 #define SIZE_INTERNAL	1982
@@ -2269,17 +2267,21 @@ int CIRCFrame::AddTab(CString strTabName, int nKindOfTab)
 
 void CIRCFrame::OnRichCursorMove(NMHDR* /* pNMHDR */, LRESULT* pResult)
 {
-	*pResult = 0;
+	AFX_NOTIFY* pNotify = (AFX_NOTIFY*)pResult;
 	CString strText = GetTextFromRichPoint();
 	if ( strText.IsEmpty() ) return;
 	int nIndex = IsUserInList( strText );
 	if ( nIndex != -1 || strText.Left( 1 ) == "#" ||
 		strText.Left( 7 ) == "http://" || strText.Left( 4 ) == "www." ||
 		strText.Left( 7 ) == "magnet:" || strText.Left( 4 ) == "ed2k:" ||
-		strText.Mid( 1, 7 ) == "http://" || strText.Mid( 1, 4 ) == "www." )	
-	   SetCursor( theApp.LoadCursor( IDC_HAND ) );
-	else if ( GetCursor() == theApp.LoadCursor( IDC_HAND ) )
-	   SetCursor( theApp.LoadCursor( IDC_IBEAM ) );
+		strText.Mid( 1, 7 ) == "http://" || strText.Mid( 1, 4 ) == "www." )
+	{
+		pNotify->pResult = (LRESULT*)theApp.LoadCursor( IDC_HAND );
+	}
+	else
+	{
+		pNotify->pResult = NULL;
+	}
 }
 
 void CIRCFrame::OnRichDblClk(NMHDR* /* pNMHDR */, LRESULT* pResult)
