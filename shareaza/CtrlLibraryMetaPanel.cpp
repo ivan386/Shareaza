@@ -708,10 +708,10 @@ void CLibraryMetaPanel::OnRun()
 
 			m_pSection.Lock();
 
-			if ( m_bmThumb.m_hObject ) m_bmThumb.DeleteObject();
-
 			if ( m_sPath == strPath )
 			{
+				if ( m_bmThumb.m_hObject ) 
+					m_bmThumb.DeleteObject();
 				m_sThumb = m_sPath;
 				m_bmThumb.Attach( pFile.CreateBitmap() );
 				m_szThumb.cx = pFile.m_nWidth;
