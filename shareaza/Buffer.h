@@ -47,6 +47,7 @@ private:
 // Accessors
 public:
 	const DWORD	GetBufferSize() const { return m_nBuffer; }	// Return the total size of the buffer
+	BYTE* const	GetDataStart() const { return m_pBuffer; }	// Return a pointer to the start of the data in the buffer
 
 // Operations
 public:
@@ -84,8 +85,8 @@ public:
 	BOOL    StartsWith(LPCSTR pszString, const size_t nLength, const BOOL bRemove = FALSE) throw();// Returns true if the buffer starts with this text
 
 	// Use the buffer with a socket
-	DWORD	Receive(SOCKET hSocket, DWORD nSpeedLimit = ~0ul);	// Move incoming data from the socket to this buffer
-	DWORD	Send(SOCKET hSocket, DWORD nSpeedLimit = ~0ul);		// Send the contents of this buffer to the computer on the far end of the socket
+	const DWORD	Receive(SOCKET hSocket, DWORD nSpeedLimit = ~0ul);	// Move incoming data from the socket to this buffer
+	const DWORD	Send(SOCKET hSocket, DWORD nSpeedLimit = ~0ul);		// Send the contents of this buffer to the computer on the far end of the socket
 
 	// Use the buffer with the ZLib compression library
 	BOOL	Deflate(BOOL bIfSmaller = FALSE);	// Compress the data in this buffer
@@ -127,6 +128,10 @@ public:
 
 	// Add ASCII text to the start of this buffer, shifting everything else forward
 	void	Prefix(LPCSTR pszText, const size_t nLength) { Insert( 0, (void*)pszText, nLength ); }
+
+private:
+	BYTE* const		GetDataEnd() const { return m_pBuffer + m_nLength; }	// Return a pointer to the end of the data in the buffer
+	const size_t	GetBufferFree() const { return m_nBuffer - m_nLength; }	// Return the unused #bytes in the buffer
 
 // Statics
 public:

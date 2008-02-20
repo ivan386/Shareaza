@@ -139,7 +139,7 @@ DWORD CBuffer::AddBuffer(CBuffer* pBuffer, const size_t nLength)
 	if ( pBuffer == NULL ) return 0;
 
 	// primitive overflow protection (relevant for 64bit)
-	if ( nLength > std::numeric_limits< int >::max() - m_nBuffer ) return 0;
+	if ( nLength > INT_MAX ) return 0;
 
 	// If the call specified a length, use it, otherwise use the length of pBuffer
 	if( pBuffer->m_nLength < nLength )
@@ -218,7 +218,7 @@ bool CBuffer::EnsureBuffer(const size_t nLength)
 void CBuffer::Print(const LPCWSTR pszText, const size_t nLength, const UINT nCodePage)
 {
 	// primitive overflow protection (relevant for 64bit)
-	if ( nLength > std::numeric_limits< int >::max() - m_nBuffer ) return;
+	if ( nLength > INT_MAX ) return;
 
 	// If the text is blank or no memory, don't do anything
 	ASSERT( pszText );
@@ -365,7 +365,7 @@ BOOL CBuffer::StartsWith(LPCSTR pszString, const size_t nLength, const BOOL bRem
 // Takes a handle to a socket
 // Reads in data from the socket, moving it into the buffer
 // Returns the number of bytes we got
-DWORD CBuffer::Receive(SOCKET hSocket, DWORD nSpeedLimit)
+const DWORD CBuffer::Receive(const SOCKET hSocket, DWORD nSpeedLimit)
 {
 	// Start the total at 0
 	DWORD nTotal = 0ul;
@@ -373,60 +373,59 @@ DWORD CBuffer::Receive(SOCKET hSocket, DWORD nSpeedLimit)
 	// Read bytes from the socket until the limit has run out
 	while ( nSpeedLimit )
 	{
-		// Calculate how much free buffer space there is
-		int nLength = m_nBuffer - m_nLength;
+		// Limit nLength to the free buffer space or the maximum size of an int
+		size_t nLength = min( GetBufferFree(), static_cast< size_t >( INT_MAX ) );
 
 		if ( nLength )
+		{
 			// Limit nLength to the speed limit
-			nLength = static_cast< int >( min( static_cast< DWORD >( nLength ), nSpeedLimit ) );
+			nLength = min( nLength, nSpeedLimit );
+		}
 		else
 		{
 			// Limit nLength to the maximum recieve size
-			nLength = static_cast< int >( min( nSpeedLimit, MAX_RECV_SIZE ) );
-			
-			// Exit loop if the buffer isn't big enough to hold the data
-			if ( !EnsureBuffer( nLength ) ) break;
+			nLength = min( nSpeedLimit, MAX_RECV_SIZE );
 		}
 
-		// Point where the data is to be stored
-		// This needs to be done after EnsureBuffer() is called as it may have changed m_pBuffer
-		char * pData = reinterpret_cast< char * >( m_pBuffer ) + m_nLength;
+		// Exit loop if the buffer isn't big enough to hold the data
+		if ( !EnsureBuffer( nLength ) )
+			break;
 
-		// Read the bytes from the socket
-		nLength = recv(	// Store the number of bytes read from the socket
-			hSocket,	// Use the passed in socket
-			pData,		// Tell recv to write the data here
-			nLength,	// Maximum # bytes to read
-			0 );		// No special options
+		// Point where the data is to be stored. This needs to be done after
+		// EnsureBuffer() is called as it may have changed the buffer
+		char* const pData = reinterpret_cast< char* >( GetDataEnd() );
+
+		// Read the bytes from the socket and record how many are actually read
+		const int nRead = recv( hSocket, pData, static_cast< int >( nLength ), 0 );
 
 		// Exit loop if nothing is left or an error occurs
-		if ( nLength <= 0 ) break;
+		if ( nRead <= 0 )
+			break;
 
-		m_nLength	+= nLength;	// Add to the buffer size
-		nTotal		+= nLength;	// Add to the total
-		nSpeedLimit	-= nLength;	// Adjust the limit
+		m_nLength	+= nRead;	// Add to the buffer size
+		nTotal		+= nRead;	// Add to the total
+		nSpeedLimit	-= nRead;	// Adjust the limit
 	}
 
 	// Add the total to the statistics
 	Statistics.Current.Bandwidth.Incoming += nTotal;
 
-	// Return the total # bytes read
+	// Return the total #bytes read
 	return nTotal;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 // CBuffer socket send
 
-// Takes a handle to a socket
-// Sends all the data in this buffer to the remote computer at the other end of it
-// Returns how many bytes were sent
-DWORD CBuffer::Send(SOCKET hSocket, DWORD nSpeedLimit)
+// Send the data from the buffer to the socket
+// Returns the #bytes sent
+const DWORD CBuffer::Send(const SOCKET hSocket, DWORD nSpeedLimit)
 {
 	// Adjust limit if there isn't enough data to send
-	nSpeedLimit = min( nSpeedLimit, m_nLength );
+	nSpeedLimit = static_cast< DWORD >( min( nSpeedLimit, m_nLength ) );
 
 	// Point to the data to write
-	char* pData = reinterpret_cast< char* >( m_pBuffer );
+	const char* pData = reinterpret_cast< char* >( GetDataStart() );
 
 	// Start the total at 0
 	DWORD nTotal = 0ul;
@@ -434,18 +433,15 @@ DWORD CBuffer::Send(SOCKET hSocket, DWORD nSpeedLimit)
 	// Write bytes to the socket until our limit has run out
 	while ( nSpeedLimit )
 	{
-		// Limit nLength to the speed limit
-		int nLength = static_cast< int >( nSpeedLimit );
+		// Limit nLength to the speed limit or max int
+		int nLength = static_cast< int >( min( nSpeedLimit, static_cast< DWORD >( INT_MAX ) ) );
 
-		// Send the bytes to the socket
-		nLength = send(		// Store the # bytes sent to the socket
-			hSocket,		// Use the passed in socket
-			pData,			// Tell send to read the data here
-			nLength,		// Maximum # bytes to send
-			0 );			// No special options
+		// Send the bytes to the socket and record how many are actually sent
+		nLength = send( hSocket, pData, nLength, 0 );
 
 		// Exit loop if nothing is left or an error occurs
-		if ( nLength <= 0 ) break;
+		if ( nLength <= 0 )
+			break;
 
 		pData		+= nLength;	// Move forward past the sent data
 		nTotal		+= nLength;	// Add to the total
@@ -458,7 +454,7 @@ DWORD CBuffer::Send(SOCKET hSocket, DWORD nSpeedLimit)
 	// Add the total to statistics
 	Statistics.Current.Bandwidth.Outgoing += nTotal;
 
-	// Return the total # bytes sent
+	// Return the total #bytes sent
 	return nTotal;
 }
 
@@ -491,9 +487,11 @@ BOOL CBuffer::Deflate(BOOL bIfSmaller)
 	return TRUE;                       // Report success
 }
 
-// Takes the size we think the data will be when decompressed, or 0 if we don't know
-// Decompresses the data in this buffer in place
+// Decompress the data in this buffer in place
 // Returns true if the data is decompressed, false if there was an error
+//
+// Side Effect: This function assumes that all of the data in the buffer needs
+// be decompressed, existing contents will be replaced by the decompression.
 BOOL CBuffer::Inflate()
 {
 	// The bytes in this buffer are compressed, decompress them
@@ -596,7 +594,7 @@ BOOL CBuffer::Ungzip()
 		pStream.next_in   = m_pBuffer;									// Decompress the memory here
 		pStream.avail_in  = static_cast< uInt >( m_nLength );			// There is this much of it
 		pStream.next_out  = pOutput.m_pBuffer;							// Write decompressed data here
-		pStream.avail_out = static_cast< uInt >( pOutput.m_nBuffer );	// Tell ZLib it has this much space, it makes this smaller to show how much space is left
+		pStream.avail_out = static_cast< uInt >( pOutput.GetBufferSize() );	// Tell ZLib it has this much space, it makes this smaller to show how much space is left
 
 		// Call ZLib inflate to decompress all the data, and see if it returns Z_STREAM_END
 		int nRes = inflate( &pStream, Z_FINISH );
@@ -607,7 +605,7 @@ BOOL CBuffer::Ungzip()
 			// Move the decompressed data from the output buffer into this one
 			Clear();                   // Record there are no bytes stored here, doesn't change the allocated block size
 			Add(pOutput.m_pBuffer,     // Add the memory at the start of the output buffer
-				pOutput.m_nBuffer      // The amount of space the buffer had when we gave it to Zlib
+				pOutput.GetBufferSize()      // The amount of space the buffer had when we gave it to Zlib
 				- pStream.avail_out ); // Minus the amount it said it left, this is the number of bytes it wrote
 
 			// Close ZLib and report success
