@@ -117,7 +117,7 @@ void CHashProgressBar::Update()
 	Invalidate( FALSE );
 }
 
-void CHashProgressBar::Show(int nWidth, BOOL bShow)
+void CHashProgressBar::Show(int nWidth, BOOL /*bShow*/)
 {
 	CRect rc;
 	SystemParametersInfo( SPI_GETWORKAREA, 0, &rc, 0 );
@@ -171,9 +171,8 @@ void CHashProgressBar::OnPaint()
 		0, m_brFill, DI_NORMAL );
 
 	// Text
-	CString strText, strFormat;
-	LoadString( strFormat, IDS_HASH_MESSAGE );
-	strText.Format( strFormat, LibraryBuilder.GetRemaining() );
+	CString strText;
+	strText.Format( IDS_HASH_MESSAGE, LibraryBuilder.GetRemaining() );
 	
 	CFont* pOld = dc.SelectObject( &CoolInterface.m_fntNormal );
 	CSize sz = dc.GetTextExtent( strText );
@@ -193,7 +192,7 @@ void CHashProgressBar::OnPaint()
 	CRect rcProgress = rcClient;
 	rcProgress.DeflateRect( 1, 1 );
 	rcProgress.top = rcProgress.bottom - 3;
-	float nPercentage = LibraryBuilder.GetProgress() / 100.;
+	float nPercentage = LibraryBuilder.GetProgress() / 100.0f;
 	if ( ( nPercentage < 0 ) || ( nPercentage > 1 ) ) nPercentage = 1;
 	rcProgress.right = rcProgress.left + (LONG)( rcProgress.Width() * nPercentage );
 	dc.Draw3dRect( &rcProgress, m_crText, m_crText );

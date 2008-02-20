@@ -2656,7 +2656,7 @@
 	<string id="8179" value="‪(נקה את היסטוריית החיפוש)"/>
 	<string id="8180" value="‪:גודל הקובץ"/>
 	<string id="8181" value="‪עד"/><!-- size from xx TO xx-->
-	<string id="8208" value="‪Shareaza is creating hashes for %i file(s):" />
+	<string id="8208" value="‪Shareaza is creating hashes for %Iu file(s):" />
 	<string id="8223" value="&#8235;%i ימים %i שעות"/>
 	<string id="8224" value="‪:שרזה מוריד"/>
 	<string id="8225" value="‪:הורדה זו מושהת"/>

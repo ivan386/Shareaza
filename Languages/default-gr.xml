@@ -2578,7 +2578,7 @@
 	<string id="8179" value="(Καθαρισμός Ιστορικού Αναζήτησης)"/>
 	<string id="8180" value="Μέγεθος αρχείου από"/>
 	<string id="8181" value="&#160;ως"/><!-- size from xx TO xx-->
-	<string id="8208" value="Το Shareaza σαρώνει %i αρχεία:"/>
+	<string id="8208" value="Το Shareaza σαρώνει %Iu αρχεία:"/>
 	<string id="8223" value="%i μέρες και %i ώρες"/>
 	<string id="8224" value="Το Shareaza λαμβάνει:"/>
 	<string id="8225" value="Αυτή η λήψη είναι σταματημένη:"/>

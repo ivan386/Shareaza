@@ -2562,7 +2562,7 @@
 	<string id="8179" value="(Arama geçmişini temizle)"/>
 	<string id="8180" value="Dosya uzunluğu"/>
 	<string id="8181" value="olmalı"/><!-- size from xx TO xx-->
-	<string id="8208" value="Shareaza %i dosyası için hash yaratıyor:"/>
+	<string id="8208" value="Shareaza %Iu dosyası için hash yaratıyor:"/>
 	<string id="8223" value="%i gün ve %i saat"/>
 	<string id="8224" value="Shareaza indiriliyor:"/>
 	<string id="8225" value="İndirme duraklatıldı:"/>

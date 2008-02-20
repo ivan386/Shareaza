@@ -2605,7 +2605,7 @@
 	<string id="8179" value="(Puhasta otsingu ajalugu)"/>
 	<string id="8180" value="Faili suurus peaks olema"/>
 	<string id="8181" value="&#160;kuni"/><!-- suurus alates xx kuni xx-->
-	<string id="8208" value="Shareaza loob kohti %i failile:"/>
+	<string id="8208" value="Shareaza loob kohti %Iu failile:"/>
 	<string id="8223" value="%i päeva ja %i tundi"/>
 	<string id="8224" value="Shareaza tõmbab:"/>
 	<string id="8225" value="See allalaadimine on peatatud:"/>

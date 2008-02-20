@@ -2578,7 +2578,7 @@
 	<string id="8179" value="(Nettoyer l'historique des recherches)"/>
 	<string id="8180" value="La taille du fichier doit être"/>
 	<string id="8181" value=" à"/><!-- size from xx TO xx-->
-	<string id="8208" value="Shareaza crée les hachages pour %i fichier(s):"/>
+	<string id="8208" value="Shareaza crée les hachages pour %Iu fichier(s):"/>
 	<string id="8223" value="%i jours et %i heures"/>
 	<string id="8224" value="Shareaza télécharge:"/>
 	<string id="8225" value="Ce téléchargement est en pause:"/>

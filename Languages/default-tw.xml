@@ -2544,7 +2544,7 @@
 	<string id="8179" value="(清除搜尋記錄)"/>
 	<string id="8180" value="檔案大小必須是"/>
 	<string id="8181" value="&#160;to"/><!-- size from xx TO xx-->
-	<string id="8208" value="Shareaza 正在為這個檔案切細: %i file(s):"/>
+	<string id="8208" value="Shareaza 正在為這個檔案切細: %Iu file(s):"/>
 	<string id="8223" value="%i 天 and %i 小時"/>
 	<string id="8224" value="Shareaza 正在下載:"/>
 	<string id="8225" value="這個下載已暫停:"/>

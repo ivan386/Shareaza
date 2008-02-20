@@ -2596,7 +2596,7 @@
 	<string id="8179" value="(清除搜索历史记录)"/>
 	<string id="8180" value="文件大小必须为"/>
 	<string id="8181" value="&#160;到"/><!-- size from xx TO xx-->
-	<string id="8208" value="Shareaza 正在为 %i 个文件创建 Hash 值:"/>
+	<string id="8208" value="Shareaza 正在为 %Iu 个文件创建 Hash 值:"/>
 	<string id="8223" value="%i 天 %i 小时"/>
 	<string id="8224" value="Shareaza 正在下载:"/>
 	<string id="8225" value="此下载已暂停:"/>

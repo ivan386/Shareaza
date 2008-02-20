@@ -2596,7 +2596,7 @@
 	<string id="8179" value="(Fjern søkelogg)"/>
 	<string id="8180" value="Filstørrelsen må være"/>
 	<string id="8181" value="&#160;til"/><!-- size from xx TO xx-->
-	<string id="8208" value="Shareaza lager hash for %i fil(er):"/>
+	<string id="8208" value="Shareaza lager hash for %Iu fil(er):"/>
 	<string id="8223" value="%i dager og %i timer"/>
 	<string id="8224" value="Shareaza laster ned:"/>
 	<string id="8225" value="Denne nedlastingen er pauset:"/>

@@ -2635,7 +2635,7 @@
 	<string id="8179" value="(مسح البحث المؤقت)"/>
 	<string id="8180" value="File size must be"/>
 	<string id="8181" value="&#160;to"/><!-- size from xx TO xx-->
-	<string id="8208" value="Shareaza is creating hashes for %i file(s):"/>
+	<string id="8208" value="Shareaza is creating hashes for %Iu file(s):"/>
 	<string id="8223" value="%i days and %i hours"/>
 	<string id="8224" value="Shareaza is downloading:"/>
 	<string id="8225" value="This download is paused:"/>

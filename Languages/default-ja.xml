@@ -2573,7 +2573,7 @@
 	<string id="8179" value="(検索履歴をクリア)"/>
 	<string id="8180" value="最小ファイルサイズ"/>
 	<string id="8181" value="&#160;～"/><!-- size from xx TO xx-->
-	<string id="8208" value="Shareazaは %i ファイルのハッシュを作成しています:"/>
+	<string id="8208" value="Shareazaは %Iu ファイルのハッシュを作成しています:"/>
 	<string id="8223" value="%i 日 %i 時間"/>
 	<string id="8224" value="Shareazaはダウンロード中です:"/>
 	<string id="8225" value="このダウンロードは一時停止しています:"/>

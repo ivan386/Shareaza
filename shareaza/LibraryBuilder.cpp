@@ -129,7 +129,7 @@ CString CLibraryBuilder::GetCurrent() const
 	return m_sPath;
 }
 
-DWORD CLibraryBuilder::GetRemaining() const
+size_t CLibraryBuilder::GetRemaining() const
 {
 	CQuickLock oLock( m_pSection );
 	return m_pFiles.size();

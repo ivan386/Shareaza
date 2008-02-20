@@ -2623,7 +2623,7 @@
 	<string id="8179" value="(Limpar Histórico de Busca)"/>
 	<string id="8180" value="O tamanho do arquivo deve ser"/>
 	<string id="8181" value="&#160;até"/><!-- size from xx TO xx-->
-	<string id="8208" value="Shareaza está criando Hashes para %i os arquivo(s):"/>
+	<string id="8208" value="Shareaza está criando Hashes para %Iu os arquivo(s):"/>
 	<string id="8223" value="%i dias e %i horas"/>
 	<string id="8224" value="O Shareaza está baixando:"/>
 	<string id="8225" value="Este download está pausado:"/>

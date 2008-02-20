@@ -2578,7 +2578,7 @@
 	<string id="8179" value="(Vymazat historii hledání)"/>
 	<string id="8180" value="Velikost souboru:"/>
 	<string id="8181" value="&#160;do"/><!-- size from xx TO xx-->
-	<string id="8208" value="Shareaza vytvoří rozdělený soubor pro %i soubor(y):"/>
+	<string id="8208" value="Shareaza vytvoří rozdělený soubor pro %Iu soubor(y):"/>
 	<string id="8223" value="%i dní a %i hodin"/>
 	<string id="8224" value="Shareaza stahuje soubor:"/>
 	<string id="8225" value="Toto stahování je pozastaveno:"/>

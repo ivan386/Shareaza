@@ -2505,7 +2505,7 @@
 	<string id="8179" value="(Maak Soekgeskiedenis Skoon)"/>
 	<string id="8180" value="Lêergrootte moet wees tussen"/>
 	<string id="8181" value="&#160;en"/><!-- size from xx TO xx-->
-	<string id="8208" value="Shareaza prosesseer %i lêer(s):"/>
+	<string id="8208" value="Shareaza prosesseer %Iu lêer(s):"/>
 	<string id="8223" value="%i dae en %i ure"/>
 	<string id="8224" value="Shareaza is besig om af te laai:"/>
 	<string id="8225" value="Hierdie aflaai is gevries:"/>

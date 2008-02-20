@@ -2615,7 +2615,7 @@
 	<string id="8179" value="(zoekgeschiedenis wissen)"/>
 	<string id="8180" value="Bestandsgrootte moet zijn"/>
 	<string id="8181" value="&#160;tot"/><!-- size from xx TO xx-->
-	<string id="8208" value="Shareaza creëert hashes voor %i bestand(en):"/>
+	<string id="8208" value="Shareaza creëert hashes voor %Iu bestand(en):"/>
 	<string id="8223" value="%i dagen and %i uren"/>
 	<string id="8224" value="Shareaza is aan het downloaden:"/>
 	<string id="8225" value="Deze download is gepauzeerd:"/>

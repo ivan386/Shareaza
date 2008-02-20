@@ -45,7 +45,7 @@ public:
 	BOOL		GetBoostPriority() const;
 
 	CString		GetCurrent() const;					// Hashing filename
-	DWORD		GetRemaining() const;				// Hashing queue size
+	size_t		GetRemaining() const;				// Hashing queue size
 	DWORD		GetProgress() const;				// Hashing file progress (0..100%)
 
 	static int	SubmitMetadata(DWORD nIndex, LPCTSTR pszSchemaURI, CXMLElement*& pXML);

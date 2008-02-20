@@ -2579,7 +2579,7 @@
 	<string id="8179" value="(Valyti paieškos žurnalą)"/>
 	<string id="8180" value="Failo dydis turi būti"/>
 	<string id="8181" value="&#160;iki"/><!-- size from xx TO xx-->
-	<string id="8208" value="„Shareaza“ kuria maišą (tapatyb. kodą) failui (liko %i):"/>
+	<string id="8208" value="„Shareaza“ kuria maišą (tapatyb. kodą) failui (liko %Iu):"/>
 	<string id="8223" value="%i d. ir %i val."/>
 	<string id="8224" value="„Shareaza“ siunčiasi:"/>
 	<string id="8225" value="Šio failo parsisiuntimas pristabdytas:"/>

@@ -2584,7 +2584,7 @@
 	<string id="8179" value="(Usuń historię wyszukiwania)"/>
 	<string id="8180" value="Rozmiar pliku musi być"/>
 	<string id="8181" value="&#160;do"/><!-- size from xx TO xx-->
-	<string id="8208" value="Shareaza oblicza hash'e dla %i plik(ów):"/>
+	<string id="8208" value="Shareaza oblicza hash'e dla %Iu plik(ów):"/>
 	<string id="8223" value="%i dni i %i godzin"/>
 	<string id="8224" value="Shareaza pobiera:"/>
 	<string id="8225" value="To pobieranie zostało wstrzymane:"/>

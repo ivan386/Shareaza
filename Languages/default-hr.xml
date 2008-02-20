@@ -2592,7 +2592,7 @@
 	<string id="8179" value="(Očisti prijašnje potrage)"/>
 	<string id="8180" value="Veličina datoteke mora biti"/>
 	<string id="8181" value="&#160;do"/><!-- size from xx TO xx-->
-	<string id="8208" value="Shareaza stvara hashes za %i datoteka:"/>
+	<string id="8208" value="Shareaza stvara hashes za %Iu datoteka:"/>
 	<string id="8223" value="%i dana i %i sati"/>
     <string id="8224" value="Shareaza skida:"/>
 	<string id="8225" value="Ovo skidanje je pauzirano"/>

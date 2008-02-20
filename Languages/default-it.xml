@@ -2578,7 +2578,7 @@
 	<string id="8179" value="(Cancella parole ricercate)"/>
 	<string id="8180" value="La dimens. del file deve essere"/>	
 	<string id="8181" value="&#160;a"/><!-- size from xx TO xx-->
-	<string id="8208" value="Shareaza sta calcolando l'hash per %i file:"/>
+	<string id="8208" value="Shareaza sta calcolando l'hash per %Iu file:"/>
 	<string id="8223" value="%i giorni e %i ore"/>
 	<string id="8224" value="Shareaza sta scaricando:"/>
 	<string id="8225" value="Questo download è in pausa:"/>

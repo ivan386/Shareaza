@@ -2435,7 +2435,7 @@
 	<string id="8177" value="Skriv några nyckelord att söka efter:" />
 	<string id="8178" value="Vad är det för filtyp?" />
 	<string id="8179" value="(Rensa sökhistorik)" />
-	<string id="8208" value="Shareaza granskar %i filer:" />
+	<string id="8208" value="Shareaza granskar %Iu filer:" />
 	<string id="8224" value="Shareaza laddar ned:" />
 	<string id="8225" value="Denna nedladdning är pausad:" />
 	<string id="8226" value="Shareaza har fullständigt laddat ned:" />

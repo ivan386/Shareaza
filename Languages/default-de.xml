@@ -2578,7 +2578,7 @@
 	<string id="8179" value="(Verlauf löschen)"/>
 	<string id="8180" value="Dateigröße"/>
 	<string id="8181" value=" bis"/><!-- size from xx TO xx-->
-	<string id="8208" value="Shareaza hasht %i Datei(en):"/>
+	<string id="8208" value="Shareaza hasht %Iu Datei(en):"/>
 	<string id="8223" value="%i Tage und %i Stunden"/>
 	<string id="8224" value="Shareaza lädt herunter:"/>
 	<string id="8225" value="Dieser Download wurde angehalten:"/>

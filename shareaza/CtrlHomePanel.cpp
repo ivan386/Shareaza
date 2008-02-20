@@ -756,7 +756,7 @@ void CHomeLibraryBox::Update()
 		}
 	}
 	
-	DWORD nHashing = LibraryBuilder.GetRemaining();
+	size_t nHashing = LibraryBuilder.GetRemaining();
 	
 	if ( nHashing > 0 )
 	{

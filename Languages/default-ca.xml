@@ -2593,7 +2593,7 @@
 	<string id="8179" value="(Neteja l'historial de cerca)"/>
 	<string id="8180" value="La mida ha de ser de"/>
 	<string id="8181" value="&#160; a"/><!-- size from xx TO xx-->
-	<string id="8208" value="Shareaza està creant els hashs per a %i arxiu(s):"/>
+	<string id="8208" value="Shareaza està creant els hashs per a %Iu arxiu(s):"/>
 	<string id="8223" value="%i dius i %i hores"/>
 	<string id="8224" value="Shareaza està descarregant:"/>
 	<string id="8225" value="Aquesta descàrrega està pausada:"/>
