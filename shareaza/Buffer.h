@@ -40,8 +40,13 @@ public:
 	// Memory pointers and byte counts
 	CBuffer*	m_pNext;	// A pointer to the next CBuffer object, letting them be linked together in a list
 	BYTE*		m_pBuffer;	// The block of allocated memory
-	DWORD		m_nLength;	// The number of bytes we have written into the block
+	DWORD		m_nLength;	// The #bytes written into the block
+private:
 	DWORD		m_nBuffer;	// The size of the allocated block
+
+// Accessors
+public:
+	const DWORD	GetBufferSize() const { return m_nBuffer; }	// Return the total size of the buffer
 
 // Operations
 public:

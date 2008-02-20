@@ -1191,8 +1191,8 @@ void CAdultFilter::Load()
 		{
 			CBuffer pBuffer;
 			DWORD nLen = (DWORD)pFile.GetLength();
-			pBuffer.EnsureBuffer( nLen );
-			if ( pBuffer.m_nBuffer < nLen ) AfxThrowUserException();
+			if ( !pBuffer.EnsureBuffer( nLen ) )
+				AfxThrowUserException();
 
 			pBuffer.m_nLength = (DWORD)pFile.GetLength();
 			pFile.Read( pBuffer.m_pBuffer, pBuffer.m_nLength );
@@ -1512,8 +1512,8 @@ void CMessageFilter::Load()
 		{
 			CBuffer pBuffer;
 			DWORD nLen = (DWORD)pFile.GetLength();
-			pBuffer.EnsureBuffer( nLen );
-			if ( pBuffer.m_nBuffer < nLen ) AfxThrowUserException();
+			if ( !pBuffer.EnsureBuffer( nLen ) )
+				AfxThrowUserException();
 
 			pBuffer.m_nLength = nLen;
 			pFile.Read( pBuffer.m_pBuffer, pBuffer.m_nLength );

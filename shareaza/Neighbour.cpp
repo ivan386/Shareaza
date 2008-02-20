@@ -386,18 +386,18 @@ BOOL CNeighbour::OnRead()
 
 	// Loop until there is no more data for zlib to decompress
 	while ( pInput->m_nLength ||							// While the input buffer has data in it
-			m_pZInput->m_nLength == m_pZInput->m_nBuffer || // Or the zlib buffer length is the same as the buffer (do)
+			m_pZInput->m_nLength == m_pZInput->GetBufferSize() || // Or the zlib buffer length is the same as the buffer (do)
 			pStream->avail_out == 0 )						// Or there is no more data availiable for zlib to decompress
 	{
 		// Make sure the zlib buffer holds at least 1 KB (do)
-		m_pZInput->EnsureBuffer( 1024 );
-		if ( m_pZInput->m_nBuffer < 1024 ) return FALSE;
+		if ( !m_pZInput->EnsureBuffer( 1024u ) )
+			return FALSE;
 
 		// Tell zlib where the compressed data is, how much is there, where it can output bytes, and how much space it has there
 		pStream->next_in	= pInput->m_pBuffer;							// Point zlib at the start of the input buffer
 		pStream->avail_in	= pInput->m_nLength;							// Give it the entire block there
 		pStream->next_out	= m_pZInput->m_pBuffer + m_pZInput->m_nLength;	// Have it put decompressed bytes in the empty space of the ZInput buffer
-		pStream->avail_out	= m_pZInput->m_nBuffer - m_pZInput->m_nLength;	// This is how much space is left there
+		pStream->avail_out	= m_pZInput->GetBufferSize() - m_pZInput->m_nLength;	// This is how much space is left there
 
 		// Call zlib inflate to decompress the contents of m_pInput into the end of m_pZInput
 		inflate( pStream, Z_SYNC_FLUSH ); // Zlib adjusts next in, avail in, next out, and avail out to record what it did
@@ -410,7 +410,7 @@ BOOL CNeighbour::OnRead()
 		}
 
 		// Calculate the size of nBlock, the block of data in ZInput that Zlib just decompressed
-		DWORD nBlock = ( m_pZInput->m_nBuffer - m_pZInput->m_nLength ) - pStream->avail_out; // Buffer size minus previous length and current empty space
+		DWORD nBlock = ( m_pZInput->GetBufferSize() - m_pZInput->m_nLength ) - pStream->avail_out; // Buffer size minus previous length and current empty space
 
 		// Record tha this many more bytes are stored in the ZInput buffer
 		m_pZInput->m_nLength += nBlock;
@@ -473,14 +473,14 @@ BOOL CNeighbour::OnWrite()
 		|| pStream->avail_out == 0 )							// Or, zlib says it has no more room left (do)
 	{
 		// Make sure the output buffer is 1 KB (do)
-		pOutput->EnsureBuffer( 1024 );
-		if ( pOutput->m_nBuffer < 1024 ) return FALSE;
+		if ( !pOutput->EnsureBuffer( 1024u ) )
+			return FALSE;
 
 		// Tell zlib where the data to compress is, and where it should put the compressed data
 		pStream->next_in	= m_pZOutput->m_pBuffer; // Start next_in and avail_in on the data in ZOutput
 		pStream->avail_in	= m_pZOutput->m_nLength;
 		pStream->next_out	= pOutput->m_pBuffer + pOutput->m_nLength; // Start next_out and avail_out on the empty space in Output
-		pStream->avail_out	= pOutput->m_nBuffer - pOutput->m_nLength;
+		pStream->avail_out	= pOutput->GetBufferSize() - pOutput->m_nLength;
 
 		// Call zlib inflate to decompress the contents of m_pInput into the end of m_pZInput
 		deflate( pStream, m_bZFlush ? Z_SYNC_FLUSH : 0 ); // Zlib adjusts next in, avail in, next out, and avail out to record what it did
@@ -492,7 +492,7 @@ BOOL CNeighbour::OnWrite()
 		m_pZOutput->Remove( m_pZOutput->m_nLength - pStream->avail_in );
 
 		// Set nOutput to the size of the new compressed block in the output buffer between the data already there, and the empty space afterwards
-		int nOutput = ( pOutput->m_nBuffer - pOutput->m_nLength ) - pStream->avail_out;
+		int nOutput = ( pOutput->GetBufferSize() - pOutput->m_nLength ) - pStream->avail_out;
 
 		// Zlib compressed something
 		if ( nOutput )

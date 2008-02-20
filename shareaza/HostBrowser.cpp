@@ -508,21 +508,21 @@ BOOL CHostBrowser::ReadContent()
 		{
 			z_streamp pStream = (z_streamp)m_pInflate;
 
-			while ( nVolume || m_pBuffer->m_nLength == m_pBuffer->m_nBuffer || pStream->avail_out == 0 )
+			while ( nVolume || m_pBuffer->m_nLength == m_pBuffer->GetBufferSize() || pStream->avail_out == 0 )
 			{
 				m_pBuffer->EnsureBuffer( 1024 );
 
 				pStream->next_in	= pInput->m_pBuffer;
 				pStream->avail_in	= pInput->m_nLength;
 				pStream->next_out	= m_pBuffer->m_pBuffer + m_pBuffer->m_nLength;
-				pStream->avail_out	= m_pBuffer->m_nBuffer - m_pBuffer->m_nLength;
+				pStream->avail_out	= m_pBuffer->GetBufferSize() - m_pBuffer->m_nLength;
 
 				inflate( pStream, Z_SYNC_FLUSH );
 
 				nVolume -= ( pInput->m_nLength - pStream->avail_in );
 				pInput->Remove( pInput->m_nLength - pStream->avail_in );
 
-				DWORD nBlock = ( m_pBuffer->m_nBuffer - m_pBuffer->m_nLength ) - pStream->avail_out;
+				DWORD nBlock = ( m_pBuffer->GetBufferSize() - m_pBuffer->m_nLength ) - pStream->avail_out;
 				m_pBuffer->m_nLength += nBlock;
 				if ( ! nBlock ) break;
 			}
