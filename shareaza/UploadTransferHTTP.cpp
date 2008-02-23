@@ -1,7 +1,7 @@
 //
 // UploadTransferHTTP.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -955,7 +955,7 @@ void CUploadTransferHTTP::SendDefaultHeaders()
 	if ( IsNetworkDisabled() )
 	{
 		// Ask to retry after some delay in seconds
-		Write( strLine + _T("Retry-After: 7200\r\n") );
+		Write( _P("Retry-After: 7200\r\n") );
 	}
 	else if ( m_bKeepAlive )
 	{
