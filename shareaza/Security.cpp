@@ -1,7 +1,7 @@
 //
 // Security.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -122,7 +122,7 @@ void CSecurity::MoveUp(CSecureRule* pRule)
 
 	POSITION posMe = m_pRules.Find( pRule );
 	if ( posMe == NULL ) return;
-	
+
 	POSITION posOther = posMe;
 	m_pRules.GetPrev( posOther );
 
@@ -139,7 +139,7 @@ void CSecurity::MoveDown(CSecureRule* pRule)
 
 	POSITION posMe = m_pRules.Find( pRule );
 	if ( posMe == NULL ) return;
-	
+
 	POSITION posOther = posMe;
 	m_pRules.GetNext( posOther );
 
@@ -222,7 +222,7 @@ void CSecurity::Ban(IN_ADDR* pAddress, int nBanLength, BOOL bMessage)
 	case banWeek:
 		pRule->m_nExpire	= static_cast< DWORD >( time( NULL ) + 604800 );
 		pRule->m_sComment	= _T("Client Block");
-		break;		
+		break;
 	case banForever:
 		pRule->m_nExpire	= CSecureRule::srIndefinite;
 		pRule->m_sComment	= _T("Ban");
@@ -385,7 +385,7 @@ BOOL CSecurity::Load()
 	CString strFile = Settings.General.UserPath + _T("\\Data\\Security.dat");
 
 	if ( ! pFile.Open( strFile, CFile::modeRead ) ) return FALSE;
-	
+
 	try
 	{
 		CArchive ar( &pFile, CArchive::load );
@@ -499,11 +499,11 @@ BOOL CSecurity::FromXML(CXMLElement* pXML)
 			CString strGUID		= pElement->GetAttributeValue( _T("guid") );
 			BOOL bExisting		= FALSE;
 			GUID pGUID;
-			
+
 			if ( Hashes::fromGuid( strGUID, &pGUID ) )
 			{
 				if ( ( pRule = GetGUID( pGUID ) ) != NULL ) bExisting = TRUE;
-				
+
 				if ( pRule == NULL )
 				{
 					pRule = new CSecureRule( FALSE );
@@ -544,12 +544,12 @@ BOOL CSecurity::Import(LPCTSTR pszFile)
 	pBuffer.m_nLength = (DWORD)pFile.GetLength();
 	pFile.Read( pBuffer.m_pBuffer, pBuffer.m_nLength );
 	pFile.Close();
-	
+
 	CXMLElement* pXML = CXMLElement::FromBytes( pBuffer.m_pBuffer, pBuffer.m_nLength, TRUE );
 	BOOL bResult = FALSE;
 
 	CQuickLock oLock( m_pSection );
-	
+
 	if ( pXML != NULL )
 	{
 		bResult = FromXML( pXML );
@@ -558,7 +558,7 @@ BOOL CSecurity::Import(LPCTSTR pszFile)
 	else
 	{
 		CString strLine;
-		
+
 		while ( pBuffer.ReadLine( strLine ) )
 		{
 			strLine.TrimLeft();
@@ -579,7 +579,7 @@ BOOL CSecurity::Import(LPCTSTR pszFile)
 			}
 		}
 	}
-	
+
 	return bResult;
 }
 
@@ -717,7 +717,7 @@ void CSecureRule::SetContentWords(const CString& strContent)
 	int nTotalLength	= 3;
 	CList< CString > pWords;
 
-    int nStart = 0, nPos = 0;
+	int nStart = 0, nPos = 0;
 	for ( ; *pszContent ; nPos++, pszContent++ )
 	{
 		if ( *pszContent == ' ' || *pszContent == '\t' )
@@ -914,7 +914,7 @@ CXMLElement* CSecureRule::ToXML()
 	wchar_t szGUID[39];
 	szGUID[ StringFromGUID2( *(GUID*)&m_pGUID, szGUID, 39 ) - 2 ] = 0;
 	pXML->AddAttribute( _T("guid"), (CString)&szGUID[1] );
-	
+
 	return pXML;
 }
 
@@ -988,7 +988,7 @@ BOOL CSecureRule::FromXML(CXMLElement* pXML)
 	{
 		_stscanf( strValue, _T("%lu"), &m_nExpire );
 	}
-	
+
 	MaskFix();
 
 	return TRUE;
@@ -1071,7 +1071,7 @@ BOOL CSecureRule::FromGnucleusString(CString& str)
 	m_nAction	= srDeny;
 	m_nExpire	= srIndefinite;
 	m_sComment	= str.SpanExcluding( _T(":") );
-	
+
 	MaskFix();
 
 	return TRUE;
@@ -1185,7 +1185,7 @@ void CAdultFilter::Load()
 	m_pszChildWords = NULL;
 
 	// Load the adult filter from disk
-	if (  pFile.Open( strFile, CFile::modeRead ) ) 
+	if (  pFile.Open( strFile, CFile::modeRead ) )
 	{
 		try
 		{
@@ -1233,8 +1233,8 @@ void CAdultFilter::Load()
 		LPCTSTR pszPtr = strBlockedWords;
 		int nWordLen = 3;
 		CList< CString > pWords;
-			
-        int nStart = 0, nPos = 0;
+
+		int nStart = 0, nPos = 0;
 		for ( ; *pszPtr ; nPos++, pszPtr++ )
 		{
 			if ( *pszPtr == ' ' )
@@ -1244,20 +1244,20 @@ void CAdultFilter::Load()
 					pWords.AddTail( strBlockedWords.Mid( nStart, nPos - nStart ) );
 					nWordLen += ( nPos - nStart ) + 1;
 				}
-				nStart = nPos + 1;	
+				nStart = nPos + 1;
 			}
 		}
-			
-			
+
+
 		if ( nStart < nPos )
 		{
 			pWords.AddTail( strBlockedWords.Mid( nStart, nPos - nStart ) );
 			nWordLen += ( nPos - nStart ) + 1;
 		}
-			
+
 		m_pszBlockedWords = new TCHAR[ nWordLen ];
 		LPTSTR pszFilter = m_pszBlockedWords;
-			
+
 		for ( POSITION pos = pWords.GetHeadPosition() ; pos ; )
 		{
 			CString strWord( pWords.GetNext( pos ) );
@@ -1266,19 +1266,19 @@ void CAdultFilter::Load()
 			CopyMemory( pszFilter, (LPCTSTR)strWord, sizeof(TCHAR) * ( strWord.GetLength() + 1 ) );
 			pszFilter += strWord.GetLength() + 1;
 		}
-			
+
 		*pszFilter++ = 0;
 		*pszFilter++ = 0;
 	}
-	
+
 	// Load the possibly blocked words into the Adult Filter
 	if ( strDubiousWords.GetLength() > 3 )
 	{
 		LPCTSTR pszPtr = strDubiousWords;
 		int nWordLen = 3;
 		CList< CString > pWords;
-			
-        int nStart = 0, nPos = 0;
+
+		int nStart = 0, nPos = 0;
 		for ( ; *pszPtr ; nPos++, pszPtr++ )
 		{
 			if ( *pszPtr == ' ' )
@@ -1288,19 +1288,19 @@ void CAdultFilter::Load()
 					pWords.AddTail( strDubiousWords.Mid( nStart, nPos - nStart ) );
 					nWordLen += ( nPos - nStart ) + 1;
 				}
-				nStart = nPos + 1;	
+				nStart = nPos + 1;
 			}
 		}
-			
+
 		if ( nStart < nPos )
 		{
 			pWords.AddTail( strDubiousWords.Mid( nStart, nPos - nStart ) );
 			nWordLen += ( nPos - nStart ) + 1;
 		}
-			
+
 		m_pszDubiousWords = new TCHAR[ nWordLen ];
 		LPTSTR pszFilter = m_pszDubiousWords;
-			
+
 		for ( POSITION pos = pWords.GetHeadPosition() ; pos ; )
 		{
 			CString strWord( pWords.GetNext( pos ) );
@@ -1309,7 +1309,7 @@ void CAdultFilter::Load()
 			CopyMemory( pszFilter, (LPCTSTR)strWord, sizeof(TCHAR) * ( strWord.GetLength() + 1 ) );
 			pszFilter += strWord.GetLength() + 1;
 		}
-			
+
 		*pszFilter++ = 0;
 		*pszFilter++ = 0;
 	}
@@ -1331,7 +1331,7 @@ void CAdultFilter::Load()
 					pWords.AddTail( strChildWords.Mid( nStart, nPos - nStart ) );
 					nWordLen += ( nPos - nStart ) + 1;
 				}
-				nStart = nPos + 1;	
+				nStart = nPos + 1;
 			}
 		}
 
@@ -1389,12 +1389,12 @@ BOOL CAdultFilter::Censor(TCHAR* pszText)
 {
 	BOOL bModified = FALSE;
 	if ( ! pszText ) return FALSE;
-	
+
 	LPCTSTR pszWord;
 
 	// Check and replace blocked words
 	if ( m_pszBlockedWords )
-	{	
+	{
 		for ( pszWord = m_pszBlockedWords ; *pszWord ; )
 		{
 			TCHAR* pReplace = (TCHAR*)_tcsistr( pszText, pszWord );
@@ -1402,7 +1402,7 @@ BOOL CAdultFilter::Censor(TCHAR* pszText)
 			if ( pReplace != NULL )
 			{
 				TCHAR cExpletives[6] = {'#','@','$','%','&','*'};
-				
+
 				for ( unsigned nLoop = 0 ; nLoop < _tcslen( pszWord ) ; nLoop++ )
 				{
 					*pReplace = cExpletives[ ( nLoop % 6 ) ];
@@ -1415,7 +1415,7 @@ BOOL CAdultFilter::Censor(TCHAR* pszText)
 			pszWord += _tcslen( pszWord ) + 1;
 		}
 	}
-	
+
 	return bModified;
 }
 
@@ -1438,7 +1438,7 @@ BOOL CAdultFilter::IsChildPornography(LPCTSTR pszText)
 
 		return ( bFound && IsFiltered( pszText ) );
 	}
-	
+
 	return FALSE;
 }
 
@@ -1450,7 +1450,7 @@ BOOL CAdultFilter::IsFiltered(LPCTSTR pszText)
 
 		// Check blocked words
 		if ( m_pszBlockedWords )
-		{	
+		{
 			for ( pszWord = m_pszBlockedWords ; *pszWord ; )
 			{
 				if ( _tcsistr( pszText, pszWord ) != NULL ) return TRUE;
@@ -1471,7 +1471,7 @@ BOOL CAdultFilter::IsFiltered(LPCTSTR pszText)
 			}
 		}
 	}
-	
+
 	return FALSE;
 }
 
@@ -1492,7 +1492,7 @@ CMessageFilter::~CMessageFilter()
 
 	if ( m_pszFilteredPhrases ) delete [] m_pszFilteredPhrases;
 	m_pszFilteredPhrases = NULL;
-	
+
 }
 
 void CMessageFilter::Load()
@@ -1506,7 +1506,7 @@ void CMessageFilter::Load()
 	m_pszFilteredPhrases = NULL;
 
 	// Load the message filter from disk
-	if (  pFile.Open( strFile, CFile::modeRead ) ) 
+	if (  pFile.Open( strFile, CFile::modeRead ) )
 	{
 		try
 		{
@@ -1544,8 +1544,8 @@ void CMessageFilter::Load()
 		LPCTSTR pszPtr = strED2KSpamPhrases;
 		int nWordLen = 3;
 		CList< CString > pWords;
-			
-        int nStart = 0, nPos = 0;
+
+		int nStart = 0, nPos = 0;
 		for ( ; *pszPtr ; nPos++, pszPtr++ )
 		{
 			if ( *pszPtr == '|' )
@@ -1555,19 +1555,19 @@ void CMessageFilter::Load()
 					pWords.AddTail( strED2KSpamPhrases.Mid( nStart, nPos - nStart ) );
 					nWordLen += ( nPos - nStart ) + 1;
 				}
-				nStart = nPos + 1;	
+				nStart = nPos + 1;
 			}
 		}
-			
+
 		if ( nStart < nPos )
 		{
 			pWords.AddTail( strED2KSpamPhrases.Mid( nStart, nPos - nStart ) );
 			nWordLen += ( nPos - nStart ) + 1;
 		}
-			
+
 		m_pszED2KSpam = new TCHAR[ nWordLen ];
 		LPTSTR pszFilter = m_pszED2KSpam;
-			
+
 		for ( POSITION pos = pWords.GetHeadPosition() ; pos ; )
 		{
 			CString strWord( pWords.GetNext( pos ) );
@@ -1576,7 +1576,7 @@ void CMessageFilter::Load()
 			CopyMemory( pszFilter, (LPCTSTR)strWord, sizeof(TCHAR) * ( strWord.GetLength() + 1 ) );
 			pszFilter += strWord.GetLength() + 1;
 		}
-			
+
 		*pszFilter++ = 0;
 		*pszFilter++ = 0;
 	}
@@ -1587,8 +1587,8 @@ void CMessageFilter::Load()
 		LPCTSTR pszPtr = strFilteredPhrases;
 		int nWordLen = 3;
 		CList< CString > pWords;
-			
-        int nStart = 0, nPos = 0;
+
+		int nStart = 0, nPos = 0;
 		for ( ; *pszPtr ; nPos++, pszPtr++ )
 		{
 			if ( *pszPtr == '|' )
@@ -1598,19 +1598,19 @@ void CMessageFilter::Load()
 					pWords.AddTail( strFilteredPhrases.Mid( nStart, nPos - nStart ) );
 					nWordLen += ( nPos - nStart ) + 1;
 				}
-				nStart = nPos + 1;	
+				nStart = nPos + 1;
 			}
 		}
-			
+
 		if ( nStart < nPos )
 		{
 			pWords.AddTail( strFilteredPhrases.Mid( nStart, nPos - nStart ) );
 			nWordLen += ( nPos - nStart ) + 1;
 		}
-			
+
 		m_pszFilteredPhrases = new TCHAR[ nWordLen ];
 		LPTSTR pszFilter = m_pszFilteredPhrases;
-			
+
 		for ( POSITION pos = pWords.GetHeadPosition() ; pos ; )
 		{
 			CString strWord( pWords.GetNext( pos ) );
@@ -1619,7 +1619,7 @@ void CMessageFilter::Load()
 			CopyMemory( pszFilter, (LPCTSTR)strWord, sizeof(TCHAR) * ( strWord.GetLength() + 1 ) );
 			pszFilter += strWord.GetLength() + 1;
 		}
-			
+
 		*pszFilter++ = 0;
 		*pszFilter++ = 0;
 	}
@@ -1631,7 +1631,7 @@ BOOL CMessageFilter::IsED2KSpam( LPCTSTR pszText )
 	{
 		// Check for Ed2K spam phrases
 		if ( m_pszED2KSpam )
-		{	
+		{
 			LPCTSTR pszWord;
 			for ( pszWord = m_pszED2KSpam ; *pszWord ; )
 			{
@@ -1640,7 +1640,7 @@ BOOL CMessageFilter::IsED2KSpam( LPCTSTR pszText )
 			}
 		}
 	}
-	
+
 	return FALSE;
 }
 
@@ -1651,7 +1651,7 @@ BOOL CMessageFilter::IsFiltered( LPCTSTR pszText )
 	{
 		// Check for filtered (spam) phrases
 		if ( m_pszFilteredPhrases )
-		{	
+		{
 			LPCTSTR pszWord;
 			for ( pszWord = m_pszFilteredPhrases ; *pszWord ; )
 			{
@@ -1660,6 +1660,6 @@ BOOL CMessageFilter::IsFiltered( LPCTSTR pszText )
 			}
 		}
 	}
-	
+
 	return FALSE;
 }

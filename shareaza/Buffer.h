@@ -1,7 +1,7 @@
 //
 // Buffer.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -58,7 +58,7 @@ public:
 	bool	EnsureBuffer(const size_t nLength);										// Tell the buffer to prepare to recieve this number of additional bytes
 	void	AddReversed(const void* pData, const size_t nLength);					// Add data to this buffer, but with the bytes in reverse order
 
- 	// Convert Unicode text to ASCII and add it to the buffer
+	// Convert Unicode text to ASCII and add it to the buffer
 	void	Print(const LPCWSTR pszText, const size_t nLength, const UINT nCodePage = CP_ACP);
 
 	inline DWORD ReadDWORD() const throw()
@@ -89,9 +89,11 @@ public:
 	const DWORD	Send(SOCKET hSocket, DWORD nSpeedLimit = ~0ul);		// Send the contents of this buffer to the computer on the far end of the socket
 
 	// Use the buffer with the ZLib compression library
-	BOOL	Deflate(BOOL bIfSmaller = FALSE);	// Compress the data in this buffer
-	BOOL	Inflate();							// Remove the compression on the data in this buffer
-	BOOL	Ungzip();							// Delete the gzip header and then remove the compression
+	BOOL		Deflate(BOOL bIfSmaller = FALSE);						// Compress the data in this buffer
+	BOOL		Inflate();												// Decompress the data in this buffer in place
+	const bool	InflateStreamTo(CBuffer& oBuffer, z_streamp& pStream);	// Decompress the data in this buffer into another buffer
+	void		InflateStreamCleanup(z_streamp& pStream) const;			// Stop stream decompression and cleanup
+	BOOL		Ungzip();												// Delete the gzip header and then remove the compression
 
 	// Read and write a DIME message in the buffer
 	void	WriteDIME(DWORD nFlags, LPCSTR pszID, size_t nIDLength, LPCSTR pszType, size_t nTypeLength, LPCVOID pBody, size_t nBody);
@@ -122,7 +124,7 @@ public:
 	// Add ASCII text to the buffer
 	void	Print(const LPCSTR pszText, const size_t nLength) { Add( (void*)pszText, nLength ); }
 	void	Print(const CStringA& strText) { Print( (LPCSTR)strText, strText.GetLength() ); }
-	
+
 	// Convert Unicode text to ASCII and add it to the buffer
 	void	Print(const CStringW& strText, const UINT nCodePage = CP_ACP) { Print( (LPCWSTR)strText, strText.GetLength(), nCodePage); }
 
@@ -135,7 +137,8 @@ private:
 
 // Statics
 public:
-	static const DWORD	MAX_RECV_SIZE = 1024ul * 16ul;	// Recieve up to 16KB blocks from the socket
+	static const DWORD	MAX_RECV_SIZE	= 1024ul * 16ul;	// Recieve up to 16KB blocks from the socket
+	static const UINT	ZLIB_CHUNK_SIZE	= 1024u;			// Chunk size for ZLib compression/decompression
 
 	// Static means you can call CBuffer::ReverseBuffer without having a CBuffer object at all
 	static void ReverseBuffer(const void* pInput, void* pOutput, size_t nLength);

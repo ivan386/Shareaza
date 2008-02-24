@@ -1,7 +1,7 @@
 //
 // Buffer.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -317,7 +317,7 @@ BOOL CBuffer::ReadLine(CString& strLine, BOOL bPeek, UINT nCodePage)
 
 	// Convert the nLength ASCII characters in the buffer into wide characters in strLine
 	int nWide = MultiByteToWideChar( nCodePage, 0, (LPCSTR)m_pBuffer, nLength, NULL, 0 );
-    MultiByteToWideChar( nCodePage, 0, (LPCSTR)m_pBuffer, nLength, strLine.GetBuffer( nWide ), nWide );
+	MultiByteToWideChar( nCodePage, 0, (LPCSTR)m_pBuffer, nLength, strLine.GetBuffer( nWide ), nWide );
 	strLine.ReleaseBuffer( nWide );
 
 	// Find the last carriage return '\r' character in the string
@@ -626,6 +626,110 @@ BOOL CBuffer::Ungzip()
 			return FALSE;
 		}
 	}
+}
+
+// Decompress the data in this buffer into another buffer
+// Returns true if the data is decompressed, false if there was an error
+//
+// Side Effect: This function allocates a new z_stream structure that gets
+// cleaned up when the stream is finished. Call InflateStreamCleanup() to close
+// the stream and delete the z_stream structure before the stream has finished.
+const bool CBuffer::InflateStreamTo( CBuffer& oBuffer, z_streamp& pStream )
+{
+	// Report success if there was nothing to decompress
+	if ( !m_nLength )
+		return true;
+
+	// Check if a z_stream structure has been allocated
+	if ( !pStream )
+	{
+		// Create a new z_stream sructure to store state information
+		pStream = new z_stream;
+
+		// Initialise it to zero
+		ZeroMemory( pStream, sizeof(z_stream) );
+
+		// Initialise ZLib
+		if ( inflateInit( pStream ) != Z_OK )
+		{
+			delete pStream;	// delete the z_stream structure
+			pStream = NULL;	// and null the pointer
+			return false;	// Report failure
+		}
+	}
+
+	// Tell Zlib how much data is available to try and decompress
+	pStream->avail_in  = static_cast< uInt >( min( m_nLength, UINT_MAX ) );
+
+	// Record inflation state
+	int nResult = Z_OK;
+
+	// Run inflate until all compressed data is consumed or there is an error
+	do
+	{
+		// Limit nLength to the free buffer space or the maximum chunk size
+		UINT nLength = static_cast< UINT >( max( GetBufferFree(), ZLIB_CHUNK_SIZE ) );
+
+		// Make sure the receiving buffer is large enough to hold at least 1KB
+		if ( !oBuffer.EnsureBuffer( nLength ) )
+			break;
+
+		// Tell the z_stream structure where to work
+		pStream->next_in   = GetDataStart();		// Decompress the data from here
+		pStream->next_out  = oBuffer.GetDataEnd();	// Write decompressed data here
+		pStream->avail_out = nLength;				// There is this much room to
+													// decompress data to
+
+		// Call ZLib inflate to decompress all the available data
+		nResult = inflate( pStream, Z_SYNC_FLUSH );
+
+		// This shouldn't happen, but check to make sure the stream state
+		// hasn't been damaged from somewhere else
+		ASSERT( nResult != Z_STREAM_ERROR );
+
+		switch ( nResult )
+		{
+		// Check for errors
+		case Z_NEED_DICT:
+		case Z_DATA_ERROR:
+		case Z_MEM_ERROR:
+			break;
+
+		// Something was decompressed
+		default:
+			// Tell the buffer it has additional data in it
+			oBuffer.m_nLength += pStream->total_out;
+
+			// Remove the consumed uncompressed data from the buffer
+			Remove( pStream->total_in );
+
+			// Adjust the state information
+			pStream->total_out = 0ul;
+			pStream->total_in = 0ul;
+		}
+	} while ( pStream->avail_out == 0u );	// Check if everything available
+											// was decompressed
+
+	// If there was not enough data to decompress anything inflate() returns
+	// Z_BUF_ERROR, ignore this error and try again next time.
+	if ( nResult == Z_BUF_ERROR )
+		nResult = Z_OK;
+
+	// Check if the stream needs to be closed.
+	if ( nResult != Z_OK )
+		// Close ZLib
+		InflateStreamCleanup( pStream );
+
+	// Report result
+	return ( nResult == Z_OK || nResult == Z_STREAM_END );
+}
+
+// Close the inflate stream and free memory structures
+void CBuffer::InflateStreamCleanup( z_streamp& pStream ) const
+{
+	inflateEnd( pStream );	// Close the stream
+	delete pStream;			// Delete the z_stream structure
+	pStream = NULL;			// Null the pointer
 }
 
 //////////////////////////////////////////////////////////////////////
