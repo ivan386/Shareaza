@@ -1,7 +1,7 @@
 //
 // HostBrowser.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2006.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -25,6 +25,7 @@
 #pragma once
 
 #include "Transfer.h"
+#include "zlib.h"
 
 class CG1Packet;
 class CG2Packet;
@@ -51,10 +52,10 @@ public:
 	BOOL			m_bNewBrowse;
 	IN_ADDR			m_pAddress;
 	WORD			m_nPort;
+	Hashes::Guid	m_oClientID;
+	Hashes::Guid	m_oPushID;
 	BOOL			m_bMustPush;
 	BOOL			m_bCanPush;
-	Hashes::Guid	m_oPushID;
-	Hashes::Guid	m_oClientID;
 	DWORD			m_tPushed;
 	BOOL			m_bConnect;
 	int				m_nHits;
@@ -67,7 +68,7 @@ public:
 	DWORD			m_nLength;
 	DWORD			m_nReceived;
 	CBuffer*		m_pBuffer;
-	LPVOID			m_pInflate;
+	z_streamp		m_pInflate;
 
 	enum { hbsNull, hbsConnecting, hbsRequesting, hbsHeaders, hbsContent };
 

@@ -1,7 +1,7 @@
 //
 // Neighbour.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -177,12 +177,8 @@ CNeighbour::~CNeighbour()
 	}
 
 	// Same thing, except for decompressing input
-	if ( z_streamp pStream = (z_streamp)m_pZSInput )
-	{
-		// End the decompression and delete the pStream object
-		inflateEnd( pStream );
-		delete pStream;
-	}
+	if ( m_pZSInput )
+		m_pZInput->InflateStreamCleanup( m_pZSInput );
 
 	// If any of these objects exist, delete them
 	if ( m_pProfile )			delete m_pProfile;
@@ -303,11 +299,11 @@ BOOL CNeighbour::OnRun()
 	// If this connection is to a hub above us, or to a Gnutella2 hub like us
 	if ( ( m_nNodeType == ntHub || ( m_nNodeType == ntNode && m_nProtocol == PROTOCOL_G2 ) ) &&
 		// And if we have a local query table for this neighbour and its cookie isn't the master cookie (do)
-	     ( m_pQueryTableLocal != NULL && m_pQueryTableLocal->m_nCookie != QueryHashMaster.m_nCookie ) &&
+		 ( m_pQueryTableLocal != NULL && m_pQueryTableLocal->m_nCookie != QueryHashMaster.m_nCookie ) &&
 		// And it's been more than 60 seconds since the last update (do)
 		 ( tNow - m_pQueryTableLocal->m_nCookie > 60000 ) &&
 		// And it's been more than 30 seconds since the master cookie (do)
-		 ( tNow - QueryHashMaster.m_nCookie > 30000 ||								
+		 ( tNow - QueryHashMaster.m_nCookie > 30000 ||
 		// Or, the master cookie is a minute older than the local one (do)
 			QueryHashMaster.m_nCookie - m_pQueryTableLocal->m_nCookie > 60000 ||
 		// Or, the local query table is not live (do)
@@ -363,64 +359,14 @@ BOOL CNeighbour::OnRead()
 	// Otherwise, compression is on, the bytes we read into the input buffer are compressed, and we have to decompress them
 	if ( m_pZInput == NULL || pInput->m_nLength == 0 ) return TRUE;
 
-	// Start or continue using zlib with m_pZSInput and pStream pointers
-	BOOL bNew = ( m_pZSInput == NULL );			// If the zlib input pointer is null, make bNew true, otherwise it's false
-	if ( bNew ) m_pZSInput = new z_stream;		// If the zlib input pointer is null, make a new z_stream
-	z_streamp pStream = (z_streamp)m_pZSInput;	// Cast the pointer as a z_streamp and call that pStream
+	// Store original buffer size
+	size_t nLength = m_pZInput->m_nLength;
 
-	// If we are starting to use zlib now
-	if ( bNew )
-	{
-		// Zero the z_stream structure and set it up for decompression
-		ZeroMemory( pStream, sizeof(z_stream) );
-		if ( inflateInit( pStream ) != Z_OK )
-		{
-			// There was an error setting up zlib, clean up and leave now
-			delete pStream;
-			delete m_pZInput;
-			m_pZInput = NULL;
-			m_pZSInput = NULL;
-			return TRUE; // Report success anyway
-		}
-	}
+	// Try to decompress the stream
+	pInput->InflateStreamTo( *m_pZInput, m_pZSInput );
 
-	// Loop until there is no more data for zlib to decompress
-	while ( pInput->m_nLength ||							// While the input buffer has data in it
-			m_pZInput->m_nLength == m_pZInput->GetBufferSize() || // Or the zlib buffer length is the same as the buffer (do)
-			pStream->avail_out == 0 )						// Or there is no more data availiable for zlib to decompress
-	{
-		// Make sure the zlib buffer holds at least 1 KB (do)
-		if ( !m_pZInput->EnsureBuffer( 1024u ) )
-			return FALSE;
-
-		// Tell zlib where the compressed data is, how much is there, where it can output bytes, and how much space it has there
-		pStream->next_in	= pInput->m_pBuffer;							// Point zlib at the start of the input buffer
-		pStream->avail_in	= pInput->m_nLength;							// Give it the entire block there
-		pStream->next_out	= m_pZInput->m_pBuffer + m_pZInput->m_nLength;	// Have it put decompressed bytes in the empty space of the ZInput buffer
-		pStream->avail_out	= m_pZInput->GetBufferSize() - m_pZInput->m_nLength;	// This is how much space is left there
-
-		// Call zlib inflate to decompress the contents of m_pInput into the end of m_pZInput
-		inflate( pStream, Z_SYNC_FLUSH ); // Zlib adjusts next in, avail in, next out, and avail out to record what it did
-
-		// Zlib decompressed something
-		if ( pStream->avail_in < pInput->m_nLength ) // We set avail_in to nLength, but zlib shrunk it smaller
-		{
-			// Remove the portion in the start of the input buffer that zlib decompressed
-			pInput->Remove( pInput->m_nLength - pStream->avail_in ); // nLength - avail_in is the size of the block that zlib decompressed
-		}
-
-		// Calculate the size of nBlock, the block of data in ZInput that Zlib just decompressed
-		DWORD nBlock = ( m_pZInput->GetBufferSize() - m_pZInput->m_nLength ) - pStream->avail_out; // Buffer size minus previous length and current empty space
-
-		// Record tha this many more bytes are stored in the ZInput buffer
-		m_pZInput->m_nLength += nBlock;
-
-		// Add this number of bytes to the zlib count
-		m_nZInput += nBlock;
-
-		// If Zlib didn't decompress anything, leave the loop
-		if ( ! nBlock ) break;
-	}
+	// Calculate how much was decompressed
+	m_nZInput += m_pZInput->m_nLength - nLength;
 
 	// Report success
 	return TRUE;
@@ -437,7 +383,7 @@ BOOL CNeighbour::OnWrite()
 	BOOL bNew = ( m_pZSOutput == NULL );		// Make bNew true if zlib compression isn't setup yet
 	if ( bNew ) m_pZSOutput = new z_stream;		// Create a new z_stream structure and point m_pZSOutput and pStream at it
 	z_streamp pStream = (z_streamp)m_pZSOutput;
-	
+
 	// If we are starting to use zlib now
 	if ( bNew )
 	{
@@ -457,7 +403,7 @@ BOOL CNeighbour::OnWrite()
 	CLockedBuffer pOutput( GetOutput() );
 
 	// If there is data in the output buffer already
-	if ( pOutput->m_nLength ) 
+	if ( pOutput->m_nLength )
 	{
 		// Send it to the other computer
 		CConnection::OnWrite();
@@ -483,7 +429,7 @@ BOOL CNeighbour::OnWrite()
 		pStream->avail_out	= pOutput->GetBufferSize() - pOutput->m_nLength;
 
 		// Call zlib inflate to decompress the contents of m_pInput into the end of m_pZInput
-		deflate( pStream, m_bZFlush ? Z_SYNC_FLUSH : 0 ); // Zlib adjusts next in, avail in, next out, and avail out to record what it did
+		deflate( pStream, m_bZFlush ? Z_SYNC_FLUSH : Z_NO_FLUSH ); // Zlib adjusts next in, avail in, next out, and avail out to record what it did
 
 		// Add the number of uncompressed bytes that zlib compressed to the m_nZOutput count
 		m_nZOutput += m_pZOutput->m_nLength - pStream->avail_in;
@@ -537,7 +483,7 @@ BOOL CNeighbour::OnCommonHit(CPacket* pPacket)
 	{
 		ASSERT( FALSE );
 	}
-	
+
 	if ( pHits == NULL )
 	{
 		pPacket->Debug( _T("Malformed Hit") );
@@ -587,27 +533,27 @@ BOOL CNeighbour::OnCommonQueryHash(CPacket* pPacket)
 		m_pQueryTableRemote = new CQueryHashTable();
 		theApp.Message( MSG_DEFAULT, IDS_PROTOCOL_QRP_UNEXPECTED, (LPCTSTR)m_sAddress );
 	}
-	
+
 	BOOL bLive = m_pQueryTableRemote->m_bLive;
-	
+
 	if ( ! m_pQueryTableRemote->OnPacket( pPacket ) )
 	{
 		theApp.Message( MSG_ERROR, IDS_PROTOCOL_QRP_FAILED, (LPCTSTR)m_sAddress );
 		return FALSE;
 	}
-	
+
 	if ( m_pQueryTableRemote->m_bLive && ! bLive )
 	{
 		theApp.Message( MSG_DEFAULT, IDS_PROTOCOL_QRP_UPDATED, (LPCTSTR)m_sAddress,
 			m_pQueryTableRemote->m_nBits, m_pQueryTableRemote->m_nHash,
 			m_pQueryTableRemote->m_nInfinity, m_pQueryTableRemote->GetPercent() );
 	}
-	
+
 	if ( m_nNodeType == ntLeaf && m_pQueryTableRemote->m_pGroup == NULL )
 	{
 		QueryHashMaster.Add( m_pQueryTableRemote );
 	}
-	
+
 	return TRUE;
 }
 

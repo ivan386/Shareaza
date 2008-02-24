@@ -1,7 +1,7 @@
 //
 // Neighbour.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -31,6 +31,7 @@
 
 // Copy in the contents of these files here before compiling
 #include "Connection.h"
+#include "zlib.h"
 
 // Tell the compiler these classes exist, and it will find out more about them soon
 class CBuffer;
@@ -84,7 +85,7 @@ public:
 
 	// Used by the list of neighbour objects in CNeighbours
 	DWORD      m_nRunCookie; // The number of times this neighbour has been run, CNeighboursBase::OnRun uses this to run each neighbour in the list once
-	DWORD      m_nUnique;    // A number, like 2, 3, 4 and so on, which is the unique key for this CNeighbour object in CNeighbour's m_pUniques map 
+	DWORD      m_nUnique;    // A number, like 2, 3, 4 and so on, which is the unique key for this CNeighbour object in CNeighbour's m_pUniques map
 	PROTOCOLID    m_nProtocol;
 	NrsState      m_nState;           // Neighbour state, like connecting, handshake 1, 2, or 3, or rejected
 	CVendor*      m_pVendor;
@@ -134,16 +135,15 @@ public:
 
 // Attributes: Internals
 protected:
-
-	DWORD    m_tLastPacket; // The time that we received the last packet
-	CBuffer* m_pZInput;     // The remote computer is sending compressed data, we'll save it in m_pInput, and then decompress it to here
-	CBuffer* m_pZOutput;    // We are sending the remote computer compressed data, we're writing it here, and then compressing it to m_pOutput
-	DWORD    m_nZInput;     // The number of decompressed bytes of data the remote computer sent us
-	DWORD    m_nZOutput;    // The number of not yet compressed bytes of data we've sent the remote computer
-	LPVOID   m_pZSInput;    // Pointer to the zlib z_stream structure for decompression
-	LPVOID   m_pZSOutput;   // Pointer to the zlib z_stream structure for compression
-	BOOL     m_bZFlush;     // True to flush the compressed output buffer to the remote computer
-	DWORD    m_tZOutput;    // The time that Zlib last compressed something
+	DWORD		m_tLastPacket;	// The time that we received the last packet
+	CBuffer*	m_pZInput;		// The remote computer is sending compressed data, we'll save it in m_pInput, and then decompress it to here
+	CBuffer*	m_pZOutput;		// We are sending the remote computer compressed data, we're writing it here, and then compressing it to m_pOutput
+	DWORD		m_nZInput;		// The number of decompressed bytes of data the remote computer sent us
+	DWORD		m_nZOutput;		// The number of not yet compressed bytes of data we've sent the remote computer
+	z_streamp	m_pZSInput;		// Pointer to the zlib z_stream structure for decompression
+	z_streamp	m_pZSOutput;	// Pointer to the zlib z_stream structure for compression
+	BOOL		m_bZFlush;		// True to flush the compressed output buffer to the remote computer
+	DWORD		m_tZOutput;		// The time that Zlib last compressed something
 
 // Operations
 public:
