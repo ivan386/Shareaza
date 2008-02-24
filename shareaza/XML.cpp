@@ -1,7 +1,7 @@
 //
 // XML.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -42,6 +42,19 @@ CXMLNode::CXMLNode(CXMLElement* pParent, LPCTSTR pszName)
 
 CXMLNode::~CXMLNode()
 {
+}
+
+void CXMLNode::Delete()
+{
+	if ( this == NULL ) return;
+
+	if ( m_pParent != NULL )
+	{
+		if ( m_nNode == xmlElement ) m_pParent->RemoveElement( (CXMLElement*)this );
+		else if ( m_nNode == xmlAttribute ) m_pParent->RemoveAttribute( (CXMLAttribute*)this );
+	}
+
+	delete this;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -326,6 +339,13 @@ CXMLElement::~CXMLElement()
 	DeleteAllAttributes();
 }
 
+CXMLElement* CXMLElement::AddElement(LPCTSTR pszName)
+{
+	CXMLElement* pElement = new CXMLElement( this, pszName );
+	m_pElements.AddTail( pElement );
+	return pElement;
+}
+
 //////////////////////////////////////////////////////////////////////
 // CXMLElement clone
 
@@ -338,7 +358,13 @@ CXMLElement* CXMLElement::Clone(CXMLElement* pParent)
 		CXMLAttribute* pAttribute = GetNextAttribute( pos )->Clone( pClone );
 		CString strName( pAttribute->m_sName );
 
+		// Convert to lowercase with CLowerCaseTable
 		ToLower( strName );
+
+		// Delete the old attribute if one exists
+		CXMLAttribute* pExisting;
+		if ( m_pAttributes.Lookup( strName, pExisting ) )
+			delete pExisting;
 
 		pClone->m_pAttributes.SetAt( strName, pAttribute );
 	}
@@ -396,7 +422,7 @@ void CXMLElement::ToString(CString& strXML, BOOL bNewline)
 {
 	strXML += '<' + m_sName;
 
-    POSITION pos = GetAttributeIterator();
+	POSITION pos = GetAttributeIterator();
 	for ( ; pos ; )
 	{
 		strXML += ' ';
@@ -518,10 +544,15 @@ BOOL CXMLElement::ParseString(LPCTSTR& strXML)
 		if ( pAttribute->ParseString( strXML ) )
 		{
 			CString strName( pAttribute->m_sName );
-			CXMLAttribute* pExisting;
+
+			// Convert to lowercase with CLowerCaseTable
 			ToLower( strName );
 
-			if ( m_pAttributes.Lookup( strName, pExisting ) ) delete pExisting;
+			// Delete the old attribute if one exists
+			CXMLAttribute* pExisting;
+			if ( m_pAttributes.Lookup( strName, pExisting ) )
+				delete pExisting;
+
 			m_pAttributes.SetAt( strName, pAttribute );
 		}
 		else
@@ -811,7 +842,14 @@ void CXMLElement::Serialize(CArchive& ar)
 			pAttribute->Serialize( ar );
 
 			CString strName( pAttribute->m_sName );
+
+			// Convert to lowercase with CLowerCaseTable
 			ToLower( strName );
+
+			// Delete the old attribute if one exists
+			CXMLAttribute* pExisting;
+			if ( m_pAttributes.Lookup( strName, pExisting ) )
+				delete pExisting;
 
 			m_pAttributes.SetAt( strName, pAttribute );
 		}
@@ -842,6 +880,49 @@ CXMLAttribute::CXMLAttribute(CXMLElement* pParent, LPCTSTR pszName) : CXMLNode( 
 
 CXMLAttribute::~CXMLAttribute()
 {
+}
+
+CXMLAttribute* CXMLElement::AddAttribute(LPCTSTR pszName, LPCTSTR pszValue)
+{
+	CXMLAttribute* pAttribute = GetAttribute( pszName );
+
+	if ( ! pAttribute )
+	{
+		pAttribute = new CXMLAttribute( this, pszName );
+		CString strName( pszName );
+
+		// Convert to lowercase with CLowerCaseTable
+		ToLower( strName );
+
+		// Delete the old attribute if one exists
+		CXMLAttribute* pExisting;
+		if ( m_pAttributes.Lookup( strName, pExisting ) )
+			delete pExisting;
+
+		m_pAttributes.SetAt( strName, pAttribute );
+	}
+
+	if ( pszValue ) pAttribute->SetValue( pszValue );
+
+	return pAttribute;
+}
+
+CXMLAttribute* CXMLElement::AddAttribute(CXMLAttribute* pAttribute)
+{
+	if ( pAttribute->m_pParent ) return NULL;
+	CString strName( pAttribute->m_sName );
+
+	// Convert to lowercase with CLowerCaseTable
+	ToLower( strName );
+
+	// Delete the old attribute if one exists
+	CXMLAttribute* pExisting;
+	if ( m_pAttributes.Lookup( strName, pExisting ) )
+		delete pExisting;
+
+	m_pAttributes.SetAt( pAttribute->m_sName, pAttribute );
+	pAttribute->m_pParent = this;
+	return pAttribute;
 }
 
 //////////////////////////////////////////////////////////////////////

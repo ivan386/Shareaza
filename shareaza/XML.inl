@@ -1,8 +1,8 @@
 //
 // XML.inl
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
-// This file is part of SHAREAZA (www.shareaza.com)
+// Copyright (c) Shareaza Development Team, 2002-2008.
+// This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
 // and/or modify it under the terms of the GNU General Public License
@@ -51,19 +51,6 @@ CXMLElement* CXMLNode::GetParent() const
 	return m_pParent;
 }
 
-void CXMLNode::Delete()
-{
-	if ( this == NULL ) return;
-
-	if ( m_pParent != NULL )
-	{
-		if ( m_nNode == xmlElement ) m_pParent->RemoveElement( (CXMLElement*)this );
-		else if ( m_nNode == xmlAttribute ) m_pParent->RemoveAttribute( (CXMLAttribute*)this );
-	}
-
-	delete this;
-}
-
 //////////////////////////////////////////////////////////////////////
 // CXMLNode name access
 
@@ -108,13 +95,6 @@ CXMLElement* CXMLElement::Detach()
 
 //////////////////////////////////////////////////////////////////////
 // CXMLElement element access
-
-CXMLElement* CXMLElement::AddElement(LPCTSTR pszName)
-{
-	CXMLElement* pElement = new CXMLElement( this, pszName );
-	m_pElements.AddTail( pElement );
-	return pElement;
-}
 
 CXMLElement* CXMLElement::AddElement(CXMLElement* pElement)
 {
@@ -175,33 +155,6 @@ void CXMLElement::RemoveElement(CXMLElement* pElement)
 //////////////////////////////////////////////////////////////////////
 // CXMLElement attribute access
 
-CXMLAttribute* CXMLElement::AddAttribute(LPCTSTR pszName, LPCTSTR pszValue)
-{
-	CXMLAttribute* pAttribute = GetAttribute( pszName );
-
-	if ( ! pAttribute )
-	{
-		pAttribute = new CXMLAttribute( this, pszName );
-		CString strName( pszName );
-		strName.MakeLower();
-		m_pAttributes.SetAt( strName, pAttribute );
-	}
-
-	if ( pszValue ) pAttribute->SetValue( pszValue );
-
-	return pAttribute;
-}
-
-CXMLAttribute* CXMLElement::AddAttribute(CXMLAttribute* pAttribute)
-{
-	if ( pAttribute->m_pParent ) return NULL;
-	CString strName( pAttribute->m_sName );
-	strName.MakeLower();
-	m_pAttributes.SetAt( pAttribute->m_sName, pAttribute );
-	pAttribute->m_pParent = this;
-	return pAttribute;
-}
-
 int CXMLElement::GetAttributeCount() const
 {
 	return (int)m_pAttributes.GetCount();
@@ -224,7 +177,10 @@ CXMLAttribute* CXMLElement::GetAttribute(LPCTSTR pszName) const
 {
 	CXMLAttribute* pAttribute = NULL;
 	CString strName( pszName );
-	strName.MakeLower();
+
+	// Convert to lowercase with CLowerCaseTable
+	ToLower( strName );
+
 	return m_pAttributes.Lookup( strName, pAttribute ) ? pAttribute : NULL;
 }
 
@@ -240,7 +196,10 @@ CString CXMLElement::GetAttributeValue(LPCTSTR pszName, LPCTSTR pszDefault) cons
 void CXMLElement::RemoveAttribute(CXMLAttribute* pAttribute)
 {
 	CString strName( pAttribute->m_sName );
-	strName.MakeLower();
+
+	// Convert to lowercase with CLowerCaseTable
+	ToLower( strName );
+
 	m_pAttributes.RemoveKey( strName );
 }
 

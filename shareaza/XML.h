@@ -1,7 +1,7 @@
 //
 // XML.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -50,7 +50,7 @@ public:
 	inline CXMLAttribute*	AsAttribute() const;
 public:
 	inline CXMLElement*	GetParent() const;
-	inline void			Delete();
+	void				Delete();
 public:
 	inline CString		GetName() const;
 	inline void			SetName(LPCTSTR pszValue);
@@ -98,7 +98,7 @@ public:
 	CXMLElement*			Clone(CXMLElement* pParent = NULL);
 	inline CXMLElement*		Detach();
 public:
-	inline CXMLElement*		AddElement(LPCTSTR pszName);
+	CXMLElement*			AddElement(LPCTSTR pszName);
 	inline CXMLElement*		AddElement(CXMLElement* pElement);
 	inline INT_PTR			GetElementCount() const;
 	inline CXMLElement*		GetFirstElement() const;
@@ -109,8 +109,8 @@ public:
 	inline void				RemoveElement(CXMLElement* pElement);
 	void					DeleteAllElements();
 public:
-	inline CXMLAttribute*	AddAttribute(LPCTSTR pszName, LPCTSTR pszValue = NULL);
-	inline CXMLAttribute*	AddAttribute(CXMLAttribute* pAttribute);
+	CXMLAttribute*			AddAttribute(LPCTSTR pszName, LPCTSTR pszValue = NULL);
+	CXMLAttribute*			AddAttribute(CXMLAttribute* pAttribute);
 	inline int				GetAttributeCount() const;
 	inline POSITION			GetAttributeIterator() const;
 	inline CXMLAttribute*	GetNextAttribute(POSITION& pos) const;
