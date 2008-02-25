@@ -44,35 +44,31 @@ protected:
 
 // Operations
 public:
-	inline int				GetType() const;
-	inline CXMLNode*		AsNode() const;
-	inline CXMLElement*		AsElement() const;
-	inline CXMLAttribute*	AsAttribute() const;
+	int				GetType() const;
+	CXMLNode*		AsNode() const;
+	CXMLElement*	AsElement() const;
+	CXMLAttribute*	AsAttribute() const;
 public:
-	inline CXMLElement*	GetParent() const;
-	void				Delete();
+	CXMLElement*	GetParent() const;
+	void			Delete();
 public:
-	inline CString		GetName() const;
-	inline void			SetName(LPCTSTR pszValue);
-	inline BOOL			IsNamed(LPCTSTR pszName) const;
-	inline CString		GetValue() const;
-	inline void			SetValue(LPCTSTR pszValue);
+	CString			GetName() const;
+	void			SetName(LPCTSTR pszValue);
+	BOOL			IsNamed(LPCTSTR pszName) const;
+	CString			GetValue() const;
+	void			SetValue(LPCTSTR pszValue);
 protected:
 	static BOOL		ParseMatch(LPCTSTR& pszXML, LPCTSTR pszToken);
 	static BOOL		ParseIdentifier(LPCTSTR& pszXML, CString& strIdentifier);
-#ifdef _AFX
 	void			Serialize(CArchive& ar);
-#endif
 public:
 	static CString	StringToValue(LPCTSTR& pszXML, int nLength);
 	static void		ValueToString(LPCTSTR pszValue, CString& strXML);
 	static void		UniformString(CString& str);
 
-	friend class CXMLElement;
-	friend class CQuerySearch;
-
-	friend class CXMLCOM;
-
+	friend class	CXMLElement;
+	friend class	CQuerySearch;
+	friend class	CXMLCOM;
 };
 
 
@@ -85,40 +81,35 @@ public:
 
 // Attributes
 protected:
-#ifdef _AFX
 	CList< CXMLElement* > m_pElements;
 	CMap< CString, const CString&, CXMLAttribute*, CXMLAttribute* > m_pAttributes;
-#else
-	CAtlList<CXMLElement*> m_pElements;
-	CAtlMap<CString, CXMLAttribute*, CStringElementTraits<CString> > m_pAttributes;
-#endif
 
 // Operations
 public:
-	CXMLElement*			Clone(CXMLElement* pParent = NULL);
-	inline CXMLElement*		Detach();
+	CXMLElement*	Clone(CXMLElement* pParent = NULL);
+	CXMLElement*	Detach();
 public:
-	CXMLElement*			AddElement(LPCTSTR pszName);
-	inline CXMLElement*		AddElement(CXMLElement* pElement);
-	inline INT_PTR			GetElementCount() const;
-	inline CXMLElement*		GetFirstElement() const;
-	inline POSITION			GetElementIterator() const;
-	inline CXMLElement*		GetNextElement(POSITION& pos) const;
-	inline CXMLElement*		GetElementByName(LPCTSTR pszName) const;
-	inline CXMLElement*		GetElementByName(LPCTSTR pszName, BOOL bCreate);
-	inline void				RemoveElement(CXMLElement* pElement);
-	void					DeleteAllElements();
+	CXMLElement*	AddElement(LPCTSTR pszName);
+	CXMLElement*	AddElement(CXMLElement* pElement);
+	INT_PTR			GetElementCount() const;
+	CXMLElement*	GetFirstElement() const;
+	POSITION		GetElementIterator() const;
+	CXMLElement*	GetNextElement(POSITION& pos) const;
+	CXMLElement*	GetElementByName(LPCTSTR pszName) const;
+	CXMLElement*	GetElementByName(LPCTSTR pszName, BOOL bCreate);
+	void			RemoveElement(CXMLElement* pElement);
+	void			DeleteAllElements();
 public:
-	CXMLAttribute*			AddAttribute(LPCTSTR pszName, LPCTSTR pszValue = NULL);
-	CXMLAttribute*			AddAttribute(CXMLAttribute* pAttribute);
-	inline int				GetAttributeCount() const;
-	inline POSITION			GetAttributeIterator() const;
-	inline CXMLAttribute*	GetNextAttribute(POSITION& pos) const;
-	inline CXMLAttribute*	GetAttribute(LPCTSTR pszName) const;
-	inline CString			GetAttributeValue(LPCTSTR pszName, LPCTSTR pszDefault = NULL) const;
-	inline void				RemoveAttribute(CXMLAttribute* pAttribute);
-	inline void				DeleteAttribute(LPCTSTR pszName);
-	void					DeleteAllAttributes();
+	CXMLAttribute*	AddAttribute(LPCTSTR pszName, LPCTSTR pszValue = NULL);
+	CXMLAttribute*	AddAttribute(CXMLAttribute* pAttribute);
+	int				GetAttributeCount() const;
+	POSITION		GetAttributeIterator() const;
+	CXMLAttribute*	GetNextAttribute(POSITION& pos) const;
+	CXMLAttribute*	GetAttribute(LPCTSTR pszName) const;
+	CString			GetAttributeValue(LPCTSTR pszName, LPCTSTR pszDefault = NULL) const;
+	void			RemoveAttribute(CXMLAttribute* pAttribute);
+	void			DeleteAttribute(LPCTSTR pszName);
+	void			DeleteAllAttributes();
 public:
 	CString			ToString(BOOL bHeader = FALSE, BOOL bNewline = FALSE);
 	void			ToString(CString& strXML, BOOL bNewline = FALSE);
@@ -128,11 +119,9 @@ public:
 	BOOL			Merge(CXMLElement* pInput);
 	CString			GetRecursiveWords();
 	void			AddRecursiveWords(CString& strWords);
-#ifdef _AFX
 	void			Serialize(CArchive& ar);
-#endif
 
-	static CXMLElement* FromString(LPCTSTR pszXML, BOOL bHeader = FALSE);
+	static CXMLElement*	FromString(LPCTSTR pszXML, BOOL bHeader = FALSE);
 	static CXMLElement* FromBytes(BYTE* pByte, DWORD nByte, BOOL bHeader = FALSE);
 	static CXMLElement* FromFile(LPCTSTR pszPath, BOOL bHeader = FALSE);
 	static CXMLElement* FromFile(HANDLE hFile, BOOL bHeader = FALSE);
@@ -158,16 +147,7 @@ public:
 	void			ToString(CString& strXML);
 	BOOL			ParseString(LPCTSTR& strXML);
 	BOOL			Equals(CXMLAttribute* pXML) const;
-#ifdef _AFX
 	void			Serialize(CArchive& ar);
-#endif
-
 };
-
-#ifdef _AFX
-#define XMLVOID(x)	(void*&)(x)
-#else
-#define XMLVOID(x)	(x)
-#endif
 
 #include "XML.inl"

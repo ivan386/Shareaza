@@ -23,22 +23,22 @@
 //////////////////////////////////////////////////////////////////////
 // CXMLNode node type and casting access
 
-int CXMLNode::GetType() const
+inline int CXMLNode::GetType() const
 {
 	return m_nNode;
 }
 
-CXMLNode* CXMLNode::AsNode() const
+inline CXMLNode* CXMLNode::AsNode() const
 {
 	return (CXMLNode*)this;
 }
 
-CXMLElement* CXMLNode::AsElement() const
+inline CXMLElement* CXMLNode::AsElement() const
 {
 	return ( m_nNode == xmlElement ) ? (CXMLElement*)this : NULL;
 }
 
-CXMLAttribute* CXMLNode::AsAttribute() const
+inline CXMLAttribute* CXMLNode::AsAttribute() const
 {
 	return ( m_nNode == xmlAttribute ) ? (CXMLAttribute*)this : NULL;
 }
@@ -46,7 +46,7 @@ CXMLAttribute* CXMLNode::AsAttribute() const
 //////////////////////////////////////////////////////////////////////
 // CXMLNode parent access and delete
 
-CXMLElement* CXMLNode::GetParent() const
+inline CXMLElement* CXMLNode::GetParent() const
 {
 	return m_pParent;
 }
@@ -54,17 +54,17 @@ CXMLElement* CXMLNode::GetParent() const
 //////////////////////////////////////////////////////////////////////
 // CXMLNode name access
 
-CString CXMLNode::GetName() const
+inline CString CXMLNode::GetName() const
 {
 	return m_sName;
 }
 
-void CXMLNode::SetName(LPCTSTR pszValue)
+inline void CXMLNode::SetName(LPCTSTR pszValue)
 {
 	m_sName = pszValue;
 }
 
-BOOL CXMLNode::IsNamed(LPCTSTR pszName) const
+inline BOOL CXMLNode::IsNamed(LPCTSTR pszName) const
 {
 	if ( this == NULL ) return FALSE;
 	return m_sName.CompareNoCase( pszName ) == 0;
@@ -73,12 +73,12 @@ BOOL CXMLNode::IsNamed(LPCTSTR pszName) const
 //////////////////////////////////////////////////////////////////////
 // CXMLNode value access
 
-CString CXMLNode::GetValue() const
+inline CString CXMLNode::GetValue() const
 {
 	return m_sValue;
 }
 
-void CXMLNode::SetValue(LPCTSTR pszValue)
+inline void CXMLNode::SetValue(LPCTSTR pszValue)
 {
 	m_sValue = pszValue;
 }
@@ -86,7 +86,7 @@ void CXMLNode::SetValue(LPCTSTR pszValue)
 //////////////////////////////////////////////////////////////////////
 // CXMLElement detach
 
-CXMLElement* CXMLElement::Detach()
+inline CXMLElement* CXMLElement::Detach()
 {
 	if ( m_pParent ) m_pParent->RemoveElement( this );
 	m_pParent = NULL;
@@ -96,7 +96,7 @@ CXMLElement* CXMLElement::Detach()
 //////////////////////////////////////////////////////////////////////
 // CXMLElement element access
 
-CXMLElement* CXMLElement::AddElement(CXMLElement* pElement)
+inline CXMLElement* CXMLElement::AddElement(CXMLElement* pElement)
 {
 	if ( pElement->m_pParent ) return NULL;
 	m_pElements.AddTail( pElement );
@@ -104,28 +104,28 @@ CXMLElement* CXMLElement::AddElement(CXMLElement* pElement)
 	return pElement;
 }
 
-INT_PTR CXMLElement::GetElementCount() const
+inline INT_PTR CXMLElement::GetElementCount() const
 {
 	return m_pElements.GetCount();
 }
 
-CXMLElement* CXMLElement::GetFirstElement() const
+inline CXMLElement* CXMLElement::GetFirstElement() const
 {
 	if ( this == NULL ) return NULL;
 	return m_pElements.GetCount() ? m_pElements.GetHead() : NULL;
 }
 
-POSITION CXMLElement::GetElementIterator() const
+inline POSITION CXMLElement::GetElementIterator() const
 {
 	return m_pElements.GetHeadPosition();
 }
 
-CXMLElement* CXMLElement::GetNextElement(POSITION& pos) const
+inline CXMLElement* CXMLElement::GetNextElement(POSITION& pos) const
 {
 	return m_pElements.GetNext( pos );
 }
 
-CXMLElement* CXMLElement::GetElementByName(LPCTSTR pszName) const
+inline CXMLElement* CXMLElement::GetElementByName(LPCTSTR pszName) const
 {
 	for ( POSITION pos = GetElementIterator() ; pos ; )
 	{
@@ -135,7 +135,7 @@ CXMLElement* CXMLElement::GetElementByName(LPCTSTR pszName) const
 	return NULL;
 }
 
-CXMLElement* CXMLElement::GetElementByName(LPCTSTR pszName, BOOL bCreate)
+inline CXMLElement* CXMLElement::GetElementByName(LPCTSTR pszName, BOOL bCreate)
 {
 	for ( POSITION pos = GetElementIterator() ; pos ; )
 	{
@@ -146,7 +146,7 @@ CXMLElement* CXMLElement::GetElementByName(LPCTSTR pszName, BOOL bCreate)
 	return bCreate ? AddElement( pszName ) : NULL;
 }
 
-void CXMLElement::RemoveElement(CXMLElement* pElement)
+inline void CXMLElement::RemoveElement(CXMLElement* pElement)
 {
 	POSITION pos = m_pElements.Find( pElement );
 	if ( pos ) m_pElements.RemoveAt( pos );
@@ -155,17 +155,17 @@ void CXMLElement::RemoveElement(CXMLElement* pElement)
 //////////////////////////////////////////////////////////////////////
 // CXMLElement attribute access
 
-int CXMLElement::GetAttributeCount() const
+inline int CXMLElement::GetAttributeCount() const
 {
 	return (int)m_pAttributes.GetCount();
 }
 
-POSITION CXMLElement::GetAttributeIterator() const
+inline POSITION CXMLElement::GetAttributeIterator() const
 {
 	return m_pAttributes.GetStartPosition();
 }
 
-CXMLAttribute* CXMLElement::GetNextAttribute(POSITION& pos) const
+inline CXMLAttribute* CXMLElement::GetNextAttribute(POSITION& pos) const
 {
 	CXMLAttribute* pAttribute = NULL;
 	CString strName;
@@ -173,7 +173,7 @@ CXMLAttribute* CXMLElement::GetNextAttribute(POSITION& pos) const
 	return pAttribute;
 }
 
-CXMLAttribute* CXMLElement::GetAttribute(LPCTSTR pszName) const
+inline CXMLAttribute* CXMLElement::GetAttribute(LPCTSTR pszName) const
 {
 	CXMLAttribute* pAttribute = NULL;
 	CString strName( pszName );
@@ -184,7 +184,7 @@ CXMLAttribute* CXMLElement::GetAttribute(LPCTSTR pszName) const
 	return m_pAttributes.Lookup( strName, pAttribute ) ? pAttribute : NULL;
 }
 
-CString CXMLElement::GetAttributeValue(LPCTSTR pszName, LPCTSTR pszDefault) const
+inline CString CXMLElement::GetAttributeValue(LPCTSTR pszName, LPCTSTR pszDefault) const
 {
 	CXMLAttribute* pAttribute = GetAttribute( pszName );
 	CString strResult;
@@ -193,7 +193,7 @@ CString CXMLElement::GetAttributeValue(LPCTSTR pszName, LPCTSTR pszDefault) cons
 	return strResult;
 }
 
-void CXMLElement::RemoveAttribute(CXMLAttribute* pAttribute)
+inline void CXMLElement::RemoveAttribute(CXMLAttribute* pAttribute)
 {
 	CString strName( pAttribute->m_sName );
 
@@ -203,7 +203,7 @@ void CXMLElement::RemoveAttribute(CXMLAttribute* pAttribute)
 	m_pAttributes.RemoveKey( strName );
 }
 
-void CXMLElement::DeleteAttribute(LPCTSTR pszName)
+inline void CXMLElement::DeleteAttribute(LPCTSTR pszName)
 {
 	CXMLAttribute* pAttribute = GetAttribute( pszName );
 	if ( pAttribute ) pAttribute->Delete();

@@ -33,11 +33,12 @@ static char THIS_FILE[]=__FILE__;
 //////////////////////////////////////////////////////////////////////
 // CXMLNode construction
 
-CXMLNode::CXMLNode(CXMLElement* pParent, LPCTSTR pszName)
+CXMLNode::CXMLNode(CXMLElement* pParent, LPCTSTR pszName) :
+	m_nNode		( xmlNode )
+,	m_pParent	( pParent )
 {
-	m_nNode		= xmlNode;
-	m_pParent	= pParent;
-	if ( pszName ) m_sName = pszName;
+	if ( pszName )
+		m_sName = pszName;
 }
 
 CXMLNode::~CXMLNode()
@@ -264,8 +265,6 @@ void CXMLNode::ValueToString(LPCTSTR pszValue, CString& strXML)
 //////////////////////////////////////////////////////////////////////
 // CXMLNode serialize
 
-#ifdef _AFX
-
 void CXMLNode::Serialize(CArchive& ar)
 {
 	if ( ar.IsStoring() )
@@ -279,8 +278,6 @@ void CXMLNode::Serialize(CArchive& ar)
 		ar >> m_sValue;
 	}
 }
-
-#endif
 
 //////////////////////////////////////////////////////////////////////
 // CXMLNode string helper
@@ -462,10 +459,8 @@ CXMLElement* CXMLElement::FromString(LPCTSTR pszXML, BOOL bHeader)
 	CXMLElement* pElement	= NULL;
 	LPCTSTR pszElement		= NULL;
 
-#ifdef _AFX
 	try
 	{
-#endif
 		if ( ParseMatch( pszXML, _T("<?xml version=\"") ) )
 		{
 			pszElement = _tcsstr( pszXML, _T("?>") );
@@ -509,7 +504,6 @@ CXMLElement* CXMLElement::FromString(LPCTSTR pszXML, BOOL bHeader)
 			delete pElement;
 			pElement = NULL;
 		}
-#ifdef _AFX
 	}
 	catch ( CException* pException )
 	{
@@ -517,7 +511,6 @@ CXMLElement* CXMLElement::FromString(LPCTSTR pszXML, BOOL bHeader)
 		delete pElement;
 		pElement = NULL;
 	}
-#endif
 
 	return pElement;
 }
@@ -812,8 +805,6 @@ void CXMLElement::AddRecursiveWords(CString& strWords)
 //////////////////////////////////////////////////////////////////////
 // CXMLElement serialize
 
-#ifdef _AFX
-
 void CXMLElement::Serialize(CArchive& ar)
 {
 	CXMLNode::Serialize( ar );
@@ -862,8 +853,6 @@ void CXMLElement::Serialize(CArchive& ar)
 		}
 	}
 }
-
-#endif
 
 
 //////////////////////////////////////////////////////////////////////
@@ -994,11 +983,7 @@ BOOL CXMLAttribute::Equals(CXMLAttribute* pXML) const
 //////////////////////////////////////////////////////////////////////
 // CXMLAttribute serialize
 
-#ifdef _AFX
-
 void CXMLAttribute::Serialize(CArchive& ar)
 {
 	CXMLNode::Serialize( ar );
 }
-
-#endif
