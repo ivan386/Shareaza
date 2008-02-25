@@ -892,6 +892,9 @@
 				RelativePath="..\shareaza\XML.cpp">
 			</File>
 			<File
+				RelativePath="..\shareaza\XML.inl">
+			</File>
+			<File
 				RelativePath="..\shareaza\XMLCOM.cpp">
 			</File>
 			<File

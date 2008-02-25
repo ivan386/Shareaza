@@ -3469,6 +3469,10 @@
 				>
 			</File>
 			<File
+				RelativePath="XML.inl"
+				>
+			</File>
+			<File
 				RelativePath="XMLCOM.h"
 				>
 			</File>
