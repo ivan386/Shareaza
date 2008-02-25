@@ -363,7 +363,7 @@ CXMLElement* CXMLElement::Clone(CXMLElement* pParent)
 
 		// Delete the old attribute if one exists
 		CXMLAttribute* pExisting;
-		if ( m_pAttributes.Lookup( strName, pExisting ) )
+		if ( pClone->m_pAttributes.Lookup( strName, pExisting ) )
 			delete pExisting;
 
 		pClone->m_pAttributes.SetAt( strName, pAttribute );
