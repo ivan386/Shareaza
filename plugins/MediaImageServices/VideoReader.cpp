@@ -59,27 +59,11 @@ HRESULT LoadFrame(IMediaDet* pDet, double total_time,
 				new char [ total_size +sizeof( BITMAPINFOHEADER ) ];
 			if (buf)
 			{
-				// Getting first frame
-				HRESULT hr0 = E_FAIL;
-				__try {
-					hr0 = pDet->GetBitmapBits ( 0.0,
-						NULL, buf, pParams->nWidth,
-						pParams->nHeight );
-					if ( SUCCEEDED( hr0 ) )
-					{
-						CopyBitmap( pDestination, buf,
-							pParams->nWidth, pParams->nHeight,
-							line_size );
-					}
-				} __except ( EXCEPTION_EXECUTE_HANDLER )
-				{
-				}
 				// Getting 25% frame
-				HRESULT hr1 = E_FAIL;
 				__try {
-					hr1 = pDet->GetBitmapBits ( total_time / 4.0,
+					hr = pDet->GetBitmapBits ( total_time / 4.0,
 						NULL, buf, pParams->nWidth, pParams->nHeight);
-					if ( SUCCEEDED( hr1 ) )
+					if ( SUCCEEDED( hr ) )
 					{
 						CopyBitmap( pDestination, buf,
 							pParams->nWidth, pParams->nHeight,
@@ -88,13 +72,22 @@ HRESULT LoadFrame(IMediaDet* pDet, double total_time,
 				} __except ( EXCEPTION_EXECUTE_HANDLER )
 				{
 				}
-				if ( SUCCEEDED( hr0 ) || SUCCEEDED( hr1 ) )
+				if ( FAILED( hr ) )
 				{
-					hr = S_OK;
-				}
-				else
-				{
-					hr = E_FAIL;
+					// Getting first frame
+					__try {
+						hr = pDet->GetBitmapBits ( 0.0,
+							NULL, buf, pParams->nWidth,
+							pParams->nHeight );
+						if ( SUCCEEDED( hr ) )
+						{
+							CopyBitmap( pDestination, buf,
+								pParams->nWidth, pParams->nHeight,
+								line_size );
+						}
+					} __except ( EXCEPTION_EXECUTE_HANDLER )
+					{
+					}
 				}
 				delete [] buf;
 			}
@@ -231,6 +224,13 @@ STDMETHODIMP CVideoReader::LoadFromFile (
 						if (pParams->nFlags & IMAGESERVICE_SCANONLY)
 						{
 							// OK
+						}
+						// Avoid trying to get the an image while debugging as
+						// some codecs call ExitProcess() if they detect a
+						// debugger is active.
+						else if ( IsDebuggerPresent() )
+						{
+							hr = E_ACCESSDENIED;
 						}
 						else
 						{
