@@ -225,7 +225,7 @@ STDMETHODIMP CVideoReader::LoadFromFile (
 						{
 							// OK
 						}
-						// Avoid trying to get the an image while debugging as
+						// Avoid trying to get an image while debugging as
 						// some codecs call ExitProcess() if they detect a
 						// debugger is active.
 						else if ( IsDebuggerPresent() )
