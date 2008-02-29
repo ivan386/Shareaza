@@ -133,7 +133,7 @@ protected:
 	afx_msg void OnContextMenu(CWnd* /*pWnd*/, CPoint /*point*/);
 
 	DECLARE_MESSAGE_MAP()
-;
+};
 
 #define IDC_REVIEW_VIEW		99
 
