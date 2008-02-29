@@ -39,7 +39,6 @@
 #include "Emoticons.h"
 #include "Skin.h"
 #include "CtrlSearchDetailPanel.h"
-#include ".\ctrlsearchdetailpanel.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -376,9 +375,6 @@ void CSearchDetailPanel::OnPaint()
 	dc.SetBkColor( CoolInterface.m_crWindow );
 	dc.SetTextColor( CoolInterface.m_crText );
 	
-	dc.SelectObject( &CoolInterface.m_fntCaption );
-	DrawText( &dc, rcWork.left, rcWork.top, m_sName );
-	
 	CPoint ptStar( rcWork.right - 3, rcWork.top - 2 );
 	
 	if ( m_nRating > 1 )
@@ -394,7 +390,11 @@ void CSearchDetailPanel::OnPaint()
 		ptStar.x -= 16;
 		ShellIcons.Draw( &dc, SHI_FAKE, 16, ptStar.x, ptStar.y, CoolInterface.m_crWindow );
 	}
-	
+
+	dc.SelectObject( &CoolInterface.m_fntCaption );
+	DrawText( &dc, rcWork.left, rcWork.top, m_sName, NULL, 
+		m_nRating > 0 ? rcWork.Width() - m_nRating * 16 - 3 : rcWork.Width() - 4 );
+
 	rcWork.top += 20;
 	
 	dc.FillSolidRect( rcWork.left, rcWork.top, rcWork.Width(), 1, CoolInterface.m_crMargin );
@@ -432,11 +432,17 @@ void CSearchDetailPanel::OnPaint()
 	dc.FillSolidRect( &rcClient, CoolInterface.m_crWindow );
 }
 
-void CSearchDetailPanel::DrawText(CDC* pDC, int nX, int nY, LPCTSTR pszText, RECT* pRect)
+void CSearchDetailPanel::DrawText(CDC* pDC, int nX, int nY, LPCTSTR pszText, RECT* pRect, int nMaxWidth)
 {
 	CSize sz = pDC->GetTextExtent( pszText, static_cast< int >( _tcslen( pszText ) ) );
-	CRect rc( nX - 2, nY - 2, nX + sz.cx + 2, nY + sz.cy + 2 );
-	
+
+	int nWidth = sz.cx;
+	if ( nMaxWidth > 0 )
+	{
+		nWidth = min( sz.cx, nMaxWidth );
+	}
+	CRect rc( nX - 2, nY - 2, nX + nWidth + 2, nY + sz.cy + 2 );
+
 	pDC->ExtTextOut( nX, nY, ETO_CLIPPED|ETO_OPAQUE, &rc, pszText, static_cast< UINT >( _tcslen( pszText ) ), NULL );
 	pDC->ExcludeClipRect( &rc );
 	

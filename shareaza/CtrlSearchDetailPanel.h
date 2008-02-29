@@ -65,7 +65,7 @@ public:
 	void		Update(CMatchFile* pFile);
 
 protected:
-	static void	DrawText(CDC* pDC, int nX, int nY, LPCTSTR pszText, RECT* pRect = NULL);
+	static void	DrawText(CDC* pDC, int nX, int nY, LPCTSTR pszText, RECT* pRect = NULL, int nMaxWidth = -1);
 	void		DrawThumbnail(CDC* pDC, CRect& rcClient, CRect& rcWork);
 	void		DrawThumbnail(CDC* pDC, CRect& rcThumb);
 	void		ClearReviews();

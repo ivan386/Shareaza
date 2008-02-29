@@ -330,9 +330,6 @@ void CLibraryMetaPanel::OnPaint()
 	
 	dc.SetBkColor( CoolInterface.m_crWindow );
 	
-	dc.SelectObject( &CoolInterface.m_fntCaption );
-	DrawText( &dc, rcWork.left, rcWork.top, m_sName );
-	
 	if ( m_nRating > 1 )
 	{
 		CPoint ptStar( rcWork.right - 3, rcWork.top - 2 );
@@ -355,13 +352,18 @@ void CLibraryMetaPanel::OnPaint()
 	}
 	else
 	{
+		m_rcRating.SetRectEmpty();
 		dc.SelectObject( &CoolInterface.m_fntUnder );
 		dc.SetTextColor( CoolInterface.m_crTextLink );
 		LoadString( str, IDS_LIBPANEL_RATE_FILE );
 		CSize szText = dc.GetTextExtent( str );
 		DrawText( &dc, rcWork.right - szText.cx, rcWork.top, str, &m_rcRating );
 	}
-	
+
+	dc.SelectObject( &CoolInterface.m_fntCaption );
+	dc.SetTextColor( CoolInterface.m_crText );
+	DrawText( &dc, rcWork.left, rcWork.top, m_sName, NULL, rcWork.Width() - m_rcRating.Width() - 4 );
+
 	rcWork.top += 20;
 	dc.FillSolidRect( rcWork.left, rcWork.top, rcWork.Width(), 1, CoolInterface.m_crMargin );
 	dc.ExcludeClipRect( rcWork.left, rcWork.top, rcWork.right, rcWork.top + 1 );
@@ -413,11 +415,18 @@ void CLibraryMetaPanel::OnPaint()
 	dc.FillSolidRect( &rcClient, CoolInterface.m_crWindow );
 }
 
-void CLibraryMetaPanel::DrawText(CDC* pDC, int nX, int nY, LPCTSTR pszText, RECT* pRect)
+void CLibraryMetaPanel::DrawText(CDC* pDC, int nX, int nY, LPCTSTR pszText, RECT* pRect, int nMaxWidth)
 {
 	DWORD dwFlags = ( Settings.General.LanguageRTL ? ETO_RTLREADING : 0 );
 	CSize sz = pDC->GetTextExtent( pszText, static_cast< int >( _tcslen( pszText ) ) );
-	CRect rc( nX - 2, nY - 2, nX + sz.cx + 2, nY + sz.cy + 2 );
+
+	int nWidth = sz.cx;
+	if ( nMaxWidth > 0 )
+	{
+		nWidth = min( sz.cx, nMaxWidth );
+	}
+
+	CRect rc( nX - 2, nY - 2, nX + nWidth + 2, nY + sz.cy + 2 );
 	
 	pDC->ExtTextOut( nX, nY, ETO_CLIPPED|ETO_OPAQUE|dwFlags, &rc, pszText, static_cast< UINT >( _tcslen( pszText ) ), NULL );
 	pDC->ExcludeClipRect( &rc );
