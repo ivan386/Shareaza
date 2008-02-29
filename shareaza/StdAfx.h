@@ -88,11 +88,6 @@
 
 #endif
 
-// For detecting Memory Leaks
-#ifdef _DEBUG
-#define _CRTDBG_MAP_ALLOC
-#endif
-
 const bool SHAREAZA_RESTRICT_WP64 = true;
 // allow min to return the smaller type if called with unsigned arguments ?
 const bool SHAREAZA_ADVANCED_MIN_TEMPLATE = true;
