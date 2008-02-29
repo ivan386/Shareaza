@@ -1,7 +1,7 @@
 //
 // CtrlSearchDetailPanel.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -39,6 +39,7 @@
 #include "Emoticons.h"
 #include "Skin.h"
 #include "CtrlSearchDetailPanel.h"
+#include ".\ctrlsearchdetailpanel.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -62,6 +63,7 @@ BEGIN_MESSAGE_MAP(CSearchDetailPanel, CWnd)
 	ON_WM_ERASEBKGND()
 	ON_NOTIFY(RVN_CLICK, IDC_REVIEW_VIEW, OnClickReview)
 	//}}AFX_MSG_MAP
+	ON_WM_CONTEXTMENU()
 END_MESSAGE_MAP()
 
 #define SIZE_INTERNAL	1982
@@ -961,4 +963,6 @@ BOOL CSearchDetailPanel::CachePreviewImage(const Hashes::Sha1Hash& /*oSHA1*/, LP
 	return FALSE;
 }
 
-
+void CSearchDetailPanel::OnContextMenu(CWnd* /*pWnd*/, CPoint /*point*/)
+{
+}
