@@ -5,7 +5,7 @@
 <manifest	name="Shareaza 2.0 - Command GUI"
 			author="Michael Stokes"
 			description="Adds a more modern command GUI look to the Shareaza 2.0 skin."
-			link="http://www.getshareaza.com/"
+			link="http://shareaza.sf.net/"
 			email="contact@shareaza.com"
 			version="1.0"
 			type="skin"
