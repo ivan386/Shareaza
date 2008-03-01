@@ -3718,11 +3718,11 @@ BEGIN
                             "You're not connected.  Click the Connect button to get started."
     IDS_TABBAR_CONNECTED    "There are no active searches.  Click here to search for files."
     IDS_UPGRADE_LAUNCH      "Shareaza has finished downloading the next Shareaza version (%s).  Would you like to upgrade now?\n\nIf you select Yes, Shareaza will close temporarily while the upgrade is installed."
-    IDS_UPGRADE_NO_NEW      "No new Shareaza version detected."
     IDS_SKIN_DELETE         "Are you sure you want to delete the ""%s"" skin?  This cannot be undone."
     IDS_BETA_EXPIRED        "This is a pre-release version of Shareaza, and the beta testing period has ended.  Please download the full, official release from http://shareaza.sourceforge.net/."
     IDS_VIEW_MODE_CONFIRM   "Changing view will close any windows you have open.  Would you like to change now?"
     IDS_TORRENT_INFO        "Torrent Information"
+    IDS_UPGRADE_NO_NEW      "No new Shareaza version detected."
 END
 
 STRINGTABLE 
@@ -5182,6 +5182,7 @@ BEGIN
     ID_HELP_SECURITY        "Help protecting your system from hostile programs."
     ID_HELP_CODEC           "All about codecs and video problems."
     ID_HELP_TEST            "Run the connection test."
+    ID_HELP_DONATE          "If you want, you can donate to our legal fund and show your appreciation."
 END
 
 STRINGTABLE 
@@ -5228,6 +5229,13 @@ END
 STRINGTABLE 
 BEGIN
     ID_TAB_IRC              "Show the IRC Chat window."
+END
+
+STRINGTABLE 
+BEGIN
+    ID_WEBSERVICES_LIST     "Choose the web service to get more information about the selected file."
+    ID_WEBSERVICES_SHAREMONKEY 
+                            "Search for the file infomation using ShareMonkey service."
 END
 
 #endif    // English (Australia) resources

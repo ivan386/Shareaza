@@ -19,15 +19,14 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_CTRLLIBRARYFILEVIEW_H__474B4237_0379_4D0B_ABCF_58FF0B3F8DDC__INCLUDED_)
-#define AFX_CTRLLIBRARYFILEVIEW_H__474B4237_0379_4D0B_ABCF_58FF0B3F8DDC__INCLUDED_
+#if !defined(CTRLLIBRARYFILEVIEW_H)
+#define CTRLLIBRARYFILEVIEW_H
 
 #pragma once
 
 #include "CtrlLibraryView.h"
 
 class CLibraryFile;
-
 
 class CLibraryFileView : public CLibraryView
 {
@@ -40,9 +39,8 @@ public:
 
 // Attributes
 protected:
-	POSITION	m_posSel;
-	BOOL		m_bEditing;
-
+	POSITION		m_posSel;
+	BOOL			m_bEditing;
 // Operations
 protected:
 	virtual BOOL	CheckAvailable(CLibraryTreeItem* pSel);
@@ -54,14 +52,10 @@ protected:
 
 // Overrides
 public:
-	//{{AFX_VIRTUAL(CLibraryFileView)
-	public:
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
-	//}}AFX_VIRTUAL
 
 // Implementation
 protected:
-	//{{AFX_MSG(CLibraryFileView)
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg void OnContextMenu(CWnd* pWnd, CPoint point);
 	afx_msg void OnMouseMove(UINT nFlags, CPoint point);
@@ -90,6 +84,8 @@ protected:
 	afx_msg void OnLibraryShared();
 	afx_msg void OnUpdateLibraryProperties(CCmdUI* pCmdUI);
 	afx_msg void OnLibraryProperties();
+	afx_msg void OnUpdateShareMonkeyLookup(CCmdUI* pCmdUI);
+	afx_msg void OnShareMonkeyLookup();
 	afx_msg void OnUpdateLibraryUnlink(CCmdUI* pCmdUI);
 	afx_msg void OnLibraryUnlink();
 	afx_msg void OnUpdateSearchForThis(CCmdUI* pCmdUI);
@@ -106,12 +102,9 @@ protected:
 	afx_msg void OnLibraryCreateTorrent();
 	afx_msg void OnUpdateLibraryRebuildAnsi(CCmdUI* pCmdUI);
 	afx_msg void OnLibraryRebuildAnsi();
-	//}}AFX_MSG
 
 	DECLARE_MESSAGE_MAP()
 
 };
 
-//{{AFX_INSERT_LOCATION}}
-
-#endif // !defined(AFX_CTRLLIBRARYFILEVIEW_H__474B4237_0379_4D0B_ABCF_58FF0B3F8DDC__INCLUDED_)
+#endif // !defined(CTRLLIBRARYFILEVIEW_H)

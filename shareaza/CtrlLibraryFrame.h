@@ -1,7 +1,7 @@
 //
 // CtrlLibraryFrame.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -136,6 +136,8 @@ protected:
 	afx_msg void OnTimer(UINT_PTR nIDEvent);
 	afx_msg void OnUpdateLibraryPanel(CCmdUI* pCmdUI);
 	afx_msg void OnLibraryPanel();
+	afx_msg void OnUpdateShowWebServices(CCmdUI* pCmdUI);
+	afx_msg void OnShowWebServices();
 	afx_msg void OnContextMenu(CWnd* pWnd, CPoint point);
 	afx_msg void OnLibrarySearch();
 	afx_msg void OnMeasureItem(int nIDCtl, LPMEASUREITEMSTRUCT lpMeasureItemStruct);

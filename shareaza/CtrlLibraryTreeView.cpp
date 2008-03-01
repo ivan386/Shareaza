@@ -1,7 +1,7 @@
 //
 // CtrlLibraryTreeView.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -52,7 +52,6 @@ static char THIS_FILE[] = __FILE__;
 IMPLEMENT_DYNAMIC(CLibraryTreeView, CWnd)
 
 BEGIN_MESSAGE_MAP(CLibraryTreeView, CWnd)
-	//{{AFX_MSG_MAP(CLibraryTreeView)
 	ON_WM_SIZE()
 	ON_WM_VSCROLL()
 	ON_WM_ERASEBKGND()
@@ -96,7 +95,6 @@ BEGIN_MESSAGE_MAP(CLibraryTreeView, CWnd)
 	ON_COMMAND(ID_LIBRARY_EXPORT_COLLECTION, OnLibraryExportCollection)
 	ON_WM_SETFOCUS()
 	ON_WM_GETDLGCODE()
-	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 #define ITEM_HEIGHT	16

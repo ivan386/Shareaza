@@ -1781,6 +1781,7 @@
 #define ID_HELP_SECURITY                33125
 #define ID_HELP_CODEC                   33126
 #define ID_HELP_TEST                    33127
+#define ID_HELP_DONATE                  33128
 #define ID_HELP_DISKSPACE               33130
 #define ID_HELP_DISKWRITEFAIL           33131
 #define ID_HELP_CONNECTIONFAIL          33132
@@ -1817,13 +1818,15 @@
 #define ID_IRC_CLOSETAB                 33227
 #define ID_IRC_SETTINGS                 33228
 #define ID_TAB_IRC                      33229
+#define ID_WEBSERVICES_LIST             33300
+#define ID_WEBSERVICES_SHAREMONKEY      33301
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
-#define _APS_NEXT_RESOURCE_VALUE        288
+#define _APS_NEXT_RESOURCE_VALUE        289
 #define _APS_NEXT_COMMAND_VALUE         33230
 #define _APS_NEXT_CONTROL_VALUE         1536
 #define _APS_NEXT_SYMED_VALUE           104

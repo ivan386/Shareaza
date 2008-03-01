@@ -60,7 +60,6 @@ static char THIS_FILE[] = __FILE__;
 IMPLEMENT_DYNAMIC(CLibraryFileView, CLibraryView)
 
 BEGIN_MESSAGE_MAP(CLibraryFileView, CLibraryView)
-	//{{AFX_MSG_MAP(CLibraryFileView)
 	ON_WM_CONTEXTMENU()
 	ON_WM_MOUSEMOVE()
 	ON_WM_LBUTTONDOWN()
@@ -88,6 +87,8 @@ BEGIN_MESSAGE_MAP(CLibraryFileView, CLibraryView)
 	ON_COMMAND(ID_LIBRARY_SHARED_FILE, OnLibraryShared)
 	ON_UPDATE_COMMAND_UI(ID_LIBRARY_PROPERTIES, OnUpdateLibraryProperties)
 	ON_COMMAND(ID_LIBRARY_PROPERTIES, OnLibraryProperties)
+	ON_UPDATE_COMMAND_UI(ID_WEBSERVICES_SHAREMONKEY, OnUpdateShareMonkeyLookup)
+	ON_COMMAND(ID_WEBSERVICES_SHAREMONKEY, OnShareMonkeyLookup)
 	ON_WM_CREATE()
 	ON_UPDATE_COMMAND_UI(ID_LIBRARY_UNLINK, OnUpdateLibraryUnlink)
 	ON_COMMAND(ID_LIBRARY_UNLINK, OnLibraryUnlink)
@@ -105,7 +106,6 @@ BEGIN_MESSAGE_MAP(CLibraryFileView, CLibraryView)
 	ON_COMMAND(ID_LIBRARY_CREATETORRENT, OnLibraryCreateTorrent)
 	ON_UPDATE_COMMAND_UI(ID_LIBRARY_REBUILD_ANSI, OnUpdateLibraryRebuildAnsi)
 	ON_COMMAND(ID_LIBRARY_REBUILD_ANSI, OnLibraryRebuildAnsi)
-	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 
@@ -894,4 +894,14 @@ void CLibraryFileView::OnSearchForSeries()
 	CRelatedSearch pSearch( GetSelectedFile() );
 	pLock.Unlock();
 	pSearch.RunSearchForSeries();
+}
+
+void CLibraryFileView::OnUpdateShareMonkeyLookup(CCmdUI* pCmdUI)
+{
+	pCmdUI->Enable( FALSE );
+}
+
+void CLibraryFileView::OnShareMonkeyLookup()
+{
+
 }

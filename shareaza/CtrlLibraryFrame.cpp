@@ -1,7 +1,7 @@
 //
 // CtrlLibraryFrame.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -70,6 +70,8 @@ BEGIN_MESSAGE_MAP(CLibraryFrame, CWnd)
 	ON_UPDATE_COMMAND_UI(ID_LIBRARY_TREE_VIRTUAL, OnUpdateLibraryTreeVirtual)
 	ON_COMMAND(ID_LIBRARY_TREE_VIRTUAL, OnLibraryTreeVirtual)
 	ON_UPDATE_COMMAND_UI(ID_LIBRARY_PANEL, OnUpdateLibraryPanel)
+	ON_UPDATE_COMMAND_UI(ID_WEBSERVICES_LIST, OnUpdateShowWebServices)
+	ON_COMMAND(ID_WEBSERVICES_LIST, OnShowWebServices)
 	ON_COMMAND(ID_LIBRARY_PANEL, OnLibraryPanel)
 	ON_COMMAND(ID_LIBRARY_SEARCH, OnLibrarySearch)
 	ON_COMMAND(ID_LIBRARY_SEARCH_QUICK, OnLibrarySearchQuick)
@@ -1064,4 +1066,15 @@ void CLibraryFrame::OnSetFocus(CWnd* pOldWnd)
 
 	if ( m_pView != NULL && IsWindow( m_pView->m_hWnd ) && m_pView->IsWindowVisible() )
 		m_pView->SetFocus();
+}
+
+void CLibraryFrame::OnUpdateShowWebServices(CCmdUI* pCmdUI)
+{
+	pCmdUI->Enable( m_pView != NULL && m_pView->m_pSelection.GetCount() == 1 );
+}
+
+void CLibraryFrame::OnShowWebServices()
+{
+	CMenu* pMenu = Skin.GetMenu( _T("WebServices.List.Menu") );
+	m_wndViewBottom.ThrowMenu( ID_WEBSERVICES_LIST, pMenu, NULL, FALSE, TRUE );
 }

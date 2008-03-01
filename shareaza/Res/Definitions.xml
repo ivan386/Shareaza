@@ -362,6 +362,7 @@
 	<resource code="33125" id="ID_HELP_SECURITY"/>
 	<resource code="33126" id="ID_HELP_CODEC"/>
 	<resource code="33127" id="ID_HELP_TEST"/>
+	<resource code="33128" id="ID_HELP_DONATE"/>
 	<resource code="33137" id="ID_MEDIA_PROPERTIES"/>
 	<resource code="33138" id="ID_MEDIA_RATE"/>
 	<resource code="33200" id="ID_MEDIA_STATE_STOP"/>
@@ -394,6 +395,8 @@
 	<resource code="33227" id="ID_IRC_CLOSETAB"/>
 	<resource code="33228" id="ID_IRC_SETTINGS"/>
 	<resource code="33229" id="ID_TAB_IRC"/>
+	<resource code="33300" id="ID_WEBSERVICES_LIST"/>
+	<resource code="33301" id="ID_WEBSERVICES_SHAREMONKEY"/>
 	<resource code="57650" id="ID_WINDOW_CASCADE"/>
 	<resource code="57651" id="ID_WINDOW_TILE_HORZ"/>
 	<resource code="57652" id="ID_WINDOW_TILE_VERT"/>

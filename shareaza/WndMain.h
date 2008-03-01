@@ -173,6 +173,7 @@ protected:
 	afx_msg void OnHelpRouter();
 	afx_msg void OnHelpSecurity();
 	afx_msg void OnHelpCodec();
+	afx_msg void OnHelpDonate();
 	afx_msg void OnUpdateViewTraffic(CCmdUI* pCmdUI);
 	afx_msg void OnViewTraffic();
 	afx_msg void OnWindowCascade();

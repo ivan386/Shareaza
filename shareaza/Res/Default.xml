@@ -223,6 +223,8 @@
 	<toolbar name="CLibraryFileView.Physical.Basic">
 		<button id="ID_LIBRARY_LAUNCH" text="Open or Play"/>
 		<button id="ID_LIBRARY_ENQUEUE" text="Add to Playlist"/>
+		<separator/>
+		<button id="ID_WEBSERVICES_LIST" text="Web Services"/>
 		<rightAlign/>
 		<separator/>
 		<control id="IDC_SEARCH_BOX" width="120"/>
@@ -233,6 +235,8 @@
 		<button id="ID_LIBRARY_ENQUEUE" text="Add to Playlist"/>
 		<separator/>
 		<button id="ID_LIBRARY_PROPERTIES" text="Properties"/>
+		<separator/>
+		<button id="ID_WEBSERVICES_LIST" text="Web Services"/>
 		<separator/>
 		<button id="ID_LIBRARY_MOVE" text="Move"/>
 		<button id="ID_LIBRARY_COPY" text="Copy"/>
@@ -246,6 +250,8 @@
 		<button id="ID_LIBRARY_LAUNCH" text="Open or Play"/>
 		<button id="ID_LIBRARY_ENQUEUE" text="Add to Playlist"/>
 		<button id="ID_LIBRARY_FOLDER_ENQUEUE" text="Play Album"/>
+		<separator/>
+		<button id="ID_WEBSERVICES_LIST" text="Web Services"/>
 		<rightAlign/>
 		<separator/>
 		<control id="IDC_SEARCH_BOX" width="120"/>
@@ -257,6 +263,8 @@
 		<button id="ID_LIBRARY_FOLDER_ENQUEUE" text="Play Album"/>
 		<separator/>
 		<button id="ID_LIBRARY_PROPERTIES" text="Properties"/>
+		<separator/>
+		<button id="ID_WEBSERVICES_LIST" text="Web Services"/>
 		<rightAlign/>
 		<separator/>
 		<control id="IDC_SEARCH_BOX" width="120"/>
@@ -480,6 +488,7 @@
 			<item id="ID_HELP_VERSION_CHECK" text="Check for new _version"/>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="_About Shareaza..."/>
+			<item id="ID_HELP_DONATE" text="_Donate to Shareaza Project!"/>
 		</menu>
 	</menu>
 	<menu name="CMainWnd.Tabbed" type="bar">
@@ -578,6 +587,7 @@
 			<item id="ID_HELP_VERSION_CHECK" text="Check for new _version"/>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="_About Shareaza..."/>
+			<item id="ID_HELP_DONATE" text="_Donate to Shareaza Project!"/>
 		</menu>
 	</menu>
 	<menu name="CMainWnd.Windowed" type="bar">
@@ -669,6 +679,7 @@
 			<item id="ID_HELP_VERSION_CHECK" text="Check for new _version"/>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="_About Shareaza..."/>
+			<item id="ID_HELP_DONATE" text="_Donate to Shareaza Project!"/>
 		</menu>
 	</menu>
 	<!-- VIEW POPUP -->
@@ -1482,6 +1493,10 @@
 			<item id="ID_IRC_BANKICK" text="Kick+Ban"/>
 			<item id="ID_IRC_BANKICKWHY" text="Kick+Ban (why?)"/>
 		</menu>
+	</menu>
+	<menu name="WebServices.List.Menu">
+		<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Bitzi"/>
+		<item id="ID_WEBSERVICES_SHAREMONKEY" text="_ShareMonkey"/>
 	</menu>
 </menus>
 
@@ -2437,7 +2452,7 @@
 		<image id="ID_LIBRARY_VIEW_LIST"/>
 		<image id="ID_LIBRARY_VIEW_THUMBNAIL" id1="ID_DOWNLOADS_REMOTE_PREVIEW"/>
 		<image id="ID_LIBRARY_PARENT"/>
-		<image id="ID_LIBRARY_PANEL" id1="ID_SEARCH_DETAILS"/>
+		<image id="ID_LIBRARY_PANEL" id1="ID_SEARCH_DETAILS" id2="ID_WEBSERVICES_LIST"/>
 		<!-- Media Player -->
 		<image id="ID_VIEW_MEDIA" id1="ID_TAB_MEDIA"/>
 		<image id="ID_MEDIA_PLAY" id1="ID_MEDIA_SELECT" id2="ID_LIBRARY_LAUNCH" id3="ID_DOWNLOADS_LAUNCH" id4="ID_UPLOADS_LAUNCH" id5="ID_DOWNLOADS_LAUNCH_COMPLETE" id6="ID_LIBRARY_FOLDER_ENQUEUE"/>

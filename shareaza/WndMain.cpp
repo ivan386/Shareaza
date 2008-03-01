@@ -181,6 +181,7 @@ BEGIN_MESSAGE_MAP(CMainWnd, CMDIFrameWnd)
 	ON_COMMAND(ID_HELP_ROUTER, OnHelpRouter)
 	ON_COMMAND(ID_HELP_SECURITY, OnHelpSecurity)
 	ON_COMMAND(ID_HELP_CODEC, OnHelpCodec)
+	ON_COMMAND(ID_HELP_DONATE, OnHelpDonate)
 	ON_UPDATE_COMMAND_UI(ID_VIEW_TRAFFIC, OnUpdateViewTraffic)
 	ON_COMMAND(ID_VIEW_TRAFFIC, OnViewTraffic)
 	ON_COMMAND(ID_WINDOW_CASCADE, OnWindowCascade)
@@ -2618,6 +2619,14 @@ void CMainWnd::OnHelpCodec()
 	const CString strWebSite(WEB_SITE_T);
 
 	ShellExecute( GetSafeHwnd(), _T("open"), strWebSite + _T("help/?codec"),
+		NULL, NULL, SW_SHOWNORMAL );
+}
+
+void CMainWnd::OnHelpDonate()
+{
+	const CString strWebSite(WEB_SITE_T);
+
+	ShellExecute( GetSafeHwnd(), _T("open"), strWebSite + _T("?id=donations"),
 		NULL, NULL, SW_SHOWNORMAL );
 }
 
