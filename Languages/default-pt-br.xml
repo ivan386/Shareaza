@@ -245,6 +245,8 @@
 	<toolbar name="CLibraryFileView.Physical.Basic">
 		<button id="ID_LIBRARY_LAUNCH" text="Abrir/Tocar"/>
 		<button id="ID_LIBRARY_ENQUEUE" text="Adicionar a Lista de Execuções"/>
+		<separator/>
+		<button id="ID_WEBSERVICES_LIST" text="Serviços da Web"/>
 		<rightAlign/>
 		<separator/>
 		<control id="IDC_SEARCH_BOX" width="120"/>
@@ -255,6 +257,8 @@
 		<button id="ID_LIBRARY_ENQUEUE" text="Adicionar a Lista de Execuções"/>
 		<separator/>
 		<button id="ID_LIBRARY_PROPERTIES" text="Propriedades"/>
+		<separator/>
+		<button id="ID_WEBSERVICES_LIST" text="Serviços da Web"/>
 		<separator/>
 		<button id="ID_LIBRARY_MOVE" text="Mover"/>
 		<button id="ID_LIBRARY_COPY" text="Copiar"/>
@@ -268,6 +272,8 @@
 		<button id="ID_LIBRARY_LAUNCH" text="Abrir/Tocar"/>
 		<button id="ID_LIBRARY_ENQUEUE" text="Adicionar a Lista de Execuções"/>
 		<button id="ID_LIBRARY_FOLDER_ENQUEUE" text="Tocar Álbum"/>
+		<separator/>
+		<button id="ID_WEBSERVICES_LIST" text="Serviços da Web"/>
 		<rightAlign/>
 		<separator/>
 		<control id="IDC_SEARCH_BOX" width="120"/>
@@ -279,6 +285,8 @@
 		<button id="ID_LIBRARY_FOLDER_ENQUEUE" text="Tocar Álbum"/>
 		<separator/>
 		<button id="ID_LIBRARY_PROPERTIES" text="Propriedades"/>
+		<separator/>
+		<button id="ID_WEBSERVICES_LIST" text="Serviços da Web"/>
 		<rightAlign/>
 		<separator/>
 		<control id="IDC_SEARCH_BOX" width="120"/>
@@ -511,6 +519,7 @@
 			<item id="ID_HELP_VERSION_CHECK" text="Procurar nova versão"/>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="Sobre o Shareaza..."/>
+			<item id="ID_HELP_DONATE" text="_Doar para o Projeto Shareaza!"/>
 		</menu>
 	</menu>
 	<menu name="CMainWnd.Tabbed" type="bar">
@@ -609,6 +618,7 @@
 			<item id="ID_HELP_VERSION_CHECK" text="Procurar nova versão"/>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="Sobre o Shareaza..."/>
+			<item id="ID_HELP_DONATE" text="_Doar para o Projeto Shareaza!"/>
 		</menu>
 	</menu>
 	<menu name="CMainWnd.Windowed" type="bar">
@@ -700,6 +710,7 @@
 			<item id="ID_HELP_VERSION_CHECK" text="Procurar nova versão"/>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="Sobre o Shareaza..."/>
+			<item id="ID_HELP_DONATE" text="_Doar para o Projeto Shareaza!"/>
 		</menu>
 	</menu>
 	<!-- VIEW POPUP -->
@@ -1531,6 +1542,10 @@
 			<item id="ID_IRC_BANKICKWHY" text="Chutar+Banir (porque?)"/>
 		</menu>
 	</menu>
+	<menu name="WebServices.List.Menu">
+		<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Bitzi"/>
+		<item id="ID_WEBSERVICES_SHAREMONKEY" text="_ShareMonkey"/>
+	</menu>
 </menus>
 
 <!-- Watermarks -->
@@ -2287,6 +2302,7 @@
 	<tip id="ID_HELP_WEB_4" message="Visite este site"/>
 	<tip id="ID_HELP_WEB_5" message="Visite este site"/>
 	<tip id="ID_HELP_WEB_6" message="Visite este site"/>
+	<tip id="ID_HELP_DONATE" message="Se você quiser, você pode doar para o nosso fundo legal e mostrar a sua apreciação."/>
 	<tip id="ID_HITMONITOR_CLEAR" message="Limpar o buffer do monitor de acerto."/>
 	<tip id="ID_HITMONITOR_PAUSE" message="Pausar a monitoração de acerto."/>
 	<tip id="ID_HITMONITOR_SEARCH" message="Procurar na rede o termo selecionado."/>
@@ -2502,6 +2518,8 @@
 	<tip id="ID_WINDOW_TILE_HORZ" message="Organizar as janelas abertas como telas não sobrepostas horizontais."/>
 	<tip id="ID_WINDOW_TILE_VERT" message="Organizar as janelas abertas como telas não sobrepostas verticais."/>
 	<tip id="ID_WINDOW_TOOLBAR" message="Mostrar ou esconder a barra de ferramentas."/>
+	<tip id="ID_WEBSERVICES_LIST" message="Escolha o serviço da web para obter mais informação sobre o arquivo selecionado."/>
+	<tip id="ID_WEBSERVICES_SHAREMONKEY" message="Procurar a informação do arquivo usando o serviço ShareMonkey."/>
 	<!-- PLUGIN TIPS -->
 	<tip id="ImageViewer_BestFit" message="Re-dimensionar a imagem para encaixar dentro da janela."/>
 	<tip id="ImageViewer_ActualSize" message="Mostrar a imagem no seu tamanho natural."/>
