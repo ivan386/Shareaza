@@ -232,6 +232,10 @@ BOOL CDownloadWithTorrent::RunTorrent(DWORD tNow)
 	}
 	
 	if ( m_pTask != NULL ) return FALSE;
+
+	// Can't send an announce for a trackerless torrent
+	if ( !m_pTorrent.m_pAnnounceTracker )
+		return TRUE;
 	
 	if ( !m_pPeerID )
 		GenerateTorrentDownloadID();
