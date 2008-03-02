@@ -324,6 +324,16 @@ void CBTInfo::Serialize(CArchive& ar)
 				SetTrackerNext();
 			}
 		}
+
+		// Compatability fix for torrents that haven't been upgraded properly
+		// from before version 4.
+		// If there is a Tracker URL but no Tracker then create the Tracker
+		if ( !m_pAnnounceTracker && !m_sTracker.IsEmpty() )
+		{
+			m_nTrackerMode = tSingle;
+			m_pAnnounceTracker = new CBTTracker;
+			m_pAnnounceTracker->m_sAddress = m_sTracker;
+		}
 	}
 }
 
