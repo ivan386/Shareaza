@@ -53,7 +53,8 @@ public:
 	BOOL			Display(CAlbumFolder* pFolder);
 	BOOL			Display(CLibraryFile* pFile);
 	BOOL			Select(DWORD nObject);
-	
+	BOOL			SetDynamicBar(LPCTSTR pszName);
+
 	inline CLibraryTreeItem* GetFolderSelection() const
 	{
 		return m_wndTree.GetFirstSelected();
@@ -98,6 +99,7 @@ protected:
 	CLibraryTipCtrl		m_wndViewTip;
 	CLibraryHeaderBar	m_wndViewTop;
 	CCoolBarCtrl		m_wndViewBottom;
+	CCoolBarCtrl		m_wndBottomDynamic;
 	CEdit				m_wndSearch;
 	CLibraryViewList	m_pViews;
 	CLibraryView*		m_pView;

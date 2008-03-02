@@ -1820,6 +1820,13 @@
 #define ID_TAB_IRC                      33229
 #define ID_WEBSERVICES_LIST             33300
 #define ID_WEBSERVICES_SHAREMONKEY      33301
+#define ID_SHAREMONKEY_DOWNLOAD         33302
+#define ID_SHAREMONKEY_SAVE             33303
+#define ID_SHAREMONKEY_PREVIOUS         33304
+#define ID_SHAREMONKEY_NEXT             33305
+#define ID_SHAREMONKEY_PRICES           33306
+#define ID_SHAREMONKEY_COMPARE          33307
+#define ID_SHAREMONKEY_BUY              33308
 
 // Next default values for new objects
 // 

@@ -160,6 +160,10 @@ int CLibraryFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_wndViewBottom.SetBarStyle( m_wndViewBottom.GetBarStyle() | CBRS_TOOLTIPS|CBRS_BORDER_TOP );
 	m_wndViewBottom.SetOwner( GetOwner() );
 
+	if ( ! m_wndBottomDynamic.Create( this, WS_CHILD|WS_VISIBLE|CBRS_NOALIGN, AFX_IDW_TOOLBAR ) ) return -1;
+	m_wndBottomDynamic.SetBarStyle( m_wndBottomDynamic.GetBarStyle() | CBRS_TOOLTIPS|CBRS_BORDER_TOP );
+	m_wndBottomDynamic.SetOwner( GetOwner() );
+
 	if ( ! m_wndSearch.Create( WS_CHILD|WS_TABSTOP|ES_AUTOHSCROLL, rcTypes, &m_wndViewBottom, IDC_SEARCH_BOX ) ) return -1;
 	m_wndSearch.SetFont( &theApp.m_gdiFont );
 
@@ -248,6 +252,10 @@ BOOL CLibraryFrame::OnCmdMsg(UINT nID, int nCode, void* pExtra, AFX_CMDHANDLERIN
 	if ( m_pPanel && m_pPanel->m_hWnd )
 	{
 		if ( m_pPanel->OnCmdMsg( nID, nCode, pExtra, pHandlerInfo ) ) return TRUE;
+	}
+	if ( m_wndBottomDynamic.m_hWnd )
+	{
+		if ( m_wndBottomDynamic.OnCmdMsg( nID, nCode, pExtra, pHandlerInfo ) ) return TRUE;
 	}
 
 	return CWnd::OnCmdMsg( nID, nCode, pExtra, pHandlerInfo );
@@ -968,6 +976,20 @@ void CLibraryFrame::OnToolbarEscape()
 	}
 }
 
+BOOL CLibraryFrame::SetDynamicBar(LPCTSTR pszName)
+{
+	BOOL bResult = Skin.CreateToolBar( pszName, &m_wndBottomDynamic );
+	if ( bResult )
+	{
+		CRect rc;
+		GetClientRect( &rc );
+		m_wndBottomDynamic.SetWindowPos( &m_wndViewBottom, rc.left + m_nTreeSize + SPLIT_SIZE,
+										 rc.bottom - BAR_HEIGHT * 2, rc.Width() - m_nTreeSize - SPLIT_SIZE,
+										 BAR_HEIGHT, SWP_SHOWWINDOW | SWP_FRAMECHANGED );
+	}
+	return bResult;
+}
+
 void CLibraryFrame::RunLocalSearch(auto_ptr< CQuerySearch > pSearch)
 {
 	CWaitCursor pCursor;
@@ -1070,7 +1092,7 @@ void CLibraryFrame::OnSetFocus(CWnd* pOldWnd)
 
 void CLibraryFrame::OnUpdateShowWebServices(CCmdUI* pCmdUI)
 {
-	pCmdUI->Enable( m_pView != NULL && m_pView->m_pSelection.GetCount() == 1 );
+	pCmdUI->Enable( m_pViewSelection != NULL && m_pViewSelection->GetCount() == 1 );
 }
 
 void CLibraryFrame::OnShowWebServices()

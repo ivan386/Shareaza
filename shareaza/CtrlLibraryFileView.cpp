@@ -903,5 +903,5 @@ void CLibraryFileView::OnUpdateShareMonkeyLookup(CCmdUI* pCmdUI)
 
 void CLibraryFileView::OnShareMonkeyLookup()
 {
-
+	GetFrame()->SetDynamicBar( L"WebServices.ShareMonkey.WithSave" );
 }
