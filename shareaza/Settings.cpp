@@ -1114,7 +1114,7 @@ void CSettings::OnChangeConnectionSpeed()
 		Downloads.SourcesWanted			= 500;
 		Search.GeneralThrottle			= 200;
 
-		Gnutella2.NumLeafs				= 400;	//Can probably support more leaves
+		Gnutella2.NumLeafs				= 400;	// Can probably support more leaves
 		BitTorrent.DownloadTorrents		= 5;	// Should be able to handle several torrents
 	}
 	else
@@ -1129,12 +1129,12 @@ void CSettings::OnChangeConnectionSpeed()
 
 		if ( Connection.InSpeed <= 10000 )
 		{
-			Gnutella2.NumLeafs			= 450;	//Can probably support more leaves
+			Gnutella2.NumLeafs			= 450;	// Can probably support more leaves
 			BitTorrent.DownloadTorrents	= 7;	// Should be able to handle several torrents
 		}
 		else
 		{
-			Gnutella2.NumLeafs			= 500;	//Can probably support more leaves
+			Gnutella2.NumLeafs			= 500;	// Can probably support more leaves
 			BitTorrent.DownloadTorrents	= 10;	// Should be able to handle several torrents
 		}
 	}
@@ -1357,7 +1357,7 @@ void CSettings::SetStartup(BOOL bStartup)
 //
 //	Returns a nicely formatted string displaying a given transfer speed
 
-CString CSettings::SmartSpeed(QWORD nVolume, int nVolumeUnits, bool bTruncate) const
+const CString CSettings::SmartSpeed(QWORD nVolume, int nVolumeUnits, bool bTruncate) const
 {
 	CString strVolume;
 	CString strUnit( _T("b/s") );
@@ -1397,6 +1397,8 @@ CString CSettings::SmartSpeed(QWORD nVolume, int nVolumeUnits, bool bTruncate) c
 		TRACE( _T("Unknown RatesUnit - %i"), General.RatesUnit );
 		break;
 	}
+	
+	// Add Unicode RTL marker if required
 	return Settings.General.LanguageRTL ? _T("\x200E") + strVolume : strVolume;
 }
 
@@ -1405,7 +1407,7 @@ CString CSettings::SmartSpeed(QWORD nVolume, int nVolumeUnits, bool bTruncate) c
 //
 //	Returns a nicely formatted string displaying a given volume
 
-CString CSettings::SmartVolume(QWORD nVolume, int nVolumeUnits, bool bTruncate) const
+const CString CSettings::SmartVolume(QWORD nVolume, int nVolumeUnits, bool bTruncate) const
 {
 	CString strUnit( _T("B") );
 	CString strVolume;
@@ -1461,61 +1463,47 @@ CString CSettings::SmartVolume(QWORD nVolume, int nVolumeUnits, bool bTruncate) 
 		}
 	}
 
+	// Add Unicode RTL marker if required
 	return Settings.General.LanguageRTL ? _T("\x200E") + strVolume : strVolume;
 }
 
-QWORD CSettings::ParseVolume(LPCTSTR szVolume, int nReturnUnits) const
+const QWORD CSettings::ParseVolume(const CString& strVolume, int nReturnUnits) const
 {
 	double val = 0;
-	TCHAR szSize[ 4 ] = {};
+	CString strSize( strVolume );
 
-	if ( szVolume[ 0 ] == _T('\x200E') ) szVolume ++;
+	// Skip Unicode RTL marker if it's present
+	if ( strSize.Left( 1 ) == _T("\x200E") ) strSize = strSize.Mid( 1 );
 
 	// Return early if there is no number in the string
-	int nReaded = _stscanf( szVolume, _T("%lf %3s"), &val, szSize );
-	if ( nReaded != 1 && nReaded != 2 ) return 0ul;
+	if ( _stscanf( strSize, _T("%lf"), &val ) != 1 ) return 0ul;
 
 	// Return early if the number is negative
 	if ( val < 0 ) return 0ul;
 
-	// First letter
-	if ( *szSize == _T('K') || *szSize == _T('k') )			// Kilo
-		val *= 1024.0f;
-	else if ( *szSize == _T('M') || *szSize == _T('m') )	// Mega
-		val *= 1024.0f * 1024.0f;
-	else if ( *szSize == _T('G') || *szSize == _T('g') )	// Giga
-		val *= 1024.0f * 1024.0f * 1024.0f;
-	else if ( *szSize == _T('T') || *szSize == _T('t') )	// Tera
-		val *= 1024.0f * 1024.0f * 1024.0f * 1024.0f;
-	else if ( *szSize == _T('P') || *szSize == _T('p') )	// Peta
-		val *= 1024.0f * 1024.0f * 1024.0f * 1024.0f * 1024.0f;
-	else if ( *szSize == _T('E') || *szSize == _T('e') )	// Exa
-		val *= 1024.0f * 1024.0f * 1024.0f * 1024.0f * 1024.0f * 1024.0f;
-	else if ( *szSize == _T('B') && szSize[ 1 ] == 0 )		// bytes
+	if ( _tcsstr( strSize, _T("B") ) )
+		// Convert to bits if Bytes were passed in
 		val *= 8.0f;
-	else if ( *szSize == _T('b') && szSize[ 1 ] == 0 )		// bits
-		;
-	else
-		// Unknown suffix
+	else if ( !_tcsstr( strSize, _T("b") ) )
+		// If bits or Bytes are not indicated return 0
 		return 0ul;
 
-	// Second letter
-	if ( *szSize == _T('B') || *szSize == _T('b') )			// Already parsed
-		;
-	else if ( szSize[ 1 ] == _T('B') && (
-		szSize[ 2 ] == 0 || szSize[ 2 ] == _T('/') ||
-		szSize[ 2 ] == _T('\\') || szSize[ 2 ] == _T(' ') ) )	// bytes
-		val *= 8.0f;
-	else if ( szSize[ 1 ] == _T('b') && (
-		szSize[ 2 ] == 0 || szSize[ 2 ] == _T('/') ||
-		szSize[ 2 ] == _T('\\') || szSize[ 2 ] == _T(' ') ) )	// bits
-		;
-	else
-		// Unknown suffix
-		return 0ul;
+	// Work out what units are represented in the string
+	if ( _tcsstr( strSize, _T("K") ) || _tcsstr( strSize, _T("k") ) )		// Kilo
+		val *= 1024.0f;
+	else if ( _tcsstr( strSize, _T("M") ) || _tcsstr( strSize, _T("m") ) )	// Mega
+		val *= pow( 1024.0f, 2 );
+	else if ( _tcsstr( strSize, _T("G") ) || _tcsstr( strSize, _T("g") ) )	// Giga
+		val *= pow( 1024.0f, 3 );
+	else if ( _tcsstr( strSize, _T("T") ) || _tcsstr( strSize, _T("t") ) )	// Tera
+		val *= pow( 1024.0f, 4 );
+	else if ( _tcsstr( strSize, _T("P") ) || _tcsstr( strSize, _T("p") ) )	// Peta
+		val *= pow( 1024.0f, 5 );
+	else if ( _tcsstr( strSize, _T("E") ) || _tcsstr( strSize, _T("e") ) )	// Exa
+		val *= pow( 1024.0f, 6 );
 
 	// Convert to required Units
-	val /= (double)nReturnUnits;
+	val /= nReturnUnits;
 
 	// Convert double to DWORD and return
 	return static_cast< QWORD >( val );

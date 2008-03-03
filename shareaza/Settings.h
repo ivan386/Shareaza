@@ -28,7 +28,7 @@ enum
 
 class CSettingsItem;
 
-class CSettings
+class CSettings : private boost::noncopyable
 {
 // Construction
 public:
@@ -735,10 +735,10 @@ public:
 	BOOL	LoadList(LPCTSTR pszName, CListCtrl* pCtrl, int nSort = 0);
 	void	SaveList(LPCTSTR pszName, CListCtrl* pCtrl);
 
-	CString	SmartSpeed(QWORD nVolume, int nVolumeUnits = Bytes, bool bTruncate = false) const;	// Convert speeds into formatted strings
-	CString	SmartVolume(QWORD nVolume, int nVolumeUnits = Bytes, bool bTruncate = false) const;	// Convert sizes into formatted strings
-	QWORD	ParseVolume(LPCTSTR szVolume, int nReturnUnits = Bytes) const;					// Convert size string into desired units
-	DWORD	GetOutgoingBandwidth() const;														// Returns available outgoing bandwidth in KB/s
+	const CString	SmartSpeed(QWORD nVolume, int nVolumeUnits = Bytes, bool bTruncate = false) const;	// Convert speeds into formatted strings
+	const CString	SmartVolume(QWORD nVolume, int nVolumeUnits = Bytes, bool bTruncate = false) const;	// Convert sizes into formatted strings
+	const QWORD	ParseVolume(const CString& strVolume, int nReturnUnits = Bytes) const;					// Convert size string into desired units
+	DWORD	GetOutgoingBandwidth() const;																// Returns available outgoing bandwidth in KB/s
 	BOOL	CheckStartup();
 	void	SetStartup(BOOL bStartup);
 
