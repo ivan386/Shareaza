@@ -945,7 +945,7 @@ void CLibraryFileView::OnMusicBrainzLookup()
 	CLibraryFrame* pFrame = GetFrame();
 	//if ( _tcscmp( pFrame->GetDynamicBarName(), L"WebServices.MusicBrainz" ) != 0 )
 	//{
-	//	pFrame->HideDynamicBar();
+		// pFrame->HideDynamicBar();
 	//}
 	pFrame->SetDynamicBar( L"WebServices.MusicBrainz" );
 }
@@ -980,12 +980,12 @@ void CLibraryFileView::CheckDynamicBar()
 	pMetaList->Setup( pFile->m_pSchema );
 	pMetaList->Combine( pFile->m_pMetadata );
 
-	if ( !pMetaList->IsMusicBrainz() )
+	if ( !pMetaList->IsMusicBrainz() && bIsMusicBrainz )
 		pFrame->SetDynamicBar( NULL );
+	else
+		pFrame->HideDynamicBar();
 
 	delete pMetaList;
-
-	pFrame->HideDynamicBar();
 }
 
 void CLibraryFileView::OnUpdateMusicBrainzMatches(CCmdUI* pCmdUI)
