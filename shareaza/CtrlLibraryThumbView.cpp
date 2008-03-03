@@ -646,7 +646,11 @@ void CLibraryThumbView::OnLButtonDown(UINT nFlags, CPoint point)
 {
 	CLibraryThumbItem* pHit = HitTest( point );
 
-	if ( SelectTo( pHit ) ) Invalidate();
+	if ( SelectTo( pHit ) )
+	{
+		Invalidate();
+		CLibraryFileView::CheckDynamicBar();
+	}
 
 	SetFocus();
 

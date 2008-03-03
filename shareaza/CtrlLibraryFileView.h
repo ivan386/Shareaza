@@ -49,6 +49,7 @@ protected:
 	void			StartSelectedFileLoop();
 	CLibraryFile*	GetNextSelectedFile();
 	CLibraryFile*	GetSelectedFile();
+	void			CheckDynamicBar();
 
 // Overrides
 public:
@@ -84,6 +85,12 @@ protected:
 	afx_msg void OnLibraryShared();
 	afx_msg void OnUpdateLibraryProperties(CCmdUI* pCmdUI);
 	afx_msg void OnLibraryProperties();
+	afx_msg void OnUpdateMusicBrainzLookup(CCmdUI* pCmdUI);
+	afx_msg void OnMusicBrainzLookup();
+	afx_msg void OnUpdateMusicBrainzMatches(CCmdUI* pCmdUI);
+	afx_msg void OnMusicBrainzMatches();
+	afx_msg void OnUpdateMusicBrainzAlbums(CCmdUI* pCmdUI);
+	afx_msg void OnMusicBrainzAlbums();
 	afx_msg void OnUpdateShareMonkeyLookup(CCmdUI* pCmdUI);
 	afx_msg void OnShareMonkeyLookup();
 	afx_msg void OnUpdateLibraryUnlink(CCmdUI* pCmdUI);

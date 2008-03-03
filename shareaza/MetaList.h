@@ -58,8 +58,6 @@ public:
 	void		ComputeWidth(CDC* pDC, int& nKeyWidth, int& nValueWidth);
 	CMetaItem*	HitTest(const CPoint& point, BOOL bLinksOnly = FALSE);
 	BOOL		OnSetCursor(CWnd* pWnd);
-
-private:
 	BOOL		IsMusicBrainz() const;
 	
 // Inline Operations

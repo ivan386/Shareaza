@@ -54,6 +54,12 @@ public:
 	BOOL			Display(CLibraryFile* pFile);
 	BOOL			Select(DWORD nObject);
 	BOOL			SetDynamicBar(LPCTSTR pszName);
+ 	void			HideDynamicBar();
+ 
+	inline LPCTSTR GetDynamicBarName() const
+	{
+		return (LPCTSTR)m_sDynamicBarName;
+	}
 
 	inline CLibraryTreeItem* GetFolderSelection() const
 	{
@@ -116,6 +122,10 @@ protected:
 	CLibraryList*		m_pViewSelection;
 	BOOL				m_bViewSelection;
 	CLibraryList		m_pViewEmpty;
+
+	CString				m_sDynamicBarName;
+	BOOL				m_bShowDynamicBar;
+	BOOL				m_bDynamicBarHidden;
 
 	BOOL		DoSizeTree();
 	BOOL		DoSizePanel();

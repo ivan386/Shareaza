@@ -708,6 +708,7 @@ void CLibraryDetailView::OnItemChanged(NMHDR* pNotify, LRESULT* pResult)
 			{
 				SelAdd( m_pList[ ((NM_LISTVIEW*) pNotify)->iItem ].nIndex );
 				m_pList[ ((NM_LISTVIEW*) pNotify)->iItem ].nState |= LDVI_SELECTED;
+				CLibraryFileView::CheckDynamicBar();
 			}
 			else
 			{

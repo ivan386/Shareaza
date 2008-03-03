@@ -741,7 +741,11 @@ void CLibraryAlbumView::OnLButtonDown(UINT nFlags, CPoint point)
 		return;
 	}
 	
-	if ( SelectTo( pHit ) ) Invalidate();
+	if ( SelectTo( pHit ) )
+	{
+		Invalidate();
+		CLibraryFileView::CheckDynamicBar();
+	}
 	
 	if ( pHit && ( nFlags & MK_RBUTTON ) == 0 )
 	{

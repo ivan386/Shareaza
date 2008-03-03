@@ -404,6 +404,9 @@
 	<resource code="33306" id="ID_SHAREMONKEY_PRICES"/>
 	<resource code="33307" id="ID_SHAREMONKEY_COMPARE"/>
 	<resource code="33308" id="ID_SHAREMONKEY_BUY"/>
+	<resource code="33309" id="ID_WEBSERVICES_MUSICBRAINZ"/>
+	<resource code="33310" id="ID_MUSICBRAINZ_MATCHES"/>
+	<resource code="33311" id="ID_MUSICBRAINZ_ALBUMS"/>
 	<resource code="57650" id="ID_WINDOW_CASCADE"/>
 	<resource code="57651" id="ID_WINDOW_TILE_HORZ"/>
 	<resource code="57652" id="ID_WINDOW_TILE_VERT"/>

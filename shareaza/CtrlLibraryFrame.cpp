@@ -109,6 +109,8 @@ CLibraryFrame::CLibraryFrame()
 	m_bPanelShow	= Settings.Library.ShowPanel;
 	m_nHeaderSize	= 0;
 	m_bUpdating		= FALSE;
+	m_bShowDynamicBar = FALSE;
+	m_bDynamicBarHidden = TRUE;
 }
 
 CLibraryFrame::~CLibraryFrame()
@@ -264,6 +266,8 @@ BOOL CLibraryFrame::OnCmdMsg(UINT nID, int nCode, void* pExtra, AFX_CMDHANDLERIN
 void CLibraryFrame::OnSize(UINT nType, int cx, int cy)
 {
 	if ( nType != 1982 ) CWnd::OnSize( nType, cx, cy );
+
+	HideDynamicBar();
 
 	CRect rc;
 	GetClientRect( &rc );
@@ -983,11 +987,39 @@ BOOL CLibraryFrame::SetDynamicBar(LPCTSTR pszName)
 	{
 		CRect rc;
 		GetClientRect( &rc );
-		m_wndBottomDynamic.SetWindowPos( &m_wndViewBottom, rc.left + m_nTreeSize + SPLIT_SIZE,
-										 rc.bottom - BAR_HEIGHT * 2, rc.Width() - m_nTreeSize - SPLIT_SIZE,
-										 BAR_HEIGHT, SWP_SHOWWINDOW | SWP_FRAMECHANGED );
+		m_sDynamicBarName = pszName;
+		if ( m_bDynamicBarHidden )
+		{
+			m_wndBottomDynamic.SetWindowPos( &m_wndViewBottom, rc.left + m_nTreeSize + SPLIT_SIZE,
+											 rc.bottom - BAR_HEIGHT * 2, rc.Width() - m_nTreeSize - SPLIT_SIZE,
+											 BAR_HEIGHT, SWP_SHOWWINDOW );
+		} 
+		else
+		{
+			m_wndBottomDynamic.Invalidate( TRUE );
+		}
+		m_bDynamicBarHidden = FALSE;
+	}
+	else
+	{	if ( !m_bDynamicBarHidden )
+		{
+			m_wndBottomDynamic.SetWindowPos( &m_wndViewBottom, 0, 0, 0, 0, 
+											 SWP_HIDEWINDOW | SWP_NOMOVE | SWP_NOSIZE );
+		}
+		m_bShowDynamicBar = FALSE;
+		m_bDynamicBarHidden = TRUE;
+		if ( pszName != NULL && m_sDynamicBarName != pszName )
+			m_sDynamicBarName.Empty();
 	}
 	return bResult;
+}
+
+void CLibraryFrame::HideDynamicBar()
+{
+	if ( m_wndBottomDynamic.IsWindowVisible() )
+	{
+		m_wndBottomDynamic.ShowWindow( SW_HIDE );
+	}
 }
 
 void CLibraryFrame::RunLocalSearch(auto_ptr< CQuerySearch > pSearch)
@@ -1092,7 +1124,20 @@ void CLibraryFrame::OnSetFocus(CWnd* pOldWnd)
 
 void CLibraryFrame::OnUpdateShowWebServices(CCmdUI* pCmdUI)
 {
-	pCmdUI->Enable( m_pViewSelection != NULL && m_pViewSelection->GetCount() == 1 );
+	m_bShowDynamicBar = m_pViewSelection != NULL && m_pViewSelection->GetCount() == 1;
+
+	if ( !m_bShowDynamicBar )
+		SetDynamicBar( NULL );
+	else if ( !m_bDynamicBarHidden && !m_wndBottomDynamic.IsWindowVisible() )
+	{
+		CRect rc;
+		GetClientRect( &rc );
+		m_wndBottomDynamic.SetWindowPos( &m_wndViewBottom, rc.left + m_nTreeSize + SPLIT_SIZE,
+										 rc.bottom - BAR_HEIGHT * 2, rc.Width() - m_nTreeSize - SPLIT_SIZE,
+										 BAR_HEIGHT, SWP_SHOWWINDOW );
+	}
+
+	pCmdUI->Enable( m_bShowDynamicBar );
 }
 
 void CLibraryFrame::OnShowWebServices()

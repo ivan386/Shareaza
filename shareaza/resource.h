@@ -1827,6 +1827,9 @@
 #define ID_SHAREMONKEY_PRICES           33306
 #define ID_SHAREMONKEY_COMPARE          33307
 #define ID_SHAREMONKEY_BUY              33308
+#define ID_WEBSERVICES_MUSICBRAINZ      33309
+#define ID_MUSICBRAINZ_MATCHES          33310
+#define ID_MUSICBRAINZ_ALBUMS           33311
 
 // Next default values for new objects
 // 

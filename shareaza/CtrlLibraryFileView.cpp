@@ -87,6 +87,12 @@ BEGIN_MESSAGE_MAP(CLibraryFileView, CLibraryView)
 	ON_COMMAND(ID_LIBRARY_SHARED_FILE, OnLibraryShared)
 	ON_UPDATE_COMMAND_UI(ID_LIBRARY_PROPERTIES, OnUpdateLibraryProperties)
 	ON_COMMAND(ID_LIBRARY_PROPERTIES, OnLibraryProperties)
+	ON_UPDATE_COMMAND_UI(ID_WEBSERVICES_MUSICBRAINZ, OnUpdateMusicBrainzLookup)
+	ON_COMMAND(ID_WEBSERVICES_MUSICBRAINZ, OnMusicBrainzLookup)
+	ON_UPDATE_COMMAND_UI(ID_MUSICBRAINZ_MATCHES, OnUpdateMusicBrainzMatches)
+	ON_COMMAND(ID_MUSICBRAINZ_MATCHES, OnMusicBrainzMatches)
+	ON_UPDATE_COMMAND_UI(ID_MUSICBRAINZ_ALBUMS, OnUpdateMusicBrainzAlbums)
+	ON_COMMAND(ID_MUSICBRAINZ_ALBUMS, OnMusicBrainzAlbums)
 	ON_UPDATE_COMMAND_UI(ID_WEBSERVICES_SHAREMONKEY, OnUpdateShareMonkeyLookup)
 	ON_COMMAND(ID_WEBSERVICES_SHAREMONKEY, OnShareMonkeyLookup)
 	ON_WM_CREATE()
@@ -663,6 +669,8 @@ void CLibraryFileView::OnUpdateLibraryBitziDownload(CCmdUI* pCmdUI)
 
 void CLibraryFileView::OnLibraryBitziDownload() 
 {
+	GetFrame()->SetDynamicBar( NULL );
+
 	if ( ! Settings.Library.BitziOkay )
 	{
 		CString strFormat;
@@ -904,4 +912,127 @@ void CLibraryFileView::OnUpdateShareMonkeyLookup(CCmdUI* pCmdUI)
 void CLibraryFileView::OnShareMonkeyLookup()
 {
 	GetFrame()->SetDynamicBar( L"WebServices.ShareMonkey.WithSave" );
+}
+
+void CLibraryFileView::OnUpdateMusicBrainzLookup(CCmdUI* pCmdUI)
+{
+	if ( GetSelectedCount() != 1 )
+	{
+		pCmdUI->Enable( FALSE );
+		return;
+	}
+
+	CSingleLock pLock( &Library.m_pSection, TRUE );
+
+	CLibraryFile* pFile = GetSelectedFile();
+	if ( !pFile->IsSchemaURI( CSchema::uriAudio ) || pFile->m_pMetadata == NULL )
+	{
+		pCmdUI->Enable( FALSE );
+		return;
+	}
+
+	CMetaList* pMetaList = new CMetaList();
+	pMetaList->Setup( pFile->m_pSchema );
+	pMetaList->Combine( pFile->m_pMetadata );
+
+	pCmdUI->Enable( pMetaList->IsMusicBrainz() );
+
+	delete pMetaList;
+}
+
+void CLibraryFileView::OnMusicBrainzLookup()
+{
+	CLibraryFrame* pFrame = GetFrame();
+	//if ( _tcscmp( pFrame->GetDynamicBarName(), L"WebServices.MusicBrainz" ) != 0 )
+	//{
+	//	pFrame->HideDynamicBar();
+	//}
+	pFrame->SetDynamicBar( L"WebServices.MusicBrainz" );
+}
+
+void CLibraryFileView::CheckDynamicBar()
+{
+	bool bIsMusicBrainz = false;
+	CLibraryFrame* pFrame = GetFrame();
+
+	if ( _tcscmp( pFrame->GetDynamicBarName(), L"WebServices.MusicBrainz" ) == 0 )
+	{
+		bIsMusicBrainz = true;
+	}
+
+	if ( GetSelectedCount() != 1 )
+	{
+		if ( bIsMusicBrainz )
+			pFrame->SetDynamicBar( NULL );
+		return;
+	}
+
+	CSingleLock pLock( &Library.m_pSection, TRUE );
+	CLibraryFile* pFile = GetSelectedFile();
+	if ( !pFile->IsSchemaURI( CSchema::uriAudio ) || pFile->m_pMetadata == NULL )
+	{
+		if ( bIsMusicBrainz )
+			pFrame->SetDynamicBar( NULL );
+		return;
+	}
+
+	CMetaList* pMetaList = new CMetaList();
+	pMetaList->Setup( pFile->m_pSchema );
+	pMetaList->Combine( pFile->m_pMetadata );
+
+	if ( !pMetaList->IsMusicBrainz() )
+		pFrame->SetDynamicBar( NULL );
+
+	delete pMetaList;
+
+	pFrame->HideDynamicBar();
+}
+
+void CLibraryFileView::OnUpdateMusicBrainzMatches(CCmdUI* pCmdUI)
+{
+	CSingleLock pLock( &Library.m_pSection, TRUE );
+
+	CLibraryFile* pFile = GetSelectedFile();
+
+	ASSERT( pFile->m_pMetadata != NULL );
+
+	CXMLAttribute* pAttribute = pFile->m_pMetadata->GetAttribute( L"mbpuid" );
+	pCmdUI->Enable( pAttribute != NULL && pAttribute->GetValue().GetLength() > 0 );
+}
+
+void CLibraryFileView::OnMusicBrainzMatches()
+{
+	CSingleLock pLock( &Library.m_pSection, TRUE );
+	
+	CLibraryFile* pFile = GetSelectedFile();
+	ASSERT( pFile->m_pMetadata != NULL );
+
+	CXMLAttribute* pAttribute = pFile->m_pMetadata->GetAttribute( L"mbpuid" );
+	CString strURL = L"http://musicbrainz.org/show/puid/?matchesonly=0&amp;puid=" + pAttribute->GetValue();
+
+	ShellExecute( GetSafeHwnd(), _T("open"), strURL, NULL, NULL, SW_SHOWNORMAL );
+}
+
+void CLibraryFileView::OnUpdateMusicBrainzAlbums(CCmdUI* pCmdUI)
+{
+	CSingleLock pLock( &Library.m_pSection, TRUE );
+	CLibraryFile* pFile = GetSelectedFile();
+
+	ASSERT( pFile->m_pMetadata != NULL );
+
+	CXMLAttribute* pAttribute = pFile->m_pMetadata->GetAttribute( L"mbartistid" );
+	pCmdUI->Enable( pAttribute != NULL && pAttribute->GetValue().GetLength() > 0 );
+}
+
+void CLibraryFileView::OnMusicBrainzAlbums()
+{
+	CSingleLock pLock( &Library.m_pSection, TRUE );
+
+	CLibraryFile* pFile = GetSelectedFile();
+	ASSERT( pFile->m_pMetadata != NULL );
+
+	CXMLAttribute* pAttribute = pFile->m_pMetadata->GetAttribute( L"mbartistid" );
+	CString strURL = L"http://musicbrainz.org/artist/" + pAttribute->GetValue();
+
+	ShellExecute( GetSafeHwnd(), _T("open"), strURL, NULL, NULL, SW_SHOWNORMAL );
 }

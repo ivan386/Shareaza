@@ -5243,6 +5243,10 @@ BEGIN
     ID_SHAREMONKEY_PRICES   "Look at the prices for the current match"
     ID_SHAREMONKEY_COMPARE  "Compare prices in different stores"
     ID_SHAREMONKEY_BUY      "Buy it and support the author"
+    ID_WEBSERVICES_MUSICBRAINZ 
+                            "Search for the same artist songs using MusicBrainz service."
+    ID_MUSICBRAINZ_MATCHES  "Search for albums matching the selected file."
+    ID_MUSICBRAINZ_ALBUMS   "Look at all albums for this artist."
 END
 
 #endif    // English (Australia) resources

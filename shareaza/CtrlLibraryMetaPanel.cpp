@@ -631,6 +631,8 @@ void CLibraryMetaPanel::OnLButtonUp(UINT nFlags, CPoint point)
 void CLibraryMetaPanel::OnLButtonDown(UINT /*nFlags*/, CPoint /*point*/)
 {
 	SetFocus();
+	CLibraryFrame* pFrame = (CLibraryFrame*)GetOwner();
+	pFrame->HideDynamicBar();
 }
 
 BOOL CLibraryMetaPanel::OnMouseWheel(UINT /*nFlags*/, short zDelta, CPoint /*pt*/)

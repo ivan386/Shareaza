@@ -423,6 +423,11 @@
 		<button id="ID_SHAREMONKEY_COMPARE" text="Compare"/>
 		<button id="ID_SHAREMONKEY_BUY" text="Buy It"/>
 	</toolbar>
+	<toolbar name="WebServices.MusicBrainz">
+		<button id="ID_MUSICBRAINZ_MATCHES" text="View Album Matches"/>
+		<button id="ID_MUSICBRAINZ_ALBUMS" text="View All Albums"/>
+		<separator/>
+	</toolbar>
 </toolbars>
 <!-- Menu Definitions -->
 <menus>
@@ -1517,6 +1522,7 @@
 	</menu>
 	<menu name="WebServices.List.Menu">
 		<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Bitzi"/>
+		<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 		<item id="ID_WEBSERVICES_SHAREMONKEY" text="_ShareMonkey"/>
 	</menu>
 </menus>
@@ -2456,7 +2462,7 @@
 		<image id="ID_VIEW_TRAFFIC"/>
 		<image id="ID_VIEW_PACKETS"/>
 		<image id="ID_VIEW_SEARCH_MONITOR"/>
-		<image id="ID_VIEW_RESULTS_MONITOR"/>
+		<image id="ID_VIEW_RESULTS_MONITOR" id1="ID_MUSICBRAINZ_MATCHES"/>
 		<image id="ID_TOOLS_SKIN"/>
 		<image id="ID_TOOLS_WIZARD"/>
 		<image id="ID_TOOLS_SETTINGS" id1="ID_NEIGHBOURS_SETTINGS" id2="ID_DOWNLOADS_SETTINGS" id3="ID_UPLOADS_SETTINGS" id4="ID_MEDIA_SETTINGS" id5="ID_UPLOADS_EDIT_QUEUE" id6="ID_IRC_SETTINGS"/>
@@ -2494,7 +2500,7 @@
 		<image id="ID_SHAREMONKEY_SAVE"/>
 		<image id="ID_TOOLS_PROFILE" id1="ID_BROWSE_PROFILE"/>
 		<image id="ID_CHAT_EMOTICONS"/>
-		<image id="ID_LIBRARY_VIEW_ALBUM"/>
+		<image id="ID_LIBRARY_VIEW_ALBUM" id1="ID_MUSICBRAINZ_ALBUMS"/>
 		<image id="ID_LIBRARY_VIEW_COLLECTION" id1="ID_LIBRARY_EXPORT_COLLECTION" id2="ID_MEDIA_EXPORT_COLLECTION"/>
 	</bitmap>
 	<bitmap id="IDB_CHILDFRAME">
