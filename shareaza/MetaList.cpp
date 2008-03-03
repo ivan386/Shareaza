@@ -144,6 +144,7 @@ void CMetaList::Setup(CSchema* pSchema, BOOL bClear)
 	if ( bClear ) Clear();
 	if ( ! pSchema ) return;
 	
+	m_pItems.RemoveAll();
 	for ( POSITION pos = pSchema->GetMemberIterator() ; pos ; )
 	{
 		CSchemaMember* pMember = pSchema->GetNextMember( pos );
