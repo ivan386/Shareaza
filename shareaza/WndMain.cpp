@@ -291,7 +291,15 @@ CMainWnd::CMainWnd() :
 	theApp.m_pMainWnd = this;
 
 	// Bypass CMDIFrameWnd::LoadFrame
+	if (theApp.m_dwWindowsVersion >= 6)
+	{
+	VERIFY( CFrameWnd::LoadFrame( IDR_MAINFRAME, WS_VISIBLE ) 
+	// Windows Vista Workaround: Aero frame bug needs better solution
+	}
+	else
+	{
 	VERIFY( CFrameWnd::LoadFrame( IDR_MAINFRAME, WS_OVERLAPPEDWINDOW ) );
+	}
 
 	theApp.m_pSafeWnd = this;
 }
