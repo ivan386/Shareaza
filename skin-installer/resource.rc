@@ -73,12 +73,6 @@ END
 IDR_MANIFEST RT_MANIFEST MOVEABLE PURE
 {
     "<assembly xmlns=""urn:schemas-microsoft-com:asm.v1"" manifestVersion=""1.0"">
-       <description>Shareaza Skin Installer</description>
-       <dependency>
-         <dependentAssembly>
-           <assemblyIdentity type=""win32"" name=""Microsoft.Windows.Common-Controls"" version=""6.0.0.0"" processorArchitecture=""X86"" publicKeyToken=""6595b64144ccf1df"" language=""*"" />
-         </dependentAssembly>
-       </dependency>
        <asmv2:trustInfo xmlns:asmv2=""urn:schemas-microsoft-com:asm.v2"">
          <asmv2:security>
            <asmv2:requestedPrivileges>
