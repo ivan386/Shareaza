@@ -69,7 +69,7 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="comctl32.lib unicows.lib kernel32.lib advapi32.lib user32.lib gdi32.lib shell32.lib comdlg32.lib version.lib mpr.lib rasapi32.lib winmm.lib winspool.lib vfw32.lib secur32.lib oleacc.lib oledlg.lib sensapi.lib"
 				OutputFile="$(OutDir)Skin.exe"
-				GenerateManifest="false"
+				GenerateManifest="true"
 				IgnoreDefaultLibraryNames="kernel32.lib;advapi32.lib;user32.lib;gdi32.lib;shell32.lib;comdlg32.lib;version.lib;mpr.lib;rasapi32.lib;winmm.lib;winspool.lib;vfw32.lib;secur32.lib;oleacc.lib;oledlg.lib;sensapi.lib"
 				GenerateDebugInformation="true"
 			/>
@@ -78,6 +78,9 @@
 			/>
 			<Tool
 				Name="VCManifestTool"
+				EmbedManifest="false"
+				AssemblyIdentity="Shareaza.SkinInstaller, processorArchitecture=x86, version=1.0.12.5, type=win32"
+				InputResourceManifests="$(OutDir)Skin.exe"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -231,6 +234,7 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="comctl32.lib unicows.lib kernel32.lib advapi32.lib user32.lib gdi32.lib shell32.lib comdlg32.lib version.lib mpr.lib rasapi32.lib winmm.lib winspool.lib vfw32.lib secur32.lib oleacc.lib oledlg.lib sensapi.lib"
 				OutputFile="$(OutDir)Skin.exe"
+				GenerateManifest="true"
 				IgnoreDefaultLibraryNames="kernel32.lib;advapi32.lib;user32.lib;gdi32.lib;shell32.lib;comdlg32.lib;version.lib;mpr.lib;rasapi32.lib;winmm.lib;winspool.lib;vfw32.lib;secur32.lib;oleacc.lib;oledlg.lib;sensapi.lib"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
@@ -241,6 +245,9 @@
 			/>
 			<Tool
 				Name="VCManifestTool"
+				EmbedManifest="true"
+				AssemblyIdentity="Shareaza.SkinInstaller, processorArchitecture=x86, version=1.0.12.5, type=win32"
+				InputResourceManifests="$(OutDir)Skin.exe"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
