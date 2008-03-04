@@ -78,7 +78,7 @@
 			/>
 			<Tool
 				Name="VCManifestTool"
-				EmbedManifest="false"
+				EmbedManifest="true"
 				AssemblyIdentity="Shareaza.SkinInstaller, processorArchitecture=x86, version=1.0.12.5, type=win32"
 				InputResourceManifests="$(OutDir)Skin.exe"
 			/>
