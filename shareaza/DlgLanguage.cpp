@@ -52,7 +52,7 @@ BEGIN_MESSAGE_MAP(CLanguageDlg, CSkinDialog)
 END_MESSAGE_MAP()
 
 #define HEADING_HEIGHT	50
-#define ITEM_HEIGHT		32
+#define ITEM_HEIGHT		38
 #define ITEM_WIDTH		200
 #define TEXT_MARGIN		0
 
