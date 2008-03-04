@@ -181,7 +181,6 @@ BEGIN_MESSAGE_MAP(CMainWnd, CMDIFrameWnd)
 	ON_COMMAND(ID_HELP_ROUTER, OnHelpRouter)
 	ON_COMMAND(ID_HELP_SECURITY, OnHelpSecurity)
 	ON_COMMAND(ID_HELP_CODEC, OnHelpCodec)
-	ON_COMMAND(ID_HELP_DONATE, OnHelpDonate)
 	ON_UPDATE_COMMAND_UI(ID_VIEW_TRAFFIC, OnUpdateViewTraffic)
 	ON_COMMAND(ID_VIEW_TRAFFIC, OnViewTraffic)
 	ON_COMMAND(ID_WINDOW_CASCADE, OnWindowCascade)
@@ -291,10 +290,10 @@ CMainWnd::CMainWnd() :
 	theApp.m_pMainWnd = this;
 
 	// Bypass CMDIFrameWnd::LoadFrame
-	if (theApp.m_dwWindowsVersion >= 6)
+	if ( theApp.m_dwWindowsVersion >= 6 )
 	{
-	VERIFY( CFrameWnd::LoadFrame( IDR_MAINFRAME, WS_VISIBLE ) 
-	// Windows Vista Workaround: Aero frame bug needs better solution
+	VERIFY( CFrameWnd::LoadFrame( IDR_MAINFRAME, WS_VISIBLE ) );
+	// Windows Vista Skin Workarond: Aero frame bug needs better solution
 	}
 	else
 	{
@@ -2627,14 +2626,6 @@ void CMainWnd::OnHelpCodec()
 	const CString strWebSite(WEB_SITE_T);
 
 	ShellExecute( GetSafeHwnd(), _T("open"), strWebSite + _T("help/?codec"),
-		NULL, NULL, SW_SHOWNORMAL );
-}
-
-void CMainWnd::OnHelpDonate()
-{
-	const CString strWebSite(WEB_SITE_T);
-
-	ShellExecute( GetSafeHwnd(), _T("open"), strWebSite + _T("?id=donations"),
 		NULL, NULL, SW_SHOWNORMAL );
 }
 
