@@ -25,7 +25,8 @@ void LoadManifestInfo(char *buf)
 	nLen = MultiByteToWideChar( CP_UTF8, 0, (LPCSTR)buf, (DWORD)strlen(buf) , NULL, 0 );
 	pszBuf = (TCHAR*)malloc( nLen * sizeof(TCHAR) );
 	MultiByteToWideChar( CP_UTF8, 0, (LPCSTR)buf, (DWORD)strlen(buf), pszBuf, nLen * sizeof(TCHAR) );
-
+	pszBuf[nLen] = '\0';
+	
 	if ((p=(TCHAR*)GetManifestValue(pszBuf, L"type"))!=NULL) {
 		if (!_wcsicmp(p, L"language")) {
 			skinType = 1;
@@ -137,8 +138,7 @@ static LPCTSTR GetManifestValue(LPCTSTR manifest, LPCTSTR searchKey) {
 	TCHAR* info;
 	TCHAR* ret;
 	TCHAR* start;
-	TCHAR* copy = _wcsdup( manifest );
-	size_t len = wcslen(copy);
+	size_t len = wcslen(manifest);
 
 	info = (TCHAR*)malloc((len+1)*sizeof(TCHAR));
 	memcpy(info, manifest, len);
