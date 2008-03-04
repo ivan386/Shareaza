@@ -43,33 +43,53 @@ IDB_BANNER              BITMAP                  "res\\banner_new.bmp"
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// RT_MANIFEST
-//
-
-1                       RT_MANIFEST             "res\\skin.xml"
-
-/////////////////////////////////////////////////////////////////////////////
-//
 // Dialog
 //
 
 IDD_MAIN DIALOGEX 0, 0, 292, 135
-STYLE DS_SETFONT | DS_MODALFRAME | DS_CENTER | WS_MINIMIZEBOX | WS_POPUP | 
-    WS_CAPTION | WS_SYSMENU
+STYLE DS_SETFONT | DS_MODALFRAME | DS_CENTER | WS_MINIMIZEBOX | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Shareaza Skin Installer"
 FONT 8, "Tahoma", 0, 0, 0x0
 BEGIN
     LTEXT           "",IDC_WHITERECT,0,31,293,75
     LTEXT           "Unknown Skin",IDC_NAME,10,38,265,14
     LTEXT           "Unknown Author",IDC_AUTH,10,52,265,19
-    CONTROL         "Progress1",IDC_PROGRESS,"msctls_progress32",WS_BORDER,
-                    10,74,273,10
+    CONTROL         "Progress1",IDC_PROGRESS,"msctls_progress32",WS_BORDER,10,74,273,10
     LTEXT           "Ready to install",IDC_STATUS,10,91,273,8
     CONTROL         "",-1,"Static",SS_ETCHEDHORZ,0,106,293,1
     PUSHBUTTON      "Select &Skin",IDC_CONFIG,9,114,83,15
     DEFPUSHBUTTON   "&Install",IDC_INSTALL,190,114,45,15
     PUSHBUTTON      "&Close",IDOK,240,114,45,15
 END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// RT_MANIFEST
+//
+
+#define IDR_MANIFEST 1 // 2 for a DLL
+
+IDR_MANIFEST RT_MANIFEST MOVEABLE PURE
+{
+    "<assembly xmlns=""urn:schemas-microsoft-com:asm.v1"" manifestVersion=""1.0"">
+       <description>Shareaza Skin Installer</description>
+       <dependency>
+         <dependentAssembly>
+           <assemblyIdentity type=""win32"" name=""Microsoft.Windows.Common-Controls"" version=""6.0.0.0"" processorArchitecture=""X86"" publicKeyToken=""6595b64144ccf1df"" language=""*"" />
+         </dependentAssembly>
+       </dependency>
+       <asmv2:trustInfo xmlns:asmv2=""urn:schemas-microsoft-com:asm.v2"">
+         <asmv2:security>
+           <asmv2:requestedPrivileges>
+             <asmv2:requestedExecutionLevel
+               level=""asInvoker""
+               uiAccess=""false"" />
+           </asmv2:requestedPrivileges>
+         </asmv2:security>
+       </asmv2:trustInfo>
+     </assembly>"
+}
 
 
 /////////////////////////////////////////////////////////////////////////////
