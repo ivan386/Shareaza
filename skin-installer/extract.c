@@ -165,6 +165,9 @@ int ValidateSkin(LPTSTR pszFile, HWND hwndDlg) {
 						return 0;
 					}
 					else {
+						// Make sure the string is NULL terminated
+						buf[err] = '\0';
+
 						if ((tmp=strstr(buf, "<manifest"))!=NULL) {
 							LoadManifestInfo(tmp);
 						}
