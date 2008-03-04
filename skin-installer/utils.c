@@ -22,10 +22,9 @@ void LoadManifestInfo(char *buf)
 	if ( strlen(buf) > 3 && (UCHAR)(*tmp) == 0xEF && (UCHAR)*(tmp+1) == 0xBB && (UCHAR)*(tmp+2) == 0xBF )
 		buf += 3;
 
-	nLen = MultiByteToWideChar( CP_UTF8, 0, (LPCSTR)buf, (DWORD)strlen(buf) , NULL, 0 );
+	nLen = MultiByteToWideChar( CP_UTF8, 0, (LPCSTR)buf, -1, NULL, 0 );
 	pszBuf = (TCHAR*)malloc( nLen * sizeof(TCHAR) );
-	MultiByteToWideChar( CP_UTF8, 0, (LPCSTR)buf, (DWORD)strlen(buf), pszBuf, nLen * sizeof(TCHAR) );
-	pszBuf[nLen] = '\0';
+	MultiByteToWideChar( CP_UTF8, 0, (LPCSTR)buf, -1, pszBuf, nLen * sizeof(TCHAR) );
 	
 	if ((p=(TCHAR*)GetManifestValue(pszBuf, L"type"))!=NULL) {
 		if (!_wcsicmp(p, L"language")) {
