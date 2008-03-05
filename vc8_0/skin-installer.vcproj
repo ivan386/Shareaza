@@ -101,7 +101,7 @@
 			<Tool
 				Name="VCPostBuildEventTool"
 				Description="Installing $(TargetFileName)..."
-				CommandLine="&quot;$(OutDir)Skin.exe&quot; /install"
+				CommandLine="&quot;$(OutDir)\Skin.exe&quot; /install"
 			/>
 		</Configuration>
 		<Configuration
@@ -164,6 +164,7 @@
 			/>
 			<Tool
 				Name="VCManifestTool"
+				AssemblyIdentity="Shareaza.SkinInstaller, processorArchitecture=amd64, version=1.0.12.5, type=win32"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -248,7 +249,7 @@
 				Name="VCManifestTool"
 				AdditionalManifestFiles="$(IntDir)\$(TargetFileName).intermediate.manifest"
 				EmbedManifest="true"
-				AssemblyIdentity="Shareaza.SkinInstaller, processorArchitecture=x86, version=1.0.12.5, type=win32"
+				AssemblyIdentity="Shareaza.SkinInstaller, processorArchitecture=x86, version=1.0.12.5, type=win32, publicKeyToken=dfbe2673baf698eb"
 				InputResourceManifests="$(OutDir)Skin.exe"
 			/>
 			<Tool
@@ -268,8 +269,8 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				Description="Installing $(TargetFileName)..."
-				CommandLine="&quot;$(OutDir)\Skin.exe&quot; /install"
+				Description="Signing and installing $(TargetFileName)..."
+				CommandLine="mt.exe -updateresource:&quot;$(OutDir)Skin.exe&quot; -snk:&quot;$(InputDir)..\$(ProjectName)\skin-installer.snk&quot; -nologo&#x0D;&#x0A;&quot;$(OutDir)\Skin.exe&quot; /install&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
@@ -331,6 +332,7 @@
 			/>
 			<Tool
 				Name="VCManifestTool"
+				AssemblyIdentity="Shareaza.SkinInstaller, processorArchitecture=amd64, version=1.0.12.5, type=win32, publicKeyToken=dfbe2673baf698eb"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
