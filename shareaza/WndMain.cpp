@@ -2634,7 +2634,7 @@ void CMainWnd::OnHelpDonate()
 {
 	const CString strWebSite(WEB_SITE_T);
 
-	ShellExecute( GetSafeHwnd(), _T("open"), strWebSite + _T("?id=donations"),
+	ShellExecute( GetSafeHwnd(), _T("open"), strWebSite + _T("donations"),
 		NULL, NULL, SW_SHOWNORMAL );
 }
 
