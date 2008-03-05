@@ -298,7 +298,7 @@
 			<Tool
 				Name="VCManifestTool"
 				AdditionalManifestFiles="$(IntDir)\$(TargetFileName).intermediate.manifest"
-				AssemblyIdentity="Shareaza.Shareaza, processorArchitecture=x86, version=2.3.1.2, type=win32"
+				AssemblyIdentity="Shareaza.Shareaza, processorArchitecture=x86, version=2.3.1.2, type=win32, publicKeyToken=ba3b397e6792377b"
 				InputResourceManifests="$(OutDir)$(ProjectName).exe"
 			/>
 			<Tool
@@ -318,6 +318,8 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				Description="Signing $(TargetFileName)..."
+				CommandLine="mt.exe -updateresource:&quot;$(OutDir)$(ProjectName).exe&quot; -snk:&quot;$(InputDir)..\$(ProjectName)\Shareaza.snk&quot; -nologo"
 			/>
 		</Configuration>
 		<Configuration
@@ -397,7 +399,7 @@
 			<Tool
 				Name="VCManifestTool"
 				AdditionalManifestFiles="$(IntDir)\$(TargetFileName).intermediate.manifest"
-				AssemblyIdentity="Shareaza.Shareaza, processorArchitecture=amd64, version=2.3.1.2, type=win32"
+				AssemblyIdentity="Shareaza.Shareaza, processorArchitecture=amd64, version=2.3.1.2, type=win32, publicKeyToken=ba3b397e6792377b"
 				InputResourceManifests="$(OutDir)$(ProjectName).exe"
 			/>
 			<Tool
@@ -417,6 +419,8 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				Description="Signing $(TargetFileName)..."
+				CommandLine="mt.exe -updateresource:&quot;$(OutDir)$(ProjectName).exe&quot; -snk:&quot;$(InputDir)..\$(ProjectName)\Shareaza.snk&quot; -nologo"
 			/>
 		</Configuration>
 	</Configurations>
