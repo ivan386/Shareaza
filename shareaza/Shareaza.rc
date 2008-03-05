@@ -205,7 +205,12 @@ IDB_BOX_MARK            BITMAP                  "Res\\BoxMark.bmp"
 // RT_MANIFEST
 //
 #define	IDR_MANIFEST 1 // 2 for a DLL
-IDR_MANIFEST			RT_MANIFEST             "Res\\Manifest.xml"
+
+#ifdef OBSOLETE_MANIFEST
+IDR_MANIFEST          	RT_MANIFEST             "Res\\ManifestVC71.xml"
+#else
+IDR_MANIFEST            RT_MANIFEST             "Res\\Manifest.xml"
+#endif
 
 /////////////////////////////////////////////////////////////////////////////
 //
