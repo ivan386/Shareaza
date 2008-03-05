@@ -608,9 +608,8 @@ BOOL CSkin::LoadNavBar(CXMLElement* pBase)
 	CString strValue = pBase->GetAttributeValue( _T("offset") );
 	if ( strValue.GetLength() )
 	{
-		_stscanf( strValue, _T("%i,%i,%i,%i"),
-			&m_rcNavBarOffset.left, &m_rcNavBarOffset.top,
-			&m_rcNavBarOffset.right, &m_rcNavBarOffset.bottom );
+		_stscanf( strValue, _T("%i,%i"),
+			&m_rcNavBarOffset.left, &m_rcNavBarOffset.top );
 	}
 
 	strValue = pBase->GetAttributeValue( _T("mode") );
@@ -1528,7 +1527,7 @@ BOOL CSkin::LoadFonts(CXMLElement* pBase, const CString& strPath)
 				{
 					pFont = &CoolInterface.m_fntCaption;
 				}
-				else if ( strName.CompareNoCase( _T("navbar.plain") ) == 0 )
+				else if ( strName.CompareNoCase( _T("navbar.caption") ) == 0 )
 				{
 					pFont = &CoolInterface.m_fntNavBar;
 				}
@@ -1550,7 +1549,8 @@ BOOL CSkin::LoadFonts(CXMLElement* pBase, const CString& strPath)
 				_stscanf( strWeight, _T("%i"), &nFontWeight );
 
 				pFont->CreateFontW( -nFontSize, 0, 0, 0, nFontWeight, FALSE, FALSE, FALSE,
-					DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, ANTIALIASED_QUALITY,
+					DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, 
+					theApp.m_dwWindowsVersion >= 6 ? DEFAULT_QUALITY : ANTIALIASED_QUALITY,
 					DEFAULT_PITCH|FF_DONTCARE, strFace );
 
 				if ( strName.CompareNoCase( _T("system.plain") ) == 0 )
@@ -1559,14 +1559,16 @@ BOOL CSkin::LoadFonts(CXMLElement* pBase, const CString& strPath)
 					if ( pFont->m_hObject ) pFont->DeleteObject();
 
 					pFont->CreateFontW( -nFontSize, 0, 0, 0, nFontWeight, FALSE, TRUE, FALSE,
-							DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, ANTIALIASED_QUALITY,
+							DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, 
+							theApp.m_dwWindowsVersion >= 6 ? DEFAULT_QUALITY : ANTIALIASED_QUALITY,
 							DEFAULT_PITCH|FF_DONTCARE, strFace );
 
 					pFont = &CoolInterface.m_fntItalic;
 					if ( pFont->m_hObject ) pFont->DeleteObject();
 
 					pFont->CreateFontW( -nFontSize, 0, 0, 0, nFontWeight, TRUE, FALSE, FALSE,
-							DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, ANTIALIASED_QUALITY,
+							DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, 
+							theApp.m_dwWindowsVersion >= 6 ? DEFAULT_QUALITY : ANTIALIASED_QUALITY,
 							DEFAULT_PITCH|FF_DONTCARE, strFace );
 				}
 				else if ( strName.CompareNoCase( _T("system.bold") ) == 0 )
@@ -1575,7 +1577,8 @@ BOOL CSkin::LoadFonts(CXMLElement* pBase, const CString& strPath)
 					if ( pFont->m_hObject ) pFont->DeleteObject();
 
 					pFont->CreateFontW( -nFontSize, 0, 0, 0, nFontWeight, TRUE, FALSE, FALSE,
-							DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, ANTIALIASED_QUALITY,
+							DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, 
+							theApp.m_dwWindowsVersion >= 6 ? DEFAULT_QUALITY : ANTIALIASED_QUALITY,
 							DEFAULT_PITCH|FF_DONTCARE, strFace );
 				}
 			}
