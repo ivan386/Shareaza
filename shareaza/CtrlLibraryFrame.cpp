@@ -284,7 +284,7 @@ void CLibraryFrame::OnSize(UINT nType, int cx, int cy)
 	}
 
 	HDWP hDWP = BeginDeferWindowPos(
-		6 + ( m_pView != NULL ) + ( m_pPanel != NULL ) + ( m_nHeaderSize > 0 ) );
+		7 + ( m_pView != NULL ) + ( m_pPanel != NULL ) + ( m_nHeaderSize > 0 ) );
 
 	DeferWindowPos( hDWP, m_wndTreeTop.GetSafeHwnd(), NULL,
 		rc.left, rc.top, m_nTreeSize, BAR_HEIGHT, SWP_NOZORDER );
@@ -301,6 +301,10 @@ void CLibraryFrame::OnSize(UINT nType, int cx, int cy)
 
 	DeferWindowPos( hDWP, m_wndViewBottom.GetSafeHwnd(), NULL,
 		rc.left + m_nTreeSize + SPLIT_SIZE, rc.bottom - BAR_HEIGHT,
+		rc.Width() - m_nTreeSize - SPLIT_SIZE, BAR_HEIGHT, SWP_NOZORDER );
+
+	DeferWindowPos( hDWP, m_wndBottomDynamic.GetSafeHwnd(), NULL,
+		rc.left + m_nTreeSize + SPLIT_SIZE, rc.bottom - BAR_HEIGHT * 2,
 		rc.Width() - m_nTreeSize - SPLIT_SIZE, BAR_HEIGHT, SWP_NOZORDER );
 
 	DeferWindowPos( hDWP, m_wndTree.GetSafeHwnd(), NULL,
@@ -637,16 +641,20 @@ void CLibraryFrame::SetView(CLibraryView* pView, BOOL bUpdate, BOOL bUser)
 	CLibraryView* pOld = m_pView;
 	m_pView = pView;
 
-	if ( m_pView ) m_pView->Create( this );
+	if ( m_pView ) 
+		m_pView->Create( this );
 	OnSize( 1982, 0, 0 );
 
-	if ( m_pView && ! bUpdate ) m_pView->Update();
+	if ( m_pView && ! bUpdate ) 
+		m_pView->Update();
 
 	if ( pOld ) pOld->ShowWindow( SW_HIDE );
-	if ( m_pView ) m_pView->ShowWindow( SW_SHOW );
+	if ( m_pView ) 
+		m_pView->ShowWindow( SW_SHOW );
 	if ( pOld ) pOld->DestroyWindow();
 
-	if ( m_pView && bUpdate ) Update( TRUE );
+	if ( m_pView && bUpdate ) 
+		Update( TRUE );
 
 	m_wndViewTop.Update( m_pView );
 
@@ -657,7 +665,8 @@ void CLibraryFrame::SetView(CLibraryView* pView, BOOL bUpdate, BOOL bUser)
 		Skin.CreateToolBar( strBar, &m_wndViewBottom );
 		m_wndViewTip.SetOwner( m_pView );
 
-		if ( bViewSel ) m_pView->SetFocus();
+		if ( bViewSel ) 
+			m_pView->SetFocus();
 	}
 
 	Invalidate();
@@ -678,13 +687,16 @@ void CLibraryFrame::SetPanel(CLibraryPanel* pPanel)
 	CLibraryPanel* pOld = m_pPanel;
 	m_pPanel = pPanel;
 
-	if ( m_pPanel ) m_pPanel->Create( this );
+	if ( m_pPanel ) 
+		m_pPanel->Create( this );
 	OnSize( 1982, 0, 0 );
 
-	if ( m_pPanel ) m_pPanel->Update();
+	if ( m_pPanel ) 
+		m_pPanel->Update();
 
 	if ( pOld ) pOld->ShowWindow( SW_HIDE );
-	if ( m_pPanel ) m_pPanel->ShowWindow( SW_SHOW );
+	if ( m_pPanel ) 
+		m_pPanel->ShowWindow( SW_SHOW );
 	if ( pOld ) pOld->DestroyWindow();
 }
 
@@ -739,7 +751,8 @@ BOOL CLibraryFrame::Update(BOOL bForce, BOOL bBestView)
 	if ( nHeaderSize != m_nHeaderSize )
 	{
 		m_nHeaderSize = nHeaderSize;
-		if ( m_nHeaderSize == 0 ) m_wndHeader.ShowWindow( SW_HIDE );
+		if ( m_nHeaderSize == 0 ) 
+			m_wndHeader.ShowWindow( SW_HIDE );
 		OnSize( 1982, 0, 0 );
 	}
 
@@ -844,7 +857,8 @@ BOOL CLibraryFrame::Select(DWORD nObject)
 
 void CLibraryFrame::OnTreeSelection(NMHDR* /*pNotify*/, LRESULT* pResult)
 {
-	if ( ! m_bUpdating ) Update( TRUE, TRUE );
+	if ( ! m_bUpdating ) 
+		Update( TRUE, TRUE );
 	*pResult = 0;
 }
 
@@ -857,7 +871,8 @@ void CLibraryFrame::OnViewSelection()
 
 void CLibraryFrame::OnTimer(UINT_PTR /*nIDEvent*/)
 {
-	if ( m_bViewSelection ) UpdatePanel( FALSE );
+	if ( m_bViewSelection ) 
+		UpdatePanel( FALSE );
 }
 
 void CLibraryFrame::OnFilterTypes()
@@ -976,7 +991,8 @@ void CLibraryFrame::OnToolbarEscape()
 	if ( GetFocus() == &m_wndSearch )
 	{
 		m_wndSearch.SetWindowText( _T("") );
-		if ( m_pView != NULL ) m_pView->SetFocus();
+		if ( m_pView != NULL ) 
+			m_pView->SetFocus();
 	}
 }
 
@@ -988,12 +1004,11 @@ BOOL CLibraryFrame::SetDynamicBar(LPCTSTR pszName)
 		CRect rc;
 		GetClientRect( &rc );
 		m_sDynamicBarName = pszName;
-		if ( m_bDynamicBarHidden )
+		if ( m_bDynamicBarHidden && !m_wndBottomDynamic.IsWindowVisible() )
 		{
-			m_wndBottomDynamic.SetWindowPos( &m_wndViewBottom, rc.left + m_nTreeSize + SPLIT_SIZE,
-											 rc.bottom - BAR_HEIGHT * 2, rc.Width() - m_nTreeSize - SPLIT_SIZE,
-											 BAR_HEIGHT, SWP_SHOWWINDOW );
-		} 
+			m_wndBottomDynamic.ShowWindow( SW_SHOW );
+			DoSizePanel();
+		}
 		else
 		{
 			m_wndBottomDynamic.Invalidate( TRUE );
@@ -1001,10 +1016,10 @@ BOOL CLibraryFrame::SetDynamicBar(LPCTSTR pszName)
 		m_bDynamicBarHidden = FALSE;
 	}
 	else
-	{	if ( !m_bDynamicBarHidden )
+	{	
+		if ( !m_bDynamicBarHidden )
 		{
-			m_wndBottomDynamic.SetWindowPos( &m_wndViewBottom, 0, 0, 0, 0, 
-											 SWP_HIDEWINDOW | SWP_NOMOVE | SWP_NOSIZE );
+			m_wndBottomDynamic.ShowWindow( SW_HIDE );
 		}
 		m_bShowDynamicBar = FALSE;
 		m_bDynamicBarHidden = TRUE;
@@ -1132,9 +1147,7 @@ void CLibraryFrame::OnUpdateShowWebServices(CCmdUI* pCmdUI)
 	{
 		CRect rc;
 		GetClientRect( &rc );
-		m_wndBottomDynamic.SetWindowPos( &m_wndViewBottom, rc.left + m_nTreeSize + SPLIT_SIZE,
-										 rc.bottom - BAR_HEIGHT * 2, rc.Width() - m_nTreeSize - SPLIT_SIZE,
-										 BAR_HEIGHT, SWP_SHOWWINDOW );
+		m_wndBottomDynamic.ShowWindow( SW_SHOW );
 	}
 
 	pCmdUI->Enable( m_bShowDynamicBar );
