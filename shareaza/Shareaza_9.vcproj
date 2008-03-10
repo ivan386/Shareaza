@@ -50,7 +50,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="zlib"
-				PreprocessorDefinitions="_DEBUG;WIN32;_WINDOWS;_SHAREAZA;ZLIB_WINAPI;SHAREAZA_USE_ASM;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS"
+				PreprocessorDefinitions="_DEBUG;WIN32;_WINDOWS;_SHAREAZA;SHAREAZA_USE_ASM;ZLIB_WINAPI"
 				StringPooling="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="1"
@@ -70,7 +70,7 @@
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="_DEBUG"
+				PreprocessorDefinitions="_DEBUG;NO_MANIFEST"
 				AdditionalIncludeDirectories="$(IntDir)"
 			/>
 			<Tool
@@ -80,18 +80,19 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="winmm.lib version.lib ws2_32.lib wininet.lib Iphlpapi.lib msi.lib"
 				LinkIncremental="2"
+				AdditionalManifestDependencies="type=&apos;win32&apos; name=&apos;Microsoft.Windows.Common-Controls&apos; version=&apos;6.0.0.0&apos; processorArchitecture=&apos;x86&apos; publicKeyToken=&apos;6595b64144ccf1df&apos; language=&apos;*&apos;"
 				IgnoreDefaultLibraryNames=""
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				TargetMachine="1"
+				KeyFile=""
 			/>
 			<Tool
 				Name="VCALinkTool"
 			/>
 			<Tool
 				Name="VCManifestTool"
-				OutputManifestFile="$(TargetPath).manifest.foo"
-				EmbedManifest="false"
+				AssemblyIdentity="Shareaza.Shareaza, processorArchitecture=x86, version=2.3.1.2, type=win32, publicKeyToken=ba3b397e6792377b"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -153,7 +154,7 @@
 				PrecompiledHeaderFile="$(IntDir)/$(ProjectName).pch"
 				BrowseInformation="1"
 				WarningLevel="4"
-				DebugInformationFormat="4"
+				DebugInformationFormat="3"
 				DisableSpecificWarnings="4512"
 			/>
 			<Tool
@@ -161,7 +162,7 @@
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="_DEBUG"
+				PreprocessorDefinitions="_DEBUG;NO_MANIFEST"
 				AdditionalIncludeDirectories="$(IntDir)"
 			/>
 			<Tool
@@ -171,18 +172,19 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="winmm.lib version.lib ws2_32.lib wininet.lib Iphlpapi.lib msi.lib"
 				LinkIncremental="2"
+				AdditionalManifestDependencies="type=&apos;win32&apos; name=&apos;Microsoft.Windows.Common-Controls&apos; version=&apos;6.0.0.0&apos; processorArchitecture=&apos;amd64&apos; publicKeyToken=&apos;6595b64144ccf1df&apos; language=&apos;*&apos;"
 				IgnoreDefaultLibraryNames=""
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				TargetMachine="17"
+				KeyFile=""
 			/>
 			<Tool
 				Name="VCALinkTool"
 			/>
 			<Tool
 				Name="VCManifestTool"
-				OutputManifestFile="$(TargetPath).manifest.foo"
-				EmbedManifest="false"
+				AssemblyIdentity="Shareaza.Shareaza, processorArchitecture=amd64, version=2.3.1.2, type=win32, publicKeyToken=ba3b397e6792377b"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -237,7 +239,7 @@
 				FavorSizeOrSpeed="1"
 				OmitFramePointers="true"
 				AdditionalIncludeDirectories="zlib"
-				PreprocessorDefinitions="NDEBUG;WIN32;_WINDOWS;_SHAREAZA;ZLIB_WINAPI;SHAREAZA_USE_ASM"
+				PreprocessorDefinitions="NDEBUG;WIN32;_WINDOWS;_SHAREAZA;ZLIB_WINAPI"
 				StringPooling="true"
 				RuntimeLibrary="0"
 				DefaultCharIsUnsigned="true"
@@ -255,7 +257,7 @@
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="NDEBUG"
+				PreprocessorDefinitions="NDEBUG;NO_MANIFEST"
 				AdditionalIncludeDirectories="$(IntDir)"
 			/>
 			<Tool
@@ -264,20 +266,21 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="winmm.lib version.lib ws2_32.lib wininet.lib Iphlpapi.lib msi.lib"
+				AdditionalManifestDependencies="type=&apos;win32&apos; name=&apos;Microsoft.Windows.Common-Controls&apos; version=&apos;6.0.0.0&apos; processorArchitecture=&apos;x86&apos; publicKeyToken=&apos;6595b64144ccf1df&apos; language=&apos;*&apos;"
 				IgnoreDefaultLibraryNames=""
 				SubSystem="2"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				SetChecksum="true"
 				TargetMachine="1"
+				KeyFile=""
 			/>
 			<Tool
 				Name="VCALinkTool"
 			/>
 			<Tool
 				Name="VCManifestTool"
-				OutputManifestFile="$(TargetPath).manifest.foo"
-				EmbedManifest="false"
+				AssemblyIdentity="Shareaza.Shareaza, processorArchitecture=x86, version=2.3.1.2, type=win32, publicKeyToken=ba3b397e6792377b"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -351,7 +354,7 @@
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="NDEBUG"
+				PreprocessorDefinitions="NDEBUG;NO_MANIFEST"
 				AdditionalIncludeDirectories="$(IntDir)"
 			/>
 			<Tool
@@ -360,20 +363,21 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="winmm.lib version.lib ws2_32.lib wininet.lib Iphlpapi.lib msi.lib"
+				AdditionalManifestDependencies="type=&apos;win32&apos; name=&apos;Microsoft.Windows.Common-Controls&apos; version=&apos;6.0.0.0&apos; processorArchitecture=&apos;amd64&apos; publicKeyToken=&apos;6595b64144ccf1df&apos; language=&apos;*&apos;"
 				IgnoreDefaultLibraryNames=""
 				SubSystem="2"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				SetChecksum="true"
 				TargetMachine="17"
+				KeyFile=""
 			/>
 			<Tool
 				Name="VCALinkTool"
 			/>
 			<Tool
 				Name="VCManifestTool"
-				OutputManifestFile="$(TargetPath).manifest.foo"
-				EmbedManifest="false"
+				AssemblyIdentity="Shareaza.Shareaza, processorArchitecture=amd64, version=2.3.1.2, type=win32, publicKeyToken=ba3b397e6792377b"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
