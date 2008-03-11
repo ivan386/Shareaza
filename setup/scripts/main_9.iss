@@ -181,6 +181,9 @@ Source: "Schemas\*"; DestDir: "{app}\Schemas"; Flags: ignoreversion overwriterea
 ; Plugins
 Source: "setup\misc\LICENSE-GeoIP.txt"; DestDir: "{app}"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension
 
+; Visualisations
+Source: "plugins\MediaVis\*"; DestDir: "{app}\Vis"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Excludes: ".svn"
+
 ; Skins
 Source: "Skins\*"; DestDir: "{app}\Skins"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Excludes: ".svn,\Arcadia's Call\*,\Green Moon\*,\LiquidMetal*\*,\NucleoX\*,\Raza-Ablaze\*"
 
