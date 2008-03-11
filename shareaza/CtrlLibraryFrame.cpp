@@ -90,6 +90,15 @@ END_MESSAGE_MAP()
 // CLibraryFrame construction
 
 CLibraryFrame::CLibraryFrame()
+: m_pView( NULL )
+, m_pPanel( NULL )
+, m_nTreeSize( Settings.Library.TreeSize )
+, m_nPanelSize( Settings.Library.PanelSize )
+, m_bPanelShow( Settings.Library.ShowPanel )
+, m_nHeaderSize( 0 )
+, m_bUpdating( FALSE )
+, m_bShowDynamicBar( TRUE )
+, m_bDynamicBarHidden( TRUE )
 {
 	m_pViews.AddTail( new CLibraryDetailView() );
 	m_pViews.AddTail( new CLibraryListView() );
@@ -101,16 +110,6 @@ CLibraryFrame::CLibraryFrame()
 
 	m_pPanels.AddTail( new CLibraryMetaPanel() );
 	m_pPanels.AddTail( new CLibraryHistoryPanel() );
-
-	m_pView			= NULL;
-	m_pPanel		= NULL;
-	m_nTreeSize		= Settings.Library.TreeSize;
-	m_nPanelSize	= Settings.Library.PanelSize;
-	m_bPanelShow	= Settings.Library.ShowPanel;
-	m_nHeaderSize	= 0;
-	m_bUpdating		= FALSE;
-	m_bShowDynamicBar = FALSE;
-	m_bDynamicBarHidden = TRUE;
 }
 
 CLibraryFrame::~CLibraryFrame()
@@ -162,7 +161,7 @@ int CLibraryFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_wndViewBottom.SetBarStyle( m_wndViewBottom.GetBarStyle() | CBRS_TOOLTIPS|CBRS_BORDER_TOP );
 	m_wndViewBottom.SetOwner( GetOwner() );
 
-	if ( ! m_wndBottomDynamic.Create( this, WS_CHILD|WS_VISIBLE|CBRS_NOALIGN, AFX_IDW_TOOLBAR ) ) return -1;
+	if ( ! m_wndBottomDynamic.Create( this, WS_CHILD|CBRS_NOALIGN, AFX_IDW_TOOLBAR ) ) return -1;
 	m_wndBottomDynamic.SetBarStyle( m_wndBottomDynamic.GetBarStyle() | CBRS_TOOLTIPS|CBRS_BORDER_TOP );
 	m_wndBottomDynamic.SetOwner( GetOwner() );
 
