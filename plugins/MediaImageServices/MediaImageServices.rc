@@ -88,7 +88,7 @@ BEGIN
             VALUE "InternalName", "MediaImageServices"
             VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2005-2007. All rights reserved."
             VALUE "OriginalFilename", "MediaImageServices.dll"
-            VALUE "ProductName", "Shareaza P2P"
+            VALUE "ProductName", "Shareaza"
             VALUE "ProductVersion", "2, 3, 0, 0"
         END
     END

@@ -88,7 +88,7 @@ BEGIN
             VALUE "InternalName", "GFLImageServices"
             VALUE "LegalCopyright", "Copyright © Nikolay Raspopov, 2005-2007."
             VALUE "OriginalFilename", "GFLImageServices.dll"
-            VALUE "ProductName", "Shareaza P2P"
+            VALUE "ProductName", "Shareaza"
             VALUE "ProductVersion", "2, 3, 0, 0"
         END
     END

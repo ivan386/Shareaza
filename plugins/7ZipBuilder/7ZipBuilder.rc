@@ -50,7 +50,7 @@ BEGIN
             VALUE "InternalName", "7ZipBuilder"
             VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2007. All rights reserved."
             VALUE "OriginalFilename", "7ZipBuilder.dll"
-            VALUE "ProductName", "Shareaza P2P"
+            VALUE "ProductName", "Shareaza"
             VALUE "ProductVersion", "2, 3, 0, 0"
         END
     END

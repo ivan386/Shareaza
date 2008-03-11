@@ -76,7 +76,7 @@ BEGIN
             VALUE "InternalName", "RatDVDReader"
             VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2006-2007. All rights reserved."
             VALUE "OriginalFilename", "RatDVDReader.dll"
-            VALUE "ProductName", "Shareaza P2P"
+            VALUE "ProductName", "Shareaza"
             VALUE "ProductVersion", "2, 3, 0, 0"
         END
     END
