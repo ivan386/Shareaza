@@ -188,6 +188,8 @@
 #define IDI_HASH                        285
 #define IDI_SEARCH_ARTIST               286
 #define IDB_BOX_MARK                    287
+#define IDB_SHELL_BASE_VISTA            288
+#define IDI_COLLECTION_VISTA            289
 #define IDR_CHANSFRAME                  991
 #define IDR_IRCFRAME                    994
 #define IDR_USERSFRAME                  995

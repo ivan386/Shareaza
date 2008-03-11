@@ -116,6 +116,7 @@ IDI_CLIPBOARD           ICON                    "Res\\Clipboard.ico"
 IDI_PAINTBRUSHES        ICON                    "Res\\Paintbrushes.ICO"
 IDI_COLLECTION_MASK     ICON                    "Res\\CollectionMask.ico"
 IDI_COLLECTION          ICON                    "Res\\Collection.ico"
+IDI_COLLECTION_VISTA    ICON                    "Res\\CollectionVista.ico"
 IDI_FIREWALLED          ICON                    "Res\\Firewalled.ico"
 IDI_SMALL               ICON                    "Res\\ShareazaSmall.ico"
 IDI_ICON                ICON                    "Res\\ShareazaIcon.ico"
@@ -149,8 +150,9 @@ BEGIN
     BEGIN
         BLOCK "000004b0"
         BEGIN
+            VALUE "Comments", "Shareaza SkinVista Edition"
             VALUE "CompanyName", "Shareaza Development Team"
-            VALUE "FileDescription", "Shareaza Ultimate File Sharing"
+            VALUE "FileDescription", "Shareaza SkinVista Edition"
             VALUE "FileVersion", "2, 3, 1, 2"
             VALUE "InternalName", "Shareaza"
             VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2002-2008. All rights reserved."
@@ -175,6 +177,7 @@ IDB_MENUBAR             BITMAP                  "Res\\MenuBar.bmp"
 IDB_SORT_ASC            BITMAP                  "Res\\SortAsc.bmp"
 IDB_SORT_DESC           BITMAP                  "Res\\SortDesc.bmp"
 IDB_SHELL_BASE          BITMAP                  "Res\\ShellBase.bmp"
+IDB_SHELL_BASE_VISTA    BITMAP                  "Res\\ShellBaseVista.bmp"
 IDB_COLOURDOT           BITMAP                  "Res\\ColourDot.bmp"
 IDB_WIZARD              BITMAP                  "Res\\Wizard.bmp"
 IDB_WIZARD_DOT          BITMAP                  "Res\\WizardDot.bmp"
@@ -190,8 +193,8 @@ IDB_NAVBAR_ALPHA        BITMAP                  "Res\\NavbarAlpha.bmp"
 IDB_REMOTE_SKIN         BITMAP                  "Res\\RemoteWnd.bmp"
 IDB_PANEL_MARK          BITMAP                  "Res\\PanelMark.bmp"
 IDB_SCHEDULER_HEADER    BITMAP                  "Res\\Scheduler.bmp"
-IDB_SCHEDULER_TIMESLICES BITMAP                  "Res\\TimeSlices.bmp"
-IDB_SHELL_BASE_RTL      BITMAP                  "res\\ShellBaseRTL.bmp"
+IDB_SCHEDULER_TIMESLICES BITMAP                 "Res\\TimeSlices.bmp"
+IDB_SHELL_BASE_RTL      BITMAP                  "Res\\ShellBaseRTL.bmp"
 IDB_NAVBAR_IMAGE_RTL    BITMAP                  "Res\\NavbarRTL.bmp"
 IDB_NAVBAR_ALPHA_RTL    BITMAP                  "Res\\NavbarAlphaRTL.bmp"
 IDB_MUSICBRAINZ_LOGO    BITMAP                  "Res\\MusicBrainz.bmp"
@@ -3205,16 +3208,15 @@ BEGIN
     VK_F4,          ID_VIEW_UPLOADS,        VIRTKEY, NOINVERT
     VK_F5,          ID_VIEW_LIBRARY,        VIRTKEY, NOINVERT
     VK_F6,          ID_VIEW_MEDIA,          VIRTKEY, NOINVERT
-    VK_F7,          ID_VIEW_SECURITY,       VIRTKEY, NOINVERT
-    VK_F8,          ID_VIEW_HOSTS,          VIRTKEY, NOINVERT
-    VK_F9,          ID_VIEW_DISCOVERY,      VIRTKEY, NOINVERT
-    VK_F10,         ID_VIEW_TRAFFIC,        VIRTKEY, NOINVERT
-    VK_F11,         ID_VIEW_SYSTEM,         VIRTKEY, NOINVERT
-    VK_F11,         ID_VIEW_NEIGHBOURS,     VIRTKEY, CONTROL, NOINVERT
-    VK_F12,         ID_TAB_IRC,             VIRTKEY, NOINVERT
-    VK_UP,          ID_LIBRARY_PARENT,      VIRTKEY, ALT, NOINVERT
-    "Z",            ID_TOOLS_RESKIN,        VIRTKEY, SHIFT, CONTROL, 
-                                                    NOINVERT
+	VK_F7,          ID_TAB_IRC,             VIRTKEY, NOINVERT
+	VK_F8,          ID_VIEW_SECURITY,       VIRTKEY, NOINVERT
+    VK_F9,          ID_VIEW_HOSTS,          VIRTKEY, NOINVERT
+    VK_F10,         ID_VIEW_DISCOVERY,      VIRTKEY, NOINVERT
+    VK_F11,         ID_VIEW_TRAFFIC,        VIRTKEY, NOINVERT
+    VK_F12,         ID_VIEW_SYSTEM,         VIRTKEY, NOINVERT
+	VK_F12,         ID_VIEW_NEIGHBOURS,     VIRTKEY, CONTROL, NOINVERT
+	VK_UP,          ID_LIBRARY_PARENT,      VIRTKEY, CONTROL, NOINVERT
+    "Z",            ID_TOOLS_RESKIN,        VIRTKEY, SHIFT, CONTROL, NOINVERT
 END
 
 

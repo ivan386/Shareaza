@@ -65,6 +65,8 @@ void CShellIcons::Clear()
 	
 	if ( Settings.General.LanguageRTL ) 
 		bmBase.LoadBitmap( IDB_SHELL_BASE_RTL );
+	else if (theApp.m_dwWindowsVersion >= 6)
+		bmBase.LoadBitmap( IDB_SHELL_BASE_VISTA );
 	else
 		bmBase.LoadBitmap( IDB_SHELL_BASE );
 	m_i16.Add( &bmBase, RGB( 0, 255, 0 ) );
