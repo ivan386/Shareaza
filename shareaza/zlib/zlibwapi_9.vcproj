@@ -1,11 +1,10 @@
-<?xml version="1.0" encoding="windows-1251"?>
+<?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9,00"
-	Name="MediaLibraryBuilder"
-	ProjectGUID="{6591E1B2-D3E7-4B83-9A40-67AC0E98B255}"
-	RootNamespace="MediaLibraryBuilder_9"
-	Keyword="AtlProj"
+	Name="zlibwapi"
+	ProjectGUID="{39F34F2C-D42A-41D2-A0BC-54D7972E2BC5}"
+	RootNamespace="zlibwapi"
 	TargetFrameworkVersion="131072"
 	>
 	<Platforms>
@@ -17,6 +16,9 @@
 		/>
 	</Platforms>
 	<ToolFiles>
+		<DefaultToolFile
+			FileName="masm.rules"
+		/>
 	</ToolFiles>
 	<Configurations>
 		<Configuration
@@ -24,15 +26,17 @@
 			OutputDirectory="$(PlatformName)\$(ConfigurationName)"
 			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
 			ConfigurationType="2"
-			UseOfATL="1"
-			ATLMinimizesCRunTimeLibraryUsage="false"
-			CharacterSet="1"
+			UseOfMFC="0"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="MASM"
+				PreprocessorDefinitions="NOOLDPENTIUMCODE"
 			/>
 			<Tool
 				Name="VCXMLDataGeneratorTool"
@@ -42,29 +46,17 @@
 			/>
 			<Tool
 				Name="VCMIDLTool"
-				PreprocessorDefinitions="_DEBUG"
-				AdditionalIncludeDirectories="..\..\shareaza"
-				TargetEnvironment="1"
-				HeaderFileName="$(InputName).h"
-				DLLDataFileName=""
-				InterfaceIdentifierFileName="$(InputName)_i.c"
-				ProxyFileName=""
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="$(InputDir)"
-				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG;_USRDLL"
-				MinimalRebuild="false"
+				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;ZLIB_WINAPI;ASMV;ASMINF;NOOLDPENTIUMCODE;_CRT_SECURE_NO_DEPRECATE"
+				ExceptionHandling="0"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="1"
-				EnableFunctionLevelLinking="true"
 				RuntimeTypeInfo="false"
-				UsePrecompiledHeader="2"
-				BrowseInformation="1"
-				WarningLevel="4"
-				DebugInformationFormat="4"
-				DisableSpecificWarnings="4995"
+				ProgramDataBaseFileName="$(TargetDir)$(TargetName).pdb"
+				DebugInformationFormat="3"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -72,23 +64,15 @@
 			<Tool
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="_DEBUG"
-				Culture="1049"
-				AdditionalIncludeDirectories="$(IntDir)"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				IgnoreImportLibrary="true"
-				AdditionalDependencies="Strmiids.lib Quartz.lib"
-				LinkIncremental="2"
-				ModuleDefinitionFile="MediaLibraryBuilder.def"
+				IgnoreDefaultLibraryNames=""
+				ModuleDefinitionFile="zlib.def"
 				GenerateDebugInformation="true"
-				SubSystem="2"
-				SetChecksum="false"
-				BaseAddress="0x1afa0000"
-				ImportLibrary="$(OutDir)/MediaLibraryBuilder.lib"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -111,8 +95,6 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				Description="Performing registration"
-				CommandLine="regsvr32 /s /c &quot;$(TargetPath)&quot;"
 			/>
 		</Configuration>
 		<Configuration
@@ -120,15 +102,17 @@
 			OutputDirectory="$(PlatformName)\$(ConfigurationName)"
 			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
 			ConfigurationType="2"
-			UseOfATL="1"
-			ATLMinimizesCRunTimeLibraryUsage="false"
-			CharacterSet="1"
+			UseOfMFC="0"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="MASM"
+				PreprocessorDefinitions="NOOLDPENTIUMCODE"
 			/>
 			<Tool
 				Name="VCXMLDataGeneratorTool"
@@ -138,29 +122,17 @@
 			/>
 			<Tool
 				Name="VCMIDLTool"
-				PreprocessorDefinitions="_DEBUG"
-				AdditionalIncludeDirectories="..\..\shareaza"
-				TargetEnvironment="3"
-				HeaderFileName="$(InputName).h"
-				DLLDataFileName=""
-				InterfaceIdentifierFileName="$(InputName)_i.c"
-				ProxyFileName=""
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="$(InputDir)"
-				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG;_USRDLL"
-				MinimalRebuild="false"
+				PreprocessorDefinitions="WIN64;_DEBUG;_WINDOWS;_USRDLL;ZLIB_WINAPI;ASMV;ASMINF;NOOLDPENTIUMCODE;_CRT_SECURE_NO_DEPRECATE"
+				ExceptionHandling="0"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="1"
-				EnableFunctionLevelLinking="true"
 				RuntimeTypeInfo="false"
-				UsePrecompiledHeader="2"
-				BrowseInformation="1"
-				WarningLevel="4"
+				ProgramDataBaseFileName="$(TargetDir)$(TargetName).pdb"
 				DebugInformationFormat="3"
-				DisableSpecificWarnings="4995"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -168,23 +140,14 @@
 			<Tool
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="_DEBUG"
-				Culture="1049"
-				AdditionalIncludeDirectories="$(IntDir)"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				IgnoreImportLibrary="true"
-				AdditionalDependencies="Strmiids.lib Quartz.lib"
-				LinkIncremental="2"
-				ModuleDefinitionFile="MediaLibraryBuilder.def"
+				ModuleDefinitionFile="zlib.def"
 				GenerateDebugInformation="true"
-				SubSystem="2"
-				SetChecksum="false"
-				BaseAddress="0x1afa0000"
-				ImportLibrary="$(OutDir)/MediaLibraryBuilder.lib"
 				TargetMachine="17"
 			/>
 			<Tool
@@ -207,8 +170,6 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				Description="Performing registration"
-				CommandLine="regsvr32 /s /c &quot;$(TargetPath)&quot;"
 			/>
 		</Configuration>
 		<Configuration
@@ -216,9 +177,7 @@
 			OutputDirectory="$(PlatformName)\$(ConfigurationName)"
 			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
 			ConfigurationType="2"
-			UseOfATL="1"
-			ATLMinimizesCRunTimeLibraryUsage="false"
-			CharacterSet="1"
+			UseOfMFC="0"
 			WholeProgramOptimization="1"
 			>
 			<Tool
@@ -228,6 +187,10 @@
 				Name="VCCustomBuildTool"
 			/>
 			<Tool
+				Name="MASM"
+				PreprocessorDefinitions="NOOLDPENTIUMCODE"
+			/>
+			<Tool
 				Name="VCXMLDataGeneratorTool"
 			/>
 			<Tool
@@ -235,13 +198,6 @@
 			/>
 			<Tool
 				Name="VCMIDLTool"
-				PreprocessorDefinitions="NDEBUG"
-				AdditionalIncludeDirectories="..\..\shareaza"
-				TargetEnvironment="1"
-				HeaderFileName="$(InputName).h"
-				DLLDataFileName=""
-				InterfaceIdentifierFileName="$(InputName)_i.c"
-				ProxyFileName=""
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
@@ -250,19 +206,11 @@
 				EnableIntrinsicFunctions="true"
 				FavorSizeOrSpeed="1"
 				OmitFramePointers="true"
-				AdditionalIncludeDirectories="$(InputDir)"
-				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_USRDLL"
-				StringPooling="true"
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;ZLIB_WINAPI;ASMV;ASMINF;NOOLDPENTIUMCODE;_CRT_SECURE_NO_DEPRECATE"
 				ExceptionHandling="0"
 				RuntimeLibrary="0"
-				BufferSecurityCheck="true"
-				EnableFunctionLevelLinking="false"
 				RuntimeTypeInfo="false"
-				UsePrecompiledHeader="2"
 				BrowseInformation="1"
-				WarningLevel="4"
-				DebugInformationFormat="0"
-				DisableSpecificWarnings="4995"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -270,25 +218,17 @@
 			<Tool
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="NDEBUG"
-				Culture="1049"
-				AdditionalIncludeDirectories="$(IntDir)"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				IgnoreImportLibrary="true"
-				AdditionalDependencies="Strmiids.lib Quartz.lib"
-				LinkIncremental="1"
-				ModuleDefinitionFile="MediaLibraryBuilder.def"
-				GenerateDebugInformation="false"
-				SubSystem="2"
+				IgnoreDefaultLibraryNames=""
+				ModuleDefinitionFile="zlib.def"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				SetChecksum="true"
-				BaseAddress="0x1afa0000"
-				ImportLibrary=""
 				TargetMachine="1"
 			/>
 			<Tool
@@ -311,8 +251,6 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				Description="Performing registration"
-				CommandLine="regsvr32 /s /c &quot;$(TargetPath)&quot;"
 			/>
 		</Configuration>
 		<Configuration
@@ -320,9 +258,7 @@
 			OutputDirectory="$(PlatformName)\$(ConfigurationName)"
 			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
 			ConfigurationType="2"
-			UseOfATL="1"
-			ATLMinimizesCRunTimeLibraryUsage="false"
-			CharacterSet="1"
+			UseOfMFC="0"
 			WholeProgramOptimization="1"
 			>
 			<Tool
@@ -332,6 +268,10 @@
 				Name="VCCustomBuildTool"
 			/>
 			<Tool
+				Name="MASM"
+				PreprocessorDefinitions="NOOLDPENTIUMCODE"
+			/>
+			<Tool
 				Name="VCXMLDataGeneratorTool"
 			/>
 			<Tool
@@ -339,13 +279,6 @@
 			/>
 			<Tool
 				Name="VCMIDLTool"
-				PreprocessorDefinitions="NDEBUG"
-				AdditionalIncludeDirectories="..\..\shareaza"
-				TargetEnvironment="3"
-				HeaderFileName="$(InputName).h"
-				DLLDataFileName=""
-				InterfaceIdentifierFileName="$(InputName)_i.c"
-				ProxyFileName=""
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
@@ -354,19 +287,11 @@
 				EnableIntrinsicFunctions="true"
 				FavorSizeOrSpeed="1"
 				OmitFramePointers="true"
-				AdditionalIncludeDirectories="$(InputDir)"
-				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_USRDLL"
-				StringPooling="true"
+				PreprocessorDefinitions="WIN64;NDEBUG;_WINDOWS;_USRDLL;ZLIB_WINAPI;ASMV;ASMINF;NOOLDPENTIUMCODE;_CRT_SECURE_NO_DEPRECATE"
 				ExceptionHandling="0"
 				RuntimeLibrary="0"
-				BufferSecurityCheck="true"
-				EnableFunctionLevelLinking="false"
 				RuntimeTypeInfo="false"
-				UsePrecompiledHeader="2"
 				BrowseInformation="1"
-				WarningLevel="4"
-				DebugInformationFormat="0"
-				DisableSpecificWarnings="4995"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -374,25 +299,16 @@
 			<Tool
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="NDEBUG"
-				Culture="1049"
-				AdditionalIncludeDirectories="$(IntDir)"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				IgnoreImportLibrary="true"
-				AdditionalDependencies="Strmiids.lib Quartz.lib"
-				LinkIncremental="1"
-				ModuleDefinitionFile="MediaLibraryBuilder.def"
-				GenerateDebugInformation="false"
-				SubSystem="2"
+				ModuleDefinitionFile="zlib.def"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				SetChecksum="true"
-				BaseAddress="0x1afa0000"
-				ImportLibrary=""
 				TargetMachine="17"
 			/>
 			<Tool
@@ -415,8 +331,6 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				Description="Performing registration"
-				CommandLine="regsvr32 /s /c &quot;$(TargetPath)&quot;"
 			/>
 		</Configuration>
 	</Configurations>
@@ -429,128 +343,248 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath=".\Builder.cpp"
+				RelativePath="adler32.c"
 				>
 			</File>
 			<File
-				RelativePath=".\MediaLibraryBuilder.cpp"
+				RelativePath="compress.c"
 				>
 			</File>
 			<File
-				RelativePath=".\MediaLibraryBuilder.def"
+				RelativePath="crc32.c"
 				>
 			</File>
 			<File
-				RelativePath=".\MediaLibraryBuilder.idl"
+				RelativePath="deflate.c"
+				>
+			</File>
+			<File
+				RelativePath="gvmat32.asm"
+				>
+				<FileConfiguration
+					Name="Debug|x64"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="MASM"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|x64"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="MASM"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="gvmat32c.c"
+				>
+				<FileConfiguration
+					Name="Debug|x64"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|x64"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="gvmat64.asm"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
+					ExcludedFromBuild="true"
 					>
 					<Tool
-						Name="VCMIDLTool"
-						AdditionalIncludeDirectories=""
+						Name="MASM"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Debug|x64"
 					>
 					<Tool
-						Name="VCMIDLTool"
-						AdditionalIncludeDirectories=""
+						Name="VCCustomBuildTool"
+						Description="Processing x64 Assembler Source..."
+						CommandLine="ml64.exe /c /Zi /W3 /errorReport:prompt /nologo /Fo&quot;$(IntDir)\$(InputName).obj&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;"
+						Outputs="&quot;$(IntDir)\$(InputName).obj&quot;"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32"
+					ExcludedFromBuild="true"
 					>
 					<Tool
-						Name="VCMIDLTool"
-						AdditionalIncludeDirectories=""
+						Name="MASM"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|x64"
 					>
 					<Tool
-						Name="VCMIDLTool"
-						AdditionalIncludeDirectories=""
+						Name="VCCustomBuildTool"
+						Description="Processing x64 Assembler Source..."
+						CommandLine="ml64.exe /c /Zi /W3 /errorReport:prompt /nologo /Fo&quot;$(IntDir)\$(InputName).obj&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;"
+						Outputs="&quot;$(IntDir)\$(InputName).obj&quot;"
 					/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\..\shareaza\Shareaza.idl"
+				RelativePath="gzio.c"
+				>
+			</File>
+			<File
+				RelativePath="infback.c"
+				>
+			</File>
+			<File
+				RelativePath="inffas32.asm"
+				>
+				<FileConfiguration
+					Name="Debug|x64"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="MASM"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|x64"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="MASM"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="inffas8664.c"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
+					ExcludedFromBuild="true"
 					>
 					<Tool
-						Name="VCMIDLTool"
-						TypeLibraryName="$(IntDir)/ShareazaOM.tlb"
-						HeaderFileName="ShareazaOM.h"
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="inffast.c"
+				>
+				<FileConfiguration
+					Name="Debug|x64"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|x64"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="inffasx64.asm"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="MASM"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Debug|x64"
 					>
 					<Tool
-						Name="VCMIDLTool"
-						TypeLibraryName="$(IntDir)/ShareazaOM.tlb"
-						HeaderFileName="ShareazaOM.h"
+						Name="VCCustomBuildTool"
+						Description="Processing x64 Assembler Source..."
+						CommandLine="ml64.exe /c /Zi /W3 /errorReport:prompt /nologo /Fo&quot;$(IntDir)\$(InputName).obj&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;"
+						Outputs="&quot;$(IntDir)\$(InputName).obj&quot;"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32"
+					ExcludedFromBuild="true"
 					>
 					<Tool
-						Name="VCMIDLTool"
-						TypeLibraryName="$(IntDir)/ShareazaOM.tlb"
-						HeaderFileName="ShareazaOM.h"
+						Name="MASM"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|x64"
 					>
 					<Tool
-						Name="VCMIDLTool"
-						TypeLibraryName="$(IntDir)/ShareazaOM.tlb"
-						HeaderFileName="ShareazaOM.h"
+						Name="VCCustomBuildTool"
+						Description="Processing x64 Assembler Source..."
+						CommandLine="ml64.exe /c /Zi /W3 /errorReport:prompt /nologo /Fo&quot;$(IntDir)\$(InputName).obj&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;"
+						Outputs="&quot;$(IntDir)\$(InputName).obj&quot;"
 					/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\stdafx.cpp"
+				RelativePath="inflate.c"
 				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="1"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|x64"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="1"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="1"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|x64"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="1"
-					/>
-				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="inftrees.c"
+				>
+			</File>
+			<File
+				RelativePath="ioapi.c"
+				>
+			</File>
+			<File
+				RelativePath="iowin32.c"
+				>
+			</File>
+			<File
+				RelativePath="trees.c"
+				>
+			</File>
+			<File
+				RelativePath="uncompr.c"
+				>
+			</File>
+			<File
+				RelativePath="unzip.c"
+				>
+			</File>
+			<File
+				RelativePath="zip.c"
+				>
+			</File>
+			<File
+				RelativePath="zlib.def"
+				>
+			</File>
+			<File
+				RelativePath="zutil.c"
+				>
 			</File>
 		</Filter>
 		<Filter
@@ -559,19 +593,59 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath=".\Builder.h"
+				RelativePath="crc32.h"
 				>
 			</File>
 			<File
-				RelativePath=".\Resource.h"
+				RelativePath="crypt.h"
 				>
 			</File>
 			<File
-				RelativePath=".\Shareaza.h"
+				RelativePath="deflate.h"
 				>
 			</File>
 			<File
-				RelativePath=".\stdafx.h"
+				RelativePath="inffast.h"
+				>
+			</File>
+			<File
+				RelativePath="inflate.h"
+				>
+			</File>
+			<File
+				RelativePath="inftrees.h"
+				>
+			</File>
+			<File
+				RelativePath="ioapi.h"
+				>
+			</File>
+			<File
+				RelativePath="iowin32.h"
+				>
+			</File>
+			<File
+				RelativePath="trees.h"
+				>
+			</File>
+			<File
+				RelativePath="unzip.h"
+				>
+			</File>
+			<File
+				RelativePath="zconf.h"
+				>
+			</File>
+			<File
+				RelativePath="zip.h"
+				>
+			</File>
+			<File
+				RelativePath="zlib.h"
+				>
+			</File>
+			<File
+				RelativePath="zutil.h"
 				>
 			</File>
 		</Filter>
@@ -581,57 +655,8 @@
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
 			>
 			<File
-				RelativePath=".\Builder.rgs"
+				RelativePath="zlib.rc"
 				>
-			</File>
-			<File
-				RelativePath=".\MediaLibraryBuilder.rc"
-				>
-			</File>
-			<File
-				RelativePath=".\MediaLibraryBuilder.rgs"
-				>
-			</File>
-		</Filter>
-		<Filter
-			Name="Generated Files"
-			SourceControlFiles="false"
-			>
-			<File
-				RelativePath=".\MediaLibraryBuilder_i.c"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|x64"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|x64"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-					/>
-				</FileConfiguration>
 			</File>
 		</Filter>
 	</Files>

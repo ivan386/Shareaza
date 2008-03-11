@@ -2,6 +2,9 @@
 Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ZIPBuilder", "..\plugins\ZIPBuilder\ZIPBuilder_9.vcproj", "{2F74AA28-2498-4805-911A-04C39858D529}"
+	ProjectSection(ProjectDependencies) = postProject
+		{39F34F2C-D42A-41D2-A0BC-54D7972E2BC5} = {39F34F2C-D42A-41D2-A0BC-54D7972E2BC5}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "7ZipBuilder", "..\plugins\7ZipBuilder\7ZipBuilder_9.vcproj", "{B69F80CD-FB15-45E8-B359-92A41CC571A7}"
 EndProject
@@ -10,6 +13,9 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RARBuilder", "..\plugins\RARBuilder\RARBuilder_9.vcproj", "{F801DAD7-F08D-48EF-B0DF-6B120377E835}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DocumentReader", "..\plugins\DocumentReader\DocumentReader_9.vcproj", "{0B9C08B4-0C49-4473-B46A-A0291FA844E8}"
+	ProjectSection(ProjectDependencies) = postProject
+		{39F34F2C-D42A-41D2-A0BC-54D7972E2BC5} = {39F34F2C-D42A-41D2-A0BC-54D7972E2BC5}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GFLImageServices", "..\plugins\GFLImageServices\GFLImageServices_9.vcproj", "{4B685EDA-C0D9-43E9-8822-9CA35947C11B}"
 EndProject
@@ -24,10 +30,16 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RatDVDReader", "..\plugins\RatDVDPlugin\RatDVDReader_9.vcproj", "{86944913-9269-4B41-AA2F-C2A37E68C50E}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SkinScanSKS", "..\plugins\SkinScanSKS\SkinScanSKS_9.vcproj", "{A4F1E383-B493-4580-8DB6-5CC89CBAAC53}"
+	ProjectSection(ProjectDependencies) = postProject
+		{39F34F2C-D42A-41D2-A0BC-54D7972E2BC5} = {39F34F2C-D42A-41D2-A0BC-54D7972E2BC5}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SWFPlugin", "..\plugins\SWFPlugin\SWFPlugin_9.vcproj", "{4491782A-4BD5-45E3-AD2F-F03EE6CE3F9E}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Skin", "..\skin-installer\Skin_9.vcproj", "{CAA6FCC8-27B1-42B9-B647-976E7BE79C70}"
+	ProjectSection(ProjectDependencies) = postProject
+		{39F34F2C-D42A-41D2-A0BC-54D7972E2BC5} = {39F34F2C-D42A-41D2-A0BC-54D7972E2BC5}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TorrentWizard", "..\torrentaid\TorrentWizard_9.vcproj", "{F02EDE36-E2AC-40E8-B6DC-76B1D53F9A5A}"
 EndProject
@@ -49,6 +61,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Installer", "..\setup\Insta
 		{F801DAD7-F08D-48EF-B0DF-6B120377E835} = {F801DAD7-F08D-48EF-B0DF-6B120377E835}
 		{4B685EDA-C0D9-43E9-8822-9CA35947C11B} = {4B685EDA-C0D9-43E9-8822-9CA35947C11B}
 	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "zlibwapi", "..\shareaza\zlib\zlibwapi_9.vcproj", "{39F34F2C-D42A-41D2-A0BC-54D7972E2BC5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -186,6 +200,14 @@ Global
 		{3D7C87D6-A044-4334-8BB4-3B88B4E1757D}.Release|Win32.Build.0 = Release|Win32
 		{3D7C87D6-A044-4334-8BB4-3B88B4E1757D}.Release|x64.ActiveCfg = Release|x64
 		{3D7C87D6-A044-4334-8BB4-3B88B4E1757D}.Release|x64.Build.0 = Release|x64
+		{39F34F2C-D42A-41D2-A0BC-54D7972E2BC5}.Debug|Win32.ActiveCfg = Debug|Win32
+		{39F34F2C-D42A-41D2-A0BC-54D7972E2BC5}.Debug|Win32.Build.0 = Debug|Win32
+		{39F34F2C-D42A-41D2-A0BC-54D7972E2BC5}.Debug|x64.ActiveCfg = Debug|x64
+		{39F34F2C-D42A-41D2-A0BC-54D7972E2BC5}.Debug|x64.Build.0 = Debug|x64
+		{39F34F2C-D42A-41D2-A0BC-54D7972E2BC5}.Release|Win32.ActiveCfg = Release|Win32
+		{39F34F2C-D42A-41D2-A0BC-54D7972E2BC5}.Release|Win32.Build.0 = Release|Win32
+		{39F34F2C-D42A-41D2-A0BC-54D7972E2BC5}.Release|x64.ActiveCfg = Release|x64
+		{39F34F2C-D42A-41D2-A0BC-54D7972E2BC5}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

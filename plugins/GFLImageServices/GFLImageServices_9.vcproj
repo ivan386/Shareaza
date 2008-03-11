@@ -79,7 +79,6 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				RegisterOutput="false"
 				IgnoreImportLibrary="true"
 				AdditionalDependencies="libgfl.lib"
 				LinkIncremental="2"
@@ -160,7 +159,7 @@
 				UsePrecompiledHeader="2"
 				BrowseInformation="1"
 				WarningLevel="4"
-				DebugInformationFormat="4"
+				DebugInformationFormat="3"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -176,7 +175,6 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				RegisterOutput="false"
 				IgnoreImportLibrary="true"
 				AdditionalDependencies="libgfl.lib"
 				LinkIncremental="2"
@@ -279,7 +277,6 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				RegisterOutput="false"
 				IgnoreImportLibrary="true"
 				AdditionalDependencies="libgfl.lib"
 				LinkIncremental="1"
@@ -384,7 +381,6 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				RegisterOutput="false"
 				IgnoreImportLibrary="true"
 				AdditionalDependencies="libgfl.lib"
 				LinkIncremental="1"

@@ -53,7 +53,6 @@
 				Optimization="0"
 				AdditionalIncludeDirectories="$(InputDir);../../shareaza/zlib"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;ZLIB_DLL;ZLIB_WINAPI"
-				ExceptionHandling="1"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="1"
 				EnableFunctionLevelLinking="true"
@@ -77,8 +76,6 @@
 			<Tool
 				Name="VCLinkerTool"
 				IgnoreImportLibrary="true"
-				AdditionalDependencies="zlibwapi.lib"
-				OutputFile="$(OutDir)/DocumentReader.dll"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="..\..\shareaza\zlib"
 				ModuleDefinitionFile="DocumentReader.def"
@@ -107,7 +104,7 @@
 			<Tool
 				Name="VCPostBuildEventTool"
 				Description="Performing registration"
-				CommandLine="copy &quot;..\..\setup\builds\zlibwapi.dll&quot; &quot;$(TargetDir)&quot; /b /y&#x0D;&#x0A;regsvr32 /s /c &quot;$(TargetPath)&quot;&#x0D;&#x0A;"
+				CommandLine="copy &quot;..\..\shareaza\zlib\$(PlatformName)\$(ConfigurationName)\zlibwapi.dll&quot; &quot;$(TargetDir)&quot; /b /y&#x0D;&#x0A;regsvr32 /s /c &quot;$(TargetPath)&quot;"
 			/>
 		</Configuration>
 		<Configuration
@@ -144,8 +141,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="$(InputDir);../../shareaza/zlib"
-				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;ZLIB_DLL;ZLIB_WINAPI"
-				ExceptionHandling="1"
+				PreprocessorDefinitions="WIN64;_DEBUG;_WINDOWS;_USRDLL;ZLIB_DLL;ZLIB_WINAPI"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="1"
 				EnableFunctionLevelLinking="true"
@@ -153,7 +149,7 @@
 				UsePrecompiledHeader="2"
 				BrowseInformation="1"
 				WarningLevel="4"
-				DebugInformationFormat="4"
+				DebugInformationFormat="3"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -169,8 +165,6 @@
 			<Tool
 				Name="VCLinkerTool"
 				IgnoreImportLibrary="true"
-				AdditionalDependencies="zlibwapi.lib"
-				OutputFile="$(OutDir)/DocumentReader.dll"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="..\..\shareaza\zlib"
 				ModuleDefinitionFile="DocumentReader.def"
@@ -199,7 +193,7 @@
 			<Tool
 				Name="VCPostBuildEventTool"
 				Description="Performing registration"
-				CommandLine="copy &quot;..\..\setup\builds\zlibwapi.dll&quot; &quot;$(TargetDir)&quot; /b /y&#x0D;&#x0A;regsvr32 /s /c &quot;$(TargetPath)&quot;&#x0D;&#x0A;"
+				CommandLine="copy &quot;..\..\shareaza\zlib\$(PlatformName)\$(ConfigurationName)\zlibwapi.dll&quot; &quot;$(TargetDir)&quot; /b /y&#x0D;&#x0A;regsvr32 /s /c &quot;$(TargetPath)&quot;"
 			/>
 		</Configuration>
 		<Configuration
@@ -243,7 +237,6 @@
 				AdditionalIncludeDirectories="$(InputDir);../../shareaza/zlib"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;ZLIB_DLL;ZLIB_WINAPI"
 				StringPooling="true"
-				ExceptionHandling="1"
 				RuntimeLibrary="0"
 				RuntimeTypeInfo="false"
 				UsePrecompiledHeader="2"
@@ -265,8 +258,6 @@
 			<Tool
 				Name="VCLinkerTool"
 				IgnoreImportLibrary="true"
-				AdditionalDependencies="zlibwapi.lib"
-				OutputFile="$(OutDir)/DocumentReader.dll"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
 				AdditionalLibraryDirectories="..\..\shareaza\zlib"
@@ -300,7 +291,7 @@
 			<Tool
 				Name="VCPostBuildEventTool"
 				Description="Performing registration"
-				CommandLine="copy &quot;..\..\setup\builds\zlibwapi.dll&quot; &quot;$(TargetDir)&quot; /b /y&#x0D;&#x0A;regsvr32 /s /c &quot;$(TargetPath)&quot;&#x0D;&#x0A;"
+				CommandLine="copy &quot;..\..\shareaza\zlib\$(PlatformName)\$(ConfigurationName)\zlibwapi.dll&quot; &quot;$(TargetDir)&quot; /b /y&#x0D;&#x0A;regsvr32 /s /c &quot;$(TargetPath)&quot;"
 			/>
 		</Configuration>
 		<Configuration
@@ -343,9 +334,8 @@
 				FavorSizeOrSpeed="1"
 				OmitFramePointers="true"
 				AdditionalIncludeDirectories="$(InputDir);../../shareaza/zlib"
-				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;ZLIB_DLL;ZLIB_WINAPI"
+				PreprocessorDefinitions="WIN64;NDEBUG;_WINDOWS;_USRDLL;ZLIB_DLL;ZLIB_WINAPI"
 				StringPooling="true"
-				ExceptionHandling="1"
 				RuntimeLibrary="0"
 				RuntimeTypeInfo="false"
 				UsePrecompiledHeader="2"
@@ -367,8 +357,6 @@
 			<Tool
 				Name="VCLinkerTool"
 				IgnoreImportLibrary="true"
-				AdditionalDependencies="zlibwapi.lib"
-				OutputFile="$(OutDir)/DocumentReader.dll"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
 				AdditionalLibraryDirectories="..\..\shareaza\zlib"
@@ -402,7 +390,7 @@
 			<Tool
 				Name="VCPostBuildEventTool"
 				Description="Performing registration"
-				CommandLine="copy &quot;..\..\setup\builds\zlibwapi.dll&quot; &quot;$(TargetDir)&quot; /b /y&#x0D;&#x0A;regsvr32 /s /c &quot;$(TargetPath)&quot;&#x0D;&#x0A;"
+				CommandLine="copy &quot;..\..\shareaza\zlib\$(PlatformName)\$(ConfigurationName)\zlibwapi.dll&quot; &quot;$(TargetDir)&quot; /b /y&#x0D;&#x0A;regsvr32 /s /c &quot;$(TargetPath)&quot;"
 			/>
 		</Configuration>
 	</Configurations>
