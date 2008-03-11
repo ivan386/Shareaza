@@ -114,9 +114,9 @@ IDR_HELPFRAME           ICON                    "Res\\Help.ico"
 IDI_SEARCH_FOLDER       ICON                    "Res\\SearchFolder.ico"
 IDI_CLIPBOARD           ICON                    "Res\\Clipboard.ico"
 IDI_PAINTBRUSHES        ICON                    "Res\\Paintbrushes.ICO"
-IDI_COLLECTION_MASK     ICON                    "Res\\CollectionMask.ico"
 IDI_COLLECTION          ICON                    "Res\\Collection.ico"
 IDI_COLLECTION_VISTA    ICON                    "Res\\CollectionVista.ico"
+IDI_COLLECTION_MASK     ICON                    "Res\\CollectionMask.ico"
 IDI_FIREWALLED          ICON                    "Res\\Firewalled.ico"
 IDI_SMALL               ICON                    "Res\\ShareazaSmall.ico"
 IDI_ICON                ICON                    "Res\\ShareazaIcon.ico"
@@ -150,9 +150,9 @@ BEGIN
     BEGIN
         BLOCK "000004b0"
         BEGIN
-            VALUE "Comments", "Shareaza SkinVista Edition"
+            VALUE "Comments", "Shareaza Ultimate File Sharing"
             VALUE "CompanyName", "Shareaza Development Team"
-            VALUE "FileDescription", "Shareaza SkinVista Edition"
+            VALUE "FileDescription", "Shareaza Ultimate File Sharing"
             VALUE "FileVersion", "2, 3, 1, 2"
             VALUE "InternalName", "Shareaza"
             VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2002-2008. All rights reserved."
@@ -3208,13 +3208,13 @@ BEGIN
     VK_F4,          ID_VIEW_UPLOADS,        VIRTKEY, NOINVERT
     VK_F5,          ID_VIEW_LIBRARY,        VIRTKEY, NOINVERT
     VK_F6,          ID_VIEW_MEDIA,          VIRTKEY, NOINVERT
-	VK_F7,          ID_TAB_IRC,             VIRTKEY, NOINVERT
-	VK_F8,          ID_VIEW_SECURITY,       VIRTKEY, NOINVERT
-    VK_F9,          ID_VIEW_HOSTS,          VIRTKEY, NOINVERT
-    VK_F10,         ID_VIEW_DISCOVERY,      VIRTKEY, NOINVERT
-    VK_F11,         ID_VIEW_TRAFFIC,        VIRTKEY, NOINVERT
-    VK_F12,         ID_VIEW_SYSTEM,         VIRTKEY, NOINVERT
-	VK_F12,         ID_VIEW_NEIGHBOURS,     VIRTKEY, CONTROL, NOINVERT
+    VK_F7,          ID_VIEW_SECURITY,       VIRTKEY, NOINVERT
+    VK_F8,          ID_VIEW_HOSTS,          VIRTKEY, NOINVERT
+    VK_F9,          ID_VIEW_DISCOVERY,      VIRTKEY, NOINVERT
+    VK_F10,         ID_VIEW_TRAFFIC,        VIRTKEY, NOINVERT
+    VK_F11,         ID_VIEW_SYSTEM,         VIRTKEY, NOINVERT
+    VK_F11,         ID_VIEW_NEIGHBOURS,     VIRTKEY, CONTROL, NOINVERT
+    VK_F12,         ID_TAB_IRC,             VIRTKEY, NOINVERT
 	VK_UP,          ID_LIBRARY_PARENT,      VIRTKEY, CONTROL, NOINVERT
     "Z",            ID_TOOLS_RESKIN,        VIRTKEY, SHIFT, CONTROL, NOINVERT
 END
