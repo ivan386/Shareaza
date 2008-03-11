@@ -50,6 +50,7 @@
 #include "Security.h"
 #include "Schema.h"
 #include "XML.h"
+#include "ShareMonkeyData.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -95,6 +96,20 @@ BEGIN_MESSAGE_MAP(CLibraryFileView, CLibraryView)
 	ON_COMMAND(ID_MUSICBRAINZ_ALBUMS, OnMusicBrainzAlbums)
 	ON_UPDATE_COMMAND_UI(ID_WEBSERVICES_SHAREMONKEY, OnUpdateShareMonkeyLookup)
 	ON_COMMAND(ID_WEBSERVICES_SHAREMONKEY, OnShareMonkeyLookup)
+	ON_UPDATE_COMMAND_UI(ID_SHAREMONKEY_DOWNLOAD, OnUpdateShareMonkeyDownload)
+	ON_COMMAND(ID_SHAREMONKEY_DOWNLOAD, OnShareMonkeyDownload)
+	ON_UPDATE_COMMAND_UI(ID_SHAREMONKEY_SAVE, OnUpdateShareMonkeySave)
+	ON_COMMAND(ID_SHAREMONKEY_SAVE, OnShareMonkeySave)
+	ON_UPDATE_COMMAND_UI(ID_SHAREMONKEY_PREVIOUS, OnUpdateShareMonkeyPrevious)
+	ON_COMMAND(ID_SHAREMONKEY_PREVIOUS, OnShareMonkeyPrevious)
+	ON_UPDATE_COMMAND_UI(ID_SHAREMONKEY_NEXT, OnUpdateShareMonkeyNext)
+	ON_COMMAND(ID_SHAREMONKEY_NEXT, OnShareMonkeyNext)
+	ON_UPDATE_COMMAND_UI(ID_SHAREMONKEY_PRICES, OnUpdateShareMonkeyPrices)
+	ON_COMMAND(ID_SHAREMONKEY_PRICES, OnShareMonkeyPrices)
+	ON_UPDATE_COMMAND_UI(ID_SHAREMONKEY_COMPARE, OnUpdateShareMonkeyCompare)
+	ON_COMMAND(ID_SHAREMONKEY_COMPARE, OnShareMonkeyCompare)
+	ON_UPDATE_COMMAND_UI(ID_SHAREMONKEY_BUY, OnUpdateShareMonkeyBuy)
+	ON_COMMAND(ID_SHAREMONKEY_BUY, OnShareMonkeyBuy)
 	ON_WM_CREATE()
 	ON_UPDATE_COMMAND_UI(ID_LIBRARY_UNLINK, OnUpdateLibraryUnlink)
 	ON_COMMAND(ID_LIBRARY_UNLINK, OnLibraryUnlink)
@@ -112,6 +127,7 @@ BEGIN_MESSAGE_MAP(CLibraryFileView, CLibraryView)
 	ON_COMMAND(ID_LIBRARY_CREATETORRENT, OnLibraryCreateTorrent)
 	ON_UPDATE_COMMAND_UI(ID_LIBRARY_REBUILD_ANSI, OnUpdateLibraryRebuildAnsi)
 	ON_COMMAND(ID_LIBRARY_REBUILD_ANSI, OnLibraryRebuildAnsi)
+	ON_MESSAGE(WM_METADATA, OnServiceDone)
 END_MESSAGE_MAP()
 
 
@@ -119,12 +135,18 @@ END_MESSAGE_MAP()
 // CLibraryFileView construction
 
 CLibraryFileView::CLibraryFileView()
+: m_bRequestingService( FALSE )
+, m_nCurrentPage( 0 )
 {
-	m_pszToolBar = _T("CLibraryFileView");
+	m_pszToolBar = L"CLibraryFileView";
 }
 
 CLibraryFileView::~CLibraryFileView()
 {
+	for ( POSITION pos = m_pServiceDataPages.GetHeadPosition() ; pos ; )
+	{
+		delete m_pServiceDataPages.GetNext( pos );
+	}
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -661,7 +683,7 @@ void CLibraryFileView::OnLibraryRebuildAnsi()
 
 void CLibraryFileView::OnUpdateLibraryBitziDownload(CCmdUI* pCmdUI) 
 {
-	if ( m_bGhostFolder )
+	if ( m_bGhostFolder || m_bRequestingService )
 		pCmdUI->Enable( FALSE );
 	else
 		pCmdUI->Enable( GetSelectedCount() > 0 && Settings.Library.BitziXML.GetLength() );
@@ -904,9 +926,25 @@ void CLibraryFileView::OnSearchForSeries()
 	pSearch.RunSearchForSeries();
 }
 
+/////////////////////////////////////////////////////////////////////
+// Web services handling
+
+void CLibraryFileView::ClearServicePages()
+{
+	for ( POSITION pos = m_pServiceDataPages.GetHeadPosition() ; pos ; )
+	{
+		CMetaPanel* pPanelData = m_pServiceDataPages.GetNext( pos );
+		if ( GetFrame()->GetPanelData() == pPanelData )
+			GetFrame()->SetPanelData( NULL );
+		else
+			delete pPanelData;
+	}
+	m_pServiceDataPages.RemoveAll();
+}
+
 void CLibraryFileView::OnUpdateShareMonkeyLookup(CCmdUI* pCmdUI)
 {
-	pCmdUI->Enable( FALSE );
+	pCmdUI->Enable( GetSelectedCount() == 1 && !m_bRequestingService );
 }
 
 void CLibraryFileView::OnShareMonkeyLookup()
@@ -916,7 +954,7 @@ void CLibraryFileView::OnShareMonkeyLookup()
 
 void CLibraryFileView::OnUpdateMusicBrainzLookup(CCmdUI* pCmdUI)
 {
-	if ( GetSelectedCount() != 1 )
+	if ( m_bGhostFolder || GetSelectedCount() != 1 || m_bRequestingService )
 	{
 		pCmdUI->Enable( FALSE );
 		return;
@@ -950,8 +988,9 @@ void CLibraryFileView::OnMusicBrainzLookup()
 void CLibraryFileView::CheckDynamicBar()
 {
 	bool bIsMusicBrainz = false;
-	CLibraryFrame* pFrame = GetFrame();
+	ClearServicePages();
 
+	CLibraryFrame* pFrame = GetFrame();
 	if ( _tcscmp( pFrame->GetDynamicBarName(), L"WebServices.MusicBrainz" ) == 0 )
 	{
 		bIsMusicBrainz = true;
@@ -960,7 +999,10 @@ void CLibraryFileView::CheckDynamicBar()
 	if ( GetSelectedCount() != 1 )
 	{
 		if ( bIsMusicBrainz )
+		{
 			pFrame->SetDynamicBar( NULL );
+			m_bRequestingService = FALSE; // TODO: abort operation
+		}
 		return;
 	}
 
@@ -970,13 +1012,18 @@ void CLibraryFileView::CheckDynamicBar()
 	if ( pFile == NULL ) // Ghost file
 	{
 		pFrame->SetDynamicBar( NULL );
+		m_bRequestingService = FALSE;
 		return;
 	}
 
 	if ( !pFile->IsSchemaURI( CSchema::uriAudio ) || pFile->m_pMetadata == NULL )
 	{
 		if ( bIsMusicBrainz )
+		{
 			pFrame->SetDynamicBar( NULL );
+		}
+
+		m_bRequestingService = FALSE; // TODO: abort operation
 		return;
 	}
 
@@ -989,6 +1036,7 @@ void CLibraryFileView::CheckDynamicBar()
 	else
 		pFrame->HideDynamicBar();
 	
+	m_bRequestingService = FALSE; // TODO: abort operation
 	delete pMetaList;
 
 	pLock.Unlock();
@@ -1041,4 +1089,139 @@ void CLibraryFileView::OnMusicBrainzAlbums()
 	CString strURL = L"http://musicbrainz.org/artist/" + pAttribute->GetValue();
 
 	ShellExecute( GetSafeHwnd(), _T("open"), strURL, NULL, NULL, SW_SHOWNORMAL );
+}
+
+void CLibraryFileView::OnUpdateShareMonkeyDownload(CCmdUI* pCmdUI)
+{
+	pCmdUI->Enable();
+}
+
+void CLibraryFileView::OnShareMonkeyDownload()
+{
+	CShareMonkeyData* pPanelData = new CShareMonkeyData();
+
+	CString strStatus;
+	LoadString( strStatus, IDS_TIP_STATUS );
+	strStatus.TrimRight( ':' );
+	pPanelData->Add( strStatus, L"Please wait..." );
+
+	ClearServicePages();
+	GetFrame()->SetPanelData( pPanelData );
+
+	m_pServiceDataPages.AddTail( pPanelData );
+	m_nCurrentPage = 0;
+
+	CSingleLock pLock( &Library.m_pSection, TRUE );
+	CLibraryFile* pFile = GetSelectedFile();
+
+	// Should be set to FALSE, and abort button created
+	m_bRequestingService = pFile != NULL;
+	if ( m_bRequestingService )
+	{
+		DWORD nIndex = pFile->m_nIndex;
+		pLock.Unlock();
+		pPanelData->Start( this, nIndex );
+		return;
+	}
+
+	pLock.Unlock();
+}
+
+void CLibraryFileView::OnUpdateShareMonkeySave(CCmdUI* pCmdUI)
+{
+	pCmdUI->Enable( !m_bRequestingService );
+}
+
+void CLibraryFileView::OnShareMonkeySave()
+{
+	
+}
+
+void CLibraryFileView::OnUpdateShareMonkeyPrevious(CCmdUI* pCmdUI)
+{
+	pCmdUI->Enable( !m_bRequestingService );
+}
+
+void CLibraryFileView::OnShareMonkeyPrevious()
+{
+	m_nCurrentPage--;
+}
+
+void CLibraryFileView::OnUpdateShareMonkeyNext(CCmdUI* pCmdUI)
+{
+	pCmdUI->Enable( !m_bRequestingService );
+}
+
+void CLibraryFileView::OnShareMonkeyNext()
+{
+	m_nCurrentPage++;
+}
+
+void CLibraryFileView::OnUpdateShareMonkeyPrices(CCmdUI* pCmdUI)
+{
+	pCmdUI->Enable( !m_bRequestingService );
+}
+
+void CLibraryFileView::OnShareMonkeyPrices()
+{
+
+}
+
+void CLibraryFileView::OnUpdateShareMonkeyCompare(CCmdUI* pCmdUI)
+{
+	pCmdUI->Enable( !m_bRequestingService );
+}
+
+void CLibraryFileView::OnShareMonkeyCompare()
+{
+
+}
+
+void CLibraryFileView::OnUpdateShareMonkeyBuy(CCmdUI* pCmdUI)
+{
+	pCmdUI->Enable( !m_bRequestingService );
+}
+
+void CLibraryFileView::OnShareMonkeyBuy()
+{
+
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// Set pszMessage to NULL when the work is done, to remove the status item from
+// the meta panel. Don't do that in the middle or the order will change.
+// The status must be the first item in the meta panel.
+LRESULT CLibraryFileView::OnServiceDone(WPARAM wParam, LPARAM lParam)
+{
+	CString strStatus;
+	LoadString( strStatus, IDS_TIP_STATUS );
+	strStatus.TrimRight( ':' );
+	
+	LPCTSTR pszMessage = (LPCTSTR)lParam;
+	CMetaPanel* pPanelData = (CMetaPanel*)wParam;
+	
+	if ( pPanelData == NULL )
+	{
+		m_nCurrentPage = 0;
+		m_bRequestingService = FALSE;
+		ClearServicePages();
+	}
+	else
+	{
+		if ( pszMessage == NULL )
+		{
+			pPanelData->Remove( strStatus );
+		}
+		else
+		{
+			CMetaItem* pItem = pPanelData->Find( strStatus );
+			if ( pItem != NULL )
+				pItem->m_sValue = pszMessage;
+		}
+	}
+
+	CLibraryFrame* pFrame = GetFrame();
+	if ( pFrame->GetPanelData() != NULL )
+		pFrame->SetPanelData( pPanelData );
+	return 0;
 }
