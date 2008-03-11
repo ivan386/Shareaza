@@ -247,8 +247,8 @@ void CLibraryFileView::OnRButtonDown(UINT nFlags, CPoint point)
 void CLibraryFileView::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags) 
 {
 	GetToolTip()->Hide();
-	
 	CWnd::OnKeyDown( nChar, nRepCnt, nFlags );
+	CheckDynamicBar();
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -932,7 +932,7 @@ void CLibraryFileView::OnUpdateMusicBrainzLookup(CCmdUI* pCmdUI)
 	}
 
 	CMetaList* pMetaList = new CMetaList();
-	pMetaList->Setup( pFile->m_pSchema );
+	pMetaList->Setup( pFile->m_pSchema, FALSE );
 	pMetaList->Combine( pFile->m_pMetadata );
 
 	pCmdUI->Enable( pMetaList->IsMusicBrainz() );
@@ -943,13 +943,10 @@ void CLibraryFileView::OnUpdateMusicBrainzLookup(CCmdUI* pCmdUI)
 void CLibraryFileView::OnMusicBrainzLookup()
 {
 	CLibraryFrame* pFrame = GetFrame();
-	//if ( _tcscmp( pFrame->GetDynamicBarName(), L"WebServices.MusicBrainz" ) != 0 )
-	//{
-		// pFrame->HideDynamicBar();
-	//}
 	pFrame->SetDynamicBar( L"WebServices.MusicBrainz" );
 }
 
+// Called when the selection changes
 void CLibraryFileView::CheckDynamicBar()
 {
 	bool bIsMusicBrainz = false;
@@ -969,6 +966,13 @@ void CLibraryFileView::CheckDynamicBar()
 
 	CSingleLock pLock( &Library.m_pSection, TRUE );
 	CLibraryFile* pFile = GetSelectedFile();
+
+	if ( pFile == NULL ) // Ghost file
+	{
+		pFrame->SetDynamicBar( NULL );
+		return;
+	}
+
 	if ( !pFile->IsSchemaURI( CSchema::uriAudio ) || pFile->m_pMetadata == NULL )
 	{
 		if ( bIsMusicBrainz )
@@ -977,15 +981,17 @@ void CLibraryFileView::CheckDynamicBar()
 	}
 
 	CMetaList* pMetaList = new CMetaList();
-	pMetaList->Setup( pFile->m_pSchema );
+	pMetaList->Setup( pFile->m_pSchema, FALSE );
 	pMetaList->Combine( pFile->m_pMetadata );
 
 	if ( !pMetaList->IsMusicBrainz() && bIsMusicBrainz )
 		pFrame->SetDynamicBar( NULL );
 	else
 		pFrame->HideDynamicBar();
-
+	
 	delete pMetaList;
+
+	pLock.Unlock();
 }
 
 void CLibraryFileView::OnUpdateMusicBrainzMatches(CCmdUI* pCmdUI)
