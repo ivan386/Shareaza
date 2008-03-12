@@ -164,7 +164,7 @@ void CHashProgressBar::OnPaint()
 	dc.FillSolidRect( &rcClient, m_crFill );
 
 	dc.SetBkMode( TRANSPARENT );
-	dc.SetTextColor( ( m_nFlash++ & 1 ) ? RGB( 255, 255, 0 ) : m_crText );
+	dc.SetTextColor( ( m_nFlash++ & 1 ) ? CoolInterface.m_crTextStatus : m_crText );
 
 	// Icon
 	DrawIconEx( dc, rcClient.left + 4, rcClient.top + 4, m_hIcon, 32, 32,
