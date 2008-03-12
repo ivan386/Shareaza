@@ -137,9 +137,9 @@ int CHashProgressBar::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_hIcon = (HICON)LoadImage( AfxGetResourceHandle(),
 		MAKEINTRESOURCE(IDI_SEARCH_FOLDER), IMAGE_ICON, 32, 32, 0 );
 
-	m_crFill	= CoolInterface.m_crFragmentComplete ;
-	m_crBorder	= CCoolInterface::CalculateColour( m_crFill, 0xFFFFFFFF, 128 );
-	m_crText	= CCoolInterface::CalculateColour( m_crFill, 0xFFFFFFFF, 220 );
+	m_crFill	= CoolInterface.m_crTipBack ;
+	m_crBorder	= CoolInterface.m_crTipBorder;
+	m_crText	= CoolInterface.m_crTipText;
 
 	if ( m_brFill.m_hObject != NULL ) m_brFill.DeleteObject();
 	m_brFill.CreateSolidBrush( m_crFill );
