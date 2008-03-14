@@ -389,7 +389,9 @@ void CTorrentSeedDlg::RunMultiFile()
 	
 	if ( hTarget != INVALID_HANDLE_VALUE )
 	{
-		BOOL bChecked = CheckFiles();
+		BOOL bChecked = TRUE;
+		if ( Settings.Experimental.TestBTPartials )
+			bChecked = CheckFiles();
 		CloseHandle( hTarget );
 		
 		if ( bChecked && CreateDownload() )

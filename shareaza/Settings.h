@@ -173,6 +173,7 @@ public:
 		bool		AdvancedPanel;
 		DWORD		SpamFilterThreshold;		// Percentage of spam hits which triggers file sources to be treated as a spam
 		DWORD		GeneralThrottle;			// A general throttle for how often each indidivual search may run. Low values may cause source finding to get overlooked. 
+		CString		ShareMonkeyBaseURL;
 	} Search;
 	
 	struct sMediaPlayer
@@ -567,6 +568,7 @@ public:
 	struct sExperimental
 	{
 		bool		EnableDIPPSupport;			// Handle GDNA host cache exchange
+		bool		TestBTPartials;
 	} Experimental;
 
 	struct sWINE

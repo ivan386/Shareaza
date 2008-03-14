@@ -180,6 +180,7 @@ CSettings::CSettings()
 	Add( _T("Search"), _T("ShowNames"), &Search.ShowNames, true );
 	Add( _T("Search"), _T("SpamFilterThreshold"), &Search.SpamFilterThreshold, 20, 1, 0, 100, _T("%") );
 	Add( _T("Search"), _T("SwitchToTransfers"), &Search.SwitchToTransfers, true );
+	Add( _T("Search"), _T("ShareMonkeyBaseURL"), &Search.ShareMonkeyBaseURL, _T("http://tools.sharemonkey.com/xml/") );
 
 	Add( _T("MediaPlayer"), _T("Aspect"), &MediaPlayer.Aspect, smaDefault );
 	Add( _T("MediaPlayer"), _T("AviPreviewCLSID"), &MediaPlayer.AviPreviewCLSID, _T("{394011F0-6D5C-42a3-96C6-24B9AD6B010C}") );
@@ -493,6 +494,7 @@ CSettings::CSettings()
 	Add( _T("Scheduler"), _T("LimitedNetworks"), &Scheduler.LimitedNetworks, true );
 
 	Add( _T("Experimental"), _T("EnableDIPPSupport"), &Experimental.EnableDIPPSupport, false );
+	Add( _T("Experimental"), _T("TestBTPartials"), &Experimental.TestBTPartials, false );
 
 	Add( _T("WINE"), _T("MenuFix"), &WINE.MenuFix, true );
 

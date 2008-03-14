@@ -742,6 +742,7 @@ BOOL CDownloadTask::MakeBatchTorrent()
 
 	m_pDownload->m_pFile = new CFragmentedFile();
 	m_pDownload->m_pFile->Create( m_pDownload->m_sDiskName, nTotal );
+	bool bMissingFile = false;
 
    	for ( int nFile = 0 ; nFile < m_pDownload->m_pTorrent.m_nFiles ; nFile++ )
 	{
@@ -762,7 +763,14 @@ BOOL CDownloadTask::MakeBatchTorrent()
 			CString strFormat;
 			LoadString(strFormat, IDS_BT_SEED_SOURCE_LOST );
 			// m_sMessage.Format( strFormat, (LPCTSTR)pFile->m_sPath );
-			return FALSE;
+			if ( Settings.Experimental.TestBTPartials )
+			{
+				bMissingFile = true;
+				nOffset += pFile->m_nSize;
+				continue;
+			}
+			else
+				return FALSE;
 		}
 		
 		DWORD nSizeHigh	= 0;
@@ -776,7 +784,14 @@ BOOL CDownloadTask::MakeBatchTorrent()
 			//	pFile->m_sPath,
 			//	Settings.SmartVolume( pFile->m_nSize ),
 			//	Settings.SmartVolume( nSize ) );
-			return FALSE;
+			if ( Settings.Experimental.TestBTPartials )
+			{
+				bMissingFile = true;
+				nOffset += pFile->m_nSize;
+				continue;
+			}
+			else 
+				return FALSE;
 		}
 		
 		BOOL bSuccess = CopyFileToBatch( hSource, nOffset, pFile->m_nSize, pFile->m_sPath );
@@ -788,7 +803,14 @@ BOOL CDownloadTask::MakeBatchTorrent()
 		else
 			nOffset += pFile->m_nSize;
 	}
-	
+
+	if ( bMissingFile )
+	{
+		m_pDownload->ClearVerification();
+		m_pDownload->m_bSeeding = FALSE;
+		m_pDownload->m_bComplete = FALSE;
+	}
+
 	return TRUE;
 }
 
