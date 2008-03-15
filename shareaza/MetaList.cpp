@@ -1,7 +1,7 @@
 //
 // MetaList.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -46,7 +46,7 @@ CMetaList::CMetaList()
 
 CMetaList::~CMetaList()
 {
-	Clear();
+	CMetaList::Clear();
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -141,10 +141,10 @@ void CMetaList::Shuffle()
 
 void CMetaList::Setup(CSchema* pSchema, BOOL bClear)
 {
-	if ( bClear ) Clear();
+	if ( bClear ) 
+		CMetaList::Clear();
 	if ( ! pSchema ) return;
 	
-	m_pItems.RemoveAll();
 	for ( POSITION pos = pSchema->GetMemberIterator() ; pos ; )
 	{
 		CSchemaMember* pMember = pSchema->GetNextMember( pos );
@@ -156,6 +156,47 @@ void CMetaList::Setup(CSchema* pSchema, BOOL bClear)
 		CMetaItem* pItem = GetNext( pos );
 		if ( pItem->m_sValue.GetLength() )
 			pItem->m_bValueDefined = TRUE;
+	}
+}
+
+///////////////////////////////////////////////////////////////////////////
+// Overwrites metadata list with a specified list keeping old members intact
+// Doesn't verify schema members, just creates key-value pairs
+void CMetaList::Setup(CMetaList* pMetaList)
+{
+	for ( POSITION posOther = pMetaList->GetIterator() ; posOther ; )
+	{
+		CMetaItem* pItemOther = pMetaList->GetNext( posOther );
+		CMetaItem* pItem = Find( pItemOther->m_sKey );
+
+		if ( pItem == NULL )
+		{
+			if ( pItemOther->m_sValue.GetLength() )
+			{
+				pItem = new CMetaItem( pItemOther->m_pMember );
+				pItem->m_sKey	= pItemOther->m_sKey;
+				pItem->m_sValue	= pItemOther->m_sValue;
+				m_pItems.AddTail( pItem );
+			}
+		}
+		else
+		{
+			pItem->m_sValue = pItemOther->m_sValue;
+		}
+
+		if ( pItem ) 
+			pItem->m_bValueDefined = pItemOther->m_sValue.GetLength() > 0;
+	}
+
+	for ( POSITION pos = GetIterator() ; pos ; )
+	{
+		CMetaItem* pItem = GetNext( pos );
+		CMetaItem* pItemOther = pMetaList->Find( pItem->m_sKey );
+		if ( pItemOther == NULL )
+		{
+			pItem->m_sValue.Empty();
+			pItem->m_bValueDefined = FALSE;
+		}
 	}
 }
 
@@ -323,7 +364,8 @@ CMetaItem::CMetaItem(CSchemaMember* pMember)
 
 BOOL CMetaItem::Combine(CXMLElement* pXML)
 {
-	if ( ! m_pMember ) return FALSE;
+	if ( ! m_pMember ) 
+		return FALSE;
 	
 	CString strValue = m_pMember->GetValueFrom( pXML, NULL, TRUE );
 	

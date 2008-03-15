@@ -699,6 +699,37 @@ void CLibraryFrame::SetPanel(CLibraryPanel* pPanel)
 	if ( pOld ) pOld->DestroyWindow();
 }
 
+CMetaPanel*	CLibraryFrame::GetPanelData()
+{
+	if ( m_pPanel == NULL ) return NULL; // Panel is hidden
+
+	if ( m_pPanel->IsKindOf( RUNTIME_CLASS( CLibraryMetaPanel ) ) )
+	{
+		CLibraryMetaPanel* pDataPanel = static_cast< CLibraryMetaPanel* >( m_pPanel );
+		if ( pDataPanel != NULL )
+		{
+			return pDataPanel->GetServicePanel();
+		}
+	}
+	return NULL;
+}
+
+void CLibraryFrame::SetPanelData(CMetaPanel* pPanel)
+{
+	if ( m_pPanel == NULL ) return; // Panel is hidden
+
+	if ( m_pPanel->IsKindOf( RUNTIME_CLASS( CLibraryMetaPanel ) ) )
+	{
+		CLibraryMetaPanel* pDataPanel = static_cast< CLibraryMetaPanel* >( m_pPanel );
+		if ( pDataPanel != NULL )
+		{
+			pDataPanel->SetServicePanel( pPanel, NULL );
+			pDataPanel->SwapPanel();
+			UpdatePanel( TRUE );
+		}
+	}
+}
+
 /////////////////////////////////////////////////////////////////////////////
 // CLibraryFrame update operations
 
@@ -937,6 +968,11 @@ void CLibraryFrame::OnLibraryPanel()
 	if ( m_pPanel )
 	{
 		m_bPanelShow = FALSE;
+		SetDynamicBar( NULL );
+		if ( m_pView ) 
+		{
+			m_pView->SendMessage( WM_METADATA );
+		}
 		SetPanel( NULL );
 	}
 	else

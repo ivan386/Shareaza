@@ -1,7 +1,7 @@
 //
 // CtrlLibraryFileView.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -27,6 +27,7 @@
 #include "CtrlLibraryView.h"
 
 class CLibraryFile;
+class CMetaPanel;
 
 class CLibraryFileView : public CLibraryView
 {
@@ -39,17 +40,23 @@ public:
 
 // Attributes
 protected:
-	POSITION		m_posSel;
-	BOOL			m_bEditing;
-// Operations
+	POSITION			m_posSel;
+	BOOL				m_bEditing;
+	BOOL				m_bRequestingService;
+	INT_PTR				m_nCurrentPage;
+	CList<CMetaPanel*>	m_pServiceDataPages;
+	BOOL				m_ServiceFailed;
+
 protected:
-	virtual BOOL	CheckAvailable(CLibraryTreeItem* pSel);
+	virtual BOOL		CheckAvailable(CLibraryTreeItem* pSel);
 	virtual DWORD_PTR	HitTestIndex(const CPoint& point) const = 0;
+
 protected:
 	void			StartSelectedFileLoop();
 	CLibraryFile*	GetNextSelectedFile();
 	CLibraryFile*	GetSelectedFile();
 	void			CheckDynamicBar();
+	void			ClearServicePages();
 
 // Overrides
 public:
@@ -93,6 +100,20 @@ protected:
 	afx_msg void OnMusicBrainzAlbums();
 	afx_msg void OnUpdateShareMonkeyLookup(CCmdUI* pCmdUI);
 	afx_msg void OnShareMonkeyLookup();
+	afx_msg void OnUpdateShareMonkeyDownload(CCmdUI* pCmdUI);
+	afx_msg void OnShareMonkeyDownload();
+	afx_msg void OnUpdateShareMonkeySave(CCmdUI* pCmdUI);
+	afx_msg void OnShareMonkeySave();
+	afx_msg void OnUpdateShareMonkeyPrevious(CCmdUI* pCmdUI);
+	afx_msg void OnShareMonkeyPrevious();
+	afx_msg void OnUpdateShareMonkeyNext(CCmdUI* pCmdUI);
+	afx_msg void OnShareMonkeyNext();
+	afx_msg void OnUpdateShareMonkeyPrices(CCmdUI* pCmdUI);
+	afx_msg void OnShareMonkeyPrices();
+	afx_msg void OnUpdateShareMonkeyCompare(CCmdUI* pCmdUI);
+	afx_msg void OnShareMonkeyCompare();
+	afx_msg void OnUpdateShareMonkeyBuy(CCmdUI* pCmdUI);
+	afx_msg void OnShareMonkeyBuy();
 	afx_msg void OnUpdateLibraryUnlink(CCmdUI* pCmdUI);
 	afx_msg void OnLibraryUnlink();
 	afx_msg void OnUpdateSearchForThis(CCmdUI* pCmdUI);
@@ -109,6 +130,7 @@ protected:
 	afx_msg void OnLibraryCreateTorrent();
 	afx_msg void OnUpdateLibraryRebuildAnsi(CCmdUI* pCmdUI);
 	afx_msg void OnLibraryRebuildAnsi();
+	afx_msg LRESULT OnServiceDone(WPARAM wParam, LPARAM lParam);
 
 	DECLARE_MESSAGE_MAP()
 

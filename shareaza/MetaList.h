@@ -1,7 +1,7 @@
 //
 // MetaList.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -45,12 +45,12 @@ protected:
 
 // Operations
 public:
-	void		Clear();
 	CMetaItem*	Add(LPCTSTR pszKey, LPCTSTR pszValue);
 	CMetaItem*	Find(LPCTSTR pszKey) const;
 	void		Remove(LPCTSTR pszKey);
 	void		Shuffle();
 	void		Setup(CSchema* pSchema, BOOL bClear = TRUE);
+	void		Setup(CMetaList* pMetaList);					// For copying data from the external list
 	void		Combine(CXMLElement* pXML);
 	void		Vote();
 	void		CreateLinks();
@@ -59,7 +59,12 @@ public:
 	CMetaItem*	HitTest(const CPoint& point, BOOL bLinksOnly = FALSE);
 	BOOL		OnSetCursor(CWnd* pWnd);
 	BOOL		IsMusicBrainz() const;
-	
+
+	virtual BOOL IsWorking() const { return FALSE; }
+	virtual void Start() {}
+	virtual void Stop() {}
+	virtual void Clear();
+
 // Inline Operations
 public:
 	inline POSITION GetIterator() const

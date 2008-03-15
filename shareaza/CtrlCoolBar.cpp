@@ -1,7 +1,7 @@
 //
 // CtrlCoolBar.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -750,7 +750,8 @@ void CCoolBarCtrl::OnMouseMove(UINT nFlags, CPoint point)
 {
 	CCoolBarItem* pItem = HitTest( point );
 
-	if ( m_pDown && m_pDown != pItem ) pItem = NULL;
+	if ( m_pDown && m_pDown != pItem ) 
+		pItem = NULL;
 
 	if ( pItem != m_pHot )
 	{
@@ -825,7 +826,8 @@ void CCoolBarCtrl::OnLButtonDown(UINT nFlags, CPoint point)
 {
 	CWnd* pFocus = GetFocus();
 
-	if ( pFocus && pFocus->GetParent() == this ) SetFocus();
+	if ( pFocus && pFocus->GetParent() == this ) 
+		SetFocus();
 
 	CCoolBarItem* pItem = HitTest( point );
 
@@ -857,7 +859,8 @@ void CCoolBarCtrl::OnLButtonUp(UINT nFlags, CPoint point)
 		ReleaseCapture();
 		Invalidate();
 
-		if ( bOn ) GetOwner()->PostMessage( WM_COMMAND, pItem->m_nID );
+		if ( bOn ) 
+			GetOwner()->PostMessage( WM_COMMAND, pItem->m_nID );
 
 		return;
 	}

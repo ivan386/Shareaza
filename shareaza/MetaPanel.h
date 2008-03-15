@@ -1,7 +1,7 @@
 //
 // MetaPanel.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -39,6 +39,11 @@ public:
 	int		Layout(CDC* pDC, int nWidth);
 	void	Paint(CDC* pDC, const CRect* prcArea);
 	BOOL	OnClick(const CPoint& point);
+
+	virtual BOOL IsWorking() const { return FALSE; }
+	virtual void Start() {}
+	virtual void Stop() {}
+	virtual void Clear() { CMetaList::Clear(); }
 
 // Attributes
 public:

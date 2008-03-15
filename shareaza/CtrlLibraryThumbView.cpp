@@ -1,7 +1,7 @@
 //
 // CtrlLibraryThumbView.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -428,7 +428,11 @@ void CLibraryThumbView::SelectTo(int nDelta)
 		if ( nFocus >= m_nCount ) nFocus = m_nCount - 1;
 	}
 
-	if ( SelectTo( m_pList[ nFocus ] ) ) Invalidate();
+	if ( SelectTo( m_pList[ nFocus ] ) )
+	{
+		Invalidate();
+		CLibraryFileView::CheckDynamicBar();
+	}
 }
 
 /////////////////////////////////////////////////////////////////////////////

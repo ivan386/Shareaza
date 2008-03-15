@@ -30,7 +30,7 @@
 
 class CLibraryView;
 class CLibraryPanel;
-
+class CMetaPanel;
 
 class CLibraryFrame : public CWnd
 {
@@ -55,7 +55,9 @@ public:
 	BOOL			Select(DWORD nObject);
 	BOOL			SetDynamicBar(LPCTSTR pszName);
  	void			HideDynamicBar();
- 
+	void			SetPanelData(CMetaPanel* pPanel);	// Sets new metadata to display which can be saved later
+	CMetaPanel*		GetPanelData();
+
 	inline LPCTSTR GetDynamicBarName() const
 	{
 		return (LPCTSTR)m_sDynamicBarName;

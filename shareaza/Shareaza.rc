@@ -193,7 +193,7 @@ IDB_NAVBAR_ALPHA        BITMAP                  "Res\\NavbarAlpha.bmp"
 IDB_REMOTE_SKIN         BITMAP                  "Res\\RemoteWnd.bmp"
 IDB_PANEL_MARK          BITMAP                  "Res\\PanelMark.bmp"
 IDB_SCHEDULER_HEADER    BITMAP                  "Res\\Scheduler.bmp"
-IDB_SCHEDULER_TIMESLICES BITMAP                 "Res\\TimeSlices.bmp"
+IDB_SCHEDULER_TIMESLICES BITMAP                  "Res\\TimeSlices.bmp"
 IDB_SHELL_BASE_RTL      BITMAP                  "Res\\ShellBaseRTL.bmp"
 IDB_NAVBAR_IMAGE_RTL    BITMAP                  "Res\\NavbarRTL.bmp"
 IDB_NAVBAR_ALPHA_RTL    BITMAP                  "Res\\NavbarAlphaRTL.bmp"
@@ -3215,7 +3215,7 @@ BEGIN
     VK_F11,         ID_VIEW_SYSTEM,         VIRTKEY, NOINVERT
     VK_F11,         ID_VIEW_NEIGHBOURS,     VIRTKEY, CONTROL, NOINVERT
     VK_F12,         ID_TAB_IRC,             VIRTKEY, NOINVERT
-	VK_UP,          ID_LIBRARY_PARENT,      VIRTKEY, CONTROL, NOINVERT
+    VK_UP,          ID_LIBRARY_PARENT,      VIRTKEY, CONTROL, NOINVERT
     "Z",            ID_TOOLS_RESKIN,        VIRTKEY, SHIFT, CONTROL, NOINVERT
 END
 

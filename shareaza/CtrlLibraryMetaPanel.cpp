@@ -49,7 +49,6 @@ static char THIS_FILE[] = __FILE__;
 IMPLEMENT_DYNCREATE(CLibraryMetaPanel, CLibraryPanel)
 
 BEGIN_MESSAGE_MAP(CLibraryMetaPanel, CLibraryPanel)
-	//{{AFX_MSG_MAP(CLibraryMetaPanel)
 	ON_WM_PAINT()
 	ON_WM_VSCROLL()
 	ON_WM_SIZE()
@@ -59,7 +58,6 @@ BEGIN_MESSAGE_MAP(CLibraryMetaPanel, CLibraryPanel)
 	ON_WM_LBUTTONUP()
 	ON_WM_LBUTTONDOWN()
 	ON_WM_MOUSEWHEEL()
-	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -67,8 +65,11 @@ END_MESSAGE_MAP()
 
 CLibraryMetaPanel::CLibraryMetaPanel()
 : m_nThumbSize( Settings.Library.ThumbSize )
-, m_crLight(CCoolInterface::CalculateColour( CoolInterface.m_crTipBack, RGB( 255, 255, 255 ), 128 ))
-, m_bNewFile(TRUE)
+, m_crLight( CCoolInterface::CalculateColour( CoolInterface.m_crTipBack, RGB( 255, 255, 255 ), 128 ) )
+, m_bNewFile( TRUE )
+, m_pMetadata( new CMetaPanel() )
+, m_pServiceData( NULL )
+, m_bExternalData( FALSE )
 {
 	m_rcFolder.SetRectEmpty();
 
@@ -81,6 +82,8 @@ CLibraryMetaPanel::CLibraryMetaPanel()
 
 CLibraryMetaPanel::~CLibraryMetaPanel()
 {
+	if ( m_pMetadata != NULL )
+		delete m_pMetadata;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -207,25 +210,32 @@ void CLibraryMetaPanel::Update()
 		if ( m_pSchema ) break;
 	}
 	
-	m_pMetadata.Setup( m_pSchema );
-	
-	if ( m_pSchema != NULL )
+	if ( m_bExternalData )
 	{
-		for ( POSITION pos = pSel->GetHeadPosition() ; pos ; )
+		m_pMetadata->Setup( m_pServiceData );
+	}
+	else
+	{
+		m_pMetadata->Setup( m_pSchema );
+	
+		if ( m_pSchema != NULL )
 		{
-			if ( CLibraryFile* pFile = Library.LookupFile( pSel->GetNext( pos ) ) )
+			for ( POSITION pos = pSel->GetHeadPosition() ; pos ; )
 			{
-				if ( pFile->m_pMetadata != NULL &&
-					 m_pSchema->Equals( pFile->m_pSchema ) )
+				if ( CLibraryFile* pFile = Library.LookupFile( pSel->GetNext( pos ) ) )
 				{
-					m_pMetadata.Combine( pFile->m_pMetadata );
+					if ( pFile->m_pMetadata != NULL &&
+						m_pSchema->Equals( pFile->m_pSchema ) )
+					{
+						m_pMetadata->Combine( pFile->m_pMetadata );
+					}
 				}
 			}
 		}
 	}
 	
-	m_pMetadata.CreateLinks();
-	m_pMetadata.Clean( 4096 );
+	m_pMetadata->CreateLinks();
+	m_pMetadata->Clean( 4096 );
 	
 	CClientDC dc( this );
 	if ( Settings.General.LanguageRTL ) theApp.m_pfnSetLayout( dc.m_hDC, LAYOUT_BITMAPORIENTATIONPRESERVED );
@@ -238,7 +248,7 @@ void CLibraryMetaPanel::Update()
 	nThumbSize = max( nThumbSize, 64 );
 	nThumbSize = min( nThumbSize, 128 );
 	
-	int nHeight = 54 + m_pMetadata.Layout( &dc, rc.Width() - 24 - nThumbSize );
+	int nHeight = 54 + m_pMetadata->Layout( &dc, rc.Width() - 24 - nThumbSize );
 	
 	pInfo.cbSize	= sizeof(pInfo);
 	pInfo.fMask		= SIF_ALL & ~SIF_TRACKPOS;
@@ -407,7 +417,7 @@ void CLibraryMetaPanel::OnPaint()
 	if ( m_sFolder.Find( '\\' ) < 0 ) m_rcFolder.SetRectEmpty();
 	rcWork.top += 18;
 	
-	m_pMetadata.Paint( &dc, &rcWork );
+	m_pMetadata->Paint( &dc, &rcWork );
 	
 	dc.SetViewportOrg( 0, 0 );
 	
@@ -502,6 +512,53 @@ void CLibraryMetaPanel::DrawThumbnail(CDC* pDC, CRect& rcThumb)
 	}
 }
 
+BOOL CLibraryMetaPanel::SetServicePanel(CMetaPanel* pPanel, CBitmap* pBitmap)
+{
+	m_pSection.Lock();
+
+	//if ( m_pServiceData != NULL && m_pServiceData != pPanel )
+	//{
+	//	m_bExternalData = FALSE;
+	//	delete m_pServiceData;
+	//}
+
+	m_pServiceData = pPanel;
+
+	if ( pBitmap != NULL && pBitmap->m_hObject )
+	{
+
+		if ( m_bmThumb.m_hObject )
+			DeleteObject( m_bmThumb.m_hObject );
+		m_bmThumb.Attach( pBitmap->m_hObject );
+
+	}
+	
+	m_bExternalData = m_pServiceData != NULL;
+	m_pSection.Unlock();
+	return TRUE;
+}
+
+CMetaPanel* CLibraryMetaPanel::GetServicePanel()
+{
+	if ( m_pServiceData != NULL && m_bExternalData )
+		return m_pServiceData;
+	else
+		return m_pMetadata;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+// Returns TRUE if web service request is running
+BOOL CLibraryMetaPanel::SwapPanel()
+{
+	BOOL bResult = FALSE;
+
+	m_pSection.Lock();
+	bResult = m_bExternalData = m_pServiceData != NULL;
+	m_pSection.Unlock();
+
+	return bResult;
+}
+
 /////////////////////////////////////////////////////////////////////////////
 // CLibraryMetaPanel scrolling
 
@@ -574,7 +631,7 @@ BOOL CLibraryMetaPanel::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)
 		SetCursor( AfxGetApp()->LoadCursor( IDC_HAND ) );
 		return TRUE;
 	}
-	else if ( m_pMetadata.HitTest( point, TRUE ) )
+	else if ( m_pMetadata->HitTest( point, TRUE ) )
 	{
 		SetCursor( AfxGetApp()->LoadCursor( IDC_HAND ) );
 		return TRUE;
@@ -615,7 +672,7 @@ void CLibraryMetaPanel::OnLButtonUp(UINT nFlags, CPoint point)
 			dlg.DoModal( 2 );
 		}
 	}
-	else if ( CMetaItem* pItem = m_pMetadata.HitTest( point, TRUE ) )
+	else if ( CMetaItem* pItem = m_pMetadata->HitTest( point, TRUE ) )
 	{
 		if ( CAlbumFolder* pFolder = pItem->GetLinkTarget() )
 		{

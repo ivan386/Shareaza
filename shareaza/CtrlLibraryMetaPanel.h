@@ -51,7 +51,8 @@ protected:
 	int				m_nIcon48;
 	int				m_nRating;
 	CSchema*		m_pSchema;
-	CMetaPanel		m_pMetadata;
+	CMetaPanel*		m_pMetadata;
+	CMetaPanel*		m_pServiceData;
 	CRect			m_rcFolder;
 	CRect			m_rcRating;
 	int				m_nScrollWheelLines;
@@ -60,6 +61,7 @@ protected:
 	CEvent				m_pWakeup;
 	HANDLE				m_hThread;
 	BOOL				m_bThread;
+	BOOL				m_bExternalData;
 	CSize				m_szThumb;
 	CBitmap				m_bmThumb;
 	COLORREF			m_crLight;
@@ -70,6 +72,10 @@ protected:
 public:
 	virtual BOOL CheckAvailable(CLibraryTreeItem* pFolders, CLibraryList* pObjects);
 	virtual void Update();
+
+			BOOL SetServicePanel(CMetaPanel* pPanel, CBitmap* pBitmap);
+	 CMetaPanel* GetServicePanel();
+			BOOL SwapPanel();
 protected:
 	void	DrawText(CDC* pDC, int nX, int nY, LPCTSTR pszText, RECT* pRect = NULL, int nMaxWidth = -1);
 	void	DrawThumbnail(CDC* pDC, CRect& rcClient, CRect& rcWork);
@@ -78,17 +84,12 @@ protected:
 	static UINT ThreadStart(LPVOID pParam);
 	void		OnRun();
 
-// Overrides
-public:
-	//{{AFX_VIRTUAL(CLibraryMetaPanel)
-	//}}AFX_VIRTUAL
-
 // Implementation
 protected:
 	afx_msg void OnPaint();
 	afx_msg void OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
 	afx_msg void OnSize(UINT nType, int cx, int cy);
-	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
+	afx_msg int  OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg void OnDestroy();
 	afx_msg BOOL OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message);
 	afx_msg void OnLButtonUp(UINT nFlags, CPoint point);
@@ -96,5 +97,4 @@ protected:
 	afx_msg BOOL OnMouseWheel(UINT nFlags, short zDelta, CPoint pt);
 
 	DECLARE_MESSAGE_MAP()
-
 };
