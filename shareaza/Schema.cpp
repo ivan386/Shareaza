@@ -1,7 +1,7 @@
 //
 // Schema.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -788,6 +788,7 @@ BOOL CSchemaBitzi::Load(CXMLElement* pXML)
 
 LPCTSTR	CSchema::uriApplication	= _T("http://www.shareaza.com/schemas/application.xsd");
 LPCTSTR	CSchema::uriAudio		= _T("http://www.limewire.com/schemas/audio.xsd");
+LPCTSTR CSchema::uriArchive		= _T("http://www.shareaza.com/schemas/archive.xsd");
 LPCTSTR	CSchema::uriBook		= _T("http://www.limewire.com/schemas/book.xsd");
 LPCTSTR	CSchema::uriImage		= _T("http://www.shareaza.com/schemas/image.xsd");
 LPCTSTR	CSchema::uriVideo		= _T("http://www.limewire.com/schemas/video.xsd");
