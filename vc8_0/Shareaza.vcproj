@@ -1017,6 +1017,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\shareaza\ShareMonkeyData.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\shareaza\ShellIcons.cpp"
 				>
 			</File>
@@ -2668,6 +2672,10 @@
 			</File>
 			<File
 				RelativePath="..\shareaza\SharedFolder.h"
+				>
+			</File>
+			<File
+				RelativePath="..\shareaza\ShareMonkeyData.h"
 				>
 			</File>
 			<File
