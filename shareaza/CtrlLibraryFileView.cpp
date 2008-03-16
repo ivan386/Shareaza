@@ -1216,7 +1216,20 @@ void CLibraryFileView::OnUpdateShareMonkeyCompare(CCmdUI* pCmdUI)
 
 void CLibraryFileView::OnShareMonkeyCompare()
 {
+	POSITION pos = m_pServiceDataPages.GetHeadPosition();
+	CMetaPanel* pPanelData = NULL;
+	
+	// TODO: change m_pServiceDataPages to CMap. Now it's stupid
+	for ( INT_PTR nPage = 0 ; nPage <= m_nCurrentPage ; nPage++ )
+	{
+		pPanelData = m_pServiceDataPages.GetNext( pos );
+	}
 
+	CShareMonkeyData* pData = static_cast< CShareMonkeyData* >( pPanelData );
+	if ( pData->m_sComparisonURL.GetLength() )
+	{
+		ShellExecute( GetSafeHwnd(), _T("open"), pData->m_sComparisonURL, NULL, NULL, SW_SHOWNORMAL );
+	}
 }
 
 void CLibraryFileView::OnUpdateShareMonkeyBuy(CCmdUI* pCmdUI)
@@ -1226,7 +1239,20 @@ void CLibraryFileView::OnUpdateShareMonkeyBuy(CCmdUI* pCmdUI)
 
 void CLibraryFileView::OnShareMonkeyBuy()
 {
+	POSITION pos = m_pServiceDataPages.GetHeadPosition();
+	CMetaPanel* pPanelData = NULL;
 
+	// TODO: change m_pServiceDataPages to CMap. Now it's stupid
+	for ( INT_PTR nPage = 0 ; nPage <= m_nCurrentPage ; nPage++ )
+	{
+		pPanelData = m_pServiceDataPages.GetNext( pos );
+	}
+
+	CShareMonkeyData* pData = static_cast< CShareMonkeyData* >( pPanelData );
+	if ( pData->m_sBuyURL.GetLength() )
+	{
+		ShellExecute( GetSafeHwnd(), _T("open"), pData->m_sBuyURL, NULL, NULL, SW_SHOWNORMAL );
+	}
 }
 
 ////////////////////////////////////////////////////////////////////////////////
