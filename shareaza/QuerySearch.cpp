@@ -1,7 +1,7 @@
 //
 // QuerySearch.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -58,8 +58,8 @@ static char THIS_FILE[]=__FILE__;
 CQuerySearch::CQuerySearch(BOOL bGUID) :
 	m_pSchema	( NULL ),
 	m_pXML		( NULL ),
-	m_nMinSize	( 0x0000000000000000 ),
-	m_nMaxSize	( 0xFFFFFFFFFFFFFFFF ),
+	m_nMinSize	( 0 ),
+	m_nMaxSize	( SIZE_UNKNOWN ),
 	m_bWantURL	( TRUE ),
 	m_bWantDN	( TRUE ),
 	m_bWantXML	( TRUE ),
@@ -1033,11 +1033,12 @@ BOOL CQuerySearch::CheckValid(bool bExpression)
 		}
 
 		if ( nValidWords ) return TRUE;
-	}
+
 #ifdef LAN_MODE
-	return TRUE;
-#else // LAN_MODE
-	
+		return TRUE;
+#endif // LAN_MODE
+	}
+
 	if ( bHashOk )
 	{
 		return TRUE;
@@ -1047,7 +1048,6 @@ BOOL CQuerySearch::CheckValid(bool bExpression)
 	m_oWords.clear();
 
 	return FALSE;
-#endif // LAN_MODE
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -1701,7 +1701,10 @@ void CQuerySearch::BuildWordTable(LPCTSTR pszString)
 
 void CQuerySearch::Serialize(CArchive& ar)
 {
-	int nVersion = 7;
+	// History:
+	// 8 - added m_nMinSize and m_nMaxSize (ryo-oh-ki)
+	int nVersion = 8;
+
 	CString strURI;
 	
 	if ( ar.IsStoring() )
@@ -1733,6 +1736,8 @@ void CQuerySearch::Serialize(CArchive& ar)
 		ar << m_bWantXML;
 		ar << m_bWantCOM;
 		ar << m_bWantPFS;
+		ar << m_nMinSize;
+		ar << m_nMaxSize;
 	}
 	else
 	{
@@ -1770,7 +1775,13 @@ void CQuerySearch::Serialize(CArchive& ar)
 			ar >> m_bWantCOM;
 			ar >> m_bWantPFS;
 		}
-		
+
+		if ( nVersion >= 8 )
+		{
+			ar >> m_nMinSize;
+			ar >> m_nMaxSize;
+		}
+
 		BuildWordList();
 	}
 }

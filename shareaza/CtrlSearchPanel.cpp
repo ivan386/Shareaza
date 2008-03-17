@@ -1,7 +1,7 @@
 //
 // CtrlSearchPanel.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -237,14 +237,14 @@ void CSearchPanel::ShowSearch(CManagedSearch* pSearch)
 		m_boxAdvanced.m_wndCheckBoxED2K.SetCheck( pSearch->m_bAllowED2K ? BST_CHECKED : BST_UNCHECKED );
 
 		CString strSize;
-		if ( pSearch->m_pSearch->m_nMinSize > 0 )
+		if ( pSearch->m_pSearch->m_nMinSize > 0 && pSearch->m_pSearch->m_nMinSize < SIZE_UNKNOWN )
 			strSize = Settings.SmartVolume( pSearch->m_pSearch->m_nMinSize, Bytes, true );
 		else
 			strSize.Empty();
 		if ( m_boxAdvanced.m_wndSizeMin.m_hWnd != NULL ) m_boxAdvanced.m_wndSizeMin.SetWindowText( strSize );
 
 
-		if ( pSearch->m_pSearch->m_nMaxSize < SIZE_UNKNOWN )
+		if ( pSearch->m_pSearch->m_nMaxSize > 0 && pSearch->m_pSearch->m_nMaxSize < SIZE_UNKNOWN )
 			strSize = Settings.SmartVolume( pSearch->m_pSearch->m_nMaxSize, Bytes, true );
 		else
 			strSize.Empty();
