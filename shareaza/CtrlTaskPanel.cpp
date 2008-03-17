@@ -275,7 +275,13 @@ void CTaskPanel::Layout(CRect& rcClient)
 			
 			pBox->SetWindowPos( NULL, rcBox.left, rcBox.top, rcBox.Width(), rcBox.Height(),
 				SWP_SHOWWINDOW | SWP_NOZORDER | SWP_NOACTIVATE );
-			
+
+			for( CWnd* pChild = pBox->GetWindow( GW_CHILD ); pChild;
+				pChild = pChild->GetWindow( GW_HWNDNEXT ) )
+			{
+				pChild->ShowWindow( pBox->m_bOpen ? SW_SHOW : SW_HIDE );
+			}
+
 			rcBox.OffsetRect( 0, nHeight + m_nMargin );
 		}
 		else if ( pBox->IsWindowVisible() )
@@ -336,7 +342,7 @@ BOOL CTaskBox::Create(CTaskPanel* pPanel, int nHeight, LPCTSTR pszCaption, UINT 
 	CString strKey;
 	strKey.Format( _T("%s.Open"), (LPCTSTR)CString( GetRuntimeClass()->m_lpszClassName ) );
 	m_bOpen = theApp.GetProfileInt( _T("Interface"), strKey, TRUE );
-	
+
 	return TRUE;
 }
 
