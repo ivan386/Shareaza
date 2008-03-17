@@ -38,7 +38,10 @@ CXMLNode::CXMLNode(CXMLElement* pParent, LPCTSTR pszName) :
 ,	m_pParent	( pParent )
 {
 	if ( pszName )
+	{
 		m_sName = pszName;
+		ToLower( m_sName );
+	}
 }
 
 CXMLNode::~CXMLNode()
