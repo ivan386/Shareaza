@@ -52,6 +52,7 @@
 				AdditionalIncludeDirectories="zlib"
 				PreprocessorDefinitions="_DEBUG;WIN32;_WINDOWS;_SHAREAZA;SHAREAZA_USE_ASM;ZLIB_WINAPI;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS"
 				StringPooling="true"
+				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="1"
 				EnableFunctionLevelLinking="true"
@@ -1004,6 +1005,10 @@
 			</File>
 			<File
 				RelativePath="SharedFolder.cpp"
+				>
+			</File>
+			<File
+				RelativePath="ShareMonkeyData.cpp"
 				>
 			</File>
 			<File
@@ -3373,6 +3378,10 @@
 			</File>
 			<File
 				RelativePath="SharedFolder.h"
+				>
+			</File>
+			<File
+				RelativePath="ShareMonkeyData.h"
 				>
 			</File>
 			<File
