@@ -45,6 +45,7 @@ public:
 	typedef std::vector<DWORD>					Hash32List;
 // Attributes
 public:
+	bool				m_bAutostart;	// Autostart search (default - true)
 	Hashes::Guid		m_oGUID;		// G1,G2: Search ID
 	CString				m_sSearch;		// search string, transformed by lowercase table
 	CString				m_sKeywords;	// search keywords (stems, minus words, split asian phrase etc.)
@@ -147,6 +148,6 @@ public:
 	static	CSearchWnd*		OpenWindow(auto_ptr< CQuerySearch > pSearch);
 	static	BOOL			WordMatch(LPCTSTR pszString, LPCTSTR pszFind, bool* bReject=NULL);
 	static	BOOL			NumberMatch(const CString& strValue, const CString& strRange);
-	static	void			PrepareCheck(CQuerySearch* pQuerySearch);
 	static	void			MakeKeywords(CString& strPhrase, bool bExpression=true);
+	static	void			SearchHelp();	// Shows some search help dialogs
 };

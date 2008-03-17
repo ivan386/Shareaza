@@ -46,7 +46,6 @@ private:
 	CSearchDetailPanel	m_wndDetails;
 	BOOL				m_bDetails;
 	int					m_nDetails;
-	int					m_nLastSearchHelp;
 	typedef boost::ptr_list< CManagedSearch > List;
 	List				m_oSearches;
 public:

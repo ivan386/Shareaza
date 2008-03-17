@@ -1,7 +1,7 @@
 //
 // CtrlHomeSearch.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -18,9 +18,6 @@
 // along with Shareaza; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
-
-#if !defined(AFX_CTRLHOMESEARCH_H__40DC2FFE_0FF6_4A72_A7C5_74DC32305269__INCLUDED_)
-#define AFX_CTRLHOMESEARCH_H__40DC2FFE_0FF6_4A72_A7C5_74DC32305269__INCLUDED_
 
 #pragma once
 
@@ -47,6 +44,7 @@ protected:
 	COLORREF		m_crWindow;
 
 	void	FillHistory();
+	void	Search(bool bAutostart);
 
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg void OnSize(UINT nType, int cx, int cy);
@@ -55,8 +53,7 @@ protected:
 	afx_msg void OnSelChangeText();
 	afx_msg void OnSearchStart();
 	afx_msg void OnSearchAdvanced();
+	afx_msg void OnSetFocus(CWnd* pOldWnd);
 
 	DECLARE_MESSAGE_MAP()
 };
-
-#endif // !defined(AFX_CTRLHOMESEARCH_H__40DC2FFE_0FF6_4A72_A7C5_74DC32305269__INCLUDED_)

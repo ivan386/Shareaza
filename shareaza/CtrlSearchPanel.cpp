@@ -423,11 +423,6 @@ auto_ptr< CManagedSearch > CSearchPanel::GetSearch()
 
 	pSearch->m_pSearch->PrepareCheck();
 
-	if ( ! pSearch->m_pSearch->CheckValid() )
-	{
-		pSearch.reset();
-	}
-	
 	return pSearch;
 }
 

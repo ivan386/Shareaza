@@ -1600,6 +1600,7 @@ void CMainWnd::OnNetworkSearch()
 	if ( Settings.Search.SearchPanel && ! m_bTrayHide && ! IsIconic() )
 	{
 		m_pWindows.OpenNewSearchWindow();
+		m_wndTabBar.OnSkinChange();
 	}
 	else
 	{
@@ -2151,16 +2152,9 @@ void CMainWnd::OnUpdateTabSearch(CCmdUI* pCmdUI)
 
 void CMainWnd::OnTabSearch() 
 {
-	if ( Settings.General.GUIMode != GUI_WINDOWED )
-	{
-		m_pWindows.OpenNewSearchWindow();
-		m_wndTabBar.OnSkinChange();
-		OpenFromTray();
-	}
-	else
-	{
-		PostMessage( WM_COMMAND, ID_NETWORK_SEARCH );
-	}
+	m_pWindows.OpenNewSearchWindow();
+	m_wndTabBar.OnSkinChange();
+	OpenFromTray();
 }
 
 void CMainWnd::OnUpdateTabTransfers(CCmdUI* pCmdUI) 

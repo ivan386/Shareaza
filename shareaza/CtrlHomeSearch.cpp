@@ -1,7 +1,7 @@
 //
 // CtrlHomeSearch.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -25,6 +25,7 @@
 #include "Schema.h"
 #include "SchemaCache.h"
 #include "QuerySearch.h"
+#include "WndSearch.h"
 #include "CoolInterface.h"
 #include "CtrlHomeSearch.h"
 #include "DlgNewSearch.h"
@@ -48,6 +49,7 @@ BEGIN_MESSAGE_MAP(CHomeSearchCtrl, CWnd)
 	ON_CBN_SELCHANGE(IDC_SEARCH_TEXT, OnSelChangeText)
 	ON_COMMAND(IDC_SEARCH_START, OnSearchStart)
 	ON_COMMAND(IDC_SEARCH_ADVANCED, OnSearchAdvanced)
+	ON_WM_SETFOCUS()
 END_MESSAGE_MAP()
 
 
@@ -219,6 +221,7 @@ void CHomeSearchCtrl::OnCloseUpText()
 	{
 		m_wndText.SetWindowText( _T("") );
 		theApp.WriteProfileInt( _T("Search"), _T("Recent.Count"), 0 );
+		m_wndSchema.Select( (CSchema*)NULL );
 		FillHistory();
 	}
 	else
@@ -232,14 +235,16 @@ void CHomeSearchCtrl::OnSelChangeText()
 	OnCloseUpText();
 }
 
-void CHomeSearchCtrl::OnSearchStart()
+void CHomeSearchCtrl::Search(bool bAutostart)
 {
 	CString strText, strURI, strEntry, strClear;
 
 	m_wndText.GetWindowText( strText );
 	strText.TrimLeft();
 	strText.TrimRight();
-	if ( strText.IsEmpty() ) return;
+
+	LoadString( strClear, IDS_SEARCH_PAD_CLEAR_HISTORY );
+	if ( _tcscmp ( strClear , strText ) == 0 ) return;
 
 	// Check if user mistakenly pasted download link to search input box
 	if ( CShareazaApp::OpenURL( strText, TRUE, TRUE ) )
@@ -248,56 +253,77 @@ void CHomeSearchCtrl::OnSearchStart()
 		return;
 	}
 
-	LoadString( strClear, IDS_SEARCH_PAD_CLEAR_HISTORY );
-	if ( _tcscmp ( strClear , strText ) == 0 ) return;
-
 	CSchema* pSchema = m_wndSchema.GetSelected();
 	if ( pSchema != NULL ) strURI = pSchema->GetURI();
 
 	Settings.Search.LastSchemaURI = strURI;
 
-	int nCount = theApp.GetProfileInt( _T("Search"), _T("Recent.Count"), 0 );
-
-    int nItem = 0;
-	for ( ; nItem < nCount ; nItem++ )
-	{
-		strEntry.Format( _T("Recent.%.2i.Text"), nItem + 1 );
-
-		if ( strText.CompareNoCase( theApp.GetProfileString( _T("Search"), strEntry ) ) == 0 )
-		{
-			strEntry.Format( _T("Recent.%.2i.SchemaURI"), nItem + 1 );
-			theApp.WriteProfileString( _T("Search"), strEntry, strURI );
-			break;
-		}
-	}
-
-	if ( nItem >= nCount )
-	{
-		theApp.WriteProfileInt( _T("Search"), _T("Recent.Count"), ++nCount );
-		strEntry.Format( _T("Recent.%.2i.Text"), nItem + 1 );
-		theApp.WriteProfileString( _T("Search"), strEntry, strText );
-		strEntry.Format( _T("Recent.%.2i.SchemaURI"), nItem + 1 );
-		theApp.WriteProfileString( _T("Search"), strEntry, strURI );
-		m_wndText.SetItemData( m_wndText.InsertString( 0, strText ), (DWORD_PTR)pSchema );
-	}
-
 	auto_ptr< CQuerySearch > pSearch( new CQuerySearch() );
-	pSearch->m_sSearch		= strText;
-	pSearch->m_pSchema		= pSchema;
+	if ( pSearch.get() )
+	{
+		pSearch->m_bAutostart	= bAutostart;
+		pSearch->m_sSearch		= strText;
+		pSearch->m_pSchema		= pSchema;
+		BOOL bValid = pSearch->CheckValid( false );
+		if ( ! bValid && bAutostart )
+		{
+			// Invalid search, open help window
+			CQuerySearch::SearchHelp();
+		}
+		else if ( AdultFilter.IsSearchFiltered( pSearch->m_sSearch ) && bAutostart )
+		{
+			// Adult search blocked, open help window
+			CHelpDlg::Show( _T("SearchHelp.AdultSearch") );
+		}
+		else
+		{
+			if ( bValid )
+			{
+				int nCount = theApp.GetProfileInt( _T("Search"), _T("Recent.Count"), 0 );
+				int nItem = 0;
+				for ( ; nItem < nCount ; nItem++ )
+				{
+					strEntry.Format( _T("Recent.%.2i.Text"), nItem + 1 );
 
-	if ( AdultFilter.IsSearchFiltered( pSearch->m_sSearch ) )
-	{								//Adult search blocked, open help window
-		CHelpDlg::Show( _T("SearchHelp.AdultSearch") );
-	}
-	else if ( !CQuerySearch::OpenWindow( pSearch ) )
-	{								//Invalid search, open help window
-		CHelpDlg::Show( _T("SearchHelp.BadSearch") );
+					if ( strText.CompareNoCase( theApp.GetProfileString( _T("Search"), strEntry ) ) == 0 )
+					{
+						strEntry.Format( _T("Recent.%.2i.SchemaURI"), nItem + 1 );
+						theApp.WriteProfileString( _T("Search"), strEntry, strURI );
+						m_wndText.SetItemData( nItem, (DWORD_PTR)pSchema );
+						break;
+					}
+				}
+				if ( nItem >= nCount )
+				{
+					theApp.WriteProfileInt( _T("Search"), _T("Recent.Count"), ++nCount );
+					strEntry.Format( _T("Recent.%.2i.Text"), nItem + 1 );
+					theApp.WriteProfileString( _T("Search"), strEntry, strText );
+					strEntry.Format( _T("Recent.%.2i.SchemaURI"), nItem + 1 );
+					theApp.WriteProfileString( _T("Search"), strEntry, strURI );
+					m_wndText.SetItemData( m_wndText.InsertString( 0, strText ), (DWORD_PTR)pSchema );
+				}
+			}
+
+			new CSearchWnd( pSearch );
+		}
 	}
 
 	m_wndText.SetWindowText( _T("") );
 }
 
+void CHomeSearchCtrl::OnSearchStart()
+{
+	Search( true );
+}
+
 void CHomeSearchCtrl::OnSearchAdvanced()
 {
-	AfxGetMainWnd()->PostMessage( WM_COMMAND, ID_TAB_SEARCH );
+	Search( false );
+}
+
+void CHomeSearchCtrl::OnSetFocus(CWnd* pOldWnd)
+{
+	CWnd::OnSetFocus(pOldWnd);
+
+	m_wndText.SetFocus();
 }

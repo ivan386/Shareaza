@@ -40,6 +40,7 @@
 #include "TigerTree.h"
 
 #include "WndSearch.h"
+#include "DlgHelp.h"
 
 #include "Download.h"
 #include "Downloads.h"
@@ -56,6 +57,7 @@ static char THIS_FILE[]=__FILE__;
 // CQuerySearch construction
 
 CQuerySearch::CQuerySearch(BOOL bGUID) :
+	m_bAutostart( true ),
 	m_pSchema	( NULL ),
 	m_pXML		( NULL ),
 	m_nMinSize	( 0 ),
@@ -82,6 +84,7 @@ CQuerySearch::CQuerySearch(BOOL bGUID) :
 }
 
 CQuerySearch::CQuerySearch(const CQuerySearch* pOrigin) :
+	m_bAutostart( pOrigin->m_bAutostart ),
 	m_oGUID( pOrigin->m_oGUID ),
 	m_sSearch( pOrigin->m_sSearch ),
 	m_sKeywords( pOrigin->m_sKeywords ),
@@ -1791,11 +1794,7 @@ void CQuerySearch::Serialize(CArchive& ar)
 
 CSearchWnd* CQuerySearch::OpenWindow(auto_ptr< CQuerySearch > pSearch)
 {
-	if ( !pSearch.get() ) 
-		return NULL;
-
-	pSearch->BuildWordList( false );
-	if ( pSearch->CheckValid( false ) )
+	if ( pSearch.get() && pSearch->CheckValid( false ) )
 	{
 		return new CSearchWnd( pSearch );
 	}
@@ -1813,7 +1812,16 @@ void CQuerySearch::PrepareCheck()
 	m_sKeywords.Empty();
 }
 
-void CQuerySearch::PrepareCheck(CQuerySearch* pQuerySearch)
+void CQuerySearch::SearchHelp()
 {
-	pQuerySearch->PrepareCheck();
+	static int nLastSearchHelp = 0;
+	switch ( ++nLastSearchHelp )
+	{
+	case 1:  CHelpDlg::Show( _T("SearchHelp.BadSearch1") );
+		break;
+	case 2:  CHelpDlg::Show( _T("SearchHelp.BadSearch2") );
+		break;
+	default: CHelpDlg::Show( _T("SearchHelp.BadSearch3") );
+		nLastSearchHelp = 0;
+	}
 }

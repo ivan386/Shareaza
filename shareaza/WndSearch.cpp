@@ -95,7 +95,6 @@ CSearchWnd::CSearchWnd(auto_ptr< CQuerySearch > pSearch) :
 	m_bSetFocus( TRUE ),
 	m_bDetails( Settings.Search.DetailPanelVisible ),
 	m_nDetails( Settings.Search.DetailPanelSize ),
-	m_nLastSearchHelp( 0 ),
 	m_tSearch( 0 ),
 	m_nCacheHits( 0 ),
 	m_nCacheHubs( 0 ),
@@ -150,7 +149,7 @@ int CSearchWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	
 	ExecuteSearch();
 	
-	if ( pSearch == NULL ) 
+	if ( pSearch == NULL || ! pSearch->m_bAutostart ) 
 	{
 		m_wndPanel.ShowSearch( NULL );
 	}
@@ -514,24 +513,7 @@ void CSearchWnd::OnSearchSearch()
 	if ( m_wndPanel.m_bSendSearch )
 	{
 		pSearch = m_wndPanel.GetSearch();
-		if ( pSearch.get() == NULL ) //Invalid search, open help window
-		{				
-			// Increment counter
-			m_nLastSearchHelp++;
-			// Open help window
-			switch ( m_nLastSearchHelp )
-			{
-			case 1:  CHelpDlg::Show( _T("SearchHelp.BadSearch1") );
-				break;
-			case 2:  CHelpDlg::Show( _T("SearchHelp.BadSearch2") );
-				break;
-			default: CHelpDlg::Show( _T("SearchHelp.BadSearch3") );
-					 m_nLastSearchHelp = 0;
-			}
 
-			return;
-		}
-		
 		if ( m_pMatches->m_nFiles == 0 && pSearch->m_pSearch->m_pSchema != NULL )
 		{
 			CList< CSchemaMember* > pColumns;
@@ -680,54 +662,44 @@ CQuerySearch* CSearchWnd::GetLastSearch()
 void CSearchWnd::ExecuteSearch()
 {
 	CManagedSearch* pManaged = GetLastManager();
+
+	m_wndPanel.ShowSearch( pManaged );
 	
-	if ( pManaged )
+	if ( pManaged && pManaged->m_pSearch.get() && pManaged->m_pSearch->m_bAutostart )
 	{
-		if ( pManaged->m_pSearch->CheckValid() )
+		if ( ! pManaged->m_pSearch->CheckValid() )
 		{
-			if ( AdultFilter.IsSearchFiltered( pManaged->m_pSearch->m_sKeywords ) )
-			{
-				CHelpDlg::Show( _T("SearchHelp.AdultSearch") );
-			}
-			else
-			{
-				m_bPaused			= FALSE;
-				m_tSearch			= GetTickCount();
-				m_bWaitMore			= FALSE;
-
-				pManaged->Stop();
-				pManaged->Start();
-
-				m_nMaxResults		= m_pMatches->m_nGnutellaHits + Settings.Gnutella.MaxResults;
-				m_nMaxED2KResults	= m_pMatches->m_nED2KHits + min( 201u, Settings.eDonkey.MaxResults );
-				m_nMaxQueryCount	= pManaged->m_nQueryCount + min( Settings.Gnutella2.QueryLimit, 10000u );
-
-				m_wndPanel.ShowSearch( pManaged );
-
-				m_wndPanel.Disable();
-
-				if ( m_bPanel && Settings.Search.HideSearchPanel )
-				{
-					m_bPanel = FALSE;
-					OnSkinChange();
-				}
-			}
+			// Invalid search, open help window
+			CQuerySearch::SearchHelp();
+		}
+		else if ( AdultFilter.IsSearchFiltered( pManaged->m_pSearch->m_sKeywords ) )
+		{
+			// Adult search blocked, open help window
+			CHelpDlg::Show( _T("SearchHelp.AdultSearch") );
 		}
 		else
 		{
-			// Increment counter
-			m_nLastSearchHelp++;
-			// Open help window
-			switch ( m_nLastSearchHelp )
-			{
-			case 1:  CHelpDlg::Show( _T("SearchHelp.BadSearch1") );
-				break;
-			case 2:  CHelpDlg::Show( _T("SearchHelp.BadSearch2") );
-				break;
-			default: CHelpDlg::Show( _T("SearchHelp.BadSearch3") );
-					 m_nLastSearchHelp = 0;
-			}
+			m_bPaused			= FALSE;
+			m_tSearch			= GetTickCount();
+			m_bWaitMore			= FALSE;
 
+			pManaged->Stop();
+			pManaged->Start();
+
+			m_nMaxResults		= m_pMatches->m_nGnutellaHits +
+				Settings.Gnutella.MaxResults;
+			m_nMaxED2KResults	= m_pMatches->m_nED2KHits +
+				min( 201u, Settings.eDonkey.MaxResults );
+			m_nMaxQueryCount	= pManaged->m_nQueryCount +
+				min( Settings.Gnutella2.QueryLimit, 10000u );
+
+			m_wndPanel.Disable();
+
+			if ( m_bPanel && Settings.Search.HideSearchPanel )
+			{
+				m_bPanel = FALSE;
+				OnSkinChange();
+			}
 		}
 	}
 	
