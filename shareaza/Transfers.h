@@ -44,7 +44,7 @@ public:
 	BYTE*			m_pBuffer;
 protected:
 	CList< CTransfer* > m_pList;
-	HANDLE			m_hThread;
+	volatile HANDLE	m_hThread;
 	volatile BOOL	m_bThread;
 	CEvent			m_pWakeup;
 	DWORD			m_nRunCookie;

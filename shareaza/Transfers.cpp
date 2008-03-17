@@ -101,7 +101,7 @@ void CTransfers::StopThread()
 	m_bThread = FALSE;
 	m_pWakeup.SetEvent();
 
-	CloseThread( &m_hThread );
+	CloseThread( (HANDLE*)&m_hThread );
 
 	Downloads.m_nTransfers	= 0;
 	Downloads.m_nBandwidth	= 0;
