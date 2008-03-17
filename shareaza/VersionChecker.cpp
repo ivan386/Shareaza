@@ -116,7 +116,7 @@ void CVersionChecker::Stop()
 	{
 		SetThreadPriority( m_hThread, THREAD_PRIORITY_NORMAL );
 		m_pRequest.Cancel();
-		CloseThread( &m_hThread );
+		CloseThread( (HANDLE*)&m_hThread );
 	}
 }
 

@@ -38,7 +38,7 @@ public:
 
 protected:
 	bool			m_bVerbose;
-	HANDLE			m_hThread;
+	volatile HANDLE	m_hThread;
 	CHttpRequest	m_pRequest;
 	CMap< CString, const CString&, CString, CString& >	m_pResponse;
 
