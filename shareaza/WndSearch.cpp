@@ -1,7 +1,7 @@
 //
 // WndSearch.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -500,8 +500,9 @@ void CSearchWnd::OnSearchSearch()
 	{
 		CString strMessage;
 		LoadString( strMessage, IDS_SEARCH_CLEAR_PREVIOUS );
-		
-		if ( AfxMessageBox( strMessage, MB_ICONQUESTION|MB_YESNO ) == IDYES )
+		if ( Settings.Search.ClearPrevious == 2 ||
+			( Settings.Search.ClearPrevious == 0 &&
+			AfxMessageBox( strMessage, MB_ICONQUESTION|MB_YESNO ) == IDYES ) )
 		{
 			CQuickLock oLock( m_pMatches->m_pSection );
 			m_pMatches->Clear();
@@ -550,11 +551,10 @@ void CSearchWnd::OnSearchSearch()
 
 		pSearch.reset( new CManagedSearch( pCriteria ) );
 	}
-	
-	Network.CreateID( pSearch->m_pSearch->m_oGUID );
-	
-	{
 
+	Network.CreateID( pSearch->m_pSearch->m_oGUID );
+
+	{
 		CQuickLock oLock( m_pMatches->m_pSection );
 		
 		if ( ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 ) != 0x8000 )
@@ -563,7 +563,6 @@ void CSearchWnd::OnSearchSearch()
 		}
 
 		m_oSearches.push_back( pSearch.release() );
-
 	}
 
 	ExecuteSearch();
@@ -737,9 +736,7 @@ void CSearchWnd::ExecuteSearch()
 
 void CSearchWnd::UpdateMessages(BOOL bActive)
 {
-	CManagedSearch* pManaged	= GetLastManager();
-	UpdateMessages(bActive, pManaged);
-
+	UpdateMessages( bActive, GetLastManager() );
 }
 
 void CSearchWnd::UpdateMessages(BOOL bActive, CManagedSearch* pManaged)

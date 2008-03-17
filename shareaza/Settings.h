@@ -172,8 +172,9 @@ public:
 		bool		AdultFilter;
 		bool		AdvancedPanel;
 		DWORD		SpamFilterThreshold;		// Percentage of spam hits which triggers file sources to be treated as a spam
-		DWORD		GeneralThrottle;			// A general throttle for how often each indidivual search may run. Low values may cause source finding to get overlooked. 
+		DWORD		GeneralThrottle;			// A general throttle for how often each individual search may run. Low values may cause source finding to get overlooked. 
 		CString		ShareMonkeyBaseURL;
+		DWORD		ClearPrevious;				// Clear previous search results? 0 - ask user; 1 - no; 2 - yes.
 	} Search;
 	
 	struct sMediaPlayer
