@@ -1,0 +1,12 @@
+.SVP Files Redistributed Under Sonique License:
+
+http://web.archive.org/web/20030423095001/sonique.lycos.com/automate/devdownload.php?sec=plugins&file=sonvisapi.zip&category=plug-ins&subcategory=api
+
+"
+By uploading any skins or plug-ins to the Sonique web site,
+you grant to Lycos and to users of the Sonique web site the perpetual, 
+world-wide, royalty free license to copy, distribute, publicly display, 
+publicly perform, and create derivative works from such skins or plug-ins. 
+You represent and warrant that all such skins or plug-ins are original works,
+created by you, which do not infringe any third party intellectual property, 
+proprietary, or other rights. "
