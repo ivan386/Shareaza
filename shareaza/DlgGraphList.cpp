@@ -1,7 +1,7 @@
 //
 // DlgGraphList.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -35,38 +35,32 @@ static char THIS_FILE[] = __FILE__;
 #endif
 
 BEGIN_MESSAGE_MAP(CGraphListDlg, CSkinDialog)
-	//{{AFX_MSG_MAP(CGraphListDlg)
 	ON_NOTIFY(LVN_ITEMCHANGED, IDC_GRAPH_ITEMS, OnItemChangedGraphItems)
 	ON_BN_CLICKED(IDC_GRAPH_ADD, OnGraphAdd)
 	ON_BN_CLICKED(IDC_GRAPH_EDIT, OnGraphEdit)
 	ON_BN_CLICKED(IDC_GRAPH_REMOVE, OnGraphRemove)
 	ON_NOTIFY(NM_DBLCLK, IDC_GRAPH_ITEMS, OnDblClkGraphItems)
 	ON_NOTIFY(NM_CUSTOMDRAW, IDC_GRAPH_ITEMS, OnCustomDrawItems)
-	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 #define LIST_COLUMNS	1
-
+#define SPEED_MINIMUM	10ul
 
 /////////////////////////////////////////////////////////////////////////////
 // CGraphListDlg dialog
 
 CGraphListDlg::CGraphListDlg(CWnd* pParent, CLineGraph* pGraph) : CSkinDialog(CGraphListDlg::IDD, pParent)
+, m_nSpeed( SPEED_MINIMUM )
+, m_bShowGrid( FALSE )
+, m_bShowAxis( FALSE )
+, m_bShowLegend( FALSE )
+, m_pGraph( pGraph )
 {
-	//{{AFX_DATA_INIT(CGraphListDlg)
-	m_nSpeed = 0;
-	m_bShowGrid = FALSE;
-	m_bShowAxis = FALSE;
-	m_bShowLegend = FALSE;
-	m_sName = _T("");
-	//}}AFX_DATA_INIT
-	m_pGraph = pGraph;
 }
 
 void CGraphListDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CSkinDialog::DoDataExchange(pDX);
-	//{{AFX_DATA_MAP(CGraphListDlg)
 	DDX_Control(pDX, IDCANCEL, m_wndCancel);
 	DDX_Control(pDX, IDOK, m_wndOK);
 	DDX_Control(pDX, IDC_GRAPH_SPEED_SPIN, m_wndSpeed);
@@ -78,7 +72,6 @@ void CGraphListDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Check(pDX, IDC_GRAPH_AXIS, m_bShowAxis);
 	DDX_Check(pDX, IDC_GRAPH_LEGEND, m_bShowLegend);
 	DDX_Text(pDX, IDC_NAME, m_sName);
-	//}}AFX_DATA_MAP
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -93,12 +86,12 @@ BOOL CGraphListDlg::OnInitDialog()
 	m_gdiImageList.Create( IDB_COLOURDOT, 16, 0, RGB(0,255,0) );
 	m_wndList.SetImageList( &m_gdiImageList, LVSIL_SMALL );
 
-	m_wndSpeed.SendMessage( UDM_SETRANGE32, 10, 120000 );
+	m_wndSpeed.SendMessage( UDM_SETRANGE32, SPEED_MINIMUM, 120000 );
 
 	m_bShowAxis		= m_pGraph->m_bShowAxis;
 	m_bShowGrid		= m_pGraph->m_bShowGrid;
 	m_bShowLegend	= m_pGraph->m_bShowLegend;
-	m_nSpeed		= m_pGraph->m_nSpeed;
+	m_nSpeed		= max( m_pGraph->m_nSpeed, SPEED_MINIMUM );
 
 	UpdateData( FALSE );
 
@@ -231,7 +224,7 @@ void CGraphListDlg::OnOK()
 	m_pGraph->m_bShowAxis		= m_bShowAxis;
 	m_pGraph->m_bShowGrid		= m_bShowGrid;
 	m_pGraph->m_bShowLegend		= m_bShowLegend;
-	m_pGraph->m_nSpeed			= m_nSpeed;
+	m_pGraph->m_nSpeed			= max( m_nSpeed, SPEED_MINIMUM );
 
 	m_pGraph->ResetMaximum();
 

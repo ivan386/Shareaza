@@ -1,7 +1,7 @@
 //
 // GraphLine.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -151,7 +151,7 @@ void CLineGraph::Serialize(CArchive& ar)
 		ar << m_bShowGrid;
 		ar << m_bShowLegend;
 		ar << m_nSpeed;
-		ar << m_nScale;
+		ar << max( m_nScale, MIN_GRID_SIZE_HORZ );
 
 		ar.WriteCount( GetItemCount() );
 
@@ -167,6 +167,7 @@ void CLineGraph::Serialize(CArchive& ar)
 		ar >> m_bShowLegend;
 		ar >> m_nSpeed;
 		ar >> m_nScale;
+		m_nScale = max( m_nScale, MIN_GRID_SIZE_HORZ );
 
 		for ( DWORD_PTR nCount = ar.ReadCount() ; nCount > 0 ; nCount-- )
 		{
@@ -201,7 +202,7 @@ void CLineGraph::Paint(CDC* pDC, CRect* pRect)
 {
 	if ( m_pGridPen.m_hObject == NULL ) m_pGridPen.CreatePen( PS_SOLID, 1, m_crGrid );
 
-	DWORD nWidth = (DWORD)pRect->Width() / m_nScale + 2;
+	DWORD nWidth = (DWORD)pRect->Width() / max( m_nScale, MIN_GRID_SIZE_HORZ ) + 2;
 
 	if ( pRect->Width() > 64 )
 	{
