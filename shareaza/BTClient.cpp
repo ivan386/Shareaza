@@ -1,7 +1,7 @@
 //
 // BTClient.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -556,6 +556,7 @@ CString CBTClient::GetAzureusStyleUserAgent(LPBYTE pVendor, size_t nVendor)
 		{ 'H', 'N', L"Hydranode" },
 		{ 'K', 'T', L"KTorrent" },
 		{ 'L', 'H', L"LH-ABC" },
+		{ 'L', 'K', L"Linkage" },
 		{ 'L', 'P', L"Lphant" },
 		{ 'L', 'T', L"libtorrent" },
 		{ 'l', 't', L"rTorrent" },
@@ -629,19 +630,22 @@ void CBTClient::DetermineUserAgent()
 		switch ( m_oGUID[0] )
 		{
 		case 'A':
-			m_sUserAgent = _T("ABC");
+			m_sUserAgent = L"ABC";
 			break;
 		case 'O':
-			m_sUserAgent = _T("Osprey");
+			m_sUserAgent = L"Osprey";
+			break;
+		case 'R':
+			m_sUserAgent = L"Tribler";
 			break;
 		case 'S':
-			m_sUserAgent = _T("Shadow");
+			m_sUserAgent = L"Shadow";
 			break;
 		case 'T':
-			m_sUserAgent = _T("BitTornado");
+			m_sUserAgent = L"BitTornado";
 			break;
 		case 'U':
-			m_sUserAgent = _T("UPnP NAT BT");
+			m_sUserAgent = L"UPnP NAT BT";
 			break;
 		default: // Unknown client using this naming.
 			m_sUserAgent.Format(_T("%c"), m_oGUID[0]);
