@@ -35,12 +35,10 @@ static char THIS_FILE[] = __FILE__;
 IMPLEMENT_DYNCREATE(CAdvancedSettingsPage, CSettingsPage)
 
 BEGIN_MESSAGE_MAP(CAdvancedSettingsPage, CSettingsPage)
-	//{{AFX_MSG_MAP(CAdvancedSettingsPage)
 	ON_WM_DESTROY()
 	ON_NOTIFY(LVN_ITEMCHANGED, IDC_PROPERTIES, OnItemChangedProperties)
 	ON_EN_CHANGE(IDC_VALUE, OnChangeValue)
 	ON_NOTIFY(LVN_COLUMNCLICK, IDC_PROPERTIES, OnColumnClickProperties)
-	//}}AFX_MSG_MAP
 	ON_BN_CLICKED(IDC_DEFAULT_VALUE, OnBnClickedDefaultValue)
 END_MESSAGE_MAP()
 
@@ -49,8 +47,6 @@ END_MESSAGE_MAP()
 
 CAdvancedSettingsPage::CAdvancedSettingsPage() : CSettingsPage(CAdvancedSettingsPage::IDD)
 {
-	//{{AFX_DATA_INIT(CAdvancedSettingsPage)
-	//}}AFX_DATA_INIT
 }
 
 CAdvancedSettingsPage::~CAdvancedSettingsPage()
@@ -60,11 +56,9 @@ CAdvancedSettingsPage::~CAdvancedSettingsPage()
 void CAdvancedSettingsPage::DoDataExchange(CDataExchange* pDX)
 {
 	CSettingsPage::DoDataExchange(pDX);
-	//{{AFX_DATA_MAP(CAdvancedSettingsPage)
 	DDX_Control(pDX, IDC_VALUE_SPIN, m_wndValueSpin);
 	DDX_Control(pDX, IDC_VALUE, m_wndValue);
 	DDX_Control(pDX, IDC_PROPERTIES, m_wndList);
-	//}}AFX_DATA_MAP
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -164,8 +158,24 @@ void CAdvancedSettingsPage::UpdateListItem(int nItem)
 		else
 			strValue += pItem->m_pItem->m_szSuffix;
 	}
-	
+
 	m_wndList.SetItemText( nItem, 1, strValue );
+	if ( pItem->IsDefault() )
+	{
+		if ( pItem->m_sName.Right( 1 ) == L"*" )
+		{
+			pItem->m_sName.TrimRight( L"*" );
+			m_wndList.SetItemText( nItem, 0, pItem->m_sName );
+		}
+	}
+	else
+	{
+		if ( pItem->m_sName.Right( 1 ) != L"*" )
+		{
+			pItem->m_sName += L"*";
+			m_wndList.SetItemText( nItem, 0, pItem->m_sName );
+		}
+	}
 }
 
 void CAdvancedSettingsPage::OnItemChangedProperties(NMHDR* /*pNMHDR*/, LRESULT* pResult) 
@@ -298,11 +308,13 @@ CAdvancedSettingsPage::EditItem::EditItem(CSettings::Item* pItem) :
 	m_nOriginalValue( pItem->m_pDword ? *pItem->m_pDword : 0 ),
 	m_bOriginalValue( pItem->m_pBool ? *pItem->m_pBool : false ),
 	m_sName(  ( ! *pItem->m_szSection ||					// Settings.Name -> General.Name
-		! lstrcmp( pItem->m_szSection, _T("Settings") ) )	// .Name -> General.Name
-		? _T("General") : pItem->m_szSection )
+		! lstrcmp( pItem->m_szSection, L"Settings" ) )	// .Name -> General.Name
+		? L"General" : pItem->m_szSection )
 {
-	m_sName += _T(".");
+	m_sName += L".";
 	m_sName += pItem->m_szName;
+	if ( !IsDefault() )
+		m_sName += L"*";
 }
 
 void CAdvancedSettingsPage::EditItem::Update()
