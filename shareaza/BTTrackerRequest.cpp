@@ -104,12 +104,9 @@ CBTTrackerRequest::CBTTrackerRequest(CDownload* pDownload, LPCTSTR pszVerb, BOOL
 	
 	m_pRequest.SetURL( strURL );
 	m_pRequest.AddHeader( _T("Accept-Encoding"), _T("gzip") );
-	
-	if ( Settings.BitTorrent.StandardPeerID )
-	{
-		CString strUserAgent = Settings.SmartAgent();
-		m_pRequest.SetUserAgent( strUserAgent );
-	}
+
+	// Set User Agent
+	m_pRequest.SetUserAgent( Settings.SmartAgent() );
 
 	theApp.Message( MSG_DEBUG, _T("Sending announce: %s"), strURL );
 

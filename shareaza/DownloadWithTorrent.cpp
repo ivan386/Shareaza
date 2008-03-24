@@ -304,52 +304,37 @@ BOOL CDownloadWithTorrent::RunTorrent(DWORD tNow)
 }
 
 //////////////////////////////////////////////////////////////////////
-// CDownloadWithTorrent GenerateTorrentDownloadID (Called 'Peer ID', but seperate for each download and *not* retained between sessions)
+// CDownloadWithTorrent Create Peer ID
+
+// The 'Peer ID' is different for each download and is not retained between
+// sessions.
 
 BOOL CDownloadWithTorrent::GenerateTorrentDownloadID()
 {
 	theApp.Message( MSG_DEBUG, _T("Creating BitTorrent Peer ID") );
 
-	int nByte;
-
 	//Check ID is not in use
-	if ( m_pPeerID ) 
+	ASSERT( !m_pPeerID );
+	if ( m_pPeerID )
 	{
-		theApp.Message( MSG_DEBUG, _T("Attempted to re-create an in-use Peer ID") );
+		theApp.Message( MSG_ERROR, _T("Attempted to re-create an in-use Peer ID") );
 		return FALSE;
 	}
 
-	// Client ID
-	if ( Settings.BitTorrent.StandardPeerID )
-	{
-		// Use the new (but not official) peer ID style.
-		m_pPeerID[ 0 ] = '-';
-		m_pPeerID[ 1 ] = BT_ID1;
-		m_pPeerID[ 2 ] = BT_ID2;
-		m_pPeerID[ 3 ] = (BYTE)theApp.m_nVersion[0] + '0';
-		m_pPeerID[ 4 ] = (BYTE)theApp.m_nVersion[1] + '0';
-		m_pPeerID[ 5 ] = (BYTE)theApp.m_nVersion[2] + '0';
-		m_pPeerID[ 6 ] = (BYTE)theApp.m_nVersion[3] + '0';
-		m_pPeerID[ 7 ] = '-';
+	// Client ID ( Azureus style http://bittorrent.org/beps/bep_0020.html )
+	m_pPeerID[ 0 ] = '-';
+	m_pPeerID[ 1 ] = BT_ID1;
+	m_pPeerID[ 2 ] = BT_ID2;
+	m_pPeerID[ 3 ] = static_cast< BYTE >( '0' + theApp.m_nVersion[0] );
+	m_pPeerID[ 4 ] = static_cast< BYTE >( '0' + theApp.m_nVersion[1] );
+	m_pPeerID[ 5 ] = static_cast< BYTE >( '0' + theApp.m_nVersion[2] );
+	m_pPeerID[ 6 ] = static_cast< BYTE >( '0' + theApp.m_nVersion[3] );
+	m_pPeerID[ 7 ] = '-';
 
-		// Random characters for ID
-		for ( nByte = 8 ; nByte < 16 ; nByte++ ) 
-		{
-			m_pPeerID[ nByte ] = uchar( ( m_pPeerID[ nByte ] + rand() ) & 0xff );
-		}
-		for ( nByte = 16 ; nByte < 20 ; nByte++ )
-		{
-			m_pPeerID[ nByte ]	= m_pPeerID[ nByte % 16 ]
-								^ m_pPeerID[ 15 - ( nByte % 16 ) ];
-		}
-	}
-	else
+	// Random characters for the rest of the Client ID
+	for ( BYTE nByte = 8 ; nByte < 20 ; nByte++ )
 	{
-		// Old style ID 
-		for ( nByte = 0 ; nByte < 20 ; nByte++ )
-		{
-			m_pPeerID[ nByte ] = uchar( ( m_pPeerID[ nByte ] + rand() ) & 0xff );
-		}
+		m_pPeerID[ nByte ] = static_cast< BYTE >( rand() & 0xFF );
 	}
 	m_pPeerID.validate();
 	return TRUE;

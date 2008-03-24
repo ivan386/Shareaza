@@ -431,7 +431,6 @@ public:
 		bool		AutoSeed;					// Automatically re-seed most recently completed torrent on start-up
 		DWORD		BandwidthPercentage;		// Percentage of bandwidth to use when BT active.
 		bool		TrackerKey;					// Send a key (random value) to trackers
-		bool		StandardPeerID;				// Use the newer (non-official) standard for making Peer-IDs
 		bool		PreferenceBTSources;		// Preference downloading from BT sources where appropriate
 	} BitTorrent;
 

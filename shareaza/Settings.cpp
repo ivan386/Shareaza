@@ -404,7 +404,6 @@ CSettings::CSettings()
 	Add( _T("BitTorrent"), _T("RequestPipe"), &BitTorrent.RequestPipe, 4, 1, 1, 10 );
 	Add( _T("BitTorrent"), _T("RequestSize"), &BitTorrent.RequestSize, 16*1024, 1024, 8, 128, _T(" KB") );
 	Add( _T("BitTorrent"), _T("SourceExchangePeriod"), &BitTorrent.SourceExchangePeriod, 10, 1, 1, 60*5, _T(" m") );
-	Add( _T("BitTorrent"), _T("StandardPeerID"), &BitTorrent.StandardPeerID, true );
 	Add( _T("BitTorrent"), _T("TorrentCodePage"), &BitTorrent.TorrentCodePage, 0, 1, 0, 9999999 );
 	Add( _T("BitTorrent"), _T("TorrentCreatorPath"), &BitTorrent.TorrentCreatorPath, _T("") );
 	Add( _T("BitTorrent"), _T("TorrentExtraKeys"), &BitTorrent.TorrentExtraKeys, true );
