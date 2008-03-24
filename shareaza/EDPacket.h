@@ -1,7 +1,7 @@
 //
 // EDPacket.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -68,15 +68,18 @@ typedef struct
 
 #define	ED2K_VERSION					0x3D
 
-#define ED2K_PROTOCOL_EDONKEY			0xE3	// eDonkey, Overnet, MLDonkey and other
-#define ED2K_PROTOCOL_KAD				0xE4	// eMule KAD
-#define ED2K_PROTOCOL_KAD_PACKED		0xE5	// eMule KAD compressed
+// Protocols
+#define ED2K_PROTOCOL_EDONKEY			0xE3	// eDonkey, Overnet, MLDonkey and other (OP_EDONKEYHEADER,OP_EDONKEYPROT)
+#define ED2K_PROTOCOL_KAD				0xE4	// eMule KAD (OP_KADEMLIAHEADER)
+#define ED2K_PROTOCOL_KAD_PACKED		0xE5	// eMule KAD compressed (OP_KADEMLIAPACKEDPROT)
 #define ED2K_PROTOCOL_REVCONNECT		0xD0	// RevConnect KAD
 #define ED2K_PROTOCOL_REVCONNECT_PACKED	0xD1	// RevConnect KAD compressed
-#define ED2K_PROTOCOL_EMULE_PACKED		0xD4	// eMule compressed
-#define ED2K_PROTOCOL_EMULE				0xC5	// eMule
-//#define ED2K_PROTOCOL_MLDONKEY		0x00
+#define ED2K_PROTOCOL_EMULE_PACKED		0xD4	// eMule compressed (OP_PACKEDPROT)
+#define ED2K_PROTOCOL_EMULE				0xC5	// eMule (OP_EMULEPROT)
+//#define ED2K_PROTOCOL_MLDONKEY		0x00	// MLDonkey (OP_MLDONKEYPROT)
 //#define ED2K_PROTOCOL_LANCAST			0xC6	// eMule Plus LANCast
+//#define ...							0xA3	// eMule reserved for later UDP headers (OP_UDPRESERVEDPROT1)
+//#define ...							0xB2	// eMule reserved for later UDP headers (OP_UDPRESERVEDPROT2)
 
 #define ED2K_MET						0x0E	// First byte of .met-file
 #define ED2K_MET_I64TAGS				0x0F	// First byte of .met-file with "Large File" support
@@ -427,6 +430,55 @@ public:
 #define ED2K_VERSION_AICH			0x00
 #define ED2K_VERSION_SECUREID		0x00
 
+// KADEMLIA versions
+#define KADEMLIA_VERSION1_46c			0x01	// eMule 45b - 46c
+#define KADEMLIA_VERSION2_47a			0x02	// eMule 47a
+#define KADEMLIA_VERSION3_47b			0x03	// eMule 47b
+#define KADEMLIA_VERSION				0x05	// current
 
+// KADEMLIA opcodes
+#define KADEMLIA_BOOTSTRAP_REQ			0x00	// <PEER (sender) [25]>
+#define KADEMLIA2_BOOTSTRAP_REQ			0x01	//
+#define KADEMLIA_BOOTSTRAP_RES			0x08	// <CNT [2]> <PEER [25]>*(CNT)
+#define KADEMLIA2_BOOTSTRAP_RES			0x09	//
+#define KADEMLIA_HELLO_REQ	 			0x10	// <PEER (sender) [25]>
+#define KADEMLIA2_HELLO_REQ				0x11	//
+#define KADEMLIA_HELLO_RES				0x18	// <PEER (receiver) [25]>
+#define KADEMLIA2_HELLO_RES				0x19	//
+#define KADEMLIA_REQ		   			0x20	// <TYPE [1]> <HASH (target) [16]> <HASH (receiver) 16>
+#define KADEMLIA2_REQ					0x21	//
+#define KADEMLIA_RES					0x28	// <HASH (target) [16]> <CNT> <PEER [25]>*(CNT)
+#define KADEMLIA2_RES					0x29	//
+#define KADEMLIA_SEARCH_REQ				0x30	// <HASH (key) [16]> <ext 0/1 [1]> <SEARCH_TREE>[ext]
+//#define UNUSED						0x31	// Old Opcode, don't use.
+#define KADEMLIA_SEARCH_NOTES_REQ		0x32	// <HASH (key) [16]>
+#define KADEMLIA2_SEARCH_KEY_REQ		0x33	//
+#define KADEMLIA2_SEARCH_SOURCE_REQ		0x34	//
+#define KADEMLIA2_SEARCH_NOTES_REQ		0x35	//
+#define KADEMLIA_SEARCH_RES				0x38	// <HASH (key) [16]> <CNT1 [2]> (<HASH (answer) [16]> <CNT2 [2]> <META>*(CNT2))*(CNT1)
+//#define UNUSED						0x39	// Old Opcode, don't use.
+#define KADEMLIA_SEARCH_NOTES_RES		0x3A	// <HASH (key) [16]> <CNT1 [2]> (<HASH (answer) [16]> <CNT2 [2]> <META>*(CNT2))*(CNT1)
+#define KADEMLIA2_SEARCH_RES			0x3B	//
+#define KADEMLIA_PUBLISH_REQ			0x40	// <HASH (key) [16]> <CNT1 [2]> (<HASH (target) [16]> <CNT2 [2]> <META>*(CNT2))*(CNT1)
+//#define UNUSED						0x41	// Old Opcode, don't use.
+#define KADEMLIA_PUBLISH_NOTES_REQ		0x42	// <HASH (key) [16]> <HASH (target) [16]> <CNT2 [2]> <META>*(CNT2))*(CNT1)
+#define	KADEMLIA2_PUBLISH_KEY_REQ		0x43	//
+#define	KADEMLIA2_PUBLISH_SOURCE_REQ	0x44	//
+#define KADEMLIA2_PUBLISH_NOTES_REQ		0x45	//
+#define KADEMLIA_PUBLISH_RES			0x48	// <HASH (key) [16]>
+//#define UNUSED						0x49	// Old Opcode, don't use.
+#define KADEMLIA_PUBLISH_NOTES_RES		0x4A	// <HASH (key) [16]>
+#define	KADEMLIA2_PUBLISH_RES			0x4B	//
+#define KADEMLIA_FIREWALLED_REQ			0x50	// <TCPPORT (sender) [2]>
+#define KADEMLIA_FINDBUDDY_REQ			0x51	// <TCPPORT (sender) [2]>
+#define KADEMLIA_CALLBACK_REQ			0x52	// <TCPPORT (sender) [2]>
+#define KADEMLIA_FIREWALLED_RES			0x58	// <IP (sender) [4]>
+#define KADEMLIA_FIREWALLED_ACK_RES		0x59	// (null)
+#define KADEMLIA_FINDBUDDY_RES			0x5A	// <TCPPORT (sender) [2]>
+#define KADEMLIA2_PING					0x60	// (null)
+#define KADEMLIA2_PONG					0x61	// (null)
 
-
+// KADEMLIA parameter
+#define KADEMLIA_FIND_VALUE				0x02
+#define KADEMLIA_STORE					0x04
+#define KADEMLIA_FIND_NODE				0x0B

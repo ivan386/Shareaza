@@ -1,7 +1,7 @@
 //
 // Datagrams.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -630,76 +630,48 @@ BOOL CDatagrams::TryRead()
 BOOL CDatagrams::OnDatagram(SOCKADDR_IN* pHost, BYTE* pBuffer, DWORD nLength)
 {
 	BOOL bHandled = FALSE;
-	GNUTELLAPACKET* pG1UDP = (GNUTELLAPACKET*)pBuffer;
-	ED2K_UDP_HEADER* pMULE = (ED2K_UDP_HEADER*)pBuffer;
-	SGP_HEADER* pSGP = (SGP_HEADER*)pBuffer;
 
 	// Detect Gnutella 1 packets
-
-	if ( nLength >= sizeof(GNUTELLAPACKET) &&
-		( sizeof(GNUTELLAPACKET) + pG1UDP->m_nLength ) == nLength )
+	if ( nLength >= sizeof(GNUTELLAPACKET) )
 	{
-		CG1Packet* pG1Packet = CG1Packet::New( pG1UDP );
-		if ( pG1Packet )
+		GNUTELLAPACKET* pG1UDP = (GNUTELLAPACKET*)pBuffer;
+		if ( ( sizeof(GNUTELLAPACKET) + pG1UDP->m_nLength ) == nLength )
 		{
-			bHandled = OnPacket( pHost, pG1Packet );
+			CG1Packet* pG1Packet = CG1Packet::New( pG1UDP );
+			if ( pG1Packet )
+			{
+				bHandled = OnPacket( pHost, pG1Packet );
 
-			pG1Packet->Release();
+				pG1Packet->Release();
+
+				if ( bHandled )
+					return TRUE;
+			}
+		}
+	}
+
+	// Detect Gnutella 2 packets
+	if ( nLength >= sizeof(SGP_HEADER) )
+	{
+		SGP_HEADER* pSGP = (SGP_HEADER*)pBuffer;
+		if ( ( *(DWORD*)pSGP->szTag & 0x00ffffff ) == ( *(DWORD*)SGP_TAG_2 & 0x00ffffff ) &&
+			pSGP->nPart && ( ! pSGP->nCount || pSGP->nPart <= pSGP->nCount ) )
+		{
+			if ( pSGP->nCount )
+			{
+				bHandled = OnReceiveSGP( pHost, pSGP, nLength - sizeof(SGP_HEADER) );
+			}
+			else
+			{
+				bHandled = OnAcknowledgeSGP( pHost, pSGP, nLength - sizeof(SGP_HEADER) );
+			}
 
 			if ( bHandled )
 				return TRUE;
 		}
 	}
 
-	// Detect ED2K and KAD packets
-
-	if ( nLength > sizeof(ED2K_UDP_HEADER) )
-	{
-		switch ( pMULE->nProtocol )
-		{
-		case ED2K_PROTOCOL_EDONKEY:
-		case ED2K_PROTOCOL_EMULE:
-		case ED2K_PROTOCOL_EMULE_PACKED:
-		case ED2K_PROTOCOL_KAD:
-		case ED2K_PROTOCOL_KAD_PACKED:
-		case ED2K_PROTOCOL_REVCONNECT:
-		case ED2K_PROTOCOL_REVCONNECT_PACKED:
-			{
-				CEDPacket* pPacket = CEDPacket::New( pMULE, nLength );
-				if ( pPacket && !pPacket->InflateOrRelease() )
-				{
-					bHandled = EDClients.OnUDP( pHost, pPacket );
-
-					pPacket->Release();
-
-					if ( bHandled )
-						return TRUE;
-				}
-			}
-		}
-	}
-
-	// Detect Gnutella 2 packets
-
-	if ( nLength >= sizeof(SGP_HEADER) &&
-		( *(DWORD*)pSGP->szTag & 0x00ffffff ) == ( *(DWORD*)SGP_TAG_2 & 0x00ffffff ) &&
-		pSGP->nPart && ( ! pSGP->nCount || pSGP->nPart <= pSGP->nCount ) )
-	{
-		if ( pSGP->nCount )
-		{
-			bHandled = OnReceiveSGP( pHost, pSGP, nLength - sizeof(SGP_HEADER) );
-		}
-		else
-		{
-			bHandled = OnAcknowledgeSGP( pHost, pSGP, nLength - sizeof(SGP_HEADER) );
-		}
-
-		if ( bHandled )
-			return TRUE;
-	}
-
 	// Detect BitTorrent packets
-
 	if ( nLength > 16 )
 	{
 		CBuffer pInput;
@@ -716,8 +688,36 @@ BOOL CDatagrams::OnDatagram(SOCKADDR_IN* pHost, BYTE* pBuffer, DWORD nLength)
 		}
 	}
 
-	// Report unknown packets
+	// Detect ED2K and KAD packets
+	if ( nLength > sizeof(ED2K_UDP_HEADER) )
+	{
+		ED2K_UDP_HEADER* pMULE = (ED2K_UDP_HEADER*)pBuffer;
+		switch ( pMULE->nProtocol )
+		{
+		case ED2K_PROTOCOL_EDONKEY:
+		case ED2K_PROTOCOL_EMULE:
+		case ED2K_PROTOCOL_EMULE_PACKED:
+		case ED2K_PROTOCOL_KAD:
+		case ED2K_PROTOCOL_KAD_PACKED:
+		case ED2K_PROTOCOL_REVCONNECT:
+		case ED2K_PROTOCOL_REVCONNECT_PACKED:
+			{
+				CEDPacket* pPacket = CEDPacket::New( pMULE, nLength );
+				if ( pPacket && ! pPacket->InflateOrRelease() )
+				{
+					bHandled = EDClients.OnPacket( pHost, pPacket );
 
+					pPacket->Release();
+
+					if ( bHandled )
+						return TRUE;
+				}
+			}
+			// TODO: Detect obfuscated eMule packets
+		}
+	}
+
+	// Report unknown packets
 	CString strText, strTmp;
 	strText.Format( _T("UDP: Recieved unknown packet (%i bytes) from %s"),
 		nLength, (LPCTSTR)CString( inet_ntoa( pHost->sin_addr ) ) );

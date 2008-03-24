@@ -373,13 +373,8 @@ BOOL CEDClients::OnAccept(CConnection* pConnection)
 //////////////////////////////////////////////////////////////////////
 // CEDClients process UDP Packets
 
-// UDP packet received
-BOOL CEDClients::OnUDP(SOCKADDR_IN* pHost, CEDPacket* pPacket)
+BOOL CEDClients::OnPacket(SOCKADDR_IN* pHost, CEDPacket* pPacket)
 {
-	if ( pPacket->m_nEdProtocol != ED2K_PROTOCOL_EDONKEY &&
-		 pPacket->m_nEdProtocol != ED2K_PROTOCOL_EMULE )
-		 return FALSE;
-
 	pPacket->SmartDump( pHost, TRUE, FALSE );
 
 	CSingleLock pLock( &Transfers.m_pSection );
@@ -392,6 +387,105 @@ BOOL CEDClients::OnUDP(SOCKADDR_IN* pHost, CEDPacket* pPacket)
 
 	CQuickLock oLock( m_pSection );
 
+	switch ( pPacket->m_nEdProtocol )
+	{
+	case ED2K_PROTOCOL_EDONKEY:
+	case ED2K_PROTOCOL_EMULE:
+		return OnPacketED( pHost, pPacket );
+	case ED2K_PROTOCOL_KAD:
+		return OnPacketKad( pHost, pPacket );
+	case ED2K_PROTOCOL_REVCONNECT:
+		// TODO: Implement RevConnect KAD
+		pPacket->Debug( _T("RevConnect KAD not implemented.") );
+	}
+
+	return FALSE;
+}
+
+BOOL CEDClients::OnPacketKad(SOCKADDR_IN* pHost, CEDPacket* pPacket)
+{
+	switch ( pPacket->m_nType )
+	{
+	case KADEMLIA_BOOTSTRAP_REQ:
+//		return OnPacket_KADEMLIA_BOOTSTRAP_REQ(pHost, pPacket);
+	case KADEMLIA2_BOOTSTRAP_REQ:
+//		return OnPacket_KADEMLIA2_BOOTSTRAP_REQ(pHost, pPacket);
+	case KADEMLIA_BOOTSTRAP_RES:
+//		return OnPacket_KADEMLIA_BOOTSTRAP_RES(pHost, pPacket);
+	case KADEMLIA2_BOOTSTRAP_RES:
+//		return OnPacket_KADEMLIA2_BOOTSTRAP_RES(pHost, pPacket);
+	case KADEMLIA_HELLO_REQ:
+//		return OnPacket_KADEMLIA_HELLO_REQ(pHost, pPacket);
+	case KADEMLIA2_HELLO_REQ:
+//		return OnPacket_KADEMLIA2_HELLO_REQ(pHost, pPacket);
+	case KADEMLIA_HELLO_RES:
+//		return OnPacket_KADEMLIA_HELLO_RES(pHost, pPacket);
+	case KADEMLIA2_HELLO_RES:
+//		return OnPacket_KADEMLIA2_HELLO_RES(pHost, pPacket);
+	case KADEMLIA_REQ:
+//		return OnPacket_KADEMLIA_REQ(pHost, pPacket);
+	case KADEMLIA2_REQ:
+//		return OnPacket_KADEMLIA2_REQ(pHost, pPacket);
+	case KADEMLIA_RES:
+//		return OnPacket_KADEMLIA_RES(pHost, pPacket);
+	case KADEMLIA2_RES:
+//		return OnPacket_KADEMLIA2_RES(pHost, pPacket);
+	case KADEMLIA_SEARCH_REQ:
+//		return OnPacket_KADEMLIA_SEARCH_REQ(pHost, pPacket);
+	case KADEMLIA_SEARCH_NOTES_REQ:
+//		return OnPacket_KADEMLIA_SEARCH_NOTES_REQ(pHost, pPacket);
+	case KADEMLIA2_SEARCH_NOTES_REQ:
+//		return OnPacket_KADEMLIA2_SEARCH_NOTES_REQ(pHost, pPacket);
+	case KADEMLIA2_SEARCH_KEY_REQ:
+//		return OnPacket_KADEMLIA2_SEARCH_KEY_REQ(pHost, pPacket);
+	case KADEMLIA2_SEARCH_SOURCE_REQ:
+//		return OnPacket_KADEMLIA2_SEARCH_SOURCE_REQ(pHost, pPacket);
+	case KADEMLIA_SEARCH_RES:
+//		return OnPacket_KADEMLIA_SEARCH_RES(pHost, pPacket);
+	case KADEMLIA_SEARCH_NOTES_RES:
+//		return OnPacket_KADEMLIA_SEARCH_NOTES_RES(pHost, pPacket);
+	case KADEMLIA2_SEARCH_RES:
+//		return OnPacket_KADEMLIA2_SEARCH_RES(pHost, pPacket);
+	case KADEMLIA_PUBLISH_REQ:
+//		return OnPacket_KADEMLIA_PUBLISH_REQ(pHost, pPacket);
+	case KADEMLIA_PUBLISH_NOTES_REQ:
+//		return OnPacket_KADEMLIA_PUBLISH_NOTES_REQ(pHost, pPacket);
+	case KADEMLIA2_PUBLISH_KEY_REQ:
+//		return OnPacket_KADEMLIA2_PUBLISH_KEY_REQ(pHost, pPacket);
+	case KADEMLIA2_PUBLISH_SOURCE_REQ:
+//		return OnPacket_KADEMLIA2_PUBLISH_SOURCE_REQ(pHost, pPacket);
+	case KADEMLIA2_PUBLISH_NOTES_REQ:
+//		return OnPacket_KADEMLIA2_PUBLISH_NOTES_REQ(pHost, pPacket);
+	case KADEMLIA_PUBLISH_RES:
+//		return OnPacket_KADEMLIA_PUBLISH_RES(pHost, pPacket);
+	case KADEMLIA_PUBLISH_NOTES_RES:
+//		return OnPacket_KADEMLIA_PUBLISH_NOTES_RES(pHost, pPacket);
+	case KADEMLIA2_PUBLISH_RES:
+//		return OnPacket_KADEMLIA2_PUBLISH_RES(pHost, pPacket);
+	case KADEMLIA_FIREWALLED_REQ:
+//		return OnPacket_KADEMLIA_FIREWALLED_REQ(pHost, pPacket);
+	case KADEMLIA_FIREWALLED_RES:
+//		return OnPacket_KADEMLIA_FIREWALLED_RES(pHost, pPacket);
+	case KADEMLIA_FIREWALLED_ACK_RES:
+//		return OnPacket_KADEMLIA_FIREWALLED_ACK_RES(pHost, pPacket);
+	case KADEMLIA_FINDBUDDY_REQ:
+//		return OnPacket_KADEMLIA_FINDBUDDY_REQ(pHost, pPacket);
+	case KADEMLIA_FINDBUDDY_RES:
+//		return OnPacket_KADEMLIA_FINDBUDDY_RES(pHost, pPacket);
+	case KADEMLIA_CALLBACK_REQ:
+//		return OnPacket_KADEMLIA_CALLBACK_REQ(pHost, pPacket);
+	case KADEMLIA2_PING:
+//		return OnPacket_KADEMLIA2_PING(pHost, pPacket);
+	case KADEMLIA2_PONG:
+//		return OnPacket_KADEMLIA2_PONG(pHost, pPacket);
+	default:
+		pPacket->Debug( _T("Unknown KAD UDP opcode.") );
+	}
+	return FALSE;
+}
+
+BOOL CEDClients::OnPacketED(SOCKADDR_IN* pHost, CEDPacket* pPacket)
+{
 	switch ( pPacket->m_nType )
 	{
 	case ED2K_C2C_UDP_REASKFILEPING:
@@ -435,6 +529,7 @@ BOOL CEDClients::OnUDP(SOCKADDR_IN* pHost, CEDPacket* pPacket)
 		break;
 	case ED2K_S2CG_SEARCHRESULT:
 	case ED2K_S2CG_FOUNDSOURCES:
+		{
 		// Correct port value. (UDP port is TCP port + 4)
 		pHost->sin_port = htons( ntohs( pHost->sin_port ) - 4 );
 
@@ -459,7 +554,10 @@ BOOL CEDClients::OnUDP(SOCKADDR_IN* pHost, CEDPacket* pPacket)
 				pHits->Delete();
 			}
 		}
+		}
 		break;
+	default:
+		pPacket->Debug( _T("Unknown ED2K UDP opcode.") );
 	}
 	
 	return TRUE;
