@@ -4566,6 +4566,10 @@
 				>
 			</File>
 			<File
+				RelativePath="Res\CollectionVista.ico"
+				>
+			</File>
+			<File
 				RelativePath="Res\colors.ico"
 				>
 			</File>
@@ -4982,6 +4986,10 @@
 			</File>
 			<File
 				RelativePath="Res\ShellBaseRTL.bmp"
+				>
+			</File>
+			<File
+				RelativePath="Res\ShellBaseVista.bmp"
 				>
 			</File>
 			<File
