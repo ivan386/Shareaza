@@ -3405,6 +3405,7 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<control caption="Handslag:" />
 		<control/><control/>
 	</dialog>
+
 	<dialog name="CDownloadsSettingsPage" cookie="BuEdBuBuEdBuBuStEdmsStEdmsStEdmsBuStCoStCoBuBu" caption="Nedladdningar">
 		<control caption="Spara _färdiga nedladdningar här:" />
 		<control/><control/>
@@ -3634,6 +3635,7 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<control caption="Avbryt" />
 		<control caption="Reward uploaders"/>
 	</dialog>
+
 	<dialog name="CWizardWelcomePage" cookie="StStStStStStStStStStStSt" caption="Välkommen till Shareaza">
 		<control caption="Välkommen till Shareaza!" />
 		<control caption="Om du inte har använt Shareaza eller andra fildelningsnätverk förut kan denna snabbstartsguide hjälpa dig att anpassa din kopia genom några enkla steg." />
@@ -3648,6 +3650,7 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<control/>
 		<control caption="Börja använda Shareaza" />
 	</dialog>
+
 	<dialog name="CWizardInterfacePage" cookie="StBuBuBuStStBuBu" caption="Vlkommen till Shareaza">
 		<control caption="Shareaza stödjer två olika typer av användargränssnitt, så att du kan välja det som du känner dig mest bekväm med." />
 		<control caption="Välj ett av dessa två användargränssnitt:" />
@@ -3699,6 +3702,7 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<control caption="från:" />
 		<control/><control/>
 	</dialog>
+
 	<dialog name="CWizardNetworksPage" cookie="StBuStBuStBuSt" caption="Välkommen till Shareaza [6 av 7]">
 		<control caption="Shareaza är ett en mångsidig fildelningsapplikation som kan komma åt många fildelningsnätverk på samma gång. På denna sida kan du välja vilka fildelningsnätverk du vill ansluta till och justera specifika inställningar för varje nätverk." />
 		<control caption="Anslut till Gnutella2 (mycket rekommenderat)" />
@@ -3708,6 +3712,7 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<control caption="Anslut till Gnutellas ursprungsnätverk" />
 		<control caption="Fastän Gnutellas ursprungsnätverk erbjuder färre funktioner än Gnutella2 och färre filer än eDonkey är det ändå en värdefull resurs." />
 	</dialog>
+
 	<dialog name="CDonkeyImportDlg" cookie="StStBuBuEdBu" caption="Importera Donkey2000-nedladdningar">
 		<control/>
 		<control caption="Shareaza har upptäckt att du har ett annat eDonkey-program installerat på din dator. Vill du importera oavslutade nedladdningar till Shareaza?" />
@@ -3716,6 +3721,7 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<control/>
 		<control caption="Stäng" />
 	</dialog>
+
 	<dialog name="CWizardFinishedPage" cookie="StStStBuBuBuSt" caption="Välkommen till Shareaza [7 av 7]">
 		<control caption="Det var det! Shareza har blivit anpassat för att fungera med din dator." />
 		<control caption="Om du någon gång vill ändra setta inställningar, kan du köra denna snabbstartsguide igen från verktygsmenyn." />
@@ -3725,6 +3731,7 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<control caption="Starta Shareaza när Windows startas" />
 		<control caption="Ha kul med Shareaza!" />
 	</dialog>
+
 	<dialog name="CProfileManagerDlg" cookie="SyBuBuBu#3" caption="Redigera min profil">
 		<control/>
 		<control caption="OK"/>
@@ -3745,6 +3752,7 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<control caption="Ålder:" />
 		<control caption="Tillåt andra att visa min profil" />
 	</dialog>
+
 	<dialog name="CContactProfilePage" cookie="BuStEdBuStEdStEdStEdStEdStEd" caption="Kontakt">
 		<control caption="_Epostadresser:" />
 		<control caption="Primär:" />
@@ -3761,6 +3769,7 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<control caption="Jabber ID:"/>
 		<control/>
 	</dialog>
+
 	<dialog name="CProfileProfilePage" cookie="BuStCoStCoBuStEdStEdBuLiBuBuCo" caption="Profil">
 		<control caption="_Plats:" />
 		<control caption="Land:" />
@@ -3778,6 +3787,7 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<control caption="Readera &gt;" />
 		<control/>
 	</dialog>
+
 	<dialog name="CBioProfilePage" cookie="Ed" caption="Biografi">
 		<control/>
 	</dialog>
@@ -3805,6 +3815,7 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<control caption="Favoritfiler är rekommenderade för användare som läser din profil. Du kan skapa favoritfiler genom att lägga till dem till din favoritmapp i ditt bibliotek." />
 		<control/>
 	</dialog>
+
 	<dialog name="CCertificateProfilePage" cookie="StBuStStStStBu" caption="Certifikat">
 		<control caption="Gnutellaanvändare identifieras med en global unik identitet och tillhörande publika och privata nyckelpar. Normalt finns det inget behov av att generera ett nytt ID, men Shareaza ger denna möjlighet för avancerade användare." />
 		<control caption="_Gnutellas globala unika identifikationscertifikat:" />
@@ -3839,6 +3850,7 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<control caption="Sök" />
 		<control caption="Avbryt" />
 	</dialog>
+
 	<dialog name="CFilterSearchDlg" cookie="BuEdStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBu" caption="Filtrera träffar">
 		<control caption="Visa endast träffar som innehåller dessa _ord:" />
 		<control/>
@@ -3924,6 +3936,7 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<control caption="Min recension och kommentarer" />
 		<control/><control/>
 	</dialog>
+
 	<dialog name="CFileSharingPage" cookie="StBuBuBuStCoStSyEd" caption="Utdelas">
 		<control caption="Enkel utdelning" />
 		<control caption="Dela ut denna fil om mappen som filen finns i är utdelad" />
@@ -4044,6 +4057,7 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<control caption="Inkludera _mig själv som en bestämd källa i URLen" />
 		<control caption="Avbryt" />
 	</dialog>
+
 	<dialog name="CURLExportDlg" cookie="StStEdStCoStCoBuBumsBu" caption="Exportera URI">
 		<control/>
 		<control caption="Du har valt att exportera %lu filer som Shareaza-URI-referenser. Välj formatet för dina URI och klicka på Save." />
@@ -4138,6 +4152,7 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<control caption="Stäng" />
 		<control/>
 	</dialog>
+
 	<dialog name="CDeleteFileDlg" cookie="StStBuBuBuStStBuStCoStCoStEd" caption="Radera fil">
 		<control caption="Är du säker på att du vill radera:" />
 		<control/>
@@ -4294,7 +4309,7 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 <listColumns>
 	<list name="CLibraryWnd">
 		<column from="File" to="Fil" />
-		<column from="Type" to="Type" />
+		<column from="Extension" to="Filändelse" />
 		<column from="Size" to="Storlek" />
 		<column from="Folder" to="Mapp" />
 		<column from="Hits" to="Träffar" />
@@ -4337,7 +4352,7 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<column from="Country" to="Land"/>
 	</list>
 	<list name="CSecurityWnd">
-		<column from="Address / Content" to="Adress" />
+		<column from="Address / Content" to="Adress / Innehåll" />
 		<column from="Action" to="Händelse" />
 		<column from="Expires" to="Utgångsdatum" />
 		<column from="Precedence" to="Företräde" />
@@ -4349,12 +4364,12 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<column from="Port" to="Port" />
 		<column from="Client" to="Klient" />
 		<column from="Last Seen" to="Sist sedd" />
+    <column from="Daily Uptime" to="Daglig drifttid"/>
 		<column from="Name" to="Namn" />
 		<column from="Description" to="Beskrivning" />
-		<column from="CurUsers" to="Nuvarande antal användare" />
-		<column from="MaxUsers" to="Max antal användare" />
-		<column from="MaxUsers" to="MaxAnvändare"/>
-		<column from="Failures" to="Misslyckade försök"/>
+		<column from="CurUsers" to="Anslutna användare" />
+		<column from="MaxUsers" to="Max användare" />
+		<column from="Failures" to="Fel"/>
 		<column from="Country" to="Land"/>
 	</list>
 	<list name="CDiscoveryWnd">
@@ -4382,7 +4397,7 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 	</list>
 	<list name="CMatchCtrl">
 		<column from="File" to="Fil" />
-		<column from="Type" to="Typ" />
+    <column from="Extension" to="Filändelse"/>
 		<column from="Size" to="Storlek" />
 		<column from="Rating" to="Betyg" />
 		<column from="Status" to="Status" />
