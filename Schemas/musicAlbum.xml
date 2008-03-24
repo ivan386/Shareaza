@@ -25,6 +25,7 @@ Shareaza Russian Schemas File translated by dAbserver; Rolandas Rudomanskis
 Shareaza Slovenian Schemas File translated by Martin McDowell
 Shareaza Albanian Schemas File translated by Besmir Godole
 Shareaza Serbian Schemas File translated by Woodstoock
+Shareaza Swedish Schemas File translated by Marcus Ehrenlans; Printz; DanielB
 Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
 -->
 
@@ -57,6 +58,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="sl-SI">Glasbeni album</title>
                <title language="sq">Albumi i Muzikës</title>
                <title language="sr">Album Pesma</title>
+               <title language="sv">Musikalbum</title>
                <title language="tr">Müzik Albümü</title>
        </titles>
        <images>
@@ -90,6 +92,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="sl-SI">Naslov</title>
                        <title language="sq">Titulli</title>
                        <title language="sr">Naslov</title>
+                       <title language="sv">Titel</title>
                        <title language="tr">Başlık</title>
                </member>
                <member name="artist" search="generic">
@@ -120,6 +123,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="sl-SI">Izvajalec</title>
                        <title language="sq">Artisti</title>
                        <title language="sr">Izvođač</title>
+                       <title language="sv">Artist</title>
                        <title language="tr">Sanatçı</title>
                </member>
                <member name="genre" search="generic">
@@ -150,6 +154,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="sl-SI">Žanr</title>
                        <title language="sq">Gjini</title>
                        <title language="sr">Žanr</title>
+                       <title language="sv">Genre</title>
                        <title language="tr">Tarz</title>
                </member>
                <member name="tracks" search="none">
@@ -178,6 +183,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="sl-SI">Steze</title>
                        <title language="sq">Kolonat</title>
                        <title language="sr">Pesme</title>
+                       <title language="sv">Spår</title>
                        <title language="tr">İzler</title>
                </member>
                <member name="disks" search="none">
@@ -206,6 +212,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="sl-SI">Zgoščenke</title>
                        <title language="sq">Disqet</title>
                        <title language="sr">Diskovi</title>
+                       <title language="sv">Skivor</title>
                        <title language="tr">Diskler</title>
                </member>
                <member name="label">
@@ -234,6 +241,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="sl-SI">Label</title>
                        <title language="sq">Etiketa</title>
                        <title language="sr">Oznaka</title>
+                       <title language="sv">Etikett</title>
                        <title language="tr">Etiket</title>
                </member>
                <member name="source">
@@ -262,6 +270,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="sl-SI">Vir</title>
                        <title language="sq">Burimi</title>
                        <title language="sr">Izvor</title>
+                       <title language="sv">Källor</title>
                        <title language="tr">Kaynak</title>
                </member>
                <member name="type" search="indexed">
@@ -290,6 +299,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="sl-SI">Tip</title>
                        <title language="sq">Lloji</title>
                        <title language="sr">Vrsta</title>
+                       <title language="sv">Typ</title>
                        <title language="tr">Tip</title>
                </member>
                <member name="TotalTime" search="indexed">
@@ -318,6 +328,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="sl-SI">Celoten čas</title>
                        <title language="sq">Koha Totale</title>
                        <title language="sr">Vreme Trajanja</title>
+                       <title language="sv">Total tid</title>
                        <title language="tr">Toplam Süre</title>
                </member>
                <member name="language" search="indexed">
@@ -347,6 +358,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="sl-SI">Jezik</title>
                        <title language="sq">Gjuhë</title>
                        <title language="sr">Jezik</title>
+                       <title language="sv">Språk</title>
                        <title language="tr">Dil</title>
                </member>
                <member name="completeness" search="none">
@@ -375,6 +387,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="sl-SI">Kompletnost</title>
                        <title language="sq">Plotësia</title>
                        <title language="sr">Popunjeno</title>
+                       <title language="sv">Fullständighet</title>
                        <title language="tr">Tamamlık</title>
                </member>
                <member name="EncoderUsed" search="indexed">
@@ -403,6 +416,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="sl-SI">Uporabljen enkoder</title>
                        <title language="sq">Koduesi i Përdorur</title>
                        <title language="sr">Korišteni Encoder</title>
+                       <title language="sv">Omkodare använd</title>
                        <title language="tr">Kullanılan Kodlayıcı</title>
                </member>
                <member name="bitrate" search="indexed">
@@ -431,6 +445,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="sl-SI">Bitna hitrost</title>
                        <title language="sq">Bitrate</title>
                        <title language="sr">Gustina Zapisa</title>
+                       <title language="sv">Bithastighet</title>
                        <title language="tr">Bitrate</title>
                </member>
                <member name="SampleRate" search="indexed">
@@ -459,6 +474,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="sl-SI">Vzorčna hitrost</title>
                        <title language="sq">Raporti Modelues</title>
                        <title language="sr">Sample Rate</title>
+                       <title language="sv">Samplingsfrekvens</title>
                        <title language="tr">Örnekler</title>
                </member>
                <member name="description">
@@ -487,6 +503,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="sl-SI">Opis</title>
                        <title language="sq">Përshkrimi</title>
                        <title language="sr">Opis</title>
+                       <title language="sv">Beskrivning</title>
                        <title language="tr">Tanımlama</title>
                </member>
                <member name="collector" search="indexed">
@@ -515,6 +532,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="sl-SI">Kolektor</title>
                        <title language="sq">Koleksionuesi</title>
                        <title language="sr">Sakupio</title>
+                       <title language="sv">Samlare</title>
                        <title language="tr">Koleksiyoncu</title>
                </member>
                <member name="qualitynotes">
@@ -543,6 +561,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="sl-SI">Opomba kakovosti</title>
                        <title language="sq">Shënimet mbi Cilësinë</title>
                        <title language="sr">O Kvalitetu</title>
+                       <title language="sv">Kvalitetsanteckningar</title>
                        <title language="tr">Kalite Notları</title>
                </member>
                <member name="Distributer" search="indexed">
@@ -571,6 +590,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="sl-SI">Distributer</title>
                        <title language="sq">Distributori</title>
                        <title language="sr">Distributer</title>
+                       <title language="sv">Distributör</title>
                        <title language="tr">Dağıtıcı</title>
                </member>
                <member name="DistributerLink">
@@ -599,6 +619,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="sl-SI">Povezava distributerja</title>
                        <title language="sq">Linku i Distributorit</title>
                        <title language="sr">Link na Distributera</title>
+                       <title language="sv">Distributionslänk</title>
                        <title language="tr">Dağıtıcı Bağlantısı</title>
                </member>
                <member name="Releasegroup" search="indexed">
@@ -627,6 +648,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="sl-SI">Skupina izdaje</title>
                        <title language="sq">Grupi Lëshues</title>
                        <title language="sr">Grupa Objavljivača</title>
+                       <title language="sv">Lanseringsgrupp</title>
                        <title language="tr">Yayın Grubu</title>
                </member>
                <member name="ReleasegroupLink">
@@ -655,6 +677,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="sl-SI">Povezava skupine izdaje</title>
                        <title language="sq">Linku i Grupit Lëshues</title>
                        <title language="sr">Link na Grupu Objavljivača</title>
+                       <title language="sv">Lanseringsgrupplänk</title>
                        <title language="tr">Yayın Grubu Bağlantısı</title>
                </member>
                <member name="year" search="none">
@@ -683,6 +706,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="sl-SI">Leto</title>
                        <title language="sq">Viti</title>
                        <title language="sr">Godina</title>
+                       <title language="sv">År</title>
                        <title language="tr">Yıl</title>
                </member>
                <member name="link" search="none">
@@ -711,6 +735,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="sl-SI">Povezava</title>
                        <title language="sq">Linku</title>
                        <title language="sr">Link</title>
+                       <title language="sv">Länk</title>
                        <title language="tr">Bağlantı</title>
                </member>
        </members>

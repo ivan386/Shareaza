@@ -25,6 +25,7 @@ Shareaza Russian Schemas File translated by dAbserver; Rolandas Rudomanskis
 Shareaza Slovenian Schemas File translated by Martin McDowell
 Shareaza Albanian Schemas File translated by Besmir Godole
 Shareaza Serbian Schemas File translated by Woodstoock
+Shareaza Swedish Schemas File translated by Marcus Ehrenlans; Printz; DanielB
 Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
 -->
 
@@ -57,6 +58,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="sl-SI">Mapa</title>
                <title language="sq">Dosja</title>
                <title language="sr">Fascikla</title>
+               <title language="sv">Mapp</title>
                <title language="tr">Klasörler</title>
        </titles>
        <images>
@@ -89,6 +91,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="sl-SI">Naslov</title>
                        <title language="sq">Titulli</title>
                        <title language="sr">Naslov</title>
+                       <title language="sv">Titel</title>
                        <title language="tr">Başlık</title>
                </member>
                <member name="description" search="none">
@@ -117,6 +120,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="sl-SI">Opis</title>
                        <title language="sq">Përshkrimi</title>
                        <title language="sr">Opis</title>
+                       <title language="sv">Beskrivning</title>
                        <title language="tr">Tanımlama</title>
                </member>
                <member name="collector" search="indexed">
@@ -145,6 +149,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="sl-SI">Kolektor</title>
                        <title language="sq">Koleksionuesi</title>
                        <title language="sr">Sakupio</title>
+                       <title language="sv">Samlare</title>
                        <title language="tr">Koleksiyoncu</title>
                </member>
                <member name="comments">
@@ -173,6 +178,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="sl-SI">Komentarji</title>
                        <title language="sq">Komente</title>
                        <title language="sr">Komentari</title>
+                       <title language="sv">Kommentarer</title>
                        <title language="tr">Yorumlar</title>
                </member>
        </members>

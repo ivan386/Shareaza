@@ -25,6 +25,7 @@ Shareaza Russian Schemas File translated by dAbserver; Rolandas Rudomanskis
 Shareaza Slovenian Schemas File translated by Martin McDowell
 Shareaza Albanian Schemas File translated by Besmir Godole
 Shareaza Serbian Schemas File translated by Woodstoock
+Shareaza Swedish Schemas File translated by Marcus Ehrenlans; Printz; DanielB
 Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
 -->
 
@@ -57,6 +58,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="sl-SI">Video:Glasbeni videji</title>
                <title language="sq">Video:Videot Muzikore</title>
                <title language="sr">Film:Spotovi</title>
+               <title language="sv">Video: Musikvideor</title>
                <title language="tr">Video: Klipler</title>
        </titles>
        <images>
@@ -90,6 +92,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="sl-SI">Naslov</title>
                        <title language="sq">Titulli</title>
                        <title language="sr">Naslov</title>
+                       <title language="sv">Titel</title>
                        <title language="tr">Başlık</title>
                </member>
        </members>
@@ -122,6 +125,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="sl-SI">Glasbeni videji</title>
                <title language="sq">Videot e Muzikës</title>
                <title language="sr">Spotovi</title>
+               <title language="sv">Musikvideo</title>
                <title language="tr">Klipler</title>
                <subtitle language="en">This folder contains music videos.</subtitle>
                <subtitle language="af">Hierdie gids bevat musiek video's.</subtitle>
@@ -148,6 +152,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="sl-SI">Ta mapa vsebuje glasbene videje.</subtitle>
                <subtitle language="sq">Kjo dosje përmban videot muzikore.</subtitle>
                <subtitle language="sr">Ova fascikla sadrži vaše spotove.</subtitle>
+               <subtitle language="sv">Denna mapp innehåller musikvideor.</subtitle>
                <subtitle language="tr">Bu klasör müzik videolarını içerir.</subtitle>
        </headerContent>
 

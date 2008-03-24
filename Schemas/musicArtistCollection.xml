@@ -25,6 +25,7 @@ Shareaza Russian Schemas File translated by dAbserver; Rolandas Rudomanskis
 Shareaza Slovenian Schemas File translated by Martin McDowell
 Shareaza Albanian Schemas File translated by Besmir Godole
 Shareaza Serbian Schemas File translated by Woodstoock
+Shareaza Swedish Schemas File translated by Marcus Ehrenlans; Printz; DanielB
 Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
 -->
 
@@ -57,6 +58,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="sl-SI">Glasba:Po izvajalcu</title>
                <title language="sq">Muzikë:Sipas Artistit</title>
                <title language="sr">Muzika:Po Izvođaču</title>
+               <title language="sv">Musik: Efter artist</title>
                <title language="tr">Müzik: Sanatçıdan</title>
        </titles>
        <members>
@@ -87,6 +89,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="sl-SI">Naslov</title>
                        <title language="sq">Titulli</title>
                        <title language="sr">Naslov</title>
+                       <title language="sv">Titel</title>
                        <title language="tr">Başlık</title>
                </member>
        </members>
@@ -122,6 +125,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="sl-SI">Glasba Po izvajalcu</title>
                <title language="sq">Musikë Sipas Artistit</title>
                <title language="sr">Muzika Po Izvođaču</title>
+               <title language="sv">Musik efter artist</title>
                <title language="tr">Sanatçıdan Müzik</title>
                <subtitle language="en">This folder contains a list of the artists in your music library.</subtitle>
                <subtitle language="af">Hierdie gids bevat 'n lys van die kunstenaars wat jy in jou biblioteek het.</subtitle>
@@ -148,6 +152,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="sl-SI">Ta mapa vsebuje seznam izvajalcev v vaši glasbeni knjižnici.</subtitle>
                <subtitle language="sq">Kjo dosje përmban një listë me artistët në librarinë tuaj me muzikë.</subtitle>
                <subtitle language="sr">Ova fascikla sadrži popis izvođača koje imate u muzičkoj kolekciji.</subtitle>
+               <subtitle language="sv">Denna mapp innehåller en lista över artister som du har i ditt bibliotek.</subtitle>
                <subtitle language="tr">Bu klasör müzik arşivinizdeki sanatçıların bir listesini içerir.</subtitle>
        </headerContent>
 

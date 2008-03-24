@@ -25,6 +25,7 @@ Shareaza Russian Schemas File translated by dAbserver; Rolandas Rudomanskis
 Shareaza Slovenian Schemas File translated by Martin McDowell
 Shareaza Albanian Schemas File translated by Besmir Godole
 Shareaza Serbian Schemas File translated by Woodstoock
+Shareaza Swedish Schemas File translated by Marcus Ehrenlans; Printz; DanielB
 Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
 -->
 
@@ -57,6 +58,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="sl-SI">Glasba:Po albumu</title>
                <title language="sq">Muzikë:Sipas Albumit</title>
                <title language="sr">Muzika:Po Albumima</title>
+               <title language="sv">Musik: Efter album</title>
                <title language="tr">Müzik: Albümden</title>
        </titles>
        <images>
@@ -90,6 +92,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="sl-SI">Naslov</title>
                        <title language="sq">Titulli</title>
                        <title language="sr">Naslov</title>
+                       <title language="sv">Titel</title>
                        <title language="tr">Başlık</title>
                </member>
        </members>
@@ -122,6 +125,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="sl-SI">Glasba Po albumu</title>
                <title language="sq">Muzikë Sipas Albumit</title>
                <title language="sr">Muzika Po Albumima</title>
+               <title language="sv">Musik efter album</title>
                <title language="tr">Albümden Müzik</title>
                <subtitle language="en">This folder contains a list of albums you have in your library.</subtitle>
                <subtitle language="af">Hierdie gids bevat 'n lys van die albums wat jy in jou bibioteek het.</subtitle>
@@ -148,6 +152,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="sl-SI">Ta mapa vsebuje seznam albumov v vaši knjižnici.</subtitle>
                <subtitle language="sq">Kjo dosje përmban një listë me albumet që janë në librarinë tuaj.</subtitle>
                <subtitle language="sr">Ova fascikla sadrži popis albuma koje imate u kolekciji.</subtitle>
+               <subtitle language="sv">Denna mapp innehåller en lista över album som du har i ditt bibliotek.</subtitle>
                <subtitle language="tr">Bu klasör arşivinizdeki albümlerin bir listesini içerir.</subtitle>
        </headerContent>
 

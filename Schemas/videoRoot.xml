@@ -25,6 +25,7 @@ Shareaza Russian Schemas File translated by dAbserver; Rolandas Rudomanskis
 Shareaza Slovenian Schemas File translated by Martin McDowell
 Shareaza Albanian Schemas File translated by Besmir Godole
 Shareaza Serbian Schemas File translated by Woodstoock
+Shareaza Swedish Schemas File translated by Marcus Ehrenlans; Printz; DanielB
 Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
 -->
 
@@ -57,6 +58,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="sl-SI">Video:Moj video</title>
                <title language="sq">Video:Video Ime</title>
                <title language="sr">Film:Moji Filmovi</title>
+               <title language="sv">Video: Min video</title>
                <title language="tr">Video: Videolarım</title>
        </titles>
        <images>
@@ -90,6 +92,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="sl-SI">Naslov</title>
                        <title language="sq">Titulli</title>
                        <title language="sr">Naslov</title>
+                       <title language="sv">Titel</title>
                        <title language="tr">Başlık</title>
                </member>
        </members>
@@ -124,6 +127,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="sl-SI">Dobrodošli v mojem videu!</title>
                <title language="sq">Mirë se erdhët në Videot Tuaja!</title>
                <title language="sr">Dobrodošli Među Vaše Filmove</title>
+               <title language="sv">Välkommen till min video!</title>
                <title language="tr">Videolarıma Hoşgeldiniz!</title>
                <subtitle language="en">These folders contain all of the video files in your library, divided into films, TV shows and music videos.  Open a folder below to continue.</subtitle>
                <subtitle language="af">Hierdie gidse bevat al die videolêers in jou biblioteek, verdeel volgens films, TV programme en musiek video's. Open 'n gids hieronder om voort te gaan.</subtitle>
@@ -150,6 +154,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="sl-SI">Te mape vsebujejo vse video datoteke v vaši knjižnici razdeljene v filme, TV oddaje in glasbene videje. Odprite mapo spodaj za nadaljevanje.</subtitle>
                <subtitle language="sq">Këto dosje përmbajnë gjithë videot në librarinë tuaj, ndarë në filma, shfaqje TV dhe video muzikore.  Që të vijoni, hapni një dosje më poshtë.</subtitle>
                <subtitle language="sr">Ove fascikle sadrže sve video zapise iz vaše kolekcije složene kao celovečernji filmovi, Tv emisije i spotovi.</subtitle>
+               <subtitle language="sv">Denna mapp innehåller alla videofiler i ditt bibliotek, uppdelad i filmer, TV-program och musikvideor. Öppna en mapp nedanför för att fortsätta.</subtitle>
                <subtitle language="tr">Bu klasörler arşivinizdeki tüm video dosyalarını, filmlerden bölümleri, TV şovları ve klipleri içermektedir. Devam etmek için bir klasör açınız.</subtitle>
        </headerContent>
 

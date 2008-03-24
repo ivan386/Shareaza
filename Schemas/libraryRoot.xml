@@ -25,6 +25,7 @@ Shareaza Russian Schemas File translated by dAbserver; Rolandas Rudomanskis
 Shareaza Slovenian Schemas File translated by Martin McDowell
 Shareaza Albanian Schemas File translated by Besmir Godole
 Shareaza Serbian Schemas File translated by Woodstoock
+Shareaza Swedish Schemas File translated by Marcus Ehrenlans; Printz; DanielB
 Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
 -->
 
@@ -57,6 +58,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="sl-SI">Splošno:Moja Shareaza knjižnica</title>
                <title language="sq">Përgjithësi:Libraria Juaj në Shareaza</title>
                <title language="sr">Opšte:Moja Kolekcija</title>
+               <title language="sv">Generellt: Mitt Shareazabibliotek</title>
                <title language="tr">Genel: Shareaza Kütüphanem</title>
        </titles>
        <members>
@@ -87,6 +89,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="sl-SI">Naslov</title>
                        <title language="sq">Titulli</title>
                        <title language="sr">Naslov</title>
+                       <title language="sv">Titel</title>
                        <title language="tr">Başlık</title>
                </member>
                <member name="owner" search="indexed">
@@ -115,6 +118,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="sl-SI">Lastnik</title>
                        <title language="sq">Zotëruesi</title>
                        <title language="sr">Vlasnik</title>
+                       <title language="sv">Ägare</title>
                        <title language="tr">Sahibi</title>
                </member>
                <member name="comments">
@@ -143,6 +147,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="sl-SI">Komentarji</title>
                        <title language="sq">Komente</title>
                        <title language="sr">Komentari</title>
+                       <title language="sv">Kommentarer</title>
                        <title language="tr">Yorumlar</title>
                </member>
        </members>
@@ -175,6 +180,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="sl-SI">Dobrodošli v vaši knjižnici!</title>
                <title language="sq">Mirë se erdhët në Librarinë Tuaj!</title>
                <title language="sr">Dobrodošli U Vašu Kolekciju!</title>
+               <title language="sv">Välkommen till ditt bibliotek!</title>
                <title language="tr">Kütüphanenize Hoşgeldiniz!</title>
                <subtitle language="en">You have {totalFiles} files totalling {totalVolume} in your library.</subtitle>
                <subtitle language="af">Jy het {totalFiles} lêers met 'n totaal van {totalVolume} in jou biblioteek.</subtitle>
@@ -201,6 +207,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="sl-SI">V vaši knjižnici imate {totalFiles} datotek, v skupni velikosti {totalVolume}.</subtitle>
                <subtitle language="sq">Në librari gjenden {totalFiles} skeda, me përmasë {totalVolume}.</subtitle>
                <subtitle language="sr">Imate {totalFiles} datoteka Tj {totalVolume} koje delite sa svetom.</subtitle>
+               <subtitle language="sv">Du har {totalFiles} filer som upptar {totalVolume} i ditt bibliotek.</subtitle>
                <subtitle language="tr">Kütüphanenizde {totalFiles} toplanmış {totalVolume} dosya vardır.</subtitle>
        </headerContent>
 

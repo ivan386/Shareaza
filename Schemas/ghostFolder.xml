@@ -25,6 +25,7 @@ Shareaza Russian Schemas File translated by dAbserver; Rolandas Rudomanskis
 Shareaza Slovenian Schemas File translated by Martin McDowell
 Shareaza Albanian Schemas File translated by Besmir Godole
 Shareaza Serbian Schemas File translated by Woodstoock
+Shareaza Swedish Schemas File translated by Marcus Ehrenlans; Printz; DanielB
 Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
 -->
 
@@ -57,6 +58,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
               <title language="sl-SI">Splošno:Navidezne datoteke</title>
               <title language="sq">Përgjithësi:Skedat Fantazmë</title>
               <title language="sr">General:Ghost Files</title>
+              <title language="sv">Generellt: skuggfiler</title>
               <title language="tr">Genel: Niteliksiz Dosyalar</title>
         </titles>
        <images>
@@ -90,6 +92,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="sl-SI">Naslov</title>
                        <title language="sq">Titulli</title>
                        <title language="sr">Naslov</title>
+                       <title language="sv">Titel</title>
                        <title language="tr">Başlık</title>
                </member>
        </members>
@@ -119,6 +122,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="sl-SI">Navidezne datoteke</title>
                <title language="sq">Skedat Fantazmë</title>
                <title language="sr">Ghost Files</title>
+               <title language="sv">Skuggfiler</title>
                <title language="tr">Niteliksiz Dosyalar</title>
                <subtitle language="en">This folder contains every file which you've deleted from the Library.</subtitle>
                <subtitle language="af">This folder contains every file which you've deleted from the Library.</subtitle>
@@ -145,6 +149,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="sl-SI">Ta mapa vsebuje vse datoteke, ki ste jih brisali iz vaše knjižnice.</subtitle>
                <subtitle language="sq">Kjo dosje përmban skedat që janë fshirë nga Libraria.</subtitle>
                <subtitle language="sr">This folder contains every file which you've deleted from the Library.</subtitle>
+               <subtitle language="sv">Denna mapp innehåller varje fil som du har raderat från din samling.</subtitle>
                <subtitle language="tr">Bu klasör kütüphaneden sildiğiniz tüm dosyaları içerir.</subtitle>
      </headerContent>
      <viewContent version="1.0" preferredView="CLibraryDetailView"/>

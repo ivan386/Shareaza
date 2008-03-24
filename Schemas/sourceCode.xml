@@ -26,6 +26,7 @@ Shareaza Russian Schemas File translated by dAbserver; Rolandas Rudomanskis
 Shareaza Slovenian Schemas File translated by Martin McDowell
 Shareaza Albanian Schemas File translated by Besmir Godole
 Shareaza Serbian Schemas File translated by Woodstoock
+Shareaza Swedish Schemas File translated by Marcus Ehrenlans; Printz; DanielB
 Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
 -->
 
@@ -57,6 +58,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="sl-SI">Izvorna koda</title>
                <title language="sq">Kodburimi</title>
                <title language="sr">Izvorni Kod</title>
+               <title language="sv">Källkod</title>
                <title language="tr">Kaynak Kod</title>
        </titles>
        <images>
@@ -90,6 +92,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="sl-SI">Naslov</title>
                        <title language="sq">Titulli</title>
                        <title language="sr">Naslov</title>
+                       <title language="sv">Titel</title>
                        <title language="tr">Başlık</title>
                </member>
                <member name="author" search="generic">
@@ -119,6 +122,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="sl-SI">Avtor</title>
                        <title language="sq">Autori</title>
                        <title language="sr">Autor</title>
+                       <title language="sv">Författare</title>
                        <title language="tr">Yazar</title>
                </member>
                <member name="company">
@@ -148,6 +152,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="sl-SI">Tvrdka</title>
                        <title language="sq">Kompania</title>
                        <title language="sr">Proizvođač</title>
+                       <title language="sv">Företag</title>
                        <title language="tr">Şirket</title>
                </member>
                <member name="subject">
@@ -177,6 +182,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="sl-SI">Zadeva</title>
                        <title language="sq">Tema</title>
                        <title language="sr">Tema</title>
+                       <title language="sv">Ämne</title>
                        <title language="tr">Konu</title>
                </member>
                <member name="keywords">
@@ -205,6 +211,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="sl-SI">Ključne besede</title>
                        <title language="sq">Fjalët Kyçe</title>
                        <title language="sr">Ključne Reči</title>
+                       <title language="sv">Nyckelord</title>
                        <title language="tr">Anahtar Kelimeler</title>
                </member>
                <member name="abstract">
@@ -233,6 +240,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="sl-SI">Povzetek</title>
                        <title language="sq">Abstrakte</title>
                        <title language="sr">Abstrakt</title>
+                       <title language="sv">Sammanfattning</title>
                        <title language="tr">Özet</title>
                </member>
                <member name="copyright">
@@ -261,6 +269,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="sl-SI">Avtorska pravica</title>
                        <title language="sq">Copyright</title>
                        <title language="sr">Prava</title>
+                       <title language="sv">Upphovsrätt</title>
                        <title language="tr">Telif Hakkı</title>
                </member>
                <member name="version">
@@ -289,6 +298,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="sl-SI">Različica</title>
                        <title language="sq">Versioni</title>
                        <title language="sr">Verzija</title>
+                       <title language="sv">Version</title>
                        <title language="tr">Versiyon</title>
                </member>
                <member name="revision">
@@ -317,6 +327,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="sl-SI">Revizija</title>
                        <title language="sq">Rishikimi</title>
                        <title language="sr">Revizija</title>
+                       <title language="sv">Revision</title>
                        <title language="tr">Düzenleme</title>
                </member>
                <member name="language">
@@ -346,6 +357,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="sl-SI">Jezik</title>
                        <title language="sq">Gjuhë</title>
                        <title language="sr">Jezik</title>
+                       <title language="sv">Språk</title>
                        <title language="tr">Dil</title>
                </member>
                <member name="languageVersion">
@@ -375,6 +387,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="sl-SI">Jezikovna različica</title>
                        <title language="sq">Versioni i Gjuhës</title>
                        <title language="sr">Narečje</title>
+                       <title language="sv">Språkversion</title>
                        <title language="tr">Dil Versiyonu</title>
                </member>
                <member name="license">
@@ -403,6 +416,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="sl-SI">Licenca</title>
                        <title language="sq">Licensë</title>
                        <title language="sr">Dozvola</title>
+                       <title language="sv">Licens</title>
                        <title language="tr">Lisans</title>
                </member>
                <member name="OS">
@@ -431,6 +445,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="sl-SI">Operac. sistem</title>
                        <title language="sq">Sistemi Operativ</title>
                        <title language="sr">OS</title>
+                       <title language="sv">OS</title>
                        <title language="tr">İşletim Sistemi</title>
                </member>
                <member name="link">
@@ -459,6 +474,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="sl-SI">Povezava</title>
                        <title language="sq">Linku</title>
                        <title language="sr">Link</title>
+                       <title language="sv">Länk</title>
                        <title language="tr">Bağlantı</title>
                </member>
                <member name="comments">
@@ -487,6 +503,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="sl-SI">Komentarji</title>
                        <title language="sq">Komente</title>
                        <title language="sr">Komentari</title>
+                       <title language="sv">Kommentarer</title>
                        <title language="tr">Yorumlar</title>
                </member>
        </members>

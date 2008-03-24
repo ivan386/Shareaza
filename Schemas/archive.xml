@@ -25,6 +25,7 @@ Shareaza Russian Schemas File translated by dAbserver; Rolandas Rudomanskis
 Shareaza Slovenian Schemas File translated by Martin McDowell
 Shareaza Albanian Schemas File translated by Besmir Godole
 Shareaza Serbian Schemas File translated by Woodstoock
+Shareaza Swedish Schemas File translated by Marcus Ehrenlans; Printz; DanielB
 Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
 -->
 
@@ -56,6 +57,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="sl-SI">Archive</title>
                <title language="sq">Archive</title>
                <title language="sr">Archive</title>
+               <title language="sv">Arkiv</title>
                <title language="tr">Archive</title>
        </titles>
        <members>
@@ -86,6 +88,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="sl-SI">Naslov</title>
                        <title language="sq">Titulli</title>
                        <title language="sr">Naslov</title>
+                       <title language="sv">Titel</title>
                        <title language="tr">Başlık</title>
               </member>
               <member name="folders" search="generic">
@@ -114,6 +117,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="sl-SI">Folders</title>
                        <title language="sq">Folders</title>
                        <title language="sr">Folders</title>
+                       <title language="sv">Mappar</title>
                        <title language="tr">Folders</title>
               </member>
               <member name="files" search="generic">
@@ -142,6 +146,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="sl-SI">Files</title>
                        <title language="sq">Files</title>
                        <title language="sr">Files</title>
+                       <title language="sv">Filer</title>
                        <title language="tr">Files</title>
               </member>
               <member name="comments" search="generic">
@@ -170,6 +175,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="sl-SI">Komentarji</title>
                        <title language="sq">Komente</title>
                        <title language="sr">Komentari</title>
+                       <title language="sv">Kommentarer</title>
                        <title language="tr">Yorumlar</title>
                </member>
               <member name="archive" search="indexed">
@@ -198,6 +204,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="sl-SI">Arhivski tip</title>
                        <title language="sq">Lloj Arkivi</title>
                        <title language="sr">Vrsta Arhive</title>
+                       <title language="sv">Arkivtyp</title>
                        <title language="tr">Arşiv Tipi</title>
                </member>
                <member name="keywords">
@@ -226,6 +233,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="sl-SI">Ključne besede</title>
                        <title language="sq">Fjalët Kyçe</title>
                        <title language="sr">Ključne Reči</title>
+                       <title language="sv">Nyckelord</title>
                        <title language="tr">Anahtar Kelimeler</title>
                </member>
                <member name="encrypted">
@@ -255,6 +263,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="sl-SI">Encrypted</title>
                        <title language="sq">Encrypted</title>
                        <title language="sr">Encrypted</title>
+                       <title language="sv">Krypterad</title>
                        <title language="tr">Encrypted</title>
                </member>
                <member name="unpackedsize">
@@ -284,6 +293,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="sl-SI">Unpacked Size</title>
                        <title language="sq">Unpacked Size</title>
                        <title language="sr">Unpacked Size</title>
+                       <title language="sv">Okomprimerad storlek</title>
                        <title language="tr">Unpacked Size</title>
                </member>
       </members>

@@ -25,6 +25,7 @@ Shareaza Russian Schemas File translated by dAbserver; Rolandas Rudomanskis
 Shareaza Slovenian Schemas File translated by Martin McDowell
 Shareaza Albanian Schemas File translated by Besmir Godole
 Shareaza Serbian Schemas File translated by Woodstoock
+Shareaza Swedish Schemas File translated by Marcus Ehrenlans; Printz; DanielB
 Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
 -->
 
@@ -57,6 +58,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="sl-SI">Knjiga:Vse knjige</title>
                <title language="sq">Libri:Gjithë Librat</title>
                <title language="sr">Knjiga:Sve Knjige</title>
+               <title language="sv">Bok: Alla böcker</title>
                <title language="tr">Kitap: Tüm Kitaplar</title>
        </titles>
        <images>
@@ -90,6 +92,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="sl-SI">Naslov</title>
                        <title language="sq">Titulli</title>
                        <title language="sr">Naslov</title>
+                       <title language="sv">Titel</title>
                        <title language="tr">Başlık</title>
                </member>
        </members>
@@ -122,6 +125,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="sl-SI">Vse knjige</title>
                <title language="sq">Gjithë Librat</title>
                <title language="sr">Sve Knjige</title>
+               <title language="sv">Alla böcker</title>
                <title language="tr">Tüm Kitaplar</title>
                <subtitle language="en">This folder contains every book in your library.</subtitle>
                <subtitle language="af">Hierdie gids bevat alle boeke in jou biblioteek.</subtitle>
@@ -148,6 +152,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="sl-SI">Ta mapa vsebuje vse knjige v vaši knjižnici.</subtitle>
                <subtitle language="sq">Kjo dosje përmban librat në librarinë tuaj.</subtitle>
                <subtitle language="sr">Ova fascikla sadrži sve vaše knjige u kolekciji.</subtitle>
+               <subtitle language="sv">Denna mapp innehåller alla böcker som du har i ditt bibliotek.</subtitle>
                <subtitle language="tr">Bu klasör arşivinizdeki her kitabı içerir.</subtitle>
        </headerContent>
        <viewContent version="1.0" preferredView="CLibraryDetailView"/>

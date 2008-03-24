@@ -25,6 +25,7 @@ Shareaza Russian Schemas File translated by dAbserver; Rolandas Rudomanskis
 Shareaza Slovenian Schemas File translated by Martin McDowell
 Shareaza Albanian Schemas File translated by Besmir Godole
 Shareaza Serbian Schemas File translated by Woodstoock
+Shareaza Swedish Schemas File translated by Marcus Ehrenlans; Printz; DanielB
 Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
 -->
 
@@ -57,6 +58,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="sl-SI">Podoba:Moje podobe</title>
                <title language="sq">Figurë:Figura Ime</title>
                <title language="sr">Slike:Moje Slike</title>
+               <title language="sv">Bild: Mina bilder</title>
                <title language="tr">Görüntü: Görüntülerim</title>
        </titles>
        <images>
@@ -90,6 +92,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="sl-SI">Naslov</title>
                        <title language="sq">Titulli</title>
                        <title language="sr">Naslov</title>
+                       <title language="sv">Titel</title>
                        <title language="tr">Başlık</title>
                </member>
        </members>
@@ -122,6 +125,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="sl-SI">Dobrodošli v mojih podobah!</title>
                <title language="sq">Mirë se erdhët në Figurat Tuaja!</title>
                <title language="sr">Dobrodošli Među Vaše Slike!</title>
+               <title language="sv">Välkommen till mina bilder!</title>
                <title language="tr">Görüntülerime Hoşgeldiniz!</title>
                <subtitle language="en">These folders contain all of the images in your library, organised by album.  Open a folder below to continue.</subtitle>
                <subtitle language="af">Hierdie gidse bevat al die prente in jou biblioteek, georganiseer volgens album. Open 'n gids hieronder om voort te gaan.</subtitle>
@@ -148,6 +152,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="sl-SI">Te mape vsebujejo vse podobe v vaši knjižnici, urejene po albumu. Odprite mapo spodaj za nadaljevanje.</subtitle>
                <subtitle language="sq">Kjo dosje përmban gjithë figurat në librarinë tuaj, organizuar sipas albumeve. Që të vijoni, hapni një dosje më poshtë.</subtitle>
                <subtitle language="sr">Ove fascikle sadrže sve slike iz vaše kolekcije složene u albume. Otvorite željenu fasciklu.</subtitle>
+               <subtitle language="sv">Denna mapp innehåller alla bilder i ditt bibliotek, organiserade efter album. Öppna en mapp nedanför för att fortsätta.</subtitle>
                <subtitle language="tr">Bu klasörler arşivinizdeki albümden düzenlenen tüm görüntüleri içermektedir. Devam etmek için bir klasör açınız.</subtitle>
        </headerContent>
 

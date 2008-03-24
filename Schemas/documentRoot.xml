@@ -25,6 +25,7 @@ Shareaza Russian Schemas File translated by dAbserver; Rolandas Rudomanskis
 Shareaza Slovenian Schemas File translated by Martin McDowell
 Shareaza Albanian Schemas File translated by Besmir Godole
 Shareaza Serbian Schemas File translated by Woodstoock
+Shareaza Swedish Schemas File translated by Marcus Ehrenlans; Printz; DanielB
 Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
 -->
 
@@ -57,6 +58,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="sl-SI">Dokument:Moji dokumenti</title>
                <title language="sq">Dokumenti:Dokumenti Im</title>
                <title language="sr">Dokument:Moji Dokumenti</title>
+               <title language="sv">Dokument: Mina dokument</title>
                <title language="tr">Doküman: Dokümanlarım</title>
        </titles>
        <images>
@@ -90,6 +92,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="sl-SI">Naslov</title>
                        <title language="sq">Titulli</title>
                        <title language="sr">Naslov</title>
+                       <title language="sv">Titel</title>
                        <title language="tr">Başlık</title>
                </member>
        </members>
@@ -122,6 +125,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="sl-SI">Dobrodošli v mojih dokumentih!</title>
                <title language="sq">Mirë se erdhët në Dokumentet Tuaja!</title>
                <title language="sr">Dobrodošli Među Vaše Dokumente!</title>
+               <title language="sv">Välkommen till Mina dokument!</title>
                <title language="tr">Dokümanlarıma Hoşgeldiniz!</title>
                <subtitle language="en">These folders contain all of your documents.</subtitle>
                <subtitle language="af">Hierdie gidse bevat al jou dokumente.</subtitle>
@@ -148,6 +152,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="sl-SI">Te mape vsebujejo vse dokumente.</subtitle>
                <subtitle language="sq">Këto dosje përmbajnë gjithë dokumentet tuaja.</subtitle>
                <subtitle language="sr">Ove fascile sadrže sve vaše dokumente.</subtitle>
+               <subtitle language="sv">Denna mapp innehåller alla dina dokument.</subtitle>
                <subtitle language="tr">Bu klasörler tüm dokümanlarınızı içerir.</subtitle>
        </headerContent>
 

@@ -25,6 +25,7 @@ Shareaza Russian Schemas File translated by dAbserver; Rolandas Rudomanskis
 Shareaza Slovenian Schemas File translated by Martin McDowell
 Shareaza Albanian Schemas File translated by Besmir Godole
 Shareaza Serbian Schemas File translated by Woodstoock
+Shareaza Swedish Schemas File translated by Marcus Ehrenlans; Printz; DanielB
 Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
 -->
 
@@ -57,6 +58,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
               <title language="sl-SI">Kolekcije:Moje kolekcije</title>
               <title language="sq">Koleksione:Koleksionet e Mia</title>
               <title language="sr">Kolekcija:Moja Kolekcija</title>
+              <title language="sv">Samlingar: Mina samlingar</title>
               <title language="tr">Koleksiyonlar: Koleksiyonlarım</title>
        </titles>
        <images>
@@ -90,6 +92,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="sl-SI">Naslov</title>
                        <title language="sq">Titulli</title>
                        <title language="sr">Naslov</title>
+                       <title language="sv">Titel</title>
                        <title language="tr">Başlık</title>
                </member>
        </members>
@@ -119,6 +122,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="sl-SI">Moje kolekcije</title>
                <title language="sq">Koleksioni Im</title>
                <title language="sr">Moja Kolekcija</title>
+               <title language="sv">Mina samlingar</title>
                <title language="tr">Koleksiyonlarım</title>
                <subtitle language="en">This folder contains any rich File Collections in your library.</subtitle>
                <subtitle language="af">Hierdie gids bevat enige ryk Versamelingslêers in jou biblioteek.</subtitle>
@@ -145,6 +149,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="sl-SI">Ta mapa vsebuje katerokoli kolekcijo bogatih (rich) datotek v vaši knjižnici.</subtitle>
                <subtitle language="sq">Kjo dosje përmban skedat me Koleksionet në librarinë tuaj.</subtitle>
                <subtitle language="sr">Ove fascikla sadrži sve vaše rich File datoteke u vašoj kolekciji.</subtitle>
+               <subtitle language="sv">Denna mapp innehåller alla filsamlingar som du har i ditt bibliotek.</subtitle>
                <subtitle language="tr">Bu klasör arşivinizdeki TV serilerinin bir listesini içerir.</subtitle>
        </headerContent>
 

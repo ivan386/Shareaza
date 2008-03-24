@@ -25,6 +25,7 @@ Shareaza Russian Schemas File translated by dAbserver; Rolandas Rudomanskis
 Shareaza Slovenian Schemas File translated by Martin McDowell
 Shareaza Albanian Schemas File translated by Besmir Godole
 Shareaza Serbian Schemas File translated by Woodstoock
+Shareaza Swedish Schemas File translated by Marcus Ehrenlans; Printz; DanielB
 Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
 -->
 
@@ -57,6 +58,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="sl-SI">Glasbeni žanr</title>
                <title language="sq">Gjinia e Muzikës</title>
                <title language="sr">Muzika Žanr</title>
+               <title language="sv">Musikgenre</title>
                <title language="tr">Müzik Tarzı</title>
        </titles>
        <images>
@@ -90,6 +92,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="sl-SI">Naslov</title>
                        <title language="sq">Titulli</title>
                        <title language="sr">Naslov</title>
+                       <title language="sv">Titel</title>
                        <title language="tr">Başlık</title>
                </member>
                <member name="description" search="none">
@@ -118,6 +121,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="sl-SI">Opis</title>
                        <title language="sq">Përshkrimi</title>
                        <title language="sr">Opis</title>
+                       <title language="sv">Beskrivning</title>
                        <title language="tr">Tanımlama</title>
                </member>
                <member name="collector" search="indexed">
@@ -146,6 +150,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="sl-SI">Kolektor</title>
                        <title language="sq">Koleksionuesi</title>
                        <title language="sr">Sakupio</title>
+                       <title language="sv">Samlare</title>
                        <title language="tr">Koleksiyoncu</title>
                </member>
                <member name="comments">
@@ -174,6 +179,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="sl-SI">Komentarji</title>
                        <title language="sq">Komente</title>
                        <title language="sr">Komentari</title>
+                       <title language="sv">Kommentarer</title>
                        <title language="tr">Yorumlar</title>
                </member>
        </members>
@@ -211,6 +217,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="sl-SI">{name} Glasba</title>
                <title language="sq">{name} Muzikë</title>
                <title language="sr">{name} - Muzika</title>
+               <title language="sv">{name} musik</title>
                <title language="tr">{name} Müzik</title>
                <subtitle language="en">This folder contains all of your music which falls into the {name} genre.</subtitle>
                <subtitle language="af">Hierdie gids bevat al jou musiek wat in die {name} genre val.</subtitle>
@@ -237,6 +244,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="sl-SI">Ta mapa vsebuje vso vašo glasbo, ki sodi v žanr {name}.</subtitle>
                <subtitle language="sq">Kjo dosje përmban gjithë muzikën e gjinisë {name}.</subtitle>
                <subtitle language="sr">Ova fascikla sadrži sve vaše pesme koje spadaju u {name} žanr.</subtitle>
+               <subtitle language="sv">Denna mapp innehåller all musik som tillhör genren {name}.</subtitle>
                <subtitle language="tr">Bu klasör {name} tarzının tüm müziklerini içerir.</subtitle>
        </headerContent>
        <viewContent version="1.0" preferredView="CLibraryAlbumView"/>

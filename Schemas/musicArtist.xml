@@ -25,6 +25,7 @@ Shareaza Russian Schemas File translated by dAbserver; Rolandas Rudomanskis
 Shareaza Slovenian Schemas File translated by Martin McDowell
 Shareaza Albanian Schemas File translated by Besmir Godole
 Shareaza Serbian Schemas File translated by Woodstoock
+Shareaza Swedish Schemas File translated by Marcus Ehrenlans; Printz; DanielB
 Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
 -->
 
@@ -57,6 +58,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="sl-SI">Glasbeni izvajalec</title>
                <title language="sq">Artisti i Muzikës</title>
                <title language="sr">Muzika Izvođač</title>
+               <title language="sv">Musikartist</title>
                <title language="tr">Şarkıcı</title>
        </titles>
        <images>
@@ -90,6 +92,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="sl-SI">Ime</title>
                        <title language="sq">Emri</title>
                        <title language="sr">Ime</title>
+                       <title language="sv">Namn</title>
                        <title language="tr">İsim</title>
                </member>
                <member name="description">
@@ -118,6 +121,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="sl-SI">Opis</title>
                        <title language="sq">Përshkrimi</title>
                        <title language="sr">Opis</title>
+                       <title language="sv">Beskrivning</title>
                        <title language="tr">Tanımlama</title>
                </member>
                <member name="collector">
@@ -146,6 +150,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="sl-SI">Kolektor</title>
                        <title language="sq">Koleksionuesi</title>
                        <title language="sr">Sakupio</title>
+                       <title language="sv">Samlare</title>
                        <title language="tr">Koleksiyoncu</title>
                </member>
                <member name="comments">
@@ -174,6 +179,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="sl-SI">Komentarji</title>
                        <title language="sq">Komente</title>
                        <title language="sr">Komentari</title>
+                       <title language="sv">Kommentarer</title>
                        <title language="tr">Yorumlar</title>
                </member>
                <member name="album">
@@ -217,6 +223,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="sl-SI">{name} - Diskografija</title>
                <title language="sq">{name} - Diskografi</title>
                <title language="sr">{name} - Diskografija</title>
+               <title language="sv">{name} - Diskografi</title>
                <title language="tr">{name} Keşif</title>
                <subtitle language="en">This folder contains all of your music by {name}.</subtitle>
                <subtitle language="af">Hierdie gids bevat al jou musiek volgens {name} .</subtitle>
@@ -243,6 +250,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="sl-SI">Ta mapa vsebuje vso vašo glasbo po {name}.</subtitle>
                <subtitle language="sq">Kjo dosje përmban gjithë muzikën e {name}.</subtitle>
                <subtitle language="sr">Ova fascikla sadrži popis vaših pesama od {name}.</subtitle>
+               <subtitle language="sv">Denna mapp innehåller all musik av {name}.</subtitle>
                <subtitle language="tr">Bu klasör {name} sanatçının müziklerini içerir.</subtitle>
        </headerContent>
        <viewContent version="1.0" preferredView="CLibraryAlbumView"/>

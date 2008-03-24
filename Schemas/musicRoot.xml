@@ -25,6 +25,7 @@ Shareaza Russian Schemas File translated by dAbserver; Rolandas Rudomanskis
 Shareaza Slovenian Schemas File translated by Martin McDowell
 Shareaza Albanian Schemas File translated by Besmir Godole
 Shareaza Serbian Schemas File translated by Woodstoock
+Shareaza Swedish Schemas File translated by Marcus Ehrenlans; Printz; DanielB
 Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
 -->
 
@@ -57,6 +58,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="sl-SI">Glasba:Moja glasba</title>
                <title language="sq">Muzikë:Muzika Ime</title>
                <title language="sr">Muzika:Moje Pesme</title>
+               <title language="sv">Musik: Min musik</title>
                <title language="tr">Müzik: Müziğim</title>
        </titles>
        <images>
@@ -90,6 +92,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="sl-SI">Naslov</title>
                        <title language="sq">Titulli</title>
                        <title language="sr">Naslov</title>
+                       <title language="sv">Titel</title>
                        <title language="tr">Başlık</title>
                </member>
        </members>
@@ -124,6 +127,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="sl-SI">Dobrodošli v moji glasbi!</title>
                <title language="sq">Mirë se erdhët në Muzikën Tuaj!</title>
                <title language="sr">Dobrodošli Među Vaše Pesme</title>
+               <title language="sv">Välkommen till min musik!</title>
                <title language="tr">Müziklerime Hoşgeldiniz!</title>
                <subtitle language="en">These folders contain all of the music in your library, organised by album, by artist and by genre.  Open a folder below to continue.</subtitle>
                <subtitle language="af">Hierdie gidse bevat al die musiek in jou biblioteek, georganiseer volgens album, kunstenaar en genre. Open 'n gids hieronder om voort te gaan.</subtitle>
@@ -150,6 +154,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="sl-SI">Te mape vsebujejo vso glasbo v vaši knjižnici, urejeno po albumu, izvajalcu in žanru. Odprite mapo spodaj za nadaljevanje.</subtitle>
                <subtitle language="sq">Këto dosje përmbajnë gjithë muzikën në librarinë tuaj, organizuar sipas albumeve, artistëve dhe gjinisë.  Hapni një nga dosjet më poshtë.</subtitle>
                <subtitle language="sr">Ove fascikle sadrže svu muziku iz vaše kolekcije složenu po albumima, izvođaču i žanru.</subtitle>
+               <subtitle language="sv">Denna mapp innehåller all musik i ditt bibliotek, organiserad efter album, artist och genre. Öppna en mapp nedanför för att fortsätta.</subtitle>
                <subtitle language="tr">Bu klasörler arşivinizdeki albüme, sanatçıya ve tarza  göre düzenlenmiş tüm müzikleri içermektedir. Devam etmek için aşağıdan bir klasörü açınız.</subtitle>
        </headerContent>
 

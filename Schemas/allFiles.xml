@@ -25,6 +25,7 @@ Shareaza Russian Schemas File translated by dAbserver; Rolandas Rudomanskis
 Shareaza Slovenian Schemas File translated by Martin McDowell
 Shareaza Albanian Schemas File translated by Besmir Godole
 Shareaza Serbian Schemas File translated by Woodstoock
+Shareaza Swedish Schemas File translated by Marcus Ehrenlans; Printz; DanielB
 Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
 -->
 
@@ -57,6 +58,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="sl-SI">Splošno:Vse datoteke</title>
                <title language="sq">Përgjithësi:Gjithë Skedat</title>
                <title language="sr">Opšte:Sve Datoteke</title>
+               <title language="sv">Generellt: Alla filer</title>
                <title language="tr">Genel: Tüm Dosyalar</title>
         </titles>
        <images>
@@ -90,6 +92,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="sl-SI">Naslov</title>
                        <title language="sq">Titulli</title>
                        <title language="sr">Naslov</title>
+                       <title language="sv">Titel</title>
                        <title language="tr">Başlık</title>
                </member>
        </members>
@@ -119,6 +122,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="sl-SI">Vse datoteke</title>
                <title language="sq">Gjithë Skedat</title>
                <title language="sr">Sve Datoteke</title>
+               <title language="sv">Alla filer</title>
                <title language="tr">Tüm Dosyalar</title>
                <subtitle language="en">This folder contains every file in your library.</subtitle>
                <subtitle language="af">Hierdie gids bevat alle lêers in jou biblioteek.</subtitle>
@@ -145,6 +149,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="sl-SI">Ta mapa vsebuje vse datoteke v vaši knjižnici.</subtitle>
                <subtitle language="sq">Kjo dosje përmban skedat në librarinë tuaj.</subtitle>
                <subtitle language="sr">Ova fascikla sadrži sve datoteke u vašoj kolekciji.</subtitle>
+               <subtitle language="sv">Denna mapp innehåller alla filer som du har i ditt bibliotek.</subtitle>
                <subtitle language="tr">Bu klasör arşivinizdeki her dosyayı içerir.</subtitle>
      </headerContent>
        <viewContent version="1.0" preferredView="CLibraryDetailView"/>

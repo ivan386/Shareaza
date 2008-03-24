@@ -25,6 +25,7 @@ Shareaza Russian Schemas File translated by dAbserver; Rolandas Rudomanskis
 Shareaza Slovenian Schemas File translated by Martin McDowell
 Shareaza Albanian Schemas File translated by Besmir Godole
 Shareaza Serbian Schemas File translated by Woodstoock
+Shareaza Swedish Schemas File translated by Marcus Ehrenlans; Printz; DanielB
 Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
 -->
 
@@ -57,6 +58,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="sl-SI">Program:Moji programi</title>
                <title language="sq">Aplikm:Aplikimet e Mia</title>
                <title language="sr">Program:Svi Programi</title>
+               <title language="sv">Applikation: Mina applikationer</title>
                <title language="tr">Uygulama: Uygulamalarım</title>
        </titles>
        <images>
@@ -90,6 +92,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="sl-SI">Naslov</title>
                        <title language="sq">Titulli</title>
                        <title language="sr">Naslov</title>
+                       <title language="sv">Titel</title>
                        <title language="tr">Başlık</title>
                </member>
        </members>
@@ -122,6 +125,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="sl-SI">Dobrodošli v mojih programih!</title>
                <title language="sq">Mirë se erdhët në Aplikimet Tuaja!</title>
                <title language="sr">Dobrodošli Među Vaše Programe!</title>
+               <title language="sv">Välkommen till mina program!</title>
                <title language="tr">Uygulamalarıma Hoşgeldiniz!</title>
                <subtitle language="en">These folders contain all of your application files.</subtitle>
                <subtitle language="af">Hierdie gidse bevat al jou programlêers.</subtitle>
@@ -148,6 +152,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="sl-SI">Te mape vsebujejo vse programske datoteke.</subtitle>
                <subtitle language="sq">Këto dosje përmbajnë gjithë skedat tuaja aplikuese.</subtitle>
                <subtitle language="sr">Ove fascikle sadrže sve vaše programe.</subtitle>
+               <subtitle language="sv">Denna mapp innehåller alla applikationsfiler.</subtitle>
                <subtitle language="tr">Bu klasörler tüm uygulama dosyalarınızı içerir.</subtitle>
        </headerContent>
 

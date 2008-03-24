@@ -25,6 +25,7 @@ Shareaza Russian Schemas File translated by dAbserver; Rolandas Rudomanskis
 Shareaza Slovenian Schemas File translated by Martin McDowell
 Shareaza Albanian Schemas File translated by Besmir Godole
 Shareaza Serbian Schemas File translated by Woodstoock
+Shareaza Swedish Schemas File translated by Marcus Ehrenlans; Printz; DanielB
 Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
 -->
 
@@ -57,6 +58,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="sl-SI">Podoba:Vse podobe</title>
                <title language="sq">Figurë:Gjithë Figurat</title>
                <title language="sr">Slike:Sve Slike</title>
+               <title language="sv">Bild: Alla bilder</title>
                <title language="tr">Görüntü: Tüm Görüntüler</title>
        </titles>
        <images>
@@ -90,6 +92,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="sl-SI">Naslov</title>
                        <title language="sq">Titulli</title>
                        <title language="sr">Naslov</title>
+                       <title language="sv">Titel</title>
                        <title language="tr">Başlık</title>
                </member>
        </members>
@@ -122,6 +125,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="sl-SI">Vse slike</title>
                <title language="sq">Gjithë Figurat</title>
                <title language="sr">Sve Slike</title>
+               <title language="sv">Alla bilder</title>
                <title language="tr">Tüm Görüntüler</title>
                <subtitle language="en">This folder contains every image file in your library.</subtitle>
                <subtitle language="af">Hierdie gids bevat alle prentlêers in jou biblioteek.</subtitle>
@@ -148,6 +152,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="sl-SI">Ta mapa vsebuje vse podobe (datoteke) v vaši knjižnici.</subtitle>
                <subtitle language="sq">Kjo dosje përmban skedat imazhe në librarinë tuaj.</subtitle>
                <subtitle language="sr">Ova fascikla sadrži sve slike u vašoj kolekciji.</subtitle>
+               <subtitle language="sv">Denna mapp innehåller alla bildfiler som du har i ditt bibliotek.</subtitle>
                <subtitle language="tr">Bu klasör arşivinizdeki her görüntü dosyasını içerir.</subtitle>
        </headerContent>
        <viewContent version="1.0" preferredView="CLibraryThumbView"/>

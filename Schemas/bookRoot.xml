@@ -25,6 +25,7 @@ Shareaza Russian Schemas File translated by dAbserver; Rolandas Rudomanskis
 Shareaza Slovenian Schemas File translated by Martin McDowell
 Shareaza Albanian Schemas File translated by Besmir Godole
 Shareaza Serbian Schemas File translated by Woodstoock
+Shareaza Swedish Schemas File translated by Marcus Ehrenlans; Printz; DanielB
 Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
 -->
 
@@ -57,6 +58,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="sl-SI">Knjiga:Moje knjige</title>
                <title language="sq">Libri:Libri Im</title>
                <title language="sr">Knjiga:Moje Knjige</title>
+               <title language="sv">Bok: Mina böcker</title>
                <title language="tr">Kitap: Kitaplarım</title>
        </titles>
        <images>
@@ -90,6 +92,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                        <title language="sl-SI">Naslov</title>
                        <title language="sq">Titulli</title>
                        <title language="sr">Naslov</title>
+                       <title language="sv">Titel</title>
                        <title language="tr">Başlık</title>
                </member>
        </members>
@@ -122,6 +125,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <title language="sl-SI">Dobrodošli v mojih knjigah!</title>
                <title language="sq">Mirë se erdhët në Librat Tuaj!</title>
                <title language="sr">Dobrodošli Među Vaše Knjige!</title>
+               <title language="sv">Välkommen till mina böcker!</title>
                <title language="tr">Kitaplarıma Hoşgeldiniz!</title>
                <subtitle language="en">These folders contain all of your books.</subtitle>
                <subtitle language="af">Hierdie gidse bevat al jou boeke.</subtitle>
@@ -148,6 +152,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <subtitle language="sl-SI">Te mape vsebujejo vse knjige.</subtitle>
                <subtitle language="sq">Këto dosje përmbajnë gjithë librat tuaj.</subtitle>
                <subtitle language="sr">Ove fascikle sadrže sve vaše knjige.</subtitle>
+               <subtitle language="sv">Denna mapp innehåller alla böcker.</subtitle>
                <subtitle language="tr">Bu klasörler tüm kitaplarınızı içerir.</subtitle>
        </headerContent>
 
