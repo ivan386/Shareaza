@@ -2742,7 +2742,7 @@
 	<string id="16270" value="Nedlastingsforespørsel til %s timed out, lukker kobling."/>
 	<string id="16271" value="Lukker nedlastings-kobling %s p.g.a mangel på trafikk."/>
 	<string id="16272" value="Nedlastingsvert %s har ikke filene &quot;%s&quot;."/>
-	<string id="16273" value="Nedlastingsvert % svarte med et ugyldig HTTP svar."/>
+	<string id="16273" value="Nedlastingsvert %s svarte med et ugyldig HTTP svar."/>
 	<string id="16274" value="Nedlastingsvert %s svarte med %s (%s)."/>
 	<string id="16275" value="Nedlastingsvert %s's versjon av &quot;%s&quot; har forskjellig URN, avbryter."/>
 	<string id="16276" value="Nedlastingsvert %s's versjon av &quot;%s&quot; har forskjellig lengde, avbryter."/>

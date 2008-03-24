@@ -2727,7 +2727,7 @@
 	<string id="16270" value="Žádost ke stahování %s vypršela, ukončuji připojení."/>
 	<string id="16271" value="Ukonečno spojení pro stahování %s pro nedostatek provozu."/>
 	<string id="16272" value="Stahování od hosta %s soubor &quot;%s&quot; nenalezen."/>
-	<string id="16273" value="Stahování od hosta % odpovědělo nesprávnou odezvou HTTP."/>
+	<string id="16273" value="Stahování od hosta %s odpovědělo nesprávnou odezvou HTTP."/>
 	<string id="16274" value="Stahování od hosta %s odpovědělo %s (%s)."/>
 	<string id="16275" value="Stažení verze od hosta %s z &quot;%s&quot; má rozdílnou URN, přerušuji."/>
 	<string id="16276" value="Stažení verze od hosta %s z &quot;%s&quot; má rozdílnou délku, přerušuji."/>

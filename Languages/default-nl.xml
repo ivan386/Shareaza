@@ -2764,7 +2764,7 @@
 	<string id="16270" value="Downloadaanvraag naar %s is uitgeteld, de verbinding wordt gesloten."/>
 	<string id="16271" value="Downloadverbinding met %s wordt gesloten vanwege gebrek aan verkeer."/>
 	<string id="16272" value="Downloadgastheer %s heeft het bestand &quot;%s&quot; niet."/>
-	<string id="16273" value="Downloadgastheer % heeft geantwoord met een ongeldig HTTP antwoord."/>
+	<string id="16273" value="Downloadgastheer %s heeft geantwoord met een ongeldig HTTP antwoord."/>
 	<string id="16274" value="Downloadgastheer %s heeft geantwoord met %s (%s)."/>
 	<string id="16275" value="Downloadgastheer %s's versie van &quot;%s&quot; heeft een andere URN, geannuleerd."/>
 	<string id="16276" value="Downloadgastheer %s's versie van &quot;%s&quot; heeft een andere lengte, geannuleerd."/>

@@ -2652,7 +2652,7 @@
 	<string id="16270" value="Download request to %s timed out, closing connection."/>
 	<string id="16271" value="Closing download connection %s due to lack of traffic."/>
 	<string id="16272" value="Download host %s does not have the file &quot;%s&quot;."/>
-	<string id="16273" value="Download host % responded with an invalid HTTP response."/>
+	<string id="16273" value="Download host %s responded with an invalid HTTP response."/>
 	<string id="16274" value="Download host %s responded with %s (%s)."/>
 	<string id="16275" value="Download host %s's version of &quot;%s&quot; has a different URN, aborting."/>
 	<string id="16276" value="Download host %s's version of &quot;%s&quot; has a different length, aborting."/>

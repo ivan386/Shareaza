@@ -2727,7 +2727,7 @@
 	<string id="16270" value="Il tempo di richiesta per il download con %s è scaduto, chiusura della connessione."/>
 	<string id="16271" value="Chiusura della connessione per il download con %s per mancanza di traffico."/>
 	<string id="16272" value="L'host di download %s non ha il file &quot;%s&quot;."/>
-	<string id="16273" value="L'host di download % ha replicato con una risposta HTTP errata."/>
+	<string id="16273" value="L'host di download %s ha replicato con una risposta HTTP errata."/>
 	<string id="16274" value="L'host di download %s ha risposto con %s (%s)."/>
 	<string id="16275" value="L'host di download %s's versione di &quot;%s&quot; ha un differente SHA1, azione annullata."/>
 	<string id="16276" value="L'host di download %s's versione di &quot;%s&quot; ha una lunghezza diversa, azione annullata."/>

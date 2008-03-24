@@ -4058,7 +4058,7 @@ STRINGTABLE
 BEGIN
     IDS_DOWNLOAD_FILENOTFOUND 
                             "Download host %s does not have the file ""%s""."
-    IDS_DOWNLOAD_NOHTTP     "Download host % responded with an invalid HTTP response."
+    IDS_DOWNLOAD_NOHTTP     "Download host %s responded with an invalid HTTP response."
     IDS_DOWNLOAD_HTTPCODE   "Download host %s responded with %s (%s)."
     IDS_DOWNLOAD_WRONG_HASH "Download host %s's version of ""%s"" has a different URN, aborting."
     IDS_DOWNLOAD_WRONG_SIZE "Download host %s's version of ""%s"" has a different length, aborting."

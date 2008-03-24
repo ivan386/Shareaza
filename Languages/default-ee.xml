@@ -2752,7 +2752,7 @@
 	<string id="16270" value="Allalaadimiseks päring %s ei vasta, sulgen ühenduse."/>
 	<string id="16271" value="Sulgen ühenduse %s liikluse puudumise tõttu."/>
 	<string id="16272" value="Allalaadimis serveril %s ei ole faili &quot;%s&quot;."/>
-	<string id="16273" value="Allalaadimis serveril % tegi vigase HTTP vastuse."/>
+	<string id="16273" value="Allalaadimis serveril %s tegi vigase HTTP vastuse."/>
 	<string id="16274" value="Allalaadimis serveril %s vastas %s (%s)."/>
 	<string id="16275" value="Allalaadimis serveril %s's versioonil &quot;%s&quot; on erinev URN, katkestan."/>
 	<string id="16276" value="Allalaadimis serveril %s's versioonil &quot;%s&quot; on erinev kestus, katkestan."/>

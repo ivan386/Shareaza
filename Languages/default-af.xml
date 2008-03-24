@@ -2651,7 +2651,7 @@
 	<string id="16270" value="Aflaaiversoek na %s se wagtyd is verstreke, konneksie word gesluit."/>
 	<string id="16271" value="Aflaaikonneksie na %s word gesluit as gevolg van 'n tekort aan dataverkeer."/>
 	<string id="16272" value="Aflaaigasheer %s het nie die lêer &quot;%s&quot; nie."/>
-	<string id="16273" value="Aflaaigasheer % het gereageer met 'n foutiewe HTTP antwoord."/>
+	<string id="16273" value="Aflaaigasheer %s het gereageer met 'n foutiewe HTTP antwoord."/>
 	<string id="16274" value="Aflaaigasheer %s het gereageer met %s (%s)."/>
 	<string id="16275" value="Aflaaigasheer %s se weergawe van &quot;%s&quot; het 'n verskillende URN, aflaai word gestaak."/>
 	<string id="16276" value="Aflaaigasheer %s se weergawe van &quot;%s&quot; het 'n verskillende grootte, aflaai word gestaak."/>

@@ -2728,7 +2728,7 @@
 	<string id="16270" value="Parsisiuntimo iš %s užklausai baigėsi laiko limitas, nutraukiamas ryšys."/>
 	<string id="16271" value="Nutraukiamas parsisiuntimo ryšys su %s dėl siuntimų srauto kamščio."/>
 	<string id="16272" value="Adresatas %s neturi failo „%s“."/>
-	<string id="16273" value="Parsisiunčiant adresatas % atsiuntė neteisingą HTTP atsakymą."/>
+	<string id="16273" value="Parsisiunčiant adresatas %s atsiuntė neteisingą HTTP atsakymą."/>
 	<string id="16274" value="Parsisiunčiant adresatas %s astsiuntė atsakymą: %s (%s)."/>
 	<string id="16275" value="Parsisiunčiant atrasta, jog adresato %s „%s“ versija turi kitokį URN, procedūra nutraukiama."/>
 	<string id="16276" value="Parsisiunčiant atrasta, jog adresato %s „%s“ versija turi kitokį dydį, procedūra nutraukiama."/>

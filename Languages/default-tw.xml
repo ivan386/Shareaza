@@ -2690,7 +2690,7 @@
 	<string id="16270" value="向 %s 的下載要求已經逾時, 關閉連線中."/>
 	<string id="16271" value="正在關閉下載連線 %s , 因為缺乏流量."/>
 	<string id="16272" value="下載主機 %s 沒有這個檔案: &quot;%s&quot;."/>
-	<string id="16273" value="下載主機 % 發出無效的 HTTP 回應."/>
+	<string id="16273" value="下載主機 %s 發出無效的 HTTP 回應."/>
 	<string id="16274" value="下載主機 %s 回應了 %s (%s)."/>
 	<string id="16275" value="下載主機 %s 的 &quot;%s&quot; 的版本有不同的 URN, 放棄."/>
 	<string id="16276" value="下載主機 %s 的 &quot;%s&quot; 的版本有不同的長度, 放棄."/>

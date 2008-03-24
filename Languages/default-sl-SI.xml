@@ -2747,7 +2747,7 @@
 	<string id="16270" value="Prošnja za prenos do %s je presegla časovno omejitev, zapiram povezavo."/>
 	<string id="16271" value="Zapiram prenosno povezavo  %s zaradi pomanjkanja prometa."/>
 	<string id="16272" value="Gostitelj za prenos %s nima datoteke &quot;%s&quot;."/>
-	<string id="16273" value="Gostitelj za prenos % je odgovoril z neveljavnim HTTP odgovorom."/>
+	<string id="16273" value="Gostitelj za prenos %s je odgovoril z neveljavnim HTTP odgovorom."/>
 	<string id="16274" value="Gostitelj za prenos %s je odgovoril z %s (%s)."/>
 	<string id="16275" value="Prenosno gostiteljeva %s različica &quot;%s&quot; ima drugačen URN, prekinjam."/>
 	<string id="16276" value="Gostitelj za prenos %s's version of &quot;%s&quot; has a different length, aborting."/>

@@ -2708,7 +2708,7 @@
 	<string id="16270" value="%s indirme isteği zaman aşımına uğradı, bağlantı kapatılıyor."/>
 	<string id="16271" value="Trafik yoğunluğundan dolayı %s indirme bağlantısı kapatılıyor."/>
 	<string id="16272" value="%s indirme hostu &quot;%s&quot; dosyasına sahip değil."/>
-	<string id="16273" value="% indirme hostu geçersiz bir HTTP yanıtıyla karşılandı."/>
+	<string id="16273" value="%s indirme hostu geçersiz bir HTTP yanıtıyla karşılandı."/>
 	<string id="16274" value="%s indirme hostu %s (%s) ile karşılandı."/>
 	<string id="16275" value="%s indirme hostunun &quot;%s&quot; versiyonu farklı URN'ye sahip, başarısızlıkla sonuçlandı."/>
 	<string id="16276" value="%s indirme hostunun &quot;%s&quot; versiyonu farklı uzunluğa sahip, başarısızlıkla sonuçlandı."/>

@@ -2790,7 +2790,7 @@
 	<string id="16270" value="O pedido de download para %s ultrapassou o tempo de espera, fechando conexão."/>
 	<string id="16271" value="Fechando conexão de download com %s devido a falta de tráfego."/>
 	<string id="16272" value="O Host de download %s não possui o arquivo &quot;%s&quot;."/>
-	<string id="16273" value="O Host de download % respondeu com uma resposta HTTP inválida."/>
+	<string id="16273" value="O Host de download %s respondeu com uma resposta HTTP inválida."/>
 	<string id="16274" value="O Host de download %s respondeu com %s (%s)."/>
 	<string id="16275" value="A versão de &quot;%s&quot; do host de download %s tem uma URN diferente, abortando."/>
 	<string id="16276" value="A versão de &quot;%s&quot; do host de download %s tem um comprimento diferente, abortando."/>
