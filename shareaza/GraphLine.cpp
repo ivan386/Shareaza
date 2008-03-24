@@ -202,7 +202,7 @@ void CLineGraph::Paint(CDC* pDC, CRect* pRect)
 {
 	if ( m_pGridPen.m_hObject == NULL ) m_pGridPen.CreatePen( PS_SOLID, 1, m_crGrid );
 
-	DWORD nWidth = (DWORD)pRect->Width() / max( m_nScale, MIN_GRID_SIZE_HORZ ) + 2;
+	DWORD nWidth = (DWORD)pRect->Width() / max( m_nScale, 2ul ) + 2;
 
 	if ( pRect->Width() > 64 )
 	{
