@@ -321,7 +321,8 @@ BOOL CDownloadWithTorrent::GenerateTorrentDownloadID()
 		return FALSE;
 	}
 
-	// Client ID ( Azureus style http://bittorrent.org/beps/bep_0020.html )
+	// Client ID
+	// Azureus style "-SSVVVV-" http://bittorrent.org/beps/bep_0020.html
 	m_pPeerID[ 0 ] = '-';
 	m_pPeerID[ 1 ] = BT_ID1;
 	m_pPeerID[ 2 ] = BT_ID2;
@@ -332,7 +333,7 @@ BOOL CDownloadWithTorrent::GenerateTorrentDownloadID()
 	m_pPeerID[ 7 ] = '-';
 
 	// Random characters for the rest of the Client ID
-	for ( BYTE nByte = 8 ; nByte < 20 ; nByte++ )
+	for ( int nByte = 8 ; nByte < 20 ; nByte++ )
 	{
 		m_pPeerID[ nByte ] = static_cast< BYTE >( rand() & 0xFF );
 	}

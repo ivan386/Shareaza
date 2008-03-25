@@ -521,7 +521,7 @@ BOOL CBTClient::OnHandshake2()
 
 CString CBTClient::GetAzureusStyleUserAgent(LPBYTE pVendor, size_t nVendor)
 {
-	// Azureus style: "-SSVVVV"
+	// Azureus style "-SSVVVV-" http://bittorrent.org/beps/bep_0020.html
 	struct azureusStyleEntry
 	{
 		uchar signature[ 2 ];
