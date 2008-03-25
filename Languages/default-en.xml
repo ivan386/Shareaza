@@ -2722,6 +2722,7 @@
 	<string id="16077" value="The address %s is already blocked by your security rules."/>
 	<string id="16078" value="Added a security rule to block %s."/>
 	<string id="16079" value="Are you sure you want to disconnect?"/>
+	<string id="16080" value="You are running the Scheduler in 'G2 only' mode. Would you like to turn this mode off, so that all active networks remain connected?"/>
 	<string id="16081" value="Sending query for &quot;%s&quot; to %s."/>
 	<string id="16083" value="Forcing your PC into hub mode may have adverse effects on performance and the P2P network. It is generally better to allow Shareaza to decide whether or not hub mode should be used.\n\nHub mode does NOT produce better search results, or have any other advantages for you.\n\nDo you really want to do this, despite these disadvantages?"/>
 	<string id="16084" value="Disabling support for Gnutella-1 protocols may limit your search results, and if you are acting as a hub it may also impact upon the results of other users. Are you sure you want to do this?"/>
