@@ -1689,7 +1689,7 @@ void CMainWnd::OnUpdateNetworkG2(CCmdUI* pCmdUI)
 
 void CMainWnd::OnNetworkG2() 
 {
-	if( Settings.Gnutella2.EnableToday )
+	if ( Settings.Gnutella2.EnableToday )
 	{
 		CString strMessage;
 		LoadString( strMessage, IDS_NETWORK_DISABLE_G2 );
@@ -1700,7 +1700,7 @@ void CMainWnd::OnNetworkG2()
 
 	Settings.Gnutella2.EnableToday = !Settings.Gnutella2.EnableToday;
 
-	if( Settings.Gnutella2.EnableToday )
+	if ( Settings.Gnutella2.EnableToday )
 	{
 		if( !Network.IsConnected() )
 			Network.Connect( TRUE );
@@ -1724,9 +1724,21 @@ void CMainWnd::OnNetworkG1()
 #ifndef LAN_MODE
 	Settings.Gnutella1.EnableToday = !Settings.Gnutella1.EnableToday;
 
-	if( Settings.Gnutella1.EnableToday )
+	if ( Settings.Gnutella1.EnableToday )
 	{
-		if( !Network.IsConnected() )
+		if ( Settings.Scheduler.Enable && 
+			 ( !Settings.Gnutella1.EnableAlways || Settings.Scheduler.LimitedNetworks ) )
+		{
+			CString strMessage;
+			LoadString( strMessage, IDS_NETWORK_UNLIMIT );
+			if ( AfxMessageBox( strMessage, MB_ICONQUESTION|MB_YESNO ) == IDYES )
+			{
+				Settings.Scheduler.LimitedNetworks = false;
+				Settings.Gnutella1.EnableAlways = true;
+			}
+		}
+
+		if ( !Network.IsConnected() )
 			Network.Connect( TRUE );
 		else
 			DiscoveryServices.Execute( FALSE, PROTOCOL_G1, FALSE );
@@ -1749,9 +1761,21 @@ void CMainWnd::OnNetworkED2K()
 #ifndef LAN_MODE
 	Settings.eDonkey.EnableToday = !Settings.eDonkey.EnableToday;
 
-	if( Settings.eDonkey.EnableToday )
+	if ( Settings.eDonkey.EnableToday )
 	{
-		if( !Network.IsConnected() )
+		if ( Settings.Scheduler.Enable && 
+			( !Settings.eDonkey.EnableAlways || Settings.Scheduler.LimitedNetworks ) )
+		{
+			CString strMessage;
+			LoadString( strMessage, IDS_NETWORK_UNLIMIT );
+			if ( AfxMessageBox( strMessage, MB_ICONQUESTION|MB_YESNO ) == IDYES )
+			{
+				Settings.Scheduler.LimitedNetworks = false;
+				Settings.eDonkey.EnableAlways = true;
+			}
+		}
+
+		if ( !Network.IsConnected() )
 			Network.Connect( TRUE );
 	}
 #endif // LAN_MODE

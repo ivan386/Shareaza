@@ -3958,6 +3958,7 @@ END
 
 STRINGTABLE 
 BEGIN
+    IDS_NETWORK_UNLIMIT     "You are running the Scheduler in 'G2 only' mode. Would you like to turn this mode off, so that all active networks remain connected?"
     IDS_NETWORK_SEARCH_SENT "Sending query for ""%s"" to %s."
     IDS_NETWORK_FORCE_HUB   "Forcing your PC into hub mode may have adverse effects on performance and the P2P network. It is generally better to allow Shareaza to decide whether or not hub mode should be used.\n\nHub mode does NOT produce better search results, or have any other advantages for you.\n\nDo you really want to do this, despite these disadvantages?"
     IDS_NETWORK_DISABLE_G1  "Disabling support for Gnutella-1 protocols may limit your search results, and if you are acting as a hub it may also impact upon the results of other users.  Are you sure you want to do this?"
