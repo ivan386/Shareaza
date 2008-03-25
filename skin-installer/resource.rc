@@ -70,21 +70,31 @@ END
 
 #define IDR_MANIFEST 1 // 2 for a DLL
 
-IDR_MANIFEST RT_MANIFEST MOVEABLE PURE
+IDR_MANIFEST RT_MANIFEST
 {
     "<assembly xmlns=""urn:schemas-microsoft-com:asm.v1"" manifestVersion=""1.0"">
+       <assemblyIdentity type=""win32"" name=""Shareaza.SkinInstaller"" version=""1.0.12.5""
+#ifdef WIN64
+		 processorArchitecture=""amd64""
+#else
+	     processorArchitecture=""x86""
+#endif
+		 publicKeyToken=""dfbe2673baf698eb"" />
+       <description>Shareaza Skin Installer</description>
+       <dependency>
+         <dependentAssembly>
+           <assemblyIdentity type=""win32"" name=""Microsoft.Windows.Common-Controls"" version=""6.0.0.0"" processorArchitecture=""*"" publicKeyToken=""6595b64144ccf1df"" language=""*"" />
+         </dependentAssembly>
+       </dependency>
        <asmv2:trustInfo xmlns:asmv2=""urn:schemas-microsoft-com:asm.v2"">
          <asmv2:security>
            <asmv2:requestedPrivileges>
-             <asmv2:requestedExecutionLevel
-               level=""asInvoker""
-               uiAccess=""false"" />
+             <asmv2:requestedExecutionLevel level=""asInvoker"" uiAccess=""false"" />
            </asmv2:requestedPrivileges>
          </asmv2:security>
        </asmv2:trustInfo>
      </assembly>"
 }
-
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -113,7 +123,7 @@ BEGIN
             VALUE "FileDescription", "Shareaza Skin Installer"
             VALUE "FileVersion", "1, 0, 12, 5"
             VALUE "InternalName", "skin-installer"
-            VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2002-2007. All rights reserved."
+            VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2002-2008. All rights reserved."
             VALUE "OriginalFilename", "skin.exe"
             VALUE "ProductName", "Shareaza"
             VALUE "ProductVersion", "2, 3, 0, 0"
