@@ -76,7 +76,7 @@
 				Name="VCPreLinkEventTool"/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="_DEBUG;OBSOLETE_MANIFEST"
+				PreprocessorDefinitions="_DEBUG"
 				AdditionalIncludeDirectories="$(IntDir)"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
@@ -165,7 +165,7 @@
 				Name="VCPreLinkEventTool"/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="NDEBUG;OBSOLETE_MANIFEST"
+				PreprocessorDefinitions="NDEBUG"
 				AdditionalIncludeDirectories="$(IntDir)"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
@@ -255,7 +255,7 @@
 				Name="VCPreLinkEventTool"/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="NDEBUG;OBSOLETE_MANIFEST"
+				PreprocessorDefinitions="NDEBUG"
 				AdditionalIncludeDirectories="$(IntDir)"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
@@ -337,7 +337,7 @@
 				Name="VCPreLinkEventTool"/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="_DEBUG;OBSOLETE_MANIFEST"
+				PreprocessorDefinitions="_DEBUG"
 				AdditionalIncludeDirectories="$(IntDir)"/>
 			<Tool
 				Name="VCWebServiceProxyGeneratorTool"/>
@@ -3699,7 +3699,7 @@
 				RelativePath="..\shareaza\Res\Mail.ico">
 			</File>
 			<File
-				RelativePath="..\shareaza\Res\ManifestVC71.xml">
+				RelativePath="..\shareaza\Res\Manifest.xml">
 			</File>
 			<File
 				RelativePath="..\shareaza\Res\Media.ico">

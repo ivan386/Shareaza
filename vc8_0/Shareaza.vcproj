@@ -78,7 +78,7 @@
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="_DEBUG"
+				PreprocessorDefinitions="WIN32;_DEBUG"
 				AdditionalIncludeDirectories="$(IntDir)"
 			/>
 			<Tool
@@ -88,19 +88,17 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="wininet.lib msi.lib iphlpapi.lib unicows.lib kernel32.lib advapi32.lib user32.lib gdi32.lib shell32.lib comdlg32.lib version.lib mpr.lib rasapi32.lib winmm.lib winspool.lib vfw32.lib secur32.lib oleacc.lib oledlg.lib sensapi.lib"
 				OutputFile="$(OutDir)$(ProjectName).exe"
-				AdditionalManifestDependencies="type=&apos;win32&apos; name=&apos;Microsoft.Windows.Common-Controls&apos; version=&apos;6.0.0.0&apos; processorArchitecture=&apos;x86&apos; publicKeyToken=&apos;6595b64144ccf1df&apos; language=&apos;*&apos;"
 				IgnoreDefaultLibraryNames="kernel32.lib;advapi32.lib;user32.lib;gdi32.lib;shell32.lib;comdlg32.lib;version.lib;mpr.lib;rasapi32.lib;winmm.lib;winspool.lib;vfw32.lib;secur32.lib;oleacc.lib;oledlg.lib;sensapi.lib"
 				GenerateDebugInformation="true"
-				GenerateMapFile="true"
+				KeyFile="$(SolutionDir)..\$(ProjectName)\$(ProjectName).snk"
+				DelaySign="true"
 			/>
 			<Tool
 				Name="VCALinkTool"
 			/>
 			<Tool
 				Name="VCManifestTool"
-				AdditionalManifestFiles="$(IntDir)\$(TargetFileName).intermediate.manifest"
-				AssemblyIdentity="Shareaza.Shareaza, processorArchitecture=x86, version=2.3.1.2, type=win32"
-				InputResourceManifests="$(OutDir)$(ProjectName).exe"
+				InputResourceManifests="$(TargetPath)"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -178,7 +176,7 @@
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="_DEBUG"
+				PreprocessorDefinitions="WIN64;_DEBUG"
 				AdditionalIncludeDirectories="$(IntDir)"
 			/>
 			<Tool
@@ -188,18 +186,17 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="wininet.lib msi.lib iphlpapi.lib version.lib winmm.lib"
 				OutputFile="$(OutDir)$(ProjectName).exe"
-				AdditionalManifestDependencies="type=&apos;win32&apos; name=&apos;Microsoft.Windows.Common-Controls&apos; version=&apos;6.0.0.0&apos; processorArchitecture=&apos;amd64&apos; publicKeyToken=&apos;6595b64144ccf1df&apos; language=&apos;*&apos;"
 				GenerateDebugInformation="true"
 				TargetMachine="17"
+				KeyFile="$(SolutionDir)..\$(ProjectName)\$(ProjectName).snk"
+				DelaySign="true"
 			/>
 			<Tool
 				Name="VCALinkTool"
 			/>
 			<Tool
 				Name="VCManifestTool"
-				AdditionalManifestFiles="$(IntDir)\$(TargetFileName).intermediate.manifest"
-				AssemblyIdentity="Shareaza.Shareaza, processorArchitecture=amd64, version=2.3.1.2, type=win32"
-				InputResourceManifests="$(OutDir)$(ProjectName).exe"
+				InputResourceManifests="$(TargetPath)"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -276,7 +273,7 @@
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="NDEBUG"
+				PreprocessorDefinitions="WIN32;NDEBUG"
 				AdditionalIncludeDirectories="$(IntDir)"
 			/>
 			<Tool
@@ -286,20 +283,19 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="wininet.lib msi.lib iphlpapi.lib unicows.lib kernel32.lib advapi32.lib user32.lib gdi32.lib shell32.lib comdlg32.lib version.lib mpr.lib rasapi32.lib winmm.lib winspool.lib vfw32.lib secur32.lib oleacc.lib oledlg.lib sensapi.lib"
 				OutputFile="$(OutDir)$(ProjectName).exe"
-				AdditionalManifestDependencies="type=&apos;win32&apos; name=&apos;Microsoft.Windows.Common-Controls&apos; version=&apos;6.0.0.0&apos; processorArchitecture=&apos;x86&apos; publicKeyToken=&apos;6595b64144ccf1df&apos; language=&apos;*&apos;"
 				IgnoreDefaultLibraryNames="kernel32.lib;advapi32.lib;user32.lib;gdi32.lib;shell32.lib;comdlg32.lib;version.lib;mpr.lib;rasapi32.lib;winmm.lib;winspool.lib;vfw32.lib;secur32.lib;oleacc.lib;oledlg.lib;sensapi.lib"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				OptimizeForWindows98="1"
+				KeyFile="$(SolutionDir)..\$(ProjectName)\$(ProjectName).snk"
+				DelaySign="true"
 			/>
 			<Tool
 				Name="VCALinkTool"
 			/>
 			<Tool
 				Name="VCManifestTool"
-				AdditionalManifestFiles="$(IntDir)\$(TargetFileName).intermediate.manifest"
-				AssemblyIdentity="Shareaza.Shareaza, processorArchitecture=x86, version=2.3.1.2, type=win32, publicKeyToken=ba3b397e6792377b"
-				InputResourceManifests="$(OutDir)$(ProjectName).exe"
+				InputResourceManifests="$(TargetPath)"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -318,8 +314,6 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				Description="Signing $(TargetFileName)..."
-				CommandLine="mt.exe -updateresource:&quot;$(OutDir)$(ProjectName).exe&quot; -snk:&quot;$(InputDir)..\$(ProjectName)\Shareaza.snk&quot; -nologo"
 			/>
 		</Configuration>
 		<Configuration
@@ -377,7 +371,7 @@
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="NDEBUG"
+				PreprocessorDefinitions="WIN64;NDEBUG"
 				AdditionalIncludeDirectories="$(IntDir)"
 			/>
 			<Tool
@@ -387,20 +381,19 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="wininet.lib msi.lib iphlpapi.lib version.lib winmm.lib"
 				OutputFile="$(OutDir)$(ProjectName).exe"
-				AdditionalManifestDependencies="type=&apos;win32&apos; name=&apos;Microsoft.Windows.Common-Controls&apos; version=&apos;6.0.0.0&apos; processorArchitecture=&apos;amd64&apos; publicKeyToken=&apos;6595b64144ccf1df&apos; language=&apos;*&apos;"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				OptimizeForWindows98="1"
 				TargetMachine="17"
+				KeyFile="$(SolutionDir)..\$(ProjectName)\$(ProjectName).snk"
+				DelaySign="true"
 			/>
 			<Tool
 				Name="VCALinkTool"
 			/>
 			<Tool
 				Name="VCManifestTool"
-				AdditionalManifestFiles="$(IntDir)\$(TargetFileName).intermediate.manifest"
-				AssemblyIdentity="Shareaza.Shareaza, processorArchitecture=amd64, version=2.3.1.2, type=win32, publicKeyToken=ba3b397e6792377b"
-				InputResourceManifests="$(OutDir)$(ProjectName).exe"
+				InputResourceManifests="$(TargetPath)"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -419,8 +412,6 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				Description="Signing $(TargetFileName)..."
-				CommandLine="mt.exe -updateresource:&quot;$(OutDir)$(ProjectName).exe&quot; -snk:&quot;$(InputDir)..\$(ProjectName)\Shareaza.snk&quot; -nologo"
 			/>
 		</Configuration>
 	</Configurations>
@@ -4096,10 +4087,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\shareaza\Res\Manifest.xml"
-				>
-			</File>
-			<File
 				RelativePath="..\shareaza\Res\Media.ico"
 				>
 			</File>
@@ -4502,9 +4489,5 @@
 		</Filter>
 	</Files>
 	<Globals>
-		<Global
-			Name="RESOURCE_FILE"
-			Value="..\shareaza\Shareaza.rc"
-		/>
 	</Globals>
 </VisualStudioProject>
