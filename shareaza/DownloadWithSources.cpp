@@ -1,7 +1,7 @@
 //
 // DownloadWithSources.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -480,8 +480,6 @@ int CDownloadWithSources::AddSourceURLs(LPCTSTR pszURLs, BOOL bURN, BOOL bFailed
 		return 0;
 
 	CString strURLs( pszURLs );
-	strURLs.Replace( _T("`"), _T("%60") );
-	strURLs.Replace( _T(","), _T("%2C") );
 	BOOL bQuote = FALSE;
 
 	for ( int nScan = 0 ; nScan < strURLs.GetLength() ; nScan++ )
@@ -490,6 +488,10 @@ int CDownloadWithSources::AddSourceURLs(LPCTSTR pszURLs, BOOL bURN, BOOL bFailed
 		{
 			bQuote = ! bQuote;
 			strURLs.SetAt( nScan, ' ' );
+		}
+		else if ( strURLs[ nScan ] == ',' && bQuote )
+		{
+			strURLs.SetAt( nScan, '`' );
 		}
 	}
 
@@ -518,6 +520,11 @@ int CDownloadWithSources::AddSourceURLs(LPCTSTR pszURLs, BOOL bURN, BOOL bFailed
 				strURL = strURL.Left( nPos );
 				strURL.TrimRight();
 				bSeen = TimeFromString( strTime, &tSeen );
+			}
+
+			for ( int nScan = 0 ; nScan < strURL.GetLength() ; nScan++ )
+			{
+				if ( strURL[ nScan ] == '`' ) strURL.SetAt( nScan, ',' );
 			}
 		}
 		else
