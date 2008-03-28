@@ -1,7 +1,7 @@
 //
 // CtrlLibraryView.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -318,7 +318,6 @@ BOOL CLibraryView::OnDrop(IDataObject* pDataObj, DWORD grfKeyState, POINT ptScre
 	if ( ! pDataObj )
 	{
 		m_oDropItem.Type = CLibraryListItem::Empty;
-		RedrawWindow();
 		return TRUE;
 	}
 
@@ -330,12 +329,10 @@ BOOL CLibraryView::OnDrop(IDataObject* pDataObj, DWORD grfKeyState, POINT ptScre
 	if ( bDrop )
 	{
 		m_oDropItem.Type = CLibraryListItem::Empty;
-		RedrawWindow();
 	}
 	else if ( m_oDropItem != oHit )
 	{
 		m_oDropItem = oHit;
-		RedrawWindow();
 	}
 
 	if ( oHit.Type == CLibraryListItem::Empty )
