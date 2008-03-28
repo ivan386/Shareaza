@@ -72,7 +72,7 @@ static LPCTSTR GetFORMATLIST(UINT id)
 		{ CF_DSPENHMETAFILE,  _T("CF_DSPENHMETAFILE") },
 		{ 0, NULL }
 	};
-	TCHAR buf [256] = { 0 };
+	static TCHAR buf [256] = { 0 };
 	for ( int i = 0; FORMATLIST [i].name; i++ )
 	{
 		if ( FORMATLIST [i].id == id )
