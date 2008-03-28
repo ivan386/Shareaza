@@ -53,7 +53,7 @@ AppModifyPath="{app}\Uninstall\setup.exe"
 ChangesAssociations=yes
 ChangesEnvironment=yes
 OutputManifestFile=Manifest_{#ConfigurationName}{#PlatformName}.txt
-MinVersion=4.0,4.0sp6
+MinVersion=0,5.0
 #if PlatformName == "Win32"
 ArchitecturesAllowed=x86
 #elif PlatformName == "x64"
@@ -151,10 +151,6 @@ Source: "plugins\RazaWebHook.dll"; DestDir: "{app}\Plugins"; Flags: overwriterea
 
 #if ConfigurationName == "Debug"
 ;--== Debug Databases ==--
-#if PlatformName == "Win32"
-; Unicows: Install on Win 9X
-;Source: "setup\builds\unicows.pdb"; DestDir: "{sys}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension; MinVersion: 4.0,0
-#endif
 
 ; Main files
 ;Source: "{#root}\shareaza.pdb"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
