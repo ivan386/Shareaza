@@ -1,7 +1,7 @@
 //
 // ShareazaDataSource.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -72,8 +72,7 @@ static LPCTSTR GetFORMATLIST(UINT id)
 		{ CF_DSPENHMETAFILE,  _T("CF_DSPENHMETAFILE") },
 		{ 0, NULL }
 	};
-	static TCHAR buf [256] = { 0 };
-
+	TCHAR buf [256] = { 0 };
 	for ( int i = 0; FORMATLIST [i].name; i++ )
 	{
 		if ( FORMATLIST [i].id == id )
@@ -86,11 +85,24 @@ static LPCTSTR GetFORMATLIST(UINT id)
 
 #endif
 
-typedef struct {
-	HWND	hWnd;
-	DWORD	dwEffect;
-	CString	sFrom;
-	CString	sTo;
+// STGMEDIUM wrapper
+class __declspec(novtable) CStgMedium : public STGMEDIUM
+{
+public:
+	inline CStgMedium() throw() : STGMEDIUM()
+	{
+	}
+	inline ~CStgMedium() throw()
+	{
+		ReleaseStgMedium( static_cast< STGMEDIUM* >( this ) );
+	}
+};
+
+typedef struct sAsyncFileOperationParams {
+	HWND			hWnd;		// Main window handle
+	DWORD			dwEffect;	// Drop effect
+	CArray<WCHAR>	sFrom;		// Sources list (double NULL terminated)
+	CArray<WCHAR>	sTo;		// Destination path (double NULL terminated)
 } AsyncFileOperationParams;
 
 UINT AsyncFileOperationThread(LPVOID param)
@@ -105,8 +117,8 @@ UINT AsyncFileOperationThread(LPVOID param)
 	SHFILEOPSTRUCT sFileOp = {
 		pAFOP->hWnd,
 		( bCopy ? FO_COPY : FO_MOVE ),
-		pAFOP->sFrom,
-		pAFOP->sTo,
+		pAFOP->sFrom.GetData(),
+		pAFOP->sTo.GetData(),
 		FOF_ALLOWUNDO,
 		FALSE,
 		NULL,
@@ -114,63 +126,18 @@ UINT AsyncFileOperationThread(LPVOID param)
 	};
 	SHFileOperation( &sFileOp );
 
-	// Process metadata also
-	CString sMetadataFrom;
-	CString sMetadataTo( (LPCTSTR)pAFOP->sTo );
-	if ( sMetadataTo[ sMetadataTo.GetLength() - 1 ] == _T('\\') )
-		sMetadataTo.Delete( sMetadataTo.GetLength() - 1 );
-	sMetadataTo.Append( _T("\\Metadata\\") );
-	int nLength = pAFOP->sFrom.GetLength() - 1;
-	ASSERT( nLength > 0 );
-	int nSingleLength = 0;
-	for ( int i = 0; nLength > 0 && i < nLength; i += ( nSingleLength + 1 ) )
-	{
-		CString sFile( (LPCTSTR)pAFOP->sFrom.Mid( i ) );
-		nSingleLength = sFile.GetLength();
-		int nSlash = sFile.ReverseFind( _T('\\') );
-		CString sMetadata( sFile.Left( nSlash ) + _T("\\Metadata\\") +
-			sFile.Mid( nSlash + 1 ) + _T(".xml") );
-		// If metadata exist
-		DWORD dwAttrs = GetFileAttributes( sMetadata );
-		if ( dwAttrs != INVALID_FILE_ATTRIBUTES &&
-			! ( dwAttrs & FILE_ATTRIBUTE_DIRECTORY ) )
-		{
-			// Adds metadata file to file operations
-			sMetadataFrom.Append( sMetadata );
-			sMetadataFrom.Append( _T(""), 1 );
-		}
-	}
-	if ( ! sMetadataFrom.IsEmpty() )
-	{
-		CreateDirectory( sMetadataTo );
-		SetFileAttributes( sMetadataTo, FILE_ATTRIBUTE_HIDDEN );
-
-		sMetadataFrom.Append( _T(""), 1 );		// double null terminated
-		sMetadataTo.Append( _T(""), 1 );		// double null terminated
-		SHFILEOPSTRUCT sFileOp = {
-			pAFOP->hWnd,
-			( bCopy ? FO_COPY : FO_MOVE ),
-			sMetadataFrom,
-			sMetadataTo,
-			0,
-			FALSE,
-			NULL,
-			NULL
-		};
-		SHFileOperation( &sFileOp );
-	}
-
 	// Notify Shell about changes (first file/folder only)
 	if ( ! bCopy )
 	{
-		int nSlash = pAFOP->sFrom.ReverseFind( _T('\\') );
-		CString sFromDir( ( nSlash == -1 ) ? pAFOP->sFrom : pAFOP->sFrom.Left( nSlash ) );
+		CString sFromDir = pAFOP->sFrom.GetData();
+		int nSlash = sFromDir.ReverseFind( _T('\\') );
+		if ( nSlash != -1 )
+			sFromDir = sFromDir.Left( nSlash );
 		SHChangeNotify( SHCNE_UPDATEDIR, SHCNF_PATH, (LPCVOID)(LPCTSTR)sFromDir, 0 );
 	}
-	SHChangeNotify( SHCNE_UPDATEDIR, SHCNF_PATH, (LPCVOID)(LPCTSTR)pAFOP->sTo, 0 );
+	SHChangeNotify( SHCNE_UPDATEDIR, SHCNF_PATH, (LPCVOID)(LPCTSTR)pAFOP->sTo.GetData(), 0 );
 
 	Library.Update();
-
 
 	delete pAFOP;
 
@@ -180,7 +147,7 @@ UINT AsyncFileOperationThread(LPVOID param)
 /////////////////////////////////////////////////////////////////////////////
 // Helper for implementing OLE enumerators
 //
-// Note: Implementation of this classe resides inside MFC library
+// Note: Implementation of this class resides inside MFC library
 //
 
 #undef  INTERFACE
@@ -230,7 +197,7 @@ public:
 /////////////////////////////////////////////////////////////////////////////
 // CEnumFormatEtc - enumerator for array for FORMATETC structures
 //
-// Note: Implementation of this classe resides inside MFC library
+// Note: Implementation of this class resides inside MFC library
 //
 
 class CEnumFormatEtc : public CEnumArray
@@ -403,7 +370,7 @@ HRESULT CShareazaDataSource::ObjectToURL(IDataObject* pIDataObject, CString& str
 	ASSERT( pIDataObject != NULL );
 
 	FORMATETC fmtc = { (CLIPFORMAT) RegisterClipboardFormat( CFSTR_SHELLURL ), NULL, DVASPECT_CONTENT, -1, TYMED_HGLOBAL };
-	STGMEDIUM medium = { 0, 0, 0 };
+	CStgMedium medium;
 
 	HRESULT hr = pIDataObject->GetData( &fmtc, &medium );
 	if ( SUCCEEDED( hr ) )
@@ -419,7 +386,6 @@ HRESULT CShareazaDataSource::ObjectToURL(IDataObject* pIDataObject, CString& str
 				GlobalUnlock( medium.hGlobal );
 			}
 		}
-		ReleaseStgMedium( &medium );
 	}
 
 	return hr;
@@ -432,7 +398,7 @@ HRESULT CShareazaDataSource::ObjectToFiles(IDataObject* pIDataObject, CList < CS
 	ASSERT( pIDataObject != NULL );
 
 	FORMATETC fmtc = { CF_HDROP, NULL, DVASPECT_CONTENT, -1, TYMED_HGLOBAL };
-	STGMEDIUM medium = { 0, 0, 0 };
+	CStgMedium medium;
 
 	oFiles.RemoveAll();
 
@@ -467,7 +433,6 @@ HRESULT CShareazaDataSource::ObjectToFiles(IDataObject* pIDataObject, CList < CS
 				GlobalUnlock( medium.hGlobal );
 			}
 		}
-		ReleaseStgMedium( &medium );
 	}
 	return hr;
 }
@@ -499,112 +464,157 @@ HRESULT CShareazaDataSource::SetDropEffect(IDataObject* pIDataObject, DWORD dwEf
 
 BOOL CShareazaDataSource::DropToFolder(IDataObject* pIDataObject, DWORD grfKeyState, DWORD* pdwEffect, BOOL bDrop, LPCTSTR pszDest)
 {
-	ASSERT( pIDataObject != NULL );
-	ASSERT( pdwEffect != NULL );
+	if( ! pdwEffect )
+		return FALSE;
+
+	*pdwEffect = DROPEFFECT_NONE;
+	
+	if ( ( grfKeyState & MK_CONTROL ) && ( grfKeyState & MK_SHIFT ) )
+		return FALSE;
+
+	if( ! pIDataObject )
+		return FALSE;
 
 	FORMATETC fmtc = { CF_HDROP, NULL, DVASPECT_CONTENT, -1, TYMED_HGLOBAL };
-	if ( SUCCEEDED ( pIDataObject->QueryGetData( &fmtc ) ) )
+	if ( FAILED ( pIDataObject->QueryGetData( &fmtc ) ) )
+		return FALSE;
+
+	// Drop files to folder
+	BOOL bRet = FALSE;
+	CStgMedium medium;
+	if ( FAILED ( pIDataObject->GetData( &fmtc, &medium ) ) )
+		return FALSE;
+
+	SIZE_T size = GlobalSize( medium.hGlobal );
+	if ( medium.tymed != TYMED_HGLOBAL || medium.hGlobal == NULL ||
+		size < sizeof( DROPFILES ) || size > 10000000 )
+		return FALSE;
+
+	AsyncFileOperationParams* pAFOP = new AsyncFileOperationParams;
+	if ( ! pAFOP )
+		return FALSE;
+
+	DROPFILES* pdf = (DROPFILES*)GlobalLock( medium.hGlobal );
+	if ( ! pdf )
+		return FALSE;
+
+	int len;
+	if ( ! pdf->fWide )
 	{
-		*pdwEffect = (grfKeyState & MK_CONTROL) ? DROPEFFECT_COPY :
-			// Default action setted to Move (temporary fix)
-			DROPEFFECT_MOVE;
-			// TODO:
-			//( (grfKeyState & MK_SHIFT ) ? DROPEFFECT_MOVE : DROPEFFECT_COPY );
-
-		if ( ! bDrop )
-			return TRUE;
-
-		// Drop files to folder
-		BOOL bRet = FALSE;
-		STGMEDIUM medium = { 0, 0, 0 };
-		if ( SUCCEEDED ( pIDataObject->GetData( &fmtc, &medium ) ) )
+		// ANSI
+		for ( LPCSTR pFrom = (LPCSTR)( (char*)pdf + pdf->pFiles ); *pFrom; pFrom += len + 1 )
 		{
-			SIZE_T size = GlobalSize( medium.hGlobal );
-			if ( medium.tymed == TYMED_HGLOBAL && medium.hGlobal != NULL &&
-				size > sizeof( DROPFILES ) && size < 10000000 )
+			len = lstrlenA( pFrom );
+			CStringW sFile( pFrom );	// ANSI -> UNICODE
+			if ( len > 4 && ! lstrcmpiA( pFrom + len - 4, ".lnk" ) )
 			{
-				size -= sizeof( DROPFILES );
-				DROPFILES* pdf = (DROPFILES*)GlobalLock( medium.hGlobal );
-				if ( pdf )
+				sFile = ResolveShortcut( sFile );
+			}
+			if ( sFile.GetLength() )
+			{
+				pAFOP->sFrom.SetSize( pAFOP->sFrom.GetSize() + sFile.GetLength() + 1 );
+				CopyMemory( pAFOP->sFrom.GetData(), (LPCWSTR)sFile,
+					sizeof(WCHAR) * ( sFile.GetLength() + 1 ) );
+			}
+			if ( ! bDrop )
+				// Test only one
+				break;
+		}
+	}
+	else
+	{
+		// UNICODE
+		for ( LPCWSTR pFrom = (LPCWSTR)( (char*)pdf + pdf->pFiles ); *pFrom; pFrom += len + 1 )
+		{
+			len = lstrlenW( pFrom );
+			if ( len > 4 && ! lstrcmpiW( pFrom + len - 4, L".lnk" ) )
+			{
+				CStringW sFile = ResolveShortcut( pFrom );
+				if ( sFile.GetLength() )
 				{
-					AsyncFileOperationParams* pAFOP = new AsyncFileOperationParams;
-					ASSERT( pAFOP );
-					pAFOP->hWnd = AfxGetMainWnd()->GetSafeHwnd();
-					pAFOP->dwEffect = *pdwEffect;
-
-					pAFOP->sTo = pszDest;
-					pAFOP->sTo.Append( _T(""), 1 );		// must be double null terminated
-
-					if ( ! pdf->fWide )
-					{	
-						// ANSI
-						for ( LPCSTR pFrom = (LPCSTR)( (char*)pdf + pdf->pFiles );
-							*pFrom; pFrom += lstrlenA( pFrom ) + 1 )
-						{
-							// ANSI -> UNICODE
-							CString sFile( pFrom );
-							if ( sFile.GetLength() > 4 && ! lstrcmpi( (LPCTSTR)sFile +
-								sFile.GetLength() - 4, _T(".lnk") ) )
-							{
-								sFile = ResolveShortcut( sFile );
-							}
-							if ( sFile.GetLength() )
-							{
-								pAFOP->sFrom.Append( sFile, sFile.GetLength() + 1 );
-							}
-						}
-					}
-					else
-					{
-						// UNICODE
-						for ( LPCWSTR pFrom = (LPCWSTR)( (char*)pdf + pdf->pFiles );
-							*pFrom; pFrom += lstrlenW( pFrom ) + 1 )
-						{
-							CString sFile( pFrom );
-							if ( sFile.GetLength() > 4 && ! lstrcmpi( (LPCTSTR)sFile +
-								sFile.GetLength() - 4, _T(".lnk") ) )
-							{
-								sFile = ResolveShortcut( sFile );
-							}
-							if ( sFile.GetLength() )
-							{
-								pAFOP->sFrom.Append( sFile, sFile.GetLength() + 1 );
-							}
-						}
-					}
-					pAFOP->sFrom.Append( _T(""), 1 );	// must be double null terminated
-
-					GlobalUnlock( medium.hGlobal );
-
-					HANDLE hThread = BeginThread( "SHFileOperation",
-						AsyncFileOperationThread, (LPVOID)pAFOP );
-					bRet = ( hThread != NULL );
+					pAFOP->sFrom.SetSize( pAFOP->sFrom.GetSize() + sFile.GetLength() + 1 );
+					CopyMemory( pAFOP->sFrom.GetData(), (LPCTSTR)sFile,
+						sizeof(WCHAR) * ( sFile.GetLength() + 1 ) );
 				}
 			}
-			ReleaseStgMedium( &medium );
-		}
-
-		if ( bRet )
-		{					
-			if ( *pdwEffect == DROPEFFECT_MOVE )
+			else
 			{
-				// Optimized move used
-				*pdwEffect = DROPEFFECT_NONE;
-				SetDropEffect( pIDataObject, DROPEFFECT_NONE );
+				pAFOP->sFrom.SetSize( pAFOP->sFrom.GetSize() + len + 1 );
+				CopyMemory( pAFOP->sFrom.GetData(), pFrom, sizeof(WCHAR) * ( len + 1 ) );
 			}
-			return TRUE;
+			if ( ! bDrop )
+				// Test only one
+				break;
 		}
-
-		*pdwEffect = DROPEFFECT_NONE;
 	}
-	return FALSE;
+	GlobalUnlock( medium.hGlobal );
+
+	// Check for "source == destination"
+	{
+		LPCTSTR szPath2 = PathFindFileName( pAFOP->sFrom.GetData() );
+		if ( ! szPath2 )
+			return FALSE;
+		int nPath1Length = lstrlen( pszDest );
+		if ( nPath1Length > 0 && pszDest[ nPath1Length - 1 ] == _T('\\') )
+			nPath1Length--;
+		int nPath2Length = szPath2 - pAFOP->sFrom.GetData() - 1;
+		if ( nPath1Length == nPath2Length &&
+			! StrCmpNI( pszDest, pAFOP->sFrom.GetData(), nPath1Length ) )
+			// source == destination
+			return TRUE;
+	}
+
+	*pdwEffect = PathIsSameRoot( pszDest, pAFOP->sFrom.GetData() ) ?
+		( ( grfKeyState & MK_CONTROL ) ? DROPEFFECT_COPY : DROPEFFECT_MOVE ) :
+		( ( grfKeyState & MK_SHIFT   ) ? DROPEFFECT_MOVE : DROPEFFECT_COPY );
+
+	if ( ! bDrop )
+		// Test only
+		return TRUE;
+
+	len = pAFOP->sFrom.GetSize();
+	pAFOP->sFrom.SetSize( len + 1 );	// Double NULL terminated
+
+	len = lstrlen( pszDest ) + 1;
+	pAFOP->sTo.SetSize( len + 1 );		// Double NULL terminated
+	CopyMemory( pAFOP->sTo.GetData(), pszDest, sizeof(WCHAR) * len );
+
+	pAFOP->hWnd = AfxGetMainWnd()->GetSafeHwnd();
+
+	pAFOP->dwEffect = *pdwEffect;
+
+	HANDLE hThread = BeginThread( "SHFileOperation",
+		AsyncFileOperationThread, (LPVOID)pAFOP );
+	if ( hThread == NULL )
+	{
+		delete pAFOP;
+		return FALSE;
+	}
+
+	if ( *pdwEffect == DROPEFFECT_MOVE )
+	{
+		// Optimized move used
+		*pdwEffect = DROPEFFECT_NONE;
+		SetDropEffect( pIDataObject, DROPEFFECT_NONE );
+	}
+
+	return TRUE;
 }
 
 // Perform basic album operations (copy or move)
 
 BOOL CShareazaDataSource::DropToAlbum(IDataObject* pIDataObject, DWORD grfKeyState, DWORD* pdwEffect, BOOL bDrop, CAlbumFolder* pAlbumFolder)
 {
-	ASSERT( pIDataObject != NULL );
+	if( ! pdwEffect )
+		return FALSE;
+
+	*pdwEffect = DROPEFFECT_NONE;
+
+	if ( ( grfKeyState & MK_CONTROL ) && ( grfKeyState & MK_SHIFT ) )
+		return FALSE;
+
+	if( ! pIDataObject )
+		return FALSE;
 
 	if ( ! pAlbumFolder ||
 		! LibraryFolders.CheckAlbum( pAlbumFolder ) ||
@@ -630,7 +640,7 @@ BOOL CShareazaDataSource::DropToAlbum(IDataObject* pIDataObject, DWORD grfKeySta
 		*pdwEffect = (grfKeyState & MK_CONTROL) ? DROPEFFECT_COPY :
 			( (grfKeyState & MK_SHIFT ) ? DROPEFFECT_MOVE : DROPEFFECT_COPY );
 
-		STGMEDIUM medium = { 0, 0, 0 };
+		CStgMedium medium;
 		if ( SUCCEEDED ( pIDataObject->GetData( &fmtc1, &medium ) ) )
 		{
 			SIZE_T size = GlobalSize( medium.hGlobal ) / 20;
@@ -679,7 +689,6 @@ BOOL CShareazaDataSource::DropToAlbum(IDataObject* pIDataObject, DWORD grfKeySta
 					GlobalUnlock( medium.hGlobal );
 				}
 			}
-			ReleaseStgMedium( &medium );
 		}
 	}
 
@@ -690,7 +699,7 @@ BOOL CShareazaDataSource::DropToAlbum(IDataObject* pIDataObject, DWORD grfKeySta
 		*pdwEffect = (grfKeyState & MK_CONTROL) ? DROPEFFECT_COPY :
 			( (grfKeyState & MK_SHIFT ) ? DROPEFFECT_MOVE : DROPEFFECT_COPY );
 
-		STGMEDIUM medium = { 0, 0, 0 };
+		CStgMedium medium;
 		if ( SUCCEEDED ( pIDataObject->GetData( &fmtc2, &medium ) ) )
 		{
 			LARGE_INTEGER zero = { 0 };
@@ -755,8 +764,6 @@ BOOL CShareazaDataSource::DropToAlbum(IDataObject* pIDataObject, DWORD grfKeySta
 				}
 			}
 			ar.Detach();
-
-			ReleaseStgMedium( &medium );
 		}
 	}
 
