@@ -24,8 +24,7 @@
 
 #pragma once
 
-#include "SHA1.h"
-
+class CHashSHA1;
 class CBuffer;
 
 class CBENode  
@@ -110,7 +109,7 @@ public:
 	
 	inline CBENode* Add(LPCSTR psz = NULL)
 	{
-		return Add( (LPBYTE)psz, psz ? strlen(psz) : 0 );
+		return Add( (LPBYTE)psz, psz ? (int)strlen(psz) : 0 );
 	}
 	
 	inline int GetCount() const

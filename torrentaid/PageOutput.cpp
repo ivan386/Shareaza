@@ -122,7 +122,7 @@ BOOL COutputPage::OnSetActive()
 				m_sName += _T(".torrent");
 				
 				if ( m_sFolder.IsEmpty() ) 
-					m_sFolder = strFile.Left( pszSlash - strFile );
+					m_sFolder = strFile.Left( (int)( pszSlash - strFile ) );
 			}
 		}
 		else

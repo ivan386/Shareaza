@@ -172,13 +172,13 @@ BOOL CWizardSheet::OnChildNotify(UINT message, WPARAM wParam, LPARAM lParam, LRE
 	
 	if ( pWnd != NULL )
 	{
-		if ( GetWindowLong( pWnd->GetSafeHwnd(), GWL_USERDATA ) == TRUE )
+		if ( GetWindowLongPtr( pWnd->GetSafeHwnd(), GWLP_USERDATA ) == TRUE )
 		{
 			pWnd = NULL;
 		}
 		else
 		{
-			SetWindowLong( pWnd->GetSafeHwnd(), GWL_USERDATA, TRUE );
+			SetWindowLongPtr( pWnd->GetSafeHwnd(), GWLP_USERDATA, TRUE );
 			pWnd->SetFont( &theApp.m_fntNormal, FALSE );
 			pWnd = pWnd->GetWindow( GW_CHILD );
 		}
@@ -374,7 +374,7 @@ void CWizardPage::StaticReplace(LPCTSTR pszSearch, LPCTSTR pszReplace)
 			int nPos = strText.Find( pszSearch );
 			if ( nPos < 0 ) break;
 			strText	= strText.Left( nPos ) + CString( pszReplace )
-					+ strText.Mid( nPos + _tcslen( pszSearch ) );
+					+ strText.Mid( nPos + (int)_tcslen( pszSearch ) );
 		}
 		
 		pChild->SetWindowText( strText );

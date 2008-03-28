@@ -130,7 +130,7 @@ void CBuffer::Clear()
 void CBuffer::Print(LPCSTR pszText)
 {
 	ASSERT( pszText != NULL );
-	Add( (void*)pszText, strlen( pszText ) );
+	Add( (void*)pszText, (DWORD)strlen( pszText ) );
 }
 
 DWORD CBuffer::Append(CBuffer* pBuffer, DWORD nLength)

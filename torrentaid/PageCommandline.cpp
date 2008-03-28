@@ -130,7 +130,7 @@ void CCommandlinePage::Start()
 	SetWizardButtons( 0 );
 }
 
-void CCommandlinePage::OnTimer(UINT nIDEvent) 
+void CCommandlinePage::OnTimer(UINT_PTR nIDEvent) 
 {
 	BOOL bFinished = FALSE;
 	

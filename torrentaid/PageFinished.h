@@ -78,7 +78,7 @@ protected:
 	afx_msg void OnAbort();
 	afx_msg void OnTorrentCopy();
 	afx_msg void OnTorrentOpen();
-	afx_msg void OnTimer(UINT nIDEvent);
+	afx_msg void OnTimer(UINT_PTR nIDEvent);
 	afx_msg void OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
 	DECLARE_MESSAGE_MAP()
 };

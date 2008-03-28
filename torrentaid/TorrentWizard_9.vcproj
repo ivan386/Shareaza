@@ -70,8 +70,7 @@
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="_DEBUG"
-				Culture="0"
+				PreprocessorDefinitions="WIN32;_DEBUG"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
@@ -90,7 +89,7 @@
 			/>
 			<Tool
 				Name="VCManifestTool"
-				AdditionalManifestFiles="res\Manifest.xml"
+				InputResourceManifests="$(TargetPath)"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -131,12 +130,7 @@
 			/>
 			<Tool
 				Name="VCMIDLTool"
-				PreprocessorDefinitions="_DEBUG"
-				MkTypLibCompatible="true"
-				SuppressStartupBanner="true"
 				TargetEnvironment="3"
-				TypeLibraryName="$(ConfigurationName)/TorrentWizard.tlb"
-				HeaderFileName=""
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
@@ -158,8 +152,7 @@
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="_DEBUG"
-				Culture="0"
+				PreprocessorDefinitions="WIN64;_DEBUG"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
@@ -178,7 +171,7 @@
 			/>
 			<Tool
 				Name="VCManifestTool"
-				AdditionalManifestFiles="res\Manifest.xml"
+				InputResourceManifests="$(TargetPath)"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -220,12 +213,6 @@
 			/>
 			<Tool
 				Name="VCMIDLTool"
-				PreprocessorDefinitions="NDEBUG"
-				MkTypLibCompatible="true"
-				SuppressStartupBanner="true"
-				TargetEnvironment="1"
-				TypeLibraryName="$(ConfigurationName)/TorrentWizard.tlb"
-				HeaderFileName=""
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
@@ -251,8 +238,7 @@
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="NDEBUG"
-				Culture="0"
+				PreprocessorDefinitions="WIN32;NDEBUG"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
@@ -272,7 +258,7 @@
 			/>
 			<Tool
 				Name="VCManifestTool"
-				AdditionalManifestFiles="res\Manifest.xml"
+				InputResourceManifests="$(TargetPath)"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -314,12 +300,7 @@
 			/>
 			<Tool
 				Name="VCMIDLTool"
-				PreprocessorDefinitions="NDEBUG"
-				MkTypLibCompatible="true"
-				SuppressStartupBanner="true"
 				TargetEnvironment="3"
-				TypeLibraryName="$(ConfigurationName)/TorrentWizard.tlb"
-				HeaderFileName=""
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
@@ -343,8 +324,7 @@
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="NDEBUG"
-				Culture="0"
+				PreprocessorDefinitions="WIN64;NDEBUG"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
@@ -364,7 +344,7 @@
 			/>
 			<Tool
 				Name="VCManifestTool"
-				AdditionalManifestFiles="res\Manifest.xml"
+				InputResourceManifests="$(TargetPath)"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -388,110 +368,39 @@
 	<Files>
 		<Filter
 			Name="Source Files"
-			Filter="cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
+			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx"
+			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
 				RelativePath="BENode.cpp"
 				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|x64"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|x64"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="Buffer.cpp"
 				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|x64"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|x64"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\CmdLine.cpp"
+				RelativePath="CmdLine.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\ED2K.cpp"
+				RelativePath="ED2K.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\MD4.cpp"
+				RelativePath="MD4.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\MD4_asm.asm"
+				RelativePath="MD4_asm.asm"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
 					>
 					<Tool
 						Name="VCCustomBuildTool"
-						CommandLine="ml.exe /c /Cx /coff /Zi /nologo /Fo &quot;$(ProjectDir)$(IntDir)\$(InputName).obj&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;"
-						Outputs="&quot;$(ProjectDir)$(IntDir)\$(InputName).obj&quot;"
+						CommandLine="ml.exe /c /Cx /coff /Zi /nologo /Fo &quot;$(IntDir)\$(InputName).obj&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;"
+						Outputs="&quot;$(IntDir)\$(InputName).obj&quot;"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -500,8 +409,8 @@
 					>
 					<Tool
 						Name="VCCustomBuildTool"
-						CommandLine="ml.exe /c /Cx /coff /Zi /nologo /Fo &quot;$(ProjectDir)$(IntDir)\$(InputName).obj&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;"
-						Outputs="&quot;$(ProjectDir)$(IntDir)\$(InputName).obj&quot;"
+						CommandLine="ml.exe /c /Cx /coff /Zi /nologo /Fo &quot;$(IntDir)\$(InputName).obj&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;"
+						Outputs="&quot;$(IntDir)\$(InputName).obj&quot;"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -509,8 +418,8 @@
 					>
 					<Tool
 						Name="VCCustomBuildTool"
-						CommandLine="ml.exe /c /Cx /coff /Zi /nologo /Fo &quot;$(ProjectDir)$(IntDir)\$(InputName).obj&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;"
-						Outputs="&quot;$(ProjectDir)$(IntDir)\$(InputName).obj&quot;"
+						CommandLine="ml.exe /c /Cx /coff /Zi /nologo /Fo &quot;$(IntDir)\$(InputName).obj&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;"
+						Outputs="&quot;$(IntDir)\$(InputName).obj&quot;"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -519,337 +428,49 @@
 					>
 					<Tool
 						Name="VCCustomBuildTool"
-						CommandLine="ml.exe /c /Cx /coff /Zi /nologo /Fo &quot;$(ProjectDir)$(IntDir)\$(InputName).obj&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;"
-						Outputs="&quot;$(ProjectDir)$(IntDir)\$(InputName).obj&quot;"
+						CommandLine="ml.exe /c /Cx /coff /Zi /nologo /Fo &quot;$(IntDir)\$(InputName).obj&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;"
+						Outputs="&quot;$(IntDir)\$(InputName).obj&quot;"
 					/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\PageCommandline.cpp"
+				RelativePath="PageCommandline.cpp"
 				>
 			</File>
 			<File
 				RelativePath="PageComment.cpp"
 				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|x64"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|x64"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="PageFinished.cpp"
 				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|x64"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|x64"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="PageOutput.cpp"
 				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|x64"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|x64"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="PagePackage.cpp"
 				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|x64"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|x64"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="PageSingle.cpp"
 				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|x64"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|x64"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="PageTracker.cpp"
 				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|x64"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|x64"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="PageWelcome.cpp"
 				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|x64"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|x64"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="SHA1.cpp"
 				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|x64"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|x64"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\SHA_asm.asm"
+				RelativePath="SHA_asm.asm"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
@@ -898,8 +519,6 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						Optimization="0"
-						PreprocessorDefinitions=""
 						UsePrecompiledHeader="1"
 					/>
 				</FileConfiguration>
@@ -908,8 +527,6 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						Optimization="0"
-						PreprocessorDefinitions=""
 						UsePrecompiledHeader="1"
 					/>
 				</FileConfiguration>
@@ -918,8 +535,6 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						Optimization="2"
-						PreprocessorDefinitions=""
 						UsePrecompiledHeader="1"
 					/>
 				</FileConfiguration>
@@ -928,8 +543,6 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-						Optimization="2"
-						PreprocessorDefinitions=""
 						UsePrecompiledHeader="1"
 					/>
 				</FileConfiguration>
@@ -937,131 +550,20 @@
 			<File
 				RelativePath="TorrentBuilder.cpp"
 				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|x64"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|x64"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="TorrentWizard.cpp"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|x64"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|x64"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="TorrentWizard.rc"
 				>
 			</File>
 			<File
 				RelativePath="WizardSheet.cpp"
 				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|x64"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="0"
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|x64"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						Optimization="2"
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
 			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
-			Filter="h;hpp;hxx;hm;inl"
+			Filter="h;hpp;hxx;hm;inl;inc;xsd"
+			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
 				RelativePath="BENode.h"
@@ -1072,19 +574,19 @@
 				>
 			</File>
 			<File
-				RelativePath=".\CmdLine.h"
+				RelativePath="CmdLine.h"
 				>
 			</File>
 			<File
-				RelativePath=".\ED2K.h"
+				RelativePath="ED2K.h"
 				>
 			</File>
 			<File
-				RelativePath=".\MD4.h"
+				RelativePath="MD4.h"
 				>
 			</File>
 			<File
-				RelativePath=".\PageCommandline.h"
+				RelativePath="PageCommandline.h"
 				>
 			</File>
 			<File
@@ -1142,14 +644,11 @@
 		</Filter>
 		<Filter
 			Name="Resource Files"
-			Filter="ico;cur;bmp;dlg;rc2;rct;bin;cnt;rtf;gif;jpg;jpeg;jpe"
+			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx"
+			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
 			>
 			<File
 				RelativePath="res\Hand.cur"
-				>
-			</File>
-			<File
-				RelativePath="res\Manifest.xml"
 				>
 			</File>
 			<File
@@ -1157,19 +656,23 @@
 				>
 			</File>
 			<File
-				RelativePath="res\TorrentWizard.rc2"
+				RelativePath="TorrentWizard.rc"
 				>
 			</File>
 			<File
-				RelativePath="res\Wizard.bmp"
+				RelativePath="Res\TorrentWizard.rc2"
+				>
+			</File>
+			<File
+				RelativePath="Res\Uninstall.ICO"
+				>
+			</File>
+			<File
+				RelativePath="Res\Wizard.bmp"
 				>
 			</File>
 		</Filter>
 	</Files>
 	<Globals>
-		<Global
-			Name="RESOURCE_FILE"
-			Value="TorrentWizard.rc"
-		/>
 	</Globals>
 </VisualStudioProject>

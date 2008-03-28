@@ -157,7 +157,7 @@ void CFinishedPage::Start()
 	SetWizardButtons( 0 );
 }
 
-void CFinishedPage::OnTimer(UINT nIDEvent) 
+void CFinishedPage::OnTimer(UINT_PTR nIDEvent) 
 {
 	BOOL bFinished = FALSE;
 	
