@@ -46,7 +46,6 @@
 #include "QueryHashTable.h"
 #include "LocalSearch.h"
 #include "SearchManager.h"
-#include "DiscoveryServices.h"
 #include "Downloads.h"
 #include "Uploads.h"
 #include "Library.h"

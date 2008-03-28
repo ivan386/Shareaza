@@ -1,7 +1,7 @@
 //
 // Datagrams.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2006.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -18,9 +18,6 @@
 // along with Shareaza; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
-
-#if !defined(AFX_DATAGRAMS_H__289BAC8C_A04C_4CB6_A185_ED043CA21CDA__INCLUDED_)
-#define AFX_DATAGRAMS_H__289BAC8C_A04C_4CB6_A185_ED043CA21CDA__INCLUDED_
 
 #pragma once
 
@@ -118,11 +115,10 @@ public:
 		m_bStable = bStable;
 	}
 	BOOL	Send(IN_ADDR* pAddress, WORD nPort, CPacket* pPacket, BOOL bRelease = TRUE, LPVOID pToken = NULL, BOOL bAck = TRUE);
+	BOOL	Send(SOCKADDR_IN* pHost, const CBuffer& pOutput);
 	BOOL	Send(SOCKADDR_IN* pHost, CPacket* pPacket, BOOL bRelease = TRUE, LPVOID pToken = NULL, BOOL bAck = TRUE);
 	void	PurgeToken(LPVOID pToken);
 	void	OnRun();
-//	void	DHTPing(const SOCKADDR_IN* pHost);
-//	void	DHTGetPeers(const SOCKADDR_IN* pHost, const Hashes::BtGuid& oNodeGUID, const Hashes::BtHash& oGUID);
 protected:
 	void	Measure();
 	BOOL	TryWrite();
@@ -131,7 +127,6 @@ protected:
 protected:
 	BOOL	TryRead();
 	BOOL	OnDatagram(SOCKADDR_IN* pHost, BYTE* pBuffer, DWORD nLength);
-	BOOL	OnReceiveBT(const SOCKADDR_IN* pHost, const CBENode* pRoot);
 	BOOL	OnReceiveSGP(SOCKADDR_IN* pHost, SGP_HEADER* pHeader, DWORD nLength);
 	BOOL	OnAcknowledgeSGP(SOCKADDR_IN* pHost, SGP_HEADER* pHeader, DWORD nLength);
 	void	ManagePartials();
@@ -160,5 +155,3 @@ protected:
 };
 
 extern CDatagrams Datagrams;
-
-#endif // !defined(AFX_DATAGRAMS_H__289BAC8C_A04C_4CB6_A185_ED043CA21CDA__INCLUDED_)

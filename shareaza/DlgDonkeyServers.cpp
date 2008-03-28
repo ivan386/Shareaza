@@ -1,7 +1,7 @@
 //
 // DlgDonkeyServers.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -185,7 +185,7 @@ void CDonkeyServersDlg::OnRun()
 
 	pFile.Seek( 0, CFile::begin );
 
-	BOOL bSuccess = HostCache.eDonkey.ImportMET( &pFile );
+	BOOL bSuccess = HostCache.ImportMET( &pFile );
 	if ( bSuccess ) HostCache.Save();
 
 	InternetCloseHandle( m_hInternet );

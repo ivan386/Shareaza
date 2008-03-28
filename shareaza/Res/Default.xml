@@ -386,6 +386,8 @@
 		<button id="ID_HOSTCACHE_G2_CACHE" text="G2 Cache"/>
 		<button id="ID_HOSTCACHE_G1_CACHE" text="G1 Cache"/>
 		<button id="ID_HOSTCACHE_ED2K_CACHE" text="eDonkey Cache"/>
+		<button id="ID_HOSTCACHE_BT_CACHE" text="BitTorrent Cache"/>
+		<button id="ID_HOSTCACHE_KAD_CACHE" text="Kademlia Cache"/>
 	</toolbar>
 	<!-- PRIVATE CHAT FRAME -->
 	<toolbar name="CPrivateChatFrame">
@@ -824,6 +826,8 @@
 			<item id="ID_HOSTCACHE_G2_CACHE" text="Gnutella_2 Cache"/>
 			<item id="ID_HOSTCACHE_G1_CACHE" text="Gnutella_1 Cache"/>
 			<item id="ID_HOSTCACHE_ED2K_CACHE" text="_eDonkey Servers"/>
+			<item id="ID_HOSTCACHE_BT_CACHE" text="_BitTorrent Cache"/>
+			<item id="ID_HOSTCACHE_KAD_CACHE" text="_Kademlia Cache"/>
 		</menu>
 		<separator/>
 		<item id="ID_HOSTCACHE_IMPORT" text="_Import MET File..."/>
@@ -2522,6 +2526,7 @@
 		<image id="ID_NETWORK_HTTP"/>
 		<image id="ID_NETWORK_FTP"/>
 		<image id="ID_NETWORK_BT" id1="ID_DOWNLOADS_TORRENT_INFO"/>
+		<image id="ID_NETWORK_KAD"/>
 	</bitmap>
 	<bitmap id="IDB_IRCICONS">
 		<image id="ID_IRC_WHOIS"/>

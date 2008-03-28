@@ -1,7 +1,7 @@
 //
 // WndHostCache.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -85,6 +85,10 @@ protected:
 	afx_msg void OnHostcacheG1Cache();
 	afx_msg void OnUpdateHostcacheEd2kCache(CCmdUI* pCmdUI);
 	afx_msg void OnHostcacheEd2kCache();
+	afx_msg void OnUpdateHostcacheBTCache(CCmdUI* pCmdUI);
+	afx_msg void OnHostcacheBTCache();
+	afx_msg void OnUpdateHostcacheKADCache(CCmdUI* pCmdUI);
+	afx_msg void OnHostcacheKADCache();
 	afx_msg void OnHostcacheImport();
 	afx_msg void OnHostcacheEd2kDownload();
 	afx_msg void OnUpdateHostcachePriority(CCmdUI* pCmdUI);

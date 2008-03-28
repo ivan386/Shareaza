@@ -48,13 +48,15 @@
 #include "EDClients.h"
 #include "EDPacket.h"
 #include "BENode.h"
-#include "BTClient.h"
 #include "Security.h"
 #include "HostCache.h"
 #include "DiscoveryServices.h"
 #include "QueryKeys.h"
 #include "LibraryMaps.h"
 #include "VendorCache.h"
+
+#include "Kademlia.h"
+#include "DHT.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -229,13 +231,29 @@ void CDatagrams::Disconnect()
 
 BOOL CDatagrams::Send(IN_ADDR* pAddress, WORD nPort, CPacket* pPacket, BOOL bRelease, LPVOID pToken, BOOL bAck)
 {
-	SOCKADDR_IN pHost;
-
-	pHost.sin_family	= PF_INET;
-	pHost.sin_addr		= *pAddress;
-	pHost.sin_port		= htons( nPort );
+	SOCKADDR_IN pHost = {};
+	pHost.sin_family = PF_INET;
+	pHost.sin_addr = *pAddress;
+	pHost.sin_port = htons( nPort );
 
 	return Send( &pHost, pPacket, bRelease, pToken, bAck );
+}
+
+BOOL CDatagrams::Send(SOCKADDR_IN* pHost, const CBuffer& pOutput)
+{
+	ASSERT( pHost != NULL && pOutput.m_pBuffer != NULL );
+
+	if ( m_hSocket == INVALID_SOCKET || Security.IsDenied( &pHost->sin_addr ) )
+	{
+		return FALSE;
+	}
+
+	sendto( m_hSocket, (const char*)pOutput.m_pBuffer, pOutput.m_nLength,
+		0, (SOCKADDR*)pHost, sizeof(SOCKADDR_IN) );
+
+	m_nOutPackets++;
+
+	return TRUE;
 }
 
 BOOL CDatagrams::Send(SOCKADDR_IN* pHost, CPacket* pPacket, BOOL bRelease, LPVOID pToken, BOOL bAck)
@@ -260,6 +278,8 @@ BOOL CDatagrams::Send(SOCKADDR_IN* pHost, CPacket* pPacket, BOOL bRelease, LPVOI
 		{
 			sendto( m_hSocket, (LPSTR)pBuffer.m_pBuffer, pBuffer.m_nLength, 0,
 				(SOCKADDR*)pHost, sizeof(SOCKADDR_IN) );
+
+			m_nOutPackets++;
 		}
 
 		return TRUE;
@@ -679,12 +699,11 @@ BOOL CDatagrams::OnDatagram(SOCKADDR_IN* pHost, BYTE* pBuffer, DWORD nLength)
 		CBENode* pRoot = CBENode::Decode( &pInput );
 		if ( pRoot )
 		{
-			bHandled = OnReceiveBT( pHost, pRoot );
+			bHandled = DHT.OnPacket( pHost, pRoot );
 
 			delete pRoot;
 
-			if ( bHandled )
-				return TRUE;
+			return bHandled;
 		}
 	}
 
@@ -705,8 +724,20 @@ BOOL CDatagrams::OnDatagram(SOCKADDR_IN* pHost, BYTE* pBuffer, DWORD nLength)
 				CEDPacket* pPacket = CEDPacket::New( pMULE, nLength );
 				if ( pPacket && ! pPacket->InflateOrRelease() )
 				{
-					bHandled = EDClients.OnPacket( pHost, pPacket );
-
+					switch ( pMULE->nProtocol )
+					{
+					case ED2K_PROTOCOL_EDONKEY:
+					case ED2K_PROTOCOL_EMULE:
+						bHandled = EDClients.OnPacket( pHost, pPacket );
+						break;
+					case ED2K_PROTOCOL_KAD:
+						bHandled = Kademlia.OnPacket( pHost, pPacket );
+						break;
+					case ED2K_PROTOCOL_REVCONNECT:
+						// TODO: Implement RevConnect KAD
+						pPacket->Debug( _T("RevConnect KAD not implemented.") );
+						break;
+					}
 					pPacket->Release();
 
 					if ( bHandled )
@@ -731,189 +762,6 @@ BOOL CDatagrams::OnDatagram(SOCKADDR_IN* pHost, BYTE* pBuffer, DWORD nLength)
 
 	return FALSE;
 }
-
-//////////////////////////////////////////////////////////////////////
-// CDatagrams BitTorrent receive handler
-
-BOOL CDatagrams::OnReceiveBT(const SOCKADDR_IN* pHost, const CBENode* pRoot)
-{
-	theApp.Message( MSG_DEBUG, _T("Recieved UDP BitTorrent packet from %s: %s"),
-		(LPCTSTR)CString( inet_ntoa( pHost->sin_addr ) ), (LPCTSTR)pRoot->Encode() );
-
-	m_nInPackets++;
-
-	// TODO: pPacket->SmartDump( pHost, TRUE, FALSE );
-
-	BOOL bHandled = FALSE;
-	CBENode pReply;
-	
-	if ( pRoot->IsType( CBENode::beDict ) )
-	{
-		// Get version
-		CBENode* pVersion = pRoot->GetNode( "v" );
-		if ( pVersion && pVersion->IsType( CBENode::beString ) )
-		{
-		}
-
-		// Get packet type and transaction id
-		CBENode* pType = pRoot->GetNode( "y" );
-		CBENode* pTransID = pRoot->GetNode( "t" );
-		if ( pType && pType->IsType( CBENode::beString ) &&
-			pTransID && pTransID->IsType( CBENode::beString ) )
-		{
-			if ( pType->GetString() == "q" )
-			{
-				// Query message
-				CBENode* pQueryMethod = pRoot->GetNode( "q" );
-				CBENode* pQueryData = pRoot->GetNode( "a" );
-				if ( pQueryMethod && pQueryMethod->IsType( CBENode::beString ) &&
-					pQueryData && pQueryData->IsType( CBENode::beDict ) )
-				{
-					if ( pQueryMethod->GetString() == "ping" )
-					{
-						// Ping
-						CBENode* pNodeID = pQueryData->GetNode( "id" );
-						if ( pNodeID && pNodeID->IsType( CBENode::beString ) &&
-							pNodeID->m_nValue == 20 )
-						{
-							Hashes::BtGuid oNodeGUID;
-							CopyMemory( &oNodeGUID[0], pNodeID->m_pValue, 20 );
-							oNodeGUID.validate();
-
-							// Send "Pong" reply
-							CBENode* pReplyData = pReply.Add( "r" );
-							Hashes::BtGuid oMyGUID( MyProfile.oGUIDBT );
-							pReplyData->Add( "id" )->SetString( &oMyGUID[0], oMyGUID.byteCount );
-							pReply.Add( "y" )->SetString( "r" );
-							pReply.Add( "t" )->SetString( pTransID->m_pValue, (size_t)pTransID->m_nValue );
-
-							bHandled = TRUE;
-						}
-					}
-					else if ( pQueryMethod->GetString() == "find_node" )
-					{
-						// Find node
-					}
-					else if ( pQueryMethod->GetString() == "get_peers" )
-					{
-						// Get peers
-					}
-					else if ( pQueryMethod->GetString() == "announce_peer" )
-					{
-						// Announce peer
-					}
-					// else if ( pQueryMethod->GetString() == "error" ) - ???
-					// else Reply: "204 Method Unknown"
-				}
-			}
-			else if ( pType->GetString() == "r" )
-			{
-				// Response message
-				CBENode* pResponse = pRoot->GetNode( "r" );
-				if ( pResponse && pResponse->IsType( CBENode::beDict ) )
-				{
-					CBENode* pNodeID = pResponse->GetNode( "id" );
-					if ( pNodeID && pNodeID->IsType( CBENode::beString ) &&
-						pNodeID->m_nValue == 20 )
-					{
-						Hashes::BtGuid oNodeGUID;
-						CopyMemory( &oNodeGUID[0], pNodeID->m_pValue, 20 );
-						oNodeGUID.validate();
-
-						// Check queries pool for pTransID
-
-						// Save access token
-						CBENode* pToken = pResponse->GetNode( "token" );
-						if ( pToken && pToken->IsType( CBENode::beString ) )
-						{
-						}
-
-						CBENode* pPeers = pResponse->GetNode( "values" );
-						if ( pPeers && pPeers->IsType( CBENode::beList) )
-						{
-						}
-
-						CBENode* pNodes = pResponse->GetNode( "nodes" );
-						if ( pNodes && pNodes->IsType( CBENode::beString ) )
-						{
-						}
-
-						bHandled = TRUE;
-					}
-				}
-			}
-			else if ( pType->GetString() == "e" )
-			{
-				// Error message
-				CBENode* pError = pRoot->GetNode( "e" );
-				if ( pError && pError->IsType( CBENode::beList ) )
-				{
-				}
-			}
-		}
-	}
-
-	if ( bHandled )
-	{
-		// Send reply if any
-		if ( ! pReply.IsType( CBENode::beNull ) )
-		{
-			pReply.Add( "v" )->SetString( theApp.m_pBTVersion, 4 );
-
-			CBuffer pOutput;
-			pReply.Encode( &pOutput );
-			sendto( m_hSocket, (LPSTR)pOutput.m_pBuffer, pOutput.m_nLength, 0,
-				(SOCKADDR*)pHost, sizeof(SOCKADDR_IN) );
-
-			theApp.Message( MSG_DEBUG, _T("UDP: Sended BitTorrent packet to %s: %s"),
-				(LPCTSTR)CString( inet_ntoa( pHost->sin_addr ) ), (LPCTSTR)pReply.Encode() );
-		}
-		return TRUE;
-	}
-	// else reply "203 Protocol Error"
-
-	return FALSE;
-}
-
-/*void CDatagrams::DHTPing(const SOCKADDR_IN* pHost)
-{
-	CBENode pPing;
-	CBENode* pPingData = pPing.Add( "a" );
-	Hashes::BtGuid oMyGUID( MyProfile.oGUIDBT );
-	pPingData->Add( "id" )->SetString( &oMyGUID[0], oMyGUID.byteCount );
-	pPing.Add( "y" )->SetString( "q" );
-	pPing.Add( "t" )->SetString( "1234" ); // TODO
-	pPing.Add( "q" )->SetString( "ping" );
-	pPing.Add( "v" )->SetString( theApp.m_pBTVersion, 4 );
-	CBuffer pPingOutput;
-	pPing.Encode( &pPingOutput );
-
-	sendto( m_hSocket, (LPSTR)pPingOutput.m_pBuffer, pPingOutput.m_nLength, 0,
-		(SOCKADDR*)pHost, sizeof(SOCKADDR_IN) );
-
-	theApp.Message( MSG_DEBUG, _T("UDP: Sended BitTorrent ping packet to %s: %s"),
-		(LPCTSTR)CString( inet_ntoa( pHost->sin_addr ) ), (LPCTSTR)pPing.Encode() );
-}*/
-
-/*void CDatagrams::DHTGetPeers(const SOCKADDR_IN* pHost, const Hashes::BtGuid& oNodeGUID, const Hashes::BtHash& oGUID)
-{
-	CBENode pGetPeers;
-	CBENode* pGetPeersData = pGetPeers.Add( "a" );
-	pGetPeersData->Add( "id" )->SetString( &oNodeGUID[0], oNodeGUID.byteCount );
-	pGetPeersData->Add( "info_hash" )->SetString( &oGUID[0], oGUID.byteCount );
-	pGetPeers.Add( "y" )->SetString( "q" );
-	pGetPeers.Add( "t" )->SetString( "4567" ); // TODO
-	pGetPeers.Add( "q" )->SetString( "get_peers" );
-	pGetPeers.Add( "v" )->SetString( theApp.m_pBTVersion, 4 );
-	CBuffer pGetPeersOutput;
-	pGetPeers.Encode( &pGetPeersOutput );
-
-	sendto( m_hSocket, (LPSTR)pGetPeersOutput.m_pBuffer, pGetPeersOutput.m_nLength, 0,
-		(SOCKADDR*)pHost, sizeof(SOCKADDR_IN) );
-
-	theApp.Message( MSG_DEBUG, _T("UDP: Sended BitTorrent get peers packet to %s: %s"),
-		(LPCTSTR)CString( inet_ntoa( pHost->sin_addr ) ), (LPCTSTR)pGetPeers.Encode() );
-}*/
 
 //////////////////////////////////////////////////////////////////////
 // CDatagrams SGP receive handler
@@ -1279,8 +1127,6 @@ BOOL CDatagrams::OnPing(SOCKADDR_IN* pHost, CG1Packet* pPacket)
 		CGGEPItem* pItem = pGGEP.Add( GGEP_HEADER_PACKED_IPPORTS );
 		DWORD nCount = min( DWORD(50), HostCache.Gnutella1.CountHosts() );
 		WORD nPos = 0;
-		pItem->UnsetCOBS();
-		pItem->UnsetSmall();
 
 		// Create 5 random positions from 0 to 50 in the descending order
 		std::vector< WORD > pList;

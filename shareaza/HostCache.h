@@ -1,7 +1,7 @@
 //
 // HostCache.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -19,9 +19,6 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_HOSTCACHE_H__7F2764B0_BB17_4FF0_AF03_7BB7D4E22F7F__INCLUDED_)
-#define AFX_HOSTCACHE_H__7F2764B0_BB17_4FF0_AF03_7BB7D4E22F7F__INCLUDED_
-
 #pragma once
 
 class CNeighbour;
@@ -37,7 +34,8 @@ public:
 	// Attributes: Host Information
 	PROTOCOLID	m_nProtocol;		// Host protocol (PROTOCOL_*)
 	IN_ADDR		m_pAddress;			// Host IP address
-	WORD		m_nPort;			// Host port number
+	WORD		m_nPort;			// Host TCP port number
+	WORD		m_nUDPPort;			// Host UDP port number
 	CVendor*	m_pVendor;			// Vendor handler from VendorCache
 	BOOL		m_bPriority;		// Host cannot be removed on failure
 	DWORD		m_nUserCount;		// G2 leaf count / ED2K user count
@@ -65,6 +63,15 @@ public:
 	DWORD		m_tKeyTime;			// G2 time when query key was received
 	DWORD		m_nKeyValue;		// G2 query key
 	DWORD		m_nKeyHost;			// G2 query key host
+
+	// Attributes: DHT
+	BOOL			m_bDHT;			// Host is DHT capable
+	Hashes::BtGuid	m_oBtGUID;		// Host GUID (160 bit)
+	CArray< BYTE >	m_Token;		// Host access token
+
+	// Attributes: Kademlia
+	Hashes::Guid	m_oGUID;		// Host GUID (128 bit)
+	BYTE			m_nKADVersion;	// Kademlia version
 
 	CNeighbour*	ConnectTo(BOOL bAutomatic = FALSE);
 	CString		ToString() const;
@@ -97,7 +104,6 @@ protected:
 };
 
 typedef CHostCacheHost* CHostCacheHostPtr;
-
 
 template<>
 struct std::less< IN_ADDR > : public std::binary_function< IN_ADDR, IN_ADDR, bool>
@@ -157,14 +163,6 @@ public:
 	void				PruneOldHosts();			// For G1
 	void				Clear();
 	void				Serialize(CArchive& ar, int nVersion);
-	int					Import(LPCTSTR pszFile);
-	int					ImportMET(CFile* pFile);
-	bool				CheckMinimumED2KServers();
-
-	inline bool EnoughED2KServers() const throw()
-	{
-		return ( CountHosts( TRUE ) >= 8 );
-	}
 
 	inline CHostCacheIterator Begin() const throw()
 	{
@@ -227,14 +225,36 @@ public:
 			std::bind2nd( good_host(), bCountUncheckedLocally ) );
 	}
 
+	inline const CHostCacheHostPtr GetForDHTQuery() const throw()
+	{
+		for ( CHostCacheIterator it = m_HostsTime.begin();
+			it != m_HostsTime.end(); ++it )
+		{
+			CHostCacheHost* pHost = (*it);
+			if ( pHost->CanQuery() && pHost->m_bDHT && pHost->m_oBtGUID )
+				return pHost;
+		}
+		return NULL;
+	}
+
+	inline const CHostCacheHostPtr GetOldestForQuery() const throw()
+	{
+		for ( CHostCacheRIterator it = m_HostsTime.rbegin();
+			it != m_HostsTime.rend(); ++it )
+		{
+			CHostCacheHost* pHost = (*it);
+			if ( pHost->CanQuery() )
+				return pHost;
+		}
+		return NULL;
+	}
+
 protected:
 	CHostCacheMap				m_Hosts;		// Hosts map (sorted by IP)
 	CHostCacheIndex				m_HostsTime;	// Host index (sorted from newer to older)
 
 	CHostCacheHostPtr	AddInternal(const IN_ADDR* pAddress, WORD nPort, DWORD tSeen, LPCTSTR pszVendor, DWORD nUptime);
 	void				PruneHosts();
-	int					LoadDefaultED2KServers();
-	void				DoED2KServersImport();
 };
 
 
@@ -247,9 +267,15 @@ public:
 	CHostCacheList	Gnutella2;
 	CHostCacheList	eDonkey;
 	CHostCacheList	G1DNA;
+	CHostCacheList	BitTorrent;
+	CHostCacheList	Kademlia;
 
 	BOOL				Load();
 	BOOL				Save();
+	int					Import(LPCTSTR pszFile);
+	int					ImportMET(CFile* pFile);
+	int					ImportNodes(CFile* pFile);
+	bool				CheckMinimumED2KServers();
 	CHostCacheHostPtr	Find(const IN_ADDR* pAddress) const;
 	BOOL				Check(const CHostCacheHostPtr pHost) const;
 	void				Remove(CHostCacheHostPtr pHost);
@@ -257,6 +283,11 @@ public:
 							  PROTOCOLID nProtocol=PROTOCOL_NULL, bool bRemove=true);
 	void				OnSuccess(const IN_ADDR* pAddress, WORD nPort, 
 							  PROTOCOLID nProtocol=PROTOCOL_NULL, bool bUpdate=true);
+
+	inline bool EnoughED2KServers() const throw()
+	{
+		return ( eDonkey.CountHosts( TRUE ) >= 8 );
+	}
 
 	inline CHostCacheList* ForProtocol(PROTOCOLID nProtocol) throw()
 	{
@@ -268,11 +299,14 @@ public:
 			return &Gnutella2;
 		case PROTOCOL_ED2K:
 			return &eDonkey;
+		case PROTOCOL_BT:
+			return &BitTorrent;
+		case PROTOCOL_KAD:
+			return &Kademlia;
 		case PROTOCOL_NULL:
 		case PROTOCOL_ANY:
 		case PROTOCOL_HTTP:
 		case PROTOCOL_FTP:
-		case PROTOCOL_BT:
 		default:
 			ASSERT(FALSE);
 			return NULL;
@@ -285,8 +319,8 @@ protected:
 
 	void				Serialize(CArchive& ar);
 	void				Clear();
+	void				DoED2KServersImport();
+	int					LoadDefaultED2KServers();
 };
 
 extern CHostCache HostCache;
-
-#endif // !defined(AFX_HOSTCACHE_H__7F2764B0_BB17_4FF0_AF03_7BB7D4E22F7F__INCLUDED_)

@@ -1,7 +1,7 @@
 //
 // HostCache.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -29,6 +29,7 @@
 #include "VendorCache.h"
 #include "EDPacket.h"
 #include "Buffer.h"
+#include "Kademlia.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -43,13 +44,19 @@ CHostCache HostCache;
 // CHostCache construction
 
 CHostCache::CHostCache() :
-		Gnutella1( PROTOCOL_G1 ), Gnutella2( PROTOCOL_G2 ),
-		eDonkey( PROTOCOL_ED2K ), G1DNA( PROTOCOL_G1 ) 
+	Gnutella1( PROTOCOL_G1 ),
+	Gnutella2( PROTOCOL_G2 ),
+	eDonkey( PROTOCOL_ED2K ),
+	G1DNA( PROTOCOL_G1 ),
+	BitTorrent( PROTOCOL_BT ),
+	Kademlia( PROTOCOL_KAD ) 
 {
 	m_pList.AddTail( &Gnutella1 );
 	m_pList.AddTail( &Gnutella2 );
 	m_pList.AddTail( &eDonkey );
 	m_pList.AddTail( &G1DNA );
+	m_pList.AddTail( &BitTorrent );
+	m_pList.AddTail( &Kademlia );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -87,7 +94,7 @@ BOOL CHostCache::Load()
 		pException->Delete();
 	}
 
-	if ( eDonkey.GetNewest() == NULL ) eDonkey.CheckMinimumED2KServers();
+	if ( eDonkey.GetNewest() == NULL ) CheckMinimumED2KServers();
 
 	return TRUE;
 }
@@ -112,8 +119,12 @@ BOOL CHostCache::Save()
 
 void CHostCache::Serialize(CArchive& ar)
 {
-	int nVersion = 14;
-	
+	// History:
+	// 14 - Added m_sCountry
+	// 15 - Added m_bDHT and m_oBtGUID (Ryo-oh-ki)
+	// 16 - Added m_nUDPPort, m_oGUID and m_nKADVersion (Ryo-oh-ki)
+	int nVersion = 16;
+
 	if ( ar.IsStoring() )
 	{
 		ar << nVersion;
@@ -146,6 +157,43 @@ void CHostCache::Serialize(CArchive& ar)
 				}
 			}
 		}
+	}
+}
+
+//////////////////////////////////////////////////////////////////////
+// CHostCache ED2K servers import
+
+void CHostCache::DoED2KServersImport()
+{
+	CString strPrograms( GetProgramFilesFolder() );
+
+	theApp.Message( MSG_SYSTEM, _T("Importing server.met from eMule/eMule mod") );
+
+	// Get the server list from eMule if possible
+	Import( strPrograms + _T("\\eMule\\config\\server.met") );
+	Import( strPrograms + _T("\\Neo Mule\\config\\server.met") );
+}
+
+//////////////////////////////////////////////////////////////////////
+// CHostCache root import
+
+int CHostCache::Import(LPCTSTR pszFile)
+{
+	CFile pFile;
+
+	if ( ! pFile.Open( pszFile, CFile::modeRead ) ) return 0;
+
+	if ( _tcsistr( pszFile, _T(".met") ) != NULL )
+	{
+		return ImportMET( &pFile );
+	}
+	else if ( _tcsistr( pszFile, _T("nodes.dat") ) != NULL )
+	{
+		return ImportNodes( &pFile );
+	}
+	else
+	{
+		return 0;
 	}
 }
 
@@ -504,7 +552,11 @@ void CHostCacheList::PruneOldHosts()
 		}
 		else if ( pHost->m_nProtocol == PROTOCOL_G2 )
 			nExpire = Settings.Gnutella2.HostExpire;
-		else // ed2k
+		else if ( pHost->m_nProtocol == PROTOCOL_BT )
+			nExpire = 24 * 60 * 60; // TODO: Add BitTorrent setting
+		else if ( pHost->m_nProtocol == PROTOCOL_KAD )
+			nExpire = 24 * 60 * 60; // TODO: Add Kademlia setting
+		else
 			nExpire = 0;
 
 		// Since we discard hosts after 3 failures, it means that we will remove
@@ -586,28 +638,9 @@ void CHostCacheList::Serialize(CArchive& ar, int nVersion)
 }
 
 //////////////////////////////////////////////////////////////////////
-// CHostCacheList root import
+// CHostCache MET import
 
-int CHostCacheList::Import(LPCTSTR pszFile)
-{
-	CFile pFile;
-	
-	if ( ! pFile.Open( pszFile, CFile::modeRead ) ) return 0;
-	
-	if ( _tcsistr( pszFile, _T(".met") ) != NULL )
-	{
-		return ImportMET( &pFile );
-	}
-	else
-	{
-		return 0;
-	}
-}
-
-//////////////////////////////////////////////////////////////////////
-// CHostCacheList MET import
-
-int CHostCacheList::ImportMET(CFile* pFile)
+int CHostCache::ImportMET(CFile* pFile)
 {
 	BYTE nVersion = 0;
 	pFile->Read( &nVersion, sizeof(nVersion) );
@@ -630,7 +663,7 @@ int CHostCacheList::ImportMET(CFile* pFile)
 		if ( pFile->Read( &nPort, sizeof(nPort) ) != sizeof(nPort) ) break;
 		if ( pFile->Read( &nTags, sizeof(nTags) ) != sizeof(nTags) ) break;
 		
-		CHostCacheHostPtr pServer = Add( &pAddress, nPort );
+		CHostCacheHostPtr pServer = eDonkey.Add( &pAddress, nPort );
 		
 		while ( nTags-- > 0 )
 		{
@@ -667,9 +700,79 @@ int CHostCacheList::ImportMET(CFile* pFile)
 }
 
 //////////////////////////////////////////////////////////////////////
-// CHostCacheList Check Minimum ED2K Servers
+// CHostCache Nodes import
 
-bool CHostCacheList::CheckMinimumED2KServers()
+int CHostCache::ImportNodes(CFile* pFile)
+{
+	int nServers = 0;
+	UINT nVersion = 0;
+
+	UINT nCount;
+	if ( pFile->Read( &nCount, sizeof( nCount ) ) != sizeof( nCount ) )
+		return 0;
+	if ( nCount == 0 )
+	{
+		// New format
+		if ( pFile->Read( &nVersion, sizeof( nVersion ) ) != sizeof( nVersion ) )
+			return 0;
+		if ( nVersion == 1 )
+		{
+			if ( pFile->Read( &nCount, sizeof( nCount ) ) != sizeof( nCount ) )
+				return 0;
+		}
+		else
+			// Unknown format
+			return 0;
+	}
+	while ( nCount-- > 0 )
+	{
+		Hashes::Guid oGUID;
+		if ( pFile->Read( &oGUID[0], oGUID.byteCount ) != oGUID.byteCount )
+			break;
+		oGUID.validate();
+		IN_ADDR pAddress;
+		if ( pFile->Read( &pAddress, sizeof( pAddress ) ) != sizeof( pAddress ) )
+			break;
+		pAddress.s_addr = ntohl( pAddress.s_addr );
+		WORD nUDPPort;
+		if ( pFile->Read( &nUDPPort, sizeof( nUDPPort ) ) != sizeof( nUDPPort ) )
+			break;
+		WORD nTCPPort;
+		if ( pFile->Read( &nTCPPort, sizeof( nTCPPort ) ) != sizeof( nTCPPort ) )
+			break;
+		BYTE nKADVersion = 0;
+		BYTE nType = 0;
+		if ( nVersion == 1 )
+		{
+			if ( pFile->Read( &nKADVersion, sizeof( nKADVersion ) ) != sizeof( nKADVersion ) )
+				break;
+		}
+		else
+		{
+			if ( pFile->Read( &nType, sizeof( nType ) ) != sizeof( nType ) )
+				break;
+		}
+		if ( nType < 4 )
+		{
+			CHostCacheHostPtr pCache = Kademlia.Add( &pAddress, nTCPPort );
+			if ( pCache )
+			{
+				pCache->m_oGUID = oGUID;
+				pCache->m_sDescription = oGUID.toString();
+				pCache->m_nUDPPort = nUDPPort;
+				pCache->m_nKADVersion = nKADVersion;
+				nServers++;
+			}
+		}
+	}
+
+	return nServers;
+}
+
+//////////////////////////////////////////////////////////////////////
+// CHostCache Check Minimum ED2K Servers
+
+bool CHostCache::CheckMinimumED2KServers()
 {
 #ifndef LAN_MODE
 	// Load default ed2k server list (if necessary)
@@ -684,9 +787,9 @@ bool CHostCacheList::CheckMinimumED2KServers()
 }
 
 //////////////////////////////////////////////////////////////////////
-// CHostCacheList Default ED2K servers import
+// CHostCache Default ED2K servers import
 
-int CHostCacheList::LoadDefaultED2KServers()
+int CHostCache::LoadDefaultED2KServers()
 {
 	CFile pFile;
 	int nServers = 0;
@@ -727,7 +830,7 @@ int CHostCacheList::LoadDefaultED2KServers()
 						pAddress.S_un.S_un_b.s_b3 = (BYTE)nIP[2];
 						pAddress.S_un.S_un_b.s_b4 = (BYTE)nIP[3];
 
-						CHostCacheHostPtr pServer = Add( &pAddress, (WORD)nPort );
+						CHostCacheHostPtr pServer = eDonkey.Add( &pAddress, (WORD)nPort );
 
 						if ( pServer )
 						{
@@ -749,40 +852,44 @@ int CHostCacheList::LoadDefaultED2KServers()
 		}
 	}
 
-	if ( !EnoughED2KServers() )
+	if ( ! EnoughED2KServers() )
 		theApp.Message( MSG_DISPLAYED_ERROR, _T("Loading default ED2K server list failed") );
 
 	return nServers;
 }
 
 //////////////////////////////////////////////////////////////////////
-// CHostCacheList ED2K servers import
-
-void CHostCacheList::DoED2KServersImport()
-{
-	CString strPrograms( GetProgramFilesFolder() ), strFolder;
-
-	theApp.Message( MSG_SYSTEM, _T("Importing server.met from eMule/eMule mod") );
-
-	// Get the server list from eMule if possible
-	strFolder = strPrograms + _T("\\eMule\\config\\server.met");
-	Import( strFolder );
-
-	strFolder = strPrograms + _T("\\Neo Mule\\config\\server.met");
-	Import( strFolder );
-}
-
-//////////////////////////////////////////////////////////////////////
 // CHostCacheHost construction
 
-CHostCacheHost::CHostCacheHost(PROTOCOLID nProtocol)
-: m_nProtocol( nProtocol )
-, m_nPort(0), m_pVendor(NULL), m_bPriority(FALSE), m_nUserCount(0)
-, m_nUserLimit(0), m_nFileLimit(0), m_nTCPFlags(0), m_nUDPFlags(0)
-, m_tAdded( GetTickCount() ), m_tSeen(0), m_tRetryAfter(0), m_tConnect(0)
-, m_tQuery(0), m_tAck(0), m_tStats(0), m_tFailure(0)
-, m_nFailures(0), m_nDailyUptime(0), m_tKeyTime(0)
-, m_nKeyValue(0), m_nKeyHost(0), m_bCheckedLocally(FALSE)
+CHostCacheHost::CHostCacheHost(PROTOCOLID nProtocol) :
+	m_nProtocol( nProtocol ),
+	m_nPort(0),
+	m_nUDPPort(0),
+	m_pVendor(NULL),
+	m_bPriority(FALSE),
+	m_nUserCount(0),
+	m_nUserLimit(0),
+	m_nFileLimit(0),
+	m_nTCPFlags(0),
+	m_nUDPFlags(0),
+	m_tAdded( GetTickCount() ),
+	m_tSeen(0),
+	m_tRetryAfter(0),
+	m_tConnect(0),
+	m_tQuery(0),
+	m_tAck(0),
+	m_tStats(0),
+	m_tFailure(0),
+	m_nFailures(0),
+	m_nDailyUptime(0),
+	m_tKeyTime(0),
+	m_nKeyValue(0),
+	m_nKeyHost(0),
+	m_bCheckedLocally(FALSE),
+	// Attributes: DHT
+	m_bDHT(FALSE),
+	// Attributes: Kademlia
+	m_nKADVersion(0)
 {
 	m_pAddress.s_addr = 0;
 }
@@ -838,6 +945,13 @@ void CHostCacheHost::Serialize(CArchive& ar, int nVersion)
 		ar << m_bCheckedLocally;
 		ar << m_nDailyUptime;
 		ar << m_sCountry;
+
+		ar << m_bDHT;
+		ar.Write( &m_oBtGUID[0], m_oBtGUID.byteCount );
+
+		ar << m_nUDPPort;
+		ar.Write( &m_oGUID[0], m_oGUID.byteCount );
+		ar << m_nKADVersion;
 	}
 	else
 	{
@@ -914,6 +1028,21 @@ void CHostCacheHost::Serialize(CArchive& ar, int nVersion)
 		}
 		else
 			m_sCountry = theApp.GetCountryCode( m_pAddress );
+
+		if ( nVersion >= 15 )
+		{
+			ar >> m_bDHT;
+			ReadArchive( ar, &m_oBtGUID[0], m_oBtGUID.byteCount );
+			m_oBtGUID.validate();
+		}
+
+		if ( nVersion >= 16 )
+		{
+			ar >> m_nUDPPort;
+			ReadArchive( ar, &m_oGUID[0], m_oGUID.byteCount );
+			m_oGUID.validate();
+			ar >> m_nKADVersion;
+		}
 	}
 }
 
@@ -926,7 +1055,7 @@ bool CHostCacheHost::Update(WORD nPort, DWORD tSeen, LPCTSTR pszVendor, DWORD nU
 
 	if ( nPort )
 	{
-		m_nPort = nPort;
+		m_nUDPPort = m_nPort = nPort;
 	}
 
 	if ( ! tSeen )
@@ -969,9 +1098,24 @@ bool CHostCacheHost::Update(WORD nPort, DWORD tSeen, LPCTSTR pszVendor, DWORD nU
 CNeighbour* CHostCacheHost::ConnectTo(BOOL bAutomatic)
 {
 	m_tConnect = static_cast< DWORD >( time( NULL ) );
-	ASSERT( m_nProtocol == PROTOCOL_G1 || m_nProtocol == PROTOCOL_G2 ||
-		 m_nProtocol == PROTOCOL_ED2K );
-	return Neighbours.ConnectTo( &m_pAddress, m_nPort, m_nProtocol, bAutomatic );
+
+	switch( m_nProtocol )
+	{
+	case PROTOCOL_G1:
+	case PROTOCOL_G2:
+	case PROTOCOL_ED2K:
+		return Neighbours.ConnectTo( &m_pAddress, m_nPort, m_nProtocol, bAutomatic );
+	case PROTOCOL_KAD:
+		{
+			SOCKADDR_IN pHost = {};
+			pHost.sin_family = AF_INET;
+			pHost.sin_addr.s_addr = m_pAddress.s_addr;
+			pHost.sin_port = htons( m_nUDPPort );
+			Kademlia.Bootstrap( &pHost );
+			break;
+		}
+	}
+	return NULL;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -1088,7 +1232,27 @@ BOOL CHostCacheHost::CanQuery(DWORD tNow) const
 		// Don't query too fast
 		return ( tNow - m_tQuery ) >= max( Settings.Gnutella2.QueryHostThrottle, 90u );
 	}
-	
+	else if ( m_nProtocol == PROTOCOL_BT )
+	{
+		// Must not be waiting for an ack
+		if ( 0 != m_tAck ) return FALSE;
+
+		// Get the time if not supplied
+		if ( 0 == tNow ) tNow = static_cast< DWORD >( time( NULL ) );
+
+		// Retry After
+		if ( 0 != m_tRetryAfter && tNow < m_tRetryAfter ) return FALSE;
+
+		// If haven't queried yet, its ok
+		if ( 0 == m_tQuery ) return TRUE;
+
+		// Don't query too fast
+		return ( tNow - m_tQuery ) >= 90u;
+	}	
+	else if ( m_nProtocol == PROTOCOL_KAD )
+	{
+		return TRUE; // TODO: Fix it
+	}
 	return FALSE;
 }
 

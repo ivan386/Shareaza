@@ -1,7 +1,7 @@
 //
 // WizardConnectionPage.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -325,7 +325,7 @@ void CWizardConnectionPage::OnRun()
 		LoadString( strMessage, IDS_WIZARD_ED2K );
 		m_wndStatus.SetWindowText( strMessage );
 
-		HostCache.eDonkey.CheckMinimumED2KServers();
+		HostCache.CheckMinimumED2KServers();
 		nCurrentStep +=30;
 		m_wndProgress.PostMessage( PBM_SETPOS, nCurrentStep );
 	}

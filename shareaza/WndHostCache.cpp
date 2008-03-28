@@ -1,7 +1,7 @@
 //
 // WndHostCache.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -66,6 +66,10 @@ BEGIN_MESSAGE_MAP(CHostCacheWnd, CPanelWnd)
 	ON_COMMAND(ID_HOSTCACHE_G1_CACHE, OnHostcacheG1Cache)
 	ON_UPDATE_COMMAND_UI(ID_HOSTCACHE_ED2K_CACHE, OnUpdateHostcacheEd2kCache)
 	ON_COMMAND(ID_HOSTCACHE_ED2K_CACHE, OnHostcacheEd2kCache)
+	ON_UPDATE_COMMAND_UI(ID_HOSTCACHE_BT_CACHE, OnUpdateHostcacheBTCache)
+	ON_COMMAND(ID_HOSTCACHE_BT_CACHE, OnHostcacheBTCache)
+	ON_UPDATE_COMMAND_UI(ID_HOSTCACHE_KAD_CACHE, OnUpdateHostcacheKADCache)
+	ON_COMMAND(ID_HOSTCACHE_KAD_CACHE, OnHostcacheKADCache)
 	ON_COMMAND(ID_HOSTCACHE_IMPORT, OnHostcacheImport)
 	ON_COMMAND(ID_HOSTCACHE_ED2K_DOWNLOAD, OnHostcacheEd2kDownload)
 	ON_UPDATE_COMMAND_UI(ID_HOSTCACHE_PRIORITY, OnUpdateHostcachePriority)
@@ -196,10 +200,16 @@ void CHostCacheWnd::Update(BOOL bForce)
 		
 		if ( pHost->m_pVendor )
 			pItem->Set( 2, pHost->m_pVendor->m_sName );
+		else if ( pHost->m_nProtocol == PROTOCOL_G1 )
+			pItem->Set( 2, _T("(Gnutella)") );
 		else if ( pHost->m_nProtocol == PROTOCOL_G2 )
-			pItem->Set( 2, _T("(Gnutella2)") );
+			pItem->Set( 2, _T("(Gnutella 2)") );
 		else if ( pHost->m_nProtocol == PROTOCOL_ED2K )
 			pItem->Set( 2, _T("(eDonkey Server)") );
+		else if ( pHost->m_nProtocol == PROTOCOL_BT )
+			pItem->Set( 2, _T("(BitTorrent)") );
+		else if ( pHost->m_nProtocol == PROTOCOL_KAD )
+			pItem->Set( 2, _T("(Kademlia)") );
 		
 		CTime pTime( (time_t)pHost->Seen() );
 		pItem->Set( 3, pTime.Format( _T("%Y-%m-%d %H:%M:%S") ) );
@@ -250,7 +260,7 @@ void CHostCacheWnd::OnSkinChange()
 		Settings.Gnutella.HostCacheView = m_nMode = PROTOCOL_G2;
 	}
 
-	for ( int nImage = 1 ; nImage < 4 ; nImage++ )
+	for ( int nImage = 1 ; nImage < 6 ; nImage++ )
 	{
 		HICON hIcon = CoolInterface.ExtractIcon( (UINT)protocolCmdMap[ nImage ].commandID, FALSE );
 		if ( hIcon )
@@ -277,7 +287,9 @@ void CHostCacheWnd::OnTimer(UINT_PTR nIDEvent)
 	{
 		PROTOCOLID nEffective = m_nMode ? m_nMode : PROTOCOL_G2;
 
-		if ( ( nEffective != PROTOCOL_G1 ) && ( nEffective != PROTOCOL_G2 ) && ( nEffective != PROTOCOL_ED2K ) )
+		if ( ( nEffective != PROTOCOL_G1 ) && ( nEffective != PROTOCOL_G2 ) &&
+			( nEffective != PROTOCOL_ED2K ) && ( nEffective != PROTOCOL_BT) &&
+			( nEffective != PROTOCOL_KAD ) )
 			nEffective = PROTOCOL_G2;
 
 		CHostCacheList* pCache = HostCache.ForProtocol( nEffective );
@@ -337,14 +349,20 @@ void CHostCacheWnd::OnNcMouseMove(UINT /*nHitTest*/, CPoint /*point*/)
 void CHostCacheWnd::OnUpdateHostCacheConnect(CCmdUI* pCmdUI) 
 {
 	pCmdUI->Enable( ( m_wndList.GetSelectedCount() > 0 ) &&
-		( m_nMode == PROTOCOL_NULL || m_nMode == PROTOCOL_G1 ||
-		m_nMode == PROTOCOL_G2 || m_nMode == PROTOCOL_ED2K ) );	
+		( m_nMode == PROTOCOL_NULL ||
+		m_nMode == PROTOCOL_G1 ||
+		m_nMode == PROTOCOL_G2 ||
+		m_nMode == PROTOCOL_ED2K ||	
+		m_nMode == PROTOCOL_KAD ) );	
 }
 
 void CHostCacheWnd::OnHostCacheConnect() 
 {
-	if ( m_nMode == PROTOCOL_NULL || m_nMode == PROTOCOL_G1 ||
-		m_nMode == PROTOCOL_G2 || m_nMode == PROTOCOL_ED2K )
+	if ( m_nMode == PROTOCOL_NULL ||
+		m_nMode == PROTOCOL_G1 ||
+		m_nMode == PROTOCOL_G2 ||
+		m_nMode == PROTOCOL_ED2K ||
+		m_nMode == PROTOCOL_KAD )
 	{
 		POSITION pos = m_wndList.GetFirstSelectedItemPosition();	
 		while ( pos )
@@ -481,6 +499,11 @@ void CHostCacheWnd::OnNeighboursCopy()
 		strURL.Format( _T("ed2k://|server|%s|%u|/"),
 			(LPCTSTR)CString( inet_ntoa( (IN_ADDR&)pHost->m_pAddress ) ), pHost->m_nPort );
 	}
+	else if ( pHost->m_nProtocol == PROTOCOL_KAD )
+	{
+		strURL.Format( _T("ed2k://|kad|%s|%u|/"),
+			(LPCTSTR)CString( inet_ntoa( (IN_ADDR&)pHost->m_pAddress ) ), pHost->m_nUDPPort );
+	}
 	
 	CURLCopyDlg::SetClipboardText( strURL );
 }
@@ -504,7 +527,7 @@ void CHostCacheWnd::OnHostCacheRemove()
 		}
 	}
 
-	HostCache.eDonkey.CheckMinimumED2KServers();
+	HostCache.CheckMinimumED2KServers();
 
 	Update();
 }
@@ -557,15 +580,42 @@ void CHostCacheWnd::OnHostcacheEd2kCache()
 	Update( TRUE );
 }
 
+void CHostCacheWnd::OnUpdateHostcacheBTCache(CCmdUI* pCmdUI) 
+{
+	pCmdUI->SetCheck( m_nMode == PROTOCOL_BT );
+}
+
+void CHostCacheWnd::OnHostcacheBTCache() 
+{
+	Settings.Gnutella.HostCacheView = m_nMode = PROTOCOL_BT;
+	m_wndList.DeleteAllItems();
+	Update( TRUE );
+}
+
+void CHostCacheWnd::OnUpdateHostcacheKADCache(CCmdUI* pCmdUI) 
+{
+	pCmdUI->SetCheck( m_nMode == PROTOCOL_KAD );
+}
+
+void CHostCacheWnd::OnHostcacheKADCache() 
+{
+	Settings.Gnutella.HostCacheView = m_nMode = PROTOCOL_KAD;
+	m_wndList.DeleteAllItems();
+	Update( TRUE );
+}
+
 void CHostCacheWnd::OnHostcacheImport() 
 {
+	// TODO: Localize it
 	CFileDialog dlg( TRUE, _T("met"), NULL, OFN_HIDEREADONLY,
-		_T("eDonkey2000 MET files|*.met|All Files|*.*||"), this );
+		_T("eDonkey2000 MET files|*.met|")
+		_T("Kademlia Nodes files|nodes.dat|")
+		_T("All Files|*.*||"), this );
 	
 	if ( dlg.DoModal() != IDOK ) return;
 	
 	CWaitCursor pCursor;
-	HostCache.eDonkey.Import( dlg.GetPathName() );
+	HostCache.Import( dlg.GetPathName() );
 	HostCache.Save();
 	Update( TRUE );
 }

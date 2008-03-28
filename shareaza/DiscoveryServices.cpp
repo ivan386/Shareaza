@@ -1,7 +1,7 @@
 //
 // DiscoveryServices.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -31,6 +31,7 @@
 #include "G2Packet.h"
 #include "Buffer.h"
 #include "Datagrams.h"
+#include "Kademlia.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -699,7 +700,7 @@ BOOL CDiscoveryServices::Execute(BOOL bDiscovery, PROTOCOLID nProtocol, USHORT n
 		m_tExecute = tNow;
 		BOOL	bG1Required = Settings.Gnutella1.EnableToday && ( nProtocol == PROTOCOL_NULL || nProtocol == PROTOCOL_G1) && ( nForceDiscovery == 1 || HostCache.Gnutella1.CountHosts(TRUE) < 20 );
 		BOOL	bG2Required = Settings.Gnutella2.EnableToday && ( nProtocol == PROTOCOL_NULL || nProtocol == PROTOCOL_G2) && ( nForceDiscovery == 1 || HostCache.Gnutella2.CountHosts(TRUE) < 25 );
-		BOOL	bEdRequired = Settings.eDonkey.EnableToday && ( nProtocol == PROTOCOL_NULL || nProtocol == PROTOCOL_ED2K ) && Settings.eDonkey.MetAutoQuery && ( m_tMetQueried == 0 || tNow - m_tMetQueried >= 60 * 60 ) && ( nForceDiscovery == 1 || !HostCache.eDonkey.EnoughED2KServers() );
+		BOOL	bEdRequired = Settings.eDonkey.EnableToday && ( nProtocol == PROTOCOL_NULL || nProtocol == PROTOCOL_ED2K ) && Settings.eDonkey.MetAutoQuery && ( m_tMetQueried == 0 || tNow - m_tMetQueried >= 60 * 60 ) && ( nForceDiscovery == 1 || !HostCache.EnoughED2KServers() );
 
 		// Broadcast dicovery
 		if ( bG2Required && Neighbours.NeedMoreHubs( PROTOCOL_G2 ) )
@@ -1529,7 +1530,7 @@ BOOL CDiscoveryServices::RunServerMet()
 	
 	if ( ! Check( m_pWebCache, CDiscoveryService::dsServerMet ) ) return FALSE;
 	
-	int nCount = HostCache.eDonkey.ImportMET( &pFile );
+	int nCount = HostCache.ImportMET( &pFile );
 	
 	if ( ! nCount ) return FALSE;
 	

@@ -1565,7 +1565,7 @@ void CMainWnd::LocalSystemChecks()
 		if ( Settings.Live.DefaultED2KServersLoaded == FALSE )
 		{
 			Settings.Live.DefaultED2KServersLoaded  = TRUE;
-			HostCache.eDonkey.CheckMinimumED2KServers();
+			HostCache.CheckMinimumED2KServers();
 		}
 
 		if ( ( Settings.Live.DonkeyServerWarning == FALSE ) && ( Settings.eDonkey.EnableToday ) )

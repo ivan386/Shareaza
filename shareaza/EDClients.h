@@ -64,8 +64,6 @@ public:
 	BOOL			IsMyDownload(const CDownloadTransferED2K* pDownload) const;
 
 protected:
-	BOOL			OnPacketKad(SOCKADDR_IN* pHost, CEDPacket* pPacket);
-	BOOL			OnPacketED(SOCKADDR_IN* pHost, CEDPacket* pPacket);
 	CEDClient*		GetByID(DWORD nClientID, IN_ADDR* pServer, const Hashes::Guid& oGUID) const;
 	CEDClient*		GetByGUID(const Hashes::Guid& oGUID) const;
 	void			OnServerStatus(SOCKADDR_IN* pHost, CEDPacket* pPacket);

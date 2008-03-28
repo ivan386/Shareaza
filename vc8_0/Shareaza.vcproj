@@ -524,6 +524,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\shareaza\DHT.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\shareaza\DiscoveryServices.cpp"
 				>
 			</File>
@@ -729,6 +733,10 @@
 			</File>
 			<File
 				RelativePath="..\shareaza\ImageServices.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\shareaza\Kademlia.cpp"
 				>
 			</File>
 			<File
@@ -2198,6 +2206,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\shareaza\DHT.h"
+				>
+			</File>
+			<File
 				RelativePath="..\shareaza\DiscoveryServices.h"
 				>
 			</File>
@@ -2411,6 +2423,10 @@
 			</File>
 			<File
 				RelativePath="..\shareaza\ImageServices.h"
+				>
+			</File>
+			<File
+				RelativePath="..\shareaza\Kademlia.h"
 				>
 			</File>
 			<File

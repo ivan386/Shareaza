@@ -500,6 +500,10 @@
 				>
 			</File>
 			<File
+				RelativePath="DHT.cpp"
+				>
+			</File>
+			<File
 				RelativePath="DiscoveryServices.cpp"
 				>
 			</File>
@@ -705,6 +709,10 @@
 			</File>
 			<File
 				RelativePath="ImageServices.cpp"
+				>
+			</File>
+			<File
+				RelativePath="Kademlia.cpp"
 				>
 			</File>
 			<File
@@ -2909,6 +2917,10 @@
 				>
 			</File>
 			<File
+				RelativePath="DHT.h"
+				>
+			</File>
+			<File
 				RelativePath="DiscoveryServices.h"
 				>
 			</File>
@@ -3122,6 +3134,10 @@
 			</File>
 			<File
 				RelativePath="ImageServices.h"
+				>
+			</File>
+			<File
+				RelativePath="Kademlia.h"
 				>
 			</File>
 			<File

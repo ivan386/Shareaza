@@ -1515,6 +1515,7 @@
 #define ID_SEARCH_DOWNLOADNOW           32824
 #define ID_OPEN_DOWNLOADS_FOLDER        32825
 #define ID_DOWNLOADS_RESUME             32826
+#define ID_HOSTCACHE_BT_CACHE           32827
 #define ID_DOWNLOADS_CLEAR_COMPLETED    32828
 #define ID_DOWNLOADS_SOURCES            32829
 #define ID_DOWNLOADS_LAUNCH             32830
@@ -1548,6 +1549,7 @@
 #define ID_HELP_FAQ                     32858
 #define ID_HELP_GUIDE                   32859
 #define ID_SEARCH_CHAT                  32860
+#define ID_HOSTCACHE_KAD_CACHE          32861
 #define ID_TRAFFIC_GRID                 32862
 #define ID_TRAFFIC_AXIS                 32863
 #define ID_TRAFFIC_LEGEND               32864
@@ -1765,6 +1767,7 @@
 #define ID_DOWNLOADS_CLEAR_INCOMPLETE   33100
 #define ID_DOWNLOADS_CLEAR_COMPLETE     33101
 #define ID_LIBRARY_CREATETORRENT        33102
+#define ID_NETWORK_KAD                  33103
 #define ID_WINDOW_NAVBAR                33104
 #define ID_DOWNLOADS_RATE               33105
 #define ID_LIBRARY_VIEW_COLLECTION      33106

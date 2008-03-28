@@ -23,7 +23,6 @@
 #include "Shareaza.h"
 #include "Settings.h"
 #include "HostCache.h"
-#include "DiscoveryServices.h"
 #include "WizardNetworksPage.h"
 #include "DlgDonkeyImport.h"
 #include "Skin.h"
