@@ -1,7 +1,7 @@
 //
 // CtrlLibraryDetailView.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -723,7 +723,6 @@ void CLibraryDetailView::OnItemChanged(NMHDR* pNotify, LRESULT* pResult)
 
 		LDVITEM* pItem = m_pList;
 		for ( DWORD nCount = m_nList ; nCount ; nCount--, pItem++ ) pItem->nState &= ~LDVI_SELECTED;
-		this->SendMessage( LVM_REDRAWITEMS, 0, m_nList );
 	}
 }
 
