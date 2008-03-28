@@ -222,7 +222,7 @@ void CWizardSheet::OnSize(UINT nType, int cx, int cy)
 	}
 }
 
-BOOL CWizardSheet::OnEraseBkgnd(CDC* pDC) 
+BOOL CWizardSheet::OnEraseBkgnd(CDC* /*pDC*/) 
 {
 	return TRUE;
 }
@@ -278,7 +278,7 @@ BOOL CWizardSheet::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)
 	return CPropertySheet::OnSetCursor( pWnd, nHitTest, message );
 }
 
-void CWizardSheet::OnLButtonUp(UINT nFlags, CPoint point)
+void CWizardSheet::OnLButtonUp(UINT /*nFlags*/, CPoint point)
 {
 	if ( point.y <= 50 )
 	{
@@ -315,7 +315,7 @@ CWizardPage::~CWizardPage()
 /////////////////////////////////////////////////////////////////////////////
 // CWizardPage message handlers
 
-HBRUSH CWizardPage::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor) 
+HBRUSH CWizardPage::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT /*nCtlColor*/) 
 {
 	if ( pWnd != NULL && pWnd->GetDlgCtrlID() == IDC_TITLE )
 	{

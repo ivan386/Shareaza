@@ -26,15 +26,19 @@
 //       // now filename is string following -f option
 //    }
 //
-class CCommandLineInfoEx : public CCommandLineInfo {
+
+class CCommandLineInfoEx : public CCommandLineInfo
+{
 public:
-   BOOL GetOption(LPCTSTR option, CString& val);
-   BOOL GetOption(LPCTSTR option) {
-      return GetOption(option, CString());
-   }
+	BOOL GetOption(LPCTSTR option, CString& val);
+	BOOL GetOption(LPCTSTR option)
+	{
+		CString foo;
+		return GetOption(option, foo);
+	}
 
 protected:
-   CMapStringToString m_options; // hash of options
-   CString  m_sLastOption;       // last option encountered
-   virtual void ParseParam(const TCHAR* pszParam, BOOL bFlag, BOOL bLast);
+	CMapStringToString m_options; // hash of options
+	CString  m_sLastOption;       // last option encountered
+	virtual void ParseParam(const TCHAR* pszParam, BOOL bFlag, BOOL bLast);
 };

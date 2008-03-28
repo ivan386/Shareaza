@@ -37,7 +37,7 @@ static char THIS_FILE[]=__FILE__;
 ///////////////////////////////////////////////////////////////////////////////
 // CBuffer construction
 
-CBuffer::CBuffer(DWORD* pLimit)
+CBuffer::CBuffer(DWORD* /*pLimit*/)
 {
 	m_pNext		= NULL;
 

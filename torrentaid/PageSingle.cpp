@@ -80,7 +80,7 @@ BOOL CSinglePage::OnSetActive()
 	return CWizardPage::OnSetActive();
 }
 
-void CSinglePage::OnTimer(UINT nIDEvent) 
+void CSinglePage::OnTimer(UINT /*nIDEvent*/) 
 {
 	KillTimer( 1 );	
 	PostMessage( WM_COMMAND, MAKELONG( IDC_BROWSE_FILE, BN_CLICKED ) );
