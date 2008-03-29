@@ -61,7 +61,7 @@ protected:
 	void			Remove(CManagedSearch* pSearch);
 
 	friend class CManagedSearch;
-
+	friend class CSearchWnd;
 };
 
 extern CSearchManager SearchManager;

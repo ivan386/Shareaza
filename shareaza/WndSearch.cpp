@@ -44,6 +44,7 @@
 #include "DlgHelp.h"
 #include "Security.h"
 #include "ResultFilters.h"
+#include "SearchManager.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -958,7 +959,8 @@ void CSearchWnd::Serialize(CArchive& ar)
 		{
 			auto_ptr< CManagedSearch > pSearch( new CManagedSearch() );
 			pSearch->Serialize( ar );
-			m_oSearches.push_back( pSearch.release() );
+			m_oSearches.push_back( pSearch.get() );
+			SearchManager.Add( pSearch.release() );
 		}		
 	}
 
