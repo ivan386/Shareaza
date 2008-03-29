@@ -188,7 +188,7 @@ CFilterOptions::CFilterOptions()
 	m_bFilterDRM		= ( Settings.Search.FilterMask & ( 1 << 6 ) ) > 0;
 	m_bFilterAdult		= ( Settings.Search.FilterMask & ( 1 << 7 ) ) > 0;
 	m_bFilterSuspicious = ( Settings.Search.FilterMask & ( 1 << 8 ) ) > 0;
-	m_bRegExp			= ( Settings.Search.FilterMask & ( 1 << 8 ) ) > 0;
+	m_bRegExp			= ( Settings.Search.FilterMask & ( 1 << 9 ) ) > 0;
 	m_nFilterMinSize	= 1;
 	m_nFilterMaxSize	= 0;
 	m_nFilterSources	= 1;
