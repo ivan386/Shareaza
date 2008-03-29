@@ -1,56 +1,33 @@
-﻿		<table width="95%" align="center" cellspacing="0" cellpadding="0">
-			<tr>
-				<td align="center">
-					<table width="100%" cellspacing="0">
-						<tr>
-							<td class="tabedg">&nbsp;</td>
-							<td class="tab">Hem</td>
-							<td class="tabfil">&nbsp;</td>
-							<td class="tab">Sök</td>
-							<td class="tabfil">&nbsp;</td>
-							<td class="tab">Nedladdningar</td>
-							<td class="tabfil">&nbsp;</td>
-							<td class="tab">Uppladdningar</td>
-							<td class="tabfil">&nbsp;</td>
-							<td class="tab">Nätverk</td>
-							<td class="tabedg">&nbsp;</td>
-						</tr>
-					</table>
-				</td>
-			</tr>
-			<tr>
-				<td class="frame">
-					<div>
-						Välkommen till <b>Shareazas fjärråtkomst.</b>
-						Om denna kopia av Shareaza körs på din PC,
-						skriv ditt användarnamn och lösenord för fjärråtkomst och klicka på <b>Logga in</b>.
-					</div>
-					<%? failure %>
-					<div align="center" style="color: red; font-weight: bold;">
-						<br>
-						Användarnamnet eller lösenordet som du skrev är fel.
-						<br>
-						Försök igen.
-					</div>
-					<%?%>
-					<form method="get" action="">
-					<input type="hidden" name="submit" value="1">
-					<table align="center">
-						<tr>
-							<td>Användarnamn:</td>
-							<td><input type="text" name="username" size="20"></td>
-						</tr>
-						<tr>
-							<td>Lösenord:</td>
-							<td><input type="password" name="password" size="20" ID="Text1"></td>
-						</tr>
-						<tr>
-							<td colspan="2" align="center">
-								<input type="submit" value="Logga in">
-							</td>
-						</tr>
-					</table>
-					</form>
-				</td>
-			</tr>
-		</table>
+﻿<!-- tabs -->
+		<div class="poetry">
+			<ul class="tabs">
+				<li class="inactive">Hem</li>
+				<li class="inactive">Sök</li>
+				<li class="inactive">Nedladdningar</li>
+				<li class="inactive">Uppladdningar</li>
+				<li class="inactive">Nätverk</li>
+			</ul>
+		</div>
+<!-- /tabs -->
+<!-- main body -->
+		<div class="poetry" id="frame">
+			<div class="padding left">
+				Välkommen till <b>Shareazas Webbgränssnitt. </b>Om detta är adressen till din Shareazaklient, skriv ditt användarnamn och lösenord och klicka på <b>Logga in</b> knappen.
+			</div>
+
+			<div class="poetry" style="color: red; font-weight: bold; height: 3em;">
+				<%? failure %>	Användarnamnet eller lösenordet var felaktigt, försök igen.<%?%>
+			</div>
+
+			<form method="get" action="">
+				<div style="text-align: right; width: 24em; margin: 0 auto;">
+					<input type="hidden" name="submit" value="1" />
+					<label>Användarnamn:</label>
+					<input type="text" name="username" size="20" /><br />
+					<label>Lösenord:</label>
+					<input type="password" name="password" size="20" /><br />
+					<input type="submit" value="Logga in" />
+				</div>
+			</form>
+		</div>
+<!-- /main body -->

@@ -1,6 +1,7 @@
+﻿<!--searchTab-->
 <%? search_selected %>
-										<td class="tabsel" nowrap><%= search_caption %></td>
+										<li class="active"><%= search_caption %></li>
 <%?%><%? !search_selected %>
-										<td class="tab" nowrap><a class="tab" href="?id=<%= search_id %>"><%= search_caption %></a></td>
+										<li class="inactive"><a class="noline" href="?id=<%= search_id %>"><%= search_caption %></a></li>
 <%?%>
-										<td class="tabfil">&nbsp;</td>
+<!-- /searchTab -->

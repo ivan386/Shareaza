@@ -1,89 +1,60 @@
-﻿<table width="95%" align="center" cellspacing="0" cellpadding="0">
-	<tr>
-		<td align="center">
-			<table width="100%" cellspacing="0">
-				<tr>
-					<td class="tabedg">&nbsp;</td>
-					<td class="tabsel">Hem</td>
-					<td class="tabfil">&nbsp;</td>
-					<td class="tab"><a class="tab" href="search">Sök</a></td>
-					<td class="tabfil">&nbsp;</td>
-					<td class="tab"><a class="tab" href="downloads">Nedladdningar</a></td>
-					<td class="tabfil">&nbsp;</td>
-					<td class="tab"><a class="tab" href="uploads">Uppladdningar</a></td>
-					<td class="tabfil">&nbsp;</td>
-					<td class="tab"><a class="tab" href="network">Nätverk</a></td>
-					<td class="tabedg">&nbsp;</td>
-				</tr>
-			</table>
-		</td>
-	</tr>
-	<tr>
-		<td class="frame">
-			<p>
-				Välkommen till <b>Shareazas fjärråtkomst</b>.
-			</p>
-			<p>
-				Denna webbkonsoll erbjuder full kontroll över sökningar, nedladdningar, uppladdningar
-				och nätverksanslutningar.
-			</p>
-			<br>
-			<table cellspacing="8">
-				<tr>
-					<td width="4" />
-					<td><a href="search"><b>Sök</b></a> - Sök efter filer, arbeta med sökresultat
-						och välj filer att ladda ned.</td>
-				</tr>
-				<tr>
-					<td width="4" />
-					<td><a href="downloads"><b>Nedladdningar</b></a> - Hantera nedladdningar, gör paus eller återuppta nedladdningar
-						och rensa färdiga.</td>
-				</tr>
-				<tr>
-					<td width="4" />
-					<td><a href="uploads"><b>Uppladdningar</b></a> - Visa uppladdningar.</td>
-				</tr>
-				<tr>
-					<td width="4" />
-					<td><a href="network"><b>Nätverk</b></a> - Visa och hantera nätverksanslutningar, 
-						anslut eller koppla ifrån olika fildelningsnätverk eller avsluta Shareaza.</td>
-				</tr>
-			</table>
-			<br>
-			<form method="get" action="newsearch" ID="Form1">
-				<table align="center">
-					<tr>
-						<td>Snabbsökning:</td>
-						<td><input type="text" name="search" size="30"></td>
-						<td>
-							<input type="submit" value="Kör">
-						</td>
-					</tr>
-				</table>
-			</form>
-			<br>
-			<form method="get" action="newdownload" ID="Form2">
-				<table align="center">
-					<tr>
-						<td>Nedladdningsmagnet:</td>
-						<td><input type="text" name="uri" size="50"></td>
-						<td>
-							<input type="submit" value="Kör">
-						</td>
-					</tr>
-				</table>
-			</form>
-<!--Translators Needed Notice -->
-			<table style="margin-left: auto; margin-right: auto; padding: 0px; border-collapse: collapse;">
-					<tr><th style="padding: 2px; border: solid 1px gray; background: #E0E0E0; white-space: nowrap; text-align: center; font-size: 11px;">Translators Needed</th></tr>
-					<tr><td style="white-space: nowrap; background: #fff; border: 1px #bbb solid; padding: 2px;">This remote is out-of-date and needs to be translated again.<br/><br/>
-					If you are fluent in both <b>English</b> and <b>Swedish</b> and wish
-					to help with Shareaza™ translations,<br/>please visit
-					our <a href="http://shareaza.sourceforge.net/help/?translationforum">Translation Forum</a> to let us know, and read the <a href="http://shareaza.sourceforge.net/help/?translate">Translator
-					documentation</a> to get started. 
-					</td></tr>
-				</table>
-<!--/Translators Needed Notice -->
-		</td>
-	</tr>
-</table>
+﻿		<!-- tabs -->
+		<div class="poetry">
+			<ul class="tabs">
+				<li class="active"><a href="home" class="noline">Hem</a></li>
+				<li class="inactive"><a href="search" class="noline">Sök</a></li>
+				<li class="inactive"><a href="downloads" class="noline">Nedladdningar</a></li>
+				<li class="inactive"><a href="uploads" class="noline">Uppladdningar</a></li>
+				<li class="inactive"><a href="network" class="noline">Nätverk</a></li>
+			</ul>
+		</div>
+		<!-- /tabs -->
+<!-- main body -->
+		<div id="frame">
+			<p>Välkommen till <b>Shareazas webbgränssnitt. </b></p><p>Detta webbgränssnitt låter dig kontrollera sökningar, nedladdningar, uppladdningar och nätverksanslutningar.</p>
+			<div style="float: right; width: 40em;">
+				<h3>Börja ladda ner:</h3>
+				<div style="text-align: right;">
+					<form method="get" action="newsearch">
+						<div>
+							<label>Snabbsökning:</label>
+							<input type="text" name="search" size="20" />
+							<select name="schema">
+								<option value="">Alla filer</option>
+								<option value="http://www.shareaza.com/schemas/application.xsd">Applikation</option>
+								<option value="http://www.limewire.com/schemas/audio.xsd">Ljud</option>
+								<option value="http://www.shareaza.com/schemas/bittorent.xsd">BitTorrent</option>
+								<option value="http://www.limewire.com/schemas/book.xsd">Bok</option>
+								<option value="http://www.shareaza.com/schemas/collection.xsd">Samling</option>
+								<option value="http://www.shareaza.com/schemas/image.xsd">Bild</option>
+								<option value="http://www.shareaza.com/schemas/presentation.xsd">Presentation</option>
+								<option value="http://www.shareaza.com/schemas/rom.xsd">ROM-avbild</option>
+								<option value="http://www.shareaza.com/schemas/shareazaSkin.xsd">Skinn</option>
+								<option value="http://www.shareaza.com/schemas/sourceCode.xsd">Källkod</option>
+								<option value="http://www.shareaza.com/schemas/spreadsheet.xsd">Kalkylark</option>
+								<option value="http://www.shareaza.com/schemas/subtitle.xsd">Undertext</option>
+								<option value="http://www.limewire.com/schemas/video.xsd">Video</option>
+								<option value="http://www.shareaza.com/schemas/wordProcessing.xsd">Ordbehandling</option>
+							</select>
+							<input type="submit" value="Gå" />
+						</div>
+					</form><br/>
+					<form method="get" action="newdownload">
+						<div>
+							<label>Magnet/torrent nedladdning:</label>
+							<input type="text" name="uri" size="35" />
+							<input type="submit" value="Gå" />
+						</div>
+					</form>
+				</div>
+			</div>
+			<h3>Nyttiga länkar:</h3>
+			<ul>
+				<li><a href="http://www.peerweb.org/" onclick="window.open(this.href); return false;">Peerweb.org</a></li>
+				<li><a href="http://www.freebase.be/" onclick="window.open(this.href); return false;">Freebase.be</a></li>
+				<li><a href="http://www.g24u.net/" onclick="window.open(this.href); return false;">g24u.net</a></li>
+				<li><a href="http://www.bittorrent.com/" onclick="window.open(this.href); return false;">Bittorrent.com</a></li>
+				<li><a href="http://www.legaltorrents.com/" onclick="window.open(this.href); return false;">LegalTorrents.com</a></li>
+				<li><a href="http://content.emule-project.net/" onclick="window.open(this.href); return false;">eMule content DB</a></li>
+			</ul>
+		</div>
