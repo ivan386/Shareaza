@@ -45,7 +45,7 @@
 #include "CtrlMatch.h"
 #include "LiveList.h"
 #include "ResultFilters.h"
-
+#include "SearchManager.h"
 #include "CtrlSearchDetailPanel.h"
 
 #ifdef _DEBUG
@@ -83,6 +83,7 @@ CMatchList::CMatchList()
 		m_nFilterMinSize	= m_pResultFilters->m_pFilters[nDefaultFilter]->m_nFilterMinSize;
 		m_nFilterMaxSize	= m_pResultFilters->m_pFilters[nDefaultFilter]->m_nFilterMaxSize;
 		m_nFilterSources	= m_pResultFilters->m_pFilters[nDefaultFilter]->m_nFilterSources;
+		m_bRegExp			= m_pResultFilters->m_pFilters[nDefaultFilter]->m_bRegExp;
 	}
 	else
 	{
@@ -98,6 +99,7 @@ CMatchList::CMatchList()
 		m_nFilterMinSize	= 1;
 		m_nFilterMaxSize	= 0;
 		m_nFilterSources	= 1;
+		m_bRegExp			= FALSE;
 	}
 
 	m_nSortColumn		= -1;
@@ -121,6 +123,7 @@ CMatchList::CMatchList()
 	m_pMapBTH	= new CMatchFile*[ MAP_SIZE ];
 	m_pMapMD5	= new CMatchFile*[ MAP_SIZE ];
 	m_pszFilter	= NULL;
+	m_pszRegexPattern = NULL;
 	m_pColumns	= NULL;
 	m_nColumns	= 0;
 	
@@ -141,8 +144,8 @@ CMatchList::~CMatchList()
 	Clear();
 	
 	if ( m_pColumns ) delete [] m_pColumns;
-	
 	if ( m_pszFilter ) delete [] m_pszFilter;
+	if ( m_pszRegexPattern ) delete [] m_pszRegexPattern;
 	
 	delete [] m_pMapED2K;
 	delete [] m_pMapTiger;
@@ -730,6 +733,116 @@ BOOL CMatchList::ClearSelection()
 	return bChanged;
 }
 
+bool CMatchList::CreateRegExpFilter(CString strPattern, CString& strFilter)
+{
+	if ( strPattern.IsEmpty() )
+	{
+		if ( m_pszRegexPattern )
+		{
+			delete m_pszRegexPattern;
+			m_pszRegexPattern = NULL;
+		}
+		return false;
+	}
+
+	CString strNewPattern;
+	bool bReplaced = false;
+
+	if ( m_pFiles && m_nFiles > 0 )
+	{
+		CMatchFile* pFirst = m_pFiles[ 0 ];
+		ASSERT( pFirst );
+		CQueryHit* pHit = pFirst->GetHits();
+		ASSERT( pHit );
+		CManagedSearch* pSearch = SearchManager.Find( pHit->m_oSearchID );
+
+		if ( pSearch )
+		{
+			CQuerySearch* pQuery = pSearch->GetSearch();
+			ASSERT( pQuery );
+
+			LPCTSTR pszPattern = strPattern.GetBuffer();
+			int nTotal = 0;
+
+			while ( *pszPattern )
+			{
+				if ( *pszPattern == '<' )
+				{
+					pszPattern++;
+					bool bEnds = false;
+					bool bAll = *pszPattern == '_';
+
+					for ( ; *pszPattern ; pszPattern++ )
+					{
+						if ( *pszPattern == '>' )
+						{
+							bEnds = true;
+							break;
+						}
+					}
+
+					if ( bEnds )
+					{
+						CQuerySearch::const_iterator itWord = pQuery->begin();
+						CQuerySearch::const_iterator itWordEnd = pQuery->end();
+
+						if ( bAll )
+						{
+							// Add all keywords at the "<_>" position
+							for ( ; itWord != itWordEnd ; itWord++ )
+							{
+								strNewPattern.AppendFormat( L"%s\\s+", 
+									CString( itWord->first, int(itWord->second) ) );
+							}
+							bReplaced = true;
+						}
+						else
+						{
+							pszPattern--; // Go back
+							int nNumber = 0;
+
+							// Numbers from 1 to 9, no more
+							if ( _stscanf( &pszPattern[0], L"%i", &nNumber ) != 1 )
+								nNumber = ++nTotal;
+
+							for ( int nWord = 1 ; itWord != itWordEnd ; itWord++, nWord++ )
+							{
+								if ( nWord == nNumber )
+								{
+									strNewPattern.AppendFormat( L"%s\\s+", 
+										CString( itWord->first, int(itWord->second) ) );
+									bReplaced = true;
+									break;
+								}
+							}
+							pszPattern++; // return to the last position
+						}
+					}
+					else
+						return false; // no closing '>'
+				}
+				else
+				{
+					strNewPattern += *pszPattern; // not replacing
+				}
+				pszPattern++;
+			}
+		}
+	}
+	else return false;
+
+	strFilter = strNewPattern;
+
+	if ( m_pszRegexPattern )
+		delete m_pszRegexPattern;
+
+	m_pszRegexPattern = new TCHAR[ strNewPattern.GetLength() + 1 ];
+	CopyMemory( m_pszRegexPattern, (LPCTSTR)strNewPattern, 
+				sizeof(TCHAR) * ( strNewPattern.GetLength() + 1 ) );
+
+	return bReplaced;
+}
+
 //////////////////////////////////////////////////////////////////////
 // CMatchList filter
 
@@ -748,63 +861,71 @@ void CMatchList::Filter()
 	if ( m_bFilterDRM )			Settings.Search.FilterMask |= ( 1 << 6 );
 	if ( m_bFilterAdult	)		Settings.Search.FilterMask |= ( 1 << 7 );
 	if ( m_bFilterSuspicious )	Settings.Search.FilterMask |= ( 1 << 8 );
-	
+	if ( m_bRegExp )			Settings.Search.FilterMask |= ( 1 << 9 );
+
 	if ( m_pszFilter ) delete [] m_pszFilter;
 	m_pszFilter = NULL;
 	
 	if ( m_sFilter.GetLength() )
 	{
-		LPCTSTR pszPtr = m_sFilter;
-		BOOL bQuote = FALSE;
-		BOOL bNot = FALSE;
-		int nWordLen = 3;
-
-		CList< CString > pWords;
-		
-        int nStart = 0, nPos = 0;
-		for ( ; *pszPtr ; nPos++, pszPtr++ )
+		if ( m_bRegExp )
 		{
-			if ( *pszPtr == '\"' || ( ! bQuote && ( *pszPtr == ' ' || *pszPtr == '\t' || *pszPtr == '-' ) ) )
+			CreateRegExpFilter( CString( m_sFilter ), m_sFilter );
+		}
+		else
+		{
+			int nWordLen = 3;
+			LPCTSTR pszPtr = m_sFilter;
+			BOOL bQuote = FALSE;
+			BOOL bNot = FALSE;
+
+			CList< CString > pWords;
+
+			int nStart = 0, nPos = 0;
+			for ( ; *pszPtr ; nPos++, pszPtr++ )
 			{
-				if ( nStart < nPos )
+				if ( *pszPtr == '\"' || ( ! bQuote && ( *pszPtr == ' ' || *pszPtr == '\t' || *pszPtr == '-' ) ) )
 				{
-					pWords.AddTail( ( bNot ? '-' : '+' ) + m_sFilter.Mid( nStart, nPos - nStart ) );
-					nWordLen += ( nPos - nStart ) + 2;
-				}
-				
-				nStart = nPos + 1;
-				
-				if ( *pszPtr == '\"' )
-				{
-					bQuote = ! bQuote;
-				}
-				else if ( *pszPtr == '-' && ! bQuote )
-				{
-					bNot = TRUE;
-				}
+					if ( nStart < nPos )
+					{
+						pWords.AddTail( ( bNot ? '-' : '+' ) + m_sFilter.Mid( nStart, nPos - nStart ) );
+						nWordLen += ( nPos - nStart ) + 2;
+					}
 
-				if ( bNot && ! bQuote && *pszPtr != '-' ) bNot = FALSE;
+					nStart = nPos + 1;
+
+					if ( *pszPtr == '\"' )
+					{
+						bQuote = ! bQuote;
+					}
+					else if ( *pszPtr == '-' && ! bQuote )
+					{
+						bNot = TRUE;
+					}
+
+					if ( bNot && ! bQuote && *pszPtr != '-' ) bNot = FALSE;
+				}
 			}
+
+			if ( nStart < nPos )
+			{
+				pWords.AddTail( ( bNot ? '-' : '+' ) + m_sFilter.Mid( nStart, nPos - nStart ) );
+				nWordLen += ( nPos - nStart ) + 2;
+			}
+
+			m_pszFilter = new TCHAR[ nWordLen ];
+			LPTSTR pszFilter = m_pszFilter;
+
+			for ( POSITION pos = pWords.GetHeadPosition() ; pos ; )
+			{
+				CString strWord = pWords.GetNext( pos );
+				CopyMemory( pszFilter, (LPCTSTR)strWord, sizeof(TCHAR) * ( strWord.GetLength() + 1 ) );
+				pszFilter += strWord.GetLength() + 1;
+			}
+
+			*pszFilter++ = 0;
+			*pszFilter++ = 0;
 		}
-		
-		if ( nStart < nPos )
-		{
-			pWords.AddTail( ( bNot ? '-' : '+' ) + m_sFilter.Mid( nStart, nPos - nStart ) );
-			nWordLen += ( nPos - nStart ) + 2;
-		}
-		
-		m_pszFilter = new TCHAR[ nWordLen ];
-		LPTSTR pszFilter = m_pszFilter;
-		
-		for ( POSITION pos = pWords.GetHeadPosition() ; pos ; )
-		{
-			CString strWord = pWords.GetNext( pos );
-			CopyMemory( pszFilter, (LPCTSTR)strWord, sizeof(TCHAR) * ( strWord.GetLength() + 1 ) );
-			pszFilter += strWord.GetLength() + 1;
-		}
-		
-		*pszFilter++ = 0;
-		*pszFilter++ = 0;
 	}
 	
 	CMatchFile** pLoop = m_pFiles;
@@ -837,7 +958,25 @@ void CMatchList::Filter()
 BOOL CMatchList::FilterHit(CQueryHit* pHit)
 {
 	pHit->m_bFiltered = FALSE;
-	
+	LPCTSTR pszName = pHit->m_sName;
+
+	if ( pHit->m_nSpeed )
+		pHit->m_sSpeed = Settings.SmartSpeed( pHit->m_nSpeed, KiloBytes );
+	else
+		pHit->m_sSpeed.Empty();
+
+	if ( m_bRegExp && m_pszRegexPattern )
+	{
+		using namespace regex;
+		const rpattern regExpPattern( m_pszRegexPattern );
+		match_results results;
+		rpattern::backref_type matches = regExpPattern.match( pszName, results );
+		if ( matches.matched )
+		{
+			return FALSE;
+		}
+	}
+
 	if ( m_bFilterBusy && pHit->m_bBusy == TRI_TRUE ) return FALSE;
 	//if ( m_bFilterPush && pHit->m_bPush == TRI_TRUE && pHit->m_nProtocol != PROTOCOL_ED2K ) return FALSE;
 	if ( m_bFilterPush && pHit->m_bPush == TRI_TRUE ) return FALSE;
@@ -850,8 +989,6 @@ BOOL CMatchList::FilterHit(CQueryHit* pHit)
 	
 	if ( m_pszFilter )
 	{
-		LPCTSTR pszName = pHit->m_sName;
-		
 		for ( LPCTSTR pszFilter = m_pszFilter ; *pszFilter ; )
 		{
 			if ( *pszFilter == '-' )
@@ -867,15 +1004,10 @@ BOOL CMatchList::FilterHit(CQueryHit* pHit)
 		}
 	}
 	
-	if ( pHit->m_nSpeed )
-		pHit->m_sSpeed = Settings.SmartSpeed( pHit->m_nSpeed, KiloBytes );
-	else
-		pHit->m_sSpeed.Empty();
-
 	// Global adult filter and Local adult filter
 	if ( Settings.Search.AdultFilter || m_bFilterAdult )
 	{
-		if ( AdultFilter.IsHitAdult( pHit->m_sName ) )
+		if ( AdultFilter.IsHitAdult( pszName ) )
 			return FALSE;
 	}
 	
@@ -1108,7 +1240,7 @@ void CMatchList::Serialize(CArchive& ar)
 		ar << m_bFilterDRM;
 		ar << m_bFilterAdult;
 		ar << m_bFilterSuspicious;
-		ar << FALSE; // Temp Placeholder
+		ar << m_bRegExp;
 
 		ar << m_nFilterMinSize;
 		ar << m_nFilterMaxSize;
@@ -1139,11 +1271,10 @@ void CMatchList::Serialize(CArchive& ar)
 
 		if ( nVersion >= 12 )
 		{
-			BOOL bTemp;
 			ar >> m_bFilterDRM;
 			ar >> m_bFilterAdult;
 			ar >> m_bFilterSuspicious;
-			ar >> bTemp; // Temp Placeholder
+			ar >> m_bRegExp;
 		}
 		
 		if ( nVersion >= 10 )

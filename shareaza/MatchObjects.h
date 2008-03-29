@@ -1,7 +1,7 @@
 //
 // MatchObjects.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -19,8 +19,8 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_MATCHOBJECTS_H__3D4FE6DE_027F_44B9_A70E_A229D970D7A8__INCLUDED_)
-#define AFX_MATCHOBJECTS_H__3D4FE6DE_027F_44B9_A70E_A229D970D7A8__INCLUDED_
+#if !defined(MATCHOBJECTS_H)
+#define MATCHOBJECTS_H
 
 #pragma once
 
@@ -68,6 +68,7 @@ public:
 	BOOL			m_bFilterDRM;
 	BOOL			m_bFilterAdult;
 	BOOL			m_bFilterSuspicious;
+	BOOL			m_bRegExp;
 	QWORD			m_nFilterMinSize;
 	QWORD			m_nFilterMaxSize;
 	DWORD			m_nFilterSources;
@@ -97,6 +98,7 @@ protected:
 	CMatchFile**	m_pMapBTH;
 	CMatchFile**	m_pMapMD5;
 	LPTSTR			m_pszFilter;
+	LPTSTR			m_pszRegexPattern;
 	CSchemaMember**	m_pColumns;
 	int				m_nColumns;
 
@@ -120,6 +122,7 @@ public:
 	INT_PTR		GetSelectedCount() const;
 	BOOL		ClearSelection();
 	void		Filter();
+	bool		CreateRegExpFilter(CString strPattern, CString& strFilter);
 	void		SelectSchema(CSchema* pSchema, CList< CSchemaMember* >* pColumns);
 	void		SetSortColumn(int nColumn = -1, BOOL bDirection = FALSE);
 	void		UpdateRange(DWORD nMin = 0, DWORD nMax = 0xFFFFFFFF);
@@ -301,4 +304,4 @@ protected:
 };
 
 
-#endif // !defined(AFX_MATCHOBJECTS_H__3D4FE6DE_027F_44B9_A70E_A229D970D7A8__INCLUDED_)
+#endif // !defined(MATCHOBJECTS_H)

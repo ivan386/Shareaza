@@ -734,6 +734,7 @@
 #define IDC_ULTRAPEER_ENABLE            1534
 #define IDC_DEFAULT_VALUE               1535
 #define IDC_IRC_PROMPT                  1536
+#define IDC_REGEXP                      1536
 #define IDC_IRC_INPUT                   1537
 #define IDC_IRC_FLOODENABLE             1538
 #define IDC_IRC_FLOODLIMIT              1539
@@ -1844,7 +1845,7 @@
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        289
 #define _APS_NEXT_COMMAND_VALUE         33230
-#define _APS_NEXT_CONTROL_VALUE         1536
+#define _APS_NEXT_CONTROL_VALUE         1537
 #define _APS_NEXT_SYMED_VALUE           104
 #endif
 #endif

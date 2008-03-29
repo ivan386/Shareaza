@@ -1,7 +1,7 @@
 //
 // ResultFilters.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -35,10 +35,10 @@ static char THIS_FILE[]=__FILE__;
 #endif
 
 CResultFilters::CResultFilters(void)
+: m_pFilters( NULL )
+, m_nFilters( 0 )
+, m_nDefault( NONE )
 {
-	m_pFilters = NULL;
-	m_nFilters = 0;
-	m_nDefault = NONE;
 }
 
 CResultFilters::~CResultFilters(void)
@@ -188,6 +188,7 @@ CFilterOptions::CFilterOptions()
 	m_bFilterDRM		= ( Settings.Search.FilterMask & ( 1 << 6 ) ) > 0;
 	m_bFilterAdult		= ( Settings.Search.FilterMask & ( 1 << 7 ) ) > 0;
 	m_bFilterSuspicious = ( Settings.Search.FilterMask & ( 1 << 8 ) ) > 0;
+	m_bRegExp			= ( Settings.Search.FilterMask & ( 1 << 8 ) ) > 0;
 	m_nFilterMinSize	= 1;
 	m_nFilterMaxSize	= 0;
 	m_nFilterSources	= 1;
@@ -208,7 +209,7 @@ void CFilterOptions::Serialize(CArchive & ar, int nVersion)
 		ar << m_bFilterDRM;
 		ar << m_bFilterAdult;
 		ar << m_bFilterSuspicious;
-		ar << FALSE;	// Temp Placeholder
+		ar << m_bRegExp;
 		ar << m_nFilterMinSize;
 		ar << m_nFilterMaxSize;
 		ar << m_nFilterSources;
@@ -226,11 +227,12 @@ void CFilterOptions::Serialize(CArchive & ar, int nVersion)
 
 		if ( nVersion >= 2 )
 		{
-			BOOL bTemp; // Temp Placeholder
 			ar >> m_bFilterDRM;
 			ar >> m_bFilterAdult;
 			ar >> m_bFilterSuspicious;
-			ar >> bTemp;
+			ar >> m_bRegExp;
+			if ( m_sFilter.IsEmpty() )
+				m_bRegExp = FALSE;
 		}
 
 		ar >> m_nFilterMinSize;

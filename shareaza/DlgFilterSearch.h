@@ -1,7 +1,7 @@
 //
 // DlgFilterSearch.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -19,8 +19,8 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_DLGFILTERSEARCH_H__779A07CC_0E13_4720_8337_ED05A9790295__INCLUDED_)
-#define AFX_DLGFILTERSEARCH_H__779A07CC_0E13_4720_8337_ED05A9790295__INCLUDED_
+#if !defined(DLGFILTERSEARCH_H_)
+#define DLGFILTERSEARCH_H
 
 #pragma once
 
@@ -37,7 +37,6 @@ public:
 
 // Dialog Data
 public:
-	//{{AFX_DATA(CFilterSearchDlg)
 	enum { IDD = IDD_FILTER_SEARCH };
 	CSpinButtonCtrl	m_wndSources;
 	CString	m_sFilter;
@@ -54,23 +53,19 @@ public:
 	CString	m_sMaxSize;
 	CString	m_sMinSize;
 	BOOL    m_bDefault;
-	//}}AFX_DATA
+	BOOL	m_bRegExp;
 
 	CMatchList*	m_pMatches;
 	CResultFilters * m_pResultFilters;
 
 // Overrides
 protected:
-	//{{AFX_VIRTUAL(CFilterSearchDlg)
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
 
 // Implementation
 protected:
-	//{{AFX_MSG(CFilterSearchDlg)
 	virtual BOOL OnInitDialog();
 	virtual void OnOK();
-	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 
 public:
@@ -79,6 +74,7 @@ public:
 	afx_msg void OnBnClickedSetDefaultFilter();
 	afx_msg void OnCbnSelChangeFilters();
 	afx_msg void OnEnKillFocusMinMaxSize();
+	afx_msg void OnClickedRegexp();
 
 private:
 	void UpdateFields();
@@ -86,6 +82,4 @@ private:
 	CComboBox m_Filters;
 };
 
-//{{AFX_INSERT_LOCATION}}
-
-#endif // !defined(AFX_DLGFILTERSEARCH_H__779A07CC_0E13_4720_8337_ED05A9790295__INCLUDED_)
+#endif // !defined(DLGFILTERSEARCH_H)

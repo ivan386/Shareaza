@@ -283,7 +283,9 @@ FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
     GROUPBOX        "Only show matches which include the &words:",IDC_STATIC,
                     5,5,210,45,WS_GROUP
-    EDITTEXT        IDC_FILTER,14,20,190,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_FILTER,14,20,151,12,ES_AUTOHSCROLL
+    CONTROL         "Reg. Exp.",IDC_REGEXP,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,168,22,43,10,WS_EX_TRANSPARENT
     CTEXT           "( you can also exclude words with -word )",IDC_STATIC,
                     14,35,190,10
     GROUPBOX        "And are of &size:",IDC_STATIC,5,50,210,50
@@ -300,31 +302,31 @@ BEGIN
     GROUPBOX        "&Hide:",IDC_STATIC,5,101,210,78,WS_GROUP
     CONTROL         "Busy hosts",IDC_FILTER_BUSY,"Button",BS_AUTOCHECKBOX | 
                     WS_TABSTOP,14,113,90,10
-    CONTROL         "Firewalled/push hosts",IDC_FILTER_PUSH,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,14,126,90,11
-    CONTROL         "Unstable hosts",IDC_FILTER_UNSTABLE,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,14,140,90,10
     CONTROL         "Non-matching files",IDC_FILTER_REJECT,"Button",
                     BS_AUTOCHECKBOX | WS_TABSTOP,115,113,90,10
+    CONTROL         "Firewalled/push hosts",IDC_FILTER_PUSH,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,14,126,90,11
     CONTROL         "Files you have already",IDC_FILTER_LOCAL,"Button",
                     BS_AUTOCHECKBOX | WS_TABSTOP,115,126,90,11
+    CONTROL         "Unstable hosts",IDC_FILTER_UNSTABLE,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,14,140,90,10
     CONTROL         "Bogus results",IDC_FILTER_BOGUS,"Button",
                     BS_AUTOCHECKBOX | WS_TABSTOP,115,140,90,10
-    DEFPUSHBUTTON   "Filter",IDOK,110,237,50,14,WS_GROUP
-    PUSHBUTTON      "Cancel",IDCANCEL,165,237,50,14
+    CONTROL         "DRM files",IDC_FILTER_DRM,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,14,153,90,10
+    CONTROL         "Adult results",IDC_ADULT_FILTER,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,115,153,90,10
+    CONTROL         "Suspicious files",IDC_FILTER_SUS,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,14,166,90,10
+    GROUPBOX        "Filters:",IDC_STATIC,5,181,210,52
     COMBOBOX        IDC_FILTERS,14,194,124,37,CBS_DROPDOWNLIST | WS_VSCROLL | 
                     WS_TABSTOP
     CONTROL         "Set as default",IDC_SET_DEFAULT_FILTER,"Button",
                     BS_AUTOCHECKBOX | WS_TABSTOP,14,213,124,10
     PUSHBUTTON      "&Save as",IDC_SAVE_FILTER,145,193,61,14
     PUSHBUTTON      "&Delete",IDC_DELETE_FILTER,145,211,61,14
-    GROUPBOX        "Filters:",IDC_STATIC,5,181,210,52
-    CONTROL         "DRM files",IDC_FILTER_DRM,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,14,153,90,10
-    CONTROL         "Suspicious files",IDC_FILTER_SUS,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,14,166,90,10
-    CONTROL         "Adult results",IDC_ADULT_FILTER,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,115,153,90,10
+    DEFPUSHBUTTON   "Filter",IDOK,110,237,50,14,WS_GROUP
+    PUSHBUTTON      "Cancel",IDCANCEL,165,237,50,14
 END
 
 IDD_SCHEMA_COLUMNS DIALOG  0, 0, 238, 142
