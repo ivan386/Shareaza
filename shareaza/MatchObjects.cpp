@@ -968,9 +968,10 @@ BOOL CMatchList::FilterHit(CQueryHit* pHit)
 	if ( m_bRegExp && m_pszRegexPattern )
 	{
 		using namespace regex;
-		const rpattern regExpPattern( m_pszRegexPattern );
+		const rpattern regExpPattern( (LPCTSTR)m_pszRegexPattern );
 		match_results results;
-		rpattern::backref_type matches = regExpPattern.match( pszName, results );
+		std::wstring strTemp( pszName, _tclen( pszName ) );
+		rpattern::backref_type matches = regExpPattern.match( strTemp, results );
 		if ( matches.matched )
 		{
 			return FALSE;
