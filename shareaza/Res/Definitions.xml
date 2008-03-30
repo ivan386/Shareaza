@@ -417,6 +417,7 @@
 
 <tipMap>
 	<control code="1374" id="IDC_THROTTLE_MODE"/>
+	<control code="1557" id="IDC_REGEXP"/>
 	<control code="1066" id="IDC_SHARE_PARTIALS"/>
 </tipMap>
 
