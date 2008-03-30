@@ -304,7 +304,7 @@ void CLibraryFolders::Maintain(CLibraryFolder* pFolder, BOOL bAdd)
 		WritePrivateProfileString( _T(".ShellClassInfo"), _T("IconFile"), sShareazaPath, sDesktopINI );
 
 		CString sIconIndex;
-		sIconIndex.Format( _T("-%u"), IDI_COLLECTION );
+		sIconIndex.Format( _T("-%u"), theApp.m_dwWindowsVersion >= 6 ? IDI_COLLECTION_VISTA : IDI_COLLECTION );
 		WritePrivateProfileString( _T(".ShellClassInfo"), _T("IconIndex"), sIconIndex, sDesktopINI );
 
 		CString sTip;

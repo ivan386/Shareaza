@@ -109,7 +109,7 @@ BOOL CCollectionExportDlg::OnInitDialog()
 		LVS_EX_FULLROWSELECT, LVS_EX_FULLROWSELECT );
 
 	//Translate window
-	SkinMe( _T("CCollectionExportDlg"), IDI_COLLECTION );
+	SkinMe( _T("CCollectionExportDlg"), theApp.m_dwWindowsVersion >= 6 ? IDI_COLLECTION_VISTA : IDI_COLLECTION );
 
 	if ( Settings.General.LanguageRTL ) 
 		m_wndDesc.ModifyStyleEx( WS_EX_RTLREADING|WS_EX_RIGHT|WS_EX_LEFTSCROLLBAR, 
@@ -119,8 +119,7 @@ BOOL CCollectionExportDlg::OnInitDialog()
 	m_wndName.SetWindowText( _T("") );
 	m_wndAuthor.SetWindowText( _T("") );
 	
-	//Get label and button caption for the first screen and save the rest to variables
-	//for later use.
+	//Get label and button caption for the first screen, save the rest to variables for later use.
 	CString str;
 	m_wndOK.GetWindowText( str );
 	int nPos = str.Find( '|' );

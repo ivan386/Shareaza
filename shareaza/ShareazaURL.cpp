@@ -1192,14 +1192,18 @@ void CShareazaURL::Register(BOOL bOnStartup)
 	}
 
 	RegisterShellType( _T("Classes"), _T("Shareaza.Collection"), _T("Shareaza Collection File"),
-		_T(".co"), _T("Shareaza"), _T("RAZAFORMAT"), IDI_COLLECTION );
+		_T(".co"), _T("Shareaza"), _T("RAZAFORMAT"), 
+		theApp.m_dwWindowsVersion >= 6 ? IDI_COLLECTION_VISTA : IDI_COLLECTION );
 	RegisterShellType( _T("Classes\\Applications\\Shareaza.exe"), NULL, _T("Shareaza Collection File"),
-		_T(".co"), _T("Shareaza"), _T("RAZAFORMAT"), IDI_COLLECTION );
+		_T(".co"), _T("Shareaza"), _T("RAZAFORMAT"),
+		theApp.m_dwWindowsVersion >= 6 ? IDI_COLLECTION_VISTA : IDI_COLLECTION );
 
 	RegisterShellType( _T("Classes"), _T("Shareaza.Collection"), _T("Shareaza Collection File"),
-		_T(".collection"), _T("Shareaza"), _T("RAZAFORMAT"), IDI_COLLECTION );
+		_T(".collection"), _T("Shareaza"), _T("RAZAFORMAT"),
+		theApp.m_dwWindowsVersion >= 6 ? IDI_COLLECTION_VISTA : IDI_COLLECTION );
 	RegisterShellType( _T("Classes\\Applications\\Shareaza.exe"), NULL, _T("Shareaza Collection File"),
-		_T(".collection"), _T("Shareaza"), _T("RAZAFORMAT"), IDI_COLLECTION );
+		_T(".collection"), _T("Shareaza"), _T("RAZAFORMAT"),
+		theApp.m_dwWindowsVersion >= 6 ? IDI_COLLECTION_VISTA : IDI_COLLECTION );
 
 	SHChangeNotify( SHCNE_ASSOCCHANGED, SHCNF_IDLIST, NULL, NULL );
 }

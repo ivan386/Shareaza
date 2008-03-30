@@ -1115,17 +1115,10 @@ LRESULT CMainWnd::OnSkinChanged(WPARAM /*wParam*/, LPARAM /*lParam*/)
 	
 	m_pSkin = Skin.GetWindowSkin( this );
 
-	if ( theApp.m_dwWindowsVersion >= 6 && m_pSkin != NULL )
+	if ( m_pSkin != NULL )
 	{
-		// Windows Vista Workaround
-		ModifyStyle( WS_OVERLAPPEDWINDOW , 0 );
-		m_pWindows.ModifyStyleEx( WS_EX_OVERLAPPEDWINDOW , 0 );
-		SetWindowRgn( NULL, TRUE );
-		m_pSkin->OnSize( this );
-	}
-	else if ( m_pSkin != NULL )
-	{
-		ModifyStyle( WS_CAPTION , 0 );
+		// Windows Vista Skinning Workaround
+		ModifyStyle( theApp.m_dwWindowsVersion >= 6 ? WS_OVERLAPPEDWINDOW : WS_CAPTION , 0 );
 		m_pWindows.ModifyStyleEx( WS_EX_CLIENTEDGE , 0 );
 		SetWindowRgn( NULL, TRUE );
 		m_pSkin->OnSize( this );
