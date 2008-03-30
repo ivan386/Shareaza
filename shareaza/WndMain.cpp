@@ -291,7 +291,10 @@ CMainWnd::CMainWnd() :
 	theApp.m_pMainWnd = this;
 
 	// Bypass CMDIFrameWnd::LoadFrame
+	if ( theApp.m_dwWindowsVersion >= 6 )
 	VERIFY( CFrameWnd::LoadFrame( IDR_MAINFRAME, WS_VISIBLE ) );
+	else
+	VERIFY( CFrameWnd::LoadFrame( IDR_MAINFRAME, WS_OVERLAPPEDWINDOW ) );
 
 	theApp.m_pSafeWnd = this;
 }
@@ -1112,18 +1115,25 @@ LRESULT CMainWnd::OnSkinChanged(WPARAM /*wParam*/, LPARAM /*lParam*/)
 	
 	m_pSkin = Skin.GetWindowSkin( this );
 
-	if ( m_pSkin != NULL )
+	if ( theApp.m_dwWindowsVersion >= 6 && m_pSkin != NULL )
 	{
+		// Windows Vista Workaround
 		ModifyStyle( WS_OVERLAPPEDWINDOW , 0 );
 		m_pWindows.ModifyStyleEx( WS_EX_OVERLAPPEDWINDOW , 0 );
 		SetWindowRgn( NULL, TRUE );
 		m_pSkin->OnSize( this );
-		//Still Needs Better Vista AeroBug Fix
+	}
+	else if ( m_pSkin != NULL )
+	{
+		ModifyStyle( WS_CAPTION , 0 );
+		m_pWindows.ModifyStyleEx( WS_EX_CLIENTEDGE , 0 );
+		SetWindowRgn( NULL, TRUE );
+		m_pSkin->OnSize( this );
 	}
 	else
 	{
 		ModifyStyle( 0, WS_OVERLAPPEDWINDOW );
-		m_pWindows.ModifyStyleEx( 0 , WS_EX_OVERLAPPEDWINDOW );
+		m_pWindows.ModifyStyleEx( 0 , WS_EX_CLIENTEDGE );
 		SetWindowRgn( NULL, TRUE );
 	}
 	
