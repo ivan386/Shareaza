@@ -190,6 +190,8 @@
 #define IDB_BOX_MARK                    287
 #define IDB_SHELL_BASE_VISTA            288
 #define IDI_COLLECTION_VISTA            289
+#define IDC_COPY_VISTA                  290
+#define IDC_MOVE_VISTA                  291
 #define IDR_CHANSFRAME                  991
 #define IDR_IRCFRAME                    994
 #define IDR_USERSFRAME                  995

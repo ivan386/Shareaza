@@ -1092,15 +1092,12 @@ BEGIN
                     IDC_MESSAGE,10,40,270,20
     EDITTEXT        IDC_URL_FORMAT,10,65,270,12,ES_AUTOHSCROLL
     LTEXT           "Insert Token:",IDC_STATIC,10,85,45,12,SS_CENTERIMAGE
-    COMBOBOX        IDC_URL_TOKEN,60,85,85,140,CBS_DROPDOWNLIST | WS_VSCROLL | 
-                    WS_TABSTOP
+    COMBOBOX        IDC_URL_TOKEN,60,85,85,140,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
     LTEXT           "Select preset:",IDC_STATIC,160,85,45,12,SS_CENTERIMAGE
-    COMBOBOX        IDC_URL_PRESET,210,85,70,79,CBS_DROPDOWNLIST | 
-                    WS_VSCROLL | WS_TABSTOP
-    DEFPUSHBUTTON   "&Copy",IDC_COPY,10,105,45,14
+    COMBOBOX        IDC_URL_PRESET,210,85,70,79,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+					DEFPUSHBUTTON   "&Copy",IDC_COPY,10,105,45,14
     PUSHBUTTON      "&Save...",IDC_SAVE,60,105,45,14
-    CONTROL         "Progress2",IDC_PROGRESS,"msctls_progress32",WS_BORDER,
-                    110,107,120,10
+    CONTROL         "Progress2",IDC_PROGRESS,"msctls_progress32",WS_BORDER,110,107,120,10
     PUSHBUTTON      "Cancel",IDCANCEL,235,105,45,14
 END
 
@@ -3658,6 +3655,8 @@ END
 IDC_HAND                CURSOR                  "Res\\Hand.cur"
 IDC_COPY                CURSOR                  "Res\\Copy.cur"
 IDC_MOVE                CURSOR                  "Res\\Move.cur"
+IDC_COPY_VISTA          CURSOR                  "Res\\CopyVista.cur"
+IDC_MOVE_VISTA          CURSOR                  "Res\\MoveVista.cur"
 IDC_DOWN                CURSOR                  "Res\\sch-down.cur"
 IDC_RIGHT               CURSOR                  "Res\\sch-right.cur"
 IDC_LEFT                CURSOR                  "Res\\sch-left.cur"
