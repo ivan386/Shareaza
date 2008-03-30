@@ -55,6 +55,7 @@
 #pragma warning ( disable : 4738 )	// (Level 3)	storing 32-bit float result in memory, possible loss of performance
 
 #pragma warning ( disable : 4061 )	// (Level 4)	enumerator 'identifier' in switch of enum 'enumeration' is not explicitly handled by a case label
+#pragma warning ( disable : 4062 )  // (Level 4)	enumerator 'identifier' in switch of enum 'enumeration' is not handled
 #pragma warning ( disable : 4263 )	// (Level 4)	'function' : member function does not override any base class virtual member function
 #pragma warning ( disable : 4266 )	// (Level 4)	'function' : no override available for virtual member function from base 'type'; function is hidden
 #pragma warning ( disable : 4365 )	// (Level 4)	'action' : conversion from 'type_1' to 'type_2', signed/unsigned mismatch
