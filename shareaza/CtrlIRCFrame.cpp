@@ -35,6 +35,7 @@
 #include "Buffer.h"
 #include "WndMain.h"
 #include "DlgIrcInput.h"
+#include "GProfile.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -580,13 +581,21 @@ void CIRCFrame::OnIrcConnect()
 	m_sNickname	= Settings.IRC.Nick;
 	if ( m_sNickname.IsEmpty() ) 
 	{
-		CString strRandomNumber;
-		m_sNickname = "razaIrc";
-		srand( (unsigned)time( NULL ) );
-		for ( int nDigit = 0 ; nDigit < 7 ; nDigit++ )
+		CString strNick = MyProfile.GetNick();
+		if ( strNick.IsEmpty() )
 		{
-			strRandomNumber.Format( L"%d", rand() );
-			m_sNickname += strRandomNumber.GetAt( 0 );
+			CString strRandomNumber;
+			m_sNickname = "razaIrc";
+			srand( (unsigned)time( NULL ) );
+			for ( int nDigit = 0 ; nDigit < 7 ; nDigit++ )
+			{
+				strRandomNumber.Format( L"%d", rand() );
+				m_sNickname += strRandomNumber.GetAt( 0 );
+			}
+		}
+		else
+		{
+			Settings.IRC.Nick = m_sNickname = strNick;
 		}
 	}
  	CString strCommand = "NICK " + m_sNickname;

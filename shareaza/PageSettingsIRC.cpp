@@ -26,6 +26,7 @@
 #include "Settings.h"
 #include "PageSettingsIRC.h"
 #include "CtrlIRCFrame.h"
+#include "GProfile.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -95,7 +96,17 @@ BOOL CIRCSettingsPage::OnInitDialog()
 	m_bTimestamp = Settings.IRC.Timestamp == true;
 	m_bFloodEnable = Settings.IRC.FloodEnable == true;
 	m_sFloodLimit = Settings.IRC.FloodLimit;
-	m_sNick = Settings.IRC.Nick;
+
+	CString strNick = MyProfile.GetNick();
+	if ( Settings.IRC.Nick.IsEmpty() && strNick.GetLength() )
+	{
+		Settings.IRC.Nick = m_sNick = strNick;
+	}
+	else
+	{
+		m_sNick = Settings.IRC.Nick;
+	}
+
 	m_sAlternate = Settings.IRC.Alternate;
 	m_sServerName = Settings.IRC.ServerName;
 	m_sServerPort = Settings.IRC.ServerPort;
@@ -218,7 +229,13 @@ void CIRCSettingsPage::OnOK()
 	Settings.IRC.Show		 = m_bShow == TRUE;
 	Settings.IRC.FloodEnable = m_bFloodEnable == TRUE;
 	Settings.IRC.FloodLimit	 = m_sFloodLimit;
-	Settings.IRC.Nick		 = m_sNick;
+
+	CString strNick = MyProfile.GetNick();
+	if ( m_sNick.IsEmpty() && strNick.GetLength() )
+		m_sNick = Settings.IRC.Nick = strNick;
+	else
+		Settings.IRC.Nick = m_sNick;
+	
 	Settings.IRC.Alternate	 = m_sAlternate;
 	Settings.IRC.ServerName	 = m_sServerName;
 	Settings.IRC.ServerPort	 = m_sServerPort;
@@ -227,7 +244,7 @@ void CIRCSettingsPage::OnOK()
 	Settings.IRC.Timestamp	 = m_bTimestamp == TRUE;
 	Settings.IRC.Updated	 = TRUE;
 	Settings.IRC.ScreenFont	 = m_sScreenFont;
-	UpdateData();
+	UpdateData( FALSE );
 	CWnd* pWnd = CWnd::FindWindow( _T("CIRCFrame"), NULL );
 	if ( pWnd ) pWnd->RedrawWindow( 0, 0, RDW_INTERNALPAINT|RDW_UPDATENOW|RDW_ALLCHILDREN );
 	CSettingsPage::OnOK();
@@ -238,7 +255,13 @@ BOOL CIRCSettingsPage::OnApply()
 	Settings.IRC.Show		 = m_bShow == TRUE;
 	Settings.IRC.FloodEnable = m_bFloodEnable == TRUE;
 	Settings.IRC.FloodLimit	 = m_sFloodLimit;
-	Settings.IRC.Nick		 = m_sNick;
+
+	CString strNick = MyProfile.GetNick();
+	if ( m_sNick.IsEmpty() && strNick.GetLength() )
+		m_sNick = Settings.IRC.Nick = strNick;
+	else
+		Settings.IRC.Nick = m_sNick;
+
 	Settings.IRC.Alternate	 = m_sAlternate;
 	Settings.IRC.ServerName	 = m_sServerName;
 	Settings.IRC.ServerPort	 = m_sServerPort;
@@ -247,7 +270,7 @@ BOOL CIRCSettingsPage::OnApply()
 	Settings.IRC.Timestamp	 = m_bTimestamp == TRUE;
 	Settings.IRC.Updated	 = TRUE;
 	Settings.IRC.ScreenFont	 = m_sScreenFont;
-	UpdateData();
+	UpdateData( FALSE );
 	m_wndFonts.Invalidate();
 	CWnd* pWnd = (CWnd*)CIRCFrame::g_pIrcFrame;
 	if ( pWnd ) pWnd->RedrawWindow( 0, 0, RDW_INTERNALPAINT|RDW_UPDATENOW|RDW_ALLCHILDREN );
