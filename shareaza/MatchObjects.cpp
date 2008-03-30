@@ -970,7 +970,7 @@ BOOL CMatchList::FilterHit(CQueryHit* pHit)
 		using namespace regex;
 		const rpattern regExpPattern( (LPCTSTR)m_pszRegexPattern );
 		match_results results;
-		std::wstring strTemp( pszName, _tclen( pszName ) );
+		std::wstring strTemp( pHit->m_sName, pHit->m_sName.GetLength() );
 		rpattern::backref_type matches = regExpPattern.match( strTemp, results );
 		if ( matches.matched )
 		{
