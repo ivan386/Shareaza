@@ -480,7 +480,6 @@ BOOL CShareazaDataSource::DropToFolder(IDataObject* pIDataObject, DWORD grfKeySt
 		return FALSE;
 
 	// Drop files to folder
-	BOOL bRet = FALSE;
 	CStgMedium medium;
 	if ( FAILED ( pIDataObject->GetData( &fmtc, &medium ) ) )
 		return FALSE;
@@ -572,7 +571,7 @@ BOOL CShareazaDataSource::DropToFolder(IDataObject* pIDataObject, DWORD grfKeySt
 		// Test only
 		return TRUE;
 
-	len = pAFOP->sFrom.GetSize();
+	len = (int)pAFOP->sFrom.GetSize();
 	pAFOP->sFrom.SetSize( len + 1 );	// Double NULL terminated
 
 	len = lstrlen( pszDest ) + 1;
