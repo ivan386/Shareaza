@@ -381,7 +381,8 @@ void CFilterSearchDlg::OnClickedRegexp()
 
 	if ( m_sFilter.IsEmpty() && m_pMatches )
 	{
-		m_pMatches->CreateRegExpFilter( L"", CString() );
+		CString strTemp;
+		m_pMatches->CreateRegExpFilter( L"", strTemp );
 		return;
 	}
 
@@ -399,7 +400,7 @@ void CFilterSearchDlg::OnClickedRegexp()
 			int nSelectEnd = m_sFilter.Find( '>', nSelect + 1 );
 			if ( nSelectEnd != -1 )
 			{
-				CEdit* pEdit = reinterpret_cast< CEdit* >( GetDlgItem( IDC_FILTER ) );
+				CEdit* pEdit = static_cast< CEdit* >( GetDlgItem( IDC_FILTER ) );
 				pEdit->SetFocus();
 				pEdit->SetSel( nSelect + 1, nSelectEnd );
 			}
