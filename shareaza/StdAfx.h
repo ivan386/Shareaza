@@ -75,7 +75,7 @@
 // 64bit related - need to be fixed
 #pragma warning ( disable : 4302 4311 4312 )
 // general - fix where feasable then move to useless
-#pragma warning ( disable : 4061 4127 4191 4244 4263 4264 4265 4296 4529 4548 4555 4640 4668 4686 4946 )
+#pragma warning ( disable : 4061 4062 4127 4191 4244 4263 4264 4265 4296 4529 4548 4555 4640 4668 4686 4946 )
 // copy/asignment-related
 #pragma warning ( disable : 4511 4512 4625 4626 )
 // behaviour change - check for regression
