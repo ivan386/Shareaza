@@ -154,6 +154,7 @@ void CSkin::Clear()
 	m_pDialogs.RemoveAll();
 	m_pSkins.RemoveAll();
 	m_pFontPaths.RemoveAll();
+	m_pImages.RemoveAll();
 	
 	if ( m_brDialog.m_hObject != NULL ) m_brDialog.DeleteObject();
 	if ( m_bmPanelMark.m_hObject != NULL ) m_bmPanelMark.DeleteObject();
@@ -421,7 +422,8 @@ BOOL CSkin::LoadStrings(CXMLElement* pBase)
 				m_pStrings.SetAt( nID, strValue );
 			}
 			else
-				ASSERT( FALSE );
+				TRACE( _T("LookupCommandID failed in CSkin::LoadStrings for string \"%s\"\r\n"),
+					pXML->GetAttributeValue( _T("id") ) );
 		}
 		else if ( pXML->IsNamed( _T("tip") ) )
 		{
@@ -433,7 +435,8 @@ BOOL CSkin::LoadStrings(CXMLElement* pBase)
 				m_pStrings.SetAt( nID, strMessage );
 			}
 			else
-				TRACE( _T("LookupCommandID failed in CSkin::LoadStrings\r\n") );
+				TRACE( _T("LookupCommandID failed in CSkin::LoadStrings for tip \"%s\"\r\n"),
+					pXML->GetAttributeValue( _T("id") ) );
 		}
 		else
 			ASSERT( FALSE );
@@ -1615,6 +1618,14 @@ BOOL CSkin::LoadFonts(CXMLElement* pBase, const CString& strPath)
 //////////////////////////////////////////////////////////////////////
 // CSkin command images
 
+CString	CSkin::GetImagePath(UINT nImageID) const
+{
+	CString strPath;
+	if ( ! m_pImages.Lookup( nImageID, strPath ) )
+		strPath.Format( _T("\"%s\",-%u"), theApp.m_strBinaryPath, nImageID );
+	return strPath;
+}
+
 BOOL CSkin::LoadCommandImages(CXMLElement* pBase, const CString& strPath)
 {
 	for ( POSITION pos = pBase->GetElementIterator() ; pos ; )
@@ -1623,49 +1634,93 @@ BOOL CSkin::LoadCommandImages(CXMLElement* pBase, const CString& strPath)
 		
 		if ( pXML->IsNamed( _T("icon") ) )
 		{
-			UINT nID = LookupCommandID( pXML );
-			if ( nID == 0 ) continue;
-
-			CString strFile = strPath;
-			strFile += pXML->GetAttributeValue( _T("res") );
-			strFile += pXML->GetAttributeValue( _T("path") );
-			
-			int nPos = strFile.Find( '$' );
-			HICON hIcon = NULL;
-			
-			if ( nPos < 0 )
-			{
-				if ( ExtractIconEx( strFile, 0, NULL, &hIcon, 1 ) != NULL && hIcon != NULL )
-				{
-					if ( Settings.General.LanguageRTL ) hIcon = CreateMirroredIcon( hIcon );
-					CoolInterface.AddIcon( nID, hIcon );
-					VERIFY( DestroyIcon( hIcon ) );
-				}
-			}
-			else
-			{
-				HINSTANCE hInstance = NULL;
-				UINT nIconID = LookupCommandID( pXML, L"res" );
-				
-				if ( _stscanf( strFile.Left( nPos ), _T("%Iu"), &hInstance ) != 1 ) return TRUE;
-				// if ( _stscanf( strFile.Mid( nPos + 1 ), _T("%lu"), &nIconID ) != 1 ) continue;
-
-
-				hIcon = (HICON)LoadImage( hInstance, MAKEINTRESOURCE(nIconID), IMAGE_ICON, 16, 16, 0 );
-				if ( hIcon != NULL )
-				{
-					if ( Settings.General.LanguageRTL ) hIcon = CreateMirroredIcon( hIcon );
-					CoolInterface.AddIcon( nID, hIcon );
-					VERIFY( DestroyIcon( hIcon ) );
-				}
-			}
+			LoadCommandIcon( pXML, strPath );
 		}
 		else if ( pXML->IsNamed( _T("bitmap") ) )
 		{
-			if ( ! LoadCommandBitmap( pXML, strPath ) ) return FALSE;
+			LoadCommandBitmap( pXML, strPath );
 		}
+		else
+			TRACE( _T("Unknown tag \"%s\" inside \"%s\" in CSkin::LoadCommandImages\r\n"),
+				pXML->GetName(), pBase->GetName() );
 	}
 	
+	return TRUE;
+}
+
+BOOL CSkin::LoadCommandIcon(CXMLElement* pXML, const CString& strPath)
+{
+	CString strFile = strPath +
+		pXML->GetAttributeValue( _T("res") ) +
+		pXML->GetAttributeValue( _T("path") );
+	int nPos = strFile.Find( '$' );
+
+	UINT nID = LookupCommandID( pXML );
+	if ( nID == 0 )
+	{
+		TRACE( _T("Icon \"%s\" has unknown ID \"%s\" in CSkin::LoadCommandIcon\r\n"),
+			strFile, pXML->GetAttributeValue( _T("id") ) );
+		return FALSE;
+	}
+
+	// Is this a RTL-enabled icon? (default: "1" - yes)
+	BOOL bRTL = ( pXML->GetAttributeValue( _T("rtl"), _T("0") ) == _T("1") );
+
+	// Icon types (default: "16" - 16x16 icon only)
+	CString strTypes = pXML->GetAttributeValue( _T("types"), _T("16") );
+	int curPos = 0;
+	CString strSize; 
+	while ( ( strSize = strTypes.Tokenize( _T(","), curPos ) ).GetLength() )
+	{
+		int cx = _tstoi( strSize );
+		int nType = 0;
+		if ( cx == 16 )
+			nType = LVSIL_SMALL;
+		else if ( cx == 32 )
+			nType = LVSIL_NORMAL;
+		else if ( cx == 48 )
+			nType = LVSIL_BIG;
+		else
+		{
+			TRACE( _T("Icon \"%s\" has invalid size \"%s\" in CSkin::LoadCommandIcon\r\n"),
+				strFile, strSize );
+			return FALSE;
+		}
+
+		HICON hIcon = NULL;
+		if ( nPos < 0 )
+		{
+			LoadIcon( strFile,
+				( ( nType == LVSIL_SMALL ) ? &hIcon : NULL ),
+				( ( nType == LVSIL_NORMAL ) ? &hIcon : NULL ),
+				( ( nType == LVSIL_BIG )? &hIcon : NULL ) );
+		}
+		else
+		{
+			HINSTANCE hInstance = NULL;
+			UINT nIconID = LookupCommandID( pXML, L"res" );
+			if ( nIconID &&
+				_stscanf( strFile.Left( nPos ), _T("%Iu"), &hInstance ) == 1 )
+				hIcon = (HICON)LoadImage( hInstance, MAKEINTRESOURCE(nIconID),
+					IMAGE_ICON, cx, cx, 0 );
+		}
+		if ( hIcon )
+		{
+			if ( bRTL && Settings.General.LanguageRTL )
+				hIcon = CreateMirroredIcon( hIcon );
+			CoolInterface.AddIcon( nID, hIcon, nType );
+			VERIFY( DestroyIcon( hIcon ) );
+
+			m_pImages.SetAt( nID, strFile );
+		}
+		else
+		{
+			TRACE( _T("Icon \"%s\" (%dx%d) failed to load in CSkin::LoadCommandIcon\r\n"),
+				strFile, cx, cx );
+			return FALSE;
+		}
+	}
+
 	return TRUE;
 }
 
@@ -1676,38 +1731,47 @@ BOOL CSkin::LoadCommandBitmap(CXMLElement* pBase, const CString& strPath)
 	// If nID is 0 then we don't want to include it in strFile because
 	// strFile must be a file system path rather than a resource path.
 	if ( nID )
+		strFile.Format( _T("%s%lu%s"), strPath, nID, pBase->GetAttributeValue( _T("path") ) );
+	else
+		strFile.Format( _T("%s%s"), strPath, pBase->GetAttributeValue( _T("path") ) );
+
+	CString strMask = pBase->GetAttributeValue( _T("mask"), _T("00FF00") );
+	COLORREF crMask;
+	int nRed = 0, nGreen = 0, nBlue = 0;
+	if ( strMask.GetLength() == 6 &&
+		_stscanf( strMask.Mid( 0, 2 ), _T("%x"), &nRed ) == 1 &&
+		_stscanf( strMask.Mid( 2, 2 ), _T("%x"), &nGreen ) == 1 &&
+		_stscanf( strMask.Mid( 4, 2 ), _T("%x"), &nBlue ) == 1 )
 	{
-	strFile.Format( _T("%s%lu%s"),
-		strPath,
-		nID,
-		pBase->GetAttributeValue( _T("path") ) );
+		crMask = RGB( nRed, nGreen, nBlue );
 	}
 	else
 	{
-	strFile.Format( _T("%s%s"),
-		strPath,
-		pBase->GetAttributeValue( _T("path") ) );
+		TRACE( _T("Bitmap \"%s\" has invalid mask \"%s\" in CSkin::LoadCommandBitmap\r\n"),
+			strFile, strMask );
+		return FALSE;
 	}
 
 	HBITMAP hBitmap = LoadBitmap( strFile );
-	if ( hBitmap == NULL ) return TRUE;
-	if ( Settings.General.LanguageRTL ) hBitmap = CreateMirroredBitmap( hBitmap );
-
-	strFile = pBase->GetAttributeValue( _T("mask") );
-	COLORREF crMask = RGB( 0, 255, 0 );
-	
-	if ( strFile.GetLength() == 6 )
+	if ( hBitmap == NULL )
 	{
-		int nRed, nGreen, nBlue;
-		_stscanf( strFile.Mid( 0, 2 ), _T("%x"), &nRed );
-		_stscanf( strFile.Mid( 2, 2 ), _T("%x"), &nGreen );
-		_stscanf( strFile.Mid( 4, 2 ), _T("%x"), &nBlue );
-		crMask = RGB( nRed, nGreen, nBlue );
+		TRACE( _T("Bitmap \"%s\" failed to load in CSkin::LoadCommandBitmap\r\n"),
+			strFile );
+		return FALSE;
 	}
+	if ( Settings.General.LanguageRTL )
+		hBitmap = CreateMirroredBitmap( hBitmap );
 
 	BOOL bResult = CoolInterface.Add( this, pBase, hBitmap, crMask );
 	DeleteObject( hBitmap );
-	return bResult;
+	if ( ! bResult )
+	{
+		TRACE( _T("Bitmap \"%s\" failed to add in CSkin::LoadCommandBitmap\r\n"),
+			strFile );
+		return FALSE;
+	}
+
+	return TRUE;
 }
 
 //////////////////////////////////////////////////////////////////////

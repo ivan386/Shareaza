@@ -146,9 +146,12 @@ protected:
 // Other
 public:
 	UINT	LookupCommandID(CXMLElement* pXML, LPCTSTR pszName = NULL) const;
+	CString	GetImagePath(UINT nImageID) const;
 protected:
+	CMap< UINT, const UINT&, CString, const CString& > m_pImages;
 	BOOL	LoadResourceMap(CXMLElement* pBase);
 	BOOL	LoadCommandImages(CXMLElement* pBase, const CString& strPath);
+	BOOL	LoadCommandIcon(CXMLElement* pXML, const CString& strPath);
 	BOOL	LoadCommandBitmap(CXMLElement* pBase, const CString& strPath);
 
 // Mode Suffixes

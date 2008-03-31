@@ -336,53 +336,20 @@ BOOL CShellIcons::Lookup(LPCTSTR pszType, HICON* phSmallIcon, HICON* phLargeIcon
 	RegCloseKey( hKey );
 	szResult[ nResult / sizeof(TCHAR) ] = 0;
 
-	CString strIcon( szResult );
+	if ( ! LoadIcon( szResult, phSmallIcon, phLargeIcon, phHugeIcon ) )
+		return FALSE;
 
-	int nIcon, nIndex = strIcon.ReverseFind( ',' );
-	if ( nIndex < 0 && strIcon.Right(3).MakeLower() != _T("ico") ) return 0;
-
-	if ( nIndex != -1 )
+	if ( Settings.General.LanguageRTL )
 	{
-		if ( _stscanf( strIcon.Mid( nIndex + 1 ), _T("%i"), &nIcon ) != 1 ) return FALSE;
-		strIcon = strIcon.Left( nIndex );
-	}
-	else nIndex = nIcon = 0;
-
-	if ( strIcon.GetLength() < 3 ) return FALSE;
-
-	if ( strIcon.GetAt( 0 ) == '\"' && strIcon.GetAt( strIcon.GetLength() - 1 ) == '\"' )
-		strIcon = strIcon.Mid( 1, strIcon.GetLength() - 2 );
-
-	BOOL bSuccess = FALSE;
-
-	if ( phLargeIcon || phSmallIcon )
-	{
-		if ( ExtractIconEx( strIcon, nIcon, phLargeIcon, phSmallIcon, 1 ) )
-		{
-			bSuccess |= ( phLargeIcon && *phLargeIcon ) || ( phSmallIcon && *phSmallIcon );
-			if ( Settings.General.LanguageRTL ) 
-			{
-				if ( phLargeIcon && *phLargeIcon ) 
-					*phLargeIcon = CreateMirroredIcon( *phLargeIcon );
-				if ( phSmallIcon && *phSmallIcon ) 
-					*phSmallIcon = CreateMirroredIcon( *phSmallIcon );
-			}
-		}
+		if ( phSmallIcon && *phSmallIcon )
+			*phSmallIcon = CreateMirroredIcon( *phSmallIcon );
+		if ( phLargeIcon && *phLargeIcon )
+			*phLargeIcon = CreateMirroredIcon( *phLargeIcon );
+		if ( phHugeIcon && *phHugeIcon )
+			*phHugeIcon = CreateMirroredIcon( *phHugeIcon );
 	}
 
-	if ( theApp.m_pfnPrivateExtractIconsW && phHugeIcon )
-	{
-		UINT nLoadedID;
-
-		if ( theApp.m_pfnPrivateExtractIconsW( strIcon, nIcon, 48, 48, phHugeIcon, &nLoadedID, 1, 0 ) )
-		{
-			bSuccess = TRUE;
-			if ( phHugeIcon && *phHugeIcon && Settings.General.LanguageRTL )
-				*phHugeIcon = CreateMirroredIcon( *phHugeIcon );
-		}
-	}
-
-	return bSuccess != 0;
+	return TRUE;
 }
 
 //////////////////////////////////////////////////////////////////////

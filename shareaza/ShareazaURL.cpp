@@ -33,6 +33,7 @@
 #include "MD5.h"
 #include "ED2K.h"
 #include "BTInfo.h"
+#include "Skin.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -1192,18 +1193,14 @@ void CShareazaURL::Register(BOOL bOnStartup)
 	}
 
 	RegisterShellType( _T("Classes"), _T("Shareaza.Collection"), _T("Shareaza Collection File"),
-		_T(".co"), _T("Shareaza"), _T("RAZAFORMAT"), 
-		theApp.m_dwWindowsVersion >= 6 ? IDI_COLLECTION_VISTA : IDI_COLLECTION );
+		_T(".co"), _T("Shareaza"), _T("RAZAFORMAT"), IDI_COLLECTION );
 	RegisterShellType( _T("Classes\\Applications\\Shareaza.exe"), NULL, _T("Shareaza Collection File"),
-		_T(".co"), _T("Shareaza"), _T("RAZAFORMAT"),
-		theApp.m_dwWindowsVersion >= 6 ? IDI_COLLECTION_VISTA : IDI_COLLECTION );
+		_T(".co"), _T("Shareaza"), _T("RAZAFORMAT"), IDI_COLLECTION );
 
 	RegisterShellType( _T("Classes"), _T("Shareaza.Collection"), _T("Shareaza Collection File"),
-		_T(".collection"), _T("Shareaza"), _T("RAZAFORMAT"),
-		theApp.m_dwWindowsVersion >= 6 ? IDI_COLLECTION_VISTA : IDI_COLLECTION );
+		_T(".collection"), _T("Shareaza"), _T("RAZAFORMAT"), IDI_COLLECTION );
 	RegisterShellType( _T("Classes\\Applications\\Shareaza.exe"), NULL, _T("Shareaza Collection File"),
-		_T(".collection"), _T("Shareaza"), _T("RAZAFORMAT"),
-		theApp.m_dwWindowsVersion >= 6 ? IDI_COLLECTION_VISTA : IDI_COLLECTION );
+		_T(".collection"), _T("Shareaza"), _T("RAZAFORMAT"), IDI_COLLECTION );
 
 	SHChangeNotify( SHCNE_ASSOCCHANGED, SHCNF_IDLIST, NULL, NULL );
 }
@@ -1216,9 +1213,8 @@ BOOL CShareazaURL::RegisterShellType(LPCTSTR pszRoot, LPCTSTR pszProtocol, LPCTS
 									 UINT nIDIcon, BOOL bOverwrite)
 {
 	HKEY hMainKey, hKey, hSub1, hSub2, hSub3, hSub4;
-	CString strProgram, strSubKey, strValue;
+	CString strSubKey, strValue;
 	DWORD nDisposition;
-	TCHAR szPath[MAX_PATH];
 
 	if ( pszRoot == NULL ) return FALSE;
 
@@ -1242,8 +1238,6 @@ BOOL CShareazaURL::RegisterShellType(LPCTSTR pszRoot, LPCTSTR pszProtocol, LPCTS
 	}
 
 	BOOL bProtocol = _tcsncmp( pszName, _T("URL:"), 4 ) == 0;
-	GetModuleFileName( NULL, szPath, MAX_PATH );
-	strProgram = szPath;
 
 	if ( _tcscmp( pszRoot, _T("Classes\\Applications\\Shareaza.exe") ) != 0 )
 	{
@@ -1257,7 +1251,7 @@ BOOL CShareazaURL::RegisterShellType(LPCTSTR pszRoot, LPCTSTR pszProtocol, LPCTS
 		
 		if ( ! RegCreateKey( hKey, _T("DefaultIcon"), &hSub1 ) )
 		{
-			strValue.Format( _T("\"%s\",-%u"), (LPCTSTR)strProgram, nIDIcon );
+			strValue = Skin.GetImagePath( nIDIcon );
 			RegSetValueEx( hSub1, NULL, 0, REG_SZ, 
 				(LPBYTE)(LPCTSTR)strValue, sizeof(TCHAR) * ( strValue.GetLength() + 1 ) );
 			RegCloseKey( hSub1 );
@@ -1279,7 +1273,7 @@ BOOL CShareazaURL::RegisterShellType(LPCTSTR pszRoot, LPCTSTR pszProtocol, LPCTS
 		{
 			if ( ! RegCreateKey( hSub2, _T("command"), &hSub3 ) )
 			{
-				strValue.Format( _T("\"%s\" \"%%%c\""), (LPCTSTR)strProgram, bProtocol ? 'L' : '1' );
+				strValue.Format( _T("\"%s\" \"%%%c\""), theApp.m_strBinaryPath, bProtocol ? 'L' : '1' );
 				RegSetValueEx( hSub3, NULL, 0, REG_SZ, (LPBYTE)(LPCTSTR)strValue, sizeof(TCHAR) * ( strValue.GetLength() + 1 ) );
 				RegCloseKey( hSub3 );
 			}
@@ -1341,10 +1335,7 @@ BOOL CShareazaURL::IsRegistered(LPCTSTR pszProtocol, HKEY hMainKey)
 	strSubKey.Format( _T("Software\\Classes\\%s"), pszProtocol );
 	CString strPath = CRegistry::GetString( _T("shell\\open\\command"), NULL, NULL, strSubKey, hMainKey == HKEY_LOCAL_MACHINE );
 
-	TCHAR szPath[MAX_PATH];
-	GetModuleFileName( NULL, szPath, MAX_PATH );
-
-	return _tcsistr( strPath, szPath ) != NULL || CRegistry::GetString( _T("shell\\open\\ddeexec\\Application"), NULL, NULL, strSubKey, hMainKey == HKEY_LOCAL_MACHINE ) == _T("Shareaza");
+	return _tcsistr( strPath, theApp.m_strBinaryPath ) != NULL || CRegistry::GetString( _T("shell\\open\\ddeexec\\Application"), NULL, NULL, strSubKey, hMainKey == HKEY_LOCAL_MACHINE ) == _T("Shareaza");
 }
 
 BOOL CShareazaURL::UnregisterShellType(LPCTSTR pszRoot, LPCTSTR pszProtocol)
@@ -1448,14 +1439,10 @@ BOOL CShareazaURL::RegisterMagnetHandler(LPCTSTR pszID, LPCTSTR pszName, LPCTSTR
 		return FALSE;
 	}
 	
-	CString strAppPath, strIcon, strCommand;
-	TCHAR szPath[MAX_PATH];
+	CString strIcon, strCommand;
 	
-	GetModuleFileName( NULL, szPath, MAX_PATH );
-	strAppPath = szPath;
-	
-	strIcon.Format( _T("\"%s\",-%u"), (LPCTSTR)strAppPath, nIDIcon );
-	strCommand.Format( _T("\"%s\" \"%%URL\""), (LPCTSTR)strAppPath );
+	strIcon = Skin.GetImagePath( nIDIcon );
+	strCommand.Format( _T("\"%s\" \"%%URL\""), theApp.m_strBinaryPath );
 	
 	RegSetValueEx( hHandler, _T(""), 0, REG_SZ, (LPBYTE)pszName, static_cast< DWORD >( sizeof(TCHAR) * ( _tcslen( pszName ) + 1 ) ) );
 	RegSetValueEx( hHandler, _T("Description"), 0, REG_SZ,

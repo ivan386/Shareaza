@@ -565,34 +565,25 @@ BOOL CSchema::LoadIcon()
 {
 	HICON hIcon16 = NULL, hIcon32 = NULL, hIcon48 = NULL;
 
-	if ( theApp.m_pfnPrivateExtractIconsW )
-	{
-		UINT nLoadedID;
-		theApp.m_pfnPrivateExtractIconsW( m_sIcon, 0, 48, 48, &hIcon48, &nLoadedID, 1, 0 );
+	::LoadIcon( m_sIcon, &hIcon16, &hIcon32, &hIcon48 );
 
-		if ( hIcon48 )
-		{
-			if ( Settings.General.LanguageRTL ) hIcon48 = CreateMirroredIcon( hIcon48 );
-			m_nIcon48 = ShellIcons.Add( hIcon48, 48 );
-			DestroyIcon( hIcon48 );
-		}
+	if ( hIcon16 )
+	{
+		if ( Settings.General.LanguageRTL ) hIcon16 = CreateMirroredIcon( hIcon16 );
+		m_nIcon16 = ShellIcons.Add( hIcon16, 16 );
+		DestroyIcon( hIcon16 );
 	}
-
-	if ( ExtractIconEx( m_sIcon, 0, &hIcon32, &hIcon16, 1 ) )
+	if ( hIcon32 )
 	{
-		if ( hIcon16 )
-		{
-			if ( Settings.General.LanguageRTL ) hIcon16 = CreateMirroredIcon( hIcon16 );
-			m_nIcon16 = ShellIcons.Add( hIcon16, 16 );
-			DestroyIcon( hIcon16 );
-		}
-
-		if ( hIcon32 )
-		{
-			if ( Settings.General.LanguageRTL ) hIcon32 = CreateMirroredIcon( hIcon32 );
-			m_nIcon32 = ShellIcons.Add( hIcon32, 32 );
-			DestroyIcon( hIcon32 );
-		}
+		if ( Settings.General.LanguageRTL ) hIcon32 = CreateMirroredIcon( hIcon32 );
+		m_nIcon32 = ShellIcons.Add( hIcon32, 32 );
+		DestroyIcon( hIcon32 );
+	}
+	if ( hIcon48 )
+	{
+		if ( Settings.General.LanguageRTL ) hIcon48 = CreateMirroredIcon( hIcon48 );
+		m_nIcon48 = ShellIcons.Add( hIcon48, 48 );
+		DestroyIcon( hIcon48 );
 	}
 
 	return hIcon16 || hIcon32 || hIcon48;

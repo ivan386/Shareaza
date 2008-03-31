@@ -63,6 +63,7 @@ public:
 	CString				m_sVersion;					// x.x.x.x
 	CString				m_sSmartAgent;				// Shareaza x.x.x.x
 	CString				m_sBuildDate;
+	CString				m_strBinaryPath;			// Shareaza.exe path
 	CFont				m_gdiFont;
 	CFont				m_gdiFontBold;
 	CFont				m_gdiFontLine;
@@ -200,6 +201,8 @@ BOOL	TimeFromString(LPCTSTR psz, FILETIME* pTime);
 CString	TimeToString(FILETIME* pTime);
 
 void	RecalcDropWidth(CComboBox* pWnd);
+// Load 16x16, 32x32, 48x48 icons from .ico, .exe, .dll files
+BOOL LoadIcon(LPCTSTR szFilename, HICON* phSmallIcon, HICON* phLargeIcon, HICON* phHugeIcon);
 // Load and add icon to CImageList, mirrored if needed
 int		AddIcon(UINT nIcon, CImageList& gdiImageList);
 // Add icon to CImageList, mirrored if needed

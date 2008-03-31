@@ -26,6 +26,7 @@
 #include "SharedFile.h"
 #include "Library.h"
 #include "Application.h"
+#include "Skin.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -687,6 +688,74 @@ void CLibraryFolder::OnFileRename(CLibraryFile* pFile)
 			m_pFiles.RemoveKey( strName );
 			m_pFiles.SetAt( pFile->GetNameLC(), pFile );
 			break;
+		}
+	}
+}
+
+//////////////////////////////////////////////////////////////////////
+// CLibraryFolders maintain physical folder
+
+void CLibraryFolder::Maintain(BOOL bAdd)
+{
+	ASSERT_VALID( this );
+
+	CString sDesktopINI( m_sPath + _T("\\desktop.ini") );
+	DWORD dwDesktopINIAttr = GetFileAttributes( sDesktopINI );
+
+	// Check if this is our desktop.ini
+	CString sPath;
+	GetPrivateProfileString( _T(".ShellClassInfo"), _T("IconFile"), _T(""),
+		sPath.GetBuffer( MAX_PATH ), MAX_PATH, sDesktopINI );
+	sPath.ReleaseBuffer();
+	sPath.MakeLower();
+	BOOL bOur = ( sPath.Find( _T("shareaza") ) != -1 );
+
+	if ( ! Settings.Library.UseCustomFolders )
+		bAdd = FALSE;
+
+	if ( bAdd && ( bOur || dwDesktopINIAttr == INVALID_FILE_ATTRIBUTES ) )
+	{
+		if ( dwDesktopINIAttr != INVALID_FILE_ATTRIBUTES )
+		{
+			SetFileAttributes( sDesktopINI, dwDesktopINIAttr &
+				~( FILE_ATTRIBUTE_HIDDEN | FILE_ATTRIBUTE_SYSTEM ) );
+		}
+
+		CString sIconFile = Skin.GetImagePath( IDI_COLLECTION );
+		CString sIconIndex( _T("0") );
+		int nPos = sIconFile.ReverseFind( _T(',') );
+		if ( nPos != -1 && nPos > sIconFile.ReverseFind( _T('\\') ) )
+		{
+			sIconIndex = sIconFile.Mid( nPos + 1 );
+			sIconFile = sIconFile.Left( nPos );
+		}
+		CString sTip;
+		LoadString( sTip, IDS_FOLDER_TIP );
+
+		WritePrivateProfileString( _T(".ShellClassInfo"), _T("ConfirmFileOp"), _T("0"), sDesktopINI );
+		WritePrivateProfileString( _T(".ShellClassInfo"), _T("IconFile"), sIconFile, sDesktopINI );
+		WritePrivateProfileString( _T(".ShellClassInfo"), _T("IconIndex"), sIconIndex, sDesktopINI );
+		WritePrivateProfileString( _T(".ShellClassInfo"), _T("InfoTip"), sTip, sDesktopINI );
+
+		dwDesktopINIAttr = GetFileAttributes( sDesktopINI );
+		if ( dwDesktopINIAttr != INVALID_FILE_ATTRIBUTES )
+		{
+			SetFileAttributes( sDesktopINI, dwDesktopINIAttr |
+				( FILE_ATTRIBUTE_HIDDEN | FILE_ATTRIBUTE_SYSTEM ) );
+
+			PathMakeSystemFolder( m_sPath );
+		}
+	}
+	else if ( bOur )
+	{
+		PathUnmakeSystemFolder( m_sPath );
+
+		if ( dwDesktopINIAttr != INVALID_FILE_ATTRIBUTES )
+		{
+			SetFileAttributes( sDesktopINI, dwDesktopINIAttr &
+				~( FILE_ATTRIBUTE_HIDDEN | FILE_ATTRIBUTE_SYSTEM ) );
+
+			DeleteFile( sDesktopINI );
 		}
 	}
 }

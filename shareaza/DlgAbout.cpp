@@ -88,13 +88,9 @@ BOOL CAboutDlg::OnInitDialog()
 	m_crWhite = CCoolInterface::GetDialogBkColor();
 	m_brWhite.CreateSolidBrush( m_crWhite );
 
-	TCHAR szPath[MAX_PATH];
-	GetModuleFileName( NULL, szPath, MAX_PATH );
-	LPCTSTR pszPath = szPath;
-
-	DWORD dwSize = GetFileVersionInfoSize( (LPTSTR)pszPath, &dwSize );
+	DWORD dwSize = GetFileVersionInfoSize( theApp.m_strBinaryPath, &dwSize );
 	BYTE* pBuffer = new BYTE[ dwSize ];
-	GetFileVersionInfo( (LPTSTR)pszPath, NULL, dwSize, pBuffer );
+	GetFileVersionInfo( theApp.m_strBinaryPath, NULL, dwSize, pBuffer );
 
 	BYTE* pValue = NULL;
 	CString strCopyRight;

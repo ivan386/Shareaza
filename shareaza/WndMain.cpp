@@ -32,6 +32,7 @@
 #include "Downloads.h"
 #include "Library.h"
 #include "LibraryBuilder.h"
+#include "LibraryFolders.h"
 #include "Plugins.h"
 #include "QuerySearch.h"
 #include "VersionChecker.h"
@@ -1154,6 +1155,10 @@ LRESULT CMainWnd::OnSkinChanged(WPARAM /*wParam*/, LPARAM /*lParam*/)
 	CFilePreviewDlg::OnSkinChange( TRUE );
 	
 	Invalidate();
+
+	// Update shell icons
+	LibraryFolders.Maintain();
+	CShareazaURL::Register();
 
 	return 0;
 }

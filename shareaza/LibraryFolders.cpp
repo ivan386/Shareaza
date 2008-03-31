@@ -137,7 +137,7 @@ CLibraryFolder* CLibraryFolders::AddFolder(LPCTSTR pszPath)
 		
 		if ( ! bAdded ) m_pFolders.AddTail( pFolder );
 
-		Maintain( pFolder, TRUE );
+		pFolder->Maintain( TRUE );
 
 		Library.Update();
 	}
@@ -166,7 +166,7 @@ BOOL CLibraryFolders::RemoveFolder(CLibraryFolder* pFolder)
 	POSITION pos = m_pFolders.Find( pFolder );
 	if ( pos == NULL ) return FALSE;
 
-	Maintain( pFolder, FALSE );
+	pFolder->Maintain( FALSE );
 
 	pFolder->OnDelete( Settings.Library.CreateGhosts ? TRI_TRUE : TRI_FALSE );
 	m_pFolders.RemoveAt( pos );
@@ -264,74 +264,6 @@ BOOL CLibraryFolders::IsShareable(LPCTSTR pszPath)
 		 strPathLC == strUserPathLC ||
 		 strPathLC == strUserPathLC + _T("\\data") ||
 		 strPathLC == strIncompletePathLC );
-}
-
-//////////////////////////////////////////////////////////////////////
-// CLibraryFolders maintain physical folder
-
-void CLibraryFolders::Maintain(CLibraryFolder* pFolder, BOOL bAdd)
-{
-	ASSERT_VALID( pFolder );
-
-	CString sDesktopINI( pFolder->m_sPath + _T("\\desktop.ini") );
-	DWORD dwDesktopINIAttr = GetFileAttributes( sDesktopINI );
-
-	CString sShareazaPath;
-	GetModuleFileName( NULL, sShareazaPath.GetBuffer( MAX_PATH ), MAX_PATH );
-	sShareazaPath.ReleaseBuffer();
-
-	// Check if this is our desktop.ini
-	CString sPath;
-	GetPrivateProfileString( _T(".ShellClassInfo"), _T("IconFile"), _T(""),
-		sPath.GetBuffer( MAX_PATH ), MAX_PATH, sDesktopINI );
-	sPath.ReleaseBuffer();
-	sPath.MakeLower();
-	BOOL bOur = ( sPath.Find( _T("shareaza") ) != -1 );
-
-	if ( ! Settings.Library.UseCustomFolders )
-		bAdd = FALSE;
-
-	if ( bAdd && ( bOur || dwDesktopINIAttr == INVALID_FILE_ATTRIBUTES ) )
-	{
-		if ( dwDesktopINIAttr != INVALID_FILE_ATTRIBUTES )
-		{
-			SetFileAttributes( sDesktopINI, dwDesktopINIAttr &
-				~( FILE_ATTRIBUTE_HIDDEN | FILE_ATTRIBUTE_SYSTEM ) );
-		}
-
-		WritePrivateProfileString( _T(".ShellClassInfo"), _T("ConfirmFileOp"), _T("0"), sDesktopINI );
-
-		WritePrivateProfileString( _T(".ShellClassInfo"), _T("IconFile"), sShareazaPath, sDesktopINI );
-
-		CString sIconIndex;
-		sIconIndex.Format( _T("-%u"), theApp.m_dwWindowsVersion >= 6 ? IDI_COLLECTION_VISTA : IDI_COLLECTION );
-		WritePrivateProfileString( _T(".ShellClassInfo"), _T("IconIndex"), sIconIndex, sDesktopINI );
-
-		CString sTip;
-		LoadString( sTip, IDS_FOLDER_TIP );
-		WritePrivateProfileString( _T(".ShellClassInfo"), _T("InfoTip"), sTip, sDesktopINI );
-
-		dwDesktopINIAttr = GetFileAttributes( sDesktopINI );
-		if ( dwDesktopINIAttr != INVALID_FILE_ATTRIBUTES )
-		{
-			SetFileAttributes( sDesktopINI, dwDesktopINIAttr |
-				( FILE_ATTRIBUTE_HIDDEN | FILE_ATTRIBUTE_SYSTEM ) );
-
-			PathMakeSystemFolder( pFolder->m_sPath );
-		}
-	}
-	else if ( bOur )
-	{
-		PathUnmakeSystemFolder( pFolder->m_sPath );
-
-		if ( dwDesktopINIAttr != INVALID_FILE_ATTRIBUTES )
-		{
-			SetFileAttributes( sDesktopINI, dwDesktopINIAttr &
-				~( FILE_ATTRIBUTE_HIDDEN | FILE_ATTRIBUTE_SYSTEM ) );
-
-			DeleteFile( sDesktopINI );
-		}
-	}
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -571,11 +503,19 @@ void CLibraryFolders::Serialize(CArchive& ar, int nVersion)
 			pFolder->Serialize( ar, nVersion );
 			m_pFolders.AddTail( pFolder );
 
-			Maintain( pFolder, TRUE );
+			pFolder->Maintain( TRUE );
 		}
 	}
 	
 	if ( nVersion >= 6 ) GetAlbumRoot()->Serialize( ar, nVersion );
+}
+
+void CLibraryFolders::Maintain()
+{
+	for ( POSITION pos = GetFolderIterator() ; pos ; )
+	{
+		GetNextFolder( pos )->Maintain( TRUE );
+	}
 }
 
 //////////////////////////////////////////////////////////////////////

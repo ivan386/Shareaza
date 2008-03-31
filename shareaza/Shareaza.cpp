@@ -377,11 +377,8 @@ BOOL CShareazaApp::InitInstance()
 		{
 			// Add to firewall exception list if necessary
 			// and enable UPnP Framework if disabled
-			CString strBinaryPath;
-			GetModuleFileName( NULL, strBinaryPath.GetBuffer( MAX_PATH ), MAX_PATH );
-			strBinaryPath.ReleaseBuffer( MAX_PATH );
 			firewall.SetupService( NET_FW_SERVICE_UPNP );
-			firewall.SetupProgram( strBinaryPath, theApp.m_pszAppName );
+			firewall.SetupProgram( m_strBinaryPath, theApp.m_pszAppName );
 		}
 	}
 
@@ -473,10 +470,7 @@ int CShareazaApp::ExitInstance()
 			if ( firewall.AccessWindowsFirewall() )
 			{
 				// Remove application from the firewall exception list
-				CString strBinaryPath;
-				GetModuleFileName( NULL, strBinaryPath.GetBuffer( MAX_PATH ), MAX_PATH );
-				strBinaryPath.ReleaseBuffer( MAX_PATH );
-				firewall.SetupProgram( strBinaryPath, theApp.m_pszAppName, TRUE );
+				firewall.SetupProgram( m_strBinaryPath, theApp.m_pszAppName, TRUE );
 			}
 		}
 
@@ -663,13 +657,13 @@ BOOL CShareazaApp::OpenURL(LPCTSTR lpszFileName, BOOL bDoIt, BOOL bSilent)
 
 void CShareazaApp::GetVersionNumber()
 {
-	TCHAR szPath[MAX_PATH];
 	DWORD dwSize;
 
 	m_nVersion[0] = m_nVersion[1] = m_nVersion[2] = m_nVersion[3] = 0;
 
-	GetModuleFileName( NULL, szPath, MAX_PATH );
-	dwSize = GetFileVersionInfoSize( szPath, &dwSize );
+	GetModuleFileName( NULL, m_strBinaryPath.GetBuffer( MAX_PATH ), MAX_PATH );
+	m_strBinaryPath.ReleaseBuffer( MAX_PATH );
+	dwSize = GetFileVersionInfoSize( m_strBinaryPath, &dwSize );
 
 	if ( dwSize )
 	{
@@ -677,7 +671,7 @@ void CShareazaApp::GetVersionNumber()
 
 		if ( pBuffer )
 		{
-			if ( GetFileVersionInfo( szPath, NULL, dwSize, pBuffer ) )
+			if ( GetFileVersionInfo( m_strBinaryPath, NULL, dwSize, pBuffer ) )
 			{
 				VS_FIXEDFILEINFO* pTable;
 
@@ -1584,6 +1578,51 @@ void RecalcDropWidth(CComboBox* pWnd)
 
     dc.RestoreDC( nSave );
     pWnd->SetDroppedWidth( nWidth );
+}
+
+BOOL LoadIcon(LPCTSTR szFilename, HICON* phSmallIcon, HICON* phLargeIcon, HICON* phHugeIcon)
+{
+	CString strIcon( szFilename );
+
+	if ( phSmallIcon )
+		*phSmallIcon = NULL;
+	if ( phLargeIcon )
+		*phLargeIcon = NULL;
+	if ( phHugeIcon )
+		*phHugeIcon = NULL;
+
+	int nIndex = strIcon.ReverseFind( _T(',') );
+	int nIcon = 0;
+	if ( nIndex != -1 )
+	{
+		if ( _stscanf( strIcon.Mid( nIndex + 1 ), _T("%i"), &nIcon ) != 1 )
+			return FALSE;
+		strIcon = strIcon.Left( nIndex );
+	}
+	else
+		nIndex = 0;
+
+	if ( strIcon.GetLength() < 3 )
+		return FALSE;
+
+	if ( strIcon.GetAt( 0 ) == _T('\"') &&
+		 strIcon.GetAt( strIcon.GetLength() - 1 ) == _T('\"') )
+		strIcon = strIcon.Mid( 1, strIcon.GetLength() - 2 );
+
+	if ( phLargeIcon || phSmallIcon )
+	{
+		ExtractIconEx( strIcon, nIcon, phLargeIcon, phSmallIcon, 1 );
+	}
+
+	if ( phHugeIcon && theApp.m_pfnPrivateExtractIconsW )
+	{
+		UINT nLoadedID;
+		theApp.m_pfnPrivateExtractIconsW( strIcon, nIcon, 48, 48,
+			phHugeIcon, &nLoadedID, 1, 0 );
+	}
+
+	return ( phLargeIcon && *phLargeIcon ) || ( phSmallIcon && *phSmallIcon ) ||
+		( phHugeIcon && *phHugeIcon );
 }
 
 int AddIcon(UINT nIcon, CImageList& gdiImageList)

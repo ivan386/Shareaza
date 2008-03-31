@@ -89,6 +89,7 @@ public:
 	BOOL			IsChanged();
 	void			OnDelete(TRISTATE bCreateGhost = TRI_UNKNOWN);
 	void			OnFileRename(CLibraryFile* pFile);
+	void			Maintain(BOOL bAdd);
 
 protected:
 	// Disable change notification monitor

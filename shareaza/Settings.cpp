@@ -556,8 +556,7 @@ void CSettings::Load()
 	// Set default program and user paths
 	if ( General.Path.IsEmpty() || ! PathFileExists( General.Path ) )
 	{
-		GetModuleFileName( NULL, General.Path.GetBuffer( MAX_PATH ), MAX_PATH );
-		General.Path.ReleaseBuffer();
+		General.Path = theApp.m_strBinaryPath;
 		if ( General.Path.ReverseFind( '\\' ) >= 0 )
 			General.Path = General.Path.Left( General.Path.ReverseFind( '\\' ) );
 	}
@@ -1338,11 +1337,7 @@ void CSettings::SetStartup(BOOL bStartup)
 	if ( bStartup )
 	{
 		CString strCommand;
-		TCHAR szPath[128];
-
-		GetModuleFileName( NULL, szPath, 128 );
-		strCommand.Format( _T("\"%s\" -tray"), szPath );
-
+		strCommand.Format( _T("\"%s\" -tray"), theApp.m_strBinaryPath );
 		RegSetValueEx( hKey, _T("Shareaza"), 0, REG_SZ, (const BYTE*)(LPCTSTR)strCommand,
 			( strCommand.GetLength() + 1 ) * sizeof(TCHAR) );
 	}
