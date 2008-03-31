@@ -7,7 +7,7 @@
 										<td class="filename"><div title="<%= download_filename %>"><%= download_filename %></div></td>
 <%?%><%?%>
 										<td><%= download_size %></td>
-										<td height="16">
+										<td>
 											<div class="progcontainer">
 												<div class="progbar" style="width:<%= download_percent %>%;"></div>
 												<div class="progprocent"><%= download_percent %>%</div>
@@ -19,13 +19,13 @@
 										<td><%= download_status %></td>
 										<td>
 <%? download_is_complete %>
-											<a href="?modify_id=<%= download_id %>&amp;modify_action=clear" title="clear the download from the list (this will not delete your file)">Wissen</a>
+											<a href="?modify_id=<%= download_id %>&amp;modify_action=clear" title="wis de download van de lijst (dit zal het bestand niet verwijderen)">Wissen</a>
 <%?%><%? !download_is_complete %>
 <%? download_is_paused %>
 											<a href="?modify_id=<%= download_id %>&amp;modify_action=resume">Hervatten</a> -
 <%?%><%? !download_is_paused %>
 											<a href="?modify_id=<%= download_id %>&amp;modify_action=pause">Pauzeren</a> -
-<%?%>										<a href="?modify_id=<%= download_id %>&amp;modify_action=more_sources">Meer Bronnen</a> -
+<%?%>										<a href="?modify_id=<%= download_id %>&amp;modify_action=more_sources">Meer bronnen</a> -
 											<a href="?modify_id=<%= download_id %>&amp;modify_action=cancel">Annuleren</a>
 <%?%>
 										</td>

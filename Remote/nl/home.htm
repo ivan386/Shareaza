@@ -1,57 +1,60 @@
-		<!-- tabs -->
+﻿		<!-- tabs -->
 		<div class="poetry">
 			<ul class="tabs">
 				<li class="active"><a href="home" class="noline">Home</a></li>
 				<li class="inactive"><a href="search" class="noline">Zoeken</a></li>
 				<li class="inactive"><a href="downloads" class="noline">Downloads</a></li>
 				<li class="inactive"><a href="uploads" class="noline">Uploads</a></li>
-				<li class="inactive"><a href="network" class="noline">Netwerken</a></li>
+				<li class="inactive"><a href="network" class="noline">Netwerk</a></li>
 			</ul>
 		</div>
 		<!-- /tabs -->
 <!-- main body -->
 		<div id="frame">
-			<p>Welkom op <b>Shareaza's Web Interface</b>.</p>
-			<p>Deze web console biedt volledige controle over je zoekopdrachten, downloads, uploads en netwerkverbindingen.</p>
+			<p>Welkom bij de <b>the Shareaza Web Interface</b>.</p> <p>Deze web interface laat je toe zoekopdrachten, downloads, uploads en netwerkverbindingen te beheren.</p>
 			<div style="float: right; width: 40em;">
-				<h3>Start downloading:</h3>
+				<h3>Start downloaden:</h3>
 				<div style="text-align: right;">
-				<form method="get" action="newsearch" ID="Form1">
-					<label>Snel Zoeken</label>
-					<input type="text" name="search" size="20">
-					<select name="schema">
-						<option value="">Any file</option>
-						<option value="http://www.shareaza.com/schemas/application.xsd">Application</option>
-						<option value="http://www.limewire.com/schemas/audio.xsd">Audio</option>
-						<option value="http://www.shareaza.com/schemas/bittorent.xsd">BitTorrent</option>
-						<option value="http://www.limewire.com/schemas/book.xsd">Book</option>
-						<option value="http://www.shareaza.com/schemas/collection.xsd">Collection</option>
-						<option value="http://www.shareaza.com/schemas/image.xsd">Image</option>
-						<option value="http://www.shareaza.com/schemas/presentation.xsd">Presentation</option>
-						<option value="http://www.shareaza.com/schemas/rom.xsd">ROM Image</option>
-						<option value="http://www.shareaza.com/schemas/shareazaSkin.xsd">Skin</option>
-						<option value="http://www.shareaza.com/schemas/sourceCode.xsd">Source Code</option>
-						<option value="http://www.shareaza.com/schemas/spreadsheet.xsd">Spreadsheet</option>
-						<option value="http://www.shareaza.com/schemas/subtitle.xsd">Subtitle</option>
-						<option value="http://www.limewire.com/schemas/video.xsd">Video</option>
-						<option value="http://www.shareaza.com/schemas/wordProcessing.xsd">Word Processing</option>
-					</select>
-					<input type="submit" value="Go">
-				</form><br />
-				<form method="get" action="newdownload" ID="Form2">
-					<label>Magnet Downloaden:</label>
-					<input type="text" name="uri" size="35">
-					<input type="submit" value="Go">
-				</form>
+					<form method="get" action="newsearch">
+						<div>
+							<label>Snel zoeken:</label>
+							<input type="text" name="search" size="20" />
+							<select name="schema">
+								<option value="">Alle bestanden</option>
+								<option value="http://www.shareaza.com/schemas/application.xsd">Programma</option>
+								<option value="http://www.limewire.com/schemas/audio.xsd">Audio</option>
+								<option value="http://www.shareaza.com/schemas/bittorent.xsd">BitTorrent</option>
+								<option value="http://www.limewire.com/schemas/book.xsd">Boek</option>
+								<option value="http://www.shareaza.com/schemas/collection.xsd">Collectie</option>
+								<option value="http://www.shareaza.com/schemas/image.xsd">Afbeelding</option>
+								<option value="http://www.shareaza.com/schemas/presentation.xsd">Presentatie</option>
+								<option value="http://www.shareaza.com/schemas/rom.xsd">ROM Afbeelding</option>
+								<option value="http://www.shareaza.com/schemas/shareazaSkin.xsd">Skin</option>
+								<option value="http://www.shareaza.com/schemas/sourceCode.xsd">Broncode</option>
+								<option value="http://www.shareaza.com/schemas/spreadsheet.xsd">Rekenblad</option>
+								<option value="http://www.shareaza.com/schemas/subtitle.xsd">Ondertiteling</option>
+								<option value="http://www.limewire.com/schemas/video.xsd">Video</option>
+								<option value="http://www.shareaza.com/schemas/wordProcessing.xsd">Documenten</option>
+							</select>
+							<input type="submit" value="Ga" />
+						</div>
+					</form><br/>
+					<form method="get" action="newdownload">
+						<div>
+							<label>Magnet/Torrent download:</label>
+							<input type="text" name="uri" size="35" />
+							<input type="submit" value="Ga" />
+						</div>
+					</form>
 				</div>
 			</div>
-			<h3>Useful links:</h3>
+			<h3>Handige links:</h3>
 			<ul>
-				<li><a href="http://www.peerweb.org/" target="_blank">Peerweb.org</a></li>
-				<li><a href="http://www.freebase.be/" target="_blank">Freebase.be</a></li>
-				<li><a href="http://www.g24u.net/" target="_blank">g24u.net</a></li>
-				<li><a href="http://www.bittorrent.com/" target="_blank">Bittorrent.com</a></li>
-				<li><a href="http://www.legaltorrents.com/" target="_blank">LegalTorrents.com</a></li>
-				<li><a href="http://content.emule-project.net/" target="_blank">eMule content DB</a></li>
+				<li><a href="http://www.peerweb.org/" onclick="window.open(this.href); return false;">Peerweb.org</a></li>
+				<li><a href="http://www.freebase.be/" onclick="window.open(this.href); return false;">Freebase.be</a></li>
+				<li><a href="http://www.g24u.net/" onclick="window.open(this.href); return false;">g24u.net</a></li>
+				<li><a href="http://www.bittorrent.com/" onclick="window.open(this.href); return false;">Bittorrent.com</a></li>
+				<li><a href="http://www.legaltorrents.com/" onclick="window.open(this.href); return false;">LegalTorrents.com</a></li>
+				<li><a href="http://content.emule-project.net/" onclick="window.open(this.href); return false;">eMule content DB</a></li>
 			</ul>
 		</div>
