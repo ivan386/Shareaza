@@ -968,14 +968,18 @@ BOOL CMatchList::FilterHit(CQueryHit* pHit)
 	if ( m_bRegExp && m_pszRegexPattern )
 	{
 		using namespace regex;
-		const rpattern regExpPattern( (LPCTSTR)m_pszRegexPattern );
-		match_results results;
-		std::wstring strTemp( pHit->m_sName, pHit->m_sName.GetLength() );
-		rpattern::backref_type matches = regExpPattern.match( strTemp, results );
-		if ( matches.matched )
+		try
 		{
-			return FALSE;
+			const rpattern regExpPattern( (LPCTSTR)m_pszRegexPattern );
+			match_results results;
+			std::wstring strTemp( pHit->m_sName, pHit->m_sName.GetLength() );
+			rpattern::backref_type matches = regExpPattern.match( strTemp, results );
+			if ( matches.matched )
+			{
+				return FALSE;
+			}		
 		}
+		catch (...)	{}
 	}
 
 	if ( m_bFilterBusy && pHit->m_bBusy == TRI_TRUE ) return FALSE;
