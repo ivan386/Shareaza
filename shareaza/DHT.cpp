@@ -194,7 +194,7 @@ BOOL CDHT::OnPacket(SOCKADDR_IN* pHost, const CBENode* pRoot)
 	pPing.Add( "v" )->SetString( theApp.m_pBTVersion, 4 );
 	CBuffer pOutput;
 	pPing.Encode( &pOutput );
-	theApp.Message( MSG_DEBUG, _T("UDP: Sended BitTorrent ping packet to %s: %s"),
+	theApp.Message( MSG_DEBUG, _T("UDP: Sent BitTorrent ping packet to %s: %s"),
 		(LPCTSTR)CString( inet_ntoa( pHost->sin_addr ) ), (LPCTSTR)pPing.Encode() );
 	return Datagrams.Send( pHost, pOutput );
 }*/
@@ -210,7 +210,7 @@ BOOL CDHT::Pong(SOCKADDR_IN* pHost, LPCSTR szTransID, size_t nTransIDLength)
 	pPong.Add( "v" )->SetString( theApp.m_pBTVersion, 4 );
 	CBuffer pOutput;
 	pPong.Encode( &pOutput );
-	theApp.Message( MSG_DEBUG, _T("UDP: Sended BitTorrent pong packet to %s: %s"),
+	theApp.Message( MSG_DEBUG, _T("UDP: Sent BitTorrent pong packet to %s: %s"),
 		(LPCTSTR)CString( inet_ntoa( pHost->sin_addr ) ), (LPCTSTR)pPong.Encode() );
 	return Datagrams.Send( pHost, pOutput );
 }
@@ -227,7 +227,7 @@ BOOL CDHT::Pong(SOCKADDR_IN* pHost, LPCSTR szTransID, size_t nTransIDLength)
 	pGetPeers.Add( "v" )->SetString( theApp.m_pBTVersion, 4 );
 	CBuffer pOutput;
 	pGetPeers.Encode( &pOutput );
-	theApp.Message( MSG_DEBUG, _T("UDP: Sended BitTorrent get peers packet to %s: %s"),
+	theApp.Message( MSG_DEBUG, _T("UDP: Sent BitTorrent get peers packet to %s: %s"),
 		(LPCTSTR)CString( inet_ntoa( pHost->sin_addr ) ), (LPCTSTR)pGetPeers.Encode() );
 	return Datagrams.Send( pHost, pOutput );
 }*/
