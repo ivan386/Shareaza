@@ -6,20 +6,20 @@
   description="Windows Vista Shell Icon Set"
   link="http://shareaza.sf.net/"
   email="Contact@ShareazaProject.com"
-  version=" "
+  version="1"
   type="Skin"
   language="en"
 />
 
 <commandImages>
  <icon id="244" path="CollectionVista.ico" types="16,32,48" rtl="0"/>
- <icon id="236" path="ClipboardVista.ico"  types="16,32,48" rtl="0"/>
- <icon id="237" path="PaintbrushesVista.ico" types="16,32,48" rtl="0"/>
- <icon id="147" path="HelpVista.ico" types="16,32,48" rtl="0"/>
- <icon id="134" path="SearchVista.ico" types="16,32,48" rtl="0"/>
- <icon id="136" path="DownloadsVista.ico" types="32,48" rtl="0"/>
- <icon id="130" path="ConnectVista.ico" types="32,48" rtl="0"/>
- <icon id="252" path="FirewalledVista.ico" types="16,32,48" rtl="0"/>
+ <icon id="236" path="ClipboardVista.ico"  types="16,32" rtl="0"/>
+ <icon id="237" path="PaintbrushesVista.ico" types="16,32" rtl="0"/>
+ <icon id="147" path="HelpVista.ico" types="16,32" rtl="0"/>
+ <icon id="134" path="SearchVista.ico" types="16,32" rtl="0"/>
+ <icon id="136" path="DownloadsVista.ico" types="32" rtl="0"/>
+ <icon id="130" path="ConnectVista.ico" types="32" rtl="0"/>
+ <icon id="252" path="FirewalledVista.ico" types="16,32" rtl="0"/>
 </commandImages>
 </skin>
 
