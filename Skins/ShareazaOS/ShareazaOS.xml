@@ -10,7 +10,7 @@
     <manifest
 		name="Shareaza OS"
 		author="RocketX"
-		link="http://www.shareaza.sourceforge.net/"
+		link="http://shareaza.sourceforge.net/"
 		Description="Skin based on the Shareaza Website"
 		version="1.40"
 		type="Skin"/>
@@ -327,9 +327,6 @@
           <part name="TopLeft" rect="16,189,40,29"/>
           <part name="Top" rect="56,3,5,29"/>
           <part name="TopRight" rect="66,189,76,29"/>
-          <part name="Close" rect="48,225,42,16"/>
-          <part name="CloseDown" rect="48,225,42,16"/>
-          <part name="CloseHover" rect="98,225,42,16"/>
         </parts>
         <anchors>
           <anchor name="Close" rect="-44,6,42,16"/>
@@ -345,44 +342,43 @@
         <target window="CMainTabBarCtrl.Windowed"/>
         <parts>
           <part name="_ID_TAB_HOME.Up"	 rect="0,0,79,29"/>
-          <part name="_ID_TAB_HOME.Checked"	 rect="0,28,79,29"/>
-          <part name="_ID_TAB_HOME.Hover"	 rect="0,28,79,29"/>
-          <part name="_ID_TAB_HOME.Down"	 rect="0,0,79,29"/>
-          <part name="_ID_TAB_LIBRARY.Up"	 rect="79,0,90,29"/>
-          <part name="_ID_TAB_LIBRARY.Checked"	 rect="79,28,90,29"/>
-          <part name="_ID_TAB_LIBRARY.Hover"	 rect="79,28,90,29"/>
-          <part name="_ID_TAB_LIBRARY.Down"	 rect="79,0,90,29"/>
-          <part name="_ID_TAB_MEDIA.Up"	 rect="169,0,134,29"/>
-          <part name="_ID_TAB_MEDIA.Checked"	 rect="169,28,134,29"/>
-          <part name="_ID_TAB_MEDIA.Hover"	 rect="169,28,134,29"/>
-          <part name="_ID_TAB_MEDIA.Down"	 rect="169,0,134,29"/>
-          <part name="_ID_TAB_SEARCH.Up"	 rect="303,0,89,29"/>
-          <part name="_ID_TAB_SEARCH.Checked"	 rect="303,28,89,29"/>
-          <part name="_ID_TAB_SEARCH.Hover"	 rect="303,28,89,29"/>
-          <part name="_ID_TAB_SEARCH.Down"	 rect="303,0,89,29"/>
-          <part name="_ID_TAB_TRANSFERS.Up"	 rect="392,0,113,29"/>
-          <part name="_ID_TAB_TRANSFERS.Checked"	 rect="392,28,113,29"/>
-          <part name="_ID_TAB_TRANSFERS.Hover"	 rect="392,28,113,29"/>
-          <part name="_ID_TAB_TRANSFERS.Down"	 rect="392,0,113,29"/>
-          <part name="_ID_TAB_NETWORK.Up"	 rect="505,0,99,29"/>
-          <part name="_ID_TAB_NETWORK.Checked"	 rect="505,28,99,29"/>
-          <part name="_ID_TAB_NETWORK.Hover"	 rect="505,28,99,29"/>
-          <part name="_ID_TAB_NETWORK.Down"	 rect="505,0,99,29"/>
-          <part name="_ID_TAB_IRC.Up"		 rect="604,0,70,29"/>
-          <part name="_ID_TAB_IRC.Checked"	 rect="604,28,70,29"/>
-          <part name="_ID_TAB_IRC.Hover" 	 rect="604,28,70,29"/>
-          <part name="_ID_TAB_IRC.Down" 	 rect="604,0,70,29"/>
+          <part name="_ID_TAB_HOME.Checked"	rect="0,28,79,29"/>
+          <part name="_ID_TAB_HOME.Hover"	rect="0,28,79,29"/>
+          <part name="_ID_TAB_HOME.Down"	rect="0,0,79,29"/>
+          <part name="_ID_TAB_LIBRARY.Up"	rect="79,0,90,29"/>
+          <part name="_ID_TAB_LIBRARY.Checked"	rect="79,28,90,29"/>
+          <part name="_ID_TAB_LIBRARY.Hover"	rect="79,28,90,29"/>
+          <part name="_ID_TAB_LIBRARY.Down"	rect="79,0,90,29"/>
+          <part name="_ID_TAB_MEDIA.Up" 	rect="169,0,134,29"/>
+          <part name="_ID_TAB_MEDIA.Checked"	rect="169,28,134,29"/>
+          <part name="_ID_TAB_MEDIA.Hover"	rect="169,28,134,29"/>
+          <part name="_ID_TAB_MEDIA.Down"	rect="169,0,134,29"/>
+          <part name="_ID_TAB_SEARCH.Up"	rect="303,0,89,29"/>
+          <part name="_ID_TAB_SEARCH.Checked"	rect="303,28,89,29"/>
+          <part name="_ID_TAB_SEARCH.Hover"	rect="303,28,89,29"/>
+          <part name="_ID_TAB_SEARCH.Down"	rect="303,0,89,29"/>
+          <part name="_ID_TAB_TRANSFERS.Up"	rect="392,0,113,29"/>
+          <part name="_ID_TAB_TRANSFERS.Checked" rect="392,28,113,29"/>
+          <part name="_ID_TAB_TRANSFERS.Hover"	rect="392,28,113,29"/>
+          <part name="_ID_TAB_TRANSFERS.Down"	rect="392,0,113,29"/>
+          <part name="_ID_TAB_NETWORK.Up"	rect="505,0,99,29"/>
+          <part name="_ID_TAB_NETWORK.Checked"	rect="505,28,99,29"/>
+          <part name="_ID_TAB_NETWORK.Hover"	rect="505,28,99,29"/>
+          <part name="_ID_TAB_NETWORK.Down"	rect="505,0,99,29"/>
+          <part name="_ID_TAB_IRC.Up"		rect="604,0,80,29"/>
+          <part name="_ID_TAB_IRC.Checked"	rect="604,28,80,29"/>
+          <part name="_ID_TAB_IRC.Hover" 	rect="604,28,80,29"/>
+          <part name="_ID_TAB_IRC.Down" 	rect="604,0,80,29"/>
         </parts>
         <anchors>
-          <!-- Add 70 Pixels to Background for IRC (698) -->
-          <anchor name="Background"	rect="15,0,628,38"/>
-          <anchor name="_ID_TAB_HOME"	rect="15,2,79,29"/>
+          <anchor name="Background"		rect="15,0,708,38"/>
+          <anchor name="_ID_TAB_HOME"		rect="15,2,79,29"/>
           <anchor name="_ID_TAB_LIBRARY"	rect="94,2,90,29"/>
-          <anchor name="_ID_TAB_MEDIA"	rect="184,2,134,29"/>
-          <anchor name="_ID_TAB_SEARCH"	rect="318,2,89,29"/>
+          <anchor name="_ID_TAB_MEDIA"		rect="184,2,134,29"/>
+          <anchor name="_ID_TAB_SEARCH" 	rect="318,2,89,29"/>
           <anchor name="_ID_TAB_TRANSFERS"	rect="407,2,113,29"/>
           <anchor name="_ID_TAB_NETWORK"	rect="520,2,99,29"/>
-          <!--IRC <anchor name="_ID_TAB_IRC"	rect="619,2,70,29"/> IRC-->
+          <anchor name="_ID_TAB_IRC"		rect="619,2,80,29"/>
         </anchors>
       </windowSkin>
       <windowSkin>
@@ -390,40 +386,39 @@
         <image type="watermark" language="en" path="sos_navbarbg.bmp"/>
         <target window="CMainTabBarCtrl.Basic"/>
         <parts>
-          <part name="_ID_TAB_HOME.Up"	 rect="0,0,79,29"/>
-          <part name="_ID_TAB_HOME.Checked"	 rect="0,28,79,29"/>
-          <part name="_ID_TAB_HOME.Hover"	 rect="0,28,79,29"/>
-          <part name="_ID_TAB_HOME.Down"	 rect="0,0,79,29"/>
-          <part name="_ID_TAB_LIBRARY.Up"	 rect="79,0,90,29"/>
-          <part name="_ID_TAB_LIBRARY.Checked"	 rect="79,28,90,29"/>
-          <part name="_ID_TAB_LIBRARY.Hover"	 rect="79,28,90,29"/>
-          <part name="_ID_TAB_LIBRARY.Down"	 rect="79,0,90,29"/>
-          <part name="_ID_TAB_MEDIA.Up"	 rect="169,0,134,29"/>
-          <part name="_ID_TAB_MEDIA.Checked"	 rect="169,28,134,29"/>
-          <part name="_ID_TAB_MEDIA.Hover"	 rect="169,28,134,29"/>
-          <part name="_ID_TAB_MEDIA.Down"	 rect="169,0,134,29"/>
-          <part name="_ID_TAB_SEARCH.Up"	 rect="303,0,89,29"/>
-          <part name="_ID_TAB_SEARCH.Checked"	 rect="303,28,89,29"/>
-          <part name="_ID_TAB_SEARCH.Hover"	 rect="303,28,89,29"/>
-          <part name="_ID_TAB_SEARCH.Down"	 rect="303,0,89,29"/>
-          <part name="_ID_TAB_TRANSFERS.Up"	 rect="392,0,113,29"/>
-          <part name="_ID_TAB_TRANSFERS.Checked"	 rect="392,28,113,29"/>
-          <part name="_ID_TAB_TRANSFERS.Hover"	 rect="392,28,113,29"/>
-          <part name="_ID_TAB_TRANSFERS.Down"	 rect="392,0,113,29"/>
-          <part name="_ID_TAB_IRC.Up"		 rect="505,0,70,29"/>
-          <part name="_ID_TAB_IRC.Checked"	 rect="505,28,70,29"/>
-          <part name="_ID_TAB_IRC.Hover" 	 rect="505,28,70,29"/>
-          <part name="_ID_TAB_IRC.Down" 	 rect="505,0,70,29"/>
+          <part name="_ID_TAB_HOME.Up"		rect="0,0,79,29"/>
+          <part name="_ID_TAB_HOME.Checked"	rect="0,28,79,29"/>
+          <part name="_ID_TAB_HOME.Hover"	rect="0,28,79,29"/>
+          <part name="_ID_TAB_HOME.Down"	rect="0,0,79,29"/>
+          <part name="_ID_TAB_LIBRARY.Up"	rect="79,0,90,29"/>
+          <part name="_ID_TAB_LIBRARY.Checked"	rect="79,28,90,29"/>
+          <part name="_ID_TAB_LIBRARY.Hover"	rect="79,28,90,29"/>
+          <part name="_ID_TAB_LIBRARY.Down"	rect="79,0,90,29"/>
+          <part name="_ID_TAB_MEDIA.Up" 	rect="169,0,134,29"/>
+          <part name="_ID_TAB_MEDIA.Checked"	rect="169,28,134,29"/>
+          <part name="_ID_TAB_MEDIA.Hover"	rect="169,28,134,29"/>
+          <part name="_ID_TAB_MEDIA.Down"	rect="169,0,134,29"/>
+          <part name="_ID_TAB_SEARCH.Up"	rect="303,0,89,29"/>
+          <part name="_ID_TAB_SEARCH.Checked"	rect="303,28,89,29"/>
+          <part name="_ID_TAB_SEARCH.Hover"	rect="303,28,89,29"/>
+          <part name="_ID_TAB_SEARCH.Down"	rect="303,0,89,29"/>
+          <part name="_ID_TAB_TRANSFERS.Up"	rect="392,0,113,29"/>
+          <part name="_ID_TAB_TRANSFERS.Checked" rect="392,28,113,29"/>
+          <part name="_ID_TAB_TRANSFERS.Hover"	rect="392,28,113,29"/>
+          <part name="_ID_TAB_TRANSFERS.Down"	rect="392,0,113,29"/>
+          <part name="_ID_TAB_IRC.Up"		rect="604,0,80,29"/>
+          <part name="_ID_TAB_IRC.Checked"	rect="604,28,80,29"/>
+          <part name="_ID_TAB_IRC.Hover" 	rect="604,28,80,29"/>
+          <part name="_ID_TAB_IRC.Down" 	rect="604,0,80,29"/>
         </parts>
         <anchors>
-          <!-- Add 70 Pixels to Background for IRC (599) -->
-          <anchor name="Background"	rect="15,0,529,38"/>
-          <anchor name="_ID_TAB_HOME"	rect="15,2,79,29"/>
+          <anchor name="Background"		rect="15,0,610,38"/>
+          <anchor name="_ID_TAB_HOME"		rect="15,2,79,29"/>
           <anchor name="_ID_TAB_LIBRARY"	rect="94,2,90,29"/>
-          <anchor name="_ID_TAB_MEDIA"	rect="184,2,134,29"/>
-          <anchor name="_ID_TAB_SEARCH"	rect="318,2,89,29"/>
+          <anchor name="_ID_TAB_MEDIA"		rect="184,2,134,29"/>
+          <anchor name="_ID_TAB_SEARCH" 	rect="318,2,89,29"/>
           <anchor name="_ID_TAB_TRANSFERS"	rect="407,2,113,29"/>
-          <!--IRC <anchor name="_ID_TAB_IRC"	rect="520,2,70,29"/> IRC-->
+          <anchor name="_ID_TAB_IRC"		rect="520,2,80,29"/>
         </anchors>
       </windowSkin>
       <!-- end navbar language for en -->
@@ -451,7 +446,7 @@
           <part name="_ID_TAB_SEARCH.Hover"	 rect="352,28,90,29"/>
           <part name="_ID_TAB_SEARCH.Down"	 rect="352,0,90,29"/>
           <part name="_ID_TAB_TRANSFERS.Up"	 rect="442,0,153,29"/>
-          <part name="_ID_TAB_TRANSFERS.Checked"	 rect="442,28,153,29"/>
+          <part name="_ID_TAB_TRANSFERS.Checked" rect="442,28,153,29"/>
           <part name="_ID_TAB_TRANSFERS.Hover"	 rect="442,28,153,29"/>
           <part name="_ID_TAB_TRANSFERS.Down"	 rect="442,0,153,29"/>
           <part name="_ID_TAB_NETWORK.Up"	 rect="595,0,60,29"/>
@@ -891,7 +886,7 @@
           <part name="_ID_TAB_SEARCH.Hover"	 rect="323,28,84,29"/>
           <part name="_ID_TAB_SEARCH.Down"	 rect="323,0,84,29"/>
           <part name="_ID_TAB_TRANSFERS.Up"	 rect="407,0,143,29"/>
-          <part name="_ID_TAB_TRANSFERS.Checked"	 rect="407,28,143,29"/>
+          <part name="_ID_TAB_TRANSFERS.Checked" rect="407,28,143,29"/>
           <part name="_ID_TAB_TRANSFERS.Hover"	 rect="407,28,143,29"/>
           <part name="_ID_TAB_TRANSFERS.Down"	 rect="407,0,143,29"/>
           <part name="_ID_TAB_NETWORK.Up"	 rect="550,0,67,29"/>
@@ -936,7 +931,7 @@
           <part name="_ID_TAB_SEARCH.Hover"	 rect="323,28,84,29"/>
           <part name="_ID_TAB_SEARCH.Down"	 rect="323,0,84,29"/>
           <part name="_ID_TAB_TRANSFERS.Up"	 rect="407,0,143,29"/>
-          <part name="_ID_TAB_TRANSFERS.Checked"	 rect="407,28,143,29"/>
+          <part name="_ID_TAB_TRANSFERS.Checked" rect="407,28,143,29"/>
           <part name="_ID_TAB_TRANSFERS.Hover"	 rect="407,28,143,29"/>
           <part name="_ID_TAB_TRANSFERS.Down"	 rect="407,0,143,29"/>
           <part name="_ID_TAB_IRC.Up"		 rect="550,0,70,29"/>
@@ -979,7 +974,7 @@
           <part name="_ID_TAB_SEARCH.Hover"	 rect="311,28,93,29"/>
           <part name="_ID_TAB_SEARCH.Down"	 rect="311,0,93,29"/>
           <part name="_ID_TAB_TRANSFERS.Up"	 rect="404,0,111,29"/>
-          <part name="_ID_TAB_TRANSFERS.Checked"	 rect="404,28,111,29"/>
+          <part name="_ID_TAB_TRANSFERS.Checked" rect="404,28,111,29"/>
           <part name="_ID_TAB_TRANSFERS.Hover"	 rect="404,28,111,29"/>
           <part name="_ID_TAB_TRANSFERS.Down"	 rect="404,0,111,29"/>
           <part name="_ID_TAB_NETWORK.Up"	 rect="515,0,94,29"/>
@@ -1024,7 +1019,7 @@
           <part name="_ID_TAB_SEARCH.Hover"	 rect="311,28,93,29"/>
           <part name="_ID_TAB_SEARCH.Down"	 rect="311,0,93,29"/>
           <part name="_ID_TAB_TRANSFERS.Up"	 rect="404,0,111,29"/>
-          <part name="_ID_TAB_TRANSFERS.Checked"	 rect="404,28,111,29"/>
+          <part name="_ID_TAB_TRANSFERS.Checked" rect="404,28,111,29"/>
           <part name="_ID_TAB_TRANSFERS.Hover"	 rect="404,28,111,29"/>
           <part name="_ID_TAB_TRANSFERS.Down"	 rect="404,0,111,29"/>
           <part name="_ID_TAB_IRC.Up"		 rect="515,0,70,29"/>
@@ -1067,7 +1062,7 @@
           <part name="_ID_TAB_SEARCH.Hover"	 rect="305,28,89,29"/>
           <part name="_ID_TAB_SEARCH.Down"	 rect="305,0,89,29"/>
           <part name="_ID_TAB_TRANSFERS.Up"	 rect="394,0,91,29"/>
-          <part name="_ID_TAB_TRANSFERS.Checked"	 rect="394,28,91,29"/>
+          <part name="_ID_TAB_TRANSFERS.Checked" rect="394,28,91,29"/>
           <part name="_ID_TAB_TRANSFERS.Hover"	 rect="394,28,91,29"/>
           <part name="_ID_TAB_TRANSFERS.Down"	 rect="394,0,91,29"/>
           <part name="_ID_TAB_NETWORK.Up"	 rect="485,0,58,29"/>
@@ -1112,7 +1107,7 @@
           <part name="_ID_TAB_SEARCH.Hover"	 rect="305,28,89,29"/>
           <part name="_ID_TAB_SEARCH.Down"	 rect="305,0,89,29"/>
           <part name="_ID_TAB_TRANSFERS.Up"	 rect="394,0,91,29"/>
-          <part name="_ID_TAB_TRANSFERS.Checked"	 rect="394,28,91,29"/>
+          <part name="_ID_TAB_TRANSFERS.Checked" rect="394,28,91,29"/>
           <part name="_ID_TAB_TRANSFERS.Hover"	 rect="394,28,91,29"/>
           <part name="_ID_TAB_TRANSFERS.Down"	 rect="394,0,91,29"/>
           <part name="_ID_TAB_IRC.Up"		 rect="485,0,70,29"/>
@@ -1155,7 +1150,7 @@
           <part name="_ID_TAB_SEARCH.Hover"	 rect="329,28,93,29"/>
           <part name="_ID_TAB_SEARCH.Down"	 rect="329,0,93,29"/>
           <part name="_ID_TAB_TRANSFERS.Up"	 rect="422,0,96,29"/>
-          <part name="_ID_TAB_TRANSFERS.Checked"	 rect="422,28,96,29"/>
+          <part name="_ID_TAB_TRANSFERS.Checked" rect="422,28,96,29"/>
           <part name="_ID_TAB_TRANSFERS.Hover"	 rect="422,28,96,29"/>
           <part name="_ID_TAB_TRANSFERS.Down"	 rect="422,0,96,29"/>
           <part name="_ID_TAB_NETWORK.Up"	 rect="518,0,98,29"/>
@@ -1200,7 +1195,7 @@
           <part name="_ID_TAB_SEARCH.Hover"	 rect="329,28,93,29"/>
           <part name="_ID_TAB_SEARCH.Down"	 rect="329,0,93,29"/>
           <part name="_ID_TAB_TRANSFERS.Up"	 rect="422,0,96,29"/>
-          <part name="_ID_TAB_TRANSFERS.Checked"	 rect="422,28,96,29"/>
+          <part name="_ID_TAB_TRANSFERS.Checked" rect="422,28,96,29"/>
           <part name="_ID_TAB_TRANSFERS.Hover"	 rect="422,28,96,29"/>
           <part name="_ID_TAB_TRANSFERS.Down"	 rect="422,0,96,29"/>
           <part name="_ID_TAB_IRC.Up"		 rect="518,0,70,29"/>
@@ -1243,7 +1238,7 @@
           <part name="_ID_TAB_SEARCH.Hover"	 rect="258,28,112,29"/>
           <part name="_ID_TAB_SEARCH.Down"	 rect="258,0,112,29"/>
           <part name="_ID_TAB_TRANSFERS.Up"	 rect="370,0,156,29"/>
-          <part name="_ID_TAB_TRANSFERS.Checked"	 rect="370,28,156,29"/>
+          <part name="_ID_TAB_TRANSFERS.Checked" rect="370,28,156,29"/>
           <part name="_ID_TAB_TRANSFERS.Hover"	 rect="370,28,156,29"/>
           <part name="_ID_TAB_TRANSFERS.Down"	 rect="370,0,156,29"/>
           <part name="_ID_TAB_NETWORK.Up"	 rect="526,0,68,29"/>
@@ -1288,7 +1283,7 @@
           <part name="_ID_TAB_SEARCH.Hover"	 rect="258,28,112,29"/>
           <part name="_ID_TAB_SEARCH.Down"	 rect="258,0,112,29"/>
           <part name="_ID_TAB_TRANSFERS.Up"	 rect="370,0,156,29"/>
-          <part name="_ID_TAB_TRANSFERS.Checked"	 rect="370,28,156,29"/>
+          <part name="_ID_TAB_TRANSFERS.Checked" rect="370,28,156,29"/>
           <part name="_ID_TAB_TRANSFERS.Hover"	 rect="370,28,156,29"/>
           <part name="_ID_TAB_TRANSFERS.Down"	 rect="370,0,156,29"/>
           <part name="_ID_TAB_IRC.Up"		 rect="526,0,70,29"/>
@@ -1331,7 +1326,7 @@
           <part name="_ID_TAB_SEARCH.Hover"	 rect="236,28,80,29"/>
           <part name="_ID_TAB_SEARCH.Down"	 rect="236,0,80,29"/>
           <part name="_ID_TAB_TRANSFERS.Up"	 rect="316,0,79,29"/>
-          <part name="_ID_TAB_TRANSFERS.Checked"	 rect="316,28,79,29"/>
+          <part name="_ID_TAB_TRANSFERS.Checked" rect="316,28,79,29"/>
           <part name="_ID_TAB_TRANSFERS.Hover"	 rect="316,28,79,29"/>
           <part name="_ID_TAB_TRANSFERS.Down"	 rect="316,0,79,29"/>
           <part name="_ID_TAB_NETWORK.Up"	 rect="395,0,72,29"/>
@@ -1376,7 +1371,7 @@
           <part name="_ID_TAB_SEARCH.Hover"	 rect="236,28,80,29"/>
           <part name="_ID_TAB_SEARCH.Down"	 rect="236,0,80,29"/>
           <part name="_ID_TAB_TRANSFERS.Up"	 rect="316,0,79,29"/>
-          <part name="_ID_TAB_TRANSFERS.Checked"	 rect="316,28,79,29"/>
+          <part name="_ID_TAB_TRANSFERS.Checked" rect="316,28,79,29"/>
           <part name="_ID_TAB_TRANSFERS.Hover"	 rect="316,28,79,29"/>
           <part name="_ID_TAB_TRANSFERS.Down"	 rect="316,0,79,29"/>
           <part name="_ID_TAB_IRC.Up"		 rect="395,0,70,29"/>
@@ -1419,7 +1414,7 @@
           <part name="_ID_TAB_SEARCH.Hover"	 rect="259,28,64,29"/>
           <part name="_ID_TAB_SEARCH.Down"	 rect="259,0,64,29"/>
           <part name="_ID_TAB_TRANSFERS.Up"	 rect="323,0,141,29"/>
-          <part name="_ID_TAB_TRANSFERS.Checked"	 rect="323,28,141,29"/>
+          <part name="_ID_TAB_TRANSFERS.Checked" rect="323,28,141,29"/>
           <part name="_ID_TAB_TRANSFERS.Hover"	 rect="323,28,141,29"/>
           <part name="_ID_TAB_TRANSFERS.Down"	 rect="323,0,141,29"/>
           <part name="_ID_TAB_NETWORK.Up"	 rect="464,0,105,29"/>
@@ -1464,7 +1459,7 @@
           <part name="_ID_TAB_SEARCH.Hover"	 rect="259,28,64,29"/>
           <part name="_ID_TAB_SEARCH.Down"	 rect="259,0,64,29"/>
           <part name="_ID_TAB_TRANSFERS.Up"	 rect="323,0,141,29"/>
-          <part name="_ID_TAB_TRANSFERS.Checked"	 rect="323,28,141,29"/>
+          <part name="_ID_TAB_TRANSFERS.Checked" rect="323,28,141,29"/>
           <part name="_ID_TAB_TRANSFERS.Hover"	 rect="323,28,141,29"/>
           <part name="_ID_TAB_TRANSFERS.Down"	 rect="323,0,141,29"/>
           <part name="_ID_TAB_IRC.Up"		 rect="464,0,70,29"/>
@@ -1507,7 +1502,7 @@
           <part name="_ID_TAB_SEARCH.Hover"	 rect="248,28,86,29"/>
           <part name="_ID_TAB_SEARCH.Down"	 rect="248,0,86,29"/>
           <part name="_ID_TAB_TRANSFERS.Up"	 rect="334,0,107,29"/>
-          <part name="_ID_TAB_TRANSFERS.Checked"	 rect="334,28,107,29"/>
+          <part name="_ID_TAB_TRANSFERS.Checked" rect="334,28,107,29"/>
           <part name="_ID_TAB_TRANSFERS.Hover"	 rect="334,28,107,29"/>
           <part name="_ID_TAB_TRANSFERS.Down"	 rect="334,0,107,29"/>
           <part name="_ID_TAB_NETWORK.Up"	 rect="441,0,65,29"/>
@@ -1552,7 +1547,7 @@
           <part name="_ID_TAB_SEARCH.Hover"	 rect="248,28,86,29"/>
           <part name="_ID_TAB_SEARCH.Down"	 rect="248,0,86,29"/>
           <part name="_ID_TAB_TRANSFERS.Up"	 rect="334,0,107,29"/>
-          <part name="_ID_TAB_TRANSFERS.Checked"	 rect="334,28,107,29"/>
+          <part name="_ID_TAB_TRANSFERS.Checked" rect="334,28,107,29"/>
           <part name="_ID_TAB_TRANSFERS.Hover"	 rect="334,28,107,29"/>
           <part name="_ID_TAB_TRANSFERS.Down"	 rect="334,0,107,29"/>
           <part name="_ID_TAB_IRC.Up"		 rect="441,0,70,29"/>
@@ -1595,7 +1590,7 @@
           <part name="_ID_TAB_SEARCH.Hover"	 rect="300,28,91,29"/>
           <part name="_ID_TAB_SEARCH.Down"	 rect="300,0,91,29"/>
           <part name="_ID_TAB_TRANSFERS.Up"	 rect="391,0,114,29"/>
-          <part name="_ID_TAB_TRANSFERS.Checked"	 rect="391,28,114,29"/>
+          <part name="_ID_TAB_TRANSFERS.Checked" rect="391,28,114,29"/>
           <part name="_ID_TAB_TRANSFERS.Hover"	 rect="391,28,114,29"/>
           <part name="_ID_TAB_TRANSFERS.Down"	 rect="391,0,114,29"/>
           <part name="_ID_TAB_NETWORK.Up"	 rect="505,0,98,29"/>
@@ -1640,7 +1635,7 @@
           <part name="_ID_TAB_SEARCH.Hover"	 rect="300,28,91,29"/>
           <part name="_ID_TAB_SEARCH.Down"	 rect="300,0,91,29"/>
           <part name="_ID_TAB_TRANSFERS.Up"	 rect="391,0,114,29"/>
-          <part name="_ID_TAB_TRANSFERS.Checked"	 rect="391,28,114,29"/>
+          <part name="_ID_TAB_TRANSFERS.Checked" rect="391,28,114,29"/>
           <part name="_ID_TAB_TRANSFERS.Hover"	 rect="391,28,114,29"/>
           <part name="_ID_TAB_TRANSFERS.Down"	 rect="391,0,114,29"/>
           <part name="_ID_TAB_IRC.Up"		 rect="505,0,70,29"/>
@@ -1683,7 +1678,7 @@
           <part name="_ID_TAB_SEARCH.Hover"	 rect="356,28,85,29"/>
           <part name="_ID_TAB_SEARCH.Down"	 rect="356,0,85,29"/>
           <part name="_ID_TAB_TRANSFERS.Up"	 rect="441,0,122,29"/>
-          <part name="_ID_TAB_TRANSFERS.Checked"	 rect="441,28,122,29"/>
+          <part name="_ID_TAB_TRANSFERS.Checked" rect="441,28,122,29"/>
           <part name="_ID_TAB_TRANSFERS.Hover"	 rect="441,28,122,29"/>
           <part name="_ID_TAB_TRANSFERS.Down"	 rect="441,0,122,29"/>
           <part name="_ID_TAB_NETWORK.Up"	 rect="563,0,70,29"/>
@@ -1728,7 +1723,7 @@
           <part name="_ID_TAB_SEARCH.Hover"	 rect="356,28,85,29"/>
           <part name="_ID_TAB_SEARCH.Down"	 rect="356,0,85,29"/>
           <part name="_ID_TAB_TRANSFERS.Up"	 rect="441,0,122,29"/>
-          <part name="_ID_TAB_TRANSFERS.Checked"	 rect="441,28,122,29"/>
+          <part name="_ID_TAB_TRANSFERS.Checked" rect="441,28,122,29"/>
           <part name="_ID_TAB_TRANSFERS.Hover"	 rect="441,28,122,29"/>
           <part name="_ID_TAB_TRANSFERS.Down"	 rect="441,0,122,29"/>
           <part name="_ID_TAB_IRC.Up"		 rect="563,0,70,29"/>
@@ -1771,7 +1766,7 @@
           <part name="_ID_TAB_SEARCH.Hover"	 rect="437,28,87,29"/>
           <part name="_ID_TAB_SEARCH.Down"	 rect="437,0,87,29"/>
           <part name="_ID_TAB_TRANSFERS.Up"	 rect="524,0,116,29"/>
-          <part name="_ID_TAB_TRANSFERS.Checked"	 rect="524,28,116,29"/>
+          <part name="_ID_TAB_TRANSFERS.Checked" rect="524,28,116,29"/>
           <part name="_ID_TAB_TRANSFERS.Hover"	 rect="524,28,116,29"/>
           <part name="_ID_TAB_TRANSFERS.Down"	 rect="524,0,116,29"/>
           <part name="_ID_TAB_NETWORK.Up"	 rect="640,0,82,29"/>
@@ -1816,7 +1811,7 @@
           <part name="_ID_TAB_SEARCH.Hover"	 rect="437,28,87,29"/>
           <part name="_ID_TAB_SEARCH.Down"	 rect="437,0,87,29"/>
           <part name="_ID_TAB_TRANSFERS.Up"	 rect="524,0,116,29"/>
-          <part name="_ID_TAB_TRANSFERS.Checked"	 rect="524,28,116,29"/>
+          <part name="_ID_TAB_TRANSFERS.Checked" rect="524,28,116,29"/>
           <part name="_ID_TAB_TRANSFERS.Hover"	 rect="524,28,116,29"/>
           <part name="_ID_TAB_TRANSFERS.Down"	 rect="524,0,116,29"/>
           <part name="_ID_TAB_IRC.Up"		 rect="640,0,70,29"/>
@@ -1859,7 +1854,7 @@
           <part name="_ID_TAB_SEARCH.Hover"	 rect="256,28,64,29"/>
           <part name="_ID_TAB_SEARCH.Down"	 rect="256,0,64,29"/>
           <part name="_ID_TAB_TRANSFERS.Up"	 rect="320,0,141,29"/>
-          <part name="_ID_TAB_TRANSFERS.Checked"	 rect="320,28,141,29"/>
+          <part name="_ID_TAB_TRANSFERS.Checked" rect="320,28,141,29"/>
           <part name="_ID_TAB_TRANSFERS.Hover"	 rect="320,28,141,29"/>
           <part name="_ID_TAB_TRANSFERS.Down"	 rect="320,0,141,29"/>
           <part name="_ID_TAB_NETWORK.Up"	 rect="461,0,97,29"/>
@@ -1904,7 +1899,7 @@
           <part name="_ID_TAB_SEARCH.Hover"	 rect="256,28,64,29"/>
           <part name="_ID_TAB_SEARCH.Down"	 rect="256,0,64,29"/>
           <part name="_ID_TAB_TRANSFERS.Up"	 rect="320,0,141,29"/>
-          <part name="_ID_TAB_TRANSFERS.Checked"	 rect="320,28,141,29"/>
+          <part name="_ID_TAB_TRANSFERS.Checked" rect="320,28,141,29"/>
           <part name="_ID_TAB_TRANSFERS.Hover"	 rect="320,28,141,29"/>
           <part name="_ID_TAB_TRANSFERS.Down"	 rect="320,0,141,29"/>
           <part name="_ID_TAB_IRC.Up"		 rect="461,0,70,29"/>
@@ -1947,7 +1942,7 @@
           <part name="_ID_TAB_SEARCH.Hover"	 rect="289,28,85,29"/>
           <part name="_ID_TAB_SEARCH.Down"	 rect="289,0,85,29"/>
           <part name="_ID_TAB_TRANSFERS.Up"	 rect="374,0,103,29"/>
-          <part name="_ID_TAB_TRANSFERS.Checked"	 rect="374,28,103,29"/>
+          <part name="_ID_TAB_TRANSFERS.Checked" rect="374,28,103,29"/>
           <part name="_ID_TAB_TRANSFERS.Hover"	 rect="374,28,103,29"/>
           <part name="_ID_TAB_TRANSFERS.Down"	 rect="374,0,103,29"/>
           <part name="_ID_TAB_NETWORK.Up"	 rect="477,0,87,29"/>
@@ -1992,7 +1987,7 @@
           <part name="_ID_TAB_SEARCH.Hover"	 rect="289,28,85,29"/>
           <part name="_ID_TAB_SEARCH.Down"	 rect="289,0,85,29"/>
           <part name="_ID_TAB_TRANSFERS.Up"	 rect="374,0,103,29"/>
-          <part name="_ID_TAB_TRANSFERS.Checked"	 rect="374,28,103,29"/>
+          <part name="_ID_TAB_TRANSFERS.Checked" rect="374,28,103,29"/>
           <part name="_ID_TAB_TRANSFERS.Hover"	 rect="374,28,103,29"/>
           <part name="_ID_TAB_TRANSFERS.Down"	 rect="374,0,103,29"/>
           <part name="_ID_TAB_IRC.Up"		 rect="477,0,70,29"/>
@@ -2035,7 +2030,7 @@
           <part name="_ID_TAB_SEARCH.Hover"	 rect="251,28,73,29"/>
           <part name="_ID_TAB_SEARCH.Down"	 rect="251,0,73,29"/>
           <part name="_ID_TAB_TRANSFERS.Up"	 rect="324,0,81,29"/>
-          <part name="_ID_TAB_TRANSFERS.Checked"	 rect="324,28,81,29"/>
+          <part name="_ID_TAB_TRANSFERS.Checked" rect="324,28,81,29"/>
           <part name="_ID_TAB_TRANSFERS.Hover"	 rect="324,28,81,29"/>
           <part name="_ID_TAB_TRANSFERS.Down"	 rect="324,0,81,29"/>
           <part name="_ID_TAB_NETWORK.Up"	 rect="405,0,85,29"/>
@@ -2080,7 +2075,7 @@
           <part name="_ID_TAB_SEARCH.Hover"	 rect="251,28,73,29"/>
           <part name="_ID_TAB_SEARCH.Down"	 rect="251,0,73,29"/>
           <part name="_ID_TAB_TRANSFERS.Up"	 rect="324,0,81,29"/>
-          <part name="_ID_TAB_TRANSFERS.Checked"	 rect="324,28,81,29"/>
+          <part name="_ID_TAB_TRANSFERS.Checked" rect="324,28,81,29"/>
           <part name="_ID_TAB_TRANSFERS.Hover"	 rect="324,28,81,29"/>
           <part name="_ID_TAB_TRANSFERS.Down"	 rect="324,0,81,29"/>
           <part name="_ID_TAB_IRC.Up"		 rect="405,0,70,29"/>
@@ -2123,7 +2118,7 @@
           <part name="_ID_TAB_SEARCH.Hover"	 rect="314,28,68,29"/>
           <part name="_ID_TAB_SEARCH.Down"	 rect="314,0,68,29"/>
           <part name="_ID_TAB_TRANSFERS.Up"	 rect="382,0,100,29"/>
-          <part name="_ID_TAB_TRANSFERS.Checked"	 rect="382,28,100,29"/>
+          <part name="_ID_TAB_TRANSFERS.Checked" rect="382,28,100,29"/>
           <part name="_ID_TAB_TRANSFERS.Hover"	 rect="382,28,100,29"/>
           <part name="_ID_TAB_TRANSFERS.Down"	 rect="382,0,100,29"/>
           <part name="_ID_TAB_NETWORK.Up"	 rect="482,0,93,29"/>
@@ -2168,7 +2163,7 @@
           <part name="_ID_TAB_SEARCH.Hover"	 rect="314,28,68,29"/>
           <part name="_ID_TAB_SEARCH.Down"	 rect="314,0,68,29"/>
           <part name="_ID_TAB_TRANSFERS.Up"	 rect="382,0,100,29"/>
-          <part name="_ID_TAB_TRANSFERS.Checked"	 rect="382,28,100,29"/>
+          <part name="_ID_TAB_TRANSFERS.Checked" rect="382,28,100,29"/>
           <part name="_ID_TAB_TRANSFERS.Hover"	 rect="382,28,100,29"/>
           <part name="_ID_TAB_TRANSFERS.Down"	 rect="382,0,100,29"/>
           <part name="_ID_TAB_IRC.Up"		 rect="482,0,70,29"/>
@@ -2211,7 +2206,7 @@
           <part name="_ID_TAB_SEARCH.Hover"	 rect="283,28,78,29"/>
           <part name="_ID_TAB_SEARCH.Down"	 rect="283,0,78,29"/>
           <part name="_ID_TAB_TRANSFERS.Up"	 rect="361,0,108,29"/>
-          <part name="_ID_TAB_TRANSFERS.Checked"	 rect="361,28,108,29"/>
+          <part name="_ID_TAB_TRANSFERS.Checked" rect="361,28,108,29"/>
           <part name="_ID_TAB_TRANSFERS.Hover"	 rect="361,28,108,29"/>
           <part name="_ID_TAB_TRANSFERS.Down"	 rect="361,0,108,29"/>
           <part name="_ID_TAB_NETWORK.Up"	 rect="469,0,85,29"/>
@@ -2256,7 +2251,7 @@
           <part name="_ID_TAB_SEARCH.Hover"	 rect="283,28,78,29"/>
           <part name="_ID_TAB_SEARCH.Down"	 rect="283,0,78,29"/>
           <part name="_ID_TAB_TRANSFERS.Up"	 rect="361,0,108,29"/>
-          <part name="_ID_TAB_TRANSFERS.Checked"	 rect="361,28,108,29"/>
+          <part name="_ID_TAB_TRANSFERS.Checked" rect="361,28,108,29"/>
           <part name="_ID_TAB_TRANSFERS.Hover"	 rect="361,28,108,29"/>
           <part name="_ID_TAB_TRANSFERS.Down"	 rect="361,0,108,29"/>
           <part name="_ID_TAB_IRC.Up"		 rect="469,0,70,29"/>
@@ -2387,7 +2382,7 @@
           <part name="_ID_TAB_SEARCH.Hover"	 rect="310,28,80,29"/>
           <part name="_ID_TAB_SEARCH.Down"	 rect="310,0,80,29"/>
           <part name="_ID_TAB_TRANSFERS.Up"	 rect="390,0,132,29"/>
-          <part name="_ID_TAB_TRANSFERS.Checked"	 rect="390,28,132,29"/>
+          <part name="_ID_TAB_TRANSFERS.Checked" rect="390,28,132,29"/>
           <part name="_ID_TAB_TRANSFERS.Hover"	 rect="390,28,132,29"/>
           <part name="_ID_TAB_TRANSFERS.Down"	 rect="390,0,132,29"/>
           <part name="_ID_TAB_NETWORK.Up"	 rect="522,0,49,29"/>
@@ -2432,7 +2427,7 @@
           <part name="_ID_TAB_SEARCH.Hover"	 rect="310,28,80,29"/>
           <part name="_ID_TAB_SEARCH.Down"	 rect="310,0,80,29"/>
           <part name="_ID_TAB_TRANSFERS.Up"	 rect="390,0,132,29"/>
-          <part name="_ID_TAB_TRANSFERS.Checked"	 rect="390,28,132,29"/>
+          <part name="_ID_TAB_TRANSFERS.Checked" rect="390,28,132,29"/>
           <part name="_ID_TAB_TRANSFERS.Hover"	 rect="390,28,132,29"/>
           <part name="_ID_TAB_TRANSFERS.Down"	 rect="390,0,132,29"/>
           <part name="_ID_TAB_IRC.Up"		 rect="522,70,29"/>
