@@ -1,7 +1,7 @@
 //
 // WndBaseMatch.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -125,7 +125,7 @@ END_MESSAGE_MAP()
 // CBaseMatchWnd construction
 
 CBaseMatchWnd::CBaseMatchWnd() :
-	m_pMatches( new CMatchList() ),
+	m_pMatches( NULL ),
 	m_pCoolMenu( NULL ),
 	m_bContextMenu( FALSE ),
 	m_tContextMenu( 0 ),
@@ -149,6 +149,8 @@ CBaseMatchWnd::~CBaseMatchWnd()
 int CBaseMatchWnd::OnCreate(LPCREATESTRUCT lpCreateStruct) 
 {
 	if ( CPanelWnd::OnCreate( lpCreateStruct ) == -1 ) return -1;
+
+	m_pMatches = new CMatchList( this );
 
 	m_wndList.Create( m_pMatches, this );
 	m_wndList.ModifyStyle( 0, WS_TABSTOP );

@@ -36,6 +36,7 @@ class CDownload;
 class CMetaList;
 class CXMLElement;
 class Review;
+class CBaseMatchWnd;
 
 typedef struct
 {
@@ -53,7 +54,7 @@ typedef struct
 class CMatchList
 {
 public:
-	CMatchList();
+	CMatchList(CBaseMatchWnd* pParent);
 	virtual ~CMatchList();
 	
 public:
@@ -101,6 +102,7 @@ protected:
 	LPTSTR			m_pszRegexPattern;
 	CSchemaMember**	m_pColumns;
 	int				m_nColumns;
+	CBaseMatchWnd*	m_pParent;
 
 	enum findType
 	{
@@ -129,6 +131,12 @@ public:
 	void		ClearUpdated();
 	void		ClearNew();
 	void		Serialize(CArchive& ar);
+
+	CBaseMatchWnd* GetParent() const
+	{
+		return m_pParent;
+	}
+
 protected:
 	CMatchFile* FindFileAndAddHit(CQueryHit* pHit, const findType nFindFlag, FILESTATS* Stats);
 	void		InsertSorted(CMatchFile* pFile);

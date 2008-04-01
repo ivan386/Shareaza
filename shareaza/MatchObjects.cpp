@@ -45,7 +45,7 @@
 #include "CtrlMatch.h"
 #include "LiveList.h"
 #include "ResultFilters.h"
-#include "SearchManager.h"
+#include "WndSearch.h"
 #include "CtrlSearchDetailPanel.h"
 
 #ifdef _DEBUG
@@ -61,7 +61,7 @@ static char THIS_FILE[]=__FILE__;
 //////////////////////////////////////////////////////////////////////
 // CMatchList construction
 
-CMatchList::CMatchList()
+CMatchList::CMatchList(CBaseMatchWnd* pParent) : m_pParent( pParent )
 {
 	m_pResultFilters = new CResultFilters;
 	m_pResultFilters->Load();
@@ -748,85 +748,77 @@ bool CMatchList::CreateRegExpFilter(CString strPattern, CString& strFilter)
 	CString strNewPattern;
 	bool bReplaced = false;
 
-	if ( m_pFiles && m_nFiles > 0 )
+	CSearchWnd* pParent = static_cast< CSearchWnd* >( GetParent() );
+	ASSERT( pParent );
+	CQuerySearch* pQuery = pParent->GetLastSearch();
+
+	if ( pQuery )
 	{
-		CMatchFile* pFirst = m_pFiles[ 0 ];
-		ASSERT( pFirst );
-		CQueryHit* pHit = pFirst->GetHits();
-		ASSERT( pHit );
-		CManagedSearch* pSearch = SearchManager.Find( pHit->m_oSearchID );
+		LPCTSTR pszPattern = strPattern.GetBuffer();
+		int nTotal = 0;
 
-		if ( pSearch )
+		while ( *pszPattern )
 		{
-			CQuerySearch* pQuery = pSearch->GetSearch();
-			ASSERT( pQuery );
-
-			LPCTSTR pszPattern = strPattern.GetBuffer();
-			int nTotal = 0;
-
-			while ( *pszPattern )
+			if ( *pszPattern == '<' )
 			{
-				if ( *pszPattern == '<' )
+				pszPattern++;
+				bool bEnds = false;
+				bool bAll = *pszPattern == '_';
+
+				for ( ; *pszPattern ; pszPattern++ )
 				{
-					pszPattern++;
-					bool bEnds = false;
-					bool bAll = *pszPattern == '_';
-
-					for ( ; *pszPattern ; pszPattern++ )
+					if ( *pszPattern == '>' )
 					{
-						if ( *pszPattern == '>' )
-						{
-							bEnds = true;
-							break;
-						}
+						bEnds = true;
+						break;
 					}
+				}
 
-					if ( bEnds )
+				if ( bEnds )
+				{
+					CQuerySearch::const_iterator itWord = pQuery->begin();
+					CQuerySearch::const_iterator itWordEnd = pQuery->end();
+
+					if ( bAll )
 					{
-						CQuerySearch::const_iterator itWord = pQuery->begin();
-						CQuerySearch::const_iterator itWordEnd = pQuery->end();
-
-						if ( bAll )
+						// Add all keywords at the "<_>" position
+						for ( ; itWord != itWordEnd ; itWord++ )
 						{
-							// Add all keywords at the "<_>" position
-							for ( ; itWord != itWordEnd ; itWord++ )
+							strNewPattern.AppendFormat( L"%s\\s+", 
+								CString( itWord->first, int(itWord->second) ) );
+						}
+						bReplaced = true;
+					}
+					else
+					{
+						pszPattern--; // Go back
+						int nNumber = 0;
+
+						// Numbers from 1 to 9, no more
+						if ( _stscanf( &pszPattern[0], L"%i", &nNumber ) != 1 )
+							nNumber = ++nTotal;
+
+						for ( int nWord = 1 ; itWord != itWordEnd ; itWord++, nWord++ )
+						{
+							if ( nWord == nNumber )
 							{
 								strNewPattern.AppendFormat( L"%s\\s+", 
 									CString( itWord->first, int(itWord->second) ) );
+								bReplaced = true;
+								break;
 							}
-							bReplaced = true;
 						}
-						else
-						{
-							pszPattern--; // Go back
-							int nNumber = 0;
-
-							// Numbers from 1 to 9, no more
-							if ( _stscanf( &pszPattern[0], L"%i", &nNumber ) != 1 )
-								nNumber = ++nTotal;
-
-							for ( int nWord = 1 ; itWord != itWordEnd ; itWord++, nWord++ )
-							{
-								if ( nWord == nNumber )
-								{
-									strNewPattern.AppendFormat( L"%s\\s+", 
-										CString( itWord->first, int(itWord->second) ) );
-									bReplaced = true;
-									break;
-								}
-							}
-							pszPattern++; // return to the last position
-						}
+						pszPattern++; // return to the last position
 					}
-					else
-						return false; // no closing '>'
 				}
 				else
-				{
-					strNewPattern += *pszPattern; // not replacing
-				}
-				pszPattern++;
+					return false; // no closing '>'
 			}
+			else
+			{
+				strNewPattern += *pszPattern; // not replacing
+			}
+			pszPattern++;
 		}
 	}
 	else return false;
