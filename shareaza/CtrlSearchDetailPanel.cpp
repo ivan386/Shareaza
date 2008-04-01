@@ -382,13 +382,15 @@ void CSearchDetailPanel::OnPaint()
 		for ( int nRating = m_nRating - 1 ; nRating ; nRating-- )
 		{
 			ptStar.x -= 16;
-			ShellIcons.Draw( &dc, SHI_STAR, 16, ptStar.x, ptStar.y, CoolInterface.m_crWindow );
+			CoolInterface.Draw( &dc, IDI_STAR, 16, ptStar.x, ptStar.y, CoolInterface.m_crWindow );
+			dc.ExcludeClipRect( ptStar.x, ptStar.y, ptStar.x + 16, ptStar.y + 16 );
 		}
 	}
 	else if ( m_nRating == 1 )
 	{
 		ptStar.x -= 16;
-		ShellIcons.Draw( &dc, SHI_FAKE, 16, ptStar.x, ptStar.y, CoolInterface.m_crWindow );
+		CoolInterface.Draw( &dc, IDI_FAKE, 16, ptStar.x, ptStar.y, CoolInterface.m_crWindow );
+		dc.ExcludeClipRect( ptStar.x, ptStar.y, ptStar.x + 16, ptStar.y + 16 );
 	}
 
 	dc.SelectObject( &CoolInterface.m_fntCaption );
@@ -576,11 +578,13 @@ void CSearchDetailPanel::DrawThumbnail(CDC* pDC, CRect& rcThumb)
 		if ( m_nIcon48 >= 0 )
 		{
 			ShellIcons.Draw( pDC, m_nIcon48, 48, pt.x, pt.y, m_crLight );
+			pDC->ExcludeClipRect( pt.x, pt.y, pt.x + 48, pt.y + 48 );
 		}
 		else if ( m_nIcon32 >= 0 )
 		{
 			pt.x += 8; pt.y += 8;
 			ShellIcons.Draw( pDC, m_nIcon32, 32, pt.x, pt.y, m_crLight );
+			pDC->ExcludeClipRect( pt.x, pt.y, pt.x + 32, pt.y + 32 );
 		}
 		
 		pDC->FillSolidRect( &rcThumb, m_crLight );
@@ -726,13 +730,15 @@ void Review::Paint(CDC* pDC, int nScroll)
 		for ( int nRating = m_nRating - 1 ; nRating ; nRating-- )
 		{
 			ptStar.x -= 16;
-			ShellIcons.Draw( pDC, SHI_STAR, 16, ptStar.x, ptStar.y, CoolInterface.m_crWindow );
+			CoolInterface.Draw( pDC, IDI_STAR, 16, ptStar.x, ptStar.y, CoolInterface.m_crWindow );
+			pDC->ExcludeClipRect( ptStar.x, ptStar.y, ptStar.x + 16, ptStar.y + 16 );
 		}
 	}
 	else if ( m_nRating == 1 )
 	{
 		ptStar.x -= 16;
-		ShellIcons.Draw( pDC, SHI_FAKE, 16, ptStar.x, ptStar.y, CoolInterface.m_crWindow );
+		CoolInterface.Draw( pDC, IDI_FAKE, 16, ptStar.x, ptStar.y, CoolInterface.m_crWindow );
+		pDC->ExcludeClipRect( ptStar.x, ptStar.y, ptStar.x + 16, ptStar.y + 16 );
 	}
 	
 	rc.top += 20;

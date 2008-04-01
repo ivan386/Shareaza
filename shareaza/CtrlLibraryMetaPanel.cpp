@@ -298,7 +298,7 @@ void CLibraryMetaPanel::OnDestroy()
 	m_bThread = FALSE;
 	m_pWakeup.SetEvent();
 	
-	CloseThread( &m_hThread );
+	CloseThread( (HANDLE*)&m_hThread );
 	
 	CLibraryPanel::OnDestroy();
 }
@@ -348,7 +348,8 @@ void CLibraryMetaPanel::OnPaint()
 		for ( int nRating = m_nRating - 1 ; nRating ; nRating-- )
 		{
 			ptStar.x -= 16;
-			ShellIcons.Draw( &dc, SHI_STAR, 16, ptStar.x, ptStar.y, CoolInterface.m_crWindow );
+			CoolInterface.Draw( &dc, IDI_STAR, 16, ptStar.x, ptStar.y, CoolInterface.m_crWindow );
+			dc.ExcludeClipRect( ptStar.x, ptStar.y, ptStar.x + 16, ptStar.y + 16 );
 			m_rcRating.UnionRect( &m_rcRating, CRect( ptStar.x, ptStar.y, ptStar.x + 16, ptStar.y + 16 ) );
 		}
 	}
@@ -357,7 +358,8 @@ void CLibraryMetaPanel::OnPaint()
 		CPoint ptStar( rcWork.right - 3, rcWork.top - 2 );
 		m_rcRating.SetRectEmpty();
 		ptStar.x -= 16;
-		ShellIcons.Draw( &dc, SHI_FAKE, 16, ptStar.x, ptStar.y, CoolInterface.m_crWindow );
+		CoolInterface.Draw( &dc, IDI_FAKE, 16, ptStar.x, ptStar.y, CoolInterface.m_crWindow );
+		dc.ExcludeClipRect( ptStar.x, ptStar.y, ptStar.x + 16, ptStar.y + 16 );
 		m_rcRating.UnionRect( &m_rcRating, CRect( ptStar.x, ptStar.y, ptStar.x + 16, ptStar.y + 16 ) );
 	}
 	else
@@ -799,4 +801,5 @@ void CLibraryMetaPanel::OnRun()
 	}
 
 	m_bThread = FALSE;
+	m_hThread = NULL;
 }

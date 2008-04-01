@@ -30,7 +30,6 @@
 #include "AlbumFolder.h"
 #include "FileExecutor.h"
 #include "CoolInterface.h"
-#include "ShellIcons.h"
 #include "Skin.h"
 #include "SHA.h"
 #include "ED2K.h"

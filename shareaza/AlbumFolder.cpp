@@ -28,7 +28,6 @@
 #include "Schema.h"
 #include "SchemaChild.h"
 #include "SchemaCache.h"
-#include "ShellIcons.h"
 #include "XML.h"
 #include "SHA.h"
 

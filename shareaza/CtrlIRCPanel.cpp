@@ -28,7 +28,6 @@
 #include "DlgIrcInput.h"
 
 #include "CoolInterface.h"
-#include "ShellIcons.h"
 #include "RichDocument.h"
 #include "Skin.h"
 #include "XML.h"

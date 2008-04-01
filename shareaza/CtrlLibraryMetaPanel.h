@@ -59,7 +59,7 @@ protected:
 protected:
 	CCriticalSection	m_pSection;
 	CEvent				m_pWakeup;
-	HANDLE				m_hThread;
+	volatile HANDLE		m_hThread;
 	BOOL				m_bThread;
 	BOOL				m_bExternalData;
 	CSize				m_szThumb;

@@ -287,8 +287,8 @@ void CSchemaCombo::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 			dc.FillSolidRect( &rcItem, GetBkColor(lpDrawItemStruct->hDC) );
 		dc.SetBkMode( TRANSPARENT );
 		
-		ShellIcons.Draw( &dc, SHI_SEARCH, 16, pt.x, pt.y, CLR_NONE, 
-			( lpDrawItemStruct->itemState & ODS_SELECTED ) );
+		CoolInterface.Draw( &dc, IDR_SEARCHFRAME, 16,
+			pt.x, pt.y, CLR_NONE, ( lpDrawItemStruct->itemState & ODS_SELECTED ) );
 		
 		rcItem.left += 20; rcItem.right -= 2;
 
@@ -318,7 +318,7 @@ void CSchemaCombo::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 		pt.x -= 8;
 		pt.y -= 8;
 		
-		ShellIcons.Draw( &dc, SHI_CHEVRON, 16, pt.x, pt.y, CLR_NONE, FALSE );
+		CoolInterface.Draw( &dc, IDI_CHEVRON, 16, pt.x, pt.y );
 	}
 	
 	dc.Detach();

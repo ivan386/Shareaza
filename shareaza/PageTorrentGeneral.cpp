@@ -23,7 +23,6 @@
 #include "Shareaza.h"
 #include "Settings.h"
 
-#include "ShellIcons.h"
 #include "BTInfo.h"
 #include "PageTorrentGeneral.h"
 

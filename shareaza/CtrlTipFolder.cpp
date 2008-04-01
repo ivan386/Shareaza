@@ -25,7 +25,6 @@
 #include "Library.h"
 #include "LibraryFolders.h"
 #include "SharedFolder.h"
-#include "CoolInterface.h"
 #include "ShellIcons.h"
 #include "CtrlTipFolder.h"
 
@@ -118,7 +117,8 @@ void CFolderTipCtrl::OnPaint(CDC* pDC)
 
 	DrawRule( pDC, &pt );
 
-	ShellIcons.Draw( pDC, SHI_FOLDER_OPEN, 32, pt.x, pt.y, CoolInterface.m_crTipBack );
+	CoolInterface.Draw( pDC, IDI_FOLDER_OPEN, 32, pt.x, pt.y, CoolInterface.m_crTipBack );
+	pDC->ExcludeClipRect( pt.x, pt.y, pt.x + 32, pt.y + 32 );
 
 	CString strText;
 	LoadString( strText, IDS_TIP_TOTAL_FILES );

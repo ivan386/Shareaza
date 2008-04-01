@@ -72,8 +72,8 @@ BOOL CAlbumTipCtrl::OnPrepare()
 	m_sName	= pFolder->m_sName;
 	m_sType	= _T("Virtual Folder");
 
-	m_nIcon32 = SHI_FOLDER_OPEN;
-	m_nIcon48 = SHI_FOLDER_OPEN;
+	m_nIcon32 = 0;
+	m_nIcon48 = 0;
 	m_bCollection = bool( pFolder->m_oCollSHA1 );
 	
 	// Metadata
@@ -179,19 +179,19 @@ void CAlbumTipCtrl::DrawThumb(CDC* pDC, CRect& rcThumb)
 	CPoint pt(	( rcThumb.left + rcThumb.right ) / 2 - 24,
 				( rcThumb.top + rcThumb.bottom ) / 2 - 24 );
 
-	UINT nStyle = ( m_bCollection ? INDEXTOOVERLAYMASK(SHI_O_COLLECTION) : 0 );
-
 	if ( m_nIcon48 >= 0 )
 	{
-		ImageList_DrawEx( ShellIcons.GetHandle( 48 ), m_nIcon48, *pDC,
-			pt.x, pt.y, 48, 48, m_crLight, CLR_DEFAULT, nStyle );
+		ShellIcons.Draw( pDC, m_nIcon48, 48, pt.x, pt.y, m_crLight );
+		if ( m_bCollection )
+			CoolInterface.Draw( pDC, IDI_COLLECTION_MASK, 16, pt.x, pt.y );
 		pDC->ExcludeClipRect( pt.x, pt.y, pt.x + 48, pt.y + 48 );
 	}
 	else if ( m_nIcon32 >= 0 )
 	{
 		pt.x += 8; pt.y += 8;
-		ImageList_DrawEx( ShellIcons.GetHandle( 32 ), m_nIcon32, *pDC,
-			pt.x, pt.y, 32, 32, m_crLight, CLR_DEFAULT, nStyle );
+		ShellIcons.Draw( pDC, m_nIcon32, 32, pt.x, pt.y );
+		if ( m_bCollection )
+			CoolInterface.Draw( pDC, IDI_COLLECTION_MASK, 16, pt.x, pt.y );
 		pDC->ExcludeClipRect( pt.x, pt.y, pt.x + 32, pt.y + 32 );
 	}
 

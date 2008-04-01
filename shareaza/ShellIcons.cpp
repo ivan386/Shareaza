@@ -40,7 +40,7 @@ CShellIcons::CShellIcons()
 	// experimental values
 	m_m16.InitHashTable( 31 );
 	m_m32.InitHashTable( 31 );
-	m_m48.InitHashTable( 17 );
+	m_m48.InitHashTable( 31 );
 }
 
 CShellIcons::~CShellIcons()
@@ -52,56 +52,58 @@ CShellIcons::~CShellIcons()
 
 void CShellIcons::Clear()
 {
-	if ( m_i16.m_hImageList ) m_i16.DeleteImageList();
-	if ( m_i32.m_hImageList ) m_i32.DeleteImageList();
-	if ( m_i48.m_hImageList ) m_i48.DeleteImageList();
-	
-	m_i16.Create( 16, 16, ILC_COLOR32|ILC_MASK, SHI_MAX, 4 );
-	m_i32.Create( 32, 32, ILC_COLOR32|ILC_MASK, 1, 4 );
-	m_i48.Create( 48, 48, ILC_COLOR32|ILC_MASK, 1, 4 );
-	
-	CBitmap bmBase;
-	HICON hTemp;
-	
-	if ( Settings.General.LanguageRTL ) 
-		bmBase.LoadBitmap( IDB_SHELL_BASE_RTL );
-	else if (theApp.m_dwWindowsVersion >= 6)
-		bmBase.LoadBitmap( IDB_SHELL_BASE_VISTA );
-	else
-		bmBase.LoadBitmap( IDB_SHELL_BASE );
-	m_i16.Add( &bmBase, RGB( 0, 255, 0 ) );
-	m_i16.SetOverlayImage( SHI_LOCKED, SHI_O_LOCKED );
-	m_i16.SetOverlayImage( SHI_PARTIAL, SHI_O_PARTIAL );
-	m_i16.SetOverlayImage( SHI_COLLECTION, SHI_O_COLLECTION );
-	m_i16.SetOverlayImage( SHI_COMMERCIAL, SHI_O_COMMERCIAL );
-	m_i16.SetOverlayImage( SHI_RATING_FAKE, SHI_O_RATING_FAKE );
-	m_i16.SetOverlayImage( SHI_RATING_AVERAGE, SHI_O_RATING_AVERAGE );
-	m_i16.SetOverlayImage( SHI_RATING_GOOD, SHI_O_RATING_GOOD );
-	
-	hTemp = (HICON)LoadImage( AfxGetResourceHandle(), MAKEINTRESOURCE(IDI_FILE), IMAGE_ICON, 32, 32, 0 );
-	AddIcon( hTemp, m_i32 );
-	hTemp = (HICON)LoadImage( AfxGetResourceHandle(), MAKEINTRESOURCE(IDI_FILE), IMAGE_ICON, 48, 48, 0 );
-	AddIcon( hTemp, m_i48 );
-	
-	hTemp = (HICON)LoadImage( AfxGetResourceHandle(), MAKEINTRESOURCE(IDI_EXECUTABLE), IMAGE_ICON, 32, 32, 0 );
-	AddIcon( hTemp, m_i32 );
-	hTemp = (HICON)LoadImage( AfxGetResourceHandle(), MAKEINTRESOURCE(IDI_EXECUTABLE), IMAGE_ICON, 48, 48, 0 );
-	AddIcon( hTemp, m_i48 );
-	
-	hTemp = (HICON)LoadImage( AfxGetResourceHandle(), MAKEINTRESOURCE(IDI_COLLECTION_MASK), IMAGE_ICON, 32, 32, 0 );
-	// not needed?
-	m_i32.SetOverlayImage( AddIcon( hTemp, m_i32 ), SHI_O_COLLECTION );
-	hTemp = (HICON)LoadImage( AfxGetResourceHandle(), MAKEINTRESOURCE(IDI_COLLECTION_MASK), IMAGE_ICON, 48, 48, 0 );
-	// not needed?
-	m_i48.SetOverlayImage( AddIcon( hTemp, m_i48 ), SHI_O_COLLECTION );
-	
 	m_m16.RemoveAll();
 	m_m32.RemoveAll();
 	m_m48.RemoveAll();
-	
-	m_m16.SetAt( _T(".exe"), SHI_EXECUTABLE );
-	m_m32.SetAt( _T(".exe"), 1 );
-	m_m48.SetAt( _T(".exe"), 1 );
+
+	if ( m_i16.m_hImageList ) m_i16.DeleteImageList();
+	if ( m_i32.m_hImageList ) m_i32.DeleteImageList();
+	if ( m_i48.m_hImageList ) m_i48.DeleteImageList();
+
+	m_i16.Create( 16, 16, ILC_COLOR32|ILC_MASK, 0, 16 );
+	m_i32.Create( 32, 32, ILC_COLOR32|ILC_MASK, 0, 16 );
+	m_i48.Create( 48, 48, ILC_COLOR32|ILC_MASK, 0, 16 );
+
+	// SHI_FILE = 0
+	VERIFY( AddIcon( CoolInterface.ExtractIcon( IDI_FILE, FALSE, LVSIL_SMALL) , m_i16 ) == SHI_FILE );
+	VERIFY( AddIcon( CoolInterface.ExtractIcon( IDI_FILE, FALSE, LVSIL_NORMAL), m_i32 ) == SHI_FILE );
+	VERIFY( AddIcon( CoolInterface.ExtractIcon( IDI_FILE, FALSE, LVSIL_BIG), m_i48 ) == SHI_FILE );
+
+	// SHI_EXECUTABLE = 1
+	VERIFY( AddIcon( CoolInterface.ExtractIcon( IDI_EXECUTABLE, FALSE, LVSIL_SMALL), m_i16 ) == SHI_EXECUTABLE );
+	VERIFY( AddIcon( CoolInterface.ExtractIcon( IDI_EXECUTABLE, FALSE, LVSIL_NORMAL), m_i32 ) == SHI_EXECUTABLE );
+	VERIFY( AddIcon( CoolInterface.ExtractIcon( IDI_EXECUTABLE, FALSE, LVSIL_BIG), m_i48 ) == SHI_EXECUTABLE );
+
+	// SHI_COMPUTER = 2
+	VERIFY( AddIcon( CoolInterface.ExtractIcon( IDI_COMPUTER, FALSE, LVSIL_SMALL), m_i16 ) == SHI_COMPUTER );
+	VERIFY( AddIcon( CoolInterface.ExtractIcon( IDI_COMPUTER, FALSE, LVSIL_NORMAL), m_i32 ) == SHI_COMPUTER );
+	VERIFY( AddIcon( CoolInterface.ExtractIcon( IDI_COMPUTER, FALSE, LVSIL_BIG), m_i48 ) == SHI_COMPUTER );
+
+	// SHI_FOLDER_CLOSED = 3
+	VERIFY( AddIcon( CoolInterface.ExtractIcon( IDI_FOLDER_CLOSED, FALSE, LVSIL_SMALL), m_i16 ) == SHI_FOLDER_CLOSED );
+	VERIFY( AddIcon( CoolInterface.ExtractIcon( IDI_FOLDER_CLOSED, FALSE, LVSIL_NORMAL), m_i32 ) == SHI_FOLDER_CLOSED );
+	VERIFY( AddIcon( CoolInterface.ExtractIcon( IDI_FOLDER_CLOSED, FALSE, LVSIL_BIG), m_i48 ) == SHI_FOLDER_CLOSED );
+
+	// SHI_FOLDER_OPEN = 4
+	VERIFY( AddIcon( CoolInterface.ExtractIcon( IDI_FOLDER_OPEN, FALSE, LVSIL_SMALL), m_i16 ) == SHI_FOLDER_OPEN );
+	VERIFY( AddIcon( CoolInterface.ExtractIcon( IDI_FOLDER_OPEN, FALSE, LVSIL_NORMAL), m_i32 ) == SHI_FOLDER_OPEN );
+	VERIFY( AddIcon( CoolInterface.ExtractIcon( IDI_FOLDER_OPEN, FALSE, LVSIL_BIG), m_i48 ) == SHI_FOLDER_OPEN );
+
+	// SHI_LOCKED = 5 (overlay)
+	VERIFY( AddIcon( CoolInterface.ExtractIcon( IDI_LOCKED, FALSE, LVSIL_SMALL), m_i16 ) == SHI_LOCKED );
+//	VERIFY( AddIcon( CoolInterface.ExtractIcon( IDI_LOCKED, FALSE, LVSIL_NORMAL), m_i32 ) == SHI_LOCKED );
+//	VERIFY( AddIcon( CoolInterface.ExtractIcon( IDI_LOCKED, FALSE, LVSIL_BIG), m_i48 ) == SHI_LOCKED );
+	m_i16.SetOverlayImage( SHI_LOCKED, SHI_O_LOCKED );
+//	m_i32.SetOverlayImage( SHI_LOCKED, SHI_O_LOCKED );
+//	m_i48.SetOverlayImage( SHI_LOCKED, SHI_O_LOCKED );
+
+	m_m16.SetAt(_T(".exe"), SHI_EXECUTABLE);
+	m_m32.SetAt(_T(".exe"), SHI_EXECUTABLE);
+	m_m48.SetAt(_T(".exe"), SHI_EXECUTABLE);
+
+	m_m16.SetAt(_T(".com"), SHI_EXECUTABLE);
+	m_m32.SetAt(_T(".com"), SHI_EXECUTABLE);
+	m_m48.SetAt(_T(".com"), SHI_EXECUTABLE);
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -110,7 +112,8 @@ void CShellIcons::Clear()
 int CShellIcons::Get(LPCTSTR pszFile, int nSize)
 {
 	LPCTSTR pszType = _tcsrchr( pszFile, '.' );
-	if ( pszType == NULL ) return 0;
+	if ( pszType == NULL )
+		return SHI_FILE;
 	
 	if ( m_i16.m_hImageList == NULL ) Clear();
 
@@ -118,7 +121,7 @@ int CShellIcons::Get(LPCTSTR pszFile, int nSize)
 	ToLower( strType );
 
 	HICON hIcon = NULL;
-	int nIndex = 0;
+	int nIndex = SHI_FILE;
 
 	SHFILEINFO sfi = { 0 };
 	switch ( nSize )
@@ -350,15 +353,4 @@ BOOL CShellIcons::Lookup(LPCTSTR pszType, HICON* phSmallIcon, HICON* phLargeIcon
 	}
 
 	return TRUE;
-}
-
-//////////////////////////////////////////////////////////////////////
-// CShellIcons drawing
-
-void CShellIcons::Draw(CDC* pDC, int nIcon, int nSize, int nX, int nY, COLORREF crBack, BOOL bSelected)
-{
-	ImageList_DrawEx( ShellIcons.GetHandle( nSize ), nIcon, pDC->GetSafeHdc(),
-		nX, nY, nSize, nSize, crBack, CLR_DEFAULT, bSelected ? ILD_SELECTED : ILD_NORMAL );
-	
-	if ( crBack != CLR_NONE ) pDC->ExcludeClipRect( nX, nY, nX + nSize, nY + nSize );
 }

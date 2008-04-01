@@ -272,7 +272,7 @@ void CDeleteFileDlg::OnDrawItem(int /*nIDCtl*/, LPDRAWITEMSTRUCT lpDrawItemStruc
 		for ( int nStar = nRating - 1 ; nStar ; nStar-- )
 		{
 			rcItem.right -= 16;
-			ShellIcons.Draw( &dc, SHI_STAR, 16, rcItem.right, rcItem.top, CLR_NONE,
+			CoolInterface.Draw( &dc, IDI_STAR, 16, rcItem.right, rcItem.top, CLR_NONE,
 				( lpDrawItemStruct->itemState & ODS_SELECTED ) || bDisabled );
 			rcItem.right -= 2;
 		}
@@ -280,7 +280,7 @@ void CDeleteFileDlg::OnDrawItem(int /*nIDCtl*/, LPDRAWITEMSTRUCT lpDrawItemStruc
 	else if ( nRating == 1 )
 	{
 		rcItem.right -= 16;
-		ShellIcons.Draw( &dc, SHI_FAKE, 16, rcItem.right, rcItem.top, CLR_NONE,
+		CoolInterface.Draw( &dc, IDI_FAKE, 16, rcItem.right, rcItem.top, CLR_NONE,
 			( lpDrawItemStruct->itemState & ODS_SELECTED ) || bDisabled );
 	}
 

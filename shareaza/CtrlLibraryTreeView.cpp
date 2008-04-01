@@ -1198,27 +1198,27 @@ void CLibraryTreeItem::Paint(CDC& dc, CRect& rc, BOOL bTarget, COLORREF crBack) 
 
 	if ( !empty() )
 	{
-		ImageList_DrawEx( ShellIcons.GetHandle( 16 ),
-			m_bExpanded ? SHI_MINUS : SHI_PLUS,
-			dc.GetSafeHdc(), rc.left, rc.top, 16, 16,
-			crBack, CLR_NONE, ILD_NORMAL );
+		CoolInterface.Draw( &dc, ( m_bExpanded ? IDI_MINUS : IDI_PLUS ), 16,
+			rc.left, rc.top, crBack );
 	}
 	else
 	{
 		dc.FillSolidRect( rc.left, rc.top, 16, 16, crBack );
 	}
 
-	int nImage = ( m_bExpanded && !empty() ) ? SHI_FOLDER_OPEN : SHI_FOLDER_CLOSED;
-	if ( m_nIcon16 >= 0 ) nImage = m_nIcon16;
-
-	UINT nIconStyle = ( m_bSelected || bTarget ) ? ILD_SELECTED : ILD_NORMAL;
-
-	if ( ! m_bShared ) nIconStyle |= INDEXTOOVERLAYMASK( SHI_O_LOCKED );
-	if ( m_bCollection ) nIconStyle |= INDEXTOOVERLAYMASK( SHI_O_COLLECTION );
-
-	ImageList_DrawEx( ShellIcons.GetHandle( 16 ), nImage,
-		dc.GetSafeHdc(), rc.left + 16, rc.top, 16, 16,
-		crBack, CLR_DEFAULT, nIconStyle );
+	if ( m_nIcon16 >= 0 )
+		ShellIcons.Draw( &dc, m_nIcon16, 16, rc.left + 16, rc.top,
+			crBack, ( m_bSelected || bTarget ) );
+	else
+		CoolInterface.Draw( &dc,
+			( ( m_bExpanded && ! empty() ) ? IDI_FOLDER_OPEN : IDI_FOLDER_CLOSED ), 16,
+			rc.left + 16, rc.top, crBack, ( m_bSelected || bTarget ) );
+	if ( ! m_bShared )
+		CoolInterface.Draw( &dc, IDI_LOCKED, 16,
+			rc.left + 16, rc.top, CLR_NONE, ( m_bSelected || bTarget ), FALSE );
+	if ( m_bCollection )
+		CoolInterface.Draw( &dc, IDI_COLLECTION_MASK, 16,
+			rc.left + 16, rc.top, CLR_NONE, ( m_bSelected || bTarget ), FALSE );
 
 	crBack = ( m_bSelected || bTarget ) ? CoolInterface.m_crHighlight : crBack;
 	COLORREF crText = ( m_bSelected || bTarget ) ? CoolInterface.m_crHiText : CoolInterface.m_crText;

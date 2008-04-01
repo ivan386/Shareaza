@@ -28,7 +28,6 @@
 #include "Skin.h"
 #include "RichElement.h"
 #include "RichFragment.h"
-#include "ShellIcons.h"
 #include "CtrlIRCFrame.h"
 #include "DlgSettingsManager.h"
 #include "CoolInterface.h"

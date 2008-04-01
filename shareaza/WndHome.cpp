@@ -32,7 +32,6 @@
 #include "VersionChecker.h"
 #include "GraphItem.h"
 #include "Statistics.h"
-#include "ShellIcons.h"
 
 #include "WndHome.h"
 #include "WndSearch.h"

@@ -33,7 +33,6 @@
 #include "CtrlLibraryView.h"
 #include "Schema.h"
 #include "SchemaCache.h"
-#include "SchemaCache.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW

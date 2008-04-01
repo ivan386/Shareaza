@@ -19,10 +19,9 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_SHELLICONS_H__D01FAB3B_B7C7_46AE_B4AF_A1451B322A27__INCLUDED_)
-#define AFX_SHELLICONS_H__D01FAB3B_B7C7_46AE_B4AF_A1451B322A27__INCLUDED_
-
 #pragma once
+
+#include "CoolInterface.h"
 
 
 class CShellIcons
@@ -38,11 +37,8 @@ public:
 	int		Get(LPCTSTR pszFile, int nSize);
 	int		Add(HICON hIcon, int nSize);
 	HICON	ExtractIcon(int nIndex, int nSize);
-public:
 	BOOL	Lookup(LPCTSTR pszType, HICON* phSmallIcon, HICON* phLargeIcon, CString* psName, CString* psMIME, HICON* phHugeIcon = NULL);
 	CString	GetTypeString(LPCTSTR pszFile);
-public:
-	void	Draw(CDC* pDC, int nIcon, int nSize, int nX, int nY, COLORREF crBack = CLR_NONE, BOOL bSelected = FALSE);
 
 // Inlines
 public:
@@ -66,14 +62,20 @@ public:
 		switch ( nSize )
 		{
 		case 16:
-			return m_i16.m_hImageList;
+			return m_i16.GetSafeHandle();
 		case 32:
-			return m_i32.m_hImageList;
+			return m_i32.GetSafeHandle();
 		case 48:
-			return m_i48.m_hImageList;
+			return m_i48.GetSafeHandle();
 		default:
 			return NULL;
 		}
+	}
+
+	inline BOOL Draw(CDC* pDC, int nIcon, int nSize, int nX, int nY, COLORREF crBack = CLR_NONE, BOOL bSelected = FALSE) const
+	{
+		return ImageList_DrawEx( GetHandle( nSize ), nIcon, pDC->GetSafeHdc(),
+			nX, nY, nSize, nSize, crBack, CLR_DEFAULT, bSelected ? ILD_SELECTED : ILD_NORMAL );
 	}
 
 // Attributes
@@ -81,7 +83,6 @@ protected:
 	CImageList		m_i16;
 	CImageList		m_i32;
 	CImageList		m_i48;
-protected:
 	CMap< CString, const CString&, int, int > m_m16;
 	CMap< CString, const CString&, int, int > m_m32;
 	CMap< CString, const CString&, int, int > m_m48;
@@ -89,47 +90,18 @@ protected:
 
 extern CShellIcons ShellIcons;
 
+// Predefined icons
 enum
 {
-	SHI_FILE,
-	SHI_PLUS,
-	SHI_MINUS,
-	SHI_TICK,
-	SHI_BUSY,
-	SHI_FIREWALL,
-	SHI_UNSTABLE,
-	SHI_COMPUTER,
-	SHI_EXECUTABLE,
-	SHI_CHAT,
-	SHI_BROWSE,
-	SHI_FOLDER_CLOSED,
-	SHI_FOLDER_OPEN,
-	SHI_LOCKED,
-	SHI_SEARCH,
-	SHI_PARTIAL,
-	SHI_CHEVRON,
-	SHI_STAR,
-	SHI_PREVIEW,
-	SHI_COLLECTION,
-	SHI_FAKE,
-	SHI_COMMERCIAL,
-	SHI_RATING_FAKE,
-	SHI_RATING_AVERAGE,
-	SHI_RATING_GOOD,
-	SHI_MAX
+	SHI_FILE = 0,
+	SHI_EXECUTABLE = 1,
+	SHI_COMPUTER = 2,
+	SHI_FOLDER_CLOSED = 3,
+	SHI_FOLDER_OPEN = 4,
+	SHI_LOCKED = 5
 };
 
 enum
 {
-	SHI_O_NULL,
-	SHI_O_LOCKED,
-	SHI_O_PARTIAL,
-	SHI_O_COLLECTION,
-	SHI_O_COMMERCIAL,
-	SHI_O_RATING_FAKE,
-	SHI_O_RATING_AVERAGE,
-	SHI_O_RATING_GOOD,
-	SHI_O_MAX
+	SHI_O_LOCKED = 1
 };
-
-#endif // !defined(AFX_SHELLICONS_H__D01FAB3B_B7C7_46AE_B4AF_A1451B322A27__INCLUDED_)

@@ -313,7 +313,7 @@ void CSearchWnd::OnPaint()
 		nTop --;
 	}
 
-	ShellIcons.Draw( &dc, SHI_SEARCH, 16, rc.left + 4, nTop, Skin.m_crBannerBack );
+	CoolInterface.Draw( &dc, IDR_SEARCHFRAME, 16, rc.left + 4, nTop, Skin.m_crBannerBack );
 	dc.ExcludeClipRect( rc.left + 4, nTop, rc.left + 4 + 16, nTop + 16 );
 	
 	CFont* pFont = (CFont*)dc.SelectObject( &CoolInterface.m_fntNormal );

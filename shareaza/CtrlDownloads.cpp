@@ -997,34 +997,39 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
 			dc.FillSolidRect( rcCell.left, rcCell.bottom - 1, 32, 1, crLeftAligned );
 			if ( IsExpandable( pDownload ) )
 			{
-				ImageList_DrawEx( ShellIcons.GetHandle( 16 ), pDownload->m_bExpanded ? SHI_MINUS : SHI_PLUS, dc.GetSafeHdc(),
-					rcCell.left, rcCell.top, 16, 16, crLeftAligned, CLR_DEFAULT, ILD_NORMAL );
+				CoolInterface.Draw( &dc, 
+					( pDownload->m_bExpanded ? IDI_MINUS : IDI_PLUS ), 16,
+					rcCell.left, rcCell.top, crLeftAligned );
 			}
 			else
 				dc.FillSolidRect( rcCell.left, rcCell.top, 16, 16, crLeftAligned );
 			rcCell.left += 16;
-			nIconStyle = pDownload->m_bSelected ? ILD_SELECTED : ILD_NORMAL;
 
+			// Draw file icon
+			ShellIcons.Draw( &dc, ShellIcons.Get( pDownload->m_sDisplayName, 16 ), 16,
+				rcCell.left, rcCell.top, crLeftAligned, pDownload->m_bSelected );
+			
 			// Add rating overlay
 			switch ( nRating )
 			{
 			case 0:		// No reviews or no reviews with ratings
 				break;
 			case 1:		// Ratings suggest fake file
-				nIconStyle |= INDEXTOOVERLAYMASK( SHI_O_RATING_FAKE );
+				CoolInterface.Draw( &dc, IDI_RATING_FAKE, 16,
+					rcCell.left, rcCell.top, CLR_NONE, pDownload->m_bSelected );
 				break;
 			case 2:	
 			case 3:	
-			case 4:	// Ratings suggest average file
-				nIconStyle |= INDEXTOOVERLAYMASK( SHI_O_RATING_AVERAGE );
+			case 4:		// Ratings suggest average file
+				CoolInterface.Draw( &dc, IDI_RATING_AVERAGE, 16,
+					rcCell.left, rcCell.top, CLR_NONE, pDownload->m_bSelected );
 				break;
 			default:	// Ratings suggest good file
-				nIconStyle |= INDEXTOOVERLAYMASK( SHI_O_RATING_GOOD );
+				CoolInterface.Draw( &dc, IDI_RATING_GOOD, 16,
+					rcCell.left, rcCell.top, CLR_NONE, pDownload->m_bSelected );
 				break;
 			}
 
-			ImageList_DrawEx( ShellIcons.GetHandle( 16 ), ShellIcons.Get( pDownload->m_sDisplayName, 16 ), dc.GetSafeHdc(),
-				rcCell.left, rcCell.top, 16, 16, crLeftAligned, CLR_DEFAULT, nIconStyle );
 			rcCell.left += 16;
 			dc.FillSolidRect( rcCell.left, rcCell.top, 1, rcCell.Height(), crLeftAligned );
 			rcCell.left += 1;

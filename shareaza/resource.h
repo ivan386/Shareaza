@@ -29,7 +29,6 @@
 #define IDD_CONNECT_TO                  138
 #define IDR_UPLOADSFRAME                138
 #define IDD_NEW_SEARCH                  139
-#define IDB_SHELL_BASE                  139
 #define IDR_TRAFFICFRAME                139
 #define IDD_FILTER_SEARCH               140
 #define IDB_FOLDERS                     140
@@ -174,7 +173,6 @@
 #define IDD_TORRENT_TRACKERS            269
 #define IDB_SCHEDULER_HEADER            270
 #define IDB_SCHEDULER_TIMESLICES        271
-#define IDB_SHELL_BASE_RTL              272
 #define IDB_NAVBAR_IMAGE_RTL            273
 #define IDB_NAVBAR_ALPHA_RTL            274
 #define IDI_COLORS                      275
@@ -188,9 +186,25 @@
 #define IDI_HASH                        285
 #define IDI_SEARCH_ARTIST               286
 #define IDB_BOX_MARK                    287
-#define IDB_SHELL_BASE_VISTA            288
 #define IDC_COPY_VISTA                  290
 #define IDC_MOVE_VISTA                  291
+#define IDI_PLUS                        301
+#define IDI_MINUS                       302
+#define IDI_TICK                        303
+#define IDI_BUSY                        304
+#define IDI_UNSTABLE                    306
+#define IDI_FOLDER_CLOSED               311
+#define IDI_FOLDER_OPEN                 312
+#define IDI_LOCKED                      313
+#define IDI_PARTIAL                     315
+#define IDI_CHEVRON                     316
+#define IDI_STAR                        317
+#define IDI_PREVIEW                     318
+#define IDI_FAKE                        320
+#define IDI_COMMERCIAL                  321
+#define IDI_RATING_FAKE                 322
+#define IDI_RATING_AVERAGE              323
+#define IDI_RATING_GOOD                 324
 #define IDR_CHANSFRAME                  991
 #define IDR_IRCFRAME                    994
 #define IDR_USERSFRAME                  995
@@ -1843,8 +1857,8 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_3D_CONTROLS                     1
-#define _APS_NEXT_RESOURCE_VALUE        289
+#define _APS_3D_CONTROLS                1
+#define _APS_NEXT_RESOURCE_VALUE        325
 #define _APS_NEXT_COMMAND_VALUE         33230
 #define _APS_NEXT_CONTROL_VALUE         1558
 #define _APS_NEXT_SYMED_VALUE           104

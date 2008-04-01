@@ -788,20 +788,17 @@ void CMatchCtrl::DrawItem(CDC& dc, CRect& rcRow, CMatchFile* pFile, CQueryHit* p
 			nText	= nNameLen;
 
 			crLeftAligned = ( rcRow.left == rcCol.left ? crWnd : crBack ) ;
-			
-			nIconStyle = bSelected ? ILD_SELECTED : ( bGrayed ? ILD_BLEND50 : ILD_NORMAL );
-			if ( pFile->m_bDRM ) nIconStyle |= INDEXTOOVERLAYMASK( SHI_O_COMMERCIAL );
-			
+
 			if ( ! pHit && nHits > 1 )
 			{
-				ImageList_DrawEx( ShellIcons.GetHandle( 16 ),
-					pFile->m_bExpanded ? SHI_MINUS : SHI_PLUS,
-					dc.GetSafeHdc(), rcCol.left, rcCol.top, 16, 16,
-					crLeftAligned, CLR_NONE, ILD_NORMAL );
+				// Draw [+] or [-]
+				CoolInterface.Draw( &dc,
+					( pFile->m_bExpanded ? IDI_MINUS : IDI_PLUS ), 16,
+					rcCol.left, rcCol.top, crLeftAligned );
 
-				ImageList_DrawEx( ShellIcons.GetHandle( 16 ),
-					pFile->m_nShellIndex, dc.GetSafeHdc(), rcCol.left + 16, rcCol.top, 16, 16,
-					crLeftAligned, bSelected ? CLR_DEFAULT : crText, nIconStyle );
+				// Draw file icon
+				ShellIcons.Draw( &dc, pFile->m_nShellIndex, 16, rcCol.left + 16, rcCol.top,
+					crLeftAligned, bSelected );
 
 				dc.FillSolidRect( rcCol.left, rcCol.top + 16, 32, ITEM_HEIGHT - 16, crLeftAligned );
 				
@@ -813,22 +810,28 @@ void CMatchCtrl::DrawItem(CDC& dc, CRect& rcRow, CMatchFile* pFile, CQueryHit* p
 					ITEM_HEIGHT, crLeftAligned );
 				rcCol.left += ( pHit ? 24 : 16 );
 				
-				if ( ! pFile->m_bDRM )
+				// Draw file icon
+				ShellIcons.Draw( &dc, pFile->m_nShellIndex, 16, rcCol.left, rcCol.top,
+					crLeftAligned, bSelected );
+
+				// Draw partial status
+				if ( ! pFile->m_bDRM &&
+					( ( pHit && pHit->m_nPartial ) ||
+					( nHits == 1 && pFile->GetBestPartial() ) ) )
 				{
-					if ( pHit && pHit->m_nPartial )
-						nIconStyle |= INDEXTOOVERLAYMASK( SHI_O_PARTIAL );
-					else if ( nHits == 1 && pFile->GetBestPartial() )
-						nIconStyle |= INDEXTOOVERLAYMASK( SHI_O_PARTIAL );
+					CoolInterface.Draw( &dc, IDI_PARTIAL, 16,
+						rcCol.left, rcCol.top, CLR_NONE, bSelected, FALSE );
 				}
-				
-				ImageList_DrawEx( ShellIcons.GetHandle( 16 ),
-					pFile->m_nShellIndex, dc.GetSafeHdc(), rcCol.left, rcCol.top, 16, 16,
-					crLeftAligned, bSelected ? CLR_DEFAULT : crText, nIconStyle );
 
 				dc.FillSolidRect( rcCol.left, rcCol.top + 16, 16, ITEM_HEIGHT - 16, crLeftAligned );
 
 				rcCol.left += 16;
 			}
+
+			if ( pFile->m_bDRM )
+				// Draw DRM status
+				CoolInterface.Draw( &dc, IDI_COMMERCIAL, 16,
+					rcCol.left, rcCol.top, CLR_NONE, bSelected );
 
 			dc.FillSolidRect( rcCol.left, rcCol.top, 1, ITEM_HEIGHT, crLeftAligned );
 			rcCol.left += 1;
@@ -1074,9 +1077,8 @@ void CMatchCtrl::DrawStatus(CDC& dc, CRect& rcCol, CMatchFile* pFile, CQueryHit*
 	
 	if ( ( bState = pHit ? pHit->m_bBusy : pFile->m_bBusy ) != FALSE )
 	{
-		ImageList_DrawEx( ShellIcons.GetHandle( 16 ),
-			bState == TRI_TRUE ? SHI_BUSY : SHI_TICK, dc.GetSafeHdc(), nPos,
-			rcCol.top, 16, 16, crBack, crBack, bSelected ? ILD_BLEND50 : ILD_NORMAL );
+		CoolInterface.Draw( &dc, ( bState == TRI_TRUE ? IDI_BUSY : IDI_TICK ), 16,
+			nPos, rcCol.top, crBack, bSelected );
 	}
 	else
 	{
@@ -1087,9 +1089,8 @@ void CMatchCtrl::DrawStatus(CDC& dc, CRect& rcCol, CMatchFile* pFile, CQueryHit*
 	
 	if ( ( bState = pHit ? pHit->m_bPush : pFile->m_bPush ) != FALSE )
 	{
-		ImageList_DrawEx( ShellIcons.GetHandle( 16 ),
-			bState == TRI_TRUE ? SHI_FIREWALL : SHI_TICK, dc.GetSafeHdc(), nPos,
-			rcCol.top, 16, 16, crBack, crBack, bSelected ? ILD_BLEND50 : ILD_NORMAL );
+		CoolInterface.Draw( &dc, ( bState == TRI_TRUE ? IDI_FIREWALLED : IDI_TICK ), 16,
+			nPos, rcCol.top, crBack, bSelected );
 	}
 	else
 	{
@@ -1100,9 +1101,8 @@ void CMatchCtrl::DrawStatus(CDC& dc, CRect& rcCol, CMatchFile* pFile, CQueryHit*
 	
 	if ( ( bState = pHit ? pHit->m_bStable : pFile->m_bStable ) != FALSE )
 	{
-		ImageList_DrawEx( ShellIcons.GetHandle( 16 ),
-			bState == TRI_TRUE ? SHI_TICK : SHI_UNSTABLE, dc.GetSafeHdc(), nPos,
-			rcCol.top, 16, 16, crBack, crBack, bSelected ? ILD_BLEND50 : ILD_NORMAL );
+		CoolInterface.Draw( &dc, ( bState == TRI_TRUE ? IDI_TICK : IDI_UNSTABLE ), 16,
+			nPos, rcCol.top, crBack, bSelected );
 	}
 	else
 	{
@@ -1115,9 +1115,7 @@ void CMatchCtrl::DrawStatus(CDC& dc, CRect& rcCol, CMatchFile* pFile, CQueryHit*
 	{
 		if ( pHit ? pHit->m_bPreview : pFile->m_bPreview )
 		{
-			ImageList_DrawEx( ShellIcons.GetHandle( 16 ),
-				SHI_PREVIEW, dc.GetSafeHdc(), nPos,
-				rcCol.top, 16, 16, crBack, crBack, bSelected ? ILD_BLEND50 : ILD_NORMAL );
+			CoolInterface.Draw( &dc, IDI_PREVIEW, 16, nPos, rcCol.top, crBack, bSelected );
 		}
 		else
 		{
@@ -1131,9 +1129,7 @@ void CMatchCtrl::DrawStatus(CDC& dc, CRect& rcCol, CMatchFile* pFile, CQueryHit*
 	{
 		if ( pHit->m_bBrowseHost )
 		{
-			ImageList_DrawEx( ShellIcons.GetHandle( 16 ),
-				SHI_BROWSE, dc.GetSafeHdc(), nPos,
-				rcCol.top, 16, 16, crBack, crBack, bSelected ? ILD_BLEND50 : ILD_NORMAL );
+			CoolInterface.Draw( &dc, IDI_BROWSE, 16, nPos, rcCol.top, crBack, bSelected );
 		}
 		else
 		{
@@ -1147,9 +1143,8 @@ void CMatchCtrl::DrawStatus(CDC& dc, CRect& rcCol, CMatchFile* pFile, CQueryHit*
 	{
 		if ( pHit->m_bChat )
 		{
-			ImageList_DrawEx( ShellIcons.GetHandle( 16 ),
-				SHI_CHAT, dc.GetSafeHdc(), nPos,
-				rcCol.top, 16, 16, crBack, crBack, bSelected ? ILD_BLEND50 : ILD_NORMAL );
+			CoolInterface.Draw( &dc, IDR_CHATFRAME, 16,
+				nPos, rcCol.top, crBack, bSelected );
 		}
 		else
 		{

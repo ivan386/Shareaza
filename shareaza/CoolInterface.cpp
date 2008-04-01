@@ -44,8 +44,8 @@ CCoolInterface::CCoolInterface()
 	// experimental values
 	m_pNameMap.InitHashTable( 509 );
 	m_pImageMap16.InitHashTable( 347 );
-	m_pImageMap32.InitHashTable( 17 );
-	m_pImageMap48.InitHashTable( 17 );
+	m_pImageMap32.InitHashTable( 61 );
+	m_pImageMap48.InitHashTable( 61 );
 	m_pWindowIcons.InitHashTable( 61 );
 }
 
@@ -123,7 +123,7 @@ UINT CCoolInterface::NameToID(LPCTSTR pszName) const
 //////////////////////////////////////////////////////////////////////
 // CCoolInterface image management
 
-int CCoolInterface::ImageForID(UINT nID, int nImageListType)
+int CCoolInterface::ImageForID(UINT nID, int nImageListType) const
 {
 	int nImage = -1;
 	switch ( nImageListType )
@@ -657,9 +657,24 @@ BOOL CCoolInterface::Add(CSkin* pSkin, CXMLElement* pBase, HBITMAP hbmImage, COL
 	for ( POSITION pos = pBase->GetElementIterator() ; pos ; )
 	{
 		CXMLElement* pXML = pBase->GetNextElement( pos );
-		if ( ! pXML->IsNamed( _T("image") ) ) continue;
+		if ( ! pXML->IsNamed( _T("image") ) )
+		{
+			TRACE( _T("Unknown tag \"%s\" inside \"%s:%s\" in CCoolInterface::Add\r\n"),
+				pXML->GetName(), pBase->GetName(), pBase->GetAttributeValue( _T("id") ) );
+			continue;
+		}
+
 		CString strValue = pXML->GetAttributeValue( _T("index") );
-		if ( strValue.GetLength() ) _stscanf( strValue, _T("%i"), &nIndex );
+		if ( strValue.GetLength() )
+		{
+			if ( _stscanf( strValue, _T("%i"), &nIndex ) != 1 )
+			{
+				TRACE( _T("Image \"%s\" has invalid index \"%s\" in CCoolInterface::Add\r\n"),
+					pBase->GetAttributeValue( _T("id") ), strValue );
+				continue;
+			}
+		}
+
 		nIndex += nBase;
 		for ( int nName = 0 ; pszNames[ nName ] ; nName++ )
 		{
@@ -702,30 +717,73 @@ CImageList* CCoolInterface::SetImageListTo(CListCtrl& pWnd, int nImageListType)
 	return NULL;
 }
 
-BOOL CCoolInterface::Draw(CDC* pDC, int nImage, POINT pt, UINT nStyle, int nImageListType)
+BOOL CCoolInterface::Draw(CDC* pDC, int nImage, POINT pt, UINT nStyle, int nImageListType) const
 {
+	HIMAGELIST hList = NULL;
 	switch ( nImageListType )
 	{
 	case LVSIL_SMALL:
-		return m_pImages16.Draw( pDC, nImage, pt, nStyle );
+		hList = m_pImages16.GetSafeHandle();
+		break;
 	case LVSIL_NORMAL:
-		return m_pImages32.Draw( pDC, nImage, pt, nStyle );
+		hList = m_pImages32.GetSafeHandle();
+		break;
 	case LVSIL_BIG:
-		return m_pImages48.Draw( pDC, nImage, pt, nStyle );
+		hList = m_pImages48.GetSafeHandle();
+		break;
 	}
-	return FALSE;
+	return ImageList_Draw( hList, nImage, pDC->GetSafeHdc(), pt.x, pt.y, nStyle );
 }
 
-BOOL CCoolInterface::DrawEx(CDC* pDC, int nImage, POINT pt, SIZE sz, COLORREF clrBk, COLORREF clrFg, UINT nStyle, int nImageListType)
+BOOL CCoolInterface::DrawEx(CDC* pDC, int nImage, POINT pt, SIZE sz, COLORREF clrBk, COLORREF clrFg, UINT nStyle, int nImageListType) const
 {
+	HIMAGELIST hList = NULL;
 	switch ( nImageListType )
 	{
 	case LVSIL_SMALL:
-		return m_pImages16.DrawEx( pDC, nImage, pt, sz, clrBk, clrFg, nStyle );
+		hList = m_pImages16.GetSafeHandle();
+		break;
 	case LVSIL_NORMAL:
-		return m_pImages32.DrawEx( pDC, nImage, pt, sz, clrBk, clrFg, nStyle );
+		hList = m_pImages32.GetSafeHandle();
+		break;
 	case LVSIL_BIG:
-		return m_pImages48.DrawEx( pDC, nImage, pt, sz, clrBk, clrFg, nStyle );
+		hList = m_pImages48.GetSafeHandle();
+		break;
 	}
-	return FALSE;
+	return ImageList_DrawEx( hList, nImage, pDC->GetSafeHdc(),
+		pt.x, pt.y, sz.cx, sz.cy, clrBk, clrFg, nStyle );
+}
+
+BOOL CCoolInterface::Draw(CDC* pDC, UINT nID, int nSize, int nX, int nY, COLORREF crBack, BOOL bSelected, BOOL bExclude) const
+{
+	HIMAGELIST hList = NULL;
+	int nType;
+	switch ( nSize )
+	{
+	case 16:
+		hList = m_pImages16.GetSafeHandle();
+		nType = LVSIL_SMALL;
+		break;
+	case 32:
+		hList = m_pImages32.GetSafeHandle();
+		nType = LVSIL_NORMAL;
+		break;
+	case 48:
+		hList = m_pImages48.GetSafeHandle();
+		nType = LVSIL_BIG;
+		break;
+	default:
+		ASSERT( FALSE );
+		return FALSE;
+	}
+	ASSERT( hList );
+	int nImage = ImageForID( nID, nType );
+	ASSERT( nImage != -1 );
+	if ( nImage == -1 )
+		return FALSE;
+	BOOL bRet = ImageList_DrawEx( hList, nImage, pDC->GetSafeHdc(),
+		nX, nY, nSize, nSize, crBack, CLR_DEFAULT, bSelected ? ILD_SELECTED : ILD_NORMAL );
+	if ( bExclude && crBack == CLR_NONE )
+		pDC->ExcludeClipRect( nX, nY, nX + nSize, nY + nSize );
+	return bRet;
 }

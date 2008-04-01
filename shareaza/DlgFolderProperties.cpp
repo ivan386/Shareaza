@@ -229,8 +229,7 @@ void CFolderPropertiesDlg::OnPaint()
 		}
 		else
 		{
-			ImageList_DrawEx( ShellIcons.GetHandle( 48 ), SHI_FOLDER_OPEN,
-				dc.GetSafeHdc(), pt.x, pt.y, 48, 48, crBack, CLR_NONE, ILD_NORMAL );
+			CoolInterface.Draw( &dc, IDI_FOLDER_OPEN, 48, pt.x, pt.y, crBack );
 			dc.ExcludeClipRect( pt.x, pt.y, pt.x + 48, pt.y + 48 );
 		}
 	}

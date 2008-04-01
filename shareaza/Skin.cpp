@@ -1663,7 +1663,7 @@ BOOL CSkin::LoadCommandIcon(CXMLElement* pXML, const CString& strPath)
 		return FALSE;
 	}
 
-	// Is this a RTL-enabled icon? (default: "1" - yes)
+	// Is this a RTL-enabled icon? (default: "0" - no)
 	BOOL bRTL = ( pXML->GetAttributeValue( _T("rtl"), _T("0") ) == _T("1") );
 
 	// Icon types (default: "16" - 16x16 icon only)
@@ -1673,15 +1673,19 @@ BOOL CSkin::LoadCommandIcon(CXMLElement* pXML, const CString& strPath)
 	while ( ( strSize = strTypes.Tokenize( _T(","), curPos ) ).GetLength() )
 	{
 		int cx = _tstoi( strSize );
-		int nType = 0;
-		if ( cx == 16 )
-			nType = LVSIL_SMALL;
-		else if ( cx == 32 )
-			nType = LVSIL_NORMAL;
-		else if ( cx == 48 )
-			nType = LVSIL_BIG;
-		else
+		int nType;
+		switch ( cx )
 		{
+		case 16:
+			nType = LVSIL_SMALL;
+			break;
+		case 32:
+			nType = LVSIL_NORMAL;
+			break;
+		case 48:
+			nType = LVSIL_BIG;
+			break;
+		default:
 			TRACE( _T("Icon \"%s\" has invalid size \"%s\" in CSkin::LoadCommandIcon\r\n"),
 				strFile, strSize );
 			return FALSE;
@@ -1701,7 +1705,7 @@ BOOL CSkin::LoadCommandIcon(CXMLElement* pXML, const CString& strPath)
 			UINT nIconID = LookupCommandID( pXML, L"res" );
 			if ( nIconID &&
 				_stscanf( strFile.Left( nPos ), _T("%Iu"), &hInstance ) == 1 )
-				hIcon = (HICON)LoadImage( hInstance, MAKEINTRESOURCE(nIconID),
+				hIcon = (HICON)LoadImage( hInstance, MAKEINTRESOURCE( nIconID ),
 					IMAGE_ICON, cx, cx, 0 );
 		}
 		if ( hIcon )

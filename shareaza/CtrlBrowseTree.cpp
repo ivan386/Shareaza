@@ -1104,24 +1104,23 @@ void CBrowseTreeItem::Paint(CDC& dc, CRect& rc, BOOL bTarget, COLORREF crBack) c
 
 	if ( m_nCount )
 	{
-		ImageList_DrawEx( ShellIcons.GetHandle( 16 ),
-			m_bExpanded ? SHI_MINUS : SHI_PLUS,
-			dc.GetSafeHdc(), rc.left, rc.top, 16, 16,
-			crBack, CLR_NONE, ILD_NORMAL );
+		CoolInterface.Draw( &dc, ( m_bExpanded ? IDI_MINUS : IDI_PLUS ), 16,
+			rc.left, rc.top, crBack );
 	}
 	else
 	{
 		dc.FillSolidRect( rc.left, rc.top, 16, 16, crBack );
 	}
 
-	int nImage = ( m_bExpanded && m_nCount ) ? SHI_FOLDER_OPEN : SHI_FOLDER_CLOSED;
-	if ( m_nIcon16 >= 0 ) nImage = m_nIcon16;
-
-	UINT nIconStyle = ( m_bSelected || bTarget ) ? ILD_SELECTED : ILD_NORMAL;
-
-	ImageList_DrawEx( ShellIcons.GetHandle( 16 ), nImage,
-		dc.GetSafeHdc(), rc.left + 16, rc.top, 16, 16,
-		crBack, CLR_DEFAULT, nIconStyle );
+	if ( m_nIcon16 >= 0 )
+		// Draw custom icon
+		ShellIcons.Draw( &dc, m_nIcon16, 16,
+			rc.left + 16, rc.top, crBack, ( m_bSelected || bTarget ) );
+	else
+		// Draw standard icon
+		CoolInterface.Draw( &dc,
+			( ( m_bExpanded && m_nCount ) ? IDI_FOLDER_OPEN : IDI_FOLDER_CLOSED ),
+			16, rc.left + 16, rc.top, crBack, ( m_bSelected || bTarget ) );
 
 	crBack = ( m_bSelected || bTarget ) ? CoolInterface.m_crHighlight : crBack;
 	COLORREF crText = ( m_bSelected || bTarget ) ? CoolInterface.m_crHiText : CoolInterface.m_crText;

@@ -784,6 +784,7 @@ void CMatchTipCtrl::OnPaint()
 	}
 
 	ShellIcons.Draw( &dc, m_nIcon, 32, pt.x, pt.y, m_crBack );
+	dc.ExcludeClipRect( pt.x, pt.y, pt.x + 32, pt.y + 32 );
 
 	if ( m_nRating > 1 )
 	{
@@ -792,7 +793,8 @@ void CMatchTipCtrl::OnPaint()
 		for ( int nRating = m_nRating - 1 ; nRating ; nRating-- )
 		{
 			ptStar.x -= 16;
-			ShellIcons.Draw( &dc, SHI_STAR, 16, ptStar.x, ptStar.y, m_crBack );
+			CoolInterface.Draw( &dc, IDI_STAR, 16, ptStar.x, ptStar.y, m_crBack );
+			dc.ExcludeClipRect( ptStar.x, ptStar.y, ptStar.x + 16, ptStar.y + 16 );
 		}
 	}
 
@@ -871,7 +873,8 @@ void CMatchTipCtrl::OnPaint()
 		//Source busy warning
 		if (m_sBusy.GetLength())
 		{
-			ShellIcons.Draw( &dc, SHI_BUSY, TIP_ICONHEIGHT, pt.x, pt.y, m_crBack );
+			CoolInterface.Draw( &dc, IDI_BUSY, 16, pt.x, pt.y, m_crBack );
+			dc.ExcludeClipRect( pt.x, pt.y, pt.x + 16, pt.y + 16 );
 
 			CPoint ptTextWithIcon = pt;
 			ptTextWithIcon.x += 20;
@@ -904,7 +907,8 @@ void CMatchTipCtrl::OnPaint()
 		//Source firewalled warning
 		if (m_sPush.GetLength())
 		{
-			ShellIcons.Draw( &dc, SHI_FIREWALL, TIP_ICONHEIGHT, pt.x, pt.y, m_crBack );
+			CoolInterface.Draw( &dc, IDI_FIREWALLED, 16, pt.x, pt.y, m_crBack );
+			dc.ExcludeClipRect( pt.x, pt.y, pt.x + 16, pt.y + 16 );
 
 			CPoint ptTextWithIcon = pt;
 			ptTextWithIcon.x += 20;
@@ -917,7 +921,8 @@ void CMatchTipCtrl::OnPaint()
 		//Source unstable warning
 		if (m_sUnstable.GetLength())
 		{
-			ShellIcons.Draw( &dc, SHI_UNSTABLE, TIP_ICONHEIGHT, pt.x, pt.y, m_crBack );
+			CoolInterface.Draw( &dc, IDI_UNSTABLE, 16, pt.x, pt.y, m_crBack );
+			dc.ExcludeClipRect( pt.x, pt.y, pt.x + 16, pt.y + 16 );
 
 			CPoint ptTextWithIcon = pt;
 			ptTextWithIcon.x += 20;

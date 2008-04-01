@@ -175,7 +175,7 @@ public:
 	void		Clear();
 	void		NameCommand(UINT nID, LPCTSTR pszName);
 	UINT		NameToID(LPCTSTR pszName) const;
-	int			ImageForID(UINT nID, int nImageListType = LVSIL_SMALL);
+	int			ImageForID(UINT nID, int nImageListType = LVSIL_SMALL) const;
 	void		AddIcon(UINT nID, HICON hIcon, int nImageListType = LVSIL_SMALL);
 	void		CopyIcon(UINT nFromID, UINT nToID, int nImageListType = LVSIL_SMALL);
 	HICON		ExtractIcon(UINT nID, BOOL bMirrored, int nImageListType = LVSIL_SMALL);
@@ -188,8 +188,9 @@ public:
 	int			GetImageCount(int nImageListType = LVSIL_SMALL);
 	BOOL		Add(CSkin* pSkin, CXMLElement* pBase, HBITMAP hbmImage, COLORREF crMask, int nImageListType = LVSIL_SMALL);
 	CImageList*	SetImageListTo(CListCtrl& pWnd, int nImageListType = LVSIL_SMALL);
-	BOOL		Draw(CDC* pDC, int nImage, POINT pt, UINT nStyle, int nImageListType = LVSIL_SMALL);
-	BOOL		DrawEx(CDC* pDC, int nImage, POINT pt, SIZE sz, COLORREF clrBk, COLORREF clrFg, UINT nStyle, int nImageListType = LVSIL_SMALL);
+	BOOL		Draw(CDC* pDC, int nImage, POINT pt, UINT nStyle = ILD_NORMAL, int nImageListType = LVSIL_SMALL) const;
+	BOOL		DrawEx(CDC* pDC, int nImage, POINT pt, SIZE sz = CSize( 16, 16 ), COLORREF clrBk = CLR_NONE, COLORREF clrFg = CLR_DEFAULT, UINT nStyle = ILD_NORMAL, int nImageListType = LVSIL_SMALL) const;
+	BOOL		Draw(CDC* pDC, UINT nID, int nSize, int nX, int nY, COLORREF crBack = CLR_NONE, BOOL bSelected = FALSE, BOOL bExclude = TRUE) const;
 	CDC*		GetBuffer(CDC& dcScreen, CSize& szItem);
 	BOOL		DrawWatermark(CDC* pDC, CRect* pRect, CBitmap* pMark, int nOffX = 0, int nOffY = 0);
 	void		CreateFonts(LPCTSTR pszFace = NULL, int nSize = 0);

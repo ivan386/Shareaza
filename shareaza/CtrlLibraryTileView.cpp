@@ -915,20 +915,21 @@ void CLibraryTileItem::Paint(CDC* pDC, const CRect& rcBlock, CDC* /*pMemDC*/)
 {
 	CRect rc( &rcBlock );
 
-	UINT nStyle = 0;
-
-	if ( m_bSelected ) nStyle |= ILD_SELECTED;
-	if ( m_bCollection ) nStyle |= INDEXTOOVERLAYMASK(SHI_O_COLLECTION);
-
 	if ( m_nIcon48 >= 0 )
 	{
-		ImageList_DrawEx( ShellIcons.GetHandle( 48 ), m_nIcon48, *pDC,
-			rc.left + 5, rc.top + 4, 48, 48, CLR_NONE, CLR_DEFAULT, nStyle );
+		ShellIcons.Draw( pDC, m_nIcon48, 48,
+			rc.left + 5, rc.top + 4, CLR_NONE, m_bSelected );
+		if ( m_bCollection )
+			CoolInterface.Draw( pDC, IDI_COLLECTION_MASK, 16,
+				rc.left + 5 , rc.top + 4, CLR_NONE, m_bSelected );
 	}
 	else if ( m_nIcon32 >= 0 )
 	{
-		ImageList_DrawEx( ShellIcons.GetHandle( 32 ), m_nIcon32, *pDC,
-			rc.left + 5 + 8, rc.top + 4 + 8, 32, 32, CLR_NONE, CLR_DEFAULT, nStyle );
+		ShellIcons.Draw( pDC, m_nIcon32, 32,
+			rc.left + 5 + 8, rc.top + 4 + 8, CLR_NONE, m_bSelected );
+		if ( m_bCollection )
+			CoolInterface.Draw( pDC, IDI_COLLECTION_MASK, 16,
+				rc.left + 5 + 8, rc.top + 4 + 8, CLR_NONE, m_bSelected );
 	}
 
 	rc.left += 48 + 5;

@@ -29,7 +29,6 @@
 #include "Registry.h"
 
 #include "Skin.h"
-#include "ShellIcons.h"
 #include "CtrlMediaFrame.h"
 #include "DlgSettingsManager.h"
 #include "DlgMediaVis.h"

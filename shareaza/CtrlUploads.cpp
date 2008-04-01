@@ -818,8 +818,8 @@ void CUploadsCtrl::PaintQueue(CDC& dc, const CRect& rcRow, CUploadQueue* pQueue,
 		{
 		case UPLOAD_COLUMN_TITLE:
 			dc.FillSolidRect( rcCell.left, rcCell.bottom - 1, 32, 1, crLeftAligned );
-			ImageList_DrawEx( ShellIcons.GetHandle( 16 ), pQueue->m_bExpanded ? SHI_MINUS : SHI_PLUS, dc.GetSafeHdc(),
-					rcCell.left, rcCell.top, 16, 16, crLeftAligned, CLR_DEFAULT, ILD_NORMAL );
+			CoolInterface.Draw( &dc, pQueue->m_bExpanded ? IDI_MINUS : IDI_PLUS, 16,
+					rcCell.left, rcCell.top, crLeftAligned );
 			rcCell.left += 16;
 			if ( pQueue == UploadQueues.m_pTorrentQueue )
 			{
@@ -838,8 +838,9 @@ void CUploadsCtrl::PaintQueue(CDC& dc, const CRect& rcRow, CUploadQueue* pQueue,
 			}
 			else
 			{
-				ImageList_DrawEx( ShellIcons.GetHandle( 16 ), pQueue->m_bExpanded ? SHI_FOLDER_OPEN : SHI_FOLDER_CLOSED, dc.GetSafeHdc(),
-						rcCell.left, rcCell.top, 16, 16, crLeftAligned, CLR_DEFAULT, pQueue->m_bSelected ? ILD_SELECTED : ILD_NORMAL );
+				CoolInterface.Draw( &dc,
+					pQueue->m_bExpanded ? IDI_FOLDER_OPEN : IDI_FOLDER_CLOSED, 16,
+					rcCell.left, rcCell.top, crLeftAligned, pQueue->m_bSelected );
 			}
 			rcCell.left += 16;
 			dc.FillSolidRect( rcCell.left, rcCell.top, 1, rcCell.Height(), crLeftAligned );
