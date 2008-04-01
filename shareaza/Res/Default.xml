@@ -2210,7 +2210,7 @@
 			<anchor name="_ID_TAB_MEDIA"			rect="178,1,84,38"/>
 			<anchor name="_ID_TAB_SEARCH"			rect="264,1,90,38"/>
 			<anchor name="_ID_TAB_TRANSFERS"		rect="356,1,106,38"/>
-			<anchor name="_ID_TAB_IRC"				rect="464,1,78,38"/>
+			<anchor name="_ID_TAB_IRC"				rect="464,1,80,38"/>
 		</anchors>
 		<parts>
 			<part name="_ID_TAB_HOME.Up"			rect="0,0,80,38"/>
@@ -2244,7 +2244,7 @@
 		<image type="alpha" language="en" res="246"/>
 		<target window="CMainTabBarCtrl"/>
 		<anchors>
-			<anchor name="Background"			rect="0,0,658,44"/>
+			<anchor name="Background"			rect="0,0,654,44"/>
 			<anchor name="_ID_TAB_HOME"			rect="4,1,80,38"/>
 			<anchor name="_ID_TAB_LIBRARY"		rect="86,1,90,38"/>
 			<anchor name="_ID_TAB_MEDIA"		rect="178,1,84,38"/>
