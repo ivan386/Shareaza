@@ -340,9 +340,9 @@
 		<button id="ID_NEIGHBOURS_CHAT" text="Chat to User"/>
 		<rightAlign/>
 		<button id="ID_NETWORK_G2" text="Gnutella2"/>
-		<button id="ID_NETWORK_ED2K" text="eDonkey"/>
 		<button id="ID_NETWORK_G1" text="Gnutella1"/>
-		<separator/>
+    <button id="ID_NETWORK_ED2K" text="eDonkey"/>
+    <separator/>
 		<button id="ID_NEIGHBOURS_SETTINGS" text="Settings"/>
 	</toolbar>
 	<toolbar name="CNeighboursWnd">
@@ -354,9 +354,9 @@
 		<button id="ID_SECURITY_BAN" text="Ban Host"/>
 		<rightAlign/>
 		<button id="ID_NETWORK_G2" text="Gnutella2"/>
-		<button id="ID_NETWORK_ED2K" text="eDonkey"/>
 		<button id="ID_NETWORK_G1" text="Gnutella1"/>
-		<separator/>
+    <button id="ID_NETWORK_ED2K" text="eDonkey"/>
+    <separator/>
 		<button id="ID_NEIGHBOURS_SETTINGS" text="Settings"/>
 	</toolbar>
 	<!-- HIT MONITOR WINDOW -->
@@ -453,9 +453,9 @@
 			<separator/>
 			<menu text="Choose _Networks">
 				<item id="ID_NETWORK_G2" text="Connect to _Gnutella2"/>
-				<item id="ID_NETWORK_ED2K" text="Connect to _eDonkey"/>
 				<item id="ID_NETWORK_G1" text="Connect to Gnutella_1"/>
-			</menu>
+        <item id="ID_NETWORK_ED2K" text="Connect to _eDonkey"/>
+      </menu>
 			<separator/>
 			<item id="ID_NETWORK_AUTO_CLOSE" text="Exit _After Transfers"/>
 			<item id="ID_NETWORK_EXIT" text="E_xit"/>
@@ -526,9 +526,9 @@
 			<separator/>
 			<menu text="Choose _Networks">
 				<item id="ID_NETWORK_G2" text="Connect to _Gnutella2"/>
-				<item id="ID_NETWORK_ED2K" text="Connect to _eDonkey"/>
 				<item id="ID_NETWORK_G1" text="Connect to Gnutella_1"/>
-			</menu>
+        <item id="ID_NETWORK_ED2K" text="Connect to _eDonkey"/>
+      </menu>
 			<separator/>
 			<item id="ID_NETWORK_CONNECT_TO" text="Connect _To..." shortcut="Ctrl+T"/>
 			<item id="ID_NETWORK_BROWSE_TO" text="_Browse Host..."/>
@@ -630,9 +630,9 @@
 			<separator/>
 			<menu text="Choose _Networks">
 				<item id="ID_NETWORK_G2" text="Connect to _Gnutella2"/>
-				<item id="ID_NETWORK_ED2K" text="Connect to _eDonkey"/>
 				<item id="ID_NETWORK_G1" text="Connect to Gnutella_1"/>
-			</menu>
+        <item id="ID_NETWORK_ED2K" text="Connect to _eDonkey"/>
+      </menu>
 			<separator/>
 			<item id="ID_NETWORK_AUTO_CLOSE" text="Close _After Transfers"/>
 			<item id="ID_NETWORK_EXIT" text="E_xit"/>
@@ -1412,9 +1412,9 @@
 			<item id="ID_NETWORK_DISCONNECT" text="_Disconnect"/>
 			<separator/>
 			<item id="ID_NETWORK_G2" text="_Gnutella2"/>
-			<item id="ID_NETWORK_ED2K" text="_eDonkey"/>
 			<item id="ID_NETWORK_G1" text="Gnutella_1"/>
-		</menu>
+      <item id="ID_NETWORK_ED2K" text="_eDonkey"/>
+    </menu>
 		<menu text="_Monitor">
 			<item id="ID_NEIGHBOURS_VIEW_ALL" text="View _All Traffic"/>
 			<item id="ID_NEIGHBOURS_VIEW_INCOMING" text="View _Incoming Traffic"/>
@@ -1715,22 +1715,23 @@
 		<text group="24" align="middle" id="G2Hubs">%i hubs</text>
 		<text group="25" align="middle" id="G2Leaves">%i leaves</text>
 		<newline group="20" gap="2"/>
+    <icon group="10" command="ID_NETWORK_G1"/><gap group="10" size="4"/>
+    <text group="10" align="middle" format="b">Gnutella1: </text>
+    <text group="11" align="middle">Disconnected</text>
+    <text group="12" align="middle">Connecting...</text>
+    <text group="13" align="middle">Connected</text>
+    <newline group="10" gap="2"/>
 		<icon group="30" command="ID_NETWORK_ED2K"/><gap group="30" size="4"/>
 		<text group="30" align="middle" format="b">eDonkey: </text>
 		<text group="31" align="middle">Disconnected</text>
 		<text group="32" align="middle">Connecting...</text>
 		<text group="33" align="middle">Connected</text>
 		<newline group="30" gap="2"/>
-		<icon group="10" command="ID_NETWORK_G1"/><gap group="10" size="4"/>
-		<text group="10" align="middle" format="b">Gnutella1: </text>
-		<text group="11" align="middle">Disconnected</text>
-		<text group="12" align="middle">Connecting...</text>
-		<text group="13" align="middle">Connected</text>
-		<newline group="10" gap="2"/>
 		<group id="2">
 			<para align="center">
-				<newline gap="6"/>
+				<newline gap="4"/>
 				<text>You have been connected for </text>
+        <newline gap="0"/>
 				<text id="ConnectedHours" format="b">%i </text>
 				<text>hours and </text>
 				<text id="ConnectedMinutes" format="b">%i </text>
@@ -2203,7 +2204,7 @@
 		<image type="alpha" language="en" res="246"/>
 		<target window="CMainTabBarCtrl.Basic"/>
 		<anchors>
-			<anchor name="Background"				rect="0,0,548,44"/>
+			<anchor name="Background"				rect="0,0,550,44"/>
 			<anchor name="_ID_TAB_HOME"				rect="4,1,80,38"/>
 			<anchor name="_ID_TAB_LIBRARY"			rect="86,1,90,38"/>
 			<anchor name="_ID_TAB_MEDIA"			rect="178,1,84,38"/>
@@ -2232,10 +2233,10 @@
 			<part name="_ID_TAB_TRANSFERS.Checked"	rect="344,38,106,38"/>
 			<part name="_ID_TAB_TRANSFERS.Hover"	rect="344,38,106,38"/>
 			<part name="_ID_TAB_TRANSFERS.Down"		rect="344,76,106,38"/>
-			<part name="_ID_TAB_IRC.Up"				rect="552,0,78,38"/>
-			<part name="_ID_TAB_IRC.Checked"		rect="552,38,78,38"/>
-			<part name="_ID_TAB_IRC.Hover"			rect="552,38,78,38"/>
-			<part name="_ID_TAB_IRC.Down"			rect="552,76,78,38"/>
+			<part name="_ID_TAB_IRC.Up"			rect="552,0,80,38"/>
+			<part name="_ID_TAB_IRC.Checked"		rect="552,38,80,38"/>
+			<part name="_ID_TAB_IRC.Hover"			rect="552,38,80,38"/>
+			<part name="_ID_TAB_IRC.Down"			rect="552,76,80,38"/>
 		</parts>
 	</windowSkin>
 	<windowSkin>
@@ -2243,14 +2244,14 @@
 		<image type="alpha" language="en" res="246"/>
 		<target window="CMainTabBarCtrl"/>
 		<anchors>
-			<anchor name="Background"			rect="0,0,652,44"/>
+			<anchor name="Background"			rect="0,0,658,44"/>
 			<anchor name="_ID_TAB_HOME"			rect="4,1,80,38"/>
 			<anchor name="_ID_TAB_LIBRARY"		rect="86,1,90,38"/>
 			<anchor name="_ID_TAB_MEDIA"		rect="178,1,84,38"/>
 			<anchor name="_ID_TAB_SEARCH"		rect="264,1,90,38"/>
 			<anchor name="_ID_TAB_TRANSFERS"	rect="356,1,106,38"/>
 			<anchor name="_ID_TAB_NETWORK"		rect="464,1,102,38"/>
-			<anchor name="_ID_TAB_IRC"			rect="568,1,78,38"/>
+			<anchor name="_ID_TAB_IRC"			rect="568,1,80,38"/>
 		</anchors>
 		<parts>
 			<part name="_ID_TAB_HOME.Up"			rect="0,0,80,38"/>
@@ -2277,10 +2278,10 @@
 			<part name="_ID_TAB_NETWORK.Checked"	rect="450,38,102,38"/>
 			<part name="_ID_TAB_NETWORK.Hover"		rect="450,38,102,38"/>
 			<part name="_ID_TAB_NETWORK.Down"		rect="450,76,102,38"/>
-			<part name="_ID_TAB_IRC.Up"				rect="552,0,78,38"/>
-			<part name="_ID_TAB_IRC.Checked"		rect="552,38,78,38"/>
-			<part name="_ID_TAB_IRC.Hover"			rect="552,38,78,38"/>
-			<part name="_ID_TAB_IRC.Down"			rect="552,76,78,38"/>
+			<part name="_ID_TAB_IRC.Up"			rect="552,0,80,38"/>
+			<part name="_ID_TAB_IRC.Checked"		rect="552,38,80,38"/>
+			<part name="_ID_TAB_IRC.Hover"			rect="552,38,80,38"/>
+			<part name="_ID_TAB_IRC.Down"			rect="552,76,80,38"/>
 		</parts>
 	</windowSkin>
 </windowSkins>
