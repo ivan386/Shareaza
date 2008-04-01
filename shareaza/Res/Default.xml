@@ -2556,6 +2556,32 @@
 	<icon res="IDI_ICON" id="ID_TRAY_OPEN"/>
 	<icon res="IDI_DOWNLOAD_MONITOR" id="ID_DOWNLOADS_MONITOR"/>
 	<icon res="IDI_ICON" id="ID_HELP_HOMEPAGE"/>
+	<!-- cache icons -->
+	<icon res="IDI_FILE" id="IDI_FILE" types="16,32,48" rtl="0"/>
+	<icon res="IDI_PLUS" id="IDI_PLUS" types="16" rtl="0"/>
+	<icon res="IDI_MINUS" id="IDI_MINUS" types="16" rtl="0"/>
+	<icon res="IDI_TICK" id="IDI_TICK" types="16" rtl="0"/>
+	<icon res="IDI_BUSY" id="IDI_BUSY" types="16" rtl="0"/>
+	<icon res="IDI_FIREWALLED" id="IDI_FIREWALLED" types="16,32,48" rtl="0"/>
+	<icon res="IDI_UNSTABLE" id="IDI_UNSTABLE" types="16" rtl="0"/>
+	<icon res="IDI_COMPUTER" id="IDI_COMPUTER" types="16,32,48" rtl="0"/>
+	<icon res="IDI_EXECUTABLE" id="IDI_EXECUTABLE" types="16,32,48" rtl="0"/>
+	<icon res="WINDOW_CHAT" id="WINDOW_CHAT" types="16,32,48" rtl="0"/>
+	<icon res="IDI_BROWSE" id="IDI_BROWSE" types="16,32,48" rtl="0"/>
+	<icon res="IDI_FOLDER_CLOSED" id="IDI_FOLDER_CLOSED" types="16,32,48" rtl="0"/>
+	<icon res="IDI_FOLDER_OPEN" id="IDI_FOLDER_OPEN" types="16,32,48" rtl="0"/>
+	<icon res="IDI_LOCKED" id="IDI_LOCKED" types="16" rtl="0"/>
+	<icon res="WINDOW_SEARCH" id="WINDOW_SEARCH" types="16,32,48" rtl="0"/>
+	<icon res="IDI_PARTIAL" id="IDI_PARTIAL" types="16" rtl="0"/>
+	<icon res="IDI_CHEVRON" id="IDI_CHEVRON" types="16" rtl="0"/>
+	<icon res="IDI_STAR" id="IDI_STAR" types="16" rtl="0"/>
+	<icon res="IDI_PREVIEW" id="IDI_PREVIEW" types="16" rtl="0"/>
+	<icon res="IDI_COLLECTION_MASK" id="IDI_COLLECTION_MASK" types="16,32,48" rtl="0"/>
+	<icon res="IDI_FAKE" id="IDI_FAKE" types="16" rtl="0"/>
+	<icon res="IDI_COMMERCIAL" id="IDI_COMMERCIAL" types="16" rtl="0"/>
+	<icon res="IDI_RATING_FAKE" id="IDI_RATING_FAKE" types="16" rtl="0"/>
+	<icon res="IDI_RATING_AVERAGE" id="IDI_RATING_AVERAGE" types="16" rtl="0"/>
+	<icon res="IDI_RATING_GOOD" id="IDI_RATING_GOOD" types="16" rtl="0"/>
 </commandImages>
 
 <!-- Tips displayed when mouse is moved over controls in the dialogs -->
