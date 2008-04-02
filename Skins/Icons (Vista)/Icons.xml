@@ -20,6 +20,32 @@
  <icon id="136" path="DownloadsVista.ico" types="32" rtl="0"/>
  <icon id="130" path="ConnectVista.ico" types="32" rtl="0"/>
  <icon id="252" path="FirewalledVista.ico" types="16,32" rtl="0"/>
+
+<bitmap path="ShellBaseVista.bmp" mask="00FF00">
+ <image id="IDI_FILE"/>
+ <image id="IDI_PLUS"/>
+ <image id="IDI_MINUS"/>
+ <image id="IDI_TICK"/>
+ <image id="IDI_BUSY"/>
+ <image />
+ <image id="IDI_UNSTABLE"/>
+ <image id="IDI_EXECUTABLE"/>
+ <image id="IDI_COMPUTER"/>
+ <image id="IDI_BROWSE"/>
+ <image id="IDI_FOLDER_CLOSED"/>
+ <image id="IDI_FOLDER_OPEN"/>
+ <image id="IDI_LOCKED"/>
+ <image id="IDI_PREVIEW"/>
+ <image id="IDI_STAR"/>
+ <image id="IDI_COLLECTION_MASK"/>
+ <image id="IDI_FAKE"/>
+ <image id="IDI_RATING_FAKE"/>
+ <image id="IDI_RATING_AVERAGE"/>
+ <image id="IDI_RATING_GOOD"/>
+ <image id="IDI_PARTIAL"/>
+ <image id="IDI_CHEVRON"/>
+ <!--image id="IDI_COMMERCIAL"-->
+</bitmap>
 </commandImages>
 </skin>
 
