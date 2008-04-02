@@ -330,7 +330,7 @@ BOOL CMainWnd::PreCreateWindow(CREATESTRUCT& cs)
 	wndcls.style			= CS_DBLCLKS | CS_OWNDC;
 	wndcls.lpfnWndProc		= AfxWndProc;
 	wndcls.hInstance		= AfxGetInstanceHandle();
-	wndcls.hIcon			= theApp.LoadIcon( IDR_MAINFRAME );
+	wndcls.hIcon			= CoolInterface.ExtractIcon( IDR_MAINFRAME, FALSE, LVSIL_NORMAL );
 	wndcls.hCursor			= theApp.LoadStandardCursor( IDC_ARROW );
 	wndcls.hbrBackground	= NULL;
 	wndcls.lpszMenuName		= NULL;
@@ -354,11 +354,12 @@ int CMainWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	// Tray
 
-	m_pTray.hWnd				= GetSafeHwnd();
+	m_pTray.hWnd = GetSafeHwnd();
+	m_pTray.hIcon = CoolInterface.ExtractIcon( IDR_MAINFRAME, FALSE );
 
 	// Icon
 	
-	SetIcon( AfxGetApp()->LoadIcon( IDI_SMALL ), FALSE );
+	SetIcon( CoolInterface.ExtractIcon( IDR_MAINFRAME, FALSE ), FALSE );
 	
 	// Status Bar
 	
@@ -807,11 +808,6 @@ void CMainWnd::OnTimer(UINT_PTR /*nIDEvent*/)
 		m_pTray.uID					= 0;
 		m_pTray.uFlags				= NIF_ICON | NIF_MESSAGE | NIF_TIP;
 		m_pTray.uCallbackMessage	= WM_TRAY;
-		
-		if ( CoolInterface.IsNewWindows() )
-			m_pTray.hIcon = AfxGetApp()->LoadIcon( IDI_SMALL );
-		else
-			m_pTray.hIcon = AfxGetApp()->LoadIcon( IDI_ICON );
 		
 		_tcscpy( m_pTray.szTip, Settings.SmartAgent() );
 		m_bTrayIcon = Shell_NotifyIcon( NIM_ADD, &m_pTray );

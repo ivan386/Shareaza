@@ -162,8 +162,6 @@
 #define IDI_FIREWALLED                  252
 #define IDR_HOME_HEADER_1               257
 #define IDR_HOME_HEADER_2               258
-#define IDI_SMALL                       260
-#define IDI_ICON                        261
 #define IDB_PANEL_MARK                  262
 #define IDR_BITTORRENT_ICON             263
 #define IDI_MAIL                        265

@@ -2553,10 +2553,10 @@
 		<image id="ID_IRC_VERSION"/>
 		<image id="ID_IRC_UNBAN"/>
 	</bitmap>
-	<icon res="IDI_ICON" id="ID_TRAY_OPEN"/>
-	<icon res="IDI_DOWNLOAD_MONITOR" id="ID_DOWNLOADS_MONITOR"/>
-	<icon res="IDI_ICON" id="ID_HELP_HOMEPAGE"/>
-	<!-- cache icons -->
+	<icon res="WINDOW_MAIN" id="WINDOW_MAIN" types="16,32,48" rtl="0"/>
+	<icon res="WINDOW_MAIN" id="ID_TRAY_OPEN" types="16" rtl="0"/>
+	<icon res="WINDOW_MAIN" id="ID_HELP_HOMEPAGE" types="16" rtl="0"/>
+	<icon res="IDI_DOWNLOAD_MONITOR" id="ID_DOWNLOADS_MONITOR" types="16" rtl="0"/>
 	<icon res="IDI_FILE" id="IDI_FILE" types="16,32,48" rtl="0"/>
 	<icon res="IDI_PLUS" id="IDI_PLUS" types="16" rtl="0"/>
 	<icon res="IDI_MINUS" id="IDI_MINUS" types="16" rtl="0"/>

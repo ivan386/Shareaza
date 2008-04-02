@@ -610,7 +610,7 @@ void CDownloadMonitorDlg::OnSysCommand(UINT nID, LPARAM lParam)
 			m_pTray.uID					= 0;
 			m_pTray.uFlags				= NIF_ICON | NIF_MESSAGE | NIF_TIP;
 			m_pTray.uCallbackMessage	= WM_TRAY;
-			m_pTray.hIcon				= theApp.LoadIcon( IDI_DOWNLOAD_MONITOR );
+			m_pTray.hIcon				= CoolInterface.ExtractIcon( IDI_DOWNLOAD_MONITOR, FALSE );
 			_tcscpy( m_pTray.szTip, _T("Shareaza Download") );
 			Shell_NotifyIcon( NIM_ADD, &m_pTray );
 			ShowWindow( SW_HIDE );
