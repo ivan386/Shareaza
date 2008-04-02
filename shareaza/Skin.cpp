@@ -1543,7 +1543,7 @@ BOOL CSkin::LoadFonts(CXMLElement* pBase, const CString& strPath)
 
 				if ( strWeight.CompareNoCase( _T("bold") ) == 0 )
 					strWeight = _T("700");
-				else
+				else if ( strWeight.IsEmpty() )
 					strWeight = _T("400");
 
 				int nFontSize = theApp.m_nDefaultFontSize, nFontWeight = FW_NORMAL;
