@@ -179,6 +179,7 @@ void CTransfers::OnRun()
 
 	Downloads.m_nTransfers = Downloads.m_nBandwidth = 0;
 	Uploads.m_nCount = Uploads.m_nBandwidth = 0;
+	m_hThread = NULL;
 }
 
 void CTransfers::OnRunTransfers()
