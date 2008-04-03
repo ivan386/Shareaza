@@ -773,7 +773,6 @@ void CMatchCtrl::DrawItem(CDC& dc, CRect& rcRow, CMatchFile* pFile, CQueryHit* p
 		rcCol.bottom = rcRow.bottom;
 		
 		LPCTSTR pszText	= _T("");
-		UINT nIconStyle = 0;
 		int nText		= -1;
 		int nPosition;
 		
