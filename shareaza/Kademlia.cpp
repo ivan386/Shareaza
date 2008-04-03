@@ -182,7 +182,7 @@ BOOL CKademlia::OnPacket(SOCKADDR_IN* pHost, CEDPacket* pPacket)
 	return FALSE;
 }
 
-BOOL CKademlia::OnPacket_KADEMLIA_BOOTSTRAP_RES(SOCKADDR_IN* pHost, CEDPacket* pPacket)
+BOOL CKademlia::OnPacket_KADEMLIA_BOOTSTRAP_RES(SOCKADDR_IN* /*pHost*/, CEDPacket* pPacket)
 {
 	Hashes::Guid oGUID;
 	IN_ADDR pAddress;
