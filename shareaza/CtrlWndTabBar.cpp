@@ -1,7 +1,7 @@
 ﻿//
 // CtrlWndTabBar.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -747,7 +747,7 @@ void CWndTabBar::TabItem::Paint(CWndTabBar* pBar, CDC* pDC, CRect* pRect, BOOL b
 
 	if ( ! Skin.m_bBordersEnabled )
 	{
-		if ( ! Skin.GetWatermark( _T("CWndTabBar") ) )
+		if ( ! bTransparent )
 			pDC->FillSolidRect( rc , CoolInterface.m_crMidtone );
 		rc.DeflateRect(0,2);
 	}
