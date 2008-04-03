@@ -1107,13 +1107,17 @@ CNeighbour* CHostCacheHost::ConnectTo(BOOL bAutomatic)
 		return Neighbours.ConnectTo( &m_pAddress, m_nPort, m_nProtocol, bAutomatic );
 	case PROTOCOL_KAD:
 		{
-			SOCKADDR_IN pHost = {};
+			SOCKADDR_IN pHost = { 0 };
 			pHost.sin_family = AF_INET;
 			pHost.sin_addr.s_addr = m_pAddress.s_addr;
 			pHost.sin_port = htons( m_nUDPPort );
 			Kademlia.Bootstrap( &pHost );
-			break;
 		}
+		break;
+	default:
+		theApp.Message( MSG_ERROR,
+			_T("ERROR: CHostCacheHost::ConnectTo() unhandled protocol in switch") );
+		ASSERT( FALSE );
 	}
 	return NULL;
 }
