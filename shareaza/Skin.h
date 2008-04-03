@@ -160,6 +160,7 @@ protected:
 
 // NavBar
 public:
+	BOOL		m_bBordersEnabled;
 	COLORREF	m_crNavBarText;
 	COLORREF	m_crNavBarTextUp;
 	COLORREF	m_crNavBarTextDown;

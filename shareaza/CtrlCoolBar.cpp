@@ -343,7 +343,7 @@ int CCoolBarCtrl::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if ( CControlBar::OnCreate( lpCreateStruct ) == -1 ) return -1;
 
-//	if ( CoolInterface.m_crSysBorders != CLR_NONE )
+//	if ( Skin.m_bBordersEnabled )
 	m_dwStyle |= CBRS_BORDER_3D;
 
 	if ( m_bDropEnabled ) ENABLE_DROP()

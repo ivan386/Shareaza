@@ -80,7 +80,7 @@ int CMonitorBarCtrl::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if ( CControlBar::OnCreate( lpCreateStruct ) == -1 ) return -1;
 
-//	if ( CoolInterface.m_crSysBorders != CLR_NONE )
+//	if ( Skin.m_bBordersEnabled )
 		m_dwStyle |= CBRS_BORDER_3D;
 
 	if ( lpCreateStruct->dwExStyle & WS_EX_LAYOUTRTL )
@@ -189,15 +189,15 @@ void CMonitorBarCtrl::DoPaint(CDC* pDC)
 	if ( ! CoolInterface.DrawWatermark( pMemDC, &rcClient, &m_bmWatermark ) )
 		pMemDC->FillSolidRect( &rcClient, CoolInterface.m_crMidtone );
 
-	if ( CoolInterface.m_crSysBorders == CLR_NONE )
-		rcClient.DeflateRect( 2, 3, 2, 1 );
-	else
+	if ( Skin.m_bBordersEnabled )
 		DrawBorders( pMemDC, rcClient );
+	else
+		rcClient.DeflateRect( 2, 3, 2, 1 );
 
 	for ( int nY = rcClient.top + 4 ; nY < rcClient.bottom - 4 ; nY += 2 )
 	{
 		pMemDC->Draw3dRect( rcClient.left + 3, nY, 4, 1,
-			CoolInterface.m_crSysBorders, CoolInterface.m_crSysBorders );
+			CoolInterface.m_crDisabled, CoolInterface.m_crDisabled );
 	}
 
 	DrawIconEx( pMemDC->GetSafeHdc(), rcClient.right - 16, rcClient.bottom - 16, m_hUpDown, 16, 16, 0, NULL, DI_NORMAL );

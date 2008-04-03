@@ -154,7 +154,7 @@ int CMainTabBarCtrl::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if ( CControlBar::OnCreate( lpCreateStruct ) == -1 ) return -1;
 
-//	if ( CoolInterface.m_crSysBorders != CLR_NONE )
+//	if ( Skin.m_bBordersEnabled )
 		m_dwStyle |= CBRS_BORDER_3D;
 
 	SetTimer( 1, 250, NULL );
@@ -293,7 +293,10 @@ void CMainTabBarCtrl::DoPaint(CDC* pDC)
 	CSize size = rc.Size();
 	CDC* pBuffer = CoolInterface.GetBuffer( *pDC, size );
 
-	DrawBorders( pBuffer, rc );
+	if ( Skin.m_bBordersEnabled )
+		DrawBorders( pBuffer, rc );
+	else
+		rc.DeflateRect(0,2,0,0);
 
 	if ( ! CoolInterface.DrawWatermark( pBuffer, &rc, &m_pSkin->m_bmWatermark ) )
 	{

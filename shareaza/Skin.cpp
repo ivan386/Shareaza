@@ -1405,9 +1405,9 @@ BOOL CSkin::LoadColourScheme(CXMLElement* pBase)
 	pColours.SetAt( _T("fragmentbar.border.simplebar"), &CoolInterface.m_crFragmentBorderSimpleBar );
 	pColours.SetAt( _T("fragmentbar.border.simplebar.selected"), &CoolInterface.m_crFragmentBorderSimpleBarSelected );
 
+	pColours.SetAt( _T("system.environment.borders"), &CoolInterface.m_crSysBorders );
 	pColours.SetAt( _T("system.environment.window"), &CoolInterface.m_crSysWindow );
 	pColours.SetAt( _T("system.environment.btnface"), &CoolInterface.m_crSysBtnFace );
-	pColours.SetAt( _T("system.environment.borders"), &CoolInterface.m_crSysBorders );
 	pColours.SetAt( _T("system.environment.3dshadow"), &CoolInterface.m_crSys3DShadow );
 	pColours.SetAt( _T("system.environment.3dhighlight"), &CoolInterface.m_crSys3DHighlight );
 	pColours.SetAt( _T("system.environment.activecaption"), &CoolInterface.m_crSysActiveCaption );
@@ -1889,6 +1889,9 @@ void CSkin::Finalise()
 	}
 	
 	CoolMenu.SetWatermark( GetWatermark( _T("CCoolMenu") ) );
+
+	// Disable Menubar 3D Borders
+	m_bBordersEnabled = CoolInterface.m_crSysBorders != CLR_NONE ? TRUE : FALSE ;
 }
 
 //////////////////////////////////////////////////////////////////////

@@ -137,7 +137,7 @@ int CWndTabBar::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if ( CControlBar::OnCreate( lpCreateStruct ) == -1 ) return -1;
 
-//	if ( CoolInterface.m_crSysBorders != CLR_NONE )
+//	if ( Skin.m_bBordersEnabled )
 		m_dwStyle |= CBRS_BORDER_3D;
 
 	m_pImages.Create( 16, 16, ILC_COLOR32|ILC_MASK, 1, 1 );
@@ -371,9 +371,7 @@ void CWndTabBar::DoPaint(CDC* pDC)
 		CoolInterface.DrawWatermark( pDC, &rc, &m_bmImage );
 	}
 
-	if ( CoolInterface.m_crSysBorders == CLR_NONE )
-		rc.DeflateRect(0,2,0,0);
-	else
+	if ( Skin.m_bBordersEnabled )
 		DrawBorders( pDC, rc );
 
 	CFont* pOldFont = (CFont*)pDC->SelectObject( &CoolInterface.m_fntNormal );
@@ -747,29 +745,37 @@ void CWndTabBar::TabItem::Paint(CWndTabBar* pBar, CDC* pDC, CRect* pRect, BOOL b
 	CRect rc( pRect );
 	COLORREF crBack;
 
+	if ( ! Skin.m_bBordersEnabled )
+	{
+		if ( ! Skin.GetWatermark( _T("CWndTabBar") ) )
+			pDC->FillSolidRect( rc , CoolInterface.m_crMidtone );
+		rc.DeflateRect(0,2);
+	}
+
 	if ( bSelected && pBar->m_bMenuGray )
 	{
 		crBack = CoolInterface.m_crBackNormal;
 		pDC->Draw3dRect( &rc, CoolInterface.m_crDisabled, CoolInterface.m_crDisabled );
 	}
-	if ( bHot )
-	{
-		SetTabmark( Skin.GetWatermark( _T("CWndTabBar.Hover") ) );
-		CoolInterface.DrawWatermark( pDC, &rc, &m_bmTabmark );
-		if ( m_bTabTest ) pDC->SetBkMode( TRANSPARENT );
-	}
-	if ( bSelected )
-	{
-		SetTabmark( Skin.GetWatermark( _T("CWndTabBar.Active") ) );
-		CoolInterface.DrawWatermark( pDC, &rc, &m_bmTabmark );
-		if ( m_bTabTest ) pDC->SetBkMode( TRANSPARENT );
-	}
-	if ( bHot && bSelected )
+	else if ( bHot && bSelected )
 	{
 		SetTabmark( Skin.GetWatermark( _T("CWndTabBar.Active.Hover") ) );
 		CoolInterface.DrawWatermark( pDC, &rc, &m_bmTabmark );
 		if ( m_bTabTest ) pDC->SetBkMode( TRANSPARENT );
 	}
+	else if ( bSelected )
+	{
+		SetTabmark( Skin.GetWatermark( _T("CWndTabBar.Active") ) );
+		CoolInterface.DrawWatermark( pDC, &rc, &m_bmTabmark );
+		if ( m_bTabTest ) pDC->SetBkMode( TRANSPARENT );
+	}
+	else if ( bHot )
+	{
+		SetTabmark( Skin.GetWatermark( _T("CWndTabBar.Hover") ) );
+		CoolInterface.DrawWatermark( pDC, &rc, &m_bmTabmark );
+		if ( m_bTabTest ) pDC->SetBkMode( TRANSPARENT );
+	}
+
 	if ( ( bHot || ( bSelected && m_bVisible ) ) && m_bTabTest != TRUE )
 	{
 		crBack = ( bHot && bSelected ) ? CoolInterface.m_crBackCheckSel : CoolInterface.m_crBackSel;
