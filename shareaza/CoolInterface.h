@@ -39,7 +39,7 @@ public:
 	CFont		m_fntBold;			// system.bold
 	CFont		m_fntBoldItalic;	// system.bold + italic
 	CFont		m_fntCaption;		// panel.caption
-	CFont		m_fntNavBar;		// navbar.plain
+	CFont		m_fntNavBar;		// navbar.caption
 	BOOL		m_bCustom;
 
 	COLORREF	m_crWindow;
@@ -167,6 +167,7 @@ public:
 
 	COLORREF	m_crSysWindow;
 	COLORREF	m_crSysBtnFace;
+	COLORREF	m_crSysBorders;
 	COLORREF	m_crSys3DShadow;
 	COLORREF	m_crSys3DHighlight;
 	COLORREF	m_crSysActiveCaption;

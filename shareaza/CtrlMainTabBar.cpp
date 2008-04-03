@@ -154,7 +154,9 @@ int CMainTabBarCtrl::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if ( CControlBar::OnCreate( lpCreateStruct ) == -1 ) return -1;
 
-	m_dwStyle |= CBRS_BORDER_3D;
+//	if ( CoolInterface.m_crSysBorders != CLR_NONE )
+		m_dwStyle |= CBRS_BORDER_3D;
+
 	SetTimer( 1, 250, NULL );
 
 	ENABLE_DROP()
@@ -576,30 +578,55 @@ void CMainTabBarCtrl::TabItem::Paint(CDC* pDstDC, CDC* pSrcDC, const CPoint& ptO
 		// No label
 		return;
 
+	if ( Skin.m_crNavBarTextUp == Skin.m_crNavBarTextHover == Skin.m_crNavBarTextChecked 
+		== Skin.m_crNavBarText == CLR_NONE )
+		// No label text
+		return;
+
+	COLORREF crNavBarText = Skin.m_crNavBarText;
+	COLORREF crNavBarShadow = Skin.m_crNavBarShadow;
+	COLORREF crNavBarOutline = Skin.m_crNavBarOutline;
+
+	if ( bDown )
+	{
+		crNavBarText = Skin.m_crNavBarTextDown != CLR_NONE ? Skin.m_crNavBarTextDown : Skin.m_crNavBarText ;
+		crNavBarShadow = Skin.m_crNavBarShadowDown != CLR_NONE ? Skin.m_crNavBarShadowDown : Skin.m_crNavBarShadow ;
+		crNavBarOutline = Skin.m_crNavBarOutlineDown != CLR_NONE ? Skin.m_crNavBarOutlineDown : Skin.m_crNavBarOutline ;
+	}
+	else if ( m_bSelected )
+	{
+		crNavBarText = Skin.m_crNavBarTextChecked != CLR_NONE ? Skin.m_crNavBarTextChecked : Skin.m_crNavBarText ;
+		crNavBarShadow = Skin.m_crNavBarShadowChecked != CLR_NONE ? Skin.m_crNavBarShadowChecked : Skin.m_crNavBarShadow ;
+		crNavBarOutline = Skin.m_crNavBarOutlineChecked != CLR_NONE ? Skin.m_crNavBarOutlineChecked : Skin.m_crNavBarOutline ;
+	}
+	else if ( bHover )
+	{
+		crNavBarText = Skin.m_crNavBarTextHover != CLR_NONE ? Skin.m_crNavBarTextHover : Skin.m_crNavBarText ;
+		crNavBarShadow = Skin.m_crNavBarShadowHover != CLR_NONE ? Skin.m_crNavBarShadowHover : Skin.m_crNavBarShadow ;
+		crNavBarOutline = Skin.m_crNavBarOutlineHover != CLR_NONE ? Skin.m_crNavBarOutlineHover : Skin.m_crNavBarOutline ;
+	}
+	else if ( Skin.m_crNavBarTextUp != CLR_NONE )
+	{
+		crNavBarText = Skin.m_crNavBarTextUp ;
+		crNavBarShadow = Skin.m_crNavBarShadowUp != CLR_NONE ? Skin.m_crNavBarShadowUp : Skin.m_crNavBarShadow ;
+		crNavBarOutline = Skin.m_crNavBarOutlineUp != CLR_NONE ? Skin.m_crNavBarOutlineUp : Skin.m_crNavBarOutline ;
+	}
+
 	if ( Settings.General.LanguageRTL )
 	{
 		rcTarget.left += Skin.m_rcNavBarOffset.right;
-		rcTarget.right -= Skin.m_rcNavBarOffset.left;
 	}
 	else
 	{
 		rcTarget.left += Skin.m_rcNavBarOffset.left;
-		rcTarget.right -= Skin.m_rcNavBarOffset.right;
 	}
 	rcTarget.top += Skin.m_rcNavBarOffset.top;
-	rcTarget.bottom -= Skin.m_rcNavBarOffset.bottom;
 
 	CFont* pOldFont = pDstDC->SelectObject( &CoolInterface.m_fntNavBar );
 	pDstDC->SetBkMode( TRANSPARENT );
-	if ( Skin.m_crNavBarShadow != CLR_NONE )
+	if ( crNavBarOutline != CLR_NONE )
 	{
-		pDstDC->SetTextColor( Skin.m_crNavBarShadow );
-		pDstDC->DrawText( m_sTitle, rcTarget + CPoint( 2, 2 ),
-			DT_CENTER | DT_SINGLELINE | DT_VCENTER | DT_NOCLIP );
-	}
-	if ( Skin.m_crNavBarOutline != CLR_NONE )
-	{
-		pDstDC->SetTextColor( Skin.m_crNavBarOutline );
+		pDstDC->SetTextColor( crNavBarOutline );
 		for ( int x = -1; x < 2; x++ )
 		{
 			for ( int y = -1; y < 2; y ++ )
@@ -610,9 +637,15 @@ void CMainTabBarCtrl::TabItem::Paint(CDC* pDstDC, CDC* pSrcDC, const CPoint& ptO
 			}
 		}
 	}
-	if ( Skin.m_crNavBarText != CLR_NONE )
+	if ( crNavBarShadow != CLR_NONE )
 	{
-		pDstDC->SetTextColor( Skin.m_crNavBarText );
+		pDstDC->SetTextColor( crNavBarShadow );
+		pDstDC->DrawText( m_sTitle, rcTarget + CPoint( 1, 1 ),
+			DT_CENTER | DT_SINGLELINE | DT_VCENTER | DT_NOCLIP );
+	}
+	if ( crNavBarText != CLR_NONE )
+	{
+		pDstDC->SetTextColor( crNavBarText );
 		pDstDC->DrawText( m_sTitle, rcTarget,
 			DT_CENTER | DT_SINGLELINE | DT_VCENTER | DT_NOCLIP );
 	}

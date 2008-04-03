@@ -161,8 +161,20 @@ protected:
 // NavBar
 public:
 	COLORREF	m_crNavBarText;
+	COLORREF	m_crNavBarTextUp;
+	COLORREF	m_crNavBarTextDown;
+	COLORREF	m_crNavBarTextHover;
+	COLORREF	m_crNavBarTextChecked;
 	COLORREF	m_crNavBarShadow;
+	COLORREF	m_crNavBarShadowUp;
+	COLORREF	m_crNavBarShadowDown;
+	COLORREF	m_crNavBarShadowHover;
+	COLORREF	m_crNavBarShadowChecked;
 	COLORREF	m_crNavBarOutline;
+	COLORREF	m_crNavBarOutlineUp;
+	COLORREF	m_crNavBarOutlineDown;
+	COLORREF	m_crNavBarOutlineHover;
+	COLORREF	m_crNavBarOutlineChecked;
 	CRect		m_rcNavBarOffset;
 	enum { NavBarNormal, NavBarUpper, NavBarLower } m_NavBarMode;
 protected:

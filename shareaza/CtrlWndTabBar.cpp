@@ -137,9 +137,10 @@ int CWndTabBar::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if ( CControlBar::OnCreate( lpCreateStruct ) == -1 ) return -1;
 
-	m_pImages.Create( 16, 16, ILC_COLOR32|ILC_MASK, 1, 1 );
+//	if ( CoolInterface.m_crSysBorders != CLR_NONE )
+		m_dwStyle |= CBRS_BORDER_3D;
 
-	m_dwStyle |= CBRS_BORDER_3D;
+	m_pImages.Create( 16, 16, ILC_COLOR32|ILC_MASK, 1, 1 );
 
 	ENABLE_DROP()
 
@@ -370,7 +371,10 @@ void CWndTabBar::DoPaint(CDC* pDC)
 		CoolInterface.DrawWatermark( pDC, &rc, &m_bmImage );
 	}
 
-	DrawBorders( pDC, rc );
+	if ( CoolInterface.m_crSysBorders == CLR_NONE )
+		rc.DeflateRect(0,2,0,0);
+	else
+		DrawBorders( pDC, rc );
 
 	CFont* pOldFont = (CFont*)pDC->SelectObject( &CoolInterface.m_fntNormal );
 

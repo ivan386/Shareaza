@@ -555,6 +555,7 @@ void CCoolInterface::CalculateColours(BOOL bCustom)
 
 	m_crSysWindow			= GetSysColor( COLOR_WINDOW );
 	m_crSysBtnFace			= GetSysColor( COLOR_BTNFACE );
+	m_crSysBorders			= GetSysColor( COLOR_GRAYTEXT );
 	m_crSys3DShadow 		= GetSysColor( COLOR_3DSHADOW );
 	m_crSys3DHighlight		= GetSysColor( COLOR_3DHIGHLIGHT );
 	m_crSysActiveCaption	= GetSysColor( COLOR_ACTIVECAPTION );

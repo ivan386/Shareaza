@@ -113,7 +113,8 @@ void CDownloadTabBar::OnSkinChange()
 int CDownloadTabBar::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if ( CControlBar::OnCreate( lpCreateStruct ) == -1 ) return -1;
-	m_dwStyle |= CBRS_BORDER_3D;
+//	if ( CoolInterface.m_crSysBorders != CLR_NONE )
+	  m_dwStyle |= CBRS_BORDER_3D;
 	return 0;
 }
 

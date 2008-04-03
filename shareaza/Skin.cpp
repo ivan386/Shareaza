@@ -1407,13 +1407,26 @@ BOOL CSkin::LoadColourScheme(CXMLElement* pBase)
 
 	pColours.SetAt( _T("system.environment.window"), &CoolInterface.m_crSysWindow );
 	pColours.SetAt( _T("system.environment.btnface"), &CoolInterface.m_crSysBtnFace );
+	pColours.SetAt( _T("system.environment.borders"), &CoolInterface.m_crSysBorders );
 	pColours.SetAt( _T("system.environment.3dshadow"), &CoolInterface.m_crSys3DShadow );
 	pColours.SetAt( _T("system.environment.3dhighlight"), &CoolInterface.m_crSys3DHighlight );
 	pColours.SetAt( _T("system.environment.activecaption"), &CoolInterface.m_crSysActiveCaption );
 
 	pColours.SetAt( _T("navbar.text"), &m_crNavBarText );
+	pColours.SetAt( _T("navbar.text.up"), &m_crNavBarTextUp );
+	pColours.SetAt( _T("navbar.text.down"), &m_crNavBarTextDown );
+	pColours.SetAt( _T("navbar.text.hover"), &m_crNavBarTextHover );
+	pColours.SetAt( _T("navbar.text.checked"), &m_crNavBarTextChecked );
 	pColours.SetAt( _T("navbar.shadow"), &m_crNavBarShadow );
+	pColours.SetAt( _T("navbar.shadow.up"), &m_crNavBarShadowUp );
+	pColours.SetAt( _T("navbar.shadow.down"), &m_crNavBarShadowDown );
+	pColours.SetAt( _T("navbar.shadow.hover"), &m_crNavBarShadowHover );
+	pColours.SetAt( _T("navbar.shadow.checked"), &m_crNavBarShadowChecked );
 	pColours.SetAt( _T("navbar.outline"), &m_crNavBarOutline );
+	pColours.SetAt( _T("navbar.outline.up"), &m_crNavBarOutlineUp );
+	pColours.SetAt( _T("navbar.outline.down"), &m_crNavBarOutlineDown );
+	pColours.SetAt( _T("navbar.outline.hover"), &m_crNavBarOutlineHover );
+	pColours.SetAt( _T("navbar.outline.checked"), &m_crNavBarOutlineChecked );
 
 	BOOL bSystem = FALSE, bNonBase = FALSE;
 	
@@ -1809,8 +1822,20 @@ void CSkin::CreateDefault()
 	// NavBar
 
 	m_crNavBarText				= CLR_NONE;
+	m_crNavBarTextUp			= m_crNavBarText;
+	m_crNavBarTextDown			= m_crNavBarText;
+	m_crNavBarTextHover			= m_crNavBarText;
+	m_crNavBarTextChecked		= m_crNavBarText;
 	m_crNavBarShadow			= CLR_NONE;
+	m_crNavBarShadowUp			= m_crNavBarShadow;
+	m_crNavBarShadowDown		= m_crNavBarShadow;
+	m_crNavBarShadowHover		= m_crNavBarShadow;
+	m_crNavBarShadowChecked		= m_crNavBarShadow;
 	m_crNavBarOutline			= CLR_NONE;
+	m_crNavBarOutlineUp			= m_crNavBarOutline;
+	m_crNavBarOutlineDown		= m_crNavBarOutline;
+	m_crNavBarOutlineHover		= m_crNavBarOutline;
+	m_crNavBarOutlineChecked	= m_crNavBarOutline;
 	m_rcNavBarOffset			= CRect( 0, 0, 0, 0 );
 
 	// Command Icons
