@@ -24,7 +24,22 @@
 	Buttons text main color: "navbar.text", default: "" - no text
 	Buttons text shadow color: "navbar.shadow", default: "" - no shadow
 	Buttons text outline color: "navbar.outline", default: "" - no outline
+	
+	Optional Button States:
+	Navbar.Text.Up
+	Navbar.Text.Down
+	Navbar.Text.Hover
+	Navbar.Text.Checked
+	Navbar.Shadow.Up
+	Navbar.Shadow.Down
+	Navbar.Shadow.Hover
+	Navbar.Shadow.Checked
+	Navbar.Outline.Up
+	Navbar.Outline.Down
+	Navbar.Outline.Hover
+	Navbar.Outline.Checked
 	-->
+
 	<colourScheme>
 		<colour name="navbar.text" value="400000"/>
 		<colour name="navbar.shadow" value="808080"/>
