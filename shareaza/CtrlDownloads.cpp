@@ -981,7 +981,6 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
 		CRect rcCell;
 		CString strSource;
 		BOOL bDisplayText	= TRUE;
-		UINT nIconStyle;
 
 		m_wndHeader.GetItemRect( nColumn, &rcCell );
 		rcCell.left		+= rcRow.left;
