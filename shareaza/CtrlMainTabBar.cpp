@@ -581,10 +581,14 @@ void CMainTabBarCtrl::TabItem::Paint(CDC* pDstDC, CDC* pSrcDC, const CPoint& ptO
 		// No label
 		return;
 
-	if ( Skin.m_crNavBarTextUp == Skin.m_crNavBarTextHover == Skin.m_crNavBarTextChecked 
-		== Skin.m_crNavBarText == CLR_NONE )
+	if ( Skin.m_crNavBarTextUp == CLR_NONE
+		|| Skin.m_crNavBarTextHover == CLR_NONE
+		|| Skin.m_crNavBarTextChecked == CLR_NONE
+		|| Skin.m_crNavBarText == CLR_NONE )
+	{
 		// No label text
 		return;
+	}
 
 	COLORREF crNavBarText = Skin.m_crNavBarText;
 	COLORREF crNavBarShadow = Skin.m_crNavBarShadow;
