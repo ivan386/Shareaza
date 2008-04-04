@@ -1,7 +1,7 @@
 //
 // QueryHit.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -434,6 +434,8 @@ CQueryHit* CQueryHit::FromPacket(CG2Packet* pPacket, int* pnHops)
 						if ( ip != INADDR_NONE && strcmp( inet_ntoa( *(IN_ADDR*)&ip ), pszIP ) == 0 &&
 							 nAddress != ip )
 							bSpam = true;
+						if ( strNick.Compare( L"RAZA" ) == 0 || strNick.Compare( L"RAZB" ) == 0 )
+							bSpam = true; // VendorCode Nick Spam
 					}
 					pPacket->m_nPosition = nSkipInner;
 				}
