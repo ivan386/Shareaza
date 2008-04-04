@@ -584,6 +584,32 @@ BOOL CSecurity::Import(LPCTSTR pszFile)
 }
 
 //////////////////////////////////////////////////////////////////////
+// CSecurity check file size, hash
+BOOL CSecurity::CheckHitFile(CString sName, QWORD nSize, const Hashes::Sha1Hash& oSHA1, 
+							 const Hashes::Ed2kHash& oED2K)
+{
+	if ( LPCTSTR pszExt = PathFindExtension( (LPCTSTR)sName ) )
+	{
+		CString strExtension;
+		pszExt++;
+		strExtension.Format( _T("size:%s:%I64i"), pszExt, nSize );
+		if ( IsDenied( NULL, strExtension ) )
+			return TRUE;
+	}
+	if ( oSHA1.isValid() )
+	{
+		if ( IsDenied( NULL, oSHA1.toUrn() ) )
+			return TRUE;
+	}
+	if ( oED2K.isValid() )
+	{
+		if ( IsDenied( NULL, oED2K.toUrn() ) )
+			return TRUE;
+	}
+	return FALSE;
+}
+
+//////////////////////////////////////////////////////////////////////
 // CSecureRule construction
 
 CSecureRule::CSecureRule(BOOL bCreate)
@@ -1643,7 +1669,6 @@ BOOL CMessageFilter::IsED2KSpam( LPCTSTR pszText )
 
 	return FALSE;
 }
-
 
 BOOL CMessageFilter::IsFiltered( LPCTSTR pszText )
 {
