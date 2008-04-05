@@ -68,6 +68,21 @@ INT_PTR CSecurity::GetCount() const
 	return m_pRules.GetCount();
 }
 
+POSITION CSecurity::GetRegExpIterator() const
+{
+	return m_pRegExpRules.GetHeadPosition();
+}
+
+CSecureRule* CSecurity::GetNextRegExp(POSITION& pos) const
+{
+	return m_pRegExpRules.GetNext( pos );
+}
+
+INT_PTR CSecurity::GetRegExpCount() const
+{
+	return m_pRegExpRules.GetCount();
+}
+
 BOOL CSecurity::Check(CSecureRule* pRule) const
 {
 	CQuickLock oLock( m_pSection );
@@ -99,6 +114,8 @@ void CSecurity::Add(CSecureRule* pRule)
 	if ( pExistingRule == NULL )
 	{
 		m_pRules.AddHead( pRule );
+		if ( pRule->m_nIP[ 0 ] == 2 )
+			m_pRegExpRules.AddHead( pRule );
 	}
 	else if ( pExistingRule != pRule )
 	{
@@ -113,6 +130,8 @@ void CSecurity::Remove(CSecureRule* pRule)
 
 	POSITION pos = m_pRules.Find( pRule );
 	if ( pos ) m_pRules.RemoveAt( pos );
+	pos = m_pRegExpRules.Find( pRule );
+	if ( pos ) m_pRegExpRules.RemoveAt( pos );
 	delete pRule;
 }
 
@@ -160,6 +179,7 @@ void CSecurity::Clear()
 	}
 
 	m_pRules.RemoveAll();
+	m_pRegExpRules.RemoveAll();
 }
 //////////////////////////////////////////////////////////////////////
 // CSecurity ban
@@ -331,6 +351,9 @@ BOOL CSecurity::IsDenied(IN_ADDR* pAddress, LPCTSTR pszContent)
 		if ( pRule->m_nExpire && pRule->IsExpired( nNow ) )
 		{
 			m_pRules.RemoveAt( posLast );
+			POSITION posRegExp = m_pRegExpRules.Find( pRule );
+			if ( posRegExp )
+				m_pRegExpRules.RemoveAt( posRegExp );
 			delete pRule;
 		}
 		else if ( pRule->Match( pAddress, pszContent ) )
@@ -346,9 +369,60 @@ BOOL CSecurity::IsDenied(IN_ADDR* pAddress, LPCTSTR pszContent)
 	return m_bDenyPolicy;
 }
 
-BOOL CSecurity::IsAccepted(IN_ADDR* pAddress, LPCTSTR pszContent)
+//////////////////////////////////////////////////////////////////////
+// CSecurity check file size, hash
+BOOL CSecurity::IsDenied(CString sName, QWORD nSize, const Hashes::Sha1Hash& oSHA1, 
+						 const Hashes::Ed2kHash& oED2K)
 {
-	return ! IsDenied( pAddress, pszContent );
+	if ( LPCTSTR pszExt = PathFindExtension( (LPCTSTR)sName ) )
+	{
+		CString strExtension;
+		pszExt++;
+		strExtension.Format( _T("size:%s:%I64i"), pszExt, nSize );
+		return IsDenied( NULL, strExtension );
+	}
+	if ( oSHA1.isValid() )
+	{
+		return IsDenied( NULL, oSHA1.toUrn() );
+	}
+	if ( oED2K.isValid() )
+	{
+		return IsDenied( NULL, oED2K.toUrn() );
+	}
+	return m_bDenyPolicy;
+}
+
+BOOL CSecurity::IsDenied(CQuerySearch::const_iterator itStart, CQuerySearch::const_iterator itEnd, 
+						 LPCTSTR pszContent)
+{
+	CQuickLock oLock( m_pSection );
+
+	DWORD nNow = static_cast< DWORD >( time( NULL ) );
+
+	for ( POSITION pos = GetRegExpIterator() ; pos ; )
+	{
+		POSITION posLast = pos;
+		CSecureRule* pRule = GetNextRegExp( pos );
+
+		if ( pRule->m_nExpire && pRule->IsExpired( nNow ) )
+		{
+			m_pRegExpRules.RemoveAt( posLast );
+			POSITION posAll = m_pRules.Find( pRule );
+			if ( posAll )
+				m_pRules.RemoveAt( posAll );
+			delete pRule;
+		}
+		else if ( pRule->Match( itStart, itEnd, pszContent ) )
+		{
+			pRule->m_nToday ++;
+			pRule->m_nEver ++;
+
+			if ( pRule->m_nAction == CSecureRule::srAccept ) return FALSE;
+			else if ( pRule->m_nAction == CSecureRule::srDeny ) return TRUE;
+		}
+	}
+
+	return m_bDenyPolicy;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -368,6 +442,9 @@ void CSecurity::Expire()
 		if ( pRule->m_nExpire && pRule->IsExpired( nNow ) )
 		{
 			m_pRules.RemoveAt( posLast );
+			POSITION posRegExp = m_pRegExpRules.Find( pRule );
+			if ( posRegExp ) 
+				m_pRegExpRules.RemoveAt( posRegExp );
 			delete pRule;
 		}
 	}
@@ -457,7 +534,11 @@ void CSecurity::Serialize(CArchive& ar)
 			if ( pRule->IsExpired( nNow, TRUE ) )
 				delete pRule;
 			else
+			{
 				m_pRules.AddTail( pRule );
+				if ( pRule->m_nIP[ 0 ] == 2 )
+					m_pRegExpRules.AddTail( pRule );
+			}
 		}
 	}
 }
@@ -517,7 +598,12 @@ BOOL CSecurity::FromXML(CXMLElement* pXML)
 
 			if ( pRule->FromXML( pElement ) )
 			{
-				if ( ! bExisting ) m_pRules.AddTail( pRule );
+				if ( ! bExisting )
+				{
+					m_pRules.AddTail( pRule );
+					if ( pRule->m_nIP[ 0 ] == 2 )
+						m_pRegExpRules.AddTail( pRule );
+				}
 				nCount++;
 			}
 			else
@@ -581,32 +667,6 @@ BOOL CSecurity::Import(LPCTSTR pszFile)
 	}
 
 	return bResult;
-}
-
-//////////////////////////////////////////////////////////////////////
-// CSecurity check file size, hash
-BOOL CSecurity::CheckHitFile(CString sName, QWORD nSize, const Hashes::Sha1Hash& oSHA1, 
-							 const Hashes::Ed2kHash& oED2K)
-{
-	if ( LPCTSTR pszExt = PathFindExtension( (LPCTSTR)sName ) )
-	{
-		CString strExtension;
-		pszExt++;
-		strExtension.Format( _T("size:%s:%I64i"), pszExt, nSize );
-		if ( IsDenied( NULL, strExtension ) )
-			return TRUE;
-	}
-	if ( oSHA1.isValid() )
-	{
-		if ( IsDenied( NULL, oSHA1.toUrn() ) )
-			return TRUE;
-	}
-	if ( oED2K.isValid() )
-	{
-		if ( IsDenied( NULL, oED2K.toUrn() ) )
-			return TRUE;
-	}
-	return FALSE;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -712,6 +772,9 @@ BOOL CSecureRule::Match(IN_ADDR* pAddress, LPCTSTR pszContent)
 	}
 	else if ( m_nType == srContent && pszContent != NULL && m_pContent != NULL )
 	{
+		if ( m_nIP[0] == 2 )
+			return FALSE;
+
 		for ( LPCTSTR pszFilter = m_pContent ; *pszFilter ; )
 		{
 			BOOL bFound = _tcsistr( pszContent, pszFilter ) != NULL;
@@ -734,11 +797,49 @@ BOOL CSecureRule::Match(IN_ADDR* pAddress, LPCTSTR pszContent)
 	return FALSE;
 }
 
+BOOL CSecureRule::Match(CQuerySearch::const_iterator itStart, 
+						CQuerySearch::const_iterator itEnd, LPCTSTR pszContent)
+{
+	CString strFilter = GetRegExpFilter( itStart, itEnd );
+	if ( strFilter.GetLength() )
+	{
+		using namespace regex;
+		try
+		{
+			const rpattern regExpPattern( (LPCTSTR)strFilter );
+			match_results results;
+			std::wstring strTemp( pszContent, _tcslen(pszContent) );
+			rpattern::backref_type matches = regExpPattern.match( strTemp, results );
+			if ( matches.matched )
+				return TRUE;
+
+		}
+		catch (...)	{}
+	}
+
+	return FALSE;
+}
+
 //////////////////////////////////////////////////////////////////////
 // CSecureRule content list helpers
 
 void CSecureRule::SetContentWords(const CString& strContent)
 {
+	if ( m_nIP[ 0 ] == 2 )
+	{
+		if ( m_pContent )
+			delete [] m_pContent;
+
+		m_nContentLength = strContent.GetLength() + 2;
+		LPTSTR pszContent = new TCHAR[ m_nContentLength ];
+		_tcscpy( pszContent, strContent );
+		m_pContent = pszContent;
+		pszContent += strContent.GetLength();
+		*pszContent++ = 0;
+		*pszContent++ = 0;
+		return;
+	}
+
 	LPTSTR pszContent	= (LPTSTR)(LPCTSTR)strContent;
 	int nTotalLength	= 3;
 	CList< CString > pWords;
@@ -792,6 +893,9 @@ CString CSecureRule::GetContentWords()
 
 	if ( m_pContent == NULL ) return strWords;
 
+	if ( m_nIP[ 0 ] == 2 )
+		return CString( (LPCTSTR)m_pContent );
+
 	for ( LPCTSTR pszFilter = m_pContent ; *pszFilter ; )
 	{
 		if ( strWords.GetLength() ) strWords += ' ';
@@ -801,6 +905,91 @@ CString CSecureRule::GetContentWords()
 	}
 
 	return strWords;
+}
+
+// Build a regular expression filter from the search query words
+// Returns an empty string if not applied or if the filter was invalid
+CString CSecureRule::GetRegExpFilter(CQuerySearch::const_iterator itStart, CQuerySearch::const_iterator itEnd)
+{
+	if ( m_nIP[ 0 ] != 2 ) return CString();
+
+	LPCTSTR pszPattern = m_pContent;
+	int nTotal = 0;
+
+	CString strFilter;
+
+	while ( *pszPattern )
+	{
+		if ( *pszPattern == '<' )
+		{
+			pszPattern++;
+			bool bEnds = false;
+			bool bAll = *pszPattern == '_';
+
+			for ( ; *pszPattern ; pszPattern++ )
+			{
+				if ( *pszPattern == '>' )
+				{
+					bEnds = true;
+					break;
+				}
+			}
+
+			if ( bEnds )
+			{
+				if ( bAll )
+				{
+					// Add all keywords at the "<_>" position
+					for ( ; itStart != itEnd ; itStart++ )
+					{
+						strFilter.AppendFormat( L"%s\\s+", 
+							CString( itStart->first, int(itStart->second) ) );
+					}
+				}
+				else
+				{
+					pszPattern--; // Go back
+					int nNumber = 0;
+
+					// Numbers from 1 to 9, no more
+					if ( _stscanf( &pszPattern[0], L"%i", &nNumber ) != 1 )
+						nNumber = ++nTotal;
+
+					for ( int nWord = 1 ; itStart != itEnd ; itStart++, nWord++ )
+					{
+						if ( nWord == nNumber )
+						{
+							strFilter.AppendFormat( L"%s\\s+", 
+								CString( itStart->first, int(itStart->second) ) );
+							break;
+						}
+					}
+					pszPattern++; // return to the last position
+				}
+			}
+			else
+				return CString(); // no closing '>'
+		}
+		else
+		{
+			strFilter += *pszPattern; // not replacing
+		}
+		pszPattern++;
+	}
+
+	// Validate
+	using namespace regex;
+	try
+	{
+		const rpattern regExpPattern( (LPCTSTR)strFilter );
+		UNUSED_ALWAYS( regExpPattern );
+	}
+	catch (...) 
+	{
+		strFilter.Empty();
+	}
+
+	return strFilter;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -909,8 +1098,15 @@ CXMLElement* CSecureRule::ToXML()
 		break;
 	case srContent:
 		pXML->AddAttribute( _T("type"), _T("content") );
+		CString str;
+		switch ( m_nIP[0] )
+		{
+			case 0: str = L"any"; break;
+			case 1: str = L"all"; break;
+			case 2: str = L"regexp"; break;
+		}
 		pXML->AddAttribute( _T("content"), GetContentWords() );
-		pXML->AddAttribute( _T("match"), m_nIP[0] != 1 ? _T("any") : _T("all") );
+		pXML->AddAttribute( _T("match"), str );
 		break;
 	}
 
@@ -975,8 +1171,14 @@ BOOL CSecureRule::FromXML(CXMLElement* pXML)
 	else if ( strValue.CompareNoCase( _T("content") ) == 0 )
 	{
 		m_nType = srContent;
+		CString strValue = pXML->GetAttributeValue( _T("match") );
+		if ( strValue.CompareNoCase( _T("any") ) == 0 )
+			m_nIP[0] = 0;
+		else if ( strValue.CompareNoCase( _T("all") ) == 0 )
+			m_nIP[0] = 1;
+		else if ( strValue.CompareNoCase( _T("regexp") ) == 0 )
+			m_nIP[0] = 2;
 		SetContentWords( pXML->GetAttributeValue( _T("content") ) );
-		m_nIP[0] = pXML->GetAttributeValue( _T("match") ).CompareNoCase( _T("all") ) == 0;
 		if ( m_pContent == NULL ) return FALSE;
 	}
 	else

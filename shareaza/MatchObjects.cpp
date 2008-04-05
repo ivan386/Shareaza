@@ -177,7 +177,7 @@ void CMatchList::AddHits(CQueryHit* pHit, CQuerySearch* pFilter)
 		// Empty file names are caught by the next clause and deleted.
 
 		if ( Security.IsDenied( &pHit->m_pAddress, pHit->m_sName ) || pHit->m_sName.IsEmpty() ||
-			 Security.CheckHitFile( pHit->m_sName, pHit->m_nSize, pHit->m_oSHA1, pHit->m_oED2K ) || 
+			 Security.IsDenied( pHit->m_sName, pHit->m_nSize, pHit->m_oSHA1, pHit->m_oED2K ) || 
 			 pHit->m_nSize == 0 )
 		{
 			delete pHit;
@@ -958,6 +958,14 @@ BOOL CMatchList::FilterHit(CQueryHit* pHit)
 		pHit->m_sSpeed = Settings.SmartSpeed( pHit->m_nSpeed, KiloBytes );
 	else
 		pHit->m_sSpeed.Empty();
+
+	CSearchWnd* pParent = static_cast< CSearchWnd* >( GetParent() );
+	if ( pParent )
+	{
+		CQuerySearch* pQuery = pParent->GetLastSearch();
+		if ( pQuery && Security.IsDenied( pQuery->begin(), pQuery->end(), pHit->m_sName ) )
+			return FALSE;
+	}
 
 	if ( m_bRegExp && m_pszRegexPattern )
 	{

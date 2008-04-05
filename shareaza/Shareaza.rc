@@ -221,7 +221,7 @@ IDB_BOX_MARK            BITMAP                  "Res\\BoxMark.bmp"
 
 #define	IDR_MANIFEST 1 // 2 for a DLL
 
-IDR_MANIFEST RT_MANIFEST
+IDR_MANIFEST RT_MANIFEST 
 {
     "<assembly xmlns=""urn:schemas-microsoft-com:asm.v1"" manifestVersion=""1.0"">
        <assemblyIdentity type=""win32"" name=""Shareaza.Shareaza"" version=""2.3.1.3""
@@ -851,9 +851,11 @@ BEGIN
                     WS_GROUP
     EDITTEXT        IDC_RULE_CONTENT,15,80,160,12,ES_AUTOHSCROLL
     CONTROL         "Match Any",IDC_RULE_MATCH_0,"Button",BS_AUTORADIOBUTTON | 
-                    WS_GROUP,15,100,70,12
+                    WS_GROUP,14,100,51,12
     CONTROL         "Match All",IDC_RULE_MATCH_1,"Button",BS_AUTORADIOBUTTON,
-                    95,100,75,12
+                    71,100,51,12
+    CONTROL         "Reg. Exp.",IDC_REGEXP,"Button",BS_AUTORADIOBUTTON,128,
+                    100,51,12
     GROUPBOX        "&Options:",IDC_STATIC,5,126,180,69,WS_GROUP
     LTEXT           "Action:",IDC_STATIC,15,140,40,12,SS_CENTERIMAGE | NOT 
                     WS_GROUP
@@ -1106,7 +1108,7 @@ BEGIN
     COMBOBOX        IDC_URL_TOKEN,60,85,85,140,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
     LTEXT           "Select preset:",IDC_STATIC,160,85,45,12,SS_CENTERIMAGE
     COMBOBOX        IDC_URL_PRESET,210,85,70,79,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
-					DEFPUSHBUTTON   "&Copy",IDC_COPY,10,105,45,14
+    DEFPUSHBUTTON   "&Copy",IDC_COPY,10,105,45,14
     PUSHBUTTON      "&Save...",IDC_SAVE,60,105,45,14
     CONTROL         "Progress2",IDC_PROGRESS,"msctls_progress32",WS_BORDER,110,107,120,10
     PUSHBUTTON      "Cancel",IDCANCEL,235,105,45,14

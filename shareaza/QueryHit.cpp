@@ -391,9 +391,9 @@ CQueryHit* CQueryHit::FromPacket(CG2Packet* pPacket, int* pnHops)
 			{
 				nAddress	= pPacket->ReadLongLE();
 				if ( Network.IsReserved( (IN_ADDR*)&nAddress, false ) ||
-					 Security.IsDenied( (IN_ADDR*)&nAddress, false ) )
+					 Security.IsDenied( (IN_ADDR*)&nAddress, NULL ) )
 					bSpam = true;
-				nPort		= pPacket->ReadShortBE();
+				nPort = pPacket->ReadShortBE();
 			}
 			else if ( nType == G2_PACKET_VENDOR && nLength >= 4 )
 			{
@@ -539,7 +539,7 @@ CQueryHit* CQueryHit::FromPacket(CG2Packet* pPacket, int* pnHops)
 				{
 					CString strVendorCode( pLastHit->m_pVendor->m_sCode );
 					if ( strVendorCode == L"RAZA" || strVendorCode == L"RAZB" || 
-						strVendorCode == L"RZCB" )
+						 strVendorCode == L"RZCB" )
 					{
 						bSpam = true;
 					}

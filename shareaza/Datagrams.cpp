@@ -635,7 +635,7 @@ BOOL CDatagrams::TryRead()
 	m_mInput.nTotal += nLength;
 	Statistics.Current.Bandwidth.Incoming += nLength;
 
-	if ( Security.IsAccepted( &pFrom.sin_addr ) &&
+	if ( ! Security.IsDenied( &pFrom.sin_addr ) &&
 		 ! Network.IsFirewalledAddress( &pFrom.sin_addr, TRUE ) )
 	{
 		OnDatagram( &pFrom, &pBuffer [ 0 ], nLength );

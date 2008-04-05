@@ -23,10 +23,10 @@
 #define AFX_SECURITY_H__85BE0E66_93D0_44B1_BEE1_E2C3C81CB8AF__INCLUDED_
 
 #pragma once
+#include "QuerySearch.h"
 
 class CSecureRule;
 class CXMLElement;
-
 
 class CSecurity
 {
@@ -43,12 +43,16 @@ public:
 
 protected:
 	CList< CSecureRule* >		m_pRules;
+	CList< CSecureRule* >		m_pRegExpRules;
 
 // Operations
 public:
 	POSITION		GetIterator() const;
 	CSecureRule*	GetNext(POSITION& pos) const;
 	INT_PTR			GetCount() const;
+	POSITION		GetRegExpIterator() const;
+	CSecureRule*	GetNextRegExp(POSITION& pos) const;
+	INT_PTR			GetRegExpCount() const;
 	BOOL			Check(CSecureRule* pRule) const;
 	void			Add(CSecureRule* pRule);
 	void			Remove(CSecureRule* pRule);
@@ -57,9 +61,10 @@ public:
 	void			Ban(IN_ADDR* pAddress, int nBanLength, BOOL bMessage = TRUE);
 	void			Clear();
 	BOOL			IsDenied(IN_ADDR* pAddress, LPCTSTR pszContent = NULL);
-	BOOL			IsAccepted(IN_ADDR* pAddress, LPCTSTR pszContent = NULL);
-	BOOL			CheckHitFile(CString sName, QWORD nSize, const Hashes::Sha1Hash& oSHA1, 
-								 const Hashes::Ed2kHash& oED2K);
+	BOOL			IsDenied(CString sName, QWORD nSize, const Hashes::Sha1Hash& oSHA1, 
+							 const Hashes::Ed2kHash& oED2K);
+	BOOL			IsDenied(CQuerySearch::const_iterator itStart, 
+							 CQuerySearch::const_iterator itEnd, LPCTSTR pszContent);
 	void			Expire();
 	BOOL			Load();
 	BOOL			Save();
@@ -111,8 +116,13 @@ public:
 	void	MaskFix();
 	BOOL	IsExpired(DWORD nNow, BOOL bSession = FALSE);
 	BOOL	Match(IN_ADDR* pAddress, LPCTSTR pszContent = NULL);
+	BOOL	Match(CQuerySearch::const_iterator itStart, 
+				  CQuerySearch::const_iterator itEnd, LPCTSTR pszContent);
 	void	SetContentWords(const CString& strContent);
+	CString	GetRegExpFilter(CQuerySearch::const_iterator itStart, 
+							CQuerySearch::const_iterator itEnd);
 	CString	GetContentWords();
+
 public:
 	void			Serialize(CArchive& ar, int nVersion);
 	CXMLElement*	ToXML();

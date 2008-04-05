@@ -141,7 +141,7 @@ BOOL CSecureRuleDlg::OnInitDialog()
 	else if ( m_pRule->m_nType == CSecureRule::srContent )
 	{
 		m_sContent = m_pRule->GetContentWords();
-		m_nMatch = m_pRule->m_nIP[0] == 1;
+		m_nMatch = (int)m_pRule->m_nIP[0];
 	}
 
 	if ( m_nExpire == 2 )
@@ -288,8 +288,8 @@ void CSecureRuleDlg::OnOK()
 	}
 	else if ( m_pRule->m_nType == CSecureRule::srContent )
 	{
-		m_pRule->SetContentWords( m_sContent );
 		m_pRule->m_nIP[0] = BYTE( m_nMatch );
+		m_pRule->SetContentWords( m_sContent );
 	}
 
 	Security.Add( m_pRule );
