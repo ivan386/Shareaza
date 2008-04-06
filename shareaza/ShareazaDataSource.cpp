@@ -489,19 +489,19 @@ BOOL CShareazaDataSource::DropToFolder(IDataObject* pIDataObject, DWORD grfKeySt
 		size < sizeof( DROPFILES ) || size > 10000000 )
 		return FALSE;
 
-	AsyncFileOperationParams* pAFOP = new AsyncFileOperationParams;
-	if ( ! pAFOP )
+	auto_ptr<AsyncFileOperationParams> pAFOP( new AsyncFileOperationParams );
+	if ( ! pAFOP.get() )
 		return FALSE;
 
 	DROPFILES* pdf = (DROPFILES*)GlobalLock( medium.hGlobal );
 	if ( ! pdf )
 		return FALSE;
 
-	int len;
+	int offset = 0, len;
 	if ( ! pdf->fWide )
 	{
 		// ANSI
-		for ( LPCSTR pFrom = (LPCSTR)( (char*)pdf + pdf->pFiles ); *pFrom; pFrom += len + 1 )
+		for ( LPCSTR pFrom = (LPCSTR)( (char*)pdf + pdf->pFiles ); *pFrom; offset += len + 1, pFrom += len + 1 )
 		{
 			len = lstrlenA( pFrom );
 			CStringW sFile( pFrom );	// ANSI -> UNICODE
@@ -512,8 +512,8 @@ BOOL CShareazaDataSource::DropToFolder(IDataObject* pIDataObject, DWORD grfKeySt
 			if ( sFile.GetLength() )
 			{
 				pAFOP->sFrom.SetSize( pAFOP->sFrom.GetSize() + sFile.GetLength() + 1 );
-				CopyMemory( pAFOP->sFrom.GetData(), (LPCWSTR)sFile,
-					sizeof(WCHAR) * ( sFile.GetLength() + 1 ) );
+				CopyMemory( pAFOP->sFrom.GetData() + offset,
+					(LPCWSTR)sFile, sizeof(WCHAR) * ( sFile.GetLength() + 1 ) );
 			}
 			if ( ! bDrop )
 				// Test only one
@@ -523,8 +523,8 @@ BOOL CShareazaDataSource::DropToFolder(IDataObject* pIDataObject, DWORD grfKeySt
 	else
 	{
 		// UNICODE
-		for ( LPCWSTR pFrom = (LPCWSTR)( (char*)pdf + pdf->pFiles ); *pFrom; pFrom += len + 1 )
-		{
+		for ( LPCWSTR pFrom = (LPCWSTR)( (char*)pdf + pdf->pFiles ); *pFrom; offset += len + 1, pFrom += len + 1 )
+		{ 
 			len = lstrlenW( pFrom );
 			if ( len > 4 && ! lstrcmpiW( pFrom + len - 4, L".lnk" ) )
 			{
@@ -532,14 +532,15 @@ BOOL CShareazaDataSource::DropToFolder(IDataObject* pIDataObject, DWORD grfKeySt
 				if ( sFile.GetLength() )
 				{
 					pAFOP->sFrom.SetSize( pAFOP->sFrom.GetSize() + sFile.GetLength() + 1 );
-					CopyMemory( pAFOP->sFrom.GetData(), (LPCTSTR)sFile,
-						sizeof(WCHAR) * ( sFile.GetLength() + 1 ) );
+					CopyMemory( pAFOP->sFrom.GetData() + offset,
+						(LPCTSTR)sFile, sizeof(WCHAR) * ( sFile.GetLength() + 1 ) );
 				}
 			}
 			else
 			{
 				pAFOP->sFrom.SetSize( pAFOP->sFrom.GetSize() + len + 1 );
-				CopyMemory( pAFOP->sFrom.GetData(), pFrom, sizeof(WCHAR) * ( len + 1 ) );
+				CopyMemory( pAFOP->sFrom.GetData() + offset,
+					pFrom, sizeof(WCHAR) * ( len + 1 ) );
 			}
 			if ( ! bDrop )
 				// Test only one
@@ -583,12 +584,9 @@ BOOL CShareazaDataSource::DropToFolder(IDataObject* pIDataObject, DWORD grfKeySt
 	pAFOP->dwEffect = *pdwEffect;
 
 	HANDLE hThread = BeginThread( "SHFileOperation",
-		AsyncFileOperationThread, (LPVOID)pAFOP );
+		AsyncFileOperationThread, (LPVOID)pAFOP.release() );
 	if ( hThread == NULL )
-	{
-		delete pAFOP;
 		return FALSE;
-	}
 
 	if ( *pdwEffect == DROPEFFECT_MOVE )
 	{
