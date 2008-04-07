@@ -4006,7 +4006,7 @@
 		<control caption="Cancel"/>
 		<control caption="Select a schema from the list, then select the fields to display as columns."/>
 	</dialog>
-	<dialog name="CSecureRuleDlg" cookie="BuStCoStEdBuStEdEdEdEdStEdEdEdEdBuEdBuBuBuStCoStCoEdStEdStEdStBuBu" caption="Security Rule">
+	<dialog name="CSecureRuleDlg" cookie="BuStCoStEdBuStEdEdEdEdStEdEdEdEdBuEdBuBuBuBuStCoStCoEdStEdStEdStBuBu" caption="Security Rule">
 		<control caption="_Rule:"/>
 		<control caption="Type:"/>
 		<control caption="Network (IP) Address|Content Filter"/>
@@ -4021,6 +4021,7 @@
 		<control/>
 		<control caption="Match Any"/>
 		<control caption="Match All"/>
+		<control caption="Reg. Exp."/>
 		<control caption="_Options:"/>
 		<control caption="Action:"/>
 		<control caption="None|Accept|Deny"/>
