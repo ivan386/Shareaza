@@ -972,7 +972,7 @@ BOOL CMatchList::FilterHit(CQueryHit* pHit)
 		using namespace regex;
 		try
 		{
-			const rpattern regExpPattern( (LPCTSTR)m_pszRegexPattern );
+			const rpattern regExpPattern( (LPCTSTR)m_pszRegexPattern, NOCASE, MODE_DEFAULT );
 			match_results results;
 			std::wstring strTemp( pHit->m_sName, pHit->m_sName.GetLength() );
 			rpattern::backref_type matches = regExpPattern.match( strTemp, results );
@@ -989,7 +989,8 @@ BOOL CMatchList::FilterHit(CQueryHit* pHit)
 	if ( m_bFilterPush && pHit->m_bPush == TRI_TRUE ) return FALSE;
 	if ( m_bFilterUnstable && pHit->m_bStable == TRI_FALSE ) return FALSE;
 	if ( m_bFilterReject && pHit->m_bMatched == FALSE ) return FALSE;
-	if ( m_bFilterBogus && pHit->m_bBogus ) return FALSE;
+	if ( m_bFilterBogus && pHit->m_bBogus ) 
+		return FALSE;
 	
 	if ( m_nFilterMinSize > 0 && pHit->m_nSize < m_nFilterMinSize ) return FALSE;
 	if ( m_nFilterMaxSize > 0 && pHit->m_nSize > m_nFilterMaxSize ) return FALSE;

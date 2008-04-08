@@ -806,7 +806,7 @@ BOOL CSecureRule::Match(CQuerySearch::const_iterator itStart,
 		using namespace regex;
 		try
 		{
-			const rpattern regExpPattern( (LPCTSTR)strFilter );
+			const rpattern regExpPattern( (LPCTSTR)strFilter, NOCASE, MODE_DEFAULT );
 			match_results results;
 			std::wstring strTemp( pszContent, _tcslen(pszContent) );
 			rpattern::backref_type matches = regExpPattern.match( strTemp, results );
