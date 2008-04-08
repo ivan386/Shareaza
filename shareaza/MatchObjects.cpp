@@ -786,7 +786,7 @@ bool CMatchList::CreateRegExpFilter(CString strPattern, CString& strFilter)
 						// Add all keywords at the "<_>" position
 						for ( ; itWord != itWordEnd ; itWord++ )
 						{
-							strNewPattern.AppendFormat( L"%s\\s+", 
+							strNewPattern.AppendFormat( L"%s\\s*", 
 								CString( itWord->first, int(itWord->second) ) );
 						}
 						bReplaced = true;
@@ -804,7 +804,7 @@ bool CMatchList::CreateRegExpFilter(CString strPattern, CString& strFilter)
 						{
 							if ( nWord == nNumber )
 							{
-								strNewPattern.AppendFormat( L"%s\\s+", 
+								strNewPattern.AppendFormat( L"%s\\s*", 
 									CString( itWord->first, int(itWord->second) ) );
 								bReplaced = true;
 								break;
@@ -977,11 +977,12 @@ BOOL CMatchList::FilterHit(CQueryHit* pHit)
 			std::wstring strTemp( pHit->m_sName, pHit->m_sName.GetLength() );
 			rpattern::backref_type matches = regExpPattern.match( strTemp, results );
 			if ( matches.matched )
-			{
 				return FALSE;
-			}		
 		}
-		catch (...)	{}
+		catch (...)
+		{
+			theApp.Message( MSG_DEBUG, L"Invalid regexp filter: \"%s\". Ignoring.", (LPCTSTR)m_pszRegexPattern );
+		}
 	}
 
 	if ( m_bFilterBusy && pHit->m_bBusy == TRI_TRUE ) return FALSE;

@@ -942,7 +942,7 @@ CString CSecureRule::GetRegExpFilter(CQuerySearch::const_iterator itStart, CQuer
 					// Add all keywords at the "<_>" position
 					for ( ; itStart != itEnd ; itStart++ )
 					{
-						strFilter.AppendFormat( L"%s\\s+", 
+						strFilter.AppendFormat( L"%s\\s*", 
 							CString( itStart->first, int(itStart->second) ) );
 					}
 				}
@@ -959,7 +959,7 @@ CString CSecureRule::GetRegExpFilter(CQuerySearch::const_iterator itStart, CQuer
 					{
 						if ( nWord == nNumber )
 						{
-							strFilter.AppendFormat( L"%s\\s+", 
+							strFilter.AppendFormat( L"%s\\s*", 
 								CString( itStart->first, int(itStart->second) ) );
 							break;
 						}
@@ -986,6 +986,7 @@ CString CSecureRule::GetRegExpFilter(CQuerySearch::const_iterator itStart, CQuer
 	}
 	catch (...) 
 	{
+		theApp.Message( MSG_DEBUG, L"Invalid regexp filter: \"%s\". Ignoring.", (LPCTSTR)strFilter );
 		strFilter.Empty();
 	}
 
