@@ -959,10 +959,10 @@ BOOL CMatchList::FilterHit(CQueryHit* pHit)
 	else
 		pHit->m_sSpeed.Empty();
 
-	CSearchWnd* pParent = static_cast< CSearchWnd* >( GetParent() );
-	if ( pParent )
+	CBaseMatchWnd* pParent = GetParent();
+	if ( pParent && pParent->IsKindOf( RUNTIME_CLASS( CSearchWnd ) ) )
 	{
-		CQuerySearch* pQuery = pParent->GetLastSearch();
+		CQuerySearch* pQuery = static_cast< CSearchWnd* >( pParent )->GetLastSearch();
 		if ( pQuery && Security.IsDenied( pQuery->begin(), pQuery->end(), pHit->m_sName ) )
 			return FALSE;
 	}
