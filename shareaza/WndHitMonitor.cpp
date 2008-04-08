@@ -1,7 +1,7 @@
 //
 // WndHitMonitor.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -45,14 +45,12 @@ static char THIS_FILE[] = __FILE__;
 IMPLEMENT_SERIAL(CHitMonitorWnd, CBaseMatchWnd, 0)
 
 BEGIN_MESSAGE_MAP(CHitMonitorWnd, CBaseMatchWnd)
-	//{{AFX_MSG_MAP(CHitMonitorWnd)
 	ON_WM_CREATE()
 	ON_WM_DESTROY()
 	ON_WM_CONTEXTMENU()
 	ON_COMMAND(ID_HITMONITOR_CLEAR, OnHitMonitorClear)
 	ON_UPDATE_COMMAND_UI(ID_HITMONITOR_PAUSE, OnUpdateHitMonitorPause)
 	ON_COMMAND(ID_HITMONITOR_PAUSE, OnHitMonitorPause)
-	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 
@@ -62,6 +60,7 @@ END_MESSAGE_MAP()
 CHitMonitorWnd::CHitMonitorWnd()
 {
 	Create( IDR_HITMONITORFRAME );
+	m_bPaused = FALSE;
 }
 
 CHitMonitorWnd::~CHitMonitorWnd()
