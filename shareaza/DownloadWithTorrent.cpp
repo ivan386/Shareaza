@@ -83,11 +83,12 @@ CDownloadWithTorrent::CDownloadWithTorrent() :
 
 CDownloadWithTorrent::~CDownloadWithTorrent()
 {
-	if ( m_bTorrentRequested ) 
-		CBTTrackerRequest::SendStopped( (CDownload*)this );
+	if ( m_bTorrentRequested )
+		CBTTrackerRequest::SendStopped( static_cast< CDownload* >( this ) );
 	m_pPeerID.clear();
 	CloseTorrentUploads();
-	if ( m_pTorrentBlock != NULL ) delete [] m_pTorrentBlock;
+	if ( m_pTorrentBlock )
+		delete [] m_pTorrentBlock;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -212,95 +213,129 @@ BOOL CDownloadWithTorrent::SetTorrent(CBTInfo* pTorrent)
 //////////////////////////////////////////////////////////////////////
 // CDownloadWithTorrent run
 
-BOOL CDownloadWithTorrent::RunTorrent(DWORD tNow)
+bool CDownloadWithTorrent::RunTorrent(DWORD tNow)
 {
-	if ( ! IsTorrent() ) return TRUE;
-	if ( m_bDiskFull ) return FALSE;
-	
-	if ( tNow > m_tTorrentChoke && tNow - m_tTorrentChoke >= 10000 ) 
+	// Return if this isn't a torrent
+	if ( !IsTorrent() )
+		return true;
+
+	// Return if disk is full
+	if ( m_bDiskFull )
+		return false;
+
+	// Choke torrents every 10 seconds
+	if ( tNow > m_tTorrentChoke && tNow - m_tTorrentChoke >= 10000 )
 		ChokeTorrent( tNow );
-	
-	if ( m_pFile != NULL && m_pFile->IsOpen() == FALSE )
+
+	// Check if the torrent file exists and has been opened
+	if ( m_pFile && m_pFile->IsOpen() == FALSE )
 	{
-		BOOL bCreated = ( m_sDiskName.IsEmpty() ||
-						GetFileAttributes( m_sDiskName ) == 0xFFFFFFFF );
-		
-		if ( ! PrepareFile() ) return FALSE;
-		
-		ASSERT( m_pTask == NULL );
-		if ( bCreated ) m_pTask = new CDownloadTask( (CDownload*)this, CDownloadTask::dtaskAllocate );
+		// Check if file has been created on the HDD
+		bool bAllocated = ( !m_sDiskName.IsEmpty()
+			&& GetFileAttributes( m_sDiskName ) != INVALID_FILE_ATTRIBUTES );
+
+		// Try to create and/or open the file
+		if ( !PrepareFile() )
+			return false;
+
+		// If file needed to be created, allocate disk space for it
+		if ( !bAllocated )
+		{
+			ASSERT( m_pTask == NULL );
+			m_pTask = new CDownloadTask( static_cast< CDownload* >( this ),
+				CDownloadTask::dtaskAllocate );
+		}
 	}
-	
-	if ( m_pTask != NULL ) return FALSE;
+
+	// Return if this download is waiting for a download task to finish
+	if ( m_pTask )
+		return false;
 
 	// Can't send an announce for a trackerless torrent
 	if ( !m_pTorrent.m_pAnnounceTracker )
-		return TRUE;
-	
+		return true;
+
+	// Generate a peerid if there isn't one
 	if ( !m_pPeerID )
 		GenerateTorrentDownloadID();
 
-	DWORD nSourcesWanted = 0;
+	// Store some values for later
+	DWORD nSourcesCount = 0ul;
+	DWORD nSourcesMax = 0ul;
+	DWORD nSourcesWanted = 0ul;
+
+	// Check if a tracker has already been locked onto
 	if ( !m_bTorrentStarted )
 	{
-		if ( !IsPaused() && IsTrying() && !m_bTorrentRequested && tNow > m_tTorrentTracker )
+		// Check if download is active, isn't already waiting for a request
+		// reply and is allowed to try and contact this tracker
+		if ( !IsPaused() && IsTrying() && !m_bTorrentRequested
+			&& tNow > m_tTorrentTracker )
 		{
+			// Get the # of sources that can be connected to
+			nSourcesCount = GetBTSourceCount( TRUE );
+
+			// Calculate how many new sources are wanted,
+			// expect a high failure rate
+			nSourcesMax = Settings.BitTorrent.DownloadConnections * 4;
+			if ( nSourcesCount < nSourcesMax )
+				nSourcesWanted = nSourcesMax - nSourcesCount;
+
 			// Initial announce to tracker
-			nSourcesWanted = GetBTSourceCount( TRUE );
-			
-			// Expect a high failure rate
-			if ( nSourcesWanted < Settings.BitTorrent.DownloadConnections * 4 )
-				nSourcesWanted = Settings.BitTorrent.DownloadConnections * 4 - nSourcesWanted;
-			else
-				nSourcesWanted = 0;
-			CBTTrackerRequest::SendStarted( (CDownload*)this, (WORD)nSourcesWanted );
+			CBTTrackerRequest::SendStarted( static_cast< CDownload* >( this ), nSourcesWanted );
 		}
+
+		// Report that the torrent checks have run successfully
+		return true;
 	}
-	else if ( tNow > m_tTorrentTracker )
+
+	// Store if this is a regular update or not
+	bool bRegularUpdate = tNow > m_tTorrentTracker;
+
+	// Check if an update needs to be sent to the tracker. This can either be a
+	// regular update or a request for more sources if the number of known
+	// sources is getting too low.
+	if ( bRegularUpdate
+		|| tNow - m_tTorrentSources > Settings.BitTorrent.DefaultTrackerPeriod )
 	{
-		// Regular tracker update
+		// Check if the torrent is seeding
 		if ( IsSeeding() )
 		{
-			nSourcesWanted = Uploads.GetTorrentUploadCount();
-			if ( nSourcesWanted < Settings.BitTorrent.UploadCount * 4 )
-				nSourcesWanted = Settings.BitTorrent.UploadCount * 4 - nSourcesWanted;
-			else
-				nSourcesWanted = 0;
+			// Use the upload count values
+			nSourcesCount = Uploads.GetTorrentUploadCount();
+			nSourcesMax = Settings.BitTorrent.UploadCount;
 		}
 		else
 		{
-			nSourcesWanted = GetBTSourceCount();
-			if ( nSourcesWanted < Settings.BitTorrent.DownloadConnections * 4 )
-				nSourcesWanted = Settings.BitTorrent.DownloadConnections * 4 - nSourcesWanted;
-			else
-				nSourcesWanted = 0;
+			// Use the download count values
+			nSourcesCount = GetBTSourceCount();
+			nSourcesMax = Settings.BitTorrent.DownloadConnections;
 		}
-		CBTTrackerRequest::SendUpdate( (CDownload*)this, (WORD)nSourcesWanted );
-	}
-	else if ( tNow - m_tTorrentSources > Settings.BitTorrent.DefaultTrackerPeriod )
-	{
-		// Check for source starvation and send tracker update if required
-		if ( IsSeeding() )
+
+		// Request more sources, more often, for regular updates
+		if ( bRegularUpdate )
+			nSourcesMax *= 4;
+
+		// Calculate the # of sources needed
+		if ( nSourcesCount < nSourcesMax )
+			nSourcesWanted = nSourcesMax - nSourcesCount;
+
+		// Check if an update needs to be sent
+		if ( bRegularUpdate || nSourcesWanted )
 		{
-			nSourcesWanted = Uploads.GetTorrentUploadCount();
-			if ( nSourcesWanted < Settings.BitTorrent.UploadCount )
-				nSourcesWanted = Settings.BitTorrent.UploadCount * 4 - nSourcesWanted;
-			else
-				nSourcesWanted = 0;
+			// Send tracker update
+			CBTTrackerRequest::SendUpdate( static_cast< CDownload* >( this ), nSourcesWanted );
 		}
 		else
 		{
-			nSourcesWanted = GetBTSourceCount();
-			if ( nSourcesWanted < Settings.BitTorrent.DownloadConnections )
-				nSourcesWanted = Settings.BitTorrent.DownloadConnections * 4 - nSourcesWanted;
-			else
-				nSourcesWanted = 0;
+			// Record the time that source counts checked even if no update
+			// was sent
+			m_tTorrentSources = tNow;
 		}
-		if ( nSourcesWanted )
-			CBTTrackerRequest::SendUpdate( (CDownload*)this, (WORD)nSourcesWanted );
-		m_tTorrentSources = tNow;
 	}
-	return TRUE;
+
+	// Report that the torrent checks have run successfully
+	return true;
 }
 
 //////////////////////////////////////////////////////////////////////

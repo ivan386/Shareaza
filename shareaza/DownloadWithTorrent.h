@@ -83,7 +83,7 @@ public:
 	CBTPacket*		CreateBitfieldPacket();
 	BOOL			SetTorrent(CBTInfo* pTorrent);
 protected:
-	BOOL			RunTorrent(DWORD tNow);
+	bool			RunTorrent(DWORD tNow);
 	void			CloseTorrent();
 	void			CloseTorrentUploads();
 	BOOL 			CheckTorrentRatio() const;

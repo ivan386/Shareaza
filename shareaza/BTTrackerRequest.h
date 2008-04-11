@@ -1,7 +1,7 @@
 //
 // BTTrackerRequest.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -35,7 +35,7 @@ class CBTTrackerRequest : public CWinThread
 {
 // Construction
 public:
-	CBTTrackerRequest(CDownload* pDownload, LPCTSTR pszVerb = NULL, BOOL bProcess = TRUE, WORD nNumWant = 0xFFFF);
+	CBTTrackerRequest(CDownload* pDownload, LPCTSTR pszVerb, DWORD nNumWant, BOOL bProcess);
 	virtual ~CBTTrackerRequest();
 
 // Attributes
@@ -46,8 +46,8 @@ public:
 
 // Operations
 public:
-	static void		SendStarted(CDownload* pDownload, WORD nNumWant = 0xFFFF);
-	static void		SendUpdate(CDownload* pDownload, WORD nNumWant = 0xFFFF);
+	static void		SendStarted(CDownload* pDownload, DWORD nNumWant);
+	static void		SendUpdate(CDownload* pDownload, DWORD nNumWant);
 	static void		SendCompleted(CDownload* pDownload);
 	static void		SendStopped(CDownload* pDownload);
     static CString	Escape(const Hashes::BtHash& oBTH);
