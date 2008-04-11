@@ -1,7 +1,7 @@
 //
 // LibraryBuilderInternals.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -38,10 +38,12 @@ protected:		// ID3v1 and ID3v2 and MP3
 	static BOOL		ScanMP3Frame(CXMLElement* pXML, HANDLE hFile, DWORD nIgnore);
 protected:		// Module Version
 	static BOOL		ReadVersion(DWORD nIndex, LPCTSTR pszPath);
-	static BOOL		CopyVersionField(CXMLElement* pXML, LPCTSTR pszAttribute, BYTE* pBuffer, LPCTSTR pszKey, DWORD nLangId, BOOL bCommaToDot = FALSE);
+	static bool		CopyVersionField(CXMLElement* pXML, LPCTSTR pszAttribute, BYTE* pBuffer, LPCTSTR pszKey, DWORD nLangId, BOOL bCommaToDot = FALSE);
 	static CString	GetVersionKey(BYTE* pBuffer, LPCTSTR pszKey, DWORD nLangId);
 	static DWORD	GetBestLanguageId(LPVOID pBuffer);
 	static BOOL		GetLanguageId(LPVOID pBuffer, UINT nSize, WORD nLangId, DWORD &nId, bool bOnlyPrimary = false);
+protected:		// Module Manifest Validation
+	static bool		ValidateManifest(LPCTSTR pszPath);
 protected:		// Windows Installer
 	static BOOL		ReadMSI(DWORD nIndex, LPCTSTR pszPath);
 	static CString	GetSummaryField(MSIHANDLE hSummaryInfo, UINT nProperty);

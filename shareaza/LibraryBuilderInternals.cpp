@@ -1,7 +1,7 @@
 //
 // LibraryBuilderInternals.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -937,26 +937,35 @@ BOOL CLibraryBuilderInternals::ReadVersion(DWORD nIndex, LPCTSTR pszPath)
 	CXMLElement* pXML = new CXMLElement( NULL, _T("application") );
 
 	pXML->AddAttribute( _T("os"), _T("Windows") );
-	CopyVersionField( pXML, _T("title"), pBuffer, _T("ProductName"), nLangId );
-	CopyVersionField( pXML, _T("version"), pBuffer, _T("ProductVersion"), nLangId, TRUE );
-	CopyVersionField( pXML, _T("fileDescription"), pBuffer, _T("FileDescription"), nLangId );
-	CopyVersionField( pXML, _T("fileVersion"), pBuffer, _T("FileVersion"), nLangId, TRUE );
-	CopyVersionField( pXML, _T("originalFileName"), pBuffer, _T("OriginalFilename"), nLangId );
-	CopyVersionField( pXML, _T("company"), pBuffer, _T("CompanyName"), nLangId );
-	CopyVersionField( pXML, _T("copyright"), pBuffer, _T("LegalCopyright"), nLangId );
-	CopyVersionField( pXML, _T("comments"), pBuffer, _T("comments"), nLangId );
+
+	bool bOur = false;
+	bOur |= CopyVersionField( pXML, _T("title"), pBuffer, _T("ProductName"), nLangId );
+			CopyVersionField( pXML, _T("version"), pBuffer, _T("ProductVersion"), nLangId, TRUE );
+	bOur |= CopyVersionField( pXML, _T("fileDescription"), pBuffer, _T("FileDescription"), nLangId );
+			CopyVersionField( pXML, _T("fileVersion"), pBuffer, _T("FileVersion"), nLangId, TRUE );
+	bOur |= CopyVersionField( pXML, _T("originalFileName"), pBuffer, _T("OriginalFilename"), nLangId );
+	bOur |= CopyVersionField( pXML, _T("company"), pBuffer, _T("CompanyName"), nLangId );
+	bOur |= CopyVersionField( pXML, _T("copyright"), pBuffer, _T("LegalCopyright"), nLangId );
+	bOur |= CopyVersionField( pXML, _T("comments"), pBuffer, _T("comments"), nLangId );
+
+	LPCTSTR pszExt = PathFindExtension( pszPath );
+	if ( bOur && pszExt && _tcscmp( pszExt, L".exe" ) == 0 /*&& ValidateManifest( pszPath )*/ )
+	{
+		// TODO: mark the file as validated OR otherwise submit corrupted OR delete metadata?
+	}
 
 	delete [] pBuffer;
 
 	return CLibraryBuilder::SubmitMetadata( nIndex, CSchema::uriApplication, pXML );
 }
 
-BOOL CLibraryBuilderInternals::CopyVersionField(CXMLElement* pXML, LPCTSTR pszAttribute, BYTE* pBuffer,
+// Return TRUE if word "Shareaza" was found
+bool CLibraryBuilderInternals::CopyVersionField(CXMLElement* pXML, LPCTSTR pszAttribute, BYTE* pBuffer,
 												LPCTSTR pszKey, DWORD nLangId, BOOL bCommaToDot)
 {
 	CString strValue = GetVersionKey( pBuffer, pszKey, nLangId );
 
-	if ( strValue.IsEmpty() ) return FALSE;
+	if ( strValue.IsEmpty() ) return false;
 
 	if ( bCommaToDot )
 	{
@@ -965,10 +974,29 @@ BOOL CLibraryBuilderInternals::CopyVersionField(CXMLElement* pXML, LPCTSTR pszAt
 			strValue = strValue.Left( nPos ) + '.' + strValue.Mid( nPos + 2 );
 		}
 	}
-
+	
 	pXML->AddAttribute( pszAttribute, strValue );
 
-	return TRUE;
+	int nPos = strValue.Find( L"Shareaza" );
+	bool bOurProduct = false;
+	if ( nPos != -1 )
+	{
+		bool bStartOk = nPos == 0, bEndOk = strValue.GetLength() == nPos + 8;
+		if ( !bStartOk && strValue.GetAt( nPos - 1 ) == ' ' )
+		{
+			bStartOk = true;
+		}
+		if ( !bEndOk && strValue.GetLength() > nPos + 8 && strValue.GetAt( nPos + 8 ) != ' ' )
+		{
+			// ShareazaPlus etc.
+		}
+		else
+			bEndOk = true;
+
+		bOurProduct = bStartOk && bEndOk;
+	}
+
+	return bOurProduct;
 }
 
 CString CLibraryBuilderInternals::GetVersionKey(BYTE* pBuffer, LPCTSTR pszKey, DWORD nLangId)
@@ -1060,6 +1088,55 @@ BOOL CLibraryBuilderInternals::GetLanguageId(LPVOID pBuffer, UINT nSize, WORD nL
 	}
 
 	return FALSE;
+}
+
+//////////////////////////////////////////////////////////////////////
+// CLibraryBuilderInternals Shareaza product validation (threaded)
+bool CLibraryBuilderInternals::ValidateManifest(LPCTSTR pszPath)
+{
+	HMODULE hExe = LoadLibrary( pszPath );
+	if ( hExe == NULL ) return false;
+
+	HRSRC hRes = FindResource( hExe, MAKEINTRESOURCE(1), RT_MANIFEST );
+	if ( hRes == NULL ) 
+	{
+		FreeLibrary( hExe );
+		return false;
+	}
+	
+	HGLOBAL hGlobal = LoadResource( hExe, hRes );
+	if ( hGlobal == NULL )
+	{
+		FreeLibrary( hExe );
+		return false;
+	}
+	
+	DWORD nLength = SizeofResource( hExe, hRes );
+	LPCSTR pData = (LPCSTR)LockResource( hGlobal );
+	if ( pData == NULL )
+	{
+		FreeResource( hGlobal );
+		FreeLibrary( hExe );
+		return false;
+	}
+
+	CString strData( pData, nLength );
+	UnlockResource( hGlobal );
+
+	bool bValid = false;
+	if ( strData.GetLength() )
+	{
+		//CXMLElement* pElement = CXMLElement::FromString( (LPCTSTR)strData );
+		//// Perform validation here
+
+		//delete pElement;
+		bValid = true;
+	}
+
+	FreeResource( hGlobal );
+	FreeLibrary( hExe );
+
+	return bValid;
 }
 
 //////////////////////////////////////////////////////////////////////
