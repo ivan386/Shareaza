@@ -1,7 +1,7 @@
 //
 // HttpRequest.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -42,13 +42,13 @@ public:
 	void		LimitContentLength(DWORD nLimit);
 	void		SetNotify(HWND hWnd, UINT nMsg, WPARAM wParam = 0);
 	int			GetStatusCode() const;
-	BOOL		GetStatusSuccess() const;
+	bool		GetStatusSuccess() const;
 	CString		GetStatusString() const;
 	CString		GetHeader(LPCTSTR pszName) const;
 	CString		GetResponseString(UINT nCodePage = CP_UTF8) const;
 	CBuffer*	GetResponseBuffer() const;
 	BOOL		InflateResponse();
-	BOOL		Execute(BOOL bBackground);
+	bool		Execute(bool bBackground);
 	BOOL		IsPending() const;
 	BOOL		IsFinished() const;
 	void		Cancel();

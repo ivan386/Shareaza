@@ -77,7 +77,7 @@ public:
 	float			GetRatio() const;
 	BOOL			UploadExists(in_addr* pIP) const;
 	BOOL			UploadExists(const Hashes::BtGuid& oGUID) const;
-	void			OnTrackerEvent(BOOL bSuccess, LPCTSTR pszReason = NULL);
+	void			OnTrackerEvent(bool bSuccess, LPCTSTR pszReason = NULL);
 	void			ChokeTorrent(DWORD tNow = 0);
 	CDownloadTransferBT*	CreateTorrentTransfer(CBTClient* pClient);
 	CBTPacket*		CreateBitfieldPacket();

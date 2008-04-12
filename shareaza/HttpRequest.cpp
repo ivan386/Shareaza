@@ -1,7 +1,7 @@
 //
 // HttpRequest.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -145,7 +145,7 @@ int CHttpRequest::GetStatusCode() const
 	return IsPending() ? 0 : m_nStatusCode;
 }
 
-BOOL CHttpRequest::GetStatusSuccess() const
+bool CHttpRequest::GetStatusSuccess() const
 {
 	return ! IsPending() && m_nStatusCode >= 200 && m_nStatusCode < 300;
 }
@@ -175,7 +175,8 @@ CBuffer* CHttpRequest::GetResponseBuffer() const
 
 BOOL CHttpRequest::InflateResponse()
 {
-	if ( IsPending() || m_pResponse == NULL ) return FALSE;
+	if ( IsPending() || m_pResponse == NULL )
+		return FALSE;
 
 	CString strEncoding( GetHeader( _T("Content-Encoding") ) );
 
@@ -194,9 +195,10 @@ BOOL CHttpRequest::InflateResponse()
 //////////////////////////////////////////////////////////////////////
 // CHttpRequest process control
 
-BOOL CHttpRequest::Execute(BOOL bBackground)
+bool CHttpRequest::Execute(bool bBackground)
 {
-	if ( IsPending() ) return FALSE;
+	if ( IsPending() )
+		return false;
 
 	ASSERT( m_sURL.GetLength() );
 
@@ -205,17 +207,21 @@ BOOL CHttpRequest::Execute(BOOL bBackground)
 	m_nStatusCode = 0;
 	m_sStatusString.Empty();
 	m_pResponseHeaders.RemoveAll();
-	if ( m_pResponse ) delete m_pResponse;
+
+	if ( m_pResponse )
+		delete m_pResponse;
 	m_pResponse = NULL;
-	if ( m_sUserAgent.IsEmpty() ) m_sUserAgent = Settings.SmartAgent();
+
+	if ( m_sUserAgent.IsEmpty() )
+		m_sUserAgent = Settings.SmartAgent();
 
 	m_hThread = BeginThread( "HTTPRequest", (AFX_THREADPROC)ThreadStart, this );
 	if ( ! m_hThread )
-		return FALSE;
+		return false;
 
 	if ( bBackground )
 	{
-		return TRUE;
+		return true;
 	}
 	else
 	{

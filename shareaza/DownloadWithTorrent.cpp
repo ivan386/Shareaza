@@ -472,7 +472,7 @@ void CDownloadWithTorrent::SendStopped()
 //////////////////////////////////////////////////////////////////////
 // CDownloadWithTorrent tracker event handler
 
-void CDownloadWithTorrent::OnTrackerEvent(BOOL bSuccess, LPCTSTR pszReason)
+void CDownloadWithTorrent::OnTrackerEvent(bool bSuccess, LPCTSTR pszReason)
 {
 	DWORD tNow = GetTickCount();
 
@@ -484,9 +484,10 @@ void CDownloadWithTorrent::OnTrackerEvent(BOOL bSuccess, LPCTSTR pszReason)
 		m_pTorrent.SetTrackerSucceeded(tNow);
 
 		// Lock on this tracker if we were searching for one
-		if ( m_pTorrent.m_nTrackerMode == tMultiFinding ) 
+		if ( m_pTorrent.m_nTrackerMode == tMultiFinding )
 		{
-			theApp.Message( MSG_DEBUG , _T("Locked on to tracker %s"), m_pTorrent.m_sTracker );
+			theApp.Message( MSG_DEBUG , _T("[BT] Locked onto tracker %s"),
+				m_pTorrent.m_sTracker );
 			m_pTorrent.m_nTrackerMode = tMultiFound;
 		}
 	}

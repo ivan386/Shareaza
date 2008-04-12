@@ -35,13 +35,13 @@ class CBTTrackerRequest : public CWinThread
 {
 // Construction
 public:
-	CBTTrackerRequest(CDownload* pDownload, LPCTSTR pszVerb, DWORD nNumWant, BOOL bProcess);
+	CBTTrackerRequest(CDownload* pDownload, LPCTSTR pszVerb, DWORD nNumWant, bool bProcess);
 	virtual ~CBTTrackerRequest();
 
 // Attributes
 public:
 	CDownload*		m_pDownload;
-	BOOL			m_bProcess;
+	bool			m_bProcess;
 	CHttpRequest	m_pRequest;
 
 // Operations
@@ -49,8 +49,8 @@ public:
     CString	Escape(const Hashes::BtHash& oBTH);
     CString	Escape(const Hashes::BtGuid& oGUID);
 protected:
-	void	Process(BOOL bRequest);
-	BOOL	Process(CBENode* pRoot);
+	void	Process(bool bRequest);
+	bool	Process(CBENode* pRoot);
 
 // Overrides
 public:
