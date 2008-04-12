@@ -1,7 +1,7 @@
 //
 // DownloadTransferHTTP.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -1293,7 +1293,7 @@ BOOL CDownloadTransferHTTP::ReadContent()
 	{
 		m_pSource->SetValid();
 
-		QWORD nLength	= min( pInput->m_nLength, m_nLength - m_nPosition );
+		size_t nLength	= min( pInput->m_nLength, m_nLength - m_nPosition );
 		BOOL bSubmit	= FALSE;
 
 		if ( m_bChunked )
@@ -1359,7 +1359,9 @@ BOOL CDownloadTransferHTTP::ReadContent()
 
 				if ( nLength > m_nChunkLength )
 				{
-					nLength = m_nChunkLength;
+					// m_nChunkLength must be smaller than nLength so this cast
+					// is safe
+					nLength = static_cast< size_t >( m_nChunkLength );
 				}
 				m_nChunkLength -= nLength;
 				if ( m_nChunkLength == 0 )
