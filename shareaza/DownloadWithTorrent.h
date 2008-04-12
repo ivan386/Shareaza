@@ -97,16 +97,8 @@ private:
 	void			SendStarted(DWORD nNumWant);
 	void			SendUpdate(DWORD nNumWant);
 	void			SendStopped();
+	TCHAR			GenerateCharacter() const;
 
-	TCHAR GenerateCharacter() const
-	{
-		switch (rand() % 3)
-		{
-		case 0 : return TCHAR( 'a' + ( rand() % 26 ) );
-		case 1 : return TCHAR( 'A' + ( rand() % 26 ) );
-		default: return TCHAR( '0' + ( rand() % 10 ) );
-		}
-	}
 	friend class CDownloads;	// m_bSeeding for Load()
 };
 
