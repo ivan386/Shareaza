@@ -96,11 +96,11 @@ TCHAR CDownloadWithTorrent::GenerateCharacter() const
 	switch ( rand() % 3 )
 	{
 	case 0:
-		return ( 'a' + ( rand() % 26 ) );
+		return static_cast< TCHAR >( 'a' + ( rand() % 26 ) );
 	case 1:
-		return ( 'A' + ( rand() % 26 ) );
+		return static_cast< TCHAR >( 'A' + ( rand() % 26 ) );
 	default:
-		return ( '0' + ( rand() % 10 ) );
+		return static_cast< TCHAR >( '0' + ( rand() % 10 ) );
 	}
 }
 
