@@ -566,7 +566,7 @@ void CDownload::OnMoved(CDownloadTask* pTask)
 	if ( m_nTorrentBlock > 0 && m_nTorrentSuccess >= m_nTorrentBlock )
 	{
 		CloseTorrentUploads();
-		CBTTrackerRequest::SendCompleted( this );
+		SendCompleted();
 		m_bSeeding = TRUE;
 		m_tBegan = 0;
 		m_bDownloading	= FALSE;

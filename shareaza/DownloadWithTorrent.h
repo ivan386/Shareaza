@@ -84,6 +84,7 @@ public:
 	BOOL			SetTorrent(CBTInfo* pTorrent);
 protected:
 	bool			RunTorrent(DWORD tNow);
+	void			SendCompleted();
 	void			CloseTorrent();
 	void			CloseTorrentUploads();
 	BOOL 			CheckTorrentRatio() const;
@@ -93,6 +94,9 @@ protected:
 private:
 	BOOL			GenerateTorrentDownloadID();	//Generate Peer ID
 	DWORD			GetRetryTime() const;
+	void			SendStarted(DWORD nNumWant);
+	void			SendUpdate(DWORD nNumWant);
+	void			SendStopped();
 
 	TCHAR GenerateCharacter() const
 	{

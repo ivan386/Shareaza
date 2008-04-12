@@ -46,12 +46,8 @@ public:
 
 // Operations
 public:
-	static void		SendStarted(CDownload* pDownload, DWORD nNumWant);
-	static void		SendUpdate(CDownload* pDownload, DWORD nNumWant);
-	static void		SendCompleted(CDownload* pDownload);
-	static void		SendStopped(CDownload* pDownload);
-    static CString	Escape(const Hashes::BtHash& oBTH);
-    static CString	Escape(const Hashes::BtGuid& oGUID);
+    CString	Escape(const Hashes::BtHash& oBTH);
+    CString	Escape(const Hashes::BtGuid& oGUID);
 protected:
 	void	Process(BOOL bRequest);
 	BOOL	Process(CBENode* pRoot);
