@@ -273,7 +273,6 @@ CSettings::CSettings()
 	Add( _T("Discovery"), _T("Lowpoint"), &Discovery.Lowpoint, 10, 1, 1, 512 );
 	Add( _T("Discovery"), _T("UpdatePeriod"), &Discovery.UpdatePeriod, 30*60, 60, 1, 60*24, _T(" m") );
 
-	Add( _T("Gnutella"), _T("BlockBlankClients"), &Gnutella.BlockBlankClients, true );
 	Add( _T("Gnutella"), _T("ConnectFactor"), &Gnutella.ConnectFactor, 4, 1, 1, 20, _T("x") );
 	Add( _T("Gnutella"), _T("ConnectThrottle"), &Gnutella.ConnectThrottle, 120, 1, 60, 3600, _T(" s") );
 	Add( _T("Gnutella"), _T("DeflateHub2Hub"), &Gnutella.DeflateHub2Hub, true );

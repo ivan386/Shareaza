@@ -677,23 +677,23 @@ BOOL CConnection::SendMyAddress()
 //////////////////////////////////////////////////////////////////////
 // CConnection blocked agent filter
 
-// Call to determine if the remote computer is running software we'd rather not communicate with
-// Returns true to block or false to allow the program
+// Call to determine if the remote computer is running software we'd rather not
+// communicate with.
+// Returns true to block or false to allow the program.
+
 BOOL CConnection::IsAgentBlocked()
 {
-	// Eliminate some obvious block and don't block cases
-	if ( m_sUserAgent == _T("Fake Shareaza") ) return TRUE; // Block "Fake Shareaza"
+	// Block "Fake Shareaza"
+	if ( m_sUserAgent == _T("Fake Shareaza") )
+		return TRUE;
 
-	// The remote computer didn't send a "User-Agent" header, or the sent blank text
-	if ( m_sUserAgent.IsEmpty() )									// Blank user agent
-	{
-		// If settings say we should block that, return true
-		if ( Settings.Gnutella.BlockBlankClients ) return TRUE;
-		else                                       return FALSE;	
-	}
+	// The remote computer didn't send a "User-Agent", or it sent whitespace
+	if ( m_sUserAgent.Trim().IsEmpty() )
+		return TRUE;
 
 	// If the list of programs to block is empty, allow this program
-	if ( Settings.Uploads.BlockAgents.IsEmpty() ) return FALSE;
+	if ( Settings.Uploads.BlockAgents.IsEmpty() )
+		return FALSE;
 
 	// Get the list of blocked programs, and make a copy here of it all in lowercase letters
 	CString strBlocked = Settings.Uploads.BlockAgents;
@@ -711,7 +711,8 @@ BOOL CConnection::IsAgentBlocked()
 		strBlocked			= strBlocked.Mid( strBrowser.GetLength() + 1 );	// Remove that much text from the start
 
 		// If the blocked list still exists and the blocked program and remote program match, block it
-		if ( strBrowser.GetLength() > 0 && strAgent.Find( strBrowser ) >= 0 ) return TRUE;
+		if ( strBrowser.GetLength() > 0 && strAgent.Find( strBrowser ) >= 0 )
+			return TRUE;
 	}
 
 	// Allow it

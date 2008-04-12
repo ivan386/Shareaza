@@ -298,7 +298,6 @@ public:
 		DWORD		HostCacheSize;
 		DWORD		HostCacheView;
 		DWORD		ConnectThrottle;			// Delay between connection attempts (seconds)
-		bool		BlockBlankClients;			// Block Ultrapeers with no user agent
 		bool		SpecifyProtocol;			// Specify G1 or G2 when initiating a connection
 	} Gnutella;
 	
