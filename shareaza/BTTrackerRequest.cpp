@@ -290,13 +290,15 @@ bool CBTTrackerRequest::Process(CBENode* pRoot)
 		m_pDownload->OnTrackerEvent( false, strError );
 		return false;
 	}
-	int nInterval = (int)(DWORD)pInterval->GetInt();
+	QWORD nInterval = pInterval->GetInt();
 
 	// Verify interval is valid
-	nInterval = max( nInterval, 60*2 );
-	nInterval = min( nInterval, 60*60 );
+	nInterval = max( nInterval, 60ull * 2ull );
+	nInterval = min( nInterval, 60ull * 60ull );
 
-	m_pDownload->m_tTorrentTracker = GetTickCount() + 1000 * nInterval;
+	// nInterval is now between 120 - 3600 so this cast is safe
+	m_pDownload->m_tTorrentTracker = static_cast< DWORD >( nInterval ) * 1000ul;
+	m_pDownload->m_tTorrentTracker += GetTickCount();
 	m_pDownload->m_bTorrentStarted = TRUE;
 
 	// Get list of peers
