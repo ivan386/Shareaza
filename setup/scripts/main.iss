@@ -99,7 +99,7 @@ AppModifyPath="{app}\Uninstall\setup.exe"
 ChangesAssociations=yes
 ChangesEnvironment=yes
 OutputManifestFile=Manifest_{#type}{#PlatformName}.txt
-MinVersion=4.0,4.0sp6
+MinVersion=0,4.0sp6
 #if PlatformName == "x64"
 ArchitecturesAllowed=x64
 ArchitecturesInstallIn64BitMode=x64
@@ -138,11 +138,6 @@ Source: "{#root}\skin.exe";     DestDir: "{app}"; Flags: overwritereadonly repla
 
 
 ;--== Dynamic Link Libraries ==--
-#if PlatformName != "x64"
-; Unicows: Install on Win 9X
-Source: "setup\builds\unicows.dll"; DestDir: "{sys}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension sharedfile uninsnosharedfileprompt; MinVersion: 4.0,0
-#endif
-
 ; Main files
 Source: "{#root}\*.dll"; DestDir: "{app}";         Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 Source: "{#root}\*.dll"; DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion uninsremovereadonly sortfilesbyextension deleteafterinstall
@@ -157,11 +152,6 @@ Source: "plugins\RazaWebHook.dll"; DestDir: "{app}\Plugins"; Flags: overwriterea
 
 #ifdef Debug
 ;--== Debug Databases ==--
-#if PlatformName != "x64"
-; Unicows: Install on Win 9X
-Source: "setup\builds\unicows.pdb"; DestDir: "{sys}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension; MinVersion: 4.0,0
-#endif
-
 ; Main files
 Source: "{#root}\shareaza.pdb"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 ; ** The next line can be uncommented to include geoip, skin & zlibwapi debug database files
