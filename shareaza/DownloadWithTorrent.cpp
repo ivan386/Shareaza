@@ -550,10 +550,12 @@ void CDownloadWithTorrent::OnTrackerEvent(BOOL bSuccess, LPCTSTR pszReason)
 
 DWORD CDownloadWithTorrent::GetRetryTime() const
 {
-	// 0..2 - 20 sec, 3..5 - 60 sec, 6..8 - 2 min, ..., > 24 - 1 hour
-	DWORD tRetryTime = m_pTorrent.GetTrackerFailures() / 3 + 1;
-	tRetryTime = tRetryTime * ( tRetryTime + 1 ) * 10 * 1000;
-	return ( tRetryTime > 60 * 60 * 1000 ) ? ( 60 * 60 * 1000 ) : tRetryTime;
+	// 0..2 - 1 min, 3..5 - 4 min, 6..8 - 9 min, ..., > 20 - 1 hour
+	DWORD tRetryTime = m_pTorrent.GetTrackerFailures() / 3ul + 1ul;
+	tRetryTime *= tRetryTime * 60ul * 1000ul;
+	if ( tRetryTime > 60ul * 60ul * 1000ul )
+		tRetryTime = 60ul * 60ul * 1000ul;
+	return tRetryTime;
 }
 
 //////////////////////////////////////////////////////////////////////
