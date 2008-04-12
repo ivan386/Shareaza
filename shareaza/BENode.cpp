@@ -1,7 +1,7 @@
 //
 // BENode.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -107,41 +107,56 @@ CBENode* CBENode::Add(const LPBYTE pKey, size_t nKey)
 	
 	auto_ptr< CBENode > pNew( new CBENode );
 	CBENode* pNew_ = pNew.get();
-	
+
+	// Overflow check
+	ASSERT ( m_nValue <= SIZE_T_MAX );
+	size_t nValue = static_cast< size_t >( m_nValue );
+
 	if ( m_nType == beList )
 	{
-		auto_array< CBENode* > pList( new CBENode*[ (size_t)m_nValue + 1 ] );
-		
-		if ( m_pValue != NULL )
+		// Overflow check
+		ASSERT( nValue + 1 <= SIZE_T_MAX );
+		auto_array< CBENode* > pList( new CBENode*[ nValue + 1 ] );
+
+		if ( m_pValue )
 		{
-			memcpy( pList.get(), m_pValue, (size_t)m_nValue * sizeof( CBENode* ) );
+			// Overflow check
+			ASSERT( nValue * sizeof( CBENode* ) <= SIZE_T_MAX );
+			memcpy( pList.get(), m_pValue, nValue * sizeof( CBENode* ) );
+
 			delete [] (CBENode**)m_pValue;
 		}
-		
-		pList[ m_nValue++ ] = pNew.release();
+
+		pList[ nValue ] = pNew.release();
 		m_pValue = pList.release();
+		++m_nValue;
 	}
 	else
 	{
-		auto_array< CBENode* > pList( new CBENode*[ (size_t)m_nValue * 2 + 2 ] );
-		
-		if ( m_pValue != NULL )
+		// Overflow check
+		ASSERT( nValue * 2 + 2 <= SIZE_T_MAX );
+		auto_array< CBENode* > pList( new CBENode*[ nValue * 2 + 2 ] );
+
+		if ( m_pValue )
 		{
-			memcpy( pList.get(), m_pValue, 2 * (size_t)m_nValue * sizeof( CBENode* ) );
+			// Overflow check
+			ASSERT( 2 * nValue * sizeof( CBENode* ) <= SIZE_T_MAX );
+			memcpy( pList.get(), m_pValue, 2 * nValue * sizeof( CBENode* ) );
+
 			delete [] (CBENode**)m_pValue;
 		}
-		
+
 		auto_array< BYTE > pxKey( new BYTE[ nKey + 1 ] );
 		memcpy( pxKey.get(), pKey, nKey );
 		pxKey[ nKey ] = 0;
-		
-		pList[ m_nValue * 2 ]		= pNew.release();
-		pList[ m_nValue * 2 + 1 ]	= (CBENode*)pxKey.release();
-		
+
+		pList[ nValue * 2 ]		= pNew.release();
+		pList[ nValue * 2 + 1 ]	= (CBENode*)pxKey.release();
+
 		m_pValue = pList.release();
-		m_nValue ++;
+		++m_nValue;
 	}
-	
+
 	return pNew_;
 }
 
