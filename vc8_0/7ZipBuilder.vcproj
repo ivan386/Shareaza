@@ -22,6 +22,7 @@
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)\plugins\"
 			IntermediateDirectory="$(OutDir)$(ProjectName)"
 			ConfigurationType="2"
+			UseOfATL="1"
 			CharacterSet="1"
 			>
 			<Tool
@@ -82,10 +83,8 @@
 			<Tool
 				Name="VCLinkerTool"
 				RegisterOutput="true"
-				AdditionalDependencies="unicows.lib kernel32.lib advapi32.lib user32.lib gdi32.lib shell32.lib comdlg32.lib version.lib mpr.lib rasapi32.lib winmm.lib winspool.lib vfw32.lib secur32.lib oleacc.lib oledlg.lib sensapi.lib"
 				OutputFile="$(OutDir)$(ProjectName).dll"
 				GenerateManifest="false"
-				IgnoreDefaultLibraryNames="kernel32.lib;advapi32.lib;user32.lib;gdi32.lib;shell32.lib;comdlg32.lib;version.lib;mpr.lib;rasapi32.lib;winmm.lib;winspool.lib;vfw32.lib;secur32.lib;oleacc.lib;oledlg.lib;sensapi.lib"
 				ModuleDefinitionFile="&quot;$(SolutionDir)..\plugins\$(ProjectName)\$(ProjectName).def&quot;"
 				GenerateDebugInformation="true"
 			/>
@@ -119,6 +118,7 @@
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)\plugins\"
 			IntermediateDirectory="$(OutDir)$(ProjectName)"
 			ConfigurationType="2"
+			UseOfATL="1"
 			CharacterSet="1"
 			>
 			<Tool
@@ -211,7 +211,6 @@
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)\plugins\"
 			IntermediateDirectory="$(OutDir)$(ProjectName)"
 			ConfigurationType="2"
-			UseOfMFC="2"
 			UseOfATL="2"
 			CharacterSet="2"
 			WholeProgramOptimization="1"
@@ -268,9 +267,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				RegisterOutput="true"
-				AdditionalDependencies="unicows.lib kernel32.lib advapi32.lib user32.lib gdi32.lib shell32.lib comdlg32.lib version.lib mpr.lib rasapi32.lib winmm.lib winspool.lib vfw32.lib secur32.lib oleacc.lib oledlg.lib sensapi.lib"
 				OutputFile="$(OutDir)$(ProjectName).dll"
-				IgnoreDefaultLibraryNames="kernel32.lib;advapi32.lib;user32.lib;gdi32.lib;shell32.lib;comdlg32.lib;version.lib;mpr.lib;rasapi32.lib;winmm.lib;winspool.lib;vfw32.lib;secur32.lib;oleacc.lib;oledlg.lib;sensapi.lib"
 				ModuleDefinitionFile="&quot;$(SolutionDir)..\plugins\$(ProjectName)\$(ProjectName).def&quot;"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
@@ -306,7 +303,6 @@
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)\plugins\"
 			IntermediateDirectory="$(OutDir)$(ProjectName)"
 			ConfigurationType="2"
-			UseOfMFC="2"
 			UseOfATL="2"
 			CharacterSet="2"
 			WholeProgramOptimization="1"

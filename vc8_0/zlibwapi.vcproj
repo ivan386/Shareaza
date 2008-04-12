@@ -69,10 +69,8 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="unicows.lib kernel32.lib advapi32.lib user32.lib gdi32.lib shell32.lib comdlg32.lib version.lib mpr.lib rasapi32.lib winmm.lib winspool.lib vfw32.lib secur32.lib oleacc.lib oledlg.lib sensapi.lib"
 				OutputFile="$(OutDir)$(ProjectName).dll"
 				GenerateManifest="false"
-				IgnoreDefaultLibraryNames="kernel32.lib;advapi32.lib;user32.lib;gdi32.lib;shell32.lib;comdlg32.lib;version.lib;mpr.lib;rasapi32.lib;winmm.lib;winspool.lib;vfw32.lib;secur32.lib;oleacc.lib;oledlg.lib;sensapi.lib"
 				ModuleDefinitionFile="&quot;$(SolutionDir)..\shareaza\zlib\zlib.def&quot;"
 				GenerateDebugInformation="true"
 			/>
@@ -186,7 +184,6 @@
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)\"
 			IntermediateDirectory="$(OutDir)$(ProjectName)"
 			ConfigurationType="2"
-			UseOfMFC="2"
 			WholeProgramOptimization="1"
 			>
 			<Tool
@@ -230,9 +227,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="unicows.lib kernel32.lib advapi32.lib user32.lib gdi32.lib shell32.lib comdlg32.lib version.lib mpr.lib rasapi32.lib winmm.lib winspool.lib vfw32.lib secur32.lib oleacc.lib oledlg.lib sensapi.lib"
 				OutputFile="$(OutDir)$(ProjectName).dll"
-				IgnoreDefaultLibraryNames="kernel32.lib;advapi32.lib;user32.lib;gdi32.lib;shell32.lib;comdlg32.lib;version.lib;mpr.lib;rasapi32.lib;winmm.lib;winspool.lib;vfw32.lib;secur32.lib;oleacc.lib;oledlg.lib;sensapi.lib"
 				ModuleDefinitionFile="&quot;$(SolutionDir)..\shareaza\zlib\zlib.def&quot;"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
@@ -268,7 +263,6 @@
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)\"
 			IntermediateDirectory="$(OutDir)$(ProjectName)"
 			ConfigurationType="2"
-			UseOfMFC="2"
 			WholeProgramOptimization="1"
 			>
 			<Tool
