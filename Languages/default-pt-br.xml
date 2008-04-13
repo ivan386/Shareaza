@@ -2529,6 +2529,7 @@
 <!-- Tips displayed when mouse is moved over controls in the dialogs -->
 <controlTips>
 	<tip id="IDC_THROTTLE_MODE" message="No modo máximo a banda não excederá o valor especificado. No modo médio flutuará em volta do valor para ambos os lados."/>
+	<tip id="IDC_REGEXP" message="Insira expressões regulares em sintaxe perl.{n}As palavras chave da busca podem ser especificadas em uma forma de &lt;n&gt;, onde n é um número entre 1 e 9. Se você quer pôr todas as palavras-chave uma após a outra, use um marcador &lt;_&gt; ."/>
 	<tip id="IDC_SHARE_PARTIALS" message="Esta opção não tem efeito em downloads iniciados anteriormente, esta opção também é ignorada se o arquivo tem o hash eDonkey e a rede eDonkey está ativada ou se é um torrent.{n}Contudo esta opção não é ignorada se o download está pausado.{n}{n}ATENÇÃO: Use esta opção só em caso de necessidade real, se você abusar desta opção você pode ser banido."/>
 </controlTips>
 <!-- Localised Strings -->
@@ -2722,6 +2723,7 @@
 	<string id="16077" value="O endereço %s já está sendo bloqueado pelas suas regras de segurança."/>
 	<string id="16078" value="Adicionada uma regra de segurança para bloquear %s."/>
 	<string id="16079" value="Você tem certeza que você quer desconectar?"/>
+	<string id="16080" value="Você está executando o Agendador no modo 'apenas G2'. Você gostaria de desativar esta modo, para que todas as redes ativas permaneçam conectadas?"/>
 	<string id="16081" value="Enviando inquisição para &quot;%s&quot; para %s."/>
 	<string id="16083" value="Forçar o seu PC em modo de HUB pode ter resultados adversos na perfomance e na rede P2P. É geralmente melhor deixar o Shareaza decidir se o modo hub deve ou não ser usado.\n\nModo hub NÃO produz melhores resultados de busca, ou tem quaisquer outras vantagens a você.\n\nVocê realmente quer fazer isso, apesar destas desvantagens?"/>
 	<string id="16084" value="Desativar o suporte aos protocolos Gnutella-1 pode limitar os seus resultados de busca, e se você está agindo como um hub pode também ter um impacto sob os resultados de outros usuários. Você tem certeza que você quer fazer isto?"/>
@@ -3865,14 +3867,14 @@
 		<control caption="Resultados Falsos"/>
 		<control caption="Filtrar"/>
 		<control caption="Cancelar"/>
+		<control caption="Arquivos suspeitos"/>
+		<control caption="Filtros:"/>
 		<control/>
 		<control caption="Pôr como padrão"/>
 		<control caption="Salvar como"/>
 		<control caption="Apagar"/>
 		<control caption="Filtros:"/>
 		<control caption="Arquivos DRM"/>
-		<control caption="Arquivos suspeitos"/>
-		<control caption="Resultados adultos"/>
 	</dialog>
 	<dialog name="CSaveFilterAsDlg" cookie="EdBuBuSt" caption="Salvar filtro como">
 		<control/>
@@ -4017,13 +4019,14 @@
 		<control/><control/><control/><control/>
 		<control caption="Filtro de Conteúdo:"/>
 		<control/>
-		<control caption="Combinar Qualquer"/>
+		<control caption="Combinar Qualquer Um"/>
 		<control caption="Combinar Todos"/>
+		<control caption="Reg. Exp."/>
 		<control caption="Opções:"/>
 		<control caption="Ação:"/>
 		<control caption="Nenhuma|Aceitar|Negar"/>
 		<control caption="Expirar:"/>
-		<control caption="Nunca (Indefinido)|Ao fim da Sessão|Após:"/>
+		<control caption="Nunca (Indefinido)|No fim da Sessão|Após:"/>
 		<control/>
 		<control caption="d"/>
 		<control/>
