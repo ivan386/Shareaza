@@ -88,6 +88,7 @@ public:
 	CLibraryFile*	m_pNextHit;
 	DWORD			m_nCollIndex;
 	int				m_nIcon16;
+	BOOL			m_bNewFile;
 	
 // Operations
 public:
@@ -99,6 +100,8 @@ public:
 	BOOL			IsSchemaURI(LPCTSTR pszURI) const;
 	BOOL			IsRated() const;		// File rated (or commented)
 	BOOL			IsRatedOnly() const;	// File rated but have no metadata
+	BOOL			IsHashed() const;
+	BOOL			IsNewFile() const;
 public:
 	BOOL			Rebuild();
 	BOOL			Rename(LPCTSTR pszName);

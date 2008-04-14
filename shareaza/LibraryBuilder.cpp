@@ -415,8 +415,6 @@ void CLibraryBuilder::OnRun()
 		}
 	}
 
-	Settings.Live.NewFile = FALSE;
-
 	CQuickLock pLock( m_pSection );
 	m_bThread = FALSE;
 	m_hThread = NULL;
@@ -544,6 +542,7 @@ BOOL CLibraryBuilder::HashFile(LPCTSTR szPath, HANDLE hFile, DWORD nIndex)
 
 		Library.RemoveFile( pFile );
 
+		pFile->m_bNewFile		= TRUE;
 		pFile->m_bBogus			= FALSE;
 		pFile->m_nVirtualBase	= bVirtual ? nFileBase : 0;
 		pFile->m_nVirtualSize	= bVirtual ? nFileSize : 0;

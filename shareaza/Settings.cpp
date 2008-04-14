@@ -55,7 +55,6 @@ CSettings::CSettings()
 	Live.AutoClose					= false;
 	Live.FirstRun					= false;
 	Live.LastDuplicateHash			= L"";
-	Live.NewFile					= false;
 	Live.MaliciousWarning			= false;
 
 	// Add all settings

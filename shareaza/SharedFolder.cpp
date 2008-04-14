@@ -347,9 +347,6 @@ BOOL CLibraryFolder::ThreadScan(volatile BOOL* pbContinue, DWORD nScanCookie)
 	WIN32_FIND_DATA pFind;
 	HANDLE hSearch;
 	
-	if ( m_pParent == NULL )
-		theApp.Message( MSG_DEBUG, _T("Library scanning: %s"), (LPCTSTR)m_sPath );
-	
 	if ( m_sPath.CompareNoCase( Settings.Downloads.IncompletePath ) == 0 ) return FALSE;
 	
 	strMetaData = m_sPath + _T("\\Metadata");
@@ -505,8 +502,8 @@ BOOL CLibraryFolder::ThreadScan(volatile BOOL* pbContinue, DWORD nScanCookie)
 		}
 	}
 	
-	if ( m_pParent == NULL )
-		theApp.Message( MSG_DEBUG, _T("Finished scanning (%i)"), bChanged );
+	if ( m_pParent == NULL && bChanged )
+		theApp.Message( MSG_DEBUG, _T("Library folder %s was changed"), (LPCTSTR)m_sPath );
 	
 	return bChanged;
 }

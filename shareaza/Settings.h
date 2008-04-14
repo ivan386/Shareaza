@@ -560,7 +560,6 @@ public:
 		bool		AutoClose;
 		bool		FirstRun;					// Is this the first time Shareaza is being run?
 		CString		LastDuplicateHash;			// Stores the hash of the file about which the warning was shown
-		bool		NewFile;					// TRUE if the new file was added to the Library
 		bool		MaliciousWarning;			// Is the warning dialog opened?
 	} Live;
 

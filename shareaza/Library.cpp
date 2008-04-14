@@ -124,14 +124,14 @@ void CLibrary::AddFile(CLibraryFile* pFile)
 			GetAlbumRoot()->OrganiseFile( pFile );
 		}
 
-        if ( !pFile->m_oSHA1 || !pFile->m_oTiger || !pFile->m_oMD5 || !pFile->m_oED2K ) // BTH ignored
+        if ( ! pFile->IsHashed() )
 		{
 			LibraryBuilder.Add( pFile ); // hash the file and add it again
-			Settings.Live.NewFile = TRUE;
-			return;
 		}
-		else if ( Settings.Live.NewFile ) // the new file was hashed
+		else if ( pFile->IsNewFile() ) // the new file was hashed
 		{
+			pFile->m_bNewFile = FALSE;
+
 			CheckDuplicates( pFile ); // check for duplicates
 		}
 	}
@@ -187,7 +187,6 @@ void CLibrary::CheckDuplicates(CLibraryFile* pFile, bool bForce)
 		if ( Settings.Live.LastDuplicateHash == pFile->m_oMD5.toString() && !bForce )
 		{
 			// we already warned about the same file
-			Settings.Live.NewFile = FALSE;
 			return;
 		}
 		Settings.Live.LastDuplicateHash = pFile->m_oMD5.toString();
@@ -200,7 +199,6 @@ void CLibrary::CheckDuplicates(CLibraryFile* pFile, bool bForce)
 		m_pSection.Unlock();
 		if ( dlg.DoModal() != IDOK )
 		{
-			Settings.Live.NewFile = FALSE;
 			Settings.Live.LastDuplicateHash.Empty();
 			dlg.m_nAction = 3;
 		}
@@ -535,13 +533,15 @@ BOOL CLibrary::ThreadScan()
 	BOOL bPeriodicScan = ( m_nScanTime < tNow - Settings.Library.WatchFoldersTimeout * 1000 );
 	BOOL bForcedScan = ( m_nForcedUpdateCookie < m_nUpdateCookie ) &&
 		( m_nUpdateCookie > tNow - Settings.Library.WatchFoldersTimeout * 1000 );
-	if ( bForcedScan )
-		m_nForcedUpdateCookie = m_nUpdateCookie;
 
-	if ( bPeriodicScan || bForcedScan )
+	bChanged = LibraryFolders.ThreadScan( &m_bThread, ( bPeriodicScan || bForcedScan ) );
+
+	if ( bPeriodicScan || bForcedScan || bChanged )
 	{
-		bChanged = LibraryFolders.ThreadScan( &m_bThread, FALSE );
 		m_nScanTime = GetTickCount();
+
+		if ( bForcedScan )
+			m_nForcedUpdateCookie = m_nUpdateCookie;
 
 		if ( bChanged )
 			Update();

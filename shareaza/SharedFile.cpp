@@ -25,6 +25,7 @@
 #include "SharedFile.h"
 #include "SharedFolder.h"
 #include "Library.h"
+#include "LibraryBuilder.h"
 #include "HashDatabase.h"
 
 #include "Network.h"
@@ -96,7 +97,8 @@ CLibraryFile::CLibraryFile(CLibraryFolder* pFolder, LPCTSTR pszName) :
 	m_nSearchWords( 0 ),
 	m_pNextHit( NULL ),
 	m_nCollIndex( 0 ),
-	m_nIcon16( -1 )
+	m_nIcon16( -1 ),
+	m_bNewFile( FALSE )
 {
 	ZeroMemory( &m_pTime, sizeof(m_pTime) );
 	ZeroMemory( &m_pMetadataTime, sizeof(m_pMetadataTime) );
@@ -242,6 +244,16 @@ BOOL CLibraryFile::IsRated() const
 BOOL CLibraryFile::IsRatedOnly() const
 {
 	return IsRated() && ( m_pSchema == NULL || m_pMetadata == NULL );
+}
+
+BOOL CLibraryFile::IsHashed() const
+{
+	return m_oSHA1 && m_oTiger && m_oMD5 && m_oED2K; // m_oBTH ignored
+}
+
+BOOL CLibraryFile::IsNewFile() const
+{
+	return m_bNewFile;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -988,6 +1000,12 @@ BOOL CLibraryFile::ThreadScan(CSingleLock& pLock, DWORD nScanCookie, QWORD nSize
 	}
 	else
 	{
+		// If file is already in library but hashing was delayed - hash it again
+		if ( m_nIndex && ! IsHashed() )
+		{
+			LibraryBuilder.Add( this );
+		}
+
 		CFolderScanDlg::Update( m_sName,
 			( m_nSize == SIZE_UNKNOWN ) ? 0 : (DWORD)( m_nSize / 1024 ) );
 	}
