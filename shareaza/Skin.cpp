@@ -1634,7 +1634,8 @@ BOOL CSkin::LoadFonts(CXMLElement* pBase, const CString& strPath)
 CString	CSkin::GetImagePath(UINT nImageID) const
 {
 	CString strPath;
-	if ( ! m_pImages.Lookup( nImageID, strPath ) )
+	if ( ! m_pImages.Lookup( nImageID, strPath ) ||
+		( _istdigit( strPath.GetAt( 0 ) ) && strPath.Find( _T('$') ) != -1 ) )
 		strPath.Format( _T("\"%s\",-%u"), theApp.m_strBinaryPath, nImageID );
 	return strPath;
 }
