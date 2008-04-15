@@ -341,8 +341,8 @@
 		<rightAlign/>
 		<button id="ID_NETWORK_G2" text="Gnutella2"/>
 		<button id="ID_NETWORK_G1" text="Gnutella1"/>
-    <button id="ID_NETWORK_ED2K" text="eDonkey"/>
-    <separator/>
+		<button id="ID_NETWORK_ED2K" text="eDonkey"/>
+		<separator/>
 		<button id="ID_NEIGHBOURS_SETTINGS" text="Settings"/>
 	</toolbar>
 	<toolbar name="CNeighboursWnd">
@@ -355,8 +355,8 @@
 		<rightAlign/>
 		<button id="ID_NETWORK_G2" text="Gnutella2"/>
 		<button id="ID_NETWORK_G1" text="Gnutella1"/>
-    <button id="ID_NETWORK_ED2K" text="eDonkey"/>
-    <separator/>
+		<button id="ID_NETWORK_ED2K" text="eDonkey"/>
+		<separator/>
 		<button id="ID_NEIGHBOURS_SETTINGS" text="Settings"/>
 	</toolbar>
 	<!-- HIT MONITOR WINDOW -->
@@ -454,8 +454,8 @@
 			<menu text="Choose _Networks">
 				<item id="ID_NETWORK_G2" text="Connect to _Gnutella2"/>
 				<item id="ID_NETWORK_G1" text="Connect to Gnutella_1"/>
-        <item id="ID_NETWORK_ED2K" text="Connect to _eDonkey"/>
-      </menu>
+				<item id="ID_NETWORK_ED2K" text="Connect to _eDonkey"/>
+			</menu>
 			<separator/>
 			<item id="ID_NETWORK_AUTO_CLOSE" text="Exit _After Transfers"/>
 			<item id="ID_NETWORK_EXIT" text="E_xit"/>
@@ -527,8 +527,8 @@
 			<menu text="Choose _Networks">
 				<item id="ID_NETWORK_G2" text="Connect to _Gnutella2"/>
 				<item id="ID_NETWORK_G1" text="Connect to Gnutella_1"/>
-        <item id="ID_NETWORK_ED2K" text="Connect to _eDonkey"/>
-      </menu>
+				<item id="ID_NETWORK_ED2K" text="Connect to _eDonkey"/>
+			</menu>
 			<separator/>
 			<item id="ID_NETWORK_CONNECT_TO" text="Connect _To..." shortcut="Ctrl+T"/>
 			<item id="ID_NETWORK_BROWSE_TO" text="_Browse Host..."/>
@@ -631,8 +631,8 @@
 			<menu text="Choose _Networks">
 				<item id="ID_NETWORK_G2" text="Connect to _Gnutella2"/>
 				<item id="ID_NETWORK_G1" text="Connect to Gnutella_1"/>
-        <item id="ID_NETWORK_ED2K" text="Connect to _eDonkey"/>
-      </menu>
+				<item id="ID_NETWORK_ED2K" text="Connect to _eDonkey"/>
+			</menu>
 			<separator/>
 			<item id="ID_NETWORK_AUTO_CLOSE" text="Close _After Transfers"/>
 			<item id="ID_NETWORK_EXIT" text="E_xit"/>
@@ -1419,8 +1419,8 @@
 			<separator/>
 			<item id="ID_NETWORK_G2" text="_Gnutella2"/>
 			<item id="ID_NETWORK_G1" text="Gnutella_1"/>
-      <item id="ID_NETWORK_ED2K" text="_eDonkey"/>
-    </menu>
+			<item id="ID_NETWORK_ED2K" text="_eDonkey"/>
+		</menu>
 		<menu text="_Monitor">
 			<item id="ID_NEIGHBOURS_VIEW_ALL" text="View _All Traffic"/>
 			<item id="ID_NEIGHBOURS_VIEW_INCOMING" text="View _Incoming Traffic"/>
@@ -1721,12 +1721,12 @@
 		<text group="24" align="middle" id="G2Hubs">%i hubs</text>
 		<text group="25" align="middle" id="G2Leaves">%i leaves</text>
 		<newline group="20" gap="2"/>
-    <icon group="10" command="ID_NETWORK_G1"/><gap group="10" size="4"/>
-    <text group="10" align="middle" format="b">Gnutella1: </text>
-    <text group="11" align="middle">Disconnected</text>
-    <text group="12" align="middle">Connecting...</text>
-    <text group="13" align="middle">Connected</text>
-    <newline group="10" gap="2"/>
+		<icon group="10" command="ID_NETWORK_G1"/><gap group="10" size="4"/>
+		<text group="10" align="middle" format="b">Gnutella1: </text>
+		<text group="11" align="middle">Disconnected</text>
+		<text group="12" align="middle">Connecting...</text>
+		<text group="13" align="middle">Connected</text>
+		<newline group="10" gap="2"/>
 		<icon group="30" command="ID_NETWORK_ED2K"/><gap group="30" size="4"/>
 		<text group="30" align="middle" format="b">eDonkey: </text>
 		<text group="31" align="middle">Disconnected</text>
@@ -1737,7 +1737,7 @@
 			<para align="center">
 				<newline gap="4"/>
 				<text>You have been connected for </text>
-        <newline gap="0"/>
+				<newline gap="0"/>
 				<text id="ConnectedHours" format="b">%i </text>
 				<text>hours and </text>
 				<text id="ConnectedMinutes" format="b">%i </text>

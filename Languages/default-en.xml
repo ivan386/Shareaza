@@ -362,8 +362,8 @@
 		<button id="ID_NEIGHBOURS_CHAT" text="Chat to User"/>
 		<rightAlign/>
 		<button id="ID_NETWORK_G2" text="Gnutella2"/>
-		<button id="ID_NETWORK_ED2K" text="eDonkey"/>
 		<button id="ID_NETWORK_G1" text="Gnutella1"/>
+		<button id="ID_NETWORK_ED2K" text="eDonkey"/>
 		<separator/>
 		<button id="ID_NEIGHBOURS_SETTINGS" text="Settings"/>
 	</toolbar>
@@ -376,8 +376,8 @@
 		<button id="ID_SECURITY_BAN" text="Ban Host"/>
 		<rightAlign/>
 		<button id="ID_NETWORK_G2" text="Gnutella2"/>
-		<button id="ID_NETWORK_ED2K" text="eDonkey"/>
 		<button id="ID_NETWORK_G1" text="Gnutella1"/>
+		<button id="ID_NETWORK_ED2K" text="eDonkey"/>
 		<separator/>
 		<button id="ID_NEIGHBOURS_SETTINGS" text="Settings"/>
 	</toolbar>
@@ -408,6 +408,8 @@
 		<button id="ID_HOSTCACHE_G2_CACHE" text="G2 Cache"/>
 		<button id="ID_HOSTCACHE_G1_CACHE" text="G1 Cache"/>
 		<button id="ID_HOSTCACHE_ED2K_CACHE" text="eDonkey Cache"/>
+		<button id="ID_HOSTCACHE_BT_CACHE" text="BitTorrent Cache"/>
+		<button id="ID_HOSTCACHE_KAD_CACHE" text="Kademlia Cache"/>
 	</toolbar>
 	<!-- PRIVATE CHAT FRAME -->
 	<toolbar name="CPrivateChatFrame">
@@ -423,6 +425,32 @@
 		<separator/>
 		<button id="ID_CHAT_CONNECT" text="Connect" visible="false"/>
 		<button id="ID_CHAT_DISCONNECT" text="Disconnect"/>
+	</toolbar>
+	<toolbar name="WebServices.ShareMonkey">
+		<button id="ID_SHAREMONKEY_DOWNLOAD" text="Get Data"/>
+		<separator/>
+		<button id="ID_SHAREMONKEY_PREVIOUS" text="Previous"/>
+		<button id="ID_SHAREMONKEY_NEXT" text="Next"/>
+		<separator/>
+		<button id="ID_SHAREMONKEY_PRICES" text="Get Prices"/>
+		<button id="ID_SHAREMONKEY_COMPARE" text="Compare"/>
+		<button id="ID_SHAREMONKEY_BUY" text="Buy It"/>
+	</toolbar>
+	<toolbar name="WebServices.ShareMonkey.WithSave">
+		<button id="ID_SHAREMONKEY_DOWNLOAD" text="Get Data"/>
+		<button id="ID_SHAREMONKEY_SAVE" text="Save"/>
+		<separator/>
+		<button id="ID_SHAREMONKEY_PREVIOUS" text="Previous"/>
+		<button id="ID_SHAREMONKEY_NEXT" text="Next"/>
+		<separator/>
+		<button id="ID_SHAREMONKEY_PRICES" text="Get Prices"/>
+		<button id="ID_SHAREMONKEY_COMPARE" text="Compare"/>
+		<button id="ID_SHAREMONKEY_BUY" text="Buy It"/>
+	</toolbar>
+	<toolbar name="WebServices.MusicBrainz">
+		<button id="ID_MUSICBRAINZ_MATCHES" text="View Album Matches"/>
+		<button id="ID_MUSICBRAINZ_ALBUMS" text="View All Albums"/>
+		<separator/>
 	</toolbar>
 	<!-- IMAGE VIEWER WINDOW -->
 	<toolbar name="ImageViewer_Toolbar">
@@ -456,8 +484,8 @@
 			<separator/>
 			<menu text="Choose _Networks">
 				<item id="ID_NETWORK_G2" text="Connect to _Gnutella2"/>
-				<item id="ID_NETWORK_ED2K" text="Connect to _eDonkey"/>
 				<item id="ID_NETWORK_G1" text="Connect to Gnutella_1"/>
+				<item id="ID_NETWORK_ED2K" text="Connect to _eDonkey"/>
 			</menu>
 			<separator/>
 			<item id="ID_NETWORK_AUTO_CLOSE" text="Exit _After Transfers"/>
@@ -529,8 +557,8 @@
 			<separator/>
 			<menu text="Choose _Networks">
 				<item id="ID_NETWORK_G2" text="Connect to _Gnutella2"/>
-				<item id="ID_NETWORK_ED2K" text="Connect to _eDonkey"/>
 				<item id="ID_NETWORK_G1" text="Connect to Gnutella_1"/>
+				<item id="ID_NETWORK_ED2K" text="Connect to _eDonkey"/>
 			</menu>
 			<separator/>
 			<item id="ID_NETWORK_CONNECT_TO" text="Connect _To..." shortcut="Ctrl+T"/>
@@ -633,8 +661,8 @@
 			<separator/>
 			<menu text="Choose _Networks">
 				<item id="ID_NETWORK_G2" text="Connect to _Gnutella2"/>
-				<item id="ID_NETWORK_ED2K" text="Connect to _eDonkey"/>
 				<item id="ID_NETWORK_G1" text="Connect to Gnutella_1"/>
+				<item id="ID_NETWORK_ED2K" text="Connect to _eDonkey"/>
 			</menu>
 			<separator/>
 			<item id="ID_NETWORK_AUTO_CLOSE" text="Close _After Transfers"/>
@@ -846,6 +874,8 @@
 			<item id="ID_HOSTCACHE_G2_CACHE" text="Gnutella_2 Cache"/>
 			<item id="ID_HOSTCACHE_G1_CACHE" text="Gnutella_1 Cache"/>
 			<item id="ID_HOSTCACHE_ED2K_CACHE" text="_eDonkey Servers"/>
+			<item id="ID_HOSTCACHE_BT_CACHE" text="_BitTorrent Cache"/>
+			<item id="ID_HOSTCACHE_KAD_CACHE" text="_Kademlia Cache"/>
 		</menu>
 		<separator/>
 		<item id="ID_HOSTCACHE_IMPORT" text="_Import MET File..."/>
@@ -1400,7 +1430,13 @@
 	</menu>
 	<!-- SYSTEM WINDOW -->
 	<menu name="CSystemWnd">
-		<item id="ID_SYSTEM_VERBOSE" text="_Verbose Mode"/>
+		<menu id="ID_SYSTEM_VERBOSE" text="_Verbose Mode">
+			<item id="ID_SYSTEM_VERBOSE_ERROR" text="_Error"/>
+			<item id="ID_SYSTEM_VERBOSE_WARNING" text="_Warning"/>
+			<item id="ID_SYSTEM_VERBOSE_NOTICE" text="_Notice"/>
+			<item id="ID_SYSTEM_VERBOSE_INFO" text="_Info"/>
+			<item id="ID_SYSTEM_VERBOSE_DEBUG" text="_Debug"/>
+		</menu>
 		<item id="ID_SYSTEM_TIMESTAMP" text="Timestam_p"/>
 		<separator/>
 		<item id="ID_SYSTEM_COPY" text="_Copy" shortcut="Ctrl+C"/>
@@ -1430,8 +1466,8 @@
 			<item id="ID_NETWORK_DISCONNECT" text="_Disconnect"/>
 			<separator/>
 			<item id="ID_NETWORK_G2" text="_Gnutella2"/>
-			<item id="ID_NETWORK_ED2K" text="_eDonkey"/>
 			<item id="ID_NETWORK_G1" text="Gnutella_1"/>
+			<item id="ID_NETWORK_ED2K" text="_eDonkey"/>
 		</menu>
 		<menu text="_Monitor">
 			<item id="ID_NEIGHBOURS_VIEW_ALL" text="View _All Traffic"/>
@@ -1544,6 +1580,7 @@
 	</menu>
 	<menu name="WebServices.List.Menu">
 		<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Bitzi"/>
+		<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 		<item id="ID_WEBSERVICES_SHAREMONKEY" text="_ShareMonkey"/>
 	</menu>
 </menus>
@@ -1732,22 +1769,23 @@
 		<text group="24" align="middle" id="G2Hubs">%i hubs</text>
 		<text group="25" align="middle" id="G2Leaves">%i leaves</text>
 		<newline group="20" gap="2"/>
-		<icon group="30" command="ID_NETWORK_ED2K"/><gap group="30" size="4"/>
-		<text group="30" align="middle" format="b">eDonkey: </text>
-		<text group="31" align="middle">Disconnected</text>
-		<text group="32" align="middle">Connecting...</text>
-		<text group="33" align="middle">Connected</text>
-		<newline group="30" gap="2"/>
 		<icon group="10" command="ID_NETWORK_G1"/><gap group="10" size="4"/>
 		<text group="10" align="middle" format="b">Gnutella1: </text>
 		<text group="11" align="middle">Disconnected</text>
 		<text group="12" align="middle">Connecting...</text>
 		<text group="13" align="middle">Connected</text>
 		<newline group="10" gap="2"/>
+		<icon group="30" command="ID_NETWORK_ED2K"/><gap group="30" size="4"/>
+		<text group="30" align="middle" format="b">eDonkey: </text>
+		<text group="31" align="middle">Disconnected</text>
+		<text group="32" align="middle">Connecting...</text>
+		<text group="33" align="middle">Connected</text>
+		<newline group="30" gap="2"/>
 		<group id="2">
 			<para align="center">
-				<newline gap="6"/>
+				<newline gap="4"/>
 				<text>You have been connected for </text>
+				<newline gap="0"/>
 				<text id="ConnectedHours" format="b">%i </text>
 				<text>hours and </text>
 				<text id="ConnectedMinutes" format="b">%i </text>
