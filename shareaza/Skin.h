@@ -145,7 +145,7 @@ protected:
 
 // Other
 public:
-	UINT	LookupCommandID(CXMLElement* pXML, LPCTSTR pszName = NULL) const;
+	UINT	LookupCommandID(CXMLElement* pXML, LPCTSTR pszName = _T("id")) const;
 	CString	GetImagePath(UINT nImageID) const;
 protected:
 	CMap< UINT, const UINT&, CString, const CString& > m_pImages;

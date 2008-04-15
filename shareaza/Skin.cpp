@@ -1481,8 +1481,7 @@ BOOL CSkin::LoadColourScheme(CXMLElement* pBase)
 
 UINT CSkin::LookupCommandID(CXMLElement* pXML, LPCTSTR pszName) const
 {
-	return CoolInterface.NameToID(
-		pXML->GetAttributeValue( pszName ? pszName : _T("id") ) );
+	return CoolInterface.NameToID( pXML->GetAttributeValue( pszName ) );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -1634,8 +1633,7 @@ BOOL CSkin::LoadFonts(CXMLElement* pBase, const CString& strPath)
 CString	CSkin::GetImagePath(UINT nImageID) const
 {
 	CString strPath;
-	if ( ! m_pImages.Lookup( nImageID, strPath ) ||
-		( _istdigit( strPath.GetAt( 0 ) ) && strPath.Find( _T('$') ) != -1 ) )
+	if ( ! m_pImages.Lookup( nImageID, strPath ) )
 		strPath.Format( _T("\"%s\",-%u"), theApp.m_strBinaryPath, nImageID );
 	return strPath;
 }
@@ -1664,10 +1662,16 @@ BOOL CSkin::LoadCommandImages(CXMLElement* pBase, const CString& strPath)
 
 BOOL CSkin::LoadCommandIcon(CXMLElement* pXML, const CString& strPath)
 {
+	// strPath is:
+	// 1) when loading from resource: "module instance$" or ...
+	// 2) when loading from file: "root skin path\".
+
 	CString strFile = strPath +
 		pXML->GetAttributeValue( _T("res") ) +
 		pXML->GetAttributeValue( _T("path") );
-	int nPos = strFile.Find( '$' );
+
+	UINT nIconID = LookupCommandID( pXML, _T("res") );
+	HINSTANCE hInstance = nIconID ? (HINSTANCE)_tstol( strPath ) : NULL;
 
 	UINT nID = LookupCommandID( pXML );
 	if ( nID == 0 )
@@ -1706,21 +1710,20 @@ BOOL CSkin::LoadCommandIcon(CXMLElement* pXML, const CString& strPath)
 		}
 
 		HICON hIcon = NULL;
-		if ( nPos < 0 )
+		if ( nIconID && hInstance )
 		{
-			LoadIcon( strFile,
-				( ( nType == LVSIL_SMALL ) ? &hIcon : NULL ),
-				( ( nType == LVSIL_NORMAL ) ? &hIcon : NULL ),
-				( ( nType == LVSIL_BIG )? &hIcon : NULL ) );
+			hIcon = (HICON)LoadImage( hInstance, MAKEINTRESOURCE( nIconID ),
+				IMAGE_ICON, cx, cx, 0 );
 		}
 		else
 		{
-			HINSTANCE hInstance = NULL;
-			UINT nIconID = LookupCommandID( pXML, L"res" );
-			if ( nIconID &&
-				_stscanf( strFile.Left( nPos ), _T("%Iu"), &hInstance ) == 1 )
-				hIcon = (HICON)LoadImage( hInstance, MAKEINTRESOURCE( nIconID ),
-					IMAGE_ICON, cx, cx, 0 );
+			if ( LoadIcon( strFile,
+				( ( nType == LVSIL_SMALL ) ? &hIcon : NULL ),
+				( ( nType == LVSIL_NORMAL ) ? &hIcon : NULL ),
+				( ( nType == LVSIL_BIG )? &hIcon : NULL ) ) )
+			{
+				m_pImages.SetAt( nID, strFile );
+			}
 		}
 		if ( hIcon )
 		{
@@ -1728,8 +1731,6 @@ BOOL CSkin::LoadCommandIcon(CXMLElement* pXML, const CString& strPath)
 				hIcon = CreateMirroredIcon( hIcon );
 			CoolInterface.AddIcon( nID, hIcon, nType );
 			VERIFY( DestroyIcon( hIcon ) );
-
-			m_pImages.SetAt( nID, strFile );
 		}
 		else
 		{
