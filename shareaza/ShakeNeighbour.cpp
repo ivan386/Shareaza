@@ -848,22 +848,22 @@ BOOL CShakeNeighbour::ReadResponse()
 		OnHandshakeComplete();	// Deletes this CShakeNeighbour object
 		return FALSE;			// Tell the method that called this one not to call us again, we're done here
 
-	} // The line starts "GNUTELLA/0.6", and says something else after that
-	else if ( strLine.GetLength() > 13 && strLine.Left( 12 ) == _T("GNUTELLA/0.6") )
+	}
+
+	// The line starts "GNUTELLA/0.6", and says something else after that
+	if ( strLine.GetLength() > 13 && strLine.Left( 12 ) == _T("GNUTELLA/0.6") )
 	{
 		// It does not say "200 OK" after that
 		if ( strLine != _T("GNUTELLA/0.6 200 OK") )
 		{
 			// Clip out just the part that says why we were rejected, document it, and set the state to rejected
 			strLine = strLine.Mid( 13 );
-			theApp.Message( MSG_ERROR, IDS_HANDSHAKE_REJECTED, (LPCTSTR)m_sAddress, (LPCTSTR)strLine );
 			m_nState = nrsRejected; // Set the neighbour state in this CShakeNeighbour object to rejected
 			if ( strLine == _T("503 Not Good Leaf") ||
 				 strLine == _T("503 We're Leaves") ||
 				 strLine == _T("503 Service unavailable") ||
 				 strLine == _T("503 Shielded leaf node") )
 			{
-				m_nDelayCloseReason = IDS_HANDSHAKE_REJECTED;
 				m_bDelayClose = TRUE;
 			}
 		} // It does say "200 OK", and the remote computer contacted us
@@ -940,25 +940,17 @@ BOOL CShakeNeighbour::OnHeaderLine(CString& strHeader, CString& strValue)
 		// Actual leechers and hostile clients. (We do ban these)
 		if ( IsClientBanned() )
 		{
-			// Reject the handshake
-			theApp.Message( MSG_ERROR, IDS_HANDSHAKE_REJECTED, (LPCTSTR)m_sAddress, (LPCTSTR)m_sUserAgent );
 			m_nState = nrsRejected;
-			// Ban them and ignore anything else in the headers
-			theApp.Message( MSG_ERROR, _T("Banning hostile client %s"), (LPCTSTR)m_sUserAgent );
 			m_bBadClient = TRUE;
-			m_nDelayCloseReason =IDS_HANDSHAKE_REJECTED;
 			m_bDelayClose = TRUE;
+			Security.Ban( &m_pHost.sin_addr, ban2Hours, TRUE );
 		}
 		
 		// If the remote computer is running a client the user has blocked
 		if ( IsAgentBlocked() )
 		{
-			// Record that we're rejecting this handshake, and set the state to rejected
-			theApp.Message( MSG_ERROR, IDS_HANDSHAKE_REJECTED, (LPCTSTR)m_sAddress, (LPCTSTR)m_sUserAgent );
 			m_nState = nrsRejected;
-			Security.Ban( &m_pHost.sin_addr, ban2Hours, FALSE );
 			m_bBadClient = TRUE;
-			m_nDelayCloseReason =IDS_HANDSHAKE_REJECTED;
 			m_bDelayClose = TRUE;
 		}
 
@@ -1140,6 +1132,8 @@ BOOL CShakeNeighbour::OnHeaderLine(CString& strHeader, CString& strValue)
 // Returns false to delete this object, or true to keep reading headers and negotiating the handshake
 BOOL CShakeNeighbour::OnHeadersComplete()
 {
+	BOOL bResult = FALSE;
+
 	// determine what kind of Network this handshake is for.
 	if ( m_bInitiated )
 	{
@@ -1235,15 +1229,6 @@ BOOL CShakeNeighbour::OnHeadersComplete()
 		m_sTryUltrapeers.Empty();
 	}
 
-	if ( m_bDelayClose )
-	{
-		m_nState = nrsClosing;
-		Write( _P("GNUTELLA/0.6 503 Sorry, you can not connect me. Please update to newer version or use different Software\r\n") );
-		SendMinimalHeaders();       // Tell the remote computer we're Shareaza and we can exchange Gnutella2 packets
-		Write( _P("\r\n") ); // End the group of headers with a blank line
-		return FALSE;
-	}
-
 	// The remote computer called us and it hasn't said Ultrapeer or not.
 	if ( !m_bInitiated && m_bUltraPeerSet == TRI_UNKNOWN )
 	{
@@ -1251,26 +1236,33 @@ BOOL CShakeNeighbour::OnHeadersComplete()
 		m_bUltraPeerSet = TRI_FALSE;
 	}
 
-	if ( ( ( ! m_bInitiated && m_bG2Accept ) || ( m_bInitiated && m_bG2Send ) ) &&
+	if ( m_bDelayClose )
+	{
+		theApp.Message( MSG_ERROR, IDS_HANDSHAKE_REJECTED, (LPCTSTR)m_sAddress, (LPCTSTR)m_sUserAgent );
+		DelayClose( IDS_HANDSHAKE_REJECTED );
+	}
+	else if ( ( ( ! m_bInitiated && m_bG2Accept ) || ( m_bInitiated && m_bG2Send ) ) &&
 			Settings.Gnutella2.EnableToday && m_nProtocol != PROTOCOL_G1 )
 	{
 		// This is a G2 connection
 		m_nProtocol = PROTOCOL_G2;
-		return OnHeadersCompleteG2();
+		bResult = OnHeadersCompleteG2();
 	}
 	else if ( ( ( ! m_bInitiated && m_bG1Accept ) || ( m_bInitiated && m_bG1Send ) ) &&
 			Settings.Gnutella1.EnableToday && m_nProtocol != PROTOCOL_G2 )
 	{	// If the remote computer doesn't accept Gnutella2 packets, or it does but we contacted it and it's not going to send them
 		// This is a Gnutella connection
 		m_nProtocol = PROTOCOL_G1;
-		return OnHeadersCompleteG1();
+		bResult = OnHeadersCompleteG1();
 	}
-	Write( _P("GNUTELLA/0.6 503 Wrong Protocol\r\n") );
-	SendMinimalHeaders();       // Tell the remote computer we're Shareaza and we can exchange Gnutella2 packets
-	Write( _P("\r\n") ); // End the group of headers with a blank line
-	DelayClose(IDS_HANDSHAKE_REJECTED);
-	m_nState = nrsClosing;
-	return TRUE;
+	else
+	{
+		Write( _P("GNUTELLA/0.6 503 Wrong Protocol\r\n") );
+		SendMinimalHeaders();
+		Write( _P("\r\n") );
+		DelayClose(IDS_HANDSHAKE_REJECTED);
+	}
+	return bResult;
 }
 
 // Called when CConnection::ReadHeaders calls ReadLine and gets a blank line, meaning a group of headers from the remote computer is done
