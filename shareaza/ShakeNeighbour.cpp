@@ -177,6 +177,7 @@ void CShakeNeighbour::Close(UINT nError)
 			break;
 		case IDS_CONNECTION_PEERPRUNE:
 			bRemove = true;
+			bFail = false;
 			break;
 	}
 
@@ -1186,7 +1187,7 @@ BOOL CShakeNeighbour::OnHeadersComplete()
 		// Gnutella Ultrapeers, however some older versions of Shareaza can send G2 hubs in it,
 		// if the client advertises G2 capability
 
-		// Todo: Clean this up once there are very few of the older clients around
+		// TODO: Clean this up once there are very few of the older clients around
 
 		int nCount = 0;
 		// Append a comma onto the end of the value text once, and then loop forever
@@ -1402,7 +1403,7 @@ BOOL CShakeNeighbour::OnHeadersCompleteG2()
 			DelayClose( IDS_HANDSHAKE_IAMLEAF ); // Send the buffer then close the socket
 			return FALSE; // Return false all the way back to CHandshakes::RunHandshakes, which will delete this object
 
-		} // We are a Gnutella2 hub, or at least we are capable of becomming one
+		} // We are a Gnutella2 hub, or at least we are capable of becoming one
 		else if ( Neighbours.IsG2Hub() || Neighbours.IsG2HubCapable() )
 		{
 			// The remote computer sent us the header "X-Ultrapeer: False"
