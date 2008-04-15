@@ -263,7 +263,7 @@ BOOL CDDEServer::Execute(LPCTSTR pszTopic, LPCTSTR pszMessage)
 			return CShareazaApp::OpenCollection( pszMessage, TRUE );
 		}
 		else
-			theApp.Message( MSG_DISPLAYED_ERROR, _T("Received a file with a unknown extension: %s"), pszType );
+			theApp.Message( MSG_ERROR, _T("Received a file with a unknown extension: %s"), pszType );
 	}
 
 	return FALSE;

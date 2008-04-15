@@ -58,7 +58,6 @@ CSettings::CSettings()
 	Live.MaliciousWarning			= false;
 
 	// Add all settings
-	Add( _T(""), _T("Debug"), &General.Debug, false );
 	Add( _T(""), _T("DebugBTSources"), &General.DebugBTSources, false );
 	Add( _T(""), _T("DebugLog"), &General.DebugLog, false );
 	Add( _T(""), _T("DiskSpaceStop"), &General.DiskSpaceStop, 25, 1, 0, 1000 , _T(" M") );
@@ -69,6 +68,7 @@ CSettings::CSettings()
 	Add( _T(""), _T("MinTransfersRest"), &General.MinTransfersRest, 15, 1, 1, 100, _T(" ms") );
 	Add( _T(""), _T("MultiUser"), &General.MultiUser, false );
 	Add( _T(""), _T("Path"), &General.Path, _T("") );
+	Add( _T(""), _T("LogLevel"), &General.LogLevel, MSG_INFO, 1, MSG_ERROR, MSG_DEBUG, _T(" level") );
 	Add( _T(""), _T("SearchLog"), &General.SearchLog, true );
 	Add( _T(""), _T("UserPath"), &General.UserPath, _T("") );
 	Add( _T("Settings"), _T("AlwaysOpenURLs"), &General.AlwaysOpenURLs, false );
@@ -80,12 +80,11 @@ CSettings::CSettings()
 	Add( _T("Settings"), _T("LanguageRTL"), &General.LanguageRTL, false );
 	Add( _T("Settings"), _T("RatesInBytes"), &General.RatesInBytes, true );
 	Add( _T("Settings"), _T("RatesUnit"), &General.RatesUnit, 0 );
-	Add( _T("Settings"), _T("Running"), &General.Running, false );
+	Add( _T("Settings"), _T("Running"), &General.Running, false, true );
 	Add( _T("Settings"), _T("ShowTimestamp"), &General.ShowTimestamp, true );
 	Add( _T("Settings"), _T("SizeLists"), &General.SizeLists, false );
 	Add( _T("Settings"), _T("SmartVersion"), &General.SmartVersion, SMART_VERSION );
 	Add( _T("Settings"), _T("TrayMinimise"), &General.TrayMinimise, false );
-	Add( _T("Settings"), _T("VerboseMode"), &General.VerboseMode, false );
 
 	Add( _T("VersionCheck"), _T("NextCheck"), &VersionCheck.NextCheck, 0 );
 	Add( _T("VersionCheck"), _T("Quote"), &VersionCheck.Quote, _T("") );
@@ -861,7 +860,6 @@ void CSettings::SmartUpgrade()
 		if ( General.SmartVersion < 39 )
 		{
 			General.RatesInBytes = true;
-			General.VerboseMode = false;
 		}
 
 		if ( General.SmartVersion < 40 )

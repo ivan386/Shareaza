@@ -21,6 +21,7 @@
 
 #include "StdAfx.h"
 #include "Shareaza.h"
+#include "Settings.h"
 #include "CtrlText.h"
 #include "CoolInterface.h"
 
@@ -57,13 +58,20 @@ CTextCtrl::CTextCtrl() :
 	m_nScrollWheelLines( 3 ),
 	m_nLastClicked( -1 )
 {
-	m_crBackground	= CoolInterface.m_crWindow ;
-	m_crText[0]		= CoolInterface.m_crText ;			// Black		- MSG_DEFAULT
-	m_crText[1]		= CoolInterface.m_crNetworkDown ;	// Blue			- MSG_SYSTEM / MSG_DOWNLOAD
-	m_crText[2]		= CoolInterface.m_crTextAlert ;		// Red			- MSG_ERROR
-	m_crText[3]		= CoolInterface.m_crNetworkNull ;	// Gray			- MSG_DEBUG
-	m_crText[4]		= CoolInterface.m_crTextLink ;		// Light Blue	- MSG_TEMP
-	m_crText[5]		= CoolInterface.m_crTextAlert ;		// Red			- MSG_DISPLAYED_ERROR
+	// TODO: Add new log color codes to CoolInterface
+
+	// Severity
+	m_crText[0] = RGB( 255, 0, 0 );				// red			- MSG_ERROR
+	m_crText[1] = RGB( 255, 128, 64 );			// orange		- MSG_WARNING
+	m_crText[2] = RGB( 0, 0, 128 );				// dark blue	- MSG_NOTICE
+	m_crText[3] = RGB( 0, 0, 0 );				// black		- MSG_INFO
+	m_crText[4] = RGB( 128, 128, 128 );			// gray			- MSG_DEBUG
+
+	// Facility
+	m_crBackground[0] = RGB( 255, 255, 255 );	// white		- MSG_FACILITY_DEFAULT
+	m_crBackground[1] = RGB( 255, 255, 224 );	// light yellow	- MSG_FACILITY_SEARCH
+	m_crBackground[2] = RGB( 224, 255, 224 );	// light green	- MSG_FACILITY_INCOMING
+	m_crBackground[3] = RGB( 224, 240, 255 );	// light blue	- MSG_FACILITY_OUTGOING
 
 	m_pFont.CreateFontW( -theApp.m_nDefaultFontSize, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE,
 		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
@@ -88,29 +96,37 @@ BOOL CTextCtrl::Create(DWORD dwStyle, const RECT& rect, CWnd* pParentWnd, UINT n
 	return CWnd::Create( NULL, NULL, dwStyle, rect, pParentWnd, nID, NULL );
 }
 
-void CTextCtrl::Add(int nType, LPCTSTR pszText)
+void CTextCtrl::Add(WORD nType, const CString& strText)
 {
-	CQuickLock pLock( m_pSection );
-	CString strLine;
+	if ( theApp.IsLogDisabled( nType ) ) return;
 
-	for ( ; *pszText ; pszText++ )
+	CQuickLock pLock( m_pSection );
+
+	CString strTime;
+	if ( Settings.General.ShowTimestamp )
 	{
-		if ( *pszText == 13 )
-		{
-			if ( strLine.GetLength() ) AddLine( nType, strLine );
-			strLine.Empty();
-		}
-		else if ( *pszText != 10 )
-		{
-			strLine += *pszText;
-		}
+		CTime pNow = CTime::GetCurrentTime();
+		strTime.Format( _T("[%02d:%02d:%02d] "),
+			pNow.GetHour(), pNow.GetMinute(), pNow.GetSecond() );
 	}
 
-	if ( strLine.GetLength() ) AddLine( nType, strLine );
+	for ( int pos = 0 ; ; )
+	{
+		CString strLine = strText.Tokenize( _T("\r\n"), pos );
+		if ( strLine.IsEmpty() )
+			break;
+		if ( Settings.General.ShowTimestamp )
+			AddLine( nType, strTime + strLine );
+		else
+			AddLine( nType, strLine );
+	}
 }
 
-void CTextCtrl::AddLine(int nType, LPCTSTR pszLine)
+void CTextCtrl::AddLine(WORD nType, const CString& strLine)
 {
+	ASSERT( ( nType & MSG_SEVERITY_MASK ) < ( sizeof m_crText / sizeof m_crText[0] ) );
+	ASSERT( ( ( nType & MSG_FACILITY_MASK ) >> 8 ) < ( sizeof m_crBackground / sizeof m_crBackground[0] ) );
+
 	CQuickLock pLock( m_pSection );
 
 	if ( m_pLines.GetSize() >= LINE_BUFFER_LIMIT )
@@ -129,7 +145,8 @@ void CTextCtrl::AddLine(int nType, LPCTSTR pszLine)
 			m_nLastClicked -= LINE_BUFFER_BLOCK;
 	}
 
-	m_pLines.Add( new CTextLine( nType, pszLine ) );
+	m_pLines.Add( new CTextLine( nType, strLine ) );
+
 	Invalidate();
 }
 
@@ -279,16 +296,16 @@ void CTextCtrl::OnPaint()
 	{
 		CTextLine* pLine = m_pLines.GetAt( nLine );
 		dc.SetTextColor( pLine->m_bSelected ? CoolInterface.m_crHiText :
-			m_crText[ pLine->m_nType ] );
+			m_crText[ pLine->m_nType & MSG_SEVERITY_MASK ] );
 		dc.SetBkColor( pLine->m_bSelected ? CoolInterface.m_crHighlight :
-			m_crBackground );
+			m_crBackground[ ( pLine->m_nType & MSG_FACILITY_MASK ) >> 8 ] );
 		pLine->Paint( &dc, &rcLine );
 	}
 
 	if ( rcLine.bottom > 0 )
 	{
 		rcLine.top = 0;
-		dc.FillSolidRect( &rcLine, m_crBackground );
+		dc.FillSolidRect( &rcLine, m_crBackground[ 0 ] );
 	}
 
 	dc.SelectObject( pOldFont );
@@ -509,13 +526,13 @@ BOOL CTextCtrl::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
 /////////////////////////////////////////////////////////////////////////////
 // CTextLine construction
 
-CTextLine::CTextLine(int nType, LPCTSTR pszText)
+CTextLine::CTextLine(WORD nType, const CString& strText) :
+	m_sText( strText ),
+	m_pLine( NULL ),
+	m_nLine( 0 ),
+	m_nType( nType ),
+	m_bSelected( FALSE )
 {
-	m_sText	= pszText;
-	m_pLine	= NULL;
-	m_nLine	= 0;
-	m_nType = nType;
-	m_bSelected = FALSE;
 }
 
 CTextLine::~CTextLine()

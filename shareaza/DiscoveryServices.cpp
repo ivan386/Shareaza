@@ -536,7 +536,7 @@ void CDiscoveryServices::AddDefaults()
 
 	if (  pFile.Open( strFile, CFile::modeRead ) )			// Load default list from file if possible
 	{
-		theApp.Message( MSG_SYSTEM, _T("Loading default discovery service list") );
+		theApp.Message( MSG_NOTICE, _T("Loading default discovery service list") );
 
 		try
 		{
@@ -586,7 +586,7 @@ void CDiscoveryServices::AddDefaults()
 	// If file can't be used or didn't have enough services, drop back to the the in-built list
 	if ( !EnoughServices() )
 	{
-		theApp.Message( MSG_DISPLAYED_ERROR, _T("Default discovery service load failed") );
+		theApp.Message( MSG_ERROR, _T("Default discovery service load failed") );
 		/*
 		CString strServices;
 		strServices.LoadString( IDS_DISCOVERY_DEFAULTS );
@@ -742,7 +742,7 @@ BOOL CDiscoveryServices::Execute(BOOL bDiscovery, PROTOCOLID nProtocol, USHORT n
 	}
 	else
 	{
-		theApp.Message( MSG_SYSTEM, IDS_DISCOVERY_BOOTSTRAP );
+		theApp.Message( MSG_NOTICE, IDS_DISCOVERY_BOOTSTRAP );
 		// TCP bootstraps
 		if ( Settings.Gnutella1.EnableToday && Settings.Gnutella2.EnableToday && nProtocol == PROTOCOL_NULL )
 			ExecuteBootstraps( Settings.Discovery.BootstrapCount, FALSE, PROTOCOL_NULL );
@@ -1010,7 +1010,7 @@ BOOL CDiscoveryServices::RequestWebCache(CDiscoveryService* pService, int nMode,
 	case wcmCaches:
 		if ( m_pWebCache != NULL ) 
 		{	
-			theApp.Message( MSG_SYSTEM, IDS_DISCOVERY_QUERY, (LPCTSTR)m_pWebCache->m_sAddress );
+			theApp.Message( MSG_NOTICE, IDS_DISCOVERY_QUERY, (LPCTSTR)m_pWebCache->m_sAddress );
 			// Update the 'last queried' settings
 			m_tQueried = tNow;
 			m_nLastQueryProtocol = nProtocol;
@@ -1021,7 +1021,7 @@ BOOL CDiscoveryServices::RequestWebCache(CDiscoveryService* pService, int nMode,
 		m_pSubmit	= GetRandomWebCache( nProtocol, TRUE, m_pWebCache, FALSE );
 		if ( m_pWebCache != NULL ) 
 		{
-			theApp.Message( MSG_SYSTEM, IDS_DISCOVERY_UPDATING, (LPCTSTR)m_pWebCache->m_sAddress );
+			theApp.Message( MSG_NOTICE, IDS_DISCOVERY_UPDATING, (LPCTSTR)m_pWebCache->m_sAddress );
 			// Update the 'last updated' settings
 			m_tUpdated = tNow;
 			m_nLastUpdateProtocol = nProtocol;
@@ -1033,7 +1033,7 @@ BOOL CDiscoveryServices::RequestWebCache(CDiscoveryService* pService, int nMode,
 		m_pWebCache	= GetRandomWebCache( nProtocol, FALSE, m_pSubmit, TRUE );
 		if ( m_pWebCache != NULL ) 
 		{		
-			theApp.Message( MSG_SYSTEM, IDS_DISCOVERY_SUBMIT, (LPCTSTR)m_pWebCache->m_sAddress );
+			theApp.Message( MSG_NOTICE, IDS_DISCOVERY_SUBMIT, (LPCTSTR)m_pWebCache->m_sAddress );
 			// Update the 'last queried' settings
 			m_tQueried = tNow;
 			m_nLastQueryProtocol = nProtocol;
@@ -1049,7 +1049,7 @@ BOOL CDiscoveryServices::RequestWebCache(CDiscoveryService* pService, int nMode,
 		}
 		else if ( m_pWebCache != NULL ) 
 		{	
-			theApp.Message( MSG_SYSTEM, IDS_DISCOVERY_QUERY, (LPCTSTR)m_pWebCache->m_sAddress );
+			theApp.Message( MSG_NOTICE, IDS_DISCOVERY_QUERY, (LPCTSTR)m_pWebCache->m_sAddress );
 			// Update the 'last queried' settings
 			m_tQueried = tNow;
 			m_nLastQueryProtocol = nProtocol;
@@ -1807,7 +1807,7 @@ void CDiscoveryService::OnSuccess()
 
 	if ( m_nType == dsWebCache || m_nType == dsServerMet )
 	{
-		theApp.Message( MSG_DEFAULT, IDS_DISCOVERY_WEB_SUCCESS,
+		theApp.Message( MSG_INFO, IDS_DISCOVERY_WEB_SUCCESS,
 			(LPCTSTR)m_sAddress );
 	}
 }

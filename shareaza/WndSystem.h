@@ -42,7 +42,7 @@ protected:
 
 // Operations
 public:
-	void		Add(int nType, LPCTSTR pszText);
+	void		Add(int nType, const CString& strText);
 	void		Clear();
 	void		ShowStartupText();
 	void		OnSkinChange();
@@ -63,8 +63,16 @@ protected:
 	afx_msg void OnSystemClear();
 	afx_msg void OnSystemCopy();
 	afx_msg void OnDestroy();
-	afx_msg void OnUpdateSystemVerbose(CCmdUI* pCmdUI);
-	afx_msg void OnSystemVerbose();
+	afx_msg void OnUpdateSystemVerboseError(CCmdUI* pCmdUI);
+	afx_msg void OnSystemVerboseError();
+	afx_msg void OnUpdateSystemVerboseWarning(CCmdUI* pCmdUI);
+	afx_msg void OnSystemVerboseWarning();
+	afx_msg void OnUpdateSystemVerboseNotice(CCmdUI* pCmdUI);
+	afx_msg void OnSystemVerboseNotice();
+	afx_msg void OnUpdateSystemVerboseInfo(CCmdUI* pCmdUI);
+	afx_msg void OnSystemVerboseInfo();
+	afx_msg void OnUpdateSystemVerboseDebug(CCmdUI* pCmdUI);
+	afx_msg void OnSystemVerboseDebug();
 	afx_msg void OnUpdateSystemTimestamp(CCmdUI* pCmdUI);
 	afx_msg void OnSystemTimestamp();
 	afx_msg void OnSystemTest();

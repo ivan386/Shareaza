@@ -87,7 +87,7 @@ void CUploadTransferHTTP::AttachTo(CConnection* pConnection)
 {
 	CUploadTransfer::AttachTo( pConnection );
 	
-	theApp.Message( MSG_DEFAULT, IDS_UPLOAD_ACCEPTED, (LPCTSTR)m_sAddress );
+	theApp.Message( MSG_INFO, IDS_UPLOAD_ACCEPTED, (LPCTSTR)m_sAddress );
 	
 	m_mInput.pLimit		= &Settings.Bandwidth.Request;
 	m_mOutput.pLimit	= &m_nBandwidth;
@@ -129,7 +129,9 @@ BOOL CUploadTransferHTTP::ReadRequest()
 	
 	if ( ! Read( strLine ) ) return TRUE;
 	if ( strLine.GetLength() > 512 ) strLine = _T("#LINE_TOO_LONG#");
-	
+
+	theApp.Message( MSG_DEBUG | MSG_FACILITY_INCOMING, _T("%s: UPLOAD REQUEST: %s"), (LPCTSTR)m_sAddress, (LPCTSTR)strLine );
+
 	if ( m_nState == upsQueued && m_pQueue != NULL )
 	{
 		DWORD tLimit = Settings.Uploads.QueuePollMin;
@@ -195,9 +197,7 @@ BOOL CUploadTransferHTTP::ReadRequest()
 		
 		m_sRequest = strRequest;
 	}
-	
-	theApp.Message( MSG_DEBUG, _T("%s: UPLOAD PATH: %s"), (LPCTSTR)m_sAddress, (LPCTSTR)m_sRequest );
-	
+		
 	m_nState	= upsHeaders;
 	m_tRequest	= GetTickCount();
 	
@@ -209,7 +209,7 @@ BOOL CUploadTransferHTTP::ReadRequest()
 
 BOOL CUploadTransferHTTP::OnHeaderLine(CString& strHeader, CString& strValue)
 {
-	theApp.Message( MSG_DEBUG, _T("%s: UPLOAD HEADER: %s: %s"), (LPCTSTR)m_sAddress, (LPCTSTR)strHeader, strValue );
+	theApp.Message( MSG_DEBUG | MSG_FACILITY_INCOMING, _T("%s: UPLOAD HEADER: %s: %s"), (LPCTSTR)m_sAddress, (LPCTSTR)strHeader, strValue );
 
 	if ( strHeader.CompareNoCase( _T("Connection") ) == 0 )
 	{
@@ -401,7 +401,7 @@ BOOL CUploadTransferHTTP::OnHeadersComplete()
 		}
 		else
 		{
-			theApp.Message( MSG_DEFAULT, IDS_UPLOAD_ABOUT, (LPCTSTR)m_sAddress, (LPCTSTR)m_sUserAgent );
+			theApp.Message( MSG_INFO, IDS_UPLOAD_ABOUT, (LPCTSTR)m_sAddress, (LPCTSTR)m_sUserAgent );
 			SendResponse( IDR_HTML_ABOUT );
 		}
 		
@@ -785,7 +785,7 @@ BOOL CUploadTransferHTTP::RequestPartialFile(CDownload* pDownload)
 	
 	StartSending( upsResponse );
 	
-	theApp.Message( MSG_DEFAULT, IDS_UPLOAD_BAD_RANGE, (LPCTSTR)m_sAddress, (LPCTSTR)m_sFileName );
+	theApp.Message( MSG_INFO, IDS_UPLOAD_BAD_RANGE, (LPCTSTR)m_sAddress, (LPCTSTR)m_sFileName );
 	
 	return TRUE;
 }
@@ -907,7 +907,7 @@ BOOL CUploadTransferHTTP::QueueRequest()
 				Settings.Uploads.QueuePollMax / nTimeScale,
 				(LPCTSTR)strName );
 			
-			theApp.Message( MSG_DEFAULT, IDS_UPLOAD_QUEUED, (LPCTSTR)m_sFileName,
+			theApp.Message( MSG_INFO, IDS_UPLOAD_QUEUED, (LPCTSTR)m_sFileName,
 				(LPCTSTR)m_sAddress, nPosition, m_pQueue->GetQueuedCount(),
 				(LPCTSTR)strName );
 
@@ -1157,7 +1157,7 @@ BOOL CUploadTransferHTTP::OpenFileSendHeaders()
 		m_pDiskFile->Release( FALSE );
 		m_pDiskFile = NULL;
 		
-		theApp.Message( MSG_DEFAULT, IDS_UPLOAD_HEADERS, (LPCTSTR)m_sFileName,
+		theApp.Message( MSG_INFO, IDS_UPLOAD_HEADERS, (LPCTSTR)m_sFileName,
 			(LPCTSTR)m_sAddress, (LPCTSTR)m_sUserAgent );
 		
 		StartSending( upsResponse );
@@ -1166,7 +1166,7 @@ BOOL CUploadTransferHTTP::OpenFileSendHeaders()
 	{
 		if ( m_pBaseFile->m_nRequests++ == 0 )
 		{
-			theApp.Message( MSG_SYSTEM, IDS_UPLOAD_FILE,
+			theApp.Message( MSG_NOTICE, IDS_UPLOAD_FILE,
 				(LPCTSTR)m_sFileName, (LPCTSTR)m_sAddress );
 			
 			CQuickLock oLock( Library.m_pSection );
@@ -1177,14 +1177,23 @@ BOOL CUploadTransferHTTP::OpenFileSendHeaders()
 			}
 		}
 		
-		theApp.Message( MSG_DEFAULT,
+		theApp.Message( MSG_INFO,
 			m_sRanges.GetLength() ? IDS_UPLOAD_PARTIAL_CONTENT : IDS_UPLOAD_CONTENT,
 			m_nOffset, m_nOffset + m_nLength - 1, (LPCTSTR)m_sFileName,
 			(LPCTSTR)m_sAddress, (LPCTSTR)m_sUserAgent );
 		
 		StartSending( upsUploading );
 	}
-	
+
+	{
+		CLockedBuffer pOutput( GetOutput() );
+		if ( pOutput->m_nLength )
+		{
+			CStringA msg( (const char*)pOutput->m_pBuffer, pOutput->m_nLength );
+			theApp.Message( MSG_DEBUG | MSG_FACILITY_OUTGOING, _T("%s: UPLOAD SEND: %s"), (LPCTSTR)m_sAddress, (LPCTSTR)CA2T( msg ) );
+		}
+	}
+
 	OnWrite();
 	
 	return TRUE;
@@ -1250,7 +1259,7 @@ void CUploadTransferHTTP::OnCompleted()
 	m_pBaseFile->AddFragment( m_nOffset, m_nLength );
 	// m_pBaseFile = NULL;
 	
-	theApp.Message( MSG_DEFAULT, IDS_UPLOAD_FINISHED, (LPCTSTR)m_sFileName, (LPCTSTR)m_sAddress );
+	theApp.Message( MSG_INFO, IDS_UPLOAD_FINISHED, (LPCTSTR)m_sFileName, (LPCTSTR)m_sAddress );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -1267,7 +1276,7 @@ BOOL CUploadTransferHTTP::OnRun()
 	case upsRequest:
 		if ( ! m_bKeepAlive && GetOutputLength() == 0 )
 		{
-			theApp.Message( MSG_DEFAULT, IDS_UPLOAD_DROPPED, (LPCTSTR)m_sAddress );
+			theApp.Message( MSG_INFO, IDS_UPLOAD_DROPPED, (LPCTSTR)m_sAddress );
 			Close();
 			return FALSE;
 		}
@@ -1315,7 +1324,7 @@ BOOL CUploadTransferHTTP::OnRun()
 
 void CUploadTransferHTTP::OnDropped(BOOL /*bError*/)
 {
-	theApp.Message( MSG_DEFAULT, IDS_UPLOAD_DROPPED, (LPCTSTR)m_sAddress );
+	theApp.Message( MSG_INFO, IDS_UPLOAD_DROPPED, (LPCTSTR)m_sAddress );
 	
 	if ( m_nState == upsUploading && m_pBaseFile != NULL )
 	{
@@ -1361,7 +1370,7 @@ BOOL CUploadTransferHTTP::RequestMetadata(CXMLElement* pMetadata)
 	
 	StartSending( upsMetadata );
 	
-	theApp.Message( MSG_DEFAULT, IDS_UPLOAD_METADATA_SEND,
+	theApp.Message( MSG_INFO, IDS_UPLOAD_METADATA_SEND,
 		(LPCTSTR)m_sFileName, (LPCTSTR)m_sAddress );
 	
 	return TRUE;
@@ -1427,7 +1436,7 @@ BOOL CUploadTransferHTTP::RequestTigerTreeRaw(CTigerTree* pTigerTree, BOOL bDele
 		
 		StartSending( upsTigerTree );
 		
-		theApp.Message( MSG_DEFAULT, IDS_UPLOAD_TIGER_SEND,
+		theApp.Message( MSG_INFO, IDS_UPLOAD_TIGER_SEND,
 			(LPCTSTR)m_sFileName, (LPCTSTR)m_sAddress );
 	}
 	else
@@ -1560,7 +1569,7 @@ BOOL CUploadTransferHTTP::RequestTigerTreeDIME(CTigerTree* pTigerTree, int nDept
 		
 		StartSending( upsTigerTree );
 		
-		theApp.Message( MSG_DEFAULT, IDS_UPLOAD_TIGER_SEND,
+		theApp.Message( MSG_INFO, IDS_UPLOAD_TIGER_SEND,
 			(LPCTSTR)m_sFileName, (LPCTSTR)m_sAddress );
 	}
 	else
@@ -1643,7 +1652,7 @@ BOOL CUploadTransferHTTP::RequestPreview(CLibraryFile* pFile, CSingleLock& oLibr
 
 	if ( bSuccess )
 	{
-		theApp.Message( MSG_DEFAULT, IDS_UPLOAD_PREVIEW_DYNAMIC, (LPCTSTR)m_sFileName, (LPCTSTR)m_sAddress );
+		theApp.Message( MSG_INFO, IDS_UPLOAD_PREVIEW_DYNAMIC, (LPCTSTR)m_sFileName, (LPCTSTR)m_sAddress );
 
 		// Resample now to display dimensions
 		int nSize = szThumb.cy * pImage.m_nWidth / pImage.m_nHeight;
@@ -1732,7 +1741,7 @@ BOOL CUploadTransferHTTP::RequestPreview(CLibraryFile* pFile, CSingleLock& oLibr
 	
 	StartSending( upsPreview );
 	
-	theApp.Message( MSG_SYSTEM, IDS_UPLOAD_PREVIEW_SEND, (LPCTSTR)m_sFileName,
+	theApp.Message( MSG_NOTICE, IDS_UPLOAD_PREVIEW_SEND, (LPCTSTR)m_sFileName,
 		(LPCTSTR)m_sAddress );
 	
 	return TRUE;
@@ -1817,7 +1826,7 @@ BOOL CUploadTransferHTTP::RequestHostBrowse()
 	
 	StartSending( upsBrowse );
 	
-	theApp.Message( MSG_SYSTEM, IDS_UPLOAD_BROWSE, (LPCTSTR)m_sAddress, (LPCTSTR)m_sUserAgent );
+	theApp.Message( MSG_NOTICE, IDS_UPLOAD_BROWSE, (LPCTSTR)m_sAddress, (LPCTSTR)m_sUserAgent );
 	
 	CTransfer::OnWrite();
 	

@@ -209,7 +209,7 @@ void CSecurity::Ban(IN_ADDR* pAddress, int nBanLength, BOOL bMessage)
 				}
 				else if ( bMessage )
 				{
-					theApp.Message( MSG_SYSTEM, IDS_NETWORK_SECURITY_ALREADY_BLOCKED,
+					theApp.Message( MSG_NOTICE, IDS_NETWORK_SECURITY_ALREADY_BLOCKED,
 						(LPCTSTR)strAddress );
 				}
 
@@ -257,7 +257,7 @@ void CSecurity::Ban(IN_ADDR* pAddress, int nBanLength, BOOL bMessage)
 
 	if ( bMessage )
 	{
-		theApp.Message( MSG_SYSTEM, IDS_NETWORK_SECURITY_BLOCKED,
+		theApp.Message( MSG_NOTICE, IDS_NETWORK_SECURITY_BLOCKED,
 			(LPCTSTR)strAddress );
 	}
 }
@@ -281,7 +281,7 @@ void CSecurity::SessionBan(IN_ADDR* pAddress, BOOL bMessage)
 			{
 				if ( bMessage )
 				{
-					theApp.Message( MSG_SYSTEM, IDS_NETWORK_SECURITY_ALREADY_BLOCKED,
+					theApp.Message( MSG_NOTICE, IDS_NETWORK_SECURITY_ALREADY_BLOCKED,
 						(LPCTSTR)strAddress );
 				}
 
@@ -299,7 +299,7 @@ void CSecurity::SessionBan(IN_ADDR* pAddress, BOOL bMessage)
 
 	if ( bMessage )
 	{
-		theApp.Message( MSG_SYSTEM, IDS_NETWORK_SECURITY_BLOCKED,
+		theApp.Message( MSG_NOTICE, IDS_NETWORK_SECURITY_BLOCKED,
 			(LPCTSTR)strAddress );
 	}
 }

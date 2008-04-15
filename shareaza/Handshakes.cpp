@@ -171,7 +171,7 @@ BOOL CHandshakes::Listen()
 	if ( bBound )
 	{
 		// Report that we are now listening on our IP address
-		theApp.Message( MSG_DEFAULT, IDS_NETWORK_LISTENING_TCP, (LPCTSTR)CString( inet_ntoa( Network.m_pHost.sin_addr ) ), htons( Network.m_pHost.sin_port ) );
+		theApp.Message( MSG_INFO, IDS_NETWORK_LISTENING_TCP, (LPCTSTR)CString( inet_ntoa( Network.m_pHost.sin_addr ) ), htons( Network.m_pHost.sin_port ) );
 	}
 
 	// Set it up so that when a remote computer connects to us, the m_pWakeup event is fired

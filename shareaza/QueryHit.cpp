@@ -226,7 +226,7 @@ CQueryHit* CQueryHit::FromPacket(CG1Packet* pPacket, int* pnHops)
 			{
 				CString strVendorName;
 				if ( pVendor ) strVendorName = pVendor->m_sName;
-				theApp.Message( MSG_DEBUG, L"Invalid compressed metadata. Vendor: %s", strVendorName );
+				theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, L"Invalid compressed metadata. Vendor: %s", strVendorName );
 			}
 		}
 
@@ -1188,7 +1188,7 @@ BOOL CQueryHit::ReadEDPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer, DWORD m_n
 		CEDTag pTag;
 		if ( ! pTag.Read( pPacket, m_nServerFlags ) ) 
 		{
-			theApp.Message( MSG_ERROR, _T("ED2K search result packet read error") ); //debug check
+			theApp.Message( MSG_ERROR | MSG_FACILITY_SEARCH, _T("ED2K search result packet read error") ); //debug check
 			return FALSE;
 		}
 	
@@ -1206,7 +1206,7 @@ BOOL CQueryHit::ReadEDPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer, DWORD m_n
 		}
 		else if ( pTag.m_nKey == ED2K_FT_LASTSEENCOMPLETE )
 		{
-			//theApp.Message( MSG_SYSTEM,_T("Last seen complete"));
+			//theApp.Message( MSG_NOTICE,_T("Last seen complete"));
 		}
 		else if ( pTag.m_nKey == ED2K_FT_SOURCES )
 		{
@@ -1222,11 +1222,11 @@ BOOL CQueryHit::ReadEDPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer, DWORD m_n
 			{
 				//Assume this file is 50% complete. (we can't tell yet, but at least this will warn the user)
 				m_nPartial = (DWORD)m_nSize >> 2;
-				//theApp.Message( MSG_SYSTEM, _T("ED2K_FT_COMPLETESOURCES tag reports no complete sources.") );				
+				//theApp.Message( MSG_NOTICE, _T("ED2K_FT_COMPLETESOURCES tag reports no complete sources.") );				
 			}
 			else
 			{
-				//theApp.Message( MSG_SYSTEM, _T("ED2K_FT_COMPLETESOURCES tag reports complete sources present.") );
+				//theApp.Message( MSG_NOTICE, _T("ED2K_FT_COMPLETESOURCES tag reports complete sources present.") );
 			}
 		}
 		else if ( pTag.m_nKey == ED2K_FT_LENGTH )
@@ -1300,13 +1300,13 @@ BOOL CQueryHit::ReadEDPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer, DWORD m_n
 			//*** Debug check. Remove this when it's working
 			CString s;
 			s.Format ( _T("Tag: %u sTag: %s Type: %u"), pTag.m_nKey, pTag.m_sKey, pTag.m_nType );
-			theApp.Message( MSG_SYSTEM, s );
+			theApp.Message( MSG_NOTICE, s );
 
 			if ( pTag.m_nType == 2 )
 				s.Format ( _T("Value: %s"), pTag.m_sValue);
 			else
 				s.Format ( _T("Value: %d"), pTag.m_nValue);
-			theApp.Message( MSG_SYSTEM, s );
+			theApp.Message( MSG_NOTICE, s );
 			*/
 		}
 	}

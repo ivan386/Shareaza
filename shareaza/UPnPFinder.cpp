@@ -102,7 +102,7 @@ FinderPointer CUPnPFinder::CreateFinderInstance()
 							IID_IUPnPDeviceFinder, &pNewDeviceFinder ) ) )
 	{
 		// Should we ask to disable auto-detection?
-		theApp.Message( MSG_DEFAULT, L"UPnP discovery is not supported or not installed." );
+		theApp.Message( MSG_INFO, L"UPnP discovery is not supported or not installed." );
 
 		throw UPnPError();
 	}
@@ -190,7 +190,7 @@ bool CUPnPFinder::AreServicesHealthy()
 	if ( !bResult )
 	{
 		Settings.Connection.EnableUPnP = FALSE;
-		theApp.Message( MSG_DISPLAYED_ERROR, L"UPnP Device Host service is not running, skipping UPnP setup." );
+		theApp.Message( MSG_ERROR, L"UPnP Device Host service is not running, skipping UPnP setup." );
 	}
 
 	return bResult;
@@ -245,7 +245,7 @@ void CUPnPFinder::StartDiscovery(bool bSecondTry)
 	Init();
 
 	if ( !bSecondTry )
-		theApp.Message( MSG_DEFAULT, L"Trying to setup port forwardings with UPnP...");
+		theApp.Message( MSG_INFO, L"Trying to setup port forwardings with UPnP...");
 
 	// On tests, in some cases the search for WANConnectionDevice had no results and only a search for InternetGatewayDevice
 	// showed up the UPnP root Device which contained the WANConnectionDevice as a child. I'm not sure if there are cases
@@ -367,13 +367,13 @@ bool CUPnPFinder::OnSearchComplete()
 	{	
 		if ( m_bSecondTry )
 		{
-			theApp.Message( MSG_DEFAULT, L"Found no UPnP gateway devices" );
+			theApp.Message( MSG_INFO, L"Found no UPnP gateway devices" );
 			Settings.Connection.EnableUPnP = FALSE;
 			theApp.m_bUPnPPortsForwarded = TRI_FALSE;
 			theApp.m_bUPnPDeviceConnected = TRI_FALSE;
 		}
 		else
-			theApp.Message( MSG_DEFAULT, L"Found no UPnP gateway devices - will retry with different parameters" );
+			theApp.Message( MSG_INFO, L"Found no UPnP gateway devices - will retry with different parameters" );
 		return false; // no devices found
 	}
 	
@@ -415,7 +415,7 @@ HRESULT	CUPnPFinder::GetDeviceServices(DevicePointer pDevice)
 	if ( nCount == 0 )
 	{
 		// Should we ask a user to disable auto-detection?
-		theApp.Message( MSG_DEFAULT, L"Found no services for the currect UPnP device." );
+		theApp.Message( MSG_INFO, L"Found no services for the currect UPnP device." );
 		return hr;
 	}
 
@@ -678,7 +678,7 @@ CString CUPnPFinder::GetLocalRoutableIP(ServicePointer pService)
 	}
 
 	if ( ! strLocalIP.IsEmpty() && ! strExternalIP.IsEmpty() )
-		theApp.Message( MSG_DEFAULT, L"UPnP route: %s->%s", strLocalIP, strExternalIP );
+		theApp.Message( MSG_INFO, L"UPnP route: %s->%s", strLocalIP, strExternalIP );
 
 	return strLocalIP;
 }
@@ -793,7 +793,7 @@ void CUPnPFinder::DeleteExistingPortMappings(ServicePointer pService)
 		{
 			// FIXME: this is a sanitize check, since some routers seem to reponse to invalid GetGenericPortMappingEntry numbers
 			// proper way would be to get the actualy portmapping count, but needs testing before
-			theApp.Message( MSG_DEFAULT, L"GetGenericPortMappingEntry maximal count exceeded, quiting." );
+			theApp.Message( MSG_INFO, L"GetGenericPortMappingEntry maximal count exceeded, quiting." );
 			break;
 		}
 	}
@@ -829,7 +829,7 @@ void CUPnPFinder::CreatePortMappings(ServicePointer pService)
 		return (void)UPnPMessage( hr );
 
 	theApp.m_bUPnPPortsForwarded = TRI_TRUE;
-	theApp.Message( MSG_DEFAULT, L"Ports successfully forwarded using UPnP service." );
+	theApp.Message( MSG_INFO, L"Ports successfully forwarded using UPnP service." );
 	
 	// Leave the message loop, since events may take more time.
 	// Assuming that the user doesn't use several devices

@@ -209,7 +209,7 @@ void CVersionChecker::ProcessResponse()
 		{
 			CString strLine	= strValue.SpanExcluding( _T("\r\n") );
 			strValue		= strValue.Mid( strLine.GetLength() + 1 );
-			if ( strLine.GetLength() ) theApp.Message( MSG_SYSTEM, strLine );
+			if ( strLine.GetLength() ) theApp.Message( MSG_NOTICE, strLine );
 		}
 	}
 	

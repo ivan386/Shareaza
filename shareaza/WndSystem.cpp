@@ -45,8 +45,16 @@ BEGIN_MESSAGE_MAP(CSystemWnd, CPanelWnd)
 	ON_COMMAND(ID_SYSTEM_CLEAR, OnSystemClear)
 	ON_COMMAND(ID_SYSTEM_COPY, OnSystemCopy)
 	ON_WM_DESTROY()
-	ON_UPDATE_COMMAND_UI(ID_SYSTEM_VERBOSE, OnUpdateSystemVerbose)
-	ON_COMMAND(ID_SYSTEM_VERBOSE, OnSystemVerbose)
+	ON_UPDATE_COMMAND_UI(ID_SYSTEM_VERBOSE_ERROR, OnUpdateSystemVerboseError)
+	ON_COMMAND(ID_SYSTEM_VERBOSE_ERROR, OnSystemVerboseError)
+	ON_UPDATE_COMMAND_UI(ID_SYSTEM_VERBOSE_WARNING, OnUpdateSystemVerboseWarning)
+	ON_COMMAND(ID_SYSTEM_VERBOSE_WARNING, OnSystemVerboseWarning)
+	ON_UPDATE_COMMAND_UI(ID_SYSTEM_VERBOSE_NOTICE, OnUpdateSystemVerboseNotice)
+	ON_COMMAND(ID_SYSTEM_VERBOSE_NOTICE, OnSystemVerboseNotice)
+	ON_UPDATE_COMMAND_UI(ID_SYSTEM_VERBOSE_INFO, OnUpdateSystemVerboseInfo)
+	ON_COMMAND(ID_SYSTEM_VERBOSE_INFO, OnSystemVerboseInfo)
+	ON_UPDATE_COMMAND_UI(ID_SYSTEM_VERBOSE_DEBUG, OnUpdateSystemVerboseDebug)
+	ON_COMMAND(ID_SYSTEM_VERBOSE_DEBUG, OnSystemVerboseDebug)
 	ON_UPDATE_COMMAND_UI(ID_SYSTEM_TIMESTAMP, OnUpdateSystemTimestamp)
 	ON_COMMAND(ID_SYSTEM_TIMESTAMP, OnSystemTimestamp)
 	ON_COMMAND(ID_SYSTEM_TEST, OnSystemTest)
@@ -65,23 +73,9 @@ CSystemWnd::CSystemWnd() : CPanelWnd( TRUE, TRUE )
 /////////////////////////////////////////////////////////////////////////////
 // CSystemWnd operations
 
-void CSystemWnd::Add(int nType, LPCTSTR pszText)
+void CSystemWnd::Add(int nType, const CString& strText)
 {
-	if ( nType == MSG_DEBUG && ! Settings.General.Debug ) return;
-	if ( nType != MSG_SYSTEM && nType != MSG_DISPLAYED_ERROR && !Settings.General.VerboseMode ) return;
-
-	if ( Settings.General.ShowTimestamp )
-	{
-		CTime pNow = CTime::GetCurrentTime();
-		CString strLine;
-		strLine.Format( _T("[%.2i:%.2i:%.2i] %s"),
-			pNow.GetHour(), pNow.GetMinute(), pNow.GetSecond(), pszText );
-		m_wndText.AddLine( nType, strLine );
-	}
-	else
-	{
-		m_wndText.AddLine( nType, pszText );
-	}
+	m_wndText.Add( nType, strText );
 }
 
 void CSystemWnd::Clear()
@@ -118,9 +112,9 @@ void CSystemWnd::ShowStartupText()
 		if ( strLine == _T(".") ) strLine.Empty();
 
 		if ( _tcsnicmp( strLine, _T("!"), 1 ) == 0 )
-			m_wndText.AddLine( MSG_SYSTEM, (LPCTSTR)strLine + 1 );
+			m_wndText.AddLine( MSG_NOTICE, (LPCTSTR)strLine + 1 );
 		else
-			m_wndText.AddLine( MSG_DEFAULT, strLine );
+			m_wndText.AddLine( MSG_INFO, strLine );
 	}
 }
 
@@ -135,8 +129,6 @@ int CSystemWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_wndText.Create( WS_VISIBLE, rc, this, 100 );
 
 	LoadState( _T("CSystemWnd"), FALSE );
-	theApp.Message( MSG_DEBUG, _T("IsG2HubCapable() = %i"), Neighbours.IsG2HubCapable() );
-	theApp.Message( MSG_DEBUG, _T("IsG1UltrapeerCapable() = %i"), Neighbours.IsG1UltrapeerCapable() );
 
 	return 0;
 }
@@ -182,14 +174,54 @@ BOOL CSystemWnd::PreTranslateMessage(MSG* pMsg)
 	return CPanelWnd::PreTranslateMessage(pMsg);
 }
 
-void CSystemWnd::OnUpdateSystemVerbose(CCmdUI* pCmdUI)
+void CSystemWnd::OnUpdateSystemVerboseError(CCmdUI* pCmdUI)
 {
-	pCmdUI->SetCheck( Settings.General.VerboseMode );
+	pCmdUI->SetCheck( Settings.General.LogLevel == MSG_ERROR );
 }
 
-void CSystemWnd::OnSystemVerbose()
+void CSystemWnd::OnSystemVerboseError()
 {
-	Settings.General.VerboseMode = ! Settings.General.VerboseMode;
+	Settings.General.LogLevel = MSG_ERROR;
+}
+
+void CSystemWnd::OnUpdateSystemVerboseWarning(CCmdUI* pCmdUI)
+{
+	pCmdUI->SetCheck( Settings.General.LogLevel == MSG_WARNING );
+}
+
+void CSystemWnd::OnSystemVerboseWarning()
+{
+	Settings.General.LogLevel = MSG_WARNING;
+}
+
+void CSystemWnd::OnUpdateSystemVerboseNotice(CCmdUI* pCmdUI)
+{
+	pCmdUI->SetCheck( Settings.General.LogLevel == MSG_NOTICE );
+}
+
+void CSystemWnd::OnSystemVerboseNotice()
+{
+	Settings.General.LogLevel = MSG_NOTICE;
+}
+
+void CSystemWnd::OnUpdateSystemVerboseInfo(CCmdUI* pCmdUI)
+{
+	pCmdUI->SetCheck( Settings.General.LogLevel == MSG_INFO );
+}
+
+void CSystemWnd::OnSystemVerboseInfo()
+{
+	Settings.General.LogLevel = MSG_INFO;
+}
+
+void CSystemWnd::OnUpdateSystemVerboseDebug(CCmdUI* pCmdUI)
+{
+	pCmdUI->SetCheck( Settings.General.LogLevel == MSG_DEBUG );
+}
+
+void CSystemWnd::OnSystemVerboseDebug()
+{
+	Settings.General.LogLevel = MSG_DEBUG;
 }
 
 void CSystemWnd::OnUpdateSystemTimestamp(CCmdUI* pCmdUI)
@@ -222,7 +254,7 @@ void CSystemWnd::OnSystemTest()
 	}
 	else
 	{
-		theApp.Message( MSG_SYSTEM, _T("CCrawlSession: %i hubs, %i leaves"),
+		theApp.Message( MSG_NOTICE, _T("CCrawlSession: %i hubs, %i leaves"),
 			CrawlSession.GetHubCount(), CrawlSession.GetLeafCount() );
 	}
 }

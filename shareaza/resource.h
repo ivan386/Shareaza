@@ -1850,6 +1850,11 @@
 #define ID_WEBSERVICES_MUSICBRAINZ      33309
 #define ID_MUSICBRAINZ_MATCHES          33310
 #define ID_MUSICBRAINZ_ALBUMS           33311
+#define ID_SYSTEM_VERBOSE_ERROR         33312
+#define ID_SYSTEM_VERBOSE_WARNING       33313
+#define ID_SYSTEM_VERBOSE_NOTICE        33314
+#define ID_SYSTEM_VERBOSE_INFO          33315
+#define ID_SYSTEM_VERBOSE_DEBUG         33316
 
 // Next default values for new objects
 // 
@@ -1857,7 +1862,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                1
 #define _APS_NEXT_RESOURCE_VALUE        325
-#define _APS_NEXT_COMMAND_VALUE         33230
+#define _APS_NEXT_COMMAND_VALUE         33317
 #define _APS_NEXT_CONTROL_VALUE         1558
 #define _APS_NEXT_SYMED_VALUE           104
 #endif

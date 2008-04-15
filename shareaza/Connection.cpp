@@ -483,7 +483,7 @@ BOOL CConnection::OnWrite()
 		&& *m_mOutput.pLimit						// And that limit isn't 0
 		&& Settings.Live.BandwidthScale <= 100 )	// And the bandwidth scale isn't at MAX
 	{
-		// Work out what the bandwitdh limit is
+		// Work out what the bandwidth limit is
 		nLimit = m_mOutput.CalculateLimit( tNow, Settings.Uploads.ThrottleMode == 0 );
 	}
 
@@ -555,7 +555,6 @@ BOOL CConnection::ReadHeaders()
 
 			// Call the OnHeadersComplete method for the most advanced class that inherits from CConnection
 			return OnHeadersComplete(); // Calls CShakeNeighbour::OnHeadersComplete()
-
 		} // The line starts with a space
 		else if ( _istspace( strLine.GetAt( 0 ) ) ) // Get the first character in the string, and see if its a space
 		{
@@ -582,10 +581,10 @@ BOOL CConnection::ReadHeaders()
 			// Trim spaces from both ends of the value, and see if it still has length
 			strValue.TrimLeft();
 			strValue.TrimRight();
-				// Give OnHeaderLine this last header, and its value
-				if ( ! OnHeaderLine( m_sLastHeader, strValue ) ) return FALSE; // Calls CShakeNeighbour::OnHeaderLine
-			}
+			// Give OnHeaderLine this last header, and its value
+			if ( ! OnHeaderLine( m_sLastHeader, strValue ) ) return FALSE; // Calls CShakeNeighbour::OnHeaderLine
 		}
+	}
 
 	// Send the contents of the output buffer to the remote computer
 	OnWrite();

@@ -209,13 +209,13 @@ BOOL CDownloadTransferBT::OnConnected()
 	{
 		// This source is only here to push start torrent uploads. (We don't want to download)
 		m_bInterested = FALSE;
-		theApp.Message( MSG_DEFAULT, _T("Initiated push start for upload to %s"), (LPCTSTR)m_sAddress );
+		theApp.Message( MSG_INFO, _T("Initiated push start for upload to %s"), (LPCTSTR)m_sAddress );
 	}
 	else
 	{
 		// Regular download
 		m_pClient->m_mInput.pLimit = &m_nBandwidth;
-		theApp.Message( MSG_DEFAULT, IDS_DOWNLOAD_CONNECTED, (LPCTSTR)m_sAddress );
+		theApp.Message( MSG_INFO, IDS_DOWNLOAD_CONNECTED, (LPCTSTR)m_sAddress );
 		if ( ! m_pDownload->PrepareFile() )
 		{
 			Close( TRI_TRUE );
@@ -425,7 +425,7 @@ BOOL CDownloadTransferBT::SendRequests()
 			m_oRequested.push_back( Selected );
 			
 			int nType	= ( m_nDownloaded == 0 || ( nOffset % nBlockSize ) == 0 )
-						? MSG_DEFAULT : MSG_DEBUG;
+						? MSG_INFO : MSG_DEBUG;
 			theApp.Message( nType, IDS_DOWNLOAD_FRAGMENT_REQUEST,
 				nOffset, nOffset + nLength - 1,
 				(LPCTSTR)m_pDownload->GetDisplayName(), (LPCTSTR)m_sAddress );
@@ -603,7 +603,7 @@ BOOL CDownloadTransferBT::OnSourceResponse(CBTPacket* pPacket)
 	
 	delete pRoot;
 	
-	theApp.Message( MSG_DEFAULT, IDS_BT_CLIENT_EXCHANGE, nCount, (LPCTSTR)m_sAddress );
+	theApp.Message( MSG_INFO, IDS_BT_CLIENT_EXCHANGE, nCount, (LPCTSTR)m_sAddress );
 	
 	return TRUE;
 }

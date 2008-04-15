@@ -4998,6 +4998,11 @@ BEGIN
     ID_DOWNLOADS_SHOW_SOURCES 
                             "Display sources which are not currently being used."
     ID_SYSTEM_VERBOSE       "Display a detailed system activity log."
+    ID_SYSTEM_VERBOSE_ERROR "Display errors only."
+    ID_SYSTEM_VERBOSE_WARNING "Display warnings and above."
+    ID_SYSTEM_VERBOSE_NOTICE "Display notices and above."
+    ID_SYSTEM_VERBOSE_INFO  "Display infos and above."
+    ID_SYSTEM_VERBOSE_DEBUG "Display all."
     ID_DISCOVERY_ADVERTISE  "Advertise the selected GWebCache service to a random existing GWebCache."
     ID_DISCOVERY_BROWSE     "Browse statistics for the selected GWebCache service on the Web."
     ID_BROWSE_STOP          "Stop browsing files on this host."

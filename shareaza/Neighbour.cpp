@@ -211,7 +211,7 @@ void CNeighbour::Close(UINT nError)
 	if ( nError && nError != IDS_HANDSHAKE_REJECTED )
 	{
 		// Report a voluntary default close, or an error
-		theApp.Message( bVoluntary ? MSG_DEFAULT : MSG_ERROR, nError, (LPCTSTR)m_sAddress );
+		theApp.Message( bVoluntary ? MSG_INFO : MSG_ERROR, nError, (LPCTSTR)m_sAddress );
 	}
 
 	// Delete this CNeighbour object, calling its destructor right now
@@ -313,7 +313,7 @@ BOOL CNeighbour::OnRun()
 		if ( m_pQueryTableLocal->PatchTo( &QueryHashMaster, this ) )
 		{
 			// There was an error, record it
-			theApp.Message( MSG_SYSTEM, IDS_PROTOCOL_QRP_SENT, (LPCTSTR)m_sAddress,
+			theApp.Message( MSG_NOTICE, IDS_PROTOCOL_QRP_SENT, (LPCTSTR)m_sAddress,
 				m_pQueryTableLocal->m_nBits, m_pQueryTableLocal->m_nHash,
 				m_pQueryTableLocal->m_nInfinity, m_pQueryTableLocal->GetPercent() );
 		}
@@ -531,7 +531,7 @@ BOOL CNeighbour::OnCommonQueryHash(CPacket* pPacket)
 	if ( m_pQueryTableRemote == NULL )
 	{
 		m_pQueryTableRemote = new CQueryHashTable();
-		theApp.Message( MSG_DEFAULT, IDS_PROTOCOL_QRP_UNEXPECTED, (LPCTSTR)m_sAddress );
+		theApp.Message( MSG_INFO, IDS_PROTOCOL_QRP_UNEXPECTED, (LPCTSTR)m_sAddress );
 	}
 
 	BOOL bLive = m_pQueryTableRemote->m_bLive;
@@ -544,7 +544,7 @@ BOOL CNeighbour::OnCommonQueryHash(CPacket* pPacket)
 
 	if ( m_pQueryTableRemote->m_bLive && ! bLive )
 	{
-		theApp.Message( MSG_DEFAULT, IDS_PROTOCOL_QRP_UPDATED, (LPCTSTR)m_sAddress,
+		theApp.Message( MSG_INFO, IDS_PROTOCOL_QRP_UPDATED, (LPCTSTR)m_sAddress,
 			m_pQueryTableRemote->m_nBits, m_pQueryTableRemote->m_nHash,
 			m_pQueryTableRemote->m_nInfinity, m_pQueryTableRemote->GetPercent() );
 	}

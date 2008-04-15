@@ -106,7 +106,7 @@ void CDownload::Pause( BOOL bRealPause )
 {
 	if ( m_bComplete || m_bPaused ) return;
 
-	theApp.Message( MSG_DOWNLOAD, IDS_DOWNLOAD_PAUSED, (LPCTSTR)GetDisplayName() );
+	theApp.Message( MSG_NOTICE, IDS_DOWNLOAD_PAUSED, (LPCTSTR)GetDisplayName() );
 	if ( !bRealPause ) 
 	{
 		StopTrying();
@@ -136,7 +136,7 @@ void CDownload::Resume()
 		return;
 	}
 	
-	theApp.Message( MSG_DOWNLOAD, IDS_DOWNLOAD_RESUMED, (LPCTSTR)GetDisplayName() );
+	theApp.Message( MSG_NOTICE, IDS_DOWNLOAD_RESUMED, (LPCTSTR)GetDisplayName() );
 	
 	if ( m_pFile != NULL )
 	{
@@ -183,7 +183,7 @@ void CDownload::Remove(BOOL bDelete)
 	
 	if ( bDelete || ! IsCompleted() )
 	{
-		theApp.Message( MSG_DOWNLOAD, IDS_DOWNLOAD_REMOVE, (LPCTSTR)GetDisplayName() );
+		theApp.Message( MSG_NOTICE, IDS_DOWNLOAD_REMOVE, (LPCTSTR)GetDisplayName() );
 	}
 	
 	DeleteFile( bDelete );
@@ -211,7 +211,7 @@ void CDownload::Boost()
 {
 	if ( m_pFile == NULL || m_bBoosted ) return;
 	
-	theApp.Message( MSG_SYSTEM, IDS_DOWNLOAD_BOOST, (LPCTSTR)GetDisplayName() );
+	theApp.Message( MSG_NOTICE, IDS_DOWNLOAD_BOOST, (LPCTSTR)GetDisplayName() );
 	
 	for ( CDownloadTransfer* pTransfer = GetFirstTransfer() ; pTransfer ; pTransfer = pTransfer->m_pDlNext )
 	{
@@ -473,7 +473,7 @@ void CDownload::OnDownloaded()
 {
 	ASSERT( m_bComplete == FALSE );
 	
-	theApp.Message( MSG_DOWNLOAD, IDS_DOWNLOAD_COMPLETED, (LPCTSTR)GetDisplayName() );
+	theApp.Message( MSG_NOTICE, IDS_DOWNLOAD_COMPLETED, (LPCTSTR)GetDisplayName() );
 	m_tCompleted = GetTickCount();
 	m_bDownloading = FALSE;
 	
@@ -544,7 +544,7 @@ void CDownload::OnMoved(CDownloadTask* pTask)
 	{
 		m_sDiskName = pTask->m_sFilename;
 		
-		theApp.Message( MSG_DOWNLOAD, IDS_DOWNLOAD_MOVED,
+		theApp.Message( MSG_NOTICE, IDS_DOWNLOAD_MOVED,
 			(LPCTSTR)GetDisplayName(), (LPCTSTR)m_sDiskName );
 		
 		if ( m_pXML != NULL && Settings.Downloads.Metadata )

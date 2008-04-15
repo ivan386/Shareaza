@@ -78,7 +78,7 @@ BOOL CDownloadWithFile::OpenFile()
 	}
 	else if ( m_nSize != SIZE_UNKNOWN && ! Downloads.IsSpaceAvailable( m_nSize, Downloads.dlPathIncomplete ) )
 	{
-		theApp.Message( MSG_DISPLAYED_ERROR, IDS_DOWNLOAD_DISK_SPACE,
+		theApp.Message( MSG_ERROR, IDS_DOWNLOAD_DISK_SPACE,
 			m_sDisplayName,
 			Settings.SmartVolume( m_nSize ) );
 	}
@@ -98,7 +98,7 @@ BOOL CDownloadWithFile::OpenFile()
 			else
 				strName.Format( _T("%s.x%i"), (LPCTSTR)m_sDiskName, rand() % 128 );
 			
-            theApp.Message( MSG_DEFAULT, IDS_DOWNLOAD_FILE_CREATE, (LPCTSTR)strName );
+            theApp.Message( MSG_INFO, IDS_DOWNLOAD_FILE_CREATE, (LPCTSTR)strName );
 			
 			if ( m_pFile->Create( strName, m_nSize ) )
 			{

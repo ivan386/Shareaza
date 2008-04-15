@@ -136,7 +136,7 @@ BOOL CUploadTransferED2K::Request(const Hashes::Ed2kHash& oED2K)
 	
 	AllocateBaseFile();
 	
-	theApp.Message( MSG_SYSTEM, IDS_UPLOAD_FILE,
+	theApp.Message( MSG_NOTICE, IDS_UPLOAD_FILE,
 		(LPCTSTR)m_sFileName, (LPCTSTR)m_sAddress );
 	
 	m_nRanking = -1;
@@ -270,7 +270,7 @@ void CUploadTransferED2K::OnDropped(BOOL /*bError*/)
 {
 	if ( m_nState == upsQueued )
 	{
-		theApp.Message( MSG_DEFAULT, IDS_UPLOAD_QUEUE_DROP, (LPCTSTR)m_sAddress );
+		theApp.Message( MSG_INFO, IDS_UPLOAD_QUEUE_DROP, (LPCTSTR)m_sAddress );
 		
 		m_tRequest = GetTickCount();
 		
@@ -582,7 +582,7 @@ BOOL CUploadTransferED2K::StartNextRequest()
 		m_nState	= upsUploading;
 		m_tContent	= m_pClient->m_mOutput.tLast = GetTickCount();
 		
-		theApp.Message( MSG_DEFAULT, IDS_UPLOAD_CONTENT,
+		theApp.Message( MSG_INFO, IDS_UPLOAD_CONTENT,
 			m_nOffset, m_nOffset + m_nLength - 1,
 			(LPCTSTR)m_sFileName, (LPCTSTR)m_sAddress,
 			(LPCTSTR)m_sUserAgent );
@@ -733,7 +733,7 @@ BOOL CUploadTransferED2K::CheckFinishedRequest()
 		!Settings.Connection.RequireForTransfers ) )
 		return FALSE; 
 	
-	theApp.Message( MSG_DEFAULT, IDS_UPLOAD_FINISHED,
+	theApp.Message( MSG_INFO, IDS_UPLOAD_FINISHED,
 		(LPCTSTR)m_sFileName, (LPCTSTR)m_sAddress );
 	
 	m_oServed.push_back( Fragments::Fragment( m_nOffset, m_nOffset + m_nLength ) );
@@ -806,7 +806,7 @@ BOOL CUploadTransferED2K::CheckRanking()
 			
 			if ( UploadQueues.Check( m_pQueue ) )
 			{
-				theApp.Message( MSG_DEFAULT, IDS_UPLOAD_QUEUED, (LPCTSTR)m_sFileName,
+				theApp.Message( MSG_INFO, IDS_UPLOAD_QUEUED, (LPCTSTR)m_sFileName,
 					(LPCTSTR)m_sAddress, nPosition, m_pQueue->GetQueuedCount(),
 					(LPCTSTR)m_pQueue->m_sName );
 			}

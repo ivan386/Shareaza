@@ -93,7 +93,7 @@ CG2Neighbour::CG2Neighbour(CNeighbour* pBase) :
 	m_tQueryTimer		( 0 ),
 	m_bBlacklisted		( FALSE )
 {
-	theApp.Message( MSG_DEFAULT, IDS_HANDSHAKE_ONLINE_G2, (LPCTSTR)m_sAddress,
+	theApp.Message( MSG_INFO, IDS_HANDSHAKE_ONLINE_G2, (LPCTSTR)m_sAddress,
 		m_sUserAgent.IsEmpty() ? _T("Unknown") : (LPCTSTR)m_sUserAgent );
 
 	SendStartups();
@@ -705,7 +705,7 @@ BOOL CG2Neighbour::OnLNI(CG2Packet* pPacket)
 		}
 		else if ( nType == G2_PACKET_FW && nLength == 0 )
 		{
-			theApp.Message( MSG_DEFAULT, _T("Received /LNI/FW from %s:%lu"),
+			theApp.Message( MSG_INFO, _T("Received /LNI/FW from %s:%lu"),
 				(LPCTSTR)CString( inet_ntoa( m_pHost.sin_addr ) ),
 				htons( m_pHost.sin_port ) );
 
@@ -1134,7 +1134,7 @@ BOOL CG2Neighbour::OnQuery(CG2Packet* pPacket)
 	// Check for invalid / blocked searches
 	if ( pSearch == NULL )
 	{
-		theApp.Message( MSG_DEFAULT, IDS_PROTOCOL_BAD_QUERY, (LPCTSTR)m_sAddress );
+		theApp.Message( MSG_INFO, IDS_PROTOCOL_BAD_QUERY, (LPCTSTR)m_sAddress );
 		Statistics.Current.Gnutella2.Dropped++;
 		m_nDropCount++;
 		return TRUE;
@@ -1153,7 +1153,7 @@ BOOL CG2Neighbour::OnQuery(CG2Packet* pPacket)
 		{
 			// Abusive client
 			m_bBlacklisted = TRUE;
-			theApp.Message( MSG_SYSTEM, _T("Blacklisting %s due to excess traffic"), (LPCTSTR)m_sAddress );
+			theApp.Message( MSG_NOTICE, _T("Blacklisting %s due to excess traffic"), (LPCTSTR)m_sAddress );
 			//Security.Ban( &m_pHost.sin_addr, ban30Mins, FALSE );
 
 		}

@@ -86,7 +86,7 @@ void CCrawlSession::Bootstrap()
 
 void CCrawlSession::SendCrawl(SOCKADDR_IN* pHost)
 {
-	theApp.Message( MSG_TEMP, _T("CRAWL: Crawling host %s"),
+	theApp.Message( MSG_DEBUG, _T("CRAWL: Crawling host %s"),
 		(LPCTSTR)CString( inet_ntoa( pHost->sin_addr ) ) );
 
 	CG2Packet* pPacket = CG2Packet::New( G2_PACKET_CRAWL_REQ, TRUE );
@@ -156,7 +156,7 @@ void CCrawlSession::OnCrawl(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 {
 	if ( ! m_bActive ) return;
 
-	theApp.Message( MSG_TEMP, _T("CRAWL: Response from %s"),
+	theApp.Message( MSG_DEBUG, _T("CRAWL: Response from %s"),
 		(LPCTSTR)CString( inet_ntoa( pHost->sin_addr ) ) );
 
 	CCrawlNode* pNode = Find( &pHost->sin_addr, TRUE );
@@ -302,7 +302,7 @@ void CCrawlNode::OnNode(CCrawlSession* pSession, CG2Packet* pPacket, DWORD /*nPa
 		m_nLatitude		= nLatitude;
 		m_nLongitude	= nLongitude;
 
-		theApp.Message( MSG_TEMP, _T("CRAWL: Found %s, %s(%i), \"%s\", lat: %.3f, lon: %.3f :"),
+		theApp.Message( MSG_DEBUG, _T("CRAWL: Found %s, %s(%i), \"%s\", lat: %.3f, lon: %.3f :"),
 			(LPCTSTR)CString( inet_ntoa( pHost.sin_addr ) ), bHub ? _T("hub") : _T("leaf"),
 			nLeafs, (LPCTSTR)strNick, double( nLatitude ), double( nLongitude ) );
 	}
@@ -325,7 +325,7 @@ void CCrawlNode::OnNode(CCrawlSession* pSession, CG2Packet* pPacket, DWORD /*nPa
 			m_pNeighbours.AddTail( pNode );
 		}
 
-		theApp.Message( MSG_TEMP, _T("CRAWL:    %s, %s(%i), \"%s\", lat: %.3f, lon: %.3f"),
+		theApp.Message( MSG_DEBUG, _T("CRAWL:    %s, %s(%i), \"%s\", lat: %.3f, lon: %.3f"),
 			(LPCTSTR)CString( inet_ntoa( pHost.sin_addr ) ), bHub ? _T("hub") : _T("leaf"),
 			nLeafs, (LPCTSTR)strNick, double( nLatitude ), double( nLongitude ) );
 	}

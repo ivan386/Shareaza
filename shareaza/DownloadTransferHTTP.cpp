@@ -87,7 +87,7 @@ CDownloadTransferHTTP::~CDownloadTransferHTTP()
 
 BOOL CDownloadTransferHTTP::Initiate()
 {
-	theApp.Message( MSG_DEFAULT, IDS_DOWNLOAD_CONNECTING,
+	theApp.Message( MSG_INFO, IDS_DOWNLOAD_CONNECTING,
 		(LPCTSTR)CString( inet_ntoa( m_pSource->m_pAddress ) ), m_pSource->m_nPort,
 		(LPCTSTR)m_pDownload->GetDisplayName() );
 	
@@ -118,7 +118,7 @@ BOOL CDownloadTransferHTTP::AcceptPush(CConnection* pConnection)
 {
 	AttachTo( pConnection );
 	
-	theApp.Message( MSG_DEFAULT, IDS_DOWNLOAD_PUSHED, (LPCTSTR)m_sAddress,
+	theApp.Message( MSG_INFO, IDS_DOWNLOAD_PUSHED, (LPCTSTR)m_sAddress,
 		(LPCTSTR)m_pDownload->GetDisplayName() );
 	
 	if ( ! m_pDownload->IsBoosted() )
@@ -173,7 +173,7 @@ DWORD CDownloadTransferHTTP::GetAverageSpeed()
 
 BOOL CDownloadTransferHTTP::OnConnected()
 {
-	theApp.Message( MSG_DEFAULT, IDS_DOWNLOAD_CONNECTED, (LPCTSTR)m_sAddress );
+	theApp.Message( MSG_INFO, IDS_DOWNLOAD_CONNECTED, (LPCTSTR)m_sAddress );
 	
 	m_tConnected = GetTickCount();
 	
@@ -198,7 +198,7 @@ BOOL CDownloadTransferHTTP::StartNextFragment()
 	if ( ! IsInputExist() || ! IsOutputExist() /* ||
 		 m_pDownload->GetTransferCount( dtsDownloading ) >= Settings.Downloads.MaxFileTransfers */ )
 	{
-		theApp.Message( MSG_DEFAULT, IDS_DOWNLOAD_CLOSING_EXTRA, (LPCTSTR)m_sAddress );
+		theApp.Message( MSG_INFO, IDS_DOWNLOAD_CLOSING_EXTRA, (LPCTSTR)m_sAddress );
 		Close( TRI_TRUE );
 		return FALSE;
 	}
@@ -218,7 +218,7 @@ BOOL CDownloadTransferHTTP::StartNextFragment()
 	}
 	else if ( m_pDownload->NeedTigerTree() && m_sTigerTree.GetLength() )
 	{
-		theApp.Message( MSG_DEFAULT, IDS_DOWNLOAD_TIGER_REQUEST,
+		theApp.Message( MSG_INFO, IDS_DOWNLOAD_TIGER_REQUEST,
 			(LPCTSTR)m_pDownload->GetDisplayName(), (LPCTSTR)m_sAddress );
 		
 		m_bTigerFetch	= TRUE;
@@ -228,7 +228,7 @@ BOOL CDownloadTransferHTTP::StartNextFragment()
 	}
 	else if ( m_pDownload->m_pXML == NULL && m_sMetadata.GetLength() )
 	{
-		theApp.Message( MSG_DEFAULT, IDS_DOWNLOAD_METADATA_REQUEST,
+		theApp.Message( MSG_INFO, IDS_DOWNLOAD_METADATA_REQUEST,
 			(LPCTSTR)m_pDownload->GetDisplayName(), (LPCTSTR)m_sAddress );
 		
 		m_bMetaFetch	= TRUE;
@@ -240,7 +240,7 @@ BOOL CDownloadTransferHTTP::StartNextFragment()
 	{
 		ChunkifyRequest( &m_nOffset, &m_nLength, Settings.Downloads.ChunkSize, TRUE );
 		
-		theApp.Message( MSG_DEFAULT, IDS_DOWNLOAD_FRAGMENT_REQUEST,
+		theApp.Message( MSG_INFO, IDS_DOWNLOAD_FRAGMENT_REQUEST,
 			m_nOffset, m_nOffset + m_nLength - 1,
 			(LPCTSTR)m_pDownload->GetDisplayName(), (LPCTSTR)m_sAddress );
 		
@@ -250,7 +250,7 @@ BOOL CDownloadTransferHTTP::StartNextFragment()
 	{
 		if ( m_pSource != NULL ) m_pSource->SetAvailableRanges( NULL );
 		
-		theApp.Message( MSG_DEFAULT, IDS_DOWNLOAD_FRAGMENT_END, (LPCTSTR)m_sAddress );
+		theApp.Message( MSG_INFO, IDS_DOWNLOAD_FRAGMENT_END, (LPCTSTR)m_sAddress );
 		Close( TRI_TRUE );
 		
 		return FALSE;
@@ -309,7 +309,7 @@ BOOL CDownloadTransferHTTP::SendRequest()
 		Write( strLine );
 	}
 	
-	theApp.Message( MSG_DEBUG, _T("%s: DOWNLOAD REQUEST: %s"),
+	theApp.Message( MSG_DEBUG | MSG_FACILITY_OUTGOING, _T("%s: DOWNLOAD REQUEST: %s"),
 		(LPCTSTR)m_sAddress, (LPCTSTR)pURL.m_sPath );
 	
 	Write( _P("Connection: Keep-Alive\r\n") ); //BearShare assumes close
@@ -600,7 +600,8 @@ BOOL CDownloadTransferHTTP::ReadResponseLine()
 
 	if ( strLine.GetLength() > 512 ) strLine = _T("#LINE_TOO_LONG#");
 
-	theApp.Message( MSG_DEBUG, _T("%s: DOWNLOAD RESPONSE: %s"), (LPCTSTR)m_sAddress, (LPCTSTR)strLine );
+	theApp.Message( MSG_DEBUG | MSG_FACILITY_INCOMING, _T("%s: DOWNLOAD RESPONSE: %s"),
+		(LPCTSTR)m_sAddress, (LPCTSTR)strLine );
 
 	if ( strLine.GetLength() >= 12 && strLine.Left( 9 ) == _T("HTTP/1.1 ") )
 	{
@@ -680,7 +681,8 @@ BOOL CDownloadTransferHTTP::ReadResponseLine()
 
 BOOL CDownloadTransferHTTP::OnHeaderLine(CString& strHeader, CString& strValue)
 {
-	theApp.Message( MSG_DEBUG, _T("%s: DOWNLOAD HEADER: %s: %s"), (LPCTSTR)m_sAddress, (LPCTSTR)strHeader, (LPCTSTR)strValue );
+	theApp.Message( MSG_DEBUG | MSG_FACILITY_INCOMING, _T("%s: DOWNLOAD HEADER: %s: %s"),
+		(LPCTSTR)m_sAddress, (LPCTSTR)strHeader, (LPCTSTR)strValue );
 	
 	if ( strHeader.CompareNoCase( _T("Server") ) == 0 )
 	{
@@ -755,7 +757,7 @@ BOOL CDownloadTransferHTTP::OnHeaderLine(CString& strHeader, CString& strValue)
 				m_nOffset = nFirst;
 				m_nLength = nLast - nFirst + 1;
 				
-				theApp.Message( MSG_DEFAULT, IDS_DOWNLOAD_USEFUL_RANGE, (LPCTSTR)m_sAddress,
+				theApp.Message( MSG_INFO, IDS_DOWNLOAD_USEFUL_RANGE, (LPCTSTR)m_sAddress,
 					m_nOffset, m_nOffset + m_nLength - 1, (LPCTSTR)m_pDownload->GetDisplayName() );
 			}
 			else
@@ -1161,7 +1163,7 @@ BOOL CDownloadTransferHTTP::OnHeadersComplete()
 		{
             // This should fix the PHEX TTH problem with closed connection.
             SetState( dtsTiger );
-            theApp.Message( MSG_DEFAULT, IDS_DOWNLOAD_TIGER_RECV, (LPCTSTR)m_sAddress,
+            theApp.Message( MSG_INFO, IDS_DOWNLOAD_TIGER_RECV, (LPCTSTR)m_sAddress,
                 (LPCTSTR)m_pSource->m_sServer );
 
             return ReadTiger(); // doesn't actually read but updates timings
@@ -1173,7 +1175,7 @@ BOOL CDownloadTransferHTTP::OnHeadersComplete()
 		}
 		else if ( m_nOffset > 0 )
 		{
-			theApp.Message( MSG_DEFAULT, IDS_DOWNLOAD_TIGER_RANGE, (LPCTSTR)m_sAddress );
+			theApp.Message( MSG_INFO, IDS_DOWNLOAD_TIGER_RANGE, (LPCTSTR)m_sAddress );
 			Close( TRI_FALSE );
 			return FALSE;
 		}
@@ -1182,7 +1184,7 @@ BOOL CDownloadTransferHTTP::OnHeadersComplete()
 				m_sContentType.CompareNoCase( _T("application/dime") ) && 
 				m_sContentType.CompareNoCase( _T("application/binary") ) ) // Content Type used by Phex 
 		{
-			theApp.Message( MSG_DEFAULT, IDS_DOWNLOAD_TIGER_RANGE, (LPCTSTR)m_sAddress );
+			theApp.Message( MSG_INFO, IDS_DOWNLOAD_TIGER_RANGE, (LPCTSTR)m_sAddress );
 			Close( TRI_TRUE );
 			return FALSE;
 		}
@@ -1190,7 +1192,7 @@ BOOL CDownloadTransferHTTP::OnHeadersComplete()
 		SetState( dtsTiger );
 		m_tContent = m_mInput.tLast = GetTickCount();
 		
-		theApp.Message( MSG_DEFAULT, IDS_DOWNLOAD_TIGER_RECV, (LPCTSTR)m_sAddress,
+		theApp.Message( MSG_INFO, IDS_DOWNLOAD_TIGER_RECV, (LPCTSTR)m_sAddress,
 			(LPCTSTR)m_pSource->m_sServer );
 		
 		return ReadTiger();
@@ -1206,7 +1208,7 @@ BOOL CDownloadTransferHTTP::OnHeadersComplete()
 		SetState( dtsMetadata );
 		m_tContent = m_mInput.tLast = GetTickCount();
 		
-		theApp.Message( MSG_DEFAULT, IDS_DOWNLOAD_METADATA_RECV,
+		theApp.Message( MSG_INFO, IDS_DOWNLOAD_METADATA_RECV,
 			(LPCTSTR)m_sAddress, (LPCTSTR)m_pSource->m_sServer );
 		
 		return ReadMetadata();
@@ -1270,7 +1272,7 @@ BOOL CDownloadTransferHTTP::OnHeadersComplete()
 	
 	if ( ! m_bKeepAlive ) m_pSource->m_bCloseConn = TRUE;
 	
-	theApp.Message( MSG_DEFAULT, IDS_DOWNLOAD_CONTENT, (LPCTSTR)m_sAddress,
+	theApp.Message( MSG_INFO, IDS_DOWNLOAD_CONTENT, (LPCTSTR)m_sAddress,
 		(LPCTSTR)m_pSource->m_sServer );
 	
 	SetState( dtsDownloading );
@@ -1441,7 +1443,7 @@ BOOL CDownloadTransferHTTP::ReadContent()
 				m_nLength - m_nPosition );
 			if ( /* m_bInitiated || */ ! bUseful )
 			{
-				theApp.Message( MSG_DEFAULT, IDS_DOWNLOAD_FRAGMENT_OVERLAP, (LPCTSTR)m_sAddress );
+				theApp.Message( MSG_INFO, IDS_DOWNLOAD_FRAGMENT_OVERLAP, (LPCTSTR)m_sAddress );
 				Close( TRI_TRUE );
 				return FALSE;
 			}
@@ -1612,7 +1614,7 @@ BOOL CDownloadTransferHTTP::ReadFlush()
         {
 			/* we got a "requested range unavailable" error but the source doesn't
 			advertise available ranges; don't start to guess, try again later */
-			theApp.Message( MSG_DEFAULT, IDS_DOWNLOAD_416_WITHOUT_RANGE, (LPCTSTR)m_sAddress );
+			theApp.Message( MSG_INFO, IDS_DOWNLOAD_416_WITHOUT_RANGE, (LPCTSTR)m_sAddress );
 			Close( TRI_TRUE );
 			return FALSE;
         }

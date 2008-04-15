@@ -167,7 +167,7 @@ void CHostCache::DoED2KServersImport()
 {
 	CString strPrograms( GetProgramFilesFolder() );
 
-	theApp.Message( MSG_SYSTEM, _T("Importing server.met from eMule/eMule mod") );
+	theApp.Message( MSG_NOTICE, _T("Importing server.met from eMule/eMule mod") );
 
 	// Get the server list from eMule if possible
 	Import( strPrograms + _T("\\eMule\\config\\server.met") );
@@ -797,7 +797,7 @@ int CHostCache::LoadDefaultED2KServers()
 
 	if ( pFile.Open( strFile, CFile::modeRead ) )			// Load default list from file if possible
 	{
-		theApp.Message( MSG_SYSTEM, _T("Loading default ED2K server list") );
+		theApp.Message( MSG_NOTICE, _T("Loading default ED2K server list") );
 
 		try
 		{
@@ -853,7 +853,7 @@ int CHostCache::LoadDefaultED2KServers()
 	}
 
 	if ( ! EnoughED2KServers() )
-		theApp.Message( MSG_DISPLAYED_ERROR, _T("Loading default ED2K server list failed") );
+		theApp.Message( MSG_ERROR, _T("Loading default ED2K server list failed") );
 
 	return nServers;
 }

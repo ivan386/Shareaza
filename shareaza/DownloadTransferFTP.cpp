@@ -122,7 +122,7 @@ CDownloadTransferFTP::CDownloadTransferFTP(CDownloadSource* pSource) :
 
 BOOL CDownloadTransferFTP::Initiate()
 {
-	theApp.Message( MSG_DEFAULT, IDS_DOWNLOAD_CONNECTING,
+	theApp.Message( MSG_INFO, IDS_DOWNLOAD_CONNECTING,
 		(LPCTSTR)CString( inet_ntoa( m_pSource->m_pAddress ) ), m_pSource->m_nPort,
 		(LPCTSTR)m_pDownload->GetDisplayName() );
 
@@ -197,7 +197,7 @@ DWORD CDownloadTransferFTP::GetMeasuredSpeed()
 
 BOOL CDownloadTransferFTP::OnConnected()
 {
-	theApp.Message( MSG_DEFAULT, IDS_DOWNLOAD_CONNECTED, (LPCTSTR)m_sAddress );
+	theApp.Message( MSG_INFO, IDS_DOWNLOAD_CONNECTED, (LPCTSTR)m_sAddress );
 	
 	m_tConnected = GetTickCount();
 	SetState( dtsRequesting );
@@ -220,7 +220,7 @@ BOOL CDownloadTransferFTP::StartNextFragment()
 	
 	if ( ! IsInputExist() || ! IsOutputExist() )
 	{
-		theApp.Message( MSG_DEFAULT, IDS_DOWNLOAD_CLOSING_EXTRA, (LPCTSTR)m_sAddress );
+		theApp.Message( MSG_INFO, IDS_DOWNLOAD_CLOSING_EXTRA, (LPCTSTR)m_sAddress );
 		Close();
 		return FALSE;
 	}
@@ -241,7 +241,7 @@ BOOL CDownloadTransferFTP::StartNextFragment()
 	{
 		// Downloading
 		// ChunkifyRequest( &m_nOffset, &m_nLength, Settings.Downloads.ChunkSize, TRUE );
-		theApp.Message( MSG_DEFAULT, IDS_DOWNLOAD_FRAGMENT_REQUEST,
+		theApp.Message( MSG_INFO, IDS_DOWNLOAD_FRAGMENT_REQUEST,
 			m_nOffset, m_nOffset + m_nLength - 1,
 			(LPCTSTR)m_pDownload->GetDisplayName(), (LPCTSTR)m_sAddress );
 		// Sending request
@@ -253,7 +253,7 @@ BOOL CDownloadTransferFTP::StartNextFragment()
 	{
 		if ( m_pSource != NULL )
 			m_pSource->SetAvailableRanges( NULL );		
-		theApp.Message( MSG_DEFAULT, IDS_DOWNLOAD_FRAGMENT_END, (LPCTSTR)m_sAddress );
+		theApp.Message( MSG_INFO, IDS_DOWNLOAD_FRAGMENT_END, (LPCTSTR)m_sAddress );
 		Close();
 		return FALSE;
 	}

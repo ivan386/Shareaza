@@ -97,7 +97,7 @@ BOOL CShakeNeighbour::ConnectTo(IN_ADDR* pAddress, WORD nPort, BOOL bAutomatic, 
 			FD_CONNECT | FD_READ | FD_WRITE | FD_CLOSE ); // Connection completed, ready to read or write, or socket closed
 
 		// Report that we are attempting this connection
-		theApp.Message( MSG_DEFAULT, IDS_CONNECTION_ATTEMPTING, (LPCTSTR)m_sAddress, htons( m_pHost.sin_port ) );
+		theApp.Message( MSG_INFO, IDS_CONNECTION_ATTEMPTING, (LPCTSTR)m_sAddress, htons( m_pHost.sin_port ) );
 
 	} // ConnectTo reported that the socket could not be made
 	else
@@ -219,7 +219,7 @@ BOOL CShakeNeighbour::OnConnected()
 	CConnection::OnConnected();
 
 	// Report that this connection was made
-	theApp.Message( MSG_DEFAULT, IDS_CONNECTION_CONNECTED, (LPCTSTR)m_sAddress );
+	theApp.Message( MSG_INFO, IDS_CONNECTION_CONNECTED, (LPCTSTR)m_sAddress );
 
 	// We initiated the connection to this computer, send it our first block of handshake headers
 	Write( _P("GNUTELLA CONNECT/0.6\r\n") ); // Ask to connect
@@ -343,6 +343,20 @@ BOOL CShakeNeighbour::OnRun()
 
 	// Have CConnection::DoRun keep talking to this remote computer
 	return TRUE;
+}
+
+BOOL CShakeNeighbour::OnWrite()
+{
+	{
+		CLockedBuffer pOutput( GetOutput() );
+		if ( pOutput->m_nLength )
+		{
+			CStringA msg( (const char*)pOutput->m_pBuffer, pOutput->m_nLength );
+			theApp.Message( MSG_DEBUG | MSG_FACILITY_OUTGOING, _T("%s: HANDSHAKE SEND: %s"), (LPCTSTR)m_sAddress, (LPCTSTR)CA2T( msg ) );
+		}
+	}
+
+	return CNeighbour::OnWrite();
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -824,7 +838,8 @@ BOOL CShakeNeighbour::ReadResponse()
 	CString strLine; // The line
 	if ( ! Read( strLine ) ) return TRUE; // The line is still arriving, return true to try this method again
 	if ( strLine.GetLength() > 1024 ) strLine = _T("#LINE_TOO_LONG#"); // Make sure the line isn't too long
-	theApp.Message( MSG_DEBUG, _T("%s: HANDSHAKE: %s"), (LPCTSTR)m_sAddress, (LPCTSTR)strLine ); // Report handshake lines
+
+	theApp.Message( MSG_DEBUG | MSG_FACILITY_INCOMING, _T("%s: HANDSHAKE: %s"), (LPCTSTR)m_sAddress, (LPCTSTR)strLine ); // Report handshake lines
 
 	// If we initiated the connection to the remote computer, and now it's responding with "GNUTELLA OK"
 	if ( strLine == _T("GNUTELLA OK") && m_bInitiated )
@@ -903,7 +918,7 @@ BOOL CShakeNeighbour::ReadResponse()
 BOOL CShakeNeighbour::OnHeaderLine(CString& strHeader, CString& strValue)
 {
 	// Record this header
-	theApp.Message( MSG_DEBUG, _T("%s: GNUTELLA HEADER: %s: %s"), (LPCTSTR)m_sAddress, (LPCTSTR)strHeader, (LPCTSTR)strValue );
+	theApp.Message( MSG_DEBUG | MSG_FACILITY_INCOMING, _T("%s: GNUTELLA HEADER: %s: %s"), (LPCTSTR)m_sAddress, (LPCTSTR)strHeader, (LPCTSTR)strValue );
 
 	// It's the "User-Agent" header, which will tell the name and version of the remote program
 	if ( strHeader.CompareNoCase( _T("User-Agent") ) == 0 )
@@ -1280,7 +1295,7 @@ BOOL CShakeNeighbour::OnHeadersCompleteG2()
 			&& ( Neighbours.IsG2Hub() || Neighbours.IsG2HubCapable() ) ) // And we're either a hub or capable of becoming one
 		{
 			// Report this case
-			theApp.Message( MSG_DEFAULT, IDS_HANDSHAKE_BACK2LEAF, (LPCTSTR)m_sAddress );
+			theApp.Message( MSG_INFO, IDS_HANDSHAKE_BACK2LEAF, (LPCTSTR)m_sAddress );
 
 			// This connection is to a leaf below us
 			m_nNodeType = ntLeaf;
@@ -1548,7 +1563,7 @@ BOOL CShakeNeighbour::OnHeadersCompleteG1()
 			 ( Neighbours.IsG1Ultrapeer() || Neighbours.IsG1UltrapeerCapable() ) ) // And, we're either a Gnutella ultrapeer or we could become one
 		{
 			// Report that the handshake is back to a leaf (do), and consider this connection to be to a leaf below us
-			theApp.Message( MSG_DEFAULT, IDS_HANDSHAKE_BACK2LEAF, (LPCTSTR)m_sAddress );
+			theApp.Message( MSG_INFO, IDS_HANDSHAKE_BACK2LEAF, (LPCTSTR)m_sAddress );
 			m_nNodeType = ntLeaf; // This connection is to a leaf below us
 		}
 
@@ -1863,7 +1878,7 @@ void CShakeNeighbour::OnHandshakeComplete()
 	else if ( m_nNodeType == ntHub )
 	{
 		// Report that we got a ultrapeer connection
-		theApp.Message( MSG_DEFAULT, IDS_HANDSHAKE_GOTPEER );
+		theApp.Message( MSG_INFO, IDS_HANDSHAKE_GOTPEER );
 
 		// (do)
 		Neighbours.PeerPrune( pNeighbour->m_nProtocol );
@@ -1872,7 +1887,7 @@ void CShakeNeighbour::OnHandshakeComplete()
 	else if ( m_nNodeType == ntLeaf )
 	{
 		// Report that we connected to a leaf
-		theApp.Message( MSG_DEFAULT, IDS_HANDSHAKE_GOTLEAF, (LPCTSTR)m_sAddress );
+		theApp.Message( MSG_INFO, IDS_HANDSHAKE_GOTLEAF, (LPCTSTR)m_sAddress );
 	}
 
 	// Delete this CShakeNeighbour object now that it has been turned into a CG1Neighbour or CG2Neighbour object

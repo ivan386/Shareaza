@@ -85,7 +85,7 @@ CG1Neighbour::CG1Neighbour(CNeighbour* pBase)
 	m_pOutbound = new CG1PacketBuffer( m_pZOutput ? m_pZOutput : pOutput ); // m_pZOutput is where to write data the program will compress
 
 	// Report that a Gnutella connection with the remote computer has been successfully established
-	theApp.Message( MSG_DEFAULT, IDS_HANDSHAKE_ONLINE, (LPCTSTR)m_sAddress, 0, 6, m_sUserAgent.IsEmpty() ? _T("Unknown") : (LPCTSTR)m_sUserAgent );
+	theApp.Message( MSG_INFO, IDS_HANDSHAKE_ONLINE, (LPCTSTR)m_sAddress, 0, 6, m_sUserAgent.IsEmpty() ? _T("Unknown") : (LPCTSTR)m_sUserAgent );
 
 	// Send the remote computer a new Gnutella ping packet
 	Send( CG1Packet::New( G1_PACKET_PING ) );

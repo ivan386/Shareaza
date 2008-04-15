@@ -43,7 +43,7 @@ public:
 		CString		Path;						// Installation path for Shareaza
 		CString		UserPath;					// Path for user data. (May be the same as above for single user installs)
 		bool		MultiUser;					// Multiuser installation
-		bool		Debug;						// Display debug information
+		DWORD		LogLevel;					// Log severity (0 - MSG_ERROR .. 4 - MSG_DEBUG)
 		bool		SearchLog;					// Display search facility log information
 		bool		DebugLog;					// Create a log file
 		DWORD		MaxDebugLogSize;			// Max size of the log file
@@ -53,7 +53,6 @@ public:
 		DWORD		GUIMode;
 		DWORD		CloseMode;
 		bool		TrayMinimise;
-		bool		VerboseMode;
 		bool		ShowTimestamp;
 		bool		SizeLists;
 		bool		HashIntegrity;

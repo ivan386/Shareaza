@@ -96,7 +96,7 @@ void CUploadTransfer::Remove(BOOL bMessage)
 
 	if ( bMessage && m_sFileName.GetLength() > 0 )
 	{
-		theApp.Message( MSG_SYSTEM, IDS_UPLOAD_REMOVE,
+		theApp.Message( MSG_NOTICE, IDS_UPLOAD_REMOVE,
 			(LPCTSTR)m_sFileName, (LPCTSTR)m_sAddress );
 	}
 
@@ -118,7 +118,7 @@ void CUploadTransfer::Close(BOOL bMessage)
 	UploadQueues.Dequeue( this );
 	CloseFile();
 
-	if ( bMessage ) theApp.Message( MSG_SYSTEM, IDS_UPLOAD_DROPPED, (LPCTSTR)m_sAddress );
+	if ( bMessage ) theApp.Message( MSG_NOTICE, IDS_UPLOAD_DROPPED, (LPCTSTR)m_sAddress );
 	if ( m_nUploaded == 0 ) Remove( FALSE );
 }
 

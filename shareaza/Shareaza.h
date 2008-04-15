@@ -141,10 +141,11 @@ public:
 
 	HINSTANCE			CustomLoadLibrary(LPCTSTR);
 	CMainWnd*			SafeMainWnd() const;
-	void				Message(int nType, UINT nID, ...) const;
-	void				Message(int nType, CString strFormat, ...) const;
+	bool				IsLogDisabled(WORD nType) const;
+	void				Message(WORD nType, UINT nID, ...) const;
+	void				Message(WORD nType, CString strFormat, ...) const;
 	BOOL				InternalURI(LPCTSTR pszURI);
-	void				PrintMessage(int nType, CString& strLog) const;
+	void				PrintMessage(WORD nType, const CString& strLog) const;
 	void				LogMessage(LPCTSTR strLog) const;
 
 	CString				GetCountryCode(IN_ADDR pAddress) const;
@@ -368,15 +369,20 @@ inline void IsType(LPCTSTR pszString, size_t nStart, size_t nLength, bool& bWord
 	}
 }
 
+// Log severity (log level)
+#define MSG_SEVERITY_MASK		0x00ff
+#define MSG_ERROR				0x0000
+#define MSG_WARNING				0x0001
+#define MSG_NOTICE				0x0002
+#define MSG_INFO				0x0003
+#define MSG_DEBUG				0x0004
 
-// To see the color of the message you must look at CTextCtrl::CTextCtrl() in CtrlText.cpp
-#define MSG_DEFAULT			0
-#define MSG_SYSTEM			1
-#define MSG_DOWNLOAD		1
-#define MSG_ERROR			2
-#define MSG_DEBUG			3
-#define MSG_TEMP			4
-#define MSG_DISPLAYED_ERROR	5	// It behave as MSG_ERROR but it is displayed also when VerboseMode is off
+// Log facility
+#define MSG_FACILITY_MASK		0xff00
+#define MSG_FACILITY_DEFAULT	0x0000
+#define MSG_FACILITY_SEARCH		0x0100
+#define MSG_FACILITY_INCOMING	0x0200
+#define MSG_FACILITY_OUTGOING	0x0300
 
 #define WM_WINSOCK		(WM_APP+101)
 #define WM_VERSIONCHECK	(WM_APP+102)

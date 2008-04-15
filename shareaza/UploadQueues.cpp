@@ -997,7 +997,7 @@ void CUploadQueues::Validate()
 	if ( Settings.eDonkey.EnableToday || Settings.eDonkey.EnableAlways )
 	{
 		if ( m_bDonkeyLimited ) 
-			theApp.Message( MSG_SYSTEM, _T("eDonkey upload ratio active- Low upload may slow downloads.")  );
+			theApp.Message( MSG_NOTICE, _T("eDonkey upload ratio active- Low upload may slow downloads.")  );
 		else
 			theApp.Message( MSG_DEBUG, _T("eDonkey upload ratio is OK.")  );
 	}

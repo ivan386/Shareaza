@@ -279,7 +279,7 @@ DWORD CNeighboursWithConnect::IsG2HubCapable(BOOL bDebug)
 	DWORD nRating = 0; // We'll make this number bigger if we find signs we can be a hub
 
 	// If the caller wants us to report debugging information, start out with a header line
-	if ( bDebug ) theApp.Message( MSG_DEBUG, _T("IsHubCapable():") );
+	if ( bDebug ) theApp.Message( MSG_DEBUG, _T("Is Gnutella2 hub capable?") );
 
 	// We can't be a Gnutella2 hub if the user has not chosen to connect to Gnutella2 in the program settings
 	if ( !Network.IsConnected() || !Settings.Gnutella2.EnableToday )
@@ -526,7 +526,7 @@ DWORD CNeighboursWithConnect::IsG1UltrapeerCapable(BOOL bDebug)
 	DWORD nRating = 0; // If we can be an ultrapeer, we'll set this to 1, and then make it higher if we'd be an even better ultrapeer
 
 	// If the caller requested we write out debugging information, start out by titling that the messages that follow come from this method
-	if ( bDebug ) theApp.Message( MSG_DEBUG, _T("IsUltrapeerCapable():") );
+	if ( bDebug ) theApp.Message( MSG_DEBUG, _T("Is Gnutella ultrapeer capable?") );
 
 	// We can't be a Gnutella ultrapeer if we're not connected to the Gnutella network
 	if ( !Network.IsConnected() || !Settings.Gnutella1.EnableToday )

@@ -432,6 +432,11 @@
 	<resource code="33309" id="ID_WEBSERVICES_MUSICBRAINZ"/>
 	<resource code="33310" id="ID_MUSICBRAINZ_MATCHES"/>
 	<resource code="33311" id="ID_MUSICBRAINZ_ALBUMS"/>
+	<resource code="33312" id="ID_SYSTEM_VERBOSE_ERROR"/>
+	<resource code="33313" id="ID_SYSTEM_VERBOSE_WARNING"/>
+	<resource code="33314" id="ID_SYSTEM_VERBOSE_NOTICE"/>
+	<resource code="33315" id="ID_SYSTEM_VERBOSE_INFO"/>
+	<resource code="33316" id="ID_SYSTEM_VERBOSE_DEBUG"/>
 	<resource code="57650" id="ID_WINDOW_CASCADE"/>
 	<resource code="57651" id="ID_WINDOW_TILE_HORZ"/>
 	<resource code="57652" id="ID_WINDOW_TILE_VERT"/>

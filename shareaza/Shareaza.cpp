@@ -583,7 +583,7 @@ BOOL CShareazaApp::OpenInternetShortcut(LPCTSTR lpszFileName, BOOL bDoIt)
 BOOL CShareazaApp::OpenTorrent(LPCTSTR lpszFileName, BOOL bDoIt)
 {
 	if ( bDoIt )
-		theApp.Message( MSG_SYSTEM, IDS_BT_PREFETCH_FILE, lpszFileName );
+		theApp.Message( MSG_NOTICE, IDS_BT_PREFETCH_FILE, lpszFileName );
 
 	BOOL bResult = FALSE;
 	CBTInfo* pTorrent = new CBTInfo();
@@ -592,7 +592,7 @@ BOOL CShareazaApp::OpenTorrent(LPCTSTR lpszFileName, BOOL bDoIt)
 		if ( pTorrent->LoadTorrentFile( lpszFileName ) )
 		{
 			if ( bDoIt && pTorrent->HasEncodingError() )
-				theApp.Message( MSG_SYSTEM, IDS_BT_ENCODING );
+				theApp.Message( MSG_NOTICE, IDS_BT_ENCODING );
 			CShareazaURL* pURL = new CShareazaURL( pTorrent );
 			if ( pURL )
 			{
@@ -607,7 +607,7 @@ BOOL CShareazaApp::OpenTorrent(LPCTSTR lpszFileName, BOOL bDoIt)
 	}
 
 	if ( bDoIt )
-		theApp.Message( MSG_DISPLAYED_ERROR, IDS_BT_PREFETCH_ERROR, lpszFileName );
+		theApp.Message( MSG_ERROR, IDS_BT_PREFETCH_ERROR, lpszFileName );
 
 	return bResult;
 }
@@ -632,7 +632,7 @@ BOOL CShareazaApp::OpenCollection(LPCTSTR lpszFileName, BOOL bDoIt)
 BOOL CShareazaApp::OpenURL(LPCTSTR lpszFileName, BOOL bDoIt, BOOL bSilent)
 {
 	if ( bDoIt && ! bSilent )
-		theApp.Message( MSG_SYSTEM, IDS_URL_RECEIVED, lpszFileName );
+		theApp.Message( MSG_NOTICE, IDS_URL_RECEIVED, lpszFileName );
 
 	CShareazaURL* pURL = new CShareazaURL();
 	if ( pURL )
@@ -647,7 +647,7 @@ BOOL CShareazaApp::OpenURL(LPCTSTR lpszFileName, BOOL bDoIt, BOOL bSilent)
 	}
 
 	if ( bDoIt && ! bSilent )
-		theApp.Message( MSG_SYSTEM, IDS_URL_PARSE_ERROR );
+		theApp.Message( MSG_NOTICE, IDS_URL_PARSE_ERROR );
 
 	return FALSE;
 }
@@ -953,16 +953,18 @@ CMainWnd* CShareazaApp::SafeMainWnd() const
 /////////////////////////////////////////////////////////////////////////////
 // CShareazaApp message
 
-void CShareazaApp::Message(int nType, UINT nID, ...) const
+bool CShareazaApp::IsLogDisabled(WORD nType) const
 {
-	// Return early if it's a debug message and debug isn't turned on
-	if ( nType == MSG_DEBUG && ! Settings.General.Debug ) return;
+	return
+		// Severity filter
+		( ( nType & MSG_SEVERITY_MASK ) > Settings.General.LogLevel ) ||
+		// Facility filter
+		( ( nType & MSG_FACILITY_MASK ) == MSG_FACILITY_SEARCH && ! Settings.General.SearchLog );
+}
 
-	// Return early if it's a temp message and debug logging isn't turned on
-#ifdef NDEBUG
-	if ( nType == MSG_TEMP ) return;
-#endif
-	if ( nType == MSG_TEMP && ! Settings.General.DebugLog ) return;
+void CShareazaApp::Message(WORD nType, UINT nID, ...) const
+{
+	if ( IsLogDisabled( nType ) ) return;
 
 	// Setup local strings
 	CString strFormat, strTemp;
@@ -970,7 +972,7 @@ void CShareazaApp::Message(int nType, UINT nID, ...) const
 	// Load the format string from the resource file
 	LoadString( strFormat, nID );
 
-	// Initialise variable arguments list
+	// Initialize variable arguments list
 	va_list pArgs;
 	va_start( pArgs, nID );
 
@@ -990,21 +992,14 @@ void CShareazaApp::Message(int nType, UINT nID, ...) const
 	return;
 }
 
-void CShareazaApp::Message(int nType, CString strFormat, ...) const
+void CShareazaApp::Message(WORD nType, CString strFormat, ...) const
 {
-	// Return early if it's a debug message and debug isn't turned on
-	if ( nType == MSG_DEBUG && ! Settings.General.Debug ) return;
-
-	// Return early if it's a temp message and debug logging isn't turned on
-#ifdef NDEBUG
-	if ( nType == MSG_TEMP ) return;
-#endif
-	if ( nType == MSG_TEMP && ! Settings.General.DebugLog ) return;
+	if ( IsLogDisabled( nType ) ) return;
 
 	// Setup local strings
 	CString strTemp;
 
-	// Initialise variable arguments list
+	// Initialize variable arguments list
 	va_list pArgs;
 	va_start( pArgs, strFormat );
 
@@ -1021,7 +1016,7 @@ void CShareazaApp::Message(int nType, CString strFormat, ...) const
 	return;
 }
 
-void CShareazaApp::PrintMessage(int nType, CString& strLog) const
+void CShareazaApp::PrintMessage(WORD nType, const CString& strLog) const
 {
 	// Check if there is a valid pointer to the main window
 	// and we are not shutting down

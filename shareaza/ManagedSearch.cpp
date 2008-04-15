@@ -276,7 +276,7 @@ BOOL CManagedSearch::ExecuteNeighbours(DWORD tTicks, DWORD tSecs)
 						// Set timer
 						m_tMoreResults = tTicks;
 						// Display message in system window
-						theApp.Message( MSG_DEBUG, _T("Asking ed2k neighbour for additional search results") );
+						theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("Asking ed2k neighbour for additional search results") );
 					}
 				}
 
@@ -344,7 +344,7 @@ BOOL CManagedSearch::ExecuteNeighbours(DWORD tTicks, DWORD tSecs)
 				m_tMoreResults = 0;
 
 				//Display message in system window
-				theApp.Message( MSG_DEFAULT, IDS_NETWORK_SEARCH_SENT,
+				theApp.Message( MSG_INFO, IDS_NETWORK_SEARCH_SENT,
 					m_pSearch->m_sSearch.GetLength() ? (LPCTSTR)m_pSearch->m_sSearch : _T("URN"),
 					(LPCTSTR)CString( inet_ntoa( pNeighbour->m_pHost.sin_addr ) ) );
 				
@@ -481,7 +481,7 @@ BOOL CManagedSearch::ExecuteG2Mesh(DWORD /*tTicks*/, DWORD tSecs)
 			{
 				Datagrams.Send( &pHost->m_pAddress, pHost->m_nPort, pPacket, TRUE, this, TRUE );
 				
-				theApp.Message( MSG_DEBUG, _T("Querying %s"),
+				theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("Querying %s"),
 					(LPCTSTR)CString( inet_ntoa( pHost->m_pAddress ) ) );
 				
 				return TRUE;
@@ -539,7 +539,7 @@ BOOL CManagedSearch::ExecuteG2Mesh(DWORD /*tTicks*/, DWORD tSecs)
 				// Report
 
 				CString strReceiver = CString( inet_ntoa( pReceiver->sin_addr ) );
-				theApp.Message( MSG_DEBUG, _T("Requesting query key from %s through %s"),
+				theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("Requesting query key from %s through %s"),
 					(LPCTSTR)CString( inet_ntoa( pHost->m_pAddress ) ), (LPCTSTR)strReceiver );
 
 				if ( pHost->m_tAck == 0 ) pHost->m_tAck = tSecs;
@@ -556,7 +556,7 @@ BOOL CManagedSearch::ExecuteG2Mesh(DWORD /*tTicks*/, DWORD tSecs)
 
 				if ( pReceiver == &Network.m_pHost )
 				{
-					theApp.Message( MSG_DEBUG, _T("Requesting query key from %s"),
+					theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("Requesting query key from %s"),
 						(LPCTSTR)CString( inet_ntoa( pHost->m_pAddress ) ) );
 				}
 				else
@@ -567,7 +567,7 @@ BOOL CManagedSearch::ExecuteG2Mesh(DWORD /*tTicks*/, DWORD tSecs)
 					pPacket->WriteShortBE( ntohs( pReceiver->sin_port ) );
 					
 					CString strReceiver = CString( inet_ntoa( pReceiver->sin_addr ) );
-					theApp.Message( MSG_DEBUG, _T("Requesting query key from %s for %s"),
+					theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("Requesting query key from %s for %s"),
 						(LPCTSTR)CString( inet_ntoa( pHost->m_pAddress ) ), (LPCTSTR)strReceiver );
 				}
 				
@@ -643,7 +643,7 @@ BOOL CManagedSearch::ExecuteDonkeyMesh(DWORD /*tTicks*/, DWORD tSecs)
 			{
 				Datagrams.Send( &pHost->m_pAddress, pHost->m_nPort + 4, pPacket, TRUE );
 				
-				theApp.Message( MSG_DEBUG, _T("Sending UDP query to %s"),
+				theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("Sending UDP query to %s"),
 					(LPCTSTR)CString( inet_ntoa( pHost->m_pAddress ) ) );
 
 				// Add to ED2K search counts

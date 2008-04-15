@@ -188,7 +188,7 @@ BOOL CEDClient::Connect()
 	else
 	{
 		if ( ! CConnection::ConnectTo( &m_pHost ) ) return FALSE;
-		theApp.Message( MSG_DEFAULT, IDS_ED2K_CLIENT_CONNECTING, (LPCTSTR)m_sAddress );
+		theApp.Message( MSG_INFO, IDS_ED2K_CLIENT_CONNECTING, (LPCTSTR)m_sAddress );
 	}
 	
 	return TRUE;
@@ -301,7 +301,7 @@ void CEDClient::AttachTo(CConnection* pConnection)
 {
 	ASSERT( m_hSocket == INVALID_SOCKET );
 	CTransfer::AttachTo( pConnection );
-	theApp.Message( MSG_DEFAULT, IDS_ED2K_CLIENT_ACCEPTED, (LPCTSTR)m_sAddress );
+	theApp.Message( MSG_INFO, IDS_ED2K_CLIENT_ACCEPTED, (LPCTSTR)m_sAddress );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -423,7 +423,7 @@ BOOL CEDClient::OnRun()
 			if ( ( m_pDownload ) && ( m_pDownload->m_nState == dtsDownloading ) )
 				return TRUE;
 			// Connection closed (Inactive)
-			theApp.Message( MSG_DEFAULT, IDS_ED2K_CLIENT_CLOSED, (LPCTSTR)m_sAddress );
+			theApp.Message( MSG_INFO, IDS_ED2K_CLIENT_CLOSED, (LPCTSTR)m_sAddress );
 			Close();
 			return FALSE;
 		}
@@ -1462,7 +1462,7 @@ BOOL CEDClient::OnHashsetRequest(CEDPacket* pPacket)
 		if ( bDelete ) delete pHashset;
 		Send( pReply );
 		
-		theApp.Message( MSG_DEFAULT, IDS_ED2K_CLIENT_SENT_HASHSET,
+		theApp.Message( MSG_INFO, IDS_ED2K_CLIENT_SENT_HASHSET,
 			(LPCTSTR)strName, (LPCTSTR)m_sAddress );	
 	}
 	else
@@ -1551,7 +1551,7 @@ BOOL CEDClient::OnMessage(CEDPacket* pPacket)
 	else
 	{	
 		// Chat is disabled- don't open a chat window. Display in system window instead.
-		theApp.Message( MSG_DEFAULT, _T("Message from %s: %s"), (LPCTSTR)m_sAddress, sMessage );
+		theApp.Message( MSG_INFO, _T("Message from %s: %s"), (LPCTSTR)m_sAddress, sMessage );
 	}
 	return TRUE;
 }
@@ -1628,7 +1628,7 @@ BOOL CEDClient::OnRequestPreview(CEDPacket* pPacket)
 
 			if ( bSuccess )
 			{
-				theApp.Message( MSG_DEFAULT, IDS_UPLOAD_PREVIEW_DYNAMIC, (LPCTSTR)pFile->m_sName, (LPCTSTR)m_sAddress );
+				theApp.Message( MSG_INFO, IDS_UPLOAD_PREVIEW_DYNAMIC, (LPCTSTR)pFile->m_sName, (LPCTSTR)m_sAddress );
 
 				// Resample now to display dimensions
 				int nSize = szThumb.cy * pImage.m_nWidth / pImage.m_nHeight;
@@ -1675,7 +1675,7 @@ BOOL CEDClient::OnRequestPreview(CEDPacket* pPacket)
 
 			// Send reply
 			Send( pReply );
-			theApp.Message( MSG_SYSTEM, IDS_UPLOAD_PREVIEW_SEND, (LPCTSTR)pFile->m_sName,
+			theApp.Message( MSG_NOTICE, IDS_UPLOAD_PREVIEW_SEND, (LPCTSTR)pFile->m_sName,
 				(LPCTSTR)m_sAddress );
 		}
 		else

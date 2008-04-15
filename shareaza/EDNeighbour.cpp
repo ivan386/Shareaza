@@ -79,7 +79,7 @@ BOOL CEDNeighbour::ConnectTo(IN_ADDR* pAddress, WORD nPort, BOOL bAutomatic)
 	{
 		WSAEventSelect( m_hSocket, Network.m_pWakeup, FD_CONNECT|FD_READ|FD_WRITE|FD_CLOSE );
 		
-		theApp.Message( MSG_DEFAULT, IDS_ED2K_SERVER_CONNECTING,
+		theApp.Message( MSG_INFO, IDS_ED2K_SERVER_CONNECTING,
 			(LPCTSTR)m_sAddress, htons( m_pHost.sin_port ) );
 	}
 	else
@@ -174,7 +174,7 @@ BOOL CEDNeighbour::OnConnected()
 							( ( theApp.m_nVersion[2] & 0x07 ) << 7  ) |
 							( ( theApp.m_nVersion[3] & 0x7F )       ) );
 
-	theApp.Message( MSG_DEFAULT, IDS_ED2K_SERVER_CONNECTED, (LPCTSTR)m_sAddress );
+	theApp.Message( MSG_INFO, IDS_ED2K_SERVER_CONNECTED, (LPCTSTR)m_sAddress );
 	
 	CEDPacket* pPacket = CEDPacket::New(  ED2K_C2S_LOGINREQUEST );
 	
@@ -334,7 +334,7 @@ BOOL CEDNeighbour::OnServerMessage(CEDPacket* pPacket)
 		if ( strLine.GetLength() > 0 )
 		{
 			strMessage = strMessage.Mid( strLine.GetLength() );
-			theApp.Message( MSG_SYSTEM, IDS_ED2K_SERVER_MESSAGE,
+			theApp.Message( MSG_NOTICE, IDS_ED2K_SERVER_MESSAGE,
 				(LPCTSTR)m_sAddress, (LPCTSTR)strLine );
 		}
 		
@@ -363,14 +363,14 @@ BOOL CEDNeighbour::OnIdChange(CEDPacket* pPacket)
 
 	if ( m_nClientID == 0 )
 	{
-		theApp.Message( MSG_DEFAULT, IDS_ED2K_SERVER_ONLINE, (LPCTSTR)m_sAddress, nClientID );
+		theApp.Message( MSG_INFO, IDS_ED2K_SERVER_ONLINE, (LPCTSTR)m_sAddress, nClientID );
 		SendSharedFiles();
 		Send( CEDPacket::New( ED2K_C2S_GETSERVERLIST ) );
 		HostCache.eDonkey.Add( &m_pHost.sin_addr, htons( m_pHost.sin_port ) );
 	}
 	else
 	{
-		theApp.Message( MSG_DEFAULT, IDS_ED2K_SERVER_IDCHANGE, (LPCTSTR)m_sAddress, m_nClientID, nClientID );
+		theApp.Message( MSG_INFO, IDS_ED2K_SERVER_IDCHANGE, (LPCTSTR)m_sAddress, m_nClientID, nClientID );
 	}
 
 	m_nState	= nrsConnected;
@@ -399,7 +399,7 @@ BOOL CEDNeighbour::OnIdChange(CEDPacket* pPacket)
 				// Try another server, but not more than once every 8 hours to avoid wasting server bandwidth
 				// If the user has messed up their settings somewhere.
 				Network.m_tLastED2KServerHop = tNow;
-				theApp.Message( MSG_DISPLAYED_ERROR, _T("ED2K server gave a low-id when we were expecting a high-id.") );
+				theApp.Message( MSG_ERROR, _T("ED2K server gave a low-id when we were expecting a high-id.") );
 				Close( IDS_CONNECTION_CLOSED );
 				return FALSE;
 			}
@@ -537,7 +537,7 @@ BOOL CEDNeighbour::OnServerIdent(CEDPacket* pPacket)
 			pHost->m_nUDPFlags |= ED2K_SERVER_UDP_GETSOURCES2;
 	}
 	
-	theApp.Message( MSG_SYSTEM, IDS_ED2K_SERVER_IDENT, (LPCTSTR)m_sAddress, (LPCTSTR)m_sServerName );
+	theApp.Message( MSG_NOTICE, IDS_ED2K_SERVER_IDENT, (LPCTSTR)m_sAddress, (LPCTSTR)m_sServerName );
 	
 	return TRUE;
 }

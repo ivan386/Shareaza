@@ -335,8 +335,8 @@ void CUploads::OnRun()
 				UploadQueues.m_pTorrentQueue->m_nMinTransfers ++;
 				UploadQueues.m_pTorrentQueue->m_nMeasured += nMeasured;
 
-				//theApp.Message( MSG_SYSTEM, pTransfer->m_sAddress );
-				//theApp.Message( MSG_SYSTEM, _T("Port: %i "), pTransfer->m_pHost.sin_port );
+				//theApp.Message( MSG_NOTICE, pTransfer->m_sAddress );
+				//theApp.Message( MSG_NOTICE, _T("Port: %i "), pTransfer->m_pHost.sin_port );
 			}
 		}
 		else if ( pTransfer->m_nState == upsUploading )

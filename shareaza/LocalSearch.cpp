@@ -248,7 +248,7 @@ bool CLocalSearch::IsValidForHit(CLibraryFile const * const pFile) const
 	{
 		if ( ! Settings.Gnutella1.EnableToday ) 
 		{
-			theApp.Message( MSG_ERROR, _T("CLocalSearch::AddHit() dropping G1 hit - G1 network not enabled") );
+			theApp.Message( MSG_ERROR | MSG_FACILITY_SEARCH, _T("CLocalSearch::AddHit() dropping G1 hit - G1 network not enabled") );
 			return false;
 		}
 		return IsValidForHitG1( pFile );
@@ -1068,7 +1068,7 @@ void CLocalSearch::DispatchPacket()
 		if ( m_bWrapped )
 		{
 			// ****Debug
-			theApp.Message( MSG_DEFAULT, _T("CLocalSearch::DispatchPacket() Wrapped query hit created") );
+			theApp.Message( MSG_INFO | MSG_FACILITY_SEARCH, _T("CLocalSearch::DispatchPacket() Wrapped query hit created") );
 			// ****
 
 			CG2Packet* pG2 = CG2Packet::New( G2_PACKET_HIT_WRAP, (CG1Packet*)m_pPacket );

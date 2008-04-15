@@ -412,13 +412,13 @@ BOOL CLibraryDictionary::BuildHashTable()
 /*
 				CString str;
 				str.Format( _T("Word Added: %s"), strWord );
-				theApp.Message( MSG_DEFAULT, str );
+				theApp.Message( MSG_INFO, str );
 			}
 			else
 			{
 				CString str;
 				str.Format( _T("Word not added: %s"), strWord );
-				theApp.Message( MSG_DEFAULT, str );
+				theApp.Message( MSG_INFO, str );
 */
 			}
 		}
@@ -453,13 +453,13 @@ BOOL CLibraryDictionary::BuildHashTable()
 /*
 				CString str;
 				str.Format( _T("File added: %s"), pFile->m_sName );
-				theApp.Message( MSG_DEFAULT, str );
+				theApp.Message( MSG_INFO, str );
 			}
 			else
 			{
 				CString str;
 				str.Format( _T("File not added: %s"), pFile->m_sName );
-				theApp.Message( MSG_DEFAULT, str );
+				theApp.Message( MSG_INFO, str );
 */
 			}
 		}

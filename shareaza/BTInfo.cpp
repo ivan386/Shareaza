@@ -536,7 +536,7 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 	{
 		m_tCreationDate = (DWORD)pDate->GetInt();
 		// CTime pTime( (time_t)m_tCreationDate );
-		// theApp.Message( MSG_SYSTEM, pTime.Format( _T("%Y-%m-%d %H:%M:%S") ) );
+		// theApp.Message( MSG_NOTICE, pTime.Format( _T("%Y-%m-%d %H:%M:%S") ) );
 	}
 
 	// Get the creator (if present)

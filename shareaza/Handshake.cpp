@@ -78,7 +78,7 @@ CHandshake::CHandshake(SOCKET hSocket, SOCKADDR_IN* pHost)
 	m_mInput.pLimit = m_mOutput.pLimit = &Settings.Bandwidth.Request;
 
 	// Record that the program accepted this connection
-	theApp.Message( MSG_DEFAULT, IDS_CONNECTION_ACCEPTED, (LPCTSTR)m_sAddress, htons( m_pHost.sin_port ) );
+	theApp.Message( MSG_INFO, IDS_CONNECTION_ACCEPTED, (LPCTSTR)m_sAddress, htons( m_pHost.sin_port ) );
 }
 
 // Copy a CHandshake object
@@ -111,7 +111,7 @@ CHandshake::~CHandshake()
 BOOL CHandshake::Push(IN_ADDR* pAddress, WORD nPort, DWORD nIndex)
 {
 	// Report we are about to push open a connection to the given IP address and port number now
-	theApp.Message( MSG_DEFAULT, IDS_UPLOAD_CONNECT, (LPCTSTR)CString( inet_ntoa( *pAddress ) ), _T("") );
+	theApp.Message( MSG_INFO, IDS_UPLOAD_CONNECT, (LPCTSTR)CString( inet_ntoa( *pAddress ) ), _T("") );
 
 	// Connect the socket in this CHandshake object to the IP address and port number the method got passed
 	if ( ! ConnectTo( pAddress, nPort ) ) return FALSE; // If the connection was not made, leave now
@@ -180,7 +180,7 @@ BOOL CHandshake::OnConnected()
 	OnWrite();
 
 	// Record that we uploaded the giv, and report success
-	theApp.Message( MSG_DEFAULT, IDS_UPLOAD_GIV, (LPCTSTR)m_sAddress );
+	theApp.Message( MSG_INFO, IDS_UPLOAD_GIV, (LPCTSTR)m_sAddress );
 	return TRUE;
 }
 
@@ -247,7 +247,7 @@ BOOL CHandshake::OnRead()
 	}
 
 	// Record this handshake line as an application message
-	theApp.Message( MSG_DEBUG, _T("%s: HANDSHAKE: %s"), (LPCTSTR)m_sAddress, (LPCTSTR)strLine );
+	theApp.Message( MSG_DEBUG | MSG_FACILITY_INCOMING, _T("%s: HANDSHAKE: %s"), (LPCTSTR)m_sAddress, (LPCTSTR)strLine );
 
 	// The first header starts "GET" or "HEAD"
 	if (     StartsWith( _P("GET ") ) ||

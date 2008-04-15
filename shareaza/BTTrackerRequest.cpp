@@ -366,7 +366,7 @@ bool CBTTrackerRequest::Process(CBENode* pRoot)
 	// Okay, clear any errors and continue
 	m_pDownload->OnTrackerEvent( true );
 
-	theApp.Message( MSG_DEFAULT, IDS_BT_TRACK_SUCCESS,
+	theApp.Message( MSG_INFO, IDS_BT_TRACK_SUCCESS,
 		m_pDownload->GetDisplayName(), nCount );
 	return true;
 }

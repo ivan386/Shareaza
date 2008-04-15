@@ -266,7 +266,7 @@ BOOL CNetwork::Connect(BOOL bAutoConnect)
 		return TRUE;
 
 	// Begin network startup
-	theApp.Message( MSG_SYSTEM, IDS_NETWORK_STARTUP );
+	theApp.Message( MSG_NOTICE, IDS_NETWORK_STARTUP );
 
 	gethostname( m_sHostName.GetBuffer( 255 ), 255 );
 	m_sHostName.ReleaseBuffer();
@@ -281,13 +281,13 @@ BOOL CNetwork::Connect(BOOL bAutoConnect)
 	Resolve( Settings.Connection.InHost, Settings.Connection.InPort, &m_pHost );
 
 	if ( /*IsFirewalled()*/Settings.Connection.FirewallState == CONNECTION_FIREWALLED ) // Temp disable
-		theApp.Message( MSG_DEFAULT, IDS_NETWORK_FIREWALLED );
+		theApp.Message( MSG_INFO, IDS_NETWORK_FIREWALLED );
 
 	SOCKADDR_IN pOutgoing;
 
 	if ( Resolve( Settings.Connection.OutHost, 0, &pOutgoing ) )
 	{
-		theApp.Message( MSG_DEFAULT, IDS_NETWORK_OUTGOING,
+		theApp.Message( MSG_INFO, IDS_NETWORK_OUTGOING,
 			(LPCTSTR)CString( inet_ntoa( pOutgoing.sin_addr ) ),
 			htons( pOutgoing.sin_port ) );
 	}
@@ -302,7 +302,7 @@ BOOL CNetwork::Connect(BOOL bAutoConnect)
 
 	if ( !m_bTCPListeningReady || !m_bUDPListeningReady )
 	{
-		theApp.Message( MSG_DISPLAYED_ERROR, _T("The connection process is failed.") );
+		theApp.Message( MSG_ERROR, _T("The connection process is failed.") );
 		Handshakes.Disconnect();
 		Datagrams.Disconnect();
 		m_pHostAddresses.RemoveAll();
@@ -330,8 +330,8 @@ void CNetwork::Disconnect()
 
 	if ( ! m_bEnabled ) return;
 
-	theApp.Message( MSG_DEFAULT, _T("") );
-	theApp.Message( MSG_SYSTEM, IDS_NETWORK_DISCONNECTING );
+	theApp.Message( MSG_INFO, _T("") );
+	theApp.Message( MSG_NOTICE, IDS_NETWORK_DISCONNECTING );
 
 	m_bEnabled				= FALSE;
 	m_bAutoConnect			= FALSE;
@@ -375,8 +375,8 @@ void CNetwork::Disconnect()
 
 	DiscoveryServices.Stop();
 
-	theApp.Message( MSG_SYSTEM, IDS_NETWORK_DISCONNECTED ); 
-	theApp.Message( MSG_SYSTEM, _T("") );
+	theApp.Message( MSG_NOTICE, IDS_NETWORK_DISCONNECTED ); 
+	theApp.Message( MSG_NOTICE, _T("") );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -389,7 +389,7 @@ BOOL CNetwork::ConnectTo(LPCTSTR pszAddress, int nPort, PROTOCOLID nProtocol, BO
 	if ( ! m_bEnabled && ! Connect() ) return FALSE;
 	
 	if ( nPort == 0 ) nPort = GNUTELLA_DEFAULT_PORT;
-	theApp.Message( MSG_DEFAULT, IDS_NETWORK_RESOLVING, pszAddress );
+	theApp.Message( MSG_INFO, IDS_NETWORK_RESOLVING, pszAddress );
 	
 	if ( AsyncResolve( pszAddress, (WORD)nPort, nProtocol, bNoUltraPeer ? 2 : 1 ) ) return TRUE;
 	
@@ -625,6 +625,9 @@ UINT CNetwork::ThreadStart(LPVOID pParam)
 
 void CNetwork::OnRun()
 {
+	Neighbours.IsG2HubCapable( TRUE );
+	Neighbours.IsG1UltrapeerCapable( TRUE );
+
 	// It will check if it is needed inside the function
 	DiscoveryServices.Execute( TRUE, PROTOCOL_NULL, FALSE );
 

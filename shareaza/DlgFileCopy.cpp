@@ -289,7 +289,7 @@ void CFileCopyDlg::OnRun()
 		{
 			LoadString ( sFile, IDS_LIBRARY_BITZI_HASHED );
 			sCurrent.Format( sFile, strName );
-			theApp.Message( MSG_SYSTEM, sCurrent  );
+			theApp.Message( MSG_NOTICE, sCurrent  );
 
 			LoadString ( sCurrent, IDS_STATUS_FILEERROR );
 			m_wndFileName.SetWindowText( sCurrent );

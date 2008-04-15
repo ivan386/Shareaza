@@ -288,8 +288,6 @@ BOOL CTransferFile::Write(QWORD nOffset, LPCVOID pBuffer, QWORD nBuffer, QWORD* 
 			CopyMemory( pWrite->m_pBuffer, pBuffer, (DWORD)nBuffer );
 			*pnWritten = nBuffer;
 
-			theApp.Message( MSG_TEMP, _T("Deferred write of %I64i bytes at %I64i"), nBuffer, nOffset );
-
 			return TRUE;
 		}
 	}
@@ -314,9 +312,6 @@ void CTransferFile::DeferredWrite(BOOL /*bOffline*/)
 
 	for ( int nDeferred = 0 ; nDeferred < m_nDeferred ; nDeferred++, pWrite++ )
 	{
-		theApp.Message( MSG_TEMP, _T("Committing deferred write of %lu bytes at %I64i"),
-			pWrite->m_nLength, pWrite->m_nOffset );
-
 		DWORD nOffsetLow	= (DWORD)( pWrite->m_nOffset & 0x00000000FFFFFFFF );
 		DWORD nOffsetHigh	= (DWORD)( ( pWrite->m_nOffset & 0xFFFFFFFF00000000 ) >> 32 );
 		SetFilePointer( m_hFile, nOffsetLow, (PLONG)&nOffsetHigh, FILE_BEGIN );
@@ -328,5 +323,4 @@ void CTransferFile::DeferredWrite(BOOL /*bOffline*/)
 	}
 
 	m_nDeferred = 0;
-	theApp.Message( MSG_TEMP, _T("Commit finished") );
 }

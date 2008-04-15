@@ -517,7 +517,7 @@ void CDownloadTipCtrl::PrepareFileInfo(CDownload* pDownload)
 		LoadString( strUntrusted, IDS_TIP_UNTRUSTED );
 
 		m_sSHA1 = pDownload->m_oSHA1.toShortUrn();
-		if ( m_sSHA1.GetLength() && Settings.General.Debug )
+		if ( m_sSHA1.GetLength() )
 		{
 			if ( ! pDownload->m_oSHA1.isTrusted() )
 			{
@@ -526,7 +526,7 @@ void CDownloadTipCtrl::PrepareFileInfo(CDownload* pDownload)
 		}
 
 		m_sTiger = pDownload->m_oTiger.toShortUrn();
-		if ( m_sTiger.GetLength() && Settings.General.Debug )
+		if ( m_sTiger.GetLength() )
 		{
 			if ( ! pDownload->m_pTigerBlock )
 			{
@@ -546,7 +546,7 @@ void CDownloadTipCtrl::PrepareFileInfo(CDownload* pDownload)
 		}
 
 		m_sED2K = pDownload->m_oED2K.toShortUrn();
-		if ( m_sED2K.GetLength() && Settings.General.Debug )
+		if ( m_sED2K.GetLength() )
 		{
 			if ( ! pDownload->m_pHashsetBlock )
 			{
@@ -566,7 +566,7 @@ void CDownloadTipCtrl::PrepareFileInfo(CDownload* pDownload)
 		}
 
 		m_sBTH = pDownload->m_oBTH.toShortUrn();
-		if ( m_sBTH.GetLength() && Settings.General.Debug )
+		if ( m_sBTH.GetLength() )
 		{
 			if ( ! pDownload->m_pTorrentBlock )
 			{
@@ -589,7 +589,7 @@ void CDownloadTipCtrl::PrepareFileInfo(CDownload* pDownload)
 			m_sURL = pDownload->m_pTorrent.m_sTracker;
 
 		m_sMD5 = pDownload->m_oMD5.toShortUrn();
-		if ( m_sMD5.GetLength() && Settings.General.Debug )
+		if ( m_sMD5.GetLength() )
 		{
 			if ( ! pDownload->m_oMD5.isTrusted() )
 			{

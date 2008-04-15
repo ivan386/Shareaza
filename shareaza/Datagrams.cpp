@@ -143,7 +143,7 @@ BOOL CDatagrams::Listen()
 
 	if ( bind( m_hSocket, (SOCKADDR*)&saHost, sizeof(saHost) ) == 0 )
 	{
-		theApp.Message( MSG_DEFAULT, IDS_NETWORK_LISTENING_UDP,
+		theApp.Message( MSG_INFO, IDS_NETWORK_LISTENING_UDP,
 			(LPCTSTR)CString( inet_ntoa( saHost.sin_addr ) ), htons( saHost.sin_port ) );
 	}
 
@@ -1585,7 +1585,7 @@ BOOL CDatagrams::OnQueryKeyAnswer(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 		pPacket->m_nPosition = nOffset;
 	}
 
-	theApp.Message( MSG_DEBUG, _T("Got a query key for %s:%lu: 0x%x"),
+	theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("Got a query key for %s:%lu: 0x%x"),
 		(LPCTSTR)CString( inet_ntoa( pHost->sin_addr ) ), htons( pHost->sin_port ), nKey );
 
 	{

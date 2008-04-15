@@ -485,13 +485,13 @@ void CEDClients::OnServerStatus(SOCKADDR_IN* /*pHost*/, CEDPacket* pPacket)
 	CHostCacheHost *pServer = HostCache.eDonkey.Find( &m_pLastServer );
 	if ( pServer == NULL )
 	{
-		theApp.Message( MSG_DEFAULT, _T("Server status received, but server not found in host cache") );
+		theApp.Message( MSG_INFO, _T("Server status received, but server not found in host cache") );
 		return;
 	}
 	if ( pServer->m_sName.GetLength() )
-		theApp.Message( MSG_DEFAULT, _T("Server status received from %s"), pServer->m_sName );
+		theApp.Message( MSG_INFO, _T("Server status received from %s"), pServer->m_sName );
 	else
-		theApp.Message( MSG_DEFAULT, _T("Server status received from %s"),
+		theApp.Message( MSG_INFO, _T("Server status received from %s"),
             (LPCTSTR)CString( inet_ntoa( m_pLastServer ) ) );
 
 	// Read in the status packet
@@ -542,7 +542,7 @@ void CEDClients::OnServerStatus(SOCKADDR_IN* /*pHost*/, CEDPacket* pPacket)
 
 	//CString strT;
 	//strT.Format( _T("Users:%d Files:%d Max Users:%d File limit:%d UDP flags:%08X"), nUsers, nFiles, nMaxUsers, nFileLimit, nUDPFlags );
-	//theApp.Message( MSG_DEFAULT, strT );
+	//theApp.Message( MSG_INFO, strT );
 }
 
 // Send a server status request
@@ -583,7 +583,7 @@ void CEDClients::RunGlobalStatsRequests(DWORD tNow)
 				// If we've had multiple failures, remove the host
 				if ( pHost->m_nFailures > 3 )
 				{		
-					theApp.Message( MSG_DEFAULT, _T("Removing ed2k server %s"), pHost->m_sName );
+					theApp.Message( MSG_INFO, _T("Removing ed2k server %s"), pHost->m_sName );
 					HostCache.eDonkey.Remove( pHost );
 				}
 			}	
@@ -606,7 +606,7 @@ void CEDClients::RunGlobalStatsRequests(DWORD tNow)
 
 			/*CString strT;
 			strT.Format( _T("  -Name:%s Last Stats:%d UDP flags:%08X"), pHost->m_sName, pHost->m_tStats, pHost->m_nUDPFlags );
-			theApp.Message( MSG_DEFAULT, strT );*/
+			theApp.Message( MSG_INFO, strT );*/
 
 			// Check if this server could be asked for stats
 			if ( ( pHost->CanQuery( tSecs ) ) &&												// If it hasn't been searched recently	
@@ -620,9 +620,9 @@ void CEDClients::RunGlobalStatsRequests(DWORD tNow)
 				{
 					// Send a request for stats to this server
 					if ( pHost->m_sName.GetLength() )
-						theApp.Message( MSG_DEFAULT, _T("Sending status request to ed2k server %s"), pHost->m_sName );
+						theApp.Message( MSG_INFO, _T("Sending status request to ed2k server %s"), pHost->m_sName );
 					else
-						theApp.Message( MSG_DEFAULT, _T("Sending status request to ed2k server %s"), (LPCTSTR)CString( inet_ntoa( pHost->m_pAddress ) ) );
+						theApp.Message( MSG_INFO, _T("Sending status request to ed2k server %s"), (LPCTSTR)CString( inet_ntoa( pHost->m_pAddress ) ) );
 
 					RequestServerStatus( &pHost->m_pAddress, pHost->m_nPort );
 					pHost->m_tStats = tSecs;

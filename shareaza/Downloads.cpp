@@ -110,7 +110,7 @@ CDownload* CDownloads::Add(CQueryHit* pHit, BOOL bAddToHead)
 
 	if ( pDownload != NULL )
 	{
-		theApp.Message( MSG_DOWNLOAD, IDS_DOWNLOAD_ALREADY, (LPCTSTR)pHit->m_sName );
+		theApp.Message( MSG_NOTICE, IDS_DOWNLOAD_ALREADY, (LPCTSTR)pHit->m_sName );
 		
 		pDownload->AddSourceHit( pHit );
 		pDownload->Resume();
@@ -123,7 +123,7 @@ CDownload* CDownloads::Add(CQueryHit* pHit, BOOL bAddToHead)
 		if ( bAddToHead ) m_pList.AddHead( pDownload );
 		else m_pList.AddTail( pDownload );
 		
-		theApp.Message( MSG_DOWNLOAD, IDS_DOWNLOAD_ADDED,
+		theApp.Message( MSG_NOTICE, IDS_DOWNLOAD_ADDED,
 			(LPCTSTR)pDownload->GetDisplayName(), pDownload->GetSourceCount() );
 
         if ( pDownload->m_oSHA1 ) pDownload->m_oSHA1.signalTrusted();
@@ -165,7 +165,7 @@ CDownload* CDownloads::Add(CMatchFile* pFile, BOOL bAddToHead)
 
 	if ( pDownload != NULL )
 	{
-		theApp.Message( MSG_DOWNLOAD, IDS_DOWNLOAD_ALREADY, (LPCTSTR)pFile->m_sName );
+		theApp.Message( MSG_NOTICE, IDS_DOWNLOAD_ALREADY, (LPCTSTR)pFile->m_sName );
 		
 		pFile->AddHitsToDownload( pDownload );
 		
@@ -179,7 +179,7 @@ CDownload* CDownloads::Add(CMatchFile* pFile, BOOL bAddToHead)
 		
 		pFile->AddHitsToDownload( pDownload, TRUE );
 		
-		theApp.Message( MSG_DOWNLOAD, IDS_DOWNLOAD_ADDED,
+		theApp.Message( MSG_NOTICE, IDS_DOWNLOAD_ADDED,
 			(LPCTSTR)pDownload->GetDisplayName(), pDownload->GetSourceCount() );
 
         if ( pDownload->m_oSHA1 ) pDownload->m_oSHA1.signalTrusted();
@@ -233,7 +233,7 @@ CDownload* CDownloads::Add(CShareazaURL* pURL)
 	
 	if ( pDownload != NULL )
 	{
-		theApp.Message( MSG_DOWNLOAD, IDS_DOWNLOAD_ALREADY,
+		theApp.Message( MSG_NOTICE, IDS_DOWNLOAD_ALREADY,
 			(LPCTSTR)pDownload->GetDisplayName() );
 		
 		bNew = FALSE;
@@ -308,7 +308,7 @@ CDownload* CDownloads::Add(CShareazaURL* pURL)
 	{
 		m_pList.AddTail( pDownload );
 		
-		theApp.Message( MSG_DOWNLOAD, IDS_DOWNLOAD_ADDED,
+		theApp.Message( MSG_NOTICE, IDS_DOWNLOAD_ADDED,
 			(LPCTSTR)pDownload->GetDisplayName(), pDownload->GetEffectiveSourceCount() );
 		
 		if ( (  pDownload->IsTorrent() && ( GetTryingCount(TRUE)  < Settings.BitTorrent.DownloadTorrents ) ) ||

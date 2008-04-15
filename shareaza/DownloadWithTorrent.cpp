@@ -399,7 +399,7 @@ void CDownloadWithTorrent::SendStarted(DWORD nNumWant)
 		return;
 
 	// Log the 'start' event
-	theApp.Message( MSG_DEFAULT,
+	theApp.Message( MSG_INFO,
 		_T("[BT] Sending initial tracker announce for %s"),
 		m_pTorrent.m_sName );
 
@@ -421,7 +421,7 @@ void CDownloadWithTorrent::SendUpdate(DWORD nNumWant)
 		return;
 
 	// Log the 'update' event
-	theApp.Message( MSG_DEFAULT,
+	theApp.Message( MSG_INFO,
 		_T("[BT] Sending update tracker announce for %s"),
 		m_pTorrent.m_sName );
 
@@ -441,7 +441,7 @@ void CDownloadWithTorrent::SendCompleted()
 		return;
 
 	// Log the 'complete' event
-	theApp.Message( MSG_DEFAULT,
+	theApp.Message( MSG_INFO,
 		_T("[BT] Sending completed tracker announce for %s"),
 		m_pTorrent.m_sName );
 
@@ -457,7 +457,7 @@ void CDownloadWithTorrent::SendStopped()
 		return;
 
 	// Log the 'stop' event
-	theApp.Message( MSG_DEFAULT,
+	theApp.Message( MSG_INFO,
 		_T("[BT] Sending final tracker announce for %s"),
 		m_pTorrent.m_sName );
 

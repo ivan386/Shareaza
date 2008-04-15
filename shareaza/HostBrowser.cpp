@@ -97,7 +97,7 @@ BOOL CHostBrowser::Browse()
 	{
 		if ( SendPush( FALSE ) )
 		{
-			theApp.Message( MSG_SYSTEM, IDS_BROWSE_PUSHED_TO, m_sAddress );
+			theApp.Message( MSG_NOTICE, IDS_BROWSE_PUSHED_TO, m_sAddress );
 		}
 		else
 		{
@@ -109,7 +109,7 @@ BOOL CHostBrowser::Browse()
 	{
 		if ( ConnectTo( &m_pAddress, m_nPort ) )
 		{
-			theApp.Message( MSG_SYSTEM, IDS_BROWSE_CONNECTING_TO, m_sAddress );
+			theApp.Message( MSG_NOTICE, IDS_BROWSE_CONNECTING_TO, m_sAddress );
 		}
 		else
 		{
@@ -133,7 +133,7 @@ void CHostBrowser::Stop(BOOL /*bCompleted*/)
 
 	if ( m_hSocket != INVALID_SOCKET )
 	{
-		theApp.Message( MSG_DEFAULT, IDS_BROWSE_CLOSED, m_sAddress );
+		theApp.Message( MSG_INFO, IDS_BROWSE_CLOSED, m_sAddress );
 	}
 
 	CTransfer::Close();
@@ -270,7 +270,7 @@ BOOL CHostBrowser::SendPush(BOOL bMessage)
 		m_tPushed = GetTickCount();
 
 		if ( bMessage )
-			theApp.Message( MSG_DEFAULT, IDS_BROWSE_PUSHED_TO, m_sAddress );
+			theApp.Message( MSG_INFO, IDS_BROWSE_PUSHED_TO, m_sAddress );
 
 		return TRUE;
 	}
@@ -343,7 +343,7 @@ void CHostBrowser::SendRequest()
 
 	m_mInput.pLimit = m_mOutput.pLimit = &Settings.Bandwidth.Downloads;
 
-	theApp.Message( MSG_DEFAULT, IDS_BROWSE_SENT_REQUEST, m_sAddress );
+	theApp.Message( MSG_INFO, IDS_BROWSE_SENT_REQUEST, m_sAddress );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -455,15 +455,15 @@ BOOL CHostBrowser::OnHeadersComplete()
 	switch ( m_nProtocol )
 	{
 	case PROTOCOL_NULL:
-		theApp.Message( MSG_DEFAULT, IDS_BROWSE_DOWNLOADING_FROM,
+		theApp.Message( MSG_INFO, IDS_BROWSE_DOWNLOADING_FROM,
 			m_sAddress, _T("HTML") );
 		break;
 	case PROTOCOL_G1:
-		theApp.Message( MSG_DEFAULT, IDS_BROWSE_DOWNLOADING_FROM,
+		theApp.Message( MSG_INFO, IDS_BROWSE_DOWNLOADING_FROM,
 			m_sAddress, _T("Gnutella-1") );
 		break;
 	case PROTOCOL_G2:
-		theApp.Message( MSG_DEFAULT, IDS_BROWSE_DOWNLOADING_FROM,
+		theApp.Message( MSG_INFO, IDS_BROWSE_DOWNLOADING_FROM,
 			m_sAddress, _T("Gnutella-2") );
 		break;
 	default:
@@ -524,7 +524,7 @@ BOOL CHostBrowser::ReadContent()
 
 	if ( m_pProfile->IsValid() && m_pNotify != NULL ) m_pNotify->OnProfileReceived();
 
-	theApp.Message( MSG_SYSTEM, IDS_BROWSE_FINISHED, m_sAddress, m_nHits );
+	theApp.Message( MSG_NOTICE, IDS_BROWSE_FINISHED, m_sAddress, m_nHits );
 
 	return TRUE;
 }
@@ -730,11 +730,6 @@ BOOL CHostBrowser::StreamHTML()
 
 	while ( m_pBuffer->ReadLine( strLine ) )
 	{
-		if ( Settings.General.Debug && ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 ) )
-		{
-			theApp.Message( MSG_DEBUG, _T("HTML-BROWSE: %s"), strLine );
-		}
-
 		int nPosHTTP = strLine.Find( _T("http://") );
 
 		while ( nPosHTTP >= 0 && strLine.Find( _T("/get/") ) > nPosHTTP )

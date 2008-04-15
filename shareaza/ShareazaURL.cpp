@@ -856,13 +856,13 @@ BOOL CShareazaURL::ParseDonkeyFile(LPCTSTR pszURL)
 		if ( _tcsncmp( strPart, _T("h="), 2 ) == 0 )
 		{
 			// AICH hash
-			 // theApp.Message(MSG_DEFAULT, _T("AICH") );
+			 // theApp.Message(MSG_INFO, _T("AICH") );
 			 strPart = strPart.Mid( 2 );
 		}
 		else if ( _tcsncmp( strPart, _T("s="), 2 ) == 0 )
 		{
 			// HTTP source
-			// theApp.Message(MSG_DEFAULT, _T("HTTP") );
+			// theApp.Message(MSG_INFO, _T("HTTP") );
 			strPart = strPart.Mid( 2 );
 
 			if ( m_sURL.GetLength() ) m_sURL += _T(", ");
@@ -872,7 +872,7 @@ BOOL CShareazaURL::ParseDonkeyFile(LPCTSTR pszURL)
 		else if ( _tcsncmp( strPart, _T("p="), 2 ) == 0 )
 		{
 			// Hash set
-			// theApp.Message(MSG_DEFAULT, _T("hash set") );
+			// theApp.Message(MSG_INFO, _T("hash set") );
 			strPart = strPart.Mid( 2 );
 		}
 

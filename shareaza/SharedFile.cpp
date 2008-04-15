@@ -1230,7 +1230,7 @@ BOOL CLibraryFile::OnVerifyDownload(
 		
 		if ( m_bVerify == TRI_TRUE )
 		{
-			theApp.Message( MSG_SYSTEM, IDS_DOWNLOAD_VERIFY_SUCCESS, (LPCTSTR)m_sName );
+			theApp.Message( MSG_NOTICE, IDS_DOWNLOAD_VERIFY_SUCCESS, (LPCTSTR)m_sName );
 			Downloads.OnVerify( GetPath(), TRUE );
 		}
 		else if ( m_bVerify == TRI_FALSE )

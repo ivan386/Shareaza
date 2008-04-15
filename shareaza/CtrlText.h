@@ -1,7 +1,7 @@
 //
 // CtrlText.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -18,9 +18,6 @@
 // along with Shareaza; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
-
-#if !defined(AFX_CTRLTEXT_H__ED51405E_BF72_48AF_9E0F_61E36C25FC12__INCLUDED_)
-#define AFX_CTRLTEXT_H__ED51405E_BF72_48AF_9E0F_61E36C25FC12__INCLUDED_
 
 #pragma once
 
@@ -40,8 +37,8 @@ protected:
 	int					m_nTotal;
 	CSize				m_cCharacter;
 	CFont				m_pFont;
-	COLORREF			m_crBackground;
-	COLORREF			m_crText[6];
+	COLORREF			m_crBackground[4];
+	COLORREF			m_crText[5];
 	BOOL				m_bProcess;
 	mutable CCriticalSection	m_pSection;
 	UINT				m_nScrollWheelLines;	// number of lines to scroll when the mouse wheel is rotated
@@ -49,8 +46,8 @@ protected:
 
 // Operations
 public:
-	void	Add(int nType, LPCTSTR pszText);
-	void	AddLine(int nType, LPCTSTR pszLine);
+	void	Add(WORD nType, const CString& strText);
+	void	AddLine(WORD nType, const CString& strLine);
 	void	Clear(BOOL bInvalidate = TRUE);
 	CFont*	GetFont();
 	void	CopyText() const;
@@ -85,7 +82,7 @@ class CTextLine
 {
 // Construction
 public:
-	CTextLine(int nType, LPCTSTR pszLine);
+	CTextLine(WORD nType, const CString& strText);
 	virtual ~CTextLine();
 
 // Attributes
@@ -93,7 +90,7 @@ public:
 	CString	m_sText;
 	int*	m_pLine;
 	int		m_nLine;
-	int		m_nType;
+	WORD	m_nType;
 	BOOL	m_bSelected;
 
 // Operations
@@ -104,7 +101,3 @@ protected:
 	void	AddLine(int nLength);
 
 };
-
-//{{AFX_INSERT_LOCATION}}
-
-#endif // !defined(AFX_CTRLTEXT_H__ED51405E_BF72_48AF_9E0F_61E36C25FC12__INCLUDED_)

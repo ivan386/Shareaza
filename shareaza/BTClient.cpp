@@ -99,7 +99,7 @@ BOOL CBTClient::Connect(CDownloadTransferBT* pDownloadTransfer)
 	m_pDownload			= pDownloadTransfer->m_pDownload;
 	m_pDownloadTransfer	= pDownloadTransfer;
 
-	theApp.Message( MSG_DEFAULT, IDS_BT_CLIENT_CONNECTING, m_sAddress );
+	theApp.Message( MSG_INFO, IDS_BT_CLIENT_CONNECTING, m_sAddress );
 
 	return TRUE;
 }
@@ -118,7 +118,7 @@ void CBTClient::AttachTo(CConnection* pConnection)
 
 	ASSERT( m_mInput.pLimit != NULL );
 	m_tConnected = GetTickCount();
-	theApp.Message( MSG_DEFAULT, IDS_BT_CLIENT_ACCEPTED, m_sAddress );
+	theApp.Message( MSG_INFO, IDS_BT_CLIENT_ACCEPTED, m_sAddress );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -236,7 +236,7 @@ BOOL CBTClient::OnRun()
 
 BOOL CBTClient::OnConnected()
 {
-	theApp.Message( MSG_DEFAULT, IDS_BT_CLIENT_HANDSHAKING, (LPCTSTR)m_sAddress );
+	theApp.Message( MSG_INFO, IDS_BT_CLIENT_HANDSHAKING, (LPCTSTR)m_sAddress );
 	SendHandshake( TRUE, TRUE );
 	return TRUE;
 }
@@ -793,7 +793,7 @@ BOOL CBTClient::OnOnline()
 	ASSERT( m_pDownload != NULL );
 	ASSERT( m_pUpload != NULL );
 	
-	theApp.Message( MSG_DEFAULT, IDS_BT_CLIENT_ONLINE, (LPCTSTR)m_sAddress,
+	theApp.Message( MSG_INFO, IDS_BT_CLIENT_ONLINE, (LPCTSTR)m_sAddress,
 		(LPCTSTR)m_pDownload->GetDisplayName() );
 	
 	if ( !m_pDownload->IsTorrent() ) // perhaps we just finished download; investigate this!
@@ -965,7 +965,7 @@ BOOL CBTClient::OnBeHandshake(CBTPacket* pPacket)
 	
 	delete pRoot;
 	
-	theApp.Message( MSG_DEFAULT, IDS_BT_CLIENT_EXTENDED, (LPCTSTR)m_sAddress, (LPCTSTR)m_sUserAgent );
+	theApp.Message( MSG_INFO, IDS_BT_CLIENT_EXTENDED, (LPCTSTR)m_sAddress, (LPCTSTR)m_sUserAgent );
 	
 	return TRUE;
 }

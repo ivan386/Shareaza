@@ -221,7 +221,7 @@ BOOL CUploadTransferBT::OnRequest(CBTPacket* pPacket)
 	{
 		m_nState = upsRequest;
 		AllocateBaseFile();
-		theApp.Message( MSG_SYSTEM, IDS_UPLOAD_FILE,
+		theApp.Message( MSG_NOTICE, IDS_UPLOAD_FILE,
 			(LPCTSTR)m_sFileName, (LPCTSTR)m_sAddress );
 	}
 	

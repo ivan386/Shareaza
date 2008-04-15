@@ -237,7 +237,7 @@ BOOL CDownloadTransferED2K::OnConnected()
 	m_pSource->m_sNick		= m_pClient->m_sNick;
 	m_pSource->SetLastSeen();
 	
-	theApp.Message( MSG_DEFAULT, IDS_DOWNLOAD_CONNECTED, (LPCTSTR)m_sAddress );
+	theApp.Message( MSG_INFO, IDS_DOWNLOAD_CONNECTED, (LPCTSTR)m_sAddress );
 	
 	return SendPrimaryRequest();
 }
@@ -249,7 +249,7 @@ void CDownloadTransferED2K::OnDropped(BOOL /*bError*/)
 {
 	if ( m_nState == dtsQueued )
 	{
-		theApp.Message( MSG_DEFAULT, IDS_DOWNLOAD_QUEUE_DROP,
+		theApp.Message( MSG_INFO, IDS_DOWNLOAD_QUEUE_DROP,
 			(LPCTSTR)m_pDownload->GetDisplayName() );
 	}
 	else
@@ -677,7 +677,7 @@ BOOL CDownloadTransferED2K::SendPrimaryRequest()
 	/*
 	if ( m_pDownload->GetVolumeRemaining() == 0 )
 	{
-		theApp.Message( MSG_DEFAULT, IDS_DOWNLOAD_FRAGMENT_END, (LPCTSTR)m_sAddress );
+		theApp.Message( MSG_INFO, IDS_DOWNLOAD_FRAGMENT_END, (LPCTSTR)m_sAddress );
 		Close( TRI_TRUE );
 		return FALSE;
 	}
@@ -769,7 +769,7 @@ BOOL CDownloadTransferED2K::SendSecondaryRequest()
 	{
 		m_pSource->m_tAttempt = GetTickCount() + Settings.eDonkey.ReAskTime * 500;
 		m_pSource->SetAvailableRanges( NULL );
-		theApp.Message( MSG_DEFAULT, IDS_DOWNLOAD_FRAGMENT_END, (LPCTSTR)m_sAddress );
+		theApp.Message( MSG_INFO, IDS_DOWNLOAD_FRAGMENT_END, (LPCTSTR)m_sAddress );
 		Close( TRI_TRUE );
 		return FALSE;
 	}
@@ -908,7 +908,7 @@ BOOL CDownloadTransferED2K::SendFragmentRequests()
 		while ( nCount-- )
 		{
 			int nType = ( m_nDownloaded == 0 || ( nOffsetBegin[nCount] % ED2K_PART_SIZE ) == 0 )
-				? MSG_DEFAULT : MSG_DEBUG;
+				? MSG_INFO : MSG_DEBUG;
 
 			theApp.Message( nType, IDS_DOWNLOAD_FRAGMENT_REQUEST,
 				nOffsetBegin[nCount], nOffsetEnd[nCount],
@@ -933,7 +933,7 @@ BOOL CDownloadTransferED2K::SendFragmentRequests()
 	
 	Send( CEDPacket::New( ED2K_C2C_QUEUERELEASE ) );
 	
-	theApp.Message( MSG_DEFAULT, IDS_DOWNLOAD_FRAGMENT_END, (LPCTSTR)m_sAddress );
+	theApp.Message( MSG_INFO, IDS_DOWNLOAD_FRAGMENT_END, (LPCTSTR)m_sAddress );
 	Close( TRI_TRUE );
 	
 	return FALSE;
@@ -1039,7 +1039,7 @@ void CDownloadTransferED2K::SetQueueRank(int nRank)
 	
 	ClearRequests();
 	
-	theApp.Message( MSG_DEFAULT, IDS_DOWNLOAD_QUEUED,
+	theApp.Message( MSG_INFO, IDS_DOWNLOAD_QUEUED,
 		(LPCTSTR)m_sAddress, m_nQueuePos, m_nQueueLen, _T("eDonkey2000") );
 }
 
