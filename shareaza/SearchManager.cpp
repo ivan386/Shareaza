@@ -161,7 +161,7 @@ BOOL CSearchManager::OnQueryAck(CG2Packet* pPacket, SOCKADDR_IN* pHost, Hashes::
 	G2_PACKET nType;
 	DWORD nLength;
 
-	theApp.Message( MSG_DEBUG, _T("Processing query acknowledge from %s:"),
+	theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("Processing query acknowledge from %s:"),
 		(LPCTSTR)CString( inet_ntoa( pHost->sin_addr ) ) );
 
 	while ( pPacket->ReadPacket( nType, nLength ) )

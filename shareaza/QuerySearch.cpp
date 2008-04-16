@@ -526,7 +526,7 @@ CQuerySearch* CQuerySearch::FromPacket(CPacket* pPacket, SOCKADDR_IN* pEndpoint)
 		if ( ((CG2Packet*)pPacket)->IsType( G2_PACKET_QUERY_WRAP ) )
 		{
 			//if ( pSearch->ReadG1Packet( (CG1Packet*)pPacket ) ) return pSearch;
-			theApp.Message( MSG_DEBUG, _T("CQuerySearch::FromPacket dropping obsolete wrapped packet") );
+			theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("CQuerySearch::FromPacket dropping obsolete wrapped packet") );
 		}
 		else
 		{
@@ -599,7 +599,7 @@ BOOL CQuerySearch::ReadG1Packet(CG1Packet* pPacket)
 				else if ( oBTH.fromUrn(   strURN ) );	// Got BTH
 				else if ( oMD5.fromUrn(   strURN ) );	// Got MD5
 				else
-					theApp.Message( MSG_DEBUG, _T("Got Gnutella query packet with unknown URN: \"%s\""), strURN );
+					theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("Got Gnutella query packet with unknown URN: \"%s\""), strURN );
 			}
 			else if ( nLength >= 4 && *pszData == '<' )
 			{
@@ -621,7 +621,7 @@ BOOL CQuerySearch::ReadG1Packet(CG1Packet* pPacket)
 				m_pXML = CXMLElement::FromString( strXML, FALSE );
 				if ( m_pXML == NULL )
 				{
-					theApp.Message( MSG_DEBUG, _T("Got Gnutella query packet with bad XML: \"%s\""), strXML );
+					theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("Got Gnutella query packet with bad XML: \"%s\""), strXML );
 				}
 				else
 				{
@@ -645,7 +645,7 @@ BOOL CQuerySearch::ReadG1Packet(CG1Packet* pPacket)
 						}
 						
 						if ( !bFound )
-							theApp.Message( MSG_DEBUG, _T("Got Gnutella query packet with unknown XML schema: \"%s\""), strXML );
+							theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("Got Gnutella query packet with unknown XML schema: \"%s\""), strXML );
 					}
 				}
 			}
@@ -693,14 +693,14 @@ BOOL CQuerySearch::ReadG1Packet(CG1Packet* pPacket)
 						else if ( oBTH.fromUrn(   strURN ) );	// Got BTH
 						else if ( oMD5.fromUrn(   strURN ) );	// Got MD5
 						else
-							theApp.Message( MSG_DEBUG, _T("Got Gnutella query packet with unknown GGEP URN: \"%s\""), strURN );
+							theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("Got Gnutella query packet with unknown GGEP URN: \"%s\""), strURN );
 					}
 				}
 				else
-					theApp.Message( MSG_DEBUG, _T("Got GGEP Gnutella query packet, but GGEP disabled") );
+					theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("Got GGEP Gnutella query packet, but GGEP disabled") );
 			}
 			else
-				theApp.Message( MSG_DEBUG, _T("Got Gnutella query packet with unknown part: \"%hs\""), CString( pszData, nLength ) );
+				theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("Got Gnutella query packet with unknown part: \"%hs\""), CString( pszData, nLength ) );
 
 			pszData += nLength + 1;
 			nDataLength -= nLength;
