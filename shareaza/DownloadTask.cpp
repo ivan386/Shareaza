@@ -238,7 +238,7 @@ void CDownloadTask::RunAllocate()
 {
 	HANDLE hFile = CreateFile( m_sFilename, GENERIC_WRITE,
 		FILE_SHARE_READ | FILE_SHARE_WRITE | ( theApp.m_bNT ? FILE_SHARE_DELETE : 0 ),
-		NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL );
+		NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL|FILE_FLAG_SEQUENTIAL_SCAN, NULL );
 	VERIFY_FILE_ACCESS( hFile, m_sFilename )
 	if ( hFile == INVALID_HANDLE_VALUE ) return;
 	
@@ -342,7 +342,7 @@ void CDownloadTask::RunCopySimple()
 	
 	// Moving failed or the destination drive differs from the source drive
 	HANDLE hSource = CreateFile( m_sFilename, GENERIC_READ,
-		FILE_SHARE_READ|FILE_SHARE_WRITE, NULL, OPEN_ALWAYS,
+		FILE_SHARE_READ | ( theApp.m_bNT ? FILE_SHARE_DELETE : 0 ), NULL, OPEN_EXISTING,
 		FILE_ATTRIBUTE_NORMAL|FILE_FLAG_SEQUENTIAL_SCAN, NULL );
 	VERIFY_FILE_ACCESS( hSource, m_sFilename )
 	if ( hSource == INVALID_HANDLE_VALUE ) return;
@@ -433,7 +433,7 @@ void CDownloadTask::RunCopyTorrent()
 	ASSERT( m_pTorrent.m_nFiles > 1 );
 	
 	HANDLE hSource = CreateFile( m_sFilename, GENERIC_READ,
-		FILE_SHARE_READ|FILE_SHARE_WRITE, NULL, OPEN_ALWAYS,
+		FILE_SHARE_READ | ( theApp.m_bNT ? FILE_SHARE_DELETE : 0 ), NULL, OPEN_EXISTING,
 		FILE_ATTRIBUTE_NORMAL|FILE_FLAG_SEQUENTIAL_SCAN, NULL );
 	VERIFY_FILE_ACCESS( hSource, m_sFilename )
 	if ( hSource == INVALID_HANDLE_VALUE ) return;
@@ -581,7 +581,7 @@ void CDownloadTask::RunMerge()
 BOOL CDownloadTask::CopyFile(HANDLE hSource, LPCTSTR pszTarget, QWORD nLength)
 {
 	HANDLE hTarget = CreateFile( pszTarget, GENERIC_WRITE,
-		0, NULL, CREATE_NEW, FILE_ATTRIBUTE_NORMAL, NULL );
+		0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL|FILE_FLAG_SEQUENTIAL_SCAN, NULL );
 	VERIFY_FILE_ACCESS( hTarget, pszTarget )
 	if ( hTarget == INVALID_HANDLE_VALUE ) return FALSE;
 	
