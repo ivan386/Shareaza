@@ -32,7 +32,7 @@ public:
 	CLibraryBuilder();
 	virtual ~CLibraryBuilder();
 
-	void		Add(CLibraryFile* pFile);			// Add file to list
+	BOOL		Add(CLibraryFile* pFile);			// Add file to list
 	void		Remove(DWORD nIndex);				// Remove file from list
 	void		Remove(LPCTSTR szPath);				// Remove file from list
 	void		Remove(CLibraryFile* pFile);		// Remove file from list

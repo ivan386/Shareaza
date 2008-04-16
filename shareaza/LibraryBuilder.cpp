@@ -73,18 +73,24 @@ CLibraryBuilder::~CLibraryBuilder()
 //////////////////////////////////////////////////////////////////////
 // CLibraryBuilder add and remove
 
-void CLibraryBuilder::Add(CLibraryFile* pFile)
+BOOL CLibraryBuilder::Add(CLibraryFile* pFile)
 {
 	ASSERT( pFile );
 	ASSERT( pFile->m_nIndex );
 
-	CQuickLock pLock( m_pSection );
-	if ( std::find( m_pFiles.begin(), m_pFiles.end(), pFile->m_nIndex ) == m_pFiles.end() )
+	if ( pFile->IsReadable() )
 	{
-		m_pFiles.push_back( pFile->m_nIndex );
+		CQuickLock pLock( m_pSection );
+		if ( std::find( m_pFiles.begin(), m_pFiles.end(), pFile->m_nIndex ) == m_pFiles.end() )
+		{
+			m_pFiles.push_back( pFile->m_nIndex );
 
-		StartThread();
+			StartThread();
+
+			return TRUE;
+		}
 	}
+	return FALSE;
 }
 
 void CLibraryBuilder::Remove(DWORD nIndex)

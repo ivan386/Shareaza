@@ -195,7 +195,7 @@ void CFileCommentsPage::OnOK()
 			pFile->m_nRating	= m_nRating;
 			pFile->m_sComments	= m_sComments;
 
-			pFile->SaveMetadata();
+			pFile->ModifyMetadata();
 			Library.Update();
 		}
 	}

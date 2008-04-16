@@ -68,7 +68,7 @@ protected:
 	void			CloseFile();
 	void			DeleteFile(BOOL bForce = FALSE);
 	BOOL			RunFile(DWORD tNow);
-	BOOL			WriteMetadata(LPCTSTR pszPath);
+//	BOOL			WriteMetadata(LPCTSTR pszPath);
 	BOOL			AppendMetadata();
 	virtual void	Serialize(CArchive& ar, int nVersion);
 private:

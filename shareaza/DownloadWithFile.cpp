@@ -550,7 +550,7 @@ BOOL CDownloadWithFile::RunFile(DWORD /*tNow*/)
 //////////////////////////////////////////////////////////////////////
 // CDownloadWithFile write the metadata
 
-BOOL CDownloadWithFile::WriteMetadata(LPCTSTR pszPath)
+/*BOOL CDownloadWithFile::WriteMetadata(LPCTSTR pszPath)
 {
 	ASSERT( m_pXML != NULL );
 	
@@ -593,7 +593,7 @@ BOOL CDownloadWithFile::WriteMetadata(LPCTSTR pszPath)
 	CloseHandle( hFile );
 	
 	return TRUE;
-}
+}*/
 
 //////////////////////////////////////////////////////////////////////
 // CDownloadWithFile append intrinsic metadata

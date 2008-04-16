@@ -247,6 +247,8 @@ void CLibraryFolder::Serialize(CArchive& ar, int nVersion)
 {
 	if ( ar.IsStoring() )
 	{
+		SaveGUID( m_sPath, m_oGUID );
+
 		ar << m_sPath;
 		ar << m_bShared;
 		ar << m_bExpanded;
@@ -270,6 +272,8 @@ void CLibraryFolder::Serialize(CArchive& ar, int nVersion)
 		Clear();
 
 		ar >> m_sPath;
+
+		LoadGUID( m_sPath, m_oGUID );
 
 		if ( nVersion >= 5 )
 		{
@@ -342,14 +346,14 @@ void CLibraryFolder::PathToName()
 BOOL CLibraryFolder::ThreadScan(volatile BOOL* pbContinue, DWORD nScanCookie)
 {
 	CSingleLock pLock( &Library.m_pSection );
-	CString strMetaData;
-	LPCTSTR pszMetaData = NULL;
+//	CString strMetaData;
+//	LPCTSTR pszMetaData = NULL;
 	WIN32_FIND_DATA pFind;
 	HANDLE hSearch;
 	
 	if ( m_sPath.CompareNoCase( Settings.Downloads.IncompletePath ) == 0 ) return FALSE;
 	
-	strMetaData = m_sPath + _T("\\Metadata");
+/*	strMetaData = m_sPath + _T("\\Metadata");
 	
 	hSearch = FindFirstFile( strMetaData + _T("\\*.*"), &pFind );
 	
@@ -358,7 +362,7 @@ BOOL CLibraryFolder::ThreadScan(volatile BOOL* pbContinue, DWORD nScanCookie)
 		FindClose( hSearch );
 		strMetaData += '\\';
 		pszMetaData = strMetaData;
-	}
+	}*/
 	
 	hSearch = FindFirstFile( m_sPath + _T("\\*.*"), &pFind );
 	
@@ -446,7 +450,7 @@ BOOL CLibraryFolder::ThreadScan(volatile BOOL* pbContinue, DWORD nScanCookie)
 					( (QWORD)pFind.nFileSizeHigh << 32 );
 
 				if ( pFile->ThreadScan( pLock, nScanCookie, nLongSize,
-					&pFind.ftLastWriteTime, pszMetaData ) )
+					&pFind.ftLastWriteTime ) )
 					bChanged = TRUE;
 
 				m_nVolume += pFile->m_nSize;
@@ -501,9 +505,6 @@ BOOL CLibraryFolder::ThreadScan(volatile BOOL* pbContinue, DWORD nScanCookie)
 			bChanged = TRUE;
 		}
 	}
-	
-	if ( m_pParent == NULL && bChanged )
-		theApp.Message( MSG_DEBUG, _T("Library folder %s was changed"), (LPCTSTR)m_sPath );
 	
 	return bChanged;
 }

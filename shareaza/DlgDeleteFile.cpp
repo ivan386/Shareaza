@@ -162,7 +162,7 @@ void CDeleteFileDlg::Apply(CLibraryFile* pFile)
 			pFile->m_sComments.Empty();
 			pFile->m_nRating = 0;
 		}
-		pFile->SaveMetadata();
+		pFile->ModifyMetadata();
 	}
 	else if ( m_bCreateGhost )
 	{
@@ -178,7 +178,7 @@ void CDeleteFileDlg::Apply(CLibraryFile* pFile)
 			pFile->m_sComments	= m_sComments = strTransl + L" (" + strUntransl + L")";
 		}
 		pFile->m_bShared = TRI_FALSE;
-		pFile->SaveMetadata();
+		pFile->ModifyMetadata();
 	}
 }
 

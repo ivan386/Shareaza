@@ -102,6 +102,7 @@ public:
 	BOOL			IsRatedOnly() const;	// File rated but have no metadata
 	BOOL			IsHashed() const;
 	BOOL			IsNewFile() const;
+	BOOL			IsReadable() const;
 public:
 	BOOL			Rebuild();
 	BOOL			Rename(LPCTSTR pszName);
@@ -109,7 +110,7 @@ public:
 	BOOL			SetMetadata(CXMLElement* pXML);
 	CString			GetMetadataWords() const;
 	void			ModifyMetadata();		// Mark metadata as modified
-	BOOL			SaveMetadata();
+//	BOOL			SaveMetadata();
 	CTigerTree*		GetTigerTree();
 	CED2K*			GetED2K();
 public:
@@ -118,8 +119,8 @@ public:
 	CString			GetAlternateSources(CList< CString >* pState, int nMaximum, PROTOCOLID nProtocol);
 protected:
 	void			Serialize(CArchive& ar, int nVersion);
-	BOOL			ThreadScan(CSingleLock& pLock, DWORD nScanCookie, QWORD nSize, FILETIME* pTime, LPCTSTR pszMetaData);
-	BOOL			LoadMetadata(HANDLE hFile);
+	BOOL			ThreadScan(CSingleLock& pLock, DWORD nScanCookie, QWORD nSize, FILETIME* pTime/*, LPCTSTR pszMetaData*/);
+//	BOOL			LoadMetadata(HANDLE hFile);
 	void			OnDelete(BOOL bDeleteGhost = FALSE, TRISTATE bCreateGhost = TRI_UNKNOWN);
 	void			Ghost();
     BOOL			OnVerifyDownload(

@@ -306,14 +306,14 @@ BOOL CLibraryFile::Rename(LPCTSTR pszName)
 		return FALSE;
 	}
 	
-	if ( m_pMetadata != NULL )
+/*	if ( m_pMetadata != NULL )
 	{
 		CString strMetaFolder	= m_pFolder->m_sPath + _T("\\Metadata");
 		CString strMetaOld		= strMetaFolder + '\\' + m_sName + _T(".xml");
 		CString strMetaNew		= strMetaFolder + '\\' + pszName + _T(".xml");
 		
 		MoveFile( strMetaOld, strMetaNew );
-	}
+	}*/
 	
 	Library.RemoveFile( this );
 	
@@ -354,7 +354,7 @@ BOOL CLibraryFile::Delete(BOOL bDeleteGhost)
 			return FALSE;
 		}
 		
-		if ( m_pMetadata != NULL || m_sComments.GetLength() || m_nRating > 0 )
+/*		if ( m_pMetadata != NULL || m_sComments.GetLength() || m_nRating > 0 )
 		{
 			CString strMetaFolder	= m_pFolder->m_sPath + _T("\\Metadata");
 			CString strMetaFile		= strMetaFolder + '\\' + m_sName + _T(".xml");
@@ -363,7 +363,7 @@ BOOL CLibraryFile::Delete(BOOL bDeleteGhost)
 			{
 				RemoveDirectory( strMetaFolder );
 			}
-		}
+		}*/
 	}
 	else
 	{
@@ -414,7 +414,7 @@ BOOL CLibraryFile::SetMetadata(CXMLElement* pXML)
 
 	Library.AddFile( this );
 	
-	SaveMetadata();
+//	SaveMetadata();
 	
 	return TRUE;
 }
@@ -867,16 +867,14 @@ void CLibraryFile::Serialize(CArchive& ar, int nVersion)
 //////////////////////////////////////////////////////////////////////
 // CLibraryFile threaded scan
 
-BOOL CLibraryFile::ThreadScan(CSingleLock& pLock, DWORD nScanCookie, QWORD nSize, FILETIME* pTime, LPCTSTR pszMetaData)
+BOOL CLibraryFile::ThreadScan(CSingleLock& pLock, DWORD nScanCookie, QWORD nSize, FILETIME* pTime/*, LPCTSTR pszMetaData*/)
 {
-	BOOL bChanged = FALSE;
-	
 	ASSERT( m_pFolder != NULL );
+
 	m_nScanCookie = nScanCookie;
-	
+
 	if ( m_nSize != nSize || CompareFileTime( &m_pTime, pTime ) != 0 )
 	{
-		bChanged = TRUE;
 		pLock.Lock();
 
 		Library.RemoveFile( this );
@@ -888,115 +886,17 @@ BOOL CLibraryFile::ThreadScan(CSingleLock& pLock, DWORD nScanCookie, QWORD nSize
         m_oTiger.clear();
         m_oMD5.clear();
         m_oED2K.clear();
-		
-		if ( m_pMetadata != NULL && m_bMetadataAuto )
-		{
-			delete m_pMetadata;
-			m_pSchema		= NULL;
-			m_pMetadata		= NULL;
-			m_bMetadataAuto	= FALSE;
-		}
-	}
-	
-	BOOL bMetaData	= FALSE;
-	
-	if ( pszMetaData != NULL )
-	{
-		CString strMetaData = pszMetaData + m_sName + _T(".xml");
-		HANDLE hFile = INVALID_HANDLE_VALUE;
-		FILETIME pMetaDataTime = { 0 };
 
-		if ( Library.m_pfnGetFileAttributesExW != NULL )
-		{
-			WIN32_FILE_ATTRIBUTE_DATA pInfo = { 0 };
-			bMetaData = (*Library.m_pfnGetFileAttributesExW)( CT2CW( (LPCTSTR)strMetaData ), GetFileExInfoStandard, &pInfo );
-			pMetaDataTime = pInfo.ftLastWriteTime;
-		}
-		if ( ! bMetaData && Library.m_pfnGetFileAttributesExA != NULL )
-		{
-			WIN32_FILE_ATTRIBUTE_DATA pInfo = { 0 };
-			bMetaData = (*Library.m_pfnGetFileAttributesExA)( CT2CA( (LPCTSTR)strMetaData ), GetFileExInfoStandard, &pInfo );
-			pMetaDataTime = pInfo.ftLastWriteTime;
-		}
-		if ( ! bMetaData )
-		{
-			hFile = CreateFile( strMetaData, GENERIC_READ,
-				FILE_SHARE_READ | ( theApp.m_bNT ? FILE_SHARE_DELETE : 0 ),
-				NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL );
-			VERIFY_FILE_ACCESS( hFile, strMetaData )
-
-			if ( hFile != INVALID_HANDLE_VALUE )
-			{
-				bMetaData = TRUE;
-				GetFileTime( hFile, NULL, NULL, &pMetaDataTime );
-			}
-		}
-		if ( bMetaData )
-		{
-			if ( CompareFileTime( &m_pMetadataTime, &pMetaDataTime ) )
-			{
-				// Ignore metadata time difference if file rated only
-				if ( ! IsRatedOnly() )
-				{
-					// Reload new metadata
-					if ( hFile == INVALID_HANDLE_VALUE )
-					{
-						hFile = CreateFile( strMetaData, GENERIC_READ,
-							FILE_SHARE_READ | ( theApp.m_bNT ? FILE_SHARE_DELETE : 0 ),
-							NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL );
-						VERIFY_FILE_ACCESS( hFile, strMetaData )
-					}				
-					if ( hFile != INVALID_HANDLE_VALUE )
-					{
-						if ( ! bChanged )
-						{
-							bChanged = TRUE;
-							pLock.Lock();
-							Library.RemoveFile( this );
-						}					
-						LoadMetadata( hFile );
-					}
-				}
-
-				CopyMemory( &m_pMetadataTime, &pMetaDataTime, sizeof( FILETIME ) );
-			}		
-		}
-		if ( hFile != INVALID_HANDLE_VALUE ) CloseHandle( hFile );
-	}
-
-	if ( ! bMetaData && m_pMetadata != NULL && ! m_bMetadataAuto )
-	{
-		BOOL bLocked = ! bChanged;
-		if ( bLocked ) pLock.Lock();
-		
-		if ( m_pMetadata != NULL && ! m_bMetadataAuto )
-		{
-			if ( ! bChanged )
-			{
-				bChanged = TRUE;
-				bLocked = FALSE;
-				Library.RemoveFile( this );
-			}
-			
-			ZeroMemory( &m_pMetadataTime, sizeof(FILETIME) );
-			LoadMetadata( INVALID_HANDLE_VALUE );
-			
-			m_oSHA1.clear();
-			m_oTiger.clear();
-			m_oMD5.clear();
-			m_oED2K.clear();
-		}
-		
-		if ( bLocked ) pLock.Unlock();
-	}
-
-	if ( bChanged )
-	{
 		Library.AddFile( this );
+
+		pLock.Unlock();
+
+		m_nUpdateCookie++;
+
 		CFolderScanDlg::Update( m_sName,
 			( m_nSize == SIZE_UNKNOWN ) ? 0 : (DWORD)( m_nSize / 1024 ) );
-		pLock.Unlock();
-		m_nUpdateCookie++;
+
+		return TRUE;
 	}
 	else
 	{
@@ -1008,15 +908,31 @@ BOOL CLibraryFile::ThreadScan(CSingleLock& pLock, DWORD nScanCookie, QWORD nSize
 
 		CFolderScanDlg::Update( m_sName,
 			( m_nSize == SIZE_UNKNOWN ) ? 0 : (DWORD)( m_nSize / 1024 ) );
-	}
 
-	return bChanged;
+		return m_bMetadataModified;
+	}
+}
+
+BOOL CLibraryFile::IsReadable() const
+{
+	if ( ! IsAvailable() )
+		return FALSE;
+
+	HANDLE hFile = CreateFile( m_pFolder->m_sPath + _T("\\") + m_sName, GENERIC_READ,
+		FILE_SHARE_READ | ( theApp.m_bNT ? FILE_SHARE_DELETE : 0 ), NULL,
+		OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL );
+	if ( hFile != INVALID_HANDLE_VALUE )
+	{
+		CloseHandle( hFile );
+		return TRUE;
+	}
+	return FALSE;
 }
 
 //////////////////////////////////////////////////////////////////////
 // CLibraryFile metadata file I/O
 
-BOOL CLibraryFile::LoadMetadata(HANDLE hFile)
+/*BOOL CLibraryFile::LoadMetadata(HANDLE hFile)
 {
 	ASSERT( m_pFolder != NULL );
 	
@@ -1142,7 +1058,7 @@ BOOL CLibraryFile::SaveMetadata()
 	}
 	
 	return TRUE;
-}
+}*/
 
 //////////////////////////////////////////////////////////////////////
 // CLibraryFile delete handler

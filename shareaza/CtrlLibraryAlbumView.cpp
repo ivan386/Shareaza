@@ -1286,7 +1286,7 @@ BOOL CLibraryAlbumTrack::LockRating()
 		if ( pFile == NULL ) return FALSE;
 		
 		pFile->m_nRating = m_nRating = ( m_nSetRating > 1 ? m_nSetRating : 0 );
-		pFile->SaveMetadata();
+		pFile->ModifyMetadata();
 		
 		Library.Update();
 		return TRUE;
