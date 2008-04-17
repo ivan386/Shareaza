@@ -365,19 +365,24 @@ BOOL CShakeNeighbour::OnWrite()
 // Tell the remote computer we are Shareaza, and setup Gnutella2 or just Gnutella communications
 void CShakeNeighbour::SendMinimalHeaders()
 {
-	// Say what program we are with a line like "User-Agent: Shareaza 1.2.3.4\r\n"
-	CString strHeader = Settings.SmartAgent();
-	if ( strHeader.GetLength() )
-	{
-		strHeader = _T("User-Agent: ") + strHeader + _T("\r\n");
-		Write( strHeader );
-	}
+	// Tell the remote we are running Shareaza
+	Write( _P("User-Agent: ") );
+	Write( Settings.SmartAgent() );
+	Write( _P("\r\n") );
 
-	// The user has checked the box to connect to Gnutella2 today
-	if ( Settings.Gnutella2.EnableToday && ( m_nProtocol != PROTOCOL_G1 ) )
+	if ( m_bInitiated )
 	{
-		// If we initiated the connection to the remote computer
-		if ( m_bInitiated )
+		if ( m_nProtocol == PROTOCOL_G1 )
+		{
+			// Tell the remote computer we accept Gnutella packets
+			Write( _P("Accept: application/x-gnutella-packets\r\n") );
+		}
+		else if ( m_nProtocol == PROTOCOL_G2 )
+		{
+			// Tell the remote computer we accept Gnutella2 packets
+			Write( _P("Accept: application/x-gnutella2\r\n") );
+		}
+		else if ( m_nProtocol == PROTOCOL_NULL )
 		{
 			if ( Settings.Gnutella1.EnableToday && Settings.Gnutella2.EnableToday )
 			{
@@ -393,46 +398,38 @@ void CShakeNeighbour::SendMinimalHeaders()
 				Write( _P("Accept: application/x-gnutella-packets\r\n") );
 			}
 		}
-		else if ( m_bG2Accept ) // The remote computer contacted us, and accepts Gnutella2 packets
-		{
-			// Reply by saying we accept them also, and will be sending them
-			Write( _P("Accept: application/x-gnutella2\r\n") );
-			Write( _P("Content-Type: application/x-gnutella2\r\n") );
-		}
 	}
-	else if ( Settings.Gnutella1.EnableToday && ( m_nProtocol != PROTOCOL_G2 ) )
+	else 
 	{
-		// If we initiated the connection to the remote computer
-		if ( m_bInitiated )
+		// The remote computer contacted us, and accepts Gnutella2 packets
+		if ( m_bG2Accept && Settings.Gnutella2.EnableToday &&
+			( m_nProtocol != PROTOCOL_G1 ) )
 		{
-			Write( _P("Accept: application/x-gnutella-packets\r\n") );
+			Write( _P("Accept: application/x-gnutella2\r\n") );					// We can read Gnutella2 packets
+			Write( _P("Content-Type: application/x-gnutella2\r\n") );			// You will be getting them from us
 		}
-		else if ( m_bG1Accept ) // The remote computer contacted us, and accepts Gnutella1 packets
+		// The remote computer contacted us, and accepts Gnutella packets
+		else if ( m_bG1Accept && Settings.Gnutella1.EnableToday &&
+			( m_nProtocol != PROTOCOL_G2 ) )
 		{
-			// Reply by saying we accept them also, and will be sending them
-			Write( _P("Accept: application/x-gnutella-packets\r\n") );
-			Write( _P("Content-Type: application/x-gnutella-packets\r\n") );
+			Write( _P("Accept: application/x-gnutella-packets\r\n") );			// We can read Gnutella1 packets
+			Write( _P("Content-Type: application/x-gnutella-packets\r\n") );	// You will be getting them from us
 		}
 	}
+
+	SendXUltrapeerHeaders();
 }
 
 // Sends Gnutella headers to the other computer
 void CShakeNeighbour::SendPublicHeaders()
 {
-	// Tell the remote we are running Shareza with a header like "User-Agent: Shareaza 2.1.0.97"
-	CString strHeader = Settings.SmartAgent();
-	if ( strHeader.GetLength() )
-	{
-		Write( _P("User-Agent: ") );
-		Write( strHeader );
-		Write( _P("\r\n") );
-	}
+	CString strHeader;
 
-//  ToDO: we currently do not use standard language codes
+	SendMinimalHeaders();
+
+//  TODO: We currently do not use standard language codes
 //	strHeader.Format( _T("X-Locale-Pref: %s\r\n"), Settings.General.Language );
 //	Write( strHeader );
-
-	Write( _P("X-Requeries: False\r\n") );
 
 	// Header "X-Version: n.n" is part of LimeWire's automatic software update feature. Skip.
 
@@ -458,49 +455,11 @@ void CShakeNeighbour::SendPublicHeaders()
 		}
 	}
 
-	// If the settings say connect to Gnutella2 and this function got passed Gnutella2 or the unknown network
-	if ( m_bInitiated )
-	{
-		if ( m_nProtocol == PROTOCOL_G1 )
-		{
-			// Tell the remote computer we accept Gnutella packets
-			Write( _P("Accept: application/x-gnutella-packets\r\n") );
-		}
-		else if ( m_nProtocol == PROTOCOL_G2 )
-		{
-			// Tell the remote computer we accept Gnutella2 packets
-			Write( _P("Accept: application/x-gnutella2\r\n") );
-		}
-		else if ( m_nProtocol == PROTOCOL_NULL )
-		{
-			// Tell the remote computer we accept Gnutella and Gnutella2 packets
-			if ( Settings.Gnutella1.EnableToday && Settings.Gnutella2.EnableToday )
-				Write( _P("Accept: application/x-gnutella2,application/x-gnutella-packets\r\n") );
-			else if ( Settings.Gnutella2.EnableToday )
-				Write( _P("Accept: application/x-gnutella2\r\n") );
-			else if ( Settings.Gnutella1.EnableToday )
-				Write( _P("Accept: application/x-gnutella-packets\r\n") );
-		}
-	}
-	else 
-	{
-		// The remote computer contacted us, and accepts Gnutella2 packets
-		if ( m_bG2Accept && ( Settings.Gnutella2.EnableToday ) && ( m_nProtocol != PROTOCOL_G1 ) )
-		{
-			// Tell the remote computer we accept Gnutella2 packets and will be sending it Gnutella2 packets
-			Write( _P("Accept: application/x-gnutella2\r\n") );			// We can read Gnutella2 packets
-			Write( _P("Content-Type: application/x-gnutella2\r\n") );	// You will be getting them from us
-		}
-		else if ( m_bG1Accept && ( Settings.Gnutella1.EnableToday ) && ( m_nProtocol != PROTOCOL_G2 ) )
-		{
-			Write( _P("Accept: application/x-gnutella-packets\r\n") );		// We can read Gnutella1 packets
-			Write( _P("Content-Type: application/x-gnutella-packets\r\n") );	// You will be getting them from us
-		}
-	}
-
 	// If the settings say connect to Gnutella and this function got passed Gnutella or the unknown network
-	if ( ( Settings.Gnutella1.EnableToday ) && ( m_nProtocol != PROTOCOL_G2 ) ) // The protocol ID is Gnutella or unknown
+	if ( Settings.Gnutella1.EnableToday && m_nProtocol != PROTOCOL_G2 )
 	{
+		Write( _P("X-Requeries: False\r\n") );
+
 		// Tell the remote computer all the Gnutella features we support
 		if ( Settings.Gnutella1.EnableGGEP ) Write( _P("GGEP: 0.5\r\n") );			// We support GGEP blocks
 		Write( _P("Pong-Caching: 0.1\r\n") );										// We support pong caching
@@ -511,190 +470,76 @@ void CShakeNeighbour::SendPublicHeaders()
 
 		Write( _P("X-Dynamic-Querying: 0.1\r\n") );
 		Write( _P("X-Ext-Probes: 0.1\r\n") );
+		
+		strHeader.Format( _T("X-Degree: %d\r\n"), Settings.Gnutella1.NumPeers );
+		Write( strHeader );
+
+		strHeader.Format( _T("X-Max-TTL: %d\r\n"), Settings.Gnutella1.SearchTTL );
+		Write( strHeader );
 	}
+}
+
+void CShakeNeighbour::SendXUltrapeerHeaders()
+{
+	bool bXUltrapeer = false;
+	bool bXUltrapeerNeeded = false;
 
 	if ( m_nProtocol == PROTOCOL_G1 ) // This protocol ID this method got passed is Gnutella1
 	{
 		// Find out if we are an ultrapeer or at least eligible to become one soon
-		if ( Settings.Gnutella1.ClientMode == MODE_ULTRAPEER || Neighbours.IsG1Ultrapeer() || 
-			Neighbours.IsG1UltrapeerCapable() )
-		{
-			// Tell the remote computer that we are an ultrapeer
-			Write( _P("X-Ultrapeer: True\r\n") );
-
-		} // We are not an ultrapeer nor are we elegible, and the settings say so too
-		else
-		{
-			// Tell the remote computer that we are not an ultrapeer, we are just a Gnutella leaf node
-			Write( _P("X-Ultrapeer: False\r\n") );
-		}
-
-		strHeader.Format( _T("X-Degree: %d\r\n"), Settings.Gnutella1.NumPeers );
-		Write( strHeader );
-
-		strHeader.Format( _T("X-Max-TTL: %d\r\n"), Settings.Gnutella1.SearchTTL );
-		Write( strHeader );
+		bXUltrapeer = ( Settings.Gnutella1.ClientMode == MODE_ULTRAPEER ||
+			Neighbours.IsG1Ultrapeer() || Neighbours.IsG1UltrapeerCapable() );
+		bXUltrapeerNeeded = Neighbours.NeedMoreHubs( PROTOCOL_G1 );
 	}
 	else if ( m_nProtocol == PROTOCOL_G2 ) // This protocol ID this method got passed is Gnutella2
 	{
 		// Find out if we are a Gnutella2 hub, or at least eligible to become one soon
-		if ( Settings.Gnutella2.ClientMode == MODE_HUB || Neighbours.IsG2Hub() || Neighbours.IsG2HubCapable() )
-		{
-			// Tell the remote computer that we are a hub
-			Write( _P("X-Ultrapeer: True\r\n") );
-
-		} // We are not a hub nor are we eligible, and the settings say so too
-		else
-		{
-			// Tell the remote computer that we are a leaf
-			Write( _P("X-Ultrapeer: False\r\n") );
-		}
-		if ( Neighbours.NeedMoreHubs( PROTOCOL_G2 ) )
-			Write( _P("X-Ultrapeer-Needed: True\r\n") );
-		else
-			Write( _P("X-Ultrapeer-Needed: False\r\n") );
+		bXUltrapeer = ( Settings.Gnutella2.ClientMode == MODE_HUB ||
+			Neighbours.IsG2Hub() || Neighbours.IsG2HubCapable() );
+		bXUltrapeerNeeded = Neighbours.NeedMoreHubs( PROTOCOL_G2 );
 	}
 	else if ( m_nProtocol == PROTOCOL_NULL ) // This protocol ID this method got passed is both Gnutella1 and Gnutella2
 	{
-		if ( m_bInitiated )
+		if ( Settings.Gnutella1.EnableToday && Settings.Gnutella2.EnableToday && 
+			( m_bInitiated || ( ( m_bG2Send || m_bG2Accept) && ( m_bG1Send || m_bG1Accept) ) ) )
 		{
-			if ( Settings.Gnutella1.EnableToday && Settings.Gnutella2.EnableToday )
-			{
-				// Find out if we are a Gnutella1 Ultrapeer or Gnutella2 hub already, or at least eligible to become one soon
-				if ( ( Settings.Gnutella1.ClientMode == MODE_ULTRAPEER || Neighbours.IsG1Ultrapeer() || Neighbours.IsG1UltrapeerCapable() ) &&
-					 ( Settings.Gnutella2.ClientMode == MODE_HUB || Neighbours.IsG2Hub() || Neighbours.IsG2HubCapable() ) )
-				{
-					// Tell the remote computer that we are a hub
-					Write( _P("X-Ultrapeer: True\r\n") );
-
-				} // We are not a hub nor are we eligible, and the settings say so too
-				else
-				{
-					// Tell the remote computer that we are a leaf
-					Write( _P("X-Ultrapeer: False\r\n") );
-				}
-				if ( Neighbours.NeedMoreHubs( PROTOCOL_G1 ) && Neighbours.NeedMoreHubs( PROTOCOL_G2 ) )
-					Write( _P("X-Ultrapeer-Needed: True\r\n") );
-				else
-					Write( _P("X-Ultrapeer-Needed: False\r\n") );
-			}
-			else if ( Settings.Gnutella1.EnableToday )
-			{
-				// Find out if we are a Gnutella1 Ultrapeer, or at least eligible to become one soon
-				if ( Settings.Gnutella1.ClientMode == MODE_ULTRAPEER || Neighbours.IsG1Ultrapeer() || Neighbours.IsG1UltrapeerCapable() )
-				{
-					// Tell the remote computer that we are a hub
-					Write( _P("X-Ultrapeer: True\r\n") );
-
-				} // We are not a hub nor are we eligible, and the settings say so too
-				else
-				{
-					// Tell the remote computer that we are a leaf
-					Write( _P("X-Ultrapeer: False\r\n") );
-				}
-				if ( Neighbours.NeedMoreHubs( PROTOCOL_G1 ) )
-					Write( _P("X-Ultrapeer-Needed: True\r\n") );
-				else
-					Write( _P("X-Ultrapeer-Needed: False\r\n") );
-			}
-			else if ( Settings.Gnutella2.EnableToday )
-			{
-				// Find out if we are a Gnutella2 hub, or at least eligible to become one soon
-				if ( Settings.Gnutella2.ClientMode == MODE_HUB || Neighbours.IsG2Hub() || Neighbours.IsG2HubCapable() )
-				{
-					// Tell the remote computer that we are a hub
-					Write( _P("X-Ultrapeer: True\r\n") );
-
-				} // We are not a hub nor are we eligible, and the settings say so too
-				else
-				{
-					// Tell the remote computer that we are a leaf
-					Write( _P("X-Ultrapeer: False\r\n") );
-				}
-				if ( Neighbours.NeedMoreHubs( PROTOCOL_G2 ) )
-					Write( _P("X-Ultrapeer-Needed: True\r\n") );
-				else
-					Write( _P("X-Ultrapeer-Needed: False\r\n") );
-			}
-			else
-			{
-				// Don't know what the hell is going on, it should not get here
-			}
-
+			// Find out if we are a Gnutella1 Ultrapeer or Gnutella2 hub already,
+			// or at least eligible to become one soon
+			bXUltrapeer =
+				( ( Settings.Gnutella1.ClientMode == MODE_ULTRAPEER ||
+					Neighbours.IsG1Ultrapeer() || Neighbours.IsG1UltrapeerCapable() ) &&
+				  ( Settings.Gnutella2.ClientMode == MODE_HUB ||
+					Neighbours.IsG2Hub() || Neighbours.IsG2HubCapable() ) );
+			bXUltrapeerNeeded = Neighbours.NeedMoreHubs( PROTOCOL_G1 ) &&
+				 Neighbours.NeedMoreHubs( PROTOCOL_G2 );
 		}
-		else
+		else if ( Settings.Gnutella1.EnableToday &&
+			( m_bInitiated || ( m_bG1Send || m_bG1Accept ) ) )
 		{
-			if ( Settings.Gnutella1.EnableToday && Settings.Gnutella2.EnableToday && 
-				( m_bG2Send || m_bG2Accept) && ( m_bG1Send || m_bG1Accept) )
-			{
-				// Find out if we are a Gnutella1 Ultrapeer or Gnutella2 hub already, or at least eligible to become one soon
-				if ( ( Settings.Gnutella1.ClientMode == MODE_ULTRAPEER || Neighbours.IsG1Ultrapeer() || Neighbours.IsG1UltrapeerCapable() ) &&
-					( Settings.Gnutella2.ClientMode == MODE_HUB || Neighbours.IsG2Hub() || Neighbours.IsG2HubCapable() ) )
-				{
-					// Tell the remote computer that we are a hub
-					Write( _P("X-Ultrapeer: True\r\n") );
-
-				} // We are not a hub nor are we eligible, and the settings say so too
-				else
-				{
-					// Tell the remote computer that we are a leaf
-					Write( _P("X-Ultrapeer: False\r\n") );
-				}
-				if ( Neighbours.NeedMoreHubs( PROTOCOL_G1 ) && Neighbours.NeedMoreHubs( PROTOCOL_G2 ) )
-					Write( _P("X-Ultrapeer-Needed: True\r\n") );
-				else
-					Write( _P("X-Ultrapeer-Needed: False\r\n") );
-			}
-			else if ( Settings.Gnutella1.EnableToday && ( m_bG1Send || m_bG1Accept) )
-			{
-				// Find out if we are a Gnutella1 Ultrapeer, or at least eligible to become one soon
-				if ( Settings.Gnutella1.ClientMode == MODE_ULTRAPEER || Neighbours.IsG1Ultrapeer() || Neighbours.IsG1UltrapeerCapable() )
-				{
-					// Tell the remote computer that we are a hub
-					Write( _P("X-Ultrapeer: True\r\n") );
-
-				} // We are not a hub nor are we eligible, and the settings say so too
-				else
-				{
-					// Tell the remote computer that we are a leaf
-					Write( _P("X-Ultrapeer: False\r\n") );
-				}
-				if ( Neighbours.NeedMoreHubs( PROTOCOL_G1 ) )
-					Write( _P("X-Ultrapeer-Needed: True\r\n") );
-				else
-					Write( _P("X-Ultrapeer-Needed: False\r\n") );
-			}
-			else if ( Settings.Gnutella2.EnableToday && ( m_bG2Send || m_bG2Accept) )
-			{
-				// Find out if we are a Gnutella2 hub, or at least eligible to become one soon
-				if ( Settings.Gnutella2.ClientMode == MODE_HUB || Neighbours.IsG2Hub() || Neighbours.IsG2HubCapable() )
-				{
-					// Tell the remote computer that we are a hub
-					Write( _P("X-Ultrapeer: True\r\n") );
-
-				} // We are not a hub nor are we eligible, and the settings say so too
-				else
-				{
-					// Tell the remote computer that we are a leaf
-					Write( _P("X-Ultrapeer: False\r\n") );
-				}
-				if ( Neighbours.NeedMoreHubs( PROTOCOL_G2 ) )
-					Write( _P("X-Ultrapeer-Needed: True\r\n") );
-				else
-					Write( _P("X-Ultrapeer-Needed: False\r\n") );
-			}
-			else
-			{
-				// Don't know what the hell is going on, it should not get here
-			}
+			// Find out if we are a Gnutella1 Ultrapeer, or at least eligible to become one soon
+			bXUltrapeer = ( Settings.Gnutella1.ClientMode == MODE_ULTRAPEER ||
+				Neighbours.IsG1Ultrapeer() || Neighbours.IsG1UltrapeerCapable() );
+			bXUltrapeerNeeded = Neighbours.NeedMoreHubs( PROTOCOL_G1 );
 		}
-
-		strHeader.Format( _T("X-Degree: %d\r\n"), Settings.Gnutella1.NumPeers );
-		Write( strHeader );
-
-		strHeader.Format( _T("X-Max-TTL: %d\r\n"), Settings.Gnutella1.SearchTTL );
-		Write( strHeader );
+		else if ( Settings.Gnutella2.EnableToday &&
+			( m_bInitiated || ( m_bG2Send || m_bG2Accept ) ) )
+		{
+			// Find out if we are a Gnutella2 hub, or at least eligible to become one soon
+			bXUltrapeer = ( Settings.Gnutella2.ClientMode == MODE_HUB ||
+				Neighbours.IsG2Hub() || Neighbours.IsG2HubCapable() );
+			bXUltrapeerNeeded = Neighbours.NeedMoreHubs( PROTOCOL_G2 );
+		}
 	}
+
+	if ( bXUltrapeer )
+		Write( _P("X-Ultrapeer: True\r\n") );
+	else
+		Write( _P("X-Ultrapeer: False\r\n") );
+
+	if ( bXUltrapeerNeeded )
+		Write( _P("X-Ultrapeer-Needed: True\r\n") );
+	else
+		Write( _P("X-Ultrapeer-Needed: False\r\n") );
 }
 
 // Reply to a remote computer's headers with more headers, confirming Gnutella2 packets and data compression
@@ -1257,9 +1102,7 @@ BOOL CShakeNeighbour::OnHeadersComplete()
 	}
 	else
 	{
-		Write( _P("GNUTELLA/0.6 503 Wrong Protocol\r\n") );
-		SendMinimalHeaders();
-		Write( _P("\r\n") );
+		SendHostHeaders( _P("GNUTELLA/0.6 503 Wrong Protocol\r\n") );
 		DelayClose(IDS_HANDSHAKE_REJECTED);
 	}
 	return bResult;

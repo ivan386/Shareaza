@@ -22,23 +22,14 @@
 // CShakeNeighbour reads and sends handshake headers to negotiate the Gnutella or Gnutella2 handshake
 // http://wiki.shareaza.com/static/Developers.Code.CShakeNeighbour
 
-// Make the compiler only include the lines here once, this is the same thing as pragma once
-#if !defined(AFX_SHAKENEIGHBOUR_H__259E22A0_EFA9_4684_B642_B98CE4CE682F__INCLUDED_)
-#define AFX_SHAKENEIGHBOUR_H__259E22A0_EFA9_4684_B642_B98CE4CE682F__INCLUDED_
 
-// Only include the lines beneath this one once
 #pragma once
 
-// Copy in the contents of these files here before compiling
 #include "Neighbour.h"
 
-// Define the class CShakeNeighbour to inherit from CNeighbour, which inherits from CConnection, picking up a socket
 class CShakeNeighbour : public CNeighbour
 {
-
 public:
-
-	// Make a new CShakeNeighbour object, and delete this one
 	CShakeNeighbour();          // Make a new blank CShakeNeighbour object
 	virtual ~CShakeNeighbour(); // Delete this CShakeNeighbour object, virtual means we expect a derived class to redefine this
 
@@ -144,6 +135,7 @@ protected:
 	virtual BOOL OnHeadersCompleteG2();
 
 	// Send headers to the remote computer
+	void SendXUltrapeerHeaders();
 	void SendMinimalHeaders();									// Tell the remote computer we are Shareaza, and try to setup Gnutella2 communications
 	void SendPublicHeaders();									// Send our first big group of Gnutella headers to the remote computer
 	void SendPrivateHeaders();									// Reply to a remote computer's headers, confirming Gnutella2 packets and data compression
@@ -154,6 +146,3 @@ protected:
 	BOOL IsClientBad();											// Checks to see if it's a GPL violator or glitchy client.
 	BOOL IsClientBanned();										// Checks to see if it's a leecher. (Clients are blocked)
 };
-
-// End the group of lines to only include once, pragma once doesn't require an endif at the bottom
-#endif // !defined(AFX_SHAKENEIGHBOUR_H__259E22A0_EFA9_4684_B642_B98CE4CE682F__INCLUDED_)
