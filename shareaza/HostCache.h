@@ -160,7 +160,7 @@ public:
 	void				OnFailure(const IN_ADDR* pAddress, WORD nPort, bool bRemove=true);
 	void				OnSuccess(const IN_ADDR* pAddress, WORD nPort, bool bUpdate=true);
 	void				PruneByQueryAck();			// For G2
-	void				PruneOldHosts();			// For G1
+	void				PruneOldHosts();
 	void				Clear();
 	void				Serialize(CArchive& ar, int nVersion);
 

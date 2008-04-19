@@ -527,7 +527,7 @@ void CHostCacheList::PruneByQueryAck()
 }
 
 //////////////////////////////////////////////////////////////////////
-// CHostCacheList prune old hosts (To remove old hosts when trying to connect to G1)
+// CHostCacheList prune old hosts
 
 void CHostCacheList::PruneOldHosts()
 {
