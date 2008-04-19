@@ -957,7 +957,7 @@ bool CShareazaApp::IsLogDisabled(WORD nType) const
 {
 	return
 		// Severity filter
-		( ( nType & MSG_SEVERITY_MASK ) > Settings.General.LogLevel ) ||
+		( ( nType & MSG_SEVERITY_MASK ) > (WORD)Settings.General.LogLevel ) ||
 		// Facility filter
 		( ( nType & MSG_FACILITY_MASK ) == MSG_FACILITY_SEARCH && ! Settings.General.SearchLog );
 }

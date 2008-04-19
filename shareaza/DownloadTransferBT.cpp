@@ -426,7 +426,7 @@ BOOL CDownloadTransferBT::SendRequests()
 			
 			int nType	= ( m_nDownloaded == 0 || ( nOffset % nBlockSize ) == 0 )
 						? MSG_INFO : MSG_DEBUG;
-			theApp.Message( nType, IDS_DOWNLOAD_FRAGMENT_REQUEST,
+			theApp.Message( (WORD)nType, IDS_DOWNLOAD_FRAGMENT_REQUEST,
 				nOffset, nOffset + nLength - 1,
 				(LPCTSTR)m_pDownload->GetDisplayName(), (LPCTSTR)m_sAddress );
 #ifdef _DEBUG

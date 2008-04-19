@@ -910,7 +910,7 @@ BOOL CDownloadTransferED2K::SendFragmentRequests()
 			int nType = ( m_nDownloaded == 0 || ( nOffsetBegin[nCount] % ED2K_PART_SIZE ) == 0 )
 				? MSG_INFO : MSG_DEBUG;
 
-			theApp.Message( nType, IDS_DOWNLOAD_FRAGMENT_REQUEST,
+			theApp.Message( (WORD)nType, IDS_DOWNLOAD_FRAGMENT_REQUEST,
 				nOffsetBegin[nCount], nOffsetEnd[nCount],
 				(LPCTSTR)m_pDownload->GetDisplayName(), (LPCTSTR)m_sAddress );
 		} 

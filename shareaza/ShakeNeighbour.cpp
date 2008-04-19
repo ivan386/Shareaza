@@ -489,14 +489,14 @@ void CShakeNeighbour::SendXUltrapeerHeaders()
 		// Find out if we are an ultrapeer or at least eligible to become one soon
 		bXUltrapeer = ( Settings.Gnutella1.ClientMode == MODE_ULTRAPEER ||
 			Neighbours.IsG1Ultrapeer() || Neighbours.IsG1UltrapeerCapable() );
-		bXUltrapeerNeeded = Neighbours.NeedMoreHubs( PROTOCOL_G1 );
+		bXUltrapeerNeeded = Neighbours.NeedMoreHubs( PROTOCOL_G1 ) == TRUE;
 	}
 	else if ( m_nProtocol == PROTOCOL_G2 ) // This protocol ID this method got passed is Gnutella2
 	{
 		// Find out if we are a Gnutella2 hub, or at least eligible to become one soon
 		bXUltrapeer = ( Settings.Gnutella2.ClientMode == MODE_HUB ||
 			Neighbours.IsG2Hub() || Neighbours.IsG2HubCapable() );
-		bXUltrapeerNeeded = Neighbours.NeedMoreHubs( PROTOCOL_G2 );
+		bXUltrapeerNeeded = Neighbours.NeedMoreHubs( PROTOCOL_G2 ) == TRUE;
 	}
 	else if ( m_nProtocol == PROTOCOL_NULL ) // This protocol ID this method got passed is both Gnutella1 and Gnutella2
 	{
@@ -519,7 +519,7 @@ void CShakeNeighbour::SendXUltrapeerHeaders()
 			// Find out if we are a Gnutella1 Ultrapeer, or at least eligible to become one soon
 			bXUltrapeer = ( Settings.Gnutella1.ClientMode == MODE_ULTRAPEER ||
 				Neighbours.IsG1Ultrapeer() || Neighbours.IsG1UltrapeerCapable() );
-			bXUltrapeerNeeded = Neighbours.NeedMoreHubs( PROTOCOL_G1 );
+			bXUltrapeerNeeded = Neighbours.NeedMoreHubs( PROTOCOL_G1 ) == TRUE;
 		}
 		else if ( Settings.Gnutella2.EnableToday &&
 			( m_bInitiated || ( m_bG2Send || m_bG2Accept ) ) )
@@ -527,7 +527,7 @@ void CShakeNeighbour::SendXUltrapeerHeaders()
 			// Find out if we are a Gnutella2 hub, or at least eligible to become one soon
 			bXUltrapeer = ( Settings.Gnutella2.ClientMode == MODE_HUB ||
 				Neighbours.IsG2Hub() || Neighbours.IsG2HubCapable() );
-			bXUltrapeerNeeded = Neighbours.NeedMoreHubs( PROTOCOL_G2 );
+			bXUltrapeerNeeded = Neighbours.NeedMoreHubs( PROTOCOL_G2 ) == TRUE;
 		}
 	}
 
