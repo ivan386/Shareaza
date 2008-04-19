@@ -554,7 +554,7 @@ BOOL CConnection::ReadHeaders()
 			m_sLastHeader.Empty();
 
 			// Call the OnHeadersComplete method for the most advanced class that inherits from CConnection
-			return OnHeadersComplete(); // Calls CShakeNeighbour::OnHeadersComplete()
+			return OnHeadersComplete();
 		} // The line starts with a space
 		else if ( _istspace( strLine.GetAt( 0 ) ) ) // Get the first character in the string, and see if its a space
 		{
@@ -567,7 +567,8 @@ BOOL CConnection::ReadHeaders()
 				if ( strLine.GetLength() > 0 )
 				{
 					// Give OnHeaderLine the last header and this line
-					if ( ! OnHeaderLine( m_sLastHeader, strLine ) ) return FALSE;
+					if ( !OnHeaderLine( m_sLastHeader, strLine ) )
+						return FALSE;
 				}
 			}
 
@@ -581,8 +582,10 @@ BOOL CConnection::ReadHeaders()
 			// Trim spaces from both ends of the value, and see if it still has length
 			strValue.TrimLeft();
 			strValue.TrimRight();
+
 			// Give OnHeaderLine this last header, and its value
-			if ( ! OnHeaderLine( m_sLastHeader, strValue ) ) return FALSE; // Calls CShakeNeighbour::OnHeaderLine
+			if ( !OnHeaderLine( m_sLastHeader, strValue ) )
+				return FALSE;
 		}
 	}
 
