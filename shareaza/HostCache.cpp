@@ -553,7 +553,7 @@ void CHostCacheList::PruneOldHosts()
 		else if ( pHost->m_nProtocol == PROTOCOL_G2 )
 			nExpire = Settings.Gnutella2.HostExpire;
 		else if ( pHost->m_nProtocol == PROTOCOL_BT )
-			nExpire = 24 * 60 * 60; // TODO: Add BitTorrent setting
+			nExpire = Settings.BitTorrent.DhtPruneTime;
 		else if ( pHost->m_nProtocol == PROTOCOL_KAD )
 			nExpire = 24 * 60 * 60; // TODO: Add Kademlia setting
 		else

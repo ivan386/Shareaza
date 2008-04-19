@@ -430,6 +430,7 @@ public:
 		DWORD		BandwidthPercentage;		// Percentage of bandwidth to use when BT active.
 		bool		TrackerKey;					// Send a key (random value) to trackers
 		bool		PreferenceBTSources;		// Preference downloading from BT sources where appropriate
+		DWORD		DhtPruneTime;
 	} BitTorrent;
 
 	struct sDownloads

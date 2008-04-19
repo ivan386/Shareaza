@@ -243,9 +243,11 @@ BOOL CNetwork::Connect(BOOL bAutoConnect)
 	CSingleLock pLock( &m_pSection, TRUE );
 
 	Settings.Live.AutoClose = FALSE;
+
 	if ( bAutoConnect ) 
 	{
 		m_bAutoConnect = TRUE;
+		HostCache.BitTorrent.PruneOldHosts();
 		// Remove really old G1 hosts before trying to connect to G1
 		if ( Settings.Gnutella1.EnableToday ) HostCache.Gnutella1.PruneOldHosts();
 	}
