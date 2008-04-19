@@ -1,7 +1,7 @@
 //
 // WndSystem.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -38,7 +38,6 @@ static char THIS_FILE[] = __FILE__;
 IMPLEMENT_SERIAL(CSystemWnd, CPanelWnd, 0)
 
 BEGIN_MESSAGE_MAP(CSystemWnd, CPanelWnd)
-	//{{AFX_MSG_MAP(CSystemWnd)
 	ON_WM_CREATE()
 	ON_WM_SIZE()
 	ON_WM_CONTEXTMENU()
@@ -58,7 +57,6 @@ BEGIN_MESSAGE_MAP(CSystemWnd, CPanelWnd)
 	ON_UPDATE_COMMAND_UI(ID_SYSTEM_TIMESTAMP, OnUpdateSystemTimestamp)
 	ON_COMMAND(ID_SYSTEM_TIMESTAMP, OnSystemTimestamp)
 	ON_COMMAND(ID_SYSTEM_TEST, OnSystemTest)
-	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 
@@ -75,7 +73,7 @@ CSystemWnd::CSystemWnd() : CPanelWnd( TRUE, TRUE )
 
 void CSystemWnd::Add(int nType, const CString& strText)
 {
-	m_wndText.Add( nType, strText );
+	m_wndText.Add( (int)nType, strText );
 }
 
 void CSystemWnd::Clear()
