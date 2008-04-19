@@ -488,8 +488,8 @@ extern const CLowerCaseTable ToLower;
 		if ( ( h ) == INVALID_HANDLE_VALUE ) \
 		{ \
 			DWORD err = GetLastError(); \
-			TRACE( _T("File error \"%ls\": %s (0x%08x)\n"), \
-				LPCTSTR((f)), LPCTSTR( GetErrorString( err ) ), err ); \
+			theApp.Message( MSG_DEBUG, _T("File error \"%s\": %s (0x%08x)"), \
+				LPCTSTR( f ), LPCTSTR( GetErrorString( err ) ), err ); \
 		} \
 	}
 #else
