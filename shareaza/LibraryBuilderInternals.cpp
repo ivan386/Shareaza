@@ -2531,26 +2531,37 @@ BOOL CLibraryBuilderInternals::ReadAPE(DWORD nIndex, HANDLE hFile, bool bPreferF
 //////////////////////////////////////////////////////////////////////
 // CLibraryBuilderInternals AVI (threaded)
 
+#define FCC(ch4) ((((DWORD)(ch4) & 0xFF) << 24) |     \
+	(((DWORD)(ch4) & 0xFF00) << 8) |    \
+	(((DWORD)(ch4) & 0xFF0000) >> 8) |  \
+	(((DWORD)(ch4) & 0xFF000000) >> 24))
+
+#define ReadDwordOrBreak(hFile, nID, nRead) ReadFile( hFile, &nID, 4, &nRead, NULL ); \
+	if ( nRead != 4 ) break;
+
+#define ReadValueOrFail(hFile, nID, nRead, nValue, nFile) ReadFile( hFile, &nID, 4, &nRead, NULL ); \
+	if ( nRead != 4 || nID != nValue ) return CLibraryBuilder::SubmitCorrupted( nFile );
+
 BOOL CLibraryBuilderInternals::ReadAVI(DWORD nIndex, HANDLE hFile)
 {
-	if ( GetFileSize( hFile, NULL ) < sizeof(AVI_HEADER) + 16 ) return CLibraryBuilder::SubmitCorrupted( nIndex );
+	if ( GetFileSize( hFile, NULL ) < sizeof(AVI_HEADER) + 16 ) 
+		return CLibraryBuilder::SubmitCorrupted( nIndex );
 	SetFilePointer( hFile, 0, NULL, FILE_BEGIN );
 
-	CHAR szID[5] = { 0, 0, 0, 0, 0 };
+	DWORD nID;
 	DWORD nRead, nNextOffset, nPos;
-	CString strCodec;
+	CStringA strCodec;
 
-	ReadFile( hFile, szID, 4, &nRead, NULL );
-	if ( nRead != 4 || strncmp( szID, "RIFF", 4 ) ) return CLibraryBuilder::SubmitCorrupted( nIndex );
-	ReadFile( hFile, szID, 4, &nRead, NULL );
+	ReadValueOrFail( hFile, nID, nRead, FCC('RIFF'), nIndex )
+	ReadFile( hFile, &nID, 4, &nRead, NULL );
 	if ( nRead != 4 ) return CLibraryBuilder::SubmitCorrupted( nIndex );
-	ReadFile( hFile, szID, 4, &nRead, NULL );
-	if ( nRead != 4 || strncmp( szID, "AVI ", 4 ) ) return CLibraryBuilder::SubmitCorrupted( nIndex );
-	ReadFile( hFile, szID, 4, &nRead, NULL );
+	ReadValueOrFail( hFile, nID, nRead, FCC('AVI '), nIndex )
 
 	// AVI files include two mandatory LIST chunks ('hdrl' and 'movi')
 	// So, treat file as corrupted if they are missing
-	if ( nRead != 4 || strncmp( szID, "LIST", 4 ) ) return CLibraryBuilder::SubmitCorrupted( nIndex );
+
+	ReadValueOrFail( hFile, nID, nRead, FCC('LIST'), nIndex )
+
 	// Get next outer LIST offset
 	ReadFile( hFile, &nNextOffset, sizeof(DWORD), &nRead, NULL );
 	if ( nRead != 4 ) return CLibraryBuilder::SubmitCorrupted( nIndex );
@@ -2558,11 +2569,10 @@ BOOL CLibraryBuilderInternals::ReadAVI(DWORD nIndex, HANDLE hFile)
 	// Remember position
 	nPos = SetFilePointer( hFile, 0, NULL, FILE_CURRENT );
 
-	ReadFile( hFile, szID, 4, &nRead, NULL );
-	if ( nRead != 4 || strncmp( szID, "hdrl", 4 ) ) return CLibraryBuilder::SubmitCorrupted( nIndex );
-	ReadFile( hFile, szID, 4, &nRead, NULL );
-	if ( nRead != 4 || strncmp( szID, "avih", 4 ) ) return CLibraryBuilder::SubmitCorrupted( nIndex );
-	ReadFile( hFile, szID, 4, &nRead, NULL );
+	ReadValueOrFail( hFile, nID, nRead, FCC('hdrl'), nIndex )
+	ReadValueOrFail( hFile, nID, nRead, FCC('avih'), nIndex )
+
+	ReadFile( hFile, &nID, 4, &nRead, NULL );
 	if ( nRead != 4 ) return CLibraryBuilder::SubmitCorrupted( nIndex );
 
 	AVI_HEADER pHeader;
@@ -2570,46 +2580,113 @@ BOOL CLibraryBuilderInternals::ReadAVI(DWORD nIndex, HANDLE hFile)
 	if ( nRead != sizeof(pHeader) ) return CLibraryBuilder::SubmitCorrupted( nIndex );
 
 	// One or more 'strl' chunks must follow the main header
-	ReadFile( hFile, szID, 4, &nRead, NULL );
-	if ( nRead != 4 || strncmp( szID, "LIST", 4 ) ) return CLibraryBuilder::SubmitCorrupted( nIndex );
-	ReadFile( hFile, szID, 4, &nRead, NULL );
+	ReadValueOrFail( hFile, nID, nRead, FCC('LIST'), nIndex )
+	ReadFile( hFile, &nID, 4, &nRead, NULL );
 	if ( nRead != 4 ) return CLibraryBuilder::SubmitCorrupted( nIndex );
-	ReadFile( hFile, szID, 4, &nRead, NULL );
-	if ( nRead != 4 || strncmp( szID, "strl", 4 ) ) return CLibraryBuilder::SubmitCorrupted( nIndex );
-	ReadFile( hFile, szID, 4, &nRead, NULL );
-	if ( nRead != 4 || strncmp( szID, "strh", 4 ) ) return CLibraryBuilder::SubmitCorrupted( nIndex );
-	ReadFile( hFile, szID, 4, &nRead, NULL );
-	if ( nRead != 4 ) return CLibraryBuilder::SubmitCorrupted( nIndex );
-	ReadFile( hFile, szID, 4, &nRead, NULL );
-	if ( nRead != 4 || strncmp( szID, "vids", 4 ) ) return CLibraryBuilder::SubmitCorrupted( nIndex );
-	ReadFile( hFile, szID, 4, &nRead, NULL );
-	if ( nRead != 4 ) return CLibraryBuilder::SubmitCorrupted( nIndex );
-	strCodec = CString( szID );
 
-	BOOL bMoviFound = FALSE;
+	ReadValueOrFail( hFile, nID, nRead, FCC('strl'), nIndex )
+	ReadValueOrFail( hFile, nID, nRead, FCC('strh'), nIndex )
+
+	ReadFile( hFile, &nID, 4, &nRead, NULL );
+	if ( nRead != 4 ) return CLibraryBuilder::SubmitCorrupted( nIndex );
+
+	ReadValueOrFail( hFile, nID, nRead, FCC('vids'), nIndex )
+	ReadFile( hFile, (BYTE*)strCodec.GetBufferSetLength( 4 ), 4, &nRead, NULL );
+	if ( nRead != 4 ) return CLibraryBuilder::SubmitCorrupted( nIndex );
+
+	bool bMoviFound = false, bInfoFound = false;
+	CXMLElement* pXML = new CXMLElement( NULL, L"video" );
+
 	do
 	{
 		nPos += nNextOffset;
 		if ( SetFilePointer( hFile, nPos, NULL, FILE_BEGIN ) == INVALID_SET_FILE_POINTER )
-			return CLibraryBuilder::SubmitCorrupted( nIndex );
-		ReadFile( hFile, szID, 4, &nRead, NULL );
-		if ( nRead != 4 ) return CLibraryBuilder::SubmitCorrupted( nIndex );
+			break;
+		ReadDwordOrBreak( hFile, nID, nRead )
 		nNextOffset = 0;
-		ReadFile( hFile, &nNextOffset, 4, &nRead, NULL );
-		if ( nRead != 4 ) return CLibraryBuilder::SubmitCorrupted( nIndex );
+		ReadDwordOrBreak( hFile, nNextOffset, nRead )
 		nPos = SetFilePointer( hFile, 0, NULL, FILE_CURRENT );
-		if ( strncmp( szID, "LIST", 4 ) == 0 )
+		if ( nID == FCC('LIST') )
 		{
-			ReadFile( hFile, szID, 4, &nRead, NULL );
-			if ( nRead != 4 ) return CLibraryBuilder::SubmitCorrupted( nIndex );
-			if ( strncmp( szID, "movi", 4 ) == 0 ) bMoviFound = TRUE;
+			ReadDwordOrBreak( hFile, nID, nRead )
+			if ( nID == FCC('movi') ) 
+			{
+				bMoviFound = true;
+			}
+			else if ( nID == FCC('INFO') )
+			{
+				bInfoFound = true;
+				while ( true )
+				{
+					ReadDwordOrBreak( hFile, nID, nRead )
+					if ( (CHAR)( nID & 0x000000FF ) != 'I' ) break;
+
+					DWORD nDataLength = 0;
+					ReadDwordOrBreak( hFile, nDataLength, nRead )
+
+					CStringA strData;
+					ReadFile( hFile, (BYTE*)strData.GetBufferSetLength( nDataLength ), nDataLength, &nRead, NULL );
+					if ( nRead != nDataLength ) break;
+
+					switch ( nID )
+					{
+						case FCC('IARL'): break; // Archival Location
+						case FCC('IART'): break; // Artist
+						case FCC('ICMS'): break; // Commissioned
+						case FCC('ICMT'): // Comments
+							pXML->AddAttribute( L"comments", CString( strData ) ); 
+							break;
+						case FCC('ICOP'): // Copyright 
+							pXML->AddAttribute( L"copyright", CString( strData ) ); 
+							break;
+						case FCC('ICRD'): break; // Creation date. List dates in year-month-day format, 
+												// padding one-digit months and days with a zero on the left; 
+												// for example, 1553-05-03 for May 3, 1553.
+						case FCC('ICRP'): // Cropped, for e.g. "lower-right corner"
+							pXML->AddAttribute( L"qualityNotes", CString( strData ) );
+							break;
+						case FCC('IDIM'): break; // Dimensions, for example, 8.5 in h, 11 in w.
+						case FCC('IDPI'): break; // Dots Per Inch
+						case FCC('IENG'): break; // Engineer
+						case FCC('IGNR'): // Genre
+							pXML->AddAttribute( L"genre", CString( strData ) );
+							break;
+						case FCC('IKEY'): // Keywords
+							pXML->AddAttribute( L"keywords", CString( strData ) );
+							break;
+						case FCC('ILGT'): break; // Lightness
+						case FCC('IMED'): break; // Medium
+						case FCC('INAM'): // Name
+							pXML->AddAttribute( L"title", CString( strData ) );
+							break;
+						case FCC('IPLT'): break; // Palette Setting
+						case FCC('IPRD'): // Product
+							pXML->AddAttribute( L"type", CString( strData ) );
+							break;
+						case FCC('ISBJ'): // Subject
+							pXML->AddAttribute( L"description", CString( strData ) ); 
+							break;
+						case FCC('ISFT'): break; // Software
+						case FCC('ISHP'): break; // Sharpness
+						case FCC('ISRC'): // Source
+							pXML->AddAttribute( L"source", CString( strData ) ); 
+							break;
+						case FCC('ISRF'): break; // Source Form
+						case FCC('ITCH'): break; // Technician
+					}
+				}
+			}
 		}
+		if ( bMoviFound && bInfoFound ) break;
 	}
-	while ( ! bMoviFound && nNextOffset );
+	while ( nNextOffset );
 
-	if ( ! bMoviFound ) return CLibraryBuilder::SubmitCorrupted( nIndex );
+	if ( ! bMoviFound ) 
+	{
+		if ( pXML ) delete pXML;
+		return CLibraryBuilder::SubmitCorrupted( nIndex );
+	}
 
-	CXMLElement* pXML = new CXMLElement( NULL, L"video" );
 	CString strItem;
 
 	double nTime = (double)pHeader.dwMicroSecPerFrame / 1000000.0f;
@@ -2626,7 +2703,7 @@ BOOL CLibraryBuilderInternals::ReadAVI(DWORD nIndex, HANDLE hFile)
 	pXML->AddAttribute( L"minutes", strItem );
 	strItem.Format( L"%.2f", nRate );
 	pXML->AddAttribute( L"frameRate", strItem );
-	pXML->AddAttribute( L"codec", strCodec );
+	pXML->AddAttribute( L"codec", CString( strCodec ) );
 
 	return CLibraryBuilder::SubmitMetadata( nIndex, CSchema::uriVideo, pXML );
 }
