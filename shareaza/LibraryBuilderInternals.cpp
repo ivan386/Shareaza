@@ -2627,12 +2627,14 @@ BOOL CLibraryBuilderInternals::ReadAVI(DWORD nIndex, HANDLE hFile)
 					CStringA strData;
 					ReadFile( hFile, (BYTE*)strData.GetBufferSetLength( nDataLength ), nDataLength, &nRead, NULL );
 					if ( nRead != nDataLength ) break;
-
 					switch ( nID )
 					{
 						case FCC('IARL'): break; // Archival Location
-						case FCC('IART'): break; // Artist
+						case FCC('IART'): // Artist 
+							pXML->AddAttribute( L"artist", CString( strData ) );
+							break;
 						case FCC('IAS1'): // Language, not documented (?)
+						case FCC('ILNG'):
 							pXML->AddAttribute( L"language", CString( strData ) );
 							break;
 						case FCC('ICMS'): break; // Commissioned
@@ -2642,9 +2644,12 @@ BOOL CLibraryBuilderInternals::ReadAVI(DWORD nIndex, HANDLE hFile)
 						case FCC('ICOP'): // Copyright 
 							pXML->AddAttribute( L"copyright", CString( strData ) ); 
 							break;
-						case FCC('ICRD'): break; // Creation date. List dates in year-month-day format, 
-												// padding one-digit months and days with a zero on the left; 
-												// for example, 1553-05-03 for May 3, 1553.
+						case FCC('IDIT'): // ???
+						case FCC('ICRD'): // Creation date. List dates in year-month-day format, 
+										  // padding one-digit months and days with a zero on the left; 
+										  // for example, 1553-05-03 for May 3, 1553.
+							pXML->AddAttribute( L"releaseDate", CString( strData ) );
+							break;
 						case FCC('ICRP'): // Cropped, for e.g. "lower-right corner"
 							pXML->AddAttribute( L"qualityNotes", CString( strData ) );
 							break;
@@ -2675,7 +2680,9 @@ BOOL CLibraryBuilderInternals::ReadAVI(DWORD nIndex, HANDLE hFile)
 							pXML->AddAttribute( L"source", CString( strData ) ); 
 							break;
 						case FCC('ISRF'): break; // Source Form
-						case FCC('ITCH'): break; // Technician
+						case FCC('ITCH'): 
+							pXML->AddAttribute( L"releasegroup", CString( strData ) );
+							break; // Technician
 					}
 				}
 			}
