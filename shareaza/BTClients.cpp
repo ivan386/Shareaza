@@ -40,9 +40,9 @@ CBTClients BTClients;
 //////////////////////////////////////////////////////////////////////
 // CBTClients construction
 
-CBTClients::CBTClients()
+CBTClients::CBTClients() :
+	m_bShutdown	( false )
 {
-	m_bShutdown = FALSE;
 }
 
 CBTClients::~CBTClients()
@@ -62,31 +62,6 @@ void CBTClients::Clear()
 
 	ShutdownRequests();
 }
-
-
-//////////////////////////////////////////////////////////////////////
-// CBTClients GUID->SHA1 filter
-
-  //Note: This was removed and placed in the transfer, after a request from people running trackers.
-  // They wanted a per-download generated ID, not static. (Do not retain between sessions.)
-
-  //Note 2: Official spec says "Generate per download", which is as per above.
-  // Unofficial spec says "Generate at startup", which is how it used to be. Which is correct?
-
-/*
-SHA1* CBTClients::GetGUID()
-{
-	(GGUID&)m_pGUID = MyProfile.GUID;
-
-	for ( int nByte = 16 ; nByte < 20 ; nByte++ )
-	{
-		m_pGUID.n[ nByte ]	= MyProfile.GUID.n[ nByte % 16 ]
-							^ MyProfile.GUID.n[ 15 - ( nByte % 16 ) ];
-	}
-
-	return &m_pGUID;
-}
-*/
 
 //////////////////////////////////////////////////////////////////////
 // CBTClients accept new connections
@@ -157,7 +132,7 @@ void CBTClients::ShutdownRequests()
 	CSingleLock pLock( &m_pSection, TRUE );
 
 	if ( m_pRequests.GetCount() == 0 ) return;
-	m_bShutdown = TRUE;
+	m_bShutdown = true;
 	pLock.Unlock();
 
 	if ( WaitForSingleObject( m_pShutdown, 5000 ) == WAIT_OBJECT_0 ) 

@@ -29,7 +29,7 @@ class CBTClient;
 class CBTTrackerRequest;
 
 
-class CBTClients
+class CBTClients : private boost::noncopyable
 {
 // Construction
 public:
@@ -42,7 +42,7 @@ protected:
 protected:
 	CCriticalSection	m_pSection;
 	CEvent				m_pShutdown;
-	BOOL				m_bShutdown;
+	bool				m_bShutdown;
 	CList< CBTTrackerRequest* > m_pRequests;
 
 // Operations
