@@ -2632,6 +2632,9 @@ BOOL CLibraryBuilderInternals::ReadAVI(DWORD nIndex, HANDLE hFile)
 					{
 						case FCC('IARL'): break; // Archival Location
 						case FCC('IART'): break; // Artist
+						case FCC('IAS1'): // Language, not documented (?)
+							pXML->AddAttribute( L"language", CString( strData ) );
+							break;
 						case FCC('ICMS'): break; // Commissioned
 						case FCC('ICMT'): // Comments
 							pXML->AddAttribute( L"comments", CString( strData ) ); 
