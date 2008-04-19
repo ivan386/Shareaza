@@ -92,7 +92,7 @@ public:
 		return bMax ?  max( nActive, m_nMinTransfers ) : nActive;
 	}
 
-	inline int GetQueueCapacity() const
+	inline DWORD GetQueueCapacity() const
 	{
 		return m_nCapacity;
 	}

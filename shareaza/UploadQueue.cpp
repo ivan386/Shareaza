@@ -175,15 +175,18 @@ BOOL CUploadQueue::Enqueue(CUploadTransfer* pUpload, BOOL bForce, BOOL bStart)
 	{	
 		if ( m_bRewardUploaders && ( pUpload->m_nUserRating > urSharing  ) )
 		{	
-			//If reward is on, a non-sharer might not queue.
-			if ( ( ( GetQueueCapacity() * ( 100 - Settings.Uploads.RewardQueuePercentage ) ) / 100 ) - ( GetQueuedCount() ) <= 0 )
+			// If reward is on, a non-sharer might not queue.
+			// Check if the # already queued plus # reserved by the reward
+			// percentage is greater than the queue would be able to hold.
+			DWORD nReserved = GetQueueCapacity() * Settings.Uploads.RewardQueuePercentage / 100ul;
+			if ( GetQueuedCount() + nReserved >= GetQueueCapacity() )
 			{
 				return FALSE;
 			}
 		}
 		else
 		{	
-			//If reward is off, or user is known to share, just check if the queue is full
+			// If reward is off, or user is known to share, just check if the queue is full
 			if ( GetQueueRemaining() <= 0 )	
 				return FALSE;
 		}
