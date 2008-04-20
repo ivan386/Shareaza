@@ -768,6 +768,10 @@
 #define IDC_IRC_COLOR_TEXT              1555
 #define IDC_IRC_COLOR_SERVER5           1556
 #define IDC_REGEXP                      1557
+#define IDC_METHOD1                     1558
+#define IDC_METHOD2                     1559
+#define IDC_PREVIEW1                    1560
+#define IDC_PREVIEW2                    1561
 #define IDS_FILTER_DELETE_CONFIRM       7000
 #define IDS_SCHEMAS                     7001
 #define IDS_MULTIPLE_VALUES             7002
@@ -1860,10 +1864,10 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_3D_CONTROLS                1
+#define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        325
 #define _APS_NEXT_COMMAND_VALUE         33317
-#define _APS_NEXT_CONTROL_VALUE         1558
+#define _APS_NEXT_CONTROL_VALUE         1562
 #define _APS_NEXT_SYMED_VALUE           104
 #endif
 #endif

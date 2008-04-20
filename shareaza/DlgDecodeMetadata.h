@@ -1,7 +1,7 @@
 //
 // DlgDecodeMetadata.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -32,30 +32,33 @@ public:
 
 // Dialog Data
 public:
-	//{{AFX_DATA(CDecodeMetadataDlg)
 	enum { IDD = IDD_CODEPAGES };
-	CButton	m_wndOK;
+	CButton		m_wndOK;
 	CComboBox	m_wndCodepages;
-	//}}AFX_DATA
+	CString		m_sOriginalWords;
+	CString		m_sPreview1;
+	CString		m_sPreview2;
 
-	CList< DWORD >	m_pFiles;
-	void		AddFile(CLibraryFile* pFile);
+	CList<DWORD> m_pFiles;
 
 // Overrides
-public:
-	//{{AFX_VIRTUAL(CDecodeMetadataDlg)
-	protected:
+protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
+	static const unsigned codePages[];
 
 // Implementation
-protected:
-	//{{AFX_MSG(CDecodeMetadataDlg)
+public:
 	virtual BOOL OnInitDialog();
 	virtual void OnOK();
-	//}}AFX_MSG
-};
+			void AddFile(CLibraryFile* pFile);
+			void GetEncodedText(CString& strText, int nMethod = 0) const;
 
-//{{AFX_INSERT_LOCATION}}
+protected:
+	int m_nMethod;
+	DECLARE_MESSAGE_MAP()
+	afx_msg void OnClickedMethod1();
+	afx_msg void OnClickedMethod2();
+	afx_msg void OnCloseupCodepages();
+};
 
 #endif // #ifndef DLGDECODEMETADATA_H_INCLUDED
