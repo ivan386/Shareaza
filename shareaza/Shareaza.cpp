@@ -496,8 +496,8 @@ int CShareazaApp::ExitInstance()
 			Settings.Save( TRUE );
 		}
 		SplashStep( dlgSplash, L"Finalizing" );
-		Downloads.Clear( TRUE );
 		BTClients.Clear();
+		Downloads.Clear( TRUE );
 		Library.Clear();
 		Skin.Clear();
 
