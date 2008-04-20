@@ -3887,6 +3887,7 @@
 	<dialog name="CFilterSearchDlg" cookie="BuEdBuStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuBuBuCoBuBuBuBuBu" caption="Filter Matches">
 		<control caption="Only show matches which include the _words:"/>
 		<control/>
+		<control caption="Reg. Exp."/>
 		<control caption="( you can also exclude words with -word )"/>
 		<control caption="And are of _size:"/>
 		<control caption="Minimum:"/>
@@ -4329,11 +4330,13 @@
 		<control caption="OK"/>
 		<control/><control/>
 	</dialog>
-	<dialog name="CDecodeMetadataDlg" cookie="BuBuStCo" caption="Metadata Localisation">
+	<dialog name="CDecodeMetadataDlg" cookie="StCoBuBuBuStStBuBu" caption="Metadata Localisation">
+		<control caption="Please select the method of re-encoding:"/>
+		<control caption="Arabic|Baltic|Central European|Chinese simplified|Chinese traditional|Cyrillic|Greek|Hebrew|Japanese|Korean|Thai|Turkish|Vietnamese"/>
+		<control caption="Preview:"/>
+		<control/><control/>	<control/><control/>
 		<control caption="OK"/>
 		<control caption="Cancel"/>
-		<control caption="Please select the method of re-encoding"/>
-		<control caption="Arabic|Baltic|Central European|Chinese simplified|Chinese traditional|Cyrillic|Greek|Hebrew|Japanese|Korean|Thai|Turkish|Vietnamese"/>
 	</dialog>
 </dialogs>
 <!-- Columns Definitions -->
