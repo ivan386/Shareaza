@@ -691,22 +691,6 @@ BOOL CDatagrams::OnDatagram(SOCKADDR_IN* pHost, BYTE* pBuffer, DWORD nLength)
 		}
 	}
 
-	// Detect BitTorrent packets
-	if ( nLength > 16 )
-	{
-		CBuffer pInput;
-		pInput.Add( pBuffer, nLength );
-		CBENode* pRoot = CBENode::Decode( &pInput );
-		if ( pRoot )
-		{
-			bHandled = DHT.OnPacket( pHost, pRoot );
-
-			delete pRoot;
-
-			return bHandled;
-		}
-	}
-
 	// Detect ED2K and KAD packets
 	if ( nLength > sizeof(ED2K_UDP_HEADER) )
 	{
@@ -745,6 +729,22 @@ BOOL CDatagrams::OnDatagram(SOCKADDR_IN* pHost, BYTE* pBuffer, DWORD nLength)
 				}
 			}
 			// TODO: Detect obfuscated eMule packets
+		}
+	}
+
+	// Detect BitTorrent packets
+	if ( nLength > 16 )
+	{
+		CBuffer pInput;
+		pInput.Add( pBuffer, nLength );
+		CBENode* pRoot = CBENode::Decode( &pInput );
+		if ( pRoot )
+		{
+			bHandled = DHT.OnPacket( pHost, pRoot );
+
+			delete pRoot;
+
+			return bHandled;
 		}
 	}
 
