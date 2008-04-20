@@ -2684,6 +2684,12 @@ BOOL CLibraryBuilderInternals::ReadAVI(DWORD nIndex, HANDLE hFile)
 							pXML->AddAttribute( L"releasegroup", CString( strData ) );
 							break; // Technician
 					}
+
+					if ( nDataLength % 2 != 0 ) // Skip padding zero byte if the data size is not even
+					{
+						ReadFile( hFile, &nID, 1, &nRead, NULL );
+						if ( nRead != 1 ) break;
+					}
 				}
 			}
 		}
