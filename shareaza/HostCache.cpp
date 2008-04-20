@@ -1265,10 +1265,13 @@ BOOL CHostCacheHost::CanQuery(DWORD tNow) const
 
 void CHostCacheHost::SetKey(DWORD nKey, const IN_ADDR* pHost)
 {
-	m_tAck		= 0;
-	m_nFailures	= 0;
-	m_tFailure	= 0;
-	m_tKeyTime	= nKey ? static_cast< DWORD >( time( NULL ) ) : 0;
-	m_nKeyValue	= nKey;
-	m_nKeyHost	= pHost && nKey ? pHost->S_un.S_addr : Network.m_pHost.sin_addr.S_un.S_addr;
+	if ( nKey )
+	{
+		m_tAck		= 0;
+		m_nFailures	= 0;
+		m_tFailure	= 0;
+		m_tKeyTime	= static_cast< DWORD >( time( NULL ) );
+		m_nKeyValue	= nKey;
+		m_nKeyHost	= pHost ? pHost->S_un.S_addr : Network.m_pHost.sin_addr.S_un.S_addr;
+	}
 }

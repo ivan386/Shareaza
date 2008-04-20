@@ -57,6 +57,8 @@ CQueryKeys::CQueryKeys()
 		*pFill++ = (BYTE)( rand() & 0xFF );
 		*pFill++ = (BYTE)( rand() & 0xFF );
 	}
+
+	// TODO: Add check for invalid (for Shareaza) zero keys
 }
 
 CQueryKeys::~CQueryKeys()
