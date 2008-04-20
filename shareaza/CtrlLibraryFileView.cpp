@@ -647,7 +647,7 @@ void CLibraryFileView::OnUpdateLibraryRebuildAnsi(CCmdUI* pCmdUI)
 			}
 			if ( ( strExtension != _T("mp3") && strExtension != _T("pdf") &&
 				   strExtension != _T("mpc") && strExtension != _T("mpp") &&
-				   strExtension != _T("mp+") ) 
+				   strExtension != _T("mp+") && strExtension != _T("avi") ) 
 				 || bXmlPossiblyModified )
 				nSelected--;
 		}
@@ -671,7 +671,7 @@ void CLibraryFileView::OnLibraryRebuildAnsi()
 
 		if ( strExtension == _T("mp3") || strExtension == _T("pdf") ||
 			 strExtension == _T("mpc") || strExtension == _T("mpp") ||
-			 strExtension == _T("mp+") )
+			 strExtension == _T("mp+") || strExtension == _T("avi") )
 			dlg.AddFile( pFile );
 	}
 
