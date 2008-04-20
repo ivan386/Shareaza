@@ -731,6 +731,7 @@ BOOL CLibraryBuilder::RefreshMetadata(const CString& sPath)
 		if ( ! pFile )
 			return FALSE;
 		nIndex = pFile->m_nIndex;
+		pFile->m_bMetadataAuto = TRUE;
 	}
 
 	BOOL bResult = FALSE;
