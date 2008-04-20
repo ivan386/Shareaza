@@ -1025,12 +1025,17 @@ BOOL CBTInfo::FinishBlockTest(DWORD nBlock)
 
 void CBTInfo::SetTrackerAccess(DWORD tNow)
 {
+	// Check that there should be a tracker
 	ASSERT ( m_nTrackerMode != tNull );
 	
 	// Can't do anything with user-entered trackers
-	if ( m_nTrackerMode == tCustom ) return;
+	if ( m_nTrackerMode == tCustom )
+		return;
 
+	// Check that there is a tracker
 	ASSERT ( m_pAnnounceTracker );
+
+	// Set the current tracker's access time
 	m_pAnnounceTracker->m_tLastAccess = tNow;
 
 	return;
@@ -1038,58 +1043,86 @@ void CBTInfo::SetTrackerAccess(DWORD tNow)
 
 void CBTInfo::SetTrackerSucceeded(DWORD tNow)
 {
+	// Check that there should be a tracker
 	ASSERT ( m_nTrackerMode != tNull );
-	
-	// Can't do anything with user-entered trackers
-	if ( m_nTrackerMode == tCustom ) return;
 
+	// Can't do anything with user-entered trackers
+	if ( m_nTrackerMode == tCustom )
+		return;
+
+	// Check that there is a tracker
 	ASSERT ( m_pAnnounceTracker );
+
+	// Set the current tracker's success time
 	m_pAnnounceTracker->m_tLastSuccess = tNow;
+
+	// Reset the failure count
 	m_pAnnounceTracker->m_nFailures = 0;
 
 	return;
 }
 
-void CBTInfo::SetTrackerRetry(DWORD tNow)
+void CBTInfo::SetTrackerRetry(DWORD tTime)
 {
+	// Check that there should be a tracker
 	ASSERT ( m_nTrackerMode != tNull );
 	
 	// Can't do anything with user-entered trackers
-	if ( m_nTrackerMode == tCustom ) return;
+	if ( m_nTrackerMode == tCustom )
+		return;
 
+	// Check that there is a tracker
 	ASSERT ( m_pAnnounceTracker );
-	m_pAnnounceTracker->m_tNextTry = tNow;
+
+	// Set the current tracker's next allowable access attempt time
+	m_pAnnounceTracker->m_tNextTry = tTime;
 
 	return;
 }
 
-void CBTInfo::SetTrackerNext(DWORD tNow)
+void CBTInfo::SetTrackerNext(DWORD tTime)
 {
 	// Make sure this is a multitracker torrent
-	if ( ! IsMultiTracker() ) return;
+	if ( !IsMultiTracker() )
+		return;
 
-	// Get Current time
-	if ( !tNow ) tNow = GetTickCount();
+	// Get current time
+	if ( !tTime )
+		tTime = GetTickCount();
 
-	// Set us as searching for a new one
+	// Set current mode to searching
 	m_nTrackerMode = tMultiFinding;
 
-	// Get the next tracker to try
+	// Start with the first tracker in the list
 	m_nTrackerIndex = 0;
+
+	// Assign the first track as the current one
 	m_pAnnounceTracker = m_pTrackerList.GetAt( m_nTrackerIndex );
+
+	// Search through the list for an available tracker or the first one that
+	// will become available
 	for ( int nTracker = 0 ; nTracker < m_pTrackerList.GetCount() ; nTracker++ )
 	{
+		// Get the next tracker in the list
 		CBTTracker* pTracker = m_pTrackerList.GetAt( nTracker );
-		if ( pTracker->m_tNextTry < tNow ) pTracker->m_tNextTry = 0;
+
+		// If it's available, reset the retry time
+		if ( pTracker->m_tNextTry && pTracker->m_tNextTry < tTime )
+			pTracker->m_tNextTry = 0;
+
+		// If this tracker will become available before the current one, make
+		// it the current tracker
 		if ( m_pAnnounceTracker->m_tNextTry > pTracker->m_tNextTry )
 		{
 			m_pAnnounceTracker = pTracker;
 			m_nTrackerIndex = nTracker;
 		}
 	}
+
+	// Check that a tracker was selected
 	ASSERT ( m_pAnnounceTracker );
 
-	// Set the tracker address as the one we are using
+	// Set the tracker name to the new one
 	m_sTracker = m_pAnnounceTracker->m_sAddress;
 
 	return;
@@ -1097,9 +1130,14 @@ void CBTInfo::SetTrackerNext(DWORD tNow)
 
 DWORD CBTInfo::GetTrackerFailures() const
 {
-	if ( m_nTrackerMode <= tCustom ) return 0;
+	// Can't do anything with user-entered trackers
+	if ( m_nTrackerMode <= tCustom )
+		return 0;
 
+	// Check that there is a tracker
 	ASSERT ( m_pAnnounceTracker );
+
+	// Return the # of failures
 	return m_pAnnounceTracker->m_nFailures;
 }
 

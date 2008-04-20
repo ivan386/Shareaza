@@ -121,8 +121,8 @@ public:
 public:
 	void		SetTrackerAccess(DWORD tNow);
 	void		SetTrackerSucceeded(DWORD tNow);
-	void		SetTrackerRetry(DWORD tNow);
-	void		SetTrackerNext(DWORD tNow = 0);
+	void		SetTrackerRetry(DWORD tTime);
+	void		SetTrackerNext(DWORD tTime = 0);
 	DWORD		GetTrackerFailures() const;
 protected:
 	BOOL		CheckFiles();
