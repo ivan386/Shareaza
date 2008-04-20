@@ -59,6 +59,7 @@ protected:
 	afx_msg void OnClickedMethod1();
 	afx_msg void OnClickedMethod2();
 	afx_msg void OnCloseupCodepages();
+	afx_msg void OnSelchangeCodepages();
 };
 
 #endif // #ifndef DLGDECODEMETADATA_H_INCLUDED

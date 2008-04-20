@@ -37,6 +37,7 @@ BEGIN_MESSAGE_MAP(CDecodeMetadataDlg, CSkinDialog)
 	ON_BN_CLICKED(IDC_METHOD1, OnClickedMethod1)
 	ON_BN_CLICKED(IDC_METHOD2, OnClickedMethod2)
 	ON_CBN_CLOSEUP(IDC_CODEPAGES, OnCloseupCodepages)
+	ON_CBN_SELCHANGE(IDC_CODEPAGES, OnSelchangeCodepages)
 END_MESSAGE_MAP()
 
 const unsigned CDecodeMetadataDlg::codePages[] =
@@ -81,7 +82,7 @@ BOOL CDecodeMetadataDlg::OnInitDialog()
 		CLibraryFile* pFile = Library.LookupFile( m_pFiles.GetHead() );
 		if ( !pFile || !pFile->m_pMetadata || !pFile->m_pSchema ) return TRUE;
 
-		CXMLElement* pXML = pFile->m_pMetadata->Clone();
+		CXMLElement* pXML = pFile->m_pMetadata;
 		m_sOriginalWords = pXML->GetRecursiveWords();
 		
 		m_sPreview1 = m_sOriginalWords;
@@ -100,9 +101,6 @@ void CDecodeMetadataDlg::AddFile(CLibraryFile* pFile)
 	m_pFiles.AddTail( pFile->m_nIndex );
 }
 
-// TODO: Allow to restore initial metadata from backup 
-// if bad encoding was applied by mistake.
-//
 void CDecodeMetadataDlg::OnOK() 
 {
 	UpdateData();
@@ -209,4 +207,9 @@ void CDecodeMetadataDlg::OnCloseupCodepages()
 	GetEncodedText( m_sPreview2, 1 );
 
 	UpdateData( FALSE );
+}
+
+void CDecodeMetadataDlg::OnSelchangeCodepages()
+{
+	OnCloseupCodepages();
 }
