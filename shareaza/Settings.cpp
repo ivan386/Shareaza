@@ -539,6 +539,12 @@ void CSettings::Load()
 	{
 		Item* pItem = m_pItems.GetNext( pos );
 		pItem->Load();
+		CString strPath;
+		if ( _tcslen( pItem->m_szSection ) > 0 )
+			strPath.AppendFormat( L"%s.%s", pItem->m_szSection, pItem->m_szName );
+		else
+			strPath.AppendFormat( L"General.%s", pItem->m_szName );
+		m_pSettingsTable.insert( CSettingsMap::value_type( strPath, pItem ) );
 	}
 
 	if ( Library.ScanMSI )
@@ -1512,6 +1518,43 @@ DWORD CSettings::GetOutgoingBandwidth() const
 		return ( Settings.Connection.OutSpeed / 8 );
 
 	return ( min( ( Settings.Connection.OutSpeed / 8 ), ( Settings.Bandwidth.Uploads / 1024 ) ) );
+}
+
+bool CSettings::GetValue(LPCTSTR pszPath, VARIANT* value)
+{
+	if ( value->vt != VT_EMPTY ) return false;
+
+	CSettingsMap::const_iterator i = m_pSettingsTable.find( pszPath );
+	if ( i == m_pSettingsTable.end() ) return false;
+	Item* pItem = (*i).second;
+
+	if ( pItem->m_pBool )
+	{
+		value->vt = VT_BOOL;
+		value->boolVal = *pItem->m_pBool ? VARIANT_TRUE : VARIANT_FALSE;
+	} 
+	else if ( pItem->m_pDword )
+	{
+		value->vt = VT_I4;
+		value->lVal = (LONG)pItem->m_pDword;
+	}
+	else if ( pItem->m_pFloat )
+	{
+		value->vt = VT_R4;
+		value->fltVal = *pItem->m_pFloat;
+	}
+	else if ( pItem->m_pString )
+	{
+		value->vt = VT_BSTR;
+		value->bstrVal = SysAllocString( CT2CW( *pItem->m_pString ) );
+	}
+	else if ( pItem->m_pSet )
+	{
+		value->vt = VT_BSTR;
+		value->bstrVal = SysAllocString( CT2CW( SaveSet( pItem->m_pSet ) ) );
+	}
+
+	return true;
 }
 
 //////////////////////////////////////////////////////////////////////

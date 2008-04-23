@@ -715,6 +715,9 @@ public:
 protected:
 	CList< Item* >	m_pItems;
 
+	typedef std::map< CString, Item* > CSettingsMap;
+	CSettingsMap m_pSettingsTable;
+
 // Operations
 public:
 	void	Load();
@@ -741,6 +744,8 @@ public:
 	DWORD	GetOutgoingBandwidth() const;																// Returns available outgoing bandwidth in KB/s
 	BOOL	CheckStartup();
 	void	SetStartup(BOOL bStartup);
+
+	bool	GetValue(LPCTSTR pszPath, VARIANT* value);
 
 	void	OnChangeConnectionSpeed();
 

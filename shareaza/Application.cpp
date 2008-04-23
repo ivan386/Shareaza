@@ -1,7 +1,7 @@
 //
 // Application.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -43,13 +43,12 @@ static char THIS_FILE[] = __FILE__;
 #endif
 
 BEGIN_MESSAGE_MAP(CApplication, CComObject)
-	//{{AFX_MSG_MAP(CApplication)
-	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 BEGIN_INTERFACE_MAP(CApplication, CComObject)
 	INTERFACE_PART(CApplication, IID_IApplication, Application)
 	INTERFACE_PART(CApplication, IID_IUserInterface, UserInterface)
+	INTERFACE_PART(CApplication, IID_ISettings, Settings)
 END_INTERFACE_MAP()
 
 CApplication Application;
@@ -62,6 +61,7 @@ CApplication::CApplication()
 {
 	EnableDispatch( IID_IApplication );
 	EnableDispatch( IID_IUserInterface );
+	EnableDispatch( IID_ISettings );
 }
 
 CApplication::~CApplication()
@@ -79,6 +79,11 @@ IApplication* CApplication::GetApp()
 IUserInterface* CApplication::GetUI()
 {
 	return (IUserInterface*)GetInterface( IID_IUserInterface, TRUE );
+}
+
+ISettings* CApplication::GetSettings()
+{
+	return (ISettings*)GetInterface( IID_ISettings, TRUE );
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -142,6 +147,40 @@ STDMETHODIMP CApplication::XApplication::get_Library(ILibrary FAR* FAR* ppLibrar
 	if ( ppLibrary == NULL ) return E_INVALIDARG;
 	*ppLibrary = (ILibrary*)Library.GetInterface( IID_ILibrary, TRUE );
 	return S_OK;
+}
+
+STDMETHODIMP CApplication::XApplication::get_Settings(ISettings FAR* FAR* ppSettings)
+{
+	METHOD_PROLOGUE( CApplication, Application )
+	if ( ppSettings == NULL ) return E_INVALIDARG;
+	*ppSettings = (ISettings*)pThis->GetInterface( IID_ISettings, TRUE );
+	return S_OK;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+// CApplication ISettings
+
+IMPLEMENT_DISPATCH(CApplication, Settings)
+
+STDMETHODIMP CApplication::XSettings::GetValue(VARIANT* value)
+{
+	METHOD_PROLOGUE( CApplication, Settings )
+
+	if ( value == NULL || value->vt != VT_BSTR ) 
+		return E_INVALIDARG;
+
+	CString strPath( value->bstrVal );
+
+	if ( strPath.IsEmpty() )
+		return E_INVALIDARG;
+
+	SysFreeString( value->bstrVal );
+	value->vt = VT_EMPTY;
+
+	if ( Settings.GetValue( strPath, value ) ) 
+		return S_OK;
+
+	return E_FAIL;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -278,3 +317,4 @@ STDMETHODIMP CApplication::XUserInterface::GetToolbar(BSTR bsName, VARIANT_BOOL 
 
 	return S_OK;
 }
+

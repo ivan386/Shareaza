@@ -1,7 +1,7 @@
 //
 // Shareaza.idl
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -345,6 +345,7 @@ library Shareaza
 	interface IApplication;
 	interface IUserInterface;
 	interface ILibrary;
+	interface ISettings;
 
 	[ uuid(8EBD0B6F-7BC4-44d1-BEC1-03E22DC2A587), dual, oleautomation ]
 	interface IApplication : IDispatch
@@ -357,6 +358,7 @@ library Shareaza
 
 		[id(20),propget] HRESULT UserInterface( [out,retval] IUserInterface** ppUserInterface );
 		[id(21),propget] HRESULT Library( [out,retval] ILibrary** ppLibrary );
+		[id(22),propget] HRESULT Settings( [out,retval] ISettings** ppSettings );
 	};
 
 	//
@@ -386,6 +388,17 @@ library Shareaza
 		[id(31)] HRESULT GetMenu( [in] BSTR bsName, [in] VARIANT_BOOL bCreate, [out,retval] ISMenu** ppMenu );
 		[id(32)] HRESULT GetToolbar( [in] BSTR bsName, [in] VARIANT_BOOL bCreate, [out,retval] ISToolbar** ppToolbar );
 
+	};
+
+	typedef enum
+	{
+		guiWidowed, guiTabbed, guiBasic
+	} GuiMode;
+	
+	[ uuid(FDDC655E-6CA6-4575-A167-1FD48AAC54EF), dual, oleautomation ]
+	interface ISettings : IDispatch
+	{
+		[id(1)] HRESULT GetValue([in, out] VARIANT* value);
 	};
 
 	typedef enum
