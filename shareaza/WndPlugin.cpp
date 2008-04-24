@@ -1,7 +1,7 @@
 //
 // WndPlugin.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -236,6 +236,9 @@ STDMETHODIMP CPluginWnd::XPluginWindow::Create1(BSTR bsCaption, HICON hIcon, VAR
 	if ( hIcon != NULL ) pThis->SetIcon( hIcon, FALSE );
 	pThis->SetWindowText( CString( bsCaption ) );
 
+	if ( pThis->m_bPanelMode )
+		LoadState( VARIANT_TRUE );
+
 	return S_OK;
 }
 
@@ -247,6 +250,9 @@ STDMETHODIMP CPluginWnd::XPluginWindow::Create2(UINT nCommandID, VARIANT_BOOL bP
 	pThis->m_bTabMode	= ( pThis->m_bPanelMode && ( bTabbed == VARIANT_TRUE ) );
 
 	if ( ! pThis->Create( nCommandID, FALSE ) ) return E_FAIL;
+
+	if ( pThis->m_bPanelMode )
+		LoadState( VARIANT_TRUE );
 
 	return S_OK;
 }
