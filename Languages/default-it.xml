@@ -3743,35 +3743,36 @@
 		<control caption="Cerca"/>
 		<control caption="Annulla"/>
 	</dialog>
-	<dialog name="CFilterSearchDlg" cookie="BuEdStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuCoBuBuBuBuBuBuBu" caption="Opzioni filtro">
-		<control caption="Mostra solo i risultati che includono le _parole:"/>
+	<dialog name="CFilterSearchDlg" cookie="BuEdBuStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuBuBuCoBuBuBuBuBu" caption="Opzioni filtro">
+		<control caption="Mostra solo risultati che includono le _parole:"/>
 		<control/>
-		<control caption="(puoi anche escludere parole con -parola)"/>
-		<control caption="E che sono di _dimensioni:"/>
-		<control caption="Minimo:"/>
+		<control caption="Reg. Exp."/>
+		<control caption="( puoi anche escludere parole con -parola )"/>
+		<control caption=" E che sono di _dimensioni:"/>
+		<control caption="Minime:"/>
 		<control/>
-		<control caption="Massimo:"/>
+		<control caption="Massime:"/>
 		<control/>
 		<control caption="Con almeno:"/>
 		<control/><control/>
 		<control caption="fonti."/>
 		<control caption="_Nascondi:"/>
 		<control caption="Host occupati"/>
-		<control caption="Host con firewall/push"/>
-		<control caption="Host instabili"/>
 		<control caption="File non corrispondenti"/>
+		<control caption="Host con firewall/push"/>
 		<control caption="File che già possiedi"/>
-		<control caption="Risulati errati"/>
-		<control caption="Filtra"/>
-		<control caption="Annulla"/>
-		<control/>
-		<control caption="Predefinito"/>
-		<control caption="_Salva come"/>
-		<control caption="_Cancella"/>
-		<control caption="Filtri:"/>
-		<control caption="File DRM"/>	
-		<control caption="File sospetti"/>	
+		<control caption="Host instabili"/>
+		<control caption="Risultati errati"/>
+		<control caption="File DRM"/>
 		<control caption="Risultati per adulti"/>
+		<control caption="File Sospetti"/>
+		<control caption="Filtri:"/>
+		<control/>
+		<control caption="Imposta come predefinito"/>
+		<control caption="_Salva come"/>
+		<control caption="_Elimina"/>
+		<control caption="Filtro"/>
+		<control caption="Annulla"/>
 	</dialog>
 	<dialog name="CSaveFilterAsDlg" cookie="EdBuBuSt" caption="Salva il filtro come">
 		<control/>
