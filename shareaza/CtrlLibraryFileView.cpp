@@ -43,7 +43,6 @@
 #include "DlgURLCopy.h"
 #include "DlgURLExport.h"
 #include "DlgDeleteFile.h"
-#include "DlgTorrentSeed.h"
 #include "DlgDecodeMetadata.h"
 #include "RelatedSearch.h"
 #include "Security.h"
@@ -328,16 +327,7 @@ void CLibraryFileView::OnLibraryLaunch()
 		bHasThumbnail = pFile->m_bCachedPreview;		
 		pLock.Unlock();
 		
-		LPCTSTR pszType = _tcsrchr( strPath, '.' );
-		if ( pszType != NULL && _tcsicmp( pszType, _T(".torrent") ) == 0 )
-		{
-			CTorrentSeedDlg dlg( strPath, FALSE );
-			dlg.DoModal();
-		}
-		else
-		{
-			if ( ! CFileExecutor::Execute( strPath, FALSE, bHasThumbnail ) ) break;
-		}
+		if ( ! CFileExecutor::Execute( strPath, FALSE, bHasThumbnail ) ) break;
 		
 		pLock.Lock();
 	}
@@ -360,10 +350,7 @@ void CLibraryFileView::OnUpdateLibraryEnqueue(CCmdUI* pCmdUI)
 		{
 			if ( LPCTSTR pszType = _tcsrchr( pFile->m_sName, '.' ) )
 			{
-				CString strType;
-				strType.Format( _T("|%s|"), pszType + 1 );
-				
-				if ( _tcsistr( Settings.MediaPlayer.FileTypes, strType ) != NULL )
+				if ( IsIn( Settings.MediaPlayer.FileTypes, pszType + 1 ) )
 				{
 					pCmdUI->Enable( TRUE );
 					return;

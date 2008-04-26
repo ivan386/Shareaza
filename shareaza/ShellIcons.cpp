@@ -243,7 +243,7 @@ CString	CShellIcons::GetTypeString(LPCTSTR pszFile)
 BOOL CShellIcons::Lookup(LPCTSTR pszType, HICON* phSmallIcon, HICON* phLargeIcon, CString* psName, CString* psMIME, HICON* phHugeIcon)
 {
 	DWORD nType, nResult;
-	TCHAR szResult[128];
+	TCHAR szResult[MAX_PATH];
 	HKEY hKey, hSub;
 
 	if ( phSmallIcon ) *phSmallIcon = NULL;
@@ -257,7 +257,7 @@ BOOL CShellIcons::Lookup(LPCTSTR pszType, HICON* phSmallIcon, HICON* phLargeIcon
 
 	if ( psMIME )
 	{
-		nResult = sizeof(TCHAR) * 128; nType = REG_SZ;
+		nResult = sizeof(TCHAR) * MAX_PATH; nType = REG_SZ;
 		if ( RegQueryValueEx( hKey, _T("Content Type"), NULL, &nType, (LPBYTE)szResult, &nResult ) == ERROR_SUCCESS )
 		{
 			szResult[ nResult / sizeof(TCHAR) ] = 0;
@@ -265,7 +265,7 @@ BOOL CShellIcons::Lookup(LPCTSTR pszType, HICON* phSmallIcon, HICON* phLargeIcon
 		}
 	}
 
-	nResult = sizeof(TCHAR) * 128; nType = REG_SZ;
+	nResult = sizeof(TCHAR) * MAX_PATH; nType = REG_SZ;
 	if ( RegQueryValueEx( hKey, _T(""), NULL, &nType, (LPBYTE)szResult, &nResult ) != ERROR_SUCCESS )
 	{
 		RegCloseKey( hKey );
@@ -279,7 +279,7 @@ BOOL CShellIcons::Lookup(LPCTSTR pszType, HICON* phSmallIcon, HICON* phLargeIcon
 
 	if ( psName )
 	{
-		nResult = sizeof(TCHAR) * 128;
+		nResult = sizeof(TCHAR) * MAX_PATH;
 		nType = REG_SZ;
 		if ( RegQueryValueEx( hKey, _T(""), NULL, &nType, (LPBYTE)szResult, &nResult ) == ERROR_SUCCESS )
 		{
@@ -295,7 +295,7 @@ BOOL CShellIcons::Lookup(LPCTSTR pszType, HICON* phSmallIcon, HICON* phLargeIcon
 			RegCloseKey( hKey );
 			return FALSE;
 		}
-		nResult = sizeof(TCHAR) * 128;
+		nResult = sizeof(TCHAR) * MAX_PATH;
 		if ( RegQueryValueEx( hSub, _T(""), NULL, &nType, (LPBYTE)szResult, &nResult ) != ERROR_SUCCESS )
 		{
 			RegCloseKey( hSub );
@@ -310,7 +310,7 @@ BOOL CShellIcons::Lookup(LPCTSTR pszType, HICON* phSmallIcon, HICON* phLargeIcon
 
 		if ( psName )
 		{
-			nResult = sizeof(TCHAR) * 128; nType = REG_SZ;
+			nResult = sizeof(TCHAR) * MAX_PATH; nType = REG_SZ;
 			if ( RegQueryValueEx( hKey, _T(""), NULL, &nType, (LPBYTE)szResult, &nResult ) == ERROR_SUCCESS )
 			{
 				szResult[ nResult / sizeof(TCHAR) ] = 0;
@@ -326,7 +326,7 @@ BOOL CShellIcons::Lookup(LPCTSTR pszType, HICON* phSmallIcon, HICON* phLargeIcon
 		}
 	}
 
-	nResult = sizeof(TCHAR) * 128;
+	nResult = sizeof(TCHAR) * MAX_PATH;
 	nType = REG_SZ;
 	if ( RegQueryValueEx( hSub, _T(""), NULL, &nType, (LPBYTE)szResult, &nResult ) != ERROR_SUCCESS )
 	{

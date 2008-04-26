@@ -180,7 +180,7 @@ public:
 	{
 		bool		EnablePlay;
 		bool		EnableEnqueue;
-		CString		FileTypes;
+		string_set	FileTypes;
 		bool		Repeat;
 		bool		Random;
 		MediaZoom	Zoom;

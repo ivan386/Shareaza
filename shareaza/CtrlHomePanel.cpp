@@ -946,7 +946,6 @@ void CHomeLibraryBox::OnLButtonUp(UINT nFlags, CPoint point)
 			{
 				CString strPath = pFile->GetPath();
 				oLock.Unlock();
-				// TODO: Should check Zone.Identifier stream for safety
 				CFileExecutor::Execute( strPath, FALSE );
 			}
 			else

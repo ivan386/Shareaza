@@ -91,13 +91,10 @@ BOOL CMediaSettingsPage::OnInitDialog()
 	m_bEnablePlay		= Settings.MediaPlayer.EnablePlay;
 	m_bEnableEnqueue	= Settings.MediaPlayer.EnableEnqueue;
 
-	for ( CString strList = Settings.MediaPlayer.FileTypes + '|' ; strList.GetLength() ; )
+	for ( string_set::const_iterator i = Settings.MediaPlayer.FileTypes.begin() ;
+		i != Settings.MediaPlayer.FileTypes.end(); i++ )
 	{
-		CString strType = strList.SpanExcluding( _T(" |") );
-		strList = strList.Mid( strType.GetLength() + 1 );
-		strType.TrimLeft();
-		strType.TrimRight();
-		if ( strType.GetLength() ) m_wndList.AddString( strType );
+		m_wndList.AddString( *i );
 	}
 	
 	CString str;
@@ -231,19 +228,15 @@ void CMediaSettingsPage::OnOK()
 		}
 	}
 
-	Settings.MediaPlayer.FileTypes.Empty();
+	Settings.MediaPlayer.FileTypes.clear();
 
 	for ( int nItem = 0 ; nItem < m_wndList.GetCount() ; nItem++ )
 	{
 		CString str;
 		m_wndList.GetLBText( nItem, str );
-
 		if ( str.GetLength() )
 		{
-			if ( Settings.MediaPlayer.FileTypes.IsEmpty() )
-				Settings.MediaPlayer.FileTypes += '|';
-			Settings.MediaPlayer.FileTypes += str;
-			Settings.MediaPlayer.FileTypes += '|';
+			Settings.MediaPlayer.FileTypes.insert( str );
 		}
 	}
 

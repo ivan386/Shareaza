@@ -1,7 +1,7 @@
 //
 // FileExecutor.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -19,9 +19,6 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_FILEEXECUTOR_H__FD5DD55D_4F14_48BB_B158_78680A23289F__INCLUDED_)
-#define AFX_FILEEXECUTOR_H__FD5DD55D_4F14_48BB_B158_78680A23289F__INCLUDED_
-
 #pragma once
 
 class CMediaWnd;
@@ -30,19 +27,19 @@ class CLibraryWnd;
 
 class CFileExecutor
 {
-// Operations
 public:
-	static BOOL		Execute(LPCTSTR pszFile, BOOL bForce = FALSE, BOOL bHasThumbnail = FALSE, LPCTSTR pszExt = NULL);
-	static BOOL		Enqueue(LPCTSTR pszFiles, BOOL bForce = FALSE, LPCTSTR pszExt = NULL);
+	static BOOL		Execute(LPCTSTR pszFile, BOOL bSkipSecurityCheck = FALSE, BOOL bHasThumbnail = FALSE, LPCTSTR pszExt = NULL);
+	static BOOL		Enqueue(LPCTSTR pszFiles, BOOL bSkipSecurityCheck = FALSE, LPCTSTR pszExt = NULL);
 	static BOOL		ShowBitziTicket(DWORD nFile);
 	static BOOL		DisplayURL(LPCTSTR pszURL);
 
-// Implementation
 protected:
-	static void			GetFileComponents(LPCTSTR pszFile, CString& strPath, CString& strType, CString& strShortPath );
+	// Open Media Player window
 	static CMediaWnd*	GetMediaWindow(BOOL bFocus);
+
+	// Open Library window
 	static CLibraryWnd*	GetLibraryWindow();
 
+	// Is file a video, audio or image file?
+	static void DetectFileType(LPCTSTR pszFile, bool& bVideo, bool& bAudio, bool& bImage);
 };
-
-#endif // !defined(AFX_FILEEXECUTOR_H__FD5DD55D_4F14_48BB_B158_78680A23289F__INCLUDED_)

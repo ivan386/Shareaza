@@ -867,10 +867,12 @@ void CShareazaApp::InitResources()
 	if ( ( m_hShlWapi = LoadLibrary( _T("shlwapi.dll") ) ) != NULL )
 	{
 		(FARPROC&)m_pfnAssocIsDangerous = GetProcAddress( m_hShlWapi, "AssocIsDangerous" );
+		(FARPROC&)m_pfnAssocQueryStringW = GetProcAddress( m_hShlWapi, "AssocQueryStringW" );
 	}
 	else
 	{
 		m_pfnAssocIsDangerous = NULL;
+		m_pfnAssocQueryStringW = NULL;
 	}
 
 	// Load the GeoIP library for mapping IPs to countries

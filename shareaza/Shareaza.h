@@ -130,6 +130,7 @@ public:
 
 	HINSTANCE	m_hShlWapi;
 	BOOL		(WINAPI *m_pfnAssocIsDangerous)(LPCWSTR);
+	HRESULT		(WINAPI *m_pfnAssocQueryStringW)(ASSOCF, ASSOCSTR, LPCWSTR, LPCWSTR, LPWSTR, DWORD*);
 
 	// GeoIP - IP to Country lookup
 	HINSTANCE	m_hGeoIP;

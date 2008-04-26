@@ -727,7 +727,7 @@ void CSettings::SmartUpgrade()
 */
 	// Add OGG handling if needed
 	if ( ( General.SmartVersion < SMART_VERSION || Live.FirstRun ) &&
-		_tcsistr( MediaPlayer.FileTypes, _T("|ogg|") ) == NULL )
+		! IsIn( MediaPlayer.FileTypes, _T("ogg") ) )
 	{
 		LONG nReg = 0;
 
@@ -735,7 +735,7 @@ void CSettings::SmartUpgrade()
 			_T("CLSID\\{02391F44-2767-4E6A-A484-9B47B506F3A4}"), NULL, &nReg )
 			== ERROR_SUCCESS && nReg > 0 )
 		{
-			MediaPlayer.FileTypes += _T("|ogg|");
+			MediaPlayer.FileTypes.insert( _T("ogg") );
 		}
 	}
 
