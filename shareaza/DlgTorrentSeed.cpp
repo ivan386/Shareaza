@@ -251,7 +251,7 @@ void CTorrentSeedDlg::OnDestroy()
 	if ( m_hThread != NULL )
 	{
 		m_bCancel = TRUE;
-		CloseThread( &m_hThread );
+		CloseThread( (HANDLE*)&m_hThread );
 	}
 	
 	CSkinDialog::OnDestroy();
@@ -358,6 +358,8 @@ void CTorrentSeedDlg::OnRun()
 	{
 		RunMultiFile();
 	}
+
+	m_hThread = NULL;
 }
 
 void CTorrentSeedDlg::RunSingleFile()

@@ -41,7 +41,7 @@ protected:
 	CButton			m_wndDownload;
 	CButton			m_wndSeed;
 protected:
-	HANDLE			m_hThread;
+	volatile HANDLE	m_hThread;
 	BOOL			m_bCancel;
 	CString			m_sTorrent;
 	BOOL			m_bForceSeed;
