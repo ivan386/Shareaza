@@ -1201,6 +1201,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <type extension="ratdvd"/>
                <type extension="rm"/>
                <type extension="rmvb"/>
+               <type extension="swf"/>
                <type extension="vob"/>
                <type extension="wm"/>
                <type extension="wmv"/>
