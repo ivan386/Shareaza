@@ -362,8 +362,8 @@
 		<button id="ID_NEIGHBOURS_CHAT" text="Conversar com Usuário"/>
 		<rightAlign/>
 		<button id="ID_NETWORK_G2" text="Gnutella 2"/>
+		<button id="ID_NETWORK_G1" text="Gnutella1"/>
 		<button id="ID_NETWORK_ED2K" text="eDonkey"/>
-		<button id="ID_NETWORK_G1" text="Gnutella 1"/>
 		<separator/>
 		<button id="ID_NEIGHBOURS_SETTINGS" text="Configurações"/>
 	</toolbar>
@@ -376,8 +376,8 @@
 		<button id="ID_SECURITY_BAN" text="Banir Host"/>
 		<rightAlign/>
 		<button id="ID_NETWORK_G2" text="Gnutella 2"/>
-		<button id="ID_NETWORK_ED2K" text="eDonkey"/>
 		<button id="ID_NETWORK_G1" text="Gnutella 1"/>
+		<button id="ID_NETWORK_ED2K" text="eDonkey"/>
 		<separator/>
 		<button id="ID_NEIGHBOURS_SETTINGS" text="Configurações"/>
 	</toolbar>
@@ -404,10 +404,12 @@
 		<button id="ID_HOSTCACHE_DISCONNECT" text="Desconectar"/>
 		<button id="ID_HOSTCACHE_REMOVE" text="Remover"/>
 		<rightAlign/>
-		<button id="ID_HOSTCACHE_G2_HORIZON" text="Cluster G2"/>
-		<button id="ID_HOSTCACHE_G2_CACHE" text="Cache G2"/>
-		<button id="ID_HOSTCACHE_G1_CACHE" text="Cache G1"/>
-		<button id="ID_HOSTCACHE_ED2K_CACHE" text="Cache eDonkey"/>
+		<button id="ID_HOSTCACHE_G2_HORIZON" text="Cluster do G2"/>
+		<button id="ID_HOSTCACHE_G2_CACHE" text="Cache do G2"/>
+		<button id="ID_HOSTCACHE_G1_CACHE" text="Cache do G1"/>
+		<button id="ID_HOSTCACHE_ED2K_CACHE" text="Cache do eDonkey"/>
+		<button id="ID_HOSTCACHE_BT_CACHE" text="Cache do BitTorrent"/>
+		<button id="ID_HOSTCACHE_KAD_CACHE" text="Cache do Kademlia"/>
 	</toolbar>
 	<!-- PRIVATE CHAT FRAME -->
 	<toolbar name="CPrivateChatFrame">
@@ -423,6 +425,32 @@
 		<separator/>
 		<button id="ID_CHAT_CONNECT" text="Conectar" visible="false"/>
 		<button id="ID_CHAT_DISCONNECT" text="Desconectar"/>
+	</toolbar>
+	<toolbar name="WebServices.ShareMonkey">
+		<button id="ID_SHAREMONKEY_DOWNLOAD" text="Obter Dados"/>
+		<separator/>
+		<button id="ID_SHAREMONKEY_PREVIOUS" text="Anterior"/>
+		<button id="ID_SHAREMONKEY_NEXT" text="Próximo"/>
+		<separator/>
+		<button id="ID_SHAREMONKEY_PRICES" text="Obter Preços"/>
+		<button id="ID_SHAREMONKEY_COMPARE" text="Comparar"/>
+		<button id="ID_SHAREMONKEY_BUY" text="Comprar"/>
+	</toolbar>
+	<toolbar name="WebServices.ShareMonkey.WithSave">
+		<button id="ID_SHAREMONKEY_DOWNLOAD" text="Obter Dados"/>
+		<button id="ID_SHAREMONKEY_SAVE" text="Salvar"/>
+		<separator/>
+		<button id="ID_SHAREMONKEY_PREVIOUS" text="Anterior"/>
+		<button id="ID_SHAREMONKEY_NEXT" text="Próximo"/>
+		<separator/>
+		<button id="ID_SHAREMONKEY_PRICES" text="Obter Preços"/>
+		<button id="ID_SHAREMONKEY_COMPARE" text="Comparar"/>
+		<button id="ID_SHAREMONKEY_BUY" text="Comprar"/>
+	</toolbar>
+	<toolbar name="WebServices.MusicBrainz">
+		<button id="ID_MUSICBRAINZ_MATCHES" text="Visualizar as Combinações dos Álbuns"/>
+		<button id="ID_MUSICBRAINZ_ALBUMS" text="Visualizar Todos os Álbuns"/>
+		<separator/>
 	</toolbar>
 	<!-- IMAGE VIEWER WINDOW -->
 	<toolbar name="ImageViewer_Toolbar">
@@ -846,6 +874,8 @@
 			<item id="ID_HOSTCACHE_G2_CACHE" text="Cache Gnutella 2"/>
 			<item id="ID_HOSTCACHE_G1_CACHE" text="Cache Gnutella 1"/>
 			<item id="ID_HOSTCACHE_ED2K_CACHE" text="Servidores eDonkey"/>
+			<item id="ID_HOSTCACHE_BT_CACHE" text="Cache do BitTorrent"/>
+			<item id="ID_HOSTCACHE_KAD_CACHE" text="Cache do Kademlia"/>
 		</menu>
 		<separator/>
 		<item id="ID_HOSTCACHE_IMPORT" text="Importar Arquivo .MET..."/>
@@ -1400,8 +1430,14 @@
 	</menu>
 	<!-- SYSTEM WINDOW -->
 	<menu name="CSystemWnd">
-		<item id="ID_SYSTEM_VERBOSE" text="Modo Verboso"/>
-		<item id="ID_SYSTEM_TIMESTAMP" text="Horário"/>
+		<menu id="ID_SYSTEM_VERBOSE" text="Modo Verboso"/>
+			<item id="ID_SYSTEM_VERBOSE_ERROR" text="Erro"/>
+			<item id="ID_SYSTEM_VERBOSE_WARNING" text="Aviso"/>
+			<item id="ID_SYSTEM_VERBOSE_NOTICE" text="Nota"/>
+			<item id="ID_SYSTEM_VERBOSE_INFO" text="Info"/>
+			<item id="ID_SYSTEM_VERBOSE_DEBUG" text="Debug"/>
+		</menu>
+		<item id="ID_SYSTEM_TIMESTAMP" text="Estampa de tempo"/>
 		<separator/>
 		<item id="ID_SYSTEM_COPY" text="Copiar" shortcut="Ctrl+C"/>
 		<separator/>
@@ -1544,6 +1580,7 @@
 	</menu>
 	<menu name="WebServices.List.Menu">
 		<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Bitzi"/>
+		<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 		<item id="ID_WEBSERVICES_SHAREMONKEY" text="_ShareMonkey"/>
 	</menu>
 </menus>
@@ -1732,22 +1769,23 @@
 		<text group="24" align="middle" id="G2Hubs">%i hubs</text>
 		<text group="25" align="middle" id="G2Leaves">%i leaves</text>
 		<newline group="20" gap="2"/>
-		<icon group="30" command="ID_NETWORK_ED2K"/><gap group="30" size="4"/>
-		<text group="30" align="middle" format="b">eDonkey: </text>
-		<text group="31" align="middle">Desconectado</text>
-		<text group="32" align="middle">Conectando...</text>
-		<text group="33" align="middle">Conectado</text>
-		<newline group="30" gap="2"/>
 		<icon group="10" command="ID_NETWORK_G1"/><gap group="10" size="4"/>
 		<text group="10" align="middle" format="b">Gnutella1: </text>
 		<text group="11" align="middle">Desconectado</text>
 		<text group="12" align="middle">Conectando...</text>
 		<text group="13" align="middle">Conectado</text>
 		<newline group="10" gap="2"/>
+		<icon group="30" command="ID_NETWORK_ED2K"/><gap group="30" size="4"/>
+		<text group="30" align="middle" format="b">eDonkey: </text>
+		<text group="31" align="middle">Desconectado</text>
+		<text group="32" align="middle">Conectando...</text>
+		<text group="33" align="middle">Conectado</text>
+		<newline group="30" gap="2"/>
 		<group id="2">
 			<para align="center">
 				<newline gap="6"/>
 				<text>Você está conectado há </text>
+				<newline gap="0"/>
 				<text id="ConnectedHours" format="b">%i </text>
 				<text>hora(s) e </text>
 				<text id="ConnectedMinutes" format="b">%i </text>
@@ -3849,6 +3887,7 @@
 	<dialog name="CFilterSearchDlg" cookie="BuEdStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuCoBuBuBuBuBuBuBu" caption="Filtrar Combinações">
 		<control caption="Apenas mostrar combinações que incluam as palavras:"/>
 		<control/>
+		<control caption="Reg. Exp."/>
 		<control caption="(você também pode excluir palavras com -palavra )"/>
 		<control caption="E que são de tamanho:"/>
 		<control caption="Mínimo:"/>
@@ -4291,11 +4330,13 @@
 		<control caption="OK"/>
 		<control/><control/>
 	</dialog>
-	<dialog name="CDecodeMetadataDlg" cookie="BuBuStCo" caption="Localização da Metadata">
+	<dialog name="CDecodeMetadataDlg" cookie="StCoBuBuBuStStBuBu" caption="Localização da Metadata">
+		<control caption="Por favor selecione o método de re-encodificação:"/>
+		<control caption="Árabe|Báltico|Centro Europeu|Chinês simplificado|Chinês tradicional|Cirílico|Grego|Hebreu|Japonês|Coreano|Tailandês|Turco|Vietnamita"/>
+		<control caption="Prever:"/>
+		<control/><control/>	<control/><control/>
 		<control caption="OK"/>
 		<control caption="Cancelar"/>
-		<control caption="Por favor selecione o método de recodificação"/>
-		<control caption="Arábe|Báltico|Europeu Central|Chinês Simplificado|Chinês Tradicional|Cirílico|Grego|Hebreu|Japonês|Coreano|Tailândes|Turco|Vietnamita"/>
 	</dialog>
 </dialogs>
 <!-- Columns Definitions -->
