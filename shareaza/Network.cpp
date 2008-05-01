@@ -401,22 +401,31 @@ BOOL CNetwork::ConnectTo(LPCTSTR pszAddress, int nPort, PROTOCOLID nProtocol, BO
 }
 
 //////////////////////////////////////////////////////////////////////
-// CNetwork local IP aquisition and sending
+// CNetwork local IP acquisition and sending
 
 void CNetwork::AcquireLocalAddress(LPCTSTR pszHeader)
 {
-	int nIP[4];
+	int nIPb1, nIPb2, nIPb3, nIPb4;
 	
-	if ( _stscanf( pszHeader, _T("%i.%i.%i.%i"), &nIP[0], &nIP[1], &nIP[2], &nIP[3] ) != 4 ) return;
+	if ( _stscanf( pszHeader, _T("%i.%i.%i.%i"), &nIPb1, &nIPb2, &nIPb3, &nIPb4 ) != 4 ||
+		nIPb1 < 0 || nIPb1 > 255 ||
+		nIPb2 < 0 || nIPb2 > 255 ||
+		nIPb3 < 0 || nIPb3 > 255 ||
+		nIPb4 < 0 || nIPb4 > 255 )
+		return;
 	
 	IN_ADDR pAddress;
 	
-	pAddress.S_un.S_un_b.s_b1 = (BYTE)nIP[0];
-	pAddress.S_un.S_un_b.s_b2 = (BYTE)nIP[1];
-	pAddress.S_un.S_un_b.s_b3 = (BYTE)nIP[2];
-	pAddress.S_un.S_un_b.s_b4 = (BYTE)nIP[3];
+	pAddress.S_un.S_un_b.s_b1 = (BYTE)nIPb1;
+	pAddress.S_un.S_un_b.s_b2 = (BYTE)nIPb2;
+	pAddress.S_un.S_un_b.s_b3 = (BYTE)nIPb3;
+	pAddress.S_un.S_un_b.s_b4 = (BYTE)nIPb4;
 	
 	if ( IsFirewalledAddress( &pAddress, FALSE, TRUE ) ) return;
+	
+	// Add new address to address list
+	if ( ! m_pHostAddresses.Find( pAddress.s_addr ) )
+		m_pHostAddresses.AddTail( pAddress.s_addr );
 	
 	m_pHost.sin_addr = pAddress;
 }
