@@ -786,33 +786,18 @@ void CShareazaApp::InitResources()
 	}
 
 	// It is not necessary to call LoadLibrary on Kernel32.dll, because it is already loaded into every process address space.
-	m_hKernel = GetModuleHandle( _T("kernel32.dll") );
-
-	//Get the amount of installed memory.
-	m_nPhysicalMemory = 0;
-	if ( m_hKernel != NULL )
-	{	//Use GlobalMemoryStatusEx if possible (WinXP)
-		BOOL (WINAPI *m_pfnGlobalMemoryStatusEx)( LPMEMORYSTATUSEX );
-		MEMORYSTATUSEX pMemory;
-
-		pMemory.dwLength = sizeof(pMemory);
-		(FARPROC&)m_pfnGlobalMemoryStatusEx = GetProcAddress( m_hKernel, "GlobalMemoryStatusEx" );
-
-		if ( m_pfnGlobalMemoryStatusEx && (*m_pfnGlobalMemoryStatusEx)( &pMemory ) )
-			m_nPhysicalMemory = pMemory.ullTotalPhys;
-	}
-
-	if ( m_nPhysicalMemory == 0 )
-	{	//Fall back to GlobalMemoryStatus (always available)
-		MEMORYSTATUS pMemory;
-		GlobalMemoryStatus( &pMemory ); 
-		m_nPhysicalMemory = pMemory.dwTotalPhys;
-	}
-
-	if ( m_hKernel != NULL )
+	if ( ( m_hKernel = GetModuleHandle( _T("kernel32.dll") ) ) != NULL )
+	{
 		(FARPROC&)m_pfnGetDiskFreeSpaceExW = GetProcAddress( m_hKernel, "GetDiskFreeSpaceExW" );
+		(FARPROC&)m_pfnCopyFileExW = GetProcAddress( m_hKernel, "CopyFileExW" );
+		(FARPROC&)m_pfnGlobalMemoryStatusEx = GetProcAddress( m_hKernel, "GlobalMemoryStatusEx" );
+	}
 	else
+	{
 		m_pfnGetDiskFreeSpaceExW = NULL;
+		m_pfnCopyFileExW = NULL;
+		m_pfnGlobalMemoryStatusEx = NULL;
+	}
 
 	if ( ( m_hShellFolder = LoadLibrary( _T("shfolder.dll") ) ) != NULL )
 		(FARPROC&)m_pfnSHGetFolderPathW = GetProcAddress( m_hShellFolder, "SHGetFolderPathW" );
@@ -893,6 +878,24 @@ void CShareazaApp::InitResources()
 
 	// We load it in a custom way, so Shareaza plugins can use this library also when it isn't in its search path but loaded by CustomLoadLibrary (very useful when running Shareaza inside Visual Studio)
 	m_hLibGFL = CustomLoadLibrary( _T("libgfl280.dll") );
+
+	// Get the amount of installed memory.
+	m_nPhysicalMemory = 0;
+	if ( m_pfnGlobalMemoryStatusEx )
+	{
+		// Use GlobalMemoryStatusEx if possible (WinXP)
+		MEMORYSTATUSEX pMemory = {};
+		pMemory.dwLength = sizeof(pMemory);
+		if (  (*m_pfnGlobalMemoryStatusEx)( &pMemory ) )
+			m_nPhysicalMemory = pMemory.ullTotalPhys;
+	}
+	if ( m_nPhysicalMemory == 0 )
+	{
+		// Fall back to GlobalMemoryStatus (always available)
+		MEMORYSTATUS pMemory;
+		GlobalMemoryStatus( &pMemory ); 
+		m_nPhysicalMemory = pMemory.dwTotalPhys;
+	}
 
 	HDC screen = GetDC( 0 );
 	scaleX = GetDeviceCaps( screen, LOGPIXELSX ) / 96.0;

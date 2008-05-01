@@ -30,6 +30,7 @@
 #include "DlgFileCopy.h"
 #include "CtrlSharedFolder.h"
 #include "Skin.h"
+#include "XML.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -249,8 +250,8 @@ void CFileCopyDlg::OnRun()
 	while ( m_bThread )
 	{
 		CString strName, strPath;
-		BOOL bMetaData = FALSE;
-
+		CSchema* pSchema = NULL;
+		CXMLElement* pMetadata = NULL;
 		CLibraryFile* pFile;
 		{
 			CQuickLock oLock( Library.m_pSection );
@@ -265,7 +266,8 @@ void CFileCopyDlg::OnRun()
 			{
 				strName		= pFile->m_sName;
 				strPath		= pFile->m_pFolder->m_sPath;
-				bMetaData	= ( pFile->m_pMetadata != NULL ) && ! pFile->m_bMetadataAuto;
+				pSchema		= pFile->m_pSchema;
+				pMetadata	= pFile->m_pMetadata->Clone();
 			}
 		}
 
@@ -273,11 +275,51 @@ void CFileCopyDlg::OnRun()
 
 		m_wndProgress.OffsetPos( 1 );
 
-		//
 		m_wndFileName.SetWindowText( strName );
-		ProcessFile( strName, strPath, bMetaData );
-		//
 
+		if ( ProcessFile( strName, strPath ) )
+		{
+			CQuickLock oLock( Library.m_pSection );
+
+			CLibraryFolder* pTargetFolder = LibraryFolders.GetFolder( m_sTarget );
+			if ( pTargetFolder )
+			{
+				bool bNew = false;
+				CLibraryFile* pTargetFile = pTargetFolder->GetFile( strName );
+				if ( pTargetFile == NULL )
+				{
+					pTargetFile = new CLibraryFile( pTargetFolder, strName );
+					pTargetFolder->m_pFiles.SetAt(
+						pTargetFile->GetNameLC(), pTargetFile );
+					pTargetFolder->m_nFiles++;
+					pTargetFolder->m_nUpdateCookie++;
+					bNew = true;
+				}
+				
+				if ( pSchema )
+				{
+					pTargetFile->m_pSchema = pSchema;
+					pSchema = NULL;
+				}
+
+				if ( pMetadata )
+				{
+					if ( pTargetFile->m_pMetadata )
+					{
+						pMetadata->Merge( pTargetFile->m_pMetadata );
+						delete pTargetFile->m_pMetadata;
+					}
+					pTargetFile->m_pMetadata = pMetadata;
+					pMetadata = NULL;
+					pTargetFile->ModifyMetadata();
+				}
+
+				if ( bNew )
+					Library.AddFile( pTargetFile );
+			}
+		}
+
+		delete pMetadata;
 /*
 		// Alternate code to check if file is hashing first
 		CString sCurrent, sFile;
@@ -311,7 +353,7 @@ void CFileCopyDlg::OnRun()
 //////////////////////////////////////////////////////////////////////
 // CFileCopyDlg file processing
 
-BOOL CFileCopyDlg::ProcessFile(CString& strName, CString& strPath, BOOL bMetaData)
+BOOL CFileCopyDlg::ProcessFile(CString& strName, CString& strPath)
 {
 	if ( strPath.CompareNoCase( m_sTarget ) == 0 ) return FALSE;
 
@@ -341,33 +383,6 @@ BOOL CFileCopyDlg::ProcessFile(CString& strName, CString& strPath, BOOL bMetaDat
 		}
 	}
 	CloseHandle( hFile );
-
-	// Move the metadata
-	if ( bMetaData )
-	{
-		CString strMetaFolder = strPath + _T("\\Metadata");
-
-		sSource = strMetaFolder + _T("\\") + strName + _T(".xml");
-
-		sTarget = m_sTarget + _T("\\Metadata");
-		CreateDirectory( sTarget );
-		sTarget += _T("\\") + strName + _T(".xml");
-
-		if ( sSource.CompareNoCase( sTarget ) == 0 ) return FALSE;
-
-		if ( m_bMove )
-		{
-			if ( ProcessMove( sSource, sTarget ) )
-			{
-				Sleep( 50 );
-				RemoveDirectory( strMetaFolder );
-			}
-		}
-		else
-		{
-			ProcessCopy( sSource, sTarget );
-		}
-	}
 
 	// Move the file
 	sSource = strPath + _T("\\") + strName;
@@ -445,23 +460,18 @@ BOOL CFileCopyDlg::ProcessMove(LPCTSTR pszSource, LPCTSTR pszTarget)
 	return FALSE;
 }
 
-typedef DWORD (WINAPI *LPPROGRESS_ROUTINE_X)(LARGE_INTEGER TotalFileSize, LARGE_INTEGER TotalBytesTransferred, LARGE_INTEGER StreamSize, LARGE_INTEGER StreamBytesTransferred, DWORD dwStreamNumber, DWORD dwCallbackReason, HANDLE hSourceFile, HANDLE hDestinationFile, LPVOID lpData OPTIONAL);
-
 BOOL CFileCopyDlg::ProcessCopy(LPCTSTR pszSource, LPCTSTR pszTarget)
 {
 	if ( ! CheckTarget( pszTarget ) ) return FALSE;
 
 	if ( theApp.m_hKernel != NULL )
 	{
-		BOOL (WINAPI *pfnCopyFileExW)(LPCWSTR, LPCWSTR, LPPROGRESS_ROUTINE_X, LPVOID, LPBOOL, DWORD);
-		(FARPROC&)pfnCopyFileExW = GetProcAddress( theApp.m_hKernel, "CopyFileExW" );
-
-		if ( pfnCopyFileExW != NULL )
+		if ( theApp.m_pfnCopyFileExW != NULL )
 		{
 			m_wndFileProg.SetPos( 0 );
 			m_nFileProg = 0;
 
-			BOOL bResult = pfnCopyFileExW( pszSource, pszTarget, CopyCallback, this,
+			BOOL bResult = theApp.m_pfnCopyFileExW( pszSource, pszTarget, CopyCallback, this,
 				&m_bCancel, COPY_FILE_FAIL_IF_EXISTS );
 
 			if ( ! bResult && ! m_bThread ) DeleteFile( pszTarget );

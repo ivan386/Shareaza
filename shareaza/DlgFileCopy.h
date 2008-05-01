@@ -19,9 +19,6 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_DLGFILECOPY_H__35C04685_7B85_4022_A702_983686FCBD9B__INCLUDED_)
-#define AFX_DLGFILECOPY_H__35C04685_7B85_4022_A702_983686FCBD9B__INCLUDED_
-
 #pragma once
 
 #include "DlgSkinDialog.h"
@@ -71,7 +68,7 @@ protected:
 	void		StartOperation();
 	void		StopOperation();
 	void		OnRun();
-	BOOL		ProcessFile(CString& strName, CString& strPath, BOOL bMetaData);
+	BOOL		ProcessFile(CString& strName, CString& strPath);
 	BOOL		CheckTarget(LPCTSTR pszTarget);
 	BOOL		ProcessMove(LPCTSTR pszSource, LPCTSTR pszTarget);
 	BOOL		ProcessCopy(LPCTSTR pszSource, LPCTSTR pszTarget);
@@ -100,8 +97,4 @@ protected:
 
 };
 
-//{{AFX_INSERT_LOCATION}}
-
 #define IDC_FOLDERS	100
-
-#endif // !defined(AFX_DLGFILECOPY_H__35C04685_7B85_4022_A702_983686FCBD9B__INCLUDED_)

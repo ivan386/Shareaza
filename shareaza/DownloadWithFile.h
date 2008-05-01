@@ -19,9 +19,6 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_DOWNLOADWITHFILE_H__79FE6B65_04DF_4CD5_A1BC_9AF8429664DC__INCLUDED_)
-#define AFX_DOWNLOADWITHFILE_H__79FE6B65_04DF_4CD5_A1BC_9AF8429664DC__INCLUDED_
-
 #pragma once
 
 #include "DownloadWithTransfers.h"
@@ -68,7 +65,6 @@ protected:
 	void			CloseFile();
 	void			DeleteFile(BOOL bForce = FALSE);
 	BOOL			RunFile(DWORD tNow);
-//	BOOL			WriteMetadata(LPCTSTR pszPath);
 	BOOL			AppendMetadata();
 	virtual void	Serialize(CArchive& ar, int nVersion);
 private:
@@ -76,5 +72,3 @@ private:
 	BOOL			AppendMetadataID3v1(HANDLE hFile, CXMLElement* pXML);
 	
 };
-
-#endif // !defined(AFX_DOWNLOADWITHFILE_H__79FE6B65_04DF_4CD5_A1BC_9AF8429664DC__INCLUDED_)

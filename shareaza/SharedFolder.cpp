@@ -346,24 +346,11 @@ void CLibraryFolder::PathToName()
 BOOL CLibraryFolder::ThreadScan(volatile BOOL* pbContinue, DWORD nScanCookie)
 {
 	CSingleLock pLock( &Library.m_pSection );
-//	CString strMetaData;
-//	LPCTSTR pszMetaData = NULL;
 	WIN32_FIND_DATA pFind;
 	HANDLE hSearch;
 	
 	if ( m_sPath.CompareNoCase( Settings.Downloads.IncompletePath ) == 0 ) return FALSE;
-	
-/*	strMetaData = m_sPath + _T("\\Metadata");
-	
-	hSearch = FindFirstFile( strMetaData + _T("\\*.*"), &pFind );
-	
-	if ( hSearch != INVALID_HANDLE_VALUE )
-	{
-		FindClose( hSearch );
-		strMetaData += '\\';
-		pszMetaData = strMetaData;
-	}*/
-	
+
 	hSearch = FindFirstFile( m_sPath + _T("\\*.*"), &pFind );
 	
 	pLock.Lock();

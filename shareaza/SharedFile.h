@@ -19,9 +19,6 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_SHAREDFILE_H__8FFCC311_D43C_445D_BAEB_575AE2AE8E99__INCLUDED_)
-#define AFX_SHAREDFILE_H__8FFCC311_D43C_445D_BAEB_575AE2AE8E99__INCLUDED_
-
 #pragma once
 
 #include "ShareazaFile.h"
@@ -110,7 +107,6 @@ public:
 	BOOL			SetMetadata(CXMLElement* pXML);
 	CString			GetMetadataWords() const;
 	void			ModifyMetadata();		// Mark metadata as modified
-//	BOOL			SaveMetadata();
 	CTigerTree*		GetTigerTree();
 	CED2K*			GetED2K();
 public:
@@ -120,7 +116,6 @@ public:
 protected:
 	void			Serialize(CArchive& ar, int nVersion);
 	BOOL			ThreadScan(CSingleLock& pLock, DWORD nScanCookie, QWORD nSize, FILETIME* pTime/*, LPCTSTR pszMetaData*/);
-//	BOOL			LoadMetadata(HANDLE hFile);
 	void			OnDelete(BOOL bDeleteGhost = FALSE, TRISTATE bCreateGhost = TRI_UNKNOWN);
 	void			Ghost();
     BOOL			OnVerifyDownload(
@@ -201,6 +196,3 @@ public:
 	BOOL	IsExpired(FILETIME& tNow);
 
 };
-
-
-#endif // !defined(AFX_SHAREDFILE_H__8FFCC311_D43C_445D_BAEB_575AE2AE8E99__INCLUDED_)

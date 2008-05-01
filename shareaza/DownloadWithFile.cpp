@@ -144,21 +144,12 @@ void CDownloadWithFile::DeleteFile(BOOL bForce)
 	
 	Uploads.OnRename( m_sDiskName, NULL, bForce );
 	
-	int nPos = m_sDiskName.ReverseFind( '\\' );
-	CString strMetadata;
-	
-	if ( nPos > 0 )
-	{
-		strMetadata = m_sDiskName.Left( nPos ) + _T("\\Metadata") + m_sDiskName.Mid( nPos ) + _T(".xml");
-	}
-	
 	if ( m_pFile != NULL )
 	{
 		if ( GetVolumeComplete() == 0 || ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 ) == 0 )
 		{
 			if ( ! ::DeleteFile( m_sDiskName ) )
 				theApp.WriteProfileString( _T("Delete"), m_sDiskName, _T("") );
-			if ( strMetadata.GetLength() ) ::DeleteFile( strMetadata );
 		}
 		else
 		{
@@ -169,7 +160,6 @@ void CDownloadWithFile::DeleteFile(BOOL bForce)
 	{
 		if ( ! ::DeleteFile( m_sDiskName ) )
 			theApp.WriteProfileString( _T("Delete"), m_sDiskName, _T("") );
-		if ( strMetadata.GetLength() ) ::DeleteFile( strMetadata );
 	}
 	
 	SetModified();
@@ -546,54 +536,6 @@ BOOL CDownloadWithFile::RunFile(DWORD /*tNow*/)
 	
 	return FALSE;
 }
-
-//////////////////////////////////////////////////////////////////////
-// CDownloadWithFile write the metadata
-
-/*BOOL CDownloadWithFile::WriteMetadata(LPCTSTR pszPath)
-{
-	ASSERT( m_pXML != NULL );
-	
-	CXMLElement* pElement = m_pXML->GetFirstElement();
-	if ( pElement == NULL || pElement->GetName() == L"comments" ||
-		 pElement->GetElementCount() == 0 ) // Only comments or an empty file, don't save it
-	{
-		delete m_pXML;
-		m_pXML = NULL;
-		return FALSE;
-	}
-
-	CString strXML = m_pXML->ToString( TRUE, TRUE );
-	delete m_pXML;
-	m_pXML = NULL;
-	
-	CString strMetadata;
-	
-	strMetadata.Format( _T("%s\\Metadata"), pszPath );
-	CreateDirectory( strMetadata );
-	SetFileAttributes( strMetadata, FILE_ATTRIBUTE_HIDDEN );
-	
-	strMetadata += m_sDiskName.Mid( m_sDiskName.ReverseFind( '\\' ) );
-	strMetadata += _T(".xml");
-	
-	HANDLE hFile = CreateFile( strMetadata, GENERIC_WRITE,
-		0, NULL, CREATE_ALWAYS,
-		FILE_ATTRIBUTE_NORMAL, NULL );
-	VERIFY_FILE_ACCESS( hFile, strMetadata )
-	if ( hFile == INVALID_HANDLE_VALUE ) return FALSE;
-	
-	DWORD nWritten;
-	
-	int nASCII = WideCharToMultiByte( CP_UTF8, 0, strXML, strXML.GetLength(), NULL, 0, NULL, NULL );
-	LPSTR pszASCII = new CHAR[ nASCII ];
-	WideCharToMultiByte( CP_UTF8, 0, strXML, strXML.GetLength(), pszASCII, nASCII, NULL, NULL );
-	WriteFile( hFile, pszASCII, nASCII, &nWritten, NULL );
-	delete [] pszASCII;
-	
-	CloseHandle( hFile );
-	
-	return TRUE;
-}*/
 
 //////////////////////////////////////////////////////////////////////
 // CDownloadWithFile append intrinsic metadata

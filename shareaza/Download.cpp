@@ -546,9 +546,6 @@ void CDownload::OnMoved(CDownloadTask* pTask)
 		
 		theApp.Message( MSG_NOTICE, IDS_DOWNLOAD_MOVED,
 			(LPCTSTR)GetDisplayName(), (LPCTSTR)m_sDiskName );
-		
-//		if ( m_pXML != NULL && Settings.Downloads.Metadata )
-//			WriteMetadata( pTask->m_sPath );
 	}
 	else
 	{
