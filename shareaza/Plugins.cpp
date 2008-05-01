@@ -313,22 +313,30 @@ BOOL CPlugins::OnCommand(CChildWnd* pActiveWnd, UINT nCommandID)
 //////////////////////////////////////////////////////////////////////
 // CPlugins file execution events
 
-BOOL CPlugins::OnExecuteFile(LPCTSTR pszFile, BOOL bHasThumbnail)
+BOOL CPlugins::OnExecuteFile(LPCTSTR pszFile, BOOL bUseImageViewer)
 {
 	COleVariant vFile( pszFile );
 	vFile.ChangeType( VT_BSTR );
 
+	CPlugin* pImageViewer = NULL;
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
 		CPlugin* pPlugin = GetNext( pos );
 
 		if ( pPlugin->m_pExecute )
 		{
-			if ( pPlugin->m_sName == _T("Shareaza Image Viewer") && ! bHasThumbnail )
+			if ( pPlugin->m_sName == _T("Shareaza Image Viewer") )
+			{
+				pImageViewer = pPlugin;
 				continue;
+			}
 			if ( pPlugin->m_pExecute->OnExecute( vFile.bstrVal ) == S_OK )
 				return TRUE;
 		}
+	}
+	if ( bUseImageViewer && pImageViewer )
+	{
+		return ( pImageViewer->m_pExecute->OnExecute( vFile.bstrVal ) == S_OK );
 	}
 
 	return FALSE;

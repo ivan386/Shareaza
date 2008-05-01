@@ -285,8 +285,6 @@ void CLibraryFileView::OnUpdateLibraryLaunch(CCmdUI* pCmdUI)
 
 void CLibraryFileView::OnLibraryLaunch() 
 {
-	BOOL bHasThumbnail = FALSE;
-
 	CSingleLock pLock( &Library.m_pSection, TRUE );
 	
 	StartSelectedFileLoop();
@@ -324,10 +322,9 @@ void CLibraryFileView::OnLibraryLaunch()
 			}
 		}
 		
-		bHasThumbnail = pFile->m_bCachedPreview;		
 		pLock.Unlock();
 		
-		if ( ! CFileExecutor::Execute( strPath, FALSE, bHasThumbnail ) ) break;
+		if ( ! CFileExecutor::Execute( strPath, FALSE ) ) break;
 		
 		pLock.Lock();
 	}

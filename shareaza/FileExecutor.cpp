@@ -64,26 +64,24 @@ CLibraryWnd* CFileExecutor::GetLibraryWindow()
 	return (CLibraryWnd*)pMainWnd->m_pWindows.Open( RUNTIME_CLASS(CLibraryWnd), FALSE, TRUE );
 }
 
-void CFileExecutor::DetectFileType(LPCTSTR pszFile, bool& bVideo, bool& bAudio, bool& bImage)
+void CFileExecutor::DetectFileType(LPCTSTR pszFile, LPCTSTR szType, bool& bVideo, bool& bAudio, bool& bImage)
 {
 	if ( GetFileAttributes( pszFile ) & FILE_ATTRIBUTE_DIRECTORY )
 		return;
 
-	CString strType = CString( PathFindExtension( pszFile ) ).MakeLower();
-
 	CSchema* pSchema;
 	if ( ( pSchema = SchemaCache.Get( CSchema::uriAudio ) ) != NULL &&
-		pSchema->FilterType( strType ) )
+		pSchema->FilterType( szType ) )
 	{
 		bAudio = true;
 	}
 	else if ( ( pSchema = SchemaCache.Get( CSchema::uriVideo ) ) != NULL &&
-		pSchema->FilterType( strType ) )
+		pSchema->FilterType( szType ) )
 	{
 		bVideo = true;
 	}
 	else if ( ( pSchema = SchemaCache.Get( CSchema::uriImage ) ) != NULL &&
-		pSchema->FilterType( strType ) )
+		pSchema->FilterType( szType ) )
 	{
 		bImage = true;
 	}
@@ -92,7 +90,7 @@ void CFileExecutor::DetectFileType(LPCTSTR pszFile, bool& bVideo, bool& bAudio, 
 	if ( ! bAudio && ! bVideo && ! bImage )
 	{
 		CString strMime;
-		ShellIcons.Lookup( strType, NULL, NULL, NULL, &strMime );
+		ShellIcons.Lookup( szType, NULL, NULL, NULL, &strMime );
 		if ( ! strMime.IsEmpty() )
 		{
 			CString strMimeMajor = strMime.SpanExcluding( _T("/") );
@@ -124,7 +122,7 @@ void CFileExecutor::DetectFileType(LPCTSTR pszFile, bool& bVideo, bool& bAudio, 
 	}
 }
 
-BOOL CFileExecutor::Execute(LPCTSTR pszFile, BOOL bSkipSecurityCheck, BOOL bHasThumbnail, LPCTSTR pszExt)
+BOOL CFileExecutor::Execute(LPCTSTR pszFile, BOOL bSkipSecurityCheck, LPCTSTR pszExt)
 {
 	CWaitCursor pCursor;
 
@@ -162,7 +160,7 @@ BOOL CFileExecutor::Execute(LPCTSTR pszFile, BOOL bSkipSecurityCheck, BOOL bHasT
 	bool bVideo = false;
 	bool bAudio = false;
 	bool bImage = false;
-	DetectFileType( pszFile, bVideo, bAudio, bImage );
+	DetectFileType( pszFile, strType, bVideo, bAudio, bImage );
 
 	// Detect dangerous files by internal safe list
 	bool bDangerous = false;
@@ -235,7 +233,7 @@ BOOL CFileExecutor::Execute(LPCTSTR pszFile, BOOL bSkipSecurityCheck, BOOL bHasT
 	// Handle all by plugins
 	if ( ! bShiftKey )
 	{
-		if ( Plugins.OnExecuteFile( pszFile, bImage || bHasThumbnail || bPartial ) )
+		if ( Plugins.OnExecuteFile( pszFile, bImage || bPartial ) )
 			return TRUE;
 	}
 
@@ -270,7 +268,7 @@ BOOL CFileExecutor::Enqueue(LPCTSTR pszFile, BOOL /*bSkipSecurityCheck*/, LPCTST
 	bool bVideo = false;
 	bool bAudio = false;
 	bool bImage = false;
-	DetectFileType( pszFile, bVideo, bAudio, bImage );
+	DetectFileType( pszFile, strType, bVideo, bAudio, bImage );
 
 	// Handle video and audio files by internal player
 	bool bShiftKey = ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 ) != 0;

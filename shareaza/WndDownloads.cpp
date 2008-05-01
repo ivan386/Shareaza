@@ -375,7 +375,7 @@ void CDownloadsWnd::OnTimer(UINT_PTR nIDEvent)
 			{
 				pDownload->m_bWaitingPreview = FALSE;
 				CFile pFile;
-				CFileExecutor::Execute( pDownload->m_sDiskName + L".png", TRUE, TRUE );
+				CFileExecutor::Execute( pDownload->m_sDiskName + L".png", TRUE );
 			}
 		}
 
@@ -974,7 +974,7 @@ void CDownloadsWnd::OnDownloadsLaunch()
 				int nDot = pDownload->m_sDisplayName.ReverseFind( '.' );
 				CString strExt = pDownload->m_sDisplayName.Mid( nDot + 1 );
 				pLock.Unlock();
-				if ( ! CFileExecutor::Execute( strName, FALSE, FALSE, strExt ) ) break;
+				if ( ! CFileExecutor::Execute( strName, FALSE, strExt ) ) break;
 				pLock.Lock();
 				
 				if ( ++nCount >= 5 ) break;
@@ -992,7 +992,7 @@ void CDownloadsWnd::OnDownloadsLaunch()
 					int nDot = pDownload->m_sDisplayName.ReverseFind( '.' );
 					CString strExt = pDownload->m_sDisplayName.Mid( nDot + 1 );
 					pLock.Unlock();
-					if ( ! CFileExecutor::Execute( strName, FALSE, FALSE, strExt ) ) break;
+					if ( ! CFileExecutor::Execute( strName, FALSE, strExt ) ) break;
 					pLock.Lock();
 				}
 				

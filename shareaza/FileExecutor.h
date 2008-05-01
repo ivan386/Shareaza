@@ -28,7 +28,7 @@ class CLibraryWnd;
 class CFileExecutor
 {
 public:
-	static BOOL		Execute(LPCTSTR pszFile, BOOL bSkipSecurityCheck = FALSE, BOOL bHasThumbnail = FALSE, LPCTSTR pszExt = NULL);
+	static BOOL		Execute(LPCTSTR pszFile, BOOL bSkipSecurityCheck = FALSE, LPCTSTR pszExt = NULL);
 	static BOOL		Enqueue(LPCTSTR pszFiles, BOOL bSkipSecurityCheck = FALSE, LPCTSTR pszExt = NULL);
 	static BOOL		ShowBitziTicket(DWORD nFile);
 	static BOOL		DisplayURL(LPCTSTR pszURL);
@@ -41,5 +41,5 @@ protected:
 	static CLibraryWnd*	GetLibraryWindow();
 
 	// Is file a video, audio or image file?
-	static void DetectFileType(LPCTSTR pszFile, bool& bVideo, bool& bAudio, bool& bImage);
+	static void DetectFileType(LPCTSTR pszFile, LPCTSTR szType, bool& bVideo, bool& bAudio, bool& bImage);
 };

@@ -19,9 +19,6 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_PLUGINS_H__3EDF2C68_FCEB_438E_A5CD_CF5DC1114FC4__INCLUDED_)
-#define AFX_PLUGINS_H__3EDF2C68_FCEB_438E_A5CD_CF5DC1114FC4__INCLUDED_
-
 #pragma once
 
 class CPlugin;
@@ -49,7 +46,7 @@ public:
 	UINT		GetCommandID();
 	BOOL		OnUpdate(CChildWnd* pActiveWnd, CCmdUI* pCmdUI);
 	BOOL		OnCommand(CChildWnd* pActiveWnd, UINT nCommandID);
-	BOOL		OnExecuteFile(LPCTSTR pszFile, BOOL bHasThumbnail = FALSE);
+	BOOL		OnExecuteFile(LPCTSTR pszFile, BOOL bUseImageViewer = FALSE);
 	BOOL		OnEnqueueFile(LPCTSTR pszFile);
 
 	inline POSITION GetIterator() const
@@ -92,5 +89,3 @@ public:
 };
 
 extern CPlugins Plugins;
-
-#endif // !defined(AFX_PLUGINS_H__3EDF2C68_FCEB_438E_A5CD_CF5DC1114FC4__INCLUDED_)
