@@ -518,12 +518,6 @@ BOOL CLibraryMetaPanel::SetServicePanel(CMetaPanel* pPanel, CBitmap* pBitmap)
 {
 	m_pSection.Lock();
 
-	//if ( m_pServiceData != NULL && m_pServiceData != pPanel )
-	//{
-	//	m_bExternalData = FALSE;
-	//	delete m_pServiceData;
-	//}
-
 	m_pServiceData = pPanel;
 
 	if ( pBitmap != NULL && pBitmap->m_hObject )

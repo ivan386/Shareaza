@@ -108,6 +108,7 @@ public:
 	CRect			m_rect;
 	BOOL			m_bLink;
 	CString			m_sLink;
+	CString			m_sLinkName;
 public:
 	BOOL			m_bFullWidth;
 	int				m_nHeight;
@@ -127,6 +128,13 @@ public:
 		m_rect.top		= y1;
 		m_rect.right	= x2;
 		m_rect.bottom	= y2;
+	}
+
+	inline CString GetDisplayValue()
+	{
+		if ( m_bLink && m_sLinkName.GetLength() )
+			return m_sLinkName;
+		return m_sValue;
 	}
 };
 

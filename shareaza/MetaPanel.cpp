@@ -1,7 +1,7 @@
 //
 // MetaPanel.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -47,6 +47,7 @@ static char THIS_FILE[]=__FILE__;
 
 CMetaPanel::CMetaPanel()
 : m_nHeight(0)
+, m_pChild( NULL )
 {
 	m_bmMusicBrainz.LoadBitmap( IDB_MUSICBRAINZ_LOGO );
 }
@@ -72,7 +73,7 @@ int CMetaPanel::Layout(CDC* pDC, int nWidth)
 		CMetaItem* pItem = GetNext( pos );
 		if ( pItem->m_pMember && pItem->m_pMember->m_bHidden ) continue;
 
-		CSize sz = pDC->GetTextExtent( pItem->m_sValue );
+		CSize sz = pDC->GetTextExtent( pItem->GetDisplayValue() );
 		
 		if ( sz.cx <= nSmall )
 		{
@@ -81,8 +82,7 @@ int CMetaPanel::Layout(CDC* pDC, int nWidth)
 			
 			if ( CMetaItem* pNext = GetNext( pos ) )
 			{	
-				ASSERT( pNext->m_pMember );
-				while ( pNext && pNext->m_pMember->m_bHidden )
+				while ( pNext && pNext->m_pMember && pNext->m_pMember->m_bHidden )
 					pNext = GetNext( pos );
 
 				if ( pNext == NULL )
@@ -92,7 +92,7 @@ int CMetaPanel::Layout(CDC* pDC, int nWidth)
 					break;
 				}
 
-				sz = pDC->GetTextExtent( pNext->m_sValue );
+				sz = pDC->GetTextExtent( pNext->GetDisplayValue() );
 				
 				if ( sz.cx <= nSmall )
 				{
@@ -122,7 +122,7 @@ int CMetaPanel::Layout(CDC* pDC, int nWidth)
 			if ( sz.cx > nLarge )
 			{
 				CRect rcText( 0, 0, nLarge, 0xFFFF );
-				Skin.DrawWrappedText( pDC, &rcText, pItem->m_sValue, NULL, FALSE );
+				Skin.DrawWrappedText( pDC, &rcText, pItem->GetDisplayValue(), NULL, FALSE );
 				pItem->m_bFullWidth	= TRUE+TRUE;
 				pItem->m_nHeight	= rcText.top + 4;
 				m_nHeight += pItem->m_nHeight + 2;
@@ -202,8 +202,9 @@ void CMetaPanel::Paint(CDC* pDC, const CRect* prcArea)
 			pDC->SetTextColor( CoolInterface.m_crText );
 			pDC->SelectObject( &CoolInterface.m_fntBold );
 			
-			pDC->ExtTextOut( rcKey.left + 3, rcKey.top + 2, ETO_CLIPPED|ETO_OPAQUE,
-				&rcKey, pItem->m_sKey + ':', NULL );
+			CString strKey( pItem->m_sKey );
+			strKey.TrimRight( L" \x00A0" );
+			pDC->ExtTextOut( rcKey.left + 3, rcKey.top + 2, ETO_CLIPPED|ETO_OPAQUE, &rcKey, strKey + ':', NULL );
 			
 			if ( pItem->m_bLink )
 			{
@@ -219,19 +220,19 @@ void CMetaPanel::Paint(CDC* pDC, const CRect* prcArea)
 			{
 				CRect rcText( &rcValue );
 				rcText.DeflateRect( 3, 2 );
-				Skin.DrawWrappedText( pDC, &rcText, pItem->m_sValue, NULL, TRUE );
+				Skin.DrawWrappedText( pDC, &rcText, pItem->GetDisplayValue(), NULL, TRUE );
 				pDC->ExtTextOut( rcValue.left, rcValue.top, ETO_OPAQUE|dwFlags, &rcValue, NULL, 0, NULL );
 				pItem->m_rect.CopyRect( &rcValue );
 			}
 			else
 			{
 				pDC->ExtTextOut( rcValue.left + 3, rcValue.top + 2, ETO_CLIPPED|ETO_OPAQUE|dwFlags,
-					&rcValue, pItem->m_sValue, NULL );
+					&rcValue, pItem->GetDisplayValue(), NULL );
 				
 				pItem->m_rect.CopyRect( &rcValue );
 				
 				pItem->m_rect.right = pItem->m_rect.left + 6 +
-					pDC->GetTextExtent( pItem->m_sValue ).cx;
+					pDC->GetTextExtent( pItem->GetDisplayValue() ).cx;
 			}
 			
 			pDC->ExcludeClipRect( &rcKey );

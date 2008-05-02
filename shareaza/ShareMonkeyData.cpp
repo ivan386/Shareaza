@@ -58,17 +58,22 @@ CShareMonkeyData::~CShareMonkeyData()
 {
 	Stop();
 	Clear();
+	if ( m_pChild )
+	{
+		delete m_pChild;
+		m_pChild = NULL;
+	}
 	CMetaPanel::Clear();
 }
 
 void CShareMonkeyData::Clear()
 {
-	if ( m_pXML != NULL )
+	if ( m_pXML )
 	{
 		delete m_pXML;
 		m_pXML = NULL;
 	}
-	if ( m_pRazaXML != NULL )
+	if ( m_pRazaXML )
 	{
 		delete m_pRazaXML;
 		m_pRazaXML = NULL;
@@ -205,9 +210,12 @@ BOOL CShareMonkeyData::BuildRequest()
 		m_sURL += L"productMatch?v=latest&stores_amount=0&result_amount=1" + str;
 	}
 	else if ( m_nRequestType == stStoreMatch )
+	{
 		// storeMatch/<session_id>/<contributor_id>/<file_id>/<product_id>/COUNTRY
-		// storeMatch/1542917/197506/2958996/281801/US
-		m_sURL += L"storeMatch/%s/197506/0/%s/US";
+		CString str;
+		str.Format( L"storeMatch/%s/197506/0/%s/%s", m_sSessionID, m_sProductID, m_sCountry );
+		m_sURL += str;
+	}
 	else if ( m_nRequestType == stComparison )
 		m_sURL += L"productMatch?v=latest&stores_amount=0&result_amount=0";
 
@@ -421,7 +429,7 @@ BOOL CShareMonkeyData::DecodeResponse(CString& strMessage)
 
 	bool bFailed = false;
 	CString strStatus, strWarnings;
-	CXMLElement* pImportElement = NULL;
+	BOOL bResult = FALSE;
 
 	for ( POSITION pos = m_pXML->GetElementIterator() ; pos ; )
 	{
@@ -430,7 +438,7 @@ BOOL CShareMonkeyData::DecodeResponse(CString& strMessage)
 		{
 			CString strVersion = pElement->GetValue();
 			float nVersion = 0;
-			if ( _stscanf( strVersion, L"%f", &nVersion ) != 1 || nVersion > 1.4f )
+			if ( _stscanf( strVersion, L"%f", &nVersion ) != 1 || nVersion > 1.5f )
 			{
 				strMessage = L"Failed: Version mismatch.";
 				Clear();
@@ -477,30 +485,25 @@ BOOL CShareMonkeyData::DecodeResponse(CString& strMessage)
 		{
 			strWarnings = pElement->GetValue();
 		}
-		else if ( pElement->IsNamed( L"Product" ) && m_nRequestType == stProductMatch ||
-				  pElement->IsNamed( L"Store" ) && m_nRequestType == stStoreMatch )
+		else if ( pElement->IsNamed( L"Product" ) && m_nRequestType == stProductMatch )
 		{
-			pImportElement = pElement;
+			bResult = ImportData( pElement );
+		}
+		else if ( pElement->IsNamed( L"Store" ) && m_nRequestType == stStoreMatch )
+		{
+			bResult = ImportData( pElement ) || bResult;
 		}
 	}
 
 	strMessage = strStatus + L". " + strWarnings;
+	Clear();
 
 	if ( bFailed )
-	{
-		Clear();
 		return FALSE;
-	}
-
-	if ( m_nRequestType == stComparison )
-	{
-		Clear();
+	else if ( m_nRequestType == stComparison )
 		return TRUE;
-	}
-
-	BOOL bResult = ImportData( pImportElement );
-	Clear();
-	return bResult;
+	else 
+		return bResult;
 }
 
 BOOL CShareMonkeyData::ImportData(CXMLElement* pRoot)
@@ -597,14 +600,43 @@ BOOL CShareMonkeyData::ImportData(CXMLElement* pRoot)
 		//pItem->m_bValueDefined = m_sProductID.GetLength() > 0;
 
 		Combine( pXML );
-		CreateLinks();
 
 		delete m_pRazaXML;
 		m_pRazaXML = NULL;
 	}
 	else if ( m_nRequestType == stStoreMatch )
 	{
+		CXMLElement* pStore = pRoot->GetElementByName( L"StoreName" );
+		if ( pStore == NULL )
+			return FALSE;
+		CString strName = pStore->GetValue();
+		if ( strName.IsEmpty() )
+			return FALSE;
 
+		CXMLElement* pPrice = pRoot->GetElementByName( L"Price" );
+		if ( pPrice == NULL )
+			return FALSE;
+
+		CXMLElement* pValue = pPrice->GetElementByName( L"PriceFormatted" );
+		if ( pValue == NULL )
+			return FALSE;
+
+		CString strValue = pValue->GetValue();
+		if ( strValue.IsEmpty() )
+			return FALSE;
+		
+		CXMLElement* pLink = pRoot->GetElementByName( L"StoreURL" );
+		if ( pLink )
+		{
+			CString strLink;
+			strLink.Format( L"%s|%s", pLink->GetValue(), strValue );
+			
+			while ( Find( strName ) )
+				strName += '\x00A0';
+
+			CMetaItem* pItem = Add( strName, strLink );
+			pItem->m_bValueDefined = TRUE;
+		}
 	}
 
 	return TRUE;

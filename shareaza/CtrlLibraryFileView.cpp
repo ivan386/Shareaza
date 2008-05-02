@@ -918,20 +918,19 @@ void CLibraryFileView::ClearServicePages()
 	for ( POSITION pos = m_pServiceDataPages.GetHeadPosition() ; pos ; )
 	{
 		CMetaPanel* pPanelData = m_pServiceDataPages.GetNext( pos );
-		if ( GetFrame()->GetPanelData() == pPanelData )
-			GetFrame()->SetPanelData( NULL );
-		else
-			delete pPanelData;
+		delete pPanelData;
 	}
+
 	m_pServiceDataPages.RemoveAll();
 	m_nCurrentPage = 0;
 	m_ServiceFailed = FALSE;
+
+	GetFrame()->SetPanelData( NULL );
 }
 
 void CLibraryFileView::OnUpdateShareMonkeyLookup(CCmdUI* pCmdUI)
 {
-	pCmdUI->Enable( FALSE );
-	// pCmdUI->Enable( GetSelectedCount() == 1 && !m_bRequestingService );
+	pCmdUI->Enable( GetSelectedCount() == 1 && !m_bRequestingService );
 }
 
 void CLibraryFileView::OnShareMonkeyLookup()
@@ -1119,7 +1118,8 @@ void CLibraryFileView::OnUpdateShareMonkeySave(CCmdUI* pCmdUI)
 	BOOL bShow = TRUE;
 	if ( m_ServiceFailed && m_nCurrentPage == m_pServiceDataPages.GetCount() - 1 )
 		bShow = FALSE;
-	pCmdUI->Enable( bShow && !m_bRequestingService && m_pServiceDataPages.GetCount() > 0 );
+	// pCmdUI->Enable( bShow && !m_bRequestingService && m_pServiceDataPages.GetCount() > 0 );
+	pCmdUI->Enable( FALSE ); // temp disabled
 }
 
 void CLibraryFileView::OnShareMonkeySave()
@@ -1186,7 +1186,34 @@ void CLibraryFileView::OnUpdateShareMonkeyPrices(CCmdUI* pCmdUI)
 
 void CLibraryFileView::OnShareMonkeyPrices()
 {
+	POSITION pos = m_pServiceDataPages.GetHeadPosition();
+	CMetaPanel* pPanelData = NULL;
 
+	// TODO: change m_pServiceDataPages to CMap. Now it's stupid
+	for ( INT_PTR nPage = 0 ; nPage <= m_nCurrentPage ; nPage++ )
+	{
+		pPanelData = m_pServiceDataPages.GetNext( pos );
+	}
+
+	CShareMonkeyData* pData = static_cast< CShareMonkeyData* >( pPanelData );
+	if ( pData->m_pChild == NULL )
+	{
+		CShareMonkeyData* pChild = new CShareMonkeyData( 0, CShareMonkeyData::stStoreMatch );
+		pData->m_pChild = pChild;
+		CString strStatus;
+		LoadString( strStatus, IDS_TIP_STATUS );
+		strStatus.TrimRight( ':' );
+		pChild->Add( strStatus, L"Please wait..." );
+		pChild->m_sSessionID = pData->m_sSessionID;
+		pChild->m_sProductID = pData->m_sProductID;
+
+		GetFrame()->SetPanelData( pChild );
+		pChild->Start( this, 0 );
+	}
+	else
+	{
+		GetFrame()->SetPanelData( pData->m_pChild );
+	}
 }
 
 void CLibraryFileView::OnUpdateShareMonkeyCompare(CCmdUI* pCmdUI)

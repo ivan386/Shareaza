@@ -196,6 +196,7 @@ void CMetaList::Setup(CMetaList* pMetaList)
 		{
 			pItem->m_sValue.Empty();
 			pItem->m_bValueDefined = FALSE;
+			pItem->m_bLink = FALSE;
 		}
 	}
 }
@@ -368,9 +369,7 @@ BOOL CMetaItem::Combine(CXMLElement* pXML)
 		return FALSE;
 	
 	CString strValue = m_pMember->GetValueFrom( pXML, NULL, TRUE );
-	
-	strValue.TrimLeft();
-	strValue.TrimRight();
+	strValue.Trim();
 	
 	if ( !m_bValueDefined )
 	{
@@ -440,7 +439,12 @@ BOOL CMetaItem::CreateLink()
 	if ( m_sValue.Find( _T("http://") ) == 0 || m_sValue.Find( _T("www.") ) == 0 ) 
 	{
 		m_bLink = TRUE;
-		m_sLink = m_sValue;
+
+		int curPos = 0;
+		m_sLink = m_sValue.Tokenize( L"|", curPos );
+		if ( curPos != -1 )
+			m_sLinkName = m_sValue.Tokenize( L"|", curPos );
+
 		return TRUE;
 	}
 
