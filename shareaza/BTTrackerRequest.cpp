@@ -24,7 +24,6 @@
 #include "Settings.h"
 #include "Network.h"
 #include "BENode.h"
-#include "BTClients.h"
 #include "BTTrackerRequest.h"
 #include "Transfers.h"
 #include "Downloads.h"
@@ -37,24 +36,17 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 
-BEGIN_MESSAGE_MAP(CBTTrackerRequest, CWinThread)
-	//{{AFX_MSG_MAP(CBTTrackerRequest)
-	//}}AFX_MSG_MAP
-END_MESSAGE_MAP()
-
 
 /////////////////////////////////////////////////////////////////////////////
 // CBTTrackerRequest construction
 
-CBTTrackerRequest::CBTTrackerRequest(CDownload* pDownload, LPCTSTR pszVerb, DWORD nNumWant, bool bProcess)
+CBTTrackerRequest::CBTTrackerRequest(CDownload* pDownload, LPCTSTR pszVerb, DWORD nNumWant, bool bProcess) :
+	m_pDownload( pDownload ),
+	m_bProcess( bProcess )
 {
 	ASSERT( pDownload != NULL );
 	ASSERT( pDownload->IsTorrent() ); 
-	
-	m_bAutoDelete	= FALSE;
-	m_pDownload		= pDownload;
-	m_bProcess		= bProcess;
-	
+		
 	CString strURL;
 	// Create the basic URL
 	strURL.Format( _T("%s?info_hash=%s&peer_id=%s&port=%i&uploaded=%I64i&downloaded=%I64i&left=%I64i&compact=1"),
@@ -104,16 +96,14 @@ CBTTrackerRequest::CBTTrackerRequest(CDownload* pDownload, LPCTSTR pszVerb, DWOR
 
 	theApp.Message( MSG_DEBUG, _T("[BT] Sending announce: %s"), strURL );
 
-	if ( BTClients.Add( this ) )
-	{
-		CreateThread();
-		SetThreadName( m_nThreadID, "BT Tracker Request" );
-	}
+	static_cast< CDownloadWithTorrent* >( m_pDownload )->Add( this );
+
+	BeginThread( "BT Tracker Request", ThreadStart, this );
 }
 
 CBTTrackerRequest::~CBTTrackerRequest()
 {
-	BTClients.Remove( this );
+	static_cast< CDownloadWithTorrent* >( m_pDownload )->Remove( this );
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -184,12 +174,13 @@ CString CBTTrackerRequest::Escape(const Hashes::BtGuid& oGUID)
 /////////////////////////////////////////////////////////////////////////////
 // CBTTrackerRequest run
 
-BOOL CBTTrackerRequest::InitInstance() 
+UINT CBTTrackerRequest::ThreadStart(LPVOID pParam)
 {
-	return TRUE;
+	( (CBTTrackerRequest*)pParam )->OnRun();
+	return 0;
 }
 
-int CBTTrackerRequest::Run()
+void CBTTrackerRequest::OnRun()
 {
 	// Check if the request return needs to be parsed
 	if ( m_bProcess )
@@ -203,12 +194,12 @@ int CBTTrackerRequest::Run()
 		m_pRequest.Execute( false );
 	}
 
-	return 0;
+	delete this;
 }
 
 void CBTTrackerRequest::Process(bool bRequest)
 {
-	// This is a "single-shot" thread so lock must be aquired
+	// This is a "single-shot" thread so lock must be acquired
 	CQuickLock oLock( Transfers.m_pSection );
 
 	ASSERT( Downloads.Check( m_pDownload ) );
@@ -268,7 +259,7 @@ void CBTTrackerRequest::Process(bool bRequest)
 	delete pRoot;
 }
 
-bool CBTTrackerRequest::Process(CBENode* pRoot)
+void CBTTrackerRequest::Process(CBENode* pRoot)
 {
 	CString strError;
 
@@ -279,7 +270,7 @@ bool CBTTrackerRequest::Process(CBENode* pRoot)
 		theApp.Message( MSG_ERROR, IDS_BT_TRACK_ERROR,
 			m_pDownload->GetDisplayName(), strError );
 		m_pDownload->OnTrackerEvent( false, strError );
-		return false;
+		return;
 	}
 
 	// Get the interval (next tracker contact)
@@ -288,7 +279,7 @@ bool CBTTrackerRequest::Process(CBENode* pRoot)
 	{
 		LoadString( strError, IDS_BT_TRACK_PARSE_ERROR );
 		m_pDownload->OnTrackerEvent( false, strError );
-		return false;
+		return;
 	}
 	QWORD nInterval = pInterval->GetInt();
 
@@ -368,6 +359,5 @@ bool CBTTrackerRequest::Process(CBENode* pRoot)
 
 	theApp.Message( MSG_INFO, IDS_BT_TRACK_SUCCESS,
 		m_pDownload->GetDisplayName(), nCount );
-	return true;
 }
 

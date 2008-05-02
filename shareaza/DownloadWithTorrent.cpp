@@ -85,10 +85,40 @@ CDownloadWithTorrent::~CDownloadWithTorrent()
 {
 	if ( m_bTorrentRequested )
 		SendStopped();
+
+	{
+		CSingleLock oLock( &m_pRequestsSection, TRUE );
+		while( ! m_pRequests.IsEmpty() )
+		{
+			oLock.Unlock();
+			Sleep( 100 );
+			oLock.Lock();
+		}
+	}
+
 	m_pPeerID.clear();
+
 	CloseTorrentUploads();
+
 	if ( m_pTorrentBlock )
 		delete [] m_pTorrentBlock;
+}
+
+void CDownloadWithTorrent::Add(CBTTrackerRequest* pRequest)
+{
+	CQuickLock oLock( m_pRequestsSection );
+
+	ASSERT( m_pRequests.Find( pRequest ) == NULL );
+	m_pRequests.AddTail( pRequest );
+}
+
+void CDownloadWithTorrent::Remove(CBTTrackerRequest* pRequest)
+{
+	CQuickLock oLock( m_pRequestsSection );
+
+	POSITION pos = m_pRequests.Find( pRequest );
+	ASSERT( pos != NULL );
+	m_pRequests.RemoveAt( pos );
 }
 
 TCHAR CDownloadWithTorrent::GenerateCharacter() const
@@ -683,7 +713,8 @@ void CDownloadWithTorrent::ChokeTorrent(DWORD tNow)
 			(DWORD)m_pTorrentUploads.GetCount() != GetBTSourceCount() &&
 			CanStartTransfers( tNow ) )
 		{
-			theApp.Message( MSG_DEBUG, _T("Attempting to push-start a BitTorrent upload")  ); 
+			theApp.Message( MSG_DEBUG, _T("Attempting to push-start a BitTorrent upload for %s"),
+				m_pTorrent.m_sName );
 			StartNewTransfer( tNow );
 		}
 	}

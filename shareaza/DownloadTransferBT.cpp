@@ -78,6 +78,10 @@ BOOL CDownloadTransferBT::Initiate()
 {
 	ASSERT( m_pClient == NULL );
 	ASSERT( m_nState == dtsNull );
+
+	theApp.Message( MSG_DEBUG, _T("Connecting to BitTorrent host %s..."),
+		(LPCTSTR)CString( inet_ntoa( m_pSource->m_pAddress ) ) );
+
 	m_pClient = new CBTClient();
 	if ( ! m_pClient->Connect( this ) )
 	{

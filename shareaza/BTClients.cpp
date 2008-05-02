@@ -25,7 +25,6 @@
 #include "Transfers.h"
 #include "BTClients.h"
 #include "BTClient.h"
-#include "BTTrackerRequest.h"
 #include "GProfile.h"
 
 #ifdef _DEBUG
@@ -40,8 +39,7 @@ CBTClients BTClients;
 //////////////////////////////////////////////////////////////////////
 // CBTClients construction
 
-CBTClients::CBTClients() :
-	m_bShutdown	( false )
+CBTClients::CBTClients()
 {
 }
 
@@ -55,12 +53,13 @@ CBTClients::~CBTClients()
 
 void CBTClients::Clear()
 {
-	for ( POSITION pos = GetIterator() ; pos ; )
+	CSingleLock oLock( &m_pListSection, TRUE );
+	while ( ! m_pList.IsEmpty() )
 	{
-		GetNext( pos )->Close();
+		oLock.Unlock();
+		m_pList.GetHead()->Close();
+		oLock.Lock();
 	}
-
-	ShutdownRequests();
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -71,7 +70,8 @@ BOOL CBTClients::OnAccept(CConnection* pConnection)
 	ASSERT( pConnection != NULL );
 
 	CSingleLock pLock( &Transfers.m_pSection );
-	if ( ! pLock.Lock( 250 ) ) return FALSE;
+	if ( ! pLock.Lock( 250 ) )
+		return FALSE;
 
 	CBTClient* pClient = new CBTClient();
 	pClient->AttachTo( pConnection );
@@ -84,68 +84,17 @@ BOOL CBTClients::OnAccept(CConnection* pConnection)
 
 void CBTClients::Add(CBTClient* pClient)
 {
+	CQuickLock oLock( m_pListSection );
+
 	ASSERT( m_pList.Find( pClient ) == NULL );
 	m_pList.AddHead( pClient );
 }
 
 void CBTClients::Remove(CBTClient* pClient)
 {
+	CQuickLock oLock( m_pListSection );
+
 	POSITION pos = m_pList.Find( pClient );
 	ASSERT( pos != NULL );
 	m_pList.RemoveAt( pos );
-}
-
-//////////////////////////////////////////////////////////////////////
-// CBTClients request thread management
-
-BOOL CBTClients::Add(CBTTrackerRequest* pRequest)
-{
-	CSingleLock pLock( &m_pSection, TRUE );
-
-	if( ! m_bShutdown )
-		m_pRequests.AddTail( pRequest );
-	else
-	{
-		delete pRequest;
-		return FALSE;
-	}
-	return TRUE;
-}
-
-void CBTClients::Remove(CBTTrackerRequest* pRequest)
-{
-	ASSERT( pRequest );
-	CSingleLock pLock( &m_pSection, TRUE );
-
-	if ( POSITION pos = m_pRequests.Find( pRequest ) )
-		m_pRequests.RemoveAt( pos );
-
-	if ( ! m_bShutdown || m_pRequests.GetCount() > 0 )
-		return;
-
-	pLock.Unlock();
-	m_pShutdown.SetEvent();
-}
-
-void CBTClients::ShutdownRequests()
-{
-	CSingleLock pLock( &m_pSection, TRUE );
-
-	if ( m_pRequests.GetCount() == 0 ) return;
-	m_bShutdown = true;
-	pLock.Unlock();
-
-	if ( WaitForSingleObject( m_pShutdown, 5000 ) == WAIT_OBJECT_0 ) 
-		return;
-
-	for (;;)
-	{
-		pLock.Lock();
-		if ( m_pRequests.GetCount() == 0 ) break;
-		CBTTrackerRequest* pRequest = m_pRequests.RemoveHead();
-		HANDLE hThread = pRequest->m_hThread;
-		pLock.Unlock();
-		CloseThread( &hThread );
-		delete pRequest;
-	}
 }

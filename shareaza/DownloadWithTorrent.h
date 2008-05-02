@@ -19,13 +19,11 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(DOWNLOADWITHTORRENT_H)
-#define DOWNLOADWITHTORRENT_H
-
 #pragma once
 
 #include "DownloadWithFile.h"
 #include "BTInfo.h"
+#include "BTTrackerRequest.h"
 
 class CDownloadTransferBT;
 class CUploadTransferBT;
@@ -62,8 +60,11 @@ protected:
 	DWORD		m_nTorrentSize;
 	BYTE*		m_pTorrentBlock;
 private:
-	CList< CUploadTransferBT* > m_pTorrentUploads;
-	DWORD		m_tTorrentChoke;
+	CList< CUploadTransferBT* >	m_pTorrentUploads;
+	DWORD						m_tTorrentChoke;
+
+	CList< CBTTrackerRequest* >	m_pRequests;		// In-process tracker requests
+	CMutex						m_pRequestsSection;	// m_pRequests guard
 
 // Operations
 public:
@@ -98,8 +99,11 @@ private:
 	void			SendUpdate(DWORD nNumWant);
 	void			SendStopped();
 	TCHAR			GenerateCharacter() const;
+	// Add tracker request for counting
+	void			Add(CBTTrackerRequest* pRequest);
+	// Remove tracker request
+	void			Remove(CBTTrackerRequest* pRequest);
 
-	friend class CDownloads;	// m_bSeeding for Load()
+	friend class CDownloads;		// m_bSeeding for Load()
+	friend class CBTTrackerRequest;	// Add(),Remove()
 };
-
-#endif // !defined(DOWNLOADWITHTORRENT_H)
