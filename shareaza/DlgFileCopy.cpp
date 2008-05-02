@@ -252,6 +252,10 @@ void CFileCopyDlg::OnRun()
 		CString strName, strPath;
 		CSchema* pSchema = NULL;
 		CXMLElement* pMetadata = NULL;
+		BOOL bMetadataAuto = FALSE;
+		int nRating = 0;
+		CString sComments;
+		CString sShareTags;
 		CLibraryFile* pFile;
 		{
 			CQuickLock oLock( Library.m_pSection );
@@ -268,6 +272,10 @@ void CFileCopyDlg::OnRun()
 				strPath		= pFile->m_pFolder->m_sPath;
 				pSchema		= pFile->m_pSchema;
 				pMetadata	= pFile->m_pMetadata->Clone();
+				bMetadataAuto = pFile->m_bMetadataAuto;
+				nRating		= pFile->m_nRating;
+				sComments	= pFile->m_sComments;
+				sShareTags	= pFile->m_sShareTags;
 			}
 		}
 
@@ -301,7 +309,10 @@ void CFileCopyDlg::OnRun()
 					pTargetFile->m_pSchema = pSchema;
 					pSchema = NULL;
 				}
-
+				pTargetFile->m_bMetadataAuto = bMetadataAuto;
+				pTargetFile->m_nRating = nRating;
+				pTargetFile->m_sComments = sComments;
+				pTargetFile->m_sShareTags = sShareTags;
 				if ( pMetadata )
 				{
 					if ( pTargetFile->m_pMetadata )
