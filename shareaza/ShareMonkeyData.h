@@ -72,6 +72,7 @@ public:
 public:
 	BOOL		Start(CLibraryFileView* pView, DWORD nFileIndex);
 	void		Stop();
+	CSchema*	GetSchema() { return m_pSchema; }
 
 	inline BOOL IsWorking()
 	{

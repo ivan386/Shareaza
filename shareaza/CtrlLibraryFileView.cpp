@@ -1118,13 +1118,70 @@ void CLibraryFileView::OnUpdateShareMonkeySave(CCmdUI* pCmdUI)
 	BOOL bShow = TRUE;
 	if ( m_bServiceFailed && m_nCurrentPage == m_pServiceDataPages.GetCount() - 1 )
 		bShow = FALSE;
-	// pCmdUI->Enable( bShow && !m_bRequestingService && m_pServiceDataPages.GetCount() > 0 );
-	pCmdUI->Enable( FALSE ); // temp disabled
+	pCmdUI->Enable( bShow && !m_bRequestingService && m_pServiceDataPages.GetCount() > 0 );
 }
 
 void CLibraryFileView::OnShareMonkeySave()
 {
-	
+	INT_PTR nCurr = 0;
+	CShareMonkeyData* pPanelData = NULL;
+
+	for ( POSITION pos = m_pServiceDataPages.GetHeadPosition() ; pos ; nCurr++ )
+	{
+		if ( m_nCurrentPage == nCurr )
+		{
+			pPanelData = static_cast< CShareMonkeyData* >( m_pServiceDataPages.GetNext( pos ) );
+			break;
+		}
+	}
+
+	if ( pPanelData == NULL ) return;
+
+	CSingleLock pLock( &Library.m_pSection, TRUE );
+
+	CLibraryFile* pFile = GetSelectedFile();
+	CSchema* pSchema = pFile->m_pSchema ? pFile->m_pSchema : pPanelData->GetSchema();
+
+	if ( pSchema )
+	{
+		CXMLElement* pRoot = pSchema->Instantiate( TRUE );
+		CXMLElement* pXML = NULL;
+
+		if ( pFile->m_pMetadata )
+		{
+			pXML = pFile->m_pMetadata->Clone();
+			pRoot->AddElement( pXML );
+		}
+		else
+			pXML = pRoot->AddElement( pSchema->m_sSingular );
+
+		CXMLAttribute* pTitle = new CXMLAttribute( NULL, L"title" );
+		pXML->AddAttribute( pTitle );
+
+		CXMLAttribute* pDescription = NULL;
+		if ( pSchema->CheckURI( CSchema::uriApplication ) )
+		{
+			pDescription = new CXMLAttribute( NULL, L"fileDescription" );
+			pXML->AddAttribute( pDescription );
+		}
+		else if ( pSchema->CheckURI( CSchema::uriArchive ) )
+		{
+			// No description... There should be games
+		}
+		else
+		{
+			pDescription = new CXMLAttribute( NULL, L"description" );
+			pXML->AddAttribute( pDescription );
+		}
+
+		if ( pTitle )
+			pTitle->SetValue( pPanelData->m_sProductName );
+		if ( pDescription )
+			pDescription->SetValue( pPanelData->m_sDescription );
+
+		pFile->SetMetadata( pRoot );
+		delete pRoot;
+	}
 }
 
 void CLibraryFileView::OnUpdateShareMonkeyPrevious(CCmdUI* pCmdUI)
