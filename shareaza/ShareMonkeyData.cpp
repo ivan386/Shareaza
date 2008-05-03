@@ -147,13 +147,13 @@ void CShareMonkeyData::OnRun()
 			{
 				if ( DecodeResponse( m_sStatus ) )
 				{
-					m_pFileView->SendMessage( WM_METADATA, (WPARAM)this );
+					NotifyWindow();
 					m_sStatus.Empty();
 				}
 				else
 				{
 					if ( m_hInternet == NULL ) break;
-					m_pFileView->SendMessage( WM_METADATA, (WPARAM)this, (LPARAM)(LPCTSTR)m_sStatus );
+					NotifyWindow( (LPCTSTR)m_sStatus );
 				}
 				break;
 			}
@@ -161,7 +161,7 @@ void CShareMonkeyData::OnRun()
 			{
 				if ( m_hInternet == NULL ) break;
 				m_sStatus = L"Failed";
-				m_pFileView->SendMessage( WM_METADATA, (WPARAM)this, (LPARAM)(LPCTSTR)m_sStatus );
+				NotifyWindow( (LPCTSTR)m_sStatus );
 				break;
 			}
 			else
@@ -171,7 +171,7 @@ void CShareMonkeyData::OnRun()
 					InternetCloseHandle( m_hRequest );
 				m_hRequest = NULL;
 				m_sStatus = L"Failed. Retrying...";
-				m_pFileView->SendMessage( WM_METADATA, (WPARAM)this, (LPARAM)(LPCTSTR)m_sStatus );
+				if ( !NotifyWindow( (LPCTSTR)m_sStatus ) ) break;
 				Sleep( 1000 );
 			}
 		}
@@ -193,6 +193,16 @@ void CShareMonkeyData::OnRun()
 	m_hInternet = NULL;
 
 	m_bFinished = TRUE;
+}
+
+bool CShareMonkeyData::NotifyWindow(LPCTSTR pszMessage) const
+{
+	if ( m_pFileView && IsWindow( m_pFileView->m_hWnd ) )
+	{
+		 m_pFileView->SendMessage( WM_METADATA, (WPARAM)this, (LPARAM)pszMessage );
+		 return true;
+	}
+	return false;
 }
 
 /////////////////////////////////////////////////////////////////////////////

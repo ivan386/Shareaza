@@ -93,6 +93,8 @@ protected:
 	BOOL			ExecuteRequest();
 	BOOL			DecodeResponse(CString& strMessage);
 	BOOL			ImportData(CXMLElement* pRoot);
+
+	inline bool NotifyWindow(LPCTSTR pszMessage = NULL) const;
 };
 
 #endif // !defined(SHAREMONKEYDATA_H)
