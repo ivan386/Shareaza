@@ -67,6 +67,7 @@ public:
 		bool		FirstRun;
 		DWORD		SmartVersion;				// Settings version
 		bool		Running;
+		CString		ShareMonkeyCid;				// Affiliate ID
 	} General;
 
 	struct sVersionCheck

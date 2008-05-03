@@ -213,7 +213,8 @@ BOOL CShareMonkeyData::BuildRequest()
 	{
 		// storeMatch/<session_id>/<contributor_id>/<file_id>/<product_id>/COUNTRY
 		CString str;
-		str.Format( L"storeMatch/%s/197506/0/%s/%s", m_sSessionID, m_sProductID, m_sCountry );
+		str.Format( L"storeMatch/%s/%s/0/%s/%s", m_sSessionID, Settings.General.ShareMonkeyCid, 
+					m_sProductID, m_sCountry );
 		m_sURL += str;
 	}
 	else if ( m_nRequestType == stComparison )
@@ -311,7 +312,8 @@ BOOL CShareMonkeyData::BuildRequest()
 					m_sURL += strCategory;
 				}
 
-				m_sURL += L"&cid=197506";
+				m_sURL += L"&cid=";
+				m_sURL += Settings.General.ShareMonkeyCid;
 			}
 		}
 	}
@@ -589,16 +591,14 @@ BOOL CShareMonkeyData::ImportData(CXMLElement* pRoot)
 		pAttribute->SetValue( m_sDescription );
 		pXML->AddAttribute( pAttribute );
 
+/*
 		if ( m_sBuyURL.GetLength() )
 		{
 			pAttribute = new CXMLAttribute( NULL, L"distributerLink" );
 			pAttribute->SetValue( m_sBuyURL );
 			pXML->AddAttribute( pAttribute );
 		}
-
-		//CMetaItem* pItem = Add( L"ProductID", m_sProductID );
-		//pItem->m_bValueDefined = m_sProductID.GetLength() > 0;
-
+*/
 		Combine( pXML );
 
 		delete m_pRazaXML;
