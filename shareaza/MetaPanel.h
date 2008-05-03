@@ -39,11 +39,13 @@ public:
 	int		Layout(CDC* pDC, int nWidth);
 	void	Paint(CDC* pDC, const CRect* prcArea);
 	BOOL	OnClick(const CPoint& point);
-
+	
 	virtual BOOL IsWorking() const { return FALSE; }
 	virtual void Start() {}
 	virtual void Stop() {}
 	virtual void Clear() { CMetaList::Clear(); }
+
+	CMetaPanel*		m_pChild;
 
 // Attributes
 public:
