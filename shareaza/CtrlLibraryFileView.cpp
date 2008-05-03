@@ -134,7 +134,7 @@ END_MESSAGE_MAP()
 
 CLibraryFileView::CLibraryFileView()
 : m_bRequestingService( FALSE )
-, m_ServiceFailed( FALSE )
+, m_bServiceFailed( FALSE )
 , m_nCurrentPage( 0 )
 {
 	m_pszToolBar = L"CLibraryFileView";
@@ -923,7 +923,7 @@ void CLibraryFileView::ClearServicePages()
 
 	m_pServiceDataPages.RemoveAll();
 	m_nCurrentPage = 0;
-	m_ServiceFailed = FALSE;
+	m_bServiceFailed = FALSE;
 
 	GetFrame()->SetPanelData( NULL );
 }
@@ -1116,7 +1116,7 @@ void CLibraryFileView::OnShareMonkeyDownload()
 void CLibraryFileView::OnUpdateShareMonkeySave(CCmdUI* pCmdUI)
 {
 	BOOL bShow = TRUE;
-	if ( m_ServiceFailed && m_nCurrentPage == m_pServiceDataPages.GetCount() - 1 )
+	if ( m_bServiceFailed && m_nCurrentPage == m_pServiceDataPages.GetCount() - 1 )
 		bShow = FALSE;
 	// pCmdUI->Enable( bShow && !m_bRequestingService && m_pServiceDataPages.GetCount() > 0 );
 	pCmdUI->Enable( FALSE ); // temp disabled
@@ -1150,7 +1150,7 @@ void CLibraryFileView::OnShareMonkeyPrevious()
 void CLibraryFileView::OnUpdateShareMonkeyNext(CCmdUI* pCmdUI)
 {
 	BOOL bShow = TRUE;
-	if ( m_ServiceFailed && m_nCurrentPage == m_pServiceDataPages.GetCount() - 1 )
+	if ( m_bServiceFailed && m_nCurrentPage == m_pServiceDataPages.GetCount() - 1 )
 		bShow = FALSE;
 	pCmdUI->Enable( bShow && !m_bRequestingService && m_pServiceDataPages.GetCount() > 0 );
 }
@@ -1179,7 +1179,7 @@ void CLibraryFileView::OnShareMonkeyNext()
 void CLibraryFileView::OnUpdateShareMonkeyPrices(CCmdUI* pCmdUI)
 {
 	BOOL bShow = TRUE;
-	if ( m_ServiceFailed && m_pServiceDataPages.GetCount() == 1 || m_pServiceDataPages.GetCount() == 0 )
+	if ( m_bServiceFailed && m_pServiceDataPages.GetCount() == 1 || m_pServiceDataPages.GetCount() == 0 )
 		bShow = FALSE;
 	pCmdUI->Enable( !m_bRequestingService && bShow );
 }
@@ -1219,7 +1219,7 @@ void CLibraryFileView::OnShareMonkeyPrices()
 void CLibraryFileView::OnUpdateShareMonkeyCompare(CCmdUI* pCmdUI)
 {
 	BOOL bShow = TRUE;
-	if ( m_ServiceFailed && m_pServiceDataPages.GetCount() == 1 || m_pServiceDataPages.GetCount() == 0 )
+	if ( m_bServiceFailed && m_pServiceDataPages.GetCount() == 1 || m_pServiceDataPages.GetCount() == 0 )
 		bShow = FALSE;
 	pCmdUI->Enable( !m_bRequestingService && bShow );
 }
@@ -1244,7 +1244,7 @@ void CLibraryFileView::OnShareMonkeyCompare()
 
 void CLibraryFileView::OnUpdateShareMonkeyBuy(CCmdUI* pCmdUI)
 {
-	pCmdUI->Enable( !m_ServiceFailed && !m_bRequestingService && m_pServiceDataPages.GetCount() > 0 );
+	pCmdUI->Enable( !m_bServiceFailed && !m_bRequestingService && m_pServiceDataPages.GetCount() > 0 );
 }
 
 void CLibraryFileView::OnShareMonkeyBuy()
@@ -1278,7 +1278,7 @@ LRESULT CLibraryFileView::OnServiceDone(WPARAM wParam, LPARAM lParam)
 	LPCTSTR pszMessage = (LPCTSTR)lParam;
 	CMetaPanel* pPanelData = (CMetaPanel*)wParam;
 	
-	m_ServiceFailed = FALSE;
+	m_bServiceFailed = FALSE;
 
 	if ( pPanelData == NULL )
 	{
@@ -1297,7 +1297,7 @@ LRESULT CLibraryFileView::OnServiceDone(WPARAM wParam, LPARAM lParam)
 			CMetaItem* pItem = pPanelData->Find( strStatus );
 			if ( pItem != NULL )
 				pItem->m_sValue = pszMessage;
-			m_ServiceFailed = TRUE;
+			m_bServiceFailed = TRUE;
 		}
 	}
 

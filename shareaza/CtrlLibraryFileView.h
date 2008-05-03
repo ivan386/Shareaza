@@ -45,7 +45,7 @@ protected:
 	BOOL				m_bRequestingService;
 	INT_PTR				m_nCurrentPage;
 	CList<CMetaPanel*>	m_pServiceDataPages;
-	BOOL				m_ServiceFailed;
+	BOOL				m_bServiceFailed;
 
 protected:
 	virtual BOOL		CheckAvailable(CLibraryTreeItem* pSel);
