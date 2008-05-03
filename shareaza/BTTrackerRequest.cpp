@@ -40,7 +40,7 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // CBTTrackerRequest construction
 
-CBTTrackerRequest::CBTTrackerRequest(CDownload* pDownload, LPCTSTR pszVerb, DWORD nNumWant, bool bProcess) :
+CBTTrackerRequest::CBTTrackerRequest(CDownloadWithTorrent* pDownload, LPCTSTR pszVerb, DWORD nNumWant, bool bProcess) :
 	m_pDownload( pDownload ),
 	m_bProcess( bProcess )
 {
@@ -96,14 +96,14 @@ CBTTrackerRequest::CBTTrackerRequest(CDownload* pDownload, LPCTSTR pszVerb, DWOR
 
 	theApp.Message( MSG_DEBUG, _T("[BT] Sending announce: %s"), strURL );
 
-	static_cast< CDownloadWithTorrent* >( m_pDownload )->Add( this );
+	m_pDownload->Add( this );
 
 	BeginThread( "BT Tracker Request", ThreadStart, this );
 }
 
 CBTTrackerRequest::~CBTTrackerRequest()
 {
-	static_cast< CDownloadWithTorrent* >( m_pDownload )->Remove( this );
+	m_pDownload->Remove( this );
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -199,10 +199,7 @@ void CBTTrackerRequest::OnRun()
 
 void CBTTrackerRequest::Process(bool bRequest)
 {
-	// This is a "single-shot" thread so lock must be acquired
-	CQuickLock oLock( Transfers.m_pSection );
-
-	ASSERT( Downloads.Check( m_pDownload ) );
+	ASSERT( Downloads.Check( static_cast< CDownload* >( m_pDownload ) ) );
 	ASSERT( m_pDownload->m_bTorrentRequested );
 
 	if ( !bRequest )

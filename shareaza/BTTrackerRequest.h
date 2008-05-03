@@ -23,23 +23,23 @@
 
 #include "HttpRequest.h"
 
-class CDownload;
+class CDownloadWithTorrent;
 class CBENode;
 
 
 class CBTTrackerRequest : public boost::noncopyable
 {
 public:
-	CBTTrackerRequest(CDownload* pDownload, LPCTSTR pszVerb, DWORD nNumWant, bool bProcess);
+	CBTTrackerRequest(CDownloadWithTorrent* pDownload, LPCTSTR pszVerb, DWORD nNumWant, bool bProcess);
 	virtual ~CBTTrackerRequest();
 
     CString	Escape(const Hashes::BtHash& oBTH);
     CString	Escape(const Hashes::BtGuid& oGUID);
 
 protected:
-	CDownload*		m_pDownload;
-	bool			m_bProcess;
-	CHttpRequest	m_pRequest;
+	CDownloadWithTorrent*	m_pDownload;
+	bool					m_bProcess;
+	CHttpRequest			m_pRequest;
 
 	void		Process(bool bRequest);
 	void		Process(CBENode* pRoot);
