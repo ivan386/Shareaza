@@ -46,6 +46,7 @@ public:
 	virtual void Clear() { CMetaList::Clear(); }
 
 	CMetaPanel*		m_pChild;
+	CString			m_sThumbnailURL;
 
 // Attributes
 public:

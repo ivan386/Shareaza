@@ -723,8 +723,7 @@ void CLibraryFrame::SetPanelData(CMetaPanel* pPanel)
 		CLibraryMetaPanel* pDataPanel = static_cast< CLibraryMetaPanel* >( m_pPanel );
 		if ( pDataPanel != NULL )
 		{
-			pDataPanel->SetServicePanel( pPanel, NULL );
-			pDataPanel->SwapPanel();
+			pDataPanel->SetServicePanel( pPanel );
 			UpdatePanel( TRUE );
 		}
 	}

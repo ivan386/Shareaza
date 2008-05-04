@@ -321,10 +321,10 @@ BOOL CShareMonkeyData::BuildRequest()
 					strCategory.Format( L"&category_id=%i", nCategory );
 					m_sURL += strCategory;
 				}
-
-				m_sURL += L"&cid=";
-				m_sURL += Settings.General.ShareMonkeyCid;
 			}
+
+			m_sURL += L"&cid=";
+			m_sURL += Settings.General.ShareMonkeyCid;
 		}
 	}
 
@@ -588,7 +588,7 @@ BOOL CShareMonkeyData::ImportData(CXMLElement* pRoot)
 				{
 					CXMLElement* pImageURL = pImage->GetElementByName( L"ImageURL" );
 					if ( pImageURL )
-						m_sImageURL = pImageURL->GetValue();
+						m_sThumbnailURL = pImageURL->GetValue();
 				}
 			}
 		}

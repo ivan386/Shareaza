@@ -62,6 +62,8 @@ protected:
 	volatile HANDLE		m_hThread;
 	BOOL				m_bThread;
 	BOOL				m_bExternalData;
+	BOOL				m_bDownloadingImage;
+	BOOL				m_bForceUpdate;
 	CSize				m_szThumb;
 	CBitmap				m_bmThumb;
 	COLORREF			m_crLight;
@@ -73,9 +75,9 @@ public:
 	virtual BOOL CheckAvailable(CLibraryTreeItem* pFolders, CLibraryList* pObjects);
 	virtual void Update();
 
-			BOOL SetServicePanel(CMetaPanel* pPanel, CBitmap* pBitmap);
+			BOOL SetServicePanel(CMetaPanel* pPanel);
 	 CMetaPanel* GetServicePanel();
-			BOOL SwapPanel();
+
 protected:
 	void	DrawText(CDC* pDC, int nX, int nY, LPCTSTR pszText, RECT* pRect = NULL, int nMaxWidth = -1);
 	void	DrawThumbnail(CDC* pDC, CRect& rcClient, CRect& rcWork);

@@ -164,6 +164,8 @@ void CMetaList::Setup(CSchema* pSchema, BOOL bClear)
 // Doesn't verify schema members, just creates key-value pairs
 void CMetaList::Setup(CMetaList* pMetaList)
 {
+	if ( pMetaList == NULL ) return;
+
 	for ( POSITION posOther = pMetaList->GetIterator() ; posOther ; )
 	{
 		CMetaItem* pItemOther = pMetaList->GetNext( posOther );

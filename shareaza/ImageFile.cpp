@@ -1,7 +1,7 @@
 //
 // ImageFile.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -23,6 +23,8 @@
 #include "Shareaza.h"
 #include "ImageServices.h"
 #include "ImageFile.h"
+#include "HttpRequest.h"
+#include "Settings.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -120,6 +122,41 @@ BOOL CImageFile::LoadFromResource(HINSTANCE hInstance, UINT nResourceID, LPCTSTR
 		}
 	}
 	return m_bLoaded;
+}
+
+BOOL CImageFile::LoadFromURL(LPCTSTR pszURL)
+{
+	CHttpRequest pImageFetcher;
+
+	pImageFetcher.SetURL( pszURL );
+	pImageFetcher.LimitContentLength( Settings.Search.MaxPreviewLength * 100 );
+
+	pImageFetcher.Execute( TRUE );
+	while ( pImageFetcher.IsPending() )
+		Sleep( 50 );
+
+	if ( pImageFetcher.GetStatusSuccess() )
+	{
+		CString strMIME = pImageFetcher.GetHeader( L"Content-Type" );
+
+		if ( strMIME.CompareNoCase( L"image/jpeg" ) != 0 &&
+			 strMIME.CompareNoCase( L"image/gif" ) != 0 &&
+			 strMIME.CompareNoCase( L"image/bmp" ) != 0 &&
+			 strMIME.CompareNoCase( L"image/png" ) != 0 )
+		{
+			theApp.Message( MSG_DEBUG, L"Preview failed: unacceptable content type." );
+			return FALSE;
+		}
+
+		CBuffer* pBuffer = pImageFetcher.GetResponseBuffer();
+		if ( pBuffer == NULL ) return FALSE;
+
+		strMIME.Replace( '/', '.' );
+		return m_bLoaded = m_ImageServices.LoadFromMemory( this, strMIME, (LPVOID)pBuffer->m_pBuffer,
+														   pBuffer->m_nLength );
+	}
+
+	return FALSE;
 }
 
 /////////////////////////////////////////////////////////////////////////////

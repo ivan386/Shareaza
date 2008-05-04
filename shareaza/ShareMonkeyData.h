@@ -58,7 +58,6 @@ protected:
 public:
 	CString				m_sURL;
 	CString				m_sComparisonURL;
-	CString				m_sImageURL;
 	CString				m_sBuyURL;
 	CString				m_sSessionID;
 	CString				m_sProductID;

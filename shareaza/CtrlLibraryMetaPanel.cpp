@@ -70,6 +70,8 @@ CLibraryMetaPanel::CLibraryMetaPanel()
 , m_pMetadata( new CMetaPanel() )
 , m_pServiceData( NULL )
 , m_bExternalData( FALSE )
+, m_bDownloadingImage( FALSE )
+, m_bForceUpdate( FALSE )
 {
 	m_rcFolder.SetRectEmpty();
 
@@ -212,6 +214,7 @@ void CLibraryMetaPanel::Update()
 	
 	if ( m_bExternalData )
 	{
+		ASSERT( m_pServiceData );
 		m_pMetadata->Setup( m_pServiceData );
 	}
 	else
@@ -260,9 +263,12 @@ void CLibraryMetaPanel::Update()
 	
 	SetScrollInfo( SB_VERT, &pInfo, TRUE );
 	
-	if ( m_bmThumb.m_hObject != NULL && m_sThumb != m_sPath ) 
-		m_bmThumb.DeleteObject();
-	
+	if ( m_bmThumb.m_hObject != NULL )
+	{
+		if ( m_sThumb != m_sPath || m_bForceUpdate ) 
+			m_bmThumb.DeleteObject();
+	}
+
 	pLock2.Unlock();
 	pLock1.Unlock();
 	
@@ -514,23 +520,35 @@ void CLibraryMetaPanel::DrawThumbnail(CDC* pDC, CRect& rcThumb)
 	}
 }
 
-BOOL CLibraryMetaPanel::SetServicePanel(CMetaPanel* pPanel, CBitmap* pBitmap)
+BOOL CLibraryMetaPanel::SetServicePanel(CMetaPanel* pPanel)
 {
 	m_pSection.Lock();
 
 	m_pServiceData = pPanel;
-
-	if ( pBitmap != NULL && pBitmap->m_hObject )
+	if ( pPanel == NULL )
 	{
-
-		if ( m_bmThumb.m_hObject )
-			DeleteObject( m_bmThumb.m_hObject );
-		m_bmThumb.Attach( pBitmap->m_hObject );
-
+		// If it's NULL, first assign the flag and do updates
+		// Otherwise, first update and then assign the flag
+		m_bExternalData = FALSE;
+		m_bForceUpdate = !m_bDownloadingImage;
 	}
-	
-	m_bExternalData = m_pServiceData != NULL;
+	else
+	{
+		m_bForceUpdate = !m_bDownloadingImage && pPanel->m_sThumbnailURL.GetLength() > 0;
+	}
+
 	m_pSection.Unlock();
+
+	Update();
+
+	m_pSection.Lock();
+	m_bExternalData = pPanel != NULL;
+
+	if ( m_bExternalData )
+		m_sThumb = pPanel->m_sThumbnailURL;
+
+	m_pSection.Unlock();
+
 	return TRUE;
 }
 
@@ -540,19 +558,6 @@ CMetaPanel* CLibraryMetaPanel::GetServicePanel()
 		return m_pServiceData;
 	else
 		return m_pMetadata;
-}
-
-/////////////////////////////////////////////////////////////////////////////
-// Returns TRUE if web service request is running
-BOOL CLibraryMetaPanel::SwapPanel()
-{
-	BOOL bResult = FALSE;
-
-	m_pSection.Lock();
-	bResult = m_bExternalData = m_pServiceData != NULL;
-	m_pSection.Unlock();
-
-	return bResult;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -710,7 +715,7 @@ void CLibraryMetaPanel::OnRun()
 	{
 		WaitForSingleObject( m_pWakeup, INFINITE );
 		if ( ! m_bThread ) break;
-		if ( ! m_bNewFile )
+		if ( ! m_bNewFile && ! m_bForceUpdate || m_bDownloadingImage )
 		{
 			m_bThread = FALSE;
 			break;
@@ -718,6 +723,7 @@ void CLibraryMetaPanel::OnRun()
 
 		m_pSection.Lock();
 		CString strPath = m_sPath;
+		m_bForceUpdate = FALSE;
 		m_pSection.Unlock();
 
 		CImageFile pFile;
@@ -725,9 +731,17 @@ void CLibraryMetaPanel::OnRun()
 		CSize Size( THUMB_STORE_SIZE, THUMB_STORE_SIZE );
 		BOOL bSuccess = FALSE;
 
-		if ( ! pCache.Load( strPath, &Size, m_nIndex, &pFile ) )
+		if ( m_bExternalData )
+		{
+			m_bDownloadingImage = TRUE;
+			bSuccess = pFile.LoadFromURL( m_sThumb ) && pFile.EnsureRGB();
+			m_bDownloadingImage = FALSE;
+		}
+
+		if ( !bSuccess && ! pCache.Load( strPath, &Size, m_nIndex, &pFile ) )
 		{
 			bSuccess = pFile.LoadFromFile( strPath, FALSE, TRUE ) && pFile.EnsureRGB();
+
 			if ( bSuccess )
 			{
 				int nSize = THUMB_STORE_SIZE * pFile.m_nWidth / pFile.m_nHeight;
