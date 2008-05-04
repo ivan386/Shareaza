@@ -40,20 +40,18 @@ public:
 public:
 	BOOL		Create();
 	void		Close();
-    BOOL		SetCollection(const Hashes::Sha1Hash& oSHA1, LPCTSTR pszPath, CString* psIndex = NULL);
-	HRESULT		OnRequest(LPCTSTR pszURL, CBuffer* pBuffer, CString* psMimeType, BOOL bParseOnly);
+	HRESULT		OnRequest(LPCTSTR pszURL, CBuffer& oBuffer, CString& sMimeType, BOOL bParseOnly);
 	
 // Attributes
 protected:
-	CCriticalSection			m_pSection;
+	static LPCWSTR					pszProtocols[];
+	CCriticalSection				m_pSection;
 	CComQIPtr< IInternetSession >	m_pSession;
-    Hashes::Sha1Hash            m_oCollSHA1;
-	CZIPFile*					m_pCollZIP;
-	static LPCWSTR				pszProtocols[];
 
 // Implementation
 protected:
-	HRESULT		OnRequestRAZACOL(LPCTSTR pszURL, CBuffer* pBuffer, CString* psMimeType, BOOL bParseOnly);
+	HRESULT		OnRequestRAZACOL(LPCTSTR pszURL, CBuffer& oBuffer, CString& sMimeType, BOOL bParseOnly);
+	HRESULT		OnRequestRAZAFILE(LPCTSTR pszURL, CBuffer& oBuffer, CString& sMimeType, BOOL bParseOnly);
 
 // COM
 protected:
@@ -80,8 +78,8 @@ public:
 // Attributes
 protected:
 	CComPtr<IInternetProtocolSink>	m_pSink;
-	CString				m_strMimeType;	// Data MIME type
-	CBuffer				m_oBuffer;		// Requested data
+	CString							m_strMimeType;	// Data MIME type
+	CBuffer							m_oBuffer;		// Requested data
 
 // Implementation
 protected:

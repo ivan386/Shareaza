@@ -158,17 +158,11 @@ BOOL CLibraryCollectionView::ShowCollection(CLibraryFile* pFile)
 
 		if ( m_pCollection->Open( pFile->GetPath() ) )
 		{
-			CString strIndex, strURL;
-			if ( IEProtocol.SetCollection( pFile->m_oSHA1, pFile->GetPath(), &strIndex ) )
+			if ( SUCCEEDED( m_pWebCtrl->Navigate( CString( _T("p2p-col://") ) +
+				pFile->m_oSHA1.toString() + _T("/") ) ) )
 			{
-				strURL.Format( _T("p2p-col://%s/%s"),
-					(LPCTSTR)pFile->m_oSHA1.toString(),
-					(LPCTSTR)strIndex );
-				if ( SUCCEEDED( m_pWebCtrl->Navigate( strURL ) ) )
-				{
-					m_oSHA1 = pFile->m_oSHA1;
-					return TRUE;
-				}
+				m_oSHA1 = pFile->m_oSHA1;
+				return TRUE;
 			}
 		}
 	}
@@ -221,7 +215,6 @@ void CLibraryCollectionView::OnDestroy()
 		m_pWebCtrl = NULL;
 	}
 	
-    IEProtocol.SetCollection( Hashes::Sha1Hash(), NULL );
 	m_pCollection->Close();
 
 	CLibraryFileView::OnDestroy();

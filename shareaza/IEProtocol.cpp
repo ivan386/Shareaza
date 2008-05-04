@@ -23,11 +23,16 @@
 #include "Shareaza.h"
 #include "IEProtocol.h"
 #include "Buffer.h"
-
+#include "Library.h"
+#include "SharedFile.h"
+#include "XML.h"
 #include "SHA.h"
 #include "ZIPFile.h"
 #include "ShellIcons.h"
 #include "Connection.h"
+#include "ImageServices.h"
+#include "ImageFile.h"
+#include "ThumbCache.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -66,7 +71,7 @@ END_INTERFACE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // Global Instance
 
-LPCWSTR	CIEProtocol::pszProtocols[]	= { L"p2p-col", L"telnet", NULL };
+LPCWSTR	CIEProtocol::pszProtocols[]	= { L"p2p-col", L"p2p-file", NULL };
 
 CIEProtocol IEProtocol;
 
@@ -74,8 +79,7 @@ CIEProtocol IEProtocol;
 /////////////////////////////////////////////////////////////////////////////
 // CIEProtocol construction
 
-CIEProtocol::CIEProtocol() :
-	m_pCollZIP( NULL )
+CIEProtocol::CIEProtocol()
 {
 }
 
@@ -120,8 +124,6 @@ void CIEProtocol::Close()
 		}
 		m_pSession.Release();
 	}
-	
-    SetCollection( Hashes::Sha1Hash(), NULL );
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -172,7 +174,7 @@ CIEProtocolRequest::~CIEProtocolRequest()
 
 HRESULT CIEProtocolRequest::OnStart(LPCTSTR pszURL, IInternetProtocolSink* pSink, IInternetBindInfo* /*pBindInfo*/, DWORD dwFlags)
 {
-	HRESULT hr = IEProtocol.OnRequest( pszURL, &m_oBuffer, &m_strMimeType,
+	HRESULT hr = IEProtocol.OnRequest( pszURL, m_oBuffer, m_strMimeType,
 		( dwFlags & PI_PARSE_URL ) != 0 );
 
 	if ( ( dwFlags & PI_PARSE_URL ) || ( hr == INET_E_INVALID_URL ) )
@@ -360,13 +362,21 @@ STDMETHODIMP CIEProtocolRequest::XInternetProtocolInfo::QueryInfo(LPCWSTR pwzUrl
 /////////////////////////////////////////////////////////////////////////////
 // CIEProtocol request handler
 
-HRESULT CIEProtocol::OnRequest(LPCTSTR pszURL, CBuffer* pBuffer, CString* psMimeType, BOOL bParseOnly)
+HRESULT CIEProtocol::OnRequest(LPCTSTR pszURL, CBuffer& oBuffer, CString& sMimeType, BOOL bParseOnly)
 {
 	CSingleLock pLock( &m_pSection, TRUE );
 
+	TRACE( _T("Requested URL: %s\n"), pszURL );
+
 	if ( _tcsnicmp( pszURL, _T("p2p-col://"), 10 ) == 0 )
 	{
-		return OnRequestRAZACOL( pszURL + 10, pBuffer, psMimeType, bParseOnly );
+		// p2p-col://{SHA1}/{relative path inside zip}
+		return OnRequestRAZACOL( pszURL + 10, oBuffer, sMimeType, bParseOnly );
+	}
+	else if ( _tcsnicmp( pszURL, _T("p2p-file://"), 11 ) == 0 )
+	{
+		// p2p-file://{SHA1}/{preview|meta}
+		return OnRequestRAZAFILE( pszURL + 11, oBuffer, sMimeType, bParseOnly );
 	}
 	else
 	{
@@ -377,80 +387,124 @@ HRESULT CIEProtocol::OnRequest(LPCTSTR pszURL, CBuffer* pBuffer, CString* psMime
 /////////////////////////////////////////////////////////////////////////////
 // CIEProtocol request handler - "p2p-col"
 
-HRESULT CIEProtocol::OnRequestRAZACOL(LPCTSTR pszURL, CBuffer* pBuffer, CString* psMimeType, BOOL /*bParseOnly*/)
+HRESULT CIEProtocol::OnRequestRAZACOL(LPCTSTR pszURL, CBuffer& oBuffer, CString& sMimeType, BOOL /*bParseOnly*/)
 {
-	if ( _tcslen( pszURL ) < 32 + 1 )
-		return INET_E_INVALID_URL;
-	if ( pszURL[32] != '/' )
+	if ( _tcslen( pszURL ) < 32 + 1 || pszURL[32] != '/' )
 		return INET_E_INVALID_URL;
 	
     Hashes::Sha1Hash oSHA1;
-	if ( !oSHA1.fromString( pszURL ) )
+	if ( ! oSHA1.fromString( pszURL ) )
 		return INET_E_INVALID_URL;
-	
-	if ( m_pCollZIP == NULL || ! m_pCollZIP->IsOpen() )
-		return INET_E_OBJECT_NOT_FOUND;
-	if ( validAndUnequal( m_oCollSHA1, oSHA1 ) )
-		return INET_E_OBJECT_NOT_FOUND;
-	
-	CString strPath( pszURL + 32 );
-	strPath = URLDecode( strPath );
-	if ( strPath.Right( 1 ) == _T("/") )
-		strPath += _T("index.htm");
 
-	CZIPFile::File* pFile = m_pCollZIP->GetFile( strPath.Mid( 1 ) );
-	if ( pFile == NULL )
-		return INET_E_OBJECT_NOT_FOUND;
+	CSingleLock oLock( &Library.m_pSection, FALSE );
+	if ( ! oLock.Lock( 500 ) )
+		return INET_E_INVALID_URL;
+
+	CLibraryFile* pCollFile = LibraryMaps.LookupFileBySHA1( oSHA1, FALSE, TRUE );
+	if ( ! pCollFile )
+		return INET_E_INVALID_URL;
+
+	CString strCollPath = pCollFile->GetPath();
+
+	oLock.Unlock();
+
+	CZIPFile oCollZIP;
+	if ( ! oCollZIP.Open( strCollPath ) )
+		return INET_E_INVALID_URL;
+
+	CString strPath = URLDecode( pszURL + 32 );
+	bool bDir = ( strPath.GetAt( strPath.GetLength() - 1 ) == _T('/') );
+
+	CZIPFile::File* pFile = oCollZIP.GetFile(
+		( bDir ? ( strPath + _T("index.htm") ) : strPath ).Mid( 1 ) );
+	if ( ! pFile )
+	{
+		if ( bDir )
+		{
+			pFile = oCollZIP.GetFile( ( strPath + _T("collection.xml") ).Mid( 1 ) );
+			if ( ! pFile )
+				return INET_E_OBJECT_NOT_FOUND;
+		}
+		else
+			return INET_E_OBJECT_NOT_FOUND;
+	}
 
 	CBuffer* pSource = pFile->Decompress();
-	if ( pSource == NULL )
+	if ( ! pSource )
 		return INET_E_OBJECT_NOT_FOUND;
 
-	pBuffer->AddBuffer( pSource );
+	oBuffer.AddBuffer( pSource );
 	delete pSource;
 
 	int nPeriod = strPath.ReverseFind( _T('.') );
 	if ( nPeriod >= 0 )
-		ShellIcons.Lookup( strPath.Mid( nPeriod ), NULL, NULL, NULL, psMimeType );
+		ShellIcons.Lookup( strPath.Mid( nPeriod ), NULL, NULL, NULL, &sMimeType );
 
 	return S_OK;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// CIEProtocol collection
+// CIEProtocol request handler - "p2p-file"
 
-BOOL CIEProtocol::SetCollection(const Hashes::Sha1Hash& oSHA1, LPCTSTR pszPath, CString* psIndex)
+HRESULT CIEProtocol::OnRequestRAZAFILE(LPCTSTR pszURL, CBuffer& oBuffer, CString& sMimeType, BOOL /*bParseOnly*/)
 {
-	CSingleLock pLock( &m_pSection, TRUE );
+	if ( _tcslen( pszURL ) < 32 + 1 || pszURL[32] != '/' )
+		return INET_E_INVALID_URL;
 
-	if ( m_pCollZIP != NULL )
+	Hashes::Sha1Hash oSHA1;
+	if ( ! oSHA1.fromString( pszURL ) )
+		return INET_E_INVALID_URL;
+
+	CSingleLock oLock( &Library.m_pSection, FALSE );
+	if ( ! oLock.Lock( 500 ) )
+		return INET_E_INVALID_URL;
+
+	CLibraryFile* pFile = LibraryMaps.LookupFileBySHA1( oSHA1, FALSE, TRUE );
+	if ( ! pFile )
+		return INET_E_INVALID_URL;
+
+	if ( _tcsicmp( pszURL + 33, _T("preview") ) == 0 )
 	{
-		delete m_pCollZIP;
-		m_pCollZIP = NULL;
-	}
-	
-	if ( !oSHA1 || pszPath == NULL ) return TRUE;
-	
-	m_pCollZIP	= new CZIPFile();
-	m_oCollSHA1	= oSHA1;
-	
-	if ( m_pCollZIP->Open( pszPath ) )
-	{
-		CZIPFile::File* pFile = m_pCollZIP->GetFile( _T("index.htm"), TRUE );
-		if ( ! pFile )
-			pFile = m_pCollZIP->GetFile( _T("Collection.xml"), TRUE );
-		if ( pFile )
+		CSize szThumb( THUMB_STORE_SIZE, THUMB_STORE_SIZE );
+		CImageFile pImage;
+		CThumbCache pCache;
+		if ( ! pCache.Load( pFile->GetPath(), &szThumb, pFile->m_nIndex, &pImage ) )
 		{
-			if ( psIndex != NULL )
-				*psIndex = pFile->m_sName;
-		}
+			if ( pImage.LoadFromFile( pFile->GetPath() ) && pImage.EnsureRGB() )
+			{
+				int nSize = THUMB_STORE_SIZE * pImage.m_nWidth / pImage.m_nHeight;
+				if ( nSize > THUMB_STORE_SIZE )
+				{
+					nSize = THUMB_STORE_SIZE * pImage.m_nHeight / pImage.m_nWidth;
+					pImage.Resample( THUMB_STORE_SIZE, nSize );
+				}
+				else
+					pImage.Resample( nSize, THUMB_STORE_SIZE );
 
-		return TRUE;
+				pCache.Store( pFile->GetPath(), &szThumb, pFile->m_nIndex, &pImage );
+			}
+		}
+		if ( pImage.m_bLoaded )
+		{
+			BYTE* pBuffer = NULL;
+			DWORD nImageSize = 0;
+			if ( pImage.SaveToMemory( _T(".jpg"), 90, &pBuffer, &nImageSize ) )
+			{
+				oBuffer.Add( pBuffer, nImageSize );
+				sMimeType = _T("image/jpeg");
+				return S_OK;
+			}
+		}
 	}
-	else
+	else if ( _tcsicmp( pszURL + 33, _T("meta") ) == 0 )
 	{
-		delete m_pCollZIP;
-		m_pCollZIP = NULL;
-		return FALSE;
+		CString strXML( _T("<?xml version=\"1.0\"?>") );
+		if ( pFile->m_pMetadata )
+			strXML += pFile->m_pMetadata->ToString();
+		oBuffer.Add( (LPCSTR)CT2A( strXML ), strXML.GetLength() );
+		sMimeType = _T("text/xml");
+		return S_OK;
 	}
+
+	return INET_E_INVALID_URL;
 }
