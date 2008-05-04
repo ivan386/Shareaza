@@ -49,7 +49,8 @@ CHostCache::CHostCache() :
 	eDonkey( PROTOCOL_ED2K ),
 	G1DNA( PROTOCOL_G1 ),
 	BitTorrent( PROTOCOL_BT ),
-	Kademlia( PROTOCOL_KAD ) 
+	Kademlia( PROTOCOL_KAD ),
+	m_tLastPruneTime( 0 )
 {
 	m_pList.AddTail( &Gnutella1 );
 	m_pList.AddTail( &Gnutella2 );
@@ -194,6 +195,22 @@ int CHostCache::Import(LPCTSTR pszFile)
 	else
 	{
 		return 0;
+	}
+}
+
+//////////////////////////////////////////////////////////////////////
+// CHostCache prune old hosts
+
+void CHostCache::PruneOldHosts()
+{
+	DWORD tNow = static_cast< DWORD >( time( NULL ) );
+	if ( tNow - m_tLastPruneTime > 5 * 60 )
+	{
+		for ( POSITION pos = m_pList.GetHeadPosition() ; pos ; )
+		{
+			m_pList.GetNext( pos )->PruneOldHosts();
+		}
+		m_tLastPruneTime = tNow;
 	}
 }
 
@@ -492,7 +509,7 @@ void CHostCacheList::OnSuccess(const IN_ADDR* pAddress, WORD nPort, bool bUpdate
 }
 
 //////////////////////////////////////////////////////////////////////
-// CHostCacheList query acknowledgement prune (G2)
+// CHostCacheList query acknowledgment prune (G2)
 
 void CHostCacheList::PruneByQueryAck()
 {
@@ -539,7 +556,6 @@ void CHostCacheList::PruneOldHosts()
 	{
 		CHostCacheHostPtr pHost = (*i).second;
 
-		DWORD nExpire;
 		float nProbability = .0;
 
 		if ( pHost->m_nProtocol == PROTOCOL_G1 )
@@ -547,23 +563,13 @@ void CHostCacheList::PruneOldHosts()
 			// Calculate some kind of probability if we need to prune it
 			float nProbability = (float)pHost->m_nDailyUptime / ( 24 * 60 * 60 );
 			nProbability /= pHost->m_nFailures + 1;
-
-			nExpire = Settings.Gnutella1.HostExpire;
 		}
-		else if ( pHost->m_nProtocol == PROTOCOL_G2 )
-			nExpire = Settings.Gnutella2.HostExpire;
-		else if ( pHost->m_nProtocol == PROTOCOL_BT )
-			nExpire = Settings.BitTorrent.DhtPruneTime;
-		else if ( pHost->m_nProtocol == PROTOCOL_KAD )
-			nExpire = 24 * 60 * 60; // TODO: Add Kademlia setting
-		else
-			nExpire = 0;
 
 		// Since we discard hosts after 3 failures, it means that we will remove
 		// hosts with the DU less than 8 hours without no failures when they expire;
 		// hosts with the DU less than 16 hours with 1 failure;
 		// hosts with the DU less than 24 hours with 2 failures;
-		if ( ( nExpire ) && ( tNow - pHost->Seen() > nExpire ) && nProbability < .333 )
+		if ( ! pHost->m_bPriority && pHost->IsExpired( tNow ) && nProbability < .333 )
 		{
 			m_HostsTime.erase(
 				std::find( m_HostsTime.begin(), m_HostsTime.end(), pHost ) );
@@ -582,14 +588,34 @@ void CHostCacheList::PruneOldHosts()
 
 void CHostCacheList::PruneHosts()
 {
-	while ( m_Hosts.size() >= Settings.Gnutella.HostCacheSize )
+	CQuickLock oLock( m_pSection );
+
+	for( CHostCacheIndex::iterator i = m_HostsTime.end();
+		m_Hosts.size() > Settings.Gnutella.HostCacheSize && i != m_HostsTime.begin(); )
 	{
-		CHostCacheIndex::iterator i = --m_HostsTime.end();
-		CHostCacheHost* pHostToRemove = (*i);
-		m_HostsTime.erase( i );
-		m_Hosts.erase( pHostToRemove->m_pAddress );
-		delete pHostToRemove;
+		--i;
+		CHostCacheHost* pHost = (*i);
+		if ( ! pHost->m_bPriority )
+		{
+			i = m_HostsTime.erase( i );
+			m_Hosts.erase( pHost->m_pAddress );
+			delete pHost;
+			m_nCookie++;
+		}
 	}
+
+	for( CHostCacheIndex::iterator i = m_HostsTime.end();
+		m_Hosts.size() > Settings.Gnutella.HostCacheSize && i != m_HostsTime.begin(); )
+	{
+		--i;
+		CHostCacheHost* pHost = (*i);
+		i = m_HostsTime.erase( i );
+		m_Hosts.erase( pHost->m_pAddress );
+		delete pHost;
+		m_nCookie++;
+	}
+
+	ASSERT( m_Hosts.size() == m_HostsTime.size() );
 }
 
 
@@ -630,8 +656,6 @@ void CHostCacheList::Serialize(CArchive& ar, int nVersion)
 		}
 
 		PruneHosts();
-
-		ASSERT( m_Hosts.size() == m_HostsTime.size() );
 
 		m_nCookie++;
 	}
@@ -1139,6 +1163,38 @@ CString CHostCacheHost::ToString() const
 	return str;
 }
 
+bool CHostCacheHost::IsExpired(DWORD tNow) const
+{
+	switch ( m_nProtocol )
+	{
+	case PROTOCOL_G1:
+		return m_tSeen && ( tNow - m_tSeen > Settings.Gnutella1.HostExpire );
+	case PROTOCOL_G2:
+		return m_tSeen && ( tNow - m_tSeen > Settings.Gnutella2.HostExpire );
+	case PROTOCOL_ED2K:
+		return false;	// Never
+	case PROTOCOL_BT:
+		return m_tSeen && ( tNow - m_tSeen > 24 * 60 * 60 ); // TODO: Add BitTorrent setting
+	case PROTOCOL_KAD:
+		return m_tSeen && ( tNow - m_tSeen > 24 * 60 * 60 ); // TODO: Add Kademlia setting
+	}
+	return false;
+}
+
+bool CHostCacheHost::IsThrottled(DWORD tNow) const
+{
+	switch ( m_nProtocol )
+	{
+	case PROTOCOL_G1:
+		return m_tConnect && ( tNow - m_tConnect < Settings.Gnutella.ConnectThrottle );
+	case PROTOCOL_G2:
+		return m_tConnect && ( tNow - m_tConnect < Settings.Gnutella.ConnectThrottle );
+	case PROTOCOL_ED2K:
+		return m_tConnect && ( tNow - m_tConnect < Settings.eDonkey.QueryServerThrottle );
+	}
+	return false;
+}
+
 //////////////////////////////////////////////////////////////////////
 // CHostCacheHost connection test
 
@@ -1147,16 +1203,7 @@ BOOL CHostCacheHost::CanConnect(DWORD tNow) const
 	// Don't connect to self
 	if ( Settings.Connection.IgnoreOwnIP && Network.IsSelfIP( m_pAddress ) ) return FALSE;
 
-	// We can connect to fresh host
-	if ( ! m_tConnect ) return TRUE;
-
 	if ( ! tNow ) tNow = static_cast< DWORD >( time( NULL ) );
-
-	DWORD nHostExpire = ( m_nProtocol == PROTOCOL_G1 ) ? Settings.Gnutella1.HostExpire :
-		( ( m_nProtocol == PROTOCOL_G2 ) ? Settings.Gnutella2.HostExpire : /* ed2k */ 0 );
-
-	DWORD nHostThrottle = ( m_nProtocol == PROTOCOL_G1 || m_nProtocol == PROTOCOL_G2 ) ?
-		Settings.Gnutella.ConnectThrottle : Settings.eDonkey.QueryServerThrottle;
 
 	return
 		// Let failed host rest some time...
@@ -1164,9 +1211,9 @@ BOOL CHostCacheHost::CanConnect(DWORD tNow) const
 		// ...and we lost no hope on this host...
 		( m_nFailures <= Settings.Connection.FailureLimit ) &&
 		// ...and host isn't expired...
-		( ! nHostExpire  || ( tNow - m_tSeen < nHostExpire ) ) &&
+		( ! IsExpired( tNow ) ) &&
 		// ...and make sure we reconnect not too fast...
-		( tNow - m_tConnect >= max( nHostThrottle, 60u ) );
+		( ! IsThrottled( tNow ) );
 		// ...then we can connect!
 }
 
@@ -1177,14 +1224,11 @@ BOOL CHostCacheHost::CanQuote(DWORD tNow) const
 {
 	if ( ! tNow ) tNow = static_cast< DWORD >( time( NULL ) );
 
-	DWORD nHostExpire = ( m_nProtocol == PROTOCOL_G1 ) ? Settings.Gnutella1.HostExpire :
-		( ( m_nProtocol == PROTOCOL_G2 ) ? Settings.Gnutella2.HostExpire : /* ed2k */ 0 );
-
 	return
 		// A host isn't dead...
 		( m_nFailures == 0 ) &&
 		// ...and host isn't expired...
-		( ! nHostExpire  || ( tNow - m_tSeen < nHostExpire ) );
+		( ! IsExpired( tNow ) );
 		// ...then we can tell about it to others!
 }
 

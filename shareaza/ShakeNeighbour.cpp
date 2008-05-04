@@ -1146,7 +1146,7 @@ BOOL CShakeNeighbour::OnHeadersCompleteG2()
 		// We'll set this flag to true if we need to tell the remote computer we're a leaf so we can connect
 		BOOL bFallback = FALSE;
 
-		// We are a Gnutella2 hub, or at least we are capable of becomming one
+		// We are a Gnutella2 hub, or at least we are capable of becoming one
 		if ( Neighbours.IsG2Hub() || Neighbours.IsG2HubCapable() )
 		{
 			// The remote computer sent us a header like "X-Ultrapeer: False"

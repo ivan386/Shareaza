@@ -1191,7 +1191,7 @@ void CNeighboursWithConnect::Maintain()
 						pHost->CanConnect( tNow ) && // We can connect to this host now (do)
 						pHost->ConnectTo( TRUE ) )   // Try to connect to this host now (do), if it works
 					{
-						// Make sure it's an eDonkey2000 compuer we just connected to
+						// Make sure it's an eDonkey2000 computer we just connected to
 						ASSERT( pHost->m_nProtocol == nProtocol );
 
 						// Count that we now have one more eDonkey2000 connection, and we don't know if about its network role yet
@@ -1251,7 +1251,7 @@ void CNeighboursWithConnect::Maintain()
 				}
 			}
 
-			// If network autoconnet is on (do)
+			// If network autoconnect is on (do)
 			if ( Network.m_bAutoConnect )
 			{
 				// If we don't have any handshaking connections for this network, and we've been connected to a hub for more than 30 seconds

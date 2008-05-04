@@ -702,7 +702,7 @@ BOOL CDiscoveryServices::Execute(BOOL bDiscovery, PROTOCOLID nProtocol, USHORT n
 		BOOL	bG2Required = Settings.Gnutella2.EnableToday && ( nProtocol == PROTOCOL_NULL || nProtocol == PROTOCOL_G2) && ( nForceDiscovery == 1 || HostCache.Gnutella2.CountHosts(TRUE) < 25 );
 		BOOL	bEdRequired = Settings.eDonkey.EnableToday && ( nProtocol == PROTOCOL_NULL || nProtocol == PROTOCOL_ED2K ) && Settings.eDonkey.MetAutoQuery && ( m_tMetQueried == 0 || tNow - m_tMetQueried >= 60 * 60 ) && ( nForceDiscovery == 1 || !HostCache.EnoughED2KServers() );
 
-		// Broadcast dicovery
+		// Broadcast discovery
 		if ( bG2Required && Neighbours.NeedMoreHubs( PROTOCOL_G2 ) )
 		{
 			SOCKADDR_IN addr;

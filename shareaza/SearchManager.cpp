@@ -177,10 +177,7 @@ BOOL CSearchManager::OnQueryAck(CG2Packet* pPacket, SOCKADDR_IN* pHost, Hashes::
 			{
 				WORD nPort = pPacket->ReadShortBE();
 
-				if ( ! Network.IsFirewalledAddress( &nAddress, TRUE ) && nPort )
-				{
-					HostCache.Gnutella2.Add( (IN_ADDR*)&nAddress, nPort, tNow );
-				}
+				HostCache.Gnutella2.Add( (IN_ADDR*)&nAddress, nPort, tNow );
 			}
 
 			if ( nLength >= 8 ) nLeaves += pPacket->ReadShortBE();

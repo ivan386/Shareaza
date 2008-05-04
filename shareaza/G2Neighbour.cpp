@@ -724,9 +724,7 @@ BOOL CG2Neighbour::OnLNI(CG2Packet* pPacket)
 		pPacket->m_nPosition = nNext;
 	}
 
-	if ( ! Network.IsFirewalledAddress( &m_pHost.sin_addr, TRUE ) && 
-		 ! Network.IsReserved( &m_pHost.sin_addr ) &&
-		 m_pVendor != NULL && m_nNodeType != ntLeaf )
+	if ( m_pVendor != NULL && m_nNodeType != ntLeaf )
 	{
 		HostCache.Gnutella2.Add( &m_pHost.sin_addr, htons( m_pHost.sin_port ),
 			0, m_pVendor->m_sCode );
@@ -1356,16 +1354,15 @@ BOOL CG2Neighbour::OnQueryKeyAns(CG2Packet* pPacket)
 		pPacket->m_nPosition = nOffset;
 	}
 
-	theApp.Message( MSG_DEBUG, _T("Got a query key for %s:%i via neighbour %s: 0x%x"),
-		(LPCTSTR)CString( inet_ntoa( *(IN_ADDR*)&nAddress ) ), nPort, (LPCTSTR)m_sAddress, nKey );
-
-	if ( Network.IsFirewalledAddress( &nAddress ) || 
-		 0 == nPort || Network.IsReserved( (IN_ADDR*)&nAddress ) ) return TRUE;
-
 	CQuickLock oLock( HostCache.Gnutella2.m_pSection );
 
 	CHostCacheHost* pCache = HostCache.Gnutella2.Add( (IN_ADDR*)&nAddress, nPort );
-	if ( pCache != NULL ) pCache->SetKey( nKey, &m_pHost.sin_addr );
+	if ( pCache != NULL )
+	{
+		theApp.Message( MSG_DEBUG, _T("Got a query key for %s:%i via neighbour %s: 0x%x"),
+			(LPCTSTR)CString( inet_ntoa( *(IN_ADDR*)&nAddress ) ), nPort, (LPCTSTR)m_sAddress, nKey );
+		pCache->SetKey( nKey, &m_pHost.sin_addr );
+	}
 
 	return TRUE;
 }

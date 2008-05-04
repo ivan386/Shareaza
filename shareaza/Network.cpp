@@ -247,9 +247,6 @@ BOOL CNetwork::Connect(BOOL bAutoConnect)
 	if ( bAutoConnect ) 
 	{
 		m_bAutoConnect = TRUE;
-		HostCache.BitTorrent.PruneOldHosts();
-		// Remove really old G1 hosts before trying to connect to G1
-		if ( Settings.Gnutella1.EnableToday ) HostCache.Gnutella1.PruneOldHosts();
 	}
 
 	// Make sure WinINet is connected (IE is not in offline mode)
@@ -644,6 +641,8 @@ void CNetwork::OnRun()
 
 	while ( m_bEnabled )
 	{
+		HostCache.PruneOldHosts();
+
 		Sleep( 50 );
 		WaitForSingleObject( m_pWakeup, 100 );
 	

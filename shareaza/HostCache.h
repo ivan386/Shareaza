@@ -53,7 +53,7 @@ public:
 	DWORD		m_tRetryAfter;		// G2 retry time according G2_PACKET_RETRY_AFTER packet (in seconds)
 	DWORD		m_tConnect;			// TCP connect time (in seconds)
 	DWORD		m_tQuery;			// G2 / ED2K query time (in seconds)
-	DWORD		m_tAck;				// Time when we sent something requires acknowledgement (0 - not required)
+	DWORD		m_tAck;				// Time when we sent something requires acknowledgment (0 - not required)
 	DWORD		m_tStats;			// ED2K stats UDP request
 	DWORD		m_tFailure;			// Last failure time
 	DWORD		m_nFailures;		// Failures counter
@@ -75,6 +75,8 @@ public:
 
 	CNeighbour*	ConnectTo(BOOL bAutomatic = FALSE);
 	CString		ToString() const;
+	bool		IsExpired(DWORD tNow) const;		// Is this host expired?
+	bool		IsThrottled(DWORD tNow) const;		// Is host temporary throttled down?
 	BOOL		CanConnect(DWORD tNow = 0) const;	// Can we connect to this host now?
 	BOOL		CanQuote(DWORD tNow = 0) const;		// Is this a recently seen host?
 	BOOL		CanQuery(DWORD tNow = 0) const;		// Can we UDP query this host? (G2/ed2k)
@@ -283,6 +285,7 @@ public:
 							  PROTOCOLID nProtocol=PROTOCOL_NULL, bool bRemove=true);
 	void				OnSuccess(const IN_ADDR* pAddress, WORD nPort, 
 							  PROTOCOLID nProtocol=PROTOCOL_NULL, bool bUpdate=true);
+	void				PruneOldHosts();
 
 	inline bool EnoughED2KServers() const throw()
 	{
@@ -316,6 +319,7 @@ public:
 protected:
 	CList< CHostCacheList* >	m_pList;
 	mutable CCriticalSection	m_pSection;
+	DWORD						m_tLastPruneTime;
 
 	void				Serialize(CArchive& ar);
 	void				Clear();
