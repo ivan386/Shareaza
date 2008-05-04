@@ -136,7 +136,7 @@ UINT CShareMonkeyData::ThreadStart(LPVOID pParam)
 // CShareMonkeyData thread run
 void CShareMonkeyData::OnRun()
 {
-	Sleep( 500 ); // Display "Please wait..." message
+	Sleep( 50 ); // Display "Please wait..." message
 	while ( m_hInternet != NULL )
 	{
 		m_pSection.Lock();
