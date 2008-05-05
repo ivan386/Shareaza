@@ -1263,6 +1263,7 @@ void CLibraryFileView::OnShareMonkeyPrices()
 		pChild->Add( strStatus, L"Please wait..." );
 		pChild->m_sSessionID = pData->m_sSessionID;
 		pChild->m_sProductID = pData->m_sProductID;
+		pChild->m_sThumbnailURL = pData->m_sThumbnailURL;
 
 		GetFrame()->SetPanelData( pChild );
 		pChild->Start( this, 0 );
