@@ -1174,11 +1174,12 @@ bool CHostCacheHost::IsExpired(DWORD tNow) const
 	case PROTOCOL_ED2K:
 		return false;	// Never
 	case PROTOCOL_BT:
-		return m_tSeen && ( tNow - m_tSeen > 24 * 60 * 60 ); // TODO: Add BitTorrent setting
+		return m_tSeen && ( tNow - m_tSeen > Settings.BitTorrent.DhtPruneTime );
 	case PROTOCOL_KAD:
 		return m_tSeen && ( tNow - m_tSeen > 24 * 60 * 60 ); // TODO: Add Kademlia setting
+	default:
+		return false;
 	}
-	return false;
 }
 
 bool CHostCacheHost::IsThrottled(DWORD tNow) const
@@ -1191,8 +1192,9 @@ bool CHostCacheHost::IsThrottled(DWORD tNow) const
 		return m_tConnect && ( tNow - m_tConnect < Settings.Gnutella.ConnectThrottle );
 	case PROTOCOL_ED2K:
 		return m_tConnect && ( tNow - m_tConnect < Settings.eDonkey.QueryServerThrottle );
+	default:
+		return false;
 	}
-	return false;
 }
 
 //////////////////////////////////////////////////////////////////////
