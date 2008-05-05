@@ -38,6 +38,7 @@ public:
 
 // Operations
 public:
+	void		Clear();
 	BOOL		AddMenu(CMenu* pMenu, BOOL bChild = FALSE);
 	BOOL		ReplaceMenuText(CMenu* pMenu, int nPosition, MENUITEMINFO FAR* mii, LPCTSTR pszText);
 	void		SetWatermark(HBITMAP hBitmap);
@@ -48,7 +49,7 @@ public:
 	UINT_PTR	DoExplorerMenu(HWND hwnd, const CStringList& oFiles, POINT point, HMENU hMenu, HMENU hSubMenu, UINT nFlags);
 
 protected:
-	CComPtr< IContextMenu >		m_pContextMenu1;
+	CComPtr< IContextMenu >		m_pContextMenuCache;
 	CComPtr< IContextMenu2 >	m_pContextMenu2;
 	CComPtr< IContextMenu3 >	m_pContextMenu3;
 

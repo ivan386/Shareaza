@@ -50,6 +50,13 @@ CCoolMenu::CCoolMenu() :
 
 CCoolMenu::~CCoolMenu()
 {
+	Clear();
+}
+
+void CCoolMenu::Clear()
+{
+	m_pContextMenuCache.Release();
+
 	SetWatermark( NULL );
 	if ( m_bUnhook ) EnableHook( FALSE );
 }
@@ -727,16 +734,20 @@ UINT_PTR CCoolMenu::DoExplorerMenu(HWND hwnd, const CStringList& oFiles, POINT p
 	HMENU hMenu, HMENU hSubMenu, UINT nFlags)
 {
 	UINT_PTR nCmd = 0;
-
+	CComPtr< IContextMenu > pContextMenu1;
 	CShellList oItemIDListList;
-	if ( oItemIDListList.GetMenu( hwnd, oFiles, (void**)&m_pContextMenu1 ) )
+	if ( oItemIDListList.GetMenu( hwnd, oFiles, (void**)&pContextMenu1 ) )
 	{
-		HRESULT hr = m_pContextMenu1->QueryContextMenu( hSubMenu, 0,
-			ID_SHELL_MENU_MIN, ID_SHELL_MENU_MAX, CMF_NORMAL | CMF_EXPLORE );
+		HRESULT hr;
+		{
+			CWaitCursor wc;
+			hr = pContextMenu1->QueryContextMenu( hSubMenu, 0,
+				ID_SHELL_MENU_MIN, ID_SHELL_MENU_MAX, CMF_NORMAL | CMF_EXPLORE );
+		}
 		if ( SUCCEEDED( hr ) )
 		{
-			hr = m_pContextMenu1.QueryInterface( &m_pContextMenu2 );
-			hr = m_pContextMenu1.QueryInterface( &m_pContextMenu3 );
+			hr = pContextMenu1.QueryInterface( &m_pContextMenu2 );
+			hr = pContextMenu1.QueryInterface( &m_pContextMenu3 );
 
 			::SetForegroundWindow( hwnd );
 			nCmd = ::TrackPopupMenu( hMenu, TPM_RETURNCMD | nFlags,
@@ -752,7 +763,7 @@ UINT_PTR CCoolMenu::DoExplorerMenu(HWND hwnd, const CStringList& oFiles, POINT p
 				ici.lpVerb = reinterpret_cast< LPCSTR >( nCmd - ID_SHELL_MENU_MIN );
 				ici.lpVerbW = reinterpret_cast< LPCWSTR >( nCmd - ID_SHELL_MENU_MIN );
 				ici.nShow = SW_SHOWNORMAL;
-				HRESULT hr = m_pContextMenu1->InvokeCommand( (CMINVOKECOMMANDINFO*)&ici );
+				HRESULT hr = pContextMenu1->InvokeCommand( (CMINVOKECOMMANDINFO*)&ici );
 				VERIFY( SUCCEEDED( hr ) );
 			}
 			else if ( ( TPM_RETURNCMD & nFlags ) == 0 )
@@ -764,8 +775,11 @@ UINT_PTR CCoolMenu::DoExplorerMenu(HWND hwnd, const CStringList& oFiles, POINT p
 			m_pContextMenu3.Release();
 			m_pContextMenu2.Release();
 		}
-		m_pContextMenu1.Release();
+		CComPtr< IContextMenu > pContextMenuCache;
+		pContextMenuCache = m_pContextMenuCache;
+		m_pContextMenuCache = pContextMenu1;
 	}
+
 	return nCmd;
 }
 //////////////////////////////////////////////////////////////////////

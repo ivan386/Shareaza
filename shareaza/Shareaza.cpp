@@ -499,6 +499,7 @@ int CShareazaApp::ExitInstance()
 		BTClients.Clear();
 		Downloads.Clear( TRUE );
 		Library.Clear();
+		CoolMenu.Clear();
 		Skin.Clear();
 
 		if ( dlgSplash )
