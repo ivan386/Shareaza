@@ -199,7 +199,6 @@ void CBTTrackerRequest::OnRun()
 
 void CBTTrackerRequest::Process(bool bRequest)
 {
-	ASSERT( Downloads.Check( static_cast< CDownload* >( m_pDownload ) ) );
 	ASSERT( m_pDownload->m_bTorrentRequested );
 
 	if ( !bRequest )
