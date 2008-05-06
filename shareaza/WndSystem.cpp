@@ -162,6 +162,26 @@ BOOL CSystemWnd::PreTranslateMessage(MSG* pMsg)
 			m_wndText.PostMessage( WM_VSCROLL, MAKELONG( SB_PAGEDOWN, 0 ), NULL );
 			return TRUE;
 		}
+		else if ( pMsg->wParam == VK_HOME )
+		{
+			m_wndText.PostMessage( WM_VSCROLL, MAKELONG( SB_TOP, 0 ), NULL );
+			return TRUE;
+		}
+		else if ( pMsg->wParam == VK_END )
+		{
+			m_wndText.PostMessage( WM_VSCROLL, MAKELONG( SB_BOTTOM, 0 ), NULL );
+			return TRUE;
+		}
+		else if ( pMsg->wParam == VK_UP )
+		{
+			m_wndText.PostMessage( WM_VSCROLL, MAKELONG( SB_LINEUP, 0 ), NULL );
+			return TRUE;
+		}
+		else if ( pMsg->wParam == VK_DOWN )
+		{
+			m_wndText.PostMessage( WM_VSCROLL, MAKELONG( SB_LINEDOWN, 0 ), NULL );
+			return TRUE;
+		}
 		else if ( pMsg->wParam == VK_TAB )
 		{
 			GetManager()->Open( RUNTIME_CLASS(CNeighboursWnd) );

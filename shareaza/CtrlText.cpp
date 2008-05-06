@@ -1,7 +1,7 @@
 //
 // CtrlText.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -218,10 +218,10 @@ void CTextCtrl::OnVScroll(UINT nSBCode, UINT /*nPos*/, CScrollBar* /*pScrollBar*
 	switch ( nSBCode )
 	{
 	case SB_TOP:
-		m_nPosition = 0;
+		m_nPosition = 1;
 		break;
 	case SB_BOTTOM:
-		m_nPosition = m_nTotal - 1;
+		m_nPosition = m_nTotal;
 		break;
 	case SB_LINEUP:
 		m_nPosition--;
