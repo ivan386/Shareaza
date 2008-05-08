@@ -552,16 +552,18 @@ BOOL CShareazaDataSource::DropToFolder(IDataObject* pIDataObject, DWORD grfKeySt
 	// Check for "source == destination"
 	{
 		LPCTSTR szPath2 = PathFindFileName( pAFOP->sFrom.GetData() );
-		if ( ! szPath2 )
-			return FALSE;
-		int nPath1Length = lstrlen( pszDest );
-		if ( nPath1Length > 0 && pszDest[ nPath1Length - 1 ] == _T('\\') )
-			nPath1Length--;
-		int nPath2Length = szPath2 - pAFOP->sFrom.GetData() - 1;
-		if ( nPath1Length == nPath2Length &&
-			! StrCmpNI( pszDest, pAFOP->sFrom.GetData(), nPath1Length ) )
-			// source == destination
-			return TRUE;
+		if ( szPath2 )
+		{
+			int nPath1Length = lstrlen( pszDest );
+			if ( nPath1Length > 0 && pszDest[ nPath1Length - 1 ] == _T('\\') )
+				nPath1Length--;
+			int nPath2Length = szPath2 - pAFOP->sFrom.GetData() - 1;
+			if ( nPath1Length == nPath2Length &&
+				! StrCmpNI( pszDest, pAFOP->sFrom.GetData(), nPath1Length ) )
+				// source == destination
+				return TRUE;
+		}
+		// else "virtual" drop
 	}
 
 	*pdwEffect = PathIsSameRoot( pszDest, pAFOP->sFrom.GetData() ) ?
