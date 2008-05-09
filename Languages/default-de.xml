@@ -3564,14 +3564,14 @@
 		<control caption="Shareaza mit .torrent-Dateien verknüpfen."/>
 	</dialog>
 		<dialog name="CWizardConnectionPage" cookie="StStCoStCoStCoStCoStms" caption="Willkommen bei Shareaza [Schritt 3 von 7]">
-		<control caption="Shareaza benötigt nun einige Informationen über ihre Internetverbinung um bestmöglich zu funktionieren."/>
+		<control caption="Shareaza benötigt nun einige Informationen über ihre Internetverbinung um bestmöglichst zu funktionieren."/>
 		<control caption="Wählen Sie den Typ ihrer Internetverbindung:"/>
-		<control caption="Modem (56k)|ISDN (64k)|DSL light (256K)|DSL light (512K)|DSL (768K)|DSL (1.5M)|DSL (4.0M)|ADSL2 (8.0M)|ADSL2 (12.0M)|ADSL2+ (24.0M)|SDSL|T1|T3|LAN|OC3"/>
-		<control caption="Oder wählen Sie ihre max. Downloadgeschwindigkeit:"/>
+		<control caption="Modem (56k)|ISDN (64k)|DSL light (256K)|DSL light (512K)|DSL (768K)|DSL (1.5M)|DSL (4.0M)|ADSL2 (8.0M)|ADSL2 (12.0M)|ADSL (20M)|ADSL2+ (24.0M)|SDSL|T1|T3|LAN|OC3"/>
+		<control caption="Oder ihr maximum (80%) eingehend:"/>
 		<control/>
-		<control caption="und die max. Uploadgeschwindigkeit:"/>
+		<control caption="und ihr maximum (75%) ausgehend:"/>
 		<control/>
-		<control caption="Soll Shareaza die benötigten Portfreigaben mit Hilfe von UPnP automatisch einrichten?"/>
+		<control caption="Die benötigten Portfreigaben mit Hilfe von UPnP automatisch einrichten ?"/>
 		<control/>
 		<control caption="Fortschritt:"/>
 		<control/>
