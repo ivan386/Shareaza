@@ -884,14 +884,12 @@ UINT CLibraryThumbView::ThreadStart(LPVOID pParam)
 void CLibraryThumbView::OnRun()
 {
 	CSingleLock pLock( &m_pSection );
-	CThumbCache pCache;
 
 	while ( m_bThread )
 	{
 		CLibraryThumbItem* pThumb = NULL;
 		DWORD nIndex = 0;
 		CString strPath;
-		BOOL bCache = FALSE;
 
 		pLock.Lock();
 
@@ -908,7 +906,6 @@ void CLibraryThumbView::OnRun()
 						pThumb	= *pList;
 						nIndex	= pFile->m_nIndex;
 						strPath	= pFile->GetPath();
-						bCache	= pFile->m_bCachedPreview;
 						oLock.Unlock();
 						break;
 					}
@@ -925,57 +922,10 @@ void CLibraryThumbView::OnRun()
 //		DWORD tNow = GetTickCount();
 
 		CImageFile pFile;
-		CSize Size( THUMB_STORE_SIZE, THUMB_STORE_SIZE );
 		BOOL bSuccess = FALSE;
-
-		if ( ! pCache.Load( strPath, &Size, nIndex, &pFile ) )
+		if ( CThumbCache::Cache( strPath, &pFile ) )
 		{
-			bSuccess = pFile.LoadFromFile( strPath, FALSE, TRUE ) && pFile.EnsureRGB();
-			if ( bSuccess )
-			{
-				int nSize = THUMB_STORE_SIZE * pFile.m_nWidth / pFile.m_nHeight;
-
-				if ( ! m_bThread ) break;
-
-				if ( nSize > THUMB_STORE_SIZE )
-				{
-					nSize = THUMB_STORE_SIZE * pFile.m_nHeight / pFile.m_nWidth;
-					pFile.Resample( THUMB_STORE_SIZE, nSize );
-				}
-				else
-				{
-					pFile.Resample( nSize, THUMB_STORE_SIZE );
-				}
-
-				if ( ! m_bThread ) break;
-
-				if ( ! pCache.Store( strPath, &Size, nIndex, &pFile ) )
-					theApp.Message( MSG_DEBUG, _T("THUMBNAIL: pCache.Store failed in CLibraryThumbView::OnRun()") );
-
-				if ( pFile.m_nWidth <= 0 || pFile.m_nHeight <= 0 )
-				{
-					bSuccess = FALSE;
-					theApp.Message( MSG_DEBUG, _T("THUMBNAIL: Invalid width or height in CLibraryThumbView::OnRun()") );
-				}
-			}
-		}
-		else
-			bSuccess = TRUE;
-
-		if ( bSuccess )
-		{
-			// Resample now to display dimensions
-			int nSize = m_szThumb.cy * pFile.m_nWidth / pFile.m_nHeight;
-
-			if ( nSize > m_szThumb.cx )
-			{
-				nSize = m_szThumb.cx * pFile.m_nHeight / pFile.m_nWidth;
-				pFile.Resample( m_szThumb.cx, nSize );
-			}
-			else
-			{
-				pFile.Resample( nSize, m_szThumb.cy );
-			}
+			bSuccess = pFile.FitTo( m_szThumb.cx, m_szThumb.cy );
 		}
 
 		pLock.Lock();
@@ -1010,15 +960,6 @@ void CLibraryThumbView::OnRun()
 		}
 
 		pLock.Unlock();
-
-		if ( bSuccess && ! bCache )
-		{
-			CQuickLock oLock( Library.m_pSection );
-			if ( CLibraryFile* pFile = Library.LookupFile( nIndex ) )
-			{
-				pFile->m_bCachedPreview = TRUE;
-			}
-		}
 
 		if ( ! m_bRush )
 		{

@@ -9,6 +9,9 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "7ZipBuilder", "..\plugins\7ZipBuilder\7ZipBuilder_9.vcproj", "{B69F80CD-FB15-45E8-B359-92A41CC571A7}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Shareaza", "..\shareaza\Shareaza_9.vcproj", "{F9C719B3-35FB-427D-A795-91105DFECAAF}"
+	ProjectSection(ProjectDependencies) = postProject
+		{0A0B10C7-CDF6-4A48-8F7B-B66A88154AAE} = {0A0B10C7-CDF6-4A48-8F7B-B66A88154AAE}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RARBuilder", "..\plugins\RARBuilder\RARBuilder_9.vcproj", "{F801DAD7-F08D-48EF-B0DF-6B120377E835}"
 EndProject
@@ -63,6 +66,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Installer", "..\setup\Insta
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "zlibwapi", "..\shareaza\zlib\zlibwapi_9.vcproj", "{39F34F2C-D42A-41D2-A0BC-54D7972E2BC5}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sqlite3", "..\sqlite3\sqlite3_9.vcproj", "{0A0B10C7-CDF6-4A48-8F7B-B66A88154AAE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -208,6 +213,14 @@ Global
 		{39F34F2C-D42A-41D2-A0BC-54D7972E2BC5}.Release|Win32.Build.0 = Release|Win32
 		{39F34F2C-D42A-41D2-A0BC-54D7972E2BC5}.Release|x64.ActiveCfg = Release|x64
 		{39F34F2C-D42A-41D2-A0BC-54D7972E2BC5}.Release|x64.Build.0 = Release|x64
+		{0A0B10C7-CDF6-4A48-8F7B-B66A88154AAE}.Debug|Win32.ActiveCfg = Debug|Win32
+		{0A0B10C7-CDF6-4A48-8F7B-B66A88154AAE}.Debug|Win32.Build.0 = Debug|Win32
+		{0A0B10C7-CDF6-4A48-8F7B-B66A88154AAE}.Debug|x64.ActiveCfg = Debug|x64
+		{0A0B10C7-CDF6-4A48-8F7B-B66A88154AAE}.Debug|x64.Build.0 = Debug|x64
+		{0A0B10C7-CDF6-4A48-8F7B-B66A88154AAE}.Release|Win32.ActiveCfg = Release|Win32
+		{0A0B10C7-CDF6-4A48-8F7B-B66A88154AAE}.Release|Win32.Build.0 = Release|Win32
+		{0A0B10C7-CDF6-4A48-8F7B-B66A88154AAE}.Release|x64.ActiveCfg = Release|x64
+		{0A0B10C7-CDF6-4A48-8F7B-B66A88154AAE}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

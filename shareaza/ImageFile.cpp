@@ -295,29 +295,47 @@ HBITMAP CImageFile::CreateBitmap(HDC hUseDC)
 /////////////////////////////////////////////////////////////////////////////
 // CImageFile image modification operations
 
+BOOL CImageFile::FitTo(int nNewWidth, int nNewHeight)
+{
+	int nSize = ( nNewHeight * m_nWidth ) / m_nHeight;
+	if ( nSize > nNewWidth )
+	{
+		nSize = ( nNewWidth * m_nHeight ) / m_nWidth;
+		return Resample( nNewWidth, nSize );
+	}
+	else
+	{
+		return Resample( nSize, nNewHeight );
+	}
+}
+
 BOOL CImageFile::Resample(int nNewWidth, int nNewHeight)
 {
 	if ( m_nWidth <= 0 || m_nHeight <= 0 )
-	{
-		theApp.Message( MSG_DEBUG, _T("THUMBNAIL: Invalid width or height in CImageFile::Resample()") );
 		return FALSE;
-	}
 	if ( nNewWidth <= 0 || nNewHeight <= 0 )
-	{
-		theApp.Message( MSG_DEBUG, _T("THUMBNAIL: Invalid new width or new height in CImageFile::Resample()") );
 		return FALSE;
-	}
-	if ( ! m_bLoaded ) return FALSE;
-	if ( m_nComponents != 3 ) return FALSE;
-	if ( nNewWidth == m_nWidth && nNewHeight == m_nHeight ) return TRUE;
+	if ( ! m_bLoaded )
+		return FALSE;
+	if ( m_nComponents != 3 )
+		return FALSE;
+	if ( nNewWidth == m_nWidth && nNewHeight == m_nHeight )
+		return TRUE;
 
 	DWORD nInPitch	= ( m_nWidth * 3 + 3 ) & ~3u;
 	DWORD nOutPitch	= ( nNewWidth * 3 + 3 ) & ~3u;
 
 	BYTE* pNew = new BYTE[ nOutPitch * nNewHeight ];
+	if ( ! pNew )
+		return FALSE;
 	BYTE* pOut = pNew;
 
 	int* pColInfo = new int[ nNewWidth * 2 ];
+	if ( ! pColInfo )
+	{
+		delete [] pNew;
+		return FALSE;
+	}
 	int* pColPtr = pColInfo;
 
 	for ( int nX = 0 ; nX < nNewWidth ; nX++ )

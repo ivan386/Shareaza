@@ -1599,8 +1599,6 @@ BOOL CUploadTransferHTTP::RequestPreview(CLibraryFile* pFile, CSingleLock& oLibr
 	m_oED2K			= pFile->m_oED2K;
 	m_oBTH			= pFile->m_oBTH;
 	m_oMD5			= pFile->m_oMD5;
-	DWORD nIndex	= pFile->m_nIndex;
-	BOOL bCached	= pFile->m_bCachedPreview;
 	
 	oLibraryLock.Unlock();
 	
@@ -1616,72 +1614,15 @@ BOOL CUploadTransferHTTP::RequestPreview(CLibraryFile* pFile, CSingleLock& oLibr
 	}
 	
 	CImageFile pImage;
-	CThumbCache pCache;
-	CSize szThumb( 0, 0 );
-	BOOL bSuccess = FALSE;
-
-	if ( ! pCache.Load( m_sFilePath, &szThumb, nIndex, &pImage ) )
-	{
-		bSuccess = Settings.Uploads.DynamicPreviews && pImage.LoadFromFile( m_sFilePath, FALSE, TRUE ) && pImage.EnsureRGB();
-		if ( bSuccess )
-		{
-			int nSize = THUMB_STORE_SIZE * pImage.m_nWidth / pImage.m_nHeight;
-			
-			if ( nSize > THUMB_STORE_SIZE )
-			{
-				nSize = THUMB_STORE_SIZE * pImage.m_nHeight / pImage.m_nWidth;
-				pImage.Resample( THUMB_STORE_SIZE, nSize );
-			}
-			else
-			{
-				pImage.Resample( nSize, THUMB_STORE_SIZE );
-			}
-
-			if ( ! pCache.Store( m_sFilePath, &szThumb, nIndex, &pImage ) )
-				theApp.Message( MSG_DEBUG, _T("THUMBNAIL: pCache.Store failed in CUploadTransferHTTP::RequestPreview()") );
-
-			if ( pImage.m_nWidth <= 0 || pImage.m_nHeight <= 0 )
-			{
-				bSuccess = FALSE;
-				theApp.Message( MSG_DEBUG, _T("THUMBNAIL: Invalid width or height in CUploadTransferHTTP::RequestPreview()") );
-			}
-		}
-	}
-	else
-		bSuccess = TRUE;	// Got a cached copy
-
-	if ( bSuccess )
+	if ( CThumbCache::Cache( m_sFilePath, &pImage, Settings.Uploads.DynamicPreviews ) )
 	{
 		theApp.Message( MSG_INFO, IDS_UPLOAD_PREVIEW_DYNAMIC, (LPCTSTR)m_sFileName, (LPCTSTR)m_sAddress );
-
-		// Resample now to display dimensions
-		int nSize = szThumb.cy * pImage.m_nWidth / pImage.m_nHeight;
-
-		if ( nSize > szThumb.cx )
-		{
-			nSize = szThumb.cx * pImage.m_nHeight / pImage.m_nWidth;
-			pImage.Resample( szThumb.cx, nSize );
-		}
-		else
-		{
-			pImage.Resample( nSize, szThumb.cy );
-		}
 	}
 	else
 	{
 		theApp.Message( MSG_ERROR, IDS_UPLOAD_PREVIEW_EMPTY, (LPCTSTR)m_sAddress, (LPCTSTR)m_sFileName );
 		SendResponse( IDR_HTML_FILENOTFOUND );
 		return TRUE;
-	}
-
-	if ( ! bCached )
-	{
-		CQuickLock oLock( Library.m_pSection );
-		if ( ( pFile = Library.LookupFile( nIndex ) ) != NULL )
-		{
-			pFile->m_bCachedPreview = TRUE;
-			Library.Update();
-		}
 	}
 
 	BYTE* pBuffer = NULL;

@@ -1,7 +1,7 @@
 //
 // ThumbCache.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -19,55 +19,16 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_THUMBCACHE_H__EDC6DF1A_071C_4171_A709_C7CCD7FAE56A__INCLUDED_)
-#define AFX_THUMBCACHE_H__EDC6DF1A_071C_4171_A709_C7CCD7FAE56A__INCLUDED_
-
 #pragma once
 
 class CImageFile;
 
-typedef struct
-{
-	DWORD		nIndex;
-	DWORD		nOffset;
-	DWORD		nLength;
-	FILETIME	pTime;
-} THUMB_INDEX;
-
-
 class CThumbCache
 {
-// Construction
 public:
-	CThumbCache();
-	virtual ~CThumbCache();
-
-// Attributes
-protected:
-	CCriticalSection m_pSection;
-protected:
-	CString		m_sPath;
-	CFile		m_pFile;
-	BOOL		m_bOpen;
-	CSize		m_szThumb;
-protected:
-	DWORD			m_nOffset;
-	THUMB_INDEX*	m_pIndex;
-	DWORD			m_nIndex;
-	DWORD			m_nBuffer;
-
-// Operations
-public:
-	BOOL	Load(LPCTSTR pszPath, CSize* pszThumb, DWORD nIndex, CImageFile* pImage);
-	BOOL	Store(LPCTSTR pszPath, CSize* pszThumb, DWORD nIndex, CImageFile* pImage);
-	static BOOL Cache(LPCTSTR pszPath, CSize* pszThumb, DWORD nIndex, CImageFile* pImage = NULL);
-	void	Close();
-protected:
-	BOOL	Prepare(LPCTSTR pszPath, CSize* pszThumb, BOOL bCreate);
-	BOOL	GetFileTime(LPCTSTR pszPath, FILETIME* pTime);
-public:
-	static BOOL Purge(LPCTSTR pszPath);
-
+	static void InitDatabase();
+	static BOOL	Load(LPCTSTR pszPath, CImageFile* pImage);
+	static void Delete(LPCTSTR pszPath);
+	static BOOL	Store(LPCTSTR pszPath, CImageFile* pImage);
+	static BOOL Cache(LPCTSTR pszPath, CImageFile* pImage = NULL, BOOL bLoadFromFile = TRUE);
 };
-
-#endif // !defined(AFX_THUMBCACHE_H__EDC6DF1A_071C_4171_A709_C7CCD7FAE56A__INCLUDED_)

@@ -151,20 +151,6 @@ void CLibraryMetaPanel::Update()
 		m_nIcon32	= ShellIcons.Get( m_sName, 32 );
 		m_nIcon48	= ShellIcons.Get( m_sName, 48 );
 		m_nRating	= pFirst->m_nRating;
-		
-		// It's complicated, users may delete SThumbs.dat file or it gets corrupted.
-		// Thus, the file flag m_bCachedPreview is unreliable.
-		// We should trust only on the thread operation which is executed later.
-
-		BOOL bThumbWasCached = pFirst->m_bCachedPreview;
-		// Thumbnail was not extracted yet, reset the file flag
-		pFirst->m_bCachedPreview = TRUE; //( m_bmThumb.m_hObject != NULL );
-
-		// If the states differ, update the Library (the window may flicker)
-		if ( bThumbWasCached != ( m_bmThumb.m_hObject != NULL ) && m_sThumb == m_sPath )
-		{
-			Library.Update();
-		}
 	}
 	else if ( m_nSelected > 1 )
 	{
@@ -727,8 +713,6 @@ void CLibraryMetaPanel::OnRun()
 		m_pSection.Unlock();
 
 		CImageFile pFile;
-		CThumbCache pCache;
-		CSize Size( THUMB_STORE_SIZE, THUMB_STORE_SIZE );
 		BOOL bSuccess = FALSE;
 
 		if ( m_bExternalData )
@@ -738,51 +722,13 @@ void CLibraryMetaPanel::OnRun()
 			m_bDownloadingImage = FALSE;
 		}
 
-		if ( !bSuccess && ! pCache.Load( strPath, &Size, m_nIndex, &pFile ) )
-		{
-			bSuccess = pFile.LoadFromFile( strPath, FALSE, TRUE ) && pFile.EnsureRGB();
-
-			if ( bSuccess )
-			{
-				int nSize = THUMB_STORE_SIZE * pFile.m_nWidth / pFile.m_nHeight;
-				
-				if ( nSize > THUMB_STORE_SIZE )
-				{
-					nSize = THUMB_STORE_SIZE * pFile.m_nHeight / pFile.m_nWidth;
-					pFile.Resample( THUMB_STORE_SIZE, nSize );
-				}
-				else
-				{
-					pFile.Resample( nSize, THUMB_STORE_SIZE );
-				}
-
-				if ( ! pCache.Store( strPath, &Size, m_nIndex, &pFile ) )
-					theApp.Message( MSG_DEBUG, _T("THUMBNAIL: pCache.Store failed in CLibraryMetaPanel::OnRun()") );
-
-				if ( pFile.m_nWidth <= 0 || pFile.m_nHeight <= 0 )
-				{
-					bSuccess = FALSE;
-					theApp.Message( MSG_DEBUG, _T("THUMBNAIL: Invalid width or height in CLibraryMetaPanel::OnRun()") );
-				}
-			}
-		}
-		else
-			bSuccess = TRUE;
+		if ( ! bSuccess )
+			bSuccess = CThumbCache::Cache( strPath, &pFile );
 
 		if ( bSuccess )
 		{
 			// Resample now to display dimensions
-			int nSize = m_nThumbSize * pFile.m_nWidth / pFile.m_nHeight;
-
-			if ( nSize > m_nThumbSize )
-			{
-				nSize = m_nThumbSize * pFile.m_nHeight / pFile.m_nWidth;
-				pFile.Resample( m_nThumbSize, nSize );
-			}
-			else
-			{
-				pFile.Resample( nSize, m_nThumbSize );
-			}
+			pFile.FitTo( m_nThumbSize, m_nThumbSize );
 
 			m_pSection.Lock();
 
@@ -798,13 +744,6 @@ void CLibraryMetaPanel::OnRun()
 			}
 
 			m_pSection.Unlock();
-		}
-		else
-		{
-			CQuickLock pLock( Library.m_pSection );
-			CLibraryFile* pFile = Library.LookupFile( m_nIndex );
-			if ( pFile != NULL )
-				pFile->m_bCachedPreview = FALSE;
 		}
 	}
 

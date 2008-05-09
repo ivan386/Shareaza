@@ -1034,6 +1034,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\shareaza\SQLite.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\shareaza\Statistics.cpp"
 				>
 			</File>
@@ -2697,6 +2701,10 @@
 			</File>
 			<File
 				RelativePath="..\shareaza\SkinWindow.h"
+				>
+			</File>
+			<File
+				RelativePath="..\shareaza\SQLite.h"
 				>
 			</File>
 			<File

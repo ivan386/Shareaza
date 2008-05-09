@@ -343,6 +343,8 @@ BOOL CShareazaApp::InitInstance()
 	if ( Settings.General.GUIMode != GUI_WINDOWED && Settings.General.GUIMode != GUI_TABBED && Settings.General.GUIMode != GUI_BASIC )
 		Settings.General.GUIMode = GUI_BASIC;
 
+	SplashStep( dlgSplash, L"Shareaza Database" );
+		CThumbCache::InitDatabase();
 	SplashStep( dlgSplash, L"P2P URIs" );
 		CShareazaURL::Register( TRUE );
 	SplashStep( dlgSplash, L"Shell Icons" );

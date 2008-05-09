@@ -199,8 +199,6 @@ void CBTTrackerRequest::OnRun()
 
 void CBTTrackerRequest::Process(bool bRequest)
 {
-	ASSERT( m_pDownload->m_bTorrentRequested );
-
 	if ( !bRequest )
 	{
 		theApp.Message( MSG_ERROR, IDS_BT_TRACKER_DOWN );

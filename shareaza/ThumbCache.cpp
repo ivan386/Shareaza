@@ -1,7 +1,7 @@
 //
 // ThumbCache.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -21,11 +21,13 @@
 
 #include "StdAfx.h"
 #include "Shareaza.h"
+#include "SQLite.h"
 #include "Settings.h"
 #include "ThumbCache.h"
 #include "ImageServices.h"
 #include "ImageFile.h"
 #include "Library.h"
+#include "SharedFile.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -33,383 +35,222 @@ static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
 #endif
 
-#define THUMB_SIGNATURE	"RAZATDB1"
-
-
 //////////////////////////////////////////////////////////////////////
-// CThumbCache construction
+// CThumbCache init
 
-CThumbCache::CThumbCache()
+void CThumbCache::InitDatabase()
 {
-	m_bOpen		= FALSE;
-	m_nOffset	= 0;
-	m_pIndex	= NULL;
-	m_nIndex	= 0;
-	m_nBuffer	= 0;
-}
-
-CThumbCache::~CThumbCache()
-{
-	Close();
-}
-
-//////////////////////////////////////////////////////////////////////
-// CThumbCache prepare
-
-BOOL CThumbCache::Prepare(LPCTSTR pszPath, CSize* pszThumb, BOOL bCreate)
-{
-	CString strPath( pszPath );
-
-	int nSlash = strPath.ReverseFind( '\\' );
-	if ( nSlash >= 0 ) strPath = strPath.Left( nSlash );
-	strPath += _T("\\SThumbs.dat");
-
-	if ( m_bOpen && strPath.CompareNoCase( m_sPath ) == 0 )
+	SQLite::CDatabase db( Settings.General.UserPath + _T("\\Data\\Shareaza.db3") );
+	if ( ! db )
 	{
-		if ( m_szThumb != *pszThumb )
-		{
-			Close();
-			DeleteFile( strPath );
-		}
-
-		return TRUE;
-	}
-	else if ( m_bOpen )
-	{
-		Close();
+		TRACE( _T("CThumbCache::InitDatabase : Database error: %s\n"), db.GetLastErrorMessage() );
+		return;
 	}
 
-	if ( m_pFile.Open( strPath, CFile::modeReadWrite ) )
-	{
-		CHAR szID[8];
-		m_pFile.Read( szID, 8 );
-
-		if ( memcmp( szID, THUMB_SIGNATURE, 8 ) != 0 )
-		{
-			m_pFile.Close();
-			return DeleteFile( strPath ) && Prepare( pszPath, pszThumb, bCreate );
-		}
-
-		m_pFile.Read( &m_szThumb.cx, 4 );
-		m_pFile.Read( &m_szThumb.cy, 4 );
-
-		if ( pszThumb->cx == 0 && pszThumb->cy == 0 ) *pszThumb = m_szThumb;
-
-		if ( m_szThumb == *pszThumb )
-		{
-			m_pFile.Read( &m_nOffset, 4 );
-			m_pFile.Read( &m_nIndex, 4 );
-
-			for ( m_nBuffer = m_nIndex ; m_nBuffer & 63 ; m_nBuffer++ );
-			m_pIndex = new THUMB_INDEX[ m_nBuffer ];
-
-			if ( m_pIndex == NULL )
-			{
-				theApp.Message( MSG_ERROR, _T("Memory allocation error in CThumbCache::Prepare") );
-				return FALSE;
-			}
-
-			m_pFile.Seek( m_nOffset, 0 );
-			m_pFile.Read( m_pIndex, sizeof(THUMB_INDEX) * m_nIndex );
-
-			m_sPath = strPath;
-			m_bOpen = TRUE;
-		}
-		else
-		{
-			m_pFile.Close();
-			DeleteFile( strPath );
-		}
-	}
-
-	if ( ! m_bOpen )
-	{
-		if ( ! bCreate ) return FALSE;
-
-		if ( ! m_pFile.Open( strPath, CFile::modeReadWrite|CFile::modeCreate ) ) return FALSE;
-
-		SetFileAttributes( strPath, FILE_ATTRIBUTE_HIDDEN|FILE_ATTRIBUTE_SYSTEM );
-
-		if ( pszThumb->cx == 0 && pszThumb->cy == 0 ) *pszThumb = CSize( Settings.Library.ThumbSize, Settings.Library.ThumbSize );
-
-		m_szThumb = *pszThumb;
-
-		m_pFile.Write( THUMB_SIGNATURE, 8 );
-		m_pFile.Write( &m_szThumb.cx, 4 );
-		m_pFile.Write( &m_szThumb.cy, 4 );
-		m_pFile.Write( &m_nOffset, 4 );
-		m_pFile.Write( &m_nIndex, 4 );
-		m_nOffset = 24;
-
-		m_sPath = strPath;
-		m_bOpen = TRUE;
-	}
-
-	return TRUE;
-}
-
-//////////////////////////////////////////////////////////////////////
-// CThumbCache close
-
-void CThumbCache::Close()
-{
-	CSingleLock pLock( &m_pSection, TRUE );
-
-	if ( m_bOpen == FALSE ) return;
-
-	m_sPath.Empty();
-	m_pFile.Close();
-	m_bOpen = FALSE;
-
-	if ( m_pIndex != NULL ) delete [] m_pIndex;
-
-	m_pIndex	= NULL;
-	m_nIndex	= 0;
-	m_nBuffer	= 0;
+	// Recreate table
+	db.Exec( _T("CREATE TABLE Thumbs (")
+		_T("Filename TEXT UNIQUE NOT NULL PRIMARY KEY, ")
+		_T("FileSize INTEGER NOT NULL, ")
+		_T("LastWriteTime INTEGER NOT NULL, ")
+		_T("Image BLOB NOT NULL);") ); // as JPEG
 }
 
 //////////////////////////////////////////////////////////////////////
 // CThumbCache load
 
-BOOL CThumbCache::Load(LPCTSTR pszPath, CSize* pszThumb, DWORD nIndex, CImageFile* pImage)
+BOOL CThumbCache::Load(LPCTSTR pszPath, CImageFile* pImage)
 {
-	CSingleLock pLock( &m_pSection, TRUE );
+	ASSERT( pszPath );
+	ASSERT( pImage );
 
-	if ( ! Prepare( pszPath, pszThumb, FALSE ) ) return FALSE;
-
-	THUMB_INDEX* pIndex = m_pIndex;
-
-    DWORD nCount = m_nIndex;
-	for ( ; nCount ; nCount--, pIndex++ )
+	// Load file info from disk
+	WIN32_FIND_DATA fd = { 0 };
+	if ( ! GetFileAttributesEx( pszPath, GetFileExInfoStandard, &fd ) )
 	{
-		if ( pIndex->nIndex == nIndex ) break;
-	}
-
-	if ( nCount == 0 ) return FALSE;
-
-	FILETIME pTime;
-	GetFileTime( pszPath, &pTime );
-	if ( CompareFileTime( &pIndex->pTime, &pTime ) != 0 ) return FALSE;
-
-	m_pFile.Seek( pIndex->nOffset, 0 );
-
-	try
-	{
-		CArchive ar( &m_pFile, CArchive::load );
-		pImage->Serialize( ar );
-	}
-	catch ( CException* pException )
-	{
-		pException->Delete();
+		// Deleted (or Ghost) file
+		TRACE( _T("CThumbCache::Load : Can't load info for %s\n"), pszPath );
 		return FALSE;
 	}
 
-	ASSERT( pImage );
-	if ( pImage && pImage->m_nWidth > 0 && pImage->m_nHeight > 0 )
-		return TRUE;
+	// Load file info from database
+	SQLite::CDatabase db( Settings.General.UserPath + _T("\\Data\\Shareaza.db3") );
+	if ( ! db )
+	{
+		TRACE( _T("CThumbCache::InitDatabase : Database error: %s\n"), db.GetLastErrorMessage() );
+		return FALSE;
+	}
+
+	CString sPath( pszPath );
+	sPath.MakeLower();
+
+	SQLite::CStatement st( db,
+		_T("SELECT FileSize, LastWriteTime, Image FROM Thumbs WHERE Filename == ?;") );
+	if ( ! st.Bind( 1, sPath ) ||
+		 ! st.Step() ||
+		 ! ( st.GetCount() == 0 || st.GetCount() == 3 ) )
+	{
+		TRACE( _T("CThumbCache::Load : Database error: %s\n"), db.GetLastErrorMessage() );
+		return FALSE;
+	}
+	if ( st.GetCount() == 0 )
+	{
+		TRACE( _T("CThumbCache::Load : No thumbnail for %s\n"), pszPath );
+		return FALSE;
+	}
+
+	QWORD nFileSize = (QWORD)st.GetInt64( _T("FileSize") );
+	QWORD nLastWriteTime = (QWORD)st.GetInt64( _T("LastWriteTime") );
+	int data_len;
+	LPCVOID data = st.GetBlob( _T("Image"), &data_len );
+	if ( ! data )
+	{
+		TRACE( _T("CThumbCache::Load : Database error: %s\n"), db.GetLastErrorMessage() );
+		return FALSE;
+	}
+
+	// Compare it
+	BOOL loaded = FALSE;
+	if ( nFileSize == MAKEQWORD( fd.nFileSizeLow, fd.nFileSizeHigh ) &&
+		nLastWriteTime == MAKEQWORD( fd.ftLastWriteTime.dwLowDateTime, fd.ftLastWriteTime.dwHighDateTime ) )
+	{
+		// Load image
+		loaded = pImage->LoadFromMemory( _T(".jpg"), data, data_len );
+	}
+
+	if ( ! loaded )
+	{
+		// Remove outdated or bad thumbnail
+		Delete( pszPath );
+	}
+
+	return loaded;
+}
+
+void CThumbCache::Delete(LPCTSTR pszPath)
+{
+	SQLite::CDatabase db( Settings.General.UserPath + _T("\\Data\\Shareaza.db3") );
+	if ( ! db )
+	{
+		TRACE( _T("CThumbCache::InitDatabase : Database error: %s\n"), db.GetLastErrorMessage() );
+		return;
+	}
+
+	CString sPath( pszPath );
+	sPath.MakeLower();
+
+	SQLite::CStatement st( db, _T("DELETE FROM Thumbs WHERE Filename == ?;") );
+	if ( ! st.Bind( 1, sPath ) )
+	{
+		TRACE( _T("CThumbCache::Load : Database error: %s\n"), db.GetLastErrorMessage() );
+	}
 	else
 	{
-		theApp.Message( MSG_DEBUG, _T("THUMBNAIL: Invalid width or height in CThumbCache::Load()") );
-		return FALSE;
+		st.Step();
 	}
 }
 
 //////////////////////////////////////////////////////////////////////
-// CThumbCache save
+// CThumbCache store
 
-BOOL CThumbCache::Store(LPCTSTR pszPath, CSize* pszThumb, DWORD nIndex, CImageFile* pImage)
+BOOL CThumbCache::Store(LPCTSTR pszPath, CImageFile* pImage)
 {
-	CSingleLock pLock( &m_pSection, TRUE );
-
+	ASSERT( pszPath );
 	ASSERT( pImage );
-	if ( ! pImage || pImage->m_nWidth <= 0 || pImage->m_nHeight <= 0 )
+	ASSERT( pImage->m_nWidth >= 0 && pImage->m_nHeight >= 0 );
+
+	// Load file info from disk
+	WIN32_FIND_DATA fd = { 0 };
+	if ( ! GetFileAttributesEx( pszPath, GetFileExInfoStandard, &fd ) )
 	{
-		theApp.Message( MSG_DEBUG, _T("THUMBNAIL: Invalid width or height in CThumbCache::Store()") );
+		TRACE( _T("CThumbCache::Store : Can't load info for %s\n"), pszPath );
 		return FALSE;
 	}
-	if ( ! Prepare( pszPath, pszThumb, TRUE ) ) return FALSE;
 
-	DWORD nBlock = pImage->GetSerialSize();
-
-	THUMB_INDEX* pIndex = m_pIndex;
-
-    DWORD nCount = m_nIndex;
-	for ( ; nCount ; nCount--, pIndex++ )
+	SQLite::CDatabase db( Settings.General.UserPath + _T("\\Data\\Shareaza.db3") );
+	if ( ! db )
 	{
-		if ( pIndex->nIndex == nIndex ) break;
+		TRACE( _T("CThumbCache::InitDatabase : Database error: %s\n"), db.GetLastErrorMessage() );
+		return FALSE;
 	}
 
-	if ( nCount != 0 && pIndex->nLength != nBlock )
+	CString sPath( pszPath );
+	sPath.MakeLower();
+
+	// Save to memory as JPEG image
+	BYTE* buf = NULL;
+	DWORD data_len = 0;
+	if ( ! pImage->SaveToMemory( _T(".jpg"), 75, &buf, &data_len ) )
 	{
-		pIndex->nIndex = 0;
-		nCount = 0;
+		TRACE( _T("CThumbCache::Store : Can't save thumbnail to JPEG for %s\n"), pszPath );
+		return FALSE;
+	}
+	auto_array< BYTE > data( buf );	
+
+	// Remove old image
+	SQLite::CStatement st1( db, _T("DELETE FROM Thumbs WHERE Filename == ?;") );
+	if ( ! st1.Bind( 1, sPath ) )
+	{
+		TRACE( _T("CThumbCache::Store : Database error: %s\n"), db.GetLastErrorMessage() );
+		return FALSE;
+	}
+	st1.Step();
+
+	// Store new one
+	SQLite::CStatement st2( db, _T("INSERT INTO Thumbs ")
+		_T("( Filename, FileSize, LastWriteTime, Image ) VALUES ( ?, ?, ?, ? );") );
+	if ( ! st2.Bind( 1, sPath ) ||
+		 ! st2.Bind( 2, (__int64)MAKEQWORD( fd.nFileSizeLow, fd.nFileSizeHigh ) ) ||
+		 ! st2.Bind( 3, (__int64)MAKEQWORD( fd.ftLastWriteTime.dwLowDateTime, fd.ftLastWriteTime.dwHighDateTime ) ) ||
+		 ! st2.Bind( 4, data.get(), data_len ) ||
+		 ! st2.Step() )
+	{
+		TRACE( _T("CThumbCache::Store : Database error: %s\n"), db.GetLastErrorMessage() );
+		return FALSE;
 	}
 
-	if ( nCount == 0 )
-	{
-		THUMB_INDEX* pBestIndex		= NULL;
-		DWORD nBestOverhead			= 0xFFFFFFFF;
+	TRACE( _T("CThumbCache::Store : Thumbnail saved for %s\n"), pszPath );
 
-		for ( pIndex = m_pIndex, nCount = m_nIndex ; nCount ; nCount--, pIndex++ )
+	CSingleLock oLock( &Library.m_pSection, FALSE );
+	if ( oLock.Lock( 250 ) )
+	{
+		if ( CLibraryFile* pFile = LibraryMaps.LookupFileByPath( pszPath ) )
 		{
-			if ( pIndex->nLength >= nBlock &&
-				( pIndex->nIndex == 0 || Library.LookupFile( pIndex->nIndex ) == NULL ) )
-			{
-				DWORD nOverhead = pIndex->nLength - nBlock;
-
-				if ( nOverhead < nBestOverhead )
-				{
-					pBestIndex = pIndex;
-					nBestOverhead = nOverhead;
-					if ( nOverhead == 0 ) break;
-				}
-			}
+			ASSERT( pFile->GetPath().MakeLower() == sPath );
+			pFile->m_bCachedPreview = TRUE;
+			Library.Update();
 		}
-
-		if ( pBestIndex != NULL )
-		{
-			pIndex = pBestIndex;
-		}
-		else
-		{
-			if ( m_nIndex >= m_nBuffer )
-			{
-				m_nBuffer += 64;
-				THUMB_INDEX* pNew = new THUMB_INDEX[ m_nBuffer ];
-				if ( m_nIndex ) CopyMemory( pNew, m_pIndex, sizeof(THUMB_INDEX) * m_nIndex );
-				if ( m_pIndex ) delete [] m_pIndex;
-				m_pIndex = pNew;
-			}
-
-			pIndex = m_pIndex + m_nIndex++;
-			pIndex->nOffset = m_nOffset;
-			pIndex->nLength = nBlock;
-
-			m_nOffset += nBlock;
-		}
-
-		pIndex->nIndex = nIndex;
 	}
-
-	GetFileTime( pszPath, &pIndex->pTime );
-
-	m_pFile.Seek( pIndex->nOffset, 0 );
-
-	try
-	{
-		CArchive ar( &m_pFile, CArchive::store );
-		pImage->Serialize( ar );
-		ar.Flush();
-	}
-	catch ( CException* pException )
-	{
-		pException->Delete();
-	}
-
-	m_pFile.SetLength( m_nOffset + sizeof(THUMB_INDEX) * m_nIndex );
-	m_pFile.Seek( 16, 0 );
-	m_pFile.Write( &m_nOffset, 4 );
-	m_pFile.Write( &m_nIndex, 4 );
-	m_pFile.Seek( m_nOffset, 0 );
-	m_pFile.Write( m_pIndex, sizeof(THUMB_INDEX) * m_nIndex );
-
-	m_pFile.Flush();
 
 	return TRUE;
-}
-
-//////////////////////////////////////////////////////////////////////
-// CThumbCache purge
-
-BOOL CThumbCache::Purge(LPCTSTR pszPath)
-{
-	CString strPath( pszPath );
-
-	int nSlash = strPath.ReverseFind( '\\' );
-	if ( nSlash >= 0 ) strPath = strPath.Left( nSlash );
-	strPath += _T("\\SThumbs.dat");
-
-	if ( GetFileAttributes( strPath ) == 0xFFFFFFFF ) return FALSE;
-
-	DeleteFile( strPath );
-
-	return TRUE;
-}
-
-//////////////////////////////////////////////////////////////////////
-// CThumbCache file time lookup
-
-BOOL CThumbCache::GetFileTime(LPCTSTR pszPath, FILETIME* pTime)
-{
-	BOOL bSuccess = FALSE;
-
-	if ( Library.m_pfnGetFileAttributesExW != NULL )
-	{
-		USES_CONVERSION;
-		WIN32_FILE_ATTRIBUTE_DATA pInfo;
-		bSuccess = (*Library.m_pfnGetFileAttributesExW)( T2CW(pszPath), GetFileExInfoStandard, &pInfo );
-		*pTime = pInfo.ftLastWriteTime;
-	}
-	if ( !bSuccess && Library.m_pfnGetFileAttributesExA != NULL )
-	{
-		USES_CONVERSION;
-		WIN32_FILE_ATTRIBUTE_DATA pInfo;
-		bSuccess = (*Library.m_pfnGetFileAttributesExA)( T2CA(pszPath), GetFileExInfoStandard, &pInfo );
-		*pTime = pInfo.ftLastWriteTime;
-	}
-	if ( !bSuccess )
-	{
-		HANDLE hFile = CreateFile( pszPath, GENERIC_READ,
-			FILE_SHARE_READ | FILE_SHARE_WRITE | ( theApp.m_bNT ? FILE_SHARE_DELETE : 0 ),
-			NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL );
-		VERIFY_FILE_ACCESS( hFile, pszPath )
-
-		if ( hFile != INVALID_HANDLE_VALUE )
-		{
-			bSuccess = TRUE;
-			::GetFileTime( hFile, NULL, NULL, pTime );
-			CloseHandle( hFile );
-		}
-	}
-
-	return bSuccess;
 }
 
 //////////////////////////////////////////////////////////////////////
 // CThumbCache cache
 
-BOOL CThumbCache::Cache(LPCTSTR pszPath, CSize* pszThumb, DWORD nIndex, CImageFile* pImage)
+BOOL CThumbCache::Cache(LPCTSTR pszPath, CImageFile* pImage, BOOL bLoadFromFile)
 {
-	ASSERT( pszPath );
-
 	CImageFile pFile;
 	if ( ! pImage )
 		pImage = &pFile;
 
-	CThumbCache pCache;
-
 	// Load from cache
-	if ( pCache.Load( pszPath, pszThumb, nIndex, pImage ) )
+	if ( CThumbCache::Load( pszPath, pImage ) )
 		return TRUE;
 
+	if ( ! bLoadFromFile )
+		return FALSE;
+
 	// Load from file
-	if ( ! pImage->LoadFromFile( pszPath ) || ! pFile.EnsureRGB() ) 
+	if ( ! pImage->LoadFromFile( pszPath, FALSE, TRUE ) || ! pImage->EnsureRGB() ||
+		pImage->m_nHeight <= 0 || pImage->m_nWidth <= 0 )
 		return FALSE;
 
 	// Resample to desired size
-	int nSize = pszThumb->cx * pFile.m_nWidth / pFile.m_nHeight;
-	if ( nSize > (int)pszThumb->cx )
-	{
-		nSize = pszThumb->cy * pFile.m_nHeight / pFile.m_nWidth;
-		if ( ! pImage->Resample( pszThumb->cx, nSize ) )
-			return  FALSE;
-	}
-	else
-	{
-		if ( ! pImage->Resample( nSize, pszThumb->cy ) )
-		return  FALSE;
-	}
+	if ( ! pImage->FitTo( THUMB_STORE_SIZE, THUMB_STORE_SIZE ) )
+		return FALSE;
 
 	// Save to cache
-	return pCache.Store( pszPath, pszThumb, nIndex, pImage );
+	CThumbCache::Store( pszPath, pImage );
+
+	return TRUE;
 }

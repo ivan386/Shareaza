@@ -929,17 +929,7 @@ void CSearchDetailPanel::OnPreviewLoaded(const Hashes::Sha1Hash& oSHA1, CImageFi
 {
 	if ( m_nThumbSize == 0 ) return;
 	
-	int nSize = m_nThumbSize * pImage->m_nWidth / pImage->m_nHeight;
-	
-	if ( nSize > m_nThumbSize )
-	{
-		nSize = m_nThumbSize * pImage->m_nHeight / pImage->m_nWidth;
-		pImage->Resample( m_nThumbSize, nSize );
-	}
-	else
-	{
-		pImage->Resample( nSize, m_nThumbSize );
-	}
+	pImage->FitTo( m_nThumbSize, m_nThumbSize );
 	
 	CSingleLock pLock( &m_pSection, TRUE );
 	

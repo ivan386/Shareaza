@@ -35,6 +35,7 @@
 #include "ShareazaURL.h"
 #include "FileExecutor.h"
 #include "Buffer.h"
+#include "ThumbCache.h"
 
 #include "XML.h"
 #include "XMLCOM.h"
@@ -937,6 +938,8 @@ void CLibraryFile::OnDelete(BOOL bDeleteGhost, TRISTATE bCreateGhost)
 {
 	if ( m_pFolder != NULL )
 	{
+		CThumbCache::Delete( GetPath() );
+
 		if ( bCreateGhost == TRI_TRUE )
 		{
 			if ( ! IsRated() )

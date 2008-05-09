@@ -392,8 +392,7 @@ void CLibraryBuilder::OnRun()
 					SetFilePointer( hFile, 0, NULL, FILE_BEGIN );
 					CLibraryBuilderPlugins::ExtractMetadata( nIndex, sPath, hFile );
 
-					CSize Size( Settings.Library.ThumbSize, Settings.Library.ThumbSize );
-					CThumbCache::Cache( sPath, &Size, nIndex );
+					CThumbCache::Cache( sPath );
 
 					// Done
 					Remove( nIndex );

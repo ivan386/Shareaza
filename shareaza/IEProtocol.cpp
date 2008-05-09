@@ -465,26 +465,8 @@ HRESULT CIEProtocol::OnRequestRAZAFILE(LPCTSTR pszURL, CBuffer& oBuffer, CString
 
 	if ( _tcsicmp( pszURL + 33, _T("preview") ) == 0 )
 	{
-		CSize szThumb( THUMB_STORE_SIZE, THUMB_STORE_SIZE );
 		CImageFile pImage;
-		CThumbCache pCache;
-		if ( ! pCache.Load( pFile->GetPath(), &szThumb, pFile->m_nIndex, &pImage ) )
-		{
-			if ( pImage.LoadFromFile( pFile->GetPath() ) && pImage.EnsureRGB() )
-			{
-				int nSize = THUMB_STORE_SIZE * pImage.m_nWidth / pImage.m_nHeight;
-				if ( nSize > THUMB_STORE_SIZE )
-				{
-					nSize = THUMB_STORE_SIZE * pImage.m_nHeight / pImage.m_nWidth;
-					pImage.Resample( THUMB_STORE_SIZE, nSize );
-				}
-				else
-					pImage.Resample( nSize, THUMB_STORE_SIZE );
-
-				pCache.Store( pFile->GetPath(), &szThumb, pFile->m_nIndex, &pImage );
-			}
-		}
-		if ( pImage.m_bLoaded )
+		if ( CThumbCache::Cache( pFile->GetPath(), &pImage ) )
 		{
 			BYTE* pBuffer = NULL;
 			DWORD nImageSize = 0;

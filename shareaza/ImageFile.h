@@ -55,6 +55,7 @@ public:
 	DWORD	GetSerialSize() const;
 	void	Serialize(CArchive& ar);
 	HBITMAP	CreateBitmap(HDC hUseDC = 0);
+	BOOL	FitTo(int nNewWidth, int nNewHeight);
 	BOOL	Resample(int nNewWidth, int nNewHeight);
 //	BOOL	FastResample(int nNewWidth, int nNewHeight);
 	BOOL	EnsureRGB(COLORREF crBack = 0xFFFFFFFF);

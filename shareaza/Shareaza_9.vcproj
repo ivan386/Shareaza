@@ -1030,6 +1030,10 @@
 				>
 			</File>
 			<File
+				RelativePath="SQLite.cpp"
+				>
+			</File>
+			<File
 				RelativePath="Statistics.cpp"
 				>
 			</File>
@@ -3411,6 +3415,10 @@
 				>
 			</File>
 			<File
+				RelativePath="SQLite.h"
+				>
+			</File>
+			<File
 				RelativePath="Statistics.h"
 				>
 			</File>
@@ -4552,6 +4560,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Res\Busy.ico"
+				>
+			</File>
+			<File
 				RelativePath="Res\channel.ico"
 				>
 			</File>
@@ -4561,6 +4573,10 @@
 			</File>
 			<File
 				RelativePath="Res\Checkmark.ico"
+				>
+			</File>
+			<File
+				RelativePath=".\Res\Chevron.ico"
 				>
 			</File>
 			<File
@@ -4592,6 +4608,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Res\Commercial.ico"
+				>
+			</File>
+			<File
 				RelativePath="Res\Computer.ico"
 				>
 			</File>
@@ -4617,6 +4637,10 @@
 			</File>
 			<File
 				RelativePath="Res\Copy.cur"
+				>
+			</File>
+			<File
+				RelativePath=".\Res\CopyVista.cur"
 				>
 			</File>
 			<File
@@ -4741,6 +4765,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Res\Fake.ico"
+				>
+			</File>
+			<File
 				RelativePath="Res\File.ico"
 				>
 			</File>
@@ -4755,6 +4783,14 @@
 			</File>
 			<File
 				RelativePath="Res\FlagEnglish.ico"
+				>
+			</File>
+			<File
+				RelativePath=".\Res\FolderClosed.ico"
+				>
+			</File>
+			<File
+				RelativePath=".\Res\FolderOpen.ico"
 				>
 			</File>
 			<File
@@ -4823,6 +4859,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Res\Locked.ico"
+				>
+			</File>
+			<File
 				RelativePath="Res\LogoLarge.jpg"
 				>
 			</File>
@@ -4843,7 +4883,15 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Res\Minus.ico"
+				>
+			</File>
+			<File
 				RelativePath="Res\Move.cur"
+				>
+			</File>
+			<File
+				RelativePath=".\Res\MoveVista.cur"
 				>
 			</File>
 			<File
@@ -4883,11 +4931,35 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Res\Partial.ico"
+				>
+			</File>
+			<File
+				RelativePath=".\Res\Plus.ico"
+				>
+			</File>
+			<File
 				RelativePath="Res\PointerArrow.ico"
 				>
 			</File>
 			<File
+				RelativePath=".\Res\Preview.ico"
+				>
+			</File>
+			<File
 				RelativePath="Res\Protocols.bmp"
+				>
+			</File>
+			<File
+				RelativePath=".\Res\RatingAverage.ico"
+				>
+			</File>
+			<File
+				RelativePath=".\Res\RatingFake.ico"
+				>
+			</File>
+			<File
+				RelativePath=".\Res\RatingGood.ico"
 				>
 			</File>
 			<File
@@ -5019,6 +5091,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Res\Star.ico"
+				>
+			</File>
+			<File
 				RelativePath="Res\System.ico"
 				>
 			</File>
@@ -5031,11 +5107,19 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Res\Tick.ico"
+				>
+			</File>
+			<File
 				RelativePath="Res\TimeSlices.bmp"
 				>
 			</File>
 			<File
 				RelativePath="Res\Traffic.ico"
+				>
+			</File>
+			<File
+				RelativePath=".\Res\Unstable.ico"
 				>
 			</File>
 			<File

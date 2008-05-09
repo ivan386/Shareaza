@@ -197,7 +197,7 @@ void CLibraryTipCtrl::OnCalcSize(CDC* pDC)
 
 	if ( m_nKeyWidth ) m_nKeyWidth += TIP_GAP;
 	m_sz.cx = max( m_sz.cx, LONG(m_nKeyWidth + nValueWidth + 102) );
-	m_sz.cy += max( nMetaHeight, 96 );
+	m_sz.cy += max( nMetaHeight, (int)Settings.Library.ThumbSize + 2 );
 	m_sz.cy += 11;
 }
 
@@ -241,7 +241,8 @@ void CLibraryTipCtrl::OnPaint(CDC* pDC)
 
 	DrawRule( pDC, &pt );
 
-	CRect rcThumb( pt.x, pt.y, pt.x + 96, pt.y + 96 );
+	CRect rcThumb( pt.x, pt.y,
+		pt.x + Settings.Library.ThumbSize + 2, pt.y + Settings.Library.ThumbSize + 2 );
 	CRect rcWork( &rcThumb );
 	DrawThumb( pDC, rcWork );
 	pDC->ExcludeClipRect( &rcThumb );
@@ -259,9 +260,9 @@ void CLibraryTipCtrl::OnPaint(CDC* pDC)
 
 		if ( ++nCount == 5 )
 		{
-			pt.x += 98; pt.y -= 2;
+			pt.x += Settings.Library.ThumbSize + 2; pt.y -= 2;
 			DrawRule( pDC, &pt, TRUE );
-			pt.x -= 98; pt.y -= 2;
+			pt.x -= Settings.Library.ThumbSize + 2; pt.y -= 2;
 		}
 	}
 }
@@ -374,54 +375,9 @@ void CLibraryTipCtrl::OnRun()
 		m_pSection.Unlock();
 
 		CImageFile pFile;
-		CThumbCache pCache;
-		CSize Size( THUMB_STORE_SIZE, THUMB_STORE_SIZE );
-		BOOL bSuccess = FALSE;
-
-		if ( ! pCache.Load( strPath, &Size, m_nIndex, &pFile ) )
+		if ( CThumbCache::Cache( strPath, &pFile ) )
 		{
-			bSuccess = pFile.LoadFromFile( strPath, FALSE, TRUE ) && pFile.EnsureRGB();
-			if ( bSuccess )
-			{
-				int nSize = THUMB_STORE_SIZE * pFile.m_nWidth / pFile.m_nHeight;
-				
-				if ( nSize > THUMB_STORE_SIZE )
-				{
-					nSize = THUMB_STORE_SIZE * pFile.m_nHeight / pFile.m_nWidth;
-					pFile.Resample( THUMB_STORE_SIZE, nSize );
-				}
-				else
-				{
-					pFile.Resample( nSize, THUMB_STORE_SIZE );
-				}
-
-				if ( ! pCache.Store( strPath, &Size, m_nIndex, &pFile ) )
-					theApp.Message( MSG_DEBUG, _T("THUMBNAIL: pCache.Store failed in CLibraryTipCtrl::OnRun()") );
-
-				if ( pFile.m_nWidth <= 0 || pFile.m_nHeight <= 0 )
-				{
-					bSuccess = FALSE;
-					theApp.Message( MSG_DEBUG, _T("THUMBNAIL: Invalid width or height in CLibraryTipCtrl::OnRun()") );
-				}
-			}
-		}
-		else
-			bSuccess = TRUE;
-
-		if ( bSuccess )
-		{
-			// Resample now to display dimensions
-			int nSize = m_szThumbSize.cy * pFile.m_nWidth / pFile.m_nHeight;
-
-			if ( nSize > m_szThumbSize.cx )
-			{
-				nSize = m_szThumbSize.cx * pFile.m_nHeight / pFile.m_nWidth;
-				pFile.Resample( m_szThumbSize.cx, nSize );
-			}
-			else
-			{
-				pFile.Resample( nSize, m_szThumbSize.cy );
-			}
+			pFile.FitTo( m_szThumbSize.cx, m_szThumbSize.cy );
 
 			m_pSection.Lock();
 
