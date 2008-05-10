@@ -21,6 +21,7 @@
 		type="Language"
 		language="ru"
 		prompt="Щелкните здесь для смены языка на Русский (от dAbserver)"
+		dir="ltr"
 />
 
 <!-- Toolbar Definitions -->
@@ -244,6 +245,8 @@
 	<toolbar name="CLibraryFileView.Physical.Basic">
 		<button id="ID_LIBRARY_LAUNCH" text="Открыть/Играть"/>
 		<button id="ID_LIBRARY_ENQUEUE" text="Добавить в список воспроизв."/>
+		<separator/>
+		<button id="ID_WEBSERVICES_LIST" text="Веб-службы"/>
 		<rightAlign/>
 		<separator/>
 		<control id="IDC_SEARCH_BOX" width="120"/>
@@ -254,6 +257,8 @@
 		<button id="ID_LIBRARY_ENQUEUE" text="Добавить в список воспроизв."/>
 		<separator/>
 		<button id="ID_LIBRARY_PROPERTIES" text="Свойства"/>
+		<separator/>
+		<button id="ID_WEBSERVICES_LIST" text="Веб-службы"/>
 		<separator/>
 		<button id="ID_LIBRARY_MOVE" text="Переместить"/>
 		<button id="ID_LIBRARY_COPY" text="Копировать"/>
@@ -267,6 +272,8 @@
 		<button id="ID_LIBRARY_LAUNCH" text="Открыть/Играть"/>
 		<button id="ID_LIBRARY_ENQUEUE" text="Добавить в список воспроизв."/>
 		<button id="ID_LIBRARY_FOLDER_ENQUEUE" text="Играть альбом"/>
+		<separator/>
+		<button id="ID_WEBSERVICES_LIST" text="Веб-службы"/>
 		<rightAlign/>
 		<separator/>
 		<control id="IDC_SEARCH_BOX" width="120"/>
@@ -278,6 +285,8 @@
 		<button id="ID_LIBRARY_FOLDER_ENQUEUE" text="Играть альбом"/>
 		<separator/>
 		<button id="ID_LIBRARY_PROPERTIES" text="Свойства"/>
+		<separator/>
+		<button id="ID_WEBSERVICES_LIST" text="Веб-службы"/>
 		<rightAlign/>
 		<separator/>
 		<control id="IDC_SEARCH_BOX" width="120"/>
@@ -353,8 +362,8 @@
 		<button id="ID_NEIGHBOURS_CHAT" text="Чат с юзером"/>
 		<rightAlign/>
 		<button id="ID_NETWORK_G2" text="Gnutella2"/>
-		<button id="ID_NETWORK_ED2K" text="eDonkey"/>
 		<button id="ID_NETWORK_G1" text="Gnutella1"/>
+		<button id="ID_NETWORK_ED2K" text="eDonkey"/>
 		<separator/>
 		<button id="ID_NEIGHBOURS_SETTINGS" text="Установки"/>
 	</toolbar>
@@ -367,8 +376,8 @@
 		<button id="ID_SECURITY_BAN" text="Блокировать хост"/>
 		<rightAlign/>
 		<button id="ID_NETWORK_G2" text="Gnutella2"/>
-		<button id="ID_NETWORK_ED2K" text="eDonkey"/>
 		<button id="ID_NETWORK_G1" text="Gnutella1"/>
+		<button id="ID_NETWORK_ED2K" text="eDonkey"/>
 		<separator/>
 		<button id="ID_NEIGHBOURS_SETTINGS" text="Установки"/>
 	</toolbar>
@@ -399,6 +408,8 @@
 		<button id="ID_HOSTCACHE_G2_CACHE" text="G2 кэш"/>
 		<button id="ID_HOSTCACHE_G1_CACHE" text="G1 кэш"/>
 		<button id="ID_HOSTCACHE_ED2K_CACHE" text="eDonkey кэш"/>
+		<button id="ID_HOSTCACHE_BT_CACHE" text="BitTorrent кэш"/>
+		<button id="ID_HOSTCACHE_KAD_CACHE" text="Kademlia кэш"/>
 	</toolbar>
 	<!-- PRIVATE CHAT FRAME -->
 	<toolbar name="CPrivateChatFrame">
@@ -414,6 +425,32 @@
 		<separator/>
 		<button id="ID_CHAT_CONNECT" text="Соединиться" visible="false"/>
 		<button id="ID_CHAT_DISCONNECT" text="Разъединить"/>
+	</toolbar>
+	<toolbar name="WebServices.ShareMonkey">
+		<button id="ID_SHAREMONKEY_DOWNLOAD" text="Получить"/>
+		<separator/>
+		<button id="ID_SHAREMONKEY_PREVIOUS" text="Назад"/>
+		<button id="ID_SHAREMONKEY_NEXT" text="Далее"/>
+		<separator/>
+		<button id="ID_SHAREMONKEY_PRICES" text="Цены"/>
+		<button id="ID_SHAREMONKEY_COMPARE" text="Сравнить"/>
+		<button id="ID_SHAREMONKEY_BUY" text="Купить"/>
+	</toolbar>
+	<toolbar name="WebServices.ShareMonkey.WithSave">
+		<button id="ID_SHAREMONKEY_DOWNLOAD" text="Получить"/>
+		<button id="ID_SHAREMONKEY_SAVE" text="Сохранить"/>
+		<separator/>
+		<button id="ID_SHAREMONKEY_PREVIOUS" text="Назад"/>
+		<button id="ID_SHAREMONKEY_NEXT" text="Далее"/>
+		<separator/>
+		<button id="ID_SHAREMONKEY_PRICES" text="Цены"/>
+		<button id="ID_SHAREMONKEY_COMPARE" text="Сравнить"/>
+		<button id="ID_SHAREMONKEY_BUY" text="Купить"/>
+	</toolbar>
+	<toolbar name="WebServices.MusicBrainz">
+		<button id="ID_MUSICBRAINZ_MATCHES" text="Похожие альбомы"/>
+		<button id="ID_MUSICBRAINZ_ALBUMS" text="Все альбомы"/>
+		<separator/>
 	</toolbar>
 	<!-- IMAGE VIEWER WINDOW -->
 	<toolbar name="ImageViewer_Toolbar">
@@ -447,8 +484,8 @@
 			<separator/>
 			<menu text="Выберите _сеть">
 				<item id="ID_NETWORK_G2" text="Соединиться с _Gnutella2"/>
-				<item id="ID_NETWORK_ED2K" text="Соединиться с _eDonkey"/>
 				<item id="ID_NETWORK_G1" text="Соединиться с Gnutella_1"/>
+				<item id="ID_NETWORK_ED2K" text="Соединиться с _eDonkey"/>
 			</menu>
 			<separator/>
 			<item id="ID_NETWORK_AUTO_CLOSE" text="Выйти _после пересылок"/>
@@ -510,6 +547,7 @@
 			<item id="ID_HELP_VERSION_CHECK" text="Проверить новую _версию"/>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="_О Shareaza..."/>
+			<item id="ID_HELP_DONATE" text="_Пожертвования"/>
 		</menu>
 	</menu>
 	<menu name="CMainWnd.Tabbed" type="bar">
@@ -519,8 +557,8 @@
 			<separator/>
 			<menu text="Выбор _Сетей">
 				<item id="ID_NETWORK_G2" text="Подключиться к _Gnutella2"/>
-				<item id="ID_NETWORK_ED2K" text="Подключиться к _eDonkey"/>
 				<item id="ID_NETWORK_G1" text="Подключиться к Gnutella_1"/>
+				<item id="ID_NETWORK_ED2K" text="Подключиться к _eDonkey"/>
 			</menu>
 			<separator/>
 			<item id="ID_NETWORK_CONNECT_TO" text="Под_ключиться к ..." shortcut="Ctrl+T"/>
@@ -608,6 +646,7 @@
 			<item id="ID_HELP_VERSION_CHECK" text="Проверить новую _версию"/>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="_О Shareaza..."/>
+			<item id="ID_HELP_DONATE" text="_Пожертвования"/>
 		</menu>
 	</menu>
 	<menu name="CMainWnd.Windowed" type="bar">
@@ -699,6 +738,7 @@
 			<item id="ID_HELP_VERSION_CHECK" text="Проверить новую _версию"/>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="_О Shareaza..."/>
+			<item id="ID_HELP_DONATE" text="_Пожертвования"/>
 		</menu>
 	</menu>
 	<!-- VIEW POPUP -->
@@ -834,6 +874,8 @@
 			<item id="ID_HOSTCACHE_G2_CACHE" text="Gnutella_2 кэш"/>
 			<item id="ID_HOSTCACHE_G1_CACHE" text="Gnutella_1 кэш"/>
 			<item id="ID_HOSTCACHE_ED2K_CACHE" text="_eDonkey кэш"/>
+			<item id="ID_HOSTCACHE_BT_CACHE" text="_BitTorrent кэш"/>
+			<item id="ID_HOSTCACHE_KAD_CACHE" text="_Kademlia кэш"/>
 		</menu>
 		<separator/>
 		<item id="ID_HOSTCACHE_IMPORT" text="_Импорт MET файла..."/>
@@ -919,7 +961,7 @@
 			<item id="ID_SEARCH_FOR_ALBUM" text="Музыку из этого же альбома"/>
 			<item id="ID_SEARCH_FOR_SERIES" text="Серии этого же сериала"/>
 		</menu>
-		<menu text="_Веб услуги">
+		<menu text="_Веб-службы">
 			<item id="ID_LIBRARY_BITZI_WEB" text="Посмотреть _Bitzi этикетку"/>
 		</menu>
 		<separator/>
@@ -944,7 +986,7 @@
 			<item id="ID_SEARCH_FOR_ALBUM" text="Музыку из этого же альбома"/>
 			<item id="ID_SEARCH_FOR_SERIES" text="Серии этого же сериала"/>
 		</menu>
-		<menu text="_Веб услуги">
+		<menu text="_Веб-службы">
 			<item id="ID_LIBRARY_BITZI_WEB" text="Посмотреть _Bitzi этикетку"/>
 		</menu>
 		<separator/>
@@ -1388,7 +1430,13 @@
 	</menu>
 	<!-- SYSTEM WINDOW -->
 	<menu name="CSystemWnd">
-		<item id="ID_SYSTEM_VERBOSE" text="_Информативный режим"/>
+		<menu id="ID_SYSTEM_VERBOSE" text="_Уровень отображения">
+			<item id="ID_SYSTEM_VERBOSE_ERROR" text="_Только ошибки"/>
+			<item id="ID_SYSTEM_VERBOSE_WARNING" text="_Предупреждения"/>
+			<item id="ID_SYSTEM_VERBOSE_NOTICE" text="_Уведомления"/>
+			<item id="ID_SYSTEM_VERBOSE_INFO" text="_Информация"/>
+			<item id="ID_SYSTEM_VERBOSE_DEBUG" text="_Всё"/>
+		</menu>
 		<item id="ID_SYSTEM_TIMESTAMP" text="_Временной штамп"/>
 		<separator/>
 		<item id="ID_SYSTEM_COPY" text="_Копировать" shortcut="Ctrl+C"/>
@@ -1418,8 +1466,8 @@
 			<item id="ID_NETWORK_DISCONNECT" text="_Разъединить"/>
 			<separator/>
 			<item id="ID_NETWORK_G2" text="_Gnutella2"/>
-			<item id="ID_NETWORK_ED2K" text="_eDonkey"/>
 			<item id="ID_NETWORK_G1" text="Gnutella_1"/>
+			<item id="ID_NETWORK_ED2K" text="_eDonkey"/>
 		</menu>
 		<menu text="_Монитор">
 			<item id="ID_NEIGHBOURS_VIEW_ALL" text="Смотреть весь _трафик"/>
@@ -1530,8 +1578,14 @@
 			<item id="ID_IRC_BANKICKWHY" text="Kick+Ban (причина?)"/>
 		</menu>
 	</menu>
+	<menu name="WebServices.List.Menu">
+		<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Bitzi"/>
+		<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
+		<item id="ID_WEBSERVICES_SHAREMONKEY" text="_ShareMonkey"/>
+	</menu>
 </menus>
 
+<!-- Watermarks -->
 <!-- Documents -->
 <documents>
 	<!-- Home View -->
@@ -1711,22 +1765,23 @@
 		<text group="24" align="middle" id="G2Hubs">%i узла(ов)</text>
 		<text group="25" align="middle" id="G2Leaves">%i ветви(ей)</text>
 		<newline group="20" gap="2"/>
-		<icon group="30" command="ID_NETWORK_ED2K"/><gap group="30" size="4"/>
-		<text group="30" align="middle" format="b">eDonkey: </text>
-		<text group="31" align="middle">Разъединенно</text>
-		<text group="32" align="middle">Соединяется…</text>
-		<text group="33" align="middle">Соединенно</text>
-		<newline group="30" gap="2"/>
 		<icon group="10" command="ID_NETWORK_G1"/><gap group="10" size="4"/>
 		<text group="10" align="middle" format="b">Gnutella1: </text>
 		<text group="11" align="middle">Разъединенно</text>
 		<text group="12" align="middle">Соединяется…</text>
 		<text group="13" align="middle">Соединенно</text>
 		<newline group="10" gap="2"/>
+		<icon group="30" command="ID_NETWORK_ED2K"/><gap group="30" size="4"/>
+		<text group="30" align="middle" format="b">eDonkey: </text>
+		<text group="31" align="middle">Разъединенно</text>
+		<text group="32" align="middle">Соединяется…</text>
+		<text group="33" align="middle">Соединенно</text>
+		<newline group="30" gap="2"/>
 		<group id="2">
 			<para align="center">
 				<newline gap="6"/>
 				<text>Вы соединенны </text>
+				<newline gap="0"/>
 				<text id="ConnectedHours" format="b">%i </text>
 				<text>час. и </text>
 				<text id="ConnectedMinutes" format="b">%i </text>
@@ -2185,7 +2240,7 @@
 		на производительность.</text>
 	</document>
 </documents>
-<!-- Localised Command Tip Text.  The "message" is displayed in the status bar, while the "tip" is shown in a tooltip -->
+<!-- Localised Command Tip Text. The "message" is displayed in the status bar, while the "tip" is shown in a tooltip -->
 <commandTips>
 	<tip id="ID_BROWSE_FILES" message="Просмотр разделяемых пользователем файлов"/>
 	<tip id="ID_BROWSE_LAUNCH" message="Обзор профиля и разделяемых файлов помеченного пользователя."/>
@@ -2275,6 +2330,7 @@
 	<tip id="ID_HELP_WEB_4" message="Посетить этот сайт"/>
 	<tip id="ID_HELP_WEB_5" message="Посетить этот сайт"/>
 	<tip id="ID_HELP_WEB_6" message="Посетить этот сайт"/>
+	<tip id="ID_HELP_DONATE" message="Вы можете пожертвовать немного средств для развития этой  программы."/>
 	<tip id="ID_HITMONITOR_CLEAR" message="Очистить буфер монитора хитов."/>
 	<tip id="ID_HITMONITOR_PAUSE" message="Приостановить вывод в монитор хитов."/>
 	<tip id="ID_HITMONITOR_SEARCH" message="Искать в сети указанную фразу."/>
@@ -2490,6 +2546,8 @@
 	<tip id="ID_WINDOW_TILE_HORZ" message="Расположить открытые окна горизонтально, без перекрывания."/>
 	<tip id="ID_WINDOW_TILE_VERT" message="Расположить открытые окна вертикально, без перекрывания."/>
 	<tip id="ID_WINDOW_TOOLBAR" message="Показать или скрыть полоску инструментов."/>
+	<tip id="ID_WEBSERVICES_LIST" message="Выберите веб-службы для получения более полной информации о файле."/>
+	<tip id="ID_WEBSERVICES_SHAREMONKEY" message="Поиск информации о файле при помощи службы ShareMonkey."/>
 	<!-- PLUGIN TIPS -->
 	<tip id="ImageViewer_BestFit" message="Изменить размер, чтобы картинка посметилась в окне."/>
 	<tip id="ImageViewer_ActualSize" message="Показывать картинку в натуральном размере."/>
@@ -2499,6 +2557,7 @@
 <!-- Tips displayed when mouse is moved over controls in the dialogs -->
 <controlTips>
 	<tip id="IDC_THROTTLE_MODE" message="В режиме максимума скорость будет не превышать указанного значения. В среднем режиме она будет колебаться в обе стороны от этого значения."/>
+	<tip id="IDC_REGEXP" message="Введите регулярное выражение в формате Perl.{n}Ключевое слово для поиска задаётся в форме &lt;n&gt;, где n номер от 1 до 9. Если хотите задать несколько слов, то используйте &lt;_&gt;."/>
 	<tip id="IDC_SHARE_PARTIALS" message="Эта настройка не имеет никакого эффекта на уже загружаемые файлы, а также игнорируется, если у файла есть хеш eDonkey и он активен в сети eDonkey, или если это торрент.{n}Но эта настройка не игнорируется, если загрузка приостановлена.{n}{n}ВНИМАНИЕ: Пользуйтесь этой настройкой в крайнем случае, иначе Вас могут заблокировать."/>
 </controlTips>
 <!-- Localised Strings -->
@@ -2692,6 +2751,7 @@
 	<string id="16077" value="Адрес %s уже заблокирован вашими правилами безопасности."/>
 	<string id="16078" value="Добавленно правило безопасности для блокировки %s."/>
 	<string id="16079" value="Вы уверены, что хотите разъединить?"/>
+	<string id="16080" value="Вы запустили расписание в режиме 'только G2'. Не хотите ли выключить этот режим, тогда все активные сети останутся подключёнными?"/>
 	<string id="16081" value="Шлю запрос для «%s» в %s."/>
 	<string id="16083" value="Принужденное становление Вашего ПК узлом может неблагоприятно повлиять на производительность и на P2P сеть.  Вообще, лучше позволить самой Shareaza решать, использовать или нет режим узла.\n\nРежим узла НЕ дает лучших результатов поиска или каких-нибудь преимуществ для Вас.\n\nВы действительно хотите это сделать, несмотря на упомянутые неудобства?"/>
 	<string id="16084" value="Выключая поддержку протоколов Gnutella-1, Вы уменьшите результаты поиска, и, если Вы работаете в режиме узла, это повлияет и на результаты других пользователей.  Вы уверены, что хотите это сделать?"/>
@@ -3319,7 +3379,6 @@
 		<control caption="Модуль менеджера загрузок предложит загрузить только указанные здесь типы файлов.  Остальные типы файлов будут обработанны вашим обозревателем.  Shareaza должна быть запущена для перехвата загрузок."/>
 	</dialog>
 	<dialog name="CInternetSettingsGroup" caption="Интернет"/>
-
 	<dialog name="CConnectionSettingsPage" cookie="BuStCoStCoStEdBuBuBuStCoStCoBuStCoBuBuBuStEdmsStEdms" caption="Соединения">
 		<control caption="Адрес для входящего потока:"/>
 		<control caption="Адрес:"/>
@@ -3954,6 +4013,7 @@
 		<control/>
 		<control caption="Удовл. любое"/>
 		<control caption="Удовл. всем"/>
+		<control caption="Рег. Выражение"/>
 		<control caption="_Опции:"/>
 		<control caption="Действие:"/>
 		<control caption="Никакое|Допустить|Запретить"/>
@@ -4224,13 +4284,14 @@
 		<control/><control/>
 	</dialog>
 	<dialog name="CDecodeMetadataDlg" cookie="BuBuStCo" caption="Локализация мета данных">
-		<control caption="ДА"/>
-		<control caption="Отмена"/>
 		<control caption="Выберите способ перекодировки (группу языков)"/>
 		<control caption="Арабский|Балтийский|Центральной Европы|Китайский упрощенный|Китайский традиционный|Кириллица|Греческий|Иврит|Японский|Корейский|Тайский|Турецкий|Вьетнамский"/>
+		<control caption="Просмотр:"/>
+		<control/><control/>	<control/><control/>
+		<control caption="ДА"/>
+		<control caption="Отмена"/>
 	</dialog>
 </dialogs>
-
 <!-- Columns Definitions -->
 <listColumns>
 	<list name="CLibraryWnd">
