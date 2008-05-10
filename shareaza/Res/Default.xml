@@ -478,7 +478,7 @@
 				<item id="ID_VIEW_DISCOVERY" text="Disco_very"/>
 			</menu>
 			<separator/>
-			<item id="ID_VIEW_BASIC" text="_Normal Mode"/>
+			<item id="ID_VIEW_BASIC" text="_Basic Mode"/>
 			<item id="ID_VIEW_TABBED" text="_Power Mode"/>
 		</menu>
 		<menu text="_Tools">
@@ -654,7 +654,7 @@
 			<item id="ID_VIEW_SEARCH_MONITOR" text="Se_arch Monitor" shortcut="Ctrl+F2"/>
 			<item id="ID_VIEW_RESULTS_MONITOR" text="H_it Monitor" shortcut="Ctrl+F3"/>
 			<separator/>
-			<item id="ID_VIEW_BASIC" text="Normal Mode"/>
+			<item id="ID_VIEW_BASIC" text="Basic Mode"/>
 			<item id="ID_VIEW_TABBED" text="Tabbed Mode"/>
 			<item id="ID_VIEW_WINDOWED" text="Windowed Mode"/>
 		</menu>
