@@ -509,7 +509,7 @@
 				<item id="ID_VIEW_DISCOVERY" text="Disco_very"/>
 			</menu>
 			<separator/>
-			<item id="ID_VIEW_BASIC" text="_Normal Mode"/>
+			<item id="ID_VIEW_BASIC" text="_Basic Mode"/>
 			<item id="ID_VIEW_TABBED" text="_Power Mode"/>
 		</menu>
 		<menu text="_Tools">
@@ -685,7 +685,7 @@
 			<item id="ID_VIEW_SEARCH_MONITOR" text="Se_arch Monitor" shortcut="Ctrl+F2"/>
 			<item id="ID_VIEW_RESULTS_MONITOR" text="H_it Monitor" shortcut="Ctrl+F3"/>
 			<separator/>
-			<item id="ID_VIEW_BASIC" text="Normal Mode"/>
+			<item id="ID_VIEW_BASIC" text="Basic Mode"/>
 			<item id="ID_VIEW_TABBED" text="Tabbed Mode"/>
 			<item id="ID_VIEW_WINDOWED" text="Windowed Mode"/>
 		</menu>
@@ -2531,7 +2531,7 @@
 	<tip id="ID_UPLOADS_LAUNCH" message="Launch the selected shared file(s)."/>
 	<tip id="ID_UPLOADS_SETTINGS" message="Configure upload settings..."/>
 	<tip id="ID_UPLOADS_START" message="Start the selected queued upload(s)."/>
-	<tip id="ID_VIEW_BASIC" message="Use Shareaza in Normal mode."/>
+	<tip id="ID_VIEW_BASIC" message="Use Shareaza in Basic mode."/>
 	<tip id="ID_VIEW_DISCOVERY" message="Show or hide the DISCOVERY SERVICES window."/>
 	<tip id="ID_VIEW_DOWNLOADS" message="Show or hide the DOWNLOADS window."/>
 	<tip id="ID_VIEW_HELP" message="Show or hide the HELP window."/>
@@ -3697,7 +3697,7 @@
 	<dialog name="CWizardInterfacePage" cookie="StBuBuBuStStBuBu" caption="Welcome to Shareaza">
 		<control caption="Shareaza supports a flexible user interface, so you can choose what is most comfortable for you. You can change these options at any time."/>
 		<control caption="Please select user interface:"/>
-		<control caption="Normal Mode"/>
+		<control caption="Basic Mode"/>
 		<control caption="Power Mode"/>
 		<control caption="Simple, easy to use menus and buttons.{n}Familiar to users of other file sharing programs."/>
 		<control caption="Power mode offers expert users lots of extra commands, windows, etc.{n}It may be a little confusing for new users!"/>
