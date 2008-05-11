@@ -48,11 +48,18 @@ void CThumbCache::InitDatabase()
 	}
 
 	// Recreate table
-	db.Exec( _T("CREATE TABLE Thumbs (")
-		_T("Filename TEXT UNIQUE NOT NULL PRIMARY KEY, ")
-		_T("FileSize INTEGER NOT NULL, ")
-		_T("LastWriteTime INTEGER NOT NULL, ")
-		_T("Image BLOB NOT NULL);") ); // as JPEG
+	if ( !db.Exec( L"CREATE TABLE Files ("
+			 L"Filename TEXT UNIQUE NOT NULL PRIMARY KEY, "
+			 L"FileSize INTEGER NOT NULL, "
+			 L"LastWriteTime INTEGER NOT NULL, "
+			 L"Image BLOB NOT NULL, " // as JPEG
+			 L"Flags INTEGER DEFAULT 0 NULL, "
+			 L"SHA1 TEXT NULL, TTH TEXT NULL, ED2K TEXT NULL, MD5 TEXT NULL); "
+			 L"CREATE INDEX IDX_SHA1 ON Files(SHA1 ASC); "
+			 L"CREATE INDEX IDX_TTH ON Files(TTH ASC); "
+			 L"CREATE INDEX IDX_ED2K ON Files(ED2K ASC); "
+			 L"CREATE INDEX IDX_MD5 ON Files(MD5 ASC);" ) )
+		db.Exec( L"VACUUM;");
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -84,7 +91,7 @@ BOOL CThumbCache::Load(LPCTSTR pszPath, CImageFile* pImage)
 	sPath.MakeLower();
 
 	SQLite::CStatement st( db,
-		_T("SELECT FileSize, LastWriteTime, Image FROM Thumbs WHERE Filename == ?;") );
+		_T("SELECT FileSize, LastWriteTime, Image FROM Files WHERE Filename == ?;") );
 	if ( ! st.Bind( 1, sPath ) ||
 		 ! st.Step() ||
 		 ! ( st.GetCount() == 0 || st.GetCount() == 3 ) )
@@ -138,7 +145,7 @@ void CThumbCache::Delete(LPCTSTR pszPath)
 	CString sPath( pszPath );
 	sPath.MakeLower();
 
-	SQLite::CStatement st( db, _T("DELETE FROM Thumbs WHERE Filename == ?;") );
+	SQLite::CStatement st( db, _T("DELETE FROM Files WHERE Filename == ?;") );
 	if ( ! st.Bind( 1, sPath ) )
 	{
 		TRACE( _T("CThumbCache::Load : Database error: %s\n"), db.GetLastErrorMessage() );
@@ -187,7 +194,7 @@ BOOL CThumbCache::Store(LPCTSTR pszPath, CImageFile* pImage)
 	auto_array< BYTE > data( buf );	
 
 	// Remove old image
-	SQLite::CStatement st1( db, _T("DELETE FROM Thumbs WHERE Filename == ?;") );
+	SQLite::CStatement st1( db, _T("DELETE FROM Files WHERE Filename == ?;") );
 	if ( ! st1.Bind( 1, sPath ) )
 	{
 		TRACE( _T("CThumbCache::Store : Database error: %s\n"), db.GetLastErrorMessage() );
@@ -196,7 +203,7 @@ BOOL CThumbCache::Store(LPCTSTR pszPath, CImageFile* pImage)
 	st1.Step();
 
 	// Store new one
-	SQLite::CStatement st2( db, _T("INSERT INTO Thumbs ")
+	SQLite::CStatement st2( db, _T("INSERT INTO Files ")
 		_T("( Filename, FileSize, LastWriteTime, Image ) VALUES ( ?, ?, ?, ? );") );
 	if ( ! st2.Bind( 1, sPath ) ||
 		 ! st2.Bind( 2, (__int64)MAKEQWORD( fd.nFileSizeLow, fd.nFileSizeHigh ) ) ||
