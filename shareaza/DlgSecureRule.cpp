@@ -112,7 +112,7 @@ BOOL CSecureRuleDlg::OnInitDialog()
 	m_nType		= m_pRule->m_nType;
 	m_sComment	= m_pRule->m_sComment;
 	m_nAction	= m_pRule->m_nAction;
-	m_nExpire	= min( m_pRule->m_nExpire, 2u );
+	m_nExpire	= min( m_pRule->m_nExpire, 2ul );
 	m_nMatch	= 0;
 
 	if ( m_pRule->m_nType == CSecureRule::srAddress )

@@ -748,11 +748,13 @@ BOOL CSkin::CreateToolBar(CXMLElement* pBase)
 					pItem->m_crText = RGB( nRed, nGreen, nBlue );
 				}
 				
-				strTemp = pXML->GetAttributeValue( _T("tip") );
-				if ( strTemp.GetLength() ) pItem->SetTip( strTemp );
+				strTemp = pXML->GetAttributeValue( L"tip" );
+				if ( strTemp.GetLength() ) 
+					pItem->SetTip( strTemp );
 				
-				strTemp = pXML->GetAttributeValue( _T("visible") );
-				if ( strTemp.GetLength() ) pItem->Show( FALSE );
+				strTemp = pXML->GetAttributeValue( L"visible", L"true" );
+				if ( strTemp.CompareNoCase( L"false" ) == 0 ) 
+					pItem->Show( FALSE );
 			}
 		}
 		else if ( pXML->IsNamed( _T("separator") ) )
@@ -772,12 +774,27 @@ BOOL CSkin::CreateToolBar(CXMLElement* pBase)
 			if ( nID )
 			{
 				strTemp = pXML->GetAttributeValue( _T("width") );
-				
+				CCoolBarItem* pItem = NULL;
+
 				if ( _stscanf( strTemp, _T("%lu"), &nWidth ) == 1 )
 				{
 					strTemp = pXML->GetAttributeValue( _T("height") );
 					_stscanf( strTemp, _T("%lu"), &nHeight );
-					pBar->Add( nID, nWidth, nHeight );
+					pItem = pBar->Add( nID, nWidth, nHeight );
+				}
+				
+				if ( pItem )
+				{
+					strTemp = pXML->GetAttributeValue( L"checked", L"false" );
+
+					if ( strTemp.CompareNoCase( L"true" ) == 0 )
+					{
+						pItem->SetCheck( TRUE );
+						pItem->m_bButtonTest = TRUE;
+					}
+
+					strTemp = pXML->GetAttributeValue( _T("text") );
+					pItem->SetText( strTemp );
 				}
 			}
 		}
@@ -1671,7 +1688,7 @@ BOOL CSkin::LoadCommandIcon(CXMLElement* pXML, const CString& strPath)
 		pXML->GetAttributeValue( _T("path") );
 
 	UINT nIconID = LookupCommandID( pXML, _T("res") );
-	HINSTANCE hInstance = nIconID ? (HINSTANCE)_tstol( strPath ) : NULL;
+	HINSTANCE hInstance = (HINSTANCE)(__int64)( nIconID ? _tstol( strPath ) : NULL );
 
 	UINT nID = LookupCommandID( pXML );
 	if ( nID == 0 )
