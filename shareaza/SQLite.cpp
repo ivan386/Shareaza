@@ -162,7 +162,11 @@ bool CStatement::Prepare()
 				if ( pszTail && *pszTail )
 					m_query = pszTail;
 				else
+				{
+					// FIXIT: when SQL command ends with a space in a composite SQL query
+					// it enters an infinite loop.
 					m_query.clear();
+				}
 
 				if ( m_st == NULL )
 					// This happens for a comment or white-space
