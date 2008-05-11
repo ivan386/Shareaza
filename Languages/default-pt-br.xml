@@ -509,7 +509,7 @@
 				<item id="ID_VIEW_DISCOVERY" text="Descobrimento"/>
 			</menu>
 			<separator/>
-			<item id="ID_VIEW_BASIC" text="Modo Normal"/>
+			<item id="ID_VIEW_BASIC" text="Modo Básico"/>
 			<item id="ID_VIEW_TABBED" text="Modo Power"/>
 		</menu>
 		<menu text="Ferramentas">
@@ -685,7 +685,7 @@
 			<item id="ID_VIEW_SEARCH_MONITOR" text="Monitor de Pesquisas" shortcut="Ctrl+F2"/>
 			<item id="ID_VIEW_RESULTS_MONITOR" text="Monitor de Acertos" shortcut="Ctrl+F3"/>
 			<separator/>
-			<item id="ID_VIEW_BASIC" text="Modo Normal"/>
+			<item id="ID_VIEW_BASIC" text="Modo Básico"/>
 			<item id="ID_VIEW_TABBED" text="Modo em Abas"/>
 			<item id="ID_VIEW_WINDOWED" text="Modo de Janelas"/>
 		</menu>
@@ -2531,7 +2531,7 @@
 	<tip id="ID_UPLOADS_LAUNCH" message="Iniciar o(s) arquivo(s) compartilhado(s) selecionado(s)."/>
 	<tip id="ID_UPLOADS_SETTINGS" message="Configurar as opções de upload..."/>
 	<tip id="ID_UPLOADS_START" message="Iniciar o(s) upload(s) selecionado(s) da fila de espera."/>
-	<tip id="ID_VIEW_BASIC" message="Usar Shareaza no modo Normal."/>
+	<tip id="ID_VIEW_BASIC" message="Usar Shareaza no modo Básico."/>
 	<tip id="ID_VIEW_DISCOVERY" message="Mostrar ou esconder a janela dos SERVIÇOS DE DESCOBRIMENTO."/>
 	<tip id="ID_VIEW_DOWNLOADS" message="Mostrar ou esconder a janela de DOWNLOADS."/>
 	<tip id="ID_VIEW_HELP" message="Mostrar ou esconder a janela de AJUDA."/>
@@ -3697,7 +3697,7 @@
 	<dialog name="CWizardInterfacePage" cookie="StBuBuBuStStBuBu" caption="Bem-Vindo ao Shareaza">
 		<control caption="O Shareaza suporta uma interface fléxivel de usuário, assim você escolhe a mais confortável para você. Você pode mudar estas opções quando quiser"/>
 		<control caption="Por favor selecione a interface de usuário:"/>
-		<control caption="Modo Normal"/>
+		<control caption="Modo Básico"/>
 		<control caption="Modo Power"/>
 		<control caption="Simples, menus e botões fáceis de usar.{n}Familiar para usuários de programas de compartilhamento de arquivos."/>
 		<control caption="O Modo Power oferece aos usuários muitos comandos extras, janelas, etc.{n}Pode ser um pouco confuso para novos usuários."/>
