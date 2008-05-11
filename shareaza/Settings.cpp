@@ -1537,7 +1537,7 @@ bool CSettings::GetValue(LPCTSTR pszPath, VARIANT* value)
 	else if ( pItem->m_pDword )
 	{
 		value->vt = VT_I4;
-		value->lVal = (LONG)pItem->m_pDword;
+		value->lVal = (LONG)*pItem->m_pDword;
 	}
 	else if ( pItem->m_pFloat )
 	{
