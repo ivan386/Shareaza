@@ -3,7 +3,8 @@
 	ProjectType="Visual C++"
 	Version="7.10"
 	Name="Shareaza"
-	ProjectGUID="{E1F5FB69-98B2-49E0-A74B-1E7141955CB6}">
+	ProjectGUID="{E1F5FB69-98B2-49E0-A74B-1E7141955CB6}"
+	RootNamespace="Shareaza">
 	<Platforms>
 		<Platform
 			Name="Win32"/>
@@ -20,7 +21,7 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/Wall"
 				Optimization="0"
-				AdditionalIncludeDirectories="$(IntDir);..\shareaza\zlib"
+				AdditionalIncludeDirectories="&quot;$(IntDir)&quot;;..\shareaza\zlib;..\sqlite3"
 				PreprocessorDefinitions="_DEBUG;WIN32;_WINDOWS;_SHAREAZA;ZLIB_WINAPI;SHAREAZA_USE_ASM"
 				StringPooling="TRUE"
 				BasicRuntimeChecks="3"
@@ -47,11 +48,12 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="unicows.lib kernel32.lib advapi32.lib user32.lib gdi32.lib shell32.lib comdlg32.lib version.lib winmm.lib winspool.lib vfw32.lib oleacc.lib ole32.lib rpcrt4.lib ws2_32.lib wininet.lib Iphlpapi.lib msi.lib"
+				AdditionalDependencies="unicows.lib kernel32.lib advapi32.lib user32.lib gdi32.lib shell32.lib comdlg32.lib version.lib winmm.lib winspool.lib vfw32.lib oleacc.lib ole32.lib rpcrt4.lib ws2_32.lib wininet.lib Iphlpapi.lib msi.lib sqlite3.lib"
 				OutputFile="$(OutDir)..\$(ProjectName).exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="TRUE"
-				IgnoreDefaultLibraryNames="kernel32.lib;advapi32.lib;user32.lib;gdi32.lib;shell32.lib;comdlg32.lib;version.lib;mpr.lib;rasapi32.lib;winmm.lib;winspool.lib;vfw32.lib;secur32.lib;oleacc.lib;oledlg.lib;sensapi.lib;Iphlpapi.lib;msi.lib"
+				AdditionalLibraryDirectories="&quot;$(TargetDir)\sqlite3\&quot;"
+				IgnoreDefaultLibraryNames="kernel32.lib;advapi32.lib;user32.lib;gdi32.lib;shell32.lib;comdlg32.lib;version.lib;mpr.lib;rasapi32.lib;winmm.lib;winspool.lib;vfw32.lib;secur32.lib;oleacc.lib;oledlg.lib;sensapi.lib;Iphlpapi.lib;msi.lib;sqlite3.lib"
 				GenerateDebugInformation="TRUE"
 				ProgramDatabaseFile="$(TargetDir)$(TargetName).pdb"
 				GenerateMapFile="TRUE"
@@ -108,7 +110,7 @@
 				OmitFramePointers="TRUE"
 				OptimizeForProcessor="2"
 				OptimizeForWindowsApplication="TRUE"
-				AdditionalIncludeDirectories="$(IntDir);..\shareaza\zlib"
+				AdditionalIncludeDirectories="&quot;$(IntDir)&quot;;..\shareaza\zlib;..\sqlite3"
 				PreprocessorDefinitions="NDEBUG;WIN32;_WINDOWS;_SHAREAZA;ZLIB_WINAPI;SHAREAZA_USE_ASM"
 				StringPooling="TRUE"
 				RuntimeLibrary="0"
@@ -134,11 +136,12 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions="/NODEFAULTLIB:LIBC"
-				AdditionalDependencies="unicows.lib kernel32.lib advapi32.lib user32.lib gdi32.lib shell32.lib comdlg32.lib version.lib winmm.lib winspool.lib vfw32.lib oleacc.lib ole32.lib rpcrt4.lib ws2_32.lib wininet.lib Iphlpapi.lib msi.lib"
+				AdditionalDependencies="unicows.lib kernel32.lib advapi32.lib user32.lib gdi32.lib shell32.lib comdlg32.lib version.lib winmm.lib winspool.lib vfw32.lib oleacc.lib ole32.lib rpcrt4.lib ws2_32.lib wininet.lib Iphlpapi.lib msi.lib sqlite3.lib"
 				OutputFile="$(OutDir)..\$(ProjectName).exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
-				IgnoreDefaultLibraryNames="kernel32.lib;advapi32.lib;user32.lib;gdi32.lib;shell32.lib;comdlg32.lib;version.lib;mpr.lib;rasapi32.lib;winmm.lib;winspool.lib;vfw32.lib;secur32.lib;oleacc.lib;oledlg.lib;sensapi.lib;Iphlpapi.lib;msi.lib"
+				AdditionalLibraryDirectories="&quot;$(TargetDir)\sqlite3\&quot;"
+				IgnoreDefaultLibraryNames="kernel32.lib;advapi32.lib;user32.lib;gdi32.lib;shell32.lib;comdlg32.lib;version.lib;mpr.lib;rasapi32.lib;winmm.lib;winspool.lib;vfw32.lib;secur32.lib;oleacc.lib;oledlg.lib;sensapi.lib;Iphlpapi.lib;msi.lib;sqlite3.lib"
 				GenerateDebugInformation="TRUE"
 				ProgramDatabaseFile="$(OutDir)$(TargetName).pdb"
 				GenerateMapFile="TRUE"
@@ -197,7 +200,7 @@
 				OmitFramePointers="TRUE"
 				OptimizeForProcessor="0"
 				OptimizeForWindowsApplication="TRUE"
-				AdditionalIncludeDirectories="$(IntDir);..\shareaza\zlib"
+				AdditionalIncludeDirectories="&quot;$(IntDir)&quot;;..\shareaza\zlib;..\sqlite3"
 				PreprocessorDefinitions="NDEBUG;WIN64;_WINDOWS;_SHAREAZA;ZLIB_WINAPI"
 				StringPooling="TRUE"
 				RuntimeLibrary="0"
@@ -223,11 +226,12 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions="/NODEFAULTLIB:LIBC /MACHINE:AMD64"
-				AdditionalDependencies="kernel32.lib advapi32.lib user32.lib gdi32.lib shell32.lib comdlg32.lib version.lib winmm.lib winspool.lib vfw32.lib oleacc.lib ole32.lib rpcrt4.lib ws2_32.lib wininet.lib Iphlpapi.lib msi.lib"
+				AdditionalDependencies="kernel32.lib advapi32.lib user32.lib gdi32.lib shell32.lib comdlg32.lib version.lib winmm.lib winspool.lib vfw32.lib oleacc.lib ole32.lib rpcrt4.lib ws2_32.lib wininet.lib Iphlpapi.lib msi.lib sqlite3.lib"
 				OutputFile="$(OutDir)..\$(ProjectName).exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
-				IgnoreDefaultLibraryNames="kernel32.lib;advapi32.lib;user32.lib;gdi32.lib;shell32.lib;comdlg32.lib;version.lib;mpr.lib;rasapi32.lib;winmm.lib;winspool.lib;vfw32.lib;secur32.lib;oleacc.lib;oledlg.lib;sensapi.lib;Iphlpapi.lib;msi.lib"
+				AdditionalLibraryDirectories="&quot;$(TargetDir)\sqlite3\&quot;"
+				IgnoreDefaultLibraryNames="kernel32.lib;advapi32.lib;user32.lib;gdi32.lib;shell32.lib;comdlg32.lib;version.lib;mpr.lib;rasapi32.lib;winmm.lib;winspool.lib;vfw32.lib;secur32.lib;oleacc.lib;oledlg.lib;sensapi.lib;Iphlpapi.lib;msi.lib;sqlite3.lib"
 				GenerateDebugInformation="TRUE"
 				ProgramDatabaseFile="$(OutDir)$(TargetName).pdb"
 				GenerateMapFile="TRUE"
@@ -279,7 +283,7 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/Wall"
 				Optimization="0"
-				AdditionalIncludeDirectories="$(IntDir);..\shareaza\zlib"
+				AdditionalIncludeDirectories="&quot;$(IntDir)&quot;;..\shareaza\zlib;..\sqlite3"
 				PreprocessorDefinitions="_DEBUG;WIN64;_WINDOWS;_SHAREAZA;ZLIB_WINAPI"
 				StringPooling="TRUE"
 				BasicRuntimeChecks="3"
@@ -307,11 +311,12 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions="/MACHINE:AMD64"
-				AdditionalDependencies="kernel32.lib advapi32.lib user32.lib gdi32.lib shell32.lib comdlg32.lib version.lib winmm.lib winspool.lib vfw32.lib oleacc.lib ole32.lib rpcrt4.lib ws2_32.lib wininet.lib Iphlpapi.lib msi.lib"
+				AdditionalDependencies="kernel32.lib advapi32.lib user32.lib gdi32.lib shell32.lib comdlg32.lib version.lib winmm.lib winspool.lib vfw32.lib oleacc.lib ole32.lib rpcrt4.lib ws2_32.lib wininet.lib Iphlpapi.lib msi.lib sqlite3.lib"
 				OutputFile="$(OutDir)..\$(ProjectName).exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="TRUE"
-				IgnoreDefaultLibraryNames="kernel32.lib;advapi32.lib;user32.lib;gdi32.lib;shell32.lib;comdlg32.lib;version.lib;mpr.lib;rasapi32.lib;winmm.lib;winspool.lib;vfw32.lib;secur32.lib;oleacc.lib;oledlg.lib;sensapi.lib;Iphlpapi.lib;msi.lib"
+				AdditionalLibraryDirectories="&quot;$(TargetDir)\sqlite3\&quot;"
+				IgnoreDefaultLibraryNames="kernel32.lib;advapi32.lib;user32.lib;gdi32.lib;shell32.lib;comdlg32.lib;version.lib;mpr.lib;rasapi32.lib;winmm.lib;winspool.lib;vfw32.lib;secur32.lib;oleacc.lib;oledlg.lib;sensapi.lib;Iphlpapi.lib;msi.lib;sqlite3.lib"
 				GenerateDebugInformation="TRUE"
 				ProgramDatabaseFile="$(TargetDir)$(TargetName).pdb"
 				GenerateMapFile="TRUE"
@@ -431,6 +436,9 @@
 			</File>
 			<File
 				RelativePath="..\shareaza\DDEServer.cpp">
+			</File>
+			<File
+				RelativePath="..\shareaza\DHT.cpp">
 			</File>
 			<File
 				RelativePath="..\shareaza\DiscoveryServices.cpp">
@@ -587,6 +595,9 @@
 			</File>
 			<File
 				RelativePath="..\shareaza\ImageServices.cpp">
+			</File>
+			<File
+				RelativePath="..\shareaza\Kademlia.cpp">
 			</File>
 			<File
 				RelativePath="..\shareaza\Library.cpp">
@@ -806,6 +817,9 @@
 			</File>
 			<File
 				RelativePath="..\shareaza\SkinWindow.cpp">
+			</File>
+			<File
+				RelativePath="..\shareaza\SQLite.cpp">
 			</File>
 			<File
 				RelativePath="..\shareaza\Statistics.cpp">
@@ -2244,6 +2258,9 @@
 				RelativePath="..\shareaza\DDEServer.h">
 			</File>
 			<File
+				RelativePath="..\shareaza\DHT.h">
+			</File>
+			<File
 				RelativePath="..\shareaza\DiscoveryServices.h">
 			</File>
 			<File
@@ -2404,6 +2421,9 @@
 			</File>
 			<File
 				RelativePath="..\shareaza\ImageServices.h">
+			</File>
+			<File
+				RelativePath="..\shareaza\Kademlia.h">
 			</File>
 			<File
 				RelativePath="..\shareaza\Library.h">
@@ -2602,6 +2622,9 @@
 			</File>
 			<File
 				RelativePath="..\shareaza\SkinWindow.h">
+			</File>
+			<File
+				RelativePath="..\shareaza\SQLite.h">
 			</File>
 			<File
 				RelativePath="..\shareaza\Statistics.h">
@@ -3894,35 +3917,6 @@
 				RelativePath="..\shareaza\Res\SchemaMappings.xml.gz">
 			</File>
 			<File
-				RelativePath="ReleaseWin32\$(ProjectName)\Shareaza_i.c">
-				<FileConfiguration
-					Name="DebugWin32|Win32"
-					ExcludedFromBuild="TRUE">
-					<Tool
-						Name="VCCLCompilerTool"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="ReleaseWin32|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-						ObjectFile="$(IntDir)$(InputName)1.obj"
-						DisableSpecificWarnings="4255;4668;4820"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Releasex64|Win32"
-					ExcludedFromBuild="TRUE">
-					<Tool
-						Name="VCCLCompilerTool"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debugx64|Win32"
-					ExcludedFromBuild="TRUE">
-					<Tool
-						Name="VCCLCompilerTool"/>
-				</FileConfiguration>
-			</File>
-			<File
 				RelativePath="Debugx64\$(ProjectName)\Shareaza_i.c">
 				<FileConfiguration
 					Name="DebugWin32|Win32"
@@ -3995,6 +3989,35 @@
 					ExcludedFromBuild="TRUE">
 					<Tool
 						Name="VCCLCompilerTool"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Releasex64|Win32"
+					ExcludedFromBuild="TRUE">
+					<Tool
+						Name="VCCLCompilerTool"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debugx64|Win32"
+					ExcludedFromBuild="TRUE">
+					<Tool
+						Name="VCCLCompilerTool"/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="ReleaseWin32\$(ProjectName)\Shareaza_i.c">
+				<FileConfiguration
+					Name="DebugWin32|Win32"
+					ExcludedFromBuild="TRUE">
+					<Tool
+						Name="VCCLCompilerTool"/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="ReleaseWin32|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+						ObjectFile="$(IntDir)$(InputName)1.obj"
+						DisableSpecificWarnings="4255;4668;4820"/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Releasex64|Win32"
