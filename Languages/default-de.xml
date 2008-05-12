@@ -17,10 +17,10 @@
 		description="Shareaza Default German Skin File"
 		link="http://shareaza.sourceforge.net/"
 		email="zero9999(at)gmail(dot)com"
-		version="2.3.0.0"
+		version="2.3.1.3"
 		type="Language"
 		language="de"
-		prompt="Klicken Sie hier um Deutsch als Sprache zu wählen."
+		prompt="Klicken Sie hier, um Deutsch als Sprache zu wählen."
 />
 
 <!-- Toolbar Definitions -->
@@ -240,8 +240,10 @@
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Suchen"/>
 	</toolbar>
 	<toolbar name="CLibraryFileView.Physical.Basic">
-		<button id="ID_LIBRARY_LAUNCH" text="Öffnen"/>
+		<button id="ID_LIBRARY_LAUNCH" text="Öffnen oder abspielen"/>
 		<button id="ID_LIBRARY_ENQUEUE" text="In Wiedergabeliste"/>
+		<separator/>
+		<button id="ID_WEBSERVICES_LIST" text="Internet-Dienste"/>
 		<rightAlign/>
 		<separator/>
 		<control id="IDC_SEARCH_BOX" width="120"/>
@@ -252,6 +254,8 @@
 		<button id="ID_LIBRARY_ENQUEUE" text="In Wiedergabeliste"/>
 		<separator/>
 		<button id="ID_LIBRARY_PROPERTIES" text="Eigenschaften"/>
+		<separator/>
+		<button id="ID_WEBSERVICES_LIST" text="Internet-Dienste"/>
 		<separator/>
 		<button id="ID_LIBRARY_MOVE" text="Verschieben"/>
 		<button id="ID_LIBRARY_COPY" text="Kopieren"/>
@@ -265,6 +269,8 @@
 		<button id="ID_LIBRARY_LAUNCH" text="Öffnen"/>
 		<button id="ID_LIBRARY_ENQUEUE" text="In Wiedergabeliste"/>
 		<button id="ID_LIBRARY_FOLDER_ENQUEUE" text="Album wiedergeben"/>
+		<separator/>
+		<button id="ID_WEBSERVICES_LIST" text="Web Services"/>
 		<rightAlign/>
 		<separator/>
 		<control id="IDC_SEARCH_BOX" width="120"/>
@@ -276,6 +282,8 @@
 		<button id="ID_LIBRARY_FOLDER_ENQUEUE" text="Album wiedergeben"/>
 		<separator/>
 		<button id="ID_LIBRARY_PROPERTIES" text="Eigenschaften"/>
+		<separator/>
+		<button id="ID_WEBSERVICES_LIST" text="Internet-Dienste"/>
 		<rightAlign/>
 		<separator/>
 		<control id="IDC_SEARCH_BOX" width="120"/>
@@ -344,7 +352,7 @@
 		<button id="ID_NEIGHBOURS_CHAT" text="Mit Benutzer chatten"/>
 		<rightAlign/>
 		<button id="ID_NETWORK_G2" text="Gnutella2"/>
-		<button id="ID_NETWORK_ED2K" text="eDonkey2000"/>
+		<button id="ID_NETWORK_ED2K" text="eDonkey"/>
 		<button id="ID_NETWORK_G1" text="Gnutella1"/>
 		<separator/>
 		<button id="ID_NEIGHBOURS_SETTINGS" text="Einstellungen"/>
@@ -358,7 +366,7 @@
 		<button id="ID_SECURITY_BAN" text="Host bannen"/>
 		<rightAlign/>
 		<button id="ID_NETWORK_G2" text="Gnutella2"/>
-		<button id="ID_NETWORK_ED2K" text="eDonkey2000"/>
+		<button id="ID_NETWORK_ED2K" text="eDonkey"/>
 		<button id="ID_NETWORK_G1" text="Gnutella1"/>
 		<separator/>
 		<button id="ID_NEIGHBOURS_SETTINGS" text="Netzwerkeinstellungen"/>
@@ -389,7 +397,9 @@
 		<button id="ID_HOSTCACHE_G2_HORIZON" text="G2-Cluster"/>
 		<button id="ID_HOSTCACHE_G2_CACHE" text="G2-Cache"/>
 		<button id="ID_HOSTCACHE_G1_CACHE" text="G1-Cache"/>
-		<button id="ID_HOSTCACHE_ED2K_CACHE" text="eDonkey2000-Cache"/>
+		<button id="ID_HOSTCACHE_ED2K_CACHE" text="eDonkey-Cache"/>
+		<button id="ID_HOSTCACHE_BT_CACHE" text="BitTorrent Cache"/>
+		<button id="ID_HOSTCACHE_KAD_CACHE" text="Kademlia Cache"/>
 	</toolbar>
 	<!-- PRIVATE CHAT FRAME -->
 	<toolbar name="CPrivateChatFrame">
@@ -404,7 +414,33 @@
 		<button id="ID_CHAT_PRIORITY" text="Priorität erhöhen"/>
 		<separator/>
 		<button id="ID_CHAT_CONNECT" text="Verbinden" visible="false"/>
-		<button id="ID_CHAT_DISCONNECT" text="Verbindung trennen"/>
+		<button id="ID_CHAT_DISCONNECT" text="Verbindung trennen"/>		
+	</toolbar>
+	<toolbar name="WebServices.ShareMonkey">
+		<button id="ID_SHAREMONKEY_DOWNLOAD" text="Daten holen"/>
+		<separator/>
+		<button id="ID_SHAREMONKEY_PREVIOUS" text="Zurück"/>
+		<button id="ID_SHAREMONKEY_NEXT" text="Vor"/>
+		<separator/>
+		<button id="ID_SHAREMONKEY_PRICES" text="Preisanfrage"/>
+		<button id="ID_SHAREMONKEY_COMPARE" text="Vergleichen"/>
+		<button id="ID_SHAREMONKEY_BUY" text="Kaufen"/>
+	</toolbar>
+	<toolbar name="WebServices.ShareMonkey.WithSave">
+		<button id="ID_SHAREMONKEY_DOWNLOAD" text="Daten holen"/>
+		<button id="ID_SHAREMONKEY_SAVE" text="Speichern"/>
+		<separator/>
+		<button id="ID_SHAREMONKEY_PREVIOUS" text="Zurück"/>
+		<button id="ID_SHAREMONKEY_NEXT" text="Vor"/>
+		<separator/>
+		<button id="ID_SHAREMONKEY_PRICES" text="Preisanfrage"/>
+		<button id="ID_SHAREMONKEY_COMPARE" text="Vergleichen"/>
+		<button id="ID_SHAREMONKEY_BUY" text="Kaufen"/>
+	</toolbar>
+	<toolbar name="WebServices.MusicBrainz">
+		<button id="ID_MUSICBRAINZ_MATCHES" text="Treffer anzeigen"/>
+		<button id="ID_MUSICBRAINZ_ALBUMS" text="Alle Alben ansehen"/>
+		<separator/>
 	</toolbar>
 	<!-- IMAGE VIEWER WINDOW -->
 	<toolbar name="ImageViewer_Toolbar">
@@ -438,7 +474,7 @@
 			<separator/>
 			<menu text="_Netzwerke wählen">
 				<item id="ID_NETWORK_G2" text="Mit _Gnutella2 verbinden"/>
-				<item id="ID_NETWORK_ED2K" text="Mit _eDonkey2000 verbinden"/>
+				<item id="ID_NETWORK_ED2K" text="Mit _eDonkey verbinden"/>
 				<item id="ID_NETWORK_G1" text="Mit Gnutella_1 verbinden"/>
 			</menu>
 			<separator/>
@@ -497,7 +533,10 @@
 				<item id="ID_HELP_WEB_2" text="P2PForums.com"/> -->
 			</menu>
 			<separator/>
+			<item id="ID_HELP_VERSION_CHECK" text="Auf neuere _Version prüfen"/>
+			<separator/>
 			<item id="ID_HELP_ABOUT" text="_Über Shareaza..."/>
+			<item id="ID_HELP_DONATE" text="_Spenden an das Shareaza Projekt!"/>
 		</menu>
 	</menu>
 	<menu name="CMainWnd.Tabbed" type="bar">
@@ -507,7 +546,7 @@
 			<separator/>
 			<menu text="_Netzwerke wählen">
 				<item id="ID_NETWORK_G2" text="Mit _Gnutella2 verbinden"/>
-				<item id="ID_NETWORK_ED2K" text="Mit _eDonkey2000 verbinden"/>
+				<item id="ID_NETWORK_ED2K" text="Mit _eDonkey verbinden"/>
 				<item id="ID_NETWORK_G1" text="Mit Gnutella_1 verbinden"/>
 			</menu>
 			<separator/>
@@ -607,7 +646,7 @@
 			<separator/>
 			<menu text="_Netzwerke wählen">
 				<item id="ID_NETWORK_G2" text="Mit _Gnutella2 verbinden"/>
-				<item id="ID_NETWORK_ED2K" text="Mit _eDonkey2000 verbinden"/>
+				<item id="ID_NETWORK_ED2K" text="Mit _eDonkey verbinden"/>
 				<item id="ID_NETWORK_G1" text="Mit Gnutella_1 verbinden"/>
 			</menu>
 			<separator/>
@@ -681,7 +720,10 @@
 				<item id="ID_HELP_WEB_2" text="P2PForums.com"/> -->
 			</menu>
 			<separator/>
+			<item id="ID_HELP_VERSION_CHECK" text="Auf neuere _Version prüfen"/>
+			<separator/>
 			<item id="ID_HELP_ABOUT" text="_Über Shareaza..."/>
+			<item id="ID_HELP_DONATE" text="_Spenden an das Shareaza Project!"/>
 		</menu>
 	</menu>
 	<!-- VIEW POPUP -->
@@ -814,7 +856,9 @@
 			<item id="ID_HOSTCACHE_G2_HORIZON" text="Gnutella2-Cl_uster"/>
 			<item id="ID_HOSTCACHE_G2_CACHE" text="Gnutella_2-Cache"/>
 			<item id="ID_HOSTCACHE_G1_CACHE" text="Gnutella_1-Cache"/>
-			<item id="ID_HOSTCACHE_ED2K_CACHE" text="_eDonkey2000-Server"/>
+			<item id="ID_HOSTCACHE_ED2K_CACHE" text="_eDonkey-Server"/>
+			<item id="ID_HOSTCACHE_BT_CACHE" text="_BitTorrent Cache"/>
+			<item id="ID_HOSTCACHE_KAD_CACHE" text="_Kademlia Cache"/>
 		</menu>
 		<separator/>
 		<item id="ID_HOSTCACHE_IMPORT" text="MET-Datei _importieren..."/>
@@ -1363,13 +1407,14 @@
 	</menu>
 	<!-- SYSTEM WINDOW -->
 	<menu name="CSystemWnd">
-		<item id="ID_SYSTEM_VERBOSE" text="_Ausführlicher Modus"/>
-		<item id="ID_SYSTEM_TIMESTAMP" text="Zeitstem_pel"/>
-		<separator/>
-		<item id="ID_SYSTEM_COPY" text="_Kopieren" shortcut="Ctrl+C"/>
-		<separator/>
-		<item id="ID_SYSTEM_CLEAR" text="Anzeige _löschen"/>
-	</menu>
+		<menu id="ID_SYSTEM_VERBOSE" text="_Ausführlicher Modus">
+			<item id="ID_SYSTEM_VERBOSE_ERROR" text="_Fehler"/>
+			<item id="ID_SYSTEM_VERBOSE_WARNING" text="_Warnung"/>
+			<item id="ID_SYSTEM_VERBOSE_NOTICE" text="_Notiz"/>
+			<item id="ID_SYSTEM_VERBOSE_INFO" text="_Info"/>
+			<item id="ID_SYSTEM_VERBOSE_DEBUG" text="_Debug"/>
+		</menu>
+
 	<!-- NEIGHBOURS WINDOW -->
 	<menu name="CNeighboursWnd.Basic">
 		<item id="ID_BROWSE_LAUNCH" text="Benutzer _durchsuchen"/>
@@ -1393,7 +1438,7 @@
 			<item id="ID_NETWORK_DISCONNECT" text="Verbindung _trennen"/>
 			<separator/>
 			<item id="ID_NETWORK_G2" text="_Gnutella2"/>
-			<item id="ID_NETWORK_ED2K" text="_eDonkey2000"/>
+			<item id="ID_NETWORK_ED2K" text="_eDonkey"/>
 			<item id="ID_NETWORK_G1" text="Gnutella_1"/>
 		</menu>
 		<menu text="_Monitor">
@@ -1476,6 +1521,39 @@
 		<separator/>
 		<item id="ID_CHAT_TIMESTAMP" text="_Zeitstempel"/>
 		<item id="ID_CHAT_CLEAR" text="Anzeige _löschen"/>
+	</menu>
+	<!-- IRC WINDOW -->
+	<menu name="CIRCTabRClick">
+		<item id="ID_IRC_CLOSETAB" text="_Close"/>
+	</menu>
+	<menu name="CIRCUserList">
+		<item id="ID_IRC_WHOIS" text="_Whois"/>
+		<item id="ID_IRC_QUERY" text="_Query"/>
+		<separator/>
+		<menu text="Actions">
+			<item id="ID_IRC_TIME" text="_Time"/>
+			<item id="ID_IRC_VERSION" text="_Version"/>
+		</menu>
+		<separator/>
+		<menu text="Control">
+			<item id="ID_IRC_IGNORE" text="_Ignore"/>
+			<item id="ID_IRC_UNIGNORE" text="_Unignore"/>
+			<item id="ID_IRC_OP" text="_Op"/>
+			<item id="ID_IRC_DEOP" text="_Deop"/>
+			<item id="ID_IRC_VOICE" text="_Voice"/>
+			<item id="ID_IRC_DEVOICE" text="D_evoice"/>
+			<item id="ID_IRC_KICK" text="_Kick"/>
+			<item id="ID_IRC_KICKWHY" text="Kick (why?)"/>
+			<item id="ID_IRC_BAN" text="_Ban"/>
+			<item id="ID_IRC_UNBAN" text="_Unban"/>
+			<item id="ID_IRC_BANKICK" text="Kick+Ban"/>
+			<item id="ID_IRC_BANKICKWHY" text="Kick+Ban (why?)"/>
+		</menu>
+	</menu>
+	<menu name="WebServices.List.Menu">
+		<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Bitzi"/>
+		<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
+		<item id="ID_WEBSERVICES_SHAREMONKEY" text="_ShareMonkey"/>
 	</menu>
 	<!-- PLUGIN MENUS -->
 	<menu name="ImageViewer_Context">
@@ -1673,7 +1751,7 @@
 		<text group="25" align="middle" id="G2Leaves">%i Leaves</text>
 		<newline group="20" gap="2"/>
 		<icon group="30" command="ID_NETWORK_ED2K"/><gap group="30" size="4"/>
-		<text group="30" align="middle" format="b">eDonkey2000: </text>
+		<text group="30" align="middle" format="b">eDonkey: </text>
 		<text group="31" align="middle">Nicht verbunden</text>
 		<text group="32" align="middle">Verbinden...</text>
 		<text group="33" align="middle">Verbunden</text>
@@ -1686,8 +1764,9 @@
 		<newline group="10" gap="2"/>
 		<group id="2">
 			<para align="center">
-				<newline gap="6"/>
+				<newline gap="4"/>
 				<text>Sie sind seit </text>
+				<newline gap="0"/>
 				<text id="ConnectedHours" format="b">%i </text>
 				<text>Stunden und </text>
 				<text id="ConnectedMinutes" format="b">%i </text>
@@ -2060,12 +2139,12 @@
 		<text>, oder um die für die Reperatur benötigte Software herunterzuladen.</text>
 	</document>
 	<document name="GeneralHelp.DonkeyServerList">
-		<text format="b">Ihre eDonkey2000-Serverliste ist leer</text>
+		<text format="b">Ihre eDonkey-Serverliste ist leer</text>
 		<newline gap="8"/>
-		<text>Sie haben keine Server in ihrer eDonkey2000-Serverliste. Sie müssen eine
-		aktuelle Serverliste (.met-Datei) herunterladen, um sich mit dem eDonkey2000-Netzwerk verbinden zu können.</text>
+		<text>Sie haben keine Server in ihrer eDonkey-Serverliste. Sie müssen eine
+		aktuelle Serverliste (.met-Datei) herunterladen, um sich mit dem eDonkey-Netzwerk verbinden zu können.</text>
 		<newline gap="8"/>
-		<text>Sie können eine Serverliste in den eDonkey2000-Einstellungen oder im Service-Provider-Fenster
+		<text>Sie können eine Serverliste in den eDonkey-Einstellungen oder im Service-Provider-Fenster
 		herunterladen.</text>
 	</document>
 	<document name="GeneralHelp.UploadWarning">
@@ -2182,7 +2261,7 @@
 	<tip id="ID_DISCOVERY_GNUTELLA" message="Bootstrap-Dienste im Service Provider-Fenster anzeigen." tip="Bootstraps anzeigen"/>
 	<tip id="ID_DISCOVERY_QUERY" message="Den markierten Service-Provider jetzt abfragen." tip="Jetzt abfragen"/>
 	<tip id="ID_DISCOVERY_REMOVE" message="Den markierten Service-Provider entfernen." tip="Entfernen"/>
-	<tip id="ID_DISCOVERY_SERVERMET" message="eDonkey2000-Server.met-URLs im Service Provider-Fenster anzeigen."/>
+	<tip id="ID_DISCOVERY_SERVERMET" message="eDonkey-Server.met-URLs im Service Provider-Fenster anzeigen."/>
 	<tip id="ID_DISCOVERY_WEBCACHE" message="GWebCache-Dienste im Service Provider-Fenster anzeigen." tip="GWebCaches anzeigen"/>
 	<tip id="ID_DOWNLOAD_GROUP_CLEAR" message="Alle Downloads dieser Gruppe abbrechen und entfernen."/>
 	<tip id="ID_DOWNLOAD_GROUP_NEW" message="Eine neue Downloadgruppe erstellen..."/>
@@ -2242,13 +2321,14 @@
 	<tip id="ID_HELP_WEB_4" message="Webseite4 besuchen"/>
 	<tip id="ID_HELP_WEB_5" message="Webseite5 besuchen"/>
 	<tip id="ID_HELP_WEB_6" message="Webseite6 besuchen"/>
+	<tip id="ID_HELP_DONATE" message="Wenn Sie möchten, können Sie für unsere gerichtlichen Geldmittel spenden und um Ihre Wertschätzung zu zeigen."/>
 	<tip id="ID_HITMONITOR_CLEAR" message="Den Treffermonitor-Puffer leeren." tip="Puffer leeren"/>
 	<tip id="ID_HITMONITOR_PAUSE" message="Den Treffermonitor anhalten." tip="Anzeige anhalten"/>
 	<tip id="ID_HITMONITOR_SEARCH" message="Das Netzwerk nach dem markierten Ausdruck durchsuchen." tip="Danach suchen"/>
 	<tip id="ID_HOSTCACHE_CONNECT" message="Mit markierten Host(s) verbinden." tip="Jetzt verbinden"/>
 	<tip id="ID_HOSTCACHE_DISCONNECT" message="Verbindung zu markierten Host(s) beenden." tip="Verbindung beenden"/>
-	<tip id="ID_HOSTCACHE_ED2K_CACHE" message="eDonkey2000-Server anzeigen."/>
-	<tip id="ID_HOSTCACHE_ED2K_DOWNLOAD" message="Ein &quot;server.met&quot;-Datei für eDonkey2000 herunterladen..."/>
+	<tip id="ID_HOSTCACHE_ED2K_CACHE" message="eDonkey-Server anzeigen."/>
+	<tip id="ID_HOSTCACHE_ED2K_DOWNLOAD" message="Ein &quot;server.met&quot;-Datei für eDonkey herunterladen..."/>
 	<tip id="ID_HOSTCACHE_G1_CACHE" message="Gecachte Hosts anzeigen (G1)."/>
 	<tip id="ID_HOSTCACHE_G2_CACHE" message="Gecachte Hosts anzeigen (G2)."/>
 	<tip id="ID_HOSTCACHE_G2_HORIZON" message="Horizont anzeigen (G2)."/>
@@ -2352,7 +2432,7 @@
 	<tip id="ID_NETWORK_CONNECT" message="Mit den Netzwerken verbinden"/>
 	<tip id="ID_NETWORK_CONNECT_TO" message="Manuell mit einem Host verbinden..." tip="Verbinden mit"/>
 	<tip id="ID_NETWORK_DISCONNECT" message="Die Verbindung mit den Netzwerken trennen"/>
-	<tip id="ID_NETWORK_ED2K" message="Zum eDonkey2000-Netzwerk verbinden."/>
+	<tip id="ID_NETWORK_ED2K" message="Zum eDonkey-Netzwerk verbinden."/>
 	<tip id="ID_NETWORK_EXIT" message="Shareaza beenden" tip="Beenden"/>
 	<tip id="ID_NETWORK_G1" message="Zum Gnutella1-Netzwerk verbinden."/>
 	<tip id="ID_NETWORK_G2" message="Zum Gnutella2-Netzwerk verbinden (empfohlen)."/>
@@ -2457,6 +2537,8 @@
 	<tip id="ID_WINDOW_TILE_HORZ" message="Die geöffneten Fenster übereinander anordnen." tip="Übereinander"/>
 	<tip id="ID_WINDOW_TILE_VERT" message="Die geöffneten Fenster nebeneinander anordnen." tip="Nebeneinander"/>
 	<tip id="ID_WINDOW_TOOLBAR" message="Die Werkzeugleiste ein- oder ausblenden." tip="Werkzeugleiste anzeigen"/>
+	<tip id="ID_WEBSERVICES_LIST" message="Wählen Sie einen Internet-Dienst, um mehr Informationen über die gewählte Datei zu erhalten."/>
+	<tip id="ID_WEBSERVICES_SHAREMONKEY" message="Mit Sharemonkey nach vorhandenen Datei-Informationen suchen."/>
 	<!-- PLUGIN TIPS -->
 	<tip id="ImageViewer_BestFit" message="Das Bild auf Fenstergröße skalieren."/>
 	<tip id="ImageViewer_ActualSize" message="Das Bild in Originalgröße anzeigen."/>
@@ -2466,6 +2548,7 @@
 <!-- Tips displayed when mouse is moved over controls in the dialogs -->
 <controlTips>
 	<tip id="IDC_THROTTLE_MODE" message="Im Maximum-Modus wird die genutzte Bandbreite nie den eingegebenen Wert überschreiten. Im Durchschnitts-Modus fluktuiert die genutzte Bandbreite um den eingegebenen Richtwert."/>
+	<tip id="IDC_REGEXP" message="Regulären Ausdruck in perl eingeben.{n}Das Suchwort kann in folgender Form definiert werden &lt;n&gt;, wobei n eine Zahl zwischen 1 und 9 ist. Wenn Sie alle Suchworte nacheinander durchsuchen wollen, benutzen Sie &lt;_&gt; markieren."/>
 	<tip id="IDC_SHARE_PARTIALS" message="Diese Einstellung hat keinen Einfluss auf bereits gestartete Downloads. In den eD2k- und BitTorrent-Netzwerken kann mit diese Option lediglich der Upload von pausierten Downloads verhindert werden.{n}{n}ACHTUNG: Benutzen Sie diese Option nur wenn unbedingt nötig - der Missbrauch kann zur Verbannung führen."/>
 </controlTips>
 <!-- Localised Strings -->
@@ -2659,10 +2742,11 @@
 	<string id="16077" value="Die Adresse %s wird von ihren Sicherheitsregeln bereits blockiert."/>
 	<string id="16078" value="Eine Regel, um %s zu blockieren, wurde hinzugefügt."/>
 	<string id="16079" value="Sind Sie sicher, dass Sie die Verbindung trennen möchten?"/>
+	<string id="16080" value="Sie benutzen die Zeitsteuerung nur mit dem G2-Netzwerk. Möchten Sie dies ausschalten und zu allen aktivierten Netzwerken verbinden ?"/>
 	<string id="16081" value="Suchanfrage für &quot;%s&quot; an %s senden."/>
 	<string id="16083" value="Das Erzwingen des HUB-Modus kann negative Auswirkungen auf das Netzwerk und die Ausführgeschwindigkeit von Shareaza haben. Es ist generell besser Shareaza diese Entscheidung selbst treffen zu lassen.\n\nDer Hub Modus führt NICHT zu besseren Suchergebnissen, und hat auch keine anderen Vorteile für Sie.\n\nSind Sie SICHER, dass Sie das wollen?"/>
 	<string id="16084" value="Die Deaktivierung des Gnutella1-Protokolls kann ihre Suchergebnisse begrenzen. Wenn Sie ein Hub sind, trifft dies auch für andere Benutzer zu. Sind Sie SICHER, dass Sie das wollen?"/>
-	<string id="16085" value="Gnutella2 ist Shareazas Hauptnetzwerk.  Wenn sie die Unterstützung für Gnutella2 deaktivieren, könnten sich die Anzahl und die Qualität Ihrer Suchergebnisse stark verschlechtern.  Sind Sie SICHER, dass Sie das wollen?"/>
+	<string id="16085" value="Gnutella2 ist Shareazas Hauptnetzwerk.  Wenn sie die Unterstützung für Gnutella2 deaktivieren, könnten sich die Anzahl und die Qualität Ihrer Suchergebnisse stark verschlechtern.  Sind Sie SICHER, dass Sie das wollen ?"/>
 	<string id="16087" value="Ihre Uploadbandbreite reicht nicht aus, um dieses Netzwerk zu aktivieren"/>
 	<string id="16128" value="Eingehende Verbindung von %s Port %i akzeptiert."/>
 	<string id="16129" value="Verbindung herstellen zu %s Port %i..."/>
@@ -2765,12 +2849,12 @@
 	<string id="16308" value="Host %s hat unverlangte Daten gesendet, Verbindung geschlossen."/>
 	<string id="16309" value="Metadaten für &quot;%s&quot; von %s anfordern..."/>
 	<string id="16310" value="TTH-Daten von %s empfangen (%s)..."/>
-	<string id="16311" value="eDonkey2000-Hash für &quot;%s&quot; von %s anfordern..."/>
-	<string id="16312" value="Ungültiger eDonkey2000-Hash von %s empfangen, Quelle entfernt."/>
-	<string id="16313" value="eDonkey2000-Hash für &quot;%s&quot; empfangen, kleinster verifizierbarer Teil ist %s."/>
-	<string id="16314" value="eDonkey2000-Hash ist verfälscht oder inkonsistent, Quelle entfernt."/>
+	<string id="16311" value="eDonkey-Hash für &quot;%s&quot; von %s anfordern..."/>
+	<string id="16312" value="Ungültiger eDonkey-Hash von %s empfangen, Quelle entfernt."/>
+	<string id="16313" value="eDonkey-Hash für &quot;%s&quot; empfangen, kleinster verifizierbarer Teil ist %s."/>
+	<string id="16314" value="eDonkey-Hash ist verfälscht oder inkonsistent, Quelle entfernt."/>
 	<string id="16315" value="Kann Kompression (inflate) für Download &quot;%s&quot; nicht aktivieren."/>
-	<string id="16316" value="Zeitüberschreitung für Warteschlangenaktualisierung von eDonkey2000-Host %s für Datei &quot;%s&quot;."/>
+	<string id="16316" value="Zeitüberschreitung für Warteschlangenaktualisierung von eDonkey-Host %s für Datei &quot;%s&quot;."/>
 	<string id="16317" value="Warten in Warteschlange für &quot;%s&quot;."/>
 	<string id="16318" value="Nicht genügend Speicherplatz um &quot;%s&quot; herunterzuladen (%s)."/>
 	<string id="16319" value="Quelle %s (%s) entfernt, weil sie beschädigte Teile der Datei &quot;%s&quot; übertragen hat (%I64i-%I64i)."/>
@@ -2816,14 +2900,14 @@
 	<string id="16359" value="Offline-Warteschlangenposition für %s abgelaufen, entfernt."/>
 	<string id="16360" value="Upload von &quot;%s&quot; an %s (%s) verweigert, alle entsprechenden Warteschlangen sind voll."/>
 	<string id="16361" value="Uploadanforderung von %s (%s) verweigert, Netwzerk deaktiviert."/>
-	<string id="16362" value="eDonkey2000-Uploads sollten nicht abgebrochen werden. Sind Sie sicher, dass Sie diesen Upload abbrechen wollen?"/>
+	<string id="16362" value="eDonkey-Uploads sollten nicht abgebrochen werden. Sind Sie sicher, dass Sie diesen Upload abbrechen wollen?"/>
 	<string id="16363" value="Torrent-Uploads"/>
 	<string id="16364" value="Fertige Uploads"/>
 	<string id="16365" value="Sind Sie sicher, dass Sie alle Downloads dieser Gruppe abbrechen möchten?"/>
 	<string id="16366" value="Warteschlange"/>
-	<string id="16367" value="eDonkey2000"/>
-	<string id="16368" value="eDonkey2000 (unvollständige Dateien)"/>
-	<string id="16369" value="eDonkey2000-Guard"/>
+	<string id="16367" value="eDonkey"/>
+	<string id="16368" value="eDonkey (unvollständige Dateien)"/>
+	<string id="16369" value="eDonkey-Guard"/>
 	<string id="16370" value="Kleine Dateien"/>
 	<string id="16371" value="Mittelgroße Dateien"/>
 	<string id="16372" value="Große Dateien"/>
@@ -2929,9 +3013,9 @@
 	<string id="16811" value="Automatisch"/>
 	<string id="16812" value="Bitte warten: UPnP-Geräte werden erkannt und konfiguriert..."/>
 	<string id="16813" value="Bitte warten: Service Provider werden aktualisiert..."/>
-	<string id="16814" value="Bitte warten: eDonkey2000-Server-Liste wird aktualisiert..."/>
+	<string id="16814" value="Bitte warten: eDonkey-Server-Liste wird aktualisiert..."/>
 	<string id="16815" value="SSDP-Host-Service ist nicht gestartet. Dieser Dienst wird benötigt, um die Installation durchzuführen.\nEs ist erforderlich, dass das Merkmal dieses Dienstes auf Automatisch eingestellt ist."/>
-	<string id="16816" value="Das eDonkey2000-Netzwerk benutzt lange Warteschlangen mit langen Wartezeiten. Wenn Sie die Maximale Warteschlangenlänge zu strikt einstellen, könnten Sie Probleme bekommen, Dateien herunterzuladen.\nSind Sie sicher, dass Sie die Maximale Warteschlangenposition auf diesen Wert setzen wollen?"/>
+	<string id="16816" value="Das eDonkey-Netzwerk benutzt lange Warteschlangen mit langen Wartezeiten. Wenn Sie die Maximale Warteschlangenlänge zu strikt einstellen, könnten Sie Probleme bekommen, Dateien herunterzuladen.\nSind Sie sicher, dass Sie die Maximale Warteschlangenposition auf diesen Wert setzen wollen?"/>
 	<string id="16817" value="Windows unterstützt keine Dateipfade länger als 256 Zeichen.\nBitte wählen Sie einen Ordner mit einem kürzeren Pfad."/>
 	<string id="16818" value="Das Verzeichnis für unvollständige Dateien darf sich nicht im Downloadverzeichnis befinden."/>
 	<string id="16819" value="Ein Unterordner des gewählten Ordners &quot;%s&quot; ist schon in ihrer Bibliothek.\nBeim Hinzufügen des Ordners müssen einige Dateien neu verifiziert werden.\n\nWollen Sie fortfahren ?"/>
@@ -2994,7 +3078,7 @@
 	<string id="17104" value="Gnutella II: Leaf-to-Hub-Verbindung"/>
 	<string id="17105" value="Gnutella II: Hub-to-Leaf-Verbindung"/>
 	<string id="17106" value="eDonkey-Server-Verbindung (LowID: %lu)"/>
-	<string id="17107" value="eDonkey2000-Serververbindung"/>
+	<string id="17107" value="eDonkey-Serververbindung"/>
 	<string id="17108" value="Handshake"/>
 	<string id="17109" value="Eingehend"/>
 	<string id="17110" value="Ausgehend"/>
@@ -3015,29 +3099,29 @@
 	<string id="17125" value="G2-Peer"/>
 	<string id="17126" value="G2-Hub"/>
 	<string id="17127" value="G2-Leaf"/>
-	<string id="17128" value="eDonkey2000-Server"/>
-	<string id="17129" value="eDonkey2000 (LowID)"/>
-	<string id="17130" value="eDonkey2000 (HighID)"/>
-	<string id="17216" value="Verbindung zu eDonkey2000-Server &quot;%s&quot; herstellen..."/>
+	<string id="17128" value="eDonkey-Server"/>
+	<string id="17129" value="eDonkey (LowID)"/>
+	<string id="17130" value="eDonkey (HighID)"/>
+	<string id="17216" value="Verbindung zu eDonkey-Server &quot;%s&quot; herstellen..."/>
 	<string id="17217" value="Mit eDoneky2000-Server %s verbunden, handshaking..."/>
 	<string id="17218" value="eD2k[%s] %s"/>
-	<string id="17219" value="eDonkey2000-Server %s hat die Verbindung abgelehnt (refuse)."/>
-	<string id="17220" value="eDonkey2000-Server %s online, ClientID ist %lu."/>
-	<string id="17221" value="eDonkey2000-Server %s hat ihre ClientID %lu in %lu geändert."/>
-	<string id="17222" value="eDonkey2000-Server %s hat sich als &quot;%s&quot; identifiziert."/>
-	<string id="17223" value="eDonkey2000-Server %s hat die Verbindung zurückgewiesen (reject)."/>
-	<string id="17224" value="Fehler beim Handshake mit eDonkey2000-Client %s."/>
-	<string id="17225" value="eDonkey2000-Clientverbindung zu %s geschlossen."/>
-	<string id="17226" value="Falsch formatiertes eDonkey2000-Paket von %s empfangen (id=%x)."/>
-	<string id="17227" value="Eingehende Verbindung von %s ist eine eDonkey2000-Clientverbindung."/>
-	<string id="17228" value="eDonkey2000-Hashset für &quot;%s&quot; an %s senden..."/>
-	<string id="17229" value="eDonkey2000-Client Verbindung mit %s war inaktiv, geschlossen."/>
-	<string id="17230" value="eDonkey2000-Client Verbindung zu %s herstellen..."/>
-	<string id="17231" value="eDonkey2000-Client %s hat die falsche GUID, Handshake abgebrochen."/>
-	<string id="17232" value="Zeitüberschreitung beim Verbinden zu eDonkey2000-Client %s."/>
-	<string id="17233" value="Zeitüberschreitung beim Handshake mit eDonkey2000-Client %s."/>
-	<string id="17234" value="eDonkey2000-Clientverbindung von %s verweigert, weil die eDonkey2000-Unterstützung deaktiviert ist."/>
-	<string id="17248" value="Unvollständige eDonkey2000-Downloads werden importiert..."/>
+	<string id="17219" value="eDonkey-Server %s hat die Verbindung abgelehnt (refuse)."/>
+	<string id="17220" value="eDonkey-Server %s online, ClientID ist %lu."/>
+	<string id="17221" value="eDonkey-Server %s hat ihre ClientID %lu in %lu geändert."/>
+	<string id="17222" value="eDonkey-Server %s hat sich als &quot;%s&quot; identifiziert."/>
+	<string id="17223" value="eDonkey-Server %s hat die Verbindung zurückgewiesen (reject)."/>
+	<string id="17224" value="Fehler beim Handshake mit eDonkey-Client %s."/>
+	<string id="17225" value="eDonkey-Clientverbindung zu %s geschlossen."/>
+	<string id="17226" value="Falsch formatiertes eDonkey-Paket von %s empfangen (id=%x)."/>
+	<string id="17227" value="Eingehende Verbindung von %s ist eine eDonkey-Clientverbindung."/>
+	<string id="17228" value="eDonkey-Hashset für &quot;%s&quot; an %s senden..."/>
+	<string id="17229" value="eDonkey-Client Verbindung mit %s war inaktiv, geschlossen."/>
+	<string id="17230" value="eDonkey-Client Verbindung zu %s herstellen..."/>
+	<string id="17231" value="eDonkey-Client %s hat die falsche GUID, Handshake abgebrochen."/>
+	<string id="17232" value="Zeitüberschreitung beim Verbinden zu eDonkey-Client %s."/>
+	<string id="17233" value="Zeitüberschreitung beim Handshake mit eDonkey-Client %s."/>
+	<string id="17234" value="eDonkey-Clientverbindung von %s verweigert, weil die eDonkey-Unterstützung deaktiviert ist."/>
+	<string id="17248" value="Unvollständige eDonkey-Downloads werden importiert..."/>
 	<string id="17249" value="Fertig, %i unvollständige Downloads erfolgreich importiert."/>
 	<string id="17250" value="Scanne Ordner: &quot;%s&quot;..."/>
 	<string id="17251" value="Fehler beim Importieren."/>
@@ -3264,7 +3348,7 @@
 		<control caption="Profil bearbeiten"/>
 		<control caption="_Chat:"/>
 		<control caption="Chat mit Gnutella-Clients aktivieren"/>
-		<control caption="Chat mit eDonkey2000-Clients aktivieren"/>
+		<control caption="Chat mit eDonkey-Clients aktivieren"/>
 		<control caption="Spamnachrichten im Chat filtern"/>
 		<control caption="Vulgäre Sprache im Chat filtern"/>
 	</dialog>
@@ -3273,7 +3357,7 @@
 		<control caption="Folgende Linktypen mit Shareaza öffnen"/>
 		<control caption="Magnet ( magnet: )"/>
 		<control caption="Gnutella ( gnutella: )"/>
-		<control caption="eDonkey2000 ( ed2k: )"/>
+		<control caption="eDonkey ( ed2k: )"/>
 		<control caption="Piolet ( mp2p: )"/>
 		<control caption="BitTorrent ( .torrent )"/>
 		<control caption="_Downloadmanager:"/>
@@ -3391,12 +3475,12 @@
 		<control caption="Gnutella2 ist das Hauptnetzwerk von Shareaza. Empfohlen."/>
 		<control caption="Gnutella2 (G2) verwenden"/>
 		<control caption="Gnutella2 konfigurieren"/>
-		<control caption="eDonkey2000-Netzwerk:"/>
-		<control caption="Das eDonkey2000-Netzwerk ist ein beliebtes serverbasiertes Netzwerk. Obwohl es nicht so viele Funktionen wie Gnutella2 bietet, findet man viele Dateien."/>
-		<control caption="eDonkey2000 verwenden"/>
-		<control caption="eDonkey2000 konfigurieren"/>
+		<control caption="eDonkey-Netzwerk:"/>
+		<control caption="Das eDonkey-Netzwerk ist ein beliebtes serverbasiertes Netzwerk. Obwohl es nicht so viele Funktionen wie Gnutella2 bietet, findet man viele Dateien."/>
+		<control caption="eDonkey verwenden"/>
+		<control caption="eDonkey konfigurieren"/>
 		<control caption="Gnutella1-Netzwerk:"/>
-		<control caption="Obwohl das ursprüngliche Gnutella-Netzwerk weniger Funktionen als Gnutella2 und weniger Dateien als eDonkey2000 hat, bleibt es eine wertvolle Resource."/>
+		<control caption="Obwohl das ursprüngliche Gnutella-Netzwerk weniger Funktionen als Gnutella2 und weniger Dateien als eDonkey hat, bleibt es eine wertvolle Resource."/>
 		<control caption="Gnutella1 verwenden"/>
 		<control caption="Gnutella1 konfigurieren"/>
 	</dialog>
@@ -3430,8 +3514,8 @@
 		<control caption="Leaf zu Hub"/>
 		<control caption="Hub zu Hub"/>
 	</dialog>
-	<dialog name="CDonkeySettingsPage" cookie="BuBuBuBuBuStEdmsStBuBuStEdmsStBuStBu" caption="eDonkey2000">
-		<control caption="_eDonkey2000-Netzwerk:"/>
+	<dialog name="CDonkeySettingsPage" cookie="BuBuBuBuBuStEdmsStBuBuStEdmsStBuStBu" caption="eDonkey">
+		<control caption="_eDonkey-Netzwerk:"/>
 		<control caption="Immer zu eD2k verbinden"/>
 		<control caption="Heute zu eD2k verbinden"/>
 		<control caption="_Globale Suche:"/>
@@ -3608,14 +3692,14 @@
 		<control caption="Shareaza ist ein Allround-File-Sharing-Programm, das auf mehrere P2P-Netzwerke gleichzeitig zugreifen kann. Hier können Sie einstellen, welche Netzwerke Sie verwenden möchten. Sie können später jederzeit andere Netzwerke auswählen."/>
 		<control caption="Zu Gnutella2 verbinden (Empfohlen)"/>
 		<control caption="Das Gnutella2-Netzwerk ist das Hauptnetzwerk von Shareaza."/>
-		<control caption="Zu eDonkey2000 verbinden"/>
-		<control caption="Das eDonkey2000-Netzwerk ist ein beliebtes serverbasiertes Netzwerk. Obwohl es nicht so viele Funktionen wie Gnutella2 bietet, findet man viele Dateien."/>
+		<control caption="Zu eDonkey verbinden"/>
+		<control caption="Das eDonkey-Netzwerk ist ein beliebtes serverbasiertes Netzwerk. Obwohl es nicht so viele Funktionen wie Gnutella2 bietet, findet man viele Dateien."/>
 		<control caption="Zu Gnutella1 verbinden"/>
-		<control caption="Obwohl das ursprüngliche Gnutella-Netzwerk weniger Funktionen als Gnutella2 und weniger Dateien als eDonkey2000 hat, bleibt es eine wertvolle Ressource."/>
+		<control caption="Obwohl das ursprüngliche Gnutella-Netzwerk weniger Funktionen als Gnutella2 und weniger Dateien als eDonkey hat, bleibt es eine wertvolle Ressource."/>
 	</dialog>
-	<dialog name="CDonkeyImportDlg" cookie="StStBuBuEdBu" caption="eDonkey2000-Downloads importieren">
+	<dialog name="CDonkeyImportDlg" cookie="StStBuBuEdBu" caption="eDonkey-Downloads importieren">
 		<control/>
-		<control caption="Sie haben noch andere eDonkey2000-Clients auf ihrem Computer installiert. Möchten Sie unvollständige Downloads in Shareaza importieren?"/>
+		<control caption="Sie haben noch andere eDonkey-Clients auf ihrem Computer installiert. Möchten Sie unvollständige Downloads in Shareaza importieren?"/>
 		<control caption="Ja"/>
 		<control caption="Nein|Abbrechen"/>
 		<control/>
@@ -3723,7 +3807,7 @@
 		<control caption="Verbinden mit:|Benutzer durchsuchen:"/>
 		<control/><control/>
 		<control caption="_Netzwerkprotokoll:"/>
-		<control caption="Gnutella1 (auto)|Gnutella2 (auto)|eDonkey2000"/>
+		<control caption="Gnutella1 (auto)|Gnutella2 (auto)|eDonkey"/>
 		<control caption="_UP unterdrücken"/>
 		<control caption="Verbinden"/>
 		<control caption="Abbrechen"/>
@@ -3734,7 +3818,7 @@
 		<control/>
 		<control caption="Herunterladen"/>
 		<control caption="Abbrechen"/>
-		<control caption="Shareaza kann Dateien aus dem Internet herunterladen (HTTP) und automatisch nach P2P-Links suchen und diese herunterladen (Magnet, Gnutella, eDonkey2000, mP2P)."/>
+		<control caption="Shareaza kann Dateien aus dem Internet herunterladen (HTTP) und automatisch nach P2P-Links suchen und diese herunterladen (Magnet, Gnutella, eDonkey, mP2P)."/>
 		<control caption="BitTorrent:  Ein Torrent kann als .torrent-Datei oder als HTTP-Link angegeben werden. Um eine .torrent-Datei via HTTP herunterzuladen fügen Sie den Link in das obige Textfeld ein. Wenn Sie bereits eine *.torrent-Datei haben, klicken Sie auf "/>
 		<control caption="_Torrent öffnen..."/>
 	</dialog>
@@ -3743,9 +3827,10 @@
 		<control caption="Suchen"/>
 		<control caption="Abbrechen"/>
 	</dialog>
-	<dialog name="CFilterSearchDlg" cookie="BuEdStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuCoBuBuBuBuBuBuBu" caption="Ergebnisse filtern">
+		<dialog name="CFilterSearchDlg" cookie="BuEdBuStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuBuBuCoBuBuBuBuBu" caption="Filter Matches">
 		<control caption="Nur Ergebnisse, die folgende _Wörter enthalten:"/>
 		<control/>
+		<control caption="Reg. Exp."/>
 		<control caption="( Sie können Wörter mit &quot;-Wort&quot; ausschließen )"/>
 		<control caption="Und folgende _Größe haben:"/>
 		<control caption="Minimum:"/>
@@ -3756,22 +3841,22 @@
 		<control/><control/>
 		<control caption="Quelle(n)."/>
 		<control caption="_Ausblenden:"/>
-		<control caption="Kein freier Uploadslot"/>
+		<control caption="Busy hosts"/>
+		<control caption="Unpassende Ergebnisse"/>		
 		<control caption="Push/LowID-Hosts"/>
+		<control caption="Lokal vorhand. Dateien"/>
 		<control caption="Instabile Hosts"/>
 		<control caption="Unpassende Ergebnisse"/>
-		<control caption="Lokal vorhand. Dateien"/>
+		<control caption="DRM Dateien"/>
+		<control caption="Adult results"/>
 		<control caption="Gefälschte Ergebnisse"/>
-		<control caption="Filtern"/>
-		<control caption="Abbrechen"/>
+		<control caption="Filter"/>
 		<control/>
 		<control caption="Als Standard"/>
 		<control caption="_Speichern als..."/>
 		<control caption="_Löschen"/>
-		<control caption="Filter:"/>
-		<control caption="DRM-gesch. Dateien"/>
-		<control caption="Spamverdacht"/>
-		<control caption="Erotikfilter"/>
+		<control caption="Filter"/>
+		<control caption="Abbrechen"/>
 	</dialog>
 	<dialog name="CSaveFilterAsDlg" cookie="EdBuBuSt" caption="Filter speichern als">
 		<control/>
@@ -3903,7 +3988,7 @@
 		<control caption="Abbrechen"/>
 		<control caption="Wählen Sie ein Schema aus der Liste und anschließend die gewünschten Felder."/>
 	</dialog>
-	<dialog name="CSecureRuleDlg" cookie="BuStCoStEdBuStEdEdEdEdStEdEdEdEdBuEdBuBuBuStCoStCoEdStEdStEdStBuBu" caption="Regel">
+		<dialog name="CSecureRuleDlg" cookie="BuStCoStEdBuStEdEdEdEdStEdEdEdEdBuEdBuBuBuBuStCoStCoEdStEdStEdStBuBu" caption="Security Rule">
 		<control caption="_Regel:"/>
 		<control caption="Typ:"/>
 		<control caption="IP-Adresse|Inhaltsfilter"/>
@@ -3918,6 +4003,7 @@
 		<control/>
 		<control caption="logisch UND"/>
 		<control caption="logisch ODER"/>
+		<control caption="Reg. Exp."/>
 		<control caption="_Optionen:"/>
 		<control caption="Aktion:"/>
 		<control caption="Keine|Erlauben|Verweigern"/>
