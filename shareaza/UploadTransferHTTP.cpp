@@ -568,11 +568,13 @@ BOOL CUploadTransferHTTP::OnHeadersComplete()
 		LPCTSTR pszURN = (LPCTSTR)m_sRequest + 13;
 		
 		{
-			CSingleLock oLock( &Library.m_pSection, TRUE );
-
-			if ( CLibraryFile* pShared = LibraryMaps.LookupFileByURN( pszURN, TRUE, TRUE ) )
+			CSingleLock oLock( &Library.m_pSection, FALSE );
+			if ( oLock.Lock( 250 ) )
 			{
-				return RequestSharedFile( pShared, oLock );
+				if ( CLibraryFile* pShared = LibraryMaps.LookupFileByURN( pszURN, TRUE, TRUE ) )
+				{
+					return RequestSharedFile( pShared, oLock );
+				}
 			}
 		}
 
@@ -588,36 +590,25 @@ BOOL CUploadTransferHTTP::OnHeadersComplete()
 		DWORD nIndex = 0;
 		
 		CString strFile	= m_sRequest.Mid( 5 );
-		int nChar		= strFile.Find( '/' );
-		
-		if ( _stscanf( strFile, _T("%lu/"), &nIndex ) == 1 && nChar > 0 && nChar < strFile.GetLength() - 1 )
-		{
-			strFile = strFile.Mid( nChar + 1 );
-			
-			{
-				CSingleLock oLock( &Library.m_pSection, TRUE );
+		int nChar = strFile.Find( '/' );
+		bool bByIndex = ( _stscanf( strFile, _T("%lu/"), &nIndex ) == 1 &&
+			nChar > 0 && nChar < strFile.GetLength() - 1 );
+		strFile = strFile.Mid( nChar + 1 );
 
-				CLibraryFile* pFile = Library.LookupFile( nIndex, TRUE, TRUE );
-			
-				if ( pFile != NULL && pFile->m_sName.CompareNoCase( strFile ) )
-				{
-					pFile = NULL;
-				}
-			
-				if ( pFile == NULL )
-				{
-					pFile = LibraryMaps.LookupFileByName( strFile, TRUE, TRUE );
-				}
-			
-				if ( pFile != NULL ) return RequestSharedFile( pFile, oLock );
-			}
-		}
-		else
+		CSingleLock oLock( &Library.m_pSection, FALSE );
+		if ( oLock.Lock( 250 ) )
 		{
-			strFile = strFile.Mid( nChar + 1 );
-			CSingleLock oLock( &Library.m_pSection, TRUE );
-			CLibraryFile* pFile = LibraryMaps.LookupFileByName( strFile, TRUE, TRUE );
-			if ( pFile != NULL ) return RequestSharedFile( pFile, oLock );
+			CLibraryFile* pFile = NULL;
+			if ( bByIndex )
+			{
+				pFile = Library.LookupFile( nIndex, TRUE, TRUE );
+				if ( pFile && pFile->m_sName.CompareNoCase( strFile ) )
+					pFile = NULL;
+			}
+			if ( ! pFile )
+				pFile = LibraryMaps.LookupFileByName( strFile, TRUE, TRUE );
+			if ( pFile )
+				return RequestSharedFile( pFile, oLock );
 		}
 	}
 	else
