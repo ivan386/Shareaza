@@ -17,7 +17,7 @@
 		description="Shareaza Default Russian Skin File"
 		link="http://shareaza.sourceforge.net/"
 		email="contact(at)shareaza(dot)com"
-		version="2.3.1.1"
+		version="2.3.1.3"
 		type="Language"
 		language="ru"
 		prompt="Щелкните здесь для смены языка на Русский (от dAbserver)"
@@ -28,7 +28,7 @@
 <toolbars>
 	<!-- MAIN WINDOW -->
 	<toolbar name="CMainWnd.Basic">
-		<button id="ID_NETWORK_CONNECT" text="Соединиться"/>
+		<button id="ID_NETWORK_CONNECT" text="Подключиться"/>
 		<separator/>
 		<button id="ID_TAB_HOME" text="Домой"/>
 		<button id="ID_TAB_LIBRARY" text="Хранилище"/>
@@ -37,7 +37,7 @@
 		<button id="ID_TAB_TRANSFERS" text="Загрузки"/>
 	</toolbar>
 	<toolbar name="CMainWnd.Tabbed">
-		<button id="ID_TAB_CONNECT" text="Соединиться"/>
+		<button id="ID_TAB_CONNECT" text="Подключиться"/>
 		<separator/>
 		<button id="ID_TAB_HOME" text="Домой"/>
 		<button id="ID_TAB_LIBRARY" text="Хранилище"/>
@@ -48,7 +48,7 @@
 		<button id="ID_TAB_IRC" text="Чат"/>
 	</toolbar>
 	<toolbar name="CMainWnd.Windowed">
-		<button id="ID_NETWORK_CONNECT" text="Соединиться"/>
+		<button id="ID_NETWORK_CONNECT" text="Подключиться"/>
 		<button id="ID_NETWORK_DISCONNECT"/>
 		<separator/>
 		<button id="ID_TAB_HOME"/>
@@ -79,10 +79,10 @@
 	<!-- SEARCH WINDOW -->
 	<toolbar name="CSearchWnd.Panel.Basic">
 		<button id="ID_SEARCH_DOWNLOAD" text="Загрузить"/>
-		<button id="ID_BROWSE_LAUNCH" text="Данные юзера"/>
+		<button id="ID_BROWSE_LAUNCH" text="Данные пользователя"/>
 		<separator/>
 		<button id="ID_SEARCH_PANEL" text="Панель поиска"/>
-		<button id="ID_SEARCH_DETAILS" text="Пан. подробностей"/>
+		<button id="ID_SEARCH_DETAILS" text="Подробности"/>
 		<rightAlign/>
 		<label text="Фильтр:" tip="Введите фильтрующие слова"/>
 		<control id="IDC_FILTER_BOX" width="130"/>
@@ -90,24 +90,24 @@
 	</toolbar>
 	<toolbar name="CSearchWnd.Panel">
 		<button id="ID_SEARCH_DOWNLOAD" text="Загрузить"/>
-		<button id="ID_BROWSE_LAUNCH" text="Данные юзера"/>
+		<button id="ID_BROWSE_LAUNCH" text="Данные пользователя"/>
 		<separator/>
 		<button id="ID_SEARCH_PANEL" text="Панель поиска"/>
-		<button id="ID_SEARCH_DETAILS" text="Пан. подробностей"/>
+		<button id="ID_SEARCH_DETAILS" text="Подробности"/>
 		<rightAlign/>
 		<label text="Фильтр:" tip="Введите фильтрующие слова"/>
 		<control id="IDC_FILTER_BOX" width="160"/>
 		<button id="ID_SEARCH_FILTER_RAW" text="Ещё..."/>
 	</toolbar>
 	<toolbar name="CSearchWnd.Full">
-		<button id="ID_SEARCH_SEARCH" text="Искать ещё..."/>
+		<button id="ID_SEARCH_SEARCH" text="Продолжить"/>
 		<button id="ID_SEARCH_STOP" text="Остановка поиска"/>
 		<separator/>
 		<button id="ID_SEARCH_DOWNLOAD" text="Загрузить"/>
-		<button id="ID_BROWSE_LAUNCH" text="Данные юзера"/>
+		<button id="ID_BROWSE_LAUNCH" text="Данные пользователя"/>
 		<separator/>
 		<button id="ID_SEARCH_PANEL" text="Панель поиска"/>
-		<button id="ID_SEARCH_DETAILS" text="Пан. подробностей"/>
+		<button id="ID_SEARCH_DETAILS" text="Подробности"/>
 		<rightAlign/>
 		<label text="Фильтр:" tip="Введите фильтрующие слова"/>
 		<control id="IDC_FILTER_BOX" width="150"/>
@@ -116,7 +116,7 @@
 	<!-- BROWSE HOST WINDOW -->
 	<toolbar name="CBrowseHeaderCtrl">
 		<button id="ID_BROWSE_PROFILE" text="Профиль"/>
-		<button id="ID_BROWSE_FILES" text="Разделяемые файлы"/>
+		<button id="ID_BROWSE_FILES" text="Файлы"/>
 	</toolbar>
 	<toolbar name="CBrowseTree.Top">
 		<button id="ID_LIBRARY_TREE_PHYSICAL" text="Папки"/>
@@ -124,9 +124,9 @@
 	</toolbar>
 	<toolbar name="CBrowseHostWnd.Basic">
 		<button id="ID_SEARCH_DOWNLOAD" text="Загрузить файл"/>
-		<button id="ID_SEARCH_CHAT" text="Чат с юзером"/>
+		<button id="ID_SEARCH_CHAT" text="Чат"/>
 		<separator/>
-		<button id="ID_SEARCH_DETAILS" text="Пан. подробностей"/>
+		<button id="ID_SEARCH_DETAILS" text="Подробности"/>
 		<rightAlign/>
 		<label text="Фильтр:" tip="Введите фильтрующие слова"/>
 		<control id="IDC_FILTER_BOX" width="160"/>
@@ -134,12 +134,12 @@
 	</toolbar>
 	<toolbar name="CBrowseHostWnd">
 		<button id="ID_SEARCH_DOWNLOAD" text="Загрузить файл"/>
-		<button id="ID_SEARCH_CHAT" text="Чат с юзером"/>
+		<button id="ID_SEARCH_CHAT" text="Чат"/>
 		<separator/>
 		<button id="ID_BROWSE_STOP" text="Стоп"/>
 		<button id="ID_BROWSE_REFRESH" text="Обновить"/>
 		<separator/>
-		<button id="ID_SEARCH_DETAILS" text="Пан. подробностей"/>
+		<button id="ID_SEARCH_DETAILS" text="Подробности"/>
 		<rightAlign/>
 		<label text="Фильтр:" tip="Введите фильтрующие слова"/>
 		<control id="IDC_FILTER_BOX" width="160"/>
@@ -147,56 +147,56 @@
 	</toolbar>
 	<!-- DOWNLOADS WINDOW -->
 	<toolbar name="CDownloadsWnd.Basic">
-		<button id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="Открыть/Играть"/>
-		<button id="ID_DOWNLOADS_LAUNCH" text="Предв. просмотр"/>
+		<button id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="Открыть"/>
+		<button id="ID_DOWNLOADS_LAUNCH" text="Просмотр"/>
 		<button id="ID_DOWNLOADS_FILE_DELETE" text="Удалить файл"/>
 		<separator/>
-		<button id="ID_DOWNLOADS_RESUME" text="Возобновить загрузку"/>
-		<button id="ID_DOWNLOADS_PAUSE" text="Пауза загрузки(ок)"/>
-		<button id="ID_DOWNLOADS_CLEAR_INCOMPLETE" text="Отмена загрузки"/>
-		<button id="ID_DOWNLOADS_CLEAR_COMPLETE" text="Убрать загрузку"/>
+		<button id="ID_DOWNLOADS_RESUME" text="Продолжить"/>
+		<button id="ID_DOWNLOADS_PAUSE" text="Приостановить"/>
+		<button id="ID_DOWNLOADS_CLEAR_INCOMPLETE" text="Отменить"/>
+		<button id="ID_DOWNLOADS_CLEAR_COMPLETE" text="Убрать"/>
 		<separator/>
 		<button id="ID_DOWNLOADS_MONITOR" text="Монитор"/>
 		<rightAlign/>
-		<button id="ID_TOOLS_DOWNLOAD" text="Внести загрузку/Torrent..."/>
-		<button id="ID_DOWNLOADS_CLEAR_COMPLETED" text="Убрать готовые"/>
+		<button id="ID_TOOLS_DOWNLOAD" text="Начать загрузку..."/>
+		<button id="ID_DOWNLOADS_CLEAR_COMPLETED" text="Очистить от завершенных"/>
 	</toolbar>
 	<toolbar name="CDownloadsWnd">
-		<button id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="Открыть/Играть"/>
+		<button id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="Открыть"/>
 		<button id="ID_DOWNLOADS_FILE_DELETE" text="Удалить файл"/>
-		<button id="ID_DOWNLOADS_LAUNCH" text="Предв. просмотр"/>
+		<button id="ID_DOWNLOADS_LAUNCH" text="Открыть"/>
 		<separator/>
-		<button id="ID_DOWNLOADS_RESUME" text="Возобновить загрузку"/>
-		<button id="ID_DOWNLOADS_PAUSE" text="Пауза загрузки(ок)"/>
-		<button id="ID_DOWNLOADS_CLEAR_INCOMPLETE" text="Отмена загрузки"/>
-		<button id="ID_DOWNLOADS_CLEAR_COMPLETE" text="Убрать загрузку"/>
+		<button id="ID_DOWNLOADS_RESUME" text="Продолжить"/>
+		<button id="ID_DOWNLOADS_PAUSE" text="Приостановить"/>
+		<button id="ID_DOWNLOADS_CLEAR_INCOMPLETE" text="Отменить"/>
+		<button id="ID_DOWNLOADS_CLEAR_COMPLETE" text="Убрать"/>
 		<separator/>
 		<button id="ID_DOWNLOADS_MONITOR" text="Монитор"/>
-		<button id="ID_DOWNLOADS_TORRENT_INFO" text="Torrent инфо"/>
+		<button id="ID_DOWNLOADS_TORRENT_INFO" text="О Torrentе"/>
 		<rightAlign/>
-		<button id="ID_TOOLS_DOWNLOAD" text="Внести загрузку/Torrent..."/>
-		<button id="ID_DOWNLOADS_CLEAR_COMPLETED" text="Убрать готовые"/>
+		<button id="ID_TOOLS_DOWNLOAD" text="Начать загрузку..."/>
+		<button id="ID_DOWNLOADS_CLEAR_COMPLETED" text="Очистить от завершенных"/>
 		<separator/>
 		<button id="ID_DOWNLOADS_FILTER_MENU" text="Фильтр"/>
 	</toolbar>
 	<!-- UPLOADS WINDOW -->
 	<toolbar name="CUploadsWnd.Basic">
-		<button id="ID_BROWSE_LAUNCH" text="Данные юзера"/>
-		<button id="ID_UPLOADS_CHAT" text="Чат с юзером"/>
+		<button id="ID_BROWSE_LAUNCH" text="Файлы"/>
+		<button id="ID_UPLOADS_CHAT" text="Чат"/>
 		<rightAlign/>
-		<button id="ID_UPLOADS_CLEAR_COMPLETED" text="Убрать готовые"/>
+		<button id="ID_UPLOADS_CLEAR_COMPLETED" text="Очистить от завершенных"/>
 	</toolbar>
 	<toolbar name="CUploadsWnd">
-		<button id="ID_UPLOADS_LAUNCH" text="Открыть/Играть"/>
+		<button id="ID_UPLOADS_LAUNCH" text="Открыть"/>
 		<separator/>
 		<button id="ID_UPLOADS_START" text="Начать сейчас"/>
-		<button id="ID_UPLOADS_CLEAR" text="Убрать выгруз"/>
+		<button id="ID_UPLOADS_CLEAR" text="Очистить"/>
 		<separator/>
-		<button id="ID_BROWSE_LAUNCH" text="Данные юзера"/>
-		<button id="ID_UPLOADS_CHAT" text="Чат с юзером"/>
-		<button id="ID_SECURITY_BAN" text="Блок. юзера"/>
+		<button id="ID_BROWSE_LAUNCH" text="Файлы"/>
+		<button id="ID_UPLOADS_CHAT" text="Чат"/>
+		<button id="ID_SECURITY_BAN" text="Блокировать"/>
 		<rightAlign/>
-		<button id="ID_UPLOADS_CLEAR_COMPLETED" text="Убрать готовые"/>
+		<button id="ID_UPLOADS_CLEAR_COMPLETED" text="Очистить от завершенных"/>
 		<separator/>
 		<button id="ID_UPLOADS_FILTER_MENU" text="Фильтр"/>
 	</toolbar>
@@ -206,21 +206,21 @@
 		<button id="ID_LIBRARY_TREE_VIRTUAL" text="Органайзер"/>
 	</toolbar>
 	<toolbar name="CLibraryTree.Virtual">
-		<button id="ID_LIBRARY_FOLDERS" text="Разделять файлы..."/>
+		<button id="ID_LIBRARY_FOLDERS" text="Общий доступ..."/>
 	</toolbar>
 	<toolbar name="CLibraryHeaderBar.Physical">
 		<button id="ID_LIBRARY_VIEW" text="Вид"/>
-		<button id="ID_LIBRARY_PANEL" text="Пан. подробностей"/>
+		<button id="ID_LIBRARY_PANEL" text="Подробности"/>
 		<button id="ID_LIBRARY_PARENT" text="Вверх"/>
 	</toolbar>
 	<toolbar name="CLibraryHeaderBar.Virtual">
 		<button id="ID_LIBRARY_VIEW" text="Вид"/>
-		<button id="ID_LIBRARY_PANEL" text="Пан. подробностей"/>
+		<button id="ID_LIBRARY_PANEL" text="Подробности"/>
 		<button id="ID_LIBRARY_PARENT" text="Вверх"/>
 	</toolbar>
 	<!-- LIBRARY VIEWS -->
 	<toolbar name="CLibraryHomeView.Physical">
-		<button id="ID_LIBRARY_FOLDERS" text="Разделять Файлы..."/>
+		<button id="ID_LIBRARY_FOLDERS" text="Общий доступ..."/>
 		<rightAlign/>
 		<separator/>
 		<control id="IDC_SEARCH_BOX" width="120"/>
@@ -243,22 +243,22 @@
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Найти"/>
 	</toolbar>
 	<toolbar name="CLibraryFileView.Physical.Basic">
-		<button id="ID_LIBRARY_LAUNCH" text="Открыть/Играть"/>
-		<button id="ID_LIBRARY_ENQUEUE" text="Добавить в список воспроизв."/>
+		<button id="ID_LIBRARY_LAUNCH" text="Открыть"/>
+		<button id="ID_LIBRARY_ENQUEUE" text="Добавить в список"/>
 		<separator/>
-		<button id="ID_WEBSERVICES_LIST" text="Веб-службы"/>
+		<button id="ID_WEBSERVICES_LIST" text="Сервис"/>
 		<rightAlign/>
 		<separator/>
 		<control id="IDC_SEARCH_BOX" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Найти"/>
 	</toolbar>
 	<toolbar name="CLibraryFileView.Physical">
-		<button id="ID_LIBRARY_LAUNCH" text="Открыть/Играть"/>
-		<button id="ID_LIBRARY_ENQUEUE" text="Добавить в список воспроизв."/>
+		<button id="ID_LIBRARY_LAUNCH" text="Открыть"/>
+		<button id="ID_LIBRARY_ENQUEUE" text="Добавить в список"/>
 		<separator/>
 		<button id="ID_LIBRARY_PROPERTIES" text="Свойства"/>
 		<separator/>
-		<button id="ID_WEBSERVICES_LIST" text="Веб-службы"/>
+		<button id="ID_WEBSERVICES_LIST" text="Сервис"/>
 		<separator/>
 		<button id="ID_LIBRARY_MOVE" text="Переместить"/>
 		<button id="ID_LIBRARY_COPY" text="Копировать"/>
@@ -269,31 +269,31 @@
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Найти"/>
 	</toolbar>
 	<toolbar name="CLibraryFileView.Virtual.Basic">
-		<button id="ID_LIBRARY_LAUNCH" text="Открыть/Играть"/>
-		<button id="ID_LIBRARY_ENQUEUE" text="Добавить в список воспроизв."/>
-		<button id="ID_LIBRARY_FOLDER_ENQUEUE" text="Играть альбом"/>
+		<button id="ID_LIBRARY_LAUNCH" text="Открыть"/>
+		<button id="ID_LIBRARY_ENQUEUE" text="Добавить в список"/>
+		<button id="ID_LIBRARY_FOLDER_ENQUEUE" text="Добавить альбом в список"/>
 		<separator/>
-		<button id="ID_WEBSERVICES_LIST" text="Веб-службы"/>
+		<button id="ID_WEBSERVICES_LIST" text="Сервис"/>
 		<rightAlign/>
 		<separator/>
 		<control id="IDC_SEARCH_BOX" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Найти"/>
 	</toolbar>
 	<toolbar name="CLibraryFileView.Virtual">
-		<button id="ID_LIBRARY_LAUNCH" text="Открыть/Играть"/>
-		<button id="ID_LIBRARY_ENQUEUE" text="Добавить в список воспроизв."/>
-		<button id="ID_LIBRARY_FOLDER_ENQUEUE" text="Играть альбом"/>
+		<button id="ID_LIBRARY_LAUNCH" text="Открыть"/>
+		<button id="ID_LIBRARY_ENQUEUE" text="Добавить в список"/>
+		<button id="ID_LIBRARY_FOLDER_ENQUEUE" text="Добавить альбом в список"/>
 		<separator/>
 		<button id="ID_LIBRARY_PROPERTIES" text="Свойства"/>
 		<separator/>
-		<button id="ID_WEBSERVICES_LIST" text="Веб-службы"/>
+		<button id="ID_WEBSERVICES_LIST" text="Сервис"/>
 		<rightAlign/>
 		<separator/>
 		<control id="IDC_SEARCH_BOX" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Найти"/>
 	</toolbar>
 	<toolbar name="CLibraryCollectionView.Virtual">
-		<button id="ID_LIBRARY_FOLDER_ENQUEUE" text="Играть весь альбом"/>
+		<button id="ID_LIBRARY_FOLDER_ENQUEUE" text="Добавить альбом в список"/>
 		<separator/>
 		<button id="ID_LIBRARY_FOLDER_DOWNLOAD" text="Загрузить все файлы"/>
 		<rightAlign/>
@@ -358,8 +358,8 @@
 	</toolbar>
 	<!-- NEIGHBOURS WINDOW -->
 	<toolbar name="CNeighboursWnd.Basic">
-		<button id="ID_BROWSE_LAUNCH" text="Данные юзера"/>
-		<button id="ID_NEIGHBOURS_CHAT" text="Чат с юзером"/>
+		<button id="ID_BROWSE_LAUNCH" text="Файлы"/>
+		<button id="ID_NEIGHBOURS_CHAT" text="Чат"/>
 		<rightAlign/>
 		<button id="ID_NETWORK_G2" text="Gnutella2"/>
 		<button id="ID_NETWORK_G1" text="Gnutella1"/>
@@ -368,12 +368,12 @@
 		<button id="ID_NEIGHBOURS_SETTINGS" text="Установки"/>
 	</toolbar>
 	<toolbar name="CNeighboursWnd">
-		<button id="ID_NETWORK_CONNECT_TO" text="Соединиться с"/>
-		<button id="ID_NEIGHBOURS_DISCONNECT" text="Разъединить"/>
+		<button id="ID_NETWORK_CONNECT_TO" text="Подключиться..."/>
+		<button id="ID_NEIGHBOURS_DISCONNECT" text="Отключиться"/>
 		<separator/>
-		<button id="ID_BROWSE_LAUNCH" text="Данные юзера"/>
-		<button id="ID_NEIGHBOURS_CHAT" text="Чат с юзером"/>
-		<button id="ID_SECURITY_BAN" text="Блокировать хост"/>
+		<button id="ID_BROWSE_LAUNCH" text="Файлы"/>
+		<button id="ID_NEIGHBOURS_CHAT" text="Чат"/>
+		<button id="ID_SECURITY_BAN" text="Блокировать"/>
 		<rightAlign/>
 		<button id="ID_NETWORK_G2" text="Gnutella2"/>
 		<button id="ID_NETWORK_G1" text="Gnutella1"/>
@@ -395,13 +395,13 @@
 	</toolbar>
 	<!-- HOST CACHE WINDOW -->
 	<toolbar name="CHostCacheWnd.Basic">
-		<button id="ID_HOSTCACHE_CONNECT" text="Соединиться с"/>
-		<button id="ID_HOSTCACHE_DISCONNECT" text="Разъединить"/>
+		<button id="ID_HOSTCACHE_CONNECT" text="Подключиться"/>
+		<button id="ID_HOSTCACHE_DISCONNECT" text="Отключиться"/>
 		<button id="ID_HOSTCACHE_REMOVE" text="Удалить"/>
 	</toolbar>
 	<toolbar name="CHostCacheWnd">
-		<button id="ID_HOSTCACHE_CONNECT" text="Соединиться с"/>
-		<button id="ID_HOSTCACHE_DISCONNECT" text="Разъединить"/>
+		<button id="ID_HOSTCACHE_CONNECT" text="Подключиться"/>
+		<button id="ID_HOSTCACHE_DISCONNECT" text="Отключиться"/>
 		<button id="ID_HOSTCACHE_REMOVE" text="Удалить"/>
 		<rightAlign/>
 		<button id="ID_HOSTCACHE_G2_HORIZON" text="G2 кластер"/>
@@ -419,12 +419,12 @@
 		<button id="ID_CHAT_COLOUR" text="C"/>
 		<button id="ID_CHAT_EMOTICONS"/>
 		<separator/>
-		<button id="ID_CHAT_BROWSE" text="Данные юзера"/>
+		<button id="ID_CHAT_BROWSE" text="Файлы"/>
 		<!--<button id="ID_CHAT_SEND_FILE" text="Послать файл"/> -->
 		<button id="ID_CHAT_PRIORITY" text="Предоставить приоритет"/>
 		<separator/>
-		<button id="ID_CHAT_CONNECT" text="Соединиться" visible="false"/>
-		<button id="ID_CHAT_DISCONNECT" text="Разъединить"/>
+		<button id="ID_CHAT_CONNECT" text="Подключиться" visible="false"/>
+		<button id="ID_CHAT_DISCONNECT" text="Отключиться"/>
 	</toolbar>
 	<toolbar name="WebServices.ShareMonkey">
 		<button id="ID_SHAREMONKEY_DOWNLOAD" text="Получить"/>
@@ -466,7 +466,7 @@
 <menus>
 	<!-- SIMPLE POPUP MENU -->
 	<menu name="Simple">
-		<item id="ID_CHILD_CLOSE" text="_Закрыть окно"/>
+		<item id="ID_CHILD_CLOSE" text="_Закрыть"/>
 	</menu>
 	<!-- CHILD POPUP MENU -->
 	<menu name="Child">
@@ -475,17 +475,17 @@
 		<item id="ID_CHILD_RESTORE" text="_Восстановить"/>
 		<item id="ID_CHILD_MINIMISE" text="_Минимизировать"/>
 		<separator/>
-		<item id="ID_CHILD_CLOSE" text="_Закрыть окно"/>
+		<item id="ID_CHILD_CLOSE" text="_Закрыть"/>
 	</menu>
 	<!-- MAIN WINDOW MENU BAR -->
 	<menu name="CMainWnd.Basic" type="bar">
 		<menu text="_Сети">
-			<item id="ID_NETWORK_CONNECT" text="_Соединение" shortcut="Ctrl+G"/>
+			<item id="ID_NETWORK_CONNECT" text="_Подключиться" shortcut="Ctrl+G"/>
 			<separator/>
 			<menu text="Выберите _сеть">
-				<item id="ID_NETWORK_G2" text="Соединиться с _Gnutella2"/>
-				<item id="ID_NETWORK_G1" text="Соединиться с Gnutella_1"/>
-				<item id="ID_NETWORK_ED2K" text="Соединиться с _eDonkey"/>
+				<item id="ID_NETWORK_G2" text="Подключиться к _Gnutella2"/>
+				<item id="ID_NETWORK_G1" text="Подключиться к Gnutella_1"/>
+				<item id="ID_NETWORK_ED2K" text="Подключиться к _eDonkey"/>
 			</menu>
 			<separator/>
 			<item id="ID_NETWORK_AUTO_CLOSE" text="Выйти _после пересылок"/>
@@ -501,25 +501,25 @@
 			<item id="ID_TAB_IRC" text="_Чат"/>
 			<separator/>
 			<menu text="_Опытным">
-				<item id="ID_VIEW_NEIGHBOURS" text="_Соединения"/>
-				<item id="ID_VIEW_UPLOADS" text="_Выгрузки"/>
+				<item id="ID_VIEW_NEIGHBOURS" text="_Сети"/>
+				<item id="ID_VIEW_UPLOADS" text="_Раздачи"/>
 				<separator/>
 				<item id="ID_VIEW_SECURITY" text="_Безопасность"/>
 				<item id="ID_VIEW_HOSTS" text="_Кэш хостов"/>
-				<item id="ID_VIEW_DISCOVERY" text="_Ресурсы соединений"/>
+				<item id="ID_VIEW_DISCOVERY" text="_Ресурсы подключений"/>
 			</menu>
 			<separator/>
 			<item id="ID_VIEW_BASIC" text="Об_ычный режим"/>
 			<item id="ID_VIEW_TABBED" text="_Режим опытных"/>
 		</menu>
 		<menu text="_Инструменты">
-			<item id="ID_LIBRARY_FOLDERS" text="Разделять _файлы..."/>
-			<item id="ID_TOOLS_DOWNLOAD" text="_Внести загрузку/Torrent..."/>
+			<item id="ID_LIBRARY_FOLDERS" text="Общий _доступ..."/>
+			<item id="ID_TOOLS_DOWNLOAD" text="_Начать загрузку..."/>
 			<separator/>
 			<item id="ID_TOOLS_SKIN" text="Выбрать _шкурку..."/>
 			<item id="ID_TOOLS_LANGUAGE" text="Выбрать _язык..."/>
 			<separator/>
-			<item id="ID_TOOLS_PROFILE" text="Ред. свой _профиль..."/>
+			<item id="ID_TOOLS_PROFILE" text="Свой _профиль..."/>
 			<item id="ID_TOOLS_WIZARD" text="_Мастер быстрого старта"/>
 			<separator/>
 			<item id="ID_TOOLS_SETTINGS" text="_Установки Shareaza..."/>
@@ -552,8 +552,8 @@
 	</menu>
 	<menu name="CMainWnd.Tabbed" type="bar">
 		<menu text="_Сети">
-			<item id="ID_NETWORK_CONNECT" text="_Соединение" shortcut="Ctrl+G"/>
-			<item id="ID_NETWORK_DISCONNECT" text="_Разъединить"/>
+			<item id="ID_NETWORK_CONNECT" text="_Подключиться" shortcut="Ctrl+G"/>
+			<item id="ID_NETWORK_DISCONNECT" text="_Отключиться"/>
 			<separator/>
 			<menu text="Выбор _Сетей">
 				<item id="ID_NETWORK_G2" text="Подключиться к _Gnutella2"/>
@@ -561,7 +561,7 @@
 				<item id="ID_NETWORK_ED2K" text="Подключиться к _eDonkey"/>
 			</menu>
 			<separator/>
-			<item id="ID_NETWORK_CONNECT_TO" text="Под_ключиться к ..." shortcut="Ctrl+T"/>
+			<item id="ID_NETWORK_CONNECT_TO" text="Под_ключиться..." shortcut="Ctrl+T"/>
 			<item id="ID_NETWORK_BROWSE_TO" text="Просмотр _хоста..."/>
 			<separator/>
 			<item id="ID_NETWORK_AUTO_CLOSE" text="Выйти _после пересылок"/>
@@ -583,7 +583,7 @@
 				<item id="ID_VIEW_SYSTEM" text="Си_стема" shortcut="F11"/>
 				<item id="ID_VIEW_NEIGHBOURS" text="С_оединения" shortcut="Ctrl+F11"/>
 				<item id="ID_VIEW_DOWNLOADS" text="_Загрузки" shortcut="F3"/>
-				<item id="ID_VIEW_UPLOADS" text="_Выгрузки" shortcut="F4"/>
+				<item id="ID_VIEW_UPLOADS" text="_Раздачи" shortcut="F4"/>
 				<item id="ID_VIEW_LIBRARY" text="_Хранилище" shortcut="F5"/>
 				<item id="ID_VIEW_MEDIA" text="Про_игрыватель" shortcut="F6"/>
 				<separator/>
@@ -598,19 +598,19 @@
 			</menu>
 			<separator/>
 			<item id="ID_VIEW_BASIC" text="Об_ычный режим"/>
-			<item id="ID_VIEW_TABBED" text="Режим _закладок"/>
+			<item id="ID_VIEW_TABBED" text="Ре_жим закладок"/>
 			<item id="ID_VIEW_WINDOWED" text="Око_нный режим"/>
 		</menu>
 		<menu text="_Инструменты">
-			<item id="ID_LIBRARY_FOLDERS" text="Разделять _файлы..."/>
-			<item id="ID_TOOLS_DOWNLOAD" text="_Внести загрузку/Torrent..."/>
+			<item id="ID_LIBRARY_FOLDERS" text="Общий _доступ..."/>
+			<item id="ID_TOOLS_DOWNLOAD" text="_Начать загрузку..."/>
 			<item id="IDC_IMPORT_DOWNLOADS" text="_Импорт частичных загрузок eMule..."/>
-			<item id="ID_OPEN_DOWNLOADS_FOLDER" text="_Открыть папку с загузками"/>
+			<item id="ID_OPEN_DOWNLOADS_FOLDER" text="_Открыть папку с загрузками"/>
 			<separator/>
 			<item id="ID_TOOLS_SKIN" text="Выбрать _шкурку..."/>
 			<item id="ID_TOOLS_LANGUAGE" text="Выбрать _язык..."/>
 			<separator/>
-			<item id="ID_TOOLS_PROFILE" text="Ред. свой _профиль..."/>
+			<item id="ID_TOOLS_PROFILE" text="Свой _профиль..."/>
 			<item id="ID_TOOLS_WIZARD" text="_Мастер быстрого старта"/>
 			<separator/>
 			<item id="ID_TOOLS_SETTINGS" text="_Установки Shareaza..."/>
@@ -635,7 +635,7 @@
 			</menu>
 			<separator/>
 			<menu text="_Веб сайты">
-				<item id="ID_HELP_HOMEPAGE" text="_Shareaza site"/>
+				<item id="ID_HELP_HOMEPAGE" text="_Сайт Shareazы"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="_Форумы Shareaza"/>
 				<!-- <item id="ID_HELP_UPDATE" text="Последние новости"/>
@@ -653,16 +653,16 @@
 		<menu text="_Сети">
 			<item id="ID_NETWORK_SEARCH" text="Новый _поиск..." shortcut="Ctrl+S"/>
 			<separator/>
-			<item id="ID_NETWORK_CONNECT" text="_Соединение" shortcut="Ctrl+G"/>
-			<item id="ID_NETWORK_DISCONNECT" text="_Разъединить"/>
+			<item id="ID_NETWORK_CONNECT" text="_Подключиться" shortcut="Ctrl+G"/>
+			<item id="ID_NETWORK_DISCONNECT" text="_Отключиться"/>
 			<separator/>
-			<item id="ID_NETWORK_CONNECT_TO" text="Под_ключиться к ..." shortcut="Ctrl+T"/>
+			<item id="ID_NETWORK_CONNECT_TO" text="Подключиться..." shortcut="Ctrl+T"/>
 			<item id="ID_NETWORK_BROWSE_TO" text="Просмотр _хоста..."/>
 			<separator/>
 			<menu text="_Выбор сетей">
-				<item id="ID_NETWORK_G2" text="Соединиться с _Gnutella2"/>
-				<item id="ID_NETWORK_ED2K" text="Соединиться с _eDonkey"/>
-				<item id="ID_NETWORK_G1" text="Соединиться с Gnutella_1"/>
+				<item id="ID_NETWORK_G2" text="Подключиться к _Gnutella2"/>
+				<item id="ID_NETWORK_ED2K" text="Подключиться кс _eDonkey"/>
+				<item id="ID_NETWORK_G1" text="Подключиться к Gnutella_1"/>
 			</menu>
 			<separator/>
 			<item id="ID_NETWORK_AUTO_CLOSE" text="_Закрыть после пересылок"/>
@@ -672,7 +672,7 @@
 			<item id="ID_VIEW_SYSTEM" text="_Система" shortcut="F11"/>
 			<item id="ID_VIEW_NEIGHBOURS" text="С_оединения" shortcut="Ctrl+F11"/>
 			<item id="ID_VIEW_DOWNLOADS" text="_Загрузки" shortcut="F3"/>
-			<item id="ID_VIEW_UPLOADS" text="_Выгрузки" shortcut="F4"/>
+			<item id="ID_VIEW_UPLOADS" text="_Раздачи" shortcut="F4"/>
 			<item id="ID_VIEW_LIBRARY" text="_Хранилище" shortcut="F5"/>
 			<item id="ID_VIEW_MEDIA" text="Про_игрыватель" shortcut="F6"/>
 			<separator/>
@@ -690,15 +690,15 @@
 			<item id="ID_VIEW_WINDOWED" text="Око_нный режим"/>
 		</menu>
 		<menu text="_Инструменты">
-			<item id="ID_LIBRARY_FOLDERS" text="Разделять _файлы..."/>
-			<item id="ID_TOOLS_DOWNLOAD" text="_Внести загрузку/Torrent..."/>
+			<item id="ID_LIBRARY_FOLDERS" text="Общий _доступ..."/>
+			<item id="ID_TOOLS_DOWNLOAD" text="_Начать загрузку..."/>
 			<item id="IDC_IMPORT_DOWNLOADS" text="_Импорт частичных загрузок eMule..."/>
-			<item id="ID_OPEN_DOWNLOADS_FOLDER" text="_Открыть папку с загузками"/>
+			<item id="ID_OPEN_DOWNLOADS_FOLDER" text="_Открыть папку с загрузками"/>
 			<separator/>
 			<item id="ID_TOOLS_SKIN" text="Выбрать _шкурку..."/>
 			<item id="ID_TOOLS_LANGUAGE" text="Выбрать _язык..."/>
 			<separator/>
-			<item id="ID_TOOLS_PROFILE" text="Ред. свой _профиль..."/>
+			<item id="ID_TOOLS_PROFILE" text="Свой _профиль..."/>
 			<separator/>
 			<item id="ID_TOOLS_WIZARD" text="_Мастер быстрого старта..."/>
 			<item id="ID_TOOLS_SETTINGS" text="_Установки Shareaza..."/>
@@ -727,7 +727,7 @@
 			</menu>
 			<separator/>
 			<menu text="_Веб сайты">
-				<item id="ID_HELP_HOMEPAGE" text="_Shareaza site"/>
+				<item id="ID_HELP_HOMEPAGE" text="_Сайт Shareazы"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="_Форумы Shareaza"/>
 				<!-- <item id="ID_HELP_UPDATE" text="Последние новости"/>
@@ -750,8 +750,8 @@
 		<item id="ID_TAB_TRANSFERS" text="_Загрузки"/>
 		<separator/>
 		<menu text="_Опытным">
-			<item id="ID_VIEW_NEIGHBOURS" text="_Соединения"/>
-			<item id="ID_VIEW_UPLOADS" text="_Выгрузки"/>
+			<item id="ID_VIEW_NEIGHBOURS" text="_Сети"/>
+			<item id="ID_VIEW_UPLOADS" text="_Раздачи"/>
 			<item id="ID_VIEW_SECURITY" text="_Безопасность"/>
 			<item id="ID_VIEW_HOSTS" text="_Кэш хостов"/>
 		</menu>
@@ -780,7 +780,7 @@
 		<item id="ID_VIEW_SYSTEM" text="_Система"/>
 		<item id="ID_VIEW_NEIGHBOURS" text="С_оединения"/>
 		<item id="ID_VIEW_DOWNLOADS" text="_Загрузки"/>
-		<item id="ID_VIEW_UPLOADS" text="_Выгрузки"/>
+		<item id="ID_VIEW_UPLOADS" text="_Раздачи"/>
 		<item id="ID_VIEW_LIBRARY" text="_Хранилище"/>
 		<item id="ID_VIEW_MEDIA" text="Про_игрыватель"/>
 		<separator/>
@@ -836,8 +836,8 @@
 		<item id="ID_TAB_TRANSFERS" text="_Загрузки"/>
 		<separator/>
 		<menu text="_Опытным">
-			<item id="ID_VIEW_NEIGHBOURS" text="_Соединения"/>
-			<item id="ID_VIEW_UPLOADS" text="_Выгрузки"/>
+			<item id="ID_VIEW_NEIGHBOURS" text="_Сети"/>
+			<item id="ID_VIEW_UPLOADS" text="_Раздачи"/>
 			<item id="ID_VIEW_SECURITY" text="_Безопасность"/>
 			<item id="ID_VIEW_HOSTS" text="_Кэш хостов"/>
 		</menu>
@@ -863,7 +863,7 @@
 	<!-- HOST CACHE WINDOW -->
 	<menu name="CHostCacheWnd">
 		<item id="ID_HOSTCACHE_CONNECT" text="Под_ключиться сейчас"/>
-		<item id="ID_HOSTCACHE_DISCONNECT" text="_Разъединить"/>
+		<item id="ID_HOSTCACHE_DISCONNECT" text="_Отключить"/>
 		<item id="ID_NEIGHBOURS_COPY" text="_Копировать ссылку"/>
 		<item id="ID_HOSTCACHE_PRIORITY" text="_Приоритетный сервер"/>
 		<separator/>
@@ -885,8 +885,8 @@
 	<menu name="CSearchWnd.Basic">
 		<item id="ID_SEARCH_DOWNLOAD" text="_Загрузить"/>
 		<separator/>
-		<item id="ID_BROWSE_LAUNCH" text="Просмотр _юзера"/>
-		<item id="ID_SEARCH_CHAT" text="_Чат с юзером"/>
+		<item id="ID_BROWSE_LAUNCH" text="_Файлы"/>
+		<item id="ID_SEARCH_CHAT" text="_Чат"/>
 		<separator/>
 		<menu text="_Искать">
 			<item id="ID_SEARCH_FOR_SIMILAR" text="Подобные файлы"/>
@@ -895,7 +895,7 @@
 			<item id="ID_SEARCH_FOR_ALBUM" text="Музыку из этого же альбома"/>
 			<item id="ID_SEARCH_FOR_SERIES" text="Серии из этого же сериала"/>
 		</menu>
-		<menu text="_Веб услуги">
+		<menu text="_Сервис">
 			<item id="ID_LIBRARY_BITZI_WEB" text="Посмотреть _Bitzi этикетку"/>
 			<item id="ID_SEARCH_COPY" text="Копировать _ссылку..."/>
 		</menu>
@@ -905,9 +905,9 @@
 		<item id="ID_SEARCH_DOWNLOADNOW" text="Загрузить сейчас"/>
 		<item id="ID_SEARCH_COPY" text="Копировать _ссылку"/>
 		<separator/>
-		<item id="ID_BROWSE_LAUNCH" text="Просмотр _юзера"/>
-		<item id="ID_SEARCH_CHAT" text="_Чат с юзером"/>
-		<item id="ID_SECURITY_BAN" text="_Блок. юзера"/>
+		<item id="ID_BROWSE_LAUNCH" text="_Файлы"/>
+		<item id="ID_SEARCH_CHAT" text="_Чат"/>
+		<item id="ID_SECURITY_BAN" text="_Блокировать"/>
 		<separator/>
 		<menu text="_Искать">
 			<item id="ID_SEARCH_FOR_THIS" text="Этот файл"/>
@@ -917,7 +917,7 @@
 			<item id="ID_SEARCH_FOR_ALBUM" text="Музыку из этого же альбома"/>
 			<item id="ID_SEARCH_FOR_SERIES" text="Серии из этого же сериала"/>
 		</menu>
-		<menu text="_Веб услуги">
+		<menu text="_Сервис">
 			<item id="ID_LIBRARY_BITZI_WEB" text="Посмотреть _Bitzi этикетку"/>
 		</menu>
 		<separator/>
@@ -932,7 +932,7 @@
 		<item id="ID_SEARCH_DOWNLOAD" text="_Загрузить"/>
 		<item id="ID_SEARCH_DOWNLOADNOW" text="Загрузить сейчас"/>
 		<separator/>
-		<item id="ID_SEARCH_CHAT" text="_Чат с юзером"/>
+		<item id="ID_SEARCH_CHAT" text="_Чат"/>
 		<separator/>
 		<menu text="_Искать">
 			<item id="ID_SEARCH_FOR_SIMILAR" text="Подобные файлы"/>
@@ -941,7 +941,7 @@
 			<item id="ID_SEARCH_FOR_ALBUM" text="Музыку из этого же альбома"/>
 			<item id="ID_SEARCH_FOR_SERIES" text="Серии из этого же сериала"/>
 		</menu>
-		<menu text="_Веб услуги">
+		<menu text="_Сервис">
 			<item id="ID_LIBRARY_BITZI_WEB" text="Посмотреть _Bitzi этикетку"/>
 			<item id="ID_SEARCH_COPY" text="Копировать _ссылку..."/>
 		</menu>
@@ -951,7 +951,7 @@
 		<item id="ID_SEARCH_DOWNLOADNOW" text="Загрузить сейчас"/>
 		<item id="ID_SEARCH_COPY" text="Копировать _ссылку"/>
 		<separator/>
-		<item id="ID_SEARCH_CHAT" text="_Чат с юзером"/>
+		<item id="ID_SEARCH_CHAT" text="_Чат"/>
 		<separator/>
 		<menu text="_Искать">
 			<item id="ID_SEARCH_FOR_THIS" text="Этот файл"/>
@@ -961,7 +961,7 @@
 			<item id="ID_SEARCH_FOR_ALBUM" text="Музыку из этого же альбома"/>
 			<item id="ID_SEARCH_FOR_SERIES" text="Серии этого же сериала"/>
 		</menu>
-		<menu text="_Веб-службы">
+		<menu text="_Сервис">
 			<item id="ID_LIBRARY_BITZI_WEB" text="Посмотреть _Bitzi этикетку"/>
 		</menu>
 		<separator/>
@@ -975,8 +975,8 @@
 		<item id="ID_SEARCH_DOWNLOAD" text="_Загрузить"/>
 		<item id="ID_SEARCH_COPY" text="Копировать _ссылку"/>
 		<separator/>
-		<item id="ID_BROWSE_LAUNCH" text="Просмотр _юзера"/>
-		<item id="ID_SEARCH_CHAT" text="_Чат с юзером"/>
+		<item id="ID_BROWSE_LAUNCH" text="_Файлы"/>
+		<item id="ID_SEARCH_CHAT" text="_Чат"/>
 		<separator/>
 		<menu text="_Искать">
 			<item id="ID_SEARCH_FOR_THIS" text="Этот файл"/>
@@ -986,7 +986,7 @@
 			<item id="ID_SEARCH_FOR_ALBUM" text="Музыку из этого же альбома"/>
 			<item id="ID_SEARCH_FOR_SERIES" text="Серии этого же сериала"/>
 		</menu>
-		<menu text="_Веб-службы">
+		<menu text="_Сервис">
 			<item id="ID_LIBRARY_BITZI_WEB" text="Посмотреть _Bitzi этикетку"/>
 		</menu>
 		<separator/>
@@ -1000,36 +1000,36 @@
 	</menu>
 	<!-- DOWNLOADS WINDOW -->
 	<menu name="CDownloadsWnd.Download.Basic">
-		<item id="ID_DOWNLOADS_LAUNCH" text="_Предв. просмотр"/>
+		<item id="ID_DOWNLOADS_LAUNCH" text="_Открыть"/>
 		<item id="ID_DOWNLOADS_REMOTE_PREVIEW" text="_Удаленный просмотр"/>
 		<item id="ID_DOWNLOADS_VIEW_REVIEWS" text="П_росмотр оценок"/>
 		<separator/>
-		<item id="ID_DOWNLOADS_RESUME" text="_Возобновить"/>
-		<item id="ID_DOWNLOADS_PAUSE" text="П_ауза"/>
-		<item id="ID_DOWNLOADS_CLEAR_INCOMPLETE" text="_Отмена"/>
+		<item id="ID_DOWNLOADS_RESUME" text="_Продолжить"/>
+		<item id="ID_DOWNLOADS_PAUSE" text="П_риостановить"/>
+		<item id="ID_DOWNLOADS_CLEAR_INCOMPLETE" text="_Отменить"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_SOURCES" text="_Найти больше источников"/>
 		<!-- <separator/>
-		<item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="О_чистить от завершенных"/>
+		<item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="Очистить от завершенных"/>
 		<item id="ID_DOWNLOADS_AUTO_CLEAR" text="Ав_то очистка"/> -->
 		<separator/>
 		<item id="ID_DOWNLOADS_HELP" text="_Справка..."/>
 	</menu>
 	<menu name="CDownloadsWnd.Download">
-		<item id="ID_DOWNLOADS_LAUNCH" text="_Предв. просмотр"/>
+		<item id="ID_DOWNLOADS_LAUNCH" text="_Открыть"/>
 		<item id="ID_DOWNLOADS_REMOTE_PREVIEW" text="_Удаленный просмотр"/>
-		<!-- <item id="ID_DOWNLOADS_LAUNCH_COPY" text="Предв. просмотр _копии"/> -->
-		<item id="ID_DOWNLOADS_ENQUEUE" text="_Добавить в список воспроизв."/>
+		<!-- <item id="ID_DOWNLOADS_LAUNCH_COPY" text="Открыть _копию"/> -->
+		<item id="ID_DOWNLOADS_ENQUEUE" text="_Добавить в список"/>
 		<item id="ID_DOWNLOADS_VIEW_REVIEWS" text="П_росмотр оценок"/>
 		<separator/>
-		<item id="ID_DOWNLOADS_RESUME" text="_Возобновить"/>
-		<item id="ID_DOWNLOADS_PAUSE" text="П_ауза"/>
-		<item id="ID_DOWNLOADS_CLEAR_INCOMPLETE" text="_Отмена"/>
+		<item id="ID_DOWNLOADS_RESUME" text="_Продолжить"/>
+		<item id="ID_DOWNLOADS_PAUSE" text="П_риостановить"/>
+		<item id="ID_DOWNLOADS_CLEAR_INCOMPLETE" text="_Отменить"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_SOURCES" text="_Найти больше источников"/>
 		<separator/>
 		<menu text="Оп_ытным">
-			<item id="ID_DOWNLOADS_SHARE" text="_Разделять файл"/>
+			<item id="ID_DOWNLOADS_SHARE" text="_Общий доступ"/>
 			<separator/>
 			<item id="ID_DOWNLOADS_COPY" text="Копировать _ссылку"/>
 			<item id="ID_DOWNLOADS_URL" text="_Добавить источник..."/>
@@ -1040,30 +1040,30 @@
 			<separator/>
 			<item id="ID_DOWNLOADS_MOVE_UP" text="Вв_ерх"/>
 			<item id="ID_DOWNLOADS_MOVE_DOWN" text="В_низ"/>
-			<item id="ID_DOWNLOADS_BOOST" text="Снять _лимит пропускной способности"/>
+			<item id="ID_DOWNLOADS_BOOST" text="Снять _лимит трафика"/>
 		</menu>
 		<item id="ID_DOWNLOADS_HELP" text="_Справка..."/>
 	</menu>
 	<menu name="CDownloadsWnd.Source">
-		<item id="ID_TRANSFERS_CONNECT" text="_Доступ"/>
+		<item id="ID_TRANSFERS_CONNECT" text="_Подключиться"/>
 		<separator/>
-		<item id="ID_BROWSE_LAUNCH" text="Просмотр _юзера"/>
-		<item id="ID_TRANSFERS_CHAT" text="_Чат с юзером"/>
+		<item id="ID_BROWSE_LAUNCH" text="_Файлы"/>
+		<item id="ID_TRANSFERS_CHAT" text="_Чат"/>
 		<item id="ID_DOWNLOADS_COPY" text="Копировать _ссылку"/>
 		<separator/>
-		<item id="ID_TRANSFERS_DISCONNECT" text="_Разъединить"/>
+		<item id="ID_TRANSFERS_DISCONNECT" text="_Отключить"/>
 		<item id="ID_TRANSFERS_FORGET" text="_Забыть"/>
 	</menu>
 	<menu name="CDownloadsWnd.Completed.Basic">
-		<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Открыть/Играть"/>
-		<item id="ID_DOWNLOADS_ENQUEUE" text="_Добавить в список воспроизв."/>
+		<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Открыть"/>
+		<item id="ID_DOWNLOADS_ENQUEUE" text="_Добавить в список"/>
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="У_брать"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_FILE_DELETE" text="_Удалить файл"/>
 	</menu>
 	<menu name="CDownloadsWnd.Completed">
-		<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Открыть/Играть"/>
-		<item id="ID_DOWNLOADS_ENQUEUE" text="_Добавить в список воспроизв."/>
+		<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Открыть"/>
+		<item id="ID_DOWNLOADS_ENQUEUE" text="_Добавить в список"/>
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="У_брать"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_COPY" text="Копировать _ссылку"/>
@@ -1075,15 +1075,15 @@
 	<menu name="CDownloadsWnd.Seeding">
 		<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Открыть"/>
 		<item id="ID_DOWNLOADS_TORRENT_INFO" text="Torrent _инфо"/>
-		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="_Прекратить распространение"/>
+		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="_Убрать"/>
 	</menu>
 	<menu name="CDownloadsWnd.Nothing">
 		<item id="ID_DOWNLOADS_HELP" text="_Справка..."/>
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="_Очистить от завершенных"/>
-		<item id="ID_DOWNLOADS_AUTO_CLEAR" text="_Авто очистка"/>
+		<item id="ID_DOWNLOADS_AUTO_CLEAR" text="_Авто-очистка"/>
 	</menu>
 	<menu name="CDownloadTabBar">
-		<item id="ID_DOWNLOAD_GROUP_RESUME" text="_Возобновить все"/>
+		<item id="ID_DOWNLOAD_GROUP_RESUME" text="_Продолжить все"/>
 		<item id="ID_DOWNLOAD_GROUP_PAUSE" text="При_остановить все"/>
 		<item id="ID_DOWNLOAD_GROUP_CLEAR" text="_Убрать все"/>
 		<separator/>
@@ -1107,26 +1107,26 @@
 	</menu>
 	<!-- UPLOADS WINDOW -->
 	<menu name="CUploadsWnd.Upload.Basic">
-		<item id="ID_BROWSE_LAUNCH" text="Просмотр _юзера"/>
-		<item id="ID_UPLOADS_CHAT" text="_Чат с юзером"/>
+		<item id="ID_BROWSE_LAUNCH" text="_Файлы"/>
+		<item id="ID_UPLOADS_CHAT" text="_Чат"/>
 	</menu>
 	<menu name="CUploadsWnd.Upload">
 		<item id="ID_UPLOADS_START" text="_Начать сейчас"/>
 		<item id="ID_UPLOADS_CLEAR" text="_Убрать"/>
 		<separator/>
-		<item id="ID_BROWSE_LAUNCH" text="Просмотр _юзера"/>
-		<item id="ID_UPLOADS_CHAT" text="_Чат с юзером"/>
-		<item id="ID_SECURITY_BAN" text="Б_лок. юзера"/>
+		<item id="ID_BROWSE_LAUNCH" text="_Файлы"/>
+		<item id="ID_UPLOADS_CHAT" text="_Чат"/>
+		<item id="ID_SECURITY_BAN" text="Б_локировать"/>
 	</menu>
 	<menu name="CUploadsWnd.Queue">
 		<item id="ID_UPLOADS_EDIT_QUEUE" text="_Настройка очереди"/>
 		<item id="ID_UPLOADS_CLEAR_COMPLETED" text="_Очистить от завершенных"/>
-		<item id="ID_UPLOADS_AUTO_CLEAR" text="_Авто очистка"/>
+		<item id="ID_UPLOADS_AUTO_CLEAR" text="_Авто-очистка"/>
 	</menu>
 	<menu name="CUploadsWnd.Nothing">
 		<item id="ID_UPLOADS_HELP" text="_Справка..."/>
 		<item id="ID_UPLOADS_CLEAR_COMPLETED" text="_Очистить от завершенных"/>
-		<item id="ID_UPLOADS_AUTO_CLEAR" text="_Авто очистка"/>
+		<item id="ID_UPLOADS_AUTO_CLEAR" text="_Авто-очистка"/>
 	</menu>
 	<menu name="CUploadsWnd.Filter">
 		<item id="ID_UPLOADS_FILTER_ALL" text="Показывать все"/>
@@ -1138,7 +1138,7 @@
 	</menu>
 	<!-- LIBRARY FRAME -->
 	<menu name="CLibraryTree.Physical.Basic">
-		<item id="ID_LIBRARY_SHARED_FOLDER" text="_Разделено"/>
+		<item id="ID_LIBRARY_SHARED_FOLDER" text="_Общий доступ"/>
 		<item id="ID_LIBRARY_REMOVE" text="_Удалить"/>
 		<separator/>
 		<item id="ID_LIBRARY_FOLDERS" text="Раз_делять файлы..."/>
@@ -1147,7 +1147,7 @@
 		<item id="ID_LIBRARY_EXPLORE" text="_Обзор"/>
 		<item id="ID_LIBRARY_REMOVE" text="_Удалить"/>
 		<separator/>
-		<item id="ID_LIBRARY_SHARED_FOLDER" text="_Разделено"/>
+		<item id="ID_LIBRARY_SHARED_FOLDER" text="_Общий доступ"/>
 		<separator/>
 		<item id="ID_LIBRARY_SCAN" text="С_канирование"/>
 		<item id="ID_LIBRARY_REBUILD" text="_Перестройка"/>
@@ -1156,14 +1156,14 @@
 		<item id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" text="_Свойства файла"/>
 	</menu>
 	<menu name="CLibraryTree.Virtual.Basic">
-		<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="_Играть альбом"/>
+		<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Добавить _альбом в список"/>
 		<item id="ID_LIBRARY_FOLDER_DELETE" text="_Удалить"/>
 		<separator/>
 		<item id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" text="Свойства _файла"/>
 		<item id="ID_LIBRARY_FOLDER_PROPERTIES" text="Свойства _альбома"/>
 	</menu>
 	<menu name="CLibraryTree.Virtual">
-		<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="_Играть альбом"/>
+		<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Добавить _альбом в список"/>
 		<item id="ID_LIBRARY_FOLDER_DELETE" text="_Удалить"/>
 		<separator/>
 		<item id="ID_LIBRARY_REBUILD" text="_Перестройка"/>
@@ -1182,10 +1182,10 @@
 		<item id="ID_LIBRARY_ALBUM_PROPERTIES" text="_Свойства"/>
 	</menu>
 	<menu name="CLibraryFileView.Physical.Basic">
-		<item id="ID_LIBRARY_LAUNCH" text="_Открыть/Играть"/>
-		<item id="ID_LIBRARY_ENQUEUE" text="_Добавить в список воспроизв."/>
+		<item id="ID_LIBRARY_LAUNCH" text="_Открыть"/>
+		<item id="ID_LIBRARY_ENQUEUE" text="_Добавить в список"/>
 		<separator/>
-		<item id="ID_LIBRARY_SHARED_FILE" text="_Разделено"/>
+		<item id="ID_LIBRARY_SHARED_FILE" text="_Общий доступ"/>
 		<separator/>
 		<item id="ID_LIBRARY_DELETE" text="_Удалить"/>
 		<separator/>
@@ -1197,7 +1197,7 @@
 			<item id="ID_SEARCH_FOR_ALBUM" text="Музыку из этого же альбома"/>
 			<item id="ID_SEARCH_FOR_SERIES" text="Серии из этого же сериала"/>
 		</menu>
-		<menu text="_Веб услуги">
+		<menu text="_Сервис">
 			<item id="ID_LIBRARY_BITZI_WEB" text="Посмотреть _Bitzi этикетку"/>
 			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Загрузить метаданные"/>
 			<separator/>
@@ -1214,10 +1214,10 @@
 		<item id="ID_LIBRARY_PROPERTIES" text="_Свойства"/>
 	</menu>
 	<menu name="CLibraryFileView.Physical">
-		<item id="ID_LIBRARY_LAUNCH" text="_Открыть/Играть"/>
-		<item id="ID_LIBRARY_ENQUEUE" text="_Добавить в список воспроизв."/>
+		<item id="ID_LIBRARY_LAUNCH" text="_Открыть"/>
+		<item id="ID_LIBRARY_ENQUEUE" text="_Добавить в список"/>
 		<separator/>
-		<item id="ID_LIBRARY_SHARED_FILE" text="_Разделено"/>
+		<item id="ID_LIBRARY_SHARED_FILE" text="_Общий доступ"/>
 		<separator/>
 		<item id="ID_LIBRARY_URL" text="Копировать сс_ылку"/>
 		<item id="ID_LIBRARY_DELETE" text="_Удалить"/>
@@ -1230,7 +1230,7 @@
 			<item id="ID_SEARCH_FOR_ALBUM" text="Музыку из этого же альбома"/>
 			<item id="ID_SEARCH_FOR_SERIES" text="Серии из этого же сериала"/>
 		</menu>
-		<menu text="_Веб услуги">
+		<menu text="_Сервис">
 			<item id="ID_LIBRARY_BITZI_WEB" text="Посмотреть _Bitzi этикетку"/>
 			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Загрузить метаданные"/>
 			<separator/>
@@ -1251,11 +1251,11 @@
 		<item id="ID_LIBRARY_PROPERTIES" text="_Свойства"/>
 	</menu>
 	<menu name="CLibraryFileView.Virtual.Basic">
-		<item id="ID_LIBRARY_LAUNCH" text="_Открыть/Играть"/>
-		<item id="ID_LIBRARY_ENQUEUE" text="_Добавить в список воспроизв."/>
-		<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Играть _альбом"/>
+		<item id="ID_LIBRARY_LAUNCH" text="_Открыть"/>
+		<item id="ID_LIBRARY_ENQUEUE" text="_Добавить в список"/>
+		<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Добавить _альбом в список"/>
 		<separator/>
-		<item id="ID_LIBRARY_SHARED_FILE" text="_Разделено"/>
+		<item id="ID_LIBRARY_SHARED_FILE" text="_Общий доступ"/>
 		<separator/>
 		<item id="ID_LIBRARY_DELETE" text="_Удалить"/>
 		<separator/>
@@ -1267,7 +1267,7 @@
 			<item id="ID_SEARCH_FOR_ALBUM" text="Музыку из этого же альбома"/>
 			<item id="ID_SEARCH_FOR_SERIES" text="Серии из этого же сериала"/>
 		</menu>
-		<menu text="_Веб услуги">
+		<menu text="_Сервис">
 			<item id="ID_LIBRARY_BITZI_WEB" text="Посмотреть _Bitzi этикетку"/>
 			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Загрузить метаданные"/>
 			<separator/>
@@ -1286,10 +1286,10 @@
 		<item id="ID_LIBRARY_PROPERTIES" text="_Свойства"/>
 	</menu>
 	<menu name="CLibraryFileView.Virtual">
-		<item id="ID_LIBRARY_LAUNCH" text="_Открыть/Играть"/>
-		<item id="ID_LIBRARY_ENQUEUE" text="_Добавить в список воспроизв."/>
+		<item id="ID_LIBRARY_LAUNCH" text="_Открыть"/>
+		<item id="ID_LIBRARY_ENQUEUE" text="_Добавить в список"/>
 		<separator/>
-		<item id="ID_LIBRARY_SHARED_FILE" text="_Разделено"/>
+		<item id="ID_LIBRARY_SHARED_FILE" text="_Общий доступ"/>
 		<separator/>
 		<item id="ID_LIBRARY_URL" text=""/>
 		<item id="ID_LIBRARY_DELETE" text="_Удалить"/>
@@ -1302,7 +1302,7 @@
 			<item id="ID_SEARCH_FOR_ALBUM" text="Музыку из этого же альбома"/>
 			<item id="ID_SEARCH_FOR_SERIES" text="Серии из этого же сериала"/>
 		</menu>
-		<menu text="_Веб услуги">
+		<menu text="_Сервис">
 			<item id="ID_LIBRARY_BITZI_WEB" text="Посмотреть _Bitzi этикетку"/>
 			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Загрузить метаданные"/>
 			<separator/>
@@ -1445,25 +1445,25 @@
 	</menu>
 	<!-- NEIGHBOURS WINDOW -->
 	<menu name="CNeighboursWnd.Basic">
-		<item id="ID_BROWSE_LAUNCH" text="Просмотр _юзера"/>
-		<item id="ID_NEIGHBOURS_CHAT" text="_Чат с юзером"/>
+		<item id="ID_BROWSE_LAUNCH" text="_Файлы"/>
+		<item id="ID_NEIGHBOURS_CHAT" text="_Чат"/>
 		<separator/>
-		<item id="ID_NEIGHBOURS_DISCONNECT" text="_Разъединить"/>
+		<item id="ID_NEIGHBOURS_DISCONNECT" text="_Отключить"/>
 		<separator/>
 		<item id="ID_NEIGHBOURS_COPY" text="_Копировать ссылку"/>
 	</menu>
 	<menu name="CNeighboursWnd">
-		<item id="ID_BROWSE_LAUNCH" text="Просмотр _юзера"/>
-		<item id="ID_NEIGHBOURS_CHAT" text="_Чат с юзером"/>
-		<item id="ID_SECURITY_BAN" text="_Блок. юзера"/>
+		<item id="ID_BROWSE_LAUNCH" text="_Файлы"/>
+		<item id="ID_NEIGHBOURS_CHAT" text="_Чат"/>
+		<item id="ID_SECURITY_BAN" text="_Блокировать"/>
 		<separator/>
-		<item id="ID_NEIGHBOURS_DISCONNECT" text="_Разъединить"/>
+		<item id="ID_NEIGHBOURS_DISCONNECT" text="_Отключить"/>
 		<separator/>
 		<item id="ID_NEIGHBOURS_COPY" text="_Копировать ссылку"/>
 		<separator/>
 		<menu text="_Сети">
-			<item id="ID_NETWORK_CONNECT" text="_Соединение"/>
-			<item id="ID_NETWORK_DISCONNECT" text="_Разъединить"/>
+			<item id="ID_NETWORK_CONNECT" text="_Подключиться"/>
+			<item id="ID_NETWORK_DISCONNECT" text="_Отключиться"/>
 			<separator/>
 			<item id="ID_NETWORK_G2" text="_Gnutella2"/>
 			<item id="ID_NETWORK_G1" text="Gnutella_1"/>
@@ -1532,10 +1532,10 @@
 	</menu>
 	<!-- PRIVATE CHAT FRAME -->
 	<menu name="CPrivateChatFrame">
-		<item id="ID_CHAT_CONNECT" text="_Соединение"/>
-		<item id="ID_CHAT_DISCONNECT" text="_Разъединить"/>
+		<item id="ID_CHAT_CONNECT" text="_Подключиться"/>
+		<item id="ID_CHAT_DISCONNECT" text="_Отключиться"/>
 		<separator/>
-		<item id="ID_CHAT_BROWSE" text="Просмотр _юзера"/>
+		<item id="ID_CHAT_BROWSE" text="_Файлы"/>
 		<!-- <item id="ID_CHAT_SEND_FILE" text="П_ослать файл..."/> -->
 		<item id="ID_CHAT_PRIORITY" text="_Предоставить приоритет"/>
 		<separator/>
@@ -1606,13 +1606,14 @@
 			<newline gap="8" indent="42"/>
 			<text>Добро пожаловать в Shareaza!</text>
 			<newline gap="8" indent="42"/>
-			<text>В настоящее время Вы не соединены ни с одной пиринговой сетью. &#160;</text>
-			<link target="raza:command:ID_NETWORK_CONNECT">Щелкните здесь для старта!</link>
+			<text>В настоящее время вы не подключены ни к одной из пиринговых сетей.</text>
+			<newline gap="8" indent="42"/>
+			<link target="raza:command:ID_NETWORK_CONNECT">Щелкните здесь для начала работы!</link>
 			<newline gap="18" indent="0"/>
 		</group>
 		<group id="2">
 			<icon res="136" width="32" height="32" target="raza:command:ID_TOOLS_DOWNLOAD"/><gap size="8"/>
-			<heading align="middle">Н А Ч И Н А Й Т Е &#160; З А Г Р У Ж А Т Ь</heading>
+			<heading align="middle">Н А Ч А Т Ь &#160; З А Г Р У З К У</heading>
 			<newline gap="8" indent="42"/>
 			<link target="raza:command:ID_TOOLS_DOWNLOAD" format="bu">Щелкните здесь</link>
 			<text align="middle">, чтобы начать загрузку файла или торрента.</text>
@@ -1638,7 +1639,7 @@
 			<newline gap="8" indent="42"/>
 			<text colour="FF0000">Shareaza обнаружила что вы за маршрутизатором или брандмаудэром,
 			и неспособны принимать соединения из Интернета. &#160;</text>
-			<text colour="FF0000" format="b">Это может ограничить скорость Загрузок/Выгрузок.</text>
+			<text colour="FF0000" format="b">Это может ограничить скорость Загрузок/Раздач.</text>
 			<newline gap="6"/>
 			<link target="raza:command:ID_HELP_ROUTER">Щелкните здесь, чтобы узнать, как настроить ваш маршрутизатор или брандмауэр</link>
 			<newline gap="18" indent="0"/>
@@ -1649,7 +1650,7 @@
 			<newline gap="8" indent="42"/>
 			<text colour="FF0000">Shareaza обнаружила что вы за маршрутизатором или брандмаудэром,
 			и неспособны принимать TCP соединения из Интернета. &#160;</text>
-			<text colour="FF0000" format="b">Это может ограничить скорость Загрузок/Выгрузок.</text>
+			<text colour="FF0000" format="b">Это может ограничить скорость Загрузок/Раздач.</text>
 			<newline gap="6"/>
 			<link target="raza:command:ID_HELP_ROUTER">Щелкните здесь, чтобы узнать, как настроить ваш маршрутизатор или брандмауэр</link>
 			<newline gap="18" indent="0"/>
@@ -1660,7 +1661,7 @@
 			<newline gap="8" indent="42"/>
 			<text colour="FF0000">Shareaza обнаружила что вы за маршрутизатором или брандмаудэром,
 			и неспособны принимать TCP соединения из Интернета. &#160;</text>
-			<text colour="FF0000" format="b">Это может ограничить скорость Загрузок/Выгрузок.</text>
+			<text colour="FF0000" format="b">Это может ограничить скорость Загрузок/Раздач.</text>
 			<newline gap="6"/>
 			<link target="raza:command:ID_HELP_ROUTER">Щелкните здесь, чтобы узнать, как настроить ваш маршрутизатор или брандмауэр</link>
 			<newline gap="18" indent="0"/>
@@ -1685,9 +1686,9 @@
 		<newline gap="18" indent="0"/>
 		<group id="5">
 			<icon res="128" width="32" height="32"/><gap size="8"/>
-			<heading align="middle">В Ы  &#160; Р А З Р Е Ш И Л И  &#160; У Д А Л Е Н Н Ы Й  &#160; Д О С Т У П</heading>
+			<heading align="middle">В Ы  &#160; Р А З Р Е Ш И Л И  &#160; У Д А Л Е Н Н О Е &#160; У П Р А В Л Е Н И Е</heading>
 			<newline gap="8" indent="42"/>
-			<text>Открыт удаленный доступ к Shareaza, используйте обозреватель и адрес:</text>
+			<text>Разрешено удаленное управление Shareazой, используйте обозреватель и адрес:</text>
 			<newline gap="6"/>
 			<link id="RemoteAccessURL1"/>
 			<text>&#160; - или -&#160;</text>
@@ -1744,7 +1745,7 @@
 			</group>
 		</para>
 	</document>
-	<document name="CHomeConnectionBox" title="Соединения" leftMargin="6" topMargin="6">
+	<document name="CHomeConnectionBox" title="Подключения" leftMargin="6" topMargin="6">
 		<styles>
 			<style name="default">
 				<font face="Verdana" size="9"/>
@@ -1752,57 +1753,57 @@
 		</styles>
 		<group id="1">
 			<para align="center">
-				<text format="b">Не соединены</text>
+				<text format="b">Не подключены</text>
 				<newline gap="4"/>
-				<link target="raza:command:ID_NETWORK_CONNECT">Щелкните здесь, чтобы соединиться</link>
+				<link target="raza:command:ID_NETWORK_CONNECT">Щелкните здесь, чтобы подключиться</link>
 			</para>
 		</group>
 		<icon group="20" command="ID_NETWORK_G2"/><gap group="20" size="4"/>
 		<text group="20" align="middle" format="b">Gnutella2: </text>
-		<text group="21" align="middle">Разъединенно</text>
-		<text group="22" align="middle">Соединяется…</text>
-		<text group="23" align="middle">Соединенно</text>
+		<text group="21" align="middle">Отключено</text>
+		<text group="22" align="middle">Подключение…</text>
+		<text group="23" align="middle">Подключено</text>
 		<text group="24" align="middle" id="G2Hubs">%i узла(ов)</text>
 		<text group="25" align="middle" id="G2Leaves">%i ветви(ей)</text>
 		<newline group="20" gap="2"/>
 		<icon group="10" command="ID_NETWORK_G1"/><gap group="10" size="4"/>
 		<text group="10" align="middle" format="b">Gnutella1: </text>
-		<text group="11" align="middle">Разъединенно</text>
-		<text group="12" align="middle">Соединяется…</text>
-		<text group="13" align="middle">Соединенно</text>
+		<text group="11" align="middle">Отключено</text>
+		<text group="12" align="middle">Подключение…</text>
+		<text group="13" align="middle">Подключено</text>
 		<newline group="10" gap="2"/>
 		<icon group="30" command="ID_NETWORK_ED2K"/><gap group="30" size="4"/>
 		<text group="30" align="middle" format="b">eDonkey: </text>
-		<text group="31" align="middle">Разъединенно</text>
-		<text group="32" align="middle">Соединяется…</text>
-		<text group="33" align="middle">Соединенно</text>
+		<text group="31" align="middle">Отключено</text>
+		<text group="32" align="middle">Подключение…</text>
+		<text group="33" align="middle">Подключено</text>
 		<newline group="30" gap="2"/>
 		<group id="2">
 			<para align="center">
 				<newline gap="6"/>
-				<text>Вы соединенны </text>
+				<text>Вы подключены </text>
 				<newline gap="0"/>
 				<text id="ConnectedHours" format="b">%i </text>
-				<text>час. и </text>
+				<text>часов и </text>
 				<text id="ConnectedMinutes" format="b">%i </text>
-				<text>мин.</text>
+				<text>минут</text>
 			</para>
 		</group>
 	</document>
-	<document name="CHomeUploadsBox" title="Выгрузки" leftMargin="6" topMargin="6">
+	<document name="CHomeUploadsBox" title="Раздачи" leftMargin="6" topMargin="6">
 		<styles>
 			<style name="default">
 				<font face="Verdana" size="9"/>
 			</style>
 		</styles>
 		<para align="center">
-			<text id="UploadsNone" format="b">Нет активных выгрузок</text>
-			<link id="UploadsOne" format="bu" target="raza:command:ID_VIEW_UPLOADS">1 выгрузка активна</link>
-			<link id="UploadsMany" format="bu" target="raza:command:ID_VIEW_UPLOADS">%i выгрузка(и) активна(ы)</link>
+			<text id="UploadsNone" format="b">Нет активных раздач</text>
+			<link id="UploadsOne" format="bu" target="raza:command:ID_VIEW_UPLOADS">1 раздача активна</link>
+			<link id="UploadsMany" format="bu" target="raza:command:ID_VIEW_UPLOADS">%i раздача(и) активна(ы)</link>
 			<newline gap="4"/>
-			<text id="UploadedNone">Вы ничего сегодня не выгружали.</text>
-			<text id="UploadedOne">Вы выгрузили 1 файл (%s).</text>
-			<text id="UploadedMany">Вы выгрузили %i файла(ов) (%s).</text>
+			<text id="UploadedNone">Вы ничего сегодня не раздавали.</text>
+			<text id="UploadedOne">Вы раздали 1 файл (%s).</text>
+			<text id="UploadedMany">Вы раздали %i файла(ов) (%s).</text>
 		</para>
 	</document>
 	<document name="CHomeTorrentsBox" title="Torrents" leftMargin="6" topMargin="6">
@@ -1862,7 +1863,7 @@
 		<newline gap="10"/>
 		<link target="raza:page:CWebSettingsPage" format="b">Веб:</link>
 		<gap size="4"/>
-		<text>Интегрируйте Shareaza с вашим вэб обозревателем для приема P2P ссылок и другого содержимого.</text>
+		<text>Интегрируйте Shareaza с вашим веб обозревателем для приема P2P ссылок и другого содержимого.</text>
 		<newline gap="10"/>
 	</document>
 	<document name="CInternetSettingsGroup" title="Интернет" leftMargin="8" topMargin="8">
@@ -1891,13 +1892,13 @@
 		<gap size="4"/>
 		<text>Производительность загрузки, планирование, проверка, перерывы и управление.</text>
 		<newline gap="10"/>
-		<link target="raza:page:CUploadsSettingsPage" format="b">Выгрузки:</link>
+		<link target="raza:page:CUploadsSettingsPage" format="b">Раздачи:</link>
 		<gap size="4"/>
-		<text>Скорости Выгрузок, организация очереди, запреты, перерывы и специальные запросы.</text>
+		<text>Скорости Раздач, организация очереди, запреты, перерывы и специальные запросы.</text>
 		<newline gap="10"/>
-		<link target="raza:page:CRemoteSettingsPage" format="b">Удаленный доступ:</link>
+		<link target="raza:page:CRemoteSettingsPage" format="b">Удаленное управление:</link>
 		<gap size="4"/>
-		<text>Включите поддержку удаленного доступа, чтобы контроллировать Shareaza при помощи веб браузера.</text>
+		<text>Включите поддержку удаленного управления, чтобы контроллировать Shareaza при помощи веб браузера.</text>
 		<newline gap="10"/>
 	</document>
 	<!-- Browse User Profile -->
@@ -1976,21 +1977,21 @@
 	</document>
 	<document name="CBrowseHostProfile.2">
 		<newline gap="40" indent="0"/>
-		<text format="b">Разделяемые файлы</text>
+		<text format="b">Общий доступ</text>
 		<newline gap="4" indent="8"/>
 		<icon res="137" target="raza:command:ID_BROWSE_FILES"/><gap size="5"/>
-		<link target="raza:command:ID_BROWSE_FILES" align="middle">Смотреть разделяемые файлы</link>
+		<link target="raza:command:ID_BROWSE_FILES" align="middle">Файлы</link>
 		<group id="2">
 			<newline gap="16" indent="0"/>
 			<text format="b">Сообщество</text>
 			<newline gap="4" indent="8"/>
 			<icon res="140" target="raza:command:ID_SEARCH_CHAT"/>
 			<gap size="5"/>
-			<link target="raza:command:ID_SEARCH_CHAT" align="middle">Чат с юзером</link>
+			<link target="raza:command:ID_SEARCH_CHAT" align="middle">Чат</link>
 		</group>
 		<group id="3">
 			<newline gap="16" indent="0"/>
-			<text format="b">Избранные вэб ссылки</text>
+			<text format="b">Избранные веб ссылки</text>
 			<newline gap="4" indent="8" id="Bookmarks"/>
 		</group>
 		<newline gap="16" indent="0"/>
@@ -2020,8 +2021,8 @@
 	<document name="DownloadHelp.Paused">
 		<text format="b">Эта загрузка в паузе</text>
 		<newline gap="8"/>
-		<text>Вы приостановили загрузку.  Если вы хотите возобновить загрузку, Вы можете
-		щелкнуть комманду </text><text format="b">Возобновить.</text>
+		<text>Вы приостановили загрузку.  Если вы хотите продолжить загрузку, Вы можете
+		щелкнуть комманду </text><text format="b">Продолжить.</text>
 	</document>
 	<document name="DownloadHelp.DiskFull">
 		<text format="b">Диск полон</text>
@@ -2050,8 +2051,8 @@
 	<document name="DownloadHelp.Pending">
 		<text format="b">Эта загрузка в ожидании</text>
 		<newline gap="8"/>
-		<text>Ожидается пока кто-нибудь начнет выгрузку.
-		Shareaza готова начать загрузку этого файла, но никто в данный момент его не выгружает.
+		<text>Ожидается пока кто-нибудь начнет раздачу.
+		Shareaza готова начать загрузку этого файла, но никто в данный момент его не раздаёт.
 		Вы, наверное, ждете в очередях других пользователей, так что загрузка файла может
 		начаться в любое время. Вы можете увидеть, под каким номером стоите у них в очереди, при
 		просмотре каждого источника. Если Вы тоже обмениваетесь файлами, Ваши шансы, что загрузка
@@ -2064,7 +2065,7 @@
 		Кол-во одновременных загрузок ограничиваются в установках Shareaza, для того чтобы
 		быть уверенными в том, что каждая загрузка получает хорошую долю пропускной
 		способности.  Вы можете изменить эти настройки в меню Инструменты - Установи Shareaza.
-		Вы также можете начать загрузку вручную, выбрав команду Возобновить.</text>
+		Вы также можете начать загрузку вручную, выбрав команду Продолжить.</text>
 	</document>
 	<document name="DownloadHelp.Searching">
 		<text format="b">Эта загрузка в поиске</text>
@@ -2094,9 +2095,9 @@
 	</document>
 	<!-- Upload help documents -->
 	<document name="UploadHelp">
-		<text format="b">Область выгрузок</text>
+		<text format="b">Область раздач</text>
 		<newline gap="8"/>
-		<text>Здесь показываются очереди и выгрузки. Вы можете развернуть дерево каждой очереди,
+		<text>Здесь показываются очереди и раздачи. Вы можете развернуть дерево каждой очереди,
 		нажав на значок «+» слева, и можете фильтровать список, используя кнопку справа в
 		панели инструментов.</text>
 	</document>
@@ -2159,17 +2160,17 @@
 		служб ресурсов. (Нажмите F9, если хотите открыть это окно)</text>
 	</document>
 	<document name="GeneralHelp.UploadWarning">
-		<text format="b">Ограничение выгрузок может замедлить загрузки</text>
+		<text format="b">Ограничение раздач может замедлить загрузки</text>
 		<newline gap="8"/>
-		<text>В некоторых сетях, к которым подсоединяется Shareaza, используются соотношения за-/выгрузок, ограничиваются
-		выгрузки тем, которые ничего не дают или, просто, предпочтение выгрузок отдается тем, которые обмениваются файлами.</text>
+		<text>В некоторых сетях, к которым подсоединяется Shareaza, используются соотношения за-/раздач, ограничиваются
+		раздачи тем, которые ничего не дают или, просто, предпочтение раздач отдается тем, которые обмениваются файлами.</text>
 		<newline/>
-		<text>К счастью, широкополосное ДСЛ соединение является как двухполосное шоссе: выгрузка и
+		<text>К счастью, широкополосное ДСЛ соединение является как двухполосное шоссе: раздача и
 		загрузка имеют отдельные каналы. Если Ваш клиент сконфигурирован как следует,
-		Вы сохраните полную скорость для выгрузок без потери скорости для загрузок.</text>
+		Вы сохраните полную скорость для раздач без потери скорости для загрузок.</text>
 		<newline gap="8"/>
-		<text>По умолчанию, лимит для выгрузок установлен на 85% от существующей выходящей пропускной способности,
-		в то время как загузки не имеют ограничений. Такие установки должны гарантировать Вам наибольшую возможную скорость
+		<text>По умолчанию, лимит для раздач установлен на 85% от существующей выходящей пропускной способности,
+		в то время как загрузки не имеют ограничений. Такие установки должны гарантировать Вам наибольшую возможную скорость
 		для загрузок.</text>
 	</document>
 	<!-- Search help documents -->
@@ -2218,37 +2219,37 @@
 	</document>
 	<!-- Share help documents -->
 	<document name="ShareHelp.AlreadyShared">
-		<text format="b">Уже разделяется</text>
+		<text format="b">Общий доступ уже открыт</text>
 		<newline gap="8"/>
-		<text>Папка, которую Вы выбрали, уже раделяется как часть разделяемой папки:</text>
+		<text>Папка, которую Вы выбрали, принадлежит уже открытой для доступа папке:</text>
 		<newline gap="8"/>
 		<text> %s</text>
 	</document>
 	<document name="ShareHelp.BadShare">
-		<text format="b">Эту папку разделять не рекомендуется</text>
+		<text format="b">Эту папку открывать для общего доступа не рекомендуется</text>
 		<newline gap="8"/>
-		<text>Эта папка системная или содержит системные папки. Разделять эту папку мы
-		не рекомендуем, так как для других людей файлы, содержащиеся в ней, не даст какой-нибудь пользы.</text>
+		<text>Эта папка системная или содержит системные папки. Открывать эту папку мы
+		не рекомендуем, так как для других людей файлы содержащиеся в ней бесполезны.</text>
 		<newline gap="8"/>
 		<text>Такие папки, как Windows, Program Files и подобные, обычно
-		не содержат файлов, подходящих для разделения. Какие-нибудь имеющие интерес файлы
+		не содержат файлов, подходящих для общего доступа. Какие-нибудь имеющие интерес файлы
 		будут находиться</text><text format="i"> внутри</text><text> подкаталогах этих
 		папок. Разделяйте именно эти папки.</text>
 		<newline gap="8"/>
-		<text>Shareaza папка 'incomplete' также не должна быть разделена в Вашем
-		хранилище, так как попытка хешировать загрузки в прогрессе может плохо повлиять
-		на производительность.</text>
+		<text>Папка Shareazы 'incomplete' также не должна быть открыта для доступа в
+		хранилище, так как попытка хешировать загрузки снизит
+		производительность.</text>
 	</document>
 </documents>
 <!-- Localised Command Tip Text. The "message" is displayed in the status bar, while the "tip" is shown in a tooltip -->
 <commandTips>
-	<tip id="ID_BROWSE_FILES" message="Просмотр разделяемых пользователем файлов"/>
-	<tip id="ID_BROWSE_LAUNCH" message="Обзор профиля и разделяемых файлов помеченного пользователя."/>
+	<tip id="ID_BROWSE_FILES" message="Просмотр файлов."/>
+	<tip id="ID_BROWSE_LAUNCH" message="Обзор профиля и файлов пользователя."/>
 	<tip id="ID_BROWSE_PROFILE" message="Просмотр профиля пользователя."/>
-	<tip id="ID_BROWSE_REFRESH" message="Обновить список файлов, доступных у этого хоста."/>
+	<tip id="ID_BROWSE_REFRESH" message="Обновить список файлов."/>
 	<tip id="ID_BROWSE_STOP" message="Остановить просмотр файлов хоста."/>
 	<tip id="ID_CHAT_BOLD" message="Применить полужирный формат (Ctrl+B)"/>
-	<tip id="ID_CHAT_BROWSE" message="Обзор профиля и разделяемых файлов пользователя."/>
+	<tip id="ID_CHAT_BROWSE" message="Обзор профиля и файлов пользователя."/>
 	<tip id="ID_CHAT_CLEAR" message="Стереть текст сообщения в этом окне."/>
 	<tip id="ID_CHAT_COLOUR" message="Выбрать цвет текста (Ctrl+K)"/>
 	<tip id="ID_CHAT_CONNECT" message="Начать сессию чата."/>
@@ -2277,13 +2278,13 @@
 	<tip id="ID_DOWNLOAD_GROUP_PAUSE" message="Приостановить загрузку всех файлов этой группы."/>
 	<tip id="ID_DOWNLOAD_GROUP_PROPERTIES" message="Правка свойств выбранной группы загрузок."/>
 	<tip id="ID_DOWNLOAD_GROUP_REMOVE" message="Удалить выбранную группу загрузок."/>
-	<tip id="ID_DOWNLOAD_GROUP_RESUME" message="Возобновить загрузку всех файлов в этой группе."/>
+	<tip id="ID_DOWNLOAD_GROUP_RESUME" message="Продолжить загрузку всех файлов в этой группе."/>
 	<tip id="ID_DOWNLOAD_GROUP_SHOW" message="Показать или скрыть полоску групп загрузок."/>
 	<tip id="ID_DOWNLOADS_AUTO_CLEAR" message="Автоматически удалять завершившиеся загрузки из списка."/>
 	<tip id="ID_DOWNLOADS_BOOST" message="Убрать ограничения пропускной способности для помеченной загрузки."/>
 	<tip id="ID_DOWNLOADS_CLEAR" message="Очистить/Удалить выбранную загрузку(и)."/>
 	<tip id="ID_DOWNLOADS_CLEAR_COMPLETE" message="Убрать помеченную загрузку(и) из списка."/>
-	<tip id="ID_DOWNLOADS_CLEAR_COMPLETED" message="Удалить из списка завершенные загрузки."/>
+	<tip id="ID_DOWNLOADS_CLEAR_COMPLETED" message="Убрать из списка завершенные загрузки."/>
 	<tip id="ID_DOWNLOADS_CLEAR_INCOMPLETE" message="Отменить загрузку помеченного незаконченного файла(ов)."/>
 	<tip id="ID_DOWNLOADS_CLEAR_PAUSED" message="Удалить из списка приостановленные загрузки."/>
 	<tip id="ID_DOWNLOADS_COPY" message="Копировать ссылку помеченного файла."/>
@@ -2306,9 +2307,9 @@
 	<tip id="ID_DOWNLOADS_PAUSE" message="Приостановить загрузку помеченного файла(ов)."/>
 	<tip id="ID_DOWNLOADS_RATE" message="Оценить помеченную загрузку."/>
 	<tip id="ID_DOWNLOADS_REMOTE_PREVIEW" message="Удаленный просмотр эскиза выбранного файла."/>
-	<tip id="ID_DOWNLOADS_RESUME" message="Возобновить загрузку помеченного файла(ов)."/>
+	<tip id="ID_DOWNLOADS_RESUME" message="Продолжить загрузку помеченного файла(ов)."/>
 	<tip id="ID_DOWNLOADS_SETTINGS" message="Конфигурировать установки загрузок..."/>
-	<tip id="ID_DOWNLOADS_SHARE" message="Разделять этот частично загруженный файл с другими пользователями."/>
+	<tip id="ID_DOWNLOADS_SHARE" message="Открыть доступ к частично загруженному файлу другим пользователями."/>
 	<tip id="ID_DOWNLOADS_SHOW_SOURCES" message="Показывать источники, которые в данный момент не используются."/>
 	<tip id="ID_DOWNLOADS_SOURCES" message="Искать большего кол-ва источников для помеченной загрузки(ок)."/>
 	<tip id="ID_DOWNLOADS_TORRENT_INFO" message="Просмотр информации о помеченной BitTorrent загрузке..."/>
@@ -2373,15 +2374,15 @@
 	<tip id="ID_LIBRARY_REBUILD" message="Переделать мета данные и хешы поменченных папок или файлов."/>
 	<tip id="ID_LIBRARY_REBUILD_ANSI" message="Перекодировать мета данные на другой язык."/>
 	<tip id="ID_LIBRARY_REFRESH" message="Обновить вид хранилища."/>
-	<tip id="ID_LIBRARY_REMOVE" message="Удалить помеченные разделяемые папки."/>
+	<tip id="ID_LIBRARY_REMOVE" message="Удалить файл."/>
 	<tip id="ID_LIBRARY_RENAME" message="Переименовать помеченный файл."/>
 	<tip id="ID_LIBRARY_SCAN" message="Сканировать помеченные папки или файлы на предмет изменений."/>
 	<tip id="ID_LIBRARY_SEARCH" message="Искать в Вашем хранилище файлов..."/>
 	<tip id="ID_LIBRARY_SEARCH_QUICK" message="Искать в Вашем хранилище файлов..."/>
 	<tip id="ID_LIBRARY_SEED_TORRENT" message="Распросранять помеченный торрент в сети BitTorrent."/>
 	<tip id="ID_LIBRARY_SELECT_ALL" message="Выбрать и просмотреть все папки в Вашем хранилище."/>
-	<tip id="ID_LIBRARY_SHARED_FILE" message="Разделять или не разделять помеченные файлы."/>
-	<tip id="ID_LIBRARY_SHARED_FOLDER" message="Разделять или не разделять помеченную папку(и)."/>
+	<tip id="ID_LIBRARY_SHARED_FILE" message="Общий доступ к помеченным файлам."/>
+	<tip id="ID_LIBRARY_SHARED_FOLDER" message="Общий доступ к помеченной папке."/>
 	<tip id="ID_LIBRARY_TREE_PHYSICAL" message="Просмотр физических папок Вашего хранилища."/>
 	<tip id="ID_LIBRARY_TREE_VIRTUAL" message="Просмотр и управление Вашим хранилищем."/>
 	<tip id="ID_LIBRARY_UNLINK" message="Удалить помеченные файлы из текущей папки альбома."/>
@@ -2437,14 +2438,14 @@
 	<tip id="ID_NEIGHBOURS_VIEW_INCOMING" message="Открыть новое окно Дампа Пакетов для мониторинга входящего трафика от этого хоста."/>
 	<tip id="ID_NEIGHBOURS_VIEW_OUTGOING" message="Открыть новое окно Дампа Пакетов для мониторинга исходящего трафика от этого хоста."/>
 	<tip id="ID_NETWORK_AUTO_CLOSE" message="Автоматически выходить из Shareaza по окончанию пересылок."/>
-	<tip id="ID_NETWORK_BROWSE_TO" message="Просмотр профиля разделяемых файлов пользователя..."/>
+	<tip id="ID_NETWORK_BROWSE_TO" message="Просмотр профиля и файлов пользователя..."/>
 	<tip id="ID_NETWORK_CONNECT" message="Соединиться с выбранными сетями."/>
 	<tip id="ID_NETWORK_CONNECT_TO" message="Вручную присоединиться к хосту..."/>
-	<tip id="ID_NETWORK_DISCONNECT" message="Отсоединиться от сетей. Это также остановит все загрузки и выгрузки."/>
+	<tip id="ID_NETWORK_DISCONNECT" message="Отсоединиться от сетей. Это также остановит все загрузки и раздачи."/>
 	<tip id="ID_NETWORK_ED2K" message="Соединиться с сетью eDonkey."/>
 	<tip id="ID_NETWORK_EXIT" message="Выйти из Shareaza"/>
 	<tip id="ID_NETWORK_G1" message="Соединиться с оригинальной сетью Gnutella."/>
-	<tip id="ID_NETWORK_G2" message="Соединиться с сетью Gnutella2 (крайне рекомендуется)."/>
+	<tip id="ID_NETWORK_G2" message="Соединиться с сетью Gnutella2 (рекомендуется)."/>
 	<tip id="ID_NETWORK_SEARCH" message="Начать новый поиск в сети..."/>
 	<tip id="ID_SEARCH_CHAT" message="Открыть чат сессию с помеченным пользователем."/>
 	<tip id="ID_SEARCH_CLEAR" message="Очистить результаты поиска."/>
@@ -2480,14 +2481,14 @@
 	<tip id="ID_SYSTEM_CLEAR" message="Очистить журнал статуса."/>
 	<tip id="ID_SYSTEM_TIMESTAMP" message="Добавлять штамп времени в каждую строчку."/>
 	<tip id="ID_SYSTEM_VERBOSE" message="Показывать подробный журнал активности системы."/>
-	<tip id="ID_TAB_CONNECT" message="Соединиться или разъединится от сети."/>
+	<tip id="ID_TAB_CONNECT" message="Соединиться или отключиться от сети."/>
 	<tip id="ID_TAB_HELP" message="Получить помощь о использовании Shareaza."/>
 	<tip id="ID_TAB_HOME" message="Вернутся на начальную страницу Shareaza"/>
 	<tip id="ID_TAB_LIBRARY" message="Просмотр и управление содержимым Вашего хранилища."/>
 	<tip id="ID_TAB_MEDIA" message="Воспроизводить аудио и видео медиа файлы из Вашего хранилища."/>
 	<tip id="ID_TAB_NETWORK" message="Посмотреть как хорошо Вы подсоединены к сети."/>
 	<tip id="ID_TAB_SEARCH" message="Искать файлов в сети для загрузки"/>
-	<tip id="ID_TAB_TRANSFERS" message="Контроль выгрузок и выполняемых Вами загрузок."/>
+	<tip id="ID_TAB_TRANSFERS" message="Контроль раздач и выполняемых Вами загрузок."/>
 	<tip id="ID_TOOLS_DOWNLOAD" message="Начать загрузку нового файла или BitTorrent торрента..."/>
 	<tip id="ID_TOOLS_LANGUAGE" message="Выбрать язык Shareaza (Select the language of Shareaza)"/>
 	<tip id="ID_TOOLS_PROFILE" message="Правка своего профиля пользователя..."/>
@@ -2504,23 +2505,23 @@
 	<tip id="ID_TRAFFIC_WINDOW" message="Открыть новое окно графика..."/>
 	<tip id="ID_TRANSFERS_CHAT" message="Открыть чат сессию с помеченным пользователем."/>
 	<tip id="ID_TRANSFERS_CONNECT" message="Обратиться к помеченному источнику и попытаться начать загрузку с него."/>
-	<tip id="ID_TRANSFERS_DISCONNECT" message="Разъединить помеченную загрузку(и)."/>
-	<tip id="ID_TRANSFERS_FORGET" message="Разъединить и забыть источники помеченной загрузки(ок)."/>
+	<tip id="ID_TRANSFERS_DISCONNECT" message="Отключить помеченную загрузку(и)."/>
+	<tip id="ID_TRANSFERS_FORGET" message="Отключить и забыть источники помеченной загрузки(ок)."/>
 	<tip id="ID_TRAY_OPEN" message="Открыть окно Shareaza."/>
-	<tip id="ID_UPLOADS_AUTO_CLEAR" message="Автоматически убирать из списка завершенные выгрузки."/>
+	<tip id="ID_UPLOADS_AUTO_CLEAR" message="Автоматически убирать из списка завершенные раздачи."/>
 	<tip id="ID_UPLOADS_CHAT" message="Открыть чат сессию с помеченным пользователем."/>
 	<tip id="ID_UPLOADS_CLEAR" message="Удалить из списка помеченную загрузку(и)."/>
-	<tip id="ID_UPLOADS_CLEAR_COMPLETED" message="Удалить из списка завершенные выгрузки."/>
-	<tip id="ID_UPLOADS_DISCONNECT" message="Отключить пересылку помеченной выгрузки(ок)."/>
-	<tip id="ID_UPLOADS_FILTER_ACTIVE" message="Показывать все активные выгрузки."/>
-	<tip id="ID_UPLOADS_FILTER_ALL" message="Показывать все выгрузки."/>
-	<tip id="ID_UPLOADS_FILTER_HISTORY" message="Показывать разъединенные выгрузки."/>
-	<tip id="ID_UPLOADS_FILTER_MENU" message="Выбирать какие типы выгрузок показывать, а каких нет, в этом режиме просмотра."/>
-	<tip id="ID_UPLOADS_FILTER_QUEUED" message="Показывать выгрузки, ожидающие в Ваших очередях."/>
-	<tip id="ID_UPLOADS_FILTER_TORRENT" message="Показывать выгрузки BitTorrent."/>
-	<tip id="ID_UPLOADS_LAUNCH" message="Запустить помеченный разделяемый файл(ы)."/>
-	<tip id="ID_UPLOADS_SETTINGS" message="Конфигурировать установки выгрузок..."/>
-	<tip id="ID_UPLOADS_START" message="Начать выгрузку помеченного файла(ов), стоящего(их) в очереди."/>
+	<tip id="ID_UPLOADS_CLEAR_COMPLETED" message="Удалить из списка завершенные раздачи."/>
+	<tip id="ID_UPLOADS_DISCONNECT" message="Отключить пересылку помеченной раздачи(ок)."/>
+	<tip id="ID_UPLOADS_FILTER_ACTIVE" message="Показывать все активные раздачи."/>
+	<tip id="ID_UPLOADS_FILTER_ALL" message="Показывать все раздачи."/>
+	<tip id="ID_UPLOADS_FILTER_HISTORY" message="Показывать историю раздач."/>
+	<tip id="ID_UPLOADS_FILTER_MENU" message="Выбирать какие типы раздач показывать, а каких нет, в этом режиме просмотра."/>
+	<tip id="ID_UPLOADS_FILTER_QUEUED" message="Показывать раздачи, ожидающие в Ваших очередях."/>
+	<tip id="ID_UPLOADS_FILTER_TORRENT" message="Показывать раздачи BitTorrent."/>
+	<tip id="ID_UPLOADS_LAUNCH" message="Запустить помеченный файл."/>
+	<tip id="ID_UPLOADS_SETTINGS" message="Конфигурировать установки раздач..."/>
+	<tip id="ID_UPLOADS_START" message="Начать раздачу помеченного файла(ов), стоящего(их) в очереди."/>
 	<tip id="ID_VIEW_BASIC" message="Использовать программу Shareaza в обычном режиме."/>
 	<tip id="ID_VIEW_DISCOVERY" message="Показать или скрыть окно Ресурсов Соединений."/>
 	<tip id="ID_VIEW_DOWNLOADS" message="Показать или скрыть окно Загрузок."/>
@@ -2536,7 +2537,7 @@
 	<tip id="ID_VIEW_SYSTEM" message="Показать или скрыть окно Системы."/>
 	<tip id="ID_VIEW_TABBED" message="Переключить Shareaza в режим закладок для опытных (Домой, Хранилище, Проигрыватель, Пересылки, Сети)."/>
 	<tip id="ID_VIEW_TRAFFIC" message="Показать или скрыть окно Графиков."/>
-	<tip id="ID_VIEW_UPLOADS" message="Показать или скрыть окно Выгрузок."/>
+	<tip id="ID_VIEW_UPLOADS" message="Показать или скрыть окно Раздач."/>
 	<tip id="ID_VIEW_WINDOWED" message="Переключить Shareaza в оконный режим для опытных."/>
 	<tip id="ID_WINDOW_CASCADE" message="Расширить все открытые окна, чтобы заполнить экран."/>
 	<tip id="ID_WINDOW_MONITOR" message="Показать или скрыть монитор пропускной способности."/>
@@ -2546,7 +2547,7 @@
 	<tip id="ID_WINDOW_TILE_HORZ" message="Расположить открытые окна горизонтально, без перекрывания."/>
 	<tip id="ID_WINDOW_TILE_VERT" message="Расположить открытые окна вертикально, без перекрывания."/>
 	<tip id="ID_WINDOW_TOOLBAR" message="Показать или скрыть полоску инструментов."/>
-	<tip id="ID_WEBSERVICES_LIST" message="Выберите веб-службы для получения более полной информации о файле."/>
+	<tip id="ID_WEBSERVICES_LIST" message="Выберите сервис для получения более полной информации о файле."/>
 	<tip id="ID_WEBSERVICES_SHAREMONKEY" message="Поиск информации о файле при помощи службы ShareMonkey."/>
 	<!-- PLUGIN TIPS -->
 	<tip id="ImageViewer_BestFit" message="Изменить размер, чтобы картинка посметилась в окне."/>
@@ -2564,7 +2565,7 @@
 <strings>
 	<string id="WINDOW_MAIN" value="Shareaza"/>
 	<string id="WINDOW_SYSTEM" value="Система"/>
-	<string id="WINDOW_NEIGHBOURS" value="Соединения"/>
+	<string id="WINDOW_NEIGHBOURS" value="Сети"/>
 	<string id="WINDOW_PACKET" value="Дамп пакетов"/>
 	<string id="WINDOW_HOSTCACHE" value="Кэш хостов"/>
 	<string id="WINDOW_SEARCHMONITOR" value="Монитор поиска"/>
@@ -2572,13 +2573,13 @@
 	<string id="WINDOW_HITMONITOR" value="Монитор хитов"/>
 	<string id="WINDOW_DOWNLOADS" value="Загрузки"/>
 	<string id="WINDOW_LIBRARY" value="Хранилище"/>
-	<string id="WINDOW_UPLOADS" value="Выгрузки"/>
+	<string id="WINDOW_UPLOADS" value="Раздачи"/>
 	<string id="WINDOW_TRAFFIC" value="График"/>
 	<string id="WINDOW_CHAT" value="Чат"/>
 	<string id="WINDOW_SECURITY" value="Безопасность"/>
 	<string id="WINDOW_DISCOVERY" value="Ресурсы соединений"/>
 	<string id="WINDOW_BROWSEHOST" value="Обзор"/>
-	<string id="WINDOW_HOME" value="Shareaza домашняя"/>
+	<string id="WINDOW_HOME" value="Shareaza"/>
 	<string id="WINDOW_MEDIA" value="Проигрыватель"/>
 	<string id="WINDOW_SEARCHPAD" value="Поиск"/>
 	<string id="WINDOW_HELP" value="Shareaza помощь"/>
@@ -2597,7 +2598,7 @@
 	<string id="8003" value="Ред. свой профиль"/>
 	<string id="8004" value="!Добро пожаловать в Shareaza (version) !\n.\nShareaza полностью бесплатная программа.\nПожалуйста используйте её с уважением к законам интеллектуальной собственности.\n."/>
 	<string id="8005" value="(закрытие после загрузок)"/>
-	<string id="8006" value="Вы не соединенны.  Щелкните кнопку Соединиться, чтобы начать."/>
+	<string id="8006" value="Вы не подключены.  Щелкните кнопку «Подключиться», чтобы начать работу."/>
 	<string id="8007" value="Нет активных процессов поиска.  Щелкните здесь, чтобы начать поиск файлов."/>
 	<string id="8008" value="Shareaza закончила загрузку новой версии Shareaza (%s).  Хотите ли сейчас обновить?\n\nЕсли выберите «Да», то Shareaza временно окончит работу, пока она будет обновляться."/>
 	<string id="8009" value="Уверены, что хотите удалить шкурку «%s»?  Действие будет необратимое."/>
@@ -2607,16 +2608,16 @@
 	<string id="8060" value="Узел/режим Ведущего с %lu хостом(ами).  %s в собсвенном хранилище."/>
 	<string id="8061" value="Режим Ведущего с %lu хостом(ами).  %s в собсвенном хранилище."/>
 	<string id="8062" value="Режим узла с %lu хостом(ами).  %s в собсвенном хранилище."/>
-	<string id="8063" value="Соединено. %s в собсвенном хранилище."/>
+	<string id="8063" value="Подключено. %s в собсвенном хранилище."/>
 	<string id="8064" value="Соединено с %lu хостом(ами).  %s в собсвенном хранилище."/>
 	<string id="8065" value="Подключаюсь к сети..."/>
 	<string id="8066" value="Нет соединения с сетью."/>
 	<string id="8067" value="%s-Вх. %s-Исх. [З:%I64i/В:%I64i]"/>
 	<string id="8068" value="[У:%I64i] %s-Вх. %s-Исх. [З:%I64i/В:%I64i]"/>
-	<string id="8069" value="Соединиться"/>
-	<string id="8070" value="Соединение..."/>
-	<string id="8071" value="Соединены"/>
-	<string id="8072" value="Разъединить"/>
+	<string id="8069" value="Подключиться"/>
+	<string id="8070" value="Подключение..."/>
+	<string id="8071" value="Подключено"/>
+	<string id="8072" value="Отключиться"/>
 	<string id="8096" value="Эта область показывает подробную информацию о помеченных файлах."/>
 	<string id="8097" value="Один источник доступен (%s).  "/>
 	<string id="8098" value="%i источника(ов) доступно (%s).  "/>
@@ -2624,9 +2625,9 @@
 	<string id="8100" value="Есть %i обзора(ов)."/>
 	<string id="8101" value="%s пишет:"/>
 	<string id="8102" value="%s оценивает этот файл:"/>
-	<string id="8103" value="&#160;&#160;Щелкните для&#160; предв. просмотра"/>
+	<string id="8103" value="&#160;&#160;Щелкните для&#160; просмотра"/>
 	<string id="8104" value="Предпросматриваю..."/>
-	<string id="8105" value="Невозможно загрузить содержимое предв. просмотра с «%s»."/>
+	<string id="8105" value="Невозможно загрузить содержимое просмотра с «%s»."/>
 	<string id="8128" value="Щелкните здесь для поиска снова"/>
 	<string id="8129" value="Поиск еще не был запущен в этом окне."/>
 	<string id="8130" value="Shareaza ищет файлы в сети ..."/>
@@ -2639,22 +2640,22 @@
 	<string id="8137" value="Без колонок схемы"/>
 	<string id="8141" value="Показывать панель поиска"/>
 	<string id="8142" value="Скрыть панель поиска"/>
-	<string id="8143" value="Идет поиск..."/>
+	<string id="8143" value="Поиск ..."/>
 	<string id="8144" value="Поиск"/>
-	<string id="8145" value="Искать ещё"/>
+	<string id="8145" value="Далее"/>
 	<string id="8146" value="Стоп"/>
 	<string id="8147" value="Любой тип файла"/>
 	<string id="8148" value="Введите искомое сюда:"/>
-	<string id="8149" value="Искать файлы типа:"/>
+	<string id="8149" value="Искать файлы данного типа:"/>
 	<string id="8150" value="Ищется:"/>
 	<string id="8151" value="Найдено:"/>
 	<string id="8152" value="Узлов: %lu; Ветвей: %lu"/>
 	<string id="8153" value="Пока ничего не ищем"/>
 	<string id="8154" value="Файлов не найдено"/>
-	<string id="8155" value="%lu файл за %lu обращ.|%lu файл за %lu обращ.|%lu файлов за %lu обращ."/>
+	<string id="8155" value="%lu файлов, %lu запросов|%lu файлов, %lu запросов|%lu файлов, %lu запросов"/>
 	<string id="8156" value="Поиск"/>
 	<string id="8157" value="Результаты"/>
-	<string id="8158" value="Очис."/>
+	<string id="8158" value="Очистить"/>
 	<string id="8159" value="Подробнее"/>
 	<string id="8160" value="Установление соединения с хостом..."/>
 	<string id="8161" value="Послан запрос на активную доставку, жду соединения..."/>
@@ -2668,8 +2669,8 @@
 	<string id="8177" value="Введите ключевые слова для поиска:"/>
 	<string id="8178" value="Какого типа файл?"/>
 	<string id="8179" value="(Очистить историю поисков)"/>
-	<string id="8180" value="Размер файла должен быть"/>
-	<string id="8181" value="&#160;до"/><!-- size from xx TO xx-->
+	<string id="8180" value="Размер файла должен быть:"/>
+	<string id="8181" value="до"/><!-- size from xx TO xx-->
 	<string id="8208" value="Shareaza создает хешы для %Iu файла(ов):"/>
 	<string id="8223" value="%i д. и %i час."/>
 	<string id="8224" value="Shareaza загружает:"/>
@@ -2704,20 +2705,20 @@
 	<string id="8307" value="Тип"/>
 	<string id="8308" value="Размер"/>
 	<string id="8309" value="Частичный источник (%.2f%% доступно)"/>
-	<string id="8310" value="%i слота(ов) выгрузки, %i - в очереди"/>
+	<string id="8310" value="%i слота(ов) раздачи, %i - в очереди"/>
 	<string id="8311" value="В Вашем хранилище этот файл уже имеется."/>
 	<string id="8312" value="Вы уже имеете этот файл в Вашем списке загрузок."/>
 	<string id="8313" value="Этот файл выглядит как спам."/>
 	<string id="8314" value="Вы было раньше загружали и удалили этот файл."/>
 	<string id="8315" value="В черном списке: "/>
 	<string id="8316" value="Обращений"/>
-	<string id="8317" value="Выгрузок"/>
+	<string id="8317" value="Раздач"/>
 	<string id="8318" value="%lu сегодня, %lu в сумме"/>
 	<string id="8319" value="Без набора хеша"/>
 	<string id="8320" value="Статус:"/>
 	<string id="8321" value="Скорость:"/>
 	<string id="8322" value="Ссылка:"/>
-	<string id="8323" value="Агент юзера:"/>
+	<string id="8323" value="Клиент:"/>
 	<string id="8324" value="Неактивный"/>
 	<string id="8325" value="Активный"/>
 	<string id="8326" value="След. в очереди"/>
@@ -2727,13 +2728,13 @@
 	<string id="8330" value="папка"/>
 	<string id="8331" value="Этот источник сейчас занят"/>
 	<string id="8332" value="Этот источник находится за брандмауэром"/>
-	<string id="8333" value="Этот источник может выгружать нестабильно"/>
+	<string id="8333" value="Этот источник может раздавать нестабильно"/>
 	<string id="8334" value="Источники этого файла сейчас заняты"/>
 	<string id="8335" value="Источники этого файла находятся за брандмауэром"/>
-	<string id="8336" value="Источники этого файла могут выгружать нестабильно"/>
+	<string id="8336" value="Источники этого файла могут раздавать нестабильно"/>
 	<string id="8337" value="Недоверяемый"/>
 	<string id="13000" value="Уверены, что хотите удалить выбранные правила безопасности? Действие будет необратимое."/>
-	<string id="13001" value="Файлы, разделяемые в интернете"/>
+	<string id="13001" value="Файлы, открытые для общего доступа"/>
 	<string id="16063" value="После 10 попыток переадресация порта при помощи UPnP, была неуспешна."/>
 	<string id="16064" value="Старт ядра сети Shareaza..."/>
 	<string id="16065" value="Не могу использовать  %s порт %i для входящих соединений.  Входящие соединения не будут поддерживаться."/>
@@ -2750,12 +2751,12 @@
 	<string id="16076" value="Менеджер  безопасности запретил соединение с %s."/>
 	<string id="16077" value="Адрес %s уже заблокирован вашими правилами безопасности."/>
 	<string id="16078" value="Добавленно правило безопасности для блокировки %s."/>
-	<string id="16079" value="Вы уверены, что хотите разъединить?"/>
-	<string id="16080" value="Вы запустили расписание в режиме 'только G2'. Не хотите ли выключить этот режим, тогда все активные сети останутся подключёнными?"/>
+	<string id="16079" value="Вы уверены, что хотите отключиться"/>
+	<string id="16080" value="Вы запустили расписание в режиме «только G2». Не хотите ли выключить этот режим, тогда все активные сети останутся подключёнными?"/>
 	<string id="16081" value="Шлю запрос для «%s» в %s."/>
 	<string id="16083" value="Принужденное становление Вашего ПК узлом может неблагоприятно повлиять на производительность и на P2P сеть.  Вообще, лучше позволить самой Shareaza решать, использовать или нет режим узла.\n\nРежим узла НЕ дает лучших результатов поиска или каких-нибудь преимуществ для Вас.\n\nВы действительно хотите это сделать, несмотря на упомянутые неудобства?"/>
 	<string id="16084" value="Выключая поддержку протоколов Gnutella-1, Вы уменьшите результаты поиска, и, если Вы работаете в режиме узла, это повлияет и на результаты других пользователей.  Вы уверены, что хотите это сделать?"/>
-	<string id="16085" value="Gnutella2 - это главная сеть Shareaza'ы.  Выключая её поддержку, Вы очень уменьшите число и ухудшите качество результатов поиска.  Вы УВЕРЕНЫ, что хотите это сделать?"/>
+	<string id="16085" value="Gnutella2 - это главная сеть Shareazы.  Выключая её поддержку, Вы очень уменьшите число и ухудшите качество результатов поиска.  Вы УВЕРЕНЫ, что хотите это сделать?"/>
 	<string id="16087" value="Выходящяя полоса пропускания слишком низка для включения этой сети."/>
 	<string id="16128" value="Принято входящее соединение с %s порт %i."/>
 	<string id="16129" value="Инициализирую соединение с хостом %s порт %i..."/>
@@ -2783,7 +2784,7 @@
 	<string id="16155" value="Действую как узел для лепесткового хоста %s."/>
 	<string id="16156" value="Хост %s хочет быть узлом, соединение закрывается."/>
 	<string id="16157" value="Хост %s не является узлом, соединение закрывается."/>
-	<string id="16158" value="Gnutella][ соединение с хостом %s установлено успешно (%s)."/>
+	<string id="16158" value="Gnutella2 соединение с хостом %s установлено успешно (%s)."/>
 	<string id="16159" value="Закрывается не Gnutella2 соединение с хостом %s."/>
 	<string id="16192" value="Хост %s отправил пакет чрезмерного размера, обрываю соединение."/>
 	<string id="16193" value="Хост %s отправил пакет с нулевой TTL, игнорирую."/>
@@ -2806,7 +2807,7 @@
 	<string id="16256" value="Добавлен «%s» в очередь загрузок с %i источником(ами)."/>
 	<string id="16257" value="Завершенна загрузка файла «%s»."/>
 	<string id="16258" value="Приостанавливаю загрузку файла «%s»."/>
-	<string id="16259" value="Возобновляю загрузку файла «%s»."/>
+	<string id="16259" value="Продолжаю загрузку файла «%s»."/>
 	<string id="16260" value="Загрузка «%s» удалена из списка."/>
 	<string id="16261" value="Создаю файл «%s» для загрузки."/>
 	<string id="16262" value="Невозможно создать локальный файл «%s» для загрузки, прерываю."/>
@@ -2846,7 +2847,7 @@
 	<string id="16296" value="Загрузка «%s» проверена успешно."/>
 	<string id="16297" value="ПРЕДУПРЕЖДЕНИЕ: Загрузка «%s» не прошла проверку, этот файл может быть не тот, которого Вы собирались загрузить!"/>
 	<string id="16298" value="Хост загрузки %s занят, жду в очереди под номером %i из %i («%s»)."/>
-	<string id="16299" value="Уверены, что хотите удалить все остановленные загрузки?  После удаления загрузок из списка Вы не сможете возобновить их загрузку."/>
+	<string id="16299" value="Уверены, что хотите удалить все остановленные загрузки?  После удаления загрузок из списка Вы не сможете продолжить их загрузку."/>
 	<string id="16300" value="Уверены, что хотите удалить загрузку «%s»?"/>
 	<string id="16301" value="Запрашиваю том tiger-tree для «%s» с %s..."/>
 	<string id="16302" value="Хост загрузки %s не удовлетворяет запрос по tiger-tree."/>
@@ -2867,51 +2868,51 @@
 	<string id="16317" value="Стою в очереди для получения «%s»."/>
 	<string id="16318" value="Недостаточно дискового пострансва для загрузки «%s» (%s)."/>
 	<string id="16319" value="Удаляю источник %s (%s) из-за пересылок испорченных частей «%s» (%I64i-%I64i)."/>
-	<string id="16320" value="Хост выгрузки %s прислал неправильный HTTP запрос."/>
+	<string id="16320" value="Хост раздачи %s прислал неправильный HTTP запрос."/>
 	<string id="16321" value="Инициализирую соединение активной доставки с %s. %s"/>
 	<string id="16322" value="Невозможно соединиться с %s для активной доставки."/>
-	<string id="16323" value="Соединение для выгрузки с %s было закрыто."/>
-	<string id="16324" value="Вышло время для ожидания запроса с хоста выгрузки %s."/>
-	<string id="16325" value="Хост выгрузки %s запросил неизвестный или недоступный объект «%s»."/>
-	<string id="16326" value="Хост выгрузки %s запросил «%s» с другим SHA1."/>
-	<string id="16327" value="Отказываю выгрузить «%s» на %s (%s), занят и клиент не поддерживает очередей."/>
+	<string id="16323" value="Соединение для раздачи с %s было закрыто."/>
+	<string id="16324" value="Вышло время для ожидания запроса с хоста раздачи %s."/>
+	<string id="16325" value="Хост раздачи %s запросил неизвестный или недоступный объект «%s»."/>
+	<string id="16326" value="Хост раздачи %s запросил «%s» с другим SHA1."/>
+	<string id="16327" value="Отказываю в раздаче «%s» на %s (%s), занят и клиент не поддерживает очередей."/>
 	<string id="16328" value="Соединение активной доставки с %s установлена, жду подтверждения..."/>
-	<string id="16329" value="Не могу открыть «%s», чтобы выгрузить на хост %s, ошибка диска/файла."/>
-	<string id="16330" value="Посылаю отрезок %I64i-%I64i содержимого выгрузки «%s» на хост %s (%s)."/>
-	<string id="16331" value="Закончена выгрузка части «%s» на %s."/>
-	<string id="16332" value="Входящее соединение с %s является HTTP запросом на выгрузку."/>
-	<string id="16333" value="Слишком занят для выгрузки «%s» на %s, ставлю в очередь под номером %i из %i («%s»)."/>
+	<string id="16329" value="Не могу открыть «%s», чтобы раздать хосту %s, ошибка диска/файла."/>
+	<string id="16330" value="Посылаю отрезок %I64i-%I64i содержимого раздачи «%s» на хост %s (%s)."/>
+	<string id="16331" value="Закончена раздача части «%s» %s."/>
+	<string id="16332" value="Входящее соединение с %s является HTTP запросом на раздачу."/>
+	<string id="16333" value="Слишком занят для раздачи «%s» на %s, ставлю в очередь под номером %i из %i («%s»)."/>
 	<string id="16334" value="С %s получен устарелый запрос на активную доставку неизвестного файла, всё-таки соединяю..."/>
 	<string id="16335" value="Удалена загрузка «%s» на %s."/>
-	<string id="16336" value="Хост выгрузки %s есть в списке блокирования юзер-агентов, отклоняю запрос."/>
-	<string id="16337" value="Посылаю заголовки выгрузки «%s» на хост %s (%s)."/>
-	<string id="16338" value="Хост выгрузки %s запросил невыполнимый отрезок файла «%s»."/>
-	<string id="16339" value="Посылаю стандартный HTML ответ на хост выгрузки %s (%s)."/>
+	<string id="16336" value="Хост раздачи %s есть в списке блокирования программ, отклоняю запрос."/>
+	<string id="16337" value="Посылаю заголовки раздачи «%s» на хост %s (%s)."/>
+	<string id="16338" value="Хост раздачи %s запросил невыполнимый отрезок файла «%s»."/>
+	<string id="16339" value="Посылаю стандартный HTML ответ на хост раздачи %s (%s)."/>
 	<string id="16340" value="Отклоняю запрос на просмотр пользователя для %s."/>
-	<string id="16341" value="Хост выгрузки %s (%s) прислал запрос для просмотра пользователя, отвечаю..."/>
-	<string id="16342" value="Закрываю соединение выгрузки на %s из-за нехватки трафика."/>
-	<string id="16343" value="Закрываю старое соединение выгрузки на %s, так как он установил новое соединение."/>
-	<string id="16344" value="Отклоняю новую выгрузку на %s, потому что старое соединение ещё в ожидании."/>
-	<string id="16345" value="Останавливаю выгрузку «%s» на %s, потому что файл был удален."/>
+	<string id="16341" value="Хост раздачи %s (%s) прислал запрос для просмотра пользователя, отвечаю..."/>
+	<string id="16342" value="Закрываю соединение раздачи на %s из-за нехватки трафика."/>
+	<string id="16343" value="Закрываю старое соединение раздачи на %s, так как он установил новое соединение."/>
+	<string id="16344" value="Отклоняю новую раздачу %s, потому что старое соединение ещё в ожидании."/>
+	<string id="16345" value="Останавливаю раздачу «%s» %s, потому что файл был удален."/>
 	<string id="16346" value="Посылаю отрезок %I64i-%I64i содержимого частично загруженного файла «%s» на хост %s (%s)."/>
-	<string id="16347" value="Стоячий в очереди хост выгрузки %s перезапрашивает слишком часто, закрываю соединение."/>
-	<string id="16348" value="Отвергнут запрос активной доставки для %s, потому что он имеет слишком много соединений для выгрузок."/>
+	<string id="16347" value="Стоячий в очереди хост раздачи %s перезапрашивает слишком часто, закрываю соединение."/>
+	<string id="16348" value="Отвергнут запрос активной доставки для %s, потому что он имеет слишком много соединений для раздач."/>
 	<string id="16349" value="Посылаю данные tiger-tree для «%s» на %s."/>
 	<string id="16350" value="Посылаю мета данные для «%s» на %s."/>
-	<string id="16351" value="Отказываю выгрузить «%s» на %s (%s), слишком много параллельных соединений с хостом."/>
+	<string id="16351" value="Отказываю в раздаче «%s» %s (%s), слишком много параллельных соединений с хостом."/>
 	<string id="16352" value="Посылаю данные предварительного просмотра для «%s» на %s."/>
 	<string id="16353" value="Отказываю послать данные предварительного просмотра для «%s» на %s, слишком много подобных соединений."/>
-	<string id="16354" value="Хост выгрузки %s запросил данные предварительного просмотра для «%s», но данные недоступны."/>
-	<string id="16355" value="Планирую выгрузку динамического предварительного просмотра для «%s» на %s."/>
+	<string id="16354" value="Хост раздачи %s запросил данные предварительного просмотра для «%s», но данные недоступны."/>
+	<string id="16355" value="Планирую раздачу динамического предварительного просмотра для «%s» %s."/>
 	<string id="16356" value="Отклоняю запрос для просмотра пользователя c %s, слишком много соединений просмотров."/>
 	<string id="16357" value="Посылаю файл «%s» на хост %s..."/>
-	<string id="16358" value="Соединение выгрузки на %s оборвано, сохраняю позицию в очереди."/>
-	<string id="16359" value="Вышло время для отключившегося, стоячего в очереди хоста выгрузки %s, удаляю."/>
-	<string id="16360" value="Отказываю выгрузить «%s» на %s (%s), все соответствующие очереди переполнены."/>
-	<string id="16361" value="Отказываю выгрузить на %s (%s), сеть блокирована."/>
-	<string id="16362" value="eDonkey загрузок отменять не рекомендуем.  Уверены, что хотите отменить эту загрузку?"/>
-	<string id="16363" value="Выгрузки Torrent"/>
-	<string id="16364" value="Законченные выгрузки"/>
+	<string id="16358" value="Соединение раздачи на %s оборвано, сохраняю позицию в очереди."/>
+	<string id="16359" value="Вышло время для отключившегося, стоячего в очереди хоста раздачи %s, удаляю."/>
+	<string id="16360" value="Отказываю в раздаче «%s» %s (%s), все соответствующие очереди переполнены."/>
+	<string id="16361" value="Отказываю в раздаче %s (%s), сеть блокирована."/>
+	<string id="16362" value="Загрузки в сети eDonkey отменять не рекомендуется.  Уверены, что хотите отменить эту загрузку?"/>
+	<string id="16363" value="Раздачи Torrent"/>
+	<string id="16364" value="Законченные раздачи"/>
 	<string id="16365" value="Вы уверенны что хотите отменить каждую загрузку в этой группе?"/>
 	<string id="16366" value="Очередь"/>
 	<string id="16367" value="Ядро eDonkey"/>
@@ -2930,15 +2931,15 @@
 	<string id="16385" value="Вы собираетесь изменить мета данные для %i файлов, уверены, что хотите продолжить?"/>
 	<string id="16386" value="Правка мета данных %i файлов."/>
 	<string id="16387" value="Файл «%s» ещё не имеет хеша.  Подождите пока хеширование будет закончено и попробуйте снова."/>
-	<string id="16388" value="Эта опция использует службу, предоставленную Bitzi.com для опознавания и разделения информации о помеченных файлах.\n\nShareaza перешлет SHA1 хеш код помеченного файла(ов) для того, чтобы запросить базу данных Bitzi.  Если Вы заинтересованы в секретности, наверное, Вы захотите познакомиться с политикой конфиденциальности Bitzi.com.\n\nХотите ли продолжать?"/>
+	<string id="16388" value="Эта опция использует службу, предоставленную Bitzi.com для получения и обмена информацией о помеченных файлах.\n\nShareaza перешлет SHA1 хеш код помеченного файла(ов) для того, чтобы запросить базу данных Bitzi.  Если Вы заинтересованы в секретности, наверное, Вы захотите познакомиться с политикой конфиденциальности Bitzi.com.\n\nХотите ли продолжать?"/>
 	<string id="16389" value="Вы уверены, что хотите удалить %i помеченных файлов(а)?\n\nФайлы будут помещены в Ваш мусорный ящик, если он активирован."/>
 	<string id="16390" value="Вы ещё не указали, какой проигрыватель использовать для ставки медиа файлов в очередь воспроизведения (напр., Nullsoft WinAmp).  Хотите ли выбрать его сейчас?\n\nShareaza передаст имя файла вашей выбранной программе вместе с /ADD аргументом."/>
-	<string id="16391" value="Вы не соединены с сетью."/>
-	<string id="16392" value="Нажмите кнопку «Соединиться» чтобы начать."/>
+	<string id="16391" value="Вы не подключены к сети."/>
+	<string id="16392" value="Нажмите кнопку «Подключиться» чтобы начать работу."/>
 	<string id="16393" value="Файл «%s» не прошел проверку хеш-теста и он может быть не тем файлом, который Вы намеревались загрузить.  Уверены, что хотите его открыть?"/>
 	<string id="16394" value="Хотите ли Вы удалить атрибут «потенциально небезопасен» с этого файла?"/>
-	<string id="16395" value="Ваша папка загрузок «%s» не включена в Ваше хранилище.\n\nВключение Вашей папки загрузок в хранилище сделает более легкими организацию и просмотр новых загрузок, и позволит Вам использовать в Shareaza функции для опытных пользователей такие как проверка загрузки и автоматическое обновление.  Помещение загруженных файлов в хранилище не обязывает Вас разделять их: Вы сможете указать для каждого файла разделять ли его.\n\nХотите добавить Вашу папку загрузок в хранилище сейчас?"/>
-	<string id="16396" value="Вы добавили папку загрузок в Ваше хранилище.  Хотите ли разделять её тоже?"/>
+	<string id="16395" value="Ваша папка загрузок «%s» не включена в Ваше хранилище.\n\nВключение Вашей папки загрузок в хранилище сделает более легкими организацию и просмотр новых загрузок, и позволит Вам использовать в Shareaza функции для опытных пользователей такие как проверка загрузки и автоматическое обновление.  Помещение загруженных файлов в хранилище не обязывает Вас открывать доступ к ним: Вы сможете указать отдельно для каждого файла открывать ли его или нет.\n\nХотите добавить Вашу папку загрузок в хранилище сейчас?"/>
+	<string id="16396" value="Вы добавили папку загрузок в Ваше хранилище.  Хотите ли открыть её для общего доступа?"/>
 	<string id="16397" value="Вы уверены, что хотите удалить %i помеченных папок(и) альбомов?\n\nОтметьте, что это действие не удаляет файлы в папках альбомов, а только папки непосредственно."/>
 	<string id="16398" value="Shareaza не смогла переименовать:\n\n%s\nв\n%s"/>
 	<string id="16399" value="Shareaza не смогла удалить файл:\n\n%s"/>
@@ -2967,7 +2968,7 @@
 	<string id="16456" value="Невозможно соединиться с хостом %s."/>
 	<string id="16457" value="Соединение сбилось из-за недопустимых данных на проводе."/>
 	<string id="16458" value="Получен неизвестный ответ: %s"/>
-	<string id="16459" value="Вы не соединены."/>
+	<string id="16459" value="Вы не подключены."/>
 	<string id="16512" value="Общая полоса пропускания приема"/>
 	<string id="16513" value="Общая полоса пропускания посылок"/>
 	<string id="16514" value="Gnutella соединений (всего)"/>
@@ -2977,8 +2978,8 @@
 	<string id="16518" value="Число файлов в Загрузках"/>
 	<string id="16519" value="Число пересылок в Загрузках"/>
 	<string id="16520" value="Полоса пропускания Загрузок"/>
-	<string id="16521" value="Число пересылок в Выгрузках"/>
-	<string id="16522" value="Полоса пропускания Выгрузок"/>
+	<string id="16521" value="Число пересылок в Раздачах"/>
+	<string id="16522" value="Полоса пропускания Раздач"/>
 	<string id="16523" value="Полученные Gnutella пакеты"/>
 	<string id="16524" value="Посланные Gnutella пакеты"/>
 	<string id="16525" value="Перенаправленные Gnutella пакеты"/>
@@ -3011,10 +3012,10 @@
 	<string id="16784" value="&amp;Закрыть"/>
 	<string id="16785" value="(Без визуализации)"/>
 	<string id="16800" value="Вы ещё не указали скорости соединения.  Прежде чем продолжить, выберите Ваш тип интернетного соединения или его скорость."/>
-	<string id="16802" value="Вы не указали каких-нибудь папок для разделения.  Вы уверены?"/>
-	<string id="16803" value="Папка, которую вы намереваетесь разделять, уже является частью другой разделяемой папки:\n\n%s"/>
+	<string id="16802" value="Вы не открыли доступ к никаким папкам.  Вы уверены?"/>
+	<string id="16803" value="Папка, которую вы намереваетесь открыть для доступа, уже является частью другой открытой папки:\n\n%s"/>
 	<string id="16804" value="Вы не ввели отображаемое имя в Ваш профиль."/>
-	<string id="16805" value="Вы не ввели местонахождение в Ваш профиль.\n\nУказать местонахождение нужно для того, чтобы другие могли видеть откуда вы соединены.\n\nЗаметьте, что указывая местонахождение Вы не раскрываете какой-либо конфиденциальной информации.\n\nВы уверенны что хотите продолжить без Вашего местонахождения?"/>
+	<string id="16805" value="Вы не ввели местонахождение в Ваш профиль.\n\nУказать местонахождение нужно для того, чтобы другие могли видеть откуда вы подключились.\n\nЗаметьте, что указывая местонахождение Вы не раскрываете какой-либо конфиденциальной информации.\n\nВы уверенны что хотите продолжить без Вашего местонахождения?"/>
 	<string id="16806" value="Shareaza не смогла переадресовать порты на Вашем NAT маршрутизаторе или брандмауэре.\n\nСконфигурируйте сеть так, чтобы TCP и UDP порт %i был переадресован на Ваш ПК."/>
 	<string id="16807" value="Введите устанавливаемый лимит пропускной способности в виде «123 kb/s» для килобитов за секунду или «123 KB/s» - для килобайтов за секунду."/>
 	<string id="16808" value="Вы не указали Ваш пол и возраст.  Уверенны что хотите продолжить не делая этого?"/>
@@ -3027,8 +3028,8 @@
 	<string id="16815" value="Служба «UPnP Device Host Service» не запущена. Эта служба необходима для настройки.\nВам нужно установить тип загрузки этой службы на автоматический."/>
 	<string id="16816" value="В сети eDonkey используются длинные очереди, и в них приходится ждать долго. Если уменьшите величину, Вы начнете принимать соединения очень ограниченно и у Вас могут возникнуть проблемы с загрузкой.\nУверены, что хотите уменьшить число очередей?"/>
 	<string id="16817" value="Windows не поддерживает путей длиннее чем 256 знаков.\nВыберите другую папку, с более коротким путем."/>
-	<string id="16818" value="Папка для выгрузок не должна совпадать с папкой временных файлов"/>
-	<string id="16819" value="Папка для незаконченных файлов не может быть добавлена в Ваше хранилище, так как это уменьшит производительнось. Незаконченные файлы можете сделать разделяемыми в окне загрузок."/>
+	<string id="16818" value="Папка для раздач не должна совпадать с папкой временных файлов"/>
+	<string id="16819" value="Папка для незаконченных файлов не может быть добавлена в Ваше хранилище, так как это уменьшит производительнось. Незаконченные файлы можно сделать доступными другим пользователям в окне загрузок."/>
 	<string id="16864" value="Запрашивается список ресурсов соединений..."/>
 	<string id="16865" value="Запрашивается список ресурсов соединений «%s»..."/>
 	<string id="16866" value="GWebCache транзакция успешна («%s»)."/>
@@ -3051,7 +3052,7 @@
 	<string id="16941" value="Закрываю соединение обзора пользователя с %s из-за нехватки трафика."/>
 	<string id="16942" value="Закрываю соединение обзора пользователя с %s."/>
 	<string id="16943" value=" Просмотр %s"/>
-	<string id="16944" value=" Найдено %i разделяемых файлов в хранилище у %s."/>
+	<string id="16944" value=" Найдено %i файлов в хранилище у %s."/>
 	<string id="16991" value="Проигрыватель Shareaza"/>
 	<string id="16992" value="Shareaza не смогла создать экземпляр модуля MediaServices.  Переустановите Shareaza программу и удостоверьтесь, что у Вас установлены все необходимые медиа кодеки и драйвера вывода данных."/>
 	<string id="16993" value="Все медиа файлы|*.asx;*.wax;*.m3u;*.wvx;*.wmx;*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm;*.cda;*.mid;*.rmi;*.midi;*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|Списки воспроизв.|*.asx;*.wax;*.m3u;*.wvx;*.wmx|Аудио файлы|*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm|Видео файлы|*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|CD аудио трэки|*.cda|MIDI файлы|*.mid;*.rmi;*.midi|Все файлы|*.*||"/>
@@ -3060,7 +3061,7 @@
 	<string id="16996" value="Часть этого файла не может быть воспроизведена, воможно Вам нужно загрузить дополнительные кодеки."/>
 	<string id="16997" value="Нет воспроизводимых файлов.  Щелкните дважды на медиа файле в Вашем хранилище для его проигрывания."/>
 	<string id="16998" value="М  &#160;  &#160; Е  &#160;  &#160; Д  &#160;  &#160; И  &#160;  &#160; А  &#160;  &#160;  &#160;  &#160;  &#160; С  &#160;  &#160; И  &#160;  &#160; С  &#160;  &#160; Т  &#160;  &#160; Е  &#160;  &#160; М  &#160;  &#160; А  &#160;  &#160;  &#160;  &#160;  &#160; S  &#160;  &#160; H  &#160;  &#160; A  &#160;  &#160; R  &#160;  &#160; E  &#160;  &#160; A  &#160;  &#160; Z  &#160;  &#160; A"/>
-	<string id="16999" value="С П И С.  &#160; В О С П Р О И З В Е Д Е Н И Я"/>
+	<string id="16999" value="Список &#160; Воспроизведения"/>
 	<string id="17024" value="Инициализация соединения с %s..."/>
 	<string id="17025" value="Невозможно установить связь с %s."/>
 	<string id="17026" value="Запрашивается соединение активной доставки через брандмауэр у %s..."/>
@@ -3077,7 +3078,7 @@
 	<string id="17037" value="Связь беседы потеряна."/>
 	<string id="17038" value="Соединение закрыто."/>
 	<string id="17039" value="Невозможно запросить соединения активной доставки у %s, нет доступного маршрута."/>
-	<string id="17040" value="Не могу послать сообщение, Вы не соединены.  Shareaza пробует соединиться..."/>
+	<string id="17040" value="Не могу послать сообщение, Вы не подключены.  Shareaza пробует соединиться..."/>
 	<string id="17041" value="Не могу послать сообщение, соединение пока не установлено."/>
 	<string id="17042" value="Вы ещё не заполнили своего профиля пользователя.  Вы должны его заполнить, прежде чем беседовать с другими пользователями.\n\nХотите ли заполнить свой профиль сейчас?"/>
 	<string id="17043" value="Предоставлен приоритет загрузки для хоста %s."/>
@@ -3101,7 +3102,7 @@
 	<string id="17117" value="Соединение"/>
 	<string id="17118" value="Подтверждение"/>
 	<string id="17119" value="Отказ"/>
-	<string id="17120" value="Разъединяется"/>
+	<string id="17120" value="Отключение"/>
 	<string id="17121" value="Неизвестно"/>
 	<string id="17122" value="G1 партнер"/>
 	<string id="17123" value="G1 ведущий"/>
@@ -3164,10 +3165,10 @@
 	<string id="17490" value="Получено %i новых BitTorrent источников c %s."/>
 	<string id="17491" value="Торрент «%s» уже в Вашем списке загрузок, и его нельзя распространить."/>
 	<string id="17492" value="Ошибка загружая торрент файл «%s».  Возможно, это неправильный торрент."/>
-	<string id="17493" value="Невозможно создать BitTorrent разделяемый файл «%s»."/>
-	<string id="17494" value="Этот торрент содержит файл «%s», но Shareaza не может найти этого файла в Вашем хранилище.  Если возможно, переместите файл в разделяемую папку и попробуйте снова."/>
+	<string id="17493" value="Невозможно создать BitTorrent файл «%s»."/>
+	<string id="17494" value="Этот торрент содержит файл «%s», но Shareaza не может найти этого файла в Вашем хранилище.  Если возможно, переместите файл в папку с открытым доступом и попробуйте снова."/>
 	<string id="17495" value="Этот торрент содержит файл «%s» версии %s, но версия Вашего файла - %s."/>
-	<string id="17496" value="Произошла ошибка во время  копирования «%s» в BitTorrent разделяемый файл."/>
+	<string id="17496" value="Произошла ошибка во время  копирования «%s» в BitTorrent файл."/>
 	<string id="17497" value="Произошла неясная ошибка во время рапространения «%s»."/>
 	<string id="17498" value="Обнаружена ошибка в файле «%s»."/>
 	<string id="17500" value="Трекер не ответил - повтор анонсирования (%i из %i)"/>
@@ -3202,7 +3203,7 @@
 	<string id="20000" value="Нет доступных ссылок"/>
 	<string id="20001" value="Закрыть"/>
 	<string id="20002" value="из"/>
-	<string id="20003" value="Для смены направления интерфейса Вы должны вручную перезапустить Shareaza.\מВыйти сейчас?"/>
+	<string id="20003" value="Для смены направления интерфейса Вы должны вручную перезапустить Shareaza.\?Выйти сейчас?"/>
 	<string id="20004" value="Ваша ОС не поддеживает языки с направлением текста справа налево."/>
 	<string id="20005" value="Нет"/>
 	<string id="20006" value="Да"/>
@@ -3227,7 +3228,7 @@
 	<string id="20111" value="Закончено"/>
 	<string id="20112" value="Распространение"/>
 	<string id="20113" value="Перемещается"/>
-	<string id="20114" value="Приостановлено"/>
+	<string id="20114" value="Пауза"/>
 	<string id="20115" value="Ошибка файла"/>
 	<string id="20116" value="Не перемещается!"/>
 	<string id="20117" value="Проверка"/>
@@ -3265,7 +3266,7 @@
 	<string id="20214" value="Хороший"/>
 	<string id="20215" value="Очень хороший"/>
 	<string id="20216" value="Отменный"/>
-	<string id="20217" value="Выберите папку с частичными загузками eDonkey/eMule:"/>
+	<string id="20217" value="Выберите папку с частичными загрузками eMule:"/>
 	<!-- Column headers in Library Album View -->
 	<string id="20230" value="№"/><!-- Track number -->
 	<string id="20231" value="Название"/>
@@ -3279,7 +3280,7 @@
 <dialogs>
 	<dialog name="CSettingSheet" cookie="SyBuBuBu#3" caption="Установки Shareaza">
 		<control/>
-		<control caption="ДА"/>
+		<control caption="OK"/>
 		<control caption="Отмена"/>
 		<control caption="Применить"/>
 		<control/>
@@ -3315,9 +3316,9 @@
 	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBuBu" caption="Хранилище">
 		<control caption="_Опции:"/>
 		<control caption="Запоминать вид папок"/>
-		<control caption="Следить за папками хранил."/>
-		<control caption="Быстрое хеш-ние (ЦПУ нагр.)"/>
-		<control caption="Разделяемые видны другим"/>
+		<control caption="Следить за хранилищем"/>
+		<control caption="Быстрое хеширование"/>
+		<control caption="Открыть общий доступ"/>
 		<control caption="_Последние файлы:"/>
 		<control caption="Помнить:"/>
 		<control/><control/>
@@ -3330,7 +3331,7 @@
 		<control/>
 		<control caption="_Внести"/>
 		<control caption="_Удалить"/>
-		<control caption="Не _разделять:"/>
+		<control caption="Не _открывать доступ для:"/>
 		<control/>
 		<control caption="_Внести"/>
 		<control caption="_Удалить"/>
@@ -3372,7 +3373,7 @@
 		<control caption="Piolet ( mp2p: )"/>
 		<control caption="BitTorrent ( .torrent )"/>
 		<control caption="_Менеджер загрузок:"/>
-		<control caption="Обрабатывать Shareaz'ой все мои вэб загрузки:"/>
+		<control caption="Обрабатывать Shareaz'ой все мои веб загрузки:"/>
 		<control/>
 		<control caption="_Внести"/>
 		<control caption="_Удалить"/>
@@ -3422,16 +3423,16 @@
 		<control/>
 		<control caption="Максимальный номер очереди:"/>
 		<control/><control/>
-		<control caption="Загрузки и выгрузки только с соединенными сетями."/>
+		<control caption="Загрузки и раздачи только с соединенными сетями."/>
 	</dialog>
-	<dialog name="CUploadsSettingsPage" cookie="BuBuBuBuStEdmsBuCoBuBuBuStCoStCoBuSyBuBuBuSt" caption="Выгрузки">
+	<dialog name="CUploadsSettingsPage" cookie="BuBuBuBuStEdmsBuCoBuBuBuStCoStCoBuSyBuBuBuSt" caption="Раздачи">
 		<control caption="_Опции:"/>
-		<control caption="Разделять новые загрузки"/>
-		<control caption="Лимит. выгрузки в режиме узла"/>
-		<control caption="Разрешить предв. просмотр"/>
-		<control caption="Лимит на уник. хост:"/>
+		<control caption="Общий доступ к загрузкам"/>
+		<control caption="Лимит раздачи в режиме узла"/>
+		<control caption="Разрешить просмотр"/>
+		<control caption="Лимит подключений на хост:"/>
 		<control/><control/>
-		<control caption="_Юзер-Агент фильтр:"/>
+		<control caption="_Фильтр программ:"/>
 		<control/>
 		<control caption="+"/>
 		<control caption="-"/>
@@ -3449,12 +3450,12 @@
 	</dialog>
 	<dialog name="CRemoteSettingsPage" cookie="BuStBuBuStBuStEdStEd" caption="Удал. доступ">
 		<control caption="_Описание:"/>
-		<control caption="Удаленный доступ к Shareaza позволит Вам оставить Shareaza запущенной и контролировать её удаленно из вэб браузера.  Для использования этого Вам понадобится иметь возможность принимать входящие соединения (и правильно настроить брандмауэр)."/>
+		<control caption="Удаленный доступ к Shareaza позволит Вам оставить Shareaza запущенной и контролировать её удаленно из веб браузера.  Для использования этого Вам понадобится иметь возможность принимать входящие соединения (и правильно настроить брандмауэр)."/>
 		<control caption="_Разрешение:"/>
 		<control caption="Разрешить удаленный доступ к Shareaza:"/>
 		<control/>
 		<control caption="_Безопасность:"/>
-		<control caption="Введите имя юзера:"/>
+		<control caption="Введите имя:"/>
 		<control/>
 		<control caption="Введите пароль:"/>
 		<control/>
@@ -3483,8 +3484,8 @@
 	<dialog name="CNetworksSettingsPage" cookie="StBuStBuStBuStBuStBuStBuSt" caption="Сети">
 		<control caption="Shareaza - многоцелевая программа обмена файлами, с доступом ко многим P2P сетям одновременно. Здесь Вы можете выбрать, какие P2P сети Вы хотите использовать, и затем определить настройки для каждой из сетей."/>
 		<control caption="Сеть Gnutella2:"/>
-		<control caption="Gnutella2 - основная сеть Shareaza, она предлагает больше особенностей и опций работы чем любая другая P2P сеть.  Крайне рекомендуется."/>
-		<control caption="Соединяться с  Gnutella2 (G2)"/>
+		<control caption="Gnutella2 - основная сеть Shareaza, она предлагает больше особенностей и опций работы чем любая другая P2P сеть."/>
+		<control caption="Соединяться с Gnutella2(G2)"/>
 		<control caption="Настроить Gnutella2"/>
 		<control caption="Сеть eDonkey:"/>
 		<control caption="eDonkey популярная сеть с использованием серверов.  Не столь богата возможностями как Gnutella2, но содержит больше файлов."/>
@@ -3540,7 +3541,7 @@
 		<control/><control/>
 		<control caption="другими eDonkey клиентами."/>
 		<control caption="eDonkey _утилиты:"/>
-		<control caption="Загрузить список серверов из вэба:"/>
+		<control caption="Загрузить список серверов из вба:"/>
 		<control caption="Загрузить..."/>
 	</dialog>
 	<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsStEdmsStBuEdmsStBuBuBuBuEdBuBuEdBuStEd" caption="BitTorrent">
@@ -3598,18 +3599,18 @@
 		<control caption="Описание:"/>
 		<control/>
 	</dialog>
-	<dialog name="CQueuePropertiesDlg" cookie="BuEdBuBuBuBuBuEdBuEdBuCoBuEdBuSyBuBuStEdmsStEdmsStEdmsBuStEdStEdmsBuEdmsBuBuBu" caption="Настройка очереди выгрузок">
+	<dialog name="CQueuePropertiesDlg" cookie="BuEdBuBuBuBuBuEdBuEdBuCoBuEdBuSyBuBuStEdmsStEdmsStEdmsBuStEdStEdmsBuEdmsBuBuBu" caption="Настройка очереди раздач">
 		<control caption="_Название:"/>
 		<control/>
 		<control caption="_Критерии:"/>
 		<control caption="Только частично загруженные файлы"/>
-		<control caption="Только разделяемые файлы хранилища"/>
-		<control caption="Разделяемые и частично загруженные"/>
-		<control caption="Мин. размер исход. файла:"/>
+		<control caption="Только файлы хранилища"/>
+		<control caption="И те, и другие"/>
+		<control caption="Минимальный размер файла:"/>
 		<control/>
-		<control caption="Макс. размер исход. файла:"/>
+		<control caption="Максимальный размер файла:"/>
 		<control/>
-		<control caption="Марка файлов:"/>
+		<control caption="Метка файлов:"/>
 		<control/>
 		<control caption="Имя файла с:"/>
 		<control/>
@@ -3617,20 +3618,20 @@
 		<control/>
 		<control caption="_Ограничения:"/>
 		<control caption="Разрешить эту очередь"/>
-		<control caption="Мин. кол-во выгрузок:"/>
+		<control caption="Мин. кол-во раздач:"/>
 		<control/><control/>
-		<control caption="Макс. кол-во выгрузок:"/>
+		<control caption="Макс. кол-во раздач:"/>
 		<control/><control/>
 		<control caption="Макс. кол-во ждущих в очереди:"/>
 		<control/><control/>
 		<control caption="_Параметры сервиса:"/>
 		<control caption="Процент полосы пропускания:"/>
 		<control/>
-		<control caption="Полоса пропускания очереди:"/>
+		<control caption="Трафик очереди:"/>
 		<control/><control/>
 		<control caption="Возврат после N секунд:"/>
 		<control/><control/>
-		<control caption="ДА"/>
+		<control caption="OK"/>
 		<control caption="Отмена"/>
 		<control caption="Вознаградить загрузчиков"/>
 	</dialog>
@@ -3642,7 +3643,7 @@
 		<control/>
 		<control caption="Расказать Shareaza о Вашем Интернет соединении"/>
 		<control/>
-		<control caption="Выбрать какие файлы разделять"/>
+		<control caption="Выбрать какие файлы открыть для доступа"/>
 		<control/>
 		<control caption="Соединиться с Вашей любимой P2P сетью, и"/>
 		<control/>
@@ -3664,7 +3665,7 @@
 		<control caption="Коммутир. соединение|ИСДН|АДСЛ (256 К)|АДСЛ (512 К)|АДСЛ (768 К)|АДСЛ (1,5 М)|АДСЛ (4,0 M)|АДСЛ2 (8,0 M)|АДСЛ2 (12,0 M)|АДСЛ2+ (24,0 M)|Кабельный модем/СДСЛ|Т1|Т3|Локальная сеть|OC3"/>
 		<control caption="Или выберите скорость загрузки:"/>
 		<control/>
-		<control caption="и скорость выгрузки:"/>
+		<control caption="и скорость раздачи:"/>
 		<control/>
 		<control caption="Хотите ли Вы перенаправить порт используя UPnP?"/>
 		<control/>
@@ -3672,9 +3673,9 @@
 		<control/>
 	</dialog>
 	<dialog name="CWizardSharePage" cookie="StStStSyBuBuSt" caption="Добро пожаловать в Shareaza [4 из 7]">
-		<control caption="Качество P2P сетей зависит от самих же пользователей! Файлы в папках указанных для выгрузок будут разделенны для других пользователей."/>
-		<control caption="Вы не обязанны ничего разделять для использования Shareaza, но другие P2P пользователи могут отказать в загрузках тем, у кого нечего выгрузить."/>
-		<control caption="Пожалуйста укажите, какие папки Вы желаете разделять (если такие у Вас есть).  Просто щелкните кнопку «Внести», чтобы указать новую папку."/>
+		<control caption="Качество P2P сетей зависит от самих же пользователей! Файлы в папках указанных для раздач будут открыты для других пользователей."/>
+		<control caption="Вы не обязанны ничем делиться для использования Shareaza, но другие P2P пользователи могут отказать в загрузках тем, у кого нечего взять."/>
+		<control caption="Пожалуйста укажите, какие папки Вы желаете открыть для общего доступа (если такие у Вас есть).  Просто щелкните кнопку «Внести», чтобы указать новую папку."/>
 		<control/>
 		<control caption="_Внести..."/>
 		<control caption="_Удалить"/>
@@ -3701,7 +3702,7 @@
 	</dialog>
 	<dialog name="CWizardNetworksPage" cookie="StBuStBuStBuSt" caption="Добро пожаловать в Shareaza [6 из 7]">
 		<control caption="Shareaza - многоцелевая программа обмена файлами, с доступом ко многим P2P сетям одновременно. Здесь Вы можете выбрать, какие P2P сети Вы хотите использовать. Отметьте, что Вы можете выбрать их позже."/>
-		<control caption="Соединяться с Gnutella2 (крайне рекомендуется)"/>
+		<control caption="Соединяться с Gnutella2 (рекомендуется)"/>
 		<control caption="Gnutella2 - основная сеть Shareaza, она предлагает больше особенностей и опций работы чем любая другая P2P сеть."/>
 		<control caption="Соединяться с eDonkey"/>
 		<control caption="eDonkey популярная сеть с использованием серверов.  Не столь богата возможностями как Gnutella2, но содержит больше файлов."/>
@@ -3711,8 +3712,8 @@
 	<dialog name="CDonkeyImportDlg" cookie="StStBuBuEdBu" caption="Импорт eDonkey Загрузок">
 		<control/>
 		<control caption="Shareaza обнаружила, что у Вас установлена другая, eDonkey, программа. Хотели бы Вы импортировать любые незаконченные загрузки в Shareaza?"/>
-		<control caption="ДА"/>
-		<control caption="Нет|Отмена"/>
+		<control caption="Да"/>
+		<control caption="Нет"/>
 		<control/>
 		<control caption="Закрыть"/>
 	</dialog>
@@ -3727,7 +3728,7 @@
 	</dialog>
 	<dialog name="CProfileManagerDlg" cookie="SyBuBuBu#3" caption="Правка своего профиля">
 		<control/>
-		<control caption="ДА"/>
+		<control caption="OK"/>
 		<control caption="Отмена"/>
 		<control caption="Применить"/>
 		<control/>
@@ -3785,7 +3786,7 @@
 		<control caption="_Предварительный просмотр:"/>
 		<control/>
 		<control caption="_Выбор:"/>
-		<control caption="Другие пользователи Gnutella, просматривающие ваш профиль и разделяемые файлы будут видеть вашу картинку воплощения. Она должна быть размером 128x128 пикселей, любого формата изображений."/>
+		<control caption="Другие пользователи Gnutella, просматривающие ваш профиль и файлы будут видеть вашу картинку воплощения. Она должна быть размером 128x128 пикселей, любого формата изображений."/>
 		<control caption="В_ыбрать..."/>
 		<control caption="_Удалить"/>
 	</dialog>
@@ -3829,7 +3830,7 @@
 		<control/>
 		<control caption="Загрузить"/>
 		<control caption="Отмена"/>
-		<control caption="Shareaza может загружать файлы из вэб'а (HTTP), и автоматически искать и загружать файлы по P2P ссылкам (Magnet, Gnutella, eDonkey, mP2P)."/>
+		<control caption="Shareaza может загружать файлы из веба (HTTP), и автоматически искать и загружать файлы по P2P ссылкам (Magnet, Gnutella, eDonkey, mP2P)."/>
 		<control caption="Shareaza может загружать и BitTorrent файлы. Torrent представляет собой xyz.torrent файл или HTTP ссылку на '.torrent' файл.  Для загрузки HTTP Torrent ссылки введите её выше.  Если у Вас уже есть '.torrent' файл, нажмите кнопку"/>
 		<control caption="Открыть _Torrent..."/>
 	</dialog>
@@ -3870,7 +3871,7 @@
 	</dialog>
 	<dialog name="CSaveFilterAsDlg" cookie="EdBuBuSt" caption="Сохранить фильтр как">
 		<control/>
-		<control caption="ДА"/>
+		<control caption="OK"/>
 		<control caption="Отмена"/>
 		<control caption="Сохранить текущий фильтр как"/>
 	</dialog>
@@ -3879,7 +3880,7 @@
 		<control/>
 		<control caption="Тип ресурса соединений:"/>
 		<control caption="Gnutella Bootstrap|GWebCache|Server.met ссылка"/>
-		<control caption="ДА"/>
+		<control caption="OK"/>
 		<control caption="Отмена"/>
 	</dialog>
 	<dialog name="CDownloadMonitorDlg" cookie="StStStStStStStStStStStStStBuBuBuBuBu" caption="Загрузка : Shareaza">
@@ -3923,12 +3924,12 @@
 		<control caption="Мой обзор и комментарии"/>
 		<control/><control/>
 	</dialog>
-	<dialog name="CFileSharingPage" cookie="StBuBuBuStCoStSyEd" caption="Разделение">
-		<control caption="Простое разделение"/>
-		<control caption="Разделять, если папка файла разделяема"/>
-		<control caption="Отменить установки разделения этого файла:"/>
-		<control caption="Сделать файл достуным для других пользователей"/>
-		<control caption="Марка(и) для выборки очереди выгрузки"/>
+	<dialog name="CFileSharingPage" cookie="StBuBuBuStCoStSyEd" caption="Общий доступ">
+		<control caption="Режим доступа"/>
+		<control caption="Наследовать доступ от родительской папки"/>
+		<control caption="Использовать независимую настройку доступа:"/>
+		<control caption="Открыть общий доступ к файлу"/>
+		<control caption="Метка для выбора очереди раздачи"/>
 		<control/>
 		<control caption="-Сети, в которых разделять"/>
 		<control/><control/>
@@ -3944,7 +3945,7 @@
 	<dialog name="CFileCopyDlg" cookie="StStmsBuBumsStSt" caption="Копирование|Перемещение файлов">
 		<control caption="Вы выбрали %i файл(а/ов) для копирования в папку:"/>
 		<control/><control/>
-		<control caption="ДА"/>
+		<control caption="OK"/>
 		<control caption="Отмена"/>
 		<control/>
 		<control caption="Жду..."/>
@@ -3957,7 +3958,7 @@
 		<control/>
 		<control caption="Все"/>
 		<control caption="Копировать эти данные всем файлам в папке"/>
-		<control caption="ДА"/>
+		<control caption="OK"/>
 		<control caption="Отмена"/>
 	</dialog>
 	<dialog name="CGraphListDlg" cookie="SyBuBuBuBuBuBuBuBuStEdmsStBuEdBuBu" caption="Графики трафика">
@@ -3975,11 +3976,11 @@
 		<control caption="мс"/>
 		<control caption="_Название:"/>
 		<control/>
-		<control caption="ДА"/>
+		<control caption="OK"/>
 		<control caption="Отмена"/>
 	</dialog>
 	<dialog name="CGraphItemDlg" cookie="BuBuBuCoStEdStEdBuBuStBu" caption="Свойства элемента графика">
-		<control caption="ДА"/>
+		<control caption="OK"/>
 		<control caption="Отмена"/>
 		<control caption="_Источник:"/>
 		<control/>
@@ -3994,7 +3995,7 @@
 	</dialog>
 	<dialog name="CSchemaColumnsDlg" cookie="CoSyBuBuSt" caption="Выбор колонок из схемы">
 		<control/><control/>
-		<control caption="ДА"/>
+		<control caption="OK"/>
 		<control caption="Отмена"/>
 		<control caption="Выберите схему из списка, затем выберите колонки для отображения."/>
 	</dialog>
@@ -4025,16 +4026,16 @@
 		<control caption="ч"/>
 		<control/>
 		<control caption="м"/>
-		<control caption="ДА"/>
+		<control caption="OK"/>
 		<control caption="Отмена"/>
 	</dialog>
-	<dialog name="CShareManagerDlg" cookie="StStSyBuBuBuBu" caption="Менеджер разделяемых папок">
+	<dialog name="CShareManagerDlg" cookie="StStSyBuBuBuBu" caption="Общий доступ">
 		<control/>
-		<control caption="Это список папок Вашего хранилища.  Можно добавлять или удалять папки кнопками слева.  Когда Вы добавляете новую папку, она первоначально разделена для всех, но Вы можете изменить это позже из самого хранилища."/>
+		<control caption="Это список папок Вашего хранилища.  Можно добавлять или удалять папки кнопками слева.  Когда Вы добавляете новую папку, она становиться доступной для всех, но Вы можете изменить это позже из самого хранилища."/>
 		<control/>
 		<control caption="_Добавить..."/>
 		<control caption="_Удалить"/>
-		<control caption="ДА"/>
+		<control caption="OK"/>
 		<control caption="Отмена"/>
 	</dialog>
 	<dialog name="CURLCopyDlg" cookie="StStStStStBuBu" caption="Копировать ссылку">
@@ -4079,7 +4080,7 @@
 		<control/>
 		<control caption="www.bitzi.com"/>
 	</dialog>
-	<dialog name="CFilePreviewDlg" cookie="StStStmsStBu" caption="Предв. просмотр копии загрузки...">
+	<dialog name="CFilePreviewDlg" cookie="StStStmsStBu" caption="Просмотр копии загрузки...">
 		<control/>
 		<control caption="Shareaza готовит предпросмотр загрузки:"/>
 		<control/><control/>
@@ -4104,7 +4105,7 @@
 		<control caption="Если знаете кого-то, кто хотел бы попробовать Shareaza, неважно новые они пользователи или нет, почему бы не дать им возможнось узнать о лучшей альтернативной P2P программе?"/>
 		<control caption="Возможно они будут благодарны, что Вы спасли их!"/>
 		<control caption="http://shareaza.sourceforge.net/"/>
-		<control caption="ДА"/>
+		<control caption="OK"/>
 	</dialog>
 	<dialog name="CExistingFileDlg" cookie="StStStStStBuBuBuBuBuStSt" caption="Загрузка имеющегося файла">
 		<control/><control/><control/><control/>
@@ -4112,7 +4113,7 @@
 		<control caption="Показать мне это файл в хранилище"/>
 		<control caption="Загрузить файл снова"/>
 		<control caption="Не загружать этот файл"/>
-		<control caption="ДА"/>
+		<control caption="OK"/>
 		<control caption="Отмена"/>
 		<control caption="Вы уже загружали этот файл и удалили его.  Что бы Вы хотели сделать?"/>
 		<control caption="Внимание!!! Найденны дубликаты. Злоумышленные программы могут заразить Ваше хранилище. Проверьте, что это Вы загрузили или поместили этот файл. Иначе, закройте Shareaza и просканируйте Ваш компьютер."/>
@@ -4122,15 +4123,15 @@
 		<control caption="Это - первый раз, когда Вы щелкнули кнопку «Закрыть» Shareaza.  Выберите, какое действие Shareaza должна выполнять когда Вы её щелкаете:"/>
 		<control caption="Сворачивать в трей"/>
 		<control caption="Закрывать Shareaza сразу"/>
-		<control caption="Закрывать Shareaza после завершения всех загрузок и выгрузок"/>
-		<control caption="ДА"/>
+		<control caption="Закрывать Shareaza после завершения всех загрузок и раздач"/>
+		<control caption="OK"/>
 		<control caption="Отмена"/>
 	</dialog>
 	<dialog name="CDonkeyServersDlg" cookie="StStEdmsBuBu" caption="Загрузить Server.met файл">
 		<control/>
-		<control caption="Вы можете загрузить eDonkey server.met файл из вэба, чтобы обновить Ваш список серверов."/>
+		<control caption="Вы можете загрузить eDonkey server.met файл из веба, чтобы обновить Ваш список серверов."/>
 		<control/><control/>
-		<control caption="ДА"/>
+		<control caption="OK"/>
 		<control caption="Отмена"/>
 	</dialog>
 	<dialog name="CHelpDlg" cookie="StBuAf" caption="Справка Shareaza'ы">
@@ -4195,7 +4196,7 @@
 		<control/>
 		<control caption="Стереть"/>
 		<control caption="Torrent _Инфо..."/>
-		<control caption="ДА"/>
+		<control caption="OK"/>
 		<control caption="Отмена"/>
 	</dialog>
 	<dialog name="CTorrentSeedDlg" cookie="StStBuBuBuStms" caption="Открыть торрент файл">
@@ -4221,7 +4222,7 @@
 		<control caption="Начать новые загрузки:"/>
 		<control caption="Когда необходимо|Когда соотношение выше 100%|Только когда запрашивают|Никогда"/>
 		<control/>
-		<control caption="Всего выгруженно:"/>
+		<control caption="Всего роздано:"/>
 		<control caption="Заметки:"/>
 		<control/>
 	</dialog>
@@ -4256,7 +4257,7 @@
 		<control/>
 		<control caption="_Добавить"/>
 		<control caption="_Удалить"/>
-		<control caption="ДА"/>
+		<control caption="OK"/>
 		<control caption="Отмена"/>
 		<control caption="_Папка завершенных файлов:"/>
 		<control/>
@@ -4267,7 +4268,7 @@
 		<control/>
 		<control caption="Внизу изображения|Полный экран|Большой экран|Средний экран|Маленький экран"/>
 		<control caption="_Установки..."/>
-		<control caption="ДА"/>
+		<control caption="OK"/>
 		<control caption="Отмена"/>
 	</dialog>
 	<dialog name="CUpgradeDlg" cookie="StStStBuBuBu" caption="Предупреждение об обновлении">
@@ -4280,7 +4281,7 @@
 	</dialog>
 	<dialog name="CDownloadReviewDlg" cookie="StBuSyEd" caption="Оценки закрузки">
 		<control/>
-		<control caption="ДА"/>
+		<control caption="OK"/>
 		<control/><control/>
 	</dialog>
 	<dialog name="CDecodeMetadataDlg" cookie="BuBuStCo" caption="Локализация мета данных">
@@ -4288,7 +4289,7 @@
 		<control caption="Арабский|Балтийский|Центральной Европы|Китайский упрощенный|Китайский традиционный|Кириллица|Греческий|Иврит|Японский|Корейский|Тайский|Турецкий|Вьетнамский"/>
 		<control caption="Просмотр:"/>
 		<control/><control/>	<control/><control/>
-		<control caption="ДА"/>
+		<control caption="OK"/>
 		<control caption="Отмена"/>
 	</dialog>
 </dialogs>
@@ -4300,7 +4301,7 @@
 		<column from="Size" to="Размер"/>
 		<column from="Folder" to="Папка"/>
 		<column from="Hits" to="Обращений"/>
-		<column from="Uploads" to="Выгрузок"/>
+		<column from="Uploads" to="Раздач"/>
 	<column from="Modified" to="Изменено"/>
 	</list>
 	<list name="CDownloadCtrl">
@@ -4315,8 +4316,8 @@
 		<column from="Country" to="Страна"/>
 	</list>
 	<list name="CUploadCtrl">
-		<column from="Remote User" to="Удаленный юзер"/>
-		<column from="Uploaded File" to="Выгружаемый файл"/>
+		<column from="Remote User" to="Хост"/>
+		<column from="Uploaded File" to="Раздаваемый файл"/>
 		<column from="Size" to="Размер"/>
 		<column from="Progress" to="Прогресс"/>
 		<column from="Speed" to="Скорость"/>
@@ -4329,7 +4330,7 @@
 		<column from="Port" to="Порт"/>
 		<column from="Time" to="Время"/>
 		<column from="Packets" to="Пакеты"/>
-		<column from="Bandwidth" to="Полоса пропускания"/>
+		<column from="Bandwidth" to="Трафик"/>
 		<column from="Total" to="Всего"/>
 		<column from="Flow" to="Поток"/>
 		<column from="Leaves" to="Ветвей"/>
@@ -4364,7 +4365,7 @@
 		<column from="Type" to="Тип"/>
 		<column from="Last Access" to="Последний доступ"/>
 		<column from="Hosts" to="Хостов"/>
-		<column from="Accesses" to="Доступов"/>
+		<column from="Accesses" to="Обращений"/>
 		<column from="Updates" to="Обновлений"/>
 		<column from="Failures" to="Отказов"/>
 	</list>
@@ -4397,7 +4398,7 @@
 	<list name="CUploadQueueList">
 		<column from="Name" to="Название"/>
 		<column from="Criteria" to="Критерии"/>
-		<column from="Bandwidth" to="Полоса пропускания"/>
+		<column from="Bandwidth" to="Трафик"/>
 		<column from="Transfers" to="Загрузок"/>
 		<column from="Order" to="Порядок"/>
 	</list>
