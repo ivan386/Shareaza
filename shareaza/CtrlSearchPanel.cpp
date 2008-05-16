@@ -94,7 +94,7 @@ BEGIN_MESSAGE_MAP(CSearchResultsBox, CTaskBox)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
-#define BOX_MARGIN	10
+#define BOX_MARGIN	6
 #define PANEL_WIDTH	200
 
 /////////////////////////////////////////////////////////////////////////////
@@ -556,10 +556,11 @@ void CSearchInputBox::OnSize(UINT nType, int cx, int cy)
 		SWP_SHOWWINDOW | SWP_NOACTIVATE | SWP_NOZORDER );
 	DeferWindowPos( hDWP, m_wndSchemas, NULL, BOX_MARGIN, 67,
 		cx - BOX_MARGIN * 2, 256,
-		SWP_SHOWWINDOW | SWP_NOACTIVATE | SWP_NOZORDER );	
-	DeferWindowPos( hDWP, m_wndStart, NULL, BOX_MARGIN, 102, 90, 24,
 		SWP_SHOWWINDOW | SWP_NOACTIVATE | SWP_NOZORDER );
-	DeferWindowPos( hDWP, m_wndStop, NULL, cx - BOX_MARGIN - 60, 102, 60, 24,
+	int width = ( cx - BOX_MARGIN * 3 ) / 2;
+	DeferWindowPos( hDWP, m_wndStart, NULL, BOX_MARGIN, 102, width, 24,
+		SWP_SHOWWINDOW | SWP_NOACTIVATE | SWP_NOZORDER );
+	DeferWindowPos( hDWP, m_wndStop, NULL, BOX_MARGIN * 2 + width, 102, width, 24,
 		SWP_SHOWWINDOW | SWP_NOACTIVATE | SWP_NOZORDER );
 	DeferWindowPos( hDWP, m_wndPrefix, NULL, cx - BOX_MARGIN - 8, 13, 8, 8,
 		SWP_SHOWWINDOW | SWP_NOACTIVATE | SWP_NOZORDER );
@@ -838,7 +839,11 @@ int CSearchAdvancedBox::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_wndSizeMax.AddString( _T("500 MB") );
 	m_wndSizeMax.AddString( _T("1 GB") );
 	m_wndSizeMax.AddString( _T("4 GB") );
-	
+
+	if ( ! m_wndSizeMinMax.Create( _T(""), WS_CHILD|WS_VISIBLE|SS_CENTER,
+		rc, this ) ) return -1;
+	m_wndSizeMinMax.SetFont( &theApp.m_gdiFont );
+
 	return 0;
 }
 
@@ -854,6 +859,10 @@ void CSearchAdvancedBox::OnSkinChange()
 			DestroyIcon( hIcon );
 		}
 	}
+
+	CString strControlTitle;
+	LoadString( strControlTitle, IDS_SEARCH_PANEL_INPUT_5 );
+	m_wndSizeMinMax.SetWindowText( strControlTitle );
 }
 
 void CSearchAdvancedBox::OnSize(UINT nType, int cx, int cy) 
@@ -876,12 +885,13 @@ void CSearchAdvancedBox::OnSize(UINT nType, int cx, int cy)
 			SWP_SHOWWINDOW | SWP_NOACTIVATE | SWP_NOZORDER );
 	if ( m_wndSizeMin.m_hWnd != NULL )
 	{
+		int width = ( cx - BOX_MARGIN * 6 ) / 2;
 		DeferWindowPos( hDWP, m_wndSizeMin, NULL, BOX_MARGIN, 81,
-			( cx - BOX_MARGIN * 4 ) / 2, 219,
-			SWP_SHOWWINDOW | SWP_NOACTIVATE | SWP_NOZORDER );
-		DeferWindowPos( hDWP, m_wndSizeMax, NULL, ( cx / 2 ) + BOX_MARGIN, 81,
-			( cx - BOX_MARGIN * 4 ) / 2, 219,
-			SWP_SHOWWINDOW | SWP_NOACTIVATE | SWP_NOZORDER );
+			width, 219, SWP_SHOWWINDOW | SWP_NOACTIVATE | SWP_NOZORDER );
+		DeferWindowPos( hDWP, m_wndSizeMax, NULL, cx - BOX_MARGIN - width, 81,
+			width, 219, SWP_SHOWWINDOW | SWP_NOACTIVATE | SWP_NOZORDER );
+		DeferWindowPos( hDWP, m_wndSizeMinMax, NULL, BOX_MARGIN + width, 81 + 2,
+			BOX_MARGIN * 4, 18, SWP_SHOWWINDOW | SWP_NOACTIVATE | SWP_NOZORDER );
 	}
 	
 	EndDeferWindowPos( hDWP );
@@ -926,12 +936,6 @@ void CSearchAdvancedBox::OnPaint()
 	// Text of "File size must be" above drop down box of MinFileSize and MaxFileSize
 	LoadString( strControlTitle, IDS_SEARCH_PANEL_INPUT_4 );
 	rct.OffsetRect( 0, 64 - rct.top );
-	pDC->ExtTextOut( rct.left, rct.top, nFlags, &rct, strControlTitle, NULL );
-	pDC->ExcludeClipRect( &rct );
-
-	// Text of "to" in between MinimumFileSize and MaximumFileSize
-	LoadString( strControlTitle, IDS_SEARCH_PANEL_INPUT_5 );
-	rct.OffsetRect( ( rc.Width() / 2 ) - ( BOX_MARGIN * 2 ) , 15 );
 	pDC->ExtTextOut( rct.left, rct.top, nFlags, &rct, strControlTitle, NULL );
 	pDC->ExcludeClipRect( &rct );
 	

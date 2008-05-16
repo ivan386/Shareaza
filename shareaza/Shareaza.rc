@@ -3800,13 +3800,13 @@ BEGIN
     IDS_SEARCH_NO_SCHEMA    "No Schema Columns"
     IDS_SEARCH_PANEL_SHOW   "Show the Search Panel"
     IDS_SEARCH_PANEL_HIDE   "Hide the Search Panel"
-    IDS_SEARCH_PANEL_SEARCHING "Searching..."
+    IDS_SEARCH_PANEL_SEARCHING "Searching"
 END
 
 STRINGTABLE 
 BEGIN
-    IDS_SEARCH_PANEL_START  "Start Search"
-    IDS_SEARCH_PANEL_MORE   "Search More"
+    IDS_SEARCH_PANEL_START  "Search"
+    IDS_SEARCH_PANEL_MORE   "More"
     IDS_SEARCH_PANEL_STOP   "Stop"
     IDS_SEARCH_PANEL_AFT    "Any File Type"
     IDS_SEARCH_PANEL_INPUT_1 "Type your search here:"

@@ -87,7 +87,7 @@ public:
 
 // Attributes
 public:
-
+	CStatic			m_wndSizeMinMax;
 	CComboBox		m_wndSizeMin;
 	CComboBox		m_wndSizeMax;
 	CButton			m_wndCheckBoxG1;

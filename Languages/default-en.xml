@@ -2649,9 +2649,9 @@
 	<string id="8137" value="No Schema Columns"/>
 	<string id="8141" value="Show the Search Panel"/>
 	<string id="8142" value="Hide the Search Panel"/>
-	<string id="8143" value="Searching..."/>
-	<string id="8144" value="Start Search"/>
-	<string id="8145" value="Search More"/>
+	<string id="8143" value="Searching"/>
+	<string id="8144" value="Search"/>
+	<string id="8145" value="More"/>
 	<string id="8146" value="Stop"/>
 	<string id="8147" value="Any File Type"/>
 	<string id="8148" value="Type your search here:"/>
