@@ -1595,7 +1595,7 @@
 				<font face="Verdana" size="12"/>
 			</style>
 			<style name="heading">
-				<font face="Comic Sans MS" size="16" weight="800"/>
+				<font face="Arial" size="16" weight="900"/>
 			</style>
 		</styles>
 		<anchor id="Header" width="32" height="172"/>
@@ -1667,7 +1667,7 @@
 			<newline gap="18" indent="0"/>
 		</group>
 		<icon res="236" width="32" height="32"/><gap size="8"/>
-		<heading align="middle">H A C T P O Й T E  &#160; S H A R E A Z A</heading>
+		<heading align="middle">Н А С Т Р О Й Т Е  &#160; S H A R E A Z у</heading>
 		<newline gap="12" indent="42"/>
 		<icon res="237" width="32" height="32" target="raza:command:ID_TOOLS_SKIN"/>
 		<gap size="8"/>
@@ -1801,9 +1801,9 @@
 			<link id="UploadsOne" format="bu" target="raza:command:ID_VIEW_UPLOADS">1 раздача активна</link>
 			<link id="UploadsMany" format="bu" target="raza:command:ID_VIEW_UPLOADS">%i раздача(и) активна(ы)</link>
 			<newline gap="4"/>
-			<text id="UploadedNone">Вы ничего сегодня не раздавали.</text>
-			<text id="UploadedOne">Вы раздали 1 файл (%s).</text>
-			<text id="UploadedMany">Вы раздали %i файла(ов) (%s).</text>
+			<text id="UploadedNone">Вы ничего сегодня не раздавали</text>
+			<text id="UploadedOne">Вы раздали 1 файл (%s)</text>
+			<text id="UploadedMany">Вы раздали %i файла(ов) (%s)</text>
 		</para>
 	</document>
 	<document name="CHomeTorrentsBox" title="Torrents" leftMargin="6" topMargin="6">
@@ -1813,17 +1813,17 @@
 			</style>
 		</styles>
 		<para align="center">
-			<text id="TorrentsNone" format="b">Торренты не распространяются</text>
-			<text id="TorrentsOne" format="b">Распространяется 1 торрент</text>
-			<text id="TorrentsMany" format="b">Распространяются %i торренты(ов)</text>
+			<text id="TorrentsNone" format="b">Торренты не раздаются</text>
+			<text id="TorrentsOne" format="b">Раздается 1 торрент</text>
+			<text id="TorrentsMany" format="b">Раздается %i торрента(ов)</text>
 			<newline gap="4"/>
-			<link id="ReseedTorrent" format="bu" target="raza:command:ID_TOOLS_RESEEDTORRENT">Распространять %s</link>
+			<link id="ReseedTorrent" format="bu" target="raza:command:ID_TOOLS_RESEEDTORRENT">Раздавать %s</link>
 			<newline gap="4"/>
 			<group id="1">
-			<link id="SeedTorrent" format="bu" target="raza:command:ID_TOOLS_SEEDTORRENT">Распространять другой торрент</link>
+			<link id="SeedTorrent" format="bu" target="raza:command:ID_TOOLS_SEEDTORRENT">Раздавать другой торрент</link>
 			</group>
 			<group id="2">
-			<link id="SeedTorrent" format="bu" target="raza:command:ID_TOOLS_SEEDTORRENT">Распространять торрент</link>
+			<link id="SeedTorrent" format="bu" target="raza:command:ID_TOOLS_SEEDTORRENT">Раздавать торрент</link>
 			</group>
 		</para>
 	</document>
@@ -2169,7 +2169,7 @@
 		загрузка имеют отдельные каналы. Если Ваш клиент сконфигурирован как следует,
 		Вы сохраните полную скорость для раздач без потери скорости для загрузок.</text>
 		<newline gap="8"/>
-		<text>По умолчанию, лимит для раздач установлен на 85% от существующей выходящей пропускной способности,
+		<text>По умолчанию, лимит для раздач установлен на 85% от существующей исходящей пропускной способности,
 		в то время как загрузки не имеют ограничений. Такие установки должны гарантировать Вам наибольшую возможную скорость
 		для загрузок.</text>
 	</document>
@@ -2757,7 +2757,7 @@
 	<string id="16083" value="Принужденное становление Вашего ПК узлом может неблагоприятно повлиять на производительность и на P2P сеть.  Вообще, лучше позволить самой Shareaza решать, использовать или нет режим узла.\n\nРежим узла НЕ дает лучших результатов поиска или каких-нибудь преимуществ для Вас.\n\nВы действительно хотите это сделать, несмотря на упомянутые неудобства?"/>
 	<string id="16084" value="Выключая поддержку протоколов Gnutella-1, Вы уменьшите результаты поиска, и, если Вы работаете в режиме узла, это повлияет и на результаты других пользователей.  Вы уверены, что хотите это сделать?"/>
 	<string id="16085" value="Gnutella2 - это главная сеть Shareazы.  Выключая её поддержку, Вы очень уменьшите число и ухудшите качество результатов поиска.  Вы УВЕРЕНЫ, что хотите это сделать?"/>
-	<string id="16087" value="Выходящяя полоса пропускания слишком низка для включения этой сети."/>
+	<string id="16087" value="Исходящяя полоса пропускания слишком низка для включения этой сети."/>
 	<string id="16128" value="Принято входящее соединение с %s порт %i."/>
 	<string id="16129" value="Инициализирую соединение с хостом %s порт %i..."/>
 	<string id="16130" value="Невозможно инициализировать соединение с хостом %s."/>
@@ -2990,8 +2990,8 @@
 	<string id="16533" value="Общая TCP полоса пропускания посылок"/>
 	<string id="16534" value="Общая UDP полоса пропускания приема"/>
 	<string id="16535" value="Общая UDP полоса пропускания посылок"/>
-	<string id="16536" value="Соотношение получ./высланных пингов Gnutella"/>
-	<string id="16537" value="Соотношение получ./высланных понгов Gnutella"/>
+	<string id="16536" value="Соотношение получ./посланных пингов Gnutella"/>
+	<string id="16537" value="Соотношение получ./посланных понгов Gnutella"/>
 	<string id="16538" value="Ошибки соединений (%)"/>
 	<string id="16768" value="Получена ссылка «%s»"/>
 	<string id="16769" value="Невозможно разобрать ссылку: Shareaza не понимает этой ссылки."/>
@@ -3092,12 +3092,12 @@
 	<string id="17107" value="Связь с eDonkey сервером"/>
 	<string id="17108" value="Подтверждение"/>
 	<string id="17109" value="Входящий"/>
-	<string id="17110" value="Выходящий"/>
+	<string id="17110" value="Исходящий"/>
 	<string id="17111" value="Текущий:"/>
 	<string id="17112" value="Всего:"/>
 	<string id="17113" value="Сжатие:"/>
 	<string id="17114" value="Соотношение:"/>
-	<string id="17115" value="Дефляция"/>
+	<string id="17115" value="Deflate"/>
 	<string id="17116" value="Отсутсвует"/>
 	<string id="17117" value="Соединение"/>
 	<string id="17118" value="Подтверждение"/>
@@ -3163,7 +3163,7 @@
 	<string id="17488" value="Вы изменили адрес ссылки (URL) трекера у этого торрента.  Уверены, что хотите это сохранить?\n\nНеправильный URL трекера может предотвратить дальнейшую загрузку."/>
 	<string id="17489" value="Создана BitTorrent пара с %s, используя расширенный протокол, идентифицировано «%s»."/>
 	<string id="17490" value="Получено %i новых BitTorrent источников c %s."/>
-	<string id="17491" value="Торрент «%s» уже в Вашем списке загрузок, и его нельзя распространить."/>
+	<string id="17491" value="Торрент «%s» уже в Вашем списке загрузок, и его нельзя раздавать."/>
 	<string id="17492" value="Ошибка загружая торрент файл «%s».  Возможно, это неправильный торрент."/>
 	<string id="17493" value="Невозможно создать BitTorrent файл «%s»."/>
 	<string id="17494" value="Этот торрент содержит файл «%s», но Shareaza не может найти этого файла в Вашем хранилище.  Если возможно, переместите файл в папку с открытым доступом и попробуйте снова."/>
@@ -3214,7 +3214,7 @@
 	<string id="20011" value="&amp;Далее"/>
 	<string id="20012" value="Закончить"/>
 	<string id="20013" value="Все"/>
-	<string id="20100" value="Соединение"/>
+	<string id="20100" value="Подключение"/>
 	<string id="20101" value="Запрос"/>
 	<string id="20102" value="Ответ"/>
 	<string id="20103" value="Скачивается"/>
@@ -3226,19 +3226,19 @@
 	<string id="20109" value="В очереди"/>
 	<string id="20110" value="Неизвестно"/>
 	<string id="20111" value="Закончено"/>
-	<string id="20112" value="Распространение"/>
+	<string id="20112" value="Раздача"/>
 	<string id="20113" value="Перемещается"/>
 	<string id="20114" value="Пауза"/>
 	<string id="20115" value="Ошибка файла"/>
 	<string id="20116" value="Не перемещается!"/>
 	<string id="20117" value="Проверка"/>
 	<string id="20118" value="Активный"/>
-	<string id="20119" value="В ожидании"/>
+	<string id="20119" value="Ожидание"/>
 	<string id="20120" value="Поиск"/>
 	<string id="20121" value="Создается"/>
 	<string id="20122" value="Торрент"/>
 	<string id="20123" value="Трекер не отвечает"/>
-	<string id="20124" value="(Нет источников)"/>
+	<string id="20124" value="(нет источников)"/>
 	<string id="20125" value="Проверено"/>
 	<string id="20126" value="Без проверки"/>
 	<string id="20127" value="источник"/>
@@ -3247,8 +3247,8 @@
 	<string id="20130" value="источников"/><!-- from 11 to 19 -->
 	<string id="20131" value="источника"/><!-- from 2 to 4 -->
 	<string id="20132" value="источников"/><!-- from 5 to 9 -->
-	<string id="20133" value="Не интересует"/>
-	<string id="20134" value="Перегружен"/>
+	<string id="20133" value="Бесполезен"/>
+	<string id="20134" value="Заморожен"/>
 	<string id="20135" value="Следующий"/>
 	<string id="20136" value="Оч."/>
 	<string id="20137" value="источников"/><!-- 3/10 sources, for e.g. -->
@@ -3259,7 +3259,7 @@
 	<string id="20204" value="Четверг"/>
 	<string id="20205" value="Пятница"/>
 	<string id="20206" value="Суббота"/>
-	<string id="20210" value="(Без оценки)"/>
+	<string id="20210" value="(без оценки)"/>
 	<string id="20211" value="Фальшивка / Испорчен"/>
 	<string id="20212" value="Плохой"/>
 	<string id="20213" value="Средний"/>
@@ -3390,7 +3390,7 @@
 		<control/>
 		<control caption="Случайный"/>
 		<control caption="Настоять на этом адресе"/>
-		<control caption="Адрес для выходящего потока:"/>
+		<control caption="Адрес для исходящего потока:"/>
 		<control caption="Адрес:"/>
 		<control caption="Автоматический"/>
 		<control caption="Скорость:"/>
@@ -4199,13 +4199,13 @@
 		<control caption="OK"/>
 		<control caption="Отмена"/>
 	</dialog>
-	<dialog name="CTorrentSeedDlg" cookie="StStBuBuBuStms" caption="Открыть торрент файл">
+	<dialog name="CTorrentSeedDlg" cookie="StStBuBuBuStms" caption="Открыть торрент">
 		<control/>
-		<control caption="Вы открыли BitTorrent файл..."/>
+		<control caption="Вы открыли торрент..."/>
 		<control caption="Загрузить"/>
-		<control caption="Распростран."/>
+		<control caption="Раздать"/>
 		<control caption="Отмена"/>
-		<control caption="Чтобы обмениваться файлами в BitTorrent, их нужно сперва распространить.  Когда процесс завершится, торрент появится в Вашем списке загрузок."/>
+		<control caption="Чтобы обмениваться файлами в BitTorrent, их нужно сперва раздать. Когда процесс завершится, торрент появится в Вашем списке загрузок."/>
 		<control/>
 	</dialog>
 	<dialog name="CTorrentGeneralPage" cookie="BuStEdStEdStEdStEdBuStCoEdStStEd" caption="Оснавное">
@@ -4240,9 +4240,9 @@
 		<control caption="Трекер:"/>
 		<control/>
 		<control caption="_Активный трекер:"/>
-		<control caption="Полных (распростран.):"/>
+		<control caption="Полных (раздача):"/>
 		<control/>
-		<control caption="_Источники (загруж.):"/>
+		<control caption="_Источники (загрузка):"/>
 		<control/>
 		<control caption="_Обновить"/>
 		<control caption="_Трекеры:"/>
