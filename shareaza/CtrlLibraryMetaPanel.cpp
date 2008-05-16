@@ -709,6 +709,7 @@ void CLibraryMetaPanel::OnRun()
 
 		m_pSection.Lock();
 		CString strPath = m_sPath;
+		CString strThumbRes = m_sThumb;
 		m_bForceUpdate = FALSE;
 		m_pSection.Unlock();
 
@@ -718,7 +719,7 @@ void CLibraryMetaPanel::OnRun()
 		if ( m_bExternalData )
 		{
 			m_bDownloadingImage = TRUE;
-			bSuccess = pFile.LoadFromURL( m_sThumb ) && pFile.EnsureRGB();
+			bSuccess = pFile.LoadFromURL( strThumbRes ) && pFile.EnsureRGB();
 			m_bDownloadingImage = FALSE;
 		}
 
