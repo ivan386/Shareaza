@@ -1,7 +1,7 @@
 //
 // CtrlCoolTip.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -19,9 +19,6 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_CTRLCOOLTIP_H__9F287EE6_069E_4FBB_8657_533279376816__INCLUDED_)
-#define AFX_CTRLCOOLTIP_H__9F287EE6_069E_4FBB_8657_533279376816__INCLUDED_
-
 #pragma once
 
 class CLineGraph;
@@ -29,14 +26,12 @@ class CLineGraph;
 
 class CCoolTipCtrl : public CWnd
 {
-// Construction
 public:
 	CCoolTipCtrl();
 	virtual ~CCoolTipCtrl();
 
 	DECLARE_DYNAMIC(CCoolTipCtrl)
 
-// Attributes
 protected:
 	bool*	m_pbEnable;
 	void*	m_pContext;
@@ -46,39 +41,29 @@ protected:
 	CPoint	m_pOpen;
 	DWORD	m_tOpen;
 	CSize	m_sz;
-protected:
 	static LPCTSTR	m_hClass;
 
-// Operations
 public:
+	virtual BOOL Create(CWnd* pParentWnd, bool* pbEnable = NULL);
 	virtual void Show(void* pContext, HWND hAltWnd = NULL);
 	virtual void Hide();
+
 protected:
 	virtual void ShowImpl();
 	void	CalcSizeHelper();
 	void	AddSize(CDC* pDC, LPCTSTR pszText, int nBase = 0);
 	void	GetPaintRect(RECT* pRect);
-	void	DrawText(CDC* pDC, POINT* pPoint, LPCTSTR pszText, int nBase = 0);
+	void	DrawText(CDC* pDC, POINT* pPoint, LPCTSTR pszText, int nBase);
+	void	DrawText(CDC* pDC, POINT* pPoint, LPCTSTR pszText, SIZE* pTextMaxSize = NULL);
 	void	DrawRule(CDC* pDC, POINT* pPoint, BOOL bPos = FALSE);
 	BOOL	WindowFromPointBelongsToOwner(const CPoint& point);
-protected:
 	CLineGraph*	CreateLineGraph();
-protected:
 	virtual BOOL OnPrepare();
 	virtual void OnCalcSize(CDC* pDC);
 	virtual void OnShow();
 	virtual void OnHide();
 	virtual void OnPaint(CDC* pDC);
 
-// Overrides
-public:
-	//{{AFX_VIRTUAL(CCoolTipCtrl)
-	virtual BOOL Create(CWnd* pParentWnd, bool* pbEnable = NULL);
-	//}}AFX_VIRTUAL
-
-// Implementation
-protected:
-	//{{AFX_MSG(CCoolTipCtrl)
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg void OnDestroy();
 	afx_msg BOOL OnEraseBkgnd(CDC* pDC);
@@ -86,13 +71,9 @@ protected:
 	afx_msg void OnMouseMove(UINT nFlags, CPoint point);
 	afx_msg void OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags);
 	afx_msg void OnTimer(UINT_PTR nIDEvent);
-	//}}AFX_MSG
 
 	DECLARE_MESSAGE_MAP()
-
 };
-
-//{{AFX_INSERT_LOCATION}}
 
 #ifndef WS_EX_LAYERED
 #define WS_EX_LAYERED		0x80000
@@ -102,5 +83,3 @@ protected:
 #define TIP_TEXTHEIGHT	14
 #define TIP_RULE		11
 #define TIP_GAP			5
-
-#endif // !defined(AFX_CTRLCOOLTIP_H__9F287EE6_069E_4FBB_8657_533279376816__INCLUDED_)

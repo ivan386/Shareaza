@@ -1,7 +1,7 @@
 //
 // CtrlLibraryTip.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -196,9 +196,10 @@ void CLibraryTipCtrl::OnCalcSize(CDC* pDC)
 	m_pMetadata.ComputeWidth( pDC, m_nKeyWidth, nValueWidth );
 
 	if ( m_nKeyWidth ) m_nKeyWidth += TIP_GAP;
-	m_sz.cx = max( m_sz.cx, LONG(m_nKeyWidth + nValueWidth + 102) );
-	m_sz.cy += max( nMetaHeight, (int)Settings.Library.ThumbSize + 2 );
-	m_sz.cy += 11;
+	m_sz.cx =  min( max( m_sz.cx, m_nKeyWidth + nValueWidth +
+		(int)Settings.Library.ThumbSize + 16 ), GetSystemMetrics( SM_CXSCREEN ) / 2 );
+	m_sz.cy += max( nMetaHeight, (int)Settings.Library.ThumbSize + 4 );
+	m_sz.cy += 6;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -208,34 +209,35 @@ void CLibraryTipCtrl::OnPaint(CDC* pDC)
 {
 	CSingleLock pLock( &m_pSection, TRUE );
 	CPoint pt( 0, 0 );
+	CSize sz( m_sz.cx, TIP_TEXTHEIGHT );
 
-	DrawText( pDC, &pt, m_sName );
+	DrawText( pDC, &pt, m_sName, &sz );
 	pt.y += TIP_TEXTHEIGHT;
 	pDC->SelectObject( &CoolInterface.m_fntNormal );
 
 	if ( m_sSHA1.GetLength() )
 	{
-		DrawText( pDC, &pt, m_sSHA1 );
+		DrawText( pDC, &pt, m_sSHA1, &sz );
 		pt.y += TIP_TEXTHEIGHT;
 	}
 	if ( m_sTTH.GetLength() )
 	{
-		DrawText( pDC, &pt, m_sTTH );
+		DrawText( pDC, &pt, m_sTTH, &sz );
 		pt.y += TIP_TEXTHEIGHT;
 	}
 	if ( m_sED2K.GetLength() )
 	{
-		DrawText( pDC, &pt, m_sED2K );
+		DrawText( pDC, &pt, m_sED2K, &sz );
 		pt.y += TIP_TEXTHEIGHT;
 	}
 	if ( m_sBTH.GetLength() )
 	{
-		DrawText( pDC, &pt, m_sBTH );
+		DrawText( pDC, &pt, m_sBTH, &sz );
 		pt.y += TIP_TEXTHEIGHT;
 	}
 	if ( m_sMD5.GetLength() )
 	{
-		DrawText( pDC, &pt, m_sMD5 );
+		DrawText( pDC, &pt, m_sMD5, &sz );
 		pt.y += TIP_TEXTHEIGHT;
 	}
 
@@ -248,21 +250,26 @@ void CLibraryTipCtrl::OnPaint(CDC* pDC)
 	pDC->ExcludeClipRect( &rcThumb );
 
 	int nCount = 0;
-
+	pt.x += Settings.Library.ThumbSize;
+	sz.cx -= pt.x + 8 + m_nKeyWidth;
 	for ( POSITION pos = m_pMetadata.GetIterator() ; pos ; )
 	{
 		CMetaItem* pItem = m_pMetadata.GetNext( pos );
 		if ( pItem->m_pMember && pItem->m_pMember->m_bHidden ) continue;
 
-		DrawText( pDC, &pt, Settings.General.LanguageRTL ? ':' + pItem->m_sKey : pItem->m_sKey + ':', 100 );
-		DrawText( pDC, &pt, pItem->m_sValue, 100 + m_nKeyWidth );
+		pt.x += 8;
+		DrawText( pDC, &pt,
+			Settings.General.LanguageRTL ? ':' + pItem->m_sKey : pItem->m_sKey + ':', &sz );
+		pt.x += m_nKeyWidth;
+		DrawText( pDC, &pt, pItem->m_sValue, &sz );
+		pt.x -= 8 + m_nKeyWidth;
 		pt.y += TIP_TEXTHEIGHT;
 
 		if ( ++nCount == 5 )
 		{
-			pt.x += Settings.Library.ThumbSize + 2; pt.y -= 2;
+			pt.x += 4; pt.y -= 2;
 			DrawRule( pDC, &pt, TRUE );
-			pt.x -= Settings.Library.ThumbSize + 2; pt.y -= 2;
+			pt.x -= 4; pt.y -= 2;
 		}
 	}
 }

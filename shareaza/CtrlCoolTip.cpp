@@ -1,7 +1,7 @@
 //
 // CtrlCoolTip.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -261,9 +261,11 @@ void CCoolTipCtrl::CalcSizeHelper()
 
 void CCoolTipCtrl::AddSize(CDC* pDC, LPCTSTR pszText, int nBase)
 {
-	CSize szText = pDC->GetTextExtent( pszText, static_cast< int >( _tcslen( pszText ) ) );
-	szText.cx += nBase;
-	m_sz.cx = max( m_sz.cx, szText.cx );
+	DWORD dwFlags = ( Settings.General.LanguageRTL ? DT_RTLREADING : 0 ) |
+		DT_SINGLELINE | DT_NOPREFIX;
+	CRect rcText( 0, 0, 0, 0 );
+	pDC->DrawText( pszText, -1, &rcText, dwFlags | DT_CALCRECT );
+	m_sz.cx = max( m_sz.cx, rcText.Width() + nBase );
 }
 
 void CCoolTipCtrl::GetPaintRect(RECT* pRect)
@@ -276,17 +278,28 @@ void CCoolTipCtrl::GetPaintRect(RECT* pRect)
 
 void CCoolTipCtrl::DrawText(CDC* pDC, POINT* pPoint, LPCTSTR pszText, int nBase)
 {
-	DWORD dwFlags = ( Settings.General.LanguageRTL ? ETO_RTLREADING : 0 );
-	CSize sz = pDC->GetTextExtent( pszText, static_cast< int >( _tcslen( pszText ) ) );
+	POINT pt = { pPoint->x + nBase, pPoint->y };
+	DrawText( pDC, &pt, pszText );
+}
 
-	if ( nBase ) pPoint->x += nBase;
-	CRect rc( pPoint->x - 2, pPoint->y - 2, pPoint->x + sz.cx + 2, pPoint->y + sz.cy + 2 );
-
-	pDC->SetBkColor( CoolInterface.m_crTipBack );
-	pDC->ExtTextOut( pPoint->x, pPoint->y, ETO_CLIPPED|ETO_OPAQUE|dwFlags, &rc, pszText, static_cast< UINT >( _tcslen( pszText ) ), NULL );
-	pDC->ExcludeClipRect( &rc );
-
-	if ( nBase ) pPoint->x -= nBase;
+void CCoolTipCtrl::DrawText(CDC* pDC, POINT* pPoint, LPCTSTR pszText, SIZE* pTextMaxSize)
+{
+	DWORD dwFlags = ( Settings.General.LanguageRTL ? DT_RTLREADING : 0 ) |
+		DT_SINGLELINE | DT_NOPREFIX;
+	CRect rcText( 0, 0, 0, 0 );
+	pDC->DrawText( pszText, -1, &rcText, dwFlags | DT_CALCRECT );
+	if ( pTextMaxSize )
+	{
+		if ( pTextMaxSize->cx > 0 && pTextMaxSize->cx < rcText.Width() )
+			rcText.right = rcText.left + pTextMaxSize->cx;
+		if ( pTextMaxSize->cy > 0 && pTextMaxSize->cy < rcText.Height() )
+			rcText.bottom = rcText.top + pTextMaxSize->cy;
+	}
+	rcText.MoveToXY( pPoint->x, pPoint->y );
+	pDC->SetBkMode( TRANSPARENT );
+	pDC->FillSolidRect( &rcText, CoolInterface.m_crTipBack );
+	pDC->DrawText( pszText, -1, &rcText, dwFlags | DT_END_ELLIPSIS );
+	pDC->ExcludeClipRect( &rcText );
 }
 
 void CCoolTipCtrl::DrawRule(CDC* pDC, POINT* pPoint, BOOL bPos)

@@ -1,7 +1,7 @@
 //
 // CtrlDownloadTip.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -88,13 +88,12 @@ void CDownloadTipCtrl::OnCalcSize(CDC* pDC)
 	if ( Downloads.Check( (CDownload*)m_pContext ) )
 	{
 		OnCalcSize( pDC, (CDownload*)m_pContext );
-		m_sz.cx = max( m_sz.cx, 400 );
 	}
 	else if ( Downloads.Check( (CDownloadSource*)m_pContext ) )
 	{
 		OnCalcSize( pDC, (CDownloadSource*)m_pContext );
-		m_sz.cx = max( m_sz.cx, 400 );
 	}
+	m_sz.cx = min( max( m_sz.cx, 400 ), GetSystemMetrics( SM_CXSCREEN ) / 2 );
 }
 
 void CDownloadTipCtrl::OnShow()
@@ -240,10 +239,12 @@ void CDownloadTipCtrl::OnCalcSize(CDC* pDC, CDownload* pDownload)
 void CDownloadTipCtrl::OnPaint(CDC* pDC, CDownload* pDownload)
 {
 	CPoint pt( 0, 0 );
+	CSize sz( m_sz.cx, TIP_TEXTHEIGHT );
+
 	CString str, strOf, strAnother;
 	LoadString( strOf, IDS_GENERAL_OF );
 
-	DrawText( pDC, &pt, m_sName );
+	DrawText( pDC, &pt, m_sName, &sz );
 	pt.y += TIP_TEXTHEIGHT;
 	pDC->SelectObject( &CoolInterface.m_fntNormal );
 
@@ -667,15 +668,6 @@ void CDownloadTipCtrl::OnCalcSize(CDC* pDC, CDownloadSource* pSource)
 
 	m_sURL = pSource->m_sURL;
 
-	if ( m_sURL.GetLength() > 128 )
-	{
-		if ( LPCTSTR pszSlash = _tcschr( (LPCTSTR)m_sURL + 7, '/' ) )
-		{
-			int nFirst = static_cast< int >( pszSlash - (LPCTSTR)m_sSize );
-			m_sURL = m_sURL.Left( nFirst + 1 ) + _T("...") + m_sURL.Right( 10 );
-		}
-	}
-
 	m_pHeaderName.RemoveAll();
 	m_pHeaderValue.RemoveAll();
 
@@ -732,6 +724,7 @@ void CDownloadTipCtrl::OnCalcSize(CDC* pDC, CDownloadSource* pSource)
 void CDownloadTipCtrl::OnPaint(CDC* pDC, CDownloadSource* pSource)
 {
 	CPoint pt( 0, 0 );
+	CSize sz( m_sz.cx, TIP_TEXTHEIGHT );
 
 	DrawText( pDC, &pt, m_sName );
 	pt.y += TIP_TEXTHEIGHT;
@@ -795,7 +788,11 @@ void CDownloadTipCtrl::OnPaint(CDC* pDC, CDownloadSource* pSource)
 
 	LoadString( strText, IDS_TIP_URL );
 	DrawText( pDC, &pt, strText );
-	DrawText( pDC, &pt, m_sURL, 80 );
+	pt.x += 80;
+	sz.cx -= 80;
+	DrawText( pDC, &pt, m_sURL, &sz );
+	pt.x -= 80;
+	sz.cx += 80;
 	pt.y += TIP_TEXTHEIGHT;
 
 	LoadString( strText, IDS_TIP_USERAGENT );

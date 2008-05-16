@@ -1,7 +1,7 @@
 //
 // CtrlUploadTip.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -153,9 +153,8 @@ void CUploadTipCtrl::OnCalcSize(CDC* pDC)
 	}
 
 	if ( m_nHeaderWidth ) m_nHeaderWidth += TIP_GAP;
-	m_sz.cx = max( m_sz.cx, m_nHeaderWidth + nValueWidth );
-
-	m_sz.cx = max( m_sz.cx, 320 );
+	m_sz.cx = min( max( max( m_sz.cx, m_nHeaderWidth + nValueWidth ), 400 ),
+		GetSystemMetrics( SM_CXSCREEN ) / 2 );
 }
 
 void CUploadTipCtrl::OnPaint(CDC* pDC)

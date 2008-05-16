@@ -1,7 +1,7 @@
 //
 // CtrlNeighbourTip.cpp : implementation file
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -346,7 +346,7 @@ void CNeighbourTipCtrl::OnPaint(CDC* pDC)
 	if ( nCompIn > 0 || nCompOut > 0 )
 	{
 		LoadString( str, IDS_NEIGHBOUR_RATIO );
-		DrawText( pDC, &pt, str, 8 );
+		DrawText( pDC, &pt, str );
 		if ( nCompIn > 0 ) str.Format( _T("%.2f%%"), nCompIn * 100.0 ); else str.Empty();
 		DrawText( pDC, &pt, str, 128 );
 		if ( nCompOut > 0 ) str.Format( _T("%.2f%%"), nCompOut * 100.0 ); else str.Empty();
