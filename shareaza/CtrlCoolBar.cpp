@@ -898,7 +898,8 @@ BOOL CCoolBarCtrl::OnCommand(WPARAM wParam, LPARAM lParam)
 	if ( HIWORD( wParam ) == EN_SETFOCUS ||
 		 HIWORD( wParam ) == EN_KILLFOCUS ) Invalidate();
 
-	GetParent()->SendMessage( WM_COMMAND, wParam, lParam );
+	if ( GetParent()->SendMessage( WM_COMMAND, wParam, lParam ) ) 
+		return TRUE;
 
 	return CControlBar::OnCommand( wParam, lParam );
 }
