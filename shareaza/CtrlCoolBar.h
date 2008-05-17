@@ -1,7 +1,7 @@
 //
 // CtrlCoolBar.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -19,8 +19,8 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_CTRLCOOLBAR_H__72F86023_E8A5_4C09_B562_948C421D8CCF__INCLUDED_)
-#define AFX_CTRLCOOLBAR_H__72F86023_E8A5_4C09_B562_948C421D8CCF__INCLUDED_
+#if !defined(CTRLCOOLBAR_H)
+#define CTRLCOOLBAR_H
 
 #pragma once
 
@@ -89,21 +89,18 @@ protected:
 
 // Overrides
 public:
-	//{{AFX_VIRTUAL(CCoolBarCtrl)
-	public:
 	virtual BOOL Create(CWnd* pParentWnd, DWORD dwStyle = WS_CHILD|WS_VISIBLE|CBRS_TOP, UINT nID = AFX_IDW_TOOLBAR);
 	virtual CSize CalcFixedLayout(BOOL bStretch, BOOL bHorz);
 	virtual INT_PTR OnToolHitTest(CPoint point, TOOLINFO* pTI) const;
 	virtual void DoPaint(CDC* pDC);
 	virtual void OnUpdateCmdUI(CFrameWnd* pTarget, BOOL bDisableIfNoHndler);
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
-	protected:
+
+protected:
 	virtual BOOL OnCommand(WPARAM wParam, LPARAM lParam);
-	//}}AFX_VIRTUAL
 
 // Implementation
 protected:
-	//{{AFX_MSG(CCoolBarCtrl)
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg void OnDestroy();
 	afx_msg void OnTimer(UINT_PTR nIDEvent);
@@ -114,7 +111,6 @@ protected:
 	afx_msg void OnLButtonUp(UINT nFlags, CPoint point);
 	afx_msg void OnLButtonDblClk(UINT nFlags, CPoint point);
 	afx_msg void OnRButtonDown(UINT nFlags, CPoint point);
-	//}}AFX_MSG
 
 	DECLARE_MESSAGE_MAP()
 	DECLARE_DROP()
@@ -143,7 +139,8 @@ public:
 	COLORREF	m_crText;
 	UINT		m_nCtrlID;
 	int			m_nCtrlHeight;
-	BOOL		m_bButtonTest;
+	BOOL		m_bRegularButton;	// Button with image and text
+	BOOL		m_bCheckButton;		// Button with check mark and text
 	CBitmap		m_bmButtonmark;
 protected:
 	CCoolBarCtrl*	m_pBar;
@@ -161,14 +158,13 @@ public:
 	virtual void SetTextColour(COLORREF crText = 0xFFFFFFFF);
 protected:
 	void	Paint(CDC* pDC, CRect& rc, BOOL bDown, BOOL bHot, BOOL bMenuGray, BOOL bTransparent);
+	void	DrawText(CDC* pDC, CRect& rc, BOOL bDown, BOOL bHot, BOOL bMenuGray, BOOL bTransparent);
 public:
 	void	SetButtonmark(HBITMAP hBitmap);
 	static CCoolBarItem* FromCmdUI(CCmdUI* pUI);
 
 	friend class CCoolBarCtrl;
 };
-
-//{{AFX_INSERT_LOCATION}}
 
 #ifndef ID_SEPARATOR
 #define ID_SEPARATOR 0
@@ -179,4 +175,4 @@ public:
 #endif
 
 
-#endif // !defined(AFX_CTRLCOOLBAR_H__72F86023_E8A5_4C09_B562_948C421D8CCF__INCLUDED_)
+#endif // !defined(CTRLCOOLBAR_H)

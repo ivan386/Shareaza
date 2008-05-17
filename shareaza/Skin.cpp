@@ -789,8 +789,7 @@ BOOL CSkin::CreateToolBar(CXMLElement* pBase)
 
 					if ( strTemp.CompareNoCase( L"true" ) == 0 )
 					{
-						pItem->SetCheck( TRUE );
-						pItem->m_bButtonTest = TRUE;
+						pItem->m_bCheckButton = TRUE;
 					}
 
 					strTemp = pXML->GetAttributeValue( _T("text") );
