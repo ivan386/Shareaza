@@ -231,7 +231,7 @@ CDownload* CDownloads::Add(CShareazaURL* pURL)
 	if ( pDownload == NULL && pURL->m_oMD5 )
 		pDownload = FindByMD5( pURL->m_oMD5 );
 	
-	if ( pDownload != NULL )
+	if ( pDownload != NULL && !pDownload->IsSeeding() )
 	{
 		theApp.Message( MSG_NOTICE, IDS_DOWNLOAD_ALREADY,
 			(LPCTSTR)pDownload->GetDisplayName() );

@@ -189,7 +189,7 @@ void CTorrentSeedDlg::OnSeed()
 		{
 			CHelpDlg::Show( _T("GeneralHelp.BadTorrentEncoding") );
 		}
-		if ( Downloads.FindByBTH( m_pInfo.m_oBTH ) == NULL )
+		if ( Downloads.FindByBTH( m_pInfo.m_oBTH ) == NULL || m_pInfo.m_nFiles == 1 )
 		{
 			// Connect if (we aren't)
 			if ( ! Network.IsConnected() ) Network.Connect();
@@ -435,7 +435,7 @@ BOOL CTorrentSeedDlg::CreateDownload()
 	CSingleLock pTransfersLock( &Transfers.m_pSection );
 	if ( ! pTransfersLock.Lock( 2000 ) ) return FALSE;
 	
-	if ( Downloads.FindByBTH( m_pInfo.m_oBTH ) != NULL )
+	if ( Downloads.FindByBTH( m_pInfo.m_oBTH ) != NULL && m_pInfo.m_nFiles != 1 )
 	{
 		CString strFormat;
 		LoadString(strFormat, IDS_BT_SEED_ALREADY );
