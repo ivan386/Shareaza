@@ -2613,7 +2613,7 @@ BOOL CLibraryBuilderInternals::ReadAVI(DWORD nIndex, HANDLE hFile)
 			else if ( nID == FCC('INFO') )
 			{
 				bInfoFound = true;
-				while ( true )
+				for ( ; ; )
 				{
 					ReadDwordOrBreak( hFile, nID, nRead )
 					if ( (CHAR)( nID & 0x000000FF ) != 'I' ) break;
