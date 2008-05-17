@@ -417,6 +417,7 @@
 	<toolbar name="WebServices.ShareMonkey.WithSave">
 		<button id="ID_SHAREMONKEY_DOWNLOAD" text="Get Data"/>
 		<button id="ID_SHAREMONKEY_SAVE" text="Save"/>
+		<control id="ID_SHAREMONKEY_SAVE_OPTION" text="Save Preview" width="100" checked="true"/>
 		<separator/>
 		<button id="ID_SHAREMONKEY_PREVIOUS" text="Previous"/>
 		<button id="ID_SHAREMONKEY_NEXT" text="Next"/>
@@ -2382,7 +2383,8 @@
 <!-- Command Images -->
 <commandImages>
 	<bitmap id="IDB_MENUBAR">
-		<image id="ID_CHECKMARK"/>
+		<!-- ID_SHAREMONKEY_SAVE_OPTION is not used but required to display the check box -->
+		<image id="ID_CHECKMARK" id1="ID_SHAREMONKEY_SAVE_OPTION"/>
 		<image id="ID_NETWORK_SEARCH" id1="ID_TAB_SEARCH"/>
 		<image id="ID_NETWORK_CONNECT" id1="ID_TAB_CONNECT" id2="ID_CHAT_CONNECT"/>
 		<image id="ID_NETWORK_DISCONNECT" id1="ID_CHAT_DISCONNECT"/>

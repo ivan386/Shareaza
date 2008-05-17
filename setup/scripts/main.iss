@@ -170,7 +170,6 @@ Source: "Data\*.*"; DestDir: "{app}\Data"; Flags: ignoreversion overwritereadonl
 ; Plugins
 Source: "GeoIP\data\GeoIP.dat"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 
-
 ;--== Misc Files ==--
 ; Icon files
 Source: "setup\misc\uninstall.ico"; DestDir: "{app}\Uninstall"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension
@@ -319,7 +318,7 @@ Root: HKCU; Subkey: "Software\Shareaza\Shareaza\Downloads"; ValueType: string; V
 Root: HKCU; Subkey: "Software\Shareaza\Shareaza\Downloads"; ValueType: string; ValueName: "CollectionPath"; ValueData: "{ini:{param:SETTINGS|},Locations,CollectionPath|{app}\Collections}"; Flags: uninsdeletekey createvalueifdoesntexist; Tasks: not multiuser
 
 ; ShareMonkey CID
-Root: HKCU; Subkey: "Software\Shareaza\Shareaza"; ValueType: string; ValueName: "ShareMonkeyCid"; ValueData: "197506"; Flags: createvalueifdoesntexist uninsdeletekey
+Root: HKCU; Subkey: "Software\Shareaza\Shareaza\WebServices"; ValueType: string; ValueName: "ShareMonkeyCid"; ValueData: "197506"; Flags: createvalueifdoesntexist uninsdeletekey
 
 ; Set permissions on registry keys
 Root: HKLM; Subkey: "SOFTWARE\Classes\.co"; Permissions: users-modify; Tasks: not multiuser

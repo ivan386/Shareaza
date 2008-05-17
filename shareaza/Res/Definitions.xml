@@ -437,6 +437,7 @@
 	<resource code="33314" id="ID_SYSTEM_VERBOSE_NOTICE"/>
 	<resource code="33315" id="ID_SYSTEM_VERBOSE_INFO"/>
 	<resource code="33316" id="ID_SYSTEM_VERBOSE_DEBUG"/>
+	<resource code="33317" id="ID_SHAREMONKEY_SAVE_OPTION"/>
 	<resource code="57650" id="ID_WINDOW_CASCADE"/>
 	<resource code="57651" id="ID_WINDOW_TILE_HORZ"/>
 	<resource code="57652" id="ID_WINDOW_TILE_VERT"/>

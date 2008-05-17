@@ -223,7 +223,7 @@ BOOL CShareMonkeyData::BuildRequest()
 	{
 		// storeMatch/<session_id>/<contributor_id>/<file_id>/<product_id>/COUNTRY
 		CString str;
-		str.Format( L"storeMatch/%s/%s/0/%s/%s", m_sSessionID, Settings.General.ShareMonkeyCid, 
+		str.Format( L"storeMatch/%s/%s/0/%s/%s", m_sSessionID, Settings.WebServices.ShareMonkeyCid, 
 					m_sProductID, m_sCountry );
 		m_sURL += str;
 	}
@@ -324,7 +324,7 @@ BOOL CShareMonkeyData::BuildRequest()
 			}
 
 			m_sURL += L"&cid=";
-			m_sURL += Settings.General.ShareMonkeyCid;
+			m_sURL += Settings.WebServices.ShareMonkeyCid;
 		}
 	}
 

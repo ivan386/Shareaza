@@ -98,6 +98,8 @@ BEGIN_MESSAGE_MAP(CLibraryFileView, CLibraryView)
 	ON_COMMAND(ID_SHAREMONKEY_DOWNLOAD, OnShareMonkeyDownload)
 	ON_UPDATE_COMMAND_UI(ID_SHAREMONKEY_SAVE, OnUpdateShareMonkeySave)
 	ON_COMMAND(ID_SHAREMONKEY_SAVE, OnShareMonkeySave)
+	ON_UPDATE_COMMAND_UI(ID_SHAREMONKEY_SAVE_OPTION, OnUpdateShareMonkeySaveOption)
+	ON_COMMAND(ID_SHAREMONKEY_SAVE_OPTION, OnShareMonkeySaveOption)
 	ON_UPDATE_COMMAND_UI(ID_SHAREMONKEY_PREVIOUS, OnUpdateShareMonkeyPrevious)
 	ON_COMMAND(ID_SHAREMONKEY_PREVIOUS, OnShareMonkeyPrevious)
 	ON_UPDATE_COMMAND_UI(ID_SHAREMONKEY_NEXT, OnUpdateShareMonkeyNext)
@@ -538,7 +540,7 @@ void CLibraryFileView::OnUpdateLibraryBitziWeb(CCmdUI* pCmdUI)
 	if ( m_bGhostFolder )
 		pCmdUI->Enable( FALSE );
 	else
-		pCmdUI->Enable( GetSelectedCount() == 1 && Settings.Library.BitziWebSubmit.GetLength() );
+		pCmdUI->Enable( GetSelectedCount() == 1 && Settings.WebServices.BitziWebSubmit.GetLength() );
 }
 
 void CLibraryFileView::OnLibraryBitziWeb() 
@@ -670,19 +672,19 @@ void CLibraryFileView::OnUpdateLibraryBitziDownload(CCmdUI* pCmdUI)
 	if ( m_bGhostFolder || m_bRequestingService )
 		pCmdUI->Enable( FALSE );
 	else
-		pCmdUI->Enable( GetSelectedCount() > 0 && Settings.Library.BitziXML.GetLength() );
+		pCmdUI->Enable( GetSelectedCount() > 0 && Settings.WebServices.BitziXML.GetLength() );
 }
 
 void CLibraryFileView::OnLibraryBitziDownload() 
 {
 	GetFrame()->SetDynamicBar( NULL );
 
-	if ( ! Settings.Library.BitziOkay )
+	if ( ! Settings.WebServices.BitziOkay )
 	{
 		CString strFormat;
 		Skin.LoadString( strFormat, IDS_LIBRARY_BITZI_MESSAGE );
 		if ( AfxMessageBox( strFormat, MB_ICONQUESTION|MB_YESNO ) != IDYES ) return;
-		Settings.Library.BitziOkay = TRUE;
+		Settings.WebServices.BitziOkay = true;
 		Settings.Save();
 	}
 
@@ -1084,6 +1086,15 @@ void CLibraryFileView::OnUpdateShareMonkeyDownload(CCmdUI* pCmdUI)
 
 void CLibraryFileView::OnShareMonkeyDownload()
 {
+	if ( ! Settings.WebServices.ShareMonkeyOkay )
+	{
+		CString strFormat;
+		Skin.LoadString( strFormat, IDS_SHAREMONKEY_MESSAGE );
+		if ( AfxMessageBox( strFormat, MB_ICONQUESTION|MB_YESNO ) != IDYES ) return;
+		Settings.WebServices.ShareMonkeyOkay = true;
+		Settings.Save();
+	}
+	
 	CShareMonkeyData* pPanelData = new CShareMonkeyData( m_nCurrentPage );
 
 	CString strStatus;
@@ -1182,6 +1193,16 @@ void CLibraryFileView::OnShareMonkeySave()
 		pFile->SetMetadata( pRoot );
 		delete pRoot;
 	}
+}
+
+void CLibraryFileView::OnUpdateShareMonkeySaveOption(CCmdUI* pCmdUI)
+{
+	OnUpdateShareMonkeySave( pCmdUI );
+}
+
+void CLibraryFileView::OnShareMonkeySaveOption()
+{
+	Settings.WebServices.ShareMonkeySaveThumbnail = !Settings.WebServices.ShareMonkeySaveThumbnail;
 }
 
 void CLibraryFileView::OnUpdateShareMonkeyPrevious(CCmdUI* pCmdUI)

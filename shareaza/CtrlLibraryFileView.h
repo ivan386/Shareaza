@@ -104,6 +104,8 @@ protected:
 	afx_msg void OnShareMonkeyDownload();
 	afx_msg void OnUpdateShareMonkeySave(CCmdUI* pCmdUI);
 	afx_msg void OnShareMonkeySave();
+	afx_msg void OnUpdateShareMonkeySaveOption(CCmdUI* pCmdUI);
+	afx_msg void OnShareMonkeySaveOption();
 	afx_msg void OnUpdateShareMonkeyPrevious(CCmdUI* pCmdUI);
 	afx_msg void OnShareMonkeyPrevious();
 	afx_msg void OnUpdateShareMonkeyNext(CCmdUI* pCmdUI);

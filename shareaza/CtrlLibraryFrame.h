@@ -109,6 +109,7 @@ protected:
 	CCoolBarCtrl		m_wndViewBottom;
 	CCoolBarCtrl		m_wndBottomDynamic;
 	CEdit				m_wndSearch;
+	CButton				m_wndSaveOption;
 	CLibraryViewList	m_pViews;
 	CLibraryView*		m_pView;
 	CLibraryPanelList	m_pPanels;

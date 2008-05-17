@@ -168,6 +168,12 @@ int CLibraryFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	if ( ! m_wndSearch.Create( WS_CHILD|WS_TABSTOP|ES_AUTOHSCROLL, rcTypes, &m_wndViewBottom, IDC_SEARCH_BOX ) ) return -1;
 	m_wndSearch.SetFont( &theApp.m_gdiFont );
 
+	if ( ! m_wndSaveOption.Create( NULL, WS_CHILD|WS_TABSTOP|BS_AUTOCHECKBOX, rcTypes, &m_wndBottomDynamic, 
+		ID_SHAREMONKEY_SAVE_OPTION ) ) return -1;
+	m_wndSaveOption.EnableWindow( FALSE );
+	m_wndSaveOption.SetCheck( Settings.WebServices.ShareMonkeySaveThumbnail );
+	m_wndSaveOption.SetFont( &theApp.m_gdiFont );
+
 	m_wndTree.Create( this );
 	m_wndHeader.Create( this );
 	m_wndViewTip.Create( this, &Settings.Interface.TipLibrary );

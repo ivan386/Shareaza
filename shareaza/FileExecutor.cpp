@@ -376,11 +376,11 @@ BOOL CFileExecutor::ShowBitziTicket(DWORD nIndex)
 {
 	CString str;
 
-	if ( ! Settings.Library.BitziOkay )
+	if ( ! Settings.WebServices.BitziOkay )
 	{
 		Skin.LoadString( str, IDS_LIBRARY_BITZI_MESSAGE );
 		if ( AfxMessageBox( str, MB_ICONQUESTION|MB_YESNO ) != IDYES ) return FALSE;
-		Settings.Library.BitziOkay = TRUE;
+		Settings.WebServices.BitziOkay = TRUE;
 		Settings.Save();
 	}
 
@@ -399,12 +399,12 @@ BOOL CFileExecutor::ShowBitziTicket(DWORD nIndex)
 		return FALSE;
 	}
 
-	CString strURL = Settings.Library.BitziWebView;
+	CString strURL = Settings.WebServices.BitziWebView;
 	CFile hFile;
 
 	if ( hFile.Open( pFile->GetPath(), CFile::modeRead|CFile::shareDenyNone ) )
 	{
-		strURL = Settings.Library.BitziWebSubmit;
+		strURL = Settings.WebServices.BitziWebSubmit;
 
 		if ( hFile.GetLength() > 0 )
 		{

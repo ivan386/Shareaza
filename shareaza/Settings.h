@@ -67,7 +67,6 @@ public:
 		bool		FirstRun;
 		DWORD		SmartVersion;				// Settings version
 		bool		Running;
-		CString		ShareMonkeyCid;				// Affiliate ID
 	} General;
 
 	struct sVersionCheck
@@ -121,11 +120,6 @@ public:
 		string_set	SafeExecute;
 		string_set	PrivateTypes;
 		DWORD		ThumbSize;
-		CString		BitziAgent;
-		CString		BitziWebView;
-		CString		BitziWebSubmit;
-		CString		BitziXML;
-		bool		BitziOkay;
 		bool		HighPriorityHash;			// Use high priority hashing
 		bool		HashWindow;					// Display annoying hashing window
 		bool		CreateGhosts;				// Default action in the delete file dialog
@@ -149,6 +143,18 @@ public:
 		bool		ScanOGG;					// Enable .ogg metadata extraction by internals
 		bool		ScanPDF;					// Enable .pdf metadata extraction by internals
 	} Library;
+
+	struct sWebServices
+	{
+		CString		BitziAgent;
+		CString		BitziWebView;
+		CString		BitziWebSubmit;
+		CString		BitziXML;
+		bool		BitziOkay;
+		CString		ShareMonkeyCid;				// Affiliate ID
+		bool		ShareMonkeySaveThumbnail;
+		bool		ShareMonkeyOkay;
+	} WebServices;
 
 	struct sSearch
 	{

@@ -32,7 +32,7 @@ static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
 #endif
 
-#define SMART_VERSION	54
+#define SMART_VERSION	55
 
 CSettings Settings;
 
@@ -71,7 +71,7 @@ CSettings::CSettings()
 	Add( _T(""), _T("LogLevel"), &General.LogLevel, MSG_INFO, 1, MSG_ERROR, MSG_DEBUG, _T(" level") );
 	Add( _T(""), _T("SearchLog"), &General.SearchLog, true );
 	Add( _T(""), _T("UserPath"), &General.UserPath, _T("") );
-	Add( _T(""), _T("ShareMonkeyCid"), &General.ShareMonkeyCid, _T(""), true );
+
 	Add( _T("Settings"), _T("AlwaysOpenURLs"), &General.AlwaysOpenURLs, false );
 	Add( _T("Settings"), _T("CloseMode"), &General.CloseMode, 0, 1, 0, 3 );
 	Add( _T("Settings"), _T("FirstRun"), &General.FirstRun, true );
@@ -109,11 +109,6 @@ CSettings::CSettings()
 	Add( _T("Interface"), _T("TipSearch"), &Interface.TipSearch, true );
 	Add( _T("Interface"), _T("TipUploads"), &Interface.TipUploads, true );
 
-	Add( _T("Library"), _T("BitziAgent"), &Library.BitziAgent, _T(".") );
-	Add( _T("Library"), _T("BitziOkay"), &Library.BitziOkay, false );
-	Add( _T("Library"), _T("BitziWebSubmit"), &Library.BitziWebSubmit, _T("http://bitzi.com/lookup/(SHA1).(TTH)?fl=(SIZE)&ff=(FIRST20)&fn=(NAME)&tag.ed2k.ed2khash=(ED2K)&(INFO)&a=(AGENT)&v=Q0.4&ref=shareaza") );
-	Add( _T("Library"), _T("BitziWebView"), &Library.BitziWebView, _T("http://bitzi.com/lookup/(URN)?v=detail&ref=shareaza") );
-	Add( _T("Library"), _T("BitziXML"), &Library.BitziXML, _T("http://ticket.bitzi.com/rdf/(SHA1).(TTH)") );
 	Add( _T("Library"), _T("CreateGhosts"), &Library.CreateGhosts, true );
 	Add( _T("Library"), _T("FilterURI"), &Library.FilterURI, NULL );
 	Add( _T("Library"), _T("HashWindow"), &Library.HashWindow, true );
@@ -158,6 +153,15 @@ CSettings::CSettings()
 	Add( _T("Library"), _T("WatchFolders"), &Library.WatchFolders, true );
 	Add( _T("Library"), _T("WatchFoldersTimeout"), &Library.WatchFoldersTimeout, 5, 1, 1, 60, _T(" s") );
 
+	Add( _T("WebServices"), _T("BitziAgent"), &WebServices.BitziAgent, _T(".") );
+	Add( _T("WebServices"), _T("BitziOkay"), &WebServices.BitziOkay, false, true );
+	Add( _T("WebServices"), _T("BitziWebSubmit"), &WebServices.BitziWebSubmit, _T("http://bitzi.com/lookup/(SHA1).(TTH)?fl=(SIZE)&ff=(FIRST20)&fn=(NAME)&tag.ed2k.ed2khash=(ED2K)&(INFO)&a=(AGENT)&v=Q0.4&ref=shareaza") );
+	Add( _T("WebServices"), _T("BitziWebView"), &WebServices.BitziWebView, _T("http://bitzi.com/lookup/(URN)?v=detail&ref=shareaza") );
+	Add( _T("WebServices"), _T("BitziXML"), &WebServices.BitziXML, _T("http://ticket.bitzi.com/rdf/(SHA1).(TTH)") );
+	Add( _T("WebServices"), _T("ShareMonkeyCid"), &WebServices.ShareMonkeyCid, _T(""), true );
+	Add( _T("WebServices"), _T("ShareMonkeyOkay"), &WebServices.ShareMonkeyOkay, false, true );
+	Add( _T("WebServices"), _T("ShareMonkeySaveThumbnail"), &WebServices.ShareMonkeySaveThumbnail, false, true );
+	
 	Add( _T("Search"), _T("AdultFilter"), &Search.AdultFilter, false );
 	Add( _T("Search"), _T("AdvancedPanel"), &Search.AdvancedPanel, true );
 	Add( _T("Search"), _T("BlankSchemaURI"), &Search.BlankSchemaURI, CSchema::uriAudio );
@@ -831,10 +835,6 @@ void CSettings::SmartUpgrade()
 
 		if ( General.SmartVersion < 32 )
 		{
-			Library.BitziWebView	= _T("http://bitzi.com/lookup/(URN)?v=detail&ref=shareaza");
-			Library.BitziWebSubmit	= _T("http://bitzi.com/lookup/(SHA1).(TTH)?fl=(SIZE)&ff=(FIRST20)&fn=(NAME)&tag.ed2k.ed2khash=(ED2K)&(INFO)&a=(AGENT)&v=Q0.4&ref=shareaza");
-			Library.BitziXML		= _T("http://ticket.bitzi.com/rdf/(SHA1).(TTH)");
-
 			theApp.WriteProfileString( _T("Interface"), _T("SchemaColumns.audio"), _T("(EMPTY)") );
 		}
 
@@ -1034,6 +1034,28 @@ void CSettings::SmartUpgrade()
 			// uTorrent
 			if ( ! IsIn( Library.PrivateTypes, _T("!ut") ) )
 				Library.PrivateTypes.insert( _T("!ut") );
+		}
+		
+		if ( General.SmartVersion < 55 ) // Migrate values to other section
+		{
+			WebServices.BitziOkay		= theApp.GetProfileInt( L"Library", L"BitziOkay", false ) != 0;
+			WebServices.ShareMonkeyCid	= theApp.GetProfileString( L"", L"ShareMonkeyCid", L"" );
+			
+			// Delete old values
+			theApp.WriteProfileString( L"Library", L"BitziAgent", NULL );
+			theApp.WriteProfileString( L"Library", L"BitziWebSubmit", NULL );
+			theApp.WriteProfileString( L"Library", L"BitziWebView", NULL );
+			theApp.WriteProfileString( L"Library", L"BitziXML", NULL );
+			theApp.WriteProfileString( L"", L"ShareMonkeyCid", NULL );
+			theApp.WriteProfileString( L"Library", L"BitziWebView", NULL );
+			
+			HKEY hKey;
+
+			if ( RegOpenKeyEx( HKEY_CURRENT_USER,
+				_T("SOFTWARE\\Shareaza\\Shareaza\\Library"), 0, KEY_ALL_ACCESS, &hKey )
+				!= ERROR_SUCCESS ) return;
+			RegDeleteValue( hKey, _T("BitziOkay") );
+			RegCloseKey( hKey );			
 		}
 	}
 

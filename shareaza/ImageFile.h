@@ -38,10 +38,11 @@ public:
 	BOOL			m_bScanned;
 	int				m_nWidth;
 	int				m_nHeight;
-	int				m_nComponents;
+	DWORD			m_nComponents;
 	BOOL			m_bLoaded;
 	LPBYTE			m_pImage;
 	CImageServices	m_ImageServices;
+	WORD			m_nFlags;
 
 // Operations
 public:
@@ -60,6 +61,11 @@ public:
 //	BOOL	FastResample(int nNewWidth, int nNewHeight);
 	BOOL	EnsureRGB(COLORREF crBack = 0xFFFFFFFF);
 	BOOL	SwapRGB();
+
+	enum ImageFlags
+	{
+		idRemote = 0x1
+	};
 
 protected:
 	void	Clear();

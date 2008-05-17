@@ -1427,6 +1427,7 @@
 #define IDS_GENERAL_NEXT                20011
 #define IDS_GENERAL_FINISH              20012
 #define IDS_GENERAL_ALL                 20013
+#define IDS_SHAREMONKEY_MESSAGE         20014
 #define IDS_STATUS_CONNECTING           20100
 #define IDS_STATUS_REQUESTING           20101
 #define IDS_STATUS_RESPONSE             20102
@@ -1859,6 +1860,7 @@
 #define ID_SYSTEM_VERBOSE_NOTICE        33314
 #define ID_SYSTEM_VERBOSE_INFO          33315
 #define ID_SYSTEM_VERBOSE_DEBUG         33316
+#define ID_SHAREMONKEY_SAVE_OPTION      33317
 
 // Next default values for new objects
 // 

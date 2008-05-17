@@ -43,7 +43,8 @@ CImageFile::CImageFile() :
 	m_nHeight( 0 ),
 	m_nComponents( 0 ),
 	m_bLoaded( FALSE ),
-	m_pImage( NULL )
+	m_pImage( NULL ),
+	m_nFlags( 0 )
 {
 }
 
@@ -65,6 +66,7 @@ void CImageFile::Clear()
 	m_nComponents	= 0;
 	m_bLoaded		= FALSE;
 	m_pImage		= NULL;
+	m_nFlags		= 0;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -152,8 +154,12 @@ BOOL CImageFile::LoadFromURL(LPCTSTR pszURL)
 		if ( pBuffer == NULL ) return FALSE;
 
 		strMIME.Replace( '/', '.' );
-		return m_bLoaded = m_ImageServices.LoadFromMemory( this, strMIME, (LPVOID)pBuffer->m_pBuffer,
-														   pBuffer->m_nLength );
+		m_bLoaded = m_ImageServices.LoadFromMemory( this, strMIME, (LPVOID)pBuffer->m_pBuffer,
+													pBuffer->m_nLength );
+		if ( m_bLoaded )
+			m_nFlags |= idRemote;
+
+		return m_bLoaded;
 	}
 
 	return FALSE;
@@ -213,7 +219,8 @@ void CImageFile::Serialize(CArchive& ar)
 
 		ar << m_nWidth;
 		ar << m_nHeight;
-		ar << m_nComponents;
+		DWORD nCompositeValue = ( m_nFlags << 16 ) | ( m_nComponents );
+		ar << nCompositeValue;
 
 		ar.Write( m_pImage, ( ( m_nWidth * m_nComponents + 3) & ~3 ) * m_nHeight );
 	}
@@ -224,7 +231,13 @@ void CImageFile::Serialize(CArchive& ar)
 		ar >> m_nWidth;
 		if ( ! m_nWidth ) return;
 		ar >> m_nHeight;
-		ar >> m_nComponents;
+		DWORD nCompositeValue;
+		ar >> nCompositeValue;
+
+		// Get higher bits for flags
+		m_nFlags = nCompositeValue >> 16;
+		// Clear high bits for components
+		m_nComponents = nCompositeValue & 0x0000FFFF;
 
 		int nPitch = ( ( m_nWidth * m_nComponents+ 3 ) & ~3 ) * m_nHeight;
 
@@ -243,19 +256,26 @@ HBITMAP CImageFile::CreateBitmap(HDC hUseDC)
 	if ( ! m_bLoaded ) return NULL;
 	if ( m_nComponents != 3 ) return NULL;
 
-	BITMAPINFO pInfo = {};
+	BITMAPV5HEADER pV5Header = {};
 
-	pInfo.bmiHeader.biSize			= sizeof(BITMAPINFOHEADER);
-	pInfo.bmiHeader.biWidth			= (LONG)m_nWidth;
-	pInfo.bmiHeader.biHeight		= (LONG)m_nHeight;
-	pInfo.bmiHeader.biPlanes		= 1;
-	pInfo.bmiHeader.biBitCount		= 24;
-	pInfo.bmiHeader.biCompression	= BI_RGB;
-	pInfo.bmiHeader.biSizeImage		= m_nWidth * m_nHeight * 3;
+	pV5Header.bV5Size			= sizeof(BITMAPV5HEADER);
+	pV5Header.bV5Width			= (LONG)m_nWidth;
+	pV5Header.bV5Height			= (LONG)m_nHeight;
+	pV5Header.bV5Planes			= 1;
+	pV5Header.bV5BitCount		= 24; // Not 32 bit :(
+	pV5Header.bV5Compression	= BI_RGB;
+	pV5Header.bV5SizeImage		= m_nWidth * m_nHeight * 3;
+
+	// The following mask specification specifies a supported 32 BPP alpha format for Windows XP.
+	// pV5Header.bV5RedMask   =  0x00FF0000;
+	// pV5Header.bV5GreenMask =  0x0000FF00;
+	// pV5Header.bV5BlueMask  =  0x000000FF;
+	// pV5Header.bV5AlphaMask =  0xFF000000;
 
 	HDC hDC = hUseDC ? hUseDC : GetDC( 0 );
 
-	HBITMAP hBitmap = CreateDIBitmap( hDC, &pInfo.bmiHeader, 0, NULL, &pInfo, DIB_RGB_COLORS );
+	void* pBits;
+	HBITMAP hBitmap = CreateDIBSection( hDC, (BITMAPINFO*)&pV5Header, DIB_RGB_COLORS, (void**)&pBits, NULL, 0ul );
 
 	if ( hBitmap )
 	{
@@ -275,7 +295,7 @@ HBITMAP CImageFile::CreateBitmap(HDC hUseDC)
 
 			SwapRGB()( pLine, pLine + m_nWidth * 3 );
 
-			SetDIBits( hDC, hBitmap, nY, 1, pLine, &pInfo, DIB_RGB_COLORS );
+			SetDIBits( hDC, hBitmap, nY, 1, pLine, (BITMAPINFO*)&pV5Header, DIB_RGB_COLORS );
 
 			SwapRGB()( pLine, pLine + m_nWidth * 3 );
 

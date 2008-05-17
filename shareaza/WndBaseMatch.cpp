@@ -604,7 +604,7 @@ void CBaseMatchWnd::OnBrowseLaunch()
 
 void CBaseMatchWnd::OnUpdateLibraryBitziWeb(CCmdUI* pCmdUI) 
 {
-	if ( m_pMatches->GetSelectedCount() != 1 || Settings.Library.BitziWebView.IsEmpty() )
+	if ( m_pMatches->GetSelectedCount() != 1 || Settings.WebServices.BitziWebView.IsEmpty() )
 	{
 		pCmdUI->Enable( FALSE );
 	}
@@ -620,12 +620,12 @@ void CBaseMatchWnd::OnUpdateLibraryBitziWeb(CCmdUI* pCmdUI)
 
 void CBaseMatchWnd::OnLibraryBitziWeb() 
 {
-	if ( ! Settings.Library.BitziOkay )
+	if ( ! Settings.WebServices.BitziOkay )
 	{
 		CString strMessage;
 		Skin.LoadString( strMessage, IDS_LIBRARY_BITZI_MESSAGE );
 		if ( AfxMessageBox( strMessage, MB_ICONQUESTION|MB_YESNO ) != IDYES ) return;
-		Settings.Library.BitziOkay = TRUE;
+		Settings.WebServices.BitziOkay = true;
 		Settings.Save();
 	}
 
@@ -678,7 +678,7 @@ void CBaseMatchWnd::OnLibraryBitziWeb()
 
 	if ( strURN.IsEmpty() ) return;
 
-	CString strURL = Settings.Library.BitziWebView;
+	CString strURL = Settings.WebServices.BitziWebView;
 	strURL.Replace( _T("(URN)"), strURN );
 	ShellExecute( GetSafeHwnd(), _T("open"), strURL, NULL, NULL, SW_SHOWNORMAL );
 }

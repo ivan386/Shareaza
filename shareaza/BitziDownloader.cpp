@@ -229,7 +229,7 @@ BOOL CBitziDownloader::BuildRequest()
 
 	if ( m_sFileSHA1.IsEmpty() || m_sFileTiger.IsEmpty() ) return FALSE;
 
-	m_sURL = Settings.Library.BitziXML;
+	m_sURL = Settings.WebServices.BitziXML;
 	m_sURL.Replace( _T("(SHA1)"), m_sFileSHA1 );
 	m_sURL.Replace( _T("(TTH)"), m_sFileTiger );
 

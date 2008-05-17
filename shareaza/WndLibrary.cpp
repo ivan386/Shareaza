@@ -101,7 +101,8 @@ BOOL CLibraryWnd::OnCmdMsg(UINT nID, int nCode, void* pExtra, AFX_CMDHANDLERINFO
 {
 	if ( m_wndFrame.m_hWnd )
 	{
-		if ( m_wndFrame.OnCmdMsg( nID, nCode, pExtra, pHandlerInfo ) ) return TRUE;
+		if ( m_wndFrame.OnCmdMsg( nID, nCode, pExtra, pHandlerInfo ) )
+			return TRUE;
 	}
 
 	return CPanelWnd::OnCmdMsg( nID, nCode, pExtra, pHandlerInfo );
