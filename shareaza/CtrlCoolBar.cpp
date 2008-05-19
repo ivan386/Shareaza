@@ -1157,6 +1157,7 @@ void CCoolBarItem::Paint(CDC* pDC, CRect& rc, BOOL bDown, BOOL bHot, BOOL bMenuG
 	if ( m_bRegularButton && !m_nCtrlID )
 	{
 		CoolInterface.DrawWatermark( pDC, &rc, &m_bmButtonmark );
+		// A mess in function prototype. Why we pass "bTransparent" and then ignore it?
 		pDC->SetBkMode( TRANSPARENT );
 		crBackground = CLR_NONE;
 		rc.OffsetRect( 1 , 0 );
@@ -1225,7 +1226,7 @@ void CCoolBarItem::Paint(CDC* pDC, CRect& rc, BOOL bDown, BOOL bHot, BOOL bMenuG
 		pDC->SetBkColor( crBackground );
 	}
 
-	DrawText( pDC, rc, bDown, bHot, bMenuGray, bTransparent );
+	DrawText( pDC, rc, bDown, bHot, bMenuGray, crBackground == CLR_NONE );
 
 	if ( m_nImage >= 0 )
 	{
