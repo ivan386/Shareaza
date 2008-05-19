@@ -412,9 +412,10 @@ void CHomeDownloadsBox::OnPaint()
 		
 		if ( pItem->m_nComplete == 0 || pItem->m_nSize == SIZE_UNKNOWN )
 		{
-			ShellIcons.Draw( &dc, pItem->m_nIcon16, 16,
-				( rcIcon.left + rcIcon.right ) / 2 - 8, rcIcon.top,
+			CRect rc( rcIcon.left, rcIcon.top, rcIcon.left + 16, rcIcon.top + 16 );
+			ShellIcons.Draw( &dc, pItem->m_nIcon16, 16, rc.left, rc.top,
 				CoolInterface.m_crWindow );
+			dc.ExcludeClipRect( &rc );
 		}
 		else
 		{
