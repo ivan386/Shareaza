@@ -1,7 +1,7 @@
 //
 // ShareazaDataSource.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -190,7 +190,7 @@ public:\
 	{ \
 		METHOD_PROLOGUE( class_name, DropTarget ) \
 		m_pDataObj = pDataObj; \
-		CoCreateInstance( CLSID_DragDropHelper, NULL, CLSCTX_ALL, IID_IDropTargetHelper, (LPVOID*) &m_spdth ); \
+		m_spdth.CoCreateInstance( CLSID_DragDropHelper ); \
 		POINT point = { ptl.x, ptl.y }; \
 		if ( ! pThis->OnDrop( m_pDataObj, grfKeyState, point, pdwEffect, FALSE ) ) \
 			*pdwEffect = DROPEFFECT_NONE; \
