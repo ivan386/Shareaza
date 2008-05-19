@@ -377,7 +377,7 @@ bool CUPnPFinder::OnSearchComplete()
 		return false; // no devices found
 	}
 	
-	for ( std::size_t pos = 0; pos != m_pDevices.size(); ++pos )
+	for ( std::size_t pos = 0; pos < m_pDevices.size(); pos++ )
 	{
 		GetDeviceServices( m_pDevices[ pos ] );
 		StartPortMapping();
