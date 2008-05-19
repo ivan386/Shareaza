@@ -551,7 +551,7 @@ BOOL CShareazaDataSource::DropToFolder(IDataObject* pIDataObject, DWORD grfKeySt
 
 	// Check for "source == destination"
 	{
-		bool bFolder = GetFileAttributes( pAFOP->sFrom.GetData() ) & FILE_ATTRIBUTE_DIRECTORY;
+		bool bFolder = ( GetFileAttributes( pAFOP->sFrom.GetData() ) & FILE_ATTRIBUTE_DIRECTORY ) != 0;
 		LPCTSTR szPath2 = PathFindFileName( pAFOP->sFrom.GetData() );
 		if ( szPath2 )
 		{
