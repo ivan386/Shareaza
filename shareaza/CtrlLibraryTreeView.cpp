@@ -109,7 +109,6 @@ CLibraryTreeView::CLibraryTreeView()
 , m_nScroll( 0 )
 , m_nSelected( 0 )
 , m_nCleanCookie( 0 )
-, m_tClickTime( 0 )
 , m_pTip( NULL )
 , m_pSelFirst( NULL )
 , m_pSelLast( NULL )
@@ -517,8 +516,6 @@ void CLibraryTreeView::OnLButtonDown(UINT nFlags, CPoint point)
 	CRect rc;
 	CLibraryTreeItem* pHit = HitTest( point, &rc );
 	BOOL bChanged = FALSE;
-	bool bGetTime = false;
-	m_tClickTime = 0;
 
 	SetFocus();
 
@@ -541,7 +538,6 @@ void CLibraryTreeView::OnLButtonDown(UINT nFlags, CPoint point)
 		if ( ( nFlags & MK_RBUTTON ) == 0 || ( pHit && pHit->m_bSelected == FALSE ) )
 		{
 			bChanged = DeselectAll( pHit );
-			bGetTime = true;
 		}
 		if ( pHit ) bChanged |= Select( pHit );
 	}
@@ -558,7 +554,6 @@ void CLibraryTreeView::OnLButtonDown(UINT nFlags, CPoint point)
 	}
 
 	if ( bChanged ) NotifySelection();
-	if ( bGetTime ) m_tClickTime = GetTickCount();
 
 	CWnd::OnLButtonDown( nFlags, point );
 }
@@ -566,7 +561,6 @@ void CLibraryTreeView::OnLButtonDown(UINT nFlags, CPoint point)
 void CLibraryTreeView::OnLButtonDblClk(UINT nFlags, CPoint point)
 {
 	OnLButtonDown( nFlags, point );
-	m_tClickTime = 0;
 
 	if ( !m_bVirtual ) 
 		OnLibraryExplore();
@@ -577,7 +571,6 @@ void CLibraryTreeView::OnLButtonDblClk(UINT nFlags, CPoint point)
 void CLibraryTreeView::OnRButtonDown(UINT nFlags, CPoint point)
 {
 	OnLButtonDown( nFlags, point );
-	m_tClickTime = 0;
 
 	CWnd::OnRButtonDown( nFlags, point );
 }
@@ -615,21 +608,6 @@ void CLibraryTreeView::OnMouseMove(UINT nFlags, CPoint point)
 void CLibraryTreeView::OnLButtonUp(UINT nFlags, CPoint point)
 {
 	m_bDrag = FALSE;
-
-	if ( m_tClickTime != 0 && !m_bVirtual && GetTickCount() - m_tClickTime > 300 )
-	{
-		if ( m_pFocus != NULL && !m_pFocus->empty() )
-		{
-			if ( Expand( m_pFocus, TRI_UNKNOWN ) )
-				NotifySelection();
-		}
-		if ( m_pFocus == NULL )
-		{
-			SelectAll();
-			NotifySelection();
-		}
-	}
-	m_tClickTime = 0;
 
 	CWnd::OnLButtonUp( nFlags, point );
 }
@@ -2003,7 +1981,6 @@ BOOL CLibraryTreeView::OnDrop(IDataObject* pDataObj, DWORD grfKeyState, POINT pt
 {
 	if ( ! pDataObj )
 	{
-		m_pDropItem = NULL;
 		RedrawWindow();
 		return TRUE;
 	}
@@ -2018,15 +1995,14 @@ BOOL CLibraryTreeView::OnDrop(IDataObject* pDataObj, DWORD grfKeyState, POINT pt
 	if ( pHit && ! rcItem.PtInRect( pt ) )
 		pHit = NULL;
 
-	if ( bDrop )
+	if ( pHit )
 	{
-		m_pDropItem = NULL;
-		RedrawWindow();
-	}
-	else if ( m_pDropItem != pHit )
-	{
-		m_pDropItem = pHit;
-		RedrawWindow();
+		DeselectAll( pHit );
+		if ( Select( pHit ) )
+		{
+			NotifySelection();
+			RedrawWindow();
+		}
 	}
 
 	if ( pHit )

@@ -57,7 +57,6 @@ private:
 	BOOL				m_bVirtual;
 	CFolderTipCtrl		m_wndFolderTip;
 	CAlbumTipCtrl		m_wndAlbumTip;
-	DWORD				m_tClickTime;
 
 // Operations
 public:
