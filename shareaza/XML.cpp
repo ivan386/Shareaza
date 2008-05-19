@@ -524,7 +524,9 @@ BOOL CXMLElement::ParseString(LPCTSTR& strXML)
 
 	if ( ! ParseIdentifier( strXML, m_sName ) ) return FALSE;
 
+#ifdef _DEBUG
 	LPCTSTR pszEnd = strXML + _tcslen( strXML );
+#endif
 
 	while ( ! ParseMatch( strXML, _T(">") ) )
 	{
@@ -533,7 +535,8 @@ BOOL CXMLElement::ParseString(LPCTSTR& strXML)
 			return ParseMatch( strXML, _T(">") );
 		}
 
-		if ( ! *strXML || strXML >= pszEnd ) return FALSE;
+		if ( ! *strXML ) return FALSE;
+		ASSERT( strXML < pszEnd );
 
 		CXMLAttribute* pAttribute = new CXMLAttribute( this );
 
@@ -563,7 +566,8 @@ BOOL CXMLElement::ParseString(LPCTSTR& strXML)
 
 	for (;;)
 	{
-		if ( ! *strXML || strXML >= pszEnd ) return FALSE;
+		if ( ! *strXML ) return FALSE;
+		ASSERT( strXML < pszEnd );
 
 		LPCTSTR pszElement = _tcschr( strXML, '<' );
 		if ( ! pszElement || *pszElement != '<' ) return FALSE;
