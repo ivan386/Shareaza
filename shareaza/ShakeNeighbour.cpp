@@ -196,8 +196,12 @@ void CShakeNeighbour::Close(UINT nError)
 // Records the failure and puts everything away
 void CShakeNeighbour::DelayClose(UINT nError)
 {
+	if ( ! m_bInitiated )
+		Security.Complain( &m_pHost.sin_addr );
+
 	// If we initiated the connection to the remote computer
 	m_nDelayCloseReason = nError;
+
 	// Change this object's state to closing
 	m_nState = nrsClosing;
 

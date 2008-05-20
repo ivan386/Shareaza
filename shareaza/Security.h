@@ -19,14 +19,17 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_SECURITY_H__85BE0E66_93D0_44B1_BEE1_E2C3C81CB8AF__INCLUDED_)
-#define AFX_SECURITY_H__85BE0E66_93D0_44B1_BEE1_E2C3C81CB8AF__INCLUDED_
-
 #pragma once
+
 #include "QuerySearch.h"
 
 class CSecureRule;
 class CXMLElement;
+
+enum
+{
+	banSession, ban5Mins, ban30Mins, ban2Hours, banWeek, banForever 
+};
 
 class CSecurity
 {
@@ -42,8 +45,16 @@ public:
 	static LPCTSTR				xmlns;
 
 protected:
+	typedef struct
+	{
+		DWORD	m_nExpire;
+		BYTE	m_nScore;
+	} CComplain;
+	typedef CMap< DWORD, DWORD, CComplain*, CComplain* > CComplainMap;
+
 	CList< CSecureRule* >		m_pRules;
 	CList< CSecureRule* >		m_pRegExpRules;
+	CComplainMap				m_Complains;
 
 // Operations
 public:
@@ -58,7 +69,8 @@ public:
 	void			Remove(CSecureRule* pRule);
 	void			MoveUp(CSecureRule* pRule);
 	void			MoveDown(CSecureRule* pRule);
-	void			Ban(IN_ADDR* pAddress, int nBanLength, BOOL bMessage = TRUE);
+	void			Ban(const IN_ADDR* pAddress, int nBanLength, BOOL bMessage = TRUE);
+	bool			Complain(const IN_ADDR* pAddress, int nBanLength = ban5Mins, int nExpire = 30, int nCount = 3);
 	void			Clear();
 	BOOL			IsDenied(IN_ADDR* pAddress, LPCTSTR pszContent = NULL);
 	BOOL			IsDenied(CString sName, QWORD nSize, const Hashes::Sha1Hash& oSHA1, 
@@ -75,11 +87,6 @@ protected:
 	CXMLElement*	ToXML(BOOL bRules = TRUE);
 	BOOL			FromXML(CXMLElement* pXML);
 	void			Serialize(CArchive& ar);
-};
-
-enum
-{
-	banSession, ban5Mins, ban30Mins, ban2Hours, banWeek, banForever 
 };
 
 class CSecureRule
@@ -115,7 +122,7 @@ public:
 	void	Reset();
 	void	MaskFix();
 	BOOL	IsExpired(DWORD nNow, BOOL bSession = FALSE);
-	BOOL	Match(IN_ADDR* pAddress, LPCTSTR pszContent = NULL);
+	BOOL	Match(const IN_ADDR* pAddress, LPCTSTR pszContent = NULL);
 	BOOL	Match(CQuerySearch::const_iterator itStart, 
 				  CQuerySearch::const_iterator itEnd, LPCTSTR pszContent);
 	void	SetContentWords(const CString& strContent);
@@ -181,5 +188,3 @@ public:
 extern CMessageFilter MessageFilter;
 extern CAdultFilter AdultFilter;
 extern CSecurity Security;
-
-#endif // !defined(AFX_SECURITY_H__85BE0E66_93D0_44B1_BEE1_E2C3C81CB8AF__INCLUDED_)

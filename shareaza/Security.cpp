@@ -173,6 +173,15 @@ void CSecurity::Clear()
 {
 	CQuickLock oLock( m_pSection );
 
+	for ( POSITION pos = m_Complains.GetStartPosition() ; pos ; )
+	{
+		DWORD pAddress;
+		CComplain* pComplain;
+		m_Complains.GetNextAssoc( pos, pAddress, pComplain );
+		delete pComplain;
+	}
+	m_Complains.RemoveAll();
+
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
 		delete GetNext( pos );
@@ -181,10 +190,11 @@ void CSecurity::Clear()
 	m_pRules.RemoveAll();
 	m_pRegExpRules.RemoveAll();
 }
+
 //////////////////////////////////////////////////////////////////////
 // CSecurity ban
 
-void CSecurity::Ban(IN_ADDR* pAddress, int nBanLength, BOOL bMessage)
+void CSecurity::Ban(const IN_ADDR* pAddress, int nBanLength, BOOL bMessage)
 {
 	CQuickLock oLock( m_pSection );
 
@@ -261,79 +271,37 @@ void CSecurity::Ban(IN_ADDR* pAddress, int nBanLength, BOOL bMessage)
 			(LPCTSTR)strAddress );
 	}
 }
-/*
-//////////////////////////////////////////////////////////////////////
-// CSecurity session ban
 
-void CSecurity::SessionBan(IN_ADDR* pAddress, BOOL bMessage)
+
+//////////////////////////////////////////////////////////////////////
+// CSecurity complain
+
+bool CSecurity::Complain(const IN_ADDR* pAddress, int nBanLength, int nExpire, int nCount)
 {
 	CQuickLock oLock( m_pSection );
 
-	CString strAddress = inet_ntoa( *pAddress );
-
-	for ( POSITION pos = GetIterator() ; pos ; )
+	DWORD nNow = static_cast< DWORD >( time( NULL ) );
+	CComplain* pComplain = NULL;
+	if ( m_Complains.Lookup( pAddress->s_addr, pComplain ) )
 	{
-		CSecureRule* pRule = GetNext( pos );
-
-		if ( pRule->Match( pAddress ) )
+		pComplain->m_nScore ++;
+		if ( pComplain->m_nScore > nCount )
 		{
-			if ( pRule->m_nAction == CSecureRule::srDeny )
-			{
-				if ( bMessage )
-				{
-					theApp.Message( MSG_NOTICE, IDS_NETWORK_SECURITY_ALREADY_BLOCKED,
-						(LPCTSTR)strAddress );
-				}
-
-				return;
-			}
+			m_Complains.RemoveKey( pAddress->s_addr );
+			Ban( pAddress, nBanLength );
+			return true;
 		}
 	}
-
-	CSecureRule* pRule	= new CSecureRule();
-	pRule->m_nAction	= CSecureRule::srDeny;
-	pRule->m_nExpire	= CSecureRule::srSession;
-	pRule->m_sComment	= _T("Quick Ban");
-	CopyMemory( pRule->m_nIP, pAddress, sizeof pRule->m_nIP );
-	Add( pRule );
-
-	if ( bMessage )
+	else
 	{
-		theApp.Message( MSG_NOTICE, IDS_NETWORK_SECURITY_BLOCKED,
-			(LPCTSTR)strAddress );
+		pComplain = new CComplain;
+		pComplain->m_nScore = 1;
+		m_Complains.SetAt( pAddress->s_addr, pComplain );
 	}
+	pComplain->m_nExpire = nNow + nExpire;
+	return false;
 }
 
-//////////////////////////////////////////////////////////////////////
-// CSecurity 5-minute block
-
-void CSecurity::TempBlock(IN_ADDR* pAddress)
-{
-	CQuickLock oLock( m_pSection );
-
-	CString strAddress = inet_ntoa( *pAddress );
-
-	for ( POSITION pos = GetIterator() ; pos ; )
-	{
-		CSecureRule* pRule = GetNext( pos );
-
-		if ( pRule->Match( pAddress ) )
-		{
-			if ( pRule->m_nAction == CSecureRule::srDeny )
-			{
-				return;
-			}
-		}
-	}
-
-	CSecureRule* pRule	= new CSecureRule();
-	pRule->m_nAction	= CSecureRule::srDeny;
-	pRule->m_nExpire	= time( NULL ) + 300;
-	pRule->m_sComment	= _T("Temp Block");
-	CopyMemory( pRule->m_nIP, pAddress, sizeof pRule->m_nIP );
-	Add( pRule );
-}
-*/
 //////////////////////////////////////////////////////////////////////
 // CSecurity access check
 
@@ -433,6 +401,15 @@ void CSecurity::Expire()
 	CQuickLock oLock( m_pSection );
 
 	DWORD nNow = static_cast< DWORD >( time( NULL ) );
+
+	for ( POSITION pos = m_Complains.GetStartPosition() ; pos ; )
+	{
+		DWORD pAddress;
+		CComplain* pComplain;
+		m_Complains.GetNextAssoc( pos, pAddress, pComplain );
+		if ( pComplain->m_nExpire < nNow )
+			m_Complains.RemoveKey( pAddress );
+	}
 
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
@@ -751,7 +728,7 @@ BOOL CSecureRule::IsExpired(DWORD nNow, BOOL bSession)
 //////////////////////////////////////////////////////////////////////
 // CSecureRule match
 
-BOOL CSecureRule::Match(IN_ADDR* pAddress, LPCTSTR pszContent)
+BOOL CSecureRule::Match(const IN_ADDR* pAddress, LPCTSTR pszContent)
 {
 	if ( m_nExpire > srSession )
 	{

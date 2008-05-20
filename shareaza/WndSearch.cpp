@@ -855,14 +855,14 @@ BOOL CSearchWnd::OnQueryHits(CQueryHit* pHits)
 					pManaged->m_tLastED2K = 0xFFFFFFFF;
 					theApp.Message( MSG_DEBUG, _T("ED2K Search Reached Maximum Number of Files") );
 				}
-
+#ifndef LAN_MODE
 				if ( !m_bWaitMore && ( m_pMatches->m_nGnutellaHits >= m_nMaxResults ) )
 				{
 					m_bWaitMore = TRUE;
 					pManaged->m_bActive = FALSE;
 					theApp.Message( MSG_DEBUG, _T("Gnutella Search Reached Maximum Number of Files") );
 				}
-				
+#endif // LAN_MODE
 				return TRUE;
 			}
 		}
