@@ -181,7 +181,7 @@
 	</toolbar>
 	<!-- UPLOADS WINDOW -->
 	<toolbar name="CUploadsWnd.Basic">
-		<button id="ID_BROWSE_LAUNCH" text="Файлы"/>
+		<button id="ID_BROWSE_LAUNCH" text="Просмотр хоста"/>
 		<button id="ID_UPLOADS_CHAT" text="Чат"/>
 		<rightAlign/>
 		<button id="ID_UPLOADS_CLEAR_COMPLETED" text="Очистить от завершенных"/>
@@ -192,7 +192,7 @@
 		<button id="ID_UPLOADS_START" text="Начать сейчас"/>
 		<button id="ID_UPLOADS_CLEAR" text="Очистить"/>
 		<separator/>
-		<button id="ID_BROWSE_LAUNCH" text="Файлы"/>
+		<button id="ID_BROWSE_LAUNCH" text="Просмотр хоста"/>
 		<button id="ID_UPLOADS_CHAT" text="Чат"/>
 		<button id="ID_SECURITY_BAN" text="Блокировать"/>
 		<rightAlign/>
@@ -358,7 +358,7 @@
 	</toolbar>
 	<!-- NEIGHBOURS WINDOW -->
 	<toolbar name="CNeighboursWnd.Basic">
-		<button id="ID_BROWSE_LAUNCH" text="Файлы"/>
+		<button id="ID_BROWSE_LAUNCH" text="Просмотр хоста"/>
 		<button id="ID_NEIGHBOURS_CHAT" text="Чат"/>
 		<rightAlign/>
 		<button id="ID_NETWORK_G2" text="Gnutella2"/>
@@ -371,7 +371,7 @@
 		<button id="ID_NETWORK_CONNECT_TO" text="Подключиться..."/>
 		<button id="ID_NEIGHBOURS_DISCONNECT" text="Отключиться"/>
 		<separator/>
-		<button id="ID_BROWSE_LAUNCH" text="Файлы"/>
+		<button id="ID_BROWSE_LAUNCH" text="Просмотр хоста"/>
 		<button id="ID_NEIGHBOURS_CHAT" text="Чат"/>
 		<button id="ID_SECURITY_BAN" text="Блокировать"/>
 		<rightAlign/>
@@ -419,7 +419,7 @@
 		<button id="ID_CHAT_COLOUR" text="C"/>
 		<button id="ID_CHAT_EMOTICONS"/>
 		<separator/>
-		<button id="ID_CHAT_BROWSE" text="Файлы"/>
+		<button id="ID_CHAT_BROWSE" text="Просмотр хоста"/>
 		<!--<button id="ID_CHAT_SEND_FILE" text="Послать файл"/> -->
 		<button id="ID_CHAT_PRIORITY" text="Предоставить приоритет"/>
 		<separator/>
@@ -519,7 +519,7 @@
 			<item id="ID_TOOLS_SKIN" text="Выбрать _шкурку..."/>
 			<item id="ID_TOOLS_LANGUAGE" text="Выбрать _язык..."/>
 			<separator/>
-			<item id="ID_TOOLS_PROFILE" text="Свой _профиль..."/>
+			<item id="ID_TOOLS_PROFILE" text="Редактировать _профиль..."/>
 			<item id="ID_TOOLS_WIZARD" text="_Мастер быстрого старта"/>
 			<separator/>
 			<item id="ID_TOOLS_SETTINGS" text="_Установки Shareaza..."/>
@@ -610,7 +610,7 @@
 			<item id="ID_TOOLS_SKIN" text="Выбрать _шкурку..."/>
 			<item id="ID_TOOLS_LANGUAGE" text="Выбрать _язык..."/>
 			<separator/>
-			<item id="ID_TOOLS_PROFILE" text="Свой _профиль..."/>
+			<item id="ID_TOOLS_PROFILE" text="Редактировать _профиль..."/>
 			<item id="ID_TOOLS_WIZARD" text="_Мастер быстрого старта"/>
 			<separator/>
 			<item id="ID_TOOLS_SETTINGS" text="_Установки Shareaza..."/>
@@ -698,7 +698,7 @@
 			<item id="ID_TOOLS_SKIN" text="Выбрать _шкурку..."/>
 			<item id="ID_TOOLS_LANGUAGE" text="Выбрать _язык..."/>
 			<separator/>
-			<item id="ID_TOOLS_PROFILE" text="Свой _профиль..."/>
+			<item id="ID_TOOLS_PROFILE" text="Редактировать _профиль..."/>
 			<separator/>
 			<item id="ID_TOOLS_WIZARD" text="_Мастер быстрого старта..."/>
 			<item id="ID_TOOLS_SETTINGS" text="_Установки Shareaza..."/>
@@ -885,7 +885,7 @@
 	<menu name="CSearchWnd.Basic">
 		<item id="ID_SEARCH_DOWNLOAD" text="_Загрузить"/>
 		<separator/>
-		<item id="ID_BROWSE_LAUNCH" text="_Файлы"/>
+		<item id="ID_BROWSE_LAUNCH" text="Просмотр _хоста"/>
 		<item id="ID_SEARCH_CHAT" text="_Чат"/>
 		<separator/>
 		<menu text="_Искать">
@@ -905,7 +905,7 @@
 		<item id="ID_SEARCH_DOWNLOADNOW" text="Загрузить сейчас"/>
 		<item id="ID_SEARCH_COPY" text="Копировать _ссылку"/>
 		<separator/>
-		<item id="ID_BROWSE_LAUNCH" text="_Файлы"/>
+		<item id="ID_BROWSE_LAUNCH" text="Просмотр _хоста"/>
 		<item id="ID_SEARCH_CHAT" text="_Чат"/>
 		<item id="ID_SECURITY_BAN" text="_Блокировать"/>
 		<separator/>
@@ -975,7 +975,7 @@
 		<item id="ID_SEARCH_DOWNLOAD" text="_Загрузить"/>
 		<item id="ID_SEARCH_COPY" text="Копировать _ссылку"/>
 		<separator/>
-		<item id="ID_BROWSE_LAUNCH" text="_Файлы"/>
+		<item id="ID_BROWSE_LAUNCH" text="Просмотр _хоста"/>
 		<item id="ID_SEARCH_CHAT" text="_Чат"/>
 		<separator/>
 		<menu text="_Искать">
@@ -1047,7 +1047,7 @@
 	<menu name="CDownloadsWnd.Source">
 		<item id="ID_TRANSFERS_CONNECT" text="_Подключиться"/>
 		<separator/>
-		<item id="ID_BROWSE_LAUNCH" text="_Файлы"/>
+		<item id="ID_BROWSE_LAUNCH" text="Просмотр _хоста"/>
 		<item id="ID_TRANSFERS_CHAT" text="_Чат"/>
 		<item id="ID_DOWNLOADS_COPY" text="Копировать _ссылку"/>
 		<separator/>
@@ -1107,14 +1107,14 @@
 	</menu>
 	<!-- UPLOADS WINDOW -->
 	<menu name="CUploadsWnd.Upload.Basic">
-		<item id="ID_BROWSE_LAUNCH" text="_Файлы"/>
+		<item id="ID_BROWSE_LAUNCH" text="Просмотр _хоста"/>
 		<item id="ID_UPLOADS_CHAT" text="_Чат"/>
 	</menu>
 	<menu name="CUploadsWnd.Upload">
 		<item id="ID_UPLOADS_START" text="_Начать сейчас"/>
 		<item id="ID_UPLOADS_CLEAR" text="_Убрать"/>
 		<separator/>
-		<item id="ID_BROWSE_LAUNCH" text="_Файлы"/>
+		<item id="ID_BROWSE_LAUNCH" text="Просмотр _хоста"/>
 		<item id="ID_UPLOADS_CHAT" text="_Чат"/>
 		<item id="ID_SECURITY_BAN" text="Б_локировать"/>
 	</menu>
@@ -1144,7 +1144,7 @@
 		<item id="ID_LIBRARY_FOLDERS" text="Раз_делять файлы..."/>
 	</menu>
 	<menu name="CLibraryTree.Physical">
-		<item id="ID_LIBRARY_EXPLORE" text="_Обзор"/>
+		<item id="ID_LIBRARY_EXPLORE" text="_Проводник"/>
 		<item id="ID_LIBRARY_REMOVE" text="_Удалить"/>
 		<separator/>
 		<item id="ID_LIBRARY_SHARED_FOLDER" text="_Общий доступ"/>
@@ -1445,7 +1445,7 @@
 	</menu>
 	<!-- NEIGHBOURS WINDOW -->
 	<menu name="CNeighboursWnd.Basic">
-		<item id="ID_BROWSE_LAUNCH" text="_Файлы"/>
+		<item id="ID_BROWSE_LAUNCH" text="Просмотр _хоста"/>
 		<item id="ID_NEIGHBOURS_CHAT" text="_Чат"/>
 		<separator/>
 		<item id="ID_NEIGHBOURS_DISCONNECT" text="_Отключить"/>
@@ -1453,7 +1453,7 @@
 		<item id="ID_NEIGHBOURS_COPY" text="_Копировать ссылку"/>
 	</menu>
 	<menu name="CNeighboursWnd">
-		<item id="ID_BROWSE_LAUNCH" text="_Файлы"/>
+		<item id="ID_BROWSE_LAUNCH" text="Просмотр _хоста"/>
 		<item id="ID_NEIGHBOURS_CHAT" text="_Чат"/>
 		<item id="ID_SECURITY_BAN" text="_Блокировать"/>
 		<separator/>
@@ -1535,7 +1535,7 @@
 		<item id="ID_CHAT_CONNECT" text="_Подключиться"/>
 		<item id="ID_CHAT_DISCONNECT" text="_Отключиться"/>
 		<separator/>
-		<item id="ID_CHAT_BROWSE" text="_Файлы"/>
+		<item id="ID_CHAT_BROWSE" text="Просмотр _хоста"/>
 		<!-- <item id="ID_CHAT_SEND_FILE" text="П_ослать файл..."/> -->
 		<item id="ID_CHAT_PRIORITY" text="_Предоставить приоритет"/>
 		<separator/>
@@ -1667,7 +1667,7 @@
 			<newline gap="18" indent="0"/>
 		</group>
 		<icon res="236" width="32" height="32"/><gap size="8"/>
-		<heading align="middle">Н А С Т Р О Й Т Е  &#160; S H A R E A Z у</heading>
+		<heading align="middle">Н А С Т Р О Й Т Е  &#160; S H A R E A Z У</heading>
 		<newline gap="12" indent="42"/>
 		<icon res="237" width="32" height="32" target="raza:command:ID_TOOLS_SKIN"/>
 		<gap size="8"/>
@@ -1904,7 +1904,7 @@
 	<!-- Browse User Profile -->
 	<document name="CBrowseHostProfile.1">
 		<heading id="Nick"/>
-		<heading> Профиль</heading>
+		<heading> &nbsp;Профиль</heading>
 		<newline gap="8"/>
 		<group id="1">
 			<newline gap="8" indent="0"/>
@@ -2244,12 +2244,12 @@
 <!-- Localised Command Tip Text. The "message" is displayed in the status bar, while the "tip" is shown in a tooltip -->
 <commandTips>
 	<tip id="ID_BROWSE_FILES" message="Просмотр файлов."/>
-	<tip id="ID_BROWSE_LAUNCH" message="Обзор профиля и файлов пользователя."/>
+	<tip id="ID_BROWSE_LAUNCH" message="Просмотр профиля и файлов пользователя."/>
 	<tip id="ID_BROWSE_PROFILE" message="Просмотр профиля пользователя."/>
 	<tip id="ID_BROWSE_REFRESH" message="Обновить список файлов."/>
 	<tip id="ID_BROWSE_STOP" message="Остановить просмотр файлов хоста."/>
 	<tip id="ID_CHAT_BOLD" message="Применить полужирный формат (Ctrl+B)"/>
-	<tip id="ID_CHAT_BROWSE" message="Обзор профиля и файлов пользователя."/>
+	<tip id="ID_CHAT_BROWSE" message="Просмотр профиля и файлов пользователя."/>
 	<tip id="ID_CHAT_CLEAR" message="Стереть текст сообщения в этом окне."/>
 	<tip id="ID_CHAT_COLOUR" message="Выбрать цвет текста (Ctrl+K)"/>
 	<tip id="ID_CHAT_CONNECT" message="Начать сессию чата."/>
@@ -2348,7 +2348,7 @@
 	<tip id="ID_LIBRARY_ADD" message="Добавить новую папку в Ваше хранилище..."/>
 	<tip id="ID_LIBRARY_ALBUM_DELETE" message="Удалить помеченную папку альбома."/>
 	<tip id="ID_LIBRARY_ALBUM_OPEN" message="Открыть помеченную папку альбома."/>
-	<tip id="ID_LIBRARY_ALBUM_PROPERTIES" message="Обзор и правка свойств помеченной папки альбома..."/>
+	<tip id="ID_LIBRARY_ALBUM_PROPERTIES" message="Просмотр и правка свойств помеченной папки альбома..."/>
 	<tip id="ID_LIBRARY_BITZI_DOWNLOAD" message="Загрузить мета данные для помеченного файла(ов) с Bitzi(TM)..."/>
 	<tip id="ID_LIBRARY_BITZI_WEB" message="Просмотреть Bitzi(TM) этикетку помеченного файла в Интернете."/>
 	<tip id="ID_LIBRARY_COLUMNS" message="Выбрать колонки мета данных для показа..."/>
@@ -2360,7 +2360,7 @@
 	<tip id="ID_LIBRARY_EXPORT_COLLECTION" message="Экспортировать помеченную папку альбома в файл коллекции..."/>
 	<tip id="ID_LIBRARY_FOLDER_DOWNLOAD" message="Загрузить все файлы выбранной коллекции."/>
 	<tip id="ID_LIBRARY_FOLDER_ENQUEUE" message="Добавить все файлы, находящиеся в помеченной папке(ах) альбома, в Ваш список воспроизведения."/>
-	<tip id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" message="Обзор и правка свойств всех файлов, находящихся в помеченной папке(ах)..."/>
+	<tip id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" message="Просмотр и правка свойств всех файлов, находящихся в помеченной папке(ах)..."/>
 	<tip id="ID_LIBRARY_FOLDER_METADATA" message="Применить общие мета данные папки альбома ко всем в ней содержащихся файлам."/>
 	<tip id="ID_LIBRARY_FOLDER_NEW" message="Создать здесь новую папку альбома..."/>
 	<tip id="ID_LIBRARY_FOLDER_PROPERTIES" message="Вид и правка свойств помеченной папки альбома..."/>
@@ -2370,7 +2370,7 @@
 	<tip id="ID_LIBRARY_MOVE" message="Переместить помеченные файлы в другую папку хранилища..."/>
 	<tip id="ID_LIBRARY_PANEL" message="Показывать или скрывать панель подробностей файлов."/>
 	<tip id="ID_LIBRARY_PARENT" message="Переместиться вверх в родиельскую папку."/>
-	<tip id="ID_LIBRARY_PROPERTIES" message="Обзор и правка свойств помеченных файлов..."/>
+	<tip id="ID_LIBRARY_PROPERTIES" message="Просмотр и правка свойств помеченных файлов..."/>
 	<tip id="ID_LIBRARY_REBUILD" message="Переделать мета данные и хешы поменченных папок или файлов."/>
 	<tip id="ID_LIBRARY_REBUILD_ANSI" message="Перекодировать мета данные на другой язык."/>
 	<tip id="ID_LIBRARY_REFRESH" message="Обновить вид хранилища."/>
@@ -2578,7 +2578,7 @@
 	<string id="WINDOW_CHAT" value="Чат"/>
 	<string id="WINDOW_SECURITY" value="Безопасность"/>
 	<string id="WINDOW_DISCOVERY" value="Ресурсы соединений"/>
-	<string id="WINDOW_BROWSEHOST" value="Обзор"/>
+	<string id="WINDOW_BROWSEHOST" value="Просмотр"/>
 	<string id="WINDOW_HOME" value="Shareaza"/>
 	<string id="WINDOW_MEDIA" value="Проигрыватель"/>
 	<string id="WINDOW_SEARCHPAD" value="Поиск"/>
@@ -2595,7 +2595,7 @@
 	<string id="8000" value="Установки Shareaza"/>
 	<string id="8001" value="Добро пожаловать в Shareaza"/>
 	<string id="8002" value="Свойства файла"/>
-	<string id="8003" value="Ред. свой профиль"/>
+	<string id="8003" value="Редактировать профиль"/>
 	<string id="8004" value="!Добро пожаловать в Shareaza (version) !\n.\nShareaza полностью бесплатная программа.\nПожалуйста используйте её с уважением к законам интеллектуальной собственности.\n."/>
 	<string id="8005" value="(закрытие после загрузок)"/>
 	<string id="8006" value="Вы не подключены.  Щелкните кнопку «Подключиться», чтобы начать работу."/>
@@ -2621,8 +2621,8 @@
 	<string id="8096" value="Эта область показывает подробную информацию о помеченных файлах."/>
 	<string id="8097" value="Один источник доступен (%s).  "/>
 	<string id="8098" value="%i источника(ов) доступно (%s).  "/>
-	<string id="8099" value="Есть один обзор."/>
-	<string id="8100" value="Есть %i обзора(ов)."/>
+	<string id="8099" value="Есть один просмотр."/>
+	<string id="8100" value="Есть %i просмотр(ов)."/>
 	<string id="8101" value="%s пишет:"/>
 	<string id="8102" value="%s оценивает этот файл:"/>
 	<string id="8103" value="&#160;&#160;Щелкните для&#160; просмотра"/>
@@ -2691,8 +2691,8 @@
 	<string id="8240" value="Shareaza перемещает загрузку:"/>
 	<string id="8241" value="Shareaza проверяет загрузку на ошибки:"/>
 	<string id="8243" value="Соотношение:"/>
-	<string id="8244" value="Число обзоров:"/>
-	<string id="8288" value="Обзор Вашего Shareaza хранилища"/>
+	<string id="8244" value="Число просмотров:"/>
+	<string id="8288" value="Просмотр вашего хранилища"/>
 	<string id="8289" value="Просматривается "/>
 	<string id="8290" value="Просматривается содержимое %i папок"/>
 	<string id="8291" value="Несколько папок"/>
@@ -3042,15 +3042,15 @@
 	<string id="16930" value="Послал запрос на активную доставку в %s для просмотра пользователя."/>
 	<string id="16931" value="Невозможно послать запрос на активную доставку в %s для просмотра пользователя."/>
 	<string id="16932" value="Послал запрос на просмотр пользователя в %s..."/>
-	<string id="16933" value="Обозреваемый хост %s послал неправильный HTTP ответ."/>
-	<string id="16934" value="Обозреваемый хост %s ответил кодом %s (%s)."/>
-	<string id="16935" value="Обозреваемый хост %s послал непонятный ответ и, возможно, не поддержывает обзора пользователя/хоста."/>
-	<string id="16936" value="Получаю содержимое от обозреваемого хоста %s (%s)"/>
-	<string id="16938" value="Ошибка декодирования пакетов Gnutella от обозреваемого хоста %s."/>
+	<string id="16933" value="Просматриваемый хост %s послал неправильный HTTP ответ."/>
+	<string id="16934" value="Просматриваемый хост %s ответил кодом %s (%s)."/>
+	<string id="16935" value="Просматриваемый хост %s послал непонятный ответ и, возможно, не поддержывает просмотр вовсе."/>
+	<string id="16936" value="Получаю содержимое от просматриваемого хоста %s (%s)"/>
+	<string id="16938" value="Ошибка декодирования пакетов Gnutella от просматриваемого хоста %s."/>
 	<string id="16939" value="Просмотр пользователя %s закончен, найдено файлов - %i."/>
 	<string id="16940" value="Соединение с %s для просмотра пользователя оборвалось."/>
-	<string id="16941" value="Закрываю соединение обзора пользователя с %s из-за нехватки трафика."/>
-	<string id="16942" value="Закрываю соединение обзора пользователя с %s."/>
+	<string id="16941" value="Закрываю соединение просмотра пользователя с %s из-за нехватки трафика."/>
+	<string id="16942" value="Закрываю соединение просмотра пользователя с %s."/>
 	<string id="16943" value=" Просмотр %s"/>
 	<string id="16944" value=" Найдено %i файлов в хранилище у %s."/>
 	<string id="16991" value="Проигрыватель Shareaza"/>
@@ -3357,7 +3357,7 @@
 	<dialog name="CCommunitySettingsPage" cookie="BuStBuBuBuBuBuBu" caption="Сообщество">
 		<control caption="Мой _профиль:"/>
 		<control caption="Используйте профиль пользователя Gnutella для обмена информацией о себе, своих интересах, ссылках на файлы и сайты, с другими."/>
-		<control caption="_Ред. свой профиль"/>
+		<control caption="_Редактировать профиль"/>
 		<control caption="_Чат:"/>
 		<control caption="Разрешить P2P чат с совместимыми клиентами"/>
 		<control caption="Разрешить чат во всех сетях"/>
@@ -3897,7 +3897,7 @@
 		<control caption="..."/>
 		<control caption="Закрыть окно по завершению загрузки"/>
 		<control caption="Открыть файл"/>
-		<control caption="Обзор хранилища"/>
+		<control caption="Просмотр хранилища"/>
 		<control caption="Удалить загрузку"/>
 		<control caption="Скрыть"/>
 	</dialog>
@@ -3917,11 +3917,11 @@
 	<dialog name="CFileMetadataPage" cookie="CoEd" caption="Мета данные">
 		<control/><control/>
 	</dialog>
-	<dialog name="CFileCommentsPage" cookie="StStCoStEdEd" caption="Мой обзор">
+	<dialog name="CFileCommentsPage" cookie="StStCoStEdEd" caption="Мой отзыв">
 		<control caption="Моя оценка"/>
 		<control caption="Я оцениваю файл:"/>
-		<control caption="(Без оценки)|Фальшивка/Испорчен/Обман|Плохой|Средний|Хороший|Очень хороший|Отменный"/>
-		<control caption="Мой обзор и комментарии"/>
+		<control caption="(Без оценки)|Фальшивка/Испорчен|Плохой|Средний|Хороший|Очень хороший|Отменный"/>
+		<control caption="Мои комментарии"/>
 		<control/><control/>
 	</dialog>
 	<dialog name="CFileSharingPage" cookie="StBuBuBuStCoStSyEd" caption="Общий доступ">
