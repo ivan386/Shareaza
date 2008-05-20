@@ -695,7 +695,7 @@ public:
 		void	Load();
 		void	Save() const;
 		void	Normalize();
-		void	SetRange(CSpinButtonCtrl& pCtrl) const;
+		template< class T > void	SetRange(T& pCtrl);
 
 		const LPCTSTR		m_szSection;
 		const LPCTSTR		m_szName;
@@ -738,7 +738,20 @@ public:
 		return m_pItems.GetNext( rPosition );
 	}
 	void	Normalize(LPVOID pSetting);
-	void	SetRange(LPVOID pSetting, CSpinButtonCtrl& pCtrl) const;
+
+	template< class T >
+	void	SetRange(LPVOID pSetting, T& pCtrl)
+	{
+		for ( POSITION pos = m_pItems.GetHeadPosition() ; pos ; )
+		{
+			Item* pItem = m_pItems.GetNext( pos );
+			if ( *pItem == pSetting )
+			{
+				pItem->SetRange< T >( pCtrl );
+				break;
+			}
+		}
+	}
 
 	BOOL	LoadWindow(LPCTSTR pszName, CWnd* pWindow);
 	void	SaveWindow(LPCTSTR pszName, CWnd* pWindow);
@@ -772,7 +785,7 @@ protected:
 		m_pItems.AddTail( new Item( szSection, szName, pDouble, dDefault, bHidden ) );
 	}
 
-	inline void Add(const LPCTSTR szSection, const LPCTSTR szName, CString* const pString, const LPCTSTR szDefault, const bool bHidden = false) throw()
+	inline void Add(const LPCTSTR szSection, const LPCTSTR szName, CString* const pString, const LPCTSTR szDefault = NULL, const bool bHidden = false) throw()
 	{
 		m_pItems.AddTail( new Item( szSection, szName, pString, szDefault, bHidden ) );
 	}

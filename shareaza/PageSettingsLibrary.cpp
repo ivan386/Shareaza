@@ -130,8 +130,8 @@ BOOL CLibrarySettingsPage::OnInitDialog()
 
 	UpdateData( FALSE );
 
-	m_wndRecentTotal.SetRange( 0, 100 );
-	m_wndRecentDays.SetRange( 0, 365 );
+	Settings.SetRange( &Settings.Library.HistoryTotal, m_wndRecentTotal );
+	Settings.SetRange( &Settings.Library.HistoryDays, m_wndRecentDays );
 
 	m_wndSafeAdd.EnableWindow( m_wndSafeList.GetWindowTextLength() > 0 );
 	m_wndSafeRemove.EnableWindow( m_wndSafeList.GetCurSel() >= 0 );

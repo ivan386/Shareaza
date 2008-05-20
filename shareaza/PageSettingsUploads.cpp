@@ -104,8 +104,6 @@ BOOL CUploadsSettingsPage::OnInitDialog()
 {
 	CSettingsPage::OnInitDialog();
 	
-	m_wndMaxPerHost.SetRange( 1, 64 );
-	
 	CRect rcList;
 	m_wndQueues.GetClientRect( &rcList );
 	rcList.right -= GetSystemMetrics( SM_CXVSCROLL );
@@ -130,7 +128,9 @@ BOOL CUploadsSettingsPage::OnInitDialog()
 	m_bSharePreviews	= Settings.Uploads.SharePreviews;
 	m_bHubUnshare		= Settings.Uploads.HubUnshare;
 	m_bThrottleMode		= Settings.Uploads.ThrottleMode;
-	
+
+	Settings.SetRange( &Settings.Uploads.MaxPerHost, m_wndMaxPerHost );
+
 	for ( CString strList = Settings.Uploads.BlockAgents + '|' ; strList.GetLength() ; )
 	{
 		CString strType = strList.SpanExcluding( _T("|") );

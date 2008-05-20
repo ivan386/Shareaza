@@ -147,10 +147,10 @@ BOOL CGeneralSettingsPage::OnInitDialog()
 	LoadString( strTitle, IDR_MEDIAFRAME );
 	Add( strTitle, Settings.Interface.TipMedia );
 	
-	m_wndTipSpin.SetRange( 100, 5000 );
+	Settings.SetRange( &Settings.Interface.TipDelay, m_wndTipSpin );
 	m_nTipDelay	= Settings.Interface.TipDelay;
 	
-	m_wndTipAlpha.SetRange( 0, 255 );
+	Settings.SetRange( &Settings.Interface.TipAlpha, m_wndTipAlpha );
 	m_wndTipAlpha.SetPos( Settings.Interface.TipAlpha );
 	
 	UpdateData( FALSE );

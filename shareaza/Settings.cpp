@@ -66,15 +66,15 @@ CSettings::CSettings()
 	Add( _T(""), _T("ItWasLimited"), &General.ItWasLimited, false, true );
 	Add( _T(""), _T("MaxDebugLogSize"), &General.MaxDebugLogSize, 10*1024*1024, 1024*1024, 0, 100, _T(" MB") );
 	Add( _T(""), _T("MinTransfersRest"), &General.MinTransfersRest, 15, 1, 1, 100, _T(" ms") );
-	Add( _T(""), _T("MultiUser"), &General.MultiUser, false );
-	Add( _T(""), _T("Path"), &General.Path, _T("") );
+	Add( _T(""), _T("MultiUser"), &General.MultiUser, false, true );
+	Add( _T(""), _T("Path"), &General.Path );
 	Add( _T(""), _T("LogLevel"), &General.LogLevel, MSG_INFO, 1, MSG_ERROR, MSG_DEBUG, _T(" level") );
 	Add( _T(""), _T("SearchLog"), &General.SearchLog, true );
-	Add( _T(""), _T("UserPath"), &General.UserPath, _T("") );
+	Add( _T(""), _T("UserPath"), &General.UserPath );
 
 	Add( _T("Settings"), _T("AlwaysOpenURLs"), &General.AlwaysOpenURLs, false );
 	Add( _T("Settings"), _T("CloseMode"), &General.CloseMode, 0, 1, 0, 3 );
-	Add( _T("Settings"), _T("FirstRun"), &General.FirstRun, true );
+	Add( _T("Settings"), _T("FirstRun"), &General.FirstRun, true, true );
 	Add( _T("Settings"), _T("GUIMode"), &General.GUIMode, GUI_BASIC );
 	Add( _T("Settings"), _T("IgnoreXPsp2"), &General.IgnoreXPsp2, false );
 	Add( _T("Settings"), _T("Language"), &General.Language, _T("en") );
@@ -88,20 +88,20 @@ CSettings::CSettings()
 	Add( _T("Settings"), _T("TrayMinimise"), &General.TrayMinimise, false );
 
 	Add( _T("VersionCheck"), _T("NextCheck"), &VersionCheck.NextCheck, 0 );
-	Add( _T("VersionCheck"), _T("Quote"), &VersionCheck.Quote, _T("") );
+	Add( _T("VersionCheck"), _T("Quote"), &VersionCheck.Quote );
 	Add( _T("VersionCheck"), _T("UpdateCheck"), &VersionCheck.UpdateCheck, true );
 	Add( _T("VersionCheck"), _T("UpdateCheckURL"), &VersionCheck.UpdateCheckURL, _T("http://shareaza.sourceforge.net/version/") );
-	Add( _T("VersionCheck"), _T("UpgradeFile"), &VersionCheck.UpgradeFile, _T("") );
-	Add( _T("VersionCheck"), _T("UpgradePrompt"), &VersionCheck.UpgradePrompt, _T("") );
-	Add( _T("VersionCheck"), _T("UpgradeSHA1"), &VersionCheck.UpgradeSHA1, _T("") );
-	Add( _T("VersionCheck"), _T("UpgradeSize"), &VersionCheck.UpgradeSize, _T("") );
-	Add( _T("VersionCheck"), _T("UpgradeSources"), &VersionCheck.UpgradeSources, _T("") );
-	Add( _T("VersionCheck"), _T("UpgradeTiger"), &VersionCheck.UpgradeTiger, _T("") );
-	Add( _T("VersionCheck"), _T("UpgradeVersion"), &VersionCheck.UpgradeVersion, _T("") );
+	Add( _T("VersionCheck"), _T("UpgradeFile"), &VersionCheck.UpgradeFile );
+	Add( _T("VersionCheck"), _T("UpgradePrompt"), &VersionCheck.UpgradePrompt );
+	Add( _T("VersionCheck"), _T("UpgradeSHA1"), &VersionCheck.UpgradeSHA1 );
+	Add( _T("VersionCheck"), _T("UpgradeSize"), &VersionCheck.UpgradeSize );
+	Add( _T("VersionCheck"), _T("UpgradeSources"), &VersionCheck.UpgradeSources );
+	Add( _T("VersionCheck"), _T("UpgradeTiger"), &VersionCheck.UpgradeTiger );
+	Add( _T("VersionCheck"), _T("UpgradeVersion"), &VersionCheck.UpgradeVersion );
 
 	Add( _T("Interface"), _T("LowResMode"), &Interface.LowResMode, false );
-	Add( _T("Interface"), _T("TipAlpha"), &Interface.TipAlpha, 230 );
-	Add( _T("Interface"), _T("TipDelay"), &Interface.TipDelay, 600 );
+	Add( _T("Interface"), _T("TipAlpha"), &Interface.TipAlpha, 230, 1, 0, 255 );
+	Add( _T("Interface"), _T("TipDelay"), &Interface.TipDelay, 600, 1, 100, 5000, _T(" ms") );
 	Add( _T("Interface"), _T("TipDownloads"), &Interface.TipDownloads, true );
 	Add( _T("Interface"), _T("TipLibrary"), &Interface.TipLibrary, true );
 	Add( _T("Interface"), _T("TipMedia"), &Interface.TipMedia, true );
@@ -110,18 +110,18 @@ CSettings::CSettings()
 	Add( _T("Interface"), _T("TipUploads"), &Interface.TipUploads, true );
 
 	Add( _T("Library"), _T("CreateGhosts"), &Library.CreateGhosts, true );
-	Add( _T("Library"), _T("FilterURI"), &Library.FilterURI, NULL );
+	Add( _T("Library"), _T("FilterURI"), &Library.FilterURI );
 	Add( _T("Library"), _T("HashWindow"), &Library.HashWindow, true );
 	Add( _T("Library"), _T("HighPriorityHash"), &Library.HighPriorityHash, false );
 	Add( _T("Library"), _T("HighPriorityHashing"), &Library.HighPriorityHashing, 20, 1, 1, 100, _T(" MB/s") );
-	Add( _T("Library"), _T("HistoryDays"), &Library.HistoryDays, 3 );
-	Add( _T("Library"), _T("HistoryTotal"), &Library.HistoryTotal, 32 );
+	Add( _T("Library"), _T("HistoryDays"), &Library.HistoryDays, 3, 1, 0, 365, _T(" days") );
+	Add( _T("Library"), _T("HistoryTotal"), &Library.HistoryTotal, 32, 1, 0, 100, _T(" files") );
 	Add( _T("Library"), _T("LowPriorityHashing"), &Library.LowPriorityHashing, 2, 1, 1, 100, _T(" MB/s") );
 	Add( _T("Library"), _T("MarkFileAsDownload"), &Library.MarkFileAsDownload, true );
 	Add( _T("Library"), _T("MaxMaliciousFileSize"), &Library.MaxMaliciousFileSize, 1024, 1, 1024, 1024*5, _T(" B") );
-	Add( _T("Library"), _T("PanelSize"), &Library.PanelSize, 120 );
+	Add( _T("Library"), _T("PanelSize"), &Library.PanelSize, 120, 1, 0, 1024, _T(" px") );
 	Add( _T("Library"), _T("PartialMatch"), &Library.PartialMatch, true );
-	Add( _T("Library"), _T("PreferAPETags"), &Library.PreferAPETags, 1 );
+	Add( _T("Library"), _T("PreferAPETags"), &Library.PreferAPETags, true );
 	Add( _T("Library"), _T("PrivateTypes"), &Library.PrivateTypes, _T("|vbs|js|jc!|fb!|bc!|!ut|dbx|part|partial|pst|reget|getright|pif|lnk|sd|url|wab|m4p|infodb|racestats|chk|tmp|temp|ini|inf|log|old|manifest|met|bak|$$$|---|~~~|###|__incomplete___|") );
 	Add( _T("Library"), _T("QueryRouteSize"), &Library.QueryRouteSize, 20, 1, 8, 24 );
 	Add( _T("Library"), _T("SafeExecute"), &Library.SafeExecute, _T("|3gp|aac|ace|ape|avi|bmp|flv|gif|iso|jpg|jpeg|mid|mov|m1v|m2v|m3u|m4a|mkv|mp2|mp3|mp4|mpa|mpe|mpg|mpeg|ogg|ogm|pdf|png|qt|rar|rm|sks|tar|tgz|torrent|txt|wav|wma|wmv|zip|co|collection|lit|") );
@@ -146,7 +146,7 @@ CSettings::CSettings()
 	Add( _T("Library"), _T("StoreViews"), &Library.StoreViews, true );
 	Add( _T("Library"), _T("ThumbSize"), &Library.ThumbSize, 96, 1, 16, 256, _T(" px") );
 	Add( _T("Library"), _T("TigerHeight"), &Library.TigerHeight, 9, 1, 1, 64 );
-	Add( _T("Library"), _T("TreeSize"), &Library.TreeSize, 200 );
+	Add( _T("Library"), _T("TreeSize"), &Library.TreeSize, 200, 1, 0, 1024, _T(" px") );
 	Add( _T("Library"), _T("UseCustomFolders"), &Library.UseCustomFolders, true );
 	Add( _T("Library"), _T("UseFolderGUID"), &Library.UseFolderGUID, true );
 	Add( _T("Library"), _T("VirtualFiles"), &Library.VirtualFiles, false );
@@ -158,7 +158,7 @@ CSettings::CSettings()
 	Add( _T("WebServices"), _T("BitziWebSubmit"), &WebServices.BitziWebSubmit, _T("http://bitzi.com/lookup/(SHA1).(TTH)?fl=(SIZE)&ff=(FIRST20)&fn=(NAME)&tag.ed2k.ed2khash=(ED2K)&(INFO)&a=(AGENT)&v=Q0.4&ref=shareaza") );
 	Add( _T("WebServices"), _T("BitziWebView"), &WebServices.BitziWebView, _T("http://bitzi.com/lookup/(URN)?v=detail&ref=shareaza") );
 	Add( _T("WebServices"), _T("BitziXML"), &WebServices.BitziXML, _T("http://ticket.bitzi.com/rdf/(SHA1).(TTH)") );
-	Add( _T("WebServices"), _T("ShareMonkeyCid"), &WebServices.ShareMonkeyCid, _T(""), true );
+	Add( _T("WebServices"), _T("ShareMonkeyCid"), &WebServices.ShareMonkeyCid );
 	Add( _T("WebServices"), _T("ShareMonkeyOkay"), &WebServices.ShareMonkeyOkay, false, true );
 	Add( _T("WebServices"), _T("ShareMonkeySaveThumbnail"), &WebServices.ShareMonkeySaveThumbnail, false, true );
 	
@@ -173,9 +173,9 @@ CSettings::CSettings()
 	Add( _T("Search"), _T("GeneralThrottle"), &Search.GeneralThrottle, 200, 1, 200, 1000, _T(" ms") );
 	Add( _T("Search"), _T("HideSearchPanel"), &Search.HideSearchPanel, false );
 	Add( _T("Search"), _T("HighlightNew"), &Search.HighlightNew, true );
-	Add( _T("Search"), _T("LastSchemaURI"), &Search.LastSchemaURI, _T("") );
+	Add( _T("Search"), _T("LastSchemaURI"), &Search.LastSchemaURI );
 	Add( _T("Search"), _T("MaxPreviewLength"), &Search.MaxPreviewLength, 20*1024, 1024, 1, 4096, _T(" KB") );
-	Add( _T("Search"), _T("MonitorFilter"), &Search.MonitorFilter, NULL );
+	Add( _T("Search"), _T("MonitorFilter"), &Search.MonitorFilter );
 	Add( _T("Search"), _T("MonitorQueue"), &Search.MonitorQueue, 128, 1, 1, 4096 );
 	Add( _T("Search"), _T("MonitorSchemaURI"), &Search.MonitorSchemaURI, CSchema::uriAudio );
 	Add( _T("Search"), _T("SchemaTypes"), &Search.SchemaTypes, true );
@@ -198,11 +198,11 @@ CSettings::CSettings()
 	Add( _T("MediaPlayer"), _T("Mpeg1PreviewCLSID"), &MediaPlayer.Mpeg1PreviewCLSID, _T("{9AA8DF47-B8FE-47da-AB1A-2DAA0DA0B646}") );
 	Add( _T("MediaPlayer"), _T("Random"), &MediaPlayer.Random, false );
 	Add( _T("MediaPlayer"), _T("Repeat"), &MediaPlayer.Repeat, false );
-	Add( _T("MediaPlayer"), _T("ServicePath"), &MediaPlayer.ServicePath, _T("") );
+	Add( _T("MediaPlayer"), _T("ServicePath"), &MediaPlayer.ServicePath );
 	Add( _T("MediaPlayer"), _T("ShortPaths"), &MediaPlayer.ShortPaths, false );
 	Add( _T("MediaPlayer"), _T("StatusVisible"), &MediaPlayer.StatusVisible, true );
 	Add( _T("MediaPlayer"), _T("VisCLSID"), &MediaPlayer.VisCLSID, _T("{591A5CFF-3172-4020-A067-238542DDE9C2}") );
-	Add( _T("MediaPlayer"), _T("VisPath"), &MediaPlayer.VisPath, _T("") );
+	Add( _T("MediaPlayer"), _T("VisPath"), &MediaPlayer.VisPath );
 	Add( _T("MediaPlayer"), _T("VisSize"), &MediaPlayer.VisSize, 1 );
 	Add( _T("MediaPlayer"), _T("VisSoniqueCLSID"), &MediaPlayer.VisSoniqueCLSID, _T("{D07E630D-A850-4f11-AD29-3D3848B67EFE}") );
 	Add( _T("MediaPlayer"), _T("VisWrapperCLSID"), &MediaPlayer.VisWrapperCLSID, _T("{C3B7B25C-6B8B-481A-BC48-59F9A6F7B69A}") );
@@ -225,15 +225,15 @@ CSettings::CSettings()
 	Add( _T("Connection"), _T("EnableUPnP"), &Connection.EnableUPnP, false );
 	Add( _T("Connection"), _T("FailureLimit"), &Connection.FailureLimit, 3, 1, 1, 512 );
 	Add( _T("Connection"), _T("FailurePenalty"), &Connection.FailurePenalty, 300, 1, 30, 3600, _T(" s") );
-	Add( _T("Connection"), _T("FirewallState"), &Connection.FirewallState, CONNECTION_AUTO );
+	Add( _T("Connection"), _T("FirewallState"), &Connection.FirewallState, CONNECTION_AUTO, 1, CONNECTION_AUTO, CONNECTION_OPEN_UDPONLY );
 	Add( _T("Connection"), _T("ForceConnectedState"), &Connection.ForceConnectedState, true );
 	Add( _T("Connection"), _T("IgnoreLocalIP"), &Connection.IgnoreLocalIP, true );
 	Add( _T("Connection"), _T("IgnoreOwnIP"), &Connection.IgnoreOwnIP, true );
 	Add( _T("Connection"), _T("InBind"), &Connection.InBind, false );
-	Add( _T("Connection"), _T("InHost"), &Connection.InHost, NULL );
-	Add( _T("Connection"), _T("InPort"), &Connection.InPort, GNUTELLA_DEFAULT_PORT );
+	Add( _T("Connection"), _T("InHost"), &Connection.InHost );
+	Add( _T("Connection"), _T("InPort"), &Connection.InPort, GNUTELLA_DEFAULT_PORT, 1, 1, 65535 );
 	Add( _T("Connection"), _T("InSpeed"), &Connection.InSpeed, 2048 );
-	Add( _T("Connection"), _T("OutHost"), &Connection.OutHost, NULL );
+	Add( _T("Connection"), _T("OutHost"), &Connection.OutHost );
 	Add( _T("Connection"), _T("OutSpeed"), &Connection.OutSpeed, 256 );
 	Add( _T("Connection"), _T("RandomPort"), &Connection.RandomPort, false );
 	Add( _T("Connection"), _T("RequireForTransfers"), &Connection.RequireForTransfers, true );
@@ -289,7 +289,7 @@ CSettings::CSettings()
 	Add( _T("Gnutella"), _T("RouteCache"), &Gnutella.RouteCache, 600, 60, 1, 120, _T(" m") );
 	Add( _T("Gnutella"), _T("SpecifyProtocol"), &Gnutella.SpecifyProtocol, true );
 
-	Add( _T("Gnutella1"), _T("ClientMode"), &Gnutella1.ClientMode, MODE_LEAF );
+	Add( _T("Gnutella1"), _T("ClientMode"), &Gnutella1.ClientMode, MODE_LEAF, 1, MODE_AUTO, MODE_HUB );
 	Add( _T("Gnutella1"), _T("DefaultTTL"), &Gnutella1.DefaultTTL, 3, 1, 1, 3 );
 	Add( _T("Gnutella1"), _T("EnableAlways"), &Gnutella1.EnableAlways, false );
 	Add( _T("Gnutella1"), _T("EnableGGEP"), &Gnutella1.EnableGGEP, true );
@@ -370,7 +370,7 @@ CSettings::CSettings()
 	Add( _T("eDonkey"), _T("MaxShareCount"), &eDonkey.MaxShareCount, 1000, 1, 0, 20000 );
 	Add( _T("eDonkey"), _T("MetAutoQuery"), &eDonkey.MetAutoQuery, true );
 	Add( _T("eDonkey"), _T("MinServerFileSize"), &eDonkey.MinServerFileSize, 0, 1, 0, 50, _T(" MB") );
-	Add( _T("eDonkey"), _T("NumServers"), &eDonkey.NumServers, 1 );
+	Add( _T("eDonkey"), _T("NumServers"), &eDonkey.NumServers, 1, 1, 0, 1 );
 	Add( _T("eDonkey"), _T("PacketThrottle"), &eDonkey.PacketThrottle, 500, 1, 250, 5000, _T(" ms") );
 	Add( _T("eDonkey"), _T("QueryFileThrottle"), &eDonkey.QueryFileThrottle, 60*60*1000, 60*1000, 30, 120, _T(" m") );
 	Add( _T("eDonkey"), _T("QueryGlobalThrottle"), &eDonkey.QueryGlobalThrottle, 1000, 1, 1000, 20000, _T(" ms") );
@@ -390,13 +390,13 @@ CSettings::CSettings()
 	Add( _T("BitTorrent"), _T("AdvancedInterfaceSet"), &BitTorrent.AdvancedInterfaceSet, false );
 	Add( _T("BitTorrent"), _T("AutoClear"), &BitTorrent.AutoClear, false );
 	Add( _T("BitTorrent"), _T("AutoSeed"), &BitTorrent.AutoSeed, true );
-	Add( _T("BitTorrent"), _T("BandwidthPercentage"), &BitTorrent.BandwidthPercentage, 80, 1, 50, 95, _T("%") );
-	Add( _T("BitTorrent"), _T("ClearRatio"), &BitTorrent.ClearRatio, 120 );
-	Add( _T("BitTorrent"), _T("DefaultTracker"), &BitTorrent.DefaultTracker, _T("") );
+	Add( _T("BitTorrent"), _T("BandwidthPercentage"), &BitTorrent.BandwidthPercentage, 80, 1, 50, 95, _T(" %") );
+	Add( _T("BitTorrent"), _T("ClearRatio"), &BitTorrent.ClearRatio, 120, 1, 100, 999, _T(" %") );
+	Add( _T("BitTorrent"), _T("DefaultTracker"), &BitTorrent.DefaultTracker );
 	Add( _T("BitTorrent"), _T("DefaultTrackerPeriod"), &BitTorrent.DefaultTrackerPeriod, 5*60000, 60000, 5, 120, _T(" m") );
 	Add( _T("BitTorrent"), _T("DhtPruneTime"), &BitTorrent.DhtPruneTime, 30*60, 60, 10, 7*24*60*60, _T(" m") );
-	Add( _T("BitTorrent"), _T("DownloadConnections"), &BitTorrent.DownloadConnections, 40 );
-	Add( _T("BitTorrent"), _T("DownloadTorrents"), &BitTorrent.DownloadTorrents, 3 );
+	Add( _T("BitTorrent"), _T("DownloadConnections"), &BitTorrent.DownloadConnections, 40, 1, 1, 800 );
+	Add( _T("BitTorrent"), _T("DownloadTorrents"), &BitTorrent.DownloadTorrents, 3, 1, 1, 10 );
 	Add( _T("BitTorrent"), _T("Endgame"), &BitTorrent.Endgame, true );
 	Add( _T("BitTorrent"), _T("LinkPing"), &BitTorrent.LinkPing, 120*1000, 1000, 10, 60*10, _T(" s") );
 	Add( _T("BitTorrent"), _T("LinkTimeout"), &BitTorrent.LinkTimeout, 180*1000, 1000, 10, 60*10, _T(" s") );
@@ -408,7 +408,7 @@ CSettings::CSettings()
 	Add( _T("BitTorrent"), _T("RequestSize"), &BitTorrent.RequestSize, 16*1024, 1024, 8, 128, _T(" KB") );
 	Add( _T("BitTorrent"), _T("SourceExchangePeriod"), &BitTorrent.SourceExchangePeriod, 10, 1, 1, 60*5, _T(" m") );
 	Add( _T("BitTorrent"), _T("TorrentCodePage"), &BitTorrent.TorrentCodePage, 0, 1, 0, 9999999 );
-	Add( _T("BitTorrent"), _T("TorrentCreatorPath"), &BitTorrent.TorrentCreatorPath, _T("") );
+	Add( _T("BitTorrent"), _T("TorrentCreatorPath"), &BitTorrent.TorrentCreatorPath );
 	Add( _T("BitTorrent"), _T("TorrentExtraKeys"), &BitTorrent.TorrentExtraKeys, true );
 	Add( _T("BitTorrent"), _T("TrackerKey"), &BitTorrent.TrackerKey, true );
 	Add( _T("BitTorrent"), _T("UploadCount"), &BitTorrent.UploadCount, 4, 1, 2, 16 );
@@ -420,24 +420,24 @@ CSettings::CSettings()
 	Add( _T("Downloads"), _T("ChunkSize"), &Downloads.ChunkSize, 512*1024, 1024, 0, 10240, _T(" KB") );
 	Add( _T("Downloads"), _T("ChunkStrap"), &Downloads.ChunkStrap, 128*1024, 1024, 0, 10240, _T(" KB") );
 	Add( _T("Downloads"), _T("ClearDelay"), &Downloads.ClearDelay, 30*1000, 1000, 1, 30*60, _T(" s") );
-	Add( _T("Downloads"), _T("CollectionPath"), &Downloads.CollectionPath, _T("") );
-	Add( _T("Downloads"), _T("CompletePath"), &Downloads.CompletePath, _T("") );
+	Add( _T("Downloads"), _T("CollectionPath"), &Downloads.CollectionPath );
+	Add( _T("Downloads"), _T("CompletePath"), &Downloads.CompletePath );
 	Add( _T("Downloads"), _T("ConnectThrottle"), &Downloads.ConnectThrottle, 250, 1, 0, 5000, _T(" ms") );
 	Add( _T("Downloads"), _T("FilterMask"), &Downloads.FilterMask, 0xFFFFFFFF );
 	Add( _T("Downloads"), _T("FlushSD"), &Downloads.FlushSD, true );
-	Add( _T("Downloads"), _T("IncompletePath"), &Downloads.IncompletePath, _T("") );
+	Add( _T("Downloads"), _T("IncompletePath"), &Downloads.IncompletePath );
 	Add( _T("Downloads"), _T("MaxAllowedFailures"), &Downloads.MaxAllowedFailures, 10, 1, 3, 40 );
 	Add( _T("Downloads"), _T("MaxConnectingSources"), &Downloads.MaxConnectingSources, 28, 1, 5, 50 );
 	Add( _T("Downloads"), _T("MaxFileSearches"), &Downloads.MaxFileSearches, 2, 1, 0, 5 );
 	Add( _T("Downloads"), _T("MaxFileTransfers"), &Downloads.MaxFileTransfers, 10 );
 	Add( _T("Downloads"), _T("MaxFiles"), &Downloads.MaxFiles, 20, 1, 1, 100 );
 	Add( _T("Downloads"), _T("MaxReviews"), &Downloads.MaxReviews, 64, 1, 0, 256 );
-	Add( _T("Downloads"), _T("MaxTransfers"), &Downloads.MaxTransfers, 100 );
+	Add( _T("Downloads"), _T("MaxTransfers"), &Downloads.MaxTransfers, 100, 1, 1, 250 );
 	Add( _T("Downloads"), _T("Metadata"), &Downloads.Metadata, true );
 	Add( _T("Downloads"), _T("MinSources"), &Downloads.MinSources, 1, 1, 0, 6 );
 	Add( _T("Downloads"), _T("NeverDrop"), &Downloads.NeverDrop, false );
 	Add( _T("Downloads"), _T("PushTimeout"), &Downloads.PushTimeout, 45*1000, 1000, 5, 180, _T(" s") );
-	Add( _T("Downloads"), _T("QueueLimit"), &Downloads.QueueLimit, 0 );
+	Add( _T("Downloads"), _T("QueueLimit"), &Downloads.QueueLimit, 0, 1, 0, 20000 );
 	Add( _T("Downloads"), _T("RequestHTTP11"), &Downloads.RequestHTTP11, true );
 	Add( _T("Downloads"), _T("RequestHash"), &Downloads.RequestHash, true );
 	Add( _T("Downloads"), _T("RequestURLENC"), &Downloads.RequestURLENC, true );
@@ -457,7 +457,7 @@ CSettings::CSettings()
 	Add( _T("Downloads"), _T("StartDroppingFailedSourcesNumber"), &Downloads.StartDroppingFailedSourcesNumber, 20, 1, 0, 50 );
 	Add( _T("Downloads"), _T("StarveGiveUp"), &Downloads.StarveGiveUp, 3, 1, 3, 120, _T(" h") );
 	Add( _T("Downloads"), _T("StarveTimeout"), &Downloads.StarveTimeout, 45*60, 60, 45, 24*60, _T(" m") );
-	Add( _T("Downloads"), _T("TorrentPath"), &Downloads.TorrentPath, _T("") );
+	Add( _T("Downloads"), _T("TorrentPath"), &Downloads.TorrentPath );
 	Add( _T("Downloads"), _T("VerifyED2K"), &Downloads.VerifyED2K, true );
 	Add( _T("Downloads"), _T("VerifyFiles"), &Downloads.VerifyFiles, true );
 	Add( _T("Downloads"), _T("VerifyTiger"), &Downloads.VerifyTiger, true );
@@ -473,7 +473,7 @@ CSettings::CSettings()
 	Add( _T("Uploads"), _T("FreeBandwidthFactor"), &Uploads.FreeBandwidthFactor, 15, 1, 0, 100, _T("%") );
 	Add( _T("Uploads"), _T("FreeBandwidthValue"), &Uploads.FreeBandwidthValue, 20*128, 128, 0, 4096, _T(" Kb/s") );
 	Add( _T("Uploads"), _T("HubUnshare"), &Uploads.HubUnshare, true );
-	Add( _T("Uploads"), _T("MaxPerHost"), &Uploads.MaxPerHost, 2 );
+	Add( _T("Uploads"), _T("MaxPerHost"), &Uploads.MaxPerHost, 2, 1, 1, 64 );
 	Add( _T("Uploads"), _T("PreviewQuality"), &Uploads.PreviewQuality, 70, 1, 5, 100, _T("%") );
 	Add( _T("Uploads"), _T("PreviewTransfers"), &Uploads.PreviewTransfers, 3, 1, 1, 64 );
 	Add( _T("Uploads"), _T("QueuePollMax"), &Uploads.QueuePollMax, 120*1000, 1000, 30, 180, _T(" s") );
@@ -488,12 +488,12 @@ CSettings::CSettings()
 	Add( _T("Uploads"), _T("ThrottleMode"), &Uploads.ThrottleMode, true );
 
 	Add( _T("Remote"), _T("Enable"), &Remote.Enable, false );
-	Add( _T("Remote"), _T("Password"), &Remote.Password, _T("") );
-	Add( _T("Remote"), _T("Username"), &Remote.Username, _T("") );
+	Add( _T("Remote"), _T("Password"), &Remote.Password );
+	Add( _T("Remote"), _T("Username"), &Remote.Username );
 
 	Add( _T("Scheduler"), _T("AllowHub"), &Scheduler.AllowHub, true );
 	Add( _T("Scheduler"), _T("Enable"), &Scheduler.Enable, false );
-	Add( _T("Scheduler"), _T("LimitedBandwidth"), &Scheduler.LimitedBandwidth, 50 );
+	Add( _T("Scheduler"), _T("LimitedBandwidth"), &Scheduler.LimitedBandwidth, 50, 1, 0, 100, _T(" %") );
 	Add( _T("Scheduler"), _T("LimitedNetworks"), &Scheduler.LimitedNetworks, true );
 
 	Add( _T("Experimental"), _T("EnableDIPPSupport"), &Experimental.EnableDIPPSupport, false );
@@ -514,15 +514,15 @@ CSettings::CSettings()
 	Add( _T("IRC"), _T("Colors[10]"), &IRC.Colors[10], RGB(200,130,230) );
 	Add( _T("IRC"), _T("Show"), &IRC.Show, TRUE );
 	Add( _T("IRC"), _T("FloodEnable"), &IRC.FloodEnable, TRUE );
-	Add( _T("IRC"), _T("Nick"), &IRC.Nick, _T("") );
-	Add( _T("IRC"), _T("Alternate"), &IRC.Alternate, _T("") );
+	Add( _T("IRC"), _T("Nick"), &IRC.Nick );
+	Add( _T("IRC"), _T("Alternate"), &IRC.Alternate );
 	Add( _T("IRC"), _T("ServerName"), &IRC.ServerName, _T("irc.p2pchat.net") );
 	Add( _T("IRC"), _T("ServerPort"), &IRC.ServerPort, _T("6667") );
 	Add( _T("IRC"), _T("FloodLimit"), &IRC.FloodLimit, _T("24") );
 	Add( _T("IRC"), _T("Timestamp"), &IRC.Timestamp, FALSE );
 	Add( _T("IRC"), _T("UserName"), &IRC.UserName, _T("razaIRC") );
 	Add( _T("IRC"), _T("RealName"), &IRC.RealName, _T("razaIRC") );
-	Add( _T("IRC"), _T("ScreenFont"), &IRC.ScreenFont, _T("") );
+	Add( _T("IRC"), _T("ScreenFont"), &IRC.ScreenFont );
 	Add( _T("IRC"), _T("Updated"), &IRC.Updated, FALSE );
 }
 
@@ -697,19 +697,6 @@ void CSettings::Normalize(LPVOID pSetting)
 		if ( *pItem == pSetting )
 		{
 			pItem->Normalize();
-			break;
-		}
-	}
-}
-
-void CSettings::SetRange(LPVOID pSetting, CSpinButtonCtrl& pCtrl) const
-{
-	for ( POSITION pos = m_pItems.GetHeadPosition() ; pos ; )
-	{
-		Item* pItem = m_pItems.GetNext( pos );
-		if ( *pItem == pSetting )
-		{
-			pItem->SetRange( pCtrl );
 			break;
 		}
 	}
@@ -1589,16 +1576,14 @@ void CSettings::Item::Load()
 	{
 		ASSERT( ! m_pDword && ! m_pFloat && ! m_pString && ! m_pSet );
 		ASSERT( m_nScale == 1 && m_nMin == 0 && m_nMax == 1 );
-		*m_pBool = CRegistry::GetBool( m_szSection, m_szName,
-			m_BoolDefault );
+		*m_pBool = CRegistry::GetBool( m_szSection, m_szName, m_BoolDefault );
 	}
 	else if ( m_pDword )
 	{
 		ASSERT( ! m_pFloat && ! m_pString && ! m_pSet );
 		ASSERT( ( m_nScale == 0 && m_nMin == 0 && m_nMax == 0 ) \
 			|| ( m_nScale && m_nMin < m_nMax ) );
-		*m_pDword = CRegistry::GetDword( m_szSection, m_szName,
-			m_DwordDefault );
+		*m_pDword = CRegistry::GetDword( m_szSection, m_szName, m_DwordDefault );
 		if ( m_nScale && m_nMin < m_nMax )
 		{
 			ASSERT( ( m_DwordDefault >= m_nMin * m_nScale ) \
@@ -1612,15 +1597,13 @@ void CSettings::Item::Load()
 	{
 		ASSERT( ! m_pString && ! m_pSet );
 		ASSERT( m_nScale == 0 && m_nMin == 0 && m_nMax == 0 );
-		*m_pFloat = CRegistry::GetFloat( m_szSection, m_szName,
-			m_FloatDefault );
+		*m_pFloat = CRegistry::GetFloat( m_szSection, m_szName, m_FloatDefault );
 	}
 	else if ( m_pString )
 	{
 		ASSERT( ! m_pSet );
 		ASSERT( m_nScale == 0 && m_nMin == 0 && m_nMax == 0 );
-		*m_pString = CRegistry::GetString( m_szSection, m_szName,
-			m_StringDefault );
+		*m_pString = CRegistry::GetString( m_szSection, m_szName, m_StringDefault );
 	}
 	else
 	{
@@ -1651,8 +1634,7 @@ void CSettings::Item::Save() const
 	}
 	else
 	{
-		CRegistry::SetString( m_szSection, m_szName,
-			SaveSet( m_pSet ) );
+		CRegistry::SetString( m_szSection, m_szName, SaveSet( m_pSet ) );
 	}
 }
 
@@ -1697,7 +1679,8 @@ void CSettings::Item::Normalize()
 	}
 }
 
-void CSettings::Item::SetRange(CSpinButtonCtrl& pCtrl) const
+template<>
+void CSettings::Item::SetRange< CSpinButtonCtrl >(CSpinButtonCtrl& pCtrl)
 {
 	if ( m_pBool )
 	{
@@ -1706,5 +1689,18 @@ void CSettings::Item::SetRange(CSpinButtonCtrl& pCtrl) const
 	else if ( m_pDword )
 	{
 		pCtrl.SetRange32( m_nMin, m_nMax );
+	}
+}
+
+template<>
+void CSettings::Item::SetRange< CSliderCtrl >(CSliderCtrl& pCtrl)
+{
+	if ( m_pBool )
+	{
+		pCtrl.SetRange( 0, 1 );
+	}
+	else if ( m_pDword )
+	{
+		pCtrl.SetRange( m_nMin, m_nMax );
 	}
 }
