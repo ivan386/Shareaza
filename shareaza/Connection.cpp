@@ -194,7 +194,6 @@ BOOL CConnection::ConnectTo(IN_ADDR* pAddress, WORD nPort)
 			int ret = setsockopt( m_hSocket, SOL_SOCKET, SO_LINGER, (char*)&ls, sizeof(ls) );
 
 			// The error is something else, record it, close the socket, set the value of m_hSocket, and leave
-			theApp.Message( MSG_DEBUG, _T("socket connect() error 0x%x"), nError );
 			shutdown( m_hSocket, SD_RECEIVE );
 			ret = closesocket( m_hSocket );
 			m_hSocket = INVALID_SOCKET;
@@ -348,7 +347,6 @@ BOOL CConnection::DoRun()
 		// If there is a nonzero error code for the connect operation
 		if ( pEvents.iErrorCode[ FD_CONNECT_BIT ] != 0 )
 		{
-			theApp.Message( MSG_DEBUG, _T("socket connect() error %i"), pEvents.iErrorCode[ FD_CONNECT_BIT ] );
 			Statistics.Current.Connections.Errors++;
 
 			// This connection was dropped
