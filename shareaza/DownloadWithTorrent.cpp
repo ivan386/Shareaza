@@ -440,8 +440,7 @@ void CDownloadWithTorrent::SendStarted(DWORD nNumWant)
 	m_nTorrentDownloaded = m_nTorrentUploaded = 0ull;
 
 	// Create and run tracker request
-	new CBTTrackerRequest( static_cast< CDownload* >( this ),
-		_T("started"), nNumWant, TRUE );
+	new CBTTrackerRequest( this, _T("started"), nNumWant, TRUE );
 }
 
 void CDownloadWithTorrent::SendUpdate(DWORD nNumWant)
@@ -460,8 +459,7 @@ void CDownloadWithTorrent::SendUpdate(DWORD nNumWant)
 	m_tTorrentTracker += Settings.BitTorrent.DefaultTrackerPeriod;
 
 	// Create and run tracker request
-	new CBTTrackerRequest( static_cast< CDownload* >( this ),
-		NULL , nNumWant, TRUE );
+	new CBTTrackerRequest( this, NULL, nNumWant, TRUE );
 }
 
 void CDownloadWithTorrent::SendCompleted()
@@ -476,8 +474,7 @@ void CDownloadWithTorrent::SendCompleted()
 		m_pTorrent.m_sName );
 
 	// Create and run tracker request
-	new CBTTrackerRequest( static_cast< CDownload* >( this ),
-		_T("completed"), 0ul, TRUE );
+	new CBTTrackerRequest( this, _T("completed"), 0ul, TRUE );
 }
 
 void CDownloadWithTorrent::SendStopped()
@@ -495,8 +492,7 @@ void CDownloadWithTorrent::SendStopped()
 	m_bTorrentStarted = m_bTorrentRequested = FALSE;
 
 	// Create and run tracker request
-	new CBTTrackerRequest( static_cast< CDownload* >( this ),
-		_T("stopped"), 0ul, FALSE );
+	new CBTTrackerRequest( this, _T("stopped"), 0ul, FALSE );
 }
 
 //////////////////////////////////////////////////////////////////////
