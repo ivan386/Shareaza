@@ -117,6 +117,10 @@ BOOL CSplashDlg::OnInitDialog()
 
 void CSplashDlg::Step(LPCTSTR pszText)
 {
+	// Check if m_nMax was set high enough during construction to allow another
+	// step to take place
+	ASSERT( m_nPos < m_nMax );
+
 	m_nPos ++;
 	m_sState.Format( m_bClosing ? _T("%s...") : _T("Starting %s..."), pszText );
 	SetWindowText( m_sState );
@@ -135,6 +139,10 @@ void CSplashDlg::Topmost()
 
 void CSplashDlg::Hide()
 {
+	// Check if m_nMax was set too high during construction, or if not enough
+	// steps were run
+	ASSERT( m_nPos == m_nMax );
+
 	m_sState = _T("Ready");
 	SetWindowText( m_sState );
 	Invalidate();
