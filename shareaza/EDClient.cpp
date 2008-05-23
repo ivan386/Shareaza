@@ -1,7 +1,7 @@
 //
 // EDClient.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -166,11 +166,14 @@ BOOL CEDClient::Equals(CEDClient* pClient)
 
 BOOL CEDClient::Connect()
 {
-	if ( m_hSocket != INVALID_SOCKET ) return FALSE;
+	if ( m_hSocket != INVALID_SOCKET )
+		return FALSE;
+
 	if ( EDClients.IsFull( this ) ) 
 	{
 		// If this download isn't queued, don't try to start it.
-		if ( ! m_pDownload || m_pDownload->m_nState != dtsQueued ) return FALSE;	
+		if ( !m_pDownload || m_pDownload->m_nState != dtsQueued )
+			return FALSE;	
 
 		// If we're really overloaded, we may have to drop some queued downloads
 		if ( EDClients.IsOverloaded() ) 
@@ -182,12 +185,16 @@ BOOL CEDClient::Connect()
 	
 	if ( CEDPacket::IsLowID( m_nClientID ) )
 	{
-		if ( ! Neighbours.PushDonkey( m_nClientID, &m_pServer.sin_addr, htons( m_pServer.sin_port ) ) ) return FALSE;
+		if ( !Neighbours.PushDonkey( m_nClientID, &m_pServer.sin_addr, htons( m_pServer.sin_port ) ) )
+			return FALSE;
+
 		m_tConnected = GetTickCount();
 	}
 	else
 	{
-		if ( ! CConnection::ConnectTo( &m_pHost ) ) return FALSE;
+		if ( !CConnection::ConnectTo( &m_pHost ) )
+			return FALSE;
+
 		theApp.Message( MSG_INFO, IDS_ED2K_CLIENT_CONNECTING, (LPCTSTR)m_sAddress );
 	}
 	

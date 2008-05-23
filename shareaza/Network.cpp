@@ -1,7 +1,7 @@
 //
 // Network.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -646,7 +646,9 @@ void CNetwork::OnRun()
 		Sleep( 50 );
 		WaitForSingleObject( m_pWakeup, 100 );
 	
-		if ( ! theApp.m_bLive ) continue;
+		if ( !theApp.m_bLive )
+			continue;
+
 		if ( theApp.m_pUPnPFinder && theApp.m_pUPnPFinder->IsAsyncFindRunning() )
 			continue;
 
@@ -656,7 +658,8 @@ void CNetwork::OnRun()
 			SearchManager.OnRun();
 			QueryHashMaster.Build();
 			
-			if ( CrawlSession.m_bActive ) CrawlSession.OnRun();
+			if ( CrawlSession.m_bActive )
+				CrawlSession.OnRun();
 			
 			m_pSection.Unlock();
 		}

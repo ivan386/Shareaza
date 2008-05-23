@@ -115,10 +115,17 @@ BOOL CConnection::ConnectTo(SOCKADDR_IN* pHost)
 // Returns true if connected
 BOOL CConnection::ConnectTo(IN_ADDR* pAddress, WORD nPort)
 {
-	// Check inputs
-	if ( m_hSocket != INVALID_SOCKET )		return FALSE; // Make sure the socket isn't already connected somehow
-	if ( pAddress == NULL || nPort == 0 )	return FALSE; // Make sure we have an address and a nonzero port number
-	if ( pAddress->S_un.S_addr == 0 )		return FALSE; // S_un.S_addr is the IP as a single unsigned 4-byte long
+	// Make sure the socket isn't already connected somehow
+	if ( m_hSocket != INVALID_SOCKET )
+		return FALSE;
+
+	// Make sure we have an address and a nonzero port number
+	if ( pAddress == NULL || nPort == 0 )
+		return FALSE;
+
+	// S_un.S_addr is the IP as a single unsigned 4-byte long
+	if ( pAddress->S_un.S_addr == 0 )
+		return FALSE;
 
 	// The IP address is in the security list of government and corporate addresses we want to avoid
 	if ( Security.IsDenied( pAddress ) )
@@ -200,6 +207,7 @@ BOOL CConnection::ConnectTo(IN_ADDR* pAddress, WORD nPort)
 
 			if ( nError != 0 ) 
 				Statistics.Current.Connections.Errors++;
+
 			return FALSE;
 		}
 	}
@@ -335,7 +343,8 @@ void CConnection::Close()
 BOOL CConnection::DoRun()
 {
 	// If this socket is invalid, call OnRun and return the result (do)
-	if ( m_hSocket == INVALID_SOCKET ) return OnRun();
+	if ( m_hSocket == INVALID_SOCKET )
+		return OnRun();
 
 	// Setup pEvents to store the socket's internal information about network events
 	WSANETWORKEVENTS pEvents;
@@ -359,21 +368,25 @@ BOOL CConnection::DoRun()
 		m_tConnected = m_mInput.tLast = m_mOutput.tLast = GetTickCount(); // Store the time 3 places
 
 		// Call CShakeNeighbour::OnConnected to start reading the handshake
-		if ( ! OnConnected() ) return FALSE;
+		if ( !OnConnected() )
+			return FALSE;
 	}
 
 	// If the FD_CLOSE network event has occurred, set bClosed to true, otherwise set it to false
 	BOOL bClosed = ( pEvents.lNetworkEvents & FD_CLOSE ) ? TRUE : FALSE;
 
 	// If the close event happened, null a pointer within the TCP bandwidth meter for input (do)
-	if ( bClosed ) m_mInput.pLimit = NULL;
+	if ( bClosed )
+		m_mInput.pLimit = NULL;
 
 	// Change the queued run state to 1 (do)
 	m_nQueuedRun = 1;
 
 	// Write the contents of the output buffer to the remote computer, and read in data it sent us
-	if ( ! OnWrite() ) return FALSE; // If this is a CShakeNeighbour object, calls CShakeNeighbour::OnWrite
-	if ( ! OnRead() ) return FALSE;
+	if ( !OnWrite() )
+		return FALSE;
+	if ( !OnRead() )
+		return FALSE;
 
 	// If the close event happened
 	if ( bClosed )
@@ -385,10 +398,12 @@ BOOL CConnection::DoRun()
 	}
 
 	// Make sure the handshake doesn't take too long
-	if ( ! OnRun() ) return FALSE; // If this is a CShakeNeighbour object, calls CShakeNeighbour::OnRun
+	if ( !OnRun() )
+		return FALSE;
 
 	// If the queued run state is 2 and OnWrite returns false, leave here with false also
-	if ( m_nQueuedRun == 2 && ! OnWrite() ) return FALSE;
+	if ( m_nQueuedRun == 2 && !OnWrite() )
+		return FALSE;
 
 	// Change the queued run state back to 0 and report success (do)
 	m_nQueuedRun = 0;

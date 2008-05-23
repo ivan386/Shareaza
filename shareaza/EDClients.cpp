@@ -136,7 +136,10 @@ void CEDClients::Clear()
 BOOL CEDClients::PushTo(DWORD nClientID, WORD nClientPort)
 {
 	CEDClient* pClient = Connect( nClientID, nClientPort, NULL, 0, Hashes::Guid() );
-	if ( pClient == NULL ) return FALSE;
+
+	if ( pClient == NULL )
+		return FALSE;
+
 	return pClient->Connect();
 }
 
@@ -153,19 +156,25 @@ CEDClient* CEDClients::Connect(DWORD nClientID, WORD nClientPort, IN_ADDR* pServ
 		if ( oGUID )
 		{
 			pClient = GetByGUID( oGUID );
-			if ( pClient ) return pClient;
+			if ( pClient )
+				return pClient;
 		}
 
-		if ( IsFull() ) return NULL;
+		if ( IsFull() )
+			return NULL;
 
 		if ( CEDPacket::IsLowID( nClientID ) )
 		{
-			if ( pServerAddress == NULL || nServerPort == 0 ) return NULL;
+			if ( pServerAddress == NULL || nServerPort == 0 )
+				return NULL;
+
 			pClient = GetByID( nClientID, pServerAddress, oGUID );
 		}
 		else
 		{
-			if ( Security.IsDenied( (IN_ADDR*)&nClientID ) ) return NULL;
+			if ( Security.IsDenied( (IN_ADDR*)&nClientID ) )
+				return NULL;
+
 			pClient = GetByID( nClientID, NULL, oGUID );
 		}
 	}
@@ -199,11 +208,13 @@ CEDClient* CEDClients::GetByID(DWORD nClientID, IN_ADDR* pServer, const Hashes::
 {
 	for ( CEDClient* pClient = m_pFirst ; pClient ; pClient = pClient->m_pEdNext )
 	{
-		if ( pServer && pClient->m_pServer.sin_addr.S_un.S_addr != pServer->S_un.S_addr ) continue;
+		if ( pServer && pClient->m_pServer.sin_addr.S_un.S_addr != pServer->S_un.S_addr )
+			continue;
 		
 		if ( pClient->m_nClientID == nClientID )
 		{
-			if ( !oGUID || validAndEqual( pClient->m_oGUID, oGUID ) ) return pClient;
+			if ( !oGUID || validAndEqual( pClient->m_oGUID, oGUID ) )
+				return pClient;
 		}
 	}
 	
