@@ -322,10 +322,12 @@ BOOL CShareazaApp::InitInstance()
 	//*/
 	// ***********
 
-	CSplashDlg* dlgSplash = m_ocmdInfo.m_bNoSplash ? NULL : new CSplashDlg( 17 +
-		( ( Settings.Connection.EnableFirewallException ) ? 1 : 0 ) +
-		( ( Settings.Connection.EnableUPnP && !Settings.Live.FirstRun ) ? 1 : 0 ),
-		false );
+	int nSplashSteps = 18
+		+ ( Settings.Connection.EnableFirewallException ? 1 : 0 )
+		+ ( Settings.Connection.EnableUPnP && !Settings.Live.FirstRun ? 1 : 0 );
+
+	CSplashDlg* dlgSplash = m_ocmdInfo.m_bNoSplash ? NULL : new CSplashDlg(
+		nSplashSteps, false );
 
 	SplashStep( dlgSplash, L"Winsock" );
 		WSADATA wsaData;
@@ -444,23 +446,28 @@ int CShareazaApp::ExitInstance()
 	{
 		CWaitCursor pCursor;
 		
-		CSplashDlg* dlgSplash = new CSplashDlg( 6 +
-			( ( Settings.Connection.DeleteFirewallException ) ? 1 : 0 ) +
-			( ( m_pUPnPFinder ) ? 1 : 0 ) +
-			( ( m_bLive ) ? 1 : 0 ),
-			true );
+		int nSplashSteps = 6
+			+ ( Settings.Connection.DeleteFirewallException ? 1 : 0 )
+			+ ( m_pUPnPFinder ? 1 : 0 )
+			+ ( m_bLive ? 1 : 0 );
+		CSplashDlg* dlgSplash = new CSplashDlg( nSplashSteps, true );
+
 		SplashStep( dlgSplash, L"Closing Server Processes" );
 		DDEServer.Close();
 		IEProtocol.Close();
+
 		SplashStep( dlgSplash, L"Disconnecting" );
 		VersionChecker.Stop();
 		DiscoveryServices.Stop();
 		Network.Disconnect();
+
 		SplashStep( dlgSplash, L"Stopping Library Tasks" );
 		Library.StopThread();
+
 		SplashStep( dlgSplash, L"Stopping Transfers" );	
 		Transfers.StopThread();
 		Downloads.CloseTransfers();
+
 		SplashStep( dlgSplash, L"Clearing Clients" );	
 		Uploads.Clear( FALSE );
 		EDClients.Clear();
@@ -497,6 +504,7 @@ int CShareazaApp::ExitInstance()
 			DiscoveryServices.Save();
 			Settings.Save( TRUE );
 		}
+
 		SplashStep( dlgSplash, L"Finalizing" );
 		BTClients.Clear();
 		Downloads.Clear( TRUE );
