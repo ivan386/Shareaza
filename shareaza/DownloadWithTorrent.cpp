@@ -33,6 +33,7 @@
 #include "DownloadTransferBT.h"
 #include "UploadTransferBT.h"
 #include "BTTrackerRequest.h"
+#include "Transfers.h"
 #include "FragmentedFile.h"
 #include "Buffer.h"
 #include "SHA.h"
@@ -500,6 +501,8 @@ void CDownloadWithTorrent::SendStopped()
 
 void CDownloadWithTorrent::OnTrackerEvent(bool bSuccess, LPCTSTR pszReason)
 {
+	CQuickLock oLock( Transfers.m_pSection );
+
 	DWORD tNow = GetTickCount();
 
 	if ( bSuccess )
