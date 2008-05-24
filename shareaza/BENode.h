@@ -1,7 +1,7 @@
 //
 // BENode.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -49,8 +49,8 @@ public:
 	CBENode*	GetNode(LPCSTR pszKey) const;
 	CBENode*	GetNode(const LPBYTE pKey, int nKey) const;
     void		GetBth(Hashes::BtHash& oBTH) const;
-	CString		GetStringFromSubNode(LPCSTR pszKey, UINT nEncoding, BOOL* pEncodingError);
-	CString		GetStringFromSubNode(int nItem, UINT nEncoding, BOOL* pEncodingError);
+	CString		GetStringFromSubNode(LPCSTR pszKey, UINT nEncoding, bool& pEncodingError);
+	CString		GetStringFromSubNode(int nItem, UINT nEncoding, bool& pEncodingError);
 	void		Encode(CBuffer* pBuffer) const;
 public:
 	static CBENode*	Decode(CBuffer* pBuffer);

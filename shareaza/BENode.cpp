@@ -195,7 +195,7 @@ CBENode* CBENode::GetNode(const LPBYTE pKey, int nKey) const
 //////////////////////////////////////////////////////////////////////
 // CBENode Extract a string from a node under this one. (Checks both normal and .utf-8)
 
-CString CBENode::GetStringFromSubNode(LPCSTR pszKey, UINT nEncoding, BOOL* pEncodingError)
+CString CBENode::GetStringFromSubNode(LPCSTR pszKey, UINT nEncoding, bool& bEncodingError)
 {
 	CBENode*	pSubNode;
 	CString		strValue;
@@ -211,6 +211,7 @@ CString CBENode::GetStringFromSubNode(LPCSTR pszKey, UINT nEncoding, BOOL* pEnco
 
 		// Open the supplied node + .utf-8
 		pSubNode = GetNode( pszUTF8Key.get() );
+
 		// We found a back-up node
 		// If it exists and is a string, try reading it
 		if ( ( pSubNode ) && ( pSubNode->m_nType == CBENode::beString ) )
@@ -222,6 +223,7 @@ CString CBENode::GetStringFromSubNode(LPCSTR pszKey, UINT nEncoding, BOOL* pEnco
 
 	// Open the supplied sub-node
 	pSubNode = GetNode( pszKey );
+
 	// If it exists and is a string, try reading it
 	if ( ( pSubNode ) && ( pSubNode->m_nType == CBENode::beString ) )
 	{
@@ -235,7 +237,7 @@ CString CBENode::GetStringFromSubNode(LPCSTR pszKey, UINT nEncoding, BOOL* pEnco
 			// We already have a value - check it's valid
 			CString strCheck = pSubNode->GetString();
 			if ( strCheck != strValue )
-				*pEncodingError = TRUE;
+				bEncodingError = true;
 		}
 	}
 
@@ -245,7 +247,7 @@ CString CBENode::GetStringFromSubNode(LPCSTR pszKey, UINT nEncoding, BOOL* pEnco
 		pSubNode = GetNode( pszKey );
 		if ( ( pSubNode ) && ( pSubNode->m_nType == CBENode::beString ) )
 		{
-			*pEncodingError = TRUE;
+			bEncodingError = true;
 			strValue = pSubNode->DecodeString( nEncoding );
 		}
 	}
@@ -257,28 +259,31 @@ CString CBENode::GetStringFromSubNode(LPCSTR pszKey, UINT nEncoding, BOOL* pEnco
 
 // CBENode Extract a string from a list/dictionary
 
-CString CBENode::GetStringFromSubNode(int nItem, UINT nEncoding, BOOL* pEncodingError)
+CString CBENode::GetStringFromSubNode(int nItem, UINT nEncoding, bool& bEncodingError)
 {
 	CBENode*	pSubNode;
 	CString		strValue;
 
 	// Check we are a list / dictionary type
 	if ( m_nType != beList && m_nType != beDict ) return strValue;
+
 	// Open the supplied list/dictionary item
 	pSubNode = GetNode( nItem );
+
 	// If it exists and is a string, try reading it
 	if ( ( pSubNode ) && ( pSubNode->m_nType == CBENode::beString ) )
 	{
 		// Read the string using the correct encoding. (UTF-8)
 		strValue = pSubNode->GetString();
 	}
+
 	// If it wasn't valid, try a decode by forcing the code page.
 	if ( ! IsValid( strValue ) )
 	{
 		// If we still don't have a valid name, try a decode by forcing the code page.
 		if ( ( pSubNode ) && ( pSubNode->m_nType == CBENode::beString ) )
 		{
-			*pEncodingError = TRUE;
+			bEncodingError = true;
 			strValue = pSubNode->DecodeString( nEncoding );
 		}
 	}
@@ -451,7 +456,8 @@ void CBENode::Decode(LPBYTE& pInput, DWORD& nInput)
 	ASSERT( m_nType == beNull );
 	ASSERT( pInput != NULL );
 	
-	if ( nInput < 1 ) AfxThrowUserException();
+	if ( nInput < 1 )
+		AfxThrowUserException();
 	
 	if ( *pInput == 'i' )
 	{
@@ -460,14 +466,17 @@ void CBENode::Decode(LPBYTE& pInput, DWORD& nInput)
         DWORD nSeek = 1;
 		for ( ; nSeek < 40 ; nSeek++ )
 		{
-			if ( nSeek >= nInput ) AfxThrowUserException();
-			if ( pInput[nSeek] == 'e' ) break;
+			if ( nSeek >= nInput )
+				AfxThrowUserException();
+			if ( pInput[nSeek] == 'e' )
+				break;
 		}
 		
 		if ( nSeek >= 40 ) AfxThrowUserException();
 		
 		pInput[nSeek] = 0;
-		if ( sscanf( (LPCSTR)pInput, "%I64i", &m_nValue ) != 1 ) AfxThrowUserException();
+		if ( sscanf( (LPCSTR)pInput, "%I64i", &m_nValue ) != 1 )
+			AfxThrowUserException();
 		pInput[nSeek] = 'e';
 		
 		INC( nSeek + 1 );
@@ -480,8 +489,10 @@ void CBENode::Decode(LPBYTE& pInput, DWORD& nInput)
 		
 		for (;;)
 		{
-			if ( nInput < 1 ) AfxThrowUserException();
-			if ( *pInput == 'e' ) break;
+			if ( nInput < 1 )
+				AfxThrowUserException();
+			if ( *pInput == 'e' )
+				break;
 			Add()->Decode( pInput, nInput );
 		}
 		
@@ -494,8 +505,10 @@ void CBENode::Decode(LPBYTE& pInput, DWORD& nInput)
 		
 		for (;;)
 		{
-			if ( nInput < 1 ) AfxThrowUserException();
-			if ( *pInput == 'e' ) break;
+			if ( nInput < 1 )
+				AfxThrowUserException();
+			if ( *pInput == 'e' )
+				break;
 			
 			int nLen = DecodeLen( pInput, nInput );
 			LPBYTE pKey = pInput;

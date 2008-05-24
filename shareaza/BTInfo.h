@@ -99,7 +99,7 @@ public:
 	int			m_nStartDownloads;				// When do we start downloads for this torrent
 
 private:
-	BOOL		m_bEncodingError;
+	bool		m_bEncodingError;
 	CSHA		m_pTestSHA1;
 	DWORD		m_nTestByte;
 	CBuffer		m_pSource;
@@ -129,11 +129,11 @@ protected:
 
 // Inlines
 public:
-	inline bool IsAvailable() const { return m_oBTH; }
-	inline BOOL	HasEncodingError() const { return m_bEncodingError; }
+	bool	IsAvailable() const { return m_oBTH; }
+	bool	HasEncodingError() const { return m_bEncodingError; }
 
 	// Check if a string is a valid path/file name.
-	inline BOOL IsValid(LPCTSTR psz) const
+	bool	IsValid(LPCTSTR psz) const
 	{
 		if ( _tcsclen( psz ) == 0 ) return FALSE;
 		if ( _tcschr( psz, '?' ) != NULL ) return FALSE;
@@ -142,7 +142,7 @@ public:
 		return TRUE;
 	}
 
-	inline BOOL	IsMultiTracker() const { return (m_pTrackerList.GetCount() > 0 ); }
+	bool	IsMultiTracker() const { return m_pTrackerList.GetCount() > 0; }
 };
 
 // Tracker status/types

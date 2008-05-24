@@ -39,23 +39,23 @@ static char THIS_FILE[]=__FILE__;
 // CBTInfo construction
 
 CBTInfo::CBTInfo() :
-	m_bEncodingError	( FALSE )
-,	m_nTotalSize		( 0 )
-,	m_nBlockSize		( 0 )
-,	m_nBlockCount		( 0 )
+	m_nTotalSize		( 0ull )
+,	m_nBlockSize		( 0ul )
+,	m_nBlockCount		( 0ul )
 ,	m_pBlockBTH			( NULL )
-,	m_nTotalUpload		( 0 )
-,	m_nTotalDownload	( 0 )
+,	m_nTotalUpload		( 0ull )
+,	m_nTotalDownload	( 0ull )
 ,	m_nFiles			( 0 )
 ,	m_pFiles			( NULL )
 ,	m_pAnnounceTracker	( NULL )
 ,	m_nTrackerIndex		( -1 )
 ,	m_nTrackerMode		( tNull )
 ,	m_nEncoding			( Settings.BitTorrent.TorrentCodePage )
-,	m_tCreationDate		( 0 )
+,	m_tCreationDate		( 0ul )
 ,	m_bPrivate			( FALSE )
 ,	m_nStartDownloads	( dtAlways )
-,	m_nTestByte			( 0 )
+,	m_bEncodingError	( false )
+,	m_nTestByte			( 0ul )
 {
 }
 
@@ -528,7 +528,7 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 	}
 
 	// Get the comments (if present)
-	m_sComment = pRoot->GetStringFromSubNode( "comment", m_nEncoding, &m_bEncodingError );
+	m_sComment = pRoot->GetStringFromSubNode( "comment", m_nEncoding, m_bEncodingError );
 
 	// Get the creation date (if present)
 	CBENode* pDate = pRoot->GetNode( "creation date" );
@@ -540,7 +540,7 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 	}
 
 	// Get the creator (if present)
-	m_sCreatedBy = pRoot->GetStringFromSubNode( "created by", m_nEncoding, &m_bEncodingError );
+	m_sCreatedBy = pRoot->GetStringFromSubNode( "created by", m_nEncoding, m_bEncodingError );
 
 	// Get announce-list (if present)	
 	CBENode* pAnnounceList = pRoot->GetNode( "announce-list" );
@@ -652,10 +652,11 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 	// Get the private flag (if present)
 	CBENode* pPrivate = pInfo->GetNode( "private" );
 	if ( ( pPrivate ) &&  ( pPrivate->IsType( CBENode::beInt )  ) )
-		m_bPrivate = (BOOL)pPrivate->GetInt();
+		m_bPrivate = pPrivate->GetInt() > 0;
 	
 	// Get the name
-	m_sName = pInfo->GetStringFromSubNode( "name", m_nEncoding, &m_bEncodingError );
+	m_sName = pInfo->GetStringFromSubNode( "name", m_nEncoding, m_bEncodingError );
+
 	// If we still don't have a name, generate one
 	if ( m_sName.IsEmpty() ) m_sName.Format( _T("Unnamed_Torrent_%i"), (int)rand() );
 	
