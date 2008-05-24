@@ -288,6 +288,7 @@ bool CSecurity::Complain(const IN_ADDR* pAddress, int nBanLength, int nExpire, i
 		if ( pComplain->m_nScore > nCount )
 		{
 			m_Complains.RemoveKey( pAddress->s_addr );
+			delete pComplain;
 			Ban( pAddress, nBanLength );
 			return true;
 		}
