@@ -534,11 +534,10 @@ BOOL CLibrary::ThreadScan()
 	BOOL bForcedScan = ( m_nForcedUpdateCookie < m_nUpdateCookie ) &&
 		( m_nUpdateCookie > tNow - Settings.Library.WatchFoldersTimeout * 1000 );
 
-	if ( bPeriodicScan || bForcedScan )
+	bChanged = LibraryFolders.ThreadScan( &m_bThread, ( bPeriodicScan || bForcedScan ) );
+
+	if ( bPeriodicScan || bForcedScan || bChanged )
 	{
-
-		bChanged = LibraryFolders.ThreadScan( &m_bThread, bForcedScan );
-
 		m_nScanTime = GetTickCount();
 
 		if ( bForcedScan )
