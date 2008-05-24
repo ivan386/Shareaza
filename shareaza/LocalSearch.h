@@ -1,7 +1,7 @@
 //
 // LocalSearch.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -18,9 +18,6 @@
 // along with Shareaza; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
-
-#if !defined(AFX_LOCALSEARCH_H__5588AE7C_89B4_4B75_95C5_1519DD6F6D9E__INCLUDED_)
-#define AFX_LOCALSEARCH_H__5588AE7C_89B4_4B75_95C5_1519DD6F6D9E__INCLUDED_
 
 #pragma once
 
@@ -61,6 +58,7 @@ protected:
 
 // Operations
 public:
+	// Search library and downloads (-1 - use default limit, 0 - no limit)
 	INT_PTR		Execute(INT_PTR nMaximum = -1);
 	void		WriteVirtualTree();
 protected:
@@ -89,5 +87,3 @@ protected:
 	CG2Packet*	FolderToPacket(CLibraryFolder* pFolder);
 
 };
-
-#endif // !defined(AFX_LOCALSEARCH_H__5588AE7C_89B4_4B75_95C5_1519DD6F6D9E__INCLUDED_)
