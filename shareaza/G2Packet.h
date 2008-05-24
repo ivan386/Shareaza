@@ -1,7 +1,7 @@
 //
 // G2Packet.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -18,9 +18,6 @@
 // along with Shareaza; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
-
-#if !defined(AFX_G2PACKET_H__1790A2FA_5A60_4846_A7BD_629747EEC1C5__INCLUDED_)
-#define AFX_G2PACKET_H__1790A2FA_5A60_4846_A7BD_629747EEC1C5__INCLUDED_
 
 #pragma once
 
@@ -45,6 +42,10 @@ typedef QWORD G2_PACKET;
 	MAKEQWORD(	MAKEDWORD(MAKEWORD(((a)),((b))),MAKEWORD(((c)),((d)))), \
 				MAKEDWORD(MAKEWORD(((e)),((f))),MAKEWORD(((g)),((h)))) \
 	);
+
+
+#define G2_PACKET_LEN(p,len) \
+	(1+(((len)>0xFF)?(((len)>0xFFFF)?3:2):1)+G2_TYPE_LEN(p)+(len))
 
 //
 // G2 Packet Flags
@@ -266,5 +267,3 @@ inline void CG2Packet::CG2PacketPool::FreePoolImpl(CPacket* pPacket)
 {
 	delete [] (CG2Packet*)pPacket;
 }
-
-#endif // !defined(AFX_G2PACKET_H__1790A2FA_5A60_4846_A7BD_629747EEC1C5__INCLUDED_)

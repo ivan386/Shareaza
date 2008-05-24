@@ -1,7 +1,7 @@
 //
 // G2Packet.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2006.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -149,11 +149,11 @@ void CG2Packet::WritePacket(CG2Packet* pPacket)
 
 void CG2Packet::WritePacket(G2_PACKET nType, DWORD nLength, BOOL bCompound)
 {
-	ASSERT( G2_TYPE_LEN( nType ) > 0 );
+	ASSERT( G2_TYPE_LEN( nType ) > 0 && G2_TYPE_LEN( nType ) < 9 );
 	ASSERT( nLength <= 0xFFFFFF );
 
-	BYTE nTypeLen	= (BYTE)( G2_TYPE_LEN( nType ) - 1 ) & 0x07;
-	BYTE nLenLen	= 1;
+	BYTE nTypeLen	= (BYTE)( G2_TYPE_LEN( nType ) - 1 ) & 0x07;	// 0..7
+	BYTE nLenLen	= 1;	// 1, 2, 3
 
 	if ( nLength > 0xFF )
 	{
@@ -170,9 +170,15 @@ void CG2Packet::WritePacket(G2_PACKET nType, DWORD nLength, BOOL bCompound)
 
 	if ( m_bBigEndian )
 	{
-		if ( nLenLen >= 3 ) WriteByte( (BYTE)( ( nLength >> 16 ) & 0xFF ) );
-		if ( nLenLen >= 2 ) WriteByte( (BYTE)( ( nLength >> 8 ) & 0xFF ) );
-		WriteByte( (BYTE)( nLength & 0xFF ) );
+		switch ( nLenLen )
+		{
+		case 3:
+			WriteByte( (BYTE)( ( nLength >> 16 ) & 0xFF ) );
+		case 2:
+			WriteByte( (BYTE)( ( nLength >> 8 ) & 0xFF ) );
+		case 1:
+			WriteByte( (BYTE)( nLength & 0xFF ) );
+		}
 	}
 	else
 	{
