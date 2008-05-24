@@ -1,7 +1,7 @@
 //
 // QueryHit.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -19,9 +19,6 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_QUERYHIT_H__275CD566_6CDF_4C59_B78D_7082E49C6E15__INCLUDED_)
-#define AFX_QUERYHIT_H__275CD566_6CDF_4C59_B78D_7082E49C6E15__INCLUDED_
-
 #pragma once
 
 #include "ShareazaFile.h"
@@ -33,7 +30,6 @@ class CQuerySearch;
 class CG1Packet;
 class CG2Packet;
 class CEDPacket;
-
 
 class CQueryHit : public CShareazaFile
 {
@@ -110,7 +106,7 @@ public:
 protected:
 	void		ReadG1Packet(CG1Packet* pPacket);
 	void		ParseAttributes(const Hashes::Guid& pClientID, CVendor* pVendor, BYTE* nFlags, BOOL bChat, BOOL bBrowseHost);
-	void		ReadG2Packet(CG2Packet* pPacket, DWORD nLength);
+	bool		ReadG2Packet(CG2Packet* pPacket, DWORD nLength);
 	BOOL		ReadEDPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer, DWORD m_nServerFlags = 0);
 	void		ReadEDAddress(CEDPacket* pPacket, SOCKADDR_IN* pServer);
 	BOOL		ParseXML(CXMLElement* pXML, DWORD nRealIndex);
@@ -135,5 +131,3 @@ public:
 #define HITEQUALS_NOT		0
 #define HITEQUALS_SIMILAR	1
 #define HITEQUALS_IDENTICAL	2
-
-#endif // !defined(AFX_QUERYHIT_H__275CD566_6CDF_4C59_B78D_7082E49C6E15__INCLUDED_)

@@ -117,7 +117,8 @@ CQueryHit* CQueryHit::FromPacket(CG1Packet* pPacket, int* pnHops)
 	if ( pPacket->m_nProtocol == PROTOCOL_G2 )
 	{
 		GNUTELLAPACKET pG1;
-		if ( ! ((CG2Packet*)pPacket)->SeekToWrapped() ) return NULL;
+		if ( ! static_cast< CG2Packet* >( static_cast< CPacket* >( pPacket ) )->
+			SeekToWrapped() ) return NULL;
 		pPacket->Read( &pG1, sizeof(pG1) );
 		
 		oQueryID = pG1.m_oGUID;
@@ -275,8 +276,12 @@ CQueryHit* CQueryHit::FromPacket(CG2Packet* pPacket, int* pnHops)
 		return FromPacket( (CG1Packet*)pPacket );
 	}
 	
-	if ( ! pPacket->m_bCompound ) return NULL;
-	
+	if ( ! pPacket->m_bCompound )
+	{
+		theApp.Message( MSG_DEBUG, _T("[G2] Hit Error: No compounded packet") );
+		return NULL;
+	}
+
 	CQueryHit* pFirstHit	= NULL;
 	CQueryHit* pLastHit		= NULL;
 	CXMLElement* pXML		= NULL;
@@ -322,173 +327,225 @@ CQueryHit* CQueryHit::FromPacket(CG2Packet* pPacket, int* pnHops)
 					pPacket->SkipCompound( nLength );
 				}
 			}
-			
-			if ( nType == G2_PACKET_HIT_DESCRIPTOR && bCompound )
-			{
-				CQueryHit* pHit = new CQueryHit( PROTOCOL_G2 );
-				
-				if ( pFirstHit ) pLastHit->m_pNext = pHit;
-				else pFirstHit = pHit;
-				pLastHit = pHit;
-				
-				pHit->ReadG2Packet( pPacket, nLength );
-			}
-			else if ( nType == G2_PACKET_HIT_GROUP && bCompound )
-			{
-				DWORD nQueued = 0, nUploads = 0, nSpeed = 0;
-				G2_PACKET nInnerType;
-				DWORD nInner;
-				
-				while ( pPacket->m_nPosition < nSkip && pPacket->ReadPacket( nInnerType, nInner ) )
-				{
-					DWORD nSkipInner = pPacket->m_nPosition + nInner;
-					
-					if ( nInnerType == G2_PACKET_PEER_STATUS && nInner >= 7 )
-					{
-						nQueued		= pPacket->ReadShortBE();
-						nUploads	= pPacket->ReadByte();
-						nSpeed		= pPacket->ReadLongBE();
-					}
-					
-					pPacket->m_nPosition = nSkipInner;
-				}
-				
-				if ( pPacket->m_nPosition < nSkip && nSpeed > 0 )
-				{
-					int nGroup = pPacket->ReadByte();
-					
-					if ( nGroup >= 0 && nGroup < 8 )
-					{
-						nGroupState[ nGroup ][0] = TRUE;
-						nGroupState[ nGroup ][1] = nQueued;
-						nGroupState[ nGroup ][2] = nUploads;
-						nGroupState[ nGroup ][3] = nSpeed;
-					}
-				}
-			}
-			else if ( nType == G2_PACKET_NEIGHBOUR_HUB && nLength >= 6 )
-			{
-#ifndef LAN_MODE
-				SOCKADDR_IN pHub;
-				
-				pHub.sin_addr.S_un.S_addr	= pPacket->ReadLongLE();
-				pHub.sin_port				= htons( pPacket->ReadShortBE() );
-				nodeTested = pTestNodeList.insert( AddrPortPair( pHub.sin_addr.S_un.S_addr,
-					                                             pHub.sin_port ) );
-				if ( !nodeTested.second )
-				{
-					// Not a unique IP and port pair
-					bSpam = true;
-				}
-#endif // LAN_MODE
-			}
-			else if ( nType == G2_PACKET_NODE_GUID && nLength == 16 )
-			{
-				pPacket->Read( oClientID );
-				oClientID.validate();
-			}
-			else if ( ( nType == G2_PACKET_NODE_ADDRESS || nType == G2_PACKET_NODE_INFO ) && nLength >= 6 )
-			{
-				nAddress	= pPacket->ReadLongLE();
-				if ( Network.IsReserved( (IN_ADDR*)&nAddress, false ) ||
-					 Security.IsDenied( (IN_ADDR*)&nAddress, NULL ) )
-					bSpam = true;
-				nPort = pPacket->ReadShortBE();
-			}
-			else if ( nType == G2_PACKET_VENDOR && nLength >= 4 )
-			{
-				CString strVendor = pPacket->ReadString( 4 );
-				pVendor = VendorCache.Lookup( strVendor );
-				if ( ! pVendor ) pVendor = VendorCache.m_pNull;
-			}
-			else if ( nType == G2_PACKET_METADATA )
-			{
-				CString strXML	= pPacket->ReadString( nLength );
-				LPCTSTR pszXML	= strXML;
-				
-				while ( pszXML && *pszXML )
-				{
-					CXMLElement* pPart = CXMLElement::FromString( pszXML, TRUE );
-					if ( ! pPart ) break;
-					
-					if ( ! pXML ) pXML = new CXMLElement( NULL, _T("Metadata") );
-					pXML->AddElement( pPart );
-					
-					pszXML = _tcsstr( pszXML + 1, _T("<?xml") );
-				}
-			}
-			else if ( nType == G2_PACKET_PROFILE && bCompound )
-			{
-				G2_PACKET nInnerType;
-				DWORD nInner;
-				DWORD ip;
 
-				while ( pPacket->m_nPosition < nSkip && pPacket->ReadPacket( nInnerType, nInner ) )
+			switch ( nType )
+			{
+			case G2_PACKET_HIT_DESCRIPTOR:
+				if ( bCompound )
 				{
-					DWORD nSkipInner = pPacket->m_nPosition + nInner;
-					if ( nInnerType == G2_PACKET_NICK )
-					{
-						strNick = pPacket->ReadString( nInner );
-						CT2A pszIP( (LPCTSTR)strNick );
-						ip = inet_addr( pszIP );
-						if ( ip != INADDR_NONE && strcmp( inet_ntoa( *(IN_ADDR*)&ip ), pszIP ) == 0 &&
-							 nAddress != ip )
-							bSpam = true;
-						if ( strNick.Compare( L"RAZA" ) == 0 || strNick.Compare( L"RAZB" ) == 0 )
-							bSpam = true; // VendorCode Nick Spam
-					}
-					pPacket->m_nPosition = nSkipInner;
+					CQueryHit* pHit = new CQueryHit( PROTOCOL_G2 );
+					if ( pFirstHit ) pLastHit->m_pNext = pHit;
+					else pFirstHit = pHit;
+					pLastHit = pHit;
+					if ( ! pHit->ReadG2Packet( pPacket, nLength ) )
+						AfxThrowUserException();
 				}
-			}
-			else if ( nType == G2_PACKET_BROWSE_HOST )
-			{
+				else
+					theApp.Message( MSG_DEBUG, _T("[G2 Hit] Error: Got hit descriptor without compound flag") );
+				break;
+
+			case G2_PACKET_HIT_GROUP:
+				if ( bCompound )
+				{
+					DWORD nQueued = 0, nUploads = 0, nSpeed = 0;
+					G2_PACKET nInnerType;
+					DWORD nInner;
+					
+					while ( pPacket->m_nPosition < nSkip && pPacket->ReadPacket( nInnerType, nInner ) )
+					{
+						DWORD nSkipInner = pPacket->m_nPosition + nInner;
+						
+						if ( nInnerType == G2_PACKET_PEER_STATUS && nInner >= 7 )
+						{
+							nQueued		= pPacket->ReadShortBE();
+							nUploads	= pPacket->ReadByte();
+							nSpeed		= pPacket->ReadLongBE();
+						}
+						
+						pPacket->m_nPosition = nSkipInner;
+					}
+					
+					if ( pPacket->m_nPosition < nSkip && nSpeed > 0 )
+					{
+						int nGroup = pPacket->ReadByte();
+						
+						if ( nGroup >= 0 && nGroup < 8 )
+						{
+							nGroupState[ nGroup ][0] = TRUE;
+							nGroupState[ nGroup ][1] = nQueued;
+							nGroupState[ nGroup ][2] = nUploads;
+							nGroupState[ nGroup ][3] = nSpeed;
+						}
+					}
+				}
+				else
+					theApp.Message( MSG_DEBUG, _T("[G2] Hit Error: Got hit group without compound flag") );
+				break;
+
+			case G2_PACKET_PROFILE:
+				if ( bCompound )
+				{
+					G2_PACKET nInnerType;
+					DWORD nInner;
+					DWORD ip;
+					while ( pPacket->m_nPosition < nSkip && pPacket->ReadPacket( nInnerType, nInner ) )
+					{
+						DWORD nSkipInner = pPacket->m_nPosition + nInner;
+						if ( nInnerType == G2_PACKET_NICK )
+						{
+							strNick = pPacket->ReadString( nInner );
+							CT2A pszIP( (LPCTSTR)strNick );
+							ip = inet_addr( pszIP );
+							if ( ip != INADDR_NONE && strcmp( inet_ntoa( *(IN_ADDR*)&ip ), pszIP ) == 0 &&
+								nAddress != ip )
+								bSpam = true;
+							if ( strNick.Compare( L"RAZA" ) == 0 || strNick.Compare( L"RAZB" ) == 0 )
+								bSpam = true; // VendorCode Nick Spam
+						}
+						pPacket->m_nPosition = nSkipInner;
+					}
+				}
+				else
+					theApp.Message( MSG_DEBUG, _T("[G2] Hit Error: Got profile without compound flag") );
+				break;
+
+			case G2_PACKET_NEIGHBOUR_HUB:
+				if ( nLength >= 6 )
+				{
+					SOCKADDR_IN pHub;					
+					pHub.sin_addr.S_un.S_addr = pPacket->ReadLongLE();
+					pHub.sin_port = htons( pPacket->ReadShortBE() );
+					nodeTested = pTestNodeList.insert(
+						AddrPortPair( pHub.sin_addr.S_un.S_addr, pHub.sin_port ) );
+#ifndef LAN_MODE
+					if ( ! nodeTested.second )
+					{
+						// Not a unique IP and port pair
+						bSpam = true;
+					}
+#endif // LAN_MODE
+				}
+				else
+					theApp.Message( MSG_DEBUG, _T("[G2] Hit Error: Got neighbour hub with invalid length (%u bytes)"), nLength );
+				break;
+
+			case G2_PACKET_NODE_GUID:
+				if ( nLength == 16 )
+				{
+					pPacket->Read( oClientID );
+					oClientID.validate();
+				}
+				else
+					theApp.Message( MSG_DEBUG, _T("[G2] Hit Error: Got node guid with invalid length (%u bytes)"), nLength );
+				break;
+
+			case G2_PACKET_NODE_ADDRESS:
+			case G2_PACKET_NODE_INFO:
+				if ( nLength >= 6 )
+				{
+					nAddress = pPacket->ReadLongLE();
+					if ( Network.IsReserved( (IN_ADDR*)&nAddress, false ) ||
+						 Security.IsDenied( (IN_ADDR*)&nAddress, NULL ) )
+						bSpam = true;
+					nPort = pPacket->ReadShortBE();
+				}
+				else
+					theApp.Message( MSG_DEBUG, _T("[G2] Hit Error: Got node address with invalid length (%u bytes)"), nLength );
+				break;
+
+			case G2_PACKET_VENDOR:
+				if ( nLength >= 4 )
+				{
+					CString strVendor = pPacket->ReadString( 4 );
+					pVendor = VendorCache.Lookup( strVendor );
+					if ( ! pVendor ) pVendor = VendorCache.m_pNull;
+				}
+				else
+					theApp.Message( MSG_DEBUG, _T("[G2] Hit Error: Got vendor with invalid length (%u bytes)"), nLength );
+				break;
+
+			case G2_PACKET_METADATA:
+				{
+					CString strXML	= pPacket->ReadString( nLength );
+					LPCTSTR pszXML	= strXML;					
+					while ( pszXML && *pszXML )
+					{
+						CXMLElement* pPart = CXMLElement::FromString( pszXML, TRUE );
+						if ( ! pPart ) break;
+						
+						if ( ! pXML ) pXML = new CXMLElement( NULL, _T("Metadata") );
+						pXML->AddElement( pPart );
+						
+						pszXML = _tcsstr( pszXML + 1, _T("<?xml") );
+					}
+				}
+				break;
+
+			case G2_PACKET_BROWSE_HOST:
 				bBrowseHost |= 1;
-			}
-			else if ( nType == G2_PACKET_BROWSE_PROFILE )
-			{
+				break;
+
+			case G2_PACKET_BROWSE_PROFILE:
 				bBrowseHost |= 2;
-			}
-			else if ( nType == G2_PACKET_PEER_CHAT )
-			{
+				break;
+
+			case G2_PACKET_PEER_CHAT:
 				bPeerChat = TRUE;
-			}
-			else if ( nType == G2_PACKET_PEER_BUSY )
-			{
+				break;
+
+			case G2_PACKET_PEER_BUSY:
 				bBusy = TRUE;
-			}
-			else if ( nType == G2_PACKET_PEER_UNSTABLE )
-			{
+				break;
+
+			case G2_PACKET_PEER_UNSTABLE:
 				bStable = FALSE;
-			}
-			else if ( nType == G2_PACKET_PEER_FIREWALLED )
-			{
+				break;
+
+			case G2_PACKET_PEER_FIREWALLED:
 #ifndef LAN_MODE
 				bPush = TRUE;
 #endif // LAN_MODE
-			}
-			else if ( nType == G2_PACKET_PEER_STATUS && nLength > 0 )
-			{
-				BYTE nStatus = pPacket->ReadByte();
-				
-				bBusy	= ( nStatus & G2_SS_BUSY ) ? TRUE : FALSE;
-				bPush	= ( nStatus & G2_SS_PUSH ) ? TRUE : FALSE;
-				bStable	= ( nStatus & G2_SS_STABLE ) ? TRUE : FALSE;
-				
-				if ( nLength >= 1+4+2+1 )
+				break;
+
+			case G2_PACKET_PEER_STATUS:
+				if ( nLength > 0 )
 				{
-					nGroupState[0][0] = TRUE;
-					nGroupState[0][3] = pPacket->ReadLongBE();
-					nGroupState[0][1] = pPacket->ReadShortBE();
-					nGroupState[0][2] = pPacket->ReadByte();
+					BYTE nStatus = pPacket->ReadByte();
+					
+					bBusy	= ( nStatus & G2_SS_BUSY ) ? TRUE : FALSE;
+					bPush	= ( nStatus & G2_SS_PUSH ) ? TRUE : FALSE;
+					bStable	= ( nStatus & G2_SS_STABLE ) ? TRUE : FALSE;
+					
+					if ( nLength >= 1+4+2+1 )
+					{
+						nGroupState[0][0] = TRUE;
+						nGroupState[0][3] = pPacket->ReadLongBE();
+						nGroupState[0][1] = pPacket->ReadShortBE();
+						nGroupState[0][2] = pPacket->ReadByte();
+					}
 				}
+				else
+					theApp.Message( MSG_DEBUG, _T("[G2] Hit Error: Got peer status with invalid length (%u bytes)"), nLength );
+				break;
+
+			default:
+				theApp.Message( MSG_DEBUG, _T("[G2] Hit Error: Got unknown type (0x%08I64x +%u)"), nType, pPacket->m_nPosition - 8 );
 			}
-			
+
 			pPacket->m_nPosition = nSkip;
 		}
 		
-		if ( ! oClientID ) AfxThrowUserException();
-		if ( pPacket->GetRemaining() < 17 ) AfxThrowUserException();
-		
+		if ( ! oClientID )
+		{
+			theApp.Message( MSG_DEBUG, _T("[G2] Hit Error: Node guid missed") );
+			AfxThrowUserException();
+		}
+		if ( pPacket->GetRemaining() < 17 )
+		{
+			theApp.Message( MSG_DEBUG, _T("[G2] Hit Error: Too short packet (remaining %u bytes)"), pPacket->GetRemaining() );
+			AfxThrowUserException();
+		}
+
 		BYTE nHops = pPacket->ReadByte() + 1;
 		if ( pnHops ) *pnHops = nHops;
 		
@@ -991,178 +1048,262 @@ void CQueryHit::ParseAttributes(const Hashes::Guid& oClientID, CVendor* pVendor,
 //////////////////////////////////////////////////////////////////////
 // CQueryHit G2 result entry reader
 
-void CQueryHit::ReadG2Packet(CG2Packet* pPacket, DWORD nLength)
+bool CQueryHit::ReadG2Packet(CG2Packet* pPacket, DWORD nLength)
 {
 	DWORD nPacket, nEnd = pPacket->m_nPosition + nLength;
 	G2_PACKET nType;
 
 	m_bResolveURL = FALSE;
-	
-	while ( pPacket->m_nPosition < nEnd && pPacket->ReadPacket( nType, nPacket ) )
-	{
-		DWORD nSkip = pPacket->m_nPosition + nPacket;
-		
-		if ( nType == G2_PACKET_URN )
-		{
-			CString strURN = pPacket->ReadString( nPacket );
-			if ( strURN.GetLength() + 1 >= (int)nPacket ) AfxThrowUserException();
-			nPacket -= strURN.GetLength() + 1;
-			
-			if ( nPacket >= 20 && strURN == _T("sha1") )
-			{
-				pPacket->Read( m_oSHA1 );
-                m_oSHA1.validate();
-			}
-			else if ( nPacket >= 44 && ( strURN == _T("bp") || strURN == _T("bitprint") ) )
-			{
-				pPacket->Read( m_oSHA1 );
-                m_oSHA1.validate();
 
-				pPacket->Read( m_oTiger );
-				m_oTiger.validate();
-			}
-			else if ( nPacket >= 24 && ( strURN == _T("ttr") || strURN == _T("tree:tiger/") ) )
-			{
-				pPacket->Read( m_oTiger );
-				m_oTiger.validate();
-			}
-			else if ( nPacket >= 16 && strURN == _T("ed2k") )
-			{
-				pPacket->Read( m_oED2K );
-				m_oED2K.validate();
-			}
-			else if ( nPacket >= 20 && strURN == _T("btih") )
-			{
-				pPacket->Read( m_oBTH );
-				m_oBTH.validate();
-			}
-			else if ( nPacket >= 16 && strURN == _T("md5") )
-			{
-				pPacket->Read( m_oMD5 );
-			}
-		}
-		else if ( nType == G2_PACKET_URL )
+	try
+	{
+		while ( pPacket->m_nPosition < nEnd && pPacket->ReadPacket( nType, nPacket ) )
 		{
-			if ( nPacket == 0 )
-			{
-				m_bResolveURL = TRUE;
-			}
-			else
-			{
-				m_sURL = pPacket->ReadString( nPacket );
-			}
-		}
-		else if ( nType == G2_PACKET_DESCRIPTIVE_NAME )
-		{
-			if ( m_bSize )
-			{
-				m_sName = pPacket->ReadString( nPacket );
-			}
-			else if ( nPacket > 4 )
-			{
-				m_bSize	= TRUE;
-				m_nSize = pPacket->ReadLongBE();
-				m_sName = pPacket->ReadString( nPacket - 4 );
-			}
-		}
-		else if ( nType == G2_PACKET_METADATA && nPacket > 0 )
-		{
-			CString strXML = pPacket->ReadString( nPacket );
+			DWORD nSkip = pPacket->m_nPosition + nPacket;
 			
-			if ( CXMLElement* pXML = CXMLElement::FromString( strXML ) )
+			switch ( nType )
 			{
-				if ( CXMLAttribute* pURI = pXML->GetAttribute( CXMLAttribute::schemaName ) )
+			case G2_PACKET_URN:
 				{
-					m_sSchemaPlural		= pXML->GetName();
-					m_sSchemaURI		= pURI->GetValue();
-					CXMLElement* pChild	= pXML->GetFirstElement();
-					
-					if ( pChild != NULL && m_sSchemaPlural.GetLength() > 0 && m_sSchemaURI.GetLength() > 0 )
+					CString strURN = pPacket->ReadString( nPacket ); // Null terminated
+					if ( strURN.GetLength() == (int)nPacket )
 					{
-						m_pXML->Delete();
-						m_pXML = pChild->Detach();
+						theApp.Message( MSG_DEBUG, _T("[G2] Hit Error: Got malformed URN (%s)"), (LPCTSTR)strURN );
+						AfxThrowUserException();
+					}
+					nPacket -= strURN.GetLength() + 1;
+					if ( nPacket >= 20 && strURN == _T("sha1") )
+					{
+						pPacket->Read( m_oSHA1 );
+						m_oSHA1.validate();
+					}
+					else if ( nPacket >= 44 && ( strURN == _T("bp") || strURN == _T("bitprint") ) )
+					{
+						pPacket->Read( m_oSHA1 );
+						m_oSHA1.validate();
+
+						pPacket->Read( m_oTiger );
+						m_oTiger.validate();
+					}
+					else if ( nPacket >= 24 && ( strURN == _T("ttr") || strURN == _T("tree:tiger/") ) )
+					{
+						pPacket->Read( m_oTiger );
+						m_oTiger.validate();
+					}
+					else if ( nPacket >= 16 && strURN == _T("ed2k") )
+					{
+						pPacket->Read( m_oED2K );
+						m_oED2K.validate();
+					}
+					else if ( nPacket >= 20 && strURN == _T("btih") )
+					{
+						pPacket->Read( m_oBTH );
+						m_oBTH.validate();
+					}
+					else if ( nPacket >= 16 && strURN == _T("md5") )
+					{
+						pPacket->Read( m_oMD5 );
+						m_oSHA1.validate();
+					}
+					else
+					{
+						theApp.Message( MSG_DEBUG, _T("[G2] Hit Error: Got unknown URN (%s)"), (LPCTSTR)strURN );
+						AfxThrowUserException();
 					}
 				}
-				else if ( CSchema* pSchema = SchemaCache.Guess( pXML->GetName() ) )
+				break;
+
+			case G2_PACKET_URL:
+				if ( nPacket == 0 )
 				{
-					m_pXML->Delete();
-					m_sSchemaPlural	= pSchema->m_sPlural;
-					m_sSchemaURI	= pSchema->GetURI();
-					m_pXML			= pXML;
-					pXML			= NULL;
+					m_bResolveURL = TRUE;
 				}
-				
-				pXML->Delete();
-			}
-		}
-		else if ( nType == G2_PACKET_SIZE )
-		{
-			if ( nPacket == 4 )
-			{
-				m_bSize	= TRUE;
-				m_nSize = pPacket->ReadLongBE();
-			}
-			else if ( nPacket == 8 )
-			{
-				m_bSize	= TRUE;
-				m_nSize = pPacket->ReadInt64();
-			}
-		}
-		else if ( nType == G2_PACKET_GROUP_ID && nPacket >= 1 )
-		{
-			m_nGroup = pPacket->ReadByte();
-			if ( m_nGroup < 0 ) m_nGroup = 0;
-			if ( m_nGroup > 7 ) m_nGroup = 7;
-		}
-		else if ( nType == G2_PACKET_OBJECT_ID && nPacket >= 4 )
-		{
-			m_nIndex = pPacket->ReadLongBE();
-		}
-		else if ( nType == G2_PACKET_CACHED_SOURCES && nPacket >= 2 )
-		{
-			m_nSources = pPacket->ReadShortBE();
-		}
-		else if ( nType == G2_PACKET_PARTIAL && nPacket >= 4 )
-		{
-			m_nPartial = pPacket->ReadLongBE();
-		}
-		else if ( nType == G2_PACKET_COMMENT )
-		{
-			CString strXML = pPacket->ReadString( nPacket );
-			
-			if ( CXMLElement* pComment = CXMLElement::FromString( strXML ) )
-			{
-				m_nRating = -1;
-				_stscanf( pComment->GetAttributeValue( _T("rating") ), _T("%i"), &m_nRating );
-				m_nRating = max( 0, min( 6, m_nRating + 1 ) );
-				m_sComments = pComment->GetValue();
-				m_sComments.Replace( _T("{n}"), _T("\r\n") );
-				delete pComment;
-			}
-		}
-		else if ( nType == G2_PACKET_PREVIEW_URL )
-		{
-			m_bPreview = TRUE;
-			if ( nPacket != 0 )
-			{
-				m_sPreview = pPacket->ReadString( nPacket );
-			}
-		}
-		else if ( nType == G2_PACKET_BOGUS )
-		{
+				else
+				{
+					m_sURL = pPacket->ReadString( nPacket );
+				}
+				break;
+
+			case G2_PACKET_DESCRIPTIVE_NAME:
+				if ( m_bSize )
+				{
+					m_sName = pPacket->ReadString( nPacket );
+				}
+				else if ( nPacket > 4 )
+				{
+					m_bSize	= TRUE;
+					m_nSize = pPacket->ReadLongBE();
+					m_sName = pPacket->ReadString( nPacket - 4 );
+				}
+				else
+				{
+					theApp.Message( MSG_DEBUG, _T("[G2] Hit Error: Got invalid descriptive name") );
+					AfxThrowUserException();
+				}
+				break;
+
+			case G2_PACKET_METADATA:
+				if ( nPacket > 0 )
+				{
+					CString strXML = pPacket->ReadString( nPacket ); // Not null terminated
+					if ( strXML.GetLength() != (int)nPacket )
+					{
+						theApp.Message( MSG_DEBUG, _T("[G2] Hit Error: Got too short metadata (%s)"), (LPCTSTR)strXML );
+						AfxThrowUserException();
+					}
+					if ( CXMLElement* pXML = CXMLElement::FromString( strXML ) )
+					{
+						if ( CXMLAttribute* pURI = pXML->GetAttribute( CXMLAttribute::schemaName ) )
+						{
+							m_sSchemaPlural		= pXML->GetName();
+							m_sSchemaURI		= pURI->GetValue();
+							CXMLElement* pChild	= pXML->GetFirstElement();						
+							if ( pChild != NULL && m_sSchemaPlural.GetLength() > 0 &&
+								m_sSchemaURI.GetLength() > 0 )
+							{
+								m_pXML->Delete();
+								m_pXML = pChild->Detach();
+							}
+						}
+						else if ( CSchema* pSchema = SchemaCache.Guess( pXML->GetName() ) )
+						{
+							m_pXML->Delete();
+							m_sSchemaPlural	= pSchema->m_sPlural;
+							m_sSchemaURI	= pSchema->GetURI();
+							m_pXML			= pXML;
+							pXML			= NULL;
+						}
+						else
+						{
+							theApp.Message( MSG_DEBUG, _T("[G2] Hit Error: Got unknown metadata schema (%s)"), (LPCTSTR)strXML );
+						}
+						pXML->Delete();
+					}
+					else
+					{
+						theApp.Message( MSG_DEBUG, _T("[G2] Hit Error: Got invalid metadata (%s)"), (LPCTSTR)strXML );
+						AfxThrowUserException();
+					}
+				}
+				else
+					theApp.Message( MSG_DEBUG, _T("[G2] Hit Error: Got empty metadata") );
+				break;
+
+			case G2_PACKET_SIZE:
+				if ( nPacket == 4 )
+				{
+					m_bSize	= TRUE;
+					m_nSize = pPacket->ReadLongBE();
+				}
+				else if ( nPacket == 8 )
+				{
+					m_bSize	= TRUE;
+					m_nSize = pPacket->ReadInt64();
+				}
+				else
+					theApp.Message( MSG_DEBUG, _T("[G2] Hit Error: Got invalid packet size") );
+				break;
+
+			case G2_PACKET_GROUP_ID:
+				if ( nPacket >= 1 )
+				{
+					m_nGroup = pPacket->ReadByte();
+					if ( m_nGroup < 0 ) m_nGroup = 0;
+					if ( m_nGroup > 7 ) m_nGroup = 7;
+				}
+				else
+					theApp.Message( MSG_DEBUG, _T("[G2] Hit Error: Got invalid group id") );
+				break;
+
+			case G2_PACKET_OBJECT_ID:
+				if ( nPacket >= 4 )
+				{
+					m_nIndex = pPacket->ReadLongBE();
+				}
+				else
+					theApp.Message( MSG_DEBUG, _T("[G2] Hit Error: Got invalid object id") );
+				break;
+
+			case G2_PACKET_CACHED_SOURCES:
+				if ( nPacket >= 2 )
+				{
+					m_nSources = pPacket->ReadShortBE();
+				}
+				else
+					theApp.Message( MSG_DEBUG, _T("[G2] Hit Error: Got invalid cached sources") );
+				break;
+
+			case G2_PACKET_PARTIAL:
+				if ( nPacket >= 4 )
+				{
+					m_nPartial = pPacket->ReadLongBE();
+				}
+				else
+					theApp.Message( MSG_DEBUG, _T("[G2] Hit Error: Got invalid partial") );
+				break;
+
+			case G2_PACKET_COMMENT:
+				{
+					CString strXML = pPacket->ReadString( nPacket ); // Not null terminated
+					if ( strXML.GetLength() != (int)nPacket )
+					{
+						theApp.Message( MSG_DEBUG, _T("[G2] Hit Error: Got too short comment (%s)"), (LPCTSTR)strXML );
+						AfxThrowUserException();
+					}
+					if ( CXMLElement* pComment = CXMLElement::FromString( strXML ) )
+					{
+						m_nRating = -1;
+						_stscanf( pComment->GetAttributeValue( _T("rating") ), _T("%i"), &m_nRating );
+						m_nRating = max( 0, min( 6, m_nRating + 1 ) );
+						m_sComments = pComment->GetValue();
+						m_sComments.Replace( _T("{n}"), _T("\r\n") );
+						delete pComment;
+					}
+					else
+					{
+						theApp.Message( MSG_DEBUG, _T("[G2] Hit Error: Got invalid comment (%s)"), (LPCTSTR)strXML );
+						AfxThrowUserException();
+					}
+				}
+				break;
+
+			case G2_PACKET_PREVIEW_URL:
+				m_bPreview = TRUE;
+				if ( nPacket != 0 )
+				{
+					m_sPreview = pPacket->ReadString( nPacket );
+				}
+				break;
+
+			case G2_PACKET_BOGUS:
 #ifndef LAN_MODE
-			m_bBogus = TRUE;
+				m_bBogus = TRUE;
 #endif // LAN_MODE
-		}
-		else if ( nType == G2_PACKET_COLLECTION )
-		{
-			m_bCollection = TRUE;
+				break;
+
+			case G2_PACKET_COLLECTION:
+				m_bCollection = TRUE;
+				break;
+
+			default:
+				theApp.Message( MSG_DEBUG, _T("[G2] Hit Error: Got unknown type (0x%08I64x +%u)"), nType, pPacket->m_nPosition - 8 );
+			}
+
+			pPacket->m_nPosition = nSkip;
 		}
 		
-		pPacket->m_nPosition = nSkip;
+		if ( ! m_oSHA1 && ! m_oTiger && ! m_oED2K && ! m_oBTH && ! m_oMD5 )
+		{
+			theApp.Message( MSG_DEBUG, _T("[G2] Hit Error: Got no hash") );
+			AfxThrowUserException();
+		}
+		return true;
 	}
-	
-	if ( !m_oSHA1 && !m_oTiger && !m_oED2K && !m_oBTH && !m_oMD5 ) AfxThrowUserException();
+	catch ( CException* pException )
+	{
+		pException->Delete();
+		return false;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////
