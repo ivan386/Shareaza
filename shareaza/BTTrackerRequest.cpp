@@ -199,6 +199,21 @@ void CBTTrackerRequest::OnRun()
 
 void CBTTrackerRequest::Process(bool bRequest)
 {
+	// This is a "single-shot" thread so lock must be acquired.
+	// Lock also needs to be held to prevent the download object from being
+	// deleted, from another thread, while it's being processed
+	CQuickLock oLock( Transfers.m_pSection );
+
+	// Abort if the download object has been deleted after the request was sent
+	// but before a reply was received
+	if( !Downloads.Check( static_cast< CDownload* >( m_pDownload ) ) )
+		return;
+
+	// Abort if the download has been paused after the request was sent but
+	// before a reply was received
+	if ( !m_pDownload->m_bTorrentRequested )
+		return;
+
 	if ( !bRequest )
 	{
 		theApp.Message( MSG_ERROR, IDS_BT_TRACKER_DOWN );
