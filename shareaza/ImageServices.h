@@ -1,7 +1,7 @@
 //
 // ImageServices.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -36,7 +36,7 @@ public:
 
 // Static Load Tool
 	static BOOL	LoadBitmap(CBitmap* pBitmap, UINT nResourceID, LPCTSTR pszType);
-	BOOL IsFileViewable(LPCTSTR pszPath);
+	static BOOL	IsFileViewable(LPCTSTR pszPath);
 
 // Implementation
 protected:

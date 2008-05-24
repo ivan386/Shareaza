@@ -1,7 +1,7 @@
 //
 // ImageServices.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -323,25 +323,14 @@ SAFEARRAY* CImageServices::ImageToArray(CImageFile* pFile)
 
 BOOL CImageServices::IsFileViewable(LPCTSTR pszPath)
 {
-	CString strType = pszPath;
-	
-	int nExtPos = strType.ReverseFind( '.' );
-	if ( nExtPos != -1 ) strType = strType.Mid( nExtPos );
-	
-	ToLower( strType );
+	// Get file extension
+	CString strType( PathFindExtension( pszPath ) );
+	if ( strType.IsEmpty() )
+		return FALSE;
+	strType.MakeLower();
 
-	if ( strType.GetLength() )
-	{
-		// Loads only once and adds
-		PluginInfo service = GetService( pszPath );
-		if ( !service.first )
-			return FALSE;
-
-		if ( Plugins.LookupEnable( service.second, FALSE, strType ) )
-			return TRUE;
-	}
-
-	return FALSE;
+	CLSID oCLSID;
+	return Plugins.LookupCLSID( L"ImageService", strType, oCLSID, FALSE );
 }
 
 /////////////////////////////////////////////////////////////////////////////
