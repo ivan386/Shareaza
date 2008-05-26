@@ -45,7 +45,7 @@ protected:
 	in_addr			m_pLastServer;
 	DWORD			m_nLastServerKey;
 	BOOL			m_bAllServersDone;
-	mutable CCriticalSection	m_pSection;
+	mutable CCriticalSection	m_pSection;	// EDClients Guard
 
 // Operations
 public:

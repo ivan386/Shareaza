@@ -132,9 +132,15 @@ void CEDClients::Clear()
 
 //////////////////////////////////////////////////////////////////////
 // CEDClients push connection setup
+//
+// This function is a callback from the Network thread. Destruction of the
+// object is called from the Tranfers thread.
 
 BOOL CEDClients::PushTo(DWORD nClientID, WORD nClientPort)
 {
+	// Lock this object until we are finished with it
+	CQuickLock oLock( m_pSection );
+
 	CEDClient* pClient = Connect( nClientID, nClientPort, NULL, 0, Hashes::Guid() );
 
 	if ( pClient == NULL )
