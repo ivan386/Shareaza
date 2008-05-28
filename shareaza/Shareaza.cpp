@@ -973,14 +973,16 @@ bool CShareazaApp::IsLogDisabled(WORD nType) const
 {
 	return
 		// Severity filter
-		( ( nType & MSG_SEVERITY_MASK ) > (WORD)Settings.General.LogLevel ) ||
+		( static_cast< DWORD >( nType & MSG_SEVERITY_MASK ) > Settings.General.LogLevel ) ||
 		// Facility filter
 		( ( nType & MSG_FACILITY_MASK ) == MSG_FACILITY_SEARCH && ! Settings.General.SearchLog );
 }
 
 void CShareazaApp::Message(WORD nType, UINT nID, ...) const
 {
-	if ( IsLogDisabled( nType ) ) return;
+	// Check if logging this type of message is enabled
+	if ( IsLogDisabled( nType ) )
+		return;
 
 	// Setup local strings
 	CString strFormat, strTemp;
@@ -1010,7 +1012,9 @@ void CShareazaApp::Message(WORD nType, UINT nID, ...) const
 
 void CShareazaApp::Message(WORD nType, CString strFormat, ...) const
 {
-	if ( IsLogDisabled( nType ) ) return;
+	// Check if logging this type of message is enabled
+	if ( IsLogDisabled( nType ) )
+		return;
 
 	// Setup local strings
 	CString strTemp;
@@ -1047,8 +1051,18 @@ void CShareazaApp::PrintMessage(WORD nType, const CString& strLog) const
 			// Make a copy of the log message into the heap array
 			_tcscpy( pszLog, strLog );
 
-			// Send to the message pump for processing
-			m_pMainWnd->PostMessage( WM_LOG, nType, (LPARAM)pszLog );
+			// Try to send to the message pump for processing
+			if( !m_pMainWnd->PostMessage( WM_LOG, nType, (LPARAM)pszLog ) )
+			{
+				// Sometimes a 10,000 item message queue just isn't enough
+				// Release memory from the heap
+				delete [] pszLog;
+				pszLog = NULL;
+
+				// Add log message to log file if required
+				if ( Settings.General.DebugLog )
+					LogMessage( _T("Overflow: ") + strLog );
+			}
 		}
 	}
 	else if ( Settings.General.DebugLog )

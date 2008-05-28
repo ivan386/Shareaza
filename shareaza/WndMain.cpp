@@ -892,6 +892,7 @@ LRESULT CMainWnd::OnLog(WPARAM wParam, LPARAM lParam)
 
 	// Release memory from the heap
 	delete [] pszLog;	// Allocated by CShareazaApp::PrintMessage()
+	pszLog = NULL;
 
 	return 0;
 }
