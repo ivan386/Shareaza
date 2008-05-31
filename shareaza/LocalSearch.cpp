@@ -116,10 +116,12 @@ INT_PTR CLocalSearch::Execute(INT_PTR nMaximum)
 {
 	if ( m_pBuffer == NULL )
 	{
-		if ( UploadQueues.GetQueueRemaining() == 0 ) return 0;
+		if ( UploadQueues.GetQueueRemaining() == 0 )
+			return 0;
 	}
 
-	if ( nMaximum < 0 ) nMaximum = Settings.Gnutella.MaxHits;
+	if ( nMaximum < 0 )
+		nMaximum = Settings.Gnutella.MaxHits;
 
 	if ( m_pSearch )
 	{
@@ -161,7 +163,8 @@ INT_PTR CLocalSearch::ExecuteSharedFiles(INT_PTR nMaximum)
 	CList< CLibraryFile* >* pFilesCopy = pFiles;
 	CList< CLibraryFile* > pExcludedFiles;
 
-	if ( pFiles == NULL ) return 0;
+	if ( pFiles == NULL )
+		return 0;
 
 	INT_PTR nHits = pFiles->GetCount();
 
@@ -180,7 +183,8 @@ INT_PTR CLocalSearch::ExecuteSharedFiles(INT_PTR nMaximum)
 				nHitsBad++;
 			}
 			nHitsTested++;
-			if ( nHitsTested - nHitsBad == nInThisPacket ) break;
+			if ( nHitsTested - nHitsBad == nInThisPacket )
+				break;
 		}
 
 		if ( nHitsTested - nHitsBad < nInThisPacket )

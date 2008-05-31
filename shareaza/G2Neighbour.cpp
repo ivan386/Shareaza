@@ -303,7 +303,7 @@ BOOL CG2Neighbour::ProcessPackets()
 	CBuffer* pInput = m_pZInput ? m_pZInput : pInputLocked;
 
     BOOL bSuccess = TRUE;
-	for ( ; bSuccess && pInput->m_nLength ; )
+	while ( bSuccess && pInput->m_nLength )
 	{
 		BYTE nInput = *(pInput->m_pBuffer);
 
@@ -317,7 +317,8 @@ BOOL CG2Neighbour::ProcessPackets()
 		BYTE nTypeLen	= ( nInput & 0x38 ) >> 3;
 		BYTE nFlags		= ( nInput & 0x07 );
 
-		if ( (DWORD)pInput->m_nLength < (DWORD)nLenLen + nTypeLen + 2 ) break;
+		if ( pInput->m_nLength < nLenLen + nTypeLen + 2ul )
+			break;
 
 		DWORD nLength = 0;
 
@@ -335,7 +336,8 @@ BOOL CG2Neighbour::ProcessPackets()
 		{
 			BYTE* pLenIn	= pInput->m_pBuffer + 1;
 			BYTE* pLenOut	= (BYTE*)&nLength;
-			for ( BYTE nLenCnt = nLenLen ; nLenCnt-- ; ) *pLenOut++ = *pLenIn++;
+			for ( BYTE nLenCnt = nLenLen ; nLenCnt-- ; )
+				*pLenOut++ = *pLenIn++;
 		}
 
 		if ( nLength >= Settings.Gnutella1.MaximumPacket )
@@ -344,7 +346,8 @@ BOOL CG2Neighbour::ProcessPackets()
 			return FALSE;
 		}
 
-		if ( (DWORD)pInput->m_nLength < (DWORD)nLength + nLenLen + nTypeLen + 2 ) break;
+		if ( pInput->m_nLength < nLength + nLenLen + nTypeLen + 2ul )
+			break;
 
 		CG2Packet* pPacket = CG2Packet::New( pInput->m_pBuffer );
 
@@ -364,7 +367,8 @@ BOOL CG2Neighbour::ProcessPackets()
 		pInput->Remove( nLength + nLenLen + nTypeLen + 2 );
 	}
 
-	if ( bSuccess ) return TRUE;
+	if ( bSuccess )
+		return TRUE;
 
 	Close( 0 );
 	return FALSE;
@@ -381,7 +385,8 @@ BOOL CG2Neighbour::OnPacket(CG2Packet* pPacket)
 
 	pPacket->SmartDump( &m_pHost, FALSE, FALSE, m_nUnique );
 
-	if ( Network.RoutePacket( pPacket ) ) return TRUE;
+	if ( Network.RoutePacket( pPacket ) )
+		return TRUE;
 
 	switch( pPacket->m_nType )
 	{
@@ -1242,7 +1247,8 @@ BOOL CG2Neighbour::OnQuery(CG2Packet* pPacket)
 		pLocal.Execute();
 	}
 	
-	if ( m_nNodeType == ntLeaf ) Send( Neighbours.CreateQueryWeb( pSearch->m_oGUID, this ), TRUE, FALSE );
+	if ( m_nNodeType == ntLeaf )
+		Send( Neighbours.CreateQueryWeb( pSearch->m_oGUID, this ), TRUE, FALSE );
 	
 	delete pSearch;
 	Statistics.Current.Gnutella2.Queries++;

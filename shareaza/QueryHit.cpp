@@ -334,8 +334,10 @@ CQueryHit* CQueryHit::FromPacket(CG2Packet* pPacket, int* pnHops)
 				if ( bCompound )
 				{
 					CQueryHit* pHit = new CQueryHit( PROTOCOL_G2 );
-					if ( pFirstHit ) pLastHit->m_pNext = pHit;
-					else pFirstHit = pHit;
+					if ( pFirstHit )
+						pLastHit->m_pNext = pHit;
+					else
+						pFirstHit = pHit;
 					pLastHit = pHit;
 					if ( ! pHit->ReadG2Packet( pPacket, nLength ) )
 						AfxThrowUserException();
@@ -458,7 +460,8 @@ CQueryHit* CQueryHit::FromPacket(CG2Packet* pPacket, int* pnHops)
 				{
 					CString strVendor = pPacket->ReadString( 4 );
 					pVendor = VendorCache.Lookup( strVendor );
-					if ( ! pVendor ) pVendor = VendorCache.m_pNull;
+					if ( !pVendor )
+						pVendor = VendorCache.m_pNull;
 				}
 				else
 					theApp.Message( MSG_DEBUG, _T("[G2] Hit Error: Got vendor with invalid length (%u bytes)"), nLength );
@@ -471,7 +474,8 @@ CQueryHit* CQueryHit::FromPacket(CG2Packet* pPacket, int* pnHops)
 					while ( pszXML && *pszXML )
 					{
 						CXMLElement* pPart = CXMLElement::FromString( pszXML, TRUE );
-						if ( ! pPart ) break;
+						if ( !pPart )
+							break;
 						
 						if ( ! pXML ) pXML = new CXMLElement( NULL, _T("Metadata") );
 						pXML->AddElement( pPart );
@@ -547,18 +551,21 @@ CQueryHit* CQueryHit::FromPacket(CG2Packet* pPacket, int* pnHops)
 		}
 
 		BYTE nHops = pPacket->ReadByte() + 1;
-		if ( pnHops ) *pnHops = nHops;
+		if ( pnHops )
+			*pnHops = nHops;
 		
 		pPacket->Read( oSearchID );
 		oSearchID.validate();
 		
-		if ( ! bPush ) bPush = ( nPort == 0 || Network.IsFirewalledAddress( &nAddress ) );
+		if ( !bPush )
+			bPush = ( nPort == 0 || Network.IsFirewalledAddress( &nAddress ) );
 		
 		DWORD nIndex = 0;
 		
 		for ( pLastHit = pFirstHit ; pLastHit ; pLastHit = pLastHit->m_pNext, nIndex++ )
 		{
-			if ( nGroupState[ pLastHit->m_nGroup ][0] == FALSE ) pLastHit->m_nGroup = 0;
+			if ( nGroupState[ pLastHit->m_nGroup ][0] == FALSE )
+				pLastHit->m_nGroup = 0;
 			
 			pLastHit->m_oSearchID	= oSearchID;
 			pLastHit->m_oClientID	= oClientID;
@@ -634,12 +641,15 @@ CQueryHit* CQueryHit::FromPacket(CG2Packet* pPacket, int* pnHops)
 	catch ( CException* pException )
 	{
 		pException->Delete();
-		if ( pXML ) delete pXML;
-		if ( pFirstHit ) pFirstHit->Delete();
+		if ( pXML )
+			delete pXML;
+		if ( pFirstHit )
+			pFirstHit->Delete();
 		return NULL;
 	}
 	
-	if ( pXML ) delete pXML;
+	if ( pXML )
+		delete pXML;
 	
 	return pFirstHit;
 }

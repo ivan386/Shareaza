@@ -87,12 +87,22 @@ BOOL CXMLNode::ParseIdentifier(LPCTSTR& pszBase, CString& strIdentifier)
 	LPCTSTR pszXML = pszBase;
 	int nParse = 0;
 
-	for ( ; *pszXML == ' ' || *pszXML == '\t' || *pszXML == '\r' || *pszXML == '\n' ; pszXML++, nParse++ );
-	if ( ! *pszXML ) return FALSE;
+	while ( *pszXML == ' ' || *pszXML == '\t' || *pszXML == '\r' || *pszXML == '\n' )
+	{
+		pszXML++;
+		nParse++;
+	}
+	if ( !*pszXML )
+		return FALSE;
 
 	int nIdentifier = 0;
-	for ( ; *pszXML && ( _istalnum( *pszXML ) || *pszXML == ':' || *pszXML == '_' || *pszXML == '-' ) ; pszXML++, nIdentifier++ );
-	if ( ! nIdentifier ) return FALSE;
+	while ( *pszXML && ( _istalnum( *pszXML ) || *pszXML == ':' || *pszXML == '_' || *pszXML == '-' ) )
+	{
+		pszXML++;
+		nIdentifier++;
+	}
+	if ( !nIdentifier )
+		return FALSE;
 
 	pszBase += nParse;
 	_tcsncpy( strIdentifier.GetBuffer( nIdentifier ), pszBase, nIdentifier );
@@ -411,8 +421,10 @@ void CXMLElement::DeleteAllAttributes()
 CString CXMLElement::ToString(BOOL bHeader, BOOL bNewline)
 {
 	CString strXML;
-	if ( bHeader ) strXML = _T("<?xml version=\"1.0\"?>");
-	if ( bNewline ) strXML += _T("\r\n");
+	if ( bHeader )
+		strXML = _T("<?xml version=\"1.0\"?>");
+	if ( bNewline )
+		strXML += _T("\r\n");
 	ToString( strXML, bNewline );
 	ASSERT( strXML.GetLength() == int( _tcslen(strXML) ) );
 	return strXML;
@@ -467,42 +479,48 @@ CXMLElement* CXMLElement::FromString(LPCTSTR pszXML, BOOL bHeader)
 		if ( ParseMatch( pszXML, _T("<?xml version=\"") ) )
 		{
 			pszElement = _tcsstr( pszXML, _T("?>") );
-			if ( ! pszElement ) return FALSE;
+			if ( !pszElement )
+				return FALSE;
 			pszXML = pszElement + 2;
 		}
-		else if ( bHeader ) return NULL;
+		else if ( bHeader )
+			return NULL;
 
 		while ( ParseMatch( pszXML, _T("<!--") ) )
 		{
 			pszElement = _tcsstr( pszXML, _T("-->") );
-			if ( ! pszElement || *pszElement != '-' ) return FALSE;
+			if ( !pszElement || *pszElement != '-' )
+				return FALSE;
 			pszXML = pszElement + 3;
 		}
 
 		while ( ParseMatch( pszXML, _T("<?xml") ) )
 		{
 			pszElement = _tcsstr( pszXML, _T("?>") );
-			if ( ! pszElement ) return FALSE;
+			if ( !pszElement )
+				return FALSE;
 			pszXML = pszElement + 2;
 		}
 
 		if ( ParseMatch( pszXML, _T("<!DOCTYPE") ) )
 		{
 			pszElement = _tcsstr( pszXML, _T(">") );
-			if ( ! pszElement ) return FALSE;
+			if ( !pszElement )
+				return FALSE;
 			pszXML = pszElement + 1;
 		}
 
 		while ( ParseMatch( pszXML, _T("<!--") ) )
 		{
 			pszElement = _tcsstr( pszXML, _T("-->") );
-			if ( ! pszElement || *pszElement != '-' ) return FALSE;
+			if ( !pszElement || *pszElement != '-' )
+				return FALSE;
 			pszXML = pszElement + 3;
 		}
 
 		pElement = new CXMLElement();
 
-		if ( ! pElement->ParseString( pszXML ) )
+		if ( !pElement->ParseString( pszXML ) )
 		{
 			delete pElement;
 			pElement = NULL;
@@ -520,9 +538,11 @@ CXMLElement* CXMLElement::FromString(LPCTSTR pszXML, BOOL bHeader)
 
 BOOL CXMLElement::ParseString(LPCTSTR& strXML)
 {
-	if ( ! ParseMatch( strXML, _T("<") ) ) return FALSE;
+	if ( !ParseMatch( strXML, _T("<") ) )
+		return FALSE;
 
-	if ( ! ParseIdentifier( strXML, m_sName ) ) return FALSE;
+	if ( !ParseIdentifier( strXML, m_sName ) )
+		return FALSE;
 
 #ifdef _DEBUG
 	LPCTSTR pszEnd = strXML + _tcslen( strXML );
@@ -535,7 +555,9 @@ BOOL CXMLElement::ParseString(LPCTSTR& strXML)
 			return ParseMatch( strXML, _T(">") );
 		}
 
-		if ( ! *strXML ) return FALSE;
+		if ( !*strXML )
+			return FALSE;
+
 		ASSERT( strXML < pszEnd );
 
 		CXMLAttribute* pAttribute = new CXMLAttribute( this );
@@ -566,17 +588,22 @@ BOOL CXMLElement::ParseString(LPCTSTR& strXML)
 
 	for (;;)
 	{
-		if ( ! *strXML ) return FALSE;
+		if ( !*strXML )
+			return FALSE;
+
 		ASSERT( strXML < pszEnd );
 
 		LPCTSTR pszElement = _tcschr( strXML, '<' );
-		if ( ! pszElement || *pszElement != '<' ) return FALSE;
+		if ( !pszElement || *pszElement != '<' )
+			return FALSE;
 
 		if ( ParseMatch( strXML, _T("<![CDATA[") ) )
 		{
 			pszElement = _tcsstr( strXML, _T("]]>") );
-			if ( ! pszElement || *pszElement != ']' ) return FALSE;
-			if ( m_sValue.GetLength() && m_sValue.Right( 1 ) != ' ' ) m_sValue += ' ';
+			if ( !pszElement || *pszElement != ']' )
+				return FALSE;
+			if ( m_sValue.GetLength() && m_sValue.Right( 1 ) != ' ' )
+				m_sValue += ' ';
 			m_sValue += StringToValue( strXML, (int)( pszElement - strXML ) );
 			pszElement += 3;
 			strXML = pszElement;
@@ -584,10 +611,12 @@ BOOL CXMLElement::ParseString(LPCTSTR& strXML)
 
 		if ( pszElement > strXML )
 		{
-			if ( m_sValue.GetLength() && m_sValue.Right( 1 ) != ' ' ) m_sValue += ' ';
+			if ( m_sValue.GetLength() && m_sValue.Right( 1 ) != ' ' )
+				m_sValue += ' ';
 			m_sValue += StringToValue( strXML, (int)( pszElement - strXML ) );
 			ASSERT( strXML == pszElement );
-			if ( strXML != pszElement ) return FALSE;
+			if ( strXML != pszElement )
+				return FALSE;
 		}
 
 		if ( ParseMatch( strXML, strClose ) )
@@ -597,7 +626,8 @@ BOOL CXMLElement::ParseString(LPCTSTR& strXML)
 		else if ( ParseMatch( strXML, _T("<!--") ) )
 		{
 			pszElement = _tcsstr( strXML, _T("-->") );
-			if ( ! pszElement || *pszElement != '-' ) return FALSE;
+			if ( !pszElement || *pszElement != '-' )
+				return FALSE;
 			strXML = pszElement + 3;
 		}
 		else
@@ -953,13 +983,16 @@ void CXMLAttribute::ToString(CString& strXML)
 
 BOOL CXMLAttribute::ParseString(LPCTSTR& strXML)
 {
-	if ( ! ParseIdentifier( strXML, m_sName ) ) return FALSE;
-	if ( ! ParseMatch( strXML, _T("=") ) ) return FALSE;
+	if ( !ParseIdentifier( strXML, m_sName ) )
+		return FALSE;
+	if ( !ParseMatch( strXML, _T("=") ) )
+		return FALSE;
 
 	if ( ParseMatch( strXML, _T("\"") ) )
 	{
 		LPCTSTR pszQuote = _tcschr( strXML,  '\"' );
-		if ( ! pszQuote || *pszQuote != '\"' ) return FALSE;
+		if ( !pszQuote || *pszQuote != '\"' )
+			return FALSE;
 
 		m_sValue = StringToValue( strXML, (int)( pszQuote - strXML ) );
 
@@ -968,7 +1001,8 @@ BOOL CXMLAttribute::ParseString(LPCTSTR& strXML)
 	else if ( ParseMatch( strXML, _T("'") ) )
 	{
 		LPCTSTR pszQuote = _tcschr( strXML,  '\'' );
-		if ( ! pszQuote || *pszQuote != '\'' ) return FALSE;
+		if ( !pszQuote || *pszQuote != '\'' )
+			return FALSE;
 
 		m_sValue = StringToValue( strXML, (int)( pszQuote - strXML ) );
 

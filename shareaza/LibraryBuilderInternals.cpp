@@ -57,94 +57,118 @@ BOOL CLibraryBuilderInternals::ExtractMetadata(DWORD nIndex, const CString& strP
 
 	if ( strType == _T(".mp3") )
 	{
-		if ( ! Settings.Library.ScanMP3 ) return FALSE;
+		if ( !Settings.Library.ScanMP3 )
+			return FALSE;
 		if ( Settings.Library.PreferAPETags )
 		{
-			if ( ReadAPE( nIndex, hFile, true ) ) return TRUE;
-			if ( ReadID3v2( nIndex, hFile ) ) return TRUE;
+			if ( ReadAPE( nIndex, hFile, true ) )
+				return TRUE;
+			if ( ReadID3v2( nIndex, hFile ) )
+				return TRUE;
 		}
 		else
 		{
-			if ( ReadID3v2( nIndex, hFile ) ) return TRUE;
-			if ( ReadAPE( nIndex, hFile, true ) ) return TRUE;
+			if ( ReadID3v2( nIndex, hFile ) )
+				return TRUE;
+			if ( ReadAPE( nIndex, hFile, true ) )
+				return TRUE;
 		}
-		if ( ReadID3v1( nIndex, hFile ) ) return TRUE;
-		if ( ReadMP3Frames( nIndex, hFile ) ) return TRUE;
+		if ( ReadID3v1( nIndex, hFile ) )
+			return TRUE;
+		if ( ReadMP3Frames( nIndex, hFile ) )
+			return TRUE;
 		return CLibraryBuilder::SubmitCorrupted( nIndex );
 	}
 	else if ( strType == _T(".exe") || strType == _T(".dll") )
 	{
-		if ( ! Settings.Library.ScanEXE ) return FALSE;
+		if ( !Settings.Library.ScanEXE )
+			return FALSE;
 		return ReadVersion( nIndex, strPath );
 	}
 	else if ( strType == _T(".msi") )
 	{
-		if ( ! Settings.Library.ScanMSI ) return FALSE;
+		if ( !Settings.Library.ScanMSI )
+			return FALSE;
 		return ReadMSI( nIndex, strPath );
 	}
 	else if ( strType == _T(".asf") || strType == _T(".wma") || strType == _T(".wmv") )
 	{
-		if ( ! Settings.Library.ScanASF ) return FALSE;
+		if ( !Settings.Library.ScanASF )
+			return FALSE;
 		return ReadASF( nIndex, hFile );
 	}
 	else if ( strType == _T(".avi") )
 	{
-		if ( ! Settings.Library.ScanAVI ) return FALSE;
+		if ( !Settings.Library.ScanAVI )
+			return FALSE;
 		return ReadAVI( nIndex, hFile );
 	}
 	else if ( strType == _T(".mpg") || strType == _T(".mpeg") )
 	{
-		if ( ! Settings.Library.ScanMPEG ) return FALSE;
+		if ( !Settings.Library.ScanMPEG )
+			return FALSE;
 		return ReadMPEG( nIndex, hFile );
 	}
 	else if ( strType == _T(".ogg") )
 	{
-		if ( ! Settings.Library.ScanOGG ) return FALSE;
+		if ( !Settings.Library.ScanOGG )
+			return FALSE;
 		return ReadOGG( nIndex, hFile );
 	}
 	else if ( strType == _T(".ape") || strType == _T(".mac") || strType == _T(".apl") )
 	{
-		if ( ! Settings.Library.ScanAPE ) return FALSE;
+		if ( !Settings.Library.ScanAPE )
+			return FALSE;
 		return ReadAPE( nIndex, hFile );
 	}
 	else if ( strType == _T(".mpc") || strType == _T(".mpp") || strType == _T(".mp+") )
 	{
-		if ( ! Settings.Library.ScanMPC ) return FALSE;
+		if ( !Settings.Library.ScanMPC )
+			return FALSE;
 		if ( Settings.Library.PreferAPETags )
 		{
-			if ( ReadMPC( nIndex, hFile ) ) return TRUE;
-			if ( ReadID3v2( nIndex, hFile ) ) return TRUE;
+			if ( ReadMPC( nIndex, hFile ) )
+				return TRUE;
+			if ( ReadID3v2( nIndex, hFile ) )
+				return TRUE;
 		}
 		else
 		{
-			if ( ReadID3v2( nIndex, hFile ) ) return TRUE;
-			if ( ReadMPC( nIndex, hFile ) ) return TRUE;
+			if ( ReadID3v2( nIndex, hFile ) )
+				return TRUE;
+			if ( ReadMPC( nIndex, hFile ) )
+				return TRUE;
 		}
 		return ReadID3v1( nIndex, hFile );
 	}
 	else if ( strType == _T(".jpg") || strType == _T(".jpeg") )
 	{
-		if ( ! Settings.Library.ScanImage ) return FALSE;
+		if ( !Settings.Library.ScanImage )
+			return FALSE;
 		return ReadJPEG( nIndex, hFile );
 	}
 	else if ( strType == _T(".gif") )
 	{
-		if ( ! Settings.Library.ScanImage ) return FALSE;
+		if ( !Settings.Library.ScanImage )
+			return FALSE;
 		return ReadGIF( nIndex, hFile );
 	}
 	else if ( strType == _T(".png") )
 	{
-		if ( ! Settings.Library.ScanImage ) return FALSE;
+		if ( !Settings.Library.ScanImage )
+			return FALSE;
 		return ReadPNG( nIndex, hFile );
 	}
 	else if ( strType == _T(".bmp") )
 	{
-		if ( ! Settings.Library.ScanImage ) return FALSE;
+		if ( !Settings.Library.ScanImage )
+			return FALSE;
 		return ReadBMP( nIndex, hFile );
 	}
 	else if ( strType == _T(".pdf") )
 	{
-		if ( ! Settings.Library.ScanPDF ) return FALSE;
+		if ( !Settings.Library.ScanPDF )
+			return FALSE;
 		return ReadPDF( nIndex, hFile, strPath );
 	}
 	else if ( strType == _T(".co") || strType == _T(".collection") )
@@ -153,7 +177,8 @@ BOOL CLibraryBuilderInternals::ExtractMetadata(DWORD nIndex, const CString& strP
 	}
 	else if ( strType == _T(".chm") )
 	{
-		if ( ! Settings.Library.ScanCHM ) return FALSE;
+		if ( !Settings.Library.ScanCHM )
+			return FALSE;
 		return ReadCHM( nIndex, hFile, strPath );
 	}
 	else if ( strType == _T(".torrent") )
