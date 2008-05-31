@@ -839,6 +839,13 @@ void CXMLElement::Serialize(CArchive& ar)
 			CXMLAttribute* pAttribute = new CXMLAttribute( this );
 			pAttribute->Serialize( ar );
 
+			// Skip attribute if name is missing
+			if ( pAttribute->m_sName.IsEmpty() )
+			{
+				delete pAttribute;
+				continue;
+			}
+
 			CString strName( pAttribute->m_sName );
 
 			// Convert to lowercase with CLowerCaseTable
