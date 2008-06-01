@@ -536,7 +536,7 @@ BOOL CLibraryBuilderInternals::ReadID3v2(DWORD nIndex, HANDLE hFile)
 		{
 			CopyID3v2Field( pXML, _T("origYear"), pBuffer, nFrameSize );
 		}
-		// MusicBrainz.org stuff goes here
+		// User defined text information frame
 		else if ( strcmp( szFrameTag, "TXXX" ) == 0 )
 		{
 			CopyID3v2Field( pXML, L"", pBuffer, nFrameSize );
@@ -728,6 +728,11 @@ BOOL CLibraryBuilderInternals::CopyID3v2Field(CXMLElement* pXML, LPCTSTR pszAttr
 					pXML->AddAttribute( L"mbpuid", strValue );
 
 				return TRUE;
+			}
+			else
+			{
+				// Unsupported user text frame
+				return FALSE;
 			}
 		}
 	}
