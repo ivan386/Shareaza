@@ -150,6 +150,7 @@ public:
 	BOOL				InternalURI(LPCTSTR pszURI);
 	void				PrintMessage(WORD nType, const CString& strLog) const;
 	void				LogMessage(LPCTSTR strLog) const;
+	void				SplashStep(LPCTSTR pszMessage = NULL, int nMax = 0, bool bClosing = false);
 
 	CString				GetCountryCode(IN_ADDR pAddress) const;
 	CString				GetCountryName(IN_ADDR pAddress) const;
@@ -172,6 +173,7 @@ public:
 	static BOOL			OpenURL(LPCTSTR lpszFileName, BOOL bDoIt, BOOL bSilent = FALSE);
 
 protected:
+	CSplashDlg*					m_dlgSplash;
 	mutable CCriticalSection	m_csMessage;
 	CShareazaCommandLineInfo	m_ocmdInfo;
 

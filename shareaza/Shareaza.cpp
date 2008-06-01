@@ -195,6 +195,7 @@ CShareazaApp::CShareazaApp()
 , m_hGeoIP( NULL )
 , m_pGeoIP( NULL )
 , m_pFontManager( NULL )
+, m_dlgSplash( NULL )
 {
 	ZeroMemory( m_nVersion, sizeof( m_nVersion ) );
 	ZeroMemory( m_pBTVersion, sizeof( m_pBTVersion ) );
@@ -326,10 +327,7 @@ BOOL CShareazaApp::InitInstance()
 		+ ( Settings.Connection.EnableFirewallException ? 1 : 0 )
 		+ ( Settings.Connection.EnableUPnP && !Settings.Live.FirstRun ? 1 : 0 );
 
-	CSplashDlg* dlgSplash = m_ocmdInfo.m_bNoSplash ? NULL : new CSplashDlg(
-		nSplashSteps, false );
-
-	SplashStep( dlgSplash, L"Winsock" );
+	SplashStep( L"Winsock", ( m_ocmdInfo.m_bNoSplash ? 0 : nSplashSteps ), false );
 		WSADATA wsaData;
 		for ( int i = 1; i <= 2; i++ )
 		{
@@ -345,37 +343,37 @@ BOOL CShareazaApp::InitInstance()
 	if ( Settings.General.GUIMode != GUI_WINDOWED && Settings.General.GUIMode != GUI_TABBED && Settings.General.GUIMode != GUI_BASIC )
 		Settings.General.GUIMode = GUI_BASIC;
 
-	SplashStep( dlgSplash, L"Shareaza Database" );
+	SplashStep( L"Shareaza Database" );
 		CThumbCache::InitDatabase();
-	SplashStep( dlgSplash, L"P2P URIs" );
+	SplashStep( L"P2P URIs" );
 		CShareazaURL::Register( TRUE );
-	SplashStep( dlgSplash, L"Shell Icons" );
+	SplashStep( L"Shell Icons" );
 		ShellIcons.Clear();
-	SplashStep( dlgSplash, L"Metadata Schemas" );
+	SplashStep( L"Metadata Schemas" );
 		SchemaCache.Load();
-	SplashStep( dlgSplash, L"Vendor Data" );
+	SplashStep( L"Vendor Data" );
 		VendorCache.Load();
-	SplashStep( dlgSplash, L"Profile" );
+	SplashStep( L"Profile" );
 		MyProfile.Load();
-	SplashStep( dlgSplash, L"Query Manager" );
+	SplashStep( L"Query Manager" );
 		QueryHashMaster.Create();
-	SplashStep( dlgSplash, L"Host Cache" );
+	SplashStep( L"Host Cache" );
 		HostCache.Load();
-	SplashStep( dlgSplash, L"Discovery Services" );
+	SplashStep( L"Discovery Services" );
 		DiscoveryServices.Load();
-	SplashStep( dlgSplash, L"Security Services" );
+	SplashStep( L"Security Services" );
 		Security.Load();
 		AdultFilter.Load();
 		MessageFilter.Load();
-	SplashStep( dlgSplash, L"Scheduler" );
+	SplashStep( L"Scheduler" );
 		Schedule.Load();
-	SplashStep( dlgSplash, L"Rich Documents" );
+	SplashStep( L"Rich Documents" );
 		Emoticons.Load();
 		Flags.Load();
 
 	if ( Settings.Connection.EnableFirewallException )
 	{
-		SplashStep( dlgSplash, L"Windows Firewall Setup" );
+		SplashStep( L"Windows Firewall Setup" );
 		CFirewall firewall;
 		if ( firewall.AccessWindowsFirewall() && firewall.AreExceptionsAllowed() )
 		{
@@ -389,7 +387,7 @@ BOOL CShareazaApp::InitInstance()
 	// If it is the first run we will run the UPnP discovery only in the QuickStart Wizard
 	if ( Settings.Connection.EnableUPnP && ! Settings.Live.FirstRun )
 	{
-		SplashStep( dlgSplash, L"Firewall/Router Setup" );
+		SplashStep( L"Firewall/Router Setup" );
 		try
 		{
 			m_pUPnPFinder.reset( new CUPnPFinder );
@@ -400,7 +398,7 @@ BOOL CShareazaApp::InitInstance()
 		catch ( CException* e ) { e->Delete(); }
 	}
 
-	SplashStep( dlgSplash, L"GUI" );
+	SplashStep( L"GUI" );
 		if ( m_ocmdInfo.m_bTray ) WriteProfileInt( _T("Windows"), _T("CMainWnd.ShowCmd"), 0 );
 		new CMainWnd();
 		CoolMenu.EnableHook();
@@ -411,25 +409,25 @@ BOOL CShareazaApp::InitInstance()
 		else
 		{
 			m_pMainWnd->ShowWindow( SW_SHOW );
-			if ( dlgSplash ) 
-				dlgSplash->Topmost();
+			if ( m_dlgSplash )
+				m_dlgSplash->Topmost();
 			m_pMainWnd->UpdateWindow();
 		}
 
 	// From this point translations are available and LoadString returns correct strings
-	SplashStep( dlgSplash, L"Download Manager" ); 
+	SplashStep( L"Download Manager" ); 
 		Downloads.Load();
-	SplashStep( dlgSplash, L"Upload Manager" );
+	SplashStep( L"Upload Manager" );
 		UploadQueues.Load();
-	SplashStep( dlgSplash, L"Library" );
+	SplashStep( L"Library" );
 		Library.Load();
-	SplashStep( dlgSplash, L"Upgrade Manager" );
+	SplashStep( L"Upgrade Manager" );
 		VersionChecker.Start(); 
 
 	pCursor.Restore();
 
-	if ( dlgSplash )
-		dlgSplash->Hide();
+	SplashStep();
+
 	m_bLive = TRUE;
 
 	ProcessShellCommand( m_ocmdInfo );
@@ -446,35 +444,28 @@ int CShareazaApp::ExitInstance()
 	{
 		CWaitCursor pCursor;
 		
-		int nSplashSteps = 6
-			+ ( Settings.Connection.DeleteFirewallException ? 1 : 0 )
-			+ ( m_pUPnPFinder ? 1 : 0 )
-			+ ( m_bLive ? 1 : 0 );
-		CSplashDlg* dlgSplash = new CSplashDlg( nSplashSteps, true );
-
-		SplashStep( dlgSplash, L"Closing Server Processes" );
 		DDEServer.Close();
 		IEProtocol.Close();
 
-		SplashStep( dlgSplash, L"Disconnecting" );
+		SplashStep( L"Disconnecting" );
 		VersionChecker.Stop();
 		DiscoveryServices.Stop();
 		Network.Disconnect();
 
-		SplashStep( dlgSplash, L"Stopping Library Tasks" );
+		SplashStep( L"Stopping Library Tasks" );
 		Library.StopThread();
 
-		SplashStep( dlgSplash, L"Stopping Transfers" );	
+		SplashStep( L"Stopping Transfers" );	
 		Transfers.StopThread();
 		Downloads.CloseTransfers();
 
-		SplashStep( dlgSplash, L"Clearing Clients" );	
+		SplashStep( L"Clearing Clients" );	
 		Uploads.Clear( FALSE );
 		EDClients.Clear();
 
 		if ( Settings.Connection.DeleteFirewallException )
 		{
-			SplashStep( dlgSplash, L"Closing Windows Firewall Access" );	
+			SplashStep( L"Closing Windows Firewall Access" );	
 			CFirewall firewall;
 			if ( firewall.AccessWindowsFirewall() )
 			{
@@ -485,7 +476,7 @@ int CShareazaApp::ExitInstance()
 
 		if ( m_pUPnPFinder )
 		{
-			SplashStep( dlgSplash, L"Closing Firewall/Router Access" );
+			SplashStep( L"Closing Firewall/Router Access" );
 			m_pUPnPFinder->StopAsyncFind();
 			if ( Settings.Connection.DeleteUPnPPorts )
 				m_pUPnPFinder->DeletePorts();
@@ -494,7 +485,7 @@ int CShareazaApp::ExitInstance()
 
 		if ( m_bLive )
 		{
-			SplashStep( dlgSplash, L"Saving" );
+			SplashStep( L"Saving" );
 			Downloads.Save();
 			DownloadGroups.Save();
 			Library.Save();
@@ -505,15 +496,14 @@ int CShareazaApp::ExitInstance()
 			Settings.Save( TRUE );
 		}
 
-		SplashStep( dlgSplash, L"Finalizing" );
+		SplashStep( L"Finalizing" );
 		BTClients.Clear();
 		Downloads.Clear( TRUE );
 		Library.Clear();
 		CoolMenu.Clear();
 		Skin.Clear();
 
-		if ( dlgSplash )
-			dlgSplash->Hide();
+		SplashStep();
 
 		CLibraryBuilderPlugins::Cleanup();
 		Plugins.Clear();
@@ -545,6 +535,23 @@ int CShareazaApp::ExitInstance()
 	if ( m_pMutex != NULL ) CloseHandle( m_pMutex );
 
 	return CWinApp::ExitInstance();
+}
+
+void CShareazaApp::SplashStep(LPCTSTR pszMessage, int nMax, bool bClosing)
+{
+	if ( ! pszMessage )
+	{
+		if ( m_dlgSplash )
+		{
+			m_dlgSplash->Hide();
+			m_dlgSplash = NULL;
+		}
+	}
+	else if ( ! m_dlgSplash && nMax )
+		m_dlgSplash = new CSplashDlg( nMax, bClosing );
+
+	if ( m_dlgSplash )
+		m_dlgSplash->Step( pszMessage );
 }
 
 void CShareazaApp::WinHelp(DWORD /*dwData*/, UINT /*nCmd*/) 
@@ -1824,6 +1831,7 @@ public:
 		m_pfnThreadProcExt( pfnThreadProc )
 	{
 	}
+
 	virtual ~CRazaThread()
 	{
 		Remove( m_hThread );
@@ -1943,11 +1951,12 @@ HANDLE BeginThread(LPCSTR pszName, AFX_THREADPROC pfnThreadProc,
 		if ( pThread->CreateThread( dwCreateFlags | CREATE_SUSPENDED, nStackSize,
 			lpSecurityAttrs ) )
 		{
+			CRazaThread::Add( pThread, pszName );
+
 			VERIFY( pThread->SetThreadPriority( nPriority ) );
+
 			if ( ! ( dwCreateFlags & CREATE_SUSPENDED ) )
 				VERIFY( pThread->ResumeThread() != (DWORD)-1 );
-
-			CRazaThread::Add( pThread, pszName );
 
 			return pThread->m_hThread;
 		}

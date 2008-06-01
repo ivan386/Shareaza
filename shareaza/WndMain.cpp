@@ -318,6 +318,7 @@ BOOL CMainWnd::OnCreateClient(LPCREATESTRUCT lpcs, CCreateContext* /* pContext *
 CMainWnd::~CMainWnd()
 {
 	theApp.m_pSafeWnd = NULL;
+	theApp.m_pMainWnd = NULL;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -515,6 +516,13 @@ int CMainWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 void CMainWnd::OnClose() 
 {
 	CWaitCursor pCursor;
+
+	int nSplashSteps = 6
+		+ ( Settings.Connection.DeleteFirewallException ? 1 : 0 )
+		+ ( theApp.m_pUPnPFinder ? 1 : 0 )
+		+ ( theApp.m_bLive ? 1 : 0 );
+
+	theApp.SplashStep( L"Closing Server Processes", nSplashSteps, true );
 	
 	theApp.m_pSafeWnd		= NULL;
 	m_pWindows.m_bClosing	= TRUE;

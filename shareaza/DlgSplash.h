@@ -1,7 +1,7 @@
 //
 // DlgSplash.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -58,9 +58,3 @@ protected:
 
 	DECLARE_MESSAGE_MAP()
 };
-
-inline void SplashStep(CSplashDlg* dlg, LPCTSTR pszMessage)
-{
-	if ( dlg != NULL )
-		dlg->Step( pszMessage );
-}
