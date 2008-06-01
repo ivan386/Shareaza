@@ -61,9 +61,11 @@ protected:
 
 // Sync Operations
 public:
-	inline void		Update()
+	inline void		Update(bool bForce=false)
 	{
 		InterlockedExchange( (volatile LONG*)&m_nUpdateCookie, GetTickCount() );
+		if ( bForce )
+			InterlockedExchange( (volatile LONG*)&m_nForcedUpdateCookie, 0 );
 	}
 	inline void		Wakeup()
 	{

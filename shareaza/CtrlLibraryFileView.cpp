@@ -531,7 +531,7 @@ void CLibraryFileView::OnLibraryDelete()
 			}
 		}
 		
-		Library.Update();
+		Library.Update( true );
 	}
 }
 

@@ -79,7 +79,7 @@ void CLibraryFolder::CloseMonitor()
 	{
 		FindCloseChangeNotification( m_hMonitor );
 		m_hMonitor = INVALID_HANDLE_VALUE;
-		m_bForceScan = TRUE;
+		m_bForceScan = FALSE;
 	}
 }
 

@@ -528,11 +528,19 @@ BOOL CLibrary::ThreadScan()
 		return FALSE;
 	}
 
-	BOOL bChanged = FALSE;
+	BOOL bForcedScan = FALSE, bPeriodicScan = FALSE;
 	DWORD tNow = GetTickCount();
-	BOOL bPeriodicScan = ( m_nScanTime < tNow - Settings.Library.WatchFoldersTimeout * 1000 );
-	BOOL bForcedScan = ( m_nForcedUpdateCookie < m_nUpdateCookie ) &&
-		( m_nUpdateCookie > tNow - Settings.Library.WatchFoldersTimeout * 1000 );
+
+	if ( !Settings.Library.WatchFolders )
+	{
+		bForcedScan = ( m_nForcedUpdateCookie == 0 );
+	}
+	else
+	{
+		bPeriodicScan = ( m_nScanTime < tNow - Settings.Library.WatchFoldersTimeout * 1000 );
+	}
+
+	BOOL bChanged = FALSE;
 
 	bChanged = LibraryFolders.ThreadScan( &m_bThread, ( bPeriodicScan || bForcedScan ) );
 
