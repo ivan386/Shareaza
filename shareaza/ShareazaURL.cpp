@@ -1,7 +1,7 @@
 //
 // ShareazaURL.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -142,33 +142,38 @@ void CShareazaURL::Clear()
 //////////////////////////////////////////////////////////////////////
 // Parse URL list
 
-BOOL CShareazaURL::Parse(LPCTSTR pszURL, CList< CString >& pURLs, BOOL bResolve)
+BOOL CShareazaURL::Parse(const CString& sText, CList< CString >& pURLs, BOOL bResolve)
 {
 	pURLs.RemoveAll();
 
-	CString sBuf( pszURL );
-	sBuf.Replace( _T("\r\n"), _T("\n") );
-	sBuf.Replace( _T("\r"), _T("\n") );
-	sBuf.Replace( _T("\n\n"), _T("\n") );
-	sBuf.Trim();
-
-	int nPos;
-	do
+	// Split text to reverse string list
+	CString sPart;
+	int curPos = 0;
+	CList< CString > oReverse;
+	while ( ( sPart = sText.Tokenize( _T("\n"), curPos ) ).GetLength() )
 	{
-		nPos = sBuf.ReverseFind( _T('\n') );
-
-		CString sURL( sBuf.Mid( nPos + 1 ) );
-		sURL.Trim();
-
-		sBuf = sBuf.Left( nPos );
-		sBuf.Trim();
-
-		if ( Parse( sURL, bResolve ) )
-			pURLs.AddTail( sURL );
-		else
-			sBuf += sURL;
+		oReverse.AddHead( sPart.Trim( _T("\r\n\t >< ") ) ); // second space is #160
 	}
-	while ( nPos != -1 );
+
+	CString sBuf;
+	for ( POSITION pos = oReverse.GetHeadPosition(); pos; )
+	{
+		CString sLine( oReverse.GetNext( pos ) );
+		if ( sLine.IsEmpty() )
+			// Empty strings breaks URL
+			sBuf.Empty();
+		else
+		{
+			// Append new line to current URL and parse
+			sBuf.Insert( 0, sLine );
+			if ( Parse( sBuf, bResolve ) )
+			{
+				// OK, new URL found
+				pURLs.AddTail( sBuf );
+				sBuf.Empty();
+			}
+		}
+	}
 
 	return ! pURLs.IsEmpty();
 }

@@ -1,7 +1,7 @@
 //
 // DlgDownload.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -70,8 +70,6 @@ BOOL CDownloadDlg::OnInitDialog()
 	
 	if ( OpenClipboard() )
 	{
-		CString strClipboard;
-
 		if ( theApp.m_bNT )
 		{
 			// These OSes can handle unicode file names
@@ -80,10 +78,10 @@ BOOL CDownloadDlg::OnInitDialog()
 				size_t nData = GlobalSize( hData );
 				LPVOID pData = GlobalLock( hData );
 				
-				LPTSTR pszData = strClipboard.GetBuffer( (int)( nData + 1 ) / 2 + 1 );
+				LPTSTR pszData = m_sURL.GetBuffer( (int)( nData + 1 ) / 2 + 1 );
 				CopyMemory( pszData, pData, nData );
 				pszData[ ( nData + 1 ) / 2 ] = 0;
-				strClipboard.ReleaseBuffer();
+				m_sURL.ReleaseBuffer();
 				GlobalUnlock( hData );
 			}
 		}
@@ -98,28 +96,17 @@ BOOL CDownloadDlg::OnInitDialog()
 				LPSTR pszData = new CHAR[ nData + 1 ];
 				CopyMemory( pszData, pData, nData * sizeof( CHAR ) );
 				pszData[ nData ] = 0;
-				strClipboard = pszData;
+				m_sURL = pszData;
 				delete [] pszData;
 				GlobalUnlock( hData );
 			}	
 		}
-			
-		// If we had something in the clipboard, see if it's a valid URL
-		if ( ! strClipboard.IsEmpty() )
-		{
-			strClipboard.Trim( _T(" \t\r\n") );
-					
-			CShareazaURL pURL;
-			if ( pURL.Parse( strClipboard ) )
-			{
-				m_sURL = strClipboard;
-				UpdateData( FALSE );
-				OnChangeURL();
-			}
-		}
-		
 		CloseClipboard();
 	}
+
+	m_sURL.Trim( _T(" \t\r\n") );
+	UpdateData( FALSE );
+	OnChangeURL();
 	
 	return TRUE;
 }

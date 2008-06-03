@@ -1,7 +1,7 @@
 //
 // ShareazaURL.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -18,9 +18,6 @@
 // along with Shareaza; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
-
-#if !defined(AFX_SHAREAZAURL_H__B39B7816_FE18_4843_A10A_C0DB32D96E52__INCLUDED_)
-#define AFX_SHAREAZAURL_H__B39B7816_FE18_4843_A10A_C0DB32D96E52__INCLUDED_
 
 #pragma once
 
@@ -64,7 +61,7 @@ public:
 // Operations
 public:
 	// Parse URL list
-	BOOL	Parse(LPCTSTR pszURL, CList< CString >& pURLs, BOOL bResolve = FALSE);
+	BOOL	Parse(const CString& sText, CList< CString >& pURLs, BOOL bResolve = FALSE);
 	// Parse single URL
 	BOOL	Parse(LPCTSTR pszURL, BOOL bResolve = TRUE);
 	// Construct CQuerySearch object
@@ -102,5 +99,3 @@ public:
 	static BOOL	UnregisterShellType(LPCTSTR pszRoot, LPCTSTR pszProtocol);
 	static void DeleteKey(HKEY hParent, LPCTSTR pszKey);
 };
-
-#endif // !defined(AFX_SHAREAZAURL_H__B39B7816_FE18_4843_A10A_C0DB32D96E52__INCLUDED_)
