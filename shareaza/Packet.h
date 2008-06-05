@@ -1,7 +1,7 @@
 //
 // Packet.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -20,7 +20,7 @@
 //
 
 // CPacket represents a packet on a peer-to-peer network, and CPacketPool keeps lists of them
-// http://wiki.shareaza.com/static/Developers.Code.CPacket
+// http://www.shareazasecurity.be/wiki/index.php?title=Developers.Code.CPacket
 
 // Make the compiler only include the lines here once, this is the same thing as pragma once
 #if !defined(AFX_PACKET_H__3094C1CC_8AD2_49BD_BF10_EA639A9EAE6F__INCLUDED_)
