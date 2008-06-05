@@ -26,6 +26,14 @@
 		<capability name="extended"/>
 	</vendor>
 
+	<vendor code="PEER">
+		<title>PeerProject</title>
+		<link>http://PeerProject.org/</link>
+		<capability name="htmlHostBrowse"/>
+		<capability name="chatFlag"/>
+		<capability name="extended"/>
+	</vendor>
+
 	<vendor code="ACQL">
 		<title>Acqlite</title>
 		<link>http://acqlite.sourceforge.net/</link>
