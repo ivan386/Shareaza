@@ -1,46 +1,21 @@
+M http://gwc.frodoslair.net/skulls/skulls.php
+M http://g2.tjtech.org/g2/
+M http://gwc.eod.cc/skulls.php
+M http://grantgalitz.com/beacon_test/gwc.php
 2 http://cache.trillinux.org/g2/bazooka.php
 2 http://gwc2.wodi.org/skulls.php
-2 http://groovy.syxy.com/up/skulls.php
 2 http://www.k33bz.com/g2/bazooka.php
-2 http://unlimitedxl.nl/skulls/skulls.php
 2 http://silvers.servehttp.com/g2/bazooka.php
 2 http://midian.jayl.de/g2/bazooka.php
-2 http://crm.infojpg.com/skull/skulls.php
 2 http://ns1.ikado.ca/webcache/skulls.php
-2 http://10fc2.ath.cx/skulls/skulls.php
-2 http://savs.biz/g2/bazooka.php
-2 http://forfeit.phpnet.us/g2/bazooka.php
-2 http://karma.cloud.bishopston.net:33559/
-2 http://dogma.cloud.bishopston.net:33559/
-M http://skulls.mi-cha-el.org/skulls.php
-M http://gwc.eod.cc/skulls.php
-M http://gwc.frodoslair.net/skulls/skulls.php
-M http://www.mp3g.net/kp2pcache/skulls.php
-M http://g2.tjtech.org/g2/
-M http://g2.admpva.com/gwcii.php
-M http://torrent.delvedown.com/cgi-bin/perlgcache.cgi
-M http://gwebcache1.sexshare2k.info/
-M http://gwebcache2.sexshare2k.info/
-M http://gwebcache3.sexshare2k.info/
-M http://gwebcache4.sexshare2k.info/
-M http://gwebcache5.sexshare2k.info/
-1 http://gwc.glucolene.com:8080/
-1 http://gwc.dietpac.com:8080/
-1 http://tsubasa.ghostwhitecrab.de/
 
-U uhc:yin.cloud.bishopston.net:33558
 U uhc:uhc2.limewire.com:20181
-U uhc:yang.cloud.bishopston.net:33558
-U uhc:guruz.udp-host-cache.com:6666
 U uhc:uhc.udp-host-cache.com:9999
-U uhc:g6.6dns.org:1337
-U uhc:secondary.udp-host-cache.com:9999
-U ukhl:mylene.dynu.net:6602
 
 D http://www.gruk.org/server.met
 D http://www.emule-server.de/server.met/min/server.met
-D http://ocbmaurice.no-ip.org/pl/slist.pl/server.met?download/server-good.met
 D http://www.esel-paradies.de/server/server.met
+D http://ocbmaurice.no-ip.org/pl/slist.pl/server.met?download/server-good.met
 
 X http://gwc.the4400.tv/skulls/skulls.php
 X http://24.224.224.42/share/g2/bazooka.php
@@ -116,7 +91,7 @@ X http://bbs.robertwoolley.co.uk/gwebcache/gcache.php
 
 #
 # Keep these comments at the end
-# Last updated 8th - August, 2007
+# Last updated August 2007 (June 2008)
 #
 # Be sure to have at least one link to a .met file and four gwebcache
 # links or else they'll keep getting added every time they're removed
@@ -126,6 +101,7 @@ X http://bbs.robertwoolley.co.uk/gwebcache/gcache.php
 # 2 = Gnutella 2 gwebcache, 1 = Gnutella gwebcache (obsolete)
 # X = banned, U = BootStrap(uhc, ukhl, gnutella1 host, gnutella2 host)
 #
-# If you make changes to this file that cause problems for you
-# Then just delete the file and Shareaza will use internal defaults
-# Or get the latest at http://svn.sourceforge.net/viewvc/*checkout*/shareaza/trunk/Data/DefaultServices.dat
+# Delete this file and PeerProject will use internal defaults.
+#
+# Live Status at http://gcachescan.jonatkins.com/
+# Get latest version at http://shareaza.svn.sourceforge.net/viewvc/*checkout*/shareaza/trunk/Data/DefaultServices.dat
