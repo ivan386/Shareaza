@@ -32,26 +32,26 @@ public:
 	CLibraryBuilder();
 	virtual ~CLibraryBuilder();
 
-	BOOL		Add(CLibraryFile* pFile);			// Add file to list
+	bool		Add(CLibraryFile* pFile);			// Add file to list
 	void		Remove(DWORD nIndex);				// Remove file from list
 	void		Remove(LPCTSTR szPath);				// Remove file from list
 	void		Remove(CLibraryFile* pFile);		// Remove file from list
 	void		RequestPriority(LPCTSTR pszPath);	// Place file to the begin of list
 	void		Skip(DWORD nIndex);					// Move file to the end of list
-	BOOL		IsAlive() const;
+	bool		IsAlive() const;
 	void		StartThread();
 	void		StopThread();
-	void		BoostPriority(BOOL bPriority);
-	BOOL		GetBoostPriority() const;
+	void		BoostPriority(bool bPriority);
+	bool		GetBoostPriority() const;
 
 	CString		GetCurrent() const;					// Hashing filename
 	size_t		GetRemaining() const;				// Hashing queue size
 	DWORD		GetProgress() const;				// Hashing file progress (0..100%)
 
 	static int	SubmitMetadata(DWORD nIndex, LPCTSTR pszSchemaURI, CXMLElement*& pXML);
-	static BOOL	SubmitCorrupted(DWORD nIndex);
+	static bool	SubmitCorrupted(DWORD nIndex);
 
-	static BOOL RefreshMetadata(const CString& sPath);
+	static bool RefreshMetadata(const CString& sPath);
 
 protected:
 	class __declspec(novtable) CFileInfo
@@ -77,8 +77,8 @@ protected:
 	mutable CMutex				m_pSection;			// Guarding
 	CFileInfoList				m_pFiles;			// File list
 	HANDLE						m_hThread;
-	BOOL						m_bThread;			// FALSE - termination request
-	BOOL						m_bPriority;
+	bool						m_bThread;			// false - termination request
+	bool						m_bPriority;
 	CString						m_sPath;			// Hashing filename
 	DWORD						m_nProgress;		// Hashing file progress (0..100%)
 	LARGE_INTEGER				m_nLastCall;		// (ticks)
@@ -87,14 +87,14 @@ protected:
 	__int64						m_nElapsed;			// (mks)
 
 	// Get next file from list doing all possible tests
-	// Returns 0 if no file available, sets m_bThread = FALSE if no files left.
+	// Returns 0 if no file available, sets m_bThread = false if no files left.
 	DWORD		GetNextFileToHash(CString& sPath);
 	static UINT	ThreadStart(LPVOID pParam);
 	void		OnRun();
-	BOOL		HashFile(LPCTSTR szPath, HANDLE hFile, DWORD nIndex);
-	static BOOL	DetectVirtualFile(LPCTSTR szPath, HANDLE hFile, QWORD& nOffset, QWORD& nLength);
-	static BOOL	DetectVirtualID3v1(HANDLE hFile, QWORD& nOffset, QWORD& nLength);
-	static BOOL	DetectVirtualID3v2(HANDLE hFile, QWORD& nOffset, QWORD& nLength);
+	bool		HashFile(LPCTSTR szPath, HANDLE hFile, DWORD nIndex);
+	static bool	DetectVirtualFile(LPCTSTR szPath, HANDLE hFile, QWORD& nOffset, QWORD& nLength);
+	static bool	DetectVirtualID3v1(HANDLE hFile, QWORD& nOffset, QWORD& nLength);
+	static bool	DetectVirtualID3v2(HANDLE hFile, QWORD& nOffset, QWORD& nLength);
 };
 
 extern CLibraryBuilder LibraryBuilder;

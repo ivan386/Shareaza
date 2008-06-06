@@ -54,12 +54,12 @@ CLibraryBuilder LibraryBuilder;
 // CLibraryBuilder construction
 
 CLibraryBuilder::CLibraryBuilder() :
-	m_hThread( NULL ),
-	m_bThread( FALSE ),
-	m_bPriority( FALSE ),
-	m_nReaded( 0 ),
-	m_nElapsed( 0 ),
-	m_nProgress( 0 )
+	m_hThread	( NULL )
+,	m_bThread	( false )
+,	m_bPriority	( false )
+,	m_nProgress	( 0ul )
+,	m_nReaded	( 0ull )
+,	m_nElapsed	( 0 )
 {
 	QueryPerformanceFrequency( &m_nFreq );
 	QueryPerformanceCounter( &m_nLastCall );
@@ -73,7 +73,7 @@ CLibraryBuilder::~CLibraryBuilder()
 //////////////////////////////////////////////////////////////////////
 // CLibraryBuilder add and remove
 
-BOOL CLibraryBuilder::Add(CLibraryFile* pFile)
+bool CLibraryBuilder::Add(CLibraryFile* pFile)
 {
 	ASSERT( pFile );
 	ASSERT( pFile->m_nIndex );
@@ -87,10 +87,10 @@ BOOL CLibraryBuilder::Add(CLibraryFile* pFile)
 
 			StartThread();
 
-			return TRUE;
+			return true;
 		}
 	}
-	return FALSE;
+	return false;
 }
 
 void CLibraryBuilder::Remove(DWORD nIndex)
@@ -209,7 +209,7 @@ DWORD CLibraryBuilder::GetNextFileToHash(CString& sPath)
 		if ( m_pFiles.empty() )
 		{
 			// No files left
-			m_bThread = FALSE;
+			m_bThread = false;
 		}
 		else
 		{
@@ -297,7 +297,7 @@ void CLibraryBuilder::StartThread()
 
 	if ( ! m_bThread && ! m_pFiles.empty() )
 	{
-		m_bThread = TRUE;
+		m_bThread = true;
 		m_hThread = BeginThread( "LibraryBuilder", ThreadStart, this, m_bPriority ?
 			THREAD_PRIORITY_BELOW_NORMAL : THREAD_PRIORITY_IDLE );
 	}
@@ -313,14 +313,14 @@ void CLibraryBuilder::StopThread()
 			return;
 
 		// Request termination
-		m_bThread = FALSE;
+		m_bThread = false;
 	}
 
 	// Wait
 	CloseThread( &m_hThread );
 }
 
-BOOL CLibraryBuilder::IsAlive() const
+bool CLibraryBuilder::IsAlive() const
 {
 	CQuickLock pLock( m_pSection );
 
@@ -330,7 +330,7 @@ BOOL CLibraryBuilder::IsAlive() const
 //////////////////////////////////////////////////////////////////////
 // CLibraryBuilder priority control
 
-void CLibraryBuilder::BoostPriority(BOOL bPriority)
+void CLibraryBuilder::BoostPriority(bool bPriority)
 {
 	CQuickLock pLock( m_pSection );
 
@@ -344,7 +344,7 @@ void CLibraryBuilder::BoostPriority(BOOL bPriority)
 	}
 }
 
-BOOL CLibraryBuilder::GetBoostPriority() const
+bool CLibraryBuilder::GetBoostPriority() const
 {
 	CQuickLock pLock( m_pSection );
 
@@ -421,7 +421,7 @@ void CLibraryBuilder::OnRun()
 	}
 
 	CQuickLock pLock( m_pSection );
-	m_bThread = FALSE;
+	m_bThread = false;
 	m_hThread = NULL;
 }
 
@@ -430,14 +430,14 @@ void CLibraryBuilder::OnRun()
 
 #define MAX_HASH_BUFFER_SIZE	1024ul*256ul	// 256 Kb
 
-BOOL CLibraryBuilder::HashFile(LPCTSTR szPath, HANDLE hFile, DWORD nIndex)
+bool CLibraryBuilder::HashFile(LPCTSTR szPath, HANDLE hFile, DWORD nIndex)
 {
 	DWORD nSizeHigh	= 0;
 	DWORD nSizeLow	= GetFileSize( hFile, &nSizeHigh );
 	QWORD nFileSize	= (QWORD)nSizeLow | ( (QWORD)nSizeHigh << 32 );
 	QWORD nFileBase	= 0;
 
-	BOOL bVirtual = FALSE;
+	bool bVirtual = false;
 
 	if ( Settings.Library.VirtualFiles )
 		bVirtual = DetectVirtualFile( szPath, hFile, nFileBase, nFileSize );
@@ -533,7 +533,7 @@ BOOL CLibraryBuilder::HashFile(LPCTSTR szPath, HANDLE hFile, DWORD nIndex)
 	VirtualFree( pBuffer, 0, MEM_RELEASE );
 
 	if ( nLength != 0 )
-		return FALSE;
+		return false;
 
 	pSHA1.Finish();
 	pMD5.Finish();
@@ -543,12 +543,12 @@ BOOL CLibraryBuilder::HashFile(LPCTSTR szPath, HANDLE hFile, DWORD nIndex)
 	{
 		CQuickLock oLibraryLock( Library.m_pSection );
 		CLibraryFile* pFile = Library.LookupFile( nIndex );
-		if ( pFile == NULL ) return FALSE;
+		if ( pFile == NULL ) return false;
 
 		Library.RemoveFile( pFile );
 
-		pFile->m_bNewFile		= TRUE;
-		pFile->m_bBogus			= FALSE;
+		pFile->m_bNewFile		= true;
+		pFile->m_bBogus			= false;
 		pFile->m_nVirtualBase	= bVirtual ? nFileBase : 0;
 		pFile->m_nVirtualSize	= bVirtual ? nFileSize : 0;
 		
@@ -576,7 +576,7 @@ BOOL CLibraryBuilder::HashFile(LPCTSTR szPath, HANDLE hFile, DWORD nIndex)
 	LibraryHashDB.StoreTiger( nIndex, &pTiger );
 	LibraryHashDB.StoreED2K( nIndex, &pED2K );
 
-	return TRUE;
+	return true;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -593,10 +593,10 @@ int CLibraryBuilder::SubmitMetadata(DWORD nIndex, LPCTSTR pszSchemaURI, CXMLElem
 		return nAttributeCount;
 	}
 
-	CXMLElement* pBase = pSchema->Instantiate( TRUE );
+	CXMLElement* pBase = pSchema->Instantiate( true );
 	pBase->AddElement( pXML );
 
-	if ( ! pSchema->Validate( pBase, TRUE ) )
+	if ( ! pSchema->Validate( pBase, true ) )
 	{
 		delete pBase;
 		return nAttributeCount;
@@ -614,7 +614,7 @@ int CLibraryBuilder::SubmitMetadata(DWORD nIndex, LPCTSTR pszSchemaURI, CXMLElem
 			// Merge new with old metadata
 			pXML->Merge( pFile->m_pMetadata );
 		else
-			pFile->m_bMetadataAuto	= TRUE;
+			pFile->m_bMetadataAuto	= true;
 
 		Library.RemoveFile( pFile );
 
@@ -640,24 +640,24 @@ int CLibraryBuilder::SubmitMetadata(DWORD nIndex, LPCTSTR pszSchemaURI, CXMLElem
 //////////////////////////////////////////////////////////////////////
 // CLibraryBuilder bogus/corrupted state submission (threaded)
 
-BOOL CLibraryBuilder::SubmitCorrupted(DWORD nIndex)
+bool CLibraryBuilder::SubmitCorrupted(DWORD nIndex)
 {
 	CQuickLock oLibraryLock( Library.m_pSection );
 	if ( CLibraryFile* pFile = Library.LookupFile( nIndex ) )
 	{
-		pFile->m_bBogus = TRUE;
-		return TRUE;
+		pFile->m_bBogus = true;
+		return true;
 	}
 
-	return FALSE;
+	return false;
 }
 
 //////////////////////////////////////////////////////////////////////
 // CLibraryBuilder virtual file detection (threaded)
 
-BOOL CLibraryBuilder::DetectVirtualFile(LPCTSTR szPath, HANDLE hFile, QWORD& nOffset, QWORD& nLength)
+bool CLibraryBuilder::DetectVirtualFile(LPCTSTR szPath, HANDLE hFile, QWORD& nOffset, QWORD& nLength)
 {
-	BOOL bVirtual = FALSE;
+	bool bVirtual = false;
 
 	if ( _tcsistr( szPath, _T(".mp3") ) != NULL )
 	{
@@ -668,27 +668,27 @@ BOOL CLibraryBuilder::DetectVirtualFile(LPCTSTR szPath, HANDLE hFile, QWORD& nOf
 	return bVirtual;
 }
 
-BOOL CLibraryBuilder::DetectVirtualID3v1(HANDLE hFile, QWORD& nOffset, QWORD& nLength)
+bool CLibraryBuilder::DetectVirtualID3v1(HANDLE hFile, QWORD& nOffset, QWORD& nLength)
 {
 	ID3V1 pInfo;
 	DWORD nRead;
 
-	if ( nLength <= 128 ) return FALSE;
+	if ( nLength <= 128 ) return false;
 
 	LONG nPosLow	= (LONG)( ( nOffset + nLength - 128 ) & 0xFFFFFFFF );
 	LONG nPosHigh	= (LONG)( ( nOffset + nLength - 128 ) >> 32 );
 	SetFilePointer( hFile, nPosLow, &nPosHigh, FILE_BEGIN );
 
-	if ( ! ReadFile( hFile, &pInfo, sizeof(pInfo), &nRead, NULL ) ) return FALSE;
-	if ( nRead != sizeof(pInfo) ) return FALSE;
-	if ( memcmp( pInfo.szTag, ID3V1_TAG, 3 ) ) return FALSE;
+	if ( ! ReadFile( hFile, &pInfo, sizeof(pInfo), &nRead, NULL ) ) return false;
+	if ( nRead != sizeof(pInfo) ) return false;
+	if ( memcmp( pInfo.szTag, ID3V1_TAG, 3 ) ) return false;
 
 	nLength -= 128;
 
-	return TRUE;
+	return true;
 }
 
-BOOL CLibraryBuilder::DetectVirtualID3v2(HANDLE hFile, QWORD& nOffset, QWORD& nLength)
+bool CLibraryBuilder::DetectVirtualID3v2(HANDLE hFile, QWORD& nOffset, QWORD& nLength)
 {
 	ID3V2_HEADER pHeader;
 	DWORD nRead;
@@ -697,13 +697,13 @@ BOOL CLibraryBuilder::DetectVirtualID3v2(HANDLE hFile, QWORD& nOffset, QWORD& nL
 	LONG nPosHigh	= (LONG)( ( nOffset ) >> 32 );
 	SetFilePointer( hFile, nPosLow, &nPosHigh, FILE_BEGIN );
 
-	if ( ! ReadFile( hFile, &pHeader, sizeof(pHeader), &nRead, NULL ) ) return FALSE;
-	if ( nRead != sizeof(pHeader) ) return FALSE;
+	if ( ! ReadFile( hFile, &pHeader, sizeof(pHeader), &nRead, NULL ) ) return false;
+	if ( nRead != sizeof(pHeader) ) return false;
 
-	if ( strncmp( pHeader.szTag, ID3V2_TAG, 3 ) ) return FALSE;
-	if ( pHeader.nMajorVersion < 2 || pHeader.nMajorVersion > 4 ) return FALSE;
-	if ( pHeader.nFlags & ~ID3V2_KNOWNMASK ) return FALSE;
-	if ( pHeader.nFlags & ID3V2_UNSYNCHRONISED ) return FALSE;
+	if ( strncmp( pHeader.szTag, ID3V2_TAG, 3 ) ) return false;
+	if ( pHeader.nMajorVersion < 2 || pHeader.nMajorVersion > 4 ) return false;
+	if ( pHeader.nFlags & ~ID3V2_KNOWNMASK ) return false;
+	if ( pHeader.nFlags & ID3V2_UNSYNCHRONISED ) return false;
 
 	DWORD nTagSize = swapEndianess( pHeader.nSize );
 	ID3_DESYNC_SIZE( nTagSize );
@@ -711,15 +711,15 @@ BOOL CLibraryBuilder::DetectVirtualID3v2(HANDLE hFile, QWORD& nOffset, QWORD& nL
 	if ( pHeader.nFlags & ID3V2_FOOTERPRESENT ) nTagSize += 10;
 	nTagSize += sizeof(pHeader);
 
-	if ( nLength <= nTagSize ) return FALSE;
+	if ( nLength <= nTagSize ) return false;
 
 	nOffset += nTagSize;
 	nLength -= nTagSize;
 
-	return TRUE;
+	return true;
 }
 
-BOOL CLibraryBuilder::RefreshMetadata(const CString& sPath)
+bool CLibraryBuilder::RefreshMetadata(const CString& sPath)
 {
 	CWaitCursor wc;
 	DWORD nIndex;
@@ -728,12 +728,12 @@ BOOL CLibraryBuilder::RefreshMetadata(const CString& sPath)
 		CQuickLock oLibraryLock( Library.m_pSection );
 		CLibraryFile* pFile = LibraryMaps.LookupFileByPath( sPath );
 		if ( ! pFile )
-			return FALSE;
+			return false;
 		nIndex = pFile->m_nIndex;
-		pFile->m_bMetadataAuto = TRUE;
+		pFile->m_bMetadataAuto = true;
 	}
 
-	BOOL bResult = FALSE;
+	bool bResult = false;
 	HANDLE hFile = CreateFile( sPath, GENERIC_READ,
 		 FILE_SHARE_READ | ( theApp.m_bNT ? FILE_SHARE_DELETE : 0 ), NULL,
 		 OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL | FILE_FLAG_SEQUENTIAL_SCAN, NULL );

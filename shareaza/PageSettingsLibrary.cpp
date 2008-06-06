@@ -1,7 +1,7 @@
 //
 // PageSettingsLibrary.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2006.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -99,10 +99,10 @@ void CLibrarySettingsPage::DoDataExchange(CDataExchange* pDX)
 /////////////////////////////////////////////////////////////////////////////
 // CLibrarySettingsPage message handlers
 
-BOOL CLibrarySettingsPage::OnInitDialog() 
+BOOL CLibrarySettingsPage::OnInitDialog()
 {
 	CSettingsPage::OnInitDialog();
-	
+
 	m_bStoreViews		= Settings.Library.StoreViews;
 	m_bWatchFolders		= Settings.Library.WatchFolders;
 	m_bBrowseFiles		= Settings.Community.ServeFiles;
@@ -141,17 +141,17 @@ BOOL CLibrarySettingsPage::OnInitDialog()
 	return TRUE;
 }
 
-void CLibrarySettingsPage::OnSelChangeSafeTypes() 
+void CLibrarySettingsPage::OnSelChangeSafeTypes()
 {
 	m_wndSafeRemove.EnableWindow( m_wndSafeList.GetCurSel() >= 0 );
 }
 
-void CLibrarySettingsPage::OnEditChangeSafeTypes() 
+void CLibrarySettingsPage::OnEditChangeSafeTypes()
 {
 	m_wndSafeAdd.EnableWindow( m_wndSafeList.GetWindowTextLength() > 0 );
 }
 
-void CLibrarySettingsPage::OnSafeAdd() 
+void CLibrarySettingsPage::OnSafeAdd()
 {
 	CString strType;
 	m_wndSafeList.GetWindowText( strType );
@@ -167,24 +167,24 @@ void CLibrarySettingsPage::OnSafeAdd()
 	m_wndSafeList.SetWindowText( _T("") );
 }
 
-void CLibrarySettingsPage::OnSafeRemove() 
+void CLibrarySettingsPage::OnSafeRemove()
 {
 	int nItem = m_wndSafeList.GetCurSel();
 	if ( nItem >= 0 ) m_wndSafeList.DeleteString( nItem );
 	m_wndSafeRemove.EnableWindow( FALSE );
 }
 
-void CLibrarySettingsPage::OnSelChangePrivateTypes() 
+void CLibrarySettingsPage::OnSelChangePrivateTypes()
 {
 	m_wndPrivateRemove.EnableWindow( m_wndPrivateList.GetCurSel() >= 0 );
 }
 
-void CLibrarySettingsPage::OnEditChangePrivateTypes() 
+void CLibrarySettingsPage::OnEditChangePrivateTypes()
 {
 	m_wndPrivateAdd.EnableWindow( m_wndPrivateList.GetWindowTextLength() > 0 );
 }
 
-void CLibrarySettingsPage::OnPrivateAdd() 
+void CLibrarySettingsPage::OnPrivateAdd()
 {
 	CString strType;
 	m_wndPrivateList.GetWindowText( strType );
@@ -200,50 +200,50 @@ void CLibrarySettingsPage::OnPrivateAdd()
 	m_wndPrivateList.SetWindowText( _T("") );
 }
 
-void CLibrarySettingsPage::OnPrivateRemove() 
+void CLibrarySettingsPage::OnPrivateRemove()
 {
 	int nItem = m_wndPrivateList.GetCurSel();
 	if ( nItem >= 0 ) m_wndPrivateList.DeleteString( nItem );
 	m_wndPrivateRemove.EnableWindow( FALSE );
 }
 
-void CLibrarySettingsPage::OnRecentClear() 
+void CLibrarySettingsPage::OnRecentClear()
 {
 	CQuickLock oLock( Library.m_pSection );
 	LibraryHistory.Clear();
 	Library.Update();
 }
 
-void CLibrarySettingsPage::OnCollectionsBrowse() 
+void CLibrarySettingsPage::OnCollectionsBrowse()
 {
 	CString strPath( BrowseForFolder( _T("Select folder for collections:"),
 		m_sCollectionPath ) );
 	if ( strPath.IsEmpty() )
 		return;
-	
+
 	UpdateData( TRUE );
 	m_sCollectionPath = strPath;
 	//m_bCollectionsChanged = TRUE;
 	UpdateData( FALSE );
 }
 
-void CLibrarySettingsPage::OnOK() 
+void CLibrarySettingsPage::OnOK()
 {
 	UpdateData();
 
-	Settings.Library.StoreViews		= m_bStoreViews != FALSE;
-	Settings.Library.WatchFolders	= m_bWatchFolders != FALSE;
-	Settings.Community.ServeFiles	= m_bBrowseFiles != FALSE;
-	Settings.Library.HighPriorityHash=m_bHighPriorityHash != FALSE;
-	Settings.Library.CreateGhosts	= m_bMakeGhosts != FALSE;
+	Settings.Library.StoreViews			= m_bStoreViews != FALSE;
+	Settings.Library.WatchFolders		= m_bWatchFolders != FALSE;
+	Settings.Community.ServeFiles		= m_bBrowseFiles != FALSE;
+	Settings.Library.HighPriorityHash	= m_bHighPriorityHash != FALSE;
+	Settings.Library.CreateGhosts		= m_bMakeGhosts != FALSE;
 
-	Settings.Library.HistoryTotal	= m_nRecentTotal;
-	Settings.Library.HistoryDays	= m_nRecentDays;
+	Settings.Library.HistoryTotal		= m_nRecentTotal;
+	Settings.Library.HistoryDays		= m_nRecentDays;
 
 	Settings.Downloads.CollectionPath = m_sCollectionPath;
 
 	//Set current hashing speed to requested
-	LibraryBuilder.BoostPriority( m_bHighPriorityHash );
+	LibraryBuilder.BoostPriority( m_bHighPriorityHash != FALSE );
 
 	Settings.Library.SafeExecute.clear();
 
@@ -271,4 +271,3 @@ void CLibrarySettingsPage::OnOK()
 
 	CSettingsPage::OnOK();
 }
-
