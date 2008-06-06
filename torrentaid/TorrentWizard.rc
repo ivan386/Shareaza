@@ -73,8 +73,8 @@ IDR_MAINFRAME           ICON                    "res\\TorrentWizard.ico"
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 1,0,0,6
- PRODUCTVERSION 1,0,0,6
+ FILEVERSION 1,0,0,7
+ PRODUCTVERSION 1,0,0,7
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -92,12 +92,12 @@ BEGIN
             VALUE "Comments", "Shareaza Torrent Wizard"
             VALUE "CompanyName", "Shareaza Development Team"
             VALUE "FileDescription", "Shareaza Torrent Wizard"
-            VALUE "FileVersion", "1, 0, 0, 6"
+            VALUE "FileVersion", "1, 0, 0, 7"
             VALUE "InternalName", "TorrentWizard"
-            VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2003-2007."
+            VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2003-2008."
             VALUE "OriginalFilename", "TorrentWizard.exe"
             VALUE "ProductName", "Shareaza"
-            VALUE "ProductVersion", "1, 0, 0, 6"
+            VALUE "ProductVersion", "1, 0, 0, 7"
         END
     END
     BLOCK "VarFileInfo"
@@ -117,7 +117,7 @@ END
 IDR_MANIFEST RT_MANIFEST
 {
     "<assembly xmlns=""urn:schemas-microsoft-com:asm.v1"" manifestVersion=""1.0"">
-       <assemblyIdentity type=""win32"" name=""Shareaza.TorrentWizard"" version=""1.0.0.6""
+       <assemblyIdentity type=""win32"" name=""Shareaza.TorrentWizard"" version=""1.0.0.7""
 #ifdef WIN64
 		 processorArchitecture=""amd64""
 #else
@@ -398,8 +398,9 @@ BEGIN
                     WS_VISIBLE
     EDITTEXT        IDC_TORRENT_NAME,15,130,300,12,ES_AUTOHSCROLL | 
                     ES_READONLY | NOT WS_VISIBLE
-    PUSHBUTTON      "&Copy",IDC_TORRENT_COPY,220,150,45,15,NOT WS_VISIBLE
-    PUSHBUTTON      "&Open",IDC_TORRENT_OPEN,270,150,45,15,NOT WS_VISIBLE
+    PUSHBUTTON      "&Copy",IDC_TORRENT_COPY,170,150,45,15,NOT WS_VISIBLE
+    PUSHBUTTON      "&Open",IDC_TORRENT_OPEN,220,150,45,15,NOT WS_VISIBLE
+    PUSHBUTTON      "&Seed",IDC_TORRENT_SEED,270,150,45,15,NOT WS_VISIBLE
     LTEXT           "Click Finish to close the Torrent Wizard, or click Back to start over and create another Torrent.",
                     IDC_DONE_2,15,185,300,20,NOT WS_VISIBLE
 END
@@ -440,12 +441,11 @@ BEGIN
                     TBS_NOTICKS | NOT WS_VISIBLE | WS_TABSTOP,45,130,135,15
     LTEXT           "You can change the speed of the Torrent creation process to reduce CPU usage if you want to use other applications while the process completes.",
                     IDC_SPEED_MESSAGE,15,105,300,20,NOT WS_VISIBLE
-    RTEXT           "Slow",IDC_SPEED_SLOW,15,130,25,15,SS_CENTERIMAGE | NOT 
-                    WS_VISIBLE
-    LTEXT           "Fast",IDC_SPEED_FAST,185,130,25,15,SS_CENTERIMAGE | NOT 
-                    WS_VISIBLE
-    EDITTEXT        IDC_TORRENT_NAME,15,130,300,12,ES_AUTOHSCROLL | 
-                    ES_READONLY | NOT WS_VISIBLE
+    RTEXT           "Slow",IDC_SPEED_SLOW,15,130,25,15,SS_CENTERIMAGE | NOT WS_VISIBLE
+    LTEXT           "Fast",IDC_SPEED_FAST,185,130,25,15,SS_CENTERIMAGE | NOT WS_VISIBLE
+    EDITTEXT        IDC_TORRENT_NAME,15,130,300,12,ES_AUTOHSCROLL | ES_READONLY | NOT WS_VISIBLE
+    PUSHBUTTON      "&Open",IDC_TORRENT_OPEN,220,150,45,15,NOT WS_VISIBLE
+    PUSHBUTTON      "&Seed",IDC_TORRENT_SEED,270,150,45,15,NOT WS_VISIBLE
     LTEXT           "Click Finish to close the Torrent Wizard.",IDC_DONE_2,
                     15,185,300,20,NOT WS_VISIBLE
 END

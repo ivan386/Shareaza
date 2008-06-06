@@ -43,6 +43,7 @@ BEGIN_MESSAGE_MAP(CFinishedPage, CWizardPage)
 	ON_BN_CLICKED(IDC_ABORT, OnAbort)
 	ON_BN_CLICKED(IDC_TORRENT_COPY, OnTorrentCopy)
 	ON_BN_CLICKED(IDC_TORRENT_OPEN, OnTorrentOpen)
+	ON_BN_CLICKED(IDC_TORRENT_SEED, OnTorrentSeed)
 	ON_WM_TIMER()
 	ON_WM_HSCROLL()
 	//}}AFX_MSG_MAP
@@ -70,8 +71,9 @@ void CFinishedPage::DoDataExchange(CDataExchange* pDX)
 	//{{AFX_DATA_MAP(CFinishedPage)
 	DDX_Control(pDX, IDC_ABORT, m_wndAbort);
 	DDX_Control(pDX, IDC_TORRENT_NAME, m_wndTorrentName);
-	DDX_Control(pDX, IDC_TORRENT_OPEN, m_wndTorrentOpen);
 	DDX_Control(pDX, IDC_TORRENT_COPY, m_wndTorrentCopy);
+	DDX_Control(pDX, IDC_TORRENT_OPEN, m_wndTorrentOpen);
+	DDX_Control(pDX, IDC_TORRENT_SEED, m_wndTorrentSeed);
 	DDX_Control(pDX, IDC_SPEED_MESSAGE, m_wndSpeedMessage);
 	DDX_Control(pDX, IDC_SPEED_SLIDER, m_wndSpeed);
 	DDX_Control(pDX, IDC_SPEED_SLOW, m_wndSpeedSlow);
@@ -145,7 +147,8 @@ void CFinishedPage::Start()
 	m_wndTorrentName.ShowWindow( SW_HIDE );
 	m_wndTorrentCopy.ShowWindow( SW_HIDE );
 	m_wndTorrentOpen.ShowWindow( SW_HIDE );
-	
+	m_wndTorrentSeed.ShowWindow( SW_HIDE );	
+
 	m_wndAbort.ShowWindow( SW_SHOW );
 	m_wndSpeedMessage.ShowWindow( SW_SHOW );
 	m_wndSpeedSlow.ShowWindow( SW_SHOW );
@@ -216,7 +219,7 @@ void CFinishedPage::OnTimer(UINT_PTR nIDEvent)
 		m_wndTorrentName.ShowWindow( SW_SHOW );
 		m_wndTorrentCopy.ShowWindow( SW_SHOW );
 		m_wndTorrentOpen.ShowWindow( SW_SHOW );
-
+		m_wndTorrentSeed.ShowWindow( SW_SHOW );
 	}
 	else
 	{
@@ -323,6 +326,13 @@ void CFinishedPage::OnTorrentCopy()
 }
 
 void CFinishedPage::OnTorrentOpen() 
+{
+	GET_PAGE( COutputPage, pOutput );
+	ShellExecute( GetSafeHwnd(), _T("open"),
+		pOutput->m_sFolder, NULL, NULL, SW_SHOWNORMAL );
+}
+
+void CFinishedPage::OnTorrentSeed() 
 {
 	CString strText;
 	m_wndTorrentName.GetWindowText( strText );

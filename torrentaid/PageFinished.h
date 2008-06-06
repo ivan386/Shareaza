@@ -44,8 +44,9 @@ public:
 	enum { IDD = IDD_FINISHED_PAGE };
 	CButton	m_wndAbort;
 	CEdit	m_wndTorrentName;
-	CButton	m_wndTorrentOpen;
 	CButton	m_wndTorrentCopy;
+	CButton	m_wndTorrentOpen;
+	CButton	m_wndTorrentSeed;
 	CStatic	m_wndSpeedMessage;
 	CSliderCtrl	m_wndSpeed;
 	CStatic	m_wndSpeedSlow;
@@ -78,6 +79,7 @@ protected:
 	afx_msg void OnAbort();
 	afx_msg void OnTorrentCopy();
 	afx_msg void OnTorrentOpen();
+	afx_msg void OnTorrentSeed();
 	afx_msg void OnTimer(UINT_PTR nIDEvent);
 	afx_msg void OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
 	DECLARE_MESSAGE_MAP()

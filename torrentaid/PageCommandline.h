@@ -44,6 +44,8 @@ public:
 	enum { IDD = IDD_COMMANDLINE_PAGE };
 	CButton	m_wndAbort;
 	CEdit	m_wndTorrentName;
+	CButton	m_wndTorrentOpen;
+	CButton	m_wndTorrentSeed;
 	CStatic	m_wndSpeedMessage;
 	CSliderCtrl	m_wndSpeed;
 	CStatic	m_wndSpeedSlow;
@@ -78,6 +80,8 @@ protected:
 	//{{AFX_MSG(CCommandlinePage)
 	virtual BOOL OnInitDialog();
 	afx_msg void OnAbort();
+	afx_msg void OnTorrentOpen();
+	afx_msg void OnTorrentSeed();
 	afx_msg void OnTimer(UINT_PTR nIDEvent);
 	afx_msg void OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
 	//}}AFX_MSG

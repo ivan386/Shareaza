@@ -45,6 +45,7 @@
 #define IDC_AUTO_PIECE_SIZE             1026
 #define IDC_EDIT1                       1027
 #define IDC_PIECE_SIZE                  1028
+#define IDC_TORRENT_SEED                1030
 #define IDS_WELCOME_NEED_TYPE           8000
 #define IDS_SINGLE_NEED_FILE            8001
 #define IDS_PACKAGE_NEED_FILES          8002

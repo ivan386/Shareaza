@@ -34,6 +34,8 @@ IMPLEMENT_DYNCREATE(CCommandlinePage, CWizardPage)
 
 BEGIN_MESSAGE_MAP(CCommandlinePage, CWizardPage)
 	ON_BN_CLICKED(IDC_ABORT, OnAbort)
+	ON_BN_CLICKED(IDC_TORRENT_OPEN, OnTorrentOpen)
+	ON_BN_CLICKED(IDC_TORRENT_SEED, OnTorrentSeed)
 	ON_WM_TIMER()
 	ON_WM_HSCROLL()
 END_MESSAGE_MAP()
@@ -58,6 +60,8 @@ void CCommandlinePage::DoDataExchange(CDataExchange* pDX)
 	//{{AFX_DATA_MAP(CCommandlinePage)
 	DDX_Control(pDX, IDC_ABORT, m_wndAbort);
 	DDX_Control(pDX, IDC_TORRENT_NAME, m_wndTorrentName);
+	DDX_Control(pDX, IDC_TORRENT_OPEN, m_wndTorrentOpen);
+	DDX_Control(pDX, IDC_TORRENT_SEED, m_wndTorrentSeed);
 	DDX_Control(pDX, IDC_SPEED_MESSAGE, m_wndSpeedMessage);
 	DDX_Control(pDX, IDC_SPEED_SLIDER, m_wndSpeed);
 	DDX_Control(pDX, IDC_SPEED_SLOW, m_wndSpeedSlow);
@@ -118,7 +122,9 @@ void CCommandlinePage::Start()
 	m_wndDone1.ShowWindow( SW_HIDE );
 	m_wndDone2.ShowWindow( SW_HIDE );
 	m_wndTorrentName.ShowWindow( SW_HIDE );
-	
+	m_wndTorrentOpen.ShowWindow( SW_HIDE );
+	m_wndTorrentSeed.ShowWindow( SW_HIDE );
+
 	m_wndAbort.ShowWindow( SW_SHOW );
 	m_wndSpeedMessage.ShowWindow( SW_SHOW );
 	m_wndSpeedSlow.ShowWindow( SW_SHOW );
@@ -187,6 +193,8 @@ void CCommandlinePage::OnTimer(UINT_PTR nIDEvent)
 	{
 		m_wndDone1.ShowWindow( SW_SHOW );
 		m_wndTorrentName.ShowWindow( SW_SHOW );
+		m_wndTorrentOpen.ShowWindow( SW_SHOW );
+		m_wndTorrentSeed.ShowWindow( SW_SHOW );
 	}
 	else
 	{
@@ -237,4 +245,16 @@ void CCommandlinePage::OnAbort()
 {
 	CWaitCursor pCursor;
 	if ( m_pBuilder != NULL ) m_pBuilder->Stop();
+}
+
+void CCommandlinePage::OnTorrentOpen() 
+{
+	ShellExecute( GetSafeHwnd(), _T("open"),
+		theApp.m_sCommandLineDestination, NULL, NULL, SW_SHOWNORMAL );
+}
+
+void CCommandlinePage::OnTorrentSeed() 
+{
+	ShellExecute( GetSafeHwnd(), NULL, 
+		theApp.m_sCommandLineDestination + '\\' + m_sDestinationFile, NULL, NULL, SW_SHOWNORMAL );
 }
