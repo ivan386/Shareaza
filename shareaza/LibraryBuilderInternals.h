@@ -64,7 +64,7 @@ protected:		// General Media
 	static bool		ReadPDF(DWORD nIndex, HANDLE hFile, LPCTSTR pszPath);
 	static CString	ReadLine(HANDLE hFile, LPCTSTR pszSeparators = NULL);
 	static CString	ReadLineReverse(HANDLE hFile, LPCTSTR pszSeparators = NULL);
-    static bool		ReadCollection(DWORD nIndex, HANDLE hFile);
+	static bool		ReadCollection(DWORD nIndex, HANDLE hFile);
 	static bool		ReadCHM(DWORD nIndex, HANDLE hFile, LPCTSTR pszPath);
 	static CString	DecodePDFText(CString& strInput);
 	static bool		ReadTorrent(DWORD nIndex, HANDLE hFile, LPCTSTR pszPath);

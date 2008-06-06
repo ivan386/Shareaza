@@ -242,7 +242,7 @@ DWORD CLibraryBuilder::GetNextFileToHash(CString& sPath)
 			}
 			oLibraryLock.Unlock();
 
-			if ( ! pFile )
+			if ( !pFile )
 			{
 				// Unknown file
 				Remove( nIndex );
@@ -295,7 +295,7 @@ void CLibraryBuilder::StartThread()
 {
 	CQuickLock pLock( m_pSection );
 
-	if ( ! m_bThread && ! m_pFiles.empty() )
+	if ( !m_bThread && !m_pFiles.empty() )
 	{
 		m_bThread = true;
 		m_hThread = BeginThread( "LibraryBuilder", ThreadStart, this, m_bPriority ?
@@ -334,7 +334,8 @@ void CLibraryBuilder::BoostPriority(bool bPriority)
 {
 	CQuickLock pLock( m_pSection );
 
-	if ( m_bPriority == bPriority ) return;
+	if ( m_bPriority == bPriority )
+		return;
 	m_bPriority = bPriority;
 
 	if ( m_bThread && m_hThread )
@@ -477,11 +478,11 @@ bool CLibraryBuilder::HashFile(LPCTSTR szPath, HANDLE hFile, DWORD nIndex)
 			m_nProgress = ( ( nFileSize - nLength ) * 100 ) / nFileSize;
 		}
 
-		if ( ! m_bThread )
+		if ( !m_bThread )
 			// Termination request
 			break;
 
-		if( ! ::ReadFile( hFile, pBuffer, nBlock, &nBlock, NULL ) )
+		if( !::ReadFile( hFile, pBuffer, nBlock, &nBlock, NULL ) )
 			// Read error
 			break;
 
@@ -512,10 +513,10 @@ bool CLibraryBuilder::HashFile(LPCTSTR szPath, HANDLE hFile, DWORD nIndex)
 			}
 
 			m_nElapsed = 0;	// mks
-			m_nReaded = 0;	
+			m_nReaded = 0;
 		}
 
-		if ( ! nBlock )
+		if ( !nBlock )
 			// EOF
 			break;
 
@@ -543,7 +544,8 @@ bool CLibraryBuilder::HashFile(LPCTSTR szPath, HANDLE hFile, DWORD nIndex)
 	{
 		CQuickLock oLibraryLock( Library.m_pSection );
 		CLibraryFile* pFile = Library.LookupFile( nIndex );
-		if ( pFile == NULL ) return false;
+		if ( pFile == NULL )
+			return false;
 
 		Library.RemoveFile( pFile );
 
@@ -551,12 +553,12 @@ bool CLibraryBuilder::HashFile(LPCTSTR szPath, HANDLE hFile, DWORD nIndex)
 		pFile->m_bBogus			= false;
 		pFile->m_nVirtualBase	= bVirtual ? nFileBase : 0;
 		pFile->m_nVirtualSize	= bVirtual ? nFileSize : 0;
-		
+
 		pSHA1.GetHash( pFile->m_oSHA1 );
 		pMD5.GetHash( pFile->m_oMD5 );
 		pTiger.GetRoot( pFile->m_oTiger );
 		pED2K.GetRoot( pFile->m_oED2K );
-		
+
 		LibraryMaps.CullDeletedFiles( pFile );
 		Library.AddFile( pFile );
 
@@ -596,7 +598,7 @@ int CLibraryBuilder::SubmitMetadata(DWORD nIndex, LPCTSTR pszSchemaURI, CXMLElem
 	CXMLElement* pBase = pSchema->Instantiate( true );
 	pBase->AddElement( pXML );
 
-	if ( ! pSchema->Validate( pBase, true ) )
+	if ( !pSchema->Validate( pBase, true ) )
 	{
 		delete pBase;
 		return nAttributeCount;
@@ -673,15 +675,19 @@ bool CLibraryBuilder::DetectVirtualID3v1(HANDLE hFile, QWORD& nOffset, QWORD& nL
 	ID3V1 pInfo;
 	DWORD nRead;
 
-	if ( nLength <= 128 ) return false;
+	if ( nLength <= 128 )
+		return false;
 
 	LONG nPosLow	= (LONG)( ( nOffset + nLength - 128 ) & 0xFFFFFFFF );
 	LONG nPosHigh	= (LONG)( ( nOffset + nLength - 128 ) >> 32 );
 	SetFilePointer( hFile, nPosLow, &nPosHigh, FILE_BEGIN );
 
-	if ( ! ReadFile( hFile, &pInfo, sizeof(pInfo), &nRead, NULL ) ) return false;
-	if ( nRead != sizeof(pInfo) ) return false;
-	if ( memcmp( pInfo.szTag, ID3V1_TAG, 3 ) ) return false;
+	if ( !ReadFile( hFile, &pInfo, sizeof(pInfo), &nRead, NULL ) )
+		return false;
+	if ( nRead != sizeof(pInfo) )
+		return false;
+	if ( memcmp( pInfo.szTag, ID3V1_TAG, 3 ) )
+		return false;
 
 	nLength -= 128;
 
@@ -697,13 +703,19 @@ bool CLibraryBuilder::DetectVirtualID3v2(HANDLE hFile, QWORD& nOffset, QWORD& nL
 	LONG nPosHigh	= (LONG)( ( nOffset ) >> 32 );
 	SetFilePointer( hFile, nPosLow, &nPosHigh, FILE_BEGIN );
 
-	if ( ! ReadFile( hFile, &pHeader, sizeof(pHeader), &nRead, NULL ) ) return false;
-	if ( nRead != sizeof(pHeader) ) return false;
+	if ( !ReadFile( hFile, &pHeader, sizeof(pHeader), &nRead, NULL ) )
+		return false;
+	if ( nRead != sizeof(pHeader) )
+		return false;
 
-	if ( strncmp( pHeader.szTag, ID3V2_TAG, 3 ) ) return false;
-	if ( pHeader.nMajorVersion < 2 || pHeader.nMajorVersion > 4 ) return false;
-	if ( pHeader.nFlags & ~ID3V2_KNOWNMASK ) return false;
-	if ( pHeader.nFlags & ID3V2_UNSYNCHRONISED ) return false;
+	if ( strncmp( pHeader.szTag, ID3V2_TAG, 3 ) )
+		return false;
+	if ( pHeader.nMajorVersion < 2 || pHeader.nMajorVersion > 4 )
+		return false;
+	if ( pHeader.nFlags & ~ID3V2_KNOWNMASK )
+		return false;
+	if ( pHeader.nFlags & ID3V2_UNSYNCHRONISED )
+		return false;
 
 	DWORD nTagSize = swapEndianess( pHeader.nSize );
 	ID3_DESYNC_SIZE( nTagSize );
@@ -711,7 +723,8 @@ bool CLibraryBuilder::DetectVirtualID3v2(HANDLE hFile, QWORD& nOffset, QWORD& nL
 	if ( pHeader.nFlags & ID3V2_FOOTERPRESENT ) nTagSize += 10;
 	nTagSize += sizeof(pHeader);
 
-	if ( nLength <= nTagSize ) return false;
+	if ( nLength <= nTagSize )
+		return false;
 
 	nOffset += nTagSize;
 	nLength -= nTagSize;
@@ -727,7 +740,7 @@ bool CLibraryBuilder::RefreshMetadata(const CString& sPath)
 	{
 		CQuickLock oLibraryLock( Library.m_pSection );
 		CLibraryFile* pFile = LibraryMaps.LookupFileByPath( sPath );
-		if ( ! pFile )
+		if ( !pFile )
 			return false;
 		nIndex = pFile->m_nIndex;
 		pFile->m_bMetadataAuto = true;
