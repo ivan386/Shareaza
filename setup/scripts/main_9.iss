@@ -54,9 +54,7 @@ ChangesAssociations=yes
 ChangesEnvironment=yes
 OutputManifestFile=Manifest_{#ConfigurationName}{#PlatformName}.txt
 MinVersion=0,5.0
-#if PlatformName == "Win32"
-ArchitecturesAllowed=x86
-#elif PlatformName == "x64"
+#if PlatformName == "x64"
 ArchitecturesAllowed=x64
 ArchitecturesInstallIn64BitMode=x64
 #endif
