@@ -347,7 +347,7 @@ bool CLibraryBuilderInternals::ReadID3v2(DWORD nIndex, HANDLE hFile)
 	CXMLElement* pXML = new CXMLElement( NULL, _T("audio") );
 	bool bBugInFrameSize = false;
 
-	for ( ;; )
+	while ( nBuffer )
 	{
 		DWORD nFrameSize = 0;
 		CHAR szFrameTag[5];
@@ -548,13 +548,9 @@ bool CLibraryBuilderInternals::ReadID3v2(DWORD nIndex, HANDLE hFile)
 		// User defined text information frame
 		else if ( strcmp( szFrameTag, "TXXX" ) == 0 )
 		{
-			CopyID3v2Field( pXML, L"", pBuffer, nFrameSize );
+			CopyID3v2Field( pXML, NULL, pBuffer, nFrameSize );
 		}
-/*		else
-		{
-			CopyID3v2Field( pXML, _T("temp"), pBuffer, nFrameSize );
-		}
-*/
+
 		pBuffer += nFrameSize;
 		nBuffer -= nFrameSize;
 	}
@@ -705,7 +701,7 @@ bool CLibraryBuilderInternals::CopyID3v2Field(CXMLElement* pXML, LPCTSTR pszAttr
 			break;
 	}
 
-	if ( !*pszAttribute )
+	if ( !pszAttribute )
 	{
 		int nSlash = strResult.Find( '/' );
 		if ( nSlash > 0 )

@@ -336,6 +336,7 @@ void CLibraryBuilder::BoostPriority(bool bPriority)
 
 	if ( m_bPriority == bPriority )
 		return;
+
 	m_bPriority = bPriority;
 
 	if ( m_bThread && m_hThread )
@@ -469,7 +470,7 @@ bool CLibraryBuilder::HashFile(LPCTSTR szPath, HANDLE hFile, DWORD nIndex)
 	void* pBuffer = VirtualAlloc( NULL, MAX_HASH_BUFFER_SIZE, MEM_COMMIT, PAGE_READWRITE );
 	DWORD nBlock;
 	QWORD nLength = nFileSize;
-	for ( ; nLength > 0 ; nLength -= nBlock )
+	while ( nLength )
 	{
 		nBlock	= min( nLength, MAX_HASH_BUFFER_SIZE );
 
@@ -478,12 +479,12 @@ bool CLibraryBuilder::HashFile(LPCTSTR szPath, HANDLE hFile, DWORD nIndex)
 			m_nProgress = ( ( nFileSize - nLength ) * 100 ) / nFileSize;
 		}
 
+		// Exit loop on termination request
 		if ( !m_bThread )
-			// Termination request
 			break;
 
+		// Exit loop on read error
 		if( !::ReadFile( hFile, pBuffer, nBlock, &nBlock, NULL ) )
-			// Read error
 			break;
 
 		QueryPerformanceCounter( &count1 );
@@ -499,7 +500,7 @@ bool CLibraryBuilder::HashFile(LPCTSTR szPath, HANDLE hFile, DWORD nIndex)
 			QWORD nMaxSpeed = 1024 * 1024 * (  m_bPriority ?
 				Settings.Library.HighPriorityHashing :
 				Settings.Library.LowPriorityHashing );				// B/s
-			if ( nMaxSpeed > 0 && nSpeed > nMaxSpeed )
+			if ( nMaxSpeed && nSpeed > nMaxSpeed )
 			{
 				DWORD nDelay = (DWORD) ( ( ( ( nSpeed * m_nElapsed ) / nMaxSpeed ) -
 					m_nElapsed ) / 1000ull );	// ms
@@ -516,14 +517,16 @@ bool CLibraryBuilder::HashFile(LPCTSTR szPath, HANDLE hFile, DWORD nIndex)
 			m_nReaded = 0;
 		}
 
+		// Exit loop on EOF
 		if ( !nBlock )
-			// EOF
 			break;
 
 		pSHA1.Add( pBuffer, nBlock );
 		pMD5.Add( pBuffer, nBlock );
 		pTiger.AddToFile( pBuffer, nBlock );
 		pED2K.AddToFile( pBuffer, nBlock );
+
+		nLength -= nBlock;
 	}
 
 	{
@@ -533,7 +536,7 @@ bool CLibraryBuilder::HashFile(LPCTSTR szPath, HANDLE hFile, DWORD nIndex)
 
 	VirtualFree( pBuffer, 0, MEM_RELEASE );
 
-	if ( nLength != 0 )
+	if ( nLength )
 		return false;
 
 	pSHA1.Finish();
@@ -544,7 +547,7 @@ bool CLibraryBuilder::HashFile(LPCTSTR szPath, HANDLE hFile, DWORD nIndex)
 	{
 		CQuickLock oLibraryLock( Library.m_pSection );
 		CLibraryFile* pFile = Library.LookupFile( nIndex );
-		if ( pFile == NULL )
+		if ( !pFile )
 			return false;
 
 		Library.RemoveFile( pFile );
@@ -719,7 +722,8 @@ bool CLibraryBuilder::DetectVirtualID3v2(HANDLE hFile, QWORD& nOffset, QWORD& nL
 	DWORD nTagSize = swapEndianess( pHeader.nSize );
 	ID3_DESYNC_SIZE( nTagSize );
 
-	if ( pHeader.nFlags & ID3V2_FOOTERPRESENT ) nTagSize += 10;
+	if ( pHeader.nFlags & ID3V2_FOOTERPRESENT )
+		nTagSize += 10;
 	nTagSize += sizeof(pHeader);
 
 	if ( nLength <= nTagSize )
