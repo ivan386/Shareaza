@@ -1,7 +1,7 @@
 //
 // DownloadWithFile.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -68,15 +68,15 @@ BOOL CDownloadWithFile::OpenFile()
 {
 	if ( m_pFile == NULL || m_sDisplayName.IsEmpty() ) return FALSE;
 	if ( m_pFile->IsOpen() ) return TRUE;
-	
+
 	SetModified();
-	
+
 	if ( m_pFile->IsValid() )
 	{
 		if ( m_pFile->Open( m_sDiskName ) ) return TRUE;
 		theApp.Message( MSG_ERROR, IDS_DOWNLOAD_FILE_OPEN_ERROR, (LPCTSTR)m_sDiskName );
 	}
-	else if ( m_nSize != SIZE_UNKNOWN && ! Downloads.IsSpaceAvailable( m_nSize, Downloads.dlPathIncomplete ) )
+	else if ( m_nSize != SIZE_UNKNOWN && !Downloads.IsSpaceAvailable( m_nSize, Downloads.dlPathIncomplete ) )
 	{
 		theApp.Message( MSG_ERROR, IDS_DOWNLOAD_DISK_SPACE,
 			m_sDisplayName,
@@ -86,9 +86,9 @@ BOOL CDownloadWithFile::OpenFile()
 	{
 		CString strLocalName = m_sDiskName;
 		m_sDiskName.Empty();
-		
+
 		GenerateDiskName();
-		
+
 		for ( int nTry = 0 ; nTry < 5 ; nTry++ )
 		{
 			CString strName;
@@ -97,9 +97,9 @@ BOOL CDownloadWithFile::OpenFile()
 				strName = m_sDiskName;
 			else
 				strName.Format( _T("%s.x%i"), (LPCTSTR)m_sDiskName, rand() % 128 );
-			
-            theApp.Message( MSG_INFO, IDS_DOWNLOAD_FILE_CREATE, (LPCTSTR)strName );
-			
+
+			theApp.Message( MSG_INFO, IDS_DOWNLOAD_FILE_CREATE, (LPCTSTR)strName );
+
 			if ( m_pFile->Create( strName, m_nSize ) )
 			{
 				theApp.WriteProfileString( _T("Delete"), strName, NULL );
@@ -107,15 +107,15 @@ BOOL CDownloadWithFile::OpenFile()
 				m_sDiskName = strName;
 				return TRUE;
 			}
-			
+
 			theApp.Message( MSG_ERROR, IDS_DOWNLOAD_FILE_CREATE_ERROR, (LPCTSTR)strName );
 		}
-		
+
 		m_sDiskName = strLocalName;
 	}
-	
+
 	m_bDiskFull = TRUE;
-	
+
 	return FALSE;
 }
 
@@ -141,14 +141,14 @@ BOOL CDownloadWithFile::PrepareFile()
 void CDownloadWithFile::DeleteFile(BOOL bForce)
 {
 	if ( m_pFile != NULL && m_pFile->IsValid() == FALSE ) return;
-	
+
 	Uploads.OnRename( m_sDiskName, NULL, bForce );
-	
+
 	if ( m_pFile != NULL )
 	{
 		if ( GetVolumeComplete() == 0 || ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 ) == 0 )
 		{
-			if ( ! ::DeleteFile( m_sDiskName ) )
+			if ( !::DeleteFile( m_sDiskName ) )
 				theApp.WriteProfileString( _T("Delete"), m_sDiskName, _T("") );
 		}
 		else
@@ -158,10 +158,10 @@ void CDownloadWithFile::DeleteFile(BOOL bForce)
 	}
 	else if ( bForce ) // be careful, do not delete completed BT seeding file
 	{
-		if ( ! ::DeleteFile( m_sDiskName ) )
+		if ( !::DeleteFile( m_sDiskName ) )
 			theApp.WriteProfileString( _T("Delete"), m_sDiskName, _T("") );
 	}
-	
+
 	SetModified();
 }
 
@@ -211,9 +211,9 @@ DWORD CDownloadWithFile::GetTimeRemaining() const
 CString CDownloadWithFile::GetDisplayName() const
 {
 	if ( m_sDisplayName.GetLength() ) return m_sDisplayName;
-	
+
 	CString strName;
-	
+
 	if ( m_oSHA1 )
 		strName = m_oSHA1.toShortUrn();
 	else if ( m_oTiger )
@@ -226,7 +226,7 @@ CString CDownloadWithFile::GetDisplayName() const
 		strName = m_oMD5.toShortUrn();
 	else
 		strName = _T("Unknown File");
-	
+
 	return strName;
 }
 
@@ -236,7 +236,7 @@ CString CDownloadWithFile::GetDisplayName() const
 const Fragments::List& CDownloadWithFile::GetEmptyFragmentList() const
 {
 	static const Fragments::List dummy( 0 );
-    return m_pFile ? m_pFile->GetEmptyFragmentList() : dummy;
+	return m_pFile ? m_pFile->GetEmptyFragmentList() : dummy;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -277,16 +277,17 @@ Fragments::List CDownloadWithFile::GetPossibleFragments(
 
 inline DWORD CalcChunkSize(QWORD nSize)
 {
-    if ( nSize <= 268435456 ) return 1024 * 1024; // try to keep chunk size reasonably large
-    DWORD nChunk = DWORD( ( nSize - 1 ) / 256 ), nTemp; // default treeheight of 9
-    while ( nTemp = nChunk & ( nChunk - 1 ) ) nChunk = nTemp;
-    return nChunk * 2;
+	if ( nSize <= 268435456 ) return 1024 * 1024; // try to keep chunk size reasonably large
+	DWORD nChunk = DWORD( ( nSize - 1 ) / 256 ), nTemp; // default treeheight of 9
+	while ( nTemp = nChunk & ( nChunk - 1 ) ) nChunk = nTemp;
+	return nChunk * 2;
 }
 
 BOOL CDownloadWithFile::GetFragment(CDownloadTransfer* pTransfer)
 {
-	if ( ! PrepareFile() ) return NULL;
-	
+	if ( !PrepareFile() )
+		return NULL;
+
 	Fragments::Fragment oLargest( SIZE_UNKNOWN, SIZE_UNKNOWN );
 
 	Fragments::List oPossible = GetPossibleFragments(
@@ -306,13 +307,13 @@ BOOL CDownloadWithFile::GetFragment(CDownloadTransfer* pTransfer)
 
 		pTransfer->m_nOffset = pRandom->begin();
 		pTransfer->m_nLength = pRandom->size();
-		
+
 		return TRUE;
 	}
 	else
 	{
 		CDownloadTransfer* pExisting = NULL;
-		
+
 		for ( CDownloadTransfer* pOther = GetFirstTransfer() ; pOther ; pOther = pOther->m_pDlNext )
 		{
 			if ( pOther->m_bRecvBackwards )
@@ -324,35 +325,35 @@ BOOL CDownloadWithFile::GetFragment(CDownloadTransfer* pTransfer)
 			{
 				if ( pOther->m_nOffset + pOther->m_nPosition != oLargest.begin() ) continue;
 			}
-			
+
 			pExisting = pOther;
 			break;
 		}
-		
+
 		if ( pExisting == NULL )
 		{
 			pTransfer->m_nOffset = oLargest.begin();
 			pTransfer->m_nLength = oLargest.size();
 			return TRUE;
 		}
-		
+
 		if ( oLargest.size() < 32 ) return FALSE;
-		
+
 		DWORD nOldSpeed	= pExisting->GetAverageSpeed();
 		DWORD nNewSpeed	= pTransfer->GetAverageSpeed();
 		QWORD nLength	= oLargest.size() / 2;
-		
+
 		if ( nOldSpeed > 5 && nNewSpeed > 5 )
 		{
 			nLength = oLargest.size() * nNewSpeed / ( nNewSpeed + nOldSpeed );
-			
+
 			if ( oLargest.size() > 102400 )
 			{
 				nLength = max( nLength, 51200u );
 				nLength = min( nLength, oLargest.size() - 51200u );
 			}
 		}
-		
+
 		if ( pExisting->m_bRecvBackwards )
 		{
 			pTransfer->m_nOffset		= oLargest.begin();
@@ -365,7 +366,7 @@ BOOL CDownloadWithFile::GetFragment(CDownloadTransfer* pTransfer)
 			pTransfer->m_nLength		= nLength;
 			pTransfer->m_bWantBackwards	= TRUE;
 		}
-		
+
 		return TRUE;
 	}
 }
@@ -375,7 +376,9 @@ BOOL CDownloadWithFile::GetFragment(CDownloadTransfer* pTransfer)
 
 BOOL CDownloadWithFile::IsPositionEmpty(QWORD nOffset)
 {
-	if ( m_pFile == NULL || ! m_pFile->IsValid() ) return FALSE;
+	if ( m_pFile == NULL || !m_pFile->IsValid() )
+		return FALSE;
+
 	return m_pFile->IsPositionRemaining( nOffset );
 }
 
@@ -384,13 +387,17 @@ BOOL CDownloadWithFile::IsPositionEmpty(QWORD nOffset)
 
 BOOL CDownloadWithFile::AreRangesUseful(const Fragments::List& oAvailable)
 {
-	if ( m_pFile == NULL || ! m_pFile->IsValid() ) return FALSE;
+	if ( m_pFile == NULL || !m_pFile->IsValid() )
+		return FALSE;
+
 	return m_pFile->GetEmptyFragmentList().overlaps( oAvailable );
 }
 
 BOOL CDownloadWithFile::IsRangeUseful(QWORD nOffset, QWORD nLength)
 {
-	if ( m_pFile == NULL || ! m_pFile->IsValid() ) return FALSE;
+	if ( m_pFile == NULL || !m_pFile->IsValid() )
+		return FALSE;
+
 	return m_pFile->GetEmptyFragmentList().overlaps( Fragments::Fragment( nOffset, nOffset + nLength ) );
 }
 
@@ -398,7 +405,9 @@ BOOL CDownloadWithFile::IsRangeUseful(QWORD nOffset, QWORD nLength)
 // and source speed into account
 BOOL CDownloadWithFile::IsRangeUsefulEnough(CDownloadTransfer* pTransfer, QWORD nOffset, QWORD nLength)
 {
-	if ( m_pFile == NULL || ! m_pFile->IsValid() ) return FALSE;
+	if ( m_pFile == NULL || !m_pFile->IsValid() )
+		return FALSE;
+
 	// range is useful if at least byte within the next amount of data transferable within the next 5 seconds
 	// is useful
 	DWORD nLength2 = 5 * pTransfer->GetAverageSpeed();
@@ -407,7 +416,7 @@ BOOL CDownloadWithFile::IsRangeUsefulEnough(CDownloadTransfer* pTransfer, QWORD 
 		if ( !pTransfer->m_bRecvBackwards ) nOffset += nLength - nLength2;
 		nLength = nLength2;
 	}
-    return m_pFile->GetEmptyFragmentList().overlaps(
+	return m_pFile->GetEmptyFragmentList().overlaps(
 		Fragments::Fragment( nOffset, nOffset + nLength ) );
 }
 
@@ -417,9 +426,10 @@ BOOL CDownloadWithFile::IsRangeUsefulEnough(CDownloadTransfer* pTransfer, QWORD 
 CString CDownloadWithFile::GetAvailableRanges() const
 {
 	CString strRange, strRanges;
-	
-	if ( m_pFile == NULL || ! m_pFile->IsValid() ) return strRanges;
-	
+
+	if ( m_pFile == NULL || !m_pFile->IsValid() )
+		return strRanges;
+
 	const Fragments::List oAvailable = inverse( m_pFile->GetEmptyFragmentList() );
 
 	for ( Fragments::List::const_iterator pFragment = oAvailable.begin();
@@ -433,7 +443,7 @@ CString CDownloadWithFile::GetAvailableRanges() const
 		{
 			strRanges += ',';
 		}
-		
+
 		strRange.Format( _T("%I64i-%I64i"), pFragment->begin(), pFragment->end() - 1 );
 		strRanges += strRange;
 	}
@@ -446,11 +456,13 @@ CString CDownloadWithFile::GetAvailableRanges() const
 
 BOOL CDownloadWithFile::ClipUploadRange(QWORD nOffset, QWORD& nLength) const
 {
-	if ( m_pFile == NULL || ! m_pFile->IsValid() ) return FALSE;
+	if ( m_pFile == NULL || !m_pFile->IsValid() )
+		return FALSE;
+
 	if ( nOffset >= m_nSize ) return FALSE;
-	
+
 	if ( m_pFile->IsPositionRemaining( nOffset ) ) return FALSE;
-	
+
 	if ( nOffset + nLength > m_nSize ) nLength = m_nSize - nOffset;
 
 	Fragments::List::const_iterator_pair match( m_pFile->GetEmptyFragmentList().equal_range(
@@ -471,8 +483,9 @@ BOOL CDownloadWithFile::ClipUploadRange(QWORD nOffset, QWORD& nLength) const
 
 BOOL CDownloadWithFile::GetRandomRange(QWORD& nOffset, QWORD& nLength) const
 {
-	if ( m_pFile == NULL || ! m_pFile->IsValid() ) return FALSE;
-	
+	if ( m_pFile == NULL || !m_pFile->IsValid() )
+		return FALSE;
+
 	if ( m_pFile->GetEmptyFragmentList().missing() == 0 ) return FALSE;
 
 	Fragments::List oFilled = inverse( m_pFile->GetEmptyFragmentList() );
@@ -491,7 +504,7 @@ BOOL CDownloadWithFile::SubmitData(QWORD nOffset, LPBYTE pData, QWORD nLength)
 {
 	SetModified();
 	m_tReceived = GetTickCount();
-	
+
 	if ( static_cast< CDownloadWithTorrent* >( this )->IsTorrent() )	// Hack: Only do this for BitTorrent
 	{
 		for ( CDownloadTransfer* pTransfer = GetFirstTransfer() ; pTransfer ; pTransfer = pTransfer->m_pDlNext )
@@ -499,7 +512,7 @@ BOOL CDownloadWithFile::SubmitData(QWORD nOffset, LPBYTE pData, QWORD nLength)
 			if ( pTransfer->m_nProtocol == PROTOCOL_BT ) pTransfer->UnrequestRange( nOffset, nLength );
 		}
 	}
-	
+
 	return m_pFile != NULL && m_pFile->WriteRange( nOffset, pData, nLength );
 }
 
@@ -520,7 +533,10 @@ QWORD CDownloadWithFile::EraseRange(QWORD nOffset, QWORD nLength)
 BOOL CDownloadWithFile::MakeComplete()
 {
 	if ( m_sDiskName.IsEmpty() ) return FALSE;
-	if ( ! PrepareFile() ) return FALSE;
+
+	if ( !PrepareFile() )
+		return FALSE;
+
 	return m_pFile->MakeComplete();
 }
 
@@ -533,7 +549,7 @@ BOOL CDownloadWithFile::RunFile(DWORD /*tNow*/)
 	{
 		if ( m_pFile->GetRemaining() == 0 ) return TRUE;
 	}
-	
+
 	return FALSE;
 }
 
@@ -542,21 +558,22 @@ BOOL CDownloadWithFile::RunFile(DWORD /*tNow*/)
 
 BOOL CDownloadWithFile::AppendMetadata()
 {
-	if ( ! Settings.Library.VirtualFiles ) return FALSE;
-	
+	if ( !Settings.Library.VirtualFiles )
+		return FALSE;
+
 	if ( m_pXML == NULL ) return FALSE;
 	CXMLElement* pXML = m_pXML->GetFirstElement();
 	if ( pXML == NULL ) return FALSE;
-	
+
 	HANDLE hFile = CreateFile( m_sDiskName, GENERIC_READ | GENERIC_WRITE,
 		FILE_SHARE_READ | FILE_SHARE_WRITE | ( theApp.m_bNT ? FILE_SHARE_DELETE : 0 ),
 		NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL );
 	VERIFY_FILE_ACCESS( hFile, m_sDiskName )
 	if ( hFile == INVALID_HANDLE_VALUE ) return FALSE;
-	
+
 	CString strURI = m_pXML->GetAttributeValue( CXMLAttribute::schemaName );
 	BOOL bSuccess = FALSE;
-	
+
 	if ( CheckURI( strURI, CSchema::uriAudio ) )
 	{
 		if ( _tcsistr( m_sDiskName, _T(".mp3") ) != NULL )
@@ -564,9 +581,9 @@ BOOL CDownloadWithFile::AppendMetadata()
 			bSuccess |= AppendMetadataID3v1( hFile, pXML );
 		}
 	}
-	
+
 	CloseHandle( hFile );
-	
+
 	return bSuccess;
 }
 
@@ -574,31 +591,46 @@ BOOL CDownloadWithFile::AppendMetadataID3v1(HANDLE hFile, CXMLElement* pXML)
 {
 	DWORD nBytes;
 	CString str;
-	
+
 	ID3V1 pID3 = {};
 	SetFilePointer( hFile, 0, NULL, FILE_BEGIN );
-	if ( ! ReadFile( hFile, &pID3, 3, &nBytes, NULL ) ) return FALSE;
-	if ( memcmp( pID3.szTag, ID3V2_TAG, 3 ) == 0 ) return FALSE;
-	
+
+	if ( !ReadFile( hFile, &pID3, 3, &nBytes, NULL ) )
+		return FALSE;
+
+	if ( memcmp( pID3.szTag, ID3V2_TAG, 3 ) == 0 )
+		return FALSE;
+
 	ZeroMemory( &pID3, sizeof(pID3) );
 	SetFilePointer( hFile, -(int)sizeof(pID3), NULL, FILE_END );
-	if ( ! ReadFile( hFile, &pID3, sizeof(pID3), &nBytes, NULL ) ) return FALSE;
-	if ( memcmp( pID3.szTag, ID3V1_TAG, 3 ) == 0 ) return FALSE;
-	
+
+	if ( !ReadFile( hFile, &pID3, sizeof(pID3), &nBytes, NULL ) )
+		return FALSE;
+
+	if ( memcmp( pID3.szTag, ID3V1_TAG, 3 ) == 0 )
+		return FALSE;
+
 	ZeroMemory( &pID3, sizeof(pID3) );
 	std::memcpy( pID3.szTag, ID3V1_TAG, 3 );
-	
+
 	str = pXML->GetAttributeValue( _T("title") );
-	if ( str.GetLength() > 0 ) strncpy( pID3.szSongname, CT2CA( (LPCTSTR)str ), 30 );
+	if ( str.GetLength() > 0 )
+		strncpy( pID3.szSongname, CT2CA( str ), 30 );
+
 	str = pXML->GetAttributeValue( _T("artist") );
-	if ( str.GetLength() > 0 ) strncpy( pID3.szArtist, CT2CA( (LPCTSTR)str ), 30 );
+	if ( str.GetLength() > 0 )
+		strncpy( pID3.szArtist, CT2CA( str ), 30 );
+
 	str = pXML->GetAttributeValue( _T("album") );
-	if ( str.GetLength() > 0 ) strncpy( pID3.szAlbum, CT2CA( (LPCTSTR)str ), 30 );
+	if ( str.GetLength() > 0 )
+		strncpy( pID3.szAlbum, CT2CA( str ), 30 );
+
 	str = pXML->GetAttributeValue( _T("year") );
-	if ( str.GetLength() > 0 ) strncpy( pID3.szYear, CT2CA( (LPCTSTR)str ), 4 );
-	
+	if ( str.GetLength() > 0 )
+		strncpy( pID3.szYear, CT2CA( str ), 4 );
+
 	str = pXML->GetAttributeValue( _T("genre") );
-	
+
 	for ( int nGenre = 0 ; nGenre < ID3_GENRES ; nGenre ++ )
 	{
 		if ( str.CompareNoCase( CLibraryBuilderInternals::pszID3Genre[ nGenre ] ) == 0 )
@@ -607,10 +639,10 @@ BOOL CDownloadWithFile::AppendMetadataID3v1(HANDLE hFile, CXMLElement* pXML)
 			break;
 		}
 	}
-	
+
 	SetFilePointer( hFile, 0, NULL, FILE_END );
 	WriteFile( hFile, &pID3, sizeof(pID3), &nBytes, NULL );
-	
+
 	return TRUE;
 }
 
@@ -620,7 +652,7 @@ BOOL CDownloadWithFile::AppendMetadataID3v1(HANDLE hFile, CXMLElement* pXML)
 void CDownloadWithFile::Serialize(CArchive& ar, int nVersion)
 {
 	CDownloadWithTransfers::Serialize( ar, nVersion );
-	
+
 	if ( ar.IsStoring() )
 	{
 		ar.WriteCount( m_pFile != NULL );
@@ -632,7 +664,7 @@ void CDownloadWithFile::Serialize(CArchive& ar, int nVersion)
 		{
 			CString strLocalName;
 			ar >> strLocalName;
-			
+
 			if ( strLocalName.GetLength() )
 			{
 				if ( m_sDiskName.GetLength() )
@@ -644,7 +676,7 @@ void CDownloadWithFile::Serialize(CArchive& ar, int nVersion)
 				GenerateDiskName();
 			}
 		}
-		
+
 		if ( nVersion < 25 || ar.ReadCount() )
 		{
 			m_pFile->Serialize( ar, nVersion );

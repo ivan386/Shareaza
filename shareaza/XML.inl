@@ -188,8 +188,12 @@ inline CString CXMLElement::GetAttributeValue(LPCTSTR pszName, LPCTSTR pszDefaul
 {
 	CXMLAttribute* pAttribute = GetAttribute( pszName );
 	CString strResult;
-	if ( pAttribute ) strResult = pAttribute->m_sValue;
-	else if ( pszDefault ) strResult = pszDefault;
+
+	if ( pAttribute )
+		strResult = pAttribute->m_sValue;
+	else if ( pszDefault )
+		strResult = pszDefault;
+
 	return strResult;
 }
 

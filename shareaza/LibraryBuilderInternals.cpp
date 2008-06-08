@@ -205,6 +205,7 @@ bool CLibraryBuilderInternals::ReadID3v1(DWORD nIndex, HANDLE hFile, CXMLElement
 
 	if ( nRead != sizeof(pInfo) )
 		return false;
+
 	if ( strncmp( pInfo.szTag, ID3V1_TAG, 3 ) )
 		return false;
 
@@ -212,55 +213,44 @@ bool CLibraryBuilderInternals::ReadID3v1(DWORD nIndex, HANDLE hFile, CXMLElement
 	if ( bIsMP3 )
 		pXML = new CXMLElement( NULL, _T("audio") );
 
-	CopyID3v1Field( pXML, _T("title"), pInfo.szSongname, 30 );
-	CopyID3v1Field( pXML, _T("artist"), pInfo.szArtist, 30 );
-	CopyID3v1Field( pXML, _T("album"), pInfo.szAlbum, 30 );
-	CopyID3v1Field( pXML, _T("year"), pInfo.szYear, 4 );
+	CopyID3v1Field( pXML, _T("title"), CString( pInfo.szSongname, 30 ) );
+	CopyID3v1Field( pXML, _T("artist"), CString( pInfo.szArtist, 30 ) );
+	CopyID3v1Field( pXML, _T("album"), CString( pInfo.szAlbum, 30 ) );
+	CopyID3v1Field( pXML, _T("year"), CString( pInfo.szYear, 4 ) );
 
 	if ( pInfo.nGenre < ID3_GENRES )
-	{
 		pXML->AddAttribute( _T("genre"), pszID3Genre[ pInfo.nGenre ] );
-	}
 
 	if ( pInfo.szComment[28] == 0 && pInfo.szComment[29] > 0 )
 	{
 		CString strTrack;
-		strTrack.Format( _T("%i"), (int)pInfo.szComment[29] );
+		strTrack.Format( _T("%i"), static_cast< int >( pInfo.szComment[29] ) );
 		pXML->AddAttribute( _T("track"), strTrack );
-		CopyID3v1Field( pXML, _T("description"), pInfo.szComment, 28 );
+		CopyID3v1Field( pXML, _T("description"), CString( pInfo.szComment, 28 ) );
 	}
 	else
-	{
-		CopyID3v1Field( pXML, _T("description"), pInfo.szComment, 30 );
-	}
+		CopyID3v1Field( pXML, _T("description"), CString( pInfo.szComment, 30 ) );
 
 	SetFilePointer( hFile, 0, NULL, FILE_BEGIN );
 
-	int nAttributeCount = pXML->GetAttributeCount();
 	if ( bIsMP3 )
 	{
 		ScanMP3Frame( pXML, hFile, sizeof(pInfo) );
-		nAttributeCount = CLibraryBuilder::SubmitMetadata( nIndex, CSchema::uriAudio, pXML );
+		return CLibraryBuilder::SubmitMetadata( nIndex, CSchema::uriAudio, pXML ) != 0;
 	}
 
-	return nAttributeCount > 0;
+	return pXML->GetAttributeCount() > 0;
 }
 
-bool CLibraryBuilderInternals::CopyID3v1Field(CXMLElement* pXML, LPCTSTR pszAttribute, LPCSTR pszValue, int nLength)
+bool CLibraryBuilderInternals::CopyID3v1Field(CXMLElement* pXML, LPCTSTR pszAttribute, CString strValue)
 {
-	CString strValue;
-	int nWide = MultiByteToWideChar( CP_ACP, 0, pszValue, nLength, NULL, 0 );
-	LPWSTR pszOutput = strValue.GetBuffer( nWide + 1 );
-	MultiByteToWideChar( CP_ACP, 0, pszValue, nLength, pszOutput, nWide );
-	pszOutput[ nWide ] = 0;
-	strValue.ReleaseBuffer();
-
 	strValue.Trim();
-	strValue.Replace( L"\r\n", L"; " ); // Windows style replacement
-	strValue.Replace( L"\n", L"; " ); // Unix style replacement
-	strValue.Replace( L"\r", L"; " ); // Mac style replacement
 	if ( strValue.IsEmpty() )
 		return false;
+
+	strValue.Replace( _T("\r\n"), _T("; ") );	// Windows style replacement
+	strValue.Replace( _T("\n"), _T("; ") );		// Unix style replacement
+	strValue.Replace( _T("\r"), _T("; ") );		// Mac style replacement
 
 	pXML->AddAttribute( pszAttribute, strValue );
 
@@ -378,7 +368,6 @@ bool CLibraryBuilderInternals::ReadID3v2(DWORD nIndex, HANDLE hFile)
 			szFrameTag[4] = 0;
 
 			nFrameSize = swapEndianess( pFrame->nSize );
-//			DWORD nOldFramesize = nFrameSize;
 
 			if ( pHeader.nMajorVersion >= 4 && !bBugInFrameSize )
 			{
@@ -389,7 +378,8 @@ bool CLibraryBuilderInternals::ReadID3v2(DWORD nIndex, HANDLE hFile)
 				// TODO: Add a code here to find the correct frame size?
 				// Report and solution: http://www.sacredchao.net/quodlibet/ticket/180
 			}
-			if ( pFrame->nFlags2 & ~ID3V2_KNOWNFRAME ) szFrameTag[0] = 0;
+			if ( pFrame->nFlags2 & ~ID3V2_KNOWNFRAME )
+				szFrameTag[0] = 0;
 		}
 		else
 		{
@@ -700,7 +690,7 @@ bool CLibraryBuilderInternals::CopyID3v2Field(CXMLElement* pXML, LPCTSTR pszAttr
 		strValue.Replace( L"\n", L"; " ); // Unix style replacement
 		strValue.Replace( L"\r", L"; " ); // Mac style replacement
 
-		if ( strResult.GetLength() == 0 && ( strValue.GetLength() == 0 || _tcslen( strValue ) == 0 ) )
+		if ( strResult.IsEmpty() && ( strValue.IsEmpty() || _tcslen( strValue ) == 0 ) )
 			return false;
 		else if ( strResult.GetLength() && strValue.GetLength() )
 		{
@@ -836,8 +826,10 @@ bool CLibraryBuilderInternals::ScanMP3Frame(CXMLElement* pXML, HANDLE hFile, DWO
 
 	DWORD nRead;
 	ReadFile( hFile, &nHeader, 4, &nRead, NULL );
+
 	if ( nRead != 4 )
 		return false;
+
 	nHeader = swapEndianess( nHeader );
 
 	for ( DWORD nSeek = 0 ; bVariable || ( nFrameCount < 16 && nSeek < 4096 * 2  ) ; nSeek++ )
@@ -862,12 +854,12 @@ bool CLibraryBuilderInternals::ScanMP3Frame(CXMLElement* pXML, HANDLE hFile, DWO
 			// 1: L3
 			// 2: L2
 			// 3: L1
-			nLayer			= (BYTE)( ( nHeader & 0x60000 ) >> 17 );		// 0110 0000 0000 0000 0000
-			BYTE nBitIndex	= (BYTE)( ( nHeader & 0x0F000 ) >> 12 );		//      1111 0000 0000 0000
-			BYTE nFreqIndex	= (BYTE)( ( nHeader & 0x00C00 ) >> 10 );		//           1100 0000 0000
-			bool bPadding	= ( nHeader & 0x00200 ) ? true : false;			//           0010 0000 0000
-			BYTE nChannels	= (BYTE)( ( nHeader & 0x000C0 ) >> 6 );			//                1100 0000
-			bool bCopyRight = ( ( nHeader & 0x00008 ) >> 3 ) ? true: false;	//                     1000
+			nLayer			= (BYTE)( ( nHeader & 0x00060000 ) >> 17 );	// 0110 0000 0000 0000 0000
+			BYTE nBitIndex	= (BYTE)( ( nHeader & 0x0000F000 ) >> 12 );	//      1111 0000 0000 0000
+			BYTE nFreqIndex	= (BYTE)( ( nHeader & 0x00000C00 ) >> 10 );	//           1100 0000 0000
+			bool bPadding	= ( nHeader & 0x00000200 ) ? true : false;	//           0010 0000 0000
+			BYTE nChannels	= (BYTE)( ( nHeader & 0x000000C0 ) >> 6 );	//                1100 0000
+			bool bCopyRight = ( nHeader & 0x00000008 ) ? true: false;	//                     1000
 			UNUSED_ALWAYS( bCopyRight );
 
 			int nBitColumn = 0;
@@ -1257,7 +1249,7 @@ CString CLibraryBuilderInternals::GetSummaryField(MSIHANDLE hSummaryInfo, UINT n
 	DWORD dwSize = 0;
 
 	if ( MsiSummaryInfoGetProperty( hSummaryInfo, nProperty, &nPropType,
-			0, NULL, L"", &dwSize ) == ERROR_MORE_DATA )
+		0, NULL, L"", &dwSize ) == ERROR_MORE_DATA )
 	{
 		dwSize++;
 		LPTSTR pszValue = new TCHAR[ dwSize ];
@@ -1959,6 +1951,7 @@ bool CLibraryBuilderInternals::ReadOGG(DWORD nIndex, HANDLE hFile)
 
 	if ( !pOGG )
 		return false;
+
 	pOGG += 1 + 6;
 	nOGG -= 1 + 6;
 
@@ -2133,7 +2126,8 @@ BYTE* CLibraryBuilderInternals::ReadOGGPage(HANDLE hFile, DWORD& nBuffer, BYTE n
 		return NULL;
 
 	ReadFile( hFile, &nByte, 1, &nRead, NULL );
-	if ( nRead != 1 ) return NULL;
+	if ( nRead != 1 )
+		return NULL;
 	if ( nFlags < 0xFF && nByte != nFlags )
 		return NULL;
 
@@ -2196,7 +2190,8 @@ bool CLibraryBuilderInternals::ReadOGGString(BYTE*& pOGG, DWORD& nOGG, CString& 
 		return false;
 
 	DWORD nLen = *(DWORD*)pOGG;
-	pOGG += 4; nOGG -= 4;
+	pOGG += 4;
+	nOGG -= 4;
 
 	if ( nOGG < nLen )
 		return false;
@@ -2410,7 +2405,7 @@ bool CLibraryBuilderInternals::ReadAPE(DWORD nIndex, HANDLE hFile, bool bPreferF
 			}
 			else if ( strKey == L"involvedpeople" )
 			{
-				if ( strKeyWords.GetLength() > 0 )
+				if ( strKeyWords.GetLength() )
 					strKeyWords += L"; " + strValue;
 				else
 					strKeyWords = strValue;
@@ -2457,7 +2452,7 @@ bool CLibraryBuilderInternals::ReadAPE(DWORD nIndex, HANDLE hFile, bool bPreferF
 			}
 			else if ( strKey == L"performersortorder" )
 			{
-				if ( strKeyWords.GetLength() > 0 )
+				if ( strKeyWords.GetLength() )
 					strKeyWords += L"; " + strValue;
 				else
 					strKeyWords = strValue;
@@ -2579,8 +2574,7 @@ bool CLibraryBuilderInternals::ReadAPE(DWORD nIndex, HANDLE hFile, bool bPreferF
 		{
 			if ( !bValidSignature )
 				ScanMP3Frame( pXML, hFile, 0 );
-			return
-				CLibraryBuilder::SubmitMetadata( nIndex, CSchema::uriAudio, pXML ) != 0;
+			return CLibraryBuilder::SubmitMetadata( nIndex, CSchema::uriAudio, pXML ) != 0;
 		}
 		else // No APE footer and no header in MP3 or invalid APE file
 		{
@@ -2910,13 +2904,16 @@ bool CLibraryBuilderInternals::ReadPDF(DWORD nIndex, HANDLE hFile, LPCTSTR pszPa
 	CSingleLock pWindowLock( &theApp.m_pSection );
 	SetFilePointer( hFile, 0, NULL, FILE_BEGIN );
 	strLine = ReadLine( hFile );
+
 	// TODO: Header should be within the first 1024 KB by specs
+
 	if ( strLine.Find( _T("%PDF") ) == 0 )
 		nCount = 7;
 	else if ( strLine.Find( _T("%!PS-Adobe") ) == 0 )
 		nCount = 21;
 	else
 		return false;
+
 	_stscanf( strLine.Mid( nCount ), _T("%lu"), &nVersion );
 	if ( nVersion > 5 )
 		return false;
@@ -2960,7 +2957,7 @@ bool CLibraryBuilderInternals::ReadPDF(DWORD nIndex, HANDLE hFile, LPCTSTR pszPa
 		// if file length is not the same as in L data, the document is treated as non-linearized
 		DWORD nError;
 		if ( SetFilePointer( hFile, nFileLength, NULL, FILE_BEGIN ) == INVALID_SET_FILE_POINTER &&
-			 ( nError = GetLastError() ) != NO_ERROR )
+			( nError = GetLastError() ) != NO_ERROR )
 		{
 			bLinearized = false;
 			nPages = 0;
@@ -3089,7 +3086,7 @@ bool CLibraryBuilderInternals::ReadPDF(DWORD nIndex, HANDLE hFile, LPCTSTR pszPa
 			}
 		}
 		if ( ReadLineReverse( hFile ) != _T("<") ||
-			 ReadLineReverse( hFile ) != _T("trailer") )
+			ReadLineReverse( hFile ) != _T("trailer") )
 		{
 			return false;
 		}
@@ -3431,7 +3428,8 @@ CString	CLibraryBuilderInternals::DecodePDFText(CString& strInput)
 		if ( strInput.GetLength() % 2 != 0 )
 			strInput.Append( _T("0") );
 	}
-	else return strInput;
+	else
+		return strInput;
 
 	if ( strInput.IsEmpty() )
 		return strInput;
@@ -3782,7 +3780,7 @@ bool CLibraryBuilderInternals::ReadCHM(DWORD nIndex, HANDLE hFile, LPCTSTR pszPa
 
 	nSizeLow = SetFilePointer( hFile, nSizeLow, (long*)&nSizeHigh, FILE_BEGIN );
 	if ( nSizeLow == INVALID_SET_FILE_POINTER &&
-		 ( nError = GetLastError() ) != NO_ERROR )
+		( nError = GetLastError() ) != NO_ERROR )
 	{
 		return CLibraryBuilder::SubmitCorrupted( nIndex );
 	}

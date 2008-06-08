@@ -31,7 +31,7 @@ public:
 	static bool		ExtractMetadata(DWORD nIndex, const CString& strPath, HANDLE hFile);
 protected:		// ID3v1 and ID3v2 and MP3
 	static bool		ReadID3v1(DWORD nIndex, HANDLE hFile, CXMLElement* pXML = NULL);
-	static bool		CopyID3v1Field(CXMLElement* pXML, LPCTSTR pszAttribute, LPCSTR pszValue, int nLength);
+	static bool		CopyID3v1Field(CXMLElement* pXML, LPCTSTR pszAttribute, CString strValue);
 	static bool		ReadID3v2(DWORD nIndex, HANDLE hFile);
 	static bool		CopyID3v2Field(CXMLElement* pXML, LPCTSTR pszAttribute, BYTE* pBuffer, DWORD nLength, bool bSkipLanguage = false);
 	static bool		ReadMP3Frames(DWORD nIndex, HANDLE hFile);

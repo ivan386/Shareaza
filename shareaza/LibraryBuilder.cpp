@@ -586,13 +586,12 @@ bool CLibraryBuilder::HashFile(LPCTSTR szPath, HANDLE hFile, DWORD nIndex)
 
 int CLibraryBuilder::SubmitMetadata(DWORD nIndex, LPCTSTR pszSchemaURI, CXMLElement*& pXML)
 {
-	int nAttributeCount = 0;
 	CSchema* pSchema = SchemaCache.Get( pszSchemaURI );
 
 	if ( pSchema == NULL )
 	{
 		delete pXML;
-		return nAttributeCount;
+		return 0;
 	}
 
 	CXMLElement* pBase = pSchema->Instantiate( true );
@@ -601,13 +600,13 @@ int CLibraryBuilder::SubmitMetadata(DWORD nIndex, LPCTSTR pszSchemaURI, CXMLElem
 	if ( !pSchema->Validate( pBase, true ) )
 	{
 		delete pBase;
-		return nAttributeCount;
+		return 0;
 	}
 
 	pXML->Detach();
 	delete pBase;
 
-	nAttributeCount = pXML->GetAttributeCount();
+	int nAttributeCount = static_cast< int >( pXML->GetAttributeCount() );
 
 	CQuickLock oLibraryLock( Library.m_pSection );
 	if ( CLibraryFile* pFile = Library.LookupFile( nIndex ) )
