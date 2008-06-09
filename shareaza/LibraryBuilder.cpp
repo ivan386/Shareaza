@@ -320,13 +320,6 @@ void CLibraryBuilder::StopThread()
 	CloseThread( &m_hThread );
 }
 
-bool CLibraryBuilder::IsAlive() const
-{
-	CQuickLock pLock( m_pSection );
-
-	return m_bThread;
-}
-
 //////////////////////////////////////////////////////////////////////
 // CLibraryBuilder priority control
 
@@ -364,7 +357,7 @@ UINT CLibraryBuilder::ThreadStart(LPVOID pParam)
 
 void CLibraryBuilder::OnRun()
 {
-	while ( IsAlive() )
+	while ( m_bThread )
 	{
 		Sleep( 100 );	// Max 10 files per second
 

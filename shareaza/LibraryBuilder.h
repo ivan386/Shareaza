@@ -38,7 +38,6 @@ public:
 	void		Remove(CLibraryFile* pFile);		// Remove file from list
 	void		RequestPriority(LPCTSTR pszPath);	// Place file to the begin of list
 	void		Skip(DWORD nIndex);					// Move file to the end of list
-	bool		IsAlive() const;
 	void		StartThread();
 	void		StopThread();
 	void		BoostPriority(bool bPriority);
@@ -77,7 +76,7 @@ protected:
 	mutable CMutex				m_pSection;			// Guarding
 	CFileInfoList				m_pFiles;			// File list
 	HANDLE						m_hThread;
-	bool						m_bThread;			// false - termination request
+	volatile bool				m_bThread;			// false - termination request
 	bool						m_bPriority;
 	CString						m_sPath;			// Hashing filename
 	DWORD						m_nProgress;		// Hashing file progress (0..100%)

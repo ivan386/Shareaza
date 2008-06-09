@@ -2080,12 +2080,6 @@ bool CLibraryBuilderInternals::ReadOGG(DWORD nIndex, HANDLE hFile)
 		nLength = max( nLength, nOGG );
 	}
 
-	if ( !LibraryBuilder.IsAlive() )
-	{
-		delete pXML;
-		return false;
-	}
-
 	if ( nFrequency > 0 && nLength > 0 && ( nLength / nFrequency ) > 0 )
 	{
 		strComment.Format( L"%lu", nLength / nFrequency );
