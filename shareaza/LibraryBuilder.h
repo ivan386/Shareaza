@@ -48,10 +48,10 @@ public:
 	size_t		GetRemaining() const;				// Hashing queue size
 	DWORD		GetProgress() const;				// Hashing file progress (0..100%)
 
-	static int	SubmitMetadata(DWORD nIndex, LPCTSTR pszSchemaURI, CXMLElement*& pXML);
-	static bool	SubmitCorrupted(DWORD nIndex);
+	int			SubmitMetadata(DWORD nIndex, LPCTSTR pszSchemaURI, CXMLElement*& pXML);
+	bool		SubmitCorrupted(DWORD nIndex);
 
-	static bool RefreshMetadata(const CString& sPath);
+	bool		RefreshMetadata(const CString& sPath);
 
 private:
 	class CFileInfo
@@ -94,9 +94,9 @@ private:
 	static UINT	ThreadStart(LPVOID pParam);
 	void		OnRun();
 	bool		HashFile(LPCTSTR szPath, HANDLE hFile, DWORD nIndex);
-	static bool	DetectVirtualFile(LPCTSTR szPath, HANDLE hFile, QWORD& nOffset, QWORD& nLength);
-	static bool	DetectVirtualID3v1(HANDLE hFile, QWORD& nOffset, QWORD& nLength);
-	static bool	DetectVirtualID3v2(HANDLE hFile, QWORD& nOffset, QWORD& nLength);
+	bool		DetectVirtualFile(LPCTSTR szPath, HANDLE hFile, QWORD& nOffset, QWORD& nLength);
+	bool		DetectVirtualID3v1(HANDLE hFile, QWORD& nOffset, QWORD& nLength);
+	bool		DetectVirtualID3v2(HANDLE hFile, QWORD& nOffset, QWORD& nLength);
 };
 
 extern CLibraryBuilder LibraryBuilder;

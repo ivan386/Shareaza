@@ -63,7 +63,7 @@ BOOL CLibraryBuilderPlugins::ExtractMetadata(DWORD nIndex, const CString& strPat
 	
 	ppXML->Release();
 	
-	BOOL bSuccess = FALSE;
+	bool bSuccess = false;
 	
 	if ( SUCCEEDED( hResult ) )
 	{
@@ -75,13 +75,13 @@ BOOL CLibraryBuilderPlugins::ExtractMetadata(DWORD nIndex, const CString& strPat
 			if ( pInner && strSchemaURI.GetLength() )
 			{
 				pInner = pInner->Detach();
-				bSuccess = CLibraryBuilder::SubmitMetadata( nIndex, strSchemaURI, pInner );
+				bSuccess = LibraryBuilder.SubmitMetadata( nIndex, strSchemaURI, pInner ) != 0;
 			}
 		}
 	}
 	else if ( hResult == E_UNEXPECTED )
 	{
-		bSuccess = CLibraryBuilder::SubmitCorrupted( nIndex );
+		bSuccess = LibraryBuilder.SubmitCorrupted( nIndex );
 	}
 	
 	delete pXML;
