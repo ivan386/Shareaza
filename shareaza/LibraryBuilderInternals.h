@@ -29,52 +29,52 @@ private:
 	static LPCTSTR	pszID3Genre[];
 
 public:
-	int				LookupID3v1Genre(const CString& strGenre) const;
-	static bool		ExtractMetadata(DWORD nIndex, const CString& strPath, HANDLE hFile);
+	int			LookupID3v1Genre(const CString& strGenre) const;
+	bool		ExtractMetadata(DWORD nIndex, const CString& strPath, HANDLE hFile);
 
 private:
 	// ID3v1 and ID3v2 and MP3
-	static bool		ReadID3v1(DWORD nIndex, HANDLE hFile, CXMLElement* pXML = NULL);
-	static bool		CopyID3v1Field(CXMLElement* pXML, LPCTSTR pszAttribute, CString strValue);
-	static bool		ReadID3v2(DWORD nIndex, HANDLE hFile);
-	static bool		CopyID3v2Field(CXMLElement* pXML, LPCTSTR pszAttribute, BYTE* pBuffer, DWORD nLength, bool bSkipLanguage = false);
-	static bool		ReadMP3Frames(DWORD nIndex, HANDLE hFile);
-	static bool		ScanMP3Frame(CXMLElement* pXML, HANDLE hFile, DWORD nIgnore);
+	bool		ReadID3v1(DWORD nIndex, HANDLE hFile, CXMLElement* pXML = NULL);
+	bool		CopyID3v1Field(CXMLElement* pXML, LPCTSTR pszAttribute, CString strValue);
+	bool		ReadID3v2(DWORD nIndex, HANDLE hFile);
+	bool		CopyID3v2Field(CXMLElement* pXML, LPCTSTR pszAttribute, BYTE* pBuffer, DWORD nLength, bool bSkipLanguage = false);
+	bool		ReadMP3Frames(DWORD nIndex, HANDLE hFile);
+	bool		ScanMP3Frame(CXMLElement* pXML, HANDLE hFile, DWORD nIgnore);
 
 	// Module Version
-	static bool		ReadVersion(DWORD nIndex, LPCTSTR pszPath);
-	static bool		CopyVersionField(CXMLElement* pXML, LPCTSTR pszAttribute, BYTE* pBuffer, LPCTSTR pszKey, DWORD nLangId, bool bCommaToDot = false);
-	static CString	GetVersionKey(BYTE* pBuffer, LPCTSTR pszKey, DWORD nLangId);
-	static DWORD	GetBestLanguageId(LPVOID pBuffer);
-	static bool		GetLanguageId(LPVOID pBuffer, UINT nSize, WORD nLangId, DWORD &nId, bool bOnlyPrimary = false);
+	bool		ReadVersion(DWORD nIndex, LPCTSTR pszPath);
+	bool		CopyVersionField(CXMLElement* pXML, LPCTSTR pszAttribute, BYTE* pBuffer, LPCTSTR pszKey, DWORD nLangId, bool bCommaToDot = false);
+	CString		GetVersionKey(BYTE* pBuffer, LPCTSTR pszKey, DWORD nLangId);
+	DWORD		GetBestLanguageId(LPVOID pBuffer);
+	bool		GetLanguageId(LPVOID pBuffer, UINT nSize, WORD nLangId, DWORD &nId, bool bOnlyPrimary = false);
 
 	// Module Manifest Validation
-	static bool		ValidateManifest(LPCTSTR pszPath);
+	bool		ValidateManifest(LPCTSTR pszPath);
 
 	// Windows Installer
-	static bool		ReadMSI(DWORD nIndex, LPCTSTR pszPath);
-	static CString	GetSummaryField(MSIHANDLE hSummaryInfo, UINT nProperty);
+	bool		ReadMSI(DWORD nIndex, LPCTSTR pszPath);
+	CString		GetSummaryField(MSIHANDLE hSummaryInfo, UINT nProperty);
 
 	// Image Files
-	static bool		ReadJPEG(DWORD nIndex, HANDLE hFile);
-	static bool		ReadGIF(DWORD nIndex, HANDLE hFile);
-	static bool		ReadPNG(DWORD nIndex, HANDLE hFile);
-	static bool		ReadBMP(DWORD nIndex, HANDLE hFile);
+	bool		ReadJPEG(DWORD nIndex, HANDLE hFile);
+	bool		ReadGIF(DWORD nIndex, HANDLE hFile);
+	bool		ReadPNG(DWORD nIndex, HANDLE hFile);
+	bool		ReadBMP(DWORD nIndex, HANDLE hFile);
 
 	// General Media
-	static bool		ReadASF(DWORD nIndex, HANDLE hFile);
-	static bool		ReadAVI(DWORD nIndex, HANDLE hFile);
-	static bool		ReadMPEG(DWORD nIndex, HANDLE hFile);
-	static bool		ReadOGG(DWORD nIndex, HANDLE hFile);
-	static BYTE*	ReadOGGPage(HANDLE hFile, DWORD& nBuffer, BYTE nFlags, DWORD nSequence, DWORD nMinSize = 0);
-	static bool		ReadOGGString(BYTE*& pOGG, DWORD& nOGG, CString& str);
-	static bool		ReadAPE(DWORD nIndex, HANDLE hFile, bool bPreferFooter = false);
-	static bool		ReadMPC(DWORD nIndex, HANDLE hFile);
-	static bool		ReadPDF(DWORD nIndex, HANDLE hFile, LPCTSTR pszPath);
-	static CString	ReadLine(HANDLE hFile, LPCTSTR pszSeparators = NULL);
-	static CString	ReadLineReverse(HANDLE hFile, LPCTSTR pszSeparators = NULL);
-	static bool		ReadCollection(DWORD nIndex, HANDLE hFile);
-	static bool		ReadCHM(DWORD nIndex, HANDLE hFile, LPCTSTR pszPath);
-	static CString	DecodePDFText(CString& strInput);
-	static bool		ReadTorrent(DWORD nIndex, HANDLE hFile, LPCTSTR pszPath);
+	bool		ReadASF(DWORD nIndex, HANDLE hFile);
+	bool		ReadAVI(DWORD nIndex, HANDLE hFile);
+	bool		ReadMPEG(DWORD nIndex, HANDLE hFile);
+	bool		ReadOGG(DWORD nIndex, HANDLE hFile);
+	BYTE*		ReadOGGPage(HANDLE hFile, DWORD& nBuffer, BYTE nFlags, DWORD nSequence, DWORD nMinSize = 0);
+	bool		ReadOGGString(BYTE*& pOGG, DWORD& nOGG, CString& str);
+	bool		ReadAPE(DWORD nIndex, HANDLE hFile, bool bPreferFooter = false);
+	bool		ReadMPC(DWORD nIndex, HANDLE hFile);
+	bool		ReadPDF(DWORD nIndex, HANDLE hFile, LPCTSTR pszPath);
+	CString		ReadLine(HANDLE hFile, LPCTSTR pszSeparators = NULL);
+	CString		ReadLineReverse(HANDLE hFile, LPCTSTR pszSeparators = NULL);
+	bool		ReadCollection(DWORD nIndex, HANDLE hFile);
+	bool		ReadCHM(DWORD nIndex, HANDLE hFile, LPCTSTR pszPath);
+	CString		DecodePDFText(CString& strInput);
+	bool		ReadTorrent(DWORD nIndex, HANDLE hFile, LPCTSTR pszPath);
 };
