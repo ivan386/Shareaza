@@ -25,10 +25,11 @@ class CXMLElement;
 
 class CLibraryBuilderInternals
 {
-public:
+private:
 	static LPCTSTR	pszID3Genre[];
 
 public:
+	int				LookupID3v1Genre(const CString& strGenre) const;
 	static bool		ExtractMetadata(DWORD nIndex, const CString& strPath, HANDLE hFile);
 
 private:

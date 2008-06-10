@@ -257,6 +257,23 @@ bool CLibraryBuilderInternals::CopyID3v1Field(CXMLElement* pXML, LPCTSTR pszAttr
 	return true;
 }
 
+int CLibraryBuilderInternals::LookupID3v1Genre(const CString& strGenre) const
+{
+	// Loop through all the genres
+	for ( int nGenre = 0 ; nGenre < ID3_GENRES ; nGenre ++ )
+	{
+		// Compare with listed genre
+		if ( strGenre.CompareNoCase( pszID3Genre[ nGenre ] ) == 0 )
+		{
+			// Return matching genre
+			return nGenre;
+		}
+	}
+
+	// Return no match found
+	return -1;
+}
+
 //////////////////////////////////////////////////////////////////////
 // CLibraryBuilderInternals ID3v2 (threaded)
 

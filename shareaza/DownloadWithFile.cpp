@@ -614,30 +614,27 @@ BOOL CDownloadWithFile::AppendMetadataID3v1(HANDLE hFile, CXMLElement* pXML)
 	std::memcpy( pID3.szTag, ID3V1_TAG, 3 );
 
 	str = pXML->GetAttributeValue( _T("title") );
-	if ( str.GetLength() > 0 )
+	if ( str.GetLength() )
 		strncpy( pID3.szSongname, CT2CA( str ), 30 );
 
 	str = pXML->GetAttributeValue( _T("artist") );
-	if ( str.GetLength() > 0 )
+	if ( str.GetLength() )
 		strncpy( pID3.szArtist, CT2CA( str ), 30 );
 
 	str = pXML->GetAttributeValue( _T("album") );
-	if ( str.GetLength() > 0 )
+	if ( str.GetLength() )
 		strncpy( pID3.szAlbum, CT2CA( str ), 30 );
 
 	str = pXML->GetAttributeValue( _T("year") );
-	if ( str.GetLength() > 0 )
+	if ( str.GetLength() )
 		strncpy( pID3.szYear, CT2CA( str ), 4 );
 
 	str = pXML->GetAttributeValue( _T("genre") );
-
-	for ( int nGenre = 0 ; nGenre < ID3_GENRES ; nGenre ++ )
+	if ( str.GetLength() )
 	{
-		if ( str.CompareNoCase( LibraryBuilder.pszID3Genre[ nGenre ] ) == 0 )
-		{
-			pID3.nGenre = BYTE( nGenre );
-			break;
-		}
+		int nGenre = LibraryBuilder.LookupID3v1Genre( str );
+		if ( nGenre != -1 )
+			pID3.nGenre = static_cast< BYTE >( nGenre );
 	}
 
 	SetFilePointer( hFile, 0, NULL, FILE_END );
