@@ -52,21 +52,23 @@ public:
 
 	static bool RefreshMetadata(const CString& sPath);
 
-protected:
-	class __declspec(novtable) CFileInfo
+private:
+	class CFileInfo
 	{
 	public:
-		inline CFileInfo(DWORD n = 0) throw() :
-			nIndex( n ), nNextAccessTime( 0 )
+		CFileInfo(DWORD index = 0ul) :
+			nIndex			( index )
+		,	nNextAccessTime	( 0ull )
 		{
 		}
-		inline CFileInfo(const CFileInfo& i) throw() :
-			nIndex( i.nIndex ), nNextAccessTime( i.nNextAccessTime)
+		CFileInfo(const CFileInfo& oFileInfo) :
+			nIndex			( oFileInfo.nIndex )
+		,	nNextAccessTime	( oFileInfo.nNextAccessTime )
 		{
 		}
-		inline bool operator==(const CFileInfo& i) const throw()
+		bool operator==(const CFileInfo& oFileInfo) const
 		{
-			return ( nIndex == i.nIndex );
+			return ( nIndex == oFileInfo.nIndex );
 		}
 		DWORD		nIndex;							// Library file index
 		QWORD		nNextAccessTime;				// Next access time
