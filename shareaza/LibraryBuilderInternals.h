@@ -21,6 +21,7 @@
 
 #pragma once
 
+class CXMLElement;
 
 class CLibraryBuilderInternals
 {
@@ -29,30 +30,37 @@ public:
 
 public:
 	static bool		ExtractMetadata(DWORD nIndex, const CString& strPath, HANDLE hFile);
-protected:		// ID3v1 and ID3v2 and MP3
+
+private:
+	// ID3v1 and ID3v2 and MP3
 	static bool		ReadID3v1(DWORD nIndex, HANDLE hFile, CXMLElement* pXML = NULL);
 	static bool		CopyID3v1Field(CXMLElement* pXML, LPCTSTR pszAttribute, CString strValue);
 	static bool		ReadID3v2(DWORD nIndex, HANDLE hFile);
 	static bool		CopyID3v2Field(CXMLElement* pXML, LPCTSTR pszAttribute, BYTE* pBuffer, DWORD nLength, bool bSkipLanguage = false);
 	static bool		ReadMP3Frames(DWORD nIndex, HANDLE hFile);
 	static bool		ScanMP3Frame(CXMLElement* pXML, HANDLE hFile, DWORD nIgnore);
-protected:		// Module Version
+
+	// Module Version
 	static bool		ReadVersion(DWORD nIndex, LPCTSTR pszPath);
 	static bool		CopyVersionField(CXMLElement* pXML, LPCTSTR pszAttribute, BYTE* pBuffer, LPCTSTR pszKey, DWORD nLangId, bool bCommaToDot = false);
 	static CString	GetVersionKey(BYTE* pBuffer, LPCTSTR pszKey, DWORD nLangId);
 	static DWORD	GetBestLanguageId(LPVOID pBuffer);
 	static bool		GetLanguageId(LPVOID pBuffer, UINT nSize, WORD nLangId, DWORD &nId, bool bOnlyPrimary = false);
-protected:		// Module Manifest Validation
+
+	// Module Manifest Validation
 	static bool		ValidateManifest(LPCTSTR pszPath);
-protected:		// Windows Installer
+
+	// Windows Installer
 	static bool		ReadMSI(DWORD nIndex, LPCTSTR pszPath);
 	static CString	GetSummaryField(MSIHANDLE hSummaryInfo, UINT nProperty);
-protected:		// Image Files
+
+	// Image Files
 	static bool		ReadJPEG(DWORD nIndex, HANDLE hFile);
 	static bool		ReadGIF(DWORD nIndex, HANDLE hFile);
 	static bool		ReadPNG(DWORD nIndex, HANDLE hFile);
 	static bool		ReadBMP(DWORD nIndex, HANDLE hFile);
-protected:		// General Media
+
+	// General Media
 	static bool		ReadASF(DWORD nIndex, HANDLE hFile);
 	static bool		ReadAVI(DWORD nIndex, HANDLE hFile);
 	static bool		ReadMPEG(DWORD nIndex, HANDLE hFile);

@@ -21,12 +21,13 @@
 
 #pragma once
 
+#include "LibraryBuilderInternals.h"
 
 class CLibraryFile;
 class CXMLElement;
 
 
-class CLibraryBuilder
+class CLibraryBuilder : public CLibraryBuilderInternals
 {
 public:
 	CLibraryBuilder();

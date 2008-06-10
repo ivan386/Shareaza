@@ -37,7 +37,7 @@
 #include "ED2K.h"
 #include "XML.h"
 #include "SchemaCache.h"
-#include "LibraryBuilderInternals.h"
+#include "LibraryBuilder.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -633,7 +633,7 @@ BOOL CDownloadWithFile::AppendMetadataID3v1(HANDLE hFile, CXMLElement* pXML)
 
 	for ( int nGenre = 0 ; nGenre < ID3_GENRES ; nGenre ++ )
 	{
-		if ( str.CompareNoCase( CLibraryBuilderInternals::pszID3Genre[ nGenre ] ) == 0 )
+		if ( str.CompareNoCase( LibraryBuilder.pszID3Genre[ nGenre ] ) == 0 )
 		{
 			pID3.nGenre = BYTE( nGenre );
 			break;

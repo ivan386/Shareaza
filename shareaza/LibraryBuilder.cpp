@@ -25,7 +25,6 @@
 #include "SharedFile.h"
 #include "Library.h"
 #include "LibraryBuilder.h"
-#include "LibraryBuilderInternals.h"
 #include "LibraryBuilderPlugins.h"
 #include "HashDatabase.h"
 #include "Security.h"
@@ -382,7 +381,7 @@ void CLibraryBuilder::OnRun()
 				if ( HashFile( sPath, hFile, nIndex ) )
 				{
 					SetFilePointer( hFile, 0, NULL, FILE_BEGIN );
-					CLibraryBuilderInternals::ExtractMetadata( nIndex, sPath, hFile );
+					ExtractMetadata( nIndex, sPath, hFile );
 
 					SetFilePointer( hFile, 0, NULL, FILE_BEGIN );
 					CLibraryBuilderPlugins::ExtractMetadata( nIndex, sPath, hFile );
@@ -752,8 +751,7 @@ bool CLibraryBuilder::RefreshMetadata(const CString& sPath)
 		theApp.Message( MSG_DEBUG, _T("Refreshing: %s"), (LPCTSTR)sPath );
 
 		SetFilePointer( hFile, 0, NULL, FILE_BEGIN );
-		bResult = CLibraryBuilderInternals::ExtractMetadata( nIndex, sPath, hFile ) ||
-			bResult;
+		bResult |= ExtractMetadata( nIndex, sPath, hFile );
 
 		SetFilePointer( hFile, 0, NULL, FILE_BEGIN );
 		bResult = CLibraryBuilderPlugins::ExtractMetadata( nIndex, sPath, hFile ) ||
