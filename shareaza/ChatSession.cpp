@@ -735,7 +735,7 @@ BOOL CChatSession::OnChatMessage(CEDPacket* pPacket)
 		sMessage = pPacket->ReadStringASCII( nMessageLength );
 
 	// Display message
-	if ( m_pWndPrivate != NULL ) m_pWndPrivate->OnRemoteMessage( FALSE, sMessage.GetBuffer() );
+	if ( m_pWndPrivate != NULL ) m_pWndPrivate->OnRemoteMessage( false, sMessage.GetBuffer() );
 	return TRUE;
 }
 
@@ -775,22 +775,22 @@ BOOL CChatSession::OnText(const CString& str)
 	{
 		if ( ::StartsWith( str, _PT("\001ACTION ") ) )
 		{
-			m_pWndPrivate->OnRemoteMessage( TRUE, str.Mid( 8 ) );
+			m_pWndPrivate->OnRemoteMessage( true, str.Mid( 8 ) );
 		}
 		else
 		{
-			m_pWndPrivate->OnRemoteMessage( FALSE, str );
+			m_pWndPrivate->OnRemoteMessage( false, str );
 		}
 	}
 	else if ( ::StartsWith( str, _PT("MESSAGE ") ) )
 	{
 		if ( ::StartsWith( str, _PT("MESSAGE \001ACTION ") ) )
 		{
-			m_pWndPrivate->OnRemoteMessage( TRUE, str.Mid( 16 ) );
+			m_pWndPrivate->OnRemoteMessage( true, str.Mid( 16 ) );
 		}
 		else
 		{
-			m_pWndPrivate->OnRemoteMessage( FALSE, str.Mid( 8 ) );
+			m_pWndPrivate->OnRemoteMessage( false, str.Mid( 8 ) );
 		}
 	}
 	else if ( ::StartsWith( str, _PT("NICK ") ) )
@@ -1042,9 +1042,10 @@ BOOL CChatSession::OnChatRequest(CG2Packet* pPacket)
 	return TRUE;
 }
 
-BOOL CChatSession::OnChatAnswer(CG2Packet* pPacket)
+bool CChatSession::OnChatAnswer(CG2Packet* pPacket)
 {
-	if ( ! pPacket->m_bCompound ) return TRUE;
+	if ( !pPacket->m_bCompound )
+		return true;
 	
 	G2_PACKET nType;
 	DWORD nLength;
@@ -1057,19 +1058,18 @@ BOOL CChatSession::OnChatAnswer(CG2Packet* pPacket)
 		{
 		case G2_PACKET_CHAT_ACCEPT:
 			m_nState = cssActive;
-			StatusMessage( 2, IDS_CHAT_PRIVATE_ONLINE, (LPCTSTR)m_sUserNick );
+			StatusMessage( 2, IDS_CHAT_PRIVATE_ONLINE, m_sUserNick );
 			StatusMessage( 0, 0 );
-			return TRUE;
+			return true;
 
 		case G2_PACKET_CHAT_DENY:
-			StatusMessage( 1, IDS_CHAT_PRIVATE_REFUSED, (LPCTSTR)m_sUserNick );
+			StatusMessage( 1, IDS_CHAT_PRIVATE_REFUSED, m_sUserNick );
 			break;
 
 		case G2_PACKET_CHAT_AWAY:
 			{
 				CString strAway = pPacket->ReadString( nLength );
-				StatusMessage( 1, IDS_CHAT_PRIVATE_AWAY, (LPCTSTR)m_sUserNick,
-					(LPCTSTR)strAway );
+				StatusMessage( 1, IDS_CHAT_PRIVATE_AWAY, m_sUserNick, strAway );
 			}
 			break;
 		}
@@ -1078,14 +1078,15 @@ BOOL CChatSession::OnChatAnswer(CG2Packet* pPacket)
 	
 	Close();
 	
-	return FALSE;
+	return false;
 }
 
-BOOL CChatSession::OnChatMessage(CG2Packet* pPacket)
+bool CChatSession::OnChatMessage(CG2Packet* pPacket)
 {
-	if ( ! pPacket->m_bCompound ) return TRUE;
+	if ( !pPacket->m_bCompound )
+		return true;
 	
-	BOOL bAction = FALSE;
+	bool bAction = false;
 	CString strBody;
 	G2_PACKET nType;
 	DWORD nLength;
@@ -1101,49 +1102,55 @@ BOOL CChatSession::OnChatMessage(CG2Packet* pPacket)
 			break;
 		
 		case G2_PACKET_CHAT_ACTION:
-			bAction = TRUE;
+			bAction = true;
 			break;
 		}
 		
 		pPacket->m_nPosition = nOffset;
 	}
 	
-	if ( strBody.IsEmpty() ) return TRUE;
+	if ( strBody.IsEmpty() )
+		return true;
 	
-	if ( m_pWndPrivate != NULL ) m_pWndPrivate->OnRemoteMessage( bAction, strBody );
+	if ( m_pWndPrivate != NULL )
+		m_pWndPrivate->OnRemoteMessage( bAction, strBody );
 	
-	return TRUE;
+	return true;
 }
 
 //////////////////////////////////////////////////////////////////////
 // CChatSession message interface
 
-BOOL CChatSession::SendPrivateMessage(BOOL bAction, LPCTSTR pszText)
+bool CChatSession::SendPrivateMessage(bool bAction, const CString& strText)
 {
 	CSingleLock pLock( &ChatCore.m_pSection, TRUE );
 	
-	if ( m_nState != cssActive && m_nState != cssAway ) return FALSE;
+	if ( m_nState != cssActive && m_nState != cssAway )
+		return false;
+
+	CString strMessage( strText );
+	if ( m_nState == cssAway )
+	{
+		CString strNick = MyProfile.GetNick();
+		if ( strNick.IsEmpty() )
+			strNick = CLIENT_NAME" User";
+		strMessage.Format( IDS_CHAT_PRIVATE_AWAY, strNick, strText );
+	}
 
 	if ( m_nProtocol == PROTOCOL_G2 )
 	{
 		CG2Packet* pPacket = CG2Packet::New( G2_PACKET_CHAT_MESSAGE, TRUE );
 		
-		if ( bAction ) pPacket->WritePacket( G2_PACKET_CHAT_ACTION, 0 );
+		if ( bAction )
+			pPacket->WritePacket( G2_PACKET_CHAT_ACTION, 0 );
 		
-		pPacket->WritePacket( G2_PACKET_BODY, pPacket->GetStringLen( pszText ) );
-		pPacket->WriteString( pszText, FALSE );
+		pPacket->WritePacket( G2_PACKET_BODY, pPacket->GetStringLen( strMessage ) );
+		pPacket->WriteString( strMessage, FALSE );
 		
 		Send( pPacket, TRUE );
 	}
 	else if ( m_nProtocol == PROTOCOL_ED2K )
 	{
-		CString strMessage;
-
-		if ( m_nState == cssAway )
-			strMessage.Format( L"%s is away: %s", (LPCTSTR)m_sUserNick, pszText );
-		else
-			strMessage = pszText;
-
 		// Limit outgoing ed2k messages to shorter than ED2K_MESSAGE_MAX characters, just in case
 		strMessage = strMessage.Left( ED2K_MESSAGE_MAX - 50 );
 
@@ -1172,31 +1179,25 @@ BOOL CChatSession::SendPrivateMessage(BOOL bAction, LPCTSTR pszText)
 	}
 	else // PROTOCOL_G1
 	{
+		if ( !m_bOld )
+			strMessage = _T("MESSAGE ") + strMessage;
 
-		CString str, strMessage;
+		if ( bAction )
+			strMessage = _T("\001ACTION ") + strMessage;
+
+		strMessage += _T("\r\n");
 		
-		if ( ! m_bOld ) str += _T("MESSAGE ");
-		if ( bAction ) str += _T("\001ACTION ");
-
-		if ( m_nState == cssAway )
-			strMessage.Format( L"%s is away: %s", (LPCTSTR)m_sUserNick, pszText );
-		else
-			strMessage = pszText;
-
-		str += strMessage;
-		str += _T("\r\n");
-		
-		Print( str, str.GetLength() );
+		Print( strMessage, strMessage.GetLength() );
 	}
 
-	return TRUE;
+	return true;
 }
 
-BOOL CChatSession::SendAwayMessage(LPCTSTR pszText)
+bool CChatSession::SendAwayMessage(const CString& strText)
 {
 	int nOldState = m_nState;
 	m_nState = cssAway;
-	BOOL bResult = SendPrivateMessage( FALSE, pszText );
+	bool bResult = SendPrivateMessage( false, strText );
 	m_nState = nOldState;
 
 	return bResult;

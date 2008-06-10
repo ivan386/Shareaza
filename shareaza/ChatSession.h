@@ -73,8 +73,8 @@ public:
 public:
 	void		Print(LPCTSTR pszString, size_t nLength);
 	void		Send(CG2Packet* pPacket, BOOL bRelease = TRUE);
-	BOOL		SendPrivateMessage(BOOL bAction, LPCTSTR pszText);
-	BOOL		SendAwayMessage(LPCTSTR pszText);
+	bool		SendPrivateMessage(bool bAction, const CString& strText);
+	bool		SendAwayMessage(const CString& strText);
 	void		StatusMessage(int nFlags, UINT nID, ...);
 	void		OnOpenWindow();
 	void		OnCloseWindow();
@@ -102,8 +102,8 @@ protected:
 	BOOL	OnProfileChallenge(CG2Packet* pPacket);
 	BOOL	OnProfileDelivery(CG2Packet* pPacket);
 	BOOL	OnChatRequest(CG2Packet* pPacket);
-	BOOL	OnChatAnswer(CG2Packet* pPacket);
-	BOOL	OnChatMessage(CG2Packet* pPacket);
+	bool	OnChatAnswer(CG2Packet* pPacket);
+	bool	OnChatMessage(CG2Packet* pPacket);
 
 };
 

@@ -168,10 +168,10 @@ void CPrivateChatFrame::OnProfileReceived()
 	SetAlert();
 }
 
-void CPrivateChatFrame::OnRemoteMessage(BOOL bAction, LPCTSTR pszText)
+void CPrivateChatFrame::OnRemoteMessage(bool bAction, LPCTSTR pszText)
 {
 	// Check message spam filter (if enabled)
-	if ( ! MessageFilter.IsFiltered( pszText ) )
+	if ( !MessageFilter.IsFiltered( pszText ) )
 	{
 		DWORD nIdle = (DWORD)time( NULL ) - theApp.m_dwLastInput;
 
@@ -183,11 +183,12 @@ void CPrivateChatFrame::OnRemoteMessage(BOOL bAction, LPCTSTR pszText)
 			else
 				strTime.Format( _T("%i:%.2i:%.2i"), nIdle / 3600, ( nIdle / 60 ) % 60, nIdle % 60 );
 
-			m_pSession->SendAwayMessage( (LPCTSTR)strTime );
+			m_pSession->SendAwayMessage( strTime );
 		}
 
 		// Adult filter (if enabled)
-		if ( AdultFilter.IsChatFiltered( pszText ) ) AdultFilter.Censor( (TCHAR*)pszText );
+		if ( AdultFilter.IsChatFiltered( pszText ) )
+			AdultFilter.Censor( (TCHAR*)pszText );
 
 		AddText( FALSE, bAction, m_sNick, pszText );
 		SetAlert();
@@ -195,7 +196,7 @@ void CPrivateChatFrame::OnRemoteMessage(BOOL bAction, LPCTSTR pszText)
 	}
 }
 
-void CPrivateChatFrame::OnLocalMessage(BOOL bAction, LPCTSTR pszText)
+void CPrivateChatFrame::OnLocalMessage(bool bAction, LPCTSTR pszText)
 {
 	TRISTATE bConnected = m_pSession->GetConnectedState();
 
@@ -214,7 +215,8 @@ void CPrivateChatFrame::OnLocalMessage(BOOL bAction, LPCTSTR pszText)
 	}
 
 	// Adult filter (if enabled)
-	if ( AdultFilter.IsChatFiltered( pszText ) ) AdultFilter.Censor( (TCHAR*)pszText );
+	if ( AdultFilter.IsChatFiltered( pszText ) )
+		AdultFilter.Censor( (TCHAR*)pszText );
 
 	AddText( TRUE, bAction, MyProfile.GetNick().Left( 255 ), pszText );
 	m_pSession->SendPrivateMessage( bAction, pszText );
