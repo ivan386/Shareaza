@@ -23,7 +23,7 @@
 
 class CXMLElement;
 
-class CLibraryBuilderInternals
+class CLibraryBuilderInternals : private boost::noncopyable
 {
 private:
 	static LPCTSTR	pszID3Genre[];

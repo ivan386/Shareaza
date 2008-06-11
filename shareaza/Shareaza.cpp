@@ -36,7 +36,7 @@
 #include "EDClients.h"
 #include "BTClients.h"
 #include "Library.h"
-#include "LibraryBuilderPlugins.h"
+#include "LibraryBuilder.h"
 #include "Transfers.h"
 #include "DownloadGroups.h"
 #include "Downloads.h"
@@ -231,7 +231,7 @@ BOOL CShareazaApp::InitInstance()
 		// ProcessShellCommand( m_ocmdInfo );
 		// ... else all INI settings will be deleted (by design)
 
-		// Do not call this -> 
+		// Do not call this ->
 		// AfxOleUnregisterTypeLib( _tlid, _wVerMajor, _wVerMinor );
 		// COleTemplateServer::UnregisterAll();
 		// COleObjectFactory::UpdateRegistryAll( FALSE );
@@ -287,13 +287,13 @@ BOOL CShareazaApp::InitInstance()
 	IEProtocol.Create();
 
 	// Set Build Date
-	COleDateTime tCompileTime; 
+	COleDateTime tCompileTime;
 	tCompileTime.ParseDateTime( _T(__DATE__), LOCALE_NOUSEROVERRIDE, 1033 );
 	m_sBuildDate = tCompileTime.Format( _T("%Y%m%d") );
 
 	// ***********
 	//*
-	// Beta expiry. Remember to re-compile to update the time, and remove this 
+	// Beta expiry. Remember to re-compile to update the time, and remove this
 	// section for final releases and public betas.
 	COleDateTime tCurrent = COleDateTime::GetCurrentTime();
 	//COleDateTimeSpan tTimeOut( 31 * 2, 0, 0, 0);	// Betas that aren't on sourceforge
@@ -310,7 +310,7 @@ BOOL CShareazaApp::InitInstance()
 	//*
 	// Alpha warning. Remember to remove this section for final releases and public betas.
 	if ( ! m_ocmdInfo.m_bNoAlphaWarning )
-	if ( AfxMessageBox( 
+	if ( AfxMessageBox(
 		L"WARNING: This is an ALPHA TEST version of Shareaza.\n\n"
 		L"It is NOT FOR GENERAL USE, and is only for testing specific features in a controlled "
 		L"environment. It will frequently stop running, or display debug information to assist testing.\n\n"
@@ -415,14 +415,14 @@ BOOL CShareazaApp::InitInstance()
 		}
 
 	// From this point translations are available and LoadString returns correct strings
-	SplashStep( L"Download Manager" ); 
+	SplashStep( L"Download Manager" );
 		Downloads.Load();
 	SplashStep( L"Upload Manager" );
 		UploadQueues.Load();
 	SplashStep( L"Library" );
 		Library.Load();
 	SplashStep( L"Upgrade Manager" );
-		VersionChecker.Start(); 
+		VersionChecker.Start();
 
 	pCursor.Restore();
 
@@ -438,12 +438,12 @@ BOOL CShareazaApp::InitInstance()
 /////////////////////////////////////////////////////////////////////////////
 // CShareazaApp termination
 
-int CShareazaApp::ExitInstance() 
+int CShareazaApp::ExitInstance()
 {
 	if ( m_bInteractive )
 	{
 		CWaitCursor pCursor;
-		
+
 		DDEServer.Close();
 		IEProtocol.Close();
 
@@ -455,17 +455,17 @@ int CShareazaApp::ExitInstance()
 		SplashStep( L"Stopping Library Tasks" );
 		Library.StopThread();
 
-		SplashStep( L"Stopping Transfers" );	
+		SplashStep( L"Stopping Transfers" );
 		Transfers.StopThread();
 		Downloads.CloseTransfers();
 
-		SplashStep( L"Clearing Clients" );	
+		SplashStep( L"Clearing Clients" );
 		Uploads.Clear( FALSE );
 		EDClients.Clear();
 
 		if ( Settings.Connection.DeleteFirewallException )
 		{
-			SplashStep( L"Closing Windows Firewall Access" );	
+			SplashStep( L"Closing Windows Firewall Access" );
 			CFirewall firewall;
 			if ( firewall.AccessWindowsFirewall() )
 			{
@@ -505,34 +505,43 @@ int CShareazaApp::ExitInstance()
 
 		SplashStep();
 
-		CLibraryBuilderPlugins::Cleanup();
+		LibraryBuilder.CleanupPlugins();
 		Plugins.Clear();
 	}
 
-	if ( m_hUser32 != NULL ) FreeLibrary( m_hUser32 );
+	if ( m_hUser32 != NULL )
+		FreeLibrary( m_hUser32 );
 
 	WSACleanup();
 
-	if ( m_hShellFolder != NULL ) FreeLibrary( m_hShellFolder );
+	if ( m_hShellFolder != NULL )
+		FreeLibrary( m_hShellFolder );
 
-	if ( m_hGDI32 != NULL ) FreeLibrary( m_hGDI32 );
+	if ( m_hGDI32 != NULL )
+		FreeLibrary( m_hGDI32 );
 
-	if ( m_hTheme != NULL ) FreeLibrary( m_hTheme );
+	if ( m_hTheme != NULL )
+		FreeLibrary( m_hTheme );
 
-	if ( m_hPowrProf != NULL ) FreeLibrary( m_hPowrProf );
+	if ( m_hPowrProf != NULL )
+		FreeLibrary( m_hPowrProf );
 
-	if ( m_hShlWapi != NULL ) FreeLibrary( m_hShlWapi );
+	if ( m_hShlWapi != NULL )
+		FreeLibrary( m_hShlWapi );
 
-	if ( m_hGeoIP != NULL ) FreeLibrary( m_hGeoIP );
+	if ( m_hGeoIP != NULL )
+		FreeLibrary( m_hGeoIP );
 
-	if ( m_hLibGFL != NULL ) FreeLibrary( m_hLibGFL );
+	if ( m_hLibGFL != NULL )
+		FreeLibrary( m_hLibGFL );
 
 	delete m_pFontManager;
 
 	UnhookWindowsHookEx( m_hHookKbd );
 	UnhookWindowsHookEx( m_hHookMouse );
 
-	if ( m_pMutex != NULL ) CloseHandle( m_pMutex );
+	if ( m_pMutex != NULL )
+		CloseHandle( m_pMutex );
 
 	return CWinApp::ExitInstance();
 }
@@ -554,7 +563,7 @@ void CShareazaApp::SplashStep(LPCTSTR pszMessage, int nMax, bool bClosing)
 		m_dlgSplash->Step( pszMessage );
 }
 
-void CShareazaApp::WinHelp(DWORD /*dwData*/, UINT /*nCmd*/) 
+void CShareazaApp::WinHelp(DWORD /*dwData*/, UINT /*nCmd*/)
 {
 	// Suppress F1
 }
@@ -738,7 +747,7 @@ void CShareazaApp::GetVersionNumber()
 	m_dwWindowsVersion = pVersion.dwMajorVersion;
 
 	//Win2000 = 0 WinXP = 1
-	m_dwWindowsVersionMinor = pVersion.dwMinorVersion; 
+	m_dwWindowsVersionMinor = pVersion.dwMinorVersion;
 
 	// Detect Windows ME
 	m_bWinME = ( m_dwWindowsVersion == 4 && m_dwWindowsVersionMinor == 90 );
@@ -778,20 +787,20 @@ void CShareazaApp::InitResources()
 		(FARPROC&)m_pfnSetLayeredWindowAttributes = GetProcAddress(
 			m_hUser32, "SetLayeredWindowAttributes" );
 
-		(FARPROC&)m_pfnGetMonitorInfoA = GetProcAddress( 
-			m_hUser32, "GetMonitorInfoA" ); 
+		(FARPROC&)m_pfnGetMonitorInfoA = GetProcAddress(
+			m_hUser32, "GetMonitorInfoA" );
 
-		(FARPROC&)m_pfnMonitorFromRect = GetProcAddress( 
-			m_hUser32, "MonitorFromRect" ); 
+		(FARPROC&)m_pfnMonitorFromRect = GetProcAddress(
+			m_hUser32, "MonitorFromRect" );
 
-		(FARPROC&)m_pfnMonitorFromWindow = GetProcAddress( 
-			m_hUser32, "MonitorFromWindow" ); 
+		(FARPROC&)m_pfnMonitorFromWindow = GetProcAddress(
+			m_hUser32, "MonitorFromWindow" );
 
-		(FARPROC&)m_pfnGetAncestor = GetProcAddress( 
-			m_hUser32, "GetAncestor" ); 
+		(FARPROC&)m_pfnGetAncestor = GetProcAddress(
+			m_hUser32, "GetAncestor" );
 
-		(FARPROC&)m_pfnPrivateExtractIconsW = GetProcAddress( 
-			m_hUser32, "PrivateExtractIconsW" ); 
+		(FARPROC&)m_pfnPrivateExtractIconsW = GetProcAddress(
+			m_hUser32, "PrivateExtractIconsW" );
 	}
 	else
 	{
@@ -911,7 +920,7 @@ void CShareazaApp::InitResources()
 	{
 		// Fall back to GlobalMemoryStatus (always available)
 		MEMORYSTATUS pMemory;
-		GlobalMemoryStatus( &pMemory ); 
+		GlobalMemoryStatus( &pMemory );
 		m_nPhysicalMemory = pMemory.dwTotalPhys;
 	}
 
@@ -927,16 +936,16 @@ void CShareazaApp::InitResources()
 	theApp.m_sPacketDumpFont	= theApp.GetProfileString( _T("Fonts"), _T("PacketDumpFont"), _T("Lucida Console") );
 	theApp.m_sSystemLogFont		= theApp.GetProfileString( _T("Fonts"), _T("SystemLogFont"), strFont );
 	theApp.m_nDefaultFontSize	= theApp.GetProfileInt( _T("Fonts"), _T("FontSize"), 11 );
-	
+
 	// Set up the default font
 	m_gdiFont.CreateFontW( -theApp.m_nDefaultFontSize, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE,
 		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
 		DEFAULT_PITCH|FF_DONTCARE, theApp.m_sDefaultFont );
-	
+
 	m_gdiFontBold.CreateFontW( -theApp.m_nDefaultFontSize, 0, 0, 0, FW_BOLD, FALSE, FALSE, FALSE,
 		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
 		DEFAULT_PITCH|FF_DONTCARE, theApp.m_sDefaultFont );
-	
+
 	m_gdiFontLine.CreateFontW( -theApp.m_nDefaultFontSize, 0, 0, 0, FW_NORMAL, FALSE, TRUE, FALSE,
 		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
 		DEFAULT_PITCH|FF_DONTCARE, theApp.m_sDefaultFont );
@@ -1088,17 +1097,17 @@ void CShareazaApp::LogMessage(LPCTSTR pszLog) const
 	CFile pFile;
 	if ( pFile.Open( Settings.General.UserPath + _T("\\Data\\Shareaza.log"), CFile::modeReadWrite ) )
 	{
-		if ( ( Settings.General.MaxDebugLogSize ) &&					// If log rotation is on 
+		if ( ( Settings.General.MaxDebugLogSize ) &&					// If log rotation is on
 			( pFile.GetLength() > Settings.General.MaxDebugLogSize ) )	// and file is too long...
-		{	
+		{
 			// Close the file
-			pFile.Close();				
-			// Rotate the logs 
+			pFile.Close();
+			// Rotate the logs
 			DeleteFile( Settings.General.UserPath + _T("\\Data\\Shareaza.old.log") );
-			MoveFile( Settings.General.UserPath + _T("\\Data\\Shareaza.log"), 
+			MoveFile( Settings.General.UserPath + _T("\\Data\\Shareaza.log"),
 				Settings.General.UserPath + _T("\\Data\\Shareaza.old.log") );
 			// Start a new log
-			if ( ! pFile.Open( Settings.General.UserPath + _T("\\Data\\Shareaza.log"), 
+			if ( ! pFile.Open( Settings.General.UserPath + _T("\\Data\\Shareaza.log"),
 				CFile::modeWrite|CFile::modeCreate ) ) return;
 			// Unicode marker
 			WORD nByteOrder = 0xFEFF;
@@ -1111,7 +1120,7 @@ void CShareazaApp::LogMessage(LPCTSTR pszLog) const
 	}
 	else
 	{
-		if ( ! pFile.Open( Settings.General.UserPath + _T("\\Data\\Shareaza.log"), 
+		if ( ! pFile.Open( Settings.General.UserPath + _T("\\Data\\Shareaza.log"),
 			CFile::modeWrite|CFile::modeCreate ) ) return;
 		// Unicode marker
 		WORD nByteOrder = 0xFEFF;
@@ -1121,7 +1130,7 @@ void CShareazaApp::LogMessage(LPCTSTR pszLog) const
 	if ( Settings.General.ShowTimestamp )
 	{
 		CTime pNow = CTime::GetCurrentTime();
-		CString strLine;	
+		CString strLine;
 		strLine.Format( _T("[%.2i:%.2i:%.2i] "),
 			pNow.GetHour(), pNow.GetMinute(), pNow.GetSecond() );
 		pFile.Write( (LPCTSTR)strLine, sizeof(TCHAR) * strLine.GetLength() );
@@ -1177,7 +1186,7 @@ CString GetErrorString(DWORD dwError)
 				return strMessage;
 			}
 		}
-	}	
+	}
 	return CString();
 }
 
@@ -1204,7 +1213,7 @@ BOOL CShareazaApp::InternalURI(LPCTSTR pszURI)
 	if ( pMainWnd == NULL ) return FALSE;
 
 	CString strURI( pszURI );
-	
+
 	if ( strURI.Find( _T("raza:command:") ) == 0 )
 	{
 		if ( UINT nCmdID = CoolInterface.NameToID( pszURI + 13 ) )
@@ -1397,10 +1406,10 @@ BOOL LoadSourcesString(CString& str, DWORD num, bool bFraction)
 	{
 		switch ( num % 10 )
 		{
-			case 0: 
+			case 0:
 				return Skin.LoadString( str, IDS_STATUS_SOURCESTENS );
 			case 1:
-				return Skin.LoadString( str, IDS_STATUS_SOURCES );				
+				return Skin.LoadString( str, IDS_STATUS_SOURCES );
 			case 2:
 			case 3:
 			case 4:
@@ -1478,14 +1487,14 @@ LPCTSTR _tcsnistr(LPCTSTR pszString, LPCTSTR pszPattern, size_t plen)
 DWORD TimeFromString(LPCTSTR pszTime)
 {
 	// 2002-04-30T08:30Z
-	
+
 	if ( _tcslen( pszTime ) != 17 ) return 0;
 	if ( pszTime[4] != '-' || pszTime[7] != '-' ) return 0;
 	if ( pszTime[10] != 'T' || pszTime[13] != ':' || pszTime[16] != 'Z' ) return 0;
-	
+
 	LPCTSTR psz;
 	int nTemp;
-	
+
 	tm pTime = {};
 
 	if ( _stscanf( pszTime, _T("%i"), &nTemp ) != 1 ) return 0;
@@ -1502,23 +1511,23 @@ DWORD TimeFromString(LPCTSTR pszTime)
 	for ( psz = pszTime + 14 ; *psz == '0' ; psz++ );
 	if ( _stscanf( psz, _T("%i"), &nTemp ) != 1 ) return 0;
 	pTime.tm_min = nTemp;
-	
+
 	time_t tGMT = mktime( &pTime );
 	// check for invalid dates
-	if (tGMT == -1) 
+	if (tGMT == -1)
 	{
 		theApp.Message( MSG_ERROR, _T("Invalid Date/Time"), pszTime );
 		return 0;
 	}
 	struct tm* pGM = gmtime( &tGMT );
 	time_t tSub = mktime( pGM );
-	
-	if (tSub == -1) 
+
+	if (tSub == -1)
 	{
 		theApp.Message( MSG_ERROR, _T("Invalid Date/Time"), pszTime );
 		return 0;
 	}
-	
+
 	return DWORD( 2 * tGMT - tSub );
 }
 
@@ -1540,11 +1549,11 @@ CString TimeToString(time_t tVal)
 BOOL TimeFromString(LPCTSTR pszTime, FILETIME* pTime)
 {
 	// 2002-04-30T08:30Z
-	
+
 	if ( _tcslen( pszTime ) != 17 ) return FALSE;
 	if ( pszTime[4] != '-' || pszTime[7] != '-' ) return FALSE;
 	if ( pszTime[10] != 'T' || pszTime[13] != ':' || pszTime[16] != 'Z' ) return FALSE;
-	
+
 	LPCTSTR psz;
 	int nTemp;
 
@@ -1588,28 +1597,28 @@ CString	TimeToString(FILETIME* pTime)
 
 void RecalcDropWidth(CComboBox* pWnd)
 {
-    // Reset the dropped width
-    int nNumEntries = pWnd->GetCount();
-    int nWidth = 0;
-    CString str;
+	// Reset the dropped width
+	int nNumEntries = pWnd->GetCount();
+	int nWidth = 0;
+	CString str;
 
-    CClientDC dc( pWnd );
-    int nSave = dc.SaveDC();
-    dc.SelectObject( pWnd->GetFont() );
+	CClientDC dc( pWnd );
+	int nSave = dc.SaveDC();
+	dc.SelectObject( pWnd->GetFont() );
 
-    int nScrollWidth = GetSystemMetrics( SM_CXVSCROLL );
-    for ( int nEntry = 0; nEntry < nNumEntries; nEntry++ )
-    {
-        pWnd->GetLBText( nEntry, str );
-        int nLength = dc.GetTextExtent( str ).cx + nScrollWidth;
-        nWidth = max( nWidth, nLength );
-    }
-    
-    // Add margin space to the calculations
-    nWidth += dc.GetTextExtent( _T("0") ).cx;
+	int nScrollWidth = GetSystemMetrics( SM_CXVSCROLL );
+	for ( int nEntry = 0; nEntry < nNumEntries; nEntry++ )
+	{
+		pWnd->GetLBText( nEntry, str );
+		int nLength = dc.GetTextExtent( str ).cx + nScrollWidth;
+		nWidth = max( nWidth, nLength );
+	}
 
-    dc.RestoreDC( nSave );
-    pWnd->SetDroppedWidth( nWidth );
+	// Add margin space to the calculations
+	nWidth += dc.GetTextExtent( _T("0") ).cx;
+
+	dc.RestoreDC( nSave );
+	pWnd->SetDroppedWidth( nWidth );
 }
 
 BOOL LoadIcon(LPCTSTR szFilename, HICON* phSmallIcon, HICON* phLargeIcon, HICON* phHugeIcon)
@@ -2105,7 +2114,7 @@ CString GetLocalAppDataFolder()
 
 		if ( !strLocalAppDataPath.GetLength() )
 			return GetAppDataFolder();
-	}	
+	}
 	ASSERT( strLocalAppDataPath.GetLength() );
 
 	CharLower( strLocalAppDataPath.GetBuffer() );
@@ -2222,7 +2231,7 @@ bool ResourceRequest(const CString& strPath, CBuffer& pResponse, CString& sHeade
 							// Save main header
 							ICONDIR* piDir = (ICONDIR*)pSource;
 							DWORD dwTotalSize = sizeof( ICONDIR ) +
-								sizeof( ICONDIRENTRY ) * piDir->idCount; 
+								sizeof( ICONDIRENTRY ) * piDir->idCount;
 							pResponse.EnsureBuffer( dwTotalSize );
 							CopyMemory( pResponse.m_pBuffer, piDir, sizeof( ICONDIR ) );
 
@@ -2298,7 +2307,7 @@ bool MarkFileAsDownload(const CString& sFilename)
 
 	if ( theApp.m_bNT && Settings.Library.MarkFileAsDownload )
 	{
-		// TODO: pFile->m_bVerify and IDS_LIBRARY_VERIFY_FIX warning features could be merged 
+		// TODO: pFile->m_bVerify and IDS_LIBRARY_VERIFY_FIX warning features could be merged
 		// with this function, because they resemble the security warning.
 		// Should raza unblock files from the application without forcing user to do that manually?
 		if ( IsIn( Settings.Library.SafeExecute, pszExt + 1 ) &&
@@ -2439,7 +2448,7 @@ static int CALLBACK BrowseCallbackProc(HWND hWnd, UINT uMsg, LPARAM lParam, LPAR
 				{
 					// Fail if pidl is a link
 					SHFILEINFO sfi = {};
-					bResult = ( SHGetFileInfo( (LPCTSTR)lParam, 0, &sfi, sizeof( sfi ), 
+					bResult = ( SHGetFileInfo( (LPCTSTR)lParam, 0, &sfi, sizeof( sfi ),
 						SHGFI_PIDL | SHGFI_ATTRIBUTES ) &&
 						( sfi.dwAttributes & SFGAO_LINK ) == 0 );
 				}

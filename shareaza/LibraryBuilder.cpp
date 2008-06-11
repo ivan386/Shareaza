@@ -25,7 +25,6 @@
 #include "SharedFile.h"
 #include "Library.h"
 #include "LibraryBuilder.h"
-#include "LibraryBuilderPlugins.h"
 #include "HashDatabase.h"
 #include "Security.h"
 #include "ThumbCache.h"
@@ -384,7 +383,7 @@ void CLibraryBuilder::OnRun()
 					ExtractMetadata( nIndex, sPath, hFile );
 
 					SetFilePointer( hFile, 0, NULL, FILE_BEGIN );
-					CLibraryBuilderPlugins::ExtractMetadata( nIndex, sPath, hFile );
+					ExtractPluginMetadata( nIndex, sPath, hFile );
 
 					CThumbCache::Cache( sPath );
 
@@ -754,8 +753,7 @@ bool CLibraryBuilder::RefreshMetadata(const CString& sPath)
 		bResult |= ExtractMetadata( nIndex, sPath, hFile );
 
 		SetFilePointer( hFile, 0, NULL, FILE_BEGIN );
-		bResult = CLibraryBuilderPlugins::ExtractMetadata( nIndex, sPath, hFile ) ||
-			bResult;
+		bResult |= ExtractPluginMetadata( nIndex, sPath, hFile );
 
 		CloseHandle( hFile );
 	}

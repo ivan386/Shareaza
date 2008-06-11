@@ -1,7 +1,7 @@
 //
 // LibraryBuilderPlugins.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -33,45 +33,43 @@ static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
 #endif
 
-CCriticalSection					CLibraryBuilderPlugins::m_pSection;
-CLibraryBuilderPlugins::CPluginMap	CLibraryBuilderPlugins::m_pMap;
-
 //////////////////////////////////////////////////////////////////////
 // CLibraryBuilderPlugins extract
 
-BOOL CLibraryBuilderPlugins::ExtractMetadata(DWORD nIndex, const CString& strPath, HANDLE hFile)
+bool CLibraryBuilderPlugins::ExtractPluginMetadata(DWORD nIndex, const CString& strPath, HANDLE hFile)
 {
 	CString strType;
-	
+
 	int nExtPos = strPath.ReverseFind( '.' );
-	if ( nExtPos != -1 ) strType = strPath.Mid( nExtPos );
-	
+	if ( nExtPos != -1 )
+		strType = strPath.Mid( nExtPos );
+
 	ToLower( strType );
-	
+
 	CComQIPtr< ILibraryBuilderPlugin > pPlugin( LoadPlugin( strType ) );
-	if ( ! pPlugin )
-		return FALSE;
-	
+	if ( !pPlugin )
+		return false;
+
 	CXMLElement* pXML	= new CXMLElement();
 	ISXMLElement* ppXML	= (ISXMLElement*)CXMLCOM::Wrap( pXML, IID_ISXMLElement );
-	
+
 	BSTR bsFile = strPath.AllocSysString();
-	
+
 	HRESULT hResult = pPlugin->Process( hFile, bsFile, ppXML );
-	
+
 	SysFreeString( bsFile );
-	
+
 	ppXML->Release();
-	
+
 	bool bSuccess = false;
-	
+
 	if ( SUCCEEDED( hResult ) )
 	{
 		if ( CXMLElement* pOuter = pXML->GetFirstElement() )
 		{
 			CXMLElement* pInner		= pOuter->GetFirstElement();
 			CString strSchemaURI	= pOuter->GetAttributeValue( CXMLAttribute::schemaName );
-			
+
 			if ( pInner && strSchemaURI.GetLength() )
 			{
 				pInner = pInner->Detach();
@@ -83,27 +81,28 @@ BOOL CLibraryBuilderPlugins::ExtractMetadata(DWORD nIndex, const CString& strPat
 	{
 		bSuccess = LibraryBuilder.SubmitCorrupted( nIndex );
 	}
-	
+
 	delete pXML;
-	
+
 	return bSuccess;
 }
 
 //////////////////////////////////////////////////////////////////////
 // CLibraryBuilderPlugins cleanup
 
-void CLibraryBuilderPlugins::Cleanup()
+void CLibraryBuilderPlugins::CleanupPlugins()
 {
 	CQuickLock oLock( m_pSection );
 
 	for ( POSITION pos = m_pMap.GetStartPosition() ; pos ; )
 	{
 		ILibraryBuilderPlugin* pPlugin = NULL;
-		CString strType;		
+		CString strType;
 		m_pMap.GetNextAssoc( pos, strType, pPlugin );
-		if ( pPlugin ) pPlugin->Release();
+		if ( pPlugin )
+			pPlugin->Release();
 	}
-	
+
 	m_pMap.RemoveAll();
 }
 
@@ -116,23 +115,20 @@ ILibraryBuilderPlugin* CLibraryBuilderPlugins::LoadPlugin(LPCTSTR pszType)
 
 	ILibraryBuilderPlugin* pPlugin = NULL;
 	if ( m_pMap.Lookup( pszType, pPlugin ) )
-	{
 		return pPlugin;
-	}
 
-	CLSID pCLSID;	
-	if ( ! Plugins.LookupCLSID( _T("LibraryBuilder"), pszType, pCLSID ) )
+	CLSID pCLSID;
+	if ( !Plugins.LookupCLSID( _T("LibraryBuilder"), pszType, pCLSID ) )
 	{
 		m_pMap.SetAt( pszType, NULL );
 		return NULL;
-	}	
+	}
 
 	HRESULT hr = CoCreateInstance( pCLSID, NULL, CLSCTX_ALL,
 		IID_ILibraryBuilderPlugin, (void**)&pPlugin );
+
 	if ( SUCCEEDED( hr ) )
-	{
 		m_pMap.SetAt( pszType, pPlugin );
-	}
 
 	return pPlugin;
 }
