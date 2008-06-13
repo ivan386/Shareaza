@@ -1,8 +1,8 @@
 //
 // Shareaza.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
-// This file is part of SHAREAZA (www.shareaza.com)
+// Copyright (c) Shareaza Development Team, 2002-2008.
+// This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
 // and/or modify it under the terms of the GNU General Public License
@@ -22,6 +22,7 @@
 #include "StdAfx.h"
 #include "Shareaza.h"
 #include "Settings.h"
+#include "Registry.h"
 #include "CoolInterface.h"
 #include "Network.h"
 #include "Firewall.h"
@@ -35,6 +36,7 @@
 #include "EDClients.h"
 #include "BTClients.h"
 #include "Library.h"
+#include "LibraryBuilder.h"
 #include "Transfers.h"
 #include "DownloadGroups.h"
 #include "Downloads.h"
@@ -54,12 +56,17 @@
 #include "FileExecutor.h"
 #include "ThumbCache.h"
 #include "BTInfo.h"
+#include "Plugins.h"
 
 #include "WndMain.h"
 #include "WndSystem.h"
 #include "DlgSplash.h"
 #include "DlgHelp.h"
-//#include "FontManager.h"
+#include "FontManager.h"
+
+#ifndef WIN64
+extern "C" HMODULE (__stdcall *_PfnLoadUnicows)(void) = &LoadUnicows;
+#endif
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -71,14 +78,30 @@ const LPCTSTR RT_BMP = _T("BMP");
 const LPCTSTR RT_JPEG = _T("JPEG");
 const LPCTSTR RT_PNG = _T("PNG");
 const LPCTSTR RT_GZIP = _T("GZIP");
-//double scaleX = 1;
-//double scaleY = 1;
+double scaleX = 1;
+double scaleY = 1;
+
+#ifndef WIN64
+HMODULE __stdcall LoadUnicows()
+{
+	HMODULE hUnicows = LoadLibraryA("unicows.dll");
+
+	if ( !hUnicows )
+	{
+		// If the load is failed, then exit.
+		MessageBoxA(NULL, "Unicode wrapper not found.", NULL, MB_ICONSTOP | MB_OK);
+		_exit(-1);
+	}
+
+	return hUnicows;
+}
+#endif
 
 /////////////////////////////////////////////////////////////////////////////
 // CShareazaCommandLineInfo
 
 CShareazaCommandLineInfo::CShareazaCommandLineInfo() :
-	m_bSilentTray( FALSE ),
+	m_bTray( FALSE ),
 	m_bNoSplash( FALSE ),
 	m_bNoAlphaWarning( FALSE ),
 	m_nGUIMode( -1 )
@@ -91,7 +114,8 @@ void CShareazaCommandLineInfo::ParseParam(const TCHAR* pszParam, BOOL bFlag, BOO
 	{
 		if ( ! lstrcmpi( pszParam, _T("tray") ) )
 		{
-			m_bSilentTray = TRUE;
+			m_bTray = TRUE;
+			m_bNoSplash = TRUE;
 			return;
 		}
 		else if ( ! lstrcmpi( pszParam, _T("nosplash") ) )
@@ -145,10 +169,36 @@ CShareazaApp::CShareazaApp()
 : m_pMutex( NULL )
 , m_pSafeWnd( NULL )
 , m_bLive( FALSE )
-, m_bUPnPPortsForwarded( TS_UNKNOWN )
-, m_bUPnPDeviceConnected( TS_UNKNOWN )
-//, m_pFontManager( NULL )
+, m_bInteractive( FALSE )
+, m_bNT( FALSE )
+, m_bServer( FALSE )
+, m_bWinME( FALSE )
+, m_bLimitedConnections( FALSE )
+, m_dwWindowsVersion( 0 )
+, m_dwWindowsVersionMinor( 0 )
+, m_nPhysicalMemory( 0 )
+, m_bMenuWasVisible( FALSE )
+, m_nDefaultFontSize( 0 )
+, m_bUPnPPortsForwarded( TRI_UNKNOWN )
+, m_bUPnPDeviceConnected( TRI_UNKNOWN )
+, m_nUPnPExternalAddress( 0 )
+, m_dwLastInput( 0 )
+, m_hHookKbd( NULL )
+, m_hHookMouse( NULL )
+, m_hUser32( NULL )
+, m_hKernel( NULL )
+, m_hShellFolder( NULL )
+, m_hGDI32( NULL )
+, m_hTheme( NULL )
+, m_hPowrProf( NULL )
+, m_hShlWapi( NULL )
+, m_hGeoIP( NULL )
+, m_pGeoIP( NULL )
+, m_pFontManager( NULL )
+, m_dlgSplash( NULL )
 {
+	ZeroMemory( m_nVersion, sizeof( m_nVersion ) );
+	ZeroMemory( m_pBTVersion, sizeof( m_pBTVersion ) );
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -162,12 +212,13 @@ BOOL CShareazaApp::InitInstance()
 
 	SetRegistryKey( _T("Shareaza") );
 	GetVersionNumber();
-	InitResources();
+	Settings.Load();			// Loads settings. Depends on GetVersionNumber()
+	InitResources();			// Loads theApp settings. Depends on Settings::Load()
+	CoolInterface.Load();		// Loads colors and fonts. Depends on InitResources()
 
 	AfxOleInit();
-//	m_pFontManager = new CFontManager();
-//	AfxEnableControlContainer( m_pFontManager );
-	AfxEnableControlContainer();
+	m_pFontManager = new CFontManager();
+	AfxEnableControlContainer( m_pFontManager );
 
 	LoadStdProfileSettings();
 	EnableShellOpen();
@@ -180,7 +231,7 @@ BOOL CShareazaApp::InitInstance()
 		// ProcessShellCommand( m_ocmdInfo );
 		// ... else all INI settings will be deleted (by design)
 
-		// Do not call this -> 
+		// Do not call this ->
 		// AfxOleUnregisterTypeLib( _tlid, _wVerMajor, _wVerMinor );
 		// COleTemplateServer::UnregisterAll();
 		// COleObjectFactory::UpdateRegistryAll( FALSE );
@@ -230,19 +281,23 @@ BOOL CShareazaApp::InitInstance()
 		return FALSE;
 	}
 
+	m_bInteractive = TRUE;
+
 	DDEServer.Create();
 	IEProtocol.Create();
 
 	// Set Build Date
-	COleDateTime tCompileTime; 
+	COleDateTime tCompileTime;
 	tCompileTime.ParseDateTime( _T(__DATE__), LOCALE_NOUSEROVERRIDE, 1033 );
 	m_sBuildDate = tCompileTime.Format( _T("%Y%m%d") );
-	
+
 	// ***********
-	// Beta expiry. Remember to re-compile to update the time, and remove this 
+	//*
+	// Beta expiry. Remember to re-compile to update the time, and remove this
 	// section for final releases and public betas.
 	COleDateTime tCurrent = COleDateTime::GetCurrentTime();
-	COleDateTimeSpan tTimeOut( 28, 0, 0, 0);
+	//COleDateTimeSpan tTimeOut( 31 * 2, 0, 0, 0);	// Betas that aren't on sourceforge
+	COleDateTimeSpan tTimeOut( 7, 0, 0, 0);			// Daily builds
 	if ( ( tCompileTime + tTimeOut )  < tCurrent )
 	{
 		CString strMessage;
@@ -250,25 +305,29 @@ BOOL CShareazaApp::InitInstance()
 		AfxMessageBox( strMessage, MB_SYSTEMMODAL|MB_ICONQUESTION|MB_OK );
 		//return FALSE;
 	}
+	//*/
 
+	//*
 	// Alpha warning. Remember to remove this section for final releases and public betas.
 	if ( ! m_ocmdInfo.m_bNoAlphaWarning )
-	if ( AfxMessageBox( 
+	if ( AfxMessageBox(
 		L"WARNING: This is an ALPHA TEST version of Shareaza.\n\n"
 		L"It is NOT FOR GENERAL USE, and is only for testing specific features in a controlled "
 		L"environment. It will frequently stop running, or display debug information to assist testing.\n\n"
 		L"If you wish to actually use this software, you should download "
-		L"the current stable release from www.shareaza.com\n"
+		L"the current stable release from http://shareaza.sourceforge.net/\n"
 		L"If you continue past this point, you may experience system instability, lose downloads, "
 		L"or corrupt system files. Corrupted downloads/files may not be recoverable. "
 		L"Do you wish to continue?", MB_SYSTEMMODAL|MB_ICONEXCLAMATION|MB_YESNO ) == IDNO )
 		return FALSE;
-
+	//*/
 	// ***********
-	
-	CSplashDlg* dlgSplash = new CSplashDlg( 18, m_ocmdInfo.m_bSilentTray );
 
-	SplashStep( dlgSplash, L"Winsock" );
+	int nSplashSteps = 18
+		+ ( Settings.Connection.EnableFirewallException ? 1 : 0 )
+		+ ( Settings.Connection.EnableUPnP && !Settings.Live.FirstRun ? 1 : 0 );
+
+	SplashStep( L"Winsock", ( m_ocmdInfo.m_bNoSplash ? 0 : nSplashSteps ), false );
 		WSADATA wsaData;
 		for ( int i = 1; i <= 2; i++ )
 		{
@@ -276,12 +335,7 @@ BOOL CShareazaApp::InitInstance()
 			if ( wsaData.wVersion == MAKEWORD( 1, 1 ) ) break;
 			if ( i == 2 ) return FALSE;
 			WSACleanup();
-			dlgSplash->IncrMax();
-			SplashStep( dlgSplash, L"Winsock (trying again)" );
 		}
-
-	SplashStep( dlgSplash, L"Settings Database" );
-		Settings.Load();
 
 	if ( m_ocmdInfo.m_nGUIMode != -1 )
 		Settings.General.GUIMode = m_ocmdInfo.m_nGUIMode;
@@ -289,52 +343,51 @@ BOOL CShareazaApp::InitInstance()
 	if ( Settings.General.GUIMode != GUI_WINDOWED && Settings.General.GUIMode != GUI_TABBED && Settings.General.GUIMode != GUI_BASIC )
 		Settings.General.GUIMode = GUI_BASIC;
 
-	SplashStep( dlgSplash, L"P2P URIs" );
+	SplashStep( L"Shareaza Database" );
+		CThumbCache::InitDatabase();
+	SplashStep( L"P2P URIs" );
 		CShareazaURL::Register( TRUE );
-	SplashStep( dlgSplash, L"Shell Icons" );
+	SplashStep( L"Shell Icons" );
 		ShellIcons.Clear();
-	SplashStep( dlgSplash, L"Metadata Schemas" );
+	SplashStep( L"Metadata Schemas" );
 		SchemaCache.Load();
-	SplashStep( dlgSplash, L"Vendor Data" );
+	SplashStep( L"Vendor Data" );
 		VendorCache.Load();
-	SplashStep( dlgSplash, L"Profile" );
+	SplashStep( L"Profile" );
 		MyProfile.Load();
-	SplashStep( dlgSplash, L"Query Manager" );
+	SplashStep( L"Query Manager" );
 		QueryHashMaster.Create();
-	SplashStep( dlgSplash, L"Host Cache" );
+	SplashStep( L"Host Cache" );
 		HostCache.Load();
-	SplashStep( dlgSplash, L"Discovery Services" );
+	SplashStep( L"Discovery Services" );
 		DiscoveryServices.Load();
-	SplashStep( dlgSplash, L"Security Services" );
+	SplashStep( L"Security Services" );
 		Security.Load();
 		AdultFilter.Load();
 		MessageFilter.Load();
-	SplashStep( dlgSplash, L"Scheduler" );
+	SplashStep( L"Scheduler" );
 		Schedule.Load();
-	SplashStep( dlgSplash, L"Rich Documents" );
+	SplashStep( L"Rich Documents" );
 		Emoticons.Load();
 		Flags.Load();
 
-	CFirewall firewall;
-	if ( Settings.Connection.EnableFirewallException && firewall.AccessWindowsFirewall() && firewall.AreExceptionsAllowed() )
+	if ( Settings.Connection.EnableFirewallException )
 	{
-		dlgSplash->IncrMax();
-		SplashStep( dlgSplash, L"Windows Firewall Setup" );
-
-		// Add to firewall exception list if necessary
-		// and enable UPnP Framework if disabled
-		CString strBinaryPath;
-		GetModuleFileName( NULL, strBinaryPath.GetBuffer( MAX_PATH ), MAX_PATH );
-		strBinaryPath.ReleaseBuffer( MAX_PATH );
-		firewall.SetupService( NET_FW_SERVICE_UPNP );
-		firewall.SetupProgram( strBinaryPath, theApp.m_pszAppName );
+		SplashStep( L"Windows Firewall Setup" );
+		CFirewall firewall;
+		if ( firewall.AccessWindowsFirewall() && firewall.AreExceptionsAllowed() )
+		{
+			// Add to firewall exception list if necessary
+			// and enable UPnP Framework if disabled
+			firewall.SetupService( NET_FW_SERVICE_UPNP );
+			firewall.SetupProgram( m_strBinaryPath, theApp.m_pszAppName );
+		}
 	}
 
 	// If it is the first run we will run the UPnP discovery only in the QuickStart Wizard
-	if ( Settings.Connection.EnableUPnP && !Settings.Live.FirstRun )
+	if ( Settings.Connection.EnableUPnP && ! Settings.Live.FirstRun )
 	{
-		dlgSplash->IncrMax();
-		SplashStep( dlgSplash, L"Firewall/Router Setup" );
+		SplashStep( L"Firewall/Router Setup" );
 		try
 		{
 			m_pUPnPFinder.reset( new CUPnPFinder );
@@ -345,37 +398,36 @@ BOOL CShareazaApp::InitInstance()
 		catch ( CException* e ) { e->Delete(); }
 	}
 
-	SplashStep( dlgSplash, L"GUI" );
-		if ( m_ocmdInfo.m_bSilentTray ) WriteProfileInt( _T("Windows"), _T("CMainWnd.ShowCmd"), 0 );
+	SplashStep( L"GUI" );
+		if ( m_ocmdInfo.m_bTray ) WriteProfileInt( _T("Windows"), _T("CMainWnd.ShowCmd"), 0 );
 		new CMainWnd();
 		CoolMenu.EnableHook();
-		if ( m_ocmdInfo.m_bSilentTray )
+		if ( m_ocmdInfo.m_bTray )
 		{
 			((CMainWnd*)m_pMainWnd)->CloseToTray();
 		}
 		else
 		{
 			m_pMainWnd->ShowWindow( SW_SHOW );
-			if ( dlgSplash ) 
-				dlgSplash->Topmost();
+			if ( m_dlgSplash )
+				m_dlgSplash->Topmost();
 			m_pMainWnd->UpdateWindow();
 		}
 
 	// From this point translations are available and LoadString returns correct strings
-	SplashStep( dlgSplash, L"Download Manager" ); 
+	SplashStep( L"Download Manager" );
 		Downloads.Load();
-	SplashStep( dlgSplash, L"Upload Manager" );
+	SplashStep( L"Upload Manager" );
 		UploadQueues.Load();
-	SplashStep( dlgSplash, L"Library" );
+	SplashStep( L"Library" );
 		Library.Load();
-	SplashStep( dlgSplash, L"Upgrade Manager" );
-	if ( VersionChecker.NeedToCheck() ) 
-		VersionChecker.Start( m_pMainWnd->GetSafeHwnd() );
+	SplashStep( L"Upgrade Manager" );
+		VersionChecker.Start();
 
 	pCursor.Restore();
 
-	if ( dlgSplash )
-		dlgSplash->Hide();
+	SplashStep();
+
 	m_bLive = TRUE;
 
 	ProcessShellCommand( m_ocmdInfo );
@@ -383,105 +435,137 @@ BOOL CShareazaApp::InitInstance()
 	return TRUE;
 }
 
-void CShareazaApp::SplashStep(CSplashDlg*& dlg, LPCTSTR pszMessage, bool bClosing)
-{
-	if ( m_ocmdInfo.m_bNoSplash ) return;
-	if ( dlg != NULL )
-		dlg->Step( pszMessage, bClosing );
-}
-
 /////////////////////////////////////////////////////////////////////////////
 // CShareazaApp termination
 
-int CShareazaApp::ExitInstance() 
+int CShareazaApp::ExitInstance()
 {
-	CWaitCursor pCursor;
-	
-	CSplashDlg* dlgSplash = new CSplashDlg( 6, m_ocmdInfo.m_bSilentTray );
-	SplashStep( dlgSplash, L"Closing Server Processes", true );
-	DDEServer.Close();
-	IEProtocol.Close();
-	SplashStep( dlgSplash, L"Disconnecting", true );
-	VersionChecker.Stop();
-	DiscoveryServices.Stop();
-	Network.Disconnect();
-	SplashStep( dlgSplash, L"Stopping Library Tasks", true );
-	Library.StopThread();
-	SplashStep( dlgSplash, L"Stopping Transfers", true );	
-	Transfers.StopThread();
-	Downloads.CloseTransfers();
-	SplashStep( dlgSplash, L"Clearing Clients", true );	
-	Uploads.Clear( FALSE );
-	EDClients.Clear();
-
-	CFirewall firewall;
-	if ( Settings.Connection.DeleteFirewallException && firewall.AccessWindowsFirewall() )
+	if ( m_bInteractive )
 	{
-		dlgSplash->IncrMax();
-		SplashStep( dlgSplash, L"Closing Windows Firewall Access", true );	
+		CWaitCursor pCursor;
 
-		// Remove application from the firewall exception list
-		CString strBinaryPath;
-		GetModuleFileName( NULL, strBinaryPath.GetBuffer( MAX_PATH ), MAX_PATH );
-		strBinaryPath.ReleaseBuffer( MAX_PATH );
-		firewall.SetupProgram( strBinaryPath, theApp.m_pszAppName, TRUE );
+		DDEServer.Close();
+		IEProtocol.Close();
+
+		SplashStep( L"Disconnecting" );
+		VersionChecker.Stop();
+		DiscoveryServices.Stop();
+		Network.Disconnect();
+
+		SplashStep( L"Stopping Library Tasks" );
+		Library.StopThread();
+
+		SplashStep( L"Stopping Transfers" );
+		Transfers.StopThread();
+		Downloads.CloseTransfers();
+
+		SplashStep( L"Clearing Clients" );
+		Uploads.Clear( FALSE );
+		EDClients.Clear();
+
+		if ( Settings.Connection.DeleteFirewallException )
+		{
+			SplashStep( L"Closing Windows Firewall Access" );
+			CFirewall firewall;
+			if ( firewall.AccessWindowsFirewall() )
+			{
+				// Remove application from the firewall exception list
+				firewall.SetupProgram( m_strBinaryPath, theApp.m_pszAppName, TRUE );
+			}
+		}
+
+		if ( m_pUPnPFinder )
+		{
+			SplashStep( L"Closing Firewall/Router Access" );
+			m_pUPnPFinder->StopAsyncFind();
+			if ( Settings.Connection.DeleteUPnPPorts )
+				m_pUPnPFinder->DeletePorts();
+			m_pUPnPFinder.reset();
+		}
+
+		if ( m_bLive )
+		{
+			SplashStep( L"Saving" );
+			Downloads.Save();
+			DownloadGroups.Save();
+			Library.Save();
+			Security.Save();
+			HostCache.Save();
+			UploadQueues.Save();
+			DiscoveryServices.Save();
+			Settings.Save( TRUE );
+		}
+
+		SplashStep( L"Finalizing" );
+		BTClients.Clear();
+		Downloads.Clear( TRUE );
+		Library.Clear();
+		CoolMenu.Clear();
+		Skin.Clear();
+
+		SplashStep();
+
+		LibraryBuilder.CleanupPlugins();
+		Plugins.Clear();
 	}
 
-	if ( m_pUPnPFinder )
-	{
-		dlgSplash->IncrMax();
-		SplashStep( dlgSplash, L"Closing Firewall/Router Access", true );
-		m_pUPnPFinder->StopAsyncFind();
-		if ( Settings.Connection.DeleteUPnPPorts )
-			m_pUPnPFinder->DeletePorts();
-		m_pUPnPFinder.reset();
-	}
-
-	if ( m_bLive )
-	{
-		dlgSplash->IncrMax();
-		SplashStep( dlgSplash, L"Saving", true );
-		Downloads.Save();
-		DownloadGroups.Save();
-		Library.Save();
-		Security.Save();
-		HostCache.Save();
-		UploadQueues.Save();
-		DiscoveryServices.Save();
-	}
-	SplashStep( dlgSplash, L"Finalizing", true );
-	Downloads.Clear( TRUE );
-	BTClients.Clear();
-	Library.Clear();
-	Skin.Clear();
-	
-	if ( m_bLive )
-		Settings.Save( TRUE );
-
-	if ( m_hUser32 != NULL ) FreeLibrary( m_hUser32 );
+	if ( m_hUser32 != NULL )
+		FreeLibrary( m_hUser32 );
 
 	WSACleanup();
 
-	if ( m_hGDI32 != NULL ) FreeLibrary( m_hGDI32 );
+	if ( m_hShellFolder != NULL )
+		FreeLibrary( m_hShellFolder );
 
-	if ( m_hPowrProf != NULL ) FreeLibrary( m_hPowrProf );
+	if ( m_hGDI32 != NULL )
+		FreeLibrary( m_hGDI32 );
 
-	if ( m_hGeoIP != NULL ) FreeLibrary( m_hGeoIP );
+	if ( m_hTheme != NULL )
+		FreeLibrary( m_hTheme );
 
-	if ( dlgSplash )
-		dlgSplash->Hide();
+	if ( m_hPowrProf != NULL )
+		FreeLibrary( m_hPowrProf );
 
-//	delete m_pFontManager;
+	if ( m_hShlWapi != NULL )
+		FreeLibrary( m_hShlWapi );
+
+	if ( m_hGeoIP != NULL )
+		FreeLibrary( m_hGeoIP );
+
+	if ( m_hLibGFL != NULL )
+		FreeLibrary( m_hLibGFL );
+
+	delete m_pFontManager;
 
 	UnhookWindowsHookEx( m_hHookKbd );
 	UnhookWindowsHookEx( m_hHookMouse );
 
-	if ( m_pMutex != NULL ) CloseHandle( m_pMutex );
+	if ( m_pMutex != NULL )
+		CloseHandle( m_pMutex );
 
 	return CWinApp::ExitInstance();
 }
 
-void CShareazaApp::WinHelp(DWORD /*dwData*/, UINT /*nCmd*/) 
+void CShareazaApp::SplashStep(LPCTSTR pszMessage, int nMax, bool bClosing)
+{
+	if ( ! pszMessage )
+	{
+		if ( m_dlgSplash )
+		{
+			m_dlgSplash->Hide();
+			m_dlgSplash = NULL;
+		}
+	}
+	else if ( ! m_dlgSplash && nMax )
+		m_dlgSplash = new CSplashDlg( nMax, bClosing );
+
+	if ( m_dlgSplash )
+		m_dlgSplash->Step( pszMessage );
+
+	TRACE( _T("Step: %s\n"), pszMessage ? pszMessage : _T("Done") );
+}
+
+void CShareazaApp::WinHelp(DWORD /*dwData*/, UINT /*nCmd*/)
 {
 	// Suppress F1
 }
@@ -496,38 +580,60 @@ CDocument* CShareazaApp::OpenDocumentFile(LPCTSTR lpszFileName)
 BOOL CShareazaApp::Open(LPCTSTR lpszFileName, BOOL bDoIt)
 {
 	int nLength = lstrlen( lpszFileName );
-	if ( nLength > 8 && lstrcmpi ( lpszFileName + nLength - 8, _T(".torrent") ) == 0 )
+	if ( nLength > 8 && ! lstrcmpi( lpszFileName + nLength - 8, _T(".torrent") ) )
 		return OpenTorrent( lpszFileName, bDoIt );
-	else if ( nLength > 3 && lstrcmpi ( lpszFileName + nLength - 3, _T(".co") ) == 0 )
+	else if ( nLength > 3 && ! lstrcmpi( lpszFileName + nLength - 3, _T(".co") ) )
 		return OpenCollection( lpszFileName, bDoIt );
-	else if ( nLength > 11 && lstrcmpi ( lpszFileName + nLength - 11, _T(".collection") ) == 0 )
+	else if ( nLength > 11 && ! lstrcmpi( lpszFileName + nLength - 11, _T(".collection") ) )
 		return OpenCollection( lpszFileName, bDoIt );
+	else if ( nLength > 4 && ! lstrcmpi( lpszFileName + nLength - 4, _T(".url") ) )
+		return OpenInternetShortcut( lpszFileName, bDoIt );
+	else if ( nLength > 4 && ! lstrcmpi( lpszFileName + nLength - 4, _T(".lnk") ) )
+		return OpenShellShortcut( lpszFileName, bDoIt );
 	else
 		return OpenURL( lpszFileName, bDoIt );
+}
+
+BOOL CShareazaApp::OpenShellShortcut(LPCTSTR lpszFileName, BOOL bDoIt)
+{
+	CString sPath( ResolveShortcut( lpszFileName ) );
+	return sPath.GetLength() && Open( sPath, bDoIt );
+}
+
+BOOL CShareazaApp::OpenInternetShortcut(LPCTSTR lpszFileName, BOOL bDoIt)
+{
+	CString sURL;
+	BOOL bResult = ( GetPrivateProfileString( _T("InternetShortcut"), _T("URL"),
+		_T(""), sURL.GetBuffer( MAX_PATH ), MAX_PATH, lpszFileName ) > 3 );
+	sURL.ReleaseBuffer();
+	return bResult && sURL.GetLength() && OpenURL( sURL, bDoIt );
 }
 
 BOOL CShareazaApp::OpenTorrent(LPCTSTR lpszFileName, BOOL bDoIt)
 {
 	if ( bDoIt )
-		theApp.Message( MSG_SYSTEM, IDS_BT_PREFETCH_FILE, lpszFileName );
+		theApp.Message( MSG_NOTICE, IDS_BT_PREFETCH_FILE, lpszFileName );
 
 	BOOL bResult = FALSE;
 	CBTInfo* pTorrent = new CBTInfo();
-	if ( pTorrent && pTorrent->LoadTorrentFile( lpszFileName ) )
+	if ( pTorrent )
 	{
-		if ( bDoIt && pTorrent->HasEncodingError() )
-			theApp.Message( MSG_SYSTEM, IDS_BT_ENCODING );
-		CShareazaURL* pURL = new CShareazaURL( pTorrent );
-		if ( pURL )
+		if ( pTorrent->LoadTorrentFile( lpszFileName ) )
 		{
-			bResult = TRUE;
-			if ( bDoIt )
-				return AfxGetMainWnd()->PostMessage( WM_URL, (WPARAM)pURL );
-			delete pURL;
-			pTorrent = NULL;	// Deleted inside CShareazaURL::Clear()
+			if ( bDoIt && pTorrent->HasEncodingError() )
+				theApp.Message( MSG_NOTICE, IDS_BT_ENCODING );
+			CShareazaURL* pURL = new CShareazaURL( pTorrent );
+			if ( pURL )
+			{
+				bResult = TRUE;
+				if ( bDoIt )
+					return AfxGetMainWnd()->PostMessage( WM_URL, (WPARAM)pURL );
+				delete pURL;
+				pTorrent = NULL;	// Deleted inside CShareazaURL::Clear()
+			}
 		}
+		delete pTorrent;
 	}
-	delete pTorrent;
 
 	if ( bDoIt )
 		theApp.Message( MSG_ERROR, IDS_BT_PREFETCH_ERROR, lpszFileName );
@@ -552,22 +658,25 @@ BOOL CShareazaApp::OpenCollection(LPCTSTR lpszFileName, BOOL bDoIt)
 	return FALSE;
 }
 
-BOOL CShareazaApp::OpenURL(LPCTSTR lpszFileName, BOOL bDoIt)
+BOOL CShareazaApp::OpenURL(LPCTSTR lpszFileName, BOOL bDoIt, BOOL bSilent)
 {
-	if ( bDoIt )
-		theApp.Message( MSG_SYSTEM, IDS_URL_RECEIVED, lpszFileName );
+	if ( bDoIt && ! bSilent )
+		theApp.Message( MSG_NOTICE, IDS_URL_RECEIVED, lpszFileName );
 
 	CShareazaURL* pURL = new CShareazaURL();
-	if ( pURL && pURL->Parse( lpszFileName ) )
+	if ( pURL )
 	{
-		if ( bDoIt )
-			AfxGetMainWnd()->PostMessage( WM_URL, (WPARAM)pURL );
-		return TRUE;
+		if ( pURL->Parse( lpszFileName ) )
+		{
+			if ( bDoIt )
+				AfxGetMainWnd()->PostMessage( WM_URL, (WPARAM)pURL );
+			return TRUE;
+		}
+		delete pURL;
 	}
-	delete pURL;
 
-	if ( bDoIt )
-		theApp.Message( MSG_SYSTEM, IDS_URL_PARSE_ERROR );
+	if ( bDoIt && ! bSilent )
+		theApp.Message( MSG_NOTICE, IDS_URL_PARSE_ERROR );
 
 	return FALSE;
 }
@@ -577,32 +686,35 @@ BOOL CShareazaApp::OpenURL(LPCTSTR lpszFileName, BOOL bDoIt)
 
 void CShareazaApp::GetVersionNumber()
 {
-	TCHAR szPath[MAX_PATH];
 	DWORD dwSize;
 
 	m_nVersion[0] = m_nVersion[1] = m_nVersion[2] = m_nVersion[3] = 0;
 
-	GetModuleFileName( NULL, szPath, MAX_PATH );
-	dwSize = GetFileVersionInfoSize( szPath, &dwSize );
+	GetModuleFileName( NULL, m_strBinaryPath.GetBuffer( MAX_PATH ), MAX_PATH );
+	m_strBinaryPath.ReleaseBuffer( MAX_PATH );
+	dwSize = GetFileVersionInfoSize( m_strBinaryPath, &dwSize );
 
 	if ( dwSize )
 	{
 		BYTE* pBuffer = new BYTE[ dwSize ];
 
-		if ( GetFileVersionInfo( szPath, NULL, dwSize, pBuffer ) )
+		if ( pBuffer )
 		{
-			VS_FIXEDFILEINFO* pTable;
-
-			if ( VerQueryValue( pBuffer, _T("\\"), (VOID**)&pTable, (UINT*)&dwSize ) )
+			if ( GetFileVersionInfo( m_strBinaryPath, NULL, dwSize, pBuffer ) )
 			{
-				m_nVersion[0] = (WORD)( pTable->dwFileVersionMS >> 16 );
-				m_nVersion[1] = (WORD)( pTable->dwFileVersionMS & 0xFFFF );
-				m_nVersion[2] = (WORD)( pTable->dwFileVersionLS >> 16 );
-				m_nVersion[3] = (WORD)( pTable->dwFileVersionLS & 0xFFFF );
-			}
-		}
+				VS_FIXEDFILEINFO* pTable;
 
-		delete [] pBuffer;
+				if ( VerQueryValue( pBuffer, _T("\\"), (VOID**)&pTable, (UINT*)&dwSize ) )
+				{
+					m_nVersion[0] = (WORD)( pTable->dwFileVersionMS >> 16 );
+					m_nVersion[1] = (WORD)( pTable->dwFileVersionMS & 0xFFFF );
+					m_nVersion[2] = (WORD)( pTable->dwFileVersionLS >> 16 );
+					m_nVersion[3] = (WORD)( pTable->dwFileVersionLS & 0xFFFF );
+				}
+			}
+
+			delete [] pBuffer;
+		}
 	}
 
 	m_sVersion.Format( _T("%i.%i.%i.%i"),
@@ -612,18 +724,21 @@ void CShareazaApp::GetVersionNumber()
 	m_sSmartAgent = _T( CLIENT_NAME );
 	m_sSmartAgent += _T(" ");
 	m_sSmartAgent += m_sVersion;
-}
 
-/////////////////////////////////////////////////////////////////////////////
-// CShareazaApp resources
+	m_pBTVersion[ 0 ] = BT_ID1;
+	m_pBTVersion[ 1 ] = BT_ID2;
+	m_pBTVersion[ 2 ] = (BYTE)m_nVersion[ 0 ];
+	m_pBTVersion[ 3 ] = (BYTE)m_nVersion[ 1 ];
 
-void CShareazaApp::InitResources()
-{
 	//Determine the version of Windows
 	OSVERSIONINFOEX pVersion;
 	pVersion.dwOSVersionInfoSize = sizeof(OSVERSIONINFOEX);
 	GetVersionEx( (OSVERSIONINFO*)&pVersion );
-	
+
+	VER_PLATFORM_WIN32s;
+	VER_PLATFORM_WIN32_WINDOWS;
+	VER_PLATFORM_WIN32_NT;
+
 	//Networking is poor under Win9x based operating systems. (95/98/Me)
 	m_bNT = ( pVersion.dwPlatformId == VER_PLATFORM_WIN32_NT );
 
@@ -634,15 +749,12 @@ void CShareazaApp::InitResources()
 	m_dwWindowsVersion = pVersion.dwMajorVersion;
 
 	//Win2000 = 0 WinXP = 1
-	m_dwWindowsVersionMinor = pVersion.dwMinorVersion; 
+	m_dwWindowsVersionMinor = pVersion.dwMinorVersion;
 
 	// Detect Windows ME
 	m_bWinME = ( m_dwWindowsVersion == 4 && m_dwWindowsVersionMinor == 90 );
 
 	m_bLimitedConnections = FALSE;
-	VER_PLATFORM_WIN32s;
-	VER_PLATFORM_WIN32_WINDOWS;
-	VER_PLATFORM_WIN32_NT;
 
 	if ( m_dwWindowsVersion == 5 && m_dwWindowsVersionMinor == 1 )
 	{	//Windows XP - Test for SP2
@@ -659,65 +771,101 @@ void CShareazaApp::InitResources()
 		// Windows 2003 or Win XP x64
 		m_bLimitedConnections = TRUE;
 	}
-	else if ( m_dwWindowsVersion == 6 && m_dwWindowsVersionMinor == 0 )
+	else if ( m_dwWindowsVersion >= 6 )
 	{
-		// Windows Vista
+		// Windows Vista or higher
 		m_bLimitedConnections = TRUE;
 	}
+}
 
-	//Get the amount of installed memory.
-	m_nPhysicalMemory = 0;
-	if ( ( m_hUser32 = LoadLibrary( _T("User32.dll") ) ) != 0 )
-	{	//Use GlobalMemoryStatusEx if possible (WinXP)
-		void (WINAPI *m_pfnGlobalMemoryStatus)( LPMEMORYSTATUSEX );
-		MEMORYSTATUSEX pMemory;
+/////////////////////////////////////////////////////////////////////////////
+// CShareazaApp resources
 
-		(FARPROC&)m_pfnGlobalMemoryStatus = GetProcAddress(
-			m_hUser32, "GlobalMemoryStatusEx" );
-
-		if ( m_pfnGlobalMemoryStatus )
-		{
-			m_pfnGlobalMemoryStatus( &pMemory ); 
-			m_nPhysicalMemory = pMemory.ullTotalPhys;
-		}
-	}
-
-	if ( m_nPhysicalMemory == 0 )
-	{	//Fall back to GlobalMemoryStatusEx (always available)
-		MEMORYSTATUS pMemory;
-		GlobalMemoryStatus( &pMemory ); 
-		m_nPhysicalMemory = pMemory.dwTotalPhys;
-	}
-	
+void CShareazaApp::InitResources()
+{
 	//Get pointers to some functions that don't exist under 95/NT
-	if ( m_hUser32 != 0 )
+	if ( ( m_hUser32 = LoadLibrary( _T("User32.dll") ) ) != NULL )
 	{
 		(FARPROC&)m_pfnSetLayeredWindowAttributes = GetProcAddress(
 			m_hUser32, "SetLayeredWindowAttributes" );
-		   
-		(FARPROC&)m_pfnGetMonitorInfoA = GetProcAddress( 
-			m_hUser32, "GetMonitorInfoA" ); 
-    
-		(FARPROC&)m_pfnMonitorFromRect = GetProcAddress( 
-			m_hUser32, "MonitorFromRect" ); 
 
-		(FARPROC&)m_pfnMonitorFromWindow = GetProcAddress( 
-			m_hUser32, "MonitorFromWindow" ); 
+		(FARPROC&)m_pfnGetMonitorInfoA = GetProcAddress(
+			m_hUser32, "GetMonitorInfoA" );
+
+		(FARPROC&)m_pfnMonitorFromRect = GetProcAddress(
+			m_hUser32, "MonitorFromRect" );
+
+		(FARPROC&)m_pfnMonitorFromWindow = GetProcAddress(
+			m_hUser32, "MonitorFromWindow" );
+
+		(FARPROC&)m_pfnGetAncestor = GetProcAddress(
+			m_hUser32, "GetAncestor" );
+
+		(FARPROC&)m_pfnPrivateExtractIconsW = GetProcAddress(
+			m_hUser32, "PrivateExtractIconsW" );
 	}
 	else
 	{
 		m_pfnSetLayeredWindowAttributes = NULL;
-		m_pfnGetMonitorInfoA = NULL; 
-        m_pfnMonitorFromRect = NULL; 
+		m_pfnGetMonitorInfoA = NULL;
+		m_pfnMonitorFromRect = NULL;
 		m_pfnMonitorFromWindow = NULL;
+		m_pfnGetAncestor = NULL;
+		m_pfnPrivateExtractIconsW = NULL;
 	}
 
-	if ( ( m_hGDI32 = LoadLibrary( _T("gdi32.dll") ) ) != 0 )
+	// It is not necessary to call LoadLibrary on Kernel32.dll, because it is already loaded into every process address space.
+	if ( ( m_hKernel = GetModuleHandle( _T("kernel32.dll") ) ) != NULL )
+	{
+		(FARPROC&)m_pfnGetDiskFreeSpaceExW = GetProcAddress( m_hKernel, "GetDiskFreeSpaceExW" );
+		(FARPROC&)m_pfnCopyFileExW = GetProcAddress( m_hKernel, "CopyFileExW" );
+		(FARPROC&)m_pfnGlobalMemoryStatusEx = GetProcAddress( m_hKernel, "GlobalMemoryStatusEx" );
+	}
+	else
+	{
+		m_pfnGetDiskFreeSpaceExW = NULL;
+		m_pfnCopyFileExW = NULL;
+		m_pfnGlobalMemoryStatusEx = NULL;
+	}
+
+	if ( ( m_hShellFolder = LoadLibrary( _T("shfolder.dll") ) ) != NULL )
+		(FARPROC&)m_pfnSHGetFolderPathW = GetProcAddress( m_hShellFolder, "SHGetFolderPathW" );
+	else
+		m_pfnSHGetFolderPathW = NULL;
+
+	if ( ( m_hGDI32 = LoadLibrary( _T("gdi32.dll") ) ) != NULL )
 		(FARPROC&)m_pfnSetLayout = GetProcAddress( m_hGDI32, "SetLayout" );
 	else
 		m_pfnSetLayout = NULL;
 
-	if ( ( m_hPowrProf = LoadLibrary( _T("PowrProf.dll") ) ) != 0 )
+	if ( ( m_hTheme = LoadLibrary( _T("UxTheme.dll") ) ) != NULL )
+	{
+		(FARPROC&)m_pfnSetWindowTheme = GetProcAddress( m_hTheme, "SetWindowTheme" );
+		(FARPROC&)m_pfnIsThemeActive = GetProcAddress( m_hTheme, "IsThemeActive" );
+		(FARPROC&)m_pfnOpenThemeData = GetProcAddress( m_hTheme, "OpenThemeData" );
+		(FARPROC&)m_pfnCloseThemeData = GetProcAddress( m_hTheme, "CloseThemeData" );
+		(FARPROC&)m_pfnDrawThemeBackground = GetProcAddress( m_hTheme, "DrawThemeBackground" );
+		(FARPROC&)m_pfnEnableThemeDialogTexture = GetProcAddress( m_hTheme, "EnableThemeDialogTexture" );
+		(FARPROC&)m_pfnDrawThemeParentBackground = GetProcAddress( m_hTheme, "DrawThemeParentBackground" );
+		(FARPROC&)m_pfnGetThemeBackgroundContentRect = GetProcAddress( m_hTheme, "GetThemeBackgroundContentRect" );
+		(FARPROC&)m_pfnGetThemeSysFont = GetProcAddress( m_hTheme, "GetThemeSysFont" );
+		(FARPROC&)m_pfnDrawThemeText = GetProcAddress( m_hTheme, "DrawThemeText" );
+	}
+	else
+	{
+		m_pfnSetWindowTheme = NULL;
+		m_pfnIsThemeActive = NULL;
+		m_pfnOpenThemeData = NULL;
+		m_pfnCloseThemeData = NULL;
+		m_pfnDrawThemeBackground = NULL;
+		m_pfnEnableThemeDialogTexture = NULL;
+		m_pfnDrawThemeParentBackground = NULL;
+		m_pfnGetThemeBackgroundContentRect = NULL;
+		m_pfnGetThemeSysFont = NULL;
+		m_pfnDrawThemeText = NULL;
+	}
+
+	if ( ( m_hPowrProf = LoadLibrary( _T("PowrProf.dll") ) ) != NULL )
 	{
 		(FARPROC&)m_pfnGetActivePwrScheme = GetProcAddress( m_hPowrProf, "GetActivePwrScheme" );
 		(FARPROC&)m_pfnGetCurrentPowerPolicies = GetProcAddress( m_hPowrProf, "GetCurrentPowerPolicies" );
@@ -730,9 +878,20 @@ void CShareazaApp::InitResources()
 		m_pfnSetActivePwrScheme = NULL;
 	}
 
+	if ( ( m_hShlWapi = LoadLibrary( _T("shlwapi.dll") ) ) != NULL )
+	{
+		(FARPROC&)m_pfnAssocIsDangerous = GetProcAddress( m_hShlWapi, "AssocIsDangerous" );
+		(FARPROC&)m_pfnAssocQueryStringW = GetProcAddress( m_hShlWapi, "AssocQueryStringW" );
+	}
+	else
+	{
+		m_pfnAssocIsDangerous = NULL;
+		m_pfnAssocQueryStringW = NULL;
+	}
+
 	// Load the GeoIP library for mapping IPs to countries
-	m_hGeoIP = LoadLibrary( _T("geoip.dll") );
-    if ( m_hGeoIP )
+	m_hGeoIP = CustomLoadLibrary( _T("geoip.dll") );
+	if ( m_hGeoIP )
 	{
 		GeoIP_newFunc pfnGeoIP_new = (GeoIP_newFunc)GetProcAddress( m_hGeoIP, "GeoIP_new" );
 		m_pfnGeoIP_country_code_by_addr = (GeoIP_country_code_by_addrFunc)GetProcAddress( m_hGeoIP, "GeoIP_country_code_by_addr" );
@@ -740,40 +899,78 @@ void CShareazaApp::InitResources()
 
 		m_pGeoIP = pfnGeoIP_new( GEOIP_MEMORY_CACHE );
 	}
+	else
+	{
+		m_pfnGeoIP_country_code_by_addr = NULL;
+		m_pfnGeoIP_country_name_by_addr = NULL;
+	}
 
-//	HDC screen = GetDC( 0 );
-//	scaleX = GetDeviceCaps( screen, LOGPIXELSX ) / 96.0;
-//	scaleY = GetDeviceCaps( screen, LOGPIXELSY ) / 96.0;
-//	ReleaseDC( 0, screen );
+	// We load it in a custom way, so Shareaza plugins can use this library also when it isn't in its search path but loaded by CustomLoadLibrary (very useful when running Shareaza inside Visual Studio)
+	m_hLibGFL = CustomLoadLibrary( _T("libgfl280.dll") );
+
+	// Get the amount of installed memory.
+	m_nPhysicalMemory = 0;
+	if ( m_pfnGlobalMemoryStatusEx )
+	{
+		// Use GlobalMemoryStatusEx if possible (WinXP)
+		MEMORYSTATUSEX pMemory = {};
+		pMemory.dwLength = sizeof(pMemory);
+		if (  (*m_pfnGlobalMemoryStatusEx)( &pMemory ) )
+			m_nPhysicalMemory = pMemory.ullTotalPhys;
+	}
+	if ( m_nPhysicalMemory == 0 )
+	{
+		// Fall back to GlobalMemoryStatus (always available)
+		MEMORYSTATUS pMemory;
+		GlobalMemoryStatus( &pMemory );
+		m_nPhysicalMemory = pMemory.dwTotalPhys;
+	}
+
+	HDC screen = GetDC( 0 );
+	scaleX = GetDeviceCaps( screen, LOGPIXELSX ) / 96.0;
+	scaleY = GetDeviceCaps( screen, LOGPIXELSY ) / 96.0;
+	ReleaseDC( 0, screen );
 
 	// Get the fonts from the registry
-	CString strFont = ( m_dwWindowsVersion == 6 && m_dwWindowsVersionMinor == 0 ) ?
+	CString strFont = ( m_dwWindowsVersion >= 6 ) ?
 					  L"Segoe UI" : L"Tahoma" ;
 	theApp.m_sDefaultFont		= theApp.GetProfileString( _T("Fonts"), _T("DefaultFont"), strFont );
 	theApp.m_sPacketDumpFont	= theApp.GetProfileString( _T("Fonts"), _T("PacketDumpFont"), _T("Lucida Console") );
 	theApp.m_sSystemLogFont		= theApp.GetProfileString( _T("Fonts"), _T("SystemLogFont"), strFont );
 	theApp.m_nDefaultFontSize	= theApp.GetProfileInt( _T("Fonts"), _T("FontSize"), 11 );
-	
+
 	// Set up the default font
 	m_gdiFont.CreateFontW( -theApp.m_nDefaultFontSize, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE,
 		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
 		DEFAULT_PITCH|FF_DONTCARE, theApp.m_sDefaultFont );
-	
+
 	m_gdiFontBold.CreateFontW( -theApp.m_nDefaultFontSize, 0, 0, 0, FW_BOLD, FALSE, FALSE, FALSE,
 		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
 		DEFAULT_PITCH|FF_DONTCARE, theApp.m_sDefaultFont );
-	
+
 	m_gdiFontLine.CreateFontW( -theApp.m_nDefaultFontSize, 0, 0, 0, FW_NORMAL, FALSE, TRUE, FALSE,
 		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
 		DEFAULT_PITCH|FF_DONTCARE, theApp.m_sDefaultFont );
 
-	theApp.m_bRTL = theApp.GetProfileInt( _T("Settings"), _T("LanguageRTL"), 0 );
-
 	srand( GetTickCount() );
 
-	m_hHookKbd   = SetWindowsHookEx( WH_KEYBOARD, KbdHook, NULL, AfxGetThread()->m_nThreadID );
-	m_hHookMouse = SetWindowsHookEx( WH_MOUSE, MouseHook, NULL, AfxGetThread()->m_nThreadID );
+	m_hHookKbd   = SetWindowsHookEx( WH_KEYBOARD, (HOOKPROC)KbdHook, NULL, AfxGetThread()->m_nThreadID );
+	m_hHookMouse = SetWindowsHookEx( WH_MOUSE, (HOOKPROC)MouseHook, NULL, AfxGetThread()->m_nThreadID );
 	m_dwLastInput = (DWORD)time( NULL );
+}
+
+/////////////////////////////////////////////////////////////////////////////
+// CShareazaApp custom library loader
+
+HINSTANCE CShareazaApp::CustomLoadLibrary(LPCTSTR pszFileName)
+{
+	HINSTANCE hLibrary = NULL;
+
+	if ( ( hLibrary = LoadLibrary( pszFileName ) ) != NULL || ( hLibrary = LoadLibrary( Settings.General.Path + _T("\\") + pszFileName ) ) != NULL );
+	else
+		TRACE( _T("DLL not found: %s\r\n"), pszFileName );
+
+	return hLibrary;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -790,77 +987,109 @@ CMainWnd* CShareazaApp::SafeMainWnd() const
 /////////////////////////////////////////////////////////////////////////////
 // CShareazaApp message
 
-void CShareazaApp::Message(int nType, UINT nID, ...) const
+bool CShareazaApp::IsLogDisabled(WORD nType) const
 {
-	if ( nType == MSG_DEBUG && ! Settings.General.Debug ) return;
-#ifdef NDEBUG
-	if ( nType == MSG_TEMP ) return;
-#endif
-	if ( nType == MSG_TEMP && ! Settings.General.DebugLog ) return;
-	
-	CString strFormat;
-	va_list pArgs;
-	
-	LoadString( strFormat, nID );
-	va_start( pArgs, nID );
-	
-	if ( strFormat.Find( _T("%1") ) >= 0 )
-	{
-		LPTSTR lpszTemp;
-		if ( ::FormatMessage( FORMAT_MESSAGE_FROM_STRING|FORMAT_MESSAGE_ALLOCATE_BUFFER,
-			strFormat, 0, 0, (LPTSTR)&lpszTemp, 0, &pArgs ) != 0 && lpszTemp != NULL )
-		{
-			if ( Settings.General.DebugLog ) LogMessage( lpszTemp );
-			PrintMessage( nType, _tcsdup( lpszTemp ) );
+	return
+		// Severity filter
+		( static_cast< DWORD >( nType & MSG_SEVERITY_MASK ) > Settings.General.LogLevel ) ||
+		// Facility filter
+		( ( nType & MSG_FACILITY_MASK ) == MSG_FACILITY_SEARCH && ! Settings.General.SearchLog );
+}
 
-			LocalFree( lpszTemp );
+void CShareazaApp::Message(WORD nType, UINT nID, ...) const
+{
+	// Check if logging this type of message is enabled
+	if ( IsLogDisabled( nType ) )
+		return;
+
+	// Setup local strings
+	CString strFormat, strTemp;
+
+	// Load the format string from the resource file
+	LoadString( strFormat, nID );
+
+	// Initialize variable arguments list
+	va_list pArgs;
+	va_start( pArgs, nID );
+
+	// Work out the type of format string and call the appropriate function
+	if ( strFormat.Find( _T("%1") ) >= 0 )
+		strTemp.FormatMessageV( strFormat, &pArgs );
+	else
+		strTemp.FormatV( strFormat, pArgs );
+
+	// Print the message if there still is one
+	if ( !strTemp.IsEmpty() )
+		PrintMessage( nType, strTemp );
+
+	// Null the argument list pointer
+	va_end( pArgs );
+
+	return;
+}
+
+void CShareazaApp::Message(WORD nType, CString strFormat, ...) const
+{
+	// Check if logging this type of message is enabled
+	if ( IsLogDisabled( nType ) )
+		return;
+
+	// Setup local strings
+	CString strTemp;
+
+	// Initialize variable arguments list
+	va_list pArgs;
+	va_start( pArgs, strFormat );
+
+	// Format the message
+	strTemp.FormatV( strFormat, pArgs );
+
+	// Print the message if there still is one
+	if ( !strTemp.IsEmpty() )
+		PrintMessage( nType, strTemp );
+
+	// Null the argument list pointer
+	va_end( pArgs );
+
+	return;
+}
+
+void CShareazaApp::PrintMessage(WORD nType, const CString& strLog) const
+{
+	// Check if there is a valid pointer to the main window
+	// and we are not shutting down
+	if ( m_pMainWnd && IsWindow( m_pMainWnd->m_hWnd )
+		&& !static_cast< CMainWnd* >( m_pMainWnd )->m_pWindows.m_bClosing )
+	{
+		// Allocate a new character array on the heap (including null terminator)
+		LPTSTR pszLog = new TCHAR[ strLog.GetLength() + 1 ];	// Released by CMainWnd::OnLog()
+
+		if ( pszLog )
+		{
+			// Make a copy of the log message into the heap array
+			_tcscpy( pszLog, strLog );
+
+			// Try to send to the message pump for processing
+			if( !m_pMainWnd->PostMessage( WM_LOG, nType, (LPARAM)pszLog ) )
+			{
+				// Sometimes a 10,000 item message queue just isn't enough
+				// Release memory from the heap
+				delete [] pszLog;
+				pszLog = NULL;
+
+				// Add log message to log file if required
+				if ( Settings.General.DebugLog )
+					LogMessage( _T("Overflow: ") + strLog );
+			}
 		}
 	}
-	else
+	else if ( Settings.General.DebugLog )
 	{
-		int nLength = _vsctprintf( strFormat, pArgs ) + 1;
-		TCHAR* szMessageBuffer = (TCHAR*)malloc( sizeof( TCHAR ) * nLength );
-		_vsntprintf( szMessageBuffer, nLength, strFormat, pArgs );
-
-		if ( Settings.General.DebugLog ) LogMessage( szMessageBuffer );
-		PrintMessage( nType, szMessageBuffer );
+		// We are shutting down and logging to file
+		LogMessage( _T("ShutDown: ") + strLog );
 	}
 
-	va_end( pArgs );
-}
-
-void CShareazaApp::Message(int nType, LPCTSTR pszFormat, ...) const
-{
-	if ( nType == MSG_DEBUG && ! Settings.General.Debug ) return;
-#ifdef NDEBUG
-	if ( nType == MSG_TEMP ) return;
-#endif
-	if ( nType == MSG_TEMP && ! Settings.General.DebugLog ) return;
-	
-	va_list pArgs;
-	va_start( pArgs, pszFormat );
-
-	int nLength = _vsctprintf( pszFormat, pArgs ) + 1;
-	TCHAR* szMessageBuffer = (TCHAR*)malloc( sizeof( TCHAR ) * nLength );
-	_vsntprintf( szMessageBuffer, nLength, pszFormat, pArgs );
-
-	if ( Settings.General.DebugLog ) LogMessage( szMessageBuffer );
-	PrintMessage( nType, szMessageBuffer );
-
-	va_end( pArgs );
-}
-
-void CShareazaApp::PrintMessage(int nType, LPCTSTR pszLog) const
-{
-	if ( m_pMainWnd && IsWindow( m_pMainWnd->m_hWnd ) && 
-		! ((CMainWnd*)m_pMainWnd)->m_pWindows.m_bClosing )
-	{
-		m_pMainWnd->PostMessage( WM_LOG, nType, (LPARAM)pszLog );
-	}
-	else
-	{
-		free( (void*)pszLog );
-	}
+	return;
 }
 
 void CShareazaApp::LogMessage(LPCTSTR pszLog) const
@@ -870,17 +1099,17 @@ void CShareazaApp::LogMessage(LPCTSTR pszLog) const
 	CFile pFile;
 	if ( pFile.Open( Settings.General.UserPath + _T("\\Data\\Shareaza.log"), CFile::modeReadWrite ) )
 	{
-		if ( ( Settings.General.MaxDebugLogSize ) &&					// If log rotation is on 
+		if ( ( Settings.General.MaxDebugLogSize ) &&					// If log rotation is on
 			( pFile.GetLength() > Settings.General.MaxDebugLogSize ) )	// and file is too long...
-		{	
+		{
 			// Close the file
-			pFile.Close();				
-			// Rotate the logs 
+			pFile.Close();
+			// Rotate the logs
 			DeleteFile( Settings.General.UserPath + _T("\\Data\\Shareaza.old.log") );
-			MoveFile( Settings.General.UserPath + _T("\\Data\\Shareaza.log"), 
+			MoveFile( Settings.General.UserPath + _T("\\Data\\Shareaza.log"),
 				Settings.General.UserPath + _T("\\Data\\Shareaza.old.log") );
 			// Start a new log
-			if ( ! pFile.Open( Settings.General.UserPath + _T("\\Data\\Shareaza.log"), 
+			if ( ! pFile.Open( Settings.General.UserPath + _T("\\Data\\Shareaza.log"),
 				CFile::modeWrite|CFile::modeCreate ) ) return;
 			// Unicode marker
 			WORD nByteOrder = 0xFEFF;
@@ -893,7 +1122,7 @@ void CShareazaApp::LogMessage(LPCTSTR pszLog) const
 	}
 	else
 	{
-		if ( ! pFile.Open( Settings.General.UserPath + _T("\\Data\\Shareaza.log"), 
+		if ( ! pFile.Open( Settings.General.UserPath + _T("\\Data\\Shareaza.log"),
 			CFile::modeWrite|CFile::modeCreate ) ) return;
 		// Unicode marker
 		WORD nByteOrder = 0xFEFF;
@@ -903,7 +1132,7 @@ void CShareazaApp::LogMessage(LPCTSTR pszLog) const
 	if ( Settings.General.ShowTimestamp )
 	{
 		CTime pNow = CTime::GetCurrentTime();
-		CString strLine;	
+		CString strLine;
 		strLine.Format( _T("[%.2i:%.2i:%.2i] "),
 			pNow.GetHour(), pNow.GetMinute(), pNow.GetSecond() );
 		pFile.Write( (LPCTSTR)strLine, sizeof(TCHAR) * strLine.GetLength() );
@@ -915,37 +1144,64 @@ void CShareazaApp::LogMessage(LPCTSTR pszLog) const
 	pFile.Close();
 }
 
-/////////////////////////////////////////////////////////////////////////////
-// CShareazaApp get error string
-
-CString CShareazaApp::GetErrorString() const
+CString GetErrorString(DWORD dwError)
 {
-	LPTSTR pszMessage = NULL;
+	LPTSTR MessageBuffer = NULL;
 	CString strMessage;
-	
-	FormatMessage( FORMAT_MESSAGE_FROM_SYSTEM|FORMAT_MESSAGE_ALLOCATE_BUFFER,
-		NULL, GetLastError(), MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
-		(LPTSTR)&pszMessage, 0, NULL );
-	
-	if ( pszMessage != NULL )
+	if ( FormatMessage (
+		FORMAT_MESSAGE_ALLOCATE_BUFFER |
+		FORMAT_MESSAGE_IGNORE_INSERTS |
+		FORMAT_MESSAGE_FROM_SYSTEM,
+		NULL, dwError, 0, (LPTSTR)&MessageBuffer, 0, NULL ) )
 	{
-		strMessage = pszMessage;
-		LocalFree( pszMessage );
+		strMessage = MessageBuffer;
+		strMessage.Trim( _T(" \t\r\n") );
+		LocalFree( MessageBuffer );
+		return strMessage;
 	}
-	
-	return strMessage;
+
+	static LPCTSTR const szModules [] =
+	{
+		_T("netapi32.dll"),
+		_T("netmsg.dll"),
+		_T("wininet.dll"),
+		_T("ntdll.dll"),
+		_T("ntdsbmsg.dll"),
+		NULL
+	};
+	for ( int i = 0; szModules[ i ]; i++ )
+	{
+		HMODULE hModule = LoadLibraryEx( szModules[ i ], NULL, LOAD_LIBRARY_AS_DATAFILE );
+		if ( hModule )
+		{
+			DWORD bResult = FormatMessage(
+				FORMAT_MESSAGE_ALLOCATE_BUFFER |
+				FORMAT_MESSAGE_IGNORE_INSERTS |
+				FORMAT_MESSAGE_FROM_HMODULE,
+				hModule, dwError, 0, (LPTSTR)&MessageBuffer, 0, NULL );
+			FreeLibrary( hModule );
+			if ( bResult )
+			{
+				strMessage = MessageBuffer;
+				strMessage.Trim( _T(" \t\r\n") );
+				LocalFree( MessageBuffer );
+				return strMessage;
+			}
+		}
+	}
+	return CString();
 }
 
 CString CShareazaApp::GetCountryCode(IN_ADDR pAddress) const
 {
-	if ( m_pGeoIP )
+	if ( m_pfnGeoIP_country_code_by_addr && m_pGeoIP )
 		return CString( m_pfnGeoIP_country_code_by_addr( m_pGeoIP, inet_ntoa( pAddress ) ) );
 	return _T("");
 }
 
 CString CShareazaApp::GetCountryName(IN_ADDR pAddress) const
 {
-	if ( m_pGeoIP )
+	if ( m_pfnGeoIP_country_name_by_addr && m_pGeoIP )
 		return CString( m_pfnGeoIP_country_name_by_addr( m_pGeoIP, inet_ntoa( pAddress ) ) );
 	return _T("");
 }
@@ -959,7 +1215,7 @@ BOOL CShareazaApp::InternalURI(LPCTSTR pszURI)
 	if ( pMainWnd == NULL ) return FALSE;
 
 	CString strURI( pszURI );
-	
+
 	if ( strURI.Find( _T("raza:command:") ) == 0 )
 	{
 		if ( UINT nCmdID = CoolInterface.NameToID( pszURI + 13 ) )
@@ -990,13 +1246,20 @@ BOOL CShareazaApp::InternalURI(LPCTSTR pszURI)
 		}
 	}
 	else if (	strURI.Find( _T("http://") ) == 0 ||
+				strURI.Find( _T("https://") ) == 0 ||
 				strURI.Find( _T("ftp://") ) == 0 ||
 				strURI.Find( _T("mailto:") ) == 0 ||
 				strURI.Find( _T("aim:") ) == 0 ||
 				strURI.Find( _T("magnet:") ) == 0 ||
 				strURI.Find( _T("gnutella:") ) == 0 ||
-				strURI.Find( _T("shareaza:") ) == 0 ||
 				strURI.Find( _T("gnet:") ) == 0 ||
+				strURI.Find( _T("shareaza:") ) == 0 ||
+				strURI.Find( _T("gwc:") ) == 0 ||
+				strURI.Find( _T("uhc:") ) == 0 ||
+				strURI.Find( _T("ukhl:") ) == 0 ||
+				strURI.Find( _T("gnutella1:") ) == 0 ||
+				strURI.Find( _T("gnutella2:") ) == 0 ||
+				strURI.Find( _T("mp2p:") ) == 0 ||
 				strURI.Find( _T("ed2k:") ) == 0 ||
 				strURI.Find( _T("sig2dat:") ) == 0 )
 	{
@@ -1034,7 +1297,7 @@ BOOL CShareazaApp::InternalURI(LPCTSTR pszURI)
 	}
 	else if ( strURI == _T("raza:upgrade") )
 	{
-		pMainWnd->PostMessage( WM_VERSIONCHECK, 1 );
+		pMainWnd->PostMessage( WM_VERSIONCHECK, VC_CONFIRM );
 	}
 	else if ( strURI == _T("raza:options") )
 	{
@@ -1067,9 +1330,7 @@ BOOL CShareazaApp::InternalURI(LPCTSTR pszURI)
 		pMainWnd->PostMessage( WM_COMMAND, ID_LIBRARY_TREE_VIRTUAL );
 	}
 	else
-	{
 		return FALSE;
-	}
 
 	return TRUE;
 }
@@ -1103,57 +1364,26 @@ CRuntimeClass* AfxClassForName(LPCTSTR pszClass)
 /////////////////////////////////////////////////////////////////////////////
 // String functions
 
-void Split(CString strSource, LPCTSTR pszDelimiter, CArray< CString >& pAddIt, BOOL bAddFirstEmpty)
+void Split(const CString& strSource, TCHAR cDelimiter, CStringArray& pAddIt, BOOL bAddFirstEmpty)
 {
-	CString		strNew = strSource;
-	CString		strTemp = strSource;
-	CString		strAdd;
-	BOOL		bFirstChecked = FALSE;
-
-	int nPos1;
-	int nPos = 0;
-
-	if ( ! _tcslen( pszDelimiter ) )
-		pszDelimiter = _T("|"); 
-
-	do
+	for( LPCTSTR start = strSource; *start; start++ )
 	{
-		nPos1 = 0;
-		nPos = strNew.Find( pszDelimiter, nPos1 );
-		if ( nPos != -1 ) 
-		{
-			CString strAdd = strTemp = strNew.Left( nPos );
-			if ( ! strAdd.IsEmpty() && ! strTemp.Trim().IsEmpty() ) 
-			{
-				pAddIt.Add( strAdd );
-			}
-			else if ( bAddFirstEmpty && ! bFirstChecked ) 
-			{
-				pAddIt.Add( strAdd.Trim() );
-			}
-			strNew = strTemp = strNew.Mid( nPos + static_cast< int >( _tcslen( pszDelimiter ) ) );
-		}
-		bFirstChecked = TRUE; // Allow only the first item empty and ignore trailing empty items 
-	} while ( nPos != -1 );
-	
-	if ( ! strTemp.Trim().IsEmpty() )
-		pAddIt.Add( strNew );
+		LPCTSTR c = _tcschr( start, cDelimiter );
+		int len = c ? (int) ( c - start ) : (int) _tcslen( start );
+		if ( len > 0 )
+			pAddIt.Add( CString( start, len ) );
+		else
+			if ( bAddFirstEmpty && ( start == strSource ) )
+				pAddIt.Add( CString() );
+		if ( ! c )
+			break;
+		start = c;
+	}
 }
 
 BOOL LoadString(CString& str, UINT nID)
 {
 	return Skin.LoadString( str, nID );
-}
-
-void Replace(CString& strBuffer, LPCTSTR pszFind, LPCTSTR pszReplace)
-{
-	for (;;)
-	{
-		int nPos = strBuffer.Find( pszFind );
-		if ( nPos < 0 ) break;
-
-		strBuffer = strBuffer.Left( nPos ) + pszReplace + strBuffer.Mid( nPos + static_cast< int >( _tcslen( pszFind ) ) );
-	}
 }
 
 BOOL LoadSourcesString(CString& str, DWORD num, bool bFraction)
@@ -1178,10 +1408,10 @@ BOOL LoadSourcesString(CString& str, DWORD num, bool bFraction)
 	{
 		switch ( num % 10 )
 		{
-			case 0: 
+			case 0:
 				return Skin.LoadString( str, IDS_STATUS_SOURCESTENS );
 			case 1:
-				return Skin.LoadString( str, IDS_STATUS_SOURCES );				
+				return Skin.LoadString( str, IDS_STATUS_SOURCES );
 			case 2:
 			case 3:
 			case 4:
@@ -1259,14 +1489,14 @@ LPCTSTR _tcsnistr(LPCTSTR pszString, LPCTSTR pszPattern, size_t plen)
 DWORD TimeFromString(LPCTSTR pszTime)
 {
 	// 2002-04-30T08:30Z
-	
+
 	if ( _tcslen( pszTime ) != 17 ) return 0;
 	if ( pszTime[4] != '-' || pszTime[7] != '-' ) return 0;
 	if ( pszTime[10] != 'T' || pszTime[13] != ':' || pszTime[16] != 'Z' ) return 0;
-	
+
 	LPCTSTR psz;
 	int nTemp;
-	
+
 	tm pTime = {};
 
 	if ( _stscanf( pszTime, _T("%i"), &nTemp ) != 1 ) return 0;
@@ -1283,23 +1513,23 @@ DWORD TimeFromString(LPCTSTR pszTime)
 	for ( psz = pszTime + 14 ; *psz == '0' ; psz++ );
 	if ( _stscanf( psz, _T("%i"), &nTemp ) != 1 ) return 0;
 	pTime.tm_min = nTemp;
-	
+
 	time_t tGMT = mktime( &pTime );
 	// check for invalid dates
-	if (tGMT == -1) 
+	if (tGMT == -1)
 	{
 		theApp.Message( MSG_ERROR, _T("Invalid Date/Time"), pszTime );
 		return 0;
 	}
 	struct tm* pGM = gmtime( &tGMT );
 	time_t tSub = mktime( pGM );
-	
-	if (tSub == -1) 
+
+	if (tSub == -1)
 	{
 		theApp.Message( MSG_ERROR, _T("Invalid Date/Time"), pszTime );
 		return 0;
 	}
-	
+
 	return DWORD( 2 * tGMT - tSub );
 }
 
@@ -1321,11 +1551,11 @@ CString TimeToString(time_t tVal)
 BOOL TimeFromString(LPCTSTR pszTime, FILETIME* pTime)
 {
 	// 2002-04-30T08:30Z
-	
+
 	if ( _tcslen( pszTime ) != 17 ) return FALSE;
 	if ( pszTime[4] != '-' || pszTime[7] != '-' ) return FALSE;
 	if ( pszTime[10] != 'T' || pszTime[13] != ':' || pszTime[16] != 'Z' ) return FALSE;
-	
+
 	LPCTSTR psz;
 	int nTemp;
 
@@ -1369,28 +1599,73 @@ CString	TimeToString(FILETIME* pTime)
 
 void RecalcDropWidth(CComboBox* pWnd)
 {
-    // Reset the dropped width
-    int nNumEntries = pWnd->GetCount();
-    int nWidth = 0;
-    CString str;
+	// Reset the dropped width
+	int nNumEntries = pWnd->GetCount();
+	int nWidth = 0;
+	CString str;
 
-    CClientDC dc( pWnd );
-    int nSave = dc.SaveDC();
-    dc.SelectObject( pWnd->GetFont() );
+	CClientDC dc( pWnd );
+	int nSave = dc.SaveDC();
+	dc.SelectObject( pWnd->GetFont() );
 
-    int nScrollWidth = GetSystemMetrics( SM_CXVSCROLL );
-    for ( int nEntry = 0; nEntry < nNumEntries; nEntry++ )
-    {
-        pWnd->GetLBText( nEntry, str );
-        int nLength = dc.GetTextExtent( str ).cx + nScrollWidth;
-        nWidth = max( nWidth, nLength );
-    }
-    
-    // Add margin space to the calculations
-    nWidth += dc.GetTextExtent( _T("0") ).cx;
+	int nScrollWidth = GetSystemMetrics( SM_CXVSCROLL );
+	for ( int nEntry = 0; nEntry < nNumEntries; nEntry++ )
+	{
+		pWnd->GetLBText( nEntry, str );
+		int nLength = dc.GetTextExtent( str ).cx + nScrollWidth;
+		nWidth = max( nWidth, nLength );
+	}
 
-    dc.RestoreDC( nSave );
-    pWnd->SetDroppedWidth( nWidth );
+	// Add margin space to the calculations
+	nWidth += dc.GetTextExtent( _T("0") ).cx;
+
+	dc.RestoreDC( nSave );
+	pWnd->SetDroppedWidth( nWidth );
+}
+
+BOOL LoadIcon(LPCTSTR szFilename, HICON* phSmallIcon, HICON* phLargeIcon, HICON* phHugeIcon)
+{
+	CString strIcon( szFilename );
+
+	if ( phSmallIcon )
+		*phSmallIcon = NULL;
+	if ( phLargeIcon )
+		*phLargeIcon = NULL;
+	if ( phHugeIcon )
+		*phHugeIcon = NULL;
+
+	int nIndex = strIcon.ReverseFind( _T(',') );
+	int nIcon = 0;
+	if ( nIndex != -1 )
+	{
+		if ( _stscanf( strIcon.Mid( nIndex + 1 ), _T("%i"), &nIcon ) != 1 )
+			return FALSE;
+		strIcon = strIcon.Left( nIndex );
+	}
+	else
+		nIndex = 0;
+
+	if ( strIcon.GetLength() < 3 )
+		return FALSE;
+
+	if ( strIcon.GetAt( 0 ) == _T('\"') &&
+		 strIcon.GetAt( strIcon.GetLength() - 1 ) == _T('\"') )
+		strIcon = strIcon.Mid( 1, strIcon.GetLength() - 2 );
+
+	if ( phLargeIcon || phSmallIcon )
+	{
+		ExtractIconEx( strIcon, nIcon, phLargeIcon, phSmallIcon, 1 );
+	}
+
+	if ( phHugeIcon && theApp.m_pfnPrivateExtractIconsW )
+	{
+		UINT nLoadedID;
+		theApp.m_pfnPrivateExtractIconsW( strIcon, nIcon, 48, 48,
+			phHugeIcon, &nLoadedID, 1, 0 );
+	}
+
+	return ( phLargeIcon && *phLargeIcon ) || ( phSmallIcon && *phSmallIcon ) ||
+		( phHugeIcon && *phHugeIcon );
 }
 
 int AddIcon(UINT nIcon, CImageList& gdiImageList)
@@ -1403,7 +1678,7 @@ int AddIcon(HICON hIcon, CImageList& gdiImageList)
 	int num = -1;
 	if ( hIcon )
 	{
-		if ( theApp.m_bRTL )
+		if ( Settings.General.LanguageRTL )
 			hIcon = CreateMirroredIcon( hIcon );
 		num = gdiImageList.Add( hIcon );
 		VERIFY( DestroyIcon( hIcon ) );
@@ -1424,8 +1699,11 @@ HICON CreateMirroredIcon(HICON hIconOrig, BOOL bDestroyOriginal)
 		hdcMask = CreateCompatibleDC( NULL );
 		if( hdcMask )
 		{
-			theApp.m_pfnSetLayout( hdcBitmap, LAYOUT_RTL );
-			theApp.m_pfnSetLayout( hdcMask, LAYOUT_RTL );
+			if ( theApp.m_pfnSetLayout )
+			{
+				theApp.m_pfnSetLayout( hdcBitmap, LAYOUT_RTL );
+				theApp.m_pfnSetLayout( hdcMask, LAYOUT_RTL );
+			}
 		}
 		else
 		{
@@ -1447,25 +1725,31 @@ HICON CreateMirroredIcon(HICON hIconOrig, BOOL bDestroyOriginal)
 					DeleteObject( ii.hbmColor );
 					ii.hbmMask = ii.hbmColor = NULL;
 					hbm = CreateCompatibleBitmap( hdcScreen, bm.bmWidth, bm.bmHeight );
-					hbmMask = CreateBitmap( bm.bmWidth, bm.bmHeight, 1, 1, NULL );
-					hbmOld = (HBITMAP)SelectObject( hdcBitmap, hbm );
-					hbmOldMask = (HBITMAP)SelectObject( hdcMask,hbmMask );
-					DrawIconEx( hdcBitmap, 0, 0, hIconOrig, bm.bmWidth, bm.bmHeight, 0, NULL, DI_IMAGE );
-					DrawIconEx( hdcMask, 0, 0, hIconOrig, bm.bmWidth, bm.bmHeight, 0, NULL, DI_MASK );
-					SelectObject( hdcBitmap, hbmOld );
-					SelectObject( hdcMask, hbmOldMask );
-					// Create the new mirrored icon and delete bitmaps
+					if ( hbm != NULL )
+					{
+						hbmMask = CreateBitmap( bm.bmWidth, bm.bmHeight, 1, 1, NULL );
+						if ( hbmMask != NULL )
+						{
+							hbmOld = (HBITMAP)SelectObject( hdcBitmap, hbm );
+							hbmOldMask = (HBITMAP)SelectObject( hdcMask,hbmMask );
+							DrawIconEx( hdcBitmap, 0, 0, hIconOrig, bm.bmWidth, bm.bmHeight, 0, NULL, DI_IMAGE );
+							DrawIconEx( hdcMask, 0, 0, hIconOrig, bm.bmWidth, bm.bmHeight, 0, NULL, DI_MASK );
+							SelectObject( hdcBitmap, hbmOld );
+							SelectObject( hdcMask, hbmOldMask );
+							// Create the new mirrored icon and delete bitmaps
 
-					ii.hbmMask = hbmMask;
-					ii.hbmColor = hbm;
-					hIcon = CreateIconIndirect( &ii );
-					DeleteObject( hbm );
-					DeleteObject( hbmMask );
+							ii.hbmMask = hbmMask;
+							ii.hbmColor = hbm;
+							hIcon = CreateIconIndirect( &ii );
+							DeleteObject( hbmMask );
+						}
+						DeleteObject( hbm );
+					}
 				}
 			}
 		}
+		ReleaseDC( NULL, hdcScreen );
 	}
-	ReleaseDC( NULL, hdcScreen );
 
 	if ( hdcBitmap ) DeleteDC( hdcBitmap );
 	if ( hdcMask ) DeleteDC( hdcMask );
@@ -1501,9 +1785,9 @@ HBITMAP CreateMirroredBitmap(HBITMAP hbmOrig)
 		hbm = CreateCompatibleBitmap( hdc, bm.bmWidth, bm.bmHeight );
 		if (!hbm)
 		{
-			ReleaseDC( NULL, hdc );
 			DeleteDC( hdcMem1 );
 			DeleteDC( hdcMem2 );
+			ReleaseDC( NULL, hdc );
 			return NULL;
 		}
 		// Flip the bitmap.
@@ -1553,11 +1837,13 @@ class CRazaThread : public CWinThread
 	DECLARE_DYNAMIC(CRazaThread)
 
 public:
-	CRazaThread(AFX_THREADPROC pfnThreadProc, LPVOID pParam) :
+	CRazaThread(AFX_THREADPROC pfnThreadProc = NULL, LPVOID pParam = NULL) :
 		CWinThread( NULL, pParam ),
+		m_bCOM( FALSE ),
 		m_pfnThreadProcExt( pfnThreadProc )
 	{
 	}
+
 	virtual ~CRazaThread()
 	{
 		Remove( m_hThread );
@@ -1565,23 +1851,26 @@ public:
 
 	virtual BOOL InitInstance()
 	{
-		ASSERT_VALID( this );
-		return TRUE;
+		CWinThread::InitInstance();
+
+		m_bCOM = SUCCEEDED( OleInitialize( NULL ) );
+		return m_bCOM;
+	}
+
+	virtual int ExitInstance()
+	{
+		if ( m_bCOM )
+			OleUninitialize();
+
+		return CWinThread::ExitInstance();
 	}
 
 	virtual int Run()
 	{
-		ASSERT_VALID( this );
-		ASSERT( m_pfnThreadProcExt );
-
-		bool bCOM = SUCCEEDED( OleInitialize( NULL ) );
-
-		int nResult = ( *m_pfnThreadProcExt )( m_pThreadParams );
-
-		if ( bCOM )
-			OleUninitialize();
-
-		return nResult;
+		if ( m_pfnThreadProcExt )
+			return ( *m_pfnThreadProcExt )( m_pThreadParams );
+		else
+			return CWinThread::Run();
 	}
 
 	static void Add(CRazaThread* pThread, LPCSTR pszName)
@@ -1635,8 +1924,13 @@ public:
 
 			theApp.Message( MSG_DEBUG, _T("WARNING: Terminating '%hs' thread (0x%08x)."),
 				( tag.pszName ? tag.pszName : "unnamed" ), hThread );
-			TRACE( _T("WARNING: Terminating '%hs' thread (0x%08x)."),
+			TRACE( _T("WARNING: Terminating '%hs' thread (0x%08x).\n"),
 				( tag.pszName ? tag.pszName : "unnamed" ), hThread );
+		}
+		else
+		{
+			theApp.Message( MSG_DEBUG, _T("WARNING: Terminating thread (0x%08x) failed."), hThread );
+			TRACE( _T("WARNING: Terminating thread (0x%08x) failed.\n"), hThread );
 		}
 	}
 
@@ -1651,6 +1945,7 @@ protected:
 
 	static CCriticalSection	m_ThreadMapSection;	// Guarding of m_ThreadMap
 	static CThreadMap		m_ThreadMap;		// Map of running threads
+	BOOL					m_bCOM;				// OLE initialized
 	AFX_THREADPROC			m_pfnThreadProcExt;
 };
 
@@ -1670,11 +1965,12 @@ HANDLE BeginThread(LPCSTR pszName, AFX_THREADPROC pfnThreadProc,
 		if ( pThread->CreateThread( dwCreateFlags | CREATE_SUSPENDED, nStackSize,
 			lpSecurityAttrs ) )
 		{
+			CRazaThread::Add( pThread, pszName );
+
 			VERIFY( pThread->SetThreadPriority( nPriority ) );
+
 			if ( ! ( dwCreateFlags & CREATE_SUSPENDED ) )
 				VERIFY( pThread->ResumeThread() != (DWORD)-1 );
-
-			CRazaThread::Add( pThread, pszName );
 
 			return pThread->m_hThread;
 		}
@@ -1689,14 +1985,16 @@ void CloseThread(HANDLE* phThread, DWORD dwTimeout)
 	{
 		__try
 		{
-			SetThreadPriority( *phThread, THREAD_PRIORITY_HIGHEST );
+			::SetThreadPriority( *phThread, THREAD_PRIORITY_NORMAL );
+
 			if ( WaitForSingleObject( *phThread, dwTimeout ) == WAIT_TIMEOUT )
 			{
 				CRazaThread::Terminate( *phThread );
 			}
 		}
-		__except( EXCEPTION_CONTINUE_EXECUTION )
+		__except( EXCEPTION_EXECUTE_HANDLER )
 		{
+			// Thread already ended
 		}
 
 		CRazaThread::Remove( *phThread );
@@ -1711,7 +2009,19 @@ void CloseThread(HANDLE* phThread, DWORD dwTimeout)
 LRESULT CALLBACK KbdHook(int nCode, WPARAM wParam, LPARAM lParam)
 {
 	if ( nCode == HC_ACTION )
+	{
 		theApp.m_dwLastInput = (DWORD)time( NULL );
+
+		BOOL bAlt = (WORD)( lParam >> 16 ) & KF_ALTDOWN;
+		// BOOL bCtrl = GetAsyncKeyState( VK_CONTROL ) & 0x80000000;
+		if ( bAlt )
+		{
+			if ( wParam == VK_DOWN )
+				SendMessage( AfxGetMainWnd()->GetSafeHwnd(), WM_SETALPHA, (WPARAM)0, 0 );
+			if ( wParam == VK_UP )
+				SendMessage( AfxGetMainWnd()->GetSafeHwnd(), WM_SETALPHA, (WPARAM)1, 0 );
+		}
+	}
 
 	return ::CallNextHookEx( theApp.m_hHookKbd, nCode, wParam, lParam );
 }
@@ -1727,10 +2037,22 @@ LRESULT CALLBACK MouseHook(int nCode, WPARAM wParam, LPARAM lParam)
 	return ::CallNextHookEx( theApp.m_hHookMouse, nCode, wParam, lParam );
 }
 
+CString GetFolderPath( int nFolder )
+{
+	TCHAR pszFolderPath[ MAX_PATH ] = { 0 };
+
+	if ( theApp.m_pfnSHGetFolderPathW && SUCCEEDED( theApp.m_pfnSHGetFolderPathW( NULL, nFolder, NULL, NULL, pszFolderPath ) ) )
+		return CString( pszFolderPath );
+
+	return _T("");
+}
+
 CString GetWindowsFolder()
 {
 	TCHAR pszWindowsPath[ MAX_PATH ] = { 0 };
-	GetWindowsDirectory( pszWindowsPath, MAX_PATH );
+	UINT nReturnValue = GetWindowsDirectory( pszWindowsPath, MAX_PATH );
+	if ( nReturnValue == 0 || nReturnValue > MAX_PATH ) return CString( _T("c:\\windows") );
+
 	CharLower( pszWindowsPath );
 	return CString( pszWindowsPath );
 }
@@ -1738,24 +2060,97 @@ CString GetWindowsFolder()
 CString GetProgramFilesFolder()
 {
 	TCHAR pszProgramsPath[ MAX_PATH ] = { 0 };
-	if ( HINSTANCE hShell = LoadLibrary( _T("shfolder.dll") ) )
-	{
-		HRESULT (WINAPI *pfnSHGetFolderPath)(HWND, int, HANDLE, DWORD, LPWSTR);
-		(FARPROC&)pfnSHGetFolderPath = GetProcAddress( hShell, "SHGetFolderPathW" );
-		if ( pfnSHGetFolderPath )
-		{
-			(*pfnSHGetFolderPath)( NULL, CSIDL_PROGRAM_FILES, NULL, NULL, pszProgramsPath );
-		}
-		FreeLibrary( hShell );
-	}
-	if ( ! *pszProgramsPath )
+	BOOL bOK = FALSE;
+
+	if ( theApp.m_pfnSHGetFolderPathW && SUCCEEDED( theApp.m_pfnSHGetFolderPathW( NULL, CSIDL_PROGRAM_FILES, NULL, NULL, pszProgramsPath ) ) )
+		bOK = TRUE;
+
+	if ( !bOK || ! *pszProgramsPath )
 	{
 		// Get drive letter
-		GetWindowsDirectory( pszProgramsPath, MAX_PATH );
+		UINT nReturnValue = GetWindowsDirectory( pszProgramsPath, MAX_PATH );
+		if ( nReturnValue == 0 || nReturnValue > MAX_PATH ) return CString( _T("c:\\program files") );
+
 		_tcscpy( pszProgramsPath + 1, _T(":\\program files") );
 	}
+
 	CharLower( pszProgramsPath );
 	return CString( pszProgramsPath );
+}
+
+CString GetDocumentsFolder()
+{
+	CString strDocumentsPath( GetFolderPath( CSIDL_PERSONAL ) );
+
+	if ( !strDocumentsPath.GetLength() )
+	{
+		strDocumentsPath = CRegistry::GetString( _T("Shell Folders"), _T("Personal"), _T(""), _T("Software\\Microsoft\\Windows\\CurrentVersion\\Explorer") );
+	}
+	ASSERT( strDocumentsPath.GetLength() );
+
+	CharLower( strDocumentsPath.GetBuffer() );
+	strDocumentsPath.ReleaseBuffer();
+
+	return strDocumentsPath;
+}
+
+CString GetAppDataFolder()
+{
+	CString strAppDataPath( GetFolderPath( CSIDL_APPDATA ) );
+
+	if ( !strAppDataPath.GetLength() )
+	{
+		strAppDataPath = CRegistry::GetString( _T("Shell Folders"), _T("AppData"), _T(""), _T("Software\\Microsoft\\Windows\\CurrentVersion\\Explorer") );
+	}
+	ASSERT( strAppDataPath.GetLength() );
+
+	CharLower( strAppDataPath.GetBuffer() );
+	strAppDataPath.ReleaseBuffer();
+
+	return strAppDataPath;
+}
+
+CString GetLocalAppDataFolder()
+{
+	CString strLocalAppDataPath( GetFolderPath( CSIDL_LOCAL_APPDATA ) );
+
+	if ( !strLocalAppDataPath.GetLength() )
+	{
+		strLocalAppDataPath = CRegistry::GetString( _T("Shell Folders"), _T("Local AppData"), _T(""), _T("Software\\Microsoft\\Windows\\CurrentVersion\\Explorer") );
+
+		if ( !strLocalAppDataPath.GetLength() )
+			return GetAppDataFolder();
+	}
+	ASSERT( strLocalAppDataPath.GetLength() );
+
+	CharLower( strLocalAppDataPath.GetBuffer() );
+	strLocalAppDataPath.ReleaseBuffer();
+
+	return strLocalAppDataPath;
+}
+
+BOOL CreateDirectory(LPCTSTR szPath)
+{
+	DWORD dwAttr = GetFileAttributes( szPath );
+	if ( ( dwAttr != INVALID_FILE_ATTRIBUTES ) &&
+		( dwAttr & FILE_ATTRIBUTE_DIRECTORY ) )
+		return TRUE;
+
+	CString strDir( szPath );
+	for ( int nStart = 2; ; )
+	{
+		int nSlash = strDir.Find( _T('\\'), nStart );
+		if ( ( nSlash == -1 ) || ( nSlash == strDir.GetLength() - 1 ) )
+			break;
+		CString strSubDir( strDir.Left( nSlash ) );
+		dwAttr = GetFileAttributes( strSubDir );
+		if ( ( dwAttr == INVALID_FILE_ATTRIBUTES ) ||
+			! ( dwAttr & FILE_ATTRIBUTE_DIRECTORY ) )
+			if ( ! CreateDirectory( strSubDir, NULL ) )
+				return FALSE;
+		nStart = nSlash + 1;
+	}
+	return CreateDirectory( szPath, NULL );
 }
 
 CString LoadHTML(HINSTANCE hInstance, UINT nResourceID)
@@ -1842,7 +2237,7 @@ bool ResourceRequest(const CString& strPath, CBuffer& pResponse, CString& sHeade
 							// Save main header
 							ICONDIR* piDir = (ICONDIR*)pSource;
 							DWORD dwTotalSize = sizeof( ICONDIR ) +
-								sizeof( ICONDIRENTRY ) * piDir->idCount; 
+								sizeof( ICONDIRENTRY ) * piDir->idCount;
 							pResponse.EnsureBuffer( dwTotalSize );
 							CopyMemory( pResponse.m_pBuffer, piDir, sizeof( ICONDIR ) );
 
@@ -1859,28 +2254,33 @@ bool ResourceRequest(const CString& strPath, CBuffer& pResponse, CString& sHeade
 								// Load subicon
 								HRSRC hResIcon = FindResource( hModule, MAKEINTRESOURCE(
 									piDirEntry[ i ].nID ), RT_ICON );
-								DWORD nSizeIcon = SizeofResource( hModule, hResIcon );
-								HGLOBAL hMemoryIcon = LoadResource( hModule, hResIcon );
-								BITMAPINFOHEADER* piImage = (BITMAPINFOHEADER*)
-									LockResource( hMemoryIcon );
+								if ( hResIcon )
+								{
+									DWORD nSizeIcon = SizeofResource( hModule, hResIcon );
+									HGLOBAL hMemoryIcon = LoadResource( hModule, hResIcon );
+									if ( hMemoryIcon )
+									{
+										BITMAPINFOHEADER* piImage = (BITMAPINFOHEADER*)LockResource( hMemoryIcon );
 
-								// Fill subicon header
-								piEntry[ i ].bWidth = piDirEntry[ i ].bWidth;
-								piEntry[ i ].bHeight = piDirEntry[ i ].bHeight;
-								piEntry[ i ].wPlanes = piDirEntry[ i ].wPlanes;
-								piEntry[ i ].bColorCount = piDirEntry[ i ].bColorCount;
-								piEntry[ i ].bReserved = 0;
-								piEntry[ i ].wBitCount = piDirEntry[ i ].wBitCount;
-								piEntry[ i ].dwBytesInRes = nSizeIcon;
-								piEntry[ i ].dwImageOffset = dwTotalSize;
+										// Fill subicon header
+										piEntry[ i ].bWidth = piDirEntry[ i ].bWidth;
+										piEntry[ i ].bHeight = piDirEntry[ i ].bHeight;
+										piEntry[ i ].wPlanes = piDirEntry[ i ].wPlanes;
+										piEntry[ i ].bColorCount = piDirEntry[ i ].bColorCount;
+										piEntry[ i ].bReserved = 0;
+										piEntry[ i ].wBitCount = piDirEntry[ i ].wBitCount;
+										piEntry[ i ].dwBytesInRes = nSizeIcon;
+										piEntry[ i ].dwImageOffset = dwTotalSize;
 
-								// Save subicon
-								pResponse.EnsureBuffer( dwTotalSize + nSizeIcon );
-								CopyMemory( pResponse.m_pBuffer + dwTotalSize,
-									piImage, nSizeIcon );
-								dwTotalSize += nSizeIcon;
+										// Save subicon
+										pResponse.EnsureBuffer( dwTotalSize + nSizeIcon );
+										CopyMemory( pResponse.m_pBuffer + dwTotalSize,
+											piImage, nSizeIcon );
+										dwTotalSize += nSizeIcon;
 
-								FreeResource( hMemoryIcon );
+										FreeResource( hMemoryIcon );
+									}
+								}
 							}
 							pResponse.m_nLength = dwTotalSize;
 						}
@@ -1902,4 +2302,214 @@ bool ResourceRequest(const CString& strPath, CBuffer& pResponse, CString& sHeade
 		}
 	}
 	return ret;
+}
+
+bool MarkFileAsDownload(const CString& sFilename)
+{
+	LPCTSTR pszExt = PathFindExtension( (LPCTSTR)sFilename );
+	if ( pszExt == NULL ) return false;
+
+	bool bSuccess = false;
+
+	if ( theApp.m_bNT && Settings.Library.MarkFileAsDownload )
+	{
+		// TODO: pFile->m_bVerify and IDS_LIBRARY_VERIFY_FIX warning features could be merged
+		// with this function, because they resemble the security warning.
+		// Should raza unblock files from the application without forcing user to do that manually?
+		if ( IsIn( Settings.Library.SafeExecute, pszExt + 1 ) &&
+			( !theApp.m_pfnAssocIsDangerous || !theApp.m_pfnAssocIsDangerous( pszExt ) ) )
+			return false;
+
+		// Temporary clear R/O attribute
+		BOOL bChanged = FALSE;
+		DWORD dwOrigAttr = GetFileAttributes( sFilename );
+		if ( dwOrigAttr != INVALID_FILE_ATTRIBUTES && ( dwOrigAttr & FILE_ATTRIBUTE_READONLY ) )
+			bChanged = SetFileAttributes( sFilename, dwOrigAttr & ~FILE_ATTRIBUTE_READONLY );
+
+		HANDLE hFile = CreateFile( sFilename + _T(":Zone.Identifier"),
+			GENERIC_WRITE, FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE,
+			NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL );
+		if ( hFile != INVALID_HANDLE_VALUE )
+		{
+			DWORD dwWritten = 0;
+			bSuccess = ( WriteFile( hFile, "[ZoneTransfer]\r\nZoneID=3\r\n", 26,
+				&dwWritten, NULL ) && dwWritten == 26 );
+			CloseHandle( hFile );
+		}
+		else
+			TRACE( "MarkFileAsDownload() : CreateFile \"%s\" error %d\n", sFilename, GetLastError() );
+
+		if ( bChanged )
+			SetFileAttributes( sFilename, dwOrigAttr );
+	}
+	return bSuccess;
+}
+
+bool LoadGUID(const CString& sFilename, Hashes::Guid& oGUID)
+{
+	bool bSuccess = false;
+	if ( theApp.m_bNT && Settings.Library.UseFolderGUID )
+	{
+		HANDLE hFile = CreateFile( sFilename + _T(":Shareaza.GUID"),
+			GENERIC_READ, FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE,
+			NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL );
+		if ( hFile != INVALID_HANDLE_VALUE )
+		{
+			Hashes::Guid oTmpGUID;
+			DWORD dwReaded = 0;
+			bSuccess = ( ReadFile( hFile, oTmpGUID.begin(), oTmpGUID.byteCount,
+				&dwReaded, NULL ) && dwReaded == oTmpGUID.byteCount );
+			if ( bSuccess )
+			{
+				oTmpGUID.validate();
+				oGUID = oTmpGUID;
+			}
+			CloseHandle( hFile );
+		}
+	}
+	return bSuccess;
+}
+
+bool SaveGUID(const CString& sFilename, const Hashes::Guid& oGUID)
+{
+	bool bSuccess = false;
+	if ( theApp.m_bNT && Settings.Library.UseFolderGUID )
+	{
+		// Temporary clear R/O attribute
+		BOOL bChanged = FALSE;
+		DWORD dwOrigAttr = GetFileAttributes( sFilename );
+		if ( dwOrigAttr != 0xffffffff && ( dwOrigAttr & FILE_ATTRIBUTE_READONLY ) )
+			bChanged = SetFileAttributes( sFilename, dwOrigAttr & ~FILE_ATTRIBUTE_READONLY );
+
+		HANDLE hFile = CreateFile( sFilename + _T(":Shareaza.GUID"),
+			GENERIC_WRITE, FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE,
+			NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL );
+		if ( hFile != INVALID_HANDLE_VALUE )
+		{
+			DWORD dwWritten = 0;
+			bSuccess = ( WriteFile( hFile, oGUID.begin(), oGUID.byteCount,
+				&dwWritten, NULL ) && dwWritten == oGUID.byteCount );
+			CloseHandle( hFile );
+		}
+		else
+			TRACE( "SaveGUID() : CreateFile \"%s\" error %d\n", sFilename, GetLastError() );
+
+		if ( bChanged )
+			SetFileAttributes( sFilename, dwOrigAttr );
+	}
+	return bSuccess;
+}
+
+CString ResolveShortcut(LPCTSTR lpszFileName)
+{
+	CComPtr< IShellLink > pIShellLink;
+	if ( SUCCEEDED( pIShellLink.CoCreateInstance( CLSID_ShellLink ) ) )
+	{
+		CComPtr< IPersistFile > pIPersistFile;
+		pIPersistFile = pIShellLink;
+		if ( pIPersistFile &&
+			SUCCEEDED( pIPersistFile->Load( CComBSTR( lpszFileName ), STGM_READ ) ) &&
+			SUCCEEDED( pIShellLink->Resolve( AfxGetMainWnd()->GetSafeHwnd(), SLR_NO_UI |
+			SLR_NOUPDATE | SLR_NOSEARCH | SLR_NOTRACK | SLR_NOLINKINFO ) ) )
+		{
+			CString sPath;
+			BOOL bResult = SUCCEEDED( pIShellLink->GetPath( sPath.GetBuffer( MAX_PATH ),
+				MAX_PATH, NULL, 0 ) );
+			sPath.ReleaseBuffer();
+			if ( bResult )
+				return sPath;
+		}
+	}
+	return CString();
+}
+
+// BrowseCallbackProc - BrowseForFolder callback function
+static int CALLBACK BrowseCallbackProc(HWND hWnd, UINT uMsg, LPARAM lParam, LPARAM lpData)
+{
+	switch ( uMsg )
+	{
+	case BFFM_INITIALIZED:
+		{
+			// Remove context help button from dialog caption
+			SetWindowLong( hWnd, GWL_STYLE,
+				GetWindowLong( hWnd, GWL_STYLE ) & ~DS_CONTEXTHELP );
+			SetWindowLong( hWnd, GWL_EXSTYLE,
+				GetWindowLong( hWnd, GWL_EXSTYLE ) & ~WS_EX_CONTEXTHELP );
+
+			// Set initial directory
+			SendMessage( hWnd, BFFM_SETSELECTION, TRUE, lpData );
+		}
+		break;
+
+	case BFFM_SELCHANGED:
+		{
+			// Fail if non-filesystem
+			TCHAR szDir[ MAX_PATH ] = {};
+			BOOL bResult = SHGetPathFromIDList( (LPITEMIDLIST)lParam, szDir );
+			if ( bResult )
+			{
+				// Fail if folder not accessible
+				bResult = ( _taccess( szDir, 4 ) == 0 );
+				if ( bResult )
+				{
+					// Fail if pidl is a link
+					SHFILEINFO sfi = {};
+					bResult = ( SHGetFileInfo( (LPCTSTR)lParam, 0, &sfi, sizeof( sfi ),
+						SHGFI_PIDL | SHGFI_ATTRIBUTES ) &&
+						( sfi.dwAttributes & SFGAO_LINK ) == 0 );
+				}
+			}
+			SendMessage( hWnd, BFFM_ENABLEOK, 0, bResult );
+		}
+		break;
+	}
+	return 0;
+}
+
+// Displays a dialog box enabling the user to select a Shell folder
+CString BrowseForFolder(UINT nTitle, LPCTSTR szInitialPath, HWND hWnd)
+{
+	CString strTitle;
+	LoadString( strTitle, nTitle );
+	return BrowseForFolder( strTitle, szInitialPath, hWnd );
+}
+
+// Displays a dialog box enabling the user to select a Shell folder
+CString BrowseForFolder(LPCTSTR szTitle, LPCTSTR szInitialPath, HWND hWnd)
+{
+	// Get last used folder
+	static TCHAR szDefaultPath[ MAX_PATH ] = {};
+	if ( ! szInitialPath || ! *szInitialPath )
+	{
+		if ( ! *szDefaultPath )
+			lstrcpyn( szDefaultPath, (LPCTSTR)GetDocumentsFolder(), MAX_PATH );
+		szInitialPath = szDefaultPath;
+	}
+
+	TCHAR szDisplayName[ MAX_PATH ] = {};
+	BROWSEINFO pBI = {};
+	pBI.hwndOwner = hWnd ? hWnd : AfxGetMainWnd()->GetSafeHwnd();
+	pBI.pszDisplayName = szDisplayName;
+	pBI.lpszTitle = szTitle;
+	pBI.ulFlags = BIF_RETURNONLYFSDIRS | BIF_EDITBOX | BIF_NEWDIALOGSTYLE;
+	pBI.lpfn = BrowseCallbackProc;
+	pBI.lParam = (LPARAM)szInitialPath;
+	LPITEMIDLIST pPath = SHBrowseForFolder( &pBI );
+	if ( pPath == NULL )
+		return CString();
+
+	TCHAR szPath[ MAX_PATH ] = {};
+	BOOL bResult = SHGetPathFromIDList( pPath, szPath );
+
+	CComPtr< IMalloc > pMalloc;
+	if ( SUCCEEDED( SHGetMalloc( &pMalloc ) ) )
+		pMalloc->Free( pPath );
+
+	if ( ! bResult )
+		return CString();
+
+	// Save last used folder
+	lstrcpyn( szDefaultPath, szPath, MAX_PATH );
+
+	return CString( szPath );
 }

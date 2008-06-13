@@ -1,8 +1,8 @@
 //
 // Shareaza.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
-// This file is part of SHAREAZA (www.shareaza.com)
+// Copyright (c) Shareaza Development Team, 2002-2008.
+// This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
 // and/or modify it under the terms of the GNU General Public License
@@ -23,13 +23,16 @@
 
 #include "Resource.h"
 #include "ComObject.h"
-#include "ShareazaOM.h"
 #include "Buffer.h"
+
+#ifndef WIN64
+static HMODULE __stdcall LoadUnicows();
+#endif
 
 class CUPnPFinder;
 class CMainWnd;
 class CSplashDlg;
-// class CFontManager;
+class CFontManager;
 
 class CShareazaCommandLineInfo : public CCommandLineInfo
 {
@@ -38,7 +41,7 @@ public:
 
 	virtual void ParseParam(const TCHAR* pszParam, BOOL bFlag, BOOL bLast);
 
-	BOOL m_bSilentTray;
+	BOOL m_bTray;
 	BOOL m_bNoSplash;
 	BOOL m_bNoAlphaWarning;
 	INT  m_nGUIMode;
@@ -56,14 +59,17 @@ public:
 	HANDLE				m_pMutex;
 	CMutex				m_pSection;
 	WORD				m_nVersion[4];
+	BYTE				m_pBTVersion[4];			// SZxx
 	CString				m_sVersion;					// x.x.x.x
 	CString				m_sSmartAgent;				// Shareaza x.x.x.x
 	CString				m_sBuildDate;
+	CString				m_strBinaryPath;			// Shareaza.exe path
 	CFont				m_gdiFont;
 	CFont				m_gdiFontBold;
 	CFont				m_gdiFontLine;
 	CWnd*				m_pSafeWnd;
-	BOOL				m_bLive;
+	volatile bool		m_bLive;
+	BOOL				m_bInteractive;
 	BOOL				m_bNT;						// NT based core. (NT, 2000, XP, etc)
 	BOOL				m_bServer;					// Server version
 	BOOL				m_bWinME;					// Windows Millennium
@@ -71,8 +77,7 @@ public:
 	DWORD				m_dwWindowsVersion;			// Windows version
 	DWORD				m_dwWindowsVersionMinor;	// Windows minor version
 	QWORD				m_nPhysicalMemory;			// Physical RAM installed
-	BOOL				m_bRTL;						// Right-to-Left GUI (2000, XP only)
-	BOOL                m_bMenuWasVisible;          // For the menus in media player window
+	BOOL				m_bMenuWasVisible;			// For the menus in media player window
 	int					m_nDefaultFontSize;			// The basic font size. (11)
 	CString				m_sDefaultFont;				// Main font. (Tahoma)
 	CString				m_sPacketDumpFont;			// Packet Window. (Lucida Console)
@@ -80,8 +85,8 @@ public:
 	boost::scoped_ptr< CUPnPFinder > m_pUPnPFinder;
 	TRISTATE			m_bUPnPPortsForwarded;		// UPnP values are assigned when the discovery is complete
 	TRISTATE			m_bUPnPDeviceConnected;		// or when the service notifies
-	CString				m_sUPnPExternalIP;
-	DWORD				m_dwLastInput;				// Time of last input event	in secs
+	DWORD				m_nUPnPExternalAddress;
+	DWORD				m_dwLastInput;				// Time of last input event (in secs)
 	HHOOK				m_hHookKbd;
 	HHOOK				m_hHookMouse;
 
@@ -91,54 +96,93 @@ public:
 	BOOL		(WINAPI *m_pfnGetMonitorInfoA)(HMONITOR, LPMONITORINFO);
 	HMONITOR	(WINAPI *m_pfnMonitorFromRect)(LPCRECT, DWORD);
 	HMONITOR	(WINAPI *m_pfnMonitorFromWindow)(HWND, DWORD);
+	HWND		(WINAPI *m_pfnGetAncestor)(HWND, UINT);
+	UINT		(WINAPI *m_pfnPrivateExtractIconsW)(LPCWSTR, int, int, int, HICON*, UINT*, UINT, UINT);
+
+	HINSTANCE	m_hKernel;
+	BOOL		(WINAPI *m_pfnGetDiskFreeSpaceExW)(LPCWSTR, PULARGE_INTEGER, PULARGE_INTEGER, PULARGE_INTEGER);
+	BOOL		(WINAPI *m_pfnCopyFileExW)(LPCWSTR, LPCWSTR, LPPROGRESS_ROUTINE, LPVOID, LPBOOL, DWORD);
+	BOOL		(WINAPI *m_pfnGlobalMemoryStatusEx)( LPMEMORYSTATUSEX );
+
+	HINSTANCE	m_hShellFolder;
+	HRESULT		(WINAPI *m_pfnSHGetFolderPathW)(HWND, int, HANDLE, DWORD, LPWSTR);
 
 	// For RTL layout support
 	HINSTANCE	m_hGDI32;
 	DWORD		(WINAPI *m_pfnSetLayout)(HDC, DWORD);
+
+	// For themes functions
+	HINSTANCE	m_hTheme;
+	HRESULT		(WINAPI *m_pfnSetWindowTheme)(HWND, LPCWSTR, LPCWSTR);
+	BOOL		(WINAPI *m_pfnIsThemeActive)(VOID);
+	HANDLE		(WINAPI *m_pfnOpenThemeData)(HWND, LPCWSTR);
+	HRESULT		(WINAPI *m_pfnCloseThemeData)(HANDLE);
+	HRESULT		(WINAPI *m_pfnDrawThemeBackground)(HANDLE, HDC, int, int, const RECT*, const RECT*);
+	HRESULT		(WINAPI *m_pfnEnableThemeDialogTexture)(HWND, DWORD);
+	HRESULT		(WINAPI *m_pfnDrawThemeParentBackground)(HWND, HDC, RECT*);
+	HRESULT		(WINAPI *m_pfnGetThemeBackgroundContentRect)(HANDLE, HDC, int, int, const RECT*, RECT*);
+	HRESULT		(WINAPI *m_pfnGetThemeSysFont)(HANDLE, int, LOGFONT);
+	HRESULT		(WINAPI *m_pfnDrawThemeText)(HANDLE, HDC, int, int, LPCWSTR, int, DWORD, DWORD, const RECT*);
 
 	// Power schemes management
 	HINSTANCE	m_hPowrProf;
 	BOOLEAN		(WINAPI *m_pfnGetActivePwrScheme)(PUINT);
 	BOOLEAN		(WINAPI *m_pfnGetCurrentPowerPolicies)(PGLOBAL_POWER_POLICY, PPOWER_POLICY);
 	BOOLEAN		(WINAPI *m_pfnSetActivePwrScheme)(UINT, PGLOBAL_POWER_POLICY, PPOWER_POLICY);
-	
-	// GeoIP - IP to Country lookup
-	HINSTANCE m_hGeoIP;
-	GeoIP* m_pGeoIP;
-	GeoIP_country_code_by_addrFunc m_pfnGeoIP_country_code_by_addr;
-	GeoIP_country_name_by_addrFunc m_pfnGeoIP_country_name_by_addr;
 
-public:
+	HINSTANCE	m_hShlWapi;
+	BOOL		(WINAPI *m_pfnAssocIsDangerous)(LPCWSTR);
+	HRESULT		(WINAPI *m_pfnAssocQueryStringW)(ASSOCF, ASSOCSTR, LPCWSTR, LPCWSTR, LPWSTR, DWORD*);
+
+	// GeoIP - IP to Country lookup
+	HINSTANCE	m_hGeoIP;
+	GeoIP*		m_pGeoIP;
+	GeoIP_country_code_by_addrFunc	m_pfnGeoIP_country_code_by_addr;
+	GeoIP_country_name_by_addrFunc	m_pfnGeoIP_country_name_by_addr;
+
+	HINSTANCE	m_hLibGFL;
+
+	HINSTANCE			CustomLoadLibrary(LPCTSTR);
 	CMainWnd*			SafeMainWnd() const;
-	void				Message(int nType, UINT nID, ...) const;
-	void				Message(int nType, LPCTSTR pszFormat, ...) const;
-	CString				GetErrorString() const;
+	bool				IsLogDisabled(WORD nType) const;
+	void				Message(WORD nType, UINT nID, ...) const;
+	void				Message(WORD nType, CString strFormat, ...) const;
 	BOOL				InternalURI(LPCTSTR pszURI);
-	void				PrintMessage(int nType, LPCTSTR pszLog) const;
-	void				LogMessage(LPCTSTR pszLog) const;
+	void				PrintMessage(WORD nType, const CString& strLog) const;
+	void				LogMessage(LPCTSTR strLog) const;
+	void				SplashStep(LPCTSTR pszMessage = NULL, int nMax = 0, bool bClosing = false);
 
 	CString				GetCountryCode(IN_ADDR pAddress) const;
 	CString				GetCountryName(IN_ADDR pAddress) const;
 
-//	CFontManager*		m_pFontManager;
+	CFontManager*		m_pFontManager;
+
+	// Open file or url. Returns NULL always.
+	virtual CDocument*	OpenDocumentFile(LPCTSTR lpszFileName);
+	// Open file or url (generic function)
+	static BOOL			Open(LPCTSTR lpszFileName, BOOL bDoIt);
+	// Open .lnk file
+	static BOOL			OpenShellShortcut(LPCTSTR lpszFileName, BOOL bDoIt);
+	// Open .url file
+	static BOOL			OpenInternetShortcut(LPCTSTR lpszFileName, BOOL bDoIt);
+	// Open .torrent file
+	static BOOL			OpenTorrent(LPCTSTR lpszFileName, BOOL bDoIt);
+	// Open .co or .collection file
+	static BOOL			OpenCollection(LPCTSTR lpszFileName, BOOL bDoIt);
+	// Open url
+	static BOOL			OpenURL(LPCTSTR lpszFileName, BOOL bDoIt, BOOL bSilent = FALSE);
+
+protected:
+	CSplashDlg*					m_dlgSplash;
+	mutable CCriticalSection	m_csMessage;
+	CShareazaCommandLineInfo	m_ocmdInfo;
 
 	virtual BOOL		InitInstance();
 	virtual int			ExitInstance();
 	virtual void		WinHelp(DWORD dwData, UINT nCmd = HELP_CONTEXT);
-	virtual CDocument*	OpenDocumentFile(LPCTSTR lpszFileName);
-
-	static BOOL			Open(LPCTSTR lpszFileName, BOOL bDoIt);
-	static BOOL			OpenTorrent(LPCTSTR lpszFileName, BOOL bDoIt);
-	static BOOL			OpenCollection(LPCTSTR lpszFileName, BOOL bDoIt);
-	static BOOL			OpenURL(LPCTSTR lpszFileName, BOOL bDoIt);
-
-protected:
-	mutable CCriticalSection	m_csMessage;
-	CShareazaCommandLineInfo	m_ocmdInfo;
 
 	void				GetVersionNumber();
 	void				InitResources();
-	void				SplashStep(CSplashDlg*& dlg, LPCTSTR pszMessage, bool bClosing = false);
 
 	DECLARE_MESSAGE_MAP()
 };
@@ -154,8 +198,7 @@ CRuntimeClass* AfxClassForName(LPCTSTR pszClass);
 BOOL LoadString(CString& str, UINT nID);
 LPCTSTR _tcsistr(LPCTSTR pszString, LPCTSTR pszPattern);
 LPCTSTR _tcsnistr(LPCTSTR pszString, LPCTSTR pszPattern, size_t plen);
-void Replace(CString& strBuffer, LPCTSTR pszFind, LPCTSTR pszReplace);
-void Split(CString strSource, LPCTSTR strDelimiter, CArray< CString >& pAddIt, BOOL bAddFirstEmpty);
+void Split(const CString& strSource, TCHAR cDelimiter, CStringArray& pAddIt, BOOL bAddFirstEmpty = FALSE);
 BOOL LoadSourcesString(CString& str, DWORD num, bool bFraction=false);
 
 DWORD	TimeFromString(LPCTSTR psz);
@@ -164,6 +207,8 @@ BOOL	TimeFromString(LPCTSTR psz, FILETIME* pTime);
 CString	TimeToString(FILETIME* pTime);
 
 void	RecalcDropWidth(CComboBox* pWnd);
+// Load 16x16, 32x32, 48x48 icons from .ico, .exe, .dll files
+BOOL LoadIcon(LPCTSTR szFilename, HICON* phSmallIcon, HICON* phLargeIcon, HICON* phHugeIcon);
 // Load and add icon to CImageList, mirrored if needed
 int		AddIcon(UINT nIcon, CImageList& gdiImageList);
 // Add icon to CImageList, mirrored if needed
@@ -173,17 +218,30 @@ int		AddIcon(HICON hIcon, CImageList& gdiImageList);
 HICON	CreateMirroredIcon(HICON hIconOrig, BOOL bDestroyOriginal = TRUE);
 HBITMAP	CreateMirroredBitmap(HBITMAP hbmOrig);
 
+#ifdef _DEBUG
+	#define ALMOST_INFINITE	INFINITE
+#else
+	#define ALMOST_INFINITE	20000
+#endif
+
 inline void SetThreadName(DWORD dwThreadID, LPCSTR szThreadName);
 HANDLE BeginThread(LPCSTR pszName, AFX_THREADPROC pfnThreadProc,
 	LPVOID pParam, int nPriority = THREAD_PRIORITY_NORMAL, UINT nStackSize = 0,
 	DWORD dwCreateFlags = 0, LPSECURITY_ATTRIBUTES lpSecurityAttrs = NULL);
-void CloseThread(HANDLE* phThread, DWORD dwTimeout = 5000);
+void CloseThread(HANDLE* phThread, DWORD dwTimeout = ALMOST_INFINITE);
 
 LRESULT CALLBACK KbdHook(int nCode, WPARAM wParam, LPARAM lParam);
 LRESULT CALLBACK MouseHook(int nCode, WPARAM wParam, LPARAM lParam);
 
+CString GetFolderPath( int nFolder );
 CString GetWindowsFolder();
 CString GetProgramFilesFolder();
+CString GetDocumentsFolder();
+CString GetAppDataFolder();
+CString GetLocalAppDataFolder();
+
+// Create directory. If one or more of the intermediate folders do not exist, they are created as well.
+BOOL CreateDirectory(LPCTSTR szPath);
 
 // Loads RT_HTML or RT_GZIP resource as string
 CString LoadHTML(HINSTANCE hInstance, UINT nResourceID);
@@ -191,11 +249,24 @@ CString LoadHTML(HINSTANCE hInstance, UINT nResourceID);
 // Loads well-known resource for HTTP-uploading
 bool ResourceRequest(const CString& strPath, CBuffer& pResponse, CString& sHeader);
 
-#ifdef _DEBUG
-#define MLOG(x) theApp.Message( MSG_DEBUG, x )
-#else
-#define MLOG(x)
-#endif
+// Mark file as downloaded from Internet (using NTFS stream)
+bool MarkFileAsDownload(const CString& sFilename);
+
+// Load GUID from NTFS stream of file
+bool LoadGUID(const CString& sFilename, Hashes::Guid& oGUID);
+
+// Save GUID to NTFS stream of file
+bool SaveGUID(const CString& sFilename, const Hashes::Guid& oGUID);
+
+// Resolve shell shortcut (.lnk file)
+CString ResolveShortcut(LPCTSTR lpszFileName);
+
+// Get Win32 API error description
+CString GetErrorString(DWORD dwError = GetLastError());
+
+// Displays a dialog box enabling the user to select a Shell folder
+CString BrowseForFolder(UINT nTitle, LPCTSTR szInitialPath = NULL, HWND hWnd = NULL);
+CString BrowseForFolder(LPCTSTR szTitle, LPCTSTR szInitialPath = NULL, HWND hWnd = NULL);
 
 typedef enum
 {
@@ -217,12 +288,12 @@ struct CompareNums
 
 inline bool IsCharacter(TCHAR nChar)
 {
-    WORD nCharType = 0;
-	
+	WORD nCharType = 0;
+
 	if ( GetStringTypeExW( LOCALE_NEUTRAL, CT_CTYPE3, &nChar, 1, &nCharType ) )
 		return ( ( nCharType & C3_ALPHA ) == C3_ALPHA ||
 				 ( ( nCharType & C3_KATAKANA ) == C3_KATAKANA ||
-				   ( nCharType & C3_HIRAGANA ) == C3_HIRAGANA ) && 
+				   ( nCharType & C3_HIRAGANA ) == C3_HIRAGANA ) &&
 				   !( ( nCharType & C3_SYMBOL ) == C3_SYMBOL )  ||
 				 ( nCharType & C3_IDEOGRAPH ) == C3_IDEOGRAPH ||
 				 _istdigit( nChar ) );
@@ -233,7 +304,7 @@ inline bool IsCharacter(TCHAR nChar)
 inline bool IsHiragana(TCHAR nChar)
 {
 	WORD nCharType = 0;
-	
+
 	if ( GetStringTypeExW( LOCALE_NEUTRAL, CT_CTYPE3, &nChar, 1, &nCharType ) )
 		return ( ( nCharType & C3_HIRAGANA ) == C3_HIRAGANA );
 	return false;
@@ -242,7 +313,7 @@ inline bool IsHiragana(TCHAR nChar)
 inline bool IsKatakana(TCHAR nChar)
 {
 	WORD nCharType = 0;
-	
+
 	if ( GetStringTypeExW( LOCALE_NEUTRAL, CT_CTYPE3, &nChar, 1, &nCharType ) )
 		return ( ( nCharType & C3_KATAKANA ) == C3_KATAKANA );
 	return false;
@@ -251,7 +322,7 @@ inline bool IsKatakana(TCHAR nChar)
 inline bool IsKanji(TCHAR nChar)
 {
 	WORD nCharType = 0;
-	
+
 	if ( GetStringTypeExW( LOCALE_NEUTRAL, CT_CTYPE3, &nChar, 1, &nCharType ) )
 		return ( ( nCharType & C3_IDEOGRAPH ) == C3_IDEOGRAPH );
 	return false;
@@ -303,28 +374,35 @@ inline void IsType(LPCTSTR pszString, size_t nStart, size_t nLength, bool& bWord
 	}
 }
 
+// Log severity (log level)
+#define MSG_SEVERITY_MASK		0x00ff
+#define MSG_ERROR				0x0000
+#define MSG_WARNING				0x0001
+#define MSG_NOTICE				0x0002
+#define MSG_INFO				0x0003
+#define MSG_DEBUG				0x0004
 
-// To see the color of the message you must look at CTextCtrl::CTextCtrl() in CtrlText.cpp
-#define MSG_DEFAULT			0
-#define MSG_SYSTEM			1
-#define MSG_DOWNLOAD		1
-#define MSG_ERROR			2
-#define MSG_DEBUG			3
-#define MSG_TEMP			4
-#define MSG_DISPLAYED_ERROR	5	// It behave as MSG_ERROR but it is displayed also when VerboseMode is off
+// Log facility
+#define MSG_FACILITY_MASK		0xff00
+#define MSG_FACILITY_DEFAULT	0x0000
+#define MSG_FACILITY_SEARCH		0x0100
+#define MSG_FACILITY_INCOMING	0x0200
+#define MSG_FACILITY_OUTGOING	0x0300
 
-#define WM_WINSOCK		(WM_USER+101)
-#define WM_VERSIONCHECK	(WM_USER+102)
-#define WM_OPENCHAT		(WM_USER+103)
-#define WM_TRAY			(WM_USER+104)
-#define WM_URL			(WM_USER+105)
-#define WM_SKINCHANGED	(WM_USER+106)
-#define WM_COLLECTION	(WM_USER+107)
-#define WM_OPENSEARCH	(WM_USER+108)
-#define WM_LOG			(WM_USER+109)
-#define WM_LIBRARYSEARCH (WM_USER+110)
-#define WM_PLAYFILE		(WM_USER+111)
-#define WM_ENQUEUEFILE	(WM_USER+112)
+#define WM_WINSOCK		(WM_APP+101)
+#define WM_VERSIONCHECK	(WM_APP+102)
+#define WM_OPENCHAT		(WM_APP+103)
+#define WM_TRAY			(WM_APP+104)
+#define WM_URL			(WM_APP+105)
+#define WM_SKINCHANGED	(WM_APP+106)
+#define WM_COLLECTION	(WM_APP+107)
+#define WM_OPENSEARCH	(WM_APP+108)
+#define WM_LOG			(WM_APP+109)
+#define WM_LIBRARYSEARCH (WM_APP+110)
+#define WM_PLAYFILE		(WM_APP+111)
+#define WM_ENQUEUEFILE	(WM_APP+112)
+#define WM_SETALPHA		(WM_APP+113)
+#define WM_METADATA		(WM_APP+114)
 
 #define WM_AFX_SETMESSAGESTRING 0x0362
 #define WM_AFX_POPMESSAGESTRING 0x0375
@@ -334,6 +412,9 @@ inline void IsType(LPCTSTR pszString, size_t nStart, size_t nLength, bool& bWord
 #define ID_PLUGIN_LAST	27999
 
 
+#define THUMB_STORE_SIZE	128
+
+
 // Client's name
 #define CLIENT_NAME			"Shareaza"
 
@@ -341,17 +422,21 @@ inline void IsType(LPCTSTR pszString, size_t nStart, size_t nLength, bool& bWord
 // Network ID stuff
 
 // 4 Character vendor code (used on G1, G2)
-// BEAR, LIME, RAZA, etc
-#define VENDOR_CODE			"RAZB"
+// BEAR, LIME, RAZA, RAZB, etc
+#define VENDOR_CODE			"RAZA"
 
 // ed2k client ID number.
-// 0 = eMule, 1 - cDonkey, 4 = Shareaza mod/fork/etc, 28 = Raza.
-#define ED2K_CLIENT_ID		4
+// 0 = eMule, 1 = cDonkey, 4 = old Shareaza alpha/beta/mod/fork, 0x28 (40) = Shareaza, 0xcb (203) = ShareazaPlus with RazaCB core, etc
+#define ED2K_CLIENT_ID		40
 
 // 2 Character BT peer-id code
-// SZ = Raza, AZ = Azureus, etc
+// SZ = Shareaza, S~ = old Shareaza alpha/beta , CB = ShareazaPlus with RazaCB core, AZ = Azureus, etc
 #define BT_ID1				'S'
-#define BT_ID2				'~'
+#define BT_ID2				'Z'
+
+#define WEB_SITE			"http://shareaza.sourceforge.net/"
+#define WEB_SITE_T			_T( WEB_SITE )
+
 
 // Drag-n-drop stuff
 
@@ -365,7 +450,104 @@ extern const LPCTSTR RT_JPEG;
 extern const LPCTSTR RT_PNG;
 extern const LPCTSTR RT_GZIP;
 
-//extern double scaleX;
-//extern double scaleY;
-//#define SCALEX(argX) ((int) ((argX) * scaleX))
-//#define SCALEY(argY) ((int) ((argY) * scaleY))
+extern double scaleX;
+extern double scaleY;
+#define SCALEX(argX) ((int) ((argX) * scaleX))
+#define SCALEY(argY) ((int) ((argY) * scaleY))
+
+class CThreadImpl
+{
+public:
+	CThreadImpl() :
+		m_bCompleted( false ),
+		m_bThread( false ),
+		m_hThread( NULL )
+	{
+	}
+	virtual ~CThreadImpl()
+	{
+		CloseThread();
+	}
+
+private:
+	volatile bool	m_bCompleted;	// TRUE - thread runs at least once
+	volatile bool	m_bThread;		// TRUE - enable thread; FALSE - terminate thread.
+	volatile HANDLE m_hThread;		// Thread handle
+	CEvent			m_pWakeup;		// Thread wakeup event (optional)
+
+	static UINT ThreadStart(LPVOID pParam)
+	{
+		CThreadImpl* pThis = reinterpret_cast< CThreadImpl* >( pParam );
+		pThis->OnRun();
+		pThis->m_bCompleted = true;	// Set complete status
+		pThis->m_hThread = NULL;
+		return 0;
+	}
+
+protected:
+	virtual void OnRun() = 0;
+
+public:
+	inline bool BeginThread(LPCSTR szName = NULL, int nPriority = THREAD_PRIORITY_NORMAL) throw()
+	{
+		if ( ! IsThreadAlive() )
+		{
+			m_bCompleted = false;	// Reset complete status
+			m_bThread = true;		// Enable thread run
+			m_hThread = ::BeginThread( szName, ThreadStart, this, nPriority );
+		}
+		return ( m_hThread != NULL );
+	}
+
+	inline void CloseThread(DWORD dwTimeout = ALMOST_INFINITE) throw()
+	{
+		Exit();		// Ask thread for exit
+		Wakeup();	// Wakeup thread if any
+		::CloseThread( (HANDLE*)&m_hThread, dwTimeout );
+	}
+
+	inline void Wait() throw()
+	{
+		::CloseThread( (HANDLE*)&m_hThread, INFINITE );
+	}
+
+	inline bool Wakeup() throw()
+	{
+		return ( m_pWakeup.SetEvent() != FALSE );
+	}
+
+	inline DWORD Doze(DWORD dwTimeout = INFINITE) throw()
+	{
+		return WaitForSingleObject( m_pWakeup, dwTimeout );
+	}
+
+	inline HANDLE GetWakeupEvent() const throw()
+	{
+		return m_pWakeup;
+	}
+
+	inline bool IsThreadCompleted() const throw()
+	{
+		return m_bCompleted;
+	}
+
+	inline bool IsThreadEnabled() const throw()
+	{
+		return m_bThread;
+	}
+
+	inline bool IsThreadAlive() const throw()
+	{
+		return m_hThread && ( WaitForSingleObject( m_hThread, 0 ) == WAIT_TIMEOUT );
+	}
+
+	inline void Exit() throw()
+	{
+		m_bThread = false;
+	}
+
+	inline bool SetThreadPriority(int nPriority) throw()
+	{
+		return m_hThread && ( ::SetThreadPriority( m_hThread, nPriority ) != FALSE );
+	}
+};
