@@ -854,55 +854,74 @@ BOOL CQueryHit::HasBogusMetadata()
 
 CXMLElement* CQueryHit::ReadXML(CG1Packet* pPacket, int nSize)
 {
-	BYTE* pRaw = new BYTE[ nSize ];
-	pPacket->Read( pRaw, nSize );
-	
-	CString strXML;
-	
-	if ( nSize >= 9 && strncmp( (LPCSTR)pRaw, "{deflate}", 9 ) == 0 )
+	if ( nSize < 2 )
+		// Empty packet
+		return NULL;
+
+	auto_array< BYTE > pRaw( new BYTE[ nSize ] );
+	if ( ! pRaw.get() )
+		// Out of memory
+		return NULL;
+
+	pPacket->Read( pRaw.get(), nSize );
+
+	LPBYTE pszXML = NULL;
+	if ( nSize >= 9 && strncmp( (LPCSTR)pRaw.get(), "{deflate}", 9 ) == 0 )
 	{
-		auto_array< BYTE > pText( CZLib::Decompress( pRaw + 9, nSize - 10, (DWORD*)&nSize ) );
-		
-		if ( pText.get() != NULL )
+		// Deflate data
+		DWORD nRealSize;
+		auto_array< BYTE > pText(
+			CZLib::Decompress( pRaw.get() + 9, nSize - 10, &nRealSize ) );
+		if ( ! pText.get() )
+			// Invalid data
+			return NULL;
+		pRaw = pText;
+
+		pszXML = pRaw.get();
+		nSize = (int)nRealSize;
+	}
+	else if ( nSize >= 11 && strncmp( (LPCSTR)pRaw.get(), "{plaintext}", 11 ) == 0 )
+	{
+		if ( nSize > 12 )
 		{
-			LPTSTR pOut = strXML.GetBuffer( nSize );
-			for ( int nPos = 0 ; nPos < nSize ; nPos++ )
-				pOut[ nPos ] = (TCHAR)pText[ nPos ];
-			strXML.ReleaseBuffer( nSize );
+			pszXML = pRaw.get() + 11;
+			nSize -= 12;
 		}
 	}
-	else if ( nSize >= 11 && strncmp( (LPCSTR)pRaw, "{plaintext}", 11 ) == 0 )
+	else if ( nSize >= 2 && strncmp( (LPCSTR)pRaw.get(), "{}", 2 ) == 0 )
 	{
-		LPCSTR pszRaw = (LPCSTR)pRaw + 11;
-		if ( strlen( pszRaw ) == (DWORD)nSize - 12 ) strXML = pszRaw;
+		if ( nSize > 3 )
+		{
+			pszXML = pRaw.get() + 2;
+			nSize -= 3;
+		}
 	}
-	else if ( nSize >= 2 && strncmp( (LPCSTR)pRaw, "{}", 2 ) == 0 )
+	else if ( nSize > 1 )
 	{
-		LPCSTR pszRaw = (LPCSTR)pRaw + 2;
-		if ( strlen( pszRaw ) == (DWORD)nSize - 3 ) strXML = pszRaw;
-	}
-	else
-	{
-		LPCSTR pszRaw = (LPCSTR)pRaw;
-		if ( strlen( pszRaw ) == (DWORD)nSize - 1 ) strXML = pszRaw;
+		pszXML = pRaw.get();
+		nSize -= 1;
 	}
 
-	delete [] pRaw;
-	
 	CXMLElement* pRoot	= NULL;
-	LPCTSTR pszXML		= strXML;
-	
-	while ( pszXML && *pszXML )
+	for( ; pszXML && *pszXML;
+		pszXML = (LPBYTE)strstr( (LPCSTR)( pszXML + 1 ), "<?xml" ) )
 	{
-		CXMLElement* pXML = CXMLElement::FromString( pszXML, TRUE );
-		if ( ! pXML ) break;
-		
-		if ( ! pRoot ) pRoot = new CXMLElement( NULL, _T("Metadata") );
+		CXMLElement* pXML = CXMLElement::FromBytes( pszXML, nSize, TRUE );
+		if ( ! pXML )
+			// Invalid XML
+			break;
+
+		if ( ! pRoot )
+		{
+			pRoot = new CXMLElement( NULL, _T("Metadata") );
+			if ( ! pRoot )
+				// Out of memory
+				break;
+		}
+
 		pRoot->AddElement( pXML );
-		
-		pszXML = _tcsstr( pszXML + 1, _T("<?xml") );
 	}
-	
+
 	return pRoot;
 }
 
