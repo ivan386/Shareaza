@@ -561,6 +561,8 @@ void CShareazaApp::SplashStep(LPCTSTR pszMessage, int nMax, bool bClosing)
 
 	if ( m_dlgSplash )
 		m_dlgSplash->Step( pszMessage );
+
+	TRACE( _T("Step: %s\n"), pszMessage ? pszMessage : _T("Done") );
 }
 
 void CShareazaApp::WinHelp(DWORD /*dwData*/, UINT /*nCmd*/)
