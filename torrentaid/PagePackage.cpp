@@ -107,9 +107,9 @@ LRESULT CPackagePage::OnWizardNext()
 	return IDD_TRACKER_PAGE;
 }
 
-void CPackagePage::OnItemChangedFileList(NMHDR* pNMHDR, LRESULT* pResult) 
+void CPackagePage::OnItemChangedFileList(NMHDR* /*pNMHDR*/, LRESULT* pResult) 
 {
-	NM_LISTVIEW* pNMListView = (NM_LISTVIEW*)pNMHDR;
+//	NM_LISTVIEW* pNMListView = (NM_LISTVIEW*)pNMHDR;
 	*pResult = 0;
 	m_wndRemove.EnableWindow( m_wndList.GetSelectedCount() > 0 );
 }
