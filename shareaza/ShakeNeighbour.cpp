@@ -93,7 +93,7 @@ BOOL CShakeNeighbour::ConnectTo(IN_ADDR* pAddress, WORD nPort, BOOL bAutomatic, 
 		// Have Windows signal our event when the state of the socket changes
 		WSAEventSelect(                                   // Associate an event object with a specified set of network events
 			m_hSocket,                                    // The socket
-			Network.m_pWakeup,                            // Signal this event when the following network events happen
+			Network.GetWakeupEvent(),                     // Signal this event when the following network events happen
 			FD_CONNECT | FD_READ | FD_WRITE | FD_CLOSE ); // Connection completed, ready to read or write, or socket closed
 
 		// Report that we are attempting this connection
@@ -132,7 +132,7 @@ void CShakeNeighbour::AttachTo(CConnection* pConnection)
 	// Have Windows signal our event when the state of the socket changes
 	WSAEventSelect(                      // Associate an event object with a specified set of network events
 		m_hSocket,                       // The socket
-		Network.m_pWakeup,               // Signal this event when the following network events happen
+		Network.GetWakeupEvent(),        // Signal this event when the following network events happen
 		FD_READ | FD_WRITE | FD_CLOSE ); // Signal it when the socket is ready to read or write, or closed
 
 	// Put this CShakeNeighbour object into the Handshake1 state (do)

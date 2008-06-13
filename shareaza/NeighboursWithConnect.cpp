@@ -1,7 +1,7 @@
 //
 // NeighboursWithConnect.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -259,7 +259,7 @@ void CNeighboursWithConnect::PeerPrune(PROTOCOLID nProtocol)
 BOOL CNeighboursWithConnect::IsG2Leaf()
 {
 	// If the network is enabled (do) and we have at least 1 connection up to a hub, then we're a leaf
-	return ( Network.m_bEnabled && m_bG2Leaf );
+	return ( Network.IsConnected() && m_bG2Leaf );
 }
 
 // Determines if we are a hub on the Gnutella2 network right now
@@ -267,7 +267,7 @@ BOOL CNeighboursWithConnect::IsG2Leaf()
 BOOL CNeighboursWithConnect::IsG2Hub()
 {
 	// If the network is enabled (do) and we have at least 1 connection down to a leaf, then we're a hub
-	return ( Network.m_bEnabled && m_bG2Hub );
+	return ( Network.IsConnected() && m_bG2Hub );
 }
 
 // Takes true if we are running the program in debug mode, and this method should write out debug information
@@ -506,7 +506,7 @@ DWORD CNeighboursWithConnect::IsG2HubCapable(BOOL bDebug)
 BOOL CNeighboursWithConnect::IsG1Leaf()
 {
 	// If the network is enabled (do) and we have at least 1 connection up to an ultrapeer, then we're a leaf
-	return ( Network.m_bEnabled && m_bG1Leaf );
+	return ( Network.IsConnected() && m_bG1Leaf );
 }
 
 // Determines if we are an ultrapeer on the Gnutella network right now
@@ -514,7 +514,7 @@ BOOL CNeighboursWithConnect::IsG1Leaf()
 BOOL CNeighboursWithConnect::IsG1Ultrapeer()
 {
 	// If the network is enabled (do) and we have at least 1 connection down to a leaf, then we're an ultrapeer
-	return ( Network.m_bEnabled && m_bG1Ultrapeer );
+	return ( Network.IsConnected() && m_bG1Ultrapeer );
 }
 
 // Takes true if we are running the program in debug mode, and this method should write out debug information
@@ -951,7 +951,7 @@ void CNeighboursWithConnect::OnRun()
 	if ( Network.m_pSection.Lock( 50 ) ) // If we're waiting more than 1/20th of a second, give up
 	{
 		// Maintain the network (do)
-		if ( Network.m_bEnabled && Network.m_bAutoConnect )
+		if ( Network.IsConnected() && Network.m_bAutoConnect )
 		{
 			// Count how many connections of each type we have, calculate how many we should have, and close and open connections accordingly
 			Maintain(); // Makes new connections by getting IP addresses from the host caches for each network
@@ -1070,7 +1070,8 @@ void CNeighboursWithConnect::Maintain()
 		m_tHubG2Promotion = tNow;		// If we've just been promoted, set the timer
 
 	// Check if we have verified if we make a good G2 hub
-	if ( ( Settings.Gnutella2.HubVerified == FALSE ) && ( m_tHubG2Promotion > 0 ) && ( Network.m_bEnabled ) )
+	if ( ( Settings.Gnutella2.HubVerified == FALSE ) &&
+		 ( m_tHubG2Promotion > 0 ) && Network.IsConnected() )
 	{
 		// If we have been a hub for at least 8 hours
 		if ( ( tNow - m_tHubG2Promotion ) > ( 8 * 60 * 60 ) )

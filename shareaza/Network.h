@@ -1,7 +1,7 @@
 //
 // Network.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -19,9 +19,6 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_NETWORK_H__544414B1_3698_4C92_B0B0_1DC56AB48074__INCLUDED_)
-#define AFX_NETWORK_H__544414B1_3698_4C92_B0B0_1DC56AB48074__INCLUDED_
-
 #pragma once
 
 class CNeighbour;
@@ -38,7 +35,8 @@ enum // It is used from CNetwork::IsFirewalled
 	CHECK_BOTH, CHECK_TCP, CHECK_UDP
 };
 
-class CNetwork
+class CNetwork :
+	public CThreadImpl
 {
 // Construction
 public:
@@ -52,9 +50,7 @@ public:
 	CQueryKeys*		QueryKeys;
 
 	CMutex			m_pSection;
-	CEvent			m_pWakeup;
 	SOCKADDR_IN		m_pHost;				// Structure (Windows Sockets) which holds address of the local machine
-	BOOL			m_bEnabled;				// If the network "enabled" (Connected or trying)
 	BOOL			m_bAutoConnect;
 	BOOL			m_bTCPListeningReady;
 	BOOL			m_bUDPListeningReady;
@@ -64,7 +60,6 @@ public:
 protected:
 	CStringA		m_sHostName;
 	CList< ULONG >	m_pHostAddresses;
-	HANDLE			m_hThread;
 	DWORD			m_nSequence;
 	struct ResolveStruct
 	{
@@ -80,14 +75,16 @@ protected:
 	};
 	CMap< HANDLE, HANDLE, ResolveStruct*, ResolveStruct* > m_pLookups;
 
+	void		OnRun();
+
 // Operations
 public:
 	BOOL		IsSelfIP(IN_ADDR nAddress) const;
 	BOOL		IsAvailable() const;
-	BOOL		IsConnected() const;
-	BOOL		IsListening() const;
-	int			IsWellConnected() const;
-	BOOL		IsStable() const;
+	bool		IsConnected() const;
+	bool		IsListening() const;
+	bool		IsWellConnected() const;
+	bool		IsStable() const;
 	BOOL		IsFirewalled(int nCheck = CHECK_UDP) const;
 	DWORD		GetStableTime() const;
 	BOOL		IsConnectedTo(IN_ADDR* pAddress) const;
@@ -111,9 +108,6 @@ public:
 	void		OnWinsock(WPARAM wParam, LPARAM lParam);
 	void		OnQuerySearch(CQuerySearch* pSearch);
 	void		OnQueryHits(CQueryHit* pHits);
-protected:
-	static UINT	ThreadStart(LPVOID pParam);
-	void		OnRun();
 public:
 	void		UDPHostCache(IN_ADDR* pAddress, WORD nPort);
 	void		UDPKnownHubCache(IN_ADDR* pAddress, WORD nPort);
@@ -123,5 +117,3 @@ public:
 };
 
 extern CNetwork Network;
-
-#endif // !defined(AFX_NETWORK_H__544414B1_3698_4C92_B0B0_1DC56AB48074__INCLUDED_)

@@ -1835,8 +1835,9 @@ class CRazaThread : public CWinThread
 	DECLARE_DYNAMIC(CRazaThread)
 
 public:
-	CRazaThread(AFX_THREADPROC pfnThreadProc, LPVOID pParam) :
+	CRazaThread(AFX_THREADPROC pfnThreadProc = NULL, LPVOID pParam = NULL) :
 		CWinThread( NULL, pParam ),
+		m_bCOM( FALSE ),
 		m_pfnThreadProcExt( pfnThreadProc )
 	{
 	}
@@ -1848,25 +1849,26 @@ public:
 
 	virtual BOOL InitInstance()
 	{
-		ASSERT_VALID( this );
-		return TRUE;
+		CWinThread::InitInstance();
+
+		m_bCOM = SUCCEEDED( OleInitialize( NULL ) );
+		return m_bCOM;
+	}
+
+	virtual int ExitInstance()
+	{
+		if ( m_bCOM )
+			OleUninitialize();
+
+		return CWinThread::ExitInstance();
 	}
 
 	virtual int Run()
 	{
-		ASSERT_VALID( this );
-		ASSERT( m_pfnThreadProcExt );
-
-		bool bCOM = SUCCEEDED( OleInitialize( NULL ) );
-
-		int nResult = 0;
 		if ( m_pfnThreadProcExt )
-			nResult = ( *m_pfnThreadProcExt )( m_pThreadParams );
-
-		if ( bCOM )
-			OleUninitialize();
-
-		return nResult;
+			return ( *m_pfnThreadProcExt )( m_pThreadParams );
+		else
+			return CWinThread::Run();
 	}
 
 	static void Add(CRazaThread* pThread, LPCSTR pszName)
@@ -1941,6 +1943,7 @@ protected:
 
 	static CCriticalSection	m_ThreadMapSection;	// Guarding of m_ThreadMap
 	static CThreadMap		m_ThreadMap;		// Map of running threads
+	BOOL					m_bCOM;				// OLE initialized
 	AFX_THREADPROC			m_pfnThreadProcExt;
 };
 
@@ -1980,7 +1983,8 @@ void CloseThread(HANDLE* phThread, DWORD dwTimeout)
 	{
 		__try
 		{
-			SetThreadPriority( *phThread, THREAD_PRIORITY_HIGHEST );
+			::SetThreadPriority( *phThread, THREAD_PRIORITY_NORMAL );
+
 			if ( WaitForSingleObject( *phThread, dwTimeout ) == WAIT_TIMEOUT )
 			{
 				CRazaThread::Terminate( *phThread );

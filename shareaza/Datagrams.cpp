@@ -147,7 +147,7 @@ BOOL CDatagrams::Listen()
 			(LPCTSTR)CString( inet_ntoa( saHost.sin_addr ) ), htons( saHost.sin_port ) );
 	}
 
-	WSAEventSelect( m_hSocket, Network.m_pWakeup, FD_READ );
+	WSAEventSelect( m_hSocket, Network.GetWakeupEvent(), FD_READ );
 
 	m_nBufferBuffer	= Settings.Gnutella2.UdpBuffers; // 256;
 	m_pBufferBuffer	= new CBuffer[ m_nBufferBuffer ];

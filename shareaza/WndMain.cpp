@@ -293,9 +293,9 @@ CMainWnd::CMainWnd() :
 
 	// Bypass CMDIFrameWnd::LoadFrame
 	if ( theApp.m_dwWindowsVersion >= 6 )
-	VERIFY( CFrameWnd::LoadFrame( IDR_MAINFRAME, WS_VISIBLE ) );
+		VERIFY( CFrameWnd::LoadFrame( IDR_MAINFRAME, WS_VISIBLE ) );
 	else
-	VERIFY( CFrameWnd::LoadFrame( IDR_MAINFRAME, WS_OVERLAPPEDWINDOW ) );
+		VERIFY( CFrameWnd::LoadFrame( IDR_MAINFRAME, WS_OVERLAPPEDWINDOW ) );
 
 	theApp.m_pSafeWnd = this;
 }
@@ -1354,9 +1354,7 @@ void CMainWnd::UpdateMessages()
 {
 	CString strFormat, strMessage, strOld;
 
-	int nCount = Network.IsWellConnected();
-
-	if ( nCount > 0 )
+	if ( Network.IsWellConnected() )
 	{	//If you have neighbours, you are connected
 		QWORD nLocalVolume;
 		LibraryMaps.GetStatistics( NULL, &nLocalVolume );
@@ -1381,7 +1379,7 @@ void CMainWnd::UpdateMessages()
 				else
 					LoadString( strFormat, IDS_STATUS_BAR_CONNECTED );
 			}
-			strMessage.Format( strFormat, nCount, Settings.SmartVolume( nLocalVolume, KiloBytes ) );
+			strMessage.Format( strFormat, Neighbours.m_nStableCount, Settings.SmartVolume( nLocalVolume, KiloBytes ) );
 		}
 	}
 	else if ( Network.IsConnected() )

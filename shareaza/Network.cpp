@@ -71,14 +71,12 @@ CNetwork::CNetwork() :
 	NodeRoute				( new CRouteCache() ),
 	QueryRoute				( new CRouteCache() ),
 	QueryKeys				( new CQueryKeys() ),
-	m_bEnabled				( FALSE ),
 	m_bAutoConnect			( FALSE ),
 	m_bTCPListeningReady	( FALSE ),
 	m_bUDPListeningReady	( FALSE ),
 	m_tStartedConnecting	( 0 ),
 	m_tLastConnect			( 0 ),
 	m_tLastED2KServerHop	( 0 ),
-	m_hThread				( NULL ),
 	m_nSequence				( 0 )
 {
 	ZeroMemory( &m_pHost, sizeof( m_pHost ) );
@@ -151,30 +149,30 @@ BOOL CNetwork::IsAvailable() const
 	return bIsAvailable;
 }
 
-BOOL CNetwork::IsConnected() const
+bool CNetwork::IsConnected() const
 {
-	return m_bEnabled;
+	return IsThreadAlive();
 }
 
-BOOL CNetwork::IsListening() const
+bool CNetwork::IsListening() const
 {
-	return m_bEnabled
+	return ( IsConnected() )
 		&& ( m_pHost.sin_addr.S_un.S_addr != 0 )
 		&& ( m_pHost.sin_port != 0 )
 		&& ( Handshakes.IsListening() );
 }
 
-int CNetwork::IsWellConnected() const
+bool CNetwork::IsWellConnected() const
 {
-	return Neighbours.m_nStableCount;
+	return IsConnected() && ( Neighbours.m_nStableCount != 0 );
 }
 
-BOOL CNetwork::IsStable() const
+bool CNetwork::IsStable() const
 {
 #ifdef LAN_MODE
 	return IsListening();
 #else // LAN_MODE
-	return IsListening() && ( Handshakes.m_nStableCount > 0 );
+	return IsListening() && IsWellConnected();
 #endif // LAN_MODE
 }
 
@@ -261,7 +259,7 @@ BOOL CNetwork::Connect(BOOL bAutoConnect)
 	}
 
 	// If we are already connected exit.
-	if ( m_bEnabled )
+	if ( IsConnected() )
 		return TRUE;
 
 	// Begin network startup
@@ -313,9 +311,8 @@ BOOL CNetwork::Connect(BOOL bAutoConnect)
 	NodeRoute->SetDuration( Settings.Gnutella.RouteCache );
 	QueryRoute->SetDuration( Settings.Gnutella.RouteCache );
 
-	m_bEnabled				= TRUE;
 	m_tStartedConnecting	= GetTickCount();
-	m_hThread				= BeginThread( "Network", ThreadStart, this );
+	BeginThread( "Network" );
 
 	return TRUE;
 }
@@ -327,12 +324,11 @@ void CNetwork::Disconnect()
 {
 	CSingleLock pLock( &m_pSection, TRUE );
 
-	if ( ! m_bEnabled ) return;
+	if ( ! IsConnected() ) return;
 
 	theApp.Message( MSG_INFO, _T("") );
 	theApp.Message( MSG_NOTICE, IDS_NETWORK_DISCONNECTING );
 
-	m_bEnabled				= FALSE;
 	m_bAutoConnect			= FALSE;
 	m_bTCPListeningReady	= FALSE;
 	m_bUDPListeningReady	= FALSE;
@@ -342,8 +338,7 @@ void CNetwork::Disconnect()
 
 	pLock.Unlock();
 
-	m_pWakeup.SetEvent();
-	CloseThread( &m_hThread );
+	CloseThread();
 
 	Handshakes.Disconnect();
 	pLock.Lock();
@@ -385,7 +380,7 @@ BOOL CNetwork::ConnectTo(LPCTSTR pszAddress, int nPort, PROTOCOLID nProtocol, BO
 {
 	CSingleLock pLock( &m_pSection, TRUE );
 	
-	if ( ! m_bEnabled && ! Connect() ) return FALSE;
+	if ( ! IsConnected() && ! Connect() ) return FALSE;
 	
 	if ( nPort == 0 ) nPort = GNUTELLA_DEFAULT_PORT;
 	theApp.Message( MSG_INFO, IDS_NETWORK_RESOLVING, pszAddress );
@@ -624,13 +619,6 @@ WORD CNetwork::RandomPort() const
 //////////////////////////////////////////////////////////////////////
 // CNetwork thread run
 
-UINT CNetwork::ThreadStart(LPVOID pParam)
-{
-	CNetwork* pNetwork = (CNetwork*)pParam;
-	pNetwork->OnRun();
-	return 0;
-}
-
 void CNetwork::OnRun()
 {
 	Neighbours.IsG2HubCapable( TRUE );
@@ -639,12 +627,12 @@ void CNetwork::OnRun()
 	// It will check if it is needed inside the function
 	DiscoveryServices.Execute( TRUE, PROTOCOL_NULL, FALSE );
 
-	while ( m_bEnabled )
+	while ( IsThreadEnabled() )
 	{
 		HostCache.PruneOldHosts();
 
 		Sleep( 50 );
-		WaitForSingleObject( m_pWakeup, 100 );
+		Doze( 100 );
 	
 		if ( !theApp.m_bLive )
 			continue;
@@ -652,7 +640,7 @@ void CNetwork::OnRun()
 		if ( theApp.m_pUPnPFinder && theApp.m_pUPnPFinder->IsAsyncFindRunning() )
 			continue;
 
-		if ( m_bEnabled && m_pSection.Lock() )
+		if ( IsThreadEnabled() && m_pSection.Lock() )
 		{
 			Datagrams.OnRun();
 			SearchManager.OnRun();
