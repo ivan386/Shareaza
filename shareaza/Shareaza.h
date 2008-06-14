@@ -155,7 +155,7 @@ public:
 	CString				GetCountryCode(IN_ADDR pAddress) const;
 	CString				GetCountryName(IN_ADDR pAddress) const;
 
-	CFontManager*		m_pFontManager;
+//	CFontManager*		m_pFontManager;
 
 	// Open file or url. Returns NULL always.
 	virtual CDocument*	OpenDocumentFile(LPCTSTR lpszFileName);
@@ -450,10 +450,10 @@ extern const LPCTSTR RT_JPEG;
 extern const LPCTSTR RT_PNG;
 extern const LPCTSTR RT_GZIP;
 
-extern double scaleX;
-extern double scaleY;
-#define SCALEX(argX) ((int) ((argX) * scaleX))
-#define SCALEY(argY) ((int) ((argY) * scaleY))
+//extern double scaleX;
+//extern double scaleY;
+//#define SCALEX(argX) ((int) ((argX) * scaleX))
+//#define SCALEY(argY) ((int) ((argY) * scaleY))
 
 class CThreadImpl
 {

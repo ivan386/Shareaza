@@ -78,8 +78,8 @@ const LPCTSTR RT_BMP = _T("BMP");
 const LPCTSTR RT_JPEG = _T("JPEG");
 const LPCTSTR RT_PNG = _T("PNG");
 const LPCTSTR RT_GZIP = _T("GZIP");
-double scaleX = 1;
-double scaleY = 1;
+// double scaleX = 1;
+// double scaleY = 1;
 
 #ifndef WIN64
 HMODULE __stdcall LoadUnicows()
@@ -194,7 +194,7 @@ CShareazaApp::CShareazaApp()
 , m_hShlWapi( NULL )
 , m_hGeoIP( NULL )
 , m_pGeoIP( NULL )
-, m_pFontManager( NULL )
+//, m_pFontManager( NULL )
 , m_dlgSplash( NULL )
 {
 	ZeroMemory( m_nVersion, sizeof( m_nVersion ) );
@@ -217,8 +217,9 @@ BOOL CShareazaApp::InitInstance()
 	CoolInterface.Load();		// Loads colors and fonts. Depends on InitResources()
 
 	AfxOleInit();
-	m_pFontManager = new CFontManager();
-	AfxEnableControlContainer( m_pFontManager );
+//	m_pFontManager = new CFontManager();
+//	AfxEnableControlContainer( m_pFontManager );
+	AfxEnableControlContainer();
 
 	LoadStdProfileSettings();
 	EnableShellOpen();
@@ -535,7 +536,7 @@ int CShareazaApp::ExitInstance()
 	if ( m_hLibGFL != NULL )
 		FreeLibrary( m_hLibGFL );
 
-	delete m_pFontManager;
+//	delete m_pFontManager;
 
 	UnhookWindowsHookEx( m_hHookKbd );
 	UnhookWindowsHookEx( m_hHookMouse );
@@ -926,10 +927,10 @@ void CShareazaApp::InitResources()
 		m_nPhysicalMemory = pMemory.dwTotalPhys;
 	}
 
-	HDC screen = GetDC( 0 );
-	scaleX = GetDeviceCaps( screen, LOGPIXELSX ) / 96.0;
-	scaleY = GetDeviceCaps( screen, LOGPIXELSY ) / 96.0;
-	ReleaseDC( 0, screen );
+//	HDC screen = GetDC( 0 );
+//	scaleX = GetDeviceCaps( screen, LOGPIXELSX ) / 96.0;
+//	scaleY = GetDeviceCaps( screen, LOGPIXELSY ) / 96.0;
+//	ReleaseDC( 0, screen );
 
 	// Get the fonts from the registry
 	CString strFont = ( m_dwWindowsVersion >= 6 ) ?
