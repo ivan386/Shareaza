@@ -55,7 +55,14 @@ CCoolMenu::~CCoolMenu()
 
 void CCoolMenu::Clear()
 {
-	m_pContextMenuCache.Release();
+	__try
+	{
+		m_pContextMenuCache.Release();
+	}
+	__except( EXCEPTION_EXECUTE_HANDLER )
+	{
+		// TODO: Find why sometimes raza crashes inside Windows Shell SetSite() function
+	}
 
 	SetWatermark( NULL );
 	if ( m_bUnhook ) EnableHook( FALSE );
