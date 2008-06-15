@@ -105,6 +105,11 @@ BOOL CDownloadDlg::OnInitDialog()
 	}
 
 	m_sURL.Trim( _T(" \t\r\n") );
+
+	CShareazaURL pURL;
+	if ( !pURL.Parse( m_sURL, m_pURLs ) )
+		m_sURL.Empty();
+
 	UpdateData( FALSE );
 	OnChangeURL();
 	
