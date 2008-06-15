@@ -219,13 +219,13 @@ library Shareaza
 		IMAGESERVICE_PARTIAL_OUT	= 0x04
 	} IMAGESERVICEFLAGS;
 
-	[ uuid(AB0A7BF2-94C0-4daa-8256-2BB6C3648050) ]
+	[ uuid(AB0A7BF2-94C0-4daa-8256-2BB6C3648050), oleautomation ]
 	interface IImageServicePlugin : stdole.IUnknown
 	{
-		HRESULT LoadFromFile( [in] BSTR sFile, [in,out] IMAGESERVICEDATA* pParams, [out] SAFEARRAY** ppImage );
-		HRESULT LoadFromMemory( [in] BSTR sType, [in] SAFEARRAY* pMemory, [in,out] IMAGESERVICEDATA* pParams, [out] SAFEARRAY** ppImage );
-		HRESULT SaveToFile( [in] BSTR sFile, [in,out] IMAGESERVICEDATA* pParams, [in] SAFEARRAY* pImage);
-		HRESULT SaveToMemory( [in] BSTR sType, [out] SAFEARRAY** ppMemory, [in,out] IMAGESERVICEDATA* pParams, [in] SAFEARRAY* pImage);
+		HRESULT LoadFromFile( [in] BSTR sFile, [in,out] IMAGESERVICEDATA* pParams, [out] SAFEARRAY(BYTE)* ppImage );
+		HRESULT LoadFromMemory( [in] BSTR sType, [in] SAFEARRAY(BYTE) pMemory, [in,out] IMAGESERVICEDATA* pParams, [out] SAFEARRAY(BYTE)* ppImage );
+		HRESULT SaveToFile( [in] BSTR sFile, [in,out] IMAGESERVICEDATA* pParams, [in] SAFEARRAY(BYTE) pImage);
+		HRESULT SaveToMemory( [in] BSTR sType, [out] SAFEARRAY(BYTE)* ppMemory, [in,out] IMAGESERVICEDATA* pParams, [in] SAFEARRAY(BYTE) pImage);
 	};
 
 	//
