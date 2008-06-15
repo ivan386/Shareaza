@@ -1,7 +1,7 @@
 //
 // PageSettingsWeb.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -19,13 +19,11 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_PAGESETTINGSWEB_H__4F6DE49F_C321_44A9_AAF0_52FE61097722__INCLUDED_)
-#define AFX_PAGESETTINGSWEB_H__4F6DE49F_C321_44A9_AAF0_52FE61097722__INCLUDED_
-
 #pragma once
 
 #include "WndSettingsPage.h"
 
+// TODO: Add Settings.Web.Foxy option
 
 class CWebSettingsPage : public CSettingsPage
 {
@@ -74,7 +72,3 @@ protected:
 	DECLARE_MESSAGE_MAP()
 
 };
-
-// Microsoft Developer Studio will insert additional declarations immediately before the previous line.
-
-#endif // !defined(AFX_PAGESETTINGSWEB_H__4F6DE49F_C321_44A9_AAF0_52FE61097722__INCLUDED_)

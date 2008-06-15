@@ -212,6 +212,7 @@ CSettings::CSettings()
 	Add( _T("Web"), _T("ED2K"), &Web.ED2K, true );
 	Add( _T("Web"), _T("Gnutella"), &Web.Gnutella, true );
 	Add( _T("Web"), _T("Magnet"), &Web.Magnet, true );
+	Add( _T("Web"), _T("Foxy"), &Web.Foxy, true );
 	Add( _T("Web"), _T("Piolet"), &Web.Piolet, true );
 	Add( _T("Web"), _T("Torrent"), &Web.Torrent, true );
 

@@ -206,12 +206,13 @@ public:
 		CString		VisPath;
 		DWORD		VisSize;
 		CString		ServicePath;
-		bool		ShortPaths;		// Some players differently handle unicode paths but they can launch files using 8.3 paths
+		bool		ShortPaths;					// Some players differently handle unicode paths but they can launch files using 8.3 paths
 	} MediaPlayer;
 	
 	struct sWeb
 	{
 		bool		Magnet;
+		bool		Foxy;						// Handle Foxy links (slightly altered magnet)
 		bool		Gnutella;
 		bool		ED2K;
 		bool		Piolet;

@@ -217,6 +217,20 @@ BOOL CShareazaURL::ParseRoot(LPCTSTR pszURL, BOOL bResolve)
 		pszURL += 8;
 		return ParseMagnet( pszURL );
 	}
+	else if ( _tcsnicmp( pszURL, _T("foxy:"), 5 ) == 0 )	// Foxy
+	{
+		pszURL += 5;
+		if ( ! _tcsnicmp( pszURL, _T("//download?"), 11 ) )			// Original
+		{
+			pszURL += 11;
+			return ParseMagnet( pszURL );
+		}
+		else if ( ! _tcsnicmp( pszURL, _T("//download/?"), 12 ) )	// "Fixed" by IE
+		{
+			pszURL += 12;
+			return ParseMagnet( pszURL );
+		}
+	}
 	else if (	_tcsnicmp( pszURL, _T("shareaza:"), 9 ) == 0 ||
 				_tcsnicmp( pszURL, _T("gnutella:"), 9 ) == 0 )
 	{
@@ -592,7 +606,9 @@ BOOL CShareazaURL::ParseMagnet(LPCTSTR pszURL)
 			m_oMD5.clear();
 			m_oBTH.clear();
 		}
-		else if ( _tcsicmp( strKey, _T("xl") ) == 0 )
+		else if ( _tcsicmp( strKey, _T("xl") ) == 0 ||
+//			_tcsicmp( strKey, _T("sz") ) == 0 ||	// TODO: Uncomment this if/when 'sz' is officially added		
+			_tcsicmp( strKey, _T("fs") ) == 0 )		// Foxy
 		{
 			QWORD nSize;
 			if ( ( ! m_bSize ) && ( _stscanf( strValue, _T("%I64i"), &nSize ) == 1 ) && ( nSize > 0 ) )
@@ -601,17 +617,6 @@ BOOL CShareazaURL::ParseMagnet(LPCTSTR pszURL)
 				m_bSize = TRUE;
 			}
 		}
-		/* // Uncomment this if/when 'sz' is officially added
-		else if ( _tcsicmp( strKey, _T("sz") ) == 0 )	
-		{
-			QWORD nSize;
-			if ( ( ! m_bSize ) && ( _stscanf( strValue, _T("%I64i"), &nSize ) == 1 ) && ( nSize > 0 ) )
-			{
-				m_nSize = nSize;
-				m_bSize = TRUE;
-			}
-		}
-		*/
 	}
 	
     if ( m_oSHA1 || m_oTiger || m_oBTH || m_oMD5 || m_oED2K || m_sURL.GetLength() )
@@ -1140,6 +1145,15 @@ void CShareazaURL::Register(BOOL bOnStartup)
 	else
 	{
 		UnregisterShellType( _T("Classes"), _T("magnet") );
+	}
+
+	if ( Settings.Web.Foxy )
+	{
+		RegisterShellType( _T("Classes"), _T("foxy"), _T("URL:Foxy Protocol"), NULL, _T("Shareaza"), _T("URL"), IDR_MAINFRAME );
+	}
+	else
+	{
+		UnregisterShellType( _T("Classes"), _T("foxy") );
 	}
 
 	if ( Settings.Web.Gnutella )

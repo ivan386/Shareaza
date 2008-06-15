@@ -1252,6 +1252,7 @@ BOOL CShareazaApp::InternalURI(LPCTSTR pszURI)
 				strURI.Find( _T("mailto:") ) == 0 ||
 				strURI.Find( _T("aim:") ) == 0 ||
 				strURI.Find( _T("magnet:") ) == 0 ||
+				strURI.Find( _T("foxy:") ) == 0 ||
 				strURI.Find( _T("gnutella:") ) == 0 ||
 				strURI.Find( _T("gnet:") ) == 0 ||
 				strURI.Find( _T("shareaza:") ) == 0 ||
