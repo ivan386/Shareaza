@@ -356,7 +356,7 @@ BOOL CHostBrowser::ReadResponseLine()
 	if ( ! Read( strLine ) ) return TRUE;
 	if ( strLine.IsEmpty() ) return TRUE;
 
-	if ( strLine.GetLength() > 512 ) strLine = _T("#LINE_TOO_LONG#");
+	if ( strLine.GetLength() > 256 * 1024 ) strLine = _T("#LINE_TOO_LONG#");
 
 	if ( strLine.GetLength() >= 12 && strLine.Left( 9 ) == _T("HTTP/1.1 ") )
 	{

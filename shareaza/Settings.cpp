@@ -294,6 +294,7 @@ CSettings::CSettings()
 	Add( _T("Gnutella1"), _T("DefaultTTL"), &Gnutella1.DefaultTTL, 3, 1, 1, 3 );
 	Add( _T("Gnutella1"), _T("EnableAlways"), &Gnutella1.EnableAlways, false );
 	Add( _T("Gnutella1"), _T("EnableGGEP"), &Gnutella1.EnableGGEP, true );
+	Add( _T("Gnutella1"), _T("HostCount"), &Gnutella1.HostCount, 15, 1, 1, 50 );
 	Add( _T("Gnutella1"), _T("HostExpire"), &Gnutella1.HostExpire, 2*24*60*60, 24*60*60, 1, 100, _T(" d") );
 	Add( _T("Gnutella1"), _T("MaxHostsInPongs"), &Gnutella1.MaxHostsInPongs, 10, 1, 5, 30 );
 	Add( _T("Gnutella1"), _T("MaximumPacket"), &Gnutella1.MaximumPacket, 65535, 1, 32, 262144 );
@@ -322,6 +323,7 @@ CSettings::CSettings()
 	Add( _T("Gnutella2"), _T("EnableAlways"), &Gnutella2.EnableAlways, true );
 	Add( _T("Gnutella2"), _T("HAWPeriod"), &Gnutella2.HAWPeriod, 300000, 1000, 1, 60*60, _T(" s") );
 	Add( _T("Gnutella2"), _T("HostCurrent"), &Gnutella2.HostCurrent, 10*60, 60, 1, 24*60, _T(" m") );
+	Add( _T("Gnutella2"), _T("HostCount"), &Gnutella2.HostCount, 15, 1, 1, 50 );
 	Add( _T("Gnutella2"), _T("HostExpire"), &Gnutella2.HostExpire, 2*24*60*60, 24*60*60, 1, 100, _T(" d") );
 	Add( _T("Gnutella2"), _T("HubHorizonSize"), &Gnutella2.HubHorizonSize, 128, 1, 32, 512 );
 	Add( _T("Gnutella2"), _T("HubVerified"), &Gnutella2.HubVerified, false );

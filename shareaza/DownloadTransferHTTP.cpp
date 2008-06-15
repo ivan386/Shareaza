@@ -598,7 +598,7 @@ BOOL CDownloadTransferHTTP::ReadResponseLine()
 	if ( ! Read( strLine ) ) return TRUE;
 	if ( strLine.IsEmpty() ) return TRUE;
 
-	if ( strLine.GetLength() > 512 ) strLine = _T("#LINE_TOO_LONG#");
+	if ( strLine.GetLength() > 256 * 1024 ) strLine = _T("#LINE_TOO_LONG#");
 
 	theApp.Message( MSG_DEBUG | MSG_FACILITY_INCOMING, _T("%s: DOWNLOAD RESPONSE: %s"),
 		(LPCTSTR)m_sAddress, (LPCTSTR)strLine );

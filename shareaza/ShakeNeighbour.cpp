@@ -586,12 +586,11 @@ void CShakeNeighbour::SendPrivateHeaders()
 }
 
 // Takes a line like "GNUTELLA/0.6 503 Need an Ultrapeer"
-// Sends it with the "X-Try-Ultrapeers:" header
+// Sends it with the X-Try-Hubs/X-Try-Ultrapeers header
 void CShakeNeighbour::SendHostHeaders(LPCSTR pszMessage, size_t nLength)
 {
 	// Local variables
 	DWORD nTime = static_cast< DWORD >( time( NULL ) );	// The number of seconds since midnight on January 1, 1970
-	CString strHosts, strHost;	// Text to describe other computers and just one
 
 	// If this method was given a message
 	if ( pszMessage )
@@ -611,21 +610,21 @@ void CShakeNeighbour::SendHostHeaders(LPCSTR pszMessage, size_t nLength)
 	{
 		// The remote computer accepts Gnutella2 packets, sends them, or is Shareaza too
 
-		int nCount = Settings.Gnutella1.PongCount;		// Set max length of list
+		int nCount = Settings.Gnutella2.HostCount;		// Set max length of list
 
 		CQuickLock oLock( HostCache.Gnutella2.m_pSection );
 
 		// Loop through the Gnutella2 host cache from newest to oldest
-		for ( CHostCacheIterator i = HostCache.Gnutella2.Begin() ; i != HostCache.Gnutella2.End() && nCount > 0 ; ++i )
+		CString strHosts;
+		for ( CHostCacheIterator i = HostCache.Gnutella2.Begin() ;
+			i != HostCache.Gnutella2.End() && nCount > 0 ; ++i )
 		{
 			CHostCacheHost* pHost = (*i);
 
 			if ( pHost->CanQuote( nTime ) )		// if host is still recent enough
 			{
-				// Add it to the string
-				strHost = pHost->ToString();						// The host object composes text about itself
 				if ( strHosts.GetLength() ) strHosts += _T(",");	// Separate each computer's info with a comma
-				strHosts += strHost;								// Add this computer's info to the string
+				strHosts += pHost->ToString();						// Add this computer's info to the string
 				nCount--;											// Decrement counter
 			}
 		}
@@ -642,22 +641,22 @@ void CShakeNeighbour::SendHostHeaders(LPCSTR pszMessage, size_t nLength)
 	{
 		// This computer is running Gnutella
 
-		int nCount = Settings.Gnutella1.PongCount;		// Set max length of list
+		int nCount = Settings.Gnutella1.HostCount;		// Set max length of list
 
 		CQuickLock oLock( HostCache.Gnutella1.m_pSection );
 
 		// Loop through the Gnutella host cache from newest to oldest
-		for ( CHostCacheIterator i = HostCache.Gnutella1.Begin() ; i != HostCache.Gnutella1.End() ; ++i )
+		CString strHosts;
+		for ( CHostCacheIterator i = HostCache.Gnutella1.Begin() ;
+			i != HostCache.Gnutella1.End() && nCount > 0 ; ++i )
 		{
 			CHostCacheHost* pHost = (*i);
 
 			// This host is still recent enough to tell another computer about
 			if ( pHost->CanQuote( nTime ) )
 			{
-				// Add it to the string
-				strHost = pHost->ToString();						// Like "24.98.97.155:6348 2004-12-18T23:47Z"
 				if ( strHosts.GetLength() ) strHosts += _T(",");	// Separate each computer's info with a comma
-				strHosts += strHost;								// Add this computer's info to the string
+				strHosts += pHost->ToString();						// Add this computer's info to the string
 				nCount--;											// Decrement counter
 			}
 		}
@@ -665,7 +664,6 @@ void CShakeNeighbour::SendHostHeaders(LPCSTR pszMessage, size_t nLength)
 		// If we have any G1 hosts to tell the remote computer about
 		if ( strHosts.GetLength() )
 		{
-			// Send the information in a header like "X-Try-Ultrapeers: 24.98.97.155:6348 2004-12-18T23:47Z," and so on
 			Write( _P("X-Try-Ultrapeers: ") );
 			Write( strHosts );
 			Write( _P("\r\n") );
@@ -686,7 +684,7 @@ BOOL CShakeNeighbour::ReadResponse()
 	// Read one header line from the handshake the remote computer has sent us
 	CString strLine; // The line
 	if ( ! Read( strLine ) ) return TRUE; // The line is still arriving, return true to try this method again
-	if ( strLine.GetLength() > 1024 ) strLine = _T("#LINE_TOO_LONG#"); // Make sure the line isn't too long
+	if ( strLine.GetLength() > 256 * 1024 ) strLine = _T("#LINE_TOO_LONG#"); // Make sure the line isn't too long
 
 	theApp.Message( MSG_DEBUG | MSG_FACILITY_INCOMING, _T("%s: HANDSHAKE: %s"), (LPCTSTR)m_sAddress, (LPCTSTR)strLine ); // Report handshake lines
 

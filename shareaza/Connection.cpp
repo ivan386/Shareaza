@@ -554,8 +554,8 @@ BOOL CConnection::ReadHeaders()
 	CString strLine;
 	while ( Read( strLine ) ) // ReadLine will return false when there are no more lines
 	{
-		// If the line is more than 20 KB, change it to the line too long error code 
-		if ( strLine.GetLength() > 20480 ) strLine = _T("#LINE_TOO_LONG#");
+		// If the line is more than 256 KB, change it to the line too long error code 
+		if ( strLine.GetLength() > 256 * 1024 ) strLine = _T("#LINE_TOO_LONG#");
 
 		// Find the first colon in the line
 		int nPos = strLine.Find( _T(":") );

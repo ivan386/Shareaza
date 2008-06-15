@@ -139,7 +139,7 @@ protected:
 	void SendMinimalHeaders();									// Tell the remote computer we are Shareaza, and try to setup Gnutella2 communications
 	void SendPublicHeaders();									// Send our first big group of Gnutella headers to the remote computer
 	void SendPrivateHeaders();									// Reply to a remote computer's headers, confirming Gnutella2 packets and data compression
-	void SendHostHeaders(LPCSTR pszMessage = NULL, size_t nLength = 0); // Send a 503 error message, and the "X-Try-Ultrapeers:" header
+	void SendHostHeaders(LPCSTR pszMessage = NULL, size_t nLength = 0); // Send a 503 error message, and the X-Try-Hubs/X-Try-Ultrapeers header
 	BOOL ReadResponse();										// Read the first line of a new group of headers from the remote computer
 	void OnHandshakeComplete();									// Turn this object into one specialized for Gnutella or Gnutella2
 

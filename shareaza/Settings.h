@@ -329,6 +329,7 @@ public:
 		bool		VendorMsg;
 		DWORD		QueryThrottle;
 		DWORD		RequeryDelay;
+		DWORD		HostCount;					// Number of hosts in X-Try-Ultrapeers
 		DWORD		HostExpire;
 		DWORD		PingFlood;
 		DWORD		PingRate;
@@ -363,6 +364,7 @@ public:
 		DWORD		KHLHubCount;
 		DWORD		HAWPeriod;
 		DWORD		HostCurrent;
+		DWORD		HostCount;					// Number of hosts in X-Try-Hubs
 		DWORD		HostExpire;
 		DWORD		PingRate;
 		DWORD		QueryGlobalThrottle;		// Max G2 query rate (Cannot exceed 8/sec)
