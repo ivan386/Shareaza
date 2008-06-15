@@ -1528,7 +1528,7 @@ void CMainWnd::LocalSystemChecks()
 		{
 			if ( Network.IsConnected() )
 			{
-				if ( ( Network.IsAvailable() ) || ( Network.IsWellConnected() > 0 ) )				
+				if ( Network.IsAvailable() || Network.IsWellConnected() )				
 				{
 					// Internet is available
 					nConnectionFailCount = 0;
