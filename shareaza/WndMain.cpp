@@ -98,7 +98,6 @@ IMPLEMENT_DYNCREATE(CMainWnd, CMDIFrameWnd)
 
 BEGIN_MESSAGE_MAP(CMainWnd, CMDIFrameWnd)
 	ON_WM_CREATE()
-	ON_WM_DESTROY()
 	ON_WM_CLOSE()
 	ON_WM_MEASUREITEM()
 	ON_WM_DRAWITEM()
@@ -517,16 +516,22 @@ void CMainWnd::OnClose()
 {
 	CWaitCursor pCursor;
 
+	if ( m_pWindows.m_bClosing )
+		return;
+	m_pWindows.m_bClosing = TRUE;
+
+	theApp.m_pSafeWnd = NULL;
+
 	int nSplashSteps = 6
 		+ ( Settings.Connection.DeleteFirewallException ? 1 : 0 )
 		+ ( theApp.m_pUPnPFinder ? 1 : 0 )
 		+ ( theApp.m_bLive ? 1 : 0 );
-
 	theApp.SplashStep( L"Closing Server Processes", nSplashSteps, true );
-	
-	theApp.m_pSafeWnd		= NULL;
-	m_pWindows.m_bClosing	= TRUE;
-	
+
+	DISABLE_DROP()
+
+	KillTimer( 1 );
+
 	if ( m_bTrayIcon )
 	{
 		Shell_NotifyIcon( NIM_DELETE, &m_pTray );
@@ -551,21 +556,13 @@ void CMainWnd::OnClose()
 	Library.StopThread();
 	ChatCore.StopThread();
 	
-	CMDIFrameWnd::OnClose();
-}
-
-void CMainWnd::OnDestroy() 
-{
-	DISABLE_DROP()
-
-	KillTimer( 1 );
 	if ( m_wndRemoteWnd.IsVisible() ) m_wndRemoteWnd.DestroyWindow();
 	
 	Network.Disconnect();
 
 	m_brshDockbar.DeleteObject();
 
-	CMDIFrameWnd::OnDestroy();
+	CMDIFrameWnd::OnClose();
 }
 
 void CMainWnd::OnEndSession(BOOL bEnding) 
