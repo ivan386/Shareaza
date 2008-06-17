@@ -282,8 +282,6 @@
 		<button id="ID_LIBRARY_FOLDER_ENQUEUE" text="Album wiedergeben"/>
 		<separator/>
 		<button id="ID_LIBRARY_PROPERTIES" text="Eigenschaften"/>
-		<separator/>
-		<button id="ID_WEBSERVICES_LIST" text="Internet-Dienste"/>
 		<rightAlign/>
 		<separator/>
 		<control id="IDC_SEARCH_BOX" width="120"/>
@@ -633,10 +631,7 @@
 				<item id="ID_HELP_WEB_2" text="P2PForums.com"/> -->
 			</menu>
 			<separator/>
-			<item id="ID_HELP_VERSION_CHECK" text="Auf neuere _Version prüfen"/>
-			<separator/>
 			<item id="ID_HELP_ABOUT" text="_Über Shareaza..."/>
-			<item id="ID_HELP_DONATE" text="_Spenden an das Shareaza Project!"/>
 		</menu>
 	</menu>
 	<menu name="CMainWnd.Windowed" type="bar">
@@ -859,8 +854,6 @@
 			<item id="ID_HOSTCACHE_G2_CACHE" text="Gnutella_2-Cache"/>
 			<item id="ID_HOSTCACHE_G1_CACHE" text="Gnutella_1-Cache"/>
 			<item id="ID_HOSTCACHE_ED2K_CACHE" text="_eDonkey-Server"/>
-			<item id="ID_HOSTCACHE_BT_CACHE" text="BitTorrent-Cache"/>
-			<item id="ID_HOSTCACHE_KAD_CACHE" text="Kademlia-Cache"/>
 		</menu>
 		<separator/>
 		<item id="ID_HOSTCACHE_IMPORT" text="MET-Datei _importieren..."/>
@@ -1409,13 +1402,7 @@
 	</menu>
 	<!-- SYSTEM WINDOW -->
 	<menu name="CSystemWnd">
-		<menu id="ID_SYSTEM_VERBOSE" text="_Ausführlicher Modus"/>
-			<item id="ID_SYSTEM_VERBOSE_ERROR" text="_Fehler"/>
-			<item id="ID_SYSTEM_VERBOSE_WARNING" text="_Warnung"/>
-			<item id="ID_SYSTEM_VERBOSE_NOTICE" text="_Notiz"/>
-			<item id="ID_SYSTEM_VERBOSE_INFO" text="_Info"/>
-			<item id="ID_SYSTEM_VERBOSE_DEBUG" text="_Debug"/>
-			</menu>
+		<item id="ID_SYSTEM_VERBOSE" text="_Ausführlicher Modus"/>
 		<item id="ID_SYSTEM_TIMESTAMP" text="Zeitstem_pel"/>
 		<separator/>
 		<item id="ID_SYSTEM_COPY" text="_Kopieren" shortcut="Ctrl+C"/>
@@ -1528,39 +1515,6 @@
 		<separator/>
 		<item id="ID_CHAT_TIMESTAMP" text="_Zeitstempel"/>
 		<item id="ID_CHAT_CLEAR" text="Anzeige _löschen"/>
-	</menu>
-	<!-- IRC WINDOW -->
- 	<menu name="CIRCTabRClick">
-		<item id="ID_IRC_CLOSETAB" text="_Close"/>
-	</menu>
- 	<menu name="CIRCUserList">
-		<item id="ID_IRC_WHOIS" text="_Whois"/>
-		<item id="ID_IRC_QUERY" text="_Query"/>
-		<separator/>
-		<menu text="Actions">
- 			<item id="ID_IRC_TIME" text="_Time"/>
-			<item id="ID_IRC_VERSION" text="_Version"/>
-		</menu>
-		<separator/>
-		<menu text="Control">
-			<item id="ID_IRC_IGNORE" text="_Ignore"/>
-			<item id="ID_IRC_UNIGNORE" text="_Unignore"/>
-			<item id="ID_IRC_OP" text="_Op"/>
-			<item id="ID_IRC_DEOP" text="_Deop"/>
-			<item id="ID_IRC_VOICE" text="_Voice"/>
-			<item id="ID_IRC_DEVOICE" text="D_evoice"/>
-			<item id="ID_IRC_KICK" text="_Kick"/>
-			<item id="ID_IRC_KICKWHY" text="Kick (why?)"/>
-			<item id="ID_IRC_BAN" text="_Ban"/>
-			<item id="ID_IRC_UNBAN" text="_Unban"/>
-			<item id="ID_IRC_BANKICK" text="Kick+Ban"/>
-			<item id="ID_IRC_BANKICKWHY" text="Kick+Ban (why?)"/>
-		</menu>
-	</menu>
-	<menu name="WebServices.List.Menu">
-		<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Bitzi"/>
-		<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
-		<item id="ID_WEBSERVICES_SHAREMONKEY" text="_ShareMonkey"/>
 	</menu>
 	<!-- PLUGIN MENUS -->
 	<menu name="ImageViewer_Context">
@@ -2861,7 +2815,7 @@
 	<string id="16313" value="eDonkey-Hash für &quot;%s&quot; empfangen, kleinster verifizierbarer Teil ist %s."/>
 	<string id="16314" value="eDonkey-Hash ist verfälscht oder inkonsistent, Quelle entfernt."/>
 	<string id="16315" value="Kann Kompression (inflate) für Download &quot;%s&quot; nicht aktivieren."/>
-	<string id="16316" value="Zeitüberschreitung für Warteschlangenaktualisierung von eDonkey-Host %s für Datei &quot;%s&quot;."/>
+	<string id="16316" value="Zeitüberschreitung für Warteschlangenaktualisierung von eDonkey0-Host %s für Datei &quot;%s&quot;."/>
 	<string id="16317" value="Warten in Warteschlange für &quot;%s&quot;."/>
 	<string id="16318" value="Nicht genügend Speicherplatz um &quot;%s&quot; herunterzuladen (%s)."/>
 	<string id="16319" value="Quelle %s (%s) entfernt, weil sie beschädigte Teile der Datei &quot;%s&quot; übertragen hat (%I64i-%I64i)."/>
@@ -3655,7 +3609,7 @@
 		<control caption="Shareaza mit .torrent-Dateien verknüpfen."/>
 	</dialog>
 		<dialog name="CWizardConnectionPage" cookie="StStCoStCoStCoStCoStms" caption="Willkommen bei Shareaza [Schritt 3 von 7]">
-		<control caption="Shareaza benötigt nun einige Informationen über ihre Internetverbinung um bestmöglichst zu funktionieren."/>
+		<control caption="Shareaza benötigt nun einige Informationen über ihre Internetverbinung um bestmöglich zu funktionieren."/>
 		<control caption="Wählen Sie den Typ ihrer Internetverbindung:"/>
 		<control caption="Modem (56k)|ISDN (64k)|DSL light (256K)|DSL light (512K)|DSL (768K)|DSL (1.5M)|DSL (4.0M)|ADSL2 (8.0M)|ADSL2 (12.0M)|ADSL2+ (24.0M)|SDSL|T1|T3|LAN|OC3"/>
 		<control caption="Oder wählen Sie ihre max. Downloadgeschwindigkeit:"/>
