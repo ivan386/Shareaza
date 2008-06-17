@@ -16,7 +16,7 @@
 		updatedBy="Felipe"
 		description="Arquivo de Skin Padrão para o Português Brasileiro do Shareaza"
 		link="http://shareaza.sourceforge.net/"
-		email="contact(at)shareaza(dot)com"
+		email="contact(at)shareazaproject(dot)com"
 		version="2.3.1.4"
 		type="language"
 		language="pt-br"
@@ -404,9 +404,9 @@
 		<button id="ID_HOSTCACHE_DISCONNECT" text="Desconectar"/>
 		<button id="ID_HOSTCACHE_REMOVE" text="Remover"/>
 		<rightAlign/>
-		<button id="ID_HOSTCACHE_G2_HORIZON" text="Cluster G2"/>
-		<button id="ID_HOSTCACHE_G2_CACHE" text="Cache G2"/>
-		<button id="ID_HOSTCACHE_G1_CACHE" text="Cache G1"/>
+		<button id="ID_HOSTCACHE_G2_HORIZON" text="Cluster do G2"/>
+		<button id="ID_HOSTCACHE_G2_CACHE" text="Cache do G2"/>
+		<button id="ID_HOSTCACHE_G1_CACHE" text="Cache do G1"/>
 		<button id="ID_HOSTCACHE_ED2K_CACHE" text="Cache do eDonkey"/>
 		<button id="ID_HOSTCACHE_BT_CACHE" text="Cache do BitTorrent"/>
 		<button id="ID_HOSTCACHE_KAD_CACHE" text="Cache do Kademlia"/>
@@ -686,7 +686,7 @@
 			<item id="ID_VIEW_SEARCH_MONITOR" text="Monitor de Pesquisas" shortcut="Ctrl+F2"/>
 			<item id="ID_VIEW_RESULTS_MONITOR" text="Monitor de Acertos" shortcut="Ctrl+F3"/>
 			<separator/>
-			<item id="ID_VIEW_BASIC" text="Modo Normal"/>
+			<item id="ID_VIEW_BASIC" text="Modo Básico"/>
 			<item id="ID_VIEW_TABBED" text="Modo em Abas"/>
 			<item id="ID_VIEW_WINDOWED" text="Modo de Janelas"/>
 		</menu>
@@ -1431,12 +1431,13 @@
 	</menu>
 	<!-- SYSTEM WINDOW -->
 	<menu name="CSystemWnd">
-		<item id="ID_SYSTEM_VERBOSE" text="Modo Verboso"/>
+		<menu id="ID_SYSTEM_VERBOSE" text="Modo Verboso"/>
 			<item id="ID_SYSTEM_VERBOSE_ERROR" text="Erro"/>
 			<item id="ID_SYSTEM_VERBOSE_WARNING" text="Aviso"/>
 			<item id="ID_SYSTEM_VERBOSE_NOTICE" text="Nota"/>
 			<item id="ID_SYSTEM_VERBOSE_INFO" text="Info"/>
 			<item id="ID_SYSTEM_VERBOSE_DEBUG" text="Debug"/>
+			</menu>
 		<item id="ID_SYSTEM_TIMESTAMP" text="Estampa de tempo"/>
 		<separator/>
 		<item id="ID_SYSTEM_COPY" text="Copiar" shortcut="Ctrl+C"/>
@@ -4065,7 +4066,7 @@
 		<control caption="Ação:"/>
 		<control caption="Nenhuma|Aceitar|Negar"/>
 		<control caption="Expirar:"/>
-		<control caption="Nunca (Indefinido)|Ao fim da Sessão|Após:"/>
+		<control caption="Nunca (Indefinido)|No fim da Sessão|Após:"/>
 		<control/>
 		<control caption="d"/>
 		<control/>
@@ -4331,8 +4332,8 @@
 		<control/><control/>
 	</dialog>
 	<dialog name="CDecodeMetadataDlg" cookie="StCoBuBuBuStStBuBu" caption="Localização da Metadata">
-		<control caption="Por favor selecione o método de recodificação"/>
-		<control caption="Arábe|Báltico|Europeu Central|Chinês Simplificado|Chinês Tradicional|Cirílico|Grego|Hebreu|Japonês|Coreano|Tailândes|Turco|Vietnamita"/>
+		<control caption="Por favor selecione o método de re-encodificação"/>
+		<control caption="Arábe|Báltico|Centro Europeu|Chinês Simplificado|Chinês Tradicional|Cirílico|Grego|Hebreu|Japonês|Coreano|Tailândes|Turco|Vietnamita"/>
 		<control caption="Prever:"/>
 		<control/><control/>    <control/><control/>
 		<control caption="OK"/>
