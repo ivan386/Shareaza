@@ -1,6 +1,11 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 
-<!-- PeerProject Default German Skin File --> <!-- This translation is based on default-en.xml SVN rev.6170 + ~1 -->
+<!-- Shareaza Default German Skin File --> <!-- This translation is based on default-en.xml SVN rev.6170 + ~1 -->
+
+<!-- This skin basically represents the current Shareaza defaults. You can use this file as -->
+<!-- a basis for creating new skins, however in a new skin be sure to ONLY include the sections -->
+<!-- which you changed! Including sections you did not edit will reduce performance and limit -->
+<!-- compatibility with future versions and other skins. -->
 
 <!-- Body element, don't touch -->
 <skin xmlns="http://www.shareaza.com/schemas/Skin.xsd" version="1.0">
@@ -9,13 +14,13 @@
 <manifest	name="Deutsch"
 		author="Jann Röder"
 		updatedBy="Frontier, Jann Röder, ZeRO (Daisuke)"
-		description="PeerProject Default German Skin File"
+		description="Shareaza Default German Skin File"
 		link="http://shareaza.sourceforge.net/"
 		email="zero9999(at)gmail(dot)com"
-		version="2.3.0.0"
+		version="2.3.1.4"
 		type="Language"
 		language="de"
-		prompt="Klicken Sie hier um Deutsch als Sprache zu wählen."
+		prompt="Klicken Sie hier, um Deutsch als Sprache zu wählen."
 />
 
 <!-- Toolbar Definitions -->
@@ -235,8 +240,10 @@
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Suchen"/>
 	</toolbar>
 	<toolbar name="CLibraryFileView.Physical.Basic">
-		<button id="ID_LIBRARY_LAUNCH" text="Öffnen"/>
+		<button id="ID_LIBRARY_LAUNCH" text="Öffnen oder abspielen"/>
 		<button id="ID_LIBRARY_ENQUEUE" text="In Wiedergabeliste"/>
+		<separator/>
+		<button id="ID_WEBSERVICES_LIST" text="Internet-Dienste"/>
 		<rightAlign/>
 		<separator/>
 		<control id="IDC_SEARCH_BOX" width="120"/>
@@ -247,6 +254,8 @@
 		<button id="ID_LIBRARY_ENQUEUE" text="In Wiedergabeliste"/>
 		<separator/>
 		<button id="ID_LIBRARY_PROPERTIES" text="Eigenschaften"/>
+		<separator/>
+		<button id="ID_WEBSERVICES_LIST" text="Internet-Dienste"/>
 		<separator/>
 		<button id="ID_LIBRARY_MOVE" text="Verschieben"/>
 		<button id="ID_LIBRARY_COPY" text="Kopieren"/>
@@ -260,6 +269,8 @@
 		<button id="ID_LIBRARY_LAUNCH" text="Öffnen"/>
 		<button id="ID_LIBRARY_ENQUEUE" text="In Wiedergabeliste"/>
 		<button id="ID_LIBRARY_FOLDER_ENQUEUE" text="Album wiedergeben"/>
+		<separator/>
+		<button id="ID_WEBSERVICES_LIST" text="Internet-Dienste"/>
 		<rightAlign/>
 		<separator/>
 		<control id="IDC_SEARCH_BOX" width="120"/>
@@ -339,8 +350,9 @@
 		<button id="ID_NEIGHBOURS_CHAT" text="Mit Benutzer chatten"/>
 		<rightAlign/>
 		<button id="ID_NETWORK_G2" text="Gnutella2"/>
-		<button id="ID_NETWORK_ED2K" text="eDonkey2000"/>
 		<button id="ID_NETWORK_G1" text="Gnutella1"/>
+		<button id="ID_NETWORK_ED2K" text="eDonkey"/>
+
 		<separator/>
 		<button id="ID_NEIGHBOURS_SETTINGS" text="Einstellungen"/>
 	</toolbar>
@@ -353,8 +365,8 @@
 		<button id="ID_SECURITY_BAN" text="Host bannen"/>
 		<rightAlign/>
 		<button id="ID_NETWORK_G2" text="Gnutella2"/>
-		<button id="ID_NETWORK_ED2K" text="eDonkey2000"/>
 		<button id="ID_NETWORK_G1" text="Gnutella1"/>
+		<button id="ID_NETWORK_ED2K" text="eDonkey"/>
 		<separator/>
 		<button id="ID_NEIGHBOURS_SETTINGS" text="Netzwerkeinstellungen"/>
 	</toolbar>
@@ -384,7 +396,9 @@
 		<button id="ID_HOSTCACHE_G2_HORIZON" text="G2-Cluster"/>
 		<button id="ID_HOSTCACHE_G2_CACHE" text="G2-Cache"/>
 		<button id="ID_HOSTCACHE_G1_CACHE" text="G1-Cache"/>
-		<button id="ID_HOSTCACHE_ED2K_CACHE" text="eDonkey2000-Cache"/>
+		<button id="ID_HOSTCACHE_ED2K_CACHE" text="eDonkey-Cache"/>
+		<button id="ID_HOSTCACHE_BT_CACHE" text="BitTorrent-Cache"/>
+		<button id="ID_HOSTCACHE_KAD_CACHE" text="Kademlia-Cache"/>
 	</toolbar>
 	<!-- PRIVATE CHAT FRAME -->
 	<toolbar name="CPrivateChatFrame">
@@ -400,6 +414,33 @@
 		<separator/>
 		<button id="ID_CHAT_CONNECT" text="Verbinden" visible="false"/>
 		<button id="ID_CHAT_DISCONNECT" text="Verbindung trennen"/>
+	</toolbar>
+	<!-- WEBSERVICES -->
+	<toolbar name="WebServices.ShareMonkey">
+		<button id="ID_SHAREMONKEY_DOWNLOAD" text="Daten holen" /> 
+		<separator /> 
+		<button id="ID_SHAREMONKEY_PREVIOUS" text="Zurück" /> 
+		<button id="ID_SHAREMONKEY_NEXT" text="Vor" /> 
+		<separator /> 
+		<button id="ID_SHAREMONKEY_PRICES" text="Preisanfrage" /> 
+		<button id="ID_SHAREMONKEY_COMPARE" text="Vergleichen" /> 
+		<button id="ID_SHAREMONKEY_BUY" text="Kaufen" /> 
+	</toolbar>
+	<toolbar name="WebServices.ShareMonkey.WithSave">
+		<button id="ID_SHAREMONKEY_DOWNLOAD" text="Daten holen" /> 
+		<button id="ID_SHAREMONKEY_SAVE" text="Speichern" /> 
+		<separator /> 
+		<button id="ID_SHAREMONKEY_PREVIOUS" text="Zurück" /> 
+		<button id="ID_SHAREMONKEY_NEXT" text="Vor" /> 
+		<separator /> 
+		<button id="ID_SHAREMONKEY_PRICES" text="Preisanfrage" /> 
+		<button id="ID_SHAREMONKEY_COMPARE" text="Vergleichen" /> 
+		<button id="ID_SHAREMONKEY_BUY" text="Kaufen" /> 
+	</toolbar>
+	<toolbar name="WebServices.MusicBrainz">
+		<button id="ID_MUSICBRAINZ_MATCHES" text="Treffer anzeigen" /> 
+		<button id="ID_MUSICBRAINZ_ALBUMS" text="Alle Alben ansehen" /> 
+		<separator /> 
 	</toolbar>
 	<!-- IMAGE VIEWER WINDOW -->
 	<toolbar name="ImageViewer_Toolbar">
@@ -433,8 +474,8 @@
 			<separator/>
 			<menu text="_Netzwerke wählen">
 				<item id="ID_NETWORK_G2" text="Mit _Gnutella2 verbinden"/>
-				<item id="ID_NETWORK_ED2K" text="Mit _eDonkey2000 verbinden"/>
 				<item id="ID_NETWORK_G1" text="Mit Gnutella_1 verbinden"/>
+				<item id="ID_NETWORK_ED2K" text="Mit _eDonkey verbinden"/>
 			</menu>
 			<separator/>
 			<item id="ID_NETWORK_AUTO_CLOSE" text="N_ach Transfer beenden"/>
@@ -473,26 +514,29 @@
 			<item id="ID_TOOLS_SETTINGS" text="_Einstellungen..."/>
 		</menu>
 		<menu text="_Hilfe">
-			<item id="ID_HELP_FAQ" text="PeerProject-_FAQ"/>
+			<item id="ID_HELP_FAQ" text="Shareaza-_FAQ"/>
 			<item id="ID_HELP_TEST" text="Verbindungstest"/>
 			<separator/>
 			<menu text="_Anleitungen">
-				<item id="ID_HELP_GUIDE" text="PeerProject-A_nleitung"/>
+				<item id="ID_HELP_GUIDE" text="Shareaza-A_nleitung"/>
 				<item id="ID_HELP_ROUTER" text="_Routerhilfe"/>
 				<item id="ID_HELP_SECURITY" text="_Sicherheitshilfe"/>
 				<item id="ID_HELP_CODEC" text="_Codec-Hilfe"/>
 			</menu>
 			<separator/>
 			<menu text="_Websites">
-				<item id="ID_HELP_HOMEPAGE" text="_PeerProject's Homepage"/>
+				<item id="ID_HELP_HOMEPAGE" text="_Shareaza's Homepage"/>
 				<separator/>
-				<item id="ID_HELP_FORUMS" text="PeerProject-_Forum"/>
-				<!-- <item id="ID_HELP_UPDATE" text="PeerProject _News"/>
+				<item id="ID_HELP_FORUMS" text="Shareaza-_Forum"/>
+				<!-- <item id="ID_HELP_UPDATE" text="Shareaza _News"/>
 				<item id="ID_HELP_WEB_1" text="File Sharing Portal"/>
 				<item id="ID_HELP_WEB_2" text="P2PForums.com"/> -->
 			</menu>
 			<separator/>
-			<item id="ID_HELP_ABOUT" text="_Über PeerProject..."/>
+			<item id="ID_HELP_VERSION_CHECK" text="Auf neuere _Version prüfen"/>
+			<separator/>
+			<item id="ID_HELP_ABOUT" text="_Über Shareaza..."/>
+			<item id="ID_HELP_DONATE" text="_Spenden an das Shareaza Projekt!"/>
 		</menu>
 	</menu>
 	<menu name="CMainWnd.Tabbed" type="bar">
@@ -502,8 +546,8 @@
 			<separator/>
 			<menu text="_Netzwerke wählen">
 				<item id="ID_NETWORK_G2" text="Mit _Gnutella2 verbinden"/>
-				<item id="ID_NETWORK_ED2K" text="Mit _eDonkey2000 verbinden"/>
 				<item id="ID_NETWORK_G1" text="Mit Gnutella_1 verbinden"/>
+				<item id="ID_NETWORK_ED2K" text="Mit _eDonkey verbinden"/>
 			</menu>
 			<separator/>
 			<item id="ID_NETWORK_CONNECT_TO" text="Verbinden _mit..." shortcut="Strg+T"/>
@@ -568,26 +612,26 @@
 			<item id="ID_WINDOW_REMOTE" text="_Fernbedienung"/>
 		</menu>
 		<menu text="_Hilfe">
-			<item id="ID_HELP_FAQ" text="PeerProject-_FAQ"/>
+			<item id="ID_HELP_FAQ" text="Shareaza-_FAQ"/>
 			<item id="ID_HELP_TEST" text="_Verbindungstest"/>
 			<separator/>
 			<menu text="_Anleitungen">
-				<item id="ID_HELP_GUIDE" text="PeerProject-A_nleitung"/>
+				<item id="ID_HELP_GUIDE" text="Shareaza-A_nleitung"/>
 				<item id="ID_HELP_ROUTER" text="_Routerhilfe"/>
 				<item id="ID_HELP_SECURITY" text="_Sicherheitshilfe"/>
 				<item id="ID_HELP_CODEC" text="_Codec-Hilfe"/>
 			</menu>
 			<separator/>
 			<menu text="_Websites">
-				<item id="ID_HELP_HOMEPAGE" text="_PeerProject's Homepage"/>
+				<item id="ID_HELP_HOMEPAGE" text="_Shareaza's Homepage"/>
 				<separator/>
-				<item id="ID_HELP_FORUMS" text="PeerProject-_Forum"/>
-				<!-- <item id="ID_HELP_UPDATE" text="PeerProject _News"/>
+				<item id="ID_HELP_FORUMS" text="Shareaza-_Forum"/>
+				<!-- <item id="ID_HELP_UPDATE" text="Shareaza _News"/>
 				<item id="ID_HELP_WEB_1" text="File Sharing Portal"/>
 				<item id="ID_HELP_WEB_2" text="P2PForums.com"/> -->
 			</menu>
 			<separator/>
-			<item id="ID_HELP_ABOUT" text="_Über PeerProject..."/>
+			<item id="ID_HELP_ABOUT" text="_Über Shareaza..."/>
 		</menu>
 	</menu>
 	<menu name="CMainWnd.Windowed" type="bar">
@@ -602,8 +646,8 @@
 			<separator/>
 			<menu text="_Netzwerke wählen">
 				<item id="ID_NETWORK_G2" text="Mit _Gnutella2 verbinden"/>
-				<item id="ID_NETWORK_ED2K" text="Mit _eDonkey2000 verbinden"/>
 				<item id="ID_NETWORK_G1" text="Mit Gnutella_1 verbinden"/>
+				<item id="ID_NETWORK_ED2K" text="Mit _eDonkey verbinden"/>
 			</menu>
 			<separator/>
 			<item id="ID_NETWORK_AUTO_CLOSE" text="N_ach Transfer beenden"/>
@@ -657,26 +701,26 @@
 			<item id="ID_WINDOW_REMOTE" text="_Fernbedienung"/>
 		</menu>
 		<menu text="_Hilfe">
-			<item id="ID_HELP_FAQ" text="PeerProject-_FAQ"/>
+			<item id="ID_HELP_FAQ" text="Shareaza-_FAQ"/>
 			<item id="ID_HELP_TEST" text="_Verbindungstest"/>
 			<separator/>
 			<menu text="_Anleitungen">
-				<item id="ID_HELP_GUIDE" text="PeerProject-A_nleitung"/>
+				<item id="ID_HELP_GUIDE" text="Shareaza-A_nleitung"/>
 				<item id="ID_HELP_ROUTER" text="_Routerhilfe"/>
 				<item id="ID_HELP_SECURITY" text="_Sicherheitshilfe"/>
 				<item id="ID_HELP_CODEC" text="_Codec-Hilfe"/>
 			</menu>
 			<separator/>
 			<menu text="_Websites">
-				<item id="ID_HELP_HOMEPAGE" text="_PeerProject's Homepage"/>
+				<item id="ID_HELP_HOMEPAGE" text="_Shareaza's Homepage"/>
 				<separator/>
-				<item id="ID_HELP_FORUMS" text="PeerProject-_Forum"/>
-				<!-- <item id="ID_HELP_UPDATE" text="PeerProject _News"/>
+				<item id="ID_HELP_FORUMS" text="Shareaza-_Forum"/>
+				<!-- <item id="ID_HELP_UPDATE" text="Shareaza _News"/>
 				<item id="ID_HELP_WEB_1" text="File Sharing Portal"/>
 				<item id="ID_HELP_WEB_2" text="P2PForums.com"/> -->
 			</menu>
 			<separator/>
-			<item id="ID_HELP_ABOUT" text="_Über PeerProject..."/>
+			<item id="ID_HELP_ABOUT" text="_Über Shareaza..."/>
 		</menu>
 	</menu>
 	<!-- VIEW POPUP -->
@@ -732,7 +776,7 @@
 	</menu>
 	<!-- TRAY MENU -->
 	<menu name="CMainWnd.Tray">
-		<item id="ID_TRAY_OPEN" text="PeerProject _Öffnen"/>
+		<item id="ID_TRAY_OPEN" text="Shareaza _Öffnen"/>
 		<separator/>
 		<item id="ID_NETWORK_SEARCH" text="N_eue Suche..."/>
 		<item id="ID_TOOLS_DOWNLOAD" text="_Datei / Torrent herunterladen..."/>
@@ -749,7 +793,7 @@
 	</menu>
 	<!--  REMOTE MENU -->
 	<menu name="CRemoteWnd">
-		<item id="ID_TRAY_OPEN" text="PeerProject _Anzeigen"/>
+		<item id="ID_TRAY_OPEN" text="Shareaza _Anzeigen"/>
 		<separator/>
 		<item id="ID_NETWORK_SEARCH" text="N_eue Suche..."/>
 		<item id="ID_TOOLS_DOWNLOAD" text="Download hinz_ufügen..."/>
@@ -809,7 +853,7 @@
 			<item id="ID_HOSTCACHE_G2_HORIZON" text="Gnutella2-Cl_uster"/>
 			<item id="ID_HOSTCACHE_G2_CACHE" text="Gnutella_2-Cache"/>
 			<item id="ID_HOSTCACHE_G1_CACHE" text="Gnutella_1-Cache"/>
-			<item id="ID_HOSTCACHE_ED2K_CACHE" text="_eDonkey2000-Server"/>
+			<item id="ID_HOSTCACHE_ED2K_CACHE" text="_eDonkey-Server"/>
 		</menu>
 		<separator/>
 		<item id="ID_HOSTCACHE_IMPORT" text="MET-Datei _importieren..."/>
@@ -1388,8 +1432,8 @@
 			<item id="ID_NETWORK_DISCONNECT" text="Verbindung _trennen"/>
 			<separator/>
 			<item id="ID_NETWORK_G2" text="_Gnutella2"/>
-			<item id="ID_NETWORK_ED2K" text="_eDonkey2000"/>
 			<item id="ID_NETWORK_G1" text="Gnutella_1"/>
+			<item id="ID_NETWORK_ED2K" text="_eDonkey"/>
 		</menu>
 		<menu text="_Monitor">
 			<item id="ID_NEIGHBOURS_VIEW_ALL" text="_Alle Pakete anzeigen"/>
@@ -1506,7 +1550,7 @@
 			<icon res="130" width="32" height="32" target="raza:command:ID_NETWORK_CONNECT"/><gap size="8"/>
 			<heading align="middle">V E R B I N D E N</heading>
 			<newline gap="8" indent="42"/>
-			<text>Willkommen bei PeerProject!</text>
+			<text>Willkommen bei Shareaza!</text>
 			<newline gap="8" indent="42"/>
 			<text>Sie sind zur Zeit mit keinem Netzwerk verbunden. &#160;</text>
 			<link target="raza:command:ID_NETWORK_CONNECT">Klicken Sie hier um sich mit den ausgewählten Netzwerken zu verbinden.</link>
@@ -1538,42 +1582,42 @@
 			<icon res="252" width="32" height="32"/><gap size="8"/>
 			<heading align="middle">W A R N U N G &#160; - &#160; K E I N E &#160; E I N G E H E N D E N &#160; V E R B I N D U N G E N &#160; M Ö G L I C H</heading>
 			<newline gap="8" indent="42"/>
-			<text colour="FF0000">PeerProject hat festgestellt, dass sich Ihr PC hinter einem NAT-Router und/oder einer Firewall befindet
+			<text colour="FF0000">Shareaza hat festgestellt, dass sich Ihr PC hinter einem NAT-Router und/oder einer Firewall befindet
 				und keine Verbindungen aus dem Internet empfangen kann.  </text>
 			<text colour="FF0000" format="b">Das kann ihre Suchergebnisse und Downloads verschlechtern.</text>
 			<newline gap="6"/>
-			<link target="raza:command:ID_HELP_ROUTER">Klicken Sie hier um herauszufinden, wie Sie ihre Firewall bzw. ihren Router für PeerProject konfigurieren müssen</link>
+			<link target="raza:command:ID_HELP_ROUTER">Klicken Sie hier um herauszufinden, wie Sie ihre Firewall bzw. ihren Router für Shareaza konfigurieren müssen</link>
 			<newline gap="18" indent="0"/>
 		</group>
 		<group id="6">
 			<icon res="252" width="32" height="32"/><gap size="8"/>
 			<heading align="middle">W A R N U N G &#160; - &#160; I H R &#160; T C P - P O R T &#160; I S T &#160; N I C H T &#160; E R R E I C H B A R</heading>
 			<newline gap="8" indent="42"/>
-			<text colour="FF0000">PeerProject hat festgestellt, dass sich Ihr PC hinter einem NAT-Router und/oder einer Firewall befindet
+			<text colour="FF0000">Shareaza hat festgestellt, dass sich Ihr PC hinter einem NAT-Router und/oder einer Firewall befindet
 				und keine TCP-Verbindungen aus dem Internet empfangen kann. &#160;</text>
 			<text colour="FF0000" format="b">Das kann ihre Suchergebnisse und Downloads verschlechtern.</text>
 			<newline gap="6"/>
-			<link target="raza:command:ID_HELP_ROUTER">Klicken Sie hier um herauszufinden, wie Sie ihre Firewall bzw. ihren Router für PeerProject konfigurieren müssen</link>
+			<link target="raza:command:ID_HELP_ROUTER">Klicken Sie hier um herauszufinden, wie Sie ihre Firewall bzw. ihren Router für Shareaza konfigurieren müssen</link>
 			<newline gap="18" indent="0"/>
 		</group>
 		<group id="7">
 			<icon res="252" width="32" height="32"/><gap size="8"/>
 			<heading align="middle">W A R N U N G &#160; - &#160; I H R &#160; UDP - PORT &#160; I S T &#160; N I C H T &#160; E R R E I C H B A R</heading>
 			<newline gap="8" indent="42"/>
-			<text colour="FF0000">PeerProject hat festgestellt, dass sich Ihr PC hinter einem NAT-Router und/oder einer Firewall befindet
+			<text colour="FF0000">Shareaza hat festgestellt, dass sich Ihr PC hinter einem NAT-Router und/oder einer Firewall befindet
 				und keine UDP-Daten aus dem Internet empfangen kann. &#160;</text>
 			<text colour="FF0000" format="b">Das kann ihre Suchergebnisse verschlechtern.</text>
 			<newline gap="6"/>
-			<link target="raza:command:ID_HELP_ROUTER">Klicken Sie hier um herauszufinden, wie Sie ihre Firewall bzw. ihren Router für PeerProject konfigurieren müssen</link>
+			<link target="raza:command:ID_HELP_ROUTER">Klicken Sie hier um herauszufinden, wie Sie ihre Firewall bzw. ihren Router für Shareaza konfigurieren müssen</link>
 			<newline gap="18" indent="0"/>
 		</group>
 		<icon res="236" width="32" height="32"/><gap size="8"/>
-		<heading align="middle">PEERPROJECT  &#160; A N P A S S E N</heading>
+		<heading align="middle">S H A R E A Z A  &#160; A N P A S S E N</heading>
 		<newline gap="12" indent="42"/>
 		<icon res="237" width="32" height="32" target="raza:command:ID_TOOLS_SKIN"/>
 		<gap size="8"/>
 		<link target="raza:command:ID_TOOLS_SKIN" format="bu" align="middle">Skins</link>
-		<text align="middle"> - Das Aussehen von PeerProject verändern</text>
+		<text align="middle"> - Das Aussehen von Shareaza verändern</text>
 		<newline gap="8"/>
 		<icon res="236" width="32" height="32" target="raza:command:ID_TOOLS_WIZARD"/>
 		<gap size="8"/>
@@ -1583,13 +1627,13 @@
 		<icon res="147" width="32" height="32" target="raza:command:ID_HELP_FAQ"/>
 		<gap size="8"/>
 		<link target="raza:command:ID_HELP_FAQ" format="bu" align="middle">Hilfe</link>
-		<text align="middle"> - PeerProject-Anleitung und FAQ</text>
+		<text align="middle"> - Shareaza-Anleitung und FAQ</text>
 		<newline gap="18" indent="0"/>
 		<group id="5">
 			<icon res="128" width="32" height="32"/><gap size="8"/>
 			<heading align="middle">R E M O T E  &#160; A C C E S S &#160; I S T &#160; A K T I V I E R T</heading>
 			<newline gap="8" indent="42"/>
-			<text>PeerProject-Remote-Access ist aktiviert.  Sie können PeerProject über ihren Webbrowser steuern:</text>
+			<text>Shareaza-Remote-Access ist aktiviert.  Sie können Shareaza über ihren Webbrowser steuern:</text>
 			<newline gap="6"/>
 			<link id="RemoteAccessURL1"/>
 			<text> - oder - </text>
@@ -1633,7 +1677,7 @@
 			<link format="bu" target="raza:shell:downloads">Meinen Downloadordner öffnen</link>
 			<group id="1">
 				<newline gap="8"/>
-				<text>PeerProject scannt </text>
+				<text>Shareaza scannt </text>
 				<text id="LibraryHashRemaining" format="b">%lu </text>
 				<text>Dateien.</text>
 				<newline gap="8"/>
@@ -1667,18 +1711,19 @@
 		<text group="24" align="middle" id="G2Hubs">%i Hubs</text>
 		<text group="25" align="middle" id="G2Leaves">%i Leaves</text>
 		<newline group="20" gap="2"/>
-		<icon group="30" command="ID_NETWORK_ED2K"/><gap group="30" size="4"/>
-		<text group="30" align="middle" format="b">eDonkey2000: </text>
-		<text group="31" align="middle">Nicht verbunden</text>
-		<text group="32" align="middle">Verbinden...</text>
-		<text group="33" align="middle">Verbunden</text>
-		<newline group="30" gap="2"/>
 		<icon group="10" command="ID_NETWORK_G1"/><gap group="10" size="4"/>
 		<text group="10" align="middle" format="b">Gnutella1: </text>
 		<text group="11" align="middle">Nicht verbunden</text>
 		<text group="12" align="middle">Verbinden...</text>
 		<text group="13" align="middle">Verbunden</text>
 		<newline group="10" gap="2"/>
+		<icon group="30" command="ID_NETWORK_ED2K"/><gap group="30" size="4"/>
+		<text group="30" align="middle" format="b">eDonkey: </text>
+		<text group="31" align="middle">Nicht verbunden</text>
+		<text group="32" align="middle">Verbinden...</text>
+		<text group="33" align="middle">Verbunden</text>
+		<newline group="30" gap="2"/>
+
 		<group id="2">
 			<para align="center">
 				<newline gap="6"/>
@@ -1734,15 +1779,15 @@
 				<colours link="000080"/>
 			</style>
 		</styles>
-		<text format="b">Willkommen beim PeerProject-Einstellungsmanager</text>
+		<text format="b">Willkommen beim Shareaza-Einstellungsmanager</text>
 		<newline gap="16"/>
 		<text>
-				Der Einstellungsmanager erlaubt es Ihnen, PeerProject völlig ihren Wünschen anzupassen.
+				Der Einstellungsmanager erlaubt es Ihnen, Shareaza völlig ihren Wünschen anzupassen.
 				In der Sektion
 		</text>
 		<text format="b">Allgemein </text>
 		<text>
-				kann das Verhalten von PeerProject gegenüber dem Benutzer angepasst werden.
+				kann das Verhalten von Shareaza gegenüber dem Benutzer angepasst werden.
 		</text>
 		<newline gap="16" indent="16"/>
 		<link target="raza:page:CGeneralSettingsPage" format="b">Allgemein:</link>
@@ -1755,7 +1800,7 @@
 		<newline gap="10"/>
 		<link target="raza:page:CMediaSettingsPage" format="b">Medienwiedergabe:</link>
 		<gap size="4"/>
-		<text>Wann die PeerProject-Medienwiedergabe benutzt wird.</text>
+		<text>Wann die Shareaza-Medienwiedergabe benutzt wird.</text>
 		<newline gap="10"/>
 		<link target="raza:page:CCommunitySettingsPage" format="b">Community:</link>
 		<gap size="4"/>
@@ -1763,7 +1808,7 @@
 		<newline gap="10"/>
 		<link target="raza:page:CWebSettingsPage" format="b">Web:</link>
 		<gap size="4"/>
-		<text>Integrieren Sie PeerProject in ihren Browser, um P2P-Links zu benutzen.</text>
+		<text>Integrieren Sie Shareaza in ihren Browser, um P2P-Links zu benutzen.</text>
 		<newline gap="10"/>
 	</document>
 	<document name="CInternetSettingsGroup" title="Internet" leftMargin="8" topMargin="8" crLink="000080">
@@ -1772,15 +1817,15 @@
 				<colours link="000080"/>
 			</style>
 		</styles>
-		<text format="b">Willkommen beim PeerProject-Einstellungsmanager</text>
+		<text format="b">Willkommen beim Shareaza-Einstellungsmanager</text>
 		<newline gap="16"/>
 		<text>
-				Der Einstellungsmanager erlaubt es Ihnen, PeerProject völlig ihren Wünschen anzupassen.
+				Der Einstellungsmanager erlaubt es Ihnen, Shareaza völlig ihren Wünschen anzupassen.
 				In der Sektion
 		</text>
 		<text format="b">Internet </text>
 		<text>
-				können Sie festlegen, wie sich PeerProject in
+				können Sie festlegen, wie sich Shareaza in
 				P2P-Netzen verhält.
 		</text>
 		<newline gap="16" indent="16"/>
@@ -1798,7 +1843,7 @@
 		<newline gap="10"/>
 		<link target="raza:page:CRemoteSettingsPage" format="b">Remote-Access:</link>
 		<gap size="4"/>
-		<text>PeerProject konfigurieren, um die Bedienung über einen Webbrowser zu ermöglichen.</text>
+		<text>Shareaza konfigurieren, um die Bedienung über einen Webbrowser zu ermöglichen.</text>
 		<newline gap="10"/>
 	</document>
 	<!-- Browse User Profile -->
@@ -1909,13 +1954,13 @@
 	<document name="DownloadHelp.Completed">
 		<text format="b">Dieser Download ist abgeschlossen.</text>
 		<newline gap="8"/>
-		<text>PeerProject hat das Herunterladen dieser Datei abgeschlossen und hat sichergestellt, dass die Datei fehlerfrei übertragen wurde.
+		<text>Shareaza hat das Herunterladen dieser Datei abgeschlossen und hat sichergestellt, dass die Datei fehlerfrei übertragen wurde.
 		Die Datei wurde in ihr Downloadverzeichnis verschoben.</text>
 	</document>
 	<document name="DownloadHelp.Moving">
 		<text format="b">Dieser Download wird verschoben</text>
 		<newline gap="8"/>
-		<text>PeerProject hat das Herunterladen dieser Datei abgeschlossen und hat sichergestellt, dass die Datei fehlerfrei übertragen wurde.
+		<text>Shareaza hat das Herunterladen dieser Datei abgeschlossen und hat sichergestellt, dass die Datei fehlerfrei übertragen wurde.
 		Die Datei wird momentan in Ihr Downloadverzeichnis bewegt und / oder entpackt.</text>
 	</document>
 	<document name="DownloadHelp.Paused">
@@ -1927,7 +1972,7 @@
 	<document name="DownloadHelp.DiskFull">
 		<text format="b">Die Festplatte ist voll</text>
 		<newline gap="8"/>
-		<text>PeerProject hat diesen Download automatisch angehalten, weil die Festplatte voll zu sein scheint
+		<text>Shareaza hat diesen Download automatisch angehalten, weil die Festplatte voll zu sein scheint
 		oder die Datei nicht geschrieben werden kann.  Wenn Sie den Download fortsetzen möchten,
 		machen Sie bitte etwas Platz auf ihrer Festplatte und / oder prüfen Sie, ob auf das Verzeichnis
 		für unvollständige Dateien zugegriffen werden kann und nehmen Sie dann den
@@ -1936,9 +1981,9 @@
 	<document name="DownloadHelp.Verifying">
 		<text format="b">Dieser Download wird überprüft</text>
 		<newline gap="8"/>
-		<text>Dieser Download ist beendet und PeerProject überprüft jetzt, ob die Datei absolut fehlerfrei
+		<text>Dieser Download ist beendet und Shareaza überprüft jetzt, ob die Datei absolut fehlerfrei
 		übertragen wurde.  Wenn beschädigte Teile gefunden werden,
-		wird PeerProject diese automatisch reparieren.</text>
+		wird Shareaza diese automatisch reparieren.</text>
 	</document>
 	<document name="DownloadHelp.Downloading">
 		<text format="b">Dieser Download ist aktiv</text>
@@ -1953,7 +1998,7 @@
 		<text format="b">Dieser Download wartet auf Transfers</text>
 		<newline gap="8"/>
 		<text>Dieser Download wartet darauf, dass jemand anfängt die Datei zu übertragen.
-		PeerProject ist bereit diese Datei herunterzuladen, aber zur Zeit überträgt niemand diese Datei an Sie.
+		Shareaza ist bereit diese Datei herunterzuladen, aber zur Zeit überträgt niemand diese Datei an Sie.
 		Sie befinden sich wahrscheinlich in der Warteschlange eines anderen Benutzers und der Download
 		kann jederzeit beginnen. Sie können die einzelnen Quellen untersuchen, um
 		alle Warteschlangen zu sehen, in denen Sie sich befinden. Wenn Sie selbst Dateien freigegeben haben,
@@ -1971,9 +2016,9 @@
 	<document name="DownloadHelp.Searching">
 		<text format="b">Für diesen Download werden Quellen gesucht</text>
 		<newline gap="8"/>
-		<text>Für diesen Download sind keine Quellen bekannt. Deshalb durchsucht PeerProject
+		<text>Für diesen Download sind keine Quellen bekannt. Deshalb durchsucht Shareaza
 		alle verbundenen P2P-Netzwerke nach neuen Quellen.  Sobald Quellen gefunden werden, wird
-		der Download automatisch gestartet.  PeerProject sucht automatisch nach Quellen,
+		der Download automatisch gestartet.  Shareaza sucht automatisch nach Quellen,
 		Sie können den Vorgang jedoch beschleunigen, indem Sie den</text>
 		<text format="b">Zusätzliche Quellen suchen </text>
 		<text>-Befehl benutzen.</text>
@@ -1985,14 +2030,14 @@
 	<document name="DownloadHelp.Creating">
 		<text format="b">Dieser Download wird erstellt</text>
 		<newline gap="8"/>
-		<text>PeerProject reserviert Speicherplatz,
+		<text>Shareaza reserviert Speicherplatz,
 		um den Download später abzuspeichern.</text>
 	</document>
 	<document name="DownloadHelp.Tracker">
 		<text format="b">BitTorrent-Tracker nicht erreichbar</text>
 		<newline gap="8"/>
 		<text>Der BitTorrent-Tracker für diesen Download ist nicht erreichbar oder funktioniert nicht richtig.
-		PeerProject kann ihn nicht kontaktieren,
+		Shareaza kann ihn nicht kontaktieren,
 		um eine Liste mit Downloadquellen zu erhalten.</text>
 	</document>
 	<!-- Upload help documents -->
@@ -2007,7 +2052,7 @@
 	<document name="GeneralHelp.DiskSpace">
 		<text format="b">Wenig Speicherplatz</text>
 		<newline gap="8"/>
-		<text>Der freie Speicherplatz auf einem oder mehreren der Datenträger, die PeerProject benutzt ist gering.</text>
+		<text>Der freie Speicherplatz auf einem oder mehreren der Datenträger, die Shareaza benutzt ist gering.</text>
 		<newline gap="8"/>
 		<text>Sie sollten stets genügend Speicherplatz frei haben. Programme können instabil werden, wenn die Datenträger voll
 		sind und temporäre Dateien könnten verloren gehen. Sie sollten das "Datenträger bereinigen"-Dienstprogramm ausführen,
@@ -2016,7 +2061,7 @@
 	<document name="GeneralHelp.DiskWriteFail">
 		<text format="b">In ein benötigtes Verzeichnis kann nicht geschrieben werden</text>
 		<newline gap="8"/>
-		<text>In ein von PeerProject benötigtes Laufwerk oder Verzeichnis kann nicht geschrieben werden.</text>
+		<text>In ein von Shareaza benötigtes Laufwerk oder Verzeichnis kann nicht geschrieben werden.</text>
 		<newline gap="8"/>
 		<text>Mögliche Gründe dafür sind, dass ein Netzlaufwerk nicht mehr verbunden ist, oder sie keine Schreibrechte
 		in einem gewählten Verzeichnis haben. Bitte überprüfen Sie Verzeichnisse und Berechtigungen,
@@ -2030,7 +2075,7 @@
 		<text>Es ist wahrscheinlich, dass ein Modem oder Router abgestürzt ist.
 		Möglicherweise müssen Sie sich manuell wieder verbinden bzw. ihre Verbindung zurücksetzen.</text>
 		<newline gap="8"/>
-		<text>PeerProject hat alle Verbindungsversuche abgebrochen, um den Verlust aller gespeicherten Hosts zu verhindern.</text>
+		<text>Shareaza hat alle Verbindungsversuche abgebrochen, um den Verlust aller gespeicherten Hosts zu verhindern.</text>
 	</document>
 	<document name="GeneralHelp.AdultFilter">
 		<text format="b">Erotikfitler aktiviert</text>
@@ -2055,12 +2100,12 @@
 		<text>, oder um die für die Reperatur benötigte Software herunterzuladen.</text>
 	</document>
 	<document name="GeneralHelp.DonkeyServerList">
-		<text format="b">Ihre eDonkey2000-Serverliste ist leer</text>
+		<text format="b">Ihre eDonkey-Serverliste ist leer</text>
 		<newline gap="8"/>
-		<text>Sie haben keine Server in ihrer eDonkey2000-Serverliste. Sie müssen eine
-		aktuelle Serverliste (.met-Datei) herunterladen, um sich mit dem eDonkey2000-Netzwerk verbinden zu können.</text>
+		<text>Sie haben keine Server in ihrer eDonkey-Serverliste. Sie müssen eine
+		aktuelle Serverliste (.met-Datei) herunterladen, um sich mit dem eDonkey-Netzwerk verbinden zu können.</text>
 		<newline gap="8"/>
-		<text>Sie können eine Serverliste in den eDonkey2000-Einstellungen oder im Service-Provider-Fenster
+		<text>Sie können eine Serverliste in den eDonkey-Einstellungen oder im Service-Provider-Fenster
 		herunterladen.</text>
 	</document>
 	<document name="GeneralHelp.UploadWarning">
@@ -2112,7 +2157,7 @@
 		<text>Nach allgemeinen Ausdrücken kann nicht effizient gesucht werden und kann zu schlechter Suchleistung und
 		hohem Bandbreitenbedarf während des Suchens führen.</text>
 		<newline gap="8"/>
-		<text>Weitere Informationen finden Sie auf der PeerProject Webseite.</text>
+		<text>Weitere Informationen finden Sie auf der Shareaza Webseite.</text>
 	</document>
 	<document name="SearchHelp.AdultSearch">
 		<text format="b">Diese Suche kann nicht gestartet werden</text>
@@ -2143,7 +2188,7 @@
 		</text><text format="i"> innerhalb </text>
 		<text> dieser Ordner. Bitte geben Sie diese Ordner frei.</text>
 		<newline gap="8"/>
-		<text>Der PeerProject "incomplete"-Ordner sollte auch nicht über die Bibliothek freigegeben werden.
+		<text>Der Shareaza "incomplete"-Ordner sollte auch nicht über die Bibliothek freigegeben werden.
 		Der Versuch, Dateien zu hashen, die gerade heruntergeladen werden, wirkt sich negativ auf die Geschwindigkeit aus.</text>
 	</document>
 </documents>
@@ -2177,7 +2222,7 @@
 	<tip id="ID_DISCOVERY_GNUTELLA" message="Bootstrap-Dienste im Service Provider-Fenster anzeigen." tip="Bootstraps anzeigen"/>
 	<tip id="ID_DISCOVERY_QUERY" message="Den markierten Service-Provider jetzt abfragen." tip="Jetzt abfragen"/>
 	<tip id="ID_DISCOVERY_REMOVE" message="Den markierten Service-Provider entfernen." tip="Entfernen"/>
-	<tip id="ID_DISCOVERY_SERVERMET" message="eDonkey2000-Server.met-URLs im Service Provider-Fenster anzeigen."/>
+	<tip id="ID_DISCOVERY_SERVERMET" message="eDonkey-Server.met-URLs im Service Provider-Fenster anzeigen."/>
 	<tip id="ID_DISCOVERY_WEBCACHE" message="GWebCache-Dienste im Service Provider-Fenster anzeigen." tip="GWebCaches anzeigen"/>
 	<tip id="ID_DOWNLOAD_GROUP_CLEAR" message="Alle Downloads dieser Gruppe abbrechen und entfernen."/>
 	<tip id="ID_DOWNLOAD_GROUP_NEW" message="Eine neue Downloadgruppe erstellen..."/>
@@ -2221,13 +2266,13 @@
 	<tip id="ID_DOWNLOADS_TORRENT_INFO" message="Informationen über den markierten BitTorrent-Download anzeigen..."/>
 	<tip id="ID_DOWNLOADS_URL" message="Quellen aus einer URL zum markierten Download hinzufügen..." tip="Quell-URL hinzufügen"/>
 	<tip id="ID_DOWNLOADS_VIEW_REVIEWS" message="Rezensionen für den markierten Download anzeigen"/>
-	<tip id="ID_HELP_ABOUT" message="Informationen über PeerProject anzeigen..." tip="Über PeerProject"/>
+	<tip id="ID_HELP_ABOUT" message="Informationen über Shareaza anzeigen..." tip="Über Shareaza"/>
 	<tip id="ID_HELP_CODEC" message="Alles über Codec- und Videoprobleme."/>
-	<tip id="ID_HELP_FAQ" message="PeerProject: Häufig gestellte Fragen (FAQ) anzeigen."/>
+	<tip id="ID_HELP_FAQ" message="Shareaza: Häufig gestellte Fragen (FAQ) anzeigen."/>
 	<tip id="ID_HELP_ROUTER" message="Finden Sie Hilfe Ihren Router / Ihre Firewall zu konfigurieren."/>
-	<tip id="ID_HELP_FORUMS" message="Das PeerProject-Forum besuchen."/>
-	<tip id="ID_HELP_GUIDE" message="Das PeerProject-Handbuch anzeigen."/>
-	<tip id="ID_HELP_HOMEPAGE" message="PeerProject's Homepage besuchen." tip="PeerProject's Homepage"/>
+	<tip id="ID_HELP_FORUMS" message="Das Shareaza-Forum besuchen."/>
+	<tip id="ID_HELP_GUIDE" message="Das Shareaza-Handbuch anzeigen."/>
+	<tip id="ID_HELP_HOMEPAGE" message="Shareaza's Homepage besuchen." tip="Shareaza's Homepage"/>
 	<tip id="ID_HELP_SECURITY" message="Hinweise, wie Sie ihren Computer vor schädlichen Programmen (Viren, Spyware) schützen können."/>
 	<tip id="ID_HELP_UPDATE" message="Neueste Nachrichten und Updates."/>
 	<tip id="ID_HELP_TEST" message="Prüfen, ob ihre Konfiguration eingehende Verbindungen zulässt."/>
@@ -2237,13 +2282,14 @@
 	<tip id="ID_HELP_WEB_4" message="Webseite4 besuchen"/>
 	<tip id="ID_HELP_WEB_5" message="Webseite5 besuchen"/>
 	<tip id="ID_HELP_WEB_6" message="Webseite6 besuchen"/>
+	<tip id="ID_HELP_DONATE" message="Wenn Sie möchten, können Sie für unsere gerichtlichen Geldmittel spenden und um Ihre Wertschätzung zu zeigen."/>
 	<tip id="ID_HITMONITOR_CLEAR" message="Den Treffermonitor-Puffer leeren." tip="Puffer leeren"/>
 	<tip id="ID_HITMONITOR_PAUSE" message="Den Treffermonitor anhalten." tip="Anzeige anhalten"/>
 	<tip id="ID_HITMONITOR_SEARCH" message="Das Netzwerk nach dem markierten Ausdruck durchsuchen." tip="Danach suchen"/>
 	<tip id="ID_HOSTCACHE_CONNECT" message="Mit markierten Host(s) verbinden." tip="Jetzt verbinden"/>
 	<tip id="ID_HOSTCACHE_DISCONNECT" message="Verbindung zu markierten Host(s) beenden." tip="Verbindung beenden"/>
-	<tip id="ID_HOSTCACHE_ED2K_CACHE" message="eDonkey2000-Server anzeigen."/>
-	<tip id="ID_HOSTCACHE_ED2K_DOWNLOAD" message="Ein &quot;server.met&quot;-Datei für eDonkey2000 herunterladen..."/>
+	<tip id="ID_HOSTCACHE_ED2K_CACHE" message="eDonkey-Server anzeigen."/>
+	<tip id="ID_HOSTCACHE_ED2K_DOWNLOAD" message="Ein &quot;server.met&quot;-Datei für eDonkey herunterladen..."/>
 	<tip id="ID_HOSTCACHE_G1_CACHE" message="Gecachte Hosts anzeigen (G1)."/>
 	<tip id="ID_HOSTCACHE_G2_CACHE" message="Gecachte Hosts anzeigen (G2)."/>
 	<tip id="ID_HOSTCACHE_G2_HORIZON" message="Horizont anzeigen (G2)."/>
@@ -2342,13 +2388,13 @@
 	<tip id="ID_NEIGHBOURS_VIEW_ALL" message="Ein neues Packet-Dump-Fenster öffnen, um diesen Host zu überwachen." tip="Gesamten Traffic anzeigen"/>
 	<tip id="ID_NEIGHBOURS_VIEW_INCOMING" message="Ein neues Packet-Dump-Fenster öffnen, um eingehenden Traffic von diesem Host zu überwachen." tip="Eingehenden Traffic anzeigen"/>
 	<tip id="ID_NEIGHBOURS_VIEW_OUTGOING" message="Ein neues Packet-Dump-Fenster öffnen, um ausgehenden Traffic an diesem Host zu überwachen." tip="Ausgehenden Traffic anzeigen"/>
-	<tip id="ID_NETWORK_AUTO_CLOSE" message="PeerProject automatisch nach dem Beenden der Transfers beenden." tip="Nach Transfers schließen"/>
+	<tip id="ID_NETWORK_AUTO_CLOSE" message="Shareaza automatisch nach dem Beenden der Transfers beenden." tip="Nach Transfers schließen"/>
 	<tip id="ID_NETWORK_BROWSE_TO" message="Die freigegebenen Dateien eines Benutzers durchsuchen und dessen Profil anzeigen..." tip="Benutzer durchsuchen"/>
 	<tip id="ID_NETWORK_CONNECT" message="Mit den Netzwerken verbinden"/>
 	<tip id="ID_NETWORK_CONNECT_TO" message="Manuell mit einem Host verbinden..." tip="Verbinden mit"/>
 	<tip id="ID_NETWORK_DISCONNECT" message="Die Verbindung mit den Netzwerken trennen"/>
-	<tip id="ID_NETWORK_ED2K" message="Zum eDonkey2000-Netzwerk verbinden."/>
-	<tip id="ID_NETWORK_EXIT" message="PeerProject beenden" tip="Beenden"/>
+	<tip id="ID_NETWORK_ED2K" message="Zum eDonkey-Netzwerk verbinden."/>
+	<tip id="ID_NETWORK_EXIT" message="Shareaza beenden" tip="Beenden"/>
 	<tip id="ID_NETWORK_G1" message="Zum Gnutella1-Netzwerk verbinden."/>
 	<tip id="ID_NETWORK_G2" message="Zum Gnutella2-Netzwerk verbinden (empfohlen)."/>
 	<tip id="ID_NETWORK_SEARCH" message="Eine neue Suche starten..." tip="Eine neue Suche starten"/>
@@ -2367,7 +2413,7 @@
 	<tip id="ID_SEARCH_FOR_SERIES" message="Nach Folgen der gleichen Fernsehserie suchen."/>
 	<tip id="ID_SEARCH_FOR_SIMILAR" message="Nach Dateien suchen, die einen ähnlichen Namen haben"/>
 	<tip id="ID_SEARCH_FOR_THIS" message="Andere Kopien der markierten Datei suchen."/>
-	<tip id="ID_SEARCH_PANEL" message="Die Suchleiste auf der linken Seite des PeerProject Fensters anzeigen" tip="Suchleiste anzeigen"/>
+	<tip id="ID_SEARCH_PANEL" message="Die Suchleiste auf der linken Seite des Shareaza Fensters anzeigen" tip="Suchleiste anzeigen"/>
 	<tip id="ID_SEARCH_SEARCH" message="Erneut im Netzwerk suchen..." tip="Erneut im Netzwerk suchen"/>
 	<tip id="ID_SEARCH_STOP" message="Den Empfang von Suchergebnissen in diesem Fenster beenden." tip="Suche stoppen"/>
 	<tip id="ID_SEARCHMONITOR_CLEAR" message="Suchmonitor-Puffer leeren." tip="Puffer leeren"/>
@@ -2387,7 +2433,7 @@
 	<tip id="ID_SYSTEM_TIMESTAMP" message="Für jede Zeile einen Zeitstempel aufzeichnen." tip="Zeitstempel aufzeichnen"/>
 	<tip id="ID_SYSTEM_VERBOSE" message="Ausführliche Meldungen ausgeben." tip="Ausführliche Meldungen"/>
 	<tip id="ID_TAB_CONNECT" message="Verbindungen zu den Netzwerken herstellen / trennen." tip="Verbindungen zu den Netzwerken herstellen / trennen."/>
-	<tip id="ID_TAB_HELP" message="PeerProject-Hilfe."/>
+	<tip id="ID_TAB_HELP" message="Shareaza-Hilfe."/>
 	<tip id="ID_TAB_HOME" message="Zur Homepage zurückkehren" tip="Zur Homepage zurückkehren"/>
 	<tip id="ID_TAB_LIBRARY" message="Die lokale Bibliothek anzeigen, um Ihre Dateien zu verwalten." tip="Die lokale Bibliothek anzeigen, um Ihre Dateien zu verwalten"/>
 	<tip id="ID_TAB_MEDIA" message="Audio- und Videodateien aus der Bibliothek abspielen."/>
@@ -2395,13 +2441,13 @@
 	<tip id="ID_TAB_SEARCH" message="Die Netzwerke nach Dateien durchsuchen"/>
 	<tip id="ID_TAB_TRANSFERS" message="Uploads und Downloads überwachen." tip="Uploads und Downloads überwachen"/>
 	<tip id="ID_TOOLS_DOWNLOAD" message="Eine neue Datei oder ein Torrent herunterladen..."/>
-	<tip id="ID_TOOLS_LANGUAGE" message="Wählen Sie die Sprache, in der Sie PeerProject benutzen möchten..."/>
+	<tip id="ID_TOOLS_LANGUAGE" message="Wählen Sie die Sprache, in der Sie Shareaza benutzen möchten..."/>
 	<tip id="ID_TOOLS_PROFILE" message="Ihr Benutzerprofil bearbeiten..."/>
 	<tip id="ID_TOOLS_RESKIN" message="Den aktuellen Skin neu laden und anwenden."/>
 	<tip id="ID_TOOLS_SEEDTORRENT" message="Den markierten Torrent seeden."/>
-	<tip id="ID_TOOLS_SETTINGS" message="PeerProject konfigurieren..." tip="Einstellungen"/>
-	<tip id="ID_TOOLS_SKIN" message="Einen anderen Skin für PeerProject wählen..." tip="Skin wechseln"/>
-	<tip id="ID_TOOLS_WIZARD" message="Den PeerProject-Schnellstart-Assistenten starten..." tip="Schnellstart-Assistent"/>
+	<tip id="ID_TOOLS_SETTINGS" message="Shareaza konfigurieren..." tip="Einstellungen"/>
+	<tip id="ID_TOOLS_SKIN" message="Einen anderen Skin für Shareaza wählen..." tip="Skin wechseln"/>
+	<tip id="ID_TOOLS_WIZARD" message="Den Shareaza-Schnellstart-Assistenten starten..." tip="Schnellstart-Assistent"/>
 	<tip id="ID_TRAFFIC_AXIS" message="Y-Achse anzeigen" tip="Y-Achse anzeigen"/>
 	<tip id="ID_TRAFFIC_CLEAR" message="Das Traffic-Diagramm löschen." tip="Graphen löschen"/>
 	<tip id="ID_TRAFFIC_GRID" message="Gitternetz anzeigen." tip="Gitternetz anzeigen"/>
@@ -2412,7 +2458,7 @@
 	<tip id="ID_TRANSFERS_CONNECT" message="Versuchen, von der/den markierte(n) Quelle(n) runterzuladen ." tip="Quelle anfragen"/>
 	<tip id="ID_TRANSFERS_DISCONNECT" message="Markierten Transfer abbrechen." tip="Verbindung trennen"/>
 	<tip id="ID_TRANSFERS_FORGET" message="Markierten Transfer abbrechen und Quelle vergessen." tip="Quelle entfernen"/>
-	<tip id="ID_TRAY_OPEN" message="Das PeerProject-Fenster öffnen." tip="Das PeerProject-Fenster öffnen"/>
+	<tip id="ID_TRAY_OPEN" message="Das Shareaza-Fenster öffnen." tip="Das Shareaza-Fenster öffnen"/>
 	<tip id="ID_UPLOADS_AUTO_CLEAR" message="Beendete Uploads automatisch entfernen" tip="Automatisch entfernen"/>
 	<tip id="ID_UPLOADS_CHAT" message="Eine Chatsitzung mit dem markierten Host beginnen." tip="Chat beginnen"/>
 	<tip id="ID_UPLOADS_CLEAR" message="Markierte(n) Upload(s) von der Liste entfernen." tip="Entfernen"/>
@@ -2427,7 +2473,7 @@
 	<tip id="ID_UPLOADS_LAUNCH" message="Die markierte(n) Datei(en) öffnen." tip="Öffnen"/>
 	<tip id="ID_UPLOADS_SETTINGS" message="Uploads konfigurieren..."/>
 	<tip id="ID_UPLOADS_START" message="Upload zum markierten Client starten" tip="Upload starten"/>
-	<tip id="ID_VIEW_BASIC" message="PeerProject im Normalmodus verwenden und erweiterte Funktionen ausblenden."/>
+	<tip id="ID_VIEW_BASIC" message="Shareaza im Normalmodus verwenden und erweiterte Funktionen ausblenden."/>
 	<tip id="ID_VIEW_DISCOVERY" message="Das Service-Provider-Fenster ein- oder ausblenden." tip="Service-Provider-Fenster"/>
 	<tip id="ID_VIEW_DOWNLOADS" message="Das Download-Fenster ein- oder ausblenden." tip="Download-Fenster"/>
 	<tip id="ID_VIEW_HELP" message="Das Hilfefenster ein- oder ausblenden."/>
@@ -2440,18 +2486,20 @@
 	<tip id="ID_VIEW_SEARCH_MONITOR" message="Das Suchmonitor-Fenster ein- oder ausblenden." tip="Suchmonitor-Fenster"/>
 	<tip id="ID_VIEW_SECURITY" message="Das Sicherheitsfenster ein- oder ausblenden." tip="Sicherheitsfenster"/>
 	<tip id="ID_VIEW_SYSTEM" message="Die Konsole ein- oder ausblenden." tip="Konsole"/>
-	<tip id="ID_VIEW_TABBED" message="PeerProject im Tab-Modus benutzen (Home, Bibliothek, Transfer, Netzwerk)." tip="Tab-Modus"/>
+	<tip id="ID_VIEW_TABBED" message="Shareaza im Tab-Modus benutzen (Home, Bibliothek, Transfer, Netzwerk)." tip="Tab-Modus"/>
 	<tip id="ID_VIEW_TRAFFIC" message="Das Diagramm-Fenster ein- oder ausblenden." tip="Diagramm-Fenster"/>
 	<tip id="ID_VIEW_UPLOADS" message="Das Upload-Fenster ein- oder ausblenden." tip="Upload-Fenster"/>
-	<tip id="ID_VIEW_WINDOWED" message="PeerProject im Fenster-Modus benutzen." tip="Fenster-Modus"/>
+	<tip id="ID_VIEW_WINDOWED" message="Shareaza im Fenster-Modus benutzen." tip="Fenster-Modus"/>
 	<tip id="ID_WINDOW_CASCADE" message="Alle offenen Fenster maximieren." tip="Vollbild"/>
 	<tip id="ID_WINDOW_MONITOR" message="Den Bandbreiten-Monitor ein- oder ausblenden." tip="Monitor anzeigen"/>
 	<tip id="ID_WINDOW_NAVBAR" message="Die Navigationsleiste ein- oder ausblenden."/>
-	<tip id="ID_WINDOW_REMOTE" message="Die PeerProject-Fernbedienung ein- oder ausblenden."/>
+	<tip id="ID_WINDOW_REMOTE" message="Die Shareaza-Fernbedienung ein- oder ausblenden."/>
 	<tip id="ID_WINDOW_TABBAR" message="Die Tableiste ein- oder ausblenden." tip="Tableiste anzeigen"/>
 	<tip id="ID_WINDOW_TILE_HORZ" message="Die geöffneten Fenster übereinander anordnen." tip="Übereinander"/>
 	<tip id="ID_WINDOW_TILE_VERT" message="Die geöffneten Fenster nebeneinander anordnen." tip="Nebeneinander"/>
 	<tip id="ID_WINDOW_TOOLBAR" message="Die Werkzeugleiste ein- oder ausblenden." tip="Werkzeugleiste anzeigen"/>
+	<tip id="ID_WEBSERVICES_LIST" message="Wählen Sie einen Internet-Dienst, um mehr Informationen über die gewählte Datei zu erhalten."/>
+	<tip id="ID_WEBSERVICES_SHAREMONKEY" message="Mit Sharemonkey nach vorhandenen Datei-Informationen suchen."/>
 	<!-- PLUGIN TIPS -->
 	<tip id="ImageViewer_BestFit" message="Das Bild auf Fenstergröße skalieren."/>
 	<tip id="ImageViewer_ActualSize" message="Das Bild in Originalgröße anzeigen."/>
@@ -2461,11 +2509,12 @@
 <!-- Tips displayed when mouse is moved over controls in the dialogs -->
 <controlTips>
 	<tip id="IDC_THROTTLE_MODE" message="Im Maximum-Modus wird die genutzte Bandbreite nie den eingegebenen Wert überschreiten. Im Durchschnitts-Modus fluktuiert die genutzte Bandbreite um den eingegebenen Richtwert."/>
+	<tip id="IDC_REGEXP" message="Regulären Ausdruck in perl eingeben.{n}Das Suchwort kann in folgender Form definiert werden &lt;n&gt;, wobei n eine Zahl zwischen 1 und 9 ist. Wenn Sie alle Suchworte nacheinander durchsuchen wollen, benutzen Sie &lt;_&gt; markieren."/>
 	<tip id="IDC_SHARE_PARTIALS" message="Diese Einstellung hat keinen Einfluss auf bereits gestartete Downloads. In den eD2k- und BitTorrent-Netzwerken kann mit diese Option lediglich der Upload von pausierten Downloads verhindert werden.{n}{n}ACHTUNG: Benutzen Sie diese Option nur wenn unbedingt nötig - der Missbrauch kann zur Verbannung führen."/>
 </controlTips>
 <!-- Localised Strings -->
 <strings>
-	<string id="WINDOW_MAIN" value="PeerProject"/>
+	<string id="WINDOW_MAIN" value="Shareaza"/>
 	<string id="WINDOW_SYSTEM" value="Konsole"/>
 	<string id="WINDOW_NEIGHBOURS" value="Hosts"/>
 	<string id="WINDOW_PACKET" value="Packet-Dump"/>
@@ -2484,7 +2533,7 @@
 	<string id="WINDOW_HOME" value="Home"/>
 	<string id="WINDOW_MEDIA" value="Medienwiedergabe"/>
 	<string id="WINDOW_SEARCHPAD" value="Suchen"/>
-	<string id="WINDOW_HELP" value="PeerProject Hilfe"/>
+	<string id="WINDOW_HELP" value="Shareaza Hilfe"/>
 	<string id="7000" value="Sind Sie sicher, dass Sie diesen Filter löschen möchten ?"/>
 	<string id="7001" value="&amp;Schemas"/>
 	<string id="7002" value="Mehrfache Einträge"/>
@@ -2495,16 +2544,16 @@
 	<string id="7101" value="Diese Vorlage kann nicht angepasst werden."/>
 	<string id="7102" value="Sind Sie sicher, dass Sie die &quot;%s&quot;-Vorlage löschen wollen?\nDieser Schritt kann nicht rückgängig gemacht werden."/>
 	<string id="8000" value="Einstellungen"/>
-	<string id="8001" value="Willkommen bei PeerProject"/>
+	<string id="8001" value="Willkommen bei Shareaza"/>
 	<string id="8002" value="Dateieigenschaften"/>
 	<string id="8003" value="Mein Profil bearbeiten"/>
-	<string id="8004" value="! Willkommen bei PeerProject (version) !\n.\nPeerProject ist völlig kostenlose Software.\nBitte benutzen Sie PeerProject verantwortungsbewusst und respektieren Sie geistiges Eigentum.\n."/>
+	<string id="8004" value="! Willkommen bei Shareaza (version) !\n.\nShareaza ist völlig kostenlose Software.\nBitte benutzen Sie Shareaza verantwortungsbewusst und respektieren Sie geistiges Eigentum.\n."/>
 	<string id="8005" value=" (Nach Transfer schließen)"/>
 	<string id="8006" value="Sie sind nicht verbunden.  Klicken Sie auf &quot;Verbinden&quot; um Verbindungen zu den gewählten Netzwerken herzustellen."/>
 	<string id="8007" value="Es läuft kein Suche. Klicken Sie auf &quot;Suchen&quot; um nach Dateien zu suchen."/>
-	<string id="8008" value="Die neuste PeerProject-Version wurde heruntergeladen (%s).  Wollen Sie das Update jetzt installieren?\n\nWenn Sie auf Ja klicken wird PeerProject kurzzeitig beendet, um das Update zu installieren."/>
+	<string id="8008" value="Die neuste Shareaza-Version wurde heruntergeladen (%s).  Wollen Sie das Update jetzt installieren?\n\nWenn Sie auf Ja klicken wird Shareaza kurzzeitig beendet, um das Update zu installieren."/>
 	<string id="8009" value="Wollen Sie den Skin &quot;%s&quot; wirklich löschen?  Dies kann nicht rückgängig gemacht werden."/>
-	<string id="8010" value="Das ist eine Vorabversion von PeerProject. Die Betatest-Periode ist abgelaufen. Bitte laden Sie die offizielle Version von http://shareaza.sourceforge.net/ herunter."/>
+	<string id="8010" value="Das ist eine Vorabversion von Shareaza. Die Betatest-Periode ist abgelaufen. Bitte laden Sie die offizielle Version von http://shareaza.sourceforge.net/ herunter."/>
 	<string id="8011" value="Das Wechseln der Ansicht schließt alle offenen Fenster.  Wollen Sie die Ansicht jetzt wechseln?"/>
 	<string id="8012" value="Torrent-Informationen"/>
 	<string id="8060" value="Hub/Ultrapeer-Modus mit %lu Leaves.  %s in ihrer Bibliothek."/>
@@ -2573,15 +2622,15 @@
 	<string id="8179" value="(Verlauf löschen)"/>
 	<string id="8180" value="Dateigröße"/>
 	<string id="8181" value=" bis"/><!-- size from xx TO xx-->
-	<string id="8208" value="PeerProject hasht %Iu Datei(en):"/>
+	<string id="8208" value="Shareaza hasht %Iu Datei(en):"/>
 	<string id="8223" value="%i Tage und %i Stunden"/>
-	<string id="8224" value="PeerProject lädt herunter:"/>
+	<string id="8224" value="Shareaza lädt herunter:"/>
 	<string id="8225" value="Dieser Download wurde angehalten:"/>
-	<string id="8226" value="PeerProject hat den Download abgeschlossen:"/>
+	<string id="8226" value="Shareaza hat den Download abgeschlossen:"/>
 	<string id="8227" value="%i Stunden und %i Minuten"/>
 	<string id="8228" value="%i Minuten und %i Sekunden"/>
 	<string id="8229" value="%i Sekunden"/>
-	<string id="8230" value="PeerProject sucht nach Quellen für:"/>
+	<string id="8230" value="Shareaza sucht nach Quellen für:"/>
 	<string id="8231" value="Keine Quellen"/>
 	<string id="8232" value="Öffnen"/>
 	<string id="8233" value="Vorschau"/>
@@ -2590,8 +2639,8 @@
 	<string id="8237" value="Heruntergeladen:"/>
 	<string id="8238" value="Anzahl Quellen:"/>
 	<string id="8239" value="Beendet"/>
-	<string id="8240" value="PeerProject verschiebt den Download:"/>
-	<string id="8241" value="PeerProject überprüft den Download auf Fehler:"/>
+	<string id="8240" value="Shareaza verschiebt den Download:"/>
+	<string id="8241" value="Shareaza überprüft den Download auf Fehler:"/>
 	<string id="8243" value="Hochgeladen: "/>
 	<string id="8244" value="Anzahl der Rezensionen:"/>
 	<string id="8288" value="Bibliothek durchsuchen"/>
@@ -2638,9 +2687,9 @@
 	<string id="13000" value="Sind Sie sicher, dass Sie die ausgewählten Sicherheitsregeln löschen möchten? Dieser Schritt kann nicht rückgängig gemacht werden."/>
 	<string id="13001" value="Über das Internet freigegebene Dateien"/>
 	<string id="16063" value="UPnP-Portfreigabe nach 10 Versuchen fehlgeschlagen."/>
-	<string id="16064" value="Der PeerProject-Netzwerkkern wird gestartet..."/>
+	<string id="16064" value="Der Shareaza-Netzwerkkern wird gestartet..."/>
 	<string id="16065" value="Kann nicht an %s Port %i für eingehende Verbindungen binden. Eingehende Verbindungen nicht möglich."/>
-	<string id="16066" value="Der PeerProject-Netzwerkkern wird heruntergefahren..."/>
+	<string id="16066" value="Der Shareaza-Netzwerkkern wird heruntergefahren..."/>
 	<string id="16067" value="Mit keinem Netzwerk verbunden."/>
 	<string id="16068" value="Eingehende Verbindungen werden an %s Port %i akzeptiert."/>
 	<string id="16069" value="Ausgehende Verbindungen gehen von %s Port %i aus."/>
@@ -2654,10 +2703,11 @@
 	<string id="16077" value="Die Adresse %s wird von ihren Sicherheitsregeln bereits blockiert."/>
 	<string id="16078" value="Eine Regel, um %s zu blockieren, wurde hinzugefügt."/>
 	<string id="16079" value="Sind Sie sicher, dass Sie die Verbindung trennen möchten?"/>
+	<string id="16080" value="Sie benutzen die Zeitsteuerung nur mit dem G2-Netzwerk. Möchten Sie dies ausschalten und zu allen aktivierten Netzwerken verbinden ?"/>
 	<string id="16081" value="Suchanfrage für &quot;%s&quot; an %s senden."/>
-	<string id="16083" value="Das Erzwingen des HUB-Modus kann negative Auswirkungen auf das Netzwerk und die Ausführgeschwindigkeit von PeerProject haben. Es ist generell besser PeerProject diese Entscheidung selbst treffen zu lassen.\n\nDer Hub Modus führt NICHT zu besseren Suchergebnissen, und hat auch keine anderen Vorteile für Sie.\n\nSind Sie SICHER, dass Sie das wollen?"/>
+	<string id="16083" value="Das Erzwingen des HUB-Modus kann negative Auswirkungen auf das Netzwerk und die Ausführgeschwindigkeit von Shareaza haben. Es ist generell besser Shareaza diese Entscheidung selbst treffen zu lassen.\n\nDer Hub Modus führt NICHT zu besseren Suchergebnissen, und hat auch keine anderen Vorteile für Sie.\n\nSind Sie SICHER, dass Sie das wollen?"/>
 	<string id="16084" value="Die Deaktivierung des Gnutella1-Protokolls kann ihre Suchergebnisse begrenzen. Wenn Sie ein Hub sind, trifft dies auch für andere Benutzer zu. Sind Sie SICHER, dass Sie das wollen?"/>
-	<string id="16085" value="Gnutella2 ist PeerProjects Hauptnetzwerk.  Wenn sie die Unterstützung für Gnutella2 deaktivieren, könnten sich die Anzahl und die Qualität Ihrer Suchergebnisse stark verschlechtern.  Sind Sie SICHER, dass Sie das wollen?"/>
+	<string id="16085" value="Gnutella2 ist Shareazas Hauptnetzwerk.  Wenn sie die Unterstützung für Gnutella2 deaktivieren, könnten sich die Anzahl und die Qualität Ihrer Suchergebnisse stark verschlechtern.  Sind Sie SICHER, dass Sie das wollen?"/>
 	<string id="16087" value="Ihre Uploadbandbreite reicht nicht aus, um dieses Netzwerk zu aktivieren"/>
 	<string id="16128" value="Eingehende Verbindung von %s Port %i akzeptiert."/>
 	<string id="16129" value="Verbindung herstellen zu %s Port %i..."/>
@@ -2678,7 +2728,7 @@
 	<string id="16147" value="Überflüssige Verbindung mit %s geschlossen, Host-Liste übertragen (%s Port %i)."/>
 	<string id="16148" value="Verbindung zu %s zurückgewiesen (%s)."/>
 	<string id="16150" value="Überflüssige Verbindung mit %s geschlossen."/>
-	<string id="16151" value="Verbindung von %s verweigert, weil PeerProject im shielded-leaf-Modus läuft."/>
+	<string id="16151" value="Verbindung von %s verweigert, weil Shareaza im shielded-leaf-Modus läuft."/>
 	<string id="16152" value="Hub %s akzeptiert uns nicht als Hub, Verbindung getrennt."/>
 	<string id="16153" value="Verbindung mit %s herstellen. Rückkehr in den shielded-leaf Modus."/>
 	<string id="16154" value="Hub-Verbindung hergestellt. Peer-Verbindungen werden getrennt."/>
@@ -2760,12 +2810,12 @@
 	<string id="16308" value="Host %s hat unverlangte Daten gesendet, Verbindung geschlossen."/>
 	<string id="16309" value="Metadaten für &quot;%s&quot; von %s anfordern..."/>
 	<string id="16310" value="TTH-Daten von %s empfangen (%s)..."/>
-	<string id="16311" value="eDonkey2000-Hash für &quot;%s&quot; von %s anfordern..."/>
-	<string id="16312" value="Ungültiger eDonkey2000-Hash von %s empfangen, Quelle entfernt."/>
-	<string id="16313" value="eDonkey2000-Hash für &quot;%s&quot; empfangen, kleinster verifizierbarer Teil ist %s."/>
-	<string id="16314" value="eDonkey2000-Hash ist verfälscht oder inkonsistent, Quelle entfernt."/>
+	<string id="16311" value="eDonkey-Hash für &quot;%s&quot; von %s anfordern..."/>
+	<string id="16312" value="Ungültiger eDonkey-Hash von %s empfangen, Quelle entfernt."/>
+	<string id="16313" value="eDonkey-Hash für &quot;%s&quot; empfangen, kleinster verifizierbarer Teil ist %s."/>
+	<string id="16314" value="eDonkey-Hash ist verfälscht oder inkonsistent, Quelle entfernt."/>
 	<string id="16315" value="Kann Kompression (inflate) für Download &quot;%s&quot; nicht aktivieren."/>
-	<string id="16316" value="Zeitüberschreitung für Warteschlangenaktualisierung von eDonkey2000-Host %s für Datei &quot;%s&quot;."/>
+	<string id="16316" value="Zeitüberschreitung für Warteschlangenaktualisierung von eDonkey0-Host %s für Datei &quot;%s&quot;."/>
 	<string id="16317" value="Warten in Warteschlange für &quot;%s&quot;."/>
 	<string id="16318" value="Nicht genügend Speicherplatz um &quot;%s&quot; herunterzuladen (%s)."/>
 	<string id="16319" value="Quelle %s (%s) entfernt, weil sie beschädigte Teile der Datei &quot;%s&quot; übertragen hat (%I64i-%I64i)."/>
@@ -2811,14 +2861,14 @@
 	<string id="16359" value="Offline-Warteschlangenposition für %s abgelaufen, entfernt."/>
 	<string id="16360" value="Upload von &quot;%s&quot; an %s (%s) verweigert, alle entsprechenden Warteschlangen sind voll."/>
 	<string id="16361" value="Uploadanforderung von %s (%s) verweigert, Netwzerk deaktiviert."/>
-	<string id="16362" value="eDonkey2000-Uploads sollten nicht abgebrochen werden. Sind Sie sicher, dass Sie diesen Upload abbrechen wollen?"/>
+	<string id="16362" value="eDonkey-Uploads sollten nicht abgebrochen werden. Sind Sie sicher, dass Sie diesen Upload abbrechen wollen?"/>
 	<string id="16363" value="Torrent-Uploads"/>
 	<string id="16364" value="Fertige Uploads"/>
 	<string id="16365" value="Sind Sie sicher, dass Sie alle Downloads dieser Gruppe abbrechen möchten?"/>
 	<string id="16366" value="Warteschlange"/>
-	<string id="16367" value="eDonkey2000"/>
-	<string id="16368" value="eDonkey2000 (unvollständige Dateien)"/>
-	<string id="16369" value="eDonkey2000-Guard"/>
+	<string id="16367" value="eDonkey"/>
+	<string id="16368" value="eDonkey (unvollständige Dateien)"/>
+	<string id="16369" value="eDonkey-Guard"/>
 	<string id="16370" value="Kleine Dateien"/>
 	<string id="16371" value="Mittelgroße Dateien"/>
 	<string id="16372" value="Große Dateien"/>
@@ -2832,9 +2882,9 @@
 	<string id="16385" value="Sie sind dabei die Metadaten von %i Dateien zu ändern. Wollen Sie fortfahren?"/>
 	<string id="16386" value="Metadaten von %i bearbeiten."/>
 	<string id="16387" value="Die Datei &quot;%s&quot; wurde noch nicht gehasht. Bitte warten Sie bis die Datei gehasht wurde und versuchen Sie es später erneut."/>
-	<string id="16388" value="Diese Option benutzt Dienste, die von Bitzi.com zur Verfügung gestellt werden, um Information über Dateien zu sammeln und zugänglich zu machen.\n\nPeerProject wird den SHA1-Hashwert für die ausgewählte(n) Datei(en) übertragen, um die Bitzi-Datenbank abzufragen.\nWenn Sie sich Sorgen um ihre Privatsphäre machen, können Sie die &quot;Bitzi.com privacy policy&quot; lesen.\n\nWollen Sie fortfahren?"/>
+	<string id="16388" value="Diese Option benutzt Dienste, die von Bitzi.com zur Verfügung gestellt werden, um Information über Dateien zu sammeln und zugänglich zu machen.\n\nShareaza wird den SHA1-Hashwert für die ausgewählte(n) Datei(en) übertragen, um die Bitzi-Datenbank abzufragen.\nWenn Sie sich Sorgen um ihre Privatsphäre machen, können Sie die &quot;Bitzi.com privacy policy&quot; lesen.\n\nWollen Sie fortfahren?"/>
 	<string id="16389" value="Sind Sie sicher, dass Sie die %i ausgewählten Datei(en) löschen möchten?\n\nDie Dateien werden in den Windows Papierkorb verschoben."/>
-	<string id="16390" value="Sie haben keinen Mediaplayer wie z.B. Winamp gewählt, um Dateien in die Wiedergabeliste aufzunehmen. Wollen Sie jetzt einen auswählen?\n\nPeerProject wird dem gewählten Programm den Dateinamen mit der &quot;/ADD&quot; Option übergeben."/>
+	<string id="16390" value="Sie haben keinen Mediaplayer wie z.B. Winamp gewählt, um Dateien in die Wiedergabeliste aufzunehmen. Wollen Sie jetzt einen auswählen?\n\nShareaza wird dem gewählten Programm den Dateinamen mit der &quot;/ADD&quot; Option übergeben."/>
 	<string id="16391" value="Sie sind mit keinem Netzwerk verbunden."/>
 	<string id="16392" value="Klicken Sie auf  &quot;Verbinden&quot; um zu beginnen."/>
 	<string id="16393" value="Die Datei &quot;%s&quot; hat die Hash-Überprüfung nicht bestanden und ist möglicherweise nicht die Datei, die Sie herunterladen wollten. Sind Sie sicher, dass Sie die Datei öffnen möchten?"/>
@@ -2842,13 +2892,13 @@
 	<string id="16395" value="Ihr Downloadverzeichnis &quot;%s&quot; ist nicht in ihrer Bibliothek.\n\nWenn Sie ihr Downloadverzeichnis zur Bibliothek hinzufügen, können Sie neue Downloads viel einfacher anzeigen und verwalten. Außerdem können Sie dann die Funktionen Downloadüberprüfung und Automatische Updates benutzen.\nDas hinzufügen ihres Downloadverzeichnis zur Bibliothek erfordert es nicht, es freizugeben: Sie können bestimmen, ob Sie einzelne Dateien freigeben.\n\nWollen Sie ihr Downloadverzeichnis jetzt zur Bibliothek hinzufügen?"/>
 	<string id="16396" value="Ihr Downloadverzeichnis wurde zu ihrer Bibliothek hinzugefügt.  Wollen Sie es auch freigeben?"/>
 	<string id="16397" value="Wollen Sie die markierten %i Alben wirklich löschen ?\n\nHierbei werden nicht die Dateien gelöscht, sondern nur die Kollektionen."/>
-	<string id="16398" value="PeerProject konnte\n\n%s\nnicht in\n%s umbenennen"/>
-	<string id="16399" value="PeerProject konnte die Datei\n\n%s\n\n nicht löschen"/>
+	<string id="16398" value="Shareaza konnte\n\n%s\nnicht in\n%s umbenennen"/>
+	<string id="16399" value="Shareaza konnte die Datei\n\n%s\n\n nicht löschen"/>
 	<string id="16400" value="Zieldatei existiert:\n\n%s\n\nMöchten Sie sie überschreiben?"/>
 	<string id="16401" value="Alle Dateitypen anzeigen"/>
-	<string id="16402" value="PeerProject hat folgende Kollektion empfangen:\n\n&quot;%s&quot;\n\nDiese Datei scheint keine gültige Kollektion zu sein."/>
-	<string id="16403" value="PeerProject hat die Kollektion &quot;%s&quot; zu ihrer Bibliothek hinzugefügt."/>
-	<string id="16404" value="PeerProject konnte die Kollektion &quot;%s&quot; nicht installieren. Fehler beim Kopieren in den Ordner &quot;%s&quot;."/>
+	<string id="16402" value="Shareaza hat folgende Kollektion empfangen:\n\n&quot;%s&quot;\n\nDiese Datei scheint keine gültige Kollektion zu sein."/>
+	<string id="16403" value="Shareaza hat die Kollektion &quot;%s&quot; zu ihrer Bibliothek hinzugefügt."/>
+	<string id="16404" value="Shareaza konnte die Kollektion &quot;%s&quot; nicht installieren. Fehler beim Kopieren in den Ordner &quot;%s&quot;."/>
 	<string id="16405" value="Möchten Sie diese Datei herunterladen?\n\n&quot;%s&quot;\n\nKlicken Sie auf Abbrechen, um nicht mehr gefragt zu werden."/>
 	<string id="16406" value="Möchten Sie alle Dateien dieser Kollektion herunterladen?\n\nKlicken Sie auf Abbrechen, um nicht mehr gefragt zu werden."/>
 	<string id="16407" value="Keine weiteren Downloads von dieser Kollektion."/>
@@ -2894,8 +2944,8 @@
 	<string id="16537" value="Gnutella-Ratio empfangener / gesendeter Pongs"/>
 	<string id="16538" value="Verbindungsfehler (%)"/>
 	<string id="16768" value="URL &quot;%s&quot; empfangen"/>
-	<string id="16769" value="Auswertung der URL nicht möglich: PeerProject versteht die URL nicht."/>
-	<string id="16770" value="Der URL-Aktionsdialog kann nicht angezeigt werden, weil PeerProject beschäftigt ist."/>
+	<string id="16769" value="Auswertung der URL nicht möglich: Shareaza versteht die URL nicht."/>
+	<string id="16770" value="Der URL-Aktionsdialog kann nicht angezeigt werden, weil Shareaza beschäftigt ist."/>
 	<string id="16771" value="Die Datei &quot;%s&quot; befindet sich bereits in ihrer Bibliothek. Möchten Sie sie dennoch herunterladen?"/>
 	<string id="16772" value="Host:"/>
 	<string id="16773" value="Port:"/>
@@ -2924,9 +2974,9 @@
 	<string id="16811" value="Automatisch"/>
 	<string id="16812" value="Bitte warten: UPnP-Geräte werden erkannt und konfiguriert..."/>
 	<string id="16813" value="Bitte warten: Service Provider werden aktualisiert..."/>
-	<string id="16814" value="Bitte warten: eDonkey2000-Server-Liste wird aktualisiert..."/>
+	<string id="16814" value="Bitte warten: eDonkey-Server-Liste wird aktualisiert..."/>
 	<string id="16815" value="SSDP-Host-Service ist nicht gestartet. Dieser Dienst wird benötigt, um die Installation durchzuführen.\nEs ist erforderlich, dass das Merkmal dieses Dienstes auf Automatisch eingestellt ist."/>
-	<string id="16816" value="Das eDonkey2000-Netzwerk benutzt lange Warteschlangen mit langen Wartezeiten. Wenn Sie die Maximale Warteschlangenlänge zu strikt einstellen, könnten Sie Probleme bekommen, Dateien herunterzuladen.\nSind Sie sicher, dass Sie die Maximale Warteschlangenposition auf diesen Wert setzen wollen?"/>
+	<string id="16816" value="Das eDonkey-Netzwerk benutzt lange Warteschlangen mit langen Wartezeiten. Wenn Sie die Maximale Warteschlangenlänge zu strikt einstellen, könnten Sie Probleme bekommen, Dateien herunterzuladen.\nSind Sie sicher, dass Sie die Maximale Warteschlangenposition auf diesen Wert setzen wollen?"/>
 	<string id="16817" value="Windows unterstützt keine Dateipfade länger als 256 Zeichen.\nBitte wählen Sie einen Ordner mit einem kürzeren Pfad."/>
 	<string id="16818" value="Das Verzeichnis für unvollständige Dateien darf sich nicht im Downloadverzeichnis befinden."/>
 	<string id="16819" value="Ein Unterordner des gewählten Ordners &quot;%s&quot; ist schon in ihrer Bibliothek.\nBeim Hinzufügen des Ordners müssen einige Dateien neu verifiziert werden.\n\nWollen Sie fortfahren ?"/>
@@ -2953,8 +3003,8 @@
 	<string id="16942" value="&quot;Durchsuchen&quot; Verbindung zu %s wird beendet."/>
 	<string id="16943" value="%s durchsuchen"/>
 	<string id="16944" value="%i freigegebene Dateien in %s's Bibliothek gefunden."/>
-	<string id="16991" value="PeerProject-Medienwiedergabe"/>
-	<string id="16992" value="PeerProject konnte das MediaServices-Plugin nicht laden. Bitte installieren Sie PeerProject erneut und stellen Sie sicher, dass Sie die nötigen Codecs und Ausgabetreiber installiert haben."/>
+	<string id="16991" value="Shareaza-Medienwiedergabe"/>
+	<string id="16992" value="Shareaza konnte das MediaServices-Plugin nicht laden. Bitte installieren Sie Shareaza erneut und stellen Sie sicher, dass Sie die nötigen Codecs und Ausgabetreiber installiert haben."/>
 	<string id="16993" value="Alle Multimedia Dateien|*.asx;*.wax;*.m3u;*.wvx;*.wmx;*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm;*.cda;*.mid;*.rmi;*.midi;*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|Wiedergabelisten|*.asx;*.wax;*.m3u;*.wvx;*.wmx|Audio Dateien|*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;|Video Dateien|*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.ogm;*.wmv|CD Audio Tracks|*.cda|MIDI Dateien|*.mid;*.rmi;*.midi|Alle Dateien|*.*||"/>
 	<string id="16994" value="Fehler beim Laden von &quot;%s&quot;"/>
 	<string id="16995" value="Die Datei ist möglicherweise beschädigt, oder die Datei benutzt einen Codec, den Sie nicht installiert haben."/>
@@ -2989,7 +3039,7 @@
 	<string id="17104" value="Gnutella II: Leaf-to-Hub-Verbindung"/>
 	<string id="17105" value="Gnutella II: Hub-to-Leaf-Verbindung"/>
 	<string id="17106" value="eDonkey-Server-Verbindung (LowID: %lu)"/>
-	<string id="17107" value="eDonkey2000-Serververbindung"/>
+	<string id="17107" value="eDonkey-Serververbindung"/>
 	<string id="17108" value="Handshake"/>
 	<string id="17109" value="Eingehend"/>
 	<string id="17110" value="Ausgehend"/>
@@ -3010,29 +3060,29 @@
 	<string id="17125" value="G2-Peer"/>
 	<string id="17126" value="G2-Hub"/>
 	<string id="17127" value="G2-Leaf"/>
-	<string id="17128" value="eDonkey2000-Server"/>
-	<string id="17129" value="eDonkey2000 (LowID)"/>
-	<string id="17130" value="eDonkey2000 (HighID)"/>
-	<string id="17216" value="Verbindung zu eDonkey2000-Server &quot;%s&quot; herstellen..."/>
+	<string id="17128" value="eDonkey-Server"/>
+	<string id="17129" value="eDonkey (LowID)"/>
+	<string id="17130" value="eDonkey (HighID)"/>
+	<string id="17216" value="Verbindung zu eDonkey-Server &quot;%s&quot; herstellen..."/>
 	<string id="17217" value="Mit eDoneky2000-Server %s verbunden, handshaking..."/>
 	<string id="17218" value="eD2k[%s] %s"/>
-	<string id="17219" value="eDonkey2000-Server %s hat die Verbindung abgelehnt (refuse)."/>
-	<string id="17220" value="eDonkey2000-Server %s online, ClientID ist %lu."/>
-	<string id="17221" value="eDonkey2000-Server %s hat ihre ClientID %lu in %lu geändert."/>
-	<string id="17222" value="eDonkey2000-Server %s hat sich als &quot;%s&quot; identifiziert."/>
-	<string id="17223" value="eDonkey2000-Server %s hat die Verbindung zurückgewiesen (reject)."/>
-	<string id="17224" value="Fehler beim Handshake mit eDonkey2000-Client %s."/>
-	<string id="17225" value="eDonkey2000-Clientverbindung zu %s geschlossen."/>
-	<string id="17226" value="Falsch formatiertes eDonkey2000-Paket von %s empfangen (id=%x)."/>
-	<string id="17227" value="Eingehende Verbindung von %s ist eine eDonkey2000-Clientverbindung."/>
-	<string id="17228" value="eDonkey2000-Hashset für &quot;%s&quot; an %s senden..."/>
-	<string id="17229" value="eDonkey2000-Client Verbindung mit %s war inaktiv, geschlossen."/>
-	<string id="17230" value="eDonkey2000-Client Verbindung zu %s herstellen..."/>
-	<string id="17231" value="eDonkey2000-Client %s hat die falsche GUID, Handshake abgebrochen."/>
-	<string id="17232" value="Zeitüberschreitung beim Verbinden zu eDonkey2000-Client %s."/>
-	<string id="17233" value="Zeitüberschreitung beim Handshake mit eDonkey2000-Client %s."/>
-	<string id="17234" value="eDonkey2000-Clientverbindung von %s verweigert, weil die eDonkey2000-Unterstützung deaktiviert ist."/>
-	<string id="17248" value="Unvollständige eDonkey2000-Downloads werden importiert..."/>
+	<string id="17219" value="eDonkey-Server %s hat die Verbindung abgelehnt (refuse)."/>
+	<string id="17220" value="eDonkey-Server %s online, ClientID ist %lu."/>
+	<string id="17221" value="eDonkey-Server %s hat ihre ClientID %lu in %lu geändert."/>
+	<string id="17222" value="eDonkey-Server %s hat sich als &quot;%s&quot; identifiziert."/>
+	<string id="17223" value="eDonkey-Server %s hat die Verbindung zurückgewiesen (reject)."/>
+	<string id="17224" value="Fehler beim Handshake mit eDonkey-Client %s."/>
+	<string id="17225" value="eDonkey-Clientverbindung zu %s geschlossen."/>
+	<string id="17226" value="Falsch formatiertes eDonkey-Paket von %s empfangen (id=%x)."/>
+	<string id="17227" value="Eingehende Verbindung von %s ist eine eDonkey-Clientverbindung."/>
+	<string id="17228" value="eDonkey-Hashset für &quot;%s&quot; an %s senden..."/>
+	<string id="17229" value="eDonkey-Client Verbindung mit %s war inaktiv, geschlossen."/>
+	<string id="17230" value="eDonkey-Client Verbindung zu %s herstellen..."/>
+	<string id="17231" value="eDonkey-Client %s hat die falsche GUID, Handshake abgebrochen."/>
+	<string id="17232" value="Zeitüberschreitung beim Verbinden zu eDonkey-Client %s."/>
+	<string id="17233" value="Zeitüberschreitung beim Handshake mit eDonkey-Client %s."/>
+	<string id="17234" value="eDonkey-Clientverbindung von %s verweigert, weil die eDonkey-Unterstützung deaktiviert ist."/>
+	<string id="17248" value="Unvollständige eDonkey-Downloads werden importiert..."/>
 	<string id="17249" value="Fertig, %i unvollständige Downloads erfolgreich importiert."/>
 	<string id="17250" value="Scanne Ordner: &quot;%s&quot;..."/>
 	<string id="17251" value="Fehler beim Importieren."/>
@@ -3066,7 +3116,7 @@
 	<string id="17491" value="Der Torrent &quot;%s&quot; ist breits auf ihrer Downloadliste und kann nicht &quot;geseedet&quot; werden."/>
 	<string id="17492" value="Fehler beim Laden der Torrent-Datei &quot;%s&quot;.  Das ist möglicherweise kein gültiger Torrent."/>
 	<string id="17493" value="Kann BitTorrent-Freigabedatei für &quot;%s&quot; nicht erstellen."/>
-	<string id="17494" value="Dieser Torrent enthält die Datei &quot;%s&quot;. PeerProject kann die Datei in ihrer Bibliothek aber nicht finden.  Verschieben Sie die Datei in den selben Ordner wie das Torrent und versuchen Sie es erneut."/>
+	<string id="17494" value="Dieser Torrent enthält die Datei &quot;%s&quot;. Shareaza kann die Datei in ihrer Bibliothek aber nicht finden.  Verschieben Sie die Datei in den selben Ordner wie das Torrent und versuchen Sie es erneut."/>
 	<string id="17495" value="Dieser Torrent enthält die Datei &quot;%s&quot; die %s groß sein sollte, die Größe ihrer Datei ist %s."/>
 	<string id="17496" value="Beim Kopieren von &quot;%s&quot; in eine BitTorrent-Freigabedatei ist ein Fehler aufgetreten."/>
 	<string id="17497" value="Beim Senden von &quot;%s&quot; trat ein unbekannter Fehler auf."/>
@@ -3095,7 +3145,7 @@
 	<string id="18507" value="%I64i Bytes vom Download entfernt."/>
 	<string id="18508" value="Downloadquelle %s für &quot;%s&quot; entfernt, weil die Warteschlangenposition %i zu hoch ist."/>
 	<string id="18509" value="Sie können diesen Download nicht als komplett annehemen und verifizieren, weil Sie keine Verifizierungsdaten (tiger-tree-Volumen, eD2k-Hashset oder BitTorrent-Hashset) haben. Ohne Verifizierungsinformationen kann der Download nicht erneut verifiziert werden."/>
-	<string id="18510" value="Sind Sie sicher, dass Sie diesen Download als komplett annehmen und neu verifizieren wollen?  Die ganze Datei wird untersucht und PeerProject wird die Teile akzeptieren, die die Verifizierung bestehen und die, die sie nicht bestehen neu herunterladen."/>
+	<string id="18510" value="Sind Sie sicher, dass Sie diesen Download als komplett annehmen und neu verifizieren wollen?  Die ganze Datei wird untersucht und Shareaza wird die Teile akzeptieren, die die Verifizierung bestehen und die, die sie nicht bestehen neu herunterladen."/>
 	<string id="18511" value="Sie wollen Änderungen an der Dateigröße vornehmen. Sind Sie sicher, dass Sie die Dateigröße dieses Downloads ändern wollen?"/>
 	<string id="19000" value="Remote-Access ist deaktiviert."/>
 	<string id="19001" value="Sie müssen Benutzername und Passwort angeben."/>
@@ -3188,7 +3238,7 @@
 	<dialog name="CGeneralSettingsPage" cookie="BuBuBuBuStCoBuBuBuBuBuBuBuBuBuSyStEdmsStmsBuStCoStCo" caption="Allgemein">
 		<control caption="_Allgemein:"/>
 		<control caption="Bei Programmstart verbinden"/>
-		<control caption="PeerProject mit Windows starten"/>
+		<control caption="Shareaza mit Windows starten"/>
 		<control caption="Dialog vor dem Öffnen von URIs"/>
 		<control caption="Datenraten in:"/>
 		<control caption="bits/Sekunde|Bytes/Sekunde|b/s|B/s|Kb/s|KB/s|Mb/s|MB/s"/>
@@ -3259,24 +3309,24 @@
 		<control caption="Profil bearbeiten"/>
 		<control caption="_Chat:"/>
 		<control caption="Chat mit Gnutella-Clients aktivieren"/>
-		<control caption="Chat mit eDonkey2000-Clients aktivieren"/>
+		<control caption="Chat mit eDonkey-Clients aktivieren"/>
 		<control caption="Spamnachrichten im Chat filtern"/>
 		<control caption="Vulgäre Sprache im Chat filtern"/>
 	</dialog>
 	<dialog name="CWebSettingsPage" cookie="BuStBuBuBuBuBuBuBuCoBuBuSt" caption="Web">
 		<control caption="_Peer-to-Peer-Links:"/>
-		<control caption="Folgende Linktypen mit PeerProject öffnen"/>
+		<control caption="Folgende Linktypen mit Shareaza öffnen"/>
 		<control caption="Magnet ( magnet: )"/>
 		<control caption="Gnutella ( gnutella: )"/>
-		<control caption="eDonkey2000 ( ed2k: )"/>
+		<control caption="eDonkey ( ed2k: )"/>
 		<control caption="Piolet ( mp2p: )"/>
 		<control caption="BitTorrent ( .torrent )"/>
 		<control caption="_Downloadmanager:"/>
-		<control caption="PeerProject für alle Internetdownloads benutzen"/>
+		<control caption="Shareaza für alle Internetdownloads benutzen"/>
 		<control/>
 		<control caption="_Add"/>
 		<control caption="_Remove"/>
-		<control caption="Das Downloadmanager-Plugin wird nur für die hier aufgeführten Dateitypen benutzt. Andere Dateitypen werden vom Webbrowser verwaltet. PeerProject muss gestartet sein, um Downloads abzufangen."/>
+		<control caption="Das Downloadmanager-Plugin wird nur für die hier aufgeführten Dateitypen benutzt. Andere Dateitypen werden vom Webbrowser verwaltet. Shareaza muss gestartet sein, um Downloads abzufangen."/>
 	</dialog>
 	<dialog name="CInternetSettingsGroup" caption="Internet"/>
 	<dialog name="CConnectionSettingsPage" cookie="BuStCoStCoStEdBuBuBuStCoStCoBuStCoBuBuBuStEdmsStEdms" caption="Verbindung">
@@ -3349,7 +3399,7 @@
 	</dialog>
 	<dialog name="CRemoteSettingsPage" cookie="BuStBuBuStBuStEdStEd" caption="Remote-Access">
 		<control caption="_Erklärung:"/>
-		<control caption="PeerProject's Remote-Access erlaubt es Ihnen, PeerProject auf ihrem PC laufen zu lassen und es über einen Webbrowser zu bedienen. Sie müssen eingehende Verbindungen akzeptieren können, um diese Funktion zu benutzen. (Korrekt konfigurierter Router, usw.)"/>
+		<control caption="Shareaza's Remote-Access erlaubt es Ihnen, Shareaza auf ihrem PC laufen zu lassen und es über einen Webbrowser zu bedienen. Sie müssen eingehende Verbindungen akzeptieren können, um diese Funktion zu benutzen. (Korrekt konfigurierter Router, usw.)"/>
 		<control caption="_Aktivieren:"/>
 		<control caption="Remote-Access aktivieren:"/>
 		<control/>
@@ -3378,20 +3428,20 @@
 		<control caption="% der _Bandbreite benutzen"/>
 		<control/>
 		<control caption="Hilfe"/>
-		<control caption="Bei geöffnetem PeerProject und aktivierter Zeitsteuerung sehen Sie, wie sich die Einstellungen ändern - Das ist normal!"/>
+		<control caption="Bei geöffnetem Shareaza und aktivierter Zeitsteuerung sehen Sie, wie sich die Einstellungen ändern - Das ist normal!"/>
 	</dialog>
 	<dialog name="CNetworksSettingsPage" cookie="StBuStBuStBuStBuStBuStBuSt" caption="Netzwerke">
-		<control caption="PeerProject ist ein Allround-File-Sharing-Programm, das auf mehrere P2P-Netzwerke gleichzeitig zugreifen kann. Hier können Sie einstellen, welche Netzwerke Sie verwenden möchten und können netzwerkspezifische Einstellungen vornehmen."/>
+		<control caption="Shareaza ist ein Allround-File-Sharing-Programm, das auf mehrere P2P-Netzwerke gleichzeitig zugreifen kann. Hier können Sie einstellen, welche Netzwerke Sie verwenden möchten und können netzwerkspezifische Einstellungen vornehmen."/>
 		<control caption="Gnutella2-Netzwerk:"/>
-		<control caption="Gnutella2 ist das Hauptnetzwerk von PeerProject. Empfohlen."/>
+		<control caption="Gnutella2 ist das Hauptnetzwerk von Shareaza. Empfohlen."/>
 		<control caption="Gnutella2 (G2) verwenden"/>
 		<control caption="Gnutella2 konfigurieren"/>
-		<control caption="eDonkey2000-Netzwerk:"/>
-		<control caption="Das eDonkey2000-Netzwerk ist ein beliebtes serverbasiertes Netzwerk. Obwohl es nicht so viele Funktionen wie Gnutella2 bietet, findet man viele Dateien."/>
-		<control caption="eDonkey2000 verwenden"/>
-		<control caption="eDonkey2000 konfigurieren"/>
+		<control caption="eDonkey-Netzwerk:"/>
+		<control caption="Das eDonkey-Netzwerk ist ein beliebtes serverbasiertes Netzwerk. Obwohl es nicht so viele Funktionen wie Gnutella2 bietet, findet man viele Dateien."/>
+		<control caption="eDonkey verwenden"/>
+		<control caption="eDonkey konfigurieren"/>
 		<control caption="Gnutella1-Netzwerk:"/>
-		<control caption="Obwohl das ursprüngliche Gnutella-Netzwerk weniger Funktionen als Gnutella2 und weniger Dateien als eDonkey2000 hat, bleibt es eine wertvolle Resource."/>
+		<control caption="Obwohl das ursprüngliche Gnutella-Netzwerk weniger Funktionen als Gnutella2 und weniger Dateien als eDonkey hat, bleibt es eine wertvolle Resource."/>
 		<control caption="Gnutella1 verwenden"/>
 		<control caption="Gnutella1 konfigurieren"/>
 	</dialog>
@@ -3425,8 +3475,8 @@
 		<control caption="Leaf zu Hub"/>
 		<control caption="Hub zu Hub"/>
 	</dialog>
-	<dialog name="CDonkeySettingsPage" cookie="BuBuBuBuBuStEdmsStBuBuStEdmsStBuStBu" caption="eDonkey2000">
-		<control caption="_eDonkey2000-Netzwerk:"/>
+	<dialog name="CDonkeySettingsPage" cookie="BuBuBuBuBuStEdmsStBuBuStEdmsStBuStBu" caption="eDonkey">
+		<control caption="_eDonkey-Netzwerk:"/>
 		<control caption="Immer zu eD2k verbinden"/>
 		<control caption="Heute zu eD2k verbinden"/>
 		<control caption="_Globale Suche:"/>
@@ -3464,7 +3514,7 @@
 		<control/>
 	</dialog>
 	<dialog name="CProtocolsSettingsPage" cookie="BuSy" caption="Protokolle">
-		<control caption="Übersicht der von PeerProject verwendeten Protokolle:"/>
+		<control caption="Übersicht der von Shareaza verwendeten Protokolle:"/>
 		<control/>
 	</dialog>
 	<dialog name="CSkinsSettingsPage" cookie="SyBuStStStStStEdBuBuBu" caption="Skins">
@@ -3534,46 +3584,46 @@
 		<control caption="Abbrechen"/>
 		<control caption="Uploader belohnen"/>
 	</dialog>
-	<dialog name="CWizardWelcomePage" cookie="StStStStStStStStStStStSt" caption="Willkommen bei PeerProject [Schritt 1 von 7]">
-		<control caption="Willkommen bei PeerProject!"/>
-		<control caption="Wenn Sie PeerProject oder einen anderen P2P-Client noch nie benutzt haben, kann Ihnen dieser Assistent bei der Konfiguration in einigen einfachen Schritten helfen."/>
+	<dialog name="CWizardWelcomePage" cookie="StStStStStStStStStStStSt" caption="Willkommen bei Shareaza [Schritt 1 von 7]">
+		<control caption="Willkommen bei Shareaza!"/>
+		<control caption="Wenn Sie Shareaza oder einen anderen P2P-Client noch nie benutzt haben, kann Ihnen dieser Assistent bei der Konfiguration in einigen einfachen Schritten helfen."/>
 		<control caption="Wenn Sie ein fortgeschrittener Benutzer sind, können Sie alle Einstellungen unter Extras -&gt; Einstellungen verändern.  Klicken Sie auf Schließen, um den Assistenten zu beenden."/>
 		<control caption="Dieser Assistent wird ihnen dabei helfen:"/>
 		<control/>
-		<control caption="PeerProject über den Typ ihrer Internetverbindung zu informieren"/>
+		<control caption="Shareaza über den Typ ihrer Internetverbindung zu informieren"/>
 		<control/>
 		<control caption="Dateien freizugeben"/>
 		<control/>
 		<control caption="Eine Verbindung zu den gewünschten P2P-Netzwerken herzustellen"/>
 		<control/>
-		<control caption="PeerProject zu benutzen"/>
+		<control caption="Shareaza zu benutzen"/>
 	</dialog>
-	<dialog name="CWizardInterfacePage" cookie="StBuBuBuStStBuBu" caption="Willkommen bei PeerProject [Schritt 2 von 7]">
-		<control caption="PeerProject bietet eine flexible Benutzeroberfläche. Sie können also wählen, was Ihnen am angenehmsten ist. Sie können diese Optionen jederzeit ändern."/>
+	<dialog name="CWizardInterfacePage" cookie="StBuBuBuStStBuBu" caption="Willkommen bei Shareaza [Schritt 2 von 7]">
+		<control caption="Shareaza bietet eine flexible Benutzeroberfläche. Sie können also wählen, was Ihnen am angenehmsten ist. Sie können diese Optionen jederzeit ändern."/>
 		<control caption="Bitte wählen Sie eine Benutzeroberfläche:"/>
 		<control caption="Normalmodus"/>
 		<control caption="Powermodus"/>
 		<control caption="Simple, einfach zu bedienende Menüs und Buttons."/>
 		<control caption="Der Powermodus bietet viele zusätzliche Befehle, Fenster, usw."/>
 		<control caption="Einfache Download-Fortschrittsanzeigen verwenden. (Verringert CPU-Last)"/>
-		<control caption="PeerProject mit .torrent-Dateien verknüpfen."/>
+		<control caption="Shareaza mit .torrent-Dateien verknüpfen."/>
 	</dialog>
-		<dialog name="CWizardConnectionPage" cookie="StStCoStCoStCoStCoStms" caption="Willkommen bei PeerProject [Schritt 3 von 7]">
-		<control caption="PeerProject benötigt nun einige Informationen über ihre Internetverbinung um bestmöglich zu funktionieren."/>
+		<dialog name="CWizardConnectionPage" cookie="StStCoStCoStCoStCoStms" caption="Willkommen bei Shareaza [Schritt 3 von 7]">
+		<control caption="Shareaza benötigt nun einige Informationen über ihre Internetverbinung um bestmöglich zu funktionieren."/>
 		<control caption="Wählen Sie den Typ ihrer Internetverbindung:"/>
 		<control caption="Modem (56k)|ISDN (64k)|DSL light (256K)|DSL light (512K)|DSL (768K)|DSL (1.5M)|DSL (4.0M)|ADSL2 (8.0M)|ADSL2 (12.0M)|ADSL2+ (24.0M)|SDSL|T1|T3|LAN|OC3"/>
 		<control caption="Oder wählen Sie ihre max. Downloadgeschwindigkeit:"/>
 		<control/>
 		<control caption="und die max. Uploadgeschwindigkeit:"/>
 		<control/>
-		<control caption="Soll PeerProject die benötigten Portfreigaben mit Hilfe von UPnP automatisch einrichten?"/>
+		<control caption="Soll Shareaza die benötigten Portfreigaben mit Hilfe von UPnP automatisch einrichten?"/>
 		<control/>
 		<control caption="Fortschritt:"/>
 		<control/>
 	</dialog>
-	<dialog name="CWizardSharePage" cookie="StStStSyBuBuSt" caption="Willkommen bei PeerProject [Schritt 4 von 7]">
+	<dialog name="CWizardSharePage" cookie="StStStSyBuBuSt" caption="Willkommen bei Shareaza [Schritt 4 von 7]">
 		<control caption="P2P-Netzwerke sind nur so gut wie die Leute, die sie benutzen. Alle Dateien, die Sie herunterladen können, werden von anderen Benutzern freigegeben."/>
-		<control caption="Sie müssen keine Dateien freigeben, um PeerProject zu benutzen. Viele P2P-Programme benachteiligen jedoch Benutzer, die keine Dateien freigeben."/>
+		<control caption="Sie müssen keine Dateien freigeben, um Shareaza zu benutzen. Viele P2P-Programme benachteiligen jedoch Benutzer, die keine Dateien freigeben."/>
 		<control caption="Bitte geben Sie an, welche Ordner Sie freigeben möchten.  Klicken Sie einfach auf &quot;Hinzufügen&quot;."/>
 		<control/>
 		<control caption="_Hinzufügen"/>
@@ -3589,8 +3639,8 @@
 		<control caption="0"/>
 		<control caption="Schließen"/>
 	</dialog>
-	<dialog name="CWizardProfilePage" cookie="StStEdStCoCoStCoCo" caption="Willkommen bei PeerProject [Schritt 5 von 7]">
-		<control caption="PeerProject ist ein viel freundlicherer Ort, wenn jeder ein paar Sachen über sich schreibt."/>
+	<dialog name="CWizardProfilePage" cookie="StStEdStCoCoStCoCo" caption="Willkommen bei Shareaza [Schritt 5 von 7]">
+		<control caption="Shareaza ist ein viel freundlicherer Ort, wenn jeder ein paar Sachen über sich schreibt."/>
 		<control caption="Ich heiße:"/>
 		<control/>
 		<control caption="und ich bin:"/>
@@ -3600,30 +3650,30 @@
 		<control/><control/>
 	</dialog>
 	<dialog name="CWizardNetworksPage" cookie="StBuStBuStBuSt" caption="Willkommen bei [Schritt 6 von 7]">
-		<control caption="PeerProject ist ein Allround-File-Sharing-Programm, das auf mehrere P2P-Netzwerke gleichzeitig zugreifen kann. Hier können Sie einstellen, welche Netzwerke Sie verwenden möchten. Sie können später jederzeit andere Netzwerke auswählen."/>
+		<control caption="Shareaza ist ein Allround-File-Sharing-Programm, das auf mehrere P2P-Netzwerke gleichzeitig zugreifen kann. Hier können Sie einstellen, welche Netzwerke Sie verwenden möchten. Sie können später jederzeit andere Netzwerke auswählen."/>
 		<control caption="Zu Gnutella2 verbinden (Empfohlen)"/>
-		<control caption="Das Gnutella2-Netzwerk ist das Hauptnetzwerk von PeerProject."/>
-		<control caption="Zu eDonkey2000 verbinden"/>
-		<control caption="Das eDonkey2000-Netzwerk ist ein beliebtes serverbasiertes Netzwerk. Obwohl es nicht so viele Funktionen wie Gnutella2 bietet, findet man viele Dateien."/>
+		<control caption="Das Gnutella2-Netzwerk ist das Hauptnetzwerk von Shareaza."/>
+		<control caption="Zu eDonkey verbinden"/>
+		<control caption="Das eDonkey-Netzwerk ist ein beliebtes serverbasiertes Netzwerk. Obwohl es nicht so viele Funktionen wie Gnutella2 bietet, findet man viele Dateien."/>
 		<control caption="Zu Gnutella1 verbinden"/>
-		<control caption="Obwohl das ursprüngliche Gnutella-Netzwerk weniger Funktionen als Gnutella2 und weniger Dateien als eDonkey2000 hat, bleibt es eine wertvolle Ressource."/>
+		<control caption="Obwohl das ursprüngliche Gnutella-Netzwerk weniger Funktionen als Gnutella2 und weniger Dateien als eDonkey hat, bleibt es eine wertvolle Ressource."/>
 	</dialog>
-	<dialog name="CDonkeyImportDlg" cookie="StStBuBuEdBu" caption="eDonkey2000-Downloads importieren">
+	<dialog name="CDonkeyImportDlg" cookie="StStBuBuEdBu" caption="eDonkey-Downloads importieren">
 		<control/>
-		<control caption="Sie haben noch andere eDonkey2000-Clients auf ihrem Computer installiert. Möchten Sie unvollständige Downloads in PeerProject importieren?"/>
+		<control caption="Sie haben noch andere eDonkey-Clients auf ihrem Computer installiert. Möchten Sie unvollständige Downloads in Shareaza importieren?"/>
 		<control caption="Ja"/>
 		<control caption="Nein|Abbrechen"/>
 		<control/>
 		<control caption="Schließen"/>
 	</dialog>
-	<dialog name="CWizardFinishedPage" cookie="StStStBuBuBuSt" caption="Willkommen bei PeerProject [Schritt 7 von 7]">
-		<control caption="Das war's!  PeerProject wurde konfiguriert, um mit Ihrem Computer zu funktionieren."/>
+	<dialog name="CWizardFinishedPage" cookie="StStStBuBuBuSt" caption="Willkommen bei Shareaza [Schritt 7 von 7]">
+		<control caption="Das war's!  Shareaza wurde konfiguriert, um mit Ihrem Computer zu funktionieren."/>
 		<control caption="Wenn Sie ihre Einstellungen ändern möchten, können Sie diesen Assistenten aus dem &quot;Extras&quot;-Menü aufrufen."/>
 		<control caption="Klicken Sie auf &lt;Fertigstellen&gt;, um sich mit den gewünschten Netzwerken zu verbinden, um nach Dateien zu suchen und diese herunterladen."/>
 		<control caption="Jetzt mit den gewählten Netzwerken verbinden"/>
-		<control caption="Beim Start von PeerProject immer mit den gewählten Netzwerken verbinden"/>
-		<control caption="PeerProject starten, wenn Windows gestartet wird"/>
-		<control caption="Genießen Sie PeerProject!"/>
+		<control caption="Beim Start von Shareaza immer mit den gewählten Netzwerken verbinden"/>
+		<control caption="Shareaza starten, wenn Windows gestartet wird"/>
+		<control caption="Genießen Sie Shareaza!"/>
 	</dialog>
 	<dialog name="CProfileManagerDlg" cookie="SyBuBuBu#3" caption="Mein Profil bearbeiten">
 		<control/>
@@ -3705,7 +3755,7 @@
 		<control/>
 	</dialog>
 	<dialog name="CCertificateProfilePage" cookie="StBuStStStStBu" caption="Zertifikat">
-		<control caption="Gnutella-Benutzer werden anhand einer eindeutigen ID und einem entsprechendem Public/Private-Schlüsselpaar identifiziert. Normalerweise ist es nicht nötig, eine neue ID zu erstellen; PeerProject stellt diese Option jedoch für erfahrene Benutzer zur Verfügung."/>
+		<control caption="Gnutella-Benutzer werden anhand einer eindeutigen ID und einem entsprechendem Public/Private-Schlüsselpaar identifiziert. Normalerweise ist es nicht nötig, eine neue ID zu erstellen; Shareaza stellt diese Option jedoch für erfahrene Benutzer zur Verfügung."/>
 		<control caption="_Eindeutiges globales Gnutella-Identifikationszertifikat:"/>
 		<control caption="GUID:"/>
 		<control/>
@@ -3718,18 +3768,18 @@
 		<control caption="Verbinden mit:|Benutzer durchsuchen:"/>
 		<control/><control/>
 		<control caption="_Netzwerkprotokoll:"/>
-		<control caption="Gnutella1 (auto)|Gnutella2 (auto)|eDonkey2000"/>
+		<control caption="Gnutella1 (auto)|Gnutella2 (auto)|eDonkey"/>
 		<control caption="_UP unterdrücken"/>
 		<control caption="Verbinden"/>
 		<control caption="Abbrechen"/>
 	</dialog>
 	<dialog name="CDownloadDlg" cookie="StStStEdBuBuStStBu" caption="Datei oder Torrent herunterladen">
 		<control/><control/>
-		<control caption="Das Herunterladen von Dateien mit PeerProject ist einfach. Geben Sie die URL oder URI in das Textfeld ein und drücken Sie &lt;Enter&gt;."/>
+		<control caption="Das Herunterladen von Dateien mit Shareaza ist einfach. Geben Sie die URL oder URI in das Textfeld ein und drücken Sie &lt;Enter&gt;."/>
 		<control/>
 		<control caption="Herunterladen"/>
 		<control caption="Abbrechen"/>
-		<control caption="PeerProject kann Dateien aus dem Internet herunterladen (HTTP) und automatisch nach P2P-Links suchen und diese herunterladen (Magnet, Gnutella, eDonkey2000, mP2P)."/>
+		<control caption="Shareaza kann Dateien aus dem Internet herunterladen (HTTP) und automatisch nach P2P-Links suchen und diese herunterladen (Magnet, Gnutella, eDonkey, mP2P)."/>
 		<control caption="BitTorrent:  Ein Torrent kann als .torrent-Datei oder als HTTP-Link angegeben werden. Um eine .torrent-Datei via HTTP herunterzuladen fügen Sie den Link in das obige Textfeld ein. Wenn Sie bereits eine *.torrent-Datei haben, klicken Sie auf "/>
 		<control caption="_Torrent öffnen..."/>
 	</dialog>
@@ -3741,6 +3791,7 @@
 	<dialog name="CFilterSearchDlg" cookie="BuEdStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuCoBuBuBuBuBuBuBu" caption="Ergebnisse filtern">
 		<control caption="Nur Ergebnisse, die folgende _Wörter enthalten:"/>
 		<control/>
+		<control caption="Reg. Exp."/>
 		<control caption="( Sie können Wörter mit &quot;-Wort&quot; ausschließen )"/>
 		<control caption="Und folgende _Größe haben:"/>
 		<control caption="Minimum:"/>
@@ -3782,8 +3833,8 @@
 		<control caption="OK"/>
 		<control caption="Abbrechen"/>
 	</dialog>
-	<dialog name="CDownloadMonitorDlg" cookie="StStStStStStStStStStStStStBuBuBuBuBu" caption="Download: PeerProject">
-		<control caption="PeerProject lädt herunter:"/>
+	<dialog name="CDownloadMonitorDlg" cookie="StStStStStStStStStStStStStBuBuBuBuBu" caption="Download: Shareaza">
+		<control caption="Shareaza lädt herunter:"/>
 		<control caption="..."/>
 		<control/><control/><control/>
 		<control caption="Übertragungsrate:"/>
@@ -3913,6 +3964,7 @@
 		<control/>
 		<control caption="logisch UND"/>
 		<control caption="logisch ODER"/>
+		<control caption="Reg. Exp."/>
 		<control caption="_Optionen:"/>
 		<control caption="Aktion:"/>
 		<control caption="Keine|Erlauben|Verweigern"/>
@@ -3956,11 +4008,11 @@
 		<control/>
 		<control caption="Abbrechen"/>
 	</dialog>
-	<dialog name="CURLActionDlg" cookie="StStStStStEdStEdStBuBuBuBuBuSt" caption="PeerProject URI-Manager">
+	<dialog name="CURLActionDlg" cookie="StStStStStEdStEdStBuBuBuBuBuSt" caption="Shareaza URI-Manager">
 		<control/>
-		<control caption="Sie haben auf eine von PeerProject unterstützte URI geklickt, die auf folgende Datei verweist:"/>
-		<control caption="Sie haben auf eine von PeerProject unterstützte URL geklickt, die Sie mit folgendem Host oder Server verbinden wird:"/>
-		<control caption="Sie haben auf eine von PeerProject unterstützte URI geklickt, die es ihnen erlaubt folgenden Host zu durchsuchen:"/>
+		<control caption="Sie haben auf eine von Shareaza unterstützte URI geklickt, die auf folgende Datei verweist:"/>
+		<control caption="Sie haben auf eine von Shareaza unterstützte URL geklickt, die Sie mit folgendem Host oder Server verbinden wird:"/>
+		<control caption="Sie haben auf eine von Shareaza unterstützte URI geklickt, die es ihnen erlaubt folgenden Host zu durchsuchen:"/>
 		<control/><control/><control/><control/>
 		<control caption="Bitte wählen Sie die gewünschte Aktion:"/>
 		<control caption="_Herunterladen"/>
@@ -3968,11 +4020,11 @@
 		<control caption="Abbrechen"/>
 		<control caption="Nicht mehr _fragen"/>
 		<control caption="Ein _Monitorfenster anzeigen"/>
-		<control caption="Sie haben auf eine von PeerProject unterstützte URI geklickt, die den folgenden Service-Provider zu ihrer Service-Provider Liste hinzufügen wird."/>
+		<control caption="Sie haben auf eine von Shareaza unterstützte URI geklickt, die den folgenden Service-Provider zu ihrer Service-Provider Liste hinzufügen wird."/>
 	</dialog>
 	<dialog name="CBitziDownloadDlg" cookie="StStmsBuSySt" caption="Metadaten herunterladen...">
 		<control/>
-		<control caption="PeerProject versucht Metadaten von Bitzi(TM) herunterzuladen..."/>
+		<control caption="Shareaza versucht Metadaten von Bitzi(TM) herunterzuladen..."/>
 		<control/>
 		<control caption="Abbrechen"/>
 		<control/>
@@ -3985,22 +4037,22 @@
 		<control caption="(Teildownloads in eine neue Vorschaudatei kopieren)"/>
 		<control caption="Abbrechen"/>
 	</dialog>
-	<dialog name="CWarningsDlg" cookie="StStStStStStStBu" caption="PeerProject respektiert seine Benutzer">
+	<dialog name="CWarningsDlg" cookie="StStStStStStStBu" caption="Shareaza respektiert seine Benutzer">
 		<control/>
-		<control caption="Wussten Sie, dass PeerProject 100%ig kostenlose Software ist"/>
-		<control caption="PeerProject enthält KEINE &quot;spyware&quot;, &quot;adware&quot; oder andere zusätzliche Software. Es zeigt keine Werbung oder &quot;popups&quot; an.{n}{n}Wenn Sie Werbung oder &quot;popups&quot; sehen während Sie PeerProject benutzen, können Sie sicher sein, dass diese nicht von PeerProject stammen."/>
+		<control caption="Wussten Sie, dass Shareaza 100%ig kostenlose Software ist"/>
+		<control caption="Shareaza enthält KEINE &quot;spyware&quot;, &quot;adware&quot; oder andere zusätzliche Software. Es zeigt keine Werbung oder &quot;popups&quot; an.{n}{n}Wenn Sie Werbung oder &quot;popups&quot; sehen während Sie Shareaza benutzen, können Sie sicher sein, dass diese nicht von Shareaza stammen."/>
 		<control caption="Leider installieren viele andere Programme unerwünschte Adware oder Spyware. Falls Sie etwas Verdächtiges beobachten, können Sie ihren PC mit einem Anti-Spyware-Programm überprüfen."/>
-		<control caption="PeerProject kostet nichts und kann von jedem kostenlos von http://shareaza.sourceforge.net/ heruntergeladen werden.  Wenn Sie jemandem Geld für PeerProject bezahlt haben, sollten Sie sofort ihr Geld zurückverlangen."/>
-		<control caption="PeerProject respektiert seine Benutzer!"/>
+		<control caption="Shareaza kostet nichts und kann von jedem kostenlos von http://shareaza.sourceforge.net/ heruntergeladen werden.  Wenn Sie jemandem Geld für Shareaza bezahlt haben, sollten Sie sofort ihr Geld zurückverlangen."/>
+		<control caption="Shareaza respektiert seine Benutzer!"/>
 		<control caption="http://shareaza.sourceforge.net/"/>
 		<control caption="Schließen"/>
 	</dialog>
-	<dialog name="CPromoteDlg" cookie="StStStStStStStBu" caption="Empfehlen Sie PeerProject">
+	<dialog name="CPromoteDlg" cookie="StStStStStStStBu" caption="Empfehlen Sie Shareaza">
 		<control/>
-		<control caption="Empfehlen Sie PeerProject ihren Freunden und Bekannten!"/>
-		<control caption="Wir hoffen, dass ihnen PeerProject gefällt. Wir glauben, dass PeerProject das beste Filesharing-Programm auf dem Markt ist."/>
+		<control caption="Empfehlen Sie Shareaza ihren Freunden und Bekannten!"/>
+		<control caption="Wir hoffen, dass ihnen Shareaza gefällt. Wir glauben, dass Shareaza das beste Filesharing-Programm auf dem Markt ist."/>
 		<control caption="Leider wissen viele nicht, was sie verpassen!"/>
-		<control caption="Wenn Sie also jemanden kennen, dem PeerProject auch gefallen könnte, empfehlen Sie PeerProject doch weiter."/>
+		<control caption="Wenn Sie also jemanden kennen, dem Shareaza auch gefallen könnte, empfehlen Sie Shareaza doch weiter."/>
 		<control caption="Ihre Freunde werden ihnen dankbar sein!"/>
 		<control caption="http://shareaza.sourceforge.net/"/>
 		<control caption="OK"/>
@@ -4021,7 +4073,7 @@
 		<control caption="Sie haben auf das Schließen-Symbol geklickt.  Bitte wählen Sie die Aktion aus, die in Zukunft bei einem Klick auf das Schließen-Symbol ausgefûhrt werden soll:"/>
 		<control caption="In den Tray schicken"/>
 		<control caption="Sofort beenden"/>
-		<control caption="PeerProject nach Abschluß aller Tranfers beenden."/>
+		<control caption="Shareaza nach Abschluß aller Tranfers beenden."/>
 		<control caption="OK"/>
 		<control caption="Abbrechen"/>
 	</dialog>
@@ -4032,7 +4084,7 @@
 		<control caption="OK"/>
 		<control caption="Abbrechen"/>
 	</dialog>
-	<dialog name="CHelpDlg" cookie="StBuAf" caption="PeerProject-Hilfe">
+	<dialog name="CHelpDlg" cookie="StBuAf" caption="Shareaza-Hilfe">
 		<control/>
 		<control caption="Schließen"/>
 		<control/>
@@ -4044,7 +4096,7 @@
 		<control caption="Alle löschen"/>
 		<control caption="Abbrechen"/>
 		<control/>
-		<control caption="PeerProject kann sich diese Datei merken und Sie darauf hinweisen, wenn sie in einer Suche auftaucht. Sie können eine Ghost-Datei mit  Kommentaren und Bewertung erstellen."/>
+		<control caption="Shareaza kann sich diese Datei merken und Sie darauf hinweisen, wenn sie in einer Suche auftaucht. Sie können eine Ghost-Datei mit  Kommentaren und Bewertung erstellen."/>
 		<control caption="Eine Ghost-Datei erstellen"/>
 		<control caption="Löschgrund:"/>
 		<control caption="Kein spezieller (Kommentar beibehalten)|Die Datei ist falsch benannt|Die Datei ist von sehr schlechter Qualität|Die Datei ist gefälscht, unbrauchbar, etc...|Einen neuen Kommentar eingeben"/>
@@ -4171,7 +4223,7 @@
 	</dialog>
 	<dialog name="CUpgradeDlg" cookie="StStStBuBuBu" caption="Update verfügbar">
 		<control/>
-		<control caption="Eine neue Version von PeerProject ist verfügbar.  Möchten Sie aktualisieren?"/>
+		<control caption="Eine neue Version von Shareaza ist verfügbar.  Möchten Sie aktualisieren?"/>
 		<control caption="Wenn Sie auf &quot;Jetzt aktualisieren&quot; klicken, wird das Update automatisch zu ihrer Downloadliste hinzugefügt und heruntergeladen."/>
 		<control caption="Jetzt _aktualisieren"/>
 		<control caption="Nicht nach Updates suchen"/>
