@@ -31,7 +31,7 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 
-IMPLEMENT_DYNAMIC(CImageServices, CComObject)
+CImageServices ImageServices;
 
 /////////////////////////////////////////////////////////////////////////////
 // CImageServices construction
@@ -42,6 +42,51 @@ CImageServices::CImageServices()
 
 CImageServices::~CImageServices()
 {
+	Clear();
+}
+
+void CImageServices::Clear()
+{
+	CloseThread();
+}
+
+void CImageServices::OnRun()
+{
+	while( IsThreadEnabled() )
+	{
+		Doze();
+
+		if ( ! IsThreadEnabled() )
+			break;
+
+		ASSERT( m_services.find( m_inCLSID ) == m_services.end() );
+
+		m_outCookie = 0;
+
+		// Create plugin
+		CComPtr< IImageServicePlugin > pService;
+		HRESULT hr = pService.CoCreateInstance( m_inCLSID );
+		ASSERT( SUCCEEDED( hr ) );
+		if ( SUCCEEDED( hr ) )
+		{
+			// Add to cache
+			CComGITPtr< IImageServicePlugin > oGIT;
+			oGIT.Attach( pService );
+			ASSERT( SUCCEEDED( hr ) );
+			if ( SUCCEEDED( hr ) )
+				m_services.insert( services_map::value_type( m_inCLSID,
+					m_outCookie = oGIT.Detach() ) );
+		}
+
+		m_pReady.SetEvent();
+	}
+
+	CQuickLock oLock( m_pSection );
+
+	// Revoke all interfaces
+	for ( services_map::iterator i = m_services.begin(); i != m_services.end(); ++i )
+		CComGITPtr< IImageServicePlugin > oGIT( (*i).second );
+	m_services.clear();
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -55,8 +100,8 @@ BOOL CImageServices::LoadFromMemory(CImageFile* pFile, LPCTSTR pszType, LPCVOID 
 
 	BOOL bSuccess = FALSE;
 
-	IImageServicePlugin* pService = GetService( pszType ).first;
-	if ( pService )
+	CComPtr< IImageServicePlugin> pService;
+	if ( GetService( pszType, &pService ) )
 	{
 		SAFEARRAY* pInput;
 		if ( SUCCEEDED( SafeArrayAllocDescriptor( 1, &pInput ) ) && pInput )
@@ -108,8 +153,8 @@ BOOL CImageServices::LoadFromFile(CImageFile* pFile, LPCTSTR szFilename, BOOL bS
 
 	BOOL bSuccess = FALSE;
 
-	IImageServicePlugin* pService = GetService( szFilename ).first;
-	if ( pService )
+	CComPtr< IImageServicePlugin> pService;
+	if ( GetService( szFilename, &pService ) )
 	{
 		CComBSTR bstrFile( szFilename );
 		HINSTANCE hRes = AfxGetResourceHandle();
@@ -218,8 +263,8 @@ BOOL CImageServices::SaveToMemory(CImageFile* pFile, LPCTSTR pszType, int nQuali
 	*ppBuffer = NULL;
 	*pnLength = 0;
 
-	PluginInfo service = GetService( pszType );
-	if ( !service.first )
+	CComPtr< IImageServicePlugin> pService;
+	if ( ! GetService( pszType, &pService ) )
 		return FALSE;
 
 	SAFEARRAY* pSource = ImageToArray( pFile );
@@ -235,7 +280,7 @@ BOOL CImageServices::SaveToMemory(CImageFile* pFile, LPCTSTR pszType, int nQuali
 	SAFEARRAY* pOutput = NULL;
 	HINSTANCE hRes = AfxGetResourceHandle();
 	BSTR bstrType = SysAllocString ( CT2CW (pszType));
-	service.first->SaveToMemory( bstrType, &pOutput, &pParams, pSource );
+	pService->SaveToMemory( bstrType, &pOutput, &pParams, pSource );
 	SysFreeString (bstrType);
 	AfxSetResourceHandle( hRes );
 	
@@ -336,53 +381,60 @@ BOOL CImageServices::IsFileViewable(LPCTSTR pszPath)
 /////////////////////////////////////////////////////////////////////////////
 // CImageServices service discovery and control
 
-CImageServices::PluginInfo CImageServices::GetService(const CString& strFile)
+bool CImageServices::GetService(LPCTSTR szFilename, IImageServicePlugin** ppIImageServicePlugin)
 {
-	int dotPos = strFile.ReverseFind( '.' );
-	if ( dotPos < 0 )
-		return PluginInfo();
-	CString strType( strFile.Mid( dotPos ) );
-	ToLower( strType );
+	// Get file extension
+	CString strType( PathFindExtension( szFilename ) ); // ".ext"
+	strType.MakeLower();
+
+	// Get plugin CLSID
+	CLSID oCLSID;
+	if ( ! Plugins.LookupCLSID( L"ImageService", strType, oCLSID, FALSE ) )
+		// Unknown or disabled extension
+		return false;
 
 	// Check cached one
+	CQuickLock oLock( m_pSection );
+	services_map::iterator i = m_services.find( oCLSID );
+	if ( i != m_services.end() )
 	{
-		const_iterator pService = m_services.find( strType );
-		if ( pService != m_services.end() )
-			return pService->second;
+		m_outCookie = (*i).second;
+	}
+	else
+	{
+		// Create new one
+		m_inCLSID = oCLSID;
+		if ( ! BeginThread( "ImageServices" ) )
+			return false;
+		Wakeup();
+		WaitForSingleObject( m_pReady, INFINITE );	// Wait for result
 	}
 
-	CLSID oCLSID;
-
-	if ( ! Plugins.LookupCLSID( L"ImageService", strType, oCLSID ) )
-		return PluginInfo();
-
-	HINSTANCE hRes = AfxGetResourceHandle();
-	AfxSetResourceHandle( hRes );
-
-	CComQIPtr< IImageServicePlugin > pService;
-	if ( FAILED( CoCreateInstance( oCLSID, NULL, CLSCTX_ALL,
-		IID_IImageServicePlugin, (void**)&pService ) ) )
-	{
-		return PluginInfo();
-	}
+	if ( ! m_outCookie )
+		// No plugin
+		return false;
 
 	// Just add to the plugin collection for the reference of CLSID.
 	// Not a very nice solution but without checking all plugins
 	// Shareaza holds only 1 plugin in the Plugins collection... 
-
+/*
     CPlugin* pPlugin = Plugins.Find( oCLSID );
-	if ( ! pPlugin ) 
+	if ( ! pPlugin )
 	{
 		// Put an empty name, so it won't be displayed in the Settings
 		pPlugin = new CPlugin( oCLSID, L"" );
 		Plugins.m_pList.AddTail( pPlugin );
 	}
+*/
 
-	PluginInfo service( pService, oCLSID );
+	// Get interface from cache
+	CComGITPtr< IImageServicePlugin > oGIT( m_outCookie );
+	HRESULT hr = oGIT.CopyTo( ppIImageServicePlugin );
+	ASSERT( SUCCEEDED( hr ) );
 
-	m_services.insert( services_map::value_type( strType, service ) );
+	oGIT.Detach();
 
-	return service;
+	return SUCCEEDED( hr );
 }
 
 /////////////////////////////////////////////////////////////////////////////

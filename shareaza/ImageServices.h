@@ -21,41 +21,39 @@
 
 #pragma once
 
+#include "ThreadImpl.h"
+
 class CImageFile;
 
-// NOTE: Dont call CImageServices's methods across thread boundaries!
 
-class CImageServices : public CComObject
+class CImageServices : public CThreadImpl
 {
-// Construction
 public:
 	CImageServices();
 	virtual ~CImageServices();
 
-	DECLARE_DYNAMIC(CImageServices)
-
-// Static Load Tool
+	void		Clear();
 	static BOOL	LoadBitmap(CBitmap* pBitmap, UINT nResourceID, LPCTSTR pszType);
 	static BOOL	IsFileViewable(LPCTSTR pszPath);
-
-// Implementation
-protected:
-	typedef std::pair< CComQIPtr< IImageServicePlugin >, CLSID > PluginInfo;
-	typedef std::map< CString, PluginInfo > services_map;
-	typedef services_map::const_iterator const_iterator;
-
-	// Operations
 	BOOL		LoadFromMemory(CImageFile* pFile, LPCTSTR pszType, LPCVOID pData, DWORD nLength, BOOL bScanOnly = FALSE, BOOL bPartialOk = FALSE);
 	BOOL		LoadFromFile(CImageFile* pFile, LPCTSTR szFilename, BOOL bScanOnly = FALSE, BOOL bPartialOk = FALSE);
 	BOOL		SaveToMemory(CImageFile* pFile, LPCTSTR pszType, int nQuality, LPBYTE* ppBuffer, DWORD* pnLength);
 //	BOOL		SaveToFile(CImageFile* pFile, LPCTSTR pszType, int nQuality, HANDLE hFile, DWORD* pnLength = NULL);
 
+protected:
+	typedef std::map< CLSID, DWORD > services_map;
+
+	services_map	m_services;
+	CMutex			m_pSection;
+
+	CLSID			m_inCLSID;		// [in] Create interface
+	DWORD			m_outCookie;	// [out] Return interface cookie
+	CEvent			m_pReady;		// Ready event
+
 	BOOL		PostLoad(CImageFile* pFile, const IMAGESERVICEDATA* pParams, SAFEARRAY* pArray);
 	SAFEARRAY*	ImageToArray(CImageFile* pFile);
-	PluginInfo	GetService(const CString& strFile);
-
-// Attributes
-	services_map	m_services;
-
-	friend class CImageFile;
+	bool		GetService(LPCTSTR szFilename, IImageServicePlugin** pIImageServicePlugin);
+	virtual void OnRun();
 };
+
+extern CImageServices ImageServices;

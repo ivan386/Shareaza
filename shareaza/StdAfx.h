@@ -497,9 +497,21 @@ extern const CLowerCaseTable ToLower;
 #endif
 
 template<>
+struct std::less< CLSID > : public std::binary_function< CLSID, CLSID, bool >
+{
+	inline bool operator()(const CLSID& _Left, const CLSID& _Right) const throw()
+	{
+		return _Left.Data1 < _Right.Data1 || ( _Left.Data1 == _Right.Data1 &&
+			( _Left.Data2 < _Right.Data2 || ( _Left.Data2 == _Right.Data2 &&
+			( _Left.Data3 < _Right.Data3 || ( _Left.Data3 == _Right.Data3 &&
+			( memcmp( _Left.Data4, _Right.Data4, 8 ) < 0 ) ) ) ) ) );
+	}
+};
+
+template<>
 struct std::less< CString > : public std::binary_function< CString, CString, bool>
 {
-	bool operator()(const CString& _Left, const CString& _Right) const throw()
+	inline bool operator()(const CString& _Left, const CString& _Right) const throw()
 	{
 		return ( _Left.CompareNoCase( _Right ) < 0 );
 	}

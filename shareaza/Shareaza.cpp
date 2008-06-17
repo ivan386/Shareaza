@@ -57,7 +57,7 @@
 #include "ThumbCache.h"
 #include "BTInfo.h"
 #include "Plugins.h"
-
+#include "ImageServices.h"
 #include "WndMain.h"
 #include "WndSystem.h"
 #include "DlgSplash.h"
@@ -507,6 +507,7 @@ int CShareazaApp::ExitInstance()
 		SplashStep();
 
 		LibraryBuilder.CleanupPlugins();
+		ImageServices.Clear();
 		Plugins.Clear();
 	}
 
@@ -1989,9 +1990,28 @@ void CloseThread(HANDLE* phThread, DWORD dwTimeout)
 		{
 			::SetThreadPriority( *phThread, THREAD_PRIORITY_NORMAL );
 
-			if ( WaitForSingleObject( *phThread, dwTimeout ) == WAIT_TIMEOUT )
+			while( *phThread )
 			{
-				CRazaThread::Terminate( *phThread );
+				MSG msg;
+				while ( PeekMessage( &msg, NULL, NULL, NULL, PM_REMOVE ) )
+				{
+					TranslateMessage( &msg );
+					DispatchMessage( &msg );
+				}
+				DWORD res = MsgWaitForMultipleObjects( 1, phThread,
+					FALSE, dwTimeout, QS_ALLINPUT | QS_ALLPOSTMESSAGE );
+				if ( res == WAIT_OBJECT_0 + 1 )
+					// Handle messages
+					continue;
+				else if ( res != WAIT_TIMEOUT )
+					// Handle signaled state or errors
+					break;
+				else
+				{
+					// Timeout
+					CRazaThread::Terminate( *phThread );
+					break;
+				}
 			}
 		}
 		__except( EXCEPTION_EXECUTE_HANDLER )

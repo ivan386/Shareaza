@@ -21,6 +21,8 @@
 
 #pragma once
 
+#include "ThreadImpl.h"
+
 class CNeighbour;
 class CBuffer;
 class CPacket;

@@ -32,8 +32,6 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 
-IMPLEMENT_DYNAMIC(CImageFile, CComObject)
-
 /////////////////////////////////////////////////////////////////////////////
 // CImageFile construction
 
@@ -76,14 +74,14 @@ BOOL CImageFile::LoadFromMemory(LPCTSTR pszType, LPCVOID pData, DWORD nLength, B
 {
 	Clear();
 
-	return m_bLoaded = m_ImageServices.LoadFromMemory( this, pszType, pData, nLength, bScanOnly, bPartialOk );
+	return m_bLoaded = ImageServices.LoadFromMemory( this, pszType, pData, nLength, bScanOnly, bPartialOk );
 }
 
 BOOL CImageFile::LoadFromFile(LPCTSTR pszFile, BOOL bScanOnly, BOOL bPartialOk)
 {
 	Clear();
 
-	return m_bLoaded = m_ImageServices.LoadFromFile( this, pszFile, bScanOnly, bPartialOk );
+	return m_bLoaded = ImageServices.LoadFromFile( this, pszFile, bScanOnly, bPartialOk );
 }
 
 BOOL CImageFile::LoadFromResource(HINSTANCE hInstance, UINT nResourceID, LPCTSTR pszType, BOOL bScanOnly, BOOL bPartialOk)
@@ -117,8 +115,7 @@ BOOL CImageFile::LoadFromResource(HINSTANCE hInstance, UINT nResourceID, LPCTSTR
 					pszType = strType;
 				}
 
-				CImageServices srv;
-				m_bLoaded = srv.LoadFromMemory( this, pszType, pMemory, nSize, bScanOnly, bPartialOk );
+				m_bLoaded = ImageServices.LoadFromMemory( this, pszType, pMemory, nSize, bScanOnly, bPartialOk );
 			}
 			FreeResource( hMemory );
 		}
@@ -154,7 +151,7 @@ BOOL CImageFile::LoadFromURL(LPCTSTR pszURL)
 		if ( pBuffer == NULL ) return FALSE;
 
 		strMIME.Replace( '/', '.' );
-		m_bLoaded = m_ImageServices.LoadFromMemory( this, strMIME, (LPVOID)pBuffer->m_pBuffer,
+		m_bLoaded = ImageServices.LoadFromMemory( this, strMIME, (LPVOID)pBuffer->m_pBuffer,
 													pBuffer->m_nLength );
 		if ( m_bLoaded )
 			m_nFlags |= idRemote;
@@ -171,13 +168,13 @@ BOOL CImageFile::LoadFromURL(LPCTSTR pszURL)
 BOOL CImageFile::SaveToMemory(LPCTSTR pszType, int nQuality, LPBYTE* ppBuffer, DWORD* pnLength)
 {
 	if ( ! m_bLoaded ) return FALSE;
-	return m_ImageServices.SaveToMemory( this, pszType, nQuality, ppBuffer, pnLength );
+	return ImageServices.SaveToMemory( this, pszType, nQuality, ppBuffer, pnLength );
 }
 
 /*BOOL CImageFile::SaveToFile(LPCTSTR pszType, int nQuality, HANDLE hFile, DWORD* pnLength)
 {
 	if ( ! m_bLoaded ) return FALSE;
-	return m_ImageServices.SaveToFile( this, pszType, nQuality, hFile, pnLength );
+	return ImageServices.SaveToFile( this, pszType, nQuality, hFile, pnLength );
 }
 
 BOOL CImageFile::SaveToFile(LPCTSTR pszFile, int nQuality)
@@ -189,7 +186,7 @@ BOOL CImageFile::SaveToFile(LPCTSTR pszFile, int nQuality)
 
 	if ( hFile == INVALID_HANDLE_VALUE ) return FALSE;
 
-	BOOL bResult = m_ImageServices.SaveToFile( this, pszFile, nQuality, hFile );
+	BOOL bResult = ImageServices.SaveToFile( this, pszFile, nQuality, hFile );
 
 	CloseHandle( hFile );
 

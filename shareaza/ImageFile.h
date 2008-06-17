@@ -21,18 +21,13 @@
 
 #pragma once
 
-class CImageServices;
 
-// NOTE: Dont call CImageFile's Load/Save methods across thread boundaries!
-
-class CImageFile : public CComObject
+class CImageFile : boost::noncopyable
 {
 // Construction
 public:
 	CImageFile();
 	virtual ~CImageFile();
-
-	DECLARE_DYNAMIC(CImageFile)
 
 public:
 	BOOL			m_bScanned;
@@ -41,7 +36,6 @@ public:
 	DWORD			m_nComponents;
 	BOOL			m_bLoaded;
 	LPBYTE			m_pImage;
-	CImageServices	m_ImageServices;
 	WORD			m_nFlags;
 
 // Operations
