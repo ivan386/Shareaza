@@ -409,7 +409,10 @@ void CSecurity::Expire()
 		CComplain* pComplain;
 		m_Complains.GetNextAssoc( pos, pAddress, pComplain );
 		if ( pComplain->m_nExpire < nNow )
+		{
 			m_Complains.RemoveKey( pAddress );
+			delete pComplain;
+		}
 	}
 
 	for ( POSITION pos = GetIterator() ; pos ; )
