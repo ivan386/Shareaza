@@ -24,14 +24,21 @@
 
 class CLibraryBuilderPlugins : private boost::noncopyable
 {
+// Construction
+public:
+	CLibraryBuilderPlugins();
+	virtual ~CLibraryBuilderPlugins()=0;
+
+// Attributes
 private:
-	typedef CMap< CString, const CString&, ILibraryBuilderPlugin*, ILibraryBuilderPlugin* > CPluginMap;
+	typedef CMap< CString, LPCTSTR, ILibraryBuilderPlugin*, ILibraryBuilderPlugin* > CPluginMap;
 
 	CCriticalSection	m_pSection;
-	CPluginMap		m_pMap;
+	CPluginMap			m_pMap;
 
 	ILibraryBuilderPlugin* LoadPlugin(LPCTSTR pszType);
 
+// Operations
 public:
 	bool	ExtractPluginMetadata(DWORD nIndex, const CString& strPath, HANDLE hFile);
 	void	CleanupPlugins();

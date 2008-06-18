@@ -34,6 +34,17 @@ static char THIS_FILE[]=__FILE__;
 #endif
 
 //////////////////////////////////////////////////////////////////////
+// CLibraryBuilderPlugins construction
+
+CLibraryBuilderPlugins::CLibraryBuilderPlugins()
+{
+}
+
+CLibraryBuilderPlugins::~CLibraryBuilderPlugins()
+{
+}
+
+//////////////////////////////////////////////////////////////////////
 // CLibraryBuilderPlugins extract
 
 bool CLibraryBuilderPlugins::ExtractPluginMetadata(DWORD nIndex, const CString& strPath, HANDLE hFile)

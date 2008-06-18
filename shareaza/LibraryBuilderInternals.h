@@ -25,13 +25,21 @@ class CXMLElement;
 
 class CLibraryBuilderInternals : private boost::noncopyable
 {
+// Construction
+public:
+	CLibraryBuilderInternals();
+	virtual ~CLibraryBuilderInternals()=0;
+
+// Attributes
 private:
 	static LPCTSTR	pszID3Genre[];
 
+// Operations
 public:
 	int			LookupID3v1Genre(const CString& strGenre) const;
 	bool		ExtractMetadata(DWORD nIndex, const CString& strPath, HANDLE hFile);
 
+// Implementation
 private:
 	// ID3v1 and ID3v2 and MP3
 	bool		ReadID3v1(DWORD nIndex, HANDLE hFile, CXMLElement* pXML = NULL);

@@ -44,6 +44,17 @@ static char THIS_FILE[]=__FILE__;
 #endif
 
 //////////////////////////////////////////////////////////////////////
+// CLibraryBuilderPlugins construction
+
+CLibraryBuilderInternals::CLibraryBuilderInternals()
+{
+}
+
+CLibraryBuilderInternals::~CLibraryBuilderInternals()
+{
+}
+
+//////////////////////////////////////////////////////////////////////
 // CLibraryBuilderInternals extract metadata (threaded)
 
 bool CLibraryBuilderInternals::ExtractMetadata(DWORD nIndex, const CString& strPath, HANDLE hFile)
