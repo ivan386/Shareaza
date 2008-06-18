@@ -94,9 +94,12 @@ BOOL CCoolTipCtrl::Create(CWnd* pParentWnd, bool* pbEnable)
 
 void CCoolTipCtrl::Show(void* pContext, HWND hAltWnd)
 {
-	if ( pContext == NULL ) return;
-	if ( AfxGetMainWnd() != GetForegroundWindow() ) return;
-	if ( m_pbEnable != NULL && *m_pbEnable == 0 ) return;
+	if ( pContext == NULL )
+		return;
+	if ( AfxGetMainWnd() != GetForegroundWindow() )
+		return;
+	if ( m_pbEnable != NULL && *m_pbEnable == 0 )
+		return;
 
 	CPoint point;
 	GetCursorPos( &point );
@@ -105,7 +108,8 @@ void CCoolTipCtrl::Show(void* pContext, HWND hAltWnd)
 
 	if ( m_bVisible )
 	{
-		if ( pContext == m_pContext ) return;
+		if ( pContext == m_pContext )
+			return;
 
 		Hide();
 
@@ -151,32 +155,13 @@ void CCoolTipCtrl::Hide()
 
 void CCoolTipCtrl::ShowImpl()
 {
-	/*
-	if ( m_bVisible ) return;
+	if ( m_bVisible )
+		return;
 
 	m_sz.cx = m_sz.cy = 0;
 
-	if ( ! OnPrepare() ) return;
-
-	CRect rc( m_pOpen.x + TIP_OFFSET_X, m_pOpen.y + TIP_OFFSET_Y, 0, 0 );
-	rc.right = rc.left + m_sz.cx + TIP_MARGIN * 2;
-	rc.bottom = rc.top + m_sz.cy + TIP_MARGIN * 2;
-
-	if ( rc.right >= GetSystemMetrics( SM_CXSCREEN ) )
-	{
-		rc.OffsetRect( GetSystemMetrics( SM_CXSCREEN ) - rc.right - 4, 0 );
-	}
-
-	if ( rc.bottom >= GetSystemMetrics( SM_CYSCREEN ) )
-	{
-		rc.OffsetRect( 0, - ( m_sz.cy + TIP_MARGIN * 2 + TIP_OFFSET_Y + 4 ) );
-	}
-	*/
-	if ( m_bVisible ) return;
-
-	m_sz.cx = m_sz.cy = 0;
-
-	if ( ! OnPrepare() ) return;
+	if ( !OnPrepare() )
+		return;
 
 	HMONITOR hMonitor = NULL;
 	MONITORINFO mi = {0};
@@ -185,12 +170,11 @@ void CCoolTipCtrl::ShowImpl()
 	rc.right = rc.left + m_sz.cx + TIP_MARGIN * 2;
 	rc.bottom = rc.top + m_sz.cy + TIP_MARGIN * 2;
 
-	if ( theApp.m_dwWindowsVersion >= 5 && GetSystemMetrics( SM_CMONITORS ) > 1 && theApp.m_pfnMonitorFromRect )
+	if ( theApp.m_dwWindowsVersion >= 5 && GetSystemMetrics( SM_CMONITORS ) > 1 && theApp.m_pfnMonitorFromPoint )
 	{
 		mi.cbSize = sizeof(MONITORINFO);
 
-		hMonitor = theApp.m_pfnMonitorFromRect( rc, MONITOR_DEFAULTTONEAREST );
-		//hMonitor = MonitorFromPoint( m_pOpen, MONITOR_DEFAULTTONEAREST );
+		hMonitor = theApp.m_pfnMonitorFromPoint( m_pOpen, MONITOR_DEFAULTTONEAREST );
 		if ( hMonitor != NULL )
 		{
 			if ( theApp.m_pfnGetMonitorInfoA && theApp.m_pfnGetMonitorInfoA(hMonitor, &mi) )

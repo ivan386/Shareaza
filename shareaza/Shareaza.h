@@ -94,7 +94,7 @@ public:
 	HINSTANCE	m_hUser32;
 	BOOL		(WINAPI *m_pfnSetLayeredWindowAttributes)(HWND, COLORREF, BYTE, DWORD);
 	BOOL		(WINAPI *m_pfnGetMonitorInfoA)(HMONITOR, LPMONITORINFO);
-	HMONITOR	(WINAPI *m_pfnMonitorFromRect)(LPCRECT, DWORD);
+	HMONITOR	(WINAPI *m_pfnMonitorFromPoint)(POINT, DWORD);
 	HMONITOR	(WINAPI *m_pfnMonitorFromWindow)(HWND, DWORD);
 	HWND		(WINAPI *m_pfnGetAncestor)(HWND, UINT);
 	UINT		(WINAPI *m_pfnPrivateExtractIconsW)(LPCWSTR, int, int, int, HICON*, UINT*, UINT, UINT);

@@ -794,8 +794,8 @@ void CShareazaApp::InitResources()
 		(FARPROC&)m_pfnGetMonitorInfoA = GetProcAddress(
 			m_hUser32, "GetMonitorInfoA" );
 
-		(FARPROC&)m_pfnMonitorFromRect = GetProcAddress(
-			m_hUser32, "MonitorFromRect" );
+		(FARPROC&)m_pfnMonitorFromPoint = GetProcAddress(
+			m_hUser32, "MonitorFromPoint" );
 
 		(FARPROC&)m_pfnMonitorFromWindow = GetProcAddress(
 			m_hUser32, "MonitorFromWindow" );
@@ -810,7 +810,7 @@ void CShareazaApp::InitResources()
 	{
 		m_pfnSetLayeredWindowAttributes = NULL;
 		m_pfnGetMonitorInfoA = NULL;
-		m_pfnMonitorFromRect = NULL;
+		m_pfnMonitorFromPoint = NULL;
 		m_pfnMonitorFromWindow = NULL;
 		m_pfnGetAncestor = NULL;
 		m_pfnPrivateExtractIconsW = NULL;
@@ -1944,7 +1944,7 @@ protected:
 		LPCSTR			pszName;	// Thread name
 	} CThreadTag;
 
-	typedef CMap<HANDLE, HANDLE, CThreadTag, const CThreadTag&> CThreadMap;
+	typedef CMap< HANDLE, HANDLE, CThreadTag, const CThreadTag& > CThreadMap;
 
 	static CCriticalSection	m_ThreadMapSection;	// Guarding of m_ThreadMap
 	static CThreadMap		m_ThreadMap;		// Map of running threads

@@ -1,7 +1,7 @@
 //
 // CtrlMatchTip.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -202,7 +202,8 @@ void CMatchTipCtrl::OnTimer(UINT_PTR /*nIDEvent*/)
 
 void CMatchTipCtrl::ShowInternal()
 {
-	if ( m_bVisible ) return;
+	if ( m_bVisible )
+		return;
 
 	if ( m_pHit != NULL )
 	{
@@ -217,7 +218,8 @@ void CMatchTipCtrl::ShowInternal()
 		return;
 	}
 
-	if ( m_sName.GetLength() > 128 ) m_sName = m_sName.Left( 128 );
+	if ( m_sName.GetLength() > 128 )
+		m_sName = m_sName.Left( 128 );
 
 	m_bVisible = TRUE;
 
@@ -233,11 +235,11 @@ void CMatchTipCtrl::ShowInternal()
 	rc.bottom = rc.top + sz.cy;
 
 
-	if ( theApp.m_dwWindowsVersion >= 5 && GetSystemMetrics( SM_CMONITORS ) > 1 && theApp.m_pfnMonitorFromRect )
+	if ( theApp.m_dwWindowsVersion >= 5 && GetSystemMetrics( SM_CMONITORS ) > 1 && theApp.m_pfnMonitorFromPoint )
 	{
 		mi.cbSize = sizeof(MONITORINFO);
 
-		hMonitor = theApp.m_pfnMonitorFromRect( rc, MONITOR_DEFAULTTONEAREST );
+		hMonitor = theApp.m_pfnMonitorFromPoint( m_pOpen, MONITOR_DEFAULTTONEAREST );
 		if ( hMonitor != NULL )
 		{
 			if ( theApp.m_pfnGetMonitorInfoA && theApp.m_pfnGetMonitorInfoA(hMonitor, &mi) )
@@ -264,21 +266,6 @@ void CMatchTipCtrl::ShowInternal()
 	{
 		rc.OffsetRect( 0, -sz.cy - TIP_OFFSET_Y - 4 );
 	}
-
-	/*
-	CRect rc( m_pOpen.x + TIP_OFFSET_X, m_pOpen.y + TIP_OFFSET_Y, 0, 0 );
-	rc.right = rc.left + sz.cx;
-	rc.bottom = rc.top + sz.cy;
-
-	if ( rc.right >= GetSystemMetrics( SM_CXSCREEN ) )
-	{
-		rc.OffsetRect( GetSystemMetrics( SM_CXSCREEN ) - rc.right - 4, 0 );
-	}
-
-	if ( rc.bottom >= GetSystemMetrics( SM_CYSCREEN ) )
-	{
-		rc.OffsetRect( 0, -sz.cy - TIP_OFFSET_Y - 4 );
-	}*/
 
 	if ( Settings.Interface.TipAlpha == 255 || theApp.m_pfnSetLayeredWindowAttributes == NULL )
 	{
@@ -314,7 +301,7 @@ void CMatchTipCtrl::LoadFromFile()
 	}
 	m_sSize = m_pFile->m_sSize;
 	LoadTypeInfo();
-	
+
 	if ( Settings.General.GUIMode == GUI_BASIC )
 	{
 		m_sSHA1.Empty();
@@ -379,7 +366,7 @@ void CMatchTipCtrl::LoadFromHit()
 	m_sName = m_pHit->m_sName;
 	m_sSize = Settings.SmartVolume( m_pHit->m_nSize );
 	LoadTypeInfo();
-	
+
 	if ( Settings.General.GUIMode == GUI_BASIC )
 	{
 		m_sSHA1.Empty();
@@ -454,7 +441,7 @@ void CMatchTipCtrl::LoadFromHit()
 	}
 	else if ( m_pHit->m_sComments.GetLength() )
 	{
-		if ( m_pHit->m_nRating == 1 ) 
+		if ( m_pHit->m_nRating == 1 )
 			LoadString( m_sStatus, IDS_TIP_EXISTS_BLACKLISTED );
 		m_sStatus += m_pHit->m_sComments;
 		m_crStatus = CoolInterface.m_crTextAlert ;
@@ -469,7 +456,7 @@ void CMatchTipCtrl::LoadFromHit()
 	if ( ( m_pHit->m_nProtocol == PROTOCOL_ED2K ) && ( m_pHit->m_bPush == TRI_TRUE ) )
 	{
 		m_sUser.Format( _T("%lu@%s - %s"),
-			m_pHit->m_oClientID.begin()[2], 
+			m_pHit->m_oClientID.begin()[2],
 			(LPCTSTR)CString( inet_ntoa( (IN_ADDR&)*m_pHit->m_oClientID.begin() ) ),
 			(LPCTSTR)m_pHit->m_pVendor->m_sName );
 	}
@@ -565,7 +552,7 @@ CSize CMatchTipCtrl::ComputeSize()
 		ExpandSize( dc, sz, m_sUser );
 		sz.cy += TIP_TEXTHEIGHT;
 	}
-	
+
 	if ( m_sCountry.GetLength() )
 	{
 		ExpandSize( dc, sz, m_sCountry, 18 + 2 );
