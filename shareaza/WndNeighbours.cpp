@@ -362,7 +362,7 @@ CNeighbour* CNeighboursWnd::GetItem(int nItem)
 {
 	if ( m_wndList.GetItemState( nItem, LVIS_SELECTED ) )
 	{
-		return Neighbours.Get( static_cast< DWORD >( m_wndList.GetItemData( nItem ) ) );
+		return Neighbours.Get( m_wndList.GetItemData( nItem ) );
 	}
 	
 	return NULL;
