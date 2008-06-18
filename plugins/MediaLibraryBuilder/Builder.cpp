@@ -180,7 +180,7 @@ HRESULT CBuilder::SafeProcess(BSTR sFile, ISXMLElement* pXML)
 						LPWSTR clsid = NULL;
 						if (SUCCEEDED (StringFromCLSID (mt.subtype, &clsid)))
 						{
-							ATLTRACE ("Video format: %ls\n", clsid);
+							ATLTRACE( _T("Video format: %s\n"), clsid);
 							CoTaskMemFree (clsid);
 						}
 #endif // _DEBUG
@@ -232,13 +232,13 @@ HRESULT CBuilder::SafeProcess(BSTR sFile, ISXMLElement* pXML)
 				return S_OK;
 			}
 			else
-				ATLTRACE ("Cannot get streams: 0x%08x\n", hr);
+				ATLTRACE( _T("Cannot get streams: 0x%08x\n"), hr);
 		}
 		else
-			ATLTRACE ("Cannot open file: 0x%08x\n", hr);
+			ATLTRACE( _T("Cannot open file: 0x%08x\n"), hr);
 	}
 	else
-		ATLTRACE ("Cannot instantiate MediaDet object: 0x%08x\n", hr);
+		ATLTRACE( _T("Cannot instantiate MediaDet object: 0x%08x\n"), hr);
 
 	return hr;
 }

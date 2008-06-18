@@ -104,7 +104,6 @@ HRESULT CreateSWF (HWND hWnd, IUnknown** ppControl) throw ()
 		hr = AtlAxCreateControlEx (L"ShockwaveFlash.ShockwaveFlash",
 			hWnd, NULL, NULL, ppControl);
 	} __except (EXCEPTION_EXECUTE_HANDLER) {
-		ATLTRACE ("AtlAxCreateControlEx exception\n");
 		hr = E_FAIL;
 	}
 	return hr;
@@ -155,16 +154,16 @@ DWORD WINAPI LoadSWF (LPVOID filename) throw ()
 									state = varResult.lVal;
 									switch (state) {
 										case 0:
-											ATLTRACE ("Loading\n");
+											ATLTRACE( _T("Loading\n") );
 											break;
 										case 1:
-											ATLTRACE ("Uninitialized\n");
+											ATLTRACE( _T("Uninitialized\n") );
 											break;
 										case 2:
-											ATLTRACE ("Loaded\n");
+											ATLTRACE( _T("Loaded\n") );
 											break;
 										case 3:
-											ATLTRACE ("Interactive\n");
+											ATLTRACE( _T("Interactive\n") );
 											break;
 										case 4:
 											// long get_TotalFrames ()
@@ -172,7 +171,7 @@ DWORD WINAPI LoadSWF (LPVOID filename) throw ()
 											VariantInit (&varResult);	
 											hr = pIDispatch->Invoke (0x7c, IID_NULL, 0, DISPATCH_PROPERTYGET,
 												&dispparams, &varResult, NULL, NULL);	
-											ATLTRACE ("Complete. Frames: %d\n", varResult.lVal);
+											ATLTRACE( _T("Complete. Frames: %d\n"), varResult.lVal);
 											// void GotoFrame (dwFrameNumber)
 											VariantInit (&varArg [0]);
 											varArg [0].vt = VT_I4;
@@ -184,7 +183,7 @@ DWORD WINAPI LoadSWF (LPVOID filename) throw ()
 												&dispparams, &varResult, NULL, &nArgErr);												
 											break;
 										default:
-											ATLTRACE ("Unknown state (%d)\n", state);
+											ATLTRACE( _T("Unknown state (%d)\n"), state);
 									}
 								}
 								Sleep (0);
@@ -220,7 +219,7 @@ DWORD WINAPI LoadSWF (LPVOID filename) throw ()
 		CoUninitialize ();
 	}
 	if (FAILED (hr)) {
-		ATLTRACE ("LoadSWF failed: 0x%08x\n", hr);
+		ATLTRACE( _T("LoadSWF failed: 0x%08x\n"), hr);
 		if (_Data) {
 			if (_Data->hBitmap)
 				DeleteObject (_Data->hBitmap);
@@ -236,19 +235,12 @@ STDMETHODIMP CSWFReader::LoadFromFile (
 	/* [in,out] */ IMAGESERVICEDATA* pParams,
 	/* [out] */ SAFEARRAY** ppImage )
 {
-	ATLTRACE ("LoadFromFile (\"%ls\", 0x%08x, 0x%08x)\n", sFile, pParams, ppImage);
+	ATLTRACE( _T("SWFPlugin::LoadFromFile (\"%s\", 0x%08x, 0x%08x)\n"), sFile, pParams, ppImage);
 
 	if (!pParams || !ppImage)
 		return E_POINTER;
 
 	*ppImage = NULL;
-
-	ATLTRACE ("Size=%d, Width=%d, Height=%d, Flags=%d%s%s%s, Components=%d, Quality=%d\n",
-		pParams->cbSize, pParams->nWidth, pParams->nHeight, pParams->nFlags,
-		((pParams->nFlags & IMAGESERVICE_SCANONLY) ? " ScanOnly" : ""),
-		((pParams->nFlags & IMAGESERVICE_PARTIAL_IN) ? " PartialIn" : ""),
-		((pParams->nFlags & IMAGESERVICE_PARTIAL_OUT) ? " PartialOut" : ""),
-		pParams->nComponents, pParams->nQuality);
 
 	EnterCriticalSection (&_CS);
 
@@ -314,7 +306,7 @@ STDMETHODIMP CSWFReader::LoadFromMemory (
 	/* [in,out] */ IMAGESERVICEDATA* /* pParams */,
 	/* [out] */ SAFEARRAY** /* ppImage */)
 {
-	ATLTRACENOTIMPL ("LoadFromMemory");
+	ATLTRACENOTIMPL( _T("SWFPlugin::LoadFromMemory") );
 }
 
 STDMETHODIMP CSWFReader::SaveToFile (
@@ -322,7 +314,7 @@ STDMETHODIMP CSWFReader::SaveToFile (
 	/* [in,out] */ IMAGESERVICEDATA* /* pParams */,
 	/* [in] */ SAFEARRAY* /* pImage */)
 {
-	ATLTRACENOTIMPL ("SaveToFile");
+	ATLTRACENOTIMPL( _T("SWFPlugin::SaveToFile") );
 }
 
 STDMETHODIMP CSWFReader::SaveToMemory (
@@ -331,5 +323,5 @@ STDMETHODIMP CSWFReader::SaveToMemory (
 	/* [in,out] */ IMAGESERVICEDATA* /* pParams */,
 	/* [in] */ SAFEARRAY* /* pImage */)
 {
-	ATLTRACENOTIMPL ("SaveToMemory");
+	ATLTRACENOTIMPL( _T("SWFPlugin::SaveToMemory") );
 }

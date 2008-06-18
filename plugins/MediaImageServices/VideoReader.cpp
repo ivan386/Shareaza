@@ -106,19 +106,12 @@ STDMETHODIMP CVideoReader::LoadFromFile (
 	/* [in,out] */ IMAGESERVICEDATA* pParams,
 	/* [out] */ SAFEARRAY** ppImage )
 {
-	ATLTRACE ("LoadFromFile (\"%s\", 0x%08x, 0x%08x)\n", CT2A(sFile), pParams, ppImage);
+	ATLTRACE( _T("MediaImageServices::LoadFromFile (\"%s\", 0x%08x, 0x%08x)\n"), sFile, pParams, ppImage);
 
 	if ( ! pParams || ! ppImage )
 		return E_POINTER;
 
 	*ppImage = NULL;
-
-	ATLTRACE ("Size=%d, Width=%d, Height=%d, Flags=%d%s%s%s, Components=%d, Quality=%d\n",
-		pParams->cbSize, pParams->nWidth, pParams->nHeight, pParams->nFlags,
-		((pParams->nFlags & IMAGESERVICE_SCANONLY) ? " ScanOnly" : ""),
-		((pParams->nFlags & IMAGESERVICE_PARTIAL_IN) ? " PartialIn" : ""),
-		((pParams->nFlags & IMAGESERVICE_PARTIAL_OUT) ? " PartialOut" : ""),
-		pParams->nComponents, pParams->nQuality);
 
 	CComPtr< IMediaDet > pDet;
 	HRESULT hr = pDet.CoCreateInstance( CLSID_MediaDet );
@@ -177,7 +170,7 @@ STDMETHODIMP CVideoReader::LoadFromFile (
 					StringFromCLSID( mt.subtype, &clsid );
 					if ( mt.subtype == MEDIASUBTYPE_Y41P )
 					{
-						ATLTRACE ("Video format: MPEG %ls\n", clsid);
+						ATLTRACE( _T("Video format: MPEG %s\n"), clsid);
 					}
 					else if (
 						mt.subtype.Data2 == 0x0000 &&
@@ -191,7 +184,7 @@ STDMETHODIMP CVideoReader::LoadFromFile (
 						mt.subtype.Data4[6] == 0x9B &&
 						mt.subtype.Data4[7] == 0x71 )
 					{
-						ATLTRACE ("Video format: %c%c%c%c %ls\n",
+						ATLTRACE( _T("Video format: %c%c%c%c %s\n"),
 							LOBYTE (LOWORD (mt.subtype.Data1)),
 							HIBYTE (LOWORD (mt.subtype.Data1)),
 							LOBYTE (HIWORD (mt.subtype.Data1)),
@@ -199,10 +192,10 @@ STDMETHODIMP CVideoReader::LoadFromFile (
 							clsid);
 					}
 					else
-						ATLTRACE ("Video format: Unknown %ls\n", clsid);
+						ATLTRACE( _T("Video format: Unknown %s\n"), clsid);
 					CoTaskMemFree( clsid );
 
-					ATLTRACE ("Video size: %dx%dx%d\n",
+					ATLTRACE( _T("Video size: %dx%dx%d\n"),
 						pVih->bmiHeader.biWidth, pVih->bmiHeader.biHeight,
 						pVih->bmiHeader.biBitCount);							
 					pParams->nWidth = pVih->bmiHeader.biWidth;
@@ -217,7 +210,7 @@ STDMETHODIMP CVideoReader::LoadFromFile (
 					{
 						double fps = 0.0;
 						hr = pDet->get_FrameRate( &fps );
-						ATLTRACE ("Video time: %02d:%02d:%02d, %.5g fps\n",
+						ATLTRACE( _T("Video time: %02d:%02d:%02d, %.5g fps\n"),
 							(int) (total_time / 3600) % 60,
 							(int) (total_time / 60) % 60,
 							(int) total_time % 60, fps);
@@ -231,6 +224,7 @@ STDMETHODIMP CVideoReader::LoadFromFile (
 						else if ( IsDebuggerPresent() )
 						{
 							hr = E_ACCESSDENIED;
+							ATLTRACE( _T("Debugger detected!\n") );
 						}
 						else
 						{
@@ -244,13 +238,13 @@ STDMETHODIMP CVideoReader::LoadFromFile (
 					mt.pUnk->Release();
 			}
 			else
-				ATLTRACE ("Cannot get streams: 0x%08x\n", hr);
+				ATLTRACE( _T("Cannot get streams: 0x%08x\n"), hr);
 		}
 		else
-			ATLTRACE ("Cannot open file: 0x%08x\n", hr);
+			ATLTRACE( _T("Cannot open file: 0x%08x\n"), hr);
 	}
 	else
-		ATLTRACE ("Cannot instante MediaDet object: 0x%08x\n", hr);
+		ATLTRACE( _T("Cannot instante MediaDet object: 0x%08x\n"), hr);
 
 	if (FAILED (hr) && *ppImage)
 	{
@@ -267,7 +261,7 @@ STDMETHODIMP CVideoReader::LoadFromMemory (
 	/* [in,out] */ IMAGESERVICEDATA* /*pParams*/,
 	/* [out] */ SAFEARRAY** /*ppImage*/ )
 {
-	ATLTRACENOTIMPL ("LoadFromMemory");
+	ATLTRACENOTIMPL( _T("ediaImageServices::LoadFromMemory") );
 }
 
 STDMETHODIMP CVideoReader::SaveToFile (
@@ -275,7 +269,7 @@ STDMETHODIMP CVideoReader::SaveToFile (
 	/* [in,out] */ IMAGESERVICEDATA* /*pParams*/,
 	/* [in] */ SAFEARRAY* /*pImage*/)
 {
-	ATLTRACENOTIMPL ("SaveToFile");
+	ATLTRACENOTIMPL( _T("ediaImageServices::SaveToFile") );
 }
 
 STDMETHODIMP CVideoReader::SaveToMemory (
@@ -284,7 +278,7 @@ STDMETHODIMP CVideoReader::SaveToMemory (
 	/* [in,out] */ IMAGESERVICEDATA* /*pParams*/,
 	/* [in] */ SAFEARRAY* /*pImage*/)
 {
-	ATLTRACENOTIMPL ("SaveToMemory");
+	ATLTRACENOTIMPL( _T("ediaImageServices::SaveToMemory") );
 }
 
 # pragma warning( pop )
