@@ -3,8 +3,7 @@
 <manifest	name="Template for Video"
 			author="Rolandas Rudomanskis"
 			version="1.4"
-			link="http://www.shareaza.com/"
-			email="contact@shareaza.com"
+			link="http://shareaza.sourceforge.net/"
 			description="The template for video collections. Enter titles, descriptions and times in metadata for each file."
 			icon="video.ico"
 />

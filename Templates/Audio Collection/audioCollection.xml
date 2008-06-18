@@ -3,8 +3,7 @@
 <manifest	name="Audio Collection"
 			author="Tom Higginson"
 			version="1.2"
-			link="http://www.shareaza.com/"
-			email="contact@shareaza.com"
+			link="http://shareaza.sourceforge.net/"
 			description="Audio collection export template."
 			icon="audio.ico"
 />
