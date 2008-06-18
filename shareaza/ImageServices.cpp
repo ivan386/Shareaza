@@ -42,6 +42,8 @@ CImageServices::CImageServices()
 
 CImageServices::~CImageServices()
 {
+	ASSERT( m_services.size() == 0 ); // Must be already cleared
+
 	Clear();
 }
 
@@ -61,8 +63,6 @@ void CImageServices::OnRun()
 
 		ASSERT( m_services.find( m_inCLSID ) == m_services.end() );
 
-		m_outCookie = 0;
-
 		// Create plugin
 		CComPtr< IImageServicePlugin > pService;
 		HRESULT hr = pService.CoCreateInstance( m_inCLSID );
@@ -71,11 +71,10 @@ void CImageServices::OnRun()
 		{
 			// Add to cache
 			CComGITPtr< IImageServicePlugin > oGIT;
-			oGIT.Attach( pService );
+			hr = oGIT.Attach( pService );
 			ASSERT( SUCCEEDED( hr ) );
 			if ( SUCCEEDED( hr ) )
-				m_services.insert( services_map::value_type( m_inCLSID,
-					m_outCookie = oGIT.Detach() ) );
+				m_services.insert( services_map::value_type( m_inCLSID, oGIT.Detach() ) );
 		}
 
 		m_pReady.SetEvent();
@@ -396,23 +395,19 @@ bool CImageServices::GetService(LPCTSTR szFilename, IImageServicePlugin** ppIIma
 	// Check cached one
 	CQuickLock oLock( m_pSection );
 	services_map::iterator i = m_services.find( oCLSID );
-	if ( i != m_services.end() )
-	{
-		m_outCookie = (*i).second;
-	}
-	else
+	if ( i == m_services.end() )
 	{
 		// Create new one
-		m_inCLSID = oCLSID;
+		m_inCLSID = oCLSID;							// Set input parameter
 		if ( ! BeginThread( "ImageServices" ) )
 			return false;
-		Wakeup();
+		Wakeup();									// Start process
 		WaitForSingleObject( m_pReady, INFINITE );	// Wait for result
+		i = m_services.find( oCLSID );				// Get result
+		if ( i == m_services.end() )
+			// No plugin
+			return false;
 	}
-
-	if ( ! m_outCookie )
-		// No plugin
-		return false;
 
 	// Just add to the plugin collection for the reference of CLSID.
 	// Not a very nice solution but without checking all plugins
@@ -428,7 +423,7 @@ bool CImageServices::GetService(LPCTSTR szFilename, IImageServicePlugin** ppIIma
 */
 
 	// Get interface from cache
-	CComGITPtr< IImageServicePlugin > oGIT( m_outCookie );
+	CComGITPtr< IImageServicePlugin > oGIT( (*i).second );
 	HRESULT hr = oGIT.CopyTo( ppIImageServicePlugin );
 	ASSERT( SUCCEEDED( hr ) );
 

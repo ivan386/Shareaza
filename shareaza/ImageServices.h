@@ -47,7 +47,6 @@ protected:
 	CMutex			m_pSection;
 
 	CLSID			m_inCLSID;		// [in] Create interface
-	DWORD			m_outCookie;	// [out] Return interface cookie
 	CEvent			m_pReady;		// Ready event
 
 	BOOL		PostLoad(CImageFile* pFile, const IMAGESERVICEDATA* pParams, SAFEARRAY* pArray);
