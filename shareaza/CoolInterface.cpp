@@ -393,7 +393,7 @@ void CCoolInterface::CreateFonts(LPCTSTR pszFace, int nSize)
 	if ( m_fntBoldItalic.m_hObject ) m_fntBoldItalic.DeleteObject();
 	if ( m_fntNavBar.m_hObject ) m_fntNavBar.DeleteObject();
 
-	DWORD nQuality = theApp.m_dwWindowsVersion >= 6 ? DEFAULT_QUALITY : ANTIALIASED_QUALITY;
+	BYTE nQuality = theApp.m_dwWindowsVersion >= 6 ? DEFAULT_QUALITY : ANTIALIASED_QUALITY;
 
 	m_fntNormal.CreateFontW( -nSize, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE,
 		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, nQuality,
