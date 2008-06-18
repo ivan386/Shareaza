@@ -1,7 +1,7 @@
 //
 // WndNeighbours.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -98,27 +98,27 @@ CNeighboursWnd::CNeighboursWnd() : CPanelWnd( TRUE, TRUE ), m_nProtocolRev( 0 )
 /////////////////////////////////////////////////////////////////////////////
 // CNeighboursWnd system message handlers
 
-int CNeighboursWnd::OnCreate(LPCREATESTRUCT lpCreateStruct) 
+int CNeighboursWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if ( CPanelWnd::OnCreate( lpCreateStruct ) == -1 ) return -1;
-	
+
 	if ( ! m_wndToolBar.Create( this, WS_CHILD|WS_VISIBLE|CBRS_NOALIGN, AFX_IDW_TOOLBAR ) ) return -1;
 	m_wndToolBar.SetBarStyle( m_wndToolBar.GetBarStyle() | CBRS_TOOLTIPS | CBRS_BORDER_TOP );
-	
+
 	m_wndList.Create( WS_CLIPCHILDREN | WS_CLIPSIBLINGS | WS_CHILD | WS_VISIBLE |
 		LVS_AUTOARRANGE | LVS_REPORT | LVS_SHOWSELALWAYS,
 		rectDefault, this, IDC_NEIGHBOURS );
 	m_pSizer.Attach( &m_wndList );
-	
+
 	m_wndTip.Create( &m_wndList, &Settings.Interface.TipNeighbours );
 	m_wndList.SetTip( &m_wndTip );
-	
+
 	m_wndList.SetExtendedStyle(
 		LVS_EX_FULLROWSELECT|LVS_EX_HEADERDRAGDROP|LVS_EX_LABELTIP|LVS_EX_SUBITEMIMAGES );
-	
+
 	CBitmap bmImages;
 	bmImages.LoadBitmap( IDB_PROTOCOLS );
-	if ( Settings.General.LanguageRTL ) 
+	if ( Settings.General.LanguageRTL )
 		bmImages.m_hObject = CreateMirroredBitmap( (HBITMAP)bmImages.m_hObject );
 
 	//Redrawn Protocol Icon Workaround
@@ -165,19 +165,19 @@ int CNeighboursWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_wndList.InsertColumn( 11, _T("Country"), LVCFMT_LEFT, 40, 10 );
 
 	m_wndList.SetFont( &theApp.m_gdiFont );
-	
+
 	LoadState( _T("CNeighboursWnd"), FALSE );
 
 	m_tLastUpdate = 0;
-	
+
 	PostMessage( WM_TIMER, 1 );
-	
+
 	return 0;
 }
 
-void CNeighboursWnd::OnDestroy() 
+void CNeighboursWnd::OnDestroy()
 {
-	Settings.SaveList( _T("CNeighboursWnd"), &m_wndList );	
+	Settings.SaveList( _T("CNeighboursWnd"), &m_wndList );
 	SaveState( _T("CNeighboursWnd") );
 	CPanelWnd::OnDestroy();
 }
@@ -189,9 +189,9 @@ void CNeighboursWnd::Update()
 {
 	CSingleLock pLock( &Network.m_pSection );
 	if ( ! pLock.Lock( 50 ) ) return;
-	
+
 	CLiveList pLiveList( 12 );
-	
+
 	m_tLastUpdate = GetTickCount();
 
 	for ( POSITION pos = Neighbours.GetIterator() ; pos ; )
@@ -199,12 +199,12 @@ void CNeighboursWnd::Update()
 		CString str;
 		CNeighbour* pNeighbour = Neighbours.GetNext( pos );
 		CLiveItem* pItem = pLiveList.Add( pNeighbour->m_nUnique );
-		
+
 		pItem->Set( 0, pNeighbour->m_sAddress );
 		pItem->Format( 1, _T("%hu"), htons( pNeighbour->m_pHost.sin_port ) );
-		
+
 		DWORD nTime = ( m_tLastUpdate - pNeighbour->m_tConnected ) / 1000;
-		
+
 		switch ( pNeighbour->m_nState )
 		{
 		case nrsConnecting:
@@ -234,9 +234,9 @@ void CNeighboursWnd::Update()
 		}
 
 		pItem->Set( 2, str );
-		
+
 		pNeighbour->Measure();
-		
+
 		pItem->Format( 3, _T("%u - %u"), pNeighbour->m_nInputCount, pNeighbour->m_nOutputCount );
 		pItem->Format( 4, _T("%s - %s"),
 			Settings.SmartSpeed( pNeighbour->m_mInput.nMeasure ),
@@ -245,15 +245,15 @@ void CNeighboursWnd::Update()
 			Settings.SmartVolume( pNeighbour->m_mInput.nTotal ),
 			Settings.SmartVolume( pNeighbour->m_mOutput.nTotal ) );
 		pItem->Format( 6, _T("%u (%u)"), pNeighbour->m_nOutbound, pNeighbour->m_nLostCount );
-		
+
 		pItem->Set( 9, pNeighbour->m_sUserAgent );
-		
+
 		if ( pNeighbour->m_nState >= nrsConnected )
 		{
 			if ( pNeighbour->m_nProtocol == PROTOCOL_G1 )
 			{
 //				CG1Neighbour* pG1 = reinterpret_cast<CG1Neighbour*>(pNeighbour);
-				
+
 				switch ( pNeighbour->m_nNodeType )
 				{
 				case ntNode:
@@ -266,14 +266,14 @@ void CNeighboursWnd::Update()
 					LoadString ( str,IDS_NEIGHBOUR_G1LEAF );
 					break;
 				}
-				
+
 				pItem->Set( 8, str );
 				pItem->m_nImage = Settings.General.LanguageRTL ? m_nProtocolRev - PROTOCOL_G1 : PROTOCOL_G1;
 			}
 			else if ( pNeighbour->m_nProtocol == PROTOCOL_G2 )
 			{
 				CG2Neighbour* pG2 = static_cast<CG2Neighbour*>(pNeighbour);
-				
+
 				switch ( pNeighbour->m_nNodeType )
 				{
 				case ntNode:
@@ -287,7 +287,7 @@ void CNeighboursWnd::Update()
 					break;
 				}
 				pItem->Set( 8, str );
-				
+
 				if ( pG2->m_nLeafCount > 0 )
 				{
 					if ( pG2->m_nLeafLimit > 0 )
@@ -303,17 +303,17 @@ void CNeighboursWnd::Update()
 				{
 					pItem->Set( 7, _T("?") );
 				}
-				
+
 				pItem->m_nImage = Settings.General.LanguageRTL ? m_nProtocolRev - PROTOCOL_G2 : PROTOCOL_G2;
 			}
 			else if ( pNeighbour->m_nProtocol == PROTOCOL_ED2K )
 			{
 				CEDNeighbour* pED2K = static_cast<CEDNeighbour*>(pNeighbour);
-				
+
 				pItem->m_nImage = Settings.General.LanguageRTL ? m_nProtocolRev - PROTOCOL_ED2K : PROTOCOL_ED2K;
 				pItem->Set( 8, _T("eDonkey") );
 				pItem->Set( 10, pED2K->m_sServerName );
-				
+
 				if ( pED2K->m_nClientID > 0 )
 				{
 					if ( pED2K->m_nUserLimit > 0 )
@@ -324,7 +324,7 @@ void CNeighboursWnd::Update()
 					{
 						pItem->Format( 7, _T("%u"), pED2K->m_nUserCount );
 					}
-					
+
 					LoadString( str, CEDPacket::IsLowID( pED2K->m_nClientID ) ? IDS_NEIGHBOUR_ED2K_LOWID : IDS_NEIGHBOUR_ED2K_HIGHID );
 					pItem->Set( 9, str );
 				}
@@ -343,7 +343,7 @@ void CNeighboursWnd::Update()
 		{
 			pItem->m_nImage = Settings.General.LanguageRTL ? m_nProtocolRev : PROTOCOL_NULL;
 		}
-		
+
 		if ( pNeighbour->m_pProfile != NULL )
 		{
 			pItem->Set( 10, pNeighbour->m_pProfile->GetNick() );
@@ -354,7 +354,7 @@ void CNeighboursWnd::Update()
 		if ( nFlag >= 0 )
 			pItem->SetImage( &m_wndList, (int)pNeighbour->m_nUnique, 11, m_nProtocolRev + nFlag + 1 );
 	}
-	
+
 	pLiveList.Apply( &m_wndList, TRUE );
 }
 
@@ -364,7 +364,7 @@ CNeighbour* CNeighboursWnd::GetItem(int nItem)
 	{
 		return Neighbours.Get( m_wndList.GetItemData( nItem ) );
 	}
-	
+
 	return NULL;
 }
 
@@ -389,17 +389,17 @@ void CNeighboursWnd::OnSkinChange()
 /////////////////////////////////////////////////////////////////////////////
 // CNeighboursWnd message handlers
 
-BOOL CNeighboursWnd::OnCmdMsg(UINT nID, int nCode, void* pExtra, AFX_CMDHANDLERINFO* pHandlerInfo) 
+BOOL CNeighboursWnd::OnCmdMsg(UINT nID, int nCode, void* pExtra, AFX_CMDHANDLERINFO* pHandlerInfo)
 {
 	if ( m_wndToolBar.m_hWnd )
 	{
 		if ( m_wndToolBar.OnCmdMsg( nID, nCode, pExtra, pHandlerInfo ) ) return TRUE;
 	}
-	
+
 	return CPanelWnd::OnCmdMsg( nID, nCode, pExtra, pHandlerInfo );
 }
 
-void CNeighboursWnd::OnSize(UINT nType, int cx, int cy) 
+void CNeighboursWnd::OnSize(UINT nType, int cx, int cy)
 {
 	CPanelWnd::OnSize( nType, cx, cy );
 
@@ -410,11 +410,11 @@ void CNeighboursWnd::OnSize(UINT nType, int cx, int cy)
 	if ( bSized && m_wndList.GetItemCount() == 0 ) m_wndList.Invalidate();
 }
 
-void CNeighboursWnd::OnTimer(UINT_PTR nIDEvent) 
+void CNeighboursWnd::OnTimer(UINT_PTR nIDEvent)
 {
-	if ( nIDEvent == 1 ) 
+	if ( nIDEvent == 1 )
 	{
-		if ( ( IsPartiallyVisible() ) || ( GetTickCount() - m_tLastUpdate > 30000 ) ) 
+		if ( ( IsPartiallyVisible() ) || ( GetTickCount() - m_tLastUpdate > 30000 ) )
 			 Update();
 	}
 }
@@ -426,20 +426,20 @@ void CNeighboursWnd::OnSortList(NMHDR* pNotifyStruct, LRESULT *pResult)
 	*pResult = 0;
 }
 
-void CNeighboursWnd::OnContextMenu(CWnd* /*pWnd*/, CPoint point) 
+void CNeighboursWnd::OnContextMenu(CWnd* /*pWnd*/, CPoint point)
 {
 	Skin.TrackPopupMenu( _T("CNeighboursWnd"), point );
 }
 
-void CNeighboursWnd::OnUpdateNeighboursDisconnect(CCmdUI* pCmdUI) 
+void CNeighboursWnd::OnUpdateNeighboursDisconnect(CCmdUI* pCmdUI)
 {
 	pCmdUI->Enable( m_wndList.GetSelectedCount() > 0 );
 }
 
-void CNeighboursWnd::OnNeighboursDisconnect() 
+void CNeighboursWnd::OnNeighboursDisconnect()
 {
 	CSingleLock pLock( &Network.m_pSection, TRUE );
-	
+
 	for ( int nItem = -1 ; ( nItem = m_wndList.GetNextItem( nItem, LVNI_SELECTED ) ) >= 0 ; )
 	{
 		if ( CNeighbour* pNeighbour = GetItem( nItem ) )
@@ -449,21 +449,21 @@ void CNeighboursWnd::OnNeighboursDisconnect()
 	}
 }
 
-void CNeighboursWnd::OnUpdateNeighboursCopy(CCmdUI* pCmdUI) 
+void CNeighboursWnd::OnUpdateNeighboursCopy(CCmdUI* pCmdUI)
 {
 	pCmdUI->Enable( m_wndList.GetSelectedCount() == 1 );
-	
+
 }
 
-void CNeighboursWnd::OnNeighboursCopy() 
+void CNeighboursWnd::OnNeighboursCopy()
 {
 	CSingleLock pLock( &Network.m_pSection, TRUE );
-	
+
 	CNeighbour* pNeighbour = GetItem( m_wndList.GetNextItem( -1, LVNI_SELECTED ) );
 	if ( ! pNeighbour ) return;
-	
+
 	CString strURL;
-	
+
 	if ( pNeighbour->m_nProtocol == PROTOCOL_G1 || pNeighbour->m_nProtocol == PROTOCOL_G2 )
 	{
 		strURL.Format( _T("gnutella:host:%s:%lu"),
@@ -474,11 +474,11 @@ void CNeighboursWnd::OnNeighboursCopy()
 		strURL.Format( _T("ed2k://|server|%s|%lu|/"),
 			(LPCTSTR)pNeighbour->m_sAddress, htons( pNeighbour->m_pHost.sin_port ) );
 	}
-	
+
 	CURLCopyDlg::SetClipboardText( strURL );
 }
 
-void CNeighboursWnd::OnUpdateNeighboursChat(CCmdUI* pCmdUI) 
+void CNeighboursWnd::OnUpdateNeighboursChat(CCmdUI* pCmdUI)
 {
 	if ( m_wndList.GetSelectedCount() == 1 && Settings.Community.ChatEnable )
 	{
@@ -496,10 +496,10 @@ void CNeighboursWnd::OnUpdateNeighboursChat(CCmdUI* pCmdUI)
 	pCmdUI->Enable( FALSE );
 }
 
-void CNeighboursWnd::OnNeighboursChat() 
+void CNeighboursWnd::OnNeighboursChat()
 {
 	CSingleLock pLock( &Network.m_pSection, TRUE );
-	
+
 	for ( int nItem = -1 ; ( nItem = m_wndList.GetNextItem( nItem, LVNI_SELECTED ) ) >= 0 ; )
 	{
 		if ( CNeighbour* pNeighbour = GetItem( nItem ) )
@@ -513,15 +513,15 @@ void CNeighboursWnd::OnNeighboursChat()
 	}
 }
 
-void CNeighboursWnd::OnUpdateSecurityBan(CCmdUI* pCmdUI) 
+void CNeighboursWnd::OnUpdateSecurityBan(CCmdUI* pCmdUI)
 {
 	pCmdUI->Enable( m_wndList.GetSelectedCount() > 0 );
 }
 
-void CNeighboursWnd::OnSecurityBan() 
+void CNeighboursWnd::OnSecurityBan()
 {
 	CSingleLock pLock( &Network.m_pSection, TRUE );
-	
+
 	for ( int nItem = -1 ; ( nItem = m_wndList.GetNextItem( nItem, LVNI_SELECTED ) ) >= 0 ; )
 	{
 		if ( CNeighbour* pNeighbour = GetItem( nItem ) )
@@ -535,7 +535,7 @@ void CNeighboursWnd::OnSecurityBan()
 	}
 }
 
-void CNeighboursWnd::OnUpdateBrowseLaunch(CCmdUI* pCmdUI) 
+void CNeighboursWnd::OnUpdateBrowseLaunch(CCmdUI* pCmdUI)
 {
 	if ( m_wndList.GetSelectedCount() == 1 )
 	{
@@ -553,73 +553,73 @@ void CNeighboursWnd::OnUpdateBrowseLaunch(CCmdUI* pCmdUI)
 	pCmdUI->Enable( FALSE );
 }
 
-void CNeighboursWnd::OnBrowseLaunch() 
+void CNeighboursWnd::OnBrowseLaunch()
 {
 	CSingleLock pLock( &Network.m_pSection, TRUE );
-	
+
 	if ( CNeighbour* pNeighbour = GetItem( m_wndList.GetNextItem( -1, LVNI_SELECTED ) ) )
 	{
 		if ( pNeighbour->m_nProtocol != PROTOCOL_ED2K )
 		{
 			SOCKADDR_IN pAddress = pNeighbour->m_pHost;
 			Hashes::Guid oGUID = pNeighbour->m_oGUID;
-			
+
 			pLock.Unlock();
-			
+
 			new CBrowseHostWnd( &pAddress, oGUID );
 		}
 	}
 }
 
-void CNeighboursWnd::OnUpdateNeighboursViewAll(CCmdUI* pCmdUI) 
+void CNeighboursWnd::OnUpdateNeighboursViewAll(CCmdUI* pCmdUI)
 {
 	pCmdUI->Enable( m_wndList.GetSelectedCount() == 1 );
 }
 
-void CNeighboursWnd::OnNeighboursViewAll() 
+void CNeighboursWnd::OnNeighboursViewAll()
 {
 	OpenPacketWnd( TRUE, TRUE );
 }
 
-void CNeighboursWnd::OnUpdateNeighboursViewIncoming(CCmdUI* pCmdUI) 
+void CNeighboursWnd::OnUpdateNeighboursViewIncoming(CCmdUI* pCmdUI)
 {
 	pCmdUI->Enable( m_wndList.GetSelectedCount() == 1 );
 }
 
-void CNeighboursWnd::OnNeighboursViewIncoming() 
+void CNeighboursWnd::OnNeighboursViewIncoming()
 {
 	OpenPacketWnd( TRUE, FALSE );
 }
 
-void CNeighboursWnd::OnUpdateNeighboursViewOutgoing(CCmdUI* pCmdUI) 
+void CNeighboursWnd::OnUpdateNeighboursViewOutgoing(CCmdUI* pCmdUI)
 {
 	pCmdUI->Enable( m_wndList.GetSelectedCount() == 1 );
 }
 
-void CNeighboursWnd::OnNeighboursViewOutgoing() 
+void CNeighboursWnd::OnNeighboursViewOutgoing()
 {
 	OpenPacketWnd( FALSE, TRUE );
 }
 
-void CNeighboursWnd::OnNeighboursSettings() 
+void CNeighboursWnd::OnNeighboursSettings()
 {
-	CSettingsManagerDlg::Run( _T("CNetworksSettingsPage") );	
+	CSettingsManagerDlg::Run( _T("CNetworksSettingsPage") );
 }
 
 void CNeighboursWnd::OpenPacketWnd(BOOL bIncoming, BOOL bOutgoing)
 {
 	CSingleLock pLock( &Network.m_pSection, TRUE );
-	
+
 	CWindowManager* pManager = GetManager();
 	CPacketWnd* pWnd = NULL;
-	
+
 	while ( ( pWnd = (CPacketWnd*)pManager->Find( RUNTIME_CLASS(CPacketWnd), pWnd ) ) != NULL )
 	{
 		if ( pWnd->m_pOwner == this ) break;
 	}
-	
+
 	if ( ! pWnd ) pWnd = new CPacketWnd( this );
-	
+
 	for ( int nItem = 0 ; nItem < m_wndList.GetItemCount() ; nItem++ )
 	{
 		if ( CNeighbour* pNeighbour = GetItem( nItem ) )
@@ -628,7 +628,7 @@ void CNeighboursWnd::OpenPacketWnd(BOOL bIncoming, BOOL bOutgoing)
 			pWnd->m_nOutputFilter	= bOutgoing ? pNeighbour->m_nUnique : 1;
 		}
 	}
-	
+
 	pWnd->m_bPaused = FALSE;
 	pWnd->BringWindowToTop();
 }
@@ -636,7 +636,7 @@ void CNeighboursWnd::OpenPacketWnd(BOOL bIncoming, BOOL bOutgoing)
 void CNeighboursWnd::OnCustomDrawList(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	NMLVCUSTOMDRAW* pDraw = (NMLVCUSTOMDRAW*)pNMHDR;
-	
+
 	if ( ! ::IsWindow( m_wndList.GetSafeHwnd() ) ) return;
 
 	if ( pDraw->nmcd.dwDrawStage == CDDS_PREPAINT )
@@ -645,14 +645,14 @@ void CNeighboursWnd::OnCustomDrawList(NMHDR* pNMHDR, LRESULT* pResult)
 		{
 			DrawEmptyMessage( CDC::FromHandle( pDraw->nmcd.hdc ) );
 		}
-		
+
 		*pResult = CDRF_NOTIFYITEMDRAW;
 	}
 	else if ( pDraw->nmcd.dwDrawStage == CDDS_ITEMPREPAINT )
 	{
 		LV_ITEM pItem = { LVIF_IMAGE, static_cast< int >( pDraw->nmcd.dwItemSpec ) };
 		m_wndList.GetItem( &pItem );
-				
+
 		int nImage = Settings.General.LanguageRTL ? m_nProtocolRev - pItem.iImage : pItem.iImage;
 		switch ( nImage )
 		{
@@ -669,15 +669,15 @@ void CNeighboursWnd::OnCustomDrawList(NMHDR* pNMHDR, LRESULT* pResult)
 			pDraw->clrText = CoolInterface.m_crNetworkED2K ;
 			break;
 		}
-		
+
 		*pResult = CDRF_NOTIFYPOSTPAINT;
 	}
 
 	// Redrawn Protocol Icon Workaround
 	else if ( CDDS_ITEMPOSTPAINT == pDraw->nmcd.dwDrawStage )
 	{
-        LVITEM rItem;
-        int    nItem = static_cast<int>( pDraw->nmcd.dwItemSpec );
+		LVITEM rItem;
+		int    nItem = static_cast<int>( pDraw->nmcd.dwItemSpec );
 
 		ZeroMemory ( &rItem, sizeof(LVITEM) );
 		rItem.mask  = LVIF_IMAGE | LVIF_STATE;
@@ -692,7 +692,7 @@ void CNeighboursWnd::OnCustomDrawList(NMHDR* pNMHDR, LRESULT* pResult)
 		pDC->FillSolidRect( rcIcon.left, rcIcon.top, 17, 17, CoolInterface.m_crWindow );
 
 		if ( rItem.state & LVIS_SELECTED )
-            m_gdiImageListFix.Draw ( pDC, rItem.iImage, rcIcon.TopLeft(), ILD_SELECTED );
+			m_gdiImageListFix.Draw ( pDC, rItem.iImage, rcIcon.TopLeft(), ILD_SELECTED );
 		else
 			m_gdiImageListFix.Draw ( pDC, rItem.iImage, rcIcon.TopLeft(), ILD_TRANSPARENT );
 
@@ -704,27 +704,27 @@ void CNeighboursWnd::DrawEmptyMessage(CDC* pDC)
 {
 	CRect rcClient, rcText;
 	CString strText;
-	
+
 	m_wndList.GetClientRect( &rcClient );
-	
+
 	if ( CWnd* pHeader = m_wndList.GetWindow( GW_CHILD ) )
 	{
 		pHeader->GetWindowRect( &rcText );
 		rcClient.top += rcText.Height();
 	}
-	
+
 	rcText.SetRect( rcClient.left, 16, rcClient.right, 0 );
 	rcText.bottom = ( rcClient.top + rcClient.bottom ) / 2;
 	rcText.top = rcText.bottom - rcText.top;
-	
+
 	pDC->SetBkMode( TRANSPARENT );
 	CFont* pOldFont = (CFont*)pDC->SelectObject( &theApp.m_gdiFont );
 	pDC->SetTextColor( CoolInterface.m_crText );
 	LoadString( strText, IDS_NEIGHBOURS_NOT_CONNECTED );
 	pDC->DrawText( strText, &rcText, DT_SINGLELINE|DT_CENTER|DT_VCENTER|DT_NOPREFIX );
-	
+
 	rcText.OffsetRect( 0, rcText.Height() );
-	
+
 	LoadString( strText, IDS_NEIGHBOURS_CONNECT );
 	pDC->DrawText( strText, &rcText, DT_SINGLELINE|DT_CENTER|DT_VCENTER|DT_NOPREFIX );
 
