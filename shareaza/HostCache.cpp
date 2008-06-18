@@ -1149,17 +1149,23 @@ CNeighbour* CHostCacheHost::ConnectTo(BOOL bAutomatic)
 //////////////////////////////////////////////////////////////////////
 // CHostCacheHost string
 
-CString CHostCacheHost::ToString() const
+CString CHostCacheHost::ToString(bool bLong) const
 {
-	time_t tSeen = m_tSeen;
-	tm* pTime = gmtime( &tSeen );
-
 	CString str;
-	str.Format( _T("%s:%i %.4i-%.2i-%.2iT%.2i:%.2iZ"),
-		(LPCTSTR)CString( inet_ntoa( m_pAddress ) ), m_nPort,
-		pTime->tm_year + 1900, pTime->tm_mon + 1, pTime->tm_mday,
-		pTime->tm_hour, pTime->tm_min ); // 2002-04-30T08:30Z
-
+	if ( bLong )
+	{
+		time_t tSeen = m_tSeen;
+		tm* pTime = gmtime( &tSeen );
+		str.Format( _T("%s:%i %.4i-%.2i-%.2iT%.2i:%.2iZ"),
+			(LPCTSTR)CString( inet_ntoa( m_pAddress ) ), m_nPort,
+			pTime->tm_year + 1900, pTime->tm_mon + 1, pTime->tm_mday,
+			pTime->tm_hour, pTime->tm_min ); // 2002-04-30T08:30Z
+	}
+	else
+	{
+		str.Format( _T("%s:%i"),
+			(LPCTSTR)CString( inet_ntoa( m_pAddress ) ), m_nPort );
+	}
 	return str;
 }
 

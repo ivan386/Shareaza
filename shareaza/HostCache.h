@@ -74,7 +74,7 @@ public:
 	BYTE			m_nKADVersion;	// Kademlia version
 
 	CNeighbour*	ConnectTo(BOOL bAutomatic = FALSE);
-	CString		ToString() const;
+	CString		ToString(bool bLong = true) const;	// "10.0.0.1:6346 2002-04-30T08:30Z"
 	bool		IsExpired(DWORD tNow) const;		// Is this host expired?
 	bool		IsThrottled(DWORD tNow) const;		// Is host temporary throttled down?
 	BOOL		CanConnect(DWORD tNow = 0) const;	// Can we connect to this host now?

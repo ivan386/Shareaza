@@ -656,7 +656,7 @@ void CShakeNeighbour::SendHostHeaders(LPCSTR pszMessage, size_t nLength)
 			if ( pHost->CanQuote( nTime ) )
 			{
 				if ( strHosts.GetLength() ) strHosts += _T(",");	// Separate each computer's info with a comma
-				strHosts += pHost->ToString();						// Add this computer's info to the string
+				strHosts += pHost->ToString( m_bShareaza );			// Add this computer's info to the string
 				nCount--;											// Decrement counter
 			}
 		}
