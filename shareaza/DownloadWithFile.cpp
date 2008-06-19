@@ -66,26 +66,26 @@ CDownloadWithFile::~CDownloadWithFile()
 
 BOOL CDownloadWithFile::OpenFile()
 {
-	if ( m_pFile == NULL || m_sDisplayName.IsEmpty() ) return FALSE;
+	if ( m_pFile == NULL || m_sName.IsEmpty() ) return FALSE;
 	if ( m_pFile->IsOpen() ) return TRUE;
 
 	SetModified();
 
 	if ( m_pFile->IsValid() )
 	{
-		if ( m_pFile->Open( m_sDiskName ) ) return TRUE;
-		theApp.Message( MSG_ERROR, IDS_DOWNLOAD_FILE_OPEN_ERROR, (LPCTSTR)m_sDiskName );
+		if ( m_pFile->Open( m_sPath ) ) return TRUE;
+		theApp.Message( MSG_ERROR, IDS_DOWNLOAD_FILE_OPEN_ERROR, (LPCTSTR)m_sPath );
 	}
 	else if ( m_nSize != SIZE_UNKNOWN && !Downloads.IsSpaceAvailable( m_nSize, Downloads.dlPathIncomplete ) )
 	{
 		theApp.Message( MSG_ERROR, IDS_DOWNLOAD_DISK_SPACE,
-			m_sDisplayName,
+			m_sName,
 			Settings.SmartVolume( m_nSize ) );
 	}
 	else
 	{
-		CString strLocalName = m_sDiskName;
-		m_sDiskName.Empty();
+		CString strLocalName = m_sPath;
+		m_sPath.Empty();
 
 		GenerateDiskName();
 
@@ -94,9 +94,9 @@ BOOL CDownloadWithFile::OpenFile()
 			CString strName;
 
 			if ( nTry == 0 )
-				strName = m_sDiskName;
+				strName = m_sPath;
 			else
-				strName.Format( _T("%s.x%i"), (LPCTSTR)m_sDiskName, rand() % 128 );
+				strName.Format( _T("%s.x%i"), (LPCTSTR)m_sPath, rand() % 128 );
 
 			theApp.Message( MSG_INFO, IDS_DOWNLOAD_FILE_CREATE, (LPCTSTR)strName );
 
@@ -104,14 +104,14 @@ BOOL CDownloadWithFile::OpenFile()
 			{
 				theApp.WriteProfileString( _T("Delete"), strName, NULL );
 				MoveFile( strLocalName + _T(".sd"), strName + _T(".sd") );
-				m_sDiskName = strName;
+				m_sPath = strName;
 				return TRUE;
 			}
 
 			theApp.Message( MSG_ERROR, IDS_DOWNLOAD_FILE_CREATE_ERROR, (LPCTSTR)strName );
 		}
 
-		m_sDiskName = strLocalName;
+		m_sPath = strLocalName;
 	}
 
 	m_bDiskFull = TRUE;
@@ -142,24 +142,24 @@ void CDownloadWithFile::DeleteFile(BOOL bForce)
 {
 	if ( m_pFile != NULL && m_pFile->IsValid() == FALSE ) return;
 
-	Uploads.OnRename( m_sDiskName, NULL, bForce );
+	Uploads.OnRename( m_sPath, NULL, bForce );
 
 	if ( m_pFile != NULL )
 	{
 		if ( GetVolumeComplete() == 0 || ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 ) == 0 )
 		{
-			if ( !::DeleteFile( m_sDiskName ) )
-				theApp.WriteProfileString( _T("Delete"), m_sDiskName, _T("") );
+			if ( !::DeleteFile( m_sPath ) )
+				theApp.WriteProfileString( _T("Delete"), m_sPath, _T("") );
 		}
 		else
 		{
-			MoveFile( m_sDiskName, m_sDiskName + _T(".aborted") );
+			MoveFile( m_sPath, m_sPath + _T(".aborted") );
 		}
 	}
 	else if ( bForce ) // be careful, do not delete completed BT seeding file
 	{
-		if ( !::DeleteFile( m_sDiskName ) )
-			theApp.WriteProfileString( _T("Delete"), m_sDiskName, _T("") );
+		if ( !::DeleteFile( m_sPath ) )
+			theApp.WriteProfileString( _T("Delete"), m_sPath, _T("") );
 	}
 
 	SetModified();
@@ -210,7 +210,7 @@ DWORD CDownloadWithFile::GetTimeRemaining() const
 
 CString CDownloadWithFile::GetDisplayName() const
 {
-	if ( m_sDisplayName.GetLength() ) return m_sDisplayName;
+	if ( m_sName.GetLength() ) return m_sName;
 
 	CString strName;
 
@@ -532,7 +532,7 @@ QWORD CDownloadWithFile::EraseRange(QWORD nOffset, QWORD nLength)
 
 BOOL CDownloadWithFile::MakeComplete()
 {
-	if ( m_sDiskName.IsEmpty() ) return FALSE;
+	if ( m_sPath.IsEmpty() ) return FALSE;
 
 	if ( !PrepareFile() )
 		return FALSE;
@@ -565,10 +565,10 @@ BOOL CDownloadWithFile::AppendMetadata()
 	CXMLElement* pXML = m_pXML->GetFirstElement();
 	if ( pXML == NULL ) return FALSE;
 
-	HANDLE hFile = CreateFile( m_sDiskName, GENERIC_READ | GENERIC_WRITE,
+	HANDLE hFile = CreateFile( m_sPath, GENERIC_READ | GENERIC_WRITE,
 		FILE_SHARE_READ | FILE_SHARE_WRITE | ( theApp.m_bNT ? FILE_SHARE_DELETE : 0 ),
 		NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL );
-	VERIFY_FILE_ACCESS( hFile, m_sDiskName )
+	VERIFY_FILE_ACCESS( hFile, m_sPath )
 	if ( hFile == INVALID_HANDLE_VALUE ) return FALSE;
 
 	CString strURI = m_pXML->GetAttributeValue( CXMLAttribute::schemaName );
@@ -576,7 +576,7 @@ BOOL CDownloadWithFile::AppendMetadata()
 
 	if ( CheckURI( strURI, CSchema::uriAudio ) )
 	{
-		if ( _tcsistr( m_sDiskName, _T(".mp3") ) != NULL )
+		if ( _tcsistr( m_sPath, _T(".mp3") ) != NULL )
 		{
 			bSuccess |= AppendMetadataID3v1( hFile, pXML );
 		}
@@ -664,9 +664,9 @@ void CDownloadWithFile::Serialize(CArchive& ar, int nVersion)
 
 			if ( strLocalName.GetLength() )
 			{
-				if ( m_sDiskName.GetLength() )
-					MoveFile( m_sDiskName + _T(".sd"), strLocalName + _T(".sd") );
-				m_sDiskName = strLocalName;
+				if ( m_sPath.GetLength() )
+					MoveFile( m_sPath + _T(".sd"), strLocalName + _T(".sd") );
+				m_sPath = strLocalName;
 			}
 			else
 			{

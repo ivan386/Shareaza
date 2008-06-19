@@ -259,10 +259,7 @@ BOOL CUploadTransferHTTP::OnHeaderLine(CString& strHeader, CString& strValue)
 				strHeader.CompareNoCase( _T("X-Alt") ) == 0 )
 	{
 		if ( Settings.Library.SourceMesh )
-		{
-			if ( strValue.Find( _T("Zhttp://") ) < 0 ) 
-				m_sLocations = strValue;
-		}
+			m_sLocations = strValue;
 		m_nGnutella |= 1;
 	}
 	else if ( strHeader.CompareNoCase( _T("X-NAlt") ) == 0 )
@@ -492,7 +489,7 @@ BOOL CUploadTransferHTTP::OnHeadersComplete()
 			{
 				if ( pDownload->m_pXML != NULL )
 				{
-					m_sFileName	= pDownload->m_sDisplayName;
+					m_sFileName	= pDownload->m_sName;
 					pMetadata	= pDownload->m_pXML->Clone();
 				}
 			}
@@ -517,7 +514,7 @@ BOOL CUploadTransferHTTP::OnHeadersComplete()
 		{
 			if ( pDownload->GetTigerTree() != NULL )
 			{
-				m_sFileName = pDownload->m_sDisplayName;
+				m_sFileName = pDownload->m_sName;
 				return RequestTigerTreeRaw( pDownload->GetTigerTree(), FALSE );
 			}
 		}
@@ -549,7 +546,7 @@ BOOL CUploadTransferHTTP::OnHeadersComplete()
 		{
 			if ( pDownload->GetTigerTree() != NULL )
 			{
-				m_sFileName = pDownload->m_sDisplayName;
+				m_sFileName = pDownload->m_sName;
 				m_nFileSize = pDownload->m_nSize;
 				return RequestTigerTreeDIME( pDownload->GetTigerTree(), nDepth,
 					bHashset ? pDownload->GetHashset() : NULL, FALSE );
@@ -688,15 +685,14 @@ BOOL CUploadTransferHTTP::RequestSharedFile(CLibraryFile* pFile, CSingleLock& oL
 		theApp.Message( MSG_ERROR, IDS_UPLOAD_BAD_RANGE, (LPCTSTR)m_sAddress, (LPCTSTR)m_sFileName );
 		return TRUE;
 	}
-	
-	CString strLocations;
-	if ( Settings.Library.SourceMesh ) 
-		strLocations = pFile->GetAlternateSources( &m_pSourcesSent, 15, 
-			m_nGnutella > 2 ? PROTOCOL_HTTP : PROTOCOL_G1 );
+
 	if ( m_sLocations.GetLength() )
 		pFile->AddAlternateSources( m_sLocations );
-	m_sLocations = strLocations;
-	
+
+	if ( Settings.Library.SourceMesh ) 
+		m_sLocations = pFile->GetAlternateSources( &m_pSourcesSent, 15, 
+			( m_nGnutella < 2 ) ? PROTOCOL_G1 : PROTOCOL_HTTP );
+
 	oLibraryLock.Unlock();
 	
 	return QueueRequest();
@@ -722,15 +718,12 @@ BOOL CUploadTransferHTTP::RequestPartialFile(CDownload* pDownload)
 	m_bTigerTree	= ( m_oTiger && pDownload->GetTigerTree() != NULL );
 	m_bMetadata		= ( pDownload->m_pXML != NULL );
 	
-	if ( m_sLocations.GetLength() ) pDownload->AddSourceURLs( m_sLocations, TRUE );
+	if ( m_sLocations.GetLength() )
+		pDownload->AddSourceURLs( m_sLocations, TRUE );
 
 	if ( Settings.Library.SourceMesh ) 
-	{
-		if ( m_nGnutella == 1 )
-			m_sLocations = pDownload->GetSourceURLs( &m_pSourcesSent, 15, PROTOCOL_G1, NULL );
-		else
-			m_sLocations = pDownload->GetSourceURLs( &m_pSourcesSent, 15, PROTOCOL_HTTP, NULL );
-	}
+		m_sLocations = pDownload->GetSourceURLs( &m_pSourcesSent, 15,
+			( m_nGnutella < 2 ) ? PROTOCOL_G1 : PROTOCOL_HTTP, NULL );
 	
 	m_sRanges = pDownload->GetAvailableRanges();
 	
@@ -982,26 +975,10 @@ void CUploadTransferHTTP::SendFileHeaders()
 {
 	CString strHeader;
 	
-	if ( m_oSHA1 )
+	if ( m_oSHA1 || m_oTiger )
 	{
 		Write( _P("X-Content-URN: ") );
-		if ( m_oTiger )
-		{
-			Write( _P("urn:bitprint:") );
-			Write( m_oSHA1.toString() );
-			Write( _P(".") );
-			Write( m_oTiger.toString() );
-		}
-		else
-		{
-			Write( m_oSHA1.toUrn() );
-		}		
-		Write( _P("\r\n") );
-	}
-	else if ( m_oTiger )
-	{
-		Write( _P("X-Content-URN: ") );
-		Write( m_oTiger.toUrn() );
+		Write( GetBitprint() );
 		Write( _P("\r\n") );
 	}
 	
@@ -1051,7 +1028,7 @@ void CUploadTransferHTTP::SendFileHeaders()
 
 	if ( m_sLocations.GetLength() )
 	{
-		if ( m_sLocations.Find( _T("://") ) < 0 )
+		if ( m_nGnutella < 2 )
 			Write( _P("X-Alt: ") );
 		else
 			Write( _P("Alt-Location: ") );

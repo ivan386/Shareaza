@@ -308,10 +308,7 @@ BOOL CDownloadTransferHTTP::SendRequest()
 		strLine.Format( _T("GET %s HTTP/1.0\r\n"), (LPCTSTR)m_pSource->m_sURL );
 		Write( strLine );
 	}
-	
-	theApp.Message( MSG_DEBUG | MSG_FACILITY_OUTGOING, _T("%s: DOWNLOAD REQUEST: %s"),
-		(LPCTSTR)m_sAddress, (LPCTSTR)pURL.m_sPath );
-	
+
 	Write( _P("Connection: Keep-Alive\r\n") ); //BearShare assumes close
 
 	if ( Settings.Gnutella2.EnableToday ) Write( _P("X-Features: g2/1.0\r\n") );
@@ -385,10 +382,10 @@ BOOL CDownloadTransferHTTP::SendRequest()
 	
 	if ( ! m_bTigerFetch && ! m_bMetaFetch )
 	{
-		if ( m_pDownload->m_oSHA1 )
+		if ( m_pDownload->m_oSHA1 || m_pDownload->m_oTiger )
 		{
 			Write( _P("X-Content-URN: ") );
-			Write( m_pDownload->m_oSHA1.toUrn() );
+			Write( m_pDownload->GetBitprint() );
 			Write( _P("\r\n") );
 		}
 		if ( m_pDownload->m_oED2K )
@@ -411,11 +408,8 @@ BOOL CDownloadTransferHTTP::SendRequest()
 		}
 		if ( m_pSource->m_bSHA1 && Settings.Library.SourceMesh )
 		{
-			if ( m_pSource->m_nGnutella < 2 )
-				strLine = m_pDownload->GetSourceURLs( &m_pSourcesSent, 15, PROTOCOL_G1, m_pSource );
-			else
-				strLine = m_pDownload->GetSourceURLs( &m_pSourcesSent, 15, PROTOCOL_HTTP, m_pSource );
-			
+			strLine = m_pDownload->GetSourceURLs( &m_pSourcesSent, 15,
+				( m_pSource->m_nGnutella < 2 ) ? PROTOCOL_G1 : PROTOCOL_HTTP, m_pSource );
 			if ( strLine.GetLength() )
 			{
 				if ( m_pSource->m_nGnutella < 2 )
@@ -430,17 +424,16 @@ BOOL CDownloadTransferHTTP::SendRequest()
 			{
 				if ( m_pSource->m_nGnutella < 2 )
 				{
-					strLine.Format( _T("%s:%i"), (LPCTSTR)CString( inet_ntoa( Network.m_pHost.sin_addr ) ),
+					strLine.Format( _T("%s:%i"),
+						(LPCTSTR)CString( inet_ntoa( Network.m_pHost.sin_addr ) ),
 						htons( Network.m_pHost.sin_port ) );
 					Write( _P("X-Alt: ") );
 				}
 				else
 				{
-					strLine.Format( _T("http://%s:%i/uri-res/N2R?%s "),
-						(LPCTSTR)CString( inet_ntoa( Network.m_pHost.sin_addr ) ),
-						htons( Network.m_pHost.sin_port ),
-						(LPCTSTR)m_pDownload->m_oSHA1.toUrn() );
-					strLine += TimeToString( static_cast< DWORD >( time( NULL ) - 180 ) );
+					strLine = m_pDownload->GetURL( Network.m_pHost.sin_addr,
+						htons( Network.m_pHost.sin_port ) ) + _T(" ") +
+						TimeToString( static_cast< DWORD >( time( NULL ) - 180 ) );
 					Write( _P("Alt-Location: ") );
 				}
 				Write( strLine );
@@ -457,6 +450,15 @@ BOOL CDownloadTransferHTTP::SendRequest()
 					}
 				}
 			}
+		}
+	}
+
+	{
+		CLockedBuffer pOutput( GetOutput() );
+		if ( pOutput->m_nLength )
+		{
+			CStringA msg( (const char*)pOutput->m_pBuffer, pOutput->m_nLength );
+			theApp.Message( MSG_DEBUG | MSG_FACILITY_OUTGOING, _T("%s: DOWNLOAD REQUEST: %s"), (LPCTSTR)m_sAddress, (LPCTSTR)CA2T( msg ) );
 		}
 	}
 	
@@ -906,12 +908,7 @@ BOOL CDownloadTransferHTTP::OnHeaderLine(CString& strHeader, CString& strValue)
 				strHeader.CompareNoCase( _T("X-Alt") ) == 0 )
 	{
 		if ( Settings.Library.SourceMesh )
-		{
-			if ( strValue.Find( _T("Zhttp://") ) < 0 )
-			{
-				m_pDownload->AddSourceURLs( strValue, m_bHashMatch );
-			}
-		}
+			m_pDownload->AddSourceURLs( strValue, m_bHashMatch );
 		m_pSource->SetGnutella( 1 );
 	}
 	else if ( strHeader.CompareNoCase( _T("X-Available-Ranges") ) == 0 )
@@ -1022,7 +1019,7 @@ BOOL CDownloadTransferHTTP::OnHeaderLine(CString& strHeader, CString& strValue)
 		BOOL bIsP2P = m_pSource->m_bSHA1 || m_pSource->m_bTiger || m_pSource->m_bED2K || m_pSource->m_bMD5 || m_pSource->m_bBTH;
 
 		// Accept Content-Disposition only if the current display name is empty or if it came from Web Servers and the current display name is shorter than 13 chars (Is likely to be default.html, default.asp, etc.).
-		if ( m_pDownload->m_sDisplayName.GetLength() == 0 || ( !bIsP2P && m_pDownload->m_sDisplayName.GetLength() < 13 ) )
+		if ( m_pDownload->m_sName.GetLength() == 0 || ( !bIsP2P && m_pDownload->m_sName.GetLength() < 13 ) )
 		{ 
 			CString strPhrase, strFilename;
 			int nPos = strValue.Find( _T("filename=") );

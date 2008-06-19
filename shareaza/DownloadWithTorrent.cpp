@@ -149,26 +149,26 @@ void CDownloadWithTorrent::Serialize(CArchive& ar, int nVersion)
 	if ( ar.IsLoading() && IsTorrent() )
 	{
 		m_oBTH = m_pTorrent.m_oBTH;
-        m_oBTH.signalTrusted();
+        m_bBTHTrusted = true;
 		if ( ! m_oTiger && m_pTorrent.m_oTiger )
 		{
 			m_oTiger = m_pTorrent.m_oTiger;
-			m_oTiger.signalTrusted();
+			m_bTigerTrusted = true;
 		}
 		if ( ! m_oSHA1 && m_pTorrent.m_oSHA1 )
 		{
 			m_oSHA1 = m_pTorrent.m_oSHA1;
-			m_oSHA1.signalTrusted();
+			m_bSHA1Trusted = true;
 		}
 		if ( ! m_oED2K && m_pTorrent.m_oED2K )
 		{
 			m_oED2K = m_pTorrent.m_oED2K;
-			m_oED2K.signalTrusted();
+			m_bED2KTrusted = true;
 		}
 		if ( ! m_oMD5 && m_pTorrent.m_oMD5 )
 		{
 			m_oMD5 = m_pTorrent.m_oMD5;
-			m_oMD5.signalTrusted();
+			m_bMD5Trusted = true;
 		}
 	}
 
@@ -211,26 +211,26 @@ BOOL CDownloadWithTorrent::SetTorrent(CBTInfo* pTorrent)
 	m_pTorrent.Copy( pTorrent );
 	
 	m_oBTH = m_pTorrent.m_oBTH;
-	m_oBTH.signalTrusted();
+	m_bBTHTrusted = true;
 	if ( ! m_oTiger && m_pTorrent.m_oTiger )
 	{
 		m_oTiger = m_pTorrent.m_oTiger;
-		m_oTiger.signalTrusted();
+		m_bTigerTrusted = true;
 	}
 	if ( ! m_oSHA1 && m_pTorrent.m_oSHA1 )
 	{
 		m_oSHA1 = m_pTorrent.m_oSHA1;
-		m_oSHA1.signalTrusted();
+		m_bSHA1Trusted = true;
 	}
 	if ( ! m_oED2K && m_pTorrent.m_oED2K )
 	{
 		m_oED2K = m_pTorrent.m_oED2K;
-		m_oED2K.signalTrusted();
+		m_bED2KTrusted = true;
 	}
 	if ( ! m_oMD5 && m_pTorrent.m_oMD5 )
 	{
 		m_oMD5 = m_pTorrent.m_oMD5;
-		m_oMD5.signalTrusted();
+		m_bMD5Trusted = true;
 	}
 	
 	m_nTorrentSize	= m_pTorrent.m_nBlockSize;
@@ -275,8 +275,8 @@ bool CDownloadWithTorrent::RunTorrent(DWORD tNow)
 	if ( m_pFile && m_pFile->IsOpen() == FALSE )
 	{
 		// Check if file has been created on the HDD
-		bool bAllocated = ( !m_sDiskName.IsEmpty()
-			&& GetFileAttributes( m_sDiskName ) != INVALID_FILE_ATTRIBUTES );
+		bool bAllocated = ( !m_sPath.IsEmpty()
+			&& GetFileAttributes( m_sPath ) != INVALID_FILE_ATTRIBUTES );
 
 		// Try to create and/or open the file
 		if ( !PrepareFile() )
@@ -849,7 +849,7 @@ BOOL CDownloadWithTorrent::SeedTorrent(LPCTSTR pszTarget)
 	if ( IsMoving() || IsCompleted() )
 		return FALSE;
 
-	if ( m_sDiskName == pszTarget )
+	if ( m_sPath == pszTarget )
 		return FALSE;
 	
 	ASSERT( m_pFile != NULL );
@@ -874,14 +874,14 @@ BOOL CDownloadWithTorrent::SeedTorrent(LPCTSTR pszTarget)
 	memset( m_pTorrentBlock, TRI_TRUE, m_nTorrentBlock );
 	m_nTorrentSuccess = m_nTorrentBlock;
 	
-	if ( m_sDiskName.GetLength() > 0 )
+	if ( m_sPath.GetLength() > 0 )
 	{
 		ASSERT( FALSE );
-		::DeleteFile( m_sDiskName );
-		::DeleteFile( m_sDiskName + _T(".sd") );
+		::DeleteFile( m_sPath );
+		::DeleteFile( m_sPath + _T(".sd") );
 	}
 	
-	m_sDiskName = pszTarget;
+	m_sPath = pszTarget;
 	SetModified();
 	
 	SendStarted( Settings.BitTorrent.UploadCount * 4ul );	

@@ -1006,6 +1006,10 @@
 				>
 			</File>
 			<File
+				RelativePath="ShareazaFile.cpp"
+				>
+			</File>
+			<File
 				RelativePath="ShareazaURL.cpp"
 				>
 			</File>
@@ -3432,6 +3436,10 @@
 			</File>
 			<File
 				RelativePath="StreamArchive.h"
+				>
+			</File>
+			<File
+				RelativePath="ThreadImpl.h"
 				>
 			</File>
 			<File

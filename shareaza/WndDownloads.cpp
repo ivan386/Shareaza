@@ -375,7 +375,7 @@ void CDownloadsWnd::OnTimer(UINT_PTR nIDEvent)
 			{
 				pDownload->m_bWaitingPreview = FALSE;
 				CFile pFile;
-				CFileExecutor::Execute( pDownload->m_sDiskName + L".png", TRUE );
+				CFileExecutor::Execute( pDownload->m_sPath + L".png", TRUE );
 			}
 		}
 
@@ -529,7 +529,7 @@ void CDownloadsWnd::Prepare()
 				m_bSelNotMoving = TRUE;
 			if ( ! pDownload->IsBoosted() )
 				m_bSelBoostable = TRUE;
-            if ( pDownload->m_oSHA1 || pDownload->m_oTiger || pDownload->m_oED2K || pDownload->m_oBTH || pDownload->m_oMD5 || pDownload->m_sDisplayName.GetLength() )
+            if ( pDownload->m_oSHA1 || pDownload->m_oTiger || pDownload->m_oED2K || pDownload->m_oBTH || pDownload->m_oMD5 || pDownload->m_sName.GetLength() )
 				m_bSelSHA1orTTHorED2KorName = TRUE;
 			if ( pDownload->IsTorrent() )
 				m_bSelTorrent = TRUE;
@@ -703,7 +703,7 @@ void CDownloadsWnd::OnDownloadsClear()
 			else if ( pDownload->IsStarted() )
 			{
 				CDeleteFileDlg dlg;
-				dlg.m_sName = pDownload->m_sDisplayName;
+				dlg.m_sName = pDownload->m_sName;
 				BOOL bShared = pDownload->IsShared();
 				
 				pLock.Unlock();
@@ -757,7 +757,7 @@ void CDownloadsWnd::OnDownloadsClearIncomplete()
 				if ( pDownload->IsStarted() )
 				{
 					CDeleteFileDlg dlg;
-					dlg.m_sName = pDownload->m_sDisplayName;
+					dlg.m_sName = pDownload->m_sName;
 					BOOL bShared = pDownload->IsShared();
 					
 					pLock.Unlock();
@@ -940,7 +940,7 @@ void CDownloadsWnd::OnDownloadsLaunch()
 		
 		if ( Downloads.Check( pDownload ) )
 		{
-			CString strName = pDownload->m_sDiskName;
+			CString strName = pDownload->m_sPath;
 			
 			if ( pDownload->IsCompleted() )
 			{
@@ -971,8 +971,8 @@ void CDownloadsWnd::OnDownloadsLaunch()
 					if ( nResponse == IDNO ) continue;
 				}
 
-				int nDot = pDownload->m_sDisplayName.ReverseFind( '.' );
-				CString strExt = pDownload->m_sDisplayName.Mid( nDot + 1 );
+				int nDot = pDownload->m_sName.ReverseFind( '.' );
+				CString strExt = pDownload->m_sName.Mid( nDot + 1 );
 				pLock.Unlock();
 				if ( ! CFileExecutor::Execute( strName, FALSE, strExt ) ) break;
 				pLock.Lock();
@@ -984,13 +984,13 @@ void CDownloadsWnd::OnDownloadsLaunch()
 				if ( pDownload->CanPreview() )
 				{
 					if ( pDownload->m_sSafeName.IsEmpty() )
-						pDownload->m_sSafeName = CDownloadTask::SafeFilename( pDownload->m_sDisplayName.Right( 64 ) );
+						pDownload->m_sSafeName = CDownloadTask::SafeFilename( pDownload->m_sName.Right( 64 ) );
 					pDownload->Preview( &pLock );
 				}
 				else
 				{
-					int nDot = pDownload->m_sDisplayName.ReverseFind( '.' );
-					CString strExt = pDownload->m_sDisplayName.Mid( nDot + 1 );
+					int nDot = pDownload->m_sName.ReverseFind( '.' );
+					CString strExt = pDownload->m_sName.Mid( nDot + 1 );
 					pLock.Unlock();
 					if ( ! CFileExecutor::Execute( strName, FALSE, strExt ) ) break;
 					pLock.Lock();
@@ -1099,9 +1099,9 @@ void CDownloadsWnd::OnDownloadsEnqueue()
 		{
 			if ( pDownload->IsStarted() )
 			{
-				CString strPath = pDownload->m_sDiskName;
-				int nDot = pDownload->m_sDisplayName.ReverseFind( '.' );
-				CString strExt = pDownload->m_sDisplayName.Mid( nDot + 1 );
+				CString strPath = pDownload->m_sPath;
+				int nDot = pDownload->m_sName.ReverseFind( '.' );
+				CString strExt = pDownload->m_sName.Mid( nDot + 1 );
 
 				pLock.Unlock();
 				CFileExecutor::Enqueue( strPath, FALSE, strExt );
@@ -1244,10 +1244,10 @@ void CDownloadsWnd::OnDownloadsCopy()
 	for ( POSITION pos = Downloads.GetIterator() ; pos ; )
 	{
 		CDownload* pDownload = Downloads.GetNext( pos );
-		if ( pDownload->m_bSelected && Downloads.Check( pDownload ) && ( pDownload->m_oSHA1 || pDownload->m_oTiger || pDownload->m_oED2K || pDownload->m_oBTH || pDownload->m_oMD5 || pDownload->m_sDisplayName.GetLength() ) )
+		if ( pDownload->m_bSelected && Downloads.Check( pDownload ) && ( pDownload->m_oSHA1 || pDownload->m_oTiger || pDownload->m_oED2K || pDownload->m_oBTH || pDownload->m_oMD5 || pDownload->m_sName.GetLength() ) )
 		{
 			CShareazaFile* pFile = new CShareazaFile();
-			pFile->m_sName		= pDownload->m_sDisplayName;
+			pFile->m_sName		= pDownload->m_sName;
 			pFile->m_oSHA1		= pDownload->m_oSHA1;
 			pFile->m_oTiger		= pDownload->m_oTiger;
 			pFile->m_oED2K		= pDownload->m_oED2K;
@@ -1262,7 +1262,7 @@ void CDownloadsWnd::OnDownloadsCopy()
 			if ( pSource->m_bSelected )
 			{
 				CShareazaFile* pFile = new CShareazaFile();
-				pFile->m_sName		= pDownload->m_sDisplayName;
+				pFile->m_sName		= pDownload->m_sName;
 				pFile->m_oSHA1		= pDownload->m_oSHA1;
 				pFile->m_oTiger		= pDownload->m_oTiger;
 				pFile->m_oED2K		= pDownload->m_oED2K;
@@ -1645,8 +1645,8 @@ void CDownloadsWnd::OnDownloadsFileDelete()
 		if ( Downloads.Check( pDownload ) && pDownload->IsCompleted() )
 		{
 			CDeleteFileDlg dlg;
-			dlg.m_sName		= pDownload->m_sDisplayName;
-			CString strPath	= pDownload->m_sDiskName;
+			dlg.m_sName		= pDownload->m_sName;
+			CString strPath	= pDownload->m_sPath;
 			
 			pLock.Unlock();
 			if ( dlg.DoModal() != IDOK ) break;
@@ -1682,7 +1682,7 @@ void CDownloadsWnd::OnDownloadsRate()
 	{
 		CDownload* pDownload = Downloads.GetNext( pos );
 		if ( pDownload->m_bSelected && pDownload->IsCompleted() )
-			pList.AddTail( pDownload->m_sDiskName );
+			pList.AddTail( pDownload->m_sPath );
 	}
 	
 	pLock.Unlock();

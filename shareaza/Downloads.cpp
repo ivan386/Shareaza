@@ -126,10 +126,10 @@ CDownload* CDownloads::Add(CQueryHit* pHit, BOOL bAddToHead)
 		theApp.Message( MSG_NOTICE, IDS_DOWNLOAD_ADDED,
 			(LPCTSTR)pDownload->GetDisplayName(), pDownload->GetSourceCount() );
 
-        if ( pDownload->m_oSHA1 ) pDownload->m_oSHA1.signalTrusted();
-        if ( pDownload->m_oED2K ) pDownload->m_oED2K.signalTrusted();
-		if ( pDownload->m_oBTH ) pDownload->m_oBTH.signalTrusted();
-		if ( pDownload->m_oMD5 ) pDownload->m_oMD5.signalTrusted();
+        if ( pDownload->m_oSHA1 ) pDownload->m_bSHA1Trusted = true;
+        if ( pDownload->m_oED2K ) pDownload->m_bED2KTrusted = true;
+		if ( pDownload->m_oBTH ) pDownload->m_bBTHTrusted = true;
+		if ( pDownload->m_oMD5 ) pDownload->m_bMD5Trusted = true;
 	}
 
 	pHit->m_bDownload = TRUE;
@@ -182,10 +182,10 @@ CDownload* CDownloads::Add(CMatchFile* pFile, BOOL bAddToHead)
 		theApp.Message( MSG_NOTICE, IDS_DOWNLOAD_ADDED,
 			(LPCTSTR)pDownload->GetDisplayName(), pDownload->GetSourceCount() );
 
-        if ( pDownload->m_oSHA1 ) pDownload->m_oSHA1.signalTrusted();
-        if ( pDownload->m_oED2K ) pDownload->m_oED2K.signalTrusted();
-		if ( pDownload->m_oBTH ) pDownload->m_oBTH.signalTrusted();
-		if ( pDownload->m_oMD5 ) pDownload->m_oMD5.signalTrusted();
+        if ( pDownload->m_oSHA1 ) pDownload->m_bSHA1Trusted = true;
+        if ( pDownload->m_oED2K ) pDownload->m_bED2KTrusted = true;
+		if ( pDownload->m_oBTH ) pDownload->m_bBTHTrusted = true;
+		if ( pDownload->m_oMD5 ) pDownload->m_bMD5Trusted = true;
 	}
 	
 	pFile->m_bDownload = TRUE;
@@ -244,35 +244,35 @@ CDownload* CDownloads::Add(CShareazaURL* pURL)
 	if ( ! pDownload->m_oSHA1 && pURL->m_oSHA1 )
 	{
 		pDownload->m_oSHA1			= pURL->m_oSHA1;
-        pDownload->m_oSHA1.signalTrusted();
+        pDownload->m_bSHA1Trusted = true;
 	}
 	if ( ! pDownload->m_oTiger && pURL->m_oTiger )
 	{
 		pDownload->m_oTiger			= pURL->m_oTiger;
-        pDownload->m_oTiger.signalTrusted();
+        pDownload->m_bTigerTrusted = true;
 	}
 	if ( ! pDownload->m_oED2K && pURL->m_oED2K )
 	{
 		pDownload->m_oED2K			= pURL->m_oED2K;
-        pDownload->m_oED2K.signalTrusted();
+        pDownload->m_bED2KTrusted = true;
 		pDownload->Share( TRUE );
 	}
 	if ( ! pDownload->m_oBTH && pURL->m_oBTH )
 	{
 		pDownload->m_oBTH			= pURL->m_oBTH;
-		pDownload->m_oBTH.signalTrusted();
+		pDownload->m_bBTHTrusted = true;
 		pDownload->Share( TRUE );
 	}
 	if ( ! pDownload->m_oMD5 && pURL->m_oMD5 )
 	{
 		pDownload->m_oMD5			= pURL->m_oMD5;
-		pDownload->m_oMD5.signalTrusted();
+		pDownload->m_bMD5Trusted = true;
 		pDownload->Share( TRUE );
 	}
 	
-	if ( ! pDownload->m_sDisplayName.GetLength() && pURL->m_sName.GetLength() )
+	if ( ! pDownload->m_sName.GetLength() && pURL->m_sName.GetLength() )
 	{
-		pDownload->m_sDisplayName = pURL->m_sName;
+		pDownload->m_sName = pURL->m_sName;
 	}
 	
 	if ( pDownload->m_nSize == SIZE_UNKNOWN && pURL->m_bSize )
@@ -527,7 +527,7 @@ CDownload* CDownloads::FindByPath(LPCTSTR szPath) const
 		for ( POSITION pos = GetIterator() ; pos ; )
 		{
 			CDownload* pDownload = GetNext( pos );
-			if ( pDownload->m_sDiskName.CompareNoCase( szPath ) == 0 )
+			if ( pDownload->m_sPath.CompareNoCase( szPath ) == 0 )
 				return pDownload;
 		}
 	}

@@ -100,7 +100,6 @@ void CURLCopyDlg::OnIncludeSelf()
 		strURN	= _T("xt=urn:bitprint:")
 				+ m_pFile->m_oSHA1.toString() + '.'
 				+ m_pFile->m_oTiger.toString();
-		strIncludeSelfURN = m_pFile->m_oSHA1.toUrn();
 	}
 	else if ( m_pFile->m_oSHA1 )
 	{
@@ -110,22 +109,12 @@ void CURLCopyDlg::OnIncludeSelf()
 	{
 		strURN = _T("xt=") + m_pFile->m_oTiger.toUrn();
 	}
-	if ( !strIncludeSelfURN.GetLength() && strURN.GetLength() ) strIncludeSelfURN = strURN.Mid( 3 );
 
 	if ( m_pFile->m_oED2K )
 	{
 		strTemp = _T("xt=") + m_pFile->m_oED2K.toUrn();
 		if ( strURN.GetLength() ) strURN += _T("&");
 		strURN += strTemp;
-		if ( !strIncludeSelfURN.GetLength() ) strIncludeSelfURN = strURN.Mid( 3 );
-	}
-
-	if ( m_pFile->m_oMD5 )
-	{
-		strTemp = _T("xt=") + m_pFile->m_oMD5.toUrn();
-		/*if ( strURN.GetLength() ) strURN += _T("&");
-		strURN += strTemp;*/
-		if ( !strIncludeSelfURN.GetLength() ) strIncludeSelfURN = strURN.Mid( 3 );
 	}
 
 	m_sMagnet = strURN;
@@ -154,16 +143,12 @@ void CURLCopyDlg::OnIncludeSelf()
 
 	m_sMagnet = _T("magnet:?") + m_sMagnet;
 
-	if ( m_wndIncludeSelf.GetCheck() && strIncludeSelfURN.GetLength() )
+	if ( m_wndIncludeSelf.GetCheck() )
 	{
-		CString strURL;
-
-		strURL.Format( _T("http://%s:%i/uri-res/N2R?%s"),
-			(LPCTSTR)CString( inet_ntoa( Network.m_pHost.sin_addr ) ),
-			htons( Network.m_pHost.sin_port ),
-			(LPCTSTR)strIncludeSelfURN );
-
-		m_sMagnet += _T("&xs=") + URLEncode( strURL );
+		CString strURL = m_pFile->GetURL( Network.m_pHost.sin_addr,
+			htons( Network.m_pHost.sin_port ) );
+		if ( strURL.GetLength() )
+			m_sMagnet += _T("&xs=") + URLEncode( strURL );
 	}
 
 	if ( m_pFile->m_oSHA1 )

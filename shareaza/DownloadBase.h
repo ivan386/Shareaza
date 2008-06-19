@@ -19,15 +19,14 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_DOWNLOADBASE_H__71956CAE_7D13_4809_837B_5F17DE46856E__INCLUDED_)
-#define AFX_DOWNLOADBASE_H__71956CAE_7D13_4809_837B_5F17DE46856E__INCLUDED_
-
 #pragma once
+
+#include "ShareazaFile.h"
 
 class CDownloadTask;
 
 
-class CDownloadBase
+class CDownloadBase : public CShareazaFile
 {
 // Construction
 protected:
@@ -36,20 +35,17 @@ protected:
 
 // Attributes
 public:
+	bool		m_bSHA1Trusted;
+	bool		m_bTigerTrusted;
+	bool		m_bED2KTrusted;
+	bool		m_bBTHTrusted;
+	bool		m_bMD5Trusted;
 	int			m_nCookie;
 public:
-	CString		m_sDisplayName;				// The name of the file (Displayed in windows, etc). May have 'unsafe' characters
 	CString		m_sSearchKeyword;			// Search keyword to override G1 keyword search.
 	CString		m_sSafeName;				// The name, with invalid characters removed. (A meaningful local disk name)
-	CString		m_sDiskName;				// The name and path of the incomplete file on disk (the .partial). 
+	CString		m_sPath;					// The name and path of the incomplete file on disk (the .partial). 
 											// The .sd will be the same as above with ".sd" on the end
-	QWORD		m_nSize;					// Size of download in Bytes
-public:
-    Hashes::Sha1ManagedHash m_oSHA1;
-    Hashes::TigerManagedHash m_oTiger;
-    Hashes::Md5ManagedHash m_oMD5;
-    Hashes::Ed2kManagedHash m_oED2K;
-    Hashes::BtManagedHash m_oBTH;
 protected:
 	CDownloadTask*	m_pTask;
 
@@ -65,7 +61,4 @@ protected:
 	virtual BOOL	IsTrying() const = 0;
 	void			GenerateDiskName(bool bTorrent = false);
 	virtual void	Serialize(CArchive& ar, int nVersion);
-
 };
-
-#endif // !defined(AFX_DOWNLOADBASE_H__71956CAE_7D13_4809_837B_5F17DE46856E__INCLUDED_)

@@ -110,7 +110,7 @@ public:
 	CTigerTree*		GetTigerTree();
 	CED2K*			GetED2K();
 public:
-	CSharedSource*	AddAlternateSource(LPCTSTR pszURL, BOOL bForce = TRUE);
+	CSharedSource*	AddAlternateSource(LPCTSTR pszURL);
 	CSharedSource*	AddAlternateSources(LPCTSTR pszURL);
 	CString			GetAlternateSources(CList< CString >* pState, int nMaximum, PROTOCOLID nProtocol);
 protected:

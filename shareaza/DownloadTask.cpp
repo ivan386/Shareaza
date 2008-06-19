@@ -105,11 +105,11 @@ void CDownloadTask::Construct(CDownload* pDownload)
 	ASSERT( pDownload->m_pTask == NULL );
 	pDownload->m_pTask = this;
 
-	CString strLocalName = pDownload->m_sDisplayName;
+	CString strLocalName = pDownload->m_sName;
 
 	m_nSize		= pDownload->m_nSize;
-	m_sName		= pDownload->m_sDisplayName;
-	m_sFilename	= pDownload->m_sDiskName;
+	m_sName		= pDownload->m_sName;
+	m_sFilename	= pDownload->m_sPath;
 	m_sPath		= DownloadGroups.GetCompletedPath( pDownload );
 
 	int nExt = strLocalName.ReverseFind( '.' );
@@ -741,7 +741,7 @@ BOOL CDownloadTask::MakeBatchTorrent()
 	}
 
 	m_pDownload->m_pFile = new CFragmentedFile();
-	m_pDownload->m_pFile->Create( m_pDownload->m_sDiskName, nTotal );
+	m_pDownload->m_pFile->Create( m_pDownload->m_sPath, nTotal );
 	bool bMissingFile = false;
 
    	for ( int nFile = 0 ; nFile < m_pDownload->m_pTorrent.m_nFiles ; nFile++ )

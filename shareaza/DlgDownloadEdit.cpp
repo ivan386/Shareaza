@@ -104,8 +104,8 @@ BOOL CDownloadEditDlg::OnInitDialog()
 		return TRUE;
 	}
 
-	m_sName = m_pDownload->m_sDisplayName;
-	m_sDiskName = m_pDownload->m_sDiskName;
+	m_sName = m_pDownload->m_sName;
+	m_sDiskName = m_pDownload->m_sPath;
 	if ( m_pDownload->m_nSize != SIZE_UNKNOWN )
 		m_sFileSize.Format( _T("%I64i"), m_pDownload->m_nSize );
 
@@ -116,9 +116,9 @@ BOOL CDownloadEditDlg::OnInitDialog()
 	if ( m_pDownload->m_oED2K )
         m_sED2K = m_pDownload->m_oED2K.toString();
 
-	m_bSHA1Trusted	=	m_pDownload->m_oSHA1.isTrusted();
-	m_bTigerTrusted	=	m_pDownload->m_oTiger.isTrusted();
-	m_bED2KTrusted	=	m_pDownload->m_oED2K.isTrusted();
+	m_bSHA1Trusted	=	m_pDownload->m_bSHA1Trusted;
+	m_bTigerTrusted	=	m_pDownload->m_bTigerTrusted;
+	m_bED2KTrusted	=	m_pDownload->m_bED2KTrusted;
 	
 	m_wndTorrent.EnableWindow( m_pDownload->IsTorrent() );
 
@@ -350,9 +350,9 @@ void CDownloadEditDlg::OnMergeAndVerify()
 	pLock.Unlock();
 
 	// Select file
-	CString strExt( PathFindExtension( m_pDownload->m_sDisplayName ) );
+	CString strExt( PathFindExtension( m_pDownload->m_sName ) );
 	if ( ! strExt.IsEmpty() ) strExt = strExt.Mid( 1 );
-	CFileDialog dlgSelectFile( TRUE, strExt, m_pDownload->m_sDisplayName,
+	CFileDialog dlgSelectFile( TRUE, strExt, m_pDownload->m_sName,
 		OFN_HIDEREADONLY | OFN_FILEMUSTEXIST | OFN_PATHMUSTEXIST | OFN_NOCHANGEDIR,
 		NULL, this );
 	if ( dlgSelectFile.DoModal() == IDOK )
@@ -436,13 +436,13 @@ BOOL CDownloadEditDlg::Commit()
 	bool bNeedUpdate = false;
 	bool bCriticalChange = false;
 
-	bNeedUpdate	= m_pDownload->m_oSHA1.isTrusted() ^ ( m_bSHA1Trusted == TRUE );
-	bNeedUpdate	|= m_pDownload->m_oTiger.isTrusted() ^ ( m_bTigerTrusted == TRUE );
-	bNeedUpdate	|= m_pDownload->m_oED2K.isTrusted() ^ ( m_bED2KTrusted == TRUE );
+	bNeedUpdate	= m_pDownload->m_bSHA1Trusted ^ ( m_bSHA1Trusted == TRUE );
+	bNeedUpdate	|= m_pDownload->m_bTigerTrusted ^ ( m_bTigerTrusted == TRUE );
+	bNeedUpdate	|= m_pDownload->m_bED2KTrusted ^ ( m_bED2KTrusted == TRUE );
 
     if ( ! Downloads.Check( m_pDownload ) || m_pDownload->IsMoving() ) return FALSE;
 
-	if ( m_pDownload->m_sDisplayName != m_sName )
+	if ( m_pDownload->m_sName != m_sName )
 	{
 		pLock.Unlock();
 		LoadString( strMessage, IDS_DOWNLOAD_EDIT_RENAME );
@@ -479,7 +479,7 @@ BOOL CDownloadEditDlg::Commit()
 		if ( ! Downloads.Check( m_pDownload ) || m_pDownload->IsMoving() ) return FALSE;
 		
 		m_pDownload->m_oSHA1 = oSHA1;
-		if ( oSHA1 ) m_pDownload->m_oSHA1.signalTrusted();
+		if ( oSHA1 ) m_pDownload->m_bSHA1Trusted = true;
 		
 		m_pDownload->CloseTransfers();
 		m_pDownload->ClearVerification();
@@ -496,7 +496,7 @@ BOOL CDownloadEditDlg::Commit()
 		if ( ! Downloads.Check( m_pDownload ) || m_pDownload->IsMoving() ) return FALSE;
 		
 		m_pDownload->m_oTiger = oTiger;
-		if ( oTiger ) m_pDownload->m_oTiger.signalTrusted();
+		if ( oTiger ) m_pDownload->m_bTigerTrusted = true;
 		
 		m_pDownload->CloseTransfers();
 		m_pDownload->ClearVerification();
@@ -513,27 +513,16 @@ BOOL CDownloadEditDlg::Commit()
 		if ( ! Downloads.Check( m_pDownload ) || m_pDownload->IsMoving() ) return FALSE;
 		
 		m_pDownload->m_oED2K = oED2K;
-		if ( oED2K ) m_pDownload->m_oED2K.signalTrusted();
+		if ( oED2K ) m_pDownload->m_bED2KTrusted = true;
 		
 		m_pDownload->CloseTransfers();
 		m_pDownload->ClearVerification();
 		bCriticalChange = true;
 	}
 
-	if ( m_bSHA1Trusted )
-		m_pDownload->m_oSHA1.signalTrusted();
-	else
-		m_pDownload->m_oSHA1.signalUntrusted();
-
-	if ( m_bTigerTrusted )
-		m_pDownload->m_oTiger.signalTrusted();
-	else
-		m_pDownload->m_oTiger.signalUntrusted();
-
-	if ( m_bED2KTrusted )
-		m_pDownload->m_oED2K.signalTrusted();
-	else
-		m_pDownload->m_oED2K.signalUntrusted();
+	m_pDownload->m_bSHA1Trusted = m_bSHA1Trusted != FALSE;
+	m_pDownload->m_bTigerTrusted = m_bTigerTrusted != FALSE;
+	m_pDownload->m_bED2KTrusted = m_bED2KTrusted != FALSE;
 
 	if ( bCriticalChange )
 	{

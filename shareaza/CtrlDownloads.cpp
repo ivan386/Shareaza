@@ -1005,7 +1005,7 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
 			rcCell.left += 16;
 
 			// Draw file icon
-			ShellIcons.Draw( &dc, ShellIcons.Get( pDownload->m_sDisplayName, 16 ), 16,
+			ShellIcons.Draw( &dc, ShellIcons.Get( pDownload->m_sName, 16 ), 16,
 				rcCell.left, rcCell.top, crLeftAligned, pDownload->m_bSelected );
 			
 			// Add rating overlay

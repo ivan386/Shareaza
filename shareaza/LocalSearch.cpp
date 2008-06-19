@@ -735,25 +735,25 @@ void CLocalSearch::AddHit(CDownload const * const pDownload, int /*nIndex*/)
 			if ( pDownload->m_nSize <= 0xFFFFFFFF )
 			{
 				if ( bCalculate )
-					nGroup += G2_PACKET_LEN( G2_PACKET_DESCRIPTIVE_NAME, sizeof( DWORD ) + pPacket->GetStringLen( pDownload->m_sDisplayName ) );
+					nGroup += G2_PACKET_LEN( G2_PACKET_DESCRIPTIVE_NAME, sizeof( DWORD ) + pPacket->GetStringLen( pDownload->m_sName ) );
 				else
 				{
-					pPacket->WritePacket( G2_PACKET_DESCRIPTIVE_NAME, sizeof( DWORD ) + pPacket->GetStringLen( pDownload->m_sDisplayName ) );
+					pPacket->WritePacket( G2_PACKET_DESCRIPTIVE_NAME, sizeof( DWORD ) + pPacket->GetStringLen( pDownload->m_sName ) );
 					pPacket->WriteLongBE( (DWORD)pDownload->m_nSize );
-					pPacket->WriteString( pDownload->m_sDisplayName, FALSE );
+					pPacket->WriteString( pDownload->m_sName, FALSE );
 				}
 			}
 			else
 			{
 				if ( bCalculate )
 					nGroup += G2_PACKET_LEN( G2_PACKET_SIZE, sizeof( QWORD ) ) +
-						G2_PACKET_LEN( G2_PACKET_DESCRIPTIVE_NAME, pPacket->GetStringLen( pDownload->m_sDisplayName ) );
+						G2_PACKET_LEN( G2_PACKET_DESCRIPTIVE_NAME, pPacket->GetStringLen( pDownload->m_sName ) );
 				else
 				{
 					pPacket->WritePacket( G2_PACKET_SIZE, sizeof( QWORD ) );
 					pPacket->WriteInt64( pDownload->m_nSize );
-					pPacket->WritePacket( G2_PACKET_DESCRIPTIVE_NAME, pPacket->GetStringLen( pDownload->m_sDisplayName ) );
-					pPacket->WriteString( pDownload->m_sDisplayName, FALSE );
+					pPacket->WritePacket( G2_PACKET_DESCRIPTIVE_NAME, pPacket->GetStringLen( pDownload->m_sName ) );
+					pPacket->WriteString( pDownload->m_sName, FALSE );
 				}
 			}
 		}

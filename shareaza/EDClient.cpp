@@ -1343,7 +1343,7 @@ BOOL CEDClient::OnFileRequest(CEDPacket* pPacket)
 
 	if ( CDownload* pDownload = Downloads.FindByED2K( m_oUpED2K, TRUE ) )
 	{
-		pReply->WriteEDString( pDownload->m_sDisplayName, m_bEmUnicode );
+		pReply->WriteEDString( pDownload->m_sName, m_bEmUnicode );
 		Send( pReply );
 		return TRUE;
 	}
@@ -1451,7 +1451,7 @@ BOOL CEDClient::OnHashsetRequest(CEDPacket* pPacket)
 			{
 				if ( ( pHashset = pDownload->GetHashset() ) != NULL )
 				{
-					strName		= pDownload->m_sDisplayName;
+					strName		= pDownload->m_sName;
 					bDelete		= FALSE;
 				}
 			}
@@ -1675,7 +1675,7 @@ BOOL CEDClient::OnPreviewAnswer(CEDPacket* pPacket)
 					else
 					{
 						CFile pFile;
-						CString strPath = pDownload->m_sDiskName + L".png";
+						CString strPath = pDownload->m_sPath + L".png";
 						if ( pFile.Open( strPath, CFile::modeCreate|CFile::modeWrite ) )
 						{
 							BYTE szByte = 0;

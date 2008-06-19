@@ -1675,43 +1675,11 @@ void CQueryHit::Resolve()
 		return;
 	}
 
-	if ( m_nIndex == 0 || m_oTiger || m_oED2K || m_oBTH || m_oMD5 || Settings.Downloads.RequestHash )
+	if ( Settings.Downloads.RequestHash || m_nIndex == 0 )
 	{
-		if ( m_oSHA1 )
-		{
-			m_sURL.Format( _T("http://%s:%i/uri-res/N2R?%s"),
-				(LPCTSTR)CString( inet_ntoa( m_pAddress ) ), m_nPort,
-				(LPCTSTR)m_oSHA1.toUrn() );
+		m_sURL = GetURL( m_pAddress, m_nPort );
+		if ( m_sURL.GetLength() )
 			return;
-		}
-		else if ( m_oTiger )
-		{
-			m_sURL.Format( _T("http://%s:%i/uri-res/N2R?%s"),
-				(LPCTSTR)CString( inet_ntoa( m_pAddress ) ), m_nPort,
-				(LPCTSTR)m_oTiger.toUrn() );
-			return;
-		}
-		else if ( m_oED2K )
-		{
-			m_sURL.Format( _T("http://%s:%i/uri-res/N2R?%s"),
-				(LPCTSTR)CString( inet_ntoa( m_pAddress ) ), m_nPort,
-				(LPCTSTR)m_oED2K.toUrn() );
-			return;
-		}
-		else if ( m_oBTH )
-		{
-			m_sURL.Format( _T("btc://%s:%i//%s/"),
-				(LPCTSTR)CString( inet_ntoa( m_pAddress ) ), m_nPort,
-				(LPCTSTR)m_oBTH.toString() );
-			return;
-		}
-		else if ( m_oMD5 )
-		{
-			m_sURL.Format( _T("http://%s:%i/uri-res/N2R?%s"),
-				(LPCTSTR)CString( inet_ntoa( m_pAddress ) ), m_nPort,
-				(LPCTSTR)m_oMD5.toUrn() );
-			return;
-		}
 	}
 
 	if ( Settings.Downloads.RequestURLENC )

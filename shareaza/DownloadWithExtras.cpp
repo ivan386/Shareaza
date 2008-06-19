@@ -95,7 +95,7 @@ BOOL CDownloadWithExtras::CanPreview()
 	LPCTSTR pszType = _tcsrchr( m_sSafeName, '.' );
 	if ( pszType == NULL )
 	{
-		pszType = _tcsrchr( m_sDisplayName, '.' );
+		pszType = _tcsrchr( m_sName, '.' );
 		if ( pszType == NULL ) return FALSE;
 	}
 	
@@ -458,7 +458,7 @@ void CDownloadWithExtras::OnPreviewRequestComplete(CDownloadTask* pTask)
 	}
 
 	CFile pFile;
-	CString strPath = m_sDiskName + L".png";
+	CString strPath = m_sPath + L".png";
 	if ( pFile.Open( strPath, CFile::modeCreate|CFile::modeWrite ) )
 	{
 		pFile.Write( pBuffer2, nImageSize );

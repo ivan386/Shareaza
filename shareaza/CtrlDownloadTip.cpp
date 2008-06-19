@@ -499,7 +499,7 @@ void CDownloadTipCtrl::OnPaint(CDC* pDC, CDownload* pDownload)
 
 void CDownloadTipCtrl::PrepareFileInfo(CDownload* pDownload)
 {
-	m_sName = pDownload->m_sDisplayName;
+	m_sName = pDownload->m_sName;
 	m_sSize = Settings.SmartVolume( pDownload->m_nSize );
 	if ( pDownload->m_nSize == SIZE_UNKNOWN ) m_sSize = _T("?");
 
@@ -520,7 +520,7 @@ void CDownloadTipCtrl::PrepareFileInfo(CDownload* pDownload)
 		m_sSHA1 = pDownload->m_oSHA1.toShortUrn();
 		if ( m_sSHA1.GetLength() )
 		{
-			if ( ! pDownload->m_oSHA1.isTrusted() )
+			if ( ! pDownload->m_bSHA1Trusted )
 			{
 				m_sSHA1 += _T(" (") + strUntrusted + _T(")");
 			}
@@ -531,7 +531,7 @@ void CDownloadTipCtrl::PrepareFileInfo(CDownload* pDownload)
 		{
 			if ( ! pDownload->m_pTigerBlock )
 			{
-				if ( pDownload->m_oTiger.isTrusted() )
+				if ( pDownload->m_bTigerTrusted )
 				{
 					m_sTiger += _T(" (") + strNoHashset + _T(")");
 				}
@@ -540,7 +540,7 @@ void CDownloadTipCtrl::PrepareFileInfo(CDownload* pDownload)
 					m_sTiger += _T(" (") + strNoHashset + _T(", ") + strUntrusted + _T(")");
 				}
 			}
-			else if ( ! pDownload->m_oTiger.isTrusted() )
+			else if ( ! pDownload->m_bTigerTrusted )
 			{
 				m_sTiger += _T(" (") + strUntrusted + _T(")");
 			}
@@ -551,7 +551,7 @@ void CDownloadTipCtrl::PrepareFileInfo(CDownload* pDownload)
 		{
 			if ( ! pDownload->m_pHashsetBlock )
 			{
-				if ( pDownload->m_oED2K.isTrusted() )
+				if ( pDownload->m_bED2KTrusted )
 				{
 					m_sED2K += _T(" (") + strNoHashset + _T(")");
 				}
@@ -560,7 +560,7 @@ void CDownloadTipCtrl::PrepareFileInfo(CDownload* pDownload)
 					m_sED2K += _T(" (") + strNoHashset + _T(", ") + strUntrusted + _T(")");
 				}
 			}
-			else if ( ! pDownload->m_oED2K.isTrusted() )
+			else if ( ! pDownload->m_bED2KTrusted )
 			{
 				m_sED2K += _T(" (") + strUntrusted + _T(")");
 			}
@@ -571,7 +571,7 @@ void CDownloadTipCtrl::PrepareFileInfo(CDownload* pDownload)
 		{
 			if ( ! pDownload->m_pTorrentBlock )
 			{
-				if ( pDownload->m_oBTH.isTrusted() )
+				if ( pDownload->m_bBTHTrusted )
 				{
 					m_sBTH += _T(" (") + strNoHashset + _T(")");
 				}
@@ -580,7 +580,7 @@ void CDownloadTipCtrl::PrepareFileInfo(CDownload* pDownload)
 					m_sBTH += _T(" (") + strNoHashset + _T(", ") + strUntrusted + _T(")");
 				}
 			}
-			else if ( ! pDownload->m_oBTH.isTrusted() )
+			else if ( ! pDownload->m_bBTHTrusted )
 			{
 				m_sBTH += _T(" (") + strUntrusted + _T(")");
 			}
@@ -592,7 +592,7 @@ void CDownloadTipCtrl::PrepareFileInfo(CDownload* pDownload)
 		m_sMD5 = pDownload->m_oMD5.toShortUrn();
 		if ( m_sMD5.GetLength() )
 		{
-			if ( ! pDownload->m_oMD5.isTrusted() )
+			if ( ! pDownload->m_bMD5Trusted )
 			{
 				m_sMD5+= _T(" (") + strUntrusted + _T(")");
 			}

@@ -206,7 +206,7 @@ void CDeleteFileDlg::Create(CDownload* pDownload, BOOL bShare)
 	if ( pFile == NULL && m_bCreateGhost && 
 		 ( m_nRateValue > 0 || m_sComments.GetLength() > 0 ) ) // The file is not completed
 	{
-		pFile = new CLibraryFile( NULL, pDownload->m_sDisplayName );
+		pFile = new CLibraryFile( NULL, pDownload->m_sName );
 		pFile->m_nSize		= pDownload->m_nSize;
 		pFile->m_oSHA1		= pDownload->m_oSHA1;
 		pFile->m_oTiger		= pDownload->m_oTiger;

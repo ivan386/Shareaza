@@ -326,11 +326,11 @@ BOOL CEDPartImporter::ImportFile(LPCTSTR pszPath, LPCTSTR pszFile)
 	CDownload* pDownload = Downloads.Add();
 	
 	pDownload->m_oED2K			= oED2K;
-	pDownload->m_oED2K.signalTrusted(); // .part use trusted hashes
+	pDownload->m_bED2KTrusted = true; // .part use trusted hashes
 
 	pDownload->m_nSize			= nSize;
-	pDownload->m_sDisplayName	= strName;
-	pDownload->m_sDiskName		= strTarget;
+	pDownload->m_sName			= strName;
+	pDownload->m_sPath			= strTarget;
 	
 	{
 		Fragments::List oNewList( nSize );

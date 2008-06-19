@@ -555,7 +555,7 @@ BOOL CHomeDownloadsBox::ExecuteDownload(CDownload* pDownload)
 	
 	if ( pDownload->IsCompleted() )
 	{
-		CString strName = pDownload->m_sDiskName;
+		CString strName = pDownload->m_sPath;
 		
 		if ( pDownload->m_bVerify == TRI_FALSE )
 		{

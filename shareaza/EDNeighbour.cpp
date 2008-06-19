@@ -694,7 +694,7 @@ void CEDNeighbour::SendSharedFiles()
 				pPacket->WriteLongLE( 2 ); //Number of Tags
 
 			//Send the file name to the ed2k server
-			CEDTag( ED2K_FT_FILENAME, pDownload->m_sDisplayName ).Write( pPacket, m_nTCPFlags );
+			CEDTag( ED2K_FT_FILENAME, pDownload->m_sName ).Write( pPacket, m_nTCPFlags );
 			//Send the file size to the ed2k server
 			CEDTag( ED2K_FT_FILESIZE, (DWORD)pDownload->m_nSize ).Write( pPacket, m_nTCPFlags );
 			if ( pDownload->m_nSize > MAX_SIZE_32BIT )
@@ -916,7 +916,7 @@ BOOL CEDNeighbour::SendSharedDownload(CDownload* pDownload)
 		pPacket->WriteLongLE( 2 ); //Number of Tags
 
 	// Send the file name to the ed2k server
-	CEDTag( ED2K_FT_FILENAME, pDownload->m_sDisplayName ).Write( pPacket, m_nTCPFlags );
+	CEDTag( ED2K_FT_FILENAME, pDownload->m_sName ).Write( pPacket, m_nTCPFlags );
 	// Send the file size to the ed2k server
 	CEDTag( ED2K_FT_FILESIZE, (DWORD)pDownload->m_nSize ).Write( pPacket, m_nTCPFlags );
 	if ( pDownload->m_nSize > MAX_SIZE_32BIT )

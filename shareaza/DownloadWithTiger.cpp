@@ -348,7 +348,7 @@ void CDownloadWithTiger::RunValidation(BOOL bSeeding)
 	CQuickLock oLock( m_pTigerSection );
 
 	if ( m_pTigerBlock == NULL && m_pHashsetBlock == NULL && m_pTorrentBlock == NULL ) return;
-	if ( m_sDiskName.IsEmpty() ) return;
+	if ( m_sPath.IsEmpty() ) return;
 
 	if ( ! bSeeding )
 	{
@@ -528,10 +528,10 @@ void CDownloadWithTiger::ContinueValidation()
 
 	if ( m_pFile == NULL )
 	{
-		hComplete = CreateFile( m_sDiskName, GENERIC_READ,
+		hComplete = CreateFile( m_sPath, GENERIC_READ,
 			FILE_SHARE_READ | FILE_SHARE_WRITE | ( theApp.m_bNT ? FILE_SHARE_DELETE : 0 ),
 			NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL );
-		VERIFY_FILE_ACCESS( hComplete, m_sDiskName )
+		VERIFY_FILE_ACCESS( hComplete, m_sPath )
 		if ( hComplete == INVALID_HANDLE_VALUE ) return;
 	}
 

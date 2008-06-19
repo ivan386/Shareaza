@@ -182,7 +182,7 @@ BOOL CDownloadMonitorDlg::OnInitDialog()
 	
 	if ( Downloads.Check( m_pDownload ) )
 	{
-		m_sName = m_pDownload->m_sDisplayName;
+		m_sName = m_pDownload->m_sName;
 		CString strType = m_sName;
 
 		int nPeriod = strType.ReverseFind( '.' );
@@ -282,25 +282,25 @@ void CDownloadMonitorDlg::OnTimer(UINT_PTR /*nIDEvent*/)
 	m_pGraph->m_nMaximum = max( m_pGraph->m_nMaximum, nSpeed );
 	
 	// Update file name if it was changed from the Advanced Edit dialog
-	Update( &m_wndFile, m_pDownload->m_sDisplayName );
+	Update( &m_wndFile, m_pDownload->m_sName );
 
 	if ( m_pDownload->IsStarted() )
 	{
 		if ( Settings.General.LanguageRTL )
 		{
 			strText.Format( _T("%s %s %.2f%% : Shareaza"),
-				(LPCTSTR)m_pDownload->m_sDisplayName, strOf, m_pDownload->GetProgress() );
+				(LPCTSTR)m_pDownload->m_sName, strOf, m_pDownload->GetProgress() );
 		}
 		else
 		{
 			strText.Format( _T("%.2f%% %s %s : Shareaza"),
-				m_pDownload->GetProgress(), strOf, (LPCTSTR)m_pDownload->m_sDisplayName );
+				m_pDownload->GetProgress(), strOf, (LPCTSTR)m_pDownload->m_sName );
 		}
 	}
 	else
 	{
 		strText.Format( _T("%s : Shareaza"),
-			(LPCTSTR)m_pDownload->m_sDisplayName );
+			(LPCTSTR)m_pDownload->m_sName );
 	}
 	
 	Update( this, strText );
@@ -572,7 +572,7 @@ void CDownloadMonitorDlg::OnDownloadStop()
 	{
 		CString strFormat, strPrompt;
 		::LoadString( strFormat, IDS_DOWNLOAD_CONFIRM_CLEAR );
-		strPrompt.Format( strFormat, (LPCTSTR)m_pDownload->m_sDisplayName );
+		strPrompt.Format( strFormat, (LPCTSTR)m_pDownload->m_sName );
 
 		pLock.Unlock();
 		if ( MessageBox( strPrompt, NULL, MB_ICONQUESTION|MB_YESNO|MB_DEFBUTTON2 ) != IDYES ) return;

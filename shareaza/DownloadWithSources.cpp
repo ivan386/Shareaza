@@ -235,11 +235,11 @@ BOOL CDownloadWithSources::AddSourceHit(CQueryHit* pHit, BOOL bForce)
 	{
 		if ( Settings.General.HashIntegrity ) return FALSE;
 		
-		if ( m_sDisplayName.IsEmpty() || pHit->m_sName.IsEmpty() ) return FALSE;
+		if ( m_sName.IsEmpty() || pHit->m_sName.IsEmpty() ) return FALSE;
 		if ( m_nSize == SIZE_UNKNOWN || ! pHit->m_bSize ) return FALSE;
 		
 		if ( m_nSize != pHit->m_nSize ) return FALSE;
-		if ( m_sDisplayName.CompareNoCase( pHit->m_sName ) ) return FALSE;
+		if ( m_sName.CompareNoCase( pHit->m_sName ) ) return FALSE;
 	}
 	
 	if ( !m_oSHA1 && pHit->m_oSHA1 )
@@ -277,9 +277,9 @@ BOOL CDownloadWithSources::AddSourceHit(CQueryHit* pHit, BOOL bForce)
 		return FALSE;
 	}
 
-	if ( m_sDisplayName.IsEmpty() && pHit->m_sName.GetLength() )
+	if ( m_sName.IsEmpty() && pHit->m_sName.GetLength() )
 	{
-		m_sDisplayName = pHit->m_sName;
+		m_sName = pHit->m_sName;
 	}
 	
 	if ( Settings.Downloads.Metadata && m_pXML == NULL )
@@ -457,9 +457,9 @@ BOOL CDownloadWithSources::AddSourceURL(LPCTSTR pszURL, BOOL bURN, FILETIME* pLa
 		m_nSize = pURL.m_nSize;
 	}
 	// Get name
-	if ( m_sDisplayName.IsEmpty() && pURL.m_sName.GetLength() )
+	if ( m_sName.IsEmpty() && pURL.m_sName.GetLength() )
 	{
-		m_sDisplayName = pURL.m_sName;
+		m_sName = pURL.m_sName;
 	}
 
 	return AddSourceInternal( new CDownloadSource( static_cast< const CDownload* >( this ),
@@ -479,79 +479,19 @@ int CDownloadWithSources::AddSourceURLs(LPCTSTR pszURLs, BOOL bURN, BOOL bFailed
 	else if ( IsPaused() )
 		return 0;
 
-	CString strURLs( pszURLs );
-	BOOL bQuote = FALSE;
-
-	for ( int nScan = 0 ; nScan < strURLs.GetLength() ; nScan++ )
-	{
-		if ( strURLs[ nScan ] == '\"' )
-		{
-			bQuote = ! bQuote;
-			strURLs.SetAt( nScan, ' ' );
-		}
-		else if ( strURLs[ nScan ] == ',' && bQuote )
-		{
-			strURLs.SetAt( nScan, '`' );
-		}
-	}
-
-	strURLs += ',';
-
 	int nCount = 0;
-	for ( ; ; )
+
+	CMapStringToFILETIME oUrls;
+	SplitStringToURLs( pszURLs, oUrls );
+
+	for ( POSITION pos = oUrls.GetStartPosition(); pos; )
 	{
-		int nPos = strURLs.Find( ',' );
-		if ( nPos < 0 ) break;
-
-		CString strURL	= strURLs.Left( nPos );
-		strURLs			= strURLs.Mid( nPos + 1 );
-		strURL.TrimLeft();
-
-		FILETIME tSeen = { 0, 0 };
-		BOOL bSeen = FALSE;
-
-		if ( _tcsistr( strURL, _T("://") ) != NULL )
-		{
-			nPos = strURL.ReverseFind( ' ' );
-			
-			if ( nPos > 0 )
-			{
-				CString strTime = strURL.Mid( nPos + 1 );
-				strURL = strURL.Left( nPos );
-				strURL.TrimRight();
-				bSeen = TimeFromString( strTime, &tSeen );
-			}
-
-			for ( int nScan = 0 ; nScan < strURL.GetLength() ; nScan++ )
-			{
-				if ( strURL[ nScan ] == '`' ) strURL.SetAt( nScan, ',' );
-			}
-		}
-		else
-		{
-			nPos = strURL.Find( ':' );
-
-			if ( nPos < 1 ) continue;
-			
-			int nPort = 0;
-			_stscanf( strURL.Mid( nPos + 1 ), _T("%i"), &nPort );
-			strURL.Truncate( nPos );
-			DWORD nAddress = inet_addr( CT2CA( strURL ) );
-			strURL.Empty();
-			
-			if ( ! Network.IsFirewalledAddress( &nAddress, TRUE ) && 
-				 ! Network.IsReserved( (IN_ADDR*)&nAddress ) && nPort != 0 && nAddress != INADDR_NONE )
-			{
-				if ( m_oSHA1 )
-				{
-					strURL.Format( _T("http://%s:%i/uri-res/N2R?%s"),
-						(LPCTSTR)CString( inet_ntoa( *(IN_ADDR*)&nAddress ) ),
-						nPort, (LPCTSTR)m_oSHA1.toUrn() );
-				}
-			}
-		}
+		CString strURL;
+		FILETIME tSeen = {};
+		oUrls.GetNextAssoc( pos, strURL, tSeen );
 		
-		if ( AddSourceURL( strURL, bURN, bSeen ? &tSeen : NULL, 0, bFailed ) )
+		if ( AddSourceURL( strURL, bURN,
+			( tSeen.dwLowDateTime | tSeen.dwHighDateTime ) ? &tSeen : NULL, 0, bFailed ) )
 		{
 			if ( bFailed )
 			{
@@ -564,7 +504,7 @@ int CDownloadWithSources::AddSourceURLs(LPCTSTR pszURLs, BOOL bURN, BOOL bFailed
 			nCount++;
 		}
 	}
-	
+
 	return nCount;
 }
 
@@ -671,32 +611,7 @@ BOOL CDownloadWithSources::AddSourceInternal(CDownloadSource* pSource)
 	// Make G2 source from the existing non-HTTP Shareaza source
 	if ( pCopy && Settings.Gnutella2.EnableToday )
 	{
-		CString strURL;
-		if ( m_oSHA1 )
-		{
-			strURL.Format( _T("http://%s:%i/uri-res/N2R?%s"),
-				(LPCTSTR)CString( inet_ntoa( pCopy->m_pAddress ) ),
-				pCopy->m_nPort, (LPCTSTR)m_oSHA1.toUrn() );
-		}
-		else if ( m_oED2K )
-		{
-			strURL.Format( _T("http://%s:%i/uri-res/N2R?%s"),
-				(LPCTSTR)CString( inet_ntoa( pCopy->m_pAddress ) ),
-				pCopy->m_nPort, (LPCTSTR)m_oED2K.toUrn() );
-		}
-		else if ( m_oMD5 )
-		{
-			strURL.Format( _T("http://%s:%i/uri-res/N2R?%s"),
-				(LPCTSTR)CString( inet_ntoa( pCopy->m_pAddress ) ),
-				pCopy->m_nPort, (LPCTSTR)m_oMD5.toUrn() );
-		}
-		else if ( m_oBTH )
-		{
-			strURL.Format( _T("http://%s:%i/uri-res/N2R?%s"),
-				(LPCTSTR)CString( inet_ntoa( pCopy->m_pAddress ) ),
-				pCopy->m_nPort, (LPCTSTR)m_oBTH.toUrn() );
-		}
-
+		CString strURL = GetURL( pCopy->m_pAddress, pCopy->m_nPort );
 		if ( strURL.GetLength() )
 		{
 			CDownloadSource* pG2Source  = new CDownloadSource( (CDownload*)this, strURL );
@@ -773,7 +688,7 @@ BOOL CDownloadWithSources::AddSourceInternal(CDownloadSource* pSource)
 
 CString CDownloadWithSources::GetSourceURLs(CList< CString >* pState, int nMaximum, PROTOCOLID nProtocol, CDownloadSource* pExcept)
 {
-	CString strSources, strURL;
+	CString strSources;
 	
 	for ( CDownloadSource* pSource = GetFirstSource() ; pSource ; pSource = pSource->m_pNext )
 	{
@@ -782,15 +697,13 @@ CString CDownloadWithSources::GetSourceURLs(CList< CString >* pState, int nMaxim
 			 ( pSource->m_bSHA1 || pSource->m_bED2K || pSource->m_bBTH  || pSource->m_bMD5 ) &&
 			 ( pState == NULL || pState->Find( pSource->m_sURL ) == NULL ) )
 		{
-			if ( pState != NULL ) pState->AddTail( pSource->m_sURL );
-			
-			
 			// Only return appropriate sources
 			if ( ( nProtocol == PROTOCOL_HTTP ) && ( pSource->m_nProtocol != PROTOCOL_HTTP ) ) continue;
 			if ( ( nProtocol == PROTOCOL_G1 ) && ( pSource->m_nGnutella != 1 ) ) continue;
-
 			//if ( bHTTP && pSource->m_nProtocol != PROTOCOL_HTTP ) continue;
-			
+
+			if ( pState != NULL ) pState->AddTail( pSource->m_sURL );
+
 			if ( nProtocol == PROTOCOL_G1 )
 			{
 				if ( strSources.GetLength() ) 
@@ -798,16 +711,23 @@ CString CDownloadWithSources::GetSourceURLs(CList< CString >* pState, int nMaxim
 				strSources += CString( inet_ntoa( pSource->m_pAddress ) );
 				if ( pSource->m_nPort != GNUTELLA_DEFAULT_PORT )
 				{
+					CString strURL;
 					strURL.Format( _T("%hu"), pSource->m_nPort );
 					strSources += ':' + strURL;
 				}
 			}
+			else if ( pSource->m_sURL.Find( _T("Zhttp://") ) >= 0 ||
+				pSource->m_sURL.Find( _T("Z%2C http://") ) >= 0 )
+			{
+				// Ignore buggy URLs
+				TRACE( _T("CDownloadWithSources::GetSourceURLs() Bad URL: %s\n"), pSource->m_sURL );
+			}
 			else
 			{
-				strURL = pSource->m_sURL;
+				CString strURL = pSource->m_sURL;
 				strURL.Replace( _T(","), _T("%2C") );
 
-				if ( strSources.GetLength() > 0 ) strSources += _T(", ");
+				if ( strSources.GetLength() ) strSources += _T(", ");
 				strSources += strURL;
 				strSources += ' ';
 				strSources += TimeToString( &pSource->m_tLastSeen );
@@ -817,8 +737,6 @@ CString CDownloadWithSources::GetSourceURLs(CList< CString >* pState, int nMaxim
 			else if ( nMaximum > 1 ) nMaximum --;
 		}
 	}
-	
-	if ( strSources.Find( _T("Zhttp://") ) >= 0 ) strSources.Empty();
 	
 	return strSources;
 }
@@ -891,7 +809,7 @@ void CDownloadWithSources::RemoveOverlappingSources(QWORD nOffset, QWORD nLength
 		{
 			theApp.Message( MSG_ERROR, IDS_DOWNLOAD_VERIFY_DROP,
 				(LPCTSTR)CString( inet_ntoa( pSource->m_pAddress ) ),
-				(LPCTSTR)pSource->m_sServer, (LPCTSTR)m_sDisplayName,
+				(LPCTSTR)pSource->m_sServer, (LPCTSTR)m_sName,
 				nOffset, nOffset + nLength - 1 );
 			pSource->Remove( TRUE, FALSE );
 		}
@@ -958,7 +876,7 @@ void CDownloadWithSources::AddFailedSource(LPCTSTR pszUrl, bool bLocal, bool bOf
 	{
 		CFailedSource* pBadSource = new CFailedSource( pszUrl, bLocal, bOffline );
 		m_pFailedSources.AddTail( pBadSource );
-		theApp.Message( MSG_DEBUG, L"Bad sources count for \"%s\": %i", m_sDisplayName, m_pFailedSources.GetCount() );
+		theApp.Message( MSG_DEBUG, L"Bad sources count for \"%s\": %i", m_sName, m_pFailedSources.GetCount() );
 	}
 }
 

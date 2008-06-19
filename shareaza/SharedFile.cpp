@@ -492,77 +492,29 @@ CED2K* CLibraryFile::GetED2K()
 //////////////////////////////////////////////////////////////////////
 // CLibraryFile alternate sources
 
-CSharedSource* CLibraryFile::AddAlternateSources(LPCTSTR pszURL)
+CSharedSource* CLibraryFile::AddAlternateSources(LPCTSTR pszURLs)
 {
-	CString strURLs( pszURL );
 	CSharedSource* pFirst = NULL;
-	BOOL bQuote = FALSE;
-	
-	for ( int nScan = 0 ; nScan < strURLs.GetLength() ; nScan++ )
+
+	CMapStringToFILETIME oUrls;
+	SplitStringToURLs( pszURLs, oUrls );
+
+	for ( POSITION pos = oUrls.GetStartPosition(); pos; )
 	{
-		if ( strURLs[ nScan ] == '\"' )
-		{
-			bQuote = ! bQuote;
-			strURLs.SetAt( nScan, ' ' );
-		}
-		else if ( strURLs[ nScan ] == ',' && bQuote )
-		{
-			strURLs.SetAt( nScan, '`' );
-		}
-	}
-	
-	strURLs += ',';
-	
-	for ( int nCount = 0 ; ; )
-	{
-		int nPos = strURLs.Find( ',' );
-		if ( nPos < 0 ) break;
-		
-		CString strURL	= strURLs.Left( nPos );
-		strURLs			= strURLs.Mid( nPos + 1 );
-		strURL.TrimLeft();
-		
-		if ( _tcsistr( strURL, _T("://") ) != NULL )
-		{
-			for ( int nScan = 0 ; nScan < strURL.GetLength() ; nScan++ )
-			{
-				if ( strURL[ nScan ] == '`' ) strURL.SetAt( nScan, ',' );
-			}
-		}
-		else
-		{
-			nPos = strURL.Find( ':' );
-			if ( nPos < 1 ) continue;
-			
-			int nPort = 0;
-			_stscanf( strURL.Mid( nPos + 1 ), _T("%i"), &nPort );
-			strURL.Truncate( nPos );
-			DWORD nAddress = inet_addr( CT2CA( strURL ) );
-			strURL.Empty();
-			
-			if ( ! Network.IsFirewalledAddress( &nAddress, TRUE ) && 
-				 ! Network.IsReserved( (IN_ADDR*)&nAddress ) && nPort != 0 && nAddress != INADDR_NONE )
-			{
-				if ( m_oSHA1 )
-				{
-					strURL.Format( _T("http://%s:%i/uri-res/N2R?%s"),
-						(LPCTSTR)CString( inet_ntoa( *(IN_ADDR*)&nAddress ) ),
-						nPort, (LPCTSTR)m_oSHA1.toUrn() );
-				}
-			}
-		}
-		
-		if ( CSharedSource* pSource = AddAlternateSource( strURL, FALSE ) )
+		CString strURL;
+		FILETIME tSeen = {};
+		oUrls.GetNextAssoc( pos, strURL, tSeen );
+
+		if ( CSharedSource* pSource = AddAlternateSource( strURL ) )
 		{
 			pFirst = pSource;
-			nCount++;
 		}
 	}
 	
 	return pFirst;
 }
 
-CSharedSource* CLibraryFile::AddAlternateSource(LPCTSTR pszURL, BOOL /*bForce*/)
+CSharedSource* CLibraryFile::AddAlternateSource(LPCTSTR pszURL)
 {
 	if ( pszURL == NULL ) return NULL;
 	if ( *pszURL == 0 ) return NULL;
@@ -574,7 +526,6 @@ CSharedSource* CLibraryFile::AddAlternateSource(LPCTSTR pszURL, BOOL /*bForce*/)
 	BOOL bSeen = FALSE;
 	
 	int nPos = strURL.ReverseFind( ' ' );
-	
 	if ( nPos > 0 )
 	{
 		CString strTime = strURL.Mid( nPos + 1 );
@@ -583,7 +534,6 @@ CSharedSource* CLibraryFile::AddAlternateSource(LPCTSTR pszURL, BOOL /*bForce*/)
 		bSeen = TimeFromString( strTime, &tSeen );
 	}
 	
-	// if ( ! bSeen && ! bForce ) return NULL;
 	if ( ! pURL.Parse( strURL ) ) return NULL;
 	
 	if ( Network.IsSelfIP( pURL.m_pAddress ) ) return NULL;
@@ -626,25 +576,32 @@ CString CLibraryFile::GetAlternateSources(CList< CString >* pState, int nMaximum
 		if ( ! pSource->IsExpired( ftNow ) &&
 			 ( pState == NULL || pState->Find( pSource->m_sURL ) == NULL ) )
 		{
-			if ( pState != NULL ) pState->AddTail( pSource->m_sURL );
-			
 			if ( ( nProtocol == PROTOCOL_HTTP ) && ( _tcsncmp( pSource->m_sURL, _T("http://"), 7 ) != 0 ) )
 				continue;
-			
-			CString strURL = pSource->m_sURL;
-			strURL.Replace( _T(","), _T("%2C") );
 
-			if ( strSources.GetLength() ) strSources += _T(", ");
-			strSources += strURL;
-			strSources += ' ';
-			strSources += TimeToString( &pSource->m_pTime );
+			if ( pState != NULL ) pState->AddTail( pSource->m_sURL );
+
+			if ( pSource->m_sURL.Find( _T("Zhttp://") ) >= 0 ||
+				pSource->m_sURL.Find( _T("Z%2C http://") ) >= 0 )
+			{
+				// Ignore buggy URLs
+				TRACE( _T("CLibraryFile::GetAlternateSources() Bad URL: %s\n"), pSource->m_sURL );
+			}
+			else
+			{
+				CString strURL = pSource->m_sURL;
+				strURL.Replace( _T(","), _T("%2C") );
+
+				if ( strSources.GetLength() ) strSources += _T(", ");
+				strSources += strURL;
+				strSources += ' ';
+				strSources += TimeToString( &pSource->m_pTime );
+			}
 
 			if ( nMaximum == 1 ) break;
 			else if ( nMaximum > 1 ) nMaximum --;
 		}
 	}
-	
-	if ( strSources.Find( _T("Zhttp://") ) >= 0 ) strSources.Empty();
 	
 	return strSources;
 }

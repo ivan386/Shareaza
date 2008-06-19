@@ -167,11 +167,7 @@ CDownloadSource::CDownloadSource(const CDownload* pDownload, CQueryHit* pHit)
 	// ... then change (back) hit to G1/G2 protocol
 	{
 		m_nProtocol = pHit->m_nProtocol;
-
-		m_sURL.Format( _T("http://%s:%i/uri-res/N2R?%s"),
-			(LPCTSTR)CString( inet_ntoa( m_pAddress ) ),
-			m_nPort,
-			(LPCTSTR)pHit->m_oBTH.toUrn() );
+		m_sURL = pHit->GetURL( m_pAddress, m_nPort );
 	}
 }
 
@@ -808,7 +804,7 @@ BOOL CDownloadSource::PushRequest()
 		
 		if ( Neighbours.PushDonkey( m_pAddress.S_un.S_addr, &m_pServerAddress, m_nServerPort ) )
 		{
-			theApp.Message( MSG_INFO, IDS_DOWNLOAD_PUSH_SENT, (LPCTSTR)m_pDownload->m_sDisplayName );
+			theApp.Message( MSG_INFO, IDS_DOWNLOAD_PUSH_SENT, (LPCTSTR)m_pDownload->m_sName );
 			m_tAttempt = GetTickCount() + Settings.Downloads.PushTimeout;
 			return TRUE;
 		}
@@ -819,7 +815,7 @@ BOOL CDownloadSource::PushRequest()
 		
 		if ( Network.SendPush( m_oGUID, m_nIndex ) )
 		{
-			theApp.Message( MSG_INFO, IDS_DOWNLOAD_PUSH_SENT, (LPCTSTR)m_pDownload->m_sDisplayName );
+			theApp.Message( MSG_INFO, IDS_DOWNLOAD_PUSH_SENT, (LPCTSTR)m_pDownload->m_sName );
 			m_tAttempt = GetTickCount() + Settings.Downloads.PushTimeout;
 			return TRUE;
 		}

@@ -455,8 +455,8 @@ BOOL CUploadTransfer::RequestPartial(CDownload* pFile)
 	if ( validAndUnequal( m_oBTH, pFile->m_oBTH ) ) return FALSE;
 	if ( validAndUnequal( m_oMD5, pFile->m_oMD5 ) ) return FALSE;
 	
-	m_sFileName	= pFile->m_sDisplayName;
-	m_sFilePath	= pFile->m_sDiskName;
+	m_sFileName	= pFile->m_sName;
+	m_sFilePath	= pFile->m_sPath;
 	m_nFileBase	= 0;
 	m_nFileSize	= pFile->m_nSize;
 	m_bFilePartial = TRUE;

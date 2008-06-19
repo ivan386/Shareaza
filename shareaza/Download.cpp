@@ -79,7 +79,7 @@ CDownload::~CDownload()
 	{
 		CloseTransfers();
 		CloseTorrentUploads();
-		Uploads.OnRename( m_sDiskName, NULL );
+		Uploads.OnRename( m_sPath, NULL );
 		if ( m_bSeeding )
 		{
 			// Auto-clear activated or we don't want to seed
@@ -88,14 +88,14 @@ CDownload::~CDownload()
 				 !Settings.BitTorrent.AutoClear && 
 				 !Settings.BitTorrent.AutoSeed )
 			{
-				if ( ! ::DeleteFile( m_sDiskName ) )
-					theApp.WriteProfileString( L"Delete", m_sDiskName, L"" );
-				if ( ! ::DeleteFile( m_sDiskName + ".sd" ) )
-					theApp.WriteProfileString( L"Delete", m_sDiskName + L".sd", L"" );
+				if ( ! ::DeleteFile( m_sPath ) )
+					theApp.WriteProfileString( L"Delete", m_sPath, L"" );
+				if ( ! ::DeleteFile( m_sPath + ".sd" ) )
+					theApp.WriteProfileString( L"Delete", m_sPath + L".sd", L"" );
 			}
 		}
-		else if ( ! ::DeleteFile( m_sDiskName ) )
-			theApp.WriteProfileString( L"Delete", m_sDiskName, L"" );
+		else if ( ! ::DeleteFile( m_sPath ) )
+			theApp.WriteProfileString( L"Delete", m_sPath, L"" );
 	}
 }
 
@@ -192,14 +192,14 @@ void CDownload::Remove(BOOL bDelete)
 	if ( m_bSeeding )
 	{
 		::DeleteFile( Settings.Downloads.IncompletePath + L"\\" + m_sSafeName + L".sd" );
-		int nBackSlash = m_sDiskName.ReverseFind( '\\' );
-		CString strTempFileName = m_sDiskName.Mid( nBackSlash + 1 );
+		int nBackSlash = m_sPath.ReverseFind( '\\' );
+		CString strTempFileName = m_sPath.Mid( nBackSlash + 1 );
 		if ( m_oBTH.toString< Hashes::base16Encoding >() == strTempFileName )
-			::DeleteFile( m_sDiskName );
+			::DeleteFile( m_sPath );
 	}
 	else
-		::DeleteFile( m_sDiskName + _T(".sd") );
-	::DeleteFile( m_sDiskName + _T(".png") );
+		::DeleteFile( m_sPath + _T(".sd") );
+	::DeleteFile( m_sPath + _T(".png") );
 	
 	Downloads.Remove( this );
 }
@@ -237,13 +237,13 @@ void CDownload::Share(BOOL bShared)
 BOOL CDownload::Rename(LPCTSTR pszName)
 {
 	// Don't bother if renaming to same name.
-	if ( m_sDisplayName == pszName ) return FALSE;
+	if ( m_sName == pszName ) return FALSE;
 
 	// Set new name
-	m_sDisplayName = pszName;
+	m_sName = pszName;
 
 	// Set the new safe name. (Can be used for previews, etc)
-	m_sSafeName = CDownloadTask::SafeFilename( m_sDisplayName.Right( 64 ) );
+	m_sSafeName = CDownloadTask::SafeFilename( m_sName.Right( 64 ) );
 
 	SetModified();
 	return TRUE;
@@ -536,16 +536,16 @@ void CDownload::OnTaskComplete(CDownloadTask* pTask)
 
 void CDownload::OnMoved(CDownloadTask* pTask)
 {
-	CString strDiskFileName = m_sDiskName;
+	CString strDiskFileName = m_sPath;
 	// File is moved
 	ASSERT( m_pFile == NULL );
 	
 	if ( pTask->m_bSuccess )
 	{
-		m_sDiskName = pTask->m_sFilename;
+		m_sPath = pTask->m_sFilename;
 		
 		theApp.Message( MSG_NOTICE, IDS_DOWNLOAD_MOVED,
-			(LPCTSTR)GetDisplayName(), (LPCTSTR)m_sDiskName );
+			(LPCTSTR)GetDisplayName(), (LPCTSTR)m_sPath );
 	}
 	else
 	{
@@ -589,15 +589,15 @@ void CDownload::OnMoved(CDownloadTask* pTask)
 	// Delete the SD file
 	::DeleteFile( strDiskFileName + _T(".sd") );
 
-	LibraryBuilder.RequestPriority( m_sDiskName );
+	LibraryBuilder.RequestPriority( m_sPath );
 	
-	VERIFY( LibraryHistory.Add( m_sDiskName, m_oSHA1, m_oED2K, m_oBTH, m_oMD5,
+	VERIFY( LibraryHistory.Add( m_sPath, m_oSHA1, m_oED2K, m_oBTH, m_oMD5,
 		GetSourceURLs( NULL, 0, PROTOCOL_NULL, NULL ) ) );
 	
 	ClearSources();
 	SetModified();
 	
-	if ( IsFullyVerified() ) OnVerify( m_sDiskName, TRUE );
+	if ( IsFullyVerified() ) OnVerify( m_sPath, TRUE );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -608,8 +608,8 @@ BOOL CDownload::OnVerify(LPCTSTR pszPath, BOOL bVerified)
 	if ( m_bVerify != TRI_UNKNOWN ) return FALSE;
 	if ( m_pFile != NULL ) return FALSE;
 	
-	if ( pszPath != (LPCTSTR)m_sDiskName &&
-		 m_sDiskName.CompareNoCase( pszPath ) != 0 ) return FALSE;
+	if ( pszPath != (LPCTSTR)m_sPath &&
+		 m_sPath.CompareNoCase( pszPath ) != 0 ) return FALSE;
 	
 	m_bVerify = bVerified ? TRI_TRUE : TRI_FALSE;
 	SetModified();
@@ -625,10 +625,10 @@ BOOL CDownload::Load(LPCTSTR pszName)
 	BOOL bSuccess = FALSE;
 	CFile pFile;
 	
-	m_sDiskName = pszName;
-	m_sDiskName = m_sDiskName.Left( m_sDiskName.GetLength() - 3 );
+	m_sPath = pszName;
+	m_sPath = m_sPath.Left( m_sPath.GetLength() - 3 );
 	
-	if ( pFile.Open( m_sDiskName + _T(".sd"), CFile::modeRead ) )
+	if ( pFile.Open( m_sPath + _T(".sd"), CFile::modeRead ) )
 	{
 		try
 		{
@@ -644,7 +644,7 @@ BOOL CDownload::Load(LPCTSTR pszName)
 		pFile.Close();
 	}
 	
-	if ( ! bSuccess && pFile.Open( m_sDiskName + _T(".sd.sav"), CFile::modeRead ) )
+	if ( ! bSuccess && pFile.Open( m_sPath + _T(".sd.sav"), CFile::modeRead ) )
 	{
 		try
 		{
@@ -662,9 +662,9 @@ BOOL CDownload::Load(LPCTSTR pszName)
 	}
 	
 	if ( m_bSeeding )
-		m_sDiskName = m_sServingFileName;
+		m_sPath = m_sServingFileName;
 
-	m_bGotPreview = GetFileAttributes( m_sDiskName + L".png" ) != INVALID_FILE_ATTRIBUTES;
+	m_bGotPreview = GetFileAttributes( m_sPath + L".png" ) != INVALID_FILE_ATTRIBUTES;
 	m_nSaveCookie = m_nCookie;
 	
 	return bSuccess;
@@ -686,20 +686,20 @@ BOOL CDownload::Save(BOOL bFlush)
 		GenerateDiskName( true );
 		// Swap disk name with the safe name, since the complete file may be located elsewhere
 		// while .sd file remains in the incomplete folder for the single-file torrents.
-		m_sServingFileName = m_sDiskName;
-		m_sDiskName = Settings.Downloads.IncompletePath + _T("\\") + m_sSafeName;
+		m_sServingFileName = m_sPath;
+		m_sPath = Settings.Downloads.IncompletePath + _T("\\") + m_sSafeName;
 	}
 	else
 	{
-		if ( m_sDiskName.IsEmpty() )
+		if ( m_sPath.IsEmpty() )
 			GenerateDiskName();
 		if ( m_sSafeName.IsEmpty() )
-			m_sSafeName = CDownloadTask::SafeFilename( m_sDisplayName.Right( 64 ) );
+			m_sSafeName = CDownloadTask::SafeFilename( m_sName.Right( 64 ) );
 	}
 	
-	::DeleteFile( m_sDiskName + _T(".sd.sav") );
+	::DeleteFile( m_sPath + _T(".sd.sav") );
 	
-	if ( ! pFile.Open( m_sDiskName + _T(".sd.sav"),
+	if ( ! pFile.Open( m_sPath + _T(".sd.sav"),
 		CFile::modeReadWrite|CFile::modeCreate|CFile::osWriteThrough ) ) return FALSE;
 	
 	{
@@ -732,18 +732,18 @@ BOOL CDownload::Save(BOOL bFlush)
 	BOOL bResult = TRUE;
 	if ( szID[0] == 'S' && szID[1] == 'D' && szID[2] == 'L' )
 	{
-		::DeleteFile( m_sDiskName + _T(".sd") );
-		MoveFile( m_sDiskName + _T(".sd.sav"), m_sDiskName + _T(".sd") );
+		::DeleteFile( m_sPath + _T(".sd") );
+		MoveFile( m_sPath + _T(".sd.sav"), m_sPath + _T(".sd") );
 	}
 	else
 	{
-		::DeleteFile( m_sDiskName + _T(".sd.sav") );
+		::DeleteFile( m_sPath + _T(".sd.sav") );
 		bResult = FALSE;
 	}
 
 	if ( m_bSeeding )
 	{
-		m_sDiskName = m_sServingFileName;
+		m_sPath = m_sServingFileName;
 	}
 
 	return bResult;
@@ -819,8 +819,8 @@ void CDownload::SerializeOld(CArchive& ar, int nVersion)
 {
 	ASSERT( ar.IsLoading() );
 	
-	ar >> m_sDiskName;
-	ar >> m_sDisplayName;
+	ar >> m_sPath;
+	ar >> m_sName;
 	
 	DWORD nSize;
 	ar >> nSize;
@@ -829,7 +829,7 @@ void CDownload::SerializeOld(CArchive& ar, int nVersion)
     Hashes::Sha1Hash oSHA1;
     SerializeIn( ar, oSHA1, nVersion );
     m_oSHA1 = oSHA1;
-    m_oSHA1.signalTrusted();
+    m_bSHA1Trusted = true;
 	
 	ar >> m_bPaused;
 	ar >> m_bExpanded;

@@ -113,7 +113,7 @@ BOOL CDownloadGroup::Link(CDownload* pDownload)
 	{
 		CString strFilter = m_pFilters.GetNext( pos );
 		
-		if ( CQuerySearch::WordMatch( pDownload->m_sDisplayName, strFilter ) )
+		if ( CQuerySearch::WordMatch( pDownload->m_sName, strFilter ) )
 		{
 			Add( pDownload );
 			return TRUE;

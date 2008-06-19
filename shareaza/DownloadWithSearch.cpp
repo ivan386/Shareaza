@@ -174,10 +174,10 @@ void CDownloadWithSearch::PrepareSearch()
 
 	if ( pSearch->m_bAndG1 )
 	{
-		if ( pSearch->m_sSearch != m_sDisplayName )
+		if ( pSearch->m_sSearch != m_sName )
 		{
 			pSearch->m_sKeywords.Empty();
-			pSearch->m_sSearch = m_sDisplayName;
+			pSearch->m_sSearch = m_sName;
 			pSearch->BuildWordList( false );
 		}
 	}
@@ -209,7 +209,7 @@ void CDownloadWithSearch::PrepareSearch()
 	}
 	
 	pSearch->m_bWantURL	= TRUE;
-	pSearch->m_bWantDN	= ( m_sDisplayName.GetLength() == 0 );
+	pSearch->m_bWantDN	= ( m_sName.GetLength() == 0 );
 	pSearch->m_bWantXML	= FALSE;
 	pSearch->m_bWantPFS	= TRUE;
 	pSearch->m_bWantCOM = FALSE;
