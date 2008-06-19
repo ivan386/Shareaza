@@ -692,7 +692,7 @@ BOOL CDownloadSource::CheckHash(const Hashes::Sha1Hash& oSHA1)
 	}
 	else
 	{
-		if ( m_pDownload->IsTorrent() ) return TRUE;
+		if ( m_pDownload->IsTorrent() && ! m_pDownload->IsSingleFileTorrent() ) return TRUE;
 		
 		m_pDownload->m_oSHA1 = oSHA1;
 	}
@@ -711,7 +711,7 @@ BOOL CDownloadSource::CheckHash(const Hashes::TigerHash& oTiger)
 	}
 	else
 	{
-		if ( m_pDownload->IsTorrent() ) return TRUE;
+		if ( m_pDownload->IsTorrent() && ! m_pDownload->IsSingleFileTorrent() ) return TRUE;
 		
 		m_pDownload->m_oTiger = oTiger;
 	}
@@ -730,7 +730,7 @@ BOOL CDownloadSource::CheckHash(const Hashes::Ed2kHash& oED2K)
 	}
 	else
 	{
-		if ( m_pDownload->IsTorrent() ) return TRUE;
+		if ( m_pDownload->IsTorrent() && ! m_pDownload->IsSingleFileTorrent() ) return TRUE;
 		
 		m_pDownload->m_oED2K = oED2K;
 	}
@@ -768,7 +768,7 @@ BOOL CDownloadSource::CheckHash(const Hashes::Md5Hash& oMD5)
 	}
 	else
 	{
-		if ( m_pDownload->IsTorrent() ) return TRUE;
+		if ( m_pDownload->IsTorrent() && ! m_pDownload->IsSingleFileTorrent() ) return TRUE;
 
 		m_pDownload->m_oMD5 = oMD5;
 	}
