@@ -72,6 +72,8 @@ public:
 	virtual BOOL	OnRun();
 	void	SetState(int nState);
 protected:
+	CTimeAverage< DWORD, 2000 > m_AverageSpeed;
+
 	void	ChunkifyRequest(QWORD* pnOffset, QWORD* pnLength, QWORD nChunk, BOOL bVerifyLock);
 
 };

@@ -552,3 +552,35 @@ inline BOOL StartsWith(const CString& sInput, LPCTSTR pszText, const int len)
 {
 	return ( sInput.GetLength() >= len ) && ! _tcsnicmp( (LPCTSTR)sInput, pszText, len );
 }
+
+// Compute average of values collected by specified time
+template< class T, DWORD dwMilliseconds >
+class CTimeAverage : boost::noncopyable
+{
+public:
+	inline T operator()(T Val)
+	{
+		// Add new value
+		DWORD dwNow = GetTickCount();
+		m_Data.push_back( CAveragePair( Val, dwNow ) );
+
+		// Remove outdated values
+		while ( m_Data.size() > 1 )
+		{
+			if ( dwNow - (*(++m_Data.begin())).second < dwMilliseconds )
+				break;
+			m_Data.pop_front();
+		}
+
+		// Calculate average
+		T sum = 0;
+		for ( CAverageList::const_iterator i = m_Data.begin(); i != m_Data.end(); ++i )
+			sum += (*i).first;
+		return sum / m_Data.size();
+	}
+
+protected:
+	typedef std::pair< T, DWORD > CAveragePair;
+	typedef std::list< CAveragePair > CAverageList;
+	CAverageList m_Data;
+};

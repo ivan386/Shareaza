@@ -151,11 +151,6 @@ void CDownloadTransferED2K::Boost()
 	m_pClient->m_mInput.pLimit = NULL;
 }
 
-DWORD CDownloadTransferED2K::GetAverageSpeed()
-{
-	return m_pSource->m_nSpeed = GetMeasuredSpeed();
-}
-
 DWORD CDownloadTransferED2K::GetMeasuredSpeed()
 {
 	// Return if there is no client

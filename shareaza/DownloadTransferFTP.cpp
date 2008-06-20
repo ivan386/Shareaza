@@ -176,11 +176,6 @@ void CDownloadTransferFTP::Boost()
 		m_RETR.m_mInput.pLimit = m_RETR.m_mOutput.pLimit = NULL;
 }
 
-DWORD CDownloadTransferFTP::GetAverageSpeed()
-{
-	return m_pSource->m_nSpeed = GetMeasuredSpeed();
-}
-
 DWORD CDownloadTransferFTP::GetMeasuredSpeed()
 {
 	// Calculate Input

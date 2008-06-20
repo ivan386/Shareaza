@@ -133,11 +133,6 @@ void CDownloadTransferBT::Boost()
 	m_pClient->m_mInput.pLimit = NULL;
 }
 
-DWORD CDownloadTransferBT::GetAverageSpeed()
-{
-	return m_pSource->m_nSpeed = GetMeasuredSpeed();
-}
-
 DWORD CDownloadTransferBT::GetMeasuredSpeed()
 {
 	// Return if there is no client

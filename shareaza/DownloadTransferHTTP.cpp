@@ -161,11 +161,12 @@ DWORD CDownloadTransferHTTP::GetAverageSpeed()
 {
 	if ( m_nState == dtsDownloading )
 	{
-		DWORD nTime = ( GetTickCount() - m_tContent ) / 1000;
-		if ( nTime > 0 ) m_pSource->m_nSpeed = (DWORD)( m_nPosition / nTime );
+		DWORD nTime = GetTickCount() - m_tContent;
+		if ( nTime )
+			m_pSource->m_nSpeed = (DWORD)( ( m_nPosition * 1000 ) / nTime );
 	}
 	
-	return m_pSource->m_nSpeed;
+	return m_AverageSpeed( m_pSource->m_nSpeed );
 }
 
 //////////////////////////////////////////////////////////////////////

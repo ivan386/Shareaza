@@ -128,7 +128,7 @@ void CDownloadTransfer::Boost()
 
 DWORD CDownloadTransfer::GetAverageSpeed()
 {
-	return GetMeasuredSpeed();
+	return m_AverageSpeed( m_pSource->m_nSpeed = GetMeasuredSpeed() );
 }
 
 DWORD CDownloadTransfer::GetMeasuredSpeed()

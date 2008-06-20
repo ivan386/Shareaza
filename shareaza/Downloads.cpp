@@ -938,7 +938,9 @@ void CDownloads::OnRun()
 		DWORD nRunningTransfersED2K	= 0;	// Number of ed2k transfers that are downloading and transfering data
 		DWORD nTotalBandwidthED2K	= 0;	// Total ed2k bandwidth in use.
 
-		DWORD nBandwidthAvailable	= Settings.Bandwidth.Downloads;
+		DWORD nBandwidthAvailable	= min( ( Settings.Bandwidth.Downloads ?
+			Settings.Bandwidth.Downloads : 0xffffffffu ),
+			Settings.Connection.InSpeed * Kilobits / Bytes );
 		DWORD nBandwidthAvailableED2K = 0;
 		BOOL bDonkeyRatioActive		= FALSE;
 
@@ -978,25 +980,14 @@ void CDownloads::OnRun()
 						DWORD nSpeed = pTransfer->GetMeasuredSpeed();
 						nTotalBandwidth += nSpeed;
 						nActiveTransfers ++;
-						if ( nSpeed > 32 ) 
+						nRunningTransfers ++;
+						pTransfersToLimit.AddTail( pTransfer );
+						if ( pTransfer->m_nProtocol == PROTOCOL_ED2K )
 						{
-							nRunningTransfers ++; 
-							pTransfersToLimit.AddTail( pTransfer );
-							if ( pTransfer->m_nProtocol == PROTOCOL_ED2K ) 
-							{
-								nTotalBandwidthED2K += nSpeed;
-								nRunningTransfersED2K ++;
-							}
-							// Limit will be set below, once all data is collected
+							nTotalBandwidthED2K += nSpeed;
+							nRunningTransfersED2K ++;
 						}
-						else
-						{
-							// This download is 'stalled'. It's probably not going to transfer 
-							// anything, so we don't want to reserve bandwidth for it.
-							pTransfer->m_nBandwidth = 0;
-							// Don't bother limiting. If it starts to transfer then it
-							// will be limited properly. For now, ignore since it's inactive.
-						}
+						// Limit will be set below, once all data is collected
 					}
 				}
 					
@@ -1064,7 +1055,7 @@ void CDownloads::OnRun()
 				}
 
 				// Minimum allocation- 64 bytes / second to prevent time-outs.
-				if ( ( nLimit ) && ( nLimit < 64 ) ) nLimit = 64;
+				nLimit = max( nLimit, 64u );
 
 				pTransfer->m_nBandwidth = nLimit;
 			}
