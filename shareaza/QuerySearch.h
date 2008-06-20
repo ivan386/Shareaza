@@ -32,7 +32,7 @@ class CG2Packet;
 class CEDPacket;
 
 
-class CQuerySearch : private boost::noncopyable, public CShareazaFile
+class CQuerySearch : public CShareazaFile
 {
 // Construction
 public:
