@@ -48,10 +48,10 @@ public:
 	void	Initiate(const Hashes::Guid& oGUID, SOCKADDR_IN* pHost, BOOL bMustPush);
 	BOOL	Accept(CChatSession* pSession);
 public:
-	virtual void	OnLocalMessage(bool bAction, LPCTSTR pszText);
+	virtual void	OnLocalMessage(BOOL bAction, LPCTSTR pszText);
 	virtual void	OnLocalCommand(LPCTSTR pszCommand, LPCTSTR pszArgs);
 	virtual void	OnProfileReceived();
-	virtual void	OnRemoteMessage(bool bAction, LPCTSTR pszText);
+	virtual void	OnRemoteMessage(BOOL bAction, LPCTSTR pszText);
 
 // Overrides
 public:

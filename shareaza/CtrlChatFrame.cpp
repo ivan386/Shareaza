@@ -410,25 +410,25 @@ void CChatFrame::OnLocalMessage(BOOL /*bAction*/, LPCTSTR /*pszText*/)
 {
 }
 
-void CChatFrame::OnLocalCommand(LPCTSTR pszCommand, LPCTSTR /*pszMessage*/)
+void CChatFrame::OnLocalCommand(LPCTSTR pszCommand, LPCTSTR /*pszArgs*/)
 {
-	if ( _tcscmp( pszCommand, _T("/clear") ) == 0 )
+	if ( _tcsicmp( pszCommand, _T("/clear") ) == 0 )
 	{
 		PostMessage( WM_COMMAND, ID_CHAT_CLEAR );
 	}
-	else if ( _tcscmp( pszCommand, _T("/connect") ) == 0 )
+	else if ( _tcsicmp( pszCommand, _T("/connect") ) == 0 )
 	{
 		PostMessage( WM_COMMAND, ID_CHAT_CONNECT );
 	}
-	else if ( _tcscmp( pszCommand, _T("/disconnect") ) == 0 )
+	else if ( _tcsicmp( pszCommand, _T("/disconnect") ) == 0 )
 	{
 		PostMessage( WM_COMMAND, ID_CHAT_DISCONNECT );
 	}
-	else if ( _tcscmp( pszCommand, _T("/close") ) == 0 )
+	else if ( _tcsicmp( pszCommand, _T("/close") ) == 0 )
 	{
 		GetParent()->PostMessage( WM_CLOSE );
 	}
-	else if ( _tcscmp( pszCommand, _T("/exit") ) == 0 )
+	else if ( _tcsicmp( pszCommand, _T("/exit") ) == 0 )
 	{
 		GetParent()->PostMessage( WM_CLOSE );
 	}

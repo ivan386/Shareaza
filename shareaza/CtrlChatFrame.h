@@ -73,7 +73,7 @@ public:
 	virtual void	OnStatusMessage(int nFlags, LPCTSTR pszText);
 	virtual void	OnLocalText(LPCTSTR pszText);
 	virtual void	OnLocalMessage(BOOL bAction, LPCTSTR pszText);
-	virtual void	OnLocalCommand(LPCTSTR pszText, LPCTSTR pszCommand);
+	virtual void	OnLocalCommand(LPCTSTR pszCommand, LPCTSTR pszArgs);
 
 // Overrides
 public:

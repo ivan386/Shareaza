@@ -168,7 +168,7 @@ void CPrivateChatFrame::OnProfileReceived()
 	SetAlert();
 }
 
-void CPrivateChatFrame::OnRemoteMessage(bool bAction, LPCTSTR pszText)
+void CPrivateChatFrame::OnRemoteMessage(BOOL bAction, LPCTSTR pszText)
 {
 	// Check message spam filter (if enabled)
 	if ( !MessageFilter.IsFiltered( pszText ) )
@@ -196,7 +196,7 @@ void CPrivateChatFrame::OnRemoteMessage(bool bAction, LPCTSTR pszText)
 	}
 }
 
-void CPrivateChatFrame::OnLocalMessage(bool bAction, LPCTSTR pszText)
+void CPrivateChatFrame::OnLocalMessage(BOOL bAction, LPCTSTR pszText)
 {
 	TRISTATE bConnected = m_pSession->GetConnectedState();
 
@@ -224,7 +224,7 @@ void CPrivateChatFrame::OnLocalMessage(bool bAction, LPCTSTR pszText)
 
 void CPrivateChatFrame::OnLocalCommand(LPCTSTR pszCommand, LPCTSTR pszArgs)
 {
-	if ( _tcscmp( pszCommand, _T("/BROWSE") ) == 0 )
+	if ( _tcsicmp( pszCommand, _T("/browse") ) == 0 )
 	{
 		PostMessage( WM_COMMAND, ID_CHAT_BROWSE );
 	}
