@@ -24,7 +24,8 @@
 #include "HttpRequest.h"
 
 
-class CVersionChecker  
+class CVersionChecker :
+	public CThreadImpl
 {
 // Construction
 public:
@@ -38,7 +39,6 @@ public:
 
 protected:
 	bool			m_bVerbose;
-	volatile HANDLE	m_hThread;
 	CHttpRequest	m_pRequest;
 	CMap< CString, const CString&, CString, CString& >	m_pResponse;
 
@@ -64,7 +64,6 @@ public:
 
 protected:
 	BOOL		NeedToCheck();
-	static UINT	ThreadStart(LPVOID pParam);
 	void		OnRun();
 	BOOL		ExecuteRequest();
 	void		ProcessResponse();

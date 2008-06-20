@@ -260,13 +260,9 @@ void CLibraryMetaPanel::Update()
 	
 	if ( m_sPath.GetLength() && m_bmThumb.m_hObject == NULL )
 	{
-		if ( m_bThread == FALSE )
-		{
-			m_bThread = TRUE;
-			m_hThread = BeginThread( "CtrlLibraryMetaPanel", ThreadStart, this, THREAD_PRIORITY_IDLE );
-		}
+		BeginThread( "CtrlLibraryMetaPanel" );
 		
-		m_pWakeup.SetEvent();
+		Wakeup();
 	}
 
 	Invalidate();
@@ -279,18 +275,12 @@ int CLibraryMetaPanel::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if ( CLibraryPanel::OnCreate( lpCreateStruct ) == -1 ) return -1;
 	
-	m_hThread = NULL;
-	m_bThread = FALSE;
-	
 	return 0;
 }
 
 void CLibraryMetaPanel::OnDestroy() 
 {
-	m_bThread = FALSE;
-	m_pWakeup.SetEvent();
-	
-	CloseThread( (HANDLE*)&m_hThread );
+	CloseThread();
 	
 	CLibraryPanel::OnDestroy();
 }
@@ -688,22 +678,15 @@ BOOL CLibraryMetaPanel::OnMouseWheel(UINT /*nFlags*/, short zDelta, CPoint /*pt*
 /////////////////////////////////////////////////////////////////////////////
 // CLibraryMetaPanel thread run
 
-UINT CLibraryMetaPanel::ThreadStart(LPVOID pParam)
-{
-	CLibraryMetaPanel* pPanel = (CLibraryMetaPanel*)pParam;
-	pPanel->OnRun();
-	return 0;
-}
-
 void CLibraryMetaPanel::OnRun()
 {
-	while ( m_bThread )
+	while ( IsThreadEnabled() )
 	{
-		WaitForSingleObject( m_pWakeup, INFINITE );
-		if ( ! m_bThread ) break;
+		Doze();
+		if ( ! IsThreadEnabled() ) break;
 		if ( ! m_bNewFile && ! m_bForceUpdate || m_bDownloadingImage )
 		{
-			m_bThread = FALSE;
+			Exit();
 			break;
 		}
 
@@ -747,7 +730,4 @@ void CLibraryMetaPanel::OnRun()
 			m_pSection.Unlock();
 		}
 	}
-
-	m_bThread = FALSE;
-	m_hThread = NULL;
 }

@@ -45,7 +45,6 @@ static char THIS_FILE[]=__FILE__;
 CBitziDownloader::CBitziDownloader()
 {
 	m_pDlg			= NULL;
-	m_hThread		= NULL;
 	m_hInternet		= NULL;
 	m_hSession		= NULL;
 	m_hRequest		= NULL;
@@ -97,7 +96,7 @@ BOOL CBitziDownloader::Start(CBitziDownloadDlg* pDlg)
 	m_nDelay	= 0;
 	m_nFailures	= 0;
 
-	m_hThread = BeginThread( "BitziDownloader", ThreadStart, this );
+	BeginThread( "BitziDownloader" );
 
 	return TRUE;
 }
@@ -113,7 +112,7 @@ void CBitziDownloader::Stop()
 	if ( m_hInternet ) InternetCloseHandle( m_hInternet );
 	m_hInternet = NULL;
 
-	CloseThread( &m_hThread );
+	CloseThread();
 
 	m_pDlg		= NULL;
 }
@@ -123,17 +122,7 @@ void CBitziDownloader::Stop()
 
 BOOL CBitziDownloader::IsWorking()
 {
-	return ( m_hThread != NULL ) && ! m_bFinished;
-}
-
-//////////////////////////////////////////////////////////////////////
-// CBitziDownloader thread bootstrap
-
-UINT CBitziDownloader::ThreadStart(LPVOID pParam)
-{
-	CBitziDownloader* pClass = (CBitziDownloader*)pParam;
-	pClass->OnRun();
-	return 0;
+	return IsThreadAlive() && ! m_bFinished;
 }
 
 //////////////////////////////////////////////////////////////////////

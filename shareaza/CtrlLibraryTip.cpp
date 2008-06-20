@@ -58,10 +58,7 @@ END_MESSAGE_MAP()
 
 CLibraryTipCtrl::CLibraryTipCtrl()
 {
-	m_hThread = NULL;
-	m_bThread = FALSE;
 	m_crLight = CCoolInterface::CalculateColour( CoolInterface.m_crTipBack, RGB( 255, 255, 255 ), 128 );
-
 	m_szThumbSize = CSize( Settings.Library.ThumbSize, Settings.Library.ThumbSize );
 }
 
@@ -318,13 +315,9 @@ void CLibraryTipCtrl::OnShow()
 {
 	OnHide();	// Do the old image destroy
 
-	if ( m_hThread == NULL )
-	{
-		m_bThread = TRUE;
-		m_hThread = BeginThread( "CtrlLibraryTip", ThreadStart, this, THREAD_PRIORITY_IDLE );
-	}
+	BeginThread( "CtrlLibraryTip" );
 
-	m_pWakeup.SetEvent();
+	Wakeup();
 }
 
 void CLibraryTipCtrl::OnHide()
@@ -339,7 +332,7 @@ void CLibraryTipCtrl::OnTimer(UINT_PTR nIDEvent)
 {
 	CCoolTipCtrl::OnTimer( nIDEvent );
 
-	if ( m_hThread != NULL && ! m_bVisible && GetTickCount() - m_tHidden > 20000 )
+	if ( ! m_bVisible && GetTickCount() - m_tHidden > 20000 )
 	{
 		StopThread();
 	}
@@ -347,35 +340,25 @@ void CLibraryTipCtrl::OnTimer(UINT_PTR nIDEvent)
 
 void CLibraryTipCtrl::OnDestroy()
 {
-	if ( m_hThread != NULL ) StopThread();
+	StopThread();
 
 	CCoolTipCtrl::OnDestroy();
 }
 
 void CLibraryTipCtrl::StopThread()
 {
-	m_bThread = FALSE;
-	m_pWakeup.SetEvent();
-
-	CloseThread( &m_hThread );
+	CloseThread();
 }
 
 /////////////////////////////////////////////////////////////////////////////
 // CLibraryTipCtrl thread run
 
-UINT CLibraryTipCtrl::ThreadStart(LPVOID pParam)
-{
-	CLibraryTipCtrl* pTip = (CLibraryTipCtrl*)pParam;
-	pTip->OnRun();
-	return 0;
-}
-
 void CLibraryTipCtrl::OnRun()
 {
-	while ( m_bThread )
+	while ( IsThreadEnabled() )
 	{
-		WaitForSingleObject( m_pWakeup, INFINITE );
-		if ( ! m_bThread ) break;
+		Doze();
+		if ( ! IsThreadEnabled() ) break;
 
 		m_pSection.Lock();
 		CString strPath = m_sPath;
@@ -401,7 +384,5 @@ void CLibraryTipCtrl::OnRun()
 			m_pSection.Unlock();
 		}
 	}
-
-	m_bThread = FALSE;
 }
 

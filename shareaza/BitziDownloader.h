@@ -19,17 +19,17 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_BITZIDOWNLOADER_H__08C21C98_E7E8_4E32_B3E9_2E149A72CE69__INCLUDED_)
-#define AFX_BITZIDOWNLOADER_H__08C21C98_E7E8_4E32_B3E9_2E149A72CE69__INCLUDED_
-
 #pragma once
+
+#include "ThreadImpl.h"
 
 class CSchema;
 class CXMLElement;
 class CBitziDownloadDlg;
 
 
-class CBitziDownloader
+class CBitziDownloader :
+	public CThreadImpl
 {
 // Construction
 public:
@@ -42,7 +42,6 @@ protected:
 	CCriticalSection	m_pSection;
 	CBitziDownloadDlg*	m_pDlg;
 protected:
-	HANDLE				m_hThread;
 	HINTERNET			m_hInternet;
 	HINTERNET			m_hSession;
 	HINTERNET			m_hRequest;
@@ -66,7 +65,6 @@ public:
 	void		Stop();
 	BOOL		IsWorking();
 protected:
-	static UINT		ThreadStart(LPVOID pParam);
 	void			OnRun();
 	BOOL			BuildRequest();
 	BOOL			ExecuteRequest();
@@ -77,5 +75,3 @@ protected:
 	BOOL			MergeMetaData(CXMLElement* pOutput, CXMLElement* pInput);
 
 };
-
-#endif // !defined(AFX_BITZIDOWNLOADER_H__08C21C98_E7E8_4E32_B3E9_2E149A72CE69__INCLUDED_)

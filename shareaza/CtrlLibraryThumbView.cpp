@@ -88,8 +88,6 @@ int CLibraryThumbView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if ( CLibraryFileView::OnCreate( lpCreateStruct ) == -1 ) return -1;
 
-	m_hThread		= NULL;
-	m_bThread		= FALSE;
 	m_nInvalidate	= 0;
 	m_bRush			= FALSE;
 
@@ -831,9 +829,10 @@ HBITMAP CLibraryThumbView::CreateDragImage(const CPoint& ptMouse, CPoint& ptMidd
 
 void CLibraryThumbView::StartThread()
 {
-	CSingleLock pLock( &m_pSection, TRUE );
+	if ( IsThreadAlive() )
+		return;
 
-	if ( m_hThread != NULL && m_bThread ) return;
+	CSingleLock pLock( &m_pSection, TRUE );
 
 	CLibraryThumbItem** pList = m_pList;
 	int nCount = 0;
@@ -845,47 +844,20 @@ void CLibraryThumbView::StartThread()
 
 	if ( nCount == 0 ) // all thumbnails extracted
 		return;
-	else if ( m_hThread != NULL && m_bThread )
-	{
-		// Thread is extracting but folder changed
-		// won't be executed?
-		StopThread();
-	}
-	else if ( m_hThread != NULL ) // finished extraction
-	{
-		DWORD nCode;
-		if ( GetExitCodeThread( m_hThread, &nCode ) ) Sleep( 100 );
-		ASSERT( m_bThread == FALSE );
-	}
 
-	m_bThread	= TRUE;
-	m_hThread = BeginThread( "CtrlLibraryThumbView", ThreadStart, this, THREAD_PRIORITY_IDLE );
+	BeginThread( "CtrlLibraryThumbView" );
 }
 
 void CLibraryThumbView::StopThread()
 {
-	// If m_bThread == FALSE it means it has finished its work and will die by itself
-	// No need to stop it.
-
-	if ( m_hThread == NULL || ! m_bThread ) return;
-
-	m_bThread = FALSE;
-
-	CloseThread( &m_hThread );
-}
-
-UINT CLibraryThumbView::ThreadStart(LPVOID pParam)
-{
-	CLibraryThumbView* pView = (CLibraryThumbView*)pParam;
-	pView->OnRun();
-	return 0;
+	CloseThread();
 }
 
 void CLibraryThumbView::OnRun()
 {
 	CSingleLock pLock( &m_pSection );
 
-	while ( m_bThread )
+	while ( IsThreadEnabled() )
 	{
 		CLibraryThumbItem* pThumb = NULL;
 		DWORD nIndex = 0;
@@ -894,7 +866,7 @@ void CLibraryThumbView::OnRun()
 		pLock.Lock();
 
 		CLibraryThumbItem** pList = m_pList;
-		for ( int nItem = m_nCount ; nItem && m_bThread; nItem--, pList++ )
+		for ( int nItem = m_nCount ; nItem && IsThreadEnabled(); nItem--, pList++ )
 		{
 			if ( (*pList)->m_nThumb == CLibraryThumbItem::thumbWaiting )
 			{
@@ -975,7 +947,6 @@ void CLibraryThumbView::OnRun()
 			//}
 		}
 	}
-	m_bThread = FALSE;
 }
 
 

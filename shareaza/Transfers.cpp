@@ -41,13 +41,11 @@ CTransfers Transfers;
 //////////////////////////////////////////////////////////////////////
 // CTransfers construction
 
-CTransfers::CTransfers()
+CTransfers::CTransfers() :
+	m_nBuffer( 256*1024 ),
+	m_pBuffer( new BYTE[ m_nBuffer ] ),
+	m_nRunCookie( 0 )
 {
-	m_nBuffer		= 256*1024;
-	m_pBuffer		= new BYTE[ m_nBuffer ];
-	m_hThread		= NULL;
-	m_bThread		= FALSE;
-	m_nRunCookie	= 0;
 }
 
 CTransfers::~CTransfers()
@@ -83,25 +81,15 @@ BOOL CTransfers::IsConnectedTo(IN_ADDR* pAddress) const
 
 BOOL CTransfers::StartThread()
 {
-	if ( m_hThread != NULL && m_bThread ) return TRUE;
-	if ( GetCount() == 0 && Downloads.GetCount() == 0 ) return FALSE;
+	if ( GetCount() == 0 && Downloads.GetCount() == 0 )
+		return FALSE;
 
-	m_hThread	= NULL;
-	m_bThread	= TRUE;
-
-	m_hThread = BeginThread( "Transfers", ThreadStart, this );
-
-	return TRUE;
+	return BeginThread( "Transfers" );
 }
 
 void CTransfers::StopThread()
 {
-	if ( m_hThread == NULL ) return;
-
-	m_bThread = FALSE;
-	m_pWakeup.SetEvent();
-
-	CloseThread( (HANDLE*)&m_hThread );
+	CloseThread();
 
 	Downloads.m_nTransfers	= 0;
 	Downloads.m_nBandwidth	= 0;
@@ -115,7 +103,7 @@ void CTransfers::StopThread()
 void CTransfers::Add(CTransfer* pTransfer)
 {
 	ASSERT( pTransfer->m_hSocket != INVALID_SOCKET );
-	WSAEventSelect( pTransfer->m_hSocket, m_pWakeup, FD_CONNECT|FD_READ|FD_WRITE|FD_CLOSE );
+	WSAEventSelect( pTransfer->m_hSocket, GetWakeupEvent(), FD_CONNECT|FD_READ|FD_WRITE|FD_CLOSE );
 
 	POSITION pos = m_pList.Find( pTransfer );
 	ASSERT( pos == NULL );
@@ -133,7 +121,7 @@ void CTransfers::Remove(CTransfer* pTransfer)
 	//	theApp.Message( MSG_DEBUG, _T("CTransfers::Remove(): %x"), pTransfer );
 
 	if ( pTransfer->m_hSocket != INVALID_SOCKET )
-		WSAEventSelect( pTransfer->m_hSocket, m_pWakeup, 0 );
+		WSAEventSelect( pTransfer->m_hSocket, GetWakeupEvent(), 0 );
 
 	CQuickLock oLock( m_pSection );
 	if ( POSITION pos = m_pList.Find( pTransfer ) )
@@ -143,30 +131,27 @@ void CTransfers::Remove(CTransfer* pTransfer)
 //////////////////////////////////////////////////////////////////////
 // CTransfers thread run
 
-UINT CTransfers::ThreadStart(LPVOID pParam)
-{
-	CTransfers* pTransfers = (CTransfers*)pParam;
-	pTransfers->OnRun();
-	return 0;
-}
-
 void CTransfers::OnRun()
 {
-	while ( m_bThread )
+	while ( IsThreadEnabled() )
 	{
 		Sleep( Settings.General.MinTransfersRest );
-		WaitForSingleObject( m_pWakeup, 50 );
+		Doze( 50 );
 
 		{
 			CQuickLock oLock( m_pSection );
 			EDClients.OnRun();
 		}
-		if ( ! m_bThread ) break;
+
+		if ( ! IsThreadEnabled() ) break;
 
 		OnRunTransfers();
-		if ( ! m_bThread ) break;
+
+		if ( ! IsThreadEnabled() ) break;
+
 		Downloads.OnRun();
-		if ( ! m_bThread ) break;
+
+		if ( ! IsThreadEnabled() ) break;
 
 		{
 			CQuickLock oLock( m_pSection );
@@ -179,7 +164,6 @@ void CTransfers::OnRun()
 
 	Downloads.m_nTransfers = Downloads.m_nBandwidth = 0;
 	Uploads.m_nCount = Uploads.m_nBandwidth = 0;
-	m_hThread = NULL;
 }
 
 void CTransfers::OnRunTransfers()
@@ -200,7 +184,7 @@ void CTransfers::OnRunTransfers()
 
 void CTransfers::OnCheckExit()
 {
-	if ( GetCount() == 0 && Downloads.GetCount() == 0 ) m_bThread = FALSE;
+	if ( GetCount() == 0 && Downloads.GetCount() == 0 ) Exit();
 
 	if ( Settings.Live.AutoClose && GetActiveCount() == 0 )
 	{

@@ -41,8 +41,6 @@ CChatCore ChatCore;
 
 CChatCore::CChatCore()
 {
-	m_hThread = NULL;
-	m_bThread = FALSE;
 }
 
 CChatCore::~CChatCore()
@@ -181,7 +179,8 @@ void CChatCore::Add(CChatSession* pSession)
 	CSingleLock pLock( &m_pSection, TRUE );
 	if ( m_pSessions.Find( pSession ) == NULL ) m_pSessions.AddTail( pSession );
 	if ( pSession->m_hSocket != INVALID_SOCKET )
-		WSAEventSelect( pSession->m_hSocket, m_pWakeup, FD_CONNECT|FD_READ|FD_WRITE|FD_CLOSE );
+		WSAEventSelect( pSession->m_hSocket, GetWakeupEvent(),
+			FD_CONNECT|FD_READ|FD_WRITE|FD_CLOSE );
 	StartThread();
 }
 
@@ -191,7 +190,7 @@ void CChatCore::Remove(CChatSession* pSession)
 	POSITION pos = m_pSessions.Find( pSession );
 	if ( pos != NULL ) m_pSessions.RemoveAt( pos );
 	if ( pSession->m_hSocket != INVALID_SOCKET )
-		WSAEventSelect( pSession->m_hSocket, m_pWakeup, 0 );
+		WSAEventSelect( pSession->m_hSocket, GetWakeupEvent(), 0 );
 }
 
 void CChatCore::Close()
@@ -209,41 +208,27 @@ void CChatCore::Close()
 
 void CChatCore::StartThread()
 {
-	if ( m_hThread != NULL && m_bThread ) return;
 	if ( GetCount() == 0 ) return;
 	
-	m_bThread = TRUE;
-	m_hThread = BeginThread( "ChatCore", ThreadStart, this );
+	BeginThread( "ChatCore" );
 }
 
 void CChatCore::StopThread()
 {
-	if ( m_hThread == NULL ) return;
-
-	m_bThread = FALSE;
-	m_pWakeup.SetEvent();
-
-	CloseThread( &m_hThread );
+	CloseThread();
 }
 
 //////////////////////////////////////////////////////////////////////
 // CChatCore thread run
 
-UINT CChatCore::ThreadStart(LPVOID pParam)
-{
-	CChatCore* pChatCore = (CChatCore*)pParam;
-	pChatCore->OnRun();
-	return 0;
-}
-
 void CChatCore::OnRun()
 {
 	CSingleLock pLock( &m_pSection );
 	
-	while ( m_bThread )
+	while ( IsThreadEnabled() )
 	{
 		Sleep( 50 );
-		WaitForSingleObject( m_pWakeup, 100 );
+		Doze( 100 );
 		
 		if ( pLock.Lock( 250 ) )
 		{
@@ -257,6 +242,4 @@ void CChatCore::OnRun()
 			pLock.Unlock();
 		}
 	}
-	
-	m_bThread = FALSE;
 }

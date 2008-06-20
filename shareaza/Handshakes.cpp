@@ -58,7 +58,6 @@ CHandshakes::CHandshakes()
 
 	// Null values for the socket and thread handles
 	m_hSocket = INVALID_SOCKET;
-	m_hThread = NULL;
 }
 
 // Delete the CHandshakes object
@@ -69,7 +68,6 @@ CHandshakes::~CHandshakes()
 
 	// Make sure it set the socket to invalid, and the thread to null
 	ASSERT( m_hSocket == INVALID_SOCKET );
-	ASSERT( m_hThread == NULL );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -177,7 +175,7 @@ BOOL CHandshakes::Listen()
 	// Set it up so that when a remote computer connects to us, the m_pWakeup event is fired
 	WSAEventSelect(		// Specify an event object to associate with the specified set of FD_XXX network events
 		m_hSocket,		// Our listening socket
-		m_pWakeup,		// Our event, a CEvent object member variable
+		GetWakeupEvent(),		// Our event, a CEvent object member variable
 		FD_ACCEPT );	// The network event to trigger this is us accepting a remote computer's connection
 
 	// Have the socket wait, listening for remote computer on the Internet to connect to it
@@ -186,10 +184,7 @@ BOOL CHandshakes::Listen()
 		256 );		// Maximum length of the queue of pending connections, let 256 computers try to call us at once (do)
 
 	// Create a new thread to run the ThreadStart method, passing it a pointer to this C
-	m_hThread = BeginThread( "Handshakes", ThreadStart, this );
-
-	// Report success
-	return TRUE;
+	return BeginThread( "Handshakes" );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -209,10 +204,7 @@ void CHandshakes::Disconnect()
 		m_hSocket = INVALID_SOCKET;
 	}
 
-	// Set the state of the wakeup event to signaled, releasing any threads that are waiting on it
-	m_pWakeup.SetEvent();
-
-	CloseThread( &m_hThread );
+	CloseThread();
 
 	// Make sure only one thread can execute the remaining code of this method at a time
 	CSingleLock pLock( &m_pSection, TRUE ); // When the method exits, local pLock will be destructed, and the lock released
@@ -329,28 +321,15 @@ void CHandshakes::Remove(CHandshake* pHandshake)
 //////////////////////////////////////////////////////////////////////
 // CHandshakes thread run
 
-// Before it exits, the Listen method creates a new thread to run on this method
-// It passes pParam, which is actually a pointer to the CHandshakes object
-// This method runs the thread, it is the start, middle, and end of the thread
-// The return value of this method is the thread's exit value
-UINT CHandshakes::ThreadStart(LPVOID pParam)
-{
-	// Cast the parameter back into what it was, a pointer to this CHandhshakes object, and call the OnRun method
-	((CHandshakes*)pParam)->OnRun();
-
-	// When OnRun is done, this thread's work is complete, have it exit with the default return code 0
-	return 0; // This is the end of the thread
-}
-
 // The thread runs this method
 // Accept incoming connections from remote computers and figure out what they want
 void CHandshakes::OnRun()
 {
 	// Loop while the socket is valid
-	while ( m_hSocket != INVALID_SOCKET )
+	while ( IsThreadEnabled() && m_hSocket != INVALID_SOCKET )
 	{
 		// Wait for a computer to call us, which fires the wakeup event
-		WaitForSingleObject( m_pWakeup, 1000 ); // Give up after a second
+		Doze( 1000 ); // Give up after a second
 
 		// Accept the connection from the remote computer, making a new CHandshake object for it in the list
 		while ( AcceptConnection() );
@@ -458,7 +437,7 @@ void CHandshakes::CreateHandshake(SOCKET hSocket, SOCKADDR_IN* pHost)
 	// Setup the socket so when there is data to read or write, or it closes, the m_pWakeup event happens
 	WSAEventSelect(							// Associate the m_pWakeup event with the FD_READ, FD_WRITE, and FD_CLOSE events
 		hSocket,							// The local socket we just made when accepting a new connection
-		m_pWakeup,							// The handshakes object's wakeup event
+		GetWakeupEvent(),					// The handshakes object's wakeup event
 		FD_READ | FD_WRITE | FD_CLOSE );	// Make the event happen when the socket is ready to read, write, or has closed
 
 	// Make a new handshake object with the received socket and IP address, and add it to the list

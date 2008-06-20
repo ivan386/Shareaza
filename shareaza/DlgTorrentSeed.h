@@ -25,7 +25,9 @@
 #include "BTInfo.h"
 
 
-class CTorrentSeedDlg : public CSkinDialog
+class CTorrentSeedDlg :
+	public CSkinDialog,
+	public CThreadImpl
 {
 // Construction
 public:
@@ -41,7 +43,6 @@ protected:
 	CButton			m_wndDownload;
 	CButton			m_wndSeed;
 protected:
-	volatile HANDLE	m_hThread;
 	BOOL			m_bCancel;
 	CString			m_sTorrent;
 	BOOL			m_bForceSeed;
@@ -58,7 +59,6 @@ protected:
 
 // Implementation
 protected:
-	static UINT	ThreadStart(LPVOID pParam);
 	void		OnRun();
 	void		RunSingleFile();
 	void		RunMultiFile();

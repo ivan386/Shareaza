@@ -72,8 +72,6 @@ CLibrary::CLibrary() :
 	m_nScanTime					( 0 ),
 	m_nUpdateSaved				( 0 ),
 	m_nFileSwitch				( 0 ),
-	m_hThread					( NULL ),
-	m_bThread					( TRUE ),
 	m_pfnGetFileAttributesExW	( NULL ),
 	m_pfnGetFileAttributesExA	( NULL )
 {
@@ -267,7 +265,9 @@ CList< CLibraryFile* >* CLibrary::Search(CQuerySearch* pSearch, int nMaximum, BO
 
 void CLibrary::Clear()
 {
-	StopThread();
+	LibraryBuilder.StopThread();
+
+	CloseThread();
 
 	CSingleLock pLock( &m_pSection, TRUE );
 
@@ -397,7 +397,7 @@ BOOL CLibrary::Load()
 	Update();
 	m_nUpdateSaved = GetTickCount();
 
-	StartThread();
+	BeginThread( "Library" );
 
 	return TRUE;
 }
@@ -473,43 +473,14 @@ void CLibrary::Serialize(CArchive& ar)
 }
 
 //////////////////////////////////////////////////////////////////////
-// CLibrary thread control
-
-void CLibrary::StartThread()
-{
-	if ( m_hThread == NULL )
-	{
-		m_bThread = TRUE;
-		m_hThread = BeginThread( "Library", ThreadStart, this, THREAD_PRIORITY_BELOW_NORMAL );
-	}
-}
-
-void CLibrary::StopThread()
-{
-	LibraryBuilder.StopThread();
-
-	m_bThread = FALSE;
-	Wakeup();
-
-	CloseThread( &m_hThread );
-}
-
-//////////////////////////////////////////////////////////////////////
 // CLibrary thread run
-
-UINT CLibrary::ThreadStart(LPVOID pParam)
-{
-	CLibrary* pLibrary = (CLibrary*)pParam;
-	pLibrary->OnRun();
-	return 0;
-}
 
 void CLibrary::OnRun()
 {
-	while ( m_bThread )
+	while ( IsThreadEnabled() )
 	{
 		ThreadScan();
-		WaitForSingleObject( m_pWakeup, 1000 );
+		Doze( 1000 );
 	}
 }
 
@@ -540,9 +511,7 @@ BOOL CLibrary::ThreadScan()
 		bPeriodicScan = ( m_nScanTime < tNow - Settings.Library.WatchFoldersTimeout * 1000 );
 	}
 
-	BOOL bChanged = FALSE;
-
-	bChanged = LibraryFolders.ThreadScan( &m_bThread, ( bPeriodicScan || bForcedScan ) );
+	BOOL bChanged = LibraryFolders.ThreadScan( bPeriodicScan || bForcedScan );
 
 	if ( bPeriodicScan || bForcedScan || bChanged )
 	{

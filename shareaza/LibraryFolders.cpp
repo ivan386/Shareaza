@@ -457,11 +457,11 @@ void CLibraryFolders::Clear()
 //////////////////////////////////////////////////////////////////////
 // CLibraryFolders thread scan
 
-BOOL CLibraryFolders::ThreadScan(volatile BOOL* pbContinue, const BOOL bForce)
+BOOL CLibraryFolders::ThreadScan(const BOOL bForce)
 {
 	BOOL bChanged = FALSE;
 
-	for ( POSITION pos = GetFolderIterator() ; pos && *pbContinue ; )
+	for ( POSITION pos = GetFolderIterator() ; pos && Library.IsThreadEnabled() ; )
 	{
 		CLibraryFolder* pFolder = GetNextFolder( pos );
 		
@@ -471,7 +471,7 @@ BOOL CLibraryFolders::ThreadScan(volatile BOOL* pbContinue, const BOOL bForce)
 
 			if ( pFolder->IsChanged() || bForce )
 			{
-				if ( pFolder->ThreadScan( pbContinue ) ) bChanged = TRUE;
+				if ( pFolder->ThreadScan() ) bChanged = TRUE;
 			}
 		}
 		else

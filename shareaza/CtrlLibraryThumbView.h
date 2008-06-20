@@ -30,7 +30,9 @@ class CLibraryThumbItem;
 class CLibraryFile;
 
 
-class CLibraryThumbView : public CLibraryFileView
+class CLibraryThumbView :
+	public CLibraryFileView,
+	public CThreadImpl
 {
 // Construction
 public:
@@ -41,8 +43,6 @@ public:
 // Attributes
 protected:
 	CCriticalSection	m_pSection;
-	HANDLE				m_hThread;
-	BOOL				m_bThread;
 	DWORD				m_nInvalidate;
 	BOOL				m_bRush;
 protected:
@@ -89,7 +89,6 @@ protected:
 
 protected:
 	static int	SortList(LPCVOID pA, LPCVOID pB);
-	static UINT	ThreadStart(LPVOID pParam);
 
 // Overrides
 public:

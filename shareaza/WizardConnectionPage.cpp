@@ -61,13 +61,11 @@ CWizardConnectionPage::CWizardConnectionPage() : CWizardPage(CWizardConnectionPa
 , m_bUpdateDonkeyServers(false)
 , m_bUPnPForward(false)
 , m_nProgressSteps(0)
-, m_hThread(NULL)
 {
 }
 
 CWizardConnectionPage::~CWizardConnectionPage()
 {
-	ASSERT( m_hThread == NULL );
 }
 
 void CWizardConnectionPage::DoDataExchange(CDataExchange* pDX)
@@ -270,7 +268,7 @@ LRESULT CWizardConnectionPage::OnWizardNext()
 		catch ( CException* e ) { e->Delete(); }
 	}
 
-	m_hThread = BeginThread( "WizardConnectionPage", ThreadStart, this, THREAD_PRIORITY_NORMAL );
+	BeginThread( "WizardConnectionPage" );
 
 	// Disable all navigation buttons while the thread is running
 	CWizardSheet* pSheet = GetSheet();
@@ -285,13 +283,6 @@ LRESULT CWizardConnectionPage::OnWizardNext()
 
 /////////////////////////////////////////////////////////////////////////////
 // CWizardConnectionPage thread
-
-UINT CWizardConnectionPage::ThreadStart(LPVOID pParam)
-{
-	CWizardConnectionPage* pDlg = (CWizardConnectionPage*)pParam;
-	pDlg->OnRun();
-	return 0;
-}
 
 void CWizardConnectionPage::OnRun()
 {
@@ -378,7 +369,7 @@ void CWizardConnectionPage::OnRun()
 
 BOOL CWizardConnectionPage::OnQueryCancel()
 {
-	if ( m_hThread )
+	if ( IsThreadAlive() )
 		return FALSE;
 
 	return CWizardPage::OnQueryCancel();
@@ -388,7 +379,7 @@ void CWizardConnectionPage::OnTimer(UINT_PTR nIDEvent)
 {
 	if ( nIDEvent != 1 ) return;
 
-	CloseThread( &m_hThread );
+	CloseThread();
 
 	if ( m_bUPnPForward && theApp.m_bUPnPPortsForwarded != TRI_TRUE )
 	{

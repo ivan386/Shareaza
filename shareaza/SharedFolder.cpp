@@ -343,7 +343,7 @@ void CLibraryFolder::PathToName()
 //////////////////////////////////////////////////////////////////////
 // CLibraryFolder threaded scan
 
-BOOL CLibraryFolder::ThreadScan(volatile BOOL* pbContinue, DWORD nScanCookie)
+BOOL CLibraryFolder::ThreadScan(DWORD nScanCookie)
 {
 	CSingleLock pLock( &Library.m_pSection );
 	WIN32_FIND_DATA pFind;
@@ -400,7 +400,7 @@ BOOL CLibraryFolder::ThreadScan(volatile BOOL* pbContinue, DWORD nScanCookie)
 					pLock.Unlock();
 				}
 				
-				if ( pFolder->ThreadScan( pbContinue, nScanCookie ) )
+				if ( pFolder->ThreadScan( nScanCookie ) )
 					bChanged = TRUE;
 				
 				m_nFiles	+= pFolder->m_nFiles;
@@ -443,12 +443,12 @@ BOOL CLibraryFolder::ThreadScan(volatile BOOL* pbContinue, DWORD nScanCookie)
 				m_nVolume += pFile->m_nSize;
 			}
 		}
-		while ( *pbContinue && FindNextFile( hSearch, &pFind ) );
+		while ( Library.IsThreadEnabled() && FindNextFile( hSearch, &pFind ) );
 		
 		FindClose( hSearch );
 	}
 	
-	if ( ! *pbContinue ) return FALSE;
+	if ( ! Library.IsThreadEnabled() ) return FALSE;
 	
 	for ( POSITION pos = GetFolderIterator() ; pos ; )
 	{

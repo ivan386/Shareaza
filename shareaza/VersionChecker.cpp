@@ -46,8 +46,7 @@ CVersionChecker VersionChecker;
 // CVersionChecker construction
 
 CVersionChecker::CVersionChecker() :
-	m_bVerbose( false ),
-	m_hThread( NULL )
+	m_bVerbose( false )
 {
 }
 
@@ -97,14 +96,12 @@ BOOL CVersionChecker::NeedToCheck()
 
 BOOL CVersionChecker::Start()
 {
-	if ( m_hThread )
+	if ( IsThreadAlive() )
 		return TRUE;
 
 	m_pRequest.Clear();
-	
-	m_hThread = BeginThread( "VersionChecker", ThreadStart, this, THREAD_PRIORITY_IDLE );
-	
-	return TRUE;
+
+	return BeginThread( "VersionChecker" );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -112,22 +109,11 @@ BOOL CVersionChecker::Start()
 
 void CVersionChecker::Stop()
 {
-	if ( m_hThread )
+	if ( IsThreadAlive() )
 	{
-		SetThreadPriority( m_hThread, THREAD_PRIORITY_NORMAL );
 		m_pRequest.Cancel();
-		CloseThread( (HANDLE*)&m_hThread );
+		CloseThread();
 	}
-}
-
-//////////////////////////////////////////////////////////////////////
-// CVersionChecker thread bootstrap
-
-UINT CVersionChecker::ThreadStart(LPVOID pParam)
-{
-	CVersionChecker* pClass = (CVersionChecker*)pParam;
-	pClass->OnRun();
-	return 0;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -146,10 +132,9 @@ void CVersionChecker::OnRun()
 			SetNextCheck( VERSIONCHECKER_FREQUENCY );
 		}
 
-		AfxGetMainWnd()->PostMessage( WM_VERSIONCHECK, VC_MESSAGE_AND_CONFIRM );
+		if ( IsThreadEnabled() )
+			AfxGetMainWnd()->PostMessage( WM_VERSIONCHECK, VC_MESSAGE_AND_CONFIRM );
 	}
-
-	m_hThread = NULL;
 }
 
 //////////////////////////////////////////////////////////////////////

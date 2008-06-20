@@ -19,16 +19,16 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_CHATCORE_H__F550EC04_AC7C_42B1_BE5B_7CDF69EA2286__INCLUDED_)
-#define AFX_CHATCORE_H__F550EC04_AC7C_42B1_BE5B_7CDF69EA2286__INCLUDED_
-
 #pragma once
+
+#include "ThreadImpl.h"
 
 class CConnection;
 class CChatSession;
 
 
-class CChatCore
+class CChatCore :
+	public CThreadImpl
 {
 // Construction
 public:
@@ -40,9 +40,6 @@ public:
 	CMutex		m_pSection;
 protected:
 	CList< CChatSession* > m_pSessions;
-	HANDLE		m_hThread;
-	BOOL		m_bThread;
-	CEvent		m_pWakeup;
 
 // Operations
 public:
@@ -61,12 +58,9 @@ protected:
 	void			Remove(CChatSession* pSession);
 	void			StartThread();
 protected:
-	static UINT		ThreadStart(LPVOID pParam);
 	void			OnRun();
 
 	friend class CChatSession;
 };
 
 extern CChatCore ChatCore;
-
-#endif // !defined(AFX_CHATCORE_H__F550EC04_AC7C_42B1_BE5B_7CDF69EA2286__INCLUDED_)

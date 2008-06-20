@@ -45,7 +45,6 @@ CDiscoveryServices DiscoveryServices;
 // CDiscoveryServices construction
 
 CDiscoveryServices::CDiscoveryServices() :
-	m_hThread		( NULL ),
 	m_hInternet		( NULL ),
 	m_hRequest		( NULL ),
 	m_pWebCache		( NULL ),
@@ -1068,9 +1067,7 @@ BOOL CDiscoveryServices::RequestWebCache(CDiscoveryService* pService, int nMode,
 	m_hInternet = InternetOpen( strAgent, INTERNET_OPEN_TYPE_PRECONFIG, NULL, NULL, 0 );
 	if ( ! m_hInternet ) return FALSE;
 	
-	m_hThread = BeginThread( "Discovery", ThreadStart, this );
-	
-	return TRUE;
+	return BeginThread( "Discovery" );
 }
 
 void CDiscoveryServices::StopWebRequest()
@@ -1078,17 +1075,7 @@ void CDiscoveryServices::StopWebRequest()
 	if ( m_hInternet ) InternetCloseHandle( m_hInternet );
 	m_hInternet = NULL;
 
-	CloseThread( &m_hThread );
-}
-
-//////////////////////////////////////////////////////////////////////
-// CDiscoveryServices thread bootstrap
-
-UINT CDiscoveryServices::ThreadStart(LPVOID pParam)
-{
-	CDiscoveryServices* pClass = (CDiscoveryServices*)pParam;
-	pClass->OnRun();
-	return 0;
+	CloseThread();
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -1155,8 +1142,6 @@ void CDiscoveryServices::OnRun()
 		m_hInternet	= NULL;
 		m_hRequest	= NULL;
 	}
-
-	m_hThread = NULL;
 }
 
 //////////////////////////////////////////////////////////////////////

@@ -19,15 +19,15 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_WIZARDCONNECTIONPAGE_H__0DAE1F77_BC93_4B54_88A2_67AFDAA1305F__INCLUDED_)
-#define AFX_WIZARDCONNECTIONPAGE_H__0DAE1F77_BC93_4B54_88A2_67AFDAA1305F__INCLUDED_
-
 #pragma once
 
+#include "ThreadImpl.h"
 #include "WizardSheet.h"
 
 
-class CWizardConnectionPage : public CWizardPage
+class CWizardConnectionPage :
+	public CWizardPage,
+	public CThreadImpl
 {
 // Construction
 public:
@@ -50,11 +50,7 @@ public:
 
 // Operations
 protected:
-	static UINT	ThreadStart(LPVOID pParam);
 	void		OnRun();
-
-public:
-	HANDLE	m_hThread;
 
 // Overrides
 public:
@@ -82,7 +78,3 @@ private:
 	bool	m_bUPnPForward;
 	short	m_nProgressSteps;
 };
-
-//{{AFX_INSERT_LOCATION}}
-
-#endif // !defined(AFX_WIZARDCONNECTIONPAGE_H__0DAE1F77_BC93_4B54_88A2_67AFDAA1305F__INCLUDED_)

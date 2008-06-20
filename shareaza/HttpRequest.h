@@ -21,10 +21,13 @@
 
 #pragma once
 
+#include "ThreadImpl.h"
+
 class CBuffer;
 
 
-class CHttpRequest
+class CHttpRequest :
+	public CThreadImpl
 {
 // Constructions
 public:
@@ -55,9 +58,7 @@ public:
 
 // Data
 protected:
-	HANDLE		m_hThread;
 	HINTERNET	m_hInternet;
-	BOOL		m_bCancel;
 	CString		m_sURL;
 	CString		m_sUserAgent;
 	CString		m_sRequestHeaders;
@@ -73,6 +74,5 @@ protected:
 	WPARAM		m_nNotifyParam;
 
 protected:
-	static UINT ThreadStart(LPVOID lpParameter);
-	void		Run();
+	void		OnRun();
 };

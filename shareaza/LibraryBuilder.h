@@ -21,6 +21,7 @@
 
 #pragma once
 
+#include "ThreadImpl.h"
 #include "LibraryBuilderInternals.h"
 #include "LibraryBuilderPlugins.h"
 
@@ -31,6 +32,7 @@ class CXMLElement;
 class CLibraryBuilder :
 	public CLibraryBuilderInternals
 ,	public CLibraryBuilderPlugins
+,	public CThreadImpl
 {
 public:
 	CLibraryBuilder();
@@ -81,8 +83,6 @@ private:
 
 	mutable CMutex				m_pSection;			// Guarding
 	CFileInfoList				m_pFiles;			// File list
-	HANDLE						m_hThread;
-	volatile bool				m_bThread;			// false - termination request
 	bool						m_bPriority;
 	CString						m_sPath;			// Hashing filename
 	DWORD						m_nProgress;		// Hashing file progress (0..100%)
@@ -94,7 +94,6 @@ private:
 	// Get next file from list doing all possible tests
 	// Returns 0 if no file available, sets m_bThread = false if no files left.
 	DWORD		GetNextFileToHash(CString& sPath);
-	static UINT	ThreadStart(LPVOID pParam);
 	void		OnRun();
 	bool		HashFile(LPCTSTR szPath, HANDLE hFile, DWORD nIndex);
 	bool		DetectVirtualFile(LPCTSTR szPath, HANDLE hFile, QWORD& nOffset, QWORD& nLength);

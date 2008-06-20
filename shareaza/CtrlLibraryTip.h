@@ -19,16 +19,16 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_CTRLLIBRARYTIP_H__DA7457FB_37EE_4940_8619_ED56D5DA593A__INCLUDED_)
-#define AFX_CTRLLIBRARYTIP_H__DA7457FB_37EE_4940_8619_ED56D5DA593A__INCLUDED_
-
 #pragma once
 
+#include "ThreadImpl.h"
 #include "CtrlCoolTip.h"
 #include "MetaList.h"
 
 
-class CLibraryTipCtrl : public CCoolTipCtrl
+class CLibraryTipCtrl :
+	public CCoolTipCtrl,
+	public CThreadImpl
 {
 // Construction
 public:
@@ -56,10 +56,7 @@ protected:
 	COLORREF		m_crLight;
 protected:
 	CCriticalSection	m_pSection;
-	CEvent				m_pWakeup;
 	CSize				m_szThumbSize;
-	HANDLE				m_hThread;
-	BOOL				m_bThread;
 	CSize				m_szThumb;
 	CBitmap				m_bmThumb;
 	DWORD				m_tHidden;
@@ -74,7 +71,6 @@ public:
 protected:
 	void		DrawThumb(CDC* pDC, CRect& rcThumb);
 	void		StopThread();
-	static UINT	CLibraryTipCtrl::ThreadStart(LPVOID pParam);
 	void		OnRun();
 
 // Overrides
@@ -92,7 +88,3 @@ protected:
 	DECLARE_MESSAGE_MAP()
 
 };
-
-//{{AFX_INSERT_LOCATION}}
-
-#endif // !defined(AFX_CTRLLIBRARYTIP_H__DA7457FB_37EE_4940_8619_ED56D5DA593A__INCLUDED_)

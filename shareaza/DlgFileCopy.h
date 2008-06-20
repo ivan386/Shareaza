@@ -27,43 +27,35 @@
 class CLibraryFile;
 
 
-class CFileCopyDlg : public CSkinDialog
+class CFileCopyDlg :
+	public CSkinDialog,
+	public CThreadImpl
 {
-// Construction
 public:
 	CFileCopyDlg(CWnd* pParent = NULL, BOOL bMove = FALSE);
 
-// Dialog Data
-public:
-	//{{AFX_DATA(CFileCopyDlg)
 	enum { IDD = IDD_FILE_COPY };
-	CStatic	m_wndMove;
-	CStatic	m_wndCopy;
-	CStatic	m_wndFileName;
-	CProgressCtrl	m_wndFileProg;
-	CButton	m_wndCancel;
-	CButton	m_wndOK;
-	CProgressCtrl	m_wndProgress;
-	CStatic	m_wndPlaceholder;
-	//}}AFX_DATA
 
-// Attributes
-public:
 	CString				m_sTarget;
+
+	void		AddFile(CLibraryFile* pFile);
+
 protected:
+	CStatic				m_wndMove;
+	CStatic				m_wndCopy;
+	CStatic				m_wndFileName;
+	CProgressCtrl		m_wndFileProg;
+	CButton				m_wndCancel;
+	CButton				m_wndOK;
+	CProgressCtrl		m_wndProgress;
+	CStatic				m_wndPlaceholder;
 	BOOL				m_bMove;
 	CList< DWORD >		m_pFiles;
 	CLibraryFolderCtrl	m_wndTree;
 	DWORD				m_nCookie;
-protected:
-	HANDLE				m_hThread;
-	BOOL				m_bThread;
 	BOOL				m_bCancel;
 	int					m_nFileProg;
 
-// Operations
-public:
-	void		AddFile(CLibraryFile* pFile);
 protected:
 	void		StartOperation();
 	void		StopOperation();
@@ -72,29 +64,18 @@ protected:
 	BOOL		CheckTarget(LPCTSTR pszTarget);
 	BOOL		ProcessMove(LPCTSTR pszSource, LPCTSTR pszTarget);
 	BOOL		ProcessCopy(LPCTSTR pszSource, LPCTSTR pszTarget);
-protected:
-	static UINT			ThreadStart(LPVOID pParam);
+
 	static DWORD WINAPI	CopyCallback(LARGE_INTEGER TotalFileSize, LARGE_INTEGER TotalBytesTransferred, LARGE_INTEGER StreamSize, LARGE_INTEGER StreamBytesTransferred, DWORD dwStreamNumber, DWORD dwCallbackReason, HANDLE hSourceFile, HANDLE hDestinationFile, LPVOID lpData);
 
-
-// Overrides
-public:
-	//{{AFX_VIRTUAL(CFileCopyDlg)
-	protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	virtual BOOL OnNotify(WPARAM wParam, LPARAM lParam, LRESULT* pResult);
-	//}}AFX_VIRTUAL
-
-// Implementation
-protected:
-	//{{AFX_MSG(CFileCopyDlg)
 	virtual BOOL OnInitDialog();
 	virtual void OnOK();
-	afx_msg void OnTimer(UINT_PTR nIDEvent);
 	virtual void OnCancel();
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
 
+	afx_msg void OnTimer(UINT_PTR nIDEvent);
+
+	DECLARE_MESSAGE_MAP()
 };
 
 #define IDC_FOLDERS	100

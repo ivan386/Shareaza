@@ -36,9 +36,7 @@ static char THIS_FILE[]=__FILE__;
 // CHttpRequest construction
 
 CHttpRequest::CHttpRequest() :
-	m_hThread( NULL ),
 	m_hInternet( NULL ),
-	m_bCancel( FALSE ),
 	m_nLimit( 0 ),
 	m_nStatusCode( 0 ),
 //	m_pPost( NULL ),
@@ -203,7 +201,6 @@ bool CHttpRequest::Execute(bool bBackground)
 	ASSERT( m_sURL.GetLength() );
 
 	m_hInternet = NULL;
-	m_bCancel = FALSE;
 	m_nStatusCode = 0;
 	m_sStatusString.Empty();
 	m_pResponseHeaders.RemoveAll();
@@ -215,8 +212,7 @@ bool CHttpRequest::Execute(bool bBackground)
 	if ( m_sUserAgent.IsEmpty() )
 		m_sUserAgent = Settings.SmartAgent();
 
-	m_hThread = BeginThread( "HTTPRequest", (AFX_THREADPROC)ThreadStart, this );
-	if ( ! m_hThread )
+	if ( ! BeginThread( "HTTPRequest" ) )
 		return false;
 
 	if ( bBackground )
@@ -225,14 +221,14 @@ bool CHttpRequest::Execute(bool bBackground)
 	}
 	else
 	{
-		CloseThread( &m_hThread );
+		Wait();
 		return GetStatusSuccess();
 	}
 }
 
 BOOL CHttpRequest::IsPending() const
 {
-	return m_hThread && ( WaitForSingleObject( m_hThread, 0 ) == WAIT_TIMEOUT );
+	return IsThreadAlive();
 }
 
 BOOL CHttpRequest::IsFinished() const
@@ -244,26 +240,19 @@ void CHttpRequest::Cancel()
 {
 	if ( ! IsPending() ) return;
 
-	m_bCancel = TRUE;
 	if ( m_hInternet )
 	{
 		InternetCloseHandle( m_hInternet );
 		m_hInternet = NULL;
 	}
 
-	CloseThread( &m_hThread );
+	CloseThread();
 }
 
 //////////////////////////////////////////////////////////////////////
 // CHttpRequest thread run
 
-UINT CHttpRequest::ThreadStart(LPVOID lpParameter)
-{
-	reinterpret_cast< CHttpRequest* >( lpParameter )->Run();
-	return 0;
-}
-
-void CHttpRequest::Run()
+void CHttpRequest::OnRun()
 {
 	ASSERT( m_sUserAgent.GetLength() );
 	ASSERT( m_sURL.GetLength() );
@@ -280,14 +269,14 @@ void CHttpRequest::Run()
 		{
 			DWORD nLength = 255;
 			BYTE nNull = 0;
-			if ( m_bCancel || ! HttpQueryInfo( hURL, HTTP_QUERY_STATUS_TEXT,
+			if ( ! IsThreadEnabled() || ! HttpQueryInfo( hURL, HTTP_QUERY_STATUS_TEXT,
 				m_sStatusString.GetBuffer( nLength ), &nLength, 0 ) ) nLength = 0;
 			m_sStatusString.ReleaseBuffer( nLength );
 			if ( m_sStatusString.GetLength() )
 			{
 				m_pResponse = new CBuffer();
 				DWORD nRemaining = 0;
-				for ( ; ! m_bCancel &&
+				for ( ; IsThreadEnabled() &&
 					InternetQueryDataAvailable( hURL, &nRemaining, 0, 0 ) &&
 					nRemaining > 0 &&
 					m_pResponse->EnsureBuffer( nRemaining ); )
@@ -297,7 +286,7 @@ void CHttpRequest::Run()
 					m_pResponse->m_nLength += nRemaining;
 					if ( m_nLimit > 0 && m_pResponse->m_nLength > m_nLimit ) break;
 				}
-				if ( ! m_bCancel && nRemaining == 0 )
+				if ( IsThreadEnabled() && nRemaining == 0 )
 				{
 					nLength = 0;
 					HttpQueryInfo( hURL, HTTP_QUERY_RAW_HEADERS, &nNull, &nLength, 0 );
@@ -344,6 +333,4 @@ void CHttpRequest::Run()
 	{
 		PostMessage( m_hNotifyWnd, m_nNotifyMsg, m_nNotifyParam, 0 );
 	}
-
-	m_hThread = NULL;
 }

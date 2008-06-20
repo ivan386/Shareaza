@@ -48,12 +48,10 @@ CDonkeyServersDlg::CDonkeyServersDlg(CWnd* pParent) : CSkinDialog(CDonkeyServers
 	m_sURL = _T("");
 	//}}AFX_DATA_INIT
 	m_hInternet = NULL;
-	m_hThread = NULL;
 }
 
 CDonkeyServersDlg::~CDonkeyServersDlg()
 {
-	ASSERT( m_hThread == NULL );
 	ASSERT( m_hInternet == NULL );
 }
 
@@ -105,7 +103,7 @@ void CDonkeyServersDlg::OnOK()
 	m_hInternet = InternetOpen( strAgent, INTERNET_OPEN_TYPE_PRECONFIG, NULL, NULL, 0 );
 	if ( m_hInternet == NULL ) return;
 
-	m_hThread = BeginThread( "DlgDonkeyServices", ThreadStart, this );
+	BeginThread( "DlgDonkeyServices" );
 
 	m_wndOK.EnableWindow( FALSE );
 	m_wndURL.EnableWindow( FALSE );
@@ -125,20 +123,13 @@ void CDonkeyServersDlg::OnTimer(UINT_PTR nIDEvent)
 		m_hInternet = NULL;
 	}
 
-	CloseThread( &m_hThread );
+	CloseThread();
 
 	if ( nIDEvent == 1 ) EndDialog( IDOK );
 }
 
 /////////////////////////////////////////////////////////////////////////////
 // CDonkeyServersDlg thread
-
-UINT CDonkeyServersDlg::ThreadStart(LPVOID pParam)
-{
-	CDonkeyServersDlg* pDlg = (CDonkeyServersDlg*)pParam;
-	pDlg->OnRun();
-	return 0;
-}
 
 void CDonkeyServersDlg::OnRun()
 {

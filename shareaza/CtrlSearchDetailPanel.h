@@ -51,7 +51,9 @@ protected:
 	CRect			m_rc;
 };
 
-class CSearchDetailPanel : public CWnd
+class CSearchDetailPanel :
+	public CWnd,
+	public CThreadImpl
 {
 // Construction
 public:
@@ -71,7 +73,6 @@ protected:
 	void		ClearReviews();
 	BOOL		RequestPreview();
 	void		CancelPreview();
-	static UINT	ThreadStart(LPVOID pParam);
 	void		OnRun();
 	BOOL		ExecuteRequest(CString strURL, BYTE** ppBuffer, DWORD* pnBuffer);
     void		OnPreviewLoaded(const Hashes::Sha1Hash& oSHA1, CImageFile* pImage);
@@ -98,14 +99,11 @@ protected:
 	int					m_nScrollWheelLines;
 protected:
 	CCriticalSection	m_pSection;
-	CEvent				m_pWakeup;
 	BOOL				m_bCanPreview;
 	BOOL				m_bRunPreview;
 	BOOL				m_bIsPreviewing;
-	HANDLE				m_hThread;
-	BOOL				m_bThread;
 	CHttpRequest		m_pRequest;
-	CList< CString >			m_pPreviewURLs;
+	CList< CString >	m_pPreviewURLs;
 protected:
 	CBitmap				m_bmThumb;
 	CSize				m_szThumb;

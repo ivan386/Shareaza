@@ -19,18 +19,17 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_TRANSFERS_H__950AC162_FF34_4B40_8D8A_2745AA245316__INCLUDED_)
-#define AFX_TRANSFERS_H__950AC162_FF34_4B40_8D8A_2745AA245316__INCLUDED_
-
 #pragma once
 
-class CTransfer;
+#include "ThreadImpl.h"
 
+class CTransfer;
 class CTransfers;
 
 extern CTransfers Transfers;
 
-class CTransfers
+class CTransfers :
+	public CThreadImpl
 {
 // Construction
 public:
@@ -44,9 +43,6 @@ public:
 	BYTE*			m_pBuffer;
 protected:
 	CList< CTransfer* > m_pList;
-	volatile HANDLE	m_hThread;
-	volatile BOOL	m_bThread;
-	CEvent			m_pWakeup;
 	DWORD			m_nRunCookie;
 
 // Operations
@@ -56,7 +52,6 @@ public:
 	BOOL		StartThread();
 	void		StopThread();
 protected:
-	static UINT	ThreadStart(LPVOID pParam);
 	void		OnRun();
 	void		OnRunTransfers();
 	void		OnCheckExit();
@@ -91,5 +86,3 @@ public:
 	friend class CDownloadWithTransfers;
 
 };
-
-#endif // !defined(AFX_TRANSFERS_H__950AC162_FF34_4B40_8D8A_2745AA245316__INCLUDED_)

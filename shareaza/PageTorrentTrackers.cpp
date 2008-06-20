@@ -168,7 +168,6 @@ BOOL CTorrentTrackersPage::OnInitDialog()
 	}
 	
 	UpdateData( FALSE );
-	m_hThread = NULL;
 
 	if ( Network.IsConnected() )
 		PostMessage( WM_COMMAND, MAKELONG( IDC_TORRENT_REFRESH, BN_CLICKED ), (LPARAM)m_wndRefresh.GetSafeHwnd() );
@@ -179,10 +178,10 @@ BOOL CTorrentTrackersPage::OnInitDialog()
 
 void CTorrentTrackersPage::OnDestroy() 
 {
-	if ( m_hThread != NULL ) 
+	if ( IsThreadAlive() ) 
 	{
 		m_pRequest.Cancel();
-		CloseThread( &m_hThread );
+		CloseThread();
 	}
 	
 	CTorrentInfoPage::OnDestroy();
@@ -192,14 +191,14 @@ void CTorrentTrackersPage::OnTorrentRefresh()
 {
 	if ( m_wndRefresh.IsWindowEnabled() == FALSE ) return;
 	
-	if ( m_hThread != NULL ) 
+	if ( IsThreadAlive() ) 
 	{
 		m_pRequest.Cancel();
-		CloseThread( &m_hThread );
+		CloseThread();
 	}
 	
 	m_wndRefresh.EnableWindow( FALSE );
-	m_hThread = BeginThread( "PageTorrentTrackers", ThreadStart, this );
+	BeginThread( "PageTorrentTrackers" );
 }
 
 void CTorrentTrackersPage::OnTimer(UINT_PTR nIDEvent) 
@@ -213,7 +212,7 @@ void CTorrentTrackersPage::OnTimer(UINT_PTR nIDEvent)
 	else
 	{
 		// Close the scrape thread
-		CloseThread( &m_hThread );
+		CloseThread();
 		// Re-enable the refresh button in one minute
 		SetTimer( 1, 60000, NULL );
 		
@@ -268,13 +267,6 @@ void CTorrentTrackersPage::OnOK()
 	}
 	
 	CTorrentInfoPage::OnOK();
-}
-
-UINT CTorrentTrackersPage::ThreadStart(LPVOID pParam)
-{
-	CTorrentTrackersPage* pObject = (CTorrentTrackersPage*)pParam;
-	pObject->OnRun();
-	return 0;
 }
 
 void CTorrentTrackersPage::OnRun()

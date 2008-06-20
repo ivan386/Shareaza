@@ -19,15 +19,15 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_PAGETORRENTTRACKERS_H__3FE33E_A574_484A_88EB_4AD8K2BE64__INCLUDED_)
-#define AFX_PAGETORRENTTRACKERS_H__3FE33E_A574_484A_88EB_4AD8K2BE64__INCLUDED_
-
 #pragma once
 
+#include "ThreadImpl.h"
 #include "DlgTorrentInfoPage.h"
 #include "HttpRequest.h"
 
-class CTorrentTrackersPage : public CTorrentInfoPage
+class CTorrentTrackersPage :
+	public CTorrentInfoPage,
+	public CThreadImpl
 {
 // Construction
 public:
@@ -55,13 +55,11 @@ public:
 // Attributes
 public:
 	CHttpRequest	m_pRequest;
-	HANDLE			m_hThread;
 	int				m_nComplete;
 	int				m_nIncomplete;
 
 // Thread
 protected:
-	static UINT		ThreadStart(LPVOID pParam);
 	void			OnRun();
 	BOOL			OnTree(CBENode* pNode);
 
@@ -88,7 +86,3 @@ protected:
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };
-
-//{{AFX_INSERT_LOCATION}}
-
-#endif // !defined(AFX_PAGETORRENTTRACKERS_H__3FE33E_A574_484A_88EB_4AD8K2BE64__INCLUDED_)

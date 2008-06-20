@@ -21,6 +21,8 @@
 
 #pragma once
 
+#include "ThreadImpl.h"
+
 class CQuerySearch;
 class CLibraryFile;
 class CLibraryFolder;
@@ -32,7 +34,9 @@ class CAlbumFolder;
 // 28 - Added CLibraryMaps m_pIndexMap, m_pNameMap and m_pPathMap counts (ryo-oh-ki)
 // 29 - Added CLibraryDictionary serialize (ryo-oh-ki)
 
-class CLibrary : public CComObject
+class CLibrary :
+	public CComObject,
+	public CThreadImpl
 {
 // Construction
 public:
@@ -55,9 +59,6 @@ public:
 
 protected:
 	int				m_nFileSwitch;
-	HANDLE			m_hThread;
-	volatile BOOL	m_bThread;
-	CEvent			m_pWakeup;
 
 // Sync Operations
 public:
@@ -66,10 +67,6 @@ public:
 		InterlockedExchange( (volatile LONG*)&m_nUpdateCookie, GetTickCount() );
 		if ( bForce )
 			InterlockedExchange( (volatile LONG*)&m_nForcedUpdateCookie, 0 );
-	}
-	inline void		Wakeup()
-	{
-		m_pWakeup.SetEvent();
 	}
 
 // File and Folder Operations
@@ -90,15 +87,15 @@ public:
 	void			Clear();
 	BOOL			Load();
 	BOOL			Save();
-	void			StartThread();
-	void			StopThread();
-
+	inline void		StopThread()
+	{
+		CloseThread();
+	}
 	static BOOL		IsBadFile(LPCTSTR szFilenameOnly, LPCTSTR szPathOnly = NULL, DWORD dwFileAttributes = 0);
 
 protected:
-	void			Serialize(CArchive& ar);
-	static UINT		ThreadStart(LPVOID pParam);
 	void			OnRun();
+	void			Serialize(CArchive& ar);
 	BOOL			ThreadScan();
 	BOOL			SafeReadTime(CFile& pFile, FILETIME* pFileTime) throw();
 	BOOL			SafeSerialize(CArchive& ar) throw();

@@ -84,7 +84,7 @@ public:
 	BOOL			SetOffline();
 	BOOL			SetOnline();
 	void			Serialize(CArchive& ar, int nVersion);
-	BOOL			ThreadScan(volatile BOOL* pbContinue, DWORD nScanCookie = 0);
+	BOOL			ThreadScan(DWORD nScanCookie = 0);
 	// Manage filesystem change notification. Returns TRUE if changes detected.
 	BOOL			IsChanged();
 	void			OnDelete(TRISTATE bCreateGhost = TRI_UNKNOWN);

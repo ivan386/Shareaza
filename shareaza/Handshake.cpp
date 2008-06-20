@@ -119,7 +119,7 @@ BOOL CHandshake::Push(IN_ADDR* pAddress, WORD nPort, DWORD nIndex)
 	// Tell Windows to give us a m_pWakeup event if this socket connects, gets data, is ready for writing, or closes
 	WSAEventSelect(				// Specify our event object Handshakes.m_pWakeup to the FD_CONNECT FD_READ FD_WRITE and FD_CLOSE events
 		m_hSocket,				// The socket in this CHandshake object
-		Handshakes.m_pWakeup,	// The MFC CEvent object we've made for the wakeup event
+		Handshakes.GetWakeupEvent(),	// The MFC CEvent object we've made for the wakeup event
 		FD_CONNECT	|			// The connection has been made
 		FD_READ		|			// There is data from the remote computer on our end of the socket waiting for us to read it
 		FD_WRITE	|			// The remote computer is ready for some data from us (do)

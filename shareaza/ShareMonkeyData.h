@@ -19,32 +19,31 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(SHAREMONKEYDATA_H)
-#define SHAREMONKEYDATA_H
-
 #pragma once
+
+#include "ThreadImpl.h"
 #include "MetaPanel.h"
 
 class CXMLElement;
 class CLibraryFileView;
 class CSchema;
 
-class CShareMonkeyData : public CMetaPanel
+class CShareMonkeyData :
+	public CMetaPanel,
+	public CThreadImpl
 {
 public:
 	CShareMonkeyData(INT_PTR nOffset, int nRequestType = CShareMonkeyData::stProductMatch);
-	~CShareMonkeyData();
+	virtual ~CShareMonkeyData();
 
 protected:
 	CCriticalSection	m_pSection;
 
 protected:
 	DWORD				m_nFileIndex;
-	HANDLE				m_hThread;
 	HINTERNET			m_hInternet;
 	HINTERNET			m_hSession;
 	HINTERNET			m_hRequest;
-	BOOL				m_bFinished;
 	DWORD				m_nDelay;
 	DWORD				m_nFailures;
 	CSchema*			m_pSchema;
@@ -73,11 +72,6 @@ public:
 	void		Stop();
 	CSchema*	GetSchema() { return m_pSchema; }
 
-	inline BOOL IsWorking()
-	{
-		return ( m_hThread != NULL ) && ! m_bFinished;
-	}
-
 	enum WebRequestType
 	{
 		stProductMatch,
@@ -86,7 +80,6 @@ public:
 	};
 
 protected:
-	static UINT		ThreadStart(LPVOID pParam);
 	void			OnRun();
 	void			Clear();
 	BOOL			BuildRequest();
@@ -96,5 +89,3 @@ protected:
 
 	inline bool NotifyWindow(LPCTSTR pszMessage = NULL) const;
 };
-
-#endif // !defined(SHAREMONKEYDATA_H)

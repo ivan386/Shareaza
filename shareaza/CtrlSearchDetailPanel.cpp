@@ -83,8 +83,6 @@ CSearchDetailPanel::CSearchDetailPanel() :
 	m_bCanPreview( FALSE ),
 	m_bRunPreview( FALSE ),
 	m_bIsPreviewing( FALSE ),
-	m_hThread( NULL ),
-	m_bThread( FALSE ),
 	m_crLight( CCoolInterface::CalculateColour(
 		CoolInterface.m_crTipBack, RGB( 255, 255, 255 ), 128 ) ),
 	m_nThumbSize( 0 )
@@ -226,9 +224,7 @@ void CSearchDetailPanel::OnDestroy()
 
 	CancelPreview();
 
-	m_bThread = FALSE;
-	m_pWakeup.SetEvent();
-	CloseThread( &m_hThread );
+	CloseThread();
 
 	CWnd::OnDestroy();
 }
@@ -761,17 +757,13 @@ BOOL CSearchDetailPanel::RequestPreview()
 	
 	if ( ! m_bValid || ! m_bCanPreview || m_pPreviewURLs.IsEmpty() ) return FALSE;
 	
-	if ( m_hThread == NULL )
-	{
-		m_bThread = TRUE;
-		m_hThread = BeginThread( "CtrlSearchDetailPanel", ThreadStart, this, THREAD_PRIORITY_IDLE );
-	}
+	BeginThread( "CtrlSearchDetailPanel" );
 	
 	m_bRunPreview = TRUE;
 	
 	pLock.Unlock();
 	
-	m_pWakeup.SetEvent();
+	Wakeup();
 	
 	return TRUE;
 }
@@ -798,18 +790,11 @@ void CSearchDetailPanel::CancelPreview()
 	m_pRequest.Cancel();
 }
 
-UINT CSearchDetailPanel::ThreadStart(LPVOID pParam)
-{
-	CSearchDetailPanel* pPanel = (CSearchDetailPanel*)pParam;
-	pPanel->OnRun();
-	return 0;
-}
-
 void CSearchDetailPanel::OnRun()
 {
 	CSingleLock pLock( &m_pSection );
 	
-	while ( m_bThread )
+	while ( IsThreadEnabled() )
 	{
 		pLock.Lock();
 		
@@ -823,7 +808,7 @@ void CSearchDetailPanel::OnRun()
 			}
 			
 			pLock.Unlock();
-			WaitForSingleObject( m_pWakeup, INFINITE );
+			Doze();
 			
 			continue;
 		}

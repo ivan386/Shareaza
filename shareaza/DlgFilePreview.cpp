@@ -67,8 +67,6 @@ CFilePreviewDlg::CFilePreviewDlg(CDownload* pDownload, CWnd* pParent) : CSkinDia
 	
 	m_pDownload	= NULL;
 	m_pPlugin	= NULL;
-	m_bThread	= FALSE;
-	m_hThread	= NULL;
 	m_pPlugin	= NULL;
 	
 	SetDownload( pDownload );
@@ -225,17 +223,16 @@ BOOL CFilePreviewDlg::OnInitDialog()
 	m_wndName.SetWindowText( m_sDisplayName );
 	m_wndCancel.EnableWindow( FALSE );
 	
-	m_bThread = TRUE;
 	m_bCancel = FALSE;
-	
-	m_hThread = BeginThread( "DlgFilePreview", ThreadStart, this );
+
+	BeginThread( "DlgFilePreview" );
 	
 	return TRUE;
 }
 
 void CFilePreviewDlg::OnCancel() 
 {
-	if ( m_bThread )
+	if ( IsThreadAlive() )
 	{
 		m_pSection.Lock();
 		m_bCancel = TRUE;
@@ -289,10 +286,8 @@ void CFilePreviewDlg::OnClose()
 
 void CFilePreviewDlg::OnDestroy() 
 {
-	CloseThread( &m_hThread );
-	
-	m_bThread	= FALSE;
-	
+	CloseThread();
+
 	if ( m_pDownload != NULL )
 	{
 		if ( Transfers.m_pSection.Lock( 1000 ) )
@@ -315,13 +310,6 @@ void CFilePreviewDlg::PostNcDestroy()
 /////////////////////////////////////////////////////////////////////////////
 // CFilePreviewDlg thread run
 
-UINT CFilePreviewDlg::ThreadStart(LPVOID pParam)
-{
-	CFilePreviewDlg* pClass = (CFilePreviewDlg*)pParam;
-	pClass->OnRun();
-	return 0;
-}
-
 void CFilePreviewDlg::OnRun()
 {
 	HANDLE hFile = CreateFile( m_sSourceName, GENERIC_READ,
@@ -333,10 +321,8 @@ void CFilePreviewDlg::OnRun()
 		if ( ! RunPlugin( hFile ) && ! m_bCancel ) RunManual( hFile );
 		CloseHandle( hFile );
 	}
-	
-	m_bThread = FALSE;
+
 	PostMessage( WM_TIMER, 3 );
-	m_hThread = NULL;
 }
 
 /////////////////////////////////////////////////////////////////////////////

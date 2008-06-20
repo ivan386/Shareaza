@@ -28,7 +28,9 @@ class CSchema;
 class CLibraryFile;
 
 
-class CLibraryMetaPanel : public CLibraryPanel
+class CLibraryMetaPanel :
+	public CLibraryPanel,
+	public CThreadImpl
 {
 // Construction
 public:
@@ -58,9 +60,6 @@ protected:
 	int				m_nScrollWheelLines;
 protected:
 	CCriticalSection	m_pSection;
-	CEvent				m_pWakeup;
-	volatile HANDLE		m_hThread;
-	BOOL				m_bThread;
 	BOOL				m_bExternalData;
 	BOOL				m_bDownloadingImage;
 	BOOL				m_bForceUpdate;
@@ -75,15 +74,14 @@ public:
 	virtual BOOL CheckAvailable(CLibraryTreeItem* pFolders, CLibraryList* pObjects);
 	virtual void Update();
 
-			BOOL SetServicePanel(CMetaPanel* pPanel);
-	 CMetaPanel* GetServicePanel();
+	BOOL		SetServicePanel(CMetaPanel* pPanel);
+	CMetaPanel*	GetServicePanel();
 
 protected:
 	void	DrawText(CDC* pDC, int nX, int nY, LPCTSTR pszText, RECT* pRect = NULL, int nMaxWidth = -1);
 	void	DrawThumbnail(CDC* pDC, CRect& rcClient, CRect& rcWork);
 	void	DrawThumbnail(CDC* pDC, CRect& rcThumb);
 protected:
-	static UINT ThreadStart(LPVOID pParam);
 	void		OnRun();
 
 // Implementation

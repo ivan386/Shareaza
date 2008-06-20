@@ -72,7 +72,7 @@ protected:
 // Core
 protected:
 	void			Clear();
-	BOOL			ThreadScan(volatile BOOL* pbContinue, const BOOL bForce = FALSE);
+	BOOL			ThreadScan(const BOOL bForce = FALSE);
 	void			Serialize(CArchive& ar, int nVersion);
 
 // COM

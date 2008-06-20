@@ -48,12 +48,13 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CFileCopyDlg dialog
 
-CFileCopyDlg::CFileCopyDlg(CWnd* pParent, BOOL bMove) : CSkinDialog(CFileCopyDlg::IDD, pParent)
+CFileCopyDlg::CFileCopyDlg(CWnd* pParent, BOOL bMove) :
+	CSkinDialog(CFileCopyDlg::IDD, pParent),
+	m_bMove( bMove ),
+	m_nCookie( 0 ),
+	m_bCancel( FALSE ),
+	m_nFileProg( 0 )
 {
-	//{{AFX_DATA_INIT(CFileCopyDlg)
-	//}}AFX_DATA_INIT
-	m_bMove		= bMove;
-	m_nCookie	= 0;
 }
 
 void CFileCopyDlg::DoDataExchange(CDataExchange* pDX)
@@ -119,9 +120,6 @@ BOOL CFileCopyDlg::OnInitDialog()
 	}
 	m_wndFileProg.SetRange( 0, 400 );
 
-	m_hThread = NULL;
-	m_bThread = FALSE;
-
 	PostMessage( WM_TIMER, 1 );
 	SetTimer( 1, 500, NULL );
 
@@ -130,14 +128,10 @@ BOOL CFileCopyDlg::OnInitDialog()
 
 void CFileCopyDlg::OnTimer(UINT_PTR /*nIDEvent*/)
 {
-	if ( m_hThread != NULL )
+	if ( IsThreadCompleted() )
 	{
-		if ( m_bThread ) return;
-
 		StopOperation();
-
 		PostMessage( WM_COMMAND, IDCANCEL );
-
 		return;
 	}
 
@@ -188,7 +182,7 @@ void CFileCopyDlg::OnOK()
 
 void CFileCopyDlg::OnCancel()
 {
-	if ( m_hThread )
+	if ( IsThreadAlive() )
 	{
 		StopOperation();
 		m_wndFileName.SetWindowText( _T("Operation cancelled") );
@@ -205,7 +199,7 @@ void CFileCopyDlg::OnCancel()
 
 void CFileCopyDlg::StartOperation()
 {
-	if ( m_hThread ) return;
+	if ( IsThreadAlive() ) return;
 
 	m_wndTree.EnableWindow( FALSE );
 	m_wndOK.EnableWindow( FALSE );
@@ -213,20 +207,17 @@ void CFileCopyDlg::StartOperation()
 	m_wndProgress.SetRange( 0, short( m_pFiles.GetCount() ) );
 	m_wndProgress.SetPos( 0 );
 
-	m_bThread = TRUE;
 	m_bCancel = FALSE;
-	m_hThread = BeginThread( "DlgFileCopy", ThreadStart, this );
+	BeginThread( "DlgFileCopy" );
 }
 
 void CFileCopyDlg::StopOperation()
 {
-	if ( m_hThread == NULL ) return;
+	if ( ! IsThreadAlive() ) return;
 
 	CWaitCursor pCursor;
 
-	m_bThread = FALSE;
-
-	CloseThread( &m_hThread );
+	CloseThread();
 
 	//m_wndCancel.SetWindowText( _T("&Close") );
 	CString sText;
@@ -238,16 +229,9 @@ void CFileCopyDlg::StopOperation()
 //////////////////////////////////////////////////////////////////////
 // CFileCopyDlg operation thread
 
-UINT CFileCopyDlg::ThreadStart(LPVOID pParam)
-{
-	CFileCopyDlg* pClass = (CFileCopyDlg*)pParam;
-	pClass->OnRun();
-	return 0;
-}
-
 void CFileCopyDlg::OnRun()
 {
-	while ( m_bThread )
+	while ( IsThreadEnabled() )
 	{
 		CString strName, strPath;
 		CSchema* pSchema = NULL;
@@ -356,9 +340,6 @@ void CFileCopyDlg::OnRun()
 		//
 */
 	}
-
-
-	m_bThread = FALSE;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -427,7 +408,7 @@ BOOL CFileCopyDlg::CheckTarget(LPCTSTR pszTarget)
 	case IDYES:
 		break;
 	case IDCANCEL:
-		m_bThread = FALSE;
+		Exit();
 	case IDNO:
 	default:
 		return FALSE;
@@ -485,7 +466,7 @@ BOOL CFileCopyDlg::ProcessCopy(LPCTSTR pszSource, LPCTSTR pszTarget)
 			BOOL bResult = theApp.m_pfnCopyFileExW( pszSource, pszTarget, CopyCallback, this,
 				&m_bCancel, COPY_FILE_FAIL_IF_EXISTS );
 
-			if ( ! bResult && ! m_bThread ) DeleteFile( pszTarget );
+			if ( ! bResult && ! IsThreadAlive() ) DeleteFile( pszTarget );
 
 			return bResult;
 		}
@@ -498,7 +479,7 @@ DWORD WINAPI CFileCopyDlg::CopyCallback(LARGE_INTEGER TotalFileSize, LARGE_INTEG
 {
 	CFileCopyDlg* pDlg = (CFileCopyDlg*)lpData;
 
-	if ( ! pDlg->m_bThread ) return 1;
+	if ( ! pDlg->IsThreadAlive() ) return 1;
 
 	if ( TotalFileSize.LowPart )
 	{

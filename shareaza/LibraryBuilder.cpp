@@ -52,12 +52,10 @@ CLibraryBuilder LibraryBuilder;
 // CLibraryBuilder construction
 
 CLibraryBuilder::CLibraryBuilder() :
-	m_hThread	( NULL )
-,	m_bThread	( false )
-,	m_bPriority	( false )
-,	m_nProgress	( 0ul )
-,	m_nReaded	( 0ull )
-,	m_nElapsed	( 0 )
+	m_bPriority( false ),
+	m_nReaded( 0 ),
+	m_nElapsed( 0 ),
+	m_nProgress( 0 )
 {
 	QueryPerformanceFrequency( &m_nFreq );
 	QueryPerformanceCounter( &m_nLastCall );
@@ -207,7 +205,7 @@ DWORD CLibraryBuilder::GetNextFileToHash(CString& sPath)
 		if ( m_pFiles.empty() )
 		{
 			// No files left
-			m_bThread = false;
+			Exit();
 		}
 		else
 		{
@@ -293,29 +291,16 @@ void CLibraryBuilder::StartThread()
 {
 	CQuickLock pLock( m_pSection );
 
-	if ( !m_bThread && !m_pFiles.empty() )
+	if ( ! m_pFiles.empty() )
 	{
-		m_bThread = true;
-		m_hThread = BeginThread( "LibraryBuilder", ThreadStart, this, m_bPriority ?
+		BeginThread( "LibraryBuilder", m_bPriority ?
 			THREAD_PRIORITY_BELOW_NORMAL : THREAD_PRIORITY_IDLE );
 	}
 }
 
 void CLibraryBuilder::StopThread()
 {
-	{
-		CQuickLock pLock( m_pSection );
-
-		if ( m_hThread == NULL )
-			// Already stopped
-			return;
-
-		// Request termination
-		m_bThread = false;
-	}
-
-	// Wait
-	CloseThread( &m_hThread );
+	CloseThread();
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -330,11 +315,7 @@ void CLibraryBuilder::BoostPriority(bool bPriority)
 
 	m_bPriority = bPriority;
 
-	if ( m_bThread && m_hThread )
-	{
-		SetThreadPriority( m_hThread, m_bPriority ?
-			THREAD_PRIORITY_BELOW_NORMAL : THREAD_PRIORITY_IDLE );
-	}
+	SetThreadPriority( m_bPriority ? THREAD_PRIORITY_BELOW_NORMAL : THREAD_PRIORITY_IDLE );
 }
 
 bool CLibraryBuilder::GetBoostPriority() const
@@ -347,15 +328,9 @@ bool CLibraryBuilder::GetBoostPriority() const
 //////////////////////////////////////////////////////////////////////
 // CLibraryBuilder thread run (threaded)
 
-UINT CLibraryBuilder::ThreadStart(LPVOID pParam)
-{
-	((CLibraryBuilder*)pParam)->OnRun();
-	return 0;
-}
-
 void CLibraryBuilder::OnRun()
 {
-	while ( m_bThread )
+	while ( IsThreadEnabled() )
 	{
 		Sleep( 100 );	// Max 10 files per second
 
@@ -412,10 +387,6 @@ void CLibraryBuilder::OnRun()
 			}
 		}
 	}
-
-	CQuickLock pLock( m_pSection );
-	m_bThread = false;
-	m_hThread = NULL;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -470,8 +441,7 @@ bool CLibraryBuilder::HashFile(LPCTSTR szPath, HANDLE hFile, DWORD nIndex)
 			m_nProgress = ( ( nFileSize - nLength ) * 100 ) / nFileSize;
 		}
 
-		// Exit loop on termination request
-		if ( !m_bThread )
+		if ( ! IsThreadEnabled() )
 			break;
 
 		// Exit loop on read error

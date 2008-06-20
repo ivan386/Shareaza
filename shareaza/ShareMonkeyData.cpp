@@ -34,11 +34,9 @@
 
 CShareMonkeyData::CShareMonkeyData(INT_PTR nOffset, int nRequestType)
 : m_nFileIndex( 0 )
-, m_hThread( NULL )
 , m_hInternet( NULL )
 , m_hSession( NULL )
 , m_hRequest( NULL )
-, m_bFinished( FALSE )
 , m_nDelay( 0 )
 , m_nFailures( 0 )
 , m_pXML( NULL )
@@ -94,14 +92,12 @@ BOOL CShareMonkeyData::Start(CLibraryFileView* pView, DWORD nFileIndex)
 
 	m_hSession	= NULL;
 	m_hRequest	= NULL;
-	m_bFinished	= FALSE;
 	m_nDelay	= 0;
 	m_nFailures	= 0;
 	m_pFileView = pView;
 	m_nFileIndex = nFileIndex;
 
-	m_hThread = BeginThread( "ShareMonkeyData", ThreadStart, this, THREAD_PRIORITY_IDLE );
-	return TRUE;
+	return BeginThread( "ShareMonkeyData" );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -116,20 +112,9 @@ void CShareMonkeyData::Stop()
 		InternetCloseHandle( m_hInternet );
 	m_hInternet = NULL;
 
-	if ( IsWorking() )
-	{
-		CloseThread( &m_hThread );
-		m_bFinished = TRUE;
-	}
+	CloseThread();
 
 	Clear();
-}
-
-UINT CShareMonkeyData::ThreadStart(LPVOID pParam)
-{
-	CShareMonkeyData* pThis = (CShareMonkeyData*)pParam;
-	pThis->OnRun();
-	return 0;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -191,8 +176,6 @@ void CShareMonkeyData::OnRun()
 	if ( m_hInternet ) 
 		InternetCloseHandle( m_hInternet );
 	m_hInternet = NULL;
-
-	m_bFinished = TRUE;
 }
 
 bool CShareMonkeyData::NotifyWindow(LPCTSTR pszMessage) const

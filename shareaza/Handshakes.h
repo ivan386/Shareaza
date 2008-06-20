@@ -19,22 +19,16 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-// CHandshakes listens for remote computers that want to connect to us
-// http://wiki.shareaza.com/static/Developers.Code.CHandshakes
-
-// Make the compiler only include the lines here once, this is the same thing as pragma once
-#if !defined(AFX_HANDSHAKES_H__2314A7BE_5C51_4F8E_A4C6_6059A7621AE0__INCLUDED_)
-#define AFX_HANDSHAKES_H__2314A7BE_5C51_4F8E_A4C6_6059A7621AE0__INCLUDED_
-
-// Only include the lines beneath this one once
 #pragma once
 
-// Tell the compiler that a class named CHandshake exists, and is defined in detail elsewhere
-class CHandshake; // Lets methods defined here take and return pointers to CHandshake objects
+#include "ThreadImpl.h"
 
-class CHandshakes
+class CHandshake;
+
+
+class CHandshakes :
+	public CThreadImpl
 {
-
 public:
 
 	// Make the CHandshakes object, and later, delete it
@@ -51,8 +45,6 @@ protected:
 
 	// The listening socket
 	SOCKET m_hSocket; // Our one listening socket
-	HANDLE m_hThread; // This thread waits for remote computers to call the listening socket
-	CEvent m_pWakeup; // Fire this event when a remote computer calls our listening socket
 
 	// The list of CHandshake objects
 	CList< CHandshake* > m_pList;        // The list of pointers to CHandshake objects
@@ -77,7 +69,6 @@ protected:
 protected:
 
 	// Loop to listen for connections and accept them
-	static UINT	ThreadStart(LPVOID pParam); // The thread that waits while the socket listens starts here
 	void OnRun();                           // Accept incoming connections from remote computers
 	void RunHandshakes();                   // Send and receive data with each remote computer in the list
 	BOOL AcceptConnection();                // Accept a connection, making a new CHandshake object in the list for it
@@ -116,6 +107,3 @@ public:
 
 // When the program runs, it makes a single global CHandshakes object
 extern CHandshakes Handshakes; // Access Handshakes externally here in Handshakes.h, even though it is defined in Handshakes.cpp
-
-// End the group of lines to only include once, pragma once doesn't require an endif at the bottom
-#endif // !defined(AFX_HANDSHAKES_H__2314A7BE_5C51_4F8E_A4C6_6059A7621AE0__INCLUDED_)

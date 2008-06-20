@@ -21,10 +21,13 @@
 
 #pragma once
 
+#include "ThreadImpl.h"
+
 class CDiscoveryService;
 
 
-class CDiscoveryServices
+class CDiscoveryServices :
+	public CThreadImpl
 {
 // Construction
 public:
@@ -36,7 +39,6 @@ public:
 // Attributes
 protected:
 	CList< CDiscoveryService* > m_pList;
-	HANDLE				m_hThread;
 	HINTERNET			m_hInternet;
 	HINTERNET			m_hRequest;
 	CDiscoveryService*	m_pWebCache;
@@ -82,7 +84,6 @@ protected:
 	CDiscoveryService*	GetRandomWebCache(PROTOCOLID nProtocol, BOOL bWorkingOnly, CDiscoveryService* pExclude = NULL, BOOL bForUpdate = FALSE);
 	BOOL				RequestWebCache(CDiscoveryService* pService, int nMode, PROTOCOLID nProtocol);
 	void				StopWebRequest();
-	static UINT			ThreadStart(LPVOID pParam);
 	void				OnRun();
 	BOOL				RunWebCacheGet(BOOL bCache);
 	BOOL				RunWebCacheUpdate();

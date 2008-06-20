@@ -61,14 +61,12 @@ const DWORD BUFFER_SIZE = 2 * 1024 * 1024u;
 
 CTorrentSeedDlg::CTorrentSeedDlg(LPCTSTR pszTorrent, BOOL bForceSeed, CWnd* pParent) : CSkinDialog( CTorrentSeedDlg::IDD, pParent )
 {
-	m_hThread	= NULL;
 	m_sTorrent	= pszTorrent;
 	m_bForceSeed	= bForceSeed;
 }
 
 CTorrentSeedDlg::~CTorrentSeedDlg()
 {
-	ASSERT( m_hThread == NULL );
 }
 
 void CTorrentSeedDlg::DoDataExchange(CDataExchange* pDX)
@@ -212,7 +210,7 @@ void CTorrentSeedDlg::OnSeed()
 			}
 
 			// Start the torrent seed process
-			m_hThread = BeginThread( "DlgTorrentSeed", ThreadStart, this );
+			BeginThread( "DlgTorrentSeed" );
 		}
 		else	// We are already seeding the torrent
 		{
@@ -248,11 +246,8 @@ void CTorrentSeedDlg::OnCancel()
 
 void CTorrentSeedDlg::OnDestroy()
 {
-	if ( m_hThread != NULL )
-	{
-		m_bCancel = TRUE;
-		CloseThread( (HANDLE*)&m_hThread );
-	}
+	m_bCancel = TRUE;
+	CloseThread();
 	
 	CSkinDialog::OnDestroy();
 }
@@ -342,12 +337,6 @@ void CTorrentSeedDlg::OnTimer(UINT_PTR nIDEvent)
 /////////////////////////////////////////////////////////////////////////////
 // CTorrentSeedDlg thread run
 
-UINT CTorrentSeedDlg::ThreadStart(LPVOID pParam)
-{
-	((CTorrentSeedDlg*)pParam)->OnRun();
-	return 0;
-}
-
 void CTorrentSeedDlg::OnRun()
 {
 	if ( m_pInfo.m_nFiles == 1 )
@@ -358,8 +347,6 @@ void CTorrentSeedDlg::OnRun()
 	{
 		RunMultiFile();
 	}
-
-	m_hThread = NULL;
 }
 
 void CTorrentSeedDlg::RunSingleFile()

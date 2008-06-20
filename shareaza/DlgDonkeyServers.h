@@ -24,10 +24,13 @@
 
 #pragma once
 
+#include "ThreadImpl.h"
 #include "DlgSkinDialog.h"
 
 
-class CDonkeyServersDlg : public CSkinDialog
+class CDonkeyServersDlg :
+	public CSkinDialog,
+	public CThreadImpl
 {
 // Construction
 public:
@@ -47,11 +50,9 @@ public:
 // Attributes
 public:
 	HINTERNET	m_hInternet;
-	HANDLE		m_hThread;
 
 // Operations
 protected:
-	static UINT		ThreadStart(LPVOID pParam);
 	void			OnRun();
 
 // Overrides

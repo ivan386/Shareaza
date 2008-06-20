@@ -29,7 +29,9 @@
 class CDownload;
 
 
-class CFilePreviewDlg : public CSkinDialog
+class CFilePreviewDlg :
+	public CSkinDialog,
+	public CThreadImpl
 {
 // Construction
 public:
@@ -52,8 +54,6 @@ public:
 	CString			m_sOldStatus;
 	CArray< DWORD >	m_pRanges;
 protected:
-	BOOL			m_bThread;
-	HANDLE			m_hThread;
 	BOOL			m_bCancel;
 	CString			m_sExecute;
 protected:
@@ -74,8 +74,6 @@ protected:
 	BOOL		QueueDeleteFile(LPCTSTR pszFile);
 	BOOL		ExecuteFile(LPCTSTR pszFile);
 	void		UpdateProgress(BOOL bRange, QWORD nRange, BOOL bPosition, QWORD nPosition);
-protected:
-	static UINT	ThreadStart(LPVOID pParam);
 
 // Dialog Data
 public:
