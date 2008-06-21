@@ -93,7 +93,7 @@
 			</simpleType>
 		</attribute>
       <attribute name="ISBN">
-        <simpleType base="int">
+        <simpleType base="string">
           <pattern value="\d{10}"/>
         </simpleType>
       </attribute>
