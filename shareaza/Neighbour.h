@@ -86,7 +86,6 @@ public:
 	// Used by the list of neighbour objects in CNeighbours
 	DWORD      m_nRunCookie; // The number of times this neighbour has been run, CNeighboursBase::OnRun uses this to run each neighbour in the list once
 	DWORD      m_nUnique;    // A number, like 2, 3, 4 and so on, which is the unique key for this CNeighbour object in CNeighbour's m_pUniques map
-	PROTOCOLID    m_nProtocol;
 	NrsState      m_nState;           // Neighbour state, like connecting, handshake 1, 2, or 3, or rejected
 	CVendor*      m_pVendor;
 	Hashes::Guid  m_oGUID;

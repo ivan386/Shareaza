@@ -53,7 +53,6 @@ static char THIS_FILE[]=__FILE__;
 CChatSession::CChatSession(CChatFrame* pFrame)
 {
 	m_nState		= cssNull;
-	m_nProtocol		= PROTOCOL_NULL;
 	m_bOld			= FALSE;
 	m_bMustPush		= FALSE;
 	m_tPushed		= 0;
@@ -376,8 +375,7 @@ BOOL CChatSession::ReadHandshake()
 	if ( ! Read( strLine ) ) return TRUE;
 	if ( strLine.IsEmpty() ) return TRUE;
 	
-	theApp.Message( MSG_DEBUG, _T("CHAT HANDSHAKE: %s: %s"),
-		(LPCTSTR)m_sAddress, (LPCTSTR)strLine );
+	theApp.Message( MSG_DEBUG | MSG_FACILITY_INCOMING, _T("%s >> CHAT HANDSHAKE: %s"), (LPCTSTR)m_sAddress, (LPCTSTR)strLine );
 	
 	m_bOld = strLine.Find( _T("/0.1") ) > 0;
 	
@@ -420,38 +418,12 @@ BOOL CChatSession::OnHeaderLine(CString& strHeader, CString& strValue)
 {
 	ASSERT ( m_nProtocol != PROTOCOL_ED2K );
 
-	theApp.Message( MSG_DEBUG, _T("CHAT HEADER: %s: %s: %s"),
-		(LPCTSTR)m_sAddress, (LPCTSTR)strHeader, (LPCTSTR)strValue );
-	
-	if ( strHeader.CompareNoCase( _T("User-Agent") ) == 0 )
-	{
-		m_sUserAgent = strValue;
-	}
-	else if ( strHeader.CompareNoCase( _T("Accept") ) == 0 )
-	{
-		if ( strValue.Find( _T("application/x-gnutella2") ) >= 0 )
-			m_nProtocol = PROTOCOL_G2;
-	}
-	else if ( strHeader.CompareNoCase( _T("X-Nickname") ) == 0 )
+	if ( ! CConnection::OnHeaderLine( strHeader, strValue ) )
+		return FALSE;
+
+	if ( strHeader.CompareNoCase( _T("X-Nickname") ) == 0 )
 	{
 		m_sUserNick = strValue;
-	}
-	else if (  strHeader.CompareNoCase( _T("X-My-Address") ) == 0
-			|| strHeader.CompareNoCase( _T("Listen-IP") ) == 0
-			|| strHeader.CompareNoCase( _T("X-Node") ) == 0
-			|| strHeader.CompareNoCase( _T("Node") ) == 0 )
-	{
-		int nColon = strValue.Find( ':' );
-		
-		if ( ! m_bInitiated && nColon > 0 )
-		{
-			int nPort = GNUTELLA_DEFAULT_PORT;
-			
-			if ( _stscanf( strValue.Mid( nColon + 1 ), _T("%i"), &nPort ) == 1 && nPort != 0 )
-			{
-				m_pHost.sin_port = htons( u_short( nPort ) );
-			}
-		}
 	}
 	
 	return TRUE;
@@ -478,6 +450,15 @@ BOOL CChatSession::OnHeadersComplete()
 		Write( _P("User-Agent: ") );
 		Write( Settings.SmartAgent() );
 		Write( _P("\r\n\r\n") );
+		
+		{
+			CLockedBuffer pOutput( GetOutput() );
+			if ( pOutput->m_nLength )
+			{
+				CStringA msg( (const char*)pOutput->m_pBuffer, pOutput->m_nLength );
+				theApp.Message( MSG_DEBUG | MSG_FACILITY_OUTGOING, _T("%s << CHAT SEND: %s"), (LPCTSTR)m_sAddress, (LPCTSTR)CA2T( msg ) );
+			}
+		}
 		
 		OnWrite();
 	}

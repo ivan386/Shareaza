@@ -39,7 +39,6 @@ public:
 
 // Attributes
 public:
-	PROTOCOLID			m_nProtocol;	// Protocol of this transfer
 	CDownload*			m_pDownload;
 	CDownloadTransfer*	m_pDlPrev;
 	CDownloadTransfer*	m_pDlNext;

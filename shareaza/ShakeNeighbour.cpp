@@ -356,7 +356,7 @@ BOOL CShakeNeighbour::OnWrite()
 		if ( pOutput->m_nLength )
 		{
 			CStringA msg( (const char*)pOutput->m_pBuffer, pOutput->m_nLength );
-			theApp.Message( MSG_DEBUG | MSG_FACILITY_OUTGOING, _T("%s: HANDSHAKE SEND: %s"), (LPCTSTR)m_sAddress, (LPCTSTR)CA2T( msg ) );
+			theApp.Message( MSG_DEBUG | MSG_FACILITY_OUTGOING, _T("%s << HANDSHAKE SEND: %s"), (LPCTSTR)m_sAddress, (LPCTSTR)CA2T( msg ) );
 		}
 	}
 
@@ -686,7 +686,7 @@ BOOL CShakeNeighbour::ReadResponse()
 	if ( ! Read( strLine ) ) return TRUE; // The line is still arriving, return true to try this method again
 	if ( strLine.GetLength() > 256 * 1024 ) strLine = _T("#LINE_TOO_LONG#"); // Make sure the line isn't too long
 
-	theApp.Message( MSG_DEBUG | MSG_FACILITY_INCOMING, _T("%s: HANDSHAKE: %s"), (LPCTSTR)m_sAddress, (LPCTSTR)strLine ); // Report handshake lines
+	theApp.Message( MSG_DEBUG | MSG_FACILITY_INCOMING, _T("%s >> HANDSHAKE: %s"), (LPCTSTR)m_sAddress, (LPCTSTR)strLine ); // Report handshake lines
 
 	// If we initiated the connection to the remote computer, and now it's responding with "GNUTELLA OK"
 	if ( strLine == _T("GNUTELLA OK") && m_bInitiated )
@@ -765,7 +765,7 @@ BOOL CShakeNeighbour::ReadResponse()
 BOOL CShakeNeighbour::OnHeaderLine(CString& strHeader, CString& strValue)
 {
 	// Record this header
-	theApp.Message( MSG_DEBUG | MSG_FACILITY_INCOMING, _T("%s: GNUTELLA HEADER: %s: %s"), (LPCTSTR)m_sAddress, (LPCTSTR)strHeader, (LPCTSTR)strValue );
+	theApp.Message( MSG_DEBUG | MSG_FACILITY_INCOMING, _T("%s >> %s: %s"), (LPCTSTR)m_sAddress, (LPCTSTR)strHeader, (LPCTSTR)strValue );
 
 	// It's the "User-Agent" header, which will tell the name and version of the remote program
 	if ( strHeader.CompareNoCase( _T("User-Agent") ) == 0 )

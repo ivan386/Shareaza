@@ -247,7 +247,7 @@ BOOL CHandshake::OnRead()
 	}
 
 	// Record this handshake line as an application message
-	theApp.Message( MSG_DEBUG | MSG_FACILITY_INCOMING, _T("%s: HANDSHAKE: %s"), (LPCTSTR)m_sAddress, (LPCTSTR)strLine );
+	theApp.Message( MSG_DEBUG | MSG_FACILITY_INCOMING, _T("%s >> HANDSHAKE: %s"), (LPCTSTR)m_sAddress, (LPCTSTR)strLine );
 
 	// The first header starts "GET" or "HEAD"
 	if (     StartsWith( _P("GET ") ) ||

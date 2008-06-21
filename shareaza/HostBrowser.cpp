@@ -62,7 +62,6 @@ CHostBrowser::CHostBrowser(CBrowseHostWnd* pNotify, IN_ADDR* pAddress, WORD nPor
 ,	m_pVendor		( NULL )
 ,	m_bCanChat		( FALSE )
 
-,	m_nProtocol		( PROTOCOL_ANY )
 ,	m_bDeflate		( FALSE )
 ,	m_nLength		( ~0ul )
 ,	m_nReceived		( 0ul )
@@ -406,8 +405,8 @@ BOOL CHostBrowser::ReadResponseLine()
 
 BOOL CHostBrowser::OnHeaderLine(CString& strHeader, CString& strValue)
 {
-	theApp.Message( MSG_DEBUG, _T("%s: BROWSE HEADER: %s: %s"),
-		m_sAddress, strHeader, strValue );
+	if ( ! CTransfer::OnHeaderLine( strHeader, strValue ) )
+		return FALSE;
 
 	if ( strHeader.CompareNoCase( _T("Server") ) == 0 )
 	{

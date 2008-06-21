@@ -127,6 +127,8 @@ BOOL CRemote::OnRead()
 	
 	if ( ! m_sHandshake.IsEmpty() )
 	{
+		theApp.Message( MSG_DEBUG | MSG_FACILITY_INCOMING, _T("%s >> REMOTE REQUEST: %s"), (LPCTSTR)m_sAddress, (LPCTSTR)m_sHandshake );
+
 		return ReadHeaders();
 	}
 	
@@ -164,7 +166,7 @@ BOOL CRemote::OnHeadersComplete()
 		if ( ! m_sHeader.IsEmpty() ) Write( m_sHeader );
 		Write( _P("Location: ") );
 		Write( m_sRedirect );
-		Write( _P("\r\n\r\n") );
+		Write( _P("\r\n") );
 	}
 	else if ( ! m_sResponse.IsEmpty() )
 	{
@@ -177,28 +179,42 @@ BOOL CRemote::OnHeadersComplete()
 		Write( _P("Content-Type: text/html; charset=UTF-8\r\n") );
 		Write( strLength );
 		if ( ! m_sHeader.IsEmpty() ) Write( m_sHeader );
-		Write( _P("\r\n") );
-		Write( m_sResponse, CP_UTF8 );
-		m_sResponse.Empty();
 	}
 	else if ( m_pResponse.m_nLength > 0 )
 	{
+		Write( _P("HTTP/1.1 200 OK\r\n") );
 		CString strLength;
 		strLength.Format( _T("Content-Length: %i\r\n"), m_pResponse.m_nLength );
-		Write( _P("HTTP/1.1 200 OK\r\n") );
 		Write( strLength );
 		if ( ! m_sHeader.IsEmpty() ) Write( m_sHeader );
-		Write( _P("\r\n") );
-		Write( &m_pResponse );
 	}
 	else
 	{
 		Write( _P("HTTP/1.1 404 Not Found\r\n") );
 		Write( _P("Content-Length: 0\r\n") );
 		Write( _P("Content-Type: text/html\r\n") );
-		Write( _P("\r\n") );
 	}
-	
+
+	{
+		CLockedBuffer pOutput( GetOutput() );
+		if ( pOutput->m_nLength )
+		{
+			CStringA msg( (const char*)pOutput->m_pBuffer, pOutput->m_nLength );
+			theApp.Message( MSG_DEBUG | MSG_FACILITY_OUTGOING, _T("%s << REMOTE SEND: %s"), (LPCTSTR)m_sAddress, (LPCTSTR)CA2T( msg ) );
+		}
+	}
+
+	Write( _P("\r\n") );
+	if ( ! m_sResponse.IsEmpty() )
+	{
+		Write( m_sResponse, CP_UTF8 );
+		m_sResponse.Empty();
+	}
+	else if ( m_pResponse.m_nLength > 0 )
+	{
+		Write( &m_pResponse );
+	}
+
 	m_sHandshake.Empty();
 	ClearHeaders();
 	OnWrite();

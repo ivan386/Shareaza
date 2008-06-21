@@ -459,7 +459,7 @@ BOOL CDownloadTransferHTTP::SendRequest()
 		if ( pOutput->m_nLength )
 		{
 			CStringA msg( (const char*)pOutput->m_pBuffer, pOutput->m_nLength );
-			theApp.Message( MSG_DEBUG | MSG_FACILITY_OUTGOING, _T("%s: DOWNLOAD REQUEST: %s"), (LPCTSTR)m_sAddress, (LPCTSTR)CA2T( msg ) );
+			theApp.Message( MSG_DEBUG | MSG_FACILITY_OUTGOING, _T("%s << DOWNLOAD REQUEST: %s"), (LPCTSTR)m_sAddress, (LPCTSTR)CA2T( msg ) );
 		}
 	}
 	
@@ -603,8 +603,7 @@ BOOL CDownloadTransferHTTP::ReadResponseLine()
 
 	if ( strLine.GetLength() > 256 * 1024 ) strLine = _T("#LINE_TOO_LONG#");
 
-	theApp.Message( MSG_DEBUG | MSG_FACILITY_INCOMING, _T("%s: DOWNLOAD RESPONSE: %s"),
-		(LPCTSTR)m_sAddress, (LPCTSTR)strLine );
+	theApp.Message( MSG_DEBUG | MSG_FACILITY_INCOMING, _T("%s >> DOWNLOAD RESPONSE: %s"), (LPCTSTR)m_sAddress, (LPCTSTR)strLine );
 
 	if ( strLine.GetLength() >= 12 && strLine.Left( 9 ) == _T("HTTP/1.1 ") )
 	{
@@ -673,8 +672,7 @@ BOOL CDownloadTransferHTTP::ReadResponseLine()
 		m_bBadResponse = TRUE;
 	}
 	
-	m_pHeaderName.RemoveAll();
-	m_pHeaderValue.RemoveAll();
+	ClearHeaders();
 	
 	return TRUE;
 }
@@ -684,9 +682,9 @@ BOOL CDownloadTransferHTTP::ReadResponseLine()
 
 BOOL CDownloadTransferHTTP::OnHeaderLine(CString& strHeader, CString& strValue)
 {
-	theApp.Message( MSG_DEBUG | MSG_FACILITY_INCOMING, _T("%s: DOWNLOAD HEADER: %s: %s"),
-		(LPCTSTR)m_sAddress, (LPCTSTR)strHeader, (LPCTSTR)strValue );
-	
+	if ( ! CDownloadTransfer::OnHeaderLine( strHeader, strValue ) )
+		return FALSE;
+
 	if ( strHeader.CompareNoCase( _T("Server") ) == 0 )
 	{
 		m_sUserAgent = strValue;
@@ -1071,7 +1069,8 @@ BOOL CDownloadTransferHTTP::OnHeaderLine(CString& strHeader, CString& strValue)
 		oMD5.fromString( strValue );
 		theApp.Message( MSG_DEBUG, _T("Content-MD5: %s"), (LPCTSTR)oMD5.toString() );
 	}
-	return CTransfer::OnHeaderLine( strHeader, strValue );
+
+	return TRUE;
 }
 
 //////////////////////////////////////////////////////////////////////

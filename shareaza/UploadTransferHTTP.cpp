@@ -130,7 +130,7 @@ BOOL CUploadTransferHTTP::ReadRequest()
 	if ( ! Read( strLine ) ) return TRUE;
 	if ( strLine.GetLength() > 256 * 1024 ) strLine = _T("#LINE_TOO_LONG#");
 
-	theApp.Message( MSG_DEBUG | MSG_FACILITY_INCOMING, _T("%s: UPLOAD REQUEST: %s"), (LPCTSTR)m_sAddress, (LPCTSTR)strLine );
+	theApp.Message( MSG_DEBUG | MSG_FACILITY_INCOMING, _T("%s >> UPLOAD REQUEST: %s"), (LPCTSTR)m_sAddress, (LPCTSTR)strLine );
 
 	if ( m_nState == upsQueued && m_pQueue != NULL )
 	{
@@ -209,7 +209,8 @@ BOOL CUploadTransferHTTP::ReadRequest()
 
 BOOL CUploadTransferHTTP::OnHeaderLine(CString& strHeader, CString& strValue)
 {
-	theApp.Message( MSG_DEBUG | MSG_FACILITY_INCOMING, _T("%s: UPLOAD HEADER: %s: %s"), (LPCTSTR)m_sAddress, (LPCTSTR)strHeader, strValue );
+	if ( ! CUploadTransfer::OnHeaderLine( strHeader, strValue ) )
+		return FALSE;
 
 	if ( strHeader.CompareNoCase( _T("Connection") ) == 0 )
 	{
@@ -219,11 +220,9 @@ BOOL CUploadTransferHTTP::OnHeaderLine(CString& strHeader, CString& strValue)
 	}
 	else if ( strHeader.CompareNoCase( _T("Accept") ) == 0 )
 	{
-		ToLower( strValue );
-
-		if ( strValue.Find( _T("application/x-gnutella-packets") ) >= 0 ) m_bHostBrowse = 1;
-		if ( strValue.Find( _T("application/x-gnutella2") ) >= 0 ) m_bHostBrowse = 2;
-		if ( strValue.Find( _T("application/x-shareaza") ) >= 0 ) m_bHostBrowse = 2;
+		if ( _tcsistr( strValue, _T("application/x-gnutella-packets") ) ) m_bHostBrowse = 1;
+		if ( _tcsistr( strValue, _T("application/x-gnutella2") ) ) m_bHostBrowse = 2;
+		if ( _tcsistr( strValue, _T("application/x-shareaza") ) ) m_bHostBrowse = 2;
 	}
 	else if ( strHeader.CompareNoCase( _T("Accept-Encoding") ) == 0 )
 	{
@@ -310,7 +309,7 @@ BOOL CUploadTransferHTTP::OnHeaderLine(CString& strHeader, CString& strValue)
 		m_nGnutella |= 1;
 	}
 	
-	return CUploadTransfer::OnHeaderLine( strHeader, strValue );
+	return TRUE;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -1158,7 +1157,7 @@ BOOL CUploadTransferHTTP::OpenFileSendHeaders()
 		if ( pOutput->m_nLength )
 		{
 			CStringA msg( (const char*)pOutput->m_pBuffer, pOutput->m_nLength );
-			theApp.Message( MSG_DEBUG | MSG_FACILITY_OUTGOING, _T("%s: UPLOAD SEND: %s"), (LPCTSTR)m_sAddress, (LPCTSTR)CA2T( msg ) );
+			theApp.Message( MSG_DEBUG | MSG_FACILITY_OUTGOING, _T("%s << UPLOAD SEND: %s"), (LPCTSTR)m_sAddress, (LPCTSTR)CA2T( msg ) );
 		}
 	}
 

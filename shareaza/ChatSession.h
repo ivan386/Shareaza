@@ -46,7 +46,6 @@ public:
 	Hashes::Guid	m_oGUID;
 public:
 	int				m_nState;
-	PROTOCOLID		m_nProtocol;
 	BOOL			m_bOld;
 	BOOL			m_bMustPush;
 	DWORD			m_tPushed;

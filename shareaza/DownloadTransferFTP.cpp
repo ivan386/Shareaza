@@ -391,10 +391,8 @@ BOOL CDownloadTransferFTP::OnRead()
 
 BOOL CDownloadTransferFTP::OnHeaderLine( CString& strHeader, CString& strValue )
 {
-	theApp.Message( MSG_DEBUG, _T("%s >> %s: %s"),
-		(LPCTSTR) m_sAddress, (LPCTSTR) strHeader, (LPCTSTR) strValue );
-	TRACE( _T("%s >> %s: %s\n"),
-		(LPCTSTR) m_sAddress, (LPCTSTR) strHeader, (LPCTSTR) strValue );
+	if ( ! CDownloadTransfer::OnHeaderLine( strHeader, strValue ) )
+		return FALSE;
 
 	m_pSource->SetLastSeen();
 
@@ -811,8 +809,7 @@ BOOL CDownloadTransferFTP::SendCommand(LPCTSTR /*args*/)
 		return TRUE;
 	}
 	
-	theApp.Message( MSG_DEBUG, _T("%s << %s"), (LPCTSTR) m_sAddress, (LPCTSTR) strLine );
-	TRACE( _T("%s << %s\n"), (LPCTSTR) m_sAddress, (LPCTSTR) strLine );
+	theApp.Message( MSG_DEBUG | MSG_FACILITY_OUTGOING, _T("%s << %s"), (LPCTSTR)m_sAddress, (LPCTSTR)strLine );
 
 	m_tRequest = GetTickCount();
 	Write( strLine + _T("\r\n") );

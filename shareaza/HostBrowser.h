@@ -63,7 +63,6 @@ public:
 	BOOL			m_bCanChat;
 public:
 	CString			m_sServer;
-	PROTOCOLID		m_nProtocol;
 	BOOL			m_bDeflate;
 	DWORD			m_nLength;
 	DWORD			m_nReceived;

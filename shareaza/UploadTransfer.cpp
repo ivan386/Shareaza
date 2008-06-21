@@ -50,7 +50,6 @@ static char THIS_FILE[]=__FILE__;
 // CUploadTransfer construction
 
 CUploadTransfer::CUploadTransfer(PROTOCOLID nProtocol) :
-	m_nProtocol( nProtocol ),
 	m_nState( upsNull ),
 	m_pQueue( NULL ),
 	m_pBaseFile( NULL ),
@@ -75,6 +74,7 @@ CUploadTransfer::CUploadTransfer(PROTOCOLID nProtocol) :
 	m_tRatingTime( 0 ),
 	m_nMaxRate( 0 )
 {
+	m_nProtocol = nProtocol;
 	ZeroMemory( m_nAverageRate, sizeof( m_nAverageRate ) );
 
 	Uploads.Add( this );

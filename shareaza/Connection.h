@@ -29,7 +29,7 @@
 
 typedef boost::shared_ptr< CCriticalSection > CCriticalSectionPtr;
 
-// A socket connection to a remote compueter on the Internet running peer-to-peer software
+// A socket connection to a remote computer on the Internet running peer-to-peer software
 class CConnection
 {
 // Construction
@@ -51,6 +51,7 @@ public:
 	CString		m_sUserAgent;	// The name of the program the remote computer is running
 	CString		m_sLastHeader;	// The handshake header that ReadHeaders most recently read
 	int			m_nQueuedRun;	// The queued run state of 0, 1, or 2 (do)
+	PROTOCOLID	m_nProtocol;	// Detected protocol
 
 // Buffers access
 protected:

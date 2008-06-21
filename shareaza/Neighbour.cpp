@@ -62,8 +62,6 @@ static char THIS_FILE[]=__FILE__;
 CNeighbour::CNeighbour(PROTOCOLID nProtocol) :
 	m_nRunCookie( 0 ),
 	m_nUnique( 0 ),
-	// Copy the given network protocol into this new object
-	m_nProtocol( nProtocol ),	// nProtocol is like PROTOCOL_ED2K
 	// Set null and default values for connection state, software vendor, guid, and user profile
 	m_nState( nrsNull ),		// No state now, soon we'll connect and do the handshake
 	m_pVendor( NULL ),			// We don't know what brand software the remote computer is running yet
@@ -108,6 +106,7 @@ CNeighbour::CNeighbour(PROTOCOLID nProtocol) :
 	m_bZFlush( FALSE ),
 	m_tZOutput( 0 )
 {
+	m_nProtocol = nProtocol;
 }
 
 // Make a new CNeighbour object, copying values from a base one
@@ -116,7 +115,6 @@ CNeighbour::CNeighbour(PROTOCOLID nProtocol, CNeighbour* pBase)
 	: CConnection( *pBase )
 	, m_nRunCookie( 0 )
 	, m_nUnique(           pBase->m_nUnique )
-	, m_nProtocol( nProtocol )
 	, m_nState( nrsConnected )
 	, m_pVendor(           pBase->m_pVendor )
 	, m_oGUID(             pBase->m_oGUID )
@@ -158,6 +156,7 @@ CNeighbour::CNeighbour(PROTOCOLID nProtocol, CNeighbour* pBase)
 	, m_bZFlush(           pBase->m_bZFlush )
 	, m_tZOutput(          pBase->m_tZOutput )
 {
+	m_nProtocol = nProtocol;
 	m_tConnected = m_tLastPacket;
 	pBase->m_pZInput  = NULL;
 	pBase->m_pZOutput = NULL;

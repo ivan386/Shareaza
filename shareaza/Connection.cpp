@@ -48,7 +48,8 @@ CConnection::CConnection() :
 	m_hSocket( INVALID_SOCKET ),
 	m_pInput( NULL ),
 	m_pOutput( NULL ),
-	m_nQueuedRun( 0 )				// DoRun sets it to 0, QueueRun sets it to 2 (do)
+	m_nQueuedRun( 0 ),				// DoRun sets it to 0, QueueRun sets it to 2 (do)
+	m_nProtocol( PROTOCOL_ANY )
 {
 	ZeroMemory( &m_pHost, sizeof( m_pHost ) );
 	ZeroMemory( &m_mInput, sizeof( m_mInput ) );
@@ -612,12 +613,13 @@ BOOL CConnection::ReadHeaders()
 // Returns true to have ReadHeaders keep going
 BOOL CConnection::OnHeaderLine(CString& strHeader, CString& strValue)
 {
+	theApp.Message( MSG_DEBUG | MSG_FACILITY_INCOMING, _T("%s >> %s: %s"), (LPCTSTR)m_sAddress, (LPCTSTR)strHeader, (LPCTSTR)strValue );
+
 	// It's the user agent header
 	if ( strHeader.CompareNoCase( _T("User-Agent") ) == 0 )
 	{
 		// Copy the value into the user agent member string
 		m_sUserAgent = strValue; // This tells what software the remote computer is running
-		return TRUE;             // Have ReadHeaders keep going
 	
 	} // It's the remote IP header
 	else if ( strHeader.CompareNoCase( _T("Remote-IP") ) == 0 )
@@ -646,6 +648,15 @@ BOOL CConnection::OnHeaderLine(CString& strHeader, CString& strValue)
 				m_pHost.sin_port = htons( u_short( nPort ) ); // Convert Windows little endian to big for the Internet with htons
 			}
 		}
+	}
+	else if ( strHeader.CompareNoCase( _T("Accept") ) == 0 )
+	{
+		if ( _tcsistr( strValue, _T("application/x-gnutella-packets") ) &&
+			m_nProtocol != PROTOCOL_G2 )
+			m_nProtocol = PROTOCOL_G1;
+		if ( _tcsistr( strValue, _T("application/x-gnutella2") ) ||
+			 _tcsistr( strValue, _T("application/x-shareaza") ) )
+			m_nProtocol = PROTOCOL_G2;
 	}
 
 	// Have ReadHeaders keep going
