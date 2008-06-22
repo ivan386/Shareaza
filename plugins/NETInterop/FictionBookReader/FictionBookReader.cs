@@ -12,6 +12,7 @@ using System.Xml;
 using System.Xml.Serialization;
 using Microsoft.Win32;
 using Schemas;
+using Enc = System.Drawing.Imaging.Encoder;
 
 #endregion
 
@@ -240,25 +241,48 @@ namespace Shareaza
 				Marshal.ThrowExceptionForHR(Hresults.E_FAIL);
 			}
 
-			byte[] bytes = image.binary[0].Value;
-			MemoryStream msIn = new MemoryStream(bytes);
+			MemoryStream msIn = new MemoryStream(image.binary[0].Value);
 			try {
-				using (Bitmap bitmap = new Bitmap(msIn)) {
-					pParams.nComponents = 3;
-					pParams.nWidth = bitmap.Width;
-					pParams.nHeight = bitmap.Height;
+				using (Image inImage = Image.FromStream(msIn)) {
+					MemoryStream msOut = new MemoryStream();
+					try {
+						Enc bmpCompression = Enc.Compression;
+						// Save the bitmap with RLE compression.
+						using (EncoderParameter parameter =
+													new EncoderParameter(bmpCompression,
+																		 (long)EncoderValue.CompressionRle)) {
+							using (EncoderParameters parameters = new EncoderParameters(1)) {
+								parameters.Param[0] = parameter;
+								inImage.Save(msOut, GetEncoderInfo(@"image/bmp"), parameters);
+							}
+						}
 
-					Rectangle rect = new Rectangle(0, 0, bitmap.Width, bitmap.Height);
-					BitmapData bmpData = bitmap.LockBits(rect,
-														 ImageLockMode.ReadWrite | ImageLockMode.ReadWrite,
-														 bitmap.PixelFormat);
+						msOut.Position = 0;
+						using (Bitmap outBitmap = new Bitmap(msOut)) {
+							// string currentPath = Path.GetDirectoryName(this.GetType().Assembly.Location);
+							// string fileName = Path.GetFileName(sFile) + @".bmp";
+							// outBitmap.Save(fileName, ImageFormat.Bmp);
 
-					// Declare an array to hold the bytes of the bitmap.
-					int nBytes = bmpData.Stride * bitmap.Height;
-					bytes = new byte[nBytes];
-					Marshal.Copy(bmpData.Scan0, bytes, 0, nBytes);
-					ppImage = bytes;
-					bitmap.UnlockBits(bmpData);
+							Rectangle rect = new Rectangle(0, 0, outBitmap.Width, outBitmap.Height);
+							BitmapData bmpData = outBitmap.LockBits(rect, ImageLockMode.ReadOnly,
+																	outBitmap.PixelFormat);
+
+							// Declare an array to hold the bytes of the bitmap.
+							int nBytes = bmpData.Stride * inImage.Height;
+							byte[] bytes = new byte[nBytes];
+							Marshal.Copy(bmpData.Scan0, bytes, 0, nBytes);
+							ppImage = bytes;
+
+							pParams.nComponents = 3;
+							pParams.nWidth = outBitmap.Width;
+							pParams.nHeight = outBitmap.Height;
+
+							outBitmap.UnlockBits(bmpData);
+						}
+					} catch {
+					} finally {
+						msOut.Close();
+					}
 				}
 			} catch {
 				Marshal.ThrowExceptionForHR(Hresults.E_FAIL);
@@ -267,7 +291,7 @@ namespace Shareaza
 			}
 		}
 
-		public void LoadFromMemory(string sType, Array pMemory, 
+		public void LoadFromMemory(string sType, Array pMemory,
 								   ref IMAGESERVICEDATA pParams, out Array ppImage) {
 			ppImage = null;
 			Marshal.ThrowExceptionForHR(Hresults.E_NOTIMPL);
@@ -277,12 +301,20 @@ namespace Shareaza
 			Marshal.ThrowExceptionForHR(Hresults.E_NOTIMPL);
 		}
 
-		public void SaveToMemory(string sType, out Array ppMemory, 
+		public void SaveToMemory(string sType, out Array ppMemory,
 								 ref IMAGESERVICEDATA pParams, Array pImage) {
 			ppMemory = null;
 			Marshal.ThrowExceptionForHR(Hresults.E_NOTIMPL);
 		}
 
 		#endregion
+
+		private ImageCodecInfo GetEncoderInfo(string mimeType) {
+			ImageCodecInfo[] codecs = ImageCodecInfo.GetImageEncoders();
+			for (int i = 0; i < codecs.Length; i++)
+				if (codecs[i].MimeType == mimeType)
+					return codecs[i];
+			return null;
+		}
 	}
 }
