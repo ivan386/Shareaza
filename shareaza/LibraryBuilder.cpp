@@ -437,8 +437,10 @@ bool CLibraryBuilder::HashFile(LPCTSTR szPath, HANDLE hFile, DWORD nIndex)
 		nBlock	= min( nLength, MAX_HASH_BUFFER_SIZE );
 
 		{
+			// Calculate % done (nResult = 0 -> 100)
 			CQuickLock pLock( m_pSection );
-			m_nProgress = ( ( nFileSize - nLength ) * 100 ) / nFileSize;
+			QWORD nResult = ( ( nFileSize - nLength ) * 100ull ) / nFileSize;
+			m_nProgress = static_cast< DWORD >( nResult );
 		}
 
 		if ( ! IsThreadEnabled() )
@@ -492,7 +494,7 @@ bool CLibraryBuilder::HashFile(LPCTSTR szPath, HANDLE hFile, DWORD nIndex)
 
 	{
 		CQuickLock pLock( m_pSection );
-		m_nProgress = 100;
+		m_nProgress = 100ul;
 	}
 
 	VirtualFree( pBuffer, 0, MEM_RELEASE );
@@ -570,7 +572,7 @@ int CLibraryBuilder::SubmitMetadata(DWORD nIndex, LPCTSTR pszSchemaURI, CXMLElem
 	pXML->Detach();
 	delete pBase;
 
-	int nAttributeCount = static_cast< int >( pXML->GetAttributeCount() );
+	int nAttributeCount = pXML->GetAttributeCount();
 
 	CQuickLock oLibraryLock( Library.m_pSection );
 	if ( CLibraryFile* pFile = Library.LookupFile( nIndex ) )
