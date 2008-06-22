@@ -159,6 +159,7 @@ public:
 	void				Update(CHostCacheHostPtr pHost, WORD nPort = 0, DWORD tSeen = 0, LPCTSTR pszVendor = NULL, DWORD nUptime = 0);
 	bool				Remove(CHostCacheHostPtr pHost);
 	bool				Remove(const IN_ADDR* pAddress);
+	void				SanityCheck();
 	void				OnFailure(const IN_ADDR* pAddress, WORD nPort, bool bRemove=true);
 	void				OnSuccess(const IN_ADDR* pAddress, WORD nPort, bool bUpdate=true);
 	void				PruneByQueryAck();			// For G2
@@ -281,6 +282,7 @@ public:
 	CHostCacheHostPtr	Find(const IN_ADDR* pAddress) const;
 	BOOL				Check(const CHostCacheHostPtr pHost) const;
 	void				Remove(CHostCacheHostPtr pHost);
+	void				SanityCheck();
 	void				OnFailure(const IN_ADDR* pAddress, WORD nPort, 
 							  PROTOCOLID nProtocol=PROTOCOL_NULL, bool bRemove=true);
 	void				OnSuccess(const IN_ADDR* pAddress, WORD nPort, 

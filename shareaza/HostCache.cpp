@@ -246,6 +246,15 @@ void CHostCache::Remove(CHostCacheHostPtr pHost)
 	}
 }
 
+void CHostCache::SanityCheck()
+{
+	for ( POSITION pos = m_pList.GetHeadPosition() ; pos ; )
+	{
+		CHostCacheList* pCache = m_pList.GetNext( pos );
+		pCache->SanityCheck();
+	}
+}
+
 void CHostCache::OnFailure(const IN_ADDR* pAddress, WORD nPort, PROTOCOLID nProtocol, bool bRemove)
 {
 	for ( POSITION pos = m_pList.GetHeadPosition() ; pos ; )
@@ -465,6 +474,24 @@ bool CHostCacheList::Remove(const IN_ADDR* pAddress)
 	return false;
 }
 
+void CHostCacheList::SanityCheck()
+{
+	CQuickLock oLock( m_pSection );
+
+	for( CHostCacheMap::iterator i = m_Hosts.begin(); i != m_Hosts.end(); ++i )
+	{
+		CHostCacheHostPtr pHost = (*i).second;
+		if ( Security.IsDenied( &pHost->m_pAddress ) )
+		{
+			m_HostsTime.erase(
+				std::find( m_HostsTime.begin(), m_HostsTime.end(), pHost ) );
+			i = m_Hosts.erase( i );
+			delete pHost;
+			m_nCookie++;
+		}
+	}
+}
+
 //////////////////////////////////////////////////////////////////////
 // CHostCacheList failure processor
 
@@ -644,7 +671,9 @@ void CHostCacheList::Serialize(CArchive& ar, int nVersion)
 			if ( pHost )
 			{
 				pHost->Serialize( ar, nVersion );
-				if ( pHost->IsValid() && Find( &pHost->m_pAddress ) == NULL )
+				if ( pHost->IsValid() &&
+					! Security.IsDenied( &pHost->m_pAddress ) &&
+					! Find( &pHost->m_pAddress ) )
 				{
 					m_Hosts.insert( CHostCacheMapPair( pHost->m_pAddress, pHost ) );
 					m_HostsTime.insert( pHost );

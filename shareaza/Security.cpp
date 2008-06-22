@@ -25,6 +25,7 @@
 #include "Security.h"
 #include "Buffer.h"
 #include "XML.h"
+#include "HostCache.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -92,6 +93,8 @@ BOOL CSecurity::Check(CSecureRule* pRule) const
 
 CSecureRule* CSecurity::GetGUID(const GUID& pGUID) const
 {
+	CQuickLock oLock( m_pSection );
+
 	for ( POSITION pos = m_pRules.GetHeadPosition() ; pos ; )
 	{
 		CSecureRule* pRule = m_pRules.GetNext( pos );
@@ -106,22 +109,27 @@ CSecureRule* CSecurity::GetGUID(const GUID& pGUID) const
 
 void CSecurity::Add(CSecureRule* pRule)
 {
-	CQuickLock oLock( m_pSection );
-
-	pRule->MaskFix();
-
-	CSecureRule* pExistingRule = GetGUID( pRule->m_pGUID );
-	if ( pExistingRule == NULL )
 	{
-		m_pRules.AddHead( pRule );
-		if ( pRule->m_nIP[ 0 ] == 2 )
-			m_pRegExpRules.AddHead( pRule );
+		CQuickLock oLock( m_pSection );
+
+		pRule->MaskFix();
+
+		CSecureRule* pExistingRule = GetGUID( pRule->m_pGUID );
+		if ( pExistingRule == NULL )
+		{
+			m_pRules.AddHead( pRule );
+			if ( pRule->m_nIP[ 0 ] == 2 )
+				m_pRegExpRules.AddHead( pRule );
+		}
+		else if ( pExistingRule != pRule )
+		{
+			*pExistingRule = *pRule;
+			delete pRule;
+		}
 	}
-	else if ( pExistingRule != pRule )
-	{
-		*pExistingRule = *pRule;
-		delete pRule;
-	}
+
+	// Check all lists for newly denied hosts
+	HostCache.SanityCheck();
 }
 
 void CSecurity::Remove(CSecureRule* pRule)
@@ -557,6 +565,7 @@ BOOL CSecurity::FromXML(CXMLElement* pXML)
 
 		if ( pElement->IsNamed( _T("rule") ) )
 		{
+			CQuickLock oLock( m_pSection );
 			CSecureRule* pRule	= NULL;
 			CString strGUID		= pElement->GetAttributeValue( _T("guid") );
 			BOOL bExisting		= FALSE;
@@ -615,8 +624,6 @@ BOOL CSecurity::Import(LPCTSTR pszFile)
 	CXMLElement* pXML = CXMLElement::FromBytes( pBuffer.m_pBuffer, pBuffer.m_nLength, TRUE );
 	BOOL bResult = FALSE;
 
-	CQuickLock oLock( m_pSection );
-
 	if ( pXML != NULL )
 	{
 		bResult = FromXML( pXML );
@@ -637,6 +644,7 @@ BOOL CSecurity::Import(LPCTSTR pszFile)
 
 			if ( pRule->FromGnucleusString( strLine ) )
 			{
+				CQuickLock oLock( m_pSection );
 				m_pRules.AddTail( pRule );
 				bResult = TRUE;
 			}
@@ -646,6 +654,9 @@ BOOL CSecurity::Import(LPCTSTR pszFile)
 			}
 		}
 	}
+
+	// Check all lists for newly denied hosts
+	HostCache.SanityCheck();
 
 	return bResult;
 }
