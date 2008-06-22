@@ -369,11 +369,12 @@ BOOL CDownloadWithSources::AddSourceURL(LPCTSTR pszURL, BOOL bURN, FILETIME* pLa
 			 Network.IsReserved( &pURL.m_pAddress ) ) return FALSE;
 	}
 
-	if ( CFailedSource* pBadSource = LookupFailedSource( pszURL ) )
+	CFailedSource* pBadSource = LookupFailedSource( pszURL );
+	if ( pBadSource )
 	{
 		// Add a positive vote, add to the downloads if the negative votes compose
 		// less than 2/3 of total.
-		INT_PTR nTotal = pBadSource->m_nPositiveVotes + pBadSource->m_nNegativeVotes + 1;
+		int nTotal = pBadSource->m_nPositiveVotes + pBadSource->m_nNegativeVotes + 1;
 		if ( bFailed )
 			pBadSource->m_nNegativeVotes++;
 		else
