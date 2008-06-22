@@ -130,7 +130,7 @@ bool CShareazaFile::SplitStringToURLs(LPCTSTR pszURLs, CMapStringToFILETIME& oUr
 				! Network.IsFirewalledAddress( &nAddress, TRUE ) &&
 				! Network.IsReserved( (IN_ADDR*)&nAddress ) )
 			{
-				strURL = GetURL( *(IN_ADDR*)&nAddress, nPort );
+				strURL = GetURL( *(IN_ADDR*)&nAddress, static_cast< DWORD >( nPort ) );
 			}
 			else
 			{
