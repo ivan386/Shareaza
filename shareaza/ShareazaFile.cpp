@@ -126,11 +126,11 @@ bool CShareazaFile::SplitStringToURLs(LPCTSTR pszURLs, CMapStringToFILETIME& oUr
 			int nPort = 0;
 			_stscanf( strURL.Mid( nPos + 1 ), _T("%i"), &nPort );
 			DWORD nAddress = inet_addr( CT2CA( strURL.Left( nPos ) ) );
-			if ( nPort != 0 && nAddress != INADDR_NONE &&
+			if ( nPort > 0 && nPort <= USHRT_MAX && nAddress != INADDR_NONE &&
 				! Network.IsFirewalledAddress( &nAddress, TRUE ) &&
 				! Network.IsReserved( (IN_ADDR*)&nAddress ) )
 			{
-				strURL = GetURL( *(IN_ADDR*)&nAddress, static_cast< DWORD >( nPort ) );
+				strURL = GetURL( *(IN_ADDR*)&nAddress, static_cast< WORD >( nPort ) );
 			}
 			else
 			{
