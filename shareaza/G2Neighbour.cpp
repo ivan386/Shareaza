@@ -490,7 +490,8 @@ BOOL CG2Neighbour::OnPing(CG2Packet* pPacket, BOOL bTCP)
 	}
 	else if ( ! nPort ||
 		 Network.IsFirewalledAddress( &nAddress ) || 
-		 Network.IsReserved( (IN_ADDR*)&nAddress ) )
+		 Network.IsReserved( (IN_ADDR*)&nAddress ) ||
+		 Security.IsDenied( (IN_ADDR*)&nAddress ) )
 	{
 		// Invalid /PI/UDP address
 		return TRUE;
@@ -948,8 +949,10 @@ BOOL CG2Neighbour::ParseKHLPacket(CG2Packet* pPacket, SOCKADDR_IN* pHost)
 					if ( nLength >= 10 ) tSeen = pPacket->ReadLongBE() + tAdjust;
 				}
 
-				if ( ! Network.IsFirewalledAddress( &nAddress, TRUE ) && 
-					! Network.IsReserved( (IN_ADDR*)&nAddress ) )
+				if ( nPort &&
+					! Network.IsFirewalledAddress( &nAddress, TRUE ) && 
+					! Network.IsReserved( (IN_ADDR*)&nAddress ) &&
+					! Security.IsDenied( (IN_ADDR*)&nAddress ) )
 				{
 					CQuickLock oLock( HostCache.Gnutella2.m_pSection );
 
@@ -1089,9 +1092,11 @@ BOOL CG2Neighbour::OnHAW(CG2Packet* pPacket)
 	}
 
 	if ( pPacket->GetRemaining() < 2 + 16 ) return TRUE;
-	if ( nAddress == 0 || nPort == 0 ) return TRUE;
-	if ( Network.IsFirewalledAddress( &nAddress, TRUE ) ||
-		 Network.IsReserved( (IN_ADDR*)&nAddress ) ) return TRUE;
+
+	if ( ! nPort ||
+		Network.IsFirewalledAddress( &nAddress, TRUE ) ||
+		Network.IsReserved( (IN_ADDR*)&nAddress ) ||
+		Security.IsDenied( (IN_ADDR*)&nAddress ) ) return TRUE;
 
 	BYTE* pPtr	= pPacket->m_pBuffer + pPacket->m_nPosition;
 	BYTE nTTL	= pPacket->ReadByte();
@@ -1294,8 +1299,10 @@ BOOL CG2Neighbour::OnQueryKeyReq(CG2Packet* pPacket)
 		pPacket->m_nPosition = nOffset;
 	}
 
-	if ( Network.IsFirewalledAddress( &nAddress, TRUE ) || 
-		 0 == nPort ||  Network.IsReserved( (IN_ADDR*)&nAddress ) ) return TRUE;
+	if ( ! nPort ||
+		Network.IsFirewalledAddress( &nAddress, TRUE ) || 
+		Network.IsReserved( (IN_ADDR*)&nAddress ) ||
+		Security.IsDenied( (IN_ADDR*)&nAddress ) ) return TRUE;
 
 	if ( bCacheOkay )
 	{
@@ -1398,8 +1405,9 @@ BOOL CG2Neighbour::OnPush(CG2Packet* pPacket)
 		m_nDropCount++;
 		return TRUE;
 	}
-	else if ( ! nPort || Network.IsFirewalledAddress( &nAddress ) ||
-		 Network.IsReserved( (IN_ADDR*)&nAddress ) )
+	else if ( ! nPort ||
+		Network.IsFirewalledAddress( &nAddress ) ||
+		Network.IsReserved( (IN_ADDR*)&nAddress ) )
 	{
 		theApp.Message( MSG_ERROR, IDS_PROTOCOL_ZERO_PUSH, (LPCTSTR)m_sAddress );
 		Statistics.Current.Gnutella2.Dropped++;
