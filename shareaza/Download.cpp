@@ -451,7 +451,7 @@ void CDownload::OnRun()
 	
 	// Don't save Downloads with many sources too often, since it's slow
 	if ( tNow - m_tSaved >=
-		( m_nSourceCount > 20 ? 5 * Settings.Downloads.SaveInterval : Settings.Downloads.SaveInterval ) )
+		( GetCount() > 20 ? 5 * Settings.Downloads.SaveInterval : Settings.Downloads.SaveInterval ) )
 	{
 		if ( m_pFile != NULL && m_pFile->Flush() )
 		{
@@ -847,7 +847,8 @@ void CDownload::SerializeOld(CArchive& ar, int nVersion)
 	
 	if ( nVersion >= 3 && ar.ReadCount() )
 	{
-		m_pXML = new CXMLElement();
-		m_pXML->Serialize( ar );
+		auto_ptr< CXMLElement > pXML( new CXMLElement() );
+		pXML->Serialize( ar );
+		MergeMetadata( pXML.get() );
 	}
 }

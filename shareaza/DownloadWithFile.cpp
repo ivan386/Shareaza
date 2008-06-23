@@ -561,8 +561,8 @@ BOOL CDownloadWithFile::AppendMetadata()
 	if ( !Settings.Library.VirtualFiles )
 		return FALSE;
 
-	if ( m_pXML == NULL ) return FALSE;
-	CXMLElement* pXML = m_pXML->GetFirstElement();
+	if ( GetMetadata() == NULL ) return FALSE;
+	CXMLElement* pXML = GetMetadata()->GetFirstElement();
 	if ( pXML == NULL ) return FALSE;
 
 	HANDLE hFile = CreateFile( m_sPath, GENERIC_READ | GENERIC_WRITE,
@@ -571,7 +571,7 @@ BOOL CDownloadWithFile::AppendMetadata()
 	VERIFY_FILE_ACCESS( hFile, m_sPath )
 	if ( hFile == INVALID_HANDLE_VALUE ) return FALSE;
 
-	CString strURI = m_pXML->GetAttributeValue( CXMLAttribute::schemaName );
+	CString strURI = GetMetadata()->GetAttributeValue( CXMLAttribute::schemaName );
 	BOOL bSuccess = FALSE;
 
 	if ( CheckURI( strURI, CSchema::uriAudio ) )

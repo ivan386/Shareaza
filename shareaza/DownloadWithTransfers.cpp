@@ -267,7 +267,7 @@ BOOL CDownloadWithTransfers::StartNewTransfer(DWORD tNow)
 	if ( static_cast< CDownloadWithTorrent* >( this )->IsTorrent() &&
 		( Settings.BitTorrent.PreferenceBTSources ) )
 	{
-		for ( CDownloadSource* pSource = m_pSourceFirst ; pSource ; )
+		for ( CDownloadSource* pSource = GetFirstSource() ; pSource ; )
 		{
 			CDownloadSource* pNext = pSource->m_pNext;
 			
@@ -286,7 +286,7 @@ BOOL CDownloadWithTransfers::StartNewTransfer(DWORD tNow)
 		}
 	}
 	
-	for ( CDownloadSource* pSource = m_pSourceFirst ; pSource ; )
+	for ( CDownloadSource* pSource = GetFirstSource() ; pSource ; )
 	{
 		CDownloadSource* pNext = pSource->m_pNext;
 		

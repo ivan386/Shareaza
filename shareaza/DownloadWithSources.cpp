@@ -1182,3 +1182,15 @@ void CDownloadWithSources::Serialize(CArchive& ar, int nVersion)
 		}
 	}
 }
+
+void CDownloadWithSources::MergeMetadata(const CXMLElement* pXML)
+{
+	if ( m_pXML )
+	{
+		m_pXML->Merge( pXML );
+	}
+	else
+	{
+		m_pXML = pXML->Clone();
+	}
+}

@@ -227,7 +227,7 @@ BOOL CDownloadTransferHTTP::StartNextFragment()
 		
 		return SendRequest();
 	}
-	else if ( m_pDownload->m_pXML == NULL && m_sMetadata.GetLength() )
+	else if ( ! m_bMetaIgnore && m_sMetadata.GetLength() )
 	{
 		theApp.Message( MSG_INFO, IDS_DOWNLOAD_METADATA_REQUEST,
 			(LPCTSTR)m_pDownload->GetDisplayName(), (LPCTSTR)m_sAddress );
@@ -1469,14 +1469,8 @@ BOOL CDownloadTransferHTTP::ReadMetadata()
 	
 	if ( CXMLElement* pXML = CXMLElement::FromString( strXML, TRUE ) )
 	{
-		if ( m_pDownload->m_pXML == NULL )
-		{
-			m_pDownload->m_pXML = pXML;
-		}
-		else
-		{
-			delete pXML;
-		}
+		m_pDownload->MergeMetadata( pXML );
+		delete pXML;
 	}
 	
 	pInput->Remove( (DWORD)m_nLength );

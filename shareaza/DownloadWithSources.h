@@ -59,25 +59,19 @@ protected:
 	virtual ~CDownloadWithSources();
 	
 // Attributes
-protected:
+private:
 	CDownloadSource*	m_pSourceFirst;
 	CCriticalSection	m_pSection;
 	CList< CFailedSource* >	m_pFailedSources; // Failed source with a timestamp when added
-
-private:
 	CDownloadSource*	m_pSourceLast;
-
-public:
-	CXMLElement*		m_pXML;
-	int					m_nSourceCount;
-
-private:
 	int					m_nG1SourceCount;
 	int					m_nG2SourceCount;
 	int					m_nEdSourceCount;
 	int					m_nHTTPSourceCount;
 	int					m_nBTSourceCount;
 	int					m_nFTPSourceCount;
+	int					m_nSourceCount;
+	CXMLElement*		m_pXML;
 
 // Operations
 public:
@@ -95,7 +89,7 @@ public:
 	void				VoteSource(LPCTSTR pszUrl, bool bPositively);
 	void				ClearSources();
 	void				ClearFailedSources();
-public:
+	void				MergeMetadata(const CXMLElement* pXML);
 	BOOL				AddSourceHit(CQueryHit* pHit, BOOL bForce = FALSE);
 	BOOL				AddSourceED2K(DWORD nClientID, WORD nClientPort, DWORD nServerIP, WORD nServerPort, const Hashes::Guid& oGUID);
     BOOL				AddSourceBT(const Hashes::BtGuid& oGUID, IN_ADDR* pAddress, WORD nPort);
@@ -108,18 +102,27 @@ public:
 protected:
 	void            RemoveOverlappingSources(QWORD nOffset, QWORD nLength);
 	BOOL		    AddSourceInternal(CDownloadSource* pSource);
-private:
-	void		    RemoveSource(CDownloadSource* pSource, BOOL bBan);
-protected:
 	void		    SortSource(CDownloadSource* pSource, BOOL bTop);
 	void		    SortSource(CDownloadSource* pSource);
+
 private:
+	void		    RemoveSource(CDownloadSource* pSource, BOOL bBan);
 	int			    GetSourceColour();
 
 public:
-	CDownloadSource* GetFirstSource() const
+	inline CDownloadSource* GetFirstSource() const
 	{
 		return m_pSourceFirst;
+	}
+
+	inline int GetCount() const
+	{
+		return m_nSourceCount;
+	}
+
+	inline CXMLElement* GetMetadata() const
+	{
+		return m_pXML;
 	}
 	
 	friend class CDownloadSource; // RemoveSource && GetSourceColour

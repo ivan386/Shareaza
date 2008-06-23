@@ -120,12 +120,12 @@ CLibraryFile::CLibraryFile(CLibraryFolder* pFolder, LPCTSTR pszName) :
 			}
 
 			// Get metadata of recently downloaded file
-			if ( pDownload->m_pXML && pDownload->m_pXML->GetFirstElement() )
+			if ( pDownload->GetMetadata() && pDownload->GetMetadata()->GetFirstElement() )
 			{
 				m_bMetadataAuto = TRUE;
 				m_pSchema = SchemaCache.Get(
-					pDownload->m_pXML->GetAttributeValue( CXMLAttribute::schemaName ) );
-				m_pMetadata = pDownload->m_pXML->GetFirstElement()->Clone();
+					pDownload->GetMetadata()->GetAttributeValue( CXMLAttribute::schemaName ) );
+				m_pMetadata = pDownload->GetMetadata()->GetFirstElement()->Clone();
 				ModifyMetadata();
 			}
 		}
