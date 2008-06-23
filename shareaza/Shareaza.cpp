@@ -326,7 +326,7 @@ BOOL CShareazaApp::InitInstance()
 
 	int nSplashSteps = 18
 		+ ( Settings.Connection.EnableFirewallException ? 1 : 0 )
-		+ ( Settings.Connection.EnableUPnP && !Settings.Live.FirstRun ? 1 : 0 );
+		+ ( ( Settings.Connection.EnableUPnP && ! Settings.Live.FirstRun ) ? 1 : 0 );
 
 	SplashStep( L"Winsock", ( m_ocmdInfo.m_bNoSplash ? 0 : nSplashSteps ), false );
 		WSADATA wsaData;
