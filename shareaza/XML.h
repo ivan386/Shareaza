@@ -28,12 +28,10 @@ class CXMLAttribute;
 
 class CXMLNode
 {
-// Construction
 public:
 	CXMLNode(CXMLElement* pParent = NULL, LPCTSTR pszName = NULL);
 	virtual ~CXMLNode();
 
-// Attributes
 protected:
 	int				m_nNode;
 	CXMLElement*	m_pParent;
@@ -42,26 +40,22 @@ protected:
 
 	enum { xmlNode, xmlElement, xmlAttribute };
 
-// Operations
+	static BOOL		ParseMatch(LPCTSTR& pszXML, LPCTSTR pszToken);
+	static BOOL		ParseIdentifier(LPCTSTR& pszXML, CString& strIdentifier);
+	void			Serialize(CArchive& ar);
+
 public:
 	int				GetType() const;
 	CXMLNode*		AsNode() const;
 	CXMLElement*	AsElement() const;
 	CXMLAttribute*	AsAttribute() const;
-public:
 	CXMLElement*	GetParent() const;
 	void			Delete();
-public:
 	CString			GetName() const;
 	void			SetName(LPCTSTR pszValue);
 	BOOL			IsNamed(LPCTSTR pszName) const;
 	CString			GetValue() const;
 	void			SetValue(LPCTSTR pszValue);
-protected:
-	static BOOL		ParseMatch(LPCTSTR& pszXML, LPCTSTR pszToken);
-	static BOOL		ParseIdentifier(LPCTSTR& pszXML, CString& strIdentifier);
-	void			Serialize(CArchive& ar);
-public:
 	static CString	StringToValue(LPCTSTR& pszXML, int nLength);
 	static void		ValueToString(LPCTSTR pszValue, CString& strXML);
 	static void		UniformString(CString& str);
@@ -74,21 +68,19 @@ public:
 
 class CXMLElement : public CXMLNode
 {
-// Construction
 public:
 	CXMLElement(CXMLElement* pParent = NULL, LPCTSTR pszName = NULL);
 	virtual ~CXMLElement();
 
-// Attributes
 protected:
 	CList< CXMLElement* > m_pElements;
 	CMap< CString, const CString&, CXMLAttribute*, CXMLAttribute* > m_pAttributes;
 
-// Operations
+	void			AddRecursiveWords(CString& strWords) const;
+
 public:
-	CXMLElement*	Clone(CXMLElement* pParent = NULL);
+	CXMLElement*	Clone(CXMLElement* pParent = NULL) const;
 	CXMLElement*	Detach();
-public:
 	CXMLElement*	AddElement(LPCTSTR pszName);
 	CXMLElement*	AddElement(CXMLElement* pElement);
 	INT_PTR			GetElementCount() const;
@@ -99,7 +91,6 @@ public:
 	CXMLElement*	GetElementByName(LPCTSTR pszName, BOOL bCreate);
 	void			RemoveElement(CXMLElement* pElement);
 	void			DeleteAllElements();
-public:
 	CXMLAttribute*	AddAttribute(LPCTSTR pszName, LPCTSTR pszValue = NULL);
 	CXMLAttribute*	AddAttribute(CXMLAttribute* pAttribute);
 	int				GetAttributeCount() const;
@@ -110,15 +101,13 @@ public:
 	void			RemoveAttribute(CXMLAttribute* pAttribute);
 	void			DeleteAttribute(LPCTSTR pszName);
 	void			DeleteAllAttributes();
-public:
-	CString			ToString(BOOL bHeader = FALSE, BOOL bNewline = FALSE);
-	void			ToString(CString& strXML, BOOL bNewline = FALSE);
+	CString			ToString(BOOL bHeader = FALSE, BOOL bNewline = FALSE) const;
+	void			ToString(CString& strXML, BOOL bNewline = FALSE) const;
 	BOOL			ParseString(LPCTSTR& strXML);
 	BOOL			Equals(CXMLElement* pXML) const;
 	// Add missing elements and attributes from pInput, preserve existing
-	BOOL			Merge(CXMLElement* pInput);
-	CString			GetRecursiveWords();
-	void			AddRecursiveWords(CString& strWords);
+	BOOL			Merge(const CXMLElement* pInput);
+	CString			GetRecursiveWords() const;
 	void			Serialize(CArchive& ar);
 
 	static CXMLElement*	FromString(LPCTSTR pszXML, BOOL bHeader = FALSE);
@@ -130,21 +119,16 @@ public:
 
 class CXMLAttribute : public CXMLNode
 {
-// Construction
 public:
 	CXMLAttribute(CXMLElement* pParent, LPCTSTR pszName = NULL);
 	virtual ~CXMLAttribute();
 
-// Attributes
-public:
 	static LPCTSTR	xmlnsSchema;
 	static LPCTSTR	xmlnsInstance;
 	static LPCTSTR	schemaName;
 
-// Operations
-public:
-	CXMLAttribute*	Clone(CXMLElement* pParent = NULL);
-	void			ToString(CString& strXML);
+	CXMLAttribute*	Clone(CXMLElement* pParent = NULL) const;
+	void			ToString(CString& strXML) const;
 	BOOL			ParseString(LPCTSTR& strXML);
 	BOOL			Equals(CXMLAttribute* pXML) const;
 	void			Serialize(CArchive& ar);

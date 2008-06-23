@@ -359,7 +359,7 @@ CXMLElement* CXMLElement::AddElement(LPCTSTR pszName)
 //////////////////////////////////////////////////////////////////////
 // CXMLElement clone
 
-CXMLElement* CXMLElement::Clone(CXMLElement* pParent)
+CXMLElement* CXMLElement::Clone(CXMLElement* pParent) const
 {
 	CXMLElement* pClone = new CXMLElement( pParent, m_sName );
 
@@ -418,7 +418,7 @@ void CXMLElement::DeleteAllAttributes()
 //////////////////////////////////////////////////////////////////////
 // CXMLElement to string
 
-CString CXMLElement::ToString(BOOL bHeader, BOOL bNewline)
+CString CXMLElement::ToString(BOOL bHeader, BOOL bNewline) const
 {
 	CString strXML;
 	if ( bHeader )
@@ -430,7 +430,7 @@ CString CXMLElement::ToString(BOOL bHeader, BOOL bNewline)
 	return strXML;
 }
 
-void CXMLElement::ToString(CString& strXML, BOOL bNewline)
+void CXMLElement::ToString(CString& strXML, BOOL bNewline) const
 {
 	strXML += '<' + m_sName;
 
@@ -765,7 +765,7 @@ BOOL CXMLElement::Equals(CXMLElement* pXML) const
 //////////////////////////////////////////////////////////////////////
 // CXMLElement Metadata merge
 
-BOOL CXMLElement::Merge(CXMLElement* pInput)
+BOOL CXMLElement::Merge(const CXMLElement* pInput)
 {
 	if ( ! this || ! pInput ) return FALSE;
 	if ( this == pInput ) return TRUE;
@@ -802,7 +802,7 @@ BOOL CXMLElement::Merge(CXMLElement* pInput)
 //////////////////////////////////////////////////////////////////////
 // CXMLElement recursive word accumulation
 
-CString CXMLElement::GetRecursiveWords()
+CString CXMLElement::GetRecursiveWords() const
 {
 	CString strWords;
 
@@ -813,7 +813,7 @@ CString CXMLElement::GetRecursiveWords()
 	return strWords;
 }
 
-void CXMLElement::AddRecursiveWords(CString& strWords)
+void CXMLElement::AddRecursiveWords(CString& strWords) const
 {
 	for ( POSITION pos = GetAttributeIterator() ; pos ; )
 	{
@@ -961,7 +961,7 @@ CXMLAttribute* CXMLElement::AddAttribute(CXMLAttribute* pAttribute)
 //////////////////////////////////////////////////////////////////////
 // CXMLAttribute clone
 
-CXMLAttribute* CXMLAttribute::Clone(CXMLElement* pParent)
+CXMLAttribute* CXMLAttribute::Clone(CXMLElement* pParent) const
 {
 	CXMLAttribute* pClone = new CXMLAttribute( pParent, m_sName );
 	pClone->m_sValue = m_sValue;
@@ -971,7 +971,7 @@ CXMLAttribute* CXMLAttribute::Clone(CXMLElement* pParent)
 //////////////////////////////////////////////////////////////////////
 // CXMLAttribute to string
 
-void CXMLAttribute::ToString(CString& strXML)
+void CXMLAttribute::ToString(CString& strXML) const
 {
 	strXML += m_sName + _T("=\"");
 	ValueToString( m_sValue, strXML );
