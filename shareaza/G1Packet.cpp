@@ -20,7 +20,7 @@
 //
 
 // CG1Packet represents a Gnutella packet, and CG1PacketPool keeps lists of them
-// http://wiki.shareaza.com/static/Developers.Code.CG1Packet
+// http://shareazasecurity.be/wiki/index.php?title=Developers.Code.CG1Packet
 
 // Copy in the contents of these files here before compiling
 #include "StdAfx.h"

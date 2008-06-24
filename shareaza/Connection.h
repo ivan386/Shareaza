@@ -20,7 +20,7 @@
 //
 
 // CConnection holds a socket used to communicate with a remote computer, and is the root of a big inheritance tree
-// http://wiki.shareaza.com/static/Developers.Code.CConnection
+// http://shareazasecurity.be/wiki/index.php?title=Developers.Code.CConnection
 
 #pragma once
 

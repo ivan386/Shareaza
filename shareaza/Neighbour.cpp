@@ -20,7 +20,7 @@
 //
 
 // CNeighbour is in the middle of the CConnection inheritance tree, adding compression and a bunch of member variables
-// http://wiki.shareaza.com/static/Developers.Code.CNeighbour
+// http://shareazasecurity.be/wiki/index.php?title=Developers.Code.CNeighbour
 
 // Copy in the contents of these files here before compiling
 #include "StdAfx.h"

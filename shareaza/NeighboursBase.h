@@ -20,7 +20,7 @@
 //
 
 // Keeps a list of CNeighbour objects, with methods to go through them, add and remove them, and count them
-// http://wiki.shareaza.com/static/Developers.Code.CNeighboursBase
+// http://shareazasecurity.be/wiki/index.php?title=Developers.Code.CNeighboursBase
 
 // Make the compiler only include the lines here once, this is the same thing as pragma once
 #if !defined(AFX_NEIGHBOURSBASE_H__EE5DBF25_1EC6_40A7_9343_7373A2A882AD__INCLUDED_)

@@ -20,7 +20,7 @@
 //
 
 // Determine our hub or leaf role, count connections for each, and make new ones or close them to have the right number
-// http://wiki.shareaza.com/static/Developers.Code.CNeighboursWithConnect
+// http://shareazasecurity.be/wiki/index.php?title=Developers.Code.CNeighboursWithConnect
 
 // Copy in the contents of these files here before compiling
 #include "StdAfx.h"

@@ -20,7 +20,7 @@
 //
 
 // CZLib makes it easier to use the zlib compression library
-// http://wiki.shareaza.com/static/Developers.Code.CZLib
+// http://shareazasecurity.be/wiki/index.php?title=Developers.Code.CZLib
 
 // Make the compiler only include the lines here once, this is the same thing as pragma once
 #if !defined(AFX_ZLIB_H__3ABC5B39_501F_41B0_828A_B7CDFAD0F73B__INCLUDED_)

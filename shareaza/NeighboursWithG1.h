@@ -20,7 +20,7 @@
 //
 
 // Adds the ping route and pong caches to the CNeighbours object, and methods to route Gnutella ping and pong packets
-// http://wiki.shareaza.com/static/Developers.Code.CNeighboursWithG1
+// http://shareazasecurity.be/wiki/index.php?title=Developers.Code.CNeighboursWithG1
 
 // Make the compiler only include the lines here once, this is the same thing as pragma once
 #if !defined(AFX_NEIGHBOURSWITHG1_H__6CDF87CC_1439_4C48_84E5_D44ADE9141A7__INCLUDED_)

@@ -20,7 +20,7 @@
 //
 
 // CShakeNeighbour reads and sends handshake headers to negotiate the Gnutella or Gnutella2 handshake
-// http://wiki.shareaza.com/static/Developers.Code.CShakeNeighbour
+// http://shareazasecurity.be/wiki/index.php?title=Developers.Code.CShakeNeighbour
 
 
 #pragma once

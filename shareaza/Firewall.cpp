@@ -20,7 +20,7 @@
 //
 
 // CFirewall wraps Windows COM components to change Windows Firewall settings, and talk UPnP to a NAT router
-// http://wiki.shareaza.com/static/Developers.Code.CFirewall
+// http://shareazasecurity.be/wiki/index.php?title=Developers.Code.CFirewall
 
 // Include
 #include "StdAfx.h"

@@ -20,7 +20,7 @@
 //
 
 // Adds methods that send packets and Gnutella queries to all the computers we're connected to
-// http://wiki.shareaza.com/static/Developers.Code.CNeighboursWithRouting
+// http://shareazasecurity.be/wiki/index.php?title=Developers.Code.CNeighboursWithRouting
 
 // Make the compiler only include the lines here once, this is the same thing as pragma once
 #if !defined(AFX_NEIGHBOURSWITHROUTING_H__F6307BC0_A35F_43A3_A6BE_98C69D9A351E__INCLUDED_)

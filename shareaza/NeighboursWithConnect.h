@@ -20,7 +20,7 @@
 //
 
 // Determine our hub or leaf role, count connections for each, and make new ones or close them to have the right number
-// http://wiki.shareaza.com/static/Developers.Code.CNeighboursWithConnect
+// http://shareazasecurity.be/wiki/index.php?title=Developers.Code.CNeighboursWithConnect
 
 // Make the compiler only include the lines here once, this is the same thing as pragma once
 #if !defined(AFX_NEIGHBOURSWITHCONNECT_H__7BAE2435_FF99_4E23_8EBE_B7C3E5FFCCB0__INCLUDED_)

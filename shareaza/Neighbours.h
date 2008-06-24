@@ -20,7 +20,7 @@
 //
 
 // Complete the CNeighbours inheritance column, calling Close on each neighbour when the program exits
-// http://wiki.shareaza.com/static/Developers.Code.CNeighbours
+// http://shareazasecurity.be/wiki/index.php?title=Developers.Code.CNeighbours
 
 // Make the compiler only include the lines here once, this is the same thing as pragma once
 #if !defined(AFX_NEIGHBOURS_H__864DFBBB_7F72_429B_96FD_A98E720FD0D0__INCLUDED_)

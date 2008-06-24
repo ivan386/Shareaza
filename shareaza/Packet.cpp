@@ -20,7 +20,7 @@
 //
 
 // CPacket represents a packet on a peer-to-peer network, and CPacketPool keeps lists of them
-// http://wiki.shareaza.com/static/Developers.Code.CPacket
+// http://shareazasecurity.be/wiki/index.php?title=Developers.Code.CPacket
 
 // Copy in the contents of these files here before compiling
 #include "StdAfx.h"

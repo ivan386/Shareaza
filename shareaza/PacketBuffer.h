@@ -20,7 +20,7 @@
 //
 
 // CG1PacketBuffer holds arrays of packets to send, organized by their type
-// http://wiki.shareaza.com/static/Developers.Code.CG1PacketBuffer
+// http://shareazasecurity.be/wiki/index.php?title=Developers.Code.CG1PacketBuffer
 
 // Make the compiler only include the lines here once, this is the same thing as pragma once
 #if !defined(AFX_PACKETBUFFER_H__7FE2F4C5_B0E8_444C_9B26_C95CCB344615__INCLUDED_)

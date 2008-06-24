@@ -20,7 +20,7 @@
 //
 
 // CHandshake figures out what the remote computer wants from the first 7 bytes it sends us
-// http://wiki.shareaza.com/static/Developers.Code.CHandshake
+// http://shareazasecurity.be/wiki/index.php?title=Developers.Code.CHandshake
 
 // Make the compiler only include the lines here once, this is the same thing as pragma once
 #if !defined(AFX_HANDSHAKE_H__FC762B48_46E6_4BB1_8B25_BC783DA966A4__INCLUDED_)

@@ -20,7 +20,7 @@
 //
 
 // Add methods helpful for eDonkey2000 that look at the list of neighbours
-// http://wiki.shareaza.com/static/Developers.Code.CNeighboursWithED2K
+// http://shareazasecurity.be/wiki/index.php?title=Developers.Code.CNeighboursWithED2K
 
 // Make the compiler only include the lines here once, this is the same thing as pragma once
 #if !defined(AFX_NEIGHBOURSWITHED2K_H__0165D8B7_0351_4EF7_B669_73D0072F5107__INCLUDED_)

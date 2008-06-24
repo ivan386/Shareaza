@@ -20,7 +20,7 @@
 //
 
 // CG1Packet represents a Gnutella packet, and CG1PacketPool keeps lists of them
-// http://wiki.shareaza.com/static/Developers.Code.CG1Packet
+// http://shareazasecurity.be/wiki/index.php?title=Developers.Code.CG1Packet
 
 // Make the compiler only include the lines here once, this is the same thing as pragma once
 #if !defined(AFX_G1PACKET_H__6B611C29_56C1_4E2A_AA72_249AB7BD76D0__INCLUDED_)

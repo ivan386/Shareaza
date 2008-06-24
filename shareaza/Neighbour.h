@@ -20,7 +20,7 @@
 //
 
 // CNeighbour is in the middle of the CConnection inheritance tree, adding compression and a bunch of member variables
-// http://wiki.shareaza.com/static/Developers.Code.CNeighbour
+// http://shareazasecurity.be/wiki/index.php?title=Developers.Code.CNeighbour
 
 // Make the compiler only include the lines here once, this is the same thing as pragma once
 #if !defined(AFX_NEIGHBOUR_H__7B1C7637_2718_4D5F_B39D_28894CC0669D__INCLUDED_)

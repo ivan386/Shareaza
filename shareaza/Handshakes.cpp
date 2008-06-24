@@ -20,7 +20,7 @@
 //
 
 // CHandshakes listens for remote computers that want to connect to us
-// http://wiki.shareaza.com/static/Developers.Code.CHandshakes
+// http://shareazasecurity.be/wiki/index.php?title=Developers.Code.CHandshakes
 
 // Copy in the contents of these files here before compiling
 #include "StdAfx.h"

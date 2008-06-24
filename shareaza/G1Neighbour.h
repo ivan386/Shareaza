@@ -20,7 +20,7 @@
 //
 
 // A CG1Neighbour object represents a remote computer running Gnutella software with which we are exchanging Gnutella packets
-// http://wiki.shareaza.com/static/Developers.Code.CG1Neighbour
+// http://shareazasecurity.be/wiki/index.php?title=Developers.Code.CG1Neighbour
 
 // Make the compiler only include the lines here once, this is the same thing as pragma once
 #if !defined(AFX_G1NEIGHBOUR_H__BF099C28_0FD5_4A9A_B36E_6490DA6FB62F__INCLUDED_)

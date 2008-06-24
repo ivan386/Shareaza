@@ -20,7 +20,7 @@
 //
 
 // Adds 2 methods helpful for Gnutella2 that look at the list of neighbours
-// http://wiki.shareaza.com/static/Developers.Code.CNeighboursWithG2
+// http://shareazasecurity.be/wiki/index.php?title=Developers.Code.CNeighboursWithG2
 
 // Make the compiler only include the lines here once, this is the same thing as pragma once
 #if !defined(AFX_NEIGHBOURSWITHG2_H__6C703D82_AD8C_48F1_9C6A_B54F5C05231E__INCLUDED_)

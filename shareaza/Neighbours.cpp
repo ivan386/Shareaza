@@ -20,7 +20,7 @@
 //
 
 // Complete the CNeighbours inheritance column, calling Close on each neighbour when the program exits
-// http://wiki.shareaza.com/static/Developers.Code.CNeighbours
+// http://shareazasecurity.be/wiki/index.php?title=Developers.Code.CNeighbours
 
 // Copy in the contents of these files here before compiling
 #include "StdAfx.h"

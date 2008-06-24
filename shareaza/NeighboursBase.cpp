@@ -20,7 +20,7 @@
 //
 
 // Keeps a list of CNeighbour objects, with methods to go through them, add and remove them, and count them
-// http://wiki.shareaza.com/static/Developers.Code.CNeighboursBase
+// http://shareazasecurity.be/wiki/index.php?title=Developers.Code.CNeighboursBase
 
 // Copy in the contents of these files here before compiling
 #include "StdAfx.h"

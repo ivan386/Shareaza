@@ -20,7 +20,7 @@
 //
 
 // Adds methods that send packets and Gnutella queries to all the computers we're connected to
-// http://wiki.shareaza.com/static/Developers.Code.CNeighboursWithRouting
+// http://shareazasecurity.be/wiki/index.php?title=Developers.Code.CNeighboursWithRouting
 
 // Copy in the contents of these files here before compiling
 #include "StdAfx.h"
