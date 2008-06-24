@@ -739,9 +739,10 @@ BOOL CUploadTransferHTTP::RequestPartialFile(CDownload* pDownload)
 	
 	if ( pDownload->IsMoving() )
 	{
-		if ( GetTickCount() - pDownload->m_tCompleted < 30000 )
+		if ( GetTickCount() - pDownload->m_tCompleted < 60 * 60 * 1000 ) // 1 hour
 		{
 			Write( _P("HTTP/1.1 503 Range Temporarily Unavailable\r\n") );
+			Write( _P("Retry-After: 60\r\n") ); // 1 min
 		}
 		else
 		{
