@@ -124,7 +124,7 @@ library Shareaza
 	// General Plugin Support
 	//
 
-	[ uuid(D1B5D3A4-B890-470a-A3FF-9700F3C2A063) ]
+	[ uuid(D1B5D3A4-B890-470a-A3FF-9700F3C2A063), oleautomation ]
 	interface IGeneralPlugin : stdole.IUnknown
 	{
 		HRESULT SetApplication( [in] IApplication* pApplication );
@@ -137,7 +137,7 @@ library Shareaza
 	// Command Plugin
 	//
 
-	[ uuid(CB25DAED-D745-45db-994E-32639D2888A9) ]
+	[ uuid(CB25DAED-D745-45db-994E-32639D2888A9), oleautomation ]
 	interface ICommandPlugin : stdole.IUnknown
 	{
 		HRESULT RegisterCommands();
@@ -150,7 +150,7 @@ library Shareaza
 	// Execute Plugin
 	//
 
-	[ uuid(8E878640-37B5-44a3-A37C-FC3BF1CCF6B6) ]
+	[ uuid(8E878640-37B5-44a3-A37C-FC3BF1CCF6B6), oleautomation ]
 	interface IExecutePlugin : stdole.IUnknown
 	{
 		HRESULT OnExecute( [in] BSTR sFilePath );
@@ -163,11 +163,11 @@ library Shareaza
 
 	interface ISToolbar;
 
-	[ uuid(ADDB77AE-3483-4a15-B391-AE31563BD7E3) ]
+	[ uuid(ADDB77AE-3483-4a15-B391-AE31563BD7E3), oleautomation ]
 	interface IPluginWindow : stdole.IUnknown
 	{
 		HRESULT ListenForSingleMessage( [in] UINT nMessage );
-		HRESULT ListenForMultipleMessages( [in] SAFEARRAY* pMessages );
+		HRESULT ListenForMultipleMessages( [in] SAFEARRAY(UINT) pMessages );
 		HRESULT Create1( [in] BSTR bsCaption, [in] HICON hIcon, [in] VARIANT_BOOL bPanel, [in] VARIANT_BOOL bTabbed );
 		HRESULT Create2( [in] UINT nCommandID, [in] VARIANT_BOOL bPanel, [in] VARIANT_BOOL bTabbed );
 		HRESULT GetHwnd( [out] HWND* phWnd );
@@ -179,7 +179,7 @@ library Shareaza
 		HRESULT AdjustWindowRect( [in,out] RECT* pRect, [in] VARIANT_BOOL bClientToWindow );
 	};
 
-	[ uuid(C6631461-2654-4572-BB3C-54F52F0FF1B9) ]
+	[ uuid(C6631461-2654-4572-BB3C-54F52F0FF1B9), oleautomation ]
 	interface IPluginWindowOwner : stdole.IUnknown
 	{
 		HRESULT OnTranslate( [in] MSG* pMessage );
@@ -192,7 +192,7 @@ library Shareaza
 	// LibraryBuilder Plugin
 	//
 
-	[ uuid(32496CEA-3B51-4f2f-9CE7-73D6AC942C34) ]
+	[ uuid(32496CEA-3B51-4f2f-9CE7-73D6AC942C34), oleautomation ]
 	interface ILibraryBuilderPlugin : stdole.IUnknown
 	{
 		HRESULT Process( [in] HANDLE hFile, [in] BSTR sFile, [in] ISXMLElement* pXML );
@@ -232,11 +232,11 @@ library Shareaza
 	// DownloadPreview Plugin
 	//
 
-	[ uuid(52A97CBD-2B99-45e8-B6F9-41E9CD583960) ]
+	[ uuid(52A97CBD-2B99-45e8-B6F9-41E9CD583960), oleautomation ]
 	interface IDownloadPreviewSite : stdole.IUnknown
 	{
 		HRESULT GetSuggestedFilename( [out,retval] BSTR* psFile );
-		HRESULT GetAvailableRanges( [out,retval] SAFEARRAY **pArray );
+		HRESULT GetAvailableRanges( [out,retval] SAFEARRAY(DWORD)* pArray );
 		HRESULT SetProgressRange( [in] DWORD nRange );
 		HRESULT SetProgressPosition( [in] DWORD nPosition );
 		HRESULT SetProgressMessage( [in] BSTR sMessage );
@@ -244,7 +244,7 @@ library Shareaza
 		HRESULT ExecuteFile( [in] BSTR sFile );
 	};
 
-	[ uuid(1182FCD9-9F14-4e4a-BD05-432422B5BFAF) ]
+	[ uuid(1182FCD9-9F14-4e4a-BD05-432422B5BFAF), oleautomation ]
 	interface IDownloadPreviewPlugin : stdole.IUnknown
 	{
 		HRESULT SetSite( [in] IDownloadPreviewSite* pSite );
@@ -269,7 +269,7 @@ library Shareaza
 		smzDistort = -1, smzFill = 0, smzOne = 1, smzDouble = 2,
 	} MediaZoom;
 
-	[ uuid(59978299-C8AC-4818-83F4-C382BB611D5C), pointer_default(unique) ]
+	[ uuid(59978299-C8AC-4818-83F4-C382BB611D5C), oleautomation, pointer_default(unique) ]
 	interface IMediaPlayer : stdole.IUnknown
 	{
 		HRESULT Create( [in] HWND hWnd );
@@ -315,7 +315,7 @@ library Shareaza
 		BYTE	nSpectrum[2][512];
 	} SHAREAZAVISCHUNK;
 
-	[ uuid(E788D125-4D41-4a35-A436-D1A1FD0C8EC9) ]
+	[ uuid(E788D125-4D41-4a35-A436-D1A1FD0C8EC9), oleautomation ]
 	interface IAudioVisPlugin : stdole.IUnknown
 	{
 		HRESULT Configure();
@@ -330,7 +330,7 @@ library Shareaza
 		HRESULT OnChunk( [in] SHAREAZAVISCHUNK* pChunk );
 	};
 
-	[ uuid(71045028-F95C-4c03-AB09-6D906DBFC731) ]
+	[ uuid(71045028-F95C-4c03-AB09-6D906DBFC731), oleautomation ]
 	interface IWrappedPluginControl : stdole.IUnknown
 	{
 		HRESULT Load( [in] BSTR sDLL, [in] LONG nIndex );
