@@ -29,7 +29,7 @@
 #include "DownloadTransfer.h"
 #include "DownloadGroups.h"
 #include "Uploads.h"
-
+#include "SharedFile.h"
 #include "Library.h"
 #include "LibraryBuilder.h"
 #include "LibraryHistory.h"
@@ -589,14 +589,20 @@ void CDownload::OnMoved(CDownloadTask* pTask)
 	// Delete the SD file
 	::DeleteFile( strDiskFileName + _T(".sd") );
 
-	LibraryBuilder.RequestPriority( m_sPath );
-	
-	VERIFY( LibraryHistory.Add( m_sPath, m_oSHA1, m_oED2K, m_oBTH, m_oMD5,
-		GetSourceURLs( NULL, 0, PROTOCOL_NULL, NULL ) ) );
-	
+	{
+		CQuickLock oLibraryLock( Library.m_pSection );
+
+		LibraryBuilder.RequestPriority( m_sPath );
+
+		VERIFY( LibraryHistory.Add( m_sPath, m_oSHA1, m_oED2K, m_oBTH, m_oMD5,
+			GetSourceURLs( NULL, 0, PROTOCOL_NULL, NULL ) ) );
+
+		if ( CLibraryFile* pFile = LibraryMaps.LookupFileByPath( m_sPath ) )
+			pFile->UpdateMetadata( this );
+	}
+
 	ClearSources();
-	SetModified();
-	
+
 	if ( IsFullyVerified() ) OnVerify( m_sPath, TRUE );
 }
 

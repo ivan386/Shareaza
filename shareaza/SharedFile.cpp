@@ -109,27 +109,8 @@ CLibraryFile::CLibraryFile(CLibraryFolder* pFolder, LPCTSTR pszName) :
 		m_sPath = pFolder->m_sPath;
 
 	if ( pFolder && pszName )
-	{
-		CDownload* pDownload = Downloads.FindByPath( GetPath() );
-		if ( pDownload )
-		{
-			// Get BTIH of recently downloaded file
-			if ( pDownload->IsSingleFileTorrent() )
-			{
-				m_oBTH = pDownload->m_oBTH;
-			}
-
-			// Get metadata of recently downloaded file
-			if ( pDownload->GetMetadata() && pDownload->GetMetadata()->GetFirstElement() )
-			{
-				m_bMetadataAuto = TRUE;
-				m_pSchema = SchemaCache.Get(
-					pDownload->GetMetadata()->GetAttributeValue( CXMLAttribute::schemaName ) );
-				m_pMetadata = pDownload->GetMetadata()->GetFirstElement()->Clone();
-				ModifyMetadata();
-			}
-		}
-	}
+		if ( CDownload* pDownload = Downloads.FindByPath( GetPath() ) )
+			UpdateMetadata( pDownload );
 
 	EnableDispatch( IID_ILibraryFile );
 }
@@ -377,6 +358,26 @@ BOOL CLibraryFile::Delete(BOOL bDeleteGhost)
 //////////////////////////////////////////////////////////////////////
 // CLibraryFile metadata access
 
+void CLibraryFile::UpdateMetadata(const CDownload* pDownload)
+{
+	// Get BTIH of recently downloaded file
+	if ( ! m_oBTH && pDownload->IsSingleFileTorrent() )
+	{
+		m_oBTH = pDownload->m_oBTH;
+	}
+
+	// Get metadata of recently downloaded file
+	if ( ! m_pSchema && ! m_pMetadata &&
+		pDownload->GetMetadata() && pDownload->GetMetadata()->GetFirstElement() )
+	{
+		m_bMetadataAuto = TRUE;
+		m_pSchema = SchemaCache.Get(
+			pDownload->GetMetadata()->GetAttributeValue( CXMLAttribute::schemaName ) );
+		m_pMetadata = pDownload->GetMetadata()->GetFirstElement()->Clone();
+		ModifyMetadata();
+	}
+}
+
 BOOL CLibraryFile::SetMetadata(CXMLElement* pXML)
 {
 	if ( m_pMetadata == NULL && pXML == NULL ) return TRUE;
@@ -414,9 +415,7 @@ BOOL CLibraryFile::SetMetadata(CXMLElement* pXML)
 	ModifyMetadata();
 
 	Library.AddFile( this );
-	
-//	SaveMetadata();
-	
+
 	return TRUE;
 }
 

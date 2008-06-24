@@ -31,6 +31,7 @@ class CQuerySearch;
 class CLibraryDownload;
 class CTigerTree;
 class CED2K;
+class CDownload;
 
 
 class CLibraryFile : public CComObject, public CShareazaFile
@@ -104,6 +105,7 @@ public:
 	BOOL			Rebuild();
 	BOOL			Rename(LPCTSTR pszName);
 	BOOL			Delete(BOOL bDeleteGhost = FALSE);
+	void			UpdateMetadata(const CDownload* pDownload);
 	BOOL			SetMetadata(CXMLElement* pXML);
 	CString			GetMetadataWords() const;
 	void			ModifyMetadata();		// Mark metadata as modified
