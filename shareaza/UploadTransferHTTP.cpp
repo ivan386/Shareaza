@@ -575,7 +575,6 @@ BOOL CUploadTransferHTTP::OnHeadersComplete()
 		}
 
 		CDownload* pDownload = Downloads.FindByURN( pszURN );
-		
 		if ( pDownload != NULL && pDownload->IsShared() && pDownload->IsStarted() )
 		{
 			return RequestPartialFile( pDownload );
@@ -938,7 +937,7 @@ void CUploadTransferHTTP::SendDefaultHeaders()
 	if ( IsNetworkDisabled() )
 	{
 		// Ask to retry after some delay in seconds
-		Write( _P("Retry-After: 7200\r\n") );
+		Write( _P("Retry-After: 3600\r\n") ); // 1 hour
 	}
 	else if ( m_bKeepAlive )
 	{
