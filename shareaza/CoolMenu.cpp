@@ -26,6 +26,7 @@
 #include "CoolMenu.h"
 #include "Skin.h"
 #include "ResultFilters.h"
+#include "Shell.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -617,133 +618,13 @@ void CCoolMenu::RegisterEdge(int nLeft, int nTop, int nLength)
 	m_nEdgeSize	= nLength;
 }
 
-class CShellItem
-{
-public:
-	CShellItem(IShellFolder* pDesktop, HWND hWnd, LPCTSTR szFullPath, void** ppFolder = NULL) :
-		m_pidl( NULL ),
-		m_pLastId( NULL )
-	{
-		HRESULT hr = pDesktop->ParseDisplayName( hWnd, 0, CT2OLE( szFullPath ), NULL,
-		  &m_pidl, NULL );
-		if ( SUCCEEDED( hr ) )
-		{
-			m_pLastId = m_pidl;
-			USHORT temp;
-			for (;;)
-			{
-				USHORT offset = m_pLastId->mkid.cb;
-				temp = *(USHORT*)( (BYTE*)m_pLastId + offset );
-				if ( temp == 0 )
-					break;
-				m_pLastId = (LPITEMIDLIST)( (BYTE*)m_pLastId + offset );
-			}
-			if ( ppFolder )
-			{
-				temp = m_pLastId->mkid.cb;
-				m_pLastId->mkid.cb = 0;
-				hr = pDesktop->BindToObject( m_pidl, NULL, IID_IShellFolder, ppFolder );
-				m_pLastId->mkid.cb = temp;
-				if ( FAILED( hr ) )
-				{
-					CoTaskMemFree( m_pidl );
-					m_pidl = NULL;
-					m_pLastId = NULL;
-				}
-			}
-		}
-	}
-
-	virtual ~CShellItem()
-	{
-		if ( m_pidl )
-		{
-			CoTaskMemFree( m_pidl );
-		}
-	}
-
-public:
-	LPITEMIDLIST	m_pidl;		// Full path
-	LPITEMIDLIST	m_pLastId;	// Filename only
-};
-
-class CShellList : public CList< CShellItem* >
-{
-public:
-	CShellList() :
-		m_pID( NULL )
-	{
-		::SHGetDesktopFolder( &m_pDesktop );
-	}
-
-	virtual ~CShellList()
-	{
-		Clear();
-	}
-
-	// Creates menu from file paths list
-	bool GetMenu(HWND hWnd, const CStringList& oFiles, void** ppContextMenu)
-	{
-		Clear();
-
-		for ( POSITION pos = oFiles.GetHeadPosition(); pos; )
-		{
-			CString strPath = oFiles.GetNext( pos );
-			CShellItem* pItemIDList = new CShellItem(  m_pDesktop, hWnd, strPath,
-				( m_pFolder ? NULL : (void**)&m_pFolder ) );	// Get only one
-			if ( pItemIDList->m_pidl )
-				AddTail( pItemIDList );
-			else
-				// Bad path
-				delete pItemIDList;
-		}
-
-		if ( GetCount() == 0 )
-			// No files
-			return false;
-
-		m_pID = new LPCITEMIDLIST [ GetCount() ];
-		if ( ! m_pID )
-			// Out of memory
-			return false;
-
-		int i = 0;
-		for ( POSITION pos = GetHeadPosition(); pos; i++)
-		{
-			m_pID[ i ] = GetNext( pos )->m_pLastId;
-		}
-
-		return SUCCEEDED( m_pFolder->GetUIObjectOf( hWnd, (UINT)GetCount(),
-			m_pID, IID_IContextMenu, NULL, ppContextMenu ) );
-	}
-
-protected:
-	CComPtr< IShellFolder > m_pDesktop;	// Desktop
-	CComPtr< IShellFolder >	m_pFolder;	// First file folder
-	LPCITEMIDLIST*			m_pID;		// File ItemID array
-
-	void Clear()
-	{
-		for ( POSITION pos = GetHeadPosition(); pos; )
-		{
-			delete GetNext( pos );
-		}
-		RemoveAll();
-
-		delete [] m_pID;
-		m_pID = NULL;
-
-		m_pFolder.Release();
-	}
-};
-
 UINT_PTR CCoolMenu::DoExplorerMenu(HWND hwnd, const CStringList& oFiles, POINT point,
 	HMENU hMenu, HMENU hSubMenu, UINT nFlags)
 {
 	UINT_PTR nCmd = 0;
 	CComPtr< IContextMenu > pContextMenu1;
-	CShellList oItemIDListList;
-	if ( oItemIDListList.GetMenu( hwnd, oFiles, (void**)&pContextMenu1 ) )
+	CShellList oItemIDListList( oFiles );
+	if ( oItemIDListList.GetMenu( hwnd, (void**)&pContextMenu1 ) )
 	{
 		HRESULT hr;
 		{
