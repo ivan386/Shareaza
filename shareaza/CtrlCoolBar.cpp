@@ -948,7 +948,17 @@ BOOL CCoolBarCtrl::OnDrop(IDataObject* pDataObj, DWORD /* grfKeyState */, POINT 
 			if ( GetTickCount() - m_dwHoverTime >= DRAG_HOVER_TIME )
 			{
 				m_dwHoverTime = 0;
-				GetOwner()->PostMessage( WM_COMMAND, m_pHot->m_nID );
+				switch ( m_pHot->m_nID )
+				{
+				case ID_TAB_CONNECT:
+				case ID_NETWORK_CONNECT:
+				case ID_NETWORK_DISCONNECT:
+				case ID_TAB_SEARCH:
+					// Ignore some buttons
+					break;
+				default:
+					GetOwner()->PostMessage( WM_COMMAND, m_pHot->m_nID );
+				}
 			}
 		}
 	}

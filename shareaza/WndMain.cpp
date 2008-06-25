@@ -391,6 +391,7 @@ int CMainWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	
 	// Tool Bar
 	
+	m_wndToolBar.EnableDrop();
 	if ( ! m_wndToolBar.Create( this, WS_CHILD|CBRS_TOP, IDW_TOOL_BAR ) ) return -1;
 	m_wndToolBar.SetWindowText( _T("Toolbar") );
 	m_wndToolBar.EnableDocking( CBRS_ALIGN_TOP | CBRS_ALIGN_BOTTOM );
