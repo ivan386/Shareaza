@@ -470,58 +470,40 @@ CMatchFile* CMatchList::FindFileAndAddHit(CQueryHit* pHit, const findType nFindF
 
 		if ( bValid )
 		{
-			ASSERT( Stats->nHadCount == 0 );
-			Stats->nHadCount = pSeek->GetItemCount();
-			
-			switch ( pHit->m_nProtocol )
-			{
-			case PROTOCOL_G1:
-			case PROTOCOL_G2:
-				ASSERT( Stats->nHadFilteredGnutella == 0 );
-				Stats->nHadFilteredGnutella	= pSeek->m_nFiltered;
-				break;
-			case PROTOCOL_ED2K:
-				ASSERT( Stats->nHadFilteredED2K	== 0 );
-				Stats->nHadFilteredED2K	= pSeek->m_nFiltered;
-				break;
-			default:
-				;
-			}			
+			Stats->bHad[0] = bool( pSeek->m_oSHA1 );
+			Stats->bHad[1] = bool( pSeek->m_oTiger );
+			Stats->bHad[2] = bool( pSeek->m_oED2K );
+			Stats->bHad[3] = bool( pSeek->m_oBTH );
+			Stats->bHad[4] = bool( pSeek->m_oMD5 );
 
-			if ( nFindFlag == fSize )
+			if ( pSeek->Add( pHit, ( nFindFlag != fSize ) ) )
 			{
-				Stats->bHadSHA1		= bool( pSeek->m_oSHA1 );
-				Stats->bHadTiger	= bool( pSeek->m_oTiger );
-				Stats->bHadED2K		= bool( pSeek->m_oED2K );
-				Stats->bHadBTH		= bool( pSeek->m_oBTH );
-				Stats->bHadMD5		= bool( pSeek->m_oMD5 );
+				Stats->bHadSHA1	 |= Stats->bHad[0];
+				Stats->bHadTiger |= Stats->bHad[1];
+				Stats->bHadED2K	 |= Stats->bHad[2];
+				Stats->bHadBTH	 |= Stats->bHad[3];
+				Stats->bHadMD5	 |= Stats->bHad[4];
 
-				// ToDo: Fixme. 
-				// pSeek->Add( pHit ) returns pHit->m_pNext with a bad memory address sometimes.
-				// Dangerous!!!
-				if ( pSeek->Add( pHit ) )
+				ASSERT( Stats->nHadCount == 0 );
+				Stats->nHadCount = pSeek->GetItemCount();
+				switch ( pHit->m_nProtocol )
 				{
-					return pSeek;
+				case PROTOCOL_G1:
+				case PROTOCOL_G2:
+					ASSERT( Stats->nHadFilteredGnutella == 0 );
+					Stats->nHadFilteredGnutella	= pSeek->m_nFiltered;
+					break;
+				case PROTOCOL_ED2K:
+					ASSERT( Stats->nHadFilteredED2K	== 0 );
+					Stats->nHadFilteredED2K	= pSeek->m_nFiltered;
+					break;
+				default:
+					;
 				}
+				return pSeek;
 			}
-			else
-			{
-				Stats->bHad[0] = bool( pSeek->m_oSHA1 );
-				Stats->bHad[1] = bool( pSeek->m_oTiger );
-				Stats->bHad[2] = bool( pSeek->m_oED2K );
-				Stats->bHad[3] = bool( pSeek->m_oBTH );
-				Stats->bHad[4] = bool( pSeek->m_oMD5 );
-
-				if ( pSeek->Add( pHit, TRUE ) )
-				{
-					Stats->bHadSHA1	 |= Stats->bHad[0];
-					Stats->bHadTiger |= Stats->bHad[1];
-					Stats->bHadED2K	 |= Stats->bHad[2];
-					Stats->bHadBTH	 |= Stats->bHad[3];
-					Stats->bHadMD5	 |= Stats->bHad[4];
-					return pSeek;
-				}
-			}
+			//else
+				// TODO: Equal hashes for different files or bad hit
 		}
 
 		if ( nFindFlag == fSize )
@@ -1472,8 +1454,10 @@ BOOL CMatchFile::Add(CQueryHit* pHit, BOOL bForce)
 	{
 		if ( m_oSHA1 && ( pHit->m_oSHA1 || Settings.General.HashIntegrity ) )
 		{
-			if ( !pHit->m_oSHA1 ) return FALSE;
-			if ( validAndUnequal( m_oSHA1, pHit->m_oSHA1 ) ) return FALSE;
+			if ( ! pHit->m_oSHA1 )
+				return FALSE;
+			if ( validAndUnequal( m_oSHA1, pHit->m_oSHA1 ) )
+				return FALSE;
 			bForce = TRUE;
 		}
 		else if ( !m_oSHA1 && pHit->m_oSHA1 && Settings.General.HashIntegrity && m_pHits )
@@ -1511,7 +1495,8 @@ BOOL CMatchFile::Add(CQueryHit* pHit, BOOL bForce)
 			}
 		}
 		
-		if ( ! bForce ) return FALSE;
+		if ( ! bForce )
+			return FALSE;
 	}
 	
 	if ( ! bSubstituted )
@@ -1546,7 +1531,8 @@ BOOL CMatchFile::Add(CQueryHit* pHit, BOOL bForce)
 		m_oMD5 = pHit->m_oMD5;
 	}
 	
-	if ( ! m_bDownload && GetLibraryStatus() == TRI_UNKNOWN && ( m_oSHA1 || m_oTiger || m_oED2K || m_oBTH || m_oMD5 ) )
+	if ( ! m_bDownload && GetLibraryStatus() == TRI_UNKNOWN &&
+		( m_oSHA1 || m_oTiger || m_oED2K || m_oBTH || m_oMD5 ) )
 	{
 		CSingleLock pLock2( &Transfers.m_pSection );
 		
