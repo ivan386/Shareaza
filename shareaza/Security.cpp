@@ -25,7 +25,6 @@
 #include "Security.h"
 #include "Buffer.h"
 #include "XML.h"
-#include "HostCache.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -129,7 +128,7 @@ void CSecurity::Add(CSecureRule* pRule)
 	}
 
 	// Check all lists for newly denied hosts
-	HostCache.SanityCheck();
+	AfxGetMainWnd()->PostMessage( WM_SANITY_CHECK );
 }
 
 void CSecurity::Remove(CSecureRule* pRule)
@@ -325,7 +324,7 @@ BOOL CSecurity::IsDenied(IN_ADDR* pAddress, LPCTSTR pszContent)
 		POSITION posLast = pos;
 		CSecureRule* pRule = GetNext( pos );
 
-		if ( pRule->m_nExpire && pRule->IsExpired( nNow ) )
+		if ( pRule->IsExpired( nNow ) )
 		{
 			m_pRules.RemoveAt( posLast );
 			POSITION posRegExp = m_pRegExpRules.Find( pRule );
@@ -338,8 +337,15 @@ BOOL CSecurity::IsDenied(IN_ADDR* pAddress, LPCTSTR pszContent)
 			pRule->m_nToday ++;
 			pRule->m_nEver ++;
 
-			if ( pRule->m_nAction == CSecureRule::srAccept ) return FALSE;
-			else if ( pRule->m_nAction == CSecureRule::srDeny ) return TRUE;
+			if ( pRule->m_nExpire > CSecureRule::srSession &&
+				pRule->m_nExpire < nNow + 300 )
+				// Add 5 min penalty for early access
+				pRule->m_nExpire = nNow + 300;
+
+			if ( pRule->m_nAction == CSecureRule::srAccept )
+				return FALSE;
+			else if ( pRule->m_nAction == CSecureRule::srDeny )
+				return TRUE;
 		}
 	}
 
@@ -381,7 +387,7 @@ BOOL CSecurity::IsDenied(CQuerySearch::const_iterator itStart, CQuerySearch::con
 		POSITION posLast = pos;
 		CSecureRule* pRule = GetNextRegExp( pos );
 
-		if ( pRule->m_nExpire && pRule->IsExpired( nNow ) )
+		if ( pRule->IsExpired( nNow ) )
 		{
 			m_pRegExpRules.RemoveAt( posLast );
 			POSITION posAll = m_pRules.Find( pRule );
@@ -428,7 +434,7 @@ void CSecurity::Expire()
 		POSITION posLast = pos;
 		CSecureRule* pRule = GetNext( pos );
 
-		if ( pRule->m_nExpire && pRule->IsExpired( nNow ) )
+		if ( pRule->IsExpired( nNow ) )
 		{
 			m_pRules.RemoveAt( posLast );
 			POSITION posRegExp = m_pRegExpRules.Find( pRule );
@@ -656,7 +662,7 @@ BOOL CSecurity::Import(LPCTSTR pszFile)
 	}
 
 	// Check all lists for newly denied hosts
-	HostCache.SanityCheck();
+	AfxGetMainWnd()->PostMessage( WM_SANITY_CHECK );
 
 	return bResult;
 }
@@ -745,10 +751,8 @@ BOOL CSecureRule::IsExpired(DWORD nNow, BOOL bSession)
 
 BOOL CSecureRule::Match(const IN_ADDR* pAddress, LPCTSTR pszContent)
 {
-	if ( m_nExpire > srSession )
-	{
-		if ( m_nExpire <= (DWORD)time( NULL ) ) return FALSE;
-	}
+	if ( IsExpired( (DWORD)time( NULL ) ) )
+		return FALSE;
 
 	if ( m_nType == srAddress && pAddress != NULL )
 	{

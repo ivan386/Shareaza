@@ -1033,6 +1033,16 @@ void CBaseMatchWnd::OnTimer(UINT_PTR nIDEvent)
 	}
 }
 
+void CBaseMatchWnd::SanityCheck()
+{
+	m_wndList.DestructiveUpdate();
+
+	CQuickLock pLock( m_pMatches->m_pSection );
+
+	m_pMatches->SanityCheck();
+	m_bUpdate = TRUE;
+}
+
 void CBaseMatchWnd::UpdateMessages(BOOL /*bActive*/)
 {
 }

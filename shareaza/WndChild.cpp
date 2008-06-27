@@ -508,6 +508,10 @@ BOOL CChildWnd::OnQueryHits(CQueryHit* /*pHits*/)
 	return FALSE;
 }
 
+void CChildWnd::SanityCheck()
+{
+}
+
 BOOL CChildWnd::OnPush(const Hashes::Guid& /*oClientID*/, CConnection* /*pConnection*/)
 {
 	return FALSE;

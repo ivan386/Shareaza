@@ -131,6 +131,7 @@ public:
 	void		ClearUpdated();
 	void		ClearNew();
 	void		Serialize(CArchive& ar);
+	void		SanityCheck();
 
 	CBaseMatchWnd* GetParent() const
 	{
@@ -301,6 +302,8 @@ public:
 	CSchema*	AddHitsToMetadata(CMetaList& oMetadata) const;
 	BOOL		AddHitsToPreviewURLs(CList < CString > & oPreviewURLs) const;
 	void		AddHitsToReviews(CList < Review* >& oReviews) const;
+
+	void		SanityCheck();
 
 protected:
 	CQueryHit*	m_pHits;

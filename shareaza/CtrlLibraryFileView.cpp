@@ -36,7 +36,7 @@
 #include "CtrlLibraryFrame.h"
 #include "CtrlLibraryFileView.h"
 #include "CtrlLibraryTip.h"
-
+#include "Shell.h"
 #include "DlgFilePropertiesSheet.h"
 #include "DlgFileCopy.h"
 #include "DlgBitziDownload.h"
@@ -727,6 +727,8 @@ void CLibraryFileView::OnUpdateLibraryProperties(CCmdUI* pCmdUI)
 
 void CLibraryFileView::OnLibraryProperties() 
 {
+	CStringList oFiles;
+
 	CSingleLock pLock( &Library.m_pSection, TRUE );
 	CFilePropertiesSheet dlg;
 
@@ -734,12 +736,41 @@ void CLibraryFileView::OnLibraryProperties()
 	while ( m_posSel )
 	{
 		if ( CLibraryFile* pFile = Library.LookupFile( m_pSelection.GetNext( m_posSel ) ) )
+		{
 			dlg.Add( pFile );
+			oFiles.AddTail( pFile->GetPath() );
+		}
 	}
-
 	pLock.Unlock();
 
-	dlg.DoModal();
+	HRESULT hr;
+	CComPtr< IDataObject > pDataObject;
+	// Convert path string list to PIDL list
+	{
+		auto_array< PIDLIST_ABSOLUTE > pShellFileAbs( new PIDLIST_ABSOLUTE [ oFiles.GetCount() ] );
+		for ( int i = 0; i < oFiles.GetCount(); ++i )
+		  pShellFileAbs[ i ] = ILCreateFromPath( oFiles.GetHead() );
+		
+		PIDLIST_ABSOLUTE pShellParent = ILCloneFull( pShellFileAbs[ 0 ] );
+		ILRemoveLastID( pShellParent );
+
+		auto_array< LPCITEMIDLIST > pShellFiles( new LPCITEMIDLIST [ oFiles.GetCount() ] );
+		POSITION pos = oFiles.GetHeadPosition();
+		for ( int i = 0; i < oFiles.GetCount(); ++i )
+			pShellFiles[ i ] = ILFindChild( pShellParent, pShellFileAbs[ i ] );
+
+		hr = CIDLData_CreateFromIDArray( pShellParent, oFiles.GetCount(),
+			pShellFiles.get(), &pDataObject );
+
+		ILFree( pShellParent );
+
+		for ( int i = 0; i < oFiles.GetCount(); ++i )
+			ILFree( (LPITEMIDLIST)pShellFileAbs[ i ] );
+	}
+	if ( SUCCEEDED( hr ) )
+		hr = SHMultiFileProperties( pDataObject, 0 );
+
+	//dlg.DoModal();
 }
 
 void CLibraryFileView::OnUpdateLibraryShared(CCmdUI* pCmdUI) 

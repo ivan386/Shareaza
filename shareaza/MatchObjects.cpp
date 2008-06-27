@@ -142,19 +142,19 @@ CMatchList::CMatchList(CBaseMatchWnd* pParent) : m_pParent( pParent )
 CMatchList::~CMatchList()
 {
 	Clear();
-	
-	if ( m_pColumns ) delete [] m_pColumns;
-	if ( m_pszFilter ) delete [] m_pszFilter;
-	if ( m_pszRegexPattern ) delete [] m_pszRegexPattern;
-	
+
+	delete [] m_pColumns;
+	delete [] m_pszFilter;
+	delete [] m_pszRegexPattern;
+
 	delete [] m_pMapED2K;
 	delete [] m_pMapTiger;
 	delete [] m_pMapSHA1;
 	delete [] m_pMapBTH;
 	delete [] m_pMapMD5;
 	delete [] m_pSizeMap;
-	
-	if ( m_pFiles ) delete [] m_pFiles;
+
+	delete [] m_pFiles;
 
 	delete m_pResultFilters;
 }
@@ -591,6 +591,16 @@ void CMatchList::Clear()
 {
 	CSingleLock pLock( &m_pSection, TRUE );
 
+	m_pSelectedFiles.RemoveAll();
+	m_pSelectedHits.RemoveAll();
+
+	ZeroMemory( m_pSizeMap, MAP_SIZE * sizeof *m_pSizeMap );
+	ZeroMemory( m_pMapSHA1, MAP_SIZE * sizeof *m_pMapSHA1 );
+	ZeroMemory( m_pMapTiger, MAP_SIZE * sizeof *m_pMapTiger );
+	ZeroMemory( m_pMapED2K, MAP_SIZE * sizeof *m_pMapED2K );
+	ZeroMemory( m_pMapBTH, MAP_SIZE * sizeof *m_pMapBTH );
+	ZeroMemory( m_pMapMD5, MAP_SIZE * sizeof *m_pMapMD5 );
+
 	if ( m_pFiles )
 	{
 		CMatchFile** pLoop = m_pFiles;
@@ -607,16 +617,6 @@ void CMatchList::Clear()
 	m_nFilteredHits		= 0;
 	m_nGnutellaHits		= 0;
 	m_nED2KHits			= 0;
-
-	m_pSelectedFiles.RemoveAll();
-	m_pSelectedHits.RemoveAll();
-
-	ZeroMemory( m_pSizeMap, MAP_SIZE * sizeof *m_pSizeMap );
-	ZeroMemory( m_pMapSHA1, MAP_SIZE * sizeof *m_pMapSHA1 );
-	ZeroMemory( m_pMapTiger, MAP_SIZE * sizeof *m_pMapTiger );
-	ZeroMemory( m_pMapED2K, MAP_SIZE * sizeof *m_pMapED2K );
-	ZeroMemory( m_pMapBTH, MAP_SIZE * sizeof *m_pMapBTH );
-	ZeroMemory( m_pMapMD5, MAP_SIZE * sizeof *m_pMapMD5 );
 
 	UpdateRange();
 }
@@ -839,7 +839,7 @@ void CMatchList::Filter()
 	if ( m_bFilterSuspicious )	Settings.Search.FilterMask |= ( 1 << 8 );
 	if ( m_bRegExp )			Settings.Search.FilterMask |= ( 1 << 9 );
 
-	if ( m_pszFilter ) delete [] m_pszFilter;
+	delete [] m_pszFilter;
 	m_pszFilter = NULL;
 	
 	if ( m_sFilter.GetLength() )
@@ -1024,7 +1024,7 @@ void CMatchList::SelectSchema(CSchema* pSchema, CList< CSchemaMember* >* pColumn
 		}
 	}
 	
-	if ( m_pColumns ) delete [] m_pColumns;
+	delete [] m_pColumns;
 	m_pColumns	= NULL;
 	m_nColumns	= 0;
 	m_pSchema	= pSchema;
@@ -1355,6 +1355,34 @@ void CMatchList::Serialize(CArchive& ar)
 	}
 }
 
+void CMatchList::SanityCheck()
+{
+	for ( DWORD nFile = 0 ; nFile < m_nFiles ; )
+	{
+		CMatchFile* pFile = m_pFiles[ nFile ];
+
+		pFile->SanityCheck();
+
+		// If file lost all of its hits then delete it
+		if ( pFile->GetTotalHitsCount() == 0 )
+		{
+			// Remove file from Files array
+			m_nFiles--;
+			if ( nFile < m_nFiles )
+			{
+				MoveMemory( m_pFiles + nFile, m_pFiles + nFile + 1,
+					( m_nFiles - nFile ) * sizeof *m_pFiles );
+				UpdateRange( nFile );
+			}
+			else
+				m_pFiles[ nFile ] = NULL;
+
+			delete pFile;
+		}
+		else
+			nFile++;
+	}
+}
 
 //////////////////////////////////////////////////////////////////////
 // CMatchFile construction
@@ -1363,7 +1391,7 @@ CMatchFile::CMatchFile(CMatchList* pList, CQueryHit* pHit) :
 	m_pList			( pList ),
 	m_pHits			( NULL ),
 	m_pBest			( NULL ),
-	m_nTotal		( NULL ),
+	m_nTotal		( 0 ),
 	m_nFiltered		( 0 ),
 	m_nSources		( 0 ),	
 	m_pNextSize		( NULL ),
@@ -1405,15 +1433,144 @@ CMatchFile::CMatchFile(CMatchList* pList, CQueryHit* pHit) :
 
 CMatchFile::~CMatchFile()
 {
-	while ( m_pHits )
+	// Remove file form Size Map
+	if ( m_pList && m_pList->m_pSizeMap )
 	{
-		CQueryHit* pNext = m_pHits->m_pNext;
-		delete m_pHits;
-		m_pHits = pNext;
+		CMatchFile** pMap = m_pList->m_pSizeMap + (DWORD)( m_nSize & 0xFF );
+		CMatchFile* pPrevFile = NULL;
+		for ( CMatchFile* pFile = *pMap; pFile; pFile = pFile->m_pNextSize )
+		{
+			if ( this == pFile )
+			{
+				if ( pPrevFile )
+					pPrevFile->m_pNextSize = m_pNextSize;
+				else
+					*pMap = m_pNextSize;
+				break;
+			}
+			pPrevFile = pFile;
+		}
 	}
-	
-	if ( m_pColumns ) delete [] m_pColumns;
-	if ( m_pPreview ) delete [] m_pPreview;
+
+	// Remove file form SHA1 Map
+	if ( m_oSHA1 && m_pList && m_pList->m_pMapSHA1 )
+	{
+		CMatchFile** pMap = m_pList->m_pMapSHA1 + m_oSHA1[ 0 ];
+		CMatchFile* pPrevFile = NULL;
+		for ( CMatchFile* pFile = *pMap; pFile; pFile = pFile->m_pNextSHA1 )
+		{
+			if ( this == pFile )
+			{
+				if ( pPrevFile )
+					pPrevFile->m_pNextSHA1 = m_pNextSHA1;
+				else
+					*pMap = m_pNextSHA1;
+				break;
+			}
+			pPrevFile = pFile;
+		}
+	}
+
+	// Remove file form Tiger Map
+	if ( m_oTiger && m_pList && m_pList->m_pMapTiger )
+	{
+		CMatchFile** pMap = m_pList->m_pMapTiger + m_oTiger[ 0 ];
+		CMatchFile* pPrevFile = NULL;
+		for ( CMatchFile* pFile = *pMap; pFile; pFile = pFile->m_pNextTiger )
+		{
+			if ( this == pFile )
+			{
+				if ( pPrevFile )
+					pPrevFile->m_pNextTiger = m_pNextTiger;
+				else
+					*pMap = m_pNextTiger;
+				break;
+			}
+			pPrevFile = pFile;
+		}
+	}
+
+	// Remove file form ED2K Map
+	if ( m_oED2K && m_pList && m_pList->m_pMapED2K )
+	{
+		CMatchFile** pMap = m_pList->m_pMapED2K + m_oED2K[ 0 ];
+		CMatchFile* pPrevFile = NULL;
+		for ( CMatchFile* pFile = *pMap; pFile; pFile = pFile->m_pNextED2K )
+		{
+			if ( this == pFile )
+			{
+				if ( pPrevFile )
+					pPrevFile->m_pNextED2K = m_pNextED2K;
+				else
+					*pMap = m_pNextED2K;
+				break;
+			}
+			pPrevFile = pFile;
+		}
+	}
+
+	// Remove file form BTH Map
+	if ( m_oBTH && m_pList && m_pList->m_pMapBTH )
+	{
+		CMatchFile** pMap = m_pList->m_pMapBTH + m_oBTH[ 0 ];
+		CMatchFile* pPrevFile = NULL;
+		for ( CMatchFile* pFile = *pMap; pFile; pFile = pFile->m_pNextBTH )
+		{
+			if ( this == pFile )
+			{
+				if ( pPrevFile )
+					pPrevFile->m_pNextBTH = m_pNextBTH;
+				else
+					*pMap = m_pNextBTH;
+				break;
+			}
+			pPrevFile = pFile;
+		}
+	}
+
+	// Remove file form MD5 Map
+	if ( m_oMD5 && m_pList && m_pList->m_pMapMD5 )
+	{
+		CMatchFile** pMap = m_pList->m_pMapMD5 + m_oMD5[ 0 ];
+		CMatchFile* pPrevFile = NULL;
+		for ( CMatchFile* pFile = *pMap; pFile; pFile = pFile->m_pNextMD5 )
+		{
+			if ( this == pFile )
+			{
+				if ( pPrevFile )
+					pPrevFile->m_pNextMD5 = m_pNextMD5;
+				else
+					*pMap = m_pNextMD5;
+				break;
+			}
+			pPrevFile = pFile;
+		}
+	}
+
+	// Remove all Hits
+	if ( m_pHits )
+	{
+		for ( CQueryHit* pHit = m_pHits ; pHit ; )
+		{
+			CQueryHit* pNext = pHit->m_pNext;
+
+			// Remove hit from selected hits
+			if ( m_pList )
+				if ( POSITION pos = m_pList->m_pSelectedHits.Find( pHit ) )
+					m_pList->m_pSelectedHits.RemoveAt( pos );
+
+			delete pHit;
+			pHit = pNext;
+		}
+	}
+
+	// Remove from selected files
+	if ( m_pList )
+		if ( POSITION pos = m_pList->m_pSelectedFiles.Find( this ) )
+			m_pList->m_pSelectedFiles.RemoveAt( pos );
+
+	delete [] m_pColumns;
+	delete [] m_pPreview;
 }
 
 void CMatchFile::RefreshStatus()
@@ -2130,9 +2287,7 @@ DWORD CMatchFile::GetBogusHitsCount() const
 
 DWORD CMatchFile::GetTotalHitsCount() const
 {
-	DWORD nTotalCount = 0;
-	for ( CQueryHit* pHits = m_pHits; pHits ; pHits = pHits->m_pNext, nTotalCount++ );
-	return nTotalCount;
+	return m_nTotal;
 }
 
 DWORD CMatchFile::GetTotalHitsSpeed() const
@@ -2492,4 +2647,38 @@ TRISTATE CMatchFile::GetLibraryStatus()
 		pLock.Unlock();
 	}
 	return m_bExisting;
+}
+
+void CMatchFile::SanityCheck()
+{
+	CQueryHit* pHitPrev = NULL;
+	for ( CQueryHit* pHit = m_pHits ; pHit ; )
+	{
+		CQueryHit* pNext = pHit->m_pNext;
+
+		if ( Security.IsDenied( &pHit->m_pAddress ) )
+		{
+			// Exclude from hits list
+			if ( pHitPrev )
+				pHitPrev->m_pNext = pNext;
+			else
+				m_pHits = pNext;
+			m_nTotal--;
+
+			// Remove hit from selected hits
+			if ( m_pList )
+				if ( POSITION pos = m_pList->m_pSelectedHits.Find( pHit ) )
+					m_pList->m_pSelectedHits.RemoveAt( pos );
+
+			// Remove from best hit
+			if ( m_pBest == pHit )
+				m_pBest = m_pHits;
+
+			delete pHit;
+		}
+		else
+			pHitPrev = pHit;
+
+		pHit = pNext;
+	}
 }

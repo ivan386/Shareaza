@@ -269,6 +269,7 @@ BEGIN_MESSAGE_MAP(CMainWnd, CMDIFrameWnd)
 	ON_COMMAND(ID_HELP_TEST, OnHelpConnectiontest)
 	ON_UPDATE_COMMAND_UI_RANGE(ID_SHELL_MENU_MIN, ID_SHELL_MENU_MAX, OnUpdateShell)
 	ON_WM_MENUCHAR()
+	ON_MESSAGE(WM_SANITY_CHECK, OnSanityCheck)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -2763,6 +2764,28 @@ LRESULT CMainWnd::OnSetText(WPARAM /*wParam*/, LPARAM /*lParam*/)
 	{
 		return Default();
 	}
+}
+
+LRESULT CMainWnd::OnSanityCheck(WPARAM /*wParam*/, LPARAM /*lParam*/)
+{
+	HostCache.SanityCheck();
+
+	// TODO: Downloads.SanityCheck();
+
+	// TODO: Uploads.SanityCheck();
+
+	CQuickLock pLock( theApp.m_pSection );
+	if ( CMainWnd* pMainWnd = theApp.SafeMainWnd() )
+	{
+		CWindowManager* pWindows = &pMainWnd->m_pWindows;
+		CChildWnd* pChildWnd = NULL;
+		while ( ( pChildWnd = pWindows->Find( NULL, pChildWnd ) ) != NULL )
+		{
+			pChildWnd->SanityCheck();
+		}
+	}
+
+	return 0L;
 }
 
 /////////////////////////////////////////////////////////////////////////////

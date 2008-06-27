@@ -71,6 +71,7 @@ public:
 	virtual BOOL OnCmdMsg(UINT nID, int nCode, void* pExtra, AFX_CMDHANDLERINFO* pHandlerInfo);
 	//}}AFX_VIRTUAL
 
+	virtual void	SanityCheck();
 	virtual void	UpdateMessages(BOOL bActive = TRUE);
 	virtual HRESULT	GetGenericView(IGenericView** ppView);
 

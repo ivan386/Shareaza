@@ -52,56 +52,49 @@ static char THIS_FILE[]=__FILE__;
 //////////////////////////////////////////////////////////////////////
 // CQueryHit construction
 
-CQueryHit::CQueryHit(PROTOCOLID nProtocol, const Hashes::Guid& oSearchID)
+CQueryHit::CQueryHit(PROTOCOLID nProtocol, const Hashes::Guid& oSearchID) :
+	m_pNext			( NULL ),
+	m_oSearchID		( oSearchID ),
+	m_nProtocol		( nProtocol ),
+	m_nPort			( 0 ),
+	m_nSpeed		( 0 ),
+	m_pVendor		( VendorCache.m_pNull ),
+	m_bPush			( TRI_UNKNOWN ),
+	m_bBusy			( TRI_UNKNOWN ),
+	m_bStable		( TRI_UNKNOWN ),
+	m_bMeasured		( TRI_UNKNOWN ),
+	m_bChat			( FALSE ),
+	m_bBrowseHost	( FALSE ),	
+	m_nGroup		( 0 ),
+//	m_bSHA1			( FALSE ),
+//	m_bTiger		( FALSE ),
+//	m_bED2K			( FALSE ),
+//	m_bBTH			( FALSE ),
+	m_nIndex		( 0 ),
+	m_bSize			( FALSE ),
+	m_nSources		( 0 ),
+	m_nPartial		( 0 ),
+	m_bPreview		( FALSE ),
+	m_nUpSlots		( 0 ),
+	m_nUpQueue		( 0 ),	
+	m_bCollection	( FALSE ),	
+	m_pXML			( NULL ),
+	m_nRating		( 0 ),	
+	m_bBogus		( FALSE ),
+	m_bMatched		( FALSE ),
+	m_bExactMatch	( FALSE ),
+	m_bFiltered		( FALSE ),
+	m_bDownload		( FALSE ),
+	m_bNew			( FALSE ),
+	m_bSelected		( FALSE ),
+	m_bResolveURL	( TRUE )
 {
-	m_pNext = NULL;
-	
-	m_oSearchID = oSearchID;
-	
-	m_nProtocol		= nProtocol;
-	m_pAddress.S_un.S_addr = 0;
-	m_nPort			= 0;
-	m_nSpeed		= 0;
-	m_pVendor		= VendorCache.m_pNull;
-	
-	m_bPush			= TRI_UNKNOWN;
-	m_bBusy			= TRI_UNKNOWN;
-	m_bStable		= TRI_UNKNOWN;
-	m_bMeasured		= TRI_UNKNOWN;
-	m_bChat			= FALSE;
-	m_bBrowseHost	= FALSE;
-	
-	m_nGroup		= 0;
-//	m_bSHA1			= FALSE;
-//	m_bTiger		= FALSE;
-//	m_bED2K			= FALSE;
-//	m_bBTH			= FALSE;
-	m_nIndex		= 0;
-	m_bSize			= FALSE;
-	m_nSize			= SIZE_UNKNOWN;
-	m_nSources		= 0;
-	m_nPartial		= 0;
-	m_bPreview		= FALSE;
-	m_nUpSlots		= 0;
-	m_nUpQueue		= 0;	
-	m_bCollection	= FALSE;
-	
-	m_pXML			= NULL;
-	m_nRating		= 0;
-	
-	m_bBogus		= FALSE;
-	m_bMatched		= FALSE;
-	m_bExactMatch	= FALSE;
-	m_bFiltered		= FALSE;
-	m_bDownload		= FALSE;
-	m_bNew			= FALSE;
-	m_bSelected		= FALSE;
-	m_bResolveURL	= TRUE;
+	m_pAddress.s_addr = 0;
 }
 
 CQueryHit::~CQueryHit()
 {
-	if ( m_pXML ) delete m_pXML;
+	delete m_pXML;
 }
 
 //////////////////////////////////////////////////////////////////////
