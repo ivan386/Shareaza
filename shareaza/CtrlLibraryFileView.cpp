@@ -727,7 +727,7 @@ void CLibraryFileView::OnUpdateLibraryProperties(CCmdUI* pCmdUI)
 
 void CLibraryFileView::OnLibraryProperties() 
 {
-	CStringList oFiles;
+//	CStringList oFiles;
 
 	CSingleLock pLock( &Library.m_pSection, TRUE );
 	CFilePropertiesSheet dlg;
@@ -738,12 +738,12 @@ void CLibraryFileView::OnLibraryProperties()
 		if ( CLibraryFile* pFile = Library.LookupFile( m_pSelection.GetNext( m_posSel ) ) )
 		{
 			dlg.Add( pFile );
-			oFiles.AddTail( pFile->GetPath() );
+//			oFiles.AddTail( pFile->GetPath() );
 		}
 	}
 	pLock.Unlock();
 
-	HRESULT hr;
+/*	HRESULT hr;
 	CComPtr< IDataObject > pDataObject;
 	// Convert path string list to PIDL list
 	{
@@ -768,9 +768,9 @@ void CLibraryFileView::OnLibraryProperties()
 			ILFree( (LPITEMIDLIST)pShellFileAbs[ i ] );
 	}
 	if ( SUCCEEDED( hr ) )
-		hr = SHMultiFileProperties( pDataObject, 0 );
+		hr = SHMultiFileProperties( pDataObject, 0 );*/
 
-	//dlg.DoModal();
+	dlg.DoModal();
 }
 
 void CLibraryFileView::OnUpdateLibraryShared(CCmdUI* pCmdUI) 
