@@ -22,10 +22,6 @@
 // CNeighbour is in the middle of the CConnection inheritance tree, adding compression and a bunch of member variables
 // http://shareazasecurity.be/wiki/index.php?title=Developers.Code.CNeighbour
 
-// Make the compiler only include the lines here once, this is the same thing as pragma once
-#if !defined(AFX_NEIGHBOUR_H__7B1C7637_2718_4D5F_B39D_28894CC0669D__INCLUDED_)
-#define AFX_NEIGHBOUR_H__7B1C7637_2718_4D5F_B39D_28894CC0669D__INCLUDED_
-
 // Only include the lines beneath this one once
 #pragma once
 
@@ -75,14 +71,12 @@ class CNeighbour : public CConnection
 
 // Construction
 public:
-
 	CNeighbour(PROTOCOLID nProtocol);
 	CNeighbour(PROTOCOLID nProtocol, CNeighbour* pBase);
 	virtual ~CNeighbour();
 
 // Attributes: State
 public:
-
 	// Used by the list of neighbour objects in CNeighbours
 	DWORD      m_nRunCookie; // The number of times this neighbour has been run, CNeighboursBase::OnRun uses this to run each neighbour in the list once
 	DWORD      m_nUnique;    // A number, like 2, 3, 4 and so on, which is the unique key for this CNeighbour object in CNeighbour's m_pUniques map
@@ -94,7 +88,6 @@ public:
 
 // Attributes: Capabilities
 public:
-
 	BOOL    m_bAutomatic;
 	bool    m_bShareaza;       // True if the remote computer is running Shareaza also
 	NrsNode m_nNodeType;       // This connection is to a hub above us, ntHub, a leaf below us, ntLeaf, or a hub just like us, ntNode
@@ -115,7 +108,6 @@ public:
 
 // Attributes: Statistics
 public:
-
 	DWORD m_nInputCount;
 	DWORD m_nOutputCount;
 	DWORD m_nDropCount;
@@ -128,7 +120,6 @@ public:
 
 // Attributes: Query Hash Tables
 public:
-
 	CQueryHashTable* m_pQueryTableRemote;
 	CQueryHashTable* m_pQueryTableLocal;
 
@@ -146,14 +137,12 @@ protected:
 
 // Operations
 public:
-
 	virtual BOOL Send(CPacket* pPacket, BOOL bRelease = TRUE, BOOL bBuffered = FALSE);
 	virtual void Close(UINT nError = IDS_CONNECTION_CLOSED);
 	void         DelayClose(UINT nError = 0); // Send the buffer then close the socket, record the error given
 	virtual BOOL SendQuery(CQuerySearch* pSearch, CPacket* pPacket, BOOL bLocal); // Validate query
 
 protected:
-
 	virtual BOOL OnRun();
 	virtual void OnDropped(BOOL bError);
 	virtual BOOL OnRead();
@@ -165,6 +154,3 @@ public:
 	DWORD GetMaxTTL() const;	// Get maximum TTL which is safe for both sides
 	void GetCompression(float* pnInRate, float* pnOutRate);
 };
-
-// End the group of lines to only include once, pragma once doesn't require an endif at the bottom
-#endif // !defined(AFX_NEIGHBOUR_H__7B1C7637_2718_4D5F_B39D_28894CC0669D__INCLUDED_)

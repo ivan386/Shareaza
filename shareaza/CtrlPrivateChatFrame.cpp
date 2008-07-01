@@ -1,7 +1,7 @@
 //
 // CtrlPrivateChatFrame.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -42,7 +42,6 @@ static char THIS_FILE[] = __FILE__;
 IMPLEMENT_DYNAMIC(CPrivateChatFrame, CChatFrame)
 
 BEGIN_MESSAGE_MAP(CPrivateChatFrame, CChatFrame)
-	//{{AFX_MSG_MAP(CPrivateChatFrame)
 	ON_WM_CREATE()
 	ON_WM_SIZE()
 	ON_WM_PAINT()
@@ -51,7 +50,6 @@ BEGIN_MESSAGE_MAP(CPrivateChatFrame, CChatFrame)
 	ON_COMMAND(ID_CHAT_BROWSE, OnChatBrowse)
 	ON_UPDATE_COMMAND_UI(ID_CHAT_PRIORITY, OnUpdateChatPriority)
 	ON_COMMAND(ID_CHAT_PRIORITY, OnChatPriority)
-	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 #define EDIT_HEIGHT		32
@@ -196,7 +194,7 @@ void CPrivateChatFrame::OnRemoteMessage(BOOL bAction, LPCTSTR pszText)
 	}
 }
 
-void CPrivateChatFrame::OnLocalMessage(BOOL bAction, LPCTSTR pszText)
+void CPrivateChatFrame::OnLocalMessage(bool bAction, LPCTSTR pszText)
 {
 	TRISTATE bConnected = m_pSession->GetConnectedState();
 

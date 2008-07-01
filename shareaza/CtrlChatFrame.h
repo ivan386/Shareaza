@@ -1,7 +1,7 @@
 //
 // CtrlChatFrame.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -18,9 +18,6 @@
 // along with Shareaza; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
-
-#if !defined(AFX_CTRLCHATFRAME_H__2244C71A_1F23_4D0E_B360_5E551CBAC37D__INCLUDED_)
-#define AFX_CTRLCHATFRAME_H__2244C71A_1F23_4D0E_B360_5E551CBAC37D__INCLUDED_
 
 #pragma once
 
@@ -72,19 +69,15 @@ public:
 	virtual void	OnSkinChange();
 	virtual void	OnStatusMessage(int nFlags, LPCTSTR pszText);
 	virtual void	OnLocalText(LPCTSTR pszText);
-	virtual void	OnLocalMessage(BOOL bAction, LPCTSTR pszText);
+	virtual void	OnLocalMessage(bool bAction, LPCTSTR pszText);
 	virtual void	OnLocalCommand(LPCTSTR pszCommand, LPCTSTR pszArgs);
 
 // Overrides
 public:
-	//{{AFX_VIRTUAL(CChatFrame)
-	public:
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
-	//}}AFX_VIRTUAL
 
 // Implementation
 protected:
-	//{{AFX_MSG(CChatFrame)
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg void OnDestroy();
 	afx_msg void OnUpdateChatBold(CCmdUI* pCmdUI);
@@ -107,15 +100,9 @@ protected:
 	afx_msg void OnClickView(NMHDR* pNotify, LRESULT *pResult);
 	afx_msg void OnUpdateChatTimestamp(CCmdUI* pCmdUI);
 	afx_msg void OnChatTimestamp();
-	//}}AFX_MSG
 
 	DECLARE_MESSAGE_MAP()
-
 };
-
-//{{AFX_INSERT_LOCATION}}
 
 #define IDC_CHAT_TEXT	100
 #define IDC_CHAT_EDIT	101
-
-#endif // !defined(AFX_CTRLCHATFRAME_H__2244C71A_1F23_4D0E_B360_5E551CBAC37D__INCLUDED_)

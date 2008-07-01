@@ -258,7 +258,7 @@ BOOL CG1Neighbour::ProcessPackets()
 	CBuffer* pInput = m_pZInput ? m_pZInput : pInputLocked;
 
 	// Start out with bSuccess true and loop until it gets set to false
-    BOOL bSuccess = TRUE;
+	BOOL bSuccess = TRUE;
 	for ( ; bSuccess ; ) // This is the same thing as while ( bSuccess )
 	{
 		// Look at the input buffer as a Gnutella packet
@@ -378,7 +378,7 @@ BOOL CG1Neighbour::SendPing(DWORD dwNow, const Hashes::Guid& oGUID)
 	m_tLastOutPing = dwNow;
 
 	// Send the remote computer a new Gnutella ping packet
-	CG1Packet* pPacket = CG1Packet::New( G1_PACKET_PING, 
+	CG1Packet* pPacket = CG1Packet::New( G1_PACKET_PING,
 		( bool( oGUID ) || bNeedPeers ) ? 0 : 1, oGUID );
 
 	// Send "Supports Cached Pongs" extension along with a packet, to receive G1 hosts for cache
@@ -392,7 +392,7 @@ BOOL CG1Neighbour::SendPing(DWORD dwNow, const Hashes::Guid& oGUID)
 		}
 		pBlock.Write( pPacket );
 	}
-	
+
 	Send( pPacket, TRUE, TRUE );
 	Statistics.Current.Gnutella1.PingsSent++;
 	return TRUE;
@@ -469,7 +469,7 @@ BOOL CG1Neighbour::OnPing(CG1Packet* pPacket)
 			{
 				// Broadcast the packet to the computers we are connected to
 				int nCount = Neighbours.Broadcast( pPacket, this, TRUE );
-				if ( nCount ) 
+				if ( nCount )
 				{
 					Statistics.Current.Gnutella1.Routed++; // Record we routed one more packet
 					Statistics.Current.Gnutella1.PingsSent += nCount;
@@ -590,7 +590,7 @@ BOOL CG1Neighbour::OnPing(CG1Packet* pPacket)
 	CList< CPongItem* > pIgnore;
 
 	// Zero the 32 bytes of the m_nPongNeeded buffer
-	ZeroMemory( m_nPongNeeded, PONG_NEEDED_BUFFER ); 
+	ZeroMemory( m_nPongNeeded, PONG_NEEDED_BUFFER );
 
 	// Loop nHops from 1 through the packet's TTL
 	for ( BYTE nHops = 1 ; nHops <= pPacket->m_nTTL ; nHops++ )
@@ -663,13 +663,13 @@ int CG1Neighbour::WriteRandomCache(CGGEPItem* pItem)
 		// G1 and it will pollute the host caches ( ??? )
 		if ( ( bIPP ? ( i != HostCache.Gnutella1.End() ) : ( i != HostCache.G1DNA.End() ) ) &&
 			pHost->m_nFailures == 0 && pHost->m_bCheckedLocally &&
-			 ( ( bIPP && ( !pHost->m_pVendor || pHost->m_pVendor->m_sCode != L"GDNA" ) ) || 
+			 ( ( bIPP && ( !pHost->m_pVendor || pHost->m_pVendor->m_sCode != L"GDNA" ) ) ||
 			   ( !bIPP && pHost->m_pVendor && pHost->m_pVendor->m_sCode == L"GDNA" ) ) )
 		{
 			pItem->Write( (void*)&pHost->m_pAddress, 4 );
 			pItem->Write( (void*)&pHost->m_nPort, 2 );
-			theApp.Message( MSG_DEBUG, _T("Sending G1 host through pong (%s:%i)"), 
-				(LPCTSTR)CString( inet_ntoa( *(IN_ADDR*)&pHost->m_pAddress ) ), pHost->m_nPort ); 
+			theApp.Message( MSG_DEBUG, _T("Sending G1 host through pong (%s:%i)"),
+				(LPCTSTR)CString( inet_ntoa( *(IN_ADDR*)&pHost->m_pAddress ) ), pHost->m_nPort );
 			nCount--;
 		}
 	}
@@ -806,7 +806,7 @@ BOOL CG1Neighbour::OnPong(CG1Packet* pPacket)
 			m_nFileVolume = nVolume;
 
 			// Add the IP address and port number to the Gnutella host cache of computers we can try to connect to
-			HostCache.Gnutella1.Add( (IN_ADDR*)&nAddress, nPort, 0, 
+			HostCache.Gnutella1.Add( (IN_ADDR*)&nAddress, nPort, 0,
 				( ( m_bShareaza && strVendorCode.IsEmpty() ) ? SHAREAZA_VENDOR_T :
 					(LPCTSTR)strVendorCode ), nUptime );
 
@@ -1046,7 +1046,7 @@ BOOL CG1Neighbour::OnVendor(CG1Packet* pPacket)
 		// Hops Flow (do)
 		case 0x0004:
 
-			if ( nVersion <= 1 && pPacket->GetRemaining() >= 1 ) 
+			if ( nVersion <= 1 && pPacket->GetRemaining() >= 1 )
 			{
 				m_nHopsFlow = pPacket->ReadByte();
 			}
@@ -1121,7 +1121,7 @@ void CG1Neighbour::SendClusterAdvisor()
 	{
 		CQuickLock oLock( HostCache.Gnutella1.m_pSection );
 
-		// Loop through the Gnutella host cache, 
+		// Loop through the Gnutella host cache,
 		for ( CHostCacheIterator i = HostCache.Gnutella1.Begin() ;
 			i != HostCache.Gnutella1.End() && nCount < 20;
 			++i )
