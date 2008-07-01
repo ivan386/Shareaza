@@ -96,7 +96,7 @@ public:
 public:
 
 	BOOL    m_bAutomatic;
-	BOOL    m_bShareaza;       // True if the remote computer is running Shareaza also
+	bool    m_bShareaza;       // True if the remote computer is running Shareaza also
 	NrsNode m_nNodeType;       // This connection is to a hub above us, ntHub, a leaf below us, ntLeaf, or a hub just like us, ntNode
 	BOOL    m_bQueryRouting;
 	BOOL    m_bPongCaching;

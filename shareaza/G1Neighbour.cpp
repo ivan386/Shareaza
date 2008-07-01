@@ -1,7 +1,7 @@
 //
 // G1Neighbour.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -1110,7 +1110,8 @@ BOOL CG1Neighbour::OnVendor(CG1Packet* pPacket)
 void CG1Neighbour::SendClusterAdvisor()
 {
 	// Only do this if the remote computer is running Shareaza and the settings here allow custom vendor message packets
-	if ( ! m_bShareaza || ! Settings.Gnutella1.VendorMsg ) return;
+	if ( !m_bShareaza || !Settings.Gnutella1.VendorMsg )
+		return;
 
 	// Setup local variables
 	DWORD tNow = static_cast< DWORD >( time( NULL ) ); // The time now, when this method was called, which won't change as the loop runs
