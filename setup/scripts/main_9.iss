@@ -149,7 +149,6 @@ Source: "plugins\RazaWebHook.dll"; DestDir: "{app}\Plugins"; Flags: overwriterea
 
 #if ConfigurationName == "Debug"
 ;--== Debug Databases ==--
-
 ; Main files
 ;Source: "{#root}\shareaza.pdb"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 ; ** The next line can be uncommented to include geoip, skin & zlibwapi debug database files
@@ -313,7 +312,7 @@ Root: HKCU; Subkey: "Software\Shareaza\Shareaza\Downloads"; ValueType: string; V
 Root: HKCU; Subkey: "Software\Shareaza\Shareaza\Downloads"; ValueType: string; ValueName: "CollectionPath"; ValueData: "{ini:{param:SETTINGS|},Locations,CollectionPath|{app}\Collections}"; Flags: uninsdeletekey createvalueifdoesntexist; Tasks: not multiuser
 
 ; ShareMonkey CID
-Root: HKCU; Subkey: "Software\Shareaza\Shareaza"; ValueType: string; ValueName: "ShareMonkeyCid"; ValueData: "197506"; Flags: createvalueifdoesntexist uninsdeletekey
+Root: HKCU; Subkey: "Software\Shareaza\Shareaza\WebServices"; ValueType: string; ValueName: "ShareMonkeyCid"; ValueData: "197506"; Flags: createvalueifdoesntexist uninsdeletekey
 
 ; Set permissions on registry keys
 Root: HKLM; Subkey: "SOFTWARE\Classes\.co"; Permissions: users-modify; Tasks: not multiuser
