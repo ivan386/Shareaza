@@ -23,6 +23,7 @@
 			OutputDirectory="$(PlatformName)\$(ConfigurationName)"
 			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
 			ConfigurationType="1"
+			UseOfATL="0"
 			CharacterSet="1"
 			>
 			<Tool
@@ -45,11 +46,10 @@
 				Optimization="0"
 				AdditionalIncludeDirectories="../shareaza/zlib"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;NOCRYPT;ZLIB_DLL;ZLIB_WINAPI;_CRT_SECURE_NO_DEPRECATE"
-				StringPooling="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="1"
+				EnableFunctionLevelLinking="true"
 				RuntimeTypeInfo="false"
-				BrowseInformation="1"
 				WarningLevel="4"
 				DebugInformationFormat="4"
 				DisableSpecificWarnings="4100"
@@ -104,6 +104,7 @@
 			OutputDirectory="$(PlatformName)\$(ConfigurationName)"
 			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
 			ConfigurationType="1"
+			UseOfATL="0"
 			CharacterSet="1"
 			>
 			<Tool
@@ -127,11 +128,9 @@
 				Optimization="0"
 				AdditionalIncludeDirectories="../shareaza/zlib"
 				PreprocessorDefinitions="WIN64;_DEBUG;_WINDOWS;NOCRYPT;ZLIB_DLL;ZLIB_WINAPI;_CRT_SECURE_NO_DEPRECATE"
-				StringPooling="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="1"
 				RuntimeTypeInfo="false"
-				BrowseInformation="1"
 				WarningLevel="4"
 				DebugInformationFormat="3"
 				DisableSpecificWarnings="4100"
@@ -185,6 +184,7 @@
 			OutputDirectory="$(PlatformName)\$(ConfigurationName)"
 			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
 			ConfigurationType="1"
+			UseOfATL="0"
 			CharacterSet="1"
 			WholeProgramOptimization="1"
 			>
@@ -206,7 +206,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="3"
-				InlineFunctionExpansion="2"
+				InlineFunctionExpansion="1"
 				EnableIntrinsicFunctions="true"
 				FavorSizeOrSpeed="1"
 				OmitFramePointers="true"
@@ -215,9 +215,7 @@
 				StringPooling="true"
 				RuntimeLibrary="0"
 				RuntimeTypeInfo="false"
-				BrowseInformation="1"
 				WarningLevel="4"
-				DebugInformationFormat="0"
 				DisableSpecificWarnings="4100"
 			/>
 			<Tool
@@ -272,6 +270,7 @@
 			OutputDirectory="$(PlatformName)\$(ConfigurationName)"
 			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
 			ConfigurationType="1"
+			UseOfATL="0"
 			CharacterSet="1"
 			WholeProgramOptimization="1"
 			>
@@ -294,7 +293,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="3"
-				InlineFunctionExpansion="2"
+				InlineFunctionExpansion="1"
 				EnableIntrinsicFunctions="true"
 				FavorSizeOrSpeed="1"
 				OmitFramePointers="true"
@@ -303,7 +302,6 @@
 				StringPooling="true"
 				RuntimeLibrary="0"
 				RuntimeTypeInfo="false"
-				BrowseInformation="1"
 				WarningLevel="4"
 				DisableSpecificWarnings="4100"
 			/>
