@@ -526,8 +526,7 @@ IMPLEMENT_DISPATCH(CLibraryFolders, LibraryFolders)
 STDMETHODIMP CLibraryFolders::XLibraryFolders::get_Application(IApplication FAR* FAR* ppApplication)
 {
 	METHOD_PROLOGUE( CLibraryFolders, LibraryFolders )
-	*ppApplication = Application.GetApp();
-	return S_OK;
+	return CApplication::GetApp( ppApplication );
 }
 
 STDMETHODIMP CLibraryFolders::XLibraryFolders::get_Library(ILibrary FAR* FAR* ppLibrary)

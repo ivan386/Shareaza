@@ -947,8 +947,7 @@ IMPLEMENT_DISPATCH(CLibraryMaps, LibraryFiles)
 STDMETHODIMP CLibraryMaps::XLibraryFiles::get_Application(IApplication FAR* FAR* ppApplication)
 {
 	METHOD_PROLOGUE( CLibraryMaps, LibraryFiles )
-	*ppApplication = Application.GetApp();
-	return S_OK;
+	return CApplication::GetApp( ppApplication );
 }
 
 STDMETHODIMP CLibraryMaps::XLibraryFiles::get_Library(ILibrary FAR* FAR* ppLibrary)

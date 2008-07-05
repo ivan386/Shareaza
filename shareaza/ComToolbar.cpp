@@ -85,15 +85,13 @@ IMPLEMENT_DISPATCH(CComToolbar, SToolbar)
 STDMETHODIMP CComToolbar::XSToolbar::get_Application(IApplication FAR* FAR* ppApplication)
 {
 	METHOD_PROLOGUE( CComToolbar, SToolbar )
-	*ppApplication = Application.GetApp();
-	return S_OK;
+	return CApplication::GetApp( ppApplication );
 }
 
 STDMETHODIMP CComToolbar::XSToolbar::get_UserInterface(IUserInterface FAR* FAR* ppUserInterface)
 {
 	METHOD_PROLOGUE( CComToolbar, SToolbar )
-	*ppUserInterface = Application.GetUI();
-	return S_OK;
+	return CApplication::GetUI( ppUserInterface );
 }
 
 STDMETHODIMP CComToolbar::XSToolbar::get__NewEnum(IUnknown FAR* FAR* ppEnum)
@@ -174,15 +172,13 @@ IMPLEMENT_DISPATCH(CComToolbar, SToolbarItem)
 STDMETHODIMP CComToolbar::XSToolbarItem::get_Application(IApplication FAR* FAR* ppApplication)
 {
 	METHOD_PROLOGUE( CComToolbar, SToolbarItem )
-	*ppApplication = Application.GetApp();
-	return S_OK;
+	return CApplication::GetApp( ppApplication );
 }
 
 STDMETHODIMP CComToolbar::XSToolbarItem::get_UserInterface(IUserInterface FAR* FAR* ppUserInterface)
 {
 	METHOD_PROLOGUE( CComToolbar, SToolbarItem )
-	*ppUserInterface = Application.GetUI();
-	return S_OK;
+	return CApplication::GetUI( ppUserInterface );
 }
 
 STDMETHODIMP CComToolbar::XSToolbarItem::get_Toolbar(ISToolbar FAR* FAR* ppToolbar)

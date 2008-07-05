@@ -753,8 +753,7 @@ IMPLEMENT_DISPATCH(CLibraryFolder, LibraryFolder)
 STDMETHODIMP CLibraryFolder::XLibraryFolder::get_Application(IApplication FAR* FAR* ppApplication)
 {
 	METHOD_PROLOGUE( CLibraryFolder, LibraryFolder )
-	*ppApplication = Application.GetApp();
-	return S_OK;
+	return CApplication::GetApp( ppApplication );
 }
 
 STDMETHODIMP CLibraryFolder::XLibraryFolder::get_Library(ILibrary FAR* FAR* ppLibrary)
@@ -831,8 +830,7 @@ IMPLEMENT_DISPATCH(CLibraryFolder, LibraryFolders)
 STDMETHODIMP CLibraryFolder::XLibraryFolders::get_Application(IApplication FAR* FAR* ppApplication)
 {
 	METHOD_PROLOGUE( CLibraryFolder, LibraryFolders )
-	*ppApplication = Application.GetApp();
-	return S_OK;
+	return CApplication::GetApp( ppApplication );
 }
 
 STDMETHODIMP CLibraryFolder::XLibraryFolders::get_Library(ILibrary FAR* FAR* ppLibrary)
@@ -901,8 +899,7 @@ IMPLEMENT_DISPATCH(CLibraryFolder, LibraryFiles)
 STDMETHODIMP CLibraryFolder::XLibraryFiles::get_Application(IApplication FAR* FAR* ppApplication)
 {
 	METHOD_PROLOGUE( CLibraryFolder, LibraryFiles )
-	*ppApplication = Application.GetApp();
-	return S_OK;
+	return CApplication::GetApp( ppApplication );
 }
 
 STDMETHODIMP CLibraryFolder::XLibraryFiles::get_Library(ILibrary FAR* FAR* ppLibrary)

@@ -611,8 +611,7 @@ STDMETHODIMP CLibrary::XLibrary::get_Application(IApplication FAR* FAR* ppApplic
 {
 	METHOD_PROLOGUE( CLibrary, Library )
 	if ( ppApplication == NULL ) return E_INVALIDARG;
-	*ppApplication = Application.GetApp();
-	return S_OK;
+	return CApplication::GetApp( ppApplication );
 }
 
 STDMETHODIMP CLibrary::XLibrary::get_Library(ILibrary FAR* FAR* ppLibrary)

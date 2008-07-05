@@ -42,6 +42,11 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 
+IMPLEMENT_DYNCREATE(CApplication, CComObject)
+
+// {E9B2EF9B-4A0C-451e-801F-257861B87FAD}
+IMPLEMENT_OLECREATE_FLAGS(CApplication, "Shareaza.Application", afxRegFreeThreading|afxRegApartmentThreading, 0xe9b2ef9b, 0x4a0c, 0x451e, 0x80, 0x1f, 0x25, 0x78, 0x61, 0xb8, 0x7f, 0xad);
+
 BEGIN_MESSAGE_MAP(CApplication, CComObject)
 END_MESSAGE_MAP()
 
@@ -50,8 +55,6 @@ BEGIN_INTERFACE_MAP(CApplication, CComObject)
 	INTERFACE_PART(CApplication, IID_IUserInterface, UserInterface)
 	INTERFACE_PART(CApplication, IID_ISettings, Settings)
 END_INTERFACE_MAP()
-
-CApplication Application;
 
 
 /////////////////////////////////////////////////////////////////////////////
@@ -71,19 +74,22 @@ CApplication::~CApplication()
 /////////////////////////////////////////////////////////////////////////////
 // CApplication operations
 
-IApplication* CApplication::GetApp()
+HRESULT CApplication::GetApp(IApplication** ppIApplication) throw()
 {
-	return (IApplication*)GetInterface( IID_IApplication, TRUE );
+	return CoCreateInstance( CLSID_ShareazaApplication, NULL, CLSCTX_ALL,
+		IID_IApplication, (void**)ppIApplication );
 }
 
-IUserInterface* CApplication::GetUI()
+HRESULT CApplication::GetUI(IUserInterface** ppIUserInterface) throw()
 {
-	return (IUserInterface*)GetInterface( IID_IUserInterface, TRUE );
+	return CoCreateInstance( CLSID_ShareazaApplication, NULL, CLSCTX_ALL,
+		IID_IUserInterface, (void**)ppIUserInterface );
 }
 
-ISettings* CApplication::GetSettings()
+HRESULT CApplication::GetSettings(ISettings** ppISettings) throw()
 {
-	return (ISettings*)GetInterface( IID_ISettings, TRUE );
+	return CoCreateInstance( CLSID_ShareazaApplication, NULL, CLSCTX_ALL,
+		IID_ISettings, (void**)ppISettings );
 }
 
 /////////////////////////////////////////////////////////////////////////////

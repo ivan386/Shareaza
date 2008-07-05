@@ -19,28 +19,20 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(APPLICATION_H)
-#define APPLICATION_H
-
 #pragma once
+
 
 class CApplication : public CComObject
 {
-// Construction
+	DECLARE_DYNCREATE(CApplication)
+
 public:
 	CApplication();
 	virtual ~CApplication();
 
-// Attributes
-public:
-
-// Operations
-public:
-	IApplication*	GetApp();
-	IUserInterface*	GetUI();
-	ISettings*		GetSettings();
-
-	DECLARE_MESSAGE_MAP()
+	static HRESULT GetApp(IApplication** ppIApplication) throw();
+	static HRESULT GetUI(IUserInterface** ppIUserInterface) throw();
+	static HRESULT GetSettings(ISettings** ppISettings) throw();
 
 // IApplication
 protected:
@@ -72,13 +64,10 @@ protected:
 
 	BEGIN_INTERFACE_PART(Settings, ISettings)
 		DECLARE_DISPATCH()
-		STDMETHOD(GetValue(VARIANT* value));	// Pass as BSTR path (e.g. Gnutella2.EnableAlways, 
-												// get back the actual value
+		STDMETHOD(GetValue)(VARIANT* value);	// Pass as BSTR path (e.g. Gnutella2.EnableAlways, get back the actual value
 	END_INTERFACE_PART(Settings)
 
+	DECLARE_MESSAGE_MAP()
+	DECLARE_OLECREATE(CApplication)
 	DECLARE_INTERFACE_MAP()
 };
-
-extern CApplication Application;
-
-#endif // !defined(APPLICATION_H)

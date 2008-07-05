@@ -407,8 +407,9 @@ BOOL CPlugin::Start()
 		return FALSE;
 	}
 
-	m_pPlugin->SetApplication(
-		(IApplication*)Application.GetInterface( IID_IApplication, FALSE ) );
+	IApplication* pApplication = NULL;
+	if ( SUCCEEDED( CApplication::GetApp( &pApplication ) ) )
+		m_pPlugin->SetApplication( pApplication );
 
 	m_nCapabilities = 0;
 	m_pPlugin->QueryCapabilities( &m_nCapabilities );

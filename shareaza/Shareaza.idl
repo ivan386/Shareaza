@@ -25,6 +25,9 @@ import "UrlMon.idl";
 [ uuid(E3481FE3-E062-4E1C-A23A-62A6D13CBFB8), version(1.0) ]
 library Shareaza
 {
+	importlib("stdole32.tlb");
+	importlib("stdole2.tlb");
+
 	interface IApplication;
 
 	//
@@ -586,6 +589,18 @@ library Shareaza
 		[id(16)] HRESULT DownloadAll();
 		[id(17),propget] HRESULT MissingCount( [out,retval] LONG* pnCount );
 	}
+
+	//
+	//  Shareaza Application
+	//
+
+	[ uuid(E9B2EF9B-4A0C-451e-801F-257861B87FAD) ]
+	coclass ShareazaApplication
+	{
+		[default] interface IApplication;
+		interface IUserInterface;
+		interface ISettings;
+	};
 
 	//
 	//  Shareaza Data Source

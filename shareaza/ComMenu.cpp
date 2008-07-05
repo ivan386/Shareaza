@@ -83,15 +83,13 @@ IMPLEMENT_DISPATCH(CComMenu, SMenu)
 STDMETHODIMP CComMenu::XSMenu::get_Application(IApplication FAR* FAR* ppApplication)
 {
 	METHOD_PROLOGUE( CComMenu, SMenu )
-	*ppApplication = Application.GetApp();
-	return S_OK;
+	return CApplication::GetApp( ppApplication );
 }
 
 STDMETHODIMP CComMenu::XSMenu::get_UserInterface(IUserInterface FAR* FAR* ppUserInterface)
 {
 	METHOD_PROLOGUE( CComMenu, SMenu )
-	*ppUserInterface = Application.GetUI();
-	return S_OK;
+	return CApplication::GetUI( ppUserInterface );
 }
 
 STDMETHODIMP CComMenu::XSMenu::get__NewEnum(IUnknown FAR* FAR* ppEnum)
