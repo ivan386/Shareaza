@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="Windows-1252"?>
+<?xml version="1.0" encoding="windows-1251"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="8,00"
-	Name="skin-installer"
-	ProjectGUID="{CAA6FCC8-27B1-42B9-B647-976E7BE79C70}"
-	RootNamespace="skin-installer"
+	Name="sqlite3"
+	ProjectGUID="{0ABB3FBC-FF1A-419E-9368-25B8617BA54E}"
+	RootNamespace="sqlite3"
 	>
 	<Platforms>
 		<Platform
@@ -21,7 +21,7 @@
 			Name="Debug|Win32"
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)\"
 			IntermediateDirectory="$(OutDir)$(ProjectName)"
-			ConfigurationType="1"
+			ConfigurationType="2"
 			CharacterSet="1"
 			>
 			<Tool
@@ -42,18 +42,15 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="$(SolutionDir)..\shareaza\zlib"
-				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;ZLIB_WINAPI;ZLIB_DLL;_CRT_SECURE_NO_DEPRECATE"
+				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;SQLITE_API=__declspec(dllexport)"
 				MinimalRebuild="true"
+				ExceptionHandling="0"
 				BasicRuntimeChecks="3"
 				SmallerTypeCheck="true"
 				RuntimeLibrary="1"
 				RuntimeTypeInfo="false"
-				UsePrecompiledHeader="2"
-				PrecompiledHeaderThrough="skin.h"
+				UsePrecompiledHeader="0"
 				ProgramDataBaseFileName="$(TargetDir)$(TargetName).pdb"
-				WarningLevel="3"
-				Detect64BitPortabilityProblems="true"
 				DebugInformationFormat="4"
 			/>
 			<Tool
@@ -61,25 +58,21 @@
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="WIN32;_DEBUG"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="comctl32.lib"
-				OutputFile="$(OutDir)Skin.exe"
+				OutputFile="$(OutDir)$(ProjectName).dll"
+				GenerateManifest="false"
 				GenerateDebugInformation="true"
-				KeyFile="$(SolutionDir)..\$(ProjectName)\$(ProjectName).snk"
-				DelaySign="true"
 			/>
 			<Tool
 				Name="VCALinkTool"
 			/>
 			<Tool
 				Name="VCManifestTool"
-				InputResourceManifests="$(TargetPath)"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -98,15 +91,13 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				Description="Installing $(TargetFileName)..."
-				CommandLine="&quot;$(TargetPath)&quot; /install"
 			/>
 		</Configuration>
 		<Configuration
 			Name="Debug|x64"
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)\"
 			IntermediateDirectory="$(OutDir)$(ProjectName)"
-			ConfigurationType="1"
+			ConfigurationType="2"
 			CharacterSet="1"
 			>
 			<Tool
@@ -123,21 +114,20 @@
 			/>
 			<Tool
 				Name="VCMIDLTool"
+				TargetEnvironment="3"
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="$(SolutionDir)..\shareaza\zlib"
-				PreprocessorDefinitions="WIN64;_DEBUG;_WINDOWS;ZLIB_WINAPI;ZLIB_DLL;_CRT_SECURE_NO_DEPRECATE"
+				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;SQLITE_API=__declspec(dllexport)"
 				MinimalRebuild="true"
+				ExceptionHandling="0"
 				BasicRuntimeChecks="3"
 				SmallerTypeCheck="true"
 				RuntimeLibrary="1"
 				RuntimeTypeInfo="false"
-				UsePrecompiledHeader="2"
-				PrecompiledHeaderThrough="skin.h"
+				UsePrecompiledHeader="0"
 				ProgramDataBaseFileName="$(TargetDir)$(TargetName).pdb"
-				WarningLevel="3"
 				DebugInformationFormat="3"
 			/>
 			<Tool
@@ -145,26 +135,22 @@
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="WIN64;_DEBUG"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="comctl32.lib"
-				OutputFile="$(OutDir)Skin.exe"
+				OutputFile="$(OutDir)$(ProjectName).dll"
+				GenerateManifest="false"
 				GenerateDebugInformation="true"
 				TargetMachine="17"
-				KeyFile="$(SolutionDir)..\$(ProjectName)\$(ProjectName).snk"
-				DelaySign="true"
 			/>
 			<Tool
 				Name="VCALinkTool"
 			/>
 			<Tool
 				Name="VCManifestTool"
-				InputResourceManifests="$(TargetPath)"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -189,7 +175,7 @@
 			Name="Release|Win32"
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)\"
 			IntermediateDirectory="$(OutDir)$(ProjectName)"
-			ConfigurationType="1"
+			ConfigurationType="2"
 			CharacterSet="1"
 			WholeProgramOptimization="1"
 			>
@@ -210,16 +196,13 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="$(SolutionDir)..\shareaza\zlib"
-				PreprocessorDefinitions="WIN32;NDEBUG;ZLIB_WINAPI;ZLIB_DLL;_CRT_SECURE_NO_DEPRECATE"
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;SQLITE_API=__declspec(dllexport)"
 				MinimalRebuild="true"
+				ExceptionHandling="0"
 				RuntimeLibrary="2"
 				RuntimeTypeInfo="false"
-				UsePrecompiledHeader="2"
-				PrecompiledHeaderThrough="skin.h"
+				UsePrecompiledHeader="0"
 				ProgramDataBaseFileName="$(TargetDir)$(TargetName).pdb"
-				WarningLevel="3"
-				Detect64BitPortabilityProblems="true"
 				DebugInformationFormat="3"
 			/>
 			<Tool
@@ -227,27 +210,22 @@
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="WIN32;NDEBUG"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="comctl32.lib"
-				OutputFile="$(OutDir)Skin.exe"
+				OutputFile="$(OutDir)$(ProjectName).dll"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				OptimizeForWindows98="1"
-				KeyFile="$(SolutionDir)..\$(ProjectName)\$(ProjectName).snk"
-				DelaySign="true"
 			/>
 			<Tool
 				Name="VCALinkTool"
 			/>
 			<Tool
 				Name="VCManifestTool"
-				InputResourceManifests="$(TargetPath)"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -266,15 +244,13 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				Description="Installing $(TargetFileName)..."
-				CommandLine="&quot;$(TargetPath)&quot; /install"
 			/>
 		</Configuration>
 		<Configuration
 			Name="Release|x64"
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)\"
 			IntermediateDirectory="$(OutDir)$(ProjectName)"
-			ConfigurationType="1"
+			ConfigurationType="2"
 			CharacterSet="1"
 			WholeProgramOptimization="1"
 			>
@@ -292,18 +268,17 @@
 			/>
 			<Tool
 				Name="VCMIDLTool"
+				TargetEnvironment="3"
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="$(SolutionDir)..\shareaza\zlib"
-				PreprocessorDefinitions="WIN64;NDEBUG;ZLIB_WINAPI;ZLIB_DLL;_CRT_SECURE_NO_DEPRECATE"
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;SQLITE_API=__declspec(dllexport)"
 				MinimalRebuild="true"
+				ExceptionHandling="0"
 				RuntimeLibrary="2"
 				RuntimeTypeInfo="false"
-				UsePrecompiledHeader="2"
-				PrecompiledHeaderThrough="skin.h"
+				UsePrecompiledHeader="0"
 				ProgramDataBaseFileName="$(TargetDir)$(TargetName).pdb"
-				WarningLevel="3"
 				DebugInformationFormat="3"
 			/>
 			<Tool
@@ -311,28 +286,23 @@
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="WIN64;NDEBUG"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="comctl32.lib"
-				OutputFile="$(OutDir)Skin.exe"
+				OutputFile="$(OutDir)$(ProjectName).dll"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				OptimizeForWindows98="1"
 				TargetMachine="17"
-				KeyFile="$(SolutionDir)..\$(ProjectName)\$(ProjectName).snk"
-				DelaySign="true"
 			/>
 			<Tool
 				Name="VCALinkTool"
 			/>
 			<Tool
 				Name="VCManifestTool"
-				InputResourceManifests="$(TargetPath)"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -359,59 +329,11 @@
 	<Files>
 		<Filter
 			Name="Source Files"
-			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx"
+			Filter="cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath="..\skin-installer\extract.c"
-				>
-			</File>
-			<File
-				RelativePath="..\skin-installer\registry.c"
-				>
-			</File>
-			<File
-				RelativePath="..\skin-installer\skin.c"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="1"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|x64"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="1"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="1"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|x64"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="1"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\skin-installer\utils.c"
-				>
-			</File>
-			<File
-				RelativePath="..\skin-installer\window.c"
+				RelativePath="..\sqlite3\sqlite3.c"
 				>
 			</File>
 		</Filter>
@@ -421,52 +343,10 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath="..\skin-installer\resource.h"
-				>
-			</File>
-			<File
-				RelativePath="..\skin-installer\resrc1.h"
-				>
-			</File>
-			<File
-				RelativePath="..\skin-installer\skin.h"
+				RelativePath="..\sqlite3\sqlite3.h"
 				>
 			</File>
 		</Filter>
-		<Filter
-			Name="Resource Files"
-			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx"
-			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
-			>
-			<File
-				RelativePath="..\skin-installer\res\banner.bmp"
-				>
-			</File>
-			<File
-				RelativePath="..\skin-installer\res\banner_new.bmp"
-				>
-			</File>
-			<File
-				RelativePath="..\skin-installer\resource.rc"
-				>
-			</File>
-			<File
-				RelativePath="..\skin-installer\res\shareaza-new.ico"
-				>
-			</File>
-			<File
-				RelativePath="..\skin-installer\res\shareaza.ico"
-				>
-			</File>
-			<File
-				RelativePath="..\skin-installer\res\skin.ico"
-				>
-			</File>
-		</Filter>
-		<File
-			RelativePath="..\skin-installer\readme.txt"
-			>
-		</File>
 	</Files>
 	<Globals>
 	</Globals>
