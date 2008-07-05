@@ -478,7 +478,7 @@ void CHostCacheList::SanityCheck()
 {
 	CQuickLock oLock( m_pSection );
 
-	for( CHostCacheMap::iterator i = m_Hosts.begin(); i != m_Hosts.end(); ++i )
+	for( CHostCacheMap::iterator i = m_Hosts.begin(); i != m_Hosts.end(); )
 	{
 		CHostCacheHostPtr pHost = (*i).second;
 		if ( Security.IsDenied( &pHost->m_pAddress ) )
@@ -489,6 +489,8 @@ void CHostCacheList::SanityCheck()
 			delete pHost;
 			m_nCookie++;
 		}
+		else
+			++i;
 	}
 }
 
