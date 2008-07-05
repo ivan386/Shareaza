@@ -45,6 +45,7 @@ public:
 	BOOL m_bNoSplash;
 	BOOL m_bNoAlphaWarning;
 	INT  m_nGUIMode;
+	BOOL m_bHelp;
 
 private:
 	CShareazaCommandLineInfo(const CShareazaCommandLineInfo&);

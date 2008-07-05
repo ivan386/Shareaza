@@ -104,7 +104,8 @@ CShareazaCommandLineInfo::CShareazaCommandLineInfo() :
 	m_bTray( FALSE ),
 	m_bNoSplash( FALSE ),
 	m_bNoAlphaWarning( FALSE ),
-	m_nGUIMode( -1 )
+	m_nGUIMode( -1 ),
+	m_bHelp( FALSE )
 {
 }
 
@@ -141,6 +142,11 @@ void CShareazaCommandLineInfo::ParseParam(const TCHAR* pszParam, BOOL bFlag, BOO
 		else if ( ! lstrcmpi( pszParam, _T("windowed") ) )
 		{
 			m_nGUIMode = GUI_WINDOWED;
+			return;
+		}
+		else if ( ! lstrcmpi( pszParam, _T("?") ) )
+		{
+			m_bHelp = TRUE;
 			return;
 		}
 	}
@@ -227,6 +233,20 @@ BOOL CShareazaApp::InitInstance()
 //	RegisterShellFileTypes();
 
 	ParseCommandLine( m_ocmdInfo );
+	if ( m_ocmdInfo.m_bHelp )
+	{
+		AfxMessageBox( _T("Command-line options:\n")
+			_T("-tray\t\tDisable startup splash screen and send application to tray\n")
+			_T("-nosplash\t\tDisable startup splash screen\n")
+			_T("-nowarn\t\tDisable alpha (daily builds) version warning dialog\n")
+			_T("-basic\t\tStart application in Basic interface mode\n")
+			_T("-tabbed\t\tStart application in Tabbed interface mode\n")
+			_T("-windowed\tStart application in Windowed interface mode\n")
+			_T("-regserver\tRegister application internal components\n")
+			_T("-unregserver\tUn-register application internal components\n"),
+			MB_SYSTEMMODAL | MB_ICONINFORMATION | MB_OK );
+		return FALSE;
+	}
 	if ( m_ocmdInfo.m_nShellCommand == CCommandLineInfo::AppUnregister )
 	{
 		// Do not call this ->
@@ -311,7 +331,7 @@ BOOL CShareazaApp::InitInstance()
 
 	//*
 	// Alpha warning. Remember to remove this section for final releases and public betas.
-	if ( ! m_ocmdInfo.m_bNoAlphaWarning )
+	if ( ! m_ocmdInfo.m_bNoAlphaWarning && m_ocmdInfo.m_bShowSplash )
 	if ( AfxMessageBox(
 		L"WARNING: This is an ALPHA TEST version of Shareaza.\n\n"
 		L"It is NOT FOR GENERAL USE, and is only for testing specific features in a controlled "
@@ -329,7 +349,7 @@ BOOL CShareazaApp::InitInstance()
 		+ ( Settings.Connection.EnableFirewallException ? 1 : 0 )
 		+ ( ( Settings.Connection.EnableUPnP && ! Settings.Live.FirstRun ) ? 1 : 0 );
 
-	SplashStep( L"Winsock", ( m_ocmdInfo.m_bNoSplash ? 0 : nSplashSteps ), false );
+	SplashStep( L"Winsock", ( ( m_ocmdInfo.m_bNoSplash || ! m_ocmdInfo.m_bShowSplash ) ? 0 : nSplashSteps ), false );
 		WSADATA wsaData;
 		for ( int i = 1; i <= 2; i++ )
 		{
