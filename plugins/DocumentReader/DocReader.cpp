@@ -756,9 +756,8 @@ STDMETHODIMP CDocReader::GetMSThumbnail(BSTR bsFile, IMAGESERVICEDATA* pParams, 
 	// We will make 3 bytes out off 1 if bitmap has less than 256 colors
 	// For 24-bit images it is not needed
 	ULONG nOutPitch = ( pBI->bmiHeader.biWidth * 3 + 3 ) & ~3u;
-	LPBYTE pRowBuf, pRowOut;
+	LPBYTE pRowOut;
 
-	pRowBuf	= new BYTE[ nInPitch ];
 	ULONG nArray = nOutPitch * (ULONG)pBI->bmiHeader.biHeight;
 	WORD nBitCount = pBI->bmiHeader.biBitCount;
 	// All calculations are performed, delete it now
@@ -810,7 +809,6 @@ STDMETHODIMP CDocReader::GetMSThumbnail(BSTR bsFile, IMAGESERVICEDATA* pParams, 
 	// Unlock safearray; we are ready to deliver it back to Shareaza
 	SafeArrayUnaccessData( *ppImage );
 
-	delete [] pRowBuf;
 	delete [] pStart;
 
 	VariantClear( &va );
