@@ -48,6 +48,8 @@ namespace Schemas
 	[XmlType(Namespace = "http://www.limewire.com/schemas/book.xsd")]
 	public class ShareazaBook
 	{
+		public ShareazaBook() {}
+		
 		[XmlAttribute(Namespace = "")]
 		public string title;
 
