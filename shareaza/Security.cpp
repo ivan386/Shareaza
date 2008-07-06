@@ -362,16 +362,13 @@ BOOL CSecurity::IsDenied(CString sName, QWORD nSize, const Hashes::Sha1Hash& oSH
 		CString strExtension;
 		pszExt++;
 		strExtension.Format( _T("size:%s:%I64i"), pszExt, nSize );
-		return IsDenied( NULL, strExtension );
+		if ( IsDenied( NULL, strExtension ) )
+			return TRUE;
 	}
-	if ( oSHA1.isValid() )
-	{
-		return IsDenied( NULL, oSHA1.toUrn() );
-	}
-	if ( oED2K.isValid() )
-	{
-		return IsDenied( NULL, oED2K.toUrn() );
-	}
+	if ( oSHA1.isValid() && IsDenied( NULL, oSHA1.toUrn() ) )
+		return TRUE;
+	if ( oED2K.isValid() && IsDenied( NULL, oED2K.toUrn() ) )
+		return TRUE;
 	return m_bDenyPolicy;
 }
 
