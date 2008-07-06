@@ -9,11 +9,11 @@ using System.Xml.Serialization;
 
 namespace Schemas
 {
-	[XmlTypeAttribute(Namespace = "http://www.limewire.com/schemas/book.xsd")]
-	[XmlRootAttribute(Namespace = "http://www.limewire.com/schemas/book.xsd", IsNullable = false)]
+	[XmlType(Namespace = "http://www.limewire.com/schemas/book.xsd")]
+	[XmlRoot(Namespace = "http://www.limewire.com/schemas/book.xsd", IsNullable = false)]
 	public class Books
 	{
-		[XmlElementAttribute("book")]
+		[XmlElement("book")]
 		public ShareazaBook[] books;
 		public static readonly string URI = @"http://www.limewire.com/schemas/book.xsd";
 
@@ -22,43 +22,48 @@ namespace Schemas
 		}
 	}
 
-	[XmlTypeAttribute(Namespace = "http://www.limewire.com/schemas/book.xsd")]
+	[XmlType(Namespace = "http://www.limewire.com/schemas/book.xsd")]
 	public class ShareazaBook
 	{
-		[XmlAttributeAttribute(Namespace = "")]
+		[XmlAttribute(Namespace = "")]
 		public string title;
 
-		[XmlAttributeAttribute(Namespace = "")]
+		[XmlAttribute(Namespace = "")]
 		public string author;
 
-		[XmlAttributeAttribute(Namespace = "")]
+		[XmlAttribute(Namespace = "")]
 		public string publisher;
 
-		[XmlAttributeAttribute(Namespace = "")]
+		[XmlAttribute(Namespace = "")]
 		public string edition;
 
-		[XmlAttributeAttribute(Namespace = "")]
+		[XmlAttribute(Namespace = "")]
 		public string description;
 
-		[XmlAttributeAttribute(Namespace = "")]
-		public RazaGenreType genre;
+		private RazaGenreType _genre;
+		
+		[XmlAttribute(AttributeName = "genre", Namespace = "")]
+		public RazaGenreType Genre {
+			get { return _genre; }
+			set { _genre = value; }
+		}
 
-		[XmlAttributeAttribute(Namespace = "")]
+		[XmlAttribute(Namespace = "")]
 		public BookType type;
 
-		[XmlAttributeAttribute(Namespace = "")]
+		[XmlAttribute(Namespace = "")]
 		public FormatType format;
 
-		[XmlAttributeAttribute(Namespace = "")]
+		[XmlAttribute(Namespace = "")]
 		public string subject;
 
-		[XmlAttributeAttribute(Namespace = "")]
+		[XmlAttribute(Namespace = "")]
 		public string keywords;
 
 		private uint pages;
 		private bool hasPages;
 
-		[XmlAttributeAttribute("pages", Namespace = "")]
+		[XmlAttribute("pages", Namespace = "")]
 		public string PagesString {
 			get {
 				if (!hasPages) return null;
@@ -80,16 +85,16 @@ namespace Schemas
 			}
 		}
 
-		[XmlAttributeAttribute(Namespace = "", DataType = "gYear")]
+		[XmlAttribute(Namespace = "", DataType = "gYear")]
 		public string year;
 
-		[XmlAttributeAttribute(Namespace = "", DataType = "language")]
+		[XmlAttribute(Namespace = "", DataType = "language")]
 		public string language;
 
 		private Int64 nISBN;
 		private bool hasISBN;
 
-		[XmlAttributeAttribute("ISBN", Namespace = "")]
+		[XmlAttribute("ISBN", Namespace = "")]
 		public string ISBNString {
 			get {
 				if (!hasISBN) return null;
@@ -114,7 +119,7 @@ namespace Schemas
 		private decimal length;
 		private bool hasLength;
 
-		[XmlAttributeAttribute("length", Namespace = "")]
+		[XmlAttribute("length", Namespace = "")]
 		public string LengthString {
 			get {
 				if (!hasLength) return null;
@@ -139,7 +144,7 @@ namespace Schemas
 		private decimal width;
 		private bool hasWidth;
 
-		[XmlAttributeAttribute("width", Namespace = "")]
+		[XmlAttribute("width", Namespace = "")]
 		public string WidthString {
 			get {
 				if (!hasWidth) return null;
@@ -164,7 +169,7 @@ namespace Schemas
 		private decimal height;
 		private bool hasHeight;
 
-		[XmlAttributeAttribute("height", Namespace = "")]
+		[XmlAttribute("height", Namespace = "")]
 		public string HeightString {
 			get {
 				if (!hasHeight) return null;
@@ -186,32 +191,29 @@ namespace Schemas
 			}
 		}
 
-		[XmlAttributeAttribute(Namespace = "")]
+		[XmlAttribute(Namespace = "")]
 		public BackType back;
 
-		[XmlAttributeAttribute(Namespace = "")]
+		[XmlAttribute(Namespace = "")]
 		public string qualitynotes;
 
-		[XmlAttributeAttribute(Namespace = "", DataType = "date")]
+		[XmlAttribute(Namespace = "", DataType = "date")]
 		public DateTime releaseDate;
 
-		[XmlAttributeAttribute(Namespace = "")]
+		[XmlAttribute(Namespace = "")]
 		public string distributer;
 
-		[XmlAttributeAttribute(Namespace = "", DataType = "anyURI")]
+		[XmlAttribute(Namespace = "", DataType = "anyURI")]
 		public string distributerLink;
 
-		[XmlAttributeAttribute(Namespace = "")]
+		[XmlAttribute(Namespace = "")]
 		public string releasegroup;
 
-		[XmlAttributeAttribute(Namespace = "", DataType = "anyURI")]
+		[XmlAttribute(Namespace = "", DataType = "anyURI")]
 		public string releasegroupLink;
 
-		[XmlAttributeAttribute(Namespace = "", DataType = "anyURI")]
+		[XmlAttribute(Namespace = "", DataType = "anyURI")]
 		public string link;
-
-		public ShareazaBook() {
-		}
 
 		public ShareazaBook(FictionBook fb) {
 			Trace.Assert(fb != null);
@@ -241,6 +243,10 @@ namespace Schemas
 					}
 				} catch { }
 
+				if (fb.description.titleinfo.genre != null && fb.description.titleinfo.genre.Length > 0)
+				{
+					this._genre = GenreMap.GetRazaGenre(fb.description.titleinfo.genre[0].Value);
+				}
 				// this.year = fb.description.titleinfo.date.value.Year;
 				if (fb.description.titleinfo.keywords != null)
 					this.keywords = fb.description.titleinfo.keywords.Value;
@@ -274,6 +280,16 @@ namespace Schemas
 
 			this.back = BackType.Digital;
 			this.format = FormatType.FictionBook;
+		}
+
+		private string GetGenres(IEnumerable enu) {
+			StringBuilder sb = new StringBuilder();
+			foreach (FictionBookDescriptionTitleinfoGenre genre in enu) {
+				string sGenre = GenreMap.GetRazaGenre(genre.Value).ToString();
+				if (!String.IsNullOrEmpty(sGenre))
+					sb.Append(sGenre + "; ");
+			}
+			return sb.ToString().TrimEnd(new char[] { ';', ' ' });
 		}
 
 		private string GetAuthors(IEnumerable enu) {
@@ -334,60 +350,60 @@ namespace Schemas
 			return result;
 		}
 
-		[XmlTypeAttribute(Namespace = "http://www.limewire.com/schemas/book.xsd")]
+		[XmlType(Namespace = "http://www.limewire.com/schemas/book.xsd")]
 		public enum RazaGenreType
 		{
-			[XmlEnumAttribute("Arts & Photograhy")]
+			[XmlEnum("Arts & Photograhy")]
 			ArtsPhotograhy,
-			[XmlEnumAttribute("Biographies & Memoirs")]
+			[XmlEnum("Biographies & Memoirs")]
 			BiographiesMemoirs,
-			[XmlEnumAttribute("Business & Investing")]
+			[XmlEnum("Business & Investing")]
 			BusinessInvesting,
 			Calendars,
-			[XmlEnumAttribute("Children's Books")]
+			[XmlEnum("Children's Books")]
 			ChildrensBooks,
 			Comics,
-			[XmlEnumAttribute("Computers & Internet")]
+			[XmlEnum("Computers & Internet")]
 			ComputersInternet,
-			[XmlEnumAttribute("Cooking, Food & Wine")]
+			[XmlEnum("Cooking, Food & Wine")]
 			CookingFoodWine,
 			Entertainment,
-			[XmlEnumAttribute("Gay & Lesbian")]
+			[XmlEnum("Gay & Lesbian")]
 			GayLesbian,
-			[XmlEnumAttribute("Health & Fitness")]
+			[XmlEnum("Health & Fitness")]
 			HealthFitness,
 			History,
-			[XmlEnumAttribute("Home & Garden")]
+			[XmlEnum("Home & Garden")]
 			HomeGarden,
 			Horror,
-			[XmlEnumAttribute("Literature & Fiction")]
+			[XmlEnum("Literature & Fiction")]
 			LiteratureFiction,
-			[XmlEnumAttribute("Mind & Body")]
+			[XmlEnum("Mind & Body")]
 			MindBody,
-			[XmlEnumAttribute("Mystery & Thrillers")]
+			[XmlEnum("Mystery & Thrillers")]
 			MysteryThrillers,
 			Nonfiction,
-			[XmlEnumAttribute("Outdoors & Nature")]
+			[XmlEnum("Outdoors & Nature")]
 			OutdoorsNature,
-			[XmlEnumAttribute("Parenting & Families")]
+			[XmlEnum("Parenting & Families")]
 			ParentingFamilies,
-			[XmlEnumAttribute("Professional & Technical")]
+			[XmlEnum("Professional & Technical")]
 			ProfessionalTechnical,
 			Reference,
-			[XmlEnumAttribute("Religion & Spirituality")]
+			[XmlEnum("Religion & Spirituality")]
 			ReligionSpirituality,
 			Romance,
 			Science,
-			[XmlEnumAttribute("Science Fiction & Fantasy")]
+			[XmlEnum("Science Fiction & Fantasy")]
 			ScienceFictionFantasy,
-			[XmlEnumAttribute("Sheet Music & Scores")]
+			[XmlEnum("Sheet Music & Scores")]
 			SheetMusicScores,
 			Sports,
 			Teens,
 			Travel
 		}
 
-		[XmlTypeAttribute(Namespace = "http://www.limewire.com/schemas/book.xsd")]
+		[XmlType(Namespace = "http://www.limewire.com/schemas/book.xsd")]
 		public enum BookType
 		{
 			Book,
@@ -395,25 +411,25 @@ namespace Schemas
 			Article
 		}
 
-		[XmlTypeAttribute(Namespace = "http://www.limewire.com/schemas/book.xsd")]
+		[XmlType(Namespace = "http://www.limewire.com/schemas/book.xsd")]
 		public enum FormatType
 		{
-			[XmlEnumAttribute("Adobe Reader")]
+			[XmlEnum("Adobe Reader")]
 			AdobeReader,
-			[XmlEnumAttribute("Compiled HTML Help")]
+			[XmlEnum("Compiled HTML Help")]
 			CompiledHTMLHelp,
-			[XmlEnumAttribute("Fiction Book")]
+			[XmlEnum("Fiction Book")]
 			FictionBook,
 			Image,
-			[XmlEnumAttribute("Microsoft Reader")]
+			[XmlEnum("Microsoft Reader")]
 			MicrosoftReader,
 			PDF,
-			[XmlEnumAttribute("Pocket PDF")]
+			[XmlEnum("Pocket PDF")]
 			PocketPDF,
 			Text
 		}
 
-		[XmlTypeAttribute(Namespace = "http://www.limewire.com/schemas/book.xsd")]
+		[XmlType(Namespace = "http://www.limewire.com/schemas/book.xsd")]
 		public enum BackType
 		{
 			Digital,
