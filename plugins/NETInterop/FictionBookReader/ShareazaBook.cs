@@ -275,6 +275,8 @@ namespace Schemas
 				// this.year = fb.description.titleinfo.date.value.Year;
 				if (fb.description.titleinfo.keywords != null)
 					this.keywords = fb.description.titleinfo.keywords.Value;
+				
+				this.description = GetDescription(fb.description.titleinfo.annotation);
 			}
 
 			if (fb.description.publishinfo != null) {
@@ -373,6 +375,22 @@ namespace Schemas
 				return default(DateTime);
 
 			return result;
+		}
+		
+		private string GetDescription(AnnotationType annotations) {
+			if (annotations == null || annotations.Items == null ||
+				annotations.Items.Length == 0) return String.Empty;
+			
+			StringBuilder sb = new StringBuilder();
+			
+			for (int i = 0; i < annotations.Items.Length; i++) {
+				ParaType paragraph = annotations.Items[i] as ParaType;
+				if (paragraph != null) {
+					sb.Append(String.Join(@" ", paragraph.Text));
+					sb.Append(@" ");
+				}
+			}
+			return sb.ToString();
 		}
 
 		[XmlType(Namespace = "http://www.limewire.com/schemas/book.xsd")]
