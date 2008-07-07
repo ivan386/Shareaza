@@ -252,11 +252,6 @@ namespace Shareaza
 				if (fs != null) fs.Close();
 			}
 
-			if (image == null || image.binary == null || image.binary.Length == 0) {
-				Marshal.ThrowExceptionForHR(Hresults.E_FAIL);
-				return;
-			}
-
 			FictionBookBinary binary = GetCover(image);
 			if (binary == null) {
 				Marshal.ThrowExceptionForHR(Hresults.E_FAIL);
