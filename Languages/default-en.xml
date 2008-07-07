@@ -172,7 +172,7 @@
 		<button id="ID_DOWNLOADS_CLEAR_COMPLETE" text="Clear Download"/>
 		<separator/>
 		<button id="ID_DOWNLOADS_MONITOR" text="Show Monitor"/>
-		<button id="ID_DOWNLOADS_TORRENT_INFO" text="Torrent Info"/>
+		<button id="ID_DOWNLOADS_EDIT" text="Properties"/>
 		<rightAlign/>
 		<button id="ID_TOOLS_DOWNLOAD" text="Add Download/Torrent..."/>
 		<button id="ID_DOWNLOADS_CLEAR_COMPLETED" text="Clear Completed"/>
@@ -439,6 +439,7 @@
 	<toolbar name="WebServices.ShareMonkey.WithSave">
 		<button id="ID_SHAREMONKEY_DOWNLOAD" text="Get Data"/>
 		<button id="ID_SHAREMONKEY_SAVE" text="Save"/>
+		<control id="ID_SHAREMONKEY_SAVE_OPTION" text="Save Preview" width="100" checked="true"/>
 		<separator/>
 		<button id="ID_SHAREMONKEY_PREVIOUS" text="Previous"/>
 		<button id="ID_SHAREMONKEY_NEXT" text="Next"/>
@@ -1035,14 +1036,14 @@
 			<item id="ID_DOWNLOADS_URL" text="_Add Source..."/>
 			<separator/>
 			<item id="ID_DOWNLOADS_MONITOR" text="Monitor _Window"/>
-			<item id="ID_DOWNLOADS_EDIT" text="Advanced _Edit..."/>
-			<item id="ID_DOWNLOADS_TORRENT_INFO" text="_Torrent Info..."/>
 			<separator/>
 			<item id="ID_DOWNLOADS_MOVE_UP" text="Move _Up"/>
 			<item id="ID_DOWNLOADS_MOVE_DOWN" text="Move _Down"/>
 			<item id="ID_DOWNLOADS_BOOST" text="_Ignore Bandwidth Limit"/>
 		</menu>
 		<item id="ID_DOWNLOADS_HELP" text="_Help..."/>
+		<separator/>
+		<item id="ID_DOWNLOADS_EDIT" text="_Properties"/>
 	</menu>
 	<menu name="CDownloadsWnd.Source">
 		<item id="ID_TRANSFERS_CONNECT" text="_Access"/>
@@ -1067,15 +1068,15 @@
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="_Clear"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_COPY" text="Copy _URI"/>
-		<item id="ID_DOWNLOADS_TORRENT_INFO" text="_Torrent Info"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_FILE_DELETE" text="_Delete File"/>
 		<item id="ID_DOWNLOADS_RATE" text="_Rate File..."/>
 	</menu>
 	<menu name="CDownloadsWnd.Seeding">
-		<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Open"/>
-		<item id="ID_DOWNLOADS_TORRENT_INFO" text="Torrent _Info"/>
+		<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Open or Play"/>
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="_Stop Seeding"/>
+		<separator/>
+		<item id="ID_DOWNLOADS_EDIT" text="_Properties"/>
 	</menu>
 	<menu name="CDownloadsWnd.Nothing">
 		<item id="ID_DOWNLOADS_HELP" text="_Help..."/>
