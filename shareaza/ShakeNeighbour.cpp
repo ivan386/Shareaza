@@ -1842,5 +1842,5 @@ BOOL CShakeNeighbour::IsClientBanned()
 	if ( _tcsistr( m_sUserAgent, _T("i2hub 2.0") ) )					return TRUE;
 
 	// Check by content filter
-	return Security.IsDenied( NULL, m_sUserAgent );
+	return Security.IsDenied( m_sUserAgent );
 }

@@ -440,7 +440,7 @@ CQueryHit* CQueryHit::FromPacket(CG2Packet* pPacket, int* pnHops)
 				{
 					nAddress = pPacket->ReadLongLE();
 					if ( Network.IsReserved( (IN_ADDR*)&nAddress, false ) ||
-						 Security.IsDenied( (IN_ADDR*)&nAddress, NULL ) )
+						 Security.IsDenied( (IN_ADDR*)&nAddress ) )
 						bSpam = true;
 					nPort = pPacket->ReadShortBE();
 				}
@@ -1981,4 +1981,9 @@ void CQueryHit::Serialize(CArchive& ar, int nVersion)
 		
 		if ( m_nSources == 0 && m_sURL.GetLength() ) m_nSources = 1;
 	}
+}
+
+void CQueryHit::Ban(int nBanLength)
+{
+	Security.Ban( &m_pAddress, nBanLength );
 }

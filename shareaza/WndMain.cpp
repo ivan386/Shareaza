@@ -2768,6 +2768,10 @@ LRESULT CMainWnd::OnSetText(WPARAM /*wParam*/, LPARAM /*lParam*/)
 
 LRESULT CMainWnd::OnSanityCheck(WPARAM /*wParam*/, LPARAM /*lParam*/)
 {
+	// Remove extra messages
+	MSG msg;
+	while ( ::PeekMessage( &msg, NULL, WM_SANITY_CHECK, WM_SANITY_CHECK, PM_REMOVE ) );
+
 	HostCache.SanityCheck();
 
 	// TODO: Downloads.SanityCheck();

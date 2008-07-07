@@ -69,12 +69,22 @@ public:
 	void			Remove(CSecureRule* pRule);
 	void			MoveUp(CSecureRule* pRule);
 	void			MoveDown(CSecureRule* pRule);
-	void			Ban(const IN_ADDR* pAddress, int nBanLength, BOOL bMessage = TRUE);
+
+	inline void		Ban(const IN_ADDR* pAddress, int nBanLength, BOOL bMessage = TRUE)
+	{
+		BanHelper( pAddress, NULL, nBanLength, bMessage );
+	}
+
+	inline void		Ban(const CShareazaFile* pFile, int nBanLength, BOOL bMessage = TRUE)
+	{
+		BanHelper( NULL, pFile, nBanLength, bMessage );
+	}
+
 	bool			Complain(const IN_ADDR* pAddress, int nBanLength = ban5Mins, int nExpire = 30, int nCount = 3);
 	void			Clear();
-	BOOL			IsDenied(IN_ADDR* pAddress, LPCTSTR pszContent = NULL);
-	BOOL			IsDenied(CString sName, QWORD nSize, const Hashes::Sha1Hash& oSHA1, 
-							 const Hashes::Ed2kHash& oED2K);
+	BOOL			IsDenied(const IN_ADDR* pAddress);
+	BOOL			IsDenied(LPCTSTR pszContent);
+	BOOL			IsDenied(const CShareazaFile* pFile);
 	BOOL			IsDenied(CQuerySearch::const_iterator itStart, 
 							 CQuerySearch::const_iterator itEnd, LPCTSTR pszContent);
 	void			Expire();
@@ -83,6 +93,7 @@ public:
 	BOOL			Import(LPCTSTR pszFile);
 
 protected:
+	void			BanHelper(const IN_ADDR* pAddress, const CShareazaFile* pFile, int nBanLength, BOOL bMessage);
 	CSecureRule*	GetGUID(const GUID& oGUID) const;
 	CXMLElement*	ToXML(BOOL bRules = TRUE);
 	BOOL			FromXML(CXMLElement* pXML);
@@ -121,13 +132,15 @@ public:
 	void	Remove();
 	void	Reset();
 	void	MaskFix();
-	BOOL	IsExpired(DWORD nNow, BOOL bSession = FALSE);
-	BOOL	Match(const IN_ADDR* pAddress, LPCTSTR pszContent = NULL);
+	BOOL	IsExpired(DWORD nNow, BOOL bSession = FALSE) const;
+	BOOL	Match(const IN_ADDR* pAddress) const;
+	BOOL	Match(LPCTSTR pszContent) const;
+	BOOL	Match(const CShareazaFile* pFile) const;
 	BOOL	Match(CQuerySearch::const_iterator itStart, 
-				  CQuerySearch::const_iterator itEnd, LPCTSTR pszContent);
+				  CQuerySearch::const_iterator itEnd, LPCTSTR pszContent) const;
 	void	SetContentWords(const CString& strContent);
 	CString	GetRegExpFilter(CQuerySearch::const_iterator itStart, 
-							CQuerySearch::const_iterator itEnd);
+							CQuerySearch::const_iterator itEnd) const;
 	CString	GetContentWords();
 
 public:

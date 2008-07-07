@@ -40,15 +40,11 @@ class CBaseMatchWnd;
 
 typedef struct
 {
-	BOOL	bHadSHA1;
-	BOOL	bHadTiger;
-	BOOL	bHadED2K;
-	BOOL	bHadBTH;
-	BOOL	bHadMD5;
-	DWORD	nHadCount;
-	DWORD	nHadFilteredGnutella;
-	DWORD	nHadFilteredED2K;
-	BOOL	bHad[5];
+	bool	bHadSHA1;
+	bool	bHadTiger;
+	bool	bHadED2K;
+	bool	bHadBTH;
+	bool	bHadMD5;
 } FILESTATS;
 
 class CMatchList
@@ -196,26 +192,26 @@ public:
 	inline int	Compare(CMatchFile* pFile) const;
 	CString		GetURN() const;
 	void		Serialize(CArchive& ar, int nVersion);
-
+	void		Ban(int nBanLength);	// Ban by hashes and by hit host IPs
 	
 	inline DWORD GetFilteredCount()
 	{
-		if ( m_pList->m_bFilterLocal && GetLibraryStatus() == TRI_FALSE ) return 0;
-		if ( m_pList->m_bFilterDRM && m_bDRM ) return 0;
-		if ( m_pList->m_bFilterSuspicious && m_bSuspicious ) return 0;
-		if ( m_nSources < m_pList->m_nFilterSources ) return 0;
-		if ( m_pBest == NULL ) return 0;
+		if ( ( m_pList->m_bFilterDRM && m_bDRM ) ||
+			( m_pList->m_bFilterSuspicious && m_bSuspicious ) ||
+			( m_nSources < m_pList->m_nFilterSources ) ||
+			( m_pBest == NULL ) ||
+			( m_pList->m_bFilterLocal && GetLibraryStatus() == TRI_FALSE ) ) return 0;
 
 		return m_nFiltered;
 	}
 	
 	inline DWORD GetItemCount()
 	{
-		if ( m_pList->m_bFilterLocal && GetLibraryStatus() == TRI_FALSE )return 0;
-		if ( m_pList->m_bFilterDRM && m_bDRM ) return 0;
-		if ( m_pList->m_bFilterSuspicious && m_bSuspicious ) return 0;
-		if ( m_nSources < m_pList->m_nFilterSources ) return 0;
-		if ( m_pBest == NULL ) return 0;
+		if ( ( m_pList->m_bFilterDRM && m_bDRM ) ||
+			( m_pList->m_bFilterSuspicious && m_bSuspicious ) ||
+			( m_nSources < m_pList->m_nFilterSources ) ||
+			( m_pBest == NULL ) ||
+			( m_pList->m_bFilterLocal && GetLibraryStatus() == TRI_FALSE ) ) return 0;
 
 		if ( m_nFiltered == 1 || ! m_bExpanded )
 			return 1;

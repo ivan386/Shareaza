@@ -176,9 +176,8 @@ void CMatchList::AddHits(CQueryHit* pHit, CQuerySearch* pFilter)
 		// The size may be zero or match the size of the file.
 		// Empty file names are caught by the next clause and deleted.
 
-		if ( Security.IsDenied( &pHit->m_pAddress, pHit->m_sName ) || pHit->m_sName.IsEmpty() ||
-			 Security.IsDenied( pHit->m_sName, pHit->m_nSize, pHit->m_oSHA1, pHit->m_oED2K ) || 
-			 pHit->m_nSize == 0 )
+		if ( pHit->m_nSize == 0 || pHit->m_sName.IsEmpty() ||
+			Security.IsDenied( &pHit->m_pAddress ) || Security.IsDenied( pHit ) )
 		{
 			delete pHit;
 			pHit = pNext;
@@ -239,7 +238,6 @@ void CMatchList::AddHits(CQueryHit* pHit, CQuerySearch* pFilter)
 		FilterHit( pHit );
 		
 		CMatchFile* pFile	= NULL;
-		PROTOCOLID nProtocol= pHit->m_nProtocol;
 		FILESTATS Stats = {};
 
 		if ( pHit->m_oSHA1 )
@@ -270,10 +268,11 @@ void CMatchList::AddHits(CQueryHit* pHit, CQuerySearch* pFilter)
 			pFile = FindFileAndAddHit( pHit, fSize, &Stats );
 		}
 		
-		if ( pFile != NULL ) // New hit for the existing file
+		bool bExistingFile = ( pFile != NULL );
+		if ( bExistingFile )
 		{
+			// New hit for the existing file
 			pMap = m_pFiles;
-
 			for ( DWORD nCount = m_nFiles ; nCount ; nCount--, pMap++ )
 			{
 				if ( *pMap == pFile )
@@ -289,37 +288,13 @@ void CMatchList::AddHits(CQueryHit* pHit, CQuerySearch* pFilter)
 					{
 						UpdateRange( m_nFiles - nCount, m_nFiles - nCount );
 					}
-
 					break;
 				}
-			}
-			
-			if ( Stats.nHadCount )
-			{
-				ASSERT( m_nItems >= (UINT)Stats.nHadCount );
-				m_nItems -= Stats.nHadCount;
-				ASSERT( m_nFilteredFiles );
-				m_nFilteredFiles --;
-				ASSERT( m_nFilteredHits >= (UINT)Stats.nHadFilteredGnutella + Stats.nHadFilteredED2K );
-				m_nFilteredHits -= ( Stats.nHadFilteredGnutella + Stats.nHadFilteredED2K );
-				switch ( nProtocol )
-				{
-				case PROTOCOL_G1:
-				case PROTOCOL_G2:
-					if ( m_nGnutellaHits >= (UINT)Stats.nHadFilteredGnutella )
-						m_nGnutellaHits -= Stats.nHadFilteredGnutella;
-					break;
-				case PROTOCOL_ED2K:
-					if ( m_nED2KHits >= (UINT)Stats.nHadFilteredED2K )
-						m_nED2KHits -= Stats.nHadFilteredED2K;
-					break;
-				default:
-					;
-				}
-			}
+			}			
 		}
-		else // New file hit
+		else
 		{
+			// New file hit
 			pFile = new CMatchFile( this, pHit );
 			pFile->m_bNew = m_bNew;
 			
@@ -349,6 +324,23 @@ void CMatchList::AddHits(CQueryHit* pHit, CQuerySearch* pFilter)
 			{
 				UpdateRange( m_nFiles );
 				m_pFiles[ m_nFiles++ ] = pFile;
+			}
+
+			if ( DWORD nItemCount = pFile->GetItemCount() )
+			{
+				m_nItems += nItemCount;
+				m_nFilteredFiles ++;
+				m_nFilteredHits += pFile->m_nFiltered;
+				switch ( pHit->m_nProtocol )
+				{
+				case PROTOCOL_G1:
+				case PROTOCOL_G2:
+					m_nGnutellaHits += pFile->m_nFiltered;
+					break;
+				case PROTOCOL_ED2K:
+					m_nED2KHits += pFile->m_nFiltered;
+					break;
+				}
 			}
 		}
 		
@@ -381,35 +373,6 @@ void CMatchList::AddHits(CQueryHit* pHit, CQuerySearch* pFilter)
 			pMap = m_pMapMD5 + pFile->m_oMD5[ 0 ];
 			pFile->m_pNextMD5 = *pMap;
 			*pMap = pFile;
-		}
-		
-		Stats.nHadCount = pFile->GetItemCount();
-		
-		if ( Stats.nHadCount )
-		{
-			m_nItems += Stats.nHadCount;
-			m_nFilteredFiles ++;
-			m_nFilteredHits += pFile->m_nFiltered;
-
-			switch ( nProtocol )
-			{
-			case PROTOCOL_G1:
-			case PROTOCOL_G2:
-				m_nGnutellaHits += pFile->m_nFiltered;
-				break;
-			case PROTOCOL_ED2K:
-				m_nED2KHits += pFile->m_nFiltered;
-				break;
-			case PROTOCOL_BT:
-			case PROTOCOL_FTP:
-			case PROTOCOL_HTTP:
-			case PROTOCOL_NULL:
-			case PROTOCOL_ANY:
-			default:
-//				ASSERT( 0 )
-				;
-			}
-
 		}
 		
 		pHit = pNext;
@@ -470,36 +433,18 @@ CMatchFile* CMatchList::FindFileAndAddHit(CQueryHit* pHit, const findType nFindF
 
 		if ( bValid )
 		{
-			Stats->bHad[0] = bool( pSeek->m_oSHA1 );
-			Stats->bHad[1] = bool( pSeek->m_oTiger );
-			Stats->bHad[2] = bool( pSeek->m_oED2K );
-			Stats->bHad[3] = bool( pSeek->m_oBTH );
-			Stats->bHad[4] = bool( pSeek->m_oMD5 );
-
+			bool bHadSHA1 = pSeek->m_oSHA1;
+			bool bHadTiger = pSeek->m_oTiger;
+			bool bHadED2K = pSeek->m_oED2K;
+			bool bHadBTH = pSeek->m_oBTH;
+			bool bHadMD5 = pSeek->m_oMD5;
 			if ( pSeek->Add( pHit, ( nFindFlag != fSize ) ) )
 			{
-				Stats->bHadSHA1	 |= Stats->bHad[0];
-				Stats->bHadTiger |= Stats->bHad[1];
-				Stats->bHadED2K	 |= Stats->bHad[2];
-				Stats->bHadBTH	 |= Stats->bHad[3];
-				Stats->bHadMD5	 |= Stats->bHad[4];
-
-				ASSERT( Stats->nHadCount == 0 );
-				Stats->nHadCount = pSeek->GetItemCount();
-				switch ( pHit->m_nProtocol )
-				{
-				case PROTOCOL_G1:
-				case PROTOCOL_G2:
-					ASSERT( Stats->nHadFilteredGnutella == 0 );
-					Stats->nHadFilteredGnutella	= pSeek->m_nFiltered;
-					break;
-				case PROTOCOL_ED2K:
-					ASSERT( Stats->nHadFilteredED2K	== 0 );
-					Stats->nHadFilteredED2K	= pSeek->m_nFiltered;
-					break;
-				default:
-					;
-				}
+				Stats->bHadSHA1	 |= bHadSHA1;
+				Stats->bHadTiger |= bHadTiger;
+				Stats->bHadED2K	 |= bHadED2K;
+				Stats->bHadBTH	 |= bHadBTH;
+				Stats->bHadMD5	 |= bHadMD5;
 				return pSeek;
 			}
 			//else
@@ -508,11 +453,11 @@ CMatchFile* CMatchList::FindFileAndAddHit(CQueryHit* pHit, const findType nFindF
 
 		if ( nFindFlag == fSize )
 		{
-			Stats->bHadSHA1 = FALSE;
-			Stats->bHadTiger = FALSE;
-			Stats->bHadED2K = FALSE;
-			Stats->bHadBTH = FALSE;
-			Stats->bHadMD5 = FALSE;
+			Stats->bHadSHA1 = false;
+			Stats->bHadTiger = false;
+			Stats->bHadED2K = false;
+			Stats->bHadBTH = false;
+			Stats->bHadMD5 = false;
 		}
 
 		switch( nFindFlag )
@@ -967,16 +912,15 @@ BOOL CMatchList::FilterHit(CQueryHit* pHit)
 		}
 	}
 
-	if ( m_bFilterBusy && pHit->m_bBusy == TRI_TRUE ) return FALSE;
-	//if ( m_bFilterPush && pHit->m_bPush == TRI_TRUE && pHit->m_nProtocol != PROTOCOL_ED2K ) return FALSE;
-	if ( m_bFilterPush && pHit->m_bPush == TRI_TRUE ) return FALSE;
-	if ( m_bFilterUnstable && pHit->m_bStable == TRI_FALSE ) return FALSE;
-	if ( m_bFilterReject && pHit->m_bMatched == FALSE ) return FALSE;
-	if ( m_bFilterBogus && pHit->m_bBogus ) 
+	if ( ( m_bFilterBusy && pHit->m_bBusy == TRI_TRUE ) ||
+	//	( m_bFilterPush && pHit->m_bPush == TRI_TRUE && pHit->m_nProtocol != PROTOCOL_ED2K ) ||
+		( m_bFilterPush && pHit->m_bPush == TRI_TRUE ) ||
+		( m_bFilterUnstable && pHit->m_bStable == TRI_FALSE ) ||
+		( m_bFilterReject && pHit->m_bMatched == FALSE ) ||
+		( m_bFilterBogus && pHit->m_bBogus ) ||
+		( m_nFilterMinSize > 0 && pHit->m_nSize < m_nFilterMinSize ) ||
+		( m_nFilterMaxSize > 0 && pHit->m_nSize > m_nFilterMaxSize ) )
 		return FALSE;
-	
-	if ( m_nFilterMinSize > 0 && pHit->m_nSize < m_nFilterMinSize ) return FALSE;
-	if ( m_nFilterMaxSize > 0 && pHit->m_nSize > m_nFilterMaxSize ) return FALSE;
 	
 	if ( m_pszFilter )
 	{
@@ -2681,4 +2625,14 @@ void CMatchFile::SanityCheck()
 
 		pHit = pNext;
 	}
+}
+
+void CMatchFile::Ban(int nBanLength)
+{
+	// Ban by hit host IPs
+	for ( CQueryHit* pHit = m_pHits ; pHit ; pHit = pHit->m_pNext )
+		pHit->Ban( nBanLength );
+
+	// Ban hashes
+	Security.Ban( this, nBanLength );
 }

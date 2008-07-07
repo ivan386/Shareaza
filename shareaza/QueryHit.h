@@ -103,6 +103,7 @@ public:
 	void		Delete();
 	int			GetRating();
 	void		Serialize(CArchive& ar, int nVersion);
+	void		Ban(int nBanLength);	// Ban by host IP only
 protected:
 	void		ReadG1Packet(CG1Packet* pPacket);
 	void		ParseAttributes(const Hashes::Guid& pClientID, CVendor* pVendor, BYTE* nFlags, BOOL bChat, BOOL bBrowseHost);

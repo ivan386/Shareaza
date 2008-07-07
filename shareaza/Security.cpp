@@ -201,18 +201,18 @@ void CSecurity::Clear()
 //////////////////////////////////////////////////////////////////////
 // CSecurity ban
 
-void CSecurity::Ban(const IN_ADDR* pAddress, int nBanLength, BOOL bMessage)
+void CSecurity::BanHelper(const IN_ADDR* pAddress, const CShareazaFile* pFile, int nBanLength, BOOL bMessage)
 {
 	CQuickLock oLock( m_pSection );
 
 	DWORD tNow = static_cast< DWORD >( time( NULL ) );
-	CString strAddress = inet_ntoa( *pAddress );
 
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
 		CSecureRule* pRule = GetNext( pos );
 
-		if ( pRule->Match( pAddress ) )
+		if ( ( pRule->m_nType == CSecureRule::srAddress && pRule->Match( pAddress ) ) ||
+			 ( pRule->m_nType == CSecureRule::srContent && pRule->Match( pFile ) ) )
 		{
 			if ( pRule->m_nAction == CSecureRule::srDeny )
 			{
@@ -224,19 +224,18 @@ void CSecurity::Ban(const IN_ADDR* pAddress, int nBanLength, BOOL bMessage)
 				{
 					pRule->m_nExpire = CSecureRule::srIndefinite;
 				}
-				else if ( bMessage )
+				else if ( bMessage && pAddress )
 				{
 					theApp.Message( MSG_NOTICE, IDS_NETWORK_SECURITY_ALREADY_BLOCKED,
-						(LPCTSTR)strAddress );
+						(LPCTSTR)CString( inet_ntoa( *pAddress ) ) );
 				}
-
 				return;
 			}
 		}
 	}
 
-	CSecureRule* pRule	= new CSecureRule();
-	pRule->m_nAction	= CSecureRule::srDeny;
+	CSecureRule* pRule = new CSecureRule();
+	pRule->m_nAction = CSecureRule::srDeny;
 
 	switch ( nBanLength )
 	{
@@ -269,13 +268,26 @@ void CSecurity::Ban(const IN_ADDR* pAddress, int nBanLength, BOOL bMessage)
 		pRule->m_sComment	= _T("Quick Ban");
 	}
 
-	CopyMemory( pRule->m_nIP, pAddress, sizeof pRule->m_nIP );
+	if ( pAddress )
+		CopyMemory( pRule->m_nIP, pAddress, sizeof pRule->m_nIP );
+	else if ( pFile && ( pFile->m_oSHA1 || pFile->m_oED2K || pFile->m_oTiger ||
+		pFile->m_oMD5 || pFile->m_oBTH ) )
+	{
+		pRule->m_nType = CSecureRule::srContent;
+		pRule->SetContentWords(
+			( pFile->m_oSHA1  ? pFile->m_oSHA1.toUrn()  + _T(" ") : CString() ) +
+			( pFile->m_oED2K  ? pFile->m_oED2K.toUrn()  + _T(" ") : CString() ) +
+			( pFile->m_oTiger ? pFile->m_oTiger.toUrn() + _T(" ") : CString() ) +
+			( pFile->m_oMD5   ? pFile->m_oMD5.toUrn()   + _T(" ") : CString() ) +
+			( pFile->m_oBTH   ? pFile->m_oBTH.toUrn()             : CString() ) );
+	}
+
 	Add( pRule );
 
-	if ( bMessage )
+	if ( bMessage && pAddress )
 	{
 		theApp.Message( MSG_NOTICE, IDS_NETWORK_SECURITY_BLOCKED,
-			(LPCTSTR)strAddress );
+			(LPCTSTR)CString( inet_ntoa( *pAddress ) ) );
 	}
 }
 
@@ -313,7 +325,7 @@ bool CSecurity::Complain(const IN_ADDR* pAddress, int nBanLength, int nExpire, i
 //////////////////////////////////////////////////////////////////////
 // CSecurity access check
 
-BOOL CSecurity::IsDenied(IN_ADDR* pAddress, LPCTSTR pszContent)
+BOOL CSecurity::IsDenied(const IN_ADDR* pAddress)
 {
 	CQuickLock oLock( m_pSection );
 
@@ -332,7 +344,46 @@ BOOL CSecurity::IsDenied(IN_ADDR* pAddress, LPCTSTR pszContent)
 				m_pRegExpRules.RemoveAt( posRegExp );
 			delete pRule;
 		}
-		else if ( pRule->Match( pAddress, pszContent ) )
+		else if ( pRule->Match( pAddress ) )
+		{
+			pRule->m_nToday ++;
+			pRule->m_nEver ++;
+
+			if ( pRule->m_nExpire > CSecureRule::srSession &&
+				pRule->m_nExpire < nNow + 300 )
+				// Add 5 min penalty for early access
+				pRule->m_nExpire = nNow + 300;
+
+			if ( pRule->m_nAction == CSecureRule::srAccept )
+				return FALSE;
+			else if ( pRule->m_nAction == CSecureRule::srDeny )
+				return TRUE;
+		}
+	}
+
+	return m_bDenyPolicy;
+}
+
+BOOL CSecurity::IsDenied(LPCTSTR pszContent)
+{
+	CQuickLock oLock( m_pSection );
+
+	DWORD nNow = static_cast< DWORD >( time( NULL ) );
+
+	for ( POSITION pos = GetIterator() ; pos ; )
+	{
+		POSITION posLast = pos;
+		CSecureRule* pRule = GetNext( pos );
+
+		if ( pRule->IsExpired( nNow ) )
+		{
+			m_pRules.RemoveAt( posLast );
+			POSITION posRegExp = m_pRegExpRules.Find( pRule );
+			if ( posRegExp )
+				m_pRegExpRules.RemoveAt( posRegExp );
+			delete pRule;
+		}
+		else if ( pRule->Match( pszContent ) )
 		{
 			pRule->m_nToday ++;
 			pRule->m_nEver ++;
@@ -354,21 +405,43 @@ BOOL CSecurity::IsDenied(IN_ADDR* pAddress, LPCTSTR pszContent)
 
 //////////////////////////////////////////////////////////////////////
 // CSecurity check file size, hash
-BOOL CSecurity::IsDenied(CString sName, QWORD nSize, const Hashes::Sha1Hash& oSHA1, 
-						 const Hashes::Ed2kHash& oED2K)
+
+BOOL CSecurity::IsDenied(const CShareazaFile* pFile)
 {
-	if ( LPCTSTR pszExt = PathFindExtension( (LPCTSTR)sName ) )
+	CQuickLock oLock( m_pSection );
+
+	DWORD nNow = static_cast< DWORD >( time( NULL ) );
+
+	for ( POSITION pos = GetIterator() ; pos ; )
 	{
-		CString strExtension;
-		pszExt++;
-		strExtension.Format( _T("size:%s:%I64i"), pszExt, nSize );
-		if ( IsDenied( NULL, strExtension ) )
-			return TRUE;
+		POSITION posLast = pos;
+		CSecureRule* pRule = GetNext( pos );
+
+		if ( pRule->IsExpired( nNow ) )
+		{
+			m_pRules.RemoveAt( posLast );
+			POSITION posRegExp = m_pRegExpRules.Find( pRule );
+			if ( posRegExp )
+				m_pRegExpRules.RemoveAt( posRegExp );
+			delete pRule;
+		}
+		else if ( pRule->Match( pFile ) )
+		{
+			pRule->m_nToday ++;
+			pRule->m_nEver ++;
+
+			if ( pRule->m_nExpire > CSecureRule::srSession &&
+				pRule->m_nExpire < nNow + 300 )
+				// Add 5 min penalty for early access
+				pRule->m_nExpire = nNow + 300;
+
+			if ( pRule->m_nAction == CSecureRule::srAccept )
+				return FALSE;
+			else if ( pRule->m_nAction == CSecureRule::srDeny )
+				return TRUE;
+		}
 	}
-	if ( oSHA1.isValid() && IsDenied( NULL, oSHA1.toUrn() ) )
-		return TRUE;
-	if ( oED2K.isValid() && IsDenied( NULL, oED2K.toUrn() ) )
-		return TRUE;
+
 	return m_bDenyPolicy;
 }
 
@@ -736,7 +809,7 @@ void CSecureRule::Reset()
 //////////////////////////////////////////////////////////////////////
 // CSecureRule expiry check
 
-BOOL CSecureRule::IsExpired(DWORD nNow, BOOL bSession)
+BOOL CSecureRule::IsExpired(DWORD nNow, BOOL bSession) const
 {
 	if ( m_nExpire == srIndefinite ) return FALSE;
 	if ( m_nExpire == srSession ) return bSession;
@@ -746,11 +819,8 @@ BOOL CSecureRule::IsExpired(DWORD nNow, BOOL bSession)
 //////////////////////////////////////////////////////////////////////
 // CSecureRule match
 
-BOOL CSecureRule::Match(const IN_ADDR* pAddress, LPCTSTR pszContent)
+BOOL CSecureRule::Match(const IN_ADDR* pAddress) const
 {
-	if ( IsExpired( (DWORD)time( NULL ) ) )
-		return FALSE;
-
 	if ( m_nType == srAddress && pAddress != NULL )
 	{
 		DWORD* pBase = (DWORD*)m_nIP;
@@ -760,12 +830,20 @@ BOOL CSecureRule::Match(const IN_ADDR* pAddress, LPCTSTR pszContent)
 // This only works if IP's are &ed before entered in the list
 		if ( ( ( *pTest ) & ( *pMask ) ) == ( *pBase ) )
 		{
-			return TRUE;
+			return ! IsExpired( (DWORD)time( NULL ) );
 		}
 	}
-	else if ( m_nType == srContent && pszContent != NULL && m_pContent != NULL )
+	return FALSE;
+}
+
+BOOL CSecureRule::Match(LPCTSTR pszContent) const
+{
+	if ( m_nType == srContent && pszContent != NULL && m_pContent != NULL )
 	{
 		if ( m_nIP[0] == 2 )
+			return FALSE;
+
+		if ( IsExpired( (DWORD)time( NULL ) ) )
 			return FALSE;
 
 		for ( LPCTSTR pszFilter = m_pContent ; *pszFilter ; )
@@ -784,14 +862,39 @@ BOOL CSecureRule::Match(const IN_ADDR* pAddress, LPCTSTR pszContent)
 			pszFilter += _tcslen( pszFilter ) + 1;
 		}
 
-		if ( m_nIP[0] == 1 ) return TRUE;
+		if ( m_nIP[0] == 1 )
+			return TRUE;
+	}
+
+	return FALSE;
+}
+
+BOOL CSecureRule::Match(const CShareazaFile* pFile) const
+{
+	if ( m_nType == srContent && pFile != NULL && m_pContent != NULL )
+	{
+		if ( LPCTSTR pszExt = PathFindExtension( (LPCTSTR)pFile->m_sName ) )
+		{
+			CString strExtension;
+			pszExt++;
+			strExtension.Format( _T("size:%s:%I64i"), pszExt, pFile->m_nSize );
+			if ( Match( strExtension ) )
+				return TRUE;
+		}
+
+		return
+			( pFile->m_oSHA1  && Match( pFile->m_oSHA1.toUrn() ) ) ||
+			( pFile->m_oED2K  && Match( pFile->m_oED2K.toUrn() ) ) ||
+			( pFile->m_oTiger && Match( pFile->m_oTiger.toUrn() ) ) ||
+			( pFile->m_oMD5   && Match( pFile->m_oMD5.toUrn() ) ) ||
+			( pFile->m_oBTH   && Match( pFile->m_oBTH.toUrn() ) );
 	}
 
 	return FALSE;
 }
 
 BOOL CSecureRule::Match(CQuerySearch::const_iterator itStart, 
-						CQuerySearch::const_iterator itEnd, LPCTSTR pszContent)
+						CQuerySearch::const_iterator itEnd, LPCTSTR pszContent) const
 {
 	CString strFilter = GetRegExpFilter( itStart, itEnd );
 	if ( strFilter.GetLength() )
@@ -902,7 +1005,8 @@ CString CSecureRule::GetContentWords()
 
 // Build a regular expression filter from the search query words
 // Returns an empty string if not applied or if the filter was invalid
-CString CSecureRule::GetRegExpFilter(CQuerySearch::const_iterator itStart, CQuerySearch::const_iterator itEnd)
+CString CSecureRule::GetRegExpFilter(CQuerySearch::const_iterator itStart,
+									 CQuerySearch::const_iterator itEnd) const
 {
 	if ( m_nIP[ 0 ] != 2 ) return CString();
 

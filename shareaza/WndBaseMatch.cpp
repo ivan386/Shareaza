@@ -571,17 +571,20 @@ void CBaseMatchWnd::OnHitMonitorSearch()
 
 void CBaseMatchWnd::OnUpdateSecurityBan(CCmdUI* pCmdUI) 
 {
-	CQueryHit* pHit = m_pMatches->GetSelectedHit();
-	pCmdUI->Enable( pHit != NULL );
+	pCmdUI->Enable( m_pMatches->GetSelectedCount() );
 }
 
 void CBaseMatchWnd::OnSecurityBan() 
 {
 	CSingleLock pLock( &Network.m_pSection, TRUE );
 
-	if ( CQueryHit* pHit = m_pMatches->GetSelectedHit() )
+	if ( CMatchFile* pFile = m_pMatches->GetSelectedFile() )
 	{
-		Security.Ban( &pHit->m_pAddress, banSession );
+		pFile->Ban( banForever );
+	}
+	else if ( CQueryHit* pHit = m_pMatches->GetSelectedHit() )
+	{
+		pHit->Ban( banForever );
 	}
 }
 
@@ -1040,7 +1043,10 @@ void CBaseMatchWnd::SanityCheck()
 	CQuickLock pLock( m_pMatches->m_pSection );
 
 	m_pMatches->SanityCheck();
+
+	m_pMatches->Filter();
 	m_bUpdate = TRUE;
+	PostMessage( WM_TIMER, 2 );
 }
 
 void CBaseMatchWnd::UpdateMessages(BOOL /*bActive*/)
