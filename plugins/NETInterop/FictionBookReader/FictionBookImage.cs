@@ -26,6 +26,8 @@ namespace Schemas
 	[XmlRoot(ElementName = "FictionBook", Namespace = "http://www.gribuser.ru/xml/fictionbook/2.0", IsNullable = false)]
 	public class FictionBookImage
 	{
+		[XmlElement("description")]
+		public FbTitleInfo description;	
 		/// <remarks>
 		/// Any binary data that is required for the presentation of this book in base64 format.
 		/// Currently only images are used.
@@ -33,4 +35,14 @@ namespace Schemas
 		[XmlElement("binary")]
 		public FictionBookBinary[] binary;	
 	}
+	
+	[XmlType()]
+	public class FbTitleInfo
+	{
+		/// <remarks>
+		/// Generic information about the book
+		///</remarks>
+		[XmlElement("title-info")]
+		public FictionBookDescriptionTitleinfo titleinfo;
+	}	
 }

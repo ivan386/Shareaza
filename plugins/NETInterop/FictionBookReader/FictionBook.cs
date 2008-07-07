@@ -35,14 +35,8 @@ namespace Schemas
 	}
 	
 	[XmlType()]
-	public class FictionBookDescription
+	public class FictionBookDescription : FbTitleInfo
 	{
-		/// <remarks>
-		/// Generic information about the book
-		///</remarks>
-		[XmlElement("title-info")]
-		public FictionBookDescriptionTitleinfo titleinfo;
-		
 		/// <remarks>
 		/// Information about this particular (xml) document
 		///</remarks>
@@ -466,13 +460,13 @@ namespace Schemas
 	public class ImageType
 	{
 		[XmlAttribute(Namespace="http://www.w3.org/1999/xlink")]
-		public string type;
+		public string type = string.Empty;
 
 		[XmlAttribute(Namespace="http://www.w3.org/1999/xlink")]
-		public string href;
+		public string href = string.Empty;
 
 		[XmlAttribute(Namespace="")]
-		public string alt;
+		public string alt = string.Empty;
 	}
 	
 	/// <remarks>

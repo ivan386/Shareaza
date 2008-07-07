@@ -252,16 +252,18 @@ namespace Shareaza
 				if (fs != null) fs.Close();
 			}
 
-			if (image == null || image.binary == null || image.binary.Length == 0 ||
-				image.binary[0].Value == null ||
-				(image.binary[0].ContentType != @"image/png" &&
-				 image.binary[0].ContentType != @"image/jpeg" &&
-				 image.binary[0].ContentType != @"image/bmp" &&
-				 image.binary[0].ContentType != @"image/gif")) {
+			if (image == null || image.binary == null || image.binary.Length == 0) {
 				Marshal.ThrowExceptionForHR(Hresults.E_FAIL);
+				return;
 			}
 
-			MemoryStream msIn = new MemoryStream(image.binary[0].Value);
+			FictionBookBinary binary = GetCover(image);
+			if (binary == null) {
+				Marshal.ThrowExceptionForHR(Hresults.E_FAIL);
+				return;
+			}
+
+			MemoryStream msIn = new MemoryStream(binary.Value);
 			try {
 				using (Image inImage = Image.FromStream(msIn)) {
 					MemoryStream msOut = new MemoryStream();
@@ -269,7 +271,7 @@ namespace Shareaza
 						Enc bmpCompression = Enc.Compression;
 						Enc bmpColors = Enc.ColorDepth;
 						// Save the bitmap with RLE compression and 24bit colors
-						using (EncoderParameter parameter1 = 
+						using (EncoderParameter parameter1 =
 												new EncoderParameter(bmpColors, 24))
 						using (EncoderParameter parameter2 =
 												new EncoderParameter(bmpCompression,
@@ -289,7 +291,7 @@ namespace Shareaza
 							// Declare an array to hold the bytes of the bitmap.
 							int nBytes = bmpData.Stride * outBitmap.Height;
 							byte[] bytes = new byte[nBytes];
-							
+
 							// Swap Red and Blue bytes
 							unsafe {
 								byte* pData = (byte*)bmpData.Scan0;
@@ -326,6 +328,40 @@ namespace Shareaza
 			} finally {
 				msIn.Close();
 			}
+		}
+
+		private FictionBookBinary GetCover(FictionBookImage image) {
+			if (image == null || image.binary == null ||
+				image.description == null || image.description.titleinfo == null)
+				return null;
+
+			ImageType[] covers = image.description.titleinfo.coverpage;
+			FictionBookBinary binary = null;
+			if (covers != null) {
+				foreach (ImageType cover in covers) {
+					string href = cover.href.TrimStart(new char[] { '#' });
+					if (!String.IsNullOrEmpty(href)) {
+						Predicate<FictionBookBinary> findHref =
+							new Predicate<FictionBookBinary>(delegate(FictionBookBinary fbb)
+							{
+								return fbb.Id == href;
+							});
+						binary = Array.Find(image.binary, findHref);
+						if (binary != null) {
+							if (binary.Value == null ||
+								(binary.ContentType != @"image/png" &&
+								 binary.ContentType != @"image/jpeg" &&
+								 binary.ContentType != @"image/bmp" &&
+								 binary.ContentType != @"image/gif")) {
+								binary = null;
+								continue;
+							} else
+								break;
+						}
+					}
+				}
+			}
+			return binary;
 		}
 
 		public void LoadFromMemory(string sType, Array pMemory,
