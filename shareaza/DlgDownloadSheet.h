@@ -1,5 +1,5 @@
 //
-// DlgTorrentInfoSheet.h
+// DlgDownloadSheet.h
 //
 // Copyright (c) Shareaza Development Team, 2002-2006.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
@@ -19,49 +19,37 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_DLGTORRENTINFOSHEET_H__FE20E80E_A1AA_CC2F05412743__INCLUDED_)
-#define AFX_DLGTORRENTINFOSHEET_H__FE20E80E_A1AA_CC2F05412743__INCLUDED_
-
 #pragma once
 
 class CSkinWindow;
 
 #include "BTInfo.h"
+#include "Download.h"
 
 
-class CTorrentInfoSheet : public CPropertySheet
+class CDownloadSheet : public CPropertySheet
 {
-// Construction
 public:
-	CTorrentInfoSheet(CBTInfo* pInfo, const Hashes::BtGuid& oPeerID);
-	virtual ~CTorrentInfoSheet();
+	CDownloadSheet(CDownload* pDownload);
+	virtual ~CDownloadSheet();
 
-	DECLARE_DYNAMIC(CTorrentInfoSheet)
+	DECLARE_DYNAMIC(CDownloadSheet)
 
-// Attributes
-public:
-	CBTInfo			m_pInfo;
-	Hashes::BtGuid	m_pPeerID;
+	CDownload*		m_pDownload;
+
+	virtual INT_PTR DoModal(int nPage = -1);
+
 protected:
 	CSkinWindow*	m_pSkin;
 	CBrush			m_brDialog;
+	CString			m_sDownloadTitle;
 	CString			m_sGeneralTitle;
 	CString			m_sFilesTitle;
 	CString			m_sTrackersTitle;
 
-// Overrides
-public:
-	//{{AFX_VIRTUAL(CTorrentInfoSheet)
-	public:
-	virtual INT_PTR DoModal(int nPage = -1);
 	virtual BOOL OnInitDialog();
-	//}}AFX_VIRTUAL
-
-// Implementation
-protected:
 	void SetTabTitle(CPropertyPage* pPage, CString& strTitle);
 
-	//{{AFX_MSG(CTorrentInfoSheet)
 	afx_msg void OnNcCalcSize(BOOL bCalcValidRects, NCCALCSIZE_PARAMS FAR* lpncsp);
 	afx_msg ONNCHITTESTRESULT OnNcHitTest(CPoint point);
 	afx_msg BOOL OnNcActivate(BOOL bActive);
@@ -75,11 +63,6 @@ protected:
 	afx_msg LRESULT OnSetText(WPARAM wParam, LPARAM lParam);
 	afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
 	afx_msg BOOL OnHelpInfo(HELPINFO* pHelpInfo);
-	//}}AFX_MSG
 
 	DECLARE_MESSAGE_MAP()
 };
-
-//{{AFX_INSERT_LOCATION}}
-
-#endif // !defined(AFX_DLGTORRENTINFOSHEET_H__FE20E80E_A1AA_CC2F05412743__INCLUDED_)

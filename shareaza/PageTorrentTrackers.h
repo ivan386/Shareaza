@@ -22,67 +22,45 @@
 #pragma once
 
 #include "ThreadImpl.h"
-#include "DlgTorrentInfoPage.h"
+#include "PagePropertyAdv.h"
 #include "HttpRequest.h"
 
 class CTorrentTrackersPage :
-	public CTorrentInfoPage,
+	public CPropertyPageAdv,
 	public CThreadImpl
 {
-// Construction
 public:
 	CTorrentTrackersPage();
 	virtual ~CTorrentTrackersPage();
 
 	DECLARE_DYNCREATE(CTorrentTrackersPage)
 
-// Dialog Data
-public:
-	//{{AFX_DATA(CTorrentTrackersPage)
 	enum { IDD = IDD_TORRENT_TRACKERS };
+
+protected:
+	CDownload*		m_pDownload;
 	CString			m_sName;
 	CString			m_sTracker;
 	CString			m_sEscapedPeerID;
-
 	CButton			m_wndRefresh;
 	CEdit			m_wndComplete;
 	CEdit			m_wndIncomplete;
 	CComboBox		m_wndTrackerMode;
-
 	CListCtrl		m_wndTrackers;
-	//}}AFX_DATA
-
-// Attributes
-public:
 	CHttpRequest	m_pRequest;
 	int				m_nComplete;
 	int				m_nIncomplete;
 
-// Thread
-protected:
 	void			OnRun();
 	BOOL			OnTree(CBENode* pNode);
-
-// URL escaper
-protected:
 	CString			Escape(const CString& str);
 
-// Overrides
-public:
-	//{{AFX_VIRTUAL(CTorrentTrackersPage)
-	public:
-	virtual void OnOK();
-	protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
-
-// Implementation
-protected:
-	//{{AFX_MSG(CTorrentTrackersPage)
+	virtual void	DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	virtual BOOL	OnInitDialog();
+	virtual void	OnOK();
 	afx_msg void	OnTorrentRefresh();
 	afx_msg void	OnTimer(UINT_PTR nIDEvent);
 	afx_msg void	OnDestroy();
-	//}}AFX_MSG
+
 	DECLARE_MESSAGE_MAP()
 };

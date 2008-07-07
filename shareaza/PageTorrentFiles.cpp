@@ -24,10 +24,10 @@
 #include "Settings.h"
 
 #include "ShellIcons.h"
-#include "BTInfo.h"
-#include "Download.h"
+#include "DlgDownloadSheet.h"
 #include "PageTorrentFiles.h"
 #include "Skin.h"
+#include "Transfers.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -35,9 +35,9 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 
-IMPLEMENT_DYNCREATE(CTorrentFilesPage, CTorrentInfoPage)
+IMPLEMENT_DYNCREATE(CTorrentFilesPage, CPropertyPageAdv)
 
-BEGIN_MESSAGE_MAP(CTorrentFilesPage, CTorrentInfoPage)
+BEGIN_MESSAGE_MAP(CTorrentFilesPage, CPropertyPageAdv)
 	//{{AFX_MSG_MAP(CTorrentFilesPage)
 	ON_WM_PAINT()
 	//}}AFX_MSG_MAP
@@ -48,8 +48,7 @@ END_MESSAGE_MAP()
 // CTorrentFilesPage property page
 
 CTorrentFilesPage::CTorrentFilesPage() : 
-	CTorrentInfoPage( CTorrentFilesPage::IDD ),
-	m_sName()
+	CPropertyPageAdv( CTorrentFilesPage::IDD )
 {
 }
 
@@ -59,7 +58,7 @@ CTorrentFilesPage::~CTorrentFilesPage()
 
 void CTorrentFilesPage::DoDataExchange(CDataExchange* pDX)
 {
-	CTorrentInfoPage::DoDataExchange(pDX);
+	CPropertyPageAdv::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CTorrentFilesPage)
 	DDX_Text(pDX, IDC_TORRENT_NAME, m_sName);
 	DDX_Control(pDX, IDC_TORRENT_FILES, m_wndFiles);
@@ -71,9 +70,12 @@ void CTorrentFilesPage::DoDataExchange(CDataExchange* pDX)
 
 BOOL CTorrentFilesPage::OnInitDialog()
 {
-	CTorrentInfoPage::OnInitDialog();
+	CPropertyPageAdv::OnInitDialog();
 
-	m_sName			= m_pInfo->m_sName;
+	CSingleLock pLock( &Transfers.m_pSection, TRUE );
+	CBTInfo* pInfo = &((CDownloadSheet*)GetParent())->m_pDownload->m_pTorrent;
+
+	m_sName			= pInfo->m_sName;
 
 	CRect rc;
 	m_wndFiles.GetClientRect( &rc );
@@ -83,9 +85,9 @@ BOOL CTorrentFilesPage::OnInitDialog()
 	m_wndFiles.InsertColumn( 1, _T("Size"), LVCFMT_RIGHT, 80, 0 );
 	Skin.Translate( _T("CTorrentFileList"), m_wndFiles.GetHeaderCtrl() );
 
-	for ( int nFile = 0 ; nFile < m_pInfo->m_nFiles ; nFile++ )
+	for ( int nFile = 0 ; nFile < pInfo->m_nFiles ; nFile++ )
 	{
-		CBTInfo::CBTFile* pFile = m_pInfo->m_pFiles + nFile;
+		CBTInfo::CBTFile* pFile = pInfo->m_pFiles + nFile;
 		
 		LV_ITEM pItem = {};
 		pItem.mask		= LVIF_TEXT|LVIF_IMAGE|LVIF_PARAM;
@@ -107,6 +109,6 @@ void CTorrentFilesPage::OnOK()
 {
 	UpdateData();
 
-	CTorrentInfoPage::OnOK();
+	CPropertyPageAdv::OnOK();
 }
 

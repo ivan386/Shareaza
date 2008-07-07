@@ -19,26 +19,22 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_PAGETORRENTGENERAL_H__3FE33E_A574_48F0_88EB_4AD6B2BE64__INCLUDED_)
-#define AFX_PAGETORRENTGENERAL_H__3FE33E_A574_48F0_88EB_4AD6B2BE64__INCLUDED_
-
 #pragma once
 
-#include "DlgTorrentInfoPage.h"
+#include "PagePropertyAdv.h"
 
-class CTorrentGeneralPage : public CTorrentInfoPage
+
+class CTorrentGeneralPage : public CPropertyPageAdv
 {
-// Construction
 public:
 	CTorrentGeneralPage();
 	virtual ~CTorrentGeneralPage();
 
 	DECLARE_DYNCREATE(CTorrentGeneralPage)
 
-// Dialog Data
-public:
-	//{{AFX_DATA(CTorrentGeneralPage)
 	enum { IDD = IDD_TORRENT_GENERAL };
+
+protected:
 	CString			m_sName;
 	CString			m_sComment;
 	CString			m_sCreatedBy;
@@ -46,25 +42,10 @@ public:
 	CString			m_sTorrentOther;
 	CComboBox		m_wndStartDownloads;
 	CString			m_sUploadTotal;
-	//}}AFX_DATA
 
-// Overrides
-public:
-	//{{AFX_VIRTUAL(CTorrentGeneralPage)
-	public:
-	virtual void OnOK();
-	protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
+	virtual BOOL OnInitDialog();
+	virtual void OnOK();
 
-// Implementation
-protected:
-	//{{AFX_MSG(CTorrentGeneralPage)
-	virtual BOOL	OnInitDialog();
-	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };
-
-//{{AFX_INSERT_LOCATION}}
-
-#endif // !defined(AFX_PAGETORRENTGENERAL_H__3FE33E_A574_48F0_88EB_4AD6B2BE64__INCLUDED_)

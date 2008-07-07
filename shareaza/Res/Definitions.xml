@@ -359,7 +359,6 @@
 	<resource code="33092" id="ID_DOWNLOAD_GROUP_PAUSE"/>
 	<resource code="33093" id="ID_DOWNLOAD_GROUP_RESUME"/>
 	<resource code="33094" id="ID_DOWNLOAD_GROUP_CLEAR"/>
-	<resource code="33095" id="ID_DOWNLOADS_TORRENT_INFO"/>
 	<resource code="33096" id="ID_DOWNLOAD_GROUP_SHOW"/>
 	<resource code="33097" id="ID_DOWNLOADS_HELP"/>
 	<resource code="33098" id="ID_DOWNLOADS_FILTER_MENU"/>

@@ -1,5 +1,5 @@
 //
-// DlgTorrentInfoSheet.cpp
+// DlgDownloadSheet.cpp
 //
 // Copyright (c) Shareaza Development Team, 2002-2006.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
@@ -22,8 +22,9 @@
 #include "StdAfx.h"
 #include "Shareaza.h"
 #include "Settings.h"
-#include "DlgTorrentInfoSheet.h"
+#include "DlgDownloadSheet.h"
 
+#include "PageDownloadEdit.h"
 #include "PageTorrentGeneral.h"
 #include "PageTorrentFiles.h"
 #include "PageTorrentTrackers.h"
@@ -37,10 +38,10 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 
-IMPLEMENT_DYNAMIC(CTorrentInfoSheet, CPropertySheet)
+IMPLEMENT_DYNAMIC(CDownloadSheet, CPropertySheet)
 
-BEGIN_MESSAGE_MAP(CTorrentInfoSheet, CPropertySheet)
-	//{{AFX_MSG_MAP(CTorrentInfoSheet)
+BEGIN_MESSAGE_MAP(CDownloadSheet, CPropertySheet)
+	//{{AFX_MSG_MAP(CDownloadSheet)
 	ON_WM_NCCALCSIZE()
 	ON_WM_NCHITTEST()
 	ON_WM_NCACTIVATE()
@@ -58,47 +59,55 @@ END_MESSAGE_MAP()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// CTorrentInfoSheet
+// CDownloadSheet
 
-CTorrentInfoSheet::CTorrentInfoSheet(CBTInfo* pInfo, const Hashes::BtGuid& oPeerID) : 
-	CPropertySheet( L"" ), m_sGeneralTitle( L"General" ),
-	m_sFilesTitle( L"Files" ), m_sTrackersTitle( L"Trackers" ),
-	m_pSkin( NULL ), m_pPeerID( oPeerID )
+CDownloadSheet::CDownloadSheet(CDownload* pDownload) : 
+	CPropertySheet( L"" ),
+	m_pDownload( pDownload ),
+	m_sDownloadTitle( L"General" ),
+	m_sGeneralTitle( L"Torrent" ),
+	m_sFilesTitle( L"Files" ),
+	m_sTrackersTitle( L"Trackers" ),
+	m_pSkin( NULL )
 {
 	m_psh.dwFlags &= ~PSP_HASHELP;
-
-	m_pInfo.Copy( pInfo );
-    //m_pInfo.m_oInfoBTH.clear();
 }
 
-CTorrentInfoSheet::~CTorrentInfoSheet()
+CDownloadSheet::~CDownloadSheet()
 {
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// CTorrentInfoSheet operations
+// CDownloadSheet operations
 
-INT_PTR CTorrentInfoSheet::DoModal(int nPage)
+INT_PTR CDownloadSheet::DoModal(int nPage)
 {
+	CDownloadEditPage		pDownload;
+	SetTabTitle( &pDownload, m_sDownloadTitle );
+	if ( ! m_pDownload->IsMoving() )
+		AddPage( &pDownload );
+
 	CTorrentGeneralPage		pGeneral;
-	CTorrentFilesPage		pFiles;
-	CTorrentTrackersPage	pTrackers;
-
 	SetTabTitle( &pGeneral, m_sGeneralTitle );
-	AddPage( &pGeneral );
+	if ( m_pDownload->IsTorrent() )
+		AddPage( &pGeneral );
 
+	CTorrentFilesPage		pFiles;
 	SetTabTitle( &pFiles, m_sFilesTitle );
-	AddPage( &pFiles );
+	if ( m_pDownload->IsTorrent() )
+		AddPage( &pFiles );
 
+	CTorrentTrackersPage	pTrackers;
 	SetTabTitle( &pTrackers, m_sTrackersTitle );
-	AddPage( &pTrackers );
-
+	if ( m_pDownload->IsTorrent() )
+		AddPage( &pTrackers );
 
 	m_psh.nStartPage = nPage;
+
 	return CPropertySheet::DoModal();
 }
 
-void CTorrentInfoSheet::SetTabTitle(CPropertyPage* pPage, CString& strTitle)
+void CDownloadSheet::SetTabTitle(CPropertyPage* pPage, CString& strTitle)
 {
 	CString strClass = pPage->GetRuntimeClass()->m_lpszClassName;
 	CString strTabLabel = Skin.GetDialogCaption( strClass );
@@ -108,9 +117,9 @@ void CTorrentInfoSheet::SetTabTitle(CPropertyPage* pPage, CString& strTitle)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// CTorrentInfoSheet message handlers
+// CDownloadSheet message handlers
 
-BOOL CTorrentInfoSheet::OnInitDialog()
+BOOL CDownloadSheet::OnInitDialog()
 {
 	BOOL bResult = CPropertySheet::OnInitDialog();
 
@@ -118,7 +127,7 @@ BOOL CTorrentInfoSheet::OnInitDialog()
 	SetIcon( theApp.LoadIcon( IDI_PROPERTIES ), TRUE );
 
 	CString strCaption;
-	LoadString( strCaption, IDS_TORRENT_INFO );
+	LoadString( strCaption, IDS_DOWNLOAD_PROPERTIES );
 	SetWindowText( strCaption );
 
 	m_pSkin = Skin.GetWindowSkin( _T("CTorrentSheet") );
@@ -151,9 +160,9 @@ BOOL CTorrentInfoSheet::OnInitDialog()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// CTorrentInfoSheet skin support
+// CDownloadSheet skin support
 
-void CTorrentInfoSheet::OnNcCalcSize(BOOL bCalcValidRects, NCCALCSIZE_PARAMS FAR* lpncsp)
+void CDownloadSheet::OnNcCalcSize(BOOL bCalcValidRects, NCCALCSIZE_PARAMS FAR* lpncsp)
 {
 	if ( m_pSkin )
 		m_pSkin->OnNcCalcSize( this, bCalcValidRects, lpncsp );
@@ -161,7 +170,7 @@ void CTorrentInfoSheet::OnNcCalcSize(BOOL bCalcValidRects, NCCALCSIZE_PARAMS FAR
 		CPropertySheet::OnNcCalcSize( bCalcValidRects, lpncsp );
 }
 
-ONNCHITTESTRESULT CTorrentInfoSheet::OnNcHitTest(CPoint point)
+ONNCHITTESTRESULT CDownloadSheet::OnNcHitTest(CPoint point)
 {
 	if ( m_pSkin )
 		return m_pSkin->OnNcHitTest( this, point, ( GetStyle() & WS_THICKFRAME ) ? TRUE : FALSE );
@@ -169,7 +178,7 @@ ONNCHITTESTRESULT CTorrentInfoSheet::OnNcHitTest(CPoint point)
 		return CPropertySheet::OnNcHitTest( point );
 }
 
-BOOL CTorrentInfoSheet::OnNcActivate(BOOL bActive)
+BOOL CDownloadSheet::OnNcActivate(BOOL bActive)
 {
 	if ( m_pSkin )
 	{
@@ -186,7 +195,7 @@ BOOL CTorrentInfoSheet::OnNcActivate(BOOL bActive)
 	}
 }
 
-void CTorrentInfoSheet::OnNcPaint()
+void CDownloadSheet::OnNcPaint()
 {
 	if ( m_pSkin )
 		m_pSkin->OnNcPaint( this );
@@ -194,38 +203,38 @@ void CTorrentInfoSheet::OnNcPaint()
 		CPropertySheet::OnNcPaint();
 }
 
-void CTorrentInfoSheet::OnNcLButtonDown(UINT nHitTest, CPoint point)
+void CDownloadSheet::OnNcLButtonDown(UINT nHitTest, CPoint point)
 {
 	if ( m_pSkin && m_pSkin->OnNcLButtonDown( this, nHitTest, point ) ) return;
 	CPropertySheet::OnNcLButtonDown(nHitTest, point);
 }
 
-void CTorrentInfoSheet::OnNcLButtonUp(UINT nHitTest, CPoint point)
+void CDownloadSheet::OnNcLButtonUp(UINT nHitTest, CPoint point)
 {
 	if ( m_pSkin && m_pSkin->OnNcLButtonUp( this, nHitTest, point ) ) return;
 	CPropertySheet::OnNcLButtonUp( nHitTest, point );
 }
 
-void CTorrentInfoSheet::OnNcLButtonDblClk(UINT nHitTest, CPoint point)
+void CDownloadSheet::OnNcLButtonDblClk(UINT nHitTest, CPoint point)
 {
 	if ( m_pSkin && m_pSkin->OnNcLButtonDblClk( this, nHitTest, point ) ) return;
 	CPropertySheet::OnNcLButtonDblClk( nHitTest, point );
 }
 
-void CTorrentInfoSheet::OnNcMouseMove(UINT nHitTest, CPoint point)
+void CDownloadSheet::OnNcMouseMove(UINT nHitTest, CPoint point)
 {
 	if ( m_pSkin ) m_pSkin->OnNcMouseMove( this, nHitTest, point );
 	CPropertySheet::OnNcMouseMove( nHitTest, point );
 }
 
-void CTorrentInfoSheet::OnSize(UINT nType, int cx, int cy)
+void CDownloadSheet::OnSize(UINT nType, int cx, int cy)
 {
 	if ( m_pSkin ) m_pSkin->OnSize( this );
 
 	if ( nType != 1982 ) CPropertySheet::OnSize( nType, cx, cy );
 }
 
-LRESULT CTorrentInfoSheet::OnSetText(WPARAM /*wParam*/, LPARAM /*lParam*/)
+LRESULT CDownloadSheet::OnSetText(WPARAM /*wParam*/, LPARAM /*lParam*/)
 {
 	if ( m_pSkin )
 	{
@@ -242,7 +251,7 @@ LRESULT CTorrentInfoSheet::OnSetText(WPARAM /*wParam*/, LPARAM /*lParam*/)
 	}
 }
 
-BOOL CTorrentInfoSheet::OnEraseBkgnd(CDC* pDC)
+BOOL CDownloadSheet::OnEraseBkgnd(CDC* pDC)
 {
 	if ( m_pSkin )
 	{
@@ -252,13 +261,13 @@ BOOL CTorrentInfoSheet::OnEraseBkgnd(CDC* pDC)
 	return CPropertySheet::OnEraseBkgnd( pDC );
 }
 
-HBRUSH CTorrentInfoSheet::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
+HBRUSH CDownloadSheet::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 {
 	// if ( m_brDialog.m_hObject ) return m_brDialog;
 	return CPropertySheet::OnCtlColor( pDC, pWnd, nCtlColor );
 }
 
-BOOL CTorrentInfoSheet::OnHelpInfo(HELPINFO* /*pHelpInfo*/)
+BOOL CDownloadSheet::OnHelpInfo(HELPINFO* /*pHelpInfo*/)
 {
 	return FALSE;
 }

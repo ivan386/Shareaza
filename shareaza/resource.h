@@ -575,7 +575,6 @@
 #define IDC_URN_SHA1                    1362
 #define IDC_URN_TIGER                   1363
 #define IDC_URN_ED2K                    1364
-#define IDC_TORRENT_INFO                1365
 #define IDC_TRAY_MINIMISE               1366
 #define IDC_FORGET_VERIFY               1367
 #define IDC_FORGET_SOURCES              1368
@@ -793,8 +792,8 @@
 #define IDS_SKIN_DELETE                 8009
 #define IDS_BETA_EXPIRED                8010
 #define IDS_VIEW_MODE_CONFIRM           8011
-#define IDS_TORRENT_INFO                8012
 #define IDS_UPGRADE_NO_NEW              8013
+#define IDS_DOWNLOAD_PROPERTIES         8014
 #define IDS_STATUS_BAR_CONNECTED_HUB_UP 8060
 #define IDS_STATUS_BAR_CONNECTED_UP     8061
 #define IDS_STATUS_BAR_CONNECTED_HUB    8062
@@ -1778,7 +1777,6 @@
 #define ID_DOWNLOAD_GROUP_PAUSE         33092
 #define ID_DOWNLOAD_GROUP_RESUME        33093
 #define ID_DOWNLOAD_GROUP_CLEAR         33094
-#define ID_DOWNLOADS_TORRENT_INFO       33095
 #define ID_DOWNLOAD_GROUP_SHOW          33096
 #define ID_DOWNLOADS_HELP               33097
 #define ID_DOWNLOADS_FILTER_MENU        33098

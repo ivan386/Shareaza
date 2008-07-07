@@ -1,5 +1,5 @@
 //
-// DlgDownloadEdit.h
+// PageDownloadEdit.h
 //
 // Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
@@ -21,24 +21,21 @@
 
 #pragma once
 
-#include "DlgSkinDialog.h"
+#include "PagePropertyAdv.h"
 
 class CDownload;
 
 
-class CDownloadEditDlg : public CSkinDialog
+class CDownloadEditPage : public CPropertyPageAdv
 {
-// Construction
 public:
-	CDownloadEditDlg(CDownload* pDownload, CWnd* pParent = NULL);
-	virtual ~CDownloadEditDlg();
+	CDownloadEditPage();
+	virtual ~CDownloadEditPage();
 
-	DECLARE_DYNAMIC(CDownloadEditDlg)
+	DECLARE_DYNAMIC(CDownloadEditPage)
+
 	enum { IDD = IDD_DOWNLOAD_EDIT };
 
-// Attributes
-public:
-	CDownload*	m_pDownload;
 	CString m_sName;
 	CString m_sDiskName;
 	CString m_sFileSize;
@@ -52,24 +49,21 @@ public:
 	CStatic m_wndForgetSources;
 	CString m_sEraseFrom;
 	CString m_sEraseTo;
-	CButton m_wndTorrent;
 	CStatic m_wndCompleteVerify;
 	CStatic m_wndMergeVerify;
 
-// Operations
-public:
 	BOOL	Commit();
 
-// Implementation
 protected:
-	DECLARE_MESSAGE_MAP()
 	virtual void DoDataExchange(CDataExchange* pDX);
 	virtual BOOL OnInitDialog();
+	virtual void OnOK();
+
 	afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
 	afx_msg BOOL OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message);
 	afx_msg void OnLButtonUp(UINT nFlags, CPoint point);
-	afx_msg void OnTorrentInfo();
 	afx_msg void OnErase();
 	afx_msg void OnMergeAndVerify();
-	virtual void OnOK();
+
+	DECLARE_MESSAGE_MAP()
 };

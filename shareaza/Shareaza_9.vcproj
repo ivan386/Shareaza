@@ -2069,10 +2069,6 @@
 					>
 				</File>
 				<File
-					RelativePath="DlgDownloadEdit.cpp"
-					>
-				</File>
-				<File
 					RelativePath="DlgDownloadGroup.cpp"
 					>
 				</File>
@@ -2082,6 +2078,10 @@
 				</File>
 				<File
 					RelativePath="DlgDownloadReviews.cpp"
+					>
+				</File>
+				<File
+					RelativePath="DlgDownloadSheet.cpp"
 					>
 				</File>
 				<File
@@ -2190,14 +2190,6 @@
 				</File>
 				<File
 					RelativePath="DlgSplash.cpp"
-					>
-				</File>
-				<File
-					RelativePath="DlgTorrentInfoPage.cpp"
-					>
-				</File>
-				<File
-					RelativePath="DlgTorrentInfoSheet.cpp"
 					>
 				</File>
 				<File
@@ -2648,6 +2640,10 @@
 			<Filter
 				Name="Pages"
 				>
+				<File
+					RelativePath="PageDownloadEdit.cpp"
+					>
+				</File>
 				<File
 					RelativePath="PageFileComments.cpp"
 					>
@@ -3403,6 +3399,10 @@
 				>
 			</File>
 			<File
+				RelativePath="Shell.h"
+				>
+			</File>
+			<File
 				RelativePath="ShellIcons.h"
 				>
 			</File>
@@ -3974,10 +3974,6 @@
 					>
 				</File>
 				<File
-					RelativePath="DlgDownloadEdit.h"
-					>
-				</File>
-				<File
 					RelativePath="DlgDownloadGroup.h"
 					>
 				</File>
@@ -3987,6 +3983,10 @@
 				</File>
 				<File
 					RelativePath="DlgDownloadReviews.h"
+					>
+				</File>
+				<File
+					RelativePath="DlgDownloadSheet.h"
 					>
 				</File>
 				<File
@@ -4095,14 +4095,6 @@
 				</File>
 				<File
 					RelativePath="DlgSplash.h"
-					>
-				</File>
-				<File
-					RelativePath="DlgTorrentInfoPage.h"
-					>
-				</File>
-				<File
-					RelativePath="DlgTorrentInfoSheet.h"
 					>
 				</File>
 				<File
@@ -4233,6 +4225,10 @@
 			<Filter
 				Name="Pages"
 				>
+				<File
+					RelativePath="PageDownloadEdit.h"
+					>
+				</File>
 				<File
 					RelativePath="PageFileComments.h"
 					>

@@ -1,5 +1,5 @@
 //
-// DlgDownloadEdit.cpp
+// PageDownloadEdit.cpp
 //
 // Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
@@ -21,12 +21,13 @@
 
 #include "StdAfx.h"
 #include "Shareaza.h"
+#include "DlgDownloadSheet.h"
+#include "PageDownloadEdit.h"
+
 #include "Download.h"
 #include "Downloads.h"
 #include "DownloadTask.h"
 #include "Transfers.h"
-#include "DlgDownloadEdit.h"
-#include "DlgTorrentInfoSheet.h"
 #include "FragmentedFile.h"
 #include "CoolInterface.h"
 
@@ -40,35 +41,34 @@ static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
 #endif
 
-IMPLEMENT_DYNAMIC(CDownloadEditDlg, CSkinDialog)
+IMPLEMENT_DYNAMIC(CDownloadEditPage, CPropertyPageAdv)
 
-BEGIN_MESSAGE_MAP(CDownloadEditDlg, CSkinDialog)
+BEGIN_MESSAGE_MAP(CDownloadEditPage, CPropertyPageAdv)
 	ON_WM_CTLCOLOR()
 	ON_WM_SETCURSOR()
 	ON_WM_LBUTTONUP()
-	ON_BN_CLICKED(IDC_TORRENT_INFO, OnTorrentInfo)
 	ON_BN_CLICKED(IDC_ERASE, OnErase)
 END_MESSAGE_MAP()
 
 
 //////////////////////////////////////////////////////////////////////////////
-// CDownloadEditDlg construction
+// CDownloadEditPage construction
 
-CDownloadEditDlg::CDownloadEditDlg(CDownload* pDownload, CWnd* pParent) : CSkinDialog( CDownloadEditDlg::IDD, pParent )
-{
-	m_pDownload = pDownload;
-	m_bSHA1Trusted = FALSE;
-	m_bTigerTrusted = FALSE;
-	m_bED2KTrusted = FALSE;
-}
-
-CDownloadEditDlg::~CDownloadEditDlg()
+CDownloadEditPage::CDownloadEditPage() :
+	CPropertyPageAdv( CDownloadEditPage::IDD ),
+	m_bSHA1Trusted( FALSE ),
+	m_bTigerTrusted( FALSE ),
+	m_bED2KTrusted( FALSE )
 {
 }
 
-void CDownloadEditDlg::DoDataExchange(CDataExchange* pDX)
+CDownloadEditPage::~CDownloadEditPage()
 {
-	CSkinDialog::DoDataExchange(pDX);
+}
+
+void CDownloadEditPage::DoDataExchange(CDataExchange* pDX)
+{
+	CPropertyPageAdv::DoDataExchange(pDX);
 	DDX_Text(pDX, IDC_NAME, m_sName);
 	DDX_Text(pDX, IDC_DISKNAME, m_sDiskName);
 	DDX_Text(pDX, IDC_FILESIZE, m_sFileSize);
@@ -82,54 +82,45 @@ void CDownloadEditDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_FORGET_SOURCES, m_wndForgetSources);
 	DDX_Text(pDX, IDC_ERASE_FROM, m_sEraseFrom);
 	DDX_Text(pDX, IDC_ERASE_TO, m_sEraseTo);
-	DDX_Control(pDX, IDC_TORRENT_INFO, m_wndTorrent);
 	DDX_Control(pDX, IDC_COMPLETE_AND_VERIFY, m_wndCompleteVerify);
 	DDX_Control(pDX, IDC_MERGE_AND_VERIFY, m_wndMergeVerify);
 }
 
 //////////////////////////////////////////////////////////////////////////////
-// CDownloadEditDlg message handlers
+// CDownloadEditPage message handlers
 
-BOOL CDownloadEditDlg::OnInitDialog()
+BOOL CDownloadEditPage::OnInitDialog()
 {
-	CSkinDialog::OnInitDialog();
-
-	SkinMe( NULL, ID_TOOLS_DOWNLOAD );
+	CPropertyPageAdv::OnInitDialog();
 
 	CSingleLock pLock( &Transfers.m_pSection, TRUE );
 
-	if ( ! Downloads.Check( m_pDownload ) || m_pDownload->IsMoving() )
-	{
-		PostMessage( WM_CLOSE );
-		return TRUE;
-	}
+	CDownload* pDownload = ((CDownloadSheet*)GetParent())->m_pDownload;
 
-	m_sName = m_pDownload->m_sName;
-	m_sDiskName = m_pDownload->m_sPath;
-	if ( m_pDownload->m_nSize != SIZE_UNKNOWN )
-		m_sFileSize.Format( _T("%I64i"), m_pDownload->m_nSize );
+	m_sName = pDownload->m_sName;
+	m_sDiskName = pDownload->m_sPath;
+	if ( pDownload->m_nSize != SIZE_UNKNOWN )
+		m_sFileSize.Format( _T("%I64i"), pDownload->m_nSize );
 
-	if ( m_pDownload->m_oSHA1 )
-		m_sSHA1 = m_pDownload->m_oSHA1.toString();
-	if ( m_pDownload->m_oTiger )
-		m_sTiger = m_pDownload->m_oTiger.toString();
-	if ( m_pDownload->m_oED2K )
-        m_sED2K = m_pDownload->m_oED2K.toString();
+	if ( pDownload->m_oSHA1 )
+		m_sSHA1 = pDownload->m_oSHA1.toString();
+	if ( pDownload->m_oTiger )
+		m_sTiger = pDownload->m_oTiger.toString();
+	if ( pDownload->m_oED2K )
+        m_sED2K = pDownload->m_oED2K.toString();
 
-	m_bSHA1Trusted	=	m_pDownload->m_bSHA1Trusted;
-	m_bTigerTrusted	=	m_pDownload->m_bTigerTrusted;
-	m_bED2KTrusted	=	m_pDownload->m_bED2KTrusted;
-	
-	m_wndTorrent.EnableWindow( m_pDownload->IsTorrent() );
+	m_bSHA1Trusted	=	pDownload->m_bSHA1Trusted;
+	m_bTigerTrusted	=	pDownload->m_bTigerTrusted;
+	m_bED2KTrusted	=	pDownload->m_bED2KTrusted;
 
 	UpdateData( FALSE );
 
 	return TRUE;
 }
 
-HBRUSH CDownloadEditDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
+HBRUSH CDownloadEditPage::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 {
-	HBRUSH hbr = CSkinDialog::OnCtlColor( pDC, pWnd, nCtlColor );
+	HBRUSH hbr = CPropertyPageAdv::OnCtlColor( pDC, pWnd, nCtlColor );
 
 	if ( pWnd == &m_wndForgetVerify || pWnd == &m_wndForgetSources ||
 		pWnd == &m_wndCompleteVerify || pWnd == &m_wndMergeVerify )
@@ -141,7 +132,7 @@ HBRUSH CDownloadEditDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 	return hbr;
 }
 
-BOOL CDownloadEditDlg::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)
+BOOL CDownloadEditPage::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)
 {
 	CRect rcCtrl1, rcCtrl2, rcCtrl3, rcCtrl4;
 	CPoint point;
@@ -159,12 +150,12 @@ BOOL CDownloadEditDlg::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)
 		return TRUE;
 	}
 
-	return CSkinDialog::OnSetCursor( pWnd, nHitTest, message );
+	return CPropertyPageAdv::OnSetCursor( pWnd, nHitTest, message );
 }
 
-void CDownloadEditDlg::OnLButtonUp(UINT nFlags, CPoint point)
+void CDownloadEditPage::OnLButtonUp(UINT nFlags, CPoint point)
 {
-	CSkinDialog::OnLButtonUp(nFlags, point);
+	CPropertyPageAdv::OnLButtonUp(nFlags, point);
 
 	CRect rcCtrl1, rcCtrl2, rcCtrl3, rcCtrl4;
 
@@ -186,8 +177,9 @@ void CDownloadEditDlg::OnLButtonUp(UINT nFlags, CPoint point)
 		if ( AfxMessageBox( strMessage, MB_ICONQUESTION|MB_YESNO ) != IDYES ) return;
 
 		CSingleLock pLock( &Transfers.m_pSection, TRUE );
-		if ( ! Downloads.Check( m_pDownload ) || m_pDownload->IsMoving() ) return;
-		m_pDownload->ClearVerification();
+		CDownload* pDownload = ((CDownloadSheet*)GetParent())->m_pDownload;
+		if ( ! Downloads.Check( pDownload ) || pDownload->IsMoving() ) return;
+		pDownload->ClearVerification();
 	}
 	else if ( rcCtrl2.PtInRect( point ) )
 	{
@@ -198,22 +190,25 @@ void CDownloadEditDlg::OnLButtonUp(UINT nFlags, CPoint point)
 		if ( AfxMessageBox( strMessage, MB_ICONQUESTION|MB_YESNO ) != IDYES ) return;
 
 		CSingleLock pLock( &Transfers.m_pSection, TRUE );
-		if ( ! Downloads.Check( m_pDownload ) || m_pDownload->IsMoving() ) return;
+		CDownload* pDownload = ((CDownloadSheet*)GetParent())->m_pDownload;
+		if ( ! Downloads.Check( pDownload ) || pDownload->IsMoving() ) return;
 
-		m_pDownload->CloseTransfers();
-		m_pDownload->ClearSources();
-		m_pDownload->SetModified();
+		pDownload->CloseTransfers();
+		pDownload->ClearSources();
+		pDownload->SetModified();
 	}
 	else if ( rcCtrl3.PtInRect( point ) )
 	{
 		if ( ! Commit() ) return;
 
 		CSingleLock pLock( &Transfers.m_pSection, TRUE );
+		CDownload* pDownload = ((CDownloadSheet*)GetParent())->m_pDownload;
 		CString strMessage;
 
-		if ( ! Downloads.Check( m_pDownload ) || m_pDownload->IsMoving() ) return;
+		if ( ! Downloads.Check( pDownload ) || pDownload->IsMoving() ) return;
 		
-		if ( m_pDownload->NeedTigerTree() && m_pDownload->NeedHashset() && !m_pDownload->IsTorrent() )
+		if ( pDownload->NeedTigerTree() && pDownload->NeedHashset() &&
+			! pDownload->IsTorrent() )
 		{
 			pLock.Unlock();
 			LoadString( strMessage, IDS_DOWNLOAD_EDIT_COMPLETE_NOHASH );
@@ -228,11 +223,11 @@ void CDownloadEditDlg::OnLButtonUp(UINT nFlags, CPoint point)
 		}
 
 		pLock.Lock();
-		if ( ! Downloads.Check( m_pDownload ) || m_pDownload->IsMoving() ) return;
+		if ( ! Downloads.Check( pDownload ) || pDownload->IsMoving() ) return;
 
-		m_pDownload->MakeComplete();
-		m_pDownload->ResetVerification();
-		m_pDownload->SetModified();
+		pDownload->MakeComplete();
+		pDownload->ResetVerification();
+		pDownload->SetModified();
 	}
 	else if ( rcCtrl4.PtInRect( point ) )
 	{
@@ -240,32 +235,7 @@ void CDownloadEditDlg::OnLButtonUp(UINT nFlags, CPoint point)
 	}
 }
 
-void CDownloadEditDlg::OnTorrentInfo()
-{
-	CSingleLock pLock( &Transfers.m_pSection, TRUE );
-
-	if ( ! Downloads.Check( m_pDownload ) ) return;
-	if ( ! m_pDownload->IsTorrent() ) return;
-
-	CTorrentInfoSheet dlg( &m_pDownload->m_pTorrent, m_pDownload->m_pPeerID );
-	pLock.Unlock();
-	dlg.DoModal();
-
-	if ( pLock.Lock(250) )
-	{
-		if ( Downloads.Check( m_pDownload ) ) 
-		{
-			if ( dlg.m_pInfo.IsAvailable() )
-			{
-				m_pDownload->m_pTorrent.m_sTracker = dlg.m_pInfo.m_sTracker;
-			}
-			m_pDownload->m_pTorrent.m_nStartDownloads = dlg.m_pInfo.m_nStartDownloads;
-			m_pDownload->m_pTorrent.m_nTrackerMode = dlg.m_pInfo.m_nTrackerMode;
-		}
-	}
-}
-
-void CDownloadEditDlg::OnErase()
+void CDownloadEditPage::OnErase()
 {
 	QWORD nFrom = 0, nTo = 0;
 	CString strMessage;
@@ -284,14 +254,15 @@ void CDownloadEditDlg::OnErase()
 	if ( ! Commit() ) return;
 
 	CSingleLock pLock( &Transfers.m_pSection, TRUE );
-	if ( ! Downloads.Check( m_pDownload ) || m_pDownload->IsMoving() ) return;
+	CDownload* pDownload = ((CDownloadSheet*)GetParent())->m_pDownload;
+	if ( ! Downloads.Check( pDownload ) || pDownload->IsMoving() ) return;
 
-	m_pDownload->CloseTransfers();
-	QWORD nErased = m_pDownload->EraseRange( nFrom, nTo + 1 - nFrom );
+	pDownload->CloseTransfers();
+	QWORD nErased = pDownload->EraseRange( nFrom, nTo + 1 - nFrom );
 
 	if ( nErased > 0 )
 	{
-		m_pDownload->ClearVerification();
+		pDownload->ClearVerification();
 		pLock.Unlock();
 		CString strFormat;
 		LoadString( strFormat, IDS_DOWNLOAD_EDIT_ERASED );
@@ -306,25 +277,26 @@ void CDownloadEditDlg::OnErase()
 	}
 }
 
-void CDownloadEditDlg::OnMergeAndVerify()
+void CDownloadEditPage::OnMergeAndVerify()
 {
 	CString strMessage, strFormat;
 
 	if ( ! Commit() ) return;
 
 	CSingleLock pLock( &Transfers.m_pSection, TRUE );
-	if ( ! Downloads.Check( m_pDownload ) ||
-		m_pDownload->IsCompleted() ||
-		m_pDownload->IsMoving() ||
-		! m_pDownload->PrepareFile() )
+	CDownload* pDownload = ((CDownloadSheet*)GetParent())->m_pDownload;
+	if ( ! Downloads.Check( pDownload ) ||
+		pDownload->IsCompleted() ||
+		pDownload->IsMoving() ||
+		! pDownload->PrepareFile() )
 	{
 		// Download almost completed
 		pLock.Unlock();
 		return;
 	}
-	if ( m_pDownload->NeedTigerTree() &&
-		 m_pDownload->NeedHashset() &&
-		! m_pDownload->IsTorrent() )
+	if ( pDownload->NeedTigerTree() &&
+		 pDownload->NeedHashset() &&
+		! pDownload->IsTorrent() )
 	{
 		// No hashsets
 		pLock.Unlock();
@@ -332,14 +304,14 @@ void CDownloadEditDlg::OnMergeAndVerify()
 		AfxMessageBox( strMessage, MB_ICONEXCLAMATION );
 		return;
 	}
-	const Fragments::List oList( m_pDownload->GetEmptyFragmentList() );
+	const Fragments::List oList( pDownload->GetEmptyFragmentList() );
 	if ( ! oList.size() )
 	{
 		// No available fragments
 		pLock.Unlock();
 		return;
 	}
-	if ( ! Downloads.Check( m_pDownload ) || m_pDownload->IsTasking() )
+	if ( ! Downloads.Check( pDownload ) || pDownload->IsTasking() )
 	{
 		pLock.Unlock();
 		strMessage = _T("The selected download item currently has some Task attached, please wait and do it later.");
@@ -350,14 +322,14 @@ void CDownloadEditDlg::OnMergeAndVerify()
 	pLock.Unlock();
 
 	// Select file
-	CString strExt( PathFindExtension( m_pDownload->m_sName ) );
+	CString strExt( PathFindExtension( pDownload->m_sName ) );
 	if ( ! strExt.IsEmpty() ) strExt = strExt.Mid( 1 );
-	CFileDialog dlgSelectFile( TRUE, strExt, m_pDownload->m_sName,
+	CFileDialog dlgSelectFile( TRUE, strExt, pDownload->m_sName,
 		OFN_HIDEREADONLY | OFN_FILEMUSTEXIST | OFN_PATHMUSTEXIST | OFN_NOCHANGEDIR,
 		NULL, this );
 	if ( dlgSelectFile.DoModal() == IDOK )
 	{
-		CSkinDialog::OnOK();
+		CPropertyPageAdv::OnOK();
 
 		// Open selected file in very compatible sharing mode
 		HANDLE hSelectedFile = CreateFile( dlgSelectFile.GetPathName(), GENERIC_READ,
@@ -367,7 +339,7 @@ void CDownloadEditDlg::OnMergeAndVerify()
 		if ( hSelectedFile != INVALID_HANDLE_VALUE )
 		{
 			pLock.Lock();
-			if ( ! Downloads.Check( m_pDownload ) || m_pDownload->IsTasking() )
+			if ( ! Downloads.Check( pDownload ) || pDownload->IsTasking() )
 			{
 				pLock.Unlock();
 				strMessage = _T("The selected download item currently has some Task attached, please wait and do it later.");
@@ -375,9 +347,9 @@ void CDownloadEditDlg::OnMergeAndVerify()
 				return;
 			}
 
-			// m_pDownload->m_pTask is already set correctly in CDownloadTask::Construct
-			/* m_pDownload->SetNewTask( new CDownloadTask( m_pDownload, hSelectedFile ) ); */
-			new CDownloadTask( m_pDownload, hSelectedFile );
+			// pDownload->m_pTask is already set correctly in CDownloadTask::Construct
+			/* pDownload->SetNewTask( new CDownloadTask( pDownload, hSelectedFile ) ); */
+			new CDownloadTask( pDownload, hSelectedFile );
 
 			pLock.Unlock();
 		}
@@ -393,13 +365,13 @@ void CDownloadEditDlg::OnMergeAndVerify()
 	pLock.Unlock();
 }
 
-void CDownloadEditDlg::OnOK()
+void CDownloadEditPage::OnOK()
 {
 	if ( ! Commit() ) return;
-	CSkinDialog::OnOK();
+	CPropertyPageAdv::OnOK();
 }
 
-BOOL CDownloadEditDlg::Commit()
+BOOL CDownloadEditPage::Commit()
 {
 	CString strMessage;
 	Hashes::Sha1Hash oSHA1;
@@ -432,110 +404,111 @@ BOOL CDownloadEditDlg::Commit()
 	}
 
 	CSingleLock pLock( &Transfers.m_pSection, TRUE );
+	CDownload* pDownload = ((CDownloadSheet*)GetParent())->m_pDownload;
 
 	bool bNeedUpdate = false;
 	bool bCriticalChange = false;
 
-	bNeedUpdate	= m_pDownload->m_bSHA1Trusted ^ ( m_bSHA1Trusted == TRUE );
-	bNeedUpdate	|= m_pDownload->m_bTigerTrusted ^ ( m_bTigerTrusted == TRUE );
-	bNeedUpdate	|= m_pDownload->m_bED2KTrusted ^ ( m_bED2KTrusted == TRUE );
+	bNeedUpdate	= pDownload->m_bSHA1Trusted ^ ( m_bSHA1Trusted == TRUE );
+	bNeedUpdate	|= pDownload->m_bTigerTrusted ^ ( m_bTigerTrusted == TRUE );
+	bNeedUpdate	|= pDownload->m_bED2KTrusted ^ ( m_bED2KTrusted == TRUE );
 
-    if ( ! Downloads.Check( m_pDownload ) || m_pDownload->IsMoving() ) return FALSE;
+    if ( ! Downloads.Check( pDownload ) || pDownload->IsMoving() ) return FALSE;
 
-	if ( m_pDownload->m_sName != m_sName )
+	if ( pDownload->m_sName != m_sName )
 	{
 		pLock.Unlock();
 		LoadString( strMessage, IDS_DOWNLOAD_EDIT_RENAME );
 		if ( AfxMessageBox( strMessage, MB_ICONQUESTION|MB_YESNO ) != IDYES ) return FALSE;
 		pLock.Lock();
-		if ( ! Downloads.Check( m_pDownload ) || m_pDownload->IsMoving() ) return FALSE;
+		if ( ! Downloads.Check( pDownload ) || pDownload->IsMoving() ) return FALSE;
 
-		m_pDownload->Rename( m_sName );
+		pDownload->Rename( m_sName );
 		bNeedUpdate = true;
 	}
 
 	QWORD nNewSize = 0;
-    if ( _stscanf( m_sFileSize, _T("%I64i"), &nNewSize ) == 1 && nNewSize != m_pDownload->m_nSize )
+    if ( _stscanf( m_sFileSize, _T("%I64i"), &nNewSize ) == 1 && nNewSize != pDownload->m_nSize )
 	{
 		pLock.Unlock();
 		LoadString( strMessage, IDS_DOWNLOAD_EDIT_CHANGE_SIZE );
 		if ( AfxMessageBox( strMessage, MB_ICONQUESTION|MB_YESNO ) != IDYES ) return FALSE;
 		pLock.Lock();
-		if ( ! Downloads.Check( m_pDownload ) || m_pDownload->IsMoving() ) return FALSE;
-		m_pDownload->m_nSize = nNewSize;
+		if ( ! Downloads.Check( pDownload ) || pDownload->IsMoving() ) return FALSE;
+		pDownload->m_nSize = nNewSize;
 
-		m_pDownload->CloseTransfers();
-		m_pDownload->ClearVerification();
+		pDownload->CloseTransfers();
+		pDownload->ClearVerification();
 		bCriticalChange = true;
 	}
 	
-	if ( m_pDownload->m_oSHA1.isValid() != oSHA1.isValid()
-		|| validAndUnequal( m_pDownload->m_oSHA1, oSHA1 ) )
+	if ( pDownload->m_oSHA1.isValid() != oSHA1.isValid()
+		|| validAndUnequal( pDownload->m_oSHA1, oSHA1 ) )
 	{
 		pLock.Unlock();
 		LoadString( strMessage, IDS_DOWNLOAD_EDIT_CHANGE_SHA1 );
 		if ( AfxMessageBox( strMessage, MB_ICONQUESTION|MB_YESNO ) != IDYES ) return FALSE;
 		pLock.Lock();
-		if ( ! Downloads.Check( m_pDownload ) || m_pDownload->IsMoving() ) return FALSE;
+		if ( ! Downloads.Check( pDownload ) || pDownload->IsMoving() ) return FALSE;
 		
-		m_pDownload->m_oSHA1 = oSHA1;
-		if ( oSHA1 ) m_pDownload->m_bSHA1Trusted = true;
+		pDownload->m_oSHA1 = oSHA1;
+		if ( oSHA1 ) pDownload->m_bSHA1Trusted = true;
 		
-		m_pDownload->CloseTransfers();
-		m_pDownload->ClearVerification();
+		pDownload->CloseTransfers();
+		pDownload->ClearVerification();
 		bCriticalChange = true;
 	}
 	
-	if ( m_pDownload->m_oTiger.isValid() != oTiger.isValid()
-		|| validAndUnequal( m_pDownload->m_oTiger, oTiger ) )
+	if ( pDownload->m_oTiger.isValid() != oTiger.isValid()
+		|| validAndUnequal( pDownload->m_oTiger, oTiger ) )
 	{
 		pLock.Unlock();
 		LoadString( strMessage, IDS_DOWNLOAD_EDIT_CHANGE_TIGER );
 		if ( AfxMessageBox( strMessage, MB_ICONQUESTION|MB_YESNO ) != IDYES ) return FALSE;
 		pLock.Lock();
-		if ( ! Downloads.Check( m_pDownload ) || m_pDownload->IsMoving() ) return FALSE;
+		if ( ! Downloads.Check( pDownload ) || pDownload->IsMoving() ) return FALSE;
 		
-		m_pDownload->m_oTiger = oTiger;
-		if ( oTiger ) m_pDownload->m_bTigerTrusted = true;
+		pDownload->m_oTiger = oTiger;
+		if ( oTiger ) pDownload->m_bTigerTrusted = true;
 		
-		m_pDownload->CloseTransfers();
-		m_pDownload->ClearVerification();
+		pDownload->CloseTransfers();
+		pDownload->ClearVerification();
 		bCriticalChange = true;
 	}
 	
-	if ( m_pDownload->m_oED2K.isValid() != oED2K.isValid()
-		|| validAndUnequal( m_pDownload->m_oED2K, oED2K ) )
+	if ( pDownload->m_oED2K.isValid() != oED2K.isValid()
+		|| validAndUnequal( pDownload->m_oED2K, oED2K ) )
 	{
 		pLock.Unlock();
 		LoadString( strMessage, IDS_DOWNLOAD_EDIT_CHANGE_ED2K );
 		if ( AfxMessageBox( strMessage, MB_ICONQUESTION|MB_YESNO ) != IDYES ) return FALSE;
 		pLock.Lock();
-		if ( ! Downloads.Check( m_pDownload ) || m_pDownload->IsMoving() ) return FALSE;
+		if ( ! Downloads.Check( pDownload ) || pDownload->IsMoving() ) return FALSE;
 		
-		m_pDownload->m_oED2K = oED2K;
-		if ( oED2K ) m_pDownload->m_bED2KTrusted = true;
+		pDownload->m_oED2K = oED2K;
+		if ( oED2K ) pDownload->m_bED2KTrusted = true;
 		
-		m_pDownload->CloseTransfers();
-		m_pDownload->ClearVerification();
+		pDownload->CloseTransfers();
+		pDownload->ClearVerification();
 		bCriticalChange = true;
 	}
 
-	m_pDownload->m_bSHA1Trusted = m_bSHA1Trusted != FALSE;
-	m_pDownload->m_bTigerTrusted = m_bTigerTrusted != FALSE;
-	m_pDownload->m_bED2KTrusted = m_bED2KTrusted != FALSE;
+	pDownload->m_bSHA1Trusted = m_bSHA1Trusted != FALSE;
+	pDownload->m_bTigerTrusted = m_bTigerTrusted != FALSE;
+	pDownload->m_bED2KTrusted = m_bED2KTrusted != FALSE;
 
 	if ( bCriticalChange )
 	{
-		m_pDownload->CloseTransfers();
-		m_pDownload->ClearSources();
-		m_pDownload->ClearFailedSources();
-		m_pDownload->ClearVerification();
+		pDownload->CloseTransfers();
+		pDownload->ClearSources();
+		pDownload->ClearFailedSources();
+		pDownload->ClearVerification();
 		bNeedUpdate = true;
 	}
 
 	if ( bNeedUpdate )
 	{
-		m_pDownload->SetModified();
+		pDownload->SetModified();
 	}
 
 	return TRUE;

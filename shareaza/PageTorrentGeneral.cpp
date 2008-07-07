@@ -23,9 +23,9 @@
 #include "Shareaza.h"
 #include "Settings.h"
 
-#include "BTInfo.h"
+#include "DlgDownloadSheet.h"
 #include "PageTorrentGeneral.h"
-
+#include "Transfers.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -33,9 +33,9 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 
-IMPLEMENT_DYNCREATE(CTorrentGeneralPage, CTorrentInfoPage)
+IMPLEMENT_DYNCREATE(CTorrentGeneralPage, CPropertyPageAdv)
 
-BEGIN_MESSAGE_MAP(CTorrentGeneralPage, CTorrentInfoPage)
+BEGIN_MESSAGE_MAP(CTorrentGeneralPage, CPropertyPageAdv)
 	//{{AFX_MSG_MAP(CTorrentGeneralPage)
 	ON_WM_PAINT()
 	//}}AFX_MSG_MAP
@@ -46,9 +46,7 @@ END_MESSAGE_MAP()
 // CTorrentGeneralPage property page
 
 CTorrentGeneralPage::CTorrentGeneralPage() : 
-	CTorrentInfoPage( CTorrentGeneralPage::IDD ),
-	m_sName(), m_sComment(), m_sCreationDate(),
-	m_sCreatedBy(), m_sTorrentOther()
+	CPropertyPageAdv( CTorrentGeneralPage::IDD )
 {
 }
 
@@ -58,7 +56,7 @@ CTorrentGeneralPage::~CTorrentGeneralPage()
 
 void CTorrentGeneralPage::DoDataExchange(CDataExchange* pDX)
 {
-	CTorrentInfoPage::DoDataExchange(pDX);
+	CPropertyPageAdv::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CTorrentGeneralPage)
 	DDX_Text(pDX, IDC_TORRENT_NAME, m_sName);
 	DDX_Text(pDX, IDC_TORRENT_COMMENTS, m_sComment);
@@ -75,26 +73,29 @@ void CTorrentGeneralPage::DoDataExchange(CDataExchange* pDX)
 
 BOOL CTorrentGeneralPage::OnInitDialog()
 {
-	CTorrentInfoPage::OnInitDialog();
+	CPropertyPageAdv::OnInitDialog();
 
-	m_sName			= m_pInfo->m_sName;
-	m_sComment		= m_pInfo->m_sComment;
-	m_sCreatedBy	= m_pInfo->m_sCreatedBy;
-	if ( m_pInfo->m_tCreationDate > 0 )
+	CSingleLock pLock( &Transfers.m_pSection, TRUE );
+	CBTInfo* pInfo = &((CDownloadSheet*)GetParent())->m_pDownload->m_pTorrent;
+
+	m_sName			= pInfo->m_sName;
+	m_sComment		= pInfo->m_sComment;
+	m_sCreatedBy	= pInfo->m_sCreatedBy;
+	if ( pInfo->m_tCreationDate > 0 )
 	{
-		CTime pTime( (time_t)m_pInfo->m_tCreationDate );
+		CTime pTime( (time_t)pInfo->m_tCreationDate );
 		m_sCreationDate = pTime.Format( _T("%Y-%m-%d  %H:%M") );
 	}
 
 	// Assember 'other' string
-	if ( m_pInfo->m_bPrivate )
+	if ( pInfo->m_bPrivate )
 	{
 		CString str;
 		LoadString( str, IDS_BT_PRIVATE );
 		m_sTorrentOther += str;
 		m_sTorrentOther += _T(", ");
 	}
-	if ( m_pInfo->HasEncodingError() )
+	if ( pInfo->HasEncodingError() )
 	{
 		CString str;
 		LoadString( str, IDS_BT_ENCODING );
@@ -110,9 +111,10 @@ BOOL CTorrentGeneralPage::OnInitDialog()
 	m_wndStartDownloads.SetItemData( 1, dtWhenRatio );
 	m_wndStartDownloads.SetItemData( 2, dtNever );
 
-	m_wndStartDownloads.SetCurSel( m_pInfo->m_nStartDownloads );
+	m_wndStartDownloads.SetCurSel( pInfo->m_nStartDownloads );
 
-	m_sUploadTotal.Format( _T(" %s"), (LPCTSTR)Settings.SmartVolume( m_pInfo->m_nTotalUpload ) );
+	m_sUploadTotal.Format( _T(" %s"),
+		(LPCTSTR)Settings.SmartVolume( pInfo->m_nTotalUpload ) );
 
 	UpdateData( FALSE );
 	
@@ -123,9 +125,13 @@ void CTorrentGeneralPage::OnOK()
 {
 	UpdateData();
 
+	CSingleLock pLock( &Transfers.m_pSection, TRUE );
+	CBTInfo* pInfo = &((CDownloadSheet*)GetParent())->m_pDownload->m_pTorrent;
+
 	// Update the starting of torrent transfers
-	m_pInfo->m_nStartDownloads = m_wndStartDownloads.GetCurSel();
-	if ( m_pInfo->m_nStartDownloads > dtNever ) m_pInfo->m_nStartDownloads = dtAlways;
+	pInfo->m_nStartDownloads = m_wndStartDownloads.GetCurSel();
+	if ( pInfo->m_nStartDownloads > dtNever )
+		pInfo->m_nStartDownloads = dtAlways;
 	
-	CTorrentInfoPage::OnOK();
+	CPropertyPageAdv::OnOK();
 }

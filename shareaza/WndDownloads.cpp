@@ -47,11 +47,10 @@
 #include "WndBrowseHost.h"
 #include "DlgDownload.h"
 #include "DlgDownloadReviews.h"
-#include "DlgDownloadEdit.h"
 #include "DlgSettingsManager.h"
 #include "DlgDeleteFile.h"
 #include "DlgFilePropertiesSheet.h"
-#include "DlgTorrentInfoSheet.h"
+#include "DlgDownloadSheet.h"
 #include "DlgURLCopy.h"
 #include "DlgURLExport.h"
 #include "DlgHelp.h"
@@ -146,8 +145,6 @@ BEGIN_MESSAGE_MAP(CDownloadsWnd, CPanelWnd)
 	ON_COMMAND(ID_DOWNLOADS_SHARE, OnDownloadsShare)
 	ON_UPDATE_COMMAND_UI(ID_DOWNLOADS_COPY, OnUpdateDownloadsCopy)
 	ON_COMMAND(ID_DOWNLOADS_COPY, OnDownloadsCopy)
-	ON_UPDATE_COMMAND_UI(ID_DOWNLOADS_TORRENT_INFO, OnUpdateDownloadsTorrentInfo)
-	ON_COMMAND(ID_DOWNLOADS_TORRENT_INFO, OnDownloadsTorrentInfo)
 	ON_UPDATE_COMMAND_UI(ID_DOWNLOAD_GROUP_SHOW, OnUpdateDownloadGroupShow)
 	ON_COMMAND(ID_DOWNLOAD_GROUP_SHOW, OnDownloadGroupShow)
 	ON_COMMAND(ID_DOWNLOADS_HELP, OnDownloadsHelp)
@@ -1359,48 +1356,10 @@ void CDownloadsWnd::OnDownloadsMonitor()
 	}
 }
 
-void CDownloadsWnd::OnUpdateDownloadsTorrentInfo(CCmdUI* pCmdUI) 
-{
-	Prepare();
-	if ( CCoolBarItem* pcCmdUI = CCoolBarItem::FromCmdUI( pCmdUI ) )
-		pcCmdUI->Show( m_bSelTorrent );
-	pCmdUI->Enable( m_bSelTorrent );
-}
-
-void CDownloadsWnd::OnDownloadsTorrentInfo() 
-{
-	CSingleLock pLock( &Transfers.m_pSection, TRUE );
-	
-	for ( POSITION pos = Downloads.GetIterator() ; pos ; )
-	{
-		CDownload* pDownload = Downloads.GetNext( pos );
-		
-		if ( pDownload->m_bSelected && pDownload->IsTorrent() )
-		{
-			CTorrentInfoSheet dlg( &pDownload->m_pTorrent, pDownload->m_pPeerID );
-			
-			pLock.Unlock();
-			dlg.DoModal();
-			pLock.Lock();
-
-			if ( Downloads.Check( pDownload ) )
-			{
-				if ( dlg.m_pInfo.IsAvailable() )
-				{
-					pDownload->m_pTorrent.m_sTracker = dlg.m_pInfo.m_sTracker;
-				}
-				pDownload->m_pTorrent.m_nStartDownloads = dlg.m_pInfo.m_nStartDownloads;
-				pDownload->m_pTorrent.m_nTrackerMode = dlg.m_pInfo.m_nTrackerMode;
-			}
-			break;
-		}
-	}
-}
-
 void CDownloadsWnd::OnUpdateDownloadsEdit(CCmdUI *pCmdUI)
 {
 	Prepare();
-	pCmdUI->Enable( m_bSelNotMoving );
+	pCmdUI->Enable( m_bSelNotMoving || m_bSelTorrent );
 }
 
 void CDownloadsWnd::OnDownloadsEdit()
@@ -1411,9 +1370,10 @@ void CDownloadsWnd::OnDownloadsEdit()
 	{
 		CDownload* pDownload = Downloads.GetNext( pos );
 		
-		if ( pDownload->m_bSelected && ! pDownload->IsMoving() )
+		if ( pDownload->m_bSelected &&
+			( ! pDownload->IsMoving() || pDownload->IsSeeding() ) )
 		{
-			CDownloadEditDlg dlg( pDownload );
+			CDownloadSheet dlg( pDownload );
 			pLock.Unlock();
 			dlg.DoModal();
 			break;

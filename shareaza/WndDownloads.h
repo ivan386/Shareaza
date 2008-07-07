@@ -178,8 +178,6 @@ protected:
 	afx_msg void OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags);
 	afx_msg void OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags);
 	afx_msg BOOL OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message);
-	afx_msg void OnUpdateDownloadsTorrentInfo(CCmdUI* pCmdUI);
-	afx_msg void OnDownloadsTorrentInfo();
 	afx_msg void OnUpdateDownloadGroupShow(CCmdUI* pCmdUI);
 	afx_msg void OnDownloadGroupShow();
 	afx_msg void OnDownloadsHelp();

@@ -19,48 +19,28 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_PAGETORRENTFILES_H__3FE33E_A874_48F0_83EB_4AD8B2BE64__INCLUDED_)
-#define AFX_PAGETORRENTFILES_H__3FE33E_A874_48F0_83EB_4AD8B2BE64__INCLUDED_
-
 #pragma once
 
-#include "DlgTorrentInfoPage.h"
+#include "PagePropertyAdv.h"
 
 
-class CTorrentFilesPage : public CTorrentInfoPage
+class CTorrentFilesPage : public CPropertyPageAdv
 {
-// Construction
 public:
 	CTorrentFilesPage();
 	virtual ~CTorrentFilesPage();
 
 	DECLARE_DYNCREATE(CTorrentFilesPage)
 
-// Dialog Data
-public:
-	//{{AFX_DATA(CTorrentFilesPage)
 	enum { IDD = IDD_TORRENT_FILES };
+
+protected:
 	CString			m_sName;
 	CListCtrl		m_wndFiles;
-	//}}AFX_DATA
 
-// Overrides
-public:
-	//{{AFX_VIRTUAL(CTorrentFilesPage)
-	public:
-	virtual void OnOK();
-	protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
-
-// Implementation
-protected:
-	//{{AFX_MSG(CTorrentFilesPage)
 	virtual BOOL OnInitDialog();
-	//}}AFX_MSG
+	virtual void OnOK();
+
 	DECLARE_MESSAGE_MAP()
 };
-
-//{{AFX_INSERT_LOCATION}}
-
-#endif // !defined(AFX_PAGETORRENTFILES_H__3FE33E_A874_48F0_83EB_4AD8B2BE64__INCLUDED_)

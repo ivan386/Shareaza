@@ -23,12 +23,14 @@
 #include "Shareaza.h"
 #include "Settings.h"
 
-#include "BTInfo.h"
 #include "BENode.h"
+#include "DlgDownloadSheet.h"
 #include "PageTorrentTrackers.h"
 #include "CoolInterface.h"
 #include "Network.h"
 #include "Skin.h"
+#include "Transfers.h"
+#include "Downloads.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -36,9 +38,9 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 
-IMPLEMENT_DYNCREATE(CTorrentTrackersPage, CTorrentInfoPage)
+IMPLEMENT_DYNCREATE(CTorrentTrackersPage, CPropertyPageAdv)
 
-BEGIN_MESSAGE_MAP(CTorrentTrackersPage, CTorrentInfoPage)
+BEGIN_MESSAGE_MAP(CTorrentTrackersPage, CPropertyPageAdv)
 	//{{AFX_MSG_MAP(CTorrentTrackersPage)
 	ON_WM_PAINT()
 	ON_BN_CLICKED(IDC_TORRENT_REFRESH, OnTorrentRefresh)
@@ -52,8 +54,8 @@ END_MESSAGE_MAP()
 // CTorrentTrackersPage property page
 
 CTorrentTrackersPage::CTorrentTrackersPage() : 
-	CTorrentInfoPage( CTorrentTrackersPage::IDD ),
-	m_sName(), m_sTracker(), m_sEscapedPeerID()
+	CPropertyPageAdv( CTorrentTrackersPage::IDD ),
+	m_pDownload( NULL )
 {
 }
 
@@ -63,7 +65,7 @@ CTorrentTrackersPage::~CTorrentTrackersPage()
 
 void CTorrentTrackersPage::DoDataExchange(CDataExchange* pDX)
 {
-	CTorrentInfoPage::DoDataExchange(pDX);
+	CPropertyPageAdv::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CTorrentTrackersPage)
 	DDX_Text(pDX, IDC_TORRENT_NAME, m_sName);
 	DDX_Text(pDX, IDC_TORRENT_TRACKER, m_sTracker);
@@ -80,11 +82,15 @@ void CTorrentTrackersPage::DoDataExchange(CDataExchange* pDX)
 
 BOOL CTorrentTrackersPage::OnInitDialog()
 {
-	CTorrentInfoPage::OnInitDialog();
+	CPropertyPageAdv::OnInitDialog();
 	
-	m_sName			= m_pInfo->m_sName;
-	m_sTracker		= m_pInfo->m_sTracker;
-	m_sEscapedPeerID = Escape( GetPeerID().toString() );
+	CSingleLock pLock( &Transfers.m_pSection, TRUE );
+	m_pDownload = ((CDownloadSheet*)GetParent())->m_pDownload;
+	CBTInfo* pInfo = &m_pDownload->m_pTorrent;
+
+	m_sName			= pInfo->m_sName;
+	m_sTracker		= pInfo->m_sTracker;
+	m_sEscapedPeerID = Escape( m_pDownload->m_pPeerID.toString() );
 
 	m_wndTrackerMode.SetItemData( 0, tNull );
 	m_wndTrackerMode.SetItemData( 1, tCustom );
@@ -92,7 +98,7 @@ BOOL CTorrentTrackersPage::OnInitDialog()
 	m_wndTrackerMode.SetItemData( 3, tMultiFinding );
 	m_wndTrackerMode.SetItemData( 4, tMultiFound );
 
-	m_wndTrackerMode.SetCurSel( m_pInfo->m_nTrackerMode );
+	m_wndTrackerMode.SetCurSel( pInfo->m_nTrackerMode );
 
 	CRect rc;
 	m_wndTrackers.GetClientRect( &rc );
@@ -104,16 +110,16 @@ BOOL CTorrentTrackersPage::OnInitDialog()
 	Skin.Translate( _T("CTorrentTrackerList"), m_wndTrackers.GetHeaderCtrl() );
 
 	int nTracker = 0;
-	for ( nTracker = 0 ; nTracker < m_pInfo->m_pTrackerList.GetCount() ; nTracker++ )
+	for ( nTracker = 0 ; nTracker < pInfo->m_pTrackerList.GetCount() ; nTracker++ )
 	{
-		CBTInfo::CBTTracker* pTrack = m_pInfo->m_pTrackerList.GetAt(nTracker);
+		CBTInfo::CBTTracker* pTrack = pInfo->m_pTrackerList.GetAt(nTracker);
 		
 		LV_ITEM pItem = {};
 		pItem.mask		= LVIF_TEXT|LVIF_IMAGE|LVIF_PARAM;
 		pItem.iItem		= m_wndTrackers.GetItemCount();
 		pItem.lParam	= (LPARAM)nTracker;
 
-		if ( m_pInfo->m_nTrackerIndex == nTracker )
+		if ( pInfo->m_nTrackerIndex == nTracker )
 			pItem.iImage = CoolInterface.ImageForID( ID_MEDIA_SELECT );
 		else
 			pItem.iImage = CoolInterface.ImageForID( ID_DOWNLOADS_COPY );
@@ -138,7 +144,8 @@ BOOL CTorrentTrackersPage::OnInitDialog()
 		m_wndTrackers.SetItemText( pItem.iItem, 2, sType );
 	}
 
-	if ( !m_pInfo->IsMultiTracker() && m_pInfo->m_pAnnounceTracker )
+	if ( ! pInfo->IsMultiTracker() &&
+		pInfo->m_pAnnounceTracker )
 	{
 		nTracker ++;
 
@@ -147,14 +154,16 @@ BOOL CTorrentTrackersPage::OnInitDialog()
 		pItem.iItem		= m_wndTrackers.GetItemCount();
 		pItem.lParam	= (LPARAM)nTracker;
 		pItem.iImage = CoolInterface.ImageForID( ID_TOOLS_LANGUAGE );
-		pItem.pszText	= (LPTSTR)(LPCTSTR)m_pInfo->m_pAnnounceTracker->m_sAddress;
+		pItem.pszText	= (LPTSTR)(LPCTSTR)pInfo->m_pAnnounceTracker->m_sAddress;
 		pItem.iItem		= m_wndTrackers.InsertItem( &pItem );
 		
 		// Display status
 		CString sStatus;
-		if ( ( m_pInfo->m_pAnnounceTracker->m_tNextTry == 0 ) && ( m_pInfo->m_pAnnounceTracker->m_tLastSuccess == 0 ) )
+		if ( ( pInfo->m_pAnnounceTracker->m_tNextTry == 0 ) &&
+			( pInfo->m_pAnnounceTracker->m_tLastSuccess == 0 ) )
 			LoadString( sStatus, IDS_STATUS_UNKNOWN );
-		else if ( m_pInfo->m_pAnnounceTracker->m_tNextTry > m_pInfo->m_pAnnounceTracker->m_tLastSuccess )
+		else if ( pInfo->m_pAnnounceTracker->m_tNextTry >
+			pInfo->m_pAnnounceTracker->m_tLastSuccess )
 			LoadString( sStatus, IDS_STATUS_TRACKERDOWN );
 		else
 			LoadString( sStatus, IDS_STATUS_ACTIVE );
@@ -170,7 +179,8 @@ BOOL CTorrentTrackersPage::OnInitDialog()
 	UpdateData( FALSE );
 
 	if ( Network.IsConnected() )
-		PostMessage( WM_COMMAND, MAKELONG( IDC_TORRENT_REFRESH, BN_CLICKED ), (LPARAM)m_wndRefresh.GetSafeHwnd() );
+		PostMessage( WM_COMMAND, MAKELONG( IDC_TORRENT_REFRESH, BN_CLICKED ),
+			(LPARAM)m_wndRefresh.GetSafeHwnd() );
 
 	return TRUE;
 }
@@ -184,7 +194,7 @@ void CTorrentTrackersPage::OnDestroy()
 		CloseThread();
 	}
 	
-	CTorrentInfoPage::OnDestroy();
+	CPropertyPageAdv::OnDestroy();
 }
 
 void CTorrentTrackersPage::OnTorrentRefresh() 
@@ -232,41 +242,54 @@ void CTorrentTrackersPage::OnOK()
 {
 	UpdateData();
 
-	// Check if tracker has been changed, and the new value could be valid
-	if ( ( m_pInfo->m_sTracker != m_sTracker ) && ( m_sTracker.Find( _T("http") ) == 0 ) )
+	CSingleLock pLock( &Transfers.m_pSection, TRUE );
+	CDownload* pDownload = ((CDownloadSheet*)GetParent())->m_pDownload;
+	if ( Downloads.Check( pDownload ) && pDownload->IsTorrent() )
 	{
-		CString strMessage;
-		LoadString( strMessage, IDS_BT_TRACK_CHANGE );
-		
-		// Display warning
-		if ( AfxMessageBox( strMessage, MB_ICONQUESTION|MB_YESNO ) == IDYES )
+		CBTInfo* pInfo = &pDownload->m_pTorrent;
+
+		// Check if tracker has been changed, and the new value could be valid
+		if ( ( pInfo->m_sTracker != m_sTracker ) &&
+			( m_sTracker.Find( _T("http") ) == 0 ) )
 		{
-			m_pInfo->m_sTracker = m_sTracker;
-			m_pInfo->m_nTrackerMode = tCustom;
-			m_pInfo->m_oBTH.validate();
-		}
-	}
-	else
-	{
-		int nTrackerMode = m_wndTrackerMode.GetCurSel();
-		if ( m_pInfo->m_nTrackerMode != nTrackerMode )
-		{
-			// Check it's valid
-			if ( ( ( nTrackerMode == tMultiFound )		&& ( m_pInfo->IsMultiTracker() ) ) ||
-				 ( ( nTrackerMode == tMultiFinding )	&& ( m_pInfo->IsMultiTracker() ) ) ||
-				 ( ( nTrackerMode == tSingle )			&& ( m_pInfo->m_pAnnounceTracker ) ) ||
-				 ( ( nTrackerMode == tCustom )			&& ( m_pInfo->m_sTracker.GetLength() > 7 ) ) )
+			CString strMessage;
+			LoadString( strMessage, IDS_BT_TRACK_CHANGE );
+			
+			// Display warning
+			pLock.Unlock();
+			if ( AfxMessageBox( strMessage, MB_ICONQUESTION|MB_YESNO ) == IDYES )
 			{
-				CString strMessage;
-				LoadString( strMessage, IDS_BT_TRACK_CHANGE );
-				// Display warning
-				if ( AfxMessageBox( strMessage, MB_ICONQUESTION|MB_YESNO ) == IDYES )
-					m_pInfo->m_nTrackerMode = nTrackerMode;
+				pLock.Lock();
+				pInfo->m_sTracker = m_sTracker;
+				pInfo->m_nTrackerMode = tCustom;
+				pInfo->m_oBTH.validate();
+			}
+		}
+		else
+		{
+			int nTrackerMode = m_wndTrackerMode.GetCurSel();
+			if ( pInfo->m_nTrackerMode != nTrackerMode )
+			{
+				// Check it's valid
+				if ( ( ( nTrackerMode == tMultiFound )		&& ( pInfo->IsMultiTracker() ) ) ||
+					 ( ( nTrackerMode == tMultiFinding )	&& ( pInfo->IsMultiTracker() ) ) ||
+					 ( ( nTrackerMode == tSingle )			&& ( pInfo->m_pAnnounceTracker ) ) ||
+					 ( ( nTrackerMode == tCustom )			&& ( pInfo->m_sTracker.GetLength() > 7 ) ) )
+				{
+					CString strMessage;
+					LoadString( strMessage, IDS_BT_TRACK_CHANGE );
+					pLock.Unlock();
+					// Display warning
+					if ( AfxMessageBox( strMessage, MB_ICONQUESTION|MB_YESNO ) == IDYES )
+					{
+						pLock.Lock();
+						pInfo->m_nTrackerMode = nTrackerMode;
+					}
+				}
 			}
 		}
 	}
-	
-	CTorrentInfoPage::OnOK();
+	CPropertyPageAdv::OnOK();
 }
 
 void CTorrentTrackersPage::OnRun()
@@ -283,15 +306,18 @@ void CTorrentTrackersPage::OnRun()
 		if ( strURL.GetLength() > 7 ) 
 		{
 			// Fetch scrape only for the given info hash
-			CString strParam = Escape( m_pInfo->m_oBTH.toString< Hashes::base16Encoding >() );
-
-			if ( strURL.Find( _T("/scrape?") ) != -1 )
 			{
-				strURL.Append( L"&info_hash=" + strParam );
-			}
-			else
-			{
-				strURL.Append( L"?info_hash=" + strParam );
+				CSingleLock pLock( &Transfers.m_pSection, TRUE );
+				CBTInfo* pInfo = &m_pDownload->m_pTorrent;
+				CString strParam = Escape( pInfo->m_oBTH.toString< Hashes::base16Encoding >() );
+				if ( strURL.Find( _T("/scrape?") ) != -1 )
+				{
+					strURL.Append( L"&info_hash=" + strParam );
+				}
+				else
+				{
+					strURL.Append( L"?info_hash=" + strParam );
+				}
 			}
 			strURL.Append( L"&peer_id=" + m_sEscapedPeerID );
 
@@ -366,8 +392,16 @@ BOOL CTorrentTrackersPage::OnTree(CBENode* pNode)
 	
 	CBENode* pFiles = pNode->GetNode( "files" );
 	if ( ! pFiles->IsType( CBENode::beDict ) ) return FALSE;
+
+	LPBYTE nKey;
+	{
+		CSingleLock pLock( &Transfers.m_pSection, TRUE );
+		if ( ! Downloads.Check( m_pDownload ) ) return FALSE;
+		CBTInfo* pInfo = &m_pDownload->m_pTorrent;
+		nKey = &pInfo->m_oBTH[ 0 ];
+	}
 	
-    CBENode* pFile = pFiles->GetNode( &m_pInfo->m_oBTH[ 0 ], Hashes::BtHash::byteCount );
+    CBENode* pFile = pFiles->GetNode( nKey, Hashes::BtHash::byteCount );
 	if ( ! pFile->IsType( CBENode::beDict ) ) return FALSE;	
 	
 	m_nComplete		= 0;

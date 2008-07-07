@@ -150,7 +150,7 @@
 		<button id="ID_DOWNLOADS_CLEAR_COMPLETE" text="Clear Download"/>
 		<separator/>
 		<button id="ID_DOWNLOADS_MONITOR" text="Show Monitor"/>
-		<button id="ID_DOWNLOADS_TORRENT_INFO" text="Torrent Info"/>
+		<button id="ID_DOWNLOADS_EDIT" text="Properties"/>
 		<rightAlign/>
 		<button id="ID_TOOLS_DOWNLOAD" text="Add Download/Torrent..."/>
 		<button id="ID_DOWNLOADS_CLEAR_COMPLETED" text="Clear Completed"/>
@@ -988,14 +988,14 @@
 			<item id="ID_DOWNLOADS_URL" text="_Add Source..."/>
 			<separator/>
 			<item id="ID_DOWNLOADS_MONITOR" text="Monitor _Window"/>
-			<item id="ID_DOWNLOADS_EDIT" text="Advanced _Edit..."/>
-			<item id="ID_DOWNLOADS_TORRENT_INFO" text="_Torrent Info..."/>
 			<separator/>
 			<item id="ID_DOWNLOADS_MOVE_UP" text="Move _Up"/>
 			<item id="ID_DOWNLOADS_MOVE_DOWN" text="Move _Down"/>
 			<item id="ID_DOWNLOADS_BOOST" text="_Ignore Bandwidth Limit"/>
 		</menu>
 		<item id="ID_DOWNLOADS_HELP" text="_Help..."/>
+		<separator/>
+		<item id="ID_DOWNLOADS_EDIT" text="_Properties"/>
 	</menu>
 	<menu name="CDownloadsWnd.Source">
 		<item id="ID_TRANSFERS_CONNECT" text="_Access"/>
@@ -1020,15 +1020,15 @@
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="_Clear"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_COPY" text="Copy _URI"/>
-		<item id="ID_DOWNLOADS_TORRENT_INFO" text="_Torrent Info"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_FILE_DELETE" text="_Delete File"/>
 		<item id="ID_DOWNLOADS_RATE" text="_Rate File..."/>
 	</menu>
 	<menu name="CDownloadsWnd.Seeding">
-		<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Open"/>
-		<item id="ID_DOWNLOADS_TORRENT_INFO" text="Torrent _Info"/>
+		<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Open or Play"/>
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="_Stop Seeding"/>
+		<separator/>
+		<item id="ID_DOWNLOADS_EDIT" text="_Properties"/>
 	</menu>
 	<menu name="CDownloadsWnd.Nothing">
 		<item id="ID_DOWNLOADS_HELP" text="_Help..."/>
@@ -2440,7 +2440,7 @@
 		<image id="ID_LIBRARY_COLUMNS"/>
 		<image id="ID_LIBRARY_SEARCH" id1="ID_LIBRARY_SEARCH_QUICK" id2="ID_LIBRARY_FOLDER_OPEN"/>
 		<image id="ID_LIBRARY_REFRESH"/>
-		<image id="ID_LIBRARY_PROPERTIES" id1="ID_LIBRARY_FOLDER_FILE_PROPERTIES" id2="ID_DOWNLOAD_GROUP_PROPERTIES" id3="ID_MEDIA_PROPERTIES"/>
+		<image id="ID_LIBRARY_PROPERTIES" id1="ID_LIBRARY_FOLDER_FILE_PROPERTIES" id2="ID_DOWNLOAD_GROUP_PROPERTIES" id3="ID_MEDIA_PROPERTIES" id4="ID_DOWNLOADS_EDIT"/>
 		<image id="ID_LIBRARY_ADD" id1="ID_LIBRARY_FOLDER_NEW"/>
 		<image id="ID_LIBRARY_REMOVE" id1="ID_LIBRARY_FOLDER_DELETE" id2="ID_LIBRARY_ALBUM_DELETE"/>
 		<image id="ID_UPLOADS_DISCONNECT"/>
@@ -2534,7 +2534,7 @@
 		<image id="ID_NETWORK_ED2K" id1="IDC_IMPORT_DOWNLOADS"/>
 		<image id="ID_NETWORK_HTTP"/>
 		<image id="ID_NETWORK_FTP"/>
-		<image id="ID_NETWORK_BT" id1="ID_DOWNLOADS_TORRENT_INFO"/>
+		<image id="ID_NETWORK_BT"/>
 		<image id="ID_NETWORK_KAD"/>
 	</bitmap>
 	<bitmap id="IDB_IRCICONS">
