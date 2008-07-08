@@ -515,8 +515,7 @@ bool CLibraryBuilder::HashFile(LPCTSTR szPath, HANDLE hFile, DWORD nIndex)
 
 		Library.RemoveFile( pFile );
 
-		pFile->m_bNewFile		= true;
-		pFile->m_bBogus			= false;
+		pFile->m_bNewFile		= TRUE;
 		pFile->m_nVirtualBase	= bVirtual ? nFileBase : 0;
 		pFile->m_nVirtualSize	= bVirtual ? nFileSize : 0;
 
@@ -612,7 +611,7 @@ bool CLibraryBuilder::SubmitCorrupted(DWORD nIndex)
 	CQuickLock oLibraryLock( Library.m_pSection );
 	if ( CLibraryFile* pFile = Library.LookupFile( nIndex ) )
 	{
-		pFile->m_bBogus = true;
+		pFile->m_bBogus = TRUE;
 		return true;
 	}
 
