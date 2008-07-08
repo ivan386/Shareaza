@@ -407,7 +407,7 @@ BOOL CPlugin::Start()
 		return FALSE;
 	}
 
-	IApplication* pApplication = NULL;
+	CComPtr< IApplication > pApplication;
 	if ( SUCCEEDED( CApplication::GetApp( &pApplication ) ) )
 		m_pPlugin->SetApplication( pApplication );
 
