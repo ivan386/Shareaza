@@ -584,3 +584,16 @@ protected:
 	typedef std::list< CAveragePair > CAverageList;
 	CAverageList m_Data;
 };
+
+template< class T >
+inline void SafeRelease(CComPtr< T >& pObj) throw()
+{
+	__try
+	{
+		pObj.Release();
+	}
+	__except( EXCEPTION_EXECUTE_HANDLER )
+	{
+		pObj.Detach();
+	}
+}
