@@ -36,6 +36,7 @@ public:
 
 	enum { IDD = IDD_DOWNLOAD_EDIT };
 
+protected:
 	CString m_sName;
 	CString m_sDiskName;
 	CString m_sFileSize;
@@ -51,10 +52,10 @@ public:
 	CString m_sEraseTo;
 	CStatic m_wndCompleteVerify;
 	CStatic m_wndMergeVerify;
+	CStatic m_wndCancelDownload;
 
 	BOOL	Commit();
 
-protected:
 	virtual void DoDataExchange(CDataExchange* pDX);
 	virtual BOOL OnInitDialog();
 	virtual void OnOK();

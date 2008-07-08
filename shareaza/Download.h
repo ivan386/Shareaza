@@ -86,6 +86,16 @@ public:
 	virtual void	Serialize(CArchive& ar, int nVersion);
 	void			OnRun();
 	BOOL			OnVerify(LPCTSTR pszPath, BOOL bVerified);
+	inline void		ForceComplete()
+	{
+		m_bPaused = FALSE;
+		m_bTempPaused = FALSE;
+		m_bVerify = TRI_FALSE;
+		MakeComplete();
+		StopTrying();
+		Share( FALSE );
+		OnDownloaded();
+	}
 private:
 	void        	StopTrying();
 	DWORD       	GetStartTimer() const;

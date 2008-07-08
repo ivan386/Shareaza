@@ -771,6 +771,7 @@
 #define IDC_METHOD2                     1559
 #define IDC_PREVIEW1                    1560
 #define IDC_PREVIEW2                    1561
+#define IDC_CANCEL_DOWNLOAD             1562
 #define IDS_FILTER_DELETE_CONFIRM       7000
 #define IDS_SCHEMAS                     7001
 #define IDS_MULTIPLE_VALUES             7002
@@ -1404,6 +1405,7 @@
 #define IDS_DOWNLOAD_EDIT_COMPLETE_NOHASH 18509
 #define IDS_DOWNLOAD_EDIT_COMPLETE_VERIFY 18510
 #define IDS_DOWNLOAD_EDIT_CHANGE_SIZE   18511
+#define IDS_DOWNLOAD_EDIT_CANCEL_DOWNLOAD 18512
 #define IDS_REMOTE_DISABLED             19000
 #define IDS_REMOTE_ENABLED              19001
 #define IDS_REMOTE_UNAVAILABLE          19002
@@ -1867,7 +1869,7 @@
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        325
 #define _APS_NEXT_COMMAND_VALUE         33317
-#define _APS_NEXT_CONTROL_VALUE         1562
+#define _APS_NEXT_CONTROL_VALUE         1563
 #define _APS_NEXT_SYMED_VALUE           104
 #endif
 #endif

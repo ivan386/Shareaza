@@ -216,39 +216,6 @@ IDB_BOX_MARK            BITMAP                  "Res\\BoxMark.bmp"
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// RT_MANIFEST
-//
-
-#define	IDR_MANIFEST 1 // 2 for a DLL
-
-IDR_MANIFEST RT_MANIFEST 
-{
-    "<assembly xmlns=""urn:schemas-microsoft-com:asm.v1"" manifestVersion=""1.0"">
-       <assemblyIdentity type=""win32"" name=""Shareaza.Shareaza"" version=""2.3.1.3""
-#ifdef WIN64
-		 processorArchitecture=""amd64""
-#else
-	     processorArchitecture=""x86""
-#endif
-		 publicKeyToken=""dfbe2673baf698eb"" />
-       <description>Shareaza Ultimate File Sharing</description>
-       <dependency>
-         <dependentAssembly>
-           <assemblyIdentity type=""win32"" name=""Microsoft.Windows.Common-Controls"" version=""6.0.0.0"" processorArchitecture=""*"" publicKeyToken=""6595b64144ccf1df"" language=""*"" />
-         </dependentAssembly>
-       </dependency>
-       <asmv2:trustInfo xmlns:asmv2=""urn:schemas-microsoft-com:asm.v2"">
-         <asmv2:security>
-           <asmv2:requestedPrivileges>
-             <asmv2:requestedExecutionLevel level=""asInvoker"" uiAccess=""false"" />
-           </asmv2:requestedPrivileges>
-         </asmv2:security>
-       </asmv2:trustInfo>
-     </assembly>"
-}
-
-/////////////////////////////////////////////////////////////////////////////
-//
 // Dialog
 //
 
@@ -777,17 +744,18 @@ FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
 END
 
-IDD_DISCOVERY_SERVICE DIALOGEX 0, 0, 257, 94
+IDD_DISCOVERY_SERVICE DIALOGEX 0, 0, 292, 145
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Discovery Service"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
-    GROUPBOX        "Service &Address:",IDC_STATIC,5,5,245,60
-    EDITTEXT        IDC_ADDRESS,15,20,225,12,ES_AUTOHSCROLL
-    LTEXT           "Discovery Service Type:",IDC_STATIC,15,40,90,12,SS_CENTERIMAGE
-    COMBOBOX        IDC_SERVICE_TYPE,110,40,130,70,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
-    DEFPUSHBUTTON   "OK",IDOK,145,72,50,14
-    PUSHBUTTON      "Cancel",IDCANCEL,200,72,50,14
+    GROUPBOX        "Service &Address:",IDC_STATIC,7,39,278,60
+    EDITTEXT        IDC_ADDRESS,14,55,264,12,ES_AUTOHSCROLL
+    RTEXT           "Discovery Service Type:",IDC_STATIC,14,74,129,12,SS_CENTERIMAGE
+    COMBOBOX        IDC_SERVICE_TYPE,148,74,130,70,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    DEFPUSHBUTTON   "OK",IDOK,179,124,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,235,124,50,14
+    CONTROL         154,IDC_STATIC,"Static",SS_BITMAP,0,0,400,31
 END
 
 IDD_SETTINGS_BANDWIDTH DIALOG  0, 0, 282, 220
@@ -1396,8 +1364,8 @@ BEGIN
     CONTROL         "Shut down Shareaza immediately",IDC_CLOSE_1,"Button",BS_AUTORADIOBUTTON,30,90,245,10
     CONTROL         "Shut down Shareaza after any downloads and uploads finish",IDC_CLOSE_2,
                     "Button",BS_AUTORADIOBUTTON,30,105,245,10
-    DEFPUSHBUTTON   "OK",IDOK,180,126,50,14,WS_GROUP
-    PUSHBUTTON      "Cancel",IDCANCEL,235,126,50,14
+    DEFPUSHBUTTON   "OK",IDOK,179,124,50,14,WS_GROUP
+    PUSHBUTTON      "Cancel",IDCANCEL,235,124,50,14
 END
 
 IDD_SETTINGS_DONKEY DIALOGEX 0, 0, 282, 220
@@ -1668,17 +1636,18 @@ BEGIN
     LTEXT           "ED2K:",IDC_STATIC,15,132,42,12,SS_CENTERIMAGE
     EDITTEXT        IDC_URN_ED2K,61,132,198,12,ES_AUTOHSCROLL
     CONTROL         "",IDC_TRUST_ED2K,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,267,135,16,8
-    GROUPBOX        "&Actions:",IDC_STATIC,7,156,278,61,WS_GROUP
-    LTEXT           "Forget current verification status and reverify",IDC_FORGET_VERIFY,15,167,236,8
-    LTEXT           "Assume file is 100% complete and reverify",IDC_COMPLETE_AND_VERIFY,15,179,236,8
-    LTEXT           "Forget all known sources",IDC_FORGET_SOURCES,15,191,236,8
-    LTEXT           "Merge with local file and verify",IDC_MERGE_AND_VERIFY,15,203,236,8
-    GROUPBOX        "Data &Eraser:",IDC_STATIC,7,221,278,38,WS_GROUP
-    LTEXT           "Byte range:",IDC_STATIC,15,236,42,12,SS_CENTERIMAGE
-    EDITTEXT        IDC_ERASE_FROM,61,236,65,12,ES_AUTOHSCROLL
-    CTEXT           "to",IDC_STATIC,134,236,12,12,SS_CENTERIMAGE
-    EDITTEXT        IDC_ERASE_TO,151,236,65,12,ES_AUTOHSCROLL
-    PUSHBUTTON      "Erase",IDC_ERASE,227,235,50,15
+    GROUPBOX        "&Actions:",IDC_STATIC,7,156,278,90,WS_GROUP
+    LTEXT           "Forget current verification status and reverify",IDC_FORGET_VERIFY,15,171,236,8
+    LTEXT           "Assume file is 100% complete and reverify",IDC_COMPLETE_AND_VERIFY,15,185,236,8
+    LTEXT           "Forget all known sources",IDC_FORGET_SOURCES,15,199,236,8
+    LTEXT           "Merge with local file and verify",IDC_MERGE_AND_VERIFY,15,213,236,8
+    LTEXT           "Cancel download but save incomplete file(s)",IDC_CANCEL_DOWNLOAD,15,227,236,8
+    GROUPBOX        "Data &Eraser:",IDC_STATIC,7,249,278,38,WS_GROUP
+    LTEXT           "Byte range:",IDC_STATIC,15,264,42,12,SS_CENTERIMAGE
+    EDITTEXT        IDC_ERASE_FROM,61,264,65,12,ES_AUTOHSCROLL
+    CTEXT           "to",IDC_STATIC,134,264,12,12,SS_CENTERIMAGE
+    EDITTEXT        IDC_ERASE_TO,151,264,65,12,ES_AUTOHSCROLL
+    PUSHBUTTON      "Erase",IDC_ERASE,227,263,50,15
 END
 
 IDD_SETTINGS_REMOTE DIALOGEX 0, 0, 282, 220
@@ -1903,7 +1872,7 @@ FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
     GROUPBOX        "Torrent &Information:",IDC_STATIC,7,3,278,28
     LTEXT           "Name:",IDC_STATIC,14,13,44,12,SS_CENTERIMAGE
-    EDITTEXT        IDC_TORRENT_NAME,63,13,215,12,ES_AUTOHSCROLL | ES_READONLY | NOT WS_TABSTOP
+    EDITTEXT        IDC_TORRENT_NAME,60,13,218,12,ES_AUTOHSCROLL | ES_READONLY | NOT WS_TABSTOP
     GROUPBOX        "&Files:",IDC_STATIC,7,33,278,254
     CONTROL         "",IDC_TORRENT_FILES,"SysListView32",LVS_REPORT | LVS_SHAREIMAGELISTS | WS_BORDER | WS_TABSTOP,14,50,264,230
 END
@@ -2133,9 +2102,13 @@ BEGIN
     IDD_DISCOVERY_SERVICE, DIALOG
     BEGIN
         LEFTMARGIN, 7
-        RIGHTMARGIN, 250
+        RIGHTMARGIN, 285
+        VERTGUIDE, 14
+        VERTGUIDE, 143
+        VERTGUIDE, 148
+        VERTGUIDE, 278
         TOPMARGIN, 7
-        BOTTOMMARGIN, 87
+        BOTTOMMARGIN, 138
     END
 
     IDD_SETTINGS_BANDWIDTH, DIALOG
@@ -2614,8 +2587,6 @@ BEGIN
         LEFTMARGIN, 7
         RIGHTMARGIN, 285
         VERTGUIDE, 14
-        VERTGUIDE, 58
-        VERTGUIDE, 63
         VERTGUIDE, 278
         TOPMARGIN, 7
         BOTTOMMARGIN, 287
@@ -3183,8 +3154,8 @@ BEGIN
     IDS_SKIN_DELETE         "Are you sure you want to delete the ""%s"" skin?  This cannot be undone."
     IDS_BETA_EXPIRED        "This is a pre-release version of Shareaza, and the beta testing period has ended.  Please download the full, official release from http://shareaza.sourceforge.net/."
     IDS_VIEW_MODE_CONFIRM   "Changing view will close any windows you have open.  Would you like to change now?"
-    IDS_DOWNLOAD_PROPERTIES "Download Properties"
     IDS_UPGRADE_NO_NEW      "No new Shareaza version detected."
+    IDS_DOWNLOAD_PROPERTIES "Download Properties"
 END
 
 STRINGTABLE 
@@ -4138,6 +4109,12 @@ BEGIN
                             "Are you sure you want to assume this download is complete and reverify it?  The whole file will be considered, and Shareaza will accept parts which pass verification and redownload parts which fail verification."
     IDS_DOWNLOAD_EDIT_CHANGE_SIZE 
                             "You have made changes to the file size.  Are you sure you want to change the file size for this download?"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_DOWNLOAD_EDIT_CANCEL_DOWNLOAD 
+                            "Are you sure you want to cancel this download but save incomplete file(s)?"
 END
 
 STRINGTABLE 

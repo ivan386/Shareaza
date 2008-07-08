@@ -360,6 +360,13 @@ BOOL CLibraryFile::Delete(BOOL bDeleteGhost)
 
 void CLibraryFile::UpdateMetadata(const CDownload* pDownload)
 {
+	// Disable sharing of incomplete files
+	if ( pDownload->m_bVerify == TRI_FALSE )
+	{
+		m_bVerify = m_bShared = TRI_FALSE;
+		m_bBogus = TRUE;
+	}
+
 	// Get BTIH of recently downloaded file
 	if ( ! m_oBTH && pDownload->IsSingleFileTorrent() )
 	{
