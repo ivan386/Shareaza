@@ -275,7 +275,7 @@ public:
 
 	BOOL				Load();
 	BOOL				Save();
-	int					Import(LPCTSTR pszFile);
+	int					Import(LPCTSTR pszFile, BOOL bFreshOnly = FALSE);
 	int					ImportMET(CFile* pFile);
 	int					ImportNodes(CFile* pFile);
 	bool				CheckMinimumED2KServers();
@@ -325,7 +325,6 @@ protected:
 
 	void				Serialize(CArchive& ar);
 	void				Clear();
-	void				DoED2KServersImport();
 	int					LoadDefaultED2KServers();
 };
 

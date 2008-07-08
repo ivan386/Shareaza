@@ -597,3 +597,20 @@ inline void SafeRelease(CComPtr< T >& pObj) throw()
 		pObj.Detach();
 	}
 }
+
+inline bool IsFileNewerThan(LPCTSTR pszFile, const DWORD nMilliseconds)
+{
+	WIN32_FILE_ATTRIBUTE_DATA fd = {};
+	if ( ! GetFileAttributesEx( pszFile, GetFileExInfoStandard, &fd ) )
+		return false;
+
+	FILETIME ftNow = {};
+	GetSystemTimeAsFileTime( &ftNow );
+
+	if ( ( MAKEQWORD( ftNow.dwLowDateTime, ftNow.dwHighDateTime ) - 
+		10000ull * nMilliseconds ) > MAKEQWORD( fd.ftLastWriteTime.dwLowDateTime,
+		fd.ftLastWriteTime.dwHighDateTime ) )
+		return false;
+
+	return true;
+}

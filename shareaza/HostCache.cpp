@@ -30,6 +30,7 @@
 #include "EDPacket.h"
 #include "Buffer.h"
 #include "Kademlia.h"
+#include "DiscoveryServices.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -162,40 +163,32 @@ void CHostCache::Serialize(CArchive& ar)
 }
 
 //////////////////////////////////////////////////////////////////////
-// CHostCache ED2K servers import
-
-void CHostCache::DoED2KServersImport()
-{
-	CString strPrograms( GetProgramFilesFolder() );
-
-	theApp.Message( MSG_NOTICE, _T("Importing server.met from eMule/eMule mod") );
-
-	// Get the server list from eMule if possible
-	Import( strPrograms + _T("\\eMule\\config\\server.met") );
-	Import( strPrograms + _T("\\Neo Mule\\config\\server.met") );
-}
-
-//////////////////////////////////////////////////////////////////////
 // CHostCache root import
 
-int CHostCache::Import(LPCTSTR pszFile)
+int CHostCache::Import(LPCTSTR pszFile, BOOL bFreshOnly)
 {
+	// Ignore too old file
+	if ( bFreshOnly && ! IsFileNewerThan( pszFile, 90 * 24 * 60 * 60 * 1000 ) ) // 90 days
+		return 0;
+
 	CFile pFile;
+	if ( ! pFile.Open( pszFile, CFile::modeRead ) )
+		return 0;
 
-	if ( ! pFile.Open( pszFile, CFile::modeRead ) ) return 0;
-
-	if ( _tcsistr( pszFile, _T(".met") ) != NULL )
+	// server.met
+	if ( _tcsicmp( PathFindExtension( pszFile ), _T(".met") ) == 0 )
 	{
+		theApp.Message( MSG_NOTICE, _T("Importing MET file: %s ..."), pszFile );
 		return ImportMET( &pFile );
 	}
-	else if ( _tcsistr( pszFile, _T("nodes.dat") ) != NULL )
+	// nodes.dat
+	else if ( _tcsicmp( PathFindExtension( pszFile ), _T(".dat") ) == 0 )
 	{
+		theApp.Message( MSG_NOTICE, _T("Importing Nodes file: %s ..."), pszFile );
 		return ImportNodes( &pFile );
 	}
 	else
-	{
 		return 0;
-	}
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -830,11 +823,21 @@ int CHostCache::ImportNodes(CFile* pFile)
 bool CHostCache::CheckMinimumED2KServers()
 {
 #ifndef LAN_MODE
-	// Load default ed2k server list (if necessary)
 	if ( ! EnoughED2KServers() )
 	{
+		// Load default ed2k server list (if necessary)
 		LoadDefaultED2KServers();
-		DoED2KServersImport();
+
+		// Get the server list from eMule (mods) if possible
+		CString strPrograms( GetProgramFilesFolder() );
+		Import( strPrograms + _T("\\eMule\\config\\server.met"), TRUE );
+		Import( strPrograms + _T("\\Neo Mule\\config\\server.met"), TRUE );
+		Import( strPrograms + _T("\\hebMule\\config\\server.met"), TRUE );
+
+		// Get server list from Web
+		if ( ! EnoughED2KServers() )
+			DiscoveryServices.Execute( TRUE, PROTOCOL_ED2K, TRUE );
+
 		return false;
 	}
 #endif // LAN_MODE
@@ -849,6 +852,10 @@ int CHostCache::LoadDefaultED2KServers()
 	CFile pFile;
 	int nServers = 0;
 	CString strFile = Settings.General.Path + _T("\\Data\\DefaultServers.dat");
+
+	// Ignore too old file
+	if ( ! IsFileNewerThan( strFile, 90 * 24 * 60 * 60 * 1000 ) ) // 90 days
+		return 0;
 
 	if ( pFile.Open( strFile, CFile::modeRead ) )			// Load default list from file if possible
 	{
@@ -906,9 +913,6 @@ int CHostCache::LoadDefaultED2KServers()
 			pException->Delete();
 		}
 	}
-
-	if ( ! EnoughED2KServers() )
-		theApp.Message( MSG_ERROR, _T("Loading default ED2K server list failed") );
 
 	return nServers;
 }
@@ -1170,8 +1174,6 @@ CNeighbour* CHostCacheHost::ConnectTo(BOOL bAutomatic)
 		}
 		break;
 	default:
-		theApp.Message( MSG_ERROR,
-			_T("ERROR: CHostCacheHost::ConnectTo() unhandled protocol in switch") );
 		ASSERT( FALSE );
 	}
 	return NULL;
