@@ -86,7 +86,7 @@ public:
 	BOOL		Move(CDownload* pDownload, int nDelta);
 	BOOL		Reorder(CDownload* pDownload, CDownload* pBefore);
 	BOOL		Swap(CDownload* p1, CDownload* p2);
-	CDownload*	FindByPath(LPCTSTR szPath) const;
+	CDownload*	FindByPath(const CString& sPath) const;
 	CDownload*	FindByURN(LPCTSTR pszURN, BOOL bSharedOnly = FALSE) const;
     CDownload*	FindBySHA1(const Hashes::Sha1Hash& oSHA1, BOOL bSharedOnly = FALSE) const;
     CDownload*	FindByTiger(const Hashes::TigerHash& oTiger, BOOL bSharedOnly = FALSE) const;

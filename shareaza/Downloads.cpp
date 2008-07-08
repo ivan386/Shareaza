@@ -520,16 +520,24 @@ BOOL CDownloads::CheckActive(CDownload* pDownload, int nScope) const
 	return FALSE;
 }
 
-CDownload* CDownloads::FindByPath(LPCTSTR szPath) const
+CDownload* CDownloads::FindByPath(const CString& sPath) const
 {
-	if ( szPath && *szPath )
+	for ( POSITION pos = GetIterator() ; pos ; )
 	{
-		for ( POSITION pos = GetIterator() ; pos ; )
+		CDownload* pDownload = GetNext( pos );
+		if ( pDownload->IsTorrent() )
 		{
-			CDownload* pDownload = GetNext( pos );
-			if ( pDownload->m_sPath.CompareNoCase( szPath ) == 0 )
-				return pDownload;
+			for ( int i = 0; i < pDownload->m_pTorrent.m_nFiles; i++ )
+			{
+				const CBTInfo::CBTFile& rFile = pDownload->m_pTorrent.m_pFiles[ i ];
+				int len = rFile.m_sPath.GetLength();
+				if ( sPath.GetLength() >= len &&
+					rFile.m_sPath.CompareNoCase( sPath.Right( len ) ) == 0 )
+					return pDownload;
+			}
 		}
+		if ( pDownload->m_sPath.CompareNoCase( sPath ) == 0 )
+			return pDownload;
 	}
 	return NULL;
 }
