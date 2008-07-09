@@ -1461,10 +1461,6 @@
 					>
 				</File>
 				<File
-					RelativePath="..\shareaza\DlgDownloadEdit.cpp"
-					>
-				</File>
-				<File
 					RelativePath="..\shareaza\DlgDownloadGroup.cpp"
 					>
 				</File>
@@ -1474,6 +1470,10 @@
 				</File>
 				<File
 					RelativePath="..\shareaza\DlgDownloadReviews.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\shareaza\DlgDownloadSheet.cpp"
 					>
 				</File>
 				<File
@@ -1582,14 +1582,6 @@
 				</File>
 				<File
 					RelativePath="..\shareaza\DlgSplash.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\shareaza\DlgTorrentInfoPage.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\shareaza\DlgTorrentInfoSheet.cpp"
 					>
 				</File>
 				<File
@@ -1944,6 +1936,10 @@
 			<Filter
 				Name="Pages"
 				>
+				<File
+					RelativePath="..\shareaza\PageDownloadEdit.cpp"
+					>
+				</File>
 				<File
 					RelativePath="..\shareaza\PageFileComments.cpp"
 					>
@@ -2700,6 +2696,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\shareaza\Shell.h"
+				>
+			</File>
+			<File
 				RelativePath="..\shareaza\ShellIcons.h"
 				>
 			</File>
@@ -3227,10 +3227,6 @@
 					>
 				</File>
 				<File
-					RelativePath="..\shareaza\DlgDownloadEdit.h"
-					>
-				</File>
-				<File
 					RelativePath="..\shareaza\DlgDownloadGroup.h"
 					>
 				</File>
@@ -3240,6 +3236,10 @@
 				</File>
 				<File
 					RelativePath="..\shareaza\DlgDownloadReviews.h"
+					>
+				</File>
+				<File
+					RelativePath="..\shareaza\DlgDownloadSheet.h"
 					>
 				</File>
 				<File
@@ -3348,14 +3348,6 @@
 				</File>
 				<File
 					RelativePath="..\shareaza\DlgSplash.h"
-					>
-				</File>
-				<File
-					RelativePath="..\shareaza\DlgTorrentInfoPage.h"
-					>
-				</File>
-				<File
-					RelativePath="..\shareaza\DlgTorrentInfoSheet.h"
 					>
 				</File>
 				<File
@@ -3486,6 +3478,10 @@
 			<Filter
 				Name="Pages"
 				>
+				<File
+					RelativePath="..\shareaza\PageDownloadEdit.h"
+					>
+				</File>
 				<File
 					RelativePath="..\shareaza\PageFileComments.h"
 					>
