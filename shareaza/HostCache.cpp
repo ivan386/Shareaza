@@ -834,6 +834,9 @@ bool CHostCache::CheckMinimumED2KServers()
 		Import( strPrograms + _T("\\Neo Mule\\config\\server.met"), TRUE );
 		Import( strPrograms + _T("\\hebMule\\config\\server.met"), TRUE );
 
+		CString strAppData( GetAppDataFolder() );
+		Import( strAppData + _T("\\aMule\\server.met"), TRUE );
+
 		// Get server list from Web
 		if ( ! EnoughED2KServers() )
 			DiscoveryServices.Execute( TRUE, PROTOCOL_ED2K, TRUE );
