@@ -70,6 +70,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "7ZipBuilder", "7ZipBuilder.
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sqlite3", "sqlite3.vcproj", "{0ABB3FBC-FF1A-419E-9368-25B8617BA54E}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TorrentWizard", "TorrentWizard.vcproj", "{F02EDE36-E2AC-40E8-B6DC-76B1D53F9A5A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
