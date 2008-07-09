@@ -296,7 +296,7 @@ void CMainTabBarCtrl::DoPaint(CDC* pDC)
 	if ( Skin.m_bBordersEnabled )
 		DrawBorders( pBuffer, rc );
 	else
-		rc.DeflateRect(0,2,0,0);
+		rc.DeflateRect(2,2,0,0);
 
 	if ( ! CoolInterface.DrawWatermark( pBuffer, &rc, &m_pSkin->m_bmWatermark ) )
 	{
@@ -592,9 +592,9 @@ void CMainTabBarCtrl::TabItem::Paint(CDC* pDstDC, CDC* pSrcDC, const CPoint& ptO
 		return;
 
 	if ( Skin.m_crNavBarTextUp == CLR_NONE
-		|| Skin.m_crNavBarTextHover == CLR_NONE
-		|| Skin.m_crNavBarTextChecked == CLR_NONE
-		|| Skin.m_crNavBarText == CLR_NONE )
+		&& Skin.m_crNavBarTextHover == CLR_NONE
+		&& Skin.m_crNavBarTextChecked == CLR_NONE
+		&& Skin.m_crNavBarText == CLR_NONE )
 	{
 		// No label text
 		return;
