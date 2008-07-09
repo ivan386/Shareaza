@@ -260,63 +260,48 @@ namespace Shareaza
 
 			MemoryStream msIn = new MemoryStream(binary.Value);
 			try {
-				using (Image inImage = Image.FromStream(msIn)) {
-					MemoryStream msOut = new MemoryStream();
-					try {
-						Enc bmpCompression = Enc.Compression;
-						Enc bmpColors = Enc.ColorDepth;
-						// Save the bitmap with RLE compression and 24bit colors
-						using (EncoderParameter parameter1 =
-												new EncoderParameter(bmpColors, 24))
-						using (EncoderParameter parameter2 =
-												new EncoderParameter(bmpCompression,
-																	 (long)EncoderValue.CompressionNone))
-						using (EncoderParameters parameters = new EncoderParameters(2)) {
-							parameters.Param[0] = parameter1;
-							parameters.Param[1] = parameter2;
-							inImage.Save(msOut, GetEncoderInfo(@"image/bmp"), parameters);
-						}
-
-						msOut.Position = 0;
-						using (Bitmap outBitmap = new Bitmap(msOut)) {
-							Rectangle rect = new Rectangle(0, 0, outBitmap.Width, outBitmap.Height);
-							BitmapData bmpData = outBitmap.LockBits(rect, ImageLockMode.ReadOnly,
-																	outBitmap.PixelFormat);
-
-							// Declare an array to hold the bytes of the bitmap.
-							int nBytes = bmpData.Stride * outBitmap.Height;
-							byte[] bytes = new byte[nBytes];
-
-							// Swap Red and Blue bytes
-							unsafe {
-								byte* pData = (byte*)bmpData.Scan0;
-								int offset = bmpData.Stride - outBitmap.Width * 3;
-								byte red;
-
-								for (int y = 0; y < outBitmap.Height; ++y) {
-									for (int x = 0; x < outBitmap.Width; ++x) {
-										red = pData[2];
-										pData[2] = pData[0];
-										pData[0] = red;
-										pData += 3;
-									}
-									pData += offset;
-								}
-							}
-							Marshal.Copy(bmpData.Scan0, bytes, 0, nBytes);
-							ppImage = bytes;
-
-							pParams.nComponents = 3;
-							pParams.nWidth = outBitmap.Width;
-							pParams.nHeight = outBitmap.Height;
-
-							outBitmap.UnlockBits(bmpData);
-						}
-					} catch {
-						Marshal.ThrowExceptionForHR(Hresults.E_FAIL);
-					} finally {
-						msOut.Close();
+				using (Bitmap inImage = (Bitmap)Image.FromStream(msIn))
+				using (Bitmap outBitmap = new Bitmap(inImage.Width, inImage.Height,
+													 PixelFormat.Format24bppRgb)) {
+					using (Graphics g = Graphics.FromImage(outBitmap)) {
+						g.DrawImage(inImage, new Point(0, 0));
 					}
+					Rectangle rect = new Rectangle(0, 0, outBitmap.Width, outBitmap.Height);
+					BitmapData bmpData = outBitmap.LockBits(rect, ImageLockMode.ReadOnly,
+															outBitmap.PixelFormat);
+
+					// Declare an array to hold the bytes of the bitmap.
+					int nBytes = bmpData.Stride * outBitmap.Height;
+					byte[] bytes = new byte[nBytes];
+
+					// Swap Red and Blue bytes
+					unsafe {
+						byte* pData = (byte*)bmpData.Scan0;
+						int offset = bmpData.Stride - outBitmap.Width * 3;
+						if (offset < 0) {
+							Marshal.ThrowExceptionForHR(Hresults.E_FAIL);
+							return;						
+						}
+						byte red;
+
+						for (int y = 0; y < outBitmap.Height; ++y) {
+							for (int x = 0; x < outBitmap.Width; ++x) {
+								red = pData[2];
+								pData[2] = pData[0];
+								pData[0] = red;
+								pData += 3;
+							}
+							pData += offset;
+						}
+					}
+					Marshal.Copy(bmpData.Scan0, bytes, 0, nBytes);
+					ppImage = bytes;
+
+					pParams.nComponents = 3;
+					pParams.nWidth = outBitmap.Width;
+					pParams.nHeight = outBitmap.Height;
+
+					outBitmap.UnlockBits(bmpData);
 				}
 			} catch {
 				Marshal.ThrowExceptionForHR(Hresults.E_FAIL);
