@@ -170,7 +170,7 @@ void CWebSettingsPage::OnOK()
 	
 	CShareazaURL::Register();
 	
-	if ( HINSTANCE hInstance = LoadLibrary( Settings.General.Path + _T("\\Plugins\\RazaWebHook.dll") ) )
+	if ( HINSTANCE hInstance = LoadLibrary( Settings.General.Path + _T("\\RazaWebHook.dll") ) )
 	{
 		HRESULT (WINAPI *pfnRegister)();
 		(FARPROC&)pfnRegister = GetProcAddress( hInstance, m_bWebHook ? "DllRegisterServer" : "DllUnregisterServer" );

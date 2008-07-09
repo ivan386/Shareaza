@@ -10,12 +10,21 @@
   #error PreProcessor version 5.2.0.0 or higher is needed for this script
 #endif
 
-#define internal_name GetStringFileInfo("..\Shareaza\" + PlatformName + "\" + ConfigurationName + "\Shareaza.exe", INTERNAL_NAME);
-#define name          internal_name + " " + PlatformName + " " + ConfigurationName + " build"
-#define version       GetFileVersion("..\Shareaza\" + PlatformName + "\" + ConfigurationName + "\Shareaza.exe")
+; Project definitions
+#define shareaza      "..\Shareaza\" + PlatformName + "\" + ConfigurationName + "\Shareaza.exe"
+#define internal_name GetStringFileInfo(shareaza, INTERNAL_NAME);
+#if ConfigurationName == "Debug"
+  #define name internal_name + " Debug build"
+#else
+  #define name internal_name
+#endif
+#define version       GetFileVersion(shareaza)
 #define Publisher     "Shareaza Development Team"
 #define Description   internal_name + " Ultimate File Sharing"
+
+; Not supported by ISPP 5.1.2
 #define date          GetDateTimeString('yyyy/mm/dd', '-', '')
+
 #if alpha == "Yes"
   #define output_name internal_name + "_" + version + "_" + PlatformName + "_" + ConfigurationName + "_" + date
 #else
@@ -97,10 +106,8 @@ Source: "setup\builds\RestoreSettings.bat"; DestDir: "{app}"; DestName: "Restore
 ; ZLib
 #if PlatformName == "Win32"
 Source: "setup\builds\zlibwapi.dll"; DestDir: "{app}";         DestName: "zlibwapi.dll"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
-Source: "setup\builds\zlibwapi.dll"; DestDir: "{app}\Plugins"; DestName: "zlibwapi.dll"; Flags: overwritereadonly replacesameversion uninsremovereadonly sortfilesbyextension deleteafterinstall
 #elif PlatformName == "x64"
 Source: "setup\builds\zlibwapi_x64.dll"; DestDir: "{app}";         DestName: "zlibwapi.dll"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
-Source: "setup\builds\zlibwapi_x64.dll"; DestDir: "{app}\Plugins"; DestName: "zlibwapi.dll"; Flags: overwritereadonly replacesameversion uninsremovereadonly sortfilesbyextension deleteafterinstall
 #endif
 
 ; SQLite
@@ -111,52 +118,49 @@ Source: "GeoIP\geoip.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesam
 Source: "GeoIP\data\GeoIP.dat"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 
 ; Plugins
-Source: "plugins\7ZipBuilder\{#PlatformName}\{#ConfigurationName}\7ZipBuilder.dll";   DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
+Source: "plugins\7ZipBuilder\{#PlatformName}\{#ConfigurationName}\7ZipBuilder.dll";   DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
 Source: "plugins\7ZipBuilder\{#PlatformName}\{#ConfigurationName}\7zxr.dll"; DestDir: "{app}";         Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
-Source: "plugins\7ZipBuilder\{#PlatformName}\{#ConfigurationName}\7zxr.dll"; DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion uninsremovereadonly sortfilesbyextension deleteafterinstall
 
-Source: "plugins\DocumentReader\{#PlatformName}\{#ConfigurationName}\DocumentReader.dll";   DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
+Source: "plugins\DocumentReader\{#PlatformName}\{#ConfigurationName}\DocumentReader.dll";   DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
 
-Source: "plugins\GFLImageServices\{#PlatformName}\{#ConfigurationName}\GFLImageServices.dll";   DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
+Source: "plugins\GFLImageServices\{#PlatformName}\{#ConfigurationName}\GFLImageServices.dll";   DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
 Source: "plugins\GFLImageServices\{#PlatformName}\{#ConfigurationName}\libgfl280.dll"; DestDir: "{app}";         Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
-Source: "plugins\GFLImageServices\{#PlatformName}\{#ConfigurationName}\libgfl280.dll"; DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion uninsremovereadonly sortfilesbyextension deleteafterinstall
 
-Source: "plugins\GFLLibraryBuilder\{#PlatformName}\{#ConfigurationName}\GFLLibraryBuilder.dll";   DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
+Source: "plugins\GFLLibraryBuilder\{#PlatformName}\{#ConfigurationName}\GFLLibraryBuilder.dll";   DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
 
-Source: "plugins\ImageViewer\{#PlatformName}\{#ConfigurationName}\ImageViewer.dll";   DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
+Source: "plugins\ImageViewer\{#PlatformName}\{#ConfigurationName}\ImageViewer.dll";   DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
 
-Source: "plugins\MediaImageServices\{#PlatformName}\{#ConfigurationName}\MediaImageServices.dll";   DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
+Source: "plugins\MediaImageServices\{#PlatformName}\{#ConfigurationName}\MediaImageServices.dll";   DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
 
-Source: "plugins\MediaLibraryBuilder\{#PlatformName}\{#ConfigurationName}\MediaLibraryBuilder.dll";   DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
+Source: "plugins\MediaLibraryBuilder\{#PlatformName}\{#ConfigurationName}\MediaLibraryBuilder.dll";   DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
 
-Source: "plugins\RARBuilder\{#PlatformName}\{#ConfigurationName}\RARBuilder.dll";   DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
+Source: "plugins\RARBuilder\{#PlatformName}\{#ConfigurationName}\RARBuilder.dll";   DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
 Source: "plugins\RARBuilder\{#PlatformName}\{#ConfigurationName}\unrar.dll"; DestDir: "{app}";         Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
-Source: "plugins\RARBuilder\{#PlatformName}\{#ConfigurationName}\unrar.dll"; DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion uninsremovereadonly sortfilesbyextension deleteafterinstall
 
-Source: "plugins\RatDVDPlugin\{#PlatformName}\{#ConfigurationName}\RatDVDReader.dll";   DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
+Source: "plugins\RatDVDPlugin\{#PlatformName}\{#ConfigurationName}\RatDVDReader.dll";   DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
 
-Source: "plugins\SkinScanSKS\{#PlatformName}\{#ConfigurationName}\SkinScanSKS.dll";   DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
+Source: "plugins\SkinScanSKS\{#PlatformName}\{#ConfigurationName}\SkinScanSKS.dll";   DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
 
-Source: "plugins\SWFPlugin\{#PlatformName}\{#ConfigurationName}\SWFPlugin.dll";   DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
+Source: "plugins\SWFPlugin\{#PlatformName}\{#ConfigurationName}\SWFPlugin.dll";   DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
 
-Source: "plugins\ZIPBuilder\{#PlatformName}\{#ConfigurationName}\ZIPBuilder.dll";   DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
+Source: "plugins\ZIPBuilder\{#PlatformName}\{#ConfigurationName}\ZIPBuilder.dll";   DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
 
-Source: "plugins\MediaPlayer.dll"; DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
+Source: "plugins\MediaPlayer.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
 
 ; Don't register RazaWebHook.dll since it will setup Shareaza as download manager
-Source: "plugins\RazaWebHook.dll"; DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+Source: "plugins\RazaWebHook.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 
 
 #if ConfigurationName == "Debug"
 ;--== Debug Databases ==--
 ; Main files
-;Source: "{#root}\shareaza.pdb"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+Source: "Shareaza\{#PlatformName}\{#ConfigurationName}\shareaza.pdb"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 ; ** The next line can be uncommented to include geoip, skin & zlibwapi debug database files
 ;Source: "{#root}\*.pdb"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 
 ; Plugins
 ; ** This section can be uncommented to include the debug database files for all the plugins
-;Source: "{#root}\plugins\*.pdb"; DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+;Source: "{#root}\plugins\*.pdb"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 #endif
 
 
@@ -409,6 +413,13 @@ Root: HKCU; Subkey: "Software\TorrentAid\TorrentWizard\Folders"; ValueType: stri
 Root: HKCU; Subkey: "Software\TorrentAid\TorrentWizard\Folders"; ValueType: string; ValueName: "001.Path"; ValueData: "{app}\Torrents"; Flags: createvalueifdoesntexist; Tasks: not multiuser
 Root: HKCU; Subkey: "Software\TorrentAid\TorrentWizard\Folders"; ValueType: string; ValueName: "Last"; ValueData: "{app}\Torrents"; Flags: createvalueifdoesntexist; Tasks: not multiuser
 
+; Turn on ShareazaOS skin
+Root: HKCU; Subkey: "Software\Shareaza\Shareaza\Skins"; ValueType: dword; ValueName: "ShareazaOS\ShareazaOS.xml"; ValueData: "{ini:{param:SETTINGS|},Skins,ShareazaOS|1}"; Flags: createvalueifdoesntexist uninsdeletekey
+
+; Disable extensions for plugins which make trouble
+; Since it is image services plugin we need to add extensions required for the first run
+Root: HKCU; Subkey: "Software\Shareaza\Shareaza\Plugins"; ValueType: string; ValueName: "{{FF5FCD00-2C20-49D8-84F6-888D2E2C95DA}"; ValueData: "|-.pdf||.bmp||.png||.jpg|"; Flags: createvalueifdoesntexist uninsdeletekey
+
 [Dirs]
 ; Make complete, incomplete, torrent and collection dir
 ; Note: download dir will be created when installer is copied but we create also here to be sure
@@ -434,14 +445,9 @@ Type: files; Name: "{app}\vc2.dll"
 
 ; Clean up old files from Shareaza
 Type: files; Name: "{app}\*.pdb"
-Type: files; Name: "{app}\Plugins\*.pdb"
 Type: files; Name: "{app}\zlib.dll"
 Type: files; Name: "{app}\zlib1.dll"
-Type: files; Name: "{app}\Plugins\zlib.dll"
-Type: files; Name: "{app}\Plugins\zlib1.dll"
-Type: files; Name: "{app}\Plugins\DivFix.dll"
 Type: files; Name: "{app}\libgfl*.dll"
-Type: files; Name: "{app}\Plugins\libgfl*.dll"
 Type: files; Name: "{app}\Skins\skin.exe"
 Type: files; Name: "{app}\Schemas\VendorCache.xsd"
 Type: files; Name: "{app}\Schemas\SchemaDescriptor.xsd"
@@ -453,6 +459,7 @@ Type: files; Name: "{app}\*.xml"
 Type: files; Name: "{app}\*.png"
 Type: files; Name: "{app}\*.bmp"
 Type: files; Name: "{app}\Data\*.url"
+Type: filesandordirs; Name: "{app}\Plugins"
 Type: filesandordirs; Name: "{userappdata}\Shareaza\Remote"
 Type: filesandordirs; Name: "{userappdata}\Shareaza\Schemas"
 Type: filesandordirs; Name: "{userappdata}\Shareaza\Skins"
@@ -461,7 +468,6 @@ Type: files; Name: "{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CompletePath|
 Type: files; Name: "{userappdata}\Shareaza\Data\DefaultAvatar.png"
 Type: files; Name: "{app}\Skins\Languages\default-en.xml"
 Type: files; Name: "{app}\unicows.dll"
-Type: files; Name: "{app}\Plugins\unicows.dll"
 
 ; Delete renamed translations
 ; "jp" to "ja"
@@ -522,8 +528,6 @@ Type: files; Name: "{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CollectionPat
 
 ; Pull in languages and localized files
 #include "languages.iss"
-; Pull in Shareaza settings to write to registry
-#include "settings.iss"
 
 ; Code sections need to be the last section in a script or the compiler will get confused
 [Code]

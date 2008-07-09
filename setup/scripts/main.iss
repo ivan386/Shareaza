@@ -1,8 +1,7 @@
+; Input defines: ConfigurationName (Debug or Release), PlatformName (Win32, x64, etc.)
+
 ; Change from "Yes" to "No" on the next line if you don't compile an alpha build
 #define alpha "Yes"
-
-; Uncomment the next line to compile the setup with the debug version of shareaza (It is no longer used to debug the setup).
-; #define Debug
 
 #if VER < 0x05010700
   #error Inno Setup version 5.1.7 or higher is needed for this script
@@ -11,59 +10,40 @@
   #error PreProcessor version 5.2.0.0 or higher is needed for this script
 #endif
 
-; Release build of the installer compiled inside Visual Studio
-#ifdef Release
-  #undef Debug
-#endif
-
-; This is defined externally only when compiled inside Visual Studio
-#ifndef PlatformName
-  #define PlatformName "Win32"
-#endif
-
-
-; This decide if it is a debug build or not
-#ifdef Debug
-  #define type "Debug"
-#else
-  #define type "Release"
-#endif
-
 ; Select file source root
-#ifexist "..\..\vc7_1\" + type + PlatformName + "\Shareaza.exe"
-  #define root "vc7_1\" + type + PlatformName
+#ifexist "..\vc7_1\" + ConfigurationName + PlatformName + "\Shareaza.exe"
+  #define root "vc7_1\" + ConfigurationName + PlatformName
 #endif
-
-#ifexist "..\..\vc8_0\" + type + PlatformName + "\Shareaza.exe"
-  #define root "vc8_0\" + type + PlatformName
+#ifexist "..\vc8_0\" + ConfigurationName + PlatformName + "\Shareaza.exe"
+  #define root "vc8_0\" + ConfigurationName + PlatformName
 #endif
-
-; Redefine this as only x64 builds need to be distinguished as different
-#if PlatformName == "Win32"
-  #define PlatformName ""
-#endif
-
 #ifndef root
   #error You must compile Shareaza, skin-installer and all plugins before compile the setup
 #endif
 
-
-#define internal_name GetStringFileInfo("..\..\" + root + "\Shareaza.exe", INTERNAL_NAME);
-#ifdef Debug
+; Project definitions
+#define shareaza      "..\" + root + "\Shareaza.exe"
+#define internal_name GetStringFileInfo(shareaza, INTERNAL_NAME);
+#if ConfigurationName == "Debug"
   #define name internal_name + " Debug build"
 #else
   #define name internal_name
 #endif
-#define version GetFileVersion("..\..\" + root + "\Shareaza.exe")
-
-#define Publisher "Shareaza Development Team"
-#define Description internal_name + " Ultimate File Sharing"
+#define version       GetFileVersion(shareaza)
+#define Publisher     "Shareaza Development Team"
+#define Description   internal_name + " Ultimate File Sharing"
 
 ; Not supported by ISPP 5.1.2
-#define date GetDateTimeString('yyyy/mm/dd', '-', '')
+#define date          GetDateTimeString('yyyy/mm/dd', '-', '')
+
+#if alpha == "Yes"
+  #define output_name internal_name + "_" + version + "_" + PlatformName + "_" + ConfigurationName + "_" + date
+#else
+  #define output_name internal_name + "_" + version + "_" + PlatformName
+#endif
 
 [Setup]
-AppComments={#internal_name} Ultimate File Sharing
+AppComments={#Description}
 AppId={#internal_name}
 AppName={#name}
 AppVersion={#version}
@@ -74,13 +54,7 @@ DirExistsWarning=no
 DefaultGroupName={#internal_name}
 AllowNoIcons=yes
 OutputDir=setup\builds
-#ifdef Debug
-OutputBaseFilename={#internal_name}_Debug_{#date}{#PlatformName}
-#elif alpha == "Yes"
-OutputBaseFilename={#internal_name}_Release_{#date}{#PlatformName}
-#else
-OutputBaseFilename={#internal_name}_{#version}{#PlatformName}
-#endif
+OutputBaseFilename={#output_name}
 SolidCompression=yes
 Compression=lzma/max
 InternalCompressLevel=max
@@ -98,8 +72,8 @@ WizardSmallImageFile=setup\misc\corner.bmp
 AppModifyPath="{app}\Uninstall\setup.exe"
 ChangesAssociations=yes
 ChangesEnvironment=yes
-OutputManifestFile=Manifest_{#type}{#PlatformName}.txt
-MinVersion=0,4.0sp6
+OutputManifestFile=Manifest_{#ConfigurationName}{#PlatformName}.txt
+MinVersion=0,5.0
 #if PlatformName == "x64"
 ArchitecturesAllowed=x64
 ArchitecturesInstallIn64BitMode=x64
@@ -131,26 +105,29 @@ Name: "deleteoldsetup"; Description: "{cm:tasks_deleteoldsetup}"; Check: EnableD
 Name: "resetdiscoveryhostcache"; Description: "{cm:tasks_resetdiscoveryhostcache}"; Flags: unchecked
 
 [Files]
-;--== Executables ==--
 ; Main files
 Source: "{#root}\Shareaza.exe"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
-Source: "{#root}\skin.exe";     DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+Source: "{#root}\Skin.exe";     DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+Source: "{#root}\TorrentWizard.exe";     DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 
+; Save/Restore scripts
+Source: "setup\builds\SaveSettings.bat"; DestDir: "{app}"; DestName: "SaveSettings.bat"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension skipifsourcedoesntexist
+Source: "setup\builds\RestoreSettings.bat"; DestDir: "{app}"; DestName: "RestoreSettings.bat"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension skipifsourcedoesntexist
 
 ;--== Dynamic Link Libraries ==--
 ; Main files
 Source: "{#root}\*.dll"; DestDir: "{app}";         Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
-Source: "{#root}\*.dll"; DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion uninsremovereadonly sortfilesbyextension deleteafterinstall
 
 ; Plugins
-Source: "{#root}\plugins\*.dll";   DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver; Excludes: "libgfl*.dll,zlibwapi.dll,unrar.dll,7zxr.dll"
-Source: "{#root}\plugins\*.dll";   DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension;           Excludes: "libgfl*.dll,zlibwapi.dll"
-Source: "plugins\MediaPlayer.dll"; DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
+Source: "{#root}\plugins\*.dll";   DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver; Excludes: "libgfl*.dll,zlibwapi.dll,unrar.dll,7zxr.dll"
+Source: "{#root}\plugins\*.dll";   DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension;           Excludes: "libgfl*.dll,zlibwapi.dll"
+Source: "plugins\MediaPlayer.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
+
 ; Don't register RazaWebHook.dll since it will setup Shareaza as download manager
-Source: "plugins\RazaWebHook.dll"; DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+Source: "plugins\RazaWebHook.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 
 
-#ifdef Debug
+#if ConfigurationName == "Debug"
 ;--== Debug Databases ==--
 ; Main files
 Source: "{#root}\shareaza.pdb"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
@@ -159,7 +136,7 @@ Source: "{#root}\shareaza.pdb"; DestDir: "{app}"; Flags: overwritereadonly repla
 
 ; Plugins
 ; ** This section can be uncommented to include the debug database files for all the plugins
-;Source: "{#root}\plugins\*.pdb"; DestDir: "{app}\Plugins"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+;Source: "{#root}\plugins\*.pdb"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 #endif
 
 
@@ -241,8 +218,8 @@ Source: "{ini:{param:SETTINGS|},Locations,UserPath|{reg:HKCU\Software\Shareaza\S
 
 ; Copy installer into download and uninstall dir
 #if alpha == "No"
-Source: "{srcexe}"; DestDir: "{ini:{param:SETTINGS|},Locations,CompletePath|{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CompletePath|{userdocs}\Shareaza Downloads}}"; DestName: "Shareaza_{#version}.exe"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension external onlyifdoesntexist; Tasks: multiuser
-Source: "{srcexe}"; DestDir: "{ini:{param:SETTINGS|},Locations,CompletePath|{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CompletePath|{app}\Downloads}}"; DestName: "Shareaza_{#version}.exe"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension external onlyifdoesntexist; Tasks: not multiuser
+Source: "{srcexe}"; DestDir: "{ini:{param:SETTINGS|},Locations,CompletePath|{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CompletePath|{userdocs}\Shareaza Downloads}}"; DestName: "{#output_name}.exe"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension external onlyifdoesntexist; Tasks: multiuser
+Source: "{srcexe}"; DestDir: "{ini:{param:SETTINGS|},Locations,CompletePath|{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CompletePath|{app}\Downloads}}"; DestName: "{#output_name}.exe"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension external onlyifdoesntexist; Tasks: not multiuser
 #endif
 Source: "{srcexe}"; DestDir: "{app}\Uninstall"; DestName: "setup.exe"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension external
 
@@ -415,6 +392,13 @@ Root: HKCU; Subkey: "Software\TorrentAid\TorrentWizard\Folders"; ValueType: stri
 Root: HKCU; Subkey: "Software\TorrentAid\TorrentWizard\Folders"; ValueType: string; ValueName: "001.Path"; ValueData: "{app}\Torrents"; Flags: createvalueifdoesntexist; Tasks: not multiuser
 Root: HKCU; Subkey: "Software\TorrentAid\TorrentWizard\Folders"; ValueType: string; ValueName: "Last"; ValueData: "{app}\Torrents"; Flags: createvalueifdoesntexist; Tasks: not multiuser
 
+; Turn on ShareazaOS skin
+Root: HKCU; Subkey: "Software\Shareaza\Shareaza\Skins"; ValueType: dword; ValueName: "ShareazaOS\ShareazaOS.xml"; ValueData: "{ini:{param:SETTINGS|},Skins,ShareazaOS|1}"; Flags: createvalueifdoesntexist uninsdeletekey
+
+; Disable extensions for plugins which make trouble
+; Since it is image services plugin we need to add extensions required for the first run
+Root: HKCU; Subkey: "Software\Shareaza\Shareaza\Plugins"; ValueType: string; ValueName: "{{FF5FCD00-2C20-49D8-84F6-888D2E2C95DA}"; ValueData: "|-.pdf||.bmp||.png||.jpg|"; Flags: createvalueifdoesntexist uninsdeletekey
+
 [Dirs]
 ; Make complete, incomplete, torrent and collection dir
 ; Note: download dir will be created when installer is copied but we create also here to be sure
@@ -440,14 +424,9 @@ Type: files; Name: "{app}\vc2.dll"
 
 ; Clean up old files from Shareaza
 Type: files; Name: "{app}\*.pdb"
-Type: files; Name: "{app}\Plugins\*.pdb"
 Type: files; Name: "{app}\zlib.dll"
 Type: files; Name: "{app}\zlib1.dll"
-Type: files; Name: "{app}\Plugins\zlib.dll"
-Type: files; Name: "{app}\Plugins\zlib1.dll"
-Type: files; Name: "{app}\Plugins\DivFix.dll"
 Type: files; Name: "{app}\libgfl*.dll"
-Type: files; Name: "{app}\Plugins\libgfl*.dll"
 Type: files; Name: "{app}\Skins\skin.exe"
 Type: files; Name: "{app}\Schemas\VendorCache.xsd"
 Type: files; Name: "{app}\Schemas\SchemaDescriptor.xsd"
@@ -459,6 +438,7 @@ Type: files; Name: "{app}\*.xml"
 Type: files; Name: "{app}\*.png"
 Type: files; Name: "{app}\*.bmp"
 Type: files; Name: "{app}\Data\*.url"
+Type: filesandordirs; Name: "{app}\Plugins"
 Type: filesandordirs; Name: "{userappdata}\Shareaza\Remote"
 Type: filesandordirs; Name: "{userappdata}\Shareaza\Schemas"
 Type: filesandordirs; Name: "{userappdata}\Shareaza\Skins"
@@ -467,7 +447,6 @@ Type: files; Name: "{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CompletePath|
 Type: files; Name: "{userappdata}\Shareaza\Data\DefaultAvatar.png"
 Type: files; Name: "{app}\Skins\Languages\default-en.xml"
 Type: files; Name: "{app}\unicows.dll"
-Type: files; Name: "{app}\Plugins\unicows.dll"
 
 ; Delete renamed translations
 ; "jp" to "ja"
@@ -528,8 +507,6 @@ Type: files; Name: "{reg:HKCU\Software\Shareaza\Shareaza\Downloads,CollectionPat
 
 ; Pull in languages and localized files
 #include "languages.iss"
-; Pull in Shareaza settings to write to registry
-#include "settings.iss"
 
 ; Code sections need to be the last section in a script or the compiler will get confused
 [Code]
@@ -1007,4 +984,4 @@ End;
 { Pull in custom wizard pages }
 #include "pages.iss"
 
-#expr SaveToFile("..\builds\Preprocessed.iss")
+#expr SaveToFile("builds\Preprocessed.iss")
