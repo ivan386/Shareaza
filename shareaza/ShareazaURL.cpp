@@ -619,7 +619,7 @@ BOOL CShareazaURL::ParseMagnet(LPCTSTR pszURL)
 		}
 	}
 	
-    if ( m_oSHA1 || m_oTiger || m_oBTH || m_oMD5 || m_oED2K || m_sURL.GetLength() )
+    if ( IsHashed() || m_sURL.GetLength() )
 	{
 		m_nAction = uriDownload;
 		return TRUE;
@@ -778,7 +778,7 @@ BOOL CShareazaURL::ParseShareazaFile(LPCTSTR pszURL)
 		}
 	}
 	
-    if ( m_oSHA1 || m_oTiger || m_oBTH || m_oMD5 || m_oED2K || m_sURL.GetLength() )
+    if ( IsHashed() || m_sURL.GetLength() )
 	{
 		m_nAction = uriDownload;
 		return TRUE;

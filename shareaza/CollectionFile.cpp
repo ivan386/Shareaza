@@ -345,7 +345,7 @@ BOOL CCollectionFile::File::Parse(CXMLElement* pRoot)
 		}
 	}
 	
-	return m_oSHA1 || m_oMD5 || m_oTiger || m_oED2K || m_oBTH;
+	return IsHashed();
 }
 
 /////////////////////////////////////////////////////////////////////////////

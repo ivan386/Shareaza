@@ -1632,8 +1632,7 @@ BOOL CMatchFile::Add(CQueryHit* pHit, BOOL bForce)
 		m_oMD5 = pHit->m_oMD5;
 	}
 	
-	if ( ! m_bDownload && GetLibraryStatus() == TRI_UNKNOWN &&
-		( m_oSHA1 || m_oTiger || m_oED2K || m_oBTH || m_oMD5 ) )
+	if ( ! m_bDownload && GetLibraryStatus() == TRI_UNKNOWN && IsHashed() )
 	{
 		CSingleLock pLock2( &Transfers.m_pSection );
 		
