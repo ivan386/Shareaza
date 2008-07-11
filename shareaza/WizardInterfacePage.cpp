@@ -151,9 +151,5 @@ LRESULT CWizardInterfacePage::OnWizardNext()
 
 	Settings.Save();
 
-	// If this system is capable of handling multiple networks, go to the network settings wizard.
-	if ( IsConnectionCapable() )
-		return 0;
-	else
-		return IDD_WIZARD_FINISHED;
+	return 0;
 }

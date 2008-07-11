@@ -98,11 +98,7 @@ BOOL CWizardFinishedPage::OnSetActive()
 
 LRESULT CWizardFinishedPage::OnWizardBack()
 {
-	// If this system is capable of handling multiple networks, go to the network settings wizard.
-	if ( IsConnectionCapable() )
-		return 0;
-	else
-		return IDD_WIZARD_INTERFACE;
+	return 0;
 }
 
 BOOL CWizardFinishedPage::OnWizardFinish()
