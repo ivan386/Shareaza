@@ -46,35 +46,31 @@ static char THIS_FILE[]=__FILE__;
 //////////////////////////////////////////////////////////////////////
 // CManagedSearch construction
 
-CManagedSearch::CManagedSearch(auto_ptr< CQuerySearch > pSearch, int nPriority)
-: m_pSearch( pSearch.release() )
+CManagedSearch::CManagedSearch(auto_ptr< CQuerySearch > pSearch, int nPriority) :
+	m_pSearch		( pSearch.release() ),
+	m_nPriority		( nPriority ),
+	m_bAllowG2		( TRUE ),
+	m_bAllowG1		( TRUE ),
+	m_bAllowED2K	( TRUE ),
+	m_bActive		( FALSE ),
+	m_bReceive		( TRUE ),
+	m_tStarted		( 0 ),
+	m_nHits			( 0 ),
+	m_nG1Hits		( 0 ),
+	m_nG2Hits		( 0 ),
+	m_nEDHits		( 0 ),
+	m_nHubs			( 0 ),
+	m_nLeaves		( 0 ),
+	m_nQueryCount	( 0 ),
+	m_tLastG2		( 0 ),
+	m_tLastED2K		( 0 ),
+	m_tMoreResults	( 0 ),
+	m_nEDServers	( 0 ),
+	m_nEDClients	( 0 ),
+	m_tExecute		( 0 )
 {
-	if ( !m_pSearch.get() )
-	{
+	if ( ! m_pSearch.get() )
 		m_pSearch.reset( new CQuerySearch() );
-	}
-	m_nPriority		= nPriority;
-	m_bAllowG2		= TRUE;
-	m_bAllowG1		= TRUE;
-	m_bAllowED2K	= TRUE;
-	
-	m_bActive		= FALSE;
-	m_bReceive		= TRUE;
-	m_tStarted		= 0;
-	m_nHits			= 0;
-	m_nG1Hits		= 0;
-	m_nG2Hits		= 0;
-	m_nEDHits		= 0;
-
-	m_nHubs			= 0;
-	m_nLeaves		= 0;
-	m_nQueryCount	= 0;
-
-	m_tLastG2		= 0;
-	m_tLastED2K		= 0;
-	m_tMoreResults	= 0;
-	m_nEDServers	= 0;
-	m_nEDClients	= 0;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -165,7 +161,7 @@ BOOL CManagedSearch::Execute()
 	DWORD tSecs		= static_cast< DWORD >( time( NULL ) );
 	
 	// Throttle this individual search (so it doesn't take up too many resources)
-	DWORD nThrottle = max( Settings.Search.GeneralThrottle, 200u );
+	DWORD nThrottle = Settings.Search.GeneralThrottle;
 	if ( m_nPriority == spLowest ) nThrottle += 30000;
 	else if ( m_nPriority == spMedium ) nThrottle += 800;
 
@@ -186,15 +182,13 @@ BOOL CManagedSearch::Execute()
 	}
 	
 	// ED2K global search. (UDP)
-	if ( Settings.eDonkey.EnableToday && Settings.eDonkey.ServerWalk && m_bAllowED2K && Network.IsListening() )
+	if ( Settings.eDonkey.EnableToday && Settings.eDonkey.ServerWalk && m_bAllowED2K &&
+		Network.IsListening() && ( m_pSearch->m_oED2K || IsLastED2KSearch() ) )
 	{
-		if ( ( m_pSearch->m_oED2K ) || ( IsLastED2KSearch() ) )
+		if ( tTicks > m_tLastED2K && tTicks - m_tLastED2K >= Settings.eDonkey.QueryGlobalThrottle )
 		{
-			if ( tTicks > m_tLastED2K && tTicks - m_tLastED2K >= Settings.eDonkey.QueryGlobalThrottle )
-			{
-				bSuccess |= ExecuteDonkeyMesh( tTicks, tSecs );
-				m_tLastED2K = tTicks;
-			}
+			bSuccess |= ExecuteDonkeyMesh( tTicks, tSecs );
+			m_tLastED2K = tTicks;
 		}
 	}
 
@@ -244,7 +238,7 @@ BOOL CManagedSearch::ExecuteNeighbours(DWORD tTicks, DWORD tSecs)
 		else if ( pNeighbour->m_nProtocol == PROTOCOL_G2 )
 		{
 			if ( tSecs - pNeighbour->m_tLastQuery <
-					Settings.Gnutella2.QueryHostThrottle / 4 ) continue;
+					Settings.Gnutella2.QueryHostThrottle ) continue;
 		}
 
 		// Lookup the host
@@ -258,7 +252,7 @@ BOOL CManagedSearch::ExecuteNeighbours(DWORD tTicks, DWORD tSecs)
 			else if ( pNeighbour->m_nProtocol == PROTOCOL_G2 )
 				nFrequency = Settings.Gnutella2.RequeryDelay * ( m_nPriority + 1 );
 			else if ( pNeighbour->m_nProtocol == PROTOCOL_ED2K )
-				nFrequency = 86400;
+				nFrequency = 86400; // 1 day
 			
 			if ( tSecs - nLastQuery < nFrequency ) // If we've queried this neighbour 'recently'
 			{

@@ -1299,7 +1299,7 @@ BOOL CHostCacheHost::CanQuery(DWORD tNow) const
 		if ( 0 == m_tQuery ) return TRUE;
 		
 		// Don't query too fast
-		return ( tNow - m_tQuery ) >= max( Settings.eDonkey.QueryServerThrottle, 60u );
+		return ( tNow - m_tQuery ) >= Settings.eDonkey.QueryServerThrottle;
 	}
 	else if ( m_nProtocol == PROTOCOL_G2 )
 	{
@@ -1322,7 +1322,7 @@ BOOL CHostCacheHost::CanQuery(DWORD tNow) const
 		if ( 0 == m_tQuery ) return TRUE;
 		
 		// Don't query too fast
-		return ( tNow - m_tQuery ) >= max( Settings.Gnutella2.QueryHostThrottle, 90u );
+		return ( tNow - m_tQuery ) >= Settings.Gnutella2.QueryHostThrottle;
 	}
 	else if ( m_nProtocol == PROTOCOL_BT )
 	{
