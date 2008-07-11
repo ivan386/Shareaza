@@ -138,7 +138,8 @@ public:
 	BOOL					CheckValid(bool bExpression=true);
 	void					PrepareCheck();
 private:
-	void					BuildWordTable(LPCTSTR pszString);
+	void					BuildWordTable();
+	void					BuildG2PosKeywords();
 	void					SlideKeywords(CString& strPhrase);
 	BOOL					WriteHashesToEDPacket(CEDPacket* pPacket, BOOL bUDP);
 

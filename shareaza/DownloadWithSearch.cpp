@@ -172,14 +172,11 @@ void CDownloadWithSearch::PrepareSearch()
 	
 	pSearch->m_bAndG1 = Settings.Gnutella1.EnableToday;
 
-	if ( pSearch->m_bAndG1 )
+	if ( pSearch->m_sSearch != m_sName )
 	{
-		if ( pSearch->m_sSearch != m_sName )
-		{
-			pSearch->m_sKeywords.Empty();
-			pSearch->m_sSearch = m_sName;
-			pSearch->BuildWordList( false );
-		}
+		pSearch->m_sKeywords.Empty();
+		pSearch->m_sSearch = m_sName;
+		pSearch->BuildWordList( false );
 	}
 
 	if ( m_oSHA1 )

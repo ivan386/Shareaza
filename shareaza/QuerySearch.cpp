@@ -28,7 +28,7 @@
 #include "G1Packet.h"
 #include "G2Packet.h"
 #include "EDPacket.h"
-
+#include "ShareazaURL.h"
 #include "Schema.h"
 #include "SchemaCache.h"
 #include "QueryHashTable.h"
@@ -267,7 +267,7 @@ CG2Packet* CQuerySearch::ToG2Packet(SOCKADDR_IN* pUDP, DWORD nKey)
 		pPacket->Write( m_oMD5 );
 	}
 	
-	if ( !m_sG2Keywords.IsEmpty() )
+	if ( ! IsHashed() && ! m_sG2Keywords.IsEmpty() )
 	{
 		short bValue = (short)( 2 * rand() / ( RAND_MAX + 1.0 ) );
 		if ( bValue )
@@ -384,10 +384,6 @@ CEDPacket* CQuerySearch::ToEDPacket(BOOL bUDP, DWORD nServerFlags)
 				pPacket->Write( m_oED2K );
 			}
 		}
-	}
-	else if ( m_oBTH )
-	{
-		// BitTorrent searches prohibited unless they are GETSOURCES above
 	}
 	else if ( !m_sKeywords.IsEmpty() && !m_sSearch.IsEmpty() || strWords.GetLength() > 0 )
 	{
@@ -881,7 +877,7 @@ BOOL CQuerySearch::CheckValid(bool bExpression)
 	bool bHashOk = false;
 
 	// Searches by hash are ok
-	if ( m_oSHA1 || m_oTiger || m_oED2K || m_oBTH || m_oMD5 )
+	if ( IsHashed() )
 	{
 		if ( m_oURNs.empty() )
 		{
@@ -1315,93 +1311,92 @@ BOOL CQuerySearch::NumberMatch(const CString& strValue, const CString& strRange)
 
 void CQuerySearch::BuildWordList(bool bExpression, bool /* bLocal */ )
 {
-	// clear word tables.
-	m_oWords.clear();
-	m_oNegWords.clear();
-
 	m_sSearch.Trim();
-
 	ToLower( m_sSearch );
 
-	if ( m_sKeywords.IsEmpty() )
-		m_sKeywords = m_sSearch;
-
-	BOOL bHash = ( m_oSHA1 || m_oTiger || m_oED2K || m_oBTH || m_oMD5 ) && m_sSearch.IsEmpty();
-	
+	// Parse "download-like" searches
 	if ( 0 == _tcsncmp( m_sSearch, _T("magnet:?"), 8 ) )
 	{
-		int nURN = m_sSearch.Find( _T("urn:") );
-		
-		if ( nURN > 0 )
+		CShareazaURL pURL;
+		if ( pURL.Parse( m_sSearch, FALSE ) )
 		{
-			m_sSearch = m_sSearch.Mid( nURN );
-			bHash = TRUE;
+			m_sSearch = pURL.m_sName;
+			if ( m_nMinSize == SIZE_UNKNOWN && m_nMaxSize == SIZE_UNKNOWN &&
+				pURL.m_nSize != SIZE_UNKNOWN && pURL.m_nSize != 0 )
+				m_nMinSize = m_nMaxSize = m_nSize;
+			if ( ! m_oSHA1 && pURL.m_oSHA1 )
+				m_oSHA1 = pURL.m_oSHA1;
+			if ( ! m_oTiger && pURL.m_oTiger )
+				m_oTiger = pURL.m_oTiger;
+			if ( ! m_oED2K && pURL.m_oED2K )
+				m_oED2K = pURL.m_oED2K;
+			if ( ! m_oBTH && pURL.m_oBTH )
+				m_oBTH = pURL.m_oBTH;
+			if ( ! m_oMD5 && pURL.m_oMD5 )
+				m_oMD5 = pURL.m_oMD5;
 		}
 	}
 
-	if ( bHash || 0 == _tcsncmp( m_sSearch, _T("urn:"), 4 ) )
+	// Parse searches started from (multiple) URN string(s)
+	while ( 0 == _tcsncmp( m_sSearch, _T("urn:"), 4 ) )
 	{
+		BOOL bHash = FALSE;
 		if ( ! m_oSHA1 )
 		{
 			if ( m_oSHA1.fromUrn( m_sSearch ) )
-			{
 				bHash = TRUE;
-			}
-		}
-		
+			else
+				m_oSHA1.clear();
+		}		
 		if ( ! m_oTiger )
 		{
 			if ( m_oTiger.fromUrn( m_sSearch ) )
-			{
 				bHash = TRUE;
-			}
+			else
+				m_oTiger.clear();
 		}
-
 		if ( ! m_oED2K )
 		{
 			if ( m_oED2K.fromUrn( m_sSearch ) )
-			{
 				bHash = TRUE;
-			}
+			else
+				m_oED2K.clear();
 		}
-
 		if ( ! m_oBTH )
 		{
 			if ( m_oBTH.fromUrn( m_sSearch ) )
-			{
 				bHash = TRUE;
-			}
+			else
+				m_oBTH.clear();
 		}
-
 		if ( ! m_oMD5 )
 		{
 			if ( m_oMD5.fromUrn( m_sSearch ) )
-			{
 				bHash = TRUE;
-			}
-		}
-
-		if ( bHash ) 
-		{
-			int nFirstSpace = m_sSearch.Find( _T(" ") );
-			if ( nFirstSpace != -1 )
-			{
-				m_sSearch = m_sSearch.Mid( nFirstSpace + 1 );
-				m_sSearch.Trim();
-			}
 			else
-				m_sSearch.Empty();
+				m_oMD5.clear();
+		}
+		if ( ! bHash )
+			break;
+		int nFirstSpace = m_sSearch.Find( _T(" ") );
+		if ( nFirstSpace != -1 )
+		{
+			m_sSearch = m_sSearch.Mid( nFirstSpace + 1 );
+			m_sSearch.Trim();
+		}
+		else
+		{
+			m_sSearch.Empty();
+			break;
 		}
 	}
 
+	// Split search string to keywords
 	if ( m_sKeywords.IsEmpty() )
 		m_sKeywords = m_sSearch;
+	MakeKeywords( m_sKeywords, bExpression );
 
-	if ( ! bHash )
-	{
-		MakeKeywords( m_sKeywords, bExpression );
-	}
-
+	// Split metadata to keywords
 	if ( m_pXML )
 	{
 		if ( CXMLElement* pXML = m_pXML->GetFirstElement() )
@@ -1453,11 +1448,15 @@ void CQuerySearch::BuildWordList(bool bExpression, bool /* bLocal */ )
 		}
 	}
 
-	m_sKeywords.TrimLeft();
+	// Build word pos/neg tables (m_oWords/m_oNegWords) from m_sKeywords
+	BuildWordTable();
 
-	// build word pos/neg tables (m_oWords/m_oNegWords)
-	BuildWordTable( m_sKeywords );
-	
+	// Build m_sPosKeywords/m_sG2Keywords from m_oWords/m_oNegWords
+	BuildG2PosKeywords();
+}
+
+void CQuerySearch::BuildG2PosKeywords()
+{
 	// clear QueryStrings.
 	m_sPosKeywords.Empty();
 	m_sG2Keywords.Empty();
@@ -1629,12 +1628,19 @@ void CQuerySearch::SlideKeywords(CString& strPhrase)
 	strPhrase = strTemp.TrimRight( L" " );
 }
 
-void CQuerySearch::BuildWordTable(LPCTSTR pszString)
+void CQuerySearch::BuildWordTable()
 {
-	if ( ! *pszString ) return;
+	// clear word tables.
+	m_oWords.clear();
+	m_oNegWords.clear();
 
-	LPCTSTR pszWord	= pszString;
-	LPCTSTR pszPtr	= pszString;
+	m_sKeywords.TrimRight();
+
+	if ( m_sKeywords.IsEmpty() )
+		return;
+
+	LPCTSTR pszWord	= m_sKeywords;
+	LPCTSTR pszPtr	= pszWord;
 	BOOL bQuote		= FALSE;
 	BOOL bNegate	= FALSE;
 	BOOL bSpace		= TRUE;
@@ -1807,6 +1813,7 @@ CSearchWnd* CQuerySearch::OpenWindow(auto_ptr< CQuerySearch > pSearch)
 void CQuerySearch::PrepareCheck()
 {
 	m_oWords.clear();
+	m_oNegWords.clear();
 	m_oURNs.clear();
 	m_oKeywordHashList.clear();
 	m_sKeywords.Empty();
