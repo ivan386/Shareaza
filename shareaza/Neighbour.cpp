@@ -492,7 +492,7 @@ BOOL CNeighbour::OnCommonHit(CPacket* pPacket)
 			Statistics.Current.Gnutella1.Dropped++;
 		else if ( m_nProtocol == PROTOCOL_G2 )
 			Statistics.Current.Gnutella2.Dropped++;
-		return TRUE;
+		return TRUE; // Stay connected
 	}
 
 	if ( Security.IsDenied( &pHits->m_pAddress ) )
@@ -505,7 +505,7 @@ BOOL CNeighbour::OnCommonHit(CPacket* pPacket)
 		else if ( m_nProtocol == PROTOCOL_G2 )
 			Statistics.Current.Gnutella2.Dropped++;
 		pHits->Delete();
-		return FALSE;
+		return TRUE; // Stay connected
 	}
 
 	Network.NodeRoute->Add( pHits->m_oClientID, this );
@@ -519,7 +519,7 @@ BOOL CNeighbour::OnCommonHit(CPacket* pPacket)
 
 	Network.OnQueryHits( pHits );
 
-	return TRUE;
+	return TRUE; // Stay connected
 }
 
 //////////////////////////////////////////////////////////////////////
