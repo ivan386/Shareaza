@@ -1029,9 +1029,10 @@ BOOL CSkin::Apply(LPCTSTR pszName, CDialog* pDialog, UINT nIconID, CToolTipCtrl*
 		{
 			return FALSE;
 		}
+		else
+			pFile.Write( "<dialogs>\r\n", 11 );
 
-		pFile.Write( "<dialog name=\"", 14 );
-
+		pFile.Write( "\t<dialog name=\"", 15 );
 		int nBytes = WideCharToMultiByte( CP_ACP, 0, strName, strName.GetLength(), NULL, 0, NULL, NULL );
 		LPSTR pBytes = new CHAR[nBytes];
 		WideCharToMultiByte( CP_ACP, 0, strName, strName.GetLength(), pBytes, nBytes, NULL, NULL );
@@ -1039,7 +1040,6 @@ BOOL CSkin::Apply(LPCTSTR pszName, CDialog* pDialog, UINT nIconID, CToolTipCtrl*
 		delete [] pBytes;
 
 		pFile.Write( "\" cookie=\"", 10 );
-
 		nBytes = WideCharToMultiByte( CP_ACP, 0, strCaption, strCaption.GetLength(), NULL, 0, NULL, NULL );
 		pBytes = new CHAR[nBytes];
 		WideCharToMultiByte( CP_ACP, 0, strCaption, strCaption.GetLength(), pBytes, nBytes, NULL, NULL );
@@ -1048,7 +1048,12 @@ BOOL CSkin::Apply(LPCTSTR pszName, CDialog* pDialog, UINT nIconID, CToolTipCtrl*
 
 		pFile.Write( "\" caption=\"", 11 );
 		pDialog->GetWindowText( strCaption );
-
+		strCaption.Replace( _T("\n"), _T("{n}") );
+		strCaption.Replace( _T("\r"), _T("") );
+		strCaption.Replace( _T("&"), _T("_") );
+		CString strTemp;
+		CXMLNode::ValueToString( strCaption, strTemp );
+		strCaption = strTemp;
 		nBytes = WideCharToMultiByte( CP_ACP, 0, strCaption, strCaption.GetLength(), NULL, 0, NULL, NULL );
 		pBytes = new CHAR[nBytes];
 		WideCharToMultiByte( CP_ACP, 0, strCaption, strCaption.GetLength(), pBytes, nBytes, NULL, NULL );
@@ -1069,15 +1074,40 @@ BOOL CSkin::Apply(LPCTSTR pszName, CDialog* pDialog, UINT nIconID, CToolTipCtrl*
 			{
 				pWnd->GetWindowText( strCaption );
 			}
-			
+			else if ( _tcsistr( szClass, _T("ListBox") ) )
+			{
+				CListBox* pListBox = static_cast< CListBox* >( pWnd );
+				for ( int i = 0; i < pListBox->GetCount(); ++i )
+				{
+					CString strTemp;
+					pListBox->GetText( i, strTemp );
+					if ( ! strCaption.IsEmpty() )
+						strCaption += _T('|');
+					strCaption += strTemp;
+				}
+			}
+			else if ( _tcsistr( szClass, _T("ComboBox") ) )
+			{
+				CComboBox* pComboBox = static_cast< CComboBox* >( pWnd );
+				for ( int i = 0; i < pComboBox->GetCount(); ++i )
+				{
+					CString strTemp;
+					pComboBox->GetLBText( i, strTemp );
+					if ( ! strCaption.IsEmpty() )
+						strCaption += _T('|');
+					strCaption += strTemp;
+				}
+			}
+		
 			if ( strCaption.GetLength() )
 			{
+				strCaption.Replace( _T("\n"), _T("{n}") );
+				strCaption.Replace( _T("\r"), _T("") );
 				strCaption.Replace( _T("&"), _T("_") );
-				strCaption.Replace( _T("\""), _T("&quot;") );
-				pFile.Write( "\t<control caption=\"", 19 );
-
-				//pszOutput = T2A(strCaption);
-				//pFile.Write( pszOutput, strlen(pszOutput) );
+				CString strTemp;
+				CXMLNode::ValueToString( strCaption, strTemp );
+				strCaption = strTemp;
+				pFile.Write( "\t\t<control caption=\"", 20 );
 				int nBytes = WideCharToMultiByte( CP_ACP, 0, strCaption, strCaption.GetLength(), NULL, 0, NULL, NULL );
 				LPSTR pBytes = new CHAR[nBytes];
 				WideCharToMultiByte( CP_ACP, 0, strCaption, strCaption.GetLength(), pBytes, nBytes, NULL, NULL );
@@ -1088,11 +1118,11 @@ BOOL CSkin::Apply(LPCTSTR pszName, CDialog* pDialog, UINT nIconID, CToolTipCtrl*
 			}
 			else
 			{
-				pFile.Write( "\t<control/>\r\n", 10+3 );
+				pFile.Write( "\t\t<control/>\r\n", 10+4 );
 			}
 		}
 		
-		pFile.Write( "</dialog>\r\n\r\n", 13 );
+		pFile.Write( "\t</dialog>\r\n", 12 );
 		pFile.Close();
 		
 		return TRUE;
