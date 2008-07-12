@@ -211,7 +211,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				AdditionalIncludeDirectories="$(SolutionDir)..\shareaza\zlib"
-				PreprocessorDefinitions="WIN32;NDEBUG;ZLIB_WINAPI;ZLIB_DLL;_CRT_SECURE_NO_DEPRECATE"
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;ZLIB_WINAPI;ZLIB_DLL;_CRT_SECURE_NO_DEPRECATE"
 				MinimalRebuild="true"
 				RuntimeLibrary="2"
 				RuntimeTypeInfo="false"
@@ -296,7 +296,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				AdditionalIncludeDirectories="$(SolutionDir)..\shareaza\zlib"
-				PreprocessorDefinitions="WIN64;NDEBUG;ZLIB_WINAPI;ZLIB_DLL;_CRT_SECURE_NO_DEPRECATE"
+				PreprocessorDefinitions="WIN64;NDEBUG;_WINDOWS;ZLIB_WINAPI;ZLIB_DLL;_CRT_SECURE_NO_DEPRECATE"
 				MinimalRebuild="true"
 				RuntimeLibrary="2"
 				RuntimeTypeInfo="false"
