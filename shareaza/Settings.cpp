@@ -403,7 +403,6 @@ CSettings::CSettings()
 	Add( _T("BitTorrent"), _T("Endgame"), &BitTorrent.Endgame, true );
 	Add( _T("BitTorrent"), _T("LinkPing"), &BitTorrent.LinkPing, 120*1000, 1000, 10, 60*10, _T(" s") );
 	Add( _T("BitTorrent"), _T("LinkTimeout"), &BitTorrent.LinkTimeout, 180*1000, 1000, 10, 60*10, _T(" s") );
-	Add( _T("BitTorrent"), _T("MaxTrackerRetry"), &BitTorrent.MaxTrackerRetry, 3, 1, 1, 8 );
 	Add( _T("BitTorrent"), _T("PreferenceBTSources"), &BitTorrent.PreferenceBTSources, true );
 	Add( _T("BitTorrent"), _T("RandomPeriod"), &BitTorrent.RandomPeriod, 30*1000, 1000, 1, 60*5, _T(" s") );
 	Add( _T("BitTorrent"), _T("RequestLimit"), &BitTorrent.RequestLimit, 128*1024, 1024, 1, 1024, _T(" KB") );

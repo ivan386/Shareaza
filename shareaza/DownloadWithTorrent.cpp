@@ -512,6 +512,8 @@ void CDownloadWithTorrent::OnTrackerEvent(bool bSuccess, LPCTSTR pszReason)
 		m_sTorrentTrackerError.Empty();
 		m_pTorrent.SetTrackerSucceeded(tNow);
 
+		theApp.Message( MSG_INFO, pszReason );
+
 		// Lock on this tracker if we were searching for one
 		if ( m_pTorrent.m_nTrackerMode == tMultiFinding )
 		{
@@ -524,41 +526,13 @@ void CDownloadWithTorrent::OnTrackerEvent(bool bSuccess, LPCTSTR pszReason)
 	{
 		// There was a problem with the tracker
 		m_bTorrentTrackerError = TRUE;
-		m_sTorrentTrackerError.Empty();
+		m_sTorrentTrackerError = pszReason;
 		m_pTorrent.m_pAnnounceTracker->m_nFailures++;
 		m_bTorrentRequested = m_bTorrentStarted = FALSE;
-		
-		if ( pszReason != NULL )
-		{
-			// If the tracker responded with an error, don't bother retrying
-			// Display reason, and back off for an hour
-			m_tTorrentTracker = tNow + 60 * 60 * 1000;
-			m_pTorrent.m_pAnnounceTracker->m_nFailures = 0;
-			m_pTorrent.SetTrackerRetry( m_tTorrentTracker );
-			m_sTorrentTrackerError = pszReason;
-		}
-		else if ( m_pTorrent.GetTrackerFailures() >= Settings.BitTorrent.MaxTrackerRetry )
-		{
-			// This tracker is probably down. Don't hammer it. Back off for an hour.
-			m_tTorrentTracker = tNow + 60 * 60 * 1000;
-			m_pTorrent.SetTrackerRetry( m_tTorrentTracker );
-			LoadString( m_sTorrentTrackerError, IDS_BT_TRACKER_DOWN );
-		}
-		else
-		{
-			// Tracker or connection may have just glitched. Re-try in 20-3600 seconds.
-			m_tTorrentTracker = tNow + GetRetryTime();
-			m_pTorrent.SetTrackerRetry( m_tTorrentTracker );
+		m_tTorrentTracker = tNow + GetRetryTime();
+		m_pTorrent.SetTrackerRetry( m_tTorrentTracker );
 
-			// Load the error message string
-			CString strErrorMessage;
-			LoadString( strErrorMessage, IDS_BT_TRACKER_RETRY );
-			m_sTorrentTrackerError.Format( strErrorMessage, m_pTorrent.GetTrackerFailures() + 1, Settings.BitTorrent.MaxTrackerRetry );
-		}
-		theApp.Message( MSG_ERROR, m_sTorrentTrackerError );
-
-		if ( m_pTorrent.IsMultiTracker() &&
-			( pszReason != NULL || m_pTorrent.GetTrackerFailures() >= Settings.BitTorrent.MaxTrackerRetry ) )
+		if ( m_pTorrent.IsMultiTracker() )
 		{
 			// Try the next one
 			m_pTorrent.SetTrackerNext( tNow );
@@ -567,11 +541,13 @@ void CDownloadWithTorrent::OnTrackerEvent(bool bSuccess, LPCTSTR pszReason)
 			m_tTorrentTracker = m_pTorrent.m_pAnnounceTracker->m_tNextTry;
 			
 			// Load the error message string
-			CString strErrorMessage;
-			LoadString( strErrorMessage, IDS_BT_TRACKER_MULTI );
-			m_sTorrentTrackerError.Format( strErrorMessage, m_pTorrent.m_nTrackerIndex + 1, m_pTorrent.m_pTrackerList.GetCount() );
-			theApp.Message( MSG_ERROR, m_sTorrentTrackerError );
+			CString strErrorFormat, strErrorMessage;
+			LoadString( strErrorFormat, IDS_BT_TRACKER_MULTI );
+			strErrorMessage.Format( strErrorFormat, m_pTorrent.m_nTrackerIndex + 1, m_pTorrent.m_pTrackerList.GetCount() );
+			m_sTorrentTrackerError = m_sTorrentTrackerError + _T(" | ") + strErrorMessage;
 		}
+
+		theApp.Message( MSG_ERROR, m_sTorrentTrackerError );
 	}
 }
 

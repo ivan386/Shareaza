@@ -420,7 +420,6 @@ public:
 		CString		TorrentCreatorPath;			// Location of the program used to create .torrent files
 		CString		DefaultTracker;
 		DWORD		DefaultTrackerPeriod;		// Delay between tracker contact attempts if one is not specified by tracker
-		DWORD		MaxTrackerRetry;			// Number of times to retry a tracker if it doesn't respond
 		DWORD		TorrentCodePage;			// The code page to assume for a .torrent file if it isn't UTF-8
 		bool		TorrentExtraKeys;			// Check for '.utf8' keys if there is an encoding error
 		DWORD		LinkTimeout;

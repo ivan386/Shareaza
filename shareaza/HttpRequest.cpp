@@ -43,7 +43,8 @@ CHttpRequest::CHttpRequest() :
 	m_pResponse( NULL ),
 	m_hNotifyWnd( NULL ),
 	m_nNotifyMsg( NULL ),
-	m_nNotifyParam( NULL )
+	m_nNotifyParam( NULL ),
+	m_bUseCookie( true )
 {
 }
 
@@ -262,8 +263,11 @@ void CHttpRequest::OnRun()
 	if ( m_hInternet )
 	{
 		HINTERNET hURL = InternetOpenUrl( m_hInternet, m_sURL, m_sRequestHeaders,
-			m_sRequestHeaders.GetLength(), INTERNET_FLAG_KEEP_CONNECTION |
-			INTERNET_FLAG_RELOAD | INTERNET_FLAG_PRAGMA_NOCACHE |
+			m_sRequestHeaders.GetLength(),
+			INTERNET_FLAG_KEEP_CONNECTION |
+			INTERNET_FLAG_RELOAD |
+			INTERNET_FLAG_PRAGMA_NOCACHE |
+			( m_bUseCookie ? 0 : INTERNET_FLAG_NO_COOKIES ) |
 			INTERNET_FLAG_NO_CACHE_WRITE, NULL );
 		if ( hURL )
 		{
@@ -333,4 +337,9 @@ void CHttpRequest::OnRun()
 	{
 		PostMessage( m_hNotifyWnd, m_nNotifyMsg, m_nNotifyParam, 0 );
 	}
+}
+
+void CHttpRequest::EnableCookie(bool bEnable)
+{
+	m_bUseCookie = bEnable;
 }

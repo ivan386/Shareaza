@@ -41,7 +41,6 @@ protected:
 	CDownload*		m_pDownload;
 	CString			m_sName;
 	CString			m_sTracker;
-	CString			m_sEscapedPeerID;
 	CButton			m_wndRefresh;
 	CEdit			m_wndComplete;
 	CEdit			m_wndIncomplete;
@@ -53,7 +52,6 @@ protected:
 
 	void			OnRun();
 	BOOL			OnTree(CBENode* pNode);
-	CString			Escape(const CString& str);
 
 	virtual void	DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	virtual BOOL	OnInitDialog();

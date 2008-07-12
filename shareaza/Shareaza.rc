@@ -4060,9 +4060,8 @@ BEGIN
     IDS_BT_SEED_COPY_FAIL   "An error occurred while copying from ""%s"" to a BitTorrent share file."
     IDS_BT_SEED_ERROR       "An unknown error occurred while trying to seed ""%s""."
     IDS_BT_SEED_VERIFY_FAIL "An error was detected in the file ""%s""."
-    IDS_BT_TRACKER_RETRY    "Tracker did not respond- Retrying announce (%i of %i)"
     IDS_BT_TRACKER_DOWN     "Unable to communicate with tracker"
-    IDS_BT_TRACKER_MULTI    "Tracker failed- Trying next tracker (%i of %i)"
+    IDS_BT_TRACKER_MULTI    "Trying next tracker (%i of %i)"
 END
 
 STRINGTABLE 

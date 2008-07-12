@@ -55,6 +55,7 @@ public:
 	BOOL		IsPending() const;
 	BOOL		IsFinished() const;
 	void		Cancel();
+	void		EnableCookie(bool bEnable);
 
 // Data
 protected:
@@ -72,7 +73,7 @@ protected:
 	HWND		m_hNotifyWnd;
 	UINT		m_nNotifyMsg;
 	WPARAM		m_nNotifyParam;
+	bool		m_bUseCookie;
 
-protected:
 	void		OnRun();
 };

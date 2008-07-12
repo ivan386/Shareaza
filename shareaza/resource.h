@@ -1379,7 +1379,6 @@
 #define IDS_BT_SEED_COPY_FAIL           17496
 #define IDS_BT_SEED_ERROR               17497
 #define IDS_BT_SEED_VERIFY_FAIL         17498
-#define IDS_BT_TRACKER_RETRY            17500
 #define IDS_BT_TRACKER_DOWN             17501
 #define IDS_BT_TRACKER_MULTI            17503
 #define IDS_BT_CLIENT_DROP_CONNECTING   17505

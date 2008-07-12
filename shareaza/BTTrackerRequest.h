@@ -33,8 +33,8 @@ public:
 	CBTTrackerRequest(CDownloadWithTorrent* pDownload, LPCTSTR pszVerb, DWORD nNumWant, bool bProcess);
 	virtual ~CBTTrackerRequest();
 
-    CString	Escape(const Hashes::BtHash& oBTH);
-    CString	Escape(const Hashes::BtGuid& oGUID);
+    static CString	Escape(const Hashes::BtHash& oBTH);
+    static CString	Escape(const Hashes::BtGuid& oGUID);
 
 protected:
 	CDownloadWithTorrent*	m_pDownload;

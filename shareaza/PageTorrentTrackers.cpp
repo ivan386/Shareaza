@@ -90,7 +90,6 @@ BOOL CTorrentTrackersPage::OnInitDialog()
 
 	m_sName			= pInfo->m_sName;
 	m_sTracker		= pInfo->m_sTracker;
-	m_sEscapedPeerID = Escape( m_pDownload->m_pPeerID.toString() );
 
 	m_wndTrackerMode.SetItemData( 0, tNull );
 	m_wndTrackerMode.SetItemData( 1, tCustom );
@@ -295,8 +294,7 @@ void CTorrentTrackersPage::OnOK()
 void CTorrentTrackersPage::OnRun()
 {
 	m_pRequest.Clear();
-	m_pRequest.AddHeader( _T("Accept-Encoding"), _T("deflate, gzip") );
-	
+
 	CString strURL = m_sTracker;
 	strURL.Replace( _T("/announce"), _T("/scrape") );
 
@@ -308,8 +306,7 @@ void CTorrentTrackersPage::OnRun()
 			// Fetch scrape only for the given info hash
 			{
 				CSingleLock pLock( &Transfers.m_pSection, TRUE );
-				CBTInfo* pInfo = &m_pDownload->m_pTorrent;
-				CString strParam = Escape( pInfo->m_oBTH.toString< Hashes::base16Encoding >() );
+				CString strParam = CBTTrackerRequest::Escape( m_pDownload->m_pTorrent.m_oBTH );
 				if ( strURL.Find( _T("/scrape?") ) != -1 )
 				{
 					strURL.Append( L"&info_hash=" + strParam );
@@ -318,13 +315,17 @@ void CTorrentTrackersPage::OnRun()
 				{
 					strURL.Append( L"?info_hash=" + strParam );
 				}
+				strURL.Append( L"&peer_id=" + CBTTrackerRequest::Escape( m_pDownload->m_pPeerID ) );
 			}
-			strURL.Append( L"&peer_id=" + m_sEscapedPeerID );
 
 			m_pRequest.SetURL( strURL );
+			m_pRequest.AddHeader( _T("Accept-Encoding"), _T("deflate, gzip") );
+			m_pRequest.EnableCookie( false );
+			m_pRequest.SetUserAgent( Settings.SmartAgent() );
 
-			theApp.Message( MSG_DEBUG, _T("Sending scrape to %s"), strURL );
-			
+			theApp.Message( MSG_DEBUG | MSG_FACILITY_OUTGOING,
+				_T("[BT] Sending BitTorrent tracker scrape: %s"), strURL );
+
 			if ( m_pRequest.Execute( FALSE ) && m_pRequest.InflateResponse() )
 			{
 				CBuffer* pResponse = m_pRequest.GetResponseBuffer();
@@ -333,6 +334,9 @@ void CTorrentTrackersPage::OnRun()
 				{
 					if ( CBENode* pNode = CBENode::Decode( pResponse ) )
 					{
+						theApp.Message( MSG_DEBUG | MSG_FACILITY_INCOMING,
+							_T("[BT] Recieved BitTorrent tracker response: %s"), pNode->Encode() );
+
 						if ( OnTree( pNode ) )
 						{
 							delete pNode;
@@ -349,41 +353,6 @@ void CTorrentTrackersPage::OnRun()
 	
 	m_pRequest.Clear();
 	PostMessage( WM_TIMER, 2 );
-}
-
-CString	CTorrentTrackersPage::Escape(const CString& str)
-{
-	int nLen = str.GetLength();
-	if ( nLen == 0 ) 
-		return CString();
-
-	CString strResult, strToken;
-	
-	for ( int nPos = 0 ; nPos < nLen ; nPos++ )
-	{
-		int nValue = 0;
-		strToken = str.Mid( nPos, 2 );
-
-		if ( _stscanf( strToken.GetBuffer(), L"%2x", &nValue ) == 1 )
-		{
-			if ( ( nValue >= '0' && nValue <= '9' ) ||
-				 ( nValue >= 'a' && nValue <= 'z' ) ||
-				 ( nValue >= 'A' && nValue <= 'Z' ) )
-			{
-				strResult += (TCHAR)nValue;
-			}
-			else
-			{
-				strResult += '%';
-				strResult.Append( strToken );
-			}
-			nPos++;
-		}
-		else
-			strResult.Append( strToken );
-	}	
-	
-	return strResult;
 }
 
 BOOL CTorrentTrackersPage::OnTree(CBENode* pNode)

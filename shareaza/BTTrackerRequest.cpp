@@ -89,12 +89,12 @@ CBTTrackerRequest::CBTTrackerRequest(CDownloadWithTorrent* pDownload, LPCTSTR ps
 	}	
 	
 	m_pRequest.SetURL( strURL );
-	m_pRequest.AddHeader( _T("Accept-Encoding"), _T("gzip") );
-
-	// Set User Agent
+	m_pRequest.AddHeader( _T("Accept-Encoding"), _T("deflate, gzip") );
+	m_pRequest.EnableCookie( false );
 	m_pRequest.SetUserAgent( Settings.SmartAgent() );
 
-	theApp.Message( MSG_DEBUG, _T("[BT] Sending announce: %s"), strURL );
+	theApp.Message( MSG_DEBUG | MSG_FACILITY_OUTGOING,
+		_T("[BT] Sending BitTorrent tracker announce: %s"), strURL );
 
 	m_pDownload->Add( this );
 
@@ -199,6 +199,8 @@ void CBTTrackerRequest::OnRun()
 
 void CBTTrackerRequest::Process(bool bRequest)
 {
+	CString strError;
+
 	// Abort if the download has been paused after the request was sent but
 	// before a reply was received
 	if ( !m_pDownload->m_bTorrentRequested )
@@ -206,15 +208,15 @@ void CBTTrackerRequest::Process(bool bRequest)
 
 	if ( !bRequest )
 	{
-		theApp.Message( MSG_ERROR, IDS_BT_TRACKER_DOWN );
-		m_pDownload->OnTrackerEvent( false );
+		LoadString( strError, IDS_BT_TRACKER_DOWN );
+		m_pDownload->OnTrackerEvent( false, strError );
 		return;
 	}
 
 	if ( !m_pRequest.InflateResponse() )
 	{
-		theApp.Message( MSG_ERROR, IDS_BT_TRACK_PARSE_ERROR );
-		m_pDownload->OnTrackerEvent( false );
+		LoadString( strError, IDS_BT_TRACK_PARSE_ERROR );
+		m_pDownload->OnTrackerEvent( false, strError );
 		return;
 	}
 
@@ -222,15 +224,15 @@ void CBTTrackerRequest::Process(bool bRequest)
 
 	if ( pBuffer == NULL )
 	{
-		theApp.Message( MSG_ERROR, IDS_BT_TRACKER_DOWN );
-		m_pDownload->OnTrackerEvent( false );
+		LoadString( strError, IDS_BT_TRACKER_DOWN );
+		m_pDownload->OnTrackerEvent( false, strError );
 		return;
 	}
 
 	if ( pBuffer->m_pBuffer == NULL )
 	{
-		theApp.Message( MSG_ERROR, IDS_BT_TRACK_PARSE_ERROR );
-		m_pDownload->OnTrackerEvent( false );
+		LoadString( strError, IDS_BT_TRACK_PARSE_ERROR );
+		m_pDownload->OnTrackerEvent( false, strError );
 		return;
 	}
 
@@ -238,21 +240,25 @@ void CBTTrackerRequest::Process(bool bRequest)
 
 	if ( pRoot && pRoot->IsType( CBENode::beDict ) )
 	{
-		theApp.Message( MSG_DEBUG, _T("[BT] Recieved BitTorrent tracker response: %s"),
-			pRoot->Encode() );
+		theApp.Message( MSG_DEBUG | MSG_FACILITY_INCOMING,
+			_T("[BT] Recieved BitTorrent tracker response: %s"), pRoot->Encode() );
 		Process( pRoot );
 	}
 	else if ( pRoot && pRoot->IsType( CBENode::beString ) )
 	{
-		CString strError = pRoot->GetString();
-		theApp.Message( MSG_ERROR, IDS_BT_TRACK_ERROR,
-			m_pDownload->GetDisplayName(), strError );
+		CString strErrorFormat;
+		LoadString( strErrorFormat, IDS_BT_TRACK_ERROR );
+		strError.Format( strErrorFormat, m_pDownload->GetDisplayName(), pRoot->GetString() );
 		m_pDownload->OnTrackerEvent( false, strError );
 	}
 	else
 	{
-		theApp.Message( MSG_ERROR, IDS_BT_TRACK_PARSE_ERROR );
-		m_pDownload->OnTrackerEvent( false );
+		LoadString( strError, IDS_BT_TRACK_PARSE_ERROR );
+		m_pDownload->OnTrackerEvent( false, strError );
+
+		CString strData( (const char*)pBuffer->m_pBuffer, pBuffer->m_nLength );
+		theApp.Message( MSG_DEBUG | MSG_FACILITY_INCOMING,
+			_T("[BT] Recieved BitTorrent tracker response: %s"), strData.Trim() );
 	}
 
 	delete pRoot;
@@ -265,9 +271,9 @@ void CBTTrackerRequest::Process(CBENode* pRoot)
 	// Check for failure
 	if ( CBENode* pError = pRoot->GetNode( "failure reason" ) )
 	{
-		strError = pError->GetString();
-		theApp.Message( MSG_ERROR, IDS_BT_TRACK_ERROR,
-			m_pDownload->GetDisplayName(), strError );
+		CString strErrorFormat;
+		LoadString( strErrorFormat, IDS_BT_TRACK_ERROR );
+		strError.Format( strErrorFormat, m_pDownload->GetDisplayName(), pError->GetString() );
 		m_pDownload->OnTrackerEvent( false, strError );
 		return;
 	}
@@ -321,9 +327,6 @@ void CBTTrackerRequest::Process(CBENode* pRoot)
 			if ( ! Network.Resolve( pIP->GetString(), (int)pPort->GetInt(), &saPeer ) )
 				continue;
 
-			theApp.Message( MSG_DEBUG, _T("[BT] Tracker: %s:%i"),
-				inet_ntoa( saPeer.sin_addr ), htons( saPeer.sin_port ) );
-
 			if ( pID->IsType( CBENode::beString ) && pID->m_nValue == Hashes::BtGuid::byteCount )
 			{
 				Hashes::BtGuid tmp( *static_cast< Hashes::BtGuid::RawStorage* >(
@@ -358,9 +361,8 @@ void CBTTrackerRequest::Process(CBENode* pRoot)
 	}
 
 	// Okay, clear any errors and continue
-	m_pDownload->OnTrackerEvent( true );
-
-	theApp.Message( MSG_INFO, IDS_BT_TRACK_SUCCESS,
-		m_pDownload->GetDisplayName(), nCount );
+	CString strErrorFormat;
+	LoadString( strErrorFormat, IDS_BT_TRACK_SUCCESS );
+	strError.Format( strErrorFormat, m_pDownload->GetDisplayName(), nCount );
+	m_pDownload->OnTrackerEvent( true, strError );
 }
-
