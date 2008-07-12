@@ -1067,7 +1067,7 @@ void CLocalSearch::WriteTrailerG2()
 
 #ifdef _DEBUG
 	// Test created hit
-	CQueryHit* pDebugHit = CQueryHit::FromPacket( pPacket );
+	CQueryHit* pDebugHit = CQueryHit::FromG2Packet( pPacket );
 	ASSERT( pDebugHit );
 	if ( pDebugHit )
 	{

@@ -89,9 +89,9 @@ protected:
 
 // Static Decode Operations
 public:
-	static CQueryHit*	FromPacket(CG1Packet* pPacket, int* pnHops = NULL);
-	static CQueryHit*	FromPacket(CG2Packet* pPacket, int* pnHops = NULL);
-	static CQueryHit*	FromPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer, DWORD m_nServerFlags, const Hashes::Guid& pSearchID = Hashes::Guid());
+	static CQueryHit*	FromG1Packet(CG1Packet* pPacket, int* pnHops = NULL);
+	static CQueryHit*	FromG2Packet(CG2Packet* pPacket, int* pnHops = NULL);
+	static CQueryHit*	FromEDPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer, DWORD m_nServerFlags, const Hashes::Guid& pSearchID = Hashes::Guid());
 protected:
 	static BOOL			CheckBogus(CQueryHit* pFirstHit);
 	static CXMLElement*	ReadXML(CG1Packet* pPacket, int nSize);
@@ -105,8 +105,8 @@ public:
 	void		Serialize(CArchive& ar, int nVersion);
 	void		Ban(int nBanLength);	// Ban by host IP only
 protected:
-	void		ReadG1Packet(CG1Packet* pPacket);
 	void		ParseAttributes(const Hashes::Guid& pClientID, CVendor* pVendor, BYTE* nFlags, BOOL bChat, BOOL bBrowseHost);
+	void		ReadG1Packet(CG1Packet* pPacket);
 	bool		ReadG2Packet(CG2Packet* pPacket, DWORD nLength);
 	BOOL		ReadEDPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer, DWORD m_nServerFlags = 0);
 	void		ReadEDAddress(CEDPacket* pPacket, SOCKADDR_IN* pServer);

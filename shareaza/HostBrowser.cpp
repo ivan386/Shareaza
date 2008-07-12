@@ -606,7 +606,7 @@ BOOL CHostBrowser::OnPacket(CG1Packet* pPacket)
 	if ( pPacket->m_nType != G1_PACKET_HIT || pPacket->m_nLength <= 27 )
 		return TRUE;
 
-	CQueryHit* pHits = CQueryHit::FromPacket( pPacket );
+	CQueryHit* pHits = CQueryHit::FromG1Packet( pPacket );
 
 	if ( pHits == NULL )
 	{
@@ -635,7 +635,7 @@ BOOL CHostBrowser::OnPacket(CG2Packet* pPacket)
 {
 	if ( pPacket->IsType( G2_PACKET_HIT ) )
 	{
-		CQueryHit* pHits = CQueryHit::FromPacket( pPacket );
+		CQueryHit* pHits = CQueryHit::FromG2Packet( pPacket );
 
 		if ( pHits == NULL )
 		{

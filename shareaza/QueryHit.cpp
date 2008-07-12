@@ -100,7 +100,7 @@ CQueryHit::~CQueryHit()
 //////////////////////////////////////////////////////////////////////
 // CQueryHit from G1 packet
 
-CQueryHit* CQueryHit::FromPacket(CG1Packet* pPacket, int* pnHops)
+CQueryHit* CQueryHit::FromG1Packet(CG1Packet* pPacket, int* pnHops)
 {
 	CQueryHit* pFirstHit	= NULL;
 	CQueryHit* pLastHit		= NULL;
@@ -262,11 +262,11 @@ CQueryHit* CQueryHit::FromPacket(CG1Packet* pPacket, int* pnHops)
 //////////////////////////////////////////////////////////////////////
 // CQueryHit from G2 packet
 
-CQueryHit* CQueryHit::FromPacket(CG2Packet* pPacket, int* pnHops)
+CQueryHit* CQueryHit::FromG2Packet(CG2Packet* pPacket, int* pnHops)
 {
 	if ( pPacket->IsType( G2_PACKET_HIT_WRAP ) )
 	{
-		return FromPacket( (CG1Packet*)pPacket );
+		return FromG1Packet( (CG1Packet*)pPacket );
 	}
 	
 	if ( ! pPacket->m_bCompound )
@@ -650,7 +650,7 @@ CQueryHit* CQueryHit::FromPacket(CG2Packet* pPacket, int* pnHops)
 //////////////////////////////////////////////////////////////////////
 // CQueryHit from ED2K packet
 
-CQueryHit* CQueryHit::FromPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer, DWORD m_nServerFlags, const Hashes::Guid& oSearchID )
+CQueryHit* CQueryHit::FromEDPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer, DWORD m_nServerFlags, const Hashes::Guid& oSearchID )
 {
 	CQueryHit* pFirstHit	= NULL;
 	CQueryHit* pLastHit		= NULL;

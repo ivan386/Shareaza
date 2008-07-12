@@ -472,11 +472,11 @@ BOOL CNeighbour::OnCommonHit(CPacket* pPacket)
 
 	if ( pPacket->m_nProtocol == PROTOCOL_G1 )
 	{
-		pHits = CQueryHit::FromPacket( (CG1Packet*)pPacket, &nHops );
+		pHits = CQueryHit::FromG1Packet( (CG1Packet*)pPacket, &nHops );
 	}
 	else if ( pPacket->m_nProtocol == PROTOCOL_G2 )
 	{
-		pHits = CQueryHit::FromPacket( (CG2Packet*)pPacket, &nHops );
+		pHits = CQueryHit::FromG2Packet( (CG2Packet*)pPacket, &nHops );
 	}
 	else
 	{

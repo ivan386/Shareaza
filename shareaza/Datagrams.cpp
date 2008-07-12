@@ -1441,7 +1441,7 @@ BOOL CDatagrams::OnQueryAck(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 BOOL CDatagrams::OnCommonHit(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 {
 	int nHops = 0;
-	CQueryHit* pHits = CQueryHit::FromPacket( pPacket, &nHops );
+	CQueryHit* pHits = CQueryHit::FromG2Packet( pPacket, &nHops );
 
 	if ( pHits == NULL )
 	{

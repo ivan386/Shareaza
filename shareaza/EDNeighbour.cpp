@@ -566,7 +566,7 @@ BOOL CEDNeighbour::OnSearchResults(CEDPacket* pPacket)
 	}
 	
 	Hashes::Guid oGUID = m_pQueries.RemoveHead();
-	CQueryHit* pHits = CQueryHit::FromPacket( pPacket, &m_pHost, m_nTCPFlags, oGUID );
+	CQueryHit* pHits = CQueryHit::FromEDPacket( pPacket, &m_pHost, m_nTCPFlags, oGUID );
 	
 	if ( pHits == NULL )
 	{
@@ -598,7 +598,7 @@ BOOL CEDNeighbour::OnSearchResults(CEDPacket* pPacket)
 
 BOOL CEDNeighbour::OnFoundSources(CEDPacket* pPacket)
 {
-	CQueryHit* pHits	= CQueryHit::FromPacket( pPacket, &m_pHost, m_nTCPFlags );
+	CQueryHit* pHits	= CQueryHit::FromEDPacket( pPacket, &m_pHost, m_nTCPFlags );
 	
 	if ( pHits == NULL )
 	{

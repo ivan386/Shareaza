@@ -462,7 +462,7 @@ BOOL CEDClients::OnPacket(SOCKADDR_IN* pHost, CEDPacket* pPacket)
 		}
 
 		// Decode packet and create hits
-		if ( CQueryHit* pHits = CQueryHit::FromPacket( pPacket, pHost, nServerFlags ) )
+		if ( CQueryHit* pHits = CQueryHit::FromEDPacket( pPacket, pHost, nServerFlags ) )
 		{
 			if ( pPacket->m_nType == ED2K_S2CG_SEARCHRESULT )
 				Network.OnQueryHits( pHits );
