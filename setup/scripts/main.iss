@@ -459,10 +459,10 @@ Type: files; Name: "{app}\Skins\Languages\default-jp.xml"
 Type: files; Name: "{userdesktop}\Shareaza.lnk"; Tasks: not desktopicon
 Type: files; Name: "{commondesktop}\Shareaza.lnk"; Tasks: not desktopicon
 Type: files; Name: "{userdesktop}\Start Shareaza.lnk"; Check: NSISUsed
-Type: filesandordirs; Name: "{userprograms}\Shareaza"; Check: NSISUsed
-Type: filesandordirs; Name: "{commonprograms}\Shareaza"; Check: NSISUsed
-Type: filesandordirs; Name: "{userprograms}\{reg:HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Shareaza_is1,Inno Setup: Icon Group|{groupname}}"; Check: InnoSetupUsed
-Type: filesandordirs; Name: "{commonprograms}\{reg:HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Shareaza_is1,Inno Setup: Icon Group|{groupname}}"; Check: InnoSetupUsed
+;Type: filesandordirs; Name: "{userprograms}\Shareaza"; Check: NSISUsed
+;Type: filesandordirs; Name: "{commonprograms}\Shareaza"; Check: NSISUsed
+;Type: filesandordirs; Name: "{userprograms}\{reg:HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Shareaza_is1,Inno Setup: Icon Group|{groupname}}"; Check: InnoSetupUsed
+;Type: filesandordirs; Name: "{commonprograms}\{reg:HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Shareaza_is1,Inno Setup: Icon Group|{groupname}}"; Check: InnoSetupUsed
 Type: files; Name: "{userappdata}\Microsoft\Internet Explorer\Quick Launch\Shareaza.lnk"; Tasks: not quicklaunch
 
 ; Delete extra components so installer can "uninstall" them
