@@ -84,6 +84,9 @@ typedef struct
 #define ED2K_MET						0x0E	// First byte of .met-file
 #define ED2K_MET_I64TAGS				0x0F	// First byte of .met-file with "Large File" support
 
+#define ED2K_FILE_VERSION1_INITIAL		0x01	// First 4 bytes of .emulecollection-file
+#define ED2K_FILE_VERSION2_LARGEFILES	0x02	// First 4 bytes of .emulecollection-file with "Large File" support
+
 class CBuffer;
 
 
@@ -301,12 +304,13 @@ public:
 
 // Attributes
 public:
-	BYTE	m_nType;
-	CString	m_sKey;
-	BYTE	m_nKey;
-	CString	m_sValue;
-	DWORD	m_nValue;
-	
+	BYTE				m_nType;
+	CString				m_sKey;
+	BYTE				m_nKey;
+	CString				m_sValue;	// ED2K_TAG_STRING
+	DWORD				m_nValue;	// ED2K_TAG_INT, ED2K_TAG_UINT8, ED2K_TAG_UINT16, ED2K_TAG_FLOAT
+	Hashes::Ed2kHash	m_oValue;	// ED2K_TAG_HASH
+
 // Operations
 public:
 	void	Clear();
@@ -334,11 +338,9 @@ public:
 // New tags (See ED2K_SERVER_TCP_NEWTAGS)
 #define ED2K_TAG_UINT16				0x08
 #define ED2K_TAG_UINT8				0x09
-#define ED2K_TAG_UNUSED				0x0A // 8 bit size, then value
-#define ED2K_TAG_SHORTSTRING		0x11 //String <=16 bytes, using tag ID for length
+#define ED2K_TAG_UNUSED				0x0A	// 8 bit size, then value
+#define ED2K_TAG_SHORTSTRING		0x11	// String <=16 bytes, using tag ID for length
 // 0x10 to 0x20 are reserved for short strings
-#define ED2K_TAG_STRING1			0x11
-#define ED2K_TAG_STRING16			0x20
 
 // Server tags / met files
 #define ED2K_ST_SERVERNAME			0x01
@@ -368,9 +370,9 @@ public:
 
 
 // File tags
-#define ED2K_FT_FILENAME			0x01
-#define ED2K_FT_FILESIZE			0x02
-#define ED2K_FT_FILETYPE			0x03
+#define ED2K_FT_FILENAME			0x01	// string
+#define ED2K_FT_FILESIZE			0x02	// uint32 (or uint64)
+#define ED2K_FT_FILETYPE			0x03	// string
 #define ED2K_FT_FILEFORMAT			0x04
 #define ED2K_FT_LASTSEENCOMPLETE	0x05
 #define ED2K_FT_TRANSFERED			0x08
@@ -382,7 +384,10 @@ public:
 #define ED2K_FT_SOURCES				0x15
 #define ED2K_FT_PERMISSIONS			0x16
 #define ED2K_FT_ULPRIORITY			0x17
+#define ED2K_FT_FILEHASH			0x28
 #define ED2K_FT_COMPLETESOURCES		0x30
+#define ED2K_FT_COLLECTIONAUTHOR	0x31	// string
+#define ED2K_FT_COLLECTIONAUTHORKEY	0x32	// blob
 #define ED2K_FT_FILESIZEUPPER		0x32
 #define ED2K_FT_ATTRANSFERED		0x50
 #define ED2K_FT_ATREQUESTED			0x51
@@ -390,7 +395,8 @@ public:
 #define ED2K_FT_LENGTH				0xD3
 #define ED2K_FT_BITRATE				0xD4
 #define ED2K_FT_CODEC				0xD5
-#define ED2K_FT_FILERATING			0xF7
+#define ED2K_FT_FILECOMMENT			0xF6	// string
+#define ED2K_FT_FILERATING			0xF7	// byte
 
 // eMuleinfo tags. Note this is now obsolete, due to ED2K_CT_FEATUREVERSIONS
 #define ED2K_ET_COMPRESSION			0x20

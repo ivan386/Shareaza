@@ -429,23 +429,18 @@ BOOL CEDTag::Read(CEDPacket* pPacket, DWORD ServerFlags)
 	Clear();
 
 	if ( pPacket->GetRemaining() < 3 ) return FALSE;
+
 	m_nType = pPacket->ReadByte();
 
 	if ( m_nType & 0x80 )
-	{	//This is a short tag (No length)
-
-		//Remove the 0x80
-		m_nType -= 0x80;
-		// No length in packet
+	{
+		m_nType &= 0x7F;
 		nLen = 1;
 	}
 	else
-	{	// Read in length
+	{
 		nLen = pPacket->ReadShortLE();
 	}
-
-	if ( m_nType < ED2K_TAG_HASH || m_nType > ( ED2K_TAG_SHORTSTRING + 15 ) ) return FALSE;
-
 
 	if ( pPacket->GetRemaining() < nLen ) return FALSE;
 
@@ -508,7 +503,8 @@ BOOL CEDTag::Read(CEDPacket* pPacket, DWORD ServerFlags)
 	}
 	else
 	{
-		theApp.Message( MSG_DEBUG, _T("Unrecognised ed2k packet") );
+		theApp.Message( MSG_DEBUG, _T("Unrecognised ed2k packet 0x%02x"), m_nType );
+		return FALSE;
 	}
 
 	return TRUE;
@@ -519,28 +515,35 @@ BOOL CEDTag::Read(CEDPacket* pPacket, DWORD ServerFlags)
 
 BOOL CEDTag::Read(CFile* pFile)
 {
+	WORD nLen;
+
 	Clear();
 
-	if ( pFile->Read( &m_nType, sizeof(m_nType) ) != sizeof(m_nType) ) return FALSE;
-	if ( m_nType < ED2K_TAG_HASH || m_nType > ED2K_TAG_INT ) return FALSE;
-
-	WORD nLen;
-	if ( pFile->Read( &nLen, sizeof(nLen) ) != sizeof(nLen) ) return FALSE;
-
+	if ( pFile->Read( &m_nType, sizeof(m_nType) ) != sizeof(m_nType) )
+		return FALSE;
+	if ( m_nType & 0x80 )
+	{
+		m_nType &= 0x7F;
+		nLen = 1;
+	}
+	else
+	{
+		if ( pFile->Read( &nLen, sizeof(nLen) ) != sizeof(nLen) )
+			return FALSE;
+	}
 	if ( nLen == 1 )
 	{
-		if ( pFile->Read( &m_nKey, sizeof(m_nKey) ) != sizeof(m_nKey) ) return FALSE;
+		if ( pFile->Read( &m_nKey, sizeof(m_nKey) ) != sizeof(m_nKey) )
+			return FALSE;
 	}
 	else if ( nLen > 1 )
 	{
 		LPSTR psz = new CHAR[ nLen + 1 ];
-
 		if ( psz == NULL )
 		{
 			theApp.Message( MSG_ERROR, _T("Memory allocation error in CEDTag::Read()") );
 			return FALSE;
 		}
-
 		if ( pFile->Read( psz, nLen ) == nLen )
 		{
 			psz[ nLen ] = 0;
@@ -554,35 +557,97 @@ BOOL CEDTag::Read(CFile* pFile)
 		}
 	}
 
-	if ( m_nType == ED2K_TAG_STRING )
+	switch ( m_nType )
 	{
-		if ( pFile->Read( &nLen, sizeof(nLen) ) != sizeof(nLen) ) return FALSE;
-
-		LPSTR psz = new CHAR[ nLen + 1 ];
-
-		if ( psz == NULL )
+	case ED2K_TAG_HASH:
 		{
-			theApp.Message( MSG_ERROR, _T("Memory allocation error in CEDTag::Read()") );
+			if ( pFile->Read( &m_oValue[ 0 ], Hashes::Ed2kHash::byteCount ) != Hashes::Ed2kHash::byteCount )
+				return FALSE;
+			m_oValue.validate();
+		}
+		break;
+
+	case ED2K_TAG_STRING:
+	case ED2K_TAG_BLOB:
+		if ( pFile->Read( &nLen, sizeof(nLen) ) != sizeof(nLen) )
 			return FALSE;
-		}
-
-		if ( pFile->Read( psz, nLen ) == nLen )
-		{
-			int nWide = MultiByteToWideChar( CP_UTF8, 0, psz, nLen, NULL, 0 );
-			MultiByteToWideChar( CP_UTF8, 0, psz, nLen, m_sValue.GetBuffer( nWide ), nWide );
-			m_sValue.ReleaseBuffer( nWide );
-
-			delete [] psz;
-		}
 		else
 		{
-			delete [] psz;
-			return FALSE;
+			LPSTR psz = new CHAR[ nLen + 1 ];
+			if ( psz == NULL )
+			{
+				theApp.Message( MSG_ERROR, _T("Memory allocation error in CEDTag::Read()") );
+				return FALSE;
+			}
+			if ( pFile->Read( psz, nLen ) == nLen )
+			{
+				int nWide = MultiByteToWideChar( CP_UTF8, 0, psz, nLen, NULL, 0 );
+				MultiByteToWideChar( CP_UTF8, 0, psz, nLen, m_sValue.GetBuffer( nWide ), nWide );
+				m_sValue.ReleaseBuffer( nWide );
+				delete [] psz;
+			}
+			else
+			{
+				delete [] psz;
+				return FALSE;
+			}
 		}
-	}
-	else if ( m_nType == ED2K_TAG_INT )
-	{
-		if ( pFile->Read( &m_nValue, sizeof(m_nValue) ) != sizeof(m_nValue) ) return FALSE;
+		break;
+
+	case ED2K_TAG_INT:
+	case ED2K_TAG_FLOAT:
+		if ( pFile->Read( &m_nValue, sizeof(m_nValue) ) != sizeof(m_nValue) )
+			return FALSE;
+		break;
+
+	case ED2K_TAG_UINT8:
+		{
+			BYTE nValue;
+			if ( pFile->Read( &nValue, sizeof(nValue) ) != sizeof(nValue) )
+				return FALSE;
+			m_nValue = nValue;
+			m_nType = ED2K_TAG_INT;
+		}
+		break;
+
+	case ED2K_TAG_UINT16:
+		{
+			WORD nValue;
+			if ( pFile->Read( &nValue, sizeof(nValue) ) != sizeof(nValue) )
+				return FALSE;
+			m_nValue = nValue;
+			m_nType = ED2K_TAG_INT;
+		}
+		break;
+
+	default:
+		if ( m_nType >= ED2K_TAG_SHORTSTRING && m_nType <= ED2K_TAG_SHORTSTRING + 15 )
+		{
+			// Calculate length of short string
+			nLen = m_nType - ( ED2K_TAG_SHORTSTRING - 1 );
+			m_nType = ED2K_TAG_STRING;
+			LPSTR psz = new CHAR[ nLen + 1 ];
+			if ( psz == NULL )
+			{
+				theApp.Message( MSG_ERROR, _T("Memory allocation error in CEDTag::Read()") );
+				return FALSE;
+			}
+			if ( pFile->Read( psz, nLen ) == nLen )
+			{
+				int nWide = MultiByteToWideChar( CP_UTF8, 0, psz, nLen, NULL, 0 );
+				MultiByteToWideChar( CP_UTF8, 0, psz, nLen, m_sValue.GetBuffer( nWide ), nWide );
+				m_sValue.ReleaseBuffer( nWide );
+				delete [] psz;
+			}
+			else
+			{
+				delete [] psz;
+				return FALSE;
+			}
+		}
+		else
+			// Unknown tag
+			return FALSE;
 	}
 
 	return TRUE;
