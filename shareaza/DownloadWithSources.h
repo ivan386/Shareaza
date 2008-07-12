@@ -19,9 +19,6 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_DOWNLOADWITHSOURCES_H__D6932F45_0557_4098_B2F3_AE35BC43ECC0__INCLUDED_)
-#define AFX_DOWNLOADWITHSOURCES_H__D6932F45_0557_4098_B2F3_AE35BC43ECC0__INCLUDED_
-
 #pragma once
 
 #include "DownloadBase.h"
@@ -61,7 +58,6 @@ protected:
 // Attributes
 private:
 	CDownloadSource*	m_pSourceFirst;
-	CCriticalSection	m_pSection;
 	CList< CFailedSource* >	m_pFailedSources; // Failed source with a timestamp when added
 	CDownloadSource*	m_pSourceLast;
 	int					m_nG1SourceCount;
@@ -86,7 +82,6 @@ public:
 	void				AddFailedSource(LPCTSTR pszUrl, bool bLocal = true, bool bOffline = false);
 	CFailedSource*		LookupFailedSource(LPCTSTR pszUrl, bool bReliable = false);
 	void				ExpireFailedSources();
-	void				VoteSource(LPCTSTR pszUrl, bool bPositively);
 	void				ClearSources();
 	void				ClearFailedSources();
 	void				MergeMetadata(const CXMLElement* pXML);
@@ -95,19 +90,20 @@ public:
     BOOL				AddSourceBT(const Hashes::BtGuid& oGUID, IN_ADDR* pAddress, WORD nPort);
 	BOOL				AddSourceURL(LPCTSTR pszURL, BOOL bURN = FALSE, FILETIME* pLastSeen = NULL, int nRedirectionCount = 0, BOOL bFailed = FALSE);
 	int					AddSourceURLs(LPCTSTR pszURLs, BOOL bURN = FALSE, BOOL bFailed = FALSE);
+	void				RemoveSource(CDownloadSource* pSource, BOOL bBan);
 	virtual BOOL		OnQueryHits(CQueryHit* pHits);
 	virtual void		Serialize(CArchive& ar, int nVersion);
+	int					GetSourceColour();
 
 // Implementation
 protected:
-	void            RemoveOverlappingSources(QWORD nOffset, QWORD nLength);
-	BOOL		    AddSourceInternal(CDownloadSource* pSource);
-	void		    SortSource(CDownloadSource* pSource, BOOL bTop);
-	void		    SortSource(CDownloadSource* pSource);
+	void				RemoveOverlappingSources(QWORD nOffset, QWORD nLength);
+	BOOL				AddSourceInternal(CDownloadSource* pSource);
+	void				SortSource(CDownloadSource* pSource, BOOL bTop);
+	void				SortSource(CDownloadSource* pSource);
 
 private:
-	void		    RemoveSource(CDownloadSource* pSource, BOOL bBan);
-	int			    GetSourceColour();
+	void				VoteSource(LPCTSTR pszUrl, bool bPositively);
 
 public:
 	inline CDownloadSource* GetFirstSource() const
@@ -124,9 +120,4 @@ public:
 	{
 		return m_pXML;
 	}
-	
-	friend class CDownloadSource; // RemoveSource && GetSourceColour
-	friend class CDownloadTransfer; // SortSource
 };
-
-#endif // !defined(AFX_DOWNLOADWITHSOURCES_H__D6932F45_0557_4098_B2F3_AE35BC43ECC0__INCLUDED_)

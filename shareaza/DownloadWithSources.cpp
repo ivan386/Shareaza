@@ -42,6 +42,7 @@
 #include "TigerTree.h"
 #include "QueryHashMaster.h"
 #include "VendorCache.h"
+#include "Transfers.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -85,6 +86,8 @@ CDownloadWithSources::~CDownloadWithSources()
 
 DWORD CDownloadWithSources::GetSourceCount(BOOL bNoPush, BOOL bSane) const
 {
+	CQuickLock pLock( Transfers.m_pSection );
+
 	if ( ! bNoPush && ! bSane ) return m_nSourceCount;
 	
 	DWORD tNow = GetTickCount();
@@ -123,6 +126,8 @@ DWORD CDownloadWithSources::GetEffectiveSourceCount() const
 
 DWORD CDownloadWithSources::GetBTSourceCount(BOOL bNoPush) const
 {
+	CQuickLock pLock( Transfers.m_pSection );
+
 	DWORD tNow = GetTickCount();
 	DWORD nCount = 0;
 	
@@ -141,6 +146,7 @@ DWORD CDownloadWithSources::GetBTSourceCount(BOOL bNoPush) const
 
 DWORD CDownloadWithSources::GetED2KCompleteSourceCount() const
 {
+	CQuickLock pLock( Transfers.m_pSection );
 
 	DWORD tNow = GetTickCount();
 	DWORD nCount = 0;
@@ -162,6 +168,8 @@ DWORD CDownloadWithSources::GetED2KCompleteSourceCount() const
 
 BOOL CDownloadWithSources::CheckSource(CDownloadSource* pCheck) const
 {
+	CQuickLock pLock( Transfers.m_pSection );
+
 	for ( CDownloadSource* pSource = m_pSourceFirst ; pSource ; pSource = pSource->m_pNext )
 	{
 		if ( pSource == pCheck ) return TRUE;
@@ -175,7 +183,9 @@ BOOL CDownloadWithSources::CheckSource(CDownloadSource* pCheck) const
 
 void CDownloadWithSources::ClearSources()
 {
-	for ( CDownloadSource* pSource = GetFirstSource() ; pSource ; )
+	CQuickLock pLock( Transfers.m_pSection );
+
+	for ( CDownloadSource* pSource = m_pSourceFirst ; pSource ; )
 	{
 		CDownloadSource* pNext = pSource->m_pNext;
 		delete pSource;
@@ -194,6 +204,8 @@ void CDownloadWithSources::ClearSources()
 
 BOOL CDownloadWithSources::AddSourceHit(CQueryHit* pHit, BOOL bForce)
 {
+	CQuickLock pLock( Transfers.m_pSection );
+
 	BOOL bHash = FALSE;
 	BOOL bUpdated = FALSE;
 	
@@ -368,6 +380,8 @@ BOOL CDownloadWithSources::AddSourceURL(LPCTSTR pszURL, BOOL bURN, FILETIME* pLa
 			 Network.IsFirewalledAddress( &pURL.m_pAddress, TRUE ) || 
 			 Network.IsReserved( &pURL.m_pAddress ) ) return FALSE;
 	}
+
+	CQuickLock pLock( Transfers.m_pSection );
 
 	CFailedSource* pBadSource = LookupFailedSource( pszURL );
 	if ( pBadSource )
@@ -549,6 +563,7 @@ BOOL CDownloadWithSources::AddSourceInternal(CDownloadSource* pSource)
 	bool bExistingIsRaza = false;
 	bool bDeleteSource = false;
 	CDownloadSource* pCopy = NULL;
+	CQuickLock pLock( Transfers.m_pSection );
 
 	if ( pSource->m_nRedirectionCount == 0 ) // Don't check for existing sources if source is a redirection
 	{
@@ -689,9 +704,11 @@ BOOL CDownloadWithSources::AddSourceInternal(CDownloadSource* pSource)
 
 CString CDownloadWithSources::GetSourceURLs(CList< CString >* pState, int nMaximum, PROTOCOLID nProtocol, CDownloadSource* pExcept)
 {
+	CQuickLock pLock( Transfers.m_pSection );
+
 	CString strSources;
 	
-	for ( CDownloadSource* pSource = GetFirstSource() ; pSource ; pSource = pSource->m_pNext )
+	for ( CDownloadSource* pSource = m_pSourceFirst ; pSource ; pSource = pSource->m_pNext )
 	{
 		if ( pSource != pExcept && pSource->m_bPushOnly == FALSE &&
 			 pSource->m_nFailures == 0 && pSource->m_bReadContent &&
@@ -750,6 +767,7 @@ CString	CDownloadWithSources::GetTopFailedSources(int nMaximum, PROTOCOLID nProt
 
 	CString strSources, str;
 	CFailedSource* pResult = NULL;
+	CQuickLock pLock( Transfers.m_pSection );
 
 	for ( POSITION pos = m_pFailedSources.GetHeadPosition() ; pos ; )
 	{
@@ -802,7 +820,9 @@ BOOL CDownloadWithSources::OnQueryHits(CQueryHit* pHits)
 
 void CDownloadWithSources::RemoveOverlappingSources(QWORD nOffset, QWORD nLength)
 {
-	for ( CDownloadSource* pSource = GetFirstSource() ; pSource ; )
+	CQuickLock pLock( Transfers.m_pSection );
+
+	for ( CDownloadSource* pSource = m_pSourceFirst ; pSource ; )
 	{
 		CDownloadSource* pNext = pSource->m_pNext;
 		
@@ -825,6 +845,7 @@ void CDownloadWithSources::RemoveOverlappingSources(QWORD nOffset, QWORD nLength
 // votes compose 2/3 of the total number of votes.
 CFailedSource* CDownloadWithSources::LookupFailedSource(LPCTSTR pszUrl, bool bReliable)
 {
+	CQuickLock pLock( Transfers.m_pSection );
 	CFailedSource* pResult = NULL;
 
 	for ( POSITION pos = m_pFailedSources.GetHeadPosition() ; pos ; )
@@ -873,6 +894,8 @@ void CDownloadWithSources::AddFailedSource(CDownloadSource* pSource, bool bLocal
 
 void CDownloadWithSources::AddFailedSource(LPCTSTR pszUrl, bool bLocal, bool bOffline)
 {
+	CQuickLock pLock( Transfers.m_pSection );
+
 	if ( LookupFailedSource( pszUrl ) == NULL )
 	{
 		CFailedSource* pBadSource = new CFailedSource( pszUrl, bLocal, bOffline );
@@ -894,7 +917,8 @@ void CDownloadWithSources::VoteSource(LPCTSTR pszUrl, bool bPositively)
 
 void CDownloadWithSources::ExpireFailedSources()
 {
-	CSingleLock pLock( &m_pSection, TRUE );
+	CQuickLock pLock( Transfers.m_pSection );
+
 	DWORD tNow = GetTickCount();
 	for ( POSITION pos = m_pFailedSources.GetHeadPosition() ; pos ; )
 	{
@@ -915,7 +939,8 @@ void CDownloadWithSources::ExpireFailedSources()
 
 void CDownloadWithSources::ClearFailedSources()
 {
-	CSingleLock pLock( &m_pSection, TRUE );
+	CQuickLock pLock( Transfers.m_pSection );
+
 	for ( POSITION pos = m_pFailedSources.GetHeadPosition() ; pos ; )
 	{
 		POSITION posThis = pos;
@@ -933,6 +958,8 @@ void CDownloadWithSources::ClearFailedSources()
 
 void CDownloadWithSources::RemoveSource(CDownloadSource* pSource, BOOL bBan)
 {
+	CQuickLock pLock( Transfers.m_pSection );
+
 	if ( bBan && pSource->m_sURL.GetLength() )
 	{
 		AddFailedSource( pSource );
@@ -973,6 +1000,8 @@ void CDownloadWithSources::RemoveSource(CDownloadSource* pSource, BOOL bBan)
 
 void CDownloadWithSources::SortSource(CDownloadSource* pSource, BOOL bTop)
 {
+	CQuickLock pLock( Transfers.m_pSection );
+
 	ASSERT( m_nSourceCount > 0 );
 	
 	if ( pSource->m_pPrev != NULL )
@@ -1022,6 +1051,8 @@ void CDownloadWithSources::SortSource(CDownloadSource* pSource, BOOL bTop)
 
 void CDownloadWithSources::SortSource(CDownloadSource* pSource)
 {
+	CQuickLock pLock( Transfers.m_pSection );
+
 	ASSERT( m_nSourceCount > 0 );
 
 	//Remove source from current position. (It's unsorted, and would interfere with sort)
@@ -1078,10 +1109,12 @@ void CDownloadWithSources::SortSource(CDownloadSource* pSource)
 
 int CDownloadWithSources::GetSourceColour()
 {
+	CQuickLock pLock( Transfers.m_pSection );
+
 	BOOL bTaken[SRC_COLOURS] = {};
 	int nFree = SRC_COLOURS;
 	
-	for ( CDownloadSource* pSource = GetFirstSource() ; pSource ; pSource = pSource->m_pNext )
+	for ( CDownloadSource* pSource = m_pSourceFirst ; pSource ; pSource = pSource->m_pNext )
 	{
 		if ( pSource->m_nColour >= 0 )
 		{
@@ -1114,12 +1147,14 @@ int CDownloadWithSources::GetSourceColour()
 void CDownloadWithSources::Serialize(CArchive& ar, int nVersion)
 {
 	CDownloadBase::Serialize( ar, nVersion );
+
+	CQuickLock pLock( Transfers.m_pSection );
 	
 	if ( ar.IsStoring() )
 	{
-		ar.WriteCount( GetSourceCount() );
+		ar.WriteCount( (DWORD)m_nSourceCount );
 		
-		for ( CDownloadSource* pSource = GetFirstSource() ; pSource ; pSource = pSource->m_pNext )
+		for ( CDownloadSource* pSource = m_pSourceFirst ; pSource ; pSource = pSource->m_pNext )
 		{
 			pSource->Serialize( ar, nVersion );
 		}
@@ -1185,6 +1220,8 @@ void CDownloadWithSources::Serialize(CArchive& ar, int nVersion)
 
 void CDownloadWithSources::MergeMetadata(const CXMLElement* pXML)
 {
+	CQuickLock pLock( Transfers.m_pSection );
+
 	if ( m_pXML )
 	{
 		CXMLAttribute* pAttr1 = m_pXML->GetAttribute( CXMLAttribute::schemaName );

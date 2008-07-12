@@ -28,7 +28,7 @@
 
 class CConnection;
 class CEDClient;
-
+class CDownloadTransfer;
 
 class CDownloadWithTransfers : public CDownloadWithSources
 {
