@@ -489,7 +489,7 @@ void CSkinsSettingsPage::OnOK()
 		theApp.WriteProfileInt( _T("Skins"), strSkin, bOn );
 	}
 
-	if ( bChanged ) AfxGetMainWnd()->PostMessage( WM_SKINCHANGED );
+	if ( bChanged ) PostMainWndMessage( WM_SKINCHANGED );
 
 	CSettingsPage::OnOK();
 }

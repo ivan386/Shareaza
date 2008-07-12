@@ -206,7 +206,7 @@ CPrivateChatFrame* CChatWindows::OpenPrivate(const Hashes::Guid& oGUID, SOCKADDR
 		CString strMessage;
 		LoadString( strMessage, IDS_CHAT_NEED_PROFILE );
 		if ( AfxMessageBox( strMessage, MB_YESNO|MB_ICONQUESTION ) == IDYES )
-			AfxGetMainWnd()->PostMessage( WM_COMMAND, ID_TOOLS_PROFILE );
+			PostMainWndMessage( WM_COMMAND, ID_TOOLS_PROFILE );
 		return NULL;
 	}
 

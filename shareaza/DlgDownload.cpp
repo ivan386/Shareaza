@@ -140,7 +140,7 @@ void CDownloadDlg::OnTorrentFile()
 	{
 		CShareazaURL* pURL = new CShareazaURL( pTorrent );
 		
-		if ( AfxGetMainWnd()->PostMessage( WM_URL, (WPARAM)pURL ) )
+		if ( PostMainWndMessage( WM_URL, (WPARAM)pURL ) )
 		{
 			EndDialog( IDCANCEL );
 			return;

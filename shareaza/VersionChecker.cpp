@@ -133,7 +133,7 @@ void CVersionChecker::OnRun()
 		}
 
 		if ( IsThreadEnabled() )
-			AfxGetMainWnd()->PostMessage( WM_VERSIONCHECK, VC_MESSAGE_AND_CONFIRM );
+			PostMainWndMessage( WM_VERSIONCHECK, VC_MESSAGE_AND_CONFIRM );
 	}
 }
 
@@ -268,7 +268,7 @@ BOOL CVersionChecker::CheckUpgradeHash(const Hashes::Sha1Hash& oHash, LPCTSTR ps
 			if ( _tcsstr( pszPath, _T(".exe") ) )
 			{
 				m_sUpgradePath = pszPath;
-				AfxGetMainWnd()->PostMessage( WM_VERSIONCHECK, VC_UPGRADE );
+				PostMainWndMessage( WM_VERSIONCHECK, VC_UPGRADE );
 				return TRUE;
 			}
 		}
@@ -290,7 +290,7 @@ BOOL CVersionChecker::CheckUpgradeHash()
 				if ( _tcsstr( pFile->GetPath(), _T(".exe") ) )
 				{
 					m_sUpgradePath = pFile->GetPath();
-					AfxGetMainWnd()->PostMessage( WM_VERSIONCHECK, VC_UPGRADE );
+					PostMainWndMessage( WM_VERSIONCHECK, VC_UPGRADE );
 					return TRUE;
 				}
 			}

@@ -1227,10 +1227,7 @@ void CChatSession::PostOpenWindow()
 {
 	if ( m_pWndPrivate != NULL || m_pWndPublic != NULL ) return;
 	
-	if ( CWnd* pWnd = (CWnd*)theApp.SafeMainWnd() )
-	{
-		pWnd->PostMessage( WM_OPENCHAT, (WPARAM)this );
-	}
+	PostMainWndMessage( WM_OPENCHAT, (WPARAM)this );
 }
 
 void CChatSession::OnOpenWindow()

@@ -603,7 +603,7 @@ BOOL CHomeDownloadsBox::ExecuteDownload(CDownload* pDownload)
 	}
 	else
 	{
-		AfxGetMainWnd()->PostMessage( WM_COMMAND, ID_VIEW_DOWNLOADS );
+		PostMainWndMessage( WM_COMMAND, ID_VIEW_DOWNLOADS );
 	}
 	
 	return TRUE;

@@ -843,15 +843,15 @@ void CRemoteWnd::OnNcLButtonDblClk(UINT /*nFlags*/, CPoint point)
 {
 	if ( m_bsHistoryDest && m_rcsHistoryDest.PtInRect( point ) )
 	{
-		AfxGetMainWnd()->PostMessage( WM_COMMAND, ID_TAB_HOME );
+		PostMainWndMessage( WM_COMMAND, ID_TAB_HOME );
 	}
 	else if ( m_bsStatusText && m_rcsStatusText.PtInRect( point ) )
 	{
-		AfxGetMainWnd()->PostMessage( WM_COMMAND, ID_TAB_MEDIA );
+		PostMainWndMessage( WM_COMMAND, ID_TAB_MEDIA );
 	}
 	else
 	{
-		AfxGetMainWnd()->PostMessage( WM_COMMAND, ID_TRAY_OPEN );
+		PostMainWndMessage( WM_COMMAND, ID_TRAY_OPEN );
 	}
 }
 

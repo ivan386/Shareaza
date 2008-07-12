@@ -194,6 +194,9 @@ extern CShareazaApp theApp;
 // Utility Functions
 //
 
+// Post message to main window in safe way
+BOOL PostMainWndMessage(UINT Msg, WPARAM wParam = NULL, LPARAM lParam = NULL);
+
 CRuntimeClass* AfxClassForName(LPCTSTR pszClass);
 
 BOOL LoadString(CString& str, UINT nID);

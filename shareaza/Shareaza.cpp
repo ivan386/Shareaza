@@ -650,7 +650,7 @@ BOOL CShareazaApp::OpenTorrent(LPCTSTR lpszFileName, BOOL bDoIt)
 			{
 				bResult = TRUE;
 				if ( bDoIt )
-					return AfxGetMainWnd()->PostMessage( WM_URL, (WPARAM)pURL );
+					return PostMainWndMessage( WM_URL, (WPARAM)pURL );
 				delete pURL;
 				pTorrent = NULL;	// Deleted inside CShareazaURL::Clear()
 			}
@@ -673,7 +673,7 @@ BOOL CShareazaApp::OpenCollection(LPCTSTR lpszFileName, BOOL bDoIt)
 	if ( pszPath )
 	{
 		lstrcpy( pszPath, lpszFileName );
-		if ( AfxGetMainWnd()->PostMessage( WM_COLLECTION, (WPARAM)pszPath ) )
+		if ( PostMainWndMessage( WM_COLLECTION, (WPARAM)pszPath ) )
 			return TRUE;
 		delete [] pszPath;
 	}
@@ -692,7 +692,7 @@ BOOL CShareazaApp::OpenURL(LPCTSTR lpszFileName, BOOL bDoIt, BOOL bSilent)
 		if ( pURL->Parse( lpszFileName ) )
 		{
 			if ( bDoIt )
-				AfxGetMainWnd()->PostMessage( WM_URL, (WPARAM)pURL );
+				PostMainWndMessage( WM_URL, (WPARAM)pURL );
 			return TRUE;
 		}
 		delete pURL;
@@ -2555,4 +2555,12 @@ CString BrowseForFolder(LPCTSTR szTitle, LPCTSTR szInitialPath, HWND hWnd)
 	lstrcpyn( szDefaultPath, szPath, MAX_PATH );
 
 	return CString( szPath );
+}
+
+BOOL PostMainWndMessage(UINT Msg, WPARAM wParam, LPARAM lParam)
+{
+	if ( CMainWnd* pWnd = theApp.SafeMainWnd() )
+		return pWnd->PostMessage( Msg, wParam, lParam );
+	else
+		return FALSE;
 }

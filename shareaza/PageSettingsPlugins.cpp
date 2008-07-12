@@ -253,7 +253,7 @@ void CPluginsSettingsPage::OnOK()
 		}
 	}
 
-	if ( bChanged ) AfxGetMainWnd()->PostMessage( WM_SKINCHANGED );
+	if ( bChanged ) PostMainWndMessage( WM_SKINCHANGED );
 
 	CSettingsPage::OnOK();
 }

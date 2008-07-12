@@ -128,7 +128,7 @@ void CSecurity::Add(CSecureRule* pRule)
 	}
 
 	// Check all lists for newly denied hosts
-	AfxGetMainWnd()->PostMessage( WM_SANITY_CHECK );
+	PostMainWndMessage( WM_SANITY_CHECK );
 }
 
 void CSecurity::Remove(CSecureRule* pRule)
@@ -732,7 +732,7 @@ BOOL CSecurity::Import(LPCTSTR pszFile)
 	}
 
 	// Check all lists for newly denied hosts
-	AfxGetMainWnd()->PostMessage( WM_SANITY_CHECK );
+	PostMainWndMessage( WM_SANITY_CHECK );
 
 	return bResult;
 }

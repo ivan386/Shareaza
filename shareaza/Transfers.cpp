@@ -192,10 +192,9 @@ void CTransfers::OnCheckExit()
 
 		if ( pLock.Lock( 250 ) )
 		{
-			if ( CWnd* pWnd = (CWnd*)theApp.SafeMainWnd() )
+			if ( PostMainWndMessage( WM_CLOSE ) )
 			{
 				Settings.Live.AutoClose = FALSE;
-				pWnd->PostMessage( WM_CLOSE );
 			}
 		}
 	}
