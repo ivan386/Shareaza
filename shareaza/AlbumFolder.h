@@ -19,9 +19,6 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_ALBUMFOLDER_H__168CEF4D_1C6F_4E24_A647_299CBAEA6670__INCLUDED_)
-#define AFX_ALBUMFOLDER_H__168CEF4D_1C6F_4E24_A647_299CBAEA6670__INCLUDED_
-
 #pragma once
 
 class CLibrary;
@@ -32,14 +29,12 @@ class CSchemaMember;
 class CXMLElement;
 
 
-class CAlbumFolder : public CComObject
+class CAlbumFolder : boost::noncopyable
 {
 // Construction
 public:
 	CAlbumFolder(CAlbumFolder* pParent = NULL, LPCTSTR pszSchemaURI = NULL, LPCTSTR pszName = NULL, BOOL bAutoDelete = FALSE);
 	virtual ~CAlbumFolder();
-
-	DECLARE_DYNAMIC(CAlbumFolder)
 
 // Attributes
 public:
@@ -57,8 +52,10 @@ public:
 	DWORD					m_nUpdateCookie;
 	DWORD					m_nSelectCookie;
 	DWORD					m_nListCookie;
-	CCollectionFile*		m_pCollection;
 	Hashes::Guid			m_oGUID;
+
+private:
+	CCollectionFile*		m_pCollection;
 
 // Operations
 public:
@@ -97,11 +94,4 @@ public:
 	bool			OnFolderDelete(CAlbumFolder* pFolder);
 	void			OnFileDelete(CLibraryFile* pFile, BOOL bDeleteGhost = FALSE);
 	void			Clear();
-
-	friend class CLibrary;
-	friend class CLibraryFolders;
-	friend class CLibraryFrame;
-	friend class CLibraryTreeView;
 };
-
-#endif // !defined(AFX_ALBUMFOLDER_H__168CEF4D_1C6F_4E24_A647_299CBAEA6670__INCLUDED_)

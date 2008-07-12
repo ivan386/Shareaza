@@ -252,13 +252,14 @@ BOOL CDDEServer::Execute(LPCTSTR pszTopic, LPCTSTR pszMessage)
 	}
 	else if ( _tcscmp( pszTopic, _T("RAZAFORMAT") ) == 0 )
 	{
-		LPCTSTR pszType = _tcsrchr( pszMessage, '.' );
+		LPCTSTR pszType = PathFindExtension( pszMessage );
 		if ( _tcsicmp( pszType, _T(".torrent") ) == 0 ) 
 		{
 			return CShareazaApp::OpenTorrent( pszMessage, TRUE );
 		}
 		else if ( _tcsicmp( pszType, _T(".co") ) == 0 ||
-				  _tcsicmp( pszType, _T(".collection") ) == 0 )
+				  _tcsicmp( pszType, _T(".collection") ) == 0 ||
+				  _tcsicmp( pszType, _T(".emulecollection") ) == 0 )
 		{
 			return CShareazaApp::OpenCollection( pszMessage, TRUE );
 		}

@@ -28,6 +28,7 @@
 #include "XML.h"
 #include "Schema.h"
 #include "SchemaCache.h"
+#include "EDPacket.h"
 
 #include "Library.h"
 #include "Downloads.h"
@@ -51,9 +52,10 @@ IMPLEMENT_DYNAMIC(CCollectionFile, CComObject)
 /////////////////////////////////////////////////////////////////////////////
 // CCollectionFile construction
 
-CCollectionFile::CCollectionFile()
+CCollectionFile::CCollectionFile() :
+	m_pMetadata ( NULL ),
+	m_nType( ShareazaCollection )
 {
-	m_pMetadata = NULL;
 }
 
 CCollectionFile::~CCollectionFile()
@@ -67,15 +69,23 @@ CCollectionFile::~CCollectionFile()
 BOOL CCollectionFile::Open(LPCTSTR pszFile)
 {
 	Close();
-	CZIPFile pZIP;
-	return pZIP.Open( pszFile ) && LoadManifest( pZIP );
-}
 
-BOOL CCollectionFile::Attach(HANDLE hFile)
-{
-	Close();
-	CZIPFile pZIP;
-	return pZIP.Attach( hFile ) && LoadManifest( pZIP );
+	CString strType = PathFindExtension( pszFile );
+	strType.MakeLower();
+	if ( strType == _T(".co") || strType == _T(".collection") )
+	{
+		m_nType = ShareazaCollection;
+
+		CZIPFile pZIP;
+		return pZIP.Open( pszFile ) && LoadManifest( pZIP );
+	}
+	else if ( strType == _T(".emulecollection") )
+	{
+		m_nType = eMuleCollection;
+
+		return LoadEMule( pszFile );
+	}
+	return FALSE;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -83,10 +93,11 @@ BOOL CCollectionFile::Attach(HANDLE hFile)
 
 void CCollectionFile::Close()
 {
-	for ( POSITION pos = GetFileIterator() ; pos ; ) delete GetNextFile( pos );
+	for ( POSITION pos = GetFileIterator() ; pos ; )
+		delete GetNextFile( pos );
 	m_pFiles.RemoveAll();
 
-	if ( m_pMetadata != NULL ) delete m_pMetadata;
+	delete m_pMetadata;
 	m_pMetadata = NULL;
 
 	m_sTitle.Empty();
@@ -234,6 +245,76 @@ BOOL CCollectionFile::LoadManifest(CZIPFile& pZIP)
 }
 
 /////////////////////////////////////////////////////////////////////////////
+// Load eMule collection
+
+BOOL CCollectionFile::LoadEMule(LPCTSTR pszFile)
+{
+	// TODO: Add schema detection
+	m_sThisURI = CSchema::uriFolder;
+	m_sParentURI = CSchema::uriCollectionsFolder;
+
+	// Open collection
+	DWORD nFileCount = 0;
+	CFile pFile;
+	if ( pFile.Open( pszFile, CFile::modeRead ) )
+	{
+		// Check collection version
+		DWORD read;
+		DWORD nVersion;
+		if ( pFile.Read( &nVersion, sizeof( nVersion ) ) == sizeof( nVersion ) &&
+			( nVersion == ED2K_FILE_VERSION1_INITIAL /*||
+			  nVersion == ED2K_FILE_VERSION2_LARGEFILES*/ ) ) // TODO: Add support for Large Files
+		{
+			// Load collection properties
+			DWORD nCount;
+			if ( pFile.Read( &nCount, sizeof( nCount ) ) == sizeof( nCount ) &&
+				nCount > 0 && nCount < 10 )
+			{
+				for ( DWORD i = 0; i < nCount; ++i )
+				{
+					CEDTag pTag;
+					if ( ! pTag.Read( &pFile ) )
+						break;
+
+					if ( pTag.Check( ED2K_FT_FILENAME, ED2K_TAG_STRING ) )
+					{						
+						m_sTitle = pTag.m_sValue;
+					}
+					else if ( pTag.Check( ED2K_FT_COLLECTIONAUTHOR, ED2K_TAG_STRING ) )
+					{
+						// TODO: ED2K_FT_COLLECTIONAUTHOR
+					}
+					else if ( pTag.Check( ED2K_FT_COLLECTIONAUTHORKEY, ED2K_TAG_BLOB ) )
+					{
+						// TODO: ED2K_FT_COLLECTIONAUTHORKEY
+					}
+				}
+			}
+
+			// Load collection files
+			if ( pFile.Read( &nFileCount, sizeof( nFileCount ) ) == sizeof( nFileCount ) &&
+				nFileCount > 0 && nFileCount < 1000 )
+			{
+				for ( DWORD i = 0; i < nFileCount; ++i )
+				{
+					File* pCollectionFile = new File( this );
+					if ( pCollectionFile && pCollectionFile->Parse( pFile ) )
+					{
+						m_pFiles.AddTail( pCollectionFile );
+					}
+					else
+					{
+						delete pCollectionFile;
+						break;
+					}
+				}
+			}
+		}
+	}
+	return nFileCount && ( m_pFiles.GetCount() == nFileCount );
+}
+
+/////////////////////////////////////////////////////////////////////////////
 // CCollectionFile clone metadata
 
 CXMLElement* CCollectionFile::CloneMetadata(CXMLElement* pMetadata)
@@ -284,20 +365,15 @@ CXMLElement* CCollectionFile::CloneMetadata(CXMLElement* pMetadata)
 /////////////////////////////////////////////////////////////////////////////
 // CCollectionFile::File construction
 
-CCollectionFile::File::File(CCollectionFile* pParent)
+CCollectionFile::File::File(CCollectionFile* pParent) :
+	m_pParent	( pParent ),
+	m_pMetadata	( NULL )
 {
-	m_pParent	= pParent;
-//	m_bSHA1		= FALSE;
-//	m_bMD5		= FALSE;
-//	m_bTiger	= FALSE;
-//	m_bED2K		= FALSE;
-	m_nSize		= SIZE_UNKNOWN;
-	m_pMetadata	= NULL;
 }
 
 CCollectionFile::File::~File()
 {
-	if ( m_pMetadata != NULL ) delete m_pMetadata;
+	delete m_pMetadata;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -346,6 +422,47 @@ BOOL CCollectionFile::File::Parse(CXMLElement* pRoot)
 	}
 	
 	return IsHashed();
+}
+
+BOOL CCollectionFile::File::Parse(CFile& pFile)
+{
+	DWORD nCount;
+	if ( pFile.Read( &nCount, sizeof( nCount ) ) == sizeof( nCount ) &&
+		nCount > 0 && nCount < 10 )
+	{
+		for ( DWORD i = 0; i < nCount; ++i )
+		{
+			CEDTag pTag;
+			if ( ! pTag.Read( &pFile ) )
+				break;
+
+			if ( pTag.Check( ED2K_FT_FILEHASH, ED2K_TAG_HASH ) )
+			{
+				m_oED2K = pTag.m_oValue;
+			}
+			else if ( pTag.Check( ED2K_FT_FILESIZE, ED2K_TAG_INT ) )
+			{
+				m_nSize = pTag.m_nValue;
+			}
+			else if ( pTag.Check( ED2K_FT_FILENAME, ED2K_TAG_STRING ) )
+			{						
+				m_sName = pTag.m_sValue;
+			}
+			else if ( pTag.Check( ED2K_FT_FILETYPE, ED2K_TAG_STRING ) )
+			{
+				// TODO: ED2K_FT_FILETYPE
+			}
+			else if ( pTag.Check( ED2K_FT_FILECOMMENT, ED2K_TAG_STRING ) )
+			{
+				// TODO: ED2K_FT_FILECOMMENT
+			}
+			else if ( pTag.Check( ED2K_FT_FILERATING, ED2K_TAG_INT ) )
+			{
+				// TODO: ED2K_FT_FILERATING
+			}
+		}
+	}
+	return ! m_sName.IsEmpty() && m_oED2K && m_nSize != SIZE_UNKNOWN;
 }
 
 /////////////////////////////////////////////////////////////////////////////

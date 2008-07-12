@@ -81,7 +81,7 @@ private:
 	bool		ReadPDF(DWORD nIndex, HANDLE hFile, LPCTSTR pszPath);
 	CString		ReadLine(HANDLE hFile, LPCTSTR pszSeparators = NULL);
 	CString		ReadLineReverse(HANDLE hFile, LPCTSTR pszSeparators = NULL);
-	bool		ReadCollection(DWORD nIndex, HANDLE hFile);
+	bool		ReadCollection(DWORD nIndex, LPCTSTR pszPath);
 	bool		ReadCHM(DWORD nIndex, HANDLE hFile, LPCTSTR pszPath);
 	CString		DecodePDFText(CString& strInput);
 	bool		ReadTorrent(DWORD nIndex, HANDLE hFile, LPCTSTR pszPath);

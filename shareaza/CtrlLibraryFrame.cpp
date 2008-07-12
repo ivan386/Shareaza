@@ -614,7 +614,6 @@ void CLibraryFrame::SetView(CLibraryView* pView, BOOL bUpdate, BOOL bUser)
 	if ( pFolderSelection && pFolderSelection->m_pVirtual && pView )
 	{
 		ASSERT_VALID( pFolderSelection );
-		ASSERT_VALID( pFolderSelection->m_pVirtual );
 		ASSERT_VALID( pView );
 
 		if ( Settings.Library.ShowVirtual && m_pView &&
@@ -759,7 +758,6 @@ BOOL CLibraryFrame::Update(BOOL bForce, BOOL bBestView)
 	if ( pFolderSelection != NULL && pFolderSelection->m_pVirtual != NULL )
 	{
 		ASSERT_VALID( pFolderSelection );
-		ASSERT_VALID( pFolderSelection->m_pVirtual );
 		strBest = pFolderSelection->m_pVirtual->GetBestView();
 	}
 

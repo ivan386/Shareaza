@@ -470,7 +470,8 @@ void CLocalSearch::AddHitG2(CLibraryFile const * const pFile, int /*nIndex*/)
 			if ( LPCTSTR pszType = _tcsrchr( pFile->m_sName, '.' ) )
 			{
 				if ( _tcsicmp( pszType, _T(".co") ) == 0 ||
-					 _tcsicmp( pszType, _T(".collection") ) == 0 )
+					 _tcsicmp( pszType, _T(".collection") ) == 0 ||
+					 _tcsicmp( pszType, _T(".emulecollection") ) == 0 )
 				{
 					if ( ! pFile->m_bBogus )
 					{

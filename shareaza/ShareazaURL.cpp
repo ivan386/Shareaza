@@ -1221,6 +1221,11 @@ void CShareazaURL::Register(BOOL bOnStartup)
 	RegisterShellType( _T("Classes\\Applications\\Shareaza.exe"), NULL, _T("Shareaza Collection File"),
 		_T(".collection"), _T("Shareaza"), _T("RAZAFORMAT"), IDI_COLLECTION );
 
+	RegisterShellType( _T("Classes"), _T("eMule"), _T("eMule Collection File"),
+		_T(".emulecollection"), _T("Shareaza"), _T("RAZAFORMAT"), IDI_COLLECTION );
+	RegisterShellType( _T("Classes\\Applications\\Shareaza.exe"), NULL, _T("eMule Collection File"),
+		_T(".emulecollection"), _T("Shareaza"), _T("RAZAFORMAT"), IDI_COLLECTION );
+
 	SHChangeNotify( SHCNE_ASSOCCHANGED, SHCNF_IDLIST, NULL, NULL );
 }
 

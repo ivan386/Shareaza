@@ -59,13 +59,8 @@ CLibraryBuilderInternals::~CLibraryBuilderInternals()
 
 bool CLibraryBuilderInternals::ExtractMetadata(DWORD nIndex, const CString& strPath, HANDLE hFile)
 {
-	CString strType;
-
-	int nExtPos = strPath.ReverseFind( '.' );
-	if ( nExtPos != -1 )
-		strType = strPath.Mid( nExtPos );
-
-	ToLower( strType );
+	CString strType = PathFindExtension( strPath );
+	strType.MakeLower();
 
 	if ( strType == _T(".mp3") )
 	{
@@ -183,9 +178,11 @@ bool CLibraryBuilderInternals::ExtractMetadata(DWORD nIndex, const CString& strP
 			return false;
 		return ReadPDF( nIndex, hFile, strPath );
 	}
-	else if ( strType == _T(".co") || strType == _T(".collection") )
+	else if ( strType == _T(".co") ||
+		strType == _T(".collection") ||
+		strType == _T(".emulecollection") )
 	{
-		return ReadCollection( nIndex, hFile );
+		return ReadCollection( nIndex, strPath );
 	}
 	else if ( strType == _T(".chm") )
 	{
@@ -3717,10 +3714,10 @@ CString CLibraryBuilderInternals::ReadLineReverse(HANDLE hFile, LPCTSTR pszSepar
 //////////////////////////////////////////////////////////////////////
 // CLibraryBuilderInternals Collection (threaded)
 
-bool CLibraryBuilderInternals::ReadCollection(DWORD nIndex, HANDLE hFile)
+bool CLibraryBuilderInternals::ReadCollection(DWORD nIndex, LPCTSTR pszPath)
 {
 	CCollectionFile pCollection;
-	if ( !pCollection.Attach( hFile ) )
+	if ( ! pCollection.Open( pszPath ) )
 		return false;
 
 	Hashes::Sha1Hash oSHA1;

@@ -131,7 +131,9 @@ BOOL CFileExecutor::Execute(LPCTSTR pszFile, BOOL bSkipSecurityCheck, LPCTSTR ps
 		strType = CString( PathFindExtension( pszFile ) ).MakeLower();
 
 	// Handle collections
-	if ( strType == _T(".co") || strType == _T(".collection") )
+	if ( strType == _T(".co") ||
+		 strType == _T(".collection") ||
+		 strType == _T(".emulecollection") )
 	{
 		if ( CLibraryWnd* pWnd = GetLibraryWindow() )
 		{

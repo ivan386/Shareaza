@@ -62,14 +62,12 @@ CLibraryListItem::CLibraryListItem(CAlbumFolder* val) :
 	Type( CLibraryListItem::AlbumFolder ),
 	pAlbumFolder( val )
 {
-	ASSERT_VALID( val );
 }
 
 CLibraryListItem::CLibraryListItem(CLibraryFolder* val) :
 	Type( CLibraryListItem::LibraryFolder ),
 	pLibraryFolder( val )
 {
-	ASSERT_VALID( val );
 }
 
 CLibraryListItem::CLibraryListItem(const CLibraryListItem& val) :
@@ -125,8 +123,6 @@ bool CLibraryListItem::operator == (const CLibraryListItem& val) const
 			return dwLibraryFile == val.dwLibraryFile;
 		
 		case CLibraryListItem::AlbumFolder:
-			ASSERT_VALID( pAlbumFolder );
-			ASSERT_VALID( val.pAlbumFolder );
 			// Same object or...
 			return ( pAlbumFolder == val.pAlbumFolder ) ||
 				// Same parent album and same album name
@@ -134,8 +130,6 @@ bool CLibraryListItem::operator == (const CLibraryListItem& val) const
 				( pAlbumFolder->m_sName == val.pAlbumFolder->m_sName ) );
 		
 		case CLibraryListItem::LibraryFolder:
-			ASSERT_VALID( pLibraryFolder );
-			ASSERT_VALID( val.pLibraryFolder );
 			// Same object or...
 			return ( pLibraryFolder == val.pLibraryFolder ) ||
 				// Same path

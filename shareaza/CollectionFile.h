@@ -36,6 +36,8 @@ public:
 	virtual ~CCollectionFile();
 	DECLARE_DYNAMIC(CCollectionFile)
 
+	enum CollectionType { ShareazaCollection, eMuleCollection };
+
 // Member File Class
 public:
 	class File : public CShareazaFile
@@ -53,7 +55,8 @@ public:
 
 	// Operations
 	public:
-		BOOL	Parse(CXMLElement* pXML);
+		BOOL	Parse(CXMLElement* pXML);	// Load from XML
+		BOOL	Parse(CFile& pFile);		// Load from .emulecollection-file
 		BOOL	IsComplete() const;
 		BOOL	IsDownloading() const;
 		BOOL	Download();
@@ -64,14 +67,15 @@ public:
 // Operations
 public:
 	BOOL		Open(LPCTSTR pszFile);
-	BOOL		Attach(HANDLE hFile);
 	void		Close();
-public:
+
 	File*		FindByURN(LPCTSTR pszURN);
 	File*		FindFile(CLibraryFile* pShared, BOOL bApply = FALSE);
 	int			GetMissingCount();
+
 protected:
 	BOOL		LoadManifest(CZIPFile& pZIP);
+	BOOL		LoadEMule(LPCTSTR pszFile);
 	static CXMLElement* CloneMetadata(CXMLElement* pMetadata);
 
 // Attributes
@@ -81,6 +85,7 @@ protected:
 	CString			m_sThisURI;
 	CString			m_sParentURI;
 	CXMLElement*	m_pMetadata;
+	CollectionType	m_nType;
 
 // Inlines
 public:
@@ -122,5 +127,10 @@ public:
 	inline CXMLElement* GetMetadata() const
 	{
 		return m_pMetadata;
+	}
+
+	inline bool IsType(CollectionType nType) const
+	{
+		return m_nType == nType;
 	}
 };

@@ -263,6 +263,7 @@ void CDownloadGroup::Serialize(CArchive& ar, int nVersion)
 		{
 			AddFilter( L".co" );
 			AddFilter( L".collection" );
+			AddFilter( L".emulecollection" );
 
 			if ( m_sFolder.IsEmpty() || ! PathIsDirectory( m_sFolder ) )
 			{

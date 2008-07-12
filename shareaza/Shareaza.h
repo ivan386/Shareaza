@@ -168,7 +168,7 @@ public:
 	static BOOL			OpenInternetShortcut(LPCTSTR lpszFileName, BOOL bDoIt);
 	// Open .torrent file
 	static BOOL			OpenTorrent(LPCTSTR lpszFileName, BOOL bDoIt);
-	// Open .co or .collection file
+	// Open .co, .collection or .emulecollection file
 	static BOOL			OpenCollection(LPCTSTR lpszFileName, BOOL bDoIt);
 	// Open url
 	static BOOL			OpenURL(LPCTSTR lpszFileName, BOOL bDoIt, BOOL bSilent = FALSE);

@@ -118,13 +118,15 @@ void CDownloadTask::Construct(CDownload* pDownload)
 		CString sExtention = strLocalName.Mid( nExt );
 		ToLower( sExtention );
 
-		if ( ( sExtention == ".collection" ) || ( sExtention == ".co" ) )
+		if ( sExtention == _T(".co") ||
+			 sExtention == _T(".collection") ||
+			 sExtention == _T(".emulecollection") )
 		{
 			m_sPath	= Settings.Downloads.CollectionPath;
 			CreateDirectory( Settings.Downloads.CollectionPath );
 			LibraryFolders.AddFolder( Settings.Downloads.CollectionPath );
 		}
-		else if ( sExtention == ".torrent" )
+		else if ( sExtention == _T(".torrent") )
 		{
 			m_sPath	= Settings.Downloads.TorrentPath;
 			CreateDirectory( Settings.Downloads.TorrentPath );
