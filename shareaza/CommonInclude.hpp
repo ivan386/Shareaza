@@ -74,6 +74,7 @@ using augment::auto_array;
 using augment::com_ptr;
 using augment::IUnknownImplementation;
 #include "Utility.hpp"
+#include "MinMax.hpp"
 #include "Hashes.hpp"
 
 #pragma warning( pop )
