@@ -273,53 +273,47 @@ void CEDPacket::Debug(LPCTSTR pszReason) const
 //////////////////////////////////////////////////////////////////////
 // CEDTag construction
 
-CEDTag::CEDTag()
+CEDTag::CEDTag() :
+	m_nType ( ED2K_TAG_NULL ),
+	m_nKey	( 0 )
 {
-	m_nType = ED2K_TAG_NULL;
-	m_nKey	= 0;
 }
 
-CEDTag::CEDTag(BYTE nKey)
+CEDTag::CEDTag(BYTE nKey, const Hashes::Ed2kHash& oHash) :
+	m_nType ( ED2K_TAG_HASH ),
+	m_nKey	( nKey ),
+	m_oValue( oHash )
 {
-	m_nType = ED2K_TAG_HASH;
-	m_nKey	= nKey;
 }
 
-CEDTag::CEDTag(BYTE nKey, DWORD nValue)
+CEDTag::CEDTag(BYTE nKey, QWORD nValue) :
+	m_nType	( ED2K_TAG_INT ),
+	m_nKey	( nKey ),
+	m_nValue( nValue )
 {
-	m_nType		= ED2K_TAG_INT;
-	m_nKey		= nKey;
-	m_nValue	= nValue;
 }
 
-CEDTag::CEDTag(BYTE nKey, LPCTSTR pszValue)
+CEDTag::CEDTag(BYTE nKey, LPCTSTR pszValue) :
+	m_nType	( ED2K_TAG_STRING ),
+	m_nKey	( nKey ),
+	m_sValue( pszValue )
 {
-	m_nType		= ED2K_TAG_STRING;
-	m_nKey		= nKey;
-	m_sValue	= pszValue;
 }
 
-CEDTag::CEDTag(LPCTSTR pszKey)
+CEDTag::CEDTag(LPCTSTR pszKey, QWORD nValue) :
+	m_nType	( ED2K_TAG_INT ),
+	m_sKey	( pszKey ),
+	m_nKey	( 0 ),
+	m_nValue( nValue )
 {
-	m_nType		= ED2K_TAG_HASH;
-	m_sKey		= pszKey;
-	m_nKey		= 0;
 }
 
-CEDTag::CEDTag(LPCTSTR pszKey, DWORD nValue)
+CEDTag::CEDTag(LPCTSTR pszKey, LPCTSTR pszValue) :
+	m_nType	( ED2K_TAG_STRING ),
+	m_sKey	( pszKey ),
+	m_nKey	( 0 ),
+	m_sValue( pszValue )
 {
-	m_nType		= ED2K_TAG_INT;
-	m_sKey		= pszKey;
-	m_nKey		= 0;
-	m_nValue	= nValue;
-}
-
-CEDTag::CEDTag(LPCTSTR pszKey, LPCTSTR pszValue)
-{
-	m_nType		= ED2K_TAG_STRING;
-	m_sKey		= pszKey;
-	m_nKey		= 0;
-	m_sValue	= pszValue;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -332,6 +326,7 @@ void CEDTag::Clear()
 	m_nValue	= 0;
 	m_sKey.Empty();
 	m_sValue.Empty();
+	m_oValue.clear();
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -339,8 +334,10 @@ void CEDTag::Clear()
 
 void CEDTag::Write(CEDPacket* pPacket, DWORD ServerFlags)
 {
-	BOOL bSmallTags = ServerFlags & ED2K_SERVER_TCP_SMALLTAGS, bUnicode = ServerFlags & ED2K_SERVER_TCP_UNICODE;
+	BOOL bSmallTags = ServerFlags & ED2K_SERVER_TCP_SMALLTAGS;
+	BOOL bUnicode = ServerFlags & ED2K_SERVER_TCP_UNICODE;
 	DWORD nPos = pPacket->m_nLength;
+
 	pPacket->WriteByte( m_nType );
 
 	if ( int nKeyLen = m_sKey.GetLength() )
@@ -392,30 +389,41 @@ void CEDTag::Write(CEDPacket* pPacket, DWORD ServerFlags)
 	{
 		if ( bSmallTags )// If we're supporting small tags
 		{	// Use a short tag
-			if ( m_nValue <= 0xFF)
-			{	// Correct type - to byte
+			if ( m_nValue <= 0xFF )
+			{	// Use a 8 bit int
 				pPacket->m_pBuffer[nPos] = 0x80 | ED2K_TAG_UINT8;
 				// Write a byte
 				pPacket->WriteByte( (BYTE)m_nValue );
 			}
-			else if ( m_nValue <= 0xFFFF)
-			{	// Correct type - to word
+			else if ( m_nValue <= 0xFFFF )
+			{	// Use a 16 bit int
 				pPacket->m_pBuffer[nPos] = 0x80 | ED2K_TAG_UINT16;
 				// Write a word
 				pPacket->WriteShortLE( (WORD)m_nValue );
 			}
-			else
-			{	// Use a normal int
+			else if ( m_nValue <= 0xFFFFFFFF )
+			{	// Use a 32 bit int
 				pPacket->m_pBuffer[nPos] = 0x80 | ED2K_TAG_INT;
 				// Write a DWORD
-				pPacket->WriteLongLE( m_nValue );
+				pPacket->WriteLongLE( (DWORD)m_nValue );
+			}
+			else
+			{	// Use a 64 bit int
+				pPacket->m_pBuffer[nPos] = 0x80 | ED2K_TAG_UINT64;
+				// Write a QWORD
+				pPacket->WriteInt64( m_nValue );
 			}
 		}
 		else
 		{	// Use a normal int
+			ASSERT( m_nValue <= 0xFFFFFFFF );
 			// Write a DWORD
-			pPacket->WriteLongLE( m_nValue );
+			pPacket->WriteLongLE( (DWORD)m_nValue );
 		}
+	}
+	else
+	{
+		ASSERT( FALSE ); // Unsupported tag
 	}
 }
 
@@ -424,7 +432,7 @@ void CEDTag::Write(CEDPacket* pPacket, DWORD ServerFlags)
 
 BOOL CEDTag::Read(CEDPacket* pPacket, DWORD ServerFlags)
 {
-	int nLen;
+	WORD nLen;
 
 	Clear();
 
@@ -456,8 +464,15 @@ BOOL CEDTag::Read(CEDPacket* pPacket, DWORD ServerFlags)
 			m_sKey = pPacket->ReadStringASCII( nLen );
 	}
 
-	if ( m_nType == ED2K_TAG_STRING )					// Length prefixed string
+	switch ( m_nType )
 	{
+	case ED2K_TAG_HASH:
+		if ( pPacket->GetRemaining() < 16 ) return FALSE;
+		pPacket->Read( &m_oValue[ 0 ], Hashes::Ed2kHash::byteCount );
+		m_oValue.validate();
+		break;
+
+	case ED2K_TAG_STRING:
 		if ( pPacket->GetRemaining() < 2 ) return FALSE;
 		nLen = pPacket->ReadShortLE();
 		if ( pPacket->GetRemaining() < nLen ) return FALSE;
@@ -465,46 +480,59 @@ BOOL CEDTag::Read(CEDPacket* pPacket, DWORD ServerFlags)
 			m_sValue = pPacket->ReadStringUTF8( nLen );
 		else
 			m_sValue = pPacket->ReadStringASCII( nLen );
-	}
-	else if ( m_nType == ED2K_TAG_INT )					// 32 bit integer
-	{
+		break;
+
+	case ED2K_TAG_BLOB: // Old 16 bit way
+		if ( pPacket->GetRemaining() < 2 ) return FALSE;
+		nLen = pPacket->ReadLongLE();
+		if ( pPacket->GetRemaining() < nLen ) return FALSE;
+		m_sValue = pPacket->ReadStringASCII( nLen );
+		break;
+
+	case ED2K_TAG_INT:
 		if ( pPacket->GetRemaining() < 4 ) return FALSE;
 		m_nValue = pPacket->ReadLongLE();
-	}
-	else if ( m_nType == ED2K_TAG_FLOAT )				// 32 bit float
-	{
+		break;
+
+	case ED2K_TAG_FLOAT:
 		if ( pPacket->GetRemaining() < 4 ) return FALSE;
 		m_nValue = pPacket->ReadLongLE();
-	}
-	else if ( m_nType == ED2K_TAG_UINT16 )				// 16 bit integer (New tag)
-	{
+		break;
+
+	case ED2K_TAG_UINT16:
 		if ( pPacket->GetRemaining() < 2 ) return FALSE;
 		m_nValue = pPacket->ReadShortLE();
-	}
-	else if ( m_nType == ED2K_TAG_UINT8 )				// 8 bit integer (New tag)
-	{
+		m_nType = ED2K_TAG_INT;
+		break;
+
+	case ED2K_TAG_UINT8:
 		if ( pPacket->GetRemaining() < 1 ) return FALSE;
 		m_nValue = pPacket->ReadByte();
-	}
-	else if ( ( m_nType >= ED2K_TAG_SHORTSTRING ) && ( m_nType <= ED2K_TAG_SHORTSTRING + 15 ) )
-	{													// Short strings (New tag)
-		nLen = ( m_nType - (ED2K_TAG_SHORTSTRING - 1) );//Calculate length of short string
-		if ( pPacket->GetRemaining() < nLen ) return FALSE;
+		m_nType = ED2K_TAG_INT;
+		break;
 
-		if ( ServerFlags & ED2K_SERVER_TCP_UNICODE )
-			m_sValue = pPacket->ReadStringUTF8( nLen );
+	case ED2K_TAG_UINT64:
+		if ( pPacket->GetRemaining() < 1 ) return FALSE;
+		m_nValue = pPacket->ReadInt64();
+		m_nType = ED2K_TAG_INT;
+		break;
+
+	default:
+		if ( m_nType >= ED2K_TAG_SHORTSTRING && m_nType <= ED2K_TAG_SHORTSTRING + 15 )
+		{
+			nLen = m_nType - ( ED2K_TAG_SHORTSTRING - 1 );
+			m_nType = ED2K_TAG_STRING;
+			if ( pPacket->GetRemaining() < nLen ) return FALSE;
+			if ( ServerFlags & ED2K_SERVER_TCP_UNICODE )
+				m_sValue = pPacket->ReadStringUTF8( nLen );
+			else
+				m_sValue = pPacket->ReadStringASCII( nLen );
+		}
 		else
-			m_sValue = pPacket->ReadStringASCII( nLen );
-	}
-	else if ( m_nType == ED2K_TAG_BLOB )				// ?
-	{
-		nLen = pPacket->ReadLongLE();
-		m_sValue = pPacket->ReadStringASCII( nLen );
-	}
-	else
-	{
-		theApp.Message( MSG_DEBUG, _T("Unrecognised ed2k packet 0x%02x"), m_nType );
-		return FALSE;
+		{
+			theApp.Message( MSG_DEBUG, _T("Unrecognised ED2K tag type 0x%02x"), m_nType );
+			return FALSE;
+		}
 	}
 
 	return TRUE;
@@ -521,6 +549,7 @@ BOOL CEDTag::Read(CFile* pFile)
 
 	if ( pFile->Read( &m_nType, sizeof(m_nType) ) != sizeof(m_nType) )
 		return FALSE;
+
 	if ( m_nType & 0x80 )
 	{
 		m_nType &= 0x7F;
@@ -531,6 +560,7 @@ BOOL CEDTag::Read(CFile* pFile)
 		if ( pFile->Read( &nLen, sizeof(nLen) ) != sizeof(nLen) )
 			return FALSE;
 	}
+
 	if ( nLen == 1 )
 	{
 		if ( pFile->Read( &m_nKey, sizeof(m_nKey) ) != sizeof(m_nKey) )
@@ -538,75 +568,46 @@ BOOL CEDTag::Read(CFile* pFile)
 	}
 	else if ( nLen > 1 )
 	{
-		LPSTR psz = new CHAR[ nLen + 1 ];
-		if ( psz == NULL )
-		{
-			theApp.Message( MSG_ERROR, _T("Memory allocation error in CEDTag::Read()") );
+		auto_array< CHAR > psz( new CHAR[ nLen + 1 ] );
+		if ( ! psz.get() )
 			return FALSE;
-		}
-		if ( pFile->Read( psz, nLen ) == nLen )
-		{
-			psz[ nLen ] = 0;
-			m_sKey = psz;
-			delete [] psz;
-		}
-		else
-		{
-			delete [] psz;
+		if ( pFile->Read( psz.get(), nLen ) != nLen )
 			return FALSE;
-		}
+		psz[ nLen ] = 0;
+		m_sKey = psz.get();
 	}
 
 	switch ( m_nType )
 	{
 	case ED2K_TAG_HASH:
-		{
-			if ( pFile->Read( &m_oValue[ 0 ], Hashes::Ed2kHash::byteCount ) != Hashes::Ed2kHash::byteCount )
-				return FALSE;
-			m_oValue.validate();
-		}
+		if ( pFile->Read( &m_oValue[ 0 ], Hashes::Ed2kHash::byteCount ) != Hashes::Ed2kHash::byteCount )
+			return FALSE;
+		m_oValue.validate();
 		break;
 
 	case ED2K_TAG_STRING:
 	case ED2K_TAG_BLOB:
 		if ( pFile->Read( &nLen, sizeof(nLen) ) != sizeof(nLen) )
 			return FALSE;
-		else
 		{
-			LPSTR psz = new CHAR[ nLen + 1 ];
-			if ( psz == NULL )
-			{
-				theApp.Message( MSG_ERROR, _T("Memory allocation error in CEDTag::Read()") );
+			auto_array< CHAR > psz( new CHAR[ nLen + 1 ] );
+			if ( ! psz.get() )
 				return FALSE;
-			}
-			if ( pFile->Read( psz, nLen ) == nLen )
-			{
-				int nWide = MultiByteToWideChar( CP_UTF8, 0, psz, nLen, NULL, 0 );
-				MultiByteToWideChar( CP_UTF8, 0, psz, nLen, m_sValue.GetBuffer( nWide ), nWide );
-				m_sValue.ReleaseBuffer( nWide );
-				delete [] psz;
-			}
-			else
-			{
-				delete [] psz;
+			if ( pFile->Read( psz.get(), nLen ) != nLen )
 				return FALSE;
-			}
+			int nWide = MultiByteToWideChar( CP_UTF8, 0, psz.get(), nLen, NULL, 0 );
+			MultiByteToWideChar( CP_UTF8, 0, psz.get(), nLen, m_sValue.GetBuffer( nWide ), nWide );
+			m_sValue.ReleaseBuffer( nWide );
 		}
 		break;
 
 	case ED2K_TAG_INT:
 	case ED2K_TAG_FLOAT:
-		if ( pFile->Read( &m_nValue, sizeof(m_nValue) ) != sizeof(m_nValue) )
-			return FALSE;
-		break;
-
-	case ED2K_TAG_UINT8:
 		{
-			BYTE nValue;
+			DWORD nValue;
 			if ( pFile->Read( &nValue, sizeof(nValue) ) != sizeof(nValue) )
 				return FALSE;
 			m_nValue = nValue;
-			m_nType = ED2K_TAG_INT;
 		}
 		break;
 
@@ -620,34 +621,42 @@ BOOL CEDTag::Read(CFile* pFile)
 		}
 		break;
 
+	case ED2K_TAG_UINT8:
+		{
+			BYTE nValue;
+			if ( pFile->Read( &nValue, sizeof(nValue) ) != sizeof(nValue) )
+				return FALSE;
+			m_nValue = nValue;
+			m_nType = ED2K_TAG_INT;
+		}
+		break;
+
+	case ED2K_TAG_UINT64:
+		if ( pFile->Read( &m_nValue, sizeof(m_nValue) ) != sizeof(m_nValue) )
+			return FALSE;
+		m_nType = ED2K_TAG_INT;
+		break;
+
 	default:
 		if ( m_nType >= ED2K_TAG_SHORTSTRING && m_nType <= ED2K_TAG_SHORTSTRING + 15 )
 		{
 			// Calculate length of short string
 			nLen = m_nType - ( ED2K_TAG_SHORTSTRING - 1 );
 			m_nType = ED2K_TAG_STRING;
-			LPSTR psz = new CHAR[ nLen + 1 ];
-			if ( psz == NULL )
-			{
-				theApp.Message( MSG_ERROR, _T("Memory allocation error in CEDTag::Read()") );
+			auto_array< CHAR > psz( new CHAR[ nLen + 1 ] );
+			if ( ! psz.get() )
 				return FALSE;
-			}
-			if ( pFile->Read( psz, nLen ) == nLen )
-			{
-				int nWide = MultiByteToWideChar( CP_UTF8, 0, psz, nLen, NULL, 0 );
-				MultiByteToWideChar( CP_UTF8, 0, psz, nLen, m_sValue.GetBuffer( nWide ), nWide );
-				m_sValue.ReleaseBuffer( nWide );
-				delete [] psz;
-			}
-			else
-			{
-				delete [] psz;
+			if ( pFile->Read( psz.get(), nLen ) != nLen )
 				return FALSE;
-			}
+			int nWide = MultiByteToWideChar( CP_UTF8, 0, psz.get(), nLen, NULL, 0 );
+			MultiByteToWideChar( CP_UTF8, 0, psz.get(), nLen, m_sValue.GetBuffer( nWide ), nWide );
+			m_sValue.ReleaseBuffer( nWide );
 		}
 		else
-			// Unknown tag
+		{
+			theApp.Message( MSG_DEBUG, _T("Unrecognised ED2K tag type 0x%02x"), m_nType );
 			return FALSE;
+		}
 	}
 
 	return TRUE;

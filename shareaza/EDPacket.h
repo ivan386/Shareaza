@@ -289,18 +289,16 @@ inline void CEDPacket::CEDPacketPool::FreePoolImpl(CPacket* pPacket)
 #define	ED2K_SERVER_UDP_64BITSIZE		0x00000080
 
 
-class CEDTag
+class CEDTag : boost::noncopyable
 {
 // Construction
 public:
-	CEDTag();
-	CEDTag(BYTE nKey);
-	CEDTag(BYTE nKey, DWORD nValue);
-	CEDTag(BYTE nKey, LPCTSTR pszValue);
-	CEDTag(LPCTSTR pszKey);
-	CEDTag(LPCTSTR pszKey, DWORD nValue);
-	CEDTag(LPCTSTR pszKey, LPCTSTR pszValue);
-	~CEDTag() {};
+	explicit CEDTag();
+	explicit CEDTag(BYTE nKey, const Hashes::Ed2kHash& oHash);
+	explicit CEDTag(BYTE nKey, QWORD nValue);
+	explicit CEDTag(BYTE nKey, LPCTSTR pszValue);
+	explicit CEDTag(LPCTSTR pszKey, QWORD nValue);
+	explicit CEDTag(LPCTSTR pszKey, LPCTSTR pszValue);
 
 // Attributes
 public:
@@ -308,7 +306,7 @@ public:
 	CString				m_sKey;
 	BYTE				m_nKey;
 	CString				m_sValue;	// ED2K_TAG_STRING
-	DWORD				m_nValue;	// ED2K_TAG_INT, ED2K_TAG_UINT8, ED2K_TAG_UINT16, ED2K_TAG_FLOAT
+	QWORD				m_nValue;	// ED2K_TAG_INT
 	Hashes::Ed2kHash	m_oValue;	// ED2K_TAG_HASH
 
 // Operations
@@ -328,17 +326,17 @@ public:
 
 // Standard tags
 #define ED2K_TAG_NULL				0x00
-#define ED2K_TAG_HASH				0x01
-#define ED2K_TAG_STRING				0x02
-#define ED2K_TAG_INT				0x03
-#define ED2K_TAG_FLOAT				0x04
+#define ED2K_TAG_HASH				0x01	// 16 bytes MD4 hash
+#define ED2K_TAG_STRING				0x02	// Length prefixed string
+#define ED2K_TAG_INT				0x03	// 32 bit integer
+#define ED2K_TAG_FLOAT				0x04	// 32 bit float
 #define ED2K_TAG_BOOL				0x05
 #define ED2K_TAG_BOOL_ARRAY			0x06
-#define ED2K_TAG_BLOB				0x07
-// New tags (See ED2K_SERVER_TCP_NEWTAGS)
-#define ED2K_TAG_UINT16				0x08
-#define ED2K_TAG_UINT8				0x09
-#define ED2K_TAG_UNUSED				0x0A	// 8 bit size, then value
+#define ED2K_TAG_BLOB				0x07	// 32 bit size, then value (eMule versions prior to 0.42e.29 uses 16 bit size)
+#define ED2K_TAG_UINT16				0x08	// 16 bit integer
+#define ED2K_TAG_UINT8				0x09	// 8 bit integer
+#define ED2K_TAG_BSOB				0x0A	// 8 bit size, then value
+#define ED2K_TAG_UINT64				0x0B	// 64 bit integer
 #define ED2K_TAG_SHORTSTRING		0x11	// String <=16 bytes, using tag ID for length
 // 0x10 to 0x20 are reserved for short strings
 
