@@ -135,9 +135,10 @@ public:
 public:
 
 	// Get the length beyond our position in the packet
-	inline int GetRemaining()
+	inline DWORD GetRemaining() const
 	{
 		// Return the number of bytes of packet data at and beyond our position in the packet
+		ASSERT( m_nLength >= m_nPosition );
 		return m_nLength - m_nPosition;
 	}
 

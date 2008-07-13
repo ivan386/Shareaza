@@ -279,11 +279,11 @@ void CSecureRuleDlg::OnOK()
 
 			pwIP[ nByte ]->GetWindowText( strItem );
 			if ( _stscanf( strItem, _T("%lu"), &nValue ) != 1 ) nValue = 0;
-			m_pRule->m_nIP[ nByte ] = min( uchar( 255u ), nValue );
+			m_pRule->m_nIP[ nByte ] = (BYTE)min( 255u, nValue );
 
 			pwMask[ nByte ]->GetWindowText( strItem );
 			if ( _stscanf( strItem, _T("%lu"), &nValue ) != 1 ) nValue = 0;
-			m_pRule->m_nMask[ nByte ] = min( uchar( 255u ), nValue );
+			m_pRule->m_nMask[ nByte ] = (BYTE)min( 255u, nValue );
 		}
 	}
 	else if ( m_pRule->m_nType == CSecureRule::srContent )

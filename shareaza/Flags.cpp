@@ -197,8 +197,8 @@ int CFlags::GetFlagIndex(CString sCountry)
 {
 	if ( sCountry.GetLength() == 2 )
 	{
-		char nFirstLetter = sCountry[0] - 65;
-		char nSecondLetter = sCountry[1] - 65;
+		char nFirstLetter = (char)( sCountry[0] - 'A' );
+		char nSecondLetter = (char)( sCountry[1] - 'A' );
 		// Currently only the letters A-Z are in the flag matrix 
 		// but GeoIP can also return some combinations that aren't all letters (A1, A2, etc.)
 		if ( nFirstLetter >= 0 && nFirstLetter <= 25 && nSecondLetter >= 0 && nSecondLetter <= 25 )

@@ -424,8 +424,8 @@ BOOL CEDNeighbour::OnServerList(CEDPacket* pPacket)
 {
 	if ( pPacket->GetRemaining() < 1 ) return TRUE;
 
-	int nCount = pPacket->ReadByte();
-	if ( pPacket->GetRemaining() < nCount * 6 ) return TRUE;
+	DWORD nCount = pPacket->ReadByte();
+	if ( pPacket->GetRemaining() < nCount * 6u ) return TRUE;
 
 	while ( nCount-- > 0 )
 	{
@@ -493,7 +493,7 @@ BOOL CEDNeighbour::OnServerIdent(CEDPacket* pPacket)
 			strDescription = pTag.m_sValue;
 			break;
 		case ED2K_ST_MAXUSERS:
-			m_nUserLimit = pTag.m_nValue;
+			m_nUserLimit = (DWORD)pTag.m_nValue;
 			break;
 /*
 		case ED2K_ST_MAXFILES:

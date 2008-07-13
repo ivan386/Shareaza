@@ -228,11 +228,11 @@ BOOL CEDPartImporter::ImportFile(LPCTSTR pszPath, LPCTSTR pszFile)
 	pFile.Read( &nCount, 4 );
 	if ( nCount > 2048 ) return FALSE;
 
-	CMap< WORD, WORD, DWORD, DWORD > pGapStart, pGapStop;
+	CMap< DWORD, DWORD, QWORD, QWORD > pGapStart, pGapStop;
 	CArray< WORD > pGapIndex;
 	BOOL bPaused = FALSE;
 	CString strName;
-	DWORD nSize = 0;
+	QWORD nSize = 0;
 
 	while ( nCount-- )
 	{
@@ -249,7 +249,7 @@ BOOL CEDPartImporter::ImportFile(LPCTSTR pszPath, LPCTSTR pszFile)
 		}
 		else if ( pTag.Check( ED2K_FT_STATUS, ED2K_TAG_INT ) )
 		{
-			bPaused = pTag.m_nValue;
+			bPaused = pTag.m_nValue != 0;
 		}
 		else if ( pTag.m_nType == ED2K_TAG_INT && pTag.m_sKey.GetLength() > 1 )
 		{
@@ -278,7 +278,7 @@ BOOL CEDPartImporter::ImportFile(LPCTSTR pszPath, LPCTSTR pszFile)
 	for ( int nGap = 0 ; nGap < pGapIndex.GetSize() ; nGap++ )
 	{
 		WORD nPart = pGapIndex.GetAt( nGap );
-		DWORD nStart = 0, nStop = 0;
+		QWORD nStart = 0, nStop = 0;
 
 		if ( ! pGapStart.Lookup( nPart, nStart ) ) return FALSE;
 		if ( nStart >= nSize ) return FALSE;
@@ -340,7 +340,7 @@ BOOL CEDPartImporter::ImportFile(LPCTSTR pszPath, LPCTSTR pszFile)
 	for ( int nGap = 0 ; nGap < pGapIndex.GetSize() ; nGap++ )
 	{
 		WORD nPart = pGapIndex.GetAt( nGap );
-		DWORD nStart = 0, nStop = 0;
+		QWORD nStart = 0, nStop = 0;
 
 		pGapStart.Lookup( nPart, nStart );
 		pGapStop.Lookup( nPart, nStop );

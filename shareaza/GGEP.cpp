@@ -570,7 +570,7 @@ BOOL CGGEPItem::Decode()
 		BYTE nSize = *pIn++ - 1;
 		nLength--;
 
-		nSize = min( nSize, nLength );
+		nSize = (BYTE)min( nSize, nLength );
 
 		while ( nSize-- )
 		{

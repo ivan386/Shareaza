@@ -591,7 +591,7 @@ BOOL CDownloadTask::CopyFile(HANDLE hSource, LPCTSTR pszTarget, QWORD nLength)
 	
 	while ( nLength )
 	{
-		DWORD nBuffer	= min( nLength, BUFFER_SIZE );
+		DWORD nBuffer	= (DWORD)min( nLength, BUFFER_SIZE );
 		DWORD nSuccess	= 0;
 		DWORD tStart	= GetTickCount();
 		
@@ -822,7 +822,7 @@ BOOL CDownloadTask::CopyFileToBatch(HANDLE hSource, QWORD nOffset, QWORD nLength
 	
 	while ( nLength )
 	{
-		DWORD nBuffer	= min( nLength, BUFFER_SIZE );
+		DWORD nBuffer	= (DWORD)min( nLength, BUFFER_SIZE );
 		DWORD tStart	= GetTickCount();
 		
 		if ( ! ReadFile( hSource, pBuffer.get(), nBuffer, &nBuffer, NULL ) ||

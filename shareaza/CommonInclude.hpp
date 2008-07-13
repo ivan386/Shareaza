@@ -3,7 +3,7 @@
 // CommonInclude.hpp                                                          //
 //                                                                            //
 // Copyright (C) 2005 Shareaza Development Team.                              //
-// This file is part of SHAREAZA (shareaza.sourceforge.net).                          //
+// This file is part of SHAREAZA (shareaza.sourceforge.net).                  //
 //                                                                            //
 // Shareaza is free software; you can redistribute it                         //
 // and/or modify it under the terms of the GNU General Public License         //
@@ -25,24 +25,11 @@
 //! \file       CommonInclude.hpp
 //! \brief      Includes all needed std/boost headers
 
-#ifndef COMMONINCLUDE_HPP_INCLUDED
-#define COMMONINCLUDE_HPP_INCLUDED
+#pragma once
 
-#pragma warning( push, 0 )
+#pragma warning( push )
 #pragma warning( disable : 4548 )
-
-#include <locale>
-#include <cstddef>
-#include <cstdlib>
-#include <cstdarg>
-#include <cstring>
-#include <cwchar>
-#include <clocale>
-#include <cstdio>
-#include <climits>
-#include <cfloat>
-#include <cmath>
-#include <ctime>
+#pragma warning( disable : 4541 ) // exception.hpp : exception::what() method uses 'typeid'
 
 #include <vector>
 #include <list>
@@ -57,18 +44,14 @@
 #include <algorithm>
 #include <memory>
 #include <iterator>
-#include <exception>
-#include <stdexcept>
 #include <limits>
 #include <new>
-#include <typeinfo>
 
 #ifndef _WIN64
 	#define BOOST_BIND_ENABLE_STDCALL 1
 	#define BOOST_MEM_FN_ENABLE_STDCALL 1
 #endif
 
-#include <boost/static_assert.hpp>
 #include <boost/cstdint.hpp>
 #include <boost/bind.hpp>
 #include <boost/bind/placeholders.hpp>
@@ -76,17 +59,7 @@
 #include <boost/smart_ptr.hpp>
 #include <boost/utility.hpp>
 #include <boost/array.hpp>
-#include <boost/multi_index_container.hpp>
-#include <boost/multi_index/sequenced_index.hpp>
-#include <boost/multi_index/ordered_index.hpp>
-#include <boost/multi_index/member.hpp>
-#include <boost/multi_index/mem_fun.hpp>
-#include <boost/mpl/arg.hpp>
-#include <boost/mpl/apply_wrap.hpp>
-#include <boost/mpl/if.hpp>
-#include <boost/lambda/lambda.hpp>
-#include <boost/lambda/bind.hpp>
-#include <boost/ptr_container/ptr_container.hpp>
+#include <boost/ptr_container/ptr_list.hpp>
 #include <boost/checked_delete.hpp>
 
 #if _MSC_VER >= 1400 
@@ -101,13 +74,6 @@ using augment::auto_array;
 using augment::com_ptr;
 using augment::IUnknownImplementation;
 #include "Utility.hpp"
-#include "MinMax.hpp"
 #include "Hashes.hpp"
 
 #pragma warning( pop )
-
-#undef NULL
-
-const int NULL = 0;
-
-#endif // #ifndef COMMONINCLUDE_HPP_INCLUDED

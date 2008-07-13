@@ -178,7 +178,7 @@ void CBuffer::AddReversed(const void *pData, const size_t nLength)
 bool CBuffer::EnsureBuffer(const size_t nLength)
 {
 	// Limit buffer size to a signed int. This is the most that can be sent/received from a socket in one call.
-	if ( nLength > std::numeric_limits< int >::max() - m_nBuffer ) return false;
+	if ( nLength > 0xffffffff - m_nBuffer ) return false;
 
 	// If the size of the buffer minus the size filled is bigger than or big enough for the given length, do nothing
 	if ( m_nBuffer - m_nLength >= nLength )

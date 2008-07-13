@@ -365,11 +365,11 @@ void CDownloadsSettingsPage::OnShowWindow(BOOL bShow, UINT nStatus)
 		// Add the new ones
 		const DWORD nSpeeds[] =
 		{
-			Settings.Connection.InSpeed / 4,		//  25%
-			Settings.Connection.InSpeed / 2,		//  50%
-			Settings.Connection.InSpeed * 0.75f,	//  75%
-			Settings.Connection.InSpeed * 0.85f,	//  85%
-			Settings.Connection.InSpeed				// 100%
+			Settings.Connection.InSpeed / 4,			//  25%
+			Settings.Connection.InSpeed / 2,			//  50%
+			( Settings.Connection.InSpeed * 3 ) / 4,	//  75%
+			( Settings.Connection.InSpeed * 17 ) / 20,	//  85%
+			Settings.Connection.InSpeed					// 100%
 		};
 		for ( int nSpeed = 0 ; nSpeed < sizeof( nSpeeds ) / sizeof( DWORD ) ; nSpeed++ )
 		{

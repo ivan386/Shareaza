@@ -73,7 +73,7 @@ CSystemWnd::CSystemWnd() : CPanelWnd( TRUE, TRUE )
 
 void CSystemWnd::Add(int nType, const CString& strText)
 {
-	m_wndText.Add( (int)nType, strText );
+	m_wndText.Add( (WORD)nType, strText );
 }
 
 void CSystemWnd::Clear()

@@ -168,7 +168,7 @@ void CHostCache::Serialize(CArchive& ar)
 int CHostCache::Import(LPCTSTR pszFile, BOOL bFreshOnly)
 {
 	// Ignore too old file
-	if ( bFreshOnly && ! IsFileNewerThan( pszFile, 90 * 24 * 60 * 60 * 1000 ) ) // 90 days
+	if ( bFreshOnly && ! IsFileNewerThan( pszFile, 90ull * 24 * 60 * 60 * 1000 ) ) // 90 days
 		return 0;
 
 	CFile pFile;
@@ -347,9 +347,8 @@ BOOL CHostCacheList::Add(LPCTSTR pszHost, DWORD tSeen, LPCTSTR pszVendor, DWORD 
 		
 		tSeen = TimeFromString( strTime );
 
-		time_t tNow;
-		time( &tNow );
-		if ( tNow < (time_t)tSeen ) 
+		DWORD tNow = static_cast< DWORD >( time( NULL ) );
+		if ( tNow < tSeen ) 
 			tSeen = tNow;
 	}
 
@@ -505,7 +504,7 @@ void CHostCacheList::OnFailure(const IN_ADDR* pAddress, WORD nPort, bool bRemove
 			Remove( pHost );
 		else
 		{
-			pHost->m_tFailure = time( NULL );
+			pHost->m_tFailure = static_cast< DWORD >( time( NULL ) );
 			pHost->m_bCheckedLocally = TRUE;
 		}
 	}
@@ -729,15 +728,15 @@ int CHostCache::ImportMET(CFile* pFile)
 			}
 			else if ( pTag.Check( ED2K_ST_MAXUSERS, ED2K_TAG_INT ) )
 			{
-				pServer->m_nUserLimit = pTag.m_nValue;
+				pServer->m_nUserLimit = (DWORD)pTag.m_nValue;
 			}
 			else if ( pTag.Check( ED2K_ST_MAXFILES, ED2K_TAG_INT ) )
 			{
-				pServer->m_nFileLimit = pTag.m_nValue;
+				pServer->m_nFileLimit = (DWORD)pTag.m_nValue;
 			}
 			else if ( pTag.Check( ED2K_ST_UDPFLAGS, ED2K_TAG_INT ) )
 			{
-				pServer->m_nUDPFlags = pTag.m_nValue;
+				pServer->m_nUDPFlags = (DWORD)pTag.m_nValue;
 			}
 		}
 		
@@ -857,7 +856,7 @@ int CHostCache::LoadDefaultED2KServers()
 	CString strFile = Settings.General.Path + _T("\\Data\\DefaultServers.dat");
 
 	// Ignore too old file
-	if ( ! IsFileNewerThan( strFile, 90 * 24 * 60 * 60 * 1000 ) ) // 90 days
+	if ( ! IsFileNewerThan( strFile, 90ull * 24 * 60 * 60 * 1000 ) ) // 90 days
 		return 0;
 
 	if ( pFile.Open( strFile, CFile::modeRead ) )			// Load default list from file if possible

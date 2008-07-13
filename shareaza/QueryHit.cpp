@@ -158,7 +158,7 @@ CQueryHit* CQueryHit::FromG1Packet(CG1Packet* pPacket, int* pnHops)
 		BOOL		bChat		= FALSE;
 		BOOL		bBrowseHost	= FALSE;
 
-		if ( pPacket->GetRemaining() >= 16 + 5 )
+		if ( pPacket->GetRemaining() >= 16u + 5u )
 		{
 			CHAR szaVendor[ 4 ];
 			pPacket->Read( szaVendor, 4 );
@@ -171,7 +171,7 @@ CQueryHit* CQueryHit::FromG1Packet(CG1Packet* pPacket, int* pnHops)
 		
 		if ( pVendor && pVendor->m_bHTMLBrowse ) bBrowseHost = TRUE;
 		
-		if ( nPublicSize > pPacket->GetRemaining() - 16 ) 
+		if ( nPublicSize + 16u > pPacket->GetRemaining() ) 
 			AfxThrowUserException();
 		
 		if ( nPublicSize >= 2 )
@@ -185,18 +185,18 @@ CQueryHit* CQueryHit::FromG1Packet(CG1Packet* pPacket, int* pnHops)
 		{
 			nXMLSize = pPacket->ReadShortLE();
 			nPublicSize -= 2;
-			if ( nPublicSize + nXMLSize > pPacket->GetRemaining() - 16 ) 
+			if ( nPublicSize + nXMLSize + 16u > pPacket->GetRemaining() ) 
 				AfxThrowUserException();
 		}
 
 		while ( nPublicSize-- ) pPacket->ReadByte();
 
-		if ( pVendor && pVendor->m_bChatFlag && pPacket->GetRemaining() >= 16 + nXMLSize + 1 )
+		if ( pVendor && pVendor->m_bChatFlag && pPacket->GetRemaining() >= 16u + nXMLSize + 1u )
 		{
 			bChat = pPacket->PeekByte() == 1;
 		}
 
-		if ( pPacket->GetRemaining() < 16 + nXMLSize ) nXMLSize = 0;
+		if ( pPacket->GetRemaining() < 16u + nXMLSize ) nXMLSize = 0;
 
 		if ( ( nFlags[0] & G1_QHD_GGEP ) && ( nFlags[1] & G1_QHD_GGEP ) &&
 			 Settings.Gnutella1.EnableGGEP )
@@ -205,7 +205,7 @@ CQueryHit* CQueryHit::FromG1Packet(CG1Packet* pPacket, int* pnHops)
 		}
 
 		// Read first 2 bytes of private data
-		if ( pPacket->GetRemaining() - 16 >= 2 )
+		if ( pPacket->GetRemaining() >= 16u + 2u )
 		{
 			WORD nID = pPacket->ReadShortLE();
 			if ( nID > 0 )
@@ -1361,11 +1361,17 @@ BOOL CQueryHit::ReadEDPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer, DWORD m_n
 		}
 		else if ( pTag.m_nKey == ED2K_FT_FILESIZE )
 		{
-			nSize.LowPart = pTag.m_nValue;
+			if ( pTag.m_nValue <= 0xFFFFFFFF )
+				nSize.LowPart = (DWORD)pTag.m_nValue;
+			else
+			{
+				nSize.LowPart =  (DWORD)(   pTag.m_nValue & 0x00000000FFFFFFFF );
+				nSize.HighPart = (DWORD)( ( pTag.m_nValue & 0xFFFFFFFF00000000 ) >> 32 );
+			}
 		}
 		else if ( pTag.m_nKey == ED2K_FT_FILESIZEUPPER )
 		{
-			nSize.HighPart = pTag.m_nValue;
+			nSize.HighPart = (DWORD)pTag.m_nValue;
 		}
 		else if ( pTag.m_nKey == ED2K_FT_LASTSEENCOMPLETE )
 		{
@@ -1373,7 +1379,7 @@ BOOL CQueryHit::ReadEDPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer, DWORD m_n
 		}
 		else if ( pTag.m_nKey == ED2K_FT_SOURCES )
 		{
-			m_nSources = pTag.m_nValue;
+			m_nSources = (DWORD)pTag.m_nValue;
 			if ( m_nSources == 0 )
 				m_bResolveURL = FALSE;
 			else
@@ -1394,7 +1400,7 @@ BOOL CQueryHit::ReadEDPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer, DWORD m_n
 		}
 		else if ( pTag.m_nKey == ED2K_FT_LENGTH )
 		{	//Length- new style (DWORD)
-			nLength = pTag.m_nValue;	
+			nLength = (DWORD)pTag.m_nValue;	
 		}
 		else if ( ( pTag.m_nKey == ED2K_FT_BITRATE ) )
 		{	//Bitrate- new style

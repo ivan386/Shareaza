@@ -537,7 +537,7 @@ void CDownloadWithTiger::ContinueValidation()
 
 	for ( int nRound = bDone ? 10 : 2 ; nRound > 0 && m_nVerifyLength > 0 ; nRound-- )
 	{
-		DWORD nChunk	= min( m_nVerifyLength, Transfers.m_nBuffer );
+		DWORD nChunk	= (DWORD)min( m_nVerifyLength, Transfers.m_nBuffer );
 		LPBYTE pChunk	= Transfers.m_pBuffer;
 
 		if ( m_pFile != NULL )

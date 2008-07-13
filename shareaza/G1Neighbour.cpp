@@ -1178,7 +1178,7 @@ BOOL CG1Neighbour::OnClusterAdvisor(CG1Packet* pPacket)
 
 	// Find out how many IP addresses and port numbers are in this packet
 	WORD nCount = pPacket->ReadShortLE();                          // The first 2 bytes are the number of hosts described
-	if ( pPacket->GetRemaining() < nCount * 6 + 20 ) return FALSE; // Make sure the payload is long enough for that many
+	if ( pPacket->GetRemaining() < nCount * 6u + 20u ) return FALSE; // Make sure the payload is long enough for that many
 
 	// Reply to this cluster advisor packet with one of our own
 	SendClusterAdvisor();

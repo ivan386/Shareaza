@@ -227,16 +227,16 @@ QWORD CGraphItem::GetValue(DWORD nCode, float nMultiplier)
 		break;
 
 	case GRC_TOTAL_BANDWIDTH_IN:
-		nValue = GetValue( GRC_GNUTELLA_BANDWIDTH_IN ) + GetValue( GRC_DOWNLOADS_BANDWIDTH ) + Datagrams.m_nInBandwidth * 8;
+		nValue = (long double)GetValue( GRC_GNUTELLA_BANDWIDTH_IN ) + GetValue( GRC_DOWNLOADS_BANDWIDTH ) + Datagrams.m_nInBandwidth * 8;
 		break;
 	case GRC_TOTAL_BANDWIDTH_OUT:
-		nValue = GetValue( GRC_GNUTELLA_BANDWIDTH_OUT ) + GetValue( GRC_UPLOADS_BANDWIDTH ) + Datagrams.m_nOutBandwidth * 8;
+		nValue = (long double)GetValue( GRC_GNUTELLA_BANDWIDTH_OUT ) + GetValue( GRC_UPLOADS_BANDWIDTH ) + Datagrams.m_nOutBandwidth * 8;
 		break;
 	case GRC_TOTAL_BANDWIDTH_TCP_IN:
-		nValue = GetValue( GRC_GNUTELLA_BANDWIDTH_IN ) + GetValue( GRC_DOWNLOADS_BANDWIDTH );
+		nValue = (long double)GetValue( GRC_GNUTELLA_BANDWIDTH_IN ) + GetValue( GRC_DOWNLOADS_BANDWIDTH );
 		break;
 	case GRC_TOTAL_BANDWIDTH_TCP_OUT:
-		nValue = GetValue( GRC_GNUTELLA_BANDWIDTH_OUT ) + GetValue( GRC_UPLOADS_BANDWIDTH );
+		nValue = (long double)GetValue( GRC_GNUTELLA_BANDWIDTH_OUT ) + GetValue( GRC_UPLOADS_BANDWIDTH );
 		break;
 	case GRC_TOTAL_BANDWIDTH_UDP_IN:
 		nValue = Datagrams.m_nInBandwidth * 8;
@@ -264,13 +264,13 @@ QWORD CGraphItem::GetValue(DWORD nCode, float nMultiplier)
 	case GRC_GNUTELLA_PACKETS_IN:
 		if ( ! Network.m_pSection.Lock( 20 ) ) break;
 		Statistics.Update();
-		nValue = Statistics.Last.Gnutella1.Incoming + Statistics.Last.Gnutella2.Incoming;
+		nValue = (long double)Statistics.Last.Gnutella1.Incoming + Statistics.Last.Gnutella2.Incoming;
 		Network.m_pSection.Unlock();
 		break;
 	case GRC_GNUTELLA_PACKETS_OUT:
 		if ( ! Network.m_pSection.Lock( 20 ) ) break;
 		Statistics.Update();
-		nValue = Statistics.Last.Gnutella1.Outgoing + Statistics.Last.Gnutella2.Outgoing;
+		nValue = (long double)Statistics.Last.Gnutella1.Outgoing + Statistics.Last.Gnutella2.Outgoing;
 		Network.m_pSection.Unlock();
 		break;
 
@@ -296,25 +296,25 @@ QWORD CGraphItem::GetValue(DWORD nCode, float nMultiplier)
 	case GRC_GNUTELLA_ROUTED:
 		if ( ! Network.m_pSection.Lock( 20 ) ) break;
 		Statistics.Update();
-		nValue = Statistics.Last.Gnutella1.Routed + Statistics.Last.Gnutella2.Routed;
+		nValue = (long double)Statistics.Last.Gnutella1.Routed + Statistics.Last.Gnutella2.Routed;
 		Network.m_pSection.Unlock();
 		break;
 	case GRC_GNUTELLA_DROPPED:
 		if ( ! Network.m_pSection.Lock( 20 ) ) break;
 		Statistics.Update();
-		nValue = Statistics.Last.Gnutella1.Dropped + Statistics.Last.Gnutella2.Dropped;
+		nValue = (long double)Statistics.Last.Gnutella1.Dropped + Statistics.Last.Gnutella2.Dropped;
 		Network.m_pSection.Unlock();
 		break;
 	case GRC_GNUTELLA_LOST:
 		if ( ! Network.m_pSection.Lock( 20 ) ) break;
 		Statistics.Update();
-		nValue = Statistics.Last.Gnutella1.Lost + Statistics.Last.Gnutella2.Lost;
+		nValue = (long double)Statistics.Last.Gnutella1.Lost + Statistics.Last.Gnutella2.Lost;
 		Network.m_pSection.Unlock();
 		break;
 	case GRC_GNUTELLA_QUERIES:
 		if ( ! Network.m_pSection.Lock( 20 ) ) break;
 		Statistics.Update();
-		nValue = Statistics.Last.Gnutella1.Queries + Statistics.Last.Gnutella2.Queries;
+		nValue = (long double)Statistics.Last.Gnutella1.Queries + Statistics.Last.Gnutella2.Queries;
 		Network.m_pSection.Unlock();
 		break;
 
@@ -346,7 +346,7 @@ QWORD CGraphItem::GetValue(DWORD nCode, float nMultiplier)
 		Network.m_pSection.Unlock();
 	};
 
-	QWORD result = nValue * nMultiplier;
+	QWORD result = (QWORD)floor( nValue * nMultiplier );
 	return result;
 }
 

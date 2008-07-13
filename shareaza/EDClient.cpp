@@ -74,7 +74,7 @@ CEDClient::CEDClient()
 	// Client capabilities
 	m_bEmAICH		= FALSE;		// Not supported
 	m_bEmUnicode	= FALSE;
-	m_bEmUDPVersion	= FALSE;
+	m_bEmUDPVersion	= 0;
 	m_bEmDeflate	= FALSE;
 	m_bEmSecureID	= FALSE;		// Not supported
 	m_bEmSources	= FALSE;
@@ -823,7 +823,7 @@ BOOL CEDClient::OnHello(CEDPacket* pPacket)
 			if ( pTag.m_nType == ED2K_TAG_INT ) m_pHost.sin_port = htons( (WORD)pTag.m_nValue );
 			break;
 		case ED2K_CT_VERSION:
-			if ( pTag.m_nType == ED2K_TAG_INT ) m_nVersion = pTag.m_nValue;
+			if ( pTag.m_nType == ED2K_TAG_INT ) m_nVersion = (int)pTag.m_nValue;
 			break;
 		case ED2K_CT_MODVERSION:
 			break;
@@ -857,7 +857,7 @@ BOOL CEDClient::OnHello(CEDPacket* pPacket)
 			{
 				m_bEmule = TRUE;
 				m_nSoftwareVersion = pTag.m_nValue & 0x00FFFFFF;
-				m_nEmCompatible = pTag.m_nValue >> 24;
+				m_nEmCompatible = (int)( pTag.m_nValue >> 24 );
 			}
 			break;
 		case ED2K_CT_MOREFEATUREVERSIONS:
@@ -998,7 +998,7 @@ BOOL CEDClient::OnEmuleInfo(CEDPacket* pPacket)
 		switch ( pTag.m_nKey )
 		{
 		case ED2K_ET_COMPRESSION:
-			 if ( pTag.m_nType == ED2K_TAG_INT ) m_bEmDeflate = pTag.m_nValue;
+			 if ( pTag.m_nType == ED2K_TAG_INT ) m_bEmDeflate = (BOOL)pTag.m_nValue;
 			break;
 		case ED2K_ET_UDPPORT:
 			if ( pTag.m_nType == ED2K_TAG_INT ) m_nUDP = (WORD)pTag.m_nValue;
@@ -1007,16 +1007,16 @@ BOOL CEDClient::OnEmuleInfo(CEDPacket* pPacket)
 			if ( pTag.m_nType == ED2K_TAG_INT ) m_bEmUDPVersion = (WORD)pTag.m_nValue;
 			break;
 		case ED2K_ET_SOURCEEXCHANGE:
-			if ( pTag.m_nType == ED2K_TAG_INT ) m_bEmSources = pTag.m_nValue;
+			if ( pTag.m_nType == ED2K_TAG_INT ) m_bEmSources = (BOOL)pTag.m_nValue;
 			break;
 		case ED2K_ET_COMMENTS:
-			if ( pTag.m_nType == ED2K_TAG_INT ) m_bEmComments = pTag.m_nValue;
+			if ( pTag.m_nType == ED2K_TAG_INT ) m_bEmComments = (BOOL)pTag.m_nValue;
 			break;
 		case ED2K_ET_EXTENDEDREQUEST:
-			if ( pTag.m_nType == ED2K_TAG_INT ) m_bEmRequest = pTag.m_nValue;
+			if ( pTag.m_nType == ED2K_TAG_INT ) m_bEmRequest = (BOOL)pTag.m_nValue;
 			break;
 		case ED2K_ET_COMPATIBLECLIENT:
-			if ( pTag.m_nType == ED2K_TAG_INT ) m_nEmCompatible = pTag.m_nValue;
+			if ( pTag.m_nType == ED2K_TAG_INT ) m_nEmCompatible = (BOOL)pTag.m_nValue;
 			break;
 		case ED2K_ET_FEATURES:		// We don't use these
 			break;
@@ -1786,9 +1786,9 @@ BOOL CEDClient::OnSourceAnswer(CEDPacket* pPacket)
 
     Hashes::Ed2kHash oHash;
 	pPacket->Read( oHash );
-	int nCount = pPacket->ReadShortLE();
+	DWORD nCount = pPacket->ReadShortLE();
 	
-	if ( pPacket->GetRemaining() < nCount * ( m_bEmSources >= 2 ? 12+16 : 12 ) )
+	if ( pPacket->GetRemaining() < nCount * ( ( m_bEmSources >= 2 ) ? 12u + 16u : 12u ) )
 	{
 		theApp.Message( MSG_ERROR, IDS_ED2K_CLIENT_BAD_PACKET, (LPCTSTR)m_sAddress, pPacket->m_nType );
 		return TRUE;

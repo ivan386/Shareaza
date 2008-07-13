@@ -119,7 +119,7 @@ namespace augment
 			return false;
 		}
 		template<>
-		bool query< NoInterface >(const IID& iid, void** ppvObject)
+		bool query< NoInterface >(const IID& /*iid*/, void** /*ppvObject*/)
 		{
 			return false;
 		}

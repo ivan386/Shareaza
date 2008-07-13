@@ -194,7 +194,7 @@ BOOL CKademlia::OnPacket_KADEMLIA_BOOTSTRAP_RES(SOCKADDR_IN* /*pHost*/, CEDPacke
 
 	nCount = pPacket->ReadShortLE();
 
-	if ( pPacket->GetRemaining() < nCount * ( 16 + 4 + 2 + 2 + 1 ) )
+	if ( pPacket->GetRemaining() < nCount * ( 16u + 4 + 2 + 2 + 1 ) )
 		return FALSE;
 
 	while( nCount-- )
@@ -235,7 +235,7 @@ BOOL CKademlia::OnPacket_KADEMLIA2_BOOTSTRAP_RES(SOCKADDR_IN* pHost, CEDPacket* 
 	nVersion = pPacket->ReadByte();
 	nCount = pPacket->ReadShortLE();
 
-	if ( pPacket->GetRemaining() < nCount * ( 16 + 4 + 2 + 2 + 1 ) )
+	if ( pPacket->GetRemaining() < nCount * ( 16u + 4 + 2 + 2 + 1 ) )
 		return FALSE;
 
 	// TODO: Packet track check

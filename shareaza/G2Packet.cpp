@@ -204,7 +204,7 @@ BOOL CG2Packet::ReadPacket(G2_PACKET& nType, DWORD& nLength, BOOL* pbCompound)
 	BYTE nTypeLen	= ( nInput & 0x38 ) >> 3;
 	BYTE nFlags		= ( nInput & 0x07 );
 
-	if ( GetRemaining() < nTypeLen + nLenLen + 1 ) AfxThrowUserException();
+	if ( GetRemaining() < nTypeLen + nLenLen + 1u ) AfxThrowUserException();
 
 	if ( m_bBigEndian )
 	{
@@ -220,7 +220,7 @@ BOOL CG2Packet::ReadPacket(G2_PACKET& nType, DWORD& nLength, BOOL* pbCompound)
 		Read( &nLength, nLenLen );
 	}
 
-	if ( GetRemaining() < (int)nLength + nTypeLen + 1 ) AfxThrowUserException();
+	if ( GetRemaining() < nLength + nTypeLen + 1u ) AfxThrowUserException();
 
 	nType = G2_PACKET_NULL;
 	Read( &nType, nTypeLen + 1 );

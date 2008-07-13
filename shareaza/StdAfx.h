@@ -106,8 +106,6 @@ const bool SHAREAZA_ADVANCED_MIN_TEMPLATE = true;
 // MFC
 //
 
-#pragma warning( push, 0 )
-
 #include <afxwin.h>         // MFC core and standard components
 #include <afxext.h>         // MFC extensions
 #include <afxcmn.h>			// MFC support for Windows Common Controls
@@ -160,9 +158,6 @@ const bool SHAREAZA_ADVANCED_MIN_TEMPLATE = true;
 #include "Resource.h"
 
 #include "ShareazaOM.h"
-
-#pragma warning( pop )
-
 
 //
 // Smaller type check fix (/RTCc)
@@ -598,7 +593,7 @@ inline void SafeRelease(CComPtr< T >& pObj) throw()
 	}
 }
 
-inline bool IsFileNewerThan(LPCTSTR pszFile, const DWORD nMilliseconds)
+inline bool IsFileNewerThan(LPCTSTR pszFile, const QWORD nMilliseconds)
 {
 	WIN32_FILE_ATTRIBUTE_DATA fd = {};
 	if ( ! GetFileAttributesEx( pszFile, GetFileExInfoStandard, &fd ) )

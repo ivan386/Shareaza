@@ -261,7 +261,6 @@ BOOL CCollectionFile::LoadEMule(LPCTSTR pszFile)
 	if ( pFile.Open( pszFile, CFile::modeRead ) )
 	{
 		// Check collection version
-		DWORD read;
 		DWORD nVersion;
 		if ( pFile.Read( &nVersion, sizeof( nVersion ) ) == sizeof( nVersion ) &&
 			( nVersion == ED2K_FILE_VERSION1_INITIAL ||
@@ -310,7 +309,7 @@ BOOL CCollectionFile::LoadEMule(LPCTSTR pszFile)
 			}
 		}
 	}
-	return nFileCount && ( m_pFiles.GetCount() == nFileCount );
+	return nFileCount && ( (DWORD)m_pFiles.GetCount() == nFileCount );
 }
 
 /////////////////////////////////////////////////////////////////////////////

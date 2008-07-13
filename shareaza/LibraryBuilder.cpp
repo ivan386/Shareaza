@@ -434,7 +434,7 @@ bool CLibraryBuilder::HashFile(LPCTSTR szPath, HANDLE hFile, DWORD nIndex)
 	QWORD nLength = nFileSize;
 	while ( nLength )
 	{
-		nBlock	= min( nLength, MAX_HASH_BUFFER_SIZE );
+		nBlock	= (DWORD)min( nLength, MAX_HASH_BUFFER_SIZE );
 
 		{
 			// Calculate % done (nResult = 0 -> 100)

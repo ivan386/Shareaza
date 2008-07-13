@@ -1292,7 +1292,7 @@ BOOL CDownloadTransferHTTP::ReadContent()
 	{
 		m_pSource->SetValid();
 
-		size_t nLength	= min( pInput->m_nLength, m_nLength - m_nPosition );
+		DWORD nLength	= (DWORD)min( pInput->m_nLength, m_nLength - m_nPosition );
 		BOOL bSubmit	= FALSE;
 
 		if ( m_bChunked )
@@ -1583,7 +1583,7 @@ BOOL CDownloadTransferHTTP::ReadFlush()
 
 	if ( m_nContentLength == SIZE_UNKNOWN ) m_nContentLength = 0;
 	
-	DWORD nRemove = min( pInput->m_nLength, m_nContentLength );
+	DWORD nRemove = (DWORD)min( pInput->m_nLength, m_nContentLength );
 	m_nContentLength -= nRemove;
 	
 	pInput->Remove( nRemove );

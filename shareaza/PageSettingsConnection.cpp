@@ -298,8 +298,8 @@ void CConnectionSettingsPage::OnOK()
 	Settings.Connection.EnableUPnP			= m_bEnableUPnP != FALSE;
 	Settings.Connection.InBind				= m_bInBind != FALSE;
 	Settings.Connection.OutHost				= m_sOutHost;
-	Settings.Connection.InSpeed				= Settings.ParseVolume( m_sInSpeed, Kilobits );
-	Settings.Connection.OutSpeed			= Settings.ParseVolume( m_sOutSpeed, Kilobits );
+	Settings.Connection.InSpeed				= (DWORD)Settings.ParseVolume( m_sInSpeed, Kilobits );
+	Settings.Connection.OutSpeed			= (DWORD)Settings.ParseVolume( m_sOutSpeed, Kilobits );
 	Settings.Connection.IgnoreLocalIP		= m_bIgnoreLocalIP != FALSE;
 	Settings.Connection.TimeoutConnect		= m_nTimeoutConnection * 1000;
 	Settings.Connection.TimeoutHandshake	= m_nTimeoutHandshake  * 1000;
@@ -356,7 +356,7 @@ void CConnectionSettingsPage::OnShowWindow(BOOL bShow, UINT nStatus)
 		// Add the new ones
 		const DWORD nSpeeds[] =
 		{
-			28.8, 33.6, 56, 64, 128, 256, 384, 512, 640, 768, 1024, 1536, 1544,
+			28, 33, 56, 64, 128, 256, 384, 512, 640, 768, 1024, 1536, 1544,
 			1550, 2048, 3072, 4096, 5120, 8192, 10240, 12288, 24576, 45000,
 			102400, 155000
 		};

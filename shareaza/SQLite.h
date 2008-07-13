@@ -37,11 +37,7 @@
 
 namespace SQLite {
 
-#pragma warning( push, 0 )
-
 #include "../sqlite3/sqlite3.h"
-
-#pragma warning( pop )
 
 class CStatement;
 class CDatabase;
