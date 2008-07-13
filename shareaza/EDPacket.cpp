@@ -482,11 +482,13 @@ BOOL CEDTag::Read(CEDPacket* pPacket, DWORD ServerFlags)
 			m_sValue = pPacket->ReadStringASCII( nLen );
 		break;
 
-	case ED2K_TAG_BLOB: // Old 16 bit way
-		if ( pPacket->GetRemaining() < 2 ) return FALSE;
-		nLen = pPacket->ReadLongLE();
-		if ( pPacket->GetRemaining() < nLen ) return FALSE;
-		m_sValue = pPacket->ReadStringASCII( nLen );
+	case ED2K_TAG_BLOB:
+		if ( pPacket->GetRemaining() < 4 ) return FALSE;
+		{
+			DWORD nLenBlob = pPacket->ReadLongLE();
+			if ( pPacket->GetRemaining() < nLenBlob ) return FALSE;
+			m_sValue = pPacket->ReadStringASCII( nLenBlob );
+		}
 		break;
 
 	case ED2K_TAG_INT:
@@ -586,11 +588,10 @@ BOOL CEDTag::Read(CFile* pFile)
 		break;
 
 	case ED2K_TAG_STRING:
-	case ED2K_TAG_BLOB:
 		if ( pFile->Read( &nLen, sizeof(nLen) ) != sizeof(nLen) )
 			return FALSE;
 		{
-			auto_array< CHAR > psz( new CHAR[ nLen + 1 ] );
+			auto_array< CHAR > psz( new CHAR[ nLen ] );
 			if ( ! psz.get() )
 				return FALSE;
 			if ( pFile->Read( psz.get(), nLen ) != nLen )
@@ -598,6 +599,21 @@ BOOL CEDTag::Read(CFile* pFile)
 			int nWide = MultiByteToWideChar( CP_UTF8, 0, psz.get(), nLen, NULL, 0 );
 			MultiByteToWideChar( CP_UTF8, 0, psz.get(), nLen, m_sValue.GetBuffer( nWide ), nWide );
 			m_sValue.ReleaseBuffer( nWide );
+		}
+		break;
+
+	case ED2K_TAG_BLOB:
+		{
+			DWORD nBlolbLen;
+			if ( pFile->Read( &nBlolbLen, sizeof(nBlolbLen) ) != sizeof(nBlolbLen) )
+				return FALSE;
+			auto_array< CHAR > psz( new CHAR[ nBlolbLen ] );
+			if ( ! psz.get() )
+				return FALSE;
+			if ( pFile->Read( psz.get(), nBlolbLen ) != nBlolbLen )
+				return FALSE;
+			CopyMemory( m_sValue.GetBuffer( ( nBlolbLen + 1 ) / sizeof( TCHAR ) ), psz.get(), nBlolbLen );
+			m_sValue.ReleaseBuffer( ( nBlolbLen + 1 ) / sizeof( TCHAR ) );
 		}
 		break;
 
@@ -643,7 +659,7 @@ BOOL CEDTag::Read(CFile* pFile)
 			// Calculate length of short string
 			nLen = m_nType - ( ED2K_TAG_SHORTSTRING - 1 );
 			m_nType = ED2K_TAG_STRING;
-			auto_array< CHAR > psz( new CHAR[ nLen + 1 ] );
+			auto_array< CHAR > psz( new CHAR[ nLen ] );
 			if ( ! psz.get() )
 				return FALSE;
 			if ( pFile->Read( psz.get(), nLen ) != nLen )

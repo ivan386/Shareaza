@@ -76,16 +76,17 @@ BOOL CCollectionFile::Open(LPCTSTR pszFile)
 	{
 		m_nType = ShareazaCollection;
 
-		CZIPFile pZIP;
-		return pZIP.Open( pszFile ) && LoadManifest( pZIP );
+		if ( LoadShareaza( pszFile ) )
+			return TRUE;
 	}
 	else if ( strType == _T(".emulecollection") )
 	{
 		m_nType = eMuleCollection;
 
-		return LoadEMule( pszFile );
+		if ( LoadEMule( pszFile ) )
+			return TRUE;
 	}
-	return FALSE;
+	return LoadText( pszFile );
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -176,10 +177,13 @@ int CCollectionFile::GetMissingCount()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// CCollectionFile load the manifest
+// Load Shareaza collection
 
-BOOL CCollectionFile::LoadManifest(CZIPFile& pZIP)
+BOOL CCollectionFile::LoadShareaza(LPCTSTR pszFile)
 {
+	CZIPFile pZIP;
+	if ( ! pZIP.Open( pszFile ) ) return FALSE;
+
 	CZIPFile::File* pFile = pZIP.GetFile( _T("Collection.xml"), TRUE );
 	if ( pFile == NULL ) return FALSE;
 
@@ -197,15 +201,13 @@ BOOL CCollectionFile::LoadManifest(CZIPFile& pZIP)
 
 	for ( POSITION pos = pContents->GetElementIterator() ; pos ; )
 	{
-		File* pFile = new File( this );
-
-		if ( pFile && pFile->Parse( pContents->GetNextElement( pos ) ) )
+		auto_ptr< File > pFile( new File( this ) );
+		if ( pFile.get() && pFile->Parse( pContents->GetNextElement( pos ) ) )
 		{
-			m_pFiles.AddTail( pFile );
+			m_pFiles.AddTail( pFile.release() );
 		}
 		else
 		{
-			delete pFile;
 			Close();
 			return FALSE;
 		}
@@ -262,8 +264,8 @@ BOOL CCollectionFile::LoadEMule(LPCTSTR pszFile)
 		DWORD read;
 		DWORD nVersion;
 		if ( pFile.Read( &nVersion, sizeof( nVersion ) ) == sizeof( nVersion ) &&
-			( nVersion == ED2K_FILE_VERSION1_INITIAL /*||
-			  nVersion == ED2K_FILE_VERSION2_LARGEFILES*/ ) ) // TODO: Add support for Large Files
+			( nVersion == ED2K_FILE_VERSION1_INITIAL ||
+			  nVersion == ED2K_FILE_VERSION2_LARGEFILES ) )
 		{
 			// Load collection properties
 			DWORD nCount;
@@ -293,25 +295,59 @@ BOOL CCollectionFile::LoadEMule(LPCTSTR pszFile)
 
 			// Load collection files
 			if ( pFile.Read( &nFileCount, sizeof( nFileCount ) ) == sizeof( nFileCount ) &&
-				nFileCount > 0 && nFileCount < 1000 )
+				nFileCount > 0 && nFileCount < 20000 )
 			{
 				for ( DWORD i = 0; i < nFileCount; ++i )
 				{
-					File* pCollectionFile = new File( this );
-					if ( pCollectionFile && pCollectionFile->Parse( pFile ) )
+					auto_ptr< File > pCollectionFile( new File( this ) );
+					if ( pCollectionFile.get() && pCollectionFile->Parse( pFile ) )
 					{
-						m_pFiles.AddTail( pCollectionFile );
+						m_pFiles.AddTail( pCollectionFile.release() );
 					}
 					else
-					{
-						delete pCollectionFile;
 						break;
-					}
 				}
 			}
 		}
 	}
 	return nFileCount && ( m_pFiles.GetCount() == nFileCount );
+}
+
+/////////////////////////////////////////////////////////////////////////////
+// Load simple text collection
+
+BOOL CCollectionFile::LoadText(LPCTSTR pszFile)
+{
+	// TODO: Add schema detection
+	m_sThisURI = CSchema::uriFolder;
+	m_sParentURI = CSchema::uriCollectionsFolder;
+
+	// Make collection title from file name
+	m_sTitle = PathFindFileName( pszFile );
+	int nPos = m_sTitle.ReverseFind( _T('.') );
+	if ( nPos != -1 )
+		m_sTitle = m_sTitle.Left( nPos );
+
+	CStdioFile pFile;
+	if ( pFile.Open( pszFile, CFile::modeRead ) )
+	{
+		for (;;)
+		{
+			CString strText;
+			if ( ! pFile.ReadString( strText ) )
+				// End of file
+				break;
+
+			auto_ptr< File > pCollectionFile( new File( this ) );
+			if ( ! pCollectionFile.get() )
+				// Out of memory
+				break;
+
+			if ( pCollectionFile->Parse( strText ) )
+				m_pFiles.AddTail( pCollectionFile.release() );
+		}
+	}
+	return ( m_pFiles.GetCount() != 0 );
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -416,7 +452,7 @@ BOOL CCollectionFile::File::Parse(CXMLElement* pRoot)
 		{
 			if ( CXMLElement* pSource = pXML->GetElementByName( _T("source") ) )
 			{
-				m_sSource = pSource->GetValue();
+				/* m_sSource =*/ pSource->GetValue();
 			}
 		}
 	}
@@ -463,6 +499,32 @@ BOOL CCollectionFile::File::Parse(CFile& pFile)
 		}
 	}
 	return ! m_sName.IsEmpty() && m_oED2K && m_nSize != SIZE_UNKNOWN;
+}
+
+BOOL CCollectionFile::File::Parse(LPCTSTR szText)
+{
+	CShareazaURL pURL;
+	if ( pURL.Parse( szText ) &&
+		pURL.m_nAction == CShareazaURL::uriDownload &&
+		pURL.m_sName.GetLength() &&
+		pURL.m_nSize != SIZE_UNKNOWN && pURL.m_nSize != 0 &&
+		pURL.IsHashed() )
+	{
+		m_sName = pURL.m_sName;
+		if ( pURL.m_oSHA1 )
+			m_oSHA1 = pURL.m_oSHA1;
+		if ( pURL.m_oTiger )
+			m_oTiger = pURL.m_oTiger;
+		if ( pURL.m_oED2K )
+			m_oED2K = pURL.m_oED2K;
+		if ( pURL.m_oMD5 )
+			m_oMD5 = pURL.m_oMD5;
+		if ( pURL.m_oBTH )
+			m_oBTH = pURL.m_oBTH;
+		m_nSize = pURL.m_nSize;
+		return TRUE;
+	}
+	return FALSE;
 }
 
 /////////////////////////////////////////////////////////////////////////////

@@ -51,12 +51,13 @@ public:
 	public:
 		CCollectionFile*	m_pParent;
 		CXMLElement*		m_pMetadata;
-		CString				m_sSource;
+//		CString				m_sSource;
 
 	// Operations
 	public:
 		BOOL	Parse(CXMLElement* pXML);	// Load from XML
 		BOOL	Parse(CFile& pFile);		// Load from .emulecollection-file
+		BOOL	Parse(LPCTSTR szText);		// Load from text line
 		BOOL	IsComplete() const;
 		BOOL	IsDownloading() const;
 		BOOL	Download();
@@ -74,8 +75,9 @@ public:
 	int			GetMissingCount();
 
 protected:
-	BOOL		LoadManifest(CZIPFile& pZIP);
-	BOOL		LoadEMule(LPCTSTR pszFile);
+	BOOL		LoadShareaza(LPCTSTR pszFile);	// Load zipped Shareaza collection
+	BOOL		LoadEMule(LPCTSTR pszFile);		// Load binary eMule collection
+	BOOL		LoadText(LPCTSTR pszFile);		// Load simple text file with links
 	static CXMLElement* CloneMetadata(CXMLElement* pMetadata);
 
 // Attributes
