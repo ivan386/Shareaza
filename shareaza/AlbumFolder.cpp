@@ -1,7 +1,7 @@
 //
 // AlbumFolder.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -845,7 +845,57 @@ BOOL CAlbumFolder::OrganiseFile(CLibraryFile* pFile)
 
 		CString strSeries = pFile->m_pMetadata->GetAttributeValue( _T("series") );
 		CXMLNode::UniformString( strSeries );
-		if ( strSeries.IsEmpty() ) return FALSE;
+		if ( strSeries.IsEmpty() ) 
+		{
+			using namespace regex;
+			try
+			{
+				const rpattern firstPattern( L"(.*)[sS]([0-9]+)[^0-9]*[eE]([0-9]+)[^0-9]+", 
+											  GLOBAL|ALLBACKREFS, MODE_SAFE );
+				const rpattern secondPattern( L"(.*[^0-9]+)([0-9]+)[xX]([0-9]+)[^0-9]+", 
+											  GLOBAL|ALLBACKREFS, MODE_SAFE );
+
+				split_results splitResults;
+				std::wstring sFileName( pFile->m_sName );
+
+				int nCount = firstPattern.split( sFileName, splitResults, 0 );
+				if ( nCount < 4 )
+				{
+					nCount = secondPattern.split( sFileName, splitResults, 0 );
+				}
+
+				if ( nCount >= 4 )
+				{
+					std::vector<std::wstring> results = splitResults.strings();
+					CString strTemp( results[1].c_str() );
+					CXMLNode::UniformString( strTemp );
+					strTemp.TrimRight( L"- " );
+
+					if ( strTemp.IsEmpty() )
+						return FALSE;
+
+					pFile->m_pMetadata->AddAttribute( _T("series"), strTemp );
+					strSeries = strTemp;
+
+					CXMLAttribute* pAttribute = pFile->m_pMetadata->GetAttribute( _T("seriesnumber") );
+					if ( pAttribute == NULL )
+					{
+						pFile->m_pMetadata->AddAttribute( _T("seriesnumber"), results[2].c_str() );
+					}
+
+					pAttribute = pFile->m_pMetadata->GetAttribute( _T("episodenumber") );
+					if ( pAttribute == NULL )
+					{
+						pFile->m_pMetadata->AddAttribute( _T("episodenumber"), results[3].c_str() );
+					}
+				}
+				else
+				{
+					return FALSE;
+				}
+			}
+			catch (...)	{ return FALSE; };
+		}
 
 		for ( POSITION pos = GetFolderIterator() ; pos ; )
 		{
