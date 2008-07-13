@@ -625,5 +625,6 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
        <typeFilter>
               <type extension="co"/> 
               <type extension="collection"/>
+              <type extension="emulecollection"/>
        </typeFilter>
 </schemaDescriptor>
