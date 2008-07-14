@@ -1340,7 +1340,7 @@ void CG1Neighbour::SendG2Push(const Hashes::Guid& oGUID, CPacket* pPacket)
 BOOL CG1Neighbour::OnQuery(CG1Packet* pPacket)
 {
 	// If the packet payload is too short
-	if ( pPacket->m_nLength <= 5 )
+	if ( pPacket->m_nLength < 4 )
 	{
 		// Record it and drop it
 		theApp.Message( MSG_ERROR, IDS_PROTOCOL_BAD_QUERY, (LPCTSTR)m_sAddress );
