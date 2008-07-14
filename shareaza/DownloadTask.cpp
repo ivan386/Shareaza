@@ -58,13 +58,14 @@ const DWORD BUFFER_SIZE = 2 * 1024 * 1024u;
 /////////////////////////////////////////////////////////////////////////////
 // CDownloadTask construction
 
-CDownloadTask::CDownloadTask(CDownload* pDownload, int nTask)
+CDownloadTask::CDownloadTask(CDownload* pDownload, dtask nTask)
 : m_nTask(nTask)
 , m_pEvent(NULL)
 , m_pDownload(pDownload)
 , m_bSuccess(FALSE)
 , m_nTorrentFile(0)
 , m_hSelectedFile(INVALID_HANDLE_VALUE)
+, m_dwFileError(0)
 {
 	Construct( pDownload );
 	SetThreadPriority( THREAD_PRIORITY_BELOW_NORMAL );
@@ -78,6 +79,7 @@ CDownloadTask::CDownloadTask(CDownload* pDownload, const CString& strPreviewURL)
 , m_bSuccess(FALSE)
 , m_nTorrentFile(0)
 , m_hSelectedFile(INVALID_HANDLE_VALUE)
+, m_dwFileError(0)
 {
 	m_pRequest.SetURL( strPreviewURL );
 	m_pRequest.AddHeader( _T("Accept"), _T("image/jpeg") );
@@ -94,6 +96,7 @@ CDownloadTask::CDownloadTask(CDownload* pDownload, HANDLE hSelectedFile)
 , m_bSuccess(FALSE)
 , m_nTorrentFile(0)
 , m_hSelectedFile(hSelectedFile)
+, m_dwFileError(0)
 {
 	Construct( pDownload );
 	SetThreadPriority( THREAD_PRIORITY_NORMAL );
@@ -105,35 +108,27 @@ void CDownloadTask::Construct(CDownload* pDownload)
 	ASSERT( pDownload->m_pTask == NULL );
 	pDownload->m_pTask = this;
 
-	CString strLocalName = pDownload->m_sName;
-
 	m_nSize		= pDownload->m_nSize;
 	m_sName		= pDownload->m_sName;
 	m_sFilename	= pDownload->m_sPath;
 	m_sPath		= DownloadGroups.GetCompletedPath( pDownload );
 
-	int nExt = strLocalName.ReverseFind( '.' );
-	if ( nExt >= 2 )
+	CString sExtention = PathFindExtension( m_sName );
+	sExtention.MakeLower();
+	if ( sExtention == _T(".co") ||
+		 sExtention == _T(".collection") ||
+		 sExtention == _T(".emulecollection") )
 	{
-		CString sExtention = strLocalName.Mid( nExt );
-		ToLower( sExtention );
-
-		if ( sExtention == _T(".co") ||
-			 sExtention == _T(".collection") ||
-			 sExtention == _T(".emulecollection") )
-		{
-			m_sPath	= Settings.Downloads.CollectionPath;
-			CreateDirectory( Settings.Downloads.CollectionPath );
-			LibraryFolders.AddFolder( Settings.Downloads.CollectionPath );
-		}
-		else if ( sExtention == _T(".torrent") )
-		{
-			m_sPath	= Settings.Downloads.TorrentPath;
-			CreateDirectory( Settings.Downloads.TorrentPath );
-			LibraryFolders.AddFolder( Settings.Downloads.TorrentPath, FALSE );
-		}
+		m_sPath	= Settings.Downloads.CollectionPath;
+		CreateDirectory( Settings.Downloads.CollectionPath );
+		LibraryFolders.AddFolder( Settings.Downloads.CollectionPath );
 	}
-
+	else if ( sExtention == _T(".torrent") )
+	{
+		m_sPath	= Settings.Downloads.TorrentPath;
+		CreateDirectory( Settings.Downloads.TorrentPath );
+		LibraryFolders.AddFolder( Settings.Downloads.TorrentPath, FALSE );
+	}
 
 	if ( m_nTask == dtaskCopySimple && m_pDownload->m_pTorrent.m_nFiles > 1 )
 	{
@@ -197,14 +192,6 @@ int CDownloadTask::Run()
 		break;
 	case dtaskCopySimple:
 		RunCopySimple();
-		if ( m_bSuccess == FALSE && m_pEvent == NULL )
-		{
-			if ( m_sPath != Settings.Downloads.CompletePath )
-			{
-				m_sPath = Settings.Downloads.CompletePath;
-				RunCopySimple();
-			}
-		}
 		break;
 	case dtaskCopyTorrent:
 		RunCopyTorrent();
@@ -282,148 +269,95 @@ void CDownloadTask::RunAllocate()
 
 void CDownloadTask::RunCopySimple()
 {
-	CString strTarget;
 	CString strSafeName = SafeFilename( m_sName );
-	
-	int nExt = strSafeName.ReverseFind( '.' );
-	
+	int nExt = strSafeName.ReverseFind( _T('.') );	
 	CString strName( nExt > 0 ? strSafeName.Left( nExt ) : strSafeName );
-	CString strExt(  nExt > 0 ? strSafeName.Mid(  nExt ) : _T( "" ) );
+	CString strExt(  nExt > 0 ? strSafeName.Mid(  nExt ) : _T("") );
 
-	// Only try to move if the drive letters match else we copy always
-	if ( m_sFilename[ 0 ] == m_sPath[ 0 ] && m_sFilename[ 0 ] != '\\' )
+	// Create list of possible destinations
+	CList< CString > oPathList;
+	oPathList.AddTail( m_sPath );
+
+	if ( m_sPath.CompareNoCase( Settings.Downloads.CompletePath ) != 0 )
+		oPathList.AddTail( Settings.Downloads.CompletePath );
+
+	CString sInPlacePath = m_sFilename.Left( m_sFilename.ReverseFind( _T('\\') ) );
+	if ( m_sPath.CompareNoCase( sInPlacePath ) != 0 )
+		oPathList.AddTail( sInPlacePath );
+
+	for ( POSITION pos = oPathList.GetHeadPosition(); pos; )
 	{
-		TCHAR szOpFrom[MAX_PATH] = { 0 };
-		_tcsncpy( szOpFrom, m_sFilename, MAX_PATH - 2 );
-		TCHAR szOpTo[MAX_PATH] = { 0 };
-		SHFILEOPSTRUCT pOp = { 0 };
-		
-		pOp.wFunc  = FO_MOVE;
-		pOp.pFrom  = szOpFrom;
-		pOp.pTo    = szOpTo;
-		pOp.fFlags = FOF_MULTIDESTFILES|FOF_NOERRORUI|FOF_SILENT;
-		
-		CQuickLock oLock( Transfers.m_pSection );
+		CString sPath = oPathList.GetNext( pos );
 
-		// Disconnect all uploads for that file (i.e. close the file handle)
-		Uploads.OnRename( m_sFilename );
-
-		for ( int nCopy = 0 ; nCopy < 10 ; nCopy++ )
+		if ( ! CreateDirectory( sPath ) )
 		{
-			if ( nCopy )
+			m_dwFileError = GetLastError();
+			continue;
+		}
+
+		sPath.TrimRight( _T("\\") );
+
+		for ( int nCopy = 0; nCopy < 10 ; nCopy++ )
+		{
+			CString strTarget;
+			if ( nCopy == 0 )
 			{
-				strTarget.Format( _T("%s\\%s (%i)%s"),
-					(LPCTSTR)m_sPath, (LPCTSTR)strName, nCopy, (LPCTSTR)strExt );
+				strTarget.Format( _T("%s\\%s%s"),
+					(LPCTSTR)sPath, (LPCTSTR)strName, (LPCTSTR)strExt );
 			}
 			else
 			{
-				strTarget.Format( _T("%s\\%s%s"),
-					(LPCTSTR)m_sPath, (LPCTSTR)strName, (LPCTSTR)strExt );
+				strTarget.Format( _T("%s\\%s (%i)%s"),
+					(LPCTSTR)sPath, (LPCTSTR)strName, nCopy, (LPCTSTR)strExt );
 			}
-			
+
+			// Disconnect all uploads for that file (i.e. close the file handle)
+			Uploads.OnRename( m_sFilename );
+
 			theApp.Message( MSG_DEBUG, _T("Moving \"%s\" to \"%s\"..."),
 				(LPCTSTR)m_sFilename, (LPCTSTR)strTarget );
-			
-			_tcsncpy( szOpTo, strTarget, MAX_PATH - 2 );
-			
-			if ( GetFileAttributes( strTarget ) == 0xFFFFFFFF &&
-				SHFileOperation( &pOp ) == 0 )
+
+			// Using very long filenames
+			if ( MoveFileWithProgress( CString( _T("\\\\?\\") ) + m_sFilename,
+				CString( _T("\\\\?\\") ) + strTarget, CopyProgressRoutine, this,
+				MOVEFILE_COPY_ALLOWED | MOVEFILE_WRITE_THROUGH ) ) 
 			{
+				m_dwFileError = 0;
+
 				MarkFileAsDownload( strTarget );
 
 				Uploads.OnRename( m_sFilename, strTarget );
+
 				m_bSuccess	= TRUE;
 				m_sFilename	= strTarget;
 				return;
 			}
+			m_dwFileError = GetLastError();
+
+			// Moving failed, so we allow uploads using the old filename for the time being
+			Uploads.OnRename( m_sFilename, m_sFilename );
+
+			if ( m_dwFileError == ERROR_REQUEST_ABORTED || m_pEvent != NULL )
+				// Aborted
+				return;
+
+			theApp.Message( MSG_DEBUG, _T("Moving \"%s\" failed with error: %s"),
+				(LPCTSTR)m_sFilename, (LPCTSTR)GetErrorString( m_dwFileError ) );
 		}
-		
-		// Moving failed, so we allow uploads using the old filename for the time being
-		Uploads.OnRename( m_sFilename, m_sFilename );
 	}
-	
-	// Moving failed or the destination drive differs from the source drive
-	HANDLE hSource = CreateFile( m_sFilename, GENERIC_READ,
-		FILE_SHARE_READ | ( theApp.m_bNT ? FILE_SHARE_DELETE : 0 ), NULL, OPEN_EXISTING,
-		FILE_ATTRIBUTE_NORMAL|FILE_FLAG_SEQUENTIAL_SCAN, NULL );
-	VERIFY_FILE_ACCESS( hSource, m_sFilename )
-	if ( hSource == INVALID_HANDLE_VALUE ) return;
-	
-	for ( int nCopy = 0; !m_bSuccess && nCopy < 10; ++nCopy )
-	{
-		if ( nCopy )
-		{
-			strTarget.Format( _T("%s\\%s (%i)%s"),
-				(LPCTSTR)m_sPath, (LPCTSTR)strName, nCopy, (LPCTSTR)strExt );
-		}
-		else
-		{
-			strTarget.Format( _T("%s\\%s%s"),
-				(LPCTSTR)m_sPath, (LPCTSTR)strName, (LPCTSTR)strExt );
-		}
-		
-		theApp.Message( MSG_DEBUG, _T("Copying \"%s\" to \"%s\"..."),
-			(LPCTSTR)m_sFilename, (LPCTSTR)strTarget );
+}
 
-		m_bSuccess = CopyFile( hSource, strTarget, m_nSize );
-	}
+DWORD CALLBACK CDownloadTask::CopyProgressRoutine(LARGE_INTEGER /*TotalFileSize*/,
+	LARGE_INTEGER /*TotalBytesTransferred*/, LARGE_INTEGER /*StreamSize*/,
+	LARGE_INTEGER /*StreamBytesTransferred*/, DWORD /*dwStreamNumber*/,
+	DWORD /*dwCallbackReason*/, HANDLE /*hSourceFile*/, HANDLE /*hDestinationFile*/,
+	LPVOID lpData)
+{
+	CDownloadTask* pThis = (CDownloadTask*)lpData;
 
-	CloseHandle( hSource );
+	// TODO: Implement notification dialog
 
-	if ( !m_bSuccess )
-	{
-		// rename in place
-		strTarget.Format( _T( "%s\\%s%s" ), LPCTSTR( m_sFilename.Left( m_sFilename.ReverseFind( '\\' ) ) ),
-			LPCTSTR( strName ), LPCTSTR( strExt ) );
-		TCHAR szOpFrom[MAX_PATH] = { 0 };
-		_tcsncpy( szOpFrom, m_sFilename, MAX_PATH - 2 );
-		TCHAR szOpTo[MAX_PATH] = { 0 };
-		_tcsncpy( szOpTo, strTarget, MAX_PATH - 2 );
-
-		SHFILEOPSTRUCT pOp = { 0 };
-		pOp.wFunc		= FO_MOVE;
-		pOp.pFrom		= szOpFrom;
-		pOp.pTo			= szOpTo;
-		pOp.fFlags		= FOF_MULTIDESTFILES|FOF_NOERRORUI|FOF_SILENT;
-
-		CQuickLock oLock( Transfers.m_pSection );
-
-		Uploads.OnRename( m_sFilename );
-
-		if ( SHFileOperation( &pOp ) == 0 )
-		{
-			MarkFileAsDownload( strTarget );
-
-			Uploads.OnRename( m_sFilename, strTarget );
-			m_bSuccess	= TRUE;
-			m_sFilename	= strTarget;
-			return;
-		}
-
-		Uploads.OnRename( m_sFilename, m_sFilename );
-	}
-	
-	if ( m_bSuccess )
-	{
-		MarkFileAsDownload( strTarget );
-
-		CQuickLock oLock( Transfers.m_pSection );
-		Uploads.OnRename( m_sFilename, NULL );
-		Uploads.OnRename( m_sFilename, strTarget );
-
-		BOOL m_bDeleteSuccess = FALSE;
-
-		for ( int nDelete = 0; !m_bDeleteSuccess && nDelete < 5; ++nDelete )
-		{
-			theApp.Message( MSG_DEBUG, _T("Deleting \"%s\"..."), (LPCTSTR)m_sFilename );
-
-			m_bDeleteSuccess = DeleteFile( m_sFilename );
-		}
-
-		if ( !m_bDeleteSuccess )
-			theApp.WriteProfileString( _T("Delete"), m_sFilename, _T("") );
-		m_sFilename = strTarget;
-	}
+	return ( pThis->m_pEvent == NULL ) ? PROGRESS_CONTINUE : PROGRESS_CANCEL;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -433,18 +367,21 @@ void CDownloadTask::RunCopyTorrent()
 {
 	ASSERT( m_pTorrent.IsAvailable() );
 	ASSERT( m_pTorrent.m_nFiles > 1 );
-	
+
+	// Check for space before copying torrent
+	if ( ! Downloads.IsSpaceAvailable( m_pTorrent.m_nTotalSize, Downloads.dlPathComplete ) )
+	{
+		m_dwFileError = ERROR_HANDLE_DISK_FULL;
+		return;
+	}
+
 	HANDLE hSource = CreateFile( m_sFilename, GENERIC_READ,
 		FILE_SHARE_READ | ( theApp.m_bNT ? FILE_SHARE_DELETE : 0 ), NULL, OPEN_EXISTING,
 		FILE_ATTRIBUTE_NORMAL|FILE_FLAG_SEQUENTIAL_SCAN, NULL );
+	m_dwFileError = GetLastError();
 	VERIFY_FILE_ACCESS( hSource, m_sFilename )
 	if ( hSource == INVALID_HANDLE_VALUE ) return;
 
-	m_bSuccess = FALSE;
-
-	// Check for space before copying torrent
-	if ( ! Downloads.IsSpaceAvailable( m_pTorrent.m_nTotalSize, Downloads.dlPathComplete ) ) return;
-	
 	QWORD nOffset = 0;
 	
 	for ( ; m_nTorrentFile < m_pTorrent.m_nFiles ; ++m_nTorrentFile )
@@ -465,7 +402,7 @@ void CDownloadTask::RunCopyTorrent()
 
 		theApp.Message( MSG_DEBUG, _T("Extracting %s..."), (LPCTSTR)strPath );
 		
-		if ( !CopyFile( hSource, strPath, rFile.m_nSize ) )
+		if ( ! CopyFile( hSource, strPath, rFile.m_nSize ) )
 		{
 			// try to copy in place
 			strPath.Format( _T("%s\\%s"), LPCTSTR( m_sFilename.Left( m_sFilename.ReverseFind( '\\' ) ) ),
@@ -473,10 +410,10 @@ void CDownloadTask::RunCopyTorrent()
 			theApp.Message( MSG_DEBUG, _T("Extraction failed, trying %s..."), LPCTSTR( strPath ) );
 			CreatePathForFile( m_sFilename.Left( m_sFilename.ReverseFind( '\\' ) ), rFile.m_sPath );
 
-			if ( !CopyFile( hSource, strPath, rFile.m_nSize ) )
+			if ( ! CopyFile( hSource, strPath, rFile.m_nSize ) )
 			{
 				CloseHandle( hSource );
-				return; // try again later ( m_bSuccess is still FALSE )
+				return;
 			}
 		}
 
@@ -584,6 +521,7 @@ BOOL CDownloadTask::CopyFile(HANDLE hSource, LPCTSTR pszTarget, QWORD nLength)
 {
 	HANDLE hTarget = CreateFile( pszTarget, GENERIC_WRITE,
 		0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL|FILE_FLAG_SEQUENTIAL_SCAN, NULL );
+	m_dwFileError = GetLastError();
 	VERIFY_FILE_ACCESS( hTarget, pszTarget )
 	if ( hTarget == INVALID_HANDLE_VALUE ) return FALSE;
 	
@@ -598,7 +536,11 @@ BOOL CDownloadTask::CopyFile(HANDLE hSource, LPCTSTR pszTarget, QWORD nLength)
 		if ( !ReadFile( hSource, pBuffer, nBuffer, &nBuffer, NULL )
 			|| !nBuffer
 			|| !WriteFile( hTarget, pBuffer, nBuffer, &nSuccess, NULL )
-			|| nSuccess != nBuffer ) break;
+			|| nSuccess != nBuffer )
+		{
+			m_dwFileError = GetLastError();
+			break;
+		}
 		
 		nLength -= nBuffer;
 		

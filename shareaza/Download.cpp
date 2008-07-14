@@ -549,14 +549,14 @@ void CDownload::OnMoved(CDownloadTask* pTask)
 	}
 	else
 	{
-		theApp.Message( MSG_ERROR, IDS_DOWNLOAD_CANT_MOVE,
+		CString strMessage;
+		strMessage.Format( IDS_DOWNLOAD_CANT_MOVE,
 			(LPCTSTR)GetDisplayName(), (LPCTSTR)pTask->m_sPath );
-		
-		if ( IsTorrent() )
-		{
-			m_bDiskFull = TRUE;
-			return;
-		}
+		theApp.Message( MSG_ERROR, _T("%s %s"),
+			strMessage, (LPCTSTR)GetErrorString( pTask->m_dwFileError ) );
+
+		m_bDiskFull = ( pTask->m_dwFileError == ERROR_HANDLE_DISK_FULL );
+		return;
 	}
 	
 	// We just completed torrent
