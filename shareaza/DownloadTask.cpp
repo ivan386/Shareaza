@@ -281,6 +281,10 @@ void CDownloadTask::RunCopySimple()
 	if ( m_sPath.CompareNoCase( Settings.Downloads.CompletePath ) != 0 )
 		oPathList.AddTail( Settings.Downloads.CompletePath );
 
+	CString sDefaultCompletePath = GetDocumentsFolder() + _T("\\Shareaza Downloads");
+	if ( m_sPath.CompareNoCase( sDefaultCompletePath ) != 0 )
+		oPathList.AddTail( sDefaultCompletePath );
+
 	CString sInPlacePath = m_sFilename.Left( m_sFilename.ReverseFind( _T('\\') ) );
 	if ( m_sPath.CompareNoCase( sInPlacePath ) != 0 )
 		oPathList.AddTail( sInPlacePath );
@@ -343,6 +347,11 @@ void CDownloadTask::RunCopySimple()
 
 			theApp.Message( MSG_DEBUG, _T("Moving \"%s\" failed with error: %s"),
 				(LPCTSTR)m_sFilename, (LPCTSTR)GetErrorString( m_dwFileError ) );
+
+			if ( m_dwFileError == ERROR_NOT_READY ||
+				 m_dwFileError == ERROR_HANDLE_DISK_FULL )
+				// Try next path
+				break;
 		}
 	}
 }

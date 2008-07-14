@@ -22,6 +22,9 @@
 #include "StdAfx.h"
 #include "Shareaza.h"
 #include "TransferFile.h"
+#include "Download.h"
+#include "Downloads.h"
+#include "Transfers.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -196,6 +199,14 @@ BOOL CTransferFile::IsOpen()
 BOOL CTransferFile::Open(BOOL bWrite, BOOL bCreate)
 {
 	if ( m_hFile != INVALID_HANDLE_VALUE ) return FALSE;
+
+	// Don't touch moving files
+	{
+		CQuickLock pLock( Transfers.m_pSection );
+		if ( CDownload* pDownload = Downloads.FindByPath( m_sPath ) )
+			if ( pDownload->IsMoving() && pDownload->IsTasking() )
+				return FALSE;
+	}
 
 	m_hFile = CreateFile( m_sPath, GENERIC_READ | ( bWrite ? GENERIC_WRITE : 0 ),
 		FILE_SHARE_READ | FILE_SHARE_WRITE | ( theApp.m_bNT ? FILE_SHARE_DELETE : 0 ),
