@@ -1156,9 +1156,12 @@ BOOL CDiscoveryServices::RunWebCacheGet(BOOL bCaches)
 	m_pWebCache->OnAccess();
 	
 	if ( bCaches )
-		strURL = m_pWebCache->m_sAddress + _T("?get=1&urlfile=1");
+		strURL = m_pWebCache->m_sAddress + _T("?get=1&urlfile=1&ping=1");
 	else
-		strURL = m_pWebCache->m_sAddress + _T("?get=1&hostfile=1");
+		strURL = m_pWebCache->m_sAddress + _T("?get=1&hostfile=1&ping=1");
+	
+	//strURL += _T("&support=1");	// GWC network and status - todo : Use this parameter's output to check GWCs for self-network support relay.
+	//strURL += _T("&info=1");		// Maintainer Info - todo : Use this parameter's output to add info (about the maintainer, etc.) into new columns inside the Discovery window.
 	
 	if ( m_nLastQueryProtocol == PROTOCOL_G2 ) strURL += _T("&net=gnutella2");
 	
@@ -1172,30 +1175,51 @@ BOOL CDiscoveryServices::RunWebCacheGet(BOOL bCaches)
 	BOOL bSuccess = FALSE;
 	int nIP[4], nIPs = 0;
 
-	if ( _tcsistr( strOutput, _T("<html>") ) != NULL )
+	if ( ( _tcsistr( strOutput, _T("<html")   ) != NULL ) ||
+		 ( _tcsistr( strOutput, _T("<head")   ) != NULL ) ||
+		 ( _tcsistr( strOutput, _T("<body")   ) != NULL ) ||
+		 ( _tcsistr( strOutput, _T("<font")   ) != NULL ) ||
+		 ( _tcsistr( strOutput, _T("<b>")     ) != NULL ) ||
+		 ( _tcsistr( strOutput, _T("<script") ) != NULL ) )
 	{
 		// Error- getting HMTL response.
 		return FALSE;
 	}
-	else if ( _tcsistr( strOutput, _T("<font>") ) != NULL )
-	{
-		// Error- getting HMTL response.
-		return FALSE;
-	}
-
 	
 	for ( strOutput += '\n' ; strOutput.GetLength() ; )
 	{
 		CString strLine	= strOutput.SpanExcluding( _T("\r\n") );
 		strOutput		= strOutput.Mid( strLine.GetLength() + 1 );
 		
-		strLine.TrimLeft();
-		strLine.TrimRight();
+		strLine.Trim();
 		if ( strLine.IsEmpty() ) continue;
 
-		theApp.Message( MSG_DEBUG, _T("GWebCache(get): %s"), (LPCTSTR)strLine );
+		theApp.Message( MSG_DEBUG, _T("GWebCache %s : %s"), (LPCTSTR)m_pWebCache->m_sAddress, (LPCTSTR)strLine );
 		
-		if ( _tcsnicmp( strLine, _T("h|"), 2 ) == 0 )
+		if ( ( _tcsistr( strLine, _T("not supported") ) != NULL ) ||
+			 ( _tcsistr( strLine, _T("not-supported") ) != NULL ) )
+		{
+			// ERROR CONDITION
+			theApp.Message( MSG_ERROR, _T("GWebCache %s : Not supported"), (LPCTSTR)m_pWebCache->m_sAddress );
+			if ( m_nLastQueryProtocol == PROTOCOL_G2 )
+			{
+				m_pWebCache->m_bGnutella1 = TRUE;
+				m_pWebCache->m_bGnutella2 = FALSE;
+			}
+			else
+			{
+				m_pWebCache->m_bGnutella1 = FALSE;
+				m_pWebCache->m_bGnutella2 = TRUE;
+			}
+			return FALSE;
+		}
+		else if ( _tcsistr( strLine, _T("too early") ) != NULL )
+		{
+			// Did we flood?
+			theApp.Message( MSG_ERROR, _T("GWebCache %s : Too many connection attempts"), (LPCTSTR)m_pWebCache->m_sAddress );
+			return FALSE;
+		}		
+		else if ( _tcsnicmp( strLine, _T("h|"), 2 ) == 0 )
 		{
 			// IP ADDRESS AT: strLine.Mid( 2 )
 			// CORRECT (REQUESTED) NETWORK
@@ -1230,7 +1254,8 @@ BOOL CDiscoveryServices::RunWebCacheGet(BOOL bCaches)
 			
 			// URL ADDRESS AT: strLine.Mid( 2 )
 			// CORRECT (REQUESTED) NETWORK
-			Add( strLine.Mid( 2 ).SpanExcluding( _T("|") ), CDiscoveryService::dsWebCache, m_nLastQueryProtocol );
+			Add( strLine.Mid( 2 ).SpanExcluding( _T("|") ),
+				CDiscoveryService::dsWebCache, m_nLastQueryProtocol );
 			
 			m_bFirstTime = FALSE;
 			bSuccess = TRUE;
@@ -1246,49 +1271,54 @@ BOOL CDiscoveryServices::RunWebCacheGet(BOOL bCaches)
 			{
 				_stscanf( (LPCTSTR)strLine + 16, _T("%u"), &m_pWebCache->m_nAccessPeriod );
 			}
-			else if ( strLine == _T("i|force|remove") || _tcsnicmp( strLine, _T("i|update|warning|bad url"), 24 ) == 0 )
+			else if ( ( _tcsnicmp( strLine, _T("i|force|remove"), 14 ) == 0 ) ||
+					  ( _tcsnicmp( strLine, _T("i|update|warning|bad url"), 24 ) == 0 ) )
 			{
 				m_pWebCache->Remove();
 				return FALSE;
 			}
-			
-			if ( _tcsistr( strLine, _T("ERROR: Network not supported") ) != NULL )
+			else if ( _tcsnicmp( strLine, _T("i|pong|"), 7 ) == 0 )
 			{
-				// ERROR CONDITION
-				if ( m_nLastQueryProtocol == PROTOCOL_G2 )
-				{
-					m_pWebCache->m_bGnutella1 = TRUE;
-					m_pWebCache->m_bGnutella2 = FALSE;
-				}
-				else
-				{
-					m_pWebCache->m_bGnutella1 = FALSE;
-					m_pWebCache->m_bGnutella2 = TRUE;
-				}
-
-				return FALSE;
+				// pong v2
+			}
+			else if ( _tcsnicmp( strLine, _T("i|warning|"), 10 ) == 0 )
+			{
+				// Something wrong
+				theApp.Message( MSG_INFO, _T("GWebCache %s : Warning : %s"), (LPCTSTR)m_pWebCache->m_sAddress, (LPCTSTR)strLine.Mid( 10 ) );
+			}
+			else if ( _tcsnicmp( strLine, _T("i|NO-URL-NO-HOSTS"), 17) == 0 )
+			{
+				// GWC is totally empty!
+				theApp.Message( MSG_DEBUG, _T("GWebCache %s : Totally empty : %s"), (LPCTSTR)m_pWebCache->m_sAddress, (LPCTSTR)strLine );
+			}
+			else if ( _tcsnicmp( strLine, _T("i|NO-URL"), 8) == 0)
+			{
+				// GWC doesn't have URLs!
+				theApp.Message( MSG_DEBUG, _T("GWebCache %s : No alternative URLs : %s"), (LPCTSTR)m_pWebCache->m_sAddress, (LPCTSTR)strLine );
+			}
+			else if ( _tcsnicmp( strLine, _T("i|NO-HOSTS"), 10) == 0)
+			{
+				// GWC doesn't have hosts!
+				theApp.Message( MSG_DEBUG, _T("GWebCache %s : No hosts : %s"), (LPCTSTR)m_pWebCache->m_sAddress, (LPCTSTR)strLine );
 			}
 		}
-		else if ( _tcsistr( strLine, _T("ERROR: Network not supported") ) != NULL )
+		else if ( _tcsnicmp( strLine, _T("PONG"), 4 ) == 0 )
 		{
-			// Wrong network (Whoops!)
-			if ( m_nLastQueryProtocol == PROTOCOL_G2 )
-			{
-				m_pWebCache->m_bGnutella1 = TRUE;
-				m_pWebCache->m_bGnutella2 = FALSE;
-			}
-			else
-			{
-				m_pWebCache->m_bGnutella1 = FALSE;
-				m_pWebCache->m_bGnutella2 = TRUE;
-			}
-
-			return FALSE;
+			// pong v1
 		}
 		else if ( _tcsistr( strLine, _T("ERROR") ) != NULL )
 		{
-			// Misc error. (Often CGI limits error)
-			return FALSE;
+			if ( _tcsistr( strLine, _T("Something Failed") ) != NULL )
+			{
+				// Some Bazooka GWCs are bugged but ok.
+				theApp.Message( MSG_INFO, _T("GWebCache %s : Warning : %s"), (LPCTSTR)m_pWebCache->m_sAddress, (LPCTSTR)strLine );
+			}
+			else
+			{
+				// Misc error. (Often CGI limits error)
+				theApp.Message( MSG_ERROR, _T("GWebCache %s : Error : %s"), (LPCTSTR)m_pWebCache->m_sAddress, (LPCTSTR)strLine );
+				return FALSE;
+			}
 		}
 		else if ( _stscanf( strLine, _T("%i.%i.%i.%i"), &nIP[0], &nIP[1], &nIP[2], &nIP[3] ) == 4 )
 		{
@@ -1302,7 +1332,8 @@ BOOL CDiscoveryServices::RunWebCacheGet(BOOL bCaches)
 		else
 		{
 			// Plain URL, WRONG NETWORK
-			Add( strLine.SpanExcluding( _T(" ") ), CDiscoveryService::dsWebCache, PROTOCOL_G1 );
+			Add( strLine.SpanExcluding( _T(" ") ),
+				CDiscoveryService::dsWebCache, PROTOCOL_G1 );
 			m_pWebCache->m_bGnutella2 = FALSE;
 			m_pWebCache->m_bGnutella1 = TRUE;
 			m_bFirstTime = FALSE;
@@ -1312,7 +1343,8 @@ BOOL CDiscoveryServices::RunWebCacheGet(BOOL bCaches)
 	if ( bSuccess )
 	{
 		m_pWebCache->OnSuccess();
-		if ( HostCache.Gnutella2.GetNewest() != NULL && nIPs > 0 ) m_tQueried = static_cast< DWORD >( time( NULL ) );
+		if ( HostCache.Gnutella2.GetNewest() != NULL && nIPs > 0 )
+			m_tQueried = static_cast< DWORD >( time( NULL ) );
 		return TRUE;
 	}
 	
@@ -1390,16 +1422,62 @@ BOOL CDiscoveryServices::RunWebCacheUpdate()
 		
 		theApp.Message( MSG_DEBUG, _T("GWebCache(update): %s"), (LPCTSTR)strLine );
 		
-		if ( _tcsstr( strLine, _T("OK") ) )
+		if ( _tcsistr( strLine, _T("OK") ) )
 		{
-			m_pWebCache->m_tUpdated = (DWORD)time( NULL );
-			m_pWebCache->m_nUpdates++;
-			m_pWebCache->OnSuccess();
-			return TRUE;
+			if ( _tcsistr( strLine, _T("i|update|OK|IP already updated") ) || _tcsistr( strLine, _T("i|update|OK|Host already updated") ) )
+			{
+				theApp.Message( MSG_INFO, _T("GWebCache(v2) IP Updated Already: %s"), (LPCTSTR)strLine );
+				m_pWebCache->m_tUpdated = (DWORD)time( NULL );
+				m_pWebCache->m_nUpdates++;
+				m_pWebCache->OnSuccess();
+				return TRUE;
+			}
+			else if ( _tcsistr( strLine, _T("i|update|OK|URL already updated") ) || _tcsistr( strLine, _T("i|update|OK|Updated URL timestamp") ) )
+			{
+				theApp.Message( MSG_INFO, _T("GWebCache(v2) URL Updated Already: %s"), (LPCTSTR)strLine );
+				m_pWebCache->m_tUpdated = (DWORD)time( NULL );
+				m_pWebCache->m_nUpdates++;
+				m_pWebCache->OnSuccess();
+				return TRUE;
+			}
+			else if ( _tcsistr( strLine, _T("i|update|OK") ) )
+			{
+				theApp.Message( MSG_INFO, _T("GWebCache(v2) Update Passed: %s"), (LPCTSTR)strLine );
+				m_pWebCache->m_tUpdated = (DWORD)time( NULL );
+				m_pWebCache->m_nUpdates++;
+				m_pWebCache->OnSuccess();
+				return TRUE;
+			}
+			else if ( _tcsstr( strLine, _T("OK") ) )
+			{
+				theApp.Message( MSG_INFO, _T("GWebCache(v1) Update Passed: %s"), (LPCTSTR)strLine );
+				m_pWebCache->m_tUpdated = (DWORD)time( NULL );
+				m_pWebCache->m_nUpdates++;
+				m_pWebCache->OnSuccess();
+				return TRUE;
+			}
 		}
-		else if ( _tcsstr( strLine, _T("ERROR") ) )
+		else if ( _tcsistr( strLine, _T("i|warning|You came back too early") ) != NULL || _tcsistr( strLine, _T("WARNING: You came back too early") ) != NULL )
 		{
+			//Beacon Cache type flood warning (Should only be logged for older Beacons, as 404s are given with the newer verions 0.4.1+).
+			theApp.Message( MSG_ERROR, _T("GWebCache(update) Too many connection attempts") );
+			//Did we flood a gwc? It's always nice to know. :)
 			return FALSE;
+		}
+		else if ( _tcsistr( strLine, _T("ERROR") ) != NULL )
+		{
+			if ( _tcsistr( strLine, _T("ERROR: Client returned too early") ) != NULL )
+			{
+				//GhostWhiteCrab type flood warning.
+				theApp.Message( MSG_ERROR, _T("GWebCache(update) Too many connection attempts") );
+				//Did we flood a gwc? It's always nice to know. :)
+				return FALSE;
+			}
+			else
+			{
+			// Misc error. (Often CGI limits error)
+			return FALSE;
+			}
 		}
 		else if ( _tcsnicmp( strLine, _T("i|access|period|"), 16 ) == 0 )
 		{
