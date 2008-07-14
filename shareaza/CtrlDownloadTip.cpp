@@ -175,8 +175,9 @@ void CDownloadTipCtrl::OnCalcSize(CDC* pDC, CDownload* pDownload)
 	m_sz.cy += TIP_RULE;
 
 	// Torrent Tracker error
-	if ( pDownload->m_bTorrentTrackerError && ( pDownload->m_sTorrentTrackerError ) )
+	if ( pDownload->m_bTorrentTrackerError && pDownload->m_sTorrentTrackerError.GetLength() )
 	{
+		AddSize( pDC, pDownload->m_sTorrentTrackerError );
 		m_bDrawError = TRUE;
 		m_sz.cy += TIP_TEXTHEIGHT;
 		m_sz.cy += TIP_RULE;

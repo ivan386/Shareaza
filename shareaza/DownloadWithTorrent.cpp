@@ -499,7 +499,7 @@ void CDownloadWithTorrent::SendStopped()
 //////////////////////////////////////////////////////////////////////
 // CDownloadWithTorrent tracker event handler
 
-void CDownloadWithTorrent::OnTrackerEvent(bool bSuccess, LPCTSTR pszReason)
+void CDownloadWithTorrent::OnTrackerEvent(bool bSuccess, LPCTSTR pszReason, LPCTSTR pszTip)
 {
 	CQuickLock oLock( Transfers.m_pSection );
 
@@ -512,7 +512,7 @@ void CDownloadWithTorrent::OnTrackerEvent(bool bSuccess, LPCTSTR pszReason)
 		m_sTorrentTrackerError.Empty();
 		m_pTorrent.SetTrackerSucceeded(tNow);
 
-		theApp.Message( MSG_INFO, pszReason );
+		theApp.Message( MSG_INFO, _T("%s"), pszReason );
 
 		// Lock on this tracker if we were searching for one
 		if ( m_pTorrent.m_nTrackerMode == tMultiFinding )
@@ -526,11 +526,13 @@ void CDownloadWithTorrent::OnTrackerEvent(bool bSuccess, LPCTSTR pszReason)
 	{
 		// There was a problem with the tracker
 		m_bTorrentTrackerError = TRUE;
-		m_sTorrentTrackerError = pszReason;
+		m_sTorrentTrackerError = ( pszTip ? pszTip : pszReason );
 		m_pTorrent.m_pAnnounceTracker->m_nFailures++;
 		m_bTorrentRequested = m_bTorrentStarted = FALSE;
 		m_tTorrentTracker = tNow + GetRetryTime();
 		m_pTorrent.SetTrackerRetry( m_tTorrentTracker );
+
+		theApp.Message( MSG_ERROR, _T("%s"), pszReason );
 
 		if ( m_pTorrent.IsMultiTracker() )
 		{
@@ -541,13 +543,11 @@ void CDownloadWithTorrent::OnTrackerEvent(bool bSuccess, LPCTSTR pszReason)
 			m_tTorrentTracker = m_pTorrent.m_pAnnounceTracker->m_tNextTry;
 			
 			// Load the error message string
-			CString strErrorFormat, strErrorMessage;
-			LoadString( strErrorFormat, IDS_BT_TRACKER_MULTI );
-			strErrorMessage.Format( strErrorFormat, m_pTorrent.m_nTrackerIndex + 1, m_pTorrent.m_pTrackerList.GetCount() );
+			CString strFormat, strErrorMessage;
+			LoadString( strFormat, IDS_BT_TRACKER_MULTI );
+			strErrorMessage.Format( strFormat, m_pTorrent.m_nTrackerIndex + 1, m_pTorrent.m_pTrackerList.GetCount() );
 			m_sTorrentTrackerError = m_sTorrentTrackerError + _T(" | ") + strErrorMessage;
 		}
-
-		theApp.Message( MSG_ERROR, m_sTorrentTrackerError );
 	}
 }
 

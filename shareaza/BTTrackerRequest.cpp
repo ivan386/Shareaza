@@ -249,7 +249,7 @@ void CBTTrackerRequest::Process(bool bRequest)
 		CString strErrorFormat;
 		LoadString( strErrorFormat, IDS_BT_TRACK_ERROR );
 		strError.Format( strErrorFormat, m_pDownload->GetDisplayName(), pRoot->GetString() );
-		m_pDownload->OnTrackerEvent( false, strError );
+		m_pDownload->OnTrackerEvent( false, strError, pRoot->GetString() );
 	}
 	else
 	{
@@ -274,7 +274,7 @@ void CBTTrackerRequest::Process(CBENode* pRoot)
 		CString strErrorFormat;
 		LoadString( strErrorFormat, IDS_BT_TRACK_ERROR );
 		strError.Format( strErrorFormat, m_pDownload->GetDisplayName(), pError->GetString() );
-		m_pDownload->OnTrackerEvent( false, strError );
+		m_pDownload->OnTrackerEvent( false, strError, pError->GetString() );
 		return;
 	}
 
