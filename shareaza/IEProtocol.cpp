@@ -403,57 +403,22 @@ HRESULT CIEProtocol::OnRequestRAZACOL(LPCTSTR pszURL, CBuffer& oBuffer, CString&
 	if ( ! oLock.Lock( 500 ) )
 		return INET_E_INVALID_URL;
 
+	// Render simple collection as HTML
 	CAlbumFolder* pCollAlbum = LibraryFolders.GetCollection( oSHA1 );
 	if ( pCollAlbum )
 	{
 		CCollectionFile* pCollFile = pCollAlbum->GetCollection();
-		if ( pCollFile && pCollFile->IsType( CCollectionFile::eMuleCollection ) )
+		if ( pCollFile && pCollFile->IsType( CCollectionFile::SimpleCollection ) )
 		{
 			CString strBuffer;
-			strBuffer.Preallocate( pCollFile->GetFileCount() * 128 + 256 );
-
-			strBuffer.Format( _T("<html>\n<head>\n")
-				_T("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"/>\n")
-				_T("<title>%s</title>\n")
-				_T("<style type=\"text/css\">\n")
-				_T("body  { margin: 0px; padding: 0px; background-color: #ffffff; color: #000000; font-family: Tahoma; font-size: 8pt; }\n")
-				_T("h1    { text-align: left; color: #ffffff; height: 64px; margin: 0px; padding: 20px; font-size: 10pt; font-weight: bold; background-image: url(res://shareaza.exe/#2/#221); }\n")
-				_T("table { font-size: 8pt; width: 100%%; }\n")
-				_T("td    { background-color: #e0e8f0; padding: 4px; }\n")
-				_T(".num  { width: 40px; text-align: right; }\n")
-				_T(".url  { text-align: left; }\n")
-				_T(".size { width: 100px; text-align: right; }\n")
-				_T("</style>\n</head>\n<body>\n<h1>%s</h1>\n<table>\n"),
-				pCollFile->GetTitle(),
-				pCollFile->GetTitle() );
-
-			DWORD i = 1;
-			for ( POSITION pos = pCollFile->GetFileIterator(); pos; )
-			{
-				CCollectionFile::File* pFile = pCollFile->GetNextFile( pos );
-
-				CString strTemp;
-				strTemp.Format( _T("<tr><td class=\"num\">%d.</td>")
-					_T("<td class=\"url\"><a href=\"ed2k://|file|%s|%I64i|%s|/\" ")
-					_T("title=\"Link: ed2k://|file|%s|%I64i|%s|/\">%s</a></td>")
-					_T("<td class=\"size\">%I64i</td></tr>\n"),
-					i++,
-					(LPCTSTR)URLEncode( pFile->m_sName ), pFile->m_nSize, (LPCTSTR)pFile->m_oED2K.toString(),
-					(LPCTSTR)URLEncode( pFile->m_sName ), pFile->m_nSize, (LPCTSTR)pFile->m_oED2K.toString(),
-					pFile->m_sName,
-					pFile->m_nSize );
-				strBuffer += strTemp;
-			}
-
-			strBuffer += _T("</table>\n</body>\n</html>");
-
+			pCollFile->Render( strBuffer );
 			oBuffer.Print( strBuffer, CP_UTF8 );
 			sMimeType = _T("text/html");
-
 			return S_OK;
 		}
 	}
 
+	// Load file directly from ZIP
 	CLibraryFile* pCollFile = LibraryMaps.LookupFileBySHA1( oSHA1, FALSE, TRUE );
 	if ( ! pCollFile )
 		return INET_E_INVALID_URL;

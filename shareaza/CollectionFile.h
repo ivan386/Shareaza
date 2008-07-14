@@ -36,7 +36,7 @@ public:
 	virtual ~CCollectionFile();
 	DECLARE_DYNAMIC(CCollectionFile)
 
-	enum CollectionType { ShareazaCollection, eMuleCollection };
+	enum CollectionType { ShareazaCollection, SimpleCollection };
 
 // Member File Class
 public:
@@ -69,6 +69,7 @@ public:
 public:
 	BOOL		Open(LPCTSTR pszFile);
 	void		Close();
+	void		Render(CString& strBuffer) const; // Render file list as HTML
 
 	File*		FindByURN(LPCTSTR pszURN);
 	File*		FindFile(CLibraryFile* pShared, BOOL bApply = FALSE);

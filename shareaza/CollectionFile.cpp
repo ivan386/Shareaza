@@ -74,15 +74,11 @@ BOOL CCollectionFile::Open(LPCTSTR pszFile)
 	strType.MakeLower();
 	if ( strType == _T(".co") || strType == _T(".collection") )
 	{
-		m_nType = ShareazaCollection;
-
 		if ( LoadShareaza( pszFile ) )
 			return TRUE;
 	}
 	else if ( strType == _T(".emulecollection") )
 	{
-		m_nType = eMuleCollection;
-
 		if ( LoadEMule( pszFile ) )
 			return TRUE;
 	}
@@ -181,6 +177,8 @@ int CCollectionFile::GetMissingCount()
 
 BOOL CCollectionFile::LoadShareaza(LPCTSTR pszFile)
 {
+	m_nType = ShareazaCollection;
+
 	CZIPFile pZIP;
 	if ( ! pZIP.Open( pszFile ) ) return FALSE;
 
@@ -251,6 +249,8 @@ BOOL CCollectionFile::LoadShareaza(LPCTSTR pszFile)
 
 BOOL CCollectionFile::LoadEMule(LPCTSTR pszFile)
 {
+	m_nType = SimpleCollection;
+
 	// TODO: Add schema detection
 	m_sThisURI = CSchema::uriFolder;
 	m_sParentURI = CSchema::uriCollectionsFolder;
@@ -258,7 +258,7 @@ BOOL CCollectionFile::LoadEMule(LPCTSTR pszFile)
 	// Open collection
 	DWORD nFileCount = 0;
 	CFile pFile;
-	if ( pFile.Open( pszFile, CFile::modeRead ) )
+	if ( pFile.Open( pszFile, CFile::modeRead | CFile::shareDenyWrite ) )
 	{
 		// Check collection version
 		DWORD nVersion;
@@ -317,6 +317,8 @@ BOOL CCollectionFile::LoadEMule(LPCTSTR pszFile)
 
 BOOL CCollectionFile::LoadText(LPCTSTR pszFile)
 {
+	m_nType = SimpleCollection;
+
 	// TODO: Add schema detection
 	m_sThisURI = CSchema::uriFolder;
 	m_sParentURI = CSchema::uriCollectionsFolder;
@@ -328,7 +330,7 @@ BOOL CCollectionFile::LoadText(LPCTSTR pszFile)
 		m_sTitle = m_sTitle.Left( nPos );
 
 	CStdioFile pFile;
-	if ( pFile.Open( pszFile, CFile::modeRead ) )
+	if ( pFile.Open( pszFile, CFile::modeRead | CFile::shareDenyWrite ) )
 	{
 		for (;;)
 		{
@@ -396,6 +398,45 @@ CXMLElement* CCollectionFile::CloneMetadata(CXMLElement* pMetadata)
 	return pMetadata;
 }
 
+void CCollectionFile::Render(CString& strBuffer) const
+{
+	strBuffer.Preallocate( GetFileCount() * 128 + 256 );
+
+	strBuffer.Format( _T("<html>\n<head>\n")
+		_T("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"/>\n")
+		_T("<title>%s</title>\n")
+		_T("<style type=\"text/css\">\n")
+		_T("body  { margin: 0px; padding: 0px; background-color: #ffffff; color: #000000; font-family: Tahoma; font-size: 8pt; }\n")
+		_T("h1    { text-align: left; color: #ffffff; height: 64px; margin: 0px; padding: 20px; font-size: 10pt; font-weight: bold; background-image: url(res://shareaza.exe/#2/#221); }\n")
+		_T("table { font-size: 8pt; width: 100%%; }\n")
+		_T("td    { background-color: #e0e8f0; padding: 4px; }\n")
+		_T(".num  { width: 40px; text-align: right; }\n")
+		_T(".url  { text-align: left; }\n")
+		_T(".size { width: 100px; text-align: right; }\n")
+		_T("</style>\n</head>\n<body>\n<h1>%s</h1>\n<table>\n"),
+		GetTitle(),
+		GetTitle() );
+
+	DWORD i = 1;
+	for ( POSITION pos = GetFileIterator(); pos; )
+	{
+		CCollectionFile::File* pFile = GetNextFile( pos );
+
+		CString strTemp;
+		strTemp.Format( _T("<tr><td class=\"num\">%d.</td>")
+			_T("<td class=\"url\"><a href=\"ed2k://|file|%s|%I64i|%s|/\" ")
+			_T("title=\"Link: ed2k://|file|%s|%I64i|%s|/\">%s</a></td>")
+			_T("<td class=\"size\">%I64i</td></tr>\n"),
+			i++,
+			(LPCTSTR)URLEncode( pFile->m_sName ), pFile->m_nSize, (LPCTSTR)pFile->m_oED2K.toString(),
+			(LPCTSTR)URLEncode( pFile->m_sName ), pFile->m_nSize, (LPCTSTR)pFile->m_oED2K.toString(),
+			pFile->m_sName,
+			pFile->m_nSize );
+		strBuffer += strTemp;
+	}
+
+	strBuffer += _T("</table>\n</body>\n</html>");
+ }
 
 /////////////////////////////////////////////////////////////////////////////
 // CCollectionFile::File construction
