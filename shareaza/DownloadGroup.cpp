@@ -113,10 +113,24 @@ BOOL CDownloadGroup::Link(CDownload* pDownload)
 	{
 		CString strFilter = m_pFilters.GetNext( pos );
 		
-		if ( CQuerySearch::WordMatch( pDownload->m_sName, strFilter ) )
+		if ( strFilter.GetAt( 0 ) == _T('.') )
 		{
-			Add( pDownload );
-			return TRUE;
+			// Filter by extension
+			int nPos = pDownload->m_sName.ReverseFind( _T('.') );
+			if ( nPos != -1 && strFilter.CompareNoCase( pDownload->m_sName.Mid( nPos ) ) == 0 )
+			{
+				Add( pDownload );
+				return TRUE;
+			}
+		}
+		else
+		{
+			// Filter by keywords
+			if ( CQuerySearch::WordMatch( pDownload->m_sName, strFilter ) )
+			{
+				Add( pDownload );
+				return TRUE;
+			}
 		}
 	}
 
