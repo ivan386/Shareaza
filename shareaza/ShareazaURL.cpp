@@ -811,6 +811,10 @@ BOOL CShareazaURL::ParseDonkey(LPCTSTR pszURL)
 	{
 		return ParseDiscovery( pszURL + 8, CDiscoveryService::dsServerMet );
 	}
+	else if ( _tcsnicmp( pszURL, _T("|serverlist|"), 12 ) == 0 )
+	{
+		return ParseDiscovery( pszURL + 12, CDiscoveryService::dsServerMet );
+	}
 	else
 	{
 		return FALSE;
@@ -1058,6 +1062,10 @@ BOOL CShareazaURL::ParseDiscovery(LPCTSTR pszURL, int nType)
 		else
 			return FALSE;
 	}
+
+	nPos = strURL.Find( '|' );
+	if ( nPos >= 0 )
+		strURL = strURL.Left( nPos );
 
 	m_nAction	= uriDiscovery;
 	m_sURL		= strURL;
