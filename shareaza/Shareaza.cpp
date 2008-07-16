@@ -613,6 +613,8 @@ BOOL CShareazaApp::Open(LPCTSTR lpszFileName, BOOL bDoIt)
 		return OpenCollection( lpszFileName, bDoIt );
 	else if ( nLength > 4 && ! lstrcmpi( lpszFileName + nLength - 4, _T(".url") ) )
 		return OpenInternetShortcut( lpszFileName, bDoIt );
+	else if ( nLength > 4 && ! lstrcmpi( lpszFileName + nLength - 4, _T(".met") ) )
+		return ! bDoIt || HostCache.Import( lpszFileName );
 	else if ( nLength > 4 && ! lstrcmpi( lpszFileName + nLength - 4, _T(".lnk") ) )
 		return OpenShellShortcut( lpszFileName, bDoIt );
 	else
