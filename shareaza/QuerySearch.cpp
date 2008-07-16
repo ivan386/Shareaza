@@ -576,10 +576,10 @@ BOOL CQuerySearch::ReadG1Packet(CG1Packet* pPacket)
 
 	if ( pPacket->GetRemaining() > 1 )
 	{
-		const char* pszData = (const char*)pPacket->m_pBuffer + pPacket->m_nPosition;
+		char* pszData = (char*)pPacket->m_pBuffer + pPacket->m_nPosition;
 		for ( int nDataLength = pPacket->GetRemaining() - 1; nDataLength > 0; )
 		{
-			const char* pszSep = (const char*)memchr( pszData, G1_PACKET_HIT_SEP, nDataLength );
+			char* pszSep = (char*)memchr( pszData, G1_PACKET_HIT_SEP, nDataLength );
 			int nLength = ( pszSep && *pszSep == G1_PACKET_HIT_SEP ) ?
 				(int)( pszSep - pszData ) : nDataLength;
 
@@ -599,19 +599,14 @@ BOOL CQuerySearch::ReadG1Packet(CG1Packet* pPacket)
 			}
 			else if ( nLength >= 4 && *pszData == '<' )
 			{
-				CString strXML( pszData, nLength );
-
-				// Fix embedded zeroes
-				int nPos = strXML.Find( _T('\0') );
-				if ( nPos >= 0 && nPos + 3 < nLength )
-				{
+				// HACK: Fix embedded zeros
+				char* p = pszData;
+				for ( int i = 0; i < nLength - 2; ++i, ++p )
 					// Fix <tag attribute="valueZ/> -> <tag attribute="value"/>
-					if ( strXML[ nPos + 1 ] == _T('/') &&
-						 strXML[ nPos + 2 ] == _T('>') )
-					{
-						strXML.SetAt( nPos, _T('"') );
-					}
-				}
+					if ( *p == _T('\0') && *(p + 1) == _T('/') && *(p + 2) == _T('>') )
+						*p = _T('"');
+
+				CString strXML( pszData, nLength );
 
 				ASSERT( m_pXML == NULL );
 				m_pXML = CXMLElement::FromString( strXML, FALSE );
