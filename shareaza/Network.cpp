@@ -543,33 +543,33 @@ BOOL CNetwork::IsReserved(IN_ADDR* pAddress, bool bCheckLocal)
 	switch ( i1 )
 	{
 		case 0:         // 000/8 is IANA reserved
-		case 1:         // 001/8 is IANA reserved       
-		case 2:         // 002/8 is IANA reserved       
-		case 5:         // 005/8 is IANA reserved       
-		case 6:         // USA Army ISC                 
-		case 7:         // used for BGP protocol        
-		case 23:        // 023/8 is IANA reserved       
-		case 27:        // 027/8 is IANA reserved       
-		case 31:        // 031/8 is IANA reserved       
-		case 36:        // 036/8 is IANA reserved       
-		case 37:        // 037/8 is IANA reserved       
-		case 39:        // 039/8 is IANA reserved       
-		case 42:        // 042/8 is IANA reserved       
-		case 49:        // 049/8 is IANA reserved       
-		case 50:        // 050/8 is IANA reserved       
-		case 55:        // misc. USA Armed forces    
-		case 127:       // 127/8 is reserved for loopback 
-		case 197:       // 197/8 is IANA reserved       
-		case 223:       // 223/8 is IANA reserved       
+		case 1:         // 001/8 is IANA reserved
+		case 2:         // 002/8 is IANA reserved
+		case 5:         // 005/8 is IANA reserved
+		case 6:         // USA Army ISC
+		case 7:         // used for BGP protocol
+		case 23:        // 023/8 is IANA reserved
+		case 27:        // 027/8 is IANA reserved
+		case 31:        // 031/8 is IANA reserved
+		case 36:        // 036/8 is IANA reserved
+		case 37:        // 037/8 is IANA reserved
+		case 39:        // 039/8 is IANA reserved
+		case 42:        // 042/8 is IANA reserved
+		case 49:        // 049/8 is IANA reserved
+		case 50:        // 050/8 is IANA reserved
+		case 55:        // misc. USA Armed forces
+//		case 77:        // 077/8 is IANA reserved - used by some eDonkeyServer
+		case 78:        // 078/8 is IANA reserved
+		case 79:        // 079/8 is IANA reserved
+		case 127:       // 127/8 is reserved for loopback
+		case 197:       // 197/8 is IANA reserved
+		case 223:       // 223/8 is IANA reserved
 			return TRUE;
 		case 10:        // Private addresses
 			return bCheckLocal && Settings.Connection.IgnoreLocalIP;
 		default:
 			break;
 	}
-
-	// 077-079/8 is IANA reserved 
-	if ( i1 >= 77 && i1 <= 79 ) return TRUE;
 
 	// 092-123/8 is IANA reserved 
 	if ( i1 >= 92 && i1 <= 120 ) return TRUE;
