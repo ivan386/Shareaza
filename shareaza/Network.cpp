@@ -577,8 +577,8 @@ BOOL CNetwork::IsReserved(IN_ADDR* pAddress, bool bCheckLocal)
 	if ( i1 == 172 && i2 >= 16 && i2 <= 31 ) 
 		return bCheckLocal && Settings.Connection.IgnoreLocalIP;
 
-	// 175-185/8, 197/8 is IANA reserved 
-	if ( i1 >= 175 && i1 <= 185 || i1 == 197 ) return TRUE;
+	// 175-185/8 is IANA reserved 
+	if ( i1 >= 175 && i1 <= 185 ) return TRUE;
 
 	// 192.168.0.0/16 is reserved for private nets by RFC1819 
 	// 192.0.2.0/24 is reserved for documentation and examples 
