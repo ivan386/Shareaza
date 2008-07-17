@@ -65,6 +65,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				OutputFile="&quot;..\shareaza\$(PlatformName)\$(ConfigurationName)\sqlite3.dll&quot;"
 				LinkIncremental="2"
 				GenerateDebugInformation="true"
 				SubSystem="2"
@@ -142,6 +143,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				LinkIncremental="2"
+				OutputFile="&quot;..\shareaza\$(PlatformName)\$(ConfigurationName)\sqlite3.dll&quot;"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				TargetMachine="17"
