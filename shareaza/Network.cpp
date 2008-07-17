@@ -548,6 +548,7 @@ BOOL CNetwork::IsReserved(IN_ADDR* pAddress, bool bCheckLocal)
 		case 5:         // 005/8 is IANA reserved
 		case 6:         // USA Army ISC
 		case 7:         // used for BGP protocol
+		case 14:		// 014/8 is IANA reserved
 		case 23:        // 023/8 is IANA reserved
 		case 27:        // 027/8 is IANA reserved
 		case 31:        // 031/8 is IANA reserved
@@ -555,12 +556,10 @@ BOOL CNetwork::IsReserved(IN_ADDR* pAddress, bool bCheckLocal)
 		case 37:        // 037/8 is IANA reserved
 		case 39:        // 039/8 is IANA reserved
 		case 42:        // 042/8 is IANA reserved
+		case 46:		// 046/8 is IANA reserved
 		case 49:        // 049/8 is IANA reserved
 		case 50:        // 050/8 is IANA reserved
 		case 55:        // misc. USA Armed forces
-//		case 77:        // 077/8 is IANA reserved - used by some eDonkeyServer
-		case 78:        // 078/8 is IANA reserved
-		case 79:        // 079/8 is IANA reserved
 		case 127:       // 127/8 is reserved for loopback
 		case 197:       // 197/8 is IANA reserved
 		case 223:       // 223/8 is IANA reserved
@@ -571,15 +570,15 @@ BOOL CNetwork::IsReserved(IN_ADDR* pAddress, bool bCheckLocal)
 			break;
 	}
 
-	// 092-123/8 is IANA reserved 
-	if ( i1 >= 92 && i1 <= 120 ) return TRUE;
+	// 100-111/8 is IANA reserved 
+	if ( i1 >= 100 && i1 <= 111 ) return TRUE;
 
 	// 172.16.0.0/12 is reserved for private nets by RFC1819 
 	if ( i1 == 172 && i2 >= 16 && i2 <= 31 ) 
 		return bCheckLocal && Settings.Connection.IgnoreLocalIP;
 
-	// 173-187/8 is IANA reserved 
-	if ( i1 >= 173 && i1 <= 187 ) return TRUE;
+	// 175-185/8, 197/8 is IANA reserved 
+	if ( i1 >= 175 && i1 <= 185 || i1 == 197 ) return TRUE;
 
 	// 192.168.0.0/16 is reserved for private nets by RFC1819 
 	// 192.0.2.0/24 is reserved for documentation and examples 
