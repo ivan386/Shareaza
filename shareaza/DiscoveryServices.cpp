@@ -612,13 +612,15 @@ void CDiscoveryServices::AddDefaults()
 
 BOOL CDiscoveryServices::Update()
 {
-	PROTOCOLID nProtocol;
-	DWORD tNow = (DWORD)time( NULL );
+	DWORD tNow = static_cast< DWORD >( time( NULL ) );
 	
 	// Don't update too frequently
 	if ( tNow - m_tUpdated < Settings.Discovery.UpdatePeriod ) return FALSE;
 	
-	if ( m_hInternet ) return FALSE;
+	if ( m_hInternet )
+		// Don't run concurrent request
+		return FALSE;
+
 	StopWebRequest();
 	
 	CSingleLock pLock( &Network.m_pSection );
@@ -628,6 +630,7 @@ BOOL CDiscoveryServices::Update()
 	if ( Network.GetStableTime() < 7200 ) return FALSE;				
 
 	// Determine which network/protocol to update
+	PROTOCOLID nProtocol;
 	if ( Neighbours.IsG2Hub() )						// G2 hub mode is active
 	{
 		if ( Neighbours.IsG1Ultrapeer() )			// G2 and G1 are active
@@ -651,13 +654,12 @@ BOOL CDiscoveryServices::Update()
 	// Must have at least 4 peers
 	if ( Neighbours.GetCount( nProtocol, -1, ntNode ) < 4 ) return FALSE;	
 		
-	// Select a random webcache of the approprate sort
+	// Select a random webcache of the appropriate sort
 	CDiscoveryService* pService = GetRandomWebCache(nProtocol, TRUE, NULL, TRUE );
 	if ( pService == NULL ) return FALSE;
 		
 	// Make the update request
 	return RequestWebCache( pService, wcmUpdate, nProtocol );
-
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -687,6 +689,7 @@ BOOL CDiscoveryServices::Execute(BOOL bDiscovery, PROTOCOLID nProtocol, USHORT n
 
 	CSingleLock pLock( &Network.m_pSection );
 	if ( ! pLock.Lock( 250 ) ) return FALSE;
+
 	DWORD tNow = static_cast< DWORD >( time( NULL ) );	// The time (in seconds) 
 
 	if ( bDiscovery ) // If this is a user-initiated manual query, or AutoStart with Cache empty
@@ -711,31 +714,21 @@ BOOL CDiscoveryServices::Execute(BOOL bDiscovery, PROTOCOLID nProtocol, USHORT n
 			Datagrams.Send( &addr, CG2Packet::New( G2_PACKET_DISCOVERY ), TRUE, 0, FALSE );
 		}
 
+		if ( bEdRequired )
+			m_tMetQueried = tNow;	// Execute this maximum one time each 60 min only when the number of eDonkey servers is too low (Very important).
+
+		pLock.Unlock();
+
 		if ( nProtocol == PROTOCOL_NULL )	// G1 + G2 + Ed hosts are wanted
-		{
-			BOOL bOK = TRUE;
-
-			if ( bG1Required )
-				bOK = bOK && RequestRandomService( PROTOCOL_G1 );
-			if ( bG2Required )
-				bOK = bOK && RequestRandomService( PROTOCOL_G2 );
-			if ( bEdRequired )
-			{
-				m_tMetQueried = tNow;	// Execute this maximum one time each 60 min only when the number of eDonkey servers is too low (Very important).
-				bOK = bOK && RequestRandomService( PROTOCOL_ED2K );
-			}
-
-			return bOK;		// TRUE if the Discovery is executed correctly or no Discovery needed
-		}
+			return  ( ! bG1Required || RequestRandomService( PROTOCOL_G1 ) ) &&
+					( ! bG2Required || RequestRandomService( PROTOCOL_G2 ) ) &&
+					( ! bEdRequired || RequestRandomService( PROTOCOL_ED2K ) );
 		else if ( bG1Required )	// Only G1
 			return RequestRandomService( PROTOCOL_G1 );
 		else if ( bG2Required )	// Only G2
 			return RequestRandomService( PROTOCOL_G2 );
 		else if ( bEdRequired )	// Only Ed
-		{
-			m_tMetQueried = tNow;	// Execute this maximum one time each 60 min only when the number of eDonkey servers is too low (Very important).
 			return RequestRandomService( PROTOCOL_ED2K );
-		}
 		else
 			return TRUE;	// No Discovery needed
 	}
@@ -830,24 +823,19 @@ void CDiscoveryServices::OnGnutellaFailed(IN_ADDR* /*pAddress*/)
 
 BOOL CDiscoveryServices::RequestRandomService(PROTOCOLID nProtocol)
 {
-	//CSingleLock pLock( &Network.m_pSection );	// Note: This shouldn't be necessary, since the
-	//if ( ! pLock.Lock( 250 ) ) return FALSE;	// calling functions should lock...
-
-	CDiscoveryService* pService = GetRandomService( nProtocol );
-
-	if ( pService )
+	if ( CDiscoveryService* pService = GetRandomService( nProtocol ) )
 	{
 		if ( pService->m_nType == CDiscoveryService::dsGnutella )
 		{
-			if ( pService->ResolveGnutella() ) return TRUE;
+			return pService->ResolveGnutella();
 		}
 		else if ( pService->m_nType == CDiscoveryService::dsServerMet )
 		{
-			if ( RequestWebCache( pService, wcmServerMet, nProtocol ) ) return TRUE;
+			return RequestWebCache( pService, wcmServerMet, nProtocol );
 		}
 		else
 		{
-			if ( RequestWebCache( pService, wcmHosts, nProtocol ) ) return TRUE;
+			return RequestWebCache( pService, wcmHosts, nProtocol );
 		}
 	}
 	return FALSE;
@@ -970,26 +958,26 @@ CDiscoveryService* CDiscoveryServices::GetRandomWebCache(PROTOCOLID nProtocol, B
 
 BOOL CDiscoveryServices::RequestWebCache(CDiscoveryService* pService, int nMode, PROTOCOLID nProtocol)
 {
-	DWORD tNow = (DWORD)time( NULL );
 	StopWebRequest();
+
+	CSingleLock pLock( &Network.m_pSection );
+	if ( ! pLock.Lock( 250 ) ) return FALSE;
+
+	DWORD tNow = (DWORD)time( NULL );
 	DWORD nHosts = 0;
 
 	switch ( nProtocol )
 	{
 	case PROTOCOL_G1:
-		theApp.Message( MSG_DEBUG, _T("CDiscoveryServices::RequestWebCache() seeking gnutella hosts") );
 		nHosts = HostCache.Gnutella1.GetCount();
 		break;
 	case PROTOCOL_G2:
-		theApp.Message( MSG_DEBUG, _T("CDiscoveryServices::RequestWebCache() seeking G2 hosts") );
 		nHosts = HostCache.Gnutella2.GetCount();
 		break;
 	case PROTOCOL_ED2K:
-		theApp.Message( MSG_DEBUG, _T("CDiscoveryServices::RequestWebCache() seeking ed2k hosts") );
 		nHosts = HostCache.eDonkey.GetCount();
 		break;
 	default:
-		theApp.Message( MSG_ERROR, _T("ERROR: CDiscoveryServices::RequestWebCache() was passed an invalid protocol") );
 		return FALSE;
 	}
 	
@@ -1042,7 +1030,6 @@ BOOL CDiscoveryServices::RequestWebCache(CDiscoveryService* pService, int nMode,
 	case wcmServerMet:
 		if ( nProtocol != PROTOCOL_ED2K )
 		{
-			theApp.Message( MSG_ERROR, _T("ERROR: CDiscoveryServices::RequestWebCache() was passed wcmServerMet with non-ed2k protocol") );
 			ASSERT ( FALSE );
 			return FALSE;
 		}
@@ -1055,17 +1042,11 @@ BOOL CDiscoveryServices::RequestWebCache(CDiscoveryService* pService, int nMode,
 		}
 		break;
 	default:
-		theApp.Message( MSG_ERROR, _T("ERROR: CDiscoveryServices::RequestWebCache() was passed an invalid mode") );
 		ASSERT ( FALSE );
 		return FALSE;
 	}
 	
 	if ( m_pWebCache == NULL ) return FALSE;
-	
-	CString strAgent = Settings.SmartAgent();
-	
-	m_hInternet = InternetOpen( strAgent, INTERNET_OPEN_TYPE_PRECONFIG, NULL, NULL, 0 );
-	if ( ! m_hInternet ) return FALSE;
 	
 	return BeginThread( "Discovery" );
 }
@@ -1083,6 +1064,12 @@ void CDiscoveryServices::StopWebRequest()
 
 void CDiscoveryServices::OnRun()
 {
+	if ( m_hInternet ) return;
+
+	m_hInternet = InternetOpen( Settings.SmartAgent(),
+		INTERNET_OPEN_TYPE_PRECONFIG, NULL, NULL, 0 );
+	if ( ! m_hInternet ) return;
+
 	BOOL bSuccess = TRUE;
 	
 	if ( m_nWebCache == wcmServerMet )
@@ -1712,9 +1699,6 @@ void CDiscoveryService::Serialize(CArchive& ar, int /*nVersion*/)
 // Note: This is used by wndDiscovery only
 BOOL CDiscoveryService::Execute(int nMode)
 {
-	CSingleLock pLock( &Network.m_pSection );
-	if ( ! pLock.Lock( 250 ) ) return FALSE;
-	
 	if ( m_nType == dsGnutella )
 	{
 		return ResolveGnutella();
