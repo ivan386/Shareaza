@@ -61,7 +61,7 @@ void CSHA::Finish()
 	// Save number of bits
 	uint64 bits = transformToBE( m_State.m_nCount * 8 );
 	// Pad out to 56 mod 64.
-	uint32 index = static_cast< uint32 >( m_State.m_nCount ) % m_State.blockSize;
+	uint32 index = static_cast< uint32 >( m_State.m_nCount % m_State.blockSize );
 	Add( hashPadding, m_State.blockSize - sizeof( bits ) - index
 		+ ( index < m_State.blockSize - sizeof( bits ) ? 0 : m_State.blockSize ) );
 	Add( &bits, sizeof( bits ) );
@@ -298,7 +298,7 @@ void CSHA::Add(const void* pData, std::size_t nLength)
 	// Update number of bytes
 	const char* input = static_cast< const char* >( pData );
 	{
-		uint32 index = static_cast< uint32 >( m_State.m_nCount ) % m_State.blockSize;
+		uint32 index = static_cast< uint32 >( m_State.m_nCount % m_State.blockSize );
 		m_State.m_nCount += nLength;
 		if ( index )
 		{
