@@ -64,12 +64,17 @@ HKLM
 					LibraryBuilder
 					{
 						ForceRemove val '.doc' = s '{E9F51B1E-DB0F-4EEE-9B36-46151994C715}'
+						ForceRemove val '.docx' = s '{E9F51B1E-DB0F-4EEE-9B36-46151994C715}'
 						ForceRemove val '.dot' = s '{E9F51B1E-DB0F-4EEE-9B36-46151994C715}'
 						ForceRemove val '.xls' = s '{E9F51B1E-DB0F-4EEE-9B36-46151994C715}'
+						ForceRemove val '.xlsx' = s '{E9F51B1E-DB0F-4EEE-9B36-46151994C715}'
 						ForceRemove val '.xlt' = s '{E9F51B1E-DB0F-4EEE-9B36-46151994C715}'
+						ForceRemove val '.xltx' = s '{E9F51B1E-DB0F-4EEE-9B36-46151994C715}'
 						ForceRemove val '.xla' = s '{E9F51B1E-DB0F-4EEE-9B36-46151994C715}'
 						ForceRemove val '.ppt' = s '{E9F51B1E-DB0F-4EEE-9B36-46151994C715}'
+						ForceRemove val '.pptx' = s '{E9F51B1E-DB0F-4EEE-9B36-46151994C715}'
 						ForceRemove val '.pot' = s '{E9F51B1E-DB0F-4EEE-9B36-46151994C715}'
+						ForceRemove val '.potx' = s '{E9F51B1E-DB0F-4EEE-9B36-46151994C715}'
 						ForceRemove val '.ppa' = s '{E9F51B1E-DB0F-4EEE-9B36-46151994C715}'
 						ForceRemove val '.mpp' = s '{E9F51B1E-DB0F-4EEE-9B36-46151994C715}'
 						ForceRemove val '.mpt' = s '{E9F51B1E-DB0F-4EEE-9B36-46151994C715}'

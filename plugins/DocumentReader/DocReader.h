@@ -1,13 +1,10 @@
 //
 // DocReader.h
 //
-//	Date:			"$Date: 2005/10/31 16:46:05 $"
-//	Revision:		"$Revision: 1.6 $"
-//  Last change by:	"$Author: rolandas $"
 //	Created by:		Rolandas Rudomanskis
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
-// This file is part of SHAREAZA (www.shareaza.com)
+// Copyright (c) Shareaza Development Team, 2002-2008.
+// This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
 // and/or modify it under the terms of the GNU General Public License
@@ -206,10 +203,11 @@ public:
 
 private:
 	STDMETHODIMP ProcessMSDocument(BSTR bsFile, ISXMLElement* pXML, LPCWSTR pszSchema, LPCWSTR pszFormat);
+	STDMETHODIMP ProcessNewMSDocument(BSTR bsFile, ISXMLElement* pXML, LPCWSTR pszSchema, LPCWSTR pszFormat);
 	STDMETHODIMP ProcessOODocument(BSTR bsFile, ISXMLElement* pXML, LPCWSTR pszSchema, LPCWSTR pszFormat);
 	STDMETHODIMP GetMSThumbnail(BSTR bsFile, IMAGESERVICEDATA* pParams, SAFEARRAY** ppImage);
 	STDMETHODIMP GetOOThumbnail(BSTR bsFile, IMAGESERVICEDATA* pParams, SAFEARRAY** ppImage);
-	CComBSTR GetMetadataXML(unzFile pFile);
+	CComBSTR GetMetadataXML(unzFile pFile, char* pszFile);
 
 	void Initialize(BOOL bOnlyThumb);
 	HBITMAP GetBitmapFromMetaFile(PICTDESC pds, int nResolution, 

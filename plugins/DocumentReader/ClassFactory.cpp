@@ -1,13 +1,10 @@
 //
 // ClassFactory.cpp
 //
-//	Date:			"$Date: 2005/11/20 18:03:53 $"
-//	Revision:		"$Revision: 1.7 $"
-//  Last change by:	"$Author: thetruecamper $"
 //	Created by:		Rolandas Rudomanskis
 //
-// Copyright (c) Shareaza Development Team, 2002-2005.
-// This file is part of SHAREAZA (www.shareaza.com)
+// Copyright (c) Shareaza Development Team, 2002-2008.
+// This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
 // and/or modify it under the terms of the GNU General Public License

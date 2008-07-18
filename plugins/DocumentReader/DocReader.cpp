@@ -3,8 +3,8 @@
 //
 //	Created by:		Rolandas Rudomanskis
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
-// This file is part of SHAREAZA (www.shareaza.com)
+// Copyright (c) Shareaza Development Team, 2002-2008.
+// This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
 // and/or modify it under the terms of the GNU General Public License
@@ -85,7 +85,12 @@ STDMETHODIMP CDocReader::Process(HANDLE hFile, BSTR sFile, ISXMLElement* pXML)
 		return E_UNEXPECTED;
 	}
 	if ( pszFormat[ 0 ] == 'M' ) // Microsoft
-		hr = ProcessMSDocument( sFile, pXML, pszSchema, pszFormat );
+	{
+		if ( wcslen( pszExt ) == 5 && pszExt[4] == 'x' )
+			hr = ProcessNewMSDocument( sFile, pXML, pszSchema, pszFormat );
+		else
+			hr = ProcessMSDocument( sFile, pXML, pszSchema, pszFormat );
+	}
 	else if ( pszFormat[ 0 ] == 'O' ) // OpenOffice or OpenDocument
 		hr = ProcessOODocument( sFile, pXML, pszSchema, pszFormat );
 
@@ -247,6 +252,207 @@ STDMETHODIMP CDocReader::ProcessMSDocument(BSTR bsFile, ISXMLElement* pXML, LPCW
 	return S_OK;
 }
 
+STDMETHODIMP CDocReader::ProcessNewMSDocument(BSTR bsFile, ISXMLElement* pXML, LPCWSTR pszSchema, LPCWSTR pszFormat)
+{
+	WCHAR pszName[MAX_PATH];
+	ULONG ulIdx;
+	if ( ! FFindQualifiedFileName( bsFile, pszName, &ulIdx ) )
+        return STG_E_INVALIDNAME;
+
+	// Open it with the UNZIP library
+	unzFile pFile = NULL;
+	zlib_filefunc_def FileFunc;
+	fill_win32_filefunc( &FileFunc );
+	pFile = unzOpen2( CW2A(pszName), &FileFunc );
+	
+	if ( ! pFile )
+	{
+		// Probably unicode path...
+		// Try to find a short name, since UNZIP can not handle them
+		if ( GetShortPathNameW( bsFile, pszName, MAX_PATH ) )
+		{
+			pFile = unzOpen2( CW2A(pszName), &FileFunc );
+			if ( ! pFile ) return STG_E_INVALIDNAME;
+		}
+		else return E_FAIL; // system doesn't support 8.3 filenames
+	}
+
+	// Read docProps\app.xml from the archive (Properties -> Pages, Company and AppVersion)
+	// Read docProps\core.xml from the archive 
+	//		(cp:coreProperties -> dc:title, subject, creator, keywords, description, revision, category)
+	CHAR szFile[256] = "docProps/core.xml";
+	CComBSTR sXML = GetMetadataXML( pFile, szFile );
+
+	// Close the file
+	unzClose( pFile );
+
+	if ( ! sXML.Length() ) return E_FAIL;
+
+	ISXMLElement* pInputXML = NULL;
+
+	if ( FAILED( pXML->FromString( sXML, &pInputXML ) ) || pInputXML == NULL )
+	{
+		return E_FAIL;
+	}
+	
+	ISXMLElements* pElements;
+	// Get the Elements collection from the XML document
+	if ( FAILED( pInputXML->get_Elements( &pElements ) ) || pElements == NULL )
+	{
+		pInputXML->Delete();
+		pInputXML->Release();
+		return E_FAIL;
+	}
+
+	BSTR bsValue = NULL;
+	BSTR bsName = NULL;
+	LPCWSTR pszSingular = NULL;
+	CString sTemp;
+
+	pszSingular = wcsrchr( pszSchema, _T('/') ) + 1;
+
+	sTemp.Append( CW2T(pszSingular), static_cast< int>( wcslen( pszSingular ) - 4 ) );
+	sTemp.Append( _T("s") );
+	bsName = CComBSTR( sTemp );
+
+	// Get a pointer to elements node and create a root element
+	ISXMLElement* pPlural;
+	ISXMLElements* pDestElements;
+
+	pXML->get_Elements( &pDestElements );
+	pDestElements->Create( bsName, &pPlural );
+	pDestElements->Release();
+	SysFreeString( bsName );
+
+	// Add root element attributes
+	ISXMLAttributes* pAttributes;
+	pPlural->get_Attributes( &pAttributes );
+	pAttributes->Add( L"xmlns:xsi", L"http://www.w3.org/2001/XMLSchema-instance" );
+	pAttributes->Add( L"xsi:noNamespaceSchemaLocation", W2OLE((LPWSTR)pszSchema) );
+	pAttributes->Release();
+
+	// Create inner element describing metadata
+	ISXMLElement* pSingular;
+	pPlural->get_Elements( &pDestElements );
+
+	sTemp = sTemp.Left( sTemp.GetLength() - 1 );
+	bsName = CComBSTR( sTemp );
+	pDestElements->Create( bsName, &pSingular );
+	pDestElements->Release();
+	SysFreeString( bsName );
+
+	// Get attributes and add all metadata
+	pSingular->get_Attributes( &pAttributes );
+
+	ISXMLElement* pData = NULL;
+
+	HRESULT hr = pElements->get_ByName( L"dc:creator", &pData );
+	if ( SUCCEEDED(hr) && pData )
+	{
+		if ( SUCCEEDED(pData->get_Value( &bsValue )) )
+			pAttributes->Add( L"author", bsValue );
+		pData->Release();
+	}
+
+	hr = pElements->get_ByName( L"dc:title", &pData );
+	if ( SUCCEEDED(hr) && pData )
+	{
+		if ( SUCCEEDED(pData->get_Value( &bsValue )) )
+			pAttributes->Add( L"title", bsValue );
+		pData->Release();
+	}
+
+	hr = pElements->get_ByName( L"dc:subject", &pData );
+	if ( SUCCEEDED(hr) && pData )
+	{
+		if ( SUCCEEDED(pData->get_Value( &bsValue )) )
+			pAttributes->Add( L"subject", bsValue );
+		pData->Release();
+	}
+
+	// Loop through all keywords
+	CComBSTR bsKeywords;
+	do
+	{
+		hr = pElements->get_ByName( L"cp:keywords", &pData );
+		if ( SUCCEEDED(hr) && pData )
+		{
+			if ( pData && SUCCEEDED(pData->get_Value( &bsValue )) )
+			{
+				if ( ! bsKeywords.Length() ) 
+				{
+					bsKeywords.AssignBSTR( bsValue );
+				}
+				else 
+				{
+					bsKeywords.Append( L";" );
+					bsKeywords.AppendBSTR( bsValue );
+				}
+				// delete keyword to get the next
+				pData->Delete();
+			}
+			pData->Release();
+		}
+	}
+	while ( pData );
+	if ( bsKeywords ) pAttributes->Add( L"keywords", bsKeywords );
+
+	hr = pElements->get_ByName( L"dc:description", &pData );
+	if ( SUCCEEDED(hr) && pData )
+	{
+		// should be abstract by definition but it corresponds to comments
+		// in MS documents
+		if ( SUCCEEDED(pData->get_Value( &bsValue )) )
+			pAttributes->Add( L"comments", bsValue );
+		pData->Release();
+	}
+
+	//hr = pElements->get_ByName( L"meta:document-statistic", &pData );
+	//if ( SUCCEEDED(hr) && pData )
+	//{
+	//	ISXMLAttributes* pStatAttributes;
+	//	hr = pData->get_Attributes( &pStatAttributes );
+	//	if ( SUCCEEDED(hr) && pStatAttributes )
+	//	{
+	//		ISXMLAttribute* pAttribute;
+	//		if ( SUCCEEDED(pStatAttributes->get_ByName( L"meta:page-count", &pAttribute )) &&
+	//			 pAttribute )
+	//		{
+	//			if ( SUCCEEDED(pAttribute->get_Value( &bsValue )) )
+	//			{
+	//				if ( pszSchema == CDocReader::uriPresentation )
+	//					pAttributes->Add( L"slides", bsValue );
+	//				else
+	//					pAttributes->Add( L"pages", bsValue );
+	//			}
+	//			pAttribute->Release();
+	//		}
+	//		pStatAttributes->Release();
+	//	}
+	//	pData->Release();
+	//}
+
+	// Now add some internal data
+
+	sTemp = pszFormat;
+	bsName = CComBSTR( sTemp );
+	pAttributes->Add( L"format", bsName );
+	SysFreeString( bsName );
+
+	// Cleanup destination
+	pAttributes->Release();
+	pSingular->Release();
+	pPlural->Release();
+
+	// Cleanup source
+	pElements->Release();
+
+	pInputXML->Delete();
+	pInputXML->Release();
+
+	return S_OK;
+}
+
 STDMETHODIMP CDocReader::ProcessOODocument(BSTR bsFile, ISXMLElement* pXML, LPCWSTR pszSchema, LPCWSTR pszFormat)
 {
 	ODS(_T("CDocReader::ProcessOODocument\n"));
@@ -277,7 +483,8 @@ STDMETHODIMP CDocReader::ProcessOODocument(BSTR bsFile, ISXMLElement* pXML, LPCW
 	}
 
 	// Read meta.xml from the archive
-	CComBSTR sXML = GetMetadataXML( pFile );
+	CHAR szFile[256] = "meta.xml";
+	CComBSTR sXML = GetMetadataXML( pFile, szFile );
 
 	// Close the file
 	unzClose( pFile );
@@ -486,12 +693,11 @@ STDMETHODIMP CDocReader::ProcessOODocument(BSTR bsFile, ISXMLElement* pXML, LPCW
 	return S_OK;
 }
 
-CComBSTR CDocReader::GetMetadataXML(unzFile pFile)
+CComBSTR CDocReader::GetMetadataXML(unzFile pFile, char* pszFile)
 {
 	CComBSTR sUnicode;
 
-	CHAR szFile[256] = "meta.xml";
-	int nError = unzLocateFile( pFile, szFile, 0 );
+	int nError = unzLocateFile( pFile, pszFile, 0 );
 	if ( nError == UNZ_OK )
 	{
 		// Open the metadata.xml
@@ -499,8 +705,8 @@ CComBSTR CDocReader::GetMetadataXML(unzFile pFile)
 		if ( nError == UNZ_OK )
 		{
 			unz_file_info pInfo = {};
-			nError = unzGetCurrentFileInfo( pFile, &pInfo, szFile,
-				sizeof(szFile), NULL, 0, NULL, 0 );
+			nError = unzGetCurrentFileInfo( pFile, &pInfo, pszFile,
+				sizeof pszFile, NULL, 0, NULL, 0 );
 			if ( nError == UNZ_OK )
 			{
 				// Prepare a buffer to read into
@@ -1162,7 +1368,7 @@ HBITMAP CDocReader::GetBitmapFromEnhMetaFile(PICTDESC pds, int nResolution, WORD
 
 LPWSTR CDocReader::GetDocumentFormat(LPCWSTR pszExt)
 {
-	if ( wcsstr( msWordExt, pszExt ) != NULL ||
+	if ( _wcsnicmp( msWordExt, pszExt, 4 ) == 0 ||
 		 wcsstr( msProjectExt, pszExt ) != NULL ||
 		 wcsstr( msVisioExt, pszExt ) != NULL ||
 		 wcsstr( ooWriterExt, pszExt ) != NULL )
@@ -1184,7 +1390,7 @@ LPWSTR CDocReader::GetDocumentFormat(LPCWSTR pszExt)
 					return L"OpenOffice.org 1.0 Text Document Template";
 		}
 	}
-	else if ( wcsstr( msPPointExt, pszExt ) != NULL ||
+	else if ( _wcsnicmp( msPPointExt, pszExt, 4 ) == 0 ||
 			  wcsstr( ooImpressExt, pszExt ) != NULL )
 	{
 		switch ( pszExt[1] )
@@ -1202,7 +1408,7 @@ LPWSTR CDocReader::GetDocumentFormat(LPCWSTR pszExt)
 					return L"OpenOffice.org 1.0 Presentation Template";
 		}
 	}
-	else if ( wcsstr( msExcelExt, pszExt ) != NULL ||
+	else if ( _wcsnicmp( msExcelExt, pszExt, 4 ) == 0 ||
 			  wcsstr( ooCalcExt, pszExt ) != NULL )
 	{
 		switch ( pszExt[1] )
@@ -1235,19 +1441,19 @@ LPWSTR CDocReader::GetSchema(BSTR sFile, LPCWSTR pszExt)
 		{
 			return (LPWSTR)CDocReader::uriBook;
 		}
-		else if ( wcsstr( msWordExt, pszExt ) != NULL ||
+		else if ( _wcsnicmp( msWordExt, pszExt, 4 ) == 0 ||
 				  wcsstr( msProjectExt, pszExt ) != NULL ||
 				  wcsstr( msVisioExt, pszExt ) != NULL ||
 				  wcsstr( ooWriterExt, pszExt ) != NULL )
 		{
 			return (LPWSTR)CDocReader::uriDocument;
 		}
-		else if ( wcsstr( msPPointExt, pszExt ) != NULL ||
+		else if ( _wcsnicmp( msPPointExt, pszExt, 4 ) == 0 ||
 				  wcsstr( ooImpressExt, pszExt ) != NULL )
 		{
 			return (LPWSTR)CDocReader::uriPresentation;
 		}
-		else if ( wcsstr( msExcelExt, pszExt ) != NULL ||
+		else if ( _wcsnicmp( msExcelExt, pszExt, 4 ) == 0 ||
 				  wcsstr( ooCalcExt, pszExt ) != NULL )
 		{
 			return (LPWSTR)CDocReader::uriSpreadsheet;
