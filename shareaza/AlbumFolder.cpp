@@ -858,7 +858,7 @@ BOOL CAlbumFolder::OrganiseFile(CLibraryFile* pFile)
 				split_results splitResults;
 				std::wstring sFileName( pFile->m_sName );
 
-				int nCount = firstPattern.split( sFileName, splitResults, 0 );
+				size_t nCount = firstPattern.split( sFileName, splitResults, 0 );
 				if ( nCount < 4 )
 				{
 					nCount = secondPattern.split( sFileName, splitResults, 0 );
