@@ -1,7 +1,7 @@
 //
 // Handshakes.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -30,80 +30,58 @@ class CHandshakes :
 	public CThreadImpl
 {
 public:
-
-	// Make the CHandshakes object, and later, delete it
 	CHandshakes();
 	virtual ~CHandshakes();
 
-public:
+	BOOL Listen();						// Listen on the socket
+	void Disconnect();					// Stop listening
 
-	// How many connections our listening socket has received, and how long they've been connected
-	DWORD m_nStableCount; // The number of connections our listening socket has received
-	DWORD m_tStableTime;  // The time at least one has been connected (do)
-
-protected:
-
-	// The listening socket
-	SOCKET m_hSocket; // Our one listening socket
-
-	// The list of CHandshake objects
-	CList< CHandshake* > m_pList;        // The list of pointers to CHandshake objects
-	mutable CCriticalSection m_pSection; // Use to make sure only one thread accesses the list at a time
-
-public:
-
-	// Start and stop listening on the socket
-	BOOL Listen();     // Listen on the socket
-	void Disconnect(); // Stop listening
-
-	// Connect to an IP, and determine if we are connected to one
-	BOOL PushTo(IN_ADDR* pAddress, WORD nPort, DWORD nIndex = 0); // Connect to the given IP
-	BOOL IsConnectedTo(IN_ADDR* pAddress) const;                  // Looks for the IP in the handshake objects list
+	BOOL PushTo(IN_ADDR* pAddress, WORD nPort, DWORD nIndex = 0);	// Connect to the given IP
+	BOOL IsConnectedTo(IN_ADDR* pAddress) const;					// Looks for the IP in the handshake objects list
 
 protected:
+	DWORD m_nStableCount;				// The number of connections our listening socket has received
+	DWORD m_tStableTime;				// The time at least one has been connected (do)
+	SOCKET m_hSocket;					// Our one listening socket
+	CList< CHandshake* > m_pList;		// The list of pointers to CHandshake objects
+	mutable CCriticalSection m_pSection;// Use to make sure only one thread accesses the list at a time
 
-	// Replace and remove CHandshake objects in the m_pList of them
-	void Substitute(CHandshake* pOld, CHandshake* pNew); // Replace an old CHandshake object in the list with a new one
-	void Remove(CHandshake* pHandshake);                 // Remove a CHandshake object from the list
+	void Substitute(CHandshake* pOld, CHandshake* pNew);	// Replace an old CHandshake object in the list with a new one
+	void Remove(CHandshake* pHandshake);					// Remove a CHandshake object from the list
 
-protected:
-
-	// Loop to listen for connections and accept them
-	void OnRun();                           // Accept incoming connections from remote computers
-	void RunHandshakes();                   // Send and receive data with each remote computer in the list
-	BOOL AcceptConnection();                // Accept a connection, making a new CHandshake object in the list for it
-	void CreateHandshake(SOCKET hSocket, SOCKADDR_IN* pHost); // Make the new CHandshake object for the new connection
-	void RunStableUpdate();                 // Update the discovery services (do)
+	void OnRun();						// Accept incoming connections from remote computers
+	void RunHandshakes();				// Send and receive data with each remote computer in the list
+	BOOL AcceptConnection();			// Accept a connection, making a new CHandshake object in the list for it
+	void CreateHandshake(SOCKET hSocket, SOCKADDR_IN* pHost);	// Make the new CHandshake object for the new connection
+	void RunStableUpdate();				// Update the discovery services (do)
 
 	// Tell WSAAccept if we want to accept a connection from a computer that just called us
 	static int CALLBACK AcceptCheck(IN LPWSABUF lpCallerId, IN LPWSABUF lpCallerData, IN OUT LPQOS lpSQOS, IN OUT LPQOS lpGQOS, IN LPWSABUF lpCalleeId, IN LPWSABUF lpCalleeData, OUT GROUP FAR * g, IN DWORD_PTR dwCallbackData);
 
 public:
-
 	// Returns an iterator at the start of the list of handshake objects
 	inline POSITION GetIterator() const
 	{
-		// Returns a MFC POSITION iterator, or null if the list is empty
 		return m_pList.GetHeadPosition();
 	}
 
 	// Given a position in the handshake list, returns the next handshake object
 	inline CHandshake* GetNext(POSITION& pos) const
 	{
-		// Returns the CHandshake object at the current position, and then moves the position iterator to the next one
-		return m_pList.GetNext( pos ); // Does two things
+		return m_pList.GetNext( pos );
 	}
 
 	// True if the socket is valid, false if its closed
 	inline BOOL IsListening() const
 	{
-		// If the socket is not invalid, it is connected to the remote computer
 		return m_hSocket != INVALID_SOCKET;
 	}
 
-	// Get complete access to CHandhsake member variables and methods (do)
-	friend class CHandshake;
+	// The time at least one has been connected (seconds)
+	inline DWORD GetStableTime() const
+	{
+		return m_tStableTime ? ( static_cast< DWORD >( time( NULL ) ) - m_tStableTime ) : 0;
+	}
 };
 
-// When the program runs, it makes a single global CHandshakes object
-extern CHandshakes Handshakes; // Access Handshakes externally here in Handshakes.h, even though it is defined in Handshakes.cpp
+extern CHandshakes Handshakes;

@@ -201,8 +201,7 @@ BOOL CNetwork::IsFirewalled(int nCheck) const
 
 DWORD CNetwork::GetStableTime() const
 {
-	if ( ! IsStable() || ! Handshakes.m_tStableTime ) return 0;
-	return (DWORD)time( NULL ) - Handshakes.m_tStableTime;
+	return IsStable() ? Handshakes.GetStableTime() : 0;
 }
 
 BOOL CNetwork::IsConnectedTo(IN_ADDR* pAddress) const

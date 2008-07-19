@@ -1,7 +1,7 @@
 //
 // Handshakes.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -22,7 +22,6 @@
 // CHandshakes listens for remote computers that want to connect to us
 // http://shareazasecurity.be/wiki/index.php?title=Developers.Code.CHandshakes
 
-// Copy in the contents of these files here before compiling
 #include "StdAfx.h"
 #include "Shareaza.h"
 #include "Settings.h"
@@ -36,31 +35,24 @@
 #include "Transfers.h"
 #include "Uploads.h"
 
-// If we are compiling in debug mode, replace the text "THIS_FILE" in the code with the name of this file
 #ifdef _DEBUG
 #undef THIS_FILE
 static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
 #endif
 
-// When the program runs, it makes a single global CHandshakes object with this line of code
 CHandshakes Handshakes;
 
 //////////////////////////////////////////////////////////////////////
 // CHandshakes construction
 
-// Make the CHandshakes object
-CHandshakes::CHandshakes()
+CHandshakes::CHandshakes() :
+	m_nStableCount( 0 ),
+	m_tStableTime( 0 ),
+	m_hSocket( INVALID_SOCKET )
 {
-	// Zero counts
-	m_nStableCount	= 0; // We haven't listened for and accepted any connections yet
-	m_tStableTime	= 0; // No time recorded yet
-
-	// Null values for the socket and thread handles
-	m_hSocket = INVALID_SOCKET;
 }
 
-// Delete the CHandshakes object
 CHandshakes::~CHandshakes()
 {
 	// Have the Disconnect method put everything away
@@ -451,13 +443,9 @@ void CHandshakes::CreateHandshake(SOCKET hSocket, SOCKADDR_IN* pHost)
 // Makes sure we know the remote IP address, and it's not on the security watch list
 // Returns CF_ACCEPT or CF_REJECT to tell WSAAccept what to do
 int CALLBACK CHandshakes::AcceptCheck(IN LPWSABUF lpCallerId,
-									  IN LPWSABUF /*lpCallerData*/,
-									  IN OUT LPQOS /*lpSQOS*/,
-									  IN OUT LPQOS /*lpGQOS*/,
-									  IN LPWSABUF /*lpCalleeId*/,
-									  IN LPWSABUF /*lpCalleeData*/,
-									  OUT GROUP FAR * /*g*/,
-									  IN DWORD_PTR /*dwCallbackData*/)
+	IN LPWSABUF /*lpCallerData*/, IN OUT LPQOS /*lpSQOS*/, IN OUT LPQOS /*lpGQOS*/,
+	IN LPWSABUF /*lpCalleeId*/, IN LPWSABUF /*lpCalleeData*/, OUT GROUP FAR * /*g*/,
+	IN DWORD_PTR /*dwCallbackData*/)
 {
 	// If the address of the remote computer is unknown or too short, reject the connection
 	if ( lpCallerId == NULL )                    return CF_REJECT; // WSAAccept didn't get the remote computer's IP and port
