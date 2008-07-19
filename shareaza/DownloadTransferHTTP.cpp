@@ -1292,7 +1292,7 @@ BOOL CDownloadTransferHTTP::ReadContent()
 	{
 		m_pSource->SetValid();
 
-		DWORD nLength	= (DWORD)min( pInput->m_nLength, m_nLength - m_nPosition );
+		size_t nLength	= min( pInput->m_nLength, m_nLength - m_nPosition );
 		BOOL bSubmit	= FALSE;
 
 		if ( m_bChunked )
