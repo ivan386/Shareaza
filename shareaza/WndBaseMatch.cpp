@@ -571,7 +571,7 @@ void CBaseMatchWnd::OnHitMonitorSearch()
 
 void CBaseMatchWnd::OnUpdateSecurityBan(CCmdUI* pCmdUI) 
 {
-	pCmdUI->Enable( m_pMatches->GetSelectedCount() );
+	pCmdUI->Enable( PtrToInt( m_pMatches->GetSelectedCount() ) );
 }
 
 void CBaseMatchWnd::OnSecurityBan() 
