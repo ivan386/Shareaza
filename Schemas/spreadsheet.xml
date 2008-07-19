@@ -552,6 +552,8 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <type extension="wb2"/>
                <type extension="wb3"/>
                <type extension="xls"/>
+               <type extension="xlsx"/>
                <type extension="xlt"/>
+               <type extension="xltx"/>
        </typeFilter>
 </schemaDescriptor>

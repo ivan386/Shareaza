@@ -517,7 +517,9 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <type extension="mpp"/>
                <type extension="mpt"/>
                <type extension="pdf"/>
+               <type extension="potx"/>
                <type extension="ppt"/>
+               <type extension="pptx"/>
                <type extension="sda"/>
                <type extension="sdd"/>
                <type extension="shw"/>

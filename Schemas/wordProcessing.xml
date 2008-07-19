@@ -548,6 +548,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <type extension="db"/>
                <type extension="dif"/>
                <type extension="doc"/>
+               <type extension="docx"/>
                <type extension="dot"/>
                <type extension="dox"/>
                <type extension="emr"/>
