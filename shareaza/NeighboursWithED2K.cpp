@@ -1,7 +1,7 @@
 //
 // NeighboursWithED2K.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -42,8 +42,6 @@ static char THIS_FILE[]=__FILE__;
 //////////////////////////////////////////////////////////////////////
 // CNeighboursWithED2K construction
 
-#pragma warning(disable: 4351)
-
 // CNeighboursWithED2K adds two arrays that need to be filled with 0s when the program creates its CNeighbours object
 CNeighboursWithED2K::CNeighboursWithED2K() :
 // Zero the memory of the sources array
@@ -69,7 +67,7 @@ CEDNeighbour* CNeighboursWithED2K::GetDonkeyServer() const // Here, const means 
 	{
 		// Get the neighbour under the current position, and move to the next position
 		CEDNeighbour* pNeighbour = (CEDNeighbour*)GetNext( pos );
-		
+
 		// This neighbour really is running eDonkey2000
 		if ( pNeighbour->m_nProtocol == PROTOCOL_ED2K )
 		{
