@@ -86,10 +86,6 @@
 
 #endif
 
-const bool SHAREAZA_RESTRICT_WP64 = true;
-// allow min to return the smaller type if called with unsigned arguments ?
-const bool SHAREAZA_ADVANCED_MIN_TEMPLATE = true;
-
 #define WINVER			0x0501		// Windows 95,98,ME,NT,2000,XP
 #define _WIN32_WINDOWS	0x0400		// Windows 95
 #define _WIN32_WINNT	0x0501		// Windows NT,2000,XP
@@ -154,10 +150,6 @@ const bool SHAREAZA_ADVANCED_MIN_TEMPLATE = true;
 //
 
 #include "CommonInclude.hpp"
-
-#include "zlib/zlib.h"
-
-#include "RegExp/regexpr2.h"
 
 #undef IDC_HAND		// Defined in Windows.h->WinUser.h and in Resource.h
 
