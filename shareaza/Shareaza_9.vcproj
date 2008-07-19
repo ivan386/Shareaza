@@ -2879,10 +2879,6 @@
 				>
 			</File>
 			<File
-				RelativePath="CommonInclude.hpp"
-				>
-			</File>
-			<File
 				RelativePath="ComObject.h"
 				>
 			</File>

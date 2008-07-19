@@ -47,6 +47,7 @@
 #pragma warning ( disable : 4264 )	// (Level 1)	'virtual_function' : no override available for virtual member function from base 'class'; function is hidden
 #pragma warning ( disable : 4555 )	// (Level 1)	expression has no effect; expected expression with side-effect
 #pragma warning ( disable : 4711 )	// (Level 1)	function 'function' selected for inline expansion
+#pragma warning ( disable : 4548 )	// (Level 1)	expression before comma has no effect; expected expression with side-effect
 
 #pragma warning ( disable : 4191 )	// (Level 3)	'operator/operation' : unsafe conversion from 'type of expression' to 'type required'
 #pragma warning ( disable : 4640 )	// (Level 3)	'instance' : construction of local static object is not thread-safe
@@ -139,17 +140,74 @@
 #include <MsiQuery.h>
 #include <MsiDefs.h>
 
+#if _MSC_VER < 1400 || _MSC_VER >= 1500
+#include <intrin.h>
+#endif
+
+//
+// STL
+//
+
+#include <vector>
+#include <list>
+#include <deque>
+#include <queue>
+#include <stack>
+#include <map>
+#include <set>
+#include <string>
+#include <utility>
+#include <functional>
+#include <algorithm>
+#include <memory>
+#include <iterator>
+#include <limits>
+#include <new>
+
+//
+// Boost
+//
+
+#ifndef _WIN64
+	#define BOOST_BIND_ENABLE_STDCALL 1
+	#define BOOST_MEM_FN_ENABLE_STDCALL 1
+#endif
+
+#include <boost/cstdint.hpp>
+#include <boost/bind.hpp>
+#include <boost/bind/placeholders.hpp>
+#include <boost/type_traits.hpp>
+#include <boost/smart_ptr.hpp>
+#include <boost/utility.hpp>
+#include <boost/array.hpp>
+#include <boost/ptr_container/ptr_list.hpp>
+#include <boost/checked_delete.hpp>
+
+//
+// Standard headers
+//
+
+#include "zlib/zlib.h"
+
+#include "RegExp/regexpr2.h"
+
+#include "MinMax.hpp"
+
 #if _MSC_VER >= 1500				// Work-around for VC9 where a (pop) is
 	#pragma warning( pop )			// ifdef'd out in stdio.h
 #endif
 
 #pragma warning( pop )				// Restore warnings
 
-//
-// Standard headers
-//
+#include "augment/augment.hpp"
+using augment::implicit_cast;
+using augment::auto_ptr;
+using augment::auto_array;
+using augment::com_ptr;
+using augment::IUnknownImplementation;
 
-#include "CommonInclude.hpp"
+#include "Utility.hpp"
+#include "Hashes.hpp"
 
 #undef IDC_HAND		// Defined in Windows.h->WinUser.h and in Resource.h
 
