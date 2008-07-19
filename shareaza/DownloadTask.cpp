@@ -185,6 +185,8 @@ BOOL CDownloadTask::InitInstance()
 
 int CDownloadTask::Run() 
 {
+	OleInitialize( NULL );
+
 	switch ( m_nTask )
 	{
 	case dtaskAllocate:
@@ -216,7 +218,9 @@ int CDownloadTask::Run()
 		MakeBatchTorrent();
 		break;
 	}
-	
+
+	OleUninitialize();	
+
 	return 0;
 }
 
