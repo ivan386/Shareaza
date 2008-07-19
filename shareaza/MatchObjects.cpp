@@ -1,7 +1,7 @@
 //
 // MatchObjects.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -340,6 +340,8 @@ void CMatchList::AddHits(CQueryHit* pHit, CQuerySearch* pFilter)
 				case PROTOCOL_ED2K:
 					m_nED2KHits += pFile->m_nFiltered;
 					break;
+				default:
+					theApp.Message( MSG_ERROR, _T("Invalid protocol in CMatchList::AddHits()") );
 				}
 			}
 		}
