@@ -206,8 +206,9 @@ void CHandshakes::Disconnect()
 	m_tStableTime	= 0;
 
 	// Delete all the handshake objects in the list, and the list itself
-	for ( POSITION pos = GetIterator() ; pos ; ) delete GetNext( pos );	// Delete each handshake object
-	m_pList.RemoveAll();												// Remove all the pointers
+	for ( POSITION pos = m_pList.GetHeadPosition() ; pos ; )
+		delete m_pList.GetNext( pos );	// Delete each handshake object
+	m_pList.RemoveAll();				// Remove all the pointers
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -266,10 +267,10 @@ BOOL CHandshakes::IsConnectedTo(IN_ADDR* pAddress) const
 	CSingleLock pLock( &m_pSection, TRUE );
 
 	// Loop for each CHandshake object in the m_pList of them
-	for ( POSITION pos = GetIterator() ; pos ; )
+	for ( POSITION pos = m_pList.GetHeadPosition() ; pos ; )
 	{
 		// Get the handshake object here in the list, and move the position iterator to the next one
-		CHandshake* pHandshake = GetNext( pos );
+		CHandshake* pHandshake = m_pList.GetNext( pos );
 
 		// If the IP address in the list handshake object matches the one given this method, we've found it
 		if ( pHandshake->m_pHost.sin_addr.S_un.S_addr == pAddress->S_un.S_addr ) return TRUE;
@@ -347,11 +348,11 @@ void CHandshakes::RunHandshakes()
 	CSingleLock pLock( &m_pSection, TRUE );
 
 	// Loop through each CHandshake object in the m_pList list of pointers to them
-	for ( POSITION posNext = GetIterator() ; posNext ; )
+	for ( POSITION posNext = m_pList.GetHeadPosition() ; posNext ; )
 	{
 		// Loop on one handshake object in the list
 		POSITION posThis = posNext;						// Save the current position, as GetNext will move it to the next one
-		CHandshake* pHandshake = GetNext( posNext );	// Get the pointer at this position, and move posNext forward
+		CHandshake* pHandshake = m_pList.GetNext( posNext );	// Get the pointer at this position, and move posNext forward
 
 		// Send and receive data write with the remote computer, deleting the handshake object if we loose the connection
 		if (

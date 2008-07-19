@@ -59,18 +59,6 @@ protected:
 	static int CALLBACK AcceptCheck(IN LPWSABUF lpCallerId, IN LPWSABUF lpCallerData, IN OUT LPQOS lpSQOS, IN OUT LPQOS lpGQOS, IN LPWSABUF lpCalleeId, IN LPWSABUF lpCalleeData, OUT GROUP FAR * g, IN DWORD_PTR dwCallbackData);
 
 public:
-	// Returns an iterator at the start of the list of handshake objects
-	inline POSITION GetIterator() const
-	{
-		return m_pList.GetHeadPosition();
-	}
-
-	// Given a position in the handshake list, returns the next handshake object
-	inline CHandshake* GetNext(POSITION& pos) const
-	{
-		return m_pList.GetNext( pos );
-	}
-
 	// True if the socket is valid, false if its closed
 	inline BOOL IsListening() const
 	{
