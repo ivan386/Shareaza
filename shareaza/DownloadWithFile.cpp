@@ -349,8 +349,8 @@ BOOL CDownloadWithFile::GetFragment(CDownloadTransfer* pTransfer)
 
 			if ( oLargest.size() > 102400 )
 			{
-				nLength = max( nLength, 51200u );
-				nLength = min( nLength, oLargest.size() - 51200u );
+				nLength = max( nLength, 51200ull );
+				nLength = min( nLength, oLargest.size() - 51200ull );
 			}
 		}
 

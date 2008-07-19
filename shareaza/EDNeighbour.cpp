@@ -78,7 +78,7 @@ BOOL CEDNeighbour::ConnectTo(IN_ADDR* pAddress, WORD nPort, BOOL bAutomatic)
 	if ( CConnection::ConnectTo( pAddress, nPort ) )
 	{
 		WSAEventSelect( m_hSocket, Network.GetWakeupEvent(), FD_CONNECT|FD_READ|FD_WRITE|FD_CLOSE );
-		
+
 		theApp.Message( MSG_INFO, IDS_ED2K_SERVER_CONNECTING,
 			(LPCTSTR)m_sAddress, htons( m_pHost.sin_port ) );
 	}
@@ -88,12 +88,12 @@ BOOL CEDNeighbour::ConnectTo(IN_ADDR* pAddress, WORD nPort, BOOL bAutomatic)
 			(LPCTSTR)CString( inet_ntoa( m_pHost.sin_addr ) ) );
 		return FALSE;
 	}
-	
+
 	m_nState		= nrsConnecting;
 	m_bAutomatic	= bAutomatic;
-	
+
 	Neighbours.Add( this );
-	
+
 	return TRUE;
 }
 
@@ -103,7 +103,7 @@ BOOL CEDNeighbour::ConnectTo(IN_ADDR* pAddress, WORD nPort, BOOL bAutomatic)
 BOOL CEDNeighbour::Send(CPacket* pPacket, BOOL bRelease, BOOL /*bBuffered*/)
 {
 	BOOL bSuccess = FALSE;
-	
+
 	if ( ( m_nState == nrsHandshake1 || m_nState >= nrsConnected ) &&
 		 pPacket->m_nProtocol == PROTOCOL_ED2K )
 	{
@@ -116,14 +116,14 @@ BOOL CEDNeighbour::Send(CPacket* pPacket, BOOL bRelease, BOOL /*bBuffered*/)
 			Write( pPacket );
 
 		QueueRun();
-		
+
 		pPacket->SmartDump( &m_pHost, FALSE, TRUE, m_nUnique );
 
 		bSuccess = TRUE;
 	}
-	
+
 	if ( bRelease ) pPacket->Release();
-	
+
 	return bSuccess;
 }
 
@@ -133,7 +133,7 @@ BOOL CEDNeighbour::Send(CPacket* pPacket, BOOL bRelease, BOOL /*bBuffered*/)
 BOOL CEDNeighbour::OnRun()
 {
 	DWORD tNow = GetTickCount();
-	
+
 	if ( m_nState != nrsConnected )
 	{
 		if ( tNow - m_tConnected > Settings.Connection.TimeoutConnect )
@@ -159,7 +159,7 @@ BOOL CEDNeighbour::OnRun()
 		//	return FALSE;
 		//}
 	}
-	
+
 	return TRUE;
 }
 
@@ -168,30 +168,30 @@ BOOL CEDNeighbour::OnRun()
 
 BOOL CEDNeighbour::OnConnected()
 {
-	DWORD nVersion =  ( ( ( ED2K_COMPATIBLECLIENT_ID & 0xFF ) << 24 ) | 
-							( ( theApp.m_nVersion[0] & 0x7F ) << 17 ) | 
+	DWORD nVersion =  ( ( ( ED2K_COMPATIBLECLIENT_ID & 0xFF ) << 24 ) |
+							( ( theApp.m_nVersion[0] & 0x7F ) << 17 ) |
 							( ( theApp.m_nVersion[1] & 0x7F ) << 10 ) |
 							( ( theApp.m_nVersion[2] & 0x07 ) << 7  ) |
 							( ( theApp.m_nVersion[3] & 0x7F )       ) );
 
 	theApp.Message( MSG_INFO, IDS_ED2K_SERVER_CONNECTED, (LPCTSTR)m_sAddress );
-	
+
 	CEDPacket* pPacket = CEDPacket::New(  ED2K_C2S_LOGINREQUEST );
-	
+
 	Hashes::Guid oGUID = MyProfile.oGUID;
 	oGUID[ 5 ] = 14;
 	oGUID[ 14 ] = 111;
 	pPacket->Write( oGUID );
-	
+
 	pPacket->WriteLongLE( m_nClientID );
 	pPacket->WriteShortLE( htons( Network.m_pHost.sin_port ) );
 
 	// Number of tags
 	if ( Settings.eDonkey.SendPortServer )
-		pPacket->WriteLongLE( 5 );	
-	else		
+		pPacket->WriteLongLE( 5 );
+	else
 		pPacket->WriteLongLE( 4 );
-	
+
 	// Tags sent to the server
 
 	// User name
@@ -204,24 +204,24 @@ BOOL CEDNeighbour::OnConnected()
 	// Port
 	if ( Settings.eDonkey.SendPortServer )
 		CEDTag( ED2K_CT_PORT, htons( Network.m_pHost.sin_port ) ).Write( pPacket, 0 );
-	// Software Version ('Client Version').	
+	// Software Version ('Client Version').
 	CEDTag( ED2K_CT_SOFTWAREVERSION, nVersion ).Write( pPacket, 0 );
 	// Flags indicating capability
 	if ( Settings.eDonkey.LargeFileSupport )
-		CEDTag( ED2K_CT_FLAGS, ED2K_SERVER_TCP_DEFLATE | 
-				ED2K_SERVER_TCP_SMALLTAGS | 
+		CEDTag( ED2K_CT_FLAGS, ED2K_SERVER_TCP_DEFLATE |
+				ED2K_SERVER_TCP_SMALLTAGS |
 				ED2K_SERVER_TCP_UNICODE |
 				ED2K_SERVER_TCP_64BITSIZE
 				).Write( pPacket, 0 );
 	else
-		CEDTag( ED2K_CT_FLAGS, ED2K_SERVER_TCP_DEFLATE | 
-				ED2K_SERVER_TCP_SMALLTAGS | 
+		CEDTag( ED2K_CT_FLAGS, ED2K_SERVER_TCP_DEFLATE |
+				ED2K_SERVER_TCP_SMALLTAGS |
 				ED2K_SERVER_TCP_UNICODE
 				).Write( pPacket, 0 );
 
 	m_nState = nrsHandshake1;
 	Send( pPacket );
-	
+
 	return TRUE;
 }
 
@@ -231,7 +231,7 @@ void CEDNeighbour::OnDropped(BOOL /*bError*/)
 	{
 		HostCache.OnFailure( &m_pHost.sin_addr, htons( m_pHost.sin_port ), PROTOCOL_ED2K, false );
 	}
-	
+
 	if ( m_nState == nrsConnecting )
 	{
 		Close( IDS_CONNECTION_REFUSED );
@@ -248,7 +248,7 @@ void CEDNeighbour::OnDropped(BOOL /*bError*/)
 BOOL CEDNeighbour::OnRead()
 {
 	BOOL bSuccess = TRUE;
-	
+
 	CNeighbour::OnRead();
 
 	CLockedBuffer pInput( GetInput() );
@@ -263,11 +263,11 @@ BOOL CEDNeighbour::OnRead()
 		{
 			pException->Delete();
 		}
-		
+
 		pPacket->Release();
 		if ( ! bSuccess ) break;
 	}
-	
+
 	return bSuccess;
 }
 
@@ -277,11 +277,11 @@ BOOL CEDNeighbour::OnRead()
 BOOL CEDNeighbour::OnPacket(CEDPacket* pPacket)
 {
 	pPacket->SmartDump( &m_pHost, FALSE, FALSE, m_nUnique );
-	
+
 	m_nInputCount++;
 	Statistics.Current.eDonkey.Incoming++;
 	m_tLastPacket = GetTickCount();
-	
+
 	switch ( pPacket->m_nType )
 	{
 	case ED2K_S2C_REJECTED:
@@ -308,7 +308,7 @@ BOOL CEDNeighbour::OnPacket(CEDPacket* pPacket)
 		break;
 		}
 	}
-	
+
 	return TRUE;
 }
 
@@ -324,23 +324,23 @@ BOOL CEDNeighbour::OnRejected(CEDPacket* /*pPacket*/)
 BOOL CEDNeighbour::OnServerMessage(CEDPacket* pPacket)
 {
 	if ( pPacket->GetRemaining() < 4 ) return TRUE;
-	
+
 	CString	strMessage = pPacket->ReadEDString( m_nTCPFlags );
-	
+
 	while ( strMessage.GetLength() > 0 )
 	{
 		CString strLine = strMessage.SpanExcluding( _T("\r\n") );
-		
+
 		if ( strLine.GetLength() > 0 )
 		{
 			strMessage = strMessage.Mid( strLine.GetLength() );
 			theApp.Message( MSG_NOTICE, IDS_ED2K_SERVER_MESSAGE,
 				(LPCTSTR)m_sAddress, (LPCTSTR)strLine );
 		}
-		
+
 		if ( strMessage.GetLength() > 0 ) strMessage = strMessage.Mid( 1 );
 	}
-	
+
 	return TRUE;
 }
 
@@ -469,15 +469,15 @@ BOOL CEDNeighbour::OnServerStatus(CEDPacket* pPacket)
 BOOL CEDNeighbour::OnServerIdent(CEDPacket* pPacket)
 {
 	if ( pPacket->GetRemaining() < Hashes::Guid::byteCount + 6 + 4 ) return TRUE;
-	
+
 	pPacket->Read( m_oGUID );
-	
+
 	pPacket->ReadLongLE();	// IP
 	pPacket->ReadShortLE();	// Port
-	
+
 	DWORD nTags = pPacket->ReadLongLE();
 	CString strDescription;
-	
+
 	while ( nTags-- > 0 && pPacket->GetRemaining() > 1 )
 	{
 		CEDTag pTag;
@@ -536,9 +536,9 @@ BOOL CEDNeighbour::OnServerIdent(CEDPacket* pPacket)
 		if ( m_nTCPFlags & ED2K_SERVER_TCP_GETSOURCES2 )
 			pHost->m_nUDPFlags |= ED2K_SERVER_UDP_GETSOURCES2;
 	}
-	
+
 	theApp.Message( MSG_NOTICE, IDS_ED2K_SERVER_IDENT, (LPCTSTR)m_sAddress, (LPCTSTR)m_sServerName );
-	
+
 	return TRUE;
 }
 
@@ -564,10 +564,10 @@ BOOL CEDNeighbour::OnSearchResults(CEDPacket* pPacket)
 		m_nDropCount++;
 		return TRUE;
 	}
-	
+
 	Hashes::Guid oGUID = m_pQueries.RemoveHead();
 	CQueryHit* pHits = CQueryHit::FromEDPacket( pPacket, &m_pHost, m_nTCPFlags, oGUID );
-	
+
 	if ( pHits == NULL )
 	{
 		if ( pPacket->m_nLength != 17 && pPacket->m_nLength != 5 )
@@ -577,10 +577,10 @@ BOOL CEDNeighbour::OnSearchResults(CEDPacket* pPacket)
 			Statistics.Current.eDonkey.Dropped++;
 			m_nDropCount++;
 		}
-		
+
 		return TRUE;
 	}
-	
+
 	// Process the 'more results available' packet.
 	if ( pPacket->m_nType == ED2K_S2C_SEARCHRESULTS && pPacket->GetRemaining() == 1 && m_pQueries.IsEmpty() )
 	{
@@ -590,19 +590,19 @@ BOOL CEDNeighbour::OnSearchResults(CEDPacket* pPacket)
 			theApp.Message( MSG_DEBUG, _T("Additional results packet received.") );
 		}
 	}
-	
+
 	Network.OnQueryHits( pHits );
-	
+
 	return TRUE;
 }
 
 BOOL CEDNeighbour::OnFoundSources(CEDPacket* pPacket)
 {
 	CQueryHit* pHits	= CQueryHit::FromEDPacket( pPacket, &m_pHost, m_nTCPFlags );
-	
+
 	if ( pHits == NULL )
 	{
-		
+
 		if ( pPacket->m_nLength != 17 && pPacket->m_nLength != 5 )
 		{
 			pPacket->Debug( _T("BadSearchResult") );
@@ -610,12 +610,12 @@ BOOL CEDNeighbour::OnFoundSources(CEDPacket* pPacket)
 			Statistics.Current.eDonkey.Dropped++;
 			m_nDropCount++;
 		}
-		
+
 		return TRUE;
 	}
-	
+
 	Network.OnQueryHits( pHits );
-	
+
 	return TRUE;
 }
 
@@ -624,13 +624,13 @@ BOOL CEDNeighbour::OnFoundSources(CEDPacket* pPacket)
 
 // This function sends the list of shared files to the ed2k server. Note that it's best to
 // keep it as brief as possible to reduce the load. This means the metadata should be limited
-// to known good values, and only files that are actually available for upload right now should 
+// to known good values, and only files that are actually available for upload right now should
 // be sent.
 void CEDNeighbour::SendSharedFiles()
-{	
+{
 	// Set the limits for number of files sent to the ed2k server
-	m_nFileLimit = max( Settings.eDonkey.MaxShareCount, 25u );
-	
+	m_nFileLimit = max( Settings.eDonkey.MaxShareCount, 25ul );
+
 	{
 		CQuickLock oLock( HostCache.eDonkey.m_pSection );
 
@@ -643,12 +643,12 @@ void CEDNeighbour::SendSharedFiles()
 
 	CEDPacket* pPacket = CEDPacket::New( ED2K_C2S_OFFERFILES );
 	POSITION pos;
-	
+
 	m_nFilesSent = 0;
-	
+
 	pPacket->WriteLongLE( m_nFilesSent );		//Write number of files. (update this later)
-	
-	
+
+
 	CSingleLock pTransfersLock( &Transfers.m_pSection );
 	CSingleLock pLibraryLock( &Library.m_pSection );
 
@@ -657,7 +657,7 @@ void CEDNeighbour::SendSharedFiles()
 	for ( pos = Downloads.GetIterator() ; pos != NULL && ( m_nFilesSent < m_nFileLimit ) ; )
 	{
 		CDownload* pDownload = Downloads.GetNext( pos );
-		
+
 		//If the file has an ed2k hash, has started, has a known size and a hashset, etc...
 		if ( ( pDownload->m_oED2K ) && ( pDownload->IsStarted() ) && ( pDownload->m_nSize != SIZE_UNKNOWN ) &&
 			 ( pDownload->NeedHashset() == FALSE ) && ( ! pDownload->IsMoving() ) &&
@@ -703,8 +703,8 @@ void CEDNeighbour::SendSharedFiles()
 			}
 
 			//Send the file type to the ed2k server
-			//CEDTag( ED2K_FT_FILETYPE, strType ).Write( pPacket ); 
-			// We don't know it for certain with incomplete files. 
+			//CEDTag( ED2K_FT_FILETYPE, strType ).Write( pPacket );
+			// We don't know it for certain with incomplete files.
 			// It *might* be okay to assume from the extention, since they are usually correct...
 			// Probably best not to for now, though. Server gets the extention anyway.
 
@@ -717,17 +717,17 @@ void CEDNeighbour::SendSharedFiles()
 		}
 	}
 	pTransfersLock.Unlock();
-	
+
 	//Send files in library to ed2k server (Complete files)
 	pLibraryLock.Lock();
 	for ( pos = LibraryMaps.GetFileIterator() ; pos != NULL && ( m_nFilesSent < m_nFileLimit ) ; )
 	{
 		CLibraryFile* pFile = LibraryMaps.GetNextFile( pos );
-		
+
 		if ( pFile->IsShared() && pFile->m_oED2K )	//If file is shared and has an ed2k hash
 		{
 			if ( ( ( Settings.eDonkey.MinServerFileSize == 0 ) || ( pFile->GetSize() > Settings.eDonkey.MinServerFileSize * 1024 * 1024 ) ) && // If file is large enough to meet minimum requirement
-			     ( ( pFile->m_nSize < MAX_SIZE_32BIT ) || ( Settings.eDonkey.LargeFileSupport && ( m_nTCPFlags & ED2K_SERVER_TCP_64BITSIZE ) ) ) ) // and isn't too large for the server
+				 ( ( pFile->m_nSize < MAX_SIZE_32BIT ) || ( Settings.eDonkey.LargeFileSupport && ( m_nTCPFlags & ED2K_SERVER_TCP_64BITSIZE ) ) ) ) // and isn't too large for the server
 			{
 				if ( UploadQueues.CanUpload( PROTOCOL_ED2K, pFile ) ) // Check if a queue exists
 				{
@@ -775,8 +775,8 @@ void CEDNeighbour::SendSharedFiles()
 						}
 
 						//Does this server support the new tags?
-						if ( m_nTCPFlags & ED2K_SERVER_TCP_SMALLTAGS )	
-						{					
+						if ( m_nTCPFlags & ED2K_SERVER_TCP_SMALLTAGS )
+						{
 							if ( pFile->IsSchemaURI( CSchema::uriAudio ) )	//If it's an audio file
 							{
 								// Bitrate
@@ -798,7 +798,7 @@ void CEDNeighbour::SendSharedFiles()
 								}
 							}
 
-							
+
 							if ( pFile->IsSchemaURI( CSchema::uriVideo ) )	//If it's a video file
 							{
 								// Codec
@@ -810,7 +810,7 @@ void CEDNeighbour::SendSharedFiles()
 
 								// Length
 								if ( pFile->m_pMetadata->GetAttributeValue( _T("minutes") ).GetLength() )	//And has minutes
-								{	
+								{
 									double nMins = 0.0;
 									//Read in the no. seconds
 									_stscanf( pFile->m_pMetadata->GetAttributeValue( _T("minutes") ), _T("%.3lf"), &nMins );
@@ -835,7 +835,7 @@ void CEDNeighbour::SendSharedFiles()
 
 					// Set the number of tags present
 					pPacket->WriteLongLE( nTags );
-	
+
 					// Send the file name to the ed2k server
 					CEDTag( ED2K_FT_FILENAME, pFile->m_sName ).Write( pPacket, m_nTCPFlags );
 					// Send the file size to the ed2k server
@@ -844,7 +844,7 @@ void CEDNeighbour::SendSharedFiles()
 					{
 						CEDTag( ED2K_FT_FILESIZEUPPER, (DWORD)(pFile->GetSize() >> 32 ) ).Write( pPacket, m_nTCPFlags );
 					}
-					
+
 					// Send the file type to the ed2k server
 					if ( strType.GetLength() ) CEDTag( ED2K_FT_FILETYPE, strType ).Write( pPacket, m_nTCPFlags );
 					// Send the bitrate to the ed2k server
@@ -865,7 +865,7 @@ void CEDNeighbour::SendSharedFiles()
 	pLibraryLock.Unlock();
 
 	*(DWORD*)pPacket->m_pBuffer = m_nFilesSent;	// Correct the number of files sent
-	
+
 	if ( m_nTCPFlags & ED2K_SERVER_TCP_DEFLATE ) pPacket->Deflate();	// ZLIB compress if available
 
 	Send( pPacket );	// Send the packet
@@ -950,6 +950,6 @@ BOOL CEDNeighbour::SendQuery(CQuerySearch* pSearch, CPacket* pPacket, BOOL bLoca
 	// Don't add the GUID for GetSources
 	if ( ( ! pSearch->m_oED2K ) || ( pSearch->m_bWantDN && Settings.eDonkey.MagnetSearch ) )
 		m_pQueries.AddTail( pSearch->m_oGUID );
-	
+
 	return CNeighbour::SendQuery( pSearch, pPacket, bLocal );
 }

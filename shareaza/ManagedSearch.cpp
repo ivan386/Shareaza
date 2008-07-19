@@ -1,7 +1,7 @@
 //
 // ManagedSearch.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -96,16 +96,16 @@ void CManagedSearch::Serialize(CArchive& ar)
 	{
 		ar >> nVersion;
 		if ( nVersion < 2 ) AfxThrowUserException();
-		
+
 		m_pSearch.reset( new CQuerySearch() );
 		m_pSearch->Serialize( ar );
-		
+
 		ar >> m_nPriority;
 		ar >> m_bActive;
 		ar >> m_bReceive;
-		
+
 		m_bActive = m_bReceive = FALSE;
-		
+
 		if ( nVersion >= 3 )
 		{
 			ar >> m_bAllowG2;
@@ -121,19 +121,19 @@ void CManagedSearch::Serialize(CArchive& ar)
 void CManagedSearch::Start()
 {
 	if ( m_bActive ) return;
-	
+
 	CSingleLock pLock( &SearchManager.m_pSection );
 	if ( !pLock.Lock( 100 ) ) return;
-	
+
 	m_bActive		= TRUE;
 	m_tStarted		= static_cast< DWORD >( time( NULL ) );
 	m_tExecute		= 0;
 	m_tLastED2K		= 0;
 	m_tMoreResults	= 0;
 	m_nQueryCount	= 0;
-	
+
 	m_pNodes.RemoveAll();
-	
+
 	SearchManager.Add( this );
 }
 
@@ -146,7 +146,7 @@ void CManagedSearch::Stop()
 	if ( m_bActive )
 	{
 		m_bActive = FALSE;
-	    Datagrams.PurgeToken( this );
+		Datagrams.PurgeToken( this );
 	}
 }
 
@@ -156,10 +156,10 @@ void CManagedSearch::Stop()
 BOOL CManagedSearch::Execute()
 {
 	if ( ! m_bActive || ! m_pSearch ) return FALSE;
-	
+
 	DWORD tTicks	= GetTickCount();
 	DWORD tSecs		= static_cast< DWORD >( time( NULL ) );
-	
+
 	// Throttle this individual search (so it doesn't take up too many resources)
 	DWORD nThrottle = Settings.Search.GeneralThrottle;
 	if ( m_nPriority == spLowest ) nThrottle += 30000;
@@ -167,8 +167,8 @@ BOOL CManagedSearch::Execute()
 
 	if ( tTicks - m_tExecute < nThrottle ) return FALSE;
 	m_tExecute = tTicks;
-	
-	// Search local neighbours- hubs, servers and ultrapeers. (TCP) 
+
+	// Search local neighbours- hubs, servers and ultrapeers. (TCP)
 	BOOL bSuccess = ExecuteNeighbours( tTicks, tSecs );
 
 	// G2 global search. (UDP)
@@ -180,7 +180,7 @@ BOOL CManagedSearch::Execute()
 			m_tLastG2 = tTicks;
 		}
 	}
-	
+
 	// ED2K global search. (UDP)
 	if ( Settings.eDonkey.EnableToday && Settings.eDonkey.ServerWalk && m_bAllowED2K &&
 		Network.IsListening() && ( m_pSearch->m_oED2K || IsLastED2KSearch() ) )
@@ -193,7 +193,7 @@ BOOL CManagedSearch::Execute()
 	}
 
 	if ( bSuccess ) m_nQueryCount++;
-	
+
 	return bSuccess;
 }
 
@@ -206,10 +206,10 @@ BOOL CManagedSearch::ExecuteNeighbours(DWORD tTicks, DWORD tSecs)
 	for ( POSITION pos = Neighbours.GetIterator() ; pos ; )
 	{
 		CNeighbour* pNeighbour = Neighbours.GetNext( pos );
-		
-		// Must be connected		
+
+		// Must be connected
 		if ( pNeighbour->m_nState != nrsConnected ) continue;
-		
+
 		// Check network flags
 		switch ( pNeighbour->m_nProtocol )
 		{
@@ -253,12 +253,12 @@ BOOL CManagedSearch::ExecuteNeighbours(DWORD tTicks, DWORD tSecs)
 				nFrequency = Settings.Gnutella2.RequeryDelay * ( m_nPriority + 1 );
 			else if ( pNeighbour->m_nProtocol == PROTOCOL_ED2K )
 				nFrequency = 86400; // 1 day
-			
+
 			if ( tSecs - nLastQuery < nFrequency ) // If we've queried this neighbour 'recently'
 			{
 				// Request more ed2k results (if appropriate)
 				if ( ( pNeighbour->m_nProtocol == PROTOCOL_ED2K ) && pNeighbour->m_oMoreResultsGUID ) // If it's an ed2k server and has more results
-				{	
+				{
 					if ( validAndEqual( m_pSearch->m_oGUID, pNeighbour->m_oMoreResultsGUID ) && // and this search is the one with results waiting
 						( m_tMoreResults + 10000 < tTicks ) )		// and we've waited a little while (to ensure the search is still active)
 					{
@@ -275,7 +275,7 @@ BOOL CManagedSearch::ExecuteNeighbours(DWORD tTicks, DWORD tSecs)
 				}
 
 				// Don't search this neighbour again.
-				continue; 
+				continue;
 			}
 		}
 
@@ -341,7 +341,7 @@ BOOL CManagedSearch::ExecuteNeighbours(DWORD tTicks, DWORD tSecs)
 				theApp.Message( MSG_INFO, IDS_NETWORK_SEARCH_SENT,
 					m_pSearch->m_sSearch.GetLength() ? (LPCTSTR)m_pSearch->m_sSearch : _T("URN"),
 					(LPCTSTR)CString( inet_ntoa( pNeighbour->m_pHost.sin_addr ) ) );
-				
+
 				if ( pNeighbour->m_nProtocol == PROTOCOL_ED2K )
 				{
 					// Add to ED2K search counts
@@ -357,10 +357,10 @@ BOOL CManagedSearch::ExecuteNeighbours(DWORD tTicks, DWORD tSecs)
 			}
 			pPacket->Release();
 		}
-		
+
 		nCount++;
 	}
-	
+
 	return ( nCount > 0 );
 }
 
@@ -372,29 +372,29 @@ BOOL CManagedSearch::ExecuteG2Mesh(DWORD /*tTicks*/, DWORD tSecs)
 	// Look at all known Gnutella2 hubs, newest first
 
 	CQuickLock oLock( HostCache.Gnutella2.m_pSection );
-	
+
 	for ( CHostCacheIterator i = HostCache.Gnutella2.Begin() ;
 		i != HostCache.Gnutella2.End();	++i )
 	{
 		CHostCacheHost* pHost = (*i);
 		// Must be Gnutella2
-		
+
 		ASSERT( pHost->m_nProtocol == PROTOCOL_G2 );
 		if ( pHost->m_nProtocol != PROTOCOL_G2 ) continue;
-		
+
 		// If this host is a neighbour, don't UDP to it
-		
+
 		if ( NULL != Neighbours.Get( &pHost->m_pAddress ) ) continue;
-		
+
 		// If this host can't be queried now, don't query it
-		
+
 		if ( ! pHost->CanQuery( tSecs ) ) continue;
-		
+
 		// Check if we have an appropriate query key for this host, and if so,
 		// record the receiver address
-		
+
 		SOCKADDR_IN* pReceiver = NULL;
-		
+
 		if ( pHost->m_nKeyValue == 0 )
 		{
 			// Well, we already know we don't have a key.. pretty simple
@@ -403,7 +403,7 @@ BOOL CManagedSearch::ExecuteG2Mesh(DWORD /*tTicks*/, DWORD tSecs)
 		{
 			// If we are "stable", we have to TX/RX our own UDP traffic,
 			// so we must have a query key for the local addess
-			
+
 			if ( pHost->m_nKeyHost == Network.m_pHost.sin_addr.S_un.S_addr )
 				pReceiver = &Network.m_pHost;
 			else
@@ -413,7 +413,7 @@ BOOL CManagedSearch::ExecuteG2Mesh(DWORD /*tTicks*/, DWORD tSecs)
 		{
 			// Make sure we have a query key via one of our neighbours,
 			// and ensure we have queried this neighbour
-			
+
 			if ( CNeighbour* pNeighbour = Neighbours.Get( (IN_ADDR*)&pHost->m_nKeyHost ) )
 			{
 				DWORD nTemp;
@@ -427,21 +427,21 @@ BOOL CManagedSearch::ExecuteG2Mesh(DWORD /*tTicks*/, DWORD tSecs)
 				pHost->m_nKeyValue = 0;
 			}
 		}
-		
+
 		// Now, if we still have a query key, send the query
-		
+
 		if ( pHost->m_nKeyValue != 0 )
 		{
 			DWORD tLastQuery, nAddress = pHost->m_pAddress.S_un.S_addr;
 			ASSERT( pReceiver != NULL );
-			
+
 			// Lookup the host
-			
+
 			if ( m_pNodes.Lookup( nAddress, tLastQuery ) )
 			{
 				// Check per-hub requery time
 				DWORD nFrequency;
-				
+
 				if ( m_nPriority >=  spLowest )
 				{
 					// Low priority "auto find" sources
@@ -454,34 +454,34 @@ BOOL CManagedSearch::ExecuteG2Mesh(DWORD /*tTicks*/, DWORD tSecs)
 					nFrequency = Settings.Gnutella2.RequeryDelay * ( m_nPriority + 1 );
 				if ( tSecs - tLastQuery < nFrequency ) continue;
 			}
-			
+
 			// Set the last query time for this host for this search
-			
+
 			m_pNodes.SetAt( nAddress, tSecs );
-			
+
 			// Record the query time on the host, for all searches
-			
+
 			pHost->m_tQuery = tSecs;
 			if ( pHost->m_tAck == 0 ) pHost->m_tAck = tSecs;
-			
+
 			// Try to create a packet
-			
+
 			m_pSearch->m_bAndG1 = ( Settings.Gnutella1.EnableToday && m_bAllowG1 );
 			CPacket* pPacket = m_pSearch->ToG2Packet( pReceiver, pHost->m_nKeyValue );
-			
+
 			// Send the packet if it was created
-			
+
 			if ( pPacket != NULL )
 			{
 				Datagrams.Send( &pHost->m_pAddress, pHost->m_nPort, pPacket, TRUE, this, TRUE );
-				
+
 				theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("Querying %s"),
 					(LPCTSTR)CString( inet_ntoa( pHost->m_pAddress ) ) );
-				
+
 				return TRUE;
 			}
 		}
-		else if ( tSecs - pHost->m_tKeyTime >= max( Settings.Gnutella2.QueryHostThrottle * 5, 5*60u ) )
+		else if ( tSecs - pHost->m_tKeyTime >= max( Settings.Gnutella2.QueryHostThrottle * 5ul, 5ul * 60ul ) )
 		{
 			// Timing wise, we can request a query key now -- but first we must figure
 			// out who should be the receiver
@@ -559,25 +559,25 @@ BOOL CManagedSearch::ExecuteG2Mesh(DWORD /*tTicks*/, DWORD tSecs)
 					pPacket->WritePacket( G2_PACKET_REQUEST_ADDRESS, 6 );
 					pPacket->WriteLongLE( pReceiver->sin_addr.S_un.S_addr );
 					pPacket->WriteShortBE( ntohs( pReceiver->sin_port ) );
-					
+
 					CString strReceiver = CString( inet_ntoa( pReceiver->sin_addr ) );
 					theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("Requesting query key from %s for %s"),
 						(LPCTSTR)CString( inet_ntoa( pHost->m_pAddress ) ), (LPCTSTR)strReceiver );
 				}
-				
+
 				// Send
-				
+
 				Datagrams.Send( &pHost->m_pAddress, pHost->m_nPort, pPacket, TRUE, NULL, FALSE );
-				
+
 				if ( pHost->m_tAck == 0 ) pHost->m_tAck = tSecs;
 				pHost->m_tKeyTime = tSecs;
 				pHost->m_nKeyValue = 0;
-				
+
 				return TRUE;
 			}
 		}
 	}
-	
+
 	return FALSE;
 }
 
@@ -593,35 +593,35 @@ BOOL CManagedSearch::ExecuteDonkeyMesh(DWORD /*tTicks*/, DWORD tSecs)
 		CHostCacheHost* pHost = (*i);
 
 		ASSERT( pHost->m_nProtocol == PROTOCOL_ED2K );
-		
+
 		// If this host is a neighbour, don't UDP to it
-		
+
 		if ( Neighbours.Get( &pHost->m_pAddress ) ) continue;
-		
+
 		// Make sure this host can be queried (now)
-		
+
 		if ( pHost->CanQuery( tSecs ) )
 		{
 			DWORD nAddress = pHost->m_pAddress.S_un.S_addr;
 			DWORD tLastQuery;
-			
+
 			// Never requery eDonkey2000 servers
-			
+
 			if ( m_pNodes.Lookup( nAddress, tLastQuery ) ) continue;
-			
+
 			// Set the last query time for this host for this search
-			
+
 			m_pNodes.SetAt( nAddress, tSecs );
-			
+
 			// Record the query time on the host, for all searches
-			
+
 			pHost->m_tQuery = tSecs;
 			if ( pHost->m_tAck == 0 ) pHost->m_tAck = tSecs;
-			
+
 			// Create a packet in the appropriate format
-			
+
 			CPacket* pPacket = NULL;
-			
+
 			if ( pHost->m_nProtocol == PROTOCOL_ED2K )
 			{
 				pPacket = m_pSearch->ToEDPacket( TRUE, pHost->m_nUDPFlags );
@@ -630,13 +630,13 @@ BOOL CManagedSearch::ExecuteDonkeyMesh(DWORD /*tTicks*/, DWORD tSecs)
 			{
 				ASSERT( FALSE );
 			}
-			
+
 			// Send the datagram if possible
-			
-			if ( pPacket != NULL ) 
+
+			if ( pPacket != NULL )
 			{
 				Datagrams.Send( &pHost->m_pAddress, pHost->m_nPort + 4, pPacket, TRUE );
-				
+
 				theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("Sending UDP query to %s"),
 					(LPCTSTR)CString( inet_ntoa( pHost->m_pAddress ) ) );
 
@@ -646,12 +646,12 @@ BOOL CManagedSearch::ExecuteDonkeyMesh(DWORD /*tTicks*/, DWORD tSecs)
 					m_nEDServers++;
 					m_nEDClients += pHost->m_nUserCount;
 				}
-				
+
 				return TRUE;
 			}
 		}
 	}
-	
+
 	return FALSE;
 }
 
@@ -671,4 +671,3 @@ BOOL CManagedSearch::IsLastED2KSearch()
 {
 	return validAndEqual( m_pSearch->m_oGUID, SearchManager.m_oLastED2KSearch );
 }
-

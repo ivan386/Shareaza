@@ -1,7 +1,7 @@
 //
 // PageSettingsBitTorrent.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -23,8 +23,6 @@
 #include "Shareaza.h"
 #include "Settings.h"
 #include "WndMain.h"
-//#include "Library.h"
-//#include "LibraryHistory.h"
 #include "PageSettingsBitTorrent.h"
 
 #ifdef _DEBUG
@@ -36,11 +34,9 @@ static char THIS_FILE[] = __FILE__;
 IMPLEMENT_DYNCREATE(CBitTorrentSettingsPage, CSettingsPage)
 
 BEGIN_MESSAGE_MAP(CBitTorrentSettingsPage, CSettingsPage)
-	//{{AFX_MSG_MAP(CBitTorrentSettingsPage)
 	ON_BN_CLICKED(IDC_TORRENT_AUTOCLEAR, OnTorrentsAutoClear)
 	ON_BN_CLICKED(IDC_TORRENTS_BROWSE, OnTorrentsBrowse)
 	ON_BN_CLICKED(IDC_TORRENTS_TORRENTMAKERBROWSE, OnMakerBrowse)
-	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 
@@ -93,7 +89,7 @@ void CBitTorrentSettingsPage::DoDataExchange(CDataExchange* pDX)
 /////////////////////////////////////////////////////////////////////////////
 // CBitTorrentSettingsPage message handlers
 
-BOOL CBitTorrentSettingsPage::OnInitDialog() 
+BOOL CBitTorrentSettingsPage::OnInitDialog()
 {
 	CSettingsPage::OnInitDialog();
 	m_bTorrentInterface = Settings.BitTorrent.AdvancedInterface;
@@ -113,7 +109,7 @@ BOOL CBitTorrentSettingsPage::OnInitDialog()
 	m_wndClearPercentage.EnableWindow( m_bAutoClear );
 
 	DWORD nMaxTorrents = ( Settings.GetOutgoingBandwidth() / 2 ) + 2;
-	nMaxTorrents = min ( 10u, nMaxTorrents);
+	nMaxTorrents = min ( 10ul, nMaxTorrents);
 
 	m_wndClearPercentageSpin.SetRange( 100, 999 );
 
@@ -124,10 +120,10 @@ BOOL CBitTorrentSettingsPage::OnInitDialog()
 	return TRUE;
 }
 
-BOOL CBitTorrentSettingsPage::OnSetActive() 
+BOOL CBitTorrentSettingsPage::OnSetActive()
 {
 	DWORD nMaxTorrents = ( Settings.GetOutgoingBandwidth() / 2 ) + 2;
-	nMaxTorrents = min( 10u, nMaxTorrents );
+	nMaxTorrents = min( 10ul, nMaxTorrents );
 
 	m_nDownloads	= min( m_nDownloads, (int)nMaxTorrents );
 	m_wndDownloadsSpin.SetRange( 0, (WORD)nMaxTorrents );
@@ -137,38 +133,38 @@ BOOL CBitTorrentSettingsPage::OnSetActive()
 	return CSettingsPage::OnSetActive();
 }
 
-void CBitTorrentSettingsPage::OnTorrentsAutoClear() 
+void CBitTorrentSettingsPage::OnTorrentsAutoClear()
 {
 	UpdateData();
 	m_wndClearPercentage.EnableWindow( m_bAutoClear );
 	m_wndClearPercentageSpin.EnableWindow( m_bAutoClear );
 }
 
-void CBitTorrentSettingsPage::OnTorrentsBrowse() 
+void CBitTorrentSettingsPage::OnTorrentsBrowse()
 {
 	CString strPath( BrowseForFolder( _T("Select folder for torrents:"),
 		m_sTorrentPath ) );
 	if ( strPath.IsEmpty() )
 		return;
-	
+
 	UpdateData( TRUE );
 	m_sTorrentPath = strPath;
 	UpdateData( FALSE );
 }
 
-void CBitTorrentSettingsPage::OnMakerBrowse() 
+void CBitTorrentSettingsPage::OnMakerBrowse()
 {
 	CFileDialog dlg( TRUE, _T("exe"), _T("TorrentWizard.exe") , OFN_HIDEREADONLY|OFN_FILEMUSTEXIST,
 		_T("Executable Files|*.exe;*.com|All Files|*.*||"), this );
-	
+
 	if ( dlg.DoModal() != IDOK ) return;
-	
+
 	UpdateData( TRUE );
 	m_sMakerPath = dlg.GetPathName();
 	UpdateData( FALSE );
 }
 
-void CBitTorrentSettingsPage::OnOK() 
+void CBitTorrentSettingsPage::OnOK()
 {
 	BOOL bRedraw = FALSE;
 	UpdateData( TRUE );
@@ -213,7 +209,7 @@ void CBitTorrentSettingsPage::OnOK()
 
 	/*
 	// Redraw the GUI to make torrents box show/hide if we need to
-	if ( bRedraw ) 
+	if ( bRedraw )
 	{
 		CMainWnd* pMainWnd = (CMainWnd*)AfxGetMainWnd();
 		pMainWnd->SetGUIMode( Settings.General.GUIMode, FALSE );

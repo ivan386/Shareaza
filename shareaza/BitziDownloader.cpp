@@ -1,7 +1,7 @@
 //
 // BitziDownloader.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -191,7 +191,7 @@ void CBitziDownloader::OnRun()
 		if ( m_pXML ) delete m_pXML;
 		m_pXML = NULL;
 
-		Sleep( min( m_nDelay, 500u ) );
+		Sleep( min( m_nDelay, 500ul ) );
 	}
 
 	if ( m_hSession != NULL && ! m_bFinished ) InternetCloseHandle( m_hSession );

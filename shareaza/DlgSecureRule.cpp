@@ -1,7 +1,7 @@
 //
 // DlgSecureRule.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -279,11 +279,11 @@ void CSecureRuleDlg::OnOK()
 
 			pwIP[ nByte ]->GetWindowText( strItem );
 			if ( _stscanf( strItem, _T("%lu"), &nValue ) != 1 ) nValue = 0;
-			m_pRule->m_nIP[ nByte ] = (BYTE)min( 255u, nValue );
+			m_pRule->m_nIP[ nByte ] = (BYTE)min( 255ul, nValue );
 
 			pwMask[ nByte ]->GetWindowText( strItem );
 			if ( _stscanf( strItem, _T("%lu"), &nValue ) != 1 ) nValue = 0;
-			m_pRule->m_nMask[ nByte ] = (BYTE)min( 255u, nValue );
+			m_pRule->m_nMask[ nByte ] = (BYTE)min( 255ul, nValue );
 		}
 	}
 	else if ( m_pRule->m_nType == CSecureRule::srContent )
@@ -297,4 +297,3 @@ void CSecureRuleDlg::OnOK()
 
 	CSkinDialog::OnOK();
 }
-

@@ -161,7 +161,7 @@ CSettings::CSettings()
 	Add( _T("WebServices"), _T("ShareMonkeyCid"), &WebServices.ShareMonkeyCid );
 	Add( _T("WebServices"), _T("ShareMonkeyOkay"), &WebServices.ShareMonkeyOkay, false, true );
 	Add( _T("WebServices"), _T("ShareMonkeySaveThumbnail"), &WebServices.ShareMonkeySaveThumbnail, false, true );
-	
+
 	Add( _T("Search"), _T("AdultFilter"), &Search.AdultFilter, false );
 	Add( _T("Search"), _T("AdvancedPanel"), &Search.AdvancedPanel, true );
 	Add( _T("Search"), _T("BlankSchemaURI"), &Search.BlankSchemaURI, CSchema::uriAudio );
@@ -635,7 +635,7 @@ void CSettings::Load()
 
 	// Enforce a few sensible values to avoid being banned/dropped/etc (in case of registry fiddling)
 	Downloads.ConnectThrottle	= max( Downloads.ConnectThrottle, Connection.ConnectThrottle + 50u );
-	
+
 	// Make sure download/incomplete folders aren't the same
 	if ( _tcsicmp( Downloads.IncompletePath, Downloads.CompletePath ) == 0 )
 	{
@@ -879,12 +879,12 @@ void CSettings::SmartUpgrade()
 		}
 
 		if ( General.SmartVersion < 43 )
-		{	
+		{
 			eDonkey.MetAutoQuery = true;
 		}
 
 		if ( General.SmartVersion < 44 )
-		{	
+		{
 			BitTorrent.AutoSeed = true;
 		}
 
@@ -1024,12 +1024,12 @@ void CSettings::SmartUpgrade()
 			if ( ! IsIn( Library.PrivateTypes, _T("!ut") ) )
 				Library.PrivateTypes.insert( _T("!ut") );
 		}
-		
+
 		if ( General.SmartVersion < 55 ) // Migrate values to other section
 		{
 			WebServices.BitziOkay		= theApp.GetProfileInt( L"Library", L"BitziOkay", false ) != 0;
 			WebServices.ShareMonkeyCid	= theApp.GetProfileString( L"", L"ShareMonkeyCid", L"" );
-			
+
 			// Delete old values
 			theApp.WriteProfileString( L"Library", L"BitziAgent", NULL );
 			theApp.WriteProfileString( L"Library", L"BitziWebSubmit", NULL );
@@ -1037,14 +1037,14 @@ void CSettings::SmartUpgrade()
 			theApp.WriteProfileString( L"Library", L"BitziXML", NULL );
 			theApp.WriteProfileString( L"", L"ShareMonkeyCid", NULL );
 			theApp.WriteProfileString( L"Library", L"BitziWebView", NULL );
-			
+
 			HKEY hKey;
 
 			if ( RegOpenKeyEx( HKEY_CURRENT_USER,
 				_T("SOFTWARE\\Shareaza\\Shareaza\\Library"), 0, KEY_ALL_ACCESS, &hKey )
 				!= ERROR_SUCCESS ) return;
 			RegDeleteValue( hKey, _T("BitziOkay") );
-			RegCloseKey( hKey );			
+			RegCloseKey( hKey );
 		}
 	}
 
@@ -1157,9 +1157,9 @@ void CSettings::OnChangeConnectionSpeed()
 
 	if( bLimited )
 	{	// Window XP Service Pack 2
-		Connection.ConnectThrottle		= max( Connection.ConnectThrottle, 250u );
-		Downloads.ConnectThrottle		= max( Downloads.ConnectThrottle, 800u );
-		Gnutella.ConnectFactor			= min( Gnutella.ConnectFactor, 3u );
+		Connection.ConnectThrottle		= max( Connection.ConnectThrottle, 250ul );
+		Downloads.ConnectThrottle		= max( Downloads.ConnectThrottle, 800ul );
+		Gnutella.ConnectFactor			= min( Gnutella.ConnectFactor, 3ul );
 		Connection.SlowConnect			= true;
 		Connection.RequireForTransfers	= true;
 		Downloads.MaxConnectingSources	= 8;
@@ -1250,7 +1250,7 @@ BOOL CSettings::LoadList(LPCTSTR pszName, CListCtrl* pCtrl, int nSort)
 	LV_COLUMN pColumn;
 
 	pColumn.mask = LVCF_FMT;
-    int nColumns = 0;
+	int nColumns = 0;
 	for ( ; pCtrl->GetColumn( nColumns, &pColumn ) ; nColumns++ );
 
 	CString strOrdering, strWidths, strItem;
@@ -1293,7 +1293,7 @@ void CSettings::SaveList(LPCTSTR pszName, CListCtrl* pCtrl)
 	LV_COLUMN pColumn;
 
 	pColumn.mask = LVCF_FMT;
-    int nColumns = 0;
+	int nColumns = 0;
 	for ( ; pCtrl->GetColumn( nColumns, &pColumn ) ; nColumns++ );
 
 	UINT* pOrdering = new UINT[ nColumns ];
@@ -1409,7 +1409,7 @@ const CString CSettings::SmartSpeed(QWORD nVolume, int nVolumeUnits, bool bTrunc
 		TRACE( _T("Unknown RatesUnit - %i"), General.RatesUnit );
 		break;
 	}
-	
+
 	// Add Unicode RTL marker if required
 	return Settings.General.LanguageRTL ? _T("\x200E") + strVolume : strVolume;
 }
@@ -1544,7 +1544,7 @@ bool CSettings::GetValue(LPCTSTR pszPath, VARIANT* value)
 	{
 		value->vt = VT_BOOL;
 		value->boolVal = *pItem->m_pBool ? VARIANT_TRUE : VARIANT_FALSE;
-	} 
+	}
 	else if ( pItem->m_pDword )
 	{
 		value->vt = VT_I4;

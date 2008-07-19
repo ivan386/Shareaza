@@ -22,15 +22,11 @@
 // CPacket represents a packet on a peer-to-peer network, and CPacketPool keeps lists of them
 // http://www.shareazasecurity.be/wiki/index.php?title=Developers.Code.CPacket
 
-// Make the compiler only include the lines here once, this is the same thing as pragma once
-#if !defined(AFX_PACKET_H__3094C1CC_8AD2_49BD_BF10_EA639A9EAE6F__INCLUDED_)
-#define AFX_PACKET_H__3094C1CC_8AD2_49BD_BF10_EA639A9EAE6F__INCLUDED_
-
 // Only include the lines beneath this one once
 #pragma once
 
 // When the allocated block of memory needs to be bigger, make it 128 bytes bigger
-const uchar PACKET_GROW = 128u;
+const DWORD PACKET_GROW = 128u;
 
 // Shareaza's vendor code is "RAZA", here is that text in ASCII and wide characters
 #define SHAREAZA_VENDOR_A VENDOR_CODE
@@ -126,7 +122,7 @@ public:
 public:
 
 	// Compute the SHA hash of the bytes of the packet
-    virtual BOOL	GetRazaHash(Hashes::Sha1Hash& oHash, DWORD nLength = 0xFFFFFFFF) const;
+	virtual BOOL	GetRazaHash(Hashes::Sha1Hash& oHash, DWORD nLength = 0xFFFFFFFF) const;
 
 	// Does nothing (do)
 	void			RazaSign();
@@ -144,7 +140,7 @@ public:
 
 	// Takes a pointer to a buffer, and the number of bytes we want written there
 	// Copies this number of bytes from the packet, and moves the packet's position beyond them
-    inline void Read(LPVOID pData, int nLength)
+	inline void Read(LPVOID pData, int nLength)
 	{
 		// Make sure the requested length doesn't poke beyond the end of the packet
 		if ( m_nPosition + nLength > m_nLength ) AfxThrowUserException();
@@ -169,7 +165,7 @@ public:
 		// Read one byte, return it, and move our position in this packet beyond it
 		return m_pBuffer[ m_nPosition++ ];
 	}
-	
+
 	// Read any Hash directly from a packet
 	template
 	<
@@ -321,7 +317,7 @@ public:
 		}
 		return TRUE;
 	}
-	
+
 	// Write any Hash directly into a packet ( just the raw data )
 	template
 	<
@@ -342,7 +338,7 @@ public:
 	inline void WriteByte(BYTE nValue)
 	{
 		// Make sure there is room for the byte
-		if ( m_nLength + sizeof( nValue ) > m_nBuffer ) 
+		if ( m_nLength + sizeof( nValue ) > m_nBuffer )
 		{
 			if ( ! Ensure( sizeof( nValue ) ) ) return;
 		}
@@ -356,7 +352,7 @@ public:
 	inline void WriteShortLE(WORD nValue)
 	{
 		// Make sure there is room for the 2 bytes
-		if ( m_nLength + sizeof(nValue) > m_nBuffer ) 		
+		if ( m_nLength + sizeof(nValue) > m_nBuffer )
 		{
 			if ( ! Ensure( sizeof( nValue ) ) ) return;
 		}
@@ -371,7 +367,7 @@ public:
 	inline void WriteShortBE(WORD nValue)
 	{
 		// Make sure there is room for the 2 bytes
-		if ( m_nLength + sizeof(nValue) > m_nBuffer ) 
+		if ( m_nLength + sizeof(nValue) > m_nBuffer )
 		{
 			if ( ! Ensure( sizeof( nValue ) ) ) return;
 		}
@@ -386,7 +382,7 @@ public:
 	inline void WriteLongLE(DWORD nValue)
 	{
 		// Make sure there is room for the 4 bytes
-		if ( m_nLength + sizeof(nValue) > m_nBuffer ) 
+		if ( m_nLength + sizeof(nValue) > m_nBuffer )
 		{
 			if ( ! Ensure( sizeof( nValue ) ) ) return;
 		}
@@ -401,7 +397,7 @@ public:
 	inline void WriteLongBE(DWORD nValue)
 	{
 		// Make sure there is room for the 4 bytes
-		if ( m_nLength + sizeof(nValue) > m_nBuffer ) 
+		if ( m_nLength + sizeof(nValue) > m_nBuffer )
 		{
 			if ( ! Ensure( sizeof( nValue ) ) ) return;
 		}
@@ -550,6 +546,3 @@ public:
 		m_pSection.Unlock();
 	}
 };
-
-// End the group of lines to only include once, pragma once doesn't require an endif at the bottom
-#endif // !defined(AFX_PACKET_H__3094C1CC_8AD2_49BD_BF10_EA639A9EAE6F__INCLUDED_)

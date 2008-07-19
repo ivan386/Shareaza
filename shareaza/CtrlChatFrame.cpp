@@ -274,7 +274,7 @@ void CChatFrame::MoveHistory(int nDelta)
 	}
 
 	m_nHistory += nDelta;
-	m_nHistory = (int)max( 0, min( m_pHistory.GetSize(), m_nHistory ) );
+	m_nHistory = max( 0, min( PtrToInt( m_pHistory.GetSize() ), m_nHistory ) );
 
 	if ( m_nHistory == m_pHistory.GetSize() )
 	{
