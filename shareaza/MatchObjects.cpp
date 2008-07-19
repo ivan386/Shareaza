@@ -340,8 +340,6 @@ void CMatchList::AddHits(CQueryHit* pHit, CQuerySearch* pFilter)
 				case PROTOCOL_ED2K:
 					m_nED2KHits += pFile->m_nFiltered;
 					break;
-				default:
-					theApp.Message( MSG_ERROR, _T("Invalid protocol in CMatchList::AddHits()") );
 				}
 			}
 		}
