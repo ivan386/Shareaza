@@ -32,9 +32,7 @@
 
 #if 1
 
-#if _MSC_VER >= 1500	// VS 2008
-
-#elif _MSC_VER >= 1400	// VS 2005
+#if _MSC_VER >= 1400	// VS 2005 & VS 2008
 
 // Warnings that are normally ON by default
 #pragma warning ( disable : 4350 )	// (Level 1)	behavior change: 'member1' called instead of 'member2'
@@ -102,6 +100,8 @@ const bool SHAREAZA_ADVANCED_MIN_TEMPLATE = true;
 #define _ATL_NO_COM_SUPPORT
 #define _MSI_NO_CRYPTO
 
+#pragma warning( push, 0 )			// Suppress Microsoft warnings
+
 //
 // MFC
 //
@@ -142,6 +142,12 @@ const bool SHAREAZA_ADVANCED_MIN_TEMPLATE = true;
 #include <iphlpapi.h>
 #include <MsiQuery.h>
 #include <MsiDefs.h>
+
+#if _MSC_VER >= 1500				// Work-around for VC9 where a (pop) is
+	#pragma warning( pop )			// ifdef'd out in stdio.h
+#endif
+
+#pragma warning( pop )				// Restore warnings
 
 //
 // Standard headers
@@ -602,7 +608,7 @@ inline bool IsFileNewerThan(LPCTSTR pszFile, const QWORD nMilliseconds)
 	FILETIME ftNow = {};
 	GetSystemTimeAsFileTime( &ftNow );
 
-	if ( ( MAKEQWORD( ftNow.dwLowDateTime, ftNow.dwHighDateTime ) - 
+	if ( ( MAKEQWORD( ftNow.dwLowDateTime, ftNow.dwHighDateTime ) -
 		10000ull * nMilliseconds ) > MAKEQWORD( fd.ftLastWriteTime.dwLowDateTime,
 		fd.ftLastWriteTime.dwHighDateTime ) )
 		return false;
