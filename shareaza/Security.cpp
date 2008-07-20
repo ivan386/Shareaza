@@ -873,13 +873,17 @@ BOOL CSecureRule::Match(const CShareazaFile* pFile) const
 {
 	if ( m_nType == srContent && pFile != NULL && m_pContent != NULL )
 	{
-		if ( LPCTSTR pszExt = PathFindExtension( (LPCTSTR)pFile->m_sName ) )
+		if ( pFile->m_nSize != 0 && pFile->m_nSize != SIZE_UNKNOWN )
 		{
-			CString strExtension;
-			pszExt++;
-			strExtension.Format( _T("size:%s:%I64i"), pszExt, pFile->m_nSize );
-			if ( Match( strExtension ) )
-				return TRUE;
+			LPCTSTR pszExt = PathFindExtension( (LPCTSTR)pFile->m_sName );
+			if ( *pszExt == _T('.') )
+			{
+				CString strExtension;
+				pszExt++;
+				strExtension.Format( _T("size:%s:%I64i"), pszExt, pFile->m_nSize );
+				if ( Match( strExtension ) )
+					return TRUE;
+			}
 		}
 
 		return
