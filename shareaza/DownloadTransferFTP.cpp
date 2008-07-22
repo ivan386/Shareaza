@@ -820,7 +820,7 @@ BOOL CDownloadTransferFTP::SendCommand(LPCTSTR /*args*/)
 //////////////////////////////////////////////////////////////////////
 // CDownloadTransferFTP dropped connection handler
 
-void CDownloadTransferFTP::OnDropped(BOOL /*bError*/)
+void CDownloadTransferFTP::OnDropped()
 {
 	if ( m_nState == dtsConnecting )
 	{

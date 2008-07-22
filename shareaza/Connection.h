@@ -318,7 +318,7 @@ protected:
 	virtual BOOL OnConnected();          // (do) just returns true
 	virtual BOOL OnRead();               // Read data waiting in the socket into the input buffer
 	virtual BOOL OnWrite();              // Move the contents of the output buffer into the socket
-	virtual void OnDropped(BOOL bError); // (do) empty
+	virtual void OnDropped(); 			 // (do) empty
 	virtual BOOL OnHeaderLine(CString& strHeader, CString& strValue); // Processes a single line from the headers
 	virtual BOOL OnHeadersComplete();    // (do) just returns true
 

@@ -127,7 +127,7 @@ protected:
 	virtual BOOL OnConnected();          // Send the remote computer our first big block of Gnutella headers
 	virtual BOOL OnRead();               // Read data from the remote computer, and look at it as a handshake
 	virtual BOOL OnWrite();
-	virtual void OnDropped(BOOL bError); // Document that the connection was lost and why, and put everything away
+	virtual void OnDropped();			 // Document that the connection was lost and why, and put everything away
 	virtual BOOL OnRun();                // Make sure the handshake hasn't been taking too long
 	virtual BOOL OnHeaderLine(CString& strHeader, CString& strValue); // Reads a header line and sets a corresponding member variable to true
 	virtual BOOL OnHeadersComplete();    // Responds to a group of headers by closing, sending a response, or turning this object into a more specific one

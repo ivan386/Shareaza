@@ -225,7 +225,7 @@ BOOL CEDNeighbour::OnConnected()
 	return TRUE;
 }
 
-void CEDNeighbour::OnDropped(BOOL /*bError*/)
+void CEDNeighbour::OnDropped()
 {
 	if ( m_nState < nrsConnected )
 	{

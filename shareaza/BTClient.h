@@ -63,7 +63,7 @@ public:
 protected:
 	virtual BOOL	OnRun();
 	virtual BOOL	OnConnected();
-	virtual void	OnDropped(BOOL bError);
+	virtual void	OnDropped();
 	virtual BOOL	OnWrite();
 	virtual BOOL	OnRead();
 

@@ -240,7 +240,7 @@ BOOL CDownloadTransferED2K::OnConnected()
 //////////////////////////////////////////////////////////////////////
 // CDownloadTransferED2K connection dropped event
 
-void CDownloadTransferED2K::OnDropped(BOOL /*bError*/)
+void CDownloadTransferED2K::OnDropped()
 {
 	if ( m_nState == dtsQueued )
 	{

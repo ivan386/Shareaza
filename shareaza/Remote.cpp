@@ -101,7 +101,7 @@ BOOL CRemote::OnRun()
 /////////////////////////////////////////////////////////////////////////////
 // CRemote dropped event
 
-void CRemote::OnDropped(BOOL /*bError*/)
+void CRemote::OnDropped()
 {
 	Close();
 	delete this;

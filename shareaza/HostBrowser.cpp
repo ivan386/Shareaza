@@ -196,7 +196,7 @@ BOOL CHostBrowser::OnRead()
 	return TRUE;
 }
 
-void CHostBrowser::OnDropped(BOOL /*bError*/)
+void CHostBrowser::OnDropped()
 {
 	if ( ! IsValid() ) return;
 
@@ -231,7 +231,7 @@ BOOL CHostBrowser::OnRun()
 	case hbsConnecting:
 		if ( nNow - m_tConnected > Settings.Connection.TimeoutConnect * 2 )
 		{
-			OnDropped( TRUE );
+			OnDropped();
 			return FALSE;
 		}
 		break;

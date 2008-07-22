@@ -93,7 +93,7 @@ protected:
 protected:
 	virtual BOOL	OnConnected();
 	virtual BOOL	OnRead();
-	virtual void	OnDropped(BOOL bError);
+	virtual void	OnDropped();
 	virtual BOOL	OnHeaderLine(CString& strHeader, CString& strValue);
 	virtual BOOL	OnHeadersComplete();
 	virtual BOOL	OnRun();

@@ -1630,7 +1630,7 @@ BOOL CDownloadTransferHTTP::ReadFlush()
 //////////////////////////////////////////////////////////////////////
 // CDownloadTransferHTTP dropped connection handler
 
-void CDownloadTransferHTTP::OnDropped(BOOL /*bError*/)
+void CDownloadTransferHTTP::OnDropped()
 {
 	if ( m_nState == dtsConnecting )
 	{

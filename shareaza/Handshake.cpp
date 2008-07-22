@@ -185,7 +185,7 @@ BOOL CHandshake::OnConnected()
 }
 
 // If we connected to the remote computer as part of a push, record that we couldn't connect to do the upload
-void CHandshake::OnDropped(BOOL /*bError*/)
+void CHandshake::OnDropped()
 {
 	// If we connected to the remote computer as part of a push
 	if ( m_bPushing )

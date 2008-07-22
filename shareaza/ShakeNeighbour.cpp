@@ -252,7 +252,7 @@ BOOL CShakeNeighbour::OnConnected()
 
 // CConnection::DoRun calls this when a socket connection has been refused or lost
 // Documents what happened, and puts everything away
-void CShakeNeighbour::OnDropped(BOOL /*bError*/)
+void CShakeNeighbour::OnDropped()
 {
 	// We tried to connect the socket, but are still waiting for the socket connection to be made
 	if ( m_nState == nrsConnecting )

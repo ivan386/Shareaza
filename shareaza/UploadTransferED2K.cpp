@@ -266,7 +266,7 @@ BOOL CUploadTransferED2K::OnConnected()
 //////////////////////////////////////////////////////////////////////
 // CUploadTransferED2K connection lost
 
-void CUploadTransferED2K::OnDropped(BOOL /*bError*/)
+void CUploadTransferED2K::OnDropped()
 {
 	if ( m_nState == upsQueued )
 	{

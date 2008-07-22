@@ -1289,7 +1289,7 @@ BOOL CUploadTransferHTTP::OnRun()
 //////////////////////////////////////////////////////////////////////
 // CUploadTransferHTTP dropped handler
 
-void CUploadTransferHTTP::OnDropped(BOOL /*bError*/)
+void CUploadTransferHTTP::OnDropped()
 {
 	theApp.Message( MSG_INFO, IDS_UPLOAD_DROPPED, (LPCTSTR)m_sAddress );
 	

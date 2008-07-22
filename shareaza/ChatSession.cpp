@@ -290,7 +290,7 @@ BOOL CChatSession::OnConnected()
 //////////////////////////////////////////////////////////////////////
 // CChatSession disconnection handler
 
-void CChatSession::OnDropped(BOOL /*bError*/)
+void CChatSession::OnDropped()
 {
 	if ( ! IsValid() ) return;
 	

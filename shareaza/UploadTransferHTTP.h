@@ -89,7 +89,7 @@ protected:
 	void	GetNeighbourList(CString& strOutput);
 protected:
 	virtual BOOL	OnRun();
-	virtual void	OnDropped(BOOL bError);
+	virtual void	OnDropped();
 	virtual BOOL	OnRead();
 	virtual BOOL	OnWrite();
 	virtual BOOL	OnHeaderLine(CString& strHeader, CString& strValue);

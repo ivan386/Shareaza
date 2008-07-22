@@ -57,7 +57,7 @@ public:
 protected:
 	virtual BOOL	OnRun();
 	virtual BOOL	OnConnected();
-	virtual void	OnDropped(BOOL bError);
+	virtual void	OnDropped();
 	virtual BOOL	OnRead();
 public:
 	BOOL	SendSharedDownload(CDownload* pDownload);

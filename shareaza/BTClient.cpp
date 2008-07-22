@@ -244,7 +244,7 @@ BOOL CBTClient::OnConnected()
 //////////////////////////////////////////////////////////////////////
 // CBTClient connection loss event
 
-void CBTClient::OnDropped(BOOL /*bError*/)
+void CBTClient::OnDropped()
 {
 	if ( ! m_bConnected )
 		theApp.Message( MSG_ERROR, IDS_BT_CLIENT_DROP_CONNECTING, (LPCTSTR)m_sAddress );

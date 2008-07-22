@@ -359,7 +359,7 @@ BOOL CConnection::DoRun()
 			Statistics.Current.Connections.Errors++;
 
 			// This connection was dropped
-			OnDropped( TRUE );
+			OnDropped();
 			return FALSE;
 		}
 
@@ -393,7 +393,7 @@ BOOL CConnection::DoRun()
 	{
 		// theApp.Message( MSG_DEBUG, _T("socket close() error %i"), pEvents.iErrorCode[ FD_CLOSE_BIT ] );
 		// Call OnDropped, telling it true if there is a close error
-		OnDropped( pEvents.iErrorCode[ FD_CLOSE_BIT ] != 0 ); // True if there is an nonzero error code for the close bit
+		OnDropped(); // True if there is an nonzero error code for the close bit
 		return FALSE;
 	}
 
@@ -429,7 +429,7 @@ BOOL CConnection::OnConnected()
 }
 
 // Objects that inherit from CConnection have OnDropped methods that do things, unlike this one
-void CConnection::OnDropped(BOOL /*bError*/)
+void CConnection::OnDropped()
 {
 	// Do nothing
 }

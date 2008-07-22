@@ -110,14 +110,14 @@ protected:
 	BOOL	OnLoggedIn();
 	void	DetachDownload();
 	void	DetachUpload();
-	void	NotifyDropped(BOOL bError = TRUE);
+	void	NotifyDropped();
 public:
 	virtual void	AttachTo(CConnection* pConnection);
 	virtual void	Close();
 protected:
 	virtual BOOL	OnRun();
 	virtual BOOL	OnConnected();
-	virtual void	OnDropped(BOOL bError);
+	virtual void	OnDropped();
 	virtual BOOL	OnWrite();
 	virtual BOOL	OnRead();
 protected:

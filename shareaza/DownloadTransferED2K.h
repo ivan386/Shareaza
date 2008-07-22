@@ -63,7 +63,7 @@ public:
 	virtual BOOL	SubtractRequested(Fragments::List& ppFragments);
 	virtual BOOL	OnRun();
 	virtual BOOL	OnConnected();
-	virtual void	OnDropped(BOOL bError);
+	virtual void	OnDropped();
 public:
 	BOOL	OnRunEx(DWORD tNow);
 	BOOL	OnFileReqAnswer(CEDPacket* pPacket);

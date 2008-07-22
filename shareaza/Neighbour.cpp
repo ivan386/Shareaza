@@ -327,7 +327,7 @@ BOOL CNeighbour::OnRun()
 
 // Call when the connection has been dropped
 // Logs the error with some statistics about how long it was quiet
-void CNeighbour::OnDropped(BOOL /*bError*/)
+void CNeighbour::OnDropped()
 {
 	// Find out how many seconds it's been since this neighbour connected, and since it received the last packet
 	DWORD nTime1 = ( GetTickCount() - m_tConnected ) / 1000;	// Time since connected in seconds

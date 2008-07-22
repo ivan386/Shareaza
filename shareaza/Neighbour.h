@@ -144,7 +144,7 @@ public:
 
 protected:
 	virtual BOOL OnRun();
-	virtual void OnDropped(BOOL bError);
+	virtual void OnDropped();
 	virtual BOOL OnRead();
 	virtual BOOL OnWrite();
 	virtual BOOL OnCommonHit(CPacket* pPacket);

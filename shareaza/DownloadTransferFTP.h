@@ -40,7 +40,7 @@ public:
 	virtual BOOL	OnRun();
 	virtual BOOL	OnRead();
 	virtual BOOL	OnConnected();
-	virtual void	OnDropped(BOOL bError);
+	virtual void	OnDropped();
 	virtual BOOL	OnHeaderLine(CString& strHeader, CString& strValue);
 
 protected:

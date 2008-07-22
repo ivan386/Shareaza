@@ -47,7 +47,7 @@ protected:
 // Operations
 public:
 	virtual BOOL	OnRun();
-	virtual void	OnDropped(BOOL bError);
+	virtual void	OnDropped();
 	virtual BOOL	OnRead();
 	virtual BOOL	OnHeadersComplete();
 protected:

@@ -473,18 +473,18 @@ BOOL CEDClient::OnConnected()
 //////////////////////////////////////////////////////////////////////
 // CEDClient connection loss event
 
-void CEDClient::OnDropped(BOOL bError)
+void CEDClient::OnDropped()
 {
 	theApp.Message( MSG_ERROR, IDS_ED2K_CLIENT_DROPPED, (LPCTSTR)m_sAddress );
-	NotifyDropped( bError );
+	NotifyDropped();
 	Close();
 }
 
-void CEDClient::NotifyDropped(BOOL bError)
+void CEDClient::NotifyDropped()
 {
 	m_bSeeking = TRUE;
-	if ( m_pDownload != NULL ) m_pDownload->OnDropped( bError );
-	if ( m_pUpload != NULL ) m_pUpload->OnDropped( bError );
+	if ( m_pDownload != NULL ) m_pDownload->OnDropped();
+	if ( m_pUpload != NULL ) m_pUpload->OnDropped();
 	m_bSeeking = FALSE;
 }
 

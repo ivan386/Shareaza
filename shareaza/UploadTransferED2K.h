@@ -55,7 +55,7 @@ public:
 	virtual void	Close(BOOL bMessage = FALSE);
 	virtual BOOL	OnRun();
 	virtual BOOL	OnConnected();
-	virtual void	OnDropped(BOOL bError);
+	virtual void	OnDropped();
 	virtual void	OnQueueKick();
 	virtual DWORD	GetMeasuredSpeed();
 public:
