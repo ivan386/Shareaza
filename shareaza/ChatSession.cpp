@@ -1,7 +1,7 @@
 //
 // ChatSession.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -79,7 +79,7 @@ CChatSession::CChatSession(CChatFrame* pFrame)
 
 CChatSession::~CChatSession()
 {
-	ASSERT( m_hSocket == INVALID_SOCKET );
+	ASSERT( ! IsValid() );
 	
 	if ( m_pProfile != NULL ) delete m_pProfile;
 	
@@ -292,7 +292,7 @@ BOOL CChatSession::OnConnected()
 
 void CChatSession::OnDropped(BOOL /*bError*/)
 {
-	if ( m_hSocket == INVALID_SOCKET ) return;
+	if ( ! IsValid() ) return;
 	
 	if ( m_nState == cssConnecting )
 	{

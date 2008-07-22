@@ -73,7 +73,7 @@ CBTClient::CBTClient() :
 
 CBTClient::~CBTClient()
 {
-	ASSERT( m_hSocket == INVALID_SOCKET );
+	ASSERT( ! IsValid() );
 	ASSERT( m_pDownloadTransfer == NULL );
 	ASSERT( m_pDownload == NULL );
 	ASSERT( m_pUpload == NULL );
@@ -89,7 +89,7 @@ CBTClient::~CBTClient()
 BOOL CBTClient::Connect(CDownloadTransferBT* pDownloadTransfer)
 {
 	if ( m_bClosing ) return FALSE;
-	ASSERT( m_hSocket == INVALID_SOCKET );
+	ASSERT( ! IsValid() );
 	ASSERT( m_pDownload == NULL );
 
 	CDownloadSource* pSource = pDownloadTransfer->m_pSource;
@@ -110,7 +110,7 @@ BOOL CBTClient::Connect(CDownloadTransferBT* pDownloadTransfer)
 void CBTClient::AttachTo(CConnection* pConnection)
 {
 	if ( m_bClosing ) return;
-	ASSERT( m_hSocket == INVALID_SOCKET );
+	ASSERT( ! IsValid() );
 
 	CTransfer::AttachTo( pConnection );
 	if ( Settings.General.DebugBTSources )
@@ -161,7 +161,7 @@ void CBTClient::Close()
 
 void CBTClient::Send(CBTPacket* pPacket, BOOL bRelease)
 {
-	ASSERT( m_hSocket != INVALID_SOCKET );
+	ASSERT( IsValid() );
 	ASSERT( m_bOnline );
 	
 	if ( pPacket != NULL )

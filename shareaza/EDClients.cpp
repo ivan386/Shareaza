@@ -272,7 +272,7 @@ BOOL CEDClients::IsFull(const CEDClient* pCheckThis)
 	// Count the number of connected clients
 	for ( CEDClient* pClient = m_pFirst ; pClient ; pClient = pClient->m_pEdNext )
 	{
-		if ( pClient->m_hSocket != INVALID_SOCKET ) nCount++;
+		if ( pClient->IsValid() ) nCount++;
 	}
 
 	// If there are more clients current connected than there should be, set the full timer
@@ -282,7 +282,7 @@ BOOL CEDClients::IsFull(const CEDClient* pCheckThis)
 	if ( ( tNow - m_tLastMaxClients ) > ( 2*1000 ) ) return FALSE;
 
 	// If we're checking a client that's already connected, say we aren't full. (don't drop it)
-	if ( ( pCheckThis != NULL ) && ( pCheckThis->m_hSocket != INVALID_SOCKET ) ) return FALSE;
+	if ( ( pCheckThis != NULL ) && ( pCheckThis->IsValid() ) ) return FALSE;
 	
 
 	// We're too full to start new connections
@@ -297,7 +297,7 @@ BOOL CEDClients::IsOverloaded() const
 
 	for ( CEDClient* pClient = m_pFirst ; pClient ; pClient = pClient->m_pEdNext )
 	{
-		if ( pClient->m_hSocket != INVALID_SOCKET ) nCount++;
+		if ( pClient->IsValid() ) nCount++;
 	}
 	
 	return ( nCount >= ( Settings.eDonkey.MaxLinks + 25 ) );

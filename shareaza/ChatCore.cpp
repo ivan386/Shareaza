@@ -1,7 +1,7 @@
 //
 // ChatCore.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -178,7 +178,7 @@ void CChatCore::Add(CChatSession* pSession)
 {
 	CSingleLock pLock( &m_pSection, TRUE );
 	if ( m_pSessions.Find( pSession ) == NULL ) m_pSessions.AddTail( pSession );
-	if ( pSession->m_hSocket != INVALID_SOCKET )
+	if ( pSession->IsValid() )
 		WSAEventSelect( pSession->m_hSocket, GetWakeupEvent(),
 			FD_CONNECT|FD_READ|FD_WRITE|FD_CLOSE );
 	StartThread();
@@ -189,7 +189,7 @@ void CChatCore::Remove(CChatSession* pSession)
 	CSingleLock pLock( &m_pSection, TRUE );
 	POSITION pos = m_pSessions.Find( pSession );
 	if ( pos != NULL ) m_pSessions.RemoveAt( pos );
-	if ( pSession->m_hSocket != INVALID_SOCKET )
+	if ( pSession->IsValid() )
 		WSAEventSelect( pSession->m_hSocket, GetWakeupEvent(), 0 );
 }
 

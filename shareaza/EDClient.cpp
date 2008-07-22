@@ -106,7 +106,7 @@ CEDClient::CEDClient()
 
 CEDClient::~CEDClient()
 {
-	ASSERT( m_hSocket == INVALID_SOCKET );
+	ASSERT( ! IsValid() );
 	ASSERT( m_pUpload == NULL );
 	ASSERT( m_pDownload == NULL );
 	
@@ -166,7 +166,7 @@ BOOL CEDClient::Equals(CEDClient* pClient)
 
 BOOL CEDClient::Connect()
 {
-	if ( m_hSocket != INVALID_SOCKET )
+	if ( IsValid() )
 		return FALSE;
 
 	if ( EDClients.IsFull( this ) ) 
@@ -287,7 +287,7 @@ void CEDClient::Send(CEDPacket* pPacket, BOOL bRelease)
 		ASSERT( pPacket->m_nProtocol == PROTOCOL_ED2K );
 		ASSERT( pPacket->m_nEdProtocol == ED2K_PROTOCOL_EDONKEY || m_bEmule || pPacket->m_nType == ED2K_C2C_EMULEINFO );
 		
-		if ( m_hSocket != INVALID_SOCKET )
+		if ( IsValid() )
 		{
 			Write( pPacket );
 			OnWrite();
@@ -295,7 +295,7 @@ void CEDClient::Send(CEDPacket* pPacket, BOOL bRelease)
 		
 		if ( bRelease ) pPacket->Release();
 	}
-	else if ( m_hSocket != INVALID_SOCKET )
+	else if ( IsValid() )
 	{
 		OnWrite();
 	}
@@ -306,7 +306,7 @@ void CEDClient::Send(CEDPacket* pPacket, BOOL bRelease)
 
 void CEDClient::AttachTo(CConnection* pConnection)
 {
-	ASSERT( m_hSocket == INVALID_SOCKET );
+	ASSERT( ! IsValid() );
 	CTransfer::AttachTo( pConnection );
 	theApp.Message( MSG_INFO, IDS_ED2K_CLIENT_ACCEPTED, (LPCTSTR)m_sAddress );
 }
@@ -338,7 +338,7 @@ BOOL CEDClient::AttachDownload(CDownloadTransferED2K* pDownload)
 	
 	if ( m_bLogin )
 		return m_pDownload->OnConnected();
-	else if ( m_hSocket == INVALID_SOCKET )
+	else if ( ! IsValid() )
 		Connect();
 	
 	return TRUE;
@@ -446,7 +446,7 @@ void CEDClient::OnRunEx(DWORD tNow)
 		if ( m_pDownload ) m_pDownload->OnRunEx( tNow );
 		if ( m_pUpload ) m_pUpload->OnRunEx( tNow );
 	}
-	else if ( m_hSocket == INVALID_SOCKET )
+	else if ( ! IsValid() )
 	{
 		// This client has no valid connections and should probably be removed. 
 

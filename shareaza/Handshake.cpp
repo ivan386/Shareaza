@@ -1,7 +1,7 @@
 //
 // Handshake.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -407,7 +407,7 @@ BOOL CHandshake::OnAcceptGive()
 BOOL CHandshake::OnPush(const Hashes::Guid& oGUID)
 {
 	// Make sure the socket is valid
-	if ( m_hSocket == INVALID_SOCKET ) return FALSE;
+	if ( ! IsValid() ) return FALSE;
 
 	// Look for the remote computer's GUID in our list of downloads and the chat interface
 	if ( Downloads.OnPush( oGUID, this ) ) return TRUE; // Return true if it's found

@@ -134,7 +134,7 @@ void CRemoteSettingsPage::OnBnClickedRemoteEnable()
 				(int)ntohs( Network.m_pHost.sin_port ) );
 			m_wndURL.EnableWindow( TRUE );
 		}
-		else if ( Handshakes.IsListening() && Network.m_pHost.sin_port != 0 )
+		else if ( Handshakes.IsValid() && Network.m_pHost.sin_port != 0 )
 		{
 			strURL.Format( _T("http://localhost:%i/remote/"),
 				(int)ntohs( Network.m_pHost.sin_port ) );

@@ -59,7 +59,7 @@ CHandshakes::~CHandshakes()
 	Disconnect();
 
 	// Make sure it set the socket to invalid, and the thread to null
-	ASSERT( m_hSocket == INVALID_SOCKET );
+	ASSERT( ! IsValid() );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -70,11 +70,11 @@ CHandshakes::~CHandshakes()
 BOOL CHandshakes::Listen()
 {
 	// Setup m_hSocket as a new TCP socket
-	if ( m_hSocket != INVALID_SOCKET )	// Make sure the socket hasn't been created yet
+	if ( IsValid() )	// Make sure the socket hasn't been created yet
 	{
 		theApp.Message( MSG_ERROR, _T("Re-connection too fast, waiting 2 seconds.") );
 		Sleep(2000);					// Too fast re-connection after disconnection, wait 2 sec
-		if ( m_hSocket != INVALID_SOCKET )
+		if ( IsValid() )
 			return FALSE;
 	}
 
@@ -85,7 +85,7 @@ BOOL CHandshakes::Listen()
 		PF_INET,		// Specify the Internet address family
 		SOCK_STREAM,	// Use TCP and not UDP
 		IPPROTO_TCP );
-	if ( m_hSocket == INVALID_SOCKET )	// Now, make sure it has been created
+	if ( ! IsValid() )	// Now, make sure it has been created
 	{
 		theApp.Message( MSG_ERROR, _T("Failed to create socket. (1st Try)") );
 		// Second attempt
@@ -93,7 +93,7 @@ BOOL CHandshakes::Listen()
 			PF_INET,		// Specify the Internet address family
 			SOCK_STREAM,	// Use TCP and not UDP
 			IPPROTO_TCP );
-		if ( m_hSocket == INVALID_SOCKET )
+		if ( ! IsValid() )
 		{
 			theApp.Message( MSG_ERROR, _T("Failed to create socket. (2nd Try)") );
 			return FALSE;
@@ -113,7 +113,7 @@ BOOL CHandshakes::Listen()
 		setsockopt( m_hSocket, SOL_SOCKET, SO_EXCLUSIVEADDRUSE, (char*)&bVal, sizeof(bVal) );
 	}
 
-	// Loop to try 5 times since the socket might not be reused immediatelly
+	// Loop to try 5 times since the socket might not be reused immediately
 	BOOL bBound = FALSE; // We're not bound to this socket yet
 	for ( int nAttempt = 0 ; nAttempt < 5 ; nAttempt++ )
 	{
@@ -185,8 +185,7 @@ BOOL CHandshakes::Listen()
 // Closes the socket and kills the thread
 void CHandshakes::Disconnect()
 {
-	// If the socket in this CHandshakes object is valid
-	if ( m_hSocket != INVALID_SOCKET )
+	if ( IsValid() )
 	{
 		// Don't use SO_LINGER here
 
@@ -319,7 +318,7 @@ void CHandshakes::Remove(CHandshake* pHandshake)
 void CHandshakes::OnRun()
 {
 	// Loop while the socket is valid
-	while ( IsThreadEnabled() && m_hSocket != INVALID_SOCKET )
+	while ( IsThreadEnabled() && IsValid() )
 	{
 		// Wait for a computer to call us, which fires the wakeup event
 		Doze( 1000 ); // Give up after a second
@@ -377,8 +376,8 @@ void CHandshakes::RunHandshakes()
 BOOL CHandshakes::AcceptConnection()
 {
 	// Local variables to receive the IP address and port number of the remote computer
-	SOCKADDR_IN pHost;
-	int nHost = sizeof(pHost);
+	SOCKADDR_IN pHost = {};
+	int nHost = sizeof( pHost );
 
 	// Accept the connection in a new socket, hSocket
 	SOCKET hSocket =		// Make a new local socket here
@@ -397,8 +396,8 @@ BOOL CHandshakes::AcceptConnection()
 	// If the remote computer's IP address is blocked or banned
 	if ( Security.IsDenied( &pHost.sin_addr ) )
 	{
-		// Set linger period to zero (it will close the socket immediatelly)
-		// Default behaviour is to send data and close or timeout and close
+		// Set linger period to zero (it will close the socket immediately)
+		// Default behavior is to send data and close or timeout and close
 		linger ls = {1, 0};
 		int ret = setsockopt( hSocket, SOL_SOCKET, SO_LINGER, (char*)&ls, sizeof(ls) );
 
@@ -407,8 +406,7 @@ BOOL CHandshakes::AcceptConnection()
 		ret = closesocket( hSocket );
 
 		// Report that this connection was denied for security reasons
-		CString strHost = inet_ntoa( pHost.sin_addr );
-		theApp.Message( MSG_ERROR, IDS_NETWORK_SECURITY_DENIED, (LPCTSTR)strHost );
+		theApp.Message( MSG_ERROR, IDS_NETWORK_SECURITY_DENIED, (LPCTSTR)CString( inet_ntoa( pHost.sin_addr ) ) );
 	}
 	else // The IP address is not blocked
 	{

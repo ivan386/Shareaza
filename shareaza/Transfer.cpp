@@ -1,7 +1,7 @@
 //
 // Transfer.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -42,8 +42,8 @@ CTransfer::CTransfer()
 
 CTransfer::~CTransfer()
 {
-	ASSERT( m_hSocket == INVALID_SOCKET );
-	if ( m_hSocket != INVALID_SOCKET ) Close();
+	ASSERT( ! IsValid() );
+	if ( IsValid() ) Close();
 }
 
 //////////////////////////////////////////////////////////////////////

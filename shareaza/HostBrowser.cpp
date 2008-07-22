@@ -88,7 +88,7 @@ BOOL CHostBrowser::Browse()
 {
 	CSingleLock pLock( &Transfers.m_pSection, TRUE );
 
-	if ( m_hSocket != INVALID_SOCKET ) return FALSE;
+	if ( IsValid() ) return FALSE;
 
 	m_sAddress = inet_ntoa( m_pAddress );
 
@@ -130,7 +130,7 @@ void CHostBrowser::Stop(BOOL /*bCompleted*/)
 {
 	CSingleLock pLock( &Transfers.m_pSection, TRUE );
 
-	if ( m_hSocket != INVALID_SOCKET )
+	if ( IsValid() )
 	{
 		theApp.Message( MSG_INFO, IDS_BROWSE_CLOSED, m_sAddress );
 	}
@@ -198,7 +198,7 @@ BOOL CHostBrowser::OnRead()
 
 void CHostBrowser::OnDropped(BOOL /*bError*/)
 {
-	if ( m_hSocket == INVALID_SOCKET ) return;
+	if ( ! IsValid() ) return;
 
 	if ( m_nState == hbsConnecting )
 	{
@@ -282,7 +282,7 @@ BOOL CHostBrowser::SendPush(BOOL bMessage)
 BOOL CHostBrowser::OnPush(const Hashes::Guid& oClientID, CConnection* pConnection)
 {
 	if ( m_tPushed == 0 ) return FALSE;
-	if ( m_hSocket != INVALID_SOCKET ) return FALSE;
+	if ( IsValid() ) return FALSE;
 
 	if ( !validAndEqual( m_oClientID, oClientID ) ) return FALSE;
 
@@ -301,7 +301,7 @@ BOOL CHostBrowser::OnPush(const Hashes::Guid& oClientID, CConnection* pConnectio
 
 void CHostBrowser::SendRequest()
 {
-	if ( m_hSocket == INVALID_SOCKET ) return;
+	if ( ! IsValid() ) return;
 
 	if ( m_bNewBrowse )
 	{

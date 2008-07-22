@@ -101,10 +101,10 @@ CDatagrams::~CDatagrams()
 
 BOOL CDatagrams::Listen()
 {
-	if ( m_hSocket != INVALID_SOCKET ) return FALSE;
+	if ( IsValid() ) return FALSE;
 
 	m_hSocket = socket( PF_INET, SOCK_DGRAM, IPPROTO_UDP );
-	if ( m_hSocket == INVALID_SOCKET ) return FALSE;
+	if ( ! IsValid() ) return FALSE;
 
 	const BOOL bEnable = TRUE;
 	VERIFY( setsockopt( m_hSocket, SOL_SOCKET, SO_BROADCAST,
@@ -202,7 +202,7 @@ BOOL CDatagrams::Listen()
 
 void CDatagrams::Disconnect()
 {
-	if ( m_hSocket == INVALID_SOCKET ) return;
+	if ( ! IsValid() ) return;
 
 	closesocket( m_hSocket );
 	m_hSocket = INVALID_SOCKET;
@@ -243,7 +243,7 @@ BOOL CDatagrams::Send(SOCKADDR_IN* pHost, const CBuffer& pOutput)
 {
 	ASSERT( pHost != NULL && pOutput.m_pBuffer != NULL );
 
-	if ( m_hSocket == INVALID_SOCKET || Security.IsDenied( &pHost->sin_addr ) )
+	if ( ! IsValid() || Security.IsDenied( &pHost->sin_addr ) )
 	{
 		return FALSE;
 	}
@@ -260,7 +260,7 @@ BOOL CDatagrams::Send(SOCKADDR_IN* pHost, CPacket* pPacket, BOOL bRelease, LPVOI
 {
 	ASSERT( pHost != NULL && pPacket != NULL );
 
-	if ( m_hSocket == INVALID_SOCKET || Security.IsDenied( &pHost->sin_addr ) )
+	if ( ! IsValid() || Security.IsDenied( &pHost->sin_addr ) )
 	{
 		if ( bRelease ) pPacket->Release();
 		return FALSE;
@@ -408,7 +408,7 @@ void CDatagrams::PurgeToken(LPVOID pToken)
 
 void CDatagrams::OnRun()
 {
-	if ( m_hSocket == INVALID_SOCKET ) return;
+	if ( ! IsValid() ) return;
 
 	TryWrite();
 	ManageOutput();
@@ -602,7 +602,7 @@ void CDatagrams::Remove(CDatagramOut* pDG)
 
 BOOL CDatagrams::TryRead()
 {
-	if ( m_hSocket == INVALID_SOCKET )
+	if ( ! IsValid() )
 		return FALSE;
 
 	std::vector< BYTE > pBuffer( 65536 );	// Maximal UDP size 64KB

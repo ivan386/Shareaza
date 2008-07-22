@@ -60,9 +60,9 @@ protected:
 
 public:
 	// True if the socket is valid, false if its closed
-	inline BOOL IsListening() const
+	inline BOOL IsValid() const throw()
 	{
-		return m_hSocket != INVALID_SOCKET;
+		return ( m_hSocket != INVALID_SOCKET );
 	}
 
 	// The time at least one has been connected (seconds)

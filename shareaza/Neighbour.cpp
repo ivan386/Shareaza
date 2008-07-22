@@ -195,7 +195,7 @@ CNeighbour::~CNeighbour()
 void CNeighbour::Close(UINT nError)
 {
 	// Make sure that the socket stored in this CNeighbour object is valid
-	ASSERT( m_hSocket != INVALID_SOCKET );
+	ASSERT( IsValid() );
 
 	// If nError is the default closed or a result of peer pruning, we're closing the connection voluntarily
 	BOOL bVoluntary = ( nError == IDS_CONNECTION_CLOSED || nError == IDS_CONNECTION_PEERPRUNE );

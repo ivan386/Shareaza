@@ -106,14 +106,24 @@ public:
 public:
 	BOOL	Listen();
 	void	Disconnect();
-	inline BOOL IsStable() const	// Avoid using this function directly, use !Network.IsFirewalled(CHECK_UDP) instead
+
+	// True if the socket is valid, false if its closed
+	inline BOOL IsValid() const throw()
 	{
-		return ( m_hSocket != INVALID_SOCKET ) && m_bStable;
+		return ( m_hSocket != INVALID_SOCKET );
 	}
+
+	// Avoid using this function directly, use !Network.IsFirewalled(CHECK_UDP) instead
+	inline BOOL IsStable() const throw()
+	{
+		return IsValid() && m_bStable;
+	}
+
 	inline void SetStable(BOOL bStable = TRUE)
 	{
 		m_bStable = bStable;
 	}
+
 	BOOL	Send(IN_ADDR* pAddress, WORD nPort, CPacket* pPacket, BOOL bRelease = TRUE, LPVOID pToken = NULL, BOOL bAck = TRUE);
 	BOOL	Send(SOCKADDR_IN* pHost, const CBuffer& pOutput);
 	BOOL	Send(SOCKADDR_IN* pHost, CPacket* pPacket, BOOL bRelease = TRUE, LPVOID pToken = NULL, BOOL bAck = TRUE);

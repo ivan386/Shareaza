@@ -159,7 +159,7 @@ bool CNetwork::IsListening() const
 	return ( IsConnected() )
 		&& ( m_pHost.sin_addr.S_un.S_addr != 0 )
 		&& ( m_pHost.sin_port != 0 )
-		&& ( Handshakes.IsListening() );
+		&& ( Handshakes.IsValid() );
 }
 
 bool CNetwork::IsWellConnected() const

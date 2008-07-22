@@ -124,6 +124,12 @@ public:
 	BOOL SendMyAddress();	// If we are listening on a port, tell the other computer our IP address and port number
 	BOOL IsAgentBlocked();	// Check the other computer's software title against our list of programs not to talk to
 	void UpdateCountry();	// Call whenever the IP address is set
+	
+	// True if the socket is valid, false if its closed
+	inline BOOL IsValid() const throw()
+	{
+		return ( m_hSocket != INVALID_SOCKET );
+	}
 
 	inline bool IsOutputExist() const throw()
 	{

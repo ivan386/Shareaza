@@ -78,8 +78,7 @@ CConnection::CConnection(CConnection& other)
 	ZeroMemory( &m_mInput, sizeof( m_mInput ) );
 	ZeroMemory( &m_mOutput, sizeof( m_mOutput ) );
 
-	// Make sure the socket isn't valid yet
-	ASSERT( m_hSocket != INVALID_SOCKET );				// Make sure the socket exists
+	ASSERT( IsValid() );				// Make sure the socket exists
 
 	// Record the current time in the input and output TCP bandwidth meters
 	m_mInput.tLast = m_mOutput.tLast = GetTickCount();
@@ -117,7 +116,7 @@ BOOL CConnection::ConnectTo(SOCKADDR_IN* pHost)
 BOOL CConnection::ConnectTo(IN_ADDR* pAddress, WORD nPort)
 {
 	// Make sure the socket isn't already connected somehow
-	if ( m_hSocket != INVALID_SOCKET )
+	if ( IsValid() )
 		return FALSE;
 
 	// Make sure we have an address and a nonzero port number
@@ -196,8 +195,8 @@ BOOL CConnection::ConnectTo(IN_ADDR* pAddress, WORD nPort)
 		// An error of "would block" is normal because connections can't be made instantly and this is a non-blocking socket
 		if ( nError != WSAEWOULDBLOCK )
 		{
-			// Set linger period to zero (it will close the socket immediatelly)
-			// Default behaviour is to send data and close or timeout and close
+			// Set linger period to zero (it will close the socket immediately)
+			// Default behavior is to send data and close or timeout and close
 			linger ls = {1, 0};
 			int ret = setsockopt( m_hSocket, SOL_SOCKET, SO_LINGER, (char*)&ls, sizeof(ls) );
 
@@ -234,7 +233,7 @@ BOOL CConnection::ConnectTo(IN_ADDR* pAddress, WORD nPort)
 void CConnection::AcceptFrom(SOCKET hSocket, SOCKADDR_IN* pHost)
 {
 	// Make sure the newly accepted socket is valid
-	ASSERT( m_hSocket == INVALID_SOCKET );
+	ASSERT( ! IsValid() );
 
 	// Record the connection information here
 	m_hSocket		= hSocket;							// Keep the socket here
@@ -268,10 +267,10 @@ void CConnection::AcceptFrom(SOCKET hSocket, SOCKADDR_IN* pHost)
 void CConnection::AttachTo(CConnection* pConnection)
 {
 	// Make sure the socket isn't valid yet
-	ASSERT( m_hSocket == INVALID_SOCKET );				// Make sure the socket here isn't valid yet
+	ASSERT( ! IsValid() );								// Make sure the socket here isn't valid yet
 	ASSERT( pConnection != NULL );						// Make sure we got a CConnection object
 	ASSERT( AfxIsValidAddress( pConnection, sizeof( *pConnection ) ) );
-	ASSERT( pConnection->m_hSocket != INVALID_SOCKET ); // And make sure its socket exists
+	ASSERT( pConnection->IsValid() );					// And make sure its socket exists
 
 	CQuickLock oOutputLock( *pConnection->m_pOutputSection );
 	CQuickLock oInputLock( *pConnection->m_pInputSection );
@@ -291,7 +290,7 @@ void CConnection::AttachTo(CConnection* pConnection)
 	ASSERT( m_pOutput == NULL );
 	m_pOutputSection= pConnection->m_pOutputSection;
 	m_pOutput		= pConnection->m_pOutput;
-	m_sUserAgent	= pConnection->m_sUserAgent; // But, we don't also copy across m_mInput and m_mOutput
+	m_sUserAgent	= pConnection->m_sUserAgent;
 
 	// Record the current time in the input and output TCP bandwidth meters
 	m_mInput.tLast = m_mOutput.tLast = GetTickCount();
@@ -319,7 +318,7 @@ void CConnection::Close()
 	ASSERT( AfxIsValidAddress( this, sizeof(*this) ) );
 
 	// The socket is valid
-	if ( m_hSocket != INVALID_SOCKET )
+	if ( IsValid() )
 	{
 		// Don't use SO_LINGER here
 
@@ -344,7 +343,7 @@ void CConnection::Close()
 BOOL CConnection::DoRun()
 {
 	// If this socket is invalid, call OnRun and return the result (do)
-	if ( m_hSocket == INVALID_SOCKET )
+	if ( ! IsValid() )
 		return OnRun();
 
 	// Setup pEvents to store the socket's internal information about network events
@@ -451,7 +450,7 @@ BOOL CConnection::OnRead()
 	CQuickLock oInputLock( *m_pInputSection );
 
 	// Make sure the socket is valid
-	if ( m_hSocket == INVALID_SOCKET ) return FALSE;
+	if ( ! IsValid() ) return FALSE;
 
 	DWORD tNow		= GetTickCount();	// The time right now
 	DWORD nLimit	= ~0ul;				// Make the limit huge
@@ -484,7 +483,7 @@ BOOL CConnection::OnWrite()
 	CQuickLock oOutputLock( *m_pOutputSection );
 
 	// Make sure the socket is valid
-	if ( m_hSocket == INVALID_SOCKET ) return FALSE;
+	if ( ! IsValid() ) return FALSE;
 
 	// If there is nothing to send, we succeed without doing anything
 	if ( m_pOutput->m_nLength == 0 ) return TRUE;
@@ -590,15 +589,16 @@ BOOL CConnection::ReadHeaders()
 		else if ( nPos > 1 && nPos < 64 ) // ":a" is 0 and "a:a" is 1, but "aa:a" is greater than 1
 		{
 			// The line is like "header:value", copy out both parts
-			m_sLastHeader		= strLine.Left( nPos );
+			CString strHeader	= strLine.Left( nPos );
 			CString strValue	= strLine.Mid( nPos + 1 );
+			m_sLastHeader = strHeader;
 
 			// Trim spaces from both ends of the value, and see if it still has length
 			strValue.TrimLeft();
 			strValue.TrimRight();
 
 			// Give OnHeaderLine this last header, and its value
-			if ( !OnHeaderLine( m_sLastHeader, strValue ) )
+			if ( !OnHeaderLine( strHeader, strValue ) )
 				return FALSE;
 		}
 	}

@@ -1,7 +1,7 @@
 //
 // DownloadWithTransfers.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -437,7 +437,7 @@ BOOL CDownloadWithTransfers::OnAcceptPush(const Hashes::Guid& oClientID, CConnec
 		pSource->m_pTransfer->Close( TRI_TRUE );
 	}
 	
-	if ( pConnection->m_hSocket == INVALID_SOCKET ) return FALSE;
+	if ( ! pConnection->IsValid() ) return FALSE;
 	
 	CDownloadTransferHTTP* pTransfer = (CDownloadTransferHTTP*)pSource->CreateTransfer();
 	ASSERT( pTransfer->m_nProtocol == PROTOCOL_HTTP );

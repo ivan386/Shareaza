@@ -1,7 +1,7 @@
 //
 // Transfers.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -102,7 +102,7 @@ void CTransfers::StopThread()
 
 void CTransfers::Add(CTransfer* pTransfer)
 {
-	ASSERT( pTransfer->m_hSocket != INVALID_SOCKET );
+	ASSERT( pTransfer->IsValid() );
 	WSAEventSelect( pTransfer->m_hSocket, GetWakeupEvent(), FD_CONNECT|FD_READ|FD_WRITE|FD_CLOSE );
 
 	POSITION pos = m_pList.Find( pTransfer );
@@ -120,7 +120,7 @@ void CTransfers::Remove(CTransfer* pTransfer)
 	//if ( Settings.General.Debug && Settings.General.DebugLog ) 
 	//	theApp.Message( MSG_DEBUG, _T("CTransfers::Remove(): %x"), pTransfer );
 
-	if ( pTransfer->m_hSocket != INVALID_SOCKET )
+	if ( pTransfer->IsValid() )
 		WSAEventSelect( pTransfer->m_hSocket, GetWakeupEvent(), 0 );
 
 	CQuickLock oLock( m_pSection );
