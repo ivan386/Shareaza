@@ -355,6 +355,8 @@ void CBrowseHostWnd::OnBrowseHits(CQueryHit* pHits)
 	{
 		m_pMatches->AddHits( pHits );
 		m_bUpdate = TRUE;
+
+		SetModified();
 	}
 }
 
@@ -363,6 +365,8 @@ void CBrowseHostWnd::OnHeadPacket(CG2Packet* pPacket)
 	if ( m_bPaused || m_hWnd == NULL ) return;
 
 	m_wndProfile.OnHeadPacket( pPacket );
+
+	SetModified();
 }
 
 void CBrowseHostWnd::OnPhysicalTree(CG2Packet* pPacket)
@@ -370,6 +374,8 @@ void CBrowseHostWnd::OnPhysicalTree(CG2Packet* pPacket)
 	if ( m_bPaused || m_hWnd == NULL ) return;
 
 	m_wndFrame.OnPhysicalTree( pPacket );
+
+	SetModified();
 }
 
 void CBrowseHostWnd::OnVirtualTree(CG2Packet* pPacket)
@@ -377,6 +383,8 @@ void CBrowseHostWnd::OnVirtualTree(CG2Packet* pPacket)
 	if ( m_bPaused || m_hWnd == NULL ) return;
 
 	m_wndFrame.OnVirtualTree( pPacket );
+
+	SetModified();
 }
 
 BOOL CBrowseHostWnd::OnPush(const Hashes::Guid& oClientID, CConnection* pConnection)

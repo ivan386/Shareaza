@@ -457,6 +457,8 @@ void CSearchWnd::OnSearchSearch()
 {
 	if ( ! Network.IsWellConnected() ) Network.Connect( TRUE );
 
+	SetModified();
+
 	//The 'Search More' situation
 	if ( !m_bPaused && m_bWaitMore && !empty() )
 	{
@@ -604,6 +606,8 @@ void CSearchWnd::OnSearchStop()
 
 	m_wndPanel.Enable();
 	UpdateMessages();
+
+	SetModified();
 }
 
 void CSearchWnd::OnUpdateSearchPanel(CCmdUI* /*pCmdUI*/)
@@ -845,6 +849,8 @@ BOOL CSearchWnd::OnQueryHits(CQueryHit* pHits)
 				m_pMatches->AddHits( pHits, pManaged->m_pSearch.get() );
 				m_bUpdate = TRUE;
 
+				SetModified();
+
 				if ( ( m_pMatches->m_nED2KHits >= m_nMaxED2KResults ) && ( pManaged->m_tLastED2K != 0xFFFFFFFF ) )
 				{
 					if ( !pManaged->m_bAllowG2 ) //If G2 is not active, pause the search now.
@@ -937,6 +943,8 @@ void CSearchWnd::OnSelChangeMatches()
 
 void CSearchWnd::Serialize(CArchive& ar)
 {
+	CQuickLock pLock( m_pMatches->m_pSection );
+
 	int nVersion = 1;
 
 	if ( ar.IsStoring() )

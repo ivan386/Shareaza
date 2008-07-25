@@ -19,9 +19,6 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_WNDBASEMATCH_H__BB7F6950_C699_40C4_8817_E3741CE3A8B2__INCLUDED_)
-#define AFX_WNDBASEMATCH_H__BB7F6950_C699_40C4_8817_E3741CE3A8B2__INCLUDED_
-
 #pragma once
 
 #include "WndPanel.h"
@@ -45,6 +42,7 @@ public:
 	CMatchCtrl		m_wndList;
 	CCoolBarCtrl	m_wndToolBar;
 	CEdit			m_wndFilter;
+
 protected:
 	CMatchList*		m_pMatches;
 	CCoolMenu*		m_pCoolMenu;
@@ -54,23 +52,26 @@ protected:
 	BOOL			m_bUpdate;
 	BOOL			m_bBMWActive;
 	DWORD			m_nCacheFiles;
+	DWORD			m_tModify;			// Last modify time (0 if not modified)
 
 // Operations
 public:
 	void			Serialize(CArchive& ar);
     int				CheckExisting(const Hashes::Sha1Hash& oSHA1, const Hashes::TigerHash& oTiger, const Hashes::Ed2kHash& oED2K,
     							const Hashes::BtHash& oBTH, const Hashes::Md5Hash& oMD5, const QWORD nSize);
+
 	inline BOOL		IsPaused() const
 	{
 		return m_bPaused;
 	}
 
-public:
-	//{{AFX_VIRTUAL(CBaseMatchWnd)
-	public:
-	virtual BOOL OnCmdMsg(UINT nID, int nCode, void* pExtra, AFX_CMDHANDLERINFO* pHandlerInfo);
-	//}}AFX_VIRTUAL
+	inline void		SetModified()
+	{
+		if ( ! m_tModify )
+			m_tModify = static_cast< DWORD >( time( NULL ) );
+	}
 
+	virtual BOOL	OnCmdMsg(UINT nID, int nCode, void* pExtra, AFX_CMDHANDLERINFO* pHandlerInfo);
 	virtual void	SanityCheck();
 	virtual void	UpdateMessages(BOOL bActive = TRUE);
 	virtual HRESULT	GetGenericView(IGenericView** ppView);
@@ -130,7 +131,4 @@ protected:
 	//}}AFX_MSG
 
 	DECLARE_MESSAGE_MAP()
-
 };
-
-#endif // !defined(AFX_WNDBASEMATCH_H__BB7F6950_C699_40C4_8817_E3741CE3A8B2__INCLUDED_)

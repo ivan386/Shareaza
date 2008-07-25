@@ -132,7 +132,8 @@ CBaseMatchWnd::CBaseMatchWnd() :
 	m_bPaused( TRUE ),
 	m_bUpdate( FALSE ),
 	m_bBMWActive( TRUE ),
-	m_nCacheFiles( 0 )
+	m_nCacheFiles( 0 ),
+	m_tModify( static_cast< DWORD >( time( NULL ) ) )
 {
 }
 
@@ -1034,6 +1035,17 @@ void CBaseMatchWnd::OnTimer(UINT_PTR nIDEvent)
 			PostMessage( WM_TIMER, 2 );
 		}
 	}
+
+	// Lazy save
+	if ( m_tModify && static_cast< DWORD >( time( NULL ) ) - m_tModify > 10 )
+	{
+		m_tModify = 0;
+
+		if ( IsKindOf( RUNTIME_CLASS(CSearchWnd) ) )
+			GetManager()->SaveSearchWindows();
+		else if ( IsKindOf( RUNTIME_CLASS(CBrowseHostWnd) ) )
+			GetManager()->SaveBrowseHostWindows();
+	}
 }
 
 void CBaseMatchWnd::SanityCheck()
@@ -1069,6 +1081,8 @@ HRESULT CBaseMatchWnd::GetGenericView(IGenericView** ppView)
 
 void CBaseMatchWnd::Serialize(CArchive& ar)
 {
+	m_tModify = 0;
+
 	CSingleLock pLock( &m_pMatches->m_pSection, TRUE );
 	CString strSchema;
 

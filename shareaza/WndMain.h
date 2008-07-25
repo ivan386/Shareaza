@@ -78,6 +78,7 @@ public:
 	void		OpenFromTray(int nShowCmd = SW_SHOW);
 	void		UpdateMessages();
 	void		LocalSystemChecks();
+	void		SaveState();	// Save all windows states
 
 // Overrides
 public:

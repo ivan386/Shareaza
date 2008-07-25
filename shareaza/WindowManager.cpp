@@ -417,13 +417,15 @@ void CWindowManager::LoadWindowStates()
 
 void CWindowManager::SaveWindowStates()
 {
-	if ( Settings.General.GUIMode != GUI_WINDOWED ) return;
+//	if ( Settings.General.GUIMode != GUI_WINDOWED ) return;
 
 	CString strWindows;
 
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
 		CChildWnd* pChild = GetNext( pos );
+
+		pChild->SaveState();
 
 		if ( strWindows.GetLength() ) strWindows += '|';
 
@@ -502,6 +504,8 @@ void CWindowManager::SaveSearchWindows()
 	ar.Close();
 	pFile.Close();
 
+	theApp.Message( MSG_DEBUG, _T("Searches successfully saved to: %s"), strFile );
+
 	if ( ! nCount ) DeleteFile( strFile );
 }
 
@@ -563,6 +567,8 @@ void CWindowManager::SaveBrowseHostWindows()
 	ar.WriteCount( 0 );
 	ar.Close();
 	pFile.Close();
+
+	theApp.Message( MSG_DEBUG, _T("Browses successfully saved to: %s"), strFile );
 
 	if ( ! nCount ) DeleteFile( strFile );
 }

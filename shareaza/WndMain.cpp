@@ -321,6 +321,20 @@ CMainWnd::~CMainWnd()
 	theApp.m_pMainWnd = NULL;
 }
 
+void CMainWnd::SaveState()
+{
+	if ( ! IsIconic() )
+		SaveBarState( _T("Toolbars\\CoolBar") );
+
+	theApp.WriteProfileInt( _T("Toolbars"), _T("CRemoteWnd"),  m_wndRemoteWnd.IsVisible() );
+
+	theApp.WriteProfileInt( _T("Toolbars"), _T("ShowMonitor"), m_wndMonitorBar.IsVisible() );
+
+	Settings.SaveWindow( _T("CMainWnd"), this );
+
+	m_pWindows.SaveWindowStates();
+}
+
 /////////////////////////////////////////////////////////////////////////////
 // CMainWnd create window
 
@@ -540,12 +554,8 @@ void CMainWnd::OnClose()
 		m_bTrayIcon = FALSE;
 	}
 	
-	if ( ! IsIconic() ) SaveBarState( _T("Toolbars\\CoolBar") );
-	theApp.WriteProfileInt( _T("Toolbars"), _T("CRemoteWnd"), m_wndRemoteWnd.IsVisible() );
-	theApp.WriteProfileInt( L"Toolbars", L"ShowMonitor", m_wndMonitorBar.IsVisible() );
-	Settings.SaveWindow( _T("CMainWnd"), this );
-	m_pWindows.SaveWindowStates();
-	
+	SaveState();
+
 	m_pWindows.SaveSearchWindows();
 	m_pWindows.SaveBrowseHostWindows();
 	m_pWindows.Close();	
@@ -841,6 +851,16 @@ void CMainWnd::OnTimer(UINT_PTR /*nIDEvent*/)
 	// Update messages
 	
 	UpdateMessages();
+
+	// Periodic saves
+
+	static DWORD tLastSave = static_cast< DWORD >( time( NULL ) );
+	DWORD tNow = static_cast< DWORD >( time( NULL ) );
+	if ( tNow - tLastSave > 60 )
+	{
+		tLastSave = tNow;
+		SaveState();
+	}
 }
 
 void CMainWnd::OnActivateApp(BOOL bActive, DWORD dwTask) 

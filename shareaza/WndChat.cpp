@@ -81,7 +81,7 @@ int CChatWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 void CChatWnd::OnDestroy()
 {
-	if ( ! IsIconic() ) SaveState( _T("CChatWnd") );
+	SaveState( _T("CChatWnd") );
 
 	if ( m_pFrame != NULL )
 	{
