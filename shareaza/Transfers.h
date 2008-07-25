@@ -26,63 +26,31 @@
 class CTransfer;
 class CTransfers;
 
-extern CTransfers Transfers;
 
 class CTransfers :
 	public CThreadImpl
 {
-// Construction
 public:
 	CTransfers();
 	virtual ~CTransfers();
 
-// Attributes
-public:
-	mutable CMutex	m_pSection;
-	DWORD			m_nBuffer;
-	BYTE*			m_pBuffer;
-protected:
-	CList< CTransfer* > m_pList;
-	DWORD			m_nRunCookie;
+	mutable CMutex		m_pSection;
 
-// Operations
-public:
-	INT_PTR		GetActiveCount() const;
-	BOOL		IsConnectedTo(IN_ADDR* pAddress) const;
+	BOOL		IsConnectedTo(const IN_ADDR* pAddress) const;
 	BOOL		StartThread();
 	void		StopThread();
-protected:
-	void		OnRun();
-	void		OnRunTransfers();
-	void		OnCheckExit();
-protected:
 	void		Add(CTransfer* pTransfer);
 	void		Remove(CTransfer* pTransfer);
 
-// List Access
-public:
-	inline POSITION GetIterator() const
-	{
-		return m_pList.GetHeadPosition();
-	}
+	static INT_PTR	GetActiveCount();
 
-	inline CTransfer* GetNext(POSITION& pos) const
-	{
-		return m_pList.GetNext( pos );
-	}
+private:
+	CList< CTransfer* >	m_pList;
+	DWORD				m_nRunCookie;
 
-	inline INT_PTR GetCount() const
-	{
-		return m_pList.GetCount();
-	}
-
-	inline BOOL Check(CTransfer* pTransfer) const
-	{
-		return m_pList.Find( pTransfer ) != NULL;
-	}
-
-	friend class CTransfer;
-	friend class CUpload;
-	friend class CDownloadWithTransfers;
-
+	void		OnRun();
+	void		OnRunTransfers();
+	void		OnCheckExit();
 };
+
+extern CTransfers Transfers;

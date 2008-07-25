@@ -1180,21 +1180,21 @@ BOOL CUploadTransferHTTP::OnWrite()
 			return TRUE;
 		}
 		
-		QWORD nPacket = min( m_nLength - m_nPosition, Transfers.m_nBuffer );
-		BYTE* pBuffer = Transfers.m_pBuffer;
+		QWORD nPacket = min( m_nLength - m_nPosition, 256 * 1024ull );
+		auto_array< BYTE > pBuffer( new BYTE[ nPacket ] );
 		
 		if ( m_bBackwards )
 		{
 			QWORD nRead = 0;
-			m_pDiskFile->Read( m_nFileBase + m_nOffset + m_nLength - m_nPosition - nPacket, pBuffer, nPacket, &nRead );
+			m_pDiskFile->Read( m_nFileBase + m_nOffset + m_nLength - m_nPosition - nPacket, pBuffer.get(), nPacket, &nRead );
 			if ( nRead != nPacket ) return TRUE;
-			WriteReversed( pBuffer, (DWORD)nPacket );
+			WriteReversed( pBuffer.get(), (DWORD)nPacket );
 		}
 		else
 		{
-			m_pDiskFile->Read( m_nFileBase + m_nOffset + m_nPosition, pBuffer, nPacket, &nPacket );
+			m_pDiskFile->Read( m_nFileBase + m_nOffset + m_nPosition, pBuffer.get(), nPacket, &nPacket );
 			if ( nPacket == 0 ) return TRUE;
-			Write( pBuffer, (DWORD)nPacket );
+			Write( pBuffer.get(), (DWORD)nPacket );
 		}
 		
 		m_nPosition += nPacket;

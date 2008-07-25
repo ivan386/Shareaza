@@ -42,8 +42,6 @@ CTransfers Transfers;
 // CTransfers construction
 
 CTransfers::CTransfers() :
-	m_nBuffer( 256*1024 ),
-	m_pBuffer( new BYTE[ m_nBuffer ] ),
 	m_nRunCookie( 0 )
 {
 }
@@ -51,26 +49,26 @@ CTransfers::CTransfers() :
 CTransfers::~CTransfers()
 {
 	StopThread();
-	delete [] m_pBuffer;
 }
 
 //////////////////////////////////////////////////////////////////////
 // CTransfers list tests
 
-INT_PTR CTransfers::GetActiveCount() const
+INT_PTR CTransfers::GetActiveCount()
 {
 	return Downloads.GetCount( TRUE ) + Uploads.GetTransferCount();
 }
 
-BOOL CTransfers::IsConnectedTo(IN_ADDR* pAddress) const
+BOOL CTransfers::IsConnectedTo(const IN_ADDR* pAddress) const
 {
 	CSingleLock pLock( &m_pSection );
-	if ( ! pLock.Lock( 100 ) )
+	if ( ! pLock.Lock( 250 ) )
 		return FALSE;
 
-	for ( POSITION pos = GetIterator() ; pos ; )
+	for ( POSITION pos = m_pList.GetHeadPosition() ; pos ; )
 	{
-		if ( GetNext( pos )->m_pHost.sin_addr.S_un.S_addr == pAddress->S_un.S_addr ) return TRUE;
+		if ( m_pList.GetNext( pos )->m_pHost.sin_addr.S_un.S_addr == pAddress->S_un.S_addr )
+			return TRUE;
 	}
 
 	return FALSE;
@@ -81,7 +79,9 @@ BOOL CTransfers::IsConnectedTo(IN_ADDR* pAddress) const
 
 BOOL CTransfers::StartThread()
 {
-	if ( GetCount() == 0 && Downloads.GetCount() == 0 )
+	CQuickLock oLock( m_pSection );
+
+	if ( m_pList.GetCount() == 0 && Downloads.GetCount() == 0 )
 		return FALSE;
 
 	return BeginThread( "Transfers" );
@@ -102,28 +102,26 @@ void CTransfers::StopThread()
 
 void CTransfers::Add(CTransfer* pTransfer)
 {
+	CQuickLock oLock( m_pSection );
+
 	ASSERT( pTransfer->IsValid() );
 	WSAEventSelect( pTransfer->m_hSocket, GetWakeupEvent(), FD_CONNECT|FD_READ|FD_WRITE|FD_CLOSE );
 
 	POSITION pos = m_pList.Find( pTransfer );
 	ASSERT( pos == NULL );
-	if ( pos == NULL ) m_pList.AddHead( pTransfer );
-
-	//if ( Settings.General.Debug && Settings.General.DebugLog ) 
-	//	theApp.Message( MSG_DEBUG, _T("CTransfers::Add(): %x"), pTransfer );
+	if ( pos == NULL )
+		m_pList.AddHead( pTransfer );
 
 	StartThread();
 }
 
 void CTransfers::Remove(CTransfer* pTransfer)
 {
-	//if ( Settings.General.Debug && Settings.General.DebugLog ) 
-	//	theApp.Message( MSG_DEBUG, _T("CTransfers::Remove(): %x"), pTransfer );
+	CQuickLock oLock( m_pSection );
 
 	if ( pTransfer->IsValid() )
 		WSAEventSelect( pTransfer->m_hSocket, GetWakeupEvent(), 0 );
 
-	CQuickLock oLock( m_pSection );
 	if ( POSITION pos = m_pList.Find( pTransfer ) )
 		m_pList.RemoveAt( pos );
 }
@@ -172,30 +170,26 @@ void CTransfers::OnRunTransfers()
 
 	++m_nRunCookie;
 
-	while ( !m_pList.IsEmpty()
-		&& m_pList.GetHead()->m_nRunCookie != m_nRunCookie )
+	while ( ! m_pList.IsEmpty() && m_pList.GetHead()->m_nRunCookie != m_nRunCookie )
 	{
 		CTransfer* pTransfer = m_pList.RemoveHead();
 		m_pList.AddTail( pTransfer );
 		pTransfer->m_nRunCookie = m_nRunCookie;
-		pTransfer->DoRun();
+
+		pTransfer->OnRun();
 	}
 }
 
 void CTransfers::OnCheckExit()
 {
-	if ( GetCount() == 0 && Downloads.GetCount() == 0 ) Exit();
+	if ( m_pList.GetCount() == 0 && Downloads.GetCount() == 0 )
+		Exit();
 
 	if ( Settings.Live.AutoClose && GetActiveCount() == 0 )
 	{
-		CSingleLock pLock( &theApp.m_pSection );
-
-		if ( pLock.Lock( 250 ) )
+		if ( PostMainWndMessage( WM_CLOSE ) )
 		{
-			if ( PostMainWndMessage( WM_CLOSE ) )
-			{
-				Settings.Live.AutoClose = FALSE;
-			}
+			Settings.Live.AutoClose = FALSE;
 		}
 	}
 }

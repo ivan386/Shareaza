@@ -535,28 +535,29 @@ void CDownloadWithTiger::ContinueValidation()
 		if ( hComplete == INVALID_HANDLE_VALUE ) return;
 	}
 
+	auto_array< BYTE > pChunk( new BYTE[ 256 * 1024ull ] );
+
 	for ( int nRound = bDone ? 10 : 2 ; nRound > 0 && m_nVerifyLength > 0 ; nRound-- )
 	{
-		DWORD nChunk	= (DWORD)min( m_nVerifyLength, Transfers.m_nBuffer );
-		LPBYTE pChunk	= Transfers.m_pBuffer;
+		DWORD nChunk	= (DWORD)min( m_nVerifyLength, 256 * 1024ull );
 
 		if ( m_pFile != NULL )
 		{
-			m_pFile->ReadRange( m_nVerifyOffset, pChunk, nChunk );
+			m_pFile->ReadRange( m_nVerifyOffset, pChunk.get(), nChunk );
 		}
 		else
 		{
 			LONG nOffsetHigh = (LONG)( m_nVerifyOffset >> 32 );
 			SetFilePointer( hComplete, (DWORD)( m_nVerifyOffset & 0xFFFFFFFF ), &nOffsetHigh, FILE_BEGIN );
-			ReadFile( hComplete, pChunk, nChunk, &nChunk, NULL );
+			ReadFile( hComplete, pChunk.get(), nChunk, &nChunk, NULL );
 		}
 
 		if ( m_nVerifyHash == HASH_TIGERTREE )
-			m_pTigerTree.AddToTest( pChunk, (DWORD)nChunk );
+			m_pTigerTree.AddToTest( pChunk.get(), (DWORD)nChunk );
 		else if ( m_nVerifyHash == HASH_ED2K )
-			m_pHashset.AddToTest( pChunk, (DWORD)nChunk );
+			m_pHashset.AddToTest( pChunk.get(), (DWORD)nChunk );
 		else if ( m_nVerifyHash == HASH_TORRENT )
-			m_pTorrent.AddToTest( pChunk, (DWORD)nChunk );
+			m_pTorrent.AddToTest( pChunk.get(), (DWORD)nChunk );
 		else
 			ASSERT( FALSE );
 

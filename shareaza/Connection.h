@@ -312,7 +312,6 @@ public:
 	virtual void AttachTo(CConnection* pConnection);             // Copy a connection (do)
 	virtual void Close();                                        // Disconnect from the remote computer
 
-protected:
 	// Read and write data through the socket, and look at headers
 	virtual BOOL OnRun();                // (do) just returns true
 	virtual BOOL OnConnected();          // (do) just returns true
