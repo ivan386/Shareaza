@@ -642,24 +642,21 @@ BOOL CShareazaApp::OpenTorrent(LPCTSTR lpszFileName, BOOL bDoIt)
 		theApp.Message( MSG_NOTICE, IDS_BT_PREFETCH_FILE, lpszFileName );
 
 	BOOL bResult = FALSE;
-	CBTInfo* pTorrent = new CBTInfo();
-	if ( pTorrent )
+	auto_ptr< CBTInfo > pTorrent( new CBTInfo() );
+	if ( pTorrent.get() )
 	{
 		if ( pTorrent->LoadTorrentFile( lpszFileName ) )
 		{
 			if ( bDoIt && pTorrent->HasEncodingError() )
 				theApp.Message( MSG_NOTICE, IDS_BT_ENCODING );
-			CShareazaURL* pURL = new CShareazaURL( pTorrent );
-			if ( pURL )
+			auto_ptr< CShareazaURL > pURL( new CShareazaURL( pTorrent.release() ) );
+			if ( pURL.get() )
 			{
 				bResult = TRUE;
 				if ( bDoIt )
-					return PostMainWndMessage( WM_URL, (WPARAM)pURL );
-				delete pURL;
-				pTorrent = NULL;	// Deleted inside CShareazaURL::Clear()
+					return PostMainWndMessage( WM_URL, (WPARAM)pURL.release() );
 			}
 		}
-		delete pTorrent;
 	}
 
 	if ( bDoIt )
@@ -673,13 +670,12 @@ BOOL CShareazaApp::OpenCollection(LPCTSTR lpszFileName, BOOL bDoIt)
 	if ( ! bDoIt )
 		return TRUE;
 
-	LPTSTR pszPath = new TCHAR[ lstrlen( lpszFileName ) + 1 ];
-	if ( pszPath )
+	auto_array< TCHAR > pszPath( new TCHAR[ lstrlen( lpszFileName ) + 1 ] );
+	if ( pszPath.get() )
 	{
-		lstrcpy( pszPath, lpszFileName );
-		if ( PostMainWndMessage( WM_COLLECTION, (WPARAM)pszPath ) )
+		lstrcpy( pszPath.get(), lpszFileName );
+		if ( PostMainWndMessage( WM_COLLECTION, (WPARAM)pszPath.release() ) )
 			return TRUE;
-		delete [] pszPath;
 	}
 
 	return FALSE;
@@ -690,16 +686,15 @@ BOOL CShareazaApp::OpenURL(LPCTSTR lpszFileName, BOOL bDoIt, BOOL bSilent)
 	if ( bDoIt && ! bSilent )
 		theApp.Message( MSG_NOTICE, IDS_URL_RECEIVED, lpszFileName );
 
-	CShareazaURL* pURL = new CShareazaURL();
-	if ( pURL )
+	auto_ptr< CShareazaURL > pURL( new CShareazaURL() );
+	if ( pURL.get() )
 	{
 		if ( pURL->Parse( lpszFileName ) )
 		{
 			if ( bDoIt )
-				PostMainWndMessage( WM_URL, (WPARAM)pURL );
+				PostMainWndMessage( WM_URL, (WPARAM)pURL.release() );
 			return TRUE;
 		}
-		delete pURL;
 	}
 
 	if ( bDoIt && ! bSilent )
