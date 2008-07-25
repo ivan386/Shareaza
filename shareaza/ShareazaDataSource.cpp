@@ -44,10 +44,11 @@ static char THIS_FILE[] = __FILE__;
 
 static LPCTSTR GetFORMATLIST(UINT id)
 {
-	static struct {
+	const struct {
 		UINT id;
 		LPCTSTR name;
 	} FORMATLIST [] = {
+		{ CF_NULL,            _T("CF_NULL") },
 		{ CF_TEXT,            _T("CF_TEXT") },
 		{ CF_BITMAP,          _T("CF_BITMAP") },
 		{ CF_METAFILEPICT,    _T("CF_METAFILEPICT") },
@@ -83,7 +84,28 @@ static LPCTSTR GetFORMATLIST(UINT id)
 	return buf;
 }
 
-#endif
+void DumpIDataObject(IDataObject* pIDataObject)
+{
+	CComPtr< IEnumFORMATETC > pIEnumFORMATETC;
+	if ( SUCCEEDED( pIDataObject->EnumFormatEtc( DATADIR_GET, &pIEnumFORMATETC ) ) )
+	{
+		TRACE( _T("IDataObject = {\n") );
+		pIEnumFORMATETC->Reset();
+		for (;;)
+		{
+			FORMATETC formatetc = {};
+			ULONG celtFetched = 0;
+			if ( pIEnumFORMATETC->Next( 1, &formatetc, &celtFetched ) != S_OK )
+				break;
+			TRACE( _T("\t{%s, %d, %d, 0x%08x, %d}\n"),
+				GetFORMATLIST( formatetc.cfFormat ), formatetc.dwAspect, formatetc.lindex,
+				formatetc.ptd, formatetc.tymed );
+		}
+		TRACE( _T("}\n") );
+	}
+}
+
+#endif	// _DEBUG
 
 // STGMEDIUM wrapper
 class __declspec(novtable) CStgMedium : public STGMEDIUM

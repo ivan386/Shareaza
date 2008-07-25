@@ -162,6 +162,16 @@ protected:
 	DECLARE_INTERFACE_MAP()
 };
 
+#ifdef _DEBUG
+
+	void DumpIDataObject(IDataObject* pIDataObject);
+
+#else	// _DEBUG
+
+	#define DumpIDataObject __noop
+
+#endif	// _DEBUG
+
 /////////////////////////////////////////////////////////////////////////////
 // Drop target helpers
 
@@ -189,6 +199,7 @@ public:\
 	STDMETHODIMP class_name::XDropTarget::DragEnter(IDataObject* pDataObj, DWORD grfKeyState, POINTL ptl, DWORD* pdwEffect) \
 	{ \
 		METHOD_PROLOGUE( class_name, DropTarget ) \
+		DumpIDataObject( pDataObj ); \
 		m_pDataObj = pDataObj; \
 		m_spdth.CoCreateInstance( CLSID_DragDropHelper ); \
 		POINT point = { ptl.x, ptl.y }; \
