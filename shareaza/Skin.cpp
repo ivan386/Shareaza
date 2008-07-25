@@ -331,7 +331,7 @@ BOOL CSkin::LoadFromXML(CXMLElement* pXML, const CString& strPath)
 		{
 			if ( ! LoadFonts( pSub, strPath ) ) break;
 		}
-		else if ( pSub->IsNamed( _T("colourScheme") ) )
+		else if ( pSub->IsNamed( _T("colourScheme") ) || pSub->IsNamed( _T("colorScheme") ) )
 		{
 			if ( ! LoadColourScheme( pSub ) ) break;
 		}
@@ -738,6 +738,8 @@ BOOL CSkin::CreateToolBar(CXMLElement* pBase)
 			{
 				CCoolBarItem* pItem = pBar->Add( nID, pXML->GetAttributeValue( _T("text") ) );
 				CString strTemp = pXML->GetAttributeValue( _T("colour") );
+				if ( ! strTemp )
+					strTemp = pXML->GetAttributeValue( _T("color") );
 				
 				if ( strTemp.GetLength() == 6 )
 				{
@@ -1358,16 +1360,21 @@ BOOL CSkin::LoadColourScheme(CXMLElement* pBase)
 	pColours.SetAt( _T("schema.row1"), &m_crSchemaRow[0] );
 	pColours.SetAt( _T("schema.row2"), &m_crSchemaRow[1] );
 
-//	The color is controlled by media player plugin, thus we can not skin it.
-//	pColours.SetAt( _T("media.window"), &CoolInterface.m_crMediaWindow );
+//	Active window color is controlled by media player plugin, thus we can not skin it.
+	pColours.SetAt( _T("media.window"), &CoolInterface.m_crMediaWindow );
+	pColours.SetAt( _T("media.window.back"), &CoolInterface.m_crMediaWindow );
 	pColours.SetAt( _T("media.window.text"), &CoolInterface.m_crMediaWindowText );
 	pColours.SetAt( _T("media.status"), &CoolInterface.m_crMediaStatus );
+	pColours.SetAt( _T("media.status.back"), &CoolInterface.m_crMediaStatus );
 	pColours.SetAt( _T("media.status.text"), &CoolInterface.m_crMediaStatusText );
 	pColours.SetAt( _T("media.panel"), &CoolInterface.m_crMediaPanel );
+	pColours.SetAt( _T("media.panel.back"), &CoolInterface.m_crMediaPanel );
 	pColours.SetAt( _T("media.panel.text"), &CoolInterface.m_crMediaPanelText );
 	pColours.SetAt( _T("media.panel.active"), &CoolInterface.m_crMediaPanelActive );
+	pColours.SetAt( _T("media.panel.active.back"), &CoolInterface.m_crMediaPanelActive );
 	pColours.SetAt( _T("media.panel.active.text"), &CoolInterface.m_crMediaPanelActiveText );
 	pColours.SetAt( _T("media.panel.caption"), &CoolInterface.m_crMediaPanelCaption );
+	pColours.SetAt( _T("media.panel.caption.back"), &CoolInterface.m_crMediaPanelCaption );
 	pColours.SetAt( _T("media.panel.caption.text"), &CoolInterface.m_crMediaPanelCaptionText );
 
 	pColours.SetAt( _T("traffic.window.back"), &CoolInterface.m_crTrafficWindowBack );
@@ -1480,7 +1487,7 @@ BOOL CSkin::LoadColourScheme(CXMLElement* pBase)
 	for ( POSITION pos = pBase->GetElementIterator() ; pos ; )
 	{
 		CXMLElement* pXML = pBase->GetNextElement( pos );
-		if ( ! pXML->IsNamed( _T("colour") ) ) continue;
+		if ( ! pXML->IsNamed( _T("colour") ) && ! pXML->IsNamed( _T("color") ) ) continue;
 
 		CString strName		= pXML->GetAttributeValue( _T("name") );
 		CString strValue	= pXML->GetAttributeValue( _T("value") );

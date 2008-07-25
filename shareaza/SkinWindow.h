@@ -59,7 +59,6 @@ public:
 	BOOL			m_bCaptionCaps;
 	CRect			m_rcCaption;
 	CFont			m_fnCaption;
-	COLORREF		m_crCaptionFill;
 	COLORREF		m_crCaptionText;
 	COLORREF		m_crCaptionInactive;
 	COLORREF		m_crCaptionShadow;

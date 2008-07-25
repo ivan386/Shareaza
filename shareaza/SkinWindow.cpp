@@ -59,7 +59,6 @@ CSkinWindow::CSkinWindow()
 	m_hoSkin			= NULL;
 	m_bCaption			= FALSE;
 	m_bCaptionCaps		= FALSE;
-	m_crCaptionFill		= CLR_NONE;
 	m_crCaptionText		= RGB( 255, 255, 255 );
 	m_crCaptionInactive	= RGB( 128, 128, 128 );
 	m_crCaptionShadow	= CLR_NONE;
@@ -300,18 +299,22 @@ BOOL CSkinWindow::Parse(CXMLElement* pBase, const CString& strPath)
 				}
 			}
 			
+			str = pGroup->GetAttributeValue( _T("color") );
+			ParseColour( str, m_crCaptionText );
 			str = pGroup->GetAttributeValue( _T("colour") );
 			ParseColour( str, m_crCaptionText );
+			str = pGroup->GetAttributeValue( _T("inactiveColor") );
+			ParseColour( str, m_crCaptionInactive );
 			str = pGroup->GetAttributeValue( _T("inactiveColour") );
 			ParseColour( str, m_crCaptionInactive );
-			str = pGroup->GetAttributeValue( _T("fill") );
-			ParseColour( str, m_crCaptionFill );
-			str = pGroup->GetAttributeValue( _T("fillColour") );
-			ParseColour( str, m_crCaptionFill );
-			str = pGroup->GetAttributeValue( _T("shadowColour") );
-			ParseColour( str, m_crCaptionShadow );
+			str = pGroup->GetAttributeValue( _T("outlineColor") );
+			ParseColour( str, m_crCaptionOutline );
 			str = pGroup->GetAttributeValue( _T("outlineColour") );
 			ParseColour( str, m_crCaptionOutline );
+			str = pGroup->GetAttributeValue( _T("shadowColor") );
+			ParseColour( str, m_crCaptionShadow );
+			str = pGroup->GetAttributeValue( _T("shadowColour") );
+			ParseColour( str, m_crCaptionShadow );
 			
 			str = pGroup->GetAttributeValue( _T("caps") );
 			m_bCaptionCaps = str.GetLength() > 0;

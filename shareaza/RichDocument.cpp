@@ -348,6 +348,15 @@ BOOL CRichDocument::LoadXML(CXMLElement* pBase, CMap< CString, const CString&, C
 			pElement->m_nFlags |= retfColour;
 			LoadXMLColour( pXML, _T("colour"), &pElement->m_cColour );
 		}
+		else
+		{
+			strTemp = pXML->GetAttributeValue( _T("color") );
+			if ( strTemp.GetLength() == 6 )
+			{
+				pElement->m_nFlags |= retfColour;
+				LoadXMLColour( pXML, _T("color"), &pElement->m_cColour );
+			}
+		}
 		
 		if ( pElement->m_nType == retIcon )
 		{
@@ -414,6 +423,7 @@ BOOL CRichDocument::LoadXMLStyles(CXMLElement* pParent)
 		}
 		
 		CXMLElement* pColours = pXML->GetElementByName( _T("colours") );
+		if ( pColours == NULL ) pColours = pXML->GetElementByName( _T("colors") );
 		if ( pColours == NULL ) pColours = pXML;
 		
 		if ( strName == _T("default") || strName.IsEmpty() )
