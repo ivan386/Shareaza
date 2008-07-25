@@ -2821,16 +2821,18 @@ BOOL CMainWnd::OnDrop(IDataObject* pDataObj, DWORD /* grfKeyState */, POINT /* p
 			return bAccepted;
 		}
 	}
-	else if ( SUCCEEDED ( pDataObj->QueryGetData( &fmtcURL ) ) )
+
+	if ( SUCCEEDED ( pDataObj->QueryGetData( &fmtcURL ) ) )
 	{
 		CString strURL;		
 		if ( CShareazaDataSource::ObjectToURL( pDataObj, strURL ) == S_OK )
 		{
 			BOOL bAccepted = CShareazaApp::OpenURL( strURL, bDrop );
 			if ( bAccepted )
-				*pdwEffect = DROPEFFECT_COPY;
+				*pdwEffect = DROPEFFECT_LINK;
 			return bAccepted;
 		}
 	}
+
 	return FALSE;
 }
