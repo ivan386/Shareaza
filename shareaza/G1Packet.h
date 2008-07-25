@@ -98,6 +98,10 @@ public:
 	// Returns amount of successfully added or updated hosts and -1 on errors.
 	static int GGEPReadCachedHosts(const CGGEPBlock& pGGEP);
 
+	// Received SCP GGEP, send 5 random hosts from the cache
+	// Since we do not provide leaves, ignore the preference data
+	static int GGEPWriteRandomCache(CGGEPItem* pItem);
+
 protected:
 
 	// Create a nested class, CG1PacketPool, that holds arrays of Gnutella packets we can use quickly

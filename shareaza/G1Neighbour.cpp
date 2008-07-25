@@ -197,7 +197,8 @@ BOOL CG1Neighbour::OnWrite()
 BOOL CG1Neighbour::OnRun()
 {
 	// Have CNeighbour::OnRun make sure the remote computer hasn't been silent too long, and send a query patch table
-	if ( ! CNeighbour::OnRun() ) return FALSE; // Pass up a false from CNeighbour::OnRun
+	if ( ! CNeighbour::OnRun() )
+		return FALSE;
 
 	// Send a ping if we haven't sent one in awhile
 	DWORD tNow = GetTickCount();
@@ -456,7 +457,6 @@ BOOL CG1Neighbour::OnPing(CG1Packet* pPacket)
 		CGGEPBlock pGGEP;
 		if ( pGGEP.ReadFromPacket( pPacket ) )
 		{
-			// If the neighbour sent
 			if ( CGGEPItem* pItem = pGGEP.Find( GGEP_HEADER_SUPPORT_CACHE_PONGS ) )
 			{
 				bSCP = true;
@@ -493,13 +493,13 @@ BOOL CG1Neighbour::OnPing(CG1Packet* pPacket)
 	CGGEPBlock pGGEP;
 	if ( bSCP )
 	{
-		WriteRandomCache( pGGEP.Add( GGEP_HEADER_PACKED_IPPORTS ) );
+		CG1Packet::GGEPWriteRandomCache( pGGEP.Add( GGEP_HEADER_PACKED_IPPORTS ) );
 	}
 	if ( Settings.Experimental.EnableDIPPSupport )
 	{
 		if ( bDNA )
 		{
-			WriteRandomCache( pGGEP.Add( GGEP_HEADER_GDNA_PACKED_IPPORTS ) );
+			CG1Packet::GGEPWriteRandomCache( pGGEP.Add( GGEP_HEADER_GDNA_PACKED_IPPORTS ) );
 		}
 	}
 
@@ -617,63 +617,6 @@ BOOL CG1Neighbour::OnPing(CG1Packet* pPacket)
 
 	// This method only returns true
 	return TRUE;
-}
-
-int CG1Neighbour::WriteRandomCache(CGGEPItem* pItem)
-{
-	if ( !pItem ) return 0;
-
-	bool bIPP = false;
-	if ( pItem->IsNamed( GGEP_HEADER_PACKED_IPPORTS ) )
-		bIPP = true;
-	else if ( !pItem->IsNamed( GGEP_HEADER_GDNA_PACKED_IPPORTS ) &&
-		!pItem->IsNamed( GGEP_HEADER_GDNA_PACKED_IPPORTS_x ) )
-	return 0;
-
-	DWORD nCount = min( DWORD(50), bIPP ? HostCache.Gnutella1.CountHosts() : HostCache.G1DNA.CountHosts() );
-	WORD nPos = 0;
-
-	// Create 5 random positions from 0 to 50 in the descending order
-	std::vector< WORD > pList;
-	pList.reserve( Settings.Gnutella1.MaxHostsInPongs );
-	for ( WORD nNo = 0 ; nNo < Settings.Gnutella1.MaxHostsInPongs ; nNo++ )
-	{
-		pList.push_back( (WORD)( ( nCount + 1 ) * rand() / ( RAND_MAX + (float)nCount ) ) );
-	}
-	std::sort( pList.begin(), pList.end(), CompareNums() );
-
-	nCount = Settings.Gnutella1.MaxHostsInPongs;
-
-	CQuickLock oLock( bIPP ? HostCache.Gnutella1.m_pSection : HostCache.G1DNA.m_pSection );
-
-	for ( CHostCacheIterator i =
-		( bIPP ? HostCache.Gnutella1.Begin() : HostCache.G1DNA.Begin() ) ;
-		( bIPP ? ( i != HostCache.Gnutella1.End() ) : ( i != HostCache.G1DNA.End() ) )
-		&& nCount && !pList.empty() ; ++i )
-	{
-		CHostCacheHost* pHost = (*i);
-
-		nPos = pList.back(); // take the smallest value;
-		pList.pop_back(); // remove it
-		for ( ;
-			( bIPP ? ( i != HostCache.Gnutella1.End() ) : ( i != HostCache.G1DNA.End() ) )
-			&& nPos-- ; ++i ) pHost = (*i);
-
-		// We won't provide Shareaza hosts for G1 cache, since users may disable
-		// G1 and it will pollute the host caches ( ??? )
-		if ( ( bIPP ? ( i != HostCache.Gnutella1.End() ) : ( i != HostCache.G1DNA.End() ) ) &&
-			pHost->m_nFailures == 0 && pHost->m_bCheckedLocally &&
-			 ( ( bIPP && ( !pHost->m_pVendor || pHost->m_pVendor->m_sCode != L"GDNA" ) ) ||
-			   ( !bIPP && pHost->m_pVendor && pHost->m_pVendor->m_sCode == L"GDNA" ) ) )
-		{
-			pItem->Write( (void*)&pHost->m_pAddress, 4 );
-			pItem->Write( (void*)&pHost->m_nPort, 2 );
-			theApp.Message( MSG_DEBUG, _T("Sending G1 host through pong (%s:%i)"),
-				(LPCTSTR)CString( inet_ntoa( *(IN_ADDR*)&pHost->m_pAddress ) ), pHost->m_nPort );
-			nCount--;
-		}
-	}
-	return Settings.Gnutella1.MaxHostsInPongs - nCount;
 }
 
 //////////////////////////////////////////////////////////////////////

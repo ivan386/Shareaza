@@ -1120,50 +1120,16 @@ BOOL CDatagrams::OnPing(SOCKADDR_IN* pHost, CG1Packet* pPacket)
 	}
 
 	CGGEPBlock pGGEP;
-	// Received SCP GGEP, send 5 random hosts from the cache
-	// Since we do not provide leaves, ignore the preference data
 	if ( bSCP )
 	{
-		CGGEPItem* pItem = pGGEP.Add( GGEP_HEADER_PACKED_IPPORTS );
-		DWORD nCount = min( DWORD(50), HostCache.Gnutella1.CountHosts() );
-		WORD nPos = 0;
-
-		// Create 5 random positions from 0 to 50 in the descending order
-		std::vector< WORD > pList;
-		pList.reserve( Settings.Gnutella1.MaxHostsInPongs );
-		for ( WORD nNo = 0 ; nNo < Settings.Gnutella1.MaxHostsInPongs ; nNo++ )
+		CG1Packet::GGEPWriteRandomCache( pGGEP.Add( GGEP_HEADER_PACKED_IPPORTS ) );
+	}
+	if ( Settings.Experimental.EnableDIPPSupport )
+	{
+		if ( bDNA )
 		{
-			pList.push_back( (WORD)( ( nCount + 1 ) * rand() / ( RAND_MAX + (float)nCount ) ) );
+			CG1Packet::GGEPWriteRandomCache( pGGEP.Add( GGEP_HEADER_GDNA_PACKED_IPPORTS ) );
 		}
-		std::sort( pList.begin(), pList.end(), CompareNums() );
-
-		nCount = Settings.Gnutella1.MaxHostsInPongs;
-
-		CQuickLock oLock( HostCache.Gnutella1.m_pSection );
-
-		for ( CHostCacheIterator i = HostCache.Gnutella1.Begin() ;
-			i != HostCache.Gnutella1.End() && nCount && !pList.empty(); ++i )
-		{
-			CHostCacheHost* pHost = (*i);
-
-			nPos = pList.back(); // take the smallest value;
-			pList.pop_back(); // remove it
-			for ( ; i != HostCache.Gnutella1.End() && nPos-- ; ++i ) pHost = (*i);
-
-			if ( i != HostCache.Gnutella1.End() &&
-				pHost->m_bCheckedLocally && pHost->m_nFailures == 0 )
-			{
-				pItem->Write( (void*)&pHost->m_pAddress, 4 );
-				pItem->Write( (void*)&pHost->m_nPort, 2 );
-				theApp.Message( MSG_DEBUG, _T("Sending G1 host through pong (%s:%i)"), 
-					(LPCTSTR)CString( inet_ntoa( *(IN_ADDR*)&pHost->m_pAddress ) ), pHost->m_nPort ); 
-				nCount--;
-			}
-			if ( nCount == 0 ) break;
-		}
-
-		if ( nCount == (DWORD)Settings.Gnutella1.MaxHostsInPongs )
-			bSCP = false; // the cache is empty
 	}
 
 	// Make a new pong packet, the response to a ping

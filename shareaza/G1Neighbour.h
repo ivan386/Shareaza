@@ -104,7 +104,6 @@ protected:
 	// Ping and pong packets
 	BOOL OnPing(CG1Packet* pPacket);
 	BOOL OnPong(CG1Packet* pPacket);
-	int WriteRandomCache(CGGEPItem* pItem);
 
 	// Bye packet
 	BOOL OnBye(CG1Packet* pPacket);

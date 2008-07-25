@@ -31,6 +31,7 @@
 #include "Buffer.h"
 #include "SHA.h"
 #include "HostCache.h"
+#include "VendorCache.h"
 
 // If we are compiling in debug mode, replace the text "THIS_FILE" in the code with the name of this file
 #ifdef _DEBUG
@@ -306,4 +307,93 @@ int CG1Packet::GGEPReadCachedHosts(const CGGEPBlock& pGGEP)
 	}
 
 	return nCount;
+}
+
+int CG1Packet::GGEPWriteRandomCache(CGGEPItem* pItem)
+{
+	if ( !pItem ) return 0;
+
+	bool bIPP = false;
+	if ( pItem->IsNamed( GGEP_HEADER_PACKED_IPPORTS ) )
+		bIPP = true;
+	else if ( !pItem->IsNamed( GGEP_HEADER_GDNA_PACKED_IPPORTS ) &&
+		!pItem->IsNamed( GGEP_HEADER_GDNA_PACKED_IPPORTS_x ) )
+	return 0;
+
+	DWORD nCount = min( 50ul,
+		( bIPP ? HostCache.Gnutella1.CountHosts() : HostCache.G1DNA.CountHosts() ) );
+	WORD nPos = 0;
+
+	// Create 5 random positions from 0 to 50 in the descending order
+	std::vector< WORD > pList;
+	pList.reserve( Settings.Gnutella1.MaxHostsInPongs );
+	for ( WORD nNo = 0 ; nNo < Settings.Gnutella1.MaxHostsInPongs ; nNo++ )
+	{
+		pList.push_back( (WORD)( ( nCount + 1 ) * rand() / ( RAND_MAX + (float)nCount ) ) );
+	}
+	std::sort( pList.begin(), pList.end(), CompareNums() );
+
+	nCount = Settings.Gnutella1.MaxHostsInPongs;
+
+	if ( bIPP )
+	{
+		CQuickLock oLock( HostCache.Gnutella1.m_pSection );
+
+		for ( CHostCacheIterator i = HostCache.Gnutella1.Begin() ;
+			i != HostCache.Gnutella1.End() && nCount && ! pList.empty() ; ++i )
+		{
+			CHostCacheHost* pHost = (*i);
+
+			nPos = pList.back();	// take the smallest value;
+			pList.pop_back();		// remove it
+			for ( ; i != HostCache.Gnutella1.End() && nPos-- ; ++i ) pHost = (*i);
+
+			// We won't provide Shareaza hosts for G1 cache, since users may disable
+			// G1 and it will pollute the host caches ( ??? )
+			if ( i != HostCache.Gnutella1.End() &&
+				pHost->m_nFailures == 0 && pHost->m_bCheckedLocally &&
+				! ( pHost->m_pVendor && pHost->m_pVendor->m_sCode == L"GDNA" ) )
+			{
+				pItem->Write( (void*)&pHost->m_pAddress, 4 );
+				pItem->Write( (void*)&pHost->m_nPort, 2 );
+				theApp.Message( MSG_DEBUG, _T("Sending G1 host through pong (%s:%i)"),
+					(LPCTSTR)CString( inet_ntoa( *(IN_ADDR*)&pHost->m_pAddress ) ), pHost->m_nPort );
+				nCount--;
+			}
+
+			if ( i == HostCache.Gnutella1.End() )
+				break;
+		}
+	}
+	else
+	{
+		CQuickLock oLock( HostCache.G1DNA.m_pSection );
+
+		for ( CHostCacheIterator i = HostCache.G1DNA.Begin() ;
+			i != HostCache.G1DNA.End() && nCount && ! pList.empty() ; ++i )
+		{
+			CHostCacheHost* pHost = (*i);
+
+			nPos = pList.back();	// take the smallest value;
+			pList.pop_back();		// remove it
+			for ( ; i != HostCache.G1DNA.End() && nPos-- ; ++i ) pHost = (*i);
+
+			// We won't provide Shareaza hosts for G1 cache, since users may disable
+			// G1 and it will pollute the host caches ( ??? )
+			if ( i != HostCache.G1DNA.End() &&
+				pHost->m_nFailures == 0 && pHost->m_bCheckedLocally &&
+				( pHost->m_pVendor && pHost->m_pVendor->m_sCode == L"GDNA" ) )
+			{
+				pItem->Write( (void*)&pHost->m_pAddress, 4 );
+				pItem->Write( (void*)&pHost->m_nPort, 2 );
+				theApp.Message( MSG_DEBUG, _T("Sending GDNA host through pong (%s:%i)"),
+					(LPCTSTR)CString( inet_ntoa( *(IN_ADDR*)&pHost->m_pAddress ) ), pHost->m_nPort );
+				nCount--;
+			}
+
+			if ( i == HostCache.G1DNA.End() )
+				break;
+		}
+	}
+	return Settings.Gnutella1.MaxHostsInPongs - nCount;
 }
