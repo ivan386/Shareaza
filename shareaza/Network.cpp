@@ -164,7 +164,7 @@ bool CNetwork::IsListening() const
 
 bool CNetwork::IsWellConnected() const
 {
-	return IsConnected() && ( Neighbours.m_nStableCount != 0 );
+	return IsConnected() && ( Neighbours.GetStableCount() != 0 );
 }
 
 bool CNetwork::IsStable() const

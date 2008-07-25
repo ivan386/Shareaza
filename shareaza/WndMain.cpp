@@ -1398,7 +1398,7 @@ void CMainWnd::UpdateMessages()
 				else
 					LoadString( strFormat, IDS_STATUS_BAR_CONNECTED );
 			}
-			strMessage.Format( strFormat, Neighbours.m_nStableCount, Settings.SmartVolume( nLocalVolume, KiloBytes ) );
+			strMessage.Format( strFormat, Neighbours.GetStableCount(), Settings.SmartVolume( nLocalVolume, KiloBytes ) );
 		}
 	}
 	else if ( Network.IsConnected() )
