@@ -175,8 +175,7 @@ void CTransfers::OnRunTransfers()
 		CTransfer* pTransfer = m_pList.RemoveHead();
 		m_pList.AddTail( pTransfer );
 		pTransfer->m_nRunCookie = m_nRunCookie;
-
-		pTransfer->OnRun();
+		pTransfer->DoRun();
 	}
 }
 
