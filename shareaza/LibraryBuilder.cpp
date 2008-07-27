@@ -580,7 +580,7 @@ int CLibraryBuilder::SubmitMetadata(DWORD nIndex, LPCTSTR pszSchemaURI, CXMLElem
 			// Merge new with old metadata
 			pXML->Merge( pFile->m_pMetadata );
 		else
-			pFile->m_bMetadataAuto	= true;
+			pFile->m_bMetadataAuto = TRUE;
 
 		Library.RemoveFile( pFile );
 
@@ -708,7 +708,7 @@ bool CLibraryBuilder::RefreshMetadata(const CString& sPath)
 		if ( !pFile )
 			return false;
 		nIndex = pFile->m_nIndex;
-		pFile->m_bMetadataAuto = true;
+		pFile->m_bMetadataAuto = TRUE;
 	}
 
 	bool bResult = false;

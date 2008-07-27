@@ -151,7 +151,8 @@ CCollectionFile::File* CCollectionFile::FindFile(CLibraryFile* pShared, BOOL bAp
 		pFile = NULL;
 	}
 
-	if ( bApply && pFile != NULL ) pFile->ApplyMetadata( pShared );
+	if ( bApply && pFile != NULL )
+		pFile->ApplyMetadata( pShared );
 
 	return pFile;
 }
@@ -616,11 +617,43 @@ BOOL CCollectionFile::File::Download()
 BOOL CCollectionFile::File::ApplyMetadata(CLibraryFile* pShared)
 {
 	ASSERT( pShared != NULL );
-	if ( m_pMetadata == NULL ) return FALSE;
 
-	CXMLElement* pXML = m_pMetadata->Clone();
-	BOOL bResult = pShared->SetMetadata( pXML );
-	delete pXML;
+	if ( m_pMetadata == NULL )
+		return FALSE;
 
-	return bResult;
+	ASSERT( m_pMetadata->GetFirstElement() != NULL );
+
+	if ( pShared->m_pMetadata != NULL )
+	{
+		// Merge metadata
+		if ( BOOL bMetadataAuto = pShared->m_bMetadataAuto )
+		{
+			CSchema* pSchema = SchemaCache.Get(
+				m_pMetadata->GetAttributeValue( CXMLAttribute::schemaName ) );
+			if ( pSchema && ( pSchema == pShared->m_pSchema ) )
+			{
+				// Merge with copy then replace metadata
+				auto_ptr< CXMLElement > pXML( pShared->m_pMetadata->Clone() );
+				if ( pXML.get() &&
+					pXML->Merge( m_pMetadata->GetFirstElement() ) &&
+					pShared->SetMetadata( pXML.get() ) )
+				{
+					// Preserve flag
+					pShared->m_bMetadataAuto = bMetadataAuto;
+					return TRUE;
+				}
+			}
+		}
+	}
+	else
+	{
+		// Set new metadata
+		auto_ptr< CXMLElement > pXML( m_pMetadata->Clone() );
+		if ( pXML.get() && pShared->SetMetadata( pXML.get() ) )
+		{
+			pShared->m_bMetadataAuto = TRUE;
+			return TRUE;
+		}
+	}
+	return FALSE;
 }

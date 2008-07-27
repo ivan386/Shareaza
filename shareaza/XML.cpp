@@ -774,15 +774,22 @@ BOOL CXMLElement::Merge(const CXMLElement* pInput)
 	TRACE( _T("Merging XML:%sand XML:%s"),
 		ToString( FALSE, TRUE ), pInput->ToString( FALSE, TRUE ) );
 
+	BOOL bChanged = FALSE;
+
 	for ( POSITION pos = pInput->GetElementIterator() ; pos ; )
 	{
 		CXMLElement* pElement	= pInput->GetNextElement( pos );
 		CXMLElement* pTarget	= GetElementByName( pElement->m_sName );
 
 		if ( pTarget == NULL )
+		{
 			AddElement( pElement->Clone() );
-		else
-			pTarget->Merge( pElement );
+			bChanged = TRUE;
+		}
+		else if ( pTarget->Merge( pElement ) )
+		{
+			bChanged = TRUE;
+		}
 	}
 
 	for ( POSITION pos = pInput->GetAttributeIterator() ; pos ; )
@@ -791,12 +798,18 @@ BOOL CXMLElement::Merge(const CXMLElement* pInput)
 		CXMLAttribute* pTarget		= GetAttribute( pAttribute->m_sName );
 
 		if ( pTarget == NULL )
+		{
 			AddAttribute( pAttribute->Clone() );
+			bChanged = TRUE;
+		}
 	}
 
-	TRACE( _T("resulting XML:%s"), ToString( FALSE, TRUE ) );
+	if ( bChanged )
+	{
+		TRACE( _T("resulting XML:%s\n"), ToString( FALSE, TRUE ) );
+	}
 
-	return TRUE;
+	return bChanged;
 }
 
 //////////////////////////////////////////////////////////////////////

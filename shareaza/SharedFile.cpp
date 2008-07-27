@@ -392,19 +392,21 @@ void CLibraryFile::UpdateMetadata(const CDownload* pDownload)
 
 BOOL CLibraryFile::SetMetadata(CXMLElement* pXML)
 {
-	if ( m_pMetadata == NULL && pXML == NULL ) return TRUE;
+	if ( m_pMetadata == NULL && pXML == NULL )
+		return TRUE;
 
 	CSchema* pSchema = NULL;
 
 	if ( pXML != NULL )
 	{
 		pSchema = SchemaCache.Get( pXML->GetAttributeValue( CXMLAttribute::schemaName ) );
-		if ( pSchema == NULL ) return FALSE;
-		if ( ! pSchema->Validate( pXML, TRUE ) ) return FALSE;
+		if ( pSchema == NULL || ! pSchema->Validate( pXML, TRUE ) )
+			return FALSE;
 
 		if ( m_pMetadata != NULL && m_pSchema == pSchema )
 		{
-			if ( m_pMetadata->Equals( pXML->GetFirstElement() ) ) return TRUE;
+			if ( m_pMetadata->Equals( pXML->GetFirstElement() ) )
+				return TRUE;
 		}
 	}
 
@@ -415,14 +417,6 @@ BOOL CLibraryFile::SetMetadata(CXMLElement* pXML)
 	m_pSchema		= pSchema;
 	m_pMetadata		= pXML ? pXML->GetFirstElement()->Detach() : NULL;
 	m_bMetadataAuto	= FALSE;
-
-	if ( m_pMetadata == NULL )
-	{
-		m_oSHA1.clear();
-		m_oTiger.clear();
-		m_oMD5.clear();
-		m_oED2K.clear();
-	}
 
 	ModifyMetadata();
 
