@@ -886,6 +886,10 @@ BOOL CShakeNeighbour::OnHeaderLine(CString& strHeader, CString& strValue)
 		m_bG1Accept |= ( strValue.Find( _T("application/x-gnutella-packets") ) >= 0 );
 		m_bG2Accept |= ( strValue.Find( _T("application/x-gnutella2") ) >= 0 );
 		m_bG2Accept |= ( strValue.Find( _T("application/x-shareaza") ) >= 0 );
+		if ( !m_bG1Accept && !m_bG2Accept )
+		{
+			theApp.Message( MSG_DEBUG, L"Unknown app accept header: %s", strHeader );
+		}
 
 	} // The remote computer is telling us it is sending a kind of packets
 	else if ( strHeader.CompareNoCase( _T("Content-Type") ) == 0 ) // And we're connected to Gnutella2
@@ -894,6 +898,10 @@ BOOL CShakeNeighbour::OnHeaderLine(CString& strHeader, CString& strValue)
 		m_bG1Send |= ( strValue.Find( _T("application/x-gnutella-packets") ) >= 0 );
 		m_bG2Send |= ( strValue.Find( _T("application/x-gnutella2") ) >= 0 );
 		m_bG2Send |= ( strValue.Find( _T("application/x-shareaza") ) >= 0 );
+		if ( !m_bG1Send && !m_bG2Send )
+		{
+			theApp.Message( MSG_DEBUG, L"Unknown app content-type header: %s", strHeader );
+		}
 
 	} // The remote computer is telling us it can accept compressed data, and the settings allow us to do compression
 	else if ( strHeader.CompareNoCase( _T("Accept-Encoding") ) == 0 && m_bCanDeflate ) // Settings allow us to do compression
