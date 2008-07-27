@@ -1951,9 +1951,11 @@ void CLibraryTreeView::OnUpdateLibraryExportCollection(CCmdUI *pCmdUI)
 {
 	BOOL bAllowExport = TRUE;
 
+	// Allow max 200 files to be parse and do not export from Ghost or Collection folder
 	if ( ! m_pSelFirst ||
 		 ! m_pSelFirst->m_pVirtual ||
 		m_pSelFirst->m_pVirtual->GetFileCount() == 0 ||
+		m_pSelFirst->m_pVirtual->GetFileCount() > 200 ||
 		CheckURI( m_pSelFirst->m_pVirtual->m_sSchemaURI, CSchema::uriGhostFolder ) ||
 		m_pSelFirst->m_pVirtual->m_oCollSHA1 ) 
 		bAllowExport = FALSE;
