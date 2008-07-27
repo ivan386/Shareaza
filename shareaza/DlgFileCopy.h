@@ -1,7 +1,7 @@
 //
 // DlgFileCopy.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -60,10 +60,10 @@ protected:
 	void		StartOperation();
 	void		StopOperation();
 	void		OnRun();
-	BOOL		ProcessFile(CString& strName, CString& strPath);
-	BOOL		CheckTarget(LPCTSTR pszTarget);
-	BOOL		ProcessMove(LPCTSTR pszSource, LPCTSTR pszTarget);
-	BOOL		ProcessCopy(LPCTSTR pszSource, LPCTSTR pszTarget);
+	bool		ProcessFile(const CString& strName, const CString& strPath);
+	bool		CheckTarget(const CString& pszTarget);
+	bool		ProcessMove(const CString& strSource, const CString& strTarget);
+	bool		ProcessCopy(const CString& pszSource, const CString& pszTarget);
 
 	static DWORD WINAPI	CopyCallback(LARGE_INTEGER TotalFileSize, LARGE_INTEGER TotalBytesTransferred, LARGE_INTEGER StreamSize, LARGE_INTEGER StreamBytesTransferred, DWORD dwStreamNumber, DWORD dwCallbackReason, HANDLE hSourceFile, HANDLE hDestinationFile, LPVOID lpData);
 

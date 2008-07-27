@@ -1,7 +1,7 @@
 //
 // DlgFileCopy.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -113,7 +113,7 @@ BOOL CFileCopyDlg::OnInitDialog()
 		}
 	}
 
-	if ( Settings.General.LanguageRTL ) 
+	if ( Settings.General.LanguageRTL )
 	{
 		m_wndProgress.ModifyStyleEx( WS_EX_LAYOUTRTL, 0, 0 );
 		m_wndFileProg.ModifyStyleEx( WS_EX_LAYOUTRTL, 0, 0 );
@@ -287,7 +287,7 @@ void CFileCopyDlg::OnRun()
 					pTargetFolder->m_nUpdateCookie++;
 					bNew = true;
 				}
-				
+
 				if ( pSchema )
 				{
 					pTargetFile->m_pSchema = pSchema;
@@ -330,7 +330,7 @@ void CFileCopyDlg::OnRun()
 
 			LoadString ( sCurrent, IDS_STATUS_FILEERROR );
 			m_wndFileName.SetWindowText( sCurrent );
-			
+
 		}
 		else
 		{
@@ -345,9 +345,10 @@ void CFileCopyDlg::OnRun()
 //////////////////////////////////////////////////////////////////////
 // CFileCopyDlg file processing
 
-BOOL CFileCopyDlg::ProcessFile(CString& strName, CString& strPath)
+bool CFileCopyDlg::ProcessFile(const CString& strName, const CString& strPath)
 {
-	if ( strPath.CompareNoCase( m_sTarget ) == 0 ) return FALSE;
+	if ( strPath.CompareNoCase( m_sTarget ) == 0 )
+		return false;
 
 	CString sSource, sTarget;
 
@@ -371,7 +372,7 @@ BOOL CFileCopyDlg::ProcessFile(CString& strName, CString& strPath)
 		case IDNO:
 		default:
 			CloseHandle( hFile );
-			return FALSE;
+			return false;
 		}
 	}
 	CloseHandle( hFile );
@@ -380,28 +381,32 @@ BOOL CFileCopyDlg::ProcessFile(CString& strName, CString& strPath)
 	sSource = strPath + _T("\\") + strName;
 	sTarget = m_sTarget + _T("\\") + strName;
 
-	if ( sSource.CompareNoCase( sTarget ) == 0 ) return FALSE;
+	if ( sSource.CompareNoCase( sTarget ) == 0 )
+		return false;
 
 	if ( m_bMove )
 	{
-		if ( ! ProcessMove( sSource, sTarget ) ) return FALSE;
+		if ( !ProcessMove( sSource, sTarget ) )
+			return false;
 	}
 	else
 	{
-		if ( ! ProcessCopy( sSource, sTarget ) ) return FALSE;
+		if ( !ProcessCopy( sSource, sTarget ) )
+			return false;
 	}
 
-	return TRUE;
+	return true;
 }
 
-BOOL CFileCopyDlg::CheckTarget(LPCTSTR pszTarget)
+bool CFileCopyDlg::CheckTarget(const CString& strTarget)
 {
-	if ( GetFileAttributes( pszTarget ) == 0xFFFFFFFF ) return TRUE;
+	if ( GetFileAttributes( strTarget ) == 0xFFFFFFFF )
+		return true;
 
 	CString strFormat, strMessage;
 
 	LoadString( strFormat, IDS_LIBRARY_TARGET_EXISTS );
-	strMessage.Format( strFormat, pszTarget );
+	strMessage.Format( strFormat, strTarget );
 
 	switch ( AfxMessageBox( strMessage, MB_ICONQUESTION|MB_YESNOCANCEL|MB_DEFBUTTON2 ) )
 	{
@@ -411,50 +416,57 @@ BOOL CFileCopyDlg::CheckTarget(LPCTSTR pszTarget)
 		Exit();
 	case IDNO:
 	default:
-		return FALSE;
+		return false;
 	}
 
-	if ( DeleteFile( pszTarget ) ) return TRUE;
+	if ( DeleteFile( strTarget ) )
+		return true;
 
 	CString strError = GetErrorString();
 
 	LoadString( strFormat, IDS_LIBRARY_DELETE_FAIL );
-	strMessage.Format( strFormat, pszTarget );
+	strMessage.Format( strFormat, strTarget );
 	strMessage += _T("\r\n\r\n") + strError;
 
 	AfxMessageBox( strMessage, MB_ICONEXCLAMATION );
 
-	return FALSE;
+	return false;
 }
 
-BOOL CFileCopyDlg::ProcessMove(LPCTSTR pszSource, LPCTSTR pszTarget)
+bool CFileCopyDlg::ProcessMove(const CString& strSource, const CString& strTarget)
 {
-	if ( ! CheckTarget( pszTarget ) ) return FALSE;
+	if ( !CheckTarget( strTarget ) )
+		return false;
 
-	Uploads.OnRename( pszSource );
+	// Closs the file handle
+	while( !Uploads.OnRename( strSource ) );
 
 	// Try moving the file
-	if ( MoveFile( pszSource, pszTarget ) )
+	if ( MoveFile( strSource, strTarget ) )
 	{
-		Uploads.OnRename( pszSource, pszTarget );
-		return TRUE;
+		// Success. Tell the file to use its new name
+		while( !Uploads.OnRename( strSource, strTarget ) );
+		return true;
 	}
 
 	// Try a copy/delete. (Will usually make a duplicate of the file)
-	if ( ProcessCopy( pszSource, pszTarget ) )
+	if ( ProcessCopy( strSource, strTarget ) )
 	{
-		Uploads.OnRename( pszSource, pszTarget );
-		return DeleteFile( pszSource );
+		// Success. Tell the file to use its new name
+		while( !Uploads.OnRename( strSource, strTarget ) );
+		return DeleteFile( strSource ) != 0;
 	}
 
-	Uploads.OnRename( pszSource, pszSource );
+	// Failure. Continue using its old name
+	while( !Uploads.OnRename( strSource, strSource ) );
 
-	return FALSE;
+	return false;
 }
 
-BOOL CFileCopyDlg::ProcessCopy(LPCTSTR pszSource, LPCTSTR pszTarget)
+bool CFileCopyDlg::ProcessCopy(const CString& strSource, const CString& strTarget)
 {
-	if ( ! CheckTarget( pszTarget ) ) return FALSE;
+	if ( !CheckTarget( strTarget ) )
+		return false;
 
 	if ( theApp.m_hKernel != NULL )
 	{
@@ -463,16 +475,17 @@ BOOL CFileCopyDlg::ProcessCopy(LPCTSTR pszSource, LPCTSTR pszTarget)
 			m_wndFileProg.SetPos( 0 );
 			m_nFileProg = 0;
 
-			BOOL bResult = theApp.m_pfnCopyFileExW( pszSource, pszTarget, CopyCallback, this,
-				&m_bCancel, COPY_FILE_FAIL_IF_EXISTS );
+			bool bResult = theApp.m_pfnCopyFileExW( strSource, strTarget, CopyCallback, this,
+				&m_bCancel, COPY_FILE_FAIL_IF_EXISTS ) != 0;
 
-			if ( ! bResult && ! IsThreadAlive() ) DeleteFile( pszTarget );
+			if ( !bResult && !IsThreadAlive() )
+				DeleteFile( strTarget );
 
 			return bResult;
 		}
 	}
 
-	return CopyFile( pszSource, pszTarget, TRUE ); // bFailIfExists = TRUE
+	return CopyFile( strSource, strTarget, TRUE ) != 0; // bFailIfExists = TRUE
 }
 
 DWORD WINAPI CFileCopyDlg::CopyCallback(LARGE_INTEGER TotalFileSize, LARGE_INTEGER TotalBytesTransferred, LARGE_INTEGER /*StreamSize*/, LARGE_INTEGER /*StreamBytesTransferred*/, DWORD /*dwStreamNumber*/, DWORD /*dwCallbackReason*/, HANDLE /*hSourceFile*/, HANDLE /*hDestinationFile*/, LPVOID lpData)
