@@ -591,84 +591,110 @@ int CLibraryDetailView::ListCompare(LPCVOID pA, LPCVOID pB)
 {
 	LDVITEM* ppA	= (LDVITEM*)pA;
 	LDVITEM* ppB	= (LDVITEM*)pB;
+	bool bFirstPass = true;
 	int nTest		= 0;
+	int nSortColumn = m_pThis->m_nSortColumn;
 
 	CLibraryFile* pfA = Library.LookupFile( ppA->nIndex );
 	CLibraryFile* pfB = Library.LookupFile( ppB->nIndex );
 
 	if ( ! pfA || ! pfB ) return 0;
 
-	switch ( m_pThis->m_nSortColumn )
+	for (;;)
 	{
-	case 0:
-		nTest = _tcsicoll( pfA->m_sName, pfB->m_sName );
-		break;
-	case 1:
+		switch ( nSortColumn )
 		{
-			LPCTSTR pszA = _tcsrchr( pfA->m_sName, '.' );
-			LPCTSTR pszB = _tcsrchr( pfB->m_sName, '.' );
-			nTest = ( pszA && pszB ) ?
-				_tcsicoll( pszA, pszB ) : ( pszA ? 1 : ( pszB ? -1 : 0 ) );
+		case 0:
+			nTest = _tcsicoll( pfA->m_sName, pfB->m_sName );
 			break;
-		}
-	case 2:
-		if ( pfA->GetSize() == pfB->GetSize() )
-			nTest = 0;
-		else if ( pfA->GetSize() < pfB->GetSize() )
-			nTest = -1;
-		else
-			nTest = 1;
-		break;
-	case 3:
-		if ( pfA->m_pFolder == NULL || pfB->m_pFolder == NULL ) return 0;
-		nTest = _tcsicoll( pfA->m_pFolder->m_sPath, pfB->m_pFolder->m_sPath );
-		break;
-	case 4:
-		if ( pfA->m_nHitsTotal == pfB->m_nHitsTotal )
-			nTest = 0;
-		else if ( pfA->m_nHitsTotal < pfB->m_nHitsTotal )
-			nTest = -1;
-		else
-			nTest = 1;
-		break;
-	case 5:
-		if ( pfA->m_nUploadsTotal == pfB->m_nUploadsTotal )
-			nTest = 0;
-		else if ( pfA->m_nUploadsTotal < pfB->m_nUploadsTotal )
-			nTest = -1;
-		else
-			nTest = 1;
-		break;
-	case 6:
-		nTest = CompareFileTime( &pfA->m_pTime, &pfB->m_pTime );
-		break;
-	default:
-		{
-			int nColumn = m_pThis->m_nSortColumn - DETAIL_COLUMNS;
-			if ( nColumn >= m_pThis->m_pColumns.GetCount() ) return 0;
-			POSITION pos = m_pThis->m_pColumns.FindIndex( nColumn );
-			if ( pos == NULL ) return 0;
-			CSchemaMember* pMember = m_pThis->m_pColumns.GetAt( pos );
-
-			CString strA, strB;
-			if ( pfA->m_pMetadata ) strA = pMember->GetValueFrom( pfA->m_pMetadata, NULL, TRUE );
-			if ( pfB->m_pMetadata ) strB = pMember->GetValueFrom( pfB->m_pMetadata, NULL, TRUE );
-
-			if ( *(LPCTSTR)strA && *(LPCTSTR)strB &&
-				( ((LPCTSTR)strA)[ _tcslen( strA ) - 1 ] == 'k' || ((LPCTSTR)strA)[ _tcslen( strA ) - 1 ] == '~' )
-				&&
-				( ((LPCTSTR)strB)[ _tcslen( strB ) - 1 ] == 'k' || ((LPCTSTR)strB)[ _tcslen( strB ) - 1 ] == '~' ) )
+		case 1:
 			{
-				nTest = CLiveList::SortProc( strA, strB, TRUE );
+				LPCTSTR pszA = _tcsrchr( pfA->m_sName, '.' );
+				LPCTSTR pszB = _tcsrchr( pfB->m_sName, '.' );
+				nTest = ( pszA && pszB ) ?
+					_tcsicoll( pszA, pszB ) : ( pszA ? 1 : ( pszB ? -1 : 0 ) );
+				break;
 			}
+		case 2:
+			if ( pfA->GetSize() == pfB->GetSize() )
+				nTest = 0;
+			else if ( pfA->GetSize() < pfB->GetSize() )
+				nTest = -1;
 			else
+				nTest = 1;
+			break;
+		case 3:
+			if ( pfA->m_pFolder && pfB->m_pFolder )
+				nTest = _tcsicoll( pfA->m_pFolder->m_sPath, pfB->m_pFolder->m_sPath );
+			else if ( pfB->m_pFolder )
+				nTest = -1;
+			else
+				nTest = 1;
+			break;
+		case 4:
+			if ( pfA->m_nHitsTotal == pfB->m_nHitsTotal )
+				nTest = 0;
+			else if ( pfA->m_nHitsTotal < pfB->m_nHitsTotal )
+				nTest = -1;
+			else
+				nTest = 1;
+			break;
+		case 5:
+			if ( pfA->m_nUploadsTotal == pfB->m_nUploadsTotal )
+				nTest = 0;
+			else if ( pfA->m_nUploadsTotal < pfB->m_nUploadsTotal )
+				nTest = -1;
+			else
+				nTest = 1;
+			break;
+		case 6:
+			nTest = CompareFileTime( &pfA->m_pTime, &pfB->m_pTime );
+			break;
+		default:
 			{
-				nTest = _tcsicoll( strA, strB );
+				int nColumn = m_pThis->m_nSortColumn - DETAIL_COLUMNS;
+				if ( nColumn >= m_pThis->m_pColumns.GetCount() ) return 0;
+				POSITION pos = m_pThis->m_pColumns.FindIndex( nColumn );
+				if ( pos == NULL ) return 0;
+				CSchemaMember* pMember = m_pThis->m_pColumns.GetAt( pos );
+
+				CString strA, strB;
+				if ( pfA->m_pMetadata ) strA = pMember->GetValueFrom( pfA->m_pMetadata, NULL, TRUE );
+				if ( pfB->m_pMetadata ) strB = pMember->GetValueFrom( pfB->m_pMetadata, NULL, TRUE );
+
+				if ( *(LPCTSTR)strA && *(LPCTSTR)strB &&
+					( ((LPCTSTR)strA)[ _tcslen( strA ) - 1 ] == 'k' || ((LPCTSTR)strA)[ _tcslen( strA ) - 1 ] == '~' )
+					&&
+					( ((LPCTSTR)strB)[ _tcslen( strB ) - 1 ] == 'k' || ((LPCTSTR)strB)[ _tcslen( strB ) - 1 ] == '~' ) )
+				{
+					nTest = CLiveList::SortProc( strA, strB, TRUE );
+				}
+				else
+				{
+					nTest = _tcsicoll( strA, strB );
+				}
 			}
 		}
+	
+		if ( nTest != 0 )
+			break;
+
+		if ( bFirstPass )
+		{
+			bFirstPass = false;
+			nSortColumn = 0;
+		}
+		else
+			nSortColumn++;
+
+		if ( nSortColumn == m_pThis->m_nSortColumn )
+			nSortColumn++;
+
+		if ( nSortColumn > 6 )
+			break;
 	}
 
-	if ( ! m_pThis->m_bSortFlip ) nTest = -nTest;
+	if ( bFirstPass && ! m_pThis->m_bSortFlip ) nTest = -nTest;
 
 	return nTest;
 }
