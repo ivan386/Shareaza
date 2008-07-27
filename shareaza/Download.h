@@ -1,7 +1,7 @@
 //
 // Download.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -18,9 +18,6 @@
 // along with Shareaza; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
-
-#if !defined(AFX_DOWNLOAD_H__156689EC_D090_4285_BB8C_9AD058024BB5__INCLUDED_)
-#define AFX_DOWNLOAD_H__156689EC_D090_4285_BB8C_9AD058024BB5__INCLUDED_
 
 #pragma once
 
@@ -68,7 +65,7 @@ private:
 public:
 	void        	Pause(BOOL bRealPause = TRUE);
 	void        	Resume();
-	void        	Remove(BOOL bDelete = FALSE);
+	void        	Remove(bool bDelete = false);
 	void        	Boost();
 	void        	Share(BOOL bShared);
 	BOOL        	Rename(LPCTSTR pszName);
@@ -103,12 +100,10 @@ private:
 	void			OnDownloaded();
 	void			OnMoved(CDownloadTask* pTask);
 	void			SerializeOld(CArchive& ar, int nVersion);
-	
+
 	friend class CDownloadTask; // m_pTask && OnTaskComplete
 	friend class CDownloadTransfer; // GetVerifyLength
 	friend class CDownloadWithTorrent; // m_bComplete
 	friend class CDownloadsWnd; // m_pTask
 	friend class CDownloads;	// m_bComplete for Load()
 };
-
-#endif // !defined(AFX_DOWNLOAD_H__156689EC_D090_4285_BB8C_9AD058024BB5__INCLUDED_)

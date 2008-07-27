@@ -138,7 +138,7 @@ BOOL CDownloadWithFile::PrepareFile()
 //////////////////////////////////////////////////////////////////////
 // CDownloadWithFile delete the file
 
-void CDownloadWithFile::DeleteFile(BOOL bForce)
+void CDownloadWithFile::DeleteFile(bool bForce)
 {
 	if ( m_pFile != NULL && m_pFile->IsValid() == FALSE ) return;
 

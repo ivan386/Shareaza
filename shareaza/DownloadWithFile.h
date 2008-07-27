@@ -1,7 +1,7 @@
 //
 // DownloadWithFile.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -63,12 +63,12 @@ protected:
 	virtual CString	GetAvailableRanges() const;
 	BOOL			OpenFile();
 	void			CloseFile();
-	void			DeleteFile(BOOL bForce = FALSE);
+	void			DeleteFile(bool bForce = false);
 	BOOL			RunFile(DWORD tNow);
 	BOOL			AppendMetadata();
 	virtual void	Serialize(CArchive& ar, int nVersion);
 private:
 	Fragments::List	GetPossibleFragments(const Fragments::List& oAvailable, Fragments::Fragment& oLargest);
 	BOOL			AppendMetadataID3v1(HANDLE hFile, CXMLElement* pXML);
-	
+
 };

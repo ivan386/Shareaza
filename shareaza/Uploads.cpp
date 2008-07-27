@@ -74,7 +74,7 @@ void CUploads::Clear(BOOL bMessage)
 	{
 		GetNext( pos )->Remove( bMessage );
 	}
-	
+
 	ASSERT( GetCount( NULL, -1 ) == 0 );
 }
 
@@ -84,13 +84,13 @@ void CUploads::Clear(BOOL bMessage)
 DWORD CUploads::GetCount(CUploadTransfer* pExcept, int nState) const
 {
 	if ( pExcept == NULL && nState == -1 ) return (DWORD)m_pList.GetCount();
-	
+
 	DWORD nCount = 0;
-	
+
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
 		CUploadTransfer* pUpload = GetNext( pos );
-		
+
 		if ( pUpload != pExcept )
 		{
 			switch ( nState )
@@ -107,14 +107,14 @@ DWORD CUploads::GetCount(CUploadTransfer* pExcept, int nState) const
 			}
 		}
 	}
-	
+
 	return nCount;
 }
 
 DWORD CUploads::GetTorrentCount(int nState) const
 {
 	DWORD nCount = 0;
-	
+
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
 		CUploadTransfer* pUpload = GetNext( pos );
@@ -138,7 +138,7 @@ DWORD CUploads::GetTorrentCount(int nState) const
 			}
 		}
 	}
-	
+
 	return nCount;
 }
 
@@ -154,12 +154,12 @@ void CUploads::SetStable(DWORD nSpeed)
 DWORD CUploads::GetBandwidth() const
 {
 	DWORD nTotal = 0;
-	
+
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
 		nTotal += GetNext( pos )->GetMeasuredSpeed();
 	}
-	
+
 	return nTotal;
 }
 
@@ -169,11 +169,11 @@ DWORD CUploads::GetBandwidth() const
 BOOL CUploads::AllowMoreTo(IN_ADDR* pAddress) const
 {
 	DWORD nCount = 0;
-	
+
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
 		CUploadTransfer* pUpload = GetNext( pos );
-		
+
 		if ( pUpload->m_nState == upsUploading ||
 			 pUpload->m_nState == upsQueued )
 		{
@@ -181,18 +181,18 @@ BOOL CUploads::AllowMoreTo(IN_ADDR* pAddress) const
 				nCount++;
 		}
 	}
-	
+
 	return ( nCount <= Settings.Uploads.MaxPerHost );
 }
 
 BOOL CUploads::CanUploadFileTo(IN_ADDR* pAddress, const Hashes::Sha1Hash& oSHA1) const
 {
 	DWORD nCount = 0;
-	
+
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
 		CUploadTransfer* pUpload = GetNext( pos );
-		
+
 		if ( pUpload->m_nState == upsUploading ||
 			 pUpload->m_nState == upsQueued )
 		{
@@ -206,14 +206,14 @@ BOOL CUploads::CanUploadFileTo(IN_ADDR* pAddress, const Hashes::Sha1Hash& oSHA1)
 			}
 		}
 	}
-	
+
 	return ( nCount < Settings.Uploads.MaxPerHost );
 }
 
 BOOL CUploads::EnforcePerHostLimit(CUploadTransfer* pHit, BOOL bRequest)
 {
 	DWORD nCount = 0;
-	
+
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
 		CUploadTransfer* pUpload = GetNext( pos );
@@ -226,17 +226,17 @@ BOOL CUploads::EnforcePerHostLimit(CUploadTransfer* pHit, BOOL bRequest)
 				nCount++;
 		}
 	}
-	
+
 	if ( nCount <= Settings.Uploads.MaxPerHost ) return FALSE;
-	
+
 	while ( nCount > Settings.Uploads.MaxPerHost )
 	{
 		CUploadTransfer* pNewest = NULL;
-		
+
 		for ( POSITION pos = GetIterator() ; pos ; )
 		{
 			CUploadTransfer* pUpload = GetNext( pos );
-			
+
 			if ( pUpload->m_nState == upsUploading ||
 				 pUpload->m_nState == upsQueued ||
 				 pUpload->m_nState == upsPreQueue )
@@ -248,24 +248,24 @@ BOOL CUploads::EnforcePerHostLimit(CUploadTransfer* pHit, BOOL bRequest)
 						pNewest = pUpload;
 						break;
 					}
-					
+
 					if ( pNewest == NULL || pUpload->m_tConnected > pNewest->m_tConnected )
 						pNewest = pUpload;
 				}
 			}
 		}
-		
+
 		if ( pNewest == NULL ) break;
-		
+
 		if ( bRequest )
 		{
 			if ( pNewest->m_pBaseFile == pHit->m_pBaseFile && ! pNewest->m_bLive )
 			{
 				UploadQueues.StealPosition( pHit, pNewest );
-				
+
 				theApp.Message( MSG_ERROR, IDS_UPLOAD_DROPPED_OLDER,
 					(LPCTSTR)pNewest->m_sAddress );
-				
+
 				pNewest->Close( FALSE );
 			}
 			else
@@ -278,10 +278,10 @@ BOOL CUploads::EnforcePerHostLimit(CUploadTransfer* pHit, BOOL bRequest)
 			theApp.Message( MSG_ERROR, IDS_UPLOAD_DROPPED_NEWER, (LPCTSTR)pNewest->m_sAddress );
 			pNewest->Close( FALSE );
 		}
-		
+
 		nCount--;
 	}
-	
+
 	return FALSE;
 }
 
@@ -293,10 +293,10 @@ void CUploads::OnRun()
 	CSingleLock pLock( &UploadQueues.m_pSection, TRUE );
 	int nCountTorrent = 0;
 	POSITION pos;
-	
+
 	m_nCount		= 0;
 	m_nBandwidth	= 0;
-	
+
 	//Set measured queue speeds to 0
 	for ( pos = UploadQueues.GetIterator() ; pos ; )
 	{
@@ -305,12 +305,12 @@ void CUploads::OnRun()
 	UploadQueues.m_pTorrentQueue->m_nMeasured = 0;
 	UploadQueues.m_pTorrentQueue->m_nMinTransfers = 0;
 	UploadQueues.m_pTorrentQueue->m_nMaxTransfers = 0;
-	
+
 	for ( pos = GetIterator() ; pos ; )
 	{
 		CUploadTransfer* pTransfer = GetNext( pos );
 
-		if ( ( pTransfer->m_nProtocol == PROTOCOL_BT ) && ( pTransfer->m_nState != upsNull ) )	
+		if ( ( pTransfer->m_nProtocol == PROTOCOL_BT ) && ( pTransfer->m_nState != upsNull ) )
 		{
 			// This is a torrent transfer
 			CUploadTransferBT* pBT = (CUploadTransferBT*)pTransfer;
@@ -353,7 +353,7 @@ void CUploads::OnRun()
 				pTransfer->m_pQueue->m_nMeasured += nMeasured;
 		}
 	}
-	
+
 	if ( nCountTorrent > 0 )	//If there are any active torrents
 	{
 		// Assign bandwidth to BT
@@ -387,63 +387,61 @@ BOOL CUploads::OnAccept(CConnection* pConnection)
 	else if ( Settings.Uploads.MaxPerHost > 0 )
 	{
 		CUploadTransfer* pUpload = new CUploadTransferHTTP();
-		
+
 		for ( POSITION pos = GetIterator() ; pos ; )
 		{
 			CUploadTransfer* pTest = GetNext( pos );
-			
+
 			if (	pTest->m_pHost.sin_addr.S_un.S_addr ==
 					pConnection->m_pHost.sin_addr.S_un.S_addr )
 			{
 				pTest->m_bLive = FALSE;
 			}
 		}
-		
+
 		pUpload->AttachTo( pConnection );
-		
+
 		return TRUE;
 	}
-	
+
 	return FALSE;
 }
 
 //////////////////////////////////////////////////////////////////////
 // CUploads rename handler
 
-void CUploads::OnRename(LPCTSTR pszSource, LPCTSTR pszTarget, BOOL bRemoving)
+bool CUploads::OnRename(const CString& strSource, LPCTSTR pszTarget, bool bRemoving)
 {
-	if ( pszSource == NULL ) return;
 	CSingleLock pLock( &Transfers.m_pSection );
-	
-	if ( pLock.Lock( 500 ) )
-	{
-		for ( POSITION pos = GetIterator() ; pos ; )
-		{
-			GetNext( pos )->OnRename( pszSource, pszTarget );
-		}
-		
-		pLock.Unlock();
-	}
-	
-	if ( ! bRemoving ) return;
+
+	if ( !pLock.Lock( 500ul ) )
+		return false;
+
+	for ( POSITION pos = GetIterator() ; pos ; )
+		GetNext( pos )->OnRename( strSource, pszTarget );
+
+	pLock.Unlock();
+
+	if ( !bRemoving )
+		return true;
 
 	CSingleLock pLock2( &theApp.m_pSection );
-	
-	if ( pLock2.Lock( 500 ) )
+
+	if ( !pLock2.Lock( 500ul ) )
+		return false;
+
+	if ( CMainWnd* pMainWnd = (CMainWnd*)theApp.m_pSafeWnd )
 	{
-		if ( CMainWnd* pMainWnd = (CMainWnd*)theApp.m_pSafeWnd )
-		{
-			CMediaWnd* pMediaWnd = (CMediaWnd*)pMainWnd->m_pWindows.Find(
-				RUNTIME_CLASS(CMediaWnd) );
-			
-			if ( pMediaWnd != NULL )
-			{
-				pMediaWnd->OnFileDelete( pszSource );
-			}
-		}
-		
-		pLock2.Unlock();
+		CMediaWnd* pMediaWnd = (CMediaWnd*)pMainWnd->m_pWindows.Find(
+			RUNTIME_CLASS(CMediaWnd) );
+
+		if ( pMediaWnd )
+			pMediaWnd->OnFileDelete( strSource );
 	}
+
+	pLock2.Unlock();
+
+	return true;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -464,4 +462,3 @@ void CUploads::Remove(CUploadTransfer* pUpload)
 	m_pList.RemoveAt( pos );
 	UNUSED_ALWAYS( pos );
 }
-
