@@ -65,7 +65,7 @@ CMatchList::CMatchList(CBaseMatchWnd* pParent) : m_pParent( pParent )
 {
 	m_pResultFilters = new CResultFilters;
 	m_pResultFilters->Load();
-	
+
 	int nDefaultFilter = m_pResultFilters->m_nDefault;
 
 	if ( ( nDefaultFilter != NONE ) && ( (int)m_pResultFilters->m_nFilters >= nDefaultFilter + 1 ) )
@@ -106,7 +106,7 @@ CMatchList::CMatchList(CBaseMatchWnd* pParent) : m_pParent( pParent )
 	m_bSortDir			= 1;
 	m_pSchema			= NULL;
 	m_bNew				= FALSE;
-	
+
 	m_pFiles			= NULL;
 	m_nFiles			= 0;
 	m_nItems			= 0;
@@ -114,7 +114,7 @@ CMatchList::CMatchList(CBaseMatchWnd* pParent) : m_pParent( pParent )
 	m_nFilteredHits		= 0;
 	m_nGnutellaHits		= 0;
 	m_nED2KHits			= 0;
-	
+
 	m_nBuffer	= 0;
 	m_pSizeMap	= new CMatchFile*[ MAP_SIZE ];
 	m_pMapSHA1	= new CMatchFile*[ MAP_SIZE ];
@@ -126,16 +126,16 @@ CMatchList::CMatchList(CBaseMatchWnd* pParent) : m_pParent( pParent )
 	m_pszRegexPattern = NULL;
 	m_pColumns	= NULL;
 	m_nColumns	= 0;
-	
+
 	ClearUpdated();
-	
+
 	ZeroMemory( m_pSizeMap, MAP_SIZE * sizeof *m_pSizeMap );
 	ZeroMemory( m_pMapSHA1, MAP_SIZE * sizeof *m_pMapSHA1 );
 	ZeroMemory( m_pMapTiger, MAP_SIZE * sizeof *m_pMapTiger );
 	ZeroMemory( m_pMapED2K, MAP_SIZE * sizeof *m_pMapED2K );
 	ZeroMemory( m_pMapBTH, MAP_SIZE * sizeof *m_pMapBTH );
 	ZeroMemory( m_pMapMD5, MAP_SIZE * sizeof *m_pMapMD5 );
-	
+
 	SetSortColumn( MATCH_COL_COUNT, TRUE );
 }
 
@@ -166,7 +166,7 @@ void CMatchList::AddHits(CQueryHit* pHit, CQuerySearch* pFilter)
 {
 	CSingleLock pLock( &m_pSection, TRUE );
 	CMatchFile **pMap;
-	
+
 	while ( pHit )
 	{
 		CQueryHit* pNext = pHit->m_pNext;
@@ -183,18 +183,18 @@ void CMatchList::AddHits(CQueryHit* pHit, CQuerySearch* pFilter)
 			pHit = pNext;
 			continue;
 		}
-		
+
 		pHit->m_bNew = m_bNew;
-		
+
 		if ( pFilter != NULL )
 		{
-			// TODO: pHit->m_bExactMatch is broken anyway, since it m_sKeywords 
+			// TODO: pHit->m_bExactMatch is broken anyway, since it m_sKeywords
 			// has no punctuation marks.
 			// Consider this:
-			// 
+			//
 			// pHit->m_sKeywords = pHit->m_sName;
 			// pFilter->MakeKeywords( pHit->m_sKeywords, false );
-			// 
+			//
 			// Then we can tokenize strings to word lists by using space
 			// as a separator, sort 2 lists and compare.
 			//
@@ -214,7 +214,7 @@ void CMatchList::AddHits(CQueryHit* pHit, CQuerySearch* pFilter)
 				pHit->m_oED2K,
 				pHit->m_oBTH,
 				pHit->m_oMD5);
-			
+
 			// ToDo: Change to pHit->m_bMatched when we will be able to get folder name
 			// from hits. Raza sends hits if folder name matches the search keywords too.
 			// For now, just move such files to bogus.
@@ -234,9 +234,9 @@ void CMatchList::AddHits(CQueryHit* pHit, CQuerySearch* pFilter)
 		{
 			pHit->m_bMatched = TRUE;
 		}
-		
+
 		FilterHit( pHit );
-		
+
 		CMatchFile* pFile	= NULL;
 		FILESTATS Stats = {};
 
@@ -260,14 +260,14 @@ void CMatchList::AddHits(CQueryHit* pHit, CQuerySearch* pFilter)
 		{
 			pFile = FindFileAndAddHit( pHit, fMD5, &Stats );
 		}
-		
+
 		if ( pFile == NULL
-            && ( ( ! pHit->m_oSHA1 && ! pHit->m_oTiger && ! pHit->m_oED2K && ! pHit->m_oBTH && ! pHit->m_oMD5 )
-                || !Settings.General.HashIntegrity ) )
+			&& ( ( ! pHit->m_oSHA1 && ! pHit->m_oTiger && ! pHit->m_oED2K && ! pHit->m_oBTH && ! pHit->m_oMD5 )
+				|| !Settings.General.HashIntegrity ) )
 		{
 			pFile = FindFileAndAddHit( pHit, fSize, &Stats );
 		}
-		
+
 		bool bExistingFile = ( pFile != NULL );
 		if ( bExistingFile )
 		{
@@ -290,32 +290,32 @@ void CMatchList::AddHits(CQueryHit* pHit, CQuerySearch* pFilter)
 					}
 					break;
 				}
-			}			
+			}
 		}
 		else
 		{
 			// New file hit
 			pFile = new CMatchFile( this, pHit );
 			pFile->m_bNew = m_bNew;
-			
+
 			pMap = m_pSizeMap + (DWORD)( pFile->m_nSize & 0xFF );
 			pFile->m_pNextSize = *pMap;
 			*pMap = pFile;
-			
+
 			if ( m_nFiles + 1 > m_nBuffer )
 			{
 				m_nBuffer += BUFFER_GROW;
 				CMatchFile** pFiles = new CMatchFile*[ m_nBuffer ];
-				
+
 				if ( m_pFiles )
 				{
 					CopyMemory( pFiles, m_pFiles, m_nFiles * sizeof( CMatchFile* ) );
 					delete [] m_pFiles;
 				}
-				
+
 				m_pFiles = pFiles;
 			}
-			
+
 			if ( m_nSortColumn >= 0 )
 			{
 				InsertSorted( pFile );
@@ -340,10 +340,13 @@ void CMatchList::AddHits(CQueryHit* pHit, CQuerySearch* pFilter)
 				case PROTOCOL_ED2K:
 					m_nED2KHits += pFile->m_nFiltered;
 					break;
+				default:
+					ASSERT(FALSE);
+					break;
 				}
 			}
 		}
-		
+
 		if ( ! Stats.bHadSHA1 && pFile->m_oSHA1 )
 		{
 			pMap = m_pMapSHA1 + pFile->m_oSHA1[ 0 ];
@@ -374,7 +377,7 @@ void CMatchList::AddHits(CQueryHit* pHit, CQuerySearch* pFilter)
 			pFile->m_pNextMD5 = *pMap;
 			*pMap = pFile;
 		}
-		
+
 		pHit = pNext;
 	}
 }
@@ -491,7 +494,7 @@ CMatchFile* CMatchList::FindFileAndAddHit(CQueryHit* pHit, const findType nFindF
 
 void CMatchList::InsertSorted(CMatchFile* pFile)
 {
-    int nFirst = 0;
+	int nFirst = 0;
 	for ( int nLast = m_nFiles - 1 ; nLast >= nFirst ; )
 	{
 		DWORD nMiddle = ( nFirst + nLast ) >> 1;
@@ -591,13 +594,13 @@ BOOL CMatchList::Select(CMatchFile* pFile, CQueryHit* pHit, BOOL bSelected)
 		else
 			m_pSelectedFiles.RemoveAt( m_pSelectedFiles.Find( pFile ) );
 	}
-	
+
 	if ( pFile != NULL )
 	{
 		DWORD nIndex = FileToItem( pFile );
 		UpdateRange( nIndex, nIndex );
 	}
-	
+
 	return TRUE;
 }
 
@@ -606,20 +609,20 @@ CMatchFile* CMatchList::GetSelectedFile(BOOL bFromHit) const
 	if ( m_pSelectedFiles.GetCount() != 1 )
 	{
 		if ( bFromHit == FALSE ) return NULL;
-		
+
 		CQueryHit* pHit = GetSelectedHit();
 		if ( pHit == NULL ) return NULL;
-		
+
 		CMatchFile** pLoop = m_pFiles;
-		
+
 		for ( DWORD nCount = m_nFiles ; nCount ; nCount--, pLoop++ )
 		{
 			if ( (*pLoop)->Check( pHit ) ) return *pLoop;
 		}
-		
+
 		return NULL;
 	}
-	
+
 	return m_pSelectedFiles.GetHead();
 }
 
@@ -631,7 +634,7 @@ CQueryHit* CMatchList::GetSelectedHit() const
 		CMatchFile* pFile = m_pSelectedFiles.GetHead();
 		return ( pFile->m_nFiltered == 1 ) ? pFile->GetHits() : NULL;
 	}
-	
+
 	return m_pSelectedHits.GetHead();
 }
 
@@ -643,10 +646,10 @@ INT_PTR CMatchList::GetSelectedCount() const
 BOOL CMatchList::ClearSelection()
 {
 	CSingleLock pLock( &m_pSection, TRUE );
-	
+
 	CMatchFile** pLoop = m_pFiles;
 	BOOL bChanged = FALSE;
-	
+
 	for ( DWORD nCount = 0 ; nCount < m_nFiles ; nCount++, pLoop++ )
 	{
 		bChanged = (*pLoop)->ClearSelection();
@@ -655,10 +658,10 @@ BOOL CMatchList::ClearSelection()
 			UpdateRange( nCount, nCount );
 		}
 	}
-	
+
 	m_pSelectedFiles.RemoveAll();
 	m_pSelectedHits.RemoveAll();
-	
+
 	return bChanged;
 }
 
@@ -713,7 +716,7 @@ bool CMatchList::CreateRegExpFilter(CString strPattern, CString& strFilter)
 						// Add all keywords at the "<_>" position
 						for ( ; itWord != itWordEnd ; itWord++ )
 						{
-							strNewPattern.AppendFormat( L"%s\\s*", 
+							strNewPattern.AppendFormat( L"%s\\s*",
 								CString( itWord->first, int(itWord->second) ) );
 						}
 						bReplaced = true;
@@ -731,7 +734,7 @@ bool CMatchList::CreateRegExpFilter(CString strPattern, CString& strFilter)
 						{
 							if ( nWord == nNumber )
 							{
-								strNewPattern.AppendFormat( L"%s\\s*", 
+								strNewPattern.AppendFormat( L"%s\\s*",
 									CString( itWord->first, int(itWord->second) ) );
 								bReplaced = true;
 								break;
@@ -758,7 +761,7 @@ bool CMatchList::CreateRegExpFilter(CString strPattern, CString& strFilter)
 		delete m_pszRegexPattern;
 
 	m_pszRegexPattern = new TCHAR[ strNewPattern.GetLength() + 1 ];
-	CopyMemory( m_pszRegexPattern, (LPCTSTR)strNewPattern, 
+	CopyMemory( m_pszRegexPattern, (LPCTSTR)strNewPattern,
 				sizeof(TCHAR) * ( strNewPattern.GetLength() + 1 ) );
 
 	return bReplaced;
@@ -770,9 +773,9 @@ bool CMatchList::CreateRegExpFilter(CString strPattern, CString& strFilter)
 void CMatchList::Filter()
 {
 	CSingleLock pLock( &m_pSection, TRUE );
-	
+
 	Settings.Search.FilterMask = 0;
-	
+
 	if ( m_bFilterBusy )		Settings.Search.FilterMask |= ( 1 << 0 );
 	if ( m_bFilterPush )		Settings.Search.FilterMask |= ( 1 << 1 );
 	if ( m_bFilterUnstable )	Settings.Search.FilterMask |= ( 1 << 2 );
@@ -786,7 +789,7 @@ void CMatchList::Filter()
 
 	delete [] m_pszFilter;
 	m_pszFilter = NULL;
-	
+
 	if ( m_sFilter.GetLength() )
 	{
 		if ( m_bRegExp )
@@ -848,13 +851,13 @@ void CMatchList::Filter()
 			*pszFilter++ = 0;
 		}
 	}
-	
+
 	CMatchFile** pLoop = m_pFiles;
-	
+
 	m_nItems			= 0;
 	m_nFilteredFiles	= 0;
 	m_nFilteredHits		= 0;
-	
+
 	for ( DWORD nCount = m_nFiles, nItems = 0 ; nCount ; nCount--, pLoop++ )
 	{
 		if ( ( nItems = (*pLoop)->Filter() ) != 0 )
@@ -868,7 +871,7 @@ void CMatchList::Filter()
 			if ( (*pLoop)->m_bSelected ) Select( *pLoop, NULL, FALSE );
 		}
 	}
-	
+
 	SetSortColumn( m_nSortColumn, m_bSortDir < 0 );
 	UpdateRange();
 }
@@ -921,7 +924,7 @@ BOOL CMatchList::FilterHit(CQueryHit* pHit)
 		( m_nFilterMinSize > 0 && pHit->m_nSize < m_nFilterMinSize ) ||
 		( m_nFilterMaxSize > 0 && pHit->m_nSize > m_nFilterMaxSize ) )
 		return FALSE;
-	
+
 	if ( m_pszFilter )
 	{
 		for ( LPCTSTR pszFilter = m_pszFilter ; *pszFilter ; )
@@ -938,14 +941,14 @@ BOOL CMatchList::FilterHit(CQueryHit* pHit)
 			pszFilter += _tcslen( pszFilter + 1 ) + 2;
 		}
 	}
-	
+
 	// Global adult filter and Local adult filter
 	if ( Settings.Search.AdultFilter || m_bFilterAdult )
 	{
 		if ( AdultFilter.IsHitAdult( pszName ) )
 			return FALSE;
 	}
-	
+
 	return ( pHit->m_bFiltered = TRUE );
 }
 
@@ -967,7 +970,7 @@ void CMatchList::SelectSchema(CSchema* pSchema, CList< CSchemaMember* >* pColumn
 			(*pLoop)->m_nColumns = 0;
 		}
 	}
-	
+
 	delete [] m_pColumns;
 	m_pColumns	= NULL;
 	m_nColumns	= 0;
@@ -1145,12 +1148,12 @@ void CMatchList::ClearUpdated()
 void CMatchList::ClearNew()
 {
 	CSingleLock pLock( &m_pSection, TRUE );
-	
+
 	for ( DWORD nFile = 0 ; nFile < m_nFiles ; nFile++ )
 	{
 		if ( m_pFiles[ nFile ] ) m_pFiles[ nFile ]->ClearNew();
 	}
-	
+
 	m_bNew = TRUE;
 }
 
@@ -1160,11 +1163,11 @@ void CMatchList::ClearNew()
 void CMatchList::Serialize(CArchive& ar)
 {
 	int nVersion = 14;
-	
+
 	if ( ar.IsStoring() )
 	{
 		ar << nVersion;
-		
+
 		ar << m_sFilter;
 		ar << m_bFilterBusy;
 		ar << m_bFilterPush;
@@ -1182,9 +1185,9 @@ void CMatchList::Serialize(CArchive& ar)
 		ar << m_nFilterSources;
 		ar << m_nSortColumn;
 		ar << m_bSortDir;
-		
+
 		ar.WriteCount( m_nFiles );
-		
+
 		for ( DWORD nFile = 0 ; nFile < m_nFiles ; nFile++ )
 		{
 			CMatchFile* pFile = m_pFiles[ nFile ];
@@ -1195,7 +1198,7 @@ void CMatchList::Serialize(CArchive& ar)
 	{
 		ar >> nVersion;
 		if ( nVersion < 8 ) AfxThrowUserException();
-		
+
 		ar >> m_sFilter;
 		ar >> m_bFilterBusy;
 		ar >> m_bFilterPush;
@@ -1211,7 +1214,7 @@ void CMatchList::Serialize(CArchive& ar)
 			ar >> m_bFilterSuspicious;
 			ar >> m_bRegExp;
 		}
-		
+
 		if ( nVersion >= 10 )
 		{
 			ar >> m_nFilterMinSize;
@@ -1223,21 +1226,21 @@ void CMatchList::Serialize(CArchive& ar)
 			ar >> nInt32; m_nFilterMinSize = nInt32;
 			ar >> nInt32; m_nFilterMaxSize = nInt32;
 		}
-		
+
 		ar >> m_nFilterSources;
 		ar >> m_nSortColumn;
 		ar >> m_bSortDir;
-		
+
 		m_nFiles = m_nBuffer = static_cast< DWORD >( ar.ReadCount() );
 		m_pFiles = new CMatchFile*[ m_nFiles ];
 		ZeroMemory( m_pFiles, sizeof(CMatchFile*) * m_nFiles );
-		
+
 		for ( DWORD nFile = 0 ; nFile < m_nFiles ; nFile++ )
 		{
 			CMatchFile* pFile = new CMatchFile( this );
 			m_pFiles[ nFile ] = pFile;
 			pFile->Serialize( ar, nVersion );
-			
+
 			for ( CQueryHit* pHit = pFile->GetHits(); pHit; pHit = pHit->m_pNext )
 			{
 				switch ( pHit->m_nProtocol )
@@ -1258,11 +1261,11 @@ void CMatchList::Serialize(CArchive& ar)
 					;
 				}
 			}
-			
+
 			CMatchFile** pMap = m_pSizeMap + (DWORD)( pFile->m_nSize & 0xFF );
 			pFile->m_pNextSize = *pMap;
 			*pMap = pFile;
-			
+
 			if ( pFile->m_oSHA1 )
 			{
 				pMap = m_pMapSHA1 + pFile->m_oSHA1[ 0 ];
@@ -1294,7 +1297,7 @@ void CMatchList::Serialize(CArchive& ar)
 				*pMap = pFile;
 			}
 		}
-		
+
 		Filter();
 	}
 }
@@ -1337,7 +1340,7 @@ CMatchFile::CMatchFile(CMatchList* pList, CQueryHit* pHit) :
 	m_pBest			( NULL ),
 	m_nTotal		( 0 ),
 	m_nFiltered		( 0 ),
-	m_nSources		( 0 ),	
+	m_nSources		( 0 ),
 	m_pNextSize		( NULL ),
 	m_pNextSHA1		( NULL ),
 	m_pNextTiger	( NULL ),
@@ -1354,7 +1357,7 @@ CMatchFile::CMatchFile(CMatchList* pList, CQueryHit* pHit) :
 	m_bDRM			( FALSE ),
 	m_bSuspicious	( FALSE ),
 	m_bCollection	( FALSE ),
-	m_bTorrent		( FALSE ),	
+	m_bTorrent		( FALSE ),
 	m_bExpanded		( Settings.Search.ExpandMatches ),
 	m_bSelected		( FALSE ),
 	m_bExisting		( TRI_UNKNOWN ),
@@ -1370,7 +1373,7 @@ CMatchFile::CMatchFile(CMatchList* pList, CQueryHit* pHit) :
 {
 	// TODO: Change to SIZE_UNKNOWN without the size
 	m_nSize			= ( pHit && pHit->m_bSize ) ? pHit->m_nSize : 0;
-	m_sSize			= Settings.SmartVolume( m_nSize );	
+	m_sSize			= Settings.SmartVolume( m_nSize );
 
 	if ( pHit ) Add( pHit );
 }
@@ -1550,7 +1553,7 @@ BOOL CMatchFile::Add(CQueryHit* pHit, BOOL bForce)
 	{
 		return FALSE;
 	}
-	
+
 	if ( ! bForce )
 	{
 		if ( m_oSHA1 && ( pHit->m_oSHA1 || Settings.General.HashIntegrity ) )
@@ -1566,15 +1569,15 @@ BOOL CMatchFile::Add(CQueryHit* pHit, BOOL bForce)
 			return FALSE;
 		}
 	}
-	
+
 	BOOL bSubstituted = FALSE;
-	
+
 	if ( m_pHits )
 	{
 		for ( CQueryHit* pOld = m_pHits ; pOld ; pOld = pOld->m_pNext )
 		{
 			BOOL bName = _tcsicmp( pHit->m_sName, pOld->m_sName ) == 0;
-			
+
 			if ( ! bForce && bName ) bForce = TRUE;
 
 			if ( bName && pHit->m_pAddress.S_un.S_addr == pOld->m_pAddress.S_un.S_addr &&
@@ -1586,37 +1589,37 @@ BOOL CMatchFile::Add(CQueryHit* pHit, BOOL bForce)
 					m_nSources -= pOld->GetSources();
 					m_nSpeed -= pOld->m_nSpeed;
 				}
-				
+
 				pOld->Copy( pHit );
 				delete pHit;
-				
+
 				pHit = pOld;
 				bForce = bSubstituted = TRUE;
 				break;
 			}
 		}
-		
+
 		if ( ! bForce )
 			return FALSE;
 	}
-	
+
 	if ( ! bSubstituted )
 	{
 		pHit->m_pNext = m_pHits;
 		m_pHits = pHit;
 		m_nTotal++;
 	}
-	
+
 	if ( ! m_oSHA1 && pHit->m_oSHA1 )
 	{
 		m_oSHA1 = pHit->m_oSHA1;
 	}
-	
+
 	if ( ! m_oTiger && pHit->m_oTiger )
 	{
 		m_oTiger = pHit->m_oTiger;
 	}
-	
+
 	if ( ! m_oED2K && pHit->m_oED2K )
 	{
 		m_oED2K = pHit->m_oED2K;
@@ -1631,11 +1634,11 @@ BOOL CMatchFile::Add(CQueryHit* pHit, BOOL bForce)
 	{
 		m_oMD5 = pHit->m_oMD5;
 	}
-	
+
 	if ( ! m_bDownload && GetLibraryStatus() == TRI_UNKNOWN && IsHashed() )
 	{
 		CSingleLock pLock2( &Transfers.m_pSection );
-		
+
 		if ( pLock2.Lock( 50 ) )
 		{
 			if ( ! m_bDownload && m_oSHA1 && Downloads.FindBySHA1( m_oSHA1 ) != NULL )
@@ -1660,11 +1663,11 @@ BOOL CMatchFile::Add(CQueryHit* pHit, BOOL bForce)
 			}
 		}
 	}
-	
+
 	if ( pHit->m_bFiltered ) Added( pHit );
-	
+
 	if ( ! m_bOneValid && ! pHit->m_bBogus && pHit->m_bMatched ) m_bOneValid = TRUE;
-	
+
 	RefreshStatus();
 
 	return TRUE;
@@ -1679,7 +1682,7 @@ BOOL CMatchFile::Check(CQueryHit* pHit) const
 	{
 		if ( pOld == pHit ) return TRUE;
 	}
-	
+
 	return FALSE;
 }
 
@@ -1723,11 +1726,11 @@ DWORD CMatchFile::Filter()
 	m_bSuspicious	= FALSE;
 	m_bCollection	= FALSE;
 	m_bTorrent		= FALSE;
-	
+
 	m_nFiltered		= 0;
 	m_nSources		= 0;
 	m_pBest			= NULL;
-	
+
 	for ( CQueryHit* pHit = m_pHits ; pHit ; pHit = pHit->m_pNext )
 	{
 		if ( m_pList->FilterHit( pHit ) )
@@ -1760,51 +1763,51 @@ DWORD CMatchFile::Filter()
 void CMatchFile::Added(CQueryHit* pHit)
 {
 	m_pBest = pHit;
-	
+
 	m_nFiltered ++;
 	m_nSources += pHit->GetSources();
 	m_nSpeed += pHit->m_nSpeed;
-	
+
 	if ( m_nFiltered && m_nSpeed )
 		m_sSpeed = Settings.SmartSpeed( m_nSpeed / m_nFiltered, KiloBytes );
 	else
 		m_sSpeed.Empty();
-	
+
 	if ( pHit->GetSources() > 0 )
 	{
 		if ( pHit->m_bPush == TRI_FALSE )
 			m_bPush = TRI_FALSE;
 		else if ( pHit->m_bPush == TRI_TRUE && m_bPush == TRI_UNKNOWN )
 			m_bPush = TRI_TRUE;
-		
+
 		if ( pHit->m_bBusy == TRI_FALSE )
 			m_bBusy = TRI_FALSE;
 		else if ( pHit->m_bBusy == TRI_TRUE && m_bBusy == TRI_UNKNOWN )
 			m_bBusy = TRI_TRUE;
-		
+
 		if ( pHit->m_bStable == TRI_TRUE )
 			m_bStable = TRI_TRUE;
 		else if ( pHit->m_bStable == TRI_FALSE && m_bStable == TRI_UNKNOWN )
 			m_bStable = TRI_FALSE;
-		
+
 		m_bPreview |= pHit->m_bPreview;
 	}
-	
+
 	m_bCollection	|= ( pHit->m_bCollection && ! pHit->m_bBogus );
-	
+
 	if ( pHit->m_nRating )
 	{
 		m_nRating += pHit->m_nRating;
 		m_nRated ++;
 	}
-	
+
 	if ( m_nShellIndex == -1 )
 	{
 		m_nShellIndex = ShellIcons.Get( pHit->m_sName, 16 );
 	}
 
 	BOOL bSchema;
-	
+
 	if ( m_pList->m_pSchema &&
 		 ( bSchema = m_pList->m_pSchema->CheckURI( pHit->m_sSchemaURI ) || pHit->m_oSHA1 ) != FALSE )
 	{
@@ -1813,10 +1816,10 @@ void CMatchFile::Added(CQueryHit* pHit)
 			m_nColumns = m_pList->m_nColumns;
 			m_pColumns = new CString[ m_nColumns ];
 		}
-		
+
 		CSchemaMember** pMember = m_pList->m_pColumns;
 		CString strValue;
-		
+
 		for ( int nCount = 0 ; nCount < m_nColumns ; nCount ++, pMember ++ )
 		{
 			if ( _tcsicmp( (*pMember)->m_sName, _T("SHA1") ) == 0 )
@@ -1839,7 +1842,7 @@ void CMatchFile::Added(CQueryHit* pHit)
 		m_pColumns = NULL;
 		m_nColumns = 0;
 	}
-	
+
 	if ( ! m_bDRM && pHit->m_pXML != NULL )
 	{
 		if ( pHit->m_pXML->GetAttributeValue( _T("DRM") ).GetLength() > 0 )
@@ -1849,7 +1852,7 @@ void CMatchFile::Added(CQueryHit* pHit)
 	// cross-packet spam filtering
 	DWORD nBogusCount = 0;
 	DWORD nTotal = 0;
-	for ( CQueryHit* pFileHits = m_pHits; pFileHits ; 
+	for ( CQueryHit* pFileHits = m_pHits; pFileHits ;
 			pFileHits = pFileHits->m_pNext, nTotal++ )
 	{
 		if ( pFileHits->m_pNext && validAndEqual( pFileHits->m_oClientID, pFileHits->m_pNext->m_oClientID ) )
@@ -1857,7 +1860,7 @@ void CMatchFile::Added(CQueryHit* pHit)
 		if ( pFileHits->m_bBogus )
 			nBogusCount++;
 	}
-	
+
 	// Mark/unmark a file as suspicious depending on the percentage of the spam hits
 	m_bSuspicious = (float)nBogusCount / nTotal > Settings.Search.SpamFilterThreshold / 100.0f;
 
@@ -1890,7 +1893,7 @@ void CMatchFile::Added(CQueryHit* pHit)
 			if ( ( _tcsicmp( pszExt, _T("exe") ) == 0 ) ||
 				 ( _tcsicmp( pszExt, _T("com") ) == 0 ) )
 			{
-				if ( m_nSize < 128 * 1024 ) 
+				if ( m_nSize < 128 * 1024 )
 				{
 					// It's really likely to be viral.
 					m_bSuspicious = TRUE;
@@ -1901,7 +1904,7 @@ void CMatchFile::Added(CQueryHit* pHit)
 			if ( ( _tcsicmp( pszExt, _T("wmv") ) == 0 ) ||
 				 ( _tcsicmp( pszExt, _T("wma") ) == 0 ) )
 			{
-				if ( m_nSize < 256 * 1024 ) 
+				if ( m_nSize < 256 * 1024 )
 				{
 					// A movie file this small is very odd.
 					m_bSuspicious = TRUE;
@@ -1912,7 +1915,7 @@ void CMatchFile::Added(CQueryHit* pHit)
 			if ( ( _tcsicmp( pszExt, _T("zip") ) == 0 ) ||
 				 ( _tcsicmp( pszExt, _T("rar") ) == 0 ) )
 			{
-				if ( m_nSize < 128 * 1024 ) 
+				if ( m_nSize < 128 * 1024 )
 				{
 					m_bSuspicious = TRUE;
 				}
@@ -1924,7 +1927,7 @@ void CMatchFile::Added(CQueryHit* pHit)
 		}
 
 	}
-	
+
 	if ( m_bDownload ) pHit->m_bDownload = TRUE;
 }
 
@@ -1944,14 +1947,14 @@ void CMatchFile::ClearNew()
 int CMatchFile::Compare(CMatchFile* pFile) const
 {
 	register int x, y;
-	
+
 	/*
 	if ( m_bCollection != pFile->m_bCollection )
 	{
 		return m_bCollection ? -m_pList->m_bSortDir : m_pList->m_bSortDir;
 	}
 	*/
-	
+
 	switch ( m_pList->m_nSortColumn )
 	{
 	case MATCH_COL_NAME:
@@ -1969,15 +1972,15 @@ int CMatchFile::Compare(CMatchFile* pFile) const
 			if ( ! x ) return 0;
 			return x > 0 ? 1 : -1;
 		}
-		
+
 	case MATCH_COL_SIZE:
 		return m_nSize == pFile->m_nSize ? 0 : ( m_nSize > pFile->m_nSize ? 1 : -1 );
-	
+
 	case MATCH_COL_RATING:
 		x = m_nRated ? m_nRating / m_nRated : 0;
 		y = pFile->m_nRated ? pFile->m_nRating / pFile->m_nRated : 0;
 		return x == y ? 0 : ( x > y ? 1 : -1 );
-		
+
 	case MATCH_COL_STATUS:
 		x = y = 0;
 		if ( m_bPush != TRI_TRUE ) x += 4;
@@ -1987,10 +1990,10 @@ int CMatchFile::Compare(CMatchFile* pFile) const
 		if ( pFile->m_bBusy != TRI_TRUE ) y += 2;
 		if ( pFile->m_bStable == TRI_TRUE ) y ++;
 		return x == y ? 0 : ( x > y ? 1 : -1 );
-		
+
 	case MATCH_COL_COUNT:
 		return m_nSources == pFile->m_nSources ? 0 : ( m_nSources > pFile->m_nSources ? 1 : -1 );
-		
+
 	case MATCH_COL_CLIENT:
 		{
 			LPCTSTR pszType1 = ( m_nFiltered == 1 ) ? (LPCTSTR)m_pHits->m_pVendor->m_sName : NULL;
@@ -2004,7 +2007,7 @@ int CMatchFile::Compare(CMatchFile* pFile) const
 
 	case MATCH_COL_TIME:
 		return m_pTime == pFile->m_pTime ? 0 : ( m_pTime > pFile->m_pTime ? 1 : -1 );
-		
+
 	case MATCH_COL_SPEED:
 		x = m_nFiltered ? m_nSpeed / m_nFiltered : 0;
 		y = pFile->m_nFiltered ? pFile->m_nSpeed / pFile->m_nFiltered : 0;
@@ -2022,16 +2025,16 @@ int CMatchFile::Compare(CMatchFile* pFile) const
 	default:
 		if ( ! m_pColumns ) return ( pFile->m_pColumns ? -1 : 0 );
 		else if ( ! pFile->m_pColumns ) return 1;
-		
+
 		x = ( m_pList->m_nSortColumn - MATCH_COL_MAX >= m_nColumns );
 		y = ( m_pList->m_nSortColumn - MATCH_COL_MAX >= pFile->m_nColumns );
 		if ( x ) return ( y ? 0 : -1 );
 		else if ( y ) return 1;
-		
+
 		{
 			LPCTSTR pszA = m_pColumns[ m_pList->m_nSortColumn - MATCH_COL_MAX ];
 			LPCTSTR pszB = pFile->m_pColumns[ m_pList->m_nSortColumn - MATCH_COL_MAX ];
-			
+
 #if 0
 			if ( *pszA && *pszB &&
 				( pszA[ _tcslen( pszA ) - 1 ] == 'k' || pszA[ _tcslen( pszA ) - 1 ] == '~' )
@@ -2060,7 +2063,7 @@ int CMatchFile::Compare(CMatchFile* pFile) const
 CString CMatchFile::GetURN() const
 {
 	CString strURN;
-	
+
 	if ( m_oSHA1 && m_oTiger )
 	{
 		strURN	= _T("urn:bitprint:")
@@ -2087,7 +2090,7 @@ CString CMatchFile::GetURN() const
 	{
 		strURN = m_oMD5.toUrn();
 	}
-	
+
 	return strURN;
 }
 
@@ -2100,9 +2103,9 @@ void CMatchFile::Serialize(CArchive& ar, int nVersion)
 	{
 		ar << m_nSize;
 		ar << m_sSize;
-        SerializeOut( ar, m_oSHA1 );
-        SerializeOut( ar, m_oTiger );
-        SerializeOut( ar, m_oED2K );
+		SerializeOut( ar, m_oSHA1 );
+		SerializeOut( ar, m_oTiger );
+		SerializeOut( ar, m_oED2K );
 		SerializeOut( ar, m_oBTH );
 		SerializeOut( ar, m_oMD5 );
 
@@ -2115,20 +2118,20 @@ void CMatchFile::Serialize(CArchive& ar, int nVersion)
 		ar << m_bExisting;
 		ar << m_bDownload;
 		ar << m_bOneValid;
-		
+
 		if ( m_pPreview == NULL ) m_nPreview = 0;
 		ar.WriteCount( m_nPreview );
 		if ( m_nPreview > 0 ) ar.Write( m_pPreview, m_nPreview );
-		
+
 		ar.WriteCount( m_nTotal );
 		CArray< CQueryHit* > pHits;
-		
-        CQueryHit* pHit = m_pHits;
+
+		CQueryHit* pHit = m_pHits;
 		for ( ; pHit ; pHit = pHit->m_pNext )
 		{
 			pHits.Add( pHit );
 		}
-		
+
 		for ( int nHit = m_nTotal - 1 ; nHit >= 0 ; nHit-- )
 		{
 			pHit = pHits.GetAt( nHit );
@@ -2149,12 +2152,12 @@ void CMatchFile::Serialize(CArchive& ar, int nVersion)
 			ar >> nSize;
 			m_nSize = nSize;
 		}
-		
+
 		ar >> m_sSize;
-        SerializeIn( ar, m_oSHA1, nVersion );
-        SerializeIn( ar, m_oTiger, nVersion );
-        SerializeIn( ar, m_oED2K, nVersion );
-		
+		SerializeIn( ar, m_oSHA1, nVersion );
+		SerializeIn( ar, m_oTiger, nVersion );
+		SerializeIn( ar, m_oED2K, nVersion );
+
 		if ( nVersion >= 13 )
 		{
 			SerializeIn( ar, m_oBTH, nVersion  );
@@ -2170,15 +2173,15 @@ void CMatchFile::Serialize(CArchive& ar, int nVersion)
 		ar >> m_bExisting;
 		ar >> m_bDownload;
 		ar >> m_bOneValid;
-		
+
 		if ( ( m_nPreview = static_cast< DWORD >( ar.ReadCount() ) ) != 0 )
 		{
 			m_pPreview = new BYTE[ m_nPreview ];
 			ReadArchive( ar, m_pPreview, m_nPreview );
 		}
-		
+
 		m_nTotal = static_cast< DWORD >( ar.ReadCount() );
-		
+
 		for ( int nCount = m_nTotal ; nCount > 0 ; nCount-- )
 		{
 			CQueryHit* pNext = new CQueryHit( PROTOCOL_NULL );
@@ -2186,7 +2189,7 @@ void CMatchFile::Serialize(CArchive& ar, int nVersion)
 			m_pHits = pNext;
 			m_pHits->Serialize( ar, nVersion );
 		}
-		
+
 		if ( nVersion >= 14 )
 		{
 			ar >> m_pTime;
@@ -2479,7 +2482,7 @@ void CMatchFile::GetUser(CString& sUser) const
 		{
 			if ( ( m_pBest->m_nProtocol == PROTOCOL_ED2K ) && ( m_pBest->m_bPush == TRI_TRUE ) )
 			{
-				sUser.Format( _T("%lu@%s - %s"), m_pBest->m_oClientID.begin()[2], 
+				sUser.Format( _T("%lu@%s - %s"), m_pBest->m_oClientID.begin()[2],
 					(LPCTSTR)CString( inet_ntoa( (IN_ADDR&)*m_pBest->m_oClientID.begin() ) ),
 					(LPCTSTR)m_pBest->m_pVendor->m_sName );
 			}
@@ -2516,7 +2519,7 @@ void CMatchFile::GetStatusTip( CString& sStatus, COLORREF& crStatus)
 			pExisting = LibraryMaps.LookupFileByBTH( m_oBTH );
 		if ( pExisting == NULL && m_oMD5 )
 			pExisting = LibraryMaps.LookupFileByMD5( m_oMD5 );
-		
+
 		if ( pExisting != NULL )
 		{
 			if ( pExisting->IsAvailable() )
@@ -2538,7 +2541,7 @@ void CMatchFile::GetStatusTip( CString& sStatus, COLORREF& crStatus)
 					int nLen = sStatus.GetLength();
 					if ( nLen > 150 )
 					{
-						// Truncate string including the last word 
+						// Truncate string including the last word
 						// but no more than 150 characters plus punctuation
 						CString str( sStatus.Left( 150 ) );
 						if ( IsCharacter( sStatus.GetAt( 151 ) ) )
