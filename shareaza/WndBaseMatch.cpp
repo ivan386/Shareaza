@@ -147,7 +147,7 @@ CBaseMatchWnd::~CBaseMatchWnd()
 /////////////////////////////////////////////////////////////////////////////
 // CBaseMatchWnd message handlers
 
-int CBaseMatchWnd::OnCreate(LPCREATESTRUCT lpCreateStruct) 
+int CBaseMatchWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if ( CPanelWnd::OnCreate( lpCreateStruct ) == -1 ) return -1;
 
@@ -168,19 +168,19 @@ int CBaseMatchWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	return 0;
 }
 
-void CBaseMatchWnd::OnDestroy() 
+void CBaseMatchWnd::OnDestroy()
 {
 	KillTimer( 2 );
-	
+
 	m_pMatches->m_pSection.Lock();
 	m_bPaused = TRUE;
 	m_bUpdate = FALSE;
 	m_pMatches->m_pSection.Unlock();
-	
+
 	CPanelWnd::OnDestroy();
 }
 
-BOOL CBaseMatchWnd::OnCmdMsg(UINT nID, int nCode, void* pExtra, AFX_CMDHANDLERINFO* pHandlerInfo) 
+BOOL CBaseMatchWnd::OnCmdMsg(UINT nID, int nCode, void* pExtra, AFX_CMDHANDLERINFO* pHandlerInfo)
 {
 	if ( m_wndToolBar.m_hWnd )
 	{
@@ -190,19 +190,19 @@ BOOL CBaseMatchWnd::OnCmdMsg(UINT nID, int nCode, void* pExtra, AFX_CMDHANDLERIN
 	return CPanelWnd::OnCmdMsg( nID, nCode, pExtra, pHandlerInfo );
 }
 
-void CBaseMatchWnd::OnSize(UINT nType, int cx, int cy) 
+void CBaseMatchWnd::OnSize(UINT nType, int cx, int cy)
 {
 	CPanelWnd::OnSize( nType, cx, cy );
 	SizeListAndBar( &m_wndList, &m_wndToolBar );
 }
 
-void CBaseMatchWnd::OnContextMenu(CWnd* pWnd, CPoint point) 
+void CBaseMatchWnd::OnContextMenu(CWnd* pWnd, CPoint point)
 {
 	if ( m_wndList.HitTestHeader( point ) && m_wndList.m_pSchema != NULL )
 	{
 		CMenu* pMenu = CSchemaColumnsDlg::BuildColumnMenu( m_wndList.m_pSchema,
 			&m_wndList.m_pColumns );
-		
+
 		pMenu->AppendMenu( MF_SEPARATOR, ID_SEPARATOR, (LPCTSTR)NULL );
 		CString strText;
 		LoadString( strText, IDS_SCHEMAS );
@@ -211,7 +211,7 @@ void CBaseMatchWnd::OnContextMenu(CWnd* pWnd, CPoint point)
 		m_pCoolMenu = new CCoolMenu();
 		m_pCoolMenu->AddMenu( pMenu, TRUE );
 		m_pCoolMenu->SetWatermark( Skin.GetWatermark( _T("CCoolMenu") ) );
-		
+
 		UINT nCmd = pMenu->TrackPopupMenu( TPM_LEFTALIGN|TPM_LEFTBUTTON|TPM_RIGHTBUTTON|
 			TPM_RETURNCMD, point.x, point.y, this );
 
@@ -226,7 +226,7 @@ void CBaseMatchWnd::OnContextMenu(CWnd* pWnd, CPoint point)
 		else if ( nCmd )
 		{
 			CList< CSchemaMember* > pColumns;
-			CSchemaColumnsDlg::ToggleColumnHelper( m_wndList.m_pSchema, 
+			CSchemaColumnsDlg::ToggleColumnHelper( m_wndList.m_pSchema,
 				&m_wndList.m_pColumns, &pColumns, nCmd, TRUE );
 			m_wndList.SelectSchema( m_wndList.m_pSchema, &pColumns );
 		}
@@ -246,34 +246,34 @@ void CBaseMatchWnd::OnUpdateBlocker(CCmdUI* pCmdUI)
 	else pCmdUI->ContinueRouting();
 }
 
-void CBaseMatchWnd::OnMeasureItem(int /*nIDCtl*/, LPMEASUREITEMSTRUCT lpMeasureItemStruct) 
+void CBaseMatchWnd::OnMeasureItem(int /*nIDCtl*/, LPMEASUREITEMSTRUCT lpMeasureItemStruct)
 {
 	if ( m_pCoolMenu ) m_pCoolMenu->OnMeasureItem( lpMeasureItemStruct );
 }
 
-void CBaseMatchWnd::OnDrawItem(int /*nIDCtl*/, LPDRAWITEMSTRUCT lpDrawItemStruct) 
+void CBaseMatchWnd::OnDrawItem(int /*nIDCtl*/, LPDRAWITEMSTRUCT lpDrawItemStruct)
 {
 	if ( m_pCoolMenu ) m_pCoolMenu->OnDrawItem( lpDrawItemStruct );
 }
 
-void CBaseMatchWnd::OnUpdateSearchDownload(CCmdUI* pCmdUI) 
+void CBaseMatchWnd::OnUpdateSearchDownload(CCmdUI* pCmdUI)
 {
 	pCmdUI->Enable( m_pMatches->GetSelectedCount() > 0 );
 }
 
-void CBaseMatchWnd::OnSearchDownload() 
+void CBaseMatchWnd::OnSearchDownload()
 {
 	CSingleLock pSingleLock( &m_pMatches->m_pSection, TRUE );
 	CList< CMatchFile* > pFiles;
 	CList< CQueryHit* > pHits;
 	POSITION pos;
-	
+
 	for ( pos = m_pMatches->m_pSelectedFiles.GetHeadPosition() ; pos ; )
 	{
 		CMatchFile* pFile = m_pMatches->m_pSelectedFiles.GetNext( pos );
-		
+
 		pSingleLock.Unlock();
-		
+
 		switch ( CheckExisting( pFile->m_oSHA1, pFile->m_oTiger, pFile->m_oED2K, pFile->m_oBTH, pFile->m_oMD5, pFile->m_nSize ) )
 		{
 		case 1:
@@ -282,16 +282,16 @@ void CBaseMatchWnd::OnSearchDownload()
 		case 3:
 			return;
 		}
-		
+
 		pSingleLock.Lock();
 	}
-	
+
 	for ( pos = m_pMatches->m_pSelectedHits.GetHeadPosition() ; pos ; )
 	{
 		CQueryHit* pHit = m_pMatches->m_pSelectedHits.GetNext( pos );
-		
+
 		pSingleLock.Unlock();
-		
+
 		switch ( CheckExisting( pHit->m_oSHA1, pHit->m_oTiger, pHit->m_oED2K, pHit->m_oBTH, pHit->m_oMD5, pHit->m_nSize ) )
 		{
 		case 1:
@@ -300,28 +300,28 @@ void CBaseMatchWnd::OnSearchDownload()
 		case 3:
 			return;
 		}
-		
+
 		pSingleLock.Lock();
 	}
-	
+
 	pSingleLock.Unlock();
-	
+
 	if ( pFiles.IsEmpty() && pHits.IsEmpty() ) return;
-	
+
 	CSyncObject* pSync[2] = { &Network.m_pSection, &Transfers.m_pSection };
 	CMultiLock pMultiLock( pSync, 2, TRUE );
-	
+
 	for ( pos = pFiles.GetHeadPosition() ; pos ; )
 	{
 		CMatchFile* pFile = pFiles.GetNext( pos );
 		if ( m_pMatches->m_pSelectedFiles.Find( pFile ) != NULL ) Downloads.Add( pFile );
 
 	}
-	
+
 	for ( pos = pHits.GetHeadPosition() ; pos ; )
 	{
 		CQueryHit* pHit = pHits.GetNext( pos );
-		if ( m_pMatches->m_pSelectedHits.Find( pHit ) != NULL ) 
+		if ( m_pMatches->m_pSelectedHits.Find( pHit ) != NULL )
 		{
 			CDownload *pDownload = Downloads.Add( pHit );
 			// Send any reviews to the download, so they can be viewed later
@@ -331,35 +331,35 @@ void CBaseMatchWnd::OnSearchDownload()
 			}
 		}
 	}
-	
+
 	pMultiLock.Unlock();
-	
+
 	m_wndList.Invalidate();
-	
+
 	if ( Settings.Search.SwitchToTransfers && ! m_bContextMenu && GetTickCount() - m_tContextMenu > 5000 )
 	{
 		GetManager()->Open( RUNTIME_CLASS(CDownloadsWnd) );
 	}
 }
 
-void CBaseMatchWnd::OnUpdateSearchDownloadNow(CCmdUI* pCmdUI) 
+void CBaseMatchWnd::OnUpdateSearchDownloadNow(CCmdUI* pCmdUI)
 {
 	pCmdUI->Enable( m_pMatches->GetSelectedCount() > 0 );
 }
 
-void CBaseMatchWnd::OnSearchDownloadNow() 
+void CBaseMatchWnd::OnSearchDownloadNow()
 {
 	CSingleLock pSingleLock( &m_pMatches->m_pSection, TRUE );
 	CList< CMatchFile* > pFiles;
 	CList< CQueryHit* > pHits;
 	POSITION pos;
-	
+
 	for ( pos = m_pMatches->m_pSelectedFiles.GetHeadPosition() ; pos ; )
 	{
 		CMatchFile* pFile = m_pMatches->m_pSelectedFiles.GetNext( pos );
-		
+
 		pSingleLock.Unlock();
-		
+
 		switch ( CheckExisting( pFile->m_oSHA1, pFile->m_oTiger, pFile->m_oED2K, pFile->m_oBTH, pFile->m_oMD5, pFile->m_nSize ) )
 		{
 		case 1:
@@ -368,16 +368,16 @@ void CBaseMatchWnd::OnSearchDownloadNow()
 		case 3:
 			return;
 		}
-		
+
 		pSingleLock.Lock();
 	}
-	
+
 	for ( pos = m_pMatches->m_pSelectedHits.GetHeadPosition() ; pos ; )
 	{
 		CQueryHit* pHit = m_pMatches->m_pSelectedHits.GetNext( pos );
-		
+
 		pSingleLock.Unlock();
-		
+
 		switch ( CheckExisting( pHit->m_oSHA1, pHit->m_oTiger, pHit->m_oED2K, pHit->m_oBTH, pHit->m_oMD5, pHit->m_nSize ) )
 		{
 		case 1:
@@ -386,33 +386,33 @@ void CBaseMatchWnd::OnSearchDownloadNow()
 		case 3:
 			return;
 		}
-		
+
 		pSingleLock.Lock();
 	}
-	
+
 	pSingleLock.Unlock();
-	
+
 	if ( pFiles.IsEmpty() && pHits.IsEmpty() ) return;
-	
+
 	CSyncObject* pSync[2] = { &Network.m_pSection, &Transfers.m_pSection };
 	CMultiLock pMultiLock( pSync, 2, TRUE );
-	
+
 	for ( pos = pFiles.GetHeadPosition() ; pos ; )
 	{
 		CMatchFile* pFile = pFiles.GetNext( pos );
 		if ( m_pMatches->m_pSelectedFiles.Find( pFile ) != NULL ) Downloads.Add( pFile, TRUE );
 	}
-	
+
 	for ( pos = pHits.GetHeadPosition() ; pos ; )
 	{
 		CQueryHit* pHit = pHits.GetNext( pos );
 		if ( m_pMatches->m_pSelectedHits.Find( pHit ) != NULL ) Downloads.Add( pHit, TRUE );
 	}
-	
+
 	for ( pos = pHits.GetHeadPosition() ; pos ; )
 	{
 		CQueryHit* pHit = pHits.GetNext( pos );
-		if ( m_pMatches->m_pSelectedHits.Find( pHit ) != NULL ) 
+		if ( m_pMatches->m_pSelectedHits.Find( pHit ) != NULL )
 		{
 			CDownload *pDownload = Downloads.Add( pHit );
 			// Send any reviews to the download, so they can be viewed later
@@ -424,9 +424,9 @@ void CBaseMatchWnd::OnSearchDownloadNow()
 	}
 
 	pMultiLock.Unlock();
-	
+
 	m_wndList.Invalidate();
-	
+
 	if ( Settings.Search.SwitchToTransfers && ! m_bContextMenu && GetTickCount() - m_tContextMenu > 5000 )
 	{
 		GetManager()->Open( RUNTIME_CLASS(CDownloadsWnd) );
@@ -442,15 +442,15 @@ int CBaseMatchWnd::CheckExisting(const Hashes::Sha1Hash& oSHA1, const Hashes::Ti
 	CLibraryFile* pFile = LibraryMaps.LookupFileByHash( oSHA1, oTiger, oED2K, oBTH, oMD5, nSize, nSize );
 
 	if ( pFile == NULL ) return 1;
-	
+
 	DWORD nIndex = pFile->m_nIndex;
-	
+
 	CExistingFileDlg dlg( pFile );
-	
+
 	pLock.Unlock();
-	
+
 	if ( dlg.DoModal() != IDOK ) dlg.m_nAction = 3;
-	
+
 	if ( dlg.m_nAction == 0 )
 	{
 		if ( CLibraryWnd* pLibrary = (CLibraryWnd*)GetManager()->Open( RUNTIME_CLASS(CLibraryWnd) ) )
@@ -462,11 +462,11 @@ int CBaseMatchWnd::CheckExisting(const Hashes::Sha1Hash& oSHA1, const Hashes::Ti
 			}
 		}
 	}
-	
+
 	return dlg.m_nAction;
 }
 
-void CBaseMatchWnd::OnUpdateSearchCopy(CCmdUI* pCmdUI) 
+void CBaseMatchWnd::OnUpdateSearchCopy(CCmdUI* pCmdUI)
 {
 	CString strMessage;
 	BOOL bSelected = m_pMatches->m_pSelectedFiles.GetCount() ||
@@ -476,7 +476,7 @@ void CBaseMatchWnd::OnUpdateSearchCopy(CCmdUI* pCmdUI)
 	pCmdUI->SetText( strMessage );
 }
 
-void CBaseMatchWnd::OnSearchCopy() 
+void CBaseMatchWnd::OnSearchCopy()
 {
 	CSingleLock pLock( &m_pMatches->m_pSection, TRUE );
 
@@ -523,13 +523,13 @@ void CBaseMatchWnd::OnSearchCopy()
 	}
 }
 
-void CBaseMatchWnd::OnUpdateSearchChat(CCmdUI* pCmdUI) 
+void CBaseMatchWnd::OnUpdateSearchChat(CCmdUI* pCmdUI)
 {
 	CQueryHit* pHit = m_pMatches->GetSelectedHit();
 	pCmdUI->Enable( pHit != NULL && pHit->m_bChat && Settings.Community.ChatEnable );
 }
 
-void CBaseMatchWnd::OnSearchChat() 
+void CBaseMatchWnd::OnSearchChat()
 {
 	CSingleLock pLock( &m_pMatches->m_pSection, TRUE );
 
@@ -541,12 +541,12 @@ void CBaseMatchWnd::OnSearchChat()
 	}
 }
 
-void CBaseMatchWnd::OnUpdateHitMonitorSearch(CCmdUI* pCmdUI) 
+void CBaseMatchWnd::OnUpdateHitMonitorSearch(CCmdUI* pCmdUI)
 {
 	pCmdUI->Enable( Network.IsWellConnected() && m_pMatches->GetSelectedCount() == 1 );
 }
 
-void CBaseMatchWnd::OnHitMonitorSearch() 
+void CBaseMatchWnd::OnHitMonitorSearch()
 {
 	CString strFile;
 
@@ -563,19 +563,19 @@ void CBaseMatchWnd::OnHitMonitorSearch()
 
 	auto_ptr< CQuerySearch > pSearch( new CQuerySearch() );
 	pSearch->m_sSearch = strFile;
-	
+
 	CNewSearchDlg dlg( NULL, pSearch );
 	if ( dlg.DoModal() != IDOK ) return;
 
 	new CSearchWnd( dlg.GetSearch() );
 }
 
-void CBaseMatchWnd::OnUpdateSecurityBan(CCmdUI* pCmdUI) 
+void CBaseMatchWnd::OnUpdateSecurityBan(CCmdUI* pCmdUI)
 {
-	pCmdUI->Enable( PtrToInt( m_pMatches->GetSelectedCount() ) );
+	pCmdUI->Enable( m_pMatches->GetSelectedCount() > 0 );
 }
 
-void CBaseMatchWnd::OnSecurityBan() 
+void CBaseMatchWnd::OnSecurityBan()
 {
 	CSingleLock pLock( &Network.m_pSection, TRUE );
 
@@ -589,13 +589,13 @@ void CBaseMatchWnd::OnSecurityBan()
 	}
 }
 
-void CBaseMatchWnd::OnUpdateBrowseLaunch(CCmdUI* pCmdUI) 
+void CBaseMatchWnd::OnUpdateBrowseLaunch(CCmdUI* pCmdUI)
 {
 	CQueryHit* pHit = m_pMatches->GetSelectedHit();
 	pCmdUI->Enable( pHit != NULL && pHit->m_bBrowseHost );
 }
 
-void CBaseMatchWnd::OnBrowseLaunch() 
+void CBaseMatchWnd::OnBrowseLaunch()
 {
 	CSingleLock pLock( &m_pMatches->m_pSection, TRUE );
 
@@ -606,7 +606,7 @@ void CBaseMatchWnd::OnBrowseLaunch()
 	}
 }
 
-void CBaseMatchWnd::OnUpdateLibraryBitziWeb(CCmdUI* pCmdUI) 
+void CBaseMatchWnd::OnUpdateLibraryBitziWeb(CCmdUI* pCmdUI)
 {
 	if ( m_pMatches->GetSelectedCount() != 1 || Settings.WebServices.BitziWebView.IsEmpty() )
 	{
@@ -622,7 +622,7 @@ void CBaseMatchWnd::OnUpdateLibraryBitziWeb(CCmdUI* pCmdUI)
 	}
 }
 
-void CBaseMatchWnd::OnLibraryBitziWeb() 
+void CBaseMatchWnd::OnLibraryBitziWeb()
 {
 	if ( ! Settings.WebServices.BitziOkay )
 	{
@@ -688,7 +688,7 @@ void CBaseMatchWnd::OnLibraryBitziWeb()
 }
 
 /*
-void CBaseMatchWnd::OnUpdateLibraryJigle(CCmdUI* pCmdUI) 
+void CBaseMatchWnd::OnUpdateLibraryJigle(CCmdUI* pCmdUI)
 {
 	if ( m_pMatches->GetSelectedCount() != 1 )
 	{
@@ -704,7 +704,7 @@ void CBaseMatchWnd::OnUpdateLibraryJigle(CCmdUI* pCmdUI)
 	}
 }
 
-void CBaseMatchWnd::OnLibraryJigle() 
+void CBaseMatchWnd::OnLibraryJigle()
 {
 	if ( m_pMatches->GetSelectedCount() != 1 ) return;
 
@@ -722,21 +722,21 @@ void CBaseMatchWnd::OnLibraryJigle()
 	}
 
 	if ( strED2K.IsEmpty() ) return;
-	
+
 	CString strURL;
 	strURL.Format( _T("http://jigle.com/search?p=ed2k%%3A%s&v=1"), (LPCTSTR)strED2K );
 	ShellExecute( GetSafeHwnd(), _T("open"), strURL, NULL, NULL, SW_SHOWNORMAL );
 }
 */
 
-void CBaseMatchWnd::OnUpdateSearchForThis(CCmdUI* pCmdUI) 
+void CBaseMatchWnd::OnUpdateSearchForThis(CCmdUI* pCmdUI)
 {
 	CSingleLock pLock( &m_pMatches->m_pSection, TRUE );
 	CRelatedSearch pSearch( m_pMatches->GetSelectedFile( TRUE ) );
 	pCmdUI->Enable( pSearch.CanSearchForThis() );
 }
 
-void CBaseMatchWnd::OnSearchForThis() 
+void CBaseMatchWnd::OnSearchForThis()
 {
 	CSingleLock pLock( &m_pMatches->m_pSection, TRUE );
 	CRelatedSearch pSearch( m_pMatches->GetSelectedFile( TRUE ) );
@@ -744,14 +744,14 @@ void CBaseMatchWnd::OnSearchForThis()
 	pSearch.RunSearchForThis();
 }
 
-void CBaseMatchWnd::OnUpdateSearchForSimilar(CCmdUI* pCmdUI) 
+void CBaseMatchWnd::OnUpdateSearchForSimilar(CCmdUI* pCmdUI)
 {
 	CSingleLock pLock( &m_pMatches->m_pSection, TRUE );
 	CRelatedSearch pSearch( m_pMatches->GetSelectedFile( TRUE ) );
 	pCmdUI->Enable( pSearch.CanSearchForSimilar() );
 }
 
-void CBaseMatchWnd::OnSearchForSimilar() 
+void CBaseMatchWnd::OnSearchForSimilar()
 {
 	CSingleLock pLock( &m_pMatches->m_pSection, TRUE );
 	CRelatedSearch pSearch( m_pMatches->GetSelectedFile( TRUE ) );
@@ -759,14 +759,14 @@ void CBaseMatchWnd::OnSearchForSimilar()
 	pSearch.RunSearchForSimilar();
 }
 
-void CBaseMatchWnd::OnUpdateSearchForArtist(CCmdUI* pCmdUI) 
+void CBaseMatchWnd::OnUpdateSearchForArtist(CCmdUI* pCmdUI)
 {
 	CSingleLock pLock( &m_pMatches->m_pSection, TRUE );
 	CRelatedSearch pSearch( m_pMatches->GetSelectedFile( TRUE ) );
 	pCmdUI->Enable( pSearch.CanSearchForArtist() );
 }
 
-void CBaseMatchWnd::OnSearchForArtist() 
+void CBaseMatchWnd::OnSearchForArtist()
 {
 	CSingleLock pLock( &m_pMatches->m_pSection, TRUE );
 	CRelatedSearch pSearch( m_pMatches->GetSelectedFile( TRUE ) );
@@ -774,14 +774,14 @@ void CBaseMatchWnd::OnSearchForArtist()
 	pSearch.RunSearchForArtist();
 }
 
-void CBaseMatchWnd::OnUpdateSearchForAlbum(CCmdUI* pCmdUI) 
+void CBaseMatchWnd::OnUpdateSearchForAlbum(CCmdUI* pCmdUI)
 {
 	CSingleLock pLock( &m_pMatches->m_pSection, TRUE );
 	CRelatedSearch pSearch( m_pMatches->GetSelectedFile( TRUE ) );
 	pCmdUI->Enable( pSearch.CanSearchForAlbum() );
 }
 
-void CBaseMatchWnd::OnSearchForAlbum() 
+void CBaseMatchWnd::OnSearchForAlbum()
 {
 	CSingleLock pLock( &m_pMatches->m_pSection, TRUE );
 	CRelatedSearch pSearch( m_pMatches->GetSelectedFile( TRUE ) );
@@ -789,14 +789,14 @@ void CBaseMatchWnd::OnSearchForAlbum()
 	pSearch.RunSearchForAlbum();
 }
 
-void CBaseMatchWnd::OnUpdateSearchForSeries(CCmdUI* pCmdUI) 
+void CBaseMatchWnd::OnUpdateSearchForSeries(CCmdUI* pCmdUI)
 {
 	CSingleLock pLock( &m_pMatches->m_pSection, TRUE );
 	CRelatedSearch pSearch( m_pMatches->GetSelectedFile( TRUE ) );
 	pCmdUI->Enable( pSearch.CanSearchForSeries() );
 }
 
-void CBaseMatchWnd::OnSearchForSeries() 
+void CBaseMatchWnd::OnSearchForSeries()
 {
 	CSingleLock pLock( &m_pMatches->m_pSection, TRUE );
 	CRelatedSearch pSearch( m_pMatches->GetSelectedFile( TRUE ) );
@@ -804,7 +804,7 @@ void CBaseMatchWnd::OnSearchForSeries()
 	pSearch.RunSearchForSeries();
 }
 
-void CBaseMatchWnd::OnUpdateSearchFilter(CCmdUI* pCmdUI) 
+void CBaseMatchWnd::OnUpdateSearchFilter(CCmdUI* pCmdUI)
 {
 	if ( m_pMatches->m_sFilter.GetLength() )
 	{
@@ -832,7 +832,7 @@ void CBaseMatchWnd::OnUpdateSearchFilter(CCmdUI* pCmdUI)
 	}
 }
 
-void CBaseMatchWnd::OnSearchFilter() 
+void CBaseMatchWnd::OnSearchFilter()
 {
 	CFilterSearchDlg dlg( NULL, m_pMatches );
 
@@ -846,17 +846,17 @@ void CBaseMatchWnd::OnSearchFilter()
 	}
 }
 
-void CBaseMatchWnd::OnSearchFilterRaw() 
+void CBaseMatchWnd::OnSearchFilterRaw()
 {
 	OnSearchFilter();
 }
 
-void CBaseMatchWnd::OnUpdateSearchFilterRemove(CCmdUI* pCmdUI) 
+void CBaseMatchWnd::OnUpdateSearchFilterRemove(CCmdUI* pCmdUI)
 {
 	pCmdUI->Enable( m_pMatches->m_sFilter.GetLength() );
 }
 
-void CBaseMatchWnd::OnSearchFilterRemove() 
+void CBaseMatchWnd::OnSearchFilterRemove()
 {
 	CWaitCursor pCursor;
 
@@ -924,7 +924,7 @@ void CBaseMatchWnd::OnToolbarEscape()
 	}
 }
 
-void CBaseMatchWnd::OnSearchColumns() 
+void CBaseMatchWnd::OnSearchColumns()
 {
 	CSchemaColumnsDlg dlg;
 
@@ -937,20 +937,20 @@ void CBaseMatchWnd::OnSearchColumns()
 	}
 }
 
-BOOL CBaseMatchWnd::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt) 
+BOOL CBaseMatchWnd::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
 {
 	m_wndList.PostMessage( WM_MOUSEWHEEL, MAKELONG( nFlags, zDelta ), MAKELONG( pt.x, pt.y ) );
 	return TRUE;
 }
 
-void CBaseMatchWnd::OnMDIActivate(BOOL bActivate, CWnd* pActivateWnd, CWnd* pDeactivateWnd) 
+void CBaseMatchWnd::OnMDIActivate(BOOL bActivate, CWnd* pActivateWnd, CWnd* pDeactivateWnd)
 {
 	if ( m_bPanelMode && bActivate )
 	{
 		CRect rcParent, rcChild;
 		GetWindowRect( &rcChild );
 		GetParent()->GetClientRect( &rcParent );
-		
+
 		if ( rcParent.Width() != rcChild.Width() || rcParent.Height() != rcChild.Height() )
 		{
 			SetWindowPos( NULL, 0, 0, rcParent.Width(), rcParent.Height(), SWP_FRAMECHANGED );
@@ -963,33 +963,33 @@ void CBaseMatchWnd::OnMDIActivate(BOOL bActivate, CWnd* pActivateWnd, CWnd* pDea
 		m_pMatches->ClearNew();
 		m_wndList.Invalidate();
 	}
-	
+
 	m_wndList.EnableTips( bActivate );
-	
+
 	CPanelWnd::OnMDIActivate( bActivate, pActivateWnd, pDeactivateWnd );
 }
 
-void CBaseMatchWnd::OnTimer(UINT_PTR nIDEvent) 
+void CBaseMatchWnd::OnTimer(UINT_PTR nIDEvent)
 {
 	if ( m_wndFilter.m_hWnd == NULL ) return;
-	
+
 //	DWORD nNow = GetTickCount();
-	
+
 	if ( nIDEvent == 1 )
 	{
 		if ( GetFocus() != &m_wndFilter )
 		{
 			CString strFilter;
 			m_wndFilter.GetWindowText( strFilter );
-			
+
 			if ( strFilter != m_pMatches->m_sFilter )
 			{
 				m_wndFilter.SetWindowText( m_pMatches->m_sFilter );
 			}
 		}
-		
+
 		BOOL bActive = ( GetMDIFrame()->MDIGetActive() == this );
-		
+
 		if ( bActive )
 		{
 			if ( HWND hFore = ::GetForegroundWindow() )
@@ -999,30 +999,30 @@ void CBaseMatchWnd::OnTimer(UINT_PTR nIDEvent)
 				bActive &= ( nProcessID == GetCurrentProcessId() );
 			}
 		}
-		
+
 		if ( m_bBMWActive != bActive )
 		{
 			m_bBMWActive = bActive;
-			
+
 			if ( ! m_bBMWActive )
 			{
 				m_pMatches->ClearNew();
 				m_wndList.Invalidate();
 			}
 		}
-		
+
 		if ( m_pMatches->m_nFilteredFiles == 0 ) UpdateMessages( FALSE );
 	}
 	else if ( ( nIDEvent == 2 && m_bUpdate ) || nIDEvent == 7 )
 	{
 		CSingleLock pLock( &m_pMatches->m_pSection );
-		
+
 		if ( pLock.Lock( 50 ) )
 		{
 			m_bUpdate = FALSE;
 			m_wndList.Update();
 			UpdateMessages();
-			
+
 			if ( m_pMatches->m_nFilteredFiles != m_nCacheFiles )
 			{
 				m_nCacheFiles = m_pMatches->m_nFilteredFiles;
