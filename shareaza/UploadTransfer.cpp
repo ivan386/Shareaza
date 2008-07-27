@@ -137,7 +137,8 @@ BOOL CUploadTransfer::Promote()
 
 BOOL CUploadTransfer::OnRename(LPCTSTR pszSource, LPCTSTR pszTarget)
 {
-	if ( m_nState != upsUploading || _tcsicmp( m_sFilePath, pszSource ) ) return FALSE;
+	if ( m_nState != upsUploading || _tcsicmp( m_sFilePath, pszSource ) )
+		return FALSE;
 
 	if ( pszTarget == NULL )
 	{
