@@ -87,11 +87,23 @@
 
 #endif
 
-#define WINVER			0x0501		// Windows 95,98,ME,NT,2000,XP
-#define _WIN32_WINDOWS	0x0400		// Windows 95
-#define _WIN32_WINNT	0x0501		// Windows NT,2000,XP
-#define _WIN32_IE		0x0500		// Internet Explorer 5.0
-#define _WIN32_DCOM					// Windows 95,98,ME DCOM
+// Target features available from Windows XP onwards.
+//	To show features that need guards for Windows 2000 compatability use:
+//	#define NTDDI_VERSION	NTDDI_WIN2K
+//	#define _WIN32_WINNT	0x0500
+#define NTDDI_VERSION	NTDDI_WINXP	// Minimum build target
+#define _WIN32_WINNT	0x0501		// Windows XP, 2003, Vista, 2008
+#include <sdkddkver.h>				// Setup versioning for windows SDK/DDK
+
+// Add defines missed/messed up when microsoft converted to NTDDI macros
+#define WINXP			0x05010000		// rpcdce.h, rpcdcep.h
+#define NTDDI_XP		0x05010000		// ipexport.h, iphlpapi.h
+#define NTDDI_WXP		0x05010000		// rpcasync.h
+#define NTDDI_XPSP1		0				// 0x05010100	// ipmib.h (leave as 0 due to broken struct)
+#define NTDDI_XPSP2		0x05010200		// shellapi.h
+#define NTDDI_WIN2K3	0				// 0x05020000	// docobj.h (leave as 0 due to broken enum)
+#define NTDDI_WINLH		0x06000000		// objidl.h
+#define NTDDK_VERSION	NTDDI_VERSION	// winioctl.h
 
 #define VC_EXTRALEAN
 #define _ATL_NO_COM_SUPPORT
@@ -103,8 +115,8 @@
 // MFC
 //
 
-#include <afxwin.h>         // MFC core and standard components
-#include <afxext.h>         // MFC extensions
+#include <afxwin.h>			// MFC core and standard components
+#include <afxext.h>			// MFC extensions
 #include <afxcmn.h>			// MFC support for Windows Common Controls
 #include <afxtempl.h>		// MFC templates
 #include <afxmt.h>			// MFC threads
@@ -139,6 +151,7 @@
 #include <iphlpapi.h>
 #include <MsiQuery.h>
 #include <MsiDefs.h>
+#include <Powrprof.h>		// The power policy applicator
 
 #if _MSC_VER < 1400 || _MSC_VER >= 1500
 #include <intrin.h>
@@ -266,91 +279,6 @@ inline CArchive& AFXAPI operator>>(CArchive& ar, TRISTATE& n)
 	n = static_cast< TRISTATE >( tmp );
 	return ar;
 }
-
-// Typedefs from powrprof.h
-typedef struct _GLOBAL_MACHINE_POWER_POLICY
-{
-	ULONG Revision;
-	SYSTEM_POWER_STATE LidOpenWakeAc;
-	SYSTEM_POWER_STATE LidOpenWakeDc;
-	ULONG BroadcastCapacityResolution;
-} GLOBAL_MACHINE_POWER_POLICY, *PGLOBAL_MACHINE_POWER_POLICY;
-
-typedef struct _GLOBAL_USER_POWER_POLICY
-{
-	ULONG Revision;
-	POWER_ACTION_POLICY PowerButtonAc;
-	POWER_ACTION_POLICY PowerButtonDc;
-	POWER_ACTION_POLICY SleepButtonAc;
-	POWER_ACTION_POLICY SleepButtonDc;
-	POWER_ACTION_POLICY LidCloseAc;
-	POWER_ACTION_POLICY LidCloseDc;
-	SYSTEM_POWER_LEVEL DischargePolicy[NUM_DISCHARGE_POLICIES];
-	ULONG GlobalFlags;
-} GLOBAL_USER_POWER_POLICY, *PGLOBAL_USER_POWER_POLICY;
-
-typedef struct _GLOBAL_POWER_POLICY
-{
-	GLOBAL_USER_POWER_POLICY user;
-	GLOBAL_MACHINE_POWER_POLICY mach;
-} GLOBAL_POWER_POLICY, *PGLOBAL_POWER_POLICY;
-
-typedef struct _MACHINE_POWER_POLICY
-{
-	ULONG Revision;
-	SYSTEM_POWER_STATE MinSleepAc;
-	SYSTEM_POWER_STATE MinSleepDc;
-	SYSTEM_POWER_STATE ReducedLatencySleepAc;
-	SYSTEM_POWER_STATE ReducedLatencySleepDc;
-	ULONG DozeTimeoutAc;
-	ULONG DozeTimeoutDc;
-	ULONG DozeS4TimeoutAc;
-	ULONG DozeS4TimeoutDc;
-	UCHAR MinThrottleAc;
-	UCHAR MinThrottleDc;
-	UCHAR pad1[2];
-	POWER_ACTION_POLICY OverThrottledAc;
-	POWER_ACTION_POLICY OverThrottledDc;
-} MACHINE_POWER_POLICY, *PMACHINE_POWER_POLICY;
-
-typedef struct _MACHINE_PROCESSOR_POWER_POLICY
-{
-	ULONG Revision;
-	PROCESSOR_POWER_POLICY ProcessorPolicyAc;
-	PROCESSOR_POWER_POLICY ProcessorPolicyDc;
-} MACHINE_PROCESSOR_POWER_POLICY, *PMACHINE_PROCESSOR_POWER_POLICY;
-
-typedef struct _USER_POWER_POLICY
-{
-	ULONG Revision;
-	POWER_ACTION_POLICY IdleAc;
-	POWER_ACTION_POLICY IdleDc;
-	ULONG IdleTimeoutAc;
-	ULONG IdleTimeoutDc;
-	UCHAR IdleSensitivityAc;
-	UCHAR IdleSensitivityDc;
-	UCHAR ThrottlePolicyAc;
-	UCHAR ThrottlePolicyDc;
-	SYSTEM_POWER_STATE MaxSleepAc;
-	SYSTEM_POWER_STATE MaxSleepDc;
-	ULONG Reserved[2];
-	ULONG VideoTimeoutAc;
-	ULONG VideoTimeoutDc;
-	ULONG SpindownTimeoutAc;
-	ULONG SpindownTimeoutDc;
-	BOOLEAN OptimizeForPowerAc;
-	BOOLEAN OptimizeForPowerDc;
-	UCHAR FanThrottleToleranceAc;
-	UCHAR FanThrottleToleranceDc;
-	UCHAR ForcedThrottleAc;
-	UCHAR ForcedThrottleDc;
-} USER_POWER_POLICY, *PUSER_POWER_POLICY;
-
-typedef struct _POWER_POLICY
-{
-	USER_POWER_POLICY user;
-	MACHINE_POWER_POLICY mach;
-} POWER_POLICY, *PPOWER_POLICY;
 
 #pragma pack( push, 1 )
 

@@ -1,7 +1,7 @@
 //
 // DlgConnectTo.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -94,7 +94,7 @@ BOOL CConnectToDlg::OnInitDialog()
 	// Load default images
 	CBitmap bmImages;
 	bmImages.LoadBitmap( IDB_PROTOCOLS );
-	if ( Settings.General.LanguageRTL ) 
+	if ( Settings.General.LanguageRTL )
 		bmImages.m_hObject = CreateMirroredBitmap( (HBITMAP)bmImages.m_hObject );
 
 	m_pImages.Create( 16, 16, ILC_COLOR32|ILC_MASK, 7, 1 ) ||
@@ -133,7 +133,7 @@ BOOL CConnectToDlg::OnInitDialog()
 
 			strItem.Format( _T("%.3Ii.Port"), nItem + 1 );
 			pData->nPort = theApp.GetProfileInt( CONNECT_SECTION, strItem, GNUTELLA_DEFAULT_PORT );
-			
+
 			strItem.Format( _T("%.3Ii.Protocol"), nItem + 1 );
 			pData->nProtocol = (PROTOCOLID)theApp.GetProfileInt( CONNECT_SECTION, strItem, PROTOCOL_G2 );
 
@@ -222,7 +222,8 @@ void CConnectToDlg::OnDrawItem(int /*nIDCtl*/, LPDRAWITEMSTRUCT lpDrawItemStruct
 	CDC dc;
 
 	dc.Attach( lpDrawItemStruct->hDC );
-	if ( Settings.General.LanguageRTL ) theApp.m_pfnSetLayout( dc.m_hDC, LAYOUT_RTL );
+	if ( Settings.General.LanguageRTL )
+		SetLayout( dc.m_hDC, LAYOUT_RTL );
 
 	CFont* pOldFont = (CFont*)dc.SelectObject( &theApp.m_gdiFont );
 	dc.SetTextColor( GetSysColor( ( lpDrawItemStruct->itemState & ODS_SELECTED )
@@ -235,7 +236,7 @@ void CConnectToDlg::OnDrawItem(int /*nIDCtl*/, LPDRAWITEMSTRUCT lpDrawItemStruct
 
 	int nImage = (int)lpDrawItemStruct->itemID;
 
-	if ( Settings.General.LanguageRTL ) 
+	if ( Settings.General.LanguageRTL )
 		nImage = m_pImages.GetImageCount() - nImage - 2;
 	else
 		nImage += 1;

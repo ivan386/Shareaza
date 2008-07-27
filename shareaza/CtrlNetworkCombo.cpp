@@ -1,7 +1,7 @@
 //
 // CtrlNetworkCombo.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -146,7 +146,8 @@ void CNetworkCombo::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 	CDC dc;
 
 	dc.Attach( lpDrawItemStruct->hDC );
-	if ( Settings.General.LanguageRTL ) theApp.m_pfnSetLayout( dc.m_hDC, LAYOUT_RTL );
+	if ( Settings.General.LanguageRTL )
+		SetLayout( dc.m_hDC, LAYOUT_RTL );
 
 	CFont* pOldFont = (CFont*)dc.SelectObject( lpDrawItemStruct->itemData == 0 ?
 		&theApp.m_gdiFontBold : &theApp.m_gdiFont );

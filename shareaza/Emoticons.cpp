@@ -1,7 +1,7 @@
 //
 // Emoticons.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -99,7 +99,7 @@ int CEmoticons::Lookup(LPCTSTR pszText, int nLen) const
 		((LPTSTR)pszText)[ nLen ] = 0;
 	}
 
-    LPCTSTR pszToken = m_pTokens;
+	LPCTSTR pszToken = m_pTokens;
 	for ( ; *pszToken ; nIndex++ )
 	{
 		if ( _tcscmp( pszToken, pszText ) == 0 )
@@ -178,7 +178,7 @@ CMenu* CEmoticons::CreateMenu()
 BOOL CEmoticons::Load()
 {
 	Clear();
-	m_pImage.Create( EMOTICON_SIZE, EMOTICON_SIZE, ILC_COLOR32|ILC_MASK, 1, 8 ) || 
+	m_pImage.Create( EMOTICON_SIZE, EMOTICON_SIZE, ILC_COLOR32|ILC_MASK, 1, 8 ) ||
 		m_pImage.Create( EMOTICON_SIZE, EMOTICON_SIZE, ILC_COLOR24|ILC_MASK, 1, 8 ) ||
 		m_pImage.Create( EMOTICON_SIZE, EMOTICON_SIZE, ILC_COLOR16|ILC_MASK, 1, 8 );
 
@@ -228,7 +228,7 @@ int CEmoticons::AddEmoticon(LPCTSTR pszText, CImageFile* pImage, CRect* pRect, C
 	if ( HDC hDC = GetDC( NULL ) ) // Get screen DC
 	{
 		hDCMem1 = CreateCompatibleDC( hDC ); // Create memory DC for the source
-		if ( !hDCMem1 ) 
+		if ( !hDCMem1 )
 		{
 			ReleaseDC( NULL, hDC );
 			return -1;
@@ -282,7 +282,7 @@ int CEmoticons::AddEmoticon(LPCTSTR pszText, CImageFile* pImage, CRect* pRect, C
 		hOld_bm2 = (HBITMAP)SelectObject( hDCMem2, bmMoved.m_hObject );
 
 		if ( Settings.General.LanguageRTL )
-			theApp.m_pfnSetLayout( hDCMem2, LAYOUT_RTL );
+			SetLayout( hDCMem2, LAYOUT_RTL );
 		StretchBlt( hDCMem2, 0, 0, EMOTICON_SIZE, EMOTICON_SIZE, hDCMem1, 0, 0, EMOTICON_SIZE, EMOTICON_SIZE, SRCCOPY );
 
 		SelectObject( hDCMem1, hOld_bm1 );

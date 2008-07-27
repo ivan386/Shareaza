@@ -1,7 +1,7 @@
 //
 // PagePropertyAdv.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2006.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -19,7 +19,7 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "Shareaza.h"
 #include "Settings.h"
 #include "PagePropertyAdv.h"
@@ -98,7 +98,8 @@ BOOL CPropertyPageAdv::PreTranslateMessage(MSG* pMsg)
 void CPropertyPageAdv::OnPaint()
 {
 	CPaintDC dc( this );
-	if ( Settings.General.LanguageRTL ) theApp.m_pfnSetLayout( dc.m_hDC, LAYOUT_RTL );
+	if ( Settings.General.LanguageRTL )
+		SetLayout( dc.m_hDC, LAYOUT_RTL );
 
 	if ( m_nIcon >= 0 )
 	{

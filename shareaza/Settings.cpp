@@ -648,8 +648,8 @@ void CSettings::Load()
 	// Temporary until G1 ultrapeer has been updated
 	Gnutella1.ClientMode = MODE_LEAF;
 
-	// UPnP is not supported in servers and Win9x
-	if ( theApp.m_bServer || theApp.m_dwWindowsVersion < 5 && !theApp.m_bWinME )
+	// UPnP is not supported on servers
+	if ( theApp.m_bIsServer )
 	{
 		Connection.EnableUPnP = false;
 		Connection.DeleteUPnPPorts = false;
@@ -660,12 +660,6 @@ void CSettings::Load()
 		Connection.InPort = 0;
 	else if ( Connection.InPort == 0 )
 		Connection.RandomPort = true;
-
-	if ( !theApp.m_bNT )
-	{
-		Connection.EnableFirewallException = false;
-		Connection.DeleteFirewallException = false;
-	}
 
 #ifdef LAN_MODE
 	Connection.IgnoreLocalIP = false;
@@ -1066,19 +1060,6 @@ void CSettings::OnChangeConnectionSpeed()
 		Search.GeneralThrottle			= 300;	// Slow searches a little so we don't get flooded
 
 		Gnutella2.NumLeafs				= 50;
-		BitTorrent.DownloadTorrents		= 1;	// Best not to try too many torrents
-	}
-	else if ( !theApp.m_bNT )
-	{	// Others Win9x users
-		Downloads.MaxFiles				= 8;
-		Downloads.MaxTransfers			= 24;
-		Downloads.MaxFileTransfers		= 6;
-		Downloads.MaxConnectingSources	= 16;
-		Downloads.MaxFileSearches		= 1;
-		Downloads.SourcesWanted			= 200;	// Don't bother requesting so many sources
-		Search.GeneralThrottle			= 250;	// Slow searches a little so we don't get flooded
-
-		Gnutella2.NumLeafs				= 100;
 		BitTorrent.DownloadTorrents		= 1;	// Best not to try too many torrents
 	}
 	else if ( Connection.InSpeed <= 256 )

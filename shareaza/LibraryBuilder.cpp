@@ -344,7 +344,7 @@ void CLibraryBuilder::OnRun()
 			}
 
 			HANDLE hFile = CreateFile( sPath, GENERIC_READ,
-				FILE_SHARE_READ | ( theApp.m_bNT ? FILE_SHARE_DELETE : 0 ), NULL,
+				FILE_SHARE_READ | FILE_SHARE_DELETE, NULL,
 				OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL | FILE_FLAG_SEQUENTIAL_SCAN, NULL );
 			VERIFY_FILE_ACCESS( hFile, sPath )
 			if ( hFile != INVALID_HANDLE_VALUE )
@@ -713,7 +713,7 @@ bool CLibraryBuilder::RefreshMetadata(const CString& sPath)
 
 	bool bResult = false;
 	HANDLE hFile = CreateFile( sPath, GENERIC_READ,
-		 FILE_SHARE_READ | ( theApp.m_bNT ? FILE_SHARE_DELETE : 0 ), NULL,
+		 FILE_SHARE_READ | FILE_SHARE_DELETE, NULL,
 		 OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL | FILE_FLAG_SEQUENTIAL_SCAN, NULL );
 	VERIFY_FILE_ACCESS( hFile, sPath )
 	if ( hFile != INVALID_HANDLE_VALUE )

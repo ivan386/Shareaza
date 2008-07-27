@@ -1,7 +1,7 @@
 //
 // DDEServer.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -70,7 +70,7 @@ BOOL CDDEServer::Create()
 
 	m_hszService = DdeCreateStringHandle( m_hInstance, (LPCTSTR)m_sService, CP_WINUNICODE );
 
-    DdeNameService( m_hInstance, m_hszService, NULL, DNS_REGISTER );
+	DdeNameService( m_hInstance, m_hszService, NULL, DNS_REGISTER );
 
 	return TRUE;
 }
@@ -213,28 +213,19 @@ BOOL CDDEServer::Execute(LPCTSTR pszTopic, HDDEDATA hData)
 
 BOOL CDDEServer::Execute(LPCTSTR pszTopic, LPCVOID pData, DWORD nLength)
 {
-	CString str;
 	ASSERT( pData );
 	ASSERT( nLength );
 
-	if ( theApp.m_bNT )
-	{
-		// Copy data info a buffer
-		LPWSTR pszData = new WCHAR[ nLength + 1 ];
-		CopyMemory( pszData, pData, nLength );
-		// Ensure it has a null terminator
-		pszData[ nLength ] = 0;
-		// Assign it to the Cstring and remove buffer
-		str = pszData;
-		delete [] pszData;
-	}
-	else
-	{
-		// Windows 9x will return the data as an ANSI string. (even though UNICODE was specified)
-		int nWide = MultiByteToWideChar( CP_ACP, 0, (LPCSTR)pData, (int)nLength, NULL, 0 );
-		MultiByteToWideChar( CP_ACP, 0, (LPCSTR)pData, (int)nLength, str.GetBuffer( nWide ), nWide );
-		str.ReleaseBuffer( nWide );
-	}
+	// Copy data info a buffer
+	LPWSTR pszData = new WCHAR[ nLength + 1 ];
+	CopyMemory( pszData, pData, nLength );
+
+	// Ensure it has a null terminator
+	pszData[ nLength ] = 0;
+
+	// Assign it to a CString and remove buffer
+	CString str( pszData );
+	delete [] pszData;
 
 	return Execute( pszTopic, str );
 }
@@ -253,7 +244,7 @@ BOOL CDDEServer::Execute(LPCTSTR pszTopic, LPCTSTR pszMessage)
 	else if ( _tcscmp( pszTopic, _T("RAZAFORMAT") ) == 0 )
 	{
 		LPCTSTR pszType = PathFindExtension( pszMessage );
-		if ( _tcsicmp( pszType, _T(".torrent") ) == 0 ) 
+		if ( _tcsicmp( pszType, _T(".torrent") ) == 0 )
 		{
 			return CShareazaApp::OpenTorrent( pszMessage, TRUE );
 		}

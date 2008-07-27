@@ -865,44 +865,22 @@ BOOL CDownloads::IsSpaceAvailable(QWORD nVolume, int nPath)
 {
 	QWORD nMargin = 10485760;
 
-	if ( theApp.m_pfnGetDiskFreeSpaceExW != NULL )
+	ULARGE_INTEGER nFree, nNull;
+
+	if ( ( !nPath || nPath == dlPathIncomplete )
+		&& GetDiskFreeSpaceEx( Settings.Downloads.IncompletePath, &nFree,
+			&nNull, &nNull ) )
 	{
-		ULARGE_INTEGER nFree, nNull;
-
-		if ( ( ! nPath || nPath == dlPathIncomplete ) && theApp.m_pfnGetDiskFreeSpaceExW( Settings.Downloads.IncompletePath, &nFree, &nNull, &nNull ) )
-		{
-			if ( nFree.QuadPart < nVolume + nMargin ) return FALSE;
-		}
-
-		if ( ( ! nPath || nPath == dlPathComplete ) && theApp.m_pfnGetDiskFreeSpaceExW( Settings.Downloads.CompletePath, &nFree, &nNull, &nNull ) )
-		{
-			if ( nFree.QuadPart < nVolume + nMargin ) return FALSE;
-		}
-
-		return TRUE;
+		if ( nFree.QuadPart < nVolume + nMargin )
+			return FALSE;
 	}
 
-	DWORD nSPC, nBPS, nFree, nTotal;
-	if ( ! nPath || nPath == dlPathIncomplete )
+	if ( ( !nPath || nPath == dlPathComplete )
+		&& GetDiskFreeSpaceEx( Settings.Downloads.CompletePath, &nFree,
+			&nNull, &nNull ) )
 	{
-		CString str = Settings.Downloads.IncompletePath.SpanExcluding( _T("\\") ) + '\\';
-
-		if ( GetDiskFreeSpace( str, &nSPC, &nBPS, &nFree, &nTotal ) )
-		{
-			QWORD nBytes = (QWORD)nSPC * (QWORD)nBPS * (QWORD)nFree;
-			if ( nBytes < nVolume + nMargin ) return FALSE;
-		}
-	}
-
-	if ( ! nPath || nPath == dlPathComplete )
-	{
-		CString str = Settings.Downloads.CompletePath.SpanExcluding( _T("\\") ) + '\\';
-
-		if ( GetDiskFreeSpace( str, &nSPC, &nBPS, &nFree, &nTotal ) )
-		{
-			QWORD nBytes = (QWORD)nSPC * (QWORD)nBPS * (QWORD)nFree;
-			if ( nBytes < nVolume + nMargin ) return FALSE;
-		}
+		if ( nFree.QuadPart < nVolume + nMargin )
+			return FALSE;
 	}
 
 	return TRUE;

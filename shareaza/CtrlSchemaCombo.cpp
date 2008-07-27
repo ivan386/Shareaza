@@ -1,7 +1,7 @@
 //
 // CtrlSchemaCombo.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -55,7 +55,7 @@ CSchemaCombo::CSchemaCombo()
 /////////////////////////////////////////////////////////////////////////////
 // CSchemaCombo operations
 
-BOOL CSchemaCombo::Create(DWORD dwStyle, const RECT& rect, CWnd* pParentWnd, UINT nID) 
+BOOL CSchemaCombo::Create(DWORD dwStyle, const RECT& rect, CWnd* pParentWnd, UINT nID)
 {
 	return CComboBox::Create( dwStyle|WS_CHILD|WS_TABSTOP|WS_VSCROLL|CBS_DROPDOWNLIST|
 		CBS_OWNERDRAWVARIABLE|CBS_HASSTRINGS|CBS_SORT, rect, pParentWnd, nID );
@@ -74,45 +74,45 @@ void CSchemaCombo::Load(LPCTSTR pszSelectURI, int nType, int nAvailability, BOOL
 	}
 
 	SetExtendedUI();
-	
+
 	m_nType			= nType;
 	m_nAvailability	= nAvailability;
-	
+
 	if ( bReset ) ResetContent();
-	
+
 	if ( bReset && m_sNoSchemaText.GetLength() )
 	{
 		SetItemData( AddString( _T(" ") ), 0 );
 		SetCurSel( 0 );
 	}
-	
+
 	for ( POSITION pos = SchemaCache.GetIterator() ; pos ; )
 	{
 		CSchema* pSchema = SchemaCache.GetNext( pos );
-		
+
 		BOOL bSelected = pSchema->CheckURI( pszSelectURI );
-		
+
 		if ( ! bReset )
 		{
 			int nIndex = FindSchema( pSchema );
-			
+
 			if ( nIndex >= 0 )
 			{
 				if ( bSelected ) SetCurSel( nIndex );
 				continue;
 			}
 		}
-		
+
 		if ( ( bSelected || pSchema->m_nType == nType || nType == -1 ) &&
 			 ( bSelected || pSchema->m_nAvailability <= nAvailability ) )
 		{
 			int nIndex = AddString( pSchema->m_sTitle );
 			SetItemData( nIndex, (LPARAM)pSchema );
-			
+
 			if ( bSelected ) SetCurSel( nIndex );
 		}
 	}
-	
+
 	if ( bReset && nAvailability < CSchema::saMax )
 	{
 		SetItemData( AddString( _T("ZZZ") ), 0 );
@@ -124,14 +124,14 @@ void CSchemaCombo::Select(LPCTSTR pszURI)
 	for ( int nItem = 0 ; nItem < GetCount() ; nItem++ )
 	{
 		CSchema* pSchema = (CSchema*)GetItemData( nItem );
-		
+
 		if ( pSchema != NULL && pSchema->CheckURI( pszURI ) )
 		{
 			SetCurSel( nItem );
 			return;
 		}
 	}
-	
+
 	SetCurSel( 0 );
 }
 
@@ -140,14 +140,14 @@ void CSchemaCombo::Select(CSchema* pSelect)
 	for ( int nItem = 0 ; nItem < GetCount() ; nItem++ )
 	{
 		CSchema* pSchema = (CSchema*)GetItemData( nItem );
-		
+
 		if ( pSchema == pSelect )
 		{
 			SetCurSel( nItem );
 			return;
 		}
 	}
-	
+
 	SetCurSel( 0 );
 }
 
@@ -174,14 +174,14 @@ int CSchemaCombo::FindSchema(CSchema* pSchema)
 	{
 		if ( (CSchema*)GetItemData( nItem ) == pSchema ) return nItem;
 	}
-	
+
 	return -1;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 // CSchemaCombo message handlers
 
-LRESULT CSchemaCombo::OnCtlColorListBox(WPARAM wParam, LPARAM lParam) 
+LRESULT CSchemaCombo::OnCtlColorListBox(WPARAM wParam, LPARAM lParam)
 {
 	if ( m_hListBox == 0 )
 	{
@@ -196,17 +196,17 @@ LRESULT CSchemaCombo::OnCtlColorListBox(WPARAM wParam, LPARAM lParam)
 			::InvalidateRect( m_hListBox, NULL, TRUE );
 		}
 	}
-	
+
 	return DefWindowProc( WM_CTLCOLORLISTBOX, wParam, lParam );
 }
 
-void CSchemaCombo::MeasureItem(LPMEASUREITEMSTRUCT lpMeasureItemStruct) 
+void CSchemaCombo::MeasureItem(LPMEASUREITEMSTRUCT lpMeasureItemStruct)
 {
 	lpMeasureItemStruct->itemWidth	= 1024;
 	lpMeasureItemStruct->itemHeight	= 18;
 }
 
-void CSchemaCombo::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct) 
+void CSchemaCombo::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 {
 	if ( lpDrawItemStruct->itemID == (UINT)-1 ) return;
 	if ( ( lpDrawItemStruct->itemAction & ODA_SELECT ) == 0 &&
@@ -215,13 +215,14 @@ void CSchemaCombo::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 	CRect rcItem( &lpDrawItemStruct->rcItem );
 	CPoint pt( rcItem.left + 1, rcItem.top + 1 );
 	CDC dc;
-	
+
 	dc.Attach( lpDrawItemStruct->hDC );
-	if ( Settings.General.LanguageRTL ) theApp.m_pfnSetLayout( dc.m_hDC, LAYOUT_RTL );
-	
+	if ( Settings.General.LanguageRTL )
+		SetLayout( dc.m_hDC, LAYOUT_RTL );
+
 	dc.SetTextColor( ( lpDrawItemStruct->itemState & ODS_SELECTED )
 		? CoolInterface.m_crHiText : CoolInterface.m_crDropdownText );
-	
+
 	CSchema* pSchema = (CSchema*)lpDrawItemStruct->itemData;
 
 	if ( pSchema != NULL )
@@ -230,24 +231,24 @@ void CSchemaCombo::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 			GetSysColor( ( lpDrawItemStruct->itemState & ODS_SELECTED ) ? COLOR_HIGHLIGHT : COLOR_WINDOW ) );*/
 		if ( IsWindowEnabled() )
 		{
-			if ( lpDrawItemStruct->itemState & ODS_SELECTED ) 
+			if ( lpDrawItemStruct->itemState & ODS_SELECTED )
 				dc.FillSolidRect( &rcItem, CoolInterface.m_crHighlight );
-			else 
+			else
 				dc.FillSolidRect( &rcItem, CoolInterface.m_crDropdownBox );
 		}
-		else 
+		else
 			dc.FillSolidRect( &rcItem, GetBkColor(lpDrawItemStruct->hDC) );
 
 		dc.SetBkMode( TRANSPARENT );
-		
-		ShellIcons.Draw( &dc, pSchema->m_nIcon16, 16, pt.x, pt.y, CLR_NONE, 
+
+		ShellIcons.Draw( &dc, pSchema->m_nIcon16, 16, pt.x, pt.y, CLR_NONE,
 			( lpDrawItemStruct->itemState & ODS_SELECTED ) );
-		
+
 		rcItem.left += 20; rcItem.right -= 2;
-		
+
 		CFont* pOldFont = (CFont*)dc.SelectObject( &theApp.m_gdiFont );
 		CString strURI = pSchema->GetURI();
-		
+
 		if ( dc.GetTextExtent( pSchema->m_sTitle + strURI ).cx > rcItem.Width() - 20
 			 && strURI.GetLength() > 8 )
 		{
@@ -260,14 +261,14 @@ void CSchemaCombo::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 				strURI = strURI.Left( nLeft ) + _T("/\x2026") + strURI.Mid( nRight );
 			}
 		}
-		
+
 		if ( dc.GetTextExtent( pSchema->m_sTitle + strURI ).cx <= rcItem.Width() - 20 )
 		{
 			// COLORREF crBackup = dc.SetTextColor( GetSysColor( COLOR_GRAYTEXT ) );
 			dc.DrawText( strURI, &rcItem, DT_SINGLELINE|DT_RIGHT|DT_VCENTER|DT_NOPREFIX );
 			// dc.SetTextColor( crBackup );
 		}
-		
+
 		dc.SelectObject( &theApp.m_gdiFontBold );
 		dc.DrawText( pSchema->m_sTitle, &rcItem, DT_SINGLELINE|DT_LEFT|DT_VCENTER|DT_NOPREFIX );
 		dc.SelectObject( pOldFont );
@@ -278,18 +279,18 @@ void CSchemaCombo::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 			GetSysColor( ( lpDrawItemStruct->itemState & ODS_SELECTED ) ? COLOR_HIGHLIGHT : COLOR_WINDOW ) );*/
 		if ( IsWindowEnabled() )
 		{
-			if ( lpDrawItemStruct->itemState & ODS_SELECTED ) 
+			if ( lpDrawItemStruct->itemState & ODS_SELECTED )
 				dc.FillSolidRect( &rcItem, CoolInterface.m_crHighlight );
-			else 
+			else
 				dc.FillSolidRect( &rcItem, CoolInterface.m_crDropdownBox );
 		}
-		else 
+		else
 			dc.FillSolidRect( &rcItem, GetBkColor(lpDrawItemStruct->hDC) );
 		dc.SetBkMode( TRANSPARENT );
-		
+
 		CoolInterface.Draw( &dc, IDR_SEARCHFRAME, 16,
 			pt.x, pt.y, CLR_NONE, ( lpDrawItemStruct->itemState & ODS_SELECTED ) );
-		
+
 		rcItem.left += 20; rcItem.right -= 2;
 
 		CFont* pOldFont = (CFont*)dc.SelectObject( &theApp.m_gdiFontBold );
@@ -300,7 +301,7 @@ void CSchemaCombo::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 	{
 		dc.Draw3dRect( &rcItem, CoolInterface.m_crDropdownBox , CoolInterface.m_crDropdownBox );
 		rcItem.DeflateRect( 1, 1 );
-		
+
 		if ( lpDrawItemStruct->itemState & ODS_SELECTED )
 		{
 			dc.Draw3dRect( &rcItem, CoolInterface.m_crBorder, CoolInterface.m_crBorder );
@@ -311,16 +312,16 @@ void CSchemaCombo::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 		{
 			dc.FillSolidRect( &rcItem, GetSysColor( COLOR_WINDOW /* COLOR_BTNFACE */ ) );
 		}
-		
+
 		dc.SetBkMode( TRANSPARENT );
-		
+
 		pt = rcItem.CenterPoint();
 		pt.x -= 8;
 		pt.y -= 8;
-		
+
 		CoolInterface.Draw( &dc, IDI_CHEVRON, 16, pt.x, pt.y );
 	}
-	
+
 	dc.Detach();
 }
 
@@ -355,7 +356,7 @@ BOOL CSchemaCombo::PreTranslateMessage(MSG* pMsg)
 	return CComboBox::PreTranslateMessage( pMsg );
 }
 
-void CSchemaCombo::OnDropDown() 
+void CSchemaCombo::OnDropDown()
 {
 	m_sPreDrop = GetSelectedURI();
 }
@@ -366,22 +367,22 @@ void CSchemaCombo::OnDropDown()
 LRESULT PASCAL CSchemaCombo::ListWndProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam)
 {
 	CSchemaCombo* pThis = (CSchemaCombo*)(LONG_PTR)GetWindowLongPtr( hWnd, GWLP_USERDATA );
-	
+
 	if ( pThis->m_nAvailability < CSchema::saMax &&
 		 ( nMsg == WM_LBUTTONDOWN || nMsg == WM_LBUTTONUP ) )
 	{
 		//CPoint pt( LOWORD( lParam ), HIWORD( lParam ) );
 		CPoint pt( lParam );
 		CRect rcClient;
-		
+
 		::GetClientRect( hWnd, &rcClient );
-		
+
 		if ( rcClient.PtInRect( pt ) )
 		{
 			LRESULT nItemHeight = ::SendMessage( hWnd, LB_GETITEMHEIGHT, 0, 0 );
 			LRESULT nTopIndex   = ::SendMessage( hWnd, LB_GETTOPINDEX, 0, 0 );
 			int nIndex		= static_cast< int >( nTopIndex + pt.y / nItemHeight );
-			
+
 			CRect rcItem;
 			::SendMessage( hWnd, LB_GETITEMRECT, nIndex, (LPARAM)&rcItem );
 
@@ -390,22 +391,22 @@ LRESULT PASCAL CSchemaCombo::ListWndProc(HWND hWnd, UINT nMsg, WPARAM wParam, LP
 				if ( pThis->OnClickItem( nIndex, nMsg == WM_LBUTTONDOWN ) )
 				{
 					if ( nMsg == WM_LBUTTONDOWN ) return 0;
-					
+
 					nIndex = pThis->GetCurSel();
 					if ( nIndex >= 0 ) CallWindowProc( pThis->m_pWndProc, hWnd, LB_SETCURSEL, nIndex, 0 );
-					
+
 					::GetWindowRect( hWnd, &rcClient );
 					LRESULT nHeight = pThis->GetCount() * nItemHeight + 2;
-					
+
 					if ( rcClient.Height() < nHeight )
 					{
 						rcClient.bottom = (LONG)min( GetSystemMetrics( SM_CYSCREEN ) - 1,
 							rcClient.top + nHeight );
-						
+
 						::MoveWindow( hWnd, rcClient.left, rcClient.top,
 							rcClient.Width(), rcClient.Height(), TRUE );
 					}
-					
+
 					return 0;
 				}
 			}
@@ -433,8 +434,8 @@ BOOL CSchemaCombo::OnClickItem(int nItem, BOOL bDown)
 				}
 				SetCurSel( nCurSel );
 			}
-		}		
+		}
 		return TRUE;
-	}	
+	}
 	return FALSE;
 }

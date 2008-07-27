@@ -1,7 +1,7 @@
 //
 // WndChild.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -136,17 +136,17 @@ BOOL CChildWnd::TestPoint(const CPoint& ptScreen)
 {
 	CWnd* pHit = WindowFromPoint( ptScreen );
 
-	if ( pHit == NULL ) return FALSE;
-	if ( pHit == this ) return TRUE;
-	if ( ! ::IsWindow( pHit->m_hWnd ) || ! ::IsWindow( m_hWnd ) ) return FALSE;
-	if( theApp.m_bNT && theApp.m_pfnGetAncestor )
-	{
-		if ( theApp.m_pfnGetAncestor( pHit->m_hWnd, GA_ROOT ) != theApp.m_pfnGetAncestor( m_hWnd, GA_ROOT ) ) return FALSE;
-	}
-	else
-	{
-		if ( pHit->GetTopLevelParent() != GetTopLevelParent() ) return FALSE;
-	}
+	if ( pHit == NULL )
+		return FALSE;
+
+	if ( pHit == this )
+		return TRUE;
+
+	if ( !IsWindow( pHit->m_hWnd ) || !IsWindow( GetSafeHwnd() ) )
+		return FALSE;
+
+	if ( ::GetAncestor( pHit->m_hWnd, GA_ROOT ) != ::GetAncestor( GetSafeHwnd(), GA_ROOT ) )
+		return FALSE;
 
 	CPoint ptChild( ptScreen );
 	pHit->ScreenToClient( &ptChild );
@@ -537,7 +537,7 @@ BOOL CChildWnd::PreTranslateMessage(MSG* pMsg)
 		( pMsg->wParam == VK_UP ||
 		  pMsg->wParam == VK_DOWN ||
 		  pMsg->wParam == VK_LEFT ||
-		  pMsg->wParam == VK_RIGHT || 
+		  pMsg->wParam == VK_RIGHT ||
 		  pMsg->wParam == VK_TAB ) )
 	{
 		if ( IsDialogMessage( pMsg ) )

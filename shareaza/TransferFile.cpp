@@ -1,7 +1,7 @@
 //
 // TransferFile.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -209,7 +209,7 @@ BOOL CTransferFile::Open(BOOL bWrite, BOOL bCreate)
 	}
 
 	m_hFile = CreateFile( m_sPath, GENERIC_READ | ( bWrite ? GENERIC_WRITE : 0 ),
-		FILE_SHARE_READ | FILE_SHARE_WRITE | ( theApp.m_bNT ? FILE_SHARE_DELETE : 0 ),
+		FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE,
 		NULL, ( bCreate ? CREATE_ALWAYS : OPEN_EXISTING ), FILE_ATTRIBUTE_NORMAL, NULL );
 	VERIFY_FILE_ACCESS( m_hFile, m_sPath )
 	if ( m_hFile != INVALID_HANDLE_VALUE ) m_bWrite = bWrite;

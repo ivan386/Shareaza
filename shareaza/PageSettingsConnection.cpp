@@ -1,7 +1,7 @@
 //
 // PageSettingsConnection.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -176,8 +176,8 @@ BOOL CConnectionSettingsPage::OnInitDialog()
 	UpdateData( FALSE );
 
 	m_wndInBind.EnableWindow( m_sInHost != strAutomatic);
-	
-	if ( theApp.m_bServer || theApp.m_dwWindowsVersion < 5 && !theApp.m_bWinME )
+
+	if ( theApp.m_bIsServer )
 	{
 		CButton* pWnd = (CButton*)GetDlgItem( IDC_ENABLE_UPNP );
 		pWnd->EnableWindow( FALSE );
@@ -271,7 +271,7 @@ void CConnectionSettingsPage::OnOK()
 	Settings.Connection.FirewallState		= m_wndCanAccept.GetCurSel();
 	Settings.Connection.InHost				= m_sInHost;
 
-	bool bRandomForwarded = ( m_nInPort == 0 && 
+	bool bRandomForwarded = ( m_nInPort == 0 &&
 		theApp.m_bUPnPPortsForwarded == TRI_TRUE );
 
 	if ( !bRandomForwarded || m_nInPort != 0 || !m_bInRandom )
@@ -282,7 +282,7 @@ void CConnectionSettingsPage::OnOK()
 			Settings.Connection.InPort = m_nInPort;
 			try
 			{
-				if ( !theApp.m_pUPnPFinder ) 
+				if ( !theApp.m_pUPnPFinder )
 					theApp.m_pUPnPFinder.reset( new CUPnPFinder );
 				if ( theApp.m_pUPnPFinder->AreServicesHealthy() )
 					theApp.m_pUPnPFinder->StartDiscovery();
@@ -308,12 +308,12 @@ void CConnectionSettingsPage::OnOK()
 
 	// Warn the user about upload limiting and ed2k/BT downloads
 	if ( !Settings.Live.UploadLimitWarning &&
-		( Settings.eDonkey.EnableToday || Settings.eDonkey.EnableAlways || Settings.BitTorrent.AdvancedInterface || Settings.BitTorrent.AdvancedInterfaceSet ) ) 
+		( Settings.eDonkey.EnableToday || Settings.eDonkey.EnableAlways || Settings.BitTorrent.AdvancedInterface || Settings.BitTorrent.AdvancedInterfaceSet ) )
 	{
 		QWORD nDownload = max( Settings.Bandwidth.Downloads, Settings.Connection.InSpeed * Kilobits / Bytes );
 		QWORD nUpload   = Settings.Connection.OutSpeed * Kilobits / Bytes;
 		if ( Settings.Bandwidth.Uploads > 0 ) nUpload =  min( Settings.Bandwidth.Uploads, nUpload );
-		
+
 		if ( nUpload * 16 < nDownload )
 		{
 			CHelpDlg::Show( _T("GeneralHelp.UploadWarning") );
@@ -379,12 +379,12 @@ void CConnectionSettingsPage::OnClickedEnableUpnp()
 {
 	if ( !m_bEnableUPnP )
 	{
-		if ( !theApp.m_pUPnPFinder ) 
+		if ( !theApp.m_pUPnPFinder )
 			theApp.m_pUPnPFinder.reset( new CUPnPFinder );
 
 		// If the UPnP Device Host service is not running ask the user to start it.
 		// It is not wise to have a delay up to 1 minute, especially that we would need
-		// to wait until this and SSDP service are started. 
+		// to wait until this and SSDP service are started.
 		// If the upnphost service can not be started Shareaza will lock up.
 		if ( !theApp.m_pUPnPFinder->AreServicesHealthy() )
 		{
@@ -397,4 +397,3 @@ void CConnectionSettingsPage::OnClickedEnableUpnp()
 	}
 	UpdateData();
 }
-

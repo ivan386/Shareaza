@@ -64,10 +64,6 @@
 #include "DlgHelp.h"
 #include "FontManager.h"
 
-#ifndef WIN64
-extern "C" HMODULE (__stdcall *_PfnLoadUnicows)(void) = &LoadUnicows;
-#endif
-
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #undef THIS_FILE
@@ -80,22 +76,6 @@ const LPCTSTR RT_PNG = _T("PNG");
 const LPCTSTR RT_GZIP = _T("GZIP");
 // double scaleX = 1;
 // double scaleY = 1;
-
-#ifndef WIN64
-HMODULE __stdcall LoadUnicows()
-{
-	HMODULE hUnicows = LoadLibraryA("unicows.dll");
-
-	if ( !hUnicows )
-	{
-		// If the load is failed, then exit.
-		MessageBoxA(NULL, "Unicode wrapper not found.", NULL, MB_ICONSTOP | MB_OK);
-		_exit(-1);
-	}
-
-	return hUnicows;
-}
-#endif
 
 /////////////////////////////////////////////////////////////////////////////
 // CShareazaCommandLineInfo
@@ -164,45 +144,38 @@ END_MESSAGE_MAP()
 // {E3481FE3-E062-4E1C-A23A-62A6D13CBFB8}
 const GUID CDECL BASED_CODE _tlid =
 	{ 0xE3481FE3, 0xE062, 0x4E1C, { 0xA2, 0x3A, 0x62, 0xA6, 0xD1, 0x3C, 0xBF, 0xB8 } };
-const WORD _wVerMajor = 1;
-const WORD _wVerMinor = 0;
 
 CShareazaApp theApp;
 
 /////////////////////////////////////////////////////////////////////////////
 // CShareazaApp construction
 
-CShareazaApp::CShareazaApp()
-: m_pMutex( NULL )
-, m_pSafeWnd( NULL )
-, m_bLive( FALSE )
-, m_bInteractive( FALSE )
-, m_bNT( FALSE )
-, m_bServer( FALSE )
-, m_bWinME( FALSE )
-, m_bLimitedConnections( FALSE )
-, m_dwWindowsVersion( 0 )
-, m_dwWindowsVersionMinor( 0 )
-, m_nPhysicalMemory( 0 )
-, m_bMenuWasVisible( FALSE )
-, m_nDefaultFontSize( 0 )
-, m_bUPnPPortsForwarded( TRI_UNKNOWN )
-, m_bUPnPDeviceConnected( TRI_UNKNOWN )
-, m_nUPnPExternalAddress( 0 )
-, m_dwLastInput( 0 )
-, m_hHookKbd( NULL )
-, m_hHookMouse( NULL )
-, m_hUser32( NULL )
-, m_hKernel( NULL )
-, m_hShellFolder( NULL )
-, m_hGDI32( NULL )
-, m_hTheme( NULL )
-, m_hPowrProf( NULL )
-, m_hShlWapi( NULL )
-, m_hGeoIP( NULL )
-, m_pGeoIP( NULL )
-//, m_pFontManager( NULL )
-, m_dlgSplash( NULL )
+CShareazaApp::CShareazaApp() :
+	m_pMutex				( NULL )
+,	m_pSafeWnd				( NULL )
+,	m_bLive					( false )
+,	m_bInteractive			( FALSE )
+,	m_bIsServer				( false )
+,	m_bIsWin2000			( false )
+,	m_bIsVistaOrNewer		( false )
+,	m_bLimitedConnections	( true )
+,	m_nWindowsVersion		( 0ul )
+,	m_nWindowsVersionMinor	( 0ul )
+,	m_nPhysicalMemory		( 0ull )
+,	m_bMenuWasVisible		( FALSE )
+,	m_nDefaultFontSize		( 0 )
+,	m_bUPnPPortsForwarded	( TRI_UNKNOWN )
+,	m_bUPnPDeviceConnected	( TRI_UNKNOWN )
+,	m_nUPnPExternalAddress	( 0ul )
+,	m_nLastInput			( 0ul )
+,	m_hHookKbd				( NULL )
+,	m_hHookMouse			( NULL )
+,	m_hTheme				( NULL )
+,	m_hShlWapi				( NULL )
+,	m_hGeoIP				( NULL )
+,	m_pGeoIP				( NULL )
+,	m_hLibGFL				( NULL )
+,	m_dlgSplash				( NULL )
 {
 	ZeroMemory( m_nVersion, sizeof( m_nVersion ) );
 	ZeroMemory( m_pBTVersion, sizeof( m_pBTVersion ) );
@@ -272,8 +245,7 @@ BOOL CShareazaApp::InitInstance()
 		return FALSE;
 	}
 
-	m_pMutex = CreateMutex( NULL, FALSE,
-		( m_dwWindowsVersion < 5 ) ? _T("Shareaza") : _T("Global\\Shareaza") );
+	m_pMutex = CreateMutex( NULL, FALSE, _T("Global\\Shareaza") );
 	if ( m_pMutex != NULL )
 	{
 		if ( GetLastError() == ERROR_ALREADY_EXISTS )
@@ -532,22 +504,10 @@ int CShareazaApp::ExitInstance()
 		Plugins.Clear();
 	}
 
-	if ( m_hUser32 != NULL )
-		FreeLibrary( m_hUser32 );
-
 	WSACleanup();
-
-	if ( m_hShellFolder != NULL )
-		FreeLibrary( m_hShellFolder );
-
-	if ( m_hGDI32 != NULL )
-		FreeLibrary( m_hGDI32 );
 
 	if ( m_hTheme != NULL )
 		FreeLibrary( m_hTheme );
-
-	if ( m_hPowrProf != NULL )
-		FreeLibrary( m_hPowrProf );
 
 	if ( m_hShlWapi != NULL )
 		FreeLibrary( m_hShlWapi );
@@ -757,47 +717,50 @@ void CShareazaApp::GetVersionNumber()
 	pVersion.dwOSVersionInfoSize = sizeof(OSVERSIONINFOEX);
 	GetVersionEx( (OSVERSIONINFO*)&pVersion );
 
-	VER_PLATFORM_WIN32s;
-	VER_PLATFORM_WIN32_WINDOWS;
-	VER_PLATFORM_WIN32_NT;
-
-	//Networking is poor under Win9x based operating systems. (95/98/Me)
-	m_bNT = ( pVersion.dwPlatformId == VER_PLATFORM_WIN32_NT );
-
 	// Determine if it's a server
-	m_bServer = m_bNT && pVersion.wProductType != VER_NT_WORKSTATION;
+	m_bIsServer = pVersion.wProductType != VER_NT_WORKSTATION;
 
-	//Win 95/98/Me/NT (<5) do not support some functions
-	m_dwWindowsVersion = pVersion.dwMajorVersion;
+	// Get Major version
+	// Windows 2000 (Major Version == 5) does not support some functions
+	m_nWindowsVersion = pVersion.dwMajorVersion;
 
-	//Win2000 = 0 WinXP = 1
-	m_dwWindowsVersionMinor = pVersion.dwMinorVersion;
+	// Get Minor version
+	//	Major version == 5
+	//		Win2000 = 0, WinXP = 1, WinXP64 = 2, Server2003 = 2
+	//	Major version == 6
+	//		Vista = 0, Server2008 = 0
+	m_nWindowsVersionMinor = pVersion.dwMinorVersion;
 
-	// Detect Windows ME
-	m_bWinME = ( m_dwWindowsVersion == 4 && m_dwWindowsVersionMinor == 90 );
+	// Most supported windows versions have network limiting
+	m_bLimitedConnections = true;
 
-	m_bLimitedConnections = FALSE;
+	// Set some variables for different Windows OSes
+	if ( m_nWindowsVersion == 5 )
+	{
+		TCHAR* sp = _tcsstr( pVersion.szCSDVersion, _T("Service Pack") );
 
-	if ( m_dwWindowsVersion == 5 && m_dwWindowsVersionMinor == 1 )
-	{	//Windows XP - Test for SP2
-		TCHAR* sp = _tcsstr( pVersion.szCSDVersion, _T("Service Pack ") );
-		if( sp && sp[ 13 ] >= '2' )
-		{	//XP SP2 - Limit the networking.
-			//AfxMessageBox(_T("Warning - Windows XP Service Pack 2 detected. Performance may be reduced."), MB_OK );
-			m_bLimitedConnections = TRUE;
+		// Windows 2000
+		if ( m_nWindowsVersionMinor == 0 )
+			m_bIsWin2000 = true;
+
+		// Windows XP
+		else if ( m_nWindowsVersionMinor == 1 )
+		{
+			// No network limiting for Vanilla XP or SP1
+			if ( !sp || sp[ 13 ] == '1' )
+				m_bLimitedConnections = false;
+		}
+
+		// Windows 2003 or Windows XP64
+		else if ( m_nWindowsVersionMinor == 2 )
+		{
+			// No network limiting for Vanilla Win2003/XP64
+			if ( !sp )
+				m_bLimitedConnections = false;
 		}
 	}
-	else if ( m_dwWindowsVersion == 5 && m_dwWindowsVersionMinor == 2
-		&& _tcsstr( pVersion.szCSDVersion, _T("Service Pack") ) )
-	{
-		// Windows 2003 or Win XP x64
-		m_bLimitedConnections = TRUE;
-	}
-	else if ( m_dwWindowsVersion >= 6 )
-	{
-		// Windows Vista or higher
-		m_bLimitedConnections = TRUE;
-	}
+	else if ( m_nWindowsVersion >= 6 )
+		m_bIsVistaOrNewer = true;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -805,61 +768,7 @@ void CShareazaApp::GetVersionNumber()
 
 void CShareazaApp::InitResources()
 {
-	//Get pointers to some functions that don't exist under 95/NT
-	if ( ( m_hUser32 = LoadLibrary( _T("User32.dll") ) ) != NULL )
-	{
-		(FARPROC&)m_pfnSetLayeredWindowAttributes = GetProcAddress(
-			m_hUser32, "SetLayeredWindowAttributes" );
-
-		(FARPROC&)m_pfnGetMonitorInfoA = GetProcAddress(
-			m_hUser32, "GetMonitorInfoA" );
-
-		(FARPROC&)m_pfnMonitorFromPoint = GetProcAddress(
-			m_hUser32, "MonitorFromPoint" );
-
-		(FARPROC&)m_pfnMonitorFromWindow = GetProcAddress(
-			m_hUser32, "MonitorFromWindow" );
-
-		(FARPROC&)m_pfnGetAncestor = GetProcAddress(
-			m_hUser32, "GetAncestor" );
-
-		(FARPROC&)m_pfnPrivateExtractIconsW = GetProcAddress(
-			m_hUser32, "PrivateExtractIconsW" );
-	}
-	else
-	{
-		m_pfnSetLayeredWindowAttributes = NULL;
-		m_pfnGetMonitorInfoA = NULL;
-		m_pfnMonitorFromPoint = NULL;
-		m_pfnMonitorFromWindow = NULL;
-		m_pfnGetAncestor = NULL;
-		m_pfnPrivateExtractIconsW = NULL;
-	}
-
-	// It is not necessary to call LoadLibrary on Kernel32.dll, because it is already loaded into every process address space.
-	if ( ( m_hKernel = GetModuleHandle( _T("kernel32.dll") ) ) != NULL )
-	{
-		(FARPROC&)m_pfnGetDiskFreeSpaceExW = GetProcAddress( m_hKernel, "GetDiskFreeSpaceExW" );
-		(FARPROC&)m_pfnCopyFileExW = GetProcAddress( m_hKernel, "CopyFileExW" );
-		(FARPROC&)m_pfnGlobalMemoryStatusEx = GetProcAddress( m_hKernel, "GlobalMemoryStatusEx" );
-	}
-	else
-	{
-		m_pfnGetDiskFreeSpaceExW = NULL;
-		m_pfnCopyFileExW = NULL;
-		m_pfnGlobalMemoryStatusEx = NULL;
-	}
-
-	if ( ( m_hShellFolder = LoadLibrary( _T("shfolder.dll") ) ) != NULL )
-		(FARPROC&)m_pfnSHGetFolderPathW = GetProcAddress( m_hShellFolder, "SHGetFolderPathW" );
-	else
-		m_pfnSHGetFolderPathW = NULL;
-
-	if ( ( m_hGDI32 = LoadLibrary( _T("gdi32.dll") ) ) != NULL )
-		(FARPROC&)m_pfnSetLayout = GetProcAddress( m_hGDI32, "SetLayout" );
-	else
-		m_pfnSetLayout = NULL;
-
+	// Get pointers to some functions that require Windows XP or greater
 	if ( ( m_hTheme = LoadLibrary( _T("UxTheme.dll") ) ) != NULL )
 	{
 		(FARPROC&)m_pfnSetWindowTheme = GetProcAddress( m_hTheme, "SetWindowTheme" );
@@ -867,11 +776,6 @@ void CShareazaApp::InitResources()
 		(FARPROC&)m_pfnOpenThemeData = GetProcAddress( m_hTheme, "OpenThemeData" );
 		(FARPROC&)m_pfnCloseThemeData = GetProcAddress( m_hTheme, "CloseThemeData" );
 		(FARPROC&)m_pfnDrawThemeBackground = GetProcAddress( m_hTheme, "DrawThemeBackground" );
-		(FARPROC&)m_pfnEnableThemeDialogTexture = GetProcAddress( m_hTheme, "EnableThemeDialogTexture" );
-		(FARPROC&)m_pfnDrawThemeParentBackground = GetProcAddress( m_hTheme, "DrawThemeParentBackground" );
-		(FARPROC&)m_pfnGetThemeBackgroundContentRect = GetProcAddress( m_hTheme, "GetThemeBackgroundContentRect" );
-		(FARPROC&)m_pfnGetThemeSysFont = GetProcAddress( m_hTheme, "GetThemeSysFont" );
-		(FARPROC&)m_pfnDrawThemeText = GetProcAddress( m_hTheme, "DrawThemeText" );
 	}
 	else
 	{
@@ -879,36 +783,16 @@ void CShareazaApp::InitResources()
 		m_pfnIsThemeActive = NULL;
 		m_pfnOpenThemeData = NULL;
 		m_pfnCloseThemeData = NULL;
-		m_pfnDrawThemeBackground = NULL;
-		m_pfnEnableThemeDialogTexture = NULL;
-		m_pfnDrawThemeParentBackground = NULL;
-		m_pfnGetThemeBackgroundContentRect = NULL;
-		m_pfnGetThemeSysFont = NULL;
-		m_pfnDrawThemeText = NULL;
 	}
 
-	if ( ( m_hPowrProf = LoadLibrary( _T("PowrProf.dll") ) ) != NULL )
-	{
-		(FARPROC&)m_pfnGetActivePwrScheme = GetProcAddress( m_hPowrProf, "GetActivePwrScheme" );
-		(FARPROC&)m_pfnGetCurrentPowerPolicies = GetProcAddress( m_hPowrProf, "GetCurrentPowerPolicies" );
-		(FARPROC&)m_pfnSetActivePwrScheme = GetProcAddress( m_hPowrProf, "SetActivePwrScheme" );
-	}
-	else
-	{
-		m_pfnGetActivePwrScheme = NULL;
-		m_pfnGetCurrentPowerPolicies = NULL;
-		m_pfnSetActivePwrScheme = NULL;
-	}
-
+	// Get pointers to some functions that require Internet Explorer 6.01 or greater
 	if ( ( m_hShlWapi = LoadLibrary( _T("shlwapi.dll") ) ) != NULL )
 	{
 		(FARPROC&)m_pfnAssocIsDangerous = GetProcAddress( m_hShlWapi, "AssocIsDangerous" );
-		(FARPROC&)m_pfnAssocQueryStringW = GetProcAddress( m_hShlWapi, "AssocQueryStringW" );
 	}
 	else
 	{
 		m_pfnAssocIsDangerous = NULL;
-		m_pfnAssocQueryStringW = NULL;
 	}
 
 	// Load the GeoIP library for mapping IPs to countries
@@ -932,21 +816,12 @@ void CShareazaApp::InitResources()
 
 	// Get the amount of installed memory.
 	m_nPhysicalMemory = 0;
-	if ( m_pfnGlobalMemoryStatusEx )
-	{
-		// Use GlobalMemoryStatusEx if possible (WinXP)
-		MEMORYSTATUSEX pMemory = {};
-		pMemory.dwLength = sizeof(pMemory);
-		if (  (*m_pfnGlobalMemoryStatusEx)( &pMemory ) )
-			m_nPhysicalMemory = pMemory.ullTotalPhys;
-	}
-	if ( m_nPhysicalMemory == 0 )
-	{
-		// Fall back to GlobalMemoryStatus (always available)
-		MEMORYSTATUS pMemory;
-		GlobalMemoryStatus( &pMemory );
-		m_nPhysicalMemory = pMemory.dwTotalPhys;
-	}
+
+	// Use GlobalMemoryStatusEx if possible (WinXP)
+	MEMORYSTATUSEX pMemory = {};
+	pMemory.dwLength = sizeof(pMemory);
+	if ( GlobalMemoryStatusEx( &pMemory ) )
+		m_nPhysicalMemory = pMemory.ullTotalPhys;
 
 //	HDC screen = GetDC( 0 );
 //	scaleX = GetDeviceCaps( screen, LOGPIXELSX ) / 96.0;
@@ -954,8 +829,7 @@ void CShareazaApp::InitResources()
 //	ReleaseDC( 0, screen );
 
 	// Get the fonts from the registry
-	CString strFont = ( m_dwWindowsVersion >= 6 ) ?
-					  L"Segoe UI" : L"Tahoma" ;
+	CString strFont = m_bIsVistaOrNewer ? _T( "Segoe UI" ) : _T( "Tahoma" ) ;
 	theApp.m_sDefaultFont		= theApp.GetProfileString( _T("Fonts"), _T("DefaultFont"), strFont );
 	theApp.m_sPacketDumpFont	= theApp.GetProfileString( _T("Fonts"), _T("PacketDumpFont"), _T("Lucida Console") );
 	theApp.m_sSystemLogFont		= theApp.GetProfileString( _T("Fonts"), _T("SystemLogFont"), strFont );
@@ -978,7 +852,7 @@ void CShareazaApp::InitResources()
 
 	m_hHookKbd   = SetWindowsHookEx( WH_KEYBOARD, (HOOKPROC)KbdHook, NULL, AfxGetThread()->m_nThreadID );
 	m_hHookMouse = SetWindowsHookEx( WH_MOUSE, (HOOKPROC)MouseHook, NULL, AfxGetThread()->m_nThreadID );
-	m_dwLastInput = (DWORD)time( NULL );
+	m_nLastInput = (DWORD)time( NULL );
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1680,10 +1554,10 @@ BOOL LoadIcon(LPCTSTR szFilename, HICON* phSmallIcon, HICON* phLargeIcon, HICON*
 		ExtractIconEx( strIcon, nIcon, phLargeIcon, phSmallIcon, 1 );
 	}
 
-	if ( phHugeIcon && theApp.m_pfnPrivateExtractIconsW )
+	if ( phHugeIcon )
 	{
 		UINT nLoadedID;
-		theApp.m_pfnPrivateExtractIconsW( strIcon, nIcon, 48, 48,
+		PrivateExtractIcons( strIcon, nIcon, 48, 48,
 			phHugeIcon, &nLoadedID, 1, 0 );
 	}
 
@@ -1722,11 +1596,8 @@ HICON CreateMirroredIcon(HICON hIconOrig, BOOL bDestroyOriginal)
 		hdcMask = CreateCompatibleDC( NULL );
 		if( hdcMask )
 		{
-			if ( theApp.m_pfnSetLayout )
-			{
-				theApp.m_pfnSetLayout( hdcBitmap, LAYOUT_RTL );
-				theApp.m_pfnSetLayout( hdcMask, LAYOUT_RTL );
-			}
+			SetLayout( hdcBitmap, LAYOUT_RTL );
+			SetLayout( hdcMask, LAYOUT_RTL );
 		}
 		else
 		{
@@ -1816,7 +1687,7 @@ HBITMAP CreateMirroredBitmap(HBITMAP hbmOrig)
 		// Flip the bitmap.
 		hOld_bm1 = (HBITMAP)SelectObject( hdcMem1, hbmOrig );
 		hOld_bm2 = (HBITMAP)SelectObject( hdcMem2, hbm );
-		theApp.m_pfnSetLayout( hdcMem2, LAYOUT_RTL );
+		SetLayout( hdcMem2, LAYOUT_RTL );
 		BitBlt( hdcMem2, 0, 0, bm.bmWidth, bm.bmHeight, hdcMem1, 0, 0, SRCCOPY );
 		SelectObject( hdcMem1, hOld_bm1 );
 		SelectObject( hdcMem2, hOld_bm2 );
@@ -2052,7 +1923,7 @@ LRESULT CALLBACK KbdHook(int nCode, WPARAM wParam, LPARAM lParam)
 {
 	if ( nCode == HC_ACTION )
 	{
-		theApp.m_dwLastInput = (DWORD)time( NULL );
+		theApp.m_nLastInput = (DWORD)time( NULL );
 
 		BOOL bAlt = (WORD)( lParam >> 16 ) & KF_ALTDOWN;
 		// BOOL bCtrl = GetAsyncKeyState( VK_CONTROL ) & 0x80000000;
@@ -2074,7 +1945,7 @@ LRESULT CALLBACK KbdHook(int nCode, WPARAM wParam, LPARAM lParam)
 LRESULT CALLBACK MouseHook(int nCode, WPARAM wParam, LPARAM lParam)
 {
 	if ( nCode == HC_ACTION )
-		theApp.m_dwLastInput = (DWORD)time( NULL );
+		theApp.m_nLastInput = (DWORD)time( NULL );
 
 	return ::CallNextHookEx( theApp.m_hHookMouse, nCode, wParam, lParam );
 }
@@ -2083,7 +1954,7 @@ CString GetFolderPath( int nFolder )
 {
 	TCHAR pszFolderPath[ MAX_PATH ] = { 0 };
 
-	if ( theApp.m_pfnSHGetFolderPathW && SUCCEEDED( theApp.m_pfnSHGetFolderPathW( NULL, nFolder, NULL, NULL, pszFolderPath ) ) )
+	if ( SUCCEEDED( SHGetFolderPath( NULL, nFolder, NULL, NULL, pszFolderPath ) ) )
 		return CString( pszFolderPath );
 
 	return _T("");
@@ -2104,7 +1975,7 @@ CString GetProgramFilesFolder()
 	TCHAR pszProgramsPath[ MAX_PATH ] = { 0 };
 	BOOL bOK = FALSE;
 
-	if ( theApp.m_pfnSHGetFolderPathW && SUCCEEDED( theApp.m_pfnSHGetFolderPathW( NULL, CSIDL_PROGRAM_FILES, NULL, NULL, pszProgramsPath ) ) )
+	if ( SUCCEEDED( SHGetFolderPath( NULL, CSIDL_PROGRAM_FILES, NULL, NULL, pszProgramsPath ) ) )
 		bOK = TRUE;
 
 	if ( !bOK || ! *pszProgramsPath )
@@ -2353,7 +2224,7 @@ bool MarkFileAsDownload(const CString& sFilename)
 
 	bool bSuccess = false;
 
-	if ( theApp.m_bNT && Settings.Library.MarkFileAsDownload )
+	if ( Settings.Library.MarkFileAsDownload )
 	{
 		// TODO: pFile->m_bVerify and IDS_LIBRARY_VERIFY_FIX warning features could be merged
 		// with this function, because they resemble the security warning.
@@ -2390,7 +2261,7 @@ bool MarkFileAsDownload(const CString& sFilename)
 bool LoadGUID(const CString& sFilename, Hashes::Guid& oGUID)
 {
 	bool bSuccess = false;
-	if ( theApp.m_bNT && Settings.Library.UseFolderGUID )
+	if ( Settings.Library.UseFolderGUID )
 	{
 		HANDLE hFile = CreateFile( sFilename + _T(":Shareaza.GUID"),
 			GENERIC_READ, FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE,
@@ -2415,7 +2286,7 @@ bool LoadGUID(const CString& sFilename, Hashes::Guid& oGUID)
 bool SaveGUID(const CString& sFilename, const Hashes::Guid& oGUID)
 {
 	bool bSuccess = false;
-	if ( theApp.m_bNT && Settings.Library.UseFolderGUID )
+	if ( Settings.Library.UseFolderGUID )
 	{
 		// Temporary clear R/O attribute
 		BOOL bChanged = FALSE;

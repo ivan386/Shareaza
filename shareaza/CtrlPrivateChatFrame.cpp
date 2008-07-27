@@ -171,7 +171,7 @@ void CPrivateChatFrame::OnRemoteMessage(BOOL bAction, LPCTSTR pszText)
 	// Check message spam filter (if enabled)
 	if ( !MessageFilter.IsFiltered( pszText ) )
 	{
-		DWORD nIdle = (DWORD)time( NULL ) - theApp.m_dwLastInput;
+		DWORD nIdle = (DWORD)time( NULL ) - theApp.m_nLastInput;
 
 		if ( nIdle > Settings.Community.AwayMessageIdleTime )
 		{

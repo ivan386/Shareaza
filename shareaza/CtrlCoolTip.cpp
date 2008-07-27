@@ -163,42 +163,22 @@ void CCoolTipCtrl::ShowImpl()
 	if ( !OnPrepare() )
 		return;
 
-	HMONITOR hMonitor = NULL;
-	MONITORINFO mi = {0};
-	CRect rcMonitor( 0, 0, 0, 0 );
 	CRect rc( m_pOpen.x + TIP_OFFSET_X, m_pOpen.y + TIP_OFFSET_Y, 0, 0 );
 	rc.right = rc.left + m_sz.cx + TIP_MARGIN * 2;
 	rc.bottom = rc.top + m_sz.cy + TIP_MARGIN * 2;
 
-	if ( theApp.m_dwWindowsVersion >= 5 && GetSystemMetrics( SM_CMONITORS ) > 1 && theApp.m_pfnMonitorFromPoint )
+	HMONITOR hMonitor = MonitorFromPoint( m_pOpen, MONITOR_DEFAULTTONEAREST );
+
+	MONITORINFO oMonitor = {0};
+	oMonitor.cbSize = sizeof( MONITORINFO );
+	GetMonitorInfo( hMonitor, &oMonitor );
+
+	if ( rc.right >= oMonitor.rcWork.right)
 	{
-		mi.cbSize = sizeof(MONITORINFO);
-
-		hMonitor = theApp.m_pfnMonitorFromPoint( m_pOpen, MONITOR_DEFAULTTONEAREST );
-		if ( hMonitor != NULL )
-		{
-			if ( theApp.m_pfnGetMonitorInfoA && theApp.m_pfnGetMonitorInfoA(hMonitor, &mi) )
-				rcMonitor = mi.rcWork;
-			else
-				hMonitor = NULL; // Fall back to GetSystemMetrics
-		}
-
+		rc.OffsetRect( oMonitor.rcWork.right - rc.right - 4, 0 );
 	}
 
-	if ( hMonitor == NULL )
-	{
-		// Unimon system or something is wrong with multimon
-
-		rcMonitor.right = GetSystemMetrics( SM_CXSCREEN );
-		rcMonitor.bottom = GetSystemMetrics( SM_CYSCREEN );
-	}
-
-	if ( rc.right >= rcMonitor.right)
-	{
-		rc.OffsetRect( rcMonitor.right - rc.right - 4, 0 );
-	}
-
-	if ( rc.bottom >= rcMonitor.bottom )
+	if ( rc.bottom >= oMonitor.rcWork.bottom )
 	{
 		rc.OffsetRect( 0, - ( m_sz.cy + TIP_MARGIN * 2 + TIP_OFFSET_Y + 4 ) );
 	}
@@ -208,15 +188,15 @@ void CCoolTipCtrl::ShowImpl()
 
 	OnShow();
 
-	if ( Settings.Interface.TipAlpha == 255 || theApp.m_pfnSetLayeredWindowAttributes == NULL )
+	if ( Settings.Interface.TipAlpha == 255 )
 	{
 		ModifyStyleEx( WS_EX_LAYERED, 0 );
 	}
 	else
 	{
 		ModifyStyleEx( 0, WS_EX_LAYERED );
-		theApp.m_pfnSetLayeredWindowAttributes( GetSafeHwnd(),
-			0, (BYTE)Settings.Interface.TipAlpha, LWA_ALPHA );
+		SetLayeredWindowAttributes( 0, (BYTE)Settings.Interface.TipAlpha,
+			LWA_ALPHA );
 	}
 
 	SetWindowPos( &wndTop, rc.left, rc.top, rc.Width(), rc.Height(),

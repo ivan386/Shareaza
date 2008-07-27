@@ -1,7 +1,7 @@
 //
 // FragmentedFile.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -31,9 +31,6 @@ static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
 #endif
 
-#undef _WIN32_WINNT
-#define _WIN32_WINNT 0x0500
-
 //////////////////////////////////////////////////////////////////////
 // CFragmentedFile construction
 
@@ -56,7 +53,7 @@ BOOL CFragmentedFile::Create(LPCTSTR pszFile, QWORD nLength)
 {
 	if ( m_pFile != NULL || m_oFList.limit() > 0 ) return FALSE;
 	if ( nLength == 0 ) return FALSE;
-	
+
 	m_pFile = TransferFiles.Open( pszFile, TRUE, TRUE );
 	if ( m_pFile == NULL ) return FALSE;
 
@@ -66,21 +63,21 @@ BOOL CFragmentedFile::Create(LPCTSTR pszFile, QWORD nLength)
 	}
 
 	m_oFList.insert( Fragments::Fragment( 0, nLength ) );
-	
-	if ( Settings.Downloads.SparseThreshold > 0 && theApp.m_bNT &&
-		 nLength != SIZE_UNKNOWN &&
-		 nLength >= Settings.Downloads.SparseThreshold * 1024 )
+
+	if ( Settings.Downloads.SparseThreshold
+		&& nLength != SIZE_UNKNOWN
+		&& nLength >= Settings.Downloads.SparseThreshold * 1024 )
 	{
 		DWORD dwOut = 0;
 		HANDLE hFile = m_pFile->GetHandle( TRUE );
-		
+
 		if ( ! DeviceIoControl( hFile, FSCTL_SET_SPARSE, NULL, 0, NULL, 0, &dwOut, NULL ) )
 		{
 			DWORD nError = GetLastError();
 			theApp.Message( MSG_ERROR, _T("Unable to set sparse file: \"%s\", Win32 error %x."), pszFile, nError );
 		}
 	}
-	
+
 	return TRUE;
 }
 
@@ -90,11 +87,11 @@ BOOL CFragmentedFile::Create(LPCTSTR pszFile, QWORD nLength)
 BOOL CFragmentedFile::Open(LPCTSTR pszFile)
 {
 	if ( m_pFile != NULL || m_oFList.limit() == 0 ) return FALSE;
-	
+
 	m_pFile = TransferFiles.Open( pszFile, TRUE, FALSE );
-	
+
 	if ( m_pFile == NULL ) return FALSE;
-	
+
 	return TRUE;
 }
 
@@ -141,7 +138,7 @@ BOOL CFragmentedFile::MakeComplete()
 {
 	if ( m_oFList.empty() ) return FALSE;
 
-    m_oFList.clear();
+	m_oFList.clear();
 
 	if ( m_pFile != NULL && m_oFList.limit() != SIZE_UNKNOWN )
 	{
@@ -165,13 +162,13 @@ void CFragmentedFile::Serialize(CArchive& ar, int nVersion)
 {
 	if ( ar.IsStoring() )
 	{
-        SerializeOut1( ar, m_oFList );
+		SerializeOut1( ar, m_oFList );
 	}
 	else
 	{
 		ASSERT( m_oFList.limit() == 0 );
-		
-        SerializeIn1( ar, m_oFList, nVersion );
+
+		SerializeIn1( ar, m_oFList, nVersion );
 	}
 }
 
@@ -232,12 +229,12 @@ BOOL CFragmentedFile::ReadRange(QWORD nOffset, LPVOID pData, QWORD nLength)
 {
 	if ( m_pFile == NULL ) return FALSE;
 	if ( nLength == 0 ) return TRUE;
-	
+
 	if ( DoesRangeOverlap( nOffset, nLength ) ) return FALSE;
-	
+
 	QWORD nRead = 0;
 	m_pFile->Read( nOffset, pData, nLength, &nRead );
-	
+
 	return nRead == nLength;
 }
 

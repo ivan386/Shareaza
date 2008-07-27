@@ -84,7 +84,7 @@ void CWizardConnectionPage::DoDataExchange(CDataExchange* pDX)
 /////////////////////////////////////////////////////////////////////////////
 // CWizardConnectionPage message handlers
 
-BOOL CWizardConnectionPage::OnInitDialog() 
+BOOL CWizardConnectionPage::OnInitDialog()
 {
 	CPropertyPage::OnInitDialog();
 
@@ -139,7 +139,7 @@ BOOL CWizardConnectionPage::OnInitDialog()
 	return TRUE;
 }
 
-BOOL CWizardConnectionPage::OnSetActive() 
+BOOL CWizardConnectionPage::OnSetActive()
 {
 	SetWizardButtons( PSWIZB_BACK | PSWIZB_NEXT );
 	m_wndProgress.SetPos( 0 );
@@ -147,7 +147,7 @@ BOOL CWizardConnectionPage::OnSetActive()
 	return CWizardPage::OnSetActive();
 }
 
-void CWizardConnectionPage::OnSelChangeConnectionType() 
+void CWizardConnectionPage::OnSelChangeConnectionType()
 {
 	m_wndDownloadSpeed.SetWindowText( _T("") );
 	m_wndUploadSpeed.SetWindowText( _T("") );
@@ -168,7 +168,7 @@ void CWizardConnectionPage::OnSelChangeUPnP()
 			m_bUPnPForward = FALSE;
 }
 
-LRESULT CWizardConnectionPage::OnWizardNext() 
+LRESULT CWizardConnectionPage::OnWizardNext()
 {
 	if ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 ) return 0;
 
@@ -234,7 +234,7 @@ LRESULT CWizardConnectionPage::OnWizardNext()
 	Settings.Bandwidth.Uploads >>= 3;
 	Settings.Bandwidth.Uploads *= 1024;
 
-	Settings.eDonkey.MaxLinks = ( nSpeed < 100 || ! theApp.m_bNT ) ? 35 : 250;
+	Settings.eDonkey.MaxLinks = nSpeed < 100 ? 35 : 250;
 	Settings.OnChangeConnectionSpeed();
 	UploadQueues.CreateDefault();
 
@@ -296,7 +296,7 @@ void CWizardConnectionPage::OnRun()
 		LoadString( strMessage, IDS_WIZARD_UPNP_SETUP );
 		m_wndStatus.SetWindowText( strMessage );
 
-		while ( theApp.m_pUPnPFinder && 
+		while ( theApp.m_pUPnPFinder &&
 				theApp.m_pUPnPFinder->IsAsyncFindRunning() )
 		{
 			Sleep( 1000 );

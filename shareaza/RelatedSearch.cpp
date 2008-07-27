@@ -1,7 +1,7 @@
 //
 // RelatedSearch.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -69,9 +69,9 @@ CRelatedSearch::CRelatedSearch(CMatchFile* pFile)
 	else
 	{
 		m_bXML = FALSE;
-        m_oSHA1.clear();
-        m_oTiger.clear();
-        m_oED2K.clear();
+		m_oSHA1.clear();
+		m_oTiger.clear();
+		m_oED2K.clear();
 		m_oBTH.clear();
 		m_oMD5.clear();
 		m_pSchema = NULL;
@@ -96,9 +96,9 @@ CRelatedSearch::CRelatedSearch(CLibraryFile* pFile)
 	else
 	{
 		m_bXML = FALSE;
-        m_oSHA1.clear();
-        m_oTiger.clear();
-        m_oED2K.clear();
+		m_oSHA1.clear();
+		m_oTiger.clear();
+		m_oED2K.clear();
 		m_oBTH.clear();
 		m_oMD5.clear();
 		m_pSchema = NULL;
@@ -222,14 +222,11 @@ CString CRelatedSearch::Tokenise(LPCTSTR psz)
 	int nChars = 0;
 	CString str, strTemp(psz);
 
-	// remove diacritics; supported for NT systems only
-	if ( theApp.m_bNT )
-	{
-		int nSource = FoldString( MAP_COMPOSITE, psz, -1, NULL, 0 ); //_tcslen( psz );
-		FoldString( MAP_COMPOSITE, psz, -1, strTemp.GetBuffer( nSource ), nSource );
-		strTemp.ReleaseBuffer( nSource );
-		psz = strTemp.GetBuffer( nSource );
-	}
+	// remove diacritics
+	int nSource = FoldString( MAP_COMPOSITE, psz, -1, NULL, 0 ); //_tcslen( psz );
+	FoldString( MAP_COMPOSITE, psz, -1, strTemp.GetBuffer( nSource ), nSource );
+	strTemp.ReleaseBuffer( nSource );
+	psz = strTemp.GetBuffer( nSource );
 
 	int nLastPoint = strTemp.ReverseFind( '.' );
 	if ( nLastPoint > 0 )

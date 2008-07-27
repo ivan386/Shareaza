@@ -1,7 +1,7 @@
 //
 // PageFileComments.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -125,7 +125,8 @@ void CFileCommentsPage::OnDrawItem(int /*nIDCtl*/, LPDRAWITEMSTRUCT lpDrawItemSt
 	CDC dc;
 
 	dc.Attach( lpDrawItemStruct->hDC );
-	if ( Settings.General.LanguageRTL ) theApp.m_pfnSetLayout( dc.m_hDC, LAYOUT_RTL );
+	if ( Settings.General.LanguageRTL )
+		SetLayout( dc.m_hDC, LAYOUT_RTL );
 
 	int nRating = lpDrawItemStruct->itemID;
 

@@ -1,7 +1,7 @@
 //
 // DlgSkinDialog.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -249,46 +249,21 @@ void CSkinDialog::OnWindowPosChanging(WINDOWPOS* lpwndpos)
 {
 	CDialog::OnWindowPosChanging( lpwndpos );
 
-	if ( theApp.m_pfnGetMonitorInfoA != NULL ) //If GetMonitorInfo() is available
-	{
-		MONITORINFO oMonitor = {};
-		oMonitor.cbSize = sizeof(oMonitor);
-		theApp.m_pfnGetMonitorInfoA( theApp.m_pfnMonitorFromWindow( GetSafeHwnd(), MONITOR_DEFAULTTOPRIMARY ), &oMonitor );
+	HMONITOR hMonitor = MonitorFromWindow( GetSafeHwnd(),
+		MONITOR_DEFAULTTOPRIMARY );
 
-		if ( abs( lpwndpos->x - oMonitor.rcWork.left ) < SNAP_SIZE )
-			lpwndpos->x = oMonitor.rcWork.left;
-		if ( abs( lpwndpos->y - oMonitor.rcWork.top ) < SNAP_SIZE )
-			lpwndpos->y = oMonitor.rcWork.top;
-		if ( abs( lpwndpos->x + lpwndpos->cx - oMonitor.rcWork.right ) < SNAP_SIZE )
-			lpwndpos->x = oMonitor.rcWork.right - lpwndpos->cx;
-		if ( abs( lpwndpos->y + lpwndpos->cy - oMonitor.rcWork.bottom ) < SNAP_SIZE )
-			lpwndpos->y = oMonitor.rcWork.bottom - lpwndpos->cy;
-	}
-	else
-	{
-		CRect rcWork;
-		SystemParametersInfo( SPI_GETWORKAREA, 0, &rcWork, 0 );
+	MONITORINFO oMonitor = {0};
+	oMonitor.cbSize = sizeof( MONITORINFO );
+	GetMonitorInfo( hMonitor, &oMonitor );
 
-		if ( abs( lpwndpos->x ) <= ( rcWork.left + SNAP_SIZE ) )
-		{
-			lpwndpos->x = rcWork.left;
-		}
-		else if (	( lpwndpos->x + lpwndpos->cx ) >= ( rcWork.right - SNAP_SIZE ) &&
-					( lpwndpos->x + lpwndpos->cx ) <= ( rcWork.right + SNAP_SIZE ) )
-		{
-			lpwndpos->x = rcWork.right - lpwndpos->cx;
-		}
-
-		if ( abs( lpwndpos->y ) <= ( rcWork.top + SNAP_SIZE ) )
-		{
-			lpwndpos->y = rcWork.top;
-		}
-		else if (	( lpwndpos->y + lpwndpos->cy ) >= ( rcWork.bottom - SNAP_SIZE ) &&
-					( lpwndpos->y + lpwndpos->cy ) <= ( rcWork.bottom + SNAP_SIZE ) )
-		{
-			lpwndpos->y = rcWork.bottom-lpwndpos->cy;
-		}
-	}
+	if ( abs( lpwndpos->x - oMonitor.rcWork.left ) < SNAP_SIZE )
+		lpwndpos->x = oMonitor.rcWork.left;
+	if ( abs( lpwndpos->y - oMonitor.rcWork.top ) < SNAP_SIZE )
+		lpwndpos->y = oMonitor.rcWork.top;
+	if ( abs( lpwndpos->x + lpwndpos->cx - oMonitor.rcWork.right ) < SNAP_SIZE )
+		lpwndpos->x = oMonitor.rcWork.right - lpwndpos->cx;
+	if ( abs( lpwndpos->y + lpwndpos->cy - oMonitor.rcWork.bottom ) < SNAP_SIZE )
+		lpwndpos->y = oMonitor.rcWork.bottom - lpwndpos->cy;
 }
 
 int CSkinDialog::OnCreate(LPCREATESTRUCT lpCreateStruct)
@@ -321,11 +296,11 @@ BOOL CSkinDialog::OnInitDialog()
 
 			GetWindowRect( &rcClient );
 			ScreenToClient( &rcClient );
-			pBanner->SetWindowPos( NULL, rcClient.left + rcClient.Width() - rc.Width(), 
+			pBanner->SetWindowPos( NULL, rcClient.left + rcClient.Width() - rc.Width(),
 				0, 0, 0, SWP_NOSIZE|SWP_NOZORDER );
 		}
 	}
-	return TRUE; 
+	return TRUE;
 }
 
 BOOL CSkinDialog::OnHelpInfo(HELPINFO* /*pHelpInfo*/)

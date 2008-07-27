@@ -115,7 +115,7 @@ BOOL CImageServices::LoadFromMemory(CImageFile* pFile, LPCTSTR pszType, LPCVOID 
 				{
 					CopyMemory( pTarget, pData, nLength );
 					VERIFY( SUCCEEDED( SafeArrayUnaccessData( pInput ) ) );
-					
+
 					CComBSTR bstrType( pszType );
 					HINSTANCE hRes = AfxGetResourceHandle();
 
@@ -179,7 +179,7 @@ BOOL CImageServices::LoadFromFile(CImageFile* pFile, LPCTSTR szFilename, BOOL bS
 		if ( ! bSuccess && ( hr == E_NOTIMPL ) )
 		{
 			HANDLE hFile = CreateFile( szFilename, GENERIC_READ,
-				FILE_SHARE_READ | ( theApp.m_bNT ? FILE_SHARE_DELETE : 0 ),
+				FILE_SHARE_READ | FILE_SHARE_DELETE,
 				NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL );
 			VERIFY_FILE_ACCESS( hFile, szFilename )
 			if ( hFile != INVALID_HANDLE_VALUE )
@@ -189,7 +189,7 @@ BOOL CImageServices::LoadFromFile(CImageFile* pFile, LPCTSTR szFilename, BOOL bS
 					HANDLE hMap = CreateFileMapping( hFile, NULL, PAGE_READONLY,
 						0, 0, NULL );
 					if ( hMap )
-					{		
+					{
 						LPCVOID pBuffer = MapViewOfFile( hMap, FILE_MAP_READ,
 							0, 0, 0 );
 						if ( pBuffer )
@@ -275,64 +275,64 @@ BOOL CImageServices::SaveToMemory(CImageFile* pFile, LPCTSTR pszType, int nQuali
 	pParams.nHeight		= pFile->m_nHeight;
 	pParams.nComponents	= pFile->m_nComponents;
 	pParams.nQuality	= nQuality;
-	
+
 	SAFEARRAY* pOutput = NULL;
 	HINSTANCE hRes = AfxGetResourceHandle();
 	BSTR bstrType = SysAllocString ( CT2CW (pszType));
 	pService->SaveToMemory( bstrType, &pOutput, &pParams, pSource );
 	SysFreeString (bstrType);
 	AfxSetResourceHandle( hRes );
-	
+
 	SafeArrayDestroy( pSource );
-	
+
 	if ( pOutput == NULL ) return FALSE;
-	
+
 	SafeArrayGetUBound( pOutput, 1, (PLONG)pnLength );
 	(*pnLength)++;
 
 	LPBYTE pEncoded;
 	SafeArrayAccessData( pOutput, (VOID**)&pEncoded );
-	
+
 	*ppBuffer = new BYTE[ *pnLength ];
 	CopyMemory( *ppBuffer, pEncoded, *pnLength );
-	
+
 	SafeArrayUnaccessData( pOutput );
 	SafeArrayDestroy( pOutput );
-	
+
 	return TRUE;
 }
 
 /*BOOL CImageServices::SaveToFile(CImageFile* pFile, LPCTSTR pszType, int nQuality, HANDLE hFile, DWORD* pnLength)
 {
 	if ( pnLength ) *pnLength = 0;
-	
+
 	IImageServicePlugin* pService = GetService( pszType );
 	if ( pService == NULL ) return FALSE;
-	
+
 	SAFEARRAY* pSource = ImageToArray( pFile );
 	if ( pSource == NULL ) return FALSE;
-	
+
 	IMAGESERVICEDATA pParams = {};
 	pParams.cbSize		= sizeof(pParams);
 	pParams.nWidth		= pFile->m_nWidth;
 	pParams.nHeight		= pFile->m_nHeight;
 	pParams.nComponents	= pFile->m_nComponents;
 	pParams.nQuality	= nQuality;
-	
+
 	DWORD nBefore = SetFilePointer( hFile, 0, NULL, FILE_CURRENT );
-	
+
 	HINSTANCE hRes = AfxGetResourceHandle();
 	BOOL bSuccess = SUCCEEDED( pService->SaveToFile( hFile, &pParams, pSource ) );
 	AfxSetResourceHandle( hRes );
-	
+
 	SafeArrayDestroy( pSource );
-	
+
 	if ( pnLength )
 	{
 		DWORD nAfter = SetFilePointer( hFile, 0, NULL, FILE_CURRENT );
 		*pnLength = nAfter - nBefore;
 	}
-	
+
 	return bSuccess;
 }*/
 
@@ -342,26 +342,26 @@ BOOL CImageServices::SaveToMemory(CImageFile* pFile, LPCTSTR pszType, int nQuali
 SAFEARRAY* CImageServices::ImageToArray(CImageFile* pFile)
 {
 	SAFEARRAY* pOutput;
-	
+
 	if ( FAILED( SafeArrayAllocDescriptor( 1, &pOutput ) ) || pOutput == NULL ) return NULL;
-	
+
 	DWORD nLength = pFile->m_nWidth * pFile->m_nComponents;
 	while ( nLength & 3 ) nLength ++;
 	nLength *= pFile->m_nHeight;
-	
+
 	pOutput->cbElements = 1;
 	pOutput->rgsabound[ 0 ].lLbound = 0;
 	pOutput->rgsabound[ 0 ].cElements = nLength;
-	
+
 	if ( FAILED( SafeArrayAllocData( pOutput ) ) ) return NULL;
-	
+
 	LPBYTE pTarget;
 	if ( FAILED( SafeArrayAccessData( pOutput, (void HUGEP* FAR*)&pTarget ) ) ) return NULL;
-	
+
 	CopyMemory( pTarget, pFile->m_pImage, nLength );
-	
+
 	SafeArrayUnaccessData( pOutput );
-	
+
 	return pOutput;
 }
 
@@ -411,9 +411,9 @@ bool CImageServices::GetService(LPCTSTR szFilename, IImageServicePlugin** ppIIma
 
 	// Just add to the plugin collection for the reference of CLSID.
 	// Not a very nice solution but without checking all plugins
-	// Shareaza holds only 1 plugin in the Plugins collection... 
+	// Shareaza holds only 1 plugin in the Plugins collection...
 /*
-    CPlugin* pPlugin = Plugins.Find( oCLSID );
+	CPlugin* pPlugin = Plugins.Find( oCLSID );
 	if ( ! pPlugin )
 	{
 		// Put an empty name, so it won't be displayed in the Settings

@@ -888,7 +888,7 @@ BOOL CLibraryFile::IsReadable() const
 		return FALSE;
 
 	HANDLE hFile = CreateFile( m_pFolder->m_sPath + _T("\\") + m_sName, GENERIC_READ,
-		FILE_SHARE_READ | ( theApp.m_bNT ? FILE_SHARE_DELETE : 0 ), NULL,
+		FILE_SHARE_READ | FILE_SHARE_DELETE, NULL,
 		OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL );
 	if ( hFile != INVALID_HANDLE_VALUE )
 	{

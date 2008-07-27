@@ -1,7 +1,7 @@
 //
 // DlgURLCopy.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -163,7 +163,7 @@ void CURLCopyDlg::OnIncludeSelf()
 		}
 	}
 
-	if ( m_pFile->m_oED2K && 
+	if ( m_pFile->m_oED2K &&
 		( m_pFile->m_nSize != 0 && m_pFile->m_nSize != SIZE_UNKNOWN ) &&
 		m_pFile->m_sName.GetLength() )
 	{
@@ -279,34 +279,16 @@ BOOL CURLCopyDlg::SetClipboardText(CString& strText)
 
 	EmptyClipboard();
 
-	if ( theApp.m_bNT )
+	CT2CW pszWide( (LPCTSTR)strText );
+	HANDLE hMem = GlobalAlloc( GMEM_MOVEABLE|GMEM_DDESHARE, ( wcslen(pszWide) + 1 ) * sizeof(WCHAR) );
+	if ( hMem )
 	{
-		CT2CW pszWide( (LPCTSTR)strText );
-		HANDLE hMem = GlobalAlloc( GMEM_MOVEABLE|GMEM_DDESHARE, ( wcslen(pszWide) + 1 ) * sizeof(WCHAR) );
-		if ( hMem )
+		LPVOID pMem = GlobalLock( hMem );
+		if ( pMem )
 		{
-			LPVOID pMem = GlobalLock( hMem );
-			if ( pMem )
-			{
-				CopyMemory( pMem, pszWide, ( wcslen(pszWide) + 1 ) * sizeof(WCHAR) );
-				GlobalUnlock( hMem );
-				SetClipboardData( CF_UNICODETEXT, hMem );
-			}
-		}
-	}
-	else
-	{
-		CT2CA pszASCII( (LPCTSTR)strText );
-    	HANDLE hMem = GlobalAlloc( GMEM_MOVEABLE|GMEM_DDESHARE, strlen(pszASCII) + 1 );
-		if ( hMem )
-		{
-			LPVOID pMem = GlobalLock( hMem );
-			if ( pMem )
-			{
-				CopyMemory( pMem, pszASCII, strlen(pszASCII) + 1 );
-				GlobalUnlock( hMem );
-				SetClipboardData( CF_TEXT, hMem );
-			}
+			CopyMemory( pMem, pszWide, ( wcslen(pszWide) + 1 ) * sizeof(WCHAR) );
+			GlobalUnlock( hMem );
+			SetClipboardData( CF_UNICODETEXT, hMem );
 		}
 	}
 
@@ -314,5 +296,3 @@ BOOL CURLCopyDlg::SetClipboardText(CString& strText)
 
 	return TRUE;
 }
-
-

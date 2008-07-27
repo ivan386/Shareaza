@@ -274,7 +274,7 @@ void CChatFrame::MoveHistory(int nDelta)
 	}
 
 	m_nHistory += nDelta;
-	m_nHistory = max( 0, min( PtrToInt( m_pHistory.GetSize() ), m_nHistory ) );
+	m_nHistory = max( 0, min( m_pHistory.GetSize(), m_nHistory ) );
 
 	if ( m_nHistory == m_pHistory.GetSize() )
 	{
@@ -578,24 +578,15 @@ void CChatFrame::OnTimer(UINT_PTR nIDEvent)
 		{
 			CWnd* pParentWnd = GetTopLevelParent();
 
-			if ( theApp.m_hUser32 != 0 )
-			{
-				BOOL (WINAPI *pfnFlashWindowEx)(PFLASHWINFO pfwi);
+			FLASHWINFO pFWX;
 
-				(FARPROC&)pfnFlashWindowEx = GetProcAddress( theApp.m_hUser32, "FlashWindowEx" );
-				if ( pfnFlashWindowEx )
-				{
-					FLASHWINFO pFWX;
+			pFWX.cbSize		= sizeof(pFWX);
+			pFWX.dwFlags	= FLASHW_ALL | FLASHW_TIMERNOFG;
+			pFWX.uCount		= 3;
+			pFWX.dwTimeout	= 0;
+			pFWX.hwnd		= pParentWnd->GetSafeHwnd();
 
-					pFWX.cbSize		= sizeof(pFWX);
-					pFWX.dwFlags	= FLASHW_ALL | FLASHW_TIMERNOFG;
-					pFWX.uCount		= 3;
-					pFWX.dwTimeout	= 0;
-					pFWX.hwnd		= pParentWnd->GetSafeHwnd();
-
-					(*pfnFlashWindowEx)( &pFWX );
-				}
-			}
+			::FlashWindowEx( &pFWX );
 		}
 	}
 }

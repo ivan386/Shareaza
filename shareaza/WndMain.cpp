@@ -292,7 +292,7 @@ CMainWnd::CMainWnd() :
 	theApp.m_pMainWnd = this;
 
 	// Bypass CMDIFrameWnd::LoadFrame
-	if ( theApp.m_dwWindowsVersion >= 6 )
+	if ( theApp.m_bIsVistaOrNewer )
 		VERIFY( CFrameWnd::LoadFrame( IDR_MAINFRAME, WS_VISIBLE ) );
 	else
 		VERIFY( CFrameWnd::LoadFrame( IDR_MAINFRAME, WS_OVERLAPPEDWINDOW ) );
@@ -338,10 +338,10 @@ void CMainWnd::SaveState()
 /////////////////////////////////////////////////////////////////////////////
 // CMainWnd create window
 
-BOOL CMainWnd::PreCreateWindow(CREATESTRUCT& cs) 
+BOOL CMainWnd::PreCreateWindow(CREATESTRUCT& cs)
 {
 	WNDCLASS wndcls = {};
-	
+
 	wndcls.style			= CS_DBLCLKS | CS_OWNDC;
 	wndcls.lpfnWndProc		= AfxWndProc;
 	wndcls.hInstance		= AfxGetInstanceHandle();
@@ -350,11 +350,11 @@ BOOL CMainWnd::PreCreateWindow(CREATESTRUCT& cs)
 	wndcls.hbrBackground	= NULL;
 	wndcls.lpszMenuName		= NULL;
 	wndcls.lpszClassName	= _T("ShareazaMainWnd");
-	
+
 	AfxRegisterClass( &wndcls );
-	
+
 	cs.lpszClass = wndcls.lpszClassName;
-	
+
 	return CMDIFrameWnd::PreCreateWindow( cs );
 }
 
@@ -373,39 +373,39 @@ int CMainWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_pTray.hIcon = CoolInterface.ExtractIcon( IDR_MAINFRAME, FALSE );
 
 	// Icon
-	
+
 	SetIcon( CoolInterface.ExtractIcon( IDR_MAINFRAME, FALSE ), FALSE );
-	
+
 	// Status Bar
-	
+
 	UINT wID[2] = { ID_SEPARATOR, ID_SEPARATOR };
 	if ( ! m_wndStatusBar.Create( this ) ) return -1;
 	m_wndStatusBar.SetIndicators( wID, 2 );
 	m_wndStatusBar.SetPaneInfo( 0, ID_SEPARATOR, SBPS_STRETCH, 0 );
 	m_wndStatusBar.SetPaneInfo( 1, ID_SEPARATOR, SBPS_NORMAL, 210 );
-	
+
 	EnableDocking( CBRS_ALIGN_ANY );
-	
+
 	// Menu Bar
-	
+
 	SetMenu( NULL );
 
 	if ( ! m_wndMenuBar.Create( this, WS_CHILD|WS_VISIBLE|CBRS_TOP, IDW_MENU_BAR ) ) return -1;
 	m_wndMenuBar.SetWindowText( _T("Menubar") );
 	m_wndMenuBar.EnableDocking( CBRS_ALIGN_TOP | CBRS_ALIGN_BOTTOM );
 	DockControlBar( &m_wndMenuBar, AFX_IDW_DOCKBAR_TOP );
-	
+
 	// Nav Bar
-	
+
 	if ( ! m_wndNavBar.Create( this, WS_CHILD|WS_VISIBLE|CBRS_TOP, IDW_NAV_BAR ) ) return -1;
 	m_wndNavBar.SetWindowText( _T("Navigation Bar") );
 	m_wndNavBar.EnableDocking( CBRS_ALIGN_TOP | CBRS_ALIGN_BOTTOM );
 	m_wndNavBar.SetBarStyle( m_wndNavBar.GetBarStyle() | CBRS_TOOLTIPS );
 	DockControlBar( &m_wndNavBar, AFX_IDW_DOCKBAR_TOP );
 	ShowControlBar( &m_wndNavBar, FALSE, FALSE );
-	
+
 	// Tool Bar
-	
+
 	m_wndToolBar.EnableDrop();
 	if ( ! m_wndToolBar.Create( this, WS_CHILD|CBRS_TOP, IDW_TOOL_BAR ) ) return -1;
 	m_wndToolBar.SetWindowText( _T("Toolbar") );
@@ -414,24 +414,24 @@ int CMainWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_wndToolBar.SetGripper( TRUE );
 	DockControlBar( &m_wndToolBar, AFX_IDW_DOCKBAR_TOP );
 	ShowControlBar( &m_wndToolBar, FALSE, FALSE );
-	
+
 	// Tab Bar
-	
+
 	if ( ! m_wndTabBar.Create( this, WS_CHILD|WS_VISIBLE|CBRS_BOTTOM, IDW_TAB_BAR ) ) return -1;
 	m_wndTabBar.SetWindowText( _T("Windows") );
 	m_wndTabBar.EnableDocking( CBRS_ALIGN_TOP | CBRS_ALIGN_BOTTOM );
 	m_wndTabBar.SetBarStyle( m_wndTabBar.GetBarStyle() | CBRS_TOOLTIPS );
 	DockControlBar( &m_wndTabBar, AFX_IDW_DOCKBAR_TOP );
-	
+
 	// Monitor Bar
-	
+
 	if ( ! m_wndMonitorBar.Create( this, WS_CHILD|WS_VISIBLE|CBRS_BOTTOM, IDW_MONITOR_BAR ) ) return -1;
 	m_wndMonitorBar.m_pSnapBar[0] = &m_wndNavBar;
 	m_wndMonitorBar.m_pSnapBar[1] = &m_wndToolBar;
 	m_wndMonitorBar.SetWindowText( _T("Monitor") );
 	m_wndMonitorBar.EnableDocking( CBRS_ALIGN_TOP | CBRS_ALIGN_BOTTOM );
 	DockControlBar( &m_wndMonitorBar, AFX_IDW_DOCKBAR_TOP );
-	
+
 	// Default Size
 	int iXSize, iYSize;
 	/*
@@ -441,7 +441,7 @@ int CMainWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		iXSize = GetSystemMetrics( SM_CXVIRTUALSCREEN );
 		iYSize = GetSystemMetrics( SM_CYVIRTUALSCREEN );
 	}
-	else	
+	else
 	*/
 	{	// Single Monitor
 		iXSize = GetSystemMetrics( SM_CXSCREEN );
@@ -468,15 +468,15 @@ int CMainWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	}
 
 	// Plugins
-	
+
 	Plugins.Enumerate();
-	
+
 	// Window Setup
-	
+
 	Settings.LoadWindow( _T("CMainWnd"), this );
-	
+
 	LoadBarState( _T("Toolbars\\CoolBar") );
-	
+
 	if ( ! m_wndMenuBar.IsVisible() ) ShowControlBar( &m_wndMenuBar, TRUE, TRUE );
 	if ( ! m_wndNavBar.IsVisible() && ! m_wndToolBar.IsVisible() )
 	{
@@ -484,7 +484,7 @@ int CMainWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		ShowControlBar( &m_wndToolBar, Settings.General.GUIMode == GUI_WINDOWED, TRUE );
 	}
 	if ( ! m_wndTabBar.IsVisible() ) ShowControlBar( &m_wndTabBar, TRUE, FALSE );
-	
+
 	if ( theApp.GetProfileInt( _T("Toolbars"), _T("CRemoteWnd"), TRUE ) )
 		m_wndRemoteWnd.Create( &m_wndMonitorBar );
 
@@ -511,24 +511,24 @@ int CMainWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		PostMessage( WM_COMMAND, ID_NETWORK_CONNECT );
 
 	Settings.Live.LoadWindowState = TRUE;
-		
+
 	// Go
-	
+
 	m_bTrayHide	= FALSE;
 	m_bTrayIcon	= FALSE;
 	m_bTimer	= FALSE;
-	
+
 	SetTimer( 1, 1000, NULL );
 
 	ENABLE_DROP()
-	
+
 	return 0;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 // CMainWnd destroy window
 
-void CMainWnd::OnClose() 
+void CMainWnd::OnClose()
 {
 	CWaitCursor pCursor;
 
@@ -553,23 +553,23 @@ void CMainWnd::OnClose()
 		Shell_NotifyIcon( NIM_DELETE, &m_pTray );
 		m_bTrayIcon = FALSE;
 	}
-	
+
 	SaveState();
 
 	m_pWindows.SaveSearchWindows();
 	m_pWindows.SaveBrowseHostWindows();
-	m_pWindows.Close();	
-	
+	m_pWindows.Close();
+
 	CDownloadMonitorDlg::CloseAll();
 	CFilePreviewDlg::CloseAll();
-	
+
 	Network.Disconnect();
 	Transfers.StopThread();
 	Library.StopThread();
 	ChatCore.StopThread();
-	
+
 	if ( m_wndRemoteWnd.IsVisible() ) m_wndRemoteWnd.DestroyWindow();
-	
+
 	Network.Disconnect();
 
 	m_brshDockbar.DeleteObject();
@@ -577,7 +577,7 @@ void CMainWnd::OnClose()
 	CMDIFrameWnd::OnClose();
 }
 
-void CMainWnd::OnEndSession(BOOL bEnding) 
+void CMainWnd::OnEndSession(BOOL bEnding)
 {
 	CMDIFrameWnd::OnEndSession( bEnding );
 	if ( bEnding ) SendMessage( WM_CLOSE );
@@ -589,26 +589,26 @@ void CMainWnd::OnEndSession(BOOL bEnding)
 void CMainWnd::SetGUIMode(int nMode, BOOL bSaveState)
 {
 	m_pWindows.ShowWindow( SW_HIDE );
-	
+
 	if ( bSaveState )
 	{
 		if ( nMode < 0 ) nMode = Settings.General.GUIMode;
-		
+
 		ShowControlBar( &m_wndMenuBar, FALSE, TRUE );
 		ShowControlBar( &m_wndNavBar, FALSE, TRUE );
 		ShowControlBar( &m_wndToolBar, FALSE, TRUE );
 		ShowControlBar( &m_wndTabBar, FALSE, TRUE );
 		ShowControlBar( &m_wndMonitorBar, FALSE, TRUE );
 	}
-	
+
 	m_pWindows.SetGUIMode( nMode, bSaveState );
 	OnSkinChanged( 0, 0 );
-	
+
 	if ( bSaveState )
 	{
 		DockControlBar( &m_wndMenuBar, AFX_IDW_DOCKBAR_TOP );
 		ShowControlBar( &m_wndMenuBar, TRUE, TRUE );
-		
+
 		if ( nMode != GUI_WINDOWED && m_wndNavBar.HasLocalVersion() )
 		{
 			DockControlBar( &m_wndNavBar, AFX_IDW_DOCKBAR_TOP );
@@ -619,18 +619,18 @@ void CMainWnd::SetGUIMode(int nMode, BOOL bSaveState)
 			DockControlBar( &m_wndToolBar, AFX_IDW_DOCKBAR_TOP );
 			ShowControlBar( &m_wndToolBar, TRUE, TRUE );
 		}
-		
+
 		DockControlBar( &m_wndTabBar, nMode == GUI_WINDOWED ? AFX_IDW_DOCKBAR_BOTTOM : AFX_IDW_DOCKBAR_TOP );
 		ShowControlBar( &m_wndTabBar, TRUE, TRUE );
 	}
 
 	m_wndTabBar.SetMaximumWidth( nMode != GUI_WINDOWED ? 200 : 140 );
 	m_wndTabBar.SetMessage( (UINT)0 );
-	
+
 	if ( bSaveState )
 	{
 		CRect rcWnd, rcBar;
-		
+
 		GetWindowRect( &rcWnd );
 		if ( m_wndNavBar.IsVisible() )
 			m_wndNavBar.GetWindowRect( &rcBar );
@@ -638,34 +638,34 @@ void CMainWnd::SetGUIMode(int nMode, BOOL bSaveState)
 			m_wndToolBar.GetWindowRect( &rcBar );
 		rcBar.left	= rcWnd.right - 128;
 		rcBar.right	= rcWnd.right;
-		
+
 		DockControlBar( &m_wndMonitorBar, AFX_IDW_DOCKBAR_TOP, &rcBar );
 		ShowControlBar( &m_wndMonitorBar, nMode == GUI_WINDOWED, TRUE );
 	}
-	
+
 	m_pWindows.ShowWindow( SW_SHOW );
 }
 
 /////////////////////////////////////////////////////////////////////////////
 // CMainWnd command architecture
 
-BOOL CMainWnd::OnCmdMsg(UINT nID, int nCode, void* pExtra, AFX_CMDHANDLERINFO* pHandlerInfo) 
+BOOL CMainWnd::OnCmdMsg(UINT nID, int nCode, void* pExtra, AFX_CMDHANDLERINFO* pHandlerInfo)
 {
 	if ( m_wndMonitorBar.m_hWnd != NULL )
 	{
 		if ( m_wndMonitorBar.OnCmdMsg( nID, nCode, pExtra, pHandlerInfo ) ) return TRUE;
 	}
-	
+
 	if ( CMediaFrame::g_pMediaFrame != NULL )
 	{
 		if ( CMediaFrame::g_pMediaFrame->OnCmdMsg( nID, nCode, pExtra, pHandlerInfo ) )
 			return TRUE;
 	}
-	
+
 	return CMDIFrameWnd::OnCmdMsg( nID, nCode, pExtra, pHandlerInfo );
 }
 
-BOOL CMainWnd::OnCommand(WPARAM wParam, LPARAM lParam) 
+BOOL CMainWnd::OnCommand(WPARAM wParam, LPARAM lParam)
 {
 	if ( Plugins.OnCommand( m_pWindows.GetActive(), LOWORD( wParam ) ) ) return TRUE;
 	return CMDIFrameWnd::OnCommand( wParam, lParam );
@@ -684,19 +684,19 @@ void CMainWnd::OnUpdateShell(CCmdUI* pCmdUI)
 	pCmdUI->Enable( TRUE );
 }
 
-void CMainWnd::OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu) 
+void CMainWnd::OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu)
 {
 	CMDIFrameWnd::OnInitMenuPopup( pPopupMenu, nIndex, bSysMenu );
 
 	CoolMenu.OnInitMenuPopup( pPopupMenu, nIndex, bSysMenu );
 }
 
-void CMainWnd::OnMeasureItem(int /*nIDCtl*/, LPMEASUREITEMSTRUCT lpMeasureItemStruct) 
+void CMainWnd::OnMeasureItem(int /*nIDCtl*/, LPMEASUREITEMSTRUCT lpMeasureItemStruct)
 {
 	CoolMenu.OnMeasureItem( lpMeasureItemStruct );
 }
 
-void CMainWnd::OnDrawItem(int /*nIDCtl*/, LPDRAWITEMSTRUCT lpDrawItemStruct) 
+void CMainWnd::OnDrawItem(int /*nIDCtl*/, LPDRAWITEMSTRUCT lpDrawItemStruct)
 {
 	CoolMenu.OnDrawItem( lpDrawItemStruct );
 }
@@ -709,7 +709,7 @@ LRESULT CMainWnd::OnMenuChar(UINT nChar, UINT nFlags, CMenu* pMenu)
 	return CMDIFrameWnd::OnMenuChar( nChar, nFlags, pMenu );
 }
 
-void CMainWnd::OnSysColorChange() 
+void CMainWnd::OnSysColorChange()
 {
 	CMDIFrameWnd::OnSysColorChange();
 	CoolInterface.OnSysColourChange();
@@ -721,7 +721,7 @@ void CMainWnd::OnUpdateFrameTitle(BOOL /*bAddToTitle*/)
 	m_wndNavBar.OnUpdateCmdUI( this, FALSE );
 }
 
-void CMainWnd::OnContextMenu(CWnd* pWnd, CPoint point) 
+void CMainWnd::OnContextMenu(CWnd* pWnd, CPoint point)
 {
 	if ( ( pWnd != this || OnNcHitTest( point ) != HTCAPTION ) )
 	{
@@ -736,87 +736,61 @@ void CMainWnd::OnContextMenu(CWnd* pWnd, CPoint point)
 void CMainWnd::OnWindowPosChanging(WINDOWPOS* lpwndpos)
 {
 	CMDIFrameWnd::OnWindowPosChanging( lpwndpos );
-	
-	if ( theApp.m_pfnGetMonitorInfoA != NULL ) //If GetMonitorInfo() is available
-	{
-		MONITORINFO oMonitor = {};
-		oMonitor.cbSize = sizeof(oMonitor);
-		
-		theApp.m_pfnGetMonitorInfoA( theApp.m_pfnMonitorFromWindow( GetSafeHwnd(), MONITOR_DEFAULTTOPRIMARY ), &oMonitor );
-		
-		if ( abs( lpwndpos->x - oMonitor.rcWork.left ) < SNAP_SIZE )
-			lpwndpos->x = oMonitor.rcWork.left;
-		if ( abs( lpwndpos->y - oMonitor.rcWork.top ) < SNAP_SIZE )
-			lpwndpos->y = oMonitor.rcWork.top;
-		if ( abs( lpwndpos->x + lpwndpos->cx - oMonitor.rcWork.right ) < SNAP_SIZE )
-			lpwndpos->x = oMonitor.rcWork.right - lpwndpos->cx;
-		if ( abs( lpwndpos->y + lpwndpos->cy - oMonitor.rcWork.bottom ) < SNAP_SIZE )
-			lpwndpos->y = oMonitor.rcWork.bottom - lpwndpos->cy;
-	}
-	else
-	{
-		CRect rcWork;
-		SystemParametersInfo( SPI_GETWORKAREA, 0, &rcWork, 0 );
-		
-		if ( abs( lpwndpos->x ) <= ( rcWork.left + SNAP_SIZE ) )
-		{
-			lpwndpos->x = rcWork.left;
-		}
-		else if (	( lpwndpos->x + lpwndpos->cx ) >= ( rcWork.right - SNAP_SIZE ) &&
-					( lpwndpos->x + lpwndpos->cx ) <= ( rcWork.right + SNAP_SIZE ) )
-		{
-			lpwndpos->x = rcWork.right - lpwndpos->cx;
-		}
-		
-		if ( abs( lpwndpos->y ) <= ( rcWork.top + SNAP_SIZE ) )
-		{
-			lpwndpos->y = rcWork.top;
-		}
-		else if (	( lpwndpos->y + lpwndpos->cy ) >= ( rcWork.bottom - SNAP_SIZE ) &&
-					( lpwndpos->y + lpwndpos->cy ) <= ( rcWork.bottom + SNAP_SIZE ) )
-		{
-			lpwndpos->y = rcWork.bottom-lpwndpos->cy;
-		}
-	}
+
+	HMONITOR hMonitor = MonitorFromWindow( GetSafeHwnd(),
+		MONITOR_DEFAULTTOPRIMARY );
+
+	MONITORINFO oMonitor = {0};
+	oMonitor.cbSize = sizeof( MONITORINFO );
+	GetMonitorInfo( hMonitor, &oMonitor );
+
+	if ( abs( lpwndpos->x - oMonitor.rcWork.left ) < SNAP_SIZE )
+		lpwndpos->x = oMonitor.rcWork.left;
+	if ( abs( lpwndpos->y - oMonitor.rcWork.top ) < SNAP_SIZE )
+		lpwndpos->y = oMonitor.rcWork.top;
+	if ( abs( lpwndpos->x + lpwndpos->cx - oMonitor.rcWork.right ) < SNAP_SIZE )
+		lpwndpos->x = oMonitor.rcWork.right - lpwndpos->cx;
+	if ( abs( lpwndpos->y + lpwndpos->cy - oMonitor.rcWork.bottom ) < SNAP_SIZE )
+		lpwndpos->y = oMonitor.rcWork.bottom - lpwndpos->cy;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 // CMainWnd common timer
 
-void CMainWnd::OnTimer(UINT_PTR /*nIDEvent*/) 
+void CMainWnd::OnTimer(UINT_PTR /*nIDEvent*/)
 {
 	// Fix resource handle
-	
+
 	ASSERT( AfxGetResourceHandle() == m_hInstance );
 	//if ( AfxGetResourceHandle() != m_hInstance )
 	//	AfxSetResourceHandle( m_hInstance );
 
 	// Propagate to children
-	
+
 	if ( m_bTimer ) return;
 	m_bTimer = TRUE;
-	
+
 	for ( POSITION pos = m_pWindows.GetIterator() ; pos ; )
 	{
 		CChildWnd* pChild = m_pWindows.GetNext( pos );
 		pChild->PostMessage( WM_TIMER, 1, 0 );
 	}
-	
+
 	m_bTimer = FALSE;
 	Settings.Live.LoadWindowState = FALSE;
-	
+
 	// Statistics
-	
+
 	Statistics.Update();
-	
+
 	// Hashing progress window
-	
+
 	m_wndHashProgressBar.Run();
-	
+
 	// Switch tray icon
-	
+
 	BOOL bNeedTrayIcon = m_bTrayHide || Settings.General.TrayMinimise || Settings.General.CloseMode == 2;
-	
+
 	if ( bNeedTrayIcon && ! m_bTrayIcon )
 	{
 		// Delete existing tray icon (if any), windows can't create a new icon with same uID
@@ -825,7 +799,7 @@ void CMainWnd::OnTimer(UINT_PTR /*nIDEvent*/)
 		m_pTray.uID					= 0;
 		m_pTray.uFlags				= NIF_ICON | NIF_MESSAGE | NIF_TIP;
 		m_pTray.uCallbackMessage	= WM_TRAY;
-		
+
 		_tcscpy( m_pTray.szTip, Settings.SmartAgent() );
 		m_bTrayIcon = Shell_NotifyIcon( NIM_ADD, &m_pTray );
 	}
@@ -834,22 +808,22 @@ void CMainWnd::OnTimer(UINT_PTR /*nIDEvent*/)
 		Shell_NotifyIcon( NIM_DELETE, &m_pTray );
 		m_bTrayIcon = FALSE;
 	}
-	
+
 	// Menu Bar
-	
-	if ( m_wndMenuBar.IsWindowVisible() == FALSE ) 
+
+	if ( m_wndMenuBar.IsWindowVisible() == FALSE )
 		ShowControlBar( &m_wndMenuBar, TRUE, FALSE );
 
 	// Scheduler
-	
+
 	if ( Settings.Scheduler.Enable ) Schedule.Update();
 
 	// Network / disk space / directory checks
 
 	LocalSystemChecks();
-	
+
 	// Update messages
-	
+
 	UpdateMessages();
 
 	// Periodic saves
@@ -863,10 +837,10 @@ void CMainWnd::OnTimer(UINT_PTR /*nIDEvent*/)
 	}
 }
 
-void CMainWnd::OnActivateApp(BOOL bActive, DWORD dwTask) 
+void CMainWnd::OnActivateApp(BOOL bActive, DWORD dwTask)
 {
 	CMDIFrameWnd::OnActivateApp( bActive, dwTask );
-	
+
 	if ( ! bActive )
 	{
 		CoFreeUnusedLibraries();
@@ -877,8 +851,8 @@ void CMainWnd::OnActivateApp(BOOL bActive, DWORD dwTask)
 void CMainWnd::OnActivate(UINT nState, CWnd* pWndOther, BOOL bMinimized)
 {
 	CMDIFrameWnd::OnActivate( nState, pWndOther, bMinimized );
-	
-    if ( nState != WA_INACTIVE )
+
+	if ( nState != WA_INACTIVE )
 	{
 		if ( CChildWnd* pChildWnd = m_pWindows.GetActive() )
 		{
@@ -887,13 +861,13 @@ void CMainWnd::OnActivate(UINT nState, CWnd* pWndOther, BOOL bMinimized)
 	}
 }
 
-void CMainWnd::OnGetMinMaxInfo(MINMAXINFO FAR* lpMMI) 
+void CMainWnd::OnGetMinMaxInfo(MINMAXINFO FAR* lpMMI)
 {
 	CMDIFrameWnd::OnGetMinMaxInfo( lpMMI );
-	
+
 	lpMMI->ptMinTrackSize.x = 320;
 	lpMMI->ptMinTrackSize.y = 240;
-	
+
 	if ( m_pSkin ) m_pSkin->OnGetMinMaxInfo( lpMMI );
 }
 
@@ -940,7 +914,7 @@ void CMainWnd::OpenFromTray(int nShowCmd)
 {
 	if ( m_bTrayHide ) ShowWindow( nShowCmd );
 	if ( IsIconic() ) SendMessage( WM_SYSCOMMAND, SC_RESTORE );
-	
+
 	SetForegroundWindow();
 	m_bTrayHide = FALSE;
 }
@@ -956,12 +930,12 @@ LRESULT CMainWnd::OnTray(WPARAM /*wParam*/, LPARAM lParam)
 		UINT nFlags = TPM_RIGHTBUTTON;
 		CPoint pt;
 		CRect rc;
-		
+
 		GetCursorPos( &pt );
 		SystemParametersInfo( SPI_GETWORKAREA, 0, &rc, 0 );
-		
+
 		nFlags |= TPM_CENTERALIGN;
-		
+
 		if ( pt.y > GetSystemMetrics( SM_CYSCREEN ) / 2 )
 		{
 			pt.y = rc.bottom;
@@ -972,36 +946,34 @@ LRESULT CMainWnd::OnTray(WPARAM /*wParam*/, LPARAM lParam)
 			pt.y = rc.top;
 			nFlags |= TPM_BOTTOMALIGN;
 		}
-		
+
 		SetForegroundWindow();
-		
+
 		CMenu* pMenu = Skin.GetMenu( _T("CMainWnd.Tray") );
 		if ( pMenu == NULL ) return 0;
-		
+
 		MENUITEMINFO pInfo;
 		pInfo.cbSize	= sizeof(pInfo);
 		pInfo.fMask		= MIIM_STATE;
 		GetMenuItemInfo( pMenu->GetSafeHmenu(), ID_TRAY_OPEN, FALSE, &pInfo );
 		pInfo.fState	|= MFS_DEFAULT;
 		SetMenuItemInfo( pMenu->GetSafeHmenu(), ID_TRAY_OPEN, FALSE, &pInfo );
-		
+
 		pMenu->TrackPopupMenu( nFlags, pt.x, pt.y, this, NULL );
-		
+
 		PostMessage( WM_NULL );
 	}
 
 	return 0;
 }
 
-void CMainWnd::OnTrayOpen() 
+void CMainWnd::OnTrayOpen()
 {
 	OpenFromTray();
 }
 
 LRESULT CMainWnd::OnChangeAlpha(WPARAM wParam, LPARAM /*lParam*/)
 {
-	if ( theApp.m_pfnSetLayeredWindowAttributes == NULL ) return -1;
-
 	if ( wParam == 1 ) // Increase transparency
 	{
 		m_nAlpha += 5;
@@ -1014,7 +986,7 @@ LRESULT CMainWnd::OnChangeAlpha(WPARAM wParam, LPARAM /*lParam*/)
 	}
 
 	ModifyStyleEx( 0, WS_EX_LAYERED );
-	theApp.m_pfnSetLayeredWindowAttributes( GetSafeHwnd(), 0, (BYTE)m_nAlpha, LWA_ALPHA );
+	SetLayeredWindowAttributes( 0, (BYTE)m_nAlpha, LWA_ALPHA );
 
 	CWnd* pWndPopup = (CWnd*)GetWindow( GW_ENABLEDPOPUP );
 	if ( pWndPopup == NULL ) return 0;
@@ -1027,13 +999,13 @@ LRESULT CMainWnd::OnChangeAlpha(WPARAM wParam, LPARAM /*lParam*/)
 	else
 	{
 		pWndPopup->ModifyStyleEx( 0, WS_EX_LAYERED );
-		theApp.m_pfnSetLayeredWindowAttributes( pWndPopup->GetSafeHwnd(), 0, (BYTE)m_nAlpha, LWA_ALPHA );
+		::SetLayeredWindowAttributes( pWndPopup->GetSafeHwnd(), 0, (BYTE)m_nAlpha, LWA_ALPHA );
 	}
 
 	return 0;
 }
 
-void CMainWnd::OnSysCommand(UINT nID, LPARAM lParam) 
+void CMainWnd::OnSysCommand(UINT nID, LPARAM lParam)
 {
 	if ( ( nID & 0xFFF0 ) == SC_KEYMENU )
 	{
@@ -1043,11 +1015,11 @@ void CMainWnd::OnSysCommand(UINT nID, LPARAM lParam)
 				m_wndMenuBar.OpenMenuChar( static_cast< UINT >( lParam ) );
 			else
 				m_wndMenuBar.OpenMenuBar();
-				
+
 			return;
 		}
 	}
-	
+
 	if ( m_bTrayHide )
 	{
 		switch ( nID & 0xFFF0 )
@@ -1063,7 +1035,7 @@ void CMainWnd::OnSysCommand(UINT nID, LPARAM lParam)
 	else
 	{
 		BOOL bShift = ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 );
-		
+
 		switch ( nID & 0xFFF0 )
 		{
 		case SC_CLOSE:
@@ -1072,7 +1044,7 @@ void CMainWnd::OnSysCommand(UINT nID, LPARAM lParam)
 				CCloseModeDlg dlg;
 				if ( dlg.DoModal() != IDOK ) return;
 			}
-			
+
 			if ( Settings.General.CloseMode == 3 && ! bShift )
 			{
 				if ( Settings.Live.AutoClose )
@@ -1096,7 +1068,7 @@ void CMainWnd::OnSysCommand(UINT nID, LPARAM lParam)
 			break;
 		}
 	}
-	
+
 	CMDIFrameWnd::OnSysCommand( nID, lParam );
 }
 
@@ -1106,30 +1078,30 @@ void CMainWnd::OnSysCommand(UINT nID, LPARAM lParam)
 LRESULT CMainWnd::OnSkinChanged(WPARAM /*wParam*/, LPARAM /*lParam*/)
 {
 	CWaitCursor pCursor;
-	
+
 	m_pSkin = NULL;
-	
+
 	m_pWindows.PostSkinRemove();
 	m_wndMenuBar.SetMenu( NULL );
 	m_wndToolBar.Clear();
-	
+
 	CDownloadMonitorDlg::OnSkinChange( FALSE );
 	CSettingsManagerDlg::OnSkinChange( FALSE );
 	CFilePreviewDlg::OnSkinChange( FALSE );
-	
+
 	Skin.Apply();
-	
+
 	if ( CMenu* pMenu = Skin.GetMenu( _T("CMainWnd") ) )
 	{
 		m_wndMenuBar.SetMenu( pMenu->GetSafeHmenu() );
 	}
-	
+
 	Skin.CreateToolBar( _T("CMainWnd"), &m_wndToolBar );
 	m_wndNavBar.OnSkinChange();
-	
+
 	m_wndMenuBar.SetWatermark( Skin.GetWatermark( _T("CCoolMenuBar") ) );
 	m_wndTabBar.OnSkinChange();
-	
+
 	if ( CWnd* pDockBar = GetDlgItem( AFX_IDW_DOCKBAR_TOP ) )
 	{
 		m_brshDockbar.DeleteObject();
@@ -1137,13 +1109,13 @@ LRESULT CMainWnd::OnSkinChanged(WPARAM /*wParam*/, LPARAM /*lParam*/)
 		SetClassLongPtr( pDockBar->GetSafeHwnd(), GCLP_HBRBACKGROUND,
 			(LONG)(LONG_PTR)(HBRUSH)m_brshDockbar );
 	}
-	
+
 	m_pSkin = Skin.GetWindowSkin( this );
 
 	if ( m_pSkin != NULL )
 	{
 		// Windows Vista Skinning Workaround
-		ModifyStyle( theApp.m_dwWindowsVersion >= 6 ? WS_OVERLAPPEDWINDOW : WS_CAPTION , 0 );
+		ModifyStyle( theApp.m_bIsVistaOrNewer ? WS_OVERLAPPEDWINDOW : WS_CAPTION , 0 );
 		m_pWindows.ModifyStyleEx( WS_EX_CLIENTEDGE , 0 );
 		SetWindowRgn( NULL, TRUE );
 		m_pSkin->OnSize( this );
@@ -1154,7 +1126,7 @@ LRESULT CMainWnd::OnSkinChanged(WPARAM /*wParam*/, LPARAM /*lParam*/)
 		m_pWindows.ModifyStyleEx( 0 , WS_EX_CLIENTEDGE );
 		SetWindowRgn( NULL, TRUE );
 	}
-	
+
 	m_wndRemoteWnd.OnSkinChange();
 	m_wndMonitorBar.OnSkinChange();
 	if ( theApp.GetProfileInt( L"Toolbars", L"ShowMonitor", TRUE ) )
@@ -1163,21 +1135,21 @@ LRESULT CMainWnd::OnSkinChanged(WPARAM /*wParam*/, LPARAM /*lParam*/)
 		if ( !m_wndMonitorBar.IsVisible() && Settings.General.GUIMode != GUI_WINDOWED )
 			PostMessage( WM_COMMAND, ID_WINDOW_MONITOR );
 	}
-	
+
 	SetWindowPos( NULL, 0, 0, 0, 0, SWP_NOMOVE|SWP_NOSIZE|
 		SWP_NOACTIVATE|SWP_NOZORDER|SWP_FRAMECHANGED|SWP_DRAWFRAME );
-	
+
 	UpdateMessages();
-	
+
 	m_wndToolBar.OnUpdated();
 	m_pWindows.PostSkinChange();
 	m_wndTabBar.OnUpdateCmdUI( this, FALSE );
 	RedrawWindow( NULL, NULL, RDW_INVALIDATE|RDW_FRAME|RDW_ALLCHILDREN );
-	
+
 	CSettingsManagerDlg::OnSkinChange( TRUE );
 	CDownloadMonitorDlg::OnSkinChange( TRUE );
 	CFilePreviewDlg::OnSkinChange( TRUE );
-	
+
 	Invalidate();
 
 	// Update shell icons
@@ -1196,11 +1168,11 @@ LRESULT CMainWnd::OnWinsock(WPARAM wParam, LPARAM lParam)
 LRESULT CMainWnd::OnHandleURL(WPARAM wParam, LPARAM /*lParam*/)
 {
 	CShareazaURL* pURL = (CShareazaURL*)wParam;
-	
+
 	DWORD tNow = GetTickCount();
 	BOOL bSoon = ( tNow - m_tURLTime < 750 );
 	m_tURLTime = tNow;
-	
+
 	if ( IsWindowEnabled() )
 	{
 		m_pURLDialog = new CURLActionDlg( this, pURL, bSoon );
@@ -1220,7 +1192,7 @@ LRESULT CMainWnd::OnHandleURL(WPARAM wParam, LPARAM /*lParam*/)
 			delete pURL;
 		}
 	}
-	
+
 	return 0;
 }
 
@@ -1229,12 +1201,12 @@ LRESULT CMainWnd::OnHandleCollection(WPARAM wParam, LPARAM /*lParam*/)
 	LPTSTR pszPath = (LPTSTR)wParam;
 	CString strPath( pszPath );
 	delete [] pszPath;
-	
+
 	if ( CLibraryWnd* pLibrary = (CLibraryWnd*)m_pWindows.Open( RUNTIME_CLASS(CLibraryWnd) ) )
 	{
 		pLibrary->OnCollection( strPath );
 	}
-	
+
 	return 0;
 }
 
@@ -1244,7 +1216,7 @@ LRESULT CMainWnd::OnVersionCheck(WPARAM wParam, LPARAM /*lParam*/)
 	{
 		AfxMessageBox( VersionChecker.m_sMessage, MB_ICONINFORMATION );
 	}
-	
+
 	if ( wParam == VC_MESSAGE_AND_CONFIRM || wParam == VC_CONFIRM )
 	{
 		// Check for already downloaded file
@@ -1262,7 +1234,7 @@ LRESULT CMainWnd::OnVersionCheck(WPARAM wParam, LPARAM /*lParam*/)
 			AfxMessageBox( strMessage, MB_ICONINFORMATION | MB_OK );
 		}
 	}
-	
+
 	if ( wParam == VC_UPGRADE && VersionChecker.m_sUpgradePath.GetLength() )
 	{
 		CString strFormat, strMessage;
@@ -1278,7 +1250,7 @@ LRESULT CMainWnd::OnVersionCheck(WPARAM wParam, LPARAM /*lParam*/)
 			// Postponed till next session
 			Settings.VersionCheck.NextCheck = 0;
 	}
-	
+
 	return 0;
 }
 
@@ -1459,20 +1431,20 @@ void CMainWnd::UpdateMessages()
 			if ( ! Shell_NotifyIcon( NIM_MODIFY, &m_pTray ) ) m_bTrayIcon = FALSE;
 		}
 	}
-	
+
 	LoadString( strMessage, IDR_MAINFRAME );
-	
+
 	if ( Settings.Live.AutoClose )
 	{
 		LoadString( strOld, IDS_CLOSING_AFTER );
 		strMessage += strOld;
 	}
-	
+
 	if ( _tcsistr( strMessage, _T(CLIENT_NAME) ) == NULL )
 	{
 		strMessage = _T(CLIENT_NAME) _T(" ") + strMessage;
 	}
-	
+
 	GetWindowText( strOld );
 	if ( strOld != strMessage ) SetWindowText( strMessage );
 }
@@ -1520,13 +1492,13 @@ void CMainWnd::LocalSystemChecks()
 			nCompleteAttributes = GetFileAttributes( Settings.Downloads.CompletePath );
 			nIncompleteAttributes = GetFileAttributes( Settings.Downloads.IncompletePath );
 
-			if ( ( nCompleteAttributes == INVALID_FILE_ATTRIBUTES ) ||  ( nIncompleteAttributes == INVALID_FILE_ATTRIBUTES ) || 
+			if ( ( nCompleteAttributes == INVALID_FILE_ATTRIBUTES ) ||  ( nIncompleteAttributes == INVALID_FILE_ATTRIBUTES ) ||
 				!( nCompleteAttributes & FILE_ATTRIBUTE_DIRECTORY ) || !( nIncompleteAttributes & FILE_ATTRIBUTE_DIRECTORY ) )
 			{
 				Settings.Live.DiskWriteWarning = TRUE;
 				PostMessage( WM_COMMAND, ID_HELP_DISKWRITEFAIL );
 			}
-			else if ( theApp.m_bNT )
+			else
 			{
 /*
 // Note: These checks fail on some machines. WinXP goofyness?
@@ -1547,7 +1519,7 @@ void CMainWnd::LocalSystemChecks()
 		{
 			if ( Network.IsConnected() )
 			{
-				if ( Network.IsAvailable() || Network.IsWellConnected() )				
+				if ( Network.IsAvailable() || Network.IsWellConnected() )
 				{
 					// Internet is available
 					nConnectionFailCount = 0;
@@ -1611,15 +1583,15 @@ void CMainWnd::LocalSystemChecks()
 /////////////////////////////////////////////////////////////////////////////
 // CMainWnd network menu
 
-void CMainWnd::OnUpdateNetworkSearch(CCmdUI* pCmdUI) 
+void CMainWnd::OnUpdateNetworkSearch(CCmdUI* pCmdUI)
 {
 	pCmdUI->Enable( IsWindowEnabled() );
 }
 
-void CMainWnd::OnNetworkSearch() 
+void CMainWnd::OnNetworkSearch()
 {
 	if ( ! Network.IsWellConnected() ) Network.Connect( TRUE );
-	
+
 	if ( Settings.Search.SearchPanel && ! m_bTrayHide && ! IsIconic() )
 	{
 		m_pWindows.OpenNewSearchWindow();
@@ -1631,11 +1603,11 @@ void CMainWnd::OnNetworkSearch()
 		if ( dlg.DoModal() != IDOK ) return;
 		new CSearchWnd( dlg.GetSearch() );
 	}
-	
+
 	OpenFromTray();
 }
 
-void CMainWnd::OnUpdateNetworkConnect(CCmdUI* pCmdUI) 
+void CMainWnd::OnUpdateNetworkConnect(CCmdUI* pCmdUI)
 {
 	pCmdUI->Enable( TRUE );
 
@@ -1665,34 +1637,34 @@ void CMainWnd::OnUpdateNetworkConnect(CCmdUI* pCmdUI)
 	pCmdUI->SetText( strText );
 }
 
-void CMainWnd::OnNetworkConnect() 
+void CMainWnd::OnNetworkConnect()
 {
 	Network.Connect( TRUE );
 }
 
-void CMainWnd::OnUpdateNetworkDisconnect(CCmdUI* pCmdUI) 
+void CMainWnd::OnUpdateNetworkDisconnect(CCmdUI* pCmdUI)
 {
 	pCmdUI->Enable( Network.IsConnected() );
 }
 
-void CMainWnd::OnNetworkDisconnect() 
+void CMainWnd::OnNetworkDisconnect()
 {
 	Network.Disconnect();
 }
 
-void CMainWnd::OnUpdateNetworkConnectTo(CCmdUI* pCmdUI) 
+void CMainWnd::OnUpdateNetworkConnectTo(CCmdUI* pCmdUI)
 {
 	pCmdUI->Enable( TRUE );
 }
 
-void CMainWnd::OnNetworkConnectTo() 
+void CMainWnd::OnNetworkConnectTo()
 {
 	CConnectToDlg dlg;
 	if ( dlg.DoModal() != IDOK ) return;
 	Network.ConnectTo( dlg.m_sHost, dlg.m_nPort, PROTOCOLID( dlg.m_nProtocol + 1 ), dlg.m_bNoUltraPeer );
 }
 
-void CMainWnd::OnNetworkBrowseTo() 
+void CMainWnd::OnNetworkBrowseTo()
 {
 	CConnectToDlg dlg( NULL, TRUE );
 	if ( dlg.DoModal() != IDOK ) return;
@@ -1705,12 +1677,12 @@ void CMainWnd::OnNetworkBrowseTo()
 	}
 }
 
-void CMainWnd::OnUpdateNetworkG2(CCmdUI* pCmdUI) 
+void CMainWnd::OnUpdateNetworkG2(CCmdUI* pCmdUI)
 {
 	pCmdUI->SetCheck( Settings.Gnutella2.EnableToday );
 }
 
-void CMainWnd::OnNetworkG2() 
+void CMainWnd::OnNetworkG2()
 {
 	if ( Settings.Gnutella2.EnableToday )
 	{
@@ -1732,7 +1704,7 @@ void CMainWnd::OnNetworkG2()
 	}
 }
 
-void CMainWnd::OnUpdateNetworkG1(CCmdUI* pCmdUI) 
+void CMainWnd::OnUpdateNetworkG1(CCmdUI* pCmdUI)
 {
 	pCmdUI->SetCheck( Settings.Gnutella1.EnableToday );
 #ifdef LAN_MODE
@@ -1742,14 +1714,14 @@ void CMainWnd::OnUpdateNetworkG1(CCmdUI* pCmdUI)
 #endif // LAN_MODE
 }
 
-void CMainWnd::OnNetworkG1() 
+void CMainWnd::OnNetworkG1()
 {
 #ifndef LAN_MODE
 	Settings.Gnutella1.EnableToday = !Settings.Gnutella1.EnableToday;
 
 	if ( Settings.Gnutella1.EnableToday )
 	{
-		if ( Settings.Scheduler.Enable && 
+		if ( Settings.Scheduler.Enable &&
 			 ( !Settings.Gnutella1.EnableAlways || Settings.Scheduler.LimitedNetworks ) )
 		{
 			CString strMessage;
@@ -1769,7 +1741,7 @@ void CMainWnd::OnNetworkG1()
 #endif // LAN_MODE
 }
 
-void CMainWnd::OnUpdateNetworkED2K(CCmdUI* pCmdUI) 
+void CMainWnd::OnUpdateNetworkED2K(CCmdUI* pCmdUI)
 {
 	pCmdUI->SetCheck( Settings.eDonkey.EnableToday );
 #ifdef LAN_MODE
@@ -1779,14 +1751,14 @@ void CMainWnd::OnUpdateNetworkED2K(CCmdUI* pCmdUI)
 #endif // LAN_MODE
 }
 
-void CMainWnd::OnNetworkED2K() 
+void CMainWnd::OnNetworkED2K()
 {
 #ifndef LAN_MODE
 	Settings.eDonkey.EnableToday = !Settings.eDonkey.EnableToday;
 
 	if ( Settings.eDonkey.EnableToday )
 	{
-		if ( Settings.Scheduler.Enable && 
+		if ( Settings.Scheduler.Enable &&
 			( !Settings.eDonkey.EnableAlways || Settings.Scheduler.LimitedNetworks ) )
 		{
 			CString strMessage;
@@ -1804,15 +1776,15 @@ void CMainWnd::OnNetworkED2K()
 #endif // LAN_MODE
 }
 
-void CMainWnd::OnUpdateNetworkAutoClose(CCmdUI* pCmdUI) 
+void CMainWnd::OnUpdateNetworkAutoClose(CCmdUI* pCmdUI)
 {
-	pCmdUI->Enable( Settings.Connection.RequireForTransfers && 
+	pCmdUI->Enable( Settings.Connection.RequireForTransfers &&
 					( Settings.Live.AutoClose || ( Transfers.GetActiveCount() > 0 ) )
 				  );
 	pCmdUI->SetCheck( Settings.Connection.RequireForTransfers && Settings.Live.AutoClose );
 }
 
-void CMainWnd::OnNetworkAutoClose() 
+void CMainWnd::OnNetworkAutoClose()
 {
 	if ( Settings.Live.AutoClose )
 	{
@@ -1822,7 +1794,7 @@ void CMainWnd::OnNetworkAutoClose()
 	{
 		Network.Disconnect();
 		Settings.Live.AutoClose = ( Transfers.GetActiveCount() > 0 );
-		
+
 		if ( Settings.Live.AutoClose )
 		{
 			if ( ! m_bTrayHide ) CloseToTray();
@@ -1834,7 +1806,7 @@ void CMainWnd::OnNetworkAutoClose()
 	}
 }
 
-void CMainWnd::OnNetworkExit() 
+void CMainWnd::OnNetworkExit()
 {
 	PostMessage( WM_CLOSE );
 }
@@ -1842,12 +1814,12 @@ void CMainWnd::OnNetworkExit()
 /////////////////////////////////////////////////////////////////////////////
 // CMainWnd view menu
 
-void CMainWnd::OnUpdateViewBasic(CCmdUI* pCmdUI) 
+void CMainWnd::OnUpdateViewBasic(CCmdUI* pCmdUI)
 {
 	pCmdUI->SetCheck( Settings.General.GUIMode == GUI_BASIC );
 }
 
-void CMainWnd::OnViewBasic() 
+void CMainWnd::OnViewBasic()
 {
 	if ( Settings.General.GUIMode == GUI_BASIC ) return;
 	CString strMessage;
@@ -1857,12 +1829,12 @@ void CMainWnd::OnViewBasic()
 	SetGUIMode( GUI_BASIC );
 }
 
-void CMainWnd::OnUpdateViewTabbed(CCmdUI* pCmdUI) 
+void CMainWnd::OnUpdateViewTabbed(CCmdUI* pCmdUI)
 {
 	pCmdUI->SetCheck( Settings.General.GUIMode == GUI_TABBED );
 }
 
-void CMainWnd::OnViewTabbed() 
+void CMainWnd::OnViewTabbed()
 {
 	if ( Settings.General.GUIMode == GUI_TABBED ) return;
 	CString strMessage;
@@ -1872,12 +1844,12 @@ void CMainWnd::OnViewTabbed()
 	SetGUIMode( GUI_TABBED );
 }
 
-void CMainWnd::OnUpdateViewWindowed(CCmdUI* pCmdUI) 
+void CMainWnd::OnUpdateViewWindowed(CCmdUI* pCmdUI)
 {
 	pCmdUI->SetCheck( Settings.General.GUIMode == GUI_WINDOWED );
 }
 
-void CMainWnd::OnViewWindowed() 
+void CMainWnd::OnViewWindowed()
 {
 	if ( Settings.General.GUIMode == GUI_WINDOWED ) return;
 	CString strMessage;
@@ -1887,34 +1859,34 @@ void CMainWnd::OnViewWindowed()
 	SetGUIMode( GUI_WINDOWED );
 }
 
-void CMainWnd::OnUpdateViewSystem(CCmdUI* pCmdUI) 
+void CMainWnd::OnUpdateViewSystem(CCmdUI* pCmdUI)
 {
 	pCmdUI->SetCheck( m_pWindows.Find( RUNTIME_CLASS(CSystemWnd) ) != NULL );
 }
 
-void CMainWnd::OnViewSystem() 
+void CMainWnd::OnViewSystem()
 {
 	m_pWindows.Open( RUNTIME_CLASS(CSystemWnd), TRUE );
 	OpenFromTray();
 }
 
-void CMainWnd::OnUpdateViewNeighbours(CCmdUI* pCmdUI) 
+void CMainWnd::OnUpdateViewNeighbours(CCmdUI* pCmdUI)
 {
 	pCmdUI->SetCheck( m_pWindows.Find( RUNTIME_CLASS(CNeighboursWnd) ) != NULL );
 }
 
-void CMainWnd::OnViewNeighbours() 
+void CMainWnd::OnViewNeighbours()
 {
 	m_pWindows.Open( RUNTIME_CLASS(CNeighboursWnd), TRUE );
 	OpenFromTray();
 }
 
-void CMainWnd::OnUpdateViewTraffic(CCmdUI* pCmdUI) 
+void CMainWnd::OnUpdateViewTraffic(CCmdUI* pCmdUI)
 {
 	pCmdUI->SetCheck( m_pWindows.Find( RUNTIME_CLASS(CTrafficWnd) ) != NULL );
 }
 
-void CMainWnd::OnViewTraffic() 
+void CMainWnd::OnViewTraffic()
 {
 	if ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 )
 	{
@@ -1927,45 +1899,45 @@ void CMainWnd::OnViewTraffic()
 	OpenFromTray();
 }
 
-void CMainWnd::OnUpdateViewDownloads(CCmdUI* pCmdUI) 
+void CMainWnd::OnUpdateViewDownloads(CCmdUI* pCmdUI)
 {
 	pCmdUI->SetCheck( m_pWindows.Find( RUNTIME_CLASS(CDownloadsWnd) ) != NULL );
 }
 
-void CMainWnd::OnViewDownloads() 
+void CMainWnd::OnViewDownloads()
 {
 	m_pWindows.Open( RUNTIME_CLASS(CDownloadsWnd), TRUE );
 	OpenFromTray();
 }
 
-void CMainWnd::OnUpdateViewUploads(CCmdUI* pCmdUI) 
+void CMainWnd::OnUpdateViewUploads(CCmdUI* pCmdUI)
 {
 	pCmdUI->SetCheck( m_pWindows.Find( RUNTIME_CLASS(CUploadsWnd) ) != NULL );
 }
 
-void CMainWnd::OnViewUploads() 
+void CMainWnd::OnViewUploads()
 {
 	m_pWindows.Open( RUNTIME_CLASS(CUploadsWnd), TRUE );
 	OpenFromTray();
 }
 
-void CMainWnd::OnUpdateViewLibrary(CCmdUI* pCmdUI) 
+void CMainWnd::OnUpdateViewLibrary(CCmdUI* pCmdUI)
 {
 	pCmdUI->SetCheck( m_pWindows.Find( RUNTIME_CLASS(CLibraryWnd) ) != NULL );
 }
 
-void CMainWnd::OnViewLibrary() 
+void CMainWnd::OnViewLibrary()
 {
 	m_pWindows.Open( RUNTIME_CLASS(CLibraryWnd), TRUE );
 	OpenFromTray();
 }
 
-void CMainWnd::OnUpdateViewMedia(CCmdUI* pCmdUI) 
+void CMainWnd::OnUpdateViewMedia(CCmdUI* pCmdUI)
 {
 	pCmdUI->SetCheck( m_pWindows.Find( RUNTIME_CLASS(CMediaWnd) ) != NULL );
 }
 
-void CMainWnd::OnViewMedia() 
+void CMainWnd::OnViewMedia()
 {
 	if ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 )
 	{
@@ -1978,34 +1950,34 @@ void CMainWnd::OnViewMedia()
 	OpenFromTray();
 }
 
-void CMainWnd::OnUpdateViewHosts(CCmdUI* pCmdUI) 
+void CMainWnd::OnUpdateViewHosts(CCmdUI* pCmdUI)
 {
 	pCmdUI->SetCheck( m_pWindows.Find( RUNTIME_CLASS(CHostCacheWnd) ) != NULL );
 }
 
-void CMainWnd::OnViewHosts() 
+void CMainWnd::OnViewHosts()
 {
 	m_pWindows.Open( RUNTIME_CLASS(CHostCacheWnd), TRUE );
 	OpenFromTray();
 }
 
-void CMainWnd::OnUpdateViewDiscovery(CCmdUI* pCmdUI) 
+void CMainWnd::OnUpdateViewDiscovery(CCmdUI* pCmdUI)
 {
 	pCmdUI->SetCheck( m_pWindows.Find( RUNTIME_CLASS(CDiscoveryWnd) ) != NULL );
 }
 
-void CMainWnd::OnViewDiscovery() 
+void CMainWnd::OnViewDiscovery()
 {
 	m_pWindows.Open( RUNTIME_CLASS(CDiscoveryWnd), TRUE );
 	OpenFromTray();
 }
 
-void CMainWnd::OnUpdateViewPackets(CCmdUI* pCmdUI) 
+void CMainWnd::OnUpdateViewPackets(CCmdUI* pCmdUI)
 {
 	pCmdUI->SetCheck( m_pWindows.Find( RUNTIME_CLASS(CPacketWnd) ) != NULL );
 }
 
-void CMainWnd::OnViewPackets() 
+void CMainWnd::OnViewPackets()
 {
 	if ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 )
 	{
@@ -2018,34 +1990,34 @@ void CMainWnd::OnViewPackets()
 	OpenFromTray();
 }
 
-void CMainWnd::OnUpdateViewSearchMonitor(CCmdUI* pCmdUI) 
+void CMainWnd::OnUpdateViewSearchMonitor(CCmdUI* pCmdUI)
 {
 	pCmdUI->SetCheck( m_pWindows.Find( RUNTIME_CLASS(CSearchMonitorWnd) ) != NULL );
 }
 
-void CMainWnd::OnViewSearchMonitor() 
+void CMainWnd::OnViewSearchMonitor()
 {
 	m_pWindows.Open( RUNTIME_CLASS(CSearchMonitorWnd), TRUE );
 	OpenFromTray();
 }
 
-void CMainWnd::OnUpdateViewResultsMonitor(CCmdUI* pCmdUI) 
+void CMainWnd::OnUpdateViewResultsMonitor(CCmdUI* pCmdUI)
 {
 	pCmdUI->SetCheck( m_pWindows.Find( RUNTIME_CLASS(CHitMonitorWnd) ) != NULL );
 }
 
-void CMainWnd::OnViewResultsMonitor() 
+void CMainWnd::OnViewResultsMonitor()
 {
 	m_pWindows.Open( RUNTIME_CLASS(CHitMonitorWnd), TRUE );
 	OpenFromTray();
 }
 
-void CMainWnd::OnUpdateViewSecurity(CCmdUI* pCmdUI) 
+void CMainWnd::OnUpdateViewSecurity(CCmdUI* pCmdUI)
 {
 	pCmdUI->SetCheck( m_pWindows.Find( RUNTIME_CLASS(CSecurityWnd) ) != NULL );
 }
 
-void CMainWnd::OnViewSecurity() 
+void CMainWnd::OnViewSecurity()
 {
 	m_pWindows.Open( RUNTIME_CLASS(CSecurityWnd), TRUE );
 	OpenFromTray();
@@ -2054,7 +2026,7 @@ void CMainWnd::OnViewSecurity()
 /////////////////////////////////////////////////////////////////////////////
 // CMainWnd tab menu
 
-void CMainWnd::OnUpdateTabConnect(CCmdUI* /*pCmdUI*/) 
+void CMainWnd::OnUpdateTabConnect(CCmdUI* /*pCmdUI*/)
 {
 	CCoolBarItem* pItem = m_wndToolBar.GetID( ID_TAB_CONNECT );
 
@@ -2100,7 +2072,7 @@ void CMainWnd::OnUpdateTabConnect(CCmdUI* /*pCmdUI*/)
 	if ( pItem ) pItem->SetImage( nTipID );
 }
 
-void CMainWnd::OnTabConnect() 
+void CMainWnd::OnTabConnect()
 {
 	if ( Network.IsConnected() )
 	{
@@ -2127,7 +2099,7 @@ void CMainWnd::OnTabConnect()
 	}
 }
 
-void CMainWnd::OnUpdateTabHome(CCmdUI* pCmdUI) 
+void CMainWnd::OnUpdateTabHome(CCmdUI* pCmdUI)
 {
 	if ( Settings.General.GUIMode != GUI_WINDOWED )
 	{
@@ -2140,7 +2112,7 @@ void CMainWnd::OnUpdateTabHome(CCmdUI* pCmdUI)
 	}
 }
 
-void CMainWnd::OnTabHome() 
+void CMainWnd::OnTabHome()
 {
 	if ( Settings.General.GUIMode != GUI_WINDOWED )
 	{
@@ -2154,19 +2126,19 @@ void CMainWnd::OnTabHome()
 	}
 }
 
-void CMainWnd::OnUpdateTabLibrary(CCmdUI* pCmdUI) 
+void CMainWnd::OnUpdateTabLibrary(CCmdUI* pCmdUI)
 {
 	CChildWnd* pChild = m_pWindows.GetActive();
 	pCmdUI->SetCheck( pChild && pChild->IsKindOf( RUNTIME_CLASS(CLibraryWnd) ) );
 }
 
-void CMainWnd::OnTabLibrary() 
+void CMainWnd::OnTabLibrary()
 {
 	m_pWindows.Open( RUNTIME_CLASS(CLibraryWnd) );
 	OpenFromTray();
 }
 
-void CMainWnd::OnUpdateTabMedia(CCmdUI* pCmdUI) 
+void CMainWnd::OnUpdateTabMedia(CCmdUI* pCmdUI)
 {
 	CMediaWnd* pChild = (CMediaWnd*)m_pWindows.GetActive();
 	pCmdUI->SetCheck( pChild && pChild->IsKindOf( RUNTIME_CLASS(CMediaWnd) ) );
@@ -2184,70 +2156,70 @@ void CMainWnd::OnUpdateTabMedia(CCmdUI* pCmdUI)
 	}
 }
 
-void CMainWnd::OnTabMedia() 
+void CMainWnd::OnTabMedia()
 {
 	m_pWindows.Open( RUNTIME_CLASS(CMediaWnd) );
 	theApp.m_bMenuWasVisible = FALSE;
 	OpenFromTray();
 }
 
-void CMainWnd::OnUpdateTabSearch(CCmdUI* pCmdUI) 
+void CMainWnd::OnUpdateTabSearch(CCmdUI* pCmdUI)
 {
 	CChildWnd* pChild = m_pWindows.GetActive();
 	pCmdUI->SetCheck( pChild && pChild->IsKindOf( RUNTIME_CLASS(CSearchWnd) ) );
 }
 
-void CMainWnd::OnTabSearch() 
+void CMainWnd::OnTabSearch()
 {
 	m_pWindows.OpenNewSearchWindow();
 	m_wndTabBar.OnSkinChange();
 	OpenFromTray();
 }
 
-void CMainWnd::OnUpdateTabTransfers(CCmdUI* pCmdUI) 
+void CMainWnd::OnUpdateTabTransfers(CCmdUI* pCmdUI)
 {
 	CChildWnd* pChild = m_pWindows.GetActive();
-	
+
 	if ( pChild != NULL && pChild->m_pGroupParent != NULL )
 	{
 		pChild = pChild->m_pGroupParent;
 		if ( ! m_pWindows.Check( pChild ) ) pChild = NULL;
 	}
-	
+
 	pCmdUI->SetCheck( pChild != NULL && pChild->IsKindOf( RUNTIME_CLASS(CDownloadsWnd) ) );
 }
 
-void CMainWnd::OnTabTransfers() 
+void CMainWnd::OnTabTransfers()
 {
 	m_pWindows.Open( RUNTIME_CLASS(CDownloadsWnd) );
 	OpenFromTray();
 }
 
-void CMainWnd::OnUpdateTabIRC(CCmdUI* pCmdUI) 
+void CMainWnd::OnUpdateTabIRC(CCmdUI* pCmdUI)
 {
 	CChildWnd* pChild = m_pWindows.GetActive();
 	pCmdUI->SetCheck( pChild && pChild->IsKindOf( RUNTIME_CLASS(CIRCWnd) ) );
-} 
+}
 
-void CMainWnd::OnTabIRC() 
+void CMainWnd::OnTabIRC()
 {
 	m_pWindows.Open( RUNTIME_CLASS(CIRCWnd) );
-	OpenFromTray();		
+	OpenFromTray();
 }
-void CMainWnd::OnUpdateTabNetwork(CCmdUI* pCmdUI) 
+void CMainWnd::OnUpdateTabNetwork(CCmdUI* pCmdUI)
 {
 	CChildWnd* pChild = m_pWindows.GetActive();
-	
+
 	if ( pChild != NULL && pChild->m_pGroupParent != NULL )
 	{
 		pChild = pChild->m_pGroupParent;
 		if ( ! m_pWindows.Check( pChild ) ) pChild = NULL;
 	}
-	
+
 	pCmdUI->SetCheck( pChild != NULL && pChild->IsKindOf( RUNTIME_CLASS(CNeighboursWnd) ) );
 }
 
-void CMainWnd::OnTabNetwork() 
+void CMainWnd::OnTabNetwork()
 {
 	m_pWindows.Open( RUNTIME_CLASS(CNeighboursWnd) );
 	OpenFromTray();
@@ -2261,11 +2233,11 @@ void CMainWnd::OnUpdateToolsDownload(CCmdUI* pCmdUI)
 	pCmdUI->Enable( IsWindowEnabled() );
 }
 
-void CMainWnd::OnToolsDownload() 
+void CMainWnd::OnToolsDownload()
 {
 	CDownloadDlg dlg;
 	if ( dlg.DoModal() != IDOK ) return;
-	
+
 	for ( POSITION pos = dlg.m_pURLs.GetHeadPosition(); pos; )
 	{
 		CShareazaURL pURL( dlg.m_pURLs.GetNext( pos ) );
@@ -2293,7 +2265,7 @@ void CMainWnd::OnUpdateToolsImportDownloads(CCmdUI* pCmdUI)
 	pCmdUI->Enable( IsWindowEnabled() );
 }
 
-void CMainWnd::OnToolsImportDownloads() 
+void CMainWnd::OnToolsImportDownloads()
 {
 	CString strPath( BrowseForFolder( IDS_SELECT_ED2K_TEMP_FOLDER ) );
 	if ( strPath.IsEmpty() )
@@ -2309,7 +2281,7 @@ void CMainWnd::OnUpdateOpenDownloadsFolder(CCmdUI* pCmdUI)
 	pCmdUI->Enable( IsWindowEnabled() );
 }
 
-void CMainWnd::OnOpenDownloadsFolder() 
+void CMainWnd::OnOpenDownloadsFolder()
 {
 	CMainWnd* pMainWnd = theApp.SafeMainWnd();
 
@@ -2317,19 +2289,19 @@ void CMainWnd::OnOpenDownloadsFolder()
 		ShellExecute( pMainWnd->GetSafeHwnd(), _T("open"), Settings.Downloads.CompletePath, NULL, NULL, SW_SHOWNORMAL );
 }
 
-void CMainWnd::OnToolsSkin() 
+void CMainWnd::OnToolsSkin()
 {
 	if ( ! IsWindowEnabled() ) return;
 	CSettingsManagerDlg::Run( _T("CSkinsSettingsPage") );
 }
 
-void CMainWnd::OnToolsLanguage() 
+void CMainWnd::OnToolsLanguage()
 {
 	if ( ! IsWindowEnabled() ) return;
 	theApp.WriteProfileInt( _T("Windows"), _T("RunLanguage"), TRUE );
-	
+
 	CLanguageDlg dlg;
-	
+
 	if ( dlg.DoModal() == IDOK )
 	{
 		CWaitCursor pCursor;
@@ -2341,9 +2313,9 @@ void CMainWnd::OnToolsSeedTorrent()
 {
 	CFileDialog dlgFile( TRUE, _T("torrent"), ( Settings.Downloads.TorrentPath + "\\." ) , OFN_HIDEREADONLY,
 		_T("Torrent Files|*.torrent|All Files|*.*||"), this );
-	
+
 	if ( dlgFile.DoModal() != IDOK ) return;
-	
+
 	CTorrentSeedDlg dlgSeed( dlgFile.GetPathName(), TRUE );
 	dlgSeed.DoModal();
 }
@@ -2374,32 +2346,32 @@ void CMainWnd::OnNoDonkeyServers()
 	CHelpDlg::Show( _T("GeneralHelp.DonkeyServerList") );
 }
 
-void CMainWnd::OnToolsProfile() 
+void CMainWnd::OnToolsProfile()
 {
 	CProfileManagerDlg dlg;
 	dlg.DoModal();
 }
 
-void CMainWnd::OnLibraryFolders() 
+void CMainWnd::OnLibraryFolders()
 {
 	CShareManagerDlg dlg;
 	dlg.DoModal();
 }
 
-void CMainWnd::OnToolsWizard() 
+void CMainWnd::OnToolsWizard()
 {
 	if ( ! IsWindowEnabled() ) return;
 	theApp.WriteProfileInt( _T("Windows"), _T("RunWizard"), TRUE );
 	CWizardSheet::RunWizard( this );
 }
 
-void CMainWnd::OnToolsSettings() 
+void CMainWnd::OnToolsSettings()
 {
 	if ( ! IsWindowEnabled() ) return;
 	CSettingsManagerDlg::Run();
 }
 
-void CMainWnd::OnToolsReskin() 
+void CMainWnd::OnToolsReskin()
 {
 	OnSkinChanged( 0, 0 );
 }
@@ -2407,12 +2379,12 @@ void CMainWnd::OnToolsReskin()
 /////////////////////////////////////////////////////////////////////////////
 // CMainWnd library hook in
 
-void CMainWnd::OnUpdateLibraryHashPriority(CCmdUI* pCmdUI) 
+void CMainWnd::OnUpdateLibraryHashPriority(CCmdUI* pCmdUI)
 {
 	pCmdUI->SetCheck( LibraryBuilder.GetBoostPriority() );
 }
 
-void CMainWnd::OnLibraryHashPriority() 
+void CMainWnd::OnLibraryHashPriority()
 {
 	LibraryBuilder.BoostPriority( ! LibraryBuilder.GetBoostPriority() );
 }
@@ -2420,22 +2392,22 @@ void CMainWnd::OnLibraryHashPriority()
 /////////////////////////////////////////////////////////////////////////////
 // CMainWnd window menu
 
-void CMainWnd::OnUpdateWindowCascade(CCmdUI* pCmdUI) 
+void CMainWnd::OnUpdateWindowCascade(CCmdUI* pCmdUI)
 {
 	pCmdUI->Enable( TRUE );
 }
 
-void CMainWnd::OnWindowCascade() 
+void CMainWnd::OnWindowCascade()
 {
 	m_pWindows.Cascade( GetAsyncKeyState( VK_SHIFT ) & 0x8000 );
 }
 
-void CMainWnd::OnUpdateWindowTileHorz(CCmdUI* pCmdUI) 
+void CMainWnd::OnUpdateWindowTileHorz(CCmdUI* pCmdUI)
 {
 	pCmdUI->Enable( Settings.General.GUIMode == GUI_WINDOWED );
 }
 
-void CMainWnd::OnUpdateWindowTileVert(CCmdUI* pCmdUI) 
+void CMainWnd::OnUpdateWindowTileVert(CCmdUI* pCmdUI)
 {
 	pCmdUI->Enable( Settings.General.GUIMode == GUI_WINDOWED );
 }
@@ -2457,16 +2429,16 @@ void CMainWnd::OnWindowNavBar()
 		m_wndTabBar.SetMessage( _T("") );
 }
 
-void CMainWnd::OnUpdateWindowToolBar(CCmdUI* pCmdUI) 
+void CMainWnd::OnUpdateWindowToolBar(CCmdUI* pCmdUI)
 {
 	pCmdUI->SetCheck( m_wndToolBar.IsVisible() );
 }
 
-void CMainWnd::OnWindowToolBar() 
+void CMainWnd::OnWindowToolBar()
 {
 	ShowControlBar( &m_wndNavBar, FALSE, FALSE );
 	ShowControlBar( &m_wndToolBar, ! m_wndToolBar.IsVisible(), FALSE );
-	if ( m_wndToolBar.IsVisible() ) 
+	if ( m_wndToolBar.IsVisible() )
 	{
 		if ( ! Network.IsConnected() ) m_wndTabBar.SetMessage( IDS_TABBAR_NOT_CONNECTED );
 	}
@@ -2474,22 +2446,22 @@ void CMainWnd::OnWindowToolBar()
 		m_wndTabBar.SetMessage( _T("") );
 }
 
-void CMainWnd::OnUpdateWindowTabBar(CCmdUI* pCmdUI) 
+void CMainWnd::OnUpdateWindowTabBar(CCmdUI* pCmdUI)
 {
 	pCmdUI->SetCheck( m_wndTabBar.IsVisible() );
 }
 
-void CMainWnd::OnWindowTabBar() 
+void CMainWnd::OnWindowTabBar()
 {
 	ShowControlBar( &m_wndTabBar, ! m_wndTabBar.IsVisible(), TRUE );
 }
 
-void CMainWnd::OnUpdateWindowMonitor(CCmdUI* pCmdUI) 
+void CMainWnd::OnUpdateWindowMonitor(CCmdUI* pCmdUI)
 {
 	pCmdUI->SetCheck( m_wndMonitorBar.IsVisible() );
 }
 
-void CMainWnd::OnWindowMonitor() 
+void CMainWnd::OnWindowMonitor()
 {
 	BOOL bVisible = !m_wndMonitorBar.IsVisible();
 	theApp.WriteProfileInt( L"Toolbars", L"ShowMonitor", bVisible );
@@ -2532,7 +2504,7 @@ void CMainWnd::OnMediaCommand()
 /////////////////////////////////////////////////////////////////////////////
 // CMainWnd help menu
 
-void CMainWnd::OnHelpAbout() 
+void CMainWnd::OnHelpAbout()
 {
 	CAboutDlg dlg;
 	dlg.DoModal();
@@ -2543,7 +2515,7 @@ void CMainWnd::OnHelpVersionCheck()
 	VersionChecker.ForceCheck();
 }
 
-void CMainWnd::OnHelpHomepage() 
+void CMainWnd::OnHelpHomepage()
 {
 	const CString strWebSite(WEB_SITE_T);
 
@@ -2552,7 +2524,7 @@ void CMainWnd::OnHelpHomepage()
 		NULL, NULL, SW_SHOWNORMAL );
 }
 
-void CMainWnd::OnHelpWeb1() 
+void CMainWnd::OnHelpWeb1()
 {
 	const CString strWebSite(WEB_SITE_T);
 
@@ -2560,7 +2532,7 @@ void CMainWnd::OnHelpWeb1()
 		NULL, NULL, SW_SHOWNORMAL );
 }
 
-void CMainWnd::OnHelpWeb2() 
+void CMainWnd::OnHelpWeb2()
 {
 	const CString strWebSite(WEB_SITE_T);
 
@@ -2568,7 +2540,7 @@ void CMainWnd::OnHelpWeb2()
 		NULL, NULL, SW_SHOWNORMAL );
 }
 
-void CMainWnd::OnHelpWeb3() 
+void CMainWnd::OnHelpWeb3()
 {
 	const CString strWebSite(WEB_SITE_T);
 
@@ -2576,7 +2548,7 @@ void CMainWnd::OnHelpWeb3()
 		NULL, NULL, SW_SHOWNORMAL );
 }
 
-void CMainWnd::OnHelpWeb4() 
+void CMainWnd::OnHelpWeb4()
 {
 	const CString strWebSite(WEB_SITE_T);
 
@@ -2584,7 +2556,7 @@ void CMainWnd::OnHelpWeb4()
 		NULL, NULL, SW_SHOWNORMAL );
 }
 
-void CMainWnd::OnHelpWeb5() 
+void CMainWnd::OnHelpWeb5()
 {
 	const CString strWebSite(WEB_SITE_T);
 
@@ -2592,7 +2564,7 @@ void CMainWnd::OnHelpWeb5()
 		NULL, NULL, SW_SHOWNORMAL );
 }
 
-void CMainWnd::OnHelpWeb6() 
+void CMainWnd::OnHelpWeb6()
 {
 	const CString strWebSite(WEB_SITE_T);
 
@@ -2600,7 +2572,7 @@ void CMainWnd::OnHelpWeb6()
 		NULL, NULL, SW_SHOWNORMAL );
 }
 
-void CMainWnd::OnHelpFaq() 
+void CMainWnd::OnHelpFaq()
 {
 	const CString strWebSite(WEB_SITE_T);
 
@@ -2620,7 +2592,7 @@ void CMainWnd::OnHelpConnectiontest()
 		NULL, NULL, SW_SHOWNORMAL );
 }
 
-void CMainWnd::OnHelpGuide() 
+void CMainWnd::OnHelpGuide()
 {
 	const CString strWebSite(WEB_SITE_T);
 
@@ -2629,7 +2601,7 @@ void CMainWnd::OnHelpGuide()
 		NULL, NULL, SW_SHOWNORMAL );
 }
 
-void CMainWnd::OnHelpForums() 
+void CMainWnd::OnHelpForums()
 {
 	const CString strWebSite(WEB_SITE_T);
 
@@ -2638,7 +2610,7 @@ void CMainWnd::OnHelpForums()
 		NULL, NULL, SW_SHOWNORMAL );
 }
 
-void CMainWnd::OnHelpUpdate() 
+void CMainWnd::OnHelpUpdate()
 {
 	const CString strWebSite(WEB_SITE_T);
 
@@ -2679,7 +2651,7 @@ void CMainWnd::OnHelpDonate()
 		NULL, NULL, SW_SHOWNORMAL );
 }
 
-void CMainWnd::OnHelpWarnings() 
+void CMainWnd::OnHelpWarnings()
 {
 	if ( IsWindowEnabled() && IsWindowVisible() && ! IsIconic() )
 	{
@@ -2689,7 +2661,7 @@ void CMainWnd::OnHelpWarnings()
 	}
 }
 
-void CMainWnd::OnHelpPromote() 
+void CMainWnd::OnHelpPromote()
 {
 	if ( IsWindowEnabled() && IsWindowVisible() && ! IsIconic() )
 	{
@@ -2702,13 +2674,13 @@ void CMainWnd::OnHelpPromote()
 /////////////////////////////////////////////////////////////////////////////
 // CMainWnd skin forwarding
 
-void CMainWnd::OnSize(UINT nType, int cx, int cy) 
+void CMainWnd::OnSize(UINT nType, int cx, int cy)
 {
 	if ( m_pSkin ) m_pSkin->OnSize( this );
 	CMDIFrameWnd::OnSize( nType, cx, cy );
 }
 
-void CMainWnd::OnNcCalcSize(BOOL bCalcValidRects, NCCALCSIZE_PARAMS FAR* lpncsp) 
+void CMainWnd::OnNcCalcSize(BOOL bCalcValidRects, NCCALCSIZE_PARAMS FAR* lpncsp)
 {
 	if ( m_pSkin )
 		m_pSkin->OnNcCalcSize( this, bCalcValidRects, lpncsp );
@@ -2716,7 +2688,7 @@ void CMainWnd::OnNcCalcSize(BOOL bCalcValidRects, NCCALCSIZE_PARAMS FAR* lpncsp)
 		CMDIFrameWnd::OnNcCalcSize( bCalcValidRects, lpncsp );
 }
 
-ONNCHITTESTRESULT CMainWnd::OnNcHitTest(CPoint point) 
+ONNCHITTESTRESULT CMainWnd::OnNcHitTest(CPoint point)
 {
 	if ( m_pSkin )
 		return m_pSkin->OnNcHitTest( this, point, TRUE );
@@ -2724,7 +2696,7 @@ ONNCHITTESTRESULT CMainWnd::OnNcHitTest(CPoint point)
 		return CMDIFrameWnd::OnNcHitTest( point );
 }
 
-void CMainWnd::OnNcPaint() 
+void CMainWnd::OnNcPaint()
 {
 	if ( m_pSkin )
 		m_pSkin->OnNcPaint( this );
@@ -2732,7 +2704,7 @@ void CMainWnd::OnNcPaint()
 		CMDIFrameWnd::OnNcPaint();
 }
 
-BOOL CMainWnd::OnNcActivate(BOOL bActive) 
+BOOL CMainWnd::OnNcActivate(BOOL bActive)
 {
 	if ( m_pSkin )
 	{
@@ -2745,25 +2717,25 @@ BOOL CMainWnd::OnNcActivate(BOOL bActive)
 	}
 }
 
-void CMainWnd::OnNcMouseMove(UINT nHitTest, CPoint point) 
+void CMainWnd::OnNcMouseMove(UINT nHitTest, CPoint point)
 {
 	if ( m_pSkin ) m_pSkin->OnNcMouseMove( this, nHitTest, point );
 	CMDIFrameWnd::OnNcMouseMove( nHitTest, point );
 }
 
-void CMainWnd::OnNcLButtonDown(UINT nHitTest, CPoint point) 
+void CMainWnd::OnNcLButtonDown(UINT nHitTest, CPoint point)
 {
 	if ( m_pSkin && m_pSkin->OnNcLButtonDown( this, nHitTest, point ) ) return;
 	CMDIFrameWnd::OnNcLButtonDown( nHitTest, point );
 }
 
-void CMainWnd::OnNcLButtonUp(UINT nHitTest, CPoint point) 
+void CMainWnd::OnNcLButtonUp(UINT nHitTest, CPoint point)
 {
 	if ( m_pSkin && m_pSkin->OnNcLButtonUp( this, nHitTest, point ) ) return;
 	CMDIFrameWnd::OnNcLButtonUp( nHitTest, point );
 }
 
-void CMainWnd::OnNcLButtonDblClk(UINT nHitTest, CPoint point) 
+void CMainWnd::OnNcLButtonDblClk(UINT nHitTest, CPoint point)
 {
 	if ( m_pSkin && m_pSkin->OnNcLButtonDblClk( this, nHitTest, point ) ) return;
 	CMDIFrameWnd::OnNcLButtonDblClk( nHitTest, point );
@@ -2844,7 +2816,7 @@ BOOL CMainWnd::OnDrop(IDataObject* pDataObj, DWORD /* grfKeyState */, POINT /* p
 
 	if ( SUCCEEDED ( pDataObj->QueryGetData( &fmtcURL ) ) )
 	{
-		CString strURL;		
+		CString strURL;
 		if ( CShareazaDataSource::ObjectToURL( pDataObj, strURL ) == S_OK )
 		{
 			BOOL bAccepted = CShareazaApp::OpenURL( strURL, bDrop );

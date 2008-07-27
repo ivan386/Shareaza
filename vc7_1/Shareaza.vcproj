@@ -48,7 +48,7 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="unicows.lib kernel32.lib advapi32.lib user32.lib gdi32.lib shell32.lib comdlg32.lib version.lib winmm.lib winspool.lib vfw32.lib oleacc.lib ole32.lib rpcrt4.lib ws2_32.lib wininet.lib Iphlpapi.lib msi.lib sqlite3.lib"
+				AdditionalDependencies="unicows.lib kernel32.lib advapi32.lib user32.lib gdi32.lib shell32.lib comdlg32.lib version.lib winmm.lib winspool.lib vfw32.lib oleacc.lib ole32.lib rpcrt4.lib ws2_32.lib wininet.lib Iphlpapi.lib msi.lib sqlite3.lib powrprof.lib"
 				OutputFile="$(OutDir)..\$(ProjectName).exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="TRUE"
@@ -136,7 +136,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions="/NODEFAULTLIB:LIBC"
-				AdditionalDependencies="unicows.lib kernel32.lib advapi32.lib user32.lib gdi32.lib shell32.lib comdlg32.lib version.lib winmm.lib winspool.lib vfw32.lib oleacc.lib ole32.lib rpcrt4.lib ws2_32.lib wininet.lib Iphlpapi.lib msi.lib sqlite3.lib"
+				AdditionalDependencies="unicows.lib kernel32.lib advapi32.lib user32.lib gdi32.lib shell32.lib comdlg32.lib version.lib winmm.lib winspool.lib vfw32.lib oleacc.lib ole32.lib rpcrt4.lib ws2_32.lib wininet.lib Iphlpapi.lib msi.lib sqlite3.lib powrprof.lib"
 				OutputFile="$(OutDir)..\$(ProjectName).exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
@@ -226,7 +226,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions="/NODEFAULTLIB:LIBC /MACHINE:AMD64"
-				AdditionalDependencies="kernel32.lib advapi32.lib user32.lib gdi32.lib shell32.lib comdlg32.lib version.lib winmm.lib winspool.lib vfw32.lib oleacc.lib ole32.lib rpcrt4.lib ws2_32.lib wininet.lib Iphlpapi.lib msi.lib sqlite3.lib"
+				AdditionalDependencies="kernel32.lib advapi32.lib user32.lib gdi32.lib shell32.lib comdlg32.lib version.lib winmm.lib winspool.lib vfw32.lib oleacc.lib ole32.lib rpcrt4.lib ws2_32.lib wininet.lib Iphlpapi.lib msi.lib sqlite3.lib powrprof.lib"
 				OutputFile="$(OutDir)..\$(ProjectName).exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
@@ -311,7 +311,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions="/MACHINE:AMD64"
-				AdditionalDependencies="kernel32.lib advapi32.lib user32.lib gdi32.lib shell32.lib comdlg32.lib version.lib winmm.lib winspool.lib vfw32.lib oleacc.lib ole32.lib rpcrt4.lib ws2_32.lib wininet.lib Iphlpapi.lib msi.lib sqlite3.lib"
+				AdditionalDependencies="kernel32.lib advapi32.lib user32.lib gdi32.lib shell32.lib comdlg32.lib version.lib winmm.lib winspool.lib vfw32.lib oleacc.lib ole32.lib rpcrt4.lib ws2_32.lib wininet.lib Iphlpapi.lib msi.lib sqlite3.lib powrprof.lib"
 				OutputFile="$(OutDir)..\$(ProjectName).exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="TRUE"

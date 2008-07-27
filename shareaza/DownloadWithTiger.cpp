@@ -1,7 +1,7 @@
 //
 // DownloadWithTiger.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -201,7 +201,7 @@ BOOL CDownloadWithTiger::SetTigerTree(BYTE* pTiger, DWORD nTiger)
 			(LPCTSTR)GetDisplayName() );
 		return FALSE;
 	}
-	
+
 	Hashes::TigerHash oRoot;
 	m_pTigerTree.GetRoot( oRoot );
 
@@ -255,7 +255,7 @@ BOOL CDownloadWithTiger::SetHashset(BYTE* pSource, DWORD nSource)
 
 	if ( m_nSize == SIZE_UNKNOWN ) return FALSE;
 	if ( m_pHashset.IsAvailable() ) return TRUE;
-	
+
 	if ( nSource == 0 && m_oED2K )
 	{
 		m_pHashset.FromRoot( m_oED2K );
@@ -264,7 +264,7 @@ BOOL CDownloadWithTiger::SetHashset(BYTE* pSource, DWORD nSource)
 	{
 		Hashes::Ed2kHash oRoot;
 		m_pHashset.GetRoot( oRoot );
-		
+
 		if ( validAndUnequal( m_oED2K, oRoot ) )
 		{
 			m_pHashset.Clear();
@@ -438,7 +438,7 @@ BOOL CDownloadWithTiger::FindNewValidationBlock(int nHash)
 	{
 		DWORD nRetry = 0xFFFFFFFF;
 		QWORD nPrevious = 0;
-		
+
 		Fragments::List::const_iterator pEnd = m_pFile->GetEmptyFragmentList().end();
 		for ( Fragments::List::const_iterator pFragment = m_pFile->GetEmptyFragmentList().begin();
 			pFragment != pEnd; ++pFragment )
@@ -529,7 +529,7 @@ void CDownloadWithTiger::ContinueValidation()
 	if ( m_pFile == NULL )
 	{
 		hComplete = CreateFile( m_sPath, GENERIC_READ,
-			FILE_SHARE_READ | FILE_SHARE_WRITE | ( theApp.m_bNT ? FILE_SHARE_DELETE : 0 ),
+			FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE,
 			NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL );
 		VERIFY_FILE_ACCESS( hComplete, m_sPath )
 		if ( hComplete == INVALID_HANDLE_VALUE ) return;
@@ -574,7 +574,7 @@ void CDownloadWithTiger::FinishValidation()
 	CQuickLock oLock( m_pTigerSection );
 
 	Fragments::List oCorrupted( m_nSize );
-	
+
 	if ( m_nVerifyHash == HASH_TIGERTREE )
 	{
 		if ( m_pTigerTree.FinishBlockTest( m_nVerifyBlock ) )
@@ -601,7 +601,7 @@ void CDownloadWithTiger::FinishValidation()
 		else
 		{
 			m_pHashsetBlock[ m_nVerifyBlock ] = TRI_FALSE;
-			
+
 			QWORD nOffset = QWORD(m_nVerifyBlock) * QWORD(ED2K_PART_SIZE);
 			oCorrupted.insert( oCorrupted.end(), Fragments::Fragment( nOffset,
 				min( nOffset + ED2K_PART_SIZE, m_nSize ) ) );
@@ -619,7 +619,7 @@ void CDownloadWithTiger::FinishValidation()
 		else
 		{
 			m_pTorrentBlock[ m_nVerifyBlock ] = TRI_FALSE;
-			
+
 			QWORD nOffset = QWORD(m_nVerifyBlock) * QWORD(m_nTorrentSize);
 			oCorrupted.insert( oCorrupted.end(), Fragments::Fragment( nOffset,
 				min( nOffset + m_nTorrentSize, m_nSize ) ) );
@@ -634,7 +634,7 @@ void CDownloadWithTiger::FinishValidation()
 			SubtractHelper( oCorrupted, m_pHashsetBlock, m_nHashsetBlock, ED2K_PART_SIZE );
 		if ( m_pTorrentBlock != NULL )
 			SubtractHelper( oCorrupted, m_pTorrentBlock, m_nTorrentBlock, m_nTorrentSize );
-		
+
 		for ( Fragments::List::const_iterator pRange = oCorrupted.begin();
 			pRange != oCorrupted.end(); ++pRange )
 		{
@@ -642,7 +642,7 @@ void CDownloadWithTiger::FinishValidation()
 			RemoveOverlappingSources( pRange->begin(), pRange->size() );
 		}
 
-    }
+	}
 	m_nVerifyHash	= HASH_NULL;
 	m_nVerifyBlock	= 0xFFFFFFFF;
 	m_nVerifyCookie++;
@@ -810,12 +810,12 @@ void CDownloadWithTiger::Serialize(CArchive& ar, int nVersion)
 			}
 		}
 	}
-	
+
 	if ( nVersion < 30 && m_oBTH )
 	{
 		ClearVerification();
 		m_oSHA1.clear();
-        m_oTiger.clear();
-        m_oED2K.clear();
+		m_oTiger.clear();
+		m_oED2K.clear();
 	}
 }

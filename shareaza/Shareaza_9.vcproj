@@ -77,7 +77,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="winmm.lib version.lib ws2_32.lib wininet.lib Iphlpapi.lib msi.lib"
+				AdditionalDependencies="winmm.lib version.lib ws2_32.lib wininet.lib Iphlpapi.lib msi.lib powrprof.lib"
 				LinkIncremental="2"
 				GenerateManifest="false"
 				IgnoreDefaultLibraryNames=""
@@ -167,7 +167,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="winmm.lib version.lib ws2_32.lib wininet.lib Iphlpapi.lib msi.lib"
+				AdditionalDependencies="winmm.lib version.lib ws2_32.lib wininet.lib Iphlpapi.lib msi.lib powrprof.lib"
 				LinkIncremental="2"
 				GenerateManifest="false"
 				IgnoreDefaultLibraryNames=""
@@ -262,7 +262,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="winmm.lib version.lib ws2_32.lib wininet.lib Iphlpapi.lib msi.lib"
+				AdditionalDependencies="winmm.lib version.lib ws2_32.lib wininet.lib Iphlpapi.lib msi.lib powrprof.lib"
 				GenerateManifest="false"
 				IgnoreDefaultLibraryNames=""
 				SubSystem="2"
@@ -359,7 +359,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="winmm.lib version.lib ws2_32.lib wininet.lib Iphlpapi.lib msi.lib"
+				AdditionalDependencies="winmm.lib version.lib ws2_32.lib wininet.lib Iphlpapi.lib msi.lib powrprof.lib"
 				GenerateManifest="false"
 				IgnoreDefaultLibraryNames=""
 				SubSystem="2"

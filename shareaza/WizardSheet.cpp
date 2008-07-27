@@ -1,7 +1,7 @@
 //
 // WizardSheet.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -433,8 +433,7 @@ void CWizardPage::StaticReplace(LPCTSTR pszSearch, LPCTSTR pszReplace)
 
 BOOL CWizardPage::IsConnectionCapable()
 {
-	return ( theApp.m_bNT )													&&	// 9x based systems can't handle enough connections
-		 ( !theApp.m_bLimitedConnections || Settings.General.IgnoreXPsp2 )	&&	// The connection rate limiting (XPsp2) makes multi-network performance awful
-		 ( Settings.Connection.InSpeed > 256 )								&&	// Must have a decent connection to be worth it. (Or extra traffic will slow downloads)
-		 ( Settings.GetOutgoingBandwidth() > 16 );								// If your outbound bandwidth is too low, the ED2K ratio will throttle you anyway
+	return ( !theApp.m_bLimitedConnections || Settings.General.IgnoreXPsp2 )	// The connection rate limiting (XPsp2) makes multi-network performance awful
+		&& ( Settings.Connection.InSpeed > 256 )								// Must have a decent connection to be worth it. (Or extra traffic will slow downloads)
+		&& ( Settings.GetOutgoingBandwidth() > 16 );							// If your outbound bandwidth is too low, the ED2K ratio will throttle you anyway
 }

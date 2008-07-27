@@ -76,7 +76,7 @@ void CLanguageDlg::DoDataExchange(CDataExchange* pDX)
 /////////////////////////////////////////////////////////////////////////////
 // CLanguageDlg message handlers
 
-BOOL CLanguageDlg::OnInitDialog() 
+BOOL CLanguageDlg::OnInitDialog()
 {
 	CSkinDialog::OnInitDialog();
 
@@ -135,26 +135,26 @@ BOOL CLanguageDlg::OnInitDialog()
 
 	rc.OffsetRect(	GetSystemMetrics( SM_CXSCREEN ) / 2 -  rc.Width() / 2 - rc.left,
 					GetSystemMetrics( SM_CYSCREEN ) / 2 - rc.Height() / 2 - rc.top );
-	
+
 	SetWindowPos( NULL, rc.left, rc.top, rc.Width(), rc.Height() , 0 );
 
 	SetTimer( 1, 100, NULL );
-	
+
 	return TRUE;
 }
 
-void CLanguageDlg::OnDestroy() 
+void CLanguageDlg::OnDestroy()
 {
 	KillTimer( 1 );
 	CSkinDialog::OnDestroy();
 }
 
-BOOL CLanguageDlg::OnEraseBkgnd(CDC* /*pDC*/) 
+BOOL CLanguageDlg::OnEraseBkgnd(CDC* /*pDC*/)
 {
 	return TRUE;
 }
 
-void CLanguageDlg::OnPaint() 
+void CLanguageDlg::OnPaint()
 {
 	CPaintDC dc( this );
 	CRect rc;
@@ -206,7 +206,7 @@ void CLanguageDlg::OnPaint()
 			rc.OffsetRect( 0, rc.Height() );
 		}
 	}
-	
+
 	rcDlg.top = rc.top;
 	dc.FillSolidRect( &rcDlg, CoolInterface.m_crBackNormal );
 	dc.SelectObject( pOldFont );
@@ -238,7 +238,7 @@ void CLanguageDlg::PaintItem(int nItem, CDC* pDC, CRect* pRect)
 	}
 
 	rc.DeflateRect( 1, 1 );
-	
+
 	CPoint ptIcon( rc.left + 4, ( rc.top + rc.bottom ) / 2 - 16 );
 
 	if ( bHover != bDown )
@@ -285,13 +285,13 @@ void CLanguageDlg::PaintItem(int nItem, CDC* pDC, CRect* pRect)
 void CLanguageDlg::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* /*pScrollBar*/)
 {
 	SCROLLINFO pInfo;
-	
+
 	pInfo.cbSize	= sizeof(pInfo);
 	pInfo.fMask		= SIF_ALL & ~SIF_TRACKPOS;
-	
+
 	GetScrollInfo( SB_VERT, &pInfo );
 	int nDelta = pInfo.nPos;
-	
+
 	switch ( nSBCode )
 	{
 	case SB_BOTTOM:
@@ -317,10 +317,10 @@ void CLanguageDlg::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* /*pScrollBar*/
 		pInfo.nPos = 0;
 		break;
 	}
-	
+
 	pInfo.nPos = max( 0, min( pInfo.nPos, pInfo.nMax - (int)pInfo.nPage + 1 ) );
 	if ( pInfo.nPos == nDelta ) return;
-	
+
 	SetScrollInfo( SB_VERT, &pInfo, TRUE );
 
 	m_nHover	= 0;
@@ -334,7 +334,7 @@ BOOL CLanguageDlg::OnMouseWheel(UINT /*nFlags*/, short zDelta, CPoint /*pt*/)
 	return TRUE;
 }
 
-void CLanguageDlg::OnMouseMove(UINT nFlags, CPoint point) 
+void CLanguageDlg::OnMouseMove(UINT nFlags, CPoint point)
 {
 	CRect rc;
 	int nScroll = GetScrollPos( SB_VERT );
@@ -359,11 +359,11 @@ void CLanguageDlg::OnMouseMove(UINT nFlags, CPoint point)
 	}
 
 	m_bKeyMode = FALSE;
-	
+
 	CSkinDialog::OnMouseMove( nFlags, point );
 }
 
-BOOL CLanguageDlg::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message) 
+BOOL CLanguageDlg::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)
 {
 	if ( nHitTest == HTCLIENT )
 	{
@@ -375,18 +375,18 @@ BOOL CLanguageDlg::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)
 		SetCursor( pt.y > HEADING_HEIGHT && m_nHover - 2 < m_pGUIDirs.GetSize() ? m_hHand : m_hArrow );
 		return TRUE;
 	}
-	
+
 	return CSkinDialog::OnSetCursor( pWnd, nHitTest, message );
 }
 
-void CLanguageDlg::OnLButtonDown(UINT /*nFlags*/, CPoint /*point*/) 
+void CLanguageDlg::OnLButtonDown(UINT /*nFlags*/, CPoint /*point*/)
 {
 	m_nDown = m_nHover;
 	SetCapture();
 	Invalidate();
 }
 
-void CLanguageDlg::OnLButtonUp(UINT /*nFlags*/, CPoint /*point*/) 
+void CLanguageDlg::OnLButtonUp(UINT /*nFlags*/, CPoint /*point*/)
 {
 	int nSelected = m_nDown && ( m_nDown == m_nHover ) ? m_nDown : 0;
 
@@ -399,7 +399,7 @@ void CLanguageDlg::OnLButtonUp(UINT /*nFlags*/, CPoint /*point*/)
 	if ( nSelected ) Execute( nSelected );
 }
 
-void CLanguageDlg::OnTimer(UINT_PTR /*nIDEvent*/) 
+void CLanguageDlg::OnTimer(UINT_PTR /*nIDEvent*/)
 {
 	if ( ! m_nHover || m_bKeyMode ) return;
 
@@ -417,18 +417,18 @@ void CLanguageDlg::OnTimer(UINT_PTR /*nIDEvent*/)
 	}
 }
 
-BOOL CLanguageDlg::PreTranslateMessage(MSG* pMsg) 
+BOOL CLanguageDlg::PreTranslateMessage(MSG* pMsg)
 {
 	if ( pMsg->message == WM_KEYDOWN )
 	{
 		OnKeyDown( static_cast< UINT >( pMsg->wParam ), LOWORD( pMsg->lParam ), HIWORD( pMsg->lParam ) );
 		return TRUE;
 	}
-	
+
 	return CSkinDialog::PreTranslateMessage( pMsg );
 }
 
-void CLanguageDlg::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags) 
+void CLanguageDlg::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
 	switch ( nChar )
 	{
@@ -440,7 +440,7 @@ void CLanguageDlg::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 		if ( ! m_nDown )
 		{
 			m_nHover--;
- 			m_bKeyMode = TRUE;
+			m_bKeyMode = TRUE;
 			SCROLLINFO pInfo;
 			pInfo.cbSize	= sizeof(pInfo);
 			pInfo.fMask		= SIF_ALL & ~SIF_TRACKPOS;
@@ -466,7 +466,7 @@ void CLanguageDlg::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 		if ( ! m_nDown )
 		{
 			m_nHover++;
- 			m_bKeyMode = TRUE;
+			m_bKeyMode = TRUE;
 			SCROLLINFO pInfo;
 			pInfo.cbSize	= sizeof(pInfo);
 			pInfo.fMask		= SIF_ALL & ~SIF_TRACKPOS;
@@ -490,7 +490,7 @@ void CLanguageDlg::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 		if ( m_nHover && ! m_nDown ) Execute( m_nHover );
 		return;
 	}
-	
+
 	CSkinDialog::OnKeyDown( nChar, nRepCnt, nFlags );
 }
 
@@ -523,7 +523,7 @@ void CLanguageDlg::Enumerate(LPCTSTR pszPath)
 			{
 				strPath.Format( _T("%s%s\\"),
 					pszPath ? pszPath : _T(""), pFind.cFileName );
-				
+
 				Enumerate( strPath );
 			}
 			else if (	_tcsistr( pFind.cFileName, _T(".xml") ) != NULL &&
@@ -543,31 +543,31 @@ BOOL CLanguageDlg::AddSkin(LPCTSTR pszPath, LPCTSTR pszName)
 {
 	CString strXML;
 	CFile pFile;
-	
+
 	strXML = Settings.General.Path + _T("\\Skins\\");
 	if ( pszPath != NULL ) strXML += pszPath;
 	strXML += pszName;
 
-    if ( ! pFile.Open( strXML, CFile::modeRead ) ) return FALSE;
-	
+	if ( ! pFile.Open( strXML, CFile::modeRead ) ) return FALSE;
+
 	DWORD nSource = (DWORD)pFile.GetLength();
 	if ( nSource > 4096*1024 ) return FALSE;
-	
+
 	CHAR* pSource = new CHAR[ nSource ];
 	pFile.Read( pSource, nSource );
 	pFile.Close();
-	
+
 	BYTE* pByte = (BYTE*)pSource;
 	DWORD nByte = nSource;
-	
+
 	if ( nByte >= 2 && ( ( pByte[0] == 0xFE && pByte[1] == 0xFF ) || ( pByte[0] == 0xFF && pByte[1] == 0xFE ) ) )
 	{
 		nByte = nByte / 2 - 1;
-		
+
 		if ( pByte[0] == 0xFE && pByte[1] == 0xFF )
 		{
 			pByte += 2;
-			
+
 			for ( DWORD nSwap = 0 ; nSwap < nByte ; nSwap ++ )
 			{
 				register CHAR nTemp = pByte[ ( nSwap << 1 ) + 0 ];
@@ -577,9 +577,9 @@ BOOL CLanguageDlg::AddSkin(LPCTSTR pszPath, LPCTSTR pszName)
 		}
 		else
 		{
-			pByte += 2; 
+			pByte += 2;
 		}
-		
+
 		CopyMemory( strXML.GetBuffer( nByte ), pByte, nByte * sizeof( TCHAR ) );
 		strXML.ReleaseBuffer( nByte );
 	}
@@ -589,62 +589,62 @@ BOOL CLanguageDlg::AddSkin(LPCTSTR pszPath, LPCTSTR pszName)
 		{
 			pByte += 3; nByte -= 3;
 		}
-		
+
 		DWORD nWide = MultiByteToWideChar( CP_UTF8, 0, (LPCSTR)pByte, nByte, NULL, 0 );
-		
+
 		MultiByteToWideChar( CP_UTF8, 0, (LPCSTR)pByte, nByte, strXML.GetBuffer( nWide ), nWide );
 		strXML.ReleaseBuffer( nWide );
 	}
-	
+
 	delete [] pSource;
-	
+
 	CXMLElement* pXML = NULL;
-	
+
 	int nManifest = strXML.Find( _T("<manifest") );
-	
+
 	if ( nManifest > 0 )
 	{
 		CString strManifest = strXML.Mid( nManifest ).SpanExcluding( _T(">") ) + '>';
-		
+
 		if ( CXMLElement* pManifest = CXMLElement::FromString( strManifest ) )
 		{
 			pXML = new CXMLElement( NULL, _T("skin") );
 			pXML->AddElement( pManifest );
 		}
 	}
-	
+
 	if ( pXML == NULL )
 	{
 		pXML = CXMLElement::FromString( strXML, TRUE );
 		if ( pXML == NULL ) return FALSE;
 	}
-	
+
 	strXML.Empty();
-	
+
 	CXMLElement* pManifest = pXML->GetElementByName( _T("manifest") );
-	
+
 	if ( ! pXML->IsNamed( _T("skin") ) || pManifest == NULL ||
 		 pManifest->GetAttributeValue( _T("type") ).CompareNoCase( _T("language") ) )
 	{
 		delete pXML;
 		return FALSE;
 	}
-	
+
 	CString	strName		= pManifest->GetAttributeValue( _T("name"), pszName );
 	CString strIcon		= pManifest->GetAttributeValue( _T("icon") );
 	CString strGUIDir	= pManifest->GetAttributeValue( _T("dir"), _T("ltr") );
 	CString strLangCode = pManifest->GetAttributeValue( _T("language") );
-	
+
 	delete pXML;
-	
+
 	if ( pszPath != NULL ) strXML += pszPath;
 	strXML += pszName;
-	
+
 	m_pPaths.Add( strXML );
 	m_pTitles.Add( strName );
 	m_pGUIDirs.Add( strGUIDir );
 	m_pLangCodes.Add ( strLangCode );
-	
+
 	if ( strIcon.GetLength() )
 	{
 		if ( pszPath )
@@ -673,7 +673,7 @@ BOOL CLanguageDlg::AddSkin(LPCTSTR pszPath, LPCTSTR pszName)
 		hIcon = theApp.LoadIcon( IDR_MAINFRAME );
 		m_pImages.Add( hIcon );
 	}
-	
+
 	return TRUE;
 }
 
@@ -682,14 +682,6 @@ void CLanguageDlg::Execute(int nSelected)
 	// Don't try to process selections past the end of the list
 	if ( nSelected - 2 >= m_pGUIDirs.GetSize() ) return;
 	BOOL bRTL = ( nSelected > 1 ) ? ( m_pGUIDirs.GetAt( nSelected - 2 ) == "rtl" ) : FALSE;
-
-	if ( bRTL && theApp.m_dwWindowsVersion < 5 )
-	{
-		CString str;
-		LoadString( str, IDS_GENERAL_RTL_NOTSUPPORTED );
-		AfxMessageBox( str, MB_SYSTEMMODAL|MB_ICONEXCLAMATION|MB_OK );
-		return;
-	}
 
 	for ( int nItem = 0 ; nItem < m_pPaths.GetSize() ; nItem++ )
 	{
@@ -703,7 +695,7 @@ void CLanguageDlg::Execute(int nSelected)
 	// required to have schemas reloaded after restart
 	Settings.General.Language = strLangCode;
 
-	if ( Settings.General.LanguageRTL != ( bRTL != FALSE ) ) 
+	if ( Settings.General.LanguageRTL != ( bRTL != FALSE ) )
 	{
 		CString str;
 		LoadString( str, IDS_GENERAL_RTL_WARNING );
@@ -719,7 +711,7 @@ void CLanguageDlg::Execute(int nSelected)
 	EndDialog( IDOK );
 }
 
-void CLanguageDlg::OnClose() 
+void CLanguageDlg::OnClose()
 {
 	EndDialog( IDCANCEL );
 }

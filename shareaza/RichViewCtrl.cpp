@@ -481,7 +481,7 @@ void CRichViewCtrl::OnTimer(UINT_PTR /*nIDEvent*/)
 
 BOOL CRichViewCtrl::OnMouseWheel(UINT /*nFlags*/, short zDelta, CPoint /*pt*/)
 {
-	OnVScroll( SB_THUMBPOSITION, (int)( GetScrollPos( SB_VERT ) - 
+	OnVScroll( SB_THUMBPOSITION, (int)( GetScrollPos( SB_VERT ) -
 		zDelta / WHEEL_DELTA * m_nScrollWheelLines * 16 ), NULL );
 	return TRUE;
 }
@@ -956,24 +956,12 @@ void CRichViewCtrl::CopySelection()
 	{
 		EmptyClipboard();
 
-		if ( theApp.m_bNT )
-		{
-			CT2W pszWide( (LPCTSTR)str );
-			HANDLE hMem = GlobalAlloc( GMEM_MOVEABLE|GMEM_DDESHARE, ( wcslen(pszWide) + 1 ) * sizeof(WCHAR) );
-			LPVOID pMem = GlobalLock( hMem );
-			CopyMemory( pMem, pszWide, ( wcslen(pszWide) + 1 ) * sizeof(WCHAR) );
-			GlobalUnlock( hMem );
-			SetClipboardData( CF_UNICODETEXT, hMem );
-		}
-		else
-		{
-			CT2A pszASCII( (LPCTSTR)str );
-			HANDLE hMem = GlobalAlloc( GMEM_MOVEABLE|GMEM_DDESHARE, strlen(pszASCII) + 1 );
-			LPVOID pMem = GlobalLock( hMem );
-			CopyMemory( pMem, pszASCII, strlen(pszASCII) + 1 );
-			GlobalUnlock( hMem );
-			SetClipboardData( CF_TEXT, hMem );
-		}
+		CT2W pszWide( (LPCTSTR)str );
+		HANDLE hMem = GlobalAlloc( GMEM_MOVEABLE|GMEM_DDESHARE, ( wcslen(pszWide) + 1 ) * sizeof(WCHAR) );
+		LPVOID pMem = GlobalLock( hMem );
+		CopyMemory( pMem, pszWide, ( wcslen(pszWide) + 1 ) * sizeof(WCHAR) );
+		GlobalUnlock( hMem );
+		SetClipboardData( CF_UNICODETEXT, hMem );
 
 		CloseClipboard();
 	}

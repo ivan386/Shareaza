@@ -25,10 +25,6 @@
 #include "ComObject.h"
 #include "Buffer.h"
 
-#ifndef WIN64
-static HMODULE __stdcall LoadUnicows();
-#endif
-
 class CUPnPFinder;
 class CMainWnd;
 class CSplashDlg;
@@ -71,12 +67,12 @@ public:
 	CWnd*				m_pSafeWnd;
 	volatile bool		m_bLive;
 	BOOL				m_bInteractive;
-	BOOL				m_bNT;						// NT based core. (NT, 2000, XP, etc)
-	BOOL				m_bServer;					// Server version
-	BOOL				m_bWinME;					// Windows Millennium
-	BOOL				m_bLimitedConnections;		// Networking is limited (XP SP2)
-	DWORD				m_dwWindowsVersion;			// Windows version
-	DWORD				m_dwWindowsVersionMinor;	// Windows minor version
+	bool				m_bIsServer;				// Is OS a Server version
+	bool				m_bIsWin2000;				// Is OS Windows 2000
+	bool				m_bIsVistaOrNewer;			// Is OS Vista or newer
+	bool				m_bLimitedConnections;		// Networking is limited (XP SP2)
+	DWORD				m_nWindowsVersion;			// Windows version
+	DWORD				m_nWindowsVersionMinor;		// Windows minor version
 	QWORD				m_nPhysicalMemory;			// Physical RAM installed
 	BOOL				m_bMenuWasVisible;			// For the menus in media player window
 	int					m_nDefaultFontSize;			// The basic font size. (11)
@@ -87,30 +83,9 @@ public:
 	TRISTATE			m_bUPnPPortsForwarded;		// UPnP values are assigned when the discovery is complete
 	TRISTATE			m_bUPnPDeviceConnected;		// or when the service notifies
 	DWORD				m_nUPnPExternalAddress;
-	DWORD				m_dwLastInput;				// Time of last input event (in secs)
+	DWORD				m_nLastInput;				// Time of last input event (in secs)
 	HHOOK				m_hHookKbd;
 	HHOOK				m_hHookMouse;
-
-	// GDI and display monitor functions
-	HINSTANCE	m_hUser32;
-	BOOL		(WINAPI *m_pfnSetLayeredWindowAttributes)(HWND, COLORREF, BYTE, DWORD);
-	BOOL		(WINAPI *m_pfnGetMonitorInfoA)(HMONITOR, LPMONITORINFO);
-	HMONITOR	(WINAPI *m_pfnMonitorFromPoint)(POINT, DWORD);
-	HMONITOR	(WINAPI *m_pfnMonitorFromWindow)(HWND, DWORD);
-	HWND		(WINAPI *m_pfnGetAncestor)(HWND, UINT);
-	UINT		(WINAPI *m_pfnPrivateExtractIconsW)(LPCWSTR, int, int, int, HICON*, UINT*, UINT, UINT);
-
-	HINSTANCE	m_hKernel;
-	BOOL		(WINAPI *m_pfnGetDiskFreeSpaceExW)(LPCWSTR, PULARGE_INTEGER, PULARGE_INTEGER, PULARGE_INTEGER);
-	BOOL		(WINAPI *m_pfnCopyFileExW)(LPCWSTR, LPCWSTR, LPPROGRESS_ROUTINE, LPVOID, LPBOOL, DWORD);
-	BOOL		(WINAPI *m_pfnGlobalMemoryStatusEx)( LPMEMORYSTATUSEX );
-
-	HINSTANCE	m_hShellFolder;
-	HRESULT		(WINAPI *m_pfnSHGetFolderPathW)(HWND, int, HANDLE, DWORD, LPWSTR);
-
-	// For RTL layout support
-	HINSTANCE	m_hGDI32;
-	DWORD		(WINAPI *m_pfnSetLayout)(HDC, DWORD);
 
 	// For themes functions
 	HINSTANCE	m_hTheme;
@@ -119,21 +94,10 @@ public:
 	HANDLE		(WINAPI *m_pfnOpenThemeData)(HWND, LPCWSTR);
 	HRESULT		(WINAPI *m_pfnCloseThemeData)(HANDLE);
 	HRESULT		(WINAPI *m_pfnDrawThemeBackground)(HANDLE, HDC, int, int, const RECT*, const RECT*);
-	HRESULT		(WINAPI *m_pfnEnableThemeDialogTexture)(HWND, DWORD);
-	HRESULT		(WINAPI *m_pfnDrawThemeParentBackground)(HWND, HDC, RECT*);
-	HRESULT		(WINAPI *m_pfnGetThemeBackgroundContentRect)(HANDLE, HDC, int, int, const RECT*, RECT*);
-	HRESULT		(WINAPI *m_pfnGetThemeSysFont)(HANDLE, int, LOGFONT);
-	HRESULT		(WINAPI *m_pfnDrawThemeText)(HANDLE, HDC, int, int, LPCWSTR, int, DWORD, DWORD, const RECT*);
 
-	// Power schemes management
-	HINSTANCE	m_hPowrProf;
-	BOOLEAN		(WINAPI *m_pfnGetActivePwrScheme)(PUINT);
-	BOOLEAN		(WINAPI *m_pfnGetCurrentPowerPolicies)(PGLOBAL_POWER_POLICY, PPOWER_POLICY);
-	BOOLEAN		(WINAPI *m_pfnSetActivePwrScheme)(UINT, PGLOBAL_POWER_POLICY, PPOWER_POLICY);
-
+	// Shell functions
 	HINSTANCE	m_hShlWapi;
 	BOOL		(WINAPI *m_pfnAssocIsDangerous)(LPCWSTR);
-	HRESULT		(WINAPI *m_pfnAssocQueryStringW)(ASSOCF, ASSOCSTR, LPCWSTR, LPCWSTR, LPWSTR, DWORD*);
 
 	// GeoIP - IP to Country lookup
 	HINSTANCE	m_hGeoIP;
@@ -155,8 +119,6 @@ public:
 
 	CString				GetCountryCode(IN_ADDR pAddress) const;
 	CString				GetCountryName(IN_ADDR pAddress) const;
-
-//	CFontManager*		m_pFontManager;
 
 	// Open file or url. Returns NULL always.
 	virtual CDocument*	OpenDocumentFile(LPCTSTR lpszFileName);

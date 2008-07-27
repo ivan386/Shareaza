@@ -1,7 +1,7 @@
 //
 // PageSettingsDownloads.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -82,25 +82,25 @@ void CDownloadsSettingsPage::DoDataExchange(CDataExchange* pDX)
 	DDX_CBString(pDX, IDC_DOWNLOADS_QUEUE_LIMIT, m_sQueueLimit);
 	DDX_Check(pDX, IDC_REQUIRE_CONNECT, m_bRequireConnect);
 	//}}AFX_DATA_MAP
-	
+
 }
 
 /////////////////////////////////////////////////////////////////////////////
 // CDownloadsSettingsPage message handlers
 
-BOOL CDownloadsSettingsPage::OnInitDialog() 
+BOOL CDownloadsSettingsPage::OnInitDialog()
 {
 	CSettingsPage::OnInitDialog();
-	
+
 	m_sDownloadsPath		= Settings.Downloads.CompletePath;
 	m_sIncompletePath		= Settings.Downloads.IncompletePath;
 	m_nMaxDownFiles			= Settings.Downloads.MaxFiles;
 	m_nMaxDownTransfers		= Settings.Downloads.MaxTransfers;
 	m_nMaxFileTransfers		= Settings.Downloads.MaxFileTransfers;
 	m_bRequireConnect		= Settings.Connection.RequireForTransfers;
-	
+
 	CalculateMaxValues();
-	
+
 	m_wndDownloadsPath.SetIcon( IDI_BROWSE );
 	m_wndIncompletePath.SetIcon( IDI_BROWSE );
 
@@ -122,13 +122,13 @@ BOOL CDownloadsSettingsPage::OnInitDialog()
 	return TRUE;
 }
 
-void CDownloadsSettingsPage::OnDownloadsBrowse() 
+void CDownloadsSettingsPage::OnDownloadsBrowse()
 {
 	CString strPath( BrowseForFolder( _T("Select folder for downloads:"),
 		m_sDownloadsPath ) );
 	if ( strPath.IsEmpty() )
 		return;
-	
+
 	// Warn user about a path that's too long
 	if ( _tcslen( strPath ) > MAX_PATH - 33 )
 	{
@@ -146,14 +146,14 @@ void CDownloadsSettingsPage::OnDownloadsBrowse()
 		AfxMessageBox( strMessage, MB_ICONEXCLAMATION );
 		return;
 	}
-	
+
 	UpdateData( TRUE );
 	m_sDownloadsPath = strPath;
 	m_bDownloadsChanged = TRUE;
 	UpdateData( FALSE );
 }
 
-void CDownloadsSettingsPage::OnIncompleteBrowse() 
+void CDownloadsSettingsPage::OnIncompleteBrowse()
 {
 	CString strPath( BrowseForFolder( _T("Select folder for incomplete files:"),
 		m_sIncompletePath ) );
@@ -195,7 +195,7 @@ void CDownloadsSettingsPage::OnIncompleteBrowse()
 BOOL CDownloadsSettingsPage::OnKillActive()
 {
 	UpdateData();
-	
+
 	if ( IsLimited( m_sBandwidthLimit ) && !Settings.ParseVolume( m_sBandwidthLimit ) )
 	{
 		CString strMessage;
@@ -204,43 +204,33 @@ BOOL CDownloadsSettingsPage::OnKillActive()
 		GetDlgItem( IDC_DOWNLOADS_BANDWIDTH_LIMIT )->SetFocus();
 		return FALSE;
 	}
-	
+
 	return CSettingsPage::OnKillActive();
 }
 
 void CDownloadsSettingsPage::CalculateMaxValues()
 {
 	// Apply limits to display
-	if ( ! theApp.m_bNT )
-	{
-		// Win9x is unable to handle high numbers of connections
-		m_nMaxDownFiles = min ( m_nMaxDownFiles, 80 );
-		m_nMaxDownTransfers = min ( m_nMaxDownTransfers, 80 );
-		m_nMaxFileTransfers = min ( m_nMaxFileTransfers, 80 );
-	}
+	// Guesstimate a good value based on available bandwidth
+	m_nMaxDownFiles = min ( m_nMaxDownFiles, 100 );
+	if ( Settings.GetOutgoingBandwidth() < 16 )
+		m_nMaxDownTransfers = min ( m_nMaxDownTransfers, 200 );
+	else if ( Settings.GetOutgoingBandwidth() <= 32 )
+		m_nMaxDownTransfers = min ( m_nMaxDownTransfers, 250 );
+	else if ( Settings.GetOutgoingBandwidth() <= 64 )
+		m_nMaxDownTransfers = min ( m_nMaxDownTransfers, 400 );
+	else if ( Settings.GetOutgoingBandwidth() <= 128 )
+		m_nMaxDownTransfers = min ( m_nMaxDownTransfers, 600 );
 	else
-	{
-		// For other systems we can guesstimate a good value based on available bandwidth
-		m_nMaxDownFiles = min ( m_nMaxDownFiles, 100 );
-		if ( Settings.GetOutgoingBandwidth() < 16 )
-			m_nMaxDownTransfers = min ( m_nMaxDownTransfers, 200 );
-		else if ( Settings.GetOutgoingBandwidth() <= 32 )
-			m_nMaxDownTransfers = min ( m_nMaxDownTransfers, 250 );
-		else if ( Settings.GetOutgoingBandwidth() <= 64 )
-			m_nMaxDownTransfers = min ( m_nMaxDownTransfers, 400 );
-		else if ( Settings.GetOutgoingBandwidth() <= 128 )
-			m_nMaxDownTransfers = min ( m_nMaxDownTransfers, 600 );
-		else
-			m_nMaxDownTransfers = min ( m_nMaxDownTransfers, 800 );
-		m_nMaxFileTransfers = min ( m_nMaxFileTransfers, 100 );
-	}
+		m_nMaxDownTransfers = min ( m_nMaxDownTransfers, 800 );
+	m_nMaxFileTransfers = min ( m_nMaxFileTransfers, 100 );
 
 	m_wndMaxDownFiles.SetRange( 1, (short)m_nMaxDownFiles );
 	m_wndMaxDownTransfers.SetRange( 1, (short)m_nMaxDownTransfers );
 	m_wndMaxFileTransfers.SetRange( 1, (short)m_nMaxFileTransfers );
 }
 
-void CDownloadsSettingsPage::OnOK() 
+void CDownloadsSettingsPage::OnOK()
 {
 	DWORD nQueueLimit = 0;
 	UpdateData( TRUE );
@@ -274,7 +264,7 @@ void CDownloadsSettingsPage::OnOK()
 		// Warn the user about setting the max queue wait limit too low
 		CString strMessage;
 		LoadString( strMessage, IDS_SETTINGS_WARN_QUEUELIMIT );
-					
+
 		if ( AfxMessageBox( strMessage, MB_ICONQUESTION|MB_YESNO ) == IDNO )
 		{
 			nQueueLimit = 0;
@@ -306,11 +296,11 @@ void CDownloadsSettingsPage::OnOK()
 	Settings.Downloads.QueueLimit			= nQueueLimit;
 	Settings.Bandwidth.Downloads			= static_cast< DWORD >( Settings.ParseVolume( m_sBandwidthLimit ) );
 	Settings.Connection.RequireForTransfers	= m_bRequireConnect != FALSE;
-	
+
 	CreateDirectory( m_sDownloadsPath );
 	CreateDirectory( m_sIncompletePath );
 	// CreateDirectory( m_sTorrentPath );
-	
+
 	if ( m_bDownloadsChanged )
 	{
 		if ( LibraryFolders.GetFolderCount() == 0 )
@@ -320,20 +310,20 @@ void CDownloadsSettingsPage::OnOK()
 		else if ( ! LibraryFolders.IsFolderShared( m_sDownloadsPath ) )
 		{
 			CString strFormat, strMessage;
-			
+
 			LoadString( strFormat, IDS_LIBRARY_DOWNLOADS_ADD );
 			strMessage.Format( strFormat, (LPCTSTR)m_sDownloadsPath );
-			
+
 			if ( AfxMessageBox( strMessage, MB_ICONQUESTION|MB_YESNO ) == IDYES )
 			{
 				CLibraryFolder* pFolder = LibraryFolders.AddFolder( m_sDownloadsPath );
-				
+
 				if ( pFolder )
 				{
 					LoadString( strMessage, IDS_LIBRARY_DOWNLOADS_SHARE );
-					
+
 					BOOL bShare = AfxMessageBox( strMessage, MB_ICONQUESTION|MB_YESNO ) == IDYES;
-					
+
 					CQuickLock oLock( Library.m_pSection );
 					if ( LibraryFolders.CheckFolder( pFolder, TRUE ) )
 						pFolder->SetShared( bShare ? TRI_TRUE : TRI_FALSE );
@@ -342,7 +332,7 @@ void CDownloadsSettingsPage::OnOK()
 			}
 		}
 	}
-	
+
 	CSettingsPage::OnOK();
 }
 
@@ -409,7 +399,7 @@ void CDownloadsSettingsPage::OnShowWindow(BOOL bShow, UINT nStatus)
 bool CDownloadsSettingsPage::IsLimited(CString& strText) const
 {
 	if ( ( _tcslen( strText ) == 0 ) ||
-		 ( _tcsistr( strText, _T("MAX") ) != NULL ) || 
+		 ( _tcsistr( strText, _T("MAX") ) != NULL ) ||
 		 ( _tcsistr( strText, _T("NONE") ) != NULL ) )
 		return false;
 	else

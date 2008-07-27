@@ -468,24 +468,16 @@ bool CFileCopyDlg::ProcessCopy(const CString& strSource, const CString& strTarge
 	if ( !CheckTarget( strTarget ) )
 		return false;
 
-	if ( theApp.m_hKernel != NULL )
-	{
-		if ( theApp.m_pfnCopyFileExW != NULL )
-		{
-			m_wndFileProg.SetPos( 0 );
-			m_nFileProg = 0;
+	m_wndFileProg.SetPos( 0 );
+	m_nFileProg = 0;
 
-			bool bResult = theApp.m_pfnCopyFileExW( strSource, strTarget, CopyCallback, this,
-				&m_bCancel, COPY_FILE_FAIL_IF_EXISTS ) != 0;
+	bool bResult = CopyFileEx( strSource, strTarget, CopyCallback, this,
+		&m_bCancel, COPY_FILE_FAIL_IF_EXISTS ) != 0;
 
-			if ( !bResult && !IsThreadAlive() )
-				DeleteFile( strTarget );
+	if ( !bResult && !IsThreadAlive() )
+		DeleteFile( strTarget );
 
-			return bResult;
-		}
-	}
-
-	return CopyFile( strSource, strTarget, TRUE ) != 0; // bFailIfExists = TRUE
+	return bResult;
 }
 
 DWORD WINAPI CFileCopyDlg::CopyCallback(LARGE_INTEGER TotalFileSize, LARGE_INTEGER TotalBytesTransferred, LARGE_INTEGER /*StreamSize*/, LARGE_INTEGER /*StreamBytesTransferred*/, DWORD /*dwStreamNumber*/, DWORD /*dwCallbackReason*/, HANDLE /*hSourceFile*/, HANDLE /*hDestinationFile*/, LPVOID lpData)

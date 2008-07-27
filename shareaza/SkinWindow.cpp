@@ -1,7 +1,7 @@
 //
 // SkinWindow.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -47,15 +47,15 @@ CSkinWindow::CSkinWindow()
 	m_nPart		= new int[ SKINPART_COUNT ];
 	m_bAnchor	= new BOOL[ SKINANCHOR_COUNT ];
 	m_rcAnchor	= new CRect[ SKINANCHOR_COUNT ];
-	
+
 	ZeroMemory( m_bPart, sizeof(BOOL) * SKINPART_COUNT );
 	ZeroMemory( m_nPart, sizeof(int) * SKINPART_COUNT );
 	ZeroMemory( m_bAnchor, sizeof(BOOL) * SKINANCHOR_COUNT );
-	
+
 	m_szMinSize.cx = m_szMinSize.cy = 0;
 	m_rcMaximise.SetRect( -1, 0, -1, -1 );
 	m_rcResize.SetRect( BORDER_WIDTH, BORDER_WIDTH, BORDER_WIDTH, BORDER_WIDTH );
-	
+
 	m_hoSkin			= NULL;
 	m_bCaption			= FALSE;
 	m_bCaptionCaps		= FALSE;
@@ -64,9 +64,9 @@ CSkinWindow::CSkinWindow()
 	m_crCaptionShadow	= CLR_NONE;
 	m_crCaptionOutline	= CLR_NONE;
 	m_nCaptionAlign		= 0;
-	
+
 	m_pRegionXML	= NULL;
-	
+
 	m_nHoverAnchor	= 0;
 	m_nDownAnchor	= 0;
 	m_nMirror = 0;
@@ -80,11 +80,11 @@ CSkinWindow::~CSkinWindow()
 		if ( m_hoSkin != NULL ) m_dcSkin.SelectObject( CBitmap::FromHandle( m_hoSkin ) );
 		m_dcSkin.DeleteDC();
 	}
-	
+
 	if ( m_bmSkin.m_hObject != NULL ) m_bmSkin.DeleteObject();
-	
+
 	if ( m_pRegionXML ) delete m_pRegionXML;
-	
+
 	for ( POSITION pos = m_pPartList.GetStartPosition() ; pos ; )
 	{
 		CRect* pRect;
@@ -92,7 +92,7 @@ CSkinWindow::~CSkinWindow()
 		m_pPartList.GetNextAssoc( pos, str, pRect );
 		delete pRect;
 	}
-	
+
 	for ( POSITION pos = m_pAnchorList.GetStartPosition() ; pos ; )
 	{
 		CRect* pRect;
@@ -100,7 +100,7 @@ CSkinWindow::~CSkinWindow()
 		m_pAnchorList.GetNextAssoc( pos, str, pRect );
 		delete pRect;
 	}
-	
+
 	delete [] m_bPart;
 	delete [] m_rcPart;
 	delete [] m_nPart;
@@ -126,26 +126,26 @@ BOOL CSkinWindow::Parse(CXMLElement* pBase, const CString& strPath)
 		_T("Close"), _T("CloseHover"), _T("CloseDown"),
 		NULL
 	};
-	
+
 	static LPCTSTR pszAnchor[] =
 	{
 		_T("Icon"), _T("System"), _T("Minimise"), _T("Maximise"), _T("Close"),
 		NULL
 	};
-	
+
 	if ( ! pBase->IsNamed( _T("windowSkin") ) ) return FALSE;
-	
+
 	CString str;
 	CRect rc;
-	
+
 	for ( POSITION pos = pBase->GetElementIterator() ; pos ; )
 	{
 		CXMLElement* pGroup = pBase->GetNextElement( pos );
-		
+
 		if ( pGroup->IsNamed( _T("target") ) )
 		{
 			CString strTarget = pGroup->GetAttributeValue( _T("window") );
-			
+
 			if ( strTarget == _T("CMainTabBarCtrl") )
 				strTarget = strTarget;
 
@@ -162,23 +162,23 @@ BOOL CSkinWindow::Parse(CXMLElement* pBase, const CString& strPath)
 			{
 				CXMLElement* pXML = pGroup->GetNextElement( posInner );
 				if ( ! pXML->IsNamed( _T("part") ) ) continue;
-				
+
 				if ( ! ParseRect( pXML, &rc ) ) continue;
 				if ( ! rc.Width() ) rc.right++;
 				if ( ! rc.Height() ) rc.bottom++;
-				
+
 				CString strMode = pXML->GetAttributeValue( _T("mode") );
 				int nMode = SKINPARTMODE_TILE;
-				
+
 				if ( strMode.CompareNoCase( _T("tile") ) == 0 )
 					nMode = SKINPARTMODE_TILE;
 				else if ( strMode.CompareNoCase( _T("stretch") ) == 0 )
 					nMode = SKINPARTMODE_STRETCH;
-				
+
 				CString strName = pXML->GetAttributeValue( _T("name") );
 				if ( strName.IsEmpty() ) continue;
-				
-                int nPart = 0;
+
+				int nPart = 0;
 				for ( ; pszPart[ nPart ] ; nPart++ )
 				{
 					if ( _tcsicmp( strName, pszPart[ nPart ] ) == 0 )
@@ -189,11 +189,11 @@ BOOL CSkinWindow::Parse(CXMLElement* pBase, const CString& strPath)
 						break;
 					}
 				}
-				
+
 				if ( pszPart[ nPart ] == NULL )
 				{
 					CRect* pRect;
-					
+
 					if ( m_pPartList.Lookup( strName, pRect ) )
 					{
 						*pRect = rc;
@@ -212,12 +212,12 @@ BOOL CSkinWindow::Parse(CXMLElement* pBase, const CString& strPath)
 			{
 				CXMLElement* pXML = pGroup->GetNextElement( posInner );
 				if ( ! pXML->IsNamed( _T("anchor") ) ) continue;
-				
+
 				if ( ! ParseRect( pXML, &rc ) ) continue;
-				
+
 				CString strName = pXML->GetAttributeValue( _T("name") );
-				
-                int nAnchor = 0;
+
+				int nAnchor = 0;
 				for ( ; pszAnchor[ nAnchor ] ; nAnchor++ )
 				{
 					if ( _tcsicmp( strName, pszAnchor[ nAnchor ] ) == 0 )
@@ -227,7 +227,7 @@ BOOL CSkinWindow::Parse(CXMLElement* pBase, const CString& strPath)
 						break;
 					}
 				}
-				
+
 				if ( pszAnchor[ nAnchor ] == NULL )
 				{
 					CRect* pRect;
@@ -261,23 +261,23 @@ BOOL CSkinWindow::Parse(CXMLElement* pBase, const CString& strPath)
 		else if ( pGroup->IsNamed( _T("caption") ) )
 		{
 			m_bCaption = ParseRect( pGroup, &m_rcCaption );
-			
+
 			CString strFont = pGroup->GetAttributeValue( _T("fontFace") );
-			
+
 			if ( strFont.GetLength() )
 			{
 				CString strSize = pGroup->GetAttributeValue( _T("fontSize") );
 				CString strBold = pGroup->GetAttributeValue( _T("fontWeight") );
-				
+
 				if ( strBold.CompareNoCase( _T("bold") ) == 0 )
 					strBold = _T("700");
 				else if ( strBold.CompareNoCase( _T("normal") ) == 0 )
 					strBold = _T("400");
-				
+
 				int nFontSize = 13, nFontWeight = FW_BOLD;
 				_stscanf( strSize, _T("%i"), &nFontSize );
 				_stscanf( strBold, _T("%i"), &nFontWeight );
-				
+
 				LOGFONT lf = {};
 				lf.lfHeight			= nFontSize;
 				lf.lfWeight			= nFontWeight;
@@ -287,7 +287,7 @@ BOOL CSkinWindow::Parse(CXMLElement* pBase, const CString& strPath)
 				lf.lfClipPrecision	= CLIP_DEFAULT_PRECIS;
 				lf.lfPitchAndFamily	= DEFAULT_PITCH|FF_DONTCARE;
 				_tcscpy( lf.lfFaceName, strFont );
-				
+
 				if ( _tcsistr( strSize, _T("pt") ) != NULL )
 				{
 					m_fnCaption.CreatePointFontIndirect( &lf );
@@ -298,7 +298,7 @@ BOOL CSkinWindow::Parse(CXMLElement* pBase, const CString& strPath)
 					m_fnCaption.CreateFontIndirect( &lf );
 				}
 			}
-			
+
 			str = pGroup->GetAttributeValue( _T("color") );
 			ParseColour( str, m_crCaptionText );
 			str = pGroup->GetAttributeValue( _T("colour") );
@@ -315,10 +315,10 @@ BOOL CSkinWindow::Parse(CXMLElement* pBase, const CString& strPath)
 			ParseColour( str, m_crCaptionShadow );
 			str = pGroup->GetAttributeValue( _T("shadowColour") );
 			ParseColour( str, m_crCaptionShadow );
-			
+
 			str = pGroup->GetAttributeValue( _T("caps") );
 			m_bCaptionCaps = str.GetLength() > 0;
-			
+
 			str = pGroup->GetAttributeValue( _T("align") );
 			if ( str.CompareNoCase( _T("left") ) == 0 )
 				m_nCaptionAlign = 0;
@@ -326,7 +326,7 @@ BOOL CSkinWindow::Parse(CXMLElement* pBase, const CString& strPath)
 				m_nCaptionAlign = 1;
 			else if ( str.CompareNoCase( _T("right") ) == 0 )
 				m_nCaptionAlign = 2;
-			
+
 			if ( m_bCaption && m_fnCaption.m_hObject == NULL )
 			{
 				NONCLIENTMETRICS pMetrics;
@@ -338,7 +338,7 @@ BOOL CSkinWindow::Parse(CXMLElement* pBase, const CString& strPath)
 		else if ( pGroup->IsNamed( _T("image") ) )
 		{
 			str = pGroup->GetAttributeValue( _T("language") );
-			
+
 			if ( str.GetLength() > 0 )
 			{
 				if ( str.CompareNoCase( Settings.General.Language ) != 0 ) continue;
@@ -348,11 +348,11 @@ BOOL CSkinWindow::Parse(CXMLElement* pBase, const CString& strPath)
 			{
 				m_sLanguage = Settings.General.Language;
 			}
-			
+
 			CString strRes	= pGroup->GetAttributeValue( _T("res") );
 			CString strFile	= pGroup->GetAttributeValue( _T("path") );
 			HBITMAP hBitmap = NULL;
-			
+
 			if ( strFile.GetLength() > 0 )
 			{
 				strFile = strPath + strFile;
@@ -370,12 +370,12 @@ BOOL CSkinWindow::Parse(CXMLElement* pBase, const CString& strPath)
 				hBitmap = (HBITMAP)LoadImage( AfxGetInstanceHandle(),
 					MAKEINTRESOURCE(nResID), IMAGE_BITMAP, 0, 0, 0 );
 			}
-			
+
 			if ( hBitmap == NULL ) return FALSE;
-			
+
 			str = pGroup->GetAttributeValue( _T("type") );
 			ToLower( str );
-			
+
 			if ( str == _T("watermark") || str == _T("water") )
 			{
 				if ( m_bmWatermark.m_hObject != NULL ) m_bmWatermark.DeleteObject();
@@ -412,7 +412,7 @@ BOOL CSkinWindow::Parse(CXMLElement* pBase, const CString& strPath)
 			_stscanf( str, _T("%i"), &m_szMinSize.cy );
 		}
 	}
-	
+
 	return ( m_bmSkin.m_hObject != NULL );
 }
 
@@ -475,10 +475,10 @@ void CSkinWindow::CalcWindowRect(RECT* pRect, BOOL bToClient, BOOL /*bZoomed*/)
 
 	if ( m_bPart[ SKINPART_LEFT ] )
 		rcAdjust.left = max( rcAdjust.left, m_rcPart[ SKINPART_LEFT ].Width() );
-	
+
 	if ( m_bPart[ SKINPART_RIGHT ] )
 		rcAdjust.right = max( rcAdjust.right, m_rcPart[ SKINPART_RIGHT ].Width() );
-	
+
 	if ( m_bPart[ SKINPART_BOTTOM_LEFT ] )
 		rcAdjust.bottom = max( rcAdjust.bottom, m_rcPart[ SKINPART_BOTTOM_LEFT ].Height() );
 	if ( m_bPart[ SKINPART_BOTTOM ] )
@@ -509,19 +509,14 @@ void CSkinWindow::OnNcCalcSize(CWnd* pWnd, BOOL /*bCalcValidRects*/, NCCALCSIZE_
 
 void CSkinWindow::OnGetMinMaxInfo(MINMAXINFO* lpMMI)
 {
-	CRect rcWork;
-	if ( theApp.m_pfnGetMonitorInfoA != NULL ) //If GetMonitorInfo() is available
-	{
-		MONITORINFO oMonitor = {};
-		oMonitor.cbSize = sizeof(oMonitor);
-		theApp.m_pfnGetMonitorInfoA( theApp.m_pfnMonitorFromWindow( AfxGetMainWnd()->GetSafeHwnd(), MONITOR_DEFAULTTOPRIMARY ), &oMonitor );
+	HMONITOR hMonitor = MonitorFromWindow( AfxGetMainWnd()->GetSafeHwnd(),
+		MONITOR_DEFAULTTOPRIMARY );
 
-		rcWork = oMonitor.rcWork;
-	}
-	else
-	{
-		SystemParametersInfo( SPI_GETWORKAREA, 0, &rcWork, 0 );
-	}
+	MONITORINFO oMonitor = {0};
+	oMonitor.cbSize = sizeof( MONITORINFO );
+	GetMonitorInfo( hMonitor, &oMonitor );
+
+	CRect rcWork = oMonitor.rcWork;
 	rcWork.OffsetRect( -rcWork.left, -rcWork.top );
 
 	CRect rcAdjusted( &rcWork );
@@ -634,7 +629,8 @@ UINT CSkinWindow::OnNcHitTest(CWnd* pWnd, CPoint point, BOOL bResizable)
 void CSkinWindow::OnNcPaint(CWnd* pWnd)
 {
 	CWindowDC dc( pWnd );
-	if ( Settings.General.LanguageRTL ) theApp.m_pfnSetLayout( dc.m_hDC, LAYOUT_RTL ); 
+	if ( Settings.General.LanguageRTL )
+		SetLayout( dc.m_hDC, LAYOUT_RTL );
 	Paint( pWnd, dc, FALSE );
 	dc.SelectObject( GetStockObject( ANSI_VAR_FONT ) ); // Comctl32.dll font leak fix
 }
@@ -642,7 +638,8 @@ void CSkinWindow::OnNcPaint(CWnd* pWnd)
 BOOL CSkinWindow::OnNcActivate(CWnd* pWnd, BOOL bActive)
 {
 	CWindowDC dc( pWnd );
-	if ( Settings.General.LanguageRTL ) theApp.m_pfnSetLayout( dc.m_hDC, LAYOUT_RTL ); 
+	if ( Settings.General.LanguageRTL )
+		SetLayout( dc.m_hDC, LAYOUT_RTL );
 	Paint( pWnd, dc, TRUE, bActive ? TRI_TRUE : TRI_FALSE );
 	dc.SelectObject( GetStockObject( ANSI_VAR_FONT ) ); // Comctl32.dll font leak fix
 	return FALSE;
@@ -651,7 +648,8 @@ BOOL CSkinWindow::OnNcActivate(CWnd* pWnd, BOOL bActive)
 void CSkinWindow::OnSetText(CWnd* pWnd)
 {
 	CWindowDC dc( pWnd );
-	if ( Settings.General.LanguageRTL ) theApp.m_pfnSetLayout( dc.m_hDC, LAYOUT_RTL ); 
+	if ( Settings.General.LanguageRTL )
+		SetLayout( dc.m_hDC, LAYOUT_RTL );
 	Paint( pWnd, dc, TRUE );
 	dc.SelectObject( GetStockObject( ANSI_VAR_FONT ) ); // Comctl32.dll font leak fix
 }
@@ -662,21 +660,22 @@ void CSkinWindow::OnSize(CWnd* pWnd)
 
 	if ( pWnd->IsZoomed() )
 	{
-		if ( theApp.m_pfnGetMonitorInfoA != NULL )
+		CRect rcWnd;
+		SystemParametersInfo( SPI_GETWORKAREA, 0, rcWnd, 0 );
+
+		HMONITOR hMonitor = MonitorFromWindow( pWnd->GetSafeHwnd(),
+			MONITOR_DEFAULTTONEAREST );
+
+		MONITORINFO oMonitor = {0};
+		oMonitor.cbSize = sizeof( MONITORINFO );
+		GetMonitorInfo( hMonitor, &oMonitor );
+
+		if ( oMonitor.dwFlags & MONITORINFOF_PRIMARY )
 		{
-			CRect rcWnd;
-			SystemParametersInfo( SPI_GETWORKAREA, 0, rcWnd, 0 );
-
-			HMONITOR hMonitor = theApp.m_pfnMonitorFromWindow( pWnd->GetSafeHwnd(), MONITOR_DEFAULTTONEAREST );
-			MONITORINFO mi;
-			memset( &mi, 0, sizeof(MONITORINFO) );
-			mi.cbSize = sizeof(MONITORINFO);
-			VERIFY( GetMonitorInfo( hMonitor, &mi ) );
-
-			if ( mi.dwFlags & MONITORINFOF_PRIMARY )
-				SetWindowPos( pWnd->m_hWnd, HWND_TOP, rcWnd.left, rcWnd.top, rcWnd.Width(), 
-				rcWnd.Height(), 0 );
+			SetWindowPos( pWnd->GetSafeHwnd(), HWND_TOP, rcWnd.left, rcWnd.top,
+				rcWnd.Width(), rcWnd.Height(), 0 );
 		}
+
 		pWnd->SetWindowRgn( NULL, TRUE );
 	}
 	else if ( m_pRegionXML )
@@ -740,10 +739,11 @@ void CSkinWindow::OnNcMouseMove(CWnd* pWnd, UINT nHitTest, CPoint /*point*/)
 	{
 		m_nHoverAnchor = nAnchor;
 		CWindowDC dc( pWnd );
-		if ( Settings.General.LanguageRTL ) theApp.m_pfnSetLayout( dc.m_hDC, LAYOUT_RTL ); 
+		if ( Settings.General.LanguageRTL )
+			SetLayout( dc.m_hDC, LAYOUT_RTL );
 		Paint( pWnd, dc, TRUE );
 		dc.SelectObject( GetStockObject( ANSI_VAR_FONT ) ); // Comctl32.dll font leak fix
-	}	
+	}
 }
 
 BOOL CSkinWindow::OnNcLButtonDown(CWnd* pWnd, UINT nHitTest, CPoint point)
@@ -766,13 +766,14 @@ BOOL CSkinWindow::OnNcLButtonDown(CWnd* pWnd, UINT nHitTest, CPoint point)
 		CMenu* pPopup = pWnd->GetSystemMenu( FALSE );
 
 		CWindowDC dc( pWnd );
-		if ( Settings.General.LanguageRTL ) theApp.m_pfnSetLayout( dc.m_hDC, LAYOUT_RTL );
+		if ( Settings.General.LanguageRTL )
+			SetLayout( dc.m_hDC, LAYOUT_RTL );
 		Paint( pWnd, dc, TRUE );
 
 		DWORD nTime = GetTickCount();
 
 		UINT nCmdID = pPopup->TrackPopupMenu( TPM_LEFTALIGN|TPM_TOPALIGN|TPM_RETURNCMD,
-			Settings.General.LanguageRTL ? rcWindow.right - rcSystem.left + rcWindow.left : rcSystem.left, 
+			Settings.General.LanguageRTL ? rcWindow.right - rcSystem.left + rcWindow.left : rcSystem.left,
 			rcSystem.bottom, pWnd, NULL );
 
 		m_nHoverAnchor = m_nDownAnchor = 0;
@@ -792,7 +793,8 @@ BOOL CSkinWindow::OnNcLButtonDown(CWnd* pWnd, UINT nHitTest, CPoint point)
 	}
 
 	CWindowDC dc( pWnd );
-	if ( Settings.General.LanguageRTL ) theApp.m_pfnSetLayout( dc.m_hDC, LAYOUT_RTL );
+	if ( Settings.General.LanguageRTL )
+		SetLayout( dc.m_hDC, LAYOUT_RTL );
 	Paint( pWnd, dc, TRUE );
 	dc.SelectObject( GetStockObject( ANSI_VAR_FONT ) ); // Comctl32.dll font leak fix
 
@@ -823,7 +825,8 @@ BOOL CSkinWindow::OnNcLButtonUp(CWnd* pWnd, UINT /*nHitTest*/, CPoint /*point*/)
 	m_nDownAnchor = 0;
 
 	CWindowDC dc( pWnd );
-	if ( Settings.General.LanguageRTL ) theApp.m_pfnSetLayout( dc.m_hDC, LAYOUT_RTL );
+	if ( Settings.General.LanguageRTL )
+		SetLayout( dc.m_hDC, LAYOUT_RTL );
 	Paint( pWnd, dc, TRUE );
 	dc.SelectObject( GetStockObject( ANSI_VAR_FONT ) ); // Comctl32.dll font leak fix
 
@@ -850,7 +853,8 @@ void CSkinWindow::Prepare(CDC* pDC)
 		m_dcSkin.CreateCompatibleDC( pDC );
 	if ( m_hoSkin == NULL )
 		m_hoSkin = (HBITMAP)m_dcSkin.SelectObject( &m_bmSkin )->GetSafeHandle();
-	if ( Settings.General.LanguageRTL ) theApp.m_pfnSetLayout( m_dcSkin.m_hDC, LAYOUT_BITMAPORIENTATIONPRESERVED ); 
+	if ( Settings.General.LanguageRTL )
+		SetLayout( m_dcSkin.m_hDC, LAYOUT_BITMAPORIENTATIONPRESERVED );
 }
 
 void CSkinWindow::Paint(CWnd* pWnd, CDC& dc, BOOL bCaption, TRISTATE bActive)
@@ -958,10 +962,10 @@ void CSkinWindow::Paint(CWnd* pWnd, CDC& dc, BOOL bCaption, TRISTATE bActive)
 		// Inactive main window caption mirroring for RTL
 		if ( Settings.General.LanguageRTL && m_sTargets == "|CMainWnd|" && m_nMirror != 0 )
 		{
-			pDC->StretchBlt( nTotalWidth - nCaptionOffset, 0, -nCaptionWidth, 
+			pDC->StretchBlt( nTotalWidth - nCaptionOffset, 0, -nCaptionWidth,
 				m_rcPart[ SKINPART_IA_TOP_LEFT ].Height(), &m_dcSkin,
 				m_rcPart[ SKINPART_IA_TOP_LEFT ].left + nRestOffset + nSystemWidth + nSystemOffset,
-				m_rcPart[ SKINPART_IA_TOP_LEFT ].top, nCaptionWidth, 
+				m_rcPart[ SKINPART_IA_TOP_LEFT ].top, nCaptionWidth,
 				m_rcPart[ SKINPART_IA_TOP_LEFT ].Height(), SRCCOPY );
 			if ( m_nMirror == 2 )
 				pDC->StretchBlt( nRestOffset + nSystemWidth, 0, -nSystemWidth,
@@ -985,10 +989,10 @@ void CSkinWindow::Paint(CWnd* pWnd, CDC& dc, BOOL bCaption, TRISTATE bActive)
 		{
 			nTotalWidth = m_rcPart[ SKINPART_TOP_LEFT ].Width();
 			nRestOffset = nTotalWidth - nSystemWidth - nSystemOffset - nCaptionWidth - nCaptionOffset;
-			pDC->StretchBlt( nTotalWidth - nCaptionOffset, 0, -nCaptionWidth, 
+			pDC->StretchBlt( nTotalWidth - nCaptionOffset, 0, -nCaptionWidth,
 				m_rcPart[ SKINPART_TOP_LEFT ].Height(), &m_dcSkin,
 				m_rcPart[ SKINPART_TOP_LEFT ].left + nRestOffset + nSystemWidth + nSystemOffset,
-				m_rcPart[ SKINPART_TOP_LEFT ].top, nCaptionWidth, 
+				m_rcPart[ SKINPART_TOP_LEFT ].top, nCaptionWidth,
 				m_rcPart[ SKINPART_TOP_LEFT ].Height(), SRCCOPY );
 			if ( m_nMirror == 2 )
 				pDC->StretchBlt( nRestOffset + nSystemWidth, 0, -nSystemWidth,
@@ -1211,7 +1215,7 @@ void CSkinWindow::Paint(CWnd* pWnd, CDC& dc, BOOL bCaption, TRISTATE bActive)
 			rcItem.right = m_rcCaption.Width() + ( m_rcCaption.Width() >= 0 ? rc.left : rc.right );
 		rcItem.top		= rc.top + m_rcCaption.top;
 		rcItem.bottom	= rc.top + m_rcCaption.bottom;
-		
+
 		switch ( m_nCaptionAlign )
 		{
 		case 0:
@@ -1226,9 +1230,9 @@ void CSkinWindow::Paint(CWnd* pWnd, CDC& dc, BOOL bCaption, TRISTATE bActive)
 			ptCap.x = max( ptCap.x, rcItem.left + 1 );
 			break;
 		}
-		
+
 		ptCap.y = ( rcItem.top + rcItem.bottom ) / 2 - sz.cy / 2;
-		
+
 		pDC->SetBkMode( TRANSPARENT );
 
 		if ( m_crCaptionOutline != CLR_NONE )
@@ -1243,7 +1247,7 @@ void CSkinWindow::Paint(CWnd* pWnd, CDC& dc, BOOL bCaption, TRISTATE bActive)
 			pDC->ExtTextOut( ptCap.x, ptCap.y + 1, ETO_CLIPPED, &rcItem, strCaption, NULL );
 			pDC->ExtTextOut( ptCap.x + 1, ptCap.y + 1, ETO_CLIPPED, &rcItem, strCaption, NULL );
 		}
-		
+
 		if ( m_crCaptionShadow != CLR_NONE )
 		{
 			pDC->SetTextColor( m_crCaptionShadow );
@@ -1254,10 +1258,10 @@ void CSkinWindow::Paint(CWnd* pWnd, CDC& dc, BOOL bCaption, TRISTATE bActive)
 		pDC->ExtTextOut( ptCap.x, ptCap.y, ETO_CLIPPED, &rcItem, strCaption, NULL );
 		pDC->SelectObject( pOldFont );
 	}
-	
+
 	dc.BitBlt( 0, 0, rc.Width(), nCaptionHeight, pDC, 0, 0, SRCCOPY );
 	pDC->SelectClipRgn( NULL );
-	
+
 	dc.SetTextColor( 0 );
 }
 
@@ -1293,15 +1297,15 @@ BOOL CSkinWindow::GetAnchor(LPCTSTR pszName, const CRect& rcClient, CRect& rcAnc
 BOOL CSkinWindow::PaintPartOnAnchor(CDC* pDC, const CRect& rcClient, LPCTSTR pszPart, LPCTSTR pszAnchor)
 {
 	CRect rcPart, rcAnchor;
-	
+
 	if ( ! GetPart( pszPart, rcPart ) ) return FALSE;
 	if ( ! GetAnchor( pszAnchor, rcClient, rcAnchor ) ) return FALSE;
 	if ( m_dcSkin.m_hDC == NULL ) Prepare( pDC );
-	
+
 	pDC->BitBlt( rcAnchor.left, rcAnchor.top, rcPart.Width(), rcPart.Height(),
 		&m_dcSkin, rcPart.left, rcPart.top, SRCCOPY );
 	pDC->ExcludeClipRect( &rcAnchor );
-	
+
 	return TRUE;
 }
 
@@ -1342,7 +1346,7 @@ void CSkinWindow::SelectRegion(CWnd* pWnd)
 		{
 			rcPart.CopyRect( &rcWnd );
 		}
-		
+
 		CString strType = pXML->GetAttributeValue( _T("type") );
 		HRGN hPart = NULL;
 
@@ -1437,29 +1441,30 @@ BOOL CSkinWindow::PreBlend(CBitmap* pbmTarget, const CRect& rcTarget, const CRec
 	BITMAPINFO pTargeInfo = {};
 	BITMAPINFO pImageInfo = {};
 	BITMAPINFO pAlphaInfo = {};
-	
+
 	pTargeInfo.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
 	pImageInfo.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
 	pAlphaInfo.bmiHeader.biSize	= sizeof(BITMAPINFOHEADER);
-	
+
 	HDC hDC = ::GetDC( 0 );
-	if ( Settings.General.LanguageRTL ) theApp.m_pfnSetLayout( hDC, LAYOUT_BITMAPORIENTATIONPRESERVED );
-	
+	if ( Settings.General.LanguageRTL )
+		SetLayout( hDC, LAYOUT_BITMAPORIENTATIONPRESERVED );
+
 	if ( 0 == GetDIBits( hDC, m_bmSkin, 0, 0, NULL, &pImageInfo, DIB_RGB_COLORS ) ||
 		 0 == GetDIBits( hDC, *pbmTarget, 0, 0, NULL, &pTargeInfo, DIB_RGB_COLORS ) )
 	{
 		::ReleaseDC( 0, hDC );
 		return FALSE;
 	}
-	
+
 	BOOL bAlpha = m_bmAlpha.m_hObject &&
 		GetDIBits( hDC, m_bmAlpha, 0, 0, NULL, &pAlphaInfo, DIB_RGB_COLORS );
 	if ( ! bAlpha ) CopyMemory( &pAlphaInfo, &pImageInfo, sizeof(pAlphaInfo) );
-	
+
 	int nTargePitch = ( ( pTargeInfo.bmiHeader.biWidth * 3 ) + 3 ) & ~3;
 	int nImagePitch = ( ( pImageInfo.bmiHeader.biWidth * 3 ) + 3 ) & ~3;
 	int nAlphaPitch = ( ( pAlphaInfo.bmiHeader.biWidth * 3 ) + 3 ) & ~3;
-	
+
 	pTargeInfo.bmiHeader.biHeight		= -abs( pTargeInfo.bmiHeader.biHeight );
 	pTargeInfo.bmiHeader.biBitCount		= 24;
 	pTargeInfo.bmiHeader.biCompression	= BI_RGB;
@@ -1472,29 +1477,29 @@ BOOL CSkinWindow::PreBlend(CBitmap* pbmTarget, const CRect& rcTarget, const CRec
 	pAlphaInfo.bmiHeader.biBitCount		= 24;
 	pAlphaInfo.bmiHeader.biCompression	= BI_RGB;
 	pAlphaInfo.bmiHeader.biSizeImage	= -pAlphaInfo.bmiHeader.biHeight * nAlphaPitch;
-	
+
 	BYTE* pTargeData = new BYTE[ pTargeInfo.bmiHeader.biSizeImage ];
 	BYTE* pImageData = new BYTE[ pImageInfo.bmiHeader.biSizeImage ];
 	BYTE* pAlphaData = bAlpha ? new BYTE[ pAlphaInfo.bmiHeader.biSizeImage ] : NULL;
-	
+
 	GetDIBits( hDC, *pbmTarget, 0, -pTargeInfo.bmiHeader.biHeight, pTargeData, &pTargeInfo, DIB_RGB_COLORS );
 	GetDIBits( hDC, m_bmSkin, 0, -pImageInfo.bmiHeader.biHeight, pImageData, &pImageInfo, DIB_RGB_COLORS );
 	if ( bAlpha ) GetDIBits( hDC, m_bmAlpha, 0, -pAlphaInfo.bmiHeader.biHeight, pAlphaData, &pAlphaInfo, DIB_RGB_COLORS );
-	
+
 	int nSrcY = rcSource.top, nSrcLeft = rcSource.left * 3;
 	int nDstY = rcTarget.top, nDstLeft = rcTarget.left * 3;
-	
+
 	int nWidth = min( rcSource.Width(), rcTarget.Width() );
 	nWidth = min( nWidth, pTargeInfo.bmiHeader.biWidth - rcTarget.left );
 	nWidth = min( nWidth, pImageInfo.bmiHeader.biWidth - rcSource.left );
 	nWidth = min( nWidth, pAlphaInfo.bmiHeader.biWidth - rcSource.left );
-	
+
 	for ( int nY = min( rcTarget.Height(), rcSource.Height() ) ; nY ; nY--, nSrcY++, nDstY++ )
 	{
 		BYTE* pTargePtr = pTargeData + nDstY * nTargePitch + nDstLeft;
 		BYTE* pImagePtr = pImageData + nSrcY * nImagePitch + nSrcLeft;
 		BYTE* pAlphaPtr = pAlphaData + nSrcY * nAlphaPitch + nSrcLeft;
-		
+
 		if ( nDstY < 0 || nDstY >= -pTargeInfo.bmiHeader.biHeight )
 		{
 			// Out of bounds on destination
@@ -1521,15 +1526,15 @@ BOOL CSkinWindow::PreBlend(CBitmap* pbmTarget, const CRect& rcTarget, const CRec
 			CopyMemory( pTargePtr, pImagePtr, nWidth * 3 );
 		}
 	}
-	
+
 	SetDIBits( hDC, *pbmTarget, 0, -pTargeInfo.bmiHeader.biHeight, pTargeData,
 		&pTargeInfo, DIB_RGB_COLORS );
-	
+
 	if ( bAlpha ) delete [] pAlphaData;
 	delete [] pImageData;
 	delete [] pTargeData;
-	
+
 	::ReleaseDC( 0, hDC );
-	
+
 	return TRUE;
 }

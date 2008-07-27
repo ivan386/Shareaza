@@ -1,7 +1,7 @@
 //
 // DlgDeleteFile.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2006.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -91,7 +91,7 @@ BOOL CDeleteFileDlg::OnInitDialog()
 		m_wndAll.EnableWindow( TRUE );
 		m_bAll = FALSE;
 	}
-	
+
 	DWORD nFlags = WS_CHILD|WS_TABSTOP|CBS_DROPDOWNLIST;
 	m_wndOptions.ModifyStyle( CBS_SORT, nFlags );
 	m_wndRating.ModifyStyle( CBS_SORT, nFlags|CBS_HASSTRINGS|CBS_OWNERDRAWFIXED );
@@ -157,7 +157,7 @@ void CDeleteFileDlg::Apply(CLibraryFile* pFile)
 
 			pFile->m_nRating = m_nRateValue;
 		}
-		else 
+		else
 		{
 			pFile->m_sComments.Empty();
 			pFile->m_nRating = 0;
@@ -191,10 +191,10 @@ void CDeleteFileDlg::Create(CDownload* pDownload, BOOL bShare)
 	if ( !oLock.Lock( 500 ) ) return;
 
 	CLibraryFile* pFile = NULL;
-	
+
 	if ( pFile == NULL && pDownload->m_oSHA1 )
 		pFile = LibraryMaps.LookupFileBySHA1( pDownload->m_oSHA1 );
-    if ( pFile == NULL && pDownload->m_oTiger )
+	if ( pFile == NULL && pDownload->m_oTiger )
 		pFile = LibraryMaps.LookupFileByTiger( pDownload->m_oTiger );
 	if ( pFile == NULL && pDownload->m_oED2K )
 		pFile = LibraryMaps.LookupFileByED2K( pDownload->m_oED2K );
@@ -202,8 +202,8 @@ void CDeleteFileDlg::Create(CDownload* pDownload, BOOL bShare)
 		pFile = LibraryMaps.LookupFileByBTH( pDownload->m_oBTH );
 	if ( pFile == NULL && pDownload->m_oMD5 )
 		pFile = LibraryMaps.LookupFileByMD5( pDownload->m_oMD5 );
-	
-	if ( pFile == NULL && m_bCreateGhost && 
+
+	if ( pFile == NULL && m_bCreateGhost &&
 		 ( m_nRateValue > 0 || m_sComments.GetLength() > 0 ) ) // The file is not completed
 	{
 		pFile = new CLibraryFile( NULL, pDownload->m_sName );
@@ -241,7 +241,8 @@ void CDeleteFileDlg::OnDrawItem(int /*nIDCtl*/, LPDRAWITEMSTRUCT lpDrawItemStruc
 	CDC dc;
 
 	dc.Attach( lpDrawItemStruct->hDC );
-	if ( Settings.General.LanguageRTL ) theApp.m_pfnSetLayout( dc.m_hDC, LAYOUT_RTL );
+	if ( Settings.General.LanguageRTL )
+		SetLayout( dc.m_hDC, LAYOUT_RTL );
 
 	int nRating = lpDrawItemStruct->itemID;
 

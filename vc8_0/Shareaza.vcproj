@@ -88,7 +88,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="wininet.lib msi.lib iphlpapi.lib version.lib winmm.lib"
+				AdditionalDependencies="wininet.lib msi.lib iphlpapi.lib version.lib winmm.lib powrprof.lib"
 				OutputFile="$(OutDir)$(ProjectName).exe"
 				GenerateDebugInformation="true"
 				KeyFile="$(SolutionDir)..\$(ProjectName)\$(ProjectName).snk"
@@ -187,7 +187,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="wininet.lib msi.lib iphlpapi.lib version.lib winmm.lib"
+				AdditionalDependencies="wininet.lib msi.lib iphlpapi.lib version.lib winmm.lib powrprof.lib"
 				OutputFile="$(OutDir)$(ProjectName).exe"
 				GenerateDebugInformation="true"
 				TargetMachine="17"
@@ -286,7 +286,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="wininet.lib msi.lib iphlpapi.lib version.lib winmm.lib"
+				AdditionalDependencies="wininet.lib msi.lib iphlpapi.lib version.lib winmm.lib powrprof.lib"
 				OutputFile="$(OutDir)$(ProjectName).exe"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
@@ -385,7 +385,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="wininet.lib msi.lib iphlpapi.lib version.lib winmm.lib"
+				AdditionalDependencies="wininet.lib msi.lib iphlpapi.lib version.lib winmm.lib powrprof.lib"
 				OutputFile="$(OutDir)$(ProjectName).exe"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"

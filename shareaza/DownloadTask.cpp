@@ -48,10 +48,6 @@ BEGIN_MESSAGE_MAP(CDownloadTask, CWinThread)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
-//#define METHOD_BUFFERED				0x00000000
-//#define FILE_DEVICE_FILE_SYSTEM		0x00000009
-//#define CTL_CODE(DeviceType,Function,Method,Access) (((DeviceType) << 16) | ((Access) << 14) | ((Function) << 2) | (Method))
-//#define FSCTL_SET_SPARSE CTL_CODE(FILE_DEVICE_FILE_SYSTEM, 49, METHOD_BUFFERED, FILE_WRITE_DATA)
 const DWORD BUFFER_SIZE = 2 * 1024 * 1024u;
 
 
@@ -230,7 +226,7 @@ int CDownloadTask::Run()
 void CDownloadTask::RunAllocate()
 {
 	HANDLE hFile = CreateFile( m_sFilename, GENERIC_WRITE,
-		FILE_SHARE_READ | FILE_SHARE_WRITE | ( theApp.m_bNT ? FILE_SHARE_DELETE : 0 ),
+		FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE,
 		NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL|FILE_FLAG_SEQUENTIAL_SCAN, NULL );
 	VERIFY_FILE_ACCESS( hFile, m_sFilename )
 	if ( hFile == INVALID_HANDLE_VALUE ) return;
@@ -241,7 +237,7 @@ void CDownloadTask::RunAllocate()
 		return;
 	}
 
-	if ( Settings.Downloads.SparseThreshold > 0 && theApp.m_bNT &&
+	if ( Settings.Downloads.SparseThreshold > 0 &&
 		 m_nSize != SIZE_UNKNOWN &&
 		 m_nSize >= Settings.Downloads.SparseThreshold * 1024 )
 	{
@@ -392,7 +388,7 @@ void CDownloadTask::RunCopyTorrent()
 	}
 
 	HANDLE hSource = CreateFile( m_sFilename, GENERIC_READ,
-		FILE_SHARE_READ | ( theApp.m_bNT ? FILE_SHARE_DELETE : 0 ), NULL, OPEN_EXISTING,
+		FILE_SHARE_READ | FILE_SHARE_DELETE, NULL, OPEN_EXISTING,
 		FILE_ATTRIBUTE_NORMAL|FILE_FLAG_SEQUENTIAL_SCAN, NULL );
 	m_dwFileError = GetLastError();
 	VERIFY_FILE_ACCESS( hSource, m_sFilename )
@@ -587,13 +583,13 @@ CString CDownloadTask::SafeFilename(LPCTSTR pszName)
 		TCHAR cChar = strName.GetAt( nChar );
 
 		if ( (DWORD)cChar > 128 )
-		{
-			if ( theApp.m_bNT ) continue;
-		}
+			continue;
 		else
 		{
-			if ( IsCharacter( cChar ) ) continue;
-			if ( _tcschr( pszValid, cChar ) != NULL ) continue;
+			if ( IsCharacter( cChar ) )
+				continue;
+			if ( _tcschr( pszValid, cChar ) != NULL )
+				continue;
 		}
 
 		strName.SetAt( nChar, '_' );
@@ -713,7 +709,7 @@ BOOL CDownloadTask::MakeBatchTorrent()
 		if ( strSource.GetLength() > 0 )
 		{
 			hSource = CreateFile( strSource, GENERIC_READ,
-				FILE_SHARE_READ | ( theApp.m_bNT ? FILE_SHARE_DELETE : 0 ),
+				FILE_SHARE_READ | FILE_SHARE_DELETE,
 				NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL );
 			VERIFY_FILE_ACCESS( hSource, strSource )
 		}

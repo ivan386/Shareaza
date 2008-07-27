@@ -218,7 +218,7 @@ BOOL CFileExecutor::Execute(LPCTSTR pszFile, BOOL bSkipSecurityCheck, LPCTSTR ps
 	if ( Settings.MediaPlayer.ShortPaths )
 	{
 		TCHAR pszShortPath[ MAX_PATH ];
-		if ( GetShortPathName( pszFile, pszShortPath, MAX_PATH ) ) 
+		if ( GetShortPathName( pszFile, pszShortPath, MAX_PATH ) )
 			strFile = pszShortPath;
 	}
 
@@ -290,47 +290,45 @@ BOOL CFileExecutor::Enqueue(LPCTSTR pszFile, BOOL /*bSkipSecurityCheck*/, LPCTST
 	if ( Settings.MediaPlayer.ShortPaths )
 	{
 		TCHAR pszShortPath[ MAX_PATH ];
-		if ( GetShortPathName( pszFile, pszShortPath, MAX_PATH ) ) 
+		if ( GetShortPathName( pszFile, pszShortPath, MAX_PATH ) )
 			strFile = pszShortPath;
 	}
 
 	// Handle video and audio files by external player
-	if ( ! bShiftKey && ( bVideo || bAudio ) && 
+	if ( ! bShiftKey && ( bVideo || bAudio ) &&
 		 ! Settings.MediaPlayer.ServicePath.IsEmpty() )
 	{
 		CString strServiceLC = Settings.MediaPlayer.ServicePath;
 		strServiceLC.MakeLower();
 
 		// Sometimes ShellExecute doesn't work, so we find the verb stuff manually
-		if ( theApp.m_pfnAssocQueryStringW )
+		CString strCommand;
+		DWORD nBufferSize = MAX_PATH;
+		HRESULT hr = AssocQueryString( ASSOCF_OPEN_BYEXENAME, ASSOCSTR_COMMAND,
+			Settings.MediaPlayer.ServicePath, _T("Enqueue"),
+			strCommand.GetBuffer( MAX_PATH ), &nBufferSize );
+		strCommand.ReleaseBuffer();
+
+		if ( SUCCEEDED( hr ) )
 		{
-			CString strCommand;
-			DWORD nBufferSize = MAX_PATH;
-			HRESULT hr = (*theApp.m_pfnAssocQueryStringW)(
-				ASSOCF_OPEN_BYEXENAME, ASSOCSTR_COMMAND, 
-				Settings.MediaPlayer.ServicePath, _T("Enqueue"), 
-				strCommand.GetBuffer( MAX_PATH ), &nBufferSize );
-			strCommand.ReleaseBuffer();
-
-			if ( SUCCEEDED( hr ) )
+			int nFind = strCommand.Find( _T("%1") );
+			if ( nFind != -1 )
 			{
-				int nFind = strCommand.Find( _T("%1") );
-				if ( nFind != -1 )
+				// Replace "%1" by strFile
+				strCommand = ( strCommand.Left( nFind ) + strFile +
+					strCommand.Mid( nFind + 2 ) ).MakeLower();
+
+				// Cut service filename from start of string
+				nFind = strCommand.Find( strServiceLC );
+				strCommand = strCommand.Mid( strServiceLC.GetLength() + nFind );
+				if ( strCommand.GetAt( 0 ) == _T('\"') )
+					strCommand = strCommand.Mid( 1 ).Trim();
+
+				if ( ShellExecute( AfxGetMainWnd()->GetSafeHwnd(), NULL,
+					Settings.MediaPlayer.ServicePath, strCommand, NULL,
+					SW_SHOWNORMAL ) > (HINSTANCE)SE_ERR_DLLNOTFOUND )
 				{
-					// Replace "%1" by strFile
-					strCommand = ( strCommand.Left( nFind ) + strFile +
-						strCommand.Mid( nFind + 2 ) ).MakeLower();
-
-					// Cut service filename from start of string
-					nFind = strCommand.Find( strServiceLC );
-					strCommand = strCommand.Mid( strServiceLC.GetLength() + nFind );
-					if ( strCommand.GetAt( 0 ) == _T('\"') ) 
-						strCommand = strCommand.Mid( 1 ).Trim();
-
-					if ( ShellExecute( AfxGetMainWnd()->GetSafeHwnd(), NULL,
-						Settings.MediaPlayer.ServicePath, strCommand, NULL,
-						SW_SHOWNORMAL ) > (HINSTANCE)SE_ERR_DLLNOTFOUND )
-						return TRUE;
+					return TRUE;
 				}
 			}
 		}
@@ -345,7 +343,7 @@ BOOL CFileExecutor::Enqueue(LPCTSTR pszFile, BOOL /*bSkipSecurityCheck*/, LPCTST
 		if ( strExecutable == _T("mplayerc.exe") )
 		{
 			strParam.Format( _T("\"%s\" /add"), strFile );
-		} 
+		}
 		else if ( strExecutable == _T("wmplayer.exe") )
 		{
 			strParam.Format( _T("/SHELLHLP_V9 Enqueue \"%s\""), strFile );
@@ -390,7 +388,7 @@ BOOL CFileExecutor::ShowBitziTicket(DWORD nIndex)
 
 	CLibraryFile* pFile = Library.LookupFile( nIndex );
 	if ( pFile == NULL ) return FALSE;
-	
+
 	if ( !pFile->m_oSHA1 || !pFile->m_oTiger || !pFile->m_oED2K )
 	{
 		CString strFormat;
@@ -424,7 +422,7 @@ BOOL CFileExecutor::ShowBitziTicket(DWORD nIndex)
 
 			strURL.Replace( _T("(FIRST20)"), str );
 		}
-		else 
+		else
 			strURL.Replace( _T("(FIRST20)"), _T("0") );
 	}
 	else

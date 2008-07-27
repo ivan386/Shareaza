@@ -1,7 +1,7 @@
 //
 // Flags.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -54,7 +54,7 @@ CFlags::~CFlags()
 BOOL CFlags::Load()
 {
 	Clear();
-	m_pImage.Create( IMAGELIST_FLAG_WIDTH, IMAGELIST_FLAG_HEIGHT, ILC_COLOR32|ILC_MASK, 26 * 26, 8 ) || 
+	m_pImage.Create( IMAGELIST_FLAG_WIDTH, IMAGELIST_FLAG_HEIGHT, ILC_COLOR32|ILC_MASK, 26 * 26, 8 ) ||
 		m_pImage.Create( IMAGELIST_FLAG_WIDTH, IMAGELIST_FLAG_HEIGHT, ILC_COLOR24|ILC_MASK, 26 * 26, 8 ) ||
 		m_pImage.Create( IMAGELIST_FLAG_WIDTH, IMAGELIST_FLAG_HEIGHT, ILC_COLOR16|ILC_MASK, 26 * 26, 8 );
 
@@ -64,7 +64,7 @@ BOOL CFlags::Load()
 
 	if (	! pImage.LoadFromFile( strFile ) ||
 			! pImage.EnsureRGB( GetSysColor( COLOR_WINDOW ) ) ||
-			! pImage.SwapRGB() || 
+			! pImage.SwapRGB() ||
 			pImage.m_nWidth != (REAL_FLAG_WIDTH * 26) ||
 			pImage.m_nHeight != (REAL_FLAG_HEIGHT * 26) )
 	{
@@ -72,7 +72,7 @@ BOOL CFlags::Load()
 	}
 
 	COLORREF crBack = RGB( 0, 255, 0 );
-	
+
 	for ( int i = 0; i < 26; i++ )
 	{
 		for ( int j = 0; j < 26; j++ )
@@ -112,7 +112,7 @@ void CFlags::AddFlag(CImageFile* pImage, CRect* pRect, COLORREF crBack)
 	if ( HDC hDC = GetDC( NULL ) ) // Get screen DC
 	{
 		hDCMem1 = CreateCompatibleDC( hDC ); // Create memory DC for the source
-		if ( !hDCMem1 ) 
+		if ( !hDCMem1 )
 		{
 			ReleaseDC( NULL, hDC );
 			return;
@@ -169,8 +169,8 @@ void CFlags::AddFlag(CImageFile* pImage, CRect* pRect, COLORREF crBack)
 		pDC2->FillSolidRect( 0, 0, IMAGELIST_FLAG_WIDTH, IMAGELIST_FLAG_HEIGHT, crBack );
 
 		if ( Settings.General.LanguageRTL )
-			theApp.m_pfnSetLayout( hDCMem2, LAYOUT_RTL );
-		StretchBlt( hDCMem2, 0, 3, REAL_FLAG_WIDTH, REAL_FLAG_HEIGHT, 
+			SetLayout( hDCMem2, LAYOUT_RTL );
+		StretchBlt( hDCMem2, 0, 3, REAL_FLAG_WIDTH, REAL_FLAG_HEIGHT,
 					hDCMem1, 0, 0, REAL_FLAG_WIDTH, REAL_FLAG_HEIGHT, SRCCOPY );
 
 		SelectObject( hDCMem1, hOld_bm1 );
@@ -199,7 +199,7 @@ int CFlags::GetFlagIndex(CString sCountry)
 	{
 		char nFirstLetter = (char)( sCountry[0] - 'A' );
 		char nSecondLetter = (char)( sCountry[1] - 'A' );
-		// Currently only the letters A-Z are in the flag matrix 
+		// Currently only the letters A-Z are in the flag matrix
 		// but GeoIP can also return some combinations that aren't all letters (A1, A2, etc.)
 		if ( nFirstLetter >= 0 && nFirstLetter <= 25 && nSecondLetter >= 0 && nSecondLetter <= 25 )
 			return nFirstLetter * 26 + nSecondLetter;

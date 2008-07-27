@@ -1,7 +1,7 @@
 //
 // CtrlMonitorBar.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -161,7 +161,7 @@ void CMonitorBarCtrl::OnSkinChange()
 	HBITMAP hWatermark = Skin.GetWatermark( _T("CMonitorBar") );
 	if ( m_bmWatermark.m_hObject != NULL ) m_bmWatermark.DeleteObject();
 	if ( hWatermark != NULL ) m_bmWatermark.Attach( hWatermark );
-	
+
 	if ( m_hTab ) DestroyIcon( m_hTab );
 	m_hTab    = CoolInterface.ExtractIcon( IDI_POINTER_ARROW, Settings.General.LanguageRTL );
 	if ( m_hUpDown ) DestroyIcon( m_hUpDown );
@@ -184,7 +184,8 @@ void CMonitorBarCtrl::DoPaint(CDC* pDC)
 
 	CSize size = rcClient.Size();
 	CDC* pMemDC = CoolInterface.GetBuffer( *pDC, size );
-	if ( Settings.General.LanguageRTL ) theApp.m_pfnSetLayout( pMemDC->m_hDC, 0 );
+	if ( Settings.General.LanguageRTL )
+		SetLayout( pMemDC->m_hDC, 0 );
 
 	if ( ! CoolInterface.DrawWatermark( pMemDC, &rcClient, &m_bmWatermark ) )
 		pMemDC->FillSolidRect( &rcClient, CoolInterface.m_crMidtone );
@@ -219,7 +220,8 @@ void CMonitorBarCtrl::DoPaint(CDC* pDC)
 	GetClientRect( &rcClient );
 	pDC->BitBlt( rcClient.left, rcClient.top, rcClient.Width(), rcClient.Height(),
 		pMemDC, 0, 0, SRCCOPY );
-	if ( Settings.General.LanguageRTL ) theApp.m_pfnSetLayout( pMemDC->m_hDC, LAYOUT_RTL );
+	if ( Settings.General.LanguageRTL )
+		SetLayout( pMemDC->m_hDC, LAYOUT_RTL );
 }
 
 /////////////////////////////////////////////////////////////////////////////
