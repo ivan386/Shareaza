@@ -79,7 +79,10 @@ CDownload::~CDownload()
 	{
 		CloseTransfers();
 		CloseTorrentUploads();
-		Uploads.OnRename( m_sPath, NULL );
+
+		// Close the file handle
+		while( !Uploads.OnRename( m_sPath, NULL ) );
+
 		if ( m_bSeeding )
 		{
 			// Auto-clear activated or we don't want to seed

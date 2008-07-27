@@ -414,7 +414,7 @@ bool CUploads::OnRename(const CString& strSource, LPCTSTR pszTarget, bool bRemov
 {
 	CSingleLock pLock( &Transfers.m_pSection );
 
-	if ( !pLock.Lock( 500ul ) )
+	if ( !pLock.Lock( 50ul ) )
 		return false;
 
 	for ( POSITION pos = GetIterator() ; pos ; )
@@ -427,7 +427,7 @@ bool CUploads::OnRename(const CString& strSource, LPCTSTR pszTarget, bool bRemov
 
 	CSingleLock pLock2( &theApp.m_pSection );
 
-	if ( !pLock2.Lock( 500ul ) )
+	if ( !pLock2.Lock( 50ul ) )
 		return false;
 
 	if ( CMainWnd* pMainWnd = (CMainWnd*)theApp.m_pSafeWnd )

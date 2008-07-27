@@ -142,7 +142,8 @@ void CDownloadWithFile::DeleteFile(bool bForce)
 {
 	if ( m_pFile != NULL && m_pFile->IsValid() == FALSE ) return;
 
-	Uploads.OnRename( m_sPath, NULL, bForce );
+	// Close the file handle
+	while( !Uploads.OnRename( m_sPath, NULL, bForce ) );
 
 	if ( m_pFile != NULL )
 	{

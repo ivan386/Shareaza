@@ -438,7 +438,7 @@ bool CFileCopyDlg::ProcessMove(const CString& strSource, const CString& strTarge
 	if ( !CheckTarget( strTarget ) )
 		return false;
 
-	// Closs the file handle
+	// Close the file handle
 	while( !Uploads.OnRename( strSource ) );
 
 	// Try moving the file
