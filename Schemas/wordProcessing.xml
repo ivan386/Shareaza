@@ -583,5 +583,6 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <type extension="wml"/>
                <type extension="wri"/>
                <type extension="xml"/>
+               <type extension="xps"/>
        </typeFilter>
 </schemaDescriptor>
