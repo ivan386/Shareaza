@@ -886,6 +886,9 @@ BOOL CSecureRule::Match(const CShareazaFile* pFile) const
 			}
 		}
 
+		if ( Match( pFile->m_sName ) )
+			return TRUE;
+
 		return
 			( pFile->m_oSHA1  && Match( pFile->m_oSHA1.toUrn() ) ) ||
 			( pFile->m_oED2K  && Match( pFile->m_oED2K.toUrn() ) ) ||
