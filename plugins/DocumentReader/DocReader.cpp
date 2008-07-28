@@ -280,29 +280,57 @@ STDMETHODIMP CDocReader::ProcessNewMSDocument(BSTR bsFile, ISXMLElement* pXML, L
 	// Read docProps\app.xml from the archive (Properties -> Pages, Company and AppVersion)
 	// Read docProps\core.xml from the archive 
 	//		(cp:coreProperties -> dc:title, subject, creator, keywords, description, revision, category)
-	CHAR szFile[256] = "docProps/core.xml";
-	CComBSTR sXML = GetMetadataXML( pFile, szFile );
-
-	// Close the file
-	unzClose( pFile );
-
-	if ( ! sXML.Length() ) return E_FAIL;
+	CHAR szFirstFile[18] = "docProps/core.xml";
+	CHAR szSecondFile[17] = "docProps/app.xml";
+	CComBSTR sXML = GetMetadataXML( pFile, szFirstFile );
 
 	ISXMLElement* pInputXML = NULL;
+	bool bSecondFile = false;
 
 	if ( FAILED( pXML->FromString( sXML, &pInputXML ) ) || pInputXML == NULL )
 	{
-		return E_FAIL;
+		sXML = GetMetadataXML( pFile, szSecondFile );
+		if ( pInputXML != NULL )
+		{
+			pInputXML->Delete();
+			pInputXML->Release();
+		}
+
+		if ( ! sXML.Length() || FAILED( pXML->FromString( sXML, &pInputXML ) ) || pInputXML == NULL ) 
+		{
+			unzClose( pFile );
+			return E_FAIL;
+		}
+
+		bSecondFile = true;
 	}
 	
 	ISXMLElements* pElements;
 	// Get the Elements collection from the XML document
 	if ( FAILED( pInputXML->get_Elements( &pElements ) ) || pElements == NULL )
 	{
-		pInputXML->Delete();
-		pInputXML->Release();
-		return E_FAIL;
+		if ( bSecondFile )
+		{
+			unzClose( pFile );
+			pInputXML->Delete();
+			pInputXML->Release();
+			return E_FAIL;
+		}
+
+		sXML = GetMetadataXML( pFile, szSecondFile );
+
+		if ( ! sXML.Length() || FAILED( pInputXML->get_Elements( &pElements ) ) || pElements == NULL ) 
+		{
+			unzClose( pFile );
+			pInputXML->Delete();
+			pInputXML->Release();
+			return E_FAIL;
+		}
+
+		bSecondFile = true;
 	}
+
+	// unzClose( pFile );
 
 	BSTR bsValue = NULL;
 	BSTR bsName = NULL;
@@ -400,37 +428,75 @@ STDMETHODIMP CDocReader::ProcessNewMSDocument(BSTR bsFile, ISXMLElement* pXML, L
 	hr = pElements->get_ByName( L"dc:description", &pData );
 	if ( SUCCEEDED(hr) && pData )
 	{
-		// should be abstract by definition but it corresponds to comments
-		// in MS documents
 		if ( SUCCEEDED(pData->get_Value( &bsValue )) )
 			pAttributes->Add( L"comments", bsValue );
 		pData->Release();
 	}
 
-	//hr = pElements->get_ByName( L"meta:document-statistic", &pData );
-	//if ( SUCCEEDED(hr) && pData )
-	//{
-	//	ISXMLAttributes* pStatAttributes;
-	//	hr = pData->get_Attributes( &pStatAttributes );
-	//	if ( SUCCEEDED(hr) && pStatAttributes )
-	//	{
-	//		ISXMLAttribute* pAttribute;
-	//		if ( SUCCEEDED(pStatAttributes->get_ByName( L"meta:page-count", &pAttribute )) &&
-	//			 pAttribute )
-	//		{
-	//			if ( SUCCEEDED(pAttribute->get_Value( &bsValue )) )
-	//			{
-	//				if ( pszSchema == CDocReader::uriPresentation )
-	//					pAttributes->Add( L"slides", bsValue );
-	//				else
-	//					pAttributes->Add( L"pages", bsValue );
-	//			}
-	//			pAttribute->Release();
-	//		}
-	//		pStatAttributes->Release();
-	//	}
-	//	pData->Release();
-	//}
+	hr = pElements->get_ByName( L"cp:revision", &pData );
+	if ( SUCCEEDED(hr) && pData )
+	{
+		if ( SUCCEEDED(pData->get_Value( &bsValue )) )
+			pAttributes->Add( L"revision", bsValue );
+		pData->Release();
+	}
+
+	if ( !bSecondFile )
+	{
+		sXML = GetMetadataXML( pFile, szSecondFile );
+		if ( sXML.Length() > 0 ) 
+		{
+			pInputXML->Delete();
+			pInputXML->Release();
+			pInputXML = NULL;
+
+			if ( FAILED( pXML->FromString( sXML, &pInputXML ) ) || pInputXML == NULL )
+			{
+				// Do nothing, clean up later
+			}
+			else
+			{
+				pElements->Release();
+				pElements = NULL;
+
+				if ( FAILED( pInputXML->get_Elements( &pElements ) ) || pElements == NULL )
+				{
+					// Do nothing, cleanup later
+				}
+				else
+				{
+					bSecondFile = true;
+				}
+			}
+		}
+	}
+
+	unzClose( pFile );
+	
+	if ( bSecondFile )
+	{
+		hr = pElements->get_ByName( L"Pages", &pData );
+		if ( SUCCEEDED(hr) && pData )
+		{
+			if ( SUCCEEDED(pData->get_Value( &bsValue )) )
+				pAttributes->Add( L"pages", bsValue );
+			pData->Release();
+		}
+		hr = pElements->get_ByName( L"Slides", &pData );
+		if ( SUCCEEDED(hr) && pData )
+		{
+			if ( SUCCEEDED(pData->get_Value( &bsValue )) )
+				pAttributes->Add( L"slides", bsValue );
+			pData->Release();
+		}
+		hr = pElements->get_ByName( L"Company", &pData );
+		if ( SUCCEEDED(hr) && pData )
+		{
+			if ( SUCCEEDED(pData->get_Value( &bsValue )) )
+				pAttributes->Add( L"copyright", bsValue );
+			pData->Release();
+		}
+	}
 
 	// Now add some internal data
 
@@ -445,10 +511,14 @@ STDMETHODIMP CDocReader::ProcessNewMSDocument(BSTR bsFile, ISXMLElement* pXML, L
 	pPlural->Release();
 
 	// Cleanup source
-	pElements->Release();
+	if ( pElements != NULL )
+		pElements->Release();
 
-	pInputXML->Delete();
-	pInputXML->Release();
+	if ( pInputXML != NULL )
+	{
+		pInputXML->Delete();
+		pInputXML->Release();
+	}
 
 	return S_OK;
 }
@@ -483,7 +553,7 @@ STDMETHODIMP CDocReader::ProcessOODocument(BSTR bsFile, ISXMLElement* pXML, LPCW
 	}
 
 	// Read meta.xml from the archive
-	CHAR szFile[256] = "meta.xml";
+	CHAR szFile[9] = "meta.xml";
 	CComBSTR sXML = GetMetadataXML( pFile, szFile );
 
 	// Close the file
@@ -697,7 +767,10 @@ CComBSTR CDocReader::GetMetadataXML(unzFile pFile, char* pszFile)
 {
 	CComBSTR sUnicode;
 
-	int nError = unzLocateFile( pFile, pszFile, 0 );
+	int nError = unzGoToFirstFile( pFile );
+	if ( nError != UNZ_OK )
+		return sUnicode;
+	nError = unzLocateFile( pFile, pszFile, 0 );
 	if ( nError == UNZ_OK )
 	{
 		// Open the metadata.xml
@@ -741,7 +814,6 @@ CComBSTR CDocReader::GetMetadataXML(unzFile pFile, char* pszFile)
 					delete [] pBuffer;
 				}
 			}
-			unzCloseCurrentFile( pFile );
 		}
 	}
 	return sUnicode; 
