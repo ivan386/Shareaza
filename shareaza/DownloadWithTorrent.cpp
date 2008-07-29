@@ -501,7 +501,10 @@ void CDownloadWithTorrent::SendStopped()
 
 void CDownloadWithTorrent::OnTrackerEvent(bool bSuccess, LPCTSTR pszReason, LPCTSTR pszTip)
 {
-	CQuickLock oLock( Transfers.m_pSection );
+	CSingleLock oLock( &Transfers.m_pSection );
+	if ( ! oLock.Lock( 500 ) )
+		// Abort probably due download cancel
+		return;
 
 	DWORD tNow = GetTickCount();
 
