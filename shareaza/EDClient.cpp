@@ -1301,7 +1301,8 @@ BOOL CEDClient::OnFileRequest(CEDPacket* pPacket)
 	pReply->Write( m_oUpED2K );
 
 	// Extra security check (Shouldn't be needed, but there have been reports of glitches)
-	if ( Security.IsDenied( &m_pHost.sin_addr ) )
+	if ( Security.IsDenied( &m_pHost.sin_addr ) ||
+		 Security.IsClientBanned( m_sUserAgent ) )
 	{
 		pReply->m_nType = ED2K_C2C_FILENOTFOUND;
 		Send( pReply );
@@ -1573,7 +1574,8 @@ BOOL CEDClient::OnRequestPreview(CEDPacket* pPacket)
 		theApp.Message( MSG_ERROR, IDS_ED2K_CLIENT_BAD_PACKET, (LPCTSTR)m_sAddress, pPacket->m_nType );
 		return TRUE;
 	}
-	else if ( Security.IsDenied( &m_pHost.sin_addr ) )  // Extra security check
+	else if ( Security.IsDenied( &m_pHost.sin_addr ) ||
+		 Security.IsClientBanned( m_sUserAgent ) )  // Extra security check
 	{
 		theApp.Message( MSG_ERROR, _T("ED2K upload to %s blocked by security rules."), m_sAddress);
 		return TRUE;
