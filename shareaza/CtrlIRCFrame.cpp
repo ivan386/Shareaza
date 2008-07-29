@@ -1448,6 +1448,8 @@ void CIRCFrame::ActivateMessageByID(CString strMessage, CIRCNewMessage* oNewMess
 		case ID_MESSAGE_USER_MESSAGE:
 		{
 			int nTab = AddTab( m_pWords.GetAt( 0 ), ID_KIND_PRIVATEMSG );
+			if ( nTab == -1 )
+				nTab = IsTabExist( m_pWords.GetAt( 0 ) );
 			if ( nTab != m_wndTab.GetCurSel() )
 				m_wndTab.SetTabColor( nTab, Settings.IRC.Colors[ ID_COLOR_NEWMSG ] );
 			oNewMessage->m_sTargetName	= m_pWords.GetAt( 0 );
