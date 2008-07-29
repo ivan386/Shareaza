@@ -30,6 +30,7 @@
 #include "SchemaCache.h"
 #include "XML.h"
 #include "SHA.h"
+#include "Settings.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -859,7 +860,7 @@ BOOL CAlbumFolder::OrganiseFile(CLibraryFile* pFile)
 				std::wstring sFileName( pFile->m_sName );
 
 				size_t nCount = firstPattern.split( sFileName, splitResults, 0 );
-				if ( nCount < 4 )
+				if ( nCount < 4 && Settings.Library.SmartSeriesDetection )
 				{
 					nCount = secondPattern.split( sFileName, splitResults, 0 );
 				}

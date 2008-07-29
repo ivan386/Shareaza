@@ -1,7 +1,7 @@
 //
 // PageSettingsLibrary.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2006.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -19,8 +19,8 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_PAGESETTINGSLIBRARY_H__7A9C2316_0CF6_4251_9BD2_C56B9DA5AD89__INCLUDED_)
-#define AFX_PAGESETTINGSLIBRARY_H__7A9C2316_0CF6_4251_9BD2_C56B9DA5AD89__INCLUDED_
+#if !defined(PAGESETTINGSLIBRARY_H)
+#define PAGESETTINGSLIBRARY_H
 
 #pragma once
 
@@ -39,7 +39,6 @@ public:
 
 // Dialog Data
 public:
-	//{{AFX_DATA(CLibrarySettingsPage)
 	enum { IDD = IDD_SETTINGS_LIBRARY };
 	CSpinButtonCtrl	m_wndRecentTotal;
 	CSpinButtonCtrl	m_wndRecentDays;
@@ -56,23 +55,20 @@ public:
 	BOOL	m_bHighPriorityHash;
 	BOOL	m_bBrowseFiles;
 	BOOL	m_bMakeGhosts;
+	BOOL	m_bSmartSeries;
 	CIconButtonCtrl	m_wndCollectionPath;
 	CString	m_sCollectionPath;
-	//}}AFX_DATA
 
 // Overrides
 public:
-	//{{AFX_VIRTUAL(CLibrarySettingsPage)
-	public:
 	virtual void OnOK();
-	protected:
+
+protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
 
 // Implementation
 protected:
 	// Generated message map functions
-	//{{AFX_MSG(CLibrarySettingsPage)
 	virtual BOOL OnInitDialog();
 	afx_msg void OnSelChangeSafeTypes();
 	afx_msg void OnEditChangeSafeTypes();
@@ -84,12 +80,8 @@ protected:
 	afx_msg void OnPrivateRemove();
 	afx_msg void OnRecentClear();
 	afx_msg void OnCollectionsBrowse();
-	//}}AFX_MSG
 
 	DECLARE_MESSAGE_MAP()
-
 };
 
-//{{AFX_INSERT_LOCATION}}
-
-#endif // !defined(AFX_PAGESETTINGSLIBRARY_H__7A9C2316_0CF6_4251_9BD2_C56B9DA5AD89__INCLUDED_)
+#endif // !defined(PAGESETTINGSLIBRARY_H)

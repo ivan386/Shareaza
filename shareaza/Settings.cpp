@@ -152,6 +152,7 @@ CSettings::CSettings()
 	Add( _T("Library"), _T("VirtualFiles"), &Library.VirtualFiles, false );
 	Add( _T("Library"), _T("WatchFolders"), &Library.WatchFolders, true );
 	Add( _T("Library"), _T("WatchFoldersTimeout"), &Library.WatchFoldersTimeout, 5, 1, 1, 60, _T(" s") );
+	Add( _T("Library"), _T("SmartSeriesDetection"), &Library.SmartSeriesDetection, false );
 
 	Add( _T("WebServices"), _T("BitziAgent"), &WebServices.BitziAgent, _T(".") );
 	Add( _T("WebServices"), _T("BitziOkay"), &WebServices.BitziOkay, false, true );

@@ -64,6 +64,7 @@ CLibrarySettingsPage::CLibrarySettingsPage() : CSettingsPage(CLibrarySettingsPag
 	m_bStoreViews = FALSE;
 	m_bBrowseFiles = FALSE;
 	m_bHighPriorityHash = FALSE;
+	m_bSmartSeries = FALSE;
 	m_sCollectionPath = _T("");
 	//}}AFX_DATA_INIT
 }
@@ -108,6 +109,7 @@ BOOL CLibrarySettingsPage::OnInitDialog()
 	m_bBrowseFiles		= Settings.Community.ServeFiles;
 	m_bHighPriorityHash = Settings.Library.HighPriorityHash;
 	m_bMakeGhosts		= Settings.Library.CreateGhosts;
+	m_bSmartSeries		= Settings.Library.SmartSeriesDetection;
 
 	m_nRecentTotal		= Settings.Library.HistoryTotal;
 	m_nRecentDays		= Settings.Library.HistoryDays;
@@ -236,7 +238,7 @@ void CLibrarySettingsPage::OnOK()
 	Settings.Community.ServeFiles		= m_bBrowseFiles != FALSE;
 	Settings.Library.HighPriorityHash	= m_bHighPriorityHash != FALSE;
 	Settings.Library.CreateGhosts		= m_bMakeGhosts != FALSE;
-
+	Settings.Library.SmartSeriesDetection = m_bSmartSeries != FALSE;
 	Settings.Library.HistoryTotal		= m_nRecentTotal;
 	Settings.Library.HistoryDays		= m_nRecentDays;
 

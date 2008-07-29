@@ -142,6 +142,7 @@ public:
 		bool		ScanMSI;					// Enable .msi metadata extraction by internals
 		bool		ScanOGG;					// Enable .ogg metadata extraction by internals
 		bool		ScanPDF;					// Enable .pdf metadata extraction by internals
+		bool		SmartSeriesDetection;		// Organize video files in Library by using predefined patterns
 	} Library;
 
 	struct sWebServices
