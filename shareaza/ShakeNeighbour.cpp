@@ -778,14 +778,14 @@ BOOL CShakeNeighbour::OnHeaderLine(CString& strHeader, CString& strValue)
 
 		// If the remote computer is running a client that is breaking GPL, causing problems, etc.
 		// We don't actually ban these clients, but we don't accept them as a leaf. Can still upload, though.
-		if ( IsClientBad() )
+		if ( Security.IsClientBad( m_sUserAgent ) )
 		{
 			// Remember this is a bad client.
 			m_bBadClient = TRUE;
 		}
 
 		// Actual leechers and hostile clients. (We do ban these)
-		if ( IsClientBanned() )
+		if ( Security.IsClientBanned( m_sUserAgent ) )
 		{
 			m_nState = nrsRejected;
 			m_bBadClient = TRUE;
@@ -1737,118 +1737,4 @@ void CShakeNeighbour::OnHandshakeComplete()
 
 	// Delete this CShakeNeighbour object now that it has been turned into a CG1Neighbour or CG2Neighbour object
 	delete this;
-}
-
-//////////////////////////////////////////////////////////////////////
-// CShakeNeighbour IsClientBad
-
-// Checks the user agent to see if it's a GPL breaker, or other trouble-maker
-// We don't ban them, but also don't offer leaf slots to them.
-BOOL CShakeNeighbour::IsClientBad()
-{
-	// No user agent- assume bad
-	if ( m_sUserAgent.IsEmpty() ) return TRUE; // They allowed to connect but no searches were performed
-
-	// Bad/unapproved versions of Shareaza
-	// Really obsolete versions of Shareaza should be blocked. (they may have bad settings)
-	if ( _tcsistr( m_sUserAgent, _T("shareaza") ) )	
-	{
-		if ( _tcsistr( m_sUserAgent, _T("shareaza 0.") ) )				return TRUE;
-		if ( _tcsistr( m_sUserAgent, _T("shareaza 1.") ) )				return TRUE;	// There can be some 1.x versions of the real Shareaza but most are fakes
-		if ( _tcsistr( m_sUserAgent, _T("shareaza 2.0") ) )				return TRUE;	// There is also a Shareaza rip-off that identify as Shareaza 2.0.0.0 (The real Shareaza 2.0.0.0 is so old and bad)
-		if ( _tcsistr( m_sUserAgent, _T("shareaza 3.0") ) )				return TRUE;
-		if ( _tcsistr( m_sUserAgent, _T("shareaza 3.1") ) )				return TRUE;
-		if ( _tcsistr( m_sUserAgent, _T("shareaza 3.2") ) )				return TRUE;
-		if ( _tcsistr( m_sUserAgent, _T("shareaza 3.3") ) )				return TRUE;
-		if ( _tcsistr( m_sUserAgent, _T("shareaza 3.4") ) )				return TRUE;
-		if ( _tcsistr( m_sUserAgent, _T("shareaza 6.") ) )				return TRUE;
-		if ( _tcsistr( m_sUserAgent, _T("shareaza 7.") ) )				return TRUE;
-		if ( _tcsistr( m_sUserAgent, _T("shareaza pro") ) )				return TRUE;
-
-		return FALSE;
-	}
-
-	// Dianlei: Shareaza rip-off
-	if ( _tcsistr( m_sUserAgent, _T("Dianlei") ) )	//  add only based on alpha code, need verification for others
-	{
-		if ( _tcsistr( m_sUserAgent, _T("Dianlei 1.") ) )				return TRUE;
-		if ( _tcsistr( m_sUserAgent, _T("Dianlei 0.") ) )				return TRUE;
-
-		return FALSE;
-	}
-	
-
-	//BearShare lite
-	if ( _tcsistr( m_sUserAgent, _T("BearShare Lite") ) )				return TRUE;
-	
-	//BearShare Pro
-	if ( _tcsistr( m_sUserAgent, _T("BearShare Pro") ) )				return TRUE;
-	
-	//The Mod iMesh Bland
-	if ( _tcsistr( m_sUserAgent, _T("iMesh Lite") ) )					return TRUE;
-	
-	//The Mod iMesh Bland
-	if ( _tcsistr( m_sUserAgent, _T("iMesh PRO") ) )					return TRUE;
-	
-	//Fildelarprogram
-	if ( _tcsistr( m_sUserAgent, _T("Fildelarprogram") ) )				return TRUE;
-	
-	//Trilix
-	if ( _tcsistr( m_sUserAgent, _T("Trilix") ) )						return TRUE;
-	
-	//Gnutella Turbo
-	//Look into this client some more
-	if ( _tcsistr( m_sUserAgent, _T("Gnutella Turbo") ) )				return TRUE;
-	
-	//Mastermax File Sharing
-	if ( _tcsistr( m_sUserAgent, _T("Mastermax File Sharing") ) )		return TRUE;
-	
-	//Fastload.TV
-	if ( _tcsistr( m_sUserAgent, _T("Fastload.TV") ) )					return TRUE;
-	
-	//K-Lite Pro
-	if ( _tcsistr( m_sUserAgent, _T("K-Lite Pro") ) )					return TRUE; // Is it bad?
-	
-	// GPL breakers- Clients violating the GPL
-	// See http://www.gnu.org/copyleft/gpl.html
-	//Some other breakers outside the list
-	
-	if ( _tcsistr( m_sUserAgent, _T("K-Lite") ) )						return TRUE; // Is it bad?
-
-	if ( _tcsistr( m_sUserAgent, _T("SlingerX") ) )						return TRUE; // Rip-off with bad tweaks
-
-	if ( _tcsistr( m_sUserAgent, _T("C -3.0.1") ) )						return TRUE;
-
-	if ( _tcsistr( m_sUserAgent, _T("vagaa") ) )						return TRUE; // Not clear why it's bad
-
-	if ( _tcsistr( m_sUserAgent, _T("mxie") ) )							return TRUE; // Leechers, do not allow to connect
-
-	if ( _tcsistr( m_sUserAgent, _T("BearShare MP3") ) ) 				return TRUE;
-	
-	if ( _tcsistr( m_sUserAgent, _T("BearShare Music") ) ) 				return TRUE;
-
-	if ( _tcsistr( m_sUserAgent, _T("WinMX") ) )						return TRUE;
-	
-	if ( _tcsistr( m_sUserAgent, _T("eTomi") ) )						return TRUE; // outdated rip-off
-
-	// Unknown- Assume OK
-	return FALSE;
-}
-
-
-//////////////////////////////////////////////////////////////////////
-// CShakeNeighbour IsClientBanned
-
-// Checks the user agent to see if it's a leecher client, or other banned client
-// Test new releases, and remove block if/when they are fixed.
-BOOL CShakeNeighbour::IsClientBanned()
-{
-	// No user agent- assume OK
-	if ( m_sUserAgent.IsEmpty() ) return FALSE;
-
-	// i2hub - leecher client. (Tested, does not upload)
-	if ( _tcsistr( m_sUserAgent, _T("i2hub 2.0") ) )					return TRUE;
-
-	// Check by content filter
-	return Security.IsDenied( m_sUserAgent );
 }

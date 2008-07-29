@@ -142,7 +142,4 @@ protected:
 	void SendHostHeaders(LPCSTR pszMessage = NULL, size_t nLength = 0); // Send a 503 error message, and the X-Try-Hubs/X-Try-Ultrapeers header
 	BOOL ReadResponse();										// Read the first line of a new group of headers from the remote computer
 	void OnHandshakeComplete();									// Turn this object into one specialized for Gnutella or Gnutella2
-
-	BOOL IsClientBad();											// Checks to see if it's a GPL violator or glitchy client.
-	BOOL IsClientBanned();										// Checks to see if it's a leecher. (Clients are blocked)
 };

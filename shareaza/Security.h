@@ -92,6 +92,14 @@ public:
 	BOOL			Save();
 	BOOL			Import(LPCTSTR pszFile);
 
+	// Checks the user agent to see if it's a GPL breaker, or other trouble-maker
+	// We don't ban them, but also don't offer leaf slots to them.
+	BOOL			IsClientBad(const CString& sUserAgent);
+
+	// Checks the user agent to see if it's a leecher client, or other banned client
+	// Test new releases, and remove block if/when they are fixed.
+	BOOL			IsClientBanned(const CString& sUserAgent);
+
 protected:
 	void			BanHelper(const IN_ADDR* pAddress, const CShareazaFile* pFile, int nBanLength, BOOL bMessage);
 	CSecureRule*	GetGUID(const GUID& oGUID) const;

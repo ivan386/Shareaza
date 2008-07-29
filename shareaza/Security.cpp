@@ -737,6 +737,116 @@ BOOL CSecurity::Import(LPCTSTR pszFile)
 	return bResult;
 }
 
+BOOL CSecurity::IsClientBad(const CString& sUserAgent)
+{
+	// No user agent- assume bad
+	if ( sUserAgent.IsEmpty() )							return TRUE; // They allowed to connect but no searches were performed
+
+	// Bad/unapproved versions of Shareaza
+	// Really obsolete versions of Shareaza should be blocked. (they may have bad settings)
+	if ( LPCTSTR szVersion = _tcsistr( sUserAgent, _T("shareaza") ) )	
+	{
+		szVersion += 8;
+		if ( _tcsistr( szVersion, _T(" 0.") ) )			return TRUE;
+		if ( _tcsistr( szVersion, _T(" 1.") ) )			return TRUE;	// There can be some 1.x versions of the real Shareaza but most are fakes
+		if ( _tcsistr( szVersion, _T(" 2.0") ) )		return TRUE;	// There is also a Shareaza rip-off that identify as Shareaza 2.0.0.0 (The real Shareaza 2.0.0.0 is so old and bad)
+		if ( _tcsistr( szVersion, _T(" 3.0") ) )		return TRUE;
+		if ( _tcsistr( szVersion, _T(" 3.1") ) )		return TRUE;
+		if ( _tcsistr( szVersion, _T(" 3.2") ) )		return TRUE;
+		if ( _tcsistr( szVersion, _T(" 3.3") ) )		return TRUE;
+		if ( _tcsistr( szVersion, _T(" 3.4") ) )		return TRUE;
+		if ( _tcsistr( szVersion, _T(" 6.") ) )			return TRUE;
+		if ( _tcsistr( szVersion, _T(" 7.") ) )			return TRUE;
+		if ( _tcsistr( szVersion, _T(" pro") ) )		return TRUE;
+		return FALSE;
+	}
+
+	// LimeWire
+	if ( LPCTSTR szVersion = _tcsistr( sUserAgent, _T("LimeWire") ) )	
+	{
+		szVersion += 8;
+		return FALSE;
+	}
+
+	// Dianlei: Shareaza rip-off
+	// add only based on alpha code, need verification for others
+	if ( LPCTSTR szVersion = _tcsistr( sUserAgent, _T("Dianlei") ) )
+	{
+		szVersion += 7;
+		if ( _tcsistr( szVersion, _T(" 1.") ) )			return TRUE;
+		if ( _tcsistr( szVersion, _T(" 0.") ) )			return TRUE;
+		return FALSE;
+	}
+
+	// BearShare
+	if ( LPCTSTR szVersion = _tcsistr( sUserAgent, _T("BearShare") ) )
+	{
+		szVersion += 9;
+		if ( _tcsistr( szVersion, _T(" Lite") ) )		return TRUE;
+		if ( _tcsistr( szVersion, _T(" Pro") ) )		return TRUE;
+		if ( _tcsistr( szVersion, _T(" MP3") ) ) 		return TRUE;	// GPL breaker
+		if ( _tcsistr( szVersion, _T(" Music") ) ) 		return TRUE;	// GPL breaker
+		return FALSE;
+	}
+
+	// The Mod iMesh Bland
+	if ( LPCTSTR szVersion = _tcsistr( sUserAgent, _T("iMesh") ) )
+	{
+		szVersion += 5;
+		if ( _tcsistr( szVersion, _T(" Lite") ) )		return TRUE;
+		if ( _tcsistr( szVersion, _T(" PRO") ) )		return TRUE;
+		return FALSE;
+	}
+
+	// Fildelarprogram
+	if ( _tcsistr( sUserAgent, _T("Fildelarprogram") ) )			return TRUE;
+	
+	// Trilix
+	if ( _tcsistr( sUserAgent, _T("Trilix") ) )						return TRUE;
+	
+	// Gnutella Turbo (Look into this client some more)
+	if ( _tcsistr( sUserAgent, _T("Gnutella Turbo") ) )				return TRUE;
+	
+	// Mastermax File Sharing
+	if ( _tcsistr( sUserAgent, _T("Mastermax File Sharing") ) )		return TRUE;
+	
+	// Fastload.TV
+	if ( _tcsistr( sUserAgent, _T("Fastload.TV") ) )				return TRUE;
+	
+	// GPL breakers- Clients violating the GPL
+	// See http://www.gnu.org/copyleft/gpl.html
+	// Some other breakers outside the list
+
+	if ( _tcsistr( sUserAgent, _T("K-Lite") ) )						return TRUE; // Is it bad?
+
+	if ( _tcsistr( sUserAgent, _T("SlingerX") ) )					return TRUE; // Rip-off with bad tweaks
+
+	if ( _tcsistr( sUserAgent, _T("C -3.0.1") ) )					return TRUE;
+
+	if ( _tcsistr( sUserAgent, _T("vagaa") ) )						return TRUE; // Not clear why it's bad
+
+	if ( _tcsistr( sUserAgent, _T("mxie") ) )						return TRUE; // Leechers, do not allow to connect
+
+	if ( _tcsistr( sUserAgent, _T("WinMX") ) )						return TRUE;
+	
+	if ( _tcsistr( sUserAgent, _T("eTomi") ) )						return TRUE; // outdated rip-off
+
+	// Unknown- Assume OK
+	return FALSE;
+}
+
+BOOL CSecurity::IsClientBanned(const CString& sUserAgent)
+{
+	// No user agent- assume OK
+	if ( sUserAgent.IsEmpty() ) return FALSE;
+
+	// i2hub - leecher client. (Tested, does not upload)
+	if ( _tcsistr( sUserAgent, _T("i2hub 2.0") ) )					return TRUE;
+
+	// Check by content filter
+	return IsDenied( sUserAgent );
+}
+
 //////////////////////////////////////////////////////////////////////
 // CSecureRule construction
 
