@@ -1,13 +1,14 @@
 M http://gwc.frodoslair.net/skulls/skulls.php
-M http://g2.tjtech.org/g2/
 M http://gwc.eod.cc/skulls.php
-M http://grantgalitz.com/beacon_test/gwc.php
+M http://gwc.cluephone.com/skulls.php
+M http://gwc.movingpages.org/skulls.php
+
 2 http://cache.trillinux.org/g2/bazooka.php
 2 http://gwc2.wodi.org/skulls.php
-2 http://www.k33bz.com/g2/bazooka.php
-2 http://silvers.servehttp.com/g2/bazooka.php
 2 http://midian.jayl.de/g2/bazooka.php
-2 http://ns1.ikado.ca/webcache/skulls.php
+2 http://gwc.guufshop.com/skulls/skulls.php
+2 http://dogma.cloud.bishopston.net:33559/
+2 http://karma.cloud.bishopston.net:33559/
 
 U uhc:uhc2.limewire.com:20181
 U uhc:uhc.udp-host-cache.com:9999
@@ -17,81 +18,32 @@ D http://www.emule-server.de/server.met/min/server.met
 D http://www.esel-paradies.de/server/server.met
 D http://ocbmaurice.no-ip.org/pl/slist.pl/server.met?download/server-good.met
 
-X http://gwc.the4400.tv/skulls/skulls.php
-X http://24.224.224.42/share/g2/bazooka.php
-X http://bazooka.stealthspy.net/g2/bazooka.php
-X http://bazooka1.servehttp.com/g2/bazooka.php
-X http://bicou.hd.free.fr/g2/bazooka.php
-X http://deadsimple.dajoob.com/skull/skulls.php
-X http://elactronix.com/g2/bazooka.php
-X http://emak.webcindario.com/g2/indice.php
-X http://g2.chez-ben.homedns.org/g2/bazooka.php
-X http://g2.instantnetworks.net/g2/bazooka.php
-X http://g2.majestyc.net/
-X http://g2.ml360.com/bazooka.php
-X http://g2.snellgrove.co.uk/bazooka.php
-X http://g2.zcluster.org/bazooka.php
-X http://glad04.no-ip.com/g2/bazooka.php
-X http://gwc.nickstallman.net/gcache
-X http://gwc.nickstallman.net/gcache.asp
-X http://gwc.nickstallman.net/gcache2.asp
-X http://gwc.wodi.org/g2/bazooka.php
-X http://gwc1.mager.org:8081/GWebCache/req
-X http://gwc1.nouiz.org/servlet/GWebCache/req
-X http://gwc2.mycroft.at/bazooka.php
-X http://gwc2.wodi.org/bazooka
-X http://gwcrab2.sarcastro.com:8002
-X http://gwebcache.alpha64.info/
-X http://helpcache.webcindario.com/g2/bazooka.php
-X http://hosting.urbanculture.co.nz/g2/bazooka.php
-X http://jum.dyndns.org:9006/GWebCache/req
-X http://kccricket.net:9080/GWebCache/req
-X http://members.lycos.co.uk/kevinfarrugia/g2/bazooka.php
-X http://members.lycos.nl/fcemoerbeke/g2/bazooka.php
-X http://mitglied.lycos.de/warylogman/g2/bazooka.php
-X http://noc.dci.com.ua/g2/bazooka.php
-X http://pocketg2.com/gwebcache/g2/bazooka.php
-X http://pokerface.bishopston.net:3559
-X http://reukiodo.dyndns.org/gwebcache/gwcii.php
-X http://taco-land.net/g2/bazooka.php
-X http://toadface.bishopston.net:3559
-X http://trancefusionnetwork.org.uk/g2/bazooka.php
-X http://tribaldance.ibiza.bishopston.net:3559
-X http://warezbrasil.redservicio.com/g2/bazooka.php
-X http://www.exagon.org/~crazypops/g2/bazooka.php
-X http://www.exoticthumbs.biz/g2/bazooka.php
-X http://www.goeg.dk/Bazooka/g2/bazooka.php
-X http://www.hlhclan.com/g2/bazooka.php
-X http://www.hostcache.org/g2/bazooka.php
-X http://www.jameslouthan.co.uk/bazooka/bazooka.php
-X http://www.kuwaitcontact.com/g2/bazooka.php
-X http://www.pione.net/g2/bazooka.php
-X http://www.student.ru.nl/markjansen/g2/bazooka.php
-X http://www.taco-land.net/g2/bazooka.php
-X http://www29.brinkster.com/bankroller/g2/bazooka.asp
-X http://www29.brinkster.com/monsoonera/g2/bazooka.asp
-X http://zafir.gratishost.com/gwc/bazooka.php
-X http://www-dr-ag-the-best-server-a-k-a.rapidshit.de/skulls.php
-X http://delelisten.no/gwc/skulls.php
-X http://delelisten.no/gwc2/skulls.php
-X http://delelisten.no/gwc3/skulls.php
-X http://delelisten.no/gwc4/skulls.php
-X http://fischaleck.net/cache/mcache.php
-X http://jercos.dyndns.org/perlgcache.cgi
-X http://admpva.com/g2/gwcii.php
-X http://g2.tjtech.org/g2/index.php
-
-# A bugged GWC
-X http://g2.sbicomputing.com/g2/bazooka.php
-# Outdated Hosts
-X http://mirror.farrugiafamily.com/g2/bazooka.php
-# It doesn't support net parameter so it mix G1 and G2
-X http://bbs.robertwoolley.co.uk/GWebCache/gcache.php
+X http://mnc.bijand.com/skulls.php
+X http://borednow.net/GWebCache/gcache.asp
+X http://g2.tjtech.org/g2/
+X http://geocities.com/prae2rian/GNUTELLA.net
 X http://bbs.robertwoolley.co.uk/gwebcache/gcache.php
+X http://torrent.delvedown.com/cgi-bin/perlgcache.cgi
+X http://gwc.nickstallman.net.nyud.net/
+X http://wc.neoboffins.com/
+X http://gwc1.nouiz.org/servlet/GWebCache/req
+X http://gwc.frodoslair.net.nyud.net/skulls/skulls.php
+X http://gwc.eod.cc.nyud.net/skulls.php
+X http://admpva.com/g2/skulls.php
+X http://flox-network.com/BeaconCache/gwc.php
+X http://bbs.robertwoolley.co.uk/GWebCache/gcache.php
+X http://gwc.monnsta.net/
+X http://datz.987mb.com/beacon/gwc.php
+X http://fischaleck.net/cache/mcache.php
+X http://reukiodo.dyndns.org/gwebcache/gwcii.php
+X http://portal.homeunix.org/Beacon/gwc.php
+X http://www.gaultopia.org/gcache/gcache.php
+X http://www.visualcave.com/gcache/gcache.php
+X http://i.net46.net/beacon/gwc.php
 
 #
 # Keep these comments at the end
-# Last updated August 2007 (pruned June 2008)
+# Last updated July 2008
 #
 # Be sure to have at least one link to a .met file and four gwebcache links
 # or else they'll keep getting added every time they're removed
@@ -103,5 +55,5 @@ X http://bbs.robertwoolley.co.uk/gwebcache/gcache.php
 #
 # Delete this file and Shareaza will use internal defaults.
 #
-# Live Status at http://gcachescan.jonatkins.com/
+# Live Status at http://gcachescan.jonatkins.com/ and http://kevogod.trillinux.org/
 # Get latest version at http://shareaza.svn.sourceforge.net/viewvc/*checkout*/shareaza/trunk/Data/DefaultServices.dat
