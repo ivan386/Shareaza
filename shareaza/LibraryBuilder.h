@@ -99,6 +99,10 @@ private:
 	bool		DetectVirtualFile(LPCTSTR szPath, HANDLE hFile, QWORD& nOffset, QWORD& nLength);
 	bool		DetectVirtualID3v1(HANDLE hFile, QWORD& nOffset, QWORD& nLength);
 	bool		DetectVirtualID3v2(HANDLE hFile, QWORD& nOffset, QWORD& nLength);
+	bool		DetectVirtualLAME(HANDLE hFile, QWORD& nOffset, QWORD& nLength);
+	bool		DetectVirtualAPEHeader(HANDLE hFile, QWORD& nOffset, QWORD& nLength);
+	bool		DetectVirtualAPEFooter(HANDLE hFile, QWORD& nOffset, QWORD& nLength);
+	bool		DetectVirtualLyrics(HANDLE hFile, QWORD& nOffset, QWORD& nLength);
 };
 
 extern CLibraryBuilder LibraryBuilder;

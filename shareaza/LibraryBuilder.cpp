@@ -629,6 +629,10 @@ bool CLibraryBuilder::DetectVirtualFile(LPCTSTR szPath, HANDLE hFile, QWORD& nOf
 	{
 		bVirtual |= DetectVirtualID3v2( hFile, nOffset, nLength );
 		bVirtual |= DetectVirtualID3v1( hFile, nOffset, nLength );
+//		bVirtual |= DetectVirtualLyrics( hFile, nOffset, nLength );
+//		bVirtual |= DetectVirtualAPEHeader( hFile, nOffset, nLength );
+//		bVirtual |= DetectVirtualAPEFooter( hFile, nOffset, nLength );
+//		bVirtual |= DetectVirtualLAME( hFile, nOffset, nLength );
 	}
 
 	return bVirtual;
@@ -636,7 +640,7 @@ bool CLibraryBuilder::DetectVirtualFile(LPCTSTR szPath, HANDLE hFile, QWORD& nOf
 
 bool CLibraryBuilder::DetectVirtualID3v1(HANDLE hFile, QWORD& nOffset, QWORD& nLength)
 {
-	ID3V1 pInfo;
+	ID3V1 pInfo = { 0 };
 	DWORD nRead;
 
 	if ( nLength <= 128 )
@@ -660,7 +664,7 @@ bool CLibraryBuilder::DetectVirtualID3v1(HANDLE hFile, QWORD& nOffset, QWORD& nL
 
 bool CLibraryBuilder::DetectVirtualID3v2(HANDLE hFile, QWORD& nOffset, QWORD& nLength)
 {
-	ID3V2_HEADER pHeader;
+	ID3V2_HEADER pHeader = { 0 };
 	DWORD nRead;
 
 	LONG nPosLow	= (LONG)( ( nOffset ) & 0xFFFFFFFF );
@@ -695,6 +699,129 @@ bool CLibraryBuilder::DetectVirtualID3v2(HANDLE hFile, QWORD& nOffset, QWORD& nL
 	nLength -= nTagSize;
 
 	return true;
+}
+
+bool CLibraryBuilder::DetectVirtualAPEHeader(HANDLE hFile, QWORD& nOffset, QWORD& nLength)
+{
+	APE_HEADER pHeader = { 0 };
+	DWORD nRead;
+
+	LONG nPosLow	= (LONG)( ( nOffset ) & 0xFFFFFFFF );
+	LONG nPosHigh	= (LONG)( ( nOffset ) >> 32 );
+	SetFilePointer( hFile, nPosLow, &nPosHigh, FILE_BEGIN );
+
+	if ( !ReadFile( hFile, &pHeader, sizeof(pHeader), &nRead, NULL ) )
+		return false;
+	if ( nRead != sizeof(pHeader) )
+		return false;
+
+	const char szMAC[ 4 ] = "MAC";
+	if ( memcmp( pHeader.cID, szMAC, 3 ) )
+		return false;
+
+	DWORD nTagSize = 0;
+	if ( pHeader.nVersion >= 3980 )
+	{
+		APE_HEADER_NEW pHeader;
+		SetFilePointer( hFile, nPosLow, &nPosHigh, FILE_BEGIN );
+		if ( !ReadFile( hFile, &pHeader, sizeof(pHeader), &nRead, NULL ) )
+			return false;
+		if ( nRead != sizeof(pHeader) )
+			return false;
+		nTagSize = pHeader.nHeaderBytes + sizeof(pHeader);
+	}
+	else
+		nTagSize = pHeader.nHeaderBytes + sizeof(pHeader);
+
+	if ( nLength <= nTagSize )
+		return false;
+
+	nOffset += nTagSize;
+	nLength -= nTagSize;
+
+	return true;
+}
+
+bool CLibraryBuilder::DetectVirtualAPEFooter(HANDLE hFile, QWORD& nOffset, QWORD& nLength)
+{
+	APE_TAG_FOOTER pFooter = { 0 };
+	DWORD nRead;
+	if ( nLength < sizeof(pFooter) )
+		return false;
+
+	LONG nPosLow	= (LONG)( ( nOffset + nLength - sizeof(pFooter) ) & 0xFFFFFFFF );
+	LONG nPosHigh	= (LONG)( ( nOffset + nLength - sizeof(pFooter) ) >> 32 );
+
+	SetFilePointer( hFile, nPosLow, &nPosHigh, FILE_BEGIN );
+	if ( !ReadFile( hFile, &pFooter, sizeof(pFooter), &nRead, NULL ) )
+		return false;
+	if ( nRead != sizeof(pFooter) )
+		return false;
+
+	const char szAPE[ 9 ] = "APETAGEX";
+	if ( memcmp( pFooter.cID, szAPE, 8 ) )
+		return false;
+
+	nLength -= sizeof(pFooter) + pFooter.nSize;
+
+	return true;
+}
+
+bool CLibraryBuilder::DetectVirtualLyrics(HANDLE hFile, QWORD& nOffset, QWORD& nLength)
+{
+	typedef struct Lycrics3v2
+	{		
+		BYTE	nSize[6];
+		struct LyricsTag
+		{
+			CHAR szID[6];
+			CHAR szVersion[3];
+		} Tag;
+	} LYRICS3_2;
+
+	if ( nLength < 15 )
+		return false;
+
+	LYRICS3_2 pFooter = { 0 };
+	DWORD nRead;
+
+	LONG nPosLow	= (LONG)( ( nOffset + nLength - sizeof(pFooter) ) & 0xFFFFFFFF );
+	LONG nPosHigh	= (LONG)( ( nOffset + nLength - sizeof(pFooter) ) >> 32 );
+	SetFilePointer( hFile, nPosLow, &nPosHigh, FILE_BEGIN );
+
+	if ( !ReadFile( hFile, &pFooter, sizeof(pFooter), &nRead, NULL ) )
+		return false;
+	if ( nRead != sizeof(pFooter) )
+		return false;
+
+	const char cLyrics[ 7 ] = "LYRICS";
+	const char cVersion[ 4 ] = "200"; // version 2.00
+	const char cEnd[ 4 ] = "END"; // version 1.00
+
+	if ( memcmp( pFooter.Tag.szID, cLyrics, 6 ) )
+		return false;
+	if ( memcmp( pFooter.Tag.szVersion, cVersion, 3 ) == 0 )
+	{
+		QWORD nSize = ( (QWORD)( pFooter.nSize[ 0 ] ) << 40 ) | ( (QWORD)( pFooter.nSize[ 1 ] ) << 32 ) |
+					  ( pFooter.nSize[ 2 ] << 24 ) | ( pFooter.nSize[ 3 ] << 16 ) |
+					  ( pFooter.nSize[ 4 ] << 8 ) | ( pFooter.nSize[ 5 ] );
+		if ( nSize + sizeof(pFooter) > nLength )
+			return false;
+		nLength -= nSize + sizeof(pFooter);
+		return true;
+	}
+	else if ( memcmp( pFooter.Tag.szVersion, cEnd, 3 ) )
+	{
+		// TODO: Find "LYRICSBEGIN" reading backwards and count the length manually
+		return false;
+	}
+
+	return false;
+}
+
+bool CLibraryBuilder::DetectVirtualLAME(HANDLE /*hFile*/, QWORD& /*nOffset*/, QWORD& /*nLength*/)
+{
+	return false;
 }
 
 bool CLibraryBuilder::RefreshMetadata(const CString& sPath)
