@@ -435,7 +435,7 @@ HRESULT CIEProtocol::OnRequestRAZACOL(LPCTSTR pszURL, CBuffer& oBuffer, CString&
 	bool bDir = ( strPath.GetAt( strPath.GetLength() - 1 ) == _T('/') );
 
 	CZIPFile::File* pFile = oCollZIP.GetFile(
-		( bDir ? ( strPath + _T("index.htm") ) : strPath ).Mid( 1 ) );
+		( bDir ? ( strPath + _T("index.htm") ) : strPath ).Mid( 1 ), TRUE );
 	if ( ! pFile )
 	{
 		if ( bDir )
