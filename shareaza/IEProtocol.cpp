@@ -440,7 +440,7 @@ HRESULT CIEProtocol::OnRequestRAZACOL(LPCTSTR pszURL, CBuffer& oBuffer, CString&
 	{
 		if ( bDir )
 		{
-			pFile = oCollZIP.GetFile( ( strPath + _T("collection.xml") ).Mid( 1 ) );
+			pFile = oCollZIP.GetFile( ( strPath + _T("collection.xml") ).Mid( 1 ), TRUE );
 			if ( ! pFile )
 				return INET_E_OBJECT_NOT_FOUND;
 		}

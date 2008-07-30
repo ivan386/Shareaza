@@ -138,22 +138,32 @@ CZIPFile::File* CZIPFile::GetFile(int nFile) const
 /////////////////////////////////////////////////////////////////////////////
 // CZIPFile lookup a file by name
 
-CZIPFile::File* CZIPFile::GetFile(LPCTSTR pszFile, BOOL bPartial) const
+CZIPFile::File* CZIPFile::GetFile(LPCTSTR pszFile, BOOL bSmartSearch) const
 {
 	File* pFile = m_pFile;
+	bool bFound = false;
 
 	for ( int nFile = m_nFile ; nFile ; nFile--, pFile++ )
 	{
-		if ( bPartial )
+		if ( _tcsicoll( pFile->m_sName, pszFile ) == 0 ) 
 		{
-			LPCTSTR pszName = _tcsrchr( pFile->m_sName, '/' );
-			pszName = pszName ? pszName + 1 : (LPCTSTR)pFile->m_sName;
-			if ( _tcsicoll( pszName, pszFile ) == 0 ) return pFile;
+			bFound = true;
+			break;
 		}
-		else
-		{
-			if ( _tcsicoll( pFile->m_sName, pszFile ) == 0 ) return pFile;
-		}
+	}
+
+	if ( bFound )
+		return pFile;
+	else if ( !bSmartSearch )
+		return NULL;
+	else
+		pFile = m_pFile;
+
+	for ( int nFile = m_nFile ; nFile ; nFile--, pFile++ )
+	{
+		LPCTSTR pszName = _tcsrchr( pFile->m_sName, '/' );
+		pszName = pszName ? pszName + 1 : (LPCTSTR)pFile->m_sName;
+		if ( _tcsicoll( pszName, pszFile ) == 0 ) return pFile;
 	}
 
 	return NULL;
