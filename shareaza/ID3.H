@@ -106,6 +106,8 @@ typedef struct
 	unsigned __int32 nSeekElements;
 } APE_HEADER;
 
+#define APE2_VERSION 3980
+
 typedef struct
 {
 	char cID[4];                             // should equal 'MAC '

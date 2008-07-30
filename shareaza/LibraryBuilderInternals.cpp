@@ -2559,7 +2559,7 @@ bool CLibraryBuilderInternals::ReadAPE(DWORD nIndex, HANDLE hFile, bool bPreferF
 	bool bMPC = pAPE.cID[0] == 'M' && pAPE.cID[1] == 'P' && pAPE.cID[2] == '+';
 	bool bNewAPE = false;
 
-	if ( bMAC && pAPE.nVersion >= 3980 )
+	if ( bMAC && pAPE.nVersion >= APE2_VERSION )
 	{
 		SetFilePointer( hFile, 0, NULL, FILE_BEGIN );
 		nValidSize = sizeof(pNewAPE);

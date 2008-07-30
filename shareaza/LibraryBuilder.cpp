@@ -720,7 +720,7 @@ bool CLibraryBuilder::DetectVirtualAPEHeader(HANDLE hFile, QWORD& nOffset, QWORD
 		return false;
 
 	DWORD nTagSize = 0;
-	if ( pHeader.nVersion >= 3980 )
+	if ( pHeader.nVersion >= APE2_VERSION )
 	{
 		APE_HEADER_NEW pHeader;
 		SetFilePointer( hFile, nPosLow, &nPosHigh, FILE_BEGIN );
@@ -761,6 +761,8 @@ bool CLibraryBuilder::DetectVirtualAPEFooter(HANDLE hFile, QWORD& nOffset, QWORD
 	const char szAPE[ 9 ] = "APETAGEX";
 	if ( memcmp( pFooter.cID, szAPE, 8 ) )
 		return false;
+	if ( pFooter.nSize + sizeof(pFooter) > nLength )
+		return false;
 
 	nLength -= sizeof(pFooter) + pFooter.nSize;
 
@@ -769,7 +771,7 @@ bool CLibraryBuilder::DetectVirtualAPEFooter(HANDLE hFile, QWORD& nOffset, QWORD
 
 bool CLibraryBuilder::DetectVirtualLyrics(HANDLE hFile, QWORD& nOffset, QWORD& nLength)
 {
-	typedef struct Lycrics3v2
+	typedef struct Lyrics3v2
 	{		
 		BYTE	nSize[6];
 		struct LyricsTag
