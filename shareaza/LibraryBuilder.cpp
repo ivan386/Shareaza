@@ -821,9 +821,87 @@ bool CLibraryBuilder::DetectVirtualLyrics(HANDLE hFile, QWORD& nOffset, QWORD& n
 	return false;
 }
 
-bool CLibraryBuilder::DetectVirtualLAME(HANDLE /*hFile*/, QWORD& /*nOffset*/, QWORD& /*nLength*/)
+bool CLibraryBuilder::DetectVirtualLAME(HANDLE hFile, QWORD& nOffset, QWORD& nLength)
 {
-	return false;
+	BYTE nFrameHeader[4] = { 0 };
+	DWORD nRead;
+
+	LONG nPosLow	= (LONG)( ( nOffset ) & 0xFFFFFFFF );
+	LONG nPosHigh	= (LONG)( ( nOffset ) >> 32 );
+	SetFilePointer( hFile, nPosLow, &nPosHigh, FILE_BEGIN );
+
+	if ( !ReadFile( hFile, nFrameHeader, sizeof(nFrameHeader), &nRead, NULL ) )
+		return false;
+	if ( nRead != sizeof(nFrameHeader) )
+		return false;
+
+	const int bitrate_table[ 3 ][ 16 ] = {
+		{ 0, 8, 16, 24, 32, 40, 48, 56, 64, 80, 96, 112, 128, 144, 160, -1 }, // MPEG 2
+		{ 0, 32, 40, 48, 56, 64, 80, 96, 112, 128, 160, 192, 224, 256, 320, -1 }, // MPEG 1
+		{ 0, 8, 16, 24, 32, 40, 48, 56, 64, -1, -1, -1, -1, -1, -1, -1 } // MPEG 2.5
+	};
+
+	const int samplerate_table[ 3 ][ 4 ] = {
+		{ 22050, 24000, 16000, -1 }, // MPEG 2
+		{ 44100, 48000, 32000, -1 }, // MPEG 1
+		{ 11025, 12000, 8000, -1 } // MPEG 2.5
+	};
+
+    // Get MPEG header data
+    int nId = ( nFrameHeader[1] >> 3 ) & 1;
+	int nSampleRateIndex = ( nFrameHeader[2] >> 2 ) & 3;
+    int nMode = ( nFrameHeader[3] >> 6 ) & 3;
+    int nBitrate = ( nFrameHeader[2] >> 4 ) & 0xf;
+    nBitrate = bitrate_table[ nId ][ nBitrate ];
+
+	int nSampleRate = 0;
+    // Check for FFE syncword
+    if ( ( nFrameHeader[1] >> 4 ) == 0xE )
+        nSampleRate = samplerate_table[ 2 ][ nSampleRateIndex ];
+    else
+        nSampleRate = samplerate_table[ nId ][ nSampleRateIndex ];
+
+    //  Determine offset of VbrHeader
+	int nLameOffset = 0;
+    if ( nId ) // MPEG1
+	{
+        if ( nMode != 3 )
+            nLameOffset = 32 + 4;
+        else
+            nLameOffset += 17 + 4;
+    }
+    else // MPEG2
+	{
+        if ( nMode != 3 )
+            nLameOffset = 17 + 4;
+        else
+            nLameOffset = 9 + 4;
+    }
+
+	LARGE_INTEGER nNewOffset = { 0 };
+	nNewOffset.LowPart = (LONG)( ( nOffset + nLameOffset ) & 0xFFFFFFFF );
+	nNewOffset.HighPart = (LONG)( ( nOffset + nLameOffset ) >> 32 );
+	nNewOffset.LowPart = SetFilePointer( hFile, nNewOffset.LowPart, &(nNewOffset.HighPart), FILE_BEGIN );
+
+	if ( nNewOffset.LowPart == INVALID_SET_FILE_POINTER && GetLastError() != NO_ERROR )
+		return false;
+
+	LAME_FRAME pFrame = { 0 };
+	if ( !ReadFile( hFile, &pFrame, sizeof(pFrame), &nRead, NULL ) )
+		return false;
+	if ( nRead != sizeof(pFrame) )
+		return false;
+
+	int nFrameSize = ( ( nId + 1 ) * 72000 * nBitrate ) / nSampleRate;
+	DWORD nMusicLength = swapEndianess( pFrame.MusicLength ) - nFrameSize;
+
+	if ( nFrameSize > nLength )
+		return false;
+
+	nOffset = nFrameSize;
+	nLength = nMusicLength; // Includes LAME footer. Huh... stupid.
+
+	return true;
 }
 
 bool CLibraryBuilder::RefreshMetadata(const CString& sPath)

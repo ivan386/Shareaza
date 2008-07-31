@@ -141,6 +141,33 @@ typedef struct
 	char cReserved[8];		// reserved for later use
 } APE_TAG_FOOTER;
 
+
+// LAME version 3.98
+typedef struct 
+{
+	DWORD	VbrTag;
+	DWORD	HeaderFlags;
+	DWORD	FrameCount;
+	DWORD	StreamSize;		// Including Xing/LAME Header
+	BYTE	BitrateTOC[100];
+	DWORD	EncQuality;
+	CHAR	ClassID[9];		// Lame source code uses 9 bytes, while in comments it's 20 bytes (?)
+	BYTE	VbrMethodRevision;
+	BYTE	LowPass;
+	DWORD	PeakSignalAmplitude;
+	USHORT	RadioReplayGain;
+	USHORT	AudiophileReplayGain;
+	BYTE	Flags;
+	BYTE	AbrBitrate;
+	BYTE	EncDelayPadding[3];
+	BYTE	Misc;
+	BYTE	Unused;
+	USHORT	Preset;
+	DWORD	MusicLength;
+	USHORT	MusicCRC;
+	USHORT	FrameCRC;
+} LAME_FRAME;
+
 typedef struct
 {
     DWORD		dwMicroSecPerFrame;	// frame display rate (or 0L)
