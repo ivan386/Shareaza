@@ -127,9 +127,9 @@ int CNeighboursWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_gdiImageListFix.Create( 16, 16, ILC_COLOR16|ILC_MASK, 7, 1 );
 	m_gdiImageListFix.Add( &bmImages, RGB( 0, 255, 0 ) );
 
-	m_gdiImageList.Create( 17, 17, ILC_COLOR32|ILC_MASK, 7, 1 ) ||
-	m_gdiImageList.Create( 17, 17, ILC_COLOR24|ILC_MASK, 7, 1 ) ||
-	m_gdiImageList.Create( 17, 17, ILC_COLOR16|ILC_MASK, 7, 1 );
+	m_gdiImageList.Create( 18, 18, ILC_COLOR32|ILC_MASK, 7, 1 ) ||
+	m_gdiImageList.Create( 18, 18, ILC_COLOR24|ILC_MASK, 7, 1 ) ||
+	m_gdiImageList.Create( 18, 18, ILC_COLOR16|ILC_MASK, 7, 1 );
 	m_gdiImageList.Add( &bmImages, RGB( 0, 255, 0 ) );
 
 	// Merge protocols and flags in one image list
@@ -689,7 +689,7 @@ void CNeighboursWnd::OnCustomDrawList(NMHDR* pNMHDR, LRESULT* pResult)
 		m_wndList.GetItemRect ( nItem, &rcIcon, LVIR_ICON );
 		CDC* pDC = CDC::FromHandle ( pDraw->nmcd.hdc );
 
-		pDC->FillSolidRect( rcIcon.left, rcIcon.top, 17, 17, CoolInterface.m_crWindow );
+		pDC->FillSolidRect( rcIcon.left, rcIcon.top, 18, 18, CoolInterface.m_crWindow );
 
 		if ( rItem.state & LVIS_SELECTED )
 			m_gdiImageListFix.Draw ( pDC, rItem.iImage, rcIcon.TopLeft(), ILD_SELECTED );
