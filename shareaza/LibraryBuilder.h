@@ -103,6 +103,26 @@ private:
 	bool		DetectVirtualAPEHeader(HANDLE hFile, QWORD& nOffset, QWORD& nLength);
 	bool		DetectVirtualAPEFooter(HANDLE hFile, QWORD& nOffset, QWORD& nLength);
 	bool		DetectVirtualLyrics(HANDLE hFile, QWORD& nOffset, QWORD& nLength);
+
+	inline int	GetVbrHeaderOffset(int nId, int nMode)
+	{
+		int nOffset = 0;
+		if ( nId ) // MPEG1
+		{
+			if ( nMode != 3 )
+				nOffset = 32 + 4;
+			else
+				nOffset = 17 + 4;
+		}
+		else // MPEG2
+		{
+			if ( nMode != 3 )
+				nOffset = 17 + 4;
+			else
+				nOffset = 9 + 4;
+		}
+		return nOffset;
+	}
 };
 
 extern CLibraryBuilder LibraryBuilder;

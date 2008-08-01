@@ -853,55 +853,162 @@ bool CLibraryBuilder::DetectVirtualLAME(HANDLE hFile, QWORD& nOffset, QWORD& nLe
     int nMode = ( nFrameHeader[3] >> 6 ) & 3;
     int nBitrate = ( nFrameHeader[2] >> 4 ) & 0xf;
     nBitrate = bitrate_table[ nId ][ nBitrate ];
-
+	
 	int nSampleRate = 0;
     // Check for FFE syncword
     if ( ( nFrameHeader[1] >> 4 ) == 0xE )
         nSampleRate = samplerate_table[ 2 ][ nSampleRateIndex ];
     else
         nSampleRate = samplerate_table[ nId ][ nSampleRateIndex ];
-
-    //  Determine offset of VbrHeader
-	int nLameOffset = 0;
-    if ( nId ) // MPEG1
-	{
-        if ( nMode != 3 )
-            nLameOffset = 32 + 4;
-        else
-            nLameOffset += 17 + 4;
-    }
-    else // MPEG2
-	{
-        if ( nMode != 3 )
-            nLameOffset = 17 + 4;
-        else
-            nLameOffset = 9 + 4;
-    }
-
+	int nFrameSize = ( ( nId + 1 ) * 72000 * nBitrate ) / nSampleRate;
+	if ( nFrameSize > nLength )
+		return false;
+ 
+	int nVbrHeaderOffset = GetVbrHeaderOffset( nId, nMode );
 	LARGE_INTEGER nNewOffset = { 0 };
-	nNewOffset.LowPart = (LONG)( ( nOffset + nLameOffset ) & 0xFFFFFFFF );
-	nNewOffset.HighPart = (LONG)( ( nOffset + nLameOffset ) >> 32 );
+	nNewOffset.LowPart = (LONG)( ( nOffset + nVbrHeaderOffset ) & 0xFFFFFFFF );
+	nNewOffset.HighPart = (LONG)( ( nOffset + nVbrHeaderOffset ) >> 32 );
 	nNewOffset.LowPart = SetFilePointer( hFile, nNewOffset.LowPart, &(nNewOffset.HighPart), FILE_BEGIN );
 
 	if ( nNewOffset.LowPart == INVALID_SET_FILE_POINTER && GetLastError() != NO_ERROR )
 		return false;
 
 	LAME_FRAME pFrame = { 0 };
-	if ( !ReadFile( hFile, &pFrame, sizeof(pFrame), &nRead, NULL ) )
+	const LAME_FRAME pEmtyRef = { 0 };
+	const char cEncoder[ 5 ] = "LAME";
+	const char cXing[ 5 ] = "Xing";
+	bool bChanged = false;
+
+	if ( !ReadFile( hFile, &pFrame, sizeof(pFrame), &nRead, NULL ) || nRead != sizeof(pFrame) )
 		return false;
-	if ( nRead != sizeof(pFrame) )
-		return false;
+	if ( memcmp( &pFrame, &pEmtyRef, sizeof(pFrame) ) == 0 ) // All zeros, strip them off
+	{
+		bChanged = true;
+		nLength -= nVbrHeaderOffset + sizeof(pFrame);
+		nOffset = nNewOffset.QuadPart + sizeof(pFrame);
+		nNewOffset.LowPart = (LONG)( ( nOffset ) & 0xFFFFFFFF );
+		nNewOffset.HighPart = (LONG)( ( nOffset ) >> 32 );
+		SetFilePointer( hFile, nNewOffset.LowPart, &(nNewOffset.HighPart), FILE_BEGIN );
+		CHAR szByte;
+		while ( ReadFile( hFile, &szByte, 1, &nRead, NULL ) && nRead == 1 && szByte == '\0' )
+		{
+			nOffset++;
+			nLength--;
+		}
+	}
+	else if ( memcmp( &pFrame, cXing, 4 ) == 0 )
+	{
+		bChanged = true;
+		nOffset += nFrameSize;
+		nLength -= nFrameSize;
+	}
+	else if ( memcmp( pFrame.ClassID, cEncoder, 4 ) == 0 ) // LAME encoder
+	{
+		bChanged = true;
+		DWORD nMusicLength = swapEndianess( pFrame.MusicLength ) - nFrameSize; // Minus the first frame
+		nOffset += nFrameSize;
 
-	int nFrameSize = ( ( nId + 1 ) * 72000 * nBitrate ) / nSampleRate;
-	DWORD nMusicLength = swapEndianess( pFrame.MusicLength ) - nFrameSize;
+		if ( nFrameSize + nMusicLength > nLength )
+			return false;
+		nLength = nMusicLength;
+	}
 
-	if ( nFrameSize > nLength )
-		return false;
+	if ( nFrameSize % 2 != 0 ) // Make it even
+		nFrameSize++;
 
-	nOffset = nFrameSize;
-	nLength = nMusicLength; // Includes LAME footer. Huh... stupid.
+	char szTrail = '\0';
 
-	return true;
+	// Strip off silence and incomplete frames from the end (hackish way)
+	for ( ; nFrameSize > sizeof(DWORD) ; ) 
+	{
+		nNewOffset.LowPart = (LONG)( ( nOffset + nLength - nFrameSize ) & 0xFFFFFFFF );
+		nNewOffset.HighPart = (LONG)( ( nOffset + nLength - nFrameSize ) >> 32 );
+		nNewOffset.LowPart = SetFilePointer( hFile, nNewOffset.LowPart, &(nNewOffset.HighPart), FILE_BEGIN );
+		if ( nNewOffset.LowPart == INVALID_SET_FILE_POINTER && GetLastError() != NO_ERROR )
+			break;
+
+		WORD nTestBytes = 0;
+		if ( !ReadFile( hFile, &nTestBytes, sizeof(nTestBytes), &nRead, NULL ) ||
+			 nRead != sizeof(WORD) )
+			break;
+		if ( memcmp( &nTestBytes, nFrameHeader, 2 ) ) // Doesn't match the start of the first frame
+		{
+			nFrameSize--; // Shorten frame size from the end until it becomes so small to fit header
+			continue;
+		}
+
+		nFrameHeader[ 0 ] = LOBYTE( nTestBytes );
+		nFrameHeader[ 1 ] = HIBYTE( nTestBytes );
+		if ( !ReadFile( hFile, &nTestBytes, sizeof(nTestBytes), &nRead, NULL ) ||
+			 nRead != sizeof(WORD) )
+			break;
+		nFrameHeader[ 2 ] = LOBYTE( nTestBytes );
+		nFrameHeader[ 3 ] = HIBYTE( nTestBytes );
+
+		// Get MPEG header data
+		nId = ( nFrameHeader[1] >> 3 ) & 1;
+		nMode = ( nFrameHeader[3] >> 6 ) & 3;
+		nVbrHeaderOffset = GetVbrHeaderOffset( nId, nMode );
+
+		QWORD nCurrOffset = nNewOffset.QuadPart + nVbrHeaderOffset;
+		nNewOffset.LowPart = (LONG)( ( nCurrOffset ) & 0xFFFFFFFF );
+		nNewOffset.HighPart = (LONG)( ( nCurrOffset ) >> 32 );
+		nNewOffset.LowPart = SetFilePointer( hFile, nNewOffset.LowPart, &(nNewOffset.HighPart), FILE_BEGIN );
+
+		if ( nNewOffset.LowPart == INVALID_SET_FILE_POINTER && GetLastError() != NO_ERROR )
+			break;
+		
+		int nLen = sizeof( pFrame );
+		ZeroMemory( &pFrame, nLen );
+		ReadFile( hFile, &pFrame, min( nLen, nFrameSize - nVbrHeaderOffset ), &nRead, NULL );
+
+		nLen--;
+		char* pszChars = (char*)&pFrame;
+		while ( nLen && pszChars[ nLen-- ] == pFrame.ClassID[ 0 ] );
+
+		if ( nLen == 0 ) // All bytes equal
+		{
+			bChanged = true;
+			nLength -= nFrameSize;
+			szTrail = pFrame.ClassID[ 0 ];
+		}
+		else
+			break;
+	}
+
+	// Remove trailing bytes
+	for ( ;  ; ) 
+	{
+		nNewOffset.LowPart = (LONG)( ( nOffset + nLength - 1 ) & 0xFFFFFFFF );
+		nNewOffset.HighPart = (LONG)( ( nOffset + nLength - 1 ) >> 32 );
+		nNewOffset.LowPart = SetFilePointer( hFile, nNewOffset.LowPart, &(nNewOffset.HighPart), FILE_BEGIN );
+		if ( nNewOffset.LowPart == INVALID_SET_FILE_POINTER && GetLastError() != NO_ERROR )
+			break;
+		CHAR szByte;
+		if ( !ReadFile( hFile, &szByte, 1, &nRead, NULL ) || nRead != 1 || szByte != szTrail )
+			break;
+
+		bChanged = true;
+		nLength--;
+	}
+
+	// The last LAME ID is one byte shorter (stupid, how about beta versions?)
+	nNewOffset.LowPart = (LONG)( ( nOffset + nLength - 8 ) & 0xFFFFFFFF );
+	nNewOffset.HighPart = (LONG)( ( nOffset + nLength - 8 ) >> 32 );
+	nNewOffset.LowPart = SetFilePointer( hFile, nNewOffset.LowPart, &(nNewOffset.HighPart), FILE_BEGIN );
+	if ( nNewOffset.LowPart == INVALID_SET_FILE_POINTER && GetLastError() != NO_ERROR )
+		return bChanged;
+
+	if ( !ReadFile( hFile, pFrame.ClassID, 9, &nRead, NULL ) || nRead != 9 )
+		return bChanged;
+
+	if ( memcmp( pFrame.ClassID, cEncoder, 4 ) == 0 ) 
+	{
+		bChanged = true;
+		nLength -= 8;
+	}
+
+	return bChanged;
 }
 
 bool CLibraryBuilder::RefreshMetadata(const CString& sPath)
