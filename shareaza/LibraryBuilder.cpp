@@ -698,6 +698,16 @@ bool CLibraryBuilder::DetectVirtualID3v2(HANDLE hFile, QWORD& nOffset, QWORD& nL
 	nOffset += nTagSize;
 	nLength -= nTagSize;
 
+	// Remove trailing zeroes
+	nPosLow = (LONG)( ( nOffset ) & 0xFFFFFFFF );
+	nPosHigh = (LONG)( ( nOffset ) >> 32 );
+	SetFilePointer( hFile, nPosLow, &nPosHigh, FILE_BEGIN );
+	CHAR szByte;
+	while ( ReadFile( hFile, &szByte, 1, &nRead, NULL ) && nRead == 1 && szByte == '\0' )
+	{
+		nOffset++;
+		nLength--;
+	}
 	return true;
 }
 
@@ -773,7 +783,7 @@ bool CLibraryBuilder::DetectVirtualLyrics(HANDLE hFile, QWORD& nOffset, QWORD& n
 {
 	typedef struct Lyrics3v2
 	{		
-		BYTE	nSize[6];
+		CHAR	nSize[6];
 		struct LyricsTag
 		{
 			CHAR szID[6];
@@ -802,11 +812,12 @@ bool CLibraryBuilder::DetectVirtualLyrics(HANDLE hFile, QWORD& nOffset, QWORD& n
 
 	if ( memcmp( pFooter.Tag.szID, cLyrics, 6 ) )
 		return false;
-	if ( memcmp( pFooter.Tag.szVersion, cVersion, 3 ) == 0 )
+
+	CString strLength( pFooter.nSize, 6 );
+	QWORD nSize = 0;
+	if ( memcmp( pFooter.Tag.szVersion, cVersion, 3 ) == 0 && 
+		 _stscanf( strLength.TrimLeft('0'), L"%I64u", &nSize ) == 1 )
 	{
-		QWORD nSize = ( (QWORD)( pFooter.nSize[ 0 ] ) << 40 ) | ( (QWORD)( pFooter.nSize[ 1 ] ) << 32 ) |
-					  ( pFooter.nSize[ 2 ] << 24 ) | ( pFooter.nSize[ 3 ] << 16 ) |
-					  ( pFooter.nSize[ 4 ] << 8 ) | ( pFooter.nSize[ 5 ] );
 		if ( nSize + sizeof(pFooter) > nLength )
 			return false;
 		nLength -= nSize + sizeof(pFooter);
@@ -913,8 +924,7 @@ bool CLibraryBuilder::DetectVirtualLAME(HANDLE hFile, QWORD& nOffset, QWORD& nLe
 		nLength = nMusicLength;
 	}
 
-	if ( nFrameSize % 2 != 0 ) // Make it even
-		nFrameSize++;
+	nFrameSize++;
 
 	char szTrail = '\0';
 
@@ -949,7 +959,6 @@ bool CLibraryBuilder::DetectVirtualLAME(HANDLE hFile, QWORD& nOffset, QWORD& nLe
 		nId = ( nFrameHeader[1] >> 3 ) & 1;
 		nMode = ( nFrameHeader[3] >> 6 ) & 3;
 		nVbrHeaderOffset = GetVbrHeaderOffset( nId, nMode );
-
 		QWORD nCurrOffset = nNewOffset.QuadPart + nVbrHeaderOffset;
 		nNewOffset.LowPart = (LONG)( ( nCurrOffset ) & 0xFFFFFFFF );
 		nNewOffset.HighPart = (LONG)( ( nCurrOffset ) >> 32 );
