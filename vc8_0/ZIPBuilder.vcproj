@@ -28,7 +28,7 @@
 			<Tool
 				Name="VCCustomBuildTool"
 				Description="Copying zlibwapi dll..."
-				CommandLine="xcopy &quot;$(SolutionDir)$(ConfigurationName)$(PlatformName)\zlibwapi.dll&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;"
+				CommandLine="if not exist &quot;$(OutDir)zlibwapi.dll&quot; (&#x0D;&#x0A;	xcopy &quot;$(SolutionDir)$(ConfigurationName)$(PlatformName)\zlibwapi.dll&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;)"
 				Outputs="$(OutDir)zlibwapi.dll"
 				ExecutionBucket="1"
 			/>
@@ -123,7 +123,7 @@
 			<Tool
 				Name="VCCustomBuildTool"
 				Description="Copying zlibwapi dll..."
-				CommandLine="xcopy &quot;$(SolutionDir)$(ConfigurationName)$(PlatformName)\zlibwapi.dll&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;"
+				CommandLine="if not exist &quot;$(OutDir)zlibwapi.dll&quot; (&#x0D;&#x0A;	xcopy &quot;$(SolutionDir)$(ConfigurationName)$(PlatformName)\zlibwapi.dll&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;)"
 				Outputs="$(OutDir)zlibwapi.dll"
 				ExecutionBucket="1"
 			/>
@@ -219,7 +219,7 @@
 			<Tool
 				Name="VCCustomBuildTool"
 				Description="Copying zlibwapi dll..."
-				CommandLine="xcopy &quot;$(SolutionDir)$(ConfigurationName)$(PlatformName)\zlibwapi.dll&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;"
+				CommandLine="if not exist &quot;$(OutDir)zlibwapi.dll&quot; (&#x0D;&#x0A;	xcopy &quot;$(SolutionDir)$(ConfigurationName)$(PlatformName)\zlibwapi.dll&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;)"
 				Outputs="$(OutDir)zlibwapi.dll"
 				ExecutionBucket="1"
 			/>
@@ -313,7 +313,7 @@
 			<Tool
 				Name="VCCustomBuildTool"
 				Description="Copying zlibwapi dll..."
-				CommandLine="xcopy &quot;$(SolutionDir)$(ConfigurationName)$(PlatformName)\zlibwapi.dll&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;"
+				CommandLine="if not exist &quot;$(OutDir)zlibwapi.dll&quot; (&#x0D;&#x0A;	xcopy &quot;$(SolutionDir)$(ConfigurationName)$(PlatformName)\zlibwapi.dll&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;)"
 				Outputs="$(OutDir)zlibwapi.dll"
 				ExecutionBucket="1"
 			/>

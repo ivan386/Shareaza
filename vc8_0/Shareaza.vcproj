@@ -32,7 +32,7 @@
 			<Tool
 				Name="VCCustomBuildTool"
 				Description="Copying LibGFL280 dll..."
-				CommandLine="xcopy &quot;$(SolutionDir)..\plugins\libGFL\$(ConfigurationName)$(PlatformName)\libgfl280.dll&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;"
+				CommandLine="if not exist &quot;$(OutDir)libgfl280.dll&quot; (&#x0D;&#x0A;	xcopy &quot;$(SolutionDir)..\plugins\libGFL\$(ConfigurationName)$(PlatformName)\libgfl280.dll&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;)"
 				Outputs="$(OutDir)libgfl280.dll"
 				ExecutionBucket="1"
 			/>
@@ -132,7 +132,7 @@
 			<Tool
 				Name="VCCustomBuildTool"
 				Description="Copying LibGFL280 dll..."
-				CommandLine="xcopy &quot;$(SolutionDir)..\plugins\libGFL\$(ConfigurationName)$(PlatformName)\libgfl280.dll&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;"
+				CommandLine="if not exist &quot;$(OutDir)libgfl280.dll&quot; (&#x0D;&#x0A;	xcopy &quot;$(SolutionDir)..\plugins\libGFL\$(ConfigurationName)$(PlatformName)\libgfl280.dll&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;)"
 				Outputs="$(OutDir)libgfl280.dll"
 				ExecutionBucket="1"
 			/>
@@ -233,7 +233,7 @@
 			<Tool
 				Name="VCCustomBuildTool"
 				Description="Copying LibGFL280 dll..."
-				CommandLine="xcopy &quot;$(SolutionDir)..\plugins\libGFL\$(ConfigurationName)$(PlatformName)\libgfl280.dll&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;"
+				CommandLine="if not exist &quot;$(OutDir)libgfl280.dll&quot; (&#x0D;&#x0A;	xcopy &quot;$(SolutionDir)..\plugins\libGFL\$(ConfigurationName)$(PlatformName)\libgfl280.dll&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;)"
 				Outputs="$(OutDir)libgfl280.dll"
 				ExecutionBucket="1"
 			/>
@@ -333,7 +333,7 @@
 			<Tool
 				Name="VCCustomBuildTool"
 				Description="Copying LibGFL280 dll..."
-				CommandLine="xcopy &quot;$(SolutionDir)..\plugins\libGFL\$(ConfigurationName)$(PlatformName)\libgfl280.dll&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;"
+				CommandLine="if not exist &quot;$(OutDir)libgfl280.dll&quot; (&#x0D;&#x0A;	xcopy &quot;$(SolutionDir)..\plugins\libGFL\$(ConfigurationName)$(PlatformName)\libgfl280.dll&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;)"
 				Outputs="$(OutDir)libgfl280.dll"
 				ExecutionBucket="1"
 			/>

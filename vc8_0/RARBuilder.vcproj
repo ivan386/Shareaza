@@ -28,7 +28,7 @@
 			<Tool
 				Name="VCCustomBuildTool"
 				Description="Copying unrar dll..."
-				CommandLine="xcopy &quot;$(SolutionDir)..\plugins\$(ProjectName)\unrar.dll&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;"
+				CommandLine="if not exist &quot;$(OutDir)unrar.dll&quot; (&#x0D;&#x0A;	xcopy &quot;$(SolutionDir)..\plugins\$(ProjectName)\unrar.dll&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;)"
 				Outputs="$(OutDir)unrar.dll"
 				ExecutionBucket="1"
 			/>
@@ -123,7 +123,7 @@
 			<Tool
 				Name="VCCustomBuildTool"
 				Description="Copying unrar dll..."
-				CommandLine="xcopy &quot;$(SolutionDir)..\plugins\$(ProjectName)\unrar.dll&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;"
+				CommandLine="if not exist &quot;$(OutDir)unrar.dll&quot; (&#x0D;&#x0A;	xcopy &quot;$(SolutionDir)..\plugins\$(ProjectName)\unrar.dll&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;)"
 				Outputs="$(OutDir)unrar.dll"
 				ExecutionBucket="1"
 			/>
@@ -219,7 +219,7 @@
 			<Tool
 				Name="VCCustomBuildTool"
 				Description="Copying unrar dll..."
-				CommandLine="xcopy &quot;$(SolutionDir)..\plugins\$(ProjectName)\unrar.dll&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;"
+				CommandLine="if not exist &quot;$(OutDir)unrar.dll&quot; (&#x0D;&#x0A;	xcopy &quot;$(SolutionDir)..\plugins\$(ProjectName)\unrar.dll&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;)"
 				Outputs="$(OutDir)unrar.dll"
 				ExecutionBucket="1"
 			/>
@@ -313,7 +313,7 @@
 			<Tool
 				Name="VCCustomBuildTool"
 				Description="Copying unrar dll..."
-				CommandLine="xcopy &quot;$(SolutionDir)..\plugins\$(ProjectName)\unrar.dll&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;"
+				CommandLine="if not exist &quot;$(OutDir)unrar.dll&quot; (&#x0D;&#x0A;	xcopy &quot;$(SolutionDir)..\plugins\$(ProjectName)\unrar.dll&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;)"
 				Outputs="$(OutDir)unrar.dll"
 				ExecutionBucket="1"
 			/>

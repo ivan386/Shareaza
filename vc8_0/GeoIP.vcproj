@@ -29,7 +29,7 @@
 			<Tool
 				Name="VCCustomBuildTool"
 				Description="Copying $(ProjectName) files..."
-				CommandLine="copy &quot;$(SolutionDir)..\GeoIP\data\GeoIP.dat&quot; &quot;$(OutDir)GeoIP.dat&quot;&#x0D;&#x0A;"
+				CommandLine="xcopy &quot;$(SolutionDir)..\GeoIP\data\GeoIP.dat&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;"
 				Outputs="&quot;$(OutDir)GeoIP.dat&quot;"
 			/>
 			<Tool
@@ -107,7 +107,7 @@
 			<Tool
 				Name="VCCustomBuildTool"
 				Description="Copying $(ProjectName) files..."
-				CommandLine="copy &quot;$(SolutionDir)..\GeoIP\data\GeoIP.dat&quot; &quot;$(OutDir)GeoIP.dat&quot;&#x0D;&#x0A;"
+				CommandLine="xcopy &quot;$(SolutionDir)..\GeoIP\data\GeoIP.dat&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;"
 				Outputs="&quot;$(OutDir)GeoIP.dat&quot;"
 			/>
 			<Tool
@@ -187,7 +187,7 @@
 			<Tool
 				Name="VCCustomBuildTool"
 				Description="Copying $(ProjectName) files..."
-				CommandLine="copy &quot;$(SolutionDir)..\GeoIP\data\GeoIP.dat&quot; &quot;$(OutDir)GeoIP.dat&quot;&#x0D;&#x0A;"
+				CommandLine="xcopy &quot;$(SolutionDir)..\GeoIP\data\GeoIP.dat&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;"
 				Outputs="&quot;$(OutDir)GeoIP.dat&quot;"
 			/>
 			<Tool
@@ -264,7 +264,7 @@
 			<Tool
 				Name="VCCustomBuildTool"
 				Description="Copying $(ProjectName) files..."
-				CommandLine="copy &quot;$(SolutionDir)..\GeoIP\data\GeoIP.dat&quot; &quot;$(OutDir)GeoIP.dat&quot;&#x0D;&#x0A;"
+				CommandLine="xcopy &quot;$(SolutionDir)..\GeoIP\data\GeoIP.dat&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;"
 				Outputs="&quot;$(OutDir)GeoIP.dat&quot;"
 			/>
 			<Tool
