@@ -172,7 +172,7 @@
 		<button id="ID_DOWNLOADS_CLEAR_COMPLETE" text="Убрать"/>
 		<separator/>
 		<button id="ID_DOWNLOADS_MONITOR" text="Монитор"/>
-		<button id="ID_DOWNLOADS_TORRENT_INFO" text="О Torrentе"/>
+		<button id="ID_DOWNLOADS_EDIT" text="Свойства"/>
 		<rightAlign/>
 		<button id="ID_TOOLS_DOWNLOAD" text="Начать загрузку..."/>
 		<button id="ID_DOWNLOADS_CLEAR_COMPLETED" text="Очистить от завершенных"/>
@@ -439,6 +439,7 @@
 	<toolbar name="WebServices.ShareMonkey.WithSave">
 		<button id="ID_SHAREMONKEY_DOWNLOAD" text="Получить"/>
 		<button id="ID_SHAREMONKEY_SAVE" text="Сохранить"/>
+		<control id="ID_SHAREMONKEY_SAVE_OPTION" text="Сохранить просмотр" width="100" checked="true"/>
 		<separator/>
 		<button id="ID_SHAREMONKEY_PREVIOUS" text="Назад"/>
 		<button id="ID_SHAREMONKEY_NEXT" text="Далее"/>
@@ -1035,14 +1036,14 @@
 			<item id="ID_DOWNLOADS_URL" text="_Добавить источник..."/>
 			<separator/>
 			<item id="ID_DOWNLOADS_MONITOR" text="Окно _монитора"/>
-			<item id="ID_DOWNLOADS_EDIT" text="_Правка опытным..."/>
-			<item id="ID_DOWNLOADS_TORRENT_INFO" text="Torrent _инфо..."/>
 			<separator/>
 			<item id="ID_DOWNLOADS_MOVE_UP" text="Вв_ерх"/>
 			<item id="ID_DOWNLOADS_MOVE_DOWN" text="В_низ"/>
 			<item id="ID_DOWNLOADS_BOOST" text="Снять _лимит трафика"/>
 		</menu>
 		<item id="ID_DOWNLOADS_HELP" text="_Справка..."/>
+		<separator/>
+		<item id="ID_DOWNLOADS_EDIT" text="_Свойства"/>
 	</menu>
 	<menu name="CDownloadsWnd.Source">
 		<item id="ID_TRANSFERS_CONNECT" text="_Подключиться"/>
@@ -1067,15 +1068,15 @@
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="У_брать"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_COPY" text="Копировать _ссылку"/>
-		<item id="ID_DOWNLOADS_TORRENT_INFO" text="Torrent инфо"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_FILE_DELETE" text="_Удалить файл"/>
 		<item id="ID_DOWNLOADS_RATE" text="_Оценка файла..."/>
 	</menu>
 	<menu name="CDownloadsWnd.Seeding">
 		<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Открыть"/>
-		<item id="ID_DOWNLOADS_TORRENT_INFO" text="Torrent _инфо"/>
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="_Убрать"/>
+		<separator/>
+		<item id="ID_DOWNLOADS_EDIT" text="_Свойства"/>
 	</menu>
 	<menu name="CDownloadsWnd.Nothing">
 		<item id="ID_DOWNLOADS_HELP" text="_Справка..."/>
@@ -1602,7 +1603,7 @@
 		<newline gap="0"/>
 		<group id="1">
 			<icon res="130" width="32" height="32"/><gap size="8"/>
-			<heading align="middle">У С Т А Н О В И Т Е  &#160; С О Е Д И Н Е Н И Е</heading>
+			<heading align="middle">У С Т А Н О В И Т Е    С О Е Д И Н Е Н И Е</heading>
 			<newline gap="8" indent="42"/>
 			<text>Добро пожаловать в Shareaza!</text>
 			<newline gap="8" indent="42"/>
@@ -1613,20 +1614,20 @@
 		</group>
 		<group id="2">
 			<icon res="136" width="32" height="32" target="raza:command:ID_TOOLS_DOWNLOAD"/><gap size="8"/>
-			<heading align="middle">Н А Ч А Т Ь &#160; З А Г Р У З К У</heading>
+			<heading align="middle">Н А Ч А Т Ь   З А Г Р У З К У</heading>
 			<newline gap="8" indent="42"/>
 			<link target="raza:command:ID_TOOLS_DOWNLOAD" format="bu">Щелкните здесь</link>
 			<text align="middle">, чтобы начать загрузку файла или торрента.</text>
 			<newline gap="24" indent="0"/>
 			<icon res="134" width="32" height="32" target="raza:command:ID_TAB_SEARCH"/><gap size="8"/>
-			<heading align="middle">П О И С К &#160; Ф А Й Л А</heading>
+			<heading align="middle">П О И С К   Ф А Й Л А</heading>
 			<newline gap="8" indent="42"/>
 			<anchor id="SearchBox" width="256" height="80"/>
 			<newline gap="12" indent="0"/>
 		</group>
 		<group id="3">
 			<icon res="128" width="32" height="32"/><gap size="8"/>
-			<heading align="middle">У В Е Д О М Л Е Н И Е  &#160; О Б  &#160; О Б Н О В Л Е Н И И</heading>
+			<heading align="middle">У В Е Д О М Л Е Н И Е    О Б    О Б Н О В Л Е Н И И</heading>
 			<newline gap="8" indent="42"/>
 			<text id="Upgrade"/>
 			<newline gap="6"/>
@@ -1635,10 +1636,10 @@
 		</group>
 		<group id="4">
 			<icon res="252" width="32" height="32"/><gap size="8"/>
-			<heading align="middle">В Н И М А Н И Е  &#160; -  &#160; В Ы  &#160; З А  &#160; Б Р А Н Д М А У Э Р О М</heading>
+			<heading align="middle">В Н И М А Н И Е    -    В Ы    З А    Б Р А Н Д М А У Э Р О М</heading>
 			<newline gap="8" indent="42"/>
 			<text colour="FF0000">Shareaza обнаружила что вы за маршрутизатором или брандмаудэром,
-			и неспособны принимать соединения из Интернета. &#160;</text>
+			и неспособны принимать соединения из Интернета.  </text>
 			<text colour="FF0000" format="b">Это может ограничить скорость Загрузок/Раздач.</text>
 			<newline gap="6"/>
 			<link target="raza:command:ID_HELP_ROUTER">Щелкните здесь, чтобы узнать, как настроить ваш маршрутизатор или брандмауэр</link>
@@ -1646,10 +1647,10 @@
 		</group>
 		<group id="6">
 			<icon res="252" width="32" height="32"/><gap size="8"/>
-			<heading align="middle">В Н И М А Н И Е  &#160; - &#160; Н Е Т &#160; С В Я З И &#160; C &#160; T C P &#160; П О Р Т О М</heading>
+			<heading align="middle">В Н И М А Н И Е    -   Н Е Т   С В Я З И   C   T C P   П О Р Т О М</heading>
 			<newline gap="8" indent="42"/>
 			<text colour="FF0000">Shareaza обнаружила что вы за маршрутизатором или брандмаудэром,
-			и неспособны принимать TCP соединения из Интернета. &#160;</text>
+			и неспособны принимать TCP соединения из Интернета.  </text>
 			<text colour="FF0000" format="b">Это может ограничить скорость Загрузок/Раздач.</text>
 			<newline gap="6"/>
 			<link target="raza:command:ID_HELP_ROUTER">Щелкните здесь, чтобы узнать, как настроить ваш маршрутизатор или брандмауэр</link>
@@ -1657,41 +1658,41 @@
 		</group>
 		<group id="7">
 			<icon res="252" width="32" height="32"/><gap size="8"/>
-			<heading align="middle">В Н И М А Н И Е  &#160; - &#160; Н Е Т &#160; С В Я З И &#160; C &#160; U D P &#160; П О Р Т О М</heading>
+			<heading align="middle">В Н И М А Н И Е    -   Н Е Т   С В Я З И   C   U D P   П О Р Т О М</heading>
 			<newline gap="8" indent="42"/>
 			<text colour="FF0000">Shareaza обнаружила что вы за маршрутизатором или брандмаудэром,
-			и неспособны принимать TCP соединения из Интернета. &#160;</text>
+			и неспособны принимать TCP соединения из Интернета.  </text>
 			<text colour="FF0000" format="b">Это может ограничить скорость Загрузок/Раздач.</text>
 			<newline gap="6"/>
 			<link target="raza:command:ID_HELP_ROUTER">Щелкните здесь, чтобы узнать, как настроить ваш маршрутизатор или брандмауэр</link>
 			<newline gap="18" indent="0"/>
 		</group>
 		<icon res="236" width="32" height="32"/><gap size="8"/>
-		<heading align="middle">Н А С Т Р О Й Т Е  &#160; S H A R E A Z У</heading>
+		<heading align="middle">Н А С Т Р О Й Т Е    S H A R E A Z У</heading>
 		<newline gap="12" indent="42"/>
 		<icon res="237" width="32" height="32" target="raza:command:ID_TOOLS_SKIN"/>
 		<gap size="8"/>
 		<link target="raza:command:ID_TOOLS_SKIN" format="bu" align="middle">Шкурки</link>
-		<text align="middle">&#160;- Измeнение обликa Sharеaza</text>
+		<text align="middle"> - Измeнение обликa Sharеaza</text>
 		<newline gap="8"/>
 		<icon res="236" width="32" height="32" target="raza:command:ID_TOOLS_WIZARD"/>
 		<gap size="8"/>
 		<link target="raza:command:ID_TOOLS_WIZARD" format="bu" align="middle">Мaстер Устанoвок</link>
-		<text align="middle">&#160;- Пошaговый мaстер устанoвок Sharеaza</text>
+		<text align="middle"> - Пошaговый мaстер устанoвок Sharеaza</text>
 		<newline gap="8"/>
 		<icon res="147" width="32" height="32" target="raza:command:ID_HELP_FAQ"/>
 		<gap size="8"/>
 		<link target="raza:command:ID_HELP_FAQ" format="bu" align="middle">Быстрaя Помoщь</link>
-		<text align="middle">&#160;- Онлайновая Справочная Система Wiki</text>
+		<text align="middle"> - Онлайновая Справочная Система Wiki</text>
 		<newline gap="18" indent="0"/>
 		<group id="5">
 			<icon res="128" width="32" height="32"/><gap size="8"/>
-			<heading align="middle">В Ы  &#160; Р А З Р Е Ш И Л И  &#160; У Д А Л Е Н Н О Е &#160; У П Р А В Л Е Н И Е</heading>
+			<heading align="middle">В Ы    Р А З Р Е Ш И Л И    У Д А Л Е Н Н О Е   У П Р А В Л Е Н И Е</heading>
 			<newline gap="8" indent="42"/>
 			<text>Разрешено удаленное управление Shareazой, используйте обозреватель и адрес:</text>
 			<newline gap="6"/>
 			<link id="RemoteAccessURL1"/>
-			<text>&#160; - или -&#160;</text>
+			<text>  - или - </text>
 			<link id="RemoteAccessURL2"/>
 			<newline gap="16" indent="0"/>
 		</group>
@@ -2148,7 +2149,7 @@
 		что он бутет работать со всеми программами BitTorrent.</text>
 		<newline gap="8"/>
 		<link target="http://shareaza.sourceforge.net/help/?torrentencoding">Щелкните здесь, если Вам нужна помощь</link>
-		<text>&#160;или если хотите загрузить ПО для правки файлов torrent.</text>
+		<text> или если хотите загрузить ПО для правки файлов torrent.</text>
 	</document>
 	<document name="GeneralHelp.DonkeyServerList">
 		<text format="b">Пустой список eDonkey серверов</text>
@@ -2197,7 +2198,8 @@
 	<document name="SearchHelp.BadSearch3">
 		<text format="b">Перефразируйте Ваш запрос</text>
 		<newline gap="8"/>
-		<text>В этом запросе, кажется, отсутствуют слова или он имеет только общеизвестные типы файлов.</text>
+		<text>В этом запросе, кажется, отсутствуют слова или он имеет только общеизвестные типы
+		файлов.</text>
 		<newline gap="8"/>
 		<text>Если Вы сталкиваетесь с трудностями формулируя запросы, имейте ввиду, что они похожы на запросы в
 		интернетных поисковиках.
@@ -2215,7 +2217,8 @@
 		а такое содержимое запрещено в установках. Перефразируйте Ваш поиск
 		или отключите фильтр.</text>
 		<newline gap="8"/>
-		<text>Для того, чтобы отключить фильтр, идите в Инструменты &gt; Установки &gt; Общее и уберите галочку с фильтра содержимого для взрослых.</text>
+		<text>Для того, чтобы отключить фильтр, идите в Инструменты &gt; Установки &gt; Общее и уберите
+		галочку с фильтра содержимого для взрослых.</text>
 	</document>
 	<!-- Share help documents -->
 	<document name="ShareHelp.AlreadyShared">
@@ -2237,8 +2240,7 @@
 		папок. Разделяйте именно эти папки.</text>
 		<newline gap="8"/>
 		<text>Папка Shareazы 'incomplete' также не должна быть открыта для доступа в
-		хранилище, так как попытка хешировать загрузки снизит
-		производительность.</text>
+		хранилище, так как попытка хешировать загрузки снизит производительность.</text>
 	</document>
 </documents>
 <!-- Localised Command Tip Text. The "message" is displayed in the status bar, while the "tip" is shown in a tooltip -->
@@ -2625,7 +2627,7 @@
 	<string id="8100" value="Есть %i просмотр(ов)."/>
 	<string id="8101" value="%s пишет:"/>
 	<string id="8102" value="%s оценивает этот файл:"/>
-	<string id="8103" value="&#160;&#160;Щелкните для&#160; просмотра"/>
+	<string id="8103" value="  Щелкните для  просмотра"/>
 	<string id="8104" value="Предпросматриваю..."/>
 	<string id="8105" value="Невозможно загрузить содержимое просмотра с «%s»."/>
 	<string id="8128" value="Щелкните здесь для поиска снова"/>
@@ -3002,7 +3004,7 @@
 	<string id="16774" value="&amp;Соединиться"/>
 	<string id="16775" value="&amp;Просматривать"/>
 	<string id="16776" value="Добавить"/>
-	<string id="16777" value="Имя&#160;файла:"/>
+	<string id="16777" value="Имя файла:"/>
 	<string id="16778" value="Ссылка:"/>
 	<string id="16779" value="Тип:"/>
 	<string id="16780" value="Не указано"/>
@@ -3060,8 +3062,8 @@
 	<string id="16995" value="Файл может быть поврежден, или Вы не имеете подходящих кодеков для его воспроизведения."/>
 	<string id="16996" value="Часть этого файла не может быть воспроизведена, воможно Вам нужно загрузить дополнительные кодеки."/>
 	<string id="16997" value="Нет воспроизводимых файлов.  Щелкните дважды на медиа файле в Вашем хранилище для его проигрывания."/>
-	<string id="16998" value="М  &#160;  &#160; Е  &#160;  &#160; Д  &#160;  &#160; И  &#160;  &#160; А  &#160;  &#160;  &#160;  &#160;  &#160; С  &#160;  &#160; И  &#160;  &#160; С  &#160;  &#160; Т  &#160;  &#160; Е  &#160;  &#160; М  &#160;  &#160; А  &#160;  &#160;  &#160;  &#160;  &#160; S  &#160;  &#160; H  &#160;  &#160; A  &#160;  &#160; R  &#160;  &#160; E  &#160;  &#160; A  &#160;  &#160; Z  &#160;  &#160; A"/>
-	<string id="16999" value="Список &#160; Воспроизведения"/>
+	<string id="16998" value="М       Е       Д       И       А                С       И       С       Т       Е       М       А                S       H       A       R       E       A       Z       A"/>
+	<string id="16999" value="Список   Воспроизведения"/>
 	<string id="17024" value="Инициализация соединения с %s..."/>
 	<string id="17025" value="Невозможно установить связь с %s."/>
 	<string id="17026" value="Запрашивается соединение активной доставки через брандмауэр у %s..."/>
@@ -3278,6 +3280,8 @@
 </strings>
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
 <dialogs>
+	<dialog name="CGeneralSettingsGroup" cookie="" caption="Основное">
+	</dialog>
 	<dialog name="CSettingSheet" cookie="SyBuBuBu#3" caption="Установки Shareaza">
 		<control/>
 		<control caption="OK"/>
@@ -3285,7 +3289,6 @@
 		<control caption="Применить"/>
 		<control/>
 	</dialog>
-	<dialog name="CGeneralSettingsGroup" cookie="" caption="Основное"/>
 	<dialog name="CGeneralSettingsPage" cookie="BuBuBuBuStCoBuBuBuBuBuBuBuBuBuSyStEdmsStmsBuStCoStCo" caption="Основное">
 		<control caption="_Основное:"/>
 		<control caption="Соединяться с сетями при старте"/>
@@ -3304,7 +3307,8 @@
 		<control caption="Показывать _подсказки для:"/>
 		<control/>
 		<control caption="Задерж.(мс):"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Прозрач.:"/>
 		<control/>
 		<control caption="_Трей:"/>
@@ -3313,7 +3317,7 @@
 		<control caption="Когда щелкаю свернуть:"/>
 		<control caption="Обычное действие|Отправить в трей"/>
 	</dialog>
-	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBuBu" caption="Хранилище">
+	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBuBuBu" caption="Хранилище">
 		<control caption="_Опции:"/>
 		<control caption="Запоминать вид папок"/>
 		<control caption="Следить за хранилищем"/>
@@ -3321,10 +3325,12 @@
 		<control caption="Открыть общий доступ"/>
 		<control caption="_Последние файлы:"/>
 		<control caption="Помнить:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="файлов"/>
 		<control caption="Не дольше:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="дней"/>
 		<control caption="Очистить список"/>
 		<control caption="_Не опасно открывать:"/>
@@ -3336,8 +3342,10 @@
 		<control caption="_Внести"/>
 		<control caption="_Удалить"/>
 		<control caption="Держать _коллекции в папке:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Теневые файлы при стирании"/>
+		<control caption="Определение номеров серий у видео"/>
 	</dialog>
 	<dialog name="CMediaSettingsPage" cookie="BuCoBuBuBuCoBuBuBuBuBuStSt" caption="Проигрыватель">
 		<control caption="_Опции:"/>
@@ -3364,6 +3372,42 @@
 		<control caption="Фильтровать текст чата от спама"/>
 		<control caption="Фильтровать нецензурные слова в чате"/>
 	</dialog>
+	<dialog name="CIRCSettingsPage" cookie="BuBuBuEdStBuStCoBuBuStBuStBuStBuStBuStBuStBuStEdStEdStEdStEdStEdStEd" caption="Чат">
+		<control caption="Настройки _чата:"/>
+		<control caption="Show chat  integration"/>
+		<control caption="Flood protection:"/>
+		<control/>
+		<control caption="lines per second"/>
+		<control caption="Метки времени"/>
+		<control caption="Шрифт:"/>
+		<control/>
+		<control caption="_Цвета:"/>
+		<control/>
+		<control caption="Сообщений сервера"/>
+		<control/>
+		<control caption="Топиков"/>
+		<control/>
+		<control caption="Действий"/>
+		<control/>
+		<control caption="Уведомлений"/>
+		<control/>
+		<control caption="Фон"/>
+		<control/>
+		<control caption="Текста"/>
+		<control caption="Настройки _соединения:"/>
+		<control caption="Ник:"/>
+		<control/>
+		<control caption="Имя:"/>
+		<control/>
+		<control caption="Альтернативный ник:"/>
+		<control/>
+		<control caption="Настоящее имя:"/>
+		<control/>
+		<control caption="Сервер:"/>
+		<control/>
+		<control caption="Порт:"/>
+		<control/>
+	</dialog>
 	<dialog name="CWebSettingsPage" cookie="BuStBuBuBuBuBuBuBuCoBuBuSt" caption="Веб">
 		<control caption="Обработка _пиринговых (P2P) ссылок:"/>
 		<control caption="Использовать Shareaza для перехвата следующих типов ссылок:"/>
@@ -3379,7 +3423,8 @@
 		<control caption="_Удалить"/>
 		<control caption="Модуль менеджера загрузок предложит загрузить только указанные здесь типы файлов.  Остальные типы файлов будут обработанны вашим обозревателем.  Shareaza должна быть запущена для перехвата загрузок."/>
 	</dialog>
-	<dialog name="CInternetSettingsGroup" caption="Интернет"/>
+	<dialog name="CInternetSettingsGroup" cookie="" caption="Интернет">
+	</dialog>
 	<dialog name="CConnectionSettingsPage" cookie="BuStCoStCoStEdBuBuBuStCoStCoBuStCoBuBuBuStEdmsStEdms" caption="Соединения">
 		<control caption="Адрес для входящего потока:"/>
 		<control caption="Адрес:"/>
@@ -3402,27 +3447,35 @@
 		<control caption="Настраивать устройства UPnP"/>
 		<control caption="_Тайм-ауты:"/>
 		<control caption="Соединение:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Приветствие:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 	</dialog>
 	<dialog name="CDownloadsSettingsPage" cookie="BuEdBuBuEdBuBuStEdmsStEdmsStEdmsBuStCoStCoBuBu" caption="Загрузки">
 		<control caption="Сохранять загруженные файлы в папке:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Держать незаконченные файлы в папке:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="_Макс. параметры загрузок:"/>
 		<control caption="Файлов одноврем.:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Потоков всего:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Потоков на файл:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Лимиты:"/>
 		<control caption="Макс. ширина канала загрузки:"/>
 		<control/>
 		<control caption="Максимальный номер очереди:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Загрузки и раздачи только с соединенными сетями."/>
 	</dialog>
 	<dialog name="CUploadsSettingsPage" cookie="BuBuBuBuStEdmsBuCoBuBuBuStCoStCoBuSyBuBuBuSt" caption="Раздачи">
@@ -3431,7 +3484,8 @@
 		<control caption="Лимит раздачи в режиме узла"/>
 		<control caption="Разрешить просмотр"/>
 		<control caption="Лимит подключений на хост:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="_Фильтр программ:"/>
 		<control/>
 		<control caption="+"/>
@@ -3448,12 +3502,12 @@
 		<control caption="_Удалить"/>
 		<control caption="(изменения применяются сразу)"/>
 	</dialog>
-	<dialog name="CRemoteSettingsPage" cookie="BuStBuBuStBuStEdStEd" caption="Удал. доступ">
+	<dialog name="CRemoteSettingsPage" cookie="BuStBuBuStBuStEdStEd" caption="Удалённый доступ">
 		<control caption="_Описание:"/>
 		<control caption="Удаленный доступ к Shareaza позволит Вам оставить Shareaza запущенной и контролировать её удаленно из веб браузера.  Для использования этого Вам понадобится иметь возможность принимать входящие соединения (и правильно настроить брандмауэр)."/>
 		<control caption="_Разрешение:"/>
 		<control caption="Разрешить удаленный доступ к Shareaza:"/>
-		<control/>
+		<control caption="URL"/>
 		<control caption="_Безопасность:"/>
 		<control caption="Введите имя:"/>
 		<control/>
@@ -3463,7 +3517,8 @@
 	<dialog name="CSchedulerSettingsPage" cookie="BuBuEdmsBuBuStStStStStStStStStStStEdBuSt" caption="Планировщик">
 		<control caption="_Опции:"/>
 		<control caption="_Включить планировщик"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="_Соединиться только с G2 при лимите"/>
 		<control caption="Ключ:"/>
 		<control caption="Вос"/>
@@ -3504,11 +3559,14 @@
 		<control caption="Оптимальный|Ветвь|Узел"/>
 		<control caption="G_2 соединения:"/>
 		<control caption="Узлов к ветви:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Ветвей к узлу:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Узлов к узлу:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Сеть Gnutella1:"/>
 		<control caption="Всегда соединяться с G1"/>
 		<control caption="Соединиться с G1 сегодня"/>
@@ -3516,11 +3574,14 @@
 		<control caption="Оптимальный|Ветвь|Ведущий"/>
 		<control caption="G_1 соединения:"/>
 		<control caption="Ведущих к ветви:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Ветвей к ведущему:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Партнеров к партнеру:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="_Компрессия в каналах связи:"/>
 		<control caption="Узел к ветви"/>
 		<control caption="Ветвь к узлу"/>
@@ -3533,12 +3594,14 @@
 		<control caption="_Глобальный поиск:"/>
 		<control caption="Поиск в кэше известных удаленных серверов:"/>
 		<control caption="Стоп поиска после:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="результатов."/>
 		<control caption="Получать и обновлять список серверов с соединенного сервера"/>
 		<control caption="С_оединения с клиентами:"/>
 		<control caption="Соединять не более чем с:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="другими eDonkey клиентами."/>
 		<control caption="eDonkey _утилиты:"/>
 		<control caption="Загрузить список серверов из вба:"/>
@@ -3548,19 +3611,25 @@
 		<control caption="_Интерфейс:"/>
 		<control caption="Показывать дополнительные элементы BitTorrent интерфейса"/>
 		<control caption="_Соединений для загрузки:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="_Торрентов одновременно"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Клиентских соединений"/>
-		<control caption="&#160;Убрать загружен. торренты при достижении соотношения"/>
-		<control/><control/><control/>
-		<control caption="&#160;Предпочитать источники торрентов"/>
+		<control caption=" Убрать загружен. торренты при достижении соотношения"/>
+		<control/>
+		<control/>
+		<control caption="%"/>
+		<control caption=" Предпочитать источники торрентов"/>
 		<control caption="_ЕndGame (ускорение):"/>
 		<control caption="Переходить в режим EndGame при завершении торрентов"/>
 		<control caption="_Держать торренты в папке:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="_Программа для создания торрентов"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Трекер по умолч.: "/>
 		<control/>
 	</dialog>
@@ -3591,11 +3660,13 @@
 		<control caption="_Установки..."/>
 		<control caption="_Хочу ещё..."/>
 	</dialog>
-	<dialog name="CAdvancedSettingsPage" cookie="SyBuStEdmsStEd" caption="Опытным">
+	<dialog name="CAdvancedSettingsPage" cookie="SyEdmsBuBuStStEd" caption="Опытным">
 		<control/>
+		<control/>
+		<control/>
+		<control caption="По умолчанию"/>
 		<control caption="Свойства установки:"/>
 		<control caption="Значение:"/>
-		<control/><control/>
 		<control caption="Описание:"/>
 		<control/>
 	</dialog>
@@ -3611,7 +3682,7 @@
 		<control caption="Максимальный размер файла:"/>
 		<control/>
 		<control caption="Метка файлов:"/>
-		<control/>
+		<control caption="Популярный|Релиз"/>
 		<control caption="Имя файла с:"/>
 		<control/>
 		<control caption="Протоколы:"/>
@@ -3619,23 +3690,28 @@
 		<control caption="_Ограничения:"/>
 		<control caption="Разрешить эту очередь"/>
 		<control caption="Мин. кол-во раздач:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Макс. кол-во раздач:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Макс. кол-во ждущих в очереди:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="_Параметры сервиса:"/>
 		<control caption="Процент полосы пропускания:"/>
 		<control/>
 		<control caption="Трафик очереди:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Возврат после N секунд:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="OK"/>
 		<control caption="Отмена"/>
 		<control caption="Вознаградить загрузчиков"/>
 	</dialog>
-	<dialog name="CWizardWelcomePage" cookie="StStStStStStStStStStStSt" caption="">
+	<dialog name="CWizardWelcomePage" cookie="StStStStStStStStStStStSt" caption="Добро пожаловать в Shareaza">
 		<control caption="Добро пожаловать в Shareaza!"/>
 		<control caption="Если Вы не использовали Shareaza или другого P2P клиента раньше, этот мастер поможет Вам настроить её за несколько простых шагов."/>
 		<control caption="Если Вы опытный пользователь, Вы можете получить доступ к полному диапазону настроек Shareaza в меню Инструменты.  Нажмите «Выход» для закрытия мастера в любое время."/>
@@ -3649,17 +3725,7 @@
 		<control/>
 		<control caption="Начать пользоваться Shareaza'ой."/>
 	</dialog>
-	<dialog name="CWizardInterfacePage" cookie="StBuBuBuStStBuBu" caption="Добро пожаловать в Shareaza">
-		<control caption="Shareaza поддерживает два типа интерфейса, так что Вы можете выбрать наиболее удобный. Вы сможете изменить эти опции и позже."/>
-		<control caption="Выберите один пользовательский интерфейс:"/>
-		<control caption="Обычный режим"/>
-		<control caption="Режим опытным"/>
-		<control caption="Обычный - удобные меню и кнопки.{n}Знакомый пользователям других программ файлообмена."/>
-		<control caption="Опытным - предлагает много дополнительных команд, окон, и т.д. Он может несколько смутить новичков!"/>
-		<control caption="Показывать упрощенную полосу прогресса. (Уменьшает нагрузку ЦПУ)"/>
-		<control caption="Ассоциировать файлы торрентов с программой."/>
-	</dialog>
-	<dialog name="CWizardConnectionPage" cookie="StStCoStCoStCoStCoStms" caption="Добро пожаловать в Shareaza [3 из 7]">
+	<dialog name="CWizardConnectionPage" cookie="StStCoStCoStCoStCoStms" caption="Добро пожаловать в Shareaza">
 		<control caption="Для оптимальной работы Shareaza должна знать о вашем соединении с Интернетом."/>
 		<control caption="Выберите тип подключения к интернету:"/>
 		<control caption="Коммутир. соединение|ИСДН|АДСЛ (256 К)|АДСЛ (512 К)|АДСЛ (768 К)|АДСЛ (1,5 М)|АДСЛ (4,0 M)|АДСЛ2 (8,0 M)|АДСЛ2 (12,0 M)|АДСЛ2+ (24,0 M)|Кабельный модем/СДСЛ|Т1|Т3|Локальная сеть|OC3"/>
@@ -3672,7 +3738,7 @@
 		<control caption="Статус:"/>
 		<control/>
 	</dialog>
-	<dialog name="CWizardSharePage" cookie="StStStSyBuBuSt" caption="Добро пожаловать в Shareaza [4 из 7]">
+	<dialog name="CWizardSharePage" cookie="StStStSyBuBuSt" caption="Добро пожаловать в Shareaza">
 		<control caption="Качество P2P сетей зависит от самих же пользователей! Файлы в папках указанных для раздач будут открыты для других пользователей."/>
 		<control caption="Вы не обязанны ничем делиться для использования Shareaza, но другие P2P пользователи могут отказать в загрузках тем, у кого нечего взять."/>
 		<control caption="Пожалуйста укажите, какие папки Вы желаете открыть для общего доступа (если такие у Вас есть).  Просто щелкните кнопку «Внести», чтобы указать новую папку."/>
@@ -3690,17 +3756,28 @@
 		<control caption="0"/>
 		<control caption="Закрыть"/>
 	</dialog>
-	<dialog name="CWizardProfilePage" cookie="StStEdStCoCoStCoCo" caption="Добро пожаловать в Shareaza [5 из 7]">
+	<dialog name="CWizardProfilePage" cookie="StStEdStCoCoStCoCo" caption="Добро пожаловать в Shareaza">
 		<control caption="Shareaza  будет ещё дружелюбней, если каждый укажет несколько деталей о себе."/>
 		<control caption="Мой ник будет:"/>
 		<control/>
 		<control caption="и мне (я):"/>
-		<control caption="&#160;(выберите)"/>
-		<control caption="&#160;(выберите)| парень| девушка| мужчина| женщина"/>
+		<control caption=" (выберите)"/>
+		<control caption=" (выберите)| парень| девушка| мужчина| женщина"/>
 		<control caption="Из:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 	</dialog>
-	<dialog name="CWizardNetworksPage" cookie="StBuStBuStBuSt" caption="Добро пожаловать в Shareaza [6 из 7]">
+	<dialog name="CWizardInterfacePage" cookie="StBuBuBuStStBuBu" caption="Добро пожаловать в Shareaza">
+		<control caption="Shareaza поддерживает два типа интерфейса, так что Вы можете выбрать наиболее удобный. Вы сможете изменить эти опции и позже."/>
+		<control caption="Выберите один пользовательский интерфейс:"/>
+		<control caption="Обычный режим"/>
+		<control caption="Режим опытным"/>
+		<control caption="Обычный - удобные меню и кнопки.{n}Знакомый пользователям других программ файлообмена."/>
+		<control caption="Опытным - предлагает много дополнительных команд, окон, и т.д. Он может несколько смутить новичков!"/>
+		<control caption="Показывать упрощенную полосу прогресса. (Уменьшает нагрузку ЦПУ)"/>
+		<control caption="Ассоциировать файлы торрентов с программой."/>
+	</dialog>
+	<dialog name="CWizardNetworksPage" cookie="StBuStBuStBuSt" caption="Добро пожаловать в Shareaza">
 		<control caption="Shareaza - многоцелевая программа обмена файлами, с доступом ко многим P2P сетям одновременно. Здесь Вы можете выбрать, какие P2P сети Вы хотите использовать. Отметьте, что Вы можете выбрать их позже."/>
 		<control caption="Соединяться с Gnutella2 (рекомендуется)"/>
 		<control caption="Gnutella2 - основная сеть Shareaza, она предлагает больше особенностей и опций работы чем любая другая P2P сеть."/>
@@ -3717,7 +3794,7 @@
 		<control/>
 		<control caption="Закрыть"/>
 	</dialog>
-	<dialog name="CWizardFinishedPage" cookie="StStStBuBuBuSt" caption="Добро пожаловать в Shareaza [7 из 7]">
+	<dialog name="CWizardFinishedPage" cookie="StStStBuBuBuSt" caption="Добро пожаловать в Shareaza">
 		<control caption="Вот и всё!  Вы настроили Shareaza для работы на Вашем компьютере."/>
 		<control caption="Если Вам понадобится изменить установки, можно перезапустить мастер, выбрав соответствующий пункт из меню Инструменты."/>
 		<control caption="После закрытия мастера, можно своединиться с выбранными сетями и начать поиск и загрузку файлов."/>
@@ -3738,7 +3815,8 @@
 		<control caption="Виртуальное:"/>
 		<control/>
 		<control caption="Настоящее:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="_Важное:"/>
 		<control caption="|Мужской|Женский"/>
 		<control caption="Пол:"/>
@@ -3817,7 +3895,8 @@
 	<dialog name="CLanguageDlg" cookie="" caption="Выберите язык программы"/>
 	<dialog name="CConnectToDlg" cookie="BuCoEdBuCoBuBuBu" caption="Соединиться с|Просмотр хоста">
 		<control caption="Инициализировать новое соединене с хостом или сервером:|Просмотр этого хоста:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Протокол _сети:"/>
 		<control caption="Gnutella1 (авто)|Gnutella2 (авто)|eDonkey"/>
 		<control caption="Подавить _ведущего"/>
@@ -3825,7 +3904,8 @@
 		<control caption="Отмена"/>
 	</dialog>
 	<dialog name="CDownloadDlg" cookie="StStStEdBuBuStStBu" caption="Загрузить файл или торрент">
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="С Shareaza загрузить любой файл легко! Просто введите или вставьте ссылку HTTP или P2P ссылку в окно ниже и нажмите «Загрузить»."/>
 		<control/>
 		<control caption="Загрузить"/>
@@ -3835,13 +3915,15 @@
 		<control caption="Открыть _Torrent..."/>
 	</dialog>
 	<dialog name="CNewSearchDlg" cookie="EdCoBuBu" caption="Новый поиск|Искать снова|Поиск в хранилище">
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Поиск"/>
 		<control caption="Отмена"/>
 	</dialog>
-	<dialog name="CFilterSearchDlg" cookie="BuEdStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuCoBuBuBuBuBuBuBu" caption="Фильтрование соответсвий">
+	<dialog name="CFilterSearchDlg" cookie="BuEdBuStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuBuBuCoBuBuBuBuBu" caption="Фильтрование соответсвий">
 		<control caption="Показывать только содержащие слова:"/>
 		<control/>
+		<control caption="Рег. Выраж."/>
 		<control caption="( исключать слова можно ставя '-' перед ними )"/>
 		<control caption="И _размером:"/>
 		<control caption="Минимум:"/>
@@ -3849,25 +3931,26 @@
 		<control caption="Максимум:"/>
 		<control/>
 		<control caption="Минимум с:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="источн."/>
-		<control caption="--хосты--———-—С_КРЫТЬ-ИЗ-СПИСКА—————--файлы--"/>
+		<control caption="Скрыть:"/>
 		<control caption="Занятые"/>
-		<control caption="За брандмауэром"/>
-		<control caption="Нестабильные"/>
 		<control caption="Несоответствующие"/>
-		<control caption="Уже загружаемые"/>
+		<control caption="За брандмауэром"/>
+		<control caption="Уже загруженные"/>
+		<control caption="Нестабильные"/>
 		<control caption="Подделки"/>
-		<control caption="Фильтровать"/>
-		<control caption="Отмена"/>
+		<control caption="Файлы с DRM"/>
+		<control caption="Для взрослых"/>
+		<control caption="Подозрительные"/>
+		<control caption="Фильтры:"/>
 		<control/>
 		<control caption="Использовать по умолчанию"/>
 		<control caption="_Сохранить как"/>
 		<control caption="_Удалить"/>
-		<control caption="Фильтры:"/>
-		<control caption="Файлы с DRM"/>
-		<control caption="Подозрительные"/>
-		<control caption="Содерж. для взрослых"/>
+		<control caption="Фильтровать"/>
+		<control caption="Отмена"/>
 	</dialog>
 	<dialog name="CSaveFilterAsDlg" cookie="EdBuBuSt" caption="Сохранить фильтр как">
 		<control/>
@@ -3875,18 +3958,21 @@
 		<control caption="Отмена"/>
 		<control caption="Сохранить текущий фильтр как"/>
 	</dialog>
-	<dialog name="CDiscoveryServiceDlg" cookie="BuEdStCoBuBu" caption="Ресурс соединений">
+	<dialog name="CDiscoveryServiceDlg" cookie="BuEdStCoBuBuSt" caption="Ресурс соединений">
 		<control caption="Адрес службы:"/>
 		<control/>
 		<control caption="Тип ресурса соединений:"/>
-		<control caption="Gnutella Bootstrap|GWebCache|Server.met ссылка"/>
+		<control caption="Gnutella Bootstrap|GWebCache|Server.met ссылка|Блокировано"/>
 		<control caption="OK"/>
 		<control caption="Отмена"/>
+		<control/>
 	</dialog>
 	<dialog name="CDownloadMonitorDlg" cookie="StStStStStStStStStStStStStBuBuBuBuBu" caption="Загрузка : Shareaza">
 		<control caption="Shareaza загружает:"/>
 		<control caption="..."/>
-		<control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
 		<control caption="Скорость передачи:"/>
 		<control caption="..."/>
 		<control caption="Примерно осталось:"/>
@@ -3903,7 +3989,10 @@
 	</dialog>
 	<dialog name="CFileGeneralPage" cookie="StEdEdEdEdStStEdStEdStEdStEdEdEd" caption="Основное">
 		<control caption="Унифицированные имена ресурсов (URNs)"/>
-		<control/><control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
 		<control caption="Атрибуты файла"/>
 		<control caption="Путь:"/>
 		<control/>
@@ -3912,17 +4001,21 @@
 		<control caption="Изменено:"/>
 		<control/>
 		<control caption="Размер:"/>
-		<control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
 	</dialog>
 	<dialog name="CFileMetadataPage" cookie="CoEd" caption="Мета данные">
-		<control/><control/>
+		<control/>
+		<control/>
 	</dialog>
 	<dialog name="CFileCommentsPage" cookie="StStCoStEdEd" caption="Мой отзыв">
 		<control caption="Моя оценка"/>
 		<control caption="Я оцениваю файл:"/>
 		<control caption="(Без оценки)|Фальшивка/Испорчен|Плохой|Средний|Хороший|Очень хороший|Отменный"/>
 		<control caption="Мои комментарии"/>
-		<control/><control/>
+		<control/>
+		<control/>
 	</dialog>
 	<dialog name="CFileSharingPage" cookie="StBuBuBuStCoStSyEd" caption="Общий доступ">
 		<control caption="Режим доступа"/>
@@ -3932,19 +4025,22 @@
 		<control caption="Метка для выбора очереди раздачи"/>
 		<control/>
 		<control caption="-Сети, в которых разделять"/>
-		<control/><control/>
+		<control/>
+		<control/>
 	</dialog>
 	<dialog name="CFileSourcesPage" cookie="StStEdSyBuBuEd" caption="Источники">
 		<control caption="Известные источники"/>
 		<control caption="Добавить источник"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="_Добавить"/>
 		<control caption="_Удалить"/>
 		<control/>
 	</dialog>
 	<dialog name="CFileCopyDlg" cookie="StStmsBuBumsStSt" caption="Копирование|Перемещение файлов">
 		<control caption="Вы выбрали %i файл(а/ов) для копирования в папку:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="OK"/>
 		<control caption="Отмена"/>
 		<control/>
@@ -3972,7 +4068,8 @@
 		<control caption="Легенду"/>
 		<control caption="_Выбор частоты измерения:"/>
 		<control caption="Интервал между измер.:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="мс"/>
 		<control caption="_Название:"/>
 		<control/>
@@ -3994,7 +4091,8 @@
 		<control caption="_Удалить"/>
 	</dialog>
 	<dialog name="CSchemaColumnsDlg" cookie="CoSyBuBuSt" caption="Выбор колонок из схемы">
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="OK"/>
 		<control caption="Отмена"/>
 		<control caption="Выберите схему из списка, затем выберите колонки для отображения."/>
@@ -4007,9 +4105,15 @@
 		<control/>
 		<control caption="_Сетевой адрес:"/>
 		<control caption="IP адрес:"/>
-		<control/><control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
 		<control caption="Маска сети:"/>
-		<control/><control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
 		<control caption="_Фильтр содержания:"/>
 		<control/>
 		<control caption="Удовл. любое"/>
@@ -4041,7 +4145,9 @@
 	<dialog name="CURLCopyDlg" cookie="StStStStStBuBu" caption="Копировать ссылку">
 		<control/>
 		<control caption="Вы можете скопировать ссылку на объект в различных форматах.  Выберите нужный формат щелкнув на одну из ссылок ниже:"/>
-		<control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
 		<control caption="Включить _меня как фиксиров. источник"/>
 		<control caption="Отмена"/>
 	</dialog>
@@ -4052,7 +4158,7 @@
 		<control caption="Вставить:"/>
 		<control caption="Tiger Root|SHA1|MD5|ED2K (CMD4)|Полное имя файла|Имя файла (ссылка)|Имя файла|Расширение файла|Размер файла|Размер файла (в байтах)|Путь к папке|Локальный адрес|Локальный порт"/>
 		<control caption="Шаблоны:"/>
-		<control/>
+		<control caption="Magnet|eDonkey|Magnet HTML|eDonkey HTML"/>
 		<control caption="_Копировать"/>
 		<control caption="_Сохранить"/>
 		<control/>
@@ -4064,12 +4170,12 @@
 		<control caption="Вы щелкнули на Shareaza-поддерживаемой ссылке, которая свяжет Вас со следующим хостом или сервером:"/>
 		<control caption="Вы щелкнули на Shareaza-поддерживаемой ссылке, которая позволит Вам просмотреть разделяемые файлы на следующем хосте:"/>
 		<control/><control/><control/><control/>
-		<control caption="Выерите _действие, которое Shareaza должна выполнить:"/>
+		<control caption="Выберите действие, которое Shareaza должна выполнить:"/>
 		<control caption="_Загрузить"/>
 		<control caption="_Искать файл"/>
 		<control caption="_Отмена"/>
-		<control caption="Запомнить мой _выбор на будущее"/>
-		<control caption="Открыть окно _Монитора загрузки"/>
+		<control caption="Запомнить мой _выбор"/>
+		<control caption="Открыть окно _Монитора"/>
 		<control caption="Вы щелкнули на Shareaza-поддерживаемой ссылке, которая добавит следующую службу ресурсов соединений в Ваш список."/>
 	</dialog>
 	<dialog name="CBitziDownloadDlg" cookie="StStmsBuSySt" caption="Загрузка мета данных...">
@@ -4160,44 +4266,46 @@
 		<control/>
 		<control caption="Информация о шаблоне:"/>
 		<control caption="Название:"/>
-		<control/>
+		<control caption="..."/>
 		<control caption="Автор:"/>
-		<control/>
+		<control caption="..."/>
 		<control caption="Описание:"/>
 		<control/>
 		<control caption="Удалить|_Назад"/>
 		<control caption="_Далее|Экспорт..."/>
 		<control caption="Отмена"/>
 	</dialog>
-	<dialog name="CDownloadEditDlg" cookie="StBuStEdEdStEdBuStStEdBuStEdBuStEdBuBuStStStStBuStEdStEdBuBuBuBu" caption="Правка загрузки (опытным)">
+	<dialog name="CDownloadEditPage" cookie="StBuStEdEdStEdBuStStEdBuStEdBuStEdBuBuStStStStStBuStEdStEdBu" caption="Свойства загрузки">
 		<control caption="ВНИМАНИЕ: Этот диалог для ОПЫТНЫХ пользователей и дает опции, которые при неправильном использовании могут разрушить загрузку."/>
 		<control caption="Имя и размер файла:"/>
 		<control caption="Имя файла:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Размер (байты):"/>
 		<control/>
 		<control caption="_URNs:"/>
 		<control caption="Верим"/>
 		<control caption="SHA1:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Tiger-Root:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="ED2K:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="_Действия:"/>
-		<control caption="Забыть текущий статус сверки (и перепроверить)"/>
+		<control caption="Забыть текущий статус проверки и перепроверить"/>
 		<control caption="Считать, что файл загружен на 100% и перепроверить"/>
 		<control caption="Забыть все известные источники"/>
 		<control caption="Слить с локальным файлом и перепроверить"/>
+		<control caption="Отменить загрузку с сохранением неполных файлов"/>
 		<control caption="Стиратель:"/>
-		<control caption="Сотри байт с:"/>
+		<control caption="Сотри с:"/>
 		<control/>
 		<control caption="по"/>
 		<control/>
 		<control caption="Стереть"/>
-		<control caption="Torrent _Инфо..."/>
-		<control caption="OK"/>
-		<control caption="Отмена"/>
 	</dialog>
 	<dialog name="CTorrentSeedDlg" cookie="StStBuBuBuStms" caption="Открыть торрент">
 		<control/>
@@ -4252,7 +4360,8 @@
 	</dialog>
 	<dialog name="CDownloadGroupDlg" cookie="BuEdSyBuCoBuBuBuBuBuEdBu" caption="Свойства группы загрузки">
 		<control caption="_Название:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="_Фильтры:"/>
 		<control/>
 		<control caption="_Добавить"/>
@@ -4260,6 +4369,7 @@
 		<control caption="OK"/>
 		<control caption="Отмена"/>
 		<control caption="_Папка завершенных файлов:"/>
+		<control/>
 		<control/>
 	</dialog>
 	<dialog name="CMediaVisDlg" cookie="StBuSyCoBuBuBu" caption="Выбор визуализации">
@@ -4284,11 +4394,14 @@
 		<control caption="OK"/>
 		<control/><control/>
 	</dialog>
-	<dialog name="CDecodeMetadataDlg" cookie="BuBuStCo" caption="Локализация мета данных">
+	<dialog name="CDecodeMetadataDlg" cookie="StCoBuBuBuStStBuBu" caption="Локализация мета данных">
 		<control caption="Выберите способ перекодировки (группу языков)"/>
 		<control caption="Арабский|Балтийский|Центральной Европы|Китайский упрощенный|Китайский традиционный|Кириллица|Греческий|Иврит|Японский|Корейский|Тайский|Турецкий|Вьетнамский"/>
 		<control caption="Просмотр:"/>
-		<control/><control/>	<control/><control/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
 		<control caption="OK"/>
 		<control caption="Отмена"/>
 	</dialog>
