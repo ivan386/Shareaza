@@ -82,7 +82,7 @@ protected:
 // Operations
 public:
 	BOOL		IsSelfIP(IN_ADDR nAddress) const;
-	BOOL		IsAvailable() const;
+	bool		IsAvailable() const;
 	bool		IsConnected() const;
 	bool		IsListening() const;
 	bool		IsWellConnected() const;

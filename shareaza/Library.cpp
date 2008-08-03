@@ -65,27 +65,15 @@ CLibrary Library;
 // CLibrary construction
 
 CLibrary::CLibrary() :
-	m_nUpdateCookie				( 0 ),
-	m_nForcedUpdateCookie		( 0 ),
-	m_nScanCount				( 0 ),
-	m_nScanCookie				( 1 ),
-	m_nScanTime					( 0 ),
-	m_nUpdateSaved				( 0 ),
-	m_nFileSwitch				( 0 ),
-	m_pfnGetFileAttributesExW	( NULL ),
-	m_pfnGetFileAttributesExA	( NULL )
+	m_nUpdateCookie				( 0ul )
+,	m_nForcedUpdateCookie		( 0ul )
+,	m_nScanCount				( 0ul )
+,	m_nScanCookie				( 1ul )
+,	m_nScanTime					( 0ul )
+,	m_nUpdateSaved				( 0ul )
+,	m_nFileSwitch				( 0 )
 {
 	EnableDispatch( IID_ILibrary );
-
-	// theApp.m_hKernel cannot be used because this code is executed before CShareazaApp::InitResources()
-	HINSTANCE hKernel;
-
-	// It is not necessary to call LoadLibrary on Kernel32.dll, because it is already loaded into every process address space.
-	if ( ( hKernel = GetModuleHandle( _T("kernel32.dll") ) ) != NULL )
-	{
-		(FARPROC&)m_pfnGetFileAttributesExW = GetProcAddress( hKernel, "GetFileAttributesExW" );
-		(FARPROC&)m_pfnGetFileAttributesExA = GetProcAddress( hKernel, "GetFileAttributesExA" );
-	}
 }
 
 CLibrary::~CLibrary()
@@ -116,13 +104,13 @@ void CLibrary::AddFile(CLibraryFile* pFile)
 
 	if ( pFile->IsAvailable() )
 	{
-        if ( pFile->m_oSHA1 || pFile->m_oTiger || pFile->m_oMD5 || pFile->m_oED2K || pFile->m_oBTH )
+		if ( pFile->m_oSHA1 || pFile->m_oTiger || pFile->m_oMD5 || pFile->m_oED2K || pFile->m_oBTH )
 		{
 			LibraryHistory.Submit( pFile );
 			GetAlbumRoot()->OrganiseFile( pFile );
 		}
 
-        if ( ! pFile->IsHashed() )
+		if ( ! pFile->IsHashed() )
 		{
 			LibraryBuilder.Add( pFile ); // hash the file and add it again
 		}
@@ -153,7 +141,7 @@ void CLibrary::RemoveFile(CLibraryFile* pFile)
 void CLibrary::OnFileDelete(CLibraryFile* pFile, BOOL bDeleteGhost)
 {
 	ASSERT( pFile != NULL );
-	
+
 	LibraryFolders.OnFileDelete( pFile, bDeleteGhost );
 	LibraryHistory.OnFileDelete( pFile );
 	LibraryHashDB.DeleteAll( pFile->m_nIndex );
@@ -169,13 +157,13 @@ void CLibrary::CheckDuplicates(CLibraryFile* pFile, bool bForce)
 	int nDot = pFile->m_sName.ReverseFind( '.' );
 
 	if ( nDot == -1 ) return;
-	if ( _tcsistr( _T("|exe|com|zip|rar|ace|7z|cab|lzh|tar|tgz|bz2|wmv|"), 
+	if ( _tcsistr( _T("|exe|com|zip|rar|ace|7z|cab|lzh|tar|tgz|bz2|wmv|"),
 		pFile->m_sName.Mid( nDot + 1 ) ) == NULL ) return;
 
 	for ( POSITION pos = LibraryMaps.GetFileIterator() ; pos ; )
 	{
 		CLibraryFile* pExisting = LibraryMaps.GetNextFile( pos );
-		
+
 		if ( validAndEqual( pFile->m_oMD5, pExisting->m_oMD5 ) )
 			nCount++;
 	}
@@ -436,7 +424,7 @@ BOOL CLibrary::Save()
 		pFile.Write( &pFileTime, sizeof(FILETIME) );
 
 		pFile.Close();
-		
+
 		theApp.Message( MSG_DEBUG, _T("Library successfully saved to: %s"), strFile );
 		return TRUE;
 	}

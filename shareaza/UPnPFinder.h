@@ -1,7 +1,7 @@
 //
 // UPnPFinder.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -19,29 +19,11 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#ifndef UPNPFINDER_H_INCLUDED
-#define UPNPFINDER_H_INCLUDED
-
 #pragma once
-#pragma warning( disable: 4355 )
 
 typedef com_ptr< IUPnPDeviceFinder > FinderPointer;
 typedef com_ptr< IUPnPDevice > DevicePointer;
 typedef com_ptr< IUPnPService > ServicePointer;
-typedef DWORD (WINAPI* TGetBestInterface) (
-  IPAddr dwDestAddr,
-  PDWORD pdwBestIfIndex
-);
-
-typedef DWORD (WINAPI* TGetIpAddrTable) (
-  PMIB_IPADDRTABLE pIpAddrTable,
-  PULONG pdwSize,
-  BOOL bOrder
-);
-
-typedef DWORD (WINAPI* TGetIfEntry) (
-  PMIB_IFROW pIfRow
-);
 
 CString translateUPnPResult(HRESULT hr);
 HRESULT UPnPMessage(HRESULT hr);
@@ -64,7 +46,7 @@ public:
 	void RemoveDevice(CComBSTR bsUDN);
 	bool OnSearchComplete();
 	void Init();
-	inline bool IsAsyncFindRunning() 
+	inline bool IsAsyncFindRunning()
 	{
 		if ( m_pDeviceFinder && m_bAsyncFindRunning && GetTickCount() - m_tLastEvent > 20000 )
 		{
@@ -82,18 +64,6 @@ public:
 
 // Implementation
 private:
-	// API functions
-	SC_HANDLE (WINAPI *m_pfnOpenSCManagerW)(LPCWSTR, LPCWSTR, DWORD);
-	SC_HANDLE (WINAPI *m_pfnOpenServiceW)(SC_HANDLE, LPCWSTR, DWORD);
-	BOOL (WINAPI *m_pfnQueryServiceStatusEx)(SC_HANDLE, SC_STATUS_TYPE, LPBYTE, DWORD, LPDWORD);
-	BOOL (WINAPI *m_pfnCloseServiceHandle)(SC_HANDLE);
-	BOOL (WINAPI *m_pfnStartServiceW)(SC_HANDLE, DWORD, LPCWSTR*);
-	BOOL (WINAPI *m_pfnControlService)(SC_HANDLE, DWORD, LPSERVICE_STATUS);
- 
-	TGetBestInterface		m_pfGetBestInterface;
-	TGetIpAddrTable			m_pfGetIpAddrTable;
-	TGetIfEntry				m_pfGetIfEntry;
-
 	static FinderPointer CreateFinderInstance();
 	struct FindDevice : std::unary_function< DevicePointer, bool >
 	{
@@ -110,7 +80,7 @@ private:
 		}
 		CComBSTR m_udn;
 	};
-	
+
 	void	ProcessAsyncFind(CComBSTR bsSearchType);
 	HRESULT	GetDeviceServices(DevicePointer pDevice);
 	void	StartPortMapping();
@@ -119,7 +89,7 @@ private:
 	void	CreatePortMappings(ServicePointer pService);
 	HRESULT SaveServices(com_ptr< IEnumUnknown >, const LONG nTotalItems);
 
-	HRESULT InvokeAction(ServicePointer pService, CComBSTR action, 
+	HRESULT InvokeAction(ServicePointer pService, CComBSTR action,
 		LPCTSTR pszInArgString, CString& strResult);
 
 	// Utility functions
@@ -152,8 +122,6 @@ private:
 	bool	m_bADSL;		// Is the device ADSL?
 	bool	m_bADSLFailed;	// Did port mapping failed for the ADSL device?
 	bool	m_bInited;
-	HMODULE m_hADVAPI32_DLL;
-	HMODULE	m_hIPHLPAPI_DLL;
 	bool	m_bSecondTry;
 	bool	m_bDisableWANIPSetup;
 	bool	m_bDisableWANPPPSetup;
@@ -179,7 +147,7 @@ private:
 	CUPnPFinder& m_instance;
 };
 
-// Service Callback 
+// Service Callback
 class CServiceCallback
 	: public IUnknownImplementation< IUPnPServiceCallback >
 {
@@ -196,5 +164,3 @@ private:
 private:
 	CUPnPFinder& m_instance;
 };
-
-#endif // #ifndef UPNPFINDER_H_INCLUDED

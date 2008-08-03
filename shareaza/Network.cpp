@@ -114,39 +114,24 @@ BOOL CNetwork::IsSelfIP(IN_ADDR nAddress) const
 	return ( m_pHostAddresses.Find( nAddress.s_addr ) != NULL );
 }
 
-BOOL CNetwork::IsAvailable() const
+bool CNetwork::IsAvailable() const
 {
-	BOOL bIsAvailable = FALSE;
-	HINSTANCE hWininet = LoadLibrary( _T("wininet.dll") );
-	BOOL (WINAPI *pfnInternetGetConnectedState)(LPDWORD, DWORD);
-	pfnInternetGetConnectedState = NULL;
+	DWORD dwState = 0ul;
 
-	if ( hWininet != NULL )
-		(FARPROC&)pfnInternetGetConnectedState = GetProcAddress( hWininet, "InternetGetConnectedState" );
-
-	if ( pfnInternetGetConnectedState )
+	__try
 	{
-		DWORD dwState = 0;
-
-		__try
+		if ( InternetGetConnectedState( &dwState, 0 ) )
 		{
-			if ( (*pfnInternetGetConnectedState)( &dwState, 0 ) )
-			{
-				if ( ! ( dwState & INTERNET_CONNECTION_OFFLINE ) ) bIsAvailable = TRUE;
-			}
-		}
-		__except( EXCEPTION_EXECUTE_HANDLER )
-		{
-			// Something blocked WinAPI (for example application level firewall)
-			bIsAvailable = FALSE;
+			if ( !( dwState & INTERNET_CONNECTION_OFFLINE ) )
+				return true;
 		}
 	}
-	else
-		bIsAvailable = TRUE; // Return always TRUE if the version of IE installed is too old and it doesn't support InternetGetConnectedState()
+	__except( EXCEPTION_EXECUTE_HANDLER )
+	{
+		// Something blocked WinAPI (for example application level firewall)
+	}
 
-	if ( hWininet != NULL ) FreeLibrary( hWininet );
-
-	return bIsAvailable;
+	return false;
 }
 
 bool CNetwork::IsConnected() const
@@ -241,7 +226,7 @@ BOOL CNetwork::Connect(BOOL bAutoConnect)
 
 	Settings.Live.AutoClose = FALSE;
 
-	if ( bAutoConnect ) 
+	if ( bAutoConnect )
 	{
 		m_bAutoConnect = TRUE;
 	}
@@ -368,7 +353,7 @@ void CNetwork::Disconnect()
 
 	DiscoveryServices.Stop();
 
-	theApp.Message( MSG_NOTICE, IDS_NETWORK_DISCONNECTED ); 
+	theApp.Message( MSG_NOTICE, IDS_NETWORK_DISCONNECTED );
 	theApp.Message( MSG_NOTICE, _T("") );
 }
 
@@ -378,16 +363,16 @@ void CNetwork::Disconnect()
 BOOL CNetwork::ConnectTo(LPCTSTR pszAddress, int nPort, PROTOCOLID nProtocol, BOOL bNoUltraPeer)
 {
 	CSingleLock pLock( &m_pSection, TRUE );
-	
+
 	if ( ! IsConnected() && ! Connect() ) return FALSE;
-	
+
 	if ( nPort == 0 ) nPort = GNUTELLA_DEFAULT_PORT;
 	theApp.Message( MSG_INFO, IDS_NETWORK_RESOLVING, pszAddress );
-	
+
 	if ( AsyncResolve( pszAddress, (WORD)nPort, nProtocol, bNoUltraPeer ? 2 : 1 ) ) return TRUE;
-	
+
 	theApp.Message( MSG_ERROR, IDS_NETWORK_RESOLVE_FAIL, pszAddress );
-	
+
 	return FALSE;
 }
 
@@ -397,27 +382,27 @@ BOOL CNetwork::ConnectTo(LPCTSTR pszAddress, int nPort, PROTOCOLID nProtocol, BO
 void CNetwork::AcquireLocalAddress(LPCTSTR pszHeader)
 {
 	int nIPb1, nIPb2, nIPb3, nIPb4;
-	
+
 	if ( _stscanf( pszHeader, _T("%i.%i.%i.%i"), &nIPb1, &nIPb2, &nIPb3, &nIPb4 ) != 4 ||
 		nIPb1 < 0 || nIPb1 > 255 ||
 		nIPb2 < 0 || nIPb2 > 255 ||
 		nIPb3 < 0 || nIPb3 > 255 ||
 		nIPb4 < 0 || nIPb4 > 255 )
 		return;
-	
+
 	IN_ADDR pAddress;
-	
+
 	pAddress.S_un.S_un_b.s_b1 = (BYTE)nIPb1;
 	pAddress.S_un.S_un_b.s_b2 = (BYTE)nIPb2;
 	pAddress.S_un.S_un_b.s_b3 = (BYTE)nIPb3;
 	pAddress.S_un.S_un_b.s_b4 = (BYTE)nIPb4;
-	
+
 	if ( IsFirewalledAddress( &pAddress, FALSE, TRUE ) ) return;
-	
+
 	// Add new address to address list
 	if ( ! m_pHostAddresses.Find( pAddress.s_addr ) )
 		m_pHostAddresses.AddTail( pAddress.s_addr );
-	
+
 	m_pHost.sin_addr = pAddress;
 }
 
@@ -438,42 +423,42 @@ BOOL CNetwork::Resolve(LPCTSTR pszHost, int nPort, SOCKADDR_IN* pHost, BOOL bNam
 	ZeroMemory( pHost, sizeof(*pHost) );
 	pHost->sin_family	= PF_INET;
 	pHost->sin_port		= htons( u_short( nPort ) );
-	
+
 	if ( pszHost == NULL || *pszHost == 0 ) return FALSE;
-	
+
 	CString strHost( pszHost );
-	
+
 	int nColon = strHost.Find( ':' );
-	
+
 	if ( nColon >= 0 )
 	{
 		if ( _stscanf( strHost.Mid( nColon + 1 ), _T("%i"), &nPort ) == 1 )
 		{
 			pHost->sin_port = htons( u_short( nPort ) );
 		}
-		
+
 		strHost = strHost.Left( nColon );
 	}
-	
+
 	CT2CA pszaHost( (LPCTSTR)strHost );
-	
+
 	DWORD dwIP = inet_addr( pszaHost );
-	
+
 	if ( dwIP == INADDR_NONE )
 	{
 		if ( ! bNames ) return TRUE;
-		
+
 		HOSTENT* pLookup = gethostbyname( pszaHost );
-		
+
 		if ( pLookup == NULL ) return FALSE;
-		
+
 		CopyMemory( &pHost->sin_addr, pLookup->h_addr, sizeof pHost->sin_addr );
 	}
 	else
 	{
 		CopyMemory( &pHost->sin_addr, &dwIP, sizeof pHost->sin_addr );
 	}
-	
+
 	return TRUE;
 }
 
@@ -481,12 +466,12 @@ BOOL CNetwork::AsyncResolve(LPCTSTR pszAddress, WORD nPort, PROTOCOLID nProtocol
 {
 	CSingleLock pLock( &m_pSection );
 	if ( ! pLock.Lock( 250 ) ) return FALSE;
-	
+
 	ResolveStruct* pResolve = new ResolveStruct;
-	
+
 	HANDLE hAsync = WSAAsyncGetHostByName( AfxGetMainWnd()->GetSafeHwnd(), WM_WINSOCK,
 		CT2CA(pszAddress), pResolve->m_pBuffer, MAXGETHOSTSTRUCT );
-	
+
 	if ( hAsync != NULL )
 	{
 		pResolve->m_sAddress = new CString( pszAddress );
@@ -569,19 +554,19 @@ BOOL CNetwork::IsReserved(IN_ADDR* pAddress, bool bCheckLocal)
 			break;
 	}
 
-	// 100-111/8 is IANA reserved 
+	// 100-111/8 is IANA reserved
 	if ( i1 >= 100 && i1 <= 111 ) return TRUE;
 
-	// 172.16.0.0/12 is reserved for private nets by RFC1819 
-	if ( i1 == 172 && i2 >= 16 && i2 <= 31 ) 
+	// 172.16.0.0/12 is reserved for private nets by RFC1819
+	if ( i1 == 172 && i2 >= 16 && i2 <= 31 )
 		return bCheckLocal && Settings.Connection.IgnoreLocalIP;
 
-	// 175-185/8 is IANA reserved 
+	// 175-185/8 is IANA reserved
 	if ( i1 >= 175 && i1 <= 185 ) return TRUE;
 
-	// 192.168.0.0/16 is reserved for private nets by RFC1819 
-	// 192.0.2.0/24 is reserved for documentation and examples 
-	// 192.88.99.0/24 is used as 6to4 Relay anycast prefix by RFC3068 
+	// 192.168.0.0/16 is reserved for private nets by RFC1819
+	// 192.0.2.0/24 is reserved for documentation and examples
+	// 192.88.99.0/24 is used as 6to4 Relay anycast prefix by RFC3068
 	if ( i1 == 192 )
 	{
 		if ( i2 == 168 ) return bCheckLocal && Settings.Connection.IgnoreLocalIP;
@@ -589,21 +574,21 @@ BOOL CNetwork::IsReserved(IN_ADDR* pAddress, bool bCheckLocal)
 		if ( i2 == 88 && i3 == 99 ) return TRUE;
 	}
 
-	// 198.18.0.0/15 is used for benchmark tests by RFC2544 
+	// 198.18.0.0/15 is used for benchmark tests by RFC2544
 	if ( i1 == 198 && i2 == 18 && i3 >= 1 && i3 <= 64 ) return TRUE;
 
-	// reserved for DHCP clients seeking addresses, not routable outside LAN 
+	// reserved for DHCP clients seeking addresses, not routable outside LAN
 	if ( i1 == 169 && i2 == 254 ) return TRUE;
 
-	// 204.152.64.0/23 is some Sun proprietary clustering thing 
+	// 204.152.64.0/23 is some Sun proprietary clustering thing
 	if ( i1 == 204 && i2 == 152 && ( i3 == 64 || i3 == 65 ) )
 		return TRUE;
 
-	// 224-239/8 is all multicast stuff 
-	// 240-255/8 is IANA reserved 
+	// 224-239/8 is all multicast stuff
+	// 240-255/8 is IANA reserved
 	if ( i1 >= 224 ) return TRUE;
 
-	// 255.255.255.255, we already tested for i1 
+	// 255.255.255.255, we already tested for i1
 	if ( i2 == 255 && i3 == 255 && i4 == 255 ) return TRUE;
 
 	return FALSE;
@@ -631,7 +616,7 @@ void CNetwork::OnRun()
 
 		Sleep( 50 );
 		Doze( 100 );
-	
+
 		if ( !theApp.m_bLive )
 			continue;
 
@@ -643,13 +628,13 @@ void CNetwork::OnRun()
 			Datagrams.OnRun();
 			SearchManager.OnRun();
 			QueryHashMaster.Build();
-			
+
 			if ( CrawlSession.m_bActive )
 				CrawlSession.OnRun();
-			
+
 			m_pSection.Unlock();
 		}
-		
+
 		Neighbours.OnRun();
 	}
 }
@@ -769,21 +754,21 @@ void CNetwork::OnWinsock(WPARAM wParam, LPARAM lParam)
 BOOL CNetwork::GetNodeRoute(const Hashes::Guid& oGUID, CNeighbour** ppNeighbour, SOCKADDR_IN* pEndpoint)
 {
 	if ( validAndEqual( oGUID, Hashes::Guid( MyProfile.oGUID ) ) ) return FALSE;
-	
+
 	if ( Network.NodeRoute->Lookup( oGUID, ppNeighbour, pEndpoint ) ) return TRUE;
 	if ( ppNeighbour == NULL ) return FALSE;
-	
+
 	for ( POSITION pos = Neighbours.GetIterator() ; pos ; )
 	{
 		CNeighbour* pNeighbour = Neighbours.GetNext( pos );
-		
+
 		if ( validAndEqual( pNeighbour->m_oGUID, oGUID ) )
 		{
 			*ppNeighbour = pNeighbour;
 			return TRUE;
 		}
 	}
-	
+
 	return FALSE;
 }
 
@@ -793,12 +778,12 @@ BOOL CNetwork::GetNodeRoute(const Hashes::Guid& oGUID, CNeighbour** ppNeighbour,
 BOOL CNetwork::RoutePacket(CG2Packet* pPacket)
 {
 	Hashes::Guid oGUID;
-	
+
 	if ( ! pPacket->GetTo( oGUID ) || validAndEqual( oGUID, Hashes::Guid( MyProfile.oGUID ) ) ) return FALSE;
-	
+
 	CNeighbour* pOrigin = NULL;
 	SOCKADDR_IN pEndpoint;
-	
+
 	if ( GetNodeRoute( oGUID, &pOrigin, &pEndpoint ) )
 	{
 		if ( pOrigin != NULL )
@@ -819,10 +804,10 @@ BOOL CNetwork::RoutePacket(CG2Packet* pPacket)
 		{
 			Datagrams.Send( &pEndpoint, pPacket, FALSE );
 		}
-		
+
 		Statistics.Current.Gnutella2.Routed++;
 	}
-	
+
 	return TRUE;
 }
 
@@ -835,37 +820,37 @@ BOOL CNetwork::SendPush(const Hashes::Guid& oGUID, DWORD nIndex)
 	if ( ! pLock.Lock( 250 ) ) return TRUE;
 
 	if ( ! IsListening() ) return FALSE;
-	
+
 	Hashes::Guid oGUID2 = oGUID;
 	SOCKADDR_IN pEndpoint;
 	CNeighbour* pOrigin;
 	int nCount = 0;
-	
+
 	while ( GetNodeRoute( oGUID2, &pOrigin, &pEndpoint ) )
 	{
 		if ( pOrigin != NULL && pOrigin->m_nProtocol == PROTOCOL_G1 )
 		{
 			CG1Packet* pPacket = CG1Packet::New( G1_PACKET_PUSH,
 				Settings.Gnutella1.MaximumTTL - 1 );
-			
+
 			pPacket->Write( oGUID );
 			pPacket->WriteLongLE( nIndex );
 			pPacket->WriteLongLE( m_pHost.sin_addr.S_un.S_addr );
 			pPacket->WriteShortLE( htons( m_pHost.sin_port ) );
-			
+
 			pOrigin->Send( pPacket );
 		}
 		else
 		{
 			CG2Packet* pPacket = CG2Packet::New( G2_PACKET_PUSH, TRUE );
-			
+
 			pPacket->WritePacket( G2_PACKET_TO, 16 );
 			pPacket->Write( oGUID );
-			
+
 			pPacket->WriteByte( 0 );
 			pPacket->WriteLongLE( m_pHost.sin_addr.S_un.S_addr );
 			pPacket->WriteShortBE( htons( m_pHost.sin_port ) );
-			
+
 			if ( pOrigin != NULL )
 			{
 				pOrigin->Send( pPacket );
@@ -875,11 +860,11 @@ BOOL CNetwork::SendPush(const Hashes::Guid& oGUID, DWORD nIndex)
 				Datagrams.Send( &pEndpoint, pPacket );
 			}
 		}
-		
+
 		oGUID2[15] ++;
 		nCount++;
 	}
-	
+
 	return nCount > 0;
 }
 
@@ -890,11 +875,11 @@ BOOL CNetwork::RouteHits(CQueryHit* pHits, CPacket* pPacket)
 {
 	SOCKADDR_IN pEndpoint;
 	CNeighbour* pOrigin;
-	
+
 	if ( ! QueryRoute->Lookup( pHits->m_oSearchID, &pOrigin, &pEndpoint ) ) return FALSE;
-	
+
 	BOOL bWrapped = FALSE;
-	
+
 	if ( pPacket->m_nProtocol == PROTOCOL_G1 )
 	{
 		CG1Packet* pG1 = (CG1Packet*)pPacket;
@@ -920,7 +905,7 @@ BOOL CNetwork::RouteHits(CQueryHit* pHits, CPacket* pPacket)
 			bWrapped = TRUE;
 		}
 	}
-	
+
 	if ( pOrigin != NULL )
 	{
 		if ( pOrigin->m_nProtocol == pPacket->m_nProtocol )
@@ -955,12 +940,12 @@ BOOL CNetwork::RouteHits(CQueryHit* pHits, CPacket* pPacket)
 		pPacket = CG2Packet::New( G2_PACKET_HIT_WRAP, (CG1Packet*)pPacket );
 		Datagrams.Send( &pEndpoint, (CG2Packet*)pPacket, TRUE );
 	}
-	
+
 	if ( pPacket->m_nProtocol == PROTOCOL_G1 )
 		Statistics.Current.Gnutella1.Routed++;
 	else if ( pPacket->m_nProtocol == PROTOCOL_G2 )
 		Statistics.Current.Gnutella2.Routed++;
-	
+
 	return TRUE;
 }
 
@@ -970,7 +955,7 @@ BOOL CNetwork::RouteHits(CQueryHit* pHits, CPacket* pPacket)
 void CNetwork::OnQuerySearch(CQuerySearch* pSearch)
 {
 	CSingleLock pLock( &theApp.m_pSection );
-	
+
 	if ( pLock.Lock( 10 ) )
 	{
 		if ( CMainWnd* pMainWnd = theApp.SafeMainWnd() )
@@ -1034,7 +1019,7 @@ void CNetwork::UDPHostCache(IN_ADDR* pAddress, WORD nPort)
 
 	CGGEPBlock pBlock;
 	CGGEPItem* pItem;
-	
+
 	pItem = pBlock.Add( GGEP_HEADER_SUPPORT_CACHE_PONGS );
 	pItem->UnsetCOBS();
 	pItem->UnsetSmall();

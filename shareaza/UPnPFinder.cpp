@@ -43,18 +43,7 @@ CUPnPFinder::CUPnPFinder()
 	m_sExternalIP(),
 	m_tLastEvent( GetTickCount() ),
 	m_bInited( false ),
-	m_hADVAPI32_DLL( NULL ),
-	m_pfnOpenSCManagerW( NULL ),
-	m_pfnOpenServiceW( NULL ),
-	m_pfnQueryServiceStatusEx( NULL ),
-	m_pfnCloseServiceHandle( NULL ),
-	m_pfnStartServiceW( NULL ),
-	m_pfnControlService( NULL ),
 	m_bSecondTry( false ),
-	m_hIPHLPAPI_DLL( NULL ),
-	m_pfGetBestInterface( NULL ),
-	m_pfGetIpAddrTable( NULL ),
-	m_pfGetIfEntry( NULL ),
 	m_bDisableWANIPSetup( Settings.Connection.SkipWANIPSetup == TRUE ),
 	m_bDisableWANPPPSetup( Settings.Connection.SkipWANPPPSetup == TRUE )
 {}
@@ -63,29 +52,6 @@ void CUPnPFinder::Init()
 {
 	if ( !m_bInited )
 	{
-		m_hADVAPI32_DLL = LoadLibrary( L"Advapi32.dll" );
-		if ( m_hADVAPI32_DLL != NULL )
-		{
-			(FARPROC&)m_pfnOpenSCManagerW = GetProcAddress(	m_hADVAPI32_DLL, "OpenSCManagerW" );
-			(FARPROC&)m_pfnOpenServiceW = GetProcAddress( m_hADVAPI32_DLL, "OpenServiceW" );
-			(FARPROC&)m_pfnQueryServiceStatusEx = GetProcAddress( m_hADVAPI32_DLL, "QueryServiceStatusEx" );
-			(FARPROC&)m_pfnCloseServiceHandle = GetProcAddress( m_hADVAPI32_DLL, "CloseServiceHandle" );
-			(FARPROC&)m_pfnStartServiceW = GetProcAddress( m_hADVAPI32_DLL, "StartServiceW" );
-			(FARPROC&)m_pfnControlService = GetProcAddress( m_hADVAPI32_DLL, "ControlService" );
-		}
-		m_hIPHLPAPI_DLL = LoadLibrary( L"iphlpapi.dll" );
-		if ( m_hIPHLPAPI_DLL != NULL )
-		{
-			(FARPROC&)m_pfGetBestInterface = GetProcAddress(m_hIPHLPAPI_DLL, "GetBestInterface" );
-			(FARPROC&)m_pfGetIpAddrTable = GetProcAddress(m_hIPHLPAPI_DLL, "GetIpAddrTable" );
-			(FARPROC&)m_pfGetIfEntry = GetProcAddress(m_hIPHLPAPI_DLL, "GetIfEntry" );
-		}
-		if ( m_pfGetBestInterface == NULL || m_pfGetIpAddrTable == NULL || m_pfGetIfEntry == NULL )
-		{
-			theApp.Message( MSG_ERROR, L"Failed to load functions from iphlpapi.dll for UPnP" );
-			ASSERT( false );
-		}
-
 		HRESULT hr = CoInitialize( NULL );
 		m_bCOM = ( hr == S_OK || hr == S_FALSE );
 		m_pDeviceFinder = CreateFinderInstance();
@@ -111,76 +77,63 @@ FinderPointer CUPnPFinder::CreateFinderInstance()
 
 CUPnPFinder::~CUPnPFinder()
 {
-	if ( m_hADVAPI32_DLL != 0 )
-	{
-		FreeLibrary(m_hADVAPI32_DLL);
-		m_hADVAPI32_DLL = 0;
-	}
-	if ( m_hIPHLPAPI_DLL != 0 )
-	{
-		FreeLibrary(m_hIPHLPAPI_DLL);
-		m_hIPHLPAPI_DLL = 0;
-	}
 	m_pDevices.clear();
 	m_pServices.clear();
-	if ( m_bCOM ) CoUninitialize();
+	if ( m_bCOM )
+		CoUninitialize();
 }
 
 // Helper function to check if UPnP Device Host service is healthy
 // Although SSPD service is dependent on this service but sometimes it may lock up.
 // This will result in application lockup when we call any methods of IUPnPDeviceFinder.
-// ToDo: Add a support for WinME.
 bool CUPnPFinder::AreServicesHealthy()
 {
 	Init();
 
 	bool bResult = false;
-	if ( m_pfnOpenSCManagerW && m_pfnOpenServiceW &&
-		 m_pfnQueryServiceStatusEx && m_pfnCloseServiceHandle && m_pfnStartServiceW )
+
+	SC_HANDLE schSCManager;
+	SC_HANDLE schService;
+
+	// Open a handle to the Service Control Manager database
+	schSCManager = OpenSCManager(
+		NULL,				// local machine
+		NULL,				// ServicesActive database
+		GENERIC_READ );		// for enumeration and status lookup
+
+	if ( schSCManager == NULL )
+		return false;
+
+	schService = OpenService( schSCManager, _T("upnphost"), GENERIC_READ );
+	if ( schService == NULL )
 	{
-		SC_HANDLE schSCManager;
-		SC_HANDLE schService;
-
-		// Open a handle to the Service Control Manager database
-		schSCManager = m_pfnOpenSCManagerW(
-			NULL,				// local machine
-			NULL,				// ServicesActive database
-			GENERIC_READ );		// for enumeration and status lookup
-
-		if ( schSCManager == NULL )
-			return false;
-
-		schService = m_pfnOpenServiceW( schSCManager, L"upnphost", GENERIC_READ );
-		if ( schService == NULL )
-		{
-			m_pfnCloseServiceHandle( schSCManager );
-			return false;
-		}
-
-		SERVICE_STATUS_PROCESS ssStatus;
-		DWORD nBytesNeeded;
-
-		if ( m_pfnQueryServiceStatusEx( schService, SC_STATUS_PROCESS_INFO,
-			(LPBYTE)&ssStatus, sizeof(SERVICE_STATUS_PROCESS), &nBytesNeeded ) )
-		{
-			if ( ssStatus.dwCurrentState == SERVICE_RUNNING )
-				bResult = true;
-		}
-		m_pfnCloseServiceHandle( schService );
-
-		if ( !bResult )
-		{
-			schService = m_pfnOpenServiceW( schSCManager, L"upnphost", SERVICE_START );
-			if ( schService )
-			{
-				// Power users have only right to start service, thus try to start it here
-				if ( m_pfnStartServiceW( schService, 0, NULL ) )
-					bResult = true;
-				m_pfnCloseServiceHandle( schService );
-			}
-		}
-		m_pfnCloseServiceHandle( schSCManager );
+		CloseServiceHandle( schSCManager );
+		return false;
 	}
+
+	SERVICE_STATUS_PROCESS ssStatus;
+	DWORD nBytesNeeded;
+
+	if ( QueryServiceStatusEx( schService, SC_STATUS_PROCESS_INFO,
+		(LPBYTE)&ssStatus, sizeof(SERVICE_STATUS_PROCESS), &nBytesNeeded ) )
+	{
+		if ( ssStatus.dwCurrentState == SERVICE_RUNNING )
+			bResult = true;
+	}
+	CloseServiceHandle( schService );
+
+	if ( !bResult )
+	{
+		schService = OpenService( schSCManager, _T("upnphost"), SERVICE_START );
+		if ( schService )
+		{
+			// Power users have only right to start service, thus try to start it here
+			if ( StartService( schService, 0, NULL ) )
+				bResult = true;
+			CloseServiceHandle( schService );
+		}
+	}
+	CloseServiceHandle( schSCManager );
 
 	if ( !bResult )
 	{
@@ -605,32 +558,15 @@ CString CUPnPFinder::GetLocalRoutableIP(ServicePointer pService)
 	DWORD ip = inet_addr( pszExternalIP );
 
 	// Get the interface through which the UPnP device has a route
-	HRESULT hrRes = E_FAIL;
-	if ( m_pfGetBestInterface != NULL )
-	{
-		try {	// just to be sure; another call from iphlpapi used earlier in eMule seemed to crash on some systems according to dumps
-			hrRes = m_pfGetBestInterface( ip, &nInterfaceIndex );
-		}
-		catch (...) {
-			ASSERT( false );
-		}
-	}
+	HRESULT hrRes = GetBestInterface( ip, &nInterfaceIndex );
 
 	if ( ip == INADDR_NONE || hrRes != NO_ERROR )
 		return CString();
 
 	MIB_IFROW ifRow = {};
 	ifRow.dwIndex = nInterfaceIndex;
-	hrRes = E_FAIL;
-	if ( m_pfGetIfEntry != NULL )
-	{
-		try {	// just to be sure; another call from iphlpapi used earlier in eMule seemed to crash on some systems according to dumps
-			hrRes = m_pfGetIfEntry( &ifRow );
-		}
-		catch (...) {
-			ASSERT( false );
-		}
-	}
+	hrRes = GetIfEntry( &ifRow );
+
 	if ( hrRes != NO_ERROR )
 		return CString();
 
@@ -639,16 +575,8 @@ CString CUPnPFinder::GetLocalRoutableIP(ServicePointer pService)
 	ULONG nSize = sizeof(mib);
 	PMIB_IPADDRTABLE ipAddr = (PMIB_IPADDRTABLE)mib;
 
-	hrRes = E_FAIL;
-	if ( m_pfGetIpAddrTable != NULL )
-	{
-		try {	// just to be sure; another call from iphlpapi used earlier in eMule seemed to crash on some systems according to dumps
-			hrRes = m_pfGetIpAddrTable( ipAddr, &nSize, FALSE );
-		}
-		catch (...) {
-			ASSERT( false );
-		}
-	}
+	hrRes = GetIpAddrTable( ipAddr, &nSize, FALSE );
+
 	if ( hrRes != NO_ERROR )
 		return CString();
 

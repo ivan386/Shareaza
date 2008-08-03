@@ -54,8 +54,6 @@ public:
 	volatile DWORD	m_nScanCookie;			// Used by CLibraryFolder::ThreadScan()
 	volatile DWORD	m_nScanTime;			// Last library scan time (ticks)
 	volatile DWORD	m_nUpdateSaved;			// Last library save time (ticks)
-	BOOL			(WINAPI* m_pfnGetFileAttributesExW)(LPCWSTR, GET_FILEEX_INFO_LEVELS, LPVOID);
-	BOOL			(WINAPI* m_pfnGetFileAttributesExA)(LPCSTR, GET_FILEEX_INFO_LEVELS, LPVOID);
 
 protected:
 	int				m_nFileSwitch;
