@@ -484,7 +484,8 @@ void CDiscoveryServices::Serialize(CArchive& ar)
 		{
 			CDiscoveryService* pService = new CDiscoveryService();
 			pService->Serialize( ar, nVersion );
-			m_pList.AddTail( pService );
+			if ( pService->m_nSubType > -1 )
+				m_pList.AddTail( pService );
 		}
 	}
 }
@@ -1690,6 +1691,8 @@ void CDiscoveryService::Serialize(CArchive& ar, int /*nVersion*/)
 			m_bGnutella2 = TRUE;
 			m_nSubType = 4;
 		}
+		else if ( m_sAddress.IsEmpty() || m_bGnutella2 != 0 || m_bGnutella2 != 1 || m_bGnutella1 != 0 || m_bGnutella1 != 1 )
+			m_nSubType = -1; // Invalid
 	}
 }
 
