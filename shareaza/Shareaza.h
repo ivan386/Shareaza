@@ -74,6 +74,7 @@ public:
 	DWORD				m_nWindowsVersion;			// Windows version
 	DWORD				m_nWindowsVersionMinor;		// Windows minor version
 	QWORD				m_nPhysicalMemory;			// Physical RAM installed
+	int					m_nLogicalProcessors;		// Multi-CPUs, multi-cores or HT modules
 	BOOL				m_bMenuWasVisible;			// For the menus in media player window
 	int					m_nDefaultFontSize;			// The basic font size. (11)
 	CString				m_sDefaultFont;				// Main font. (Tahoma)

@@ -162,6 +162,7 @@ CShareazaApp::CShareazaApp() :
 ,	m_nWindowsVersion		( 0ul )
 ,	m_nWindowsVersionMinor	( 0ul )
 ,	m_nPhysicalMemory		( 0ull )
+,	m_nLogicalProcessors	( -1 )
 ,	m_bMenuWasVisible		( FALSE )
 ,	m_nDefaultFontSize		( 0 )
 ,	m_bUPnPPortsForwarded	( TRI_UNKNOWN )
@@ -822,6 +823,18 @@ void CShareazaApp::InitResources()
 	pMemory.dwLength = sizeof(pMemory);
 	if ( GlobalMemoryStatusEx( &pMemory ) )
 		m_nPhysicalMemory = pMemory.ullTotalPhys;
+
+	long nResult = ERROR_SUCCESS;
+	CString strProcKey;
+	while ( nResult == ERROR_SUCCESS )
+	{
+		HKEY hKey;
+		// These keyes are populated during startup, so it's safe to check them
+		strProcKey.Format( L"Hardware\\Description\\System\\CentralProcessor\\%i", ++m_nLogicalProcessors );
+		if ( RegOpenKeyEx( HKEY_LOCAL_MACHINE, strProcKey, 0, KEY_QUERY_VALUE, &hKey ) != ERROR_SUCCESS )
+			break;
+		RegCloseKey( hKey );
+	}
 
 //	HDC screen = GetDC( 0 );
 //	scaleX = GetDeviceCaps( screen, LOGPIXELSX ) / 96.0;
@@ -1826,6 +1839,14 @@ public:
 			theApp.Message( MSG_DEBUG, _T("WARNING: Terminating thread (0x%08x) failed."), hThread );
 			TRACE( _T("WARNING: Terminating thread (0x%08x) failed.\n"), hThread );
 		}
+	}
+
+	static void YieldProc()
+	{
+		if ( theApp.m_nLogicalProcessors > 1 )
+			SwitchToThread();
+		else
+			Sleep( 0 );
 	}
 
 protected:
