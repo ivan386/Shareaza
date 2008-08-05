@@ -765,7 +765,6 @@ BOOL CDownloadTabBar::TabItem::Select(BOOL bSelect)
 
 void CDownloadTabBar::TabItem::SetTabmark(HBITMAP hBitmap)
 {
-	m_bTabTest = FALSE;
 	if ( m_bmTabmark.m_hObject )
 		m_bmTabmark.DeleteObject();
 	if ( hBitmap != NULL )
@@ -780,6 +779,7 @@ void CDownloadTabBar::TabItem::Paint(CDownloadTabBar* pBar, CDC* pDC, CRect* pRe
 {
 	CRect rc( pRect );
 	COLORREF crBack;
+	m_bTabTest = FALSE;
 
 	BOOL bPopulated = m_nCount > 0;
 
@@ -788,37 +788,36 @@ void CDownloadTabBar::TabItem::Paint(CDownloadTabBar* pBar, CDC* pDC, CRect* pRe
 		crBack = CoolInterface.m_crBackNormal;
 		pDC->Draw3dRect( &rc, CoolInterface.m_crDisabled, CoolInterface.m_crDisabled );
 	}
-	if ( bHot )
-	{
-		SetTabmark( Skin.GetWatermark( _T("CDownloadTabBar.Hover") ) );
-		CoolInterface.DrawWatermark( pDC, &rc, &m_bmTabmark );
-		if ( m_bTabTest ) pDC->SetBkMode( TRANSPARENT );
-	}
-	if ( m_bSelected )
-	{
-		SetTabmark( Skin.GetWatermark( _T("CDownloadTabBar.Active") ) );
-		CoolInterface.DrawWatermark( pDC, &rc, &m_bmTabmark );
-		if ( m_bTabTest ) pDC->SetBkMode( TRANSPARENT );
-	}
-	if ( bHot && m_bSelected )
-	{
+	else if ( bHot && m_bSelected )
 		SetTabmark( Skin.GetWatermark( _T("CDownloadTabBar.Active.Hover") ) );
-		CoolInterface.DrawWatermark( pDC, &rc, &m_bmTabmark );
-		if ( m_bTabTest ) pDC->SetBkMode( TRANSPARENT );
-	}
-	if ( ( bHot || m_bSelected ) && m_bTabTest != TRUE )
+	else if ( m_bSelected )
+		SetTabmark( Skin.GetWatermark( _T("CDownloadTabBar.Active") ) );
+	else if ( bHot )
+		SetTabmark( Skin.GetWatermark( _T("CDownloadTabBar.Hover") ) );
+
+	if ( m_bTabTest )
 	{
-		crBack = ( bHot && m_bSelected ) ? CoolInterface.m_crBackCheckSel : CoolInterface.m_crBackSel;
-		pDC->Draw3dRect( &rc, CoolInterface.m_crBorder, CoolInterface.m_crBorder );
+		crBack = CLR_NONE;
+		pDC->SetBkMode( TRANSPARENT );
+		CoolInterface.DrawWatermark( pDC, &rc, &m_bmTabmark );
 	}
 	else
 	{
-		crBack = bTransparent ? CLR_NONE : CoolInterface.m_crMidtone;
-		if ( crBack != CLR_NONE ) pDC->Draw3dRect( &rc, crBack, crBack );
+		if ( bHot || m_bSelected )
+		{
+			crBack = ( bHot && m_bSelected ) ? CoolInterface.m_crBackCheckSel : CoolInterface.m_crBackSel;
+			pDC->Draw3dRect( &rc, CoolInterface.m_crBorder, CoolInterface.m_crBorder );
+		}
+		else
+		{
+			crBack = bTransparent ? CLR_NONE : CoolInterface.m_crMidtone;
+			if ( crBack != CLR_NONE ) pDC->Draw3dRect( &rc, crBack, crBack );
+		}
+
+		if ( crBack != CLR_NONE ) pDC->SetBkColor( crBack );
 	}
 
 	rc.DeflateRect( 1, 1 );
-	if ( crBack != CLR_NONE ) pDC->SetBkColor( crBack );
 
 	CPoint ptImage( rc.left + 2, rc.top + 1 );
 
@@ -875,8 +874,10 @@ void CDownloadTabBar::TabItem::Paint(CDownloadTabBar* pBar, CDC* pDC, CRect* pRe
 
 	rc.left -= 20;
 
-	if ( crBack != CLR_NONE ) pDC->SetBkColor( crBack );
-
+	if ( crBack != CLR_NONE )
+	{
+		pDC->SetBkColor( crBack );
+	}
 	if ( m_bSelected || bHot )
 	{
 		pDC->SetTextColor( CoolInterface.m_crCmdTextSel );

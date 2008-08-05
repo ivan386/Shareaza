@@ -727,7 +727,6 @@ CWndTabBar::TabItem::~TabItem()
 
 void CWndTabBar::TabItem::SetTabmark(HBITMAP hBitmap)
 {
-	m_bTabTest = FALSE;
 	if ( hBitmap != NULL ) 
 	{
 		if ( m_bmTabmark.m_hObject )
@@ -744,6 +743,7 @@ void CWndTabBar::TabItem::Paint(CWndTabBar* pBar, CDC* pDC, CRect* pRect, BOOL b
 {
 	CRect rc( pRect );
 	COLORREF crBack;
+	m_bTabTest = FALSE;
 
 	if ( ! Skin.m_bBordersEnabled )
 	{
@@ -757,38 +757,37 @@ void CWndTabBar::TabItem::Paint(CWndTabBar* pBar, CDC* pDC, CRect* pRect, BOOL b
 		crBack = CoolInterface.m_crBackNormal;
 		pDC->Draw3dRect( &rc, CoolInterface.m_crDisabled, CoolInterface.m_crDisabled );
 	}
-	else if ( bHot && bSelected )
-	{
-		SetTabmark( Skin.GetWatermark( _T("CWndTabBar.Active.Hover") ) );
-		CoolInterface.DrawWatermark( pDC, &rc, &m_bmTabmark );
-		if ( m_bTabTest ) pDC->SetBkMode( TRANSPARENT );
-	}
-	else if ( bSelected )
-	{
-		SetTabmark( Skin.GetWatermark( _T("CWndTabBar.Active") ) );
-		CoolInterface.DrawWatermark( pDC, &rc, &m_bmTabmark );
-		if ( m_bTabTest ) pDC->SetBkMode( TRANSPARENT );
-	}
-	else if ( bHot )
-	{
-		SetTabmark( Skin.GetWatermark( _T("CWndTabBar.Hover") ) );
-		CoolInterface.DrawWatermark( pDC, &rc, &m_bmTabmark );
-		if ( m_bTabTest ) pDC->SetBkMode( TRANSPARENT );
-	}
 
-	if ( ( bHot || ( bSelected && m_bVisible ) ) && m_bTabTest != TRUE )
+	else if ( bHot && bSelected )
+		SetTabmark( Skin.GetWatermark( _T("CWndTabBar.Active.Hover") ) );
+	else if ( bSelected )
+		SetTabmark( Skin.GetWatermark( _T("CWndTabBar.Active") ) );
+	else if ( bHot )
+		SetTabmark( Skin.GetWatermark( _T("CWndTabBar.Hover") ) );
+
+	if ( m_bTabTest )
 	{
-		crBack = ( bHot && bSelected ) ? CoolInterface.m_crBackCheckSel : CoolInterface.m_crBackSel;
-		pDC->Draw3dRect( &rc, CoolInterface.m_crBorder, CoolInterface.m_crBorder );
+		crBack = CLR_NONE;
+		pDC->SetBkMode( TRANSPARENT );
+		CoolInterface.DrawWatermark( pDC, &rc, &m_bmTabmark );
 	}
 	else
 	{
-		crBack = bTransparent ? CLR_NONE : CoolInterface.m_crMidtone;
-		if ( crBack != CLR_NONE ) pDC->Draw3dRect( &rc, crBack, crBack );
+		if ( bHot || ( bSelected && m_bVisible ) )
+		{
+			crBack = ( bHot && bSelected ) ? CoolInterface.m_crBackCheckSel : CoolInterface.m_crBackSel;
+			pDC->Draw3dRect( &rc, CoolInterface.m_crBorder, CoolInterface.m_crBorder );
+		}
+		else
+		{
+			crBack = bTransparent ? CLR_NONE : CoolInterface.m_crMidtone;
+			if ( crBack != CLR_NONE ) pDC->Draw3dRect( &rc, crBack, crBack );
+		}
+
+		if ( crBack != CLR_NONE ) pDC->SetBkColor( crBack );
 	}
 
 	rc.DeflateRect( 1, 1 );
-	if ( crBack != CLR_NONE ) pDC->SetBkColor( crBack );
 
 	CPoint ptImage( rc.left + 2, rc.top + 1 );
 
