@@ -46,7 +46,7 @@ public:
 	DWORD		m_nMinGridVert;
 public:
 	DWORD		m_nSpeed;
-	DWORD		m_nScale;
+	DWORD		m_nScale;	// How much points to store in memory; default is 2, which means 200% of display width 
 	DWORD		m_nMaximum;
 	DWORD		m_nUpdates;
 	DWORD		m_tLastScale;

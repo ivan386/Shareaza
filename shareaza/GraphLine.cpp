@@ -151,7 +151,7 @@ void CLineGraph::Serialize(CArchive& ar)
 		ar << m_bShowGrid;
 		ar << m_bShowLegend;
 		ar << m_nSpeed;
-		ar << max( m_nScale, MIN_GRID_SIZE_HORZ );
+		ar << m_nScale;
 
 		ar.WriteCount( GetItemCount() );
 
@@ -167,7 +167,8 @@ void CLineGraph::Serialize(CArchive& ar)
 		ar >> m_bShowLegend;
 		ar >> m_nSpeed;
 		ar >> m_nScale;
-		m_nScale = max( m_nScale, MIN_GRID_SIZE_HORZ );
+		if ( m_nScale == 0 )
+			m_nScale = 2;
 
 		for ( DWORD_PTR nCount = ar.ReadCount() ; nCount > 0 ; nCount-- )
 		{
@@ -201,8 +202,9 @@ void CLineGraph::ResetMaximum(BOOL bForce)
 void CLineGraph::Paint(CDC* pDC, CRect* pRect)
 {
 	if ( m_pGridPen.m_hObject == NULL ) m_pGridPen.CreatePen( PS_SOLID, 1, m_crGrid );
+	ASSERT( m_nScale != 0 );
 
-	DWORD nWidth = (DWORD)pRect->Width() / max( m_nScale, 2ul ) + 2;
+	DWORD nWidth = (DWORD)pRect->Width() / m_nScale + 2;
 
 	if ( pRect->Width() > 64 )
 	{
