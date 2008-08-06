@@ -1125,7 +1125,7 @@ bool CQueryHit::ReadG2Packet(CG2Packet* pPacket, DWORD nLength)
 					else if ( nPacket >= 16 && strURN == _T("md5") )
 					{
 						pPacket->Read( m_oMD5 );
-						m_oSHA1.validate();
+						m_oMD5.validate();
 					}
 					else
 					{
