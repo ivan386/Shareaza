@@ -544,7 +544,7 @@ CString CBTClient::GetAzureusStyleUserAgent(LPBYTE pVendor, size_t nVendor)
 		{ 'B', 'R', L"BitRocket" },
 		{ 'B', 'S', L"BitSlave" },
 		{ 'B', 'X', L"Bittorrent X" },
-		{ 'C', 'B', L"ShareazaPlus" },		// ShareazaPlus with RazaCB core
+		{ 'C', 'B', L"ShareazaPlus" },		// RazaCB Core
 		{ 'C', 'D', L"Enhanced CTorrent" },
 		{ 'C', 'T', L"CTorrent" },
 		{ 'D', 'E', L"DelugeTorrent" },
@@ -560,11 +560,13 @@ CString CBTClient::GetAzureusStyleUserAgent(LPBYTE pVendor, size_t nVendor)
 		{ 'L', 'P', L"Lphant" },
 		{ 'L', 'T', L"libtorrent" },
 		{ 'l', 't', L"rTorrent" },
+		{ 'L', 'W', L"LimeWire" },
 		{ 'M', 'O', L"Mono Torrent" },
 		{ 'M', 'P', L"MooPolice" },
 		{ 'M', 'T', L"MoonlightTorrent" },
 		{ 'P', 'C', L"CacheLogic" },
 		{ 'P', 'D', L"Pando" },
+		{ 'P', 'E', L"PeerProject" },
 		{ 'p', 'X', L"pHoeniX" },
 		{ 'q', 'B', L"qBittorrent" },
 		{ 'Q', 'T', L"QT4" },
@@ -575,7 +577,7 @@ CString CBTClient::GetAzureusStyleUserAgent(LPBYTE pVendor, size_t nVendor)
 		{ 's', 't', L"Sharktorrent" },
 		{ 'S', 'T', L"SymTorrent" },
 		{ 'S', 'Z', L"Shareaza" },
-		{ 'S', '~', L"ShareazaBeta" },		// Shareaza alpha/beta versions
+		{ 'S', '~', L"ShareazaBeta" },
 		{ 'T', 'N', L"Torrent.NET" },
 		{ 'T', 'R', L"Transmission" },
 		{ 'T', 'S', L"TorrentStorm" },
