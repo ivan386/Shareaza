@@ -449,10 +449,18 @@ void CDownloadsWnd::OnContextMenu(CWnd* /*pWnd*/, CPoint point)
 
 BOOL CDownloadsWnd::PreTranslateMessage(MSG* pMsg)
 {
-	if ( pMsg->message == WM_KEYDOWN && pMsg->wParam == VK_TAB )
+	if ( pMsg->message == WM_KEYDOWN )
 	{
-		GetManager()->Open( RUNTIME_CLASS(CUploadsWnd) );
-		return TRUE;
+		if ( pMsg->wParam == VK_TAB )
+		{
+			GetManager()->Open( RUNTIME_CLASS(CUploadsWnd) );
+			return TRUE;
+		}
+		else if ( ( pMsg->wParam == 'V' || pMsg->wParam == VK_INSERT ) &&
+			( GetAsyncKeyState( VK_CONTROL ) & 0x8000 ) )
+		{
+			PostMainWndMessage( WM_COMMAND, ID_TOOLS_DOWNLOAD );
+		}
 	}
 
 	return CPanelWnd::PreTranslateMessage( pMsg );
@@ -1922,14 +1930,20 @@ void CDownloadsWnd::OnRButtonDown(UINT nFlags, CPoint point)
 
 void CDownloadsWnd::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
-	if ( nChar == VK_ESCAPE ) CancelDrag();
-	if ( m_pDragList != NULL ) OnSetCursor( NULL, 0, 0 );
+	if ( nChar == VK_ESCAPE )
+		CancelDrag();
+
+	if ( m_pDragList != NULL )
+		OnSetCursor( NULL, 0, 0 );
+
 	CPanelWnd::OnKeyDown( nChar, nRepCnt, nFlags );
 }
 
 void CDownloadsWnd::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
-	if ( m_pDragList ) OnSetCursor( NULL, 0, 0 );
+	if ( m_pDragList )
+		OnSetCursor( NULL, 0, 0 );
+
 	CPanelWnd::OnKeyUp( nChar, nRepCnt, nFlags );
 }
 
