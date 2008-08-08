@@ -34,8 +34,7 @@ library Shareaza
 	// Common Data Types
 	//
 
-	typedef [ uuid(9BB696CB-BE11-4569-BB25-7C35D155C936) ]
-	enum
+	typedef enum
 	{
 		TRI_UNKNOWN = 0,
 		TRI_FALSE   = 1,
@@ -397,7 +396,7 @@ library Shareaza
 	{
 		guiWindowed, guiTabbed, guiBasic
 	} GuiMode;
-	
+
 	[ uuid(FDDC655E-6CA6-4575-A167-1FD48AAC54EF), dual, oleautomation ]
 	interface ISettings : IDispatch
 	{
