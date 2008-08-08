@@ -19,9 +19,6 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_G2NEIGHBOUR_H__F3C423B0_60F0_4721_81A3_1109E59CD425__INCLUDED_)
-#define AFX_G2NEIGHBOUR_H__F3C423B0_60F0_4721_81A3_1109E59CD425__INCLUDED_
-
 #pragma once
 
 #include "Neighbour.h"
@@ -52,7 +49,7 @@ public:
 	BOOL			OnQueryAck(CG2Packet* pPacket);
 	BOOL			OnQueryKeyReq(CG2Packet* pPacket);
 	BOOL			OnQueryKeyAns(CG2Packet* pPacket);
-	BOOL			OnPush(CG2Packet* pPacket);
+	bool			OnPush(CG2Packet* pPacket);
 	BOOL			OnProfileChallenge(CG2Packet* pPacket);
 	BOOL			OnProfileDelivery(CG2Packet* pPacket);
 
@@ -108,5 +105,3 @@ protected:
 	void			SendStartups();
 	BOOL			ProcessPackets();
 };
-
-#endif // !defined(AFX_G2NEIGHBOUR_H__F3C423B0_60F0_4721_81A3_1109E59CD425__INCLUDED_)

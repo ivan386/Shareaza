@@ -1,7 +1,7 @@
 //
 // G1Neighbour.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -22,17 +22,10 @@
 // A CG1Neighbour object represents a remote computer running Gnutella software with which we are exchanging Gnutella packets
 // http://shareazasecurity.be/wiki/index.php?title=Developers.Code.CG1Neighbour
 
-// Make the compiler only include the lines here once, this is the same thing as pragma once
-#if !defined(AFX_G1NEIGHBOUR_H__BF099C28_0FD5_4A9A_B36E_6490DA6FB62F__INCLUDED_)
-#define AFX_G1NEIGHBOUR_H__BF099C28_0FD5_4A9A_B36E_6490DA6FB62F__INCLUDED_
-
-// Only include the lines beneath this one once
 #pragma once
 
-// Copy in the contents of these files here before compiling
 #include "Neighbour.h"
 
-// Tell the compiler these classes exist, and it will find out more about them soon
 class CG1Packet;
 class CG1PacketBuffer;
 class CPongItem;
@@ -112,7 +105,7 @@ protected:
 	BOOL OnVendor(CG1Packet* pPacket);
 
 	// Push packet
-	BOOL OnPush(CG1Packet* pPacket);
+	bool OnPush(CG1Packet* pPacket);
 
 	// Query and query hit packets
 	BOOL OnQuery(CG1Packet* pPacket);
@@ -122,6 +115,3 @@ protected:
 	void SendClusterAdvisor();
 	BOOL OnClusterAdvisor(CG1Packet* pPacket);
 };
-
-// End the group of lines to only include once, pragma once doesn't require an endif at the bottom
-#endif // !defined(AFX_G1NEIGHBOUR_H__BF099C28_0FD5_4A9A_B36E_6490DA6FB62F__INCLUDED_)

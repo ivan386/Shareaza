@@ -1148,16 +1148,16 @@ BOOL CG1Neighbour::OnClusterAdvisor(CG1Packet* pPacket)
 // Takes a pointer to the bytes of a push packet the remote computer sent us
 // If the push is for us, pushes open a new connection, if not, tries to send it to the computer it's for
 // Always returns true to stay connected to the remote computer
-BOOL CG1Neighbour::OnPush(CG1Packet* pPacket)
+bool CG1Neighbour::OnPush(CG1Packet* pPacket)
 {
 	// Push packets should be 26 bytes long, if it's too short, or too long and settings say to care
 	if ( pPacket->m_nLength < 26 || ( pPacket->m_nLength > 26 && Settings.Gnutella1.StrictPackets ) )
 	{
-		// Record the weird packet and don't do anything else with it
-		theApp.Message( MSG_ERROR, IDS_PROTOCOL_SIZE_PUSH, (LPCTSTR)m_sAddress );
-		Statistics.Current.Gnutella1.Dropped++;
-		m_nDropCount++;
-		return TRUE; // Stay connected to the remote computer, though
+		// Ignore packet and return that it was handled
+		theApp.Message( MSG_NOTICE, IDS_PROTOCOL_SIZE_PUSH, m_sAddress );
+		++Statistics.Current.Gnutella1.Dropped;
+		++m_nDropCount;
+		return true;
 	}
 
 	// The first 16 bytes of the packet payload are the Gnutella client ID GUID, read them into pClientID
@@ -1169,17 +1169,31 @@ BOOL CG1Neighbour::OnPush(CG1Packet* pPacket)
 	DWORD nAddress   = pPacket->ReadLongLE();  // 4 bytes, the IP address of (do)
 	WORD nPort       = pPacket->ReadShortLE(); // 2 bytes, the port number
 
-	// Assume this push packet does not have a GGEP block
-	BOOL bGGEP = FALSE;
-
 	// Check the security list to make sure the IP address isn't on it
 	if ( Security.IsDenied( (IN_ADDR*)&nAddress ) )
 	{
-		// It is, count this packet as dropped and do nothing more with it
-		Statistics.Current.Gnutella1.Dropped++;
-		m_nDropCount++;
-		return TRUE; // Stay connected to the computer that gave us this packet, though
+		// Failed security check, ignore packet and return that it was handled
+		++Statistics.Current.Gnutella1.Dropped;
+		++m_nDropCount;
+		return true;
 	}
+
+	// Check that remote client has a port number, isn't firewalled or using a
+	// reserved address
+	if ( !nPort
+		|| Network.IsFirewalledAddress( &nAddress )
+		|| Network.IsReserved( (IN_ADDR*)&nAddress ) )
+	{
+		// Can't push open a connection, ignore packet and return that it was
+		// handled
+		theApp.Message( MSG_NOTICE, IDS_PROTOCOL_ZERO_PUSH, m_sAddress );
+		++Statistics.Current.Gnutella1.Dropped;
+		++m_nDropCount;
+		return true;
+	}
+
+	// Assume this push packet does not have a GGEP block
+	bool bGGEP = false;
 
 	// If the packet is longer than a normal push packet, and the remote computer said it supports GGEP blocks in the handshake
 	if ( pPacket->m_nLength > 26 && m_bGGEP )
@@ -1187,33 +1201,23 @@ BOOL CG1Neighbour::OnPush(CG1Packet* pPacket)
 		// Read the next byte from the packet and make sure it's 0xC3, the magic code for a GGEP block
 		if ( pPacket->ReadByte() != GGEP_MAGIC )
 		{
-			// It's not, drop the packet, but stay connected
-			theApp.Message( MSG_ERROR, IDS_PROTOCOL_GGEP_REQUIRED, (LPCTSTR)m_sAddress );
-			Statistics.Current.Gnutella1.Dropped++;
-			m_nDropCount++;
+			// Ignore packet and return that it was handled
+			theApp.Message( MSG_ERROR, IDS_PROTOCOL_GGEP_REQUIRED, m_sAddress );
+			++Statistics.Current.Gnutella1.Dropped;
+			++m_nDropCount;
 			return TRUE;
 		}
 
 		// This push packet does have a GGEP block
-		bGGEP = TRUE;
-	}
-
-	// If there is no port number specified in the packet, or we know the IP address to be firewalled
-	if ( ! nPort || Network.IsFirewalledAddress( &nAddress ) )
-	{
-		// Then we can't push open a connection, do nothing more with the packet
-		theApp.Message( MSG_ERROR, IDS_PROTOCOL_ZERO_PUSH, (LPCTSTR)m_sAddress );
-		Statistics.Current.Gnutella1.Dropped++;
-		m_nDropCount++;
-		return TRUE; // Stay connected to the remote computer
+		bGGEP = true;
 	}
 
 	// If the push packet contains our own client ID, this is someone asking us to push open a connection
 	if ( validAndEqual( oClientID, Hashes::Guid( MyProfile.oGUID ) ) )
 	{
-		// Push open the connection
+		// Set up push connection and return that packet was handled
 		Handshakes.PushTo( (IN_ADDR*)&nAddress, nPort, nFileIndex );
-		return TRUE;
+		return true;
 	}
 
 	// Otherwise, the push packet is for another computer that we can hopefully can send it to, try to find it
@@ -1227,7 +1231,8 @@ BOOL CG1Neighbour::OnPush(CG1Packet* pPacket)
 		if ( pOrigin->m_nProtocol == PROTOCOL_G1 )
 		{
 			// If this packet has a GGEP block, but the computer its for doesn't support them, cut it off
-			if ( bGGEP && ! pOrigin->m_bGGEP ) pPacket->Shorten( 26 );
+			if ( bGGEP && ! pOrigin->m_bGGEP )
+				pPacket->Shorten( 26 );
 
 			// Send the push packet to the computer that needs to do it
 			pOrigin->Send( pPacket, FALSE, TRUE );
@@ -1246,11 +1251,11 @@ BOOL CG1Neighbour::OnPush(CG1Packet* pPacket)
 		}
 
 		// Record that we routed one more packet
-		Statistics.Current.Gnutella1.Routed++;
+		++Statistics.Current.Gnutella1.Routed;
 	}
 
-	// Always return true to stay connected to the remote computer
-	return TRUE;
+	// Return that packet was handled
+	return true;
 }
 
 // Called by CNetwork::RoutePacket (do)

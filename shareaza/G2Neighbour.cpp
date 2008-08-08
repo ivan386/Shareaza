@@ -302,7 +302,7 @@ BOOL CG2Neighbour::ProcessPackets()
 
 	CBuffer* pInput = m_pZInput ? m_pZInput : pInputLocked;
 
-    BOOL bSuccess = TRUE;
+	BOOL bSuccess = TRUE;
 	while ( bSuccess && pInput->m_nLength )
 	{
 		BYTE nInput = *(pInput->m_pBuffer);
@@ -443,7 +443,7 @@ BOOL CG2Neighbour::OnPing(CG2Packet* pPacket, BOOL bTCP)
 	BOOL bUDP = FALSE;
 	DWORD nAddress = 0;
 	WORD nPort = 0;
-	
+
 	if ( pPacket->m_bCompound )
 	{
 		G2_PACKET nType;
@@ -489,7 +489,7 @@ BOOL CG2Neighbour::OnPing(CG2Packet* pPacket, BOOL bTCP)
 		}
 	}
 	else if ( ! nPort ||
-		 Network.IsFirewalledAddress( &nAddress ) || 
+		 Network.IsFirewalledAddress( &nAddress ) ||
 		 Network.IsReserved( (IN_ADDR*)&nAddress ) ||
 		 Security.IsDenied( (IN_ADDR*)&nAddress ) )
 	{
@@ -546,7 +546,7 @@ BOOL CG2Neighbour::OnPing(CG2Packet* pPacket, BOOL bTCP)
 					 tNow - pNeighbour2->m_tLastRelayedPingOut >= Settings.Gnutella2.PingRate )
 				{
 					pG2Nodes.Add(  pNeighbour2 );
- 				}
+				}
 			}
 		}
 
@@ -950,7 +950,7 @@ BOOL CG2Neighbour::ParseKHLPacket(CG2Packet* pPacket, SOCKADDR_IN* pHost)
 				}
 
 				if ( nPort &&
-					! Network.IsFirewalledAddress( &nAddress, TRUE ) && 
+					! Network.IsFirewalledAddress( &nAddress, TRUE ) &&
 					! Network.IsReserved( (IN_ADDR*)&nAddress ) &&
 					! Security.IsDenied( (IN_ADDR*)&nAddress ) )
 				{
@@ -1005,7 +1005,7 @@ BOOL CG2Neighbour::ParseKHLPacket(CG2Packet* pPacket, SOCKADDR_IN* pHost)
 		bInvalid = TRUE;
 
 	if ( bInvalid )
-		theApp.Message( MSG_ERROR, _T("G2: Invalid KHL packet received from %s"), 
+		theApp.Message( MSG_ERROR, _T("G2: Invalid KHL packet received from %s"),
 			(LPCTSTR)CString( inet_ntoa( pHost->sin_addr ) ) );
 
 	return TRUE;
@@ -1020,9 +1020,9 @@ void CG2Neighbour::SendHAW()
 
 	WORD nLeafs = 0;
 	Hashes::Guid oGUID;
-	
+
 	Network.CreateID( oGUID );
-	
+
 	for ( POSITION pos = Neighbours.GetIterator() ; pos ; )
 	{
 		CNeighbour* pNeighbour = Neighbours.GetNext( pos );
@@ -1048,9 +1048,9 @@ void CG2Neighbour::SendHAW()
 	pPacket->WriteByte( 100 );	// TTL
 	pPacket->WriteByte( 0 );	// Hops
 	pPacket->Write( oGUID );
-	
+
 	Send( pPacket, TRUE, TRUE );
-	
+
 	m_pGUIDCache->Add( oGUID, this );
 
 	m_tLastHAWOut = GetTickCount();
@@ -1153,7 +1153,7 @@ BOOL CG2Neighbour::OnQuery(CG2Packet* pPacket)
 	{
 
 		// Update allowed query operations, check for bad client
-		if ( m_nQueryLimiter > -60 ) 
+		if ( m_nQueryLimiter > -60 )
 		{
 			m_nQueryLimiter--;
 		}
@@ -1251,10 +1251,10 @@ BOOL CG2Neighbour::OnQuery(CG2Packet* pPacket)
 		CLocalSearch pLocal( pSearch, this, FALSE );
 		pLocal.Execute();
 	}
-	
+
 	if ( m_nNodeType == ntLeaf )
 		Send( Neighbours.CreateQueryWeb( pSearch->m_oGUID, this ), TRUE, FALSE );
-	
+
 	delete pSearch;
 	Statistics.Current.Gnutella2.Queries++;
 
@@ -1300,7 +1300,7 @@ BOOL CG2Neighbour::OnQueryKeyReq(CG2Packet* pPacket)
 	}
 
 	if ( ! nPort ||
-		Network.IsFirewalledAddress( &nAddress, TRUE ) || 
+		Network.IsFirewalledAddress( &nAddress, TRUE ) ||
 		Network.IsReserved( (IN_ADDR*)&nAddress ) ||
 		Security.IsDenied( (IN_ADDR*)&nAddress ) ) return TRUE;
 
@@ -1383,41 +1383,56 @@ BOOL CG2Neighbour::OnQueryKeyAns(CG2Packet* pPacket)
 //////////////////////////////////////////////////////////////////////
 // CG2Neighbour PUSH packet handler
 
-BOOL CG2Neighbour::OnPush(CG2Packet* pPacket)
+bool CG2Neighbour::OnPush(CG2Packet* pPacket)
 {
-	if ( ! pPacket->m_bCompound ) return TRUE;
+	if ( !pPacket->m_bCompound )
+		return true;
 
 	DWORD nLength = pPacket->GetRemaining();
 
-	if ( ! pPacket->SkipCompound( nLength, 6 ) )
+	// Check if packet is too small
+	if ( !pPacket->SkipCompound( nLength, 6 ) )
 	{
+		// Ignore packet and return that it was handled
+		theApp.Message( MSG_NOTICE, IDS_PROTOCOL_SIZE_PUSH, m_sAddress );
 		pPacket->Debug( _T("BadPush") );
-		Statistics.Current.Gnutella2.Dropped++;
-		return TRUE;
+		++Statistics.Current.Gnutella2.Dropped;
+		++m_nDropCount;
+		return true;
 	}
 
+	// Get IP address and port
 	DWORD nAddress	= pPacket->ReadLongLE();
 	WORD nPort		= pPacket->ReadShortBE();
 
+	// Check the security list to make sure the IP address isn't on it
 	if ( Security.IsDenied( (IN_ADDR*)&nAddress ) )
 	{
-		Statistics.Current.Gnutella2.Dropped++;
-		m_nDropCount++;
-		return TRUE;
-	}
-	else if ( ! nPort ||
-		Network.IsFirewalledAddress( &nAddress ) ||
-		Network.IsReserved( (IN_ADDR*)&nAddress ) )
-	{
-		theApp.Message( MSG_ERROR, IDS_PROTOCOL_ZERO_PUSH, (LPCTSTR)m_sAddress );
-		Statistics.Current.Gnutella2.Dropped++;
-		m_nDropCount++;
-		return TRUE;
+		// Failed security check, ignore packet and return that it was handled
+		++Statistics.Current.Gnutella2.Dropped;
+		++m_nDropCount;
+		return true;
 	}
 
+	// Check that remote client has a port number, isn't firewalled or using a
+	// reserved address
+	if ( !nPort
+		|| Network.IsFirewalledAddress( &nAddress )
+		|| Network.IsReserved( (IN_ADDR*)&nAddress ) )
+	{
+		// Can't push open a connection, ignore packet and return that it was
+		// handled
+		theApp.Message( MSG_NOTICE, IDS_PROTOCOL_ZERO_PUSH, m_sAddress );
+		++Statistics.Current.Gnutella2.Dropped;
+		++m_nDropCount;
+		return true;
+	}
+
+	// Set up push connection
 	Handshakes.PushTo( (IN_ADDR*)&nAddress, nPort );
 
-	return TRUE;
+	// Return that packet was handled
+	return true;
 }
 
 //////////////////////////////////////////////////////////////////////
