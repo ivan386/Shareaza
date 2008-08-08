@@ -52,14 +52,14 @@ public:
 	void			Add(CEDClient* pClient);
 	void			Remove(CEDClient* pClient);
 	void			Clear();
-	BOOL			PushTo(DWORD nClientID, WORD nClientPort);
+	bool			PushTo(DWORD nClientID, WORD nClientPort);
 	CEDClient*		GetByIP(IN_ADDR* pAddress) const;
 	CEDClient*		Connect(DWORD nClientID, WORD nClientPort, IN_ADDR* pServerAddress, WORD nServerPort, const Hashes::Guid& oGUID);
 	BOOL			Merge(CEDClient* pClient);
 	void			OnRun();
 	BOOL			OnAccept(CConnection* pConnection);
 	BOOL			OnPacket(SOCKADDR_IN* pHost, CEDPacket* pPacket);
-	BOOL			IsFull(const CEDClient* pCheckThis = NULL);
+	bool			IsFull(const CEDClient* pCheckThis = NULL);
 	BOOL			IsOverloaded() const;
 	BOOL			IsMyDownload(const CDownloadTransferED2K* pDownload) const;
 

@@ -136,20 +136,20 @@ void CTransfers::OnRun()
 		Sleep( Settings.General.MinTransfersRest );
 		Doze( 50 );
 
-		{
-			CQuickLock oLock( m_pSection );
-			EDClients.OnRun();
-		}
+		EDClients.OnRun();
 
-		if ( ! IsThreadEnabled() ) break;
+		if ( !IsThreadEnabled() )
+			break;
 
 		OnRunTransfers();
 
-		if ( ! IsThreadEnabled() ) break;
+		if ( !IsThreadEnabled() )
+			break;
 
 		Downloads.OnRun();
 
-		if ( ! IsThreadEnabled() ) break;
+		if ( !IsThreadEnabled() )
+			break;
 
 		{
 			CQuickLock oLock( m_pSection );

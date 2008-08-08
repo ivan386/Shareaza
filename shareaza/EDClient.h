@@ -1,7 +1,7 @@
 //
 // EDClient.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2006.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -18,9 +18,6 @@
 // along with Shareaza; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
-
-#if !defined(AFX_EDCLIENT_H__4D9C179A_0C83_4A98_8CC0_E82644224697__INCLUDED_)
-#define AFX_EDCLIENT_H__4D9C179A_0C83_4A98_8CC0_E82644224697__INCLUDED_
 
 #pragma once
 
@@ -39,7 +36,7 @@ class CEDClient : public CTransfer
 public:
 	CEDClient();
 	virtual ~CEDClient();
-	
+
 // Attributes
 public:
 	CEDClient*	m_pEdPrev;
@@ -73,11 +70,12 @@ public:	//Client capabilities
 	BOOL		m_bEmLargeFile;		// Large file support
 public:
 	BOOL		m_bLogin;
-    Hashes::Ed2kHash m_oUpED2K;
+	Hashes::Ed2kHash m_oUpED2K;
 	QWORD		m_nUpSize;
 public:
 	CDownloadTransferED2K*	m_pDownload;
 	CUploadTransferED2K*	m_pUpload;
+	bool					m_bCallbackRequested;
 	BOOL					m_bSeeking;
 	DWORD					m_nRunExCookie;
 
@@ -140,8 +138,6 @@ public:
 	BOOL	OnUdpReaskAck(CEDPacket* pPacket);
 	BOOL	OnUdpQueueFull(CEDPacket* pPacket);
 	BOOL	OnUdpFileNotFound(CEDPacket* pPacket);
-	
+
 	inline BOOL IsOnline() const { return m_bConnected && m_bLogin; }
 };
-
-#endif // !defined(AFX_EDCLIENT_H__4D9C179A_0C83_4A98_8CC0_E82644224697__INCLUDED_)

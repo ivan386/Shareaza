@@ -1,7 +1,7 @@
 //
 // EDNeighbour.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -18,9 +18,6 @@
 // along with Shareaza; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
-
-#if !defined(AFX_EDNEIGHBOUR_H__7E77CD2A_D3AA_4E53_981B_3B4624968921__INCLUDED_)
-#define AFX_EDNEIGHBOUR_H__7E77CD2A_D3AA_4E53_981B_3B4624968921__INCLUDED_
 
 #pragma once
 
@@ -69,11 +66,9 @@ protected:
 	BOOL	OnServerList(CEDPacket* pPacket);
 	BOOL	OnServerStatus(CEDPacket* pPacket);
 	BOOL	OnServerIdent(CEDPacket* pPacket);
-	BOOL	OnCallbackRequest(CEDPacket* pPacket);
+	bool	OnCallbackRequested(CEDPacket* pPacket);
 	BOOL	OnSearchResults(CEDPacket* pPacket);
 	BOOL	OnFoundSources(CEDPacket* pPacket);
 	void	SendSharedFiles();
 
 };
-
-#endif // !defined(AFX_EDNEIGHBOUR_H__7E77CD2A_D3AA_4E53_981B_3B4624968921__INCLUDED_)

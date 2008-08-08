@@ -297,16 +297,14 @@ BOOL CEDNeighbour::OnPacket(CEDPacket* pPacket)
 	case ED2K_S2C_SERVERIDENT:
 		return OnServerIdent( pPacket );
 	case ED2K_S2C_CALLBACKREQUESTED:
-		return OnCallbackRequest( pPacket );
+		return OnCallbackRequested( pPacket );
 	case ED2K_S2C_SEARCHRESULTS:
 		return OnSearchResults( pPacket );
 	case ED2K_S2C_FOUNDSOURCES:
 		return OnFoundSources( pPacket );
 	default:
-		{
 		pPacket->Debug( _T("Unknown") );
 		break;
-		}
 	}
 
 	return TRUE;
@@ -542,18 +540,50 @@ BOOL CEDNeighbour::OnServerIdent(CEDPacket* pPacket)
 	return TRUE;
 }
 
-BOOL CEDNeighbour::OnCallbackRequest(CEDPacket* pPacket)
+bool CEDNeighbour::OnCallbackRequested(CEDPacket* pPacket)
 {
-	if ( pPacket->GetRemaining() < 6 ) return TRUE;
+	// Check if packet is too small
+	if ( pPacket->GetRemaining() < 6 )
+	{
+		// Ignore packet and return that it was handled
+		theApp.Message( MSG_NOTICE, IDS_PROTOCOL_SIZE_PUSH, m_sAddress );
+		++Statistics.Current.eDonkey.Dropped;
+		++m_nDropCount;
+		return true;
+	}
 
+	// Get IP address and port
 	DWORD nAddress	= pPacket->ReadLongLE();
 	WORD nPort		= pPacket->ReadShortLE();
 
-	if ( Network.IsFirewalledAddress( &nAddress ) ) return TRUE;
+	// Check the security list to make sure the IP address isn't on it
+	if ( Security.IsDenied( (IN_ADDR*)&nAddress ) )
+	{
+		// Failed security check, ignore packet and return that it was handled
+		++Statistics.Current.Gnutella1.Dropped;
+		++m_nDropCount;
+		return true;
+	}
+	
+	// Check that remote client has a port number, isn't firewalled or using a
+	// reserved address
+	if ( !nPort
+		|| Network.IsFirewalledAddress( &nAddress )
+		|| Network.IsReserved( (IN_ADDR*)&nAddress ) )
+	{
+		// Can't push open a connection, ignore packet and return that it was
+		// handled
+		theApp.Message( MSG_NOTICE, IDS_PROTOCOL_ZERO_PUSH, m_sAddress );
+		++Statistics.Current.eDonkey.Dropped;
+		++m_nDropCount;
+		return true;
+	}
 
+	// Set up push connection
 	EDClients.PushTo( nAddress, nPort );
 
-	return TRUE;
+	// Return that packet was handled
+	return true;
 }
 
 BOOL CEDNeighbour::OnSearchResults(CEDPacket* pPacket)
