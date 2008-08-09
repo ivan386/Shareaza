@@ -89,7 +89,7 @@ void CEDClients::Add(CEDClient* pClient)
 		m_pFirst = m_pLast = pClient;
 	}
 
-	m_nCount++;
+	++m_nCount;
 }
 
 void CEDClients::Remove(CEDClient* pClient)
@@ -108,7 +108,7 @@ void CEDClients::Remove(CEDClient* pClient)
 	else
 		m_pLast = pClient->m_pEdPrev;
 
-	m_nCount --;
+	--m_nCount;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -276,15 +276,16 @@ bool CEDClients::IsFull(const CEDClient* pCheckThis)
 {
 	CQuickLock oLock( m_pSection );
 
-	DWORD nCount = 0;
-	DWORD tNow = GetTickCount();
-
 	// Count the number of connected clients
+	DWORD nCount = 0;
 	for ( CEDClient* pClient = m_pFirst ; pClient ; pClient = pClient->m_pEdNext )
 	{
 		if ( pClient->IsValid() )
 			++nCount;
 	}
+
+	// Get the current time
+	DWORD tNow = GetTickCount();
 
 	// If there are more clients current connected than there should be, set the full timer
 	if ( nCount >= Settings.eDonkey.MaxLinks )
