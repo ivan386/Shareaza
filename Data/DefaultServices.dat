@@ -10,8 +10,9 @@ M http://gwc.movingpages.org/skulls.php
 2 http://dogma.cloud.bishopston.net:33559/
 2 http://karma.cloud.bishopston.net:33559/
 
-U uhc:uhc2.limewire.com:20181
 U uhc:uhc.udp-host-cache.com:9999
+U uhc:secondary.udp-host-cache.com:9999
+U uhc:tertiary.udp-host-cache.com:9999
 
 D http://www.gruk.org/server.met
 D http://www.emule-server.de/server.met/min/server.met
@@ -43,7 +44,7 @@ X http://i.net46.net/beacon/gwc.php
 
 #
 # Keep these comments at the end
-# Last updated July 2008
+# Last updated August 2008
 #
 # Be sure to have at least one link to a .met file and four gwebcache links
 # or else they'll keep getting added every time they're removed
