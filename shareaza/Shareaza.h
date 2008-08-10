@@ -351,9 +351,9 @@ inline T GetRandomNum(const T& min, const T& max)
 {
 	if ( theApp.m_hCryptProv != 0 )
 	{
-		unsigned int nRandom;
-		if ( CryptGenRandom( theApp.m_hCryptProv, sizeof(unsigned int), (BYTE*)&nRandom ) )
-			return min + (double)nRandom / ( (double)UINT_MAX / ( max - min + 1 ) + 1 );
+		T nRandom = 0;
+		if ( CryptGenRandom( theApp.m_hCryptProv, sizeof(T), (BYTE*)&nRandom ) )
+			return min + (double)nRandom / ( (double)static_cast<T>(-1) / ( max - min + 1 ) + 1 );
 	}
 
 	// Fallback to non-secure method

@@ -318,7 +318,7 @@ void CDownloadTransfer::ChunkifyRequest(QWORD* pnOffset, QWORD* pnLength, QWORD 
 	{
 		QWORD nCount = *pnLength / nChunk;
 		if ( *pnLength % nChunk ) nCount++;
-		nCount = rand() % nCount;
+		nCount = GetRandomNum( 0ui64, nCount - 1 );
 
 		QWORD nStart = *pnOffset + nChunk * nCount;
 		*pnLength = min( nChunk, *pnOffset + *pnLength - nStart );
