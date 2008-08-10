@@ -596,7 +596,7 @@ BOOL CNetwork::IsReserved(IN_ADDR* pAddress, bool bCheckLocal)
 
 WORD CNetwork::RandomPort() const
 {
-	return WORD( 10000 + ( rand() % 50000 ) );
+	return WORD( GetRandomNum( 10000, 60000 ) );
 }
 
 //////////////////////////////////////////////////////////////////////

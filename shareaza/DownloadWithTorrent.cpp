@@ -124,14 +124,14 @@ void CDownloadWithTorrent::Remove(CBTTrackerRequest* pRequest)
 
 TCHAR CDownloadWithTorrent::GenerateCharacter() const
 {
-	switch ( rand() % 3 )
+	switch ( GetRandomNum( 0, 2 ) )
 	{
 	case 0:
-		return static_cast< TCHAR >( 'a' + ( rand() % 26 ) );
+		return static_cast< TCHAR >( 'a' + ( GetRandomNum( 0, 25 ) ) );
 	case 1:
-		return static_cast< TCHAR >( 'A' + ( rand() % 26 ) );
+		return static_cast< TCHAR >( 'A' + ( GetRandomNum( 0, 25 ) ) );
 	default:
-		return static_cast< TCHAR >( '0' + ( rand() % 10 ) );
+		return static_cast< TCHAR >( '0' + ( GetRandomNum( 0, 9 ) ) );
 	}
 }
 
@@ -721,7 +721,7 @@ void CDownloadWithTorrent::ChokeTorrent(DWORD tNow)
 	
 	if ( bChooseRandom && nTotalRandom > 0 )
 	{
-		nTotalRandom = rand() % nTotalRandom;
+		nTotalRandom = GetRandomNum( 0, nTotalRandom - 1 );
 		
 		for ( POSITION pos = m_pTorrentUploads.GetHeadPosition() ; pos ; )
 		{

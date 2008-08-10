@@ -24,6 +24,7 @@
 #include "Resource.h"
 #include "ComObject.h"
 #include "Buffer.h"
+#include <wincrypt.h>
 
 class CUPnPFinder;
 class CMainWnd;
@@ -87,6 +88,9 @@ public:
 	DWORD				m_nLastInput;				// Time of last input event (in secs)
 	HHOOK				m_hHookKbd;
 	HHOOK				m_hHookMouse;
+
+	// Cryptography Context handle
+	HCRYPTPROV			m_hCryptProv;
 
 	// For themes functions
 	HINSTANCE	m_hTheme;
@@ -339,6 +343,21 @@ inline void IsType(LPCTSTR pszString, size_t nStart, size_t nLength, bool& bWord
 		bWord = false;
 		bDigit = false;
 	}
+}
+
+// Use with whole numbers only
+template <typename T>
+inline T GetRandomNum(const T& min, const T& max)
+{
+	if ( theApp.m_hCryptProv != 0 )
+	{
+		unsigned int nRandom;
+		if ( CryptGenRandom( theApp.m_hCryptProv, sizeof(unsigned int), (BYTE*)&nRandom ) )
+			return min + (double)nRandom / ( (double)UINT_MAX / ( max - min + 1 ) + 1 );
+	}
+
+	// Fallback to non-secure method
+	return min + (double)rand() / ( (double)RAND_MAX / ( max - min + 1 ) + 1 );
 }
 
 // Log severity (log level)

@@ -695,7 +695,7 @@ void CUPnPFinder::DeleteExistingPortMappings(ServicePointer pService)
 					str.Format( L"%hu", Settings.Connection.InPort );
 					if ( _tcsstr( strPort, str ) != NULL ) // ports are equal
 					{
-						Settings.Connection.InPort = 10000 + ( rand() % 50000 );
+						Settings.Connection.InPort = GetRandomNum( 10000, 60000 );
 						// start from the beginning
 						nEntry = 0;
 						hrDel = hr = S_OK;
@@ -736,7 +736,7 @@ void CUPnPFinder::CreatePortMappings(ServicePointer pService)
 
 	if ( Settings.Connection.InPort == 0 ) // random port
 	{
-		Settings.Connection.InPort = 10000 + ( rand() % 50000 );
+		Settings.Connection.InPort = GetRandomNum( 10000, 60000 );
 	}
 	strPort.Format( L"%hu", Settings.Connection.InPort );
 

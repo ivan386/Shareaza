@@ -325,7 +325,7 @@ int CMediaListCtrl::GetNext(BOOL bSet)
 
 		if ( nCount > 0 )
 		{
-			nCount = rand() % nCount;
+			nCount = GetRandomNum( 0, nCount - 1 );
 
 			for ( nItem = GetItemCount() - 1 ; nItem >= 0 ; nItem-- )
 			{

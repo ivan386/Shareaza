@@ -583,13 +583,13 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 					{
 						for ( POSITION pos = pTrackers.GetHeadPosition() ; pos ; )
 						{
-							if ( rand() % 2 )
+							if ( GetRandomNum( 0, 1 ) )
 							{
 								CString strTemp;
 								strTemp = pTrackers.GetAt( pos );
 								pTrackers.RemoveAt( pos );
 
-								if ( rand() % 2 )
+								if ( GetRandomNum( 0, 1 ) )
 									pTrackers.AddHead( strTemp );
 								else
 									pTrackers.AddTail( strTemp );

@@ -96,7 +96,7 @@ BOOL CDownloadWithFile::OpenFile()
 			if ( nTry == 0 )
 				strName = m_sPath;
 			else
-				strName.Format( _T("%s.x%i"), (LPCTSTR)m_sPath, rand() % 128 );
+				strName.Format( _T("%s.x%i"), (LPCTSTR)m_sPath, GetRandomNum( 0, 127 ) );
 
 			theApp.Message( MSG_INFO, IDS_DOWNLOAD_FILE_CREATE, (LPCTSTR)strName );
 

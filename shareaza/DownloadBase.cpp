@@ -125,7 +125,8 @@ void CDownloadBase::GenerateDiskName(bool bTorrent)
 	}
 	else
 	{
-		m_sPath.Format( _T("rand_%2i%2i%2i%2i"), rand() % 100, rand() % 100, rand() % 100, rand() % 100 );
+		m_sPath.Format( _T("rand_%2i%2i%2i%2i"), GetRandomNum( 0, 99 ), GetRandomNum( 0, 99 ), 
+			GetRandomNum( 0, 99 ), GetRandomNum( 0, 99 ) );
 	}
 
 	// Add a .partial extension

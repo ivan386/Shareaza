@@ -329,7 +329,7 @@ int CG1Packet::GGEPWriteRandomCache(CGGEPItem* pItem)
 	pList.reserve( Settings.Gnutella1.MaxHostsInPongs );
 	for ( WORD nNo = 0 ; nNo < Settings.Gnutella1.MaxHostsInPongs ; nNo++ )
 	{
-		pList.push_back( (WORD)( ( nCount + 1 ) * rand() / ( RAND_MAX + (float)nCount ) ) );
+		pList.push_back( (WORD)GetRandomNum( 0, 50 ) );
 	}
 	std::sort( pList.begin(), pList.end(), CompareNums() );
 

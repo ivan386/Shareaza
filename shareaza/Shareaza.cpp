@@ -177,6 +177,7 @@ CShareazaApp::CShareazaApp() :
 ,	m_pGeoIP				( NULL )
 ,	m_hLibGFL				( NULL )
 ,	m_dlgSplash				( NULL )
+,	m_hCryptProv			( 0 )
 {
 	ZeroMemory( m_nVersion, sizeof( m_nVersion ) );
 	ZeroMemory( m_pBTVersion, sizeof( m_pBTVersion ) );
@@ -323,14 +324,16 @@ BOOL CShareazaApp::InitInstance()
 		+ ( ( Settings.Connection.EnableUPnP && ! Settings.Live.FirstRun ) ? 1 : 0 );
 
 	SplashStep( L"Winsock", ( ( m_ocmdInfo.m_bNoSplash || ! m_ocmdInfo.m_bShowSplash ) ? 0 : nSplashSteps ), false );
-		WSADATA wsaData;
-		for ( int i = 1; i <= 2; i++ )
-		{
-			if ( WSAStartup( MAKEWORD( 1, 1 ), &wsaData ) ) return FALSE;
-			if ( wsaData.wVersion == MAKEWORD( 1, 1 ) ) break;
-			if ( i == 2 ) return FALSE;
-			WSACleanup();
-		}
+	WSADATA wsaData;
+	for ( int i = 1; i <= 2; i++ )
+	{
+		if ( WSAStartup( MAKEWORD( 1, 1 ), &wsaData ) ) return FALSE;
+		if ( wsaData.wVersion == MAKEWORD( 1, 1 ) ) break;
+		if ( i == 2 ) return FALSE;
+		WSACleanup();
+	}
+
+	CryptAcquireContext( &m_hCryptProv, NULL, NULL, PROV_RSA_FULL, CRYPT_VERIFYCONTEXT );
 
 	if ( m_ocmdInfo.m_nGUIMode != -1 )
 		Settings.General.GUIMode = m_ocmdInfo.m_nGUIMode;
@@ -523,6 +526,9 @@ int CShareazaApp::ExitInstance()
 
 	UnhookWindowsHookEx( m_hHookKbd );
 	UnhookWindowsHookEx( m_hHookMouse );
+
+	if ( theApp.m_hCryptProv != 0 )
+		CryptReleaseContext( theApp.m_hCryptProv, 0 );
 
 	if ( m_pMutex != NULL )
 		CloseHandle( m_pMutex );

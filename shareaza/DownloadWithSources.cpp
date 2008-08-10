@@ -1126,9 +1126,9 @@ int CDownloadWithSources::GetSourceColour()
 		}
 	}
 	
-	if ( nFree == 0 ) return rand() % SRC_COLOURS;
+	if ( nFree == 0 ) return GetRandomNum( 0, SRC_COLOURS - 1 );
 	
-	nFree = rand() % nFree;
+	nFree = GetRandomNum( 0, nFree - 1 );
 	
 	for ( int nColour = 0 ; nColour < SRC_COLOURS ; nColour++ )
 	{
@@ -1138,7 +1138,7 @@ int CDownloadWithSources::GetSourceColour()
 		}
 	}
 	
-	return rand() % SRC_COLOURS;
+	return GetRandomNum( 0, SRC_COLOURS - 1 );
 }
 
 //////////////////////////////////////////////////////////////////////
