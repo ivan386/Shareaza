@@ -982,7 +982,7 @@
           <part name="_ID_TAB_NETWORK.Hover"	rect="616,28,79,29"/>
           <part name="_ID_TAB_NETWORK.Down"	rect="616,0,79,29"/>
           <part name="_ID_TAB_IRC.Up"		rect="696,0,70,29"/>
-          <part name="_ID_TAB_IRC.Checked"	rect="69604,28,70,29"/>
+          <part name="_ID_TAB_IRC.Checked"	rect="696,28,70,29"/>
           <part name="_ID_TAB_IRC.Hover" 	rect="696,28,70,29"/>
           <part name="_ID_TAB_IRC.Down" 	rect="696,0,70,29"/>
         </parts>
@@ -1158,7 +1158,7 @@
           <part name="_ID_TAB_NETWORK.Hover"	rect="515,28,94,29"/>
           <part name="_ID_TAB_NETWORK.Down"	rect="515,0,94,29"/>
           <part name="_ID_TAB_IRC.Up"		rect="609,0,70,29"/>
-          <part name="_ID_TAB_IRC.Checked"	rect="6094,28,70,29"/>
+          <part name="_ID_TAB_IRC.Checked"	rect="609,28,70,29"/>
           <part name="_ID_TAB_IRC.Hover" 	rect="609,28,70,29"/>
           <part name="_ID_TAB_IRC.Down" 	rect="609,0,70,29"/>
         </parts>
@@ -1375,7 +1375,7 @@
           <part name="_ID_TAB_TRANSFERS.Hover"	rect="422,28,96,29"/>
           <part name="_ID_TAB_TRANSFERS.Down"	rect="422,0,96,29"/>
           <part name="_ID_TAB_IRC.Up"		rect="518,0,70,29"/>
-          <part name="_ID_TAB_IRC.Checked"	rect="5184,28,70,29"/>
+          <part name="_ID_TAB_IRC.Checked"	rect="518,28,70,29"/>
           <part name="_ID_TAB_IRC.Hover" 	rect="518,28,70,29"/>
           <part name="_ID_TAB_IRC.Down" 	rect="518,0,70,29"/>
         </parts>
