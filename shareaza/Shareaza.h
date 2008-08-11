@@ -353,11 +353,11 @@ inline T GetRandomNum(const T& min, const T& max)
 	{
 		T nRandom = 0;
 		if ( CryptGenRandom( theApp.m_hCryptProv, sizeof( T ), (BYTE*)&nRandom ) )
-			return min + ( (double)nRandom * ( max - min ) ) / (double)static_cast< T >( -1 );
+			return min + (double)nRandom / ( (double)( static_cast< T >( -1 ) ) / ( max - min + 1 ) + 1 );
 	}
 
 	// Fallback to non-secure method
-	return min + ( (double)rand() * ( max - min ) ) / (double)RAND_MAX;
+	return min + (double)rand() / ( (double)RAND_MAX / ( max - min + 1 ) + 1 );
 }
 
 template <>
