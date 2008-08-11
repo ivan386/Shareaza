@@ -353,7 +353,7 @@ inline T GetRandomNum(const T& min, const T& max)
 	{
 		T nRandom = 0;
 		if ( CryptGenRandom( theApp.m_hCryptProv, sizeof(T), (BYTE*)&nRandom ) )
-			return min + (double)nRandom / ( (double)static_cast<T>(-1) / ( max - min + 1 ) + 1 );
+			return min + (double)nRandom / ( (double)( sizeof(T) == 8 ? UINT_MAX : ULLONG_MAX ) / ( max - min + 1 ) + 1 );
 	}
 
 	// Fallback to non-secure method
