@@ -352,12 +352,36 @@ inline T GetRandomNum(const T& min, const T& max)
 	if ( theApp.m_hCryptProv != 0 )
 	{
 		T nRandom = 0;
-		if ( CryptGenRandom( theApp.m_hCryptProv, sizeof(T), (BYTE*)&nRandom ) )
-			return min + (double)nRandom / ( (double)( sizeof(T) == 8 ? ULLONG_MAX : UINT_MAX ) / ( max - min + 1 ) + 1 );
+		if ( CryptGenRandom( theApp.m_hCryptProv, sizeof( T ), (BYTE*)&nRandom ) )
+			return min + ( (double)nRandom * ( max - min ) ) / (double)static_cast< T >( -1 );
 	}
 
 	// Fallback to non-secure method
-	return min + (double)rand() / ( (double)RAND_MAX / ( max - min + 1 ) + 1 );
+	return min + ( (double)rand() * ( max - min ) ) / (double)RAND_MAX;
+}
+
+template <>
+inline __int8 GetRandomNum<__int8>(const __int8& min, const __int8& max)
+{
+	return (__int8)GetRandomNum<unsigned __int8>( min, max );
+}
+
+template <>
+inline __int16 GetRandomNum<__int16>(const __int16& min, const __int16& max)
+{
+	return (__int16)GetRandomNum<unsigned __int16>( min, max );
+}
+
+template <>
+inline __int32 GetRandomNum<__int32>(const __int32& min, const __int32& max)
+{
+	return (__int32)GetRandomNum<unsigned __int32>( min, max );
+}
+
+template <>
+inline __int64 GetRandomNum<__int64>(const __int64& min, const __int64& max)
+{
+	return (__int64)GetRandomNum<unsigned __int64>( min, max );
 }
 
 // Log severity (log level)
