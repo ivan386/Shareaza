@@ -1807,7 +1807,7 @@
 		<newline gap="10"/>
 		<link target="raza:page:CLibrarySettingsPage" format="b">Library:</link>
 		<gap size="4"/>
-		<text>Presentation and management of the file library, and opening files.</text>
+		<text>Presentation, access, and management of the file library.</text>
 		<newline gap="10"/>
 		<link target="raza:page:CMediaSettingsPage" format="b">Media Player:</link>
 		<gap size="4"/>
@@ -1817,10 +1817,13 @@
 		<gap size="4"/>
 		<text>Your profile, chat and instant messaging settings.</text>
 		<newline gap="10"/>
-		<link target="raza:page:CWebSettingsPage" format="b">Web:</link>
+		<link target="raza:page:CIRCSettingsPage" format="b">Chat:</link>
+		<gap size="4"/>
+		<text>IRC chatroom visual appearance and connection settings.</text>
+		<newline gap="10"/>
+		<link target="raza:page:CWebSettingsPage" format="b">Web Integration:</link>
 		<gap size="4"/>
 		<text>Integrate Shareaza with your web browser to accept peer-to-peer links and download content.</text>
-		<newline gap="10"/>
 	</document>
 	<document name="CInternetSettingsGroup" title="Internet" leftMargin="8" topMargin="8">
 		<styles>
@@ -1830,14 +1833,10 @@
 		</styles>
 		<text format="b">Welcome to Shareaza's Settings Manager</text>
 		<newline gap="16"/>
-		<text>
-			The Shareaza Settings Manager allows advanced users to completely customise how
-			Shareaza works. The settings in the 
-		</text>
+		<text>	The Shareaza Settings Manager allows advanced users to completely customise 
+			how Shareaza works. The settings in the </text>
 		<text format="b">Internet </text>
-		<text>
-			section control how Shareaza interacts with other nodes within distributed peer-to-peer
-			networks.
+		<text>	section control how Shareaza interacts with other nodes within distributed peer-to-peer networks.
 		</text>
 		<newline gap="16" indent="16"/>
 		<link target="raza:page:CConnectionSettingsPage" format="b">Connection:</link>
@@ -1856,6 +1855,9 @@
 		<gap size="4"/>
 		<text>Set up the ability to control Shareaza remotely through a web browser.</text>
 		<newline gap="10"/>
+		<link target="raza:page:CSchedulerSettingsPage" format="b">Scheduler:</link>
+		<gap size="4"/>
+		<text>Limit download connections based on a periodic schedule.</text>
 	</document>
 	<!-- Browse User Profile -->
 	<document name="CBrowseHostProfile.1">
