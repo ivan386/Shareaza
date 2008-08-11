@@ -1105,14 +1105,14 @@ void CDownloadWithSources::SortSource(CDownloadSource* pSource)
 //////////////////////////////////////////////////////////////////////
 // CDownloadWithSources source colour selector
 
-#define SRC_COLOURS 6
+#define SRC_COLOURS 6u
 
 int CDownloadWithSources::GetSourceColour()
 {
 	CQuickLock pLock( Transfers.m_pSection );
 
 	BOOL bTaken[SRC_COLOURS] = {};
-	int nFree = SRC_COLOURS;
+	unsigned int nFree = SRC_COLOURS;
 	
 	for ( CDownloadSource* pSource = m_pSourceFirst ; pSource ; pSource = pSource->m_pNext )
 	{
@@ -1126,9 +1126,9 @@ int CDownloadWithSources::GetSourceColour()
 		}
 	}
 	
-	if ( nFree == 0 ) return GetRandomNum( 0, SRC_COLOURS - 1 );
+	if ( nFree == 0 ) return GetRandomNum( 0u, SRC_COLOURS - 1 );
 	
-	nFree = GetRandomNum( 0, nFree - 1 );
+	nFree = GetRandomNum( 0u, nFree - 1 );
 	
 	for ( int nColour = 0 ; nColour < SRC_COLOURS ; nColour++ )
 	{
@@ -1138,7 +1138,7 @@ int CDownloadWithSources::GetSourceColour()
 		}
 	}
 	
-	return GetRandomNum( 0, SRC_COLOURS - 1 );
+	return GetRandomNum( 0u, SRC_COLOURS - 1 );
 }
 
 //////////////////////////////////////////////////////////////////////
