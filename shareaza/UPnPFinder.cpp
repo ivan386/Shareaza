@@ -22,6 +22,7 @@
 #include "StdAfx.h"
 #include "Shareaza.h"
 #include "Settings.h"
+#include "Network.h"
 #include "UPnPFinder.h"
 
 #ifdef _DEBUG
@@ -695,7 +696,7 @@ void CUPnPFinder::DeleteExistingPortMappings(ServicePointer pService)
 					str.Format( L"%hu", Settings.Connection.InPort );
 					if ( _tcsstr( strPort, str ) != NULL ) // ports are equal
 					{
-						Settings.Connection.InPort = GetRandomNum( 10000, 60000 );
+						Settings.Connection.InPort = Network.RandomPort();
 						// start from the beginning
 						nEntry = 0;
 						hrDel = hr = S_OK;
@@ -736,7 +737,7 @@ void CUPnPFinder::CreatePortMappings(ServicePointer pService)
 
 	if ( Settings.Connection.InPort == 0 ) // random port
 	{
-		Settings.Connection.InPort = GetRandomNum( 10000, 60000 );
+		Settings.Connection.InPort = Network.RandomPort();
 	}
 	strPort.Format( L"%hu", Settings.Connection.InPort );
 

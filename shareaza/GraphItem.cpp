@@ -223,7 +223,7 @@ QWORD CGraphItem::GetValue(DWORD nCode, float nMultiplier)
 	switch ( nCode )
 	{
 	case GRC_RANDOM:
-		nValue = GetRandomNum( 0, 100 );
+		nValue = GetRandomNum( 0, 99 );
 		break;
 
 	case GRC_TOTAL_BANDWIDTH_IN:
