@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 
-<!-- Shareaza Default English Skin File --> <!-- This translation is based on default-en.xml SVN rev.6238 + ~1 -->
+<!-- Shareaza Default English Skin File --> <!-- This translation is based on default-en.xml SVN rev.7280 -->
 
 <!-- This skin basically represents the current Shareaza defaults. You can use this file as -->
 <!-- a basis for creating new skins, however in a new skin be sure to ONLY include the sections -->
@@ -16,8 +16,8 @@
 		updatedBy="Rolandas Rudomanskis, ryo-oh-ki, ceceboy, ale5000"
 		description="Shareaza Default English Skin File"
 		link="http://shareaza.sourceforge.net/"
-		email="contact(at)shareaza(dot)com"
-		version="2.3.1.1"
+		email="Contact(at)ShareazaProject.com"
+		version="2.3.2.0"
 		type="Language"
 		language="en"
 		prompt="Click here to select English as your natural language."
@@ -456,7 +456,6 @@
 	<!-- IMAGE VIEWER WINDOW -->
 	<toolbar name="ImageViewer_Toolbar">
 		<button id="ImageViewer_BestFit" text="Best Fit"/>
-		<button id="ImageViewer_ActualSize" text="Actual Size"/>
 		<separator/>
 		<button id="ImageViewer_Refresh" text="Refresh"/>
 		<separator/>
@@ -1588,8 +1587,8 @@
 
 <!-- Watermarks -->
 <watermarks>
-	<watermark target="CHomeViewCtrl.Header" path="257.PNG"/>
-	<watermark target="CHomeViewCtrl.Header" path="258.PNG"/>
+	<watermark target="CHomeViewCtrl.Header1" path="257.PNG"/>
+	<watermark target="CHomeViewCtrl.Header2" path="258.PNG"/>
 </watermarks>
 <!-- Documents -->
 <documents>
@@ -1855,7 +1854,7 @@
 		<newline gap="10"/>
 		<link target="raza:page:CLibrarySettingsPage" format="b">Library:</link>
 		<gap size="4"/>
-		<text>Presentation and management of the file library, and opening files.</text>
+		<text>Presentation, access, and management of the file library.</text>
 		<newline gap="10"/>
 		<link target="raza:page:CMediaSettingsPage" format="b">Media Player:</link>
 		<gap size="4"/>
@@ -1865,10 +1864,13 @@
 		<gap size="4"/>
 		<text>Your profile, chat and instant messaging settings.</text>
 		<newline gap="10"/>
-		<link target="raza:page:CWebSettingsPage" format="b">Web:</link>
+		<link target="raza:page:CIRCSettingsPage" format="b">Chat:</link>
+		<gap size="4"/>
+		<text>IRC chatroom visual appearance and connection settings.</text>
+		<newline gap="10"/>
+		<link target="raza:page:CWebSettingsPage" format="b">Web Integration:</link>
 		<gap size="4"/>
 		<text>Integrate Shareaza with your web browser to accept peer-to-peer links and download content.</text>
-		<newline gap="10"/>
 	</document>
 	<document name="CInternetSettingsGroup" title="Internet" leftMargin="8" topMargin="8">
 		<styles>
@@ -1878,14 +1880,10 @@
 		</styles>
 		<text format="b">Welcome to Shareaza's Settings Manager</text>
 		<newline gap="16"/>
-		<text>
-			The Shareaza Settings Manager allows advanced users to completely customise how
-			Shareaza works. The settings in the 
-		</text>
+		<text>	The Shareaza Settings Manager allows advanced users to completely customise 
+			how Shareaza works. The settings in the </text>
 		<text format="b">Internet </text>
-		<text>
-			section control how Shareaza interacts with other nodes within distributed peer-to-peer
-			networks.
+		<text>	section control how Shareaza interacts with other nodes within distributed peer-to-peer networks.
 		</text>
 		<newline gap="16" indent="16"/>
 		<link target="raza:page:CConnectionSettingsPage" format="b">Connection:</link>
@@ -1904,6 +1902,9 @@
 		<gap size="4"/>
 		<text>Set up the ability to control Shareaza remotely through a web browser.</text>
 		<newline gap="10"/>
+		<link target="raza:page:CSchedulerSettingsPage" format="b">Scheduler:</link>
+		<gap size="4"/>
+		<text>Limit download connections based on a periodic schedule.</text>
 	</document>
 	<!-- Browse User Profile -->
 	<document name="CBrowseHostProfile.1">
