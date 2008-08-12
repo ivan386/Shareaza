@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 
-<!-- Shareaza Default German Skin File --> <!-- This translation is based on default-en.xml SVN rev.6170 + ~1 -->
+<!-- Shareaza Default German Skin File --> <!-- This translation is based on default-en.xml SVN rev.7280 -->
 
 <!-- This skin basically represents the current Shareaza defaults. You can use this file as -->
 <!-- a basis for creating new skins, however in a new skin be sure to ONLY include the sections -->
@@ -13,11 +13,11 @@
 <!-- Manifest -->
 <manifest	name="Deutsch"
 		author="Jann Röder"
-		updatedBy="Frontier, Jann Röder, ZeRO (Daisuke)"
+		updatedBy="OldDeath, Frontier, Jann Röder, ZeRO (Daisuke)"
 		description="Shareaza Default German Skin File"
 		link="http://shareaza.sourceforge.net/"
 		email="zero9999(at)gmail(dot)com"
-		version="2.3.1.4"
+		version="2.3.1.5"
 		type="Language"
 		language="de"
 		prompt="Klicken Sie hier, um Deutsch als Sprache zu wählen."
@@ -44,6 +44,7 @@
 		<button id="ID_TAB_SEARCH" text="Suchen"/>
 		<button id="ID_TAB_TRANSFERS" text="Transfer"/>
 		<button id="ID_TAB_NETWORK" text="Netzwerk"/>
+		<button id="ID_TAB_IRC" text="Chat"/>
 	</toolbar>
 	<toolbar name="CMainWnd.Windowed">
 		<button id="ID_NETWORK_CONNECT" text="Verbinden"/>
@@ -56,6 +57,7 @@
 		<button id="ID_VIEW_UPLOADS"/>
 		<button id="ID_VIEW_LIBRARY"/>
 		<button id="ID_VIEW_MEDIA"/>
+		<button id="ID_TAB_IRC"/>
 		<button id="ID_VIEW_SECURITY"/>
 		<button id="ID_VIEW_HOSTS"/>
 		<button id="ID_VIEW_DISCOVERY"/>
@@ -282,6 +284,8 @@
 		<button id="ID_LIBRARY_FOLDER_ENQUEUE" text="Album wiedergeben"/>
 		<separator/>
 		<button id="ID_LIBRARY_PROPERTIES" text="Eigenschaften"/>
+		<separator/>
+		<button id="ID_WEBSERVICES_LIST" text="Internetdienste"/>
 		<rightAlign/>
 		<separator/>
 		<control id="IDC_SEARCH_BOX" width="120"/>
@@ -344,6 +348,13 @@
 		<button id="ID_MEDIA_CLEAR" text="Aufräumen"/>
 		<button id="ID_MEDIA_SAVE" text="Speichern"/>
 	</toolbar>
+	<!-- IRC WINDOW -->
+	<toolbar name="CMainIrcBar">
+		<button id="ID_IRC_CONNECT" text="Verbinden" tip="Mit IRC verbinden"/>
+		<button id="ID_IRC_DISCONNECT" text="Verbindung trennen" tip="Verbindung mit IRC-Chat trennen"/>
+		<rightAlign/>
+		<button id="ID_IRC_SETTINGS" text="Einstellungen" tip="IRC-Einstellungen konfigurieren"/>
+	</toolbar>
 	<!-- NEIGHBOURS WINDOW -->
 	<toolbar name="CNeighboursWnd.Basic">
 		<button id="ID_BROWSE_LAUNCH" text="Benutzer durchsuchen"/>
@@ -352,7 +363,6 @@
 		<button id="ID_NETWORK_G2" text="Gnutella2"/>
 		<button id="ID_NETWORK_G1" text="Gnutella1"/>
 		<button id="ID_NETWORK_ED2K" text="eDonkey"/>
-
 		<separator/>
 		<button id="ID_NEIGHBOURS_SETTINGS" text="Einstellungen"/>
 	</toolbar>
@@ -429,6 +439,7 @@
 	<toolbar name="WebServices.ShareMonkey.WithSave">
 		<button id="ID_SHAREMONKEY_DOWNLOAD" text="Daten holen" /> 
 		<button id="ID_SHAREMONKEY_SAVE" text="Speichern" /> 
+		<control id="ID_SHAREMONKEY_SAVE_OPTION" text="Vorschau speichern" width="100" checked="true"/>
 		<separator /> 
 		<button id="ID_SHAREMONKEY_PREVIOUS" text="Zurück" /> 
 		<button id="ID_SHAREMONKEY_NEXT" text="Vor" /> 
@@ -488,6 +499,7 @@
 			<item id="ID_TAB_SEARCH" text="_Suchen"/>
 			<item id="ID_TAB_TRANSFERS" text="_Downloads"/>
 			<item id="ID_WINDOW_REMOTE" text="_Fernbedienung"/>
+			<item id="ID_TAB_IRC" text="_Chat"/>
 			<separator/>
 			<menu text="_Erweitert">
 				<item id="ID_VIEW_NEIGHBOURS" text="_Netzwerk"/>
@@ -563,6 +575,7 @@
 			<item id="ID_TAB_SEARCH" text="_Suchen"/>
 			<item id="ID_TAB_TRANSFERS" text="_Transfer"/>
 			<item id="ID_TAB_NETWORK" text="_Netzwerk"/>
+			<item id="ID_TAB_IRC" text="_Chat"/>
 			<separator/>
 			<item id="ID_VIEW_SECURITY" text="S_icherheit"/>
 			<item id="ID_VIEW_HOSTS" text="H_ost-Cache"/>
@@ -631,7 +644,10 @@
 				<item id="ID_HELP_WEB_2" text="P2PForums.com"/> -->
 			</menu>
 			<separator/>
+			<item id="ID_HELP_VERSION_CHECK" text="Nach _Update suchen"/>
+			<separator/>
 			<item id="ID_HELP_ABOUT" text="_Über Shareaza..."/>
+			<item id="ID_HELP_DONATE" text="_An das Shareaza Projekt spenden!"/>
 		</menu>
 	</menu>
 	<menu name="CMainWnd.Windowed" type="bar">
@@ -720,7 +736,10 @@
 				<item id="ID_HELP_WEB_2" text="P2PForums.com"/> -->
 			</menu>
 			<separator/>
+			<item id="ID_HELP_VERSION_CHECK" text="Nach _Update suchen"/>
+			<separator/>
 			<item id="ID_HELP_ABOUT" text="_Über Shareaza..."/>
+			<item id="ID_HELP_DONATE" text="_An das Shareaza Projekt spenden!"/>
 		</menu>
 	</menu>
 	<!-- VIEW POPUP -->
@@ -745,6 +764,7 @@
 		<item id="ID_TAB_SEARCH" text="_Suchen"/>
 		<item id="ID_TAB_TRANSFERS" text="_Transfer"/>
 		<item id="ID_TAB_NETWORK" text="_Netzwerk"/>
+		<item id="ID_TAB_IRC" text="_Chat"/>
 		<separator/>
 		<item id="ID_VIEW_SECURITY" text="_Sicherheit"/>
 		<item id="ID_VIEW_HOSTS" text="_Host-Cache"/>
@@ -830,6 +850,7 @@
 		<item id="ID_TAB_SEARCH" text="_Suchen"/>
 		<item id="ID_TAB_TRANSFERS" text="_Transfer"/>
 		<item id="ID_TAB_NETWORK" text="_Netzwerk"/>
+		<item id="ID_TAB_IRC" text="_Chat"/>
 		<separator/>
 		<item id="ID_VIEW_SECURITY" text="_Sicherheit"/>
 		<item id="ID_VIEW_HOSTS" text="_Host Cache"/>
@@ -854,6 +875,8 @@
 			<item id="ID_HOSTCACHE_G2_CACHE" text="Gnutella_2-Cache"/>
 			<item id="ID_HOSTCACHE_G1_CACHE" text="Gnutella_1-Cache"/>
 			<item id="ID_HOSTCACHE_ED2K_CACHE" text="_eDonkey-Server"/>
+			<item id="ID_HOSTCACHE_BT_CACHE" text="_BitTorrent-Cache"/>
+			<item id="ID_HOSTCACHE_KAD_CACHE" text="_Kademlia-Cache"/>
 		</menu>
 		<separator/>
 		<item id="ID_HOSTCACHE_IMPORT" text="MET-Datei _importieren..."/>
@@ -1045,7 +1068,6 @@
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="_Entfernen"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_COPY" text="U_RI kopieren"/>
-		<item id="ID_DOWNLOADS_TORRENT_INFO" text="Torrent-Info"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_FILE_DELETE" text="_Datei löschen"/>
 		<item id="ID_DOWNLOADS_RATE" text="D_atei bewerten..."/>
@@ -1053,6 +1075,7 @@
 	<menu name="CDownloadsWnd.Seeding">
 		<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Öffnen"/>
 		<item id="ID_DOWNLOADS_TORRENT_INFO" text="Torrent-_Info"/>
+		<separator/>
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="_Seeden beenden"/>
 	</menu>
 	<menu name="CDownloadsWnd.Nothing">
@@ -1187,6 +1210,7 @@
 			<item id="ID_LIBRARY_COPY" text="Datei(en) _kopieren..."/>
 		</menu>
 		<item id="ID_LIBRARY_REBUILD_ANSI" text="_Metadaten lokalisieren"/>
+		<item id="ID_LIBRARY_REFRESH_METADATA" text="_Refresh Metadata"/>
 		<separator/>
 		<item id="ID_LIBRARY_PROPERTIES" text="_Eigenschaften"/>
 	</menu>
@@ -1219,8 +1243,11 @@
 			<item id="ID_LIBRARY_COPY" text="Datei(en) _kopieren..."/>
 		</menu>
 		<item id="ID_LIBRARY_REBUILD_ANSI" text="Metadaten _lokalisieren"/>
+		<item id="ID_LIBRARY_REFRESH_METADATA" text="Metadaten _aktualisieren"/>
 		<separator/>
 		<item id="ID_LIBRARY_COLUMNS" text="S_palteneinstellungen..."/>
+		<separator/>
+		<item id="ID_SHELL_MENU" text="_Kontextmenü"/>
 		<separator/>
 		<item id="ID_LIBRARY_PROPERTIES" text="_Eigenschaften"/>
 	</menu>
@@ -1255,6 +1282,7 @@
 			<item id="ID_LIBRARY_COPY" text="Datei(en) _kopieren..."/>
 		</menu>
 		<item id="ID_LIBRARY_REBUILD_ANSI" text="Metadaten _lokalisieren"/>
+		<item id="ID_LIBRARY_REFRESH_METADATA" text="Metadaten _aktualisieren"/>
 		<separator/>
 		<item id="ID_LIBRARY_PROPERTIES" text="_Eigenschaften"/>
 	</menu>
@@ -1289,6 +1317,7 @@
 			<item id="ID_LIBRARY_COPY" text="Datei(en) _kopieren..."/>
 		</menu>
 		<item id="ID_LIBRARY_REBUILD_ANSI" text="Metadaten _lokalisieren"/>
+		<item id="ID_LIBRARY_REFRESH_METADATA" text="Metadaten _aktualisieren"/>
 		<separator/>
 		<item id="ID_LIBRARY_COLUMNS" text="S_palteneinstellungen..."/>
 		<separator/>
@@ -1402,7 +1431,13 @@
 	</menu>
 	<!-- SYSTEM WINDOW -->
 	<menu name="CSystemWnd">
-		<item id="ID_SYSTEM_VERBOSE" text="_Ausführlicher Modus"/>
+		<menu id="ID_SYSTEM_VERBOSE" text="_Ausführlicher Modus"/> <!-- TRANSLATION STILL NEEDED ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo -->
+			<item id="ID_SYSTEM_VERBOSE_ERROR" text="_Error"/>
+			<item id="ID_SYSTEM_VERBOSE_WARNING" text="_Warning"/>
+			<item id="ID_SYSTEM_VERBOSE_NOTICE" text="_Notice"/>
+			<item id="ID_SYSTEM_VERBOSE_INFO" text="_Info"/>
+			<item id="ID_SYSTEM_VERBOSE_DEBUG" text="_Debug"/>
+			</menu>
 		<item id="ID_SYSTEM_TIMESTAMP" text="Zeitstem_pel"/>
 		<separator/>
 		<item id="ID_SYSTEM_COPY" text="_Kopieren" shortcut="Ctrl+C"/>
@@ -1515,6 +1550,39 @@
 		<separator/>
 		<item id="ID_CHAT_TIMESTAMP" text="_Zeitstempel"/>
 		<item id="ID_CHAT_CLEAR" text="Anzeige _löschen"/>
+	</menu>
+	<!-- IRC WINDOW -->
+	<menu name="CIRCTabRClick">
+		<item id="ID_IRC_CLOSETAB" text="_Schließen"/>
+	</menu>
+	<menu name="CIRCUserList">
+		<item id="ID_IRC_WHOIS" text="_Whois"/><!-- TRNASLATION STILL NEEDED````````````````````~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+		<item id="ID_IRC_QUERY" text="_Abfragen"/>
+		<separator/>
+		<menu text="Actions">
+			<item id="ID_IRC_TIME" text="_Zeit"/>
+			<item id="ID_IRC_VERSION" text="_Version"/>
+		</menu>
+		<separator/>
+		<menu text="Control">
+			<item id="ID_IRC_IGNORE" text="_Ignorieren"/>
+			<item id="ID_IRC_UNIGNORE" text="_Nicht mehr ignorieren"/>
+			<item id="ID_IRC_OP" text="_Op"/>
+			<item id="ID_IRC_DEOP" text="_Deop"/>
+			<item id="ID_IRC_VOICE" text="_Voice"/>
+			<item id="ID_IRC_DEVOICE" text="D_evoice"/>
+			<item id="ID_IRC_KICK" text="_Hinauswerfen"/>
+			<item id="ID_IRC_KICKWHY" text="Hinauswerfen (Grund?)"/>
+			<item id="ID_IRC_BAN" text="_Verbannen"/>
+			<item id="ID_IRC_UNBAN" text="_Verbannung aufheben"/>
+			<item id="ID_IRC_BANKICK" text="Hinauswerfen+Verbannen"/>
+			<item id="ID_IRC_BANKICKWHY" text="Hinauswerfen+Verbannen (Grund?)"/>
+		</menu>
+	</menu>
+	<menu name="WebServices.List.Menu">
+		<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Bitzi"/>
+		<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
+		<item id="ID_WEBSERVICES_SHAREMONKEY" text="_ShareMonkey"/>
 	</menu>
 	<!-- PLUGIN MENUS -->
 	<menu name="ImageViewer_Context">
@@ -1723,11 +1791,11 @@
 		<text group="32" align="middle">Verbinden...</text>
 		<text group="33" align="middle">Verbunden</text>
 		<newline group="30" gap="2"/>
-
 		<group id="2">
 			<para align="center">
 				<newline gap="6"/>
 				<text>Sie sind seit </text>
+				<newline gap="0"/>
 				<text id="ConnectedHours" format="b">%i </text>
 				<text>Stunden und </text>
 				<text id="ConnectedMinutes" format="b">%i </text>
@@ -1806,6 +1874,10 @@
 		<gap size="4"/>
 		<text>Ihr Profil, Chat und Instant Messaging-Einstellungen.</text>
 		<newline gap="10"/>
+		<link target="raza:page:CIRCSettingsPage" format="b">IRC:</link>
+		<gap size="4"/>
+		<text>IRC chatroom visual appearance and connection settings.</text>
+		<newline gap="10"/>
 		<link target="raza:page:CWebSettingsPage" format="b">Web:</link>
 		<gap size="4"/>
 		<text>Integrieren Sie Shareaza in ihren Browser, um P2P-Links zu benutzen.</text>
@@ -1845,6 +1917,9 @@
 		<gap size="4"/>
 		<text>Shareaza konfigurieren, um die Bedienung über einen Webbrowser zu ermöglichen.</text>
 		<newline gap="10"/>
+		<link target="raza:page:CSchedulerSettingsPage" format="b">Scheduler:</link>
+		<gap size="4"/>
+		<text>Limit download connections based on a periodic schedule.</text>
 	</document>
 	<!-- Browse User Profile -->
 	<document name="CBrowseHostProfile.1">
@@ -2907,6 +2982,7 @@
 	<string id="16410" value="Ein Unterordner des ausgewählten Ordners &quot;%s&quot; befindet sich schon in ihrer Bibliothek.\nDas Hinzufügen dieses Ordners hat zur Folge, dass einige Dateien neu verifiziert werden müssen.\n\nMöchten Sie fortfahren?"/>
 	<string id="16411" value="Kann Datei %s nicht verschieben. Es ist möglich, dass eine andere Anwendung die Datei gerade verwendet.\n\nMöchten Sie stattdessen versuchen, die Datei zu kopieren?"/>
 	<string id="16412" value="Ghost-Datei"/>
+	<string id="16413" value="Neue Gruppe"/>
 	<string id="16448" value="Verbunden mit %s, handshaking..."/>
 	<string id="16449" value="Chatten mit %s (%s)."/>
 	<string id="16450" value="Verbindung mit %s getrennt."/>
@@ -3163,6 +3239,7 @@
 	<string id="20010" value="&amp;Zurück"/>
 	<string id="20011" value="&amp;Weiter"/>
 	<string id="20012" value="Abschließen"/>
+	<string id="20013" value="Alle"/>
 	<string id="20100" value="Verbinden"/>
 	<string id="20101" value="Anfordern"/>
 	<string id="20102" value="Antwort"/>
@@ -3227,6 +3304,8 @@
 </strings>
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
 <dialogs>
+	<dialog name="CGeneralSettingsGroup" cookie="" caption="Allgemein">
+	</dialog>
 	<dialog name="CSettingSheet" cookie="SyBuBuBu#3" caption="Einstellungen">
 		<control/>
 		<control caption="OK"/>
@@ -3234,7 +3313,6 @@
 		<control caption="Übernehmen"/>
 		<control/>
 	</dialog>
-	<dialog name="CGeneralSettingsGroup" cookie="" caption="Allgemein"/>
 	<dialog name="CGeneralSettingsPage" cookie="BuBuBuBuStCoBuBuBuBuBuBuBuBuBuSyStEdmsStmsBuStCoStCo" caption="Allgemein">
 		<control caption="_Allgemein:"/>
 		<control caption="Bei Programmstart verbinden"/>
@@ -3253,7 +3331,8 @@
 		<control caption="T_ooltips:"/>
 		<control/>
 		<control caption="Verzögerung:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Transp.:"/>
 		<control/>
 		<control caption="_Tray:"/>
@@ -3270,10 +3349,12 @@
 		<control caption="Durchsuchen erlauben"/>
 		<control caption="_Neue Dateien:"/>
 		<control caption="Merken:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Dateien"/>
 		<control caption="Bis zu:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Tage"/>
 		<control caption="Verlauf jetzt löschen"/>
 		<control caption="_Sichere Dateitypen:"/>
@@ -3285,8 +3366,10 @@
 		<control caption="_Hinzufügen"/>
 		<control caption="_Entfernen"/>
 		<control caption="_Kollektionen hier speichern:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Erst. Ghost-Dateien beim Löschen"/>
+		<control caption="Smart video series detection"/> <!-- still needs to be translated!!! kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk-->
 	</dialog>
 	<dialog name="CMediaSettingsPage" cookie="BuCoBuBuBuCoBuBuBuBuBuStSt" caption="Medienwiedergabe">
 		<control caption="_Optionen:"/>
@@ -3313,6 +3396,42 @@
 		<control caption="Spamnachrichten im Chat filtern"/>
 		<control caption="Vulgäre Sprache im Chat filtern"/>
 	</dialog>
+	<dialog name="CIRCSettingsPage" cookie="BuBuBuEdStBuStCoBuBuStBuStBuStBuStBuStBuStBuStEdStEdStEdStEdStEdStEd" caption="Chat">
+		<control caption="IRC _Optionen:"/>
+		<control caption="Zeige IRC im Menü an"/>
+		<control caption="Flooding-Schutz:"/>
+		<control/>
+		<control caption="Zeilen pro Sekunde"/>
+		<control caption="Zeitstempel anzeigen"/>
+		<control caption="Schriftart:"/>
+		<control/>
+		<control caption="_Farben:"/>
+		<control/>
+		<control caption="Servernachrichten"/>
+		<control/>
+		<control caption="Themen"/>
+		<control/>
+		<control caption="Channel Actions"/>
+		<control/>
+		<control caption="Notizen"/>
+		<control/>
+		<control caption="Hintergrund "/>
+		<control/>
+		<control caption="Text"/>
+		<control caption="_Verbindungseinstellungen:"/>
+		<control caption="Nick:"/>
+		<control/>
+		<control caption="Benutzername:"/>
+		<control/>
+		<control caption="Alternativer Nick:"/>
+		<control/>
+		<control caption="Wirklicher Name:"/>
+		<control/>
+		<control caption="Server:"/>
+		<control/>
+		<control caption="Port:"/>
+		<control/>
+	</dialog>
 	<dialog name="CWebSettingsPage" cookie="BuStBuBuBuBuBuBuBuCoBuBuSt" caption="Web">
 		<control caption="_Peer-to-Peer-Links:"/>
 		<control caption="Folgende Linktypen mit Shareaza öffnen"/>
@@ -3328,7 +3447,8 @@
 		<control caption="_Remove"/>
 		<control caption="Das Downloadmanager-Plugin wird nur für die hier aufgeführten Dateitypen benutzt. Andere Dateitypen werden vom Webbrowser verwaltet. Shareaza muss gestartet sein, um Downloads abzufangen."/>
 	</dialog>
-	<dialog name="CInternetSettingsGroup" caption="Internet"/>
+	<dialog name="CInternetSettingsGroup" caption="Internet">
+	</dialog>
 	<dialog name="CConnectionSettingsPage" cookie="BuStCoStCoStEdBuBuBuStCoStCoBuStCoBuBuBuStEdmsStEdms" caption="Verbindung">
 		<control caption="_Inbound-Adresse:"/>
 		<control caption="Adresse:"/>
@@ -3351,27 +3471,35 @@
 		<control caption="UPnP-Geräte automatisch einstellen"/>
 		<control caption="_Wartezeiten:"/>
 		<control caption="Verbindung:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Handshake:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 	</dialog>
 	<dialog name="CDownloadsSettingsPage" cookie="BuEdBuBuEdBuBuStEdmsStEdmsStEdmsBuStCoStCoBuBu" caption="Downloads">
 		<control caption="_Downloadverzeichnis:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="_Unvollständige Dateien:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="_Anzahl Downloads:"/>
 		<control caption="Dateien maximal:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Max. Downloads:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Quellen pro Datei:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="_Limits:"/>
 		<control caption="Downloadgeschwindigkeit:"/>
 		<control/>
 		<control caption="Max. Warteschlangenlänge:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Nur in verbundenen Netzwerken hoch- und herunterladen."/>
 	</dialog>
 	<dialog name="CUploadsSettingsPage" cookie="BuBuBuBuStEdmsBuCoBuBuBuStCoStCoBuSyBuBuBuSt" caption="Uploads">
@@ -3380,7 +3508,8 @@
 		<control caption="Freig. im HUB-Modus einschr."/>
 		<control caption="Vorschau-Dateien freigeben"/>
 		<control caption="Uploads pro Host:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="_User-Agent-Filter:"/>
 		<control/>
 		<control caption="+"/>
@@ -3412,7 +3541,8 @@
 	<dialog name="CSchedulerSettingsPage" cookie="BuBuEdmsBuBuStStStStStStStStStStStEdBuSt" caption="Zeitsteuerung">
 		<control caption="_Optionen:"/>
 		<control caption="Zeitsteuerung _aktivieren"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="_Nur G2, wenn Zeitsteuerung aktiv"/>
 		<control caption="Legende:"/>
 		<control caption="So"/>
@@ -3453,11 +3583,14 @@
 		<control caption="Optimal|Leaf|Hub"/>
 		<control caption="G_2-Verbindungen:"/>
 		<control caption="Leaf zu Hub:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Hub zu Leaf:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Hub zu Hub:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Gnutella1-Netzwerk:"/>
 		<control caption="Immer zu Gnutella1 verbinden"/>
 		<control caption="Heute zu Gnutella1 verbinden"/>
@@ -3465,11 +3598,14 @@
 		<control caption="Optimal|Leaf|Ultrapeer"/>
 		<control caption="G_1-Verbindungen:"/>
 		<control caption="Leaf zu Ultrapeer:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Ultrapeer zu Leaf:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Peer zu Peer:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="_Kompression:"/>
 		<control caption="Hub zu Leaf"/>
 		<control caption="Leaf zu Hub"/>
@@ -3482,12 +3618,14 @@
 		<control caption="_Globale Suche:"/>
 		<control caption="Auf bekannten Servern aus dem Server-Cache suchen."/>
 		<control caption="Suche stoppen nach:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Suchergebnissen."/>
 		<control caption="Serverlisten-Aktualisierungen vom verbundenem eD2k-Server erhalten"/>
 		<control caption="Client-_Verbindungen:"/>
 		<control caption="Mit maximal"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="anderen Clients verbinden."/>
 		<control caption="eDonkey-_Tools:"/>
 		<control caption="Serverliste aus dem Internet herunterladen:"/>
@@ -3497,19 +3635,25 @@
 		<control caption="_Benutzeroberfläche:"/>
 		<control caption="Zusätzliche BitTorrent-Bedienelemente anzeigen"/>
 		<control caption="_Download-Verbindungen:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Torrents gleichzeitig"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Client-Verbindungen"/>
 		<control caption=" Torrents entfernen bei Up- / Downloadverhältnis von"/>
-		<control/><control/><control/>
+		<control/>
+		<control/>
+		<control caption="%"/
 		<control caption=" Torrentquellen bevorzugen"/>
 		<control caption="_End-Game:"/>
 		<control caption="End-Game-Modus am Ende von Torrent-Downloads aktivieren"/>
 		<control caption="Torrents hier _speichern:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="._torrent-Erstellungsprogramm"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="St_andardtracker:"/>
 		<control/>
 	</dialog>
@@ -3542,10 +3686,12 @@
 	</dialog>
 	<dialog name="CAdvancedSettingsPage" cookie="SyBuStEdmsStEd" caption="Erweitert">
 		<control/>
-		<control caption="Eigenschaften:"/>
+		<control/>
+		<control/>
+		<control caption="Standard"/>
+		<control caption="Einstellungswert:"/>
 		<control caption="Wert:"/>
-		<control/><control/>
-		<control caption="Info:"/>
+		<control caption="Beschreibung:"/>
 		<control/>
 	</dialog>
 	<dialog name="CQueuePropertiesDlg" cookie="BuEdBuBuBuBuBuEdBuEdBuCoBuEdBuSyBuBuStEdmsStEdmsStEdmsBuStEdStEdmsBuEdmsBuBuBu" caption="Warteschlangeneigenschaften">
@@ -3560,7 +3706,7 @@
 		<control caption="Maximale Dateigröße:"/>
 		<control/>
 		<control caption="Markierung:"/>
-		<control/>
+		<control caption="Popular|Release"/>
 		<control caption="Dateiname enthält:"/>
 		<control/>
 		<control caption="Protokolle:"/>
@@ -3568,18 +3714,23 @@
 		<control caption="K_apazität:"/>
 		<control caption="Diese Warteschlange aktivieren"/>
 		<control caption="Minimum Uploads:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Maximum Uploads:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Warteschlangenlänge:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="_Bandbreite:"/>
 		<control caption="Anteil an Gesamtbandbreite:"/>
 		<control/>
 		<control caption="Upload Geschwindigkeit:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Rotieren nach N Sekunden:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="OK"/>
 		<control caption="Abbrechen"/>
 		<control caption="Uploader belohnen"/>
@@ -3597,16 +3748,6 @@
 		<control caption="Eine Verbindung zu den gewünschten P2P-Netzwerken herzustellen"/>
 		<control/>
 		<control caption="Shareaza zu benutzen"/>
-	</dialog>
-	<dialog name="CWizardInterfacePage" cookie="StBuBuBuStStBuBu" caption="Willkommen bei Shareaza [Schritt 2 von 7]">
-		<control caption="Shareaza bietet eine flexible Benutzeroberfläche. Sie können also wählen, was Ihnen am angenehmsten ist. Sie können diese Optionen jederzeit ändern."/>
-		<control caption="Bitte wählen Sie eine Benutzeroberfläche:"/>
-		<control caption="Normalmodus"/>
-		<control caption="Powermodus"/>
-		<control caption="Simple, einfach zu bedienende Menüs und Buttons."/>
-		<control caption="Der Powermodus bietet viele zusätzliche Befehle, Fenster, usw."/>
-		<control caption="Einfache Download-Fortschrittsanzeigen verwenden. (Verringert CPU-Last)"/>
-		<control caption="Shareaza mit .torrent-Dateien verknüpfen."/>
 	</dialog>
 		<dialog name="CWizardConnectionPage" cookie="StStCoStCoStCoStCoStms" caption="Willkommen bei Shareaza [Schritt 3 von 7]">
 		<control caption="Shareaza benötigt nun einige Informationen über ihre Internetverbinung um bestmöglich zu funktionieren."/>
@@ -3647,7 +3788,18 @@
 		<control caption=" ( Bitte wählen )"/>
 		<control caption=" ( Bitte wählen )| Junge| Mädchen| Mann| Frau"/>
 		<control caption="aus:"/>
-		<control/><control/>
+		<control/>
+		<control/>
+	</dialog>
+	<dialog name="CWizardInterfacePage" cookie="StBuBuBuStStBuBu" caption="Willkommen bei Shareaza [Schritt 2 von 7]">
+		<control caption="Shareaza bietet eine flexible Benutzeroberfläche. Sie können also wählen, was Ihnen am angenehmsten ist. Sie können diese Optionen jederzeit ändern."/>
+		<control caption="Bitte wählen Sie eine Benutzeroberfläche:"/>
+		<control caption="Normalmodus"/>
+		<control caption="Powermodus"/>
+		<control caption="Simple, einfach zu bedienende Menüs und Buttons."/>
+		<control caption="Der Powermodus bietet viele zusätzliche Befehle, Fenster, usw."/>
+		<control caption="Einfache Download-Fortschrittsanzeigen verwenden. (Verringert CPU-Last)"/>
+		<control caption="Shareaza mit .torrent-Dateien verknüpfen."/>
 	</dialog>
 	<dialog name="CWizardNetworksPage" cookie="StBuStBuStBuSt" caption="Willkommen bei [Schritt 6 von 7]">
 		<control caption="Shareaza ist ein Allround-File-Sharing-Programm, das auf mehrere P2P-Netzwerke gleichzeitig zugreifen kann. Hier können Sie einstellen, welche Netzwerke Sie verwenden möchten. Sie können später jederzeit andere Netzwerke auswählen."/>
@@ -3687,7 +3839,8 @@
 		<control caption="Nickname:"/>
 		<control/>
 		<control caption="Name:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="_Persönliche Daten:"/>
 		<control caption="|männlich|weiblich"/>
 		<control caption="Geschlecht:"/>
@@ -3766,7 +3919,8 @@
 	<dialog name="CLanguageDlg" cookie="" caption="Sprache wählen"/>
 	<dialog name="CConnectToDlg" cookie="BuCoEdBuCoBuBuBu" caption="Verbinden mit|Benutzer durchsuchen">
 		<control caption="Verbinden mit:|Benutzer durchsuchen:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="_Netzwerkprotokoll:"/>
 		<control caption="Gnutella1 (auto)|Gnutella2 (auto)|eDonkey"/>
 		<control caption="_UP unterdrücken"/>
@@ -3774,7 +3928,8 @@
 		<control caption="Abbrechen"/>
 	</dialog>
 	<dialog name="CDownloadDlg" cookie="StStStEdBuBuStStBu" caption="Datei oder Torrent herunterladen">
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Das Herunterladen von Dateien mit Shareaza ist einfach. Geben Sie die URL oder URI in das Textfeld ein und drücken Sie &lt;Enter&gt;."/>
 		<control/>
 		<control caption="Herunterladen"/>
@@ -3784,7 +3939,8 @@
 		<control caption="_Torrent öffnen..."/>
 	</dialog>
 	<dialog name="CNewSearchDlg" cookie="EdCoBuBu" caption="Neue Suche|Erneut Suchen|In Bibliothek suchen">
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Suchen"/>
 		<control caption="Abbrechen"/>
 	</dialog>
@@ -3799,7 +3955,8 @@
 		<control caption="Maximum:"/>
 		<control/>
 		<control caption="Mit mindestens:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Quelle(n)."/>
 		<control caption="_Ausblenden:"/>
 		<control caption="Kein freier Uploadslot"/>
@@ -3832,11 +3989,14 @@
 		<control caption="Gnutella-Bootstrap|GWebCache|Server.met-URL|Blockiert"/>
 		<control caption="OK"/>
 		<control caption="Abbrechen"/>
+		<control/>
 	</dialog>
 	<dialog name="CDownloadMonitorDlg" cookie="StStStStStStStStStStStStStBuBuBuBuBu" caption="Download: Shareaza">
 		<control caption="Shareaza lädt herunter:"/>
 		<control caption="..."/>
-		<control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
 		<control caption="Übertragungsrate:"/>
 		<control caption="..."/>
 		<control caption="Geschätzte Dauer:"/>
@@ -3853,7 +4013,10 @@
 	</dialog>
 	<dialog name="CFileGeneralPage" cookie="StEdEdEdEdStStEdStEdStEdStEdEdEd" caption="Allgemein">
 		<control caption="Universal Resource Names (URNs)"/>
-		<control/><control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
 		<control caption="Dateieigenschaften"/>
 		<control caption="Ort:"/>
 		<control/>
@@ -3862,17 +4025,21 @@
 		<control caption="Geändert:"/>
 		<control/>
 		<control caption="Größe:"/>
-		<control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
 	</dialog>
 	<dialog name="CFileMetadataPage" cookie="CoEd" caption="Metadaten">
-		<control/><control/>
+		<control/>
+		<control/>
 	</dialog>
 	<dialog name="CFileCommentsPage" cookie="StStCoStEdEd" caption="Bewertung">
 		<control caption="Meine Bewertung"/>
 		<control caption="Bewertung:"/>
 		<control caption="(Keine Bewertung)|Gefälscht/Beschädigt/Irreführend|Schlecht|Durchschnittlich|Gut|Sehr Gut|Exzellent"/>
 		<control caption="Mein Kommentar"/>
-		<control/><control/>
+		<control/>
+		<control/>
 	</dialog>
 	<dialog name="CFileSharingPage" cookie="StBuBuBuStCoStSyEd" caption="Freigabe">
 		<control caption="Freigabe"/>
@@ -3882,19 +4049,22 @@
 		<control caption="Etikett"/>
 		<control/>
 		<control caption="-Freigeben in Netzwerk:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 	</dialog>
 	<dialog name="CFileSourcesPage" cookie="StStEdSyBuBuEd" caption="Quellen">
 		<control caption="Bekannte Quellen"/>
 		<control caption="Neue Quelle hinzufügen"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="_Hinzufügen"/>
 		<control caption="_Entfernen"/>
 		<control/>
 	</dialog>
 	<dialog name="CFileCopyDlg" cookie="StStmsBuBumsStSt" caption="Dateien kopieren|Dateien verschieben">
 		<control caption="Sie haben %i Datei(en) zum Kopieren in folgenden Ordner gewählt:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="OK"/>
 		<control caption="Abbrechen"/>
 		<control/>
@@ -3922,7 +4092,8 @@
 		<control caption="Legende"/>
 		<control caption="Mess_frequenz:"/>
 		<control caption="Zeit zwischen Messungen:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="ms"/>
 		<control caption="_Name:"/>
 		<control/>
@@ -3944,7 +4115,8 @@
 		<control caption="_Entfernen"/>
 	</dialog>
 	<dialog name="CSchemaColumnsDlg" cookie="CoSyBuBuSt" caption="Spalten- / Schema-Einstellungen">
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="OK"/>
 		<control caption="Abbrechen"/>
 		<control caption="Wählen Sie ein Schema aus der Liste und anschließend die gewünschten Felder."/>
@@ -3957,9 +4129,15 @@
 		<control/>
 		<control caption="_Netzwerkadresse:"/>
 		<control caption="IP-Adresse:"/>
-		<control/><control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
 		<control caption="Netzmaske:"/>
-		<control/><control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
 		<control caption="_Inhaltsfilter:"/>
 		<control/>
 		<control caption="logisch UND"/>
@@ -3991,7 +4169,9 @@
 	<dialog name="CURLCopyDlg" cookie="StStStStStBuBu" caption="URI kopieren">
 		<control/>
 		<control caption="Sie können für das gewählte Objekt eine URI in verschiedenen Formaten kopieren. Bitte wählen Sie das gewünschte Format, indem Sie unten auf eine URI klicken:"/>
-		<control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
 		<control caption="_Mich selbst als Quelle aufnehmen"/>
 		<control caption="Abbrechen"/>
 	</dialog>
@@ -4002,7 +4182,7 @@
 		<control caption="Einfügen:"/>
 		<control caption="Tiger Root|SHA1|MD5|eD2k (CMD4)|Dateiname|Dateiname (URI)|Basis Dateiname|Dateierweiterung|Dateigröße|Dateigröße (bytes)|Verzeichnispfad|Lokaler Host|Lokaler Port"/>
 		<control caption="Vorlage:"/>
-		<control/>
+		<control caption="Magnet|eDonkey|Magnet HTML|eDonkey HTML"/>
 		<control caption="_Kopieren"/>
 		<control caption="Speichern..."/>
 		<control/>
@@ -4110,9 +4290,9 @@
 		<control/>
 		<control caption="Infos:"/>
 		<control caption="Name:"/>
-		<control/>
+		<control caption="..."/>
 		<control caption="Autor:"/>
-		<control/>
+		<control caption="..."/>
 		<control caption="Beschreibung:"/>
 		<control/>
 		<control caption="Löschen|_Zurück"/>
@@ -4123,31 +4303,33 @@
 		<control caption="ACHTUNG: Dieser Dialog stellt erweiterte Funktionen für Poweruser zur Verfügung. Diese Funktionen zerstören bei falscher Anwendung ihre Downloads."/>
 		<control caption="Dateiname und -größe:"/>
 		<control caption="Datei_name:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Dateigröße (Byte):"/>
 		<control/>
 		<control caption="_URNs:"/>
 		<control caption="Vertraut"/>
 		<control caption="SHA1:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Tiger-Root:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="ED2K:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="_Aktionen:"/>
 		<control caption="Datei erneut verifizieren (TTH oder eD2k-Hashset)"/>
 		<control caption="Datei als komplett annehmen und erneut verifizieren"/>
 		<control caption="Alle Quellen vergessen"/>
 		<control caption="Mit lokaler Datei zusammenführen und erneut verifizieren"/>
+		<control caption="Download abbrechen aber unvollstaendige Datei(en) behalten"/>
 		<control caption="Data _Eraser:"/>
 		<control caption="Bytes löschen:"/>
 		<control/>
 		<control caption="bis"/>
 		<control/>
 		<control caption="Löschen"/>
-		<control caption="_Torrent-Info..."/>
-		<control caption="OK"/>
-		<control caption="Abbrechen"/>
 	</dialog>
 	<dialog name="CTorrentSeedDlg" cookie="StStBuBuBuStms" caption=".torrent-Datei öffnen">
 		<control/>
@@ -4202,7 +4384,8 @@
 	</dialog>
 	<dialog name="CDownloadGroupDlg" cookie="BuEdSyBuCoBuBuBuBuBuEdBu" caption="Downloadgruppen-Eigenschaften">
 		<control caption="_Name:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="_Filter:"/>
 		<control/>
 		<control caption="_Hinzufügen"/>
@@ -4210,6 +4393,7 @@
 		<control caption="OK"/>
 		<control caption="Abbrechen"/>
 		<control caption="Ziel_ordner:"/>
+		<control/>
 		<control/>
 	</dialog>
 	<dialog name="CMediaVisDlg" cookie="StBuSyCoBuBuBu" caption="Visualisierung wählen">
@@ -4235,10 +4419,15 @@
 		<control/><control/>
 	</dialog>
 	<dialog name="CDecodeMetadataDlg" cookie="BuBuStCo" caption="Metadaten-Lokalisierung">
-		<control caption="OK"/>
-		<control caption="Abbrechen"/>
 		<control caption="Bitte wählen Sie die neue Codierung"/>
 		<control caption="Arabisch|Baltisch|Zentraleuropäisch|Chinesisch (vereinfacht)|Chinesisch (traditionell)|Kyrillisch|Griechisch|Hebräisch|Japanisch|Koreanisch|Thailändisch|Türkisch|Vietnamesisch"/>
+		<control caption="Vorschau:"/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
+		<control caption="OK"/>
+		<control caption="Abbrechen"/>	
 	</dialog>
 </dialogs>
 <!-- Columns Definitions -->
