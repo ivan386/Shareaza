@@ -269,8 +269,8 @@ ErrorReplacingExistingFile=当覆盖已存在文件时发生错误：
 ErrorRestartReplace=覆盖失败：
 ErrorRenamingTemp=当试图给目的目录中文件改名时失败：
 ErrorRegisterServer=无法注册 DLL/OCX： %1
-ErrorRegisterServerMissingExport=DllRegisterServer支持未发现
 ErrorRegisterTypeLib=无法注册类型：%1
+ErrorRegSvr32Failed=RegSvr32 failed with exit code %1
 
 ; *** Post-installation errors
 ErrorOpeningReadme=当试图打开 自述文件 时发生错误。

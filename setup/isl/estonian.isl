@@ -288,8 +288,8 @@ ErrorReplacingExistingFile=Olemasoleva faili asendamisel ilmnes viga:
 ErrorRestartReplace=Faili asendamine peale restarti ei õnnestunud:
 ErrorRenamingTemp=Faili nime muutmisel sihtkataloogis ilmnes viga:
 ErrorRegisterServer=Ei saa registreerida DLL/OCX: %1
-ErrorRegisterServerMissingExport=DllRegisterServer eksporti ei leitud
 ErrorRegisterTypeLib=Võimatu registreerida library tüüpi: %1
+ErrorRegSvr32Failed=RegSvr32 luhtus with exit code %1
 
 ; *** Post-installation errors
 ErrorOpeningReadme=Readme faili avamisel ilmnes viga.

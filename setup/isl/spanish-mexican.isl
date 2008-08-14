@@ -275,7 +275,7 @@ ErrorReplacingExistingFile=Se ha presentado un error al intentar remplazar el ar
 ErrorRestartReplace=Error al reintentar reemplazo:
 ErrorRenamingTemp=Se ha presentado un error al intentar renombrar un archivo en el directorio de destino:
 ErrorRegisterServer=Imposible registrar DLL/OCX: %1
-ErrorRegisterServerMissingExport=DllRegisterServer export no fue encontrado
+ErrorRegSvr32Failed=RegSvr32 se falló con codice de código %1
 ErrorRegisterTypeLib=Imposible registrar la librería: %1
 
 ; *** Post-installation errors

@@ -270,8 +270,8 @@ ErrorReplacingExistingFile='n Fout het gebeur toe die bestaande leêr oorskryf is
 ErrorRestartReplace=HerbeginVerander gefaal:
 ErrorRenamingTemp='n Fout het gebeur terwyl 'n leêr in die bestemmingsgids van naam verander is:
 ErrorRegisterServer=Onmoontlik om die DLL/OCX te registreer: %1
-ErrorRegisterServerMissingExport=DllRegisterServer nie gevind
 ErrorRegisterTypeLib=Onmoontlik om die biblioteek tipe te registreer: %1
+ErrorRegSvr32Failed=RegSvr32 gefaal with exit kode %1
 
 ; *** Post-installation errors
 ErrorOpeningReadme='n Fout het gebeur terwyl die README leêr oopgemaak is.
