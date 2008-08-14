@@ -2570,6 +2570,8 @@
 	<icon res="IDI_FILE" id="IDI_FILE" types="16,32,48" rtl="0"/>
 	<icon res="IDI_PLUS" id="IDI_PLUS" types="16" rtl="0"/>
 	<icon res="IDI_MINUS" id="IDI_MINUS" types="16" rtl="0"/>
+	<icon res="IDI_PLUS_HOVER" id="IDI_PLUS_HOVER" types="16" rtl="0"/>
+	<icon res="IDI_MINUS_HOVER" id="IDI_MINUS_HOVER" types="16" rtl="0"/>
 	<icon res="IDI_TICK" id="IDI_TICK" types="16" rtl="0"/>
 	<icon res="IDI_BUSY" id="IDI_BUSY" types="16" rtl="0"/>
 	<icon res="IDI_FIREWALLED" id="IDI_FIREWALLED" types="16,32,48" rtl="0"/>

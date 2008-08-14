@@ -54,6 +54,8 @@
 	<resource code="303" id="IDI_TICK"/>
 	<resource code="304" id="IDI_BUSY"/>
 	<resource code="306" id="IDI_UNSTABLE"/>
+	<resource code="307" id="IDI_PLUS_HOVER"/>
+	<resource code="308" id="IDI_MINUS_HOVER"/>
 	<resource code="311" id="IDI_FOLDER_CLOSED"/>
 	<resource code="312" id="IDI_FOLDER_OPEN"/>
 	<resource code="313" id="IDI_LOCKED"/>
