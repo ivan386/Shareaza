@@ -990,15 +990,29 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
 
 		crLeftAligned = ( rcRow.left == rcCell.left ? crNatural : crBack ) ;
 
+		POINT ptHover;
+		RECT  rcTick = { rcCell.left+2, rcCell.top+2, rcCell.left+14, rcCell.bottom-2 };
+		GetCursorPos(&ptHover);
+		ScreenToClient(&ptHover);
+
 		switch ( pColumn.lParam )
 		{
 		case DOWNLOAD_COLUMN_TITLE:
 			dc.FillSolidRect( rcCell.left, rcCell.bottom - 1, 32, 1, crLeftAligned );
 			if ( IsExpandable( pDownload ) )
 			{
-				CoolInterface.Draw( &dc, 
-					( pDownload->m_bExpanded ? IDI_MINUS : IDI_PLUS ), 16,
-					rcCell.left, rcCell.top, crLeftAligned );
+				if ( pDownload->m_bExpanded )
+				{
+					CoolInterface.Draw( &dc, 
+						( PtInRect(&rcTick,ptHover) ? IDI_MINUS_HOVER : IDI_MINUS ),
+						16, rcCell.left, rcCell.top, crLeftAligned );
+				}
+				else 
+				{
+					CoolInterface.Draw( &dc, 
+						( PtInRect(&rcTick,ptHover) ? IDI_PLUS_HOVER : IDI_PLUS ),
+						16, rcCell.left, rcCell.top, crLeftAligned );
+				}
 			}
 			else
 				dc.FillSolidRect( rcCell.left, rcCell.top, 16, 16, crLeftAligned );
@@ -1353,7 +1367,6 @@ void CDownloadsCtrl::PaintSource(CDC& dc, const CRect& rcRow, CDownload* pDownlo
 
 			strText = pSource->m_sCountry;
 			break;
-
 		}
 		
 		nTextLeft	= min( nTextLeft, int(rcCell.left) );
@@ -1985,7 +1998,14 @@ void CDownloadsCtrl::OnMouseMove(UINT nFlags, CPoint point)
 		
 		if ( HitTest( point, &pDownload, &pSource, NULL, &rcItem ) )
 		{
-			if ( pDownload != NULL && point.x > rcItem.left + 16 )
+			// [+] or [-] Hoverstates
+			if ( point.x < rcItem.left + 18 )
+			{
+				CRect rcRefresh( 1, rcItem.top - 32, 18, rcItem.bottom + 32 );
+				RedrawWindow(rcRefresh);
+			}
+
+			if ( pDownload != NULL && point.x > rcItem.left + 18 )
 			{
 				m_wndTip.Show( pDownload );
 				return;

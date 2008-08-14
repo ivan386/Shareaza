@@ -1,7 +1,7 @@
 //
 // CtrlUploads.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -814,12 +814,27 @@ void CUploadsCtrl::PaintQueue(CDC& dc, const CRect& rcRow, CUploadQueue* pQueue,
 
 		crLeftAligned = ( rcRow.left == rcCell.left ? crNatural : crBack ) ;
 
+		POINT ptHover;
+		RECT  rcTick = { rcCell.left+2, rcCell.top+2, rcCell.left+14, rcCell.bottom-2 };
+		GetCursorPos(&ptHover);
+		ScreenToClient(&ptHover);
+
 		switch ( pColumn.lParam )
 		{
 		case UPLOAD_COLUMN_TITLE:
 			dc.FillSolidRect( rcCell.left, rcCell.bottom - 1, 32, 1, crLeftAligned );
-			CoolInterface.Draw( &dc, pQueue->m_bExpanded ? IDI_MINUS : IDI_PLUS, 16,
-					rcCell.left, rcCell.top, crLeftAligned );
+
+			if ( pQueue->m_bExpanded )
+			{
+			CoolInterface.Draw( &dc, PtInRect(&rcTick,ptHover) ? IDI_MINUS_HOVER : IDI_MINUS,
+					16, rcCell.left, rcCell.top, crLeftAligned );
+			}
+			else
+			{
+				CoolInterface.Draw( &dc, PtInRect(&rcTick,ptHover) ? IDI_PLUS_HOVER : IDI_PLMINUS,
+					16, rcCell.left, rcCell.top, crLeftAligned );
+			}
+
 			rcCell.left += 16;
 			if ( pQueue == UploadQueues.m_pTorrentQueue )
 			{
@@ -1398,6 +1413,12 @@ void CUploadsCtrl::OnMouseMove(UINT nFlags, CPoint point)
 		
 		if ( HitTest( point, NULL, &pFile, NULL, &rcItem ) )
 		{
+			// [+] or [-] Hoverstates
+			if ( point.x < rcItem.left + 18 )
+			{
+				CRect rcRefresh( 1, rcItem.top - 32, 18, rcItem.bottom + 32 );
+				RedrawWindow(rcRefresh);
+			}
 			if ( pFile != NULL )
 			{
 				m_wndTip.Show( pFile );

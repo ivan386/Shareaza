@@ -97,7 +97,7 @@ BEGIN_MESSAGE_MAP(CLibraryTreeView, CWnd)
 	ON_WM_GETDLGCODE()
 END_MESSAGE_MAP()
 
-#define ITEM_HEIGHT	16
+#define ITEM_HEIGHT	17
 
 /////////////////////////////////////////////////////////////////////////////
 // CLibraryTreeView construction
@@ -575,6 +575,13 @@ void CLibraryTreeView::OnRButtonDown(UINT nFlags, CPoint point)
 	CWnd::OnRButtonDown( nFlags, point );
 }
 
+void CLibraryTreeView::OnLButtonUp(UINT nFlags, CPoint point)
+{
+	m_bDrag = FALSE;
+
+	CWnd::OnLButtonUp( nFlags, point );
+}
+
 void CLibraryTreeView::OnMouseMove(UINT nFlags, CPoint point)
 {
 	if ( m_bDrag && ( nFlags & MK_LBUTTON ) )
@@ -603,13 +610,13 @@ void CLibraryTreeView::OnMouseMove(UINT nFlags, CPoint point)
 	}
 
 	CWnd::OnMouseMove( nFlags, point );
-}
 
-void CLibraryTreeView::OnLButtonUp(UINT nFlags, CPoint point)
-{
-	m_bDrag = FALSE;
-
-	CWnd::OnLButtonUp( nFlags, point );
+	// [+] or [-] Hoverstate
+	if ( point.x < 20 )
+	{
+		CRect rcRefresh( 1, point.y - 48, 18, point.y + 48 );
+		RedrawWindow(rcRefresh);
+	}
 }
 
 void CLibraryTreeView::OnKeyDown(UINT nChar, UINT /*nRepCnt*/, UINT /*nFlags*/)
@@ -1172,16 +1179,24 @@ BOOL CLibraryTreeItem::IsVisible() const
 
 void CLibraryTreeItem::Paint(CDC& dc, CRect& rc, BOOL bTarget, COLORREF crBack) const
 {
-	if ( crBack == CLR_NONE ) crBack = CoolInterface.m_crWindow;
+	POINT ptHover;
+	RECT  rcTick = { rc.left+2, rc.top+2, rc.left+14, rc.bottom-2 };
+	GetCursorPos( &ptHover );
+	if ( dc.GetWindow()!= NULL )
+		dc.GetWindow()->ScreenToClient( &ptHover );
 
-	if ( !empty() )
+	if ( crBack == CLR_NONE ) crBack = CoolInterface.m_crWindow;
+	dc.FillSolidRect( rc.left, rc.top, 32, 17, crBack );
+
+	if ( m_bExpanded )
 	{
-		CoolInterface.Draw( &dc, ( m_bExpanded ? IDI_MINUS : IDI_PLUS ), 16,
-			rc.left, rc.top, crBack );
+		CoolInterface.Draw( &dc, PtInRect(&rcTick,ptHover) ? IDI_MINUS_HOVER : IDI_MINUS,
+			16, rc.left, rc.top, crBack );
 	}
-	else
+	else if ( !empty() )
 	{
-		dc.FillSolidRect( rc.left, rc.top, 16, 16, crBack );
+		CoolInterface.Draw( &dc, PtInRect(&rcTick,ptHover) ? IDI_PLUS_HOVER : IDI_PLUS,
+			16, rc.left, rc.top, crBack );
 	}
 
 	if ( m_nIcon16 >= 0 )

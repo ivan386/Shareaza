@@ -4560,7 +4560,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Res\Busy.ico"
+				RelativePath="Res\Busy.ico"
 				>
 			</File>
 			<File
@@ -4576,7 +4576,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Res\Chevron.ico"
+				RelativePath="Res\Chevron.ico"
 				>
 			</File>
 			<File
@@ -4608,7 +4608,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Res\Commercial.ico"
+				RelativePath="Res\Commercial.ico"
 				>
 			</File>
 			<File
@@ -4640,7 +4640,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Res\CopyVista.cur"
+				RelativePath="Res\CopyVista.cur"
 				>
 			</File>
 			<File
@@ -4765,7 +4765,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Res\Fake.ico"
+				RelativePath="Res\Fake.ico"
 				>
 			</File>
 			<File
@@ -4786,11 +4786,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Res\FolderClosed.ico"
+				RelativePath="Res\FolderClosed.ico"
 				>
 			</File>
 			<File
-				RelativePath=".\Res\FolderOpen.ico"
+				RelativePath="Res\FolderOpen.ico"
 				>
 			</File>
 			<File
@@ -4859,7 +4859,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Res\Locked.ico"
+				RelativePath="Res\Locked.ico"
 				>
 			</File>
 			<File
@@ -4883,7 +4883,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Res\Minus.ico"
+				RelativePath="Res\Minus.ico"
+				>
+			</File>
+			<File
+				RelativePath="Res\MinusHover.ico"
 				>
 			</File>
 			<File
@@ -4891,7 +4895,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Res\MoveVista.cur"
+				RelativePath="Res\MoveVista.cur"
 				>
 			</File>
 			<File
@@ -4931,11 +4935,15 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Res\Partial.ico"
+				RelativePath="Res\Partial.ico"
 				>
 			</File>
 			<File
-				RelativePath=".\Res\Plus.ico"
+				RelativePath="Res\Plus.ico"
+				>
+			</File>
+			<File
+				RelativePath="Res\PlusHover.ico"
 				>
 			</File>
 			<File
@@ -4943,7 +4951,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Res\Preview.ico"
+				RelativePath="Res\Preview.ico"
 				>
 			</File>
 			<File
@@ -4951,15 +4959,15 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Res\RatingAverage.ico"
+				RelativePath="Res\RatingAverage.ico"
 				>
 			</File>
 			<File
-				RelativePath=".\Res\RatingFake.ico"
+				RelativePath="Res\RatingFake.ico"
 				>
 			</File>
 			<File
-				RelativePath=".\Res\RatingGood.ico"
+				RelativePath="Res\RatingGood.ico"
 				>
 			</File>
 			<File
@@ -5091,7 +5099,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Res\Star.ico"
+				RelativePath="Res\Star.ico"
 				>
 			</File>
 			<File
@@ -5107,7 +5115,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Res\Tick.ico"
+				RelativePath="Res\Tick.ico"
 				>
 			</File>
 			<File
@@ -5119,7 +5127,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Res\Unstable.ico"
+				RelativePath="Res\Unstable.ico"
 				>
 			</File>
 			<File

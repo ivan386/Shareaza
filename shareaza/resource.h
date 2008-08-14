@@ -191,6 +191,8 @@
 #define IDI_TICK                        303
 #define IDI_BUSY                        304
 #define IDI_UNSTABLE                    306
+#define IDI_PLUS_HOVER                  307
+#define IDI_MINUS_HOVER                 308
 #define IDI_FOLDER_CLOSED               311
 #define IDI_FOLDER_OPEN                 312
 #define IDI_LOCKED                      313

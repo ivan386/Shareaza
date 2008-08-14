@@ -772,6 +772,11 @@ void CMatchCtrl::DrawItem(CDC& dc, CRect& rcRow, CMatchFile* pFile, CQueryHit* p
 		rcCol.top = rcRow.top;
 		rcCol.bottom = rcRow.bottom;
 		
+		POINT ptHover;
+		RECT  rcTick = { rcCol.left+2, rcCol.top+2, rcCol.left+14, rcCol.bottom-2 };
+		GetCursorPos(&ptHover);
+		ScreenToClient(&ptHover);
+
 		LPCTSTR pszText	= _T("");
 		int nText		= -1;
 		int nPosition;
@@ -791,9 +796,16 @@ void CMatchCtrl::DrawItem(CDC& dc, CRect& rcRow, CMatchFile* pFile, CQueryHit* p
 			if ( ! pHit && nHits > 1 )
 			{
 				// Draw [+] or [-]
-				CoolInterface.Draw( &dc,
-					( pFile->m_bExpanded ? IDI_MINUS : IDI_PLUS ), 16,
-					rcCol.left, rcCol.top, crLeftAligned );
+				if ( pFile->m_bExpanded )
+				{
+					CoolInterface.Draw( &dc, PtInRect(&rcTick,ptHover) ? IDI_MINUS_HOVER : IDI_MINUS,
+						16, rcCol.left, rcCol.top, crLeftAligned );
+				}
+				else
+				{
+					CoolInterface.Draw( &dc, PtInRect(&rcTick,ptHover) ? IDI_PLUS_HOVER : IDI_PLUS,
+						16, rcCol.left, rcCol.top, crLeftAligned );
+				}
 
 				// Draw file icon
 				ShellIcons.Draw( &dc, pFile->m_nShellIndex, 16, rcCol.left + 16, rcCol.top,
@@ -1566,6 +1578,13 @@ void CMatchCtrl::OnMouseMove(UINT /*nFlags*/, CPoint point)
 	}
 	
 	m_wndTip.Hide();
+
+	// [+] or [-] Hoverstates
+	if ( point.x < rcCol.left + 18 )
+	{
+		CRect rcRefresh( 1, rcCol.top - 32, 18, rcCol.bottom + 32 );
+		RedrawWindow(rcRefresh);
+	}
 }
 
 BOOL CMatchCtrl::PixelTest(const CPoint& point)

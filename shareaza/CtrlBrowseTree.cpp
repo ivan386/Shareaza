@@ -1,7 +1,7 @@
 //
 // CtrlBrowseTree.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -36,7 +36,7 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 
-#define ITEM_HEIGHT	16
+#define ITEM_HEIGHT	17
 #define WM_UPDATE	(WM_APP+80)
 
 IMPLEMENT_DYNAMIC(CBrowseTreeCtrl, CWnd)
@@ -439,6 +439,13 @@ void CBrowseTreeCtrl::OnRButtonDown(UINT nFlags, CPoint point)
 void CBrowseTreeCtrl::OnMouseMove(UINT nFlags, CPoint point)
 {
 	CWnd::OnMouseMove( nFlags, point );
+
+	// [+] or [-] Hoverstates
+	if ( ! nFlags && point.x < 20 )
+	{
+		CRect rcRefresh( 1, point.y - 48, 18, point.y + 48 );
+		RedrawWindow(rcRefresh);
+	}
 }
 
 void CBrowseTreeCtrl::OnLButtonUp(UINT nFlags, CPoint point)
@@ -1100,16 +1107,24 @@ int CBrowseTreeItem::GetChildCount() const
 
 void CBrowseTreeItem::Paint(CDC& dc, CRect& rc, BOOL bTarget, COLORREF crBack) const
 {
-	if ( crBack == CLR_NONE ) crBack = CoolInterface.m_crWindow;
+	POINT ptHover;
+	RECT  rcTick = { rc.left+2, rc.top+2, rc.left+14, rc.bottom-2 };
+	GetCursorPos( &ptHover );
+	if ( dc.GetWindow()!= NULL )
+		dc.GetWindow()->ScreenToClient( &ptHover );
 
-	if ( m_nCount )
+	if ( crBack == CLR_NONE ) crBack = CoolInterface.m_crWindow;
+	dc.FillSolidRect( rc.left, rc.top, 32, 17, crBack );
+
+	if ( m_bExpanded )
 	{
-		CoolInterface.Draw( &dc, ( m_bExpanded ? IDI_MINUS : IDI_PLUS ), 16,
-			rc.left, rc.top, crBack );
+		CoolInterface.Draw( &dc, PtInRect(&rcTick,ptHover) ? IDI_CLOSETICKOVER : IDI_CLOSETICK,
+			16, rc.left, rc.top, crBack );
 	}
-	else
+	else if ( m_nCount )
 	{
-		dc.FillSolidRect( rc.left, rc.top, 16, 16, crBack );
+		CoolInterface.Draw( &dc, PtInRect(&rcTick,ptHover) ? IDI_OPENTICKOVER : IDI_OPENTICK,
+			16, rc.left, rc.top, crBack );
 	}
 
 	if ( m_nIcon16 >= 0 )
