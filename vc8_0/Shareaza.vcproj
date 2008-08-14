@@ -3910,6 +3910,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\shareaza\Res\CopyVista.cur"
+				>
+			</File>
+			<File
 				RelativePath="..\shareaza\Res\Default.xml"
 				>
 				<FileConfiguration
@@ -4129,11 +4133,23 @@
 				>
 			</File>
 			<File
-				RelativePath="..\shareaza\res\MenuBar.bmp"
+				RelativePath="..\shareaza\Res\MenuBar.bmp"
+				>
+			</File>
+			<File
+				RelativePath="..\shareaza\Res\Minus.ico"
+				>
+			</File>
+			<File
+				RelativePath="..\shareaza\Res\MinusHover.ico"
 				>
 			</File>
 			<File
 				RelativePath="..\shareaza\Res\Move.cur"
+				>
+			</File>
+			<File
+				RelativePath="..\shareaza\Res\MoveVista.cur"
 				>
 			</File>
 			<File
@@ -4170,6 +4186,14 @@
 			</File>
 			<File
 				RelativePath="..\shareaza\Res\PanelMark.bmp"
+				>
+			</File>
+			<File
+				RelativePath="..\shareaza\Res\Plus.ico"
+				>
+			</File>
+			<File
+				RelativePath="..\shareaza\Res\PlusHover.ico"
 				>
 			</File>
 			<File
@@ -4261,11 +4285,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\shareaza\res\Shareaza.ico"
+				RelativePath="..\shareaza\Res\Shareaza.ico"
 				>
 			</File>
 			<File
-				RelativePath="..\shareaza\res\Shareaza.rc2"
+				RelativePath="..\shareaza\Res\Shareaza.rc2"
 				>
 			</File>
 			<File
