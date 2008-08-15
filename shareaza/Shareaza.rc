@@ -520,7 +520,7 @@ END
 
 IDD_WIZARD_WELCOME DIALOGEX 0, 0, 277, 174
 STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
-CAPTION "Welcome to Shareaza"
+CAPTION "Welcome to Shareaza (3/6)"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
     LTEXT           "Welcome to Shareaza!",IDC_STATIC,10,10,265,10
@@ -539,10 +539,10 @@ END
 
 IDD_WIZARD_CONNECTION DIALOGEX 0, 0, 277, 174
 STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
-CAPTION "Welcome to Shareaza"
+CAPTION "Welcome to Shareaza (1/6)"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
-    LTEXT           "For optimum performance, Shareaza needs to know a little bit about your connection to the Internet.",IDC_STATIC,7,10,263,18
+    LTEXT           "For best performance, Shareaza needs to know a little bit about your connection to the Internet.",IDC_STATIC,7,10,263,18
     LTEXT           "Choose the type of your Internet connection:",IDC_STATIC,7,30,260,12
     COMBOBOX        IDC_CONNECTION_TYPE,26,44,100,178,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
     LTEXT           "Or choose the download speed:",IDC_STATIC,7,64,130,12
@@ -557,7 +557,7 @@ END
 
 IDD_WIZARD_SHARING DIALOGEX 0, 0, 277, 174
 STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
-CAPTION "Welcome to Shareaza"
+CAPTION "Welcome to Shareaza (2/6)"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
     LTEXT           "P2P networks are only as good as the people who use them.  All of the content available for download is being shared by another user.",IDC_STATIC,10,10,265,20
@@ -571,7 +571,7 @@ END
 
 IDD_WIZARD_FINISHED DIALOGEX 0, 0, 277, 174
 STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
-CAPTION "Welcome to Shareaza"
+CAPTION "Welcome to Shareaza (6/6)"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
     LTEXT           "That's it!  Shareaza has been configured to work with your computer.",IDC_STATIC,10,10,265,10
@@ -710,7 +710,7 @@ END
 
 IDD_WIZARD_INTERFACE DIALOGEX 0, 0, 277, 174
 STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
-CAPTION "Welcome to Shareaza"
+CAPTION "Welcome to Shareaza (4/6)"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
     LTEXT           "Shareaza supports a flexible user interface, so you can choose what is most comfortable for you. You can change these options at any time.",IDC_STATIC,12,7,258,20
@@ -1252,7 +1252,7 @@ END
 
 IDD_WIZARD_PROFILE DIALOGEX 0, 0, 277, 174
 STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
-CAPTION "Welcome to Shareaza"
+CAPTION "Welcome to Shareaza (3/6)"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
     LTEXT           "Shareaza is a much friendlier place when everyone writes a few basic details about themselves.",IDC_STATIC,10,10,265,20
@@ -1490,7 +1490,7 @@ END
 
 IDD_WIZARD_NETWORKS DIALOGEX 0, 0, 277, 174
 STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
-CAPTION "Welcome to Shareaza"
+CAPTION "Welcome to Shareaza (5/6)"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
     LTEXT           "Shareaza is a general-purpose file-sharing application that can access many P2P networks at the same time.  Here you can select which networks you'd like to access.  Note that you can always select different networks later.",IDC_STATIC,10,10,265,30
