@@ -80,7 +80,7 @@ typename list_type::range_type selectBlock(const list_type& src,
 
 	if ( blocks.empty() ) return range_type( 0, 0 );
 
-	range_size_type block = blocks[ std::rand() % blocks.size() ] * block_size;
+	range_size_type block = blocks[ GetRandomNum( 0ui64, (uint64)blocks.size() - 1 ) ] * block_size;
 
 	return range_type( block, min( block + block_size, src.limit() ) );
 }

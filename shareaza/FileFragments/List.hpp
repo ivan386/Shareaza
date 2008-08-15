@@ -175,13 +175,13 @@ public:
 	iterator random_range()
 	{
 		iterator result = begin();
-		if ( !empty() ) std::advance( result, std::rand() % size() );
+		if ( !empty() ) std::advance( result, GetRandomNum( 0ui64, (uint64)size() - 1 ) );
 		return result;
 	}
 	const_iterator random_range() const
 	{
 		const_iterator result = begin();
-		if ( !empty() ) std::advance( result, std::rand() % size() );
+		if ( !empty() ) std::advance( result, GetRandomNum( 0ui64, (uint64)size() - 1 ) );
 		return result;
 	}
 
