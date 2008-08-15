@@ -420,7 +420,7 @@
 		<button id="ID_CHAT_EMOTICONS"/>
 		<separator/>
 		<button id="ID_CHAT_BROWSE" text="Blaai deur Gebruikersinligting"/>
-		<!--<button id="ID_CHAT_SEND_FILE" text="Stuur Lêer"/> -->
+		<!-- <button id="ID_CHAT_SEND_FILE" text="Stuur Lêer"/> -->
 		<button id="ID_CHAT_PRIORITY" text="Gee Prioriteit"/>
 	<separator/>
 		<button id="ID_CHAT_CONNECT" text="Connect" visible="false"/>
@@ -484,8 +484,8 @@
 			<separator/>
 			<menu text="Selekteer _Netwerke">
 				<item id="ID_NETWORK_G2" text="Konnekteer aan _Gnutella2"/>
-				<item id="ID_NETWORK_ED2K" text="Konnekteer aan _eDonkey2000"/>
 				<item id="ID_NETWORK_G1" text="Konnekteer aan Gnutella_1"/>
+				<item id="ID_NETWORK_ED2K" text="Konnekteer aan _eDonkey2000"/>
 			</menu>
 			<separator/>
 			<item id="ID_NETWORK_AUTO_CLOSE" text="Verlaat Shareaza _Na Oordragte"/>
@@ -557,8 +557,8 @@
 			<separator/>
 			<menu text="Selekteer _Netwerke">
 				<item id="ID_NETWORK_G2" text="Konnekteer aan _Gnutella2"/>
-				<item id="ID_NETWORK_ED2K" text="Konnekteer aan _eDonkey2000"/>
 				<item id="ID_NETWORK_G1" text="Konnekteer aan Gnutella_1"/>
+				<item id="ID_NETWORK_ED2K" text="Konnekteer aan _eDonkey2000"/>
 			</menu>
 			<separator/>
 			<item id="ID_NETWORK_CONNECT_TO" text="Konnekteer _Aan..." shortcut="Ctrl+T"/>
@@ -661,8 +661,8 @@
 			<separator/>
 			<menu text="Selekteer _Netwerke">
 				<item id="ID_NETWORK_G2" text="Konnekteer aan _Gnutella2"/>
+				<item id="ID_NETWORK_G1" text="Konnekteer aan Gnutella_1"/>
 				<item id="ID_NETWORK_ED2K" text="Konnekteer aan _eDonkey2000"/>
-				<item id="ID_NETWORK_G1" text="Konekteer aan Gnutella_1"/>
 			</menu>
 			<separator/>
 			<item id="ID_NETWORK_AUTO_CLOSE" text="Verlaat Shareaza _Na Oordragte"/>
@@ -864,6 +864,7 @@
 	<menu name="CHostCacheWnd">
 		<item id="ID_HOSTCACHE_CONNECT" text="_Konnekteer Nou"/>
 		<item id="ID_HOSTCACHE_DISCONNECT" text="_Diskonnekteer"/>
+		<item id="ID_NEIGHBOURS_COPY" text="Copy _URI"/>
 		<item id="ID_HOSTCACHE_PRIORITY" text="_Prioritiseer Bediener"/>
 		<separator/>
 		<item id="ID_HOSTCACHE_REMOVE" text="_Verwyder Bediener(s)"/>
@@ -1465,8 +1466,8 @@
 			<item id="ID_NETWORK_DISCONNECT" text="_Diskonnekteer"/>
 			<separator/>
 			<item id="ID_NETWORK_G2" text="_Gnutella2"/>
-			<item id="ID_NETWORK_ED2K" text="_eDonkey2000"/>
 			<item id="ID_NETWORK_G1" text="Gnutella_1"/>
+			<item id="ID_NETWORK_ED2K" text="_eDonkey2000"/>
 		</menu>
 		<menu text="_Monitor">
 			<item id="ID_NEIGHBOURS_VIEW_ALL" text="Vertoon _Alle Dataverkeer"/>
@@ -1586,8 +1587,8 @@
 
 <!-- Watermarks -->
 <watermarks>
-	<watermark target="CHomeViewCtrl.Header" path="257.PNG"/>
-	<watermark target="CHomeViewCtrl.Header" path="258.PNG"/>
+	<watermark target="CHomeViewCtrl.Header1" path="257.PNG"/>
+	<watermark target="CHomeViewCtrl.Header2" path="258.PNG"/>
 </watermarks>
 <!-- Documents -->
 <documents>
@@ -1604,7 +1605,7 @@
 		<anchor id="Header" width="32" height="172"/>
 		<newline gap="0"/>
 		<group id="1">
-			<icon res="130" width="32" height="32"/><gap size="8"/>
+			<icon res="130" width="32" height="32" target="raza:command:ID_NETWORK_CONNECT"/><gap size="8"/>
 			<heading align="middle">K O N N E K T E E R &#160; N O U</heading>
 			<newline gap="8" indent="42"/>
 			<text>Welkom by Shareaza!</text>
@@ -1822,10 +1823,10 @@
 			<link id="ReseedTorrent" format="bu" target="raza:command:ID_TOOLS_RESEEDTORRENT">Hersaai  %s</link>
 			<newline gap="4"/>
 			<group id="1">
-				<link id="SeedTorrent" format="bu" target="raza:command:ID_TOOLS_SEEDTORRENT">Saai 'n ander torrent</link>
+			<link id="SeedTorrent" format="bu" target="raza:command:ID_TOOLS_SEEDTORRENT">Saai 'n ander torrent</link>
 			</group>
 			<group id="2">
-				<link id="SeedTorrent" format="bu" target="raza:command:ID_TOOLS_SEEDTORRENT">Saai 'n torrent</link>
+			<link id="SeedTorrent" format="bu" target="raza:command:ID_TOOLS_SEEDTORRENT">Saai 'n torrent</link>
 			</group>
 		</para>
 	</document>
@@ -1908,7 +1909,7 @@
 	<!-- Browse User Profile -->
 	<document name="CBrowseHostProfile.1">
 		<heading id="Nick"/>
-		<heading>&#160;se Profiel</heading>
+		<heading>'se Profiel</heading>
 		<newline gap="8"/>
 		<group id="1">
 			<newline gap="8" indent="0"/>
@@ -2940,6 +2941,7 @@
 	<string id="16375" value="Gedeeltelik"/>
 	<string id="16376" value="Alle Lêers"/>
 	<string id="16377" value="HTTP Beskerming"/>
+	<string id="16379" value="Library Files"/>
 	<string id="16384" value="Is jy seker jy wil die lêer &quot;%s&quot; oopmaak ?\n\nSommige lêers mag dalk skadelik wees vir jou rekenaar.  Maak seker jy weet wat die lêer is voordat jy dit oopmaak."/>
 	<string id="16385" value="Jy is op pad om die metadata te verander van %i lêers, Is jy seker jy wil voortgaan?"/>
 	<string id="16386" value="Metadata van %i lêers word verander."/>
@@ -2968,6 +2970,8 @@
 	<string id="16409" value="Voer &amp;URI's Uit..."/>
 	<string id="16410" value="'n Subgids van die geselekteerde gids &quot;%s&quot; is alreeds deel van jou biblioteek.\nDie byvoeging van hierdie gids sal die herprosessering van sommige lêers veroorsaak.\n\nIs jy seker jy wil voortgaan ?"/>
 	<string id="16411" value="Kon nie die lêer %s suif nie. Die lêer mag dalk deur 'n ander program gebruik word.\n\nWil jy die lêer eerder probeer kopieer?"/>
+	<string id="16412" value="Ghost File"/>
+	<string id="16413" value="New Group"/> <!-- ToDo -->
 	<string id="16448" value="Gekonnekteer aan %s, besig om blad te skud..."/>
 	<string id="16449" value="Nou besig om met %s (%s) te gesels."/>
 	<string id="16450" value="Konneksie aan %s gesluit."/>
@@ -3001,6 +3005,9 @@
 	<string id="16533" value="Totale TCP Stuur Bandwydte"/>
 	<string id="16534" value="Totale UDP Ontvang Bandwydte"/>
 	<string id="16535" value="Totale UDP Stuur Bandwydte"/>
+	<string id="16536" value="Gnutella Ratio of Received/Sent Pings"/>
+	<string id="16537" value="Gnutella Ratio of Received/Sent Pongs"/>
+	<string id="16538" value="Connection Errors (%)"/>
 	<string id="16768" value="URL &quot;%s&quot; ontvang"/>
 	<string id="16769" value="Kan nie URL gebruik nie: Shareaza verstaan nie hierdie URL nie."/>
 	<string id="16770" value="Kan nie URL-aksie venster vertoon nie, want Shareaza is beset."/>
@@ -3177,6 +3184,14 @@
 	<string id="17498" value="'n Fout is opgespoor in die lêer &quot;%s&quot;."/>
 	<string id="17500" value="Verwyser het nie geantwoord nie- Probeer weer aankondiging (%i van %i)"/>
 	<string id="17501" value="Kon nie met verwyser kommunikeer nie"/>
+	<string id="17503" value="Tracker failed- Trying next tracker (%i of %i)"/> <!-- ToDo -->
+	<string id="17505" value="BitTorrent connection to %s was dropped."/>
+	<string id="17506" value="BitTorrent handshake with %s was dropped."/>
+	<string id="17507" value="BitTorrent coupling with %s was dropped."/>
+	<string id="17510" value="BitTorrent coupling with %s not accepted, a connection to this client already exists."/>
+	<string id="17511" value="BitTorrent coupling with %s not accepted, maximum connections reached."/>
+	<string id="17512" value="Private torrent"/>
+	<string id="17513" value="Encoding error"/> <!-- End ToDo -->
 	<string id="18496" value="Jy het verandering in die naam-veld gemaak. Is jy seker jy wil die aflaai hernoem?"/>
 	<string id="18497" value="Jy het 'n SHA1-waarde ingetik, maar dit is foutief. Kontroleer dit asseblief en probeer weer."/>
 	<string id="18498" value="Jy het 'n wortel tiger-tree waarde ingetik, maar dit is foutief. Kontroleer dit asseblief en probeer weer."/>
@@ -3240,6 +3255,7 @@
 	<string id="20134" value="Beset"/>
 	<string id="20135" value="Volgende"/>
 	<string id="20136" value="Q"/>
+	<string id="20137" value="sources"/> <!--"3/10 sources"-->
 	<string id="20200" value="Sondag"/>
 	<string id="20201" value="Maandag"/>
 	<string id="20202" value="Dinsdag"/>
@@ -3254,7 +3270,7 @@
 	<string id="20214" value="Goed"/>
 	<string id="20215" value="Baie Goed"/>
 	<string id="20216" value="Uitstekend"/>
-<string id="20217" value="Select the eDonkey/eMule temp folder:"/>
+	<string id="20217" value="Select the eDonkey/eMule temp folder:"/>
 	<!-- Column headers in Library Album View -->
 	<string id="20230" value="#"/><!-- Track number -->
 	<string id="20231" value="Title"/>
@@ -3300,7 +3316,6 @@
 		<control/>
 		<control caption="_Taakbalk:"/>
 		<control caption="As ek sluit kliek:"/>
-
 		<control caption="Vra My|Sluit Dadelik|Minimeer na Taakbalk|Sluit Na Oordragte"/>
 		<control caption="As ek minimeer kliek:"/>
 		<control caption="Normaal|Minimeer na Taakbalk"/>
@@ -3314,11 +3329,9 @@
 		<control caption="_Onlangse Lêers:"/>
 		<control caption="Onthou:"/>
 		<control/><control/>
-
 		<control caption="lêers"/>
 		<control caption="Vir:"/>
 		<control/><control/>
-
 		<control caption="dae"/>
 		<control caption="Maak nou skoon"/>
 		<control caption="_Veilig om oop te maak:"/>
@@ -3352,12 +3365,9 @@
 	</dialog>
 	<dialog name="CCommunitySettingsPage" cookie="BuStBuBuBuBuBuBu" caption="Gemeenskap">
 		<control caption="My _Profiel:"/>
-
 		<control caption="Jy kan jou Gnutella Gebruikersprofiel gebruik om inligting oor jouself en jou belangstellings te deel, of om lêers en webblaaie aan te beveel aan ander."/>
 		<control caption="Verander My Profiel"/>
 		<control caption="_Gesels:"/>
-
-
 		<control caption="Skakel Persoon-tot-Persoon geselskappe aan met ondersteunende kliënte"/>
 		<control caption="Skakel geselskappe aan op alle netwerke"/>
 		<control caption="Filtreer gesels boodskappe vir spam"/>
@@ -3467,7 +3477,6 @@
 		<control caption="Maksimum Waglysposisie:"/>
 		<control/>
 		<control/>
-
 		<control caption="Laai net af of op na netwerke waaraan jy gekonnekteer is."/>
 	</dialog>
 	<dialog name="CUploadsSettingsPage" cookie="BuBuBuBuStEdmsBuCoBuBuBuStCoStCoBuSyBuBuBuSt" caption="Oplaaie">
@@ -3496,7 +3505,6 @@
 	</dialog>
 	<dialog name="CRemoteSettingsPage" cookie="BuStBuBuStBuStEdStEd" caption="Web Toegang">
 		<control caption="_Gids:"/>
-
 		<control caption="Shareaza Web Toegang laat jou toe om Shareaza op jou rekenaar aan te los en dit vanaf 'n afgeleë plek te beheer deur middel van 'n web blaaier. Jy sal inkomende konneksies moet kan ontvang om hierdie funksie te gebruik ('n korrek opgestelde roeteerder, ens)."/>
 		<control caption="_Aanskakel:"/>
 		<control caption="_Skakel Shareaza Web Toegang aan:"/>
@@ -3527,24 +3535,19 @@
 		<control caption="% van _bandwydte onder maksimum"/>
 		<control/>
 		<control caption="Hulp"/>
-
 		<control caption="Die Tydsbeplanner is ontwerp om jou toe te laat om tye te spesifiseer wanneer Shareaza moet konnekteer en lêers aflaai. {n}{n}{n}Nota: As jy Shareaza oop het terwyl die tydsbeplanner aktief is, mag jy die instellings sien verander - Dit is normaal!-"/>
 	</dialog>
 	<dialog name="CNetworksSettingsPage" cookie="StBuStBuStBuStBuStBuStBuSt" caption="Netwerke">
-
 		<control caption="Shareaza is 'n algemeendoelige lêerdelingsprogram wat toegang tot verskeie P2P netwerke gelyktydig bied.  Op hierdie bladsy kan jy kies aan watter P2P netwerke jy wil konnekteer en daarna spesifieke verstellings maak vir elke netwerk."/>
 		<control caption="Gnutella2 Netwerk:"/>
-
 		<control caption="Die Gnutella2 Netwerk is Shareaza se primêre netwerk en bied meer funksies en beter werkverrigting as enige ander P2P netwerk.  Word sterk aanbeveel."/>
 		<control caption="Konnekteer aan Gnutella2 (G2)"/>
 		<control caption="Konfigureer Gnutella2"/>
 		<control caption="eDonkey2000 Netwerk:"/>
-
 		<control caption="Die eDonkey2000 netwerk is 'n populêre bediener-gebaseerde netwerk.  Nie so funksieryk soos Gnutella2 nie, maar dit het 'n groot hoeveelheid lêers."/>
 		<control caption="Konnekteer aan eDonkey2000"/>
 		<control caption="Konfigureer eDonkey2000"/>
 		<control caption="Oorspronklike Gnutella Netwerk:"/>
-
 		<control caption="Alhoewel die oorspronklike Gnutella netwerk minder funksieryk as Gnutella2 is en ook minder lêers het as eDonkey2000, bly dit 'n waardevolle hulpbron."/>
 		<control caption="Konnekteer aan Oorspronklike Gnutella"/>
 		<control caption="Konfigureer Gnutella1"/>
@@ -3557,14 +3560,14 @@
 		<control caption="Optimaal|Leaf|Hub"/>
 		<control caption="G_2 Konneksies:"/>
 		<control caption="Leaf na Hub:"/>
-		<control/><control/>
-
+		<control/>
+		<control/>
 		<control caption="Hub na Leaf:"/>
-		<control/><control/>
-
+		<control/>
+		<control/>
 		<control caption="Hub na Hub:"/>
-		<control/><control/>
-
+		<control/>
+		<control/>
 		<control caption="Gnutella1 Netwerk:"/>
 		<control caption="Konnekteer altyd aan Gnutella1"/>
 		<control caption="Konnekteer vandag aan Gnutella1"/>
@@ -3572,14 +3575,14 @@
 		<control caption="Optimaal|Leaf|Ultrapeer"/>
 		<control caption="G_1 Konneksies:"/>
 		<control caption="Leaf na Ultrapeer:"/>
-		<control/><control/>
-
+		<control/>
+		<control/>
 		<control caption="Ultrapeer na Leaf:"/>
-		<control/><control/>
-
+		<control/>
+		<control/>
 		<control caption="Peer na Peer:"/>
-		<control/><control/>
-
+		<control/>
+		<control/>
 		<control caption="_Koppeling Kompressie:"/>
 		<control caption="Hub na Leaf"/>
 		<control caption="Leaf na Hub"/>
@@ -3590,14 +3593,12 @@
 		<control caption="Konnekteer aan eDonkey2000"/>
 		<control caption="Konnekteer elke sessie"/>
 		<control caption="_Globale Soek:"/>
-
 		<control caption="Soek bekende afgeleë bedieners in die bedienerskasgeheue:"/>
 		<control caption="Staak soektog na:"/>
 		<control/>
 		<control/>
 		<control caption="soekresultate."/>
-
-
+		<control caption="Update server list"/>
 		<control caption="_Kliëntkoppeling Konneksies:"/>
 		<control caption="Konnekteer aan nie meer as:"/>
 		<control/>
@@ -3617,23 +3618,19 @@
 		<control/>
 		<control/>
 		<control caption="Kliënt koppellings"/>
-
-		<control caption="&#160;Verwyder voltooide torrents&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;Wanneer die deelverhouding bereik word"/>
+		<control caption=" Verwyder voltooide torrents&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;Wanneer die deelverhouding bereik word"/>
 		<control/>
 		<control/>
 		<control caption="%"/>
 		<control caption="Prefer torrent sources"/>
 		<control caption="_EndGame:"/>
-
 		<control caption="Skakel 'Endgame'-modus aan wanneer torrent-lêers voltooi word"/>
 		<control caption="_Stoor Torrents Hier:"/>
-
-
-
 		<control/>
 		<control/>
 		<control caption="_Torrent Skepper"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="_Verstek Verwyser: "/>
 		<control/>
 	</dialog>
@@ -3717,13 +3714,10 @@
 	</dialog>
 	<dialog name="CWizardWelcomePage" cookie="StStStStStStStStStStStSt" caption="Welkom by Shareaza">
 		<control caption="Welkom by Shareaza!"/>
-
-
 		<control caption="As jy nog nie voorheen Shareaza gebruik het nie, kan hierdie SnelBegin Assistent jou help om jou kopie in te stel in 'n paar eenvoudige stappe."/>
 		<control caption="As jy 'n meer gevorderde gebruiker is, kan jy toegang tot die volle spektrum van Shareaza se verstellings via die Opsies kieslys verkry. Kliek 'Maak Toe' om die assistent op enige stadium te verlaat."/>
 		<control caption="Hierdie assistent sal jou help om:"/>
 		<control/>
-
 		<control caption="Inligting oor jou internet konneksie te verskaf"/>
 		<control/>
 		<control caption="Te kies watter lêers jy wil deel"/>
@@ -3733,9 +3727,8 @@
 		<control caption="Shareaza te begin gebruik."/>
 	</dialog>
 	<dialog name="CWizardConnectionPage" cookie="StCoStCoStCoStCoStCo" caption="Welkom by Shareaza [3 van 7]">
-
 		<control caption="Vir optimale werksverrigting, benodig Shareaza inligting oor jou internet konneksie."/>
-		<control caption="&#160;( selekteer asseblief )| Ek gebruik nou die Internet by die huis| Ek gebruik nou die Internet vanaf 'n kampus LAN| Ek gebruik nou die Internet vanaf 'n kantoor LAN| Ek gebruik nou die Internet by 'n hotel of lughawe"/>
+		<control caption=" ( selekteer asseblief )| Ek gebruik nou die Internet by die huis| Ek gebruik nou die Internet vanaf 'n kampus LAN| Ek gebruik nou die Internet vanaf 'n kantoor LAN| Ek gebruik nou die Internet by 'n hotel of lughawe"/>
 		<control caption="Dial up Modem|ISDN|ADSL (256K)|ADSL (512K)|ADSL (768K)|ADSL (1.5M)|ADSL (4.0M)|ADSL2 (8.0M)|ADSL2 (12.0M)|ADSL2+ (24.0M)|Cable Modem/SDSL|T1|T3|LAN|OC3"/>
 		<control caption="Or choose the download speed:"/>
 		<control/>
@@ -3747,16 +3740,12 @@
 		<control/>
 	</dialog>
 	<dialog name="CWizardSharePage" cookie="StStStSyBuBuSt" caption="Welkom by Shareaza [4 van 7]">
-
-
-
 		<control caption="P2P netwerke is net so goed soos die mense wat hulle gebruik.  Al die inhoud beskikbaar vir aflaai word gedeel deur 'n ander gebruiker."/>
 		<control caption="Dit is nie noodsaaklik om inhoud te deel om Shareaza te gebruik nie, alhoewel sommige sagteware verskillend optree teenoor gebruikers wat niks deel nie."/>
 		<control caption="Dui asseblief aan watter gidse, indien enige, jy wil deel.  Kliek eenvoudig op die Voeg By knoppie om 'n gids by te voeg."/>
 		<control/>
 		<control caption="_Voeg By..."/>
 		<control caption="_Verwyder"/>
-
 		<control caption="WAARSKUWING: Verspreiding van werke onder kopiereg word meestal verbied."/>
 	</dialog>
 	<dialog name="CFolderScanDlg" cookie="StStStStStStBu" caption="Deursoek Gidse...">
@@ -3769,47 +3758,37 @@
 		<control caption="Maak Toe"/>
 	</dialog>
 	<dialog name="CWizardProfilePage" cookie="StStEdStCoCoStCoCo" caption="Welkom by Shareaza [5 van 7]">
-
 		<control caption="Shareaza is 'n baie vriendeliker plek as elkeen 'n paar basiese inligting oor homself invul."/>
 		<control caption="My bynaam is:"/>
 		<control/>
 		<control caption="en ek is 'n:"/>
-		<control caption="&#160;(selekteer)"/>
-		<control caption="&#160;(selekteer)| ou| meisie| man| vrou"/>
+		<control caption=" (selekteer)"/>
+		<control caption=" (selekteer)| ou| meisie| man| vrou"/>
 		<control caption="van:"/>
 		<control/>
 		<control/>
 	</dialog>
 	<dialog name="CWizardInterfacePage" cookie="StBuBuBuStStBuBuBu" caption="Welkom by Shareaza">
-
 		<control caption="Shareaza ondersteun 'n buigsame gebruikerskoppelvlak, sodat jy kan kies wat die mees gerieflikste vir jou is. Jy kan hierdie opsies enige tyd verander."/>
 		<control caption="Selekteer asseblief 'n gebruikerskoppelvlak:"/>
 		<control caption="Normale Modus"/>
 		<control caption="Kragmodus"/>
-
-
-
 		<control caption="Eenvoudige, gebruikersvriendelike kieslyste en knoppies.{n}Bekend aan gebruikers van ander lêerdelingsprogramme."/>
 		<control caption="Kragmodus bied gevorderde gebruikers verskeie ekstra opdragte, vensters, ens.{n}Dit mag nuwe gebruikers dalk deurmekaar maak!"/>
 		<control caption="Vertoon vereenvoudigde aflaai-vorderingsbalke. (Verminder CPU gebruik)"/>
 		<control caption="Hanteer torrent skakels."/>
 	</dialog>
 	<dialog name="CWizardNetworksPage" cookie="StBuStBuStBuSt" caption="Welkom by Shareaza [6 van 7]">
-
 		<control caption="Shareaza is 'n algemeendoelige lêerdelingsprogram wat toegang tot verskeie P2P netwerke gelyktydig bied.  Op hierdie bladsy kan jy kies aan watter P2P netwerke jy wil koppel. Let wel dat jy altyd later ander netwerke kan selekteer."/>
 		<control caption="Koppel aan Gnutella2 (Sterk Aanbeveel)"/>
-
 		<control caption="Die Gnutella2 Netwerk is Shareaza se primêre netwerk en bied meer funksies en beter werkverrigting as enige ander P2P netwerk.  Word sterk aanbeveel."/>
 		<control caption="Koppel aan eDonkey2000"/>
-
 		<control caption="Die eDonkey2000 netwerk is 'n populêre bediener-gebaseerde netwerk.  Nie so funksieryk soos Gnutella2 nie, maar dit het 'n groot hoeveelheid lêers."/>
 		<control caption="Koppel aan Gnutella1"/>
-
 		<control caption="Alhoewel die oorspronklike Gnutella netwerk minder funksieryk as Gnutella2 is en ook minder lêers het as eDonkey2000, bly dit 'n waardevolle hulpbron."/>
 	</dialog>
 	<dialog name="CDonkeyImportDlg" cookie="StStBuBuEdBu" caption="Trek eDonkey2000 Aflaaie In">
 		<control/>
-
 		<control caption="Shareaza het raakgesien dat jy 'n ander eDonkey2000 program geinstalleer het op jou rekenaar.  Wil jy enige onvolledige aflaaie in Shareaza intrek?"/>
 		<control caption="Ja"/>
 		<control caption="Nee|Kanselleer"/>
@@ -3817,10 +3796,6 @@
 		<control caption="Maak Toe"/>
 	</dialog>
 	<dialog name="CWizardFinishedPage" cookie="StStStBuBuBuSt" caption="Welkom by Shareaza [7 van 7]">
-
-
-
-
 		<control caption="Dis dit!  Shareaza is ingestel om met jou rekenaar te werk."/>
 		<control caption="As jy ooit nodig het om jou verstellings te verander, kan jy hierdie SnelBegin Assistent weer hardloop deur dit te selekteer vanaf die Opsies kieslys."/>
 		<control caption="Nadat jy hierdie assistent toegemaak het deur Finish te kliek, kan jy aan die netwerke konnekteer wat jy selekteer het en begin soek en inhoud aflaai."/>
@@ -3838,13 +3813,11 @@
 	</dialog>
 	<dialog name="CIdentityProfilePage" cookie="BuStEdStEdEdBuCoStCoStBu" caption="Identiteit">
 		<control caption="_Naam:"/>
-
 		<control caption="Bynaam:"/>
-
-
 		<control/>
 		<control caption="Regte Naam:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="_Persoonsbesonderhede:"/>
 		<control caption="|Manlik|Vroulik"/>
 		<control caption="Geslag:"/>
@@ -3892,7 +3865,6 @@
 		<control caption="_Voorskou:"/>
 		<control/>
 		<control caption="_Selekteer:"/>
-
 		<control caption="Ander Gnutella gebruikers wat na jou profiel en gedeelde lêers kyk sal jou avatar sien.  Pasgemaakte avatars moet 128x128 beeldpunte wees en kan in enige ondersteunde fotolêertipe op jou rekenaar wees."/>
 		<control caption="_Kies..."/>
 		<control caption="_Verwyder"/>
@@ -3909,13 +3881,10 @@
 	</dialog>
 	<dialog name="CFilesProfilePage" cookie="BuStSy" caption="Lêers">
 		<control caption="_Gunstelling Lêers:"/>
-
 		<control caption="Gunstelling lêers word aanbeveel aan mense wat jou profiel lees.  Skep gunstelling lêers deur hulle by die &quot;Gunstellinge&quot; biblioteekgids by te voeg."/>
 		<control/>
 	</dialog>
 	<dialog name="CCertificateProfilePage" cookie="StBuStStStStBu" caption="Sertifikaat">
-
-
 		<control caption="Gnutella gebruikers word geidentifiseer deur 'n globaal unieke sertifikaat en 'n ooreenstemmende publieke en privaat sleutelpaar.  Normaalweg is dit nie nodig om 'n nuwe ID te genereer nie, maar Shareaza bied hierdie opsie vir gevorderde gebruikers."/>
 		<control caption="_Gnutella Globaal Unieke Identifikasie Sertifikaat:"/>
 		<control caption="GUID:"/>
@@ -3926,7 +3895,6 @@
 	</dialog>
 	<dialog name="CLanguageDlg" cookie="" caption="Selekteer Taal"/>
 	<dialog name="CConnectToDlg" cookie="BuCoEdBuCoBuBuBu" caption="Konnekteer Aan|Blaai deur Gebruikersinligting">
-
 		<control caption="Maak 'n nuwe konneksie na 'n gasheer of bediener:|Blaai deur hierdie kliënt se profiel en gedeelde lêers:"/>
 		<control/>
 		<control/>
@@ -3939,7 +3907,6 @@
 	<dialog name="CDownloadDlg" cookie="StStStEdBuBuStStBu" caption="Laai Lêer of Torrent Af">
 		<control/>
 		<control/>
-
 		<control caption="Dit is eenvoudig om enige lêer met Shareaza af te laai.  Plaas net eenvoudig die URL of URI van die lêer in die spasie hieronder en druk Enter."/>
 		<control/>
 		<control caption="Laai Af"/>
@@ -3955,7 +3922,6 @@
 		<control caption="Kanselleer"/>
 	</dialog>
 	<dialog name="CFilterSearchDlg" cookie="BuEdStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuCoBuBuBuBu" caption="Filreer Resultate">
-
 		<control caption="Vertoon net resultate wat die volgende _woorde bevat:"/>
 		<control/>
 		<control caption="Reg. Exp."/>
@@ -3979,14 +3945,12 @@
 		<control caption="DRM files"/>
 		<control caption="Adult results"/>
 		<control caption="Verkeerde lêers"/>
-
-		<control caption="Filreer"/>
+		<control caption="Filters:"/>
 		<control/>
 		<control caption="Stel in as standaard"/>
 		<control caption="_Stoor as"/>
 		<control caption="_Skrap"/>
-
-		<control caption="Filters:"/>
+		<control caption="Filreer"/>
 		<control caption="Kanseleer"/>	
 	</dialog>
 	<dialog name="CSaveFilterAsDlg" cookie="EdBuBuSt" caption="Stoor filter as">
@@ -3999,8 +3963,7 @@
 		<control caption="Diens _Adres:"/>
 		<control/>
 		<control caption="Ontdekkingsdiens Tipe:"/>
-
-		<control/>
+		<control caption="Blocked"/>
 		<control caption="OK"/>
 		<control caption="Kanselleer"/>
 		<control/>
@@ -4019,7 +3982,6 @@
 		<control caption="..."/>
 		<control caption="Aantal bronne:"/>
 		<control caption="..."/>
-
 		<control caption="Maak hierdie venster toe wanneer aflaai voltooi het"/>
 		<control caption="Open Lêer"/>
 		<control caption="Vertoon Biblioteek"/>
@@ -4059,10 +4021,8 @@
 	</dialog>
 	<dialog name="CFileSharingPage" cookie="StBuBuBuStCoStSyEd" caption="Deling">
 		<control caption="Eenvoudige Deling"/>
-
 		<control caption="Deel hierdie lêer as die moedergids gedeel word"/>
 		<control caption="Stel huidige delingsverstellings van hierdie lêer tersy:"/>
-
 		<control caption="Stel hierdie lêer beskikbaar aan ander gebruikers"/>
 		<control caption="Oplaaiwaglys Seleksiemerker(s)"/>
 		<control/>
@@ -4080,7 +4040,6 @@
 		<control/>
 	</dialog>
 	<dialog name="CFileCopyDlg" cookie="StStmsBuBumsStSt" caption="Kopieer Lêers|Skuif Lêers">
-
 		<control caption="Jy het %i lêer(s) geselekteer om na die volgende gids te kopieer:"/>
 		<control/>
 		<control/>
@@ -4088,7 +4047,6 @@
 		<control caption="Kanselleer"/>
 		<control/>
 		<control caption="Reg..."/>
-
 		<control caption="Jy het %i lêer(s) geselekteer om na die volgende gids te skuif:"/>
 	</dialog>
 	<dialog name="CFolderPropertiesDlg" cookie="StEdStCoBuStBuBu" caption="Albumgids Eienskappe">
@@ -4097,7 +4055,6 @@
 		<control caption="Gids Tipe:"/>
 		<control/>
 		<control caption="Alles"/>
-
 		<control caption="Kopieer hierdie algemene eienskappe aan alle lêers in die gids"/>
 		<control caption="OK"/>
 		<control caption="Kanselleer"/>
@@ -4140,7 +4097,6 @@
 		<control/>
 		<control caption="OK"/>
 		<control caption="Kanselleer"/>
-
 		<control caption="Selekteer 'n skema van die lys en selekteer dan die velde wat as kolomme vertoon moet word."/>
 	</dialog>
 	<dialog name="CSecureRuleDlg" cookie="BuStCoStEdBuStEdEdEdEdStEdEdEdEdBuEdBuBuBuStCoStCoEdStEdStEdStBuBu" caption="Sekuriteitsreëls">
@@ -4181,7 +4137,6 @@
 	</dialog>
 	<dialog name="CShareManagerDlg" cookie="StStSyBuBuBuBu" caption="Gedeelde Lêers Beheerder">
 		<control/>
-
 		<control caption="Hierdie is 'n lys van gidse in jou biblioteek.  Jy kan gidse byvoeg of verwyder deur die knoppies aan die linkerkant te gebruik.  Wanneer jy 'n nuwe gids byvoeg word dit outomaties gedeel met ander gebruikers, maar jy kan dit afskakel vanuit die Shareaza biblioteek as jy wil."/>
 		<control/>
 		<control caption="_Voeg By..."/>
@@ -4191,7 +4146,6 @@
 	</dialog>
 	<dialog name="CURLCopyDlg" cookie="StStStStStBuBu" caption="Kopieer URI">
 		<control/>
-
 		<control caption="Jy kan 'n URI van die geselekteerde item kopieer in 'n verskeidenheid formate.  Kies asseblief die formaat wat jy wil gebruik deur op een van die URIs hieronder te kliek:"/>
 		<control/>
 		<control/>
@@ -4201,7 +4155,6 @@
 	</dialog>
 	<dialog name="CURLExportDlg" cookie="StStEdStCoStCoBuBumsBu" caption="Voer URIs Uit">
 		<control/>
-
 		<control caption="Jy het %lu lêers geselekteer om uit te voer as Shareaza ondersteunende URI verwysings.  Selekteer asseblief die formaat van die URIs en kliek Stoor:"/>
 		<control/>
 		<control caption="Voeg Teken By:"/>
@@ -4215,9 +4168,6 @@
 	</dialog>
 	<dialog name="CURLActionDlg" cookie="StStStStStEdStEdStBuBuBuBuBuSt" caption="Shareaza URI Beheerder">
 		<control/>
-
-
-
 		<control caption="Jy het gekliek op 'n Shareaza ondersteunende URI wat skakel na die volgende inhoud op die netwerk:"/>
 		<control caption="Jy het gekliek op 'n Shareaza ondersteunende URL wat jou aan die volgende gasheer of bediener sal konnekteer:"/>
 		<control caption="Jy het gekliek op 'n Shareaza ondersteunende URI wat jou die deur die gedeelde lêers van die volgende gasheer sal laat blaai:"/>
@@ -4228,7 +4178,6 @@
 		<control caption="Kanselleer"/>
 		<control caption="_Onthou my keuse volgende keer"/>
 		<control caption="Open 'n aflaai_monitor venster"/>
-
 		<control caption="Jy het gekliek op 'n Shareaza ondersteunende URI wat die volgende Ontdekkingsdiens by jou Ontdekkingsdienskasgeheue sal voeg."/>
 	</dialog>
 	<dialog name="CBitziDownloadDlg" cookie="StStmsBuSySt" caption="Laai Metadata Af...">
@@ -4243,16 +4192,12 @@
 		<control/>
 		<control caption="Shareaza is besig om 'n voorskou te skep van die aflaai:"/>
 		<control/><control/>
-
 		<control caption="(kopieer afgelaaide dele na 'n nuwe voorskoulêer)"/>
 		<control caption="Kanselleer"/>
 	</dialog>
 	<dialog name="CWarningsDlg" cookie="StStStStStStStBu" caption="Shareaza Respekteer ons Gebruikers">
 		<control/>
 		<control caption="Het jy geweet Shareaza is 'n 100% gratis program?"/>
-
-
-
 		<control caption="Shareaza bevat GEEN &quot;spioenware&quot;, &quot;advertensieware&quot; of enige ander ongewenste sagteware nie. Dit vertoon ook GEEN advertensies of &quot;opspringboodskappe&quot; ooit nie.{n}{n}As jy ooit advertensies of &quot;opspringboodskappe&quot; sien terwyl jy Shareaza gebruik, wees gerus dat hulle NIE van hierdie program afkomstig is nie."/>
 		<control caption="Ongelukkig kom 'n groot aantal ander sagteware met spioen- of advertensieware uit, so as jy iets verdags sien, word jy aangeraai om jou rekenaar met 'n spioen- of advertensieware verwyderaarsprogram te laat deursoek."/>
 		<control caption="Jy moes nie enige geld betaal het vir Shareaza nie.  Shareaza kan gratis afgelaai word deur enige iemand vanaf http://shareaza.sourceforge.net/.  As jy iemand geld betaal het vir Shareaza, moet jy 'n volle terugbetaling onmiddellik eis."/>
@@ -4263,10 +4208,6 @@
 	<dialog name="CPromoteDlg" cookie="StStStStStStStBu" caption="Versprei die Nuus">
 		<control/>
 		<control caption="Help ons om die nuus te versprei"/>
-
-
-
-
 		<control caption="Ons hoop jy het dit sover geniet om Shareaza te gebruik.  Ons glo dat dit die beste lêerdelingsprogram beskikbaar is."/>
 		<control caption="Ongelukkig weet 'n groot aantal lêerdelers nie wat hulle mis nie!"/>
 		<control caption="As jy van iemand weet wat van Shareaza sal hou, of hulle 'n nuwe gebruiker is, of iemand wat steeds probeer uithou met 'n ondergeskikte program, hoekom hulle nie laat weet dat daar 'n beter alternatief is nie?"/>
@@ -4276,20 +4217,17 @@
 	</dialog>
 	<dialog name="CExistingFileDlg" cookie="StStStStStBuBuBuBuBuSt" caption="Aflaai van bestaande lêer">
 		<control/><control/><control/><control/>
-
 		<control caption="Jy het hierdie lêer alreeds in jou biblioteek.  Wat wil jy graag doen?"/>
 		<control caption="Wys my die lêer in my biblioteek"/>
 		<control caption="Laai die lêer weer af"/>
 		<control caption="Moet nie die lêer aflaai nie"/>
 		<control caption="OK"/>
 		<control caption="Kanselleer"/>
-
 		<control caption="Jy het hierdie lêer voorheen afgelaai en geskrap.  Wat wil jy graag doen?"/>
 		<control caption="Warning!!! Duplicate files detected. Some malicious software may infect your Library. Make sure that you downloaded this file or placed it manually. Otherwise, shutdown Shareaza and scan your computer with an antivirus program."/>
 	</dialog>
 	<dialog name="CCloseModeDlg" cookie="StStBuBuBuBuBu" caption="Sluitingsknoppie">
 		<control/>
-
 		<control caption="Hierdie is die eerste keer wat jy Shareaza se sluitingsknoppie gekliek het.  Kies asseblief watter aksie jy wil hê Shareaza moet uitvoer as jy die sluitingsknoppie in die vervolg kliek:"/>
 		<control caption="Minimeer na die taakbalkarea"/>
 		<control caption="Verlaat Shareaza dadelik"/>
@@ -4299,7 +4237,6 @@
 	</dialog>
 	<dialog name="CDonkeyServersDlg" cookie="StStEdmsBuBu" caption="Laai Server.met Lêer af">
 		<control/>
-
 		<control caption="Jy kan 'n eDonkey2000 server.met lêer van die web aflaai om jou lokale lys van bedienders te verfris."/>
 		<control/><control/>
 		<control caption="OK"/>
@@ -4317,21 +4254,16 @@
 		<control caption="Skrap Alles"/>
 		<control caption="Kanselleer"/>
 		<control/>
-
 		<control caption="Shareaza kan hierdie lêer onthou en jou waarsku as jy dit weer teëkom in 'n ander soektog.  Selekteer asseblief die rede waarom jy die lêer skrap:"/>
 		<control caption="Create a ghost file"/>
 		<control caption="Ek wil nie kommentaar byvoeg nie."/>
-
 		<control caption="Hierdie lêer is verkeerdelik genoem en kan misleidend wees."/>
 		<control caption="Hierdie lêer is van swak gehalte."/>
-
-
 		<control caption="Hierdie lêer is vals, korrup of andersinds onbruikbaar."/>
 		<control caption="Jy kan 'n kort nota skryf om te verduidelik hoekom die lêer sleg is:"/>
 		<control/>
 	</dialog>
 	<dialog name="CCollectionExportDlg" cookie="StBuBu" caption="Voer Gids Uit">
-
 		<control caption="Hierdie funksie word gebruik om die inhoud van 'n albumgids uit te voer as 'n ryk versamelingslêer."/>
 		<control/>
 		<control caption="Template Information:"/>
@@ -4346,7 +4278,6 @@
 		<control caption="Kanselleer"/>
 	</dialog>
 	<dialog name="CDownloadEditPage" cookie="StBuEdBuStEdStEdStEdBuStStStBuStEdStEdBuBuBuBu" caption="Verander Aflaai (Gevorderd)">
-
 		<control caption="WAARSKUWING: Hierdie venster verskaf gevorderde aflaaifunksies vir kragtige gebruikers wat, as dit verkeerdelik gebruik word, korrupsie kan veroorsaak."/>
 		<control caption="Filename and Si_ze:"/>
 		<control caption="Lêer_naam:"/>
@@ -4366,7 +4297,6 @@
 		<control/>
 		<control/>
 		<control caption="_Aksies:"/>
-
 		<control caption="Vergeet huidige foutkontrole status (en herkontroleer)"/>
 		<control caption="Neem aan lêer is 100% volledig en herkontroleer"/>
 		<control caption="Vergeet alle bekende bronne"/>
@@ -4381,12 +4311,10 @@
 	</dialog>
 	<dialog name="CTorrentSeedDlg" cookie="StStBuBuBuStms" caption="Open Torrentlêer">
 		<control/>
-
 		<control caption="Jy het 'n BitTorrent Torrentlêer oopgemaak. Wil jy sy inhoud aflaai, of dit hersaai?"/>
 		<control caption="Laai Af"/>
 		<control caption="Saai"/>
 		<control caption="Kanselleer"/>
-
 		<control caption="Om voltooide lêers te deel met BitTorrent, moet hulle eers gesaai word. Sodra hierdie proses voltooi is, sal die Torrent as 'n nuwe item op jou aflaailys verskyn."/>
 		<control/>
 	</dialog>
@@ -4420,7 +4348,6 @@
 		<control caption="Name:"/>
 		<control/>
 		<control caption="Tracker:"/>
-
 		<control/>
 		<control caption="_Current Tracker:"/>
 		<control caption="Completed (Seeds):"/>
@@ -4449,10 +4376,8 @@
 	</dialog>
 	<dialog name="CMediaVisDlg" cookie="StBuSyCoBuBuBu" caption="Selekteer Visualisering">
 		<control/>
-
 		<control caption="Selekteer 'n klankvisualisering van die lys:"/>
 		<control/>
-
 		<control caption="Voetrëel Beeld|Volle Beeldgrootte|Groot Beeldgrootte|Medium Beeldgrootte|Klein Beeldgrootte"/>
 		<control caption="_Verstellings"/>
 		<control caption="OK"/>
@@ -4460,8 +4385,6 @@
 	</dialog>
 	<dialog name="CUpgradeDlg" cookie="StStStBuBuBu" caption="Opgradeer Kennisgewing">
 		<control/>
-
-
 		<control caption="'n Nuwe weergawe van Shareaza is nou beskikbaar. Wil jy graag opgradeer?"/>
 		<control caption="As jy Opgradeer Nou kliek sal Shareaza die opgradering by jou aflaailys byvoeg en dit outomaties begin aflaai."/>
 		<control caption="Opgradeer _Nou"/>
