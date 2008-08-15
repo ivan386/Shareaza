@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 
-<!-- Shareaza Default English Skin File --> <!-- This translation is based on default-en.xml SVN rev.7280 -->
+<!-- Shareaza Default English Skin File --> <!-- This translation is based on default-en.xml SVN rev.7292 -->
 
 <!-- This skin basically represents the current Shareaza defaults. You can use this file as -->
 <!-- a basis for creating new skins, however in a new skin be sure to ONLY include the sections -->
@@ -453,8 +453,9 @@
 		<button id="ID_MUSICBRAINZ_ALBUMS" text="View All Albums"/>
 		<separator/>
 	</toolbar>
-	<!-- IMAGE VIEWER WINDOW -->
+	<!-- IMAGE VIEWER WINDOW - DELETE? -->
 	<toolbar name="ImageViewer_Toolbar">
+		<button id="ImageViewer_ActualSize" text="Actual Size"/>
 		<button id="ImageViewer_BestFit" text="Best Fit"/>
 		<separator/>
 		<button id="ImageViewer_Refresh" text="Refresh"/>
@@ -3735,7 +3736,7 @@
 		<control/>
 		<control caption="Get started using Shareaza."/>
 	</dialog>
-	<dialog name="CWizardConnectionPage" cookie="StStCoStCoStCoStCoStms" caption="Welcome to Shareaza">
+	<dialog name="CWizardConnectionPage" cookie="StStCoStCoStCoStCoStms" caption="Welcome to Shareaza (1/6)">
 		<control caption="For optimum performance, Shareaza needs to know a little bit about your connection to the Internet."/>
 		<control caption="Choose the type of your Internet connection:"/>
 		<control caption="Dial up Modem|ISDN|ADSL (256K)|ADSL (512K)|ADSL (768K)|ADSL (1.5M)|ADSL (4.0M)|ADSL2 (8.0M)|ADSL2 (12.0M)|ADSL2+ (24.0M)|Cable Modem/SDSL|T1|T3|LAN|OC3"/>
@@ -3748,7 +3749,7 @@
 		<control caption="Status:"/>
 		<control/>
 	</dialog>
-	<dialog name="CWizardSharePage" cookie="StStStSyBuBuSt" caption="Welcome to Shareaza">
+	<dialog name="CWizardSharePage" cookie="StStStSyBuBuSt" caption="Welcome to Shareaza (2/6)">
 		<control caption="P2P networks are only as good as the people who use them.  All of the content available for download is being shared by another user."/>
 		<control caption="You do not have to share content to use Shareaza, however some software will behave differently to users who are not sharing anything."/>
 		<control caption="Please indicate which folders, if any, you wish to share.  Simply click the Add button to add a new folder."/>
@@ -3766,7 +3767,7 @@
 		<control caption="0"/>
 		<control caption="Close"/>
 	</dialog>
-	<dialog name="CWizardProfilePage" cookie="StStEdStCoCoStCoCo" caption="Welcome to Shareaza">
+	<dialog name="CWizardProfilePage" cookie="StStEdStCoCoStCoCo" caption="Welcome to Shareaza (3/6)">
 		<control caption="Shareaza is a much friendlier place when everyone writes a few basic details about themselves."/>
 		<control caption="I use the name:"/>
 		<control/>
@@ -3777,7 +3778,7 @@
 		<control/>
 		<control/>
 	</dialog>
-	<dialog name="CWizardInterfacePage" cookie="StBuBuBuStStBuBu" caption="Welcome to Shareaza">
+	<dialog name="CWizardInterfacePage" cookie="StBuBuBuStStBuBu" caption="Welcome to Shareaza (4/6)">
 		<control caption="Shareaza supports a flexible user interface, so you can choose what is most comfortable for you. You can change these options at any time."/>
 		<control caption="Please select user interface:"/>
 		<control caption="Basic Mode"/>
@@ -3787,7 +3788,7 @@
 		<control caption="Display simplified download progress bars. (Reduces CPU use)"/>
 		<control caption="Handle torrent links."/>
 	</dialog>
-	<dialog name="CWizardNetworksPage" cookie="StBuStBuStBuSt" caption="Welcome to Shareaza">
+	<dialog name="CWizardNetworksPage" cookie="StBuStBuStBuSt" caption="Welcome to Shareaza (5/6)">
 		<control caption="Shareaza is a general-purpose file-sharing application that can access many P2P networks at the same time.  Here you can select which networks you&apos;d like to access.  Note that you can always select different networks later."/>
 		<control caption="Connect to Gnutella2 (Highly Recommended)"/>
 		<control caption="The Gnutella2 network is Shareaza&apos;s premiere network, offering more features and performance than any other P2P net."/>
@@ -3804,7 +3805,7 @@
 		<control/>
 		<control caption="Close"/>
 	</dialog>
-	<dialog name="CWizardFinishedPage" cookie="StStStBuBuBuSt" caption="Welcome to Shareaza">
+	<dialog name="CWizardFinishedPage" cookie="StStStBuBuBuSt" caption="Welcome to Shareaza (6/6)">
 		<control caption="That&apos;s it!  Shareaza has been configured to work with your computer."/>
 		<control caption="If you ever need to change your settings, you can re-run this QuickStart wizard by selecting it from the Tools menu."/>
 		<control caption="After closing this wizard by clicking Finish, you can connect to the networks you selected and start searching and downloading content."/>
