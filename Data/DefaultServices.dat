@@ -2,6 +2,9 @@ M http://gwc.frodoslair.net/skulls/skulls.php
 M http://gwc.eod.cc/skulls.php
 M http://gwc.cluephone.com/skulls.php
 M http://gwc.movingpages.org/skulls.php
+M http://gweb.4octets.co.uk/skulls.php
+M http://silvers.servehttp.com/Beacon/gwc.php
+M http://gwc.werwin.net/gwc.php
 
 2 http://cache.trillinux.org/g2/bazooka.php
 2 http://gwc2.wodi.org/skulls.php
@@ -9,16 +12,21 @@ M http://gwc.movingpages.org/skulls.php
 2 http://gwc.guufshop.com/skulls/skulls.php
 2 http://dogma.cloud.bishopston.net:33559/
 2 http://karma.cloud.bishopston.net:33559/
+2 http://bbs.robertwoolley.co.uk/GWebCache/skulls.php
 
 U uhc:uhc.udp-host-cache.com:9999
 U uhc:secondary.udp-host-cache.com:9999
 U uhc:tertiary.udp-host-cache.com:9999
+U uhc:yin.cloud.bishopston.net:33558
+U uhc:yang.cloud.bishopston.net:33558
 
 D http://www.gruk.org/server.met
 D http://www.emule-server.de/server.met/min/server.met
 D http://www.esel-paradies.de/server/server.met
 D http://ocbmaurice.no-ip.org/pl/slist.pl/server.met?download/server-good.met
 
+X http://gwc.vectra.bvnet.ro/skulls/skulls.php
+X http://silvers.servehttp.com/g2/bazooka.php
 X http://mnc.bijand.com/skulls.php
 X http://borednow.net/GWebCache/gcache.asp
 X http://g2.tjtech.org/g2/
@@ -41,6 +49,7 @@ X http://portal.homeunix.org/Beacon/gwc.php
 X http://www.gaultopia.org/gcache/gcache.php
 X http://www.visualcave.com/gcache/gcache.php
 X http://i.net46.net/beacon/gwc.php
+X http://www.lo7.wroc.pl/~stash/g2-moved/bazooka.php
 
 #
 # Keep these comments at the end
