@@ -10,16 +10,15 @@
 <%?%>
 												<a href="?close=<%= search_id %>">Close Search</a>
 	</div>
-		<div id="filters">
 										<form method="get" action="">
+		<div id="filters">
 											<input type="hidden" name="id" value="<%= search_id %>" />
 											<input type="hidden" name="setfilter" value="1" />
 											<label>Filter:</label>
 											<input type="text" name="filter" value="<%= search_filter %>" size="20" />
 											<input type="submit" value="Filter" />
-
-										</form>
 		</div>
+										</form>
 										<br />
 <table>
 	<tr>
