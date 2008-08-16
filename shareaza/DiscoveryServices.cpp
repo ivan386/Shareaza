@@ -90,9 +90,9 @@ DWORD CDiscoveryServices::GetCount(int nType, PROTOCOLID nProtocol) const
 	DWORD nCount = 0;
 	CDiscoveryService* ptr;
 
-	for ( POSITION pos = GetIterator() ; pos ; )
+	for ( POSITION pos = m_pList.GetHeadPosition() ; pos ; )
 	{
-		ptr = GetNext( pos );
+		ptr = m_pList.GetNext( pos );
 		if ( ( nType == CDiscoveryService::dsNull ) || ( ptr->m_nType == nType ) )	// If we're counting all types, or it matches
 		{
 			if ( ( nProtocol == PROTOCOL_NULL ) ||									// If we're counting all protocols
@@ -182,9 +182,9 @@ CDiscoveryService* CDiscoveryServices::Add(LPCTSTR pszAddress, int nType, PROTOC
 
 	case CDiscoveryService::dsBlocked:
 		pService = new CDiscoveryService( CDiscoveryService::dsBlocked, strAddress );
-		for ( POSITION pos = GetIterator() ; pos ; )
+		for ( POSITION pos = m_pList.GetHeadPosition() ; pos ; )
 		{
-			CDiscoveryService* pItem = GetNext( pos );
+			CDiscoveryService* pItem = m_pList.GetNext( pos );
 
 			if ( _tcsistr( pItem->m_sAddress, pService->m_sAddress ) != NULL )
 			{
@@ -277,9 +277,9 @@ BOOL CDiscoveryServices::CheckWebCacheValid(LPCTSTR pszAddress)
 	if ( _tcsclen( pszAddress ) < 12 ) return FALSE;
 
 	// Check it's not blocked
-	for ( POSITION pos = GetIterator() ; pos ; )
+	for ( POSITION pos = m_pList.GetHeadPosition() ; pos ; )
 	{
-		CDiscoveryService* pService = GetNext( pos );
+		CDiscoveryService* pService = m_pList.GetNext( pos );
 
 		if ( pService->m_nType == CDiscoveryService::dsBlocked )
 		{
@@ -340,9 +340,9 @@ DWORD CDiscoveryServices::LastExecute() const
 
 CDiscoveryService* CDiscoveryServices::GetByAddress(LPCTSTR pszAddress) const
 {
-	for ( POSITION pos = GetIterator() ; pos ; )
+	for ( POSITION pos = m_pList.GetHeadPosition() ; pos ; )
 	{
-		CDiscoveryService* pService = GetNext( pos );
+		CDiscoveryService* pService = m_pList.GetNext( pos );
 
 		int nLen = pService->m_sAddress.GetLength();
 		if ( nLen > 45 )
@@ -363,9 +363,9 @@ CDiscoveryService* CDiscoveryServices::GetByAddress(LPCTSTR pszAddress) const
 
 CDiscoveryService* CDiscoveryServices::GetByAddress( IN_ADDR* pAddress, WORD nPort, int nSubType )
 {
-	for ( POSITION pos = GetIterator() ; pos ; )
+	for ( POSITION pos = m_pList.GetHeadPosition() ; pos ; )
 	{
-		CDiscoveryService* pService = GetNext( pos );
+		CDiscoveryService* pService = m_pList.GetNext( pos );
 
 			if ( pService->m_nSubType == nSubType && pService->m_pAddress.S_un.S_addr == pAddress->S_un.S_addr &&
 				pService->m_nPort == nPort )
@@ -379,9 +379,9 @@ void CDiscoveryServices::Clear()
 {
 	Stop();
 
-	for ( POSITION pos = GetIterator() ; pos ; )
+	for ( POSITION pos = m_pList.GetHeadPosition() ; pos ; )
 	{
-		delete GetNext( pos );
+		delete m_pList.GetNext( pos );
 	}
 
 	m_pList.RemoveAll();
@@ -468,9 +468,9 @@ void CDiscoveryServices::Serialize(CArchive& ar)
 
 		ar.WriteCount( GetCount() );
 
-		for ( POSITION pos = GetIterator() ; pos ; )
+		for ( POSITION pos = m_pList.GetHeadPosition() ; pos ; )
 		{
-			GetNext( pos )->Serialize( ar, nVersion );
+			m_pList.GetNext( pos )->Serialize( ar, nVersion );
 		}
 	}
 	else
@@ -482,10 +482,10 @@ void CDiscoveryServices::Serialize(CArchive& ar)
 
 		for ( DWORD_PTR nCount = ar.ReadCount() ; nCount > 0 ; nCount-- )
 		{
-			CDiscoveryService* pService = new CDiscoveryService();
+			auto_ptr< CDiscoveryService > pService( new CDiscoveryService() );
 			pService->Serialize( ar, nVersion );
 			if ( pService->m_nSubType > -1 )
-				m_pList.AddTail( pService );
+				m_pList.AddTail( pService.release() );
 		}
 	}
 }
@@ -499,9 +499,9 @@ BOOL CDiscoveryServices::EnoughServices() const
 	int nWebCacheCount = 0, nServerMetCount = 0;	// Types of services
 	int nG1Count = 0, nG2Count = 0;					// Protocols
 
-	for ( POSITION pos = GetIterator() ; pos ; )
+	for ( POSITION pos = m_pList.GetHeadPosition() ; pos ; )
 	{
-		CDiscoveryService* pService = GetNext( pos );
+		CDiscoveryService* pService = m_pList.GetNext( pos );
 		if ( pService->m_nType == CDiscoveryService::dsWebCache )
 		{
 			nWebCacheCount++;
@@ -779,9 +779,9 @@ int CDiscoveryServices::ExecuteBootstraps(int nCount, BOOL bUDP, PROTOCOLID nPro
 
 	if ( nCount < 1 ) return 0;
 
-	for ( POSITION pos = GetIterator() ; pos ; )
+	for ( POSITION pos = m_pList.GetHeadPosition() ; pos ; )
 	{
-		CDiscoveryService* pService = GetNext( pos );
+		CDiscoveryService* pService = m_pList.GetNext( pos );
 		if ( pService->m_nType == CDiscoveryService::dsGnutella &&
 			( ( bGnutella1 && bGnutella2 ) || ( bGnutella1 == pService->m_bGnutella1 && bGnutella2 == pService->m_bGnutella2 ) ) &&
 			( ( ( pService->m_nSubType == 3 || pService->m_nSubType == 4 ) && bUDP && ( time( NULL ) - pService->m_tAccessed >= 300 ) ) ||
@@ -854,9 +854,9 @@ CDiscoveryService* CDiscoveryServices::GetRandomService(PROTOCOLID nProtocol)
 	DWORD tNow = static_cast< DWORD >( time( NULL ) );
 
 	// Loops through all services
-	for ( POSITION pos = GetIterator() ; pos ; )
+	for ( POSITION pos = m_pList.GetHeadPosition() ; pos ; )
 	{
-		CDiscoveryService* pService = GetNext( pos );
+		CDiscoveryService* pService = m_pList.GetNext( pos );
 
 		switch ( nProtocol )
 		{
@@ -908,9 +908,9 @@ CDiscoveryService* CDiscoveryServices::GetRandomWebCache(PROTOCOLID nProtocol, B
 	CArray< CDiscoveryService* > pWebCaches;
 	DWORD tNow = static_cast< DWORD >( time( NULL ) );
 
-	for ( POSITION pos = GetIterator() ; pos ; )
+	for ( POSITION pos = m_pList.GetHeadPosition() ; pos ; )
 	{
-		CDiscoveryService* pService = GetNext( pos );
+		CDiscoveryService* pService = m_pList.GetNext( pos );
 
 		if ( pService->m_nType == CDiscoveryService::dsWebCache && pService != pExclude )
 		{
