@@ -17,10 +17,11 @@
 		description="Shareaza Default German Skin File"
 		link="http://shareaza.sourceforge.net/"
 		email="zero9999(at)gmail(dot)com"
-		version="2.3.1.5"
+		version="2.3.2.0"
 		type="Language"
 		language="de"
 		prompt="Klicken Sie hier, um Deutsch als Sprache zu wählen."
+		
 />
 
 <!-- Toolbar Definitions -->
@@ -425,7 +426,6 @@
 		<button id="ID_CHAT_CONNECT" text="Verbinden" visible="false"/>
 		<button id="ID_CHAT_DISCONNECT" text="Verbindung trennen"/>
 	</toolbar>
-	<!-- WEBSERVICES -->
 	<toolbar name="WebServices.ShareMonkey">
 		<button id="ID_SHAREMONKEY_DOWNLOAD" text="Daten holen" /> 
 		<separator /> 
@@ -455,8 +455,8 @@
 	</toolbar>
 	<!-- IMAGE VIEWER WINDOW -->
 	<toolbar name="ImageViewer_Toolbar">
-		<button id="ImageViewer_BestFit" text="Fenstergröße"/>
 		<button id="ImageViewer_ActualSize" text="Originalgröße"/>
+		<button id="ImageViewer_BestFit" text="Fenstergröße"/>
 		<separator/>
 		<button id="ImageViewer_Refresh" text="Aktualisieren"/>
 		<separator/>
@@ -1431,13 +1431,13 @@
 	</menu>
 	<!-- SYSTEM WINDOW -->
 	<menu name="CSystemWnd">
-		<menu id="ID_SYSTEM_VERBOSE" text="_Ausführlicher Modus"/> <!-- TRANSLATION STILL NEEDED ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo -->
+		<menu id="ID_SYSTEM_VERBOSE" text="_Modus"> 
 			<item id="ID_SYSTEM_VERBOSE_ERROR" text="_Error"/>
 			<item id="ID_SYSTEM_VERBOSE_WARNING" text="_Warning"/>
 			<item id="ID_SYSTEM_VERBOSE_NOTICE" text="_Notice"/>
 			<item id="ID_SYSTEM_VERBOSE_INFO" text="_Info"/>
 			<item id="ID_SYSTEM_VERBOSE_DEBUG" text="_Debug"/>
-			</menu>
+		</menu>
 		<item id="ID_SYSTEM_TIMESTAMP" text="Zeitstem_pel"/>
 		<separator/>
 		<item id="ID_SYSTEM_COPY" text="_Kopieren" shortcut="Ctrl+C"/>
@@ -1583,15 +1583,6 @@
 		<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Bitzi"/>
 		<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 		<item id="ID_WEBSERVICES_SHAREMONKEY" text="_ShareMonkey"/>
-	</menu>
-	<!-- PLUGIN MENUS -->
-	<menu name="ImageViewer_Context">
-		<item id="ImageViewer_BestFit" text="_Fenstergröße"/>
-		<item id="ImageViewer_ActualSize" text="_Originalgröße"/>
-		<separator/>
-		<item id="ImageViewer_Refresh" text="Aktualisie_ren"/>
-		<separator/>
-		<item id="ImageViewer_Close" text="_Schließen"/>
 	</menu>
 </menus>
 
@@ -1850,12 +1841,12 @@
 		<text format="b">Willkommen beim Shareaza-Einstellungsmanager</text>
 		<newline gap="16"/>
 		<text>
-				Der Einstellungsmanager erlaubt es Ihnen, Shareaza völlig ihren Wünschen anzupassen.
-				In der Sektion
+			Der Einstellungsmanager erlaubt es Ihnen, Shareaza völlig ihren Wünschen anzupassen.
+			In der Sektion
 		</text>
 		<text format="b">Allgemein </text>
 		<text>
-				kann das Verhalten von Shareaza gegenüber dem Benutzer angepasst werden.
+			kann das Verhalten von Shareaza gegenüber dem Benutzer angepasst werden.
 		</text>
 		<newline gap="16" indent="16"/>
 		<link target="raza:page:CGeneralSettingsPage" format="b">Allgemein:</link>
@@ -1874,14 +1865,13 @@
 		<gap size="4"/>
 		<text>Ihr Profil, Chat und Instant Messaging-Einstellungen.</text>
 		<newline gap="10"/>
-		<link target="raza:page:CIRCSettingsPage" format="b">IRC:</link>
+		<link target="raza:page:CIRCSettingsPage" format="b">IRC-Chat:</link>
 		<gap size="4"/>
-		<text>IRC chatroom visual appearance and connection settings.</text>
+		<text>Grafische Einstellungen und Verbindungseinstellungen des IRC-Chats.</text>
 		<newline gap="10"/>
 		<link target="raza:page:CWebSettingsPage" format="b">Web:</link>
 		<gap size="4"/>
 		<text>Integrieren Sie Shareaza in ihren Browser, um P2P-Links zu benutzen.</text>
-		<newline gap="10"/>
 	</document>
 	<document name="CInternetSettingsGroup" title="Internet" leftMargin="8" topMargin="8" crLink="000080">
 		<styles>
@@ -1891,14 +1881,10 @@
 		</styles>
 		<text format="b">Willkommen beim Shareaza-Einstellungsmanager</text>
 		<newline gap="16"/>
-		<text>
-				Der Einstellungsmanager erlaubt es Ihnen, Shareaza völlig ihren Wünschen anzupassen.
-				In der Sektion
-		</text>
+		<text>Der Einstellungsmanager erlaubt es Ihnen, Shareaza völlig ihren Wünschen anzupassen.
+		In der Sektion</text>
 		<text format="b">Internet </text>
-		<text>
-				können Sie festlegen, wie sich Shareaza in
-				P2P-Netzen verhält.
+		<text>können Sie festlegen, wie sich Shareaza in P2P-Netzen verhält.
 		</text>
 		<newline gap="16" indent="16"/>
 		<link target="raza:page:CConnectionSettingsPage" format="b">Verbindung:</link>
@@ -1917,9 +1903,9 @@
 		<gap size="4"/>
 		<text>Shareaza konfigurieren, um die Bedienung über einen Webbrowser zu ermöglichen.</text>
 		<newline gap="10"/>
-		<link target="raza:page:CSchedulerSettingsPage" format="b">Scheduler:</link>
+		<link target="raza:page:CSchedulerSettingsPage" format="b">Zeitsteuerung:</link>
 		<gap size="4"/>
-		<text>Limit download connections based on a periodic schedule.</text>
+		<text>Downloadgeschwindigkeiten zeitweise automatisch drosseln.</text>
 	</document>
 	<!-- Browse User Profile -->
 	<document name="CBrowseHostProfile.1">
@@ -2267,7 +2253,7 @@
 		Der Versuch, Dateien zu hashen, die gerade heruntergeladen werden, wirkt sich negativ auf die Geschwindigkeit aus.</text>
 	</document>
 </documents>
-<!-- Localised Command Tip Text.  The "message" is displayed in the status bar, while the "tip" is shown in a tooltip -->
+<!-- Localised Command Tip Text. The "message" is displayed in the status bar, while the "tip" is shown in a tooltip -->
 <commandTips>
 	<tip id="ID_BROWSE_FILES" message="Die Dateien des Benutzers anzeigen."/>
 	<tip id="ID_BROWSE_LAUNCH" message="Die Dateien und das Profil des markierten Benutzers durchsuchen." tip="Benutzer durchsuchen"/>
@@ -3303,6 +3289,7 @@
 	<string id="20236" value="Bewertung"/>
 </strings>
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
+<!-- Don't edit dialogs manualy! Use DialogScan feature instead -->
 <dialogs>
 	<dialog name="CGeneralSettingsGroup" cookie="" caption="Allgemein">
 	</dialog>
@@ -3341,7 +3328,7 @@
 		<control caption="Bei Klick auf [-]:"/>
 		<control caption="Minimieren (normal)|In den Tray minimieren"/>
 	</dialog>
-	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBuBu" caption="Bibliothek">
+	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBuBuBu" caption="Bibliothek">
 		<control caption="_Optionen:"/>
 		<control caption="Ansichtoptionen speichern"/>
 		<control caption="Ordner überwachen"/>
@@ -3447,7 +3434,7 @@
 		<control caption="_Remove"/>
 		<control caption="Das Downloadmanager-Plugin wird nur für die hier aufgeführten Dateitypen benutzt. Andere Dateitypen werden vom Webbrowser verwaltet. Shareaza muss gestartet sein, um Downloads abzufangen."/>
 	</dialog>
-	<dialog name="CInternetSettingsGroup" caption="Internet">
+	<dialog name="CInternetSettingsGroup" cookie="" caption="Internet">
 	</dialog>
 	<dialog name="CConnectionSettingsPage" cookie="BuStCoStCoStEdBuBuBuStCoStCoBuStCoBuBuBuStEdmsStEdms" caption="Verbindung">
 		<control caption="_Inbound-Adresse:"/>
