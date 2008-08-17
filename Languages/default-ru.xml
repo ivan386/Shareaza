@@ -1596,38 +1596,37 @@
 				<font face="Verdana" size="12"/>
 			</style>
 			<style name="heading">
-				<font face="Arial" size="16" weight="900"/>
+				<font face="Trebuchet MS" size="16" weight="800"/>
 			</style>
 		</styles>
 		<anchor id="Header" width="32" height="172"/>
 		<newline gap="0"/>
 		<group id="1">
 			<icon res="130" width="32" height="32"/><gap size="8"/>
-			<heading align="middle">У С Т А Н О В И Т Е    С О Е Д И Н Е Н И Е</heading>
+			<heading align="middle">У С Т А Н О В И Т Е  &#160; С О Е Д И Н Е Н И Е</heading>
 			<newline gap="8" indent="42"/>
 			<text>Добро пожаловать в Shareaza!</text>
 			<newline gap="8" indent="42"/>
-			<text>В настоящее время вы не подключены ни к одной из пиринговых сетей.</text>
-			<newline gap="8" indent="42"/>
+			<text>В настоящее время вы не подключены ни к одной из пиринговых сетей. &#160;</text>
 			<link target="raza:command:ID_NETWORK_CONNECT">Щелкните здесь для начала работы!</link>
 			<newline gap="18" indent="0"/>
 		</group>
 		<group id="2">
 			<icon res="136" width="32" height="32" target="raza:command:ID_TOOLS_DOWNLOAD"/><gap size="8"/>
-			<heading align="middle">Н А Ч А Т Ь   З А Г Р У З К У</heading>
+			<heading align="middle">Н А Ч А Т Ь &#160; З А Г Р У З К У</heading>
 			<newline gap="8" indent="42"/>
 			<link target="raza:command:ID_TOOLS_DOWNLOAD" format="bu">Щелкните здесь</link>
 			<text align="middle">, чтобы начать загрузку файла или торрента.</text>
 			<newline gap="24" indent="0"/>
 			<icon res="134" width="32" height="32" target="raza:command:ID_TAB_SEARCH"/><gap size="8"/>
-			<heading align="middle">П О И С К   Ф А Й Л А</heading>
+			<heading align="middle">П О И С К &#160; Ф А Й Л А</heading>
 			<newline gap="8" indent="42"/>
 			<anchor id="SearchBox" width="256" height="80"/>
 			<newline gap="12" indent="0"/>
 		</group>
 		<group id="3">
 			<icon res="128" width="32" height="32"/><gap size="8"/>
-			<heading align="middle">У В Е Д О М Л Е Н И Е    О Б    О Б Н О В Л Е Н И И</heading>
+			<heading align="middle">У В Е Д О М Л Е Н И Е  &#160; О Б  &#160; О Б Н О В Л Е Н И И</heading>
 			<newline gap="8" indent="42"/>
 			<text id="Upgrade"/>
 			<newline gap="6"/>
@@ -1636,10 +1635,10 @@
 		</group>
 		<group id="4">
 			<icon res="252" width="32" height="32"/><gap size="8"/>
-			<heading align="middle">В Н И М А Н И Е    -    В Ы    З А    Б Р А Н Д М А У Э Р О М</heading>
+			<heading align="middle">В Н И М А Н И Е  &#160; -  &#160; В Ы  &#160; З А  &#160; Б Р А Н Д М А У Э Р О М</heading>
 			<newline gap="8" indent="42"/>
 			<text colour="FF0000">Shareaza обнаружила что вы за маршрутизатором или брандмаудэром,
-			и неспособны принимать соединения из Интернета.  </text>
+			и неспособны принимать соединения из Интернета. &#160;</text>
 			<text colour="FF0000" format="b">Это может ограничить скорость Загрузок/Раздач.</text>
 			<newline gap="6"/>
 			<link target="raza:command:ID_HELP_ROUTER">Щелкните здесь, чтобы узнать, как настроить ваш маршрутизатор или брандмауэр</link>
@@ -1647,10 +1646,10 @@
 		</group>
 		<group id="6">
 			<icon res="252" width="32" height="32"/><gap size="8"/>
-			<heading align="middle">В Н И М А Н И Е    -   Н Е Т   С В Я З И   C   T C P   П О Р Т О М</heading>
+			<heading align="middle">В Н И М А Н И Е  &#160; - &#160; Н Е Т &#160; С В Я З И &#160; C &#160; T C P &#160; П О Р Т О М</heading>
 			<newline gap="8" indent="42"/>
 			<text colour="FF0000">Shareaza обнаружила что вы за маршрутизатором или брандмаудэром,
-			и неспособны принимать TCP соединения из Интернета.  </text>
+			и неспособны принимать TCP соединения из Интернета. &#160;</text>
 			<text colour="FF0000" format="b">Это может ограничить скорость Загрузок/Раздач.</text>
 			<newline gap="6"/>
 			<link target="raza:command:ID_HELP_ROUTER">Щелкните здесь, чтобы узнать, как настроить ваш маршрутизатор или брандмауэр</link>
@@ -1658,41 +1657,41 @@
 		</group>
 		<group id="7">
 			<icon res="252" width="32" height="32"/><gap size="8"/>
-			<heading align="middle">В Н И М А Н И Е    -   Н Е Т   С В Я З И   C   U D P   П О Р Т О М</heading>
+			<heading align="middle">В Н И М А Н И Е  &#160; - &#160; Н Е Т &#160; С В Я З И &#160; C &#160; U D P &#160; П О Р Т О М</heading>
 			<newline gap="8" indent="42"/>
 			<text colour="FF0000">Shareaza обнаружила что вы за маршрутизатором или брандмаудэром,
-			и неспособны принимать TCP соединения из Интернета.  </text>
+			и неспособны принимать TCP соединения из Интернета. &#160;</text>
 			<text colour="FF0000" format="b">Это может ограничить скорость Загрузок/Раздач.</text>
 			<newline gap="6"/>
 			<link target="raza:command:ID_HELP_ROUTER">Щелкните здесь, чтобы узнать, как настроить ваш маршрутизатор или брандмауэр</link>
 			<newline gap="18" indent="0"/>
 		</group>
 		<icon res="236" width="32" height="32"/><gap size="8"/>
-		<heading align="middle">Н А С Т Р О Й Т Е    S H A R E A Z У</heading>
+		<heading align="middle">Н А С Т Р О Й Т Е  &#160; S H A R E A Z У</heading>
 		<newline gap="12" indent="42"/>
 		<icon res="237" width="32" height="32" target="raza:command:ID_TOOLS_SKIN"/>
 		<gap size="8"/>
 		<link target="raza:command:ID_TOOLS_SKIN" format="bu" align="middle">Шкурки</link>
-		<text align="middle"> - Измeнение обликa Sharеaza</text>
+		<text align="middle">&#160;- Измeнение обликa Sharеaza</text>
 		<newline gap="8"/>
 		<icon res="236" width="32" height="32" target="raza:command:ID_TOOLS_WIZARD"/>
 		<gap size="8"/>
 		<link target="raza:command:ID_TOOLS_WIZARD" format="bu" align="middle">Мaстер Устанoвок</link>
-		<text align="middle"> - Пошaговый мaстер устанoвок Sharеaza</text>
+		<text align="middle">&#160;- Пошaговый мaстер устанoвок Sharеaza</text>
 		<newline gap="8"/>
 		<icon res="147" width="32" height="32" target="raza:command:ID_HELP_FAQ"/>
 		<gap size="8"/>
 		<link target="raza:command:ID_HELP_FAQ" format="bu" align="middle">Быстрaя Помoщь</link>
-		<text align="middle"> - Онлайновая Справочная Система Wiki</text>
+		<text align="middle">&#160;- Онлайновая Справочная Система Wiki</text>
 		<newline gap="18" indent="0"/>
 		<group id="5">
 			<icon res="128" width="32" height="32"/><gap size="8"/>
-			<heading align="middle">В Ы    Р А З Р Е Ш И Л И    У Д А Л Е Н Н О Е   У П Р А В Л Е Н И Е</heading>
+			<heading align="middle">В Ы  &#160; Р А З Р Е Ш И Л И  &#160; У Д А Л Е Н Н О Е &#160; У П Р А В Л Е Н И Е</heading>
 			<newline gap="8" indent="42"/>
 			<text>Разрешено удаленное управление Shareazой, используйте обозреватель и адрес:</text>
 			<newline gap="6"/>
 			<link id="RemoteAccessURL1"/>
-			<text>  - или - </text>
+			<text>&#160; - или -&#160;</text>
 			<link id="RemoteAccessURL2"/>
 			<newline gap="16" indent="0"/>
 		</group>
@@ -1875,14 +1874,10 @@
 		</styles>
 		<text format="b">Добро пожаловать в менеджер установок Shareaza</text>
 		<newline gap="16"/>
-		<text>
-			Менеджер установок Shareaza опытным пользователям позволит полностью настроить
-			работу Shareaza.  Установки в секции
-		</text>
+		<text>	Менеджер установок Shareaza опытным пользователям позволит полностью настроить
+			работу Shareaza.  Установки в секции </text>
 		<text format="b">Интернет </text>
-		<text>
-			контролируют взаимодействие Shareaza с другими узлами в пределах распределенного
-			соединения равноправных узлов.
+		<text>	контролируют взаимодействие Shareaza с другими узлами в пределах распределенного соединения равноправных узлов.
 		</text>
 		<newline gap="16" indent="16"/>
 		<link target="raza:page:CConnectionSettingsPage" format="b">Соединения:</link>
@@ -1901,6 +1896,9 @@
 		<gap size="4"/>
 		<text>Включите поддержку удаленного управления, чтобы контроллировать Shareaza при помощи веб браузера.</text>
 		<newline gap="10"/>
+		<link target="raza:page:CSchedulerSettingsPage" format="b">Расписание:</link>
+		<gap size="4"/>
+		<text>Составте расписание для ограничения загрузок по времени.</text>
 	</document>
 	<!-- Browse User Profile -->
 	<document name="CBrowseHostProfile.1">
@@ -2149,7 +2147,7 @@
 		что он бутет работать со всеми программами BitTorrent.</text>
 		<newline gap="8"/>
 		<link target="http://shareaza.sourceforge.net/help/?torrentencoding">Щелкните здесь, если Вам нужна помощь</link>
-		<text> или если хотите загрузить ПО для правки файлов torrent.</text>
+		<text>&#160;или если хотите загрузить ПО для правки файлов torrent.</text>
 	</document>
 	<document name="GeneralHelp.DonkeyServerList">
 		<text format="b">Пустой список eDonkey серверов</text>
@@ -2607,6 +2605,7 @@
 	<string id="8010" value="Это предвыпускная версия Shareaza, и период бета тестирования закончился.  Пожалуйста загрузите полную, официальную версию с http://shareaza.sourceforge.net/."/>
 	<string id="8011" value="При смене вида все открытые Вами окна будут закрыты.  Хотите ли переключить сейчас?"/>
 	<string id="8012" value="Информация о торренте"/>
+	<string id="8014" value="Свойства загрузки"/>
 	<string id="8060" value="Узел/режим Ведущего с %lu хостом(ами).  %s в собсвенном хранилище."/>
 	<string id="8061" value="Режим Ведущего с %lu хостом(ами).  %s в собсвенном хранилище."/>
 	<string id="8062" value="Режим узла с %lu хостом(ами).  %s в собсвенном хранилище."/>
@@ -2627,7 +2626,7 @@
 	<string id="8100" value="Есть %i просмотр(ов)."/>
 	<string id="8101" value="%s пишет:"/>
 	<string id="8102" value="%s оценивает этот файл:"/>
-	<string id="8103" value="  Щелкните для  просмотра"/>
+	<string id="8103" value="&#160;&#160;Щелкните для&#160; просмотра"/>
 	<string id="8104" value="Предпросматриваю..."/>
 	<string id="8105" value="Невозможно загрузить содержимое просмотра с «%s»."/>
 	<string id="8128" value="Щелкните здесь для поиска снова"/>
@@ -3062,8 +3061,8 @@
 	<string id="16995" value="Файл может быть поврежден, или Вы не имеете подходящих кодеков для его воспроизведения."/>
 	<string id="16996" value="Часть этого файла не может быть воспроизведена, воможно Вам нужно загрузить дополнительные кодеки."/>
 	<string id="16997" value="Нет воспроизводимых файлов.  Щелкните дважды на медиа файле в Вашем хранилище для его проигрывания."/>
-	<string id="16998" value="М       Е       Д       И       А                С       И       С       Т       Е       М       А                S       H       A       R       E       A       Z       A"/>
-	<string id="16999" value="Список   Воспроизведения"/>
+	<string id="16998" value="М  &#160;  &#160; Е  &#160;  &#160; Д  &#160;  &#160; И  &#160;  &#160; А  &#160;  &#160;  &#160;  &#160;  &#160; С  &#160;  &#160; И  &#160;  &#160; С  &#160;  &#160; Т  &#160;  &#160; Е  &#160;  &#160; М  &#160;  &#160; А  &#160;  &#160;  &#160;  &#160;  &#160; S  &#160;  &#160; H  &#160;  &#160; A  &#160;  &#160; R  &#160;  &#160; E  &#160;  &#160; A  &#160;  &#160; Z  &#160;  &#160; A"/>
+	<string id="16999" value="Список &#160; Воспроизведения"/>
 	<string id="17024" value="Инициализация соединения с %s..."/>
 	<string id="17025" value="Невозможно установить связь с %s."/>
 	<string id="17026" value="Запрашивается соединение активной доставки через брандмауэр у %s..."/>
@@ -3725,7 +3724,7 @@
 		<control/>
 		<control caption="Начать пользоваться Shareaza'ой."/>
 	</dialog>
-	<dialog name="CWizardConnectionPage" cookie="StStCoStCoStCoStCoStms" caption="Добро пожаловать в Shareaza">
+	<dialog name="CWizardConnectionPage" cookie="StStCoStCoStCoStCoStms" caption="Добро пожаловать в Shareaza (1/6)">
 		<control caption="Для оптимальной работы Shareaza должна знать о вашем соединении с Интернетом."/>
 		<control caption="Выберите тип подключения к интернету:"/>
 		<control caption="Коммутир. соединение|ИСДН|АДСЛ (256 К)|АДСЛ (512 К)|АДСЛ (768 К)|АДСЛ (1,5 М)|АДСЛ (4,0 M)|АДСЛ2 (8,0 M)|АДСЛ2 (12,0 M)|АДСЛ2+ (24,0 M)|Кабельный модем/СДСЛ|Т1|Т3|Локальная сеть|OC3"/>
@@ -3738,7 +3737,7 @@
 		<control caption="Статус:"/>
 		<control/>
 	</dialog>
-	<dialog name="CWizardSharePage" cookie="StStStSyBuBuSt" caption="Добро пожаловать в Shareaza">
+	<dialog name="CWizardSharePage" cookie="StStStSyBuBuSt" caption="Добро пожаловать в Shareaza (2/6)">
 		<control caption="Качество P2P сетей зависит от самих же пользователей! Файлы в папках указанных для раздач будут открыты для других пользователей."/>
 		<control caption="Вы не обязанны ничем делиться для использования Shareaza, но другие P2P пользователи могут отказать в загрузках тем, у кого нечего взять."/>
 		<control caption="Пожалуйста укажите, какие папки Вы желаете открыть для общего доступа (если такие у Вас есть).  Просто щелкните кнопку «Внести», чтобы указать новую папку."/>
@@ -3756,7 +3755,7 @@
 		<control caption="0"/>
 		<control caption="Закрыть"/>
 	</dialog>
-	<dialog name="CWizardProfilePage" cookie="StStEdStCoCoStCoCo" caption="Добро пожаловать в Shareaza">
+	<dialog name="CWizardProfilePage" cookie="StStEdStCoCoStCoCo" caption="Добро пожаловать в Shareaza (3/6)">
 		<control caption="Shareaza  будет ещё дружелюбней, если каждый укажет несколько деталей о себе."/>
 		<control caption="Мой ник будет:"/>
 		<control/>
@@ -3767,7 +3766,7 @@
 		<control/>
 		<control/>
 	</dialog>
-	<dialog name="CWizardInterfacePage" cookie="StBuBuBuStStBuBu" caption="Добро пожаловать в Shareaza">
+	<dialog name="CWizardInterfacePage" cookie="StBuBuBuStStBuBu" caption="Добро пожаловать в Shareaza (4/6)">
 		<control caption="Shareaza поддерживает два типа интерфейса, так что Вы можете выбрать наиболее удобный. Вы сможете изменить эти опции и позже."/>
 		<control caption="Выберите один пользовательский интерфейс:"/>
 		<control caption="Обычный режим"/>
@@ -3777,7 +3776,7 @@
 		<control caption="Показывать упрощенную полосу прогресса. (Уменьшает нагрузку ЦПУ)"/>
 		<control caption="Ассоциировать файлы торрентов с программой."/>
 	</dialog>
-	<dialog name="CWizardNetworksPage" cookie="StBuStBuStBuSt" caption="Добро пожаловать в Shareaza">
+	<dialog name="CWizardNetworksPage" cookie="StBuStBuStBuSt" caption="Добро пожаловать в Shareaza (5/6)">
 		<control caption="Shareaza - многоцелевая программа обмена файлами, с доступом ко многим P2P сетям одновременно. Здесь Вы можете выбрать, какие P2P сети Вы хотите использовать. Отметьте, что Вы можете выбрать их позже."/>
 		<control caption="Соединяться с Gnutella2 (рекомендуется)"/>
 		<control caption="Gnutella2 - основная сеть Shareaza, она предлагает больше особенностей и опций работы чем любая другая P2P сеть."/>
@@ -3794,7 +3793,7 @@
 		<control/>
 		<control caption="Закрыть"/>
 	</dialog>
-	<dialog name="CWizardFinishedPage" cookie="StStStBuBuBuSt" caption="Добро пожаловать в Shareaza">
+	<dialog name="CWizardFinishedPage" cookie="StStStBuBuBuSt" caption="Добро пожаловать в Shareaza (6/6)">
 		<control caption="Вот и всё!  Вы настроили Shareaza для работы на Вашем компьютере."/>
 		<control caption="Если Вам понадобится изменить установки, можно перезапустить мастер, выбрав соответствующий пункт из меню Инструменты."/>
 		<control caption="После закрытия мастера, можно своединиться с выбранными сетями и начать поиск и загрузку файлов."/>
@@ -3946,7 +3945,7 @@
 		<control caption="Подозрительные"/>
 		<control caption="Фильтры:"/>
 		<control/>
-		<control caption="Использовать по умолчанию"/>
+		<control caption="По умолчанию"/>
 		<control caption="_Сохранить как"/>
 		<control caption="_Удалить"/>
 		<control caption="Фильтровать"/>
@@ -4275,7 +4274,7 @@
 		<control caption="_Далее|Экспорт..."/>
 		<control caption="Отмена"/>
 	</dialog>
-	<dialog name="CDownloadEditPage" cookie="StBuStEdEdStEdBuStStEdBuStEdBuStEdBuBuStStStStStBuStEdStEdBu" caption="Свойства загрузки">
+	<dialog name="CDownloadEditPage" cookie="StBuStEdEdStEdBuStStEdBuStEdBuStEdBuBuStStStStStBuStEdStEdBu" caption="Загрузка">
 		<control caption="ВНИМАНИЕ: Этот диалог для ОПЫТНЫХ пользователей и дает опции, которые при неправильном использовании могут разрушить загрузку."/>
 		<control caption="Имя и размер файла:"/>
 		<control caption="Имя файла:"/>
@@ -4316,7 +4315,7 @@
 		<control caption="Чтобы обмениваться файлами в BitTorrent, их нужно сперва раздать. Когда процесс завершится, торрент появится в Вашем списке загрузок."/>
 		<control/>
 	</dialog>
-	<dialog name="CTorrentGeneralPage" cookie="BuStEdStEdStEdStEdBuStCoEdStStEd" caption="Оснавное">
+	<dialog name="CTorrentGeneralPage" cookie="BuStEdStEdStEdStEdBuStCoEdStStEd" caption="Торрент">
 		<control caption="_Информация о торренте:"/>
 		<control caption="Имя:"/>
 		<control/>
