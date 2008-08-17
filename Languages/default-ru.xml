@@ -3003,7 +3003,7 @@
 	<string id="16774" value="&amp;Соединиться"/>
 	<string id="16775" value="&amp;Просматривать"/>
 	<string id="16776" value="Добавить"/>
-	<string id="16777" value="Имя файла:"/>
+	<string id="16777" value="Файл:"/>
 	<string id="16778" value="Ссылка:"/>
 	<string id="16779" value="Тип:"/>
 	<string id="16780" value="Не указано"/>
@@ -4163,19 +4163,22 @@
 		<control/>
 		<control caption="_Отмена"/>
 	</dialog>
-	<dialog name="CURLActionDlg" cookie="StStStStStEdStEdStBuBuBuBuBuSt" caption="Shareaza менеджер ссылок">
+	<dialog name="CURLActionDlg" cookie="StStStStStEdStEdStBuBuBuBuBuSt" caption="Менеджер ссылок Shareaza">
 		<control/>
-		<control caption="Вы щелкнули на Shareaza-поддерживаемой ссылке, которая ведет к содержимому файла в сети:"/>
-		<control caption="Вы щелкнули на Shareaza-поддерживаемой ссылке, которая свяжет Вас со следующим хостом или сервером:"/>
-		<control caption="Вы щелкнули на Shareaza-поддерживаемой ссылке, которая позволит Вам просмотреть разделяемые файлы на следующем хосте:"/>
-		<control/><control/><control/><control/>
+		<control caption="Вы щёлкнули по Shareaza-поддерживаемой ссылке, которая ведет к содержимому файла в сети:"/>
+		<control caption="Вы щёлкнули по Shareaza-поддерживаемой ссылке, которая свяжет Вас со следующим хостом или сервером:"/>
+		<control caption="Вы щёлкнули по Shareaza-поддерживаемой ссылке, которая позволит Вам просмотреть разделяемые файлы на следующем хосте:"/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
 		<control caption="Выберите действие, которое Shareaza должна выполнить:"/>
 		<control caption="_Загрузить"/>
 		<control caption="_Искать файл"/>
 		<control caption="_Отмена"/>
 		<control caption="Запомнить мой _выбор"/>
 		<control caption="Открыть окно _Монитора"/>
-		<control caption="Вы щелкнули на Shareaza-поддерживаемой ссылке, которая добавит следующую службу ресурсов соединений в Ваш список."/>
+		<control caption="Вы щёлкнули по Shareaza-поддерживаемой ссылке, которая добавит следующую службу ресурсов соединений в Ваш список."/>
 	</dialog>
 	<dialog name="CBitziDownloadDlg" cookie="StStmsBuSySt" caption="Загрузка мета данных...">
 		<control/>
@@ -4317,7 +4320,7 @@
 	</dialog>
 	<dialog name="CTorrentGeneralPage" cookie="BuStEdStEdStEdStEdBuStCoEdStStEd" caption="Торрент">
 		<control caption="_Информация о торренте:"/>
-		<control caption="Имя:"/>
+		<control caption="Файл:"/>
 		<control/>
 		<control caption="Создан:"/>
 		<control/>
@@ -4335,21 +4338,21 @@
 	</dialog>
 	<dialog name="CTorrentFilesPage" cookie="BuStEdBuSy" caption="Файлы">
 		<control caption="_Информация о торренте:"/>
-		<control caption="Имя:"/>
+		<control caption="Файл:"/>
 		<control/>
 		<control caption="_Файлы:"/>
 		<control/>
 	</dialog>
 	<dialog name="CTorrentTrackersPage" cookie="BuStEdStEdBuStEdStEdBuBuSyStCo" caption="Трекеры">
 		<control caption="_Информация о торренте:"/>
-		<control caption="Имя:"/>
+		<control caption="Файл:"/>
 		<control/>
 		<control caption="Трекер:"/>
 		<control/>
 		<control caption="_Активный трекер:"/>
-		<control caption="Полных (раздача):"/>
+		<control caption="_Сидеры (раздача):"/>
 		<control/>
-		<control caption="_Источники (загрузка):"/>
+		<control caption="_Личеры (загрузка):"/>
 		<control/>
 		<control caption="_Обновить"/>
 		<control caption="_Трекеры:"/>
@@ -4527,7 +4530,7 @@
 		<column from="Expires" to="Истекает"/>
 	</list>
 	<list name="CTorrentFileList">
-		<column from="Filename" to="Имя файла"/>
+		<column from="Filename" to="Файл"/>
 		<column from="Size" to="Размер"/>
 	</list>
 	<list name="CTorrentTrackerList">
