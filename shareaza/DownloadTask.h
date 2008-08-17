@@ -34,9 +34,7 @@ public:
 		dtaskPreviewRequest, dtaskCheckHash, dtaskMergeFile, dtaskCreateBatch
 	};
 
-	CDownloadTask(CDownload* pDownload, dtask nTask);
-	CDownloadTask(CDownload* pDownload, const CString& strPreviewURL);
-	CDownloadTask(CDownload* pDownload, HANDLE hSelectedFile);
+	CDownloadTask(CDownload* pDownload, dtask nTask, LPCTSTR szParam1 = NULL);
 	virtual ~CDownloadTask();
 
 	DECLARE_DYNAMIC(CDownloadTask)
@@ -56,6 +54,7 @@ public:
 	CBTInfo		m_pTorrent;
 	CHttpRequest m_pRequest;
 	DWORD		m_dwFileError;
+	CString		m_sMergeFilename;
 
 private:
 	void	Construct(CDownload* pDownload);
@@ -63,7 +62,6 @@ private:
 protected:
 	int			m_nTorrentFile;
 	CEvent*		m_pEvent;
-	HANDLE		m_hSelectedFile;
 
 	void	RunAllocate();
 	void	RunCopySimple();

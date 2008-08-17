@@ -242,6 +242,8 @@ void CDownloadEditPage::OnLButtonUp(UINT nFlags, CPoint point)
 	}
 	else if ( rcCtrl4.PtInRect( point ) )
 	{
+		if ( ! Commit() ) return;
+
 		OnMergeAndVerify ();
 	}
 	else if ( rcCtrl5.PtInRect( point ) )
@@ -307,8 +309,6 @@ void CDownloadEditPage::OnMergeAndVerify()
 {
 	CString strMessage, strFormat;
 
-	if ( ! Commit() ) return;
-
 	CSingleLock pLock( &Transfers.m_pSection, TRUE );
 	CDownload* pDownload = ((CDownloadSheet*)GetParent())->m_pDownload;
 	if ( ! Downloads.Check( pDownload ) ||
@@ -355,40 +355,20 @@ void CDownloadEditPage::OnMergeAndVerify()
 		NULL, this );
 	if ( dlgSelectFile.DoModal() == IDOK )
 	{
-		CPropertyPageAdv::OnOK();
-
-		// Open selected file in very compatible sharing mode
-		HANDLE hSelectedFile = CreateFile( dlgSelectFile.GetPathName(), GENERIC_READ,
-            FILE_SHARE_READ | FILE_SHARE_WRITE, NULL, OPEN_EXISTING,
-			FILE_ATTRIBUTE_NORMAL, NULL);
-		VERIFY_FILE_ACCESS( hSelectedFile, dlgSelectFile.GetPathName() )
-		if ( hSelectedFile != INVALID_HANDLE_VALUE )
+		pLock.Lock();
+		if ( ! Downloads.Check( pDownload ) || pDownload->IsTasking() )
 		{
-			pLock.Lock();
-			if ( ! Downloads.Check( pDownload ) || pDownload->IsTasking() )
-			{
-				pLock.Unlock();
-				strMessage = _T("The selected download item currently has some Task attached, please wait and do it later.");
-				AfxMessageBox( strMessage, MB_ICONEXCLAMATION );
-				return;
-			}
-
-			// pDownload->m_pTask is already set correctly in CDownloadTask::Construct
-			/* pDownload->SetNewTask( new CDownloadTask( pDownload, hSelectedFile ) ); */
-			new CDownloadTask( pDownload, hSelectedFile );
-
 			pLock.Unlock();
+			strMessage = _T("The selected download item currently has some Task attached, please wait and do it later.");
+			AfxMessageBox( strMessage, MB_ICONEXCLAMATION );
+			return;
 		}
-		else
-		{
-			// File open error
-			LoadString( strFormat, IDS_DOWNLOAD_FILE_OPEN_ERROR );
-			strMessage.Format( strFormat, dlgSelectFile.GetPathName() );
-			AfxMessageBox( strMessage, MB_ICONERROR );
-		}
-	}
 
-	pLock.Unlock();
+		new CDownloadTask( pDownload, CDownloadTask::dtaskMergeFile,
+			dlgSelectFile.GetPathName() );
+
+		pLock.Unlock();
+	}
 }
 
 void CDownloadEditPage::OnOK()

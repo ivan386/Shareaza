@@ -905,7 +905,8 @@ void CDownloadsWnd::OnDownloadsRemotePreview()
 							(LPCTSTR)CString( inet_ntoa( pSource->m_pAddress ) ), pSource->m_nPort,
 							(LPCTSTR)pDownload->m_oSHA1.toUrn() );
 					}
-					pDownload->m_pTask = new CDownloadTask( pDownload, pSource->m_sPreview );
+					pDownload->m_pTask = new CDownloadTask( pDownload,
+						CDownloadTask::dtaskPreviewRequest, pSource->m_sPreview );
 					pDownload->m_bWaitingPreview = TRUE;
 					pSource->m_bPreviewRequestSent = TRUE;
 					break;
