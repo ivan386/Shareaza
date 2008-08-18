@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 
-<!-- Shareaza Default Greek Skin File --> <!-- This translation is based on default-en.xml SVN rev.7280 -->
+<!-- Shareaza Default Greek Skin File --> <!-- This translation is based on default-en.xml SVN rev.7300 -->
 
 <!-- This skin basically represents the current Shareaza defaults. You can use this file as -->
 <!-- a basis for creating new skins, however in a new skin be sure to ONLY include the sections -->
@@ -1865,9 +1865,9 @@
 		<gap size="4"/>
 		<text>Οι ρυθμίσεις για το προφίλ σας, τις συνομιλίες και τα άμεσα μηνύματα.</text>
 		<newline gap="10"/>
-		<link target="raza:page:CIRCSettingsPage" format="b">Chat:</link>
+		<link target="raza:page:CIRCSettingsPage" format="b">Συνομιλία με Χρήστη:</link>
 		<gap size="4"/>
-		<text>IRC chatroom visual appearance and connection settings.</text>
+		<text>Οπτική εμφάνιση του Δωματίου Συνομιλιών IRC και ρυθμίσεις σύνδεσης.</text>
 		<newline gap="10"/>
 		<link target="raza:page:CWebSettingsPage" format="b">Ιστός:</link>
 		<gap size="4"/>
@@ -1903,9 +1903,9 @@
 		<gap size="4"/>
 		<text>Ρυθμίστε τη δυνατότητα να χειρίζεστε το Shareaza από απομακρυσμένα προγράμματα περιήγησης.</text>
 		<newline gap="10"/>
-		<link target="raza:page:CSchedulerSettingsPage" format="b">Scheduler:</link>
+		<link target="raza:page:CSchedulerSettingsPage" format="b">Προγραμματιστής:</link>
 		<gap size="4"/>
-		<text>Limit download connections based on a periodic schedule.</text>
+		<text>Περιορίστε τις συνδέσεις λήψης με βάσει ένα περιοδικό πρόγραμμα.</text>
 	</document>
 	<!-- Browse User Profile -->
 	<document name="CBrowseHostProfile.1">
@@ -4169,7 +4169,7 @@
 		<control caption="Εισαγωγή Κουπονιού:"/>
 		<control caption="Ρίζα Tiger|SHA1|MD5|ED2K (CMD4)|Όνομα Αρχείου|Όνομα Αρχείου (URI)|Βασικό Όνομα Αρχείου|Τύπος Αρχείου|Μέγεθος Αρχείου|Μέγεθος Αρχείου (bytes)|Path Φακέλου|Τοπικός Host|Τοπική Θύρα"/>
 		<control caption="Επιλογή preset:"/>
-		<control/>
+		<control caption="Magnet|eDonkey|Magnet HTML|eDonkey HTML"/>
 		<control caption="_Αντιγραφή"/>
 		<control caption="Αποθήκευση..."/>
 		<control/>
@@ -4305,7 +4305,7 @@
 		<control caption="ED2K:"/>
 		<control/>
 		<control/>
-		<control caption="Actions:"/>
+		<control caption="Ενέργειες:"/>
 		<control caption="Αφαίρεση τρέχουσας επαλήθευσης και επαναεπαλήθευση"/>
 		<control caption="Θεώρηση της λήψης ως ολοκληρωμένης και επαναεπαλήθευσή της"/>
 		<control caption="Απολησμόνηση όλων των γνωστών πηγών"/>
@@ -4408,7 +4408,7 @@
 	<dialog name="CDecodeMetadataDlg" cookie="StCoBuBuBuStStBuBu" caption="Metadata Localisation">
 		<control caption="Επιλογή μεθόδου επανακωδικοποίησης"/>
 		<control caption="Αραβική|Βαλτικής|Κεντροευρωπαϊκή|Κινέζικη απλοποιημένη|Κινέζικη παραδοσιακή|Κυριλλική|Ελληνική|Εβραϊκή|Ιαπωνική|Κορεατική|Τάι|Τούρκικη|Βιετναμέζικη"/>
-		<control caption="Preview:"/>
+		<control caption="Προεπισκόπηση:"/>
 		<control/>
 		<control/>
 		<control/>

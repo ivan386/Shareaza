@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- Shareaza Default English Skin File --> <!-- This translation is based on default-en.xml SVN rev.6238 + ~1 -->
+<!-- Shareaza Default English Skin File --> <!-- This translation is based on default-en.xml SVN rev.7300 -->
 
 <!-- This skin basically represents the current Shareaza defaults. You can use this file as -->
 <!-- a basis for creating new skins, however in a new skin be sure to ONLY include the sections -->
@@ -16,8 +16,8 @@
         updatedBy="Felipe"
 		description="Shareaza Default English Skin File"
         link="http://shareaza.sourceforge.net/"
-        email="contact(at)shareaza(dot)com"
-        version="2.3.1.1"
+        email="Contact(at)ShareazaProject.com"
+        version="2.3.2.0"
         type="Language"
         language="pt-br"
         prompt="Clique aqui para traduzir o Shareaza para o português do Brasil."
@@ -455,8 +455,8 @@
     </toolbar>
     <!-- IMAGE VIEWER WINDOW -->
     <toolbar name="ImageViewer_Toolbar">
+	  <button id="ImageViewer_ActualSize" text="Tamanho Verdadeiro"/>
       <button id="ImageViewer_BestFit" text="Melhor Encaixe"/>
-      <button id="ImageViewer_ActualSize" text="Tamanho Verdadeiro"/>
       <separator/>
       <button id="ImageViewer_Refresh" text="Atualizar"/>
       <separator/>
@@ -1865,10 +1865,13 @@
       <gap size="4"/>
       <text>Seu perfil, configurações da conversa e das mensagens instantâneas.</text>
       <newline gap="10"/>
-      <link target="raza:page:CWebSettingsPage" format="b">Web:</link>
+      <link target="raza:page:CIRCSettingsPage" format="b">Web:</link>
+      <gap size="4"/>
+      <text>Aparência visual da sala de chat do IRC e configurações da conexão.</text>
+      <newline gap="10"/>
+      <link target="raza:page:CWebSettingsPage" format="b">Integração com a Web:</link>
       <gap size="4"/>
       <text>Integrar o Shareaza ao seu navegador da web para aceitar links peer-to-peer e baixar conteúdo.</text>
-      <newline gap="10"/>
     </document>
     <document name="CInternetSettingsGroup" title="Internet" leftMargin="8" topMargin="8">
       <styles>
@@ -1878,14 +1881,10 @@
       </styles>
       <text format="b">Bem-vindo ao Gerente das Configurações do Shareaza</text>
       <newline gap="16"/>
-      <text>
-        O Gerente das Configurações do Shareaza permite aos usuários avançados modificar
-        completamente o Shareaza. As configurações na seção
-      </text>
+      <text>O Gerente das Configurações do Shareaza permite aos usuários avançados modificar
+          completamente o Shareaza. As configurações na seção</text>
       <text format="b">Internet </text>
-      <text>
-        controlam como o Shareaza interage com outros nodes dentro das
-        redes peer-to-peer.
+      <text>  controlam como o Shareaza interage com outros nodes dentro das redes peer-to-peer.
       </text>
       <newline gap="16" indent="16"/>
       <link target="raza:page:CConnectionSettingsPage" format="b">Conexão:</link>
@@ -1904,6 +1903,9 @@
       <gap size="4"/>
       <text>Configurar a habilidade de controlar o Shareaza remotamente através de um navegador da web.</text>
       <newline gap="10"/>
+		<link target="raza:page:CSchedulerSettingsPage" format="b">Agendador:</link>
+		<gap size="4"/>
+		<text>Limitar as conexões de download baseado numa agenda periódica.</text>
     </document>
     <!-- Browse User Profile -->
     <document name="CBrowseHostProfile.1">
@@ -2075,20 +2077,16 @@
     <document name="DownloadHelp.Searching">
       <text format="b">Este Download está Procurando</text>
       <newline gap="8"/>
-      <text>
-        Não há fontes conhecidas para este download, então o Shareaza está procurando
-        todas as redes P2P conectadas por novas fontes. Uma vez que as fontes são achadas, o
-        download iniciará automaticamente. O Shareaza procura por fontes automaticamente,
-        Contudo você pode acelerar este processo usando o comando
-      </text>
+      <text>Não há fontes conhecidas para este download, então o Shareaza está procurando
+      todas as redes P2P conectadas por novas fontes. Uma vez que as fontes são achadas, o
+      download iniciará automaticamente. O Shareaza procura por fontes automaticamente,
+      Contudo você pode acelerar este processo usando o comando </text>
       <text format="b">Achar Mais Fontes </text>.
       <newline gap="8"/>
-      <text>
-        Infelizmente em muitos casos pode não haver usuários online que tenham o
-        arquivo que você está procurando. O único curso de ação aqui é esperar
-        alguém vir online, ou cancelá-lo e tentar achar um arquivo similar o qual está
-        mais amplamente disponível.
-      </text>
+      <text>Infelizmente em muitos casos pode não haver usuários online que tenham o
+      arquivo que você está procurando. O único curso de ação aqui é esperar
+      alguém vir online, ou cancelá-lo e tentar achar um arquivo similar o qual está
+      mais amplamente disponível.</text>
     </document>
     <document name="DownloadHelp.Creating">
       <text format="b">Este Download está sendo Criado</text>
@@ -3928,7 +3926,8 @@
       <control caption="Abrir _Torrent..."/>
     </dialog>
     <dialog name="CNewSearchDlg" cookie="EdCoBuBu" caption="Nova Busca|Procurar de Novo|Achar na Biblioteca">
-      <control/><control/>
+      <control/>
+      <control/>
       <control caption="Procurar"/>
       <control caption="Cancelar"/>
     </dialog>
@@ -4037,7 +4036,8 @@
       <control caption="Etiqueta(s) de Seleção da Fila de Espera do Upload"/>
       <control/>
       <control caption="-Redes nas quais compartilhar"/>
-      <control/><control/>
+      <control/>
+      <control/>
     </dialog>
     <dialog name="CFileSourcesPage" cookie="StStEdSyBuBuEd" caption="Fontes">
       <control caption="Fontes Conhecidas"/>
@@ -4102,7 +4102,8 @@
       <control caption="_Remover"/>
     </dialog>
     <dialog name="CSchemaColumnsDlg" cookie="CoSyBuBuSt" caption="Selecionar Colunas do Schema">
-      <control/><control/>
+      <control/>
+      <control/>
       <control caption="OK"/>
       <control caption="Cancelar"/>
       <control caption="Selecione um Schema da lista, então selecione os campos para exibir como colunas."/>
@@ -4296,9 +4297,11 @@
       <control caption="_URNs:"/>
       <control caption="Confia"/>
       <control caption="SHA1:"/>
-      <control/><control/>
+      <control/>
+      <control/>
       <control caption="Tiger-Root:"/>
-      <control/><control/>
+      <control/>
+      <control/>
       <control caption="ED2K:"/>
       <control/>
       <control/>
