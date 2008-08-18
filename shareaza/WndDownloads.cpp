@@ -503,6 +503,7 @@ void CDownloadsWnd::Prepare()
 	if ( tNow - m_tSel < 250 ) return;
 	m_tSel = tNow;
 
+	m_nSelectedDownloads = 0;
 	m_bSelAny = m_bSelDownload = m_bSelSource = m_bSelTrying = m_bSelPaused = FALSE;
 	m_bSelNotPausedOrMoving = m_bSelNoPreview = m_bSelNotCompleteAndNoPreview = FALSE;
 	m_bSelCompletedAndNoPreview = m_bSelStartedAndNotMoving = m_bSelCompleted = FALSE;
@@ -526,6 +527,7 @@ void CDownloadsWnd::Prepare()
 
 		if ( pDownload->m_bSelected )
 		{
+			m_nSelectedDownloads ++;
 			m_bSelAny = TRUE;
 			m_bSelDownload = TRUE;
 			if ( pDownload->IsCompleted() )
@@ -628,8 +630,8 @@ void CDownloadsWnd::OnUpdateDownloadsResume(CCmdUI* pCmdUI)
 {
 	Prepare();
 	if ( CCoolBarItem* pcCmdUI = CCoolBarItem::FromCmdUI( pCmdUI ) )
-		pcCmdUI->Show( m_bSelPaused || ( m_bSelDownload && ! m_bSelTrying ) );
-	pCmdUI->Enable( m_bSelPaused || ( m_bSelDownload && ! m_bSelTrying ) );
+		pcCmdUI->Show( m_bSelPaused || ( m_bSelDownload && ! m_bSelTrying && ! m_bSelCompleted ) );
+	pCmdUI->Enable( m_bSelPaused || ( m_bSelDownload && ! m_bSelTrying && ! m_bSelCompleted ) );
 }
 
 void CDownloadsWnd::OnDownloadsResume()
@@ -1368,7 +1370,7 @@ void CDownloadsWnd::OnDownloadsMonitor()
 void CDownloadsWnd::OnUpdateDownloadsEdit(CCmdUI *pCmdUI)
 {
 	Prepare();
-	pCmdUI->Enable( m_bSelNotMoving || m_bSelTorrent );
+	pCmdUI->Enable( ( m_bSelNotMoving || m_bSelTorrent ) && m_nSelectedDownloads == 1 );
 }
 
 void CDownloadsWnd::OnDownloadsEdit()

@@ -50,18 +50,16 @@ protected:
 	CDownloadsCtrl	m_wndDownloads;
 	CDownloadTabBar	m_wndTabBar;
 	CCoolBarCtrl	m_wndToolBar;
-protected:
 	CList< CDownload* >* m_pDragList;
 	CImageList*		m_pDragImage;
 	CPoint			m_pDragOffs;
 	HCURSOR			m_hCursMove;
 	HCURSOR			m_hCursCopy;
-protected:
 	int				m_nMoreSourcesLimiter;
 	DWORD			m_tMoreSourcesTimer;
 	DWORD			m_tLastUpdate;
 	bool			m_bMouseCaptured;
-protected:
+	DWORD			m_nSelectedDownloads;
 	DWORD			m_tSel;
 	BOOL			m_bSelAny;
 	BOOL			m_bSelDownload;
