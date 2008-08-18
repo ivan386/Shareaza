@@ -13,7 +13,7 @@ Name: "it"; MessagesFile: "compiler:Languages\Italian.isl"; LicenseFile: "setup/
 Name: "no"; MessagesFile: "compiler:Languages\Norwegian.isl"; LicenseFile: "setup/license/norwegian.rtf"
 Name: "af"; MessagesFile: "setup\isl\afrikaans.isl"; LicenseFile: "setup/license/afrikaans.rtf"
 Name: "pt"; MessagesFile: "compiler:Languages\Portuguese.isl"; LicenseFile: "setup/license/portuguese.rtf"
-Name: "pt_br"; MessagesFile: "compiler:Languages\BrazilianPortuguese.isl"; LicenseFile: "setup/license/portuguese-braz.rtf"
+Name: "pt_br"; MessagesFile: "setup\isl\portuguese-braz.isl"; LicenseFile: "setup/license/portuguese-braz.rtf"
 Name: "fr"; MessagesFile: "compiler:Languages\french.isl"; LicenseFile: "setup/license/french.rtf"
 Name: "es"; MessagesFile: "compiler:Languages\Spanish.isl"; LicenseFile: "setup/license/spanish.rtf"
 Name: "es_mx"; MessagesFile: "setup\isl\spanish-mexican.isl"; LicenseFile: "setup/license/spanish-mexican.rtf"
@@ -483,32 +483,33 @@ pt.CreateQuickLaunchIcon=Criar ícone na barra de Inicialização &Rápida
 ; Portuguese Braz
 pt_br.components_plugins=Plugins
 pt_br.components_skins=Skins
-pt_br.tasks_languages=Idiomas
+pt_br.tasks_languages=Multi-idioma
 pt_br.tasks_allusers=Todos os Usuários
-pt_br.tasks_selectusers=Instalar %1 para:
-pt_br.tasks_currentuser=%1 apenas
+pt_br.tasks_selectusers=Instalar o %1 para:
+pt_br.tasks_currentuser=só para o %1
 pt_br.tasks_multisetup=Ativar suporte para vários usuários
-pt_br.tasks_firewall=Adicionar exceção ao Firewall do Windows
-pt_br.tasks_upnp=Ativar descobrimento de dispositivos UPnP
+pt_br.tasks_firewall=Adicionar uma exceção ao Firewall do Windows
+pt_br.tasks_upnp=Ativar o descobrimento de dispositivos UPnP
 pt_br.tasks_deleteoldsetup=Apagar os instaladores antigos
-pt_br.tasks_resetdiscoveryhostcache=Resetar Descobrimento e Cache de Hosts
-pt_br.run_skinexe=Instalando as Skins...
-pt_br.reg_incomingchat=Nova mensagem no chat
-pt_br.reg_apptitle=Shareaza o Compartilhador de Arquivos Definitivo
+pt_br.tasks_resetdiscoveryhostcache=Resetar o Descobrimento e o Cache dos Hosts
+pt_br.run_skinexe=Executando a instalação das skins...
+pt_br.reg_incomingchat=Mensagem de chat a entrar
+pt_br.reg_apptitle=Shareaza o Último Compartilhador de Arquivo
 pt_br.icons_license=Licença
 pt_br.icons_uninstall=Desinstalar
 pt_br.icons_downloads=Downloads
 pt_br.icons_basicmode=Modo Simples
-pt_br.icons_tabbedmode=Modo Avançado
+pt_br.icons_tabbedmode=Modo em Abas
 pt_br.icons_windowedmode=Modo de Janelas
-pt_br.dialog_shutdown=Você quer fechar o %1?
-pt_br.dialog_firewall=A instalação falhou ao tentar adicionar o Shareaza a lista de exceções do Firewall do Windows.%nPor favor adicione manualmente o Shareaza a lista.
-pt_br.dialog_malwaredetected=Um malware foi detectado no seu sistema as %1, por favor remova-o com um scanner contra vírus/malware antes de instalar o Shareaza. Você quer sair agora?
-pt_br.page_viruswarning_text=Ao usar a Internet você deve sempre manter seu Anti-Vírus atualizado, para proteger contra vírus, worms, cavalos-de-tróia e outros programas perigosos. Você encontra uma lista de bons anti-vírus e dicas de segurança entrando no seguinte endereço:
+pt_br.dialog_shutdown=O %1 está rodando atualmente. Você gostaria que o %1 fosse fechado para que a instalação possa continuar?
+pt_br.dialog_firewall=A instalação falhou ao tentar adicionar o Shareaza a lista de exceções do Firewall do Windows.%nPor favor adicione o Shareaza a lista de exceções manualmente.
+pt_br.dialog_malwaredetected=Um malware foi detectado no seu sistema em %1, por favor remova-o com um scanner contra vírus/malware antes de instalar o Shareaza. Você quer sair agora?
+pt_br.page_viruswarning_text=Quando usar a Internet você deve sempre garantir que você tenha um scanner contra vírus atualizado para proteger você de trojans, worms e outros programas maliciosos. Você pode achar uma lista de bons scanners contra vírus e outras dicas de segurança para proteger seu computador seguindo este link:
 pt_br.page_viruswarning_title=Aviso sobre_Vírus
 pt_br.page_viruswarning_subtitle=Você tem um programa anti-vírus instalado?
-pt_br.CreateDesktopIcon=Mostrar um ícone na &área de trabalho
-pt_br.CreateQuickLaunchIcon=Mostrar um ícone na barra de &Inicialização Rápida
+pt_br.CreateDesktopIcon=Exibir um ícone na &área de trabalho
+pt_br.CreateQuickLaunchIcon=Exibir um ícone na barra de &Inicialização Rápida
+PathNotExist=Erro, o caminho da pasta %1 não existe
 ; French
 fr.components_plugins=Plugins
 fr.components_skins=Skins
