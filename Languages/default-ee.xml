@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 
-<!-- Shareaza Default Estonian Skin File --> <!-- This translation is based on default-en.xml SVN rev.xxxx -->
+<!-- Shareaza Default Estonian Skin File -->
+<!-- Translation based on default-en.xml SVN rev.xxxx -->
 
 <!-- This skin basically represents the current Shareaza defaults. You can use this file as -->
 <!-- a basis for creating new skins, however in a new skin be sure to ONLY include the sections -->
@@ -23,7 +24,7 @@
 		updateBy="Felix Kütt"
 		description="Shareaza Default Estonian Skin File"
 		link="http://shareaza.sourceforge.net/"
-		email="janekk32(at)solo.delfi(dot)ee"
+		email="janekk32(at)solo.delfi.ee"
 		version="2.2.2.9"
 		type="Language"
 		language="ee"
@@ -1462,12 +1463,6 @@
 		<item id="ID_CHAT_CLEAR" text="_Puhasta Aken"/>
 	</menu>
 </menus>
-
-<!-- Watermarks -->
-<watermarks>
-	<watermark target="CHomeViewCtrl.Header" path="257.PNG"/>
-	<watermark target="CHomeViewCtrl.Header" path="258.PNG"/>
-</watermarks>
 
 <!-- Documents -->
 <documents>

@@ -1,16 +1,32 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
+
 <!-- Shareaza Default English Skin File -->
-<!-- This translation is based on default-en.xml SVN rev.6238 + ~1 -->
+<!-- Translation based on default-en.xml SVN rev.6238 -->
+
 <!-- This skin basically represents the current Shareaza defaults. You can use this file as -->
 <!-- a basis for creating new skins, however in a new skin be sure to ONLY include the sections -->
 <!-- which you changed! Including sections you did not edit will reduce performance and limit -->
 <!-- compatibility with future versions and other skins. -->
+
 <!-- Body element, don't touch -->
 <skin xmlns="http://www.shareaza.com/schemas/Skin.xsd" version="1.0">
+
   <!-- Manifest -->
-  <manifest name="عربي Arabic" author="Awadh A Al-Ghaamdi" updatedBy="Awadh A Al-Ghaamdi" description="Shareaza Default Arabic Skin File" link="http://shareaza.sourceforge.net/" email="awadh_al_ghaamdi@hotmail.com" version="2.3.0.1" type="Language" language="ara" prompt="Click here to select English as your natural language." dir="rtl" />
-  <!-- Toolbar Definitions -->
-  <toolbars>
+  <manifest name="عربي Arabic"
+	author="Awadh A Al-Ghaamdi"
+	updatedBy="Awadh A Al-Ghaamdi"
+	description="Shareaza Default Arabic Skin File"
+	link="http://shareaza.sourceforge.net/"
+	email="awadh_al_ghaamdi@hotmail.com"
+	version="2.3.0.1"
+	type="Language"
+	language="ara"
+	prompt="Click here to select English as your natural language."
+	dir="rtl"
+/>
+
+<!-- Toolbar Definitions -->
+<toolbars>
     <!-- MAIN WINDOW -->
     <toolbar name="CMainWnd.Basic">
       <button id="ID_NETWORK_CONNECT" text="إتصال" />
@@ -1477,11 +1493,6 @@
       <item id="ImageViewer_Close" text="إ_غلاق" />
     </menu>
   </menus>
-  <!-- Watermarks -->
-  <watermarks>
-    <watermark target="CHomeViewCtrl.Header" path="257.PNG" />
-    <watermark target="CHomeViewCtrl.Header" path="258.PNG" />
-  </watermarks>
   <!-- Documents -->
   <documents>
     <!-- Home View -->

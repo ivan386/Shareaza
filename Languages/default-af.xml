@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<!-- Structure updated to English revision 7280--> <!-- ToDo: Replace "Properties" "Web Services" etc. -->
-<!-- Shareaza Default Afrikaans Skin File --> <!-- This translation is based on default-en.xml SVN rev.xxxx --> <!-- Weergawe: 27 Oktober 2005 vir Shareaza 2.2.0.2 -->
+
+<!-- Shareaza Default Afrikaans Skin File --> <!-- ToDo: Replace English "Properties" "Web Services" etc. -->
+<!-- Translation structure based on default-en.xml SVN rev.7300 --> <!-- Weergawe: 27 Oktober 2005 vir Shareaza 2.2.0.2 -->
 
 <!-- This skin basically represents the current Shareaza defaults. You can use this file as -->
 <!-- a basis for creating new skins, however in a new skin be sure to ONLY include the sections -->
@@ -16,8 +17,8 @@
 		updatedBy="Thesage, omega09"
 		description="Shareaza Default Afrikaans Skin File"
 		link="http://shareaza.sourceforge.net/"
-		email="jvdwalt(at)tuks(dot)co.za"
-		version="2.3.2.0" <!-- Structure -->
+		email="jvdwalt(at)tuks.co.za"
+		version="2.3.2.0"
 		type="Language"
 		language="af"
 		prompt="Kliek hier om Afrikaans as jou taal te kies."
@@ -422,9 +423,9 @@
 		<button id="ID_CHAT_BROWSE" text="Blaai deur Gebruikersinligting"/>
 		<!-- <button id="ID_CHAT_SEND_FILE" text="Stuur Lêer"/> -->
 		<button id="ID_CHAT_PRIORITY" text="Gee Prioriteit"/>
-	<separator/>
-		<button id="ID_CHAT_CONNECT" text="Connect" visible="false"/>
-		<button id="ID_CHAT_DISCONNECT" text="Disconnect"/>
+		<separator/>
+		<button id="ID_CHAT_CONNECT" text="Konnekteer" visible="false"/>
+		<button id="ID_CHAT_DISCONNECT" text="Diskonnekteer"/>
 	</toolbar>
 	<toolbar name="WebServices.ShareMonkey">
 		<button id="ID_SHAREMONKEY_DOWNLOAD" text="Get Data"/>
@@ -455,6 +456,7 @@
 	</toolbar>
 	<!-- IMAGE VIEWER WINDOW -->
 	<toolbar name="ImageViewer_Toolbar">
+		<button id="ImageViewer_ActualSize" text="Actual Size"/>
 		<button id="ImageViewer_BestFit" text="Best Fit"/>
 		<separator/>
 		<button id="ImageViewer_Refresh" text="Refresh"/>
@@ -1584,12 +1586,6 @@
 		<item id="ID_WEBSERVICES_SHAREMONKEY" text="_ShareMonkey"/>
 	</menu>
 </menus>
-
-<!-- Watermarks -->
-<watermarks>
-	<watermark target="CHomeViewCtrl.Header1" path="257.PNG"/>
-	<watermark target="CHomeViewCtrl.Header2" path="258.PNG"/>
-</watermarks>
 <!-- Documents -->
 <documents>
 	<!-- Home View -->
@@ -1769,7 +1765,7 @@
 		<text group="24" align="middle" id="G2Hubs">%i gashere</text>
 		<text group="25" align="middle" id="G2Leaves">%i kliënte</text>
 		<newline group="20" gap="2"/>
-<icon group="10" command="ID_NETWORK_G1"/><gap group="10" size="4"/>
+		<icon group="10" command="ID_NETWORK_G1"/><gap group="10" size="4"/>
 		<text group="10" align="middle" format="b">Gnutella1:</text>
 		<text group="11" align="middle">Nie Gekonnekteer</text>
 		<text group="12" align="middle">Konnekteer nou...</text>
@@ -1864,14 +1860,13 @@
 		<gap size="4"/>
 		<text>Jou profiel, geselsies en kitsboodskap verstellings.</text>
 		<newline gap="10"/>
-		<link target="raza:page:CWebSettingsPage" format="b">Web:</link>
+		<link target="raza:page:CIRCSettingsPage" format="b">Chat:</link>
 		<gap size="4"/>
 		<text>IRC chatroom visual appearance and connection settings.</text>
 		<newline gap="10"/>
 		<link target="raza:page:CWebSettingsPage" format="b">Web Integration:</link>
 		<gap size="4"/>
 		<text>Integreer Shareaza met jou webblaaier om persoon-tot-persoon skakels te aanvaar en inhoud af te laai.</text>
-		<newline gap="10"/>
 	</document>
 	<document name="CInternetSettingsGroup" title="Internet" leftMargin="8" topMargin="8">
 		<styles>
@@ -3207,6 +3202,7 @@
 	<string id="18508" value="Verwyder aflaaibron %s vir &quot;%s&quot; omdat waglysposisie %i te hoog is."/>
 	<string id="18509" value="Jy kan nie aaneem hierdie aflaai is voltooi en dit herkontroleer nie, aangesien jy nog geen kontrole-data, soos 'n tiger-tree waarde, eDonkey hashset of BitTorrent hashset het nie. Sonder kontrole-data kan die aflaai nie herkontroleer word nie."/>
 	<string id="18510" value="Is jy seker jy wil aanneem dat hierdie aflaai voltooi is en dit herkontroleer? Die totale lêer sal oorweeg word, en Shareaza sal net dele aanvaar wat die kontrole deurkom, en die res weer aflaai."/>
+	<string id="18511" value="You have made changes to the file size. Are you sure you want to change the file size for this download?"/>
 	<string id="19000" value="Web toegang is afgeskakel."/>
 	<string id="19001" value="Jy moet 'n gebruikersnaam en wagwoord kies."/>
 	<string id="19002" value="Kan nie konneksies ontvang nie, URL nie beskikbaar."/>
@@ -3218,6 +3214,12 @@
 	<string id="20005" value="Nee"/>
 	<string id="20006" value="Ja"/>
 	<string id="20007" value="Auto"/>
+	<string id="20008" value="Default"/>
+	<string id="20009" value="Custom"/>
+	<string id="20010" value="&amp;Back"/>
+	<string id="20011" value="&amp;Next"/>
+	<string id="20012" value="Finish"/>
+	<string id="20013" value="All"/>
 	<string id="20100" value="Konnekteer"/>
 	<string id="20101" value="Stuur Versoek"/>
 	<string id="20102" value="Ontvang Antwoord"/>
@@ -3328,10 +3330,12 @@
 		<control caption="Lys jou gedeelde lêers vir ander"/>
 		<control caption="_Onlangse Lêers:"/>
 		<control caption="Onthou:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="lêers"/>
 		<control caption="Vir:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="dae"/>
 		<control caption="Maak nou skoon"/>
 		<control caption="_Veilig om oop te maak:"/>
@@ -3726,7 +3730,7 @@
 		<control/>
 		<control caption="Shareaza te begin gebruik."/>
 	</dialog>
-	<dialog name="CWizardConnectionPage" cookie="StCoStCoStCoStCoStCo" caption="Welkom by Shareaza [3 van 7]">
+	<dialog name="CWizardConnectionPage" cookie="StCoStCoStCoStCoStCo" caption="Welkom by Shareaza (1/6)">
 		<control caption="Vir optimale werksverrigting, benodig Shareaza inligting oor jou internet konneksie."/>
 		<control caption=" ( selekteer asseblief )| Ek gebruik nou die Internet by die huis| Ek gebruik nou die Internet vanaf 'n kampus LAN| Ek gebruik nou die Internet vanaf 'n kantoor LAN| Ek gebruik nou die Internet by 'n hotel of lughawe"/>
 		<control caption="Dial up Modem|ISDN|ADSL (256K)|ADSL (512K)|ADSL (768K)|ADSL (1.5M)|ADSL (4.0M)|ADSL2 (8.0M)|ADSL2 (12.0M)|ADSL2+ (24.0M)|Cable Modem/SDSL|T1|T3|LAN|OC3"/>
@@ -3739,7 +3743,7 @@
 		<control caption="Status:"/>
 		<control/>
 	</dialog>
-	<dialog name="CWizardSharePage" cookie="StStStSyBuBuSt" caption="Welkom by Shareaza [4 van 7]">
+	<dialog name="CWizardSharePage" cookie="StStStSyBuBuSt" caption="Welkom by Shareaza (2/6)">
 		<control caption="P2P netwerke is net so goed soos die mense wat hulle gebruik.  Al die inhoud beskikbaar vir aflaai word gedeel deur 'n ander gebruiker."/>
 		<control caption="Dit is nie noodsaaklik om inhoud te deel om Shareaza te gebruik nie, alhoewel sommige sagteware verskillend optree teenoor gebruikers wat niks deel nie."/>
 		<control caption="Dui asseblief aan watter gidse, indien enige, jy wil deel.  Kliek eenvoudig op die Voeg By knoppie om 'n gids by te voeg."/>
@@ -3757,7 +3761,7 @@
 		<control caption="0"/>
 		<control caption="Maak Toe"/>
 	</dialog>
-	<dialog name="CWizardProfilePage" cookie="StStEdStCoCoStCoCo" caption="Welkom by Shareaza [5 van 7]">
+	<dialog name="CWizardProfilePage" cookie="StStEdStCoCoStCoCo" caption="Welkom by Shareaza (3/6)">
 		<control caption="Shareaza is 'n baie vriendeliker plek as elkeen 'n paar basiese inligting oor homself invul."/>
 		<control caption="My bynaam is:"/>
 		<control/>
@@ -3768,7 +3772,7 @@
 		<control/>
 		<control/>
 	</dialog>
-	<dialog name="CWizardInterfacePage" cookie="StBuBuBuStStBuBuBu" caption="Welkom by Shareaza">
+	<dialog name="CWizardInterfacePage" cookie="StBuBuBuStStBuBuBu" caption="Welkom by Shareaza (4/6)">
 		<control caption="Shareaza ondersteun 'n buigsame gebruikerskoppelvlak, sodat jy kan kies wat die mees gerieflikste vir jou is. Jy kan hierdie opsies enige tyd verander."/>
 		<control caption="Selekteer asseblief 'n gebruikerskoppelvlak:"/>
 		<control caption="Normale Modus"/>
@@ -3778,7 +3782,7 @@
 		<control caption="Vertoon vereenvoudigde aflaai-vorderingsbalke. (Verminder CPU gebruik)"/>
 		<control caption="Hanteer torrent skakels."/>
 	</dialog>
-	<dialog name="CWizardNetworksPage" cookie="StBuStBuStBuSt" caption="Welkom by Shareaza [6 van 7]">
+	<dialog name="CWizardNetworksPage" cookie="StBuStBuStBuSt" caption="Welkom by Shareaza (5/6)">
 		<control caption="Shareaza is 'n algemeendoelige lêerdelingsprogram wat toegang tot verskeie P2P netwerke gelyktydig bied.  Op hierdie bladsy kan jy kies aan watter P2P netwerke jy wil koppel. Let wel dat jy altyd later ander netwerke kan selekteer."/>
 		<control caption="Koppel aan Gnutella2 (Sterk Aanbeveel)"/>
 		<control caption="Die Gnutella2 Netwerk is Shareaza se primêre netwerk en bied meer funksies en beter werkverrigting as enige ander P2P netwerk.  Word sterk aanbeveel."/>
@@ -3795,7 +3799,7 @@
 		<control/>
 		<control caption="Maak Toe"/>
 	</dialog>
-	<dialog name="CWizardFinishedPage" cookie="StStStBuBuBuSt" caption="Welkom by Shareaza [7 van 7]">
+	<dialog name="CWizardFinishedPage" cookie="StStStBuBuBuSt" caption="Welkom by Shareaza (6/6)">
 		<control caption="Dis dit!  Shareaza is ingestel om met jou rekenaar te werk."/>
 		<control caption="As jy ooit nodig het om jou verstellings te verander, kan jy hierdie SnelBegin Assistent weer hardloop deur dit te selekteer vanaf die Opsies kieslys."/>
 		<control caption="Nadat jy hierdie assistent toegemaak het deur Finish te kliek, kan jy aan die netwerke konnekteer wat jy selekteer het en begin soek en inhoud aflaai."/>
@@ -4428,7 +4432,7 @@
 		<column from="Client" to="Program"/>
 		<column from="Downloaded" to="Afgelaai"/>
 		<column from="Complete" to="Voltooi"/>
-		<column from="Country" to=""/>
+		<column from="Country" to="Anderland"/>
 	</list>
 	<list name="CUploadCtrl">
 		<column from="Remote User" to="Gebruiker"/>
@@ -4438,7 +4442,7 @@
 		<column from="Speed" to="Spoed"/>
 		<column from="Client" to="Kliënt"/>
 		<column from="Rating" to="Gradering"/>
-		<column from="Country" to=""/>
+		<column from="Country" to="Anderland"/>
 	</list>
 	<list name="CNeighboursWnd">
 		<column from="Address" to="Adres"/>
@@ -4452,7 +4456,7 @@
 		<column from="Mode" to="Tipe"/>
 		<column from="Client" to="Program"/>
 		<column from="Name" to="Naam"/>
-		<column from="Country" to=""/>
+		<column from="Country" to="Anderland"/>
 	</list>
 	<list name="CSecurityWnd">
 		<column from="Address / Content" to="Adres / Inhoud"/>
@@ -4473,7 +4477,7 @@
 		<column from="CurUsers" to="Huidiglik"/>
 		<column from="MaxUsers" to="Maksimum"/>
 		<column from="Failures" to=""/>
-		<column from="Country" to=""/>
+		<column from="Country" to="Anderland"/>
 	</list>
 	<list name="CDiscoveryWnd">
 		<column from="Address" to="Adres"/>
@@ -4508,7 +4512,7 @@
 		<column from="Speed" to="Spoed"/>
 		<column from="Client" to="Program"/>
 		<column from="Time" to=""/>
-		<column from="Country" to=""/>
+		<column from="Country" to="Anderland"/>
 	</list>
 	<list name="CUploadQueueList">
 		<column from="Name" to="Naam"/>

@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 
-<!-- Shareaza Default Swedish Skin File --> <!-- This translation is based on default-en.xml SVN rev.xxxx -->
+<!-- Shareaza Default Swedish Skin File -->
+<!-- Translation based on default-en.xml SVN rev.xxxx -->
 
 <!-- This skin basically represents the current Shareaza defaults. You can use this file as -->
 <!-- a basis for creating new skins, however in a new skin be sure to ONLY include the sections -->
@@ -16,7 +17,7 @@
 		updatedBy="DanielB"
 		description="Shareaza Default Swedish Skin File"
 		link="http://shareaza.sourceforge.net/"
-		email="swey1(at)hotmail(dot)com"
+		email="swey1(at)hotmail.com"
 		version="2.3.1.1"
 		type="Language"
 		language="sv"
@@ -1547,12 +1548,6 @@
 		<item id="ID_WEBSERVICES_SHAREMONKEY" text="_ShareMonkey"/>
 	</menu>
 </menus>
-
-<!-- Watermarks -->
-<watermarks>
-	<watermark target="CHomeViewCtrl.Header" path="257.PNG"/>
-	<watermark target="CHomeViewCtrl.Header" path="258.PNG"/>
-</watermarks>
 <!-- Documents -->
 <documents>
 	<!-- Home View -->

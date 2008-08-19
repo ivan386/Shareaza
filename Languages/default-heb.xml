@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 
-<!-- Shareaza Default Hebrew Skin File --> <!-- This translation is based on default-en.xml SVN rev.7280 -->
+<!-- Shareaza Default Hebrew Skin File -->
+<!-- Translation based on default-en.xml SVN rev.7280 -->
 
 <!-- למתרגמים: יש לשים לב לתווים בלתי נראים שהופכים את כיוון ההצגה בשרזה.
 יש גם שוני בתגים של עיצוב כמו
@@ -1594,11 +1595,6 @@ PDF
 		<item id="ID_WEBSERVICES_SHAREMONKEY" text="_ShareMonkey"/>
 	</menu>
 </menus>
-<!-- Watermarks -->
-<watermarks>
-	<watermark target="CHomeViewCtrl.Header" path="257.PNG"/>
-	<watermark target="CHomeViewCtrl.Header" path="258.PNG"/>
-</watermarks>
 <!-- Documents -->
 <documents>
 	<!-- Home View -->

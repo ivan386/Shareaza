@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 
-<!-- Shareaza Default Russian Skin File --> <!-- This translation is based on default-en.xml SVN rev.xxxx -->
+<!-- Shareaza Default Russian Skin File -->
+<!-- Translation based on default-en.xml SVN rev.7300 -->
 
 <!-- This skin basically represents the current Shareaza defaults. You can use this file as -->
 <!-- a basis for creating new skins, however in a new skin be sure to ONLY include the sections -->
@@ -16,8 +17,8 @@
 		updatedBy="Rolandas Rudomanskis, ryo-oh-ki"
 		description="Shareaza Default Russian Skin File"
 		link="http://shareaza.sourceforge.net/"
-		email="contact(at)shareaza(dot)com"
-		version="2.3.1.3"
+		email="Contact(at)ShareazaProject.com"
+		version="2.3.2.0"
 		type="Language"
 		language="ru"
 		prompt="Щелкните здесь для смены языка на Русский (от dAbserver)"
@@ -1585,8 +1586,6 @@
 		<item id="ID_WEBSERVICES_SHAREMONKEY" text="_ShareMonkey"/>
 	</menu>
 </menus>
-
-<!-- Watermarks -->
 <!-- Documents -->
 <documents>
 	<!-- Home View -->

@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 
-<!-- Shareaza Default Chinese (Simplified) Skin File --> <!-- This translation is based on default-en.xml SVN rev.6092 + ~1 -->
+<!-- Shareaza Default Chinese (Simplified) Skin File -->
+<!-- Translation based on default-en.xml SVN rev.6092 -->
 
 <!-- This skin basically represents the current Shareaza defaults. You can use this file as -->
 <!-- a basis for creating new skins, however in a new skin be sure to ONLY include the sections -->
@@ -22,7 +23,7 @@
 		updatedBy="John"
 		description="Shareaza Chinese (Simplified) Skin File"
 		link="http://www.p2pnet.cn/shareaza"
-		email="ShareazaSTC(at)gmail(dot)com"
+		email="ShareazaSTC(at)gmail.com"
 		version="2.3.0.0"
 		type="Language"
 		language="chs"
@@ -1470,12 +1471,6 @@
 		<item id="ID_CHAT_CLEAR" text="清除窗口(_L)"/>
 	</menu>
 </menus>
-
-<!-- Watermarks -->
-<watermarks>
-	<watermark target="CHomeViewCtrl.Header" path="257.PNG"/>
-	<watermark target="CHomeViewCtrl.Header" path="258.PNG"/>
-</watermarks>
 
 <!-- Documents -->
 <documents>

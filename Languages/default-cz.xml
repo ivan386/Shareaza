@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 
-<!-- Shareaza Default Czech Skin File --> <!-- This translation is based on default-en.xml SVN rev.xxxx -->
+<!-- Shareaza Default Czech Skin File -->
+<!-- Translation based on default-en.xml SVN rev.xxxx -->
 
 <!-- This skin basically represents the current Shareaza defaults. You can use this file as -->
 <!-- a basis for creating new skins, however in a new skin be sure to ONLY include the sections -->
@@ -1487,12 +1488,6 @@
 		<item id="ImageViewer_Close" text="_Zavřít"/>
 	</menu>
 </menus>
-
-<!-- Watermarks -->
-<watermarks>
-	<watermark target="CHomeViewCtrl.Header" path="257.PNG"/>
-	<watermark target="CHomeViewCtrl.Header" path="258.PNG"/>
-</watermarks>
 <!-- Documents -->
 <documents>
 	<!-- Home View -->

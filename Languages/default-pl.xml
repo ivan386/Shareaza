@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 
-<!-- Shareaza Default Polish Skin File --> <!-- This translation is based on default-en.xml SVN rev.xxxx -->
+<!-- Shareaza Default Polish Skin File -->
+<!-- Translation based on default-en.xml SVN rev.xxxx -->
 
 <!-- This skin basically represents the current Shareaza defaults. You can use this file as -->
 <!-- a basis for creating new skins, however in a new skin be sure to ONLY include the sections -->
@@ -16,7 +17,7 @@
 		updatedBy="Xzbeat"
 		description="Shareaza Default Polish Skin File"
 		link="http://www.myservice.pl/"
-		email="Xzbeat(at)gmail(dot)com"
+		email="Xzbeat(at)gmail.com"
 		version="2.1.2.7"
 		type="Language"
 		language="pl"
@@ -1454,13 +1455,6 @@
 		<item id="ID_CHAT_CLEAR" text="Wyczyść okno"/>
 	</menu>
 </menus>
-
-<!-- Watermarks -->
-<watermarks>
-	<watermark target="CHomeViewCtrl.Header" path="257.PNG"/>
-	<watermark target="CHomeViewCtrl.Header" path="258.PNG"/>
-</watermarks>
-
 <!-- Documents -->
 <documents>
 	<!-- Home View -->
