@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 
 <!-- Shareaza Default Turkish Skin File -->
-<!-- Translation is based on default-en.xml SVN rev.xxxx -->
+<!-- Translation based on default-en.xml SVN rev.xxxx --> <!-- R.7300 Structural Updates Incomplete -->
 
 <!-- This skin basically represents the current Shareaza defaults. You can use this file as -->
 <!-- a basis for creating new skins, however in a new skin be sure to ONLY include the sections -->
@@ -22,6 +22,7 @@
 		type="Language"
 		language="tr"
 		prompt="Türkçe için buraya tıklayınız."
+
 />
 
 <!-- Toolbar Definitions -->
@@ -45,6 +46,7 @@
 		<button id="ID_TAB_SEARCH" text="Arama"/>
 		<button id="ID_TAB_TRANSFERS" text="Transferler"/>
 		<button id="ID_TAB_NETWORK" text="Ağ"/>
+		<button id="ID_TAB_IRC" text="Chat"/>
 	</toolbar>
 	<toolbar name="CMainWnd.Windowed">
 		<button id="ID_NETWORK_CONNECT" text="Bağlan"/>
@@ -57,6 +59,7 @@
 		<button id="ID_VIEW_UPLOADS"/>
 		<button id="ID_VIEW_LIBRARY"/>
 		<button id="ID_VIEW_MEDIA"/>
+		<button id="ID_TAB_IRC"/>
 		<button id="ID_VIEW_SECURITY"/>
 		<button id="ID_VIEW_HOSTS"/>
 		<button id="ID_VIEW_DISCOVERY"/>
@@ -243,6 +246,8 @@
 	<toolbar name="CLibraryFileView.Physical.Basic">
 		<button id="ID_LIBRARY_LAUNCH" text="Aç/Oynat"/>
 		<button id="ID_LIBRARY_ENQUEUE" text="Oynatma Listesine Ekle"/>
+		<separator/>
+		<button id="ID_WEBSERVICES_LIST" text="Web Services"/>
 		<rightAlign/>
 		<separator/>
 		<control id="IDC_SEARCH_BOX" width="120"/>
@@ -252,7 +257,9 @@
 		<button id="ID_LIBRARY_LAUNCH" text="Aç/Oynat"/>
 		<button id="ID_LIBRARY_ENQUEUE" text="Oynatma Listesine Ekle"/>
 		<separator/>
-		<button id="ID_LIBRARY_PROPERTIES" text="Özellikler"/>
+		<button id="ID_LIBRARY_PROPERTIES" text="Properties"/>
+		<separator/>
+		<button id="ID_WEBSERVICES_LIST" text="Web Services"/>
 		<separator/>
 		<button id="ID_LIBRARY_MOVE" text="Taşı"/>
 		<button id="ID_LIBRARY_COPY" text="Kopyala"/>
@@ -266,6 +273,8 @@
 		<button id="ID_LIBRARY_LAUNCH" text="Aç/Oynat"/>
 		<button id="ID_LIBRARY_ENQUEUE" text="Oynatma Listesine Ekle"/>
 		<button id="ID_LIBRARY_FOLDER_ENQUEUE" text="Albüm Oynat"/>
+		<separator/>
+		<button id="ID_WEBSERVICES_LIST" text="Web Services"/>
 		<rightAlign/>
 		<separator/>
 		<control id="IDC_SEARCH_BOX" width="120"/>
@@ -275,6 +284,8 @@
 		<button id="ID_LIBRARY_LAUNCH" text="Aç/Oynat"/>
 		<button id="ID_LIBRARY_ENQUEUE" text="Oynatma Listesine Ekle"/>
 		<button id="ID_LIBRARY_FOLDER_ENQUEUE" text="Albüm Oynat"/>
+		<separator/>
+		<button id="ID_LIBRARY_PROPERTIES" text="Properties"/>
 		<separator/>
 		<button id="ID_LIBRARY_PROPERTIES" text="Özellikler"/>
 		<rightAlign/>
@@ -339,14 +350,21 @@
 		<button id="ID_MEDIA_CLEAR" text="Temizle"/>
 		<button id="ID_MEDIA_SAVE" text="Kaydet"/>
 	</toolbar>
+	<!-- IRC WINDOW -->
+	<toolbar name="CMainIrcBar">
+		<button id="ID_IRC_CONNECT" text="Connect" tip="Connect to IRC"/>
+		<button id="ID_IRC_DISCONNECT" text="Disconnect" tip="Disconnect from IRC"/>
+		<rightAlign/>
+		<button id="ID_IRC_SETTINGS" text="Settings" tip="Configure IRC Settings"/>
+	</toolbar>
 	<!-- NEIGHBOURS WINDOW -->
 	<toolbar name="CNeighboursWnd.Basic">
 		<button id="ID_BROWSE_LAUNCH" text="Kullanıcı Ara"/>
 		<button id="ID_NEIGHBOURS_CHAT" text="Sohbet"/>
 		<rightAlign/>
 		<button id="ID_NETWORK_G2" text="Gnutella2"/>
-		<button id="ID_NETWORK_ED2K" text="eDonkey2000"/>
 		<button id="ID_NETWORK_G1" text="Gnutella1"/>
+		<button id="ID_NETWORK_ED2K" text="eDonkey"/>
 		<separator/>
 		<button id="ID_NEIGHBOURS_SETTINGS" text="Ayarlar"/>
 	</toolbar>
@@ -359,8 +377,8 @@
 		<button id="ID_SECURITY_BAN" text="Yasaklı Host"/>
 		<rightAlign/>
 		<button id="ID_NETWORK_G2" text="Gnutella2"/>
-		<button id="ID_NETWORK_ED2K" text="eDonkey2000"/>
 		<button id="ID_NETWORK_G1" text="Gnutella1"/>
+		<button id="ID_NETWORK_ED2K" text="eDonkey"/>
 		<separator/>
 		<button id="ID_NEIGHBOURS_SETTINGS" text="Ayarlar"/>
 	</toolbar>
@@ -391,6 +409,8 @@
 		<button id="ID_HOSTCACHE_G2_CACHE" text="G2 Bellek"/>
 		<button id="ID_HOSTCACHE_G1_CACHE" text="G1 Bellek"/>
 		<button id="ID_HOSTCACHE_ED2K_CACHE" text="eDonkey Bellek"/>
+		<button id="ID_HOSTCACHE_BT_CACHE" text="BitTorrent Cache"/>
+		<button id="ID_HOSTCACHE_KAD_CACHE" text="Kademlia Cache"/>
 	</toolbar>
 	<!-- PRIVATE CHAT FRAME -->
 	<toolbar name="CPrivateChatFrame">
@@ -407,8 +427,43 @@
 		<button id="ID_CHAT_CONNECT" text="Bağlan" visible="false"/>
 		<button id="ID_CHAT_DISCONNECT" text="Bağlantı Kes"/>
 	</toolbar>
+	<toolbar name="WebServices.ShareMonkey">
+		<button id="ID_SHAREMONKEY_DOWNLOAD" text="Get Data"/>
+		<separator/>
+		<button id="ID_SHAREMONKEY_PREVIOUS" text="Previous"/>
+		<button id="ID_SHAREMONKEY_NEXT" text="Next"/>
+		<separator/>
+		<button id="ID_SHAREMONKEY_PRICES" text="Get Prices"/>
+		<button id="ID_SHAREMONKEY_COMPARE" text="Compare"/>
+		<button id="ID_SHAREMONKEY_BUY" text="Buy It"/>
+	</toolbar>
+	<toolbar name="WebServices.ShareMonkey.WithSave">
+		<button id="ID_SHAREMONKEY_DOWNLOAD" text="Get Data"/>
+		<button id="ID_SHAREMONKEY_SAVE" text="Save"/>
+		<control id="ID_SHAREMONKEY_SAVE_OPTION" text="Save Preview" width="100" checked="true"/>
+		<separator/>
+		<button id="ID_SHAREMONKEY_PREVIOUS" text="Previous"/>
+		<button id="ID_SHAREMONKEY_NEXT" text="Next"/>
+		<separator/>
+		<button id="ID_SHAREMONKEY_PRICES" text="Get Prices"/>
+		<button id="ID_SHAREMONKEY_COMPARE" text="Compare"/>
+		<button id="ID_SHAREMONKEY_BUY" text="Buy It"/>
+	</toolbar>
+	<toolbar name="WebServices.MusicBrainz">
+		<button id="ID_MUSICBRAINZ_MATCHES" text="View Album Matches"/>
+		<button id="ID_MUSICBRAINZ_ALBUMS" text="View All Albums"/>
+		<separator/>
+	</toolbar>
+	<!-- IMAGE VIEWER WINDOW - DELETE? -->
+	<toolbar name="ImageViewer_Toolbar">
+		<button id="ImageViewer_ActualSize" text="Actual Size"/>
+		<button id="ImageViewer_BestFit" text="Best Fit"/>
+		<separator/>
+		<button id="ImageViewer_Refresh" text="Refresh"/>
+		<separator/>
+		<button id="ImageViewer_Close" text="Close"/>
+	</toolbar>
 </toolbars>
-
 <!-- Menu Definitions -->
 <menus>
 	<!-- SIMPLE POPUP MENU -->
@@ -445,6 +500,7 @@
 			<item id="ID_TAB_SEARCH" text="A_rama"/>
 			<item id="ID_TAB_TRANSFERS" text="_İndirme"/>
 			<item id="ID_WINDOW_REMOTE" text="Uzaktakini Göster"/>
+			<item id="ID_TAB_IRC" text="_Chat"/>
 			<separator/>
 			<menu text="Geliş_miş">
 				<item id="ID_VIEW_NEIGHBOURS" text="_Komşular"/>
@@ -472,6 +528,7 @@
 		</menu>
 		<menu text="_Yardım">
 			<item id="ID_HELP_FAQ" text="Shareaza _SSS"/>
+			<item id="ID_HELP_TEST" text="_Connection Test"/>
 			<separator/>
 			<menu text="_Guides">
 				<item id="ID_HELP_GUIDE" text="Shareaza _Kullanıcı Rehberi "/>
@@ -488,6 +545,9 @@
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
 				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>	-->
 			</menu>
+			<separator/>
+			<item id="ID_HELP_VERSION_CHECK" text="Check for new _version"/>
+			<item id="ID_HELP_DONATE" text="_Donate to Shareaza Project!"/>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="_Shareaza Hakkında..."/>
 		</menu>
@@ -516,6 +576,7 @@
 			<item id="ID_TAB_SEARCH" text="A_rama"/>
 			<item id="ID_TAB_TRANSFERS" text="_Transferler"/>
 			<item id="ID_TAB_NETWORK" text="A_ğ"/>
+			<item id="ID_TAB_IRC" text="_IRC"/>
 			<separator/>
 			<item id="ID_VIEW_SECURITY" text="_Güvenlik"/>
 			<item id="ID_VIEW_HOSTS" text="Ana Bellek"/>
@@ -557,12 +618,14 @@
 		<menu text="_Pencere">
 			<item id="ID_WINDOW_NAVBAR" text="_Kaydırma Çubuğunu Göster"/>
 			<item id="ID_WINDOW_TOOLBAR" text="_Araç Çubuğunu Göster"/>
+			<separator/>
 			<item id="ID_WINDOW_TABBAR" text="Sekme _Çubuğunu Göster"/>
 			<item id="ID_WINDOW_MONITOR" text="_Ekranı Göster"/>
 			<item id="ID_WINDOW_REMOTE" text="Uzaktakini Göster"/>
 		</menu>
 		<menu text="_Yardım">
 			<item id="ID_HELP_FAQ" text="Shareaza _FAQ"/>
+			<item id="ID_HELP_TEST" text="_Connection Test"/>
 			<separator/>
 			<menu text="_Rehber">
 				<item id="ID_HELP_GUIDE" text="Shareaza _Kullanıcı Rehberi"/>
@@ -579,6 +642,9 @@
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
 				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>	-->
 			</menu>
+			<separator/>
+			<item id="ID_HELP_VERSION_CHECK" text="Check for new _version"/>
+			<item id="ID_HELP_DONATE" text="_Donate to Shareaza"/>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="_Shareaza Hakkında..."/>
 		</menu>
@@ -642,12 +708,14 @@
 			<separator/>
 			<item id="ID_WINDOW_NAVBAR" text="_Kaydırma Çubuğunu Göster"/>
 			<item id="ID_WINDOW_TOOLBAR" text="_Araç Çubuğunu Göster"/>
+			<separator/>
 			<item id="ID_WINDOW_TABBAR" text="Sekme Çubuğunu _ Göster"/>
 			<item id="ID_WINDOW_MONITOR" text="_Ekranı Göster"/>
 			<item id="ID_WINDOW_REMOTE" text="_Uzağı Göster"/>
 		</menu>
 		<menu text="_Help">
 			<item id="ID_HELP_FAQ" text="Shareaza _SSS"/>
+			<item id="ID_HELP_TEST" text="_Connection Test"/>
 			<separator/>
 			<menu text="_Rehber">
 				<item id="ID_HELP_GUIDE" text="Shareaza _Kullanıcı Rehberi"/>
@@ -664,6 +732,9 @@
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
 				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>	-->
 			</menu>
+			<separator/>
+			<item id="ID_HELP_VERSION_CHECK" text="Check for new _version"/>
+			<item id="ID_HELP_DONATE" text="_Donate to Shareaza"/>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="_Shareaza Hakkında..."/>
 		</menu>
@@ -690,6 +761,7 @@
 		<item id="ID_TAB_SEARCH" text="A_rama"/>
 		<item id="ID_TAB_TRANSFERS" text="_Transferler"/>
 		<item id="ID_TAB_NETWORK" text="_Ağ"/>
+		<item id="ID_TAB_IRC" text="IR_C"/>
 		<separator/>
 		<item id="ID_VIEW_SECURITY" text="_Güvenlik"/>
 		<item id="ID_VIEW_HOSTS" text="_Host Bellek"/>
@@ -775,6 +847,7 @@
 		<item id="ID_TAB_SEARCH" text="A_rama"/>
 		<item id="ID_TAB_TRANSFERS" text="_Transferler"/>
 		<item id="ID_TAB_NETWORK" text="_Ağ"/>
+		<item id="ID_TAB_IRC" text="IR_C"/>
 		<separator/>
 		<item id="ID_VIEW_SECURITY" text="_Güvenlik"/>
 		<item id="ID_VIEW_HOSTS" text="_Host Bellek"/>
@@ -798,6 +871,8 @@
 			<item id="ID_HOSTCACHE_G2_CACHE" text="Gnutella_2 Bellek"/>
 			<item id="ID_HOSTCACHE_G1_CACHE" text="Gnutella_1 Bellek"/>
 			<item id="ID_HOSTCACHE_ED2K_CACHE" text="_eDonkey Serverlar"/>
+			<item id="ID_HOSTCACHE_BT_CACHE" text="_BitTorrent Cache"/>
+			<item id="ID_HOSTCACHE_KAD_CACHE" text="_Kademlia Cache"/>
 		</menu>
 		<separator/>
 		<item id="ID_HOSTCACHE_IMPORT" text="_MET Dosyası Aktar..."/>
@@ -957,20 +1032,21 @@
 			<item id="ID_DOWNLOADS_URL" text="Ka_ynak Ekle..."/>
 			<separator/>
 			<item id="ID_DOWNLOADS_MONITOR" text="Ekran _Penceresi"/>
-			<item id="ID_DOWNLOADS_EDIT" text="İ_leri Düzenleme..."/>
-			<item id="ID_DOWNLOADS_TORRENT_INFO" text="_Torrent Bilgisi..."/>
 			<separator/>
 			<item id="ID_DOWNLOADS_MOVE_UP" text="Yuka_rı Taşı"/>
 			<item id="ID_DOWNLOADS_MOVE_DOWN" text="_Aşağı Taşı"/>
 			<item id="ID_DOWNLOADS_BOOST" text="Ya_sakları Yoksay"/>
 		</menu>
 		<item id="ID_DOWNLOADS_HELP" text="_Yardım..."/>
+		<separator/>
+		<item id="ID_DOWNLOADS_EDIT" text="İ_leri Düzenleme..."/>
 	</menu>
 	<menu name="CDownloadsWnd.Source">
 		<item id="ID_TRANSFERS_CONNECT" text="_Erişim"/>
 		<separator/>
 		<item id="ID_BROWSE_LAUNCH" text="Ku_llanıcı Ara"/>
 		<item id="ID_TRANSFERS_CHAT" text="_Sohbet"/>
+		<item id="ID_DOWNLOADS_COPY" text="Copy _URI"/>
 		<separator/>
 		<item id="ID_TRANSFERS_DISCONNECT" text="Bağlantı _Kes"/>
 		<item id="ID_TRANSFERS_FORGET" text="_Unut"/>
@@ -988,15 +1064,15 @@
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="_Temizle"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_COPY" text="Kopyala _URI"/>
-		<item id="ID_DOWNLOADS_TORRENT_INFO" text="Torrent Bilgisi"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_FILE_DELETE" text="_Dosya Sil"/>
 		<item id="ID_DOWNLOADS_RATE" text="Dosya indirme _Hızı..."/>
 	</menu>
 	<menu name="CDownloadsWnd.Seeding">
 		<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Aç"/>
-		<item id="ID_DOWNLOADS_TORRENT_INFO" text="Torrent _Bilgisi"/>
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="_Yükleme Durdur"/>
+		<separator/>
+		<item id="ID_DOWNLOADS_EDIT" text="İ_leri Düzenleme"/>
 	</menu>
 	<menu name="CDownloadsWnd.Nothing">
 		<item id="ID_DOWNLOADS_HELP" text="_Yardım..."/>
@@ -1130,6 +1206,7 @@
 			<item id="ID_LIBRARY_COPY" text="Dosyaları _Kopyala..."/>
 		</menu>
 		<item id="ID_LIBRARY_REBUILD_ANSI" text="Sı_nırlı Veri"/>
+		<item id="ID_LIBRARY_REFRESH_METADATA" text="_Refresh Metadata"/>
 		<separator/>
 		<item id="ID_LIBRARY_PROPERTIES" text="Ö_zellikler"/>
 	</menu>
@@ -1162,8 +1239,11 @@
 			<item id="ID_LIBRARY_COPY" text="Dosyaları _Kopyala..."/>
 		</menu>
 		<item id="ID_LIBRARY_REBUILD_ANSI" text="_Sınırlı Veri"/>
+		<item id="ID_LIBRARY_REFRESH_METADATA" text="_Refresh Metadata"/>
 		<separator/>
 		<item id="ID_LIBRARY_COLUMNS" text="Sü_tun Seç..."/>
+		<separator/>
+		<item id="ID_SHELL_MENU" text="S_hell menu"/>
 		<separator/>
 		<item id="ID_LIBRARY_PROPERTIES" text="Ö_zellikler"/>
 	</menu>
@@ -1198,6 +1278,7 @@
 			<item id="ID_LIBRARY_COPY" text="Do_syaları Kopyala..."/>
 		</menu>
 		<item id="ID_LIBRARY_REBUILD_ANSI" text="Sı_nırlı Veri"/>
+		<item id="ID_LIBRARY_REFRESH_METADATA" text="_Refresh Metadata"/>
 		<separator/>
 		<item id="ID_LIBRARY_PROPERTIES" text="Ö_zellikler"/>
 	</menu>
@@ -1232,6 +1313,7 @@
 			<item id="ID_LIBRARY_COPY" text="Do_syaları Kopyala..."/>
 		</menu>
 		<item id="ID_LIBRARY_REBUILD_ANSI" text="Sı_nırlı Veri"/>
+		<item id="ID_LIBRARY_REFRESH_METADATA" text="_Refresh Metadata"/>
 		<separator/>
 		<item id="ID_LIBRARY_COLUMNS" text="Sü_tun Seç..."/>
 		<separator/>
@@ -1326,6 +1408,8 @@
 	</menu>
 	<menu name="CMediaList">
 		<item id="ID_MEDIA_SELECT" text="_Oynat"/>
+		<item id="ID_MEDIA_RATE" text="Ra_te File..."/>
+		<item id="ID_MEDIA_PROPERTIES" text="_Properties..."/>
 		<separator/>
 		<item id="ID_MEDIA_ADD" text="_Dosya Ekle..."/>
 		<item id="ID_MEDIA_ADD_FOLDER" text="Klasör _Ekle..."/>
@@ -1336,14 +1420,23 @@
 		<separator/>
 		<item id="ID_MEDIA_OPEN" text="O_ynatma Listesini Aç..."/>
 		<item id="ID_MEDIA_SAVE" text="Oy_natma Listesini Kaydet..."/>
+		<item id="ID_MEDIA_EXPORT_COLLECTION" text="E_xport Collection..."/>
 		<item id="ID_MEDIA_CLEAR" text="Oyna_tma Listesini Temizle"/>
 		<separator/>
 		<item id="ID_MEDIA_PLAYLIST" text="Oynat_ma Listesini Göster"/>
 	</menu>
 	<!-- SYSTEM WINDOW -->
 	<menu name="CSystemWnd">
-		<item id="ID_SYSTEM_VERBOSE" text="_Verbose Mode"/>
+		<menu id="ID_SYSTEM_VERBOSE" text="_Verbose Mode">
+			<item id="ID_SYSTEM_VERBOSE_ERROR" text="_Error"/>
+			<item id="ID_SYSTEM_VERBOSE_WARNING" text="_Warning"/>
+			<item id="ID_SYSTEM_VERBOSE_NOTICE" text="_Notice"/>
+			<item id="ID_SYSTEM_VERBOSE_INFO" text="_Info"/>
+			<item id="ID_SYSTEM_VERBOSE_DEBUG" text="_Debug"/>
+		</menu>
 		<item id="ID_SYSTEM_TIMESTAMP" text="_Zaman tutucu"/>
+		<separator/>
+		<item id="ID_SYSTEM_COPY" text="_Copy" shortcut="Ctrl+C"/>
 		<separator/>
 		<item id="ID_SYSTEM_CLEAR" text="_Ara Beleği Temizle"/>
 	</menu>
@@ -1370,8 +1463,8 @@
 			<item id="ID_NETWORK_DISCONNECT" text="Bağlantı _Kes"/>
 			<separator/>
 			<item id="ID_NETWORK_G2" text="_Gnutella2"/>
-			<item id="ID_NETWORK_ED2K" text="_eDonkey2000"/>
 			<item id="ID_NETWORK_G1" text="Gnutella_1"/>
+			<item id="ID_NETWORK_ED2K" text="_eDonkey2000"/>
 		</menu>
 		<menu text="Ek_ran">
 			<item id="ID_NEIGHBOURS_VIEW_ALL" text="_Tüm Aktarımları Görüntüle"/>
@@ -1454,10 +1547,42 @@
 		<item id="ID_CHAT_TIMESTAMP" text="_Zamantutucu"/>
 		<item id="ID_CHAT_CLEAR" text="_Pencere Temizle"/>
 	</menu>
+	<!-- IRC WINDOW -->
+	<menu name="CIRCTabRClick">
+		<item id="ID_IRC_CLOSETAB" text="_Close"/>
+	</menu>
+	<menu name="CIRCUserList">
+		<item id="ID_IRC_WHOIS" text="_Whois"/>
+		<item id="ID_IRC_QUERY" text="_Query"/>
+		<separator/>
+		<menu text="Actions">
+			<item id="ID_IRC_TIME" text="_Time"/>
+			<item id="ID_IRC_VERSION" text="_Version"/>
+		</menu>
+		<separator/>
+		<menu text="Control">
+			<item id="ID_IRC_IGNORE" text="_Ignore"/>
+			<item id="ID_IRC_UNIGNORE" text="_Unignore"/>
+			<item id="ID_IRC_OP" text="_Op"/>
+			<item id="ID_IRC_DEOP" text="_Deop"/>
+			<item id="ID_IRC_VOICE" text="_Voice"/>
+			<item id="ID_IRC_DEVOICE" text="D_evoice"/>
+			<item id="ID_IRC_KICK" text="_Kick"/>
+			<item id="ID_IRC_KICKWHY" text="Kick (why?)"/>
+			<item id="ID_IRC_BAN" text="_Ban"/>
+			<item id="ID_IRC_UNBAN" text="_Unban"/>
+			<item id="ID_IRC_BANKICK" text="Kick+Ban"/>
+			<item id="ID_IRC_BANKICKWHY" text="Kick+Ban (why?)"/>
+		</menu>
+	</menu>
+	<menu name="WebServices.List.Menu">
+		<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Bitzi"/>
+		<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
+		<item id="ID_WEBSERVICES_SHAREMONKEY" text="_ShareMonkey"/>
+	</menu>
 </menus>
 <!-- Documents -->
 <documents>
-
 	<!-- Home View -->
 	<document name="CHomeViewCtrl" leftMargin="16" topMargin="0">
 		<styles>
@@ -1478,7 +1603,6 @@
 			<link target="raza:command:ID_NETWORK_CONNECT">Başlamak için buraya tıklayın!</link>
 			<newline gap="18" indent="0"/>
 		</group>
-
 		<group id="2">
 			<icon res="134" width="32" height="32"/><gap size="8"/>
 			<heading align="middle">S H A R E A Z A &#160; A R A M A</heading>
@@ -1486,7 +1610,6 @@
 			<anchor id="SearchBox" width="256" height="80"/>
 			<newline gap="12" indent="0"/>
 		</group>
-
 		<group id="3">
 			<icon res="128" width="32" height="32"/><gap size="8"/>
 			<heading align="middle">G Ü N C E L L E M E Y İ &#160; B İ L D İ R</heading>
@@ -1496,7 +1619,6 @@
 			<link target="raza:upgrade">Güncelleme için tıklayınız!</link>
 			<newline gap="18" indent="0"/>
 		</group>
-
 		<group id="4">
 			<icon res="252" width="32" height="32"/><gap size="8"/>
 			<heading align="middle">U Y A R I &#160; - &#160; G Ü V E N L İ K &#160; D U V A R I &#160; A Ç I K </heading>
@@ -1507,29 +1629,24 @@
 			<link target="raza:command:ID_HELP_ROUTER">Yönlendirici ya da güvenlik duvarı ayarları için tıklayınız.</link>
 			<newline gap="18" indent="0"/>
 		</group>
-
 		<icon res="236" width="32" height="32"/><gap size="8"/>
 		<heading align="middle">S H A R E A Z A &#160; Alıcısına</heading>
 		<newline gap="12" indent="42"/>
-
 		<icon res="237" width="32" height="32" target="raza:command:ID_TOOLS_SKIN"/>
 		<gap size="8"/>
 		<link target="raza:command:ID_TOOLS_SKIN" format="bu" align="middle">Arayüzler</link>
 		<text align="middle">&#160;- Shareaza'nın görüntüsünü değiştir.</text>
 		<newline gap="8"/>
-
 		<icon res="236" width="32" height="32" target="raza:command:ID_TOOLS_WIZARD"/>
 		<gap size="8"/>
 		<link target="raza:command:ID_TOOLS_WIZARD" format="bu" align="middle">Ayarlar Sihirbazı</link>
 		<text align="middle">&#160;- Shareaza Ayarlarını Düzenle</text>
 		<newline gap="8"/>
-
 		<icon res="147" width="32" height="32" target="raza:command:ID_HELP_FAQ"/>
 		<gap size="8"/>
 		<link target="raza:command:ID_HELP_FAQ" format="bu" align="middle">Hızlı Yardım</link>
 		<text align="middle">&#160;- Shareaza'nın temel kullanımı ile ilgili yardım</text>
 		<newline gap="18" indent="0"/>
-
 		<icon res="136" width="32" height="32" target="raza:shell:downloads"/>
 		<gap size="8"/>
 		<heading align="middle">İ N D İ R M E L E R İ M</heading>
@@ -1537,7 +1654,6 @@
 		<text>İndirmeler klasörünü açmak için</text>
 		<link target="raza:shell:downloads">Tıklayın</link>
 		<newline gap="18" indent="0"/>
-
 		<group id="5">
 			<icon res="128" width="32" height="32"/><gap size="8"/>
 			<heading align="middle">U Z A K T A N  &#160; E R İ Ş İ M  &#160;  E T K İ N</heading>
@@ -1549,9 +1665,7 @@
 			<link id="RemoteAccessURL2"/>
 			<newline gap="16" indent="0"/>
 		</group>
-
 	</document>
-
 	<document name="CHomeDownloadsBox" title="İndirmelerim" leftMargin="6" topMargin="6">
 		<styles>
 			<style name="default">
@@ -1568,7 +1682,6 @@
 			<link id="DownloadsMany" format="bu" target="raza:command:ID_VIEW_DOWNLOADS">İndirmelere Git (%i)</link>
 		</para>
 	</document>
-
 	<document name="CHomeLibraryBox" title="Kütüphanem" leftMargin="6" topMargin="6">
 		<styles>
 			<style name="default">
@@ -1600,7 +1713,6 @@
 			</group>
 		</para>
 	</document>
-
 	<document name="CHomeConnectionBox" title="Bağlantı" leftMargin="6" topMargin="6">
 		<styles>
 			<style name="default">
@@ -1614,7 +1726,6 @@
 				<link target="raza:command:ID_NETWORK_CONNECT">Bağlanmak için tıklayınız!</link>
 			</para>
 		</group>
-
 		<icon group="20" command="ID_NETWORK_G2"/><gap group="20" size="4"/>
 		<text group="20" align="middle" format="b">Gnutella2:</text>
 		<text group="21" align="middle">Bağlantı Yok</text>
@@ -1623,25 +1734,23 @@
 		<text group="24" align="middle" id="G2Hubs">%i hub</text>
 		<text group="25" align="middle" id="G2Leaves">%i ayrıldı</text>
 		<newline group="20" gap="2"/>
-
 		<icon group="10" command="ID_NETWORK_G1"/><gap group="10" size="4"/>
 		<text group="10" align="middle" format="b">Gnutella1:</text>
 		<text group="11" align="middle">Bağlantı Yok</text>
 		<text group="12" align="middle">Bağlanıyor...</text>
 		<text group="13" align="middle">Bağlandı</text>
 		<newline group="10" gap="2"/>
-
 		<icon group="30" command="ID_NETWORK_ED2K"/><gap group="30" size="4"/>
 		<text group="30" align="middle" format="b">eDonkey:</text>
 		<text group="31" align="middle">Bağlantı Yok</text>
 		<text group="32" align="middle">Bağlanıyor...</text>
 		<text group="33" align="middle">Bağlandı</text>
 		<newline group="30" gap="2"/>
-
 		<group id="2">
 			<para align="center">
-				<newline gap="6"/>
+				<newline gap="4"/>
 				<text>Bağlantıda </text>
+				<newline gap="0"/>
 				<text id="ConnectedHours" format="b">%i </text>
 				<text>saat ve </text>
 				<text id="ConnectedMinutes" format="b">%i </text>
@@ -1649,7 +1758,6 @@
 			</para>
 		</group>
 	</document>
-
 	<document name="CHomeUploadsBox" title="Uploads" leftMargin="6" topMargin="6">
 		<styles>
 			<style name="default">
@@ -1660,15 +1768,12 @@
 			<text id="UploadsNone" format="b">Aktif aktarım yok</text>
 			<link id="UploadsOne" format="bu" target="raza:command:ID_VIEW_UPLOADS">1 aktif aktarım</link>
 			<link id="UploadsMany" format="bu" target="raza:command:ID_VIEW_UPLOADS">%i aktif aktarım</link>
-
 			<newline gap="4"/>
-
 			<text id="UploadedNone">Bugun hiç aktarım yapmadınız.</text>
 			<text id="UploadedOne">1 dosya(%s) aktardınız.</text>
 			<text id="UploadedMany">%i dosya(%s) aktardınız.</text>
 		</para>
 	</document>
-
 	<document name="CHomeTorrentsBox" title="Torrents" leftMargin="6" topMargin="6">
 		<styles>
 			<style name="default">
@@ -1689,122 +1794,95 @@
 			<link id="SeedTorrent" format="bu" target="raza:command:ID_TOOLS_SEEDTORRENT">Bir torrent kaynak</link>
 			</group>
 		</para>
-
 	</document>
-
 	<!-- Settings Pages -->
-
 	<document name="CGeneralSettingsGroup" title="Genel" leftMargin="8" topMargin="8">
-
 		<styles>
 			<style name="default">
 				<colours link="000080"/>
 			</style>
 		</styles>
-
 		<text format="b">Shareaza'nın Ayarlar Yönetimine hoşgeldiniz.</text>
 		<newline gap="16"/>
-
-		<text>
-			Shareaza Ayarlar Yönetimi ileri kulanıcılara Shareaza'nın nasıl çalışacağını tamamen ayarlamalarına izin verir. Ayarlar
-		</text>
+		<text> Shareaza Ayarlar Yönetimi ileri kulanıcılara 
+			Shareaza'nın nasıl çalışacağını tamamen ayarlamalarına izin verir. Ayarlar </text>
 		<text format="b">Genel</text>
-		<text>
-			sekmesi kullanıcı olaylarını kapsar.
-		</text>
+		<text>sekmesi kullanıcı olaylarını kapsar. </text>
 		<newline gap="16" indent="16"/>
-
 		<link target="raza:page:CGeneralSettingsPage" format="b">Genel:</link>
 		<gap size="4"/>
 		<text>Ortak kullanıcılar arayüzünde araçlar, küçültme, numara formatları, uyarılar vb. ayarlar vardır. </text>
 		<newline gap="10"/>
-
 		<link target="raza:page:CLibrarySettingsPage" format="b">Kütüphane:</link>
 		<gap size="4"/>
 		<text>Dosya kütüphanesini tanıtır ve yönetir, ve dosyaları açar.</text>
 		<newline gap="10"/>
-
 		<link target="raza:page:CMediaSettingsPage" format="b">Media Player:</link>
 		<gap size="4"/>
 		<text>Shareaza Medya Merkezi yapısı nerede ve ne zaman kullanılır.</text>
 		<newline gap="10"/>
-
 		<link target="raza:page:CCommunitySettingsPage" format="b">İletişim:</link>
 		<gap size="4"/>
 		<text>Profil, sohbet ve mesaj ayarları.</text>
 		<newline gap="10"/>
-
-		<link target="raza:page:CWebSettingsPage" format="b">Web:</link>
+		<link target="raza:page:CIRCSettingsPage" format="b">IRC:</link>
+		<gap size="4"/>
+		<text>IRC chatroom visual appearance and connection settings.</text>
+		<newline gap="10"/>
+		<link target="raza:page:CWebSettingsPage" format="b">Web Integration:</link>
 		<gap size="4"/>
 		<text>Shareaza tarayıcınızın kabul ettiği linkler ve İndirilmiş içeriklerle bütünleşir.</text>
-		<newline gap="10"/>
-
 	</document>
-
 	<document name="CInternetSettingsGroup" title="Internet" leftMargin="8" topMargin="8">
-
 		<styles>
 			<style name="default">
 				<colours link="000080"/>
 			</style>
 		</styles>
-
 		<text format="b">Shareaza'nın Ayarlar Yönetimine hoşgeldiniz.</text>
 		<newline gap="16"/>
-
-		<text>
-			Shareaza Ayarlar Yönetimi ileri kulanıcılara Shareaza'nın nasıl çalışacağını tamamen ayarlamalarına izin verir. Ayarlar
-		</text>
+		<text>  Shareaza Ayarlar Yönetimi ileri kulanıcılara Shareaza'nın nasıl çalışacağını tamamen ayarlamalarına izin verir. 
+		Ayarlar	</text>
 		<text format="b">Internet </text>
-		<text>
-			sekmesi karşılıklı ağlardaki diğer düğümlerle etkileşimini kontrol eder.
-		</text>
+		<text> sekmesi karşılıklı ağlardaki diğer düğümlerle etkileşimini kontrol eder. </text>
 		<newline gap="16" indent="16"/>
-
 		<link target="raza:page:CConnectionSettingsPage" format="b">Bağlantı:</link>
 		<gap size="4"/>
 		<text>İnternet bağlantınızın hızı ve verimidir.</text>
 		<newline gap="10"/>
-
 		<link target="raza:page:CDownloadsSettingsPage" format="b">İndirmeler:</link>
 		<gap size="4"/>
 		<text>İndirme programı, doğrulaması, zamanı ve yönetimi.</text>
 		<newline gap="10"/>
-
 		<link target="raza:page:CUploadsSettingsPage" format="b">Aktarımlar:</link>
 		<gap size="4"/>
 		<text>Aktarım kapasitesi, sıralaması, kısıtlamaları, zamanı ve özel sorgular.</text>
 		<newline gap="10"/>
-
 		<link target="raza:page:CRemoteSettingsPage" format="b">Uzak:</link>
 		<gap size="4"/>
 		<text>Web tarayıcınız aracılığıyla Shareaza uzaktan kontrol yapmanızı sağlayan ayarlar. </text>
 		<newline gap="10"/>
-
+		<link target="raza:page:CSchedulerSettingsPage" format="b">Scheduler:</link>
+		<gap size="4"/>
+		<text>Limit download connections based on a periodic schedule.</text>
 	</document>
-
 	<!-- Browse User Profile -->
-
 	<document name="CBrowseHostProfile.1">
-
 		<heading id="Nick"/>
 		<heading>'nin Profili</heading>
 		<newline gap="8"/>
-
 		<group id="1">
 			<newline gap="8" indent="0"/>
 			<text format="b">İsim</text>
 			<newline gap="2" indent="8"/>
 			<text id="FullName"/>
 		</group>
-
 		<group id="2">
 			<newline gap="8" indent="0"/>
 			<text format="b">Konum</text>
 			<newline gap="2" indent="8"/>
 			<text id="FullLocation"/>
 		</group>
-
 		<group id="3">
 			<newline gap="8" indent="0"/>
 			<text format="b">Cinsiyet</text>
@@ -1814,7 +1892,6 @@
 			<text>,</text>
 			<text id="Age"/>
 		</group>
-
 		<group id="4">
 			<newline gap="8" indent="0"/>
 			<text format="b">Bağlantı Bilgisi</text>
@@ -1850,7 +1927,6 @@
 			<icon res="207"/><gap size="5"/>
 			<link id="ContactJabber"/>
 		</group>
-
 		<group id="5">
 			<newline gap="8" indent="0"/>
 			<text format="b">İlgi Alanları</text>
@@ -1864,17 +1940,13 @@
 			<newline gap="2" indent="8"/>
 			<text id="BioText"/>
 		</group>
-
 	</document>
-
 	<document name="CBrowseHostProfile.2">
-
 		<newline gap="40" indent="0"/>
 		<text format="b">Paylaşılan Dosyalar</text>
 		<newline gap="4" indent="8"/>
 		<icon res="137" target="raza:command:ID_BROWSE_FILES"/><gap size="5"/>
 		<link target="raza:command:ID_BROWSE_FILES" align="middle">Paylaşılan Dosyaları Göster</link>
-
 		<group id="2">
 			<newline gap="16" indent="0"/>
 			<text format="b">İletişim</text>
@@ -1883,83 +1955,74 @@
 			<gap size="5"/>
 			<link target="raza:command:ID_SEARCH_CHAT" align="middle">Sohbet</link>
 		</group>
-
 		<group id="3">
 			<newline gap="16" indent="0"/>
 			<text format="b">Favori Web Bağlantıları</text>
 			<newline gap="4" indent="8" id="Bookmarks"/>
 		</group>
-
 		<newline gap="16" indent="0"/>
-
 	</document>
-
 	<!-- Download help documents -->
-
 	<document name="DownloadHelp.Select">
 		<text format="b">İndirme Alanı</text>
 		<newline gap="8"/>
-		<text>Dosyaların nereye indirildiğini gösterir. Kişisel kaynakları ayrıntılarıyla görüntüleyebilirsiniz.</text>
-
+		<text>Dosyaların nereye indirildiğini gösterir. 
+		Kişisel kaynakları ayrıntılarıyla görüntüleyebilirsiniz.</text>
 		<newline gap="8"/>
 		<text>Belirli bir İndirme sırasında yardım bilgisi almak için bu komutu kullanabilirsiniz.
 		İndirmeyi seçmek ve karar vermek de bu komutla yapılır.</text>
 	</document>
-
 	<document name="DownloadHelp.Completed">
 		<text format="b">İndirme Tamamlandı</text>
 		<newline gap="8"/>
 		<text>Shareaza dosyanın indirilmesi tamamladı ve yanlışsız aktarımı doğruladı. Dosya İndirilenler klasörüne taşındı.
 		</text>
 	</document>
-
 	<document name="DownloadHelp.Moving">
 		<text format="b">İndirme Devam Ediyor</text>
 		<newline gap="8"/>
-		<text>
-		Shareaza dosyanın İndirilmesini tamamladı ve yanlışsız aktarımı doğruladı. Dosya şu an indirilenler klasörüne taşınıyor.</text>
+		<text>Shareaza dosyanın İndirilmesini tamamladı ve yanlışsız aktarımı doğruladı. Dosya şu an indirilenler klasörüne taşınıyor.
+		</text>
 	</document>
-
 	<document name="DownloadHelp.Paused">
 		<text format="b">İndirme Duraklatıldı</text>
 		<newline gap="8"/>
 		<text>İndirmeyi duraklattınız. İndirmeyi devam ettirmek istiyorsanız</text>
 		<text format="b"> İndirmeyi Sürdür</text><text> butonuna tıklayınız.</text>
 	</document>
-
 	<document name="DownloadHelp.DiskFull">
 		<text format="b">Disk Dolu</text>
 		<newline gap="8"/>
 		<text>Shareaza İndirmeyi otomatik olarak durdurdu çünkü harddiskiniz dolu olabilir ya da dosya yazılamıyor.
 		Eğer indirmeye devam etmek istiyorsanız harddiskinizde boş alan oluşturun ya da dosyanın tam ulaşılabilir
-		olduğuna emin olun ve indirmeye devam edin.</text>
+		olduğuna emin olun ve indirmeye devam edin.
+		</text>
 	</document>
-
 	<document name="DownloadHelp.Verifying">
 		<text format="b">İndirme Doğrulanıyor</text>
 		<newline gap="8"/>
 		<text>İndirme tamamlandı ve Shareaza şimdi orijinal dosyanın aynısının kopyalandığını doğruluyor.
 		Eğer hasarlı bir parça bulunursa, Shareaza bunu otomatik olarak tamir edecek.</text>
 	</document>
-
 	<document name="DownloadHelp.Downloading">
 		<text format="b">İndirim Etkin!</text>
 		<newline gap="8"/>
 		<text>İndirme şu an devam ediyor. Eğer İndirim çok yavaşsa, daha fazla kaynak için
-		</text>		<text format="b"> Daha Fazla Kaynak Bul</text><text> butonunu tıklayın. Eğer hızınız artmıyorsa
+		</text>		
+		<text format="b"> Daha Fazla Kaynak Bul</text><text> butonunu tıklayın. Eğer hızınız artmıyorsa
 		indirdiğiniz kullanıcının aktarım hız limiti yeterli olmayabilir
 		indirim hızınız zamanla artacaktır.</text>
 	</document>
-
 	<document name="DownloadHelp.Pending">
 		<text format="b">İndirme Beklemede</text>
 		<newline gap="8"/>
-		<text>İndirim birisinin aktarımı başlatmasını bekliyor. Shareaza bu dosyayı indirmek için hazır ama kimse gönderim yapmıyor.
+		<text>İndirim birisinin aktarımı başlatmasını bekliyor. 
+		Shareaza bu dosyayı indirmek için hazır ama kimse gönderim yapmıyor.
 		Muhtemelen giğer kullanıcıların sırasını bekliyorsunuz ve indirim her an başlayabilir.
 		Beklediğiniz sırayı görmek için kişisel kaynaklarınızı gözden geçirebilirsiniz.
-		Eğer kendi dosyalarını paylaştırıyorsanız, transferin çabuk başlama olasılığı yüksektir.</text>
+		Eğer kendi dosyalarını paylaştırıyorsanız, transferin çabuk başlama olasılığı yüksektir.
+		</text>
 	</document>
-
 	<document name="DownloadHelp.Queued">
 		<text format="b">İndirim Sırada</text>
 		<newline gap="8"/>
@@ -1969,41 +2032,38 @@
 		   Shareaza ayarlarını Araçlar aracılığıyla değiştirebilirsiniz.
 		   Alternatif olarak devam et komutuyla indirmeyi başlatabilirsiniz.</text>
 	</document>
-
 	<document name="DownloadHelp.Searching">
 		<text format="b">İndirme Arama</text>
 		<newline gap="8"/>
-		<text>Bu indirme için bilinmeyen kaynaklar var, Shareaza yeni kaynaklar için tüm bağlı P2P ağlarını arıyor. Kaynaklar bulundu, indirme otomatik başlayacaktır.
+		<text>Bu indirme için bilinmeyen kaynaklar var, Shareaza yeni kaynaklar için tüm bağlı P2P ağlarını arıyor. 
+		Kaynaklar bulundu, indirme otomatik başlayacaktır.
 		 Shareaza kaynakları otomatik arar, yine de </text>
 		<text format="b"> Daha Fazla Kaynak Bul</text><text> komutunu kullanarak işe hız verebilirsiniz.</text>
 		<newline gap="8"/>
 		<text>Maalesef aradığınız dosyaya sahip olan kimse online durumda değil.
 		Tek çare birinin online duruma gelmesini beklemek ya da vazgeçmek ve daha
-		geniş bir alanda bulabileceğiniz benzer bir dosya aramak. 	</text>
+		geniş bir alanda bulabileceğiniz benzer bir dosya aramak. 	
+		</text>
 	</document>
-
 	<document name="DownloadHelp.Creating">
 		<text format="b">İndirme Oluşturuluyor</text>
 		<newline gap="8"/>
-				<text>Shareaza indirme geçmişini görüntülemek ve daha sonra kaydetmek için önceden bir dosya ayırıyor.</text>
+		<text>Shareaza indirme geçmişini görüntülemek ve daha sonra kaydetmek için önceden bir dosya ayırıyor.
+		</text>
 	</document>
-
 	<document name="DownloadHelp.Tracker">
 		<text format="b">BitTorrent Tracker Bozuk</text>
 		<newline gap="8"/>
-		<text>BitTorrent tracker server, indirme için aksaklık ya da bozukluk olabileceği görünüyor. Shareaza
-		alınacak listesini ya da indirme eşlemesini içeremez.</text>
+		<text>BitTorrent tracker server, indirme için aksaklık ya da bozukluk olabileceği görünüyor. 
+		Shareaza alınacak listesini ya da indirme eşlemesini içeremez.
+		</text>
 	</document>
-
 	<!-- Upload help documents -->
-
 	<document name="UploadHelp">
 		<text format="b">Aktarım Alanı</text>
 		<newline gap="8"/>
 		<text>Burada sıranız ve aktarımlarınız gösterilir. Sol taraftaki small + ile her kuyruğu genişletebilirsiniz ve penceredeki araç çubuğunda sağda bulunan buton ile görüntüleri filtreleyebilirsiniz</text>	</document>
-
 	<!-- General help documents -->
-
 	<document name="GeneralHelp.DiskSpace">
 		<text format="b">Disk Alanı Az</text>
 		<newline gap="8"/>
@@ -2013,7 +2073,6 @@
 		dengesiz olabilir ve geçici dosyalar kaybolabilir. Bir disk temizleyici kullanmalı, istenmeyen dosyaları silmeli ya da
 		fazla ihtiyaç duymadığınız yazılımları kaldırmalısınız.</text>
 	</document>
-
 	<document name="GeneralHelp.DiskWriteFail">
 		<text format="b">İstenen Bir Dizin Yazılamıyor</text>
 		<newline gap="8"/>
@@ -2022,7 +2081,6 @@
 		<text>Ağ sürücüsünün bağlantısı kesilmiş olabilir ya da seçilen dizine yazma izniniz olmayabilir.
 		Lütfen dizinleri ve izinleri kontrol edin ya da geçici dosyaların yerini değiştirin.</text>
 	</document>
-
 	<document name="GeneralHelp.ConnectionFail">
 		<text format="b">İnternet Bağlantısı Yitirildi</text>
 		<newline gap="8"/>
@@ -2033,37 +2091,37 @@
 		<newline gap="8"/>
 		<text>Shareaza tüm host belleklerin yitirilmesine engel olmak için bağlantı girişimlerini kesti.</text>
 	</document>
-
 	<document name="GeneralHelp.AdultFilter">
 		<text format="b">Gelişmiş içerik filtresi etkin kılındı</text>
 		<newline gap="8"/>
 		<text>Lütfen dikkat, ekran içerikleri (herhangi bir otomatik filtre kadar) 100% etkili olmayabilir.
-		Bu, fazla istenmeyen sonuçları süzmek için basit bir şekilde taslaktır, 100% güvenli blok kadar tercih edilir.</text>
+		Bu, fazla istenmeyen sonuçları süzmek için basit bir şekilde taslaktır, 
+		100% güvenli blok kadar tercih edilir.</text>
 		<newline gap="8"/>
 		<text>Çocukların Internet kullanımı(P2P dosya paylaşımı dahil) daima ailelerin denetimi altında olmalıdır.</text>
 	</document>
-
 	<document name="GeneralHelp.BadTorrentEncoding">
 		<text format="b">Torrent kodlama hatası olduğunu görür</text>
 		<newline gap="8"/>
 		<text>Windows, bu torrentda metin şifre çözümünde bir çeviri hatası bildirdi.
-		Torrent bozuk ya da sadece yanlış kodlanmış olması mümkündür. Bazı dosya isimleri yanlış olsa da torrent hala düzgün indirebilir.</text>
+		Torrent bozuk ya da sadece yanlış kodlanmış olması mümkündür. 
+		Bazı dosya isimleri yanlış olsa da torrent hala düzgün indirebilir.</text>
 		<newline gap="8"/>
 		<text>
 		Gelişmiş torrent oluşturma programları, torrentın tüm BitTorrent uygulamalarında düzgün çalışmasını garantileyecek hale getirmek için size izin vermelidir.</text>
 		<newline gap="8"/>
 		<link target="http://shareaza.sourceforge.net/help/?torrentencoding">Ek yardım için burayı tıklayınız</link>
 		<text>, ya da torrent onarım  yazılımını indiriniz.</text>
-</document>
-
+	</document>
 	<document name="GeneralHelp.DonkeyServerList">
 		<text format="b">eDonkey server listeniz boş</text>
 		<newline gap="8"/>
-		<text>eDonkey2000 server listenizde hiç server yer almıyor. ED2K ya bağlanarak server listenizi güncel olarak(met dosyası) indirmeye ihtiyacınız var</text>
+		<text>eDonkey2000 server listenizde hiç server yer almıyor. ED2K ya bağlanarak server listenizi güncel olarak(met dosyası) indirmeye ihtiyacınız var
+		</text>
 		<newline gap="8"/>
-		<text>Keşif servisleri penceresi ya da ed2k ayarlar sayfasından server listesi indirebilirsiniz(Keşif servisleri penceresini açmak için F9 'a basın).</text>
+		<text>Keşif servisleri penceresi ya da ed2k ayarlar sayfasından server listesi indirebilirsiniz(Keşif servisleri penceresini açmak için F9 'a basın).
+		</text>
 	</document>
-
 	<document name="GeneralHelp.UploadWarning">
 		<text format="b">Limitli aktarımlar, yavaş İndirebilir</text>
 		<newline gap="8"/>
@@ -2071,34 +2129,33 @@
 		bilinen paylaştırıcıların aktarımını tercih eder.</text>
 		<newline/>
 		<text>Neyse ki, genişbant  DSL bağlantıları iki şeritli yola benzer: aktarım ve indirme için ayrılmış bölümlere sahipsiniz.
-		Eğer istemciniz düzgün yapılandırıldıysa, tam indirme kapasitesine sahip olduğu sürece yüksek oranda aktarım yapabilirsiniz.</text>
+		Eğer istemciniz düzgün yapılandırıldıysa, tam indirme kapasitesine sahip olduğu sürece yüksek oranda aktarım yapabilirsiniz.
+		</text>
 		<newline gap="8"/>
 		<text>Varsayılan, indirmeler limitsiz olduğunda aktarım limitiniz mevcut bant genişliğinin %85 'idir.
-		Bu yapılandırma mevcut indirmeler arasında en hızlı olanağı vermelidir.</text>
+		Bu yapılandırma mevcut indirmeler arasında en hızlı olanağı vermelidir.
+		</text>
 	</document>
-
 	<!-- Search help documents -->
-
 	<document name="SearchHelp.BadSearch1">
 		<text format="b">Lütfen anlamlı sözcüklerle arayın</text>
 		<newline gap="8"/>
 		<text>Bu arama kalitesiz formattadır ve doğru görev yapamayabilir.
-	Aramalar olanaklı birkaç terim içermelidir ve bir şema(mesela dosya türü) belirtilmelidir.
+		Aramalar olanaklı birkaç terim içermelidir ve bir şema(mesela dosya türü) belirtilmelidir.
 		Ayrıca, aramalar sadece sayılar ve olumsuz terimlerle sınırlı kalmamalıdır ve bitmiş genel sorgulardan kaçınılmalıdır.</text>
 		<newline gap="8"/>
 		<text>Ağdaki birçok istemci örneğin mp3 dosyalarının tümü için bir aramayı görmezlikten gelecektir. Çünkü yeterince kesin değildir ve çok fazla sonuç oluşturacaktır.</text>
 	</document>
-
 	<document name="SearchHelp.BadSearch2">
 		<text format="b">Lütfen anlamlı sözcüklerle arayın</text>
 		<newline gap="8"/>
 		<text>Bu arama uygun biçimde işlemek için yeterli terimi içermez.
 		 Tüm aramalar başlayabilmek için geçerli alfabetik karakterlerden en az birine ihtiyaç duyar.</text>
 		<newline gap="8"/>
-		<text> Genel dosya kapsamları (ve numaraları) aratıldığında, aramayı yaratıyorken iyi olarak diğer şarta girebilirsin.
-		 Noktalama ve özel sembollar aramalarda kullanılmazlar, sadece metin girin.</text>
+		<text> Genel dosya kapsamları (ve numaraları) aratıldığında, 
+		aramayı yaratıyorken iyi olarak diğer şarta girebilirsin. 
+		Noktalama ve özel sembollar aramalarda kullanılmazlar, sadece metin girin.</text>
 	</document>
-
 	<document name="SearchHelp.BadSearch3">
 		<text format="b">Lütfen anlamlı sözcüklerle arayın</text>
 		<newline gap="8"/>
@@ -2111,18 +2168,14 @@
 		<newline gap="8"/>
 		<text>Shareaza web sitesinde daha fazla yardım bulunabilir.</text>
 	</document>
-
 	<document name="SearchHelp.AdultSearch">
 		<text format="b">Arama Başlayamadı</text>
 		<newline gap="8"/>
 		<text>Belirilen aramalar büyük ihtimalle gelişmiş içerikle çok sayıda sonuç dönebilir, bunu ayarlardan kapatabilirsiniz. Ya anlamlı arama yapabilir ya da filtreyi engelleyebilirsiniz.</text>
-
 		<newline gap="8"/>
 		<text>Filtre engellemek için araç çubuğundaki &gt; Ayarlar &gt;içinde Genel ve kontrol edilmemiş gelişmiş içerik filtresine gidilir.</text>
 	</document>
-
 	<!-- Share help documents -->
-
 	<document name="ShareHelp.AlreadyShared">
 		<text format="b">Zaten Paylaşıldı</text>
 		<newline gap="8"/>
@@ -2130,20 +2183,19 @@
 		<newline gap="8"/>
 		<text>%s</text>
 	</document>
-
 	<document name="ShareHelp.BadShare">
 		<text format="b">Bu klasör paylaşılmamalı</text>
 		<newline gap="8"/>
 		<text>Bu klasör(ya da içerikler) bir sistem klasörüdür. Bu dosyanın paylaşımı diğer insanların kullanmaması gereken dosyalar içerdiğinden önerilmedi.</text>
 		<newline gap="8"/>
-		<text>Windows dizini,Program dosyaları, vb. gibi klasörler genellikle paylaşıma uygun dosya içermez. İlgili tüm dosyalar bu klasörlerin</text><text format="i"> içine</text>
+		<text>Windows dizini,Program dosyaları, vb. gibi klasörler genellikle paylaşıma uygun dosya içermez. İlgili tüm dosyalar bu klasörlerin</text>
+		<text format="i"> içine</text>
 		<text>yerleştirilmiş alt klasörlerdedir. Lütfen yerine bunları paylaşın.</text>
 		<newline gap="8"/>
-		<text>Shareaza 'tamamlanmamış' klasörü kütüphaneden dahi paylaştırılmamalıdır, hash download-lar denendiği sürece performans etkilenebilir</text>
+		<text>Shareaza 'tamamlanmamış' klasörü kütüphaneden dahi paylaştırılmamalıdır, hash download-lar denendiği sürece performans etkilenebilir
+		</text>
 	</document>
-
 </documents>
-
 <!-- Localised Command Tip Text.  The "message" is displayed in the status bar, while the "tip" is shown in a tooltip -->
 <commandTips>
 	<tip id="ID_BROWSE_FILES" message="Kullanıcının paylaşılan dosyalarını göster"/>
@@ -2446,8 +2498,20 @@
 	<tip id="ID_WINDOW_TILE_HORZ" message="Açık pencereleri üstüste binmeden yatay olarak düzenle."/>
 	<tip id="ID_WINDOW_TILE_VERT" message="Açık pencereleri üstüste binmeden düşey olarak düzenle."/>
 	<tip id="ID_WINDOW_TOOLBAR" message="Araç çubuğu göster/gizle."/>
+	<tip id="ID_WEBSERVICES_LIST" message=""/>
+	<tip id="ID_WEBSERVICES_SHAREMONKEY" message=""/>
+	<!-- PLUGIN TIPS -->
+	<tip id="ImageViewer_BestFit" message=""/>
+	<tip id="ImageViewer_ActualSize" message=""/>
+	<tip id="ImageViewer_Refresh" message=""/>
+	<tip id="ImageViewer_Close" message=""/>
 </commandTips>
-
+<!-- Tips displayed when mouse is moved over controls in the dialogs -->
+<controlTips>
+	<tip id="IDC_THROTTLE_MODE" message=""/>
+	<tip id="IDC_REGEXP" message=""/>
+	<tip id="IDC_SHARE_PARTIALS" message=""/>
+</controlTips>
 <!-- Localised Strings -->
 <strings>
 	<string id="WINDOW_MAIN" value="Shareaza"/>
@@ -2476,10 +2540,10 @@
 	<string id="7003" value="Çeşit"/>
 	<string id="7004" value="Filtrenin &quot;%s&quot; kadarı çağrılmıştı,  bunu değiştirmek istiyor musunuz?"/>
 	<string id="7005" value="Lütfen filtreye bir isim veriniz."/>
-
-
-
-	<string id="8000" value="Shareaza Ayarları"/>
+	<string id="7100" value=""/>
+	<string id="7101" value=""/>
+	<string id="7102" value=""/>
+	<string id="8000" value=""/>
 	<string id="8001" value="Shareaza'ya Hoşgeldiniz"/>
 	<string id="8002" value="Dosya Özellikleri"/>
 	<string id="8003" value="Profilimi Düzenle"/>
@@ -2491,6 +2555,8 @@
 	<string id="8009" value=" &quot;%s&quot; arayüzünü silmek istediğinizden emin misiniz? Bu yapılamaz."/>
 	<string id="8010" value="Bu Shareaza'nın değiştirme öncesi programıdır, ve bu beta deneme aşaması sonlanmıştır. Lütfen http://shareaza.sourceforge.net/ adresinden programın tamamını yükleyiniz."/>
 	<string id="8011" value="Görüntü Değiştirme açıldığında pencereler kapanacaktır. Şimdi değiştirmek ister misin?"/>
+	<string id="8012" value="Torrent Information"/>
+	<string id="8014" value="Download Properties"/>
 	<string id="8060" value="%lu komşusu ile Hub/Ultrapeer mod.  %s yerel kütüphanede."/>
 	<string id="8061" value="%lu komşusu ile Ultrapeer mod.  %s yerel kütüphanede."/>
 	<string id="8062" value="%lu komşu(lar)la Hub modu.  %s yerel kütüphane."/>
@@ -2576,6 +2642,7 @@
 	<string id="8240" value="Shareaza indirmeyi bırakıyor:"/>
 	<string id="8241" value="Shareaza hatalar için İndirmeyi konrol ediyor:"/>
 	<string id="8243" value="Aktarım miktarı:"/>
+	<string id="8244" value=""/>
 	<string id="8288" value="Shareaza kütüphanesi araştırılıyor"/>
 	<string id="8289" value="Araştırılıyor "/>
 	<string id="8290" value="%i Klasörden içerikler araştırılıyor"/>
@@ -2807,6 +2874,7 @@
 	<string id="16375" value="Bölüm"/>
 	<string id="16376" value="Tüm Dosyalar"/>
 	<string id="16377" value="HTTP Koruma"/>
+	<string id="16379" value=""/>
 	<string id="16384" value="&quot;%s&quot; dosyasını atmak istediğinize emin misiniz?\n\nBazı dosyalar bilgisayarınıza zarar verebilir. Dosyayı atmadan önce ne dosyası olduğundan emin olun."/>
 	<string id="16385" value="%i dosyada veri değiştirmek üzeresiniz, devam etmek istediğinize emin misiniz?"/>
 	<string id="16386" value="%i dosyada veri yayınlanıyor."/>
@@ -2835,6 +2903,8 @@
 	<string id="16409" value="&amp;URI'leri Gönder..."/>
 	<string id="16410" value="Seçilen klasör &quot;%s&quot; klasörünün alt klasörü, zaten kütüphanenizin parçasıdır.\nEklenen bu klasör bazı dosyaların bozulmasına neden olacaktır.\n\nDevam etmek istiyor musunuz ?"/>
 	<string id="16411" value="%s dosyası taşınamaz. Dosya diğer bir uygulama tarafından kullanılıyor olabilir.\n\nBu dosyanın yerine kopyasını almayı denemek ister misiniz?"/>
+	<string id="16412" value="Ghost File"/>
+	<string id="16413" value="New Group"/>
 	<string id="16448" value="%s'e bağlanılıyor, anlaşılıyor..."/>
 	<string id="16449" value="%s (%s) ile sohbet ediyor."/>
 	<string id="16450" value="%s bağlantısı kapandı."/>
@@ -2868,6 +2938,9 @@
 	<string id="16533" value="Toplam TCP Gönderim Bantgenişliği"/>
 	<string id="16534" value="Toplam UDP Alım Bantgenişliği"/>
 	<string id="16535" value="Toplam UDP Gönderim Bantgenişliği"/>
+	<string id="16536" value=""/>
+	<string id="16537" value=""/>
+	<string id="16538" value=""/>
 	<string id="16768" value="&quot;%s&quot; URL alındı"/>
 	<string id="16769" value="URL ayrıştırılamaz : Shareaza bu URL'yi anlamıyor."/>
 	<string id="16770" value="URL faaliyet diyalogu gösterilemez çünkü Shareaza meşgul."/>
@@ -2925,6 +2998,7 @@
 	<string id="16942" value="%s'ye gözatan kullanıcı bağlantısı kapatılıyor."/>
 	<string id="16943" value="Göz atılıyor %s"/>
 	<string id="16944" value="%i paylaşılan dosya %s'nin kütüphanesinde  bulundu."/>
+	<string id="16991" value="Shareaza Ortam Sistema"/>
 	<string id="16992" value="Shareaza MedyaServisleri plugin'ini desteklenemedi.  lütfen Shareazayı tekrar yükleyin ve zorunlu ortam codeclerinin ve çıkış sürücülerinin yüklendiğini doğrulayın."/>
 	<string id="16993" value="Tüm ortam dosyaları|*.asx;*.wax;*.m3u;*.wvx;*.wmx;*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm;*.cda;*.mid;*.rmi;*.midi;*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|Oynatma Listeleri|*.asx;*.wax;*.m3u;*.wvx;*.wmx|Ses Dosyaları|*.asf;*.wav;*.snd;*.au;*.aif;*.aifc;*.aiff;*.wma;*.rm;*.mp3;*.ogg;*.ogm|Video Dosyaları|*.avi;*.asf;*.mpeg;*.mpg;*.m1v;*.mp2;*.mpa;*.mpe;*.wmv|CD Ses Trackleri|*.cda|MIDI Dosyalar|*.mid;*.rmi;*.midi|Tüm Dosyalar|*.*||"/>
 	<string id="16994" value="&quot;%s&quot; ortam dosyası yüklenemez"/>
@@ -3070,6 +3144,12 @@
 	<string id="20005" value="Hayır"/>
 	<string id="20006" value="Evet"/>
 	<string id="20007" value="Otomatik"/>
+	<string id="20008" value=""/>
+	<string id="20009" value=""/>
+	<string id="20010" value=""/>
+	<string id="20011" value=""/>
+	<string id="20012" value=""/>
+	<string id="20013" value=""/>
 	<string id="20100" value="Bağlanıyor"/>
 	<string id="20101" value="İstekte Bulunuluyor"/>
 	<string id="20102" value="Yanıt"/>
@@ -3107,6 +3187,7 @@
 	<string id="20134" value="Tıkandı"/>
 	<string id="20135" value="Sonraki"/>
 	<string id="20136" value="Q"/>
+	<string id="20137" value=""/><!-- "3/10 sources" -->
 	<string id="20200" value="Pazar"/>
 	<string id="20201" value="Pazartesi"/>
 	<string id="20202" value="Salı"/>
@@ -3121,10 +3202,20 @@
 	<string id="20214" value="İyi"/>
 	<string id="20215" value="Çok İyi"/>
 	<string id="20216" value="Mükemmel"/>
+	<string id="20217" value=""/>
+	<!-- Column headers in Library Album View -->
+	<string id="20230" value="#"/><!-- Track number -->
+	<string id="20231" value="Title"/>
+	<string id="20232" value="Length"/>
+	<string id="20233" value="Bitrate"/>
+	<string id="20234" value="Album"/>
+	<string id="20235" value="Artist"/>
+	<string id="20236" value="Rating"/>
 </strings>
-
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
 <dialogs>
+	<dialog name="CGeneralSettingsGroup" cookie="" caption="General">
+	</dialog>
 	<dialog name="CSettingSheet" cookie="SyBuBuBu#3" caption="Shareaza Ayarları">
 		<control/>
 		<control caption="Tamam"/>
@@ -3132,9 +3223,7 @@
 		<control caption="Uygula"/>
 		<control/>
 	</dialog>
-
 	<dialog name="CGeneralSettingsGroup" cookie="" caption="Genel"/>
-
 	<dialog name="CGeneralSettingsPage" cookie="BuBuBuBuStCoBuBuBuBuBuBuBuBuBuSyStEdmsStmsBuStCoStCo" caption="Genel">
 		<control caption="_Genel:"/>
 		<control caption="Shareaza'yı çalıştırmak için otomatik bağlan"/>
@@ -3153,7 +3242,8 @@
 		<control caption="Araç türleri:"/>
 		<control/>
 		<control caption="Gecikme(ms):"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Opaklık:"/>
 		<control/>
 		<control caption="Boyut:"/>
@@ -3171,10 +3261,12 @@
 		<control caption="Diğerlerinin paylaşımlara gözatmasına izin ver"/>
 		<control caption="Güncel Dosyalar:"/>
 		<control caption="Hatırla:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="dosyalar"/>
 		<control caption="İçin:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="gün"/>
 		<control caption="Geçmişi Temizle"/>
 		<control caption="Güvenli Aç:"/>
@@ -3186,7 +3278,8 @@
 		<control caption="Ekle"/>
 		<control caption="Kaldır"/>
 		<control caption="Tüm Kolleksiyonlar Burada:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Create ghost files when deleting"/>
 	</dialog>
 
@@ -3214,7 +3307,42 @@
 		<control caption="Spam için sohbet mesajlarını filtrele"/>
 		<control caption="Saygısızlıkları sansürle"/>
 	</dialog>
-
+<!--<dialog name="CIRCSettingsPage" cookie="BuBuBuEdStBuStCoBuBuStBuStBuStBuStBuStBuStBuStEdStEdStEdStEdStEdStEd" caption="Chat">
+		<control caption=""/>
+		<control caption=""/>
+		<control caption=""/>
+		<control/>
+		<control caption=""/>
+		<control caption=""/>
+		<control caption=""/>
+		<control/>
+		<control caption=""/>
+		<control/>
+		<control caption=""/>
+		<control/>
+		<control caption=""/>
+		<control/>
+		<control caption=""/>
+		<control/>
+		<control caption=""/>
+		<control/>
+		<control caption=""/>
+		<control/>
+		<control caption=""/>
+		<control caption=""/>
+		<control caption=""/>
+		<control/>
+		<control caption=""/>
+		<control/>
+		<control caption=":"/>
+		<control/>
+		<control caption=""/>
+		<control/>
+		<control caption=""/>
+		<control/>
+		<control caption=""/>
+		<control/>
+	</dialog>-->
 	<dialog name="CWebSettingsPage" cookie="BuStBuBuBuBuBuBuBuCoBuBuSt" caption="Web">
 		<control caption="Eşli bağlantı kullanılıyor:"/>
 		<control caption="Bu bağlantı türlerini açmak için Shareaza kullan:"/>
@@ -3230,9 +3358,7 @@
 		<control caption="Kaldır"/>
 		<control caption="İndirme yönetim eklentisi sadece listelenen dosya türlerini indirmeye çalışacak.	Diğer dosya türleri web tarayıcınız tarafından yönetilecek. Shareaza indirme yönetimi çalışıyor olmalı."/>
 	</dialog>
-
 	<dialog name="CInternetSettingsGroup" caption="Internet"/>
-
 	<dialog name="CConnectionSettingsPage" cookie="BuStCoStCoStEdBuBuBuStCoStCoBuStCoBuBuStEdmsStEdms" caption="Bağlantı">
 		<control caption="Gelen Adres:"/>
 		<control caption="Adres:"/>
@@ -3254,38 +3380,45 @@
 		<control caption="Özel/yerel IP adreslerini yoksay"/>
 		<control caption="Zaman Aşımları:"/>
 		<control caption="Bağlantı:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Anlaşma:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 	</dialog>
-
 	<dialog name="CDownloadsSettingsPage" cookie="BuEdBuBuEdBuBuStEdmsStEdmsStEdmsBuStCoStCoBuBu" caption="Downloadlar">
 		<control caption="Dosyanın tamamını buraya kaydet:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Geçici tamamlanmamış dosyaları burada depola:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="İndirme sayısı:"/>
 		<control caption="Maksimum Dosya:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Maksimum Transfer:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Dosya başına transfer:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Limit:"/>
 		<control caption="Toplam İndirme Bantgenişliği:"/>
 		<control/>
 		<control caption="Maksimum sıra uzunluğu:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Sadece bağlanılan ağlara aktarım yapın ve download edin."/>
 	</dialog>
-
 	<dialog name="CUploadsSettingsPage" cookie="BuBuBuBuStEdmsBuCoBuBuBuStCoStCoBuSyBuBuBuSt" caption="Aktarımlar">
 		<control caption="Seçenekler:"/>
 		<control caption="Yeni indirme bölümleri paylaştır"/>
 		<control caption="Hub modunda limitli paylaşım"/>
 		<control caption="Önizleme dosyalarını paylaştır"/>
 		<control caption="Bir host için limit:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Kullanıcı temsilci filtresi:"/>
 		<control/>
 		<control caption="+"/>
@@ -3302,7 +3435,6 @@
 		<control caption="Sil"/>
 		<control caption="(Değişimler hemen yürürlüğe girsin)"/>
 	</dialog>
-
 	<dialog name="CRemoteSettingsPage" cookie="BuStBuBuStBuStEdStEd" caption="Uzaktan Erişim">
 		<control caption="_Rehber:"/>
 		<control caption="Shareaza Uzaktan Erişim PC'nizde çalışan Shareaza'dan ayrılmanıza ve uzaktaki web tarayıcısını kontrol etmenize izin verir. Gelen bağlantıları kabul etmek için bu özellikleri kullanmaya ihtiyaç duyacaksınız(i.e. düzgün yönlendirme yapılandırması, etc) ."/>
@@ -3315,11 +3447,11 @@
 		<control caption="Şifre Seçiniz:"/>
 		<control/>
 	</dialog>
-
 	<dialog name="CSchedulerSettingsPage" cookie="BuBuEdmsBuBuStStStStStStStStStStStEdBuSt" caption="Tasarımcı">
 		<control caption="Seçenekler:"/>
 		<control caption="Tasarımcı Etkin"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Kısıtladığında sadece G2'ye bağlan"/>
 		<control caption="Anahtar:"/>
 		<control caption="Pzr"/>
@@ -3337,7 +3469,6 @@
 		<control caption="Yardım"/>
 		<control caption="Shareaza bağlandığında ve dosyaları indireceğinde size izin verilen süre tasarlanır. {n}{n}{n}Not: Shareaza açık iken tasarımcı aktif ise, ayarlarınızın değiştiğini görebilirsiniz -Bu normal!-"/>
 	</dialog>
-
 	<dialog name="CNetworksSettingsPage" cookie="StBuStBuStBuStBuStBuStBuSt" caption="Ağlar">
 		<control caption="Shareaza aynı zamanda birçok P2P ağa erişebilen genel bir amaç dosya paylaşımı uygulamasıdır. Bu sayfada bağlamayı istediğiniz P2P ağları seçebilirsiniz, ve sonra her ağ için belirli ayarları ayarlayabilirsiniz."/>
 		<control caption="Gnutella2 Ağı:"/>
@@ -3353,7 +3484,6 @@
 		<control caption="Orijinal Gnutella Bağlan"/>
 		<control caption="Gnutella1 Yapılandır"/>
 	</dialog>
-
 	<dialog name="CGnutellaSettingsPage" cookie="BuBuBuStCoBuStEdmsStEdmsStEdmsBuBuBuStCoBuStEdmsStEdmsStEdmsBuBuBuBu" caption="Gnutella">
 		<control caption="Gnutella2 Ağı:"/>
 		<control caption="Daima Gnutella2 Bağlan"/>
@@ -3362,11 +3492,14 @@
 		<control caption="Optimal|Leaf|Hub"/>
 		<control caption="G_2 Bağlantıları:"/>
 		<control caption="Leaf - Hub:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Hub - Leaf:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Hub - Hub:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Gnutella1 Ağı:"/>
 		<control caption="Daima Gnutella1 Bağlan"/>
 		<control caption="Bugün Gnutella1 Bağlan"/>
@@ -3374,17 +3507,19 @@
 		<control caption="Optimal|Leaf|Ultrapeer"/>
 		<control caption="G_1 Bağlantıları:"/>
 		<control caption="Leaf - Ultrapeer:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Ultrapeer - Leaf:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Peer - Peer:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Bağlantı Özeti:"/>
 		<control caption="Hub - Leaf"/>
 		<control caption="Leaf - Hub"/>
 		<control caption="Hub - Hub"/>
 	</dialog>
-
 	<dialog name="CDonkeySettingsPage" cookie="BuBuBuBuBuStEdmsStBuStEdmsStBuStBuStBu" caption="eDonkey2000">
 		<control caption="_eDonkey2000 Ağı:"/>
 		<control caption="Bugün eDonkey2000 Bağlan"/>
@@ -3392,11 +3527,13 @@
 		<control caption="Ayrıntılı Aranıyor:"/>
 		<control caption="Server belleğinde, uzaktaki bilinmeyen serverları arayın:"/>
 		<control caption="Sonra aramayı durdur:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Sonuçları ara."/>
 		<control caption="İstemci Bağlantıları:"/>
 		<control caption="Daha fazla bağlanma:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Diğer eDonkey istemcileri."/>
 		<control caption="eDonkey2000 Araçları:"/>
 		<control caption="eDonkey/eMule indirme parçaları(.part) aktar:"/>
@@ -3404,24 +3541,29 @@
 		<control caption="Webden eDonkey2000 server listesini indir:"/>
 		<control caption="İndir..."/>
 	</dialog>
-
 	<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsStEdmsStBuEdmsStBuBuBuBuEdBuBuEdBuStEd" caption="BitTorrent">
 		<control caption="Arayüz:"/>
 		<control caption="BitTorrent ek arayüz elemanları görüntüle"/>
 		<control caption="İndirme Bağlantıları:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="İlk olarak Torrentlar"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="İstemci bağlantıları"/>
 		<control caption="&#160;Paylaşım oranları genişletildiğinde &#160;Torrent indirmelerini temizle"/>
-		<control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
 		<control caption="&#160;Torrent kaynakları tercih et"/>
 		<control caption="EndGame:"/>
 		<control caption="Torrentlar tamamlandığında EndGame modu etkinleşir"/>
 		<control caption="Torrentlar burada saklanıyor:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Torrent Yaratıcısı"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Varsayılan Tracker: "/>
 		<control/>
 	</dialog>
@@ -3455,16 +3597,15 @@
 		<control caption="Kur..."/>
 		<control caption="Dahası"/>
 	</dialog>
-
 	<dialog name="CAdvancedSettingsPage" cookie="SyBuStEdmsStEd" caption="İleri">
 		<control/>
 		<control caption="Özellik ayarları:"/>
 		<control caption="Değer:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Açıklama:"/>
 		<control/>
 	</dialog>
-
 	<dialog name="CQueuePropertiesDlg" cookie="BuEdBuBuBuEdBuEdBuCoBuEdBuSyBuBuStEdmsStEdmsStEdmsBuStEdStEdmsBuEdmsBuBuBu" caption="Sıra Aktarım Özellikleri">
 		<control caption="Adı:"/>
 		<control/>
@@ -3483,23 +3624,27 @@
 		<control caption="Kapasite:"/>
 		<control caption="Sırayı etkinleştir"/>
 		<control caption="Minimum transfer sayısı:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Maximum transfer sayısı:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Maximum sırada bekleme sayısı:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Servis Parametreleri:"/>
 		<control caption="Bantgenişliği doluluk yüzdesi:"/>
 		<control/>
 		<control caption="Sıra için aktarım bant genişliği:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="N saniye sonra döndür:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="TAMAM"/>
 		<control caption="İptal"/>
 		<control caption="Aktaranları ödüllendir"/>
 	</dialog>
-
 	<dialog name="CWizardWelcomePage" cookie="StStStStStStStStStStStSt" caption="Shareaza'ya Hoşgeldiniz">
 		<control caption="Shareaza'ya Hoşgeldiniz!"/>
 		<control caption="Daha önce Shareaza ya da farklı bir P2P istemci kullanmadıysanız, HızlıBaşlat sihirbazı basit adımlarla kopyalarınızı ayarlamanıza yardım edebilir."/>
@@ -3514,20 +3659,7 @@
 		<control/>
 		<control caption="Shareaza'yı kullanarak başla."/>
 	</dialog>
-
-	<dialog name="CWizardInterfacePage" cookie="StBuBuBuStStBuBuBu" caption="Shareaza'ya Hoşgeldiniz">
-		<control caption="Shareaza esnek bir kullanıcı arayüzü destekler, sizin için rahat olanı seçebilirsiniz. Bu seçenekleri her hangi bir zamanda değiştirebilirsiniz."/>
-		<control caption="Lütfen kullanıcı arayüzü seçin:"/>
-		<control caption="Normal Mod"/>
-		<control caption="Power Mod"/>
-		<control caption="Menülerin ve butonların kullanımı kolaydır.{n}Diğer dosya paylaşım programlarının kullanıcılarına tanıdıktır."/>
-		<control caption="Power modu uzman kullanıcılara ekstra komut, pencere vb. sunar.{n}Bu yeni kullanıcılar için biraz karmaşık olabilir!"/>
-		<control caption="İndirme ilerleme çubuğunu basitçe görüntüle. (CPU kullanımını düşürür)"/>
-		<control caption="Torrent arayüzü ek elemanları görüntüle."/>
-		<control caption="Torrent bağlantılarını yönet."/>
-	</dialog>
-
-	<dialog name="CWizardConnectionPage" cookie="StCoStCoStCoStCoStCo" caption="Shareaza'ya Hoşgeldiniz [3 of 7]">
+	<dialog name="CWizardConnectionPage" cookie="StCoStCoStCoStCoStCo" caption="Shareaza'ya Hoşgeldiniz (1/6)">
 		<control caption="En yüksek performans için, Shareaza Internet bağlantınızla ilgili küçük parçaları bilmeye ihtiyaç duyar."/>
 		<control caption="&#160;( lütfen seçin )| Interneti evde kullanıyorum| Interneti okul LANında kullanıyorum|Interneti ofis LANında kullanıyorum|Interneti otelde ya da havaalanında kullanıyorum"/>
 		<control caption="Ağınız ya da kampüs ağınız güvenlik duvarı ya da NAT yönlendirici tarafından korunuyor mu?"/>
@@ -3539,8 +3671,7 @@
 		<control caption="YA DA , seç:"/>
 		<control/>
 	</dialog>
-
-	<dialog name="CWizardSharePage" cookie="StStStSyBuBuSt" caption="Shareaza'ya Hoşgeldiniz [4 of 7]">
+	<dialog name="CWizardSharePage" cookie="StStStSyBuBuSt" caption="Shareaza'ya Hoşgeldiniz (2/6)">
 		<control caption="P2P ağları onu kullanan insanlar için en iyisidir. İndirme için diğer kullanıcılardan bulunan tüm içerikler paylaştırılıyor."/>
 		<control caption="Shareaza'da içerik paylaştırılamadığında, bazı yazılımlar birşey paylaşmayan kullanıcılara farklı davranacaktır."/>
 		<control caption="Lütfen hangi klasörü paylaşmak istediğini belirt. Ekle butonuna basarak kolayca yeni klasör ekleye+bilirsin."/>
@@ -3549,7 +3680,6 @@
 		<control caption="_Kaldır"/>
 		<control caption="UYARI: Telif hakkını dağıtmak birçok ülkede bir suçtur."/>
 	</dialog>
-
 	<dialog name="CFolderScanDlg" cookie="StStStStStStBu" caption="Klasör Taranıyor...">
 		<control/>
 		<control caption="..."/>
@@ -3559,8 +3689,7 @@
 		<control caption="0"/>
 		<control caption="Kapat"/>
 	</dialog>
-
-	<dialog name="CWizardProfilePage" cookie="StStEdStCoCoStCoCo" caption="Shareaza'ya Hoşgeldiniz [5 of 7]">
+	<dialog name="CWizardProfilePage" cookie="StStEdStCoCoStCoCo" caption="Shareaza'ya Hoşgeldiniz (3/6)">
 		<control caption="Herkes kendisiyle ilgili bir kaç temel detaylar yazdığında Shareaza daha dostça biryer olur."/>
 		<control caption="Bu ismi kullanıyorum:"/>
 		<control/>
@@ -3568,10 +3697,21 @@
 		<control caption="&#160;(seçin)"/>
 		<control caption="&#160;(seçin)| erkek| kız| bay| bayan"/>
 		<control caption="from:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 	</dialog>
-
-	<dialog name="CWizardNetworksPage" cookie="StBuStBuStBuSt" caption="Shareaza'ya Hoşgeldiniz [6 of 7]">
+	<dialog name="CWizardInterfacePage" cookie="StBuBuBuStStBuBuBu" caption="Shareaza'ya Hoşgeldiniz (4/6)">
+		<control caption="Shareaza esnek bir kullanıcı arayüzü destekler, sizin için rahat olanı seçebilirsiniz. Bu seçenekleri her hangi bir zamanda değiştirebilirsiniz."/>
+		<control caption="Lütfen kullanıcı arayüzü seçin:"/>
+		<control caption="Normal Mod"/>
+		<control caption="Power Mod"/>
+		<control caption="Menülerin ve butonların kullanımı kolaydır.{n}Diğer dosya paylaşım programlarının kullanıcılarına tanıdıktır."/>
+		<control caption="Power modu uzman kullanıcılara ekstra komut, pencere vb. sunar.{n}Bu yeni kullanıcılar için biraz karmaşık olabilir!"/>
+		<control caption="İndirme ilerleme çubuğunu basitçe görüntüle. (CPU kullanımını düşürür)"/>
+		<control caption="Torrent arayüzü ek elemanları görüntüle."/>
+		<control caption="Torrent bağlantılarını yönet."/>
+	</dialog>
+	<dialog name="CWizardNetworksPage" cookie="StBuStBuStBuSt" caption="Shareaza'ya Hoşgeldiniz (5/6)">
 		<control caption="Shareaza aynı zamanda birçok P2P ağa erişebilen genel bir amaç dosya paylaşımı uygulamasıdır. Bu sayfada bağlamayı istediğiniz P2P ağları seçebilirsiniz, ve sonra her ağ için belirli ayarları ayarlayabilirsiniz."/>
 		<control caption="Gnutella2'ya Bağlan (çok önerilir)"/>
 		<control caption="Gnutella2 ağı Shareaza 'nın ana ağıdır, diğer P2P netlerden daha fazla performans ve özellik sonuyor."/>
@@ -3580,7 +3720,6 @@
 		<control caption="Orijinal Gnutella'ya Bağlan"/>
 		<control caption="Orijinal Gnutella ağı Gnutella2 den daha zengin özellikleri olmasına ve eDonkey2000'den daha az dosya olmasına karşın değerli bir kaynak olarak kalacaktır."/>
 	</dialog>
-
 	<dialog name="CDonkeyImportDlg" cookie="StStBuBuEdBu" caption="eDonkey2000 Downloadları Gönder">
 		<control/>
 		<control caption="Shareaza bilgisayarınızda başka bir eDonkey2000 program yüklemesi buldu. Shareaza'daki bitirilmemiş downloadları göndermek istiyor musun?"/>
@@ -3589,8 +3728,7 @@
 		<control/>
 		<control caption="Kapat"/>
 	</dialog>
-
-	<dialog name="CWizardFinishedPage" cookie="StStStBuBuBuSt" caption="Shareaza'ya Hoşgeldiniz [7 of 7]">
+	<dialog name="CWizardFinishedPage" cookie="StStStBuBuBuSt" caption="Shareaza'ya Hoşgeldiniz (6/6)">
 		<control caption="İşte bu!  Shareaza bilgisayarınızla çalışarak yapılandırıldı."/>
 		<control caption="Eğer ayarlamalarınızı değiştirmeye ihtiyacınız olursa, Araçlar menüsünden Hızlı Başlat Sihirbazını çalıştırarak bunu yapabilirsiniz."/>
 		<control caption="Bitir tıklanarak sihirbaz kapatıldıktan sonra, seçtiğiniz ağa bağlanabilir ve içerik arama - download yapabilirsiniz."/>
@@ -3599,7 +3737,6 @@
 		<control caption="Windows her açıldığında Shareaza'yı başlat"/>
 		<control caption="Shareaza'yı kullanmak zevkli!"/>
 	</dialog>
-
 	<dialog name="CProfileManagerDlg" cookie="SyBuBuBu#3" caption="Profilimi Düzenle">
 		<control/>
 		<control caption="Tamam"/>
@@ -3607,13 +3744,13 @@
 		<control caption="Uygula"/>
 		<control/>
 	</dialog>
-
 	<dialog name="CIdentityProfilePage" cookie="BuStEdStEdEdBuCoStCoStBu" caption="Kimlik">
 		<control caption="İsim:"/>
 		<control caption="Takma İsim:"/>
 		<control/>
 		<control caption="Gerçek İsim:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Gerekli Olanlar:"/>
 		<control caption="|Bay|Bayan"/>
 		<control caption="Cinsiyet:"/>
@@ -3621,7 +3758,6 @@
 		<control caption="Yaş:"/>
 		<control caption="Diğerlerinin benim profilimi görmesine izin ver"/>
 	</dialog>
-
 	<dialog name="CContactProfilePage" cookie="BuStEdBuStEdStEdStEdStEdStEd" caption="İletişim">
 		<control caption="_Email Adresleri:"/>
 		<control caption="Birincil:"/>
@@ -3638,7 +3774,6 @@
 		<control caption="Anlaşılmayan ID:"/>
 		<control/>
 	</dialog>
-
 	<dialog name="CProfileProfilePage" cookie="BuStCoStCoBuStEdStEdBuLiBuBuCo" caption="Profil">
 		<control caption="Konum:"/>
 		<control caption="Ülke:"/>
@@ -3656,11 +3791,9 @@
 		<control caption="Kaldır &gt;"/>
 		<control/>
 	</dialog>
-
 	<dialog name="CBioProfilePage" cookie="Ed" caption="Bio">
 		<control/>
 	</dialog>
-
 	<dialog name="CAvatarProfilePage" cookie="BuStBuStBuBu" caption="Değişim">
 		<control caption="Önizleme:"/>
 		<control/>
@@ -3669,7 +3802,6 @@
 		<control caption="Gözat..."/>
 		<control caption="Kaldır"/>
 	</dialog>
-
 	<dialog name="CFavouritesProfilePage" cookie="SyBuStEdStEdBuBu" caption="Favoriler">
 		<control/>
 		<control caption="Düzenle:"/>
@@ -3680,13 +3812,11 @@
 		<control caption="Yeni"/>
 		<control caption="Kaldır"/>
 	</dialog>
-
 	<dialog name="CFilesProfilePage" cookie="BuStSy" caption="Dosyalar">
 		<control caption="Favori Dosyalar:"/>
 		<control caption="Favori Dosyalar profilinize bakan kullanıcılara önerilir. Kütüphane klasörüne &quot;Favorileri&quot; ekleyerek favori dosyaları oluşturabilirsin."/>
 		<control/>
 	</dialog>
-
 	<dialog name="CCertificateProfilePage" cookie="StBuStStStStBu" caption="Sertifika">
 		<control caption="Gnutella kullanıcıları heskesçe bilinen tek bir kimlik ve özel anahtar eşlemesi ile tanınırlar. Normalde yeni bir ID oluşturulamaya ihtiyaç duyulmadığı halde Shareaza ileri kullanıcılarına böyle bir seçenek sağlar."/>
 		<control caption="_Gnutella Global Kimlik Tespit Sertifikası:"/>
@@ -3696,21 +3826,20 @@
 		<control/>
 		<control caption="Yeni Oluştur"/>
 	</dialog>
-
 	<dialog name="CLanguageDlg" cookie="" caption="Dil Seçimi"/>
-
 	<dialog name="CConnectToDlg" cookie="BuCoEdBuCoBuBuBu" caption="Bağlan|Hosta Gözat">
 		<control caption="Host ya da servera yeni bir bağlanti başlat:|Hosta Gözat:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Ağ Protokolü:"/>
 		<control caption="Gnutella1 (otomatik)|Gnutella2 (otomatik)|eDonkey2000"/>
 		<control caption="Ultrapeer'ı Sakla"/>
 		<control caption="Bağlan"/>
 		<control caption="İptal"/>
 	</dialog>
-
 	<dialog name="CDownloadDlg" cookie="StStStEdBuBuStStBu" caption="Download Dosyası ya da Torrent">
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Shareaza ile bir dosyayı download etmek çok kolay. Basit bir şekilde URL ya da URI dosya tanımlamasını yukardaki kutuya yazın ya da yapıştırın ve Enter'a basın."/>
 		<control/>
 		<control caption="İndir"/>
@@ -3719,13 +3848,12 @@
 		<control caption="Shareaza ayrıca BitTorrent dosyaları indiriyor. Bir torrent xyz.torrent dosyası ya da .torrent dosyası HTTP bağlantısı ile tanımlanabilir. Bir torrent HTTP indirme bağlantısını yukarıdaki kutuya yapıştır. Bir .torrent dosyası varsa, Torrent Aç tıkla: "/>
 		<control caption="Torrent'ı Aç..."/>
 	</dialog>
-
 	<dialog name="CNewSearchDlg" cookie="EdCoBuBu" caption="Yeni Arama|Tekrar Ara|Kütüphanede Bul">
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Ara"/>
 		<control caption="İptal"/>
 	</dialog>
-
 	<dialog name="CFilterSearchDlg" cookie="BuEdStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuCoBuBuBuBuBuBuBu" caption="Filtre Eşleştirmesi">
 		<control caption="Sadece kelimeyi içeren eşleştirmeleri göster:"/>
 		<control/>
@@ -3736,7 +3864,8 @@
 		<control caption="Maksimum:"/>
 		<control/>
 		<control caption="küçük miktar ile:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="kaynaklar."/>
 		<control caption="Gizle:"/>
 		<control caption="Meşgul hostlar"/>
@@ -3756,14 +3885,12 @@
 		<control caption="Şüpheli Dosyalar"/>
 		<control caption="Yetişkinle İçin Sonuçlar"/>
 	</dialog>
-
 	<dialog name="CSaveFilterAsDlg" cookie="EdBuBuSt" caption="Filtre Farklı Kaydet">
 		<control/>
 		<control caption="Tamam"/>
 		<control caption="İptal"/>
 		<control caption="Yürürlükteki Filtreyi Farklı Kaydet"/>
 	</dialog>
-
 	<dialog name="CDiscoveryServiceDlg" cookie="BuEdStCoBuBu" caption="Keşif Servisi">
 		<control caption="Servis Adresi:"/>
 		<control/>
@@ -3772,11 +3899,12 @@
 		<control caption="Tamam"/>
 		<control caption="İptal"/>
 	</dialog>
-
 	<dialog name="CDownloadMonitorDlg" cookie="StStStStStStStStStStStStStBuBuBuBuBu" caption="Download : Shareaza">
 		<control caption="Shareaza download ediyor:"/>
 		<control caption="..."/>
-		<control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
 		<control caption="Toplam Aktarım Hızı:"/>
 		<control caption="..."/>
 		<control caption="Kalan Tahmini Süre:"/>
@@ -3794,7 +3922,10 @@
 
 	<dialog name="CFileGeneralPage" cookie="StEdEdEdEdStStEdStEdStEdStEdEdEd" caption="Genel">
 		<control caption="Universal Resource Names(URNs) - Genel Kaynak İsimleri"/>
-		<control/><control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
 		<control caption="Dosya Nitelikleri"/>
 		<control caption="Konum:"/>
 		<control/>
@@ -3803,21 +3934,22 @@
 		<control caption="Değiştirildi:"/>
 		<control/>
 		<control caption="Boyut:"/>
-		<control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
 	</dialog>
-
 	<dialog name="CFileMetadataPage" cookie="CoEd" caption="Veri">
-		<control/><control/>
+		<control/>
+		<control/>
 	</dialog>
-
 	<dialog name="CFileCommentsPage" cookie="StStCoStEdEd" caption="Eleştirilerim">
 		<control caption="Beğendiklerim"/>
 		<control caption="Bu dosyayı değerlendiririm:"/>
 		<control caption="(Beğenilmedi)|Sahte/Bozuk/Yanıltıcı|Kalitesiz|Orta|İyi|Çok İyi|Mükemmel"/>
 		<control caption="Eleştiri ve Yorumlarım"/>
-		<control/><control/>
+		<control/>
+		<control/>
 	</dialog>
-
 	<dialog name="CFileSharingPage" cookie="StBuBuBuStCoStSyEd" caption="Paylaşım">
 		<control caption="Basit Paylaşım"/>
 		<control caption="Ana dosya paylaştırıldı ise bu dosyayı paylaştır"/>
@@ -3826,28 +3958,28 @@
 		<control caption="Sıra Aktarım Seçimi Etiketi(leri)"/>
 		<control/>
 		<control caption="Paylaşılan Ağ"/>
-		<control/><control/>
+		<control/>
+		<control/>
 	</dialog>
-
 	<dialog name="CFileSourcesPage" cookie="StStEdSyBuBuEd" caption="Kaynaklar">
 		<control caption="Bilinen Kaynaklar"/>
 		<control caption="Yeni Kaynak Ekle"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="_Ekle"/>
 		<control caption="_Kaldır"/>
 		<control/>
 	</dialog>
-
 	<dialog name="CFileCopyDlg" cookie="StStmsBuBumsStSt" caption="Dosyaları Kopyala|Dosyaları Taşı">
 		<control caption="Klasöre kopyalamak için %i dosya seçildi:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Tamam"/>
 		<control caption="İptal"/>
 		<control/>
 		<control caption="Hazır..."/>
 		<control caption="Klasöre taşımak için %i dosya seçildi:"/>
 	</dialog>
-
 	<dialog name="CFolderPropertiesDlg" cookie="StEdStCoBuStBuBu" caption="Albüm Klasör Özellikleri">
 		<control caption="Albüm Klasör Başlığı:"/>
 		<control/>
@@ -3858,7 +3990,6 @@
 		<control caption="Tamam"/>
 		<control caption="İptal"/>
 	</dialog>
-
 	<dialog name="CGraphListDlg" cookie="SyBuBuBuBuBuBuBuBuStEdmsStBuEdBuBu" caption="Grafikler">
 		<control/>
 		<control caption="_Ekle..."/>
@@ -3870,19 +4001,20 @@
 		<control caption="Gösterge "/>
 		<control caption="Sık Örnekleme:"/>
 		<control caption="Örnekler Arasındaki Zaman:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="ms"/>
 		<control caption="_İsim:"/>
 		<control/>
 		<control caption="Tamam"/>
 		<control caption="İptal"/>
 	</dialog>
-
 	<dialog name="CGraphItemDlg" cookie="BuBuBuCoCoStStEdBuBuStBu" caption="Grafik Özellikleri">
 		<control caption="Tamam"/>
 		<control caption="İptal"/>
 		<control caption="_Kaynak:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Parametre:"/>
 		<control caption="Birimler:"/>
 		<control/>
@@ -3891,14 +4023,13 @@
 		<control/>
 		<control caption="Kaldır"/>
 	</dialog>
-
 	<dialog name="CSchemaColumnsDlg" cookie="CoSyBuBuSt" caption="Şemadan Sütun Seç">
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Tamam"/>
 		<control caption="İptal"/>
 		<control caption="Listeden bir şema seçin, sonra sütun olarak görünmesi için alanlar seçiniz."/>
 	</dialog>
-
 	<dialog name="CSecureRuleDlg" cookie="BuStCoStEdBuStEdEdEdEdStEdEdEdEdBuEdBuBuBuStCoStCoEdStEdStEdStBuBu" caption="Güvenlik Kuralı">
 		<control caption="Kural:"/>
 		<control caption="Tür:"/>
@@ -3907,9 +4038,15 @@
 		<control/>
 		<control caption="Ağ Adresi:"/>
 		<control caption="IP Adres:"/>
-		<control/><control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
 		<control caption="Ağ Maskesi:"/>
-		<control/><control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
 		<control caption="İçerik Filtresi:"/>
 		<control/>
 		<control caption="Hiç Eşleme"/>
@@ -3928,7 +4065,6 @@
 		<control caption="Tamam"/>
 		<control caption="İptal"/>
 	</dialog>
-
 	<dialog name="CShareManagerDlg" cookie="StStSyBuBuBuBu" caption="Paylaşılan Klasör Yönetimi">
 		<control/>
 		<control caption="Bu kütüphanenizdeki klasörlerin listesidir. Soldaki düğmeyi kullanarak klasör ekleyip kaldırabilirsiniz . Daha önce diğer kullanıcılar ile paylaşılan yeni bir klasör eklediğinizde, bununla birlikte isterseniz Shareaza kütüphanesinden bunu paylaşmayabilirsiniz."/>
@@ -3938,15 +4074,15 @@
 		<control caption="Tamam"/>
 		<control caption="İptal"/>
 	</dialog>
-
 	<dialog name="CURLCopyDlg" cookie="StStStStStBuBu" caption="URI Kopyala ">
 		<control/>
 		<control caption="Farklı formattaki değişiklik içinden seçilen parça için URI kopyalayabilirsin. Lütfen URI'nin altında kullanmak istediğiniz formatlardan birini tıklayınız:"/>
-		<control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
 		<control caption="URL'ye sabit kaynağı kendim ekleyeyim "/>
 		<control caption="İptal"/>
 	</dialog>
-
 	<dialog name="CURLExportDlg" cookie="StStEdStCoStCoBuBumsBu" caption="URI'ler Gönder">
 		<control/>
 		<control caption="Shareaza-Güç sağlayıcısı URI referansları gibi %lu dosyalarının gönderimini seçtiniz. Lütfen URI'ler için bir format seçiniz ve kaydeti tıklayınız:"/>
@@ -3960,13 +4096,15 @@
 		<control/>
 		<control caption="İptal"/>
 	</dialog>
-
 	<dialog name="CURLActionDlg" cookie="StStStStStEdStEdStBuBuBuBuBuSt" caption="Shareaza URI Yöneticisi">
 		<control/>
 		<control caption="Shareaza-Güç sağlayıcısı URI'ye tıkladınız, ağdaki içerikleri takip eden bağlantılar:"/>
 		<control caption="Shareaza-Güç sağlayıcısı URI'ye tıkladınız, host ya da server aramak için bağlanacaksınız:"/>
 		<control caption="Shareaza-Güç sağlayıcısı URI'ye tıkladınız, aradığınız hostdan paylaştırılabilen dosyalara gözatmanıza izin verilecektir:"/>
-		<control/><control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
 		<control caption="Lütfen Shareaza alma isterseniz bir faaliyet seçiniz:"/>
 		<control caption="_İndir"/>
 		<control caption="_Dosya Ara"/>
@@ -3975,7 +4113,6 @@
 		<control caption="İndirme Penceresi Aç"/>
 		<control caption="Shareaza-Güç sağlayıcısı URI'ye tıkladınız, keşif servis belleğinize takip ettiğiniz keşif servisiniz eklenecek."/>
 	</dialog>
-
 	<dialog name="CBitziDownloadDlg" cookie="StStmsBuSySt" caption="Veri İndirmesi...">
 		<control/>
 		<control caption="Shareaza Bitzi(TM) den veri indirmeye çalışıyor ..."/>
@@ -3984,15 +4121,14 @@
 		<control/>
 		<control caption="www.bitzi.com"/>
 	</dialog>
-
 	<dialog name="CFilePreviewDlg" cookie="StStStmsStBu" caption="Akıllı Download Önizleme...">
 		<control/>
 		<control caption="Shareaza indirirken ederken önizleme yaratır:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="(yeni bir önizleme dosyasının indirme parçaları kopyalanıyor)"/>
 		<control caption="İptal"/>
 	</dialog>
-
 	<dialog name="CWarningsDlg" cookie="StStStStStStStBu" caption="Shareaza Kullanıcılarına Saygı Duyar">
 		<control/>
 		<control caption="Shareaza'nın 100% özgür bir ürün olduğunu biliyor muydunuz?"/>
@@ -4003,7 +4139,6 @@
 		<control caption="http://shareaza.sourceforge.net/"/>
 		<control caption="Kapat"/>
 	</dialog>
-
 	<dialog name="CPromoteDlg" cookie="StStStStStStStBu" caption="Kelimeyi Yaymak">
 		<control/>
 		<control caption="Bu kelimenin yayılmasında bize yardım edin"/>
@@ -4014,9 +4149,11 @@
 		<control caption="http://shareaza.sourceforge.net/"/>
 		<control caption="Tamam"/>
 	</dialog>
-
 	<dialog name="CExistingFileDlg" cookie="StStStStStBuBuBuBuBuSt" caption="Mevcut Dosya">
-		<control/><control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
 		<control caption="Zaten kütüphanenizde bu dosyaya sahipsiniz. Ne yapmak istersiniz?"/>
 		<control caption="Kütüphanemdeki dosyaları göster"/>
 		<control caption="Bu dosyayı tekrar indir"/>
@@ -4025,7 +4162,6 @@
 		<control caption="İptal"/>
 		<control caption="Bu dosyayı daha önce indirdiniz ve sildiniz. Ne yapmak istersiniz?"/>
 	</dialog>
-
 	<dialog name="CCloseModeDlg" cookie="StStBuBuBuBuBu" caption="Kapat Düğmesi">
 		<control/>
 		<control caption="Bu Shareaza'nın kapat butonuna ilk basışınızdır. Lütfen Shareaza'nın yapmasını istediğiniz faaliyeti seçiniz:"/>
@@ -4035,21 +4171,19 @@
 		<control caption="Tamam"/>
 		<control caption="İptal"/>
 	</dialog>
-
 	<dialog name="CDonkeyServersDlg" cookie="StStEdmsBuBu" caption="Server.met İndirme Dosyası">
 		<control/>
 		<control caption="Yerel Server listenizdeki güncel webden eDonkey2000 server.met dosyalasını indirebilirsiniz."/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Tamam"/>
 		<control caption="İptal"/>
 	</dialog>
-
 	<dialog name="CHelpDlg" cookie="StBuAf" caption="Shareaza Yardım">
 		<control/>
 		<control caption="Kapat"/>
 		<control/>
 	</dialog>
-
 	<dialog name="CDeleteFileDlg" cookie="StStBuBuBuStStBuBuBuBuStEd" caption="Dosya Sil">
 		<control caption="Silmek istediğinizden emin misiniz:"/>
 		<control/>
@@ -4065,13 +4199,11 @@
 		<control caption="Bu dosyanın neden bozuk oldugunu küçük bir açıklama notu ile bildirebilirsin:"/>
 		<control/>
 	</dialog>
-
 	<dialog name="CCollectionExportDlg" cookie="StBuBu" caption="Klasör Gönder">
 		<control caption="Bu özellik zengin kolleksiyon dosyası gibi bir albüm klasörünün içeriğini göndermeye yarar."/>
 		<control caption="Gönder..."/>
 		<control caption="İptal"/>
 	</dialog>
-
 	<dialog name="CDownloadEditDlg" cookie="StBuEdBuStEdStEdStEdBuStStStBuStEdStEdBuBuBuBu" caption="İndirme Düzenle(İlerlemiş)">
 		<control caption="Uyarı: İleri kullanıcılar için bu dialog ileri indirme biçimlendirme özelliği temin eder, bu özellikler kullanılırsa hatalar oluşabilir ve muhtemelen bozukluklar ortaya çıkabilir."/>
 		<control caption="_Dosya Adı:"/>
@@ -4097,7 +4229,6 @@
 		<control caption="Tamam"/>
 		<control caption="İptal"/>
 	</dialog>
-
 	<dialog name="CTorrentSeedDlg" cookie="StStBuBuBuStms" caption="Torrent Dosyası Aç">
 		<control/>
 		<control caption="BitTorrent torrent dosyası açtınız.  Onun içindekileri indirmemek istermisiniz yada, tekrar besleme yapmak ister misiniz?"/>
@@ -4107,7 +4238,6 @@
 		<control caption="Dosyaları tam paylaşmak için BitTorrent köken olmalıdır. Bir kere bu iş indirme listenizde yeni bir parça gibi görünecek tam Torent'dır."/>
 		<control/>
 	</dialog>
-
 	<dialog name="CTorrentTrackerDlg" cookie="BuStEdStEdStEdStEdStEdBuStEdStEdBuStCoBuSyBuCoBu" caption="BitTorrent Gelişmiş Bilgi">
 		<control caption="Torrent _Bilgileri:"/>
 		<control caption="İsim:"/>
@@ -4134,10 +4264,10 @@
 		<control/>
 		<control caption="Kapat"/>
 	</dialog>
-
 	<dialog name="CDownloadGroupDlg" cookie="BuEdSyBuCoBuBuBuBuBuEdBu" caption="İndirme Grup Özellikleri">
 		<control caption="_İsim:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="_Filtreler:"/>
 		<control/>
 		<control caption="_Ekle"/>
@@ -4147,7 +4277,6 @@
 		<control caption="_Dosya klasörleri tamamlandı:"/>
 		<control/>
 	</dialog>
-
 	<dialog name="CMediaVisDlg" cookie="StBuSyCoBuBuBu" caption="Biçim Seçimi">
 		<control/>
 		<control caption="Listeden ses biçimleri seçiniz:"/>
@@ -4157,7 +4286,6 @@
 		<control caption="Tamam"/>
 		<control caption="İptal"/>
 	</dialog>
-
 	<dialog name="CUpgradeDlg" cookie="StStStBuBuBu" caption="Güncelleme Uyarısı">
 		<control/>
 		<control caption="Shareaza'nın yeni bir versiyonu bulunmaktadır. Güncellemek ister misiniz?"/>
@@ -4166,21 +4294,24 @@
 		<control caption="Yeni versiyonları kontrol etme"/>
 		<control caption="Güncelleme"/>
 	</dialog>
-
 	<dialog name="CDownloadReviewDlg" cookie="StBuSyEd" caption="Gözden Geçirilen İndirmeler">
 		<control/>
 		<control caption="Tamam"/>
-		<control/><control/>
+		<control/>
+		<control/>
 	</dialog>
-
 	<dialog name="CDecodeMetadataDlg" cookie="BuBuStCo" caption="Veri Yerleştir">
-		<control caption="Tamam"/>
-		<control caption="İptal"/>
 		<control caption="Lütfen kodlama ile ilgili metod seçiniz."/>
 		<control caption="Arapça|Baltık|Merkezi Avrupa|Basitleştirilmiş Çince|Geleneksel Çince|Slavca|Yunanca|İbranice|Japonca|Korece|Tay dili|Türkçe|Vietnamca"/>
+		<control caption="Preview:"/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
+		<control caption="Tamam"/>
+		<control caption="İptal"/>
 	</dialog>
 </dialogs>
-
 <!-- Columns Definitions -->
 <listColumns>
 	<list name="CLibraryWnd">
@@ -4240,6 +4371,7 @@
 		<column from="Port" to="Port"/>
 		<column from="Client" to="İstemci"/>
 		<column from="Last Seen" to="Son Görüşülen"/>
+		<column from="Daily Uptime" to=""/>
 		<column from="Name" to="İsim"/>
 		<column from="Description" to="Açıklama"/>
 		<column from="CurUsers" to="Güncel Kullanıcılar"/>
@@ -4301,11 +4433,14 @@
 		<column from="URL" to="URL"/>
 		<column from="Expires" to="Sonlananlar"/>
 	</list>
+	<list name="CTorrentFileList">
+		<column from="Filename" to=""/>
+		<column from="Size" to=""/>
+	</list>
 	<list name="CTorrentTrackerList">
 		<column from="Filename" to="Dosya Adı"/>
 		<column from="Size" to="Boyut"/>
 	</list>
-
 	<list name="CReviewList">
 		<column from="User" to="Kullanıcılar"/>
 		<column from="Rating" to="Reyting"/>
