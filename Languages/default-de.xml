@@ -22,7 +22,6 @@
 		type="Language"
 		language="de"
 		prompt="Klicken Sie hier, um Deutsch als Sprache zu wählen."
-		
 />
 
 <!-- Toolbar Definitions -->
@@ -427,6 +426,7 @@
 		<button id="ID_CHAT_CONNECT" text="Verbinden" visible="false"/>
 		<button id="ID_CHAT_DISCONNECT" text="Verbindung trennen"/>
 	</toolbar>
+	<!-- WEBSERVICES -->
 	<toolbar name="WebServices.ShareMonkey">
 		<button id="ID_SHAREMONKEY_DOWNLOAD" text="Daten holen" /> 
 		<separator /> 
@@ -646,9 +646,9 @@
 			</menu>
 			<separator/>
 			<item id="ID_HELP_VERSION_CHECK" text="Nach _Update suchen"/>
+			<item id="ID_HELP_DONATE" text="_An das Shareaza Projekt spenden!"/>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="_Über Shareaza..."/>
-			<item id="ID_HELP_DONATE" text="_An das Shareaza Projekt spenden!"/>
 		</menu>
 	</menu>
 	<menu name="CMainWnd.Windowed" type="bar">
@@ -738,9 +738,9 @@
 			</menu>
 			<separator/>
 			<item id="ID_HELP_VERSION_CHECK" text="Nach _Update suchen"/>
+			<item id="ID_HELP_DONATE" text="_An das Shareaza Projekt spenden!"/>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="_Über Shareaza..."/>
-			<item id="ID_HELP_DONATE" text="_An das Shareaza Projekt spenden!"/>
 		</menu>
 	</menu>
 	<!-- VIEW POPUP -->
@@ -1835,14 +1835,10 @@
 		</styles>
 		<text format="b">Willkommen beim Shareaza-Einstellungsmanager</text>
 		<newline gap="16"/>
-		<text>
-			Der Einstellungsmanager erlaubt es Ihnen, Shareaza völlig ihren Wünschen anzupassen.
-			In der Sektion
-		</text>
+		<text>Der Einstellungsmanager erlaubt es Ihnen, Shareaza völlig ihren Wünschen anzupassen.
+			In der Sektion</text>
 		<text format="b">Allgemein </text>
-		<text>
-			kann das Verhalten von Shareaza gegenüber dem Benutzer angepasst werden.
-		</text>
+		<text>kann das Verhalten von Shareaza gegenüber dem Benutzer angepasst werden.</text>
 		<newline gap="16" indent="16"/>
 		<link target="raza:page:CGeneralSettingsPage" format="b">Allgemein:</link>
 		<gap size="4"/>
@@ -1877,10 +1873,9 @@
 		<text format="b">Willkommen beim Shareaza-Einstellungsmanager</text>
 		<newline gap="16"/>
 		<text>Der Einstellungsmanager erlaubt es Ihnen, Shareaza völlig ihren Wünschen anzupassen.
-		In der Sektion</text>
+			In der Sektion</text>
 		<text format="b">Internet </text>
-		<text>können Sie festlegen, wie sich Shareaza in P2P-Netzen verhält.
-		</text>
+		<text>können Sie festlegen, wie sich Shareaza in P2P-Netzen verhält.</text>
 		<newline gap="16" indent="16"/>
 		<link target="raza:page:CConnectionSettingsPage" format="b">Verbindung:</link>
 		<gap size="4"/>
@@ -2248,7 +2243,7 @@
 		Der Versuch, Dateien zu hashen, die gerade heruntergeladen werden, wirkt sich negativ auf die Geschwindigkeit aus.</text>
 	</document>
 </documents>
-<!-- Localised Command Tip Text. The "message" is displayed in the status bar, while the "tip" is shown in a tooltip -->
+<!-- Localised Command Tip Text.  The "message" is displayed in the status bar, while the "tip" is shown in a tooltip -->
 <commandTips>
 	<tip id="ID_BROWSE_FILES" message="Die Dateien des Benutzers anzeigen."/>
 	<tip id="ID_BROWSE_LAUNCH" message="Die Dateien und das Profil des markierten Benutzers durchsuchen." tip="Benutzer durchsuchen"/>
@@ -3284,7 +3279,6 @@
 	<string id="20236" value="Bewertung"/>
 </strings>
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
-<!-- Don't edit dialogs manualy! Use DialogScan feature instead -->
 <dialogs>
 	<dialog name="CGeneralSettingsGroup" cookie="" caption="Allgemein">
 	</dialog>
@@ -3626,7 +3620,7 @@
 		<control caption=" Torrents entfernen bei Up- / Downloadverhältnis von"/>
 		<control/>
 		<control/>
-		<control caption="%"/
+		<control caption="%"/>
 		<control caption=" Torrentquellen bevorzugen"/>
 		<control caption="_End-Game:"/>
 		<control caption="End-Game-Modus am Ende von Torrent-Downloads aktivieren"/>
@@ -4175,7 +4169,10 @@
 		<control caption="Sie haben auf eine von Shareaza unterstützte URI geklickt, die auf folgende Datei verweist:"/>
 		<control caption="Sie haben auf eine von Shareaza unterstützte URL geklickt, die Sie mit folgendem Host oder Server verbinden wird:"/>
 		<control caption="Sie haben auf eine von Shareaza unterstützte URI geklickt, die es ihnen erlaubt folgenden Host zu durchsuchen:"/>
-		<control/><control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
 		<control caption="Bitte wählen Sie die gewünschte Aktion:"/>
 		<control caption="_Herunterladen"/>
 		<control caption="_Nach Datei suchen"/>
@@ -4195,7 +4192,8 @@
 	<dialog name="CFilePreviewDlg" cookie="StStStmsStBu" caption="Vorschau...">
 		<control/>
 		<control caption="Vorschau erstellen für:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="(Teildownloads in eine neue Vorschaudatei kopieren)"/>
 		<control caption="Abbrechen"/>
 	</dialog>
@@ -4220,7 +4218,10 @@
 		<control caption="OK"/>
 	</dialog>
 	<dialog name="CExistingFileDlg" cookie="StStStStStBuBuBuBuBuStSt" caption="Vorhandene Datei herunterladen">
-		<control/><control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
 		<control caption="Diese Datei befindet sich bereits in Ihrer Bibliothek. Was möchten Sie tun?"/>
 		<control caption="Datei in meiner Bibliothek anzeigen"/>
 		<control caption="Datei erneut herunterladen"/>
@@ -4242,7 +4243,8 @@
 	<dialog name="CDonkeyServersDlg" cookie="StStEdmsBuBu" caption="Server.met-Datei herunterladen">
 		<control/>
 		<control caption="Sie können eine server.met-Datei aus dem Internet herunterladen, um Ihre lokale Serverliste zu aktualisieren."/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="OK"/>
 		<control caption="Abbrechen"/>
 	</dialog>
@@ -4398,7 +4400,8 @@
 	<dialog name="CDownloadReviewDlg" cookie="StBuSyEd" caption="Rezensionen herunterladen">
 		<control/>
 		<control caption="OK"/>
-		<control/><control/>
+		<control/>
+		<control/>
 	</dialog>
 	<dialog name="CDecodeMetadataDlg" cookie="BuBuStCo" caption="Metadaten-Lokalisierung">
 		<control caption="Bitte wählen Sie die neue Codierung"/>
