@@ -54,6 +54,7 @@
 		<button id="ID_TAB_SEARCH" text="搜尋"/>
 		<button id="ID_TAB_TRANSFERS" text="傳輸"/>
 		<button id="ID_TAB_NETWORK" text="網路"/>
+		<button id="ID_TAB_IRC" text="IRC"/>
 	</toolbar>
 	<toolbar name="CMainWnd.Windowed">
 		<button id="ID_NETWORK_CONNECT" text="連線"/>
@@ -66,6 +67,7 @@
 		<button id="ID_VIEW_UPLOADS"/>
 		<button id="ID_VIEW_LIBRARY"/>
 		<button id="ID_VIEW_MEDIA"/>
+		<button id="ID_TAB_IRC"/>
 		<button id="ID_VIEW_SECURITY"/>
 		<button id="ID_VIEW_HOSTS"/>
 		<button id="ID_VIEW_DISCOVERY"/>
@@ -416,6 +418,8 @@
 		<button id="ID_CHAT_CONNECT" text="連線" visible="false"/>
 		<button id="ID_CHAT_DISCONNECT" text="中斷連線"/>
 	</toolbar>
+	<!-- WEBSERVICES -->
+	<!-- IMAGE VIEWER ? -->
 </toolbars>
 
 <!-- Menu Definitions -->
@@ -1632,20 +1636,18 @@
 		<text group="24" align="middle" id="G2Hubs">%i 結點</text>
 		<text group="25" align="middle" id="G2Leaves">%i 葉結點</text>
 		<newline group="20" gap="2"/>
-
-		<icon group="30" command="ID_NETWORK_ED2K"/><gap group="30" size="4"/>
-		<text group="30" align="middle" format="b">eDonkey:</text>
-		<text group="31" align="middle">已中斷連線</text>
-		<text group="32" align="middle">連線中...</text>
-		<text group="33" align="middle">已連線</text>
-		<newline group="30" gap="2"/>
-
 		<icon group="10" command="ID_NETWORK_G1"/><gap group="10" size="4"/>
 		<text group="10" align="middle" format="b">Gnutella1:</text>
 		<text group="11" align="middle">已中斷連線</text>
 		<text group="12" align="middle">連線中...</text>
 		<text group="13" align="middle">已連線</text>
 		<newline group="10" gap="2"/>
+		<icon group="30" command="ID_NETWORK_ED2K"/><gap group="30" size="4"/>
+		<text group="30" align="middle" format="b">eDonkey:</text>
+		<text group="31" align="middle">已中斷連線</text>
+		<text group="32" align="middle">連線中...</text>
+		<text group="33" align="middle">已連線</text>
+		<newline group="30" gap="2"/>
 
 		<group id="2">
 			<para align="center">
@@ -1714,14 +1716,10 @@
 		<text format="b">歡迎使用 Shareaza 的設定管理員</text>
 		<newline gap="16"/>
 
-		<text>
-			Shareaza 設定管理員讓進階使用者完全地自訂 Shareaza 的運作方式
-                        以下的部分是用來自訂
-		</text>
-		<text format="b">一般</text>
-		<text>
-			使用者的習慣.
-		</text>
+		<text>Shareaza 設定管理員讓進階使用者完全地自訂 Shareaza 的運作方式
+			以下的部分是用來自訂 </text>
+		<text format="b">一般 </text>
+		<text>使用者的習慣.</text>
 		<newline gap="16" indent="16"/>
 
 		<link target="raza:page:CGeneralSettingsPage" format="b">一般:</link>
@@ -1744,10 +1742,14 @@
 		<text>您的個人檔案, 聊天與即時通訊的設定.</text>
 		<newline gap="10"/>
 
+		<link target="raza:page:CIRCSettingsPage" format="b">IRC:</link>
+		<gap size="4"/>
+		<text>IRC.</text>
+		<newline gap="10"/>
+
 		<link target="raza:page:CWebSettingsPage" format="b">網際網路:</link>
 		<gap size="4"/>
 		<text>Shareaza 崁入您的瀏覽器, 處理 P2P 連結與下載內容.</text>
-		<newline gap="10"/>
 
 	</document>
 
@@ -1762,14 +1764,10 @@
 		<text format="b">歡迎使用 Shareaza 的設定管理員</text>
 		<newline gap="16"/>
 
-		<text>
-		        Shareaza 設定管理員讓使用者完全地自訂 Shareaza 的運作方式.
-                        這個設定讓您
-		</text>
+		<text>Shareaza 設定管理員讓使用者完全地自訂 Shareaza 的運作方式.
+			這個設定讓您 </text>
 		<text format="b">網際網路 </text>
-		<text>
-			在分散式 P2P 網路中 Shareaza 如何與其他結點互動.
-		</text>
+		<text>在分散式 P2P 網路中 Shareaza 如何與其他結點互動.</text>
 		<newline gap="16" indent="16"/>
 
 		<link target="raza:page:CConnectionSettingsPage" format="b">連線:</link>
@@ -1791,6 +1789,10 @@
 		<gap size="4"/>
 		<text>有關經由瀏覽器遠端操控 Shareaza 的設定.</text>
 		<newline gap="10"/>
+
+		<link target="raza:page:CSchedulerSettingsPage" format="b">Scheduler:</link>
+		<gap size="4"/>
+		<text>Limit download connections based on a periodic schedule.</text>
 
 	</document>
 
@@ -3148,7 +3150,8 @@
 		<control caption="工具提示:"/>
 		<control/>
 		<control caption="延遲時間 (毫秒):"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="不透明度:"/>
 		<control/>
 		<control caption="系統列:"/>
@@ -3166,10 +3169,12 @@
 		<control caption="允許其他人瀏覽我分享的檔案"/>
 		<control caption="最近的檔案:"/>
 		<control caption="記住:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="檔案"/>
 		<control caption="最多:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="天"/>
 		<control caption="立刻清除歷史記錄"/>
 		<control caption="以下可以安全開啟:"/>
@@ -3181,7 +3186,8 @@
 		<control caption="新增"/>
 		<control caption="移除"/>
 		<control caption="將組檔存放在這個位置:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Create ghost files when deleting"/>
 	</dialog>
 
@@ -3248,28 +3254,36 @@
 		<control caption="忽略私人/區域 IP 位址 "/>
 		<control caption="逾時:"/>
 		<control caption="連線:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="信號交換:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 	</dialog>
 
 	<dialog name="CDownloadsSettingsPage" cookie="BuEdBuBuEdBuBuStEdmsStEdmsStEdmsBuStCoStCoBuBu" caption="下載">
 		<control caption="請將下載完成的檔案存放在這裡:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="請將暫存的未完成檔案放在這裡:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="下載數量:"/>
 		<control caption="最多同時下載的檔案數:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="最多同時進行的下載連線數:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="每個檔案的下載連線數:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="限制:"/>
 		<control caption="總計下載頻寬:"/>
 		<control/>
 		<control caption="最大排隊長度:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="只與您連線的網路下載與上傳."/>
 	</dialog>
 
@@ -3279,7 +3293,8 @@
 		<control caption="在結點模式時限制分享"/>
 		<control caption="分享預覽檔"/>
 		<control caption="每個主機的最多可同時下載:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="使用者代理過濾:"/>
 		<control/>
 		<control caption="+"/>
@@ -3313,7 +3328,8 @@
 	<dialog name="CSchedulerSettingsPage" cookie="BuBuEdmsBuBuStStStStStStStStStStStEdBuSt" caption="預定表">
 		<control caption="選項:"/>
 		<control caption="啟用預定表"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="只要在受到限制時才連線至 G2"/>
 		<control caption="Key:"/>
 		<control caption="日"/>
@@ -3356,11 +3372,14 @@
 		<control caption="自動偵測|葉節點|結點"/>
 		<control caption="G2 連線:"/>
 		<control caption="葉節點對結點:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="結點對葉節點:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="結點對結點:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Gnutella1 網路:"/>
 		<control caption="總是連線至 Gnutella1"/>
 		<control caption="本次連線至 Gnutella1"/>
@@ -3368,11 +3387,14 @@
 		<control caption="自動|葉節點|超級用戶"/>
 		<control caption="G1 連線:"/>
 		<control caption="葉節點對超級用戶:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="超級用戶對葉節點:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="用戶對用戶:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Link Compression:"/>
 		<control caption="結點對葉節點"/>
 		<control caption="葉節點對結點"/>
@@ -3386,11 +3408,13 @@
 		<control caption="全球搜尋:"/>
 		<control caption="從伺服器快取搜尋已知的遠端伺服器:"/>
 		<control caption="在...之後停止搜尋:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="搜尋結果."/>
 		<control caption="客戶端連結的連線:"/>
 		<control caption="....的連線數不超過:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="其他的 eDonkey 客戶端."/>
 		<control caption="eDonkey2000 工具箱:"/>
 		<control caption="匯入 eDonkey/eMule 部份下載檔 (.part):"/>
@@ -3403,19 +3427,25 @@
 		<control caption="介面:"/>
 		<control caption="顯示額外的 BitTorrent 介面要素"/>
 		<control caption="下載連線:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="同時進行...個 Torrent"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="客戶端連線"/>
 		<control caption="&#160;清除下載的 torrents&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;在分享率達到後"/>
-		<control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
 		<control caption="&#160;偏好 torrent 來源"/>
 		<control caption="終場模式:"/>
 		<control caption="在 torrent 即將完成時啟用終場模式"/>
 		<control caption="Torrents 存放於此:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Torrent 製作程式"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="預設伺服器: "/>
 		<control/>
 	</dialog>
@@ -3454,7 +3484,8 @@
 		<control/>
 		<control caption="設定的屬性:"/>
 		<control caption="值:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="敘述:"/>
 		<control/>
 	</dialog>
@@ -3477,18 +3508,23 @@
 		<control caption="容納大小:"/>
 		<control caption="啟用這個排隊隊伍"/>
 		<control caption="最小傳輸數:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="最大傳輸數:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="最多可以有多少人在這個排隊隊伍:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="服務參數:"/>
 		<control caption="飽和頻寬百分比:"/>
 		<control/>
 		<control caption="這個排隊隊伍的上傳頻寬:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="在 N 秒後輪流:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="確定"/>
 		<control caption="取消"/>
 		<control caption="獎勵上傳者"/>
@@ -3509,19 +3545,7 @@
 		<control caption="開始使用Shareaza."/>
 	</dialog>
 
-	<dialog name="CWizardInterfacePage" cookie="StBuBuBuStStBuBuBu" caption="歡迎使用 Shareaza">
-		<control caption="Shareaza 支援十分彈性化的使用介面, 所以請選擇您最感到順手的介面吧. 您可以隨時更改這些設定."/>
-		<control caption="請選擇使用者介面:"/>
-		<control caption="標準模式"/>
-		<control caption="進階模式"/>
-		<control caption="簡單明瞭的選單與按鈕.{n}其他檔案分享軟體的使用者會感到十分熟悉."/>
-		<control caption="進階模式提供進階使用者更多的指令與視窗顯示...等等.{n}新手可能會感到困惑!"/>
-		<control caption="顯示簡化的下載進度棒. (減低 CPU 資源的消耗)"/>
-		<control caption="顯示額外的 torrent 介面元件."/>
-		<control caption="管理 torrent 連結."/>
-	</dialog>
-
-	<dialog name="CWizardConnectionPage" cookie="StCoStCoStCoStCoStCo" caption="歡迎使用者 Shareaza [3 之 7]">
+	<dialog name="CWizardConnectionPage" cookie="StCoStCoStCoStCoStCo" caption="歡迎使用者 Shareaza (1/6)">
 		<control caption="為了達到最佳效能, Shareaza 需要知道您的上網方式/地點."/>
 		<control caption="&#160;( 請選擇 )|我從家中上網|我從學校的區域網路上網|我從公司的區域網路上網|我從機場或是飯店上網"/>
 		<control caption="您的網路或是校園受到防火牆/NAT 路由器的保護嗎?"/>
@@ -3534,7 +3558,7 @@
 		<control/>
 	</dialog>
 
-	<dialog name="CWizardSharePage" cookie="StStStSyBuBuSt" caption="歡迎使用 Shareaza [4 之 7]">
+	<dialog name="CWizardSharePage" cookie="StStStSyBuBuSt" caption="歡迎使用 Shareaza (2/6)">
 		<control caption="P2P 網路的有效性取決於使用它的用戶.  所有可以下載的檔案內容都是由其他使用者貢獻的."/>
 		<control caption="分享您的檔案並不是使用 Shareaza 的所需條件, 但是某些軟體對於不分享任何檔案的使用者會採取不同的對待方式."/>
 		<control caption="如果您想要分享您的資料夾(如果有的話), 請指示. 按下新增鈕即可新增資料夾."/>
@@ -3554,7 +3578,7 @@
 		<control caption="關閉"/>
 	</dialog>
 
-	<dialog name="CWizardProfilePage" cookie="StStEdStCoCoStCoCo" caption="歡迎使用 Shareaza [5 之 7]">
+	<dialog name="CWizardProfilePage" cookie="StStEdStCoCoStCoCo" caption="歡迎使用 Shareaza (3/6)">
 		<control caption="每個人分享一些自己的基本資料會讓Shareaza成為更友善的社群."/>
 		<control caption="我的代號:"/>
 		<control/>
@@ -3562,10 +3586,23 @@
 		<control caption="&#160;(選擇)"/>
 		<control caption="&#160;(選擇)| 男孩| 女孩| 男人| 女人"/>
 		<control caption="來自:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 	</dialog>
 
-	<dialog name="CWizardNetworksPage" cookie="StBuStBuStBuSt" caption="歡迎來到 Shareaza [6 之 7]">
+	<dialog name="CWizardInterfacePage" cookie="StBuBuBuStStBuBuBu" caption="歡迎使用 Shareaza (4/6)">
+		<control caption="Shareaza 支援十分彈性化的使用介面, 所以請選擇您最感到順手的介面吧. 您可以隨時更改這些設定."/>
+		<control caption="請選擇使用者介面:"/>
+		<control caption="標準模式"/>
+		<control caption="進階模式"/>
+		<control caption="簡單明瞭的選單與按鈕.{n}其他檔案分享軟體的使用者會感到十分熟悉."/>
+		<control caption="進階模式提供進階使用者更多的指令與視窗顯示...等等.{n}新手可能會感到困惑!"/>
+		<control caption="顯示簡化的下載進度棒. (減低 CPU 資源的消耗)"/>
+		<control caption="顯示額外的 torrent 介面元件."/>
+		<control caption="管理 torrent 連結."/>
+	</dialog>
+
+	<dialog name="CWizardNetworksPage" cookie="StBuStBuStBuSt" caption="歡迎來到 Shareaza (5/6)">
 		<control caption="Shareaza 為萬用型檔案交換程式, 可同時連線至多種 P2P 網路.  您可在這邊選擇要連線的網路. 您可稍後任意調整這些設定."/>
 		<control caption="連線至 Gnutella2 (強烈建議)"/>
 		<control caption=" Gnutella2 網路是 Shareaza 首次推出的網路, 比其他P2P 網路提供更多的功能與更佳的效能."/>
@@ -3584,7 +3621,7 @@
 		<control caption="關閉"/>
 	</dialog>
 
-	<dialog name="CWizardFinishedPage" cookie="StStStBuBuBuSt" caption="歡迎使用 Shareaza [7 之 7]">
+	<dialog name="CWizardFinishedPage" cookie="StStStBuBuBuSt" caption="歡迎使用 Shareaza (6/6)]">
 		<control caption="這樣就可以了! Shareaza 已經設定好在您的電腦上運作了"/>
 		<control caption="如果您需要更改設定, 您可以從Tools Menu 重新執行 快速啟動精靈"/>
 		<control caption="按下完成, 關閉精靈後, 您可以連線至你選擇的網路並且開始搜尋, 下載檔案."/>
@@ -3607,7 +3644,8 @@
 		<control caption="Screen Name:"/>
 		<control/>
 		<control caption="真實姓名:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="_Vitals:"/>
 		<control caption="|男性|女性"/>
 		<control caption="性別:"/>
@@ -3695,7 +3733,8 @@
 
 	<dialog name="CConnectToDlg" cookie="BuCoEdBuCoBuBuBu" caption="連線至|瀏覽主機">
 		<control caption="起始新連線至主機或伺服器:|瀏覽這個主機:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="網路協定:"/>
 		<control caption="Gnutella1 (自動)|Gnutella2 (自動)|eDonkey2000"/>
 		<control caption="封鎖超級用戶"/>
@@ -3704,7 +3743,8 @@
 	</dialog>
 
 	<dialog name="CDownloadDlg" cookie="StStStEdBuBuStStBu" caption="下載檔案或 Torrent">
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="使用 Shareaza 下載檔案很簡單. 只要在下方的框框鍵入或是貼上 指向檔案的 URL/URI ,然後按 Enter."/>
 		<control/>
 		<control caption="下載"/>
@@ -3715,7 +3755,8 @@
 	</dialog>
 
 	<dialog name="CNewSearchDlg" cookie="EdCoBuBu" caption="新的搜尋|再次搜尋|搜尋收藏">
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="搜尋"/>
 		<control caption="取消"/>
 	</dialog>
@@ -3730,7 +3771,8 @@
 		<control caption="最多:"/>
 		<control/>
 		<control caption="至少要有:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="來源."/>
 		<control caption="隱藏:"/>
 		<control caption="忙碌中的主機"/>
@@ -3770,7 +3812,9 @@
 	<dialog name="CDownloadMonitorDlg" cookie="StStStStStStStStStStStStStBuBuBuBuBu" caption="下載 : Shareaza">
 		<control caption="Shareaza 正在下載:"/>
 		<control caption="..."/>
-		<control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
 		<control caption="總計傳輸速度:"/>
 		<control caption="..."/>
 		<control caption="估計剩餘時間:"/>
@@ -3788,7 +3832,10 @@
 
 	<dialog name="CFileGeneralPage" cookie="StEdEdEdEdStStEdStEdStEdStEdEdEd" caption="一般">
 		<control caption="萬用資源名稱 (URNs)"/>
-		<control/><control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
 		<control caption="檔案屬性"/>
 		<control caption="位置:"/>
 		<control/>
@@ -3797,11 +3844,14 @@
 		<control caption="修改日期:"/>
 		<control/>
 		<control caption="大小:"/>
-		<control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
 	</dialog>
 
 	<dialog name="CFileMetadataPage" cookie="CoEd" caption="解釋資料">
-		<control/><control/>
+		<control/>
+		<control/>
 	</dialog>
 
 	<dialog name="CFileCommentsPage" cookie="StStCoStEdEd" caption="我的評論">
@@ -3809,7 +3859,8 @@
 		<control caption="我評定這個檔案:"/>
 		<control caption="(沒有任何評分)|冒牌貨/已毀損/容易令人誤解|差勁|普通|不錯|很好|極佳"/>
 		<control caption="我的評論與意見"/>
-		<control/><control/>
+		<control/>
+		<control/>
 	</dialog>
 
 	<dialog name="CFileSharingPage" cookie="StBuBuBuStCoStSyEd" caption="分享">
@@ -3820,13 +3871,15 @@
 		<control caption="上傳排隊隊伍選擇標籤"/>
 		<control/>
 		<control caption="-您要在那些網路分享"/>
-		<control/><control/>
+		<control/>
+		<control/>
 	</dialog>
 
 	<dialog name="CFileSourcesPage" cookie="StStEdSyBuBuEd" caption="來源">
 		<control caption="已知的來源"/>
 		<control caption="新增來源"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="新增"/>
 		<control caption="移除"/>
 		<control/>
@@ -3834,7 +3887,8 @@
 
 	<dialog name="CFileCopyDlg" cookie="StStmsBuBumsStSt" caption="複製檔案|移動檔案">
 		<control caption="您已選擇了 %i 個檔案, 將他們複製至以下的資料夾:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="確定"/>
 		<control caption="取消"/>
 		<control/>
@@ -3864,7 +3918,8 @@
 		<control caption="圖解"/>
 		<control caption="取樣頻率:"/>
 		<control caption="每個取樣之間的週期:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="毫秒"/>
 		<control caption="名稱:"/>
 		<control/>
@@ -3876,7 +3931,8 @@
 		<control caption="確定"/>
 		<control caption="取消"/>
 		<control caption="來源:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="參數:"/>
 		<control caption="單位:"/>
 		<control/>
@@ -3887,7 +3943,8 @@
 	</dialog>
 
 	<dialog name="CSchemaColumnsDlg" cookie="CoSyBuBuSt" caption="Select Columns from Schema">
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="確定"/>
 		<control caption="取消"/>
 		<control caption="Select a schema from the list, then select the fields to display as columns."/>
@@ -3901,9 +3958,15 @@
 		<control/>
 		<control caption="網路位址:"/>
 		<control caption="IP 位址:"/>
-		<control/><control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
 		<control caption="網路遮罩:"/>
-		<control/><control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
 		<control caption="內容過濾:"/>
 		<control/>
 		<control caption="部份比對"/>
@@ -3936,7 +3999,9 @@
 	<dialog name="CURLCopyDlg" cookie="StStStStStBuBu" caption="複製 URI">
 		<control/>
 		<control caption="您可以為選擇的項目使用不同的格式複製 URL.  請點選以下其中一個 URI 決定您要使用的格式:"/>
-		<control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
 		<control caption="請把我當做這個URL的固定來源之一"/>
 		<control caption="取消"/>
 	</dialog>
@@ -3960,7 +4025,10 @@
 		<control caption="您點選了由 Shareaza 驅動的 URI, 讓您連結到以下的這個網路上的內容:"/>
 		<control caption="您點選了由 Shareaza 驅動的 URL, 將讓您連線至以下的主機或伺服器:"/>
 		<control caption="您點選了由 Shareaza 驅動的 URL, 將讓你瀏覽以下的主機的分享檔案:"/>
-		<control/><control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
 		<control caption="請選擇您要 Shareaza 進行的動作:"/>
 		<control caption="立刻下載"/>
 		<control caption="尋找檔案"/>
@@ -3982,7 +4050,8 @@
 	<dialog name="CFilePreviewDlg" cookie="StStStmsStBu" caption="智慧型下載預覽...">
 		<control/>
 		<control caption="Shareaza 正在為這個下載製作預覽:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="(正在複製已下載的區塊(chunk) 至新的預覽檔)"/>
 		<control caption="取消"/>
 	</dialog>
@@ -4010,7 +4079,10 @@
 	</dialog>
 
 	<dialog name="CExistingFileDlg" cookie="StStStStStBuBuBuBuBuSt" caption="現存的檔案">
-		<control/><control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
 		<control caption="你的檔案收藏已經有這個檔案了. 您的決定是?"/>
 		<control caption="在我的收藏顯示這個檔案"/>
 		<control caption="再次下載這個檔案"/>
@@ -4033,7 +4105,8 @@
 	<dialog name="CDonkeyServersDlg" cookie="StStEdmsBuBu" caption="下載 Server.met 檔">
 		<control/>
 		<control caption="您可從網際網路下載 eDonkey2000 server.met 檔以更新您本地的伺服器清單."/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="確定"/>
 		<control caption="取消"/>
 	</dialog>
@@ -4079,17 +4152,21 @@
 		<control caption="警告: 這個對話框提供進階使用者進階的下載編輯功能. 如果錯誤地使用, 可能導致資料毀損."/>
 		<control caption="檔案名稱與大小:"/>
 		<control caption="檔案名稱:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="檔案大小 (位元組):"/>
 		<control/>
 		<control caption="_URNs:"/>
 		<control caption="可靠的"/>
 		<control caption="SHA1:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Tiger-Root:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="ED2K:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="動作:"/>
 		<control caption="忘卻目前的驗證狀態並重新驗證"/>
 		<control caption="假定檔案是100%完整並且重新驗證"/>
@@ -4163,7 +4240,8 @@
 
 	<dialog name="CDownloadGroupDlg" cookie="BuEdSyBuCoBuBuBuBuBuEdBu" caption="下載群組的屬性">
 		<control caption="名稱:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="過濾:"/>
 		<control/>
 		<control caption="新增"/>
@@ -4196,7 +4274,8 @@
 	<dialog name="CDownloadReviewDlg" cookie="StBuSyEd" caption="下載評論">
 		<control/>
 		<control caption="確定"/>
-		<control/><control/>
+		<control/>
+		<control/>
 	</dialog>
 
 	<dialog name="CDecodeMetadataDlg" cookie="BuBuStCo" caption="解釋資料本地化">

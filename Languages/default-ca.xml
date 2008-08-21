@@ -407,6 +407,7 @@
 		<button id="ID_CHAT_CONNECT" text="Connecta" visible="false"/>
 		<button id="ID_CHAT_DISCONNECT" text="Desconnecta"/>
 	</toolbar>
+	<!-- WEBSERVICES -->
 	<!-- IMAGE VIEWER WINDOW -->
 	<toolbar name="ImageViewer_Toolbar">
 		<button id="ImageViewer_BestFit" text="Millor ajust"/>
@@ -1756,14 +1757,10 @@
 		</styles>
 		<text format="b">Configuració de Shareaza</text>
 		<newline gap="16"/>
-		<text>
-			Aquesta pantalla permet configurar una gran quantitat de paràmetres del funcionament
-			de Shareaza.  La configuració
-		</text>
+		<text> Aquesta pantalla permet configurar una gran quantitat de paràmetres del funcionament
+			de Shareaza.  La configuració </text>
 		<text format="b">General </text>
-		<text>
-			està relacionada amb l'experiència de l'usuari.
-		</text>
+		<text>està relacionada amb l'experiència de l'usuari.</text>
 		<newline gap="16" indent="16"/>
 		<link target="raza:page:CGeneralSettingsPage" format="b">General:</link>
 		<gap size="4"/>
@@ -3219,7 +3216,8 @@
 		<control caption="P_istes:"/>
 		<control/>
 		<control caption="Retard (ms):"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Opacitat:"/>
 		<control/>
 		<control caption="_Barra de tasques:"/>
@@ -3236,10 +3234,12 @@
 		<control caption="Permet que altres exploren el teu perfil i arxius"/>
 		<control caption="Arxius _recents:"/>
 		<control caption="Recorda:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="arxius"/>
 		<control caption="Fins a:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="dies"/>
 		<control caption="Esborra l'historial"/>
 		<control caption="_Arxius segurs per a obrir:"/>
@@ -3251,7 +3251,8 @@
 		<control caption="_Afegeix"/>
 		<control caption="_Treu"/>
 		<control caption="Desa les _col·leccions aquí:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Crea arxius fantasma a l'esborrar descàrregues"/>
 	</dialog>
 	<dialog name="CMediaSettingsPage" cookie="BuCoBuBuBuCoBuBuBuBuBuStSt" caption="Reproductor">
@@ -3317,27 +3318,35 @@
 		<control caption="Habilita la connexió de dispositius UPnP"/>
 		<control caption="_Temps d'expiració:"/>
 		<control caption="A connexions:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="A negociacions:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 	</dialog>
 	<dialog name="CDownloadsSettingsPage" cookie="BuEdBuBuEdBuBuStEdmsStEdmsStEdmsBuStCoStCoBuBu" caption="Descàrregues">
 		<control caption="_Carpeta d'arxius completats:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Carpeta d'arxius _incomplets: (temporal)"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="_Nombre de descàrregues:"/>
 		<control caption="Arxius màx:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Transferències màx:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Fonts per arxiu:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Límit:"/>
 		<control caption="Ample de banda:"/>
 		<control/>
 		<control caption="Mida màxima de les cues:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Sols puja i descarrega per les xarxes connectades."/>
 	</dialog>
 	<dialog name="CUploadsSettingsPage" cookie="BuBuBuBuStEdmsBuCoBuBuBuStCoStCoBuSyBuBuBuSt" caption="Pujades">
@@ -3346,7 +3355,8 @@
 		<control caption="Limita la compartició en mode concentrador"/>
 		<control caption="Comparteix vistes prèvies"/>
 		<control caption="Límit per usuari:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="_Filtre per programa:"/>
 		<control/>
 		<control caption="+"/>
@@ -3378,7 +3388,8 @@
 	<dialog name="CSchedulerSettingsPage" cookie="BuBuEdmsBuBuStStStStStStStStStStStEdBuSt" caption="Programador">
 		<control caption="_Opcions:"/>
 		<control caption="_Habilita el calendari"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="_Connecta a Gnutella2 únicament quan s'està limitat"/>
 		<control caption="Clau:"/>
 		<control caption="Diu"/>
@@ -3419,11 +3430,14 @@
 		<control caption="Óptim|Leaf|Concentrador"/>
 		<control caption="Connexions G_2:"/>
 		<control caption="Leaf a Concentrador:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Concentrador a Leaf:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Concentrador a Concentrador:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Xarxa Gnutella1:"/>
 		<control caption="Connecta sempre a Gnutella1"/>
 		<control caption="Connecta a Gnutella1 en aquesta sessió"/>
@@ -3431,11 +3445,14 @@
 		<control caption="Óptim|Leaf|Ultrapeer"/>
 		<control caption="Connexions G_1:"/>
 		<control caption="Leaf a Ultrapeer:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Ultrapeer a Leaf:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Peer a Peer:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="_Compresió d'enllaç:"/>
 		<control caption="Concentrador a Leaf"/>
 		<control caption="Leaf a Concentrador"/>
@@ -3448,12 +3465,14 @@
 		<control caption="Cerques _globals:"/>
 		<control caption="Cerca servidors coneguts (del caxè):"/>
 		<control caption="Atura després de:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="resultats."/>
 		<control caption="Rebre i actualitzar la llista de servidors des dels servidors connectats."/>
 		<control caption="Límit de _connexions amb altres clients:"/>
 		<control caption="No connectar amb més de:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="clients de eDonkey a la vegada."/>
 		<control caption="_Eines d'eDonkey:"/>
 		<control caption="Descarrega una llista de servidors de eDonkey de la web:"/>
@@ -3464,19 +3483,25 @@
 		<control caption="_Interface:"/>
 		<control caption="Mostra elements addicionals BitTorrent en la interfície"/>
 		<control caption="_Connexions de descàrrega:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Torrents al mateix temps"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Connexions de clients"/>
 		<control caption=" Neteja els torrents descarregats&#160;&#160;quan la ràtio de compartició sigui 1"/>
-		<control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
 		<control caption="&#160;Prefereix fonts torrent"/>
 		<control caption="_EndGame:"/>
 		<control caption="Habilita el mode EndGame al completar torrents"/>
 		<control caption="_Desa els torrents aquí "/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="_Creador de Torrents"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="_Rastrejador per defecte (&quot;Tracker&quot;):"/>
 		<control/>
 	</dialog>
@@ -3511,7 +3536,8 @@
 		<control/>
 		<control caption="Configuració:"/>
 		<control caption="Valor:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Descripció:"/>
 		<control/>
 	</dialog>
@@ -3535,23 +3561,28 @@
 		<control caption="_Capacitat:"/>
 		<control caption="Habilita aquesta cua"/>
 		<control caption="Mínim nombre de transferències:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Màxim nombre de transferències:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Màxim nombre esperant en cua:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="_Paràmetres del servei:"/>
 		<control caption="Percentatge de banda saturada:"/>
 		<control/>
 		<control caption="Banda ampla per a aquesta cua:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Rota després de N segons:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Accepta"/>
 		<control caption="Cancel·la"/>
 		<control caption="Dóna prioritat als usuaris/es que comparteixin més"/>
 	</dialog>
-	<dialog name="CWizardWelcomePage" cookie="StStStStStStStStStStStSt" caption="Benvingut/uda(a) a Shareaza [1 de 7]">
+	<dialog name="CWizardWelcomePage" cookie="StStStStStStStStStStStSt" caption="Benvingut/uda(a) a Shareaza">
 		<control caption="Benvingut/uda(a) a Shareaza! (pronunciat 'xa-re-a-sa')"/>
 		<control caption="Si no has usat mai Shareaza o altre client P2P, aquest assistent t'ajudarà a configurar de forma ràpida les opcions bàsiques de Shareaza."/>
 		<control caption="Si ets un usuari avançat, les opcions es poden canviar usant el menú d'eines. Aquesta guia pot ser tancada en qualsevol moment, fent clic a &quot;Tanca&quot;."/>
@@ -3565,18 +3596,7 @@
 		<control/>
 		<control caption="Començar a utilitzar Shareaza..."/>
 	</dialog>
-	<dialog name="CWizardInterfacePage" cookie="StBuBuBuStStBuBuBu" caption="Benvingut/uda(a) a Shareaza [2 de 7]">
-		<control caption="Shareaza soporta una interfícies flexible, així que pots escollir la que millor et vagi. Pots canviar aquestes opcions en qualsevol moment"/>
-		<control caption="Si us plau, selecciona alguna d'aquestes interfícies:"/>
-		<control caption="Mode normal"/>
-		<control caption="Mode avançat"/>
-		<control caption="Simple, botons i menus fàcils d'utilitzar.     Familiar per a usuaris que han utilitzat altres programes per a compartir arxius."/>
-		<control caption="El mode avançat dóna accés a més comandes, finestres, etc.{n}Pot resultar complicat i confús a nous usuaris."/>
-		<control caption="Mostra barres de progrés de descàrrega simplificades. (Redueix la càrrega del processador)"/>
-		<control caption="Maneja enllaços BitTorrent."/>
-
-	</dialog>
-	<dialog name="CWizardConnectionPage" cookie="StCoStCoStCoStCoStCoStms" caption="Benvingut/uda a Shareaza [3 de 7]">
+	<dialog name="CWizardConnectionPage" cookie="StCoStCoStCoStCoStCoStms" caption="Benvingut/uda a Shareaza (1/6)">
 		<control caption="Per a un rendiment óptim, Shareaza necessita saber un mica més sobre la teva connexió a Internet."/>
 		<control caption="Tria el tipus de la teva connexió a Internet:"/>
 		<control caption="Mòdem|ISDN|ADSL (256K)|ADSL (512K)|ADSL (768K)|ADSL (1.5M)|ADSL (4.0M)|ADSL2 (8.0M)|ADSL2 (12.0M)|ADSL2+ (24.0M)|Cable Modem/SDSL|T1|T3|LAN|OC3"/>
@@ -3585,12 +3605,11 @@
 		<control caption="i de pujada:"/>
 		<control/>
 		<control caption="Vols configurar automàticament el readreçament de ports amb UPnP?"/>
-
 		<control/>
 		<control caption="Estat:"/>
 		<control/>
 	</dialog>
-	<dialog name="CWizardSharePage" cookie="StStStSyBuBuSt" caption="Benvingut/uda a Shareaza [4 de 7]">
+	<dialog name="CWizardSharePage" cookie="StStStSyBuBuSt" caption="Benvingut/uda a Shareaza (2/6)">
 		<control caption="Les xarxes P2P són bones si la gent que les utilitza també ho és. Tot el contingut disponible per a descarregar està essent compartit per un altre usuari."/>
 		<control caption="Tu no has de compartir contingut per a usar Shareaza. La majoria de programes i xarxes penalitzen els usuaris que  comparteixen molts pocs arxius o cap."/>
 		<control caption="Si us plau, indica quines carpetes vols compartir. Solament has de fer clic al botó &quot;Afegeix&quot; per a afegir una carpeta."/>
@@ -3608,7 +3627,7 @@
 		<control caption="0"/>
 		<control caption="Tanca"/>
 	</dialog>
-	<dialog name="CWizardProfilePage" cookie="StStEdStCoCoStCoCo" caption="Benvingut/uda(a) a Shareaza [5 de 7]">
+	<dialog name="CWizardProfilePage" cookie="StStEdStCoCoStCoCo" caption="Benvingut/uda(a) a Shareaza (3/6)">
 		<control caption="Shareaza és molt més amigable quan tothom inclou alguna informació sobre ells/es."/>
 		<control caption="El meu pseudònim:"/>
 		<control/>
@@ -3616,9 +3635,20 @@
 		<control caption="&#160;(tria)"/>
 		<control caption="&#160;(tria)| jove| adult| home| dona"/>
 		<control caption="de:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 	</dialog>
-	<dialog name="CWizardNetworksPage" cookie="StBuStBuStBuSt" caption="Benvingut/uda a Shareaza [6 de 7]">
+	<dialog name="CWizardInterfacePage" cookie="StBuBuBuStStBuBuBu" caption="Benvingut/uda(a) a Shareaza (4/6)">
+		<control caption="Shareaza soporta una interfícies flexible, així que pots escollir la que millor et vagi. Pots canviar aquestes opcions en qualsevol moment"/>
+		<control caption="Si us plau, selecciona alguna d'aquestes interfícies:"/>
+		<control caption="Mode normal"/>
+		<control caption="Mode avançat"/>
+		<control caption="Simple, botons i menus fàcils d'utilitzar.     Familiar per a usuaris que han utilitzat altres programes per a compartir arxius."/>
+		<control caption="El mode avançat dóna accés a més comandes, finestres, etc.{n}Pot resultar complicat i confús a nous usuaris."/>
+		<control caption="Mostra barres de progrés de descàrrega simplificades. (Redueix la càrrega del processador)"/>
+		<control caption="Maneja enllaços BitTorrent."/>
+	</dialog>
+	<dialog name="CWizardNetworksPage" cookie="StBuStBuStBuSt" caption="Benvingut/uda a Shareaza (5/6)">
 		<control caption="Shareaza és una aplicació per a compartir arxius de forma general que pot accedir a diverses xarxes P2P al mateix temps.  Aquí pots seleccionar a quines xarxes et vols connectar. Recorda que després pots seleccionar altres xarxes."/>
 		<control caption="Connecta a Gnutella2 (altament recomanat)"/>
 		<control caption="La xarxa Gnutella2 és la xarxa preferida per Shareaza, ofrerint més característiques i rendiment que lees altres."/>
@@ -3635,7 +3665,7 @@
 		<control/>
 		<control caption="Tanca"/>
 	</dialog>
-	<dialog name="CWizardFinishedPage" cookie="StStStBuBuBuSt" caption="Benvingut/uda a Shareaza [7 de 7]">
+	<dialog name="CWizardFinishedPage" cookie="StStStBuBuBuSt" caption="Benvingut/uda a Shareaza (6/6)">
 		<control caption="¡Ja està tot! Shareaza ha estat configurat per a funcionar al teu sistema."/>
 		<control caption="Si vols canviar alguna configuració, aquest assistent es pot trobar al menú d'eines."/>
 		<control caption="Després de fer clic en &quot;Finalitza&quot;, pots usar la Xarxa i cercar contingut."/>
@@ -3656,7 +3686,8 @@
 		<control caption="Pseudònim:"/>
 		<control/>
 		<control caption="Nom real:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="_Informació vital:"/>
 		<control caption="|Home|Dona"/>
 		<control caption="Gènere:"/>
@@ -3735,7 +3766,8 @@
 	<dialog name="CLanguageDlg" cookie="" caption="Selecciona idioma"/>
 	<dialog name="CConnectToDlg" cookie="BuCoEdBuCoBuBuBu" caption="Connecta a|Explora servidor">
 		<control caption="Inicia una nova connexió al servidor:|Explora aquest servidor:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Protocol de xarxa."/>
 		<control caption="Gnutella1 (automàtic)|Gnutella2 (automàtic)|eDonkey"/>
 		<control caption="_Sumprimeix Ultrapeer"/>
@@ -3743,7 +3775,8 @@
 		<control caption="Cancel·la"/>
 	</dialog>
 	<dialog name="CDownloadDlg" cookie="StStStEdBuBuStStBu" caption="Descarrega arxiu o torrent">
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Descarregar arxius amb Shareaza és fàcil. Simplement escriu o enganxa l'URI o URL de l'arxiu al requadre, i fes clic a descarregar."/>
 		<control/>
 		<control caption="Descarrega"/>
@@ -3753,7 +3786,8 @@
 		<control caption="Obre _Torrent..."/>
 	</dialog>
 	<dialog name="CNewSearchDlg" cookie="EdCoBuBu" caption="Cerca|Cercar de nou|Cerca a la col·lecció">
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Cerca"/>
 		<control caption="Cancel·la"/>
 	</dialog>
@@ -3767,7 +3801,8 @@
 		<control caption="Màxima:"/>
 		<control/>
 		<control caption="Al menys:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="fonts."/>
 		<control caption="_Oculta:"/>
 		<control caption="Ocupats"/>
@@ -3804,7 +3839,9 @@
 	<dialog name="CDownloadMonitorDlg" cookie="StStStStStStStStStStStStStBuBuBuBuBu" caption="Descàrrega : Shareaza">
 		<control caption="Shareaza està descarregant:"/>
 		<control caption="..."/>
-		<control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
 		<control caption="Velocitat de transferència:"/>
 		<control caption="..."/>
 		<control caption="Temps estimat:"/>
@@ -3821,7 +3858,10 @@
 	</dialog>
 	<dialog name="CFileGeneralPage" cookie="StEdEdEdEdStStEdStEdStEdStEdEdEd" caption="General">
 		<control caption="Universal Resource Names (URNs)"/>
-		<control/><control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
 		<control caption="Atributs d'arxiu"/>
 		<control caption="Ubicació:"/>
 		<control/>
@@ -3830,17 +3870,21 @@
 		<control caption="Modificat:"/>
 		<control/>
 		<control caption="Mida:"/>
-		<control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
 	</dialog>
 	<dialog name="CFileMetadataPage" cookie="CoEd" caption="Metainformació">
-		<control/><control/>
+		<control/>
+		<control/>
 	</dialog>
 	<dialog name="CFileCommentsPage" cookie="StStCoStEdEd" caption="La meva avaluació">
 		<control caption="La meva avaluació"/>
 		<control caption="L'avaluo com a:"/>
 		<control caption="(Sense Valoració)|Fals/Corrupte|Pobre|Mitjà|Bo|Molt bo|Excel·lent"/>
 		<control caption="Els meus comentaris i valoracions"/>
-		<control/><control/>
+		<control/>
+		<control/>
 	</dialog>
 	<dialog name="CFileSharingPage" cookie="StBuBuBuStCoStSyEd" caption="Compartició">
 		<control caption="Compartició simple"/>
@@ -3850,19 +3894,22 @@
 		<control caption="Etiquetes de selecció per a la cua de pujada"/>
 		<control/>
 		<control caption="-Comparteix a les xarxes"/>
-		<control/><control/>
+		<control/>
+		<control/>
 	</dialog>
 	<dialog name="CFileSourcesPage" cookie="StStEdSyBuBuEd" caption="Fonts">
 		<control caption="Fonts conegudes"/>
 		<control caption="Afegeix font"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="_Afegeix"/>
 		<control caption="_Treu"/>
 		<control/>
 	</dialog>
 	<dialog name="CFileCopyDlg" cookie="StStmsBuBumsStSt" caption="Copia arxius|Mou arxius">
 		<control caption="Has seleccionat %i arxiu(s) per a copiar a:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Accepta"/>
 		<control caption="Cancel·la"/>
 		<control/>
@@ -3890,7 +3937,8 @@
 		<control caption="Llegenda"/>
 		<control caption="_Freqüència:"/>
 		<control caption="Període entre mostres:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="ms"/>
 		<control caption="_Nom:"/>
 		<control/>
@@ -3912,7 +3960,8 @@
 	</dialog>
 
 	<dialog name="CSchemaColumnsDlg" cookie="CoSyBuBuSt" caption="Selecciona columnes de l'esquema">
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Acceptar"/>
 		<control caption="Cancel·lar"/>
 		<control caption="Selecciona un esquema de la llista i, després, selecciona els camps a mostrar."/>
@@ -3925,9 +3974,15 @@
 		<control/>
 		<control caption="Adreça de xarxa:"/>
 		<control caption="Adreça IP:"/>
-		<control/><control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
 		<control caption="Màscara de xarxa:"/>
-		<control/><control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
 		<control caption="Filtre de _contingut:"/>
 		<control/>
 		<control caption="Coincideix qualsevol"/>
@@ -3958,7 +4013,9 @@
 	<dialog name="CURLCopyDlg" cookie="StStStStStBuBu" caption="Copiar URI">
 		<control/>
 		<control caption="Pots copiar el URI en diversos formats. Per favor, tria el format que vulgues d'aquests:"/>
-		<control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
 		<control caption="Incloure'm com a font fixa a l'URI"/>
 		<control caption="Cancel·la"/>
 	</dialog>
@@ -3980,7 +4037,10 @@
 		<control caption="Has obert un URI controlat per Shareaza, que enllaça amb el següent contingut a la xarxa:"/>
 		<control caption="Has obert un URL controlat per Shareaza, que connectarà amb el següent usuari o servidor:"/>
 		<control caption="Has obert un URI controlat per Shareaza, que permet explorar el següent usuari o servidor:"/>
-		<control/><control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
 		<control caption="Si us plau, selecciona l'acció que desitja fer:"/>
 		<control caption="_Descarrega ara"/>
 		<control caption="C_erca arxiu"/>
@@ -4000,7 +4060,8 @@
 	<dialog name="CFilePreviewDlg" cookie="StStStmsStBu" caption="Vista prèvia intel·ligent...">
 		<control/>
 		<control caption="Shareaza està creant la vista prèvia:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="(copiant l'arxiu a un arxiu de vista prèvia)"/>
 		<control caption="Cancel·la"/>
 	</dialog>
@@ -4025,7 +4086,10 @@
 		<control caption="Tanca"/>
 	</dialog>
 	<dialog name="CExistingFileDlg" cookie="StStStStStBuBuBuBuBuStSt" caption="L'arxiu ja existeix">
-		<control/><control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
 		<control caption="Aquest arxiu ja hi és a la col·lecció. Què vols fer?"/>
 		<control caption="Localitza'l en la col·lecció"/>
 		<control caption="Descarrega'l de nou"/>
@@ -4047,7 +4111,8 @@
 	<dialog name="CDonkeyServersDlg" cookie="StStEdmsBuBu" caption="Descarrega l'arxiu Server.met">
 		<control/>
 		<control caption="Descarrega el Server.met per a eDonkey de la web per a actualitzar el caxè de servidors."/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Accepta"/>
 		<control caption="Cancel·la"/>
 	</dialog>
@@ -4090,17 +4155,21 @@
 		<control caption="ADVERTÈNCIA: Amb aquesta finestra es poden configurar opcions avançades de la descàrrega per a usuaris avançats, que, si són utilitzades incorrectament, podrien danyar o perdre la descàrrega."/>
 		<control caption="_Nom de l'arxiu i mida:"/>
 		<control caption="Nom:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Mida (Bytes):"/>
 		<control/>
 		<control caption="_URNs:"/>
 		<control caption="De confiança"/>
 		<control caption="SHA1:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Tiger-Root:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="ED2K:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="_Accions:"/>
 		<control caption="Oblida l'estat de verificació actual i torna a verificar"/>
 		<control caption="Asumeix completats i reverifica (per a recuperar descàrregues)"/>
@@ -4169,7 +4238,8 @@
 	</dialog>
 	<dialog name="CDownloadGroupDlg" cookie="BuEdSyBuCoBuBuBuBuBuEdBu" caption="Propietats del grup de descàrrega">
 		<control caption="_Nom:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="_Filtres:"/>
 		<control/>
 		<control caption="_Afegeix"/>
@@ -4199,7 +4269,8 @@
 	<dialog name="CDownloadReviewDlg" cookie="StBuSyEd" caption="Descarrega ressenyes">
 		<control/>
 		<control caption="Sí"/>
-		<control/><control/>
+		<control/>
+		<control/>
 	</dialog>
 	<dialog name="CDecodeMetadataDlg" cookie="BuBuStCo" caption="Localització de la metainformació">
 		<control caption="Sí"/>

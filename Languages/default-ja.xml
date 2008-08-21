@@ -51,6 +51,7 @@
 		<button id="ID_TAB_SEARCH" text="検索"/>
 		<button id="ID_TAB_TRANSFERS" text="転送"/>
 		<button id="ID_TAB_NETWORK" text="ネットワーク"/>
+		<button id="ID_TAB_IRC" text="IRC"/>
 	</toolbar>
 	<toolbar name="CMainWnd.Windowed">
 		<button id="ID_NETWORK_CONNECT" text="接続"/>
@@ -63,6 +64,7 @@
 		<button id="ID_VIEW_UPLOADS"/>
 		<button id="ID_VIEW_LIBRARY"/>
 		<button id="ID_VIEW_MEDIA"/>
+		<button id="ID_TAB_IRC"/>
 		<button id="ID_VIEW_SECURITY"/>
 		<button id="ID_VIEW_HOSTS"/>
 		<button id="ID_VIEW_DISCOVERY"/>
@@ -413,6 +415,7 @@
 		<button id="ID_CHAT_CONNECT" text="接続" visible="false"/>
 		<button id="ID_CHAT_DISCONNECT" text="切断"/>
 	</toolbar>
+	<!-- WEBSERVICES -->
 	<!-- IMAGE VIEWER WINDOW -->
 	<toolbar name="ImageViewer_Toolbar">
 		<button id="ImageViewer_BestFit" text="自動拡大/縮小"/>
@@ -1670,18 +1673,18 @@
 		<text group="24" align="middle" id="G2Hubs">%i ハブ</text>
 		<text group="25" align="middle" id="G2Leaves">%i リーフ</text>
 		<newline group="20" gap="2"/>
-		<icon group="30" command="ID_NETWORK_ED2K"/><gap group="30" size="4"/>
-		<text group="30" align="middle" format="b">eDonkey:</text>
-		<text group="31" align="middle">切断</text>
-		<text group="32" align="middle">接続中...</text>
-		<text group="33" align="middle">接続済</text>
-		<newline group="30" gap="2"/>
 		<icon group="10" command="ID_NETWORK_G1"/><gap group="10" size="4"/>
 		<text group="10" align="middle" format="b">Gnutella1:</text>
 		<text group="11" align="middle">切断</text>
 		<text group="12" align="middle">接続中...</text>
 		<text group="13" align="middle">接続済</text>
 		<newline group="10" gap="2"/>
+		<icon group="30" command="ID_NETWORK_ED2K"/><gap group="30" size="4"/>
+		<text group="30" align="middle" format="b">eDonkey:</text>
+		<text group="31" align="middle">切断</text>
+		<text group="32" align="middle">接続中...</text>
+		<text group="33" align="middle">接続済</text>
+		<newline group="30" gap="2"/>
 		<group id="2">
 			<para align="center">
 				<newline gap="6"/>
@@ -1764,10 +1767,13 @@
 		<gap size="4"/>
 		<text>プロフィール、チャット、そしてインスタントメッセージの設定を行います。</text>
 		<newline gap="10"/>
+		<link target="raza:page:CIRCSettingsPage" format="b">IRC:</link>
+		<gap size="4"/>
+		<text>IRC chatroom visual appearance and connection settings.</text>
+		<newline gap="10"/>
 		<link target="raza:page:CWebSettingsPage" format="b">ウェブ:</link>
 		<gap size="4"/>
 		<text>Shareazaとウェブブラウザを統合してピア・ツー・ピアリンクを受け付け、その内容を ダウンロードすることが出来ます。</text>
-		<newline gap="10"/>
 	</document>
 	<document name="CInternetSettingsGroup" title="インターネット" leftMargin="8" topMargin="8">
 		<styles>
@@ -1777,15 +1783,10 @@
 		</styles>
 		<text format="b">Shareaza設定マネージャへようこそ</text>
 		<newline gap="16"/>
-		<text>
-			Shareaza設定マネージャでは熟練したユーザがShareazaの挙動を思い通りに
-			カスタマイズすることが出来ます。
-		</text>
-		<text format="b">インターネット</text>
-		<text>
-			セクションの設定ではShareazaが分散型ピア・ツー・ピアネットワーク内で
-			他のユーザーとどのように対話するかの制御を行います。
-		</text>
+		<text>Shareaza設定マネージャでは熟練したユーザがShareazaの挙動を思い通りに
+			カスタマイズすることが出来ます。 </text>
+		<text format="b">インターネット </text>
+		<text>セクションの設定ではShareazaが分散型ピア・ツー・ピアネットワーク内で 他のユーザーとどのように対話するかの制御を行います。</text>
 		<newline gap="16" indent="16"/>
 		<link target="raza:page:CConnectionSettingsPage" format="b">接続:</link>
 		<gap size="4"/>
@@ -1803,6 +1804,9 @@
 		<gap size="4"/>
 		<text>ウェブブラウザを通してShareazaを遠隔操作する為の設定を行います。</text>
 		<newline gap="10"/>
+		<link target="raza:page:CSchedulerSettingsPage" format="b">Scheduler:</link>
+		<gap size="4"/>
+		<text>Limit download connections based on a periodic schedule.</text>
 	</document>
 	<!-- Browse User Profile -->
 	<document name="CBrowseHostProfile.1">
@@ -3185,7 +3189,8 @@
 		<control caption="ツールチップ(_O):"/>
 		<control/>
 		<control caption="遅延(㍉秒):"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="透明度:"/>
 		<control/>
 		<control caption="トレイ(_T):"/>
@@ -3203,10 +3208,12 @@
 		<control caption="共有ファイルの参照を許可する"/>
 		<control caption="ファイル履歴(_R):"/>
 		<control caption="記録:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="ファイル"/>
 		<control caption="上限:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="日"/>
 		<control caption="履歴をクリア"/>
 		<control caption="安全な拡張子(_S):"/>
@@ -3218,7 +3225,8 @@
 		<control caption="追加(_A)"/>
 		<control caption="削除(_R)"/>
 		<control caption="コレクションの格納先(_C):"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="ファイル削除時にゴーストを作成する"/>
 	</dialog>
 
@@ -3289,28 +3297,36 @@
 		<control caption="UPnP接続デバイスの設定を有効にする"/>
 		<control caption="タイムアウト(_T):"/>
 		<control caption="接続:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="ハンドシェイク:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 	</dialog>
 
 	<dialog name="CDownloadsSettingsPage" cookie="BuEdBuBuEdBuBuStEdmsStEdmsStEdmsBuStCoStCoBuBu" caption="ダウンロード">
 		<control caption="完了ファイルの保存先(_C):"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="未完了ファイルの保存先(_I):"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="ダウンロード数(_N):"/>
 		<control caption="最大ファイル数:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="最大転送数:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="転送/ファイル:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="制限(_L):"/>
 		<control caption="総ダウンロード帯域幅:"/>
 		<control/>
 		<control caption="最大キュー数:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="接続済みのネットワークでしかアップロード・ダウンロードしない"/>
 	</dialog>
 
@@ -3320,7 +3336,8 @@
 		<control caption="ハブモードでは共有を制限する"/>
 		<control caption="プレビューファイルを共有する"/>
 		<control caption="制限/ユニークホスト:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="ユーザエージェントフィルタ(_U):"/>
 		<control/>
 		<control caption="+"/>
@@ -3354,7 +3371,8 @@
 	<dialog name="CSchedulerSettingsPage" cookie="BuBuEdmsBuBuStStStStStStStStStStStEdBuSt" caption="スケジューラ">
 		<control caption="オプション(_O):"/>
 		<control caption="スケジューラを有効にする(_E)"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="制限時にだけG2に接続する(_C)"/>
 		<control caption="キー:"/>
 		<control caption="日"/>
@@ -3397,11 +3415,14 @@
 		<control caption="自動|リーフ|ハブ"/>
 		<control caption="G2接続(_2):"/>
 		<control caption="リーフ → ハブ:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="ハブ → リーフ:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="ハブ → ハブ:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Gnutella1ネットワーク:"/>
 		<control caption="常時Gnutella1に接続する"/>
 		<control caption="今回Gnutella1に接続する"/>
@@ -3409,11 +3430,14 @@
 		<control caption="自動|リーフ|ウルトラピア"/>
 		<control caption="G1接続(_1):"/>
 		<control caption="リーフ → ウルトラピア:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="ウルトラピア → リーフ:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="ピア → ピア:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="リンク圧縮(_L):"/>
 		<control caption="ハブ → リーフ"/>
 		<control caption="リーフ → ハブ"/>
@@ -3427,11 +3451,13 @@
 		<control caption="グローバル検索(_G):"/>
 		<control caption="サーバーキャッシュ内の既知のリモートサーバーを検索:"/>
 		<control caption="検索を終了するタイミング:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="検索結果"/>
 		<control caption="クライアントリンク接続(_C):"/>
 		<control caption="最大接続数:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="eDonkeyクライアント"/>
 		<control caption="eDonkey2000ツール(_T):"/>
 		<control caption="eDonkey/eMule部分ダウンロード(.part)をインポート:"/>
@@ -3444,19 +3470,25 @@
 		<control caption="インターフェース(_I):"/>
 		<control caption="追加のBitTorrentインターフェースを表示する"/>
 		<control caption="ダウンロード接続数(_D):"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="同時Torrent数"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="クライアント接続数"/>
 		<control caption="&#160;次の共有比率になればダウンロードしたTorrentを自動クリアする:"/>
-		<control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
 		<control caption="&#160;Torrentソースを優先する"/>
 		<control caption="EndGame(_E):"/>
 		<control caption="Torrent完了時にEndGameモードを有効にする"/>
 		<control caption="Torrentの保存先(_S):"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Torrent Creator(_T)"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="デフォルトのトラッカー: "/>
 		<control/>
 	</dialog>
@@ -3495,7 +3527,8 @@
 		<control/>
 		<control caption="設定プロパティ:"/>
 		<control caption="値:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="説明:"/>
 		<control/>
 	</dialog>
@@ -3520,18 +3553,23 @@
 		<control caption="制限(_C):"/>
 		<control caption="このキューで有効にする"/>
 		<control caption="最小転送数:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="最大転送数:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="最大待機キュー数:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="サービスパラメータ(_S):"/>
 		<control caption="飽和帯域割合:"/>
 		<control/>
 		<control caption="このキューのアップロード帯域幅:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="～秒後に交代させる:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="OK"/>
 		<control caption="キャンセル"/>
 		<control caption="アップローダに報いる"/>
@@ -3552,19 +3590,7 @@
 		<control caption="Shareazaの開始"/>
 	</dialog>
 
-	<dialog name="CWizardInterfacePage" cookie="StBuBuBuStStBuBuBu" caption="Shareazaへようこそ">
-		<control caption="Shareazaは複数のユーザーインターフェースをサポートしている為、 その中からあなたに相応しいものを選択することができ、これらのオプションは後で何時でも変更することができます"/>
-		<control caption="ユーザーインターフェースを選択して下さい:"/>
-		<control caption="素人モード"/>
-		<control caption="玄人モード"/>
-		<control caption="メニューとボタンによる単純なインターフェースです。{n}他のファイル共有プログラムとよく似た操作感で使用することが出来ます。"/>
-		<control caption="玄人モードは多くの拡張コマンドやウィンドウ等を熟練ユーザーへ提供します。{n}初心者ユーザーには判りづらいかもしれません!"/>
-		<control caption="ダウンロード進行バーの表示を簡素化 (CPUの使用率を抑えることができます)"/>
-		<control caption="BitTorrentインターフェースの追加要素を表示"/>
-		<control caption="BitTorrentリンクを処理する"/>
-	</dialog>
-
-	<dialog name="CWizardConnectionPage" cookie="StStCoStCoStCoStCoStms" caption="Shareazaへようこそ [3 of 7]">
+	<dialog name="CWizardConnectionPage" cookie="StStCoStCoStCoStCoStms" caption="Shareazaへようこそ (1/6)]">
 		<control caption="最適な性能を得る為、あなたのインターネット接続についての情報をいくつかShareazaに提供する必要があります。"/>
 		<control caption="以下の中からあなたが使用しているインターネットの接続を選択して下さい:"/>
 		<control caption="ダイヤルアップモデム| ISDN| ADSL (256K)| ADSL (512K)| ADSL (768K)| ADSL (1.5M)| ADSL (4.0M)| ADSL2 (8.0M)| ADSL2 (12.0M)| ADSL2+ (24.0M)| ケーブルモデム/SDSL| T1| T3| LAN| OC3"/>
@@ -3578,7 +3604,7 @@
 		<control/>
 	</dialog>
 
-	<dialog name="CWizardSharePage" cookie="StStStSyBuBuSt" caption="Shareazaへようこそ [4 of 7]">
+	<dialog name="CWizardSharePage" cookie="StStStSyBuBuSt" caption="Shareazaへようこそ (2/6)">
 		<control caption="P2Pネットワークはその使用者によって成り立っています。 ダウンロードできる全てのファイルは世界中のユーザによって共有されているものです。"/>
 		<control caption="Shareazaを使用時に必ずしもファイルを共有する必要はありませんが、いくつかのソフトウェアは共有しないユーザーに対して何らかのペナルティを与えることもあります。"/>
 		<control caption="共有する場合はそのフォルダを指定して下さい。 やり方は単に追加ボタンをクリックして共有するフォルダを選択するだけです。"/>
@@ -3598,7 +3624,7 @@
 		<control caption="閉じる"/>
 	</dialog>
 
-	<dialog name="CWizardProfilePage" cookie="StStEdStCoCoStCoCo" caption="Shareazaへようこそ [5 of 7]">
+	<dialog name="CWizardProfilePage" cookie="StStEdStCoCoStCoCo" caption="Shareazaへようこそ (3/6)">
 		<control caption="全てのユーザが自分自身についての基本的な情報を入力しておくと、Shareazaは更に親しみの持てる場所となります。"/>
 		<control caption="名前:"/>
 		<control/>
@@ -3606,10 +3632,23 @@
 		<control caption="&#160;(選択)"/>
 		<control caption="&#160;(選択)| 少年| 少女| 男性| 女性"/>
 		<control caption="住所:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 	</dialog>
 
-	<dialog name="CWizardNetworksPage" cookie="StBuStBuStBuSt" caption="Shareazaへようこそ [6 of 7]">
+	<dialog name="CWizardInterfacePage" cookie="StBuBuBuStStBuBuBu" caption="Shareazaへようこそ (4/6)">
+		<control caption="Shareazaは複数のユーザーインターフェースをサポートしている為、 その中からあなたに相応しいものを選択することができ、これらのオプションは後で何時でも変更することができます"/>
+		<control caption="ユーザーインターフェースを選択して下さい:"/>
+		<control caption="素人モード"/>
+		<control caption="玄人モード"/>
+		<control caption="メニューとボタンによる単純なインターフェースです。{n}他のファイル共有プログラムとよく似た操作感で使用することが出来ます。"/>
+		<control caption="玄人モードは多くの拡張コマンドやウィンドウ等を熟練ユーザーへ提供します。{n}初心者ユーザーには判りづらいかもしれません!"/>
+		<control caption="ダウンロード進行バーの表示を簡素化 (CPUの使用率を抑えることができます)"/>
+		<control caption="BitTorrentインターフェースの追加要素を表示"/>
+		<control caption="BitTorrentリンクを処理する"/>
+	</dialog>
+
+	<dialog name="CWizardNetworksPage" cookie="StBuStBuStBuSt" caption="Shareazaへようこそ (5/6)">
 		<control caption="Shareazaは複数のP2Pネットワークへ同時にアクセスできる汎用ファイル共有アプリケーションです。 このページではあなたがどのP2Pネットワークに接続するかを選択することができます。 ここで選択しなかったとしても、後でいつでも別のネットワークを選択できることを覚えておいて下さい。"/>
 		<control caption="Gnutella2に接続 (推奨)"/>
 		<control caption="Gnutella2ネットワークは他のどんなP2Pネットワークよりも機能・処理能力があり、Shareazaの主力ネットワークとなっています"/>
@@ -3628,7 +3667,7 @@
 		<control caption="閉じる"/>
 	</dialog>
 
-	<dialog name="CWizardFinishedPage" cookie="StStStBuBuBuSt" caption="Shareazaへようこそ [7 of 7]">
+	<dialog name="CWizardFinishedPage" cookie="StStStBuBuBuSt" caption="Shareazaへようこそ (6/6)">
 		<control caption="完了しました！ あなたのコンピュータ内でShareazaが正常に動作するように構成されました。"/>
 		<control caption="後で設定を変更する必要がある場合には、ツールメニューからクイックスタートウィザードを選択することでこのウィザードをやり直すことができます"/>
 		<control caption="完了をクリックしてこのウィザードを終了させた後は、選択したネットワークに接続してファイルを検索し、そのダウンロードを開始することができます"/>
@@ -3651,7 +3690,8 @@
 		<control caption="ニックネーム:"/>
 		<control/>
 		<control caption="本名:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="身体(_V):"/>
 		<control caption="|男性|女性"/>
 		<control caption="性別:"/>
@@ -3739,7 +3779,8 @@
 
 	<dialog name="CConnectToDlg" cookie="BuCoEdBuCoBuBuBu" caption="接続|ホスト参照">
 		<control caption="ホスト又はサーバへの新規接続を開始:|このホストを参照:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="ネットワークプロトコル(_P):"/>
 		<control caption="Gnutella1 (自動)|Gnutella2 (自動)|eDonkey2000"/>
 		<control caption="ウルトラピア圧縮(_U)"/>
@@ -3748,7 +3789,8 @@
 	</dialog>
 
 	<dialog name="CDownloadDlg" cookie="StStStEdBuBuStStBu" caption="ファイル・Torrentダウンロード">
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Shareazaではどんなファイルをダウンロードするのも簡単です。ファイルへのURLかURIを入力するか、貼り付けてEnterキーを押して下さい"/>
 		<control/>
 		<control caption="ダウンロード"/>
@@ -3759,7 +3801,8 @@
 	</dialog>
 
 	<dialog name="CNewSearchDlg" cookie="EdCoBuBu" caption="新規検索|再検索|ライブラリ検索">
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="検索"/>
 		<control caption="キャンセル"/>
 	</dialog>
@@ -3774,7 +3817,8 @@
 		<control caption="最大:"/>
 		<control/>
 		<control caption="少なくとも:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="ソース"/>
 		<control caption="非表示(_H):"/>
 		<control caption="ビジー状態のホスト"/>
@@ -3814,7 +3858,9 @@
 	<dialog name="CDownloadMonitorDlg" cookie="StStStStStStStStStStStStStBuBuBuBuBu" caption="ダウンロード : Shareaza">
 		<control caption="Shareazaはダウンロード中です:"/>
 		<control caption="..."/>
-		<control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
 		<control caption="総転送速度:"/>
 		<control caption="..."/>
 		<control caption="予想残り時間:"/>
@@ -3832,7 +3878,10 @@
 
 	<dialog name="CFileGeneralPage" cookie="StEdEdEdEdStStEdStEdStEdStEdEdEd" caption="一般">
 		<control caption="ユニバーサルリソース名(URN)"/>
-		<control/><control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
 		<control caption="ファイル属性"/>
 		<control caption="場所:"/>
 		<control/>
@@ -3841,11 +3890,14 @@
 		<control caption="最終更新日:"/>
 		<control/>
 		<control caption="サイズ:"/>
-		<control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
 	</dialog>
 
 	<dialog name="CFileMetadataPage" cookie="CoEd" caption="メタデータ">
-		<control/><control/>
+		<control/>
+		<control/>
 	</dialog>
 
 	<dialog name="CFileCommentsPage" cookie="StStCoStEdEd" caption="レビュー">
@@ -3853,7 +3905,8 @@
 		<control caption="このファイルを評価:"/>
 		<control caption="(評価無し)|偽物/破損/紛らわしい|悪い|普通|良い|とても良い|素薔薇しい"/>
 		<control caption="レビューとコメント"/>
-		<control/><control/>
+		<control/>
+		<control/>
 	</dialog>
 
 	<dialog name="CFileSharingPage" cookie="StBuBuBuStCoStSyEd" caption="共有">
@@ -3864,13 +3917,15 @@
 		<control caption="アップロードキュー選択タグ"/>
 		<control/>
 		<control caption="-共有するネットワーク"/>
-		<control/><control/>
+		<control/>
+		<control/>
 	</dialog>
 
 	<dialog name="CFileSourcesPage" cookie="StStEdSyBuBuEd" caption="ソース">
 		<control caption="既知のソース"/>
 		<control caption="新規ソースを追加"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="追加(_A)"/>
 		<control caption="削除(_R)"/>
 		<control/>
@@ -3878,7 +3933,8 @@
 
 	<dialog name="CFileCopyDlg" cookie="StStmsBuBumsStSt" caption="ファイルコピー|ファイル移動">
 		<control caption="選択した %i ファイルを以下のフォルダにコピーします:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="OK"/>
 		<control caption="キャンセル"/>
 		<control/>
@@ -3908,7 +3964,8 @@
 		<control caption="表示説明"/>
 		<control caption="サンプリング周波数(_F):"/>
 		<control caption="サンプリング周期:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="ﾐﾘ秒"/>
 		<control caption="名前(_N):"/>
 		<control/>
@@ -3920,7 +3977,8 @@
 		<control caption="OK"/>
 		<control caption="キャンセル"/>
 		<control caption="ソース(_S):"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="パラメータ:"/>
 		<control caption="単位:"/>
 		<control/>
@@ -3931,7 +3989,8 @@
 	</dialog>
 
 	<dialog name="CSchemaColumnsDlg" cookie="CoSyBuBuSt" caption="スキーマからカラムを選択">
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="OK"/>
 		<control caption="キャンセル"/>
 		<control caption="リストからスキーマを選択し、その後カラムとして表示するフィールドを選択して下さい"/>
@@ -3945,9 +4004,15 @@
 		<control/>
 		<control caption="ネットワークアドレス(_N):"/>
 		<control caption="IPアドレス:"/>
-		<control/><control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
 		<control caption="ネットマスク:"/>
-		<control/><control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
 		<control caption="内容フィルタ(_C):"/>
 		<control/>
 		<control caption="何れかに一致"/>
@@ -3980,7 +4045,9 @@
 	<dialog name="CURLCopyDlg" cookie="StStStStStBuBu" caption="URIをコピー">
 		<control/>
 		<control caption="選択したファイル用にそれぞれ異なる形式のURIをコピーすることが出来ます。 以下の中から使用したい形式のURIを選択して下さい:"/>
-		<control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
 		<control caption="固定ソースとしてURLに自分自身を含める(_M)"/>
 		<control caption="キャンセル"/>
 	</dialog>
@@ -4004,7 +4071,10 @@
 		<control caption="ネットワーク上にある以下の内容へのリンクであるURIをクリックしました:"/>
 		<control caption="以下のホストかサーバに接続するURIをクリックしました:"/>
 		<control caption="以下のホストで利用可能な共有ファイルを参照するURIをクリックしました:"/>
-		<control/><control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
 		<control caption="Shareazaに行わせる処理を選択して下さい:"/>
 		<control caption="ダウンロード(_D)"/>
 		<control caption="ファイルを検索(_S)"/>
@@ -4026,7 +4096,8 @@
 	<dialog name="CFilePreviewDlg" cookie="StStStmsStBu" caption="ダウンロードプレビュー...">
 		<control/>
 		<control caption="Shareazaはダウンロードのプレビューを作成しています:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="(新規プレビューファイルにダウンロードしたチャンクをコピー中)"/>
 		<control caption="キャンセル"/>
 	</dialog>
@@ -4054,7 +4125,10 @@
 	</dialog>
 
 	<dialog name="CExistingFileDlg" cookie="StStStStStBuBuBuBuBuStSt" caption="既存ファイル">
-		<control/><control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
 		<control caption="ライブラリ内に既に同じファイルが存在します。どうしますか?"/>
 		<control caption="ライブラリ内のファイルを表示する"/>
 		<control caption="ファイルのダウンロードをやり直す"/>
@@ -4078,7 +4152,8 @@
 	<dialog name="CDonkeyServersDlg" cookie="StStEdmsBuBu" caption="Server.metファイルのダウンロード">
 		<control/>
 		<control caption="ローカルサーバリストを更新する為にウェブからeDonkey2000 server.metファイルをダウンロードします"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="OK"/>
 		<control caption="キャンセル"/>
 	</dialog>
@@ -4125,17 +4200,21 @@
 		<control caption="警告: このダイアログは熟練したユーザーに対して高度なダウンロード編集機能を提供します。 これが不当に使用された場合、恐らくそのダウンロードは不正になります。"/>
 		<control caption="ファイル名とサイズ(_Z):"/>
 		<control caption="ファイル名:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="サイズ(バイト):"/>
 		<control/>
 		<control caption="URN(_U):"/>
 		<control caption="検証"/>
 		<control caption="SHA1:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Tiger-Root:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="ED2K:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="操作(_A):"/>
 		<control caption="現在の検証情報を廃棄 (そして再検証)"/>
 		<control caption="ファイルが100%完全であるとみなして再検証する"/>
@@ -4209,7 +4288,8 @@
 
 	<dialog name="CDownloadGroupDlg" cookie="BuEdSyBuCoBuBuBuBuBuEdBu" caption="ダウンロードグループプロパティ">
 		<control caption="名前(_N):"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="フィルタ(_F):"/>
 		<control/>
 		<control caption="追加(_A)"/>
@@ -4242,7 +4322,8 @@
 	<dialog name="CDownloadReviewDlg" cookie="StBuSyEd" caption="ダウンロードレビュー">
 		<control/>
 		<control caption="OK"/>
-		<control/><control/>
+		<control/>
+		<control/>
 	</dialog>
 
 	<dialog name="CDecodeMetadataDlg" cookie="BuBuStCo" caption="Metadataローカライズ">

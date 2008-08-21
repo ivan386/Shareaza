@@ -414,6 +414,8 @@
 		<button id="ID_CHAT_CONNECT" text="Ühenda" visible="false"/>
 		<button id="ID_CHAT_DISCONNECT" text="Katkesta ühendus"/>
 	</toolbar>
+	<!-- WEBSERVICES -->
+	<!-- IMAGE VIEWER? -->
 </toolbars>
 
 <!-- Menu Definitions -->
@@ -1633,20 +1635,18 @@
 		<text group="24" align="middle" id="G2Hubs">%i hubs</text>
 		<text group="25" align="middle" id="G2Leaves">%i leaves</text>
 		<newline group="20" gap="2"/>
-
-		<icon group="30" command="ID_NETWORK_ED2K"/><gap group="30" size="4"/>
-		<text group="30" align="middle" format="b">eDonkey:</text>
-		<text group="31" align="middle">Ühenduseta</text>
-		<text group="32" align="middle">Ühendan...</text>
-		<text group="33" align="middle">Ühendatud</text>
-		<newline group="30" gap="2"/>
-
 		<icon group="10" command="ID_NETWORK_G1"/><gap group="10" size="4"/>
 		<text group="10" align="middle" format="b">Gnutella1:</text>
 		<text group="11" align="middle">Ühenduseta</text>
 		<text group="12" align="middle">Ühendan...</text>
 		<text group="13" align="middle">Ühendatud</text>
 		<newline group="10" gap="2"/>
+		<icon group="30" command="ID_NETWORK_ED2K"/><gap group="30" size="4"/>
+		<text group="30" align="middle" format="b">eDonkey:</text>
+		<text group="31" align="middle">Ühenduseta</text>
+		<text group="32" align="middle">Ühendan...</text>
+		<text group="33" align="middle">Ühendatud</text>
+		<newline group="30" gap="2"/>
 
 		<group id="2">
 			<para align="center">
@@ -3210,7 +3210,8 @@
 		<control caption="T_ooltips:"/>
 		<control/>
 		<control caption="Viivitus (ms):"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Ulatus:"/>
 		<control/>
 		<control caption="_Tööriistariba:"/>
@@ -3228,10 +3229,12 @@
 		<control caption="Luba teistel oma faile vaadata"/>
 		<control caption="_Hiljutised Failid:"/>
 		<control caption="Pea Meeles:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="faili"/>
 		<control caption="Kuni:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="päeva"/>
 		<control caption="Puhasta Kohe Ajalugu"/>
 		<control caption="_Ohutu Avada:"/>
@@ -3243,7 +3246,8 @@
 		<control caption="_Lisa"/>
 		<control caption="_Eemalda"/>
 		<control caption="Siia _Salvesta Kollektsioonid:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Create ghost files when deleting"/>
 	</dialog>
 
@@ -3310,28 +3314,36 @@
 		<control caption="Eira kohalikke IP aadresse "/>
 		<control caption="_Vaheajad:"/>
 		<control caption="Ühendusi:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Kinnitusi:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 	</dialog>
 
 	<dialog name="CDownloadsSettingsPage" cookie="BuEdBuBuEdBuBuStEdmsStEdmsStEdmsBuStCoStCoBuBu" caption="Allalaadimised">
 		<control caption="Salvesta _Lõpetatud Failid Siia:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Salvesta Ajutised _Poolikud Failid Siia:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="_Allalaadimised:"/>
 		<control caption="Maksimaalselt Faile:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Maksimaalsed Ülekanded:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Ülekandeid Faili Kohta:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="_Piirangud:"/>
 		<control caption="Allalaadimiskiiruse Piirang:"/>
 		<control/>
 		<control caption="Maksimaalne Järjekordade arv:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Tõmba ainult ühendatud võrkudest."/>
 	</dialog>
 
@@ -3341,7 +3353,8 @@
 		<control caption="Piira jagamist hub rešiimis"/>
 		<control caption="Jaga eelvaatefaile"/>
 		<control caption="Piira üksikuid servereid:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="_Kasutaja-poolne Filter:"/>
 		<control/>
 		<control caption="+"/>
@@ -3375,7 +3388,8 @@
 	<dialog name="CSchedulerSettingsPage" cookie="BuBuEdmsBuBuStStStStStStStStStStStEdBuSt" caption="Planeerija">
 		<control caption="_Seaded:"/>
 		<control caption="_Võimalda Planeerija"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="_Ühenda G2-te ainult limiteeritult"/>
 		<control caption="Võti:"/>
 		<control caption="Püh"/>
@@ -3418,11 +3432,14 @@
 		<control caption="Optimaalne|Leaf|Hub"/>
 		<control caption="G_2 Ühendused:"/>
 		<control caption="Leaf to Hub:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Hub to Leaf:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Hub to Hub:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Gnutella1 Võrgustik:"/>
 		<control caption="Ühenda alati Gnutella1-e"/>
 		<control caption="Ühenda täna Gnutella1-e"/>
@@ -3430,11 +3447,14 @@
 		<control caption="Optimal|Leaf|Ultrapeer"/>
 		<control caption="G_1 Connections:"/>
 		<control caption="Leaf to Ultrapeer:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Ultrapeer to Leaf:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Peer to Peer:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="_Link Compression:"/>
 		<control caption="Hub to Leaf"/>
 		<control caption="Leaf to Hub"/>
@@ -3448,11 +3468,13 @@
 		<control caption="_Üldine Otsing:"/>
 		<control caption="Otsi tuntud servereid, serverite võrgustikust:"/>
 		<control caption="Lõpeta otsing pärast:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="tulemust."/>
 		<control caption="_Kliendipoolsed Ühendused:"/>
 		<control caption="Ühenda kõige rohkem:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="teise eDonkey kliendiga."/>
 		<control caption="eDonkey2000 _Tööriistad:"/>
 		<control caption="Impordi eDonkey/eMule poolikud allalaadimised (.part):"/>
@@ -3465,19 +3487,25 @@
 		<control caption="_Kasutajaliides:"/>
 		<control caption="Näita lisa BitTorrenti kasutajaliidese elemente"/>
 		<control caption="_Allalaadimisühendused:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Torrentit korraga"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Kliendi ühendust"/>
 		<control caption="&#160;Puhasta allalaaditud torrentid&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;Kui jagamissuhe jõuab"/>
-		<control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
 		<control caption="&#160;Eelista torrenti allikaid"/>
 		<control caption="_EndGame:"/>
 		<control caption="Võimalda EndGame rešiim kui lõpetad torrente"/>
 		<control caption="_Salvesta Torrentid Siia:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="_Torrenti Looja"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Vaikimisi Jälitaja: "/>
 		<control/>
 	</dialog>
@@ -3516,7 +3544,8 @@
 		<control/>
 		<control caption="Seadete Omadused:"/>
 		<control caption="Väärtus:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Kirjeldus:"/>
 		<control/>
 	</dialog>
@@ -3539,18 +3568,23 @@
 		<control caption="_Ulatuvus:"/>
 		<control caption="Võimalda see järjekord"/>
 		<control caption="Minimaalne ülekannete arv:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Maksimaalne ülekannete arv:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Maksimaalne järjekorra suurus:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="_Teenuse Parameeterid:"/>
 		<control caption="Küllastatud ülekandekiiruse ülekaal:"/>
 		<control/>
 		<control caption="Üleslaadimise ribalaius sellele järjekorrale:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Keera ümber pärast N sekundit:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="OK"/>
 		<control caption="Tühista"/>
 		<control caption="Autasusta üleslaadijaid"/>
@@ -3571,19 +3605,7 @@
 		<control caption="Alustada Shareaza kasutamist."/>
 	</dialog>
 
-	<dialog name="CWizardInterfacePage" cookie="StBuBuBuStStBuBuBu" caption="Teretulemast Shareazasse">
-		<control caption="Shareaza toetab paindlikku kasutajaliidest, nii et saad valida just endale sobiva. Sa saad neid seadeid igal ajal muuta."/>
-		<control caption="Vali kasutajaliides:"/>
-		<control caption="Tavaline Vaade"/>
-		<control caption="Arenenud Vaade"/>
-		<control caption="Lihtne, kergelt kasutatavate nuppude ja vaatega.{n}Sarnane teiste failijagamis programmidega."/>
-		<control caption="Arenenud Vaade pakub kogenud kasutajatele palju lisa aknaid, käsklusi, jne.{n}See võib uutele kasutajatele veidi segadusseajav olla!"/>
-		<control caption="Kuva lihtsustatud allalaadimisriba. (Vähendab CPU kasutust)"/>
-		<control caption="Kuva täiendavaid torrent liidese elemente."/>
-		<control caption="Käsitle torrent linke."/>
-	</dialog>
-
-	<dialog name="CWizardConnectionPage" cookie="StCoStCoStCoStCoStCo" caption="Teretulemast Shareazasse [3 of 7]">
+	<dialog name="CWizardConnectionPage" cookie="StCoStCoStCoStCoStCo" caption="Teretulemast Shareazasse (1/6)">
 		<control caption="Optimaalseks kasutuseks vajab Shareaza veidi infot sinu Internetiühenduse kohta."/>
 		<control caption="&#160;( vali )| Ma kasutan Internetti kodus| Ma kasutan Internetti kooli LAN-is| Ma kasutan Internetti töö LAN-is| Ma kasutan Internetti hotellis või lennujaamas"/>
 		<control caption="Kas sinu võrk on kaitstud tulemüüri või NAT ruuteriga?"/>
@@ -3596,7 +3618,7 @@
 		<control/>
 	</dialog>
 
-	<dialog name="CWizardSharePage" cookie="StStStSyBuBuSt" caption="Teretulemast Shareazasse [4 of 7]">
+	<dialog name="CWizardSharePage" cookie="StStStSyBuBuSt" caption="Teretulemast Shareazasse (2/6)">
 		<control caption="P2P võrgud on ainult nii head kui head on nende võrkude kasutajad.  Kõiki saadaolevaid faile jagavad teised kasutajad."/>
 		<control caption="Sa ei pea Shareaza kasutamiseks faile jagama, aga mõni progremm käitub mittemidagi jagavate kasutajatega teistmoodi."/>
 		<control caption="Palun näita, milliseid kaustu jagada.  Kliki Lisa nuppu, et lisada uus kaust."/>
@@ -3616,7 +3638,7 @@
 		<control caption="Sule"/>
 	</dialog>
 
-	<dialog name="CWizardProfilePage" cookie="StStEdStCoCoStCoCo" caption="Tretulemast Shareazasse [5 of 7]">
+	<dialog name="CWizardProfilePage" cookie="StStEdStCoCoStCoCo" caption="Tretulemast Shareazasse (3/6)">
 		<control caption="Shareaza on palju sõbralikum koht kui kõik kasutajad kirjutavad midagi enda kohta."/>
 		<control caption="Ma kasutan nime:"/>
 		<control/>
@@ -3624,10 +3646,23 @@
 		<control caption="&#160;(vali)"/>
 		<control caption="&#160;(vali)| poiss| tüdruk| mees| naine"/>
 		<control caption="pärit olen:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 	</dialog>
 
-	<dialog name="CWizardNetworksPage" cookie="StBuStBuStBuSt" caption="Teretulemast Shareazasse [6 of 7]">
+	<dialog name="CWizardInterfacePage" cookie="StBuBuBuStStBuBuBu" caption="Teretulemast Shareazasse (4/6)">
+		<control caption="Shareaza toetab paindlikku kasutajaliidest, nii et saad valida just endale sobiva. Sa saad neid seadeid igal ajal muuta."/>
+		<control caption="Vali kasutajaliides:"/>
+		<control caption="Tavaline Vaade"/>
+		<control caption="Arenenud Vaade"/>
+		<control caption="Lihtne, kergelt kasutatavate nuppude ja vaatega.{n}Sarnane teiste failijagamis programmidega."/>
+		<control caption="Arenenud Vaade pakub kogenud kasutajatele palju lisa aknaid, käsklusi, jne.{n}See võib uutele kasutajatele veidi segadusseajav olla!"/>
+		<control caption="Kuva lihtsustatud allalaadimisriba. (Vähendab CPU kasutust)"/>
+		<control caption="Kuva täiendavaid torrent liidese elemente."/>
+		<control caption="Käsitle torrent linke."/>
+	</dialog>
+
+	<dialog name="CWizardNetworksPage" cookie="StBuStBuStBuSt" caption="Teretulemast Shareazasse (5/6)">
 		<control caption="Shareaza on üldptstarbeline failijagamisprogramm, mis suudab ühenduda paljudesse P2P võrkudesse samaegselt.  Siin saad sa valida, millistesse võrkudesse sa tahad ühendada.  Sa saad ka hiljem valida erinevadi võrke."/>
 		<control caption="Ühenda Gnutella2 (Soovituslik)"/>
 		<control caption="Gnutella2 võrk on Shareaza's peamine töö võrk, pakkudes rohkem võimalusi ja paremat esitust, kui mõni teine P2P võrk."/>
@@ -3646,7 +3681,7 @@
 		<control caption="Sule"/>
 	</dialog>
 
-	<dialog name="CWizardFinishedPage" cookie="StStStBuBuBuSt" caption="Teretulemast Shareazasse [7 of 7]">
+	<dialog name="CWizardFinishedPage" cookie="StStStBuBuBuSt" caption="Teretulemast Shareazasse (6/6)">
 		<control caption="Ongi kõik!  Shareaza on valmis sinu arvutis töötama."/>
 		<control caption="Kui sa tahad seadeid muuta, võid uuesti käivitada Kiirabilise Töörista ribalt."/>
 		<control caption="Pärast selle abilise sulgemist, klikkides Valmis nuppu, saad sa ühendada valitud võrkudesse ja alustada otsinguid ning allalaadimist."/>
@@ -3669,7 +3704,8 @@
 		<control caption="Kasutaja nimi:"/>
 		<control/>
 		<control caption="Päris nimi:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="_Muud:"/>
 		<control caption="|Mees|Naine"/>
 		<control caption="Sugu:"/>
@@ -3757,7 +3793,8 @@
 
 	<dialog name="CConnectToDlg" cookie="BuCoEdBuCoBuBuBu" caption="Ühenda serveriga|Sirvi kasutajat">
 		<control caption="Alusta serveriga uut ühendust:|Sirvi seda serverit:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Võrgu_protokoll:"/>
 		<control caption="Gnutella1 (auto)|Gnutella2 (auto)|eDonkey2000"/>
 		<control caption="_Vaigista Ultrapeer"/>
@@ -3766,7 +3803,8 @@
 	</dialog>
 
 	<dialog name="CDownloadDlg" cookie="StStStEdBuBuStStBu" caption="Tõmba Fail või Torrent">
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Failide allalaadimine Shareazaga on lihtne.  Lihtsalt trüki või kleebi faili URL või URI all asuvasse kasti ja vajuta Enter oma klaviatuuril."/>
 		<control/>
 		<control caption="Tõmba"/>
@@ -3777,7 +3815,8 @@
 	</dialog>
 
 	<dialog name="CNewSearchDlg" cookie="EdCoBuBu" caption="Uus Otsing|Korda Otsingut|Otsi Raamatukogust">
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Otsi"/>
 		<control caption="Tühista"/>
 	</dialog>
@@ -3792,7 +3831,8 @@
 		<control caption="Maksimaalselt:"/>
 		<control/>
 		<control caption="Vähemalt:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="allikaga."/>
 		<control caption="_Peida:"/>
 		<control caption="Hõivatud serverid"/>
@@ -3832,7 +3872,9 @@
 	<dialog name="CDownloadMonitorDlg" cookie="StStStStStStStStStStStStStBuBuBuBuBu" caption="Allalaadimine : Shareaza">
 		<control caption="Shareaza Tõmbab:"/>
 		<control caption="..."/>
-		<control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
 		<control caption="Ülekande kiirus:"/>
 		<control caption="..."/>
 		<control caption="Arvatav järelejäänud aeg:"/>
@@ -3850,7 +3892,10 @@
 
 	<dialog name="CFileGeneralPage" cookie="StEdEdEdEdStStEdStEdStEdStEdEdEd" caption="Üldist">
 		<control caption="Universal Resource Names (URNs)(Levinud ressursside nimed) "/>
-		<control/><control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
 		<control caption="Faili Omadused"/>
 		<control caption="Asukoht:"/>
 		<control/>
@@ -3859,11 +3904,14 @@
 		<control caption="Muudetud:"/>
 		<control/>
 		<control caption="Suurus:"/>
-		<control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
 	</dialog>
 
 	<dialog name="CFileMetadataPage" cookie="CoEd" caption="Andmebaas">
-		<control/><control/>
+		<control/>
+		<control/>
 	</dialog>
 
 	<dialog name="CFileCommentsPage" cookie="StStCoStEdEd" caption="Minu Arvamus">
@@ -3871,7 +3919,8 @@
 		<control caption="Mina hindan seda faili:"/>
 		<control caption="(Hinnanguta)|Vale/Vigane/Eksitav|Kehv|Keskmine|Hea|Väga hea|Suurepärane"/>
 		<control caption="Minu arvamus ja kommentaar"/>
-		<control/><control/>
+		<control/>
+		<control/>
 	</dialog>
 
 	<dialog name="CFileSharingPage" cookie="StBuBuBuStCoStSyEd" caption="Jagamine">
@@ -3882,13 +3931,15 @@
 		<control caption="Järjekorra Valiku Märksõna"/>
 		<control/>
 		<control caption="-Võrk milles jagada"/>
-		<control/><control/>
+		<control/>
+		<control/>
 	</dialog>
 
 	<dialog name="CFileSourcesPage" cookie="StStEdSyBuBuEd" caption="Allikad">
 		<control caption="Tuntud Allikad"/>
 		<control caption="Lisa Uus Allikas"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="_Lisa"/>
 		<control caption="_Eemalda"/>
 		<control/>
@@ -3896,7 +3947,8 @@
 
 	<dialog name="CFileCopyDlg" cookie="StStmsBuBumsStSt" caption="Kopeeri Faile|Liiguta Faile">
 		<control caption="Sa oled valinud %i faili, et kopeerida see järgnevasse kausta:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="OK"/>
 		<control caption="Tühista"/>
 		<control/>
@@ -3926,7 +3978,8 @@
 		<control caption="Legendi"/>
 		<control caption="_Uuenduse Sagedus:"/>
 		<control caption="Uuenduste vaheline aeg:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="ms"/>
 		<control caption="_Nimi:"/>
 		<control/>
@@ -3938,7 +3991,8 @@
 		<control caption="OK"/>
 		<control caption="Tühista"/>
 		<control caption="_Allikas:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Parameetrid:"/>
 		<control caption="Ühikud:"/>
 		<control/>
@@ -3949,7 +4003,8 @@
 	</dialog>
 
 	<dialog name="CSchemaColumnsDlg" cookie="CoSyBuBuSt" caption="Vali Teema Pealkiri">
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="OK"/>
 		<control caption="Tühista"/>
 		<control caption="Vali nimekirjast teema, seejärel vali milliseid pealkirju kuvada."/>
@@ -3963,9 +4018,15 @@
 		<control/>
 		<control caption="_Võrgu Aadress:"/>
 		<control caption="IP Aadress:"/>
-		<control/><control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
 		<control caption="Võrgumask:"/>
-		<control/><control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
 		<control caption="_Sisu Filter:"/>
 		<control/>
 		<control caption="Leia sobiv"/>
@@ -3998,7 +4059,9 @@
 	<dialog name="CURLCopyDlg" cookie="StStStStStBuBu" caption="Kopeeri URI">
 		<control/>
 		<control caption="Kopeeri valitud faili URI, erinevates formaatides.  Palun vali formaat, klikkides allpool oleval URI-l:"/>
-		<control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
 		<control caption="Lisa _mind URL-i püsiallikana"/>
 		<control caption="Tühista"/>
 	</dialog>
@@ -4022,7 +4085,10 @@
 		<control caption="Sa oled klikkinud Shareaza poolt koostatud URI-l, mis viitab Võrgus järgnevale sisule:"/>
 		<control caption="Sa oled klikkinud Shareaza poolt koostatud URI-l, mis ühendab sind järgneva serveriga:"/>
 		<control caption="Sa oled klikkinud Shareaza poolt koostatud URI-l, mis laseb sul kasutaja poolt jagatavaid faile sirvida:"/>
-		<control/><control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
 		<control caption="Palun vali, mida Shareaza peaks tegema:"/>
 		<control caption="_Tõmba kohe"/>
 		<control caption="_Otsi Faili"/>
@@ -4044,7 +4110,8 @@
 	<dialog name="CFilePreviewDlg" cookie="StStStmsStBu" caption="Tark Eelvaade...">
 		<control/>
 		<control caption="Shareaza loob tõmbamisele eelvaadet:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="(kopeerin alalaadimise osasid eelvaatesse)"/>
 		<control caption="Tühista"/>
 	</dialog>
@@ -4072,7 +4139,10 @@
 	</dialog>
 
 	<dialog name="CExistingFileDlg" cookie="StStStStStBuBuBuBuBuSt" caption="Olemasolev Fail">
-		<control/><control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
 		<control caption="See fail on sul juba Raamatukogus olemas.  Mida sa soovid teha?"/>
 		<control caption="Näita seda faili Raamatukogus"/>
 		<control caption="Tõmba see fail uuesti"/>
@@ -4095,7 +4165,8 @@
 	<dialog name="CDonkeyServersDlg" cookie="StStEdmsBuBu" caption="Tõmba Server.met Fail">
 		<control/>
 		<control caption="Tõmba weebist eDonkey2000 server.met fail, et värskendada oma kohalikke serverite nimekirja."/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="OK"/>
 		<control caption="Tühista"/>
 	</dialog>
@@ -4141,17 +4212,21 @@
 		<control caption="HOIATUS: See aken pakub täpsemat allalaadimiste andmete muutmise võimalust arenenud kasutajatele, mida valesti kasutades võib faili kasutuks muuta."/>
 		<control caption="Faili Nimi ja _Suurus:"/>
 		<control caption="Faili Nimi:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Faili Suurus (Baitides):"/>
 		<control/>
 		<control caption="_URNs:"/>
 		<control caption="Usaldatud"/>
 		<control caption="SHA1:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Tiger-Root:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="ED2K:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="_Tegevused:"/>
 		<control caption="Unusta praegune kinnituse seis ja kinnita uuesti"/>
 		<control caption="Eelda, et fail on 100% valmis ja kinnita"/>
@@ -4225,7 +4300,8 @@
 
 	<dialog name="CDownloadGroupDlg" cookie="BuEdSyBuCoBuBuBuBuBuEdBu" caption="Allalaadimisgrupi Omadused">
 		<control caption="_Nimi:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="_Filtrid:"/>
 		<control/>
 		<control caption="_Lisa"/>
@@ -4258,7 +4334,8 @@
 	<dialog name="CDownloadReviewDlg" cookie="StBuSyEd" caption="Allalaadimiste ülevaated">
 		<control/>
 		<control caption="OK"/>
-		<control/><control/>
+		<control/>
+		<control/>
 	</dialog>
 
 	<dialog name="CDecodeMetadataDlg" cookie="BuBuStCo" caption="Andmebaasi kohastamine">

@@ -427,6 +427,7 @@
 		<button id="ID_CHAT_CONNECT" text="Σύνδεση" visible="false"/>
 		<button id="ID_CHAT_DISCONNECT" text="Αποσύνδεση"/>
 	</toolbar>
+	<!-- WEBSERVICES -->
 	<toolbar name="WebServices.ShareMonkey">
 		<button id="ID_SHAREMONKEY_DOWNLOAD" text="Λήψη Δεδομένων"/>
 		<separator/>
@@ -1765,18 +1766,18 @@
 		<text group="24" align="middle" id="G2Hubs">%i κόμβοι</text>
 		<text group="25" align="middle" id="G2Leaves">%i φύλλα</text>
 		<newline group="20" gap="2"/>
-		<icon group="30" command="ID_NETWORK_ED2K"/><gap group="30" size="4"/>
-		<text group="30" align="middle" format="b">ED2K: </text>
-		<text group="31" align="middle">Αποσυνδεμένο</text>
-		<text group="32" align="middle">Σύνδεση...</text>
-		<text group="33" align="middle">Ενωμένο</text>
-		<newline group="30" gap="2"/>
 		<icon group="10" command="ID_NETWORK_G1"/><gap group="10" size="4"/>
 		<text group="10" align="middle" format="b">Gnutella: </text>
 		<text group="11" align="middle">Αποσυνδεμένο</text>
 		<text group="12" align="middle">Σύνδεση...</text>
 		<text group="13" align="middle">Ενωμένο</text>
 		<newline group="10" gap="2"/>
+		<icon group="30" command="ID_NETWORK_ED2K"/><gap group="30" size="4"/>
+		<text group="30" align="middle" format="b">ED2K: </text>
+		<text group="31" align="middle">Αποσυνδεμένο</text>
+		<text group="32" align="middle">Σύνδεση...</text>
+		<text group="33" align="middle">Ενωμένο</text>
+		<newline group="30" gap="2"/>
 		<group id="2">
 			<para align="center">
 				<newline gap="6"/>
@@ -3717,7 +3718,7 @@
 		<control caption="Άκυρο"/>
 		<control caption="Ανταμοιβή αποστολέων"/>
 	</dialog>
-	<dialog name="CWizardWelcomePage" cookie="StStStStStStStStStStStSt" caption="Οδηγός Σύντομης Εκκίνησης [1 από 7]">
+	<dialog name="CWizardWelcomePage" cookie="StStStStStStStStStStStSt" caption="Οδηγός Σύντομης Εκκίνησης">
 		<control caption="Καλώς ήρθατε στο Shareaza!"/>
 		<control caption="Αν δεν έχετε προηγούμενη εμπειρία με το Shareaza ή άλλο πρόγραμμα P2P, αυτός ο οδηγός θα σας βοηθήσει να το ρυθμίσετε σε λίγα απλά βήματα."/>
 		<control caption="Αν είστε πιο προχωρημένοι, μπορείτε να ρυθμίσετε κάθε λεπτομέρεια από το μενού Εργαλεία. Για κλείσιμο του οδηγού ανά πάσα στιγμή, κλικ στο Exit."/>
@@ -3731,7 +3732,7 @@
 		<control/>
 		<control caption="Εκκίνηση της χρήσης του Shareaza."/>
 	</dialog>
-	<dialog name="CWizardConnectionPage" cookie="StStCoStCoStCoStCoStms" caption="Δήλωση Σύνδεσης [2 από 7]">
+	<dialog name="CWizardConnectionPage" cookie="StStCoStCoStCoStCoStms" caption="Δήλωση Σύνδεσης [1 από 6]">
 		<control caption="Για βέλτιστη απόδοση, το Shareaza χρειάζεται να ξέρει λίγα πράγματα για τη σύνδεσή σας στο Διαδίκτυο."/>
 		<control caption="Διαλέξτε τον τύπο της σύνδεσής σας στο Διαδίκτυο:"/>
 		<control caption="Dial up Modem|ISDN|ADSL (256K)|ADSL (512K)|ADSL (768K)|ADSL (1.5M)|ADSL (4.0M)|ADSL2 (8.0M)|ADSL2 (12.0M)|ADSL2+ (24.0M)|Cable Modem/SDSL|T1|T3|LAN|OC3"/>
@@ -3744,7 +3745,7 @@
 		<control caption="Κατάσταση:"/>
 		<control/>
 	</dialog>
-	<dialog name="CWizardSharePage" cookie="StStStSyBuBuSt" caption="Καθορισμός Κοινοποιήσεων [3 από 7]">
+	<dialog name="CWizardSharePage" cookie="StStStSyBuBuSt" caption="Καθορισμός Κοινοποιήσεων [2 από 6]">
 		<control caption="Τα δίκτυα P2P είναι τόσο καλά, όσο οι άνθρωποι που τα χρησιμοποιούν. Όλα τα διαθέσιμα προς λήψη αρχεία κοινοποιούνται από άλλους χρήστες."/>
 		<control caption="Για τη χρήση του Shareaza δεν απαιτείται καμία κοινοποίηση, όμως αρκετά λογισμικά συμπεριφέρονται διαφορετικά σε χρήστες που δεν κοινοποιούν τίποτα."/>
 		<control caption="Συστείνεται να κοινοποιήσετε κάποιους φακέλους. Κλικ στο κουμπί Προσθήκη για κάθε επιπλέον φάκελο."/>
@@ -3762,7 +3763,7 @@
 		<control caption="0"/>
 		<control caption="Κλείσιμο"/>
 	</dialog>
-	<dialog name="CWizardProfilePage" cookie="StStEdStCoCoStCoCo" caption="Συμπλήρωση Προφίλ [4 από 7]">
+	<dialog name="CWizardProfilePage" cookie="StStEdStCoCoStCoCo" caption="Συμπλήρωση Προφίλ [3 από 6]">
 		<control caption="Το Shareaza γίνεται πολύ φιλικότερο όταν όλοι γράφουν λίγα στοιχεία για τον εαυτό τους."/>
 		<control caption="Χρήση ονόματος:"/>
 		<control/>
@@ -3773,7 +3774,7 @@
 		<control/>
 		<control/>
 	</dialog>
-	<dialog name="CWizardInterfacePage" cookie="StBuBuBuStStBuBu" caption="Επιλογή Μορφής [5 από 7]">
+	<dialog name="CWizardInterfacePage" cookie="StBuBuBuStStBuBu" caption="Επιλογή Μορφής [4 από 6]">
 		<control caption="Το Shareaza υποστηρίζει ένα ευέλικτο περιβάλλον, όπου επιλέγετε ό,τι σας βολεύει περισσότερο. Μπορείτε να αλλάξετε αυτές τις επιλογές ανά πάσα στιγμή."/>
 		<control caption="Παρακαλώ επιλέξτε μορφή:"/>
 		<control caption="Απλοποιημένη Μορφή"/>
@@ -3783,7 +3784,7 @@
 		<control caption="Εμφάνιση απλοποιημένης μπάρας προόδου λήψης. (Μειωμένη χρήση CPU)"/>
 		<control caption="Χειρισμός συνδέσμων torrent."/>
 	</dialog>
-	<dialog name="CWizardNetworksPage" cookie="StBuStBuStBuSt" caption="Επιλογή Δικτύων [6 από 7]">
+	<dialog name="CWizardNetworksPage" cookie="StBuStBuStBuSt" caption="Επιλογή Δικτύων [5 από 6]">
 		<control caption="Το Shareaza είναι ένα γενικού σκοπού πρόγραμμα ανταλλαγής αρχείων που συνδέεται σε πολλά P2P δίκτυα ταυτόχρονα. Εδώ μπορείτε να επιλέξετε σε ποια δίκτυα θέλετε να συνδέεστε. Σημειώστε ότι μπορείτε να επιλέξετε διαφορετικά δίκτυα αργότερα."/>
 		<control caption="Σύνδεση στο Gnutella2 (Συστείνεται Ανεπιφύλακτα)"/>
 		<control caption="Το πρωτεύον δίκτυο του Shareaza, που προσφέρει τα περισσότερα χαρακτηριστικά και επιδόσεις από κάθε άλλο."/>
@@ -3800,7 +3801,7 @@
 		<control/>
 		<control caption="Κλείσιμο"/>
 	</dialog>
-	<dialog name="CWizardFinishedPage" cookie="StStStBuBuBuSt" caption="Ολοκλήρωση Οδηγού Σύντομης Εκκίνησης [7 από 7]">
+	<dialog name="CWizardFinishedPage" cookie="StStStBuBuBuSt" caption="Ολοκλήρωση Οδηγού Σύντομης Εκκίνησης [6 από 6]">
 		<control caption="Αυτό ήταν! Το Shareaza έχει ρυθμιστεί να δουλεύει με τον υπολογιστή σας."/>
 		<control caption="Αν ποτέ χρειαστεί να αλλάξετε τις ρυθμίσεις σας, μπορείτε να ξανατρέξετε αυτόν τον οδηγό επιλέγοντάς τον από το μενού Εργαλεία."/>
 		<control caption="Μετά το κλείσιμο του οδηγού με κλικ στο Τέλος, μπορείτε να συνδεθείτε στα δίκτυα που επιλέξατε και να αρχίσετε αναζητήσεις και λήψεις."/>
@@ -4175,7 +4176,10 @@
 		<control caption="Κάνατε κλικ σε ένα URI που στο δίκτυο αντιστοιχεί στο εξής περιεχόμενο:"/>
 		<control caption="Κάνατε κλικ σε μια URL που συνδέει στον εξής host ή server:"/>
 		<control caption="Κάνατε κλικ σε ένα URI που επιτρέπει την περιήγηση των κοινοποιημένων αρχείων του εξής host:"/>
-		<control/><control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
 		<control caption="Παρακαλώ επιλέξτε μια ενέργεια:"/>
 		<control caption="Άμεση _Λήψη"/>
 		<control caption="Ανα_ζήτηση Αρχείων"/>
@@ -4195,7 +4199,8 @@
 	<dialog name="CFilePreviewDlg" cookie="StStStmsStBu" caption="Έξυπνη Προεπισκόπηση Λήψης...">
 		<control/>
 		<control caption="Δημιουργία προεπισκόπησης αρχείου:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="(αντιγραφή ληφθέντων τμημάτων σε ένα νέο αρχείο προεπισκόπησης)"/>
 		<control caption="Άκυρο"/>
 	</dialog>
@@ -4220,7 +4225,10 @@
 		<control caption="OK"/>
 	</dialog>
 	<dialog name="CExistingFileDlg" cookie="StStStStStBuBuBuBuBuStSt" caption="Προϋπάρχοντα Αρχεία">
-		<control/><control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
 		<control caption="Έχετε ήδη αυτό το αρχείο στη Βιβλιοθήκη. Τι θέλετε να κάνετε;"/>
 		<control caption="Μετάβαση στο αρχείο στη Βιβλιοθήκη"/>
 		<control caption="Λήψη του αρχείου ξανά"/>
@@ -4242,7 +4250,8 @@
 	<dialog name="CDonkeyServersDlg" cookie="StStEdmsBuBu" caption="Λήψη Αρχείου Server.met">
 		<control/>
 		<control caption="Μπορείτε να λάβετε ένα αρχείο server.met του ED2K από το Διαδίκτυο για να ανανεώσετε την τοπική λίστα servers."/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="OK"/>
 		<control caption="Άκυρο"/>
 	</dialog>
@@ -4398,7 +4407,8 @@
 	<dialog name="CDownloadReviewDlg" cookie="StBuSyEd" caption="Κριτικές Λήψης">
 		<control/>
 		<control caption="OK"/>
-		<control/><control/>
+		<control/>
+		<control/>
 	</dialog>
 	<dialog name="CDecodeMetadataDlg" cookie="StCoBuBuBuStStBuBu" caption="Metadata Localisation">
 		<control caption="Επιλογή μεθόδου επανακωδικοποίησης"/>

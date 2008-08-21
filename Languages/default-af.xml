@@ -427,6 +427,7 @@
 		<button id="ID_CHAT_CONNECT" text="Konnekteer" visible="false"/>
 		<button id="ID_CHAT_DISCONNECT" text="Diskonnekteer"/>
 	</toolbar>
+	<!-- WEBSERVICES -->
 	<toolbar name="WebServices.ShareMonkey">
 		<button id="ID_SHAREMONKEY_DOWNLOAD" text="Get Data"/>
 		<separator/>
@@ -1835,14 +1836,10 @@
 		</styles>
 		<text format="b">Welkom by die Shareaza Verstellingsbeheerder</text>
 		<newline gap="16"/>
-		<text>
-			Die Shareaza Verstellingsbeheerder laat gevorderde gebruikers toe om die werking van Shareaza
-			heeltemal te verander. Die verstellings in die
-		</text>
+		<text> Die Shareaza Verstellingsbeheerder laat gevorderde gebruikers toe om die werking van Shareaza
+			heeltemal te verander. Die verstellings in die </text>
 		<text format="b">Algemeen </text>
-		<text>
-			afdeling hou verband met die gebruikerskoppelvlak.
-		</text>
+		<text>afdeling hou verband met die gebruikerskoppelvlak.</text>
 		<newline gap="16" indent="16"/>
 		<link target="raza:page:CGeneralSettingsPage" format="b">Algemeen:</link>
 		<gap size="4"/>
@@ -4175,7 +4172,10 @@
 		<control caption="Jy het gekliek op 'n Shareaza ondersteunende URI wat skakel na die volgende inhoud op die netwerk:"/>
 		<control caption="Jy het gekliek op 'n Shareaza ondersteunende URL wat jou aan die volgende gasheer of bediener sal konnekteer:"/>
 		<control caption="Jy het gekliek op 'n Shareaza ondersteunende URI wat jou die deur die gedeelde lêers van die volgende gasheer sal laat blaai:"/>
-		<control/><control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
 		<control caption="Selekteer asseblief die aksie wat Shareaza moet uitvoer:"/>
 		<control caption="_Laai Nou Af"/>
 		<control caption="_Soek vir Lêer"/>
@@ -4195,7 +4195,8 @@
 	<dialog name="CFilePreviewDlg" cookie="StStStmsStBu" caption="Slim Aflaai Voorskou...">
 		<control/>
 		<control caption="Shareaza is besig om 'n voorskou te skep van die aflaai:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="(kopieer afgelaaide dele na 'n nuwe voorskoulêer)"/>
 		<control caption="Kanselleer"/>
 	</dialog>
@@ -4220,7 +4221,10 @@
 		<control caption="OK"/>
 	</dialog>
 	<dialog name="CExistingFileDlg" cookie="StStStStStBuBuBuBuBuSt" caption="Aflaai van bestaande lêer">
-		<control/><control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
 		<control caption="Jy het hierdie lêer alreeds in jou biblioteek.  Wat wil jy graag doen?"/>
 		<control caption="Wys my die lêer in my biblioteek"/>
 		<control caption="Laai die lêer weer af"/>
@@ -4242,7 +4246,8 @@
 	<dialog name="CDonkeyServersDlg" cookie="StStEdmsBuBu" caption="Laai Server.met Lêer af">
 		<control/>
 		<control caption="Jy kan 'n eDonkey2000 server.met lêer van die web aflaai om jou lokale lys van bedienders te verfris."/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="OK"/>
 		<control caption="Kanselleer"/>
 	</dialog>
@@ -4398,7 +4403,8 @@
 	<dialog name="CDownloadReviewDlg" cookie="StBuSyEd" caption="Aflaai Resensies">
 		<control/>
 		<control caption="OK"/>
-		<control/><control/>
+		<control/>
+		<control/>
 	</dialog>
 	<dialog name="CDecodeMetadataDlg" cookie="BuBuStCo" caption="Metadata Lokalisering">
 		<control caption="Selekteer asseblief die her-enkoderingsmetode:"/>

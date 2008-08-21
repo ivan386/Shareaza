@@ -427,6 +427,7 @@
 		<button id="ID_CHAT_CONNECT" text="Подключиться" visible="false"/>
 		<button id="ID_CHAT_DISCONNECT" text="Отключиться"/>
 	</toolbar>
+	<!-- WEBSERVICES -->
 	<toolbar name="WebServices.ShareMonkey">
 		<button id="ID_SHAREMONKEY_DOWNLOAD" text="Получить"/>
 		<separator/>
@@ -1835,14 +1836,10 @@
 		</styles>
 		<text format="b">Добро пожаловать в менеджер установок Shareaza</text>
 		<newline gap="16"/>
-		<text>
-			Менеджер установок Shareaza опытным пользователям позволит полностью настроить
-			работу Shareaza.  Установки в секции
-		</text>
+		<text>Менеджер установок Shareaza опытным пользователям позволит полностью настроить
+			работу Shareaza.  Установки в секции </text>
 		<text format="b">Основное </text>
-		<text>
-			потребуют некоторого пользовательского опыта.
-		</text>
+		<text>потребуют некоторого пользовательского опыта.</text>
 		<newline gap="16" indent="16"/>
 		<link target="raza:page:CGeneralSettingsPage" format="b">Основное:</link>
 		<gap size="4"/>
@@ -1860,10 +1857,13 @@
 		<gap size="4"/>
 		<text>Ваш профиль, чат и установки быстрых сообщений (пейджер).</text>
 		<newline gap="10"/>
+		<link target="raza:page:CIRCSettingsPage" format="b">IRC:</link>
+		<gap size="4"/>
+		<text>IRC.</text>
+		<newline gap="10"/>
 		<link target="raza:page:CWebSettingsPage" format="b">Веб:</link>
 		<gap size="4"/>
 		<text>Интегрируйте Shareaza с вашим веб обозревателем для приема P2P ссылок и другого содержимого.</text>
-		<newline gap="10"/>
 	</document>
 	<document name="CInternetSettingsGroup" title="Интернет" leftMargin="8" topMargin="8">
 		<styles>
@@ -4190,7 +4190,8 @@
 	<dialog name="CFilePreviewDlg" cookie="StStStmsStBu" caption="Просмотр копии загрузки...">
 		<control/>
 		<control caption="Shareaza готовит предпросмотр загрузки:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="(копируются загруженные части в новый файл)"/>
 		<control caption="Отмена"/>
 	</dialog>
@@ -4215,7 +4216,10 @@
 		<control caption="OK"/>
 	</dialog>
 	<dialog name="CExistingFileDlg" cookie="StStStStStBuBuBuBuBuStSt" caption="Загрузка имеющегося файла">
-		<control/><control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
 		<control caption="У Вас уже есть этот файл в хранилище.  Что бы Вы хотели сделать?"/>
 		<control caption="Показать мне это файл в хранилище"/>
 		<control caption="Загрузить файл снова"/>
@@ -4237,7 +4241,8 @@
 	<dialog name="CDonkeyServersDlg" cookie="StStEdmsBuBu" caption="Загрузить Server.met файл">
 		<control/>
 		<control caption="Вы можете загрузить eDonkey server.met файл из веба, чтобы обновить Ваш список серверов."/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="OK"/>
 		<control caption="Отмена"/>
 	</dialog>
@@ -4393,7 +4398,8 @@
 	<dialog name="CDownloadReviewDlg" cookie="StBuSyEd" caption="Оценки закрузки">
 		<control/>
 		<control caption="OK"/>
-		<control/><control/>
+		<control/>
+		<control/>
 	</dialog>
 	<dialog name="CDecodeMetadataDlg" cookie="StCoBuBuBuStStBuBu" caption="Локализация мета данных">
 		<control caption="Выберите способ перекодировки (группу языков)"/>

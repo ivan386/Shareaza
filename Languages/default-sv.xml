@@ -425,6 +425,7 @@
 		<button id="ID_CHAT_CONNECT" text="Anslut" visible="false" />
 		<button id="ID_CHAT_DISCONNECT" text="Koppla ifrån" />
 	</toolbar>
+	<!-- WEBSERVICES -->
 	<!-- IMAGE VIEWER WINDOW -->
 	<toolbar name="ImageViewer_Toolbar">
 		<button id="ImageViewer_BestFit" text="Anpassa efter skrmen"/>
@@ -1727,18 +1728,18 @@
 		<text group="24" align="middle" id="G2Hubs">%i nav</text>
 		<text group="25" align="middle" id="G2Leaves">%i löv</text>
 		<newline group="20" gap="2"/>
-		<icon group="30" command="ID_NETWORK_ED2K"/><gap group="30" size="4"/>
-		<text group="30" align="middle" format="b">eDonkey: </text>
-		<text group="31" align="middle">Inte ansluten</text>
-		<text group="32" align="middle">Ansluter…</text>
-		<text group="33" align="middle">Ansluten</text>
-		<newline group="30" gap="2"/>
 		<icon group="10" command="ID_NETWORK_G1"/><gap group="10" size="4"/>
 		<text group="10" align="middle" format="b">Gnutella1: </text>
 		<text group="11" align="middle">Inte ansluten</text>
 		<text group="12" align="middle">Ansluter…</text>
 		<text group="13" align="middle">Ansluten</text>
 		<newline group="10" gap="2"/>
+		<icon group="30" command="ID_NETWORK_ED2K"/><gap group="30" size="4"/>
+		<text group="30" align="middle" format="b">eDonkey: </text>
+		<text group="31" align="middle">Inte ansluten</text>
+		<text group="32" align="middle">Ansluter…</text>
+		<text group="33" align="middle">Ansluten</text>
+		<newline group="30" gap="2"/>
 		<group id="2">
 			<para align="center">
 				<newline gap="6"/>
@@ -1796,14 +1797,10 @@
 		</styles>
 		<text format="b">Välkommen till Shareazas inställningshanterare</text>
 		<newline gap="16"/>
-		<text>
-		Shareazas inställningshanterare tillåter avancerade användare att fullständigt anpassa hur
-		Shareaza ska fungera. Inställningarna i
-		</text>
+		<text>Shareazas inställningshanterare tillåter avancerade användare att fullständigt anpassa hur
+		Shareaza ska fungera. Inställningarna i </text>
 		<text format="b">Generellt -</text>
-		<text>
-		sektionen relaterar till användarens upplevelse.
-		</text>
+		<text>sektionen relaterar till användarens upplevelse.</text>
 		<newline gap="16" indent="16"/>
 		<link target="raza:page:CGeneralSettingsPage" format="b">Generellt:</link>
 		<gap size="4"/>
@@ -1821,10 +1818,13 @@
 		<gap size="4"/>
 		<text>Inställningar för din profil, chatt och direktmeddelanden.</text>
 		<newline gap="10"/>
+		<link target="raza:page:CIRCSettingsPage" format="b">IRC:</link>
+		<gap size="4"/>
+		<text>IRC chatroom visual appearance and connection settings.</text>
+		<newline gap="10"/>
 		<link target="raza:page:CWebSettingsPage" format="b">Webb:</link>
 		<gap size="4"/>
 		<text>Integrera Shareaza med din webbläsare för att acceptera fildelningslänkar och ladda ned innehåll.</text>
-		<newline gap="10"/>
 	</document>
 	<document name="CInternetSettingsGroup" title="Internet" leftMargin="8" topMargin="8">
 		<styles>
@@ -1834,14 +1834,10 @@
 		</styles>
 		<text format="b">Välkommen till Shareazas inställningshanterare</text>
 		<newline gap="16"/>
-		<text>
-		Shareaza inställningshanterare tillåter avancerade användare att fullständigt anpassa hur
-		Shareaza fungerar. Inställningar inom
-		</text>
+		<text>Shareaza inställningshanterare tillåter avancerade användare att fullständigt anpassa hur
+			Shareaza fungerar. Inställningar inom </text>
 		<text format="b">Internet -</text>
-		<text>
-		sektionen styr hur Shareaza förhåller sig till andra noder inom fildelningsnätverk.
-		</text>
+		<text>sektionen styr hur Shareaza förhåller sig till andra noder inom fildelningsnätverk.</text>
 		<newline gap="16" indent="16"/>
 		<link target="raza:page:CConnectionSettingsPage" format="b">Anslutning:</link>
 		<gap size="4"/>
@@ -1859,6 +1855,9 @@
 		<gap size="4"/>
 		<text>Sätt upp möjligheten att styra Shareaza från en annan plats genom en webbläsare.</text>
 		<newline gap="10"/>
+		<link target="raza:page:CSchedulerSettingsPage" format="b">Scheduler:</link>
+		<gap size="4"/>
+		<text>Limit download connections based on a periodic schedule.</text>
 	</document>
 	<!-- Browse User Profile -->
 	<document name="CBrowseHostProfile.1">
@@ -3262,7 +3261,8 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<control caption="_Knappbeskrivningar"/>
 		<control/>
 		<control caption="Vänta (ms):" />
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Synlig:" />
 		<control/>
 		<control caption="A_ktivitetsfält:" />
@@ -3279,10 +3279,12 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<control caption="Tillåt andra användare att se fillistan"/>
 		<control caption="_Senast använda filer:" />
 		<control caption="Kom ihåg:" />
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="filer" />
 		<control caption="Upp till:" />
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="dagar" />
 		<control caption="Rensa historik nu" />
 		<control caption="Säkra att _öppna:" />
@@ -3294,7 +3296,8 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<control caption="_Lägg till" />
 		<control caption="_Radera" />
 		<control caption="Lagra _samlingar här:" />
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Skapa skuggfil vid radering"/>
 	</dialog>
 	<dialog name="CMediaSettingsPage" cookie="BuCoBuBuBuCoBuBuBuBuBuStSt" caption="Mediaspelare">
@@ -3396,28 +3399,36 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<control caption="Tillåt inställning av UPnP-enheter"/>
 		<control caption="_Avbrottstid:"/>
 		<control caption="Anslutning:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Handslag:" />
-		<control/><control/>
+		<control/>
+		<control/>
 	</dialog>
 
 	<dialog name="CDownloadsSettingsPage" cookie="BuEdBuBuEdBuBuStEdmsStEdmsStEdmsBuStCoStCoBuBu" caption="Nedladdningar">
 		<control caption="Spara _färdiga nedladdningar här:" />
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Spara tillfälliga _ofullständiga nedladdningar här:" />
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Antal _nedladdningar:" />
 		<control caption="Max antal filer:" />
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Max antal överföringar:" />
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Överföringar per fil:" />
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="_Begränsningar:" />
 		<control caption="Total nedladdningsbandbredd:" />
 		<control/>
 		<control caption="Största köstorlek:" />
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Tillåt endast överföringar till och från nätverk som är /nanslutna för närvarande."/>
 	</dialog>
 	<dialog name="CUploadsSettingsPage" cookie="BuBuBuBuStEdmsBuCoBuBuBuStCoStCoBuSyBuBuBuSt" caption="Uppladdningar">
@@ -3426,7 +3437,8 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<control caption="Begränsa utdelning i navläge" />
 		<control caption="Dela ut förhandsvisade filer" />
 		<control caption="Begränsa per unik värd:" />
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="_Användargramfilter:" />
 		<control/>
 		<control caption="+"/>
@@ -3458,7 +3470,8 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 	<dialog name="CSchedulerSettingsPage" cookie="BuBuEdmsBuBuStStStStStStStStStStStEdBuSt" caption="Schemaläggare">
 		<control caption="_Alternativ:" />
 		<control caption="_Aktivera schemaläggare" />
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="_Inskränk nätverken vid begränsningar" />
 		<control caption="Förklaring:" />
 		<control caption="Sö" />
@@ -3499,11 +3512,14 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<control caption="Optimal|Löv|Nav" />
 		<control caption="G_2-anslutningar:" />
 		<control caption="Löv till nav:" />
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Nav till löv:" />
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Nav till nav:" />
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Gnutella1-nätverk:" />
 		<control caption="Anslut alltid till Gnutella1" />
 		<control caption="Anslut till Gnutella1 idag" />
@@ -3511,11 +3527,14 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<control caption="Optimal|Löv|Nav" />
 		<control caption="G_1-anslutningar:" />
 		<control caption="Löv till ultralike:" />
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Ultralike to löv:" />
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Like till like:" />
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="_Länkkomprimering:" />
 		<control caption="Nav till löv" />
 		<control caption="Löv till nav" />
@@ -3528,12 +3547,14 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<control caption="_Globala sökningar:" />
 		<control caption="Sök efter kända fjärrservrar i denna servercache:" />
 		<control caption="Sluta söka efter:" />
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="sökresultat." />
 		<control caption="Ta emot och uppdatera serverlistan frn den anslutana servern"/>
 		<control caption="_Länkanslutningar:" />
 		<control caption="Anslut inte till fler än:" />
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="andra eDonkey-klienter." />
 		<control caption="eDonkey-_verktyg:" />
 		<control caption="Ladda ned serverlista för eDonkey från webben:"/>
@@ -3543,19 +3564,25 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<control caption="_Gränssnitt:" />
 		<control caption="Visa ytterligare gränssnittselement för BitTorrent" />
 		<control caption="_Nedladdningsanslutning:" />
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Torrents direkt" />
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Klientanslutningar" />
 		<control caption="&#160;Radera frdiga torrents&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;När delningsproportionen uppnår"/>
-		<control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
 		<control caption="&#160;Föredra torrentkällor"/>
 		<control caption="_Slutspel:" />
 		<control caption="Aktivera slutspelsläge när nedladdning av torrents slutförs" />
 		<control caption="_Lagra torrents här:" />
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="_Torrentskapare" />
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Förvald spårare:"/>
 		<control/>
 	</dialog>
@@ -3590,7 +3617,8 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<control/>
 		<control caption="Egenskaper för inställning:" />
 		<control caption="Värde:" />
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Beskrivning:" />
 		<control/>
 	</dialog>
@@ -3614,18 +3642,23 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<control caption="_Kapacitet:" />
 		<control caption="Aktivera denna kö" />
 		<control caption="Minimera antalet överföringar:" />
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Max antal överföringar:" />
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Max antal väntande i kö:" />
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="_Tjänsteparametrar:" />
 		<control caption="Mätt bandbreddsandel:" />
 		<control/>
 		<control caption="Bandbredd för denna kö:" />
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Rotera efter N sekunder:" />
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="OK"/>
 		<control caption="Avbryt" />
 		<control caption="Reward uploaders"/>
@@ -3645,18 +3678,7 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<control/>
 		<control caption="Börja använda Shareaza" />
 	</dialog>
-
-	<dialog name="CWizardInterfacePage" cookie="StBuBuBuStStBuBu" caption="Vlkommen till Shareaza">
-		<control caption="Shareaza stödjer två olika typer av användargränssnitt, så att du kan välja det som du känner dig mest bekväm med." />
-		<control caption="Välj ett av dessa två användargränssnitt:" />
-		<control caption="Normalt läge" />
-		<control caption="Expertläge" />
-		<control caption="Enkla menyer och knappar.	Bekant för användare av andra fildelningsprogram." />
-		<control caption="Expoertläge som erbjuder avancerade användare många fler kommandon, fönster etc." />
-		<control caption="Visa förenklad nedladdningsindikator. (Minskar CPU-användning)"/>
-		<control caption="Hantera torrentlänkar."/>
-	</dialog>
-	<dialog name="CWizardConnectionPage" cookie="StStCoStCoStCoStCoStms" caption="Välkommen till Shareaza [3 av 7]">
+	<dialog name="CWizardConnectionPage" cookie="StStCoStCoStCoStCoStms" caption="Välkommen till Shareaza (1/6)">
 		<control caption="För att uppnå bästa prestanda måste Shareaza veta lite om din Internetanslutning."/>
 		<control caption="Välj typ av Internetanslutning:"/>
 		<control caption="Uppringt modem|ISDN|ADSL (256K)|ADSL (512K)|ADSL (768K)|ADSL (1.5M)|ADSL (4.0M)|ADSL2 (8.0M)|ADSL2 (12.0M)|ADSL2+ (24.0M)|Kabelmodem/SDSL|T1|T3|LAN|OC3"/>
@@ -3669,7 +3691,7 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<control caption="Status:"/>
 		<control/>
 	</dialog>
-	<dialog name="CWizardSharePage" cookie="StStStSyBuBuSt" caption="Välkomment till Shareaza [4 av 7]">
+	<dialog name="CWizardSharePage" cookie="StStStSyBuBuSt" caption="Välkomment till Shareaza (2/6)">
 		<control caption="Fildelningsnätverk är bara så bra som användarna vill att de ska vara. Allt innehåll för nedladdning delas ut av anda användare." />
 		<control caption="Du behöver inte dela ut för att använda Shareaza, men en del mjukvara kommer att bete sig annorlunda mot användare som inte delar ut filer." />
 		<control caption="Välj vilka mappar du vill dela ut. Klicka på Lägg till för att lägga till fler mappar." />
@@ -3687,7 +3709,7 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<control caption="0"/>
 		<control caption="Stäng" />
 	</dialog>
-	<dialog name="CWizardProfilePage" cookie="StStEdStCoCoStCoCo" caption="Välkommen till Shareaza [5 av 7]">
+	<dialog name="CWizardProfilePage" cookie="StStEdStCoCoStCoCo" caption="Välkommen till Shareaza (3/6)">
 		<control caption="Shareaza är en mycket trevligare plats när alla skriver några detaljer om sig själv." />
 		<control caption="Jag använder namnet:" />
 		<control/>
@@ -3695,10 +3717,20 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<control caption="&#160;(välj)"/>
 		<control caption="&#160;(välj)| kille| tjej| man| kvinna"/>
 		<control caption="från:" />
-		<control/><control/>
+		<control/>
+		<control/>
 	</dialog>
-
-	<dialog name="CWizardNetworksPage" cookie="StBuStBuStBuSt" caption="Välkommen till Shareaza [6 av 7]">
+	<dialog name="CWizardInterfacePage" cookie="StBuBuBuStStBuBu" caption="Vlkommen till Shareaza (4/6)">
+		<control caption="Shareaza stödjer två olika typer av användargränssnitt, så att du kan välja det som du känner dig mest bekväm med." />
+		<control caption="Välj ett av dessa två användargränssnitt:" />
+		<control caption="Normalt läge" />
+		<control caption="Expertläge" />
+		<control caption="Enkla menyer och knappar.	Bekant för användare av andra fildelningsprogram." />
+		<control caption="Expoertläge som erbjuder avancerade användare många fler kommandon, fönster etc." />
+		<control caption="Visa förenklad nedladdningsindikator. (Minskar CPU-användning)"/>
+		<control caption="Hantera torrentlänkar."/>
+	</dialog>
+	<dialog name="CWizardNetworksPage" cookie="StBuStBuStBuSt" caption="Välkommen till Shareaza (5/6)">
 		<control caption="Shareaza är ett en mångsidig fildelningsapplikation som kan komma åt många fildelningsnätverk på samma gång. På denna sida kan du välja vilka fildelningsnätverk du vill ansluta till och justera specifika inställningar för varje nätverk." />
 		<control caption="Anslut till Gnutella2 (mycket rekommenderat)" />
 		<control caption="Gnutella2 är Shareazas främsta nätverk, som erbjuder fler funktioner och prestanda än något annat fildelningsnätverk hittils. Mycket rekommenderad." />
@@ -3707,7 +3739,6 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<control caption="Anslut till Gnutellas ursprungsnätverk" />
 		<control caption="Fastän Gnutellas ursprungsnätverk erbjuder färre funktioner än Gnutella2 och färre filer än eDonkey är det ändå en värdefull resurs." />
 	</dialog>
-
 	<dialog name="CDonkeyImportDlg" cookie="StStBuBuEdBu" caption="Importera Donkey2000-nedladdningar">
 		<control/>
 		<control caption="Shareaza har upptäckt att du har ett annat eDonkey-program installerat på din dator. Vill du importera oavslutade nedladdningar till Shareaza?" />
@@ -3716,8 +3747,7 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<control/>
 		<control caption="Stäng" />
 	</dialog>
-
-	<dialog name="CWizardFinishedPage" cookie="StStStBuBuBuSt" caption="Välkommen till Shareaza [7 av 7]">
+	<dialog name="CWizardFinishedPage" cookie="StStStBuBuBuSt" caption="Välkommen till Shareaza (6/6)">
 		<control caption="Det var det! Shareza har blivit anpassat för att fungera med din dator." />
 		<control caption="Om du någon gång vill ändra setta inställningar, kan du köra denna snabbstartsguide igen från verktygsmenyn." />
 		<control caption="Efter att du stängt guiden genom att välja Slutföra, kan du ansluta till nätverken du valt, starta sökningar och ladda ned innehåll." />
@@ -3739,7 +3769,8 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<control caption="Visningsnamn:" />
 		<control/>
 		<control caption="Riktigt namn:" />
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="_Livuppgifter:" />
 		<control caption="|Man|Kvinna" />
 		<control caption="Kön:" />
@@ -3823,7 +3854,8 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 	<dialog name="CLanguageDlg" cookie="" caption="Välj språk" />
 	<dialog name="CConnectToDlg" cookie="BuCoEdBuCoBuBuBu" caption="Anslut till|Visa värdens filer">
 		<control caption="Skapa en ny anslutning till värden eller servern:|Visa värdens filer" />
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Nätverks_protokoll:" />
 		<control caption="Gnutella1 (auto)|Gnutella2 (auto)|eDonkey" />
 		<control caption="_Undvik Ultrapeer" />
@@ -3831,7 +3863,8 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<control caption="Avbryt" />
 	</dialog>
 	<dialog name="CDownloadDlg" cookie="StStStEdBuBuStStBu" caption="Ladda ned fil eller Torrent">
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Att ladda ned nya filer med Shareaza är enkelt. Skriv eller klista in den URL eller URI som beskriver filen du vill ladda ned i rutan nedanför och tryck enter." />
 		<control/>
 		<control caption="Ladda ned" />
@@ -3841,7 +3874,8 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<control caption="Öppna _Torrent…" />
 	</dialog>
 	<dialog name="CNewSearchDlg" cookie="EdCoBuBu" caption="Ny sökning|Sök igen|Sök i bibliotek">
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Sök" />
 		<control caption="Avbryt" />
 	</dialog>
@@ -3856,7 +3890,8 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<control caption="Största:" />
 		<control/>
 		<control caption="Med minst:" />
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="källor." />
 		<control caption="_Dölj:" />
 		<control caption="Upptagna värdar" />
@@ -3893,7 +3928,9 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 	<dialog name="CDownloadMonitorDlg" cookie="StStStStStStStStStStStStStBuBuBuBuBu" caption="Ladda ned : Shareaza">
 		<control caption="Shareaza laddas ned:" />
 		<control caption="…" />
-		<control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
 		<control caption="Total överföringsfart:" />
 		<control caption="…" />
 		<control caption="Beräknad återstående tid:" />
@@ -3910,7 +3947,10 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 	</dialog>
 	<dialog name="CFileGeneralPage" cookie="StEdEdEdEdStStEdStEdStEdStEdEdEd" caption="Generellt">
 		<control caption="Universalla resursnamn (URNs)" />
-		<control/><control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
 		<control caption="Filattribut" />
 		<control caption="Plats:" />
 		<control/>
@@ -3919,17 +3959,21 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<control caption="Ändrad:" />
 		<control/>
 		<control caption="Storlek:" />
-		<control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
 	</dialog>
 	<dialog name="CFileMetadataPage" cookie="CoEd" caption="Metadata">
-		<control/><control/>
+		<control/>
+		<control/>
 	</dialog>
 	<dialog name="CFileCommentsPage" cookie="StStCoStEdEd" caption="Min recension">
 		<control caption="Mitt betyg" />
 		<control caption="Jag betygsatte denna fil:" />
 		<control caption="(No Rating)|Fake/Corrupt/Misleading|Poor|Average|Good|Very Good|Excellent"/>
 		<control caption="Min recension och kommentarer" />
-		<control/><control/>
+		<control/>
+		<control/>
 	</dialog>
 
 	<dialog name="CFileSharingPage" cookie="StBuBuBuStCoStSyEd" caption="Utdelas">
@@ -3940,19 +3984,22 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<control caption="Upload Queue Selection Tag(s)"/>
 		<control/>
 		<control caption="-Nätverk att dela ut på" />
-		<control/><control/>
+		<control/>
+		<control/>
 	</dialog>
 	<dialog name="CFileSourcesPage" cookie="StStEdSyBuBuEd" caption="Källor">
 		<control caption="Kända källor" />
 		<control caption="Lägg till källa" />
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="_Lägg till" />
 		<control caption="_Radera" />
 		<control/>
 	</dialog>
 	<dialog name="CFileCopyDlg" cookie="StStmsBuBumsStSt" caption="Kopiera filer|Flytta filer">
 		<control caption="Du har valt %i fil/filer att kopiera till följande mapp:" />
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="OK"/>
 		<control caption="Avbryt" />
 		<control/>
@@ -3980,7 +4027,8 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<control caption="Förklaring" />
 		<control caption="_Provtagningsfrekvens:" />
 		<control caption="Period mellan provtagningar:" />
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="ms"/>
 		<control caption="_Namn:" />
 		<control/>
@@ -4002,7 +4050,8 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<control caption="_Radera" />
 	</dialog>
 	<dialog name="CSchemaColumnsDlg" cookie="CoSyBuBuSt" caption="Välj kolumner för schema">
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="OK"/>
 		<control caption="Avbryt" />
 		<control caption="Välj ett schema från listan. Välj sedan fälten att visa som kolumner." />
@@ -4015,9 +4064,15 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<control/>
 		<control caption="_Nätverksadress:" />
 		<control caption="IP-adress:" />
-		<control/><control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
 		<control caption="Nätmask:" />
-		<control/><control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
 		<control caption="_Innehållsfilter:" />
 		<control/>
 		<control caption="Matcha någon" />
@@ -4048,7 +4103,9 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 	<dialog name="CURLCopyDlg" cookie="StStStStStBuBu" caption="Kopiera URI">
 		<control/>
 		<control caption="Du kan kopiera en URI för den valda artikeln till flera olika format. Välj det format som du vill använda genom att klicka på det nedan:" />
-		<control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
 		<control caption="Inkludera _mig själv som en bestämd källa i URLen" />
 		<control caption="Avbryt" />
 	</dialog>
@@ -4071,7 +4128,10 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<control caption="Du har klickat på en Shareaza-URI som länkar till följande innehåll på nätverket:" />
 		<control caption="Du har klickat på en Shareaza-URI som kommer att ansluta dig till följande värd eller server:" />
 		<control caption="Du har klickat på en Shareaza-URI som tillåter dig att visa de utdelade filer tillgängliga hos denna värd:" />
-		<control/><control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
 		<control caption="Välj den handling du vill att Shareaza ska utföra:" />
 		<control caption="_Ladda ned nu" />
 		<control caption="_Sök efter fil" />
@@ -4091,7 +4151,8 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 	<dialog name="CFilePreviewDlg" cookie="StStStmsStBu" caption="Smart förhandsvisning">
 		<control/>
 		<control caption="Shareaza skapar en förhandsvisning för följande nedladdning:" />
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="(kopierar nedladdade stycken till en ny förhandsvisningsfil)" />
 		<control caption="Avbryt" />
 	</dialog>
@@ -4116,7 +4177,10 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<control caption="OK"/>
 	</dialog>
 	<dialog name="CExistingFileDlg" cookie="StStStStStBuBuBuBuBuSt" caption="Eisterande fil">
-		<control/><control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
 		<control caption="Du har redan denna fil i ditt bibliotek. Vad vill du göra?" />
 		<control caption="Visa filen i mitt bibliotek" />
 		<control caption="Ladda ned filen igen" />
@@ -4138,7 +4202,8 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 	<dialog name="CDonkeyServersDlg" cookie="StStEdmsBuBu" caption="Ladda ned Server.met-fil">
 		<control/>
 		<control caption="Du kan ladda ned en eDonkey Server.met-fil från webben för att uppdatera din lokala serverlista." />
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="OK"/>
 		<control caption="Avbryt" />
 	</dialog>
@@ -4182,17 +4247,21 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<control caption="VARNING: Denna dialog tillhandahåller avancerade nedladdningsinställningar för avancerade användare. Felaktiga användning kan leda till korrupta filer." />
 		<control caption="Filnamn och stor_lek:"/>
 		<control caption="Fil_namn:" />
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Filstorlek (Byte):"/>
 		<control/>
 		<control caption="_URNs:"/>
 		<control caption="Pålitlig"/>
 		<control caption="SHA1:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Tiger-Root:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="ED2K:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="_Åtgärder:"/>
 		<control caption="Glöm nuvarande verifikationsstatus (och återverifiera)" />
 		<control caption="Anta att filen är 100% färdig och återverifiera" />
@@ -4261,7 +4330,8 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 	</dialog>
 	<dialog name="CDownloadGroupDlg" cookie="BuEdSyBuCoBuBuBuBuBuEdBu" caption="Egenskaper för nedladdningsgruppen">
 		<control caption="_Namn:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="_Filter:" />
 		<control/>
 		<control caption="_Lägg till" />
@@ -4291,7 +4361,8 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 	<dialog name="CDownloadReviewDlg" cookie="StBuSyEd" caption="Ladda ner recensioner">
 		<control/>
 		<control caption="OK"/>
-		<control/><control/>
+		<control/>
+		<control/>
 	</dialog>
 	<dialog name="CDecodeMetadataDlg" cookie="BuBuStCo" caption="Metadatalokalisering">
 		<control caption="OK"/>

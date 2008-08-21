@@ -408,6 +408,7 @@
       <button id="ID_CHAT_CONNECT" text="إتصال" visible="false" />
       <button id="ID_CHAT_DISCONNECT" text="قطع الإتصال" />
     </toolbar>
+	<!-- WEBSERVICES -->
     <!--نافذة عارض الصور-->
     <toolbar name="ImageViewer_Toolbar">
       <button id="ImageViewer_BestFit" text="أفضل تناسب" />
@@ -1752,14 +1753,10 @@
       </styles>
       <text format="b">اهلا بك في مدير إعدادات Shareaza</text>
       <newline gap="16" />
-      <text>
-			يسمح مدير إعدادات Shareaza للمستخدمين المتقدمين بالتخصيص كيفية عمل
-			بالكامل . الإعدادات في قسم
-		</text>
+      <text>يسمح مدير إعدادات Shareaza للمستخدمين المتقدمين بالتخصيص كيفية عمل
+			بالكامل . الإعدادات في قسم</text>
       <text format="b">عام</text>
-      <text>
-			يتعلق بتجربة المستخدم
-		</text>
+      <text>يتعلق بتجربة المستخدم</text>
       <newline gap="16" indent="16" />
       <link target="raza:page:CGeneralSettingsPage" format="b">عام:</link>
       <gap size="4" />
@@ -3621,17 +3618,7 @@
       <control />
       <control caption="Shareaza إبدأ الإستعمال" />
     </dialog>
-    <dialog name="CWizardInterfacePage" cookie="StBuBuBuStStBuBu" caption="Shareaza مرحبا بك مع">
-      <control caption="شير-أزا يدعم واجهة المستخدم المرنة ، لذا يمكنك أن تختار الواجهة التي تريحك . يمكنك أن تغير هذه الخيارات في أي وقت كان" />
-      <control caption=":الرجاء تحديد الواجهة" />
-      <control caption="النمط العادي" />
-      <control caption="النمط المتقدم" />
-      <control caption="القوائم و الأزرار سهلة الإستعمال و بسيطة .{n}مألوفة للمستخدمين الذين لديهم برامج مشاركة أخرى" />
-      <control caption="النمط المتقدم للمستخدمين الخبراء بالأوامر المتعددة{n}ربما يكون هذا النمط صعبا نوعا للمستخدمين الجدد" />
-      <control caption="عرض أشرطة بسيطة لتقدم التحميل . (تخفض من إستعمال وحدة المعالج المركزية) ـ" />
-      <control caption="torrent معالجة روابط" />
-    </dialog>
-    <dialog name="CWizardConnectionPage" cookie="StStCoStCoStCoStCoStms" caption="[ـ [3 من 7 Shareaza مرحبا بكم في">
+    <dialog name="CWizardConnectionPage" cookie="StStCoStCoStCoStCoStms" caption="(1/6) _ Shareaza مرحبا بكم في">
       <control caption="للإتصال بالإنترنت Shareaza لأداء مثالي ، يجب إعداد" />
       <control caption=":إختر نوع إتصال الإنترنت" />
       <control caption="مودم طلب هاتفي|ISDN|ADSL (256ك)|ADSL (512ك)|ADSL (768ك)|ADSL (1.5م)|ADSL (4.0م)|ADSL2 (8.0م)|ADSL2 (12.0م)|ADSL2+ (24.0م)|مودم كيبل/SDSL|T1|T3|LAN|OC3" />
@@ -3644,7 +3631,7 @@
       <control caption=":الحالة" />
       <control />
     </dialog>
-    <dialog name="CWizardSharePage" cookie="StStStSyBuBuSt" caption="[ـ [4 من 7 Shareaza مرحبا بكم في">
+    <dialog name="CWizardSharePage" cookie="StStStSyBuBuSt" caption="(2/6) _ Shareaza مرحبا بكم في">
       <control caption="شبكات النظير إلى النظير هي فقط صالحة إذا كان من يستخدمها إنسان صالح . كل المحتوبات المتوفر للتحميل يتم مشاركتها مع مستخدمين آخرين" />
       <control caption="ليس من الضروري أن تشارك من أجل إستعمال شير-أزا و من ناحية أخرى فهناك بعض البرامج تتصرف بشكل مختلف مع المستخدمين الذين لا يشاركون بأي شئ" />
       <control caption="الرجاء تعيين المجلدات المراد المشاركة بها إن وجدت . أنقر زر إضافة لإضافة أي مجلد جديد" />
@@ -3662,7 +3649,7 @@
       <control caption="0" />
       <control caption="إغلاق" />
     </dialog>
-    <dialog name="CWizardProfilePage" cookie="StStEdStCoCoStCoCo" caption="[ـ [5 من 7 Shareaza مرحبا بكم في">
+    <dialog name="CWizardProfilePage" cookie="StStEdStCoCoStCoCo" caption="(3/6) _ Shareaza مرحبا بكم في">
       <control caption="يعتبر شير-أزا المكان الأكثر ودية عندما يكتب أي شخص بضعة تفاصيل أساسية حول نفسه" />
       <control caption="أنا إسمي:" />
       <control />
@@ -3673,7 +3660,17 @@
       <control />
       <control />
     </dialog>
-    <dialog name="CWizardNetworksPage" cookie="StBuStBuStBuSt" caption="[ـ [6 من 7 Shareaza مرحبا بكم في">
+    <dialog name="CWizardInterfacePage" cookie="StBuBuBuStStBuBu" caption="(4/6) _ Shareaza مرحبا بك مع">
+      <control caption="شير-أزا يدعم واجهة المستخدم المرنة ، لذا يمكنك أن تختار الواجهة التي تريحك . يمكنك أن تغير هذه الخيارات في أي وقت كان" />
+      <control caption=":الرجاء تحديد الواجهة" />
+      <control caption="النمط العادي" />
+      <control caption="النمط المتقدم" />
+      <control caption="القوائم و الأزرار سهلة الإستعمال و بسيطة .{n}مألوفة للمستخدمين الذين لديهم برامج مشاركة أخرى" />
+      <control caption="النمط المتقدم للمستخدمين الخبراء بالأوامر المتعددة{n}ربما يكون هذا النمط صعبا نوعا للمستخدمين الجدد" />
+      <control caption="عرض أشرطة بسيطة لتقدم التحميل . (تخفض من إستعمال وحدة المعالج المركزية) ـ" />
+      <control caption="torrent معالجة روابط" />
+    </dialog>
+    <dialog name="CWizardNetworksPage" cookie="StBuStBuStBuSt" caption="(5/6) _ Shareaza مرحبا بكم في">
       <control caption="شير-أزا هو تطبيق لمشاركة الملفات بشكا عام حيث يمكنه الدخول على العديد من شبكات النظير إلى النظبر في نفس الوقت . هنا يمكنك أن تختار الشبكات المراد الدخول إليها . ملاحظة : يمكنك أن تختار شبكات مختلفة دائما فيما بعد" />
       <control caption="(مهم جدا) Gnutella2 الإتصال بـ" />
       <control caption="شبكة نيتيللاGnutella هي الشبكة الرئيسية لبرنامج شير-أزا ، فهي تقدم مميزات و أداء أكثر من أي شبكة أخرى" />
@@ -3690,7 +3687,7 @@
       <control />
       <control caption="إغلاق" />
     </dialog>
-    <dialog name="CWizardFinishedPage" cookie="StStStBuBuBuSt" caption="[ـ [7 من 7 Shareaza مرحبا بكم في">
+    <dialog name="CWizardFinishedPage" cookie="StStStBuBuBuSt" caption="(6/6) _ Shareaza مرحبا بكم في">
       <control caption="ليعمل على كمبيوترك Shareaza هذا كل شيء . تم تكوين" />
       <control caption="عندما تحتاج إلى تغيير إعداداتك ، يمكنك تشغيل معالج البدء السريع هذا مرة أخرى من قائمة أدوات" />
       <control caption="بعد إغلاق هذا المعالج بواسطة النقر على زر إنهاء ، يمكنك الإتصال بالشبكات التي قمت بتحديدها و تبدأ البحث عن الملفات و تحميلها" />

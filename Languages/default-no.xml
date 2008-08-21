@@ -45,6 +45,7 @@
 		<button id="ID_TAB_SEARCH" text="Søk"/>
 		<button id="ID_TAB_TRANSFERS" text="Overføringer"/>
 		<button id="ID_TAB_NETWORK" text="Nettverk"/>
+		<button id="ID_TAB_IRC" text="IRC"/>
 	</toolbar>
 	<toolbar name="CMainWnd.Windowed">
 		<button id="ID_NETWORK_CONNECT" text="Koble til"/>
@@ -57,6 +58,7 @@
 		<button id="ID_VIEW_UPLOADS"/>
 		<button id="ID_VIEW_LIBRARY"/>
 		<button id="ID_VIEW_MEDIA"/>
+		<button id="ID_TAB_IRC"/>
 		<button id="ID_VIEW_SECURITY"/>
 		<button id="ID_VIEW_HOSTS"/>
 		<button id="ID_VIEW_DISCOVERY"/>
@@ -407,6 +409,8 @@
 		<button id="ID_CHAT_CONNECT" text="Koble til" visible="false"/>
 		<button id="ID_CHAT_DISCONNECT" text="Koble fra"/>
 	</toolbar>
+	<!-- WEBSERVICES -->
+	<!-- IMAGE VIEWER ? -->
 </toolbars>
 
 <!-- Menu Definitions -->
@@ -1737,10 +1741,14 @@
 		<text>Din profil. Egenskaper for samtale og meldinger.</text>
 		<newline gap="10"/>
 
+		<link target="raza:page:CIRCSettingsPage" format="b">IRC:</link>
+		<gap size="4"/>
+		<text>IRC chatroom visual appearance and connection settings.</text>
+		<newline gap="10"/>
+
 		<link target="raza:page:CWebSettingsPage" format="b">Internett:</link>
 		<gap size="4"/>
 		<text>Endre Shareaza slik at du automatisk starter nedlastinger fra Internett Explorer.</text>
-		<newline gap="10"/>
 
 	</document>
 
@@ -1785,6 +1793,9 @@
 		<gap size="4"/>
 		<text>Sett opp Shareaza slik at du kan kjøre programmet gjennom en vanlig Internett browser.</text>
 		<newline gap="10"/>
+		<link target="raza:page:CSchedulerSettingsPage" format="b">Scheduler:</link>
+		<gap size="4"/>
+		<text>Limit download connections based on a periodic schedule.</text>
 
 	</document>
 
@@ -3187,7 +3198,8 @@
 		<control caption="Verktøytips:"/>
 		<control/>
 		<control caption="Forsinkelse:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Uklarhet:"/>
 		<control/>
 		<control caption="_Systemfeltet:"/>
@@ -3205,10 +3217,12 @@
 		<control caption="La andre utforske mine filer"/>
 		<control caption="Nye filer:"/>
 		<control caption="Husk:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="filer"/>
 		<control caption="Opp til:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="dager"/>
 		<control caption="Slett historie nå"/>
 		<control caption="_Sikre å åpne:"/>
@@ -3220,7 +3234,8 @@
 		<control caption="_Legg til"/>
 		<control caption="_Fjern"/>
 		<control caption="Lagre _samlinger her:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Create ghost files when deleting"/>
 	</dialog>
 
@@ -3288,28 +3303,36 @@
 		<control caption="Ignorer private/lokale IP-adresser"/>
 		<control caption="_Tidsavbrudd:"/>
 		<control caption="Tilkobling:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Håndtrykk:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 	</dialog>
 
 	<dialog name="CDownloadsSettingsPage" cookie="BuEdBuBuEdBuBuStEdmsStEdmsStEdmsBuStCoStCoBuBu" caption="Nedlastinger">
 		<control caption="Lagre _ferdige filer her:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Lagre _midlertidige filer her:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="_Antall nedlastinger:"/>
 		<control caption="Maks filer:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Maks overføringer:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Overføringer per fil:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Grenser:"/>
 		<control caption="Nedlastingsbåndbredde:"/>
 		<control/>
 		<control caption="Maksimalt antall i kø:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Last bare opp og ned til nettverk som er tilkoblet."/>
 	</dialog>
 
@@ -3319,7 +3342,8 @@
 		<control caption="Begrens deling i hub-modus"/>
 		<control caption="Del forhåndsviste filer"/>
 		<control caption="Grense per unike vert:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="_Programfilter:"/>
 		<control/>
 		<control caption="+"/>
@@ -3353,7 +3377,8 @@
 	<dialog name="CSchedulerSettingsPage" cookie="BuBuEdmsBuBuStStStStStStStStStStStEdBuSt" caption="Planlegger">
 		<control caption="_Innstillinger:"/>
 		<control caption="_Aktiver planlegger"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Koble kun til G2 når begrenset"/>
 		<control caption="Valg:"/>
 		<control caption="Søn"/>
@@ -3396,11 +3421,14 @@
 		<control caption="Optimal|Leaf|Hub"/>
 		<control caption="G_2-tilkoblinger:"/>
 		<control caption="Leaf til Hub:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Hub til Leaf:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Hub til Hub:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Gnutella1-nettverket:"/>
 		<control caption="Koble alltid til Gnutella1"/>
 		<control caption="Koble til Gnutella1 i dag"/>
@@ -3408,11 +3436,14 @@
 		<control caption="Optimal|Leaf|Ultrapeer"/>
 		<control caption="G_1-tilkoblinger:"/>
 		<control caption="Leaf til Ultrapeer:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Ultrapeer til Leaf:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Peer til Peer:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="_Linkkompressjon:"/>
 		<control caption="Hub til Leaf"/>
 		<control caption="Leaf til Hub"/>
@@ -3426,11 +3457,13 @@
 		<control caption="_Globalt søk:"/>
 		<control caption="Søk kjente fjern-servere i server-cachen:"/>
 		<control caption="Stopp søket etter"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="søkeresultater"/>
 		<control caption="_Klientkoblinger:"/>
 		<control caption="Koble til maksimalt"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="andre eDonkey-klienter."/>
 		<control caption="eDonkey2000 _verktøy:"/>
 		<control caption="Importer uferdige nedlastinger fra eDonkey/eMule (.part):"/>
@@ -3443,19 +3476,25 @@
 		<control caption="Grensesnitt:"/>
 		<control caption="Vis flere BitTorrent grensesnitts-elementer"/>
 		<control caption="Nedlastingskoblinger:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="_Samtidige torrenter"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Klienttilkoblinger"/>
 		<control caption="&#160;Fjern nedlastede torrenter&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;Når delingsraten når"/>
-		<control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
 		<control caption="&#160;Foretrekk torrent-kilder"/>
 		<control caption="_EndGame:"/>
 		<control caption="Skru på EndGame-modus når torrenter blir ferdige"/>
 		<control caption="Lagre Torrenter her:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Program for å lage torrenter"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="_Standard Tracker:"/>
 		<control/>
 	</dialog>
@@ -3494,7 +3533,8 @@
 		<control/>
 		<control caption="Egenskaper:"/>
 		<control caption="Verdi:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Beskrivelse:"/>
 		<control/>
 	</dialog>
@@ -3517,24 +3557,29 @@
 		<control caption="_Kapasitet:"/>
 		<control caption="Aktiver denne køen"/>
 		<control caption="Minimum antall overføringer:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Maks antall overføringer:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Maks antall ventende i kø:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="_Serviceparameter:"/>
 		<control caption="Mettet båndbredde-prosent:"/>
 		<control/>
 		<control caption="Opplastingsbåndbredde for denne køen:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Roter etter N sekunder:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="OK"/>
 		<control caption="Avbryt"/>
 		<control caption="Belønn opplastere"/>
 	</dialog>
 
-	<dialog name="CWizardWelcomePage" cookie="StStStStStStStStStStStSt" caption="">
+	<dialog name="CWizardWelcomePage" cookie="StStStStStStStStStStStSt" caption="Velkommen til Shareaza">
 		<control caption="Velkommen til Shareaza!"/>
 		<control caption="Hvis du ikke har brukt Shareaza eller et annen P2P-program før, vil innstillingsveiviseren guide deg gjennom innstillingene ved hjelp av et par enkle steg."/>
 		<control caption="Hvis du er en mer avansert bruker, kan du endre innstillingene via Shareazas verktøy-meny. Klikk avslutt for å lukke hjelperen når du ønsker det."/>
@@ -3549,19 +3594,7 @@
 		<control caption="Hvordan du vil starte Shareaza"/>
 	</dialog>
 
-	<dialog name="CWizardInterfacePage" cookie="StBuBuBuStStBuBuBu" caption="Velkommen til Shareaza [2 av 7]">
-		<control caption="Shareaza støtter to forskjellige brukergrensesnitt, så du selv kan velge det du liker best"/>
-		<control caption="Vennligst velg et av disse grensesnittene:"/>
-		<control caption="Normalmodus"/>
-		<control caption="Powermodus"/>
-		<control caption="Enkle menyer og store knapper. Liknende andre fildelingsprogrammer."/>
-		<control caption="Powermodus gir ekspertene mange ekstra kommandoer og vinduer o.l."/>
-		<control caption="Vis enkel fremgangsindikator for nedlasninger. (Reduserer bruk av CPU)"/>
-		<control caption="Vis utvidede torrent elementer."/>
-		<control caption="Åpne torrent linker."/>
-	</dialog>
-
-	<dialog name="CWizardConnectionPage" cookie="StCoStCoStCoStCoStCo" caption="Velkommen til Shareaza [3 av 7]">
+	<dialog name="CWizardConnectionPage" cookie="StCoStCoStCoStCoStCo" caption="Velkommen til Shareaza (1/6)">
 		<control caption="For optimal utnyttelse, trenger Shareaza å vite litt om tilkoblingen din."/>
 		<control caption="&#160;( vennligst velg )| Jeg bruker internett hjemme| Jeg bruker internett på et skolenettverk| Jeg bruker internett på en firmanettverk| Jeg bruker internett på et hotell eller flyplass"/>
 		<control caption="Er nettverket på skolen beskyttet av brannmur eller NAT-router?"/>
@@ -3574,7 +3607,7 @@
 		<control/>
 	</dialog>
 
-	<dialog name="CWizardSharePage" cookie="StStStSyBuBuSt" caption="Velkommen til Shareaza [4 av 7]">
+	<dialog name="CWizardSharePage" cookie="StStStSyBuBuSt" caption="Velkommen til Shareaza (2/6)">
 		<control caption="P2P-nettverket er kun så godt som det brukerne gjør det til. Alt du kan laste ned blir delt av en annen bruker."/>
 		<control caption="Du trenger ikke å dele noe for å bruke Shareaza, men andre programmer kan reagere forskjellig på brukere som ikke deler."/>
 		<control caption="Vennligst velg hvilke mapper, hvis noen, du vil dele. Klikk på Legg til knappen for å legge til en ny mappe."/>
@@ -3594,7 +3627,7 @@
 		<control caption="Lukk"/>
 	</dialog>
 
-	<dialog name="CWizardProfilePage" cookie="StStEdStCoCoStCoCo" caption="Velkommen til Shareaza [5 av 7]">
+	<dialog name="CWizardProfilePage" cookie="StStEdStCoCoStCoCo" caption="Velkommen til Shareaza (3/6)">
 		<control caption="Shareaza er en mye vennligere plass å være når alle skriver inn et par detaljer om seg selv."/>
 		<control caption="Jeg bruker navnet:"/>
 		<control/>
@@ -3602,10 +3635,23 @@
 		<control caption="&#160;(velg)"/>
 		<control caption="&#160;(velg)| gutt| jente| mann| kvinne"/>
 		<control caption="fra:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 	</dialog>
 
-	<dialog name="CWizardNetworksPage" cookie="StBuStBuStBuSt" caption="Velkommen til Shareaza [6 av 7]">
+	<dialog name="CWizardInterfacePage" cookie="StBuBuBuStStBuBuBu" caption="Velkommen til Shareaza (4/6)">
+		<control caption="Shareaza støtter to forskjellige brukergrensesnitt, så du selv kan velge det du liker best"/>
+		<control caption="Vennligst velg et av disse grensesnittene:"/>
+		<control caption="Normalmodus"/>
+		<control caption="Powermodus"/>
+		<control caption="Enkle menyer og store knapper. Liknende andre fildelingsprogrammer."/>
+		<control caption="Powermodus gir ekspertene mange ekstra kommandoer og vinduer o.l."/>
+		<control caption="Vis enkel fremgangsindikator for nedlasninger. (Reduserer bruk av CPU)"/>
+		<control caption="Vis utvidede torrent elementer."/>
+		<control caption="Åpne torrent linker."/>
+	</dialog>
+
+	<dialog name="CWizardNetworksPage" cookie="StBuStBuStBuSt" caption="Velkommen til Shareaza (5/6)">
 		<control caption="Shareaza er et avansert fildelingsprogram som kan koble seg til flere P2P nettverk på en gang.  Her kan du velge hvilke nettverk du vil koble til. Husk at du kan endre dette senere også."/>
 		<control caption="Koble til Gnutella2 (høyst anbefalt)"/>
 		<control caption="Gnutella2 nettverket er hovednettverket til Shareaza, et nettverk som har flere egenskaper og høyere utnyttelse en noen andre P2P nett."/>
@@ -3624,7 +3670,7 @@
 		<control caption="Lukk"/>
 	</dialog>
 
-	<dialog name="CWizardFinishedPage" cookie="StStStBuBuBuSt" caption="Velkommen til Shareaza [7 av 7]">
+	<dialog name="CWizardFinishedPage" cookie="StStStBuBuBuSt" caption="Velkommen til Shareaza (6/6)">
 		<control caption="Ferdig!  Shareaza er nå satt opp til å virke på din pc."/>
 		<control caption="Hvis du trenger å endre på innstillingene, kan du kjøre veiviseren på nytt fra Verktøy menyen."/>
 		<control caption="Etter at du har lukket veiviseren ved å trykke på Fullfør, kan du koble til nettverkene du valgte og starte søk etter det du vil laste ned"/>
@@ -3647,7 +3693,8 @@
 		<control caption="Kallenavn:"/>
 		<control/>
 		<control caption="Ekte navn:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="_Info:"/>
 		<control caption="|Mann|Kvinne"/>
 		<control caption="Kjønn:"/>
@@ -3735,7 +3782,8 @@
 
 	<dialog name="CConnectToDlg" cookie="BuCoEdBuCoBuBuBu" caption="Koble Til|Utforsk vert">
 		<control caption="Start en ny kobling til vert eller tjener:|Utforsk denne verten:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Nettverks_protokoll:"/>
 		<control caption="Gnutella1 (auto)|Gnutella2 (auto)|eDonkey2000"/>
 		<control caption="_Reduser ultrapeer"/>
@@ -3744,7 +3792,8 @@
 	</dialog>
 
 	<dialog name="CDownloadDlg" cookie="StStStEdBuBuStStBu" caption="Last ned fil eller torrent">
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Å laste ned filer med Shareaza er lett. Bare skriv inn URL eller URI som beskriver filen i vinduet under og trykk Enter."/>
 		<control/>
 		<control caption="Last ned"/>
@@ -3755,7 +3804,8 @@
 	</dialog>
 
 	<dialog name="CNewSearchDlg" cookie="EdCoBuBu" caption="Nytt søk|Søk på nytt|Finn i mine filer">
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Søk"/>
 		<control caption="Avbryt"/>
 	</dialog>
@@ -3770,7 +3820,8 @@
 		<control caption="Maks:"/>
 		<control/>
 		<control caption="Minst"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="kilder."/>
 		<control caption="_Skjul:"/>
 		<control caption="Opptatt vert"/>
@@ -3810,7 +3861,9 @@
 	<dialog name="CDownloadMonitorDlg" cookie="StStStStStStStStStStStStStBuBuBuBuBu" caption="Nedlasting : Shareaza">
 		<control caption="Shareaza laster ned:"/>
 		<control caption="..."/>
-		<control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
 		<control caption="Hastighet:"/>
 		<control caption="..."/>
 		<control caption="Gjenstående tid:"/>
@@ -3828,7 +3881,10 @@
 
 	<dialog name="CFileGeneralPage" cookie="StEdEdEdEdStStEdStEdStEdStEdEdEd" caption="Generelt">
 		<control caption="Universelt Ressurs Navn (URN)"/>
-		<control/><control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
 		<control caption="Egenskaper"/>
 		<control caption="Plassering:"/>
 		<control/>
@@ -3837,11 +3893,14 @@
 		<control caption="Endret:"/>
 		<control/>
 		<control caption="Størrelse:"/>
-		<control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
 	</dialog>
 
 	<dialog name="CFileMetadataPage" cookie="CoEd" caption="Metadata">
-		<control/><control/>
+		<control/>
+		<control/>
 	</dialog>
 
 	<dialog name="CFileCommentsPage" cookie="StStCoStEdEd" caption="Min karakter">
@@ -3849,7 +3908,8 @@
 		<control caption="Karakter:"/>
 		<control caption="(Ingen karakter)|Falsk/Korrupt/Missvisende|Dårlig|Moddels|God|Veldig god|Utmerket"/>
 		<control caption="Mine karakter og kommentarer"/>
-		<control/><control/>
+		<control/>
+		<control/>
 	</dialog>
 
 	<dialog name="CFileSharingPage" cookie="StBuBuBuStCoStSyEd" caption="Deling">
@@ -3860,13 +3920,15 @@
 		<control caption="Opplastingskø-karakteristikk"/>
 		<control/>
 		<control caption="Skal deles på nettverkene "/>
-		<control/><control/>
+		<control/>
+		<control/>
 	</dialog>
 
 	<dialog name="CFileSourcesPage" cookie="StStEdSyBuBuEd" caption="Kilder">
 		<control caption="Kjente kilder"/>
 		<control caption="Legg til kilde"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="_Legg til"/>
 		<control caption="_Fjern"/>
 		<control/>
@@ -3874,7 +3936,8 @@
 
 	<dialog name="CFileCopyDlg" cookie="StStmsBuBumsStSt" caption="Kopier filer|Flytt filer">
 		<control caption="Du har valgt %i file(r) som skal kopieres til denne mappen:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="OK"/>
 		<control caption="Avbryt"/>
 		<control/>
@@ -3904,7 +3967,8 @@
 		<control caption="Forklaring"/>
 		<control caption="Frekvens:"/>
 		<control caption="Oppdateringsfrekvens: "/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="ms"/>
 		<control caption="_Navn:"/>
 		<control/>
@@ -3916,7 +3980,8 @@
 		<control caption="OK"/>
 		<control caption="Avbryt"/>
 		<control caption="_Kilde:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Parameter:"/>
 		<control caption="Enheter:"/>
 		<control/>
@@ -3927,7 +3992,8 @@
 	</dialog>
 
 	<dialog name="CSchemaColumnsDlg" cookie="CoSyBuBuSt" caption="Velg kolonner fra skjema">
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="OK"/>
 		<control caption="Avbryt"/>
 		<control caption="Velgt et skjema fra listen, deretter velg felt som skal vises som kolonner."/>
@@ -3941,9 +4007,15 @@
 		<control/>
 		<control caption="_Nettverksadresse:"/>
 		<control caption="IP adresse:"/>
-		<control/><control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
 		<control caption="Nettmaske:"/>
-		<control/><control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
 		<control caption="_Innholdsfilter:"/>
 		<control/>
 		<control caption="Match tilfeldig"/>
@@ -3976,7 +4048,9 @@
 	<dialog name="CURLCopyDlg" cookie="StStStStStBuBu" caption="Kopier URI">
 		<control/>
 		<control caption="Du kan kopiere en URI til valgte objekt på flere forskjellige måter.  Vennligst velg en av URI-typene du ønsker å bruke under:"/>
-		<control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
 		<control caption="Inkluder _meg som en fast kilde i URL"/>
 		<control caption="Avbryt"/>
 	</dialog>
@@ -4000,7 +4074,10 @@
 		<control caption="Du har klikket på en Shareaza URI som peker til innholdet på nettverket:"/>
 		<control caption="Du har klikket en Shareaza URL som vil koble deg til denne verten eller denne serveren:"/>
 		<control caption="Du har klikket på en Shareaza URI som vil gi deg muligheten til å utforske filene på denne verten:"/>
-		<control/><control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
 		<control caption="Vennligst velg hvordan du vil Shareaza skal reagere:"/>
 		<control caption="_Last ned nå"/>
 		<control caption="_Søk etter fil"/>
@@ -4022,7 +4099,8 @@
 	<dialog name="CFilePreviewDlg" cookie="StStStmsStBu" caption="Smart forhåndsvisning...">
 		<control/>
 		<control caption="Shareaza lager en forhåndsvisning av filen:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="(kopierer nedlastede deler til en ny forhåndsvisning)"/>
 		<control caption="Avbryt"/>
 	</dialog>
@@ -4050,7 +4128,10 @@
 	</dialog>
 
 	<dialog name="CExistingFileDlg" cookie="StStStStStBuBuBuBuBuSt" caption="Laste ned fil på nytt">
-		<control/><control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
 		<control caption="Du har allerede denne filen i mine filer. Hva vil du gjøre?"/>
 		<control caption="Vis filen i mine filer"/>
 		<control caption="Last ned filen på nytt"/>
@@ -4073,7 +4154,8 @@
 	<dialog name="CDonkeyServersDlg" cookie="StStEdmsBuBu" caption="Last ned server.met fil">
 		<control/>
 		<control caption="Du kan laste ned en eDonkey2000 server.met fil fra nettet for å oppdatere listen med servere."/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="OK"/>
 		<control caption="Avbryt"/>
 	</dialog>
@@ -4171,7 +4253,8 @@
 
 	<dialog name="CDownloadGroupDlg" cookie="BuEdSyBuCoBuBuBuBuBuEdBu" caption="Gruppeegenskaper">
 		<control caption="Navn:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Filter:"/>
 		<control/>
 		<control caption="Legg til"/>
@@ -4204,7 +4287,8 @@
 	<dialog name="CDownloadReviewDlg" cookie="StBuSyEd" caption="Omtaler av nedlasting">
 		<control/>
 		<control caption="OK"/>
-		<control/><control/>
+		<control/>
+		<control/>
 	</dialog>
 
 	<dialog name="CDecodeMetadataDlg" cookie="BuBuStCo" caption="Lokalisering av metadata">

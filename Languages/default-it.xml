@@ -407,6 +407,7 @@
 		<button id="ID_CHAT_CONNECT" text="Connetti" visible="false"/>
 		<button id="ID_CHAT_DISCONNECT" text="Disconnetti"/>
 	</toolbar>
+	<!-- WEBSERVICES -->
 	<!-- IMAGE VIEWER WINDOW -->
 	<toolbar name="ImageViewer_Toolbar">
 		<button id="ImageViewer_BestFit" text="Adatta dimensioni"/>
@@ -1667,18 +1668,18 @@
 		<text group="24" align="middle" id="G2Hubs">%i hub</text>
 		<text group="25" align="middle" id="G2Leaves">%i permessi</text>
 		<newline group="20" gap="2"/>
-		<icon group="30" command="ID_NETWORK_ED2K"/><gap group="30" size="4"/>
-		<text group="30" align="middle" format="b">eDonkey: </text>
-		<text group="31" align="middle">Disconnesso</text>
-		<text group="32" align="middle">Connessione...</text>
-		<text group="33" align="middle">Connesso</text>
-		<newline group="30" gap="2"/>
 		<icon group="10" command="ID_NETWORK_G1"/><gap group="10" size="4"/>
 		<text group="10" align="middle" format="b">Gnutella1: </text>
 		<text group="11" align="middle">Disconnesso</text>
 		<text group="12" align="middle">Connessione...</text>
 		<text group="13" align="middle">Connesso</text>
 		<newline group="10" gap="2"/>
+		<icon group="30" command="ID_NETWORK_ED2K"/><gap group="30" size="4"/>
+		<text group="30" align="middle" format="b">eDonkey: </text>
+		<text group="31" align="middle">Disconnesso</text>
+		<text group="32" align="middle">Connessione...</text>
+		<text group="33" align="middle">Connesso</text>
+		<newline group="30" gap="2"/>
 		<group id="2">
 			<para align="center">
 				<newline gap="6"/>
@@ -1761,10 +1762,13 @@
 		<gap size="4"/>
 		<text>Il tuo profilo, chat e le configurazioni per la messaggeria istantanea.</text>
 		<newline gap="10"/>
+		<link target="raza:page:CIRCSettingsPage" format="b">IRC:</link>
+		<gap size="4"/>
+		<text>IRC chatroom visual appearance and connection settings.</text>
+		<newline gap="10"/>
 		<link target="raza:page:CWebSettingsPage" format="b">Web:</link>
 		<gap size="4"/>
 		<text>Integra Shareaza con il tuo browser Internet in modo da accettare i collegamenti peer-to-peer e scaricarne i contenuti.</text>
-		<newline gap="10"/>
 	</document>
 	<document name="CInternetSettingsGroup" title="Internet" leftMargin="8" topMargin="8">
 		<styles>
@@ -1774,15 +1778,10 @@
 		</styles>
 		<text format="b">Benvenuto nel gestore delle configurazioni di Shareaza</text>
 		<newline gap="16"/>
-		<text>
-			Il gestore delle configurazioni permette agli utenti esperti di personalizzare completamente Shareaza.
-			Le configurazioni nella sezione
-		</text>
+		<text>Il gestore delle configurazioni permette agli utenti esperti di personalizzare completamente Shareaza.
+			Le configurazioni nella sezione	</text>
 		<text format="b">Internet </text>
-		<text>
-			controllano come Shareaza interagisce con altri nodi all'interno delle
-			reti peer to peer.
-		</text>
+		<text>controllano come Shareaza interagisce con altri nodi all'interno delle reti peer to peer.</text>
 		<newline gap="16" indent="16"/>
 		<link target="raza:page:CConnectionSettingsPage" format="b">Connessione:</link>
 		<gap size="4"/>
@@ -1800,6 +1799,9 @@
 		<gap size="4"/>
 		<text>Configura la funzione di controllo remoto di Shareaza tramite un web browser.</text>
 		<newline gap="10"/>
+		<link target="raza:page:CSchedulerSettingsPage" format="b">Scheduler:</link>
+		<gap size="4"/>
+		<text>Limit download connections based on a periodic schedule.</text>
 	</document>
 	<!-- Browse User Profile -->
 	<document name="CBrowseHostProfile.1">
@@ -3203,7 +3205,8 @@
 		<control caption="T_ooltip:"/>
 		<control/>
 		<control caption="Ritardo (ms):"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Opacità:"/>
 		<control/>
 		<control caption="_Barra:"/>
@@ -3220,10 +3223,12 @@
 		<control caption="Permetti di vedere i tuoi file"/>
 		<control caption="_File recenti:"/>
 		<control caption="Memorizza:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="file"/>
 		<control caption="Fino a:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="giorni"/>
 		<control caption="Cancella cronologia"/>
 		<control caption="Estensioni _sicure:"/>
@@ -3235,7 +3240,8 @@
 		<control caption="A_ggiungi"/>
 		<control caption="Ri_muovi"/>
 		<control caption="Salva _collezioni qui:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Crea file fantasma durante la cancellazione"/>
 	</dialog>
 	<dialog name="CMediaSettingsPage" cookie="BuCoBuBuBuCoBuBuBuBuBuStSt" caption="Media player">
@@ -3301,27 +3307,35 @@
 		<control caption="Abilita l'impostazione dei dispositivi UPnP"/>
 		<control caption="_Timeout:"/>
 		<control caption="Connessione:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Negoziazione:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 	</dialog>
 	<dialog name="CDownloadsSettingsPage" cookie="BuEdBuBuEdBuBuStEdmsStEdmsStEdmsBuStCoStCoBuBu" caption="Download">
 		<control caption="Cartella dei file _completati:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Cartella dei file _incompleti temporanei:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="_Numero di download:"/>
 		<control caption="File massimi:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Download massimi:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Fonti per file:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="_Limiti:"/>
 		<control caption="Banda totale di download:"/>
 		<control/>
 		<control caption="Lunghezza massima di coda:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Scarica e invia file solo alle reti connesse."/>
 	</dialog>
 	<dialog name="CUploadsSettingsPage" cookie="BuBuBuBuStEdmsBuCoBuBuBuStCoStCoBuSyBuBuBuSt" caption="Upload">
@@ -3330,7 +3344,8 @@
 		<control caption="Limita condivisione in modalità hub"/>
 		<control caption="Condividi file di anteprima"/>
 		<control caption="Limite per singolo host:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Filtro _User-Agent:"/>
 		<control/>
 		<control caption="+"/>
@@ -3362,7 +3377,8 @@
 	<dialog name="CSchedulerSettingsPage" cookie="BuBuEdmsBuBuStStStStStStStStStStStEdBuSt" caption="Scheduler">
 		<control caption="Opzioni:"/>
 		<control caption="_Abilita schedulatore"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="_Connetti solo a G2 quando limitato"/>
 		<control caption="Chiave:"/>
 		<control caption="Dom"/>
@@ -3403,11 +3419,14 @@
 		<control caption="Ottimale|Leaf|Hub"/>
 		<control caption="Connessioni G_2:"/>
 		<control caption="Leaf a Hub:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Hub a Leaf:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Hub a Hub:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Rete Gnutella1:"/>
 		<control caption="Connetti sempre a Gnutella1"/>
 		<control caption="Connetti a Gnutella1 oggi"/>
@@ -3415,11 +3434,14 @@
 		<control caption="Ottimale|Leaf|Ultrapeer"/>
 		<control caption="Connessioni G_1:"/>
 		<control caption="Leaf a Ultrapeer:"/>		
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Ultrapeer a Leaf:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Peer a Peer:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="_Compressione collegamento:"/>
 		<control caption="Hub a Leaf"/>
 		<control caption="Leaf a Hub"/>
@@ -3432,12 +3454,14 @@
 		<control caption="Ricerca _globale:"/>
 		<control caption="Cerca server remoti conosciuti nella cache dei server:"/>
 		<control caption="Termina la ricerca dopo:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="risultati di ricerca."/>
 		<control caption="Ricevi una lista di server aggiornata dal server connesso"/>
 		<control caption="_Connessioni al client:"/>
 		<control caption="Connetti a meno di:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="client di eDonkey."/>
 		<control caption="_Strumenti eDonkey:"/>
 		<control caption="Scarica la lista dei server eDonkey dal web:"/>
@@ -3447,19 +3471,25 @@
 		<control caption="_Interfaccia:"/>
 		<control caption="Mostra elementi addizionali dell'interfaccia di BitTorrent"/>
 		<control caption="_Connessioni di download:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Torrent in contemporanea"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Connessioni del client"/>
 		<control caption="&#160;Nascondi torrent completati&#160;&#160;&#160;&#160;&#160;&#160;&#160;Quando il rapporto di cond. è"/>
-		<control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
 		<control caption="&#160;Priorità alle fonti torrent"/>
 		<control caption="_EndGame:"/>
 		<control caption="Abilita modalità EndGame nel completare il torrent"/>
 		<control caption="_Salva torrent qui:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="_Generatore di torrent"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Tracker di default:"/>
 		<control/>
 	</dialog>
@@ -3494,7 +3524,8 @@
 		<control/>
 		<control caption="Regolazione delle proprietà:"/>
 		<control caption="Valore:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Descrizione:"/>
 		<control/>
 	</dialog>
@@ -3518,18 +3549,23 @@
 		<control caption="C_apacità:"/>
 		<control caption="Abilita questa coda"/>
 		<control caption="Numero minimo di trasferimenti:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Numero massimo di trasferimenti:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Numero massimo di attesa in coda:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Parametri di _servizio:"/>
 		<control caption="Percentuale banda saturata:"/>
 		<control/>
 		<control caption="Banda di upload per questa coda:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Ruota dopo N secondi:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="OK"/>
 		<control caption="Annulla"/>
 		<control caption="Ricompensa gli uploader"/>
@@ -3548,17 +3584,7 @@
 		<control/>
 		<control caption="Iniziare ad usare Shareaza"/>
 	</dialog>
-	<dialog name="CWizardInterfacePage" cookie="StBuBuBuStStBuBu" caption="Benvenuto su Shareaza">
-		<control caption="Shareaza supporta un'interfaccia utente flessibile, così puoi scegliere quella più confortevole per te. Puoi cambiare queste opzioni in qualunque momento."/>
-		<control caption="Seleziona l'interfaccia utente:"/>
-		<control caption="Modalità normale"/>
-		<control caption="Modalità avanzata"/>
-		<control caption="Semplice con menu e pulsanti facili da usare.{n}Familiare agli utenti di altri programmi di condivisione file."/>
-		<control caption="La modalità avanzata offre agli utenti esperti comandi extra, finestre, ecc.{n}Può confondere i nuovi utenti!"/>
-		<control caption="Visualizza le barre dei progressi semplificate. (Riduce l'uso della CPU)"/>
-		<control caption="Gestisci collegamenti ai torrent."/>
-	</dialog>
-	<dialog name="CWizardConnectionPage" cookie="StStCoStCoStCoStCoStms" caption="Benvenuto su Shareaza [3 di 7]">
+	<dialog name="CWizardConnectionPage" cookie="StStCoStCoStCoStCoStms" caption="Benvenuto su Shareaza (1/6)">
 		<control caption="Per prestazioni ottimali, Shareaza ha bisogno di avere informazioni sulla tua connessione a internet."/>
 		<control caption="Scegli il tipo della tua connessione a internet:"/>
 		<control caption="Modem analogico|ISDN|ADSL (256K)|ADSL (512K)|ADSL (768K)|ADSL (1.5M)|ADSL (4.0M)|ADSL2 (8.0M)|ADSL2 (12.0M)|ADSL2+ (24.0M)|Modem via cavo/SDSL|T1|T3|LAN|OC3"/>
@@ -3571,7 +3597,7 @@
 		<control caption="Stato:"/>
 		<control/>
 	</dialog>
-	<dialog name="CWizardSharePage" cookie="StStStSyBuBuSt" caption="Benvenuto su Shareaza [4 di 7]">
+	<dialog name="CWizardSharePage" cookie="StStStSyBuBuSt" caption="Benvenuto su Shareaza (2/6)">
 		<control caption="Le reti P2P sono composte da persone che le utilizzano. Tutto il contenuto disponibile per il download è condiviso da altri utenti."/>
 		<control caption="Non devi necessariamente condividere per usare Shareaza, tuttavia ci sono programmi che si comportano diversamente con utenti che non condividono niente."/>
 		<control caption="Indica quali cartelle vuoi condividere. Clicca sul pulsante Aggiungi per aggiungere una nuova cartella."/>
@@ -3589,7 +3615,7 @@
 		<control caption="0"/>
 		<control caption="Chiudi"/>
 	</dialog>
-	<dialog name="CWizardProfilePage" cookie="StStEdStCoCoStCoCo" caption="Benvenuto su Shareaza [5 di 7]">
+	<dialog name="CWizardProfilePage" cookie="StStEdStCoCoStCoCo" caption="Benvenuto su Shareaza (3/6)">
 		<control caption="Shareaza ti permette di conoscere nuovi amici e di scambiare informazioni con loro, inserisci alcuni dettagli personali."/>
 		<control caption="Io uso il nome:"/>
 		<control/>
@@ -3597,9 +3623,20 @@
 		<control caption="&#160;(scegli)"/>
 		<control caption="&#160;(scegli)| ragazzo| ragazza| uomo| donna"/>
 		<control caption="da:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 	</dialog>
-	<dialog name="CWizardNetworksPage" cookie="StBuStBuStBuSt" caption="Benvenuto su Shareaza [6 di 7]">
+	<dialog name="CWizardInterfacePage" cookie="StBuBuBuStStBuBu" caption="Benvenuto su Shareaza (4/6)">
+		<control caption="Shareaza supporta un'interfaccia utente flessibile, così puoi scegliere quella più confortevole per te. Puoi cambiare queste opzioni in qualunque momento."/>
+		<control caption="Seleziona l'interfaccia utente:"/>
+		<control caption="Modalità normale"/>
+		<control caption="Modalità avanzata"/>
+		<control caption="Semplice con menu e pulsanti facili da usare.{n}Familiare agli utenti di altri programmi di condivisione file."/>
+		<control caption="La modalità avanzata offre agli utenti esperti comandi extra, finestre, ecc.{n}Può confondere i nuovi utenti!"/>
+		<control caption="Visualizza le barre dei progressi semplificate. (Riduce l'uso della CPU)"/>
+		<control caption="Gestisci collegamenti ai torrent."/>
+	</dialog>
+	<dialog name="CWizardNetworksPage" cookie="StBuStBuStBuSt" caption="Benvenuto su Shareaza (5/6)">
 		<control caption="Shareaza è un'applicazione generica per la condivisione dei file che può accedere a molte reti P2P nello stesso momento. Qui puoi selezionare a quali reti vuoi accedere. Da notare che puoi sempre selezionare differenti reti successivamente."/>
 		<control caption="Connetti a Gnutella2 (Fortemente raccomandato)"/>
 		<control caption="La rete Gnutella2 è la rete primaria di Shareaza, in quanto offre più funzionalità e prestazioni di qualsiasi altra rete P2P."/>
@@ -3616,7 +3653,7 @@
 		<control/>
 		<control caption="Chiudi"/>
 	</dialog>
-	<dialog name="CWizardFinishedPage" cookie="StStStBuBuBuSt" caption="Benvenuto su Shareaza [7 di 7]">
+	<dialog name="CWizardFinishedPage" cookie="StStStBuBuBuSt" caption="Benvenuto su Shareaza (6/6)">
 		<control caption="Complimenti! Shareaza è stato configurato con successo."/>
 		<control caption="Se vuoi cambiare le impostazioni, puoi riavviare questa configurazione guidata dal menu Strumenti."/>
 		<control caption="Dopo la chiusura di questa configurazione guidata cliccando su Fine, puoi connetterti alle reti selezionate e iniziare a cercare e a scaricare."/>
@@ -3637,7 +3674,8 @@
 		<control caption="Nickname:"/>
 		<control/>
 		<control caption="Nome vero:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="_Principali:"/>
 		<control caption="|Maschio|Femmina"/>
 		<control caption="Sesso:"/>
@@ -3716,7 +3754,8 @@
 	<dialog name="CLanguageDlg" cookie="" caption="Seleziona lingua"/>
 	<dialog name="CConnectToDlg" cookie="BuCoEdBuCoBuBuBu" caption="Connetti a|Esplora host">
 		<control caption="Avvia una nuova connessione con l'host o il server:|Esplora questo host:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="_Protocollo rete:"/>
 		<control caption="Gnutella1 (auto)|Gnutella2 (auto)|eDonkey"/>
 		<control caption="_Annulla ultrapeer"/>
@@ -3724,7 +3763,8 @@
 		<control caption="Annulla"/>
 	</dialog>
 	<dialog name="CDownloadDlg" cookie="StStStEdBuBuStStBu" caption="Scarica file o torrent">
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Scaricare qualsiasi file con Shareaza è semplice. Scrivi o incolla l'URL o URI che descrive il file nello spazio seguente e premi Invio."/>
 		<control/>
 		<control caption="Scarica"/>
@@ -3734,7 +3774,8 @@
 		<control caption="Apri _torrent..."/>
 	</dialog>
 	<dialog name="CNewSearchDlg" cookie="EdCoBuBu" caption="Nuova ricerca|Cerca ancora|Cerca nella libreria">
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Cerca"/>
 		<control caption="Annulla"/>
 	</dialog>
@@ -3749,7 +3790,8 @@
 		<control caption="Massime:"/>
 		<control/>
 		<control caption="Con almeno:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="fonti."/>
 		<control caption="_Nascondi:"/>
 		<control caption="Host occupati"/>
@@ -3786,7 +3828,9 @@
 	<dialog name="CDownloadMonitorDlg" cookie="StStStStStStStStStStStStStBuBuBuBuBu" caption="Download : Shareaza">
 		<control caption="Shareaza sta scaricando:"/>
 		<control caption="..."/>
-		<control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
 		<control caption="Velocità di trasferimento:"/>
 		<control caption="..."/>
 		<control caption="Tempo residuo stimato:"/>
@@ -3803,7 +3847,10 @@
 	</dialog>
 	<dialog name="CFileGeneralPage" cookie="StEdEdEdEdStStEdStEdStEdStEdEdEd" caption="Generale">
 		<control caption="Nome universale delle risorse (URN)"/>
-		<control/><control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
 		<control caption="Attributi file"/>
 		<control caption="Percorso:"/>
 		<control/>
@@ -3812,17 +3859,21 @@
 		<control caption="Modificato:"/>
 		<control/>
 		<control caption="Dimensione:"/>
-		<control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
 	</dialog>
 	<dialog name="CFileMetadataPage" cookie="CoEd" caption="Metadata">
-		<control/><control/>
+		<control/>
+		<control/>
 	</dialog>
 	<dialog name="CFileCommentsPage" cookie="StStCoStEdEd" caption="La mia revisione">
 		<control caption="Le mia valutazione"/>
 		<control caption="Valuto questo file:"/>
 		<control caption="(Nessuna valutazione)|Falso/Corrotto/Fuorviante|Scarso|Medio|Buono|Molto buono|Eccellente"/>
 		<control caption="Le mie osservazioni e commenti"/>
-		<control/><control/>
+		<control/>
+		<control/>
 	</dialog>
 	<dialog name="CFileSharingPage" cookie="StBuBuBuStCoStSyEd" caption="Condivisione">
 		<control caption="Condivisione semplice"/>
@@ -3832,19 +3883,22 @@
 		<control caption="Selezione coda upload"/>
 		<control/>
 		<control caption="-Reti su cui condividere"/>
-		<control/><control/>
+		<control/>
+		<control/>
 	</dialog>
 	<dialog name="CFileSourcesPage" cookie="StStEdSyBuBuEd" caption="Fonti">
 		<control caption="Fonti conosciute"/>
 		<control caption="Aggiungi nuova fonte"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="_Aggiungi"/>
 		<control caption="_Rimuovi"/>
 		<control/>
 	</dialog>
 	<dialog name="CFileCopyDlg" cookie="StStmsBuBumsStSt" caption="Copia i file|Sposta i file">
 		<control caption="Hai selezionato %i file da copiare nella seguente cartella:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="OK"/>
 		<control caption="Annulla"/>
 		<control/>
@@ -3872,7 +3926,8 @@
 		<control caption="Legenda"/>
 		<control caption="_Frequenza campione:"/>
 		<control caption="Periodo fra campioni:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="ms"/>
 		<control caption="_Nome:"/>
 		<control/>
@@ -3894,7 +3949,8 @@
 		<control caption="_Rimuovi"/>
 	</dialog>
 	<dialog name="CSchemaColumnsDlg" cookie="CoSyBuBuSt" caption="Seleziona colonne dallo schema">
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="OK"/>
 		<control caption="Annulla"/>
 		<control caption="Seleziona uno schema dalla lista, poi seleziona i campi da mostrare come colonne."/>
@@ -3907,9 +3963,15 @@
 		<control/>
 		<control caption="_Indirizzo rete:"/>
 		<control caption="Indirizzo IP:"/>
-		<control/><control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
 		<control caption="Netmask:"/>
-		<control/><control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
 		<control caption="Filtro _contenuto:"/>
 		<control/>
 		<control caption="Una"/>
@@ -3940,7 +4002,9 @@
 	<dialog name="CURLCopyDlg" cookie="StStStStStBuBu" caption="Copia URI">
 		<control/>
 		<control caption="Puoi copiare una URI per l'elemento selezionato in una varietà di formati diversi. Scegli il formato che vuoi utilizzare cliccando su uno degli URI seguenti:"/>
-		<control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
 		<control caption="Includi _me stesso come fonte stabile nell'URL"/>
 		<control caption="Annulla"/>
 	</dialog>
@@ -3962,7 +4026,10 @@
 		<control caption="Hai cliccato su una URI adattata per Shareaza che collega al seguente contenuto nella rete:"/>
 		<control caption="Hai cliccato su una URL adattata per Shareaza che ti connetterà al seguente host o server:"/>
 		<control caption="Hai cliccato su una URI adattata per Shareaza che ti permetterà di esplorare i file condivisi disponibili sul seguente host:"/>
-		<control/><control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
 		<control caption="Seleziona l'azione che vuoi che Shareaza esegua:"/>
 		<control caption="_Scarica ora"/>
 		<control caption="_Cerca il file"/>
@@ -3982,7 +4049,8 @@
 	<dialog name="CFilePreviewDlg" cookie="StStStmsStBu" caption="Anteprima download...">
 		<control/>
 		<control caption="Shareaza sta creando un'anteprima del download:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="(copiatura di spezzoni scaricati in un nuovo file anteprima)"/>
 		<control caption="Annulla"/>
 	</dialog>
@@ -4007,7 +4075,10 @@
 		<control caption="OK"/>
 	</dialog>
 	<dialog name="CExistingFileDlg" cookie="StStStStStBuBuBuBuBuStSt" caption="Download di un file esistente">
-		<control/><control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
 		<control caption="Questo file è già presente nella tua libreria. Cosa desideri fare?"/>
 		<control caption="Mostrami il file nella libreria"/>
 		<control caption="Scarica il file di nuovo"/>
@@ -4029,7 +4100,8 @@
 	<dialog name="CDonkeyServersDlg" cookie="StStEdmsBuBu" caption="Scarica file server.met">
 		<control/>
 		<control caption="Puoi scaricare il file server.met di eDonkey dal web per aggiornare la tua lista locale dei server."/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="OK"/>
 		<control caption="Annulla"/>
 	</dialog>
@@ -4072,17 +4144,21 @@
 		<control caption="ATTENZIONE: Questa finestra fornisce funzionalità di modifica dei download avanzate per utenti esperti e se usata in modo errato può causare danni."/>
 		<control caption="Nome del file e _dimensione:"/>
 		<control caption="Nome del file:"/>
-		<control/><control/>	
+		<control/>
+		<control/>	
 		<control caption="Dimens. (Byte):"/>
 		<control/>
 		<control caption="_URN:"/>
 		<control caption="Sicuro"/>
 		<control caption="SHA1:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Tiger-Root:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="ED2K:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="_Azioni:"/>
 		<control caption="Azzera stato di verifica attuale e verifica di nuovo"/>
 		<control caption="Simula il file completo al 100% e verifica di nuovo"/>
@@ -4151,7 +4227,8 @@
 	</dialog>
 	<dialog name="CDownloadGroupDlg" cookie="BuEdSyBuCoBuBuBuBuBuEdBu" caption="Proprietà gruppo di download">
 		<control caption="_Nome:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="_Filtri:"/>
 		<control/>
 		<control caption="_Aggiungi"/>
@@ -4181,7 +4258,8 @@
 	<dialog name="CDownloadReviewDlg" cookie="StBuSyEd" caption="Revisioni download">
 		<control/>
 		<control caption="OK"/>
-		<control/><control/>
+		<control/>
+		<control/>
 	</dialog>
 	<dialog name="CDecodeMetadataDlg" cookie="BuBuStCo" caption="Localizzazione metadata">
 		<control caption="OK"/>

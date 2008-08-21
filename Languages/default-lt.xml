@@ -45,6 +45,7 @@
 		<button id="ID_TAB_SEARCH" text="Paieška"/>
 		<button id="ID_TAB_TRANSFERS" text="Siuntimai"/>
 		<button id="ID_TAB_NETWORK" text="Tinklas"/>
+		<button id="ID_TAB_IRC" text="IRC"/>
 	</toolbar>
 	<toolbar name="CMainWnd.Windowed">
 		<button id="ID_NETWORK_CONNECT" text="Jungtis"/>
@@ -57,6 +58,7 @@
 		<button id="ID_VIEW_UPLOADS"/>
 		<button id="ID_VIEW_LIBRARY"/>
 		<button id="ID_VIEW_MEDIA"/>
+		<button id="ID_TAB_IRC"/>
 		<button id="ID_VIEW_SECURITY"/>
 		<button id="ID_VIEW_HOSTS"/>
 		<button id="ID_VIEW_DISCOVERY"/>
@@ -407,6 +409,7 @@
 		<button id="ID_CHAT_CONNECT" text="Susijungti" visible="false"/>
 		<button id="ID_CHAT_DISCONNECT" text="Atsijungti"/>
 	</toolbar>
+	<!-- WEBSERVICES -->
 	<!-- IMAGE VIEWER WINDOW -->
 	<toolbar name="ImageViewer_Toolbar">
 		<button id="ImageViewer_BestFit" text="Geriausias dydis"/>
@@ -816,6 +819,8 @@
 			<item id="ID_HOSTCACHE_G2_CACHE" text="Gnutella_2 talpykla"/>
 			<item id="ID_HOSTCACHE_G1_CACHE" text="Gnutella_1 talpykla"/>
 			<item id="ID_HOSTCACHE_ED2K_CACHE" text="_eDonkey serveriai"/>
+			<item id="ID_HOSTCACHE_BT_CACHE" text="_BitTorrent Cache"/>
+			<item id="ID_HOSTCACHE_KAD_CACHE" text="_Kademlia Cache"/>
 		</menu>
 		<separator/>
 		<item id="ID_HOSTCACHE_IMPORT" text="_Importuoti MET failą..."/>
@@ -983,6 +988,8 @@
 			<item id="ID_DOWNLOADS_BOOST" text="Nepaisyti _greitaveikos limito"/>
 		</menu>
 		<item id="ID_DOWNLOADS_HELP" text="Ži_nynas..."/>
+		<separator/>
+			<item id="ID_DOWNLOADS_EDIT" text="Išplėstinė _taisa..."/>
 	</menu>
 	<menu name="CDownloadsWnd.Source">
 		<item id="ID_TRANSFERS_CONNECT" text="_Užklausti šaltinio"/>
@@ -1675,18 +1682,18 @@
 		<text group="24" align="middle" id="G2Hubs">%i mazgai</text>
 		<text group="25" align="middle" id="G2Leaves">%i šakos</text>
 		<newline group="20" gap="2"/>
-		<icon group="30" command="ID_NETWORK_ED2K"/><gap group="30" size="4"/>
-		<text group="30" align="middle" format="b">eDonkey: </text>
-		<text group="31" align="middle">Atsijungta</text>
-		<text group="32" align="middle">Jungiamasi...</text>
-		<text group="33" align="middle">Prisijungta</text>
-		<newline group="30" gap="2"/>
 		<icon group="10" command="ID_NETWORK_G1"/><gap group="10" size="4"/>
 		<text group="10" align="middle" format="b">Gnutella1: </text>
 		<text group="11" align="middle">Atsijungta</text>
 		<text group="12" align="middle">Jungiamasi...</text>
 		<text group="13" align="middle">Prisijungta</text>
 		<newline group="10" gap="2"/>
+		<icon group="30" command="ID_NETWORK_ED2K"/><gap group="30" size="4"/>
+		<text group="30" align="middle" format="b">eDonkey: </text>
+		<text group="31" align="middle">Atsijungta</text>
+		<text group="32" align="middle">Jungiamasi...</text>
+		<text group="33" align="middle">Prisijungta</text>
+		<newline group="30" gap="2"/>
 		<group id="2">
 			<para align="center">
 				<newline gap="6"/>
@@ -1769,10 +1776,13 @@
 		<gap size="4"/>
 		<text>Jūsų profilio, pokalbių ir skubiųjų žinučių nuostatos.</text>
 		<newline gap="10"/>
+		<link target="raza:page:CIRCSettingsPage" format="b">IRC:</link>
+		<gap size="4"/>
+		<text>IRC chatroom visual appearance and connection settings.</text>
+		<newline gap="10"/>
 		<link target="raza:page:CWebSettingsPage" format="b">Žiniatinklis:</link>
 		<gap size="4"/>
 		<text>„Shareaza“ integravimas į Jūsų naršyklę, siekiant priimti lygiaverčio susijungimo tinklo nuorodas ir parsisiuntimo vertus failus.</text>
-		<newline gap="10"/>
 	</document>
 	<document name="CInternetSettingsGroup" title="Internetas" leftMargin="8" topMargin="8">
 		<styles>
@@ -3207,7 +3217,8 @@
 		<control caption="_Užuominos:"/>
 		<control/>
 		<control caption="Delsa (ms):"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Ryškis:"/>
 		<control/>
 		<control caption="_Sistemos juostelė:"/>
@@ -3224,10 +3235,12 @@
 		<control caption="Leisti peržiūrėti bendrintus failus"/>
 		<control caption="Paskutiniai _failai:"/>
 		<control caption="Prisiminti:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="failus(ų)"/>
 		<control caption="&#160;"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="dienas"/>
 		<control caption="Valyti žurnalą dabar"/>
 		<control caption="_Saugu atverti:"/>
@@ -3239,7 +3252,8 @@
 		<control caption="_Pridėti"/>
 		<control caption="Š_alinti"/>
 		<control caption="_Laikyti rinkinius čia:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Kurti šešėlinius failus trinant"/>
 	</dialog>
 	<dialog name="CMediaSettingsPage" cookie="BuCoBuBuBuCoBuBuBuBuBuStSt" caption="Grotuvas">
@@ -3341,27 +3355,35 @@
 		<control caption="Įgalinti UPnP susijungimo įrenginių derinimą"/>
 		<control caption="_Laiko limitai:"/>
 		<control caption="Susijungimui:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Patvirtinimui:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 	</dialog>
 	<dialog name="CDownloadsSettingsPage" cookie="BuEdBuBuEdBuBuStEdmsStEdmsStEdmsBuStCoStCoBuBu" caption="Atsisiuntimai">
 		<control caption="Saugoti _parsiųstus failus čia:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Laikyti _nebaigtus siųstis failus čia:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Parsisiuntimų _skaičius:"/>
 		<control caption="Daugiausiai failų:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Daugiausiai siuntimų:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Siuntimų failui:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Limitai:"/>
 		<control caption="Visuminė parsisiuntimų greitaveika:"/>
 		<control/>
 		<control caption="Maksimalus eilės dydis:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Failų mainus vykdyti tik tinkluose, prie kurių prisijungta."/>
 	</dialog>
 	<dialog name="CUploadsSettingsPage" cookie="BuBuBuBuStEdmsBuCoBuBuBuStCoStCoBuSyBuBuBuSt" caption="Išsiuntimai">
@@ -3370,7 +3392,8 @@
 		<control caption="Tapus mazgu, riboti siuntimą"/>
 		<control caption="Bendrinti failų peržiūros turinį"/>
 		<control caption="Limitas unikaliam IP:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="_Naudotojų agentų filtras:"/>
 		<control/>
 		<control caption="+"/>
@@ -3402,7 +3425,8 @@
 	<dialog name="CSchedulerSettingsPage" cookie="BuBuEdmsBuBuStStStStStStStStStStStEdBuSt" caption="Planuotojas">
 		<control caption="_Parinktys:"/>
 		<control caption="Į_galinti planuotoją"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="_Jungtis tik prie G2, kai ribojama"/>
 		<control caption="Raktai:"/>
 		<control caption="Sek"/>
@@ -3443,11 +3467,14 @@
 		<control caption="Optimali|Atšaka|Mazgas"/>
 		<control caption="G_2 susijungimai:"/>
 		<control caption="Mazgų į atšaką:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Atšakų į mazgą:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Mazgų į mazgą:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Gnutella1 tinklas:"/>
 		<control caption="Visada jungtis prie Gnutella1"/>
 		<control caption="Jungtis prie Gnutella1 šiandien"/>
@@ -3455,11 +3482,14 @@
 		<control caption="Optimali|Atšaka|Vedantysis"/>
 		<control caption="G_1 susijungimai:"/>
 		<control caption="Vedančiųjų į atšaką:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Atšakų į vedantįjį:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Partnerių į partnerį:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="_Duomenų suspaudimas jungtyse:"/>
 		<control caption="Mazgo į atšaką"/>
 		<control caption="Atšakos į mazgą"/>
@@ -3472,12 +3502,14 @@
 		<control caption="_Globalinė paieška:"/>
 		<control caption="Ieškoti žinomų nutolusių serverių serverio laikinojoje talpykloje:"/>
 		<control caption="Stabdyti paieška po:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="radinių(-io)."/>
 		<control caption="Gauti ir atnaujinti serverių sąrašą iš susijungusio serverio"/>
 		<control caption="_Kliento susijungimai:"/>
 		<control caption="Jungtis nedaugiau kaip prie:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="kitų eDonkey klientų(-o)."/>
 		<control caption="eDonkey į_rankiai:"/>
 		<control caption="eDonkey serverių sąrašo parsisiuntimas iš interneto:"/>
@@ -3487,19 +3519,25 @@
 		<control caption="_Sąsaja:"/>
 		<control caption="Rodyti papildomus BitTorrent sąsajos elementus"/>
 		<control caption="_Atsisiuntimų susijungimai:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Torrent failų per kartą"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Klientų susijungimų"/>
 		<control caption="&#160;Valyti parsisiųstus torrent,&#160;&#160;&#160;&#160;&#160;&#160;&#160;kai bendrinimo santykis pasiekia"/>
-		<control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
 		<control caption="&#160;Teikti pirmenybę torrent šaltiniams"/>
 		<control caption="_EndGame (paspartinimas):"/>
 		<control caption="Įgalinti BitTorrent „EndGame“ veikseną baigiant siųstis failus"/>
 		<control caption="_Laikyti torrent failus čia:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="_Torrent failų kūrimo programa"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Numatytasis seklys: "/>
 		<control/>
 	</dialog>
@@ -3534,7 +3572,8 @@
 		<control/>
 		<control caption="Nuostatos ypatybės:"/>
 		<control caption="Reikšmė:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Aprašas:"/>
 		<control/>
 	</dialog>
@@ -3558,18 +3597,23 @@
 		<control caption="Pa_jėgumas:"/>
 		<control caption="Įgalinti šią eilės taisyklę"/>
 		<control caption="Minimalus siuntimų skaičius:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Maksimalus siuntimų skaičius:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Maks. laukiančiųjų eilėje skaičius:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Pa_slaugos parametrai:"/>
 		<control caption="Greitaveikos įsotinimo proc. dydis:"/>
 		<control/>
 		<control caption="Šios eilės išsiuntimo greitaveika:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Rotacija po N sekundžių:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Gerai"/>
 		<control caption="Atšaukti"/>
 		<control caption="Atlyginti siuntėjus"/>
@@ -3588,17 +3632,7 @@
 		<control/>
 		<control caption="pradėti naudotis „Shareaza“ programa."/>
 	</dialog>
-	<dialog name="CWizardInterfacePage" cookie="StBuBuBuStStBuBu" caption="Sveiki! Čia „Shareaza“">
-		<control caption="„Shareaza“ palaiko dvi skirtingas naudotojo sąsajas, todėl galite pasirinkti, kuri iš jų labiausiai Jums patogi. Jūs galėsite vėliau pakeisti šias nuostatas."/>
-		<control caption="Pasirinkite vieną naudotojo sąsają:"/>
-		<control caption="Įprastinė veiksena"/>
-		<control caption="Eksperto veiksena"/>
-		<control caption="Paprasta, lengva naudotis meniu ir mygtukais.{n}Naudotojams pažįstama iš daugelio kitų failų dalinimosi programų."/>
-		<control caption="Eksperto veiksena siūlo patyrusiems naudotojams daug papildomų komandų, langų ir t.t. Naujokus gali šiek tiek klaidinti!"/>
-		<control caption="Rodyti supaprastintas eigos juostas. (Sumažina procesoriaus apkrovimą)"/>
-		<control caption="Susieti torrent nuorodas su programa."/>
-	</dialog>
-	<dialog name="CWizardConnectionPage" cookie="StStCoStCoStCoStCoStms" caption="Sveiki! Čia „Shareaza“ [3 iš 7]">
+	<dialog name="CWizardConnectionPage" cookie="StStCoStCoStCoStCoStms" caption="Sveiki! Čia „Shareaza“ (1/6)">
 		<control caption="Optimaliam darbui „Shareazai“ reikia žinoti šiek tiek apie Jūsų interneto ryšį."/>
 		<control caption="Pasirinkite prisijungimo prie interneto tipą:"/>
 		<control caption="Telefono ryšys|ISDN|ADSL (256 K)|ADSL (512 K)|ADSL (768 K)|ADSL (1,5 M)|ADSL (4,0 M)|ADSL2 (8,0 M)|ADSL2 (12,0 M)|ADSL2+ (24,0 M)|Kabelinis modemas/SDSL|T1|T3|Vietinis tinklas|OC3"/>
@@ -3611,7 +3645,7 @@
 		<control caption="Būklė:"/>
 		<control/>
 	</dialog>
-	<dialog name="CWizardSharePage" cookie="StStStSyBuBuSt" caption="Sveiki! Čia „Shareaza“ [4 iš 7]">
+	<dialog name="CWizardSharePage" cookie="StStStSyBuBuSt" caption="Sveiki! Čia „Shareaza“ (2/6)">
 		<control caption="Lygiaverčio tarptinklinio susijungimo (P2P) tinklai yra geri tiek, kiek patys žmonės, kurie juo naudojasi. Parsisiųsti failus galite dėl to, kad kiti naudotojai dalinasi."/>
 		<control caption="Kad naudotumėtės „Shareaza“, Jūs nebūtinai turite dalintis failais, tačiau kai kuri progr. įranga gali elgtis skirtingai su tais naudotojais, kurie niekuo nesidalina."/>
 		<control caption="Nurodykite, jei norite, aplankus, kurių turinį norite bendrinti. Paprasčiausiai paspauskite mygtuką „Pridėti“ kiekvieno naujo aplanko bendrinimui."/>
@@ -3629,7 +3663,7 @@
 		<control caption="0"/>
 		<control caption="Baigti"/>
 	</dialog>
-	<dialog name="CWizardProfilePage" cookie="StStEdStCoCoStCoCo" caption="Sveiki! Čia „Shareaza“ [5 iš 7]">
+	<dialog name="CWizardProfilePage" cookie="StStEdStCoCoStCoCo" caption="Sveiki! Čia „Shareaza“ (3/6)">
 		<control caption="„Shareaza“ taps draugiškesne, jei kiekvienas šiek tiek parašys apie save."/>
 		<control caption="Mano vardas:"/>
 		<control/>
@@ -3637,9 +3671,20 @@
 		<control caption="&#160;(pasirinkite)"/>
 		<control caption="&#160;(pasirinkite)| vaikinas| mergina| vyras| moteris"/>
 		<control caption="iš:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 	</dialog>
-	<dialog name="CWizardNetworksPage" cookie="StBuStBuStBuSt" caption="Sveiki! Čia „Shareaza“ [6 iš 7]">
+	<dialog name="CWizardInterfacePage" cookie="StBuBuBuStStBuBu" caption="Sveiki! Čia „Shareaza“">
+		<control caption="„Shareaza“ palaiko dvi skirtingas naudotojo sąsajas, todėl galite pasirinkti, kuri iš jų labiausiai Jums patogi. Jūs galėsite vėliau pakeisti šias nuostatas."/>
+		<control caption="Pasirinkite vieną naudotojo sąsają:"/>
+		<control caption="Įprastinė veiksena"/>
+		<control caption="Eksperto veiksena"/>
+		<control caption="Paprasta, lengva naudotis meniu ir mygtukais.{n}Naudotojams pažįstama iš daugelio kitų failų dalinimosi programų."/>
+		<control caption="Eksperto veiksena siūlo patyrusiems naudotojams daug papildomų komandų, langų ir t.t. Naujokus gali šiek tiek klaidinti!"/>
+		<control caption="Rodyti supaprastintas eigos juostas. (Sumažina procesoriaus apkrovimą)"/>
+		<control caption="Susieti torrent nuorodas su programa."/>
+	</dialog>
+	<dialog name="CWizardNetworksPage" cookie="StBuStBuStBuSt" caption="Sveiki! Čia „Shareaza“ (5/6)">
 		<control caption="„Shareaza“ - tai bendros paskirties failų apsikeitimo programa, kuri gali prisijungti prie kelių lygiaverčio tarptinklinio susijungimo (P2P) tinklų vienu metu. Pasirinkite, prie kurių P2P tinklų norite jungtis, o po to derinkite kiekvieną tinklą atskirai."/>
 		<control caption="Jungtis prie Gnutella2 (Labai rekomenduojama)"/>
 		<control caption="Gnutella2 tinklas - tai pagrindinis „Shareaza“ tinklas, siūlantis daugiau galimybių ir našumo nei kiti P2P tinklai. Ypač rekomenduojama."/>
@@ -3656,7 +3701,7 @@
 		<control/>
 		<control caption="Užverti"/>
 	</dialog>
-	<dialog name="CWizardFinishedPage" cookie="StStStBuBuBuSt" caption="Sveiki! Čia „Shareaza“ [7 iš 7]">
+	<dialog name="CWizardFinishedPage" cookie="StStStBuBuBuSt" caption="Sveiki! Čia „Shareaza“ (6/6)">
 		<control caption="Štai ir viskas! „Shareaza“ yra sukonfigūruota darbui Jūsų kompiuteryje."/>
 		<control caption="Jei Jums kada nors prisireiks pakeisti nuostatas, Jūs galėsite iš naujo paleisti šį Nuostatų vedlį, pasirinkdami jį iš meniu „Įrankiai“."/>
 		<control caption="Po to, kai paspausite mygtuką „Baigti“, Jūs galėsite prisijungti prie tinklų, kuriuos Jūs nurodėte, ieškoti ir parsisiųsti failus."/>
@@ -3677,7 +3722,8 @@
 		<control caption="Slapyvardis:"/>
 		<control/>
 		<control caption="Vardas, pav.:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="_Demografiniai duomenys:"/>
 		<control caption="|Vyras|Moteris"/>
 		<control caption="Lytis:"/>
@@ -3756,7 +3802,8 @@
 	<dialog name="CLanguageDlg" cookie="" caption="Pasirinkite kalbą"/>
 	<dialog name="CConnectToDlg" cookie="BuCoEdBuCoBuBuBu" caption="Jungtis prie|Naršyti adresatą">
 		<control caption="Užmegzti naują ryšį su kompiuteriu ar serveriu:|Naršyti šį kompiuterį:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Tinklo _protokolas:"/>
 		<control caption="Gnutella1 (auto)|Gnutella2 (аuto)|eDonkey"/>
 		<control caption="_Slopinti vedančiuosius"/>
@@ -3764,7 +3811,8 @@
 		<control caption="Atšaukti"/>
 	</dialog>
 	<dialog name="CDownloadDlg" cookie="StStStEdBuBuStStBu" caption="Parsisiųsti failą ar Torrent">
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Su „Shareaza“ parsisiųsti failus lengva. Tiesiog įrašykite arba įterpkite nukopijuotą failo nuorodą į langelį apačioje ir paspauskite „Parsisiųsti“."/>
 		<control/>
 		<control caption="_Parsisiųsti"/>
@@ -3774,7 +3822,8 @@
 		<control caption="Atverti _Torrent..."/>
 	</dialog>
 	<dialog name="CNewSearchDlg" cookie="EdCoBuBu" caption="Nauja paieška|Ieškoti dar kartą|Ieškoti kolekcijoje">
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Ieškoti"/>
 		<control caption="Atšaukti"/>
 	</dialog>
@@ -3788,7 +3837,8 @@
 		<control caption="Daugiausiai:"/>
 		<control/>
 		<control caption="Mažiausiai su:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="šaltinių."/>
 		<control caption="_Slėpti:"/>
 		<control caption="Užimtus adresatus"/>
@@ -3825,7 +3875,9 @@
 	<dialog name="CDownloadMonitorDlg" cookie="StStStStStStStStStStStStStBuBuBuBuBu" caption="Siunčiamas failas : „Shareaza“">
 		<control caption="„Shareaza“ parsisiunčia:"/>
 		<control caption="..."/>
-		<control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
 		<control caption="Bendra siuntimo sparta:"/>
 		<control caption="..."/>
 		<control caption="Apytiksliai likę laiko:"/>
@@ -3842,7 +3894,10 @@
 	</dialog>
 	<dialog name="CFileGeneralPage" cookie="StEdEdEdEdStStEdStEdStEdStEdEdEd" caption="Bendra">
 		<control caption="Universalūs ištekliaus vardai (URNs)"/>
-		<control/><control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
 		<control caption="Failo savybės"/>
 		<control caption="Vieta:"/>
 		<control/>
@@ -3851,17 +3906,21 @@
 		<control caption="Modifikuota:"/>
 		<control/>
 		<control caption="Dydis:"/>
-		<control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
 	</dialog>
 	<dialog name="CFileMetadataPage" cookie="CoEd" caption="Meta duomenys">
-		<control/><control/>
+		<control/>
+		<control/>
 	</dialog>
 	<dialog name="CFileCommentsPage" cookie="StStCoStEdEd" caption="Mano apžvalga">
 		<control caption="Mano įvertinimas"/>
 		<control caption="Įvertinu šį failą(-us):"/>
 		<control caption="(Be įvertinimo)|Klastotė/Sugadinta/Klaidinanti|Prasta|Vidutinė|Gera|Labai gera|Puiki"/>
 		<control caption="Mano apžvalga ir komentarai"/>
-		<control/><control/>
+		<control/>
+		<control/>
 	</dialog>
 	<dialog name="CFileSharingPage" cookie="StBuBuBuStCoStSyEd" caption="Bendrinimas">
 		<control caption="Paprastas bendrinimas"/>
@@ -3871,19 +3930,22 @@
 		<control caption="Žymė(s) išsiuntimų eilės parinkimui"/>
 		<control/>
 		<control caption="-Bendrinti šiuose tinkluose"/>
-		<control/><control/>
+		<control/>
+		<control/>
 	</dialog>
 	<dialog name="CFileSourcesPage" cookie="StStEdSyBuBuEd" caption="Šaltiniai">
 		<control caption="Žinomi šaltiniai"/>
 		<control caption="Pridėti naują šaltinį"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="_Pridėti"/>
 		<control caption="Š_alinti"/>
 		<control/>
 	</dialog>
 	<dialog name="CFileCopyDlg" cookie="StStmsBuBumsStSt" caption="Failų kopijavimas|Failų perkėlimas">
 		<control caption="Jūs pasirinkote %i failų(-us) perkėlimui į šį aplanką:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Gerai"/>
 		<control caption="Atšaukti"/>
 		<control/>
@@ -3911,7 +3973,8 @@
 		<control caption="Legendą"/>
 		<control caption="Matavimų _dažnis:"/>
 		<control caption="Laikotarpis tarp matavimų:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="ms"/>
 		<control caption="Pa_vadinimas:"/>
 		<control/>
@@ -3933,7 +3996,8 @@
 		<control caption="Š_alinti"/>
 	</dialog>
 	<dialog name="CSchemaColumnsDlg" cookie="CoSyBuBuSt" caption="Pasirinkite stulpelius iš schemos">
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Gerai"/>
 		<control caption="Atšaukti"/>
 		<control caption="Pasirinkite schemą iš sąrašo, o po to pažymėkite laukus, kuriuos rodyti kaip stulpelius."/>
@@ -3946,9 +4010,15 @@
 		<control/>
 		<control caption="Tinklo _adresas:"/>
 		<control caption="IP adresas:"/>
-		<control/><control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
 		<control caption="Kaukė:"/>
-		<control/><control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
 		<control caption="Turinio _filtras:"/>
 		<control/>
 		<control caption="Bet kuris žodis"/>
@@ -3979,7 +4049,9 @@
 	<dialog name="CURLCopyDlg" cookie="StStStStStBuBu" caption="Nuorodos kopijavimas">
 		<control/>
 		<control caption="Jūs galite nukopijuoti pasirinkto failo nuorodą skirtingais formatais. Pasirinkite norimą formatą, paspaudę vieną iš žemiau pateiktų nuorodų:"/>
-		<control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
 		<control caption="Įtraukti _save kaip pastovų nuorodos šaltinį"/>
 		<control caption="Atšaukti"/>
 	</dialog>
@@ -4001,7 +4073,10 @@
 		<control caption="Jūs paspaudėte su „Shareaza“ susietą nuorodą, kuri nukreipia į šį failą tinkle:"/>
 		<control caption="Jūs paspaudėte su „Shareaza“ susietą nuorodą, kuri sujungs Jus su šiuo kompiuteriu ar serveriu:"/>
 		<control caption="Jūs paspaudėte su „Shareaza“ susietą nuorodą, kuri leis peržiūrėti failus, esančius šiame kompiuteryje:"/>
-		<control/><control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
 		<control caption="Pasirinkite, kokį veiksmą „Shareaza“ turėtų atlikti:"/>
 		<control caption="Parsi_siųsti dabar"/>
 		<control caption="_Ieškoti failo"/>
@@ -4021,7 +4096,8 @@
 	<dialog name="CFilePreviewDlg" cookie="StStStmsStBu" caption="Parsisiunčiamo failo gudri peržiūra...">
 		<control/>
 		<control caption="„Shareaza“ kuria peržiūrą šiam failui:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="(kopijuojami parsisiųsti gabalai į naują pežiūros failą)"/>
 		<control caption="_Atšaukti"/>
 	</dialog>
@@ -4046,7 +4122,10 @@
 		<control caption="Gerai"/>
 	</dialog>
 	<dialog name="CExistingFileDlg" cookie="StStStStStBuBuBuBuBuStSt" caption="Esamo failo parsisiuntimas">
-		<control/><control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
 		<control caption="Jūs jau turite šį failą savo kolekcijoje. Ką Jūs norėtumėte daryti?"/>
 		<control caption="Parodyti failą mano kolekcijoje"/>
 		<control caption="Parsisiųsti failą dar kartą"/>
@@ -4068,7 +4147,8 @@
 	<dialog name="CDonkeyServersDlg" cookie="StStEdmsBuBu" caption="Server.met failo parsisiuntimas">
 		<control/>
 		<control caption="Jūs galite parsisiųsti eDonkey server.met failą iš interneto, jei norite atnaujinti vietinį serverių sąrašą."/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Gerai"/>
 		<control caption="Atšaukti"/>
 	</dialog>
@@ -4111,17 +4191,21 @@
 		<control caption="DĖMESIO: Šiame dialogo lange patyrę naudotojai gali taisyti failo informaciją, bet neteisingi pakeitimai gali sugadinti failą."/>
 		<control caption="_Failo vardas ir dydis:"/>
 		<control caption="Failo vardas:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Dydis (baitais):"/>
 		<control/>
 		<control caption="_Universalūs ištekliaus vardai (URNs):"/>
 		<control caption="Patikima"/>
 		<control caption="SHA1:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Tiger-root:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="ED2K:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="_Veiksmai:"/>
 		<control caption="Pamiršti esamą patikros būseną (ir atlikti patikrą iš naujo)"/>
 		<control caption="Tarti, kad failas 100% baigtas siųstis, ir atlikti patikrą iš naujo"/>
@@ -4190,7 +4274,8 @@
 	</dialog>
 	<dialog name="CDownloadGroupDlg" cookie="BuEdSyBuCoBuBuBuBuBuEdBu" caption="Atsisiuntimų grupės ypatybės">
 		<control caption="Pa_vadinimas:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="_Filtrai:"/>
 		<control/>
 		<control caption="_Pridėti"/>
@@ -4220,7 +4305,8 @@
 	<dialog name="CDownloadReviewDlg" cookie="StBuSyEd" caption="Atsisiuntimų įvertinimai">
 		<control/>
 		<control caption="Gerai"/>
-		<control/><control/>
+		<control/>
+		<control/>
 	</dialog>
 	<dialog name="CDecodeMetadataDlg" cookie="BuBuStCo" caption="Meta duomenų lokalizavimas">
 		<control caption="Gerai"/>

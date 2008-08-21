@@ -427,6 +427,7 @@
 		<button id="ID_CHAT_CONNECT" text="Kapcsolódás" visible="false"/>
 		<button id="ID_CHAT_DISCONNECT" text="Lekapcsolódás"/>
 	</toolbar>
+	<!-- WEBSERVICES -->
 	<toolbar name="WebServices.ShareMonkey">
 		<button id="ID_SHAREMONKEY_DOWNLOAD" text="Adatok letöltése"/>
 		<separator/>

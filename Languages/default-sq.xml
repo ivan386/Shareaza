@@ -407,6 +407,7 @@
 		<button id="ID_CHAT_CONNECT" text="Lidhu" visible="false"/>
 		<button id="ID_CHAT_DISCONNECT" text="Shkëputu"/>
 	</toolbar>
+	<!-- WEBSERVICES -->
 	<!-- IMAGE VIEWER WINDOW -->
 	<toolbar name="ImageViewer_Toolbar">
 		<button id="ImageViewer_BestFit" text="Përmasa Perfekte"/>
@@ -1736,14 +1737,10 @@
 		</styles>
 		<text format="b">Mirë se erdhët te Menaxheri për Kuadrot e Shareaza-s</text>
 		<newline gap="16"/>
-		<text>
-			Menaxheri për Kuadrot e Shareaza-s bën që përdoruesit e përparuar të porositin tërësisht mënyrën si
-			Shareaza funksionon.  Kuadrot e seksionit
-		</text>
+		<text>Menaxheri për Kuadrot e Shareaza-s bën që përdoruesit e përparuar të porositin tërësisht mënyrën si
+			Shareaza funksionon.  Kuadrot e seksionit </text>
 		<text format="b">Përgjithësi </text>
-		<text>
-			kërkojnë një përdorues me përvojë.
-		</text>
+		<text>kërkojnë një përdorues me përvojë.</text>
 		<newline gap="16" indent="16"/>
 		<link target="raza:page:CGeneralSettingsPage" format="b">Përgjithësi:</link>
 		<gap size="4"/>
@@ -1761,10 +1758,13 @@
 		<gap size="4"/>
 		<text>Kuadrot e profilit, chat-it dhe e mesazheve tuaja të çastit.</text>
 		<newline gap="10"/>
+		<link target="raza:page:CIRCSettingsPage" format="b">IRC:</link>
+		<gap size="4"/>
+		<text>IRC chatroom visual appearance and connection settings.</text>
+		<newline gap="10"/>
 		<link target="raza:page:CWebSettingsPage" format="b">Rrjeti:</link>
 		<gap size="4"/>
 		<text>Integron Shareaza-n me shfletuesin e rrjetit që të pranojë linket pikë-më-pikë dhe të shkarkojë përmbajtje.</text>
-		<newline gap="10"/>
 	</document>
 	<document name="CInternetSettingsGroup" title="Interneti" leftMargin="8" topMargin="8">
 		<styles>
@@ -1774,15 +1774,10 @@
 		</styles>
 		<text format="b">Mirë se erdhët te Menaxheri për Kuadrot e Shareaza-s</text>
 		<newline gap="16"/>
-		<text>
-			Menaxheri për Kuadrot e Shareaza-s bën që përdoruesit e përparuar të porositin tërësisht mënyrën si
-			Shareaza funksionon.  Kuadrot e seksionit
-		</text>
+		<text>Menaxheri për Kuadrot e Shareaza-s bën që përdoruesit e përparuar të porositin tërësisht mënyrën si
+			Shareaza funksionon.  Kuadrot e seksionit </text>
 		<text format="b">Interneti </text>
-		<text>
-			tregojnë si Shareaza ndërvepron me nyjet e tjera në rrjetet pikë-më-pikë
-			të klasifikuara.
-		</text>
+		<text>tregojnë si Shareaza ndërvepron me nyjet e tjera në rrjetet pikë-më-pikë të klasifikuara.</text>
 		<newline gap="16" indent="16"/>
 		<link target="raza:page:CConnectionSettingsPage" format="b">Lidhja:</link>
 		<gap size="4"/>
@@ -1800,6 +1795,9 @@
 		<gap size="4"/>
 		<text>Aftësi për të kontrolluar Shareaza-n me pult nga një shfletues rrjeti.</text>
 		<newline gap="10"/>
+		<link target="raza:page:CSchedulerSettingsPage" format="b">Scheduler:</link>
+		<gap size="4"/>
+		<text>Limit download connections based on a periodic schedule.</text>
 	</document>
 	<!-- Browse User Profile -->
 	<document name="CBrowseHostProfile.1">
@@ -3203,7 +3201,8 @@
 		<control caption="K_ëshillat:"/>
 		<control/>
 		<control caption="Vonesa (ms):"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Opaciteti:"/>
 		<control/>
 		<control caption="_Tabaka:"/>
@@ -3220,10 +3219,12 @@
 		<control caption="Të tjerët i shfletojnë shpërndarjet"/>
 		<control caption="_Skedat e Fundit:"/>
 		<control caption="Mbaj mend:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="skeda"/>
 		<control caption="Deri në:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="ditë"/>
 		<control caption="Pastro Historinë"/>
 		<control caption="_Nuk Rrezikojnë:"/>
@@ -3235,7 +3236,8 @@
 		<control caption="_Shto"/>
 		<control caption="_Fshije"/>
 		<control caption="Depozitimi për _Koleksionet:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Krijo skeda fantazmë kur fshin"/>
 	</dialog>
 	<dialog name="CMediaSettingsPage" cookie="BuCoBuBuBuCoBuBuBuBuBuStSt" caption="Lexuesi">
@@ -3301,27 +3303,35 @@
 		<control caption="Lejo ndërtimin e mjeteve lidhëse UPnP "/>
 		<control caption="_Jashtëkohë:"/>
 		<control caption="Lidhja:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Takimi i Dorës:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 	</dialog>
 	<dialog name="CDownloadsSettingsPage" cookie="BuEdBuBuEdBuBuStEdmsStEdmsStEdmsBuStCoStCoBuBu" caption="Shkarkesat">
 		<control caption="Depozitimi për Skedat e _Përfunduara:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Depozitimi për Skedat e Përkohshme të _Papërfunduara:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="_Numri i Shkarkesave:"/>
 		<control caption="Skedat Maks.:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Shkarkesat Maks.:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Burimet për Skedë:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="_Kufiri:"/>
 		<control caption="Banda Totale e Shkarkimit:"/>
 		<control/>
 		<control caption="Gjatësi Maks. e Pritjes në Radhë:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Shkarko e ngarko vetëm nga rrjetet e lidhura."/>
 	</dialog>
 	<dialog name="CUploadsSettingsPage" cookie="BuBuBuBuStEdmsBuCoBuBuBuStCoStCoBuSyBuBuBuSt" caption="Ngarkesat">
@@ -3330,7 +3340,8 @@
 		<control caption="Kufizo shpërndarjen si 'nyje'"/>
 		<control caption="Shpërndaji skedat e parashikimit"/>
 		<control caption="Kufiri për hostin unik:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="_Filtri për Agjentin Përdorues:"/>
 		<control/>
 		<control caption="+"/>
@@ -3362,7 +3373,8 @@
 	<dialog name="CSchedulerSettingsPage" cookie="BuBuEdmsBuBuStStStStStStStStStStStEdBuSt" caption="Planifikimi">
 		<control caption="_Mundësi:"/>
 		<control caption="_Lejo Planifikuesin"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Kur ka kufizime _Lidhu vetëm tek G2"/>
 		<control caption="Legjendë:"/>
 		<control caption="Die"/>
@@ -3403,11 +3415,14 @@
 		<control caption="Optimale|Gjethe|Nyje"/>
 		<control caption="Lidhje G_2:"/>
 		<control caption="Gjethe në Nyje:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Nyje në Gjethe:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Nyje në Nyje:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Rrjeti Gnutella1:"/>
 		<control caption="Gjithmonë lidhu te Gnutella1"/>
 		<control caption="Lidhu sot te Gnutella1"/>
@@ -3415,11 +3430,14 @@
 		<control caption="Optimale|Gjethe|Ultrapikë"/>
 		<control caption="Lidhje G_1:"/>
 		<control caption="Gjethe në Ultrapikë:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Ultrapikë në Gjethe:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Pikë në Pikë:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Ngjeshjet e _Linkut:"/>
 		<control caption="Nyje në Gjethe"/>
 		<control caption="Gjethe në Nyje"/>
@@ -3432,12 +3450,14 @@
 		<control caption="Kërkimi _Global:"/>
 		<control caption="Kërko serverat e njohur të largët në depon e serverave:"/>
 		<control caption="Ndale kërkimin pas:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="rezultatesh."/>
 		<control caption="Merre dhe ridato server-listën nga serveri i lidhur"/>
 		<control caption="Linku për Lidhjet e _Klientit:"/>
 		<control caption="Mos u lidh në më tepër se:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="klientë të tjerë në eDonkey."/>
 		<control caption="_Mjetet e eDonkey:"/>
 		<control caption="Shkarko server-listën e eDonkey në rrjet:"/>
@@ -3447,19 +3467,25 @@
 		<control caption="_Ndërfaqe:"/>
 		<control caption="Shfaqi elementet shtesë në ndërfaqen BitTorrent"/>
 		<control caption="Lidhjet për _Shkarkim:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="torrente përnjëherë"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="lidhje me klientë"/>
 		<control caption="&#160;Pastro torrentet e shkarkuara&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;Kur shpërndarja arrin"/>
-		<control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
 		<control caption="&#160;Parapëlqe burime nga torrenti"/>
 		<control caption="_FundLojë:"/>
 		<control caption="Lejo mënyrën FundLojë kur torrentet përfundojnë"/>
 		<control caption="_Depozitimi për Torrentet:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Krijuesi i _Torrenteve"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Gjurmuesi Tipik:"/>
 		<control/>
 	</dialog>
@@ -3494,7 +3520,8 @@
 		<control/>
 		<control caption="Vetitë e Kuadros:"/>
 		<control caption="Vlera:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Përshkrimi:"/>
 		<control/>
 	</dialog>
@@ -3518,18 +3545,23 @@
 		<control caption="_Kapaciteti:"/>
 		<control caption="Lejo punën në radhë"/>
 		<control caption="Numri minimal i transfertave:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Numri maksimal i transfertave:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Numri maks. i pritjeve në radhë:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Parametra të _Shërbimit:"/>
 		<control caption="Pjesa e ngopur e shtri. së bandës:"/>
 		<control/>
 		<control caption="Shtri. e bandës për punët në radhë:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Rrotullo pas N sekondash:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="OK"/>
 		<control caption="Anulo"/>
 		<control caption="Shpërbleji ngarkuesit"/>
@@ -3548,17 +3580,7 @@
 		<control/>
 		<control caption="Përdorni Shareaza-n."/>
 	</dialog>
-	<dialog name="CWizardInterfacePage" cookie="StBuBuBuStStBuBu" caption="Mirë se erdhët në Shareaza">
-		<control caption="Shareaza ka një ndërfaqe që mund të ndryshohet, pra ju mund të zgjidhni atë që ju përshtatet më shumë. Këto mundësi mund të ndryshohen në çdo kohë."/>
-		<control caption="Ju lutemi zgjidhni ndërfaqen tuaj:"/>
-		<control caption="E Thjeshtë"/>
-		<control caption="E Avancuar"/>
-		<control caption="E lehtë për të përdorur menytë dhe butonat.{n}Ngjan me programet e tjera skedëshpërndarëse."/>
-		<control caption="Ofron mjaft komanda, dritare ekstra etj. për përdoruesit ekspertë.{n}Përdoruesit e rinj mund t'i hutojë disi!"/>
-		<control caption="Shfaqe progresin në shufër të thjeshtë. (Zbute përdorimin e CPU-së)"/>
-		<control caption="Përkrahi linket torrente."/>
-	</dialog>
-	<dialog name="CWizardConnectionPage" cookie="StStCoStCoStCoStCoStms" caption="Mirë se erdhët në Shareaza [3 nga 7]">
+	<dialog name="CWizardConnectionPage" cookie="StStCoStCoStCoStCoStms" caption="Mirë se erdhët në Shareaza (1/6)">
 		<control caption="Për efektshmëri optimale, Shareaza duhet të dijë si lidheni në Internet."/>
 		<control caption="Zgjidhni llojin e lidhjes me Internet:"/>
 		<control caption="Modem Dial up|ISDN|ADSL (256K)|ADSL (512K)|ADSL (768K)|ADSL (1.5M)|ADSL (4.0M)|ADSL2 (8.0M)|ADSL2 (12.0M)|ADSL2+ (24.0M)|Modem me Kabllo/SDSL|T1|T3|LAN|OC3"/>
@@ -3571,7 +3593,7 @@
 		<control caption="Statusi:"/>
 		<control/>
 	</dialog>
-	<dialog name="CWizardSharePage" cookie="StStStSyBuBuSt" caption="Mirë se erdhët në Shareaza [4 nga 7]">
+	<dialog name="CWizardSharePage" cookie="StStStSyBuBuSt" caption="Mirë se erdhët në Shareaza (2/6)">
 		<control caption="Rrjeti P2P është po aq i mirë sa edhe njerëzit që e përdorin atë. Gjithë përmbajtja që vlen të shkarkohet po shpërndahet nga një përdorues tjetër."/>
 		<control caption="Që të përdorni Shareaza-n, nuk duhet patjetër të shpërndani përmbajtje, porse disa softuere sillen ndryshe me përdoruesit që nuk shpërndajnë asgjë."/>
 		<control caption="Ju lutemi tregoni se cilat dosje, nëse keni, dëshironi të shpërndani. Që të shtoni një dosje të re, thjesht klikoni butonin Shto."/>
@@ -3589,7 +3611,7 @@
 		<control caption="0"/>
 		<control caption="Mbylle"/>
 	</dialog>
-	<dialog name="CWizardProfilePage" cookie="StStEdStCoCoStCoCo" caption="Mirë se erdhët në Shareaza [5 nga 7]">
+	<dialog name="CWizardProfilePage" cookie="StStEdStCoCoStCoCo" caption="Mirë se erdhët në Shareaza (3/6)">
 		<control caption="Shareaza është një vend miqësor ku secili mund të shkruajë disa detaje themelore rreth vetes."/>
 		<control caption="Unë quhem:"/>
 		<control/>
@@ -3597,9 +3619,20 @@
 		<control caption="&#160;(zgjidhe)"/>
 		<control caption="&#160;(zgjidhe)| djalë| vajzë| burrë| grua"/>
 		<control caption="nga:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 	</dialog>
-	<dialog name="CWizardNetworksPage" cookie="StBuStBuStBuSt" caption="Mirë se erdhët në Shareaza [6 nga 7]">
+	<dialog name="CWizardInterfacePage" cookie="StBuBuBuStStBuBu" caption="Mirë se erdhët në Shareaza (4/6)">
+		<control caption="Shareaza ka një ndërfaqe që mund të ndryshohet, pra ju mund të zgjidhni atë që ju përshtatet më shumë. Këto mundësi mund të ndryshohen në çdo kohë."/>
+		<control caption="Ju lutemi zgjidhni ndërfaqen tuaj:"/>
+		<control caption="E Thjeshtë"/>
+		<control caption="E Avancuar"/>
+		<control caption="E lehtë për të përdorur menytë dhe butonat.{n}Ngjan me programet e tjera skedëshpërndarëse."/>
+		<control caption="Ofron mjaft komanda, dritare ekstra etj. për përdoruesit ekspertë.{n}Përdoruesit e rinj mund t'i hutojë disi!"/>
+		<control caption="Shfaqe progresin në shufër të thjeshtë. (Zbute përdorimin e CPU-së)"/>
+		<control caption="Përkrahi linket torrente."/>
+	</dialog>
+	<dialog name="CWizardNetworksPage" cookie="StBuStBuStBuSt" caption="Mirë se erdhët në Shareaza (5/6)">
 		<control caption="Shareaza është një aplikim skedë-shpërndarës me synim të përgjithshëm hyrjen në sa shumë rrjete P2P në të njëjtën kohë. Këtu mund të zgjidhni në cilat rrjete doni të hyni. Vëreni se gjithmonë mund të zgjidhni rrjete të ndryshme, edhe më vonë."/>
 		<control caption="Lidhu tek Gnutella2 (Rekomandohet Fort)"/>
 		<control caption="Rrjeti Gnutella2 është rrjeti parësor i Shareaza-s, i cili ofron më tepër veçori dhe efektshmëri se çdo rrjet P2P."/>
@@ -3616,7 +3649,7 @@
 		<control/>
 		<control caption="Mbylle"/>
 	</dialog>
-	<dialog name="CWizardFinishedPage" cookie="StStStBuBuBuSt" caption="Mirë se erdhët në Shareaza [7 nga 7]">
+	<dialog name="CWizardFinishedPage" cookie="StStStBuBuBuSt" caption="Mirë se erdhët në Shareaza (6/6)">
 		<control caption="Kaq ishte! Ju konfiguruat Shareaza-n që të punojë në këtë kompjuter."/>
 		<control caption="Nëse doni t'i ndryshoni përsëri kuadrot, uizardi i shpejtë mund të rihapet duke zgjedhur menynë Mjete."/>
 		<control caption="Kur të mbyllni këtë uizard duke klikuar Përfundo, mund të lidheni në rrjetet që zgjodhët dhe të nisni të kërkoni e shkarkoni përmbajtjet e dëshiruara."/>
@@ -3637,7 +3670,8 @@
 		<control caption="Emri në ekran:"/>
 		<control/>
 		<control caption="Emri i vërtetë:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="_Jetësore:"/>
 		<control caption="|Mashkull|Femër"/>
 		<control caption="Gjinia:"/>
@@ -3716,7 +3750,8 @@
 	<dialog name="CLanguageDlg" cookie="" caption="Zgjidhni gjuhën"/>
 	<dialog name="CConnectToDlg" cookie="BuCoEdBuCoBuBuBu" caption="Lidhuni Te|Shfletoni Hostin">
 		<control caption="Nis një lidhje të re te hosti/serveri:|Shfleto këtë host:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="_Protokolli i Rrjetit:"/>
 		<control caption="Gnutella1 (auto)|Gnutella2 (auto)|eDonkey"/>
 		<control caption="_Shtype Ultrapikën"/>
@@ -3724,7 +3759,8 @@
 		<control caption="Anulo"/>
 	</dialog>
 	<dialog name="CDownloadDlg" cookie="StStStEdBuBuStStBu" caption="Shkarkoni një Skedë ose Torrent">
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Shkarkimi i skedave me Shareaza është mjaft i lehtë. Thjesht shkruani ose ngjisni më poshtë një URL/URI që përshkruan skedën dhe shtypni Enter."/>
 		<control/>
 		<control caption="Shkarko"/>
@@ -3734,7 +3770,8 @@
 		<control caption="Hap _Torrent..."/>
 	</dialog>
 	<dialog name="CNewSearchDlg" cookie="EdCoBuBu" caption="Kërkim i Ri|Kërko Përsëri|Gjej në Librari">
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Kërko"/>
 		<control caption="Anulo"/>
 	</dialog>
@@ -3748,7 +3785,8 @@
 		<control caption="Maksimumi:"/>
 		<control/>
 		<control caption="Me të paktën:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="burime."/>
 		<control caption="_Fshehi:"/>
 		<control caption="Hostet e zëna"/>
@@ -3785,7 +3823,9 @@
 	<dialog name="CDownloadMonitorDlg" cookie="StStStStStStStStStStStStStBuBuBuBuBu" caption="Shkarko : Shareaza">
 		<control caption="Shareaza po shkarkon:"/>
 		<control caption="..."/>
-		<control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
 		<control caption="Shpejtësi:"/>
 		<control caption="..."/>
 		<control caption="Kohë e mbetur:"/>
@@ -3802,7 +3842,10 @@
 	</dialog>
 	<dialog name="CFileGeneralPage" cookie="StEdEdEdEdStStEdStEdStEdStEdEdEd" caption="Përgjithësi">
 		<control caption="Emri Burimor Universal (URN)"/>
-		<control/><control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
 		<control caption="Atributet e Skedës"/>
 		<control caption="Vendi:"/>
 		<control/>
@@ -3811,17 +3854,21 @@
 		<control caption="Modifikimi:"/>
 		<control/>
 		<control caption="Masa:"/>
-		<control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
 	</dialog>
 	<dialog name="CFileMetadataPage" cookie="CoEd" caption="Metadatat">
-		<control/><control/>
+		<control/>
+		<control/>
 	</dialog>
 	<dialog name="CFileCommentsPage" cookie="StStCoStEdEd" caption="Pasqyrimi">
 		<control caption="Vlerësimi im"/>
 		<control caption="Kjo skedë vlerësohet:"/>
 		<control caption="(Pa vlerësim)|False/Korruptuar/Keqprijëse|Dobët|Mesatare|Mirë|Shumë mirë|Shkëlqyer"/>
 		<control caption="Pasqyrimi dhe Komenti im"/>
-		<control/><control/>
+		<control/>
+		<control/>
 	</dialog>
 	<dialog name="CFileSharingPage" cookie="StBuBuBuStCoStSyEd" caption="Shpërndarja">
 		<control caption="Shpërndarje e Thjeshtë"/>
@@ -3831,19 +3878,22 @@
 		<control caption="Ngarko Etiketat për të Zgjedhur Punët në Radhë"/>
 		<control/>
 		<control caption="-Rrjetet ku do Shpërndani"/>
-		<control/><control/>
+		<control/>
+		<control/>
 	</dialog>
 	<dialog name="CFileSourcesPage" cookie="StStEdSyBuBuEd" caption="Burimi">
 		<control caption="Burimet e Njohura"/>
 		<control caption="Shto një Burim të Ri"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="_Shto"/>
 		<control caption="_Fshije"/>
 		<control/>
 	</dialog>
 	<dialog name="CFileCopyDlg" cookie="StStmsBuBumsStSt" caption="Kopjo Skedat|Lëvizi Skedat">
 		<control caption="Ju zgjodhët që në dosjen më poshtë të kopjoni %i skedë(a):"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="OK"/>
 		<control caption="Anulo"/>
 		<control/>
@@ -3871,7 +3921,8 @@
 		<control caption="Legjendë"/>
 		<control caption="_Frekuenca e Vrojtimit:"/>
 		<control caption="Periudha midis shembujve:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="ms"/>
 		<control caption="_Emri:"/>
 		<control/>
@@ -3893,7 +3944,8 @@
 		<control caption="_Fshije"/>
 	</dialog>
 	<dialog name="CSchemaColumnsDlg" cookie="CoSyBuBuSt" caption="Zgjidhni Kolonat nga Skema">
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="OK"/>
 		<control caption="Anulo"/>
 		<control caption="Zgjidhni një skedë nga lista, pastaj zgjidhni fushat që do të shfaqni si kolona."/>
@@ -3906,9 +3958,15 @@
 		<control/>
 		<control caption="Adresa e _Rrjetit:"/>
 		<control caption="Adresa IP:"/>
-		<control/><control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
 		<control caption="Netmaska:"/>
-		<control/><control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
 		<control caption="Filtri i _Përmbajtjes:"/>
 		<control/>
 		<control caption="Krahaso Disa"/>
@@ -3939,7 +3997,9 @@
 	<dialog name="CURLCopyDlg" cookie="StStStStStBuBu" caption="Kopjo URI-n">
 		<control/>
 		<control caption="Ju mund të kopjoni një URI për njësinë e zgjedhuri në një mori formatesh të ndryshme. Ju lutemi zgjidhni formatin që dëshironi të përdorni duke klikuar një nga URI-t më poshtë:"/>
-		<control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
 		<control caption="Përfshije _vetveten si një burim i ngulitur në URL"/>
 		<control caption="Anulo"/>
 	</dialog>
@@ -3961,7 +4021,10 @@
 		<control caption="Ju klikuat një URI me fuqi në Shareaza, i cili lidhet në rrjet me këtë përmbajtje:"/>
 		<control caption="Ju klikuat një URL me fuqi në Shareaza, i cili do të lidhet te hosti ose serveri më poshtë:"/>
 		<control caption="Ju klikuat një URI me fuqi në Shareaza, i cili do t'ju lejojë të shfletoni skedat e shpërndara të vlefshme në hostin më poshtë:"/>
-		<control/><control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
 		<control caption="Ju lutemi zgjidhni si doni të veprojë Shareaza:"/>
 		<control caption="_Shkarko Tani"/>
 		<control caption="_Kërko Skedën"/>
@@ -3981,7 +4044,8 @@
 	<dialog name="CFilePreviewDlg" cookie="StStStmsStBu" caption="Parashikim i Shkarkimit Inteligjent...">
 		<control/>
 		<control caption="Shareaza po krijon një parashikim të shkarkimit:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="(po kopjoj thelat e shkarkuara tek një skedë e re parashikuese)"/>
 		<control caption="Anulo"/>
 	</dialog>
@@ -4006,7 +4070,10 @@
 		<control caption="OK"/>
 	</dialog>
 	<dialog name="CExistingFileDlg" cookie="StStStStStBuBuBuBuBuStSt" caption="Skedë Ekzistuese">
-		<control/><control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
 		<control caption="Kjo skedë ndodhet që më parë në librarinë tuaj të skedave. Çfarë mendoni të bëni?"/>
 		<control caption="Më trego skedën në librarinë time"/>
 		<control caption="Shkarko skedën përsëri"/>
@@ -4028,7 +4095,8 @@
 	<dialog name="CDonkeyServersDlg" cookie="StStEdmsBuBu" caption="Shkarkoni Skedën Server.met">
 		<control/>
 		<control caption="Skeda server.met e eDonkey mund të shkarkohet nga ky rrjet për të rifreskuar listën lokale me serverat tuaj."/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="OK"/>
 		<control caption="Anulo"/>
 	</dialog>
@@ -4071,17 +4139,21 @@
 		<control caption="KUJDES: Kjo tabelë paraqet veçori të përparuara për editimin e shkarkimit, të cilat nëse përdoren jokorrekt mund, dhe mbase do të shkaktojnë korruptim."/>
 		<control caption="Emri dhe Për_masa e skedës:"/>
 		<control caption="Emri i skedës:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Përmasa (Bajte):"/>
 		<control/>
 		<control caption="_URN-e:"/>
 		<control caption="Me besim"/>
 		<control caption="SHA1:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="Tiger-Root:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="ED2K:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="_Veprime:"/>
 		<control caption="Harro statusin aktual të verifikimit dhe riverifiko"/>
 		<control caption="Supozo që skeda ka përfunduar 100% dhe riverifiko"/>
@@ -4150,7 +4222,8 @@
 	</dialog>
 	<dialog name="CDownloadGroupDlg" cookie="BuEdSyBuCoBuBuBuBuBuEdBu" caption="Vetitë e Grupit në Shkarkim">
 		<control caption="_Emri:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="_Filtrat:"/>
 		<control/>
 		<control caption="_Shto"/>
@@ -4180,7 +4253,8 @@
 	<dialog name="CDownloadReviewDlg" cookie="StBuSyEd" caption="Pasqyrimet e Shkarkesës">
 		<control/>
 		<control caption="OK"/>
-		<control/><control/>
+		<control/>
+		<control/>
 	</dialog>
 	<dialog name="CDecodeMetadataDlg" cookie="BuBuStCo" caption="Vendndodhja e Metadatave">
 		<control caption="OK"/>

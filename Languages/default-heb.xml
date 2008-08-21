@@ -437,6 +437,7 @@ PDF
 		<button id="ID_CHAT_CONNECT" text="התחבר" visible="false"/>
 		<button id="ID_CHAT_DISCONNECT" text="התנתק"/>
 	</toolbar>
+	<!-- WEBSERVICES -->
 	<toolbar name="WebServices.ShareMonkey">
 		<button id="ID_SHAREMONKEY_DOWNLOAD" text="השג מידע"/>
 		<separator/>

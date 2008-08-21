@@ -46,7 +46,7 @@
 		<button id="ID_TAB_SEARCH" text="Arama"/>
 		<button id="ID_TAB_TRANSFERS" text="Transferler"/>
 		<button id="ID_TAB_NETWORK" text="Ağ"/>
-		<button id="ID_TAB_IRC" text="Chat"/>
+		<button id="ID_TAB_IRC" text="IRC"/>
 	</toolbar>
 	<toolbar name="CMainWnd.Windowed">
 		<button id="ID_NETWORK_CONNECT" text="Bağlan"/>
@@ -427,42 +427,43 @@
 		<button id="ID_CHAT_CONNECT" text="Bağlan" visible="false"/>
 		<button id="ID_CHAT_DISCONNECT" text="Bağlantı Kes"/>
 	</toolbar>
-	<toolbar name="WebServices.ShareMonkey">
-		<button id="ID_SHAREMONKEY_DOWNLOAD" text="Get Data"/>
+	<!-- WEBSERVICES -->
+<!--<toolbar name="WebServices.ShareMonkey">
+		<button id="ID_SHAREMONKEY_DOWNLOAD" text=""/>
 		<separator/>
-		<button id="ID_SHAREMONKEY_PREVIOUS" text="Previous"/>
-		<button id="ID_SHAREMONKEY_NEXT" text="Next"/>
+		<button id="ID_SHAREMONKEY_PREVIOUS" text=""/>
+		<button id="ID_SHAREMONKEY_NEXT" text=""/>
 		<separator/>
-		<button id="ID_SHAREMONKEY_PRICES" text="Get Prices"/>
-		<button id="ID_SHAREMONKEY_COMPARE" text="Compare"/>
-		<button id="ID_SHAREMONKEY_BUY" text="Buy It"/>
+		<button id="ID_SHAREMONKEY_PRICES" text=""/>
+		<button id="ID_SHAREMONKEY_COMPARE" text=""/>
+		<button id="ID_SHAREMONKEY_BUY" text=""/>
 	</toolbar>
 	<toolbar name="WebServices.ShareMonkey.WithSave">
-		<button id="ID_SHAREMONKEY_DOWNLOAD" text="Get Data"/>
-		<button id="ID_SHAREMONKEY_SAVE" text="Save"/>
-		<control id="ID_SHAREMONKEY_SAVE_OPTION" text="Save Preview" width="100" checked="true"/>
+		<button id="ID_SHAREMONKEY_DOWNLOAD" text=""/>
+		<button id="ID_SHAREMONKEY_SAVE" text=""/>
+		<control id="ID_SHAREMONKEY_SAVE_OPTION" text="" width="100" checked="true"/>
 		<separator/>
-		<button id="ID_SHAREMONKEY_PREVIOUS" text="Previous"/>
-		<button id="ID_SHAREMONKEY_NEXT" text="Next"/>
+		<button id="ID_SHAREMONKEY_PREVIOUS" text=""/>
+		<button id="ID_SHAREMONKEY_NEXT" text=""/>
 		<separator/>
-		<button id="ID_SHAREMONKEY_PRICES" text="Get Prices"/>
-		<button id="ID_SHAREMONKEY_COMPARE" text="Compare"/>
-		<button id="ID_SHAREMONKEY_BUY" text="Buy It"/>
+		<button id="ID_SHAREMONKEY_PRICES" text=""/>
+		<button id="ID_SHAREMONKEY_COMPARE" text=""/>
+		<button id="ID_SHAREMONKEY_BUY" text=""/>
 	</toolbar>
 	<toolbar name="WebServices.MusicBrainz">
-		<button id="ID_MUSICBRAINZ_MATCHES" text="View Album Matches"/>
-		<button id="ID_MUSICBRAINZ_ALBUMS" text="View All Albums"/>
+		<button id="ID_MUSICBRAINZ_MATCHES" text=""/>
+		<button id="ID_MUSICBRAINZ_ALBUMS" text=""/>
 		<separator/>
-	</toolbar>
+	</toolbar> -->
 	<!-- IMAGE VIEWER WINDOW - DELETE? -->
-	<toolbar name="ImageViewer_Toolbar">
-		<button id="ImageViewer_ActualSize" text="Actual Size"/>
-		<button id="ImageViewer_BestFit" text="Best Fit"/>
+<!--<toolbar name="ImageViewer_Toolbar">
+		<button id="ImageViewer_ActualSize" text=""/>
+		<button id="ImageViewer_BestFit" text=""/>
 		<separator/>
-		<button id="ImageViewer_Refresh" text="Refresh"/>
+		<button id="ImageViewer_Refresh" text=""/>
 		<separator/>
-		<button id="ImageViewer_Close" text="Close"/>
-	</toolbar>
+		<button id="ImageViewer_Close" text=""/>
+	</toolbar> -->
 </toolbars>
 <!-- Menu Definitions -->
 <menus>
@@ -1842,7 +1843,7 @@
 		<text format="b">Shareaza'nın Ayarlar Yönetimine hoşgeldiniz.</text>
 		<newline gap="16"/>
 		<text>  Shareaza Ayarlar Yönetimi ileri kulanıcılara Shareaza'nın nasıl çalışacağını tamamen ayarlamalarına izin verir. 
-		Ayarlar	</text>
+			Ayarlar	</text>
 		<text format="b">Internet </text>
 		<text> sekmesi karşılıklı ağlardaki diğer düğümlerle etkileşimini kontrol eder. </text>
 		<newline gap="16" indent="16"/>
@@ -1933,7 +1934,6 @@
 			<newline gap="2" indent="8"/>
 			<text id="Interests"/>
 		</group>
-
 		<group id="6">
 			<newline gap="8" indent="0"/>
 			<text format="b">Bio</text>
