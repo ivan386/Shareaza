@@ -431,6 +431,15 @@
 		<button id="ID_MUSICBRAINZ_ALBUMS" text="View All Albums"/>
 		<separator/>
 	</toolbar>
+	<!-- IMAGE VIEWER WINDOW - DELETE? -->
+	<toolbar name="ImageViewer_Toolbar">
+		<button id="ImageViewer_ActualSize" text="Actual Size"/>
+		<button id="ImageViewer_BestFit" text="Best Fit"/>
+		<separator/>
+		<button id="ImageViewer_Refresh" text="Refresh"/>
+		<separator/>
+		<button id="ImageViewer_Close" text="Close"/>
+	</toolbar>
 </toolbars>
 <!-- Menu Definitions -->
 <menus>
@@ -515,9 +524,9 @@
 			</menu>
 			<separator/>
 			<item id="ID_HELP_VERSION_CHECK" text="Check for new _version"/>
+			<item id="ID_HELP_DONATE" text="_Donate to the Shareaza Project"/>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="_About Shareaza..."/>
-			<item id="ID_HELP_DONATE" text="_Donate to Shareaza Project!"/>
 		</menu>
 	</menu>
 	<menu name="CMainWnd.Tabbed" type="bar">
@@ -614,9 +623,9 @@
 			</menu>
 			<separator/>
 			<item id="ID_HELP_VERSION_CHECK" text="Check for new _version"/>
+			<item id="ID_HELP_DONATE" text="_Donate to the Shareaza Project"/>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="_About Shareaza..."/>
-			<item id="ID_HELP_DONATE" text="_Donate to Shareaza Project!"/>
 		</menu>
 	</menu>
 	<menu name="CMainWnd.Windowed" type="bar">
@@ -706,9 +715,9 @@
 			</menu>
 			<separator/>
 			<item id="ID_HELP_VERSION_CHECK" text="Check for new _version"/>
+			<item id="ID_HELP_DONATE" text="_Donate to the Shareaza Project"/>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="_About Shareaza..."/>
-			<item id="ID_HELP_DONATE" text="_Donate to Shareaza Project!"/>
 		</menu>
 	</menu>
 	<!-- VIEW POPUP -->
@@ -1792,14 +1801,10 @@
 		</styles>
 		<text format="b">Welcome to Shareaza's Settings Manager</text>
 		<newline gap="16"/>
-		<text>
-			The Shareaza Settings Manager allows advanced users to completely customise how
-			Shareaza works. The settings in the 
-		</text>
+		<text>The Shareaza Settings Manager allows advanced users to completely customise how
+			Shareaza works. The settings in the </text>
 		<text format="b">General </text>
-		<text>
-			section relate to the user experience.
-		</text>
+		<text>section relate to the user experience.</text>
 		<newline gap="16" indent="16"/>
 		<link target="raza:page:CGeneralSettingsPage" format="b">General:</link>
 		<gap size="4"/>
@@ -1819,7 +1824,7 @@
 		<newline gap="10"/>
 		<link target="raza:page:CIRCSettingsPage" format="b">Chat:</link>
 		<gap size="4"/>
-		<text>IRC chatroom visual appearance and connection settings.</text>
+		<text>IRC chatroom visual appearances and connection settings.</text>
 		<newline gap="10"/>
 		<link target="raza:page:CWebSettingsPage" format="b">Web Integration:</link>
 		<gap size="4"/>
@@ -1833,11 +1838,10 @@
 		</styles>
 		<text format="b">Welcome to Shareaza's Settings Manager</text>
 		<newline gap="16"/>
-		<text>	The Shareaza Settings Manager allows advanced users to completely customise 
+		<text>The Shareaza Settings Manager allows advanced users to completely customise 
 			how Shareaza works. The settings in the </text>
 		<text format="b">Internet </text>
-		<text>	section control how Shareaza interacts with other nodes within distributed peer-to-peer networks.
-		</text>
+		<text>section control how Shareaza interacts with other nodes within distributed peer-to-peer networks. </text>
 		<newline gap="16" indent="16"/>
 		<link target="raza:page:CConnectionSettingsPage" format="b">Connection:</link>
 		<gap size="4"/>
