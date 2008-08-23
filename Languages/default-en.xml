@@ -1553,6 +1553,15 @@
 		<item id="ID_CHAT_TIMESTAMP" text="_Timestamp"/>
 		<item id="ID_CHAT_CLEAR" text="C_lear Window"/>
 	</menu>
+	<!-- PLUGIN MENUS -->
+	<menu name="ImageViewer_Context">
+		<item id="ImageViewer_BestFit" text="_Best Fit"/>
+		<item id="ImageViewer_ActualSize" text="_Actual Size"/>
+		<separator/>
+		<item id="ImageViewer_Refresh" text="_Refresh"/>
+		<separator/>
+		<item id="ImageViewer_Close" text="_Close"/>
+	</menu>
 	<!-- IRC WINDOW -->
 	<menu name="CIRCTabRClick">
 		<item id="ID_IRC_CLOSETAB" text="_Close"/>
