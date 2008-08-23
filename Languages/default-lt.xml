@@ -354,7 +354,7 @@
 		<button id="ID_IRC_CONNECT" text="Jungtis" tip="Jungtis prie IRC"/>
 		<button id="ID_IRC_DISCONNECT" text="Atsijungti" tip="Atsijungti nuo IRC"/>
 		<rightAlign/>
-		<button id="ID_IRC_SETTINGS" text="Settings" tip="Keisti IRC nuostatas"/>
+		<button id="ID_IRC_SETTINGS" text="Nuostatos" tip="Keisti IRC nuostatas"/>
 	</toolbar>
 	<!-- NEIGHBOURS WINDOW -->
 	<toolbar name="CNeighboursWnd.Basic">
@@ -2606,6 +2606,7 @@
 	<string id="WINDOW_MEDIA" value="Grotuvas"/>
 	<string id="WINDOW_SEARCHPAD" value="Paieška"/>
 	<string id="WINDOW_HELP" value="„Shareaza“ žinynas"/>
+	<string id="WINDOW_IRC" value="Shareaza pokalbiai"/>
 	<string id="7000" value="Ar tikrai norite pašalinti šį filtrą?"/>
 	<string id="7001" value="&amp;Schemos"/>
 	<string id="7002" value="Skirtingos reikšmės"/>
@@ -3086,6 +3087,13 @@
 	<string id="16997" value="Joks failas negrojamas. Grojimui spragtelkite grotuvo failą savo kolekcijoje."/>
 	<string id="16998" value="S &#160; &#160; H &#160; &#160; A &#160; &#160; R &#160; &#160; E &#160; &#160; A &#160; &#160; Z &#160; &#160; A &#160; &#160; &#160; &#160; &#160; M &#160; &#160; E &#160; &#160; D &#160; &#160; I &#160; &#160; J &#160; &#160; A &#160; &#160; &#160; &#160; &#160; S &#160; &#160; I &#160; &#160; S &#160; &#160; T &#160; &#160; E &#160; &#160; M &#160; &#160; A"/>
 	<string id="16999" value="G R O J A R A Š T I S"/>
+	<string id="17017" value="Kalbėk!"/>
+	<string id="17018" value="Sveiki! Čia Shareaza pokalbiai!"/>
+	<string id="17019" value="Gerbkite kitus naudodamiesi šia paslauga"/>
+	<string id="17020" value="Pridėti"/>
+	<string id="17021" value="Šalinti"/>
+	<string id="17022" value="Naudotojai"/>
+	<string id="17023" value="Kanalai"/>
 	<string id="17024" value="Užmezgamas ryšys su %s..."/>
 	<string id="17025" value="Neįmanoma užmegzti ryšio su %s."/>
 	<string id="17026" value="Prašoma užmegzti įstūmiantįjį ryšį per užkardą su adresatu %s..."/>
@@ -4434,6 +4442,12 @@
 		<control/>
 		<control caption="Gerai"/>
 		<control caption="Atšaukti"/>
+	</dialog>
+	<dialog name="CIrcInputDlg" cookie="EdBuBuSt" caption="Kanalo pavadinimas|Priežastis">
+		<control/>
+		<control caption="Gerai"/>
+		<control caption="Atšaukti"/>
+		<control caption="Įveskite kanalą, kurį norite pridėti:|Įveskite veiksmo priežastį:"/>
 	</dialog>
 </dialogs>
 <!-- Columns Definitions -->
