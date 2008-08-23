@@ -2047,7 +2047,7 @@
 		<newline gap="8"/>
 		<link target="http://shareaza.sourceforge.net/help/?torrentencoding">點選這裡取得更多說明</link>
 		<text>, 或是下載軟體修復 torrent.</text>
-</document>
+	</document>
 
 	<document name="GeneralHelp.DonkeyServerList">
 		<text format="b">您的 eDonkey 伺服器清單是空的</text>
@@ -2682,7 +2682,7 @@
 	<string id="16264" value="正在啟始連線至 %s 連接埠 %i 以下載 &quot;%s&quot;..."/>
 	<string id="16265" value="無法連線至下載主機 %s."/>
 	<string id="16266" value="連到 %s 的下載連線已建立."/>
-	<!-- incorrect translation causes a crash <string id="16267" value="&quot;%s&quot; 的下載分塊(%I64i-%I64i): 正在向 %s 要求."/> -->
+<!-- incorrect translation causes a crash <string id="16267" value="&quot;%s&quot; 的下載分塊(%I64i-%I64i): 正在向 %s 要求."/> -->
 	<string id="16268" value="沒有任何可用的下載分塊, 正在與 %s 的關閉連線."/>
 	<string id="16269" value="分塊縮減, 正在關閉與 %s 的連線."/>
 	<string id="16270" value="向 %s 的下載要求已經逾時, 關閉連線中."/>
@@ -3354,10 +3354,10 @@
 		<control caption="Gnutella2 網路是 Shareaza 初次推出的網路, 提供比其他 P2P 網路更多的功能與更佳的效能.強烈推薦使用!!"/>
 		<control caption="連線至 Gnutella2 (G2)"/>
 		<control caption="規劃 Gnutella2"/>
-		<control caption="eDonkey2000 網路:"/>
-		<control caption="The eDonkey2000 網路是一個十分熱門, 以伺服器構成的網路.  功能的多樣性不如 Gnutella2, 但是 eDonkey2000 擁有十分龐大的檔案數量."/>
-		<control caption="連線至 eDonkey2000"/>
-		<control caption="規劃 eDonkey2000"/>
+		<control caption="eDonkey 網路:"/>
+		<control caption="The eDonkey 網路是一個十分熱門, 以伺服器構成的網路.  功能的多樣性不如 Gnutella2, 但是 eDonkey 擁有十分龐大的檔案數量."/>
+		<control caption="連線至 eDonkey"/>
+		<control caption="規劃 eDonkey"/>
 		<control caption="原始 Gnutella 網路:"/>
 		<control caption="雖然原始的 Gnutella 網路的功能不如 Gnutella2, 而且擁有的檔案數又少於 eDonkey2000, 它仍舊是寶貴的資源."/>
 		<control caption="連線至原始的 Gnutella"/>

@@ -4066,7 +4066,7 @@
 		<control caption="Për fat të keq, shumë shpërdarës skedash nuk e dinë se sa shumë u duhet!"/>
 		<control caption="Nëse njihni ndokënd që do t'i pëlqente Shareaza, qoftë një përdorues i ri apo dikush që vendos të marrë një produkt me çmim të ulët, pse të mos i tregoni se ka një alternativë më të mirë?"/>
 		<control caption="Ka shanse që ata t'ju jenë mirënjohës që i shpëtuat!"/>
-		<control caption="www.shareaza.com"/>
+		<control caption="Shareaza.Sourceforge.net"/>
 		<control caption="OK"/>
 	</dialog>
 	<dialog name="CExistingFileDlg" cookie="StStStStStBuBuBuBuBuStSt" caption="Skedë Ekzistuese">

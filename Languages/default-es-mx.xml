@@ -2263,7 +2263,7 @@
 	<tip id="ID_HELP_ROUTER" message="Consigue ayuda para configurar tu Router Y/O Firewall."/>
 	<tip id="ID_HELP_FORUMS" message="Visitar las foros de Shareaza, para soporte técnico y discusiones."/>
 	<tip id="ID_HELP_GUIDE" message="Visita la Gua de Usuarios Shareaza."/>
-	<tip id="ID_HELP_HOMEPAGE" message="Visitar Shareaza.com."/>
+	<tip id="ID_HELP_HOMEPAGE" message="Visitar Shareaza.Sourceforge.net."/>
 	<tip id="ID_HELP_SECURITY" message="Ayuda protegiendo tu sistema de programas hostiles"/>
 	<tip id="ID_HELP_UPDATE" message="Checar noticias y actualizaciones."/>
 	<tip id="ID_HELP_WEB_1" message="Visitar este sitio"/>

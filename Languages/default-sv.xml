@@ -2560,7 +2560,7 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 	<string id="8007" value="Det finns inga aktiva sökningar. Klicka här för att söka efter filer." />
 	<string id="8008" value="Shareaza har fullständigt laddad ned Shareaza version (%s).  Vill du uppgradera nu?\n\nOm du väljer Ja kommer Shareaza stängas tillfälligt och uppgraderingen kommer att installeras.." />
 	<string id="8009" value="Är du säker på att du vill radera skinnet &quot;%s&quot;?  Detta kan inte ångras." />
-	<string id="8010" value="Detta är en förhandsversion av Shareaza och förhandstestningen har avslutats. Ladda ned en fullständig officiell version från www.shareaza.com." />
+	<string id="8010" value="Detta är en förhandsversion av Shareaza och förhandstestningen har avslutats. Ladda ned en fullständig officiell version från Shareaza.Sourceforge.net." />
 	<string id="8011" value="Vid vyändring stängs alla öppna fönster. Vill du ändra vy nu?" />
 	<string id="8012" value="Torrentinformation"/>
 	<string id="8060" value="Nav/Ultralikeläge med %lu grannar. %s i ditt lokala bibliotek."/>
@@ -4161,7 +4161,7 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<control caption="Visste du att Shareaza är en 100% fri produkt?" />
 		<control caption="Shareaza innehåller INTE NÅGOT &quot;spionprogram&quot;, &quot;reklamprogram&quot; eller andra medskickade program. Det visar INGEN reklam eller &quot;popupfönster&quot; någonsin.{n}{n}Om du någonsin ser reklam eller &quot;popupfönster&quot; när du använder Shareaza kan du vara säker på att det INTE kommer från detta program." />
 		<control caption="Tyvärr innehåller många andra program oönskvärda reklamprogram eller spionprogram. Så om du ser något misstänkt kan du kontrollera din PC med ett program som tar bort dessa program." />
-		<control caption="Du ska inte ha betalat något för att komma över Shareaza. Shareaza kan laddas ned fritt av alla från www.shareaza.com. Om du har betalat pengar för detta program ska du kräva tillbaka dem med en gång." />
+		<control caption="Du ska inte ha betalat något för att komma över Shareaza. Shareaza kan laddas ned fritt av alla från Shareaza.Sourceforge.net. Om du har betalat pengar för detta program ska du kräva tillbaka dem med en gång." />
 		<control caption="Shareaza respekterar sina användare!" />
 		<control caption="http://shareaza.sourceforge.net/"/>
 		<control caption="Stäng" />

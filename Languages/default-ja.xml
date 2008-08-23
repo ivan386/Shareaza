@@ -2234,7 +2234,7 @@
 	<tip id="ID_HELP_ROUTER" message="ルータやファイアーウォールの設定についてのヘルプを閲覧します"/>
 	<tip id="ID_HELP_FORUMS" message="Shareaza討論フォーラムを訪問します"/>
 	<tip id="ID_HELP_GUIDE" message="Shareazaユーザーズガイドを訪問します"/>
-	<tip id="ID_HELP_HOMEPAGE" message="Shareaza.comウェブサイトを訪問します"/>
+	<tip id="ID_HELP_HOMEPAGE" message="Shareaza.Sourceforge.netウェブサイトを訪問します"/>
 	<tip id="ID_HELP_SECURITY" message="悪意のあるプログラムからシステムを守るためのヘルプ"/>
 	<tip id="ID_HELP_UPDATE" message="ニュースと更新をチェックします"/>
 	<tip id="ID_HELP_WEB_1" message="このウェブサイトを訪問します"/>
