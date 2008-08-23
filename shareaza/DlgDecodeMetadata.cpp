@@ -83,7 +83,7 @@ BOOL CDecodeMetadataDlg::OnInitDialog()
 		if ( !pFile || !pFile->m_pMetadata || !pFile->m_pSchema ) return TRUE;
 
 		CXMLElement* pXML = pFile->m_pMetadata;
-		m_sOriginalWords = pXML->GetRecursiveWords();
+		m_sOriginalWords = pFile->m_pSchema->GetVisibleWords( pXML );
 		
 		m_sPreview1 = m_sOriginalWords;
 		GetEncodedText( m_sPreview1, 0 );
