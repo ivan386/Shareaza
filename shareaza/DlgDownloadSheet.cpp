@@ -83,24 +83,25 @@ CDownloadSheet::~CDownloadSheet()
 INT_PTR CDownloadSheet::DoModal(int nPage)
 {
 	CDownloadEditPage		pDownload;
-	SetTabTitle( &pDownload, m_sDownloadTitle );
-	if ( ! m_pDownload->IsMoving() )
-		AddPage( &pDownload );
-
 	CTorrentGeneralPage		pGeneral;
-	SetTabTitle( &pGeneral, m_sGeneralTitle );
-	if ( m_pDownload->IsTorrent() )
-		AddPage( &pGeneral );
-
 	CTorrentFilesPage		pFiles;
-	SetTabTitle( &pFiles, m_sFilesTitle );
-	if ( m_pDownload->IsTorrent() )
-		AddPage( &pFiles );
-
 	CTorrentTrackersPage	pTrackers;
-	SetTabTitle( &pTrackers, m_sTrackersTitle );
+
+	if ( ! m_pDownload->IsMoving() )
+	{
+		SetTabTitle( &pDownload, m_sDownloadTitle );
+		AddPage( &pDownload );
+	}
+
 	if ( m_pDownload->IsTorrent() )
+	{
+		SetTabTitle( &pGeneral, m_sGeneralTitle );
+		AddPage( &pGeneral );
+		SetTabTitle( &pFiles, m_sFilesTitle );
+		AddPage( &pFiles );
+		SetTabTitle( &pTrackers, m_sTrackersTitle );
 		AddPage( &pTrackers );
+	}
 
 	m_psh.nStartPage = nPage;
 
