@@ -1498,7 +1498,6 @@ BOOL CSkinWindow::PreBlend(CBitmap* pbmTarget, const CRect& rcTarget, const CRec
 	{
 		BYTE* pTargePtr = pTargeData + nDstY * nTargePitch + nDstLeft;
 		BYTE* pImagePtr = pImageData + nSrcY * nImagePitch + nSrcLeft;
-		BYTE* pAlphaPtr = pAlphaData + nSrcY * nAlphaPitch + nSrcLeft;
 
 		if ( nDstY < 0 || nDstY >= -pTargeInfo.bmiHeader.biHeight )
 		{
@@ -1510,6 +1509,7 @@ BOOL CSkinWindow::PreBlend(CBitmap* pbmTarget, const CRect& rcTarget, const CRec
 		}
 		else if ( bAlpha && nSrcY < -pAlphaInfo.bmiHeader.biHeight )
 		{
+			BYTE* pAlphaPtr = pAlphaData + nSrcY * nAlphaPitch + nSrcLeft;
 			for ( int nX = nWidth ; nX ; nX-- )
 			{
 				register BYTE nAlpha = *pAlphaPtr; pAlphaPtr += 3;
