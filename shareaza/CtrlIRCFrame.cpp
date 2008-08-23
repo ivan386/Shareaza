@@ -427,7 +427,9 @@ void CIRCFrame::OnPaint()
 	PaintHeader( rcComponent, dc );
 	rcComponent.DeflateRect( 10, 4 );
 	dc.SelectObject( &CoolInterface.m_fntCaption );
-	DrawText( &dc, rcComponent.left, rcComponent.top, _T("Chat!") );
+	CString str;
+	LoadString( str, IDS_IRC_INPUT_CAPTION );
+	DrawText( &dc, rcComponent.left, rcComponent.top, str );
 
 	rcComponent.right = rcClient.right;
 	rcComponent.left = rcClient.left + PANEL_WIDTH;

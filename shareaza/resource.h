@@ -1266,6 +1266,7 @@
 #define IDS_MEDIA_EMPTY                 16997
 #define IDS_MEDIA_TITLE                 16998
 #define IDS_MEDIA_PLAYLIST              16999
+#define IDS_IRC_INPUT_CAPTION           17017
 #define IDS_IRC_PANEL_TITLE             17018
 #define IDS_IRC_PANEL_SUBTITLE          17019
 #define IDS_IRC_PANEL_ADDCHANNEL        17020

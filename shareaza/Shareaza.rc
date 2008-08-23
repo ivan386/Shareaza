@@ -3930,6 +3930,7 @@ END
 
 STRINGTABLE 
 BEGIN
+    IDS_IRC_INPUT_CAPTION   "Chat!"
     IDS_IRC_PANEL_TITLE     "Welcome to Shareaza Chat!"
     IDS_IRC_PANEL_SUBTITLE  "Please respect others while using this service"
     IDS_IRC_PANEL_ADDCHANNEL "Add"
@@ -4624,7 +4625,7 @@ BEGIN
                             "Export the selected album folder to collection files..."
     ID_LIBRARY_SEED_TORRENT "Seed the selected Torrent on BitTorrent."
     ID_LIBRARY_REBUILD_ANSI "Rebuild metadata using other language."
-    ID_DOWNLOADS_EDIT       "Show the advanced edit download interface..."
+    ID_DOWNLOADS_EDIT       "Show the advanced download properties..."
     ID_MEDIA_MUTE           "Mute audio playback"
     ID_WINDOW_REMOTE        "Show or hide the Shareaza Remote Control"
     ID_UPLOADS_FILTER_TORRENT "Show BitTorrent uploads."
