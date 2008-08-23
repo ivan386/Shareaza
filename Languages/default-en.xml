@@ -2300,7 +2300,7 @@
 	<tip id="ID_DOWNLOADS_CLEAR_INCOMPLETE" message="Cancel the selected incomplete download(s)."/>
 	<tip id="ID_DOWNLOADS_CLEAR_PAUSED" message="Clear downloads which have been paused."/>
 	<tip id="ID_DOWNLOADS_COPY" message="Copy the URI of the selected file."/>
-	<tip id="ID_DOWNLOADS_EDIT" message="Show the advanced edit download interface..."/>
+	<tip id="ID_DOWNLOADS_EDIT" message="Show the advanced download properties..."/>
 	<tip id="ID_DOWNLOADS_ENQUEUE" message="Add the selected download(s) to your media playlist."/>
 	<tip id="ID_DOWNLOADS_FILE_DELETE" message="Delete the selected completed file(s)."/>
 	<tip id="ID_DOWNLOADS_FILTER_ACTIVE" message="Show downloads which are active."/>
@@ -2496,6 +2496,7 @@
 	<tip id="ID_TAB_CONNECT" message="Connect or disconnect from the network."/>
 	<tip id="ID_TAB_HELP" message="Get help using Shareaza."/>
 	<tip id="ID_TAB_HOME" message="Return to the Shareaza Home page"/>
+	<tip id="ID_TAB_IRC" message="Show the IRC Chat window."/>
 	<tip id="ID_TAB_LIBRARY" message="View and manage your local content library."/>
 	<tip id="ID_TAB_MEDIA" message="Play audio and video media files from your library."/>
 	<tip id="ID_TAB_NETWORK" message="See how well you are connected to the Network."/>
