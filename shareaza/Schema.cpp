@@ -732,6 +732,30 @@ CString CSchema::GetIndexedWords(CXMLElement* pXML) const
 	return str;
 }
 
+CString CSchema::GetVisibleWords(CXMLElement* pXML) const
+{
+	CString str;
+	
+	if ( pXML == NULL ) return str;
+	
+	for ( POSITION pos = GetMemberIterator() ; pos ; )
+	{
+		CSchemaMember* pMember = GetNextMember( pos );
+		
+		if ( !pMember->m_bHidden )
+		{
+			CString strMember = pMember->GetValueFrom( pXML, NULL, FALSE );
+			
+			if ( strMember.GetLength() )
+			{
+				if ( str.GetLength() ) str += ' ';
+				str += strMember;
+			}
+		}
+	}
+	return str;
+}
+
 //////////////////////////////////////////////////////////////////////
 // CSchema member resolution
 

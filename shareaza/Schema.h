@@ -84,6 +84,7 @@ public:
 	CXMLElement*	Instantiate(BOOL bNamespace = FALSE) const;
 	BOOL			Validate(CXMLElement* pXML, BOOL bFix);
 	CString			GetIndexedWords(CXMLElement* pXML) const;
+	CString			GetVisibleWords(CXMLElement* pXML) const;
 	void			ResolveTokens(CString& str, CXMLElement* pXML) const;
 protected:
 	BOOL			LoadSchema(LPCTSTR pszFile);
