@@ -1,7 +1,7 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <!-- Shareaza Default English Skin File -->
-<!-- Translation based on default-en.xml SVN rev.7310 -->
+<!-- Translation based on default-en.xml SVN rev.7300 -->
 
 <!-- This skin basically represents the current Shareaza defaults. You can use this file as -->
 <!-- a basis for creating new skins, however in a new skin be sure to ONLY include the sections -->
@@ -1553,6 +1553,15 @@
 		<item id="ID_CHAT_TIMESTAMP" text="_Estampa do Tempo"/>
 		<item id="ID_CHAT_CLEAR" text="L_impar Janela"/>
 	</menu>
+	<!-- PLUGIN MENUS -->
+	<menu name="ImageViewer_Context">
+		<item id="ImageViewer_BestFit" text="_Melhor Encaixe"/>
+		<item id="ImageViewer_ActualSize" text="_Tamanho Verdadeiro"/>
+		<separator/>
+		<item id="ImageViewer_Refresh" text="_Atualizar"/>
+		<separator/>
+		<item id="ImageViewer_Close" text="_Fechar"/>
+	</menu>
 	<!-- IRC WINDOW -->
 	<menu name="CIRCTabRClick">
 		<item id="ID_IRC_CLOSETAB" text="_Fechar"/>
@@ -2324,7 +2333,7 @@
 	<tip id="ID_HELP_ROUTER" message="Consiga ajuda para configurar o seu Roteador ou Firewall."/>
 	<tip id="ID_HELP_FORUMS" message="Visitar os fóruns de discussão do Shareaza."/>
 	<tip id="ID_HELP_GUIDE" message="Visite o Guia dos Usuários do Shareaza."/>
-	<tip id="ID_HELP_HOMEPAGE" message="Visitar o site Shareaza.Sourceforge.net."/>
+	<tip id="ID_HELP_HOMEPAGE" message="Visitar o site Shareaza.com."/>
 	<tip id="ID_HELP_SECURITY" message="Ajuda para proteger o seu sistema de programas hostis"/>
 	<tip id="ID_HELP_UPDATE" message="Checar por novidades e atualizações."/>
 	<tip id="ID_HELP_TEST" message="Execute o teste de conexão."/>
@@ -2487,6 +2496,7 @@
 	<tip id="ID_TAB_CONNECT" message="Conectar ou desconectar da rede."/>
 	<tip id="ID_TAB_HELP" message="Obtenha ajuda pra usar o Shareaza."/>
 	<tip id="ID_TAB_HOME" message="Retornar a Home page do Shareaza"/>
+	<tip id="ID_TAB_IRC" message="Mostrar a janela do Chat do IRC."/>
 	<tip id="ID_TAB_LIBRARY" message="Ver e gerenciar a sua biblioteca de conteúdo local."/>
 	<tip id="ID_TAB_MEDIA" message="Tocar arquivos de mídia de áudio e vídeo da sua biblioteca."/>
 	<tip id="ID_TAB_NETWORK" message="Ver quão bem você está conectado a Rede."/>
@@ -2586,6 +2596,7 @@
 	<string id="WINDOW_MEDIA" value="Media Player"/>
 	<string id="WINDOW_SEARCHPAD" value="Procurar"/>
 	<string id="WINDOW_HELP" value="Ajuda do Shareaza"/>
+	<string id="WINDOW_IRC" value="Chat do Shareaza"/>
 	<string id="7000" value="Você tem certeza que você quer apagar este filtro?"/>
 	<string id="7001" value="&amp;Schemas"/>
 	<string id="7002" value="Valores Múltiplos"/>
@@ -3066,6 +3077,13 @@
 	<string id="16997" value="Não há arquivo tocando. Clique duas vezes num arquivo de mídia na sua biblioteca para tocá-lo."/>
 	<string id="16998" value="S &#160; &#160; H &#160; &#160; A &#160; &#160; R &#160; &#160; E &#160; &#160; A &#160; &#160; Z &#160; &#160; A &#160; &#160; &#160; &#160; &#160; M &#160; &#160; E &#160; &#160; D &#160; &#160; I &#160; &#160; A &#160; &#160; &#160; &#160; &#160; S &#160; &#160; Y &#160; &#160; S &#160; &#160; T &#160; &#160; E &#160; &#160; M"/><!-- on one line -->
 	<string id="16999" value="LISTA	 DE	 EXECUÇÕES"/>
+	<string id="17017" value="Chat!"/>
+	<string id="17018" value="Bem-Vindo ao Chat do Shareaza!"/>
+	<string id="17019" value="Por favor respeite os outros enquanto usa este serviço"/>
+	<string id="17020" value="Adicionar"/>
+	<string id="17021" value="Remover"/>
+	<string id="17022" value="Usuários"/>
+	<string id="17023" value="Canais"/>
 	<string id="17024" value="Iniciando uma conexão para %s..."/>
 	<string id="17025" value="Incapaz de criar uma conexão para %s."/>
 	<string id="17026" value="Pedindo uma conexão push com firewall de %s..."/>
@@ -3370,14 +3388,14 @@
 		<control caption="Você pode usar o seu Perfil de Usuário Gnutella para compartilhar info sobre você, seus interesses, sites e arquivos recomendados."/>
 		<control caption="Editar o Meu Perfil"/>
 		<control caption="_Conversar:"/>
-		<control caption="Permitir chat peer to peer com os clientes compatíveis"/>
-		<control caption="Permitir conversas em todas as redes"/>
+		<control caption="Ativar o chat peer to peer com os clientes compatíveis"/>
+		<control caption="Ativar o chat sobre outros protocolos (onde possível)"/>
 		<control caption="Filtrar mensagens de chat com spam"/>
 		<control caption="Censurar obscenidades no chat"/>
 	</dialog>
 	<dialog name="CIRCSettingsPage" cookie="BuBuBuEdStBuStCoBuBuStBuStBuStBuStBuStBuStBuStEdStEdStEdStEdStEdStEd" caption="Chat">
 		<control caption="Opções do _Cliente:"/>
-		<control caption="Mostrar integração ao chat"/>
+		<control caption="Mostrar a integração com o chat"/>
 		<control caption="Proteção contra flood:"/>
 		<control/>
 		<control caption="linhas por segundo"/>
@@ -4416,6 +4434,12 @@
 		<control/>
 		<control caption="OK"/>
 		<control caption="Cancelar"/>
+	</dialog>
+	<dialog name="CIrcInputDlg" cookie="EdBuBuSt" caption="Nome do Canal|Por qual motivo">
+		<control/>
+		<control caption="OK"/>
+		<control caption="Cancelar"/>
+		<control caption="Insira o canal que você quer adicionar:|Insira o motivo do chute/ban:"/>
 	</dialog>
 </dialogs>
 <!-- Columns Definitions -->
