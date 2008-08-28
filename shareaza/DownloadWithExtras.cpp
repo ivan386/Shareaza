@@ -437,11 +437,11 @@ void CDownloadWithExtras::OnPreviewRequestComplete(CDownloadTask* pTask)
 
 	CImageFile pImage;
 	DWORD nBuffer = pBuffer->m_nLength;
-	BYTE* pBytes = new BYTE[ nBuffer ];
-	CopyMemory( pBytes, pBuffer->m_pBuffer, nBuffer );
+	auto_array< BYTE > pBytes( new BYTE[ nBuffer ] );
+	CopyMemory( pBytes.get(), pBuffer->m_pBuffer, nBuffer );
 	CString strURN = pTask->m_pRequest.GetHeader( L"X-Previewed-URN" );
 
-	if ( ! pImage.LoadFromMemory( L".jpg", pBytes, nBuffer, FALSE, TRUE ) )
+	if ( ! pImage.LoadFromMemory( L".jpg", pBytes.get(), nBuffer, FALSE, TRUE ) )
 	{
 		theApp.Message( MSG_ERROR, IDS_SEARCH_DETAILS_PREVIEW_FAILED, (LPCTSTR)strURN );
 		return;
@@ -453,7 +453,6 @@ void CDownloadWithExtras::OnPreviewRequestComplete(CDownloadTask* pTask)
 	if ( ! pImage.SaveToMemory( _T(".png"), Settings.Uploads.PreviewQuality, (LPBYTE*)&pBuffer2, &nImageSize ) )
 	{
 		theApp.Message( MSG_ERROR, IDS_SEARCH_DETAILS_PREVIEW_FAILED, (LPCTSTR)strURN );
-		delete [] pBytes;
 		return;
 	}
 
@@ -467,7 +466,6 @@ void CDownloadWithExtras::OnPreviewRequestComplete(CDownloadTask* pTask)
 		// Make it hidden, so the files won't be shared
 		SetFileAttributes( (LPCTSTR)strPath, FILE_ATTRIBUTE_HIDDEN|FILE_ATTRIBUTE_SYSTEM );
 	}
-	delete [] pBytes;
 	delete [] pBuffer2;
 	m_bGotPreview = TRUE;
 	m_bWaitingPreview = TRUE;
