@@ -142,8 +142,14 @@ void CVersionChecker::OnRun()
 
 BOOL CVersionChecker::ExecuteRequest()
 {
-	m_pRequest.SetURL( Settings.VersionCheck.UpdateCheckURL +
-		_T("?Version=") + theApp.m_sVersion );
+	m_pRequest.SetURL( Settings.VersionCheck.UpdateCheckURL
+		+ _T("?Version=") + theApp.m_sVersion
+#ifdef WIN64
+		+ _T("&Platform=Win64")
+#else	// WIN64
+		+ _T("&Platform=Win32")
+#endif	// WIN64
+	);
 
 	if ( ! m_pRequest.Execute( FALSE ) ) return FALSE;
 
