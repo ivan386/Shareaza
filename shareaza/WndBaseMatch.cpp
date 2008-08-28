@@ -1050,6 +1050,9 @@ void CBaseMatchWnd::OnTimer(UINT_PTR nIDEvent)
 
 void CBaseMatchWnd::SanityCheck()
 {
+	if ( ! Settings.Search.SanityCheck )
+		return;
+
 	m_wndList.DestructiveUpdate();
 
 	CQuickLock pLock( m_pMatches->m_pSection );

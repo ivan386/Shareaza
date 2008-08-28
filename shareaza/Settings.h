@@ -182,6 +182,7 @@ public:
 		DWORD		GeneralThrottle;			// A general throttle for how often each individual search may run. Low values may cause source finding to get overlooked. 
 		CString		ShareMonkeyBaseURL;
 		DWORD		ClearPrevious;				// Clear previous search results? 0 - ask user; 1 - no; 2 - yes.
+		bool		SanityCheck;				// Drop hits of banned hosts
 	} Search;
 	
 	struct sMediaPlayer
