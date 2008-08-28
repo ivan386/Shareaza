@@ -1,7 +1,7 @@
 //
 // EDPartImporter.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -19,55 +19,35 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_EDPARTIMPORTER_H__C40852E2_4CA4_458D_9B00_3301A02AF029__INCLUDED_)
-#define AFX_EDPARTIMPORTER_H__C40852E2_4CA4_458D_9B00_3301A02AF029__INCLUDED_
-
 #pragma once
 
+#include "ShareazaThread.h"
 
-class CEDPartImporter : public CWinThread
+
+class CEDPartImporter : public CRazaThread
 {
-// Construction
 public:
 	CEDPartImporter();
 	virtual ~CEDPartImporter();
 
 	DECLARE_DYNAMIC(CEDPartImporter)
 
-// Attributes
+	void	AddFolder(LPCTSTR pszFolder);
+	void	Start(CEdit* pCtrl);
+	void	Stop();
+	BOOL	IsRunning();
+
 protected:
 	CList< CString >	m_pFolders;
 	CEdit	*	m_pTextCtrl;
 	int			m_nCount;
 
-// Operations
-public:
-	void	AddFolder(LPCTSTR pszFolder);
-	void	Start(CEdit* pCtrl);
-	void	Stop();
-	BOOL	IsRunning();
-protected:
 	void	ImportFolder(LPCTSTR pszPath);
 	BOOL	ImportFile(LPCTSTR pszPath, LPCTSTR pszFile);
 	BOOL	CopyFile(LPCTSTR pszSource, LPCTSTR pszTarget);
 	void	Message(UINT nMessageID, ...);
 
-// Overrides
-public:
-	//{{AFX_VIRTUAL(CEDPartImporter)
-	public:
-	virtual BOOL InitInstance();
 	virtual int Run();
-	//}}AFX_VIRTUAL
-
-// Implementation
-protected:
-	//{{AFX_MSG(CEDPartImporter)
-	//}}AFX_MSG
 
 	DECLARE_MESSAGE_MAP()
 };
-
-//{{AFX_INSERT_LOCATION}}
-
-#endif // !defined(AFX_EDPARTIMPORTER_H__C40852E2_4CA4_458D_9B00_3301A02AF029__INCLUDED_)

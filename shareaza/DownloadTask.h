@@ -23,11 +23,12 @@
 
 #include "BTInfo.h"
 #include "HttpRequest.h"
+#include "ShareazaThread.h"
 
 
 class CDownload;
 
-class CDownloadTask : public CWinThread
+class CDownloadTask : public CRazaThread
 {
 public:
 	enum dtask { dtaskAllocate, dtaskCopySimple, dtaskCopyTorrent, 
@@ -78,7 +79,6 @@ protected:
 		DWORD dwCallbackReason, HANDLE hSourceFile, HANDLE hDestinationFile,
 		LPVOID lpData);
 
-	virtual BOOL InitInstance();
 	virtual int Run();
 
 	DECLARE_MESSAGE_MAP()

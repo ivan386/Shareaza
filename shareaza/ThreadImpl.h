@@ -1,5 +1,5 @@
 //
-// Shareaza.h
+// ThreadImpl.h
 //
 // Copyright (c) Shareaza Development Team, 2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
@@ -20,6 +20,10 @@
 //
 
 #pragma once
+
+
+#include "ShareazaThread.h"
+
 
 class CThreadImpl
 {

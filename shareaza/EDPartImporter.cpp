@@ -1,7 +1,7 @@
 //
 // EDPartImporter.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -37,9 +37,9 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 
-IMPLEMENT_DYNAMIC(CEDPartImporter, CWinThread)
+IMPLEMENT_DYNAMIC(CEDPartImporter, CRazaThread)
 
-BEGIN_MESSAGE_MAP(CEDPartImporter, CWinThread)
+BEGIN_MESSAGE_MAP(CEDPartImporter, CRazaThread)
 	//{{AFX_MSG_MAP(CEDPartImporter)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
@@ -58,11 +58,6 @@ CEDPartImporter::~CEDPartImporter()
 {
 }
 
-BOOL CEDPartImporter::InitInstance()
-{
-	return TRUE;
-}
-
 /////////////////////////////////////////////////////////////////////////////
 // CEDPartImporter operations
 
@@ -76,8 +71,7 @@ void CEDPartImporter::Start(CEdit* pCtrl)
 {
 	ASSERT( pCtrl != NULL );
 	m_pTextCtrl = pCtrl;
-	CreateThread();
-	SetThreadName( m_nThreadID, "ED Part Importer" );
+	CreateThread( "ED Part Importer" );
 }
 
 void CEDPartImporter::Stop()

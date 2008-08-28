@@ -41,9 +41,9 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 
-IMPLEMENT_DYNAMIC(CDownloadTask, CWinThread)
+IMPLEMENT_DYNAMIC(CDownloadTask, CRazaThread)
 
-BEGIN_MESSAGE_MAP(CDownloadTask, CWinThread)
+BEGIN_MESSAGE_MAP(CDownloadTask, CRazaThread)
 	//{{AFX_MSG_MAP(CDownloadTask)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
@@ -108,9 +108,7 @@ CDownloadTask::CDownloadTask(CDownload* pDownload, dtask nTask, LPCTSTR szParam1
 	}
 
 	m_bAutoDelete = TRUE;
-	CreateThread();
-	SetThreadPriority( THREAD_PRIORITY_NORMAL );
-	SetThreadName( m_nThreadID, "Download Task" );
+	CreateThread( "Download Task" );
 }
 
 CDownloadTask::~CDownloadTask()
@@ -148,15 +146,8 @@ BOOL CDownloadTask::WasAborted()
 /////////////////////////////////////////////////////////////////////////////
 // CDownloadTask run
 
-BOOL CDownloadTask::InitInstance()
-{
-	return TRUE;
-}
-
 int CDownloadTask::Run()
 {
-	OleInitialize( NULL );
-
 	switch ( m_nTask )
 	{
 	case dtaskAllocate:
@@ -188,8 +179,6 @@ int CDownloadTask::Run()
 		MakeBatchTorrent();
 		break;
 	}
-
-	OleUninitialize();
 
 	return 0;
 }
