@@ -282,16 +282,18 @@ BOOL CUploadsWnd::IsSelected(CUploadFile* pFile)
 
 void CUploadsWnd::Prepare()
 {
-	DWORD tNow = GetTickCount();
-	if ( tNow - m_tSel < 250 ) return;
-	m_tSel = tNow;
+	if ( GetTickCount() - m_tSel < 250 )
+		return;
 
+	CSingleLock pLock( &Transfers.m_pSection, FALSE );
+	if ( ! pLock.Lock( 250 ) )
+		return;
+
+	m_tSel = GetTickCount();
 	m_bSelFile = m_bSelUpload = FALSE;
 	m_bSelActive = m_bSelQueued = FALSE;
 	m_bSelHttp = m_bSelDonkey = FALSE;
 	m_bSelSourceAcceptConnections = m_bSelSourceExtended = FALSE;
-
-	CSingleLock pLock( &Transfers.m_pSection, TRUE );
 
 	for ( POSITION posFile = UploadFiles.GetIterator() ; posFile ; )
 	{
