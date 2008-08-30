@@ -324,8 +324,13 @@ void CXMLNode::UniformString(CString& str)
 		}
 		else if ( ! _istalnum( TCHAR( nChar ) ) && nChar < 0xC0 && _tcschr( pszOK, TCHAR( nChar ) ) == NULL )
 		{
-			str = str.Left( nPos ) + str.Mid( nPos + 1 );
-			nPos--;
+			if ( nPos == 0 || str.GetAt( nPos - 1 ) == ' ' )
+				str = str.Left( nPos ) + str.Mid( nPos + 1 );
+			else
+			{
+				LPTSTR pszTemp = _tcsninc( str, nPos );
+				pszTemp[ 0 ] = ' ';
+			}
 		}
 		else
 		{
