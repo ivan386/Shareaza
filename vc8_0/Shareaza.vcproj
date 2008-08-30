@@ -1014,6 +1014,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\shareaza\ShareazaThread.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\shareaza\ShareazaURL.cpp"
 				>
 			</File>
@@ -2677,6 +2681,10 @@
 			</File>
 			<File
 				RelativePath="..\shareaza\ShareazaFile.h"
+				>
+			</File>
+			<File
+				RelativePath="..\shareaza\ShareazaThread.h"
 				>
 			</File>
 			<File
