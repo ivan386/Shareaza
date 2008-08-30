@@ -330,12 +330,16 @@ bool CLibraryBuilder::GetBoostPriority() const
 
 void CLibraryBuilder::OnRun()
 {
+	DWORD nSkippedIndex = 0;
+	int nAttempts = 0;
+
 	while ( IsThreadEnabled() )
 	{
 		Sleep( 100 );	// Max 10 files per second
 
 		CString sPath;
 		DWORD nIndex = GetNextFileToHash( sPath );
+
 		if ( nIndex )
 		{
 			{
@@ -354,6 +358,7 @@ void CLibraryBuilder::OnRun()
 				// ToDo: We need MD5 hash of the audio file without tags...
 				if ( HashFile( sPath, hFile, nIndex ) )
 				{
+					nAttempts = 0;
 					SetFilePointer( hFile, 0, NULL, FILE_BEGIN );
 					ExtractMetadata( nIndex, sPath, hFile );
 
@@ -366,7 +371,15 @@ void CLibraryBuilder::OnRun()
 					Remove( nIndex );
 				}
 				else
-					Skip( nIndex );
+				{
+					if ( ++nAttempts > 5 )
+					{
+						Remove( nIndex );
+						nAttempts = 0;
+					}
+					else
+						Skip( nIndex );
+				}
 
 				CloseHandle( hFile );
 			}
@@ -377,7 +390,15 @@ void CLibraryBuilder::OnRun()
 					// Fatal error
 					Remove( nIndex );
 				else
-					Skip( nIndex );
+				{
+					if ( ++nAttempts > 5 )
+					{
+						Remove( nIndex );
+						nAttempts = 0;
+					}
+					else
+						Skip( nIndex );
+				}
 			}
 
 			{
@@ -629,10 +650,10 @@ bool CLibraryBuilder::DetectVirtualFile(LPCTSTR szPath, HANDLE hFile, QWORD& nOf
 	{
 		bVirtual |= DetectVirtualID3v2( hFile, nOffset, nLength );
 		bVirtual |= DetectVirtualID3v1( hFile, nOffset, nLength );
-//		bVirtual |= DetectVirtualLyrics( hFile, nOffset, nLength );
-//		bVirtual |= DetectVirtualAPEHeader( hFile, nOffset, nLength );
-//		bVirtual |= DetectVirtualAPEFooter( hFile, nOffset, nLength );
-//		bVirtual |= DetectVirtualLAME( hFile, nOffset, nLength );
+		bVirtual |= DetectVirtualLyrics( hFile, nOffset, nLength );
+		bVirtual |= DetectVirtualAPEHeader( hFile, nOffset, nLength );
+		bVirtual |= DetectVirtualAPEFooter( hFile, nOffset, nLength );
+		bVirtual |= DetectVirtualLAME( hFile, nOffset, nLength );
 	}
 
 	return bVirtual;
@@ -698,7 +719,7 @@ bool CLibraryBuilder::DetectVirtualID3v2(HANDLE hFile, QWORD& nOffset, QWORD& nL
 	nOffset += nTagSize;
 	nLength -= nTagSize;
 
-	// Remove trailing zeroes
+	// Remove leading zeroes
 	nPosLow = (LONG)( ( nOffset ) & 0xFFFFFFFF );
 	nPosHigh = (LONG)( ( nOffset ) >> 32 );
 	SetFilePointer( hFile, nPosLow, &nPosHigh, FILE_BEGIN );
@@ -832,6 +853,40 @@ bool CLibraryBuilder::DetectVirtualLyrics(HANDLE hFile, QWORD& nOffset, QWORD& n
 	return false;
 }
 
+bool CLibraryBuilder::ReadLameFrame(HANDLE hFile, int nMaxSize, LAME_FRAME& frame, int& nFinalSize)
+{
+	DWORD nRead = 0;
+	if ( nMaxSize > sizeof(frame) || !ReadFile( hFile, &frame, nMaxSize, &nRead, NULL ) )
+		return false;
+
+	nFinalSize = nRead;
+	BYTE* pStruct = (BYTE*)&frame;
+	pStruct += 8; // after HeaderFlags
+
+	if ( ( frame.HeaderFlags & VBR_FRAMES_FLAG ) == 0 )
+	{
+		memcpy( pStruct + 4, pStruct, sizeof(frame) - 4 - 8 );
+		pStruct += 4;
+		frame.FrameCount = 0;
+		nFinalSize -= 4;
+	}
+	if ( ( frame.HeaderFlags & VBR_BYTES_FLAG ) == 0 )
+	{
+		memcpy( pStruct + 4, pStruct, sizeof(frame) - 2 * 4 - 8 );
+		pStruct += 4;
+		frame.StreamSize = 0;
+		nFinalSize -= 4;
+	}
+
+	//if ( ( frame.HeaderFlags & VBR_TOC_FLAG ) == 0 )
+	{
+		memcpy( pStruct + 100, pStruct, sizeof(frame) - 2 * 4 - 100 - 8 );
+		nFinalSize -= 100;
+		ZeroMemory( frame.BitrateTOC, 100 );
+	}
+	return true;
+}
+
 bool CLibraryBuilder::DetectVirtualLAME(HANDLE hFile, QWORD& nOffset, QWORD& nLength)
 {
 	BYTE nFrameHeader[4] = { 0 };
@@ -955,11 +1010,7 @@ bool CLibraryBuilder::DetectVirtualLAME(HANDLE hFile, QWORD& nOffset, QWORD& nLe
 		nFrameHeader[ 2 ] = LOBYTE( nTestBytes );
 		nFrameHeader[ 3 ] = HIBYTE( nTestBytes );
 
-		// Get MPEG header data
-		nId = ( nFrameHeader[1] >> 3 ) & 1;
-		nMode = ( nFrameHeader[3] >> 6 ) & 3;
-		nVbrHeaderOffset = GetVbrHeaderOffset( nId, nMode );
-		QWORD nCurrOffset = nNewOffset.QuadPart + nVbrHeaderOffset;
+		QWORD nCurrOffset = nNewOffset.QuadPart - 4;
 		nNewOffset.LowPart = (LONG)( ( nCurrOffset ) & 0xFFFFFFFF );
 		nNewOffset.HighPart = (LONG)( ( nCurrOffset ) >> 32 );
 		nNewOffset.LowPart = SetFilePointer( hFile, nNewOffset.LowPart, &(nNewOffset.HighPart), FILE_BEGIN );
@@ -969,7 +1020,7 @@ bool CLibraryBuilder::DetectVirtualLAME(HANDLE hFile, QWORD& nOffset, QWORD& nLe
 		
 		int nLen = sizeof( pFrame );
 		ZeroMemory( &pFrame, nLen );
-		ReadFile( hFile, &pFrame, min( nLen, nFrameSize - nVbrHeaderOffset ), &nRead, NULL );
+		ReadFile( hFile, &pFrame, min( nLen, nFrameSize ), &nRead, NULL );
 
 		nLen--;
 		char* pszChars = (char*)&pFrame;
