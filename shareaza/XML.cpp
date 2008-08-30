@@ -300,9 +300,7 @@ void CXMLNode::UniformString(CString& str)
 	// non-alphanumeric characters which will not be ignored
 	static LPCTSTR pszOK = _T("'-&/,;#()");
 
-	str.TrimLeft();
-	str.TrimRight();
-
+	str.Trim();
 	BOOL bSpace = TRUE;
 
 	for ( int nPos = 0 ; nPos < str.GetLength() ; nPos++ )
