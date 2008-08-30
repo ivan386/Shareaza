@@ -851,50 +851,40 @@ BOOL CAlbumFolder::OrganiseFile(CLibraryFile* pFile)
 			using namespace regex;
 			try
 			{
-				const rpattern firstPattern( L"(.*\\b)[sS]([0-9]+)[^0-9]*[eE]([0-9]+)[^0-9]+", NOFLAGS, MODE_SAFE );
-				const rpattern secondPattern( L"(.*[^0-9]+\\b)([0-9]+)[xX]([0-9]+)[^0-9]+", NOFLAGS, MODE_SAFE );
-				const rpattern thirdPattern( L"(.*\\b)(se?a?s?o?n?)([0-9]+)[^0-9]*(ep?i?s?o?d?e?)([0-9]+)[^0-9]+", 
+				const rpattern firstPattern( L"(.*)(\\bse?a?s?o?n?)\\s*([0-9]+)[^0-9]*(\\bep?i?s?o?d?e?)\\s*([0-9]+)[^0-9]+", 
 											 NOCASE, MODE_SAFE );
+				const rpattern secondPattern( L"(.*[^0-9]+\\b)([0-9]+)\\s*[xX]\\s*([0-9]+)[^0-9]+", NOFLAGS, MODE_SAFE );
 
 				split_results splitResults;
-				std::vector<std::wstring> results;
 
 				CString strNormalizedFileName = (LPCTSTR)pFile->m_sName;
 				CXMLNode::UniformString( strNormalizedFileName );
 				std::wstring sFileName( strNormalizedFileName );
 
 				size_t nCount = firstPattern.split( sFileName, splitResults, 0 );
+				std::vector<std::wstring> results = splitResults.strings();
+				if ( nCount >= 6 && 
+					 _tcsicmp( _tcsistr( L"season", results[2].c_str() ), L"season" ) == 0 && 
+					 _tcsicmp( _tcsistr( L"episode", results[4].c_str() ), L"episode" ) == 0 )
+				{
+					std::vector<std::wstring>::iterator it = 
+						std::find( results.begin(), results.end(), results[2] );
+					results.erase( it );
+					it = std::find( results.begin(), results.end(), results[3] );
+					results.erase( it );
+					nCount -= 2;
+				}
+				else 
+					nCount = 0;
+
 				if ( nCount < 4 && Settings.Library.SmartSeriesDetection )
 				{
 					nCount = secondPattern.split( sFileName, splitResults, 0 );
-					if ( nCount < 4 ) 
-					{
-						nCount = thirdPattern.split( sFileName, splitResults, 0 );
-						if ( nCount < 6 )
-							nCount = 0;
-						else 
-						{
-							results = splitResults.strings();
-							if ( _tcsicmp( _tcsistr( L"season", results[2].c_str() ), L"season" ) == 0 && 
-								 _tcsicmp( _tcsistr( L"episode", results[4].c_str() ), L"episode" ) == 0 )
-							{
-								std::vector<std::wstring>::iterator it = 
-									std::find( results.begin(), results.end(), results[2] );
-								results.erase( it );
-								it = std::find( results.begin(), results.end(), results[3] );
-								results.erase( it );
-								nCount -= 2;
-							}
-							else 
-								nCount = 0;
-						}
-					}
+					results = splitResults.strings();
 				}
 
 				if ( nCount >= 4 )
 				{
-					if ( results.size() == 0 )
-						results = splitResults.strings();
 					CString strTemp( results[1].c_str() );
 					strTemp.TrimRight( L"- " );
 
