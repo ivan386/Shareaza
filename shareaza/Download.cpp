@@ -67,7 +67,6 @@ CDownload::CDownload() :
 ,	m_bDownloading	( FALSE )
 ,	m_bTempPaused	( FALSE )
 {
-	DownloadGroups.Link( this );
 }
 
 CDownload::~CDownload()
@@ -105,7 +104,7 @@ CDownload::~CDownload()
 //////////////////////////////////////////////////////////////////////
 // CDownload control : pause
 
-void CDownload::Pause( BOOL bRealPause )
+void CDownload::Pause(BOOL bRealPause)
 {
 	if ( m_bComplete || m_bPaused ) return;
 
