@@ -1188,15 +1188,18 @@ void CLibraryTreeItem::Paint(CDC& dc, CRect& rc, BOOL bTarget, COLORREF crBack) 
 	if ( crBack == CLR_NONE ) crBack = CoolInterface.m_crWindow;
 	dc.FillSolidRect( rc.left, rc.top, 32, 17, crBack );
 
-	if ( m_bExpanded )
+	if ( !empty() )
 	{
-		CoolInterface.Draw( &dc, PtInRect(&rcTick,ptHover) ? IDI_MINUS_HOVER : IDI_MINUS,
-			16, rc.left, rc.top, crBack );
-	}
-	else if ( !empty() )
-	{
-		CoolInterface.Draw( &dc, PtInRect(&rcTick,ptHover) ? IDI_PLUS_HOVER : IDI_PLUS,
-			16, rc.left, rc.top, crBack );
+		if ( m_bExpanded )
+		{
+			CoolInterface.Draw( &dc, PtInRect(&rcTick,ptHover) ? IDI_MINUS_HOVER : IDI_MINUS,
+				16, rc.left, rc.top, crBack );
+		}
+		else
+		{
+			CoolInterface.Draw( &dc, PtInRect(&rcTick,ptHover) ? IDI_PLUS_HOVER : IDI_PLUS,
+				16, rc.left, rc.top, crBack );
+		}
 	}
 
 	if ( m_nIcon16 >= 0 )
