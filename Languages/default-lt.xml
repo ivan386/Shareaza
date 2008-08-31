@@ -1877,9 +1877,9 @@
 		<gap size="4"/>
 		<text>Jūsų profilio, pokalbių ir skubiųjų žinučių nuostatos.</text>
 		<newline gap="10"/>
-		<link target="raza:page:CIRCSettingsPage" format="b">IRC:</link>
+		<link target="raza:page:CIRCSettingsPage" format="b">Pokalbiai:</link>
 		<gap size="4"/>
-		<text>IRC chatroom visual appearance and connection settings.</text>
+		<text>IRC pokalbių kanalų išvaizda ir susijugimo nuostatos.</text>
 		<newline gap="10"/>
 		<link target="raza:page:CWebSettingsPage" format="b">Žiniatinklis:</link>
 		<gap size="4"/>
