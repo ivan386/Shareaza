@@ -330,7 +330,6 @@ bool CLibraryBuilder::GetBoostPriority() const
 
 void CLibraryBuilder::OnRun()
 {
-	DWORD nSkippedIndex = 0;
 	int nAttempts = 0;
 
 	while ( IsThreadEnabled() )
