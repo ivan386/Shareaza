@@ -1157,6 +1157,7 @@ void CDownloads::Load()
 	PurgePreviews();
 
 	DownloadGroups.CreateDefault();
+	DownloadGroups.Load();
 	LoadFromCompoundFiles();
 
 	strPath = Settings.Downloads.IncompletePath + _T("\\*.sd");
@@ -1199,7 +1200,6 @@ void CDownloads::Load()
 	}
 
 	Save( FALSE );
-	DownloadGroups.Load();
 	Transfers.StartThread();
 }
 
