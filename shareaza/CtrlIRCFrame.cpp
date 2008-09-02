@@ -337,7 +337,7 @@ void CIRCFrame::OnSkinChange()
 {
 	m_wndPanel.OnSkinChange();
 
-	Skin.CreateToolBar( _T("CMainIrcBar"), &m_wndMainBar );
+	Skin.CreateToolBar( _T("CIRCFrame"), &m_wndMainBar );
 	if ( m_bmWatermark.m_hObject != NULL ) m_bmWatermark.DeleteObject();
 	if ( HBITMAP hMark = Skin.GetWatermark( _T("CIRCHeaderPanel") ) )
 		m_bmWatermark.Attach( hMark );
