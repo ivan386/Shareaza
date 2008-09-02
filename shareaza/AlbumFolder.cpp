@@ -851,7 +851,7 @@ BOOL CAlbumFolder::OrganiseFile(CLibraryFile* pFile)
 			using namespace regex;
 			try
 			{
-				const rpattern firstPattern( L"(.*)(\\bse?a?s?o?n?)\\s*([0-9]+)[^0-9]*(\\bep?i?s?o?d?e?)\\s*([0-9]+)[^0-9]+", 
+				const rpattern firstPattern( L"(.*)(\\bse?a?s?o?n?)\\s*([0-9]+)\\s*(ep?i?s?o?d?e?)\\s*([0-9]+)[^0-9]+", 
 											 NOCASE, MODE_SAFE );
 				const rpattern secondPattern( L"(.*[^0-9]+\\b)([0-9]+)\\s*[xX]\\s*([0-9]+)[^0-9]+", NOFLAGS, MODE_SAFE );
 
