@@ -2323,6 +2323,7 @@
 	<tip id="ID_DOWNLOADS_SHARE" message="Partager ce téléchargement partiel avec les autres utilisateurs."/>
 	<tip id="ID_DOWNLOADS_SHOW_SOURCES" message="Afficher les sources actuellement utilisées."/>
 	<tip id="ID_DOWNLOADS_SOURCES" message="Rechercher plus de sources pour cette sélection de téléchargements."/>
+	<tip id="ID_DOWNLOADS_TORRENT_INFO" message="Voir des informations sur le téléchargement BitTorrent sélectionné..."/>
 	<tip id="ID_DOWNLOADS_URL" message="Ajouter une nouvelle source URL au téléchargement sélectionné..."/>
 	<tip id="ID_DOWNLOADS_VIEW_REVIEWS" message="Voir les revues pour le téléchargement sélectionné"/>
 	<tip id="ID_HELP_ABOUT" message="Affiche le dialogue &#171;&#160;À propos de Shareaza&#160;&#187;..."/>
@@ -2569,7 +2570,7 @@
 <!-- Tips displayed when mouse is moved over controls in the dialogs -->
 <controlTips>
 	<tip id="IDC_THROTTLE_MODE" message="Sur maximum, la bande passante ne dépassera pas la limite. Sur moyenne, elle variera autour de la limite."/>
-	<tip id="IDC_REGEXP" message="Entrez des expression régulières selon la syntaxe de perl.{n}Les mots-clefs pour la recherche peuvent être spécifiés sous la forme de &lt;n&gt;, où n est un chiffre entre 1 et 9. Si vous voulez entrer tous les mots-clés les uns après les autres, utilisez la balise &lt;_&gt;."/>
+	<tip id="IDC_REGEXP" message="Entrez des expression régulières selon la syntaxe de Perl.{n}Les mots-clefs pour la recherche peuvent être spécifiés sous la forme de &lt;n&gt;, où n est un chiffre entre 1 et 9. Si vous voulez entrer tous les mots-clés les uns après les autres, utilisez la balise &lt;_&gt;."/>
 	<tip id="IDC_SHARE_PARTIALS" message="Cette configuration n'a pas d'effet sur les téléchargements commencés antérieurement&#160;; de plus cette configuration est ignorée si le fichier a le hash eDonkey et que le reseau eDonkey est activé, ou si c'est un torrent.{n}Cette configuration n'est pas ignorée si le téléchargement est en pause.{n}{n}ATTENTION&#160;: N'utilisez pas cette option qu'en cas de vraie nécessité, si vous abusez de cette option vous pourriez être banni."/>
 </controlTips>
 <!-- Localised Strings -->
@@ -3904,7 +3905,7 @@
 	</dialog>
 	<dialog name="CCertificateProfilePage" cookie="StBuStStStStBu" caption="Certificat">
 		<control caption="Les utilisateurs de Gnutella possèdent un identifiant unique et une paire de clés publiques et privées. Normalement, il n'est pas nécessaire de générer un nouvel ID, Shareaza propose toutefois cette option pour les utilisateurs initiés."/>
-		<control caption="_Gnutella Globally Unique Identification Certificate&#160;:"/>
+		<control caption="_Certificat d'identification Gnutella unique&#160;:"/>
 		<control caption="GUID&#160;:"/>
 		<control/>
 		<control caption="Créé&#160;:"/>
@@ -3943,7 +3944,7 @@
 		<control caption="Montrer seulement les résultats qui contiennent les mots&#160;:"/>
 		<control/>
 		<control caption="Reg. Exp."/>
-		<control caption="vous pouvez exclure des mots avec -mot"/>
+		<control caption="( vous pouvez exclure des mots avec -mot )"/>
 		<control caption="Et qui ont une taille de&#160;:"/>
 		<control caption="Minimum&#160;:"/>
 		<control/>
