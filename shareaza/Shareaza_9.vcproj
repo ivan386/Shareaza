@@ -83,6 +83,7 @@
 				IgnoreDefaultLibraryNames=""
 				GenerateDebugInformation="true"
 				SubSystem="2"
+				DataExecutionPrevention="0"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -173,6 +174,7 @@
 				IgnoreDefaultLibraryNames=""
 				GenerateDebugInformation="true"
 				SubSystem="2"
+				DataExecutionPrevention="0"
 				TargetMachine="17"
 				KeyFile=""
 			/>
@@ -269,6 +271,7 @@
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				SetChecksum="true"
+				DataExecutionPrevention="0"
 				TargetMachine="1"
 				KeyFile=""
 			/>
@@ -363,6 +366,7 @@
 				GenerateManifest="false"
 				IgnoreDefaultLibraryNames=""
 				SubSystem="2"
+				DataExecutionPrevention="0"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				SetChecksum="true"
