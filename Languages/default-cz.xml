@@ -170,7 +170,7 @@
 		<button id="ID_DOWNLOADS_CLEAR_COMPLETE" text="Vymazat stažené"/>
 		<separator/>
 		<button id="ID_DOWNLOADS_MONITOR" text="Zobrazit monitorování"/>
-		<button id="ID_DOWNLOADS_TORRENT_INFO" text="Torrent Info"/>
+		<button id="ID_DOWNLOADS_EDIT" text="Vlastnosti"/>
 		<rightAlign/>
 		<button id="ID_TOOLS_DOWNLOAD" text="Přidat stahování/Torrent..."/>
 		<button id="ID_DOWNLOADS_CLEAR_COMPLETED" text="Vymazat dokončené"/>
@@ -978,14 +978,14 @@
 			<item id="ID_DOWNLOADS_URL" text="Přid_at zdroj..."/>
 			<separator/>
 			<item id="ID_DOWNLOADS_MONITOR" text="Okno _sledování"/>
-			<item id="ID_DOWNLOADS_EDIT" text="Pokročilé _úpravy..."/>
-			<item id="ID_DOWNLOADS_TORRENT_INFO" text="_Torrent Info..."/>
 			<separator/>
 			<item id="ID_DOWNLOADS_MOVE_UP" text="Přesunout nahor_u"/>
 			<item id="ID_DOWNLOADS_MOVE_DOWN" text="Přesunout _dolů"/>
 			<item id="ID_DOWNLOADS_BOOST" text="_Ignorovat omezení šířky pásma"/>
 		</menu>
 		<item id="ID_DOWNLOADS_HELP" text="_Nápověda..."/>
+		<separator/>
+		<item id="ID_DOWNLOADS_EDIT" text="Pokročilé _úpravy..."/>
 	</menu>
 	<menu name="CDownloadsWnd.Source">
 		<item id="ID_TRANSFERS_CONNECT" text="_Přístup"/>
@@ -1010,15 +1010,16 @@
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="_Smazat"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_COPY" text="Kopírovat _URI"/>
-		<item id="ID_DOWNLOADS_TORRENT_INFO" text="Torrent Info"/>
+		<item id="ID_DOWNLOADS_EDIT" text="Info"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_FILE_DELETE" text="_Odstranit soubor"/>
 		<item id="ID_DOWNLOADS_RATE" text="_Rychlost souboru..."/>
 	</menu>
 	<menu name="CDownloadsWnd.Seeding">
 		<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Otevřít"/>
-		<item id="ID_DOWNLOADS_TORRENT_INFO" text="Torrent _Info"/>
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="Za_stavit Seedování"/>
+		<separator/>
+		<item id="ID_DOWNLOADS_EDIT" text="_Vlastnosti"/>
 	</menu>
 	<menu name="CDownloadsWnd.Nothing">
 		<item id="ID_DOWNLOADS_HELP" text="_Nápověda..."/>
@@ -1152,6 +1153,7 @@
 			<item id="ID_LIBRARY_COPY" text="_Kopírovat soubory..."/>
 		</menu>
 		<item id="ID_LIBRARY_REBUILD_ANSI" text="_Místní popisky"/>
+		<item id="ID_LIBRARY_REFRESH_METADATA" text="_Refresh Metadata"/>
 		<separator/>
 		<item id="ID_LIBRARY_PROPERTIES" text="_Vlastnosti"/>
 	</menu>

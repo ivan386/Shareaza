@@ -170,7 +170,7 @@
 		<button id="ID_DOWNLOADS_CLEAR_COMPLETE" text="Neteja la descàrrega"/>
 		<separator/>
 		<button id="ID_DOWNLOADS_MONITOR" text="Mostra el monitor"/>
-		<button id="ID_DOWNLOADS_TORRENT_INFO" text="Informació del Torrent"/>
+		<button id="ID_DOWNLOADS_EDIT" text="Informació"/>
 		<rightAlign/>
 		<button id="ID_TOOLS_DOWNLOAD" text="Descarregar Arxiu..."/>
 		<button id="ID_DOWNLOADS_CLEAR_COMPLETED" text="_Netejar Completats"/>
@@ -973,21 +973,19 @@
 		<separator/>
 		<menu text="_Avançat">
 			<item id="ID_DOWNLOADS_SHARE" text="_Comparteix arxiu"/>
-
-
 			<separator/>
 			<item id="ID_DOWNLOADS_COPY" text="_Copia URI (enllaç)"/>
 			<item id="ID_DOWNLOADS_URL" text="_Afegeix font..."/>
 			<separator/>
 			<item id="ID_DOWNLOADS_MONITOR" text="Finestra del _monitor"/>
-			<item id="ID_DOWNLOADS_EDIT" text="Edició avançada"/>
-			<item id="ID_DOWNLOADS_TORRENT_INFO" text="_Informació del Torrent"/>
 			<separator/>
 			<item id="ID_DOWNLOADS_MOVE_UP" text="Moure _amunt"/>
 			<item id="ID_DOWNLOADS_MOVE_DOWN" text="Moure _avall"/>
 			<item id="ID_DOWNLOADS_BOOST" text="_Ignora el límit de banda"/>
 		</menu>
 		<item id="ID_DOWNLOADS_HELP" text="_Ajuda..."/>
+		<separator/>
+		<item id="ID_DOWNLOADS_EDIT" text="Edició avançada"/>
 	</menu>
 	<menu name="CDownloadsWnd.Source">
 		<item id="ID_TRANSFERS_CONNECT" text="_Accedeix"/>
@@ -1012,15 +1010,16 @@
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="_Neteja"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_COPY" text="Copia _URI"/>
-		<item id="ID_DOWNLOADS_TORRENT_INFO" text="Informació del Torrent"/>
+		<item id="ID_DOWNLOADS_EDIT" text="Informació"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_FILE_DELETE" text="_Esborra Arxiu"/>
 		<item id="ID_DOWNLOADS_RATE" text="_Valora arxiu..."/>
 	</menu>
 	<menu name="CDownloadsWnd.Seeding">
 		<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Obre"/>
-		<item id="ID_DOWNLOADS_TORRENT_INFO" text="Informació del Torrent"/>
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="_Atura el sembrat"/>
+		<separator/>
+		<item id="ID_DOWNLOADS_EDIT" text="Informació"/>
 	</menu>
 	<menu name="CDownloadsWnd.Nothing">
 		<item id="ID_DOWNLOADS_HELP" text="_Ajuda..."/>

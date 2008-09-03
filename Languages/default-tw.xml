@@ -181,7 +181,7 @@
 		<button id="ID_DOWNLOADS_CLEAR_COMPLETE" text="清除已完成下載"/>
 		<separator/>
 		<button id="ID_DOWNLOADS_MONITOR" text="顯示監視器"/>
-		<button id="ID_DOWNLOADS_TORRENT_INFO" text="Torrent 資訊"/>
+		<button id="ID_DOWNLOADS_EDIT" text="資訊"/>
 		<rightAlign/>
 		<button id="ID_TOOLS_DOWNLOAD" text="新增檔案下載/Torrent檔..."/>
 		<button id="ID_DOWNLOADS_CLEAR_COMPLETED" text="清除已完成下載"/>
@@ -970,20 +970,21 @@
 			<item id="ID_DOWNLOADS_URL" text="新增來源..."/>
 			<separator/>
 			<item id="ID_DOWNLOADS_MONITOR" text="Monitor 視窗"/>
-			<item id="ID_DOWNLOADS_EDIT" text="進階編輯..."/>
-			<item id="ID_DOWNLOADS_TORRENT_INFO" text="Torrent 資訊..."/>
 			<separator/>
 			<item id="ID_DOWNLOADS_MOVE_UP" text="上移"/>
 			<item id="ID_DOWNLOADS_MOVE_DOWN" text="下移"/>
 			<item id="ID_DOWNLOADS_BOOST" text="忽略頻寬限制"/>
 		</menu>
 		<item id="ID_DOWNLOADS_HELP" text="說明..."/>
+		<separator/>
+		<item id="ID_DOWNLOADS_EDIT" text="進階編輯..."/>
 	</menu>
 	<menu name="CDownloadsWnd.Source">
 		<item id="ID_TRANSFERS_CONNECT" text="存取"/>
 		<separator/>
 		<item id="ID_BROWSE_LAUNCH" text="瀏覽使用者"/>
 		<item id="ID_TRANSFERS_CHAT" text="與使用者聊天"/>
+		<item id="ID_DOWNLOADS_COPY" text="複製 URI"/>
 		<separator/>
 		<item id="ID_TRANSFERS_DISCONNECT" text="中斷連線"/>
 		<item id="ID_TRANSFERS_FORGET" text="忘卻"/>
@@ -1001,15 +1002,16 @@
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="清除"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_COPY" text="複製 URI"/>
-		<item id="ID_DOWNLOADS_TORRENT_INFO" text="Torrent 資訊"/>
+		<item id="ID_DOWNLOADS_EDIT" text="資訊"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_FILE_DELETE" text="刪除檔案"/>
 		<item id="ID_DOWNLOADS_RATE" text="為檔案評分..."/>
 	</menu>
 	<menu name="CDownloadsWnd.Seeding">
 		<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="開啟"/>
-		<item id="ID_DOWNLOADS_TORRENT_INFO" text="Torrent 資訊"/>
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="停止做種"/>
+		<separator/>
+		<item id="ID_DOWNLOADS_EDIT" text="Torrent 資訊..."/>
 	</menu>
 	<menu name="CDownloadsWnd.Nothing">
 		<item id="ID_DOWNLOADS_HELP" text="說明..."/>
@@ -4306,8 +4308,9 @@
   <column from="Client" to="客戶端" />
   <column from="Downloaded" to="已下載" />
   <column from="Complete" to="完成" />
+  <column from="Country" to=""/>
   </list>
-	<list name="CUploadCtrl">
+    <list name="CUploadCtrl">
   <column from="Remote User" to="遠端用戶" />
   <column from="Uploaded File" to="已上傳檔案" />
   <column from="Size" to="ˇ大小" />
@@ -4315,8 +4318,9 @@
   <column from="Speed" to="速度" />
   <column from="Client" to="客戶端" />
   <column from="Rating" to="評分" />
+  <column from="Country" to=""/>
   </list>
-	<list name="CNeighboursWnd">
+    <list name="CNeighboursWnd">
   <column from="Address" to="位址" />
   <column from="Port" to="連接埠" />
   <column from="Time" to="" />
@@ -4328,6 +4332,7 @@
   <column from="Mode" to="模式" />
   <column from="Client" to="客戶端" />
   <column from="Name" to="名稱" />
+  <column from="Country" to=""/>
   </list>
 	<list name="CSecurityWnd">
   <column from="Address / Content" to="位址 / 內容" />
@@ -4346,6 +4351,8 @@
   <column from="Description" to="敘述" />
   <column from="CurUsers" to="目前用戶人數" />
   <column from="MaxUsers" to="最大用戶人數" />
+  <column from="Failures" to=""/>
+  <column from="Country" to=""/>
   </list>
 	<list name="CDiscoveryWnd">
   <column from="Address" to="" />
@@ -4379,6 +4386,8 @@
   <column from="Host/Count" to="主機/計數" />
   <column from="Speed" to="速度" />
   <column from="Client" to="客戶端" />
+  <column from="Time" to=""/>
+  <column from="Country" to=""/>
   </list>
 	<list name="CUploadQueueList">
   <column from="Name" to="名稱" />

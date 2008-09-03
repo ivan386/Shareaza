@@ -178,7 +178,7 @@
 		<button id="ID_DOWNLOADS_CLEAR_COMPLETE" text="完了済みをクリア"/>
 		<separator/>
 		<button id="ID_DOWNLOADS_MONITOR" text="モニターを表示"/>
-		<button id="ID_DOWNLOADS_TORRENT_INFO" text="Torrent情報"/>
+		<button id="ID_DOWNLOADS_EDIT" text="情報"/>
 		<rightAlign/>
 		<button id="ID_TOOLS_DOWNLOAD" text="ダウンロード/Torrent追加..."/>
 		<button id="ID_DOWNLOADS_CLEAR_COMPLETED" text="完了済みをクリア"/>
@@ -980,14 +980,14 @@
 			<item id="ID_DOWNLOADS_URL" text="ソースを追加(_A)..."/>
 			<separator/>
 			<item id="ID_DOWNLOADS_MONITOR" text="モニタウィンドウ(_W)"/>
-			<item id="ID_DOWNLOADS_EDIT" text="高度な編集(_E)..."/>
-			<item id="ID_DOWNLOADS_TORRENT_INFO" text="Torrent情報(_T)..."/>
 			<separator/>
 			<item id="ID_DOWNLOADS_MOVE_UP" text="上に移動(_U)"/>
 			<item id="ID_DOWNLOADS_MOVE_DOWN" text="下に移動(_D)"/>
 			<item id="ID_DOWNLOADS_BOOST" text="帯域制限を無視(_I)"/>
 		</menu>
 		<item id="ID_DOWNLOADS_HELP" text="ヘルプ(_H)..."/>
+		<separator/>
+		<item id="ID_DOWNLOADS_EDIT" text="高度な編集(_E)..."/>
 	</menu>
 	<menu name="CDownloadsWnd.Source">
 		<item id="ID_TRANSFERS_CONNECT" text="アクセス(_A)"/>
@@ -1012,15 +1012,16 @@
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="クリア(_C)"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_COPY" text="URIをコピー(_U)"/>
-		<item id="ID_DOWNLOADS_TORRENT_INFO" text="Torrent情報"/>
+		<item id="ID_DOWNLOADS_EDIT" text="情報"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_FILE_DELETE" text="削除(_D)"/>
 		<item id="ID_DOWNLOADS_RATE" text="ファイルを評価(_R)..."/>
 	</menu>
 	<menu name="CDownloadsWnd.Seeding">
 		<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="開く(_O)"/>
-		<item id="ID_DOWNLOADS_TORRENT_INFO" text="Torrent情報(_I)"/>
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="シード停止(_S)"/>
+		<separator/>
+		<item id="ID_DOWNLOADS_EDIT" text="Torrent情報(_I)"/>
 	</menu>
 	<menu name="CDownloadsWnd.Nothing">
 		<item id="ID_DOWNLOADS_HELP" text="ヘルプ(_H)..."/>

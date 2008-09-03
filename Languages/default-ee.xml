@@ -177,7 +177,7 @@
 		<button id="ID_DOWNLOADS_CLEAR_COMPLETE" text="Puhasta"/>
 		<separator/>
 		<button id="ID_DOWNLOADS_MONITOR" text="Monitor"/>
-		<button id="ID_DOWNLOADS_TORRENT_INFO" text="Torrenti Info"/>
+		<button id="ID_DOWNLOADS_EDIT" text="Info"/>
 		<rightAlign/>
 		<button id="ID_TOOLS_DOWNLOAD" text="Lisa tõmbamine/Torrent..."/>
 		<button id="ID_DOWNLOADS_CLEAR_COMPLETED" text="Puhasta Valmis"/>
@@ -966,14 +966,14 @@
 			<item id="ID_DOWNLOADS_URL" text="_Lisa Allikas..."/>
 			<separator/>
 			<item id="ID_DOWNLOADS_MONITOR" text="J_älgimisaken"/>
-			<item id="ID_DOWNLOADS_EDIT" text="_Muuda Omadusi..."/>
-			<item id="ID_DOWNLOADS_TORRENT_INFO" text="_Torrenti Teave..."/>
 			<separator/>
 			<item id="ID_DOWNLOADS_MOVE_UP" text="Liigu _Üles"/>
 			<item id="ID_DOWNLOADS_MOVE_DOWN" text="Lii_gu Alla"/>
 			<item id="ID_DOWNLOADS_BOOST" text="_Eira Piiranguid"/>
 		</menu>
 		<item id="ID_DOWNLOADS_HELP" text="_Abi..."/>
+		<separator/>
+		<item id="ID_DOWNLOADS_EDIT" text="_Muuda Omadusi..."/>
 	</menu>
 	<menu name="CDownloadsWnd.Source">
 		<item id="ID_TRANSFERS_CONNECT" text="_Ligipääs"/>
@@ -997,15 +997,16 @@
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="_Puhasta"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_COPY" text="Kopeeri _URI"/>
-		<item id="ID_DOWNLOADS_TORRENT_INFO" text="Torrenti Info"/>
+		<item id="ID_DOWNLOADS_EDIT" text="Info"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_FILE_DELETE" text="_Kustuta Fail"/>
 		<item id="ID_DOWNLOADS_RATE" text="_Hinda Fail..."/>
 	</menu>
 	<menu name="CDownloadsWnd.Seeding">
 		<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Ava"/>
-		<item id="ID_DOWNLOADS_TORRENT_INFO" text="Torrenti _Info"/>
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="_Lõpeta Jagamine"/>
+		<separator/>
+		<item id="ID_DOWNLOADS_EDIT text="_Info"/>
 	</menu>
 	<menu name="CDownloadsWnd.Nothing">
 		<item id="ID_DOWNLOADS_HELP" text="_Abi..."/>

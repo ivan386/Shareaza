@@ -171,7 +171,7 @@
       <button id="ID_DOWNLOADS_CLEAR_COMPLETE" text="إزالة التحميل" />
       <separator />
       <button id="ID_DOWNLOADS_MONITOR" text="إظهار الشاشة" />
-      <button id="ID_DOWNLOADS_TORRENT_INFO" text="معلومات Torrent" />
+      <button id="ID_DOWNLOADS_EDIT" text="معلومات" />
       <rightAlign />
       <button id="ID_TOOLS_DOWNLOAD" text="اضافة تحميل/Torrent..." />
       <button id="ID_DOWNLOADS_CLEAR_COMPLETED" text="تم اكمال المسح" />
@@ -977,14 +977,14 @@
         <item id="ID_DOWNLOADS_URL" text="_اضف مصدر..." />
         <separator />
         <item id="ID_DOWNLOADS_MONITOR" text="نافذة _الشاشه" />
-        <item id="ID_DOWNLOADS_EDIT" text="تحرير _متقدم..." />
-        <item id="ID_DOWNLOADS_TORRENT_INFO" text="معلومات _Torrent..." />
         <separator />
         <item id="ID_DOWNLOADS_MOVE_UP" text="نقل _للاعلى" />
         <item id="ID_DOWNLOADS_MOVE_DOWN" text="نقل _للاسفل" />
         <item id="ID_DOWNLOADS_BOOST" text="السرعة _زيادة" />
       </menu>
       <item id="ID_DOWNLOADS_HELP" text="_تعليمات..." />
+      <separator />
+      <item id="ID_DOWNLOADS_EDIT" text="تحرير _متقدم..." />
     </menu>
     <menu name="CDownloadsWnd.Source">
       <item id="ID_TRANSFERS_CONNECT" text="الوصول" />
@@ -1009,15 +1009,16 @@
       <item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="_إزالة" />
       <separator />
       <item id="ID_DOWNLOADS_COPY" text="نسخ _رابط" />
-      <item id="ID_DOWNLOADS_TORRENT_INFO" text="معلومات Torrent" />
+      <item id="ID_DOWNLOADS_EDIT" text="معلومات" />
       <separator />
       <item id="ID_DOWNLOADS_FILE_DELETE" text="_حذف الملف" />
       <item id="ID_DOWNLOADS_RATE" text="_تصنيف الملف..." />
     </menu>
     <menu name="CDownloadsWnd.Seeding">
       <item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_فتح" />
-      <item id="ID_DOWNLOADS_TORRENT_INFO" text="_معلومات Torrent" />
       <item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="_إيقاف الإرسال" />
+      <separator />
+      <item id="ID_DOWNLOADS_EDIT" text="_معلومات" />
     </menu>
     <menu name="CDownloadsWnd.Nothing">
       <item id="ID_DOWNLOADS_HELP" text="_تعليمات..." />

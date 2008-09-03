@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 
 <!-- Shareaza Default English Skin File -->
-<!-- Translation based on default-en.xml SVN rev.7300 -->
+<!-- Translation based on default-en.xml SVN rev.7350 -->
 
 <!-- This skin basically represents the current Shareaza defaults. You can use this file as -->
 <!-- a basis for creating new skins, however in a new skin be sure to ONLY include the sections -->
@@ -351,7 +351,7 @@
 		<button id="ID_MEDIA_SAVE" text="Save"/>
 	</toolbar>
 	<!-- IRC WINDOW -->
-	<toolbar name="CMainIrcBar">
+	<toolbar name="CIRCFrame">
 		<button id="ID_IRC_CONNECT" text="Connect" tip="Connect to IRC"/>
 		<button id="ID_IRC_DISCONNECT" text="Disconnect" tip="Disconnect from IRC"/>
 		<rightAlign/>

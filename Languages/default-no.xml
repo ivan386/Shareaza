@@ -172,7 +172,7 @@
 		<button id="ID_DOWNLOADS_CLEAR_COMPLETE" text="Fjern nedlasting"/>
 		<separator/>
 		<button id="ID_DOWNLOADS_MONITOR" text="Vis monitor"/>
-		<button id="ID_DOWNLOADS_TORRENT_INFO" text="Torrent info"/>
+		<button id="ID_DOWNLOADS_EDIT" text="Info"/>
 		<rightAlign/>
 		<button id="ID_TOOLS_DOWNLOAD" text="Legg til nedlasting/torrent..."/>
 		<button id="ID_DOWNLOADS_CLEAR_COMPLETED" text="Fjern ferdige"/>
@@ -961,20 +961,21 @@
 			<item id="ID_DOWNLOADS_URL" text="Legg til kilde..."/>
 			<separator/>
 			<item id="ID_DOWNLOADS_MONITOR" text="Monitor-vindu"/>
-			<item id="ID_DOWNLOADS_EDIT" text="Avansert redigering"/>
-			<item id="ID_DOWNLOADS_TORRENT_INFO" text="Torrent-info..."/>
 			<separator/>
 			<item id="ID_DOWNLOADS_MOVE_UP" text="Flytt opp"/>
 			<item id="ID_DOWNLOADS_MOVE_DOWN" text="Flytt ned"/>
 			<item id="ID_DOWNLOADS_BOOST" text="Ignorer hastighetsinnstillinger"/>
 		</menu>
 		<item id="ID_DOWNLOADS_HELP" text="Hjelp..."/>
+		<separator/>
+		<item id="ID_DOWNLOADS_EDIT" text="Avansert redigering"/>
 	</menu>
 	<menu name="CDownloadsWnd.Source">
 		<item id="ID_TRANSFERS_CONNECT" text="Start"/>
 		<separator/>
 		<item id="ID_BROWSE_LAUNCH" text="Utforsk bruker"/>
 		<item id="ID_TRANSFERS_CHAT" text="Snakk med bruker"/>
+		<item id="ID_DOWNLOADS_COPY" text="Copy _URI"/>
 		<separator/>
 		<item id="ID_TRANSFERS_DISCONNECT" text="Koble fra"/>
 		<item id="ID_TRANSFERS_FORGET" text="Glem kilde"/>
@@ -992,7 +993,7 @@
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="Fjern"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_COPY" text="Kopier URI"/>
-		<item id="ID_DOWNLOADS_TORRENT_INFO" text="Informasjon om torrent"/>
+		<item id="ID_DOWNLOADS_EDIT" text="Informasjon"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_FILE_DELETE" text="Slett fil"/>
 		<item id="ID_DOWNLOADS_RATE" text="Gi karakter"/>
@@ -1001,6 +1002,8 @@
 		<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="Åpne"/>
 		<item id="ID_DOWNLOADS_TORRENT_INFO" text="Informasjon om torrent"/>
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="_Stopp spreding"/>
+		<separator/>
+		<item id="ID_DOWNLOADS_EDIT" text="Torrent-info..."/>
 	</menu>
 	<menu name="CDownloadsWnd.Nothing">
 		<item id="ID_DOWNLOADS_HELP" text="_Hjelp..."/>
@@ -4319,6 +4322,7 @@
 		<column from="Client" to="Klient"/>
 		<column from="Downloaded" to="Lastet ned"/>
 		<column from="Complete" to="Ferdig"/>
+		<column from="Country" to=""/>
 	</list>
 	<list name="CUploadCtrl">
 		<column from="Remote User" to="Bruker"/>
@@ -4328,6 +4332,7 @@
 		<column from="Speed" to="Hastighet"/>
 		<column from="Client" to="Klient"/>
 		<column from="Rating" to="Karakter"/>
+		<column from="Country" to=""/>
 	</list>
 	<list name="CNeighboursWnd">
 		<column from="Address" to="Adresse"/>
@@ -4341,6 +4346,7 @@
 		<column from="Mode" to="Modus"/>
 		<column from="Client" to="Klient"/>
 		<column from="Name" to="Navn"/>
+		<column from="Country" to=""/>
 	</list>
 	<list name="CSecurityWnd">
 		<column from="Address / Content" to="Adresse / Inn"/>
@@ -4359,6 +4365,8 @@
 		<column from="Description" to="Beskrivelse"/>
 		<column from="CurUsers" to="Brukere"/>
 		<column from="MaxUsers" to="Maks brukere"/>
+		<column from="Failures" to=""/>
+		<column from="Country" to=""/>
 	</list>
 	<list name="CDiscoveryWnd">
 		<column from="Address" to="Adresse"/>
@@ -4392,6 +4400,8 @@
 		<column from="Host/Count" to="Vert/Antall"/>
 		<column from="Speed" to="Hastighet"/>
 		<column from="Client" to="Klient"/>
+		<column from="Time" to=""/>
+		<column from="Country" to=""/>
 	</list>
 	<list name="CUploadQueueList">
 		<column from="Name" to="Navn"/>
@@ -4412,9 +4422,14 @@
 		<column from="URL" to=""/>
 		<column from="Expires" to="Utløper"/>
 	</list>
+	<list name="CTorrentFileList">
+		<column from="Filename" to="Filnavn"/>
+		<column from="Size" to="Størrelse"/>
+	</list>
 	<list name="CTorrentTrackerList">
 		<column from="Filename" to="Filnavn"/>
 		<column from="Size" to="Størrelse"/>
+		<column from="Type" to=""/>
 	</list>
 	<list name="CReviewList">
 		<column from="User" to="Bruker"/>

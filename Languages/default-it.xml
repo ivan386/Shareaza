@@ -170,7 +170,7 @@
 		<button id="ID_DOWNLOADS_CLEAR_COMPLETE" text="Rimuovi download"/>
 		<separator/>
 		<button id="ID_DOWNLOADS_MONITOR" text="Mostra monitor"/>
-		<button id="ID_DOWNLOADS_TORRENT_INFO" text="Informazioni torrent"/>
+		<button id="ID_DOWNLOADS_EDIT" text="Informazioni"/>
 		<rightAlign/>
 		<button id="ID_TOOLS_DOWNLOAD" text="Aggiungi download..."/>
 		<button id="ID_DOWNLOADS_CLEAR_COMPLETED" text="Rimuovi file completati"/>
@@ -976,14 +976,14 @@
 			<item id="ID_DOWNLOADS_URL" text="Aggiungi fonte..."/>
 			<separator/>
 			<item id="ID_DOWNLOADS_MONITOR" text="Finestra monitor"/>
-			<item id="ID_DOWNLOADS_EDIT" text="Modifica avanzata..."/>
-			<item id="ID_DOWNLOADS_TORRENT_INFO" text="Informazioni torrent..."/>
 			<separator/>
 			<item id="ID_DOWNLOADS_MOVE_UP" text="Sposta su"/>
 			<item id="ID_DOWNLOADS_MOVE_DOWN" text="Sposta giù"/>
 			<item id="ID_DOWNLOADS_BOOST" text="Ignora limite di banda"/>
 		</menu>
 		<item id="ID_DOWNLOADS_HELP" text="Aiuto..."/>
+		<separator/>
+		<item id="ID_DOWNLOADS_EDIT" text="Modifica avanzata..."/>
 	</menu>
 	<menu name="CDownloadsWnd.Source">
 		<item id="ID_TRANSFERS_CONNECT" text="_Accedi"/>
@@ -1008,15 +1008,16 @@
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="Rimuovi"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_COPY" text="Copia URI"/>
-		<item id="ID_DOWNLOADS_TORRENT_INFO" text="_Torrent Info"/>
+		<item id="ID_DOWNLOADS_EDIT" text="_Info"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_FILE_DELETE" text="Elimina file"/>
 		<item id="ID_DOWNLOADS_RATE" text="Valuta file..."/>
 	</menu>
 	<menu name="CDownloadsWnd.Seeding">
-		<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="Apri"/>
-		<item id="ID_DOWNLOADS_TORRENT_INFO" text="Torrent Info"/>
+		<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Apri"/>
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="_Ferma condivisione"/>
+		<separator/>
+		<item id="ID_DOWNLOADS_EDIT" text="Torrent _Info"/>
 	</menu>
 	<menu name="CDownloadsWnd.Nothing">
 		<item id="ID_DOWNLOADS_HELP" text="Aiuto..."/>

@@ -173,7 +173,7 @@
 		<button id="ID_DOWNLOADS_CLEAR_COMPLETE" text="Απόσυρση Αρχείου"/>
 		<separator/>
 		<button id="ID_DOWNLOADS_MONITOR" text="Προβολή Εποπτείας"/>
-		<button id="ID_DOWNLOADS_TORRENT_INFO" text="Πληροφορίες Torrent"/>
+		<button id="ID_DOWNLOADS_EDIT" text="Πληροφορίες"/>
 		<rightAlign/>
 		<button id="ID_TOOLS_DOWNLOAD" text="Νέα Λήψη ή Torrent..."/>
 		<button id="ID_DOWNLOADS_CLEAR_COMPLETED" text="Απόσυρση Ολοκληρωμένων"/>
@@ -351,7 +351,7 @@
 		<button id="ID_MEDIA_SAVE" text="Αποθήκευση"/>
 	</toolbar>
 	<!-- IRC WINDOW -->
-	<toolbar name="CMainIrcBar">
+	<toolbar name="CIRCFrame">
 		<button id="ID_IRC_CONNECT" text="Σύνδεση" tip="Σύνδεση στο IRC"/>
 		<button id="ID_IRC_DISCONNECT" text="Αποσύνδεση" tip="Αποσύνδεση από το IRC"/>
 		<rightAlign/>

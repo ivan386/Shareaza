@@ -176,7 +176,7 @@
 		<button id="ID_DOWNLOADS_CLEAR_COMPLETE" text="清除下载"/>
 		<separator/>
 		<button id="ID_DOWNLOADS_MONITOR" text="显示监视器"/>
-		<button id="ID_DOWNLOADS_TORRENT_INFO" text="Torrent 信息"/>
+		<button id="ID_DOWNLOADS_EDIT" text="信息"/>
 		<rightAlign/>
 		<button id="ID_TOOLS_DOWNLOAD" text="添加下载..."/>
 		<button id="ID_DOWNLOADS_CLEAR_COMPLETED" text="清除完成文件"/>
@@ -973,20 +973,21 @@
 			<item id="ID_DOWNLOADS_URL" text="添加资源(_A)..."/>
 			<separator/>
 			<item id="ID_DOWNLOADS_MONITOR" text="监视器(_W)"/>
-			<item id="ID_DOWNLOADS_EDIT" text="高级编辑(_E)..."/>
-			<item id="ID_DOWNLOADS_TORRENT_INFO" text="Torrent 信息(_T)..."/>
 			<separator/>
 			<item id="ID_DOWNLOADS_MOVE_UP" text="上移(_U)"/>
 			<item id="ID_DOWNLOADS_MOVE_DOWN" text="下移(_D)"/>
 			<item id="ID_DOWNLOADS_BOOST" text="忽略带宽限制(_I)"/>
 		</menu>
 		<item id="ID_DOWNLOADS_HELP" text="帮助(_H)..."/>
+		<separator/>
+		<item id="ID_DOWNLOADS_EDIT" text="高级编辑(_E)..."/>
 	</menu>
 	<menu name="CDownloadsWnd.Source">
 		<item id="ID_TRANSFERS_CONNECT" text="访问(_A)"/>
 		<separator/>
 		<item id="ID_BROWSE_LAUNCH" text="浏览用户(_B)"/>
 		<item id="ID_TRANSFERS_CHAT" text="与用户聊天(_C)"/>
+		<item id="ID_DOWNLOADS_COPY" text="复制 _URI"/>
 		<separator/>
 		<item id="ID_TRANSFERS_DISCONNECT" text="断开(_D)"/>
 		<item id="ID_TRANSFERS_FORGET" text="忽略(_F)"/>
@@ -1004,15 +1005,16 @@
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="清除(_C)"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_COPY" text="复制 URI(_U)"/>
-		<item id="ID_DOWNLOADS_TORRENT_INFO" text="Torrent 信息"/>
+		<item id="ID_DOWNLOADS_EDIT" text="Torrent 信息"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_FILE_DELETE" text="删除文件(_D)"/>
 		<item id="ID_DOWNLOADS_RATE" text="文件评级(_R)..."/>
 	</menu>
 	<menu name="CDownloadsWnd.Seeding">
 		<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="打开(_O)"/>
-		<item id="ID_DOWNLOADS_TORRENT_INFO" text="Torrent 信息(_I)"/>
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="停止做种(_S)"/>
+		<separator/>
+		<item id="ID_DOWNLOADS_EDIT" text="信息(_E)"/>
 	</menu>
 	<menu name="CDownloadsWnd.Nothing">
 		<item id="ID_DOWNLOADS_HELP" text="帮助(_H)..."/>

@@ -172,7 +172,7 @@
 		<button id="ID_DOWNLOADS_CLEAR_COMPLETE" text="Entfernen"/>
 		<separator/>
 		<button id="ID_DOWNLOADS_MONITOR" text="Monitor anzeigen"/>
-		<button id="ID_DOWNLOADS_TORRENT_INFO" text="Torrent-Info"/>
+		<button id="ID_DOWNLOADS_EDIT" text="Info"/>
 		<rightAlign/>
 		<button id="ID_TOOLS_DOWNLOAD" text="Download / Torrent hinzufügen..."/>
 		<button id="ID_DOWNLOADS_CLEAR_COMPLETED" text="Aufräumen"/>
@@ -350,7 +350,7 @@
 		<button id="ID_MEDIA_SAVE" text="Speichern"/>
 	</toolbar>
 	<!-- IRC WINDOW -->
-	<toolbar name="CMainIrcBar">
+	<toolbar name="CIRCFrame">
 		<button id="ID_IRC_CONNECT" text="Verbinden" tip="Mit IRC verbinden"/>
 		<button id="ID_IRC_DISCONNECT" text="Verbindung trennen" tip="Verbindung mit IRC-Chat trennen"/>
 		<rightAlign/>
@@ -1037,14 +1037,14 @@
 			<item id="ID_DOWNLOADS_URL" text="_Quelle hinzufügen..."/>
 			<separator/>
 			<item id="ID_DOWNLOADS_MONITOR" text="_Monitor Fenster"/>
-			<item id="ID_DOWNLOADS_EDIT" text="Download _bearbeiten..."/>
-			<item id="ID_DOWNLOADS_TORRENT_INFO" text="_Torrent Info..."/>
 			<separator/>
 			<item id="ID_DOWNLOADS_MOVE_UP" text="Nach _oben"/>
 			<item id="ID_DOWNLOADS_MOVE_DOWN" text="Nach _unten"/>
 			<item id="ID_DOWNLOADS_BOOST" text="G_eschwindigkeitslimit aufheben"/>
 		</menu>
 		<item id="ID_DOWNLOADS_HELP" text="_Hilfe..."/>
+		<separator/>
+		<item id="ID_DOWNLOADS_EDIT" text="Download _bearbeiten..."/>
 	</menu>
 	<menu name="CDownloadsWnd.Source">
 		<item id="ID_TRANSFERS_CONNECT" text="_Starten"/>
@@ -1075,9 +1075,9 @@
 	</menu>
 	<menu name="CDownloadsWnd.Seeding">
 		<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Öffnen"/>
-		<item id="ID_DOWNLOADS_TORRENT_INFO" text="Torrent-_Info"/>
-		<separator/>
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="_Seeden beenden"/>
+		<separator/>
+		<item id="ID_DOWNLOADS_EDIT" text="_Info"/>
 	</menu>
 	<menu name="CDownloadsWnd.Nothing">
 		<item id="ID_DOWNLOADS_HELP" text="_Hilfe..."/>

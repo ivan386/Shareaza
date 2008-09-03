@@ -172,7 +172,7 @@
 		<button id="ID_DOWNLOADS_CLEAR_COMPLETE" text="Počisti prenos"/>
 		<separator/>
 		<button id="ID_DOWNLOADS_MONITOR" text="Pokaži nadzornik"/>
-		<button id="ID_DOWNLOADS_TORRENT_INFO" text="Informacije o torrent-u"/>
+		<button id="ID_DOWNLOADS_EDIT" text="Informacije"/>
 		<rightAlign/>
 		<button id="ID_TOOLS_DOWNLOAD" text="Dodaj prenos/torrent..."/>
 		<button id="ID_DOWNLOADS_CLEAR_COMPLETED" text="Počisti končano"/>
@@ -961,20 +961,21 @@
 			<item id="ID_DOWNLOADS_URL" text="Dodaj _vir..."/>
 			<separator/>
 			<item id="ID_DOWNLOADS_MONITOR" text="Okno _nadzornika"/>
-			<item id="ID_DOWNLOADS_EDIT" text="N_apredno urejanje..."/>
-			<item id="ID_DOWNLOADS_TORRENT_INFO" text="Informacija o _Torrentu..."/>
 			<separator/>
 			<item id="ID_DOWNLOADS_MOVE_UP" text="Premakni _gor"/>
 			<item id="ID_DOWNLOADS_MOVE_DOWN" text="Premakni _dol"/>
 			<item id="ID_DOWNLOADS_BOOST" text="Prezri _omejitev pasovne širine"/>
 		</menu>
 		<item id="ID_DOWNLOADS_HELP" text="_Pomoč..."/>
+		<separator/>
+		<item id="ID_DOWNLOADS_EDIT" text="N_apredno urejanje..."/>
 	</menu>
 	<menu name="CDownloadsWnd.Source">
 		<item id="ID_TRANSFERS_CONNECT" text="_Dostop"/>
 		<separator/>
 		<item id="ID_BROWSE_LAUNCH" text="_Brskaj po uporabniku"/>
 		<item id="ID_TRANSFERS_CHAT" text="_Kramljaj z uporabnikom"/>
+		<item id="ID_DOWNLOADS_COPY" text="Kopiraj _URI"/>
 		<separator/>
 		<item id="ID_TRANSFERS_DISCONNECT" text="Prekini po_vezavo"/>
 		<item id="ID_TRANSFERS_FORGET" text="_Pozabi"/>
@@ -992,15 +993,16 @@
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="_Počisti"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_COPY" text="Kopiraj _URI"/>
-		<item id="ID_DOWNLOADS_TORRENT_INFO" text="Informacije o _Torrent-u"/>
+		<item id="ID_DOWNLOADS_EDIT" text="Informacije"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_FILE_DELETE" text="_Briši datoteko"/>
 		<item id="ID_DOWNLOADS_RATE" text="_Oceni datoteko..."/>
 	</menu>
 	<menu name="CDownloadsWnd.Seeding">
 		<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Odpri"/>
-		<item id="ID_DOWNLOADS_TORRENT_INFO" text="Informacije o _Torrent-u"/>
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="_Končaj sejanje (seeding)"/>
+		<separator/>
+		<item id="ID_DOWNLOADS_EDIT" text="Informacija o _Torrentu..."/>
 	</menu>
 	<menu name="CDownloadsWnd.Nothing">
 		<item id="ID_DOWNLOADS_HELP" text="_Pomoč..."/>

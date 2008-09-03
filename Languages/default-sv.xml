@@ -173,7 +173,7 @@
 		<button id="ID_DOWNLOADS_CLEAR_COMPLETE" text="Rensa nedladdning" />
 		<separator/>
 		<button id="ID_DOWNLOADS_MONITOR" text="Visa monitor" />
-		<button id="ID_DOWNLOADS_TORRENT_INFO" text="Torrentinformation" />
+		<button id="ID_DOWNLOADS_EDIT" text="Information" />
 		<rightAlign/>
 		<button id="ID_TOOLS_DOWNLOAD" text="Lägg till nedladdning/Torrent…" />
 		<button id="ID_DOWNLOADS_CLEAR_COMPLETED" text="Rensa färdiga" />
@@ -351,7 +351,7 @@
 		<button id="ID_MEDIA_SAVE" text="Spara" />
 	</toolbar>
 	<!-- IRC WINDOW -->
-	<toolbar name="CMainIrcBar">
+	<toolbar name="CIRCFrame">
 		<button id="ID_IRC_CONNECT" text="Anslut" tip="Anslut till IRC"/>
 		<button id="ID_IRC_DISCONNECT" text="Koppla från" tip="Koppla ifrån IRC"/>
 		<rightAlign/>
@@ -1007,14 +1007,14 @@
 			<item id="ID_DOWNLOADS_URL" text="_Lägg till källa…" />
 			<separator/>
 			<item id="ID_DOWNLOADS_MONITOR" text="Monitor_fönster" />
-			<item id="ID_DOWNLOADS_EDIT" text="Avancerad _redigering…" />
-			<item id="ID_DOWNLOADS_TORRENT_INFO" text="_Torrentinformation.." />
 			<separator/>
 			<item id="ID_DOWNLOADS_MOVE_UP" text="Flytta _upp" />
 			<item id="ID_DOWNLOADS_MOVE_DOWN" text="Flytta _ned" />
 			<item id="ID_DOWNLOADS_BOOST" text="_Ignorera bandbreddsbegränsning" />
 		</menu>
 		<item id="ID_DOWNLOADS_HELP" text="_Hjälp…" />
+		<separator/>
+		<item id="ID_DOWNLOADS_EDIT" text="Avancerad _redigering…" />
 	</menu>
 	<menu name="CDownloadsWnd.Source">
 		<item id="ID_TRANSFERS_CONNECT" text="_Åtkomst" />
@@ -1039,15 +1039,16 @@
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="_Rensa" />
 		<separator/>
 		<item id="ID_DOWNLOADS_COPY" text="Kopiera _URI" />
-		<item id="ID_DOWNLOADS_TORRENT_INFO" text="_Torrentinfo"/>
+		<item id="ID_DOWNLOADS_EDIT" text="_info"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_FILE_DELETE" text="_Radera fil" />
 		<item id="ID_DOWNLOADS_RATE" text="_Betygsätt fil…" />
 	</menu>
 	<menu name="CDownloadsWnd.Seeding">
 		<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_ppna"/>
-		<item id="ID_DOWNLOADS_TORRENT_INFO" text="Torrent_info"/>
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="_Sluta dela ut"/>
+		<separator/>
+		<item id="ID_DOWNLOADS_EDIT" text="_Torrentinformation.." />
 	</menu>
 	<menu name="CDownloadsWnd.Nothing">
 		<item id="ID_DOWNLOADS_HELP" text="_Hjälp"/>
@@ -1432,8 +1433,8 @@
 			<item id="ID_NETWORK_DISCONNECT" text="_Koppla ifrån" />
 			<separator/>
 			<item id="ID_NETWORK_G2" text="_Gnutella2"/>
-			<item id="ID_NETWORK_ED2K" text="_eDonkey"/>
 			<item id="ID_NETWORK_G1" text="Gnutella_1"/>
+			<item id="ID_NETWORK_ED2K" text="_eDonkey"/>
 		</menu>
 		<menu text="_Monitor">
 			<item id="ID_NEIGHBOURS_VIEW_ALL" text="Visa _all trafik" />
@@ -1546,6 +1547,7 @@
 	</menu>
 	<menu name="WebServices.List.Menu">
 		<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Bitzi"/>
+		<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
 		<item id="ID_WEBSERVICES_SHAREMONKEY" text="_ShareMonkey"/>
 	</menu>
 </menus>
@@ -4234,9 +4236,9 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<control/>
 		<control caption="Mallinformation:"/>
 		<control caption="Namn:"/>
-		<control/>
+		<control caption="..."/>
 		<control caption="Författare:"/>
-		<control/>
+		<control caption="..."/>
 		<control caption="Beskrivning:"/>
 		<control/>
 		<control caption="Radera|_Föregående"/>

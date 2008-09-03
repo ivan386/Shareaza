@@ -183,7 +183,7 @@ PDF
 		<button id="ID_DOWNLOADS_CLEAR_COMPLETE" text="‪נקה הורדה"/>
 		<separator/>
 		<button id="ID_DOWNLOADS_MONITOR" text="‪(הצג משגוח (מוניטור"/>
-		<button id="ID_DOWNLOADS_TORRENT_INFO" text="‪מידע הטורנט"/>
+		<button id="ID_DOWNLOADS_EDIT" text="‪מידע הטורנט"/>
 		<rightAlign/>
 		<button id="ID_TOOLS_DOWNLOAD" text="‪הוסף הורדה/טורנט"/>
 		<button id="ID_DOWNLOADS_CLEAR_COMPLETED" text="‪נקה הורדות שהסתיימו"/>
@@ -361,7 +361,7 @@ PDF
 		<button id="ID_MEDIA_SAVE" text="‪שמור"/>
 	</toolbar>
 	<!-- IRC WINDOW -->
-	<toolbar name="CMainIrcBar">
+	<toolbar name="CIRCFrame">
 		<button id="ID_IRC_CONNECT" text="התחבר" tip="התחבר לחדר שיחה"/>
 		<button id="ID_IRC_DISCONNECT" text="התנתק" tip="התנתק מחדר שיחה"/>
 		<rightAlign/>
@@ -1047,14 +1047,14 @@ PDF
 			<item id="ID_DOWNLOADS_URL" text="‪הו_סף מקור"/>
 			<separator/>
 			<item id="ID_DOWNLOADS_MONITOR" text="‪_חלון מוניטור"/>
-			<item id="ID_DOWNLOADS_EDIT" text="‪_עריכה מתקדמת"/>
-			<item id="ID_DOWNLOADS_TORRENT_INFO" text="‪מידע על ה_טורנט"/>
 			<separator/>
 			<item id="ID_DOWNLOADS_MOVE_UP" text="‪העבר מעלה"/>
 			<item id="ID_DOWNLOADS_MOVE_DOWN" text="‪העבר מטה"/>
 			<item id="ID_DOWNLOADS_BOOST" text="‪התעלם מהגבלת רוחב פס"/>
 		</menu>
 		<item id="ID_DOWNLOADS_HELP" text="‪...ע_זרה"/>
+		<separator/>
+		<item id="ID_DOWNLOADS_EDIT" text="‪_עריכה מתקדמת"/>
 	</menu>
 	<menu name="CDownloadsWnd.Source">
 		<item id="ID_TRANSFERS_CONNECT" text="‪_כניסה"/>
@@ -1079,15 +1079,16 @@ PDF
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="‪_נקה"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_COPY" text="‪...URI העתק"/>
-		<item id="ID_DOWNLOADS_TORRENT_INFO" text="‪מידע לגבי הטורנט"/>
+		<item id="ID_DOWNLOADS_EDIT" text="‪מידע לגבי הטורנט"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_FILE_DELETE" text="‪_מחק קובץ"/>
 		<item id="ID_DOWNLOADS_RATE" text="‪...דרג קובץ"/>
 	</menu>
 	<menu name="CDownloadsWnd.Seeding">
 		<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="‪_פתח"/>
-		<item id="ID_DOWNLOADS_TORRENT_INFO" text="‪מידע לגבי הטורנט"/>
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="‪הפסק בקשות להעלאות"/>
+		<separator/>
+		<item id="ID_DOWNLOADS_EDIT" text="‪מידע על ה_טורנט"/>
 	</menu>
 	<menu name="CDownloadsWnd.Nothing">
 		<item id="ID_DOWNLOADS_HELP" text="‪...ע_זרה"/>

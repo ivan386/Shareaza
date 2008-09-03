@@ -170,7 +170,7 @@
 		<button id="ID_DOWNLOADS_CLEAR_COMPLETE" text="Pastro"/>
 		<separator/>
 		<button id="ID_DOWNLOADS_MONITOR" text="Monitoro"/>
-		<button id="ID_DOWNLOADS_TORRENT_INFO" text="Info Torrenti"/>
+		<button id="ID_DOWNLOADS_EDIT" text="Info"/>
 		<rightAlign/>
 		<button id="ID_TOOLS_DOWNLOAD" text="Shto një Shkarkesë/Torrent..."/>
 		<button id="ID_DOWNLOADS_CLEAR_COMPLETED" text="Pastro të Përfunduarit"/>
@@ -958,7 +958,7 @@
 	</menu>
 	<menu name="CDownloadsWnd.Download">
 		<item id="ID_DOWNLOADS_LAUNCH" text="_Parashiko"/>
-				<item id="ID_DOWNLOADS_REMOTE_PREVIEW" text="Parashikim i L_argët"/>
+		<item id="ID_DOWNLOADS_REMOTE_PREVIEW" text="Parashikim i L_argët"/>
 		<!-- <item id="ID_DOWNLOADS_LAUNCH_COPY" text="Para_shiko Kopjen"/> -->
 		<item id="ID_DOWNLOADS_ENQUEUE" text="Shtoje në _Listë"/>
 		<item id="ID_DOWNLOADS_VIEW_REVIEWS" text="_Shiko Pasqyrat"/>
@@ -976,14 +976,14 @@
 			<item id="ID_DOWNLOADS_URL" text="_Shto një Burim..."/>
 			<separator/>
 			<item id="ID_DOWNLOADS_MONITOR" text="_Monitoroni"/>
-			<item id="ID_DOWNLOADS_EDIT" text="_Edito me Përparim..."/>
-			<item id="ID_DOWNLOADS_TORRENT_INFO" text="Info mbi _Torrentin..."/>
 			<separator/>
 			<item id="ID_DOWNLOADS_MOVE_UP" text="Lëvize _Sipër"/>
 			<item id="ID_DOWNLOADS_MOVE_DOWN" text="Lëvize _Poshtë"/>
 			<item id="ID_DOWNLOADS_BOOST" text="_Përbuze Kufirin e Shtrirjes së Bandës"/>
 		</menu>
 		<item id="ID_DOWNLOADS_HELP" text="_Ndihmë..."/>
+		<separator/>
+		<item id="ID_DOWNLOADS_EDIT" text="_Edito me Përparim..."/>
 	</menu>
 	<menu name="CDownloadsWnd.Source">
 		<item id="ID_TRANSFERS_CONNECT" text="_Hyrje"/>
@@ -1008,15 +1008,16 @@
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="_Pastro"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_COPY" text="Kopjo _URIn"/>
-		<item id="ID_DOWNLOADS_TORRENT_INFO" text="Info mbi _Torrentin"/>
+		<item id="ID_DOWNLOADS_EDIT" text="Info"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_FILE_DELETE" text="_Fshije Skedën"/>
 		<item id="ID_DOWNLOADS_RATE" text="_Vlerëso Skedën..."/>
 	</menu>
 	<menu name="CDownloadsWnd.Seeding">
 		<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Hape"/>
-		<item id="ID_DOWNLOADS_TORRENT_INFO" text="_Info mbi Torrentin"/>
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="_Ndale Mbjelljen"/>
+		<separator/>
+		<item id="ID_DOWNLOADS_EDIT" text="Info mbi _Torrentin..."/>
 	</menu>
 	<menu name="CDownloadsWnd.Nothing">
 		<item id="ID_DOWNLOADS_HELP" text="_Ndihmë..."/>

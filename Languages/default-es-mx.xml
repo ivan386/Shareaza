@@ -170,7 +170,7 @@
 		<button id="ID_DOWNLOADS_CLEAR_COMPLETE" text="Limpiar Descarga"/>
 		<separator/>
 		<button id="ID_DOWNLOADS_MONITOR" text="Mostrar Monitor"/>
-		<button id="ID_DOWNLOADS_TORRENT_INFO" text="Información de Torrent"/>
+		<button id="ID_DOWNLOADS_EDIT" text="Información"/>
 		<rightAlign/>
 		<button id="ID_TOOLS_DOWNLOAD" text="Descargar Archivo"/>
 		<button id="ID_DOWNLOADS_CLEAR_COMPLETED" text="Limpiar Completados"/>
@@ -962,20 +962,21 @@
 			<item id="ID_DOWNLOADS_URL" text="_Agregar Fuente..."/>
 			<separator/>
 			<item id="ID_DOWNLOADS_MONITOR" text="Ventana de _Monitor"/>
-			<item id="ID_DOWNLOADS_EDIT" text="Edición Avanzada"/>
-			<item id="ID_DOWNLOADS_TORRENT_INFO" text="_Información de Torrent"/>
 			<separator/>
 			<item id="ID_DOWNLOADS_MOVE_UP" text="Mover _Arriba"/>
 			<item id="ID_DOWNLOADS_MOVE_DOWN" text="Mover _Abajo"/>
 			<item id="ID_DOWNLOADS_BOOST" text="_Ignorar Límite de Banda Ancha"/>
 		</menu>
-	<item id="ID_DOWNLOADS_HELP" text="_Ayuda..."/>
+		<item id="ID_DOWNLOADS_HELP" text="_Ayuda..."/>
+		<separator/>
+		<item id="ID_DOWNLOADS_EDIT" text="_Información de Torrent"/>
 	</menu>
 	<menu name="CDownloadsWnd.Source">
 		<item id="ID_TRANSFERS_CONNECT" text="_Acceder"/>
 		<separator/>
 		<item id="ID_BROWSE_LAUNCH" text="_Explorar Usuario"/>
 		<item id="ID_TRANSFERS_CHAT" text="_Chat con Usuario"/>
+		<item id="ID_DOWNLOADS_COPY" text="Copy _URI"/>
 		<separator/>
 		<item id="ID_TRANSFERS_DISCONNECT" text="_Desconectar"/>
 		<item id="ID_TRANSFERS_FORGET" text="_Olvidar"/>
@@ -993,7 +994,7 @@
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="_Limpiar"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_COPY" text="Copiar _URI"/>
-		<item id="ID_DOWNLOADS_TORRENT_INFO" text="Información de Torrent"/>
+		<item id="ID_DOWNLOADS_EDIT" text="Información"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_FILE_DELETE" text="_Eliminar Archivo"/>
 		<item id="ID_DOWNLOADS_RATE" text="_Darle rating a archivo..."/>
@@ -1001,8 +1002,9 @@
 	</menu>
 	<menu name="CDownloadsWnd.Seeding">
 		<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Abrir"/>
-		<item id="ID_DOWNLOADS_TORRENT_INFO" text="Información de Torrent"/>
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="_Detener Seeding"/>
+		<separator/>
+		<item id="ID_DOWNLOADS_EDIT" text="Información de Torrent"/>
 	</menu>
 	<menu name="CDownloadsWnd.Nothing">
 		<item id="ID_DOWNLOADS_HELP" text="_Ayuda..."/>

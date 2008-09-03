@@ -172,7 +172,7 @@
 		<button id="ID_DOWNLOADS_CLEAR_COMPLETE" text="Wissen"/>
 		<separator/>
 		<button id="ID_DOWNLOADS_MONITOR" text="Monitor tonen"/>
-		<button id="ID_DOWNLOADS_TORRENT_INFO" text="Torrentinformatie"/>
+		<button id="ID_DOWNLOADS_EDIT" text="Informatie"/>
 		<rightAlign/>
 		<button id="ID_TOOLS_DOWNLOAD" text="Downloadlink invoegen"/>
 		<button id="ID_DOWNLOADS_CLEAR_COMPLETED" text="Wis voltooide bestanden"/>
@@ -342,7 +342,7 @@
 		<button id="ID_MEDIA_SAVE" text="Opslaan"/>
 	</toolbar>
 	 <!-- IRC WINDOW -->
-	<toolbar name="CMainIrcBar">
+	<toolbar name="CIRCFrame">
 		<button id="ID_IRC_CONNECT" text="Connect" tip="Connect to IRC"/>
 		<button id="ID_IRC_DISCONNECT" text="Disconnect" tip="Disconnect from IRC"/>
 		<rightAlign/>
@@ -994,20 +994,21 @@
 			<item id="ID_DOWNLOADS_URL" text="Bron toe_voegen..."/>
 			<separator/>
 			<item id="ID_DOWNLOADS_MONITOR" text="_Monitor venster"/>
-			<item id="ID_DOWNLOADS_EDIT" text="Uitgebreid aan_passen..."/>
-			<item id="ID_DOWNLOADS_TORRENT_INFO" text="_Torrentinformatie..."/>
 			<separator/>
 			<item id="ID_DOWNLOADS_MOVE_UP" text="Naar b_oven"/>
 			<item id="ID_DOWNLOADS_MOVE_DOWN" text="Naar b_eneden"/>
 			<item id="ID_DOWNLOADS_BOOST" text="_Negeer snelheidslimiet"/>
 		</menu>
 		<item id="ID_DOWNLOADS_HELP" text="_Help..."/>
+		<separator/>
+		<item id="ID_DOWNLOADS_EDIT" text="Uitgebreid aan_passen..."/>
 	</menu>
 	<menu name="CDownloadsWnd.Source">
 		<item id="ID_TRANSFERS_CONNECT" text="_Starten"/>
 		<separator/>
 		<item id="ID_BROWSE_LAUNCH" text="Gebruiker _bekijken"/>
 		<item id="ID_TRANSFERS_CHAT" text="_Chatten met gebruiker"/>
+		<item id="ID_DOWNLOADS_COPY" text="Copy _URI"/>
 		<separator/>
 		<item id="ID_TRANSFERS_DISCONNECT" text="Verbinding ver_breken"/>
 		<item id="ID_TRANSFERS_FORGET" text="_Vergeten"/>
@@ -1025,15 +1026,16 @@
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="_Wissen"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_COPY" text="_URI kopiëren"/>
-		<item id="ID_DOWNLOADS_TORRENT_INFO" text="Torrent_informatie"/>
+		<item id="ID_DOWNLOADS_EDIT" text="Torrent_informatie"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_FILE_DELETE" text="Bestand _verwijderen"/>
 		<item id="ID_DOWNLOADS_RATE" text="Bestand _beoordelen..."/>
 	</menu>
 	<menu name="CDownloadsWnd.Seeding">
 		<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Openen"/>
-		<item id="ID_DOWNLOADS_TORRENT_INFO" text="Torrent_informatie"/>
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="_Stop het uitzaaien"/>
+		<separator/>
+		<item id="ID_DOWNLOADS_EDIT" text="_Torrentinformatie..."/>
 	</menu>
 	<menu name="CDownloadsWnd.Nothing">
 		<item id="ID_DOWNLOADS_HELP" text="_Help..."/>

@@ -172,7 +172,7 @@
 		<button id="ID_DOWNLOADS_CLEAR_COMPLETE" text="Wyczyść pobieranie"/>
 		<separator/>
 		<button id="ID_DOWNLOADS_MONITOR" text="Pokaż monitor pobierania"/>
-		<button id="ID_DOWNLOADS_TORRENT_INFO" text="Torrent Info"/>
+		<button id="ID_DOWNLOADS_EDIT" text="Info"/>
 		<rightAlign/>
 		<button id="ID_TOOLS_DOWNLOAD" text="Dodaj plik/Torrent..."/>
 		<button id="ID_DOWNLOADS_CLEAR_COMPLETED" text="Wyczyść zakończone"/>
@@ -961,20 +961,21 @@
 			<item id="ID_DOWNLOADS_URL" text="Dodaj źródło..."/>
 			<separator/>
 			<item id="ID_DOWNLOADS_MONITOR" text="Okno monitora"/>
-			<item id="ID_DOWNLOADS_EDIT" text="Zaawansowana edycja..."/>
-			<item id="ID_DOWNLOADS_TORRENT_INFO" text="Torrent Info..."/>
 			<separator/>
 			<item id="ID_DOWNLOADS_MOVE_UP" text="Przenieś w górę"/>
 			<item id="ID_DOWNLOADS_MOVE_DOWN" text="Przenieś w dół"/>
 			<item id="ID_DOWNLOADS_BOOST" text="Ignoruj limit szerokości pasma"/>
 		</menu>
 		<item id="ID_DOWNLOADS_HELP" text="Pomoc..."/>
+		<separator/>
+		<item id="ID_DOWNLOADS_EDIT" text="Zaawansowana edycja..."/>
 	</menu>
 	<menu name="CDownloadsWnd.Source">
 		<item id="ID_TRANSFERS_CONNECT" text="Przejmij"/>
 		<separator/>
 		<item id="ID_BROWSE_LAUNCH" text="Przegladaj użytkownika"/>
 		<item id="ID_TRANSFERS_CHAT" text="Rozmowa z użytkownikiem"/>
+		<item id="ID_DOWNLOADS_COPY" text="Copy _URI"/>
 		<separator/>
 		<item id="ID_TRANSFERS_DISCONNECT" text="Rozłącz"/>
 		<item id="ID_TRANSFERS_FORGET" text="Zapomnij"/>
@@ -992,7 +993,7 @@
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="Wyczyść"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_COPY" text="Kopiuj URI"/>
-		<item id="ID_DOWNLOADS_TORRENT_INFO" text="Torrent Info"/>
+		<item id="ID_DOWNLOADS_EDIT" text="Info"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_FILE_DELETE" text="Usuń plik"/>
 		<item id="ID_DOWNLOADS_RATE" text="Oceń plik"/>
@@ -1001,6 +1002,8 @@
 		<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="Otwórz"/>
 		<item id="ID_DOWNLOADS_TORRENT_INFO" text="Torrent Info"/>
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="Zakończ udostępnianie"/>
+		<separator/>
+		<item id="ID_DOWNLOADS_EDIT" text="Torrent Info..."/>
 	</menu>
 	<menu name="CDownloadsWnd.Nothing">
 		<item id="ID_DOWNLOADS_HELP" text="Pomoc..."/>
