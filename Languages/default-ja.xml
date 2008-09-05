@@ -4327,12 +4327,25 @@
 		<control/>
 	</dialog>
 
-	<dialog name="CDecodeMetadataDlg" cookie="BuBuStCo" caption="Metadataローカライズ">
-		<control caption="OK"/>
-		<control caption="キャンセル"/>
+	<dialog name="CDecodeMetadataDlg" cookie="StCoBuBuBuStStBuBu" caption="Metadataローカライズ">
 		<control caption="再エンコード方式を選択して下さい"/>
 		<control caption="アラビア語|バルト語|中央ヨーロッパ|簡体中国語|繁体中国語|キリル語|ギリシア語|ヘブライ語|日本語|韓国語|タイ語|トルコ語|ベトナム語"/>
+		<control caption="キャンセル"/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
+		<control caption="OK"/>
+		<control caption="Cancel"/>
 	</dialog>
+
+<!--<dialog name="CIrcInputDlg" cookie="EdBuBuSt" caption="Channel Name|Why reason">
+		<control/>
+		<control caption="OK"/>
+		<control caption="Cancel"/>
+		<control caption="Enter channel you want to add:|Enter kick/ban reason:"/>
+	</dialog>-->
+
 </dialogs>
 
 <!-- Columns Definitions -->
@@ -4355,6 +4368,7 @@
 		<column from="Client" to="クライアント"/>
 		<column from="Downloaded" to="ダウンロード済"/>
 		<column from="Complete" to="完了"/>
+		<column from="Country" to="国"/>
 	</list>
 	<list name="CUploadCtrl">
 		<column from="Remote User" to="リモートユーザー"/>
@@ -4364,6 +4378,7 @@
 		<column from="Speed" to="速度"/>
 		<column from="Client" to="クライアント"/>
 		<column from="Rating" to="評価"/>
+		<column from="Country" to="国"/>
 	</list>
 	<list name="CNeighboursWnd">
 		<column from="Address" to="アドレス"/>
@@ -4377,6 +4392,7 @@
 		<column from="Mode" to="モード"/>
 		<column from="Client" to="クライアント"/>
 		<column from="Name" to="名前"/>
+		<column from="Country" to="国"/>
 	</list>
 	<list name="CSecurityWnd">
 		<column from="Address / Content" to="アドレス / 内容"/>
@@ -4396,6 +4412,8 @@
 		<column from="Description" to="説明"/>
 		<column from="CurUsers" to="ユーザー"/>
 		<column from="MaxUsers" to="最大ユーザー"/>
+		<column from="Failures" to=""/>
+		<column from="Country" to="国"/>
 	</list>
 	<list name="CDiscoveryWnd">
 		<column from="Address" to="アドレス"/>
@@ -4429,6 +4447,8 @@
 		<column from="Host/Count" to="ホスト/カウント"/>
 		<column from="Speed" to="速度"/>
 		<column from="Client" to="クライアント"/>
+		<column from="Time" to="時間"/>
+		<column from="Country" to="国"/>
 	</list>
 	<list name="CUploadQueueList">
 		<column from="Name" to="名前"/>

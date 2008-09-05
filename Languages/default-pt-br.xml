@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 
 <!-- Shareaza Default English Skin File -->
 <!-- Translation based on default-en.xml SVN rev.7350 -->
@@ -548,7 +548,7 @@
 		  </menu>
 		  <separator/>
 		  <item id="ID_HELP_VERSION_CHECK" text="Procurar nova _versão"/>
-		  <item id="ID_HELP_DONATE" text="_Doar para o Projeto Shareaza!"/>
+		  <item id="ID_HELP_DONATE" text="_Doar para o Projeto Shareaza"/>
 		  <separator/>
 		  <item id="ID_HELP_ABOUT" text="_Sobre o Shareaza..."/>
 		</menu>
@@ -647,7 +647,7 @@
 		  </menu>
 		  <separator/>
 		  <item id="ID_HELP_VERSION_CHECK" text="Procurar nova _versão"/>
-			<item id="ID_HELP_DONATE" text="_Doar para o Projeto do Shareaza"/>
+		  <item id="ID_HELP_DONATE" text="_Doar para o Projeto do Shareaza"/>
 		  <separator/>
 		  <item id="ID_HELP_ABOUT" text="_Sobre o Shareaza..."/>
 		</menu>
@@ -739,9 +739,9 @@
 		  </menu>
 		  <separator/>
 		  <item id="ID_HELP_VERSION_CHECK" text="Procurar nova _versão"/>
+		  <item id="ID_HELP_DONATE" text="_Doar para o Projeto Shareaza"/>
 		  <separator/>
 		  <item id="ID_HELP_ABOUT" text="_Sobre o Shareaza..."/>
-		  <item id="ID_HELP_DONATE" text="_Doar para o Projeto Shareaza!"/>
 		</menu>
 	</menu>
 	<!-- VIEW POPUP -->

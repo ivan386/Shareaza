@@ -4319,11 +4319,22 @@
 		<control/>
 		<control/>
 	</dialog>
-	<dialog name="CDecodeMetadataDlg" cookie="BuBuStCo" caption="Metadata lokalisatie">
-		<control caption="OK"/>
-		<control caption="Annuleren"/>
+	<dialog name="CDecodeMetadataDlg" cookie="StCoBuBuBuStStBuBu" caption="Metadata lokalisatie">
 		<control caption="Selecteer hercodeermethode"/>
 		<control caption="Arabisch|Baltisch|Centraal Europees|Chinees (vereenvoudigd)|Chinees (traditioneel)|Cyrillic|Grieks|Hebreeuws|Japans|Koreaans|Thais|Turks|Vietnamees"/>
+		<control caption="Preview:"/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
+		<control caption="OK"/>
+		<control caption="Annuleren"/>
+	</dialog>
+	<dialog name="CIrcInputDlg" cookie="EdBuBuSt" caption="Channel Name|Why reason">
+		<control/>
+		<control caption="OK"/>
+		<control caption="Annuleren"/>
+		<control caption="Add a channel name:|Enter kick/ban reason:"/>
 	</dialog>
 </dialogs>
 <!-- Columns Definitions -->

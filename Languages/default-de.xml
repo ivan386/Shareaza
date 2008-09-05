@@ -4403,7 +4403,7 @@
 		<control/>
 		<control/>
 	</dialog>
-	<dialog name="CDecodeMetadataDlg" cookie="BuBuStCo" caption="Metadaten-Lokalisierung">
+	<dialog name="CDecodeMetadataDlg" cookie="StCoBuBuBuStStBuBu" caption="Metadaten-Lokalisierung">
 		<control caption="Bitte wählen Sie die neue Codierung"/>
 		<control caption="Arabisch|Baltisch|Zentraleuropäisch|Chinesisch (vereinfacht)|Chinesisch (traditionell)|Kyrillisch|Griechisch|Hebräisch|Japanisch|Koreanisch|Thailändisch|Türkisch|Vietnamesisch"/>
 		<control caption="Vorschau:"/>
@@ -4413,6 +4413,12 @@
 		<control/>
 		<control caption="OK"/>
 		<control caption="Abbrechen"/>	
+	</dialog>
+	<dialog name="CIrcInputDlg" cookie="EdBuBuSt" caption="Channel Name|Why reason">
+		<control/>
+		<control caption="OK"/>
+		<control caption="Abbrechen"/>
+		<control caption="Add a channel name:|Enter kick/ban reason:"/>
 	</dialog>
 </dialogs>
 <!-- Columns Definitions -->

@@ -4260,11 +4260,22 @@
 		<control/>
 		<control/>
 	</dialog>
-	<dialog name="CDecodeMetadataDlg" cookie="BuBuStCo" caption="Lokalizace popisků">
-		<control caption="OK"/>
-		<control caption="Zrušit"/>
+	<dialog name="CDecodeMetadataDlg" cookie="StCoBuBuBuStStBuBu" caption="Lokalizace popisků">
 		<control caption="Prosím zvolte metodu obnovení kódování"/>
 		<control caption="Arabic|Baltic|Central European|Chinese simplified|Chinese traditional|Cyrillic|Greek|Hebrew|Japanese|Korean|Thai|Turkish|Vietnamese"/>
+		<control caption="Preview:"/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
+		<control caption="OK"/>
+		<control caption="Zrušit"/>
+	</dialog>
+	<dialog name="CIrcInputDlg" cookie="EdBuBuSt" caption="Channel Name|Why reason">
+		<control/>
+		<control caption="OK"/>
+		<control caption="Zrušit"/>
+		<control caption="Add a channel name:|Enter kick/ban reason:"/>
 	</dialog>
 </dialogs>
 <!-- Columns Definitions -->

@@ -662,8 +662,8 @@
 			<separator/>
 			<menu text="_Ağ Seç">
 				<item id="ID_NETWORK_G2" text="Bağlan _Gnutella2"/>
-				<item id="ID_NETWORK_ED2K" text="Bağlan _eDonkey2000"/>
 				<item id="ID_NETWORK_G1" text="Bağlan Gnutella_1"/>
+				<item id="ID_NETWORK_ED2K" text="Bağlan _eDonkey2000"/>
 			</menu>
 			<separator/>
 			<item id="ID_NETWORK_AUTO_CLOSE" text="Kapat _Transferden Sonra"/>
@@ -4406,7 +4406,7 @@
 		<control/>
 		<control/>
 	</dialog>
-	<dialog name="CDecodeMetadataDlg" cookie="BuBuStCo" caption="Veri Yerleştir">
+	<dialog name="CDecodeMetadataDlg" cookie="StCoBuBuBuStStBuBu" caption="Veri Yerleştir">
 		<control caption="Lütfen kodlama ile ilgili metod seçiniz."/>
 		<control caption="Arapça|Baltık|Merkezi Avrupa|Basitleştirilmiş Çince|Geleneksel Çince|Slavca|Yunanca|İbranice|Japonca|Korece|Tay dili|Türkçe|Vietnamca"/>
 		<control caption="Ön izleme:"/>
@@ -4417,7 +4417,7 @@
 		<control caption="Tamam"/>
 		<control caption="İptal"/>
 	</dialog>
-<dialog name="CIrcInputDlg" cookie="EdBuBuSt" caption="Channel Name|Why reason">
+	<dialog name="CIrcInputDlg" cookie="EdBuBuSt" caption="Channel Name|Why reason">
 		<control/>
 		<control caption="Tamam"/>
 		<control caption="İptal"/>

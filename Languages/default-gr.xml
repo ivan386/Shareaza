@@ -487,8 +487,8 @@
 			<separator/>
 			<menu text="Επιλογή _Δικτύων">
 				<item id="ID_NETWORK_G2" text="Σύνδεση στο Gnutella_2"/>
-				<item id="ID_NETWORK_ED2K" text="Σύνδεση στο _ED2K"/>
 				<item id="ID_NETWORK_G1" text="Σύνδεση στο _Gnutella"/>
+				<item id="ID_NETWORK_ED2K" text="Σύνδεση στο _ED2K"/>
 			</menu>
 			<separator/>
 			<item id="ID_NETWORK_AUTO_CLOSE" text="Έξοδος _Μετά τις Μεταφορές"/>
@@ -548,9 +548,9 @@
 			</menu>
 			<separator/>
 			<item id="ID_HELP_VERSION_CHECK" text="Ελεγχος για νέα έκδοση"/>
+			<item id="ID_HELP_DONATE" text="Δωρεά στο Shareaza"/>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="Σχετικά με το Shareaza..."/>
-			<item id="ID_HELP_DONATE" text="Δωρεά στο Shareaza"/>
 		</menu>
 	</menu>
 	<menu name="CMainWnd.Tabbed" type="bar">
@@ -560,8 +560,8 @@
 			<separator/>
 			<menu text="Επιλογή _Δικτύων">
 				<item id="ID_NETWORK_G2" text="Σύνδεση στο Gnutella_2"/>
-				<item id="ID_NETWORK_ED2K" text="Σύνδεση στο _ED2K"/>
 				<item id="ID_NETWORK_G1" text="Σύνδεση στο _Gnutella"/>
+				<item id="ID_NETWORK_ED2K" text="Σύνδεση στο _ED2K"/>
 			</menu>
 			<separator/>
 			<item id="ID_NETWORK_CONNECT_TO" text="Σύνδεση _ με..." shortcut="Ctrl+T"/>
@@ -647,9 +647,9 @@
 			</menu>
 			<separator/>
 			<item id="ID_HELP_VERSION_CHECK" text="Ελεγχος για νέα έκδοση"/>
+			<item id="ID_HELP_DONATE" text="Δωρίστε στο project Shareaza"/>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="Σχετικά με το Shareaza..."/>
-			<item id="ID_HELP_DONATE" text="Δωρίστε στο project Shareaza"/>
 		</menu>
 	</menu>
 	<menu name="CMainWnd.Windowed" type="bar">
@@ -664,8 +664,8 @@
 			<separator/>
 			<menu text="Επιλογή _Δικτύων">
 				<item id="ID_NETWORK_G2" text="Σύνδεση στο Gnutella_2"/>
-				<item id="ID_NETWORK_ED2K" text="Σύνδεση στο ED2K"/>
 				<item id="ID_NETWORK_G1" text="Σύνδεση στο Gnutella"/>
+				<item id="ID_NETWORK_ED2K" text="Σύνδεση στο ED2K"/>
 			</menu>
 			<separator/>
 			<item id="ID_NETWORK_AUTO_CLOSE" text="Έξοδος Μετά τις Μεταφορές"/>
@@ -739,9 +739,9 @@
 			</menu>
 			<separator/>
 			<item id="ID_HELP_VERSION_CHECK" text="Έλεγχος για νέα έκδοση"/>
+			<item id="ID_HELP_DONATE" text="Δωρίστε στο project Shareaza"/>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="Σχετικά με το Shareaza..."/>
-			<item id="ID_HELP_DONATE" text="Δωρίστε στο project Shareaza"/>
 		</menu>
 	</menu>
 	<!-- VIEW POPUP -->
@@ -4420,6 +4420,12 @@
 		<control/>
 		<control caption="OK"/>
 		<control caption="Άκυρο"/>
+	</dialog>
+	<dialog name="CIrcInputDlg" cookie="EdBuBuSt" caption="Channel Name|Why reason">
+		<control/>
+		<control caption="OK"/>
+		<control caption="Άκυρο"/>
+		<control caption="Add a channel name:|Enter kick/ban reason:"/>
 	</dialog>
 </dialogs>
 <!-- Columns Definitions -->

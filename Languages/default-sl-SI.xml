@@ -4324,12 +4324,25 @@
 		<control/>
 	</dialog>
 
-	<dialog name="CDecodeMetadataDlg" cookie="BuBuStCo" caption="Lokalizacija metapodatkov">
-		<control caption="V redu"/>
-		<control caption="Prekliči"/>
+	<dialog name="CDecodeMetadataDlg" cookie="StCoBuBuBuStStBuBu" caption="Lokalizacija metapodatkov">
 		<control caption="Izberite metodo za ponovno enkodiranje"/>
 		<control caption="Arabska|Baltska|Srednjeevropska|Poenostavljeno Kitajska|Tradicionalno Kitajska|V Cirilici|Grška|Hebrejska|Japonska|Korejska|Tajska|Turška|Vietnamska"/>
+		<control caption="Preview:"/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
+		<control caption="V redu"/>
+		<control caption="Prekliči"/>
 	</dialog>
+
+	<dialog name="CIrcInputDlg" cookie="EdBuBuSt" caption="Channel Name|Why reason">
+		<control/>
+		<control caption="V redu"/>
+		<control caption="Prekliči"/>
+		<control caption="Enter channel you want to add:|Enter kick/ban reason:"/>
+	</dialog>
+
 </dialogs>
 
 <!-- Columns Definitions -->
@@ -4352,6 +4365,7 @@
 		<column from="Client" to="Odjemalec"/>
 		<column from="Downloaded" to="Prenešeno"/>
 		<column from="Complete" to="Dokončano"/>
+		<column from="Country" to=""/>
 	</list>
 	<list name="CUploadCtrl">
 		<column from="Remote User" to="Oddaljen uporabnik"/>
@@ -4361,6 +4375,7 @@
 		<column from="Speed" to="Hitrost"/>
 		<column from="Client" to="Odjemalec"/>
 		<column from="Rating" to="Ocena"/>
+		<column from="Country" to=""/>
 	</list>
 	<list name="CNeighboursWnd">
 		<column from="Address" to="Naslov"/>
@@ -4374,6 +4389,7 @@
 		<column from="Mode" to="Način"/>
 		<column from="Client" to="Odjemalec"/>
 		<column from="Name" to="Ime"/>
+		<column from="Country" to=""/>
 	</list>
 	<list name="CSecurityWnd">
 		<column from="Address / Content" to="Naslov / Vsebina"/>
@@ -4388,10 +4404,13 @@
 		<column from="Port" to="Vrata"/>
 		<column from="Client" to="Odjemalec"/>
 		<column from="Last Seen" to="Zadnje videno"/>
+		<column from="Daily Uptime" to=""/>
 		<column from="Name" to="Ime"/>
 		<column from="Description" to="Opis"/>
 		<column from="CurUsers" to="TrenutUporab"/>
 		<column from="MaxUsers" to="MaksUporab"/>
+		<column from="Failures" to=""/>
+		<column from="Country" to=""/>
 	</list>
 	<list name="CDiscoveryWnd">
 		<column from="Address" to="Naslov"/>
@@ -4425,6 +4444,8 @@
 		<column from="Host/Count" to="Gostitelj/Število"/>
 		<column from="Speed" to="Hitrost"/>
 		<column from="Client" to="Odjemalec"/>
+		<column from="Time" to=""/>
+		<column from="Country" to=""/>
 	</list>
 	<list name="CUploadQueueList">
 		<column from="Name" to="Ime"/>

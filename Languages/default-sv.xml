@@ -4366,11 +4366,22 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<control/>
 		<control/>
 	</dialog>
-	<dialog name="CDecodeMetadataDlg" cookie="BuBuStCo" caption="Metadatalokalisering">
-		<control caption="OK"/>
-		<control caption="Avbryt"/>
+	<dialog name="CDecodeMetadataDlg" cookie="StCoBuBuBuStStBuBu" caption="Metadatalokalisering">
 		<control caption="Välj metod för omkodning"/>
 		<control caption="Arabisk|Baltisk|Centraluropeisk|Förenklad kinesisk|Traditionell kinesisk|Kyrillisk|Grekisk|Hebreisk|Japansk|Koreansk|Thailändsk|Turkisk|Vietnamesisk"/>
+		<control caption="Preview:"/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
+		<control caption="OK"/>
+		<control caption="Avbryt"/>
+	</dialog>
+	<dialog name="CIrcInputDlg" cookie="EdBuBuSt" caption="Channel Name|Why reason">
+		<control/>
+		<control caption="OK"/>
+		<control caption="Avbryt"/>
+		<control caption="Add a channel name:|Enter kick/ban reason:"/>
 	</dialog>
 </dialogs>
 <!-- Columns Definitions -->

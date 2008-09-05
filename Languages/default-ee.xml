@@ -4339,12 +4339,25 @@
 		<control/>
 	</dialog>
 
-	<dialog name="CDecodeMetadataDlg" cookie="BuBuStCo" caption="Andmebaasi kohastamine">
-		<control caption="OK"/>
-		<control caption="Tühista"/>
+	<dialog name="CDecodeMetadataDlg" cookie="StCoBuBuBuStStBuBu" caption="Andmebaasi kohastamine">
 		<control caption="Vali ümberkodeerimise meetod"/>
 		<control caption="Arabic|Baltic|Central European|Chinese simplified|Chinese traditional|Cyrillic|Greek|Hebrew|Japanese|Korean|Thai|Turkish|Vietnamese"/>
+		<control caption="Preview:"/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
+		<control caption="OK"/>
+		<control caption="Tühista"/>
 	</dialog>
+
+	<dialog name="CIrcInputDlg" cookie="EdBuBuSt" caption="Channel Name|Why reason">
+		<control/>
+		<control caption="OK"/>
+		<control caption="Tühista"/>
+		<control caption="Add a channel name:|Enter kick/ban reason:"/>
+	</dialog>
+
 </dialogs>
 
 <!-- Columns Definitions -->
@@ -4367,6 +4380,7 @@
 		<column from="Client" to="Klient"/>
 		<column from="Downloaded" to="Allalaaditud"/>
 		<column from="Complete" to="Tehtud"/>
+		<column from="Country" to="Piirkond"/>
 	</list>
 	<list name="CUploadCtrl">
 		<column from="Remote User" to="Kaugkasutaja"/>
@@ -4376,6 +4390,7 @@
 		<column from="Speed" to="Kiirus"/>
 		<column from="Client" to="Klient"/>
 		<column from="Rating" to="Reiting"/>
+		<column from="Country" to="Piirkond"/>
 	</list>
 	<list name="CNeighboursWnd">
 		<column from="Address" to="Aadress"/>
@@ -4389,6 +4404,7 @@
 		<column from="Mode" to=""/>
 		<column from="Client" to="Klient"/>
 		<column from="Name" to="Nimi"/>
+		<column from="Country" to="Piirkond"/>
 	</list>
 	<list name="CSecurityWnd">
 		<column from="Address / Content" to="Aadress / Sisu"/>
@@ -4403,10 +4419,13 @@
 		<column from="Port" to="Port"/>
 		<column from="Client" to="Klient"/>
 		<column from="Last Seen" to="Viimati Nähtud"/>
+		<column from="Daily Uptime" to=""/>
 		<column from="Name" to="Nimi"/>
 		<column from="Description" to="Kirjeldus"/>
 		<column from="CurUsers" to="Hetkel kasutajaid"/>
 		<column from="MaxUsers" to="Max kasutajaid"/>
+		<column from="Failures" to=""/>
+		<column from="Country" to="Piirkond"/>
 	</list>
 	<list name="CDiscoveryWnd">
 		<column from="Address" to="Aadress"/>
@@ -4440,6 +4459,8 @@
 		<column from="Host/Count" to="Server"/>
 		<column from="Speed" to="Kiirus"/>
 		<column from="Client" to="Klient"/>
+		<column from="Time" to=""/>
+		<column from="Country" to="Piirkond"/>
 	</list>
 	<list name="CUploadQueueList">
 		<column from="Name" to="Nimi"/>

@@ -1687,18 +1687,18 @@
 		<text group="24" align="middle" id="G2Hubs">%i hubs</text>
 		<text group="25" align="middle" id="G2Leaves">%i leaves</text>
 		<newline group="20" gap="2"/>
-		<icon group="30" command="ID_NETWORK_ED2K"/><gap group="30" size="4"/>
-		<text group="30" align="middle" format="b">e2dk: </text>
-		<text group="31" align="middle">Desconnectat</text>
-		<text group="32" align="middle">Connectant...</text>
-		<text group="33" align="middle">Connectat</text>
-		<newline group="30" gap="2"/>
 		<icon group="10" command="ID_NETWORK_G1"/><gap group="10" size="4"/>
 		<text group="10" align="middle" format="b">Gnutella1: </text>
 		<text group="11" align="middle">Desconnectat</text>
 		<text group="12" align="middle">Connectant...</text>
 		<text group="13" align="middle">Connectat</text>
 		<newline group="10" gap="2"/>
+		<icon group="30" command="ID_NETWORK_ED2K"/><gap group="30" size="4"/>
+		<text group="30" align="middle" format="b">e2dk: </text>
+		<text group="31" align="middle">Desconnectat</text>
+		<text group="32" align="middle">Connectant...</text>
+		<text group="33" align="middle">Connectat</text>
+		<newline group="30" gap="2"/>
 		<group id="2">
 			<para align="center">
 				<newline gap="6"/>
@@ -4271,11 +4271,22 @@
 		<control/>
 		<control/>
 	</dialog>
-	<dialog name="CDecodeMetadataDlg" cookie="BuBuStCo" caption="Localització de la metainformació">
-		<control caption="Sí"/>
-		<control caption="Cancel·la"/>
+	<dialog name="CDecodeMetadataDlg" cookie="StCoBuBuBuStStBuBu" caption="Localització de la metainformació">
 		<control caption="Selecciona un mètode de codificació"/>
 		<control caption="Aràbic|Bàltic|Europa Central|Xinès Simplificat|Xinès Tradicional|Cirílic|Grec|Hebreu|Japonès|Coreà|Tailandès|Turc|Vietnamita"/>
+		<control caption="Preview:"/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
+		<control caption="Sí"/>
+		<control caption="Cancel·la"/>
+	</dialog>
+	<dialog name="CIrcInputDlg" cookie="EdBuBuSt" caption="Channel Name|Why reason">
+		<control/>
+		<control caption="Sí"/>
+		<control caption="Cancel·la"/>
+		<control caption="Add a channel name:|Enter kick/ban reason:"/>
 	</dialog>
 </dialogs>
 <!-- Columns Definitions -->

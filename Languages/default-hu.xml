@@ -547,9 +547,9 @@
 			</menu>
 			<separator/>
 			<item id="ID_HELP_VERSION_CHECK" text="_Frissítések keresése"/>
+			<item id="ID_HELP_DONATE" text="A_dományok a Shareaza projektnek"/>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="_Névjegy..."/>
-			<item id="ID_HELP_DONATE" text="A_dományok a Shareaza projektnek"/>
 		</menu>
 	</menu>
 	<menu name="CMainWnd.Tabbed" type="bar">
@@ -646,9 +646,9 @@
 			</menu>
 			<separator/>
 			<item id="ID_HELP_VERSION_CHECK" text="_Frissítések keresése"/>
+			<item id="ID_HELP_DONATE" text="A_dományok a Shareaza projektnek"/>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="_Névjegy..."/>
-			<item id="ID_HELP_DONATE" text="A_dományok a Shareaza projektnek"/>
 		</menu>
 	</menu>
 	<menu name="CMainWnd.Windowed" type="bar">
@@ -738,9 +738,9 @@
 			</menu>
 			<separator/>
 			<item id="ID_HELP_VERSION_CHECK" text="_Frissítések keresése"/>
-			<separator/>
-			<item id="ID_HELP_ABOUT" text="__Névjegy..."/>
 			<item id="ID_HELP_DONATE" text="A_dományok a Shareaza projektnek"/>
+			<separator/>
+			<item id="ID_HELP_ABOUT" text="_Névjegy..."/>
 		</menu>
 	</menu>
 	<!-- VIEW POPUP -->
@@ -4154,7 +4154,10 @@
 		<control caption="Egy Shareaza által is támogatott URI-re kattintott, amely a következő fájlhoz vezet el téged:"/>
 		<control caption="Egy Shareaza által is támogatott URL-re kattintott, amely a következő szerverhez vagy p2p kiszolgálóhoz fog kapcsolni:"/>
 		<control caption="Egy Shareaza által is támogatott URI-re kattintott, amely engedélyezi a következő kiszlgáló megosztásának a böngészését:"/>
-		<control/><control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
 		<control caption="Válasszon a lehetőségekből:"/>
 		<control caption="Letöltés _most"/>
 		<control caption="_Keresés"/>
@@ -4174,7 +4177,8 @@
 	<dialog name="CFilePreviewDlg" cookie="StStStmsStBu" caption="Előnézet...">
 		<control/>
 		<control caption="Előnézet elkészítése:"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="(letöltött részek összeszedése az előnézethez)"/>
 		<control caption="Mégse"/>
 	</dialog>
@@ -4199,7 +4203,10 @@
 		<control caption="OK"/>
 	</dialog>
 	<dialog name="CExistingFileDlg" cookie="StStStStStBuBuBuBuBuStSt" caption="Létező fájl letöltése">
-		<control/><control/><control/><control/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
 		<control caption="Már rendelkezik egy ilyen fájllal. Mi legyen?"/>
 		<control caption="Mutassa meg a fájlt a Könyvtárban"/>
 		<control caption="Töltse le újra"/>
@@ -4221,7 +4228,8 @@
 	<dialog name="CDonkeyServersDlg" cookie="StStEdmsBuBu" caption="Server.met letöltése">
 		<control/>
 		<control caption="eDonkey server.met fájl letöltése a netről."/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="OK"/>
 		<control caption="Mégse"/>
 	</dialog>
@@ -4377,7 +4385,8 @@
 	<dialog name="CDownloadReviewDlg" cookie="StBuSyEd" caption="Vélemények letöltése">
 		<control/>
 		<control caption="OK"/>
-		<control/><control/>
+		<control/>
+		<control/>
 	</dialog>
 	<dialog name="CDecodeMetadataDlg" cookie="StCoBuBuBuStStBuBu" caption="Metaadat javítása">
 		<control caption="Válasszon egy másik karakterkódolást:"/>
@@ -4389,6 +4398,12 @@
 		<control/>
 		<control caption="OK"/>
 		<control caption="Mégse"/>
+	</dialog>
+	<dialog name="CIrcInputDlg" cookie="EdBuBuSt" caption="Channel Name|Why reason">
+		<control/>
+		<control caption="OK"/>
+		<control caption="Mégse"/>
+		<control caption="Add a channel name:|Enter kick/ban reason:"/>
 	</dialog>
 </dialogs>
 <!-- Columns Definitions -->

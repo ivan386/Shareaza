@@ -4273,11 +4273,22 @@
 		<control/>
 	</dialog>
 
-	<dialog name="CDecodeMetadataDlg" cookie="BuBuStCo" caption="Lokalizacija Metadate">
-		<control caption="OK"/>
-		<control caption="Odustani"/>
+	<dialog name="CDecodeMetadataDlg" cookie="StCoBuBuBuStStBuBu" caption="Lokalizacija Metadate">
 		<control caption="Molim odaberite metodu re-encodinga"/>
 		<control caption="Arabic|Baltic|Central European|Chinese simplified|Chinese traditional|Cyrillic|Greek|Hebrew|Japanese|Korean|Thai|Turkish|Vietnamese"/>
+		<control caption="Preview:"/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
+		<control caption="OK"/>
+		<control caption="Odustani"/>
+	</dialog>
+	<dialog name="CIrcInputDlg" cookie="EdBuBuSt" caption="Channel Name|Why reason">
+		<control/>
+		<control caption="OK"/>
+		<control caption="Odustani"/>
+		<control caption="Add a channel name:|Enter kick/ban reason:"/>
 	</dialog>
 </dialogs>
 
@@ -4301,6 +4312,7 @@
 		<column from="Client" to="Davaoc"/>
 		<column from="Downloaded" to="Skinuto"/>
 		<column from="Complete" to="Gotovo"/>
+		<column from="Country" to="Država"/>
 	</list>
 	<list name="CUploadCtrl">
 		<column from="Remote User" to="Korisnik"/>
@@ -4310,6 +4322,7 @@
 		<column from="Speed" to="Brzina"/>
 		<column from="Client" to="Klijent"/>
 		<column from="Rating" to="Ocjena"/>
+		<column from="Country" to="Država"/>
 	</list>
 	<list name="CNeighboursWnd">
 		<column from="Address" to="Adresa"/>
@@ -4323,6 +4336,7 @@
 		<column from="Mode" to="Način"/>
 		<column from="Client" to="Klijent"/>
 		<column from="Name" to="Ime"/>
+		<column from="Country" to="Država"/>
 	</list>
 	<list name="CSecurityWnd">
 		<column from="Address / Content" to="Adresa / Sadržaj"/>
@@ -4337,10 +4351,13 @@
 		<column from="Port" to="Port"/>
 		<column from="Client" to="Klijent"/>
 		<column from="Last Seen" to="Zadnji Put Viđeno"/>
+		<column from="Daily Uptime" to=""/>
 		<column from="Name" to="Ime"/>
 		<column from="Description" to="Opis"/>
 		<column from="CurUsers" to="UprKorisnika"/>
 		<column from="MaxUsers" to="MaxKorisnika"/>
+		<column from="Failures" to=""/>
+		<column from="Country" to="Država"/>
 	</list>
 	<list name="CDiscoveryWnd">
 		<column from="Address" to="Adresa"/>
@@ -4374,6 +4391,8 @@
 		<column from="Host/Count" to="Davalac/Koliko"/>
 		<column from="Speed" to="Brzina"/>
 		<column from="Client" to="Klijent"/>
+		<column from="Time" to=""/>
+		<column from="Country" to="Država"/>
 	</list>
 	<list name="CUploadQueueList">
 		<column from="Name" to="Ime"/>
@@ -4394,9 +4413,13 @@
 		<column from="URL" to="URL"/>
 		<column from="Expires" to="Ističe"/>
 	</list>
-	<list name="CTorrentTrackerList">
+	<list name="CTorrentFileList">
 		<column from="Filename" to="Ime Datoteke"/>
 		<column from="Size" to="Veličina"/>
+	<list name="CTorrentTrackerList">
+		<column from="Tracker" to=""/>
+		<column from="Status" to=""/>
+		<column from="Type" to=""/>
 	</list>
 	<list name="CReviewList">
 		<column from="User" to="Korisnik"/>

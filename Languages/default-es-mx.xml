@@ -21,7 +21,7 @@
 		version="2.2.3.3"
 		type="Language"
 		language="es-mx"
-		prompt="Seleccione aquí para usar Shareaza en Español Internacional"
+		prompt="Seleccione aquí para usar Shareaza en Español Mexicano"
 />
 
 <!-- Toolbar Definitions -->
@@ -969,7 +969,7 @@
 		</menu>
 		<item id="ID_DOWNLOADS_HELP" text="_Ayuda..."/>
 		<separator/>
-		<item id="ID_DOWNLOADS_EDIT" text="_Información de Torrent"/>
+		<item id="ID_DOWNLOADS_EDIT" text="_Edición Avanzada"/>
 	</menu>
 	<menu name="CDownloadsWnd.Source">
 		<item id="ID_TRANSFERS_CONNECT" text="_Acceder"/>
@@ -1714,14 +1714,10 @@
 		<text format="b">Configuración de Shareaza</text>
 		<newline gap="16"/>
 
-		<text>
-			Esta pantalla permite configurar una gran cantidad de parámetros del funcionamiento
-			de Shareaza.  La configuración
-		</text>
+		<text>Esta pantalla permite configurar una gran cantidad de parámetros del funcionamiento
+			de Shareaza.  La configuración </text>
 		<text format="b">General </text>
-		<text>
-			es relacionada con la experiencia del usuario.
-		</text>
+		<text>es relacionada con la experiencia del usuario.</text>
 		<newline gap="16" indent="16"/>
 
 		<link target="raza:page:CGeneralSettingsPage" format="b">General:</link>
@@ -1744,10 +1740,14 @@
 		<text>Configurar tu perfil, chat y servicios de mensajería.</text>
 		<newline gap="10"/>
 
+		<link target="raza:page:CIRCSettingsPage" format="b">IRC:</link>
+		<gap size="4"/>
+		<text>IRC chatroom visual appearance and connection settings.</text>
+		<newline gap="10"/>
+
 		<link target="raza:page:CWebSettingsPage" format="b">Web:</link>
 		<gap size="4"/>
 		<text>Integrar Shareaza con el navegador de la web, para aceptar enlaces peer-to-peer, y manejador de descargas.</text>
-		<newline gap="10"/>
 
 	</document>
 
@@ -1762,14 +1762,10 @@
 		<text format="b">Configuración de Shareaza</text>
 		<newline gap="16"/>
 
-		<text>
-			Esta pantalla permite configurar una gran cantidad de parámetros del funcionamiento
-			de Shareaza.  La configuración de
-		</text>
+		<text>	Esta pantalla permite configurar una gran cantidad de parámetros del funcionamiento
+			de Shareaza.  La configuración de </text>
 		<text format="b">Internet </text>
-		<text>
-			permite configurar la interacción de Shareaza con las redes peer-to-peer.
-		</text>
+		<text>	permite configurar la interacción de Shareaza con las redes peer-to-peer.</text>
 		<newline gap="16" indent="16"/>
 
 		<link target="raza:page:CConnectionSettingsPage" format="b">Conexión:</link>
@@ -1791,6 +1787,11 @@
 		<gap size="4"/>
 		<text>Seleccionar y configurar las redes que Shareaza utiliza.</text>
 		<newline gap="10"/>
+
+		<link target="raza:page:CSchedulerSettingsPage" format="b">Scheduler:</link>
+		<gap size="4"/>
+		<text>Limit download connections based on a periodic schedule.</text>
+
 
 	</document>
 
@@ -3606,8 +3607,8 @@
 		<control caption="Dar premio a usuarios que suben"/>
 	</dialog>
 
-	<dialog name="CWizardWelcomePage" cookie="StStStStStStStStStStStSt" caption="Bienvenido(a) a Shareaza [1 de 7]">
-		<control caption="Bienvenido(a) a Shareaza! (pronunciado 'she-ra-za')"/>
+	<dialog name="CWizardWelcomePage" cookie="StStStStStStStStStStStSt" caption="Bienvenido(a) a Shareaza">
+		<control caption="Bienvenido(a) a Shareaza! (pronunciado 'sher-a-za')"/>
 		<control caption="Este asistente te va a ayudar a configurar de forma rápida las opciones básicas de Shareaza."/>
 		<control caption="Si eres un usuario avanzado, las opciones se pueden cambiar usando el menú de herramientas. Esta guía puede ser cerrada en cualquier momento, haciendole click en Cerrar."/>
 		<control caption="Esto te va a asistir a:"/>
@@ -3656,7 +3657,7 @@
 		<control caption="Cerrar"/>
 	</dialog>
 
-	<dialog name="CWizardProfilePage" cookie="StStEdStCoCoStCoCo" caption="Bienvenido(a) a Shareaza(3/6)">
+	<dialog name="CWizardProfilePage" cookie="StStEdStCoCoStCoCo" caption="Bienvenido a Shareaza (3/6)">
 		<control caption="Shareaza es mucho más amigable, cuando todo el mundo incluye alguna información sobre ellos."/>
 		<control caption="Mi Nick:"/>
 		<control/>
@@ -3680,7 +3681,7 @@
 		<control caption="Manejar enlaces torrent."/>
 	</dialog>
 
-	<dialog name="CWizardNetworksPage" cookie="StBuStBuStBuSt" caption="Bienvenido(a) a Shareaza (5/6)">
+	<dialog name="CWizardNetworksPage" cookie="StBuStBuStBuSt" caption="Bienvenido a Shareaza (5/6)">
 		<control caption="Shareaza es una aplicacion para compartir archivos de proposito en general y puede acceder a varias redes P2P al mismo tiempo.  Aqu  puedes seleccionar a que redes te quieres conectar.  Pero recuerda que luego puedes seleccionar otras redes."/>
 		<control caption="Conectar a Gnutella2 (Altamente Recomendado)"/>
 		<control caption="La Red Gnutella2 es la red premiere de Shareaza, ofreciendo más características y rendimiento que otra red P2P."/>
@@ -3699,7 +3700,7 @@
 		<control caption="Cerrar"/>
 	</dialog>
 
-	<dialog name="CWizardFinishedPage" cookie="StStStBuBuBuSt" caption="Bienvenido(a) a Shareaza (6/6)">
+	<dialog name="CWizardFinishedPage" cookie="StStStBuBuBuSt" caption="Bienvenido a Shareaza (6/6)">
 		<control caption="¡Eso era todo! Shareaza ha sido configurado para funcionar en tu sistema."/>
 		<control caption="Si en algún momento necesitas cambiar alguna configuración, este Asistente se puede correr desde el menú de Herramientas."/>
 		<control caption="Después de hacer click en Finalizar, puedes usar la red y buscar contenido."/>
@@ -4362,11 +4363,22 @@
 		<control/>
 	</dialog>
 
-	<dialog name="CDecodeMetadataDlg" cookie="BuBuStCo" caption="Ubicar Metadata">
-		<control caption="OK"/>
-		<control caption="Cancelar"/>
+	<dialog name="CDecodeMetadataDlg" cookie="StCoBuBuBuStStBuBu" caption="Ubicar Metadata">
 		<control caption="Por favor selecciona un metodo de codificación"/>
 		<control caption="Arabico|Baltico|Europa Central|Chino Simplificado|Chino Traducional|Cirílico|Griego|Hebreo|Japonés|Koreano|Taílandes|Turco|Vietnamita"/>
+		<control caption="Preview:"/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
+		<control caption="OK"/>
+		<control caption="Cancelar"/>
+	</dialog>
+	<dialog name="CIrcInputDlg" cookie="EdBuBuSt" caption="Channel Name|Why reason">
+		<control/>
+		<control caption="OK"/>
+		<control caption="Cancelar"/>
+		<control caption="Add a channel name:|Enter kick/ban reason:"/>
 	</dialog>
 </dialogs>
 
@@ -4390,6 +4402,7 @@
 		<column from="Client" to="Cliente"/>
 		<column from="Downloaded" to="Descargado"/>
 		<column from="Complete" to="Completo"/>
+		<column from="Country" to="País"/>
 	</list>
 	<list name="CUploadCtrl">
 		<column from="Remote User" to="Usuario Remoto"/>
@@ -4399,6 +4412,7 @@
 		<column from="Speed" to="Velocidad"/>
 		<column from="Client" to="Cliente"/>
 		<column from="Rating" to=""/>
+		<column from="Country" to="País"/>
 	</list>
 	<list name="CNeighboursWnd">
 		<column from="Address" to="Dirección"/>
@@ -4412,6 +4426,7 @@
 		<column from="Mode" to="Modo"/>
 		<column from="Client" to="Cliente"/>
 		<column from="Name" to="Nombre"/>
+		<column from="Country" to="País"/>
 	</list>
 	<list name="CSecurityWnd">
 		<column from="Address / Content" to="Dirección / Contenido"/>
@@ -4426,10 +4441,13 @@
 		<column from="Port" to="Puerto"/>
 		<column from="Client" to="Cliente"/>
 		<column from="Last Seen" to="Última vez visto"/>
+		<column from="Daily Uptime" to="Tiempo de operación"/>
 		<column from="Name" to="Nombre"/>
 		<column from="Description" to="Descripción"/>
 		<column from="CurUsers" to="U. Actuales"/>
 		<column from="MaxUsers" to="U. Máximos"/>
+		<column from="Failures" to="Fallas"/>
+		<column from="Country" to="País"/>
 	</list>
 	<list name="CDiscoveryWnd">
 		<column from="Address" to="Dirección"/>
@@ -4463,6 +4481,8 @@
 		<column from="Host/Count" to=""/>
 		<column from="Speed" to="Velocidad"/>
 		<column from="Client" to="Cliente"/>
+		<column from="Time" to="Tiempo"/>
+		<column from="Country" to="País"/>
 	</list>
 	<list name="CUploadQueueList">
 		<column from="Name" to="Nombre"/>

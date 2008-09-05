@@ -1000,10 +1000,9 @@
 	</menu>
 	<menu name="CDownloadsWnd.Seeding">
 		<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="Åpne"/>
-		<item id="ID_DOWNLOADS_TORRENT_INFO" text="Informasjon om torrent"/>
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="_Stopp spreding"/>
 		<separator/>
-		<item id="ID_DOWNLOADS_EDIT" text="Torrent-info..."/>
+		<item id="ID_DOWNLOADS_EDIT" text="Informasjon om torrent..."/>
 	</menu>
 	<menu name="CDownloadsWnd.Nothing">
 		<item id="ID_DOWNLOADS_HELP" text="_Hjelp..."/>
@@ -4294,11 +4293,22 @@
 		<control/>
 	</dialog>
 
-	<dialog name="CDecodeMetadataDlg" cookie="BuBuStCo" caption="Lokalisering av metadata">
-		<control caption="OK"/>
-		<control caption="Avbryt"/>
+	<dialog name="CDecodeMetadataDlg" cookie="StCoBuBuBuStStBuBu" caption="Lokalisering av metadata">
 		<control caption="Vennligst velg metiden for omkoding"/>
 		<control caption="Arabisk|Baltisk|Sentraleuropeisk|Kinesisk forenklet|Kinesisk tradisjonelt|Cyrillisk|Gresk|Hebraisk|Japansk|Koreansk|Thai|Tyrkisk|Vietnamesisk"/>
+		<control caption="Preview:"/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
+		<control caption="OK"/>
+		<control caption="Avbryt"/>
+	</dialog>
+	<dialog name="CIrcInputDlg" cookie="EdBuBuSt" caption="Channel Name|Why reason">
+		<control/>
+		<control caption="OK"/>
+		<control caption="Avbryt"/>
+		<control caption="Add a channel name:|Enter kick/ban reason:"/>
 	</dialog>
 </dialogs>
 
@@ -4322,7 +4332,7 @@
 		<column from="Client" to="Klient"/>
 		<column from="Downloaded" to="Lastet ned"/>
 		<column from="Complete" to="Ferdig"/>
-		<column from="Country" to=""/>
+		<column from="Country" to="Land"/>
 	</list>
 	<list name="CUploadCtrl">
 		<column from="Remote User" to="Bruker"/>
@@ -4332,7 +4342,7 @@
 		<column from="Speed" to="Hastighet"/>
 		<column from="Client" to="Klient"/>
 		<column from="Rating" to="Karakter"/>
-		<column from="Country" to=""/>
+		<column from="Country" to="Land"/>
 	</list>
 	<list name="CNeighboursWnd">
 		<column from="Address" to="Adresse"/>
@@ -4346,7 +4356,7 @@
 		<column from="Mode" to="Modus"/>
 		<column from="Client" to="Klient"/>
 		<column from="Name" to="Navn"/>
-		<column from="Country" to=""/>
+		<column from="Country" to="Land"/>
 	</list>
 	<list name="CSecurityWnd">
 		<column from="Address / Content" to="Adresse / Inn"/>
@@ -4366,7 +4376,7 @@
 		<column from="CurUsers" to="Brukere"/>
 		<column from="MaxUsers" to="Maks brukere"/>
 		<column from="Failures" to=""/>
-		<column from="Country" to=""/>
+		<column from="Country" to="Land"/>
 	</list>
 	<list name="CDiscoveryWnd">
 		<column from="Address" to="Adresse"/>
@@ -4401,7 +4411,7 @@
 		<column from="Speed" to="Hastighet"/>
 		<column from="Client" to="Klient"/>
 		<column from="Time" to=""/>
-		<column from="Country" to=""/>
+		<column from="Country" to="Land"/>
 	</list>
 	<list name="CUploadQueueList">
 		<column from="Name" to="Navn"/>

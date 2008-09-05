@@ -2110,7 +2110,7 @@
 	<list name="CLibraryWnd">
 		<column from="File" to=""/>
 		<column from="Extension" to=""/>
-		<column from="Size" to=""/>
+		<column from="Size" to="Koko"/>
 		<column from="Folder" to=""/>
 		<column from="Hits" to=""/>
 		<column from="Uploads" to=""/>
@@ -2118,24 +2118,24 @@
 	</list>
 	<list name="CDownloadCtrl">
 		<column from="Downloaded File" to=""/>
-		<column from="Size" to=""/>
+		<column from="Size" to="Koko"/>
 		<column from="Progress" to=""/>
 		<column from="Speed" to=""/>
-		<column from="Status" to=""/>
+		<column from="Status" to="Tila"/>
 		<column from="Client" to=""/>
 		<column from="Downloaded" to=""/>
 		<column from="Complete" to=""/>
-		<column from="Country" to=""/>
+		<column from="Country" to="Maa"/>
 	</list>
 	<list name="CUploadCtrl">
 		<column from="Remote User" to=""/>
 		<column from="Uploaded File" to=""/>
-		<column from="Size" to=""/>
+		<column from="Size" to="Koko"/>
 		<column from="Progress" to=""/>
 		<column from="Speed" to=""/>
 		<column from="Client" to=""/>
 		<column from="Rating" to=""/>
-		<column from="Country" to=""/>
+		<column from="Country" to="Maa"/>
 	</list>
 	<list name="CNeighboursWnd">
 		<column from="Address" to=""/>
@@ -2148,8 +2148,8 @@
 		<column from="Leaves" to=""/>
 		<column from="Mode" to=""/>
 		<column from="Client" to=""/>
-		<column from="Name" to=""/>
-		<column from="Country" to=""/>
+		<column from="Name" to="Nimi"/>
+		<column from="Country" to="Maa"/>
 	</list>
 	<list name="CSecurityWnd">
 		<column from="Address / Content" to=""/>
@@ -2165,12 +2165,12 @@
 		<column from="Client" to=""/>
 		<column from="Last Seen" to=""/>
 		<column from="Daily Uptime" to=""/>
-		<column from="Name" to=""/>
+		<column from="Name" to="Nimi"/>
 		<column from="Description" to=""/>
 		<column from="CurUsers" to=""/>
 		<column from="MaxUsers" to=""/>
 		<column from="Failures" to=""/>
-		<column from="Country" to=""/>
+		<column from="Country" to="Maa"/>
 	</list>
 	<list name="CDiscoveryWnd">
 		<column from="Address" to=""/>
@@ -2198,14 +2198,14 @@
 	<list name="CMatchCtrl">
 		<column from="File" to=""/>
 		<column from="Extension" to=""/>
-		<column from="Size" to=""/>
+		<column from="Size" to="Koko"/>
 		<column from="Rating" to=""/>
-		<column from="Status" to=""/>
+		<column from="Status" to="Tila"/>
 		<column from="Host/Count" to=""/>
 		<column from="Speed" to=""/>
 		<column from="Client" to=""/>
-		<column from="Time" to=""/>
-		<column from="Country" to=""/>
+		<column from="Time" to="Aika"/>
+		<column from="Country" to="Maa"/>
 	</list>
 	<list name="CUploadQueueList">
 		<column from="Name" to=""/>
@@ -2219,7 +2219,7 @@
 		<column from="Value" to=""/>
 	</list>
 	<list name="CFavouritesProfileList">
-		<column from="Name" to=""/>
+		<column from="Name" to="Nimi"/>
 		<column from="URL" to=""/>
 	</list>
 	<list name="CFileSourcesPageList">
@@ -2228,11 +2228,11 @@
 	</list>
 	<list name="CTorrentFileList">
 		<column from="Filename" to=""/>
-		<column from="Size" to=""/>
+		<column from="Size" to="Koko"/>
 	</list>
 	<list name="CTorrentTrackerList">
 		<column from="Tracker" to=""/>
-		<column from="Status" to=""/>
+		<column from="Status" to="Tila"/>
 		<column from="Type" to=""/>
 	</list>
 	<list name="CReviewList">

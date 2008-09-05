@@ -1000,7 +1000,6 @@
 	</menu>
 	<menu name="CDownloadsWnd.Seeding">
 		<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="Otwórz"/>
-		<item id="ID_DOWNLOADS_TORRENT_INFO" text="Torrent Info"/>
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="Zakończ udostępnianie"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_EDIT" text="Torrent Info..."/>
@@ -4263,12 +4262,25 @@
 		<control/>
 	</dialog>
 
-	<dialog name="CDecodeMetadataDlg" cookie="BuBuStCo" caption="Lokalizacja Metadanych">
-		<control caption="OK"/>
-		<control caption="Anuluj"/>
+	<dialog name="CDecodeMetadataDlg" cookie="StCoBuBuBuStStBuBu" caption="Lokalizacja Metadanych">
 		<control caption="Proszę wybrać metodę kodowania"/>
 		<control caption="Arabski|Bałtycki|Europa Środkowa|Chiński uproszczony|Chiński tradycyjny|Cyrylica|Grecki|Hebrajski|Japoński|Koreański|Tajlandzki|Turecki|Wietnamski"/>
+		<control caption="Preview:"/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
+		<control caption="OK"/>
+		<control caption="Anuluj"/>
 	</dialog>
+
+	<dialog name="CIrcInputDlg" cookie="EdBuBuSt" caption="Channel Name|Why reason">
+		<control/>
+		<control caption="OK"/>
+		<control caption="Anuluj"/>
+		<control caption="Add a channel name:|Enter kick/ban reason:"/>
+	</dialog>
+
 </dialogs>
 
 <!-- Columns Definitions -->
@@ -4291,6 +4303,7 @@
         <column from="Client" to="Klient"/>
         <column from="Downloaded" to="Pobrano"/>
         <column from="Complete" to="Zakończono"/>
+		<column from="Country" to="Kraj"/>
     </list>
 	<list name="CUploadCtrl">
 		<column from="Remote User" to="Zdalny użytkownik"/>
@@ -4300,6 +4313,7 @@
 		<column from="Speed" to="Prędkość"/>
 		<column from="Client" to="Klient"/>
 		<column from="Rating" to="Ocena"/>
+		<column from="Country" to="Kraj"/>
 	</list>
     <list name="CNeighboursWnd">
         <column from="Address" to="Adres"/>
@@ -4313,6 +4327,7 @@
         <column from="Mode" to="Tryb"/>
         <column from="Client" to="Klient"/>
         <column from="Name" to="Nazwa"/>
+		<column from="Country" to="Kraj"/>
     </list>
 	<list name="CSecurityWnd">
 		<column from="Address / Content" to="Adres / Zawartość"/>
@@ -4327,10 +4342,13 @@
 		<column from="Port" to="Port"/>
 		<column from="Client" to="Klient"/>
 		<column from="Last Seen" to="Ostatnio widziany"/>
+		<column from="Daily Uptime" to=""/>
 		<column from="Name" to="Nazwa"/>
 		<column from="Description" to="Opis"/>
 		<column from="CurUsers" to="Akt Użytkowników"/>
 		<column from="MaxUsers" to="Max użytkowników"/>
+		<column from="Failures" to=""/>
+		<column from="Country" to="Kraj"/>
 	</list>
 	<list name="CDiscoveryWnd">
 		<column from="Address" to="Adres"/>
@@ -4364,6 +4382,8 @@
 		<column from="Host/Count" to="Host/Ilość"/>
 		<column from="Speed" to="Prędkość"/>
 		<column from="Client" to="Klient"/>
+		<column from="Time" to=""/>
+		<column from="Country" to="Kraj"/>
 	</list>
 	<list name="CUploadQueueList">
 		<column from="Name" to="Nazwa"/>
@@ -4384,9 +4404,14 @@
 		<column from="URL" to="URL"/>
 		<column from="Expires" to="Wygasa"/>
 	</list>
+	<list name="CTorrentFileList">
+		<column from="Filename" to="Nazwa pliku"/>
+		<column from="Size" to="Rozmiar"/>
+	</list>
 	<list name="CTorrentTrackerList">
 		<column from="Filename" to="Nazwa pliku"/>
 		<column from="Size" to="Rozmiar"/>
+		<column from="Type" to=""/>
 	</list>
 	<list name="CReviewList">
 		<column from="User" to="Użytkownik"/>

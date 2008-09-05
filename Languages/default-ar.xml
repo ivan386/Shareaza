@@ -18,10 +18,10 @@
 	description="Shareaza Default Arabic Skin File"
 	link="http://shareaza.sourceforge.net/"
 	email="awadh_al_ghaamdi@hotmail.com"
-	version="2.3.0.1"
+	version="2.3.1.0"
 	type="Language"
 	language="ara"
-	prompt="Click here to select English as your natural language."
+	prompt="Click here to select Arabic as your natural language."
 	dir="rtl"
 />
 
@@ -590,7 +590,7 @@
           <item id="ID_HELP_HOMEPAGE" text="_Shareaza.Sourceforge.net" />
           <separator />
           <item id="ID_HELP_FORUMS" text="_منتديات Shareaza" />
-          <!-- <item id="ID_HELP_UPDATE" text="آخر الأخبار"/>
+          <item id="ID_HELP_UPDATE" text="آخر الأخبار"/>
 		<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
 		<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
 		</menu>
@@ -1683,13 +1683,6 @@
       <text group="24" align="middle" id="G2Hubs">%i محور</text>
       <text group="25" align="middle" id="G2Leaves">%i فرع</text>
       <newline group="20" gap="2" />
-      <icon group="30" command="ID_NETWORK_ED2K" />
-      <gap group="30" size="4" />
-      <text group="30" align="middle" format="b">eDonkey: </text>
-      <text group="31" align="middle">غير متصل</text>
-      <text group="32" align="middle">إتصال...</text>
-      <text group="33" align="middle">متصل</text>
-      <newline group="30" gap="2" />
       <icon group="10" command="ID_NETWORK_G1" />
       <gap group="10" size="4" />
       <text group="10" align="middle" format="b">Gnutella1: </text>
@@ -1697,6 +1690,13 @@
       <text group="12" align="middle">إتصال...</text>
       <text group="13" align="middle">متصل</text>
       <newline group="10" gap="2" />
+      <icon group="30" command="ID_NETWORK_ED2K" />
+      <gap group="30" size="4" />
+      <text group="30" align="middle" format="b">eDonkey: </text>
+      <text group="31" align="middle">غير متصل</text>
+      <text group="32" align="middle">إتصال...</text>
+      <text group="33" align="middle">متصل</text>
+      <newline group="30" gap="2" />
       <group id="2">
         <para align="center">
           <newline gap="6" />
@@ -1775,10 +1775,13 @@
       <gap size="4" />
       <text>ملف الإعدادات الخاص بك و مراسله منتدى الدعم الفني</text>
       <newline gap="10" />
+      <link target="raza:page:CSchedulerSettingsPage" format="b">IRC:</link>
+      <gap size="4"/>
+      <text>IRC.</text>
+      <newline gap="10" />
       <link target="raza:page:CWebSettingsPage" format="b">الانترنت:</link>
       <gap size="4" />
       <text>إندماج هذا البرنامج مع متصفحك لقبول إرتباطات النظير إلى النظير و من ثم تحميل المحتوى</text>
-      <newline gap="10" />
     </document>
     <document name="CInternetSettingsGroup" title="الانترنت" rightMargin="8" topMargin="8">
       <styles>
@@ -1791,12 +1794,12 @@
       <text>
 			يسمح مدير إعدادات شير-أزا للمستخدمين المتقدمين بتخصيص كيفية
 			عمل شير-أزا بالكامل . الإعدادات في قسم
-</text>
+      </text>
       <text format="b">انترنت </text>
       <text>
 			للتحكم بكيفية تفاعل Shareaza مع العقد الأخرى ضمن شبكة نظير إلى
 			إلى نظير
-		</text>
+      </text>
       <newline gap="16" indent="16" />
       <link target="raza:page:CConnectionSettingsPage" format="b">الإتصال :</link>
       <gap size="4" />
@@ -1814,6 +1817,9 @@
       <gap size="4" />
       <text>عملية القدرة للتحكم بالبرنامج عن بعد من خلال المتصفح الخاص بك</text>
       <newline gap="10" />
+      <link target="raza:page:CSchedulerSettingsPage" format="b">Scheduler:</link>
+      <gap size="4"/>
+      <text>Limit bandwidth on a periodic schedule.</text>
     </document>
     <!--تصفح وضعية المستخدم-->
     <document name="CBrowseHostProfile.1">
@@ -2255,6 +2261,7 @@
     <tip id="ID_HELP_HOMEPAGE" message="Shareaza زيارة موقع" />
     <tip id="ID_HELP_SECURITY" message="تعليمات عن حماية نظامك من البرامج العدائية" />
     <tip id="ID_HELP_UPDATE" message="التدقيق عن أخبار و عن تحديثات" />
+<!-- Untranslated:
     <tip id="ID_HELP_TEST" message="Run the connection test." />
     <tip id="ID_HELP_WEB_1" message="Visit this website" />
     <tip id="ID_HELP_WEB_2" message="Visit this website" />
@@ -2482,12 +2489,13 @@
     <tip id="ImageViewer_ActualSize" message="Show the image at its natural size." />
     <tip id="ImageViewer_Refresh" message="Refresh the image." />
     <tip id="ImageViewer_Close" message="Close the image viewer window." />
+  End Untranslated -->
   </commandTips>
   <!-- Tips displayed when mouse is moved over controls in the dialogs -->
-  <controlTips>
+  <!-- <controlTips>
     <tip id="IDC_THROTTLE_MODE" message="In the maximum mode the bandwidth won't exceed the specified value. In the average mode it will fluctuate around the value to both sides." />
     <tip id="IDC_SHARE_PARTIALS" message="This setting has no effect on downloads previously started, also this setting is ignored if the file have the eDonkey hash and the eDonkey network is enabled or if it is a torrent.{n}However this setting isn't ignored if the download is paused.{n}{n}ATTENTION: Use this option only in case of real necessity, if you abuse of the option you may be banned." />
-  </controlTips>
+  </controlTips> -->
   <!-- Localised Strings -->
   <strings>
     <string id="WINDOW_MAIN" value="Shareaza" />
@@ -2597,8 +2605,7 @@
     <string id="8178" value="ما هو نوع الملف المطلوب ؟" />
     <string id="8179" value="(Clear Search History)" />
     <string id="8180" value="File size must be" />
-    <string id="8181" value=" to" />
-    <!-- size from xx TO xx-->
+    <string id="8181" value=" to" />    <!-- size from xx TO xx-->
     <string id="8208" value="Shareaza is creating hashes for %Iu file(s):" />
     <string id="8223" value="%i days and %i hours" />
     <string id="8224" value="Shareaza is downloading:" />
@@ -3130,8 +3137,7 @@
     <string id="19002" value="Unable to accept connections, URL unavailable." />
     <string id="20000" value="No URN available" />
     <string id="20001" value="Close" />
-    <string id="20002" value="of" />
-    <!-- e.g. 1 of 10 -->
+    <string id="20002" value="of" />    <!-- e.g. 1 of 10 -->
     <string id="20003" value="Changing interface direction requires restart. \nYou will need to start Shareaza manually. Exit now?" />
     <string id="20004" value="Right-to-left languages are not supported in your OS." />
     <string id="20005" value="No" />
@@ -3171,22 +3177,16 @@
     <string id="20125" value="Verified" />
     <string id="20126" value="Unverified" />
     <string id="20127" value="source" />
-    <string id="20128" value="sources" />
-    <!-- numbers 21, 31, ... -->
-    <string id="20129" value="sources" />
-    <!-- tens -->
-    <string id="20130" value="sources" />
-    <!-- from 11 to 19 -->
-    <string id="20131" value="sources" />
-    <!-- from 2 to 4 -->
-    <string id="20132" value="sources" />
-    <!-- from 5 to 9 -->
+    <string id="20128" value="sources" />    <!-- numbers 21, 31, ... -->
+    <string id="20129" value="sources" />    <!-- tens -->
+    <string id="20130" value="sources" />    <!-- from 11 to 19 -->
+    <string id="20131" value="sources" />    <!-- from 2 to 4 -->
+    <string id="20132" value="sources" />    <!-- from 5 to 9 -->
     <string id="20133" value="Uninterested" />
     <string id="20134" value="Choked" />
     <string id="20135" value="Next" />
     <string id="20136" value="Q" />
-    <string id="20137" value="sources" />
-    <!-- 3/10 sources, for e.g. -->
+    <string id="20137" value="sources" />    <!-- 3/10 sources -->
     <string id="20200" value="Sunday" />
     <string id="20201" value="Monday" />
     <string id="20202" value="Tuesday" />
@@ -4322,7 +4322,7 @@
       <column from="Client" to="العميل" />
       <column from="Downloaded" to="محمل" />
       <column from="Complete" to="مكتمل" />
-      <column from="Country" to="" />
+      <column from="Country" to="قطر" />
     </list>
     <list name="CUploadCtrl">
       <column from="Remote User" to="المستخدم البعيد" />
@@ -4332,7 +4332,7 @@
       <column from="Speed" to="السرعة" />
       <column from="Client" to="العميل" />
       <column from="Rating" to="" />
-      <column from="Country" to="" />
+      <column from="Country" to="قطر" />
     </list>
     <list name="CNeighboursWnd">
       <column from="Address" to="العنوان" />
@@ -4346,7 +4346,7 @@
       <column from="Mode" to="النمط" />
       <column from="Client" to="العميل" />
       <column from="Name" to="الاسم" />
-      <column from="Country" to="" />
+      <column from="Country" to="قطر" />
     </list>
     <list name="CSecurityWnd">
       <column from="Address / Content" to="العنوان / المحتوى" />
@@ -4367,7 +4367,7 @@
       <column from="CurUsers" to="" />
       <column from="MaxUsers" to="اقصى مستخدمون" />
       <column from="Failures" to="" />
-      <column from="Country" to="" />
+      <column from="Country" to="قطر" />
     </list>
     <list name="CDiscoveryWnd">
       <column from="Address" to="العنوان" />
@@ -4402,7 +4402,7 @@
       <column from="Speed" to="السرعة" />
       <column from="Client" to="العميل" />
       <column from="Time" to="" />
-      <column from="Country" to="" />
+      <column from="Country" to="قطر" />
     </list>
     <list name="CUploadQueueList">
       <column from="Name" to="الاسم" />

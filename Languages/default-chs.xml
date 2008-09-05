@@ -1645,19 +1645,19 @@
 		<text group="25" align="middle" id="G2Leaves">%i 个子端</text>
 		<newline group="20" gap="2"/>
 
-		<icon group="30" command="ID_NETWORK_ED2K"/><gap group="30" size="4"/>
-		<text group="30" align="middle" format="b">eDonkey: </text>
-		<text group="31" align="middle">断开连接</text>
-		<text group="32" align="middle">连接中...</text>
-		<text group="33" align="middle">已连接</text>
-		<newline group="30" gap="2"/>
-
 		<icon group="10" command="ID_NETWORK_G1"/><gap group="10" size="4"/>
 		<text group="10" align="middle" format="b">Gnutella1: </text>
 		<text group="11" align="middle">断开连接</text>
 		<text group="12" align="middle">连接中...</text>
 		<text group="13" align="middle">已连接</text>
 		<newline group="10" gap="2"/>
+
+		<icon group="30" command="ID_NETWORK_ED2K"/><gap group="30" size="4"/>
+		<text group="30" align="middle" format="b">eDonkey: </text>
+		<text group="31" align="middle">断开连接</text>
+		<text group="32" align="middle">连接中...</text>
+		<text group="33" align="middle">已连接</text>
+		<newline group="30" gap="2"/>
 
 		<group id="2">
 			<para align="center">
@@ -1752,10 +1752,14 @@
 		<text>个人资料，聊天和及时讯息的设置。</text>
 		<newline gap="10"/>
 
+		<link target="raza:page:CIRCSettingsPage" format="b">IRC:</link>
+		<gap size="4"/>
+		<text>IRC.</text>
+		<newline gap="10"/>
+
 		<link target="raza:page:CWebSettingsPage" format="b">网页:</link>
 		<gap size="4"/>
 		<text>集成 Shareaza 到浏览器以便允许对等连接和下载。</text>
-		<newline gap="10"/>
 
 	</document>
 
@@ -1798,6 +1802,10 @@
 		<gap size="4"/>
 		<text>设置通过网页浏览器远程控制 Shareaza 的功能。</text>
 		<newline gap="10"/>
+
+		<link target="peer:page:CSchedulerSettingsPage" format="b">Scheduler:</link>
+		<gap size="4"/>
+		<text>Limit download connections based on a periodic schedule.</text>
 
 	</document>
 
@@ -4345,12 +4353,25 @@
 		<control/>
 	</dialog>
 
-	<dialog name="CDecodeMetadataDlg" cookie="BuBuStCo" caption="元数据本地化">
-		<control caption="确定"/>
-		<control caption="取消"/>
+	<dialog name="CDecodeMetadataDlg" cookie="StCoBuBuBuStStBuBu" caption="元数据本地化">
 		<control caption="请选择重新编码的方式"/>
 		<control caption="阿拉伯文|波罗的海文|中欧|简体中文|繁体中文|西里尔文|希腊文|希伯来文|日文|韩文|泰文|土耳其文|越南文"/>
+		<control caption="Preview:"/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
+		<control caption="确定"/>
+		<control caption="取消"/>
 	</dialog>
+
+	<dialog name="CIrcInputDlg" cookie="EdBuBuSt" caption="Channel Name|Why reason">
+		<control/>
+		<control caption="确定"/>
+		<control caption="取消"/>
+		<control caption="Add a channel name:|Enter kick/ban reason:"/>
+	</dialog>
+
 </dialogs>
 
 <!-- Columns Definitions -->

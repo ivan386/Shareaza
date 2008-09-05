@@ -4262,11 +4262,22 @@
 		<control/>
 		<control/>
 	</dialog>
-	<dialog name="CDecodeMetadataDlg" cookie="BuBuStCo" caption="Localizzazione metadata">
-		<control caption="OK"/>
-		<control caption="Annulla"/>
+	<dialog name="CDecodeMetadataDlg" cookie="StCoBuBuBuStStBuBu" caption="Localizzazione metadata">
 		<control caption="Seleziona il metodo di ri-codifica"/>
 		<control caption="Arabo|Baltico|Europeo centrale|Cinese semplificato|Cinese tradizionale|Cirillico|Greco|Ebraico|Giapponese|Coreano|Tailandese|Turco|Vietnamita"/>
+		<control caption="Preview:"/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
+		<control caption="OK"/>
+		<control caption="Annulla"/>
+	</dialog>
+	<dialog name="CIrcInputDlg" cookie="EdBuBuSt" caption="Channel Name|Why reason">
+		<control/>
+		<control caption="OK"/>
+		<control caption="Annulla"/>
+		<control caption="Add a channel name:|Enter kick/ban reason:"/>
 	</dialog>
 </dialogs>
 <!-- Columns Definitions -->

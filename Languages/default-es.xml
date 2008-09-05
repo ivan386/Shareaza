@@ -1763,10 +1763,13 @@
 		<gap size="4"/>
 		<text>Configurar tu perfil, chat y servicios de mensajería.</text>
 		<newline gap="10"/>
+		<link target="raza:page:CIRCSettingsPage" format="b">IRC:</link>
+		<gap size="4"/>
+		<text>IRC chatroom visual appearance and connection settings.</text>
+		<newline gap="10"/>
 		<link target="raza:page:CWebSettingsPage" format="b">Web:</link>
 		<gap size="4"/>
 		<text>Integrar Shareaza con el navegador de la web, para aceptar enlaces peer-to-peer, y manejador de descargas.</text>
-		<newline gap="10"/>
 	</document>
 	<document name="CInternetSettingsGroup" title="Internet" leftMargin="8" topMargin="8">
 		<styles>
@@ -1785,7 +1788,6 @@
 			permite configurar la interacción de Shareaza con las redes peer-to-peer.
 		</text>
 		<newline gap="16" indent="16"/>
-
 		<link target="raza:page:CConnectionSettingsPage" format="b">Conexión:</link>
 		<gap size="4"/>
 		<text>Velocidad y capacidad de tu conexión.</text>
@@ -1802,6 +1804,9 @@
 		<gap size="4"/>
 		<text>Seleccionar y configurar las redes que Shareaza utiliza.</text>
 		<newline gap="10"/>
+		<link target="raza:page:CSchedulerSettingsPage" format="b">Scheduler:</link>
+		<gap size="4"/>
+		<text>Limit download connections based on a periodic schedule.</text>
 	</document>
 	<!-- Browse User Profile -->
 	<document name="CBrowseHostProfile.1">
@@ -3570,8 +3575,8 @@ Puede comenzar a transferir en cualquier momento.</text>
 		<control caption="Cancelar"/>
 		<control caption="Dar premio a usuarios que suben"/>
 	</dialog>
-	<dialog name="CWizardWelcomePage" cookie="StStStStStStStStStStStSt" caption="Bienvenido(a) a Shareaza [1 de 7]">
-		<control caption="Bienvenido(a) a Shareaza! (pronunciado 'she-ra-za')"/>
+	<dialog name="CWizardWelcomePage" cookie="StStStStStStStStStStStSt" caption="Bienvenido(a) a Shareaza">
+		<control caption="Bienvenido(a) a Shareaza! (pronunciado 'sher-a-za')"/>
 		<control caption="Este asistente te va a ayudar a configurar de forma rápida las opciones básicas de Shareaza."/>
 		<control caption="Si eres un usuario avanzado, las opciones se pueden cambiar usando el menú de herramientas. Esta guía puede ser cerrada en cualquier momento, haciendole click en Cerrar."/>
 		<control caption="Este asistente te ayudará a:"/>
@@ -3584,17 +3589,7 @@ Puede comenzar a transferir en cualquier momento.</text>
 		<control/>
 		<control caption="Empezar usando Shareza."/>
 	</dialog>
-	<dialog name="CWizardInterfacePage" cookie="StBuBuBuStStBuBuBu" caption="Bienvenido a Shareaza">
-		<control caption="Shareaza tiene una interface de usuario muy flexible, tu puedes seleccionar la que tu sientas que es más confortable para ti. Puedes cambiar las opciones en cualquier momento."/>
-		<control caption="Selecciona una interface gráfica:"/>
-		<control caption="Modo Normal"/>
-		<control caption="Modo Avanzado"/>
-		<control caption="Simple, menus facil de usar y botones.{n}Familiar a usuarios que han usado otros programas para compartir archivos."/>
-		<control caption="El modo avanzado proporciona comandos extras, ventanas, etc.{n}¡Puede ser algo confuso para nuevos usuarios!"/>
-		<control caption="Mostrar barras de progreso simplificadas. (Reduce uso de CPU)"/>
-		<control caption="Manejar enlaces torrent."/>
-	</dialog>
-	<dialog name="CWizardConnectionPage" cookie="StCoStCoStCoStCoStCo" caption="Bienvenido a Shareaza [3 de 7]">
+	<dialog name="CWizardConnectionPage" cookie="StCoStCoStCoStCoStCo" caption="Bienvenido a Shareaza (1/6)">
 		<control caption="Para un rendimiento optimo, Shareaza necesita saber un poco más sobre tu conexión a Internet."/>
 		<control caption="Elije el tipo de tu conexión a Internet"/>
 		<control caption="Dial up Modem|ISDN|ADSL (256K)|ADSL (512K)|ADSL (768K)|ADSL (1.5M)|ADSL (4.0M)|ADSL2 (8.0M)|ADSL2 (12.0M)|ADSL2+ (24.0M)|Cable Modem/SDSL|T1|T3|LAN|OC3"/>
@@ -3607,7 +3602,7 @@ Puede comenzar a transferir en cualquier momento.</text>
 		<control caption="Status:"/>
 		<control/>
 	</dialog>
-	<dialog name="CWizardSharePage" cookie="StStStSyBuBuSt" caption="Bienvenido a Shareaza [4 de 7]">
+	<dialog name="CWizardSharePage" cookie="StStStSyBuBuSt" caption="Bienvenido a Shareaza (2/6)">
 		<control caption="Las redes P2P son buenas si son como la gente que los usa.  Todo el contenido disponible para descargar esta siendo compartido por otro usuario."/>
 		<control caption="Tu no tienes que compartir contenido para usar Shareaza, de todas maneras algunos software van a comportarse diferente si no compartes nada."/>
 		<control caption="Por favor indica que carpetas, si hay alguna, que tu deseas compartir. Solamente haz click en el botón agregar para agregar una carpeta."/>
@@ -3625,7 +3620,7 @@ Puede comenzar a transferir en cualquier momento.</text>
 		<control caption="0"/>
 		<control caption="Cerrar"/>
 	</dialog>
-	<dialog name="CWizardProfilePage" cookie="StStEdStCoCoStCoCo" caption="Bienvenido(a) a Shareaza [5 de 7]">
+	<dialog name="CWizardProfilePage" cookie="StStEdStCoCoStCoCo" caption="Bienvenido a Shareaza (3/6)">
 		<control caption="Shareaza es mucho más amigable, cuando todo el mundo incluye alguna información sobre ellos."/>
 		<control caption="Mi Nick:"/>
 		<control/>
@@ -3636,7 +3631,17 @@ Puede comenzar a transferir en cualquier momento.</text>
 		<control/>
 		<control/>
 	</dialog>
-	<dialog name="CWizardNetworksPage" cookie="StBuStBuStBuSt" caption="Bienvenido(a) a Shareaza [6 de 7]">
+	<dialog name="CWizardInterfacePage" cookie="StBuBuBuStStBuBuBu" caption="Bienvenido a Shareaza (4/6)">
+		<control caption="Shareaza tiene una interface de usuario muy flexible, tu puedes seleccionar la que tu sientas que es más confortable para ti. Puedes cambiar las opciones en cualquier momento."/>
+		<control caption="Selecciona una interface gráfica:"/>
+		<control caption="Modo Normal"/>
+		<control caption="Modo Avanzado"/>
+		<control caption="Simple, menus facil de usar y botones.{n}Familiar a usuarios que han usado otros programas para compartir archivos."/>
+		<control caption="El modo avanzado proporciona comandos extras, ventanas, etc.{n}¡Puede ser algo confuso para nuevos usuarios!"/>
+		<control caption="Mostrar barras de progreso simplificadas. (Reduce uso de CPU)"/>
+		<control caption="Manejar enlaces torrent."/>
+	</dialog>
+	<dialog name="CWizardNetworksPage" cookie="StBuStBuStBuSt" caption="Bienvenido a Shareaza (5/6)">
 		<control caption="Shareaza es una aplicacion para compartir archivos de proposito en general y puede acceder a varias redes P2P al mismo tiempo. Aquí puedes seleccionar a que redes te quieres conectar.  Pero recuerda que luego puedes seleccionar otras redes."/>
 		<control caption="Conectar a Gnutella2 (Altamente Recomendado)"/>
 		<control caption="La Red Gnutella2 es la red principal de Shareaza, ofreciendo más características y rendimiento que otra red P2P."/>
@@ -3653,7 +3658,7 @@ Puede comenzar a transferir en cualquier momento.</text>
 		<control/>
 		<control caption="Cerrar"/>
 	</dialog>
-	<dialog name="CWizardFinishedPage" cookie="StStStBuBuBuSt" caption="Bienvenido(a) a Shareaza [7 de 7]">
+	<dialog name="CWizardFinishedPage" cookie="StStStBuBuBuSt" caption="Bienvenido a Shareaza (6/6)">
 		<control caption="¡Eso era todo! Shareaza ha sido configurado para funcionar en tu sistema."/>
 		<control caption="Si en algún momento necesitas cambiar alguna configuración, este Asistente se puede ejecutar desde el menú de Herramientas."/>
 		<control caption="Después de hacer click en Finalizar, puedes usar la red y buscar contenido."/>
@@ -4258,11 +4263,22 @@ Puede comenzar a transferir en cualquier momento.</text>
 		<control/>
 		<control/>
 	</dialog>
-	<dialog name="CDecodeMetadataDlg" cookie="BuBuStCo" caption="Ubicar Metadata">
-		<control caption="OK"/>
-		<control caption="Cancelar"/>
+	<dialog name="CDecodeMetadataDlg" cookie="StCoBuBuBuStStBuBu" caption="Ubicar Metadata">
 		<control caption="Por favor selecciona un metodo de codificación"/>
 		<control caption="Arabico|Baltico|Europa Central|Chino Simplificado|Chino Traducional|Cirílico|Griego|Hebreo|Japonés|Koreano|Taílandes|Turco|Vietnamita"/>
+		<control caption="Preview:"/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
+		<control caption="OK"/>
+		<control caption="Cancelar"/>
+	</dialog>
+	<dialog name="CIrcInputDlg" cookie="EdBuBuSt" caption="Channel Name|Why reason">
+		<control/>
+		<control caption="OK"/>
+		<control caption="Cancelar"/>
+		<control caption="Add a channel name:|Enter kick/ban reason:"/>
 	</dialog>
 </dialogs>
 <!-- Columns Definitions -->
@@ -4324,7 +4340,7 @@ Puede comenzar a transferir en cualquier momento.</text>
 		<column from="Port" to="Puerto"/>
 		<column from="Client" to="Cliente"/>
 		<column from="Last Seen" to="Última vez visto"/>
-		<column from="Daily Uptime" to="Tiempo de operación diario"/>
+		<column from="Daily Uptime" to="Tiempo de operación"/>
 		<column from="Name" to="Nombre"/>
 		<column from="Description" to="Descripción"/>
 		<column from="CurUsers" to="U. Actuales"/>

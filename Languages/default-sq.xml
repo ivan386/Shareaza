@@ -4257,11 +4257,22 @@
 		<control/>
 		<control/>
 	</dialog>
-	<dialog name="CDecodeMetadataDlg" cookie="BuBuStCo" caption="Vendndodhja e Metadatave">
-		<control caption="OK"/>
-		<control caption="Anulo"/>
+	<dialog name="CDecodeMetadataDlg" cookie="StCoBuBuBuStStBuBu" caption="Vendndodhja e Metadatave">
 		<control caption="Ju lutemi zgjidhni metodën e rikodimit"/>
 		<control caption="Arabe|Baltike|Europa Qendrore|Kineze e thjeshtë|Kineze tradicionale|Cirilike|Greke|Hebraike|Japoneze|Koreane|Tailandeze|Turke|Vietnameze"/>
+		<control caption="Preview:"/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
+		<control caption="OK"/>
+		<control caption="Anulo"/>
+	</dialog>
+	<dialog name="CIrcInputDlg" cookie="EdBuBuSt" caption="Channel Name|Why reason">
+		<control/>
+		<control caption="OK"/>
+		<control caption="Anulo"/>
+		<control caption="Enter channel you want to add:|Enter kick/ban reason:"/>
 	</dialog>
 </dialogs>
 <!-- Columns Definitions -->
