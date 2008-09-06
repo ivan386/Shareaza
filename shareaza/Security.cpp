@@ -786,17 +786,15 @@ BOOL CSecurity::IsClientBad(const CString& sUserAgent)
 		if ( _tcsistr( szVersion, _T(" Pro") ) )		return TRUE;
 		if ( _tcsistr( szVersion, _T(" MP3") ) ) 		return TRUE;	// GPL breaker
 		if ( _tcsistr( szVersion, _T(" Music") ) ) 		return TRUE;	// GPL breaker
+		if ( _tcsistr( szVersion, _T(" 6.") ) ) 		return TRUE;	// iMesh
 		return FALSE;
 	}
 
-	// The Mod iMesh Bland
-	if ( LPCTSTR szVersion = _tcsistr( sUserAgent, _T("iMesh") ) )
-	{
-		szVersion += 5;
-		if ( _tcsistr( szVersion, _T(" Lite") ) )		return TRUE;
-		if ( _tcsistr( szVersion, _T(" PRO") ) )		return TRUE;
-		return FALSE;
-	}
+	// iMesh
+	if ( _tcsistr( sUserAgent, _T("iMesh") ) )						return TRUE;
+
+	// Identified Shareaza Leecher Mod
+	if ( _tcsistr( sUserAgent, _T("eMule mod (4)") ) )				return TRUE;
 
 	// Fildelarprogram
 	if ( _tcsistr( sUserAgent, _T("Fildelarprogram") ) )			return TRUE;
@@ -838,7 +836,7 @@ BOOL CSecurity::IsClientBad(const CString& sUserAgent)
 BOOL CSecurity::IsClientBanned(const CString& sUserAgent)
 {
 	// No user agent- assume OK
-	if ( sUserAgent.IsEmpty() ) return FALSE;
+	if ( sUserAgent.IsEmpty() )										return FALSE;
 
 	// i2hub - leecher client. (Tested, does not upload)
 	if ( _tcsistr( sUserAgent, _T("i2hub 2.0") ) )					return TRUE;

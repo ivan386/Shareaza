@@ -1112,7 +1112,7 @@ void CEDClient::DeriveSoftwareVersion()
 			case 4:		// Shareaza alpha/beta/mod/fork versions
 				if ( m_bEmAICH )
 				{
-					if ( m_sUserAgent.IsEmpty() )
+					if ( m_sUserAgent.IsEmpty() )								// Banned by Security Rules (Shareaza Leecher Mod)
 						m_sUserAgent.Format( _T("eMule mod (4) %i.%i.%i.%i"),	// Their version is always 2.1.1.0 or 2.2.1.0
 							( ( m_nSoftwareVersion >> 17 ) &0x7F ), ( ( m_nSoftwareVersion >> 10 ) &0x7F ),
 							( ( m_nSoftwareVersion >>  7 ) &0x07 ), ( ( m_nSoftwareVersion ) &0x7F ) );
