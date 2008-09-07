@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8,00"
+	Version="8.00"
 	Name="DocumentReader"
 	ProjectGUID="{FF8DE974-0784-45C3-8776-744E41A9E84B}"
 	RootNamespace="DocumentReader"
+	SccProjectName="Svn"
+	SccAuxPath="Svn"
+	SccLocalPath="Svn"
+	SccProvider="SubversionScc"
 	>
 	<Platforms>
 		<Platform
@@ -28,7 +32,7 @@
 			<Tool
 				Name="VCCustomBuildTool"
 				Description="Copying zlibwapi dll..."
-				CommandLine="if not exist &quot;$(OutDir)zlibwapi.dll&quot; (&#x0D;&#x0A;	xcopy &quot;$(SolutionDir)$(ConfigurationName)$(PlatformName)\zlibwapi.dll&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;)"
+				CommandLine="if not exist &quot;$(OutDir)zlibwapi.dll&quot; (&#x0D;&#x0A;xcopy &quot;$(SolutionDir)$(ConfigurationName)$(PlatformName)\zlibwapi.dll&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;)&#x0D;&#x0A;"
 				Outputs="$(OutDir)zlibwapi.dll"
 				ExecutionBucket="1"
 			/>
@@ -124,7 +128,7 @@
 			<Tool
 				Name="VCCustomBuildTool"
 				Description="Copying zlibwapi dll..."
-				CommandLine="if not exist &quot;$(OutDir)zlibwapi.dll&quot; (&#x0D;&#x0A;	xcopy &quot;$(SolutionDir)$(ConfigurationName)$(PlatformName)\zlibwapi.dll&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;)"
+				CommandLine="if not exist &quot;$(OutDir)zlibwapi.dll&quot; (&#x0D;&#x0A;xcopy &quot;$(SolutionDir)$(ConfigurationName)$(PlatformName)\zlibwapi.dll&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;)&#x0D;&#x0A;"
 				Outputs="$(OutDir)zlibwapi.dll"
 				ExecutionBucket="1"
 			/>
@@ -221,7 +225,7 @@
 			<Tool
 				Name="VCCustomBuildTool"
 				Description="Copying zlibwapi dll..."
-				CommandLine="if not exist &quot;$(OutDir)zlibwapi.dll&quot; (&#x0D;&#x0A;	xcopy &quot;$(SolutionDir)$(ConfigurationName)$(PlatformName)\zlibwapi.dll&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;)"
+				CommandLine="if not exist &quot;$(OutDir)zlibwapi.dll&quot; (&#x0D;&#x0A;xcopy &quot;$(SolutionDir)$(ConfigurationName)$(PlatformName)\zlibwapi.dll&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;)&#x0D;&#x0A;"
 				Outputs="$(OutDir)zlibwapi.dll"
 				ExecutionBucket="1"
 			/>
@@ -316,7 +320,7 @@
 			<Tool
 				Name="VCCustomBuildTool"
 				Description="Copying zlibwapi dll..."
-				CommandLine="if not exist &quot;$(OutDir)zlibwapi.dll&quot; (&#x0D;&#x0A;	xcopy &quot;$(SolutionDir)$(ConfigurationName)$(PlatformName)\zlibwapi.dll&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;)"
+				CommandLine="if not exist &quot;$(OutDir)zlibwapi.dll&quot; (&#x0D;&#x0A;xcopy &quot;$(SolutionDir)$(ConfigurationName)$(PlatformName)\zlibwapi.dll&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;)&#x0D;&#x0A;"
 				Outputs="$(OutDir)zlibwapi.dll"
 				ExecutionBucket="1"
 			/>
@@ -415,6 +419,18 @@
 			<File
 				RelativePath="..\plugins\DocumentReader\CoreUtils.cpp"
 				>
+			</File>
+			<File
+				RelativePath="..\plugins\DocumentReader\DocProperties.cpp"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\plugins\DocumentReader\DocReader.cpp"
@@ -531,6 +547,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\plugins\DocumentReader\Shareaza.h"
+				>
+			</File>
+			<File
 				RelativePath="..\plugins\DocumentReader\stdafx.h"
 				>
 			</File>
@@ -556,42 +576,6 @@
 		<Filter
 			Name="Generated Fíles"
 			>
-			<File
-				RelativePath=".\Releasex64\plugins\DocumentReader\DocumentReader_i.c"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|x64"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|x64"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-					/>
-				</FileConfiguration>
-			</File>
 			<File
 				RelativePath=".\ReleaseWin32\plugins\DocumentReader\DocumentReader_i.c"
 				>
@@ -697,6 +681,42 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\Releasex64\plugins\DocumentReader\DocumentReader_i.c"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|x64"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|x64"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
 					/>
 				</FileConfiguration>
 			</File>

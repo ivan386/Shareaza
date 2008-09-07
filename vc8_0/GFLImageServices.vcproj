@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8,00"
+	Version="8.00"
 	Name="GFLImageServices"
 	ProjectGUID="{E99CA8F9-D6F6-440C-B6EF-47F02DFAD891}"
 	RootNamespace="GFLImageServices"
+	SccProjectName="Svn"
+	SccAuxPath="Svn"
+	SccLocalPath="Svn"
+	SccProvider="SubversionScc"
 	>
 	<Platforms>
 		<Platform
@@ -28,7 +32,7 @@
 			<Tool
 				Name="VCCustomBuildTool"
 				Description="Copying LibGFL280 dll..."
-				CommandLine="if not exist &quot;$(OutDir)libgfl280.dll&quot; (&#x0D;&#x0A;	xcopy &quot;$(SolutionDir)..\plugins\libGFL\$(ConfigurationName)$(PlatformName)\libgfl280.dll&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;)"
+				CommandLine="if not exist &quot;$(OutDir)libgfl280.dll&quot; (&#x0D;&#x0A;xcopy &quot;$(SolutionDir)..\plugins\libGFL\$(ConfigurationName)$(PlatformName)\libgfl280.dll&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;)&#x0D;&#x0A;"
 				Outputs="$(OutDir)libgfl280.dll"
 				ExecutionBucket="1"
 			/>
@@ -122,7 +126,7 @@
 			<Tool
 				Name="VCCustomBuildTool"
 				Description="Copying LibGFL280 dll..."
-				CommandLine="if not exist &quot;$(OutDir)libgfl280.dll&quot; (&#x0D;&#x0A;	xcopy &quot;$(SolutionDir)..\plugins\libGFL\$(ConfigurationName)$(PlatformName)\libgfl280.dll&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;)"
+				CommandLine="if not exist &quot;$(OutDir)libgfl280.dll&quot; (&#x0D;&#x0A;xcopy &quot;$(SolutionDir)..\plugins\libGFL\$(ConfigurationName)$(PlatformName)\libgfl280.dll&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;)&#x0D;&#x0A;"
 				Outputs="$(OutDir)libgfl280.dll"
 				ExecutionBucket="1"
 			/>
@@ -217,7 +221,7 @@
 			<Tool
 				Name="VCCustomBuildTool"
 				Description="Copying LibGFL280 dll..."
-				CommandLine="if not exist &quot;$(OutDir)libgfl280.dll&quot; (&#x0D;&#x0A;	xcopy &quot;$(SolutionDir)..\plugins\libGFL\$(ConfigurationName)$(PlatformName)\libgfl280.dll&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;)"
+				CommandLine="if not exist &quot;$(OutDir)libgfl280.dll&quot; (&#x0D;&#x0A;xcopy &quot;$(SolutionDir)..\plugins\libGFL\$(ConfigurationName)$(PlatformName)\libgfl280.dll&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;)&#x0D;&#x0A;"
 				Outputs="$(OutDir)libgfl280.dll"
 				ExecutionBucket="1"
 			/>
@@ -310,7 +314,7 @@
 			<Tool
 				Name="VCCustomBuildTool"
 				Description="Copying LibGFL280 dll..."
-				CommandLine="if not exist &quot;$(OutDir)libgfl280.dll&quot; (&#x0D;&#x0A;	xcopy &quot;$(SolutionDir)..\plugins\libGFL\$(ConfigurationName)$(PlatformName)\libgfl280.dll&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;)"
+				CommandLine="if not exist &quot;$(OutDir)libgfl280.dll&quot; (&#x0D;&#x0A;xcopy &quot;$(SolutionDir)..\plugins\libGFL\$(ConfigurationName)$(PlatformName)\libgfl280.dll&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;)&#x0D;&#x0A;"
 				Outputs="$(OutDir)libgfl280.dll"
 				ExecutionBucket="1"
 			/>
@@ -503,10 +507,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\plugins\LibGFL\libgfle.h"
-				>
-			</File>
-			<File
 				RelativePath="..\plugins\GFLImageServices\resource.h"
 				>
 			</File>
@@ -540,42 +540,6 @@
 		<Filter
 			Name="Generated Files"
 			>
-			<File
-				RelativePath=".\Releasex64\plugins\GFLImageServices\GFLImageServices_i.c"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|x64"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|x64"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-					/>
-				</FileConfiguration>
-			</File>
 			<File
 				RelativePath=".\DebugWin32\plugins\GFLImageServices\GFLImageServices_i.c"
 				>
@@ -684,19 +648,15 @@
 					/>
 				</FileConfiguration>
 			</File>
-		</Filter>
-		<Filter
-			Name="Library Files"
-			>
 			<File
-				RelativePath="..\plugins\LibGFL\ReleaseWin32\libgfl.lib"
+				RelativePath=".\Releasex64\plugins\GFLImageServices\GFLImageServices_i.c"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
 					ExcludedFromBuild="true"
 					>
 					<Tool
-						Name="VCCustomBuildTool"
+						Name="VCCLCompilerTool"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -704,18 +664,30 @@
 					ExcludedFromBuild="true"
 					>
 					<Tool
-						Name="VCCustomBuildTool"
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|x64"
-					ExcludedFromBuild="true"
 					>
 					<Tool
-						Name="VCCustomBuildTool"
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
 					/>
 				</FileConfiguration>
 			</File>
+		</Filter>
+		<Filter
+			Name="Library Files"
+			>
 			<File
 				RelativePath="..\plugins\LibGFL\DebugWin32\libgfl.lib"
 				>
@@ -785,6 +757,34 @@
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|x64"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\plugins\LibGFL\ReleaseWin32\libgfl.lib"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|x64"
 					ExcludedFromBuild="true"
 					>
 					<Tool

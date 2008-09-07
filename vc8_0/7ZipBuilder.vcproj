@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="windows-1251"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8,00"
+	Version="8.00"
 	Name="7ZipBuilder"
 	ProjectGUID="{B69F80CD-FB15-45E8-B359-92A41CC571A7}"
 	RootNamespace="7ZipBuilder"
+	SccProjectName="Svn"
+	SccAuxPath="Svn"
+	SccLocalPath="Svn"
+	SccProvider="SubversionScc"
 	>
 	<Platforms>
 		<Platform
@@ -28,15 +32,12 @@
 			<Tool
 				Name="VCCustomBuildTool"
 				Description="Copying 7zxr dll..."
-				CommandLine="if not exist &quot;$(OutDir)7zxr.dll&quot; (&#x0D;&#x0A;	xcopy &quot;$(SolutionDir)..\plugins\$(ProjectName)\7zxr.dll&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;)"
+				CommandLine="if not exist &quot;$(OutDir)7zxr.dll&quot; (&#x0D;&#x0A;xcopy &quot;$(SolutionDir)..\plugins\$(ProjectName)\7zxr.dll&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;)&#x0D;&#x0A;"
 				Outputs="$(OutDir)7zxr.dll"
 				ExecutionBucket="1"
 			/>
 			<Tool
 				Name="VCPreBuildEventTool"
-			/>
-			<Tool
-				Name="VCCustomBuildTool"
 			/>
 			<Tool
 				Name="VCXMLDataGeneratorTool"
@@ -125,7 +126,7 @@
 			<Tool
 				Name="VCCustomBuildTool"
 				Description="Copying 7zxr dll..."
-				CommandLine="if not exist &quot;$(OutDir)7zxr.dll&quot; (&#x0D;&#x0A;	xcopy &quot;$(SolutionDir)..\plugins\$(ProjectName)\7zxr.dll&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;)"
+				CommandLine="if not exist &quot;$(OutDir)7zxr.dll&quot; (&#x0D;&#x0A;xcopy &quot;$(SolutionDir)..\plugins\$(ProjectName)\7zxr.dll&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;)&#x0D;&#x0A;"
 				Outputs="$(OutDir)7zxr.dll"
 				ExecutionBucket="1"
 			/>
@@ -220,7 +221,7 @@
 			<Tool
 				Name="VCCustomBuildTool"
 				Description="Copying 7zxr dll..."
-				CommandLine="if not exist &quot;$(OutDir)7zxr.dll&quot; (&#x0D;&#x0A;	xcopy &quot;$(SolutionDir)..\plugins\$(ProjectName)\7zxr.dll&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;)"
+				CommandLine="if not exist &quot;$(OutDir)7zxr.dll&quot; (&#x0D;&#x0A;xcopy &quot;$(SolutionDir)..\plugins\$(ProjectName)\7zxr.dll&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;)&#x0D;&#x0A;"
 				Outputs="$(OutDir)7zxr.dll"
 				ExecutionBucket="1"
 			/>
@@ -313,7 +314,7 @@
 			<Tool
 				Name="VCCustomBuildTool"
 				Description="Copying 7zxr dll..."
-				CommandLine="if not exist &quot;$(OutDir)7zxr.dll&quot; (&#x0D;&#x0A;	xcopy &quot;$(SolutionDir)..\plugins\$(ProjectName)\7zxr.dll&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;)"
+				CommandLine="if not exist &quot;$(OutDir)7zxr.dll&quot; (&#x0D;&#x0A;xcopy &quot;$(SolutionDir)..\plugins\$(ProjectName)\7zxr.dll&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;)&#x0D;&#x0A;"
 				Outputs="$(OutDir)7zxr.dll"
 				ExecutionBucket="1"
 			/>
@@ -498,11 +499,11 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath="..\plugins\7ZipBuilder\7ZipBuilder.h"
+				RelativePath="..\plugins\7ZipBuilder\Class.h"
 				>
 			</File>
 			<File
-				RelativePath="..\plugins\7ZipBuilder\Class.h"
+				RelativePath="..\plugins\7ZipBuilder\resource.h"
 				>
 			</File>
 			<File
@@ -536,7 +537,7 @@
 			Name="Generated Files"
 			>
 			<File
-				RelativePath=".\ReleaseWin32\plugins\7ZipBuilder\7ZipBuilder_i.c"
+				RelativePath=".\Releasex64\plugins\7ZipBuilder\7ZipBuilder_i.c"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
@@ -556,18 +557,18 @@
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|x64"
 					ExcludedFromBuild="true"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|x64"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
 					/>
 				</FileConfiguration>
 			</File>
@@ -596,6 +597,42 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|x64"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\ReleaseWin32\plugins\7ZipBuilder\7ZipBuilder_i.c"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|x64"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -640,42 +677,6 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath=".\Releasex64\plugins\7ZipBuilder\7ZipBuilder_i.c"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|x64"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|x64"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
 					/>
 				</FileConfiguration>
 			</File>

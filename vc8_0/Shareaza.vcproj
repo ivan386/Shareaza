@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8,00"
+	Version="8.00"
 	Name="Shareaza"
 	ProjectGUID="{E1F5FB69-98B2-49E0-A74B-1E7141955CB6}"
 	RootNamespace="Shareaza"
+	SccProjectName="Svn"
+	SccAuxPath="Svn"
+	SccLocalPath="Svn"
+	SccProvider="SubversionScc"
 	>
 	<Platforms>
 		<Platform
@@ -32,7 +36,7 @@
 			<Tool
 				Name="VCCustomBuildTool"
 				Description="Copying LibGFL280 dll..."
-				CommandLine="if not exist &quot;$(OutDir)libgfl280.dll&quot; (&#x0D;&#x0A;	xcopy &quot;$(SolutionDir)..\plugins\libGFL\$(ConfigurationName)$(PlatformName)\libgfl280.dll&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;)"
+				CommandLine="if not exist &quot;$(OutDir)libgfl280.dll&quot; (&#x0D;&#x0A;xcopy &quot;$(SolutionDir)..\plugins\libGFL\$(ConfigurationName)$(PlatformName)\libgfl280.dll&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;)&#x0D;&#x0A;"
 				Outputs="$(OutDir)libgfl280.dll"
 				ExecutionBucket="1"
 			/>
@@ -132,7 +136,7 @@
 			<Tool
 				Name="VCCustomBuildTool"
 				Description="Copying LibGFL280 dll..."
-				CommandLine="if not exist &quot;$(OutDir)libgfl280.dll&quot; (&#x0D;&#x0A;	xcopy &quot;$(SolutionDir)..\plugins\libGFL\$(ConfigurationName)$(PlatformName)\libgfl280.dll&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;)"
+				CommandLine="if not exist &quot;$(OutDir)libgfl280.dll&quot; (&#x0D;&#x0A;xcopy &quot;$(SolutionDir)..\plugins\libGFL\$(ConfigurationName)$(PlatformName)\libgfl280.dll&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;)&#x0D;&#x0A;"
 				Outputs="$(OutDir)libgfl280.dll"
 				ExecutionBucket="1"
 			/>
@@ -233,7 +237,7 @@
 			<Tool
 				Name="VCCustomBuildTool"
 				Description="Copying LibGFL280 dll..."
-				CommandLine="if not exist &quot;$(OutDir)libgfl280.dll&quot; (&#x0D;&#x0A;	xcopy &quot;$(SolutionDir)..\plugins\libGFL\$(ConfigurationName)$(PlatformName)\libgfl280.dll&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;)"
+				CommandLine="if not exist &quot;$(OutDir)libgfl280.dll&quot; (&#x0D;&#x0A;xcopy &quot;$(SolutionDir)..\plugins\libGFL\$(ConfigurationName)$(PlatformName)\libgfl280.dll&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;)&#x0D;&#x0A;"
 				Outputs="$(OutDir)libgfl280.dll"
 				ExecutionBucket="1"
 			/>
@@ -333,7 +337,7 @@
 			<Tool
 				Name="VCCustomBuildTool"
 				Description="Copying LibGFL280 dll..."
-				CommandLine="if not exist &quot;$(OutDir)libgfl280.dll&quot; (&#x0D;&#x0A;	xcopy &quot;$(SolutionDir)..\plugins\libGFL\$(ConfigurationName)$(PlatformName)\libgfl280.dll&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;)"
+				CommandLine="if not exist &quot;$(OutDir)libgfl280.dll&quot; (&#x0D;&#x0A;xcopy &quot;$(SolutionDir)..\plugins\libGFL\$(ConfigurationName)$(PlatformName)\libgfl280.dll&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;)&#x0D;&#x0A;"
 				Outputs="$(OutDir)libgfl280.dll"
 				ExecutionBucket="1"
 			/>
@@ -2176,10 +2180,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\shareaza\CommonInclude.hpp"
-				>
-			</File>
-			<File
 				RelativePath="..\shareaza\ComObject.h"
 				>
 			</File>
@@ -2601,10 +2601,6 @@
 			</File>
 			<File
 				RelativePath="..\shareaza\Remote.h"
-				>
-			</File>
-			<File
-				RelativePath="..\shareaza\res_hack_def.h"
 				>
 			</File>
 			<File
@@ -3788,6 +3784,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\shareaza\Res\BoxMark.bmp"
+				>
+			</File>
+			<File
 				RelativePath="..\shareaza\Res\Browse.ico"
 				>
 			</File>
@@ -3842,6 +3842,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\shareaza\Res\Busy.ico"
+				>
+			</File>
+			<File
 				RelativePath="..\shareaza\Res\channel.ico"
 				>
 			</File>
@@ -3850,15 +3854,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\shareaza\Res\ChatHeader.ico"
-				>
-			</File>
-			<File
-				RelativePath="..\shareaza\Res\ChatHeader32.ico"
-				>
-			</File>
-			<File
 				RelativePath="..\shareaza\Res\Checkmark.ico"
+				>
+			</File>
+			<File
+				RelativePath="..\shareaza\Res\Chevron.ico"
 				>
 			</File>
 			<File
@@ -3887,6 +3887,10 @@
 			</File>
 			<File
 				RelativePath="..\shareaza\Res\ColourDot.ico"
+				>
+			</File>
+			<File
+				RelativePath="..\shareaza\Res\Commercial.ico"
 				>
 			</File>
 			<File
@@ -3966,7 +3970,11 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\shareaza\Res\DefaultServices.dat"
+				RelativePath="..\Data\DefaultServers.dat"
+				>
+			</File>
+			<File
+				RelativePath="..\Data\DefaultServices.dat"
 				>
 			</File>
 			<File
@@ -4039,7 +4047,19 @@
 				>
 			</File>
 			<File
+				RelativePath="..\Data\Emoticons.bmp"
+				>
+			</File>
+			<File
+				RelativePath="..\Data\Emoticons.xml"
+				>
+			</File>
+			<File
 				RelativePath="..\shareaza\Res\Executable.ico"
+				>
+			</File>
+			<File
+				RelativePath="..\shareaza\Res\Fake.ico"
 				>
 			</File>
 			<File
@@ -4060,7 +4080,31 @@
 				>
 			</File>
 			<File
+				RelativePath="..\Data\Flags.png"
+				>
+			</File>
+			<File
+				RelativePath="..\shareaza\Res\FolderClosed.ico"
+				>
+			</File>
+			<File
+				RelativePath="..\shareaza\Res\FolderOpen.ico"
+				>
+			</File>
+			<File
+				RelativePath="..\shareaza\Res\Folders.bmp"
+				>
+			</File>
+			<File
+				RelativePath="..\shareaza\Res\FoldersV2.bmp"
+				>
+			</File>
+			<File
 				RelativePath="..\shareaza\Res\FontSymbols.bmp"
+				>
+			</File>
+			<File
+				RelativePath="..\shareaza\Res\FortyEight.bmp"
 				>
 			</File>
 			<File
@@ -4125,11 +4169,23 @@
 				>
 			</File>
 			<File
+				RelativePath="..\shareaza\Res\Locked.ico"
+				>
+			</File>
+			<File
 				RelativePath="..\shareaza\Res\LogoLarge.jpg"
 				>
 			</File>
 			<File
 				RelativePath="..\shareaza\Res\Mail.ico"
+				>
+			</File>
+			<File
+				RelativePath="..\shareaza\Res\Manifest.xml"
+				>
+			</File>
+			<File
+				RelativePath="..\shareaza\Res\ManifestVC71.xml"
 				>
 			</File>
 			<File
@@ -4142,6 +4198,10 @@
 			</File>
 			<File
 				RelativePath="..\shareaza\Res\MenuBar.bmp"
+				>
+			</File>
+			<File
+				RelativePath="..\Data\MessageFilter.dat"
 				>
 			</File>
 			<File
@@ -4185,6 +4245,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\shareaza\Res\open.ico"
+				>
+			</File>
+			<File
 				RelativePath="..\shareaza\Res\Packets.ico"
 				>
 			</File>
@@ -4194,6 +4258,10 @@
 			</File>
 			<File
 				RelativePath="..\shareaza\Res\PanelMark.bmp"
+				>
+			</File>
+			<File
+				RelativePath="..\shareaza\Res\Partial.ico"
 				>
 			</File>
 			<File
@@ -4209,7 +4277,23 @@
 				>
 			</File>
 			<File
+				RelativePath="..\shareaza\Res\Preview.ico"
+				>
+			</File>
+			<File
 				RelativePath="..\shareaza\Res\Protocols.bmp"
+				>
+			</File>
+			<File
+				RelativePath="..\shareaza\Res\RatingAverage.ico"
+				>
+			</File>
+			<File
+				RelativePath="..\shareaza\Res\RatingFake.ico"
+				>
+			</File>
+			<File
+				RelativePath="..\shareaza\Res\RatingGood.ico"
 				>
 			</File>
 			<File
@@ -4281,6 +4365,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\shareaza\Res\SearchArtist.ico"
+				>
+			</File>
+			<File
 				RelativePath="..\shareaza\Res\SearchFolder.ico"
 				>
 			</File>
@@ -4301,22 +4389,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\shareaza\Res\ShareazaIcon.ico"
-				>
-			</File>
-			<File
-				RelativePath="..\shareaza\Res\ShareazaSmall.ico"
-				>
-			</File>
-			<File
-				RelativePath="..\shareaza\Res\ShellBase.bmp"
-				>
-			</File>
-			<File
-				RelativePath="..\shareaza\Res\ShellBaseRTL.bmp"
-				>
-			</File>
-			<File
 				RelativePath="..\shareaza\Res\Skin.ico"
 				>
 			</File>
@@ -4333,6 +4405,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\Data\Splash.png"
+				>
+			</File>
+			<File
+				RelativePath="..\shareaza\Res\Star.ico"
+				>
+			</File>
+			<File
 				RelativePath="..\shareaza\Res\System.ico"
 				>
 			</File>
@@ -4345,11 +4425,19 @@
 				>
 			</File>
 			<File
+				RelativePath="..\shareaza\Res\Tick.ico"
+				>
+			</File>
+			<File
 				RelativePath="..\shareaza\Res\TimeSlices.bmp"
 				>
 			</File>
 			<File
 				RelativePath="..\shareaza\Res\Traffic.ico"
+				>
+			</File>
+			<File
+				RelativePath="..\shareaza\Res\Unstable.ico"
 				>
 			</File>
 			<File
@@ -4362,6 +4450,10 @@
 			</File>
 			<File
 				RelativePath="..\shareaza\Res\users.ico"
+				>
+			</File>
+			<File
+				RelativePath="..\Data\Vendors.xml"
 				>
 			</File>
 			<File
@@ -4378,6 +4470,10 @@
 			</File>
 			<File
 				RelativePath="..\shareaza\Res\World.ico"
+				>
+			</File>
+			<File
+				RelativePath="..\shareaza\Res\WorldGPS.xml"
 				>
 			</File>
 		</Filter>
@@ -4403,43 +4499,6 @@
 			<File
 				RelativePath="..\shareaza\Res\SchemaMappings.xml.gz"
 				>
-			</File>
-			<File
-				RelativePath="ReleaseWin32\shareaza\Shareaza_i.c"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|x64"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-						DisableSpecificWarnings="4255;4619;4668;4820;4826"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|x64"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="Releasex64\shareaza\Shareaza_i.c"
@@ -4541,6 +4600,43 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|x64"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="ReleaseWin32\shareaza\Shareaza_i.c"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|x64"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+						DisableSpecificWarnings="4255;4619;4668;4820;4826"
 					/>
 				</FileConfiguration>
 				<FileConfiguration

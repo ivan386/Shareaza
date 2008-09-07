@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="windows-1251"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8,00"
+	Version="8.00"
 	Name="ZIPBuilder"
 	ProjectGUID="{2F74AA28-2498-4805-911A-04C39858D529}"
 	RootNamespace="ZIPBuilder"
+	SccProjectName="Svn"
+	SccAuxPath="Svn"
+	SccLocalPath="Svn"
+	SccProvider="SubversionScc"
 	>
 	<Platforms>
 		<Platform
@@ -28,7 +32,7 @@
 			<Tool
 				Name="VCCustomBuildTool"
 				Description="Copying zlibwapi dll..."
-				CommandLine="if not exist &quot;$(OutDir)zlibwapi.dll&quot; (&#x0D;&#x0A;	xcopy &quot;$(SolutionDir)$(ConfigurationName)$(PlatformName)\zlibwapi.dll&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;)"
+				CommandLine="if not exist &quot;$(OutDir)zlibwapi.dll&quot; (&#x0D;&#x0A;xcopy &quot;$(SolutionDir)$(ConfigurationName)$(PlatformName)\zlibwapi.dll&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;)&#x0D;&#x0A;"
 				Outputs="$(OutDir)zlibwapi.dll"
 				ExecutionBucket="1"
 			/>
@@ -123,7 +127,7 @@
 			<Tool
 				Name="VCCustomBuildTool"
 				Description="Copying zlibwapi dll..."
-				CommandLine="if not exist &quot;$(OutDir)zlibwapi.dll&quot; (&#x0D;&#x0A;	xcopy &quot;$(SolutionDir)$(ConfigurationName)$(PlatformName)\zlibwapi.dll&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;)"
+				CommandLine="if not exist &quot;$(OutDir)zlibwapi.dll&quot; (&#x0D;&#x0A;xcopy &quot;$(SolutionDir)$(ConfigurationName)$(PlatformName)\zlibwapi.dll&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;)&#x0D;&#x0A;"
 				Outputs="$(OutDir)zlibwapi.dll"
 				ExecutionBucket="1"
 			/>
@@ -219,7 +223,7 @@
 			<Tool
 				Name="VCCustomBuildTool"
 				Description="Copying zlibwapi dll..."
-				CommandLine="if not exist &quot;$(OutDir)zlibwapi.dll&quot; (&#x0D;&#x0A;	xcopy &quot;$(SolutionDir)$(ConfigurationName)$(PlatformName)\zlibwapi.dll&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;)"
+				CommandLine="if not exist &quot;$(OutDir)zlibwapi.dll&quot; (&#x0D;&#x0A;xcopy &quot;$(SolutionDir)$(ConfigurationName)$(PlatformName)\zlibwapi.dll&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;)&#x0D;&#x0A;"
 				Outputs="$(OutDir)zlibwapi.dll"
 				ExecutionBucket="1"
 			/>
@@ -313,7 +317,7 @@
 			<Tool
 				Name="VCCustomBuildTool"
 				Description="Copying zlibwapi dll..."
-				CommandLine="if not exist &quot;$(OutDir)zlibwapi.dll&quot; (&#x0D;&#x0A;	xcopy &quot;$(SolutionDir)$(ConfigurationName)$(PlatformName)\zlibwapi.dll&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;)"
+				CommandLine="if not exist &quot;$(OutDir)zlibwapi.dll&quot; (&#x0D;&#x0A;xcopy &quot;$(SolutionDir)$(ConfigurationName)$(PlatformName)\zlibwapi.dll&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;)&#x0D;&#x0A;"
 				Outputs="$(OutDir)zlibwapi.dll"
 				ExecutionBucket="1"
 			/>
@@ -503,15 +507,15 @@
 				>
 			</File>
 			<File
+				RelativePath="..\plugins\ZIPBuilder\resource.h"
+				>
+			</File>
+			<File
 				RelativePath="..\plugins\ZIPBuilder\Shareaza.h"
 				>
 			</File>
 			<File
 				RelativePath="..\plugins\ZIPBuilder\StdAfx.h"
-				>
-			</File>
-			<File
-				RelativePath="..\plugins\ZIPBuilder\ZIPBuilder.h"
 				>
 			</File>
 		</Filter>
@@ -536,42 +540,6 @@
 		<Filter
 			Name="Generated Files"
 			>
-			<File
-				RelativePath=".\ReleaseWin32\plugins\ZIPBuilder\ZIPBuilder_i.c"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|x64"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|x64"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
-			</File>
 			<File
 				RelativePath=".\DebugWin32\plugins\ZIPBuilder\ZIPBuilder_i.c"
 				>
@@ -677,6 +645,42 @@
 					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\ReleaseWin32\plugins\ZIPBuilder\ZIPBuilder_i.c"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|x64"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|x64"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
 					/>
 				</FileConfiguration>
 			</File>

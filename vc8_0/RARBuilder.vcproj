@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="windows-1251"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8,00"
+	Version="8.00"
 	Name="RARBuilder"
 	ProjectGUID="{F801DAD7-F08D-48EF-B0DF-6B120377E835}"
 	RootNamespace="RARBuilder"
+	SccProjectName="Svn"
+	SccAuxPath="Svn"
+	SccLocalPath="Svn"
+	SccProvider="SubversionScc"
 	>
 	<Platforms>
 		<Platform
@@ -28,7 +32,7 @@
 			<Tool
 				Name="VCCustomBuildTool"
 				Description="Copying unrar dll..."
-				CommandLine="if not exist &quot;$(OutDir)unrar.dll&quot; (&#x0D;&#x0A;	xcopy &quot;$(SolutionDir)..\plugins\$(ProjectName)\unrar.dll&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;)"
+				CommandLine="if not exist &quot;$(OutDir)unrar.dll&quot; (&#x0D;&#x0A;xcopy &quot;$(SolutionDir)..\plugins\$(ProjectName)\unrar.dll&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;)&#x0D;&#x0A;"
 				Outputs="$(OutDir)unrar.dll"
 				ExecutionBucket="1"
 			/>
@@ -123,7 +127,7 @@
 			<Tool
 				Name="VCCustomBuildTool"
 				Description="Copying unrar dll..."
-				CommandLine="if not exist &quot;$(OutDir)unrar.dll&quot; (&#x0D;&#x0A;	xcopy &quot;$(SolutionDir)..\plugins\$(ProjectName)\unrar.dll&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;)"
+				CommandLine="if not exist &quot;$(OutDir)unrar.dll&quot; (&#x0D;&#x0A;xcopy &quot;$(SolutionDir)..\plugins\$(ProjectName)\unrar.dll&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;)&#x0D;&#x0A;"
 				Outputs="$(OutDir)unrar.dll"
 				ExecutionBucket="1"
 			/>
@@ -219,7 +223,7 @@
 			<Tool
 				Name="VCCustomBuildTool"
 				Description="Copying unrar dll..."
-				CommandLine="if not exist &quot;$(OutDir)unrar.dll&quot; (&#x0D;&#x0A;	xcopy &quot;$(SolutionDir)..\plugins\$(ProjectName)\unrar.dll&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;)"
+				CommandLine="if not exist &quot;$(OutDir)unrar.dll&quot; (&#x0D;&#x0A;xcopy &quot;$(SolutionDir)..\plugins\$(ProjectName)\unrar.dll&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;)&#x0D;&#x0A;"
 				Outputs="$(OutDir)unrar.dll"
 				ExecutionBucket="1"
 			/>
@@ -313,7 +317,7 @@
 			<Tool
 				Name="VCCustomBuildTool"
 				Description="Copying unrar dll..."
-				CommandLine="if not exist &quot;$(OutDir)unrar.dll&quot; (&#x0D;&#x0A;	xcopy &quot;$(SolutionDir)..\plugins\$(ProjectName)\unrar.dll&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;)"
+				CommandLine="if not exist &quot;$(OutDir)unrar.dll&quot; (&#x0D;&#x0A;xcopy &quot;$(SolutionDir)..\plugins\$(ProjectName)\unrar.dll&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;)&#x0D;&#x0A;"
 				Outputs="$(OutDir)unrar.dll"
 				ExecutionBucket="1"
 			/>
@@ -503,7 +507,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\plugins\RARBuilder\RARBuilder.h"
+				RelativePath="..\plugins\RARBuilder\resource.h"
 				>
 			</File>
 			<File
@@ -540,42 +544,6 @@
 		<Filter
 			Name="Generated Fнles"
 			>
-			<File
-				RelativePath=".\ReleaseWin32\plugins\RARBuilder\RARBuilder_i.c"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|x64"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|x64"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
-			</File>
 			<File
 				RelativePath=".\DebugWin32\plugins\RARBuilder\RARBuilder_i.c"
 				>
@@ -681,6 +649,42 @@
 					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\ReleaseWin32\plugins\RARBuilder\RARBuilder_i.c"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|x64"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|x64"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
 					/>
 				</FileConfiguration>
 			</File>
