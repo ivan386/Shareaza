@@ -5,10 +5,6 @@
 	Name="DocumentReader"
 	ProjectGUID="{FF8DE974-0784-45C3-8776-744E41A9E84B}"
 	RootNamespace="DocumentReader"
-	SccProjectName="Svn"
-	SccAuxPath="Svn"
-	SccLocalPath="Svn"
-	SccProvider="SubversionScc"
 	>
 	<Platforms>
 		<Platform

@@ -5,10 +5,6 @@
 	Name="GFLLibraryBuilder"
 	ProjectGUID="{5D001F1C-729C-48EA-B4BF-F98B95AE2A47}"
 	RootNamespace="GFLLibraryBuilder"
-	SccProjectName="Svn"
-	SccAuxPath="Svn"
-	SccLocalPath="Svn"
-	SccProvider="SubversionScc"
 	>
 	<Platforms>
 		<Platform

@@ -5,10 +5,6 @@
 	Name="Shareaza"
 	ProjectGUID="{E1F5FB69-98B2-49E0-A74B-1E7141955CB6}"
 	RootNamespace="Shareaza"
-	SccProjectName="Svn"
-	SccAuxPath="Svn"
-	SccLocalPath="Svn"
-	SccProvider="SubversionScc"
 	>
 	<Platforms>
 		<Platform

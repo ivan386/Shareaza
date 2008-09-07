@@ -5,10 +5,6 @@
 	Name="GFLImageServices"
 	ProjectGUID="{E99CA8F9-D6F6-440C-B6EF-47F02DFAD891}"
 	RootNamespace="GFLImageServices"
-	SccProjectName="Svn"
-	SccAuxPath="Svn"
-	SccLocalPath="Svn"
-	SccProvider="SubversionScc"
 	>
 	<Platforms>
 		<Platform

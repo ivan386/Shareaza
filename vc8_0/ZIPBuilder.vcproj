@@ -5,10 +5,6 @@
 	Name="ZIPBuilder"
 	ProjectGUID="{2F74AA28-2498-4805-911A-04C39858D529}"
 	RootNamespace="ZIPBuilder"
-	SccProjectName="Svn"
-	SccAuxPath="Svn"
-	SccLocalPath="Svn"
-	SccProvider="SubversionScc"
 	>
 	<Platforms>
 		<Platform

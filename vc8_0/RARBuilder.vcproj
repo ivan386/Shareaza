@@ -5,10 +5,6 @@
 	Name="RARBuilder"
 	ProjectGUID="{F801DAD7-F08D-48EF-B0DF-6B120377E835}"
 	RootNamespace="RARBuilder"
-	SccProjectName="Svn"
-	SccAuxPath="Svn"
-	SccLocalPath="Svn"
-	SccProvider="SubversionScc"
 	>
 	<Platforms>
 		<Platform
