@@ -119,7 +119,7 @@ public:
 	void				Message(WORD nType, CString strFormat, ...) const;
 	BOOL				InternalURI(LPCTSTR pszURI);
 	void				PrintMessage(WORD nType, const CString& strLog) const;
-	void				LogMessage(LPCTSTR strLog) const;
+	void				LogMessage(LPCTSTR pszLog) const;
 	void				SplashStep(LPCTSTR pszMessage = NULL, int nMax = 0, bool bClosing = false);
 
 	CString				GetCountryCode(IN_ADDR pAddress) const;
@@ -167,7 +167,7 @@ BOOL PostMainWndMessage(UINT Msg, WPARAM wParam = NULL, LPARAM lParam = NULL);
 CRuntimeClass* AfxClassForName(LPCTSTR pszClass);
 
 BOOL LoadString(CString& str, UINT nID);
-LPCTSTR _tcsistr(LPCTSTR pszString, LPCTSTR pszPattern);
+LPCTSTR _tcsistr(LPCTSTR pszString, LPCTSTR pszSubString);
 LPCTSTR _tcsnistr(LPCTSTR pszString, LPCTSTR pszPattern, size_t plen);
 void Split(const CString& strSource, TCHAR cDelimiter, CStringArray& pAddIt, BOOL bAddFirstEmpty = FALSE);
 BOOL LoadSourcesString(CString& str, DWORD num, bool bFraction=false);
@@ -448,8 +448,3 @@ extern const LPCTSTR RT_BMP;
 extern const LPCTSTR RT_JPEG;
 extern const LPCTSTR RT_PNG;
 extern const LPCTSTR RT_GZIP;
-
-//extern double scaleX;
-//extern double scaleY;
-//#define SCALEX(argX) ((int) ((argX) * scaleX))
-//#define SCALEY(argY) ((int) ((argY) * scaleY))

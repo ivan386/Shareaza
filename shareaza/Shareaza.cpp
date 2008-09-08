@@ -1341,33 +1341,54 @@ BOOL LoadSourcesString(CString& str, DWORD num, bool bFraction)
 /////////////////////////////////////////////////////////////////////////////
 // Case independent string search
 
-LPCTSTR _tcsistr(LPCTSTR pszString, LPCTSTR pszPattern)
+LPCTSTR _tcsistr(LPCTSTR pszString, LPCTSTR pszSubString)
 {
-	if ( !*pszString || !*pszPattern ) return NULL;
+	// Return null if string or substring is empty
+	if ( !*pszString || !*pszSubString )
+		return NULL;
 
-	const TCHAR cFirstPatternChar = ToLower( *pszPattern );
+	// Return if string is too small to hold the substring
+	size_t nString( _tcslen( pszString ) );
+	size_t nSubString( _tcslen( pszSubString ) );
+	if ( nString < nSubString )
+		return NULL;
 
-	for ( ; ; ++pszString )
+	// Get the first character from the substring and lowercase it
+	const TCHAR cFirstPatternChar = ToLower( *pszSubString );
+
+	// Loop over the part of the string that the substring could fit into
+	LPCTSTR pszCutOff = pszString + nString - nSubString;
+	while ( pszString <= pszCutOff )
 	{
-		while ( *pszString && ToLower( *pszString ) != cFirstPatternChar ) ++pszString;
-
-		if ( !*pszString ) return NULL;
-
-		int i = 0;
-		while ( const TCHAR cPatternChar = ToLower( pszPattern[ ++i ] ) )
+		// Search for the start of the substring
+		while ( pszString <= pszCutOff
+			&& ToLower( *pszString ) != cFirstPatternChar )
 		{
-			if ( const TCHAR cStringChar = ToLower( pszString[ i ] ) )
-			{
-				if ( cStringChar != cPatternChar ) break;
-			}
-			else
-			{
-				return NULL;
-			}
+			++pszString;
 		}
 
-		if ( !pszPattern[ i ] ) return pszString;
+		// Exit loop if no match found
+		if ( pszString > pszCutOff )
+			break;
+
+		// Check the rest of the substring
+		size_t nChar( 1 );
+		while ( pszSubString[nChar]
+			&& ToLower( pszString[nChar] ) == ToLower( pszSubString[nChar] ) )
+		{
+			++nChar;
+		}
+
+		// If the substring matched return a pointer to the start of the match
+		if ( !pszSubString[nChar] )
+			return pszString;
+
+		// Move on to the next character and continue search
+		++pszString;
 	}
+
+	// No match found, return a null pointer
+	return NULL;
 }
 
 LPCTSTR _tcsnistr(LPCTSTR pszString, LPCTSTR pszPattern, size_t plen)
