@@ -60,7 +60,7 @@ CLowerCaseTable::CLowerCaseTable()
 	cTable[ 65439 ] = TCHAR( 12444 );
 }
 
-CString& CLowerCaseTable::operator()(CString& strSource) const
+const CString& CLowerCaseTable::operator()(CString& strSource) const
 {
 	const int nLength = strSource.GetLength();
 	const LPTSTR str = strSource.GetBuffer() + nLength;
