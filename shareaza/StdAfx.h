@@ -68,6 +68,11 @@
 #define _CRT_SECURE_NO_DEPRECATE
 #define _CRT_NON_CONFORMING_SWPRINTFS
 
+// For detecting Memory Leaks
+#ifdef _DEBUG
+#define _CRTDBG_MAP_ALLOC
+#endif
+
 #else	// VS 2003
 
 // 64bit related - need to be fixed
@@ -107,7 +112,6 @@
 
 #define VC_EXTRALEAN
 #define _ATL_NO_COM_SUPPORT
-#define _MSI_NO_CRYPTO
 
 #pragma warning( push, 0 )			// Suppress Microsoft warnings
 
