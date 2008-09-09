@@ -76,7 +76,7 @@ void CBENode::Clear()
 			delete [] (CBENode**)m_pValue;
 		}
 	}
-	
+
 	m_nType		= beNull;
 	m_pValue	= NULL;
 	m_nValue	= 0;
@@ -104,7 +104,7 @@ CBENode* CBENode::Add(const LPBYTE pKey, size_t nKey)
 		ASSERT( FALSE );
 		break;
 	}
-	
+
 	auto_ptr< CBENode > pNew( new CBENode );
 	CBENode* pNew_ = pNew.get();
 
@@ -166,28 +166,28 @@ CBENode* CBENode::Add(const LPBYTE pKey, size_t nKey)
 CBENode* CBENode::GetNode(LPCSTR pszKey) const
 {
 	if ( m_nType != beDict ) return NULL;
-	
+
 	CBENode** pNode = (CBENode**)m_pValue;
-	
+
 	for ( DWORD nNode = (DWORD)m_nValue ; nNode ; nNode--, pNode += 2 )
 	{
 		if ( strcmp( pszKey, (LPCSTR)pNode[1] ) == 0 ) return *pNode;
 	}
-	
+
 	return NULL;
 }
 
 CBENode* CBENode::GetNode(const LPBYTE pKey, int nKey) const
 {
 	if ( m_nType != beDict ) return NULL;
-	
+
 	CBENode** pNode = (CBENode**)m_pValue;
-	
+
 	for ( DWORD nNode = (DWORD)m_nValue ; nNode ; nNode--, pNode += 2 )
 	{
 		if ( memcmp( pKey, (LPBYTE)pNode[1], nKey ) == 0 ) return *pNode;
 	}
-	
+
 	return NULL;
 }
 
@@ -297,10 +297,10 @@ CString CBENode::GetStringFromSubNode(int nItem, UINT nEncoding, bool& bEncoding
 void CBENode::GetBth(Hashes::BtHash& oBTH) const
 {
 	ASSERT( this != NULL );
-	
+
 	CBuffer pBuffer;
 	Encode( &pBuffer );
-	
+
 	CSHA pSHA;
 	pSHA.Add( pBuffer.m_pBuffer, pBuffer.m_nLength );
 	pSHA.Finish();
@@ -313,11 +313,11 @@ void CBENode::GetBth(Hashes::BtHash& oBTH) const
 void CBENode::Encode(CBuffer* pBuffer) const
 {
 	CHAR szBuffer[64];
-	
+
 	ASSERT( this != NULL );
 	ASSERT( pBuffer != NULL );
 	CString str;
-	
+
 	if ( m_nType == beString )
 	{
 		pBuffer->Print( szBuffer, sprintf( szBuffer, "%u:", (DWORD)m_nValue ) );
@@ -330,22 +330,22 @@ void CBENode::Encode(CBuffer* pBuffer) const
 	else if ( m_nType == beList )
 	{
 		CBENode** pNode = (CBENode**)m_pValue;
-		
+
 		pBuffer->Print( _P("l") );
-		
+
 		for ( DWORD nItem = 0 ; nItem < (DWORD)m_nValue ; nItem++, pNode++ )
 		{
 			(*pNode)->Encode( pBuffer );
 		}
-		
+
 		pBuffer->Print( _P("e") );
 	}
 	else if ( m_nType == beDict )
 	{
 		CBENode** pNode = (CBENode**)m_pValue;
-		
+
 		pBuffer->Print( _P("d") );
-		
+
 		for ( DWORD nItem = 0 ; nItem < m_nValue ; nItem++, pNode += 2 )
 		{
 			LPCSTR pszKey = (LPCSTR)pNode[1];
@@ -354,7 +354,7 @@ void CBENode::Encode(CBuffer* pBuffer) const
 			pBuffer->Print( pszKey, nKeyLength );
 			(*pNode)->Encode( pBuffer );
 		}
-		
+
 		pBuffer->Print( _P("e") );
 	}
 	else
@@ -426,7 +426,7 @@ const CString CBENode::Encode() const
 CBENode* CBENode::Decode(CBuffer* pBuffer)
 {
 	ASSERT( pBuffer != NULL );
-	
+
 	try
 	{
 		auto_ptr< CBENode > pNode( new CBENode() );
@@ -455,15 +455,15 @@ void CBENode::Decode(LPBYTE& pInput, DWORD& nInput)
 {
 	ASSERT( m_nType == beNull );
 	ASSERT( pInput != NULL );
-	
+
 	if ( nInput < 1 )
 		AfxThrowUserException();
-	
+
 	if ( *pInput == 'i' )
 	{
 		INC( 1 );
-		
-        DWORD nSeek = 1;
+
+		DWORD nSeek = 1;
 		for ( ; nSeek < 40 ; nSeek++ )
 		{
 			if ( nSeek >= nInput )
@@ -471,14 +471,14 @@ void CBENode::Decode(LPBYTE& pInput, DWORD& nInput)
 			if ( pInput[nSeek] == 'e' )
 				break;
 		}
-		
+
 		if ( nSeek >= 40 ) AfxThrowUserException();
-		
+
 		pInput[nSeek] = 0;
 		if ( sscanf( (LPCSTR)pInput, "%I64i", &m_nValue ) != 1 )
 			AfxThrowUserException();
 		pInput[nSeek] = 'e';
-		
+
 		INC( nSeek + 1 );
 		m_nType = beInt;
 	}
@@ -486,7 +486,7 @@ void CBENode::Decode(LPBYTE& pInput, DWORD& nInput)
 	{
 		m_nType = beList;
 		INC( 1 );
-		
+
 		for (;;)
 		{
 			if ( nInput < 1 )
@@ -495,28 +495,31 @@ void CBENode::Decode(LPBYTE& pInput, DWORD& nInput)
 				break;
 			Add()->Decode( pInput, nInput );
 		}
-		
+
 		INC( 1 );
 	}
 	else if ( *pInput == 'd' )
 	{
 		m_nType = beDict;
 		INC( 1 );
-		
+
 		for (;;)
 		{
 			if ( nInput < 1 )
 				AfxThrowUserException();
 			if ( *pInput == 'e' )
 				break;
-			
+
 			int nLen = DecodeLen( pInput, nInput );
-			LPBYTE pKey = pInput;
-			INC( nLen );
-			
-			Add( pKey, nLen )->Decode( pInput, nInput );
+
+			if ( nLen )
+			{
+				LPBYTE pKey = pInput;
+				INC( nLen );
+				Add( pKey, nLen )->Decode( pInput, nInput );
+			}
 		}
-		
+
 		INC( 1 );
 	}
 	else if ( *pInput >= '0' && *pInput <= '9' )
@@ -526,7 +529,7 @@ void CBENode::Decode(LPBYTE& pInput, DWORD& nInput)
 		m_pValue	= new CHAR[ (DWORD)m_nValue + 1 ];
 		CopyMemory( m_pValue, pInput, (DWORD)m_nValue );
 		((LPBYTE)m_pValue)[ m_nValue ] = 0;
-		
+
 		INC( (DWORD)m_nValue );
 	}
 	else
@@ -537,22 +540,27 @@ void CBENode::Decode(LPBYTE& pInput, DWORD& nInput)
 
 int CBENode::DecodeLen(LPBYTE& pInput, DWORD& nInput)
 {
-    DWORD nSeek = 1;
-    for ( ; nSeek < 32 ; nSeek++ )
+	DWORD nSeek = 1;
+	for ( ; nSeek < 32 ; nSeek++ )
 	{
-		if ( nSeek >= nInput ) AfxThrowUserException();
-		if ( pInput[ nSeek ] == ':' ) break;
+		if ( nSeek >= nInput )
+			AfxThrowUserException();
+		if ( pInput[ nSeek ] == ':' )
+			break;
 	}
-	
-	if ( nSeek >= 32 ) AfxThrowUserException();
+
+	if ( nSeek >= 32 )
+		AfxThrowUserException();
 	int nLen = 0;
-	
+
 	pInput[ nSeek ] = 0;
-	if ( sscanf( (LPCSTR)pInput, "%i", &nLen ) != 1 ) AfxThrowUserException();
+	if ( sscanf( (LPCSTR)pInput, "%i", &nLen ) != 1 )
+		AfxThrowUserException();
 	pInput[ nSeek ] = ':';
 	INC( nSeek + 1 );
-	
-	if ( nInput < (DWORD)nLen ) AfxThrowUserException();
-	
+
+	if ( nInput < (DWORD)nLen )
+		AfxThrowUserException();
+
 	return nLen;
 }
