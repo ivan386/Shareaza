@@ -917,24 +917,23 @@ void CShareazaApp::Message(WORD nType, UINT nID, ...) const
 	if ( IsLogDisabled( nType ) )
 		return;
 
-	// Setup local strings
-	CString strFormat, strTemp;
-
 	// Load the format string from the resource file
-	LoadString( strFormat, nID );
+	CString strFormat;
+	strFormat.LoadString( nID );
 
 	// Initialize variable arguments list
 	va_list pArgs;
 	va_start( pArgs, nID );
 
 	// Work out the type of format string and call the appropriate function
+	CString strTemp;
 	if ( strFormat.Find( _T("%1") ) >= 0 )
 		strTemp.FormatMessageV( strFormat, &pArgs );
 	else
 		strTemp.FormatV( strFormat, pArgs );
 
 	// Print the message if there still is one
-	if ( !strTemp.IsEmpty() )
+	if ( strTemp.GetLength() )
 		PrintMessage( nType, strTemp );
 
 	// Null the argument list pointer
@@ -943,24 +942,22 @@ void CShareazaApp::Message(WORD nType, UINT nID, ...) const
 	return;
 }
 
-void CShareazaApp::Message(WORD nType, CString strFormat, ...) const
+void CShareazaApp::Message(WORD nType, LPCTSTR pszFormat, ...) const
 {
 	// Check if logging this type of message is enabled
 	if ( IsLogDisabled( nType ) )
 		return;
 
-	// Setup local strings
-	CString strTemp;
-
 	// Initialize variable arguments list
 	va_list pArgs;
-	va_start( pArgs, strFormat );
+	va_start( pArgs, pszFormat );
 
 	// Format the message
-	strTemp.FormatV( strFormat, pArgs );
+	CString strTemp;
+	strTemp.FormatV( pszFormat, pArgs );
 
 	// Print the message if there still is one
-	if ( !strTemp.IsEmpty() )
+	if ( strTemp.GetLength() )
 		PrintMessage( nType, strTemp );
 
 	// Null the argument list pointer

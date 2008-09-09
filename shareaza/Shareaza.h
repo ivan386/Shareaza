@@ -116,7 +116,7 @@ public:
 	CMainWnd*			SafeMainWnd() const;
 	bool				IsLogDisabled(WORD nType) const;
 	void				Message(WORD nType, UINT nID, ...) const;
-	void				Message(WORD nType, CString strFormat, ...) const;
+	void				Message(WORD nType, LPCTSTR pszFormat, ...) const;
 	BOOL				InternalURI(LPCTSTR pszURI);
 	void				PrintMessage(WORD nType, const CString& strLog) const;
 	void				LogMessage(LPCTSTR pszLog) const;
