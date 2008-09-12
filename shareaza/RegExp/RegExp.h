@@ -9,7 +9,7 @@
 
 #include "resource.h"		// main symbols
 
-class CRegExpApp : public CWinAppEx
+class CRegExpApp : public CWinApp
 {
 public:
 	CRegExpApp();

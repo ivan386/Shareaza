@@ -9,7 +9,7 @@
 #define new DEBUG_NEW
 #endif
 
-BEGIN_MESSAGE_MAP(CRegExpApp, CWinAppEx)
+BEGIN_MESSAGE_MAP(CRegExpApp, CWinApp)
 END_MESSAGE_MAP()
 
 CRegExpApp::CRegExpApp()
@@ -25,7 +25,7 @@ BOOL CRegExpApp::InitInstance()
 	InitCtrls.dwICC = ICC_WIN95_CLASSES;
 	InitCommonControlsEx(&InitCtrls);
 
-	CWinAppEx::InitInstance();
+	CWinApp::InitInstance();
 
 	SetRegistryKey( _T("Shareaza") );
 
