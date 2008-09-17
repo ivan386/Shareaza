@@ -3899,7 +3899,8 @@
 		<control/>
 		<control caption="Παραγωγή Νέου"/>
 	</dialog>
-	<dialog name="CLanguageDlg" cookie="" caption="Επιλογή Γλώσσας"/>
+	<dialog name="CLanguageDlg" cookie="" caption="Επιλογή Γλώσσας">
+	</dialog>
 	<dialog name="CConnectToDlg" cookie="BuCoEdBuCoBuBuBu" caption="Σύνδεση με|Περιήγηση Host">
 		<control caption="Εγκαινίαση νέας σύνδεσης με host ή server:|Περιήγηση του εξής host:"/>
 		<control/>

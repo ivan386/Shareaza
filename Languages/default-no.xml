@@ -3780,7 +3780,8 @@
 		<control caption="Lag nytt"/>
 	</dialog>
 
-	<dialog name="CLanguageDlg" cookie="" caption="Velg språk"/>
+	<dialog name="CLanguageDlg" cookie="" caption="Velg språk">
+	</dialog>
 
 	<dialog name="CConnectToDlg" cookie="BuCoEdBuCoBuBuBu" caption="Koble Til|Utforsk vert">
 		<control caption="Start en ny kobling til vert eller tjener:|Utforsk denne verten:"/>
@@ -4190,7 +4191,7 @@
 		<control caption="Avbryt"/>
 	</dialog>
 
-	<dialog name="CDownloadEditDlg" cookie="StBuEdBuStEdStEdStEdBuStStStBuStEdStEdBuBuBuBu" caption="Endre nedlasting (Avansert)">
+	<dialog name="CDownloadEditPage" cookie="StBuEdBuStEdStEdStEdBuStStStBuStEdStEdBuBuBuBu" caption="Endre nedlasting (Avansert)">
 		<control caption="OBS: Avansert redigering er for erfarne brukere, filene kan bli ødelagt hvis du gjør noe galt."/>
 		<control caption="Fil_navn:"/>
 		<control/>
@@ -4226,7 +4227,7 @@
 		<control/>
 	</dialog>
 
-	<dialog name="CTorrentTrackerDlg" cookie="BuStEdStEdStEdStEdStEdBuStEdStEdBuStCoBuSyBuCoBu" caption="Avansert BitTorrent-informason">
+	<dialog name="CTorrentGeneralPage" cookie="BuStEdStEdStEdStEdStEdBuStEdStEdBuStCoBuSyBuCoBu" caption="Avansert BitTorrent-informason">
 		<control caption="Torrent _informasjon:"/>
 		<control caption="Navn:"/>
 		<control/>

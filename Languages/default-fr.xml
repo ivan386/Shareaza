@@ -3337,7 +3337,7 @@
 		<control caption="Qd je clique sur Minimiser&#160;:"/>
 		<control caption="Normal|Minimiser dans la barre des tâches"/>
 	</dialog>
-	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBuBu" caption="Bibliothèque">
+	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBuBuBu" caption="Bibliothèque">
 		<control caption="_Options&#160;:"/>
 		<control caption="Mémoriser l'affichage des dossiers"/>
 		<control caption="Surveiller les dossiers"/>
@@ -3912,7 +3912,8 @@
 		<control/>
 		<control caption="Générer un nouv."/>
 	</dialog>
-	<dialog name="CLanguageDlg" cookie="" caption="Choisir la langue"/>
+	<dialog name="CLanguageDlg" cookie="" caption="Choisir la langue">
+	</dialog>
 	<dialog name="CConnectToDlg" cookie="BuCoEdBuCoBuBuBu" caption="Se connecter à|Parcourir l'hôte">
 		<control caption="Établir une nouvelle connexion avec l'hôte ou le serveur&#160;:|Parcourir cet hôte&#160;:"/>
 		<control/>
@@ -3940,7 +3941,7 @@
 		<control caption="Rechercher"/>
 		<control caption="Annuler"/>
 	</dialog>
-	<dialog name="CFilterSearchDlg" cookie="BuEdStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuCoBuBuBuBuBuBuBu" caption="Assortiments du filtre">
+	<dialog name="CFilterSearchDlg" cookie="BuEdBuStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuBuBuCoBuBuBuBuBu" caption="Assortiments du filtre">
 		<control caption="Montrer seulement les résultats qui contiennent les mots&#160;:"/>
 		<control/>
 		<control caption="Reg. Exp."/>
@@ -3961,16 +3962,16 @@
 		<control caption="Sans correspondance"/>
 		<control caption="Fichiers possédés"/>
 		<control caption="Faux résultats"/>
+		<control caption="Fichiers DRM"/>
+		<control caption="Résultats pour adultes"/>
+		<control caption="Fichiers suspects"/>
 		<control caption="Filtrer"/>
-		<control caption="Annuler"/>
 		<control/>
 		<control caption="Régler par défaut"/>
 		<control caption="_Sauvegarder sous"/>
 		<control caption="_Effacer"/>
 		<control caption="Filtres&#160;:"/>
-		<control caption="Fichiers DRM"/>
-		<control caption="Fichiers suspects"/>
-		<control caption="Résultats pour adultes"/>
+		<control caption="Annuler"/>
 	</dialog>
 	<dialog name="CSaveFilterAsDlg" cookie="EdBuBuSt" caption="Sauvegarder le filtre sous">
 		<control/>
@@ -3978,7 +3979,7 @@
 		<control caption="Annuler"/>
 		<control caption="Sauvegarder le filtre actuel sous"/>
 	</dialog>
-	<dialog name="CDiscoveryServiceDlg" cookie="BuEdStCoBuBu" caption="Services de découverte">
+	<dialog name="CDiscoveryServiceDlg" cookie="BuEdStCoBuBuSt" caption="Services de découverte">
 		<control caption="_Adresse du service&#160;:"/>
 		<control/>
 		<control caption="Type de service&#160;:"/>
@@ -4096,7 +4097,7 @@
 		<control caption="Valider"/>
 		<control caption="Annuler"/>
 	</dialog>
-	<dialog name="CGraphItemDlg" cookie="BuBuBuCoStStEdBuBuStBu" caption="Propriétés du graphique">
+	<dialog name="CGraphItemDlg" cookie="BuBuBuCoStEdStEdBuBuStBu" caption="Propriétés du graphique">
 		<control caption="Valider"/>
 		<control caption="Annuler"/>
 		<control caption="_Source&#160;:"/>
@@ -4117,7 +4118,7 @@
 		<control caption="Annuler"/>
 		<control caption="Sélectionnez un schéma dans la liste, puis les champs à afficher en tant que colonnes."/>
 	</dialog>
-	<dialog name="CSecureRuleDlg" cookie="BuStCoStEdBuStEdEdEdEdStEdEdEdEdBuEdBuBuBuStCoStCoEdStEdStEdStBuBu" caption="Règle de sécurité">
+	<dialog name="CSecureRuleDlg" cookie="BuStCoStEdBuStEdEdEdEdStEdEdEdEdBuEdBuBuBuBuStCoStCoEdStEdStEdStBuBu" caption="Règle de sécurité">
 		<control caption="_Règle&#160;:"/>
 		<control caption="Type&#160;:"/>
 		<control caption="Adresse (IP) réseau|Filtre de contenu"/>
@@ -4237,7 +4238,7 @@
 		<control caption="http://shareaza.sourceforge.net/"/>
 		<control caption="Valider"/>
 	</dialog>
-	<dialog name="CExistingFileDlg" cookie="StStStStStBuBuBuBuBuSt" caption="Téléchargement d'un fichier existant">
+	<dialog name="CExistingFileDlg" cookie="StStStStStBuBuBuBuBuStSt" caption="Téléchargement d'un fichier existant">
 		<control/>
 		<control/>
 		<control/>
@@ -4303,7 +4304,7 @@
 		<control caption="_Prochain|Export..."/>
 		<control caption="_Annuler"/>
 	</dialog>
-	<dialog name="CDownloadEditDlg" cookie="StBuStEdEdStEdBuStStEdBuStEdBuStEdBuBuStStStStBuStEdStEdBuBuBuBu" caption="Édition des téléchargements (avancée)">
+	<dialog name="CDownloadEditPage" cookie="StBuStEdEdStEdBuStStEdBuStEdBuStEdBuBuStStStStStBuStEdStEdBu" caption="Édition des téléchargements (avancée)">
 		<control caption="ATTENTION&#160;: Utilisateurs avertis... Cette fenêtre donne accès à des paramètres avancés qui, s'ils sont mal renseignés, peuvent corrompre un fichier."/>
 		<control caption="Nom du fichier et Taille&#160;:"/>
 		<control caption="Nom de Fichier&#160;:"/>
@@ -4423,7 +4424,7 @@
 		<control/>
 		<control/>
 	</dialog>
-	<dialog name="CDecodeMetadataDlg" cookie="BuBuStCo" caption="Localisation des métadonnées">
+	<dialog name="CDecodeMetadataDlg" cookie="StCoBuBuBuStStBuBu" caption="Localisation des métadonnées">
 		<control caption="Merci de sélectionner la méthode de réencodage"/>
 		<control caption="Arabe|Balte|Européen de l'Est|Chinois simplifié|Chinois traditionnel|Cyrillique|Grec|Hébreu|Japonais|Coréen|Thaï|Turc|Vietnamien"/>
 		<control caption="Prévisualisation&#160;:"/>

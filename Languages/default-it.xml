@@ -3180,6 +3180,8 @@
 </strings>
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
 <dialogs>
+	<dialog name="CGeneralSettingsGroup" cookie="" caption="Generale">
+	</dialog>
 	<dialog name="CSettingSheet" cookie="SyBuBuBu#3" caption="Opzioni di Shareaza">
 		<control/>
 		<control caption="OK"/>
@@ -3187,7 +3189,6 @@
 		<control caption="Applica"/>
 		<control/>
 	</dialog>
-	<dialog name="CGeneralSettingsGroup" cookie="" caption="Generale"/>
 	<dialog name="CGeneralSettingsPage" cookie="BuBuBuBuStCoBuBuBuBuBuBuBuBuBuSyStEdmsStmsBuStCoStCo" caption="Generale">
 		<control caption="_Generale:"/>
 		<control caption="Connetti all'avvio di Shareaza"/>
@@ -3216,7 +3217,7 @@
 		<control caption="Quando clicco minimizza:"/>
 		<control caption="Normale|Minimizza nell'area di notifica"/>
 	</dialog>
-	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBuBu" caption="Libreria">
+	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBuBuBu" caption="Libreria">
 		<control caption="_Opzioni:"/>
 		<control caption="Salva visualizzazione cartelle"/>
 		<control caption="Visualizza cartelle nella libreria"/>
@@ -3244,6 +3245,7 @@
 		<control/>
 		<control/>
 		<control caption="Crea file fantasma durante la cancellazione"/>
+		<control caption="Smart video series detection"/>
 	</dialog>
 	<dialog name="CMediaSettingsPage" cookie="BuCoBuBuBuCoBuBuBuBuBuStSt" caption="Media player">
 		<control caption="_Opzioni:"/>
@@ -3270,6 +3272,7 @@
 		<control caption="Filtra i messaggi chat dallo spam"/>
 		<control caption="Censura contenuti profani in chat"/>
 	</dialog>
+	<!--dialog name="CIRCSettingsPage"-->
 	<dialog name="CWebSettingsPage" cookie="BuStBuBuBuBuBuBuBuCoBuBuSt" caption="Web">
 		<control caption="Gestione link _Peer to Peer:"/>
 		<control caption="Usa Shareaza per aprire questi tipi di link:"/>
@@ -3285,7 +3288,8 @@
 		<control caption="_Rimuovi"/>
 		<control caption="Il plugin gestore dei download scaricherà solo i tipi di file elencati qui. Altri tipi di file saranno gestiti dal tuo browser. Shareaza deve essere in esecuzione per gestire i download."/>
 	</dialog>
-	<dialog name="CInternetSettingsGroup" caption="Internet"/>
+	<dialog name="CInternetSettingsGroup" caption="Internet">
+	</dialog>
 	<dialog name="CConnectionSettingsPage" cookie="BuStCoStCoStEdBuBuBuStCoStCoBuStCoBuBuBuStEdmsStEdms" caption="Connessione">
 		<control caption="Indirizzi in _entrata:"/>
 		<control caption="Indirizzo:"/>
@@ -3521,12 +3525,13 @@
 		<control caption="_Installa..."/>
 		<control caption="Altri plugin"/>
 	</dialog>
-	<dialog name="CAdvancedSettingsPage" cookie="SyBuStEdmsStEd" caption="Avanzate">
+	<dialog name="CAdvancedSettingsPage" cookie="SyEdmsBuBuStStEd" caption="Avanzate">
 		<control/>
+		<control/>
+		<control/>
+		<control caption="Set Default"/>
 		<control caption="Regolazione delle proprietà:"/>
 		<control caption="Valore:"/>
-		<control/>
-		<control/>
 		<control caption="Descrizione:"/>
 		<control/>
 	</dialog>
@@ -3752,7 +3757,8 @@
 		<control/>
 		<control caption="Genera nuovo"/>
 	</dialog>
-	<dialog name="CLanguageDlg" cookie="" caption="Seleziona lingua"/>
+	<dialog name="CLanguageDlg" cookie="" caption="Seleziona lingua">
+	</dialog>
 	<dialog name="CConnectToDlg" cookie="BuCoEdBuCoBuBuBu" caption="Connetti a|Esplora host">
 		<control caption="Avvia una nuova connessione con l'host o il server:|Esplora questo host:"/>
 		<control/>
@@ -3818,13 +3824,14 @@
 		<control caption="Annulla"/>
 		<control caption="Salva il filtro attuale come"/>
 	</dialog>
-	<dialog name="CDiscoveryServiceDlg" cookie="BuEdStCoBuBu" caption="Servizio di ricerca">
+	<dialog name="CDiscoveryServiceDlg" cookie="BuEdStCoBuBuSt" caption="Servizio di ricerca">
 		<control caption="_Indirizzo servizio:"/>
 		<control/>
 		<control caption="Tipo servizio di ricerca:"/>
 		<control caption="Gnutella Bootstrap|GWebCache|URL server.met|Bloccato"/>
 		<control caption="OK"/>
 		<control caption="Annulla"/>
+		<control/>
 	</dialog>
 	<dialog name="CDownloadMonitorDlg" cookie="StStStStStStStStStStStStStBuBuBuBuBu" caption="Download : Shareaza">
 		<control caption="Shareaza sta scaricando:"/>
@@ -3956,7 +3963,7 @@
 		<control caption="Annulla"/>
 		<control caption="Seleziona uno schema dalla lista, poi seleziona i campi da mostrare come colonne."/>
 	</dialog>
-	<dialog name="CSecureRuleDlg" cookie="BuStCoStEdBuStEdEdEdEdStEdEdEdEdBuEdBuBuBuStCoStCoEdStEdStEdStBuBu" caption="Regole di sicurezza">
+	<dialog name="CSecureRuleDlg" cookie="BuStCoStEdBuStEdEdEdEdStEdEdEdEdBuEdBuBuBuBuStCoStCoEdStEdStEdStBuBu" caption="Regole di sicurezza">
 		<control caption="_Regola:"/>
 		<control caption="Tipo:"/>
 		<control caption="Indirizzo rete (IP)|Filtro contenuti"/>
@@ -3977,6 +3984,7 @@
 		<control/>
 		<control caption="Una"/>
 		<control caption="Tutte"/>
+		<control caption="Reg. Exp."/>
 		<control caption="_Opzioni:"/>
 		<control caption="Azione:"/>
 		<control caption="Nessuna|Accetta|Non accetta"/>
@@ -4141,7 +4149,7 @@
 		<control caption="_Avanti|Esporta..."/>
 		<control caption="A_nnulla"/>
 	</dialog>
-	<dialog name="CDownloadEditDlg" cookie="StBuStEdEdStEdBuStStEdBuStEdBuStEdBuBuStStStStBuStEdStEdBuBuBuBu" caption="Modifica download">
+	<dialog name="CDownloadEditPage" cookie="StBuStEdEdStEdBuStStEdBuStEdBuStEdBuBuStStStStStBuStEdStEdBu" caption="Modifica download">
 		<control caption="ATTENZIONE: Questa finestra fornisce funzionalità di modifica dei download avanzate per utenti esperti e se usata in modo errato può causare danni."/>
 		<control caption="Nome del file e _dimensione:"/>
 		<control caption="Nome del file:"/>
@@ -4165,15 +4173,13 @@
 		<control caption="Simula il file completo al 100% e verifica di nuovo"/>
 		<control caption="Rimuovi tutte le fonti conosciute"/>
 		<control caption="Unisci con il file locale e verifica"/>
+		<control caption="Cancella file"/>
 		<control caption="_Cancella dati:"/>
 		<control caption="Range di byte:"/>
 		<control/>
 		<control caption="a"/>
 		<control/>
 		<control caption="Cancella"/>
-		<control caption="Info _torrent..."/>
-		<control caption="OK"/>
-		<control caption="Annulla"/>
 	</dialog>
 	<dialog name="CTorrentSeedDlg" cookie="StStBuBuBuStms" caption="Apri file torrent">
 		<control/>

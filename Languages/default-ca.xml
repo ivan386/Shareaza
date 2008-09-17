@@ -3189,6 +3189,8 @@
 </strings>
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
 <dialogs>
+	<dialog name="CGeneralSettingsGroup" cookie="" caption="General">
+	</dialog>
 	<dialog name="CSettingSheet" cookie="SyBuBuBu#3" caption="Configuració de Shareaza">
 		<control/>
 		<control caption="Accepta"/>
@@ -3196,7 +3198,6 @@
 		<control caption="Aplica"/>
 		<control/>
 	</dialog>
-	<dialog name="CGeneralSettingsGroup" cookie="" caption="General"/>
 	<dialog name="CGeneralSettingsPage" cookie="BuBuBuBuStCoBuBuBuBuBuBuBuBuBuSyStEdmsStmsBuStCoStCo" caption="General">
 		<control caption="_General:"/>
 		<control caption="Connexió automàtica a l'iniciar Shareaza"/>
@@ -3225,7 +3226,7 @@
 		<control caption="Quant es fa clic a minimitzar:"/>
 		<control caption="Normal|Minimitza a la barra de tasques"/>
 	</dialog>
-	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBuBu" caption="Col·lecció">
+	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBuBuBu" caption="Col·lecció">
 		<control caption="_Opcions:"/>
 		<control caption="Recordar les vistes de carpetes"/>
 		<control caption="Mostra les carpetes de la col·lecció"/>
@@ -3253,6 +3254,7 @@
 		<control/>
 		<control/>
 		<control caption="Crea arxius fantasma a l'esborrar descàrregues"/>
+		<control caption="Smart video series detection"/>
 	</dialog>
 	<dialog name="CMediaSettingsPage" cookie="BuCoBuBuBuCoBuBuBuBuBuStSt" caption="Reproductor">
 		<control caption="_Opcions:"/>
@@ -3457,7 +3459,7 @@
 		<control caption="Leaf a Concentrador"/>
 		<control caption="Concentrador a Concentrador"/>
 	</dialog>
-	<dialog name="CDonkeySettingsPage" cookie="BuBuBuBuBuStEdmsStBuStEdmsStBuStBuStBu" caption="eDonkey">
+	<dialog name="CDonkeySettingsPage" cookie="BuBuBuBuBuStEdmsStBuBuStEdmsStBuStBu" caption="eDonkey">
 		<control caption="Xarxa _eDonkey:"/>
 		<control caption="Connecta a eDonkey per aquesta sessió"/>
 		<control caption="Connecta sempre a eDonkey"/>
@@ -3476,7 +3478,6 @@
 		<control caption="_Eines d'eDonkey:"/>
 		<control caption="Descarrega una llista de servidors de eDonkey de la web:"/>
 		<control caption="Descarrega..."/>
-
 	</dialog>
 	<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsStEdmsStBuEdmsStBuBuBuBuEdBuBuEdBuStEd" caption="BitTorrent">
 		<control caption="_Interface:"/>
@@ -3531,16 +3532,17 @@
 		<control caption="_Configura..."/>
 		<control caption="Obtén més..."/>
 	</dialog>
-	<dialog name="CAdvancedSettingsPage" cookie="SyBuStEdmsStEd" caption="Avançades">
+	<dialog name="CAdvancedSettingsPage" cookie="SyEdmsBuBuStStEd" caption="Avançades">
 		<control/>
+		<control/>
+		<control/>
+		<control caption="Set Default"/>
 		<control caption="Configuració:"/>
 		<control caption="Valor:"/>
-		<control/>
-		<control/>
 		<control caption="Descripció:"/>
 		<control/>
 	</dialog>
-	<dialog name="CQueuePropertiesDlg" cookie="BuEdBuBuBuEdBuEdBuCoBuEdBuSyBuBuStEdmsStEdmsStEdmsBuStEdStEdmsBuEdmsBuBuBu" caption="Propietats de la cua de pujada">
+	<dialog name="CQueuePropertiesDlg" cookie="BuEdBuBuBuBuBuEdBuEdBuCoBuEdBuSyBuBuStEdmsStEdmsStEdmsBuStEdStEdmsBuEdmsBuBuBu" caption="Propietats de la cua de pujada">
 		<control caption="_Nom:"/>
 		<control/>
 		<control caption="_Criteris:"/>
@@ -3552,7 +3554,7 @@
 		<control caption="Mida màxima de l'arxiu font:"/>
 		<control/>
 		<control caption="Arxius marcats:"/>
-		<control/>
+		<control caption="Popular|Release"/>
 		<control caption="Nom com:"/>
 		<control/>
 		<control caption="Protocols:"/>
@@ -3595,7 +3597,7 @@
 		<control/>
 		<control caption="Començar a utilitzar Shareaza..."/>
 	</dialog>
-	<dialog name="CWizardConnectionPage" cookie="StCoStCoStCoStCoStCoStms" caption="Benvingut/uda a Shareaza (1/6)">
+	<dialog name="CWizardConnectionPage" cookie="StStCoStCoStCoStCoStms" caption="Benvingut/uda a Shareaza (1/6)">
 		<control caption="Per a un rendiment óptim, Shareaza necessita saber un mica més sobre la teva connexió a Internet."/>
 		<control caption="Tria el tipus de la teva connexió a Internet:"/>
 		<control caption="Mòdem|ISDN|ADSL (256K)|ADSL (512K)|ADSL (768K)|ADSL (1.5M)|ADSL (4.0M)|ADSL2 (8.0M)|ADSL2 (12.0M)|ADSL2+ (24.0M)|Cable Modem/SDSL|T1|T3|LAN|OC3"/>
@@ -3762,7 +3764,8 @@
 		<control/>
 		<control caption="Genera nou"/>
 	</dialog>
-	<dialog name="CLanguageDlg" cookie="" caption="Selecciona idioma"/>
+	<dialog name="CLanguageDlg" cookie="" caption="Selecciona idioma">
+	</dialog>
 	<dialog name="CConnectToDlg" cookie="BuCoEdBuCoBuBuBu" caption="Connecta a|Explora servidor">
 		<control caption="Inicia una nova connexió al servidor:|Explora aquest servidor:"/>
 		<control/>
@@ -3790,9 +3793,10 @@
 		<control caption="Cerca"/>
 		<control caption="Cancel·la"/>
 	</dialog>
-	<dialog name="CFilterSearchDlg" cookie="BuEdStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuCoBuBuBuBuBuBuBu" caption="Filtre">
+	<dialog name="CFilterSearchDlg" cookie="BuEdBuStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuBuBuCoBuBuBuBuBu" caption="Filtre">
 		<control caption="Sols mostra els resultats que incloguin les paraules:"/>
 		<control/>
+		<control caption="Reg. Exp."/>
 		<control caption="( també pots excloure paraules amb -paraula )"/>
 		<control caption="Tenen la mida:"/>
 		<control caption="Mínima:"/>
@@ -3810,16 +3814,16 @@
 		<control caption="Resultats erronis"/>
 		<control caption="Arxius que ja tens"/>
 		<control caption="Resultats falsos"/>
+		<control caption="Arxius DRM"/>
+		<control caption="Arxius per a adults"/>
+		<control caption="Arxius sospitosos"/>
 		<control caption="Filtra"/>
-		<control caption="Cancel·la"/>
 		<control/>
 		<control caption="Posa-ho per defecte"/>
 		<control caption="_Desa com"/>
 		<control caption="_Esborra"/>
 		<control caption="Filtres:"/>
-		<control caption="Arxius DRM"/>
-		<control caption="Arxius sospitosos"/>
-		<control caption="Arxius per a adults"/>
+		<control caption="Cancel·la"/>
 	</dialog>
 	<dialog name="CSaveFilterAsDlg" cookie="EdBuBuSt" caption="Desa filtre com...">
 		<control/>
@@ -3827,13 +3831,14 @@
 		<control caption="Cancel·la"/>
 		<control caption="Desa el filtre com"/>
 	</dialog>
-	<dialog name="CDiscoveryServiceDlg" cookie="BuEdStCoBuBu" caption="Servei de descobriments">
+	<dialog name="CDiscoveryServiceDlg" cookie="BuEdStCoBuBuSt" caption="Servei de descobriments">
 		<control caption="Adreça _del servei:"/>
 		<control/>
 		<control caption="Tipus de servei de descobriment:"/>
 		<control caption="Nus Gnutella|GWebCache|Server.met URL"/>
 		<control caption="Sí"/>
 		<control caption="Cancel·la"/>
+		<control/>
 	</dialog>
 	<dialog name="CDownloadMonitorDlg" cookie="StStStStStStStStStStStStStBuBuBuBuBu" caption="Descàrrega : Shareaza">
 		<control caption="Shareaza està descarregant:"/>
@@ -3944,12 +3949,13 @@
 		<control caption="Accepta"/>
 		<control caption="Cancel·la"/>
 	</dialog>
-	<dialog name="CGraphItemDlg" cookie="BuBuBuCoCoStStEdBuBuStBu" caption="Propietats">
+	<dialog name="CGraphItemDlg" cookie="BuBuBuCoStEdStEdBuBuStBu" caption="Propietats">
 		<control caption="Accepta"/>
 		<control caption="Cancel·la"/>
 		<control caption="Font:"/>
 		<control/>
 		<control caption="Paràmetre:"/>
+		<control/>
 		<control caption="Unitats:"/>
 		<control/>
 		<control caption="Mostra:"/>
@@ -3957,7 +3963,6 @@
 		<control/>
 		<control caption="_Esborra"/>
 	</dialog>
-
 	<dialog name="CSchemaColumnsDlg" cookie="CoSyBuBuSt" caption="Selecciona columnes de l'esquema">
 		<control/>
 		<control/>
@@ -3965,7 +3970,7 @@
 		<control caption="Cancel·lar"/>
 		<control caption="Selecciona un esquema de la llista i, després, selecciona els camps a mostrar."/>
 	</dialog>
-	<dialog name="CSecureRuleDlg" cookie="BuStCoStEdBuStEdEdEdEdStEdEdEdEdBuEdBuBuBuStCoStCoEdStEdStEdStBuBu" caption="Normes de seguretat">
+	<dialog name="CSecureRuleDlg" cookie="BuStCoStEdBuStEdEdEdEdStEdEdEdEdBuEdBuBuBuBuStCoStCoEdStEdStEdStBuBu" caption="Normes de seguretat">
 		<control caption="_Norma:"/>
 		<control caption="Tipus:"/>
 		<control caption="Adreça de xarxa (IP)|Filtre de contingut"/>
@@ -3986,6 +3991,7 @@
 		<control/>
 		<control caption="Coincideix qualsevol"/>
 		<control caption="Coincideixen totes"/>
+		<control caption="Reg. Exp."/>
 		<control caption="_Opcions:"/>
 		<control caption="Acció:"/>
 		<control caption="Cap|Accepta|Denega"/>
@@ -4120,7 +4126,7 @@
 		<control caption="Tanca"/>
 		<control/>
 	</dialog>
-	<dialog name="CDeleteFileDlg" cookie="StStBuBuBuStStBuBuBuBuStEd" caption="Esborra arxiu">
+	<dialog name="CDeleteFileDlg" cookie="StStBuBuBuStStBuStCoStCoStEd" caption="Esborra arxiu">
 		<control caption="Estàs segur d'esborrar...?"/>
 		<control/>
 		<control caption="Esborra"/>
@@ -4150,7 +4156,7 @@
 		<control caption="_Següent|Exporta"/>
 		<control caption="_Cancel·la"/>
 	</dialog>
-	<dialog name="CDownloadEditDlg" cookie="StBuStEdEdStEdBuStStEdBuStEdBuStEdBuBuStStStStBuStEdStEdBuBuBuBu" caption="Edició de la descàrrega (avançat)">
+	<dialog name="CDownloadEditPage" cookie="StBuStEdEdStEdBuStStEdBuStEdBuStEdBuBuStStStStStBuStEdStEdBu" caption="Edició de la descàrrega (avançat)">
 		<control caption="ADVERTÈNCIA: Amb aquesta finestra es poden configurar opcions avançades de la descàrrega per a usuaris avançats, que, si són utilitzades incorrectament, podrien danyar o perdre la descàrrega."/>
 		<control caption="_Nom de l'arxiu i mida:"/>
 		<control caption="Nom:"/>
@@ -4174,15 +4180,13 @@
 		<control caption="Asumeix completats i reverifica (per a recuperar descàrregues)"/>
 		<control caption="Oblida totes les fonts conegudes"/>
 		<control caption="Combina amb un arxiu local i verifica"/>
+		<control caption="Cancel·la download but save incomplete file"/>
 		<control caption="_Esborra dades:"/>
 		<control caption="Rang de bytes:"/>
 		<control/>
 		<control caption="a"/>
 		<control/>
 		<control caption="Esborra"/>
-		<control caption="Info del _Torrent..."/>
-		<control caption="Accepta"/>
-		<control caption="Cancel·la"/>
 	</dialog>
 	<dialog name="CTorrentSeedDlg" cookie="StStBuBuBuStms" caption="Obre un arxiu Torrent">
 		<control/>

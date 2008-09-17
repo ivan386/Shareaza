@@ -3179,6 +3179,8 @@
 </strings>
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
 <dialogs>
+	<dialog name="CGeneralSettingsGroup" cookie="" caption="Hlavní">
+	</dialog>
 	<dialog name="CSettingSheet" cookie="SyBuBuBu#3" caption="Nastavení Shareazy">
 		<control/>
 		<control caption="OK"/>
@@ -3186,7 +3188,6 @@
 		<control caption="Použít"/>
 		<control/>
 	</dialog>
-	<dialog name="CGeneralSettingsGroup" cookie="" caption="Hlavní"/>
 	<dialog name="CGeneralSettingsPage" cookie="BuBuBuBuStCoBuBuBuBuBuBuBuBuBuSyStEdmsStmsBuStCoStCo" caption="Hlavní">
 		<control caption="_Hlavní:"/>
 		<control caption="Automat. se připojit při startu Shareazy"/>
@@ -3215,7 +3216,7 @@
 		<control caption="Když kliknu minimalizovat:"/>
 		<control caption="Normálně na lištu|Shodit do ikony v liště"/>
 	</dialog>
-	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBuBu" caption="Knihovna">
+	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBuBuBu" caption="Knihovna">
 		<control caption="_Nastavení:"/>
 		<control caption="Pamatovat si vzhled složky"/>
 		<control caption="Sledovat složky knihovny"/>
@@ -3243,6 +3244,7 @@
 		<control/>
 		<control/>
 		<control caption="Ukládat informace o smazaných souborech"/>
+		<control caption="Smart video series detection"/>
 	</dialog>
 	<dialog name="CMediaSettingsPage" cookie="BuCoBuBuBuCoBuBuBuBuBuStSt" caption="Přehrávač">
 		<control caption="_Nastavení:"/>
@@ -3284,7 +3286,8 @@
 		<control caption="Odst_ranit"/>
 		<control caption="Plugin správce stahování se bude pokoušet stahovat jen soubory ze seznamu vlevo. Ostatní typy souborů budou stahovány webovým prohlížečem. Správce stahování je aktivní pouze pokud je Shareaza spuštěna."/>
 	</dialog>
-	<dialog name="CInternetSettingsGroup" caption="Internet"/>
+	<dialog name="CInternetSettingsGroup" caption="Internet">
+	</dialog>
 	<dialog name="CConnectionSettingsPage" cookie="BuStCoStCoStEdBuBuBuStCoStCoBuStCoBuBuBuStEdmsStEdms" caption="Připojení">
 		<control caption="Příchozí _adresa:"/>
 		<control caption="Adresa:"/>
@@ -3520,12 +3523,13 @@
 		<control caption="Na_stavení..."/>
 		<control caption="Stáhnout další"/>
 	</dialog>
-	<dialog name="CAdvancedSettingsPage" cookie="SyBuStEdmsStEd" caption="Pokročilé">
+	<dialog name="CAdvancedSettingsPage" cookie="SyEdmsBuBuStStEd" caption="Pokročilé">
 		<control/>
+		<control/>
+		<control/>
+		<control caption="Set Default"/>
 		<control caption="Nastavení vlastností:"/>
 		<control caption="Hodnota:"/>
-		<control/>
-		<control/>
 		<control caption="Popis:"/>
 		<control/>
 	</dialog>
@@ -3751,7 +3755,8 @@
 		<control/>
 		<control caption="Generovat nový"/>
 	</dialog>
-	<dialog name="CLanguageDlg" cookie="" caption="Zvolte si jazyk"/>
+	<dialog name="CLanguageDlg" cookie="" caption="Zvolte si jazyk">
+	</dialog>
 	<dialog name="CConnectToDlg" cookie="BuCoEdBuCoBuBuBu" caption="Připojit k|Prohlížet počítač">
 		<control caption="Otevřít nové připojení k uživateli nebo serveru:|Prohlížet tento počítač:"/>
 		<control/>
@@ -3779,9 +3784,10 @@
 		<control caption="Hledat"/>
 		<control caption="Zrušit"/>
 	</dialog>
-	<dialog name="CFilterSearchDlg" cookie="BuEdStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuCoBuBuBuBuBuBuBu" caption="Nastavení filtru">
+	<dialog name="CFilterSearchDlg" cookie="BuEdBuStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuBuBuCoBuBuBuBuBu" caption="Nastavení filtru">
 		<control caption="_Ukázat jen výsledky které obsahují slova:"/>
 		<control/>
+		<control caption="Reg. Exp."/>
 		<control caption="( můžete také vyloučit slova: -slovo )"/>
 		<control caption="a mají veliko_st (KB):"/>
 		<control caption="Minimálně:"/>
@@ -3799,16 +3805,16 @@
 		<control caption="Neodpovídající soubory"/>
 		<control caption="Soubory které již máte"/>
 		<control caption="Falešné výsledky"/>
-		<control caption="Filtr"/>
-		<control caption="Zrušit"/>
+		<control caption="Soubory s DRM"/>
+		<control caption="Obsah pro dospělé"/>
+		<control caption="Podezřelé soubory"/>
+		<control caption="_Filtry:"/>
 		<control/>
 		<control caption="Nastavit jako standardní"/>
 		<control caption="_Uložit jako"/>
 		<control caption="_Vymazat"/>
-		<control caption="_Filtry:"/>
-		<control caption="Soubory s DRM"/>
-		<control caption="Podezřelé soubory"/>
-		<control caption="Obsah pro dospělé"/>
+		<control caption="Filtr"/>
+		<control caption="Zrušit"/>
 	</dialog>
 	<dialog name="CSaveFilterAsDlg" cookie="EdBuBuSt" caption="Uložit filtr jako">
 		<control/>
@@ -3816,13 +3822,14 @@
 		<control caption="Zrušit"/>
 		<control caption="Uložit aktuální filtr jako"/>
 	</dialog>
-	<dialog name="CDiscoveryServiceDlg" cookie="BuEdStCoBuBu" caption="Vyhledávací služba">
+	<dialog name="CDiscoveryServiceDlg" cookie="BuEdStCoBuBuSt" caption="Vyhledávací služba">
 		<control caption="_Adresa služby:"/>
 		<control/>
 		<control caption="Typ vyhledávací služby:"/>
 		<control caption="Gnutella Bootstrap|GWebCache|Server.met URL|Blocked"/>
 		<control caption="OK"/>
 		<control caption="Zrušit"/>
+		<control/>
 	</dialog>
 	<dialog name="CDownloadMonitorDlg" cookie="StStStStStStStStStStStStStBuBuBuBuBu" caption="Stáhnout : Shareaza">
 		<control caption="Shareaza stahuje soubor:"/>
@@ -3954,7 +3961,7 @@
 		<control caption="Zrušit"/>
 		<control caption="Vyberte možnosti ze seznamu, pak vyberte pole k zobrazení jako sloupce."/>
 	</dialog>
-	<dialog name="CSecureRuleDlg" cookie="BuStCoStEdBuStEdEdEdEdStEdEdEdEdBuEdBuBuBuStCoStCoEdStEdStEdStBuBu" caption="Bezpeč.pravidla">
+	<dialog name="CSecureRuleDlg" cookie="BuStCoStEdBuStEdEdEdEdStEdEdEdEdBuEdBuBuBuBuStCoStCoEdStEdStEdStBuBu" caption="Bezpeč.pravidla">
 		<control caption="P_ravidlo:"/>
 		<control caption="Typ:"/>
 		<control caption="Síť (IP) Adresa|Obsah filtru"/>
@@ -3975,6 +3982,7 @@
 		<control/>
 		<control caption="Přizpůsobit jakékoli"/>
 		<control caption="Přizpůsobit vše"/>
+		<control caption="Reg. Exp."/>
 		<control caption="_Nastavení:"/>
 		<control caption="Akce:"/>
 		<control caption="Žádný|Přijmout|Odepřít"/>
@@ -4139,7 +4147,7 @@
 		<control caption="_Next|Export"/>
 		<control caption="_Cancel"/>
 	</dialog>
-	<dialog name="CDownloadEditDlg" cookie="StBuStEdEdStEdBuStStEdBuStEdBuStEdBuBuStStStStBuStEdStEdBuBuBuBu" caption="Upravit stahování (Pokročilé)">
+	<dialog name="CDownloadEditPage" cookie="StBuStEdEdStEdBuStStEdBuStEdBuStEdBuBuStStStStStBuStEdStEdBu" caption="Upravit stahování (Pokročilé)">
 		<control caption="UPOZORNĚNÍ: Pokročilé úpravy stahování jsou pro zkušené uživatele. Pokud je nesprávně použijete mohou a pravděpodobně způsobí poškození souboru."/>
 		<control caption="_Jméno a velikost soubrou:"/>
 		<control caption="Jméno _souboru:"/>
@@ -4163,15 +4171,13 @@
 		<control caption="Považovat soubor za 100% dokončen a znovu ověřit"/>
 		<control caption="Zapomenout všechny známé zdroje"/>
 		<control caption="Sloučit se lokálním souborem a ověřit "/>
+		<control caption="Zrušit download but save incomplete file"/>
 		<control caption="_Odstranit data:"/>
 		<control caption="Odstranit byty:"/>
 		<control/>
 		<control caption="do"/>
 		<control/>
 		<control caption="Vymazat"/>
-		<control caption="Informace o _torentu..."/>
-		<control caption="OK"/>
-		<control caption="Zrušit"/>
 	</dialog>
 	<dialog name="CTorrentSeedDlg" cookie="StStBuBuBuStms" caption="Otevřít torrent">
 		<control/>

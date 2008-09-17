@@ -11,12 +11,6 @@
 <!-- Body element, don't touch -->
 <skin xmlns="http://www.shareaza.com/schemas/Skin.xsd" version="1.0">
 
-<fonts>
-	<font name="System.Plain" face="Tahoma" size="11" />
-	<font name="System.Bold" face="Tahoma" size="11" weight="bold" />
-	<font name="Panel.Caption" face="Tahoma" size="11" />
-</fonts>
-
 <!-- Manifest -->
 <manifest	name="简体中文"
 		author="STC"
@@ -29,6 +23,12 @@
 		language="chs"
 		prompt="单击这里显示简体中文"
 />
+
+<fonts>
+	<font name="System.Plain" face="Tahoma" size="11" />
+	<font name="System.Bold" face="Tahoma" size="11" weight="bold" />
+	<font name="Panel.Caption" face="Tahoma" size="11" />
+</fonts>
 
 <!-- Toolbar Definitions -->
 <toolbars>
@@ -51,6 +51,7 @@
 		<button id="ID_TAB_SEARCH" text="搜索"/>
 		<button id="ID_TAB_TRANSFERS" text="传送"/>
 		<button id="ID_TAB_NETWORK" text="网络"/>
+		<button id="ID_TAB_IRC" text="IRC"/>
 	</toolbar>
 	<toolbar name="CMainWnd.Windowed">
 		<button id="ID_NETWORK_CONNECT" text="连接"/>
@@ -63,6 +64,7 @@
 		<button id="ID_VIEW_UPLOADS"/>
 		<button id="ID_VIEW_LIBRARY"/>
 		<button id="ID_VIEW_MEDIA"/>
+		<button id="ID_TAB_IRC"/>
 		<button id="ID_VIEW_SECURITY"/>
 		<button id="ID_VIEW_HOSTS"/>
 		<button id="ID_VIEW_DISCOVERY"/>
@@ -175,8 +177,8 @@
 		<button id="ID_DOWNLOADS_CLEAR_INCOMPLETE" text="取消"/>
 		<button id="ID_DOWNLOADS_CLEAR_COMPLETE" text="清除下载"/>
 		<separator/>
-		<button id="ID_DOWNLOADS_MONITOR" text="显示监视器"/>
 		<button id="ID_DOWNLOADS_EDIT" text="信息"/>
+		<button id="ID_DOWNLOADS_MONITOR" text="显示监视器"/>
 		<rightAlign/>
 		<button id="ID_TOOLS_DOWNLOAD" text="添加下载..."/>
 		<button id="ID_DOWNLOADS_CLEAR_COMPLETED" text="清除完成文件"/>
@@ -351,8 +353,8 @@
 		<button id="ID_NEIGHBOURS_CHAT" text="与用户聊天"/>
 		<rightAlign/>
 		<button id="ID_NETWORK_G2" text="Gnutella2"/>
-		<button id="ID_NETWORK_ED2K" text="eDonkey"/>
 		<button id="ID_NETWORK_G1" text="Gnutella1"/>
+		<button id="ID_NETWORK_ED2K" text="eDonkey"/>
 		<separator/>
 		<button id="ID_NEIGHBOURS_SETTINGS" text="设置"/>
 	</toolbar>
@@ -1389,8 +1391,8 @@
 			<item id="ID_NETWORK_DISCONNECT" text="断开(_D)"/>
 			<separator/>
 			<item id="ID_NETWORK_G2" text="Gnutella2(_G)"/>
-			<item id="ID_NETWORK_ED2K" text="edonkey(_E)"/>
 			<item id="ID_NETWORK_G1" text="Gnutella1(_1)"/>
+			<item id="ID_NETWORK_ED2K" text="edonkey(_E)"/>
 		</menu>
 		<menu text="监视器(_M)">
 			<item id="ID_NEIGHBOURS_VIEW_ALL" text="查看全部通讯量(_A)"/>
@@ -1774,13 +1776,10 @@
 		<text format="b">欢迎来到设置管理器</text>
 		<newline gap="16"/>
 
-		<text>
-			设置管理器使得高级用户可以完全定制 Shareaza 的工作方式。此
+		<text>设置管理器使得高级用户可以完全定制 Shareaza 的工作方式。此
 		</text>
 		<text format="b">互联 </text>
-		<text>
-			部分的设置决定 Shareaza 如何与其他 P2P 网络交换信息。
-		</text>
+		<text>部分的设置决定 Shareaza 如何与其他 P2P 网络交换信息。</text>
 		<newline gap="16" indent="16"/>
 
 		<link target="raza:page:CConnectionSettingsPage" format="b">连接:</link>
@@ -3188,6 +3187,9 @@
 
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
 <dialogs>
+	<dialog name="CGeneralSettingsGroup" cookie="" caption="常规">
+	</dialog>
+
 	<dialog name="CSettingSheet" cookie="SyBuBuBu#3" caption="Shareaza 设置">
 		<control/>
 		<control caption="确定"/>
@@ -3195,8 +3197,6 @@
 		<control caption="应用"/>
 		<control/>
 	</dialog>
-
-	<dialog name="CGeneralSettingsGroup" cookie="" caption="常规"/>
 
 	<dialog name="CGeneralSettingsPage" cookie="BuBuBuBuStCoBuBuBuBuBuBuBuBuBuSyStEdmsStmsBuStCoStCo" caption="常规">
 		<control caption="用户界面(_U):"/>
@@ -3227,7 +3227,7 @@
 		<control caption="标准|最小化到系统托盘"/>
 	</dialog>
 
-	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBuBu" caption="收藏">
+	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBuBuBu" caption="收藏">
 		<control caption="选项(_O):"/>
 		<control caption="记住文件夹视图"/>
 		<control caption="监视收藏文件夹"/>
@@ -3255,6 +3255,7 @@
 		<control/>
 		<control/>
 		<control caption="当删除时建立回收文件"/>
+		<control caption="Smart video series detection"/>
 	</dialog>
 
 	<dialog name="CMediaSettingsPage" cookie="BuCoBuBuBuCoBuBuBuBuBuStSt" caption="媒体">
@@ -3300,7 +3301,8 @@
 		<control caption="下载管理器插件只尝试下载下列文件类型。其他文件类型将由您的网页浏览器处理。Shareaza 只有运行时才能处理这些类型的下载。"/>
 	</dialog>
 
-	<dialog name="CInternetSettingsGroup" caption="Internet"/>
+	<dialog name="CInternetSettingsGroup" caption="Internet">
+	</dialog>
 
 	<dialog name="CConnectionSettingsPage" cookie="BuStCoStCoStEdBuBuBuStCoStCoBuStCoBuBuBuStEdmsStEdms" caption="连接">
 		<control caption="传入地址(_I):"/>
@@ -3481,15 +3483,13 @@
 		<control/>
 		<control/>
 		<control caption="个搜索结果。"/>
-        <control caption="从连接接收和更新服务器列表"/>
+		<control caption="从连接接收和更新服务器列表"/>
 		<control caption="客户端链接连接(_C):"/>
 		<control caption="连接不多于:"/>
 		<control/>
 		<control/>
 		<control caption="其他 eDonkey 客户端。"/>
 		<control caption="eDonkey 工具(_T):"/>
-		<control caption="导入 eDonkey/eMule 未完成下载 (.part):"/>
-		<control caption="导入..."/>
 		<control caption="从网络上下载 eDonkey 服务器列表:"/>
 		<control caption="下载..."/>
 	</dialog>
@@ -3551,15 +3551,17 @@
 		<control caption="获取更多"/>
 	</dialog>
 
-	<dialog name="CAdvancedSettingsPage" cookie="SyBuStEdmsStEd" caption="高级">
+	<dialog name="CAdvancedSettingsPage" cookie="SyEdmsBuBuStStEd" caption="高级">
 		<control/>
+		<control/>
+		<control/>
+		<control caption="Set Default"/>
+		<control caption="描述:"/>
 		<control caption="设置属性:"/>
 		<control caption="赋值:"/>
 		<control/>
-		<control/>
-		<control caption="描述:"/>
-		<control/>
 	</dialog>
+
 	<dialog name="CQueuePropertiesDlg" cookie="BuEdBuBuBuBuBuEdBuEdBuCoBuEdBuSyBuBuStEdmsStEdmsStEdmsBuStEdStEdmsBuEdmsBuBuBu" caption="上传队列属性">
 		<control caption="名称(_N):"/>
 		<control/>
@@ -3572,7 +3574,7 @@
 		<control caption="最大资源文件大小:"/>
 		<control/>
 		<control caption="标记的文件:"/>
-		<control/>
+		<control caption="Popular|Release"/>
 		<control caption="文件名匹配:"/>
 		<control/>
 		<control caption="协议:"/>
@@ -3617,18 +3619,17 @@
 		<control caption="开始使用 Shareaza。"/>
 	</dialog>
 
-	<dialog name="CWizardConnectionPage" cookie="StCoStCoStCoStCoStCoStms" caption="欢迎使用 Shareaza (1/6)">
+	<dialog name="CWizardConnectionPage" cookie="StStCoStCoStCoStCoStms" caption="欢迎使用 Shareaza (1/6)">
 		<control caption="为获得最佳效果，Shareaza 必须知道您的互联网连接。"/>
-		<control caption="&#160;(请选择)| 我在家中使用互联网| 我通过大学的局域网连接到互联网| 我通过办公室中的局域网连接到互联网| 我在旅馆或机场使用互联网"/>
-		<control caption="您的网络是否被防火墙保护，或者使用了 NAT 路由？"/>
-		<control caption="&#160;是，我可以接受所有传入连接| 不，我无法从互联网上接受传入连接| 我不知道，请自动选择防火墙状态"/>
-		<control caption="您的互联网连接是否有防火墙保护，或者使用了 NAT 路由器？"/>
-		<control caption="&#160;是，我可以完全访问互联网| 不，但我将为 Shareaza 设置端口映射| 不，所以我无法从互联网接受传入连接| 我不知道，请自动选择防火墙状态"/>
 		<control caption="如果您知道互联网连接速度，请在下面做出选择:"/>
 		<control caption="| 调制解调器拨号| ISDN| ADSL (256K)| ADSL (512K)| ADSL (768K)| ADSL (1.5M)| ADSL (4.0M)| ADSL2 (8.0M)| ADSL2 (12.0M)| ADSL2+ (24.0M)| Cable Modem/SDSL| T1| T3| LAN| OC3"/>
 		<control caption="或选择:"/>
 		<control/>
 		<control caption="状态:"/>
+		<control/>
+		<control caption="Do you want to automatically setup port-forwarding by using UPnP?"/>
+		<control/>
+		<control caption="Status:"/>
 		<control/>
 	</dialog>
 
@@ -3664,7 +3665,7 @@
 		<control/>
 	</dialog>
 
-	<dialog name="CWizardInterfacePage" cookie="StBuBuBuStStBuBuBu" caption="欢迎使用 Shareaza (4/6)">
+	<dialog name="CWizardInterfacePage" cookie="StBuBuBuStStBuBu" caption="欢迎使用 Shareaza (4/6)">
 		<control caption="Shareaza 支持不同的用户界面，因此您可以选择最适合您的界面。您可以在任何时候改变这些选项"/>
 		<control caption="请选择用户界面:"/>
 		<control caption="普通模式"/>
@@ -3672,7 +3673,6 @@
 		<control caption="简单，易用的菜单和按钮。{n}与其他的文件共享程序相似的界面。"/>
 		<control caption="增强模式提供给专家用户更多的命令和窗口等。{n}可能对新用户来说有点困难！"/>
 		<control caption="显示简单的下载进程栏。(减小 CPU 负荷)"/>
-		<control caption="显示额外的 Torrent 界面元素。"/>
 		<control caption="监视 Torrent 链接"/>
 	</dialog>
 
@@ -3803,7 +3803,8 @@
 		<control caption="生成新码"/>
 	</dialog>
 
-	<dialog name="CLanguageDlg" cookie="" caption="选择语言"/>
+	<dialog name="CLanguageDlg" cookie="" caption="选择语言">
+	</dialog>
 
 	<dialog name="CConnectToDlg" cookie="BuCoEdBuCoBuBuBu" caption="连接到|浏览用户">
 		<control caption="初始化新的连接到主机或服务器:|浏览该用户:"/>
@@ -3835,9 +3836,10 @@
 		<control caption="取消"/>
 	</dialog>
 
-	<dialog name="CFilterSearchDlg" cookie="BuEdStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuCoBuBuBuBuBuBuBu" caption="过滤匹配项">
+	<dialog name="CFilterSearchDlg" cookie="BuEdBuStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuBuBuCoBuBuBuBuBu" caption="过滤匹配项">
 		<control caption="只显示包含此词组的匹配项(_W):"/>
 		<control/>
+		<control caption="Reg. Exp."/>
 		<control caption="( 您也可以通过 - 来排除字词 )"/>
 		<control caption="以及大小(_S):"/>
 		<control caption="最小:"/>
@@ -3855,16 +3857,16 @@
 		<control caption="无匹配文件"/>
 		<control caption="已存在文件"/>
 		<control caption="虚假结果"/>
-		<control caption="过滤"/>
-		<control caption="取消"/>
+		<control caption="数字版权管理文件"/>
+		<control caption="成人结果"/>
+		<control caption="可疑文件"/>
+		<control caption="过滤:"/>
 		<control/>
 		<control caption="设为默认"/>
 		<control caption="另存为(_S)"/>
 		<control caption="删除(_D)"/>
-		<control caption="过滤:"/>
-		<control caption="数字版权管理文件"/>
-		<control caption="可疑文件"/>
-		<control caption="成人结果"/>
+		<control caption="过滤"/>
+		<control caption="取消"/>
 	</dialog>
 
 	<dialog name="CSaveFilterAsDlg" cookie="EdBuBuSt" caption="保存过滤为">
@@ -4001,13 +4003,13 @@
 		<control caption="取消"/>
 	</dialog>
 
-	<dialog name="CGraphItemDlg" cookie="BuBuBuCoCoStStEdBuBuStBu" caption="图表项目属性">
+	<dialog name="CGraphItemDlg" cookie="BuBuBuCoStEdStEdBuBuStBu" caption="图表项目属性">
 		<control caption="确定"/>
 		<control caption="取消"/>
 		<control caption="资源(_S):"/>
 		<control/>
-		<control/>
 		<control caption="参数:"/>
+		<control/>
 		<control caption="单位:"/>
 		<control/>
 		<control caption="显示(_D):"/>
@@ -4024,7 +4026,7 @@
 		<control caption="从列表中选择种类，然后选择要显示的项目。"/>
 	</dialog>
 
-	<dialog name="CSecureRuleDlg" cookie="BuStCoStEdBuStEdEdEdEdStEdEdEdEdBuEdBuBuBuStCoStCoEdStEdStEdStBuBu" caption="安全策略">
+	<dialog name="CSecureRuleDlg" cookie="BuStCoStEdBuStEdEdEdEdStEdEdEdEdBuEdBuBuBuBuStCoStCoEdStEdStEdStBuBu" caption="安全策略">
 		<control caption="规则(_R):"/>
 		<control caption="类型:"/>
 		<control caption="网络 (IP) 地址|内容过滤"/>
@@ -4045,6 +4047,7 @@
 		<control/>
 		<control caption="任意匹配"/>
 		<control caption="完全匹配"/>
+		<control caption="Reg. Exp."/>
 		<control caption="选项(_O):"/>
 		<control caption="操作:"/>
 		<control caption="无|接受|拒绝"/>
@@ -4164,7 +4167,7 @@
 		<control caption="确定"/>
 		<control caption="取消"/>
 		<control caption="您曾经下载并且删除此文件。您打算怎么做？"/>
-		<control caption="警告！！！检测到重复文件。一些恶意软件可能感染您的收藏。请确认您是手动下载或存放此文件。否则，请关闭 Shareaza 并用杀毒软件扫描您的电脑。"/>
+		<control caption="警告！检测到重复文件。一些恶意软件可能感染您的收藏。请确认您是手动下载或存放此文件。否则，请关闭 Shareaza 并用杀毒软件扫描您的电脑。"/>
 	</dialog>
 
 	<dialog name="CCloseModeDlg" cookie="StStBuBuBuBuBu" caption="关闭按钮">
@@ -4192,7 +4195,7 @@
 		<control/>
 	</dialog>
 
-	<dialog name="CDeleteFileDlg" cookie="StStBuBuBuStStBuBuBuBuStEd" caption="删除文件">
+	<dialog name="CDeleteFileDlg" cookie="StStBuBuBuStStBuStCoStCoStEd" caption="删除文件">
 		<control caption="您确定要删除:"/>
 		<control/>
 		<control caption="删除"/>
@@ -4200,10 +4203,11 @@
 		<control caption="取消"/>
 		<control/>
 		<control caption="Shareaza 能够记住此文件，当您再次搜索到它时将会给予提示。请选择删除此文件的原因:"/>
-		<control caption="我不想添加注释。"/>
-		<control caption="这个文件名不正确，可能会产生误导。"/>
-		<control caption="这个文件的质量太差。"/>
-		<control caption="这个文件是假的，损坏或者不可用。"/>
+		<control caption="Create a ghost file"/>
+		<control caption="The reason for deleting:"/>
+		<control caption="Just deleting, keep my comments|This file is named incorrectly, and could be misleading|This file is of very poor quality|This file is a fake, or is corrupt or somehow unusable|Replace my comments with the new ones"/>
+		<control caption="File rating:"/>
+		<control caption="(No Rating)|Fake/Corrupt/Misleading|Poor|Average|Good|Very Good|Excellent"/>
 		<control caption="您可以输入短的注释描述为什么文件是坏的:"/>
 		<control/>
 	</dialog>
@@ -4223,7 +4227,7 @@
 		<control caption="取消(_C)"/>
 	</dialog>
 
-	<dialog name="CDownloadEditDlg" cookie="StBuStEdEdStEdBuStStEdBuStEdBuStEdBuBuStStStStBuStEdStEdBuBuBuBu" caption="编辑下载">
+	<dialog name="CDownloadEditPage" cookie="StBuStEdEdStEdBuStStEdBuStEdBuStEdBuBuStStStStStBuStEdStEdBu" caption="编辑下载">
 		<control caption="警告: 此对话框为高级用户提供下载编辑功能，如果使用不当可能会使软件停止工作。"/>
 		<control caption="文件名称和大小(_Z):"/>
 		<control caption="文件名称:"/>
@@ -4247,15 +4251,13 @@
 		<control caption="假设文件 100％ 完整并重检"/>
 		<control caption="忽略所有已知资源"/>
 		<control caption="与本地文件合并且校验"/>
+		<control caption="取消(save incomplete file)"/>
 		<control caption="数据擦除(_E):"/>
 		<control caption="字节范围:"/>
 		<control/>
 		<control caption="到"/>
 		<control/>
 		<control caption="擦除"/>
-		<control caption="Torrent 信息(_T)..."/>
-		<control caption="确定"/>
-		<control caption="取消"/>
 	</dialog>
 
 	<dialog name="CTorrentSeedDlg" cookie="StStBuBuBuStms" caption="打开 Torrent 文件">

@@ -3237,6 +3237,8 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 </strings>
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
 <dialogs>
+	<dialog name="CGeneralSettingsGroup" cookie="" caption="Generellt">
+	</dialog>
 	<dialog name="CSettingSheet" cookie="SyBuBuBu#3" caption="Inställningar för Shareaza">
 		<control/>
 		<control caption="OK"/>
@@ -3244,7 +3246,6 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<control caption="Verkställ" />
 		<control/>
 	</dialog>
-	<dialog name="CGeneralSettingsGroup" cookie="" caption="Generellt"/>
 	<dialog name="CGeneralSettingsPage" cookie="BuBuBuBuStCoBuBuBuBuBuBuBuBuBuSyStEdmsStmsBuStCoStCo" caption="Generellt">
 		<control caption="_Generellt:"/>
 		<control caption="Anslut automatiskt vid Shareazas start"/>
@@ -3273,7 +3274,7 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<control caption="När jag klickar minimera." />
 		<control caption="Normal|Minimera till aktivitetsfltet"/>
 	</dialog>
-	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBuBu" caption="Bibliotek">
+	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBuBuBu" caption="Bibliotek">
 		<control caption="_Alternativ:"/>
 		<control caption="Kom ihåg mappvyer" />
 		<control caption="Bevaka biblioteksmappar" />
@@ -3301,6 +3302,7 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<control/>
 		<control/>
 		<control caption="Skapa skuggfil vid radering"/>
+		<control caption="Smart video series detection"/>
 	</dialog>
 	<dialog name="CMediaSettingsPage" cookie="BuCoBuBuBuCoBuBuBuBuBuStSt" caption="Mediaspelare">
 		<control caption="_Alternativ:" />
@@ -3378,7 +3380,8 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<control caption="_Radera" />
 		<control caption="Insticksprogrammet för nedladdningshantering kommer endast att försöka att ladda ned filtyper som visas här. Andra filtyper kommer att hanteras av din webbläsare. Shareaza måste vara startad för att hantera nedladdningar." />
 	</dialog>
-	<dialog name="CInternetSettingsGroup" caption="Internet"/>
+	<dialog name="CInternetSettingsGroup" caption="Internet">
+	</dialog>
 	<dialog name="CConnectionSettingsPage" cookie="BuStCoStCoStEdBuBuBuStCoStCoBuStCoBuBuBuStEdmsStEdms" caption="Anslutning">
 		<control caption="_Ingående adress:" />
 		<control caption="Adress:" />
@@ -3407,7 +3410,6 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<control/>
 		<control/>
 	</dialog>
-
 	<dialog name="CDownloadsSettingsPage" cookie="BuEdBuBuEdBuBuStEdmsStEdmsStEdmsBuStCoStCoBuBu" caption="Nedladdningar">
 		<control caption="Spara _färdiga nedladdningar här:" />
 		<control/>
@@ -3615,16 +3617,17 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<control caption="_Inställningar…" />
 		<control caption="Skaffa fler" />
 	</dialog>
-	<dialog name="CAdvancedSettingsPage" cookie="SyBuStEdmsStEd" caption="Avancerat">
+	<dialog name="CAdvancedSettingsPage" cookie="SyEdmsBuBuStStEd" caption="Avancerat">
 		<control/>
+		<control/>
+		<control/>
+		<control caption="Set Default"/>
 		<control caption="Egenskaper för inställning:" />
 		<control caption="Värde:" />
-		<control/>
-		<control/>
 		<control caption="Beskrivning:" />
 		<control/>
 	</dialog>
-	<dialog name="CQueuePropertiesDlg" cookie="BuEdBuBuBuEdBuEdBuCoBuEdBuSyBuBuStEdmsStEdmsStEdmsBuStEdStEdmsBuEdmsBuBuBu" caption="Egenskaper för uppladdningskö">
+	<dialog name="CQueuePropertiesDlg" cookie="BuEdBuBuBuBuBuEdBuEdBuCoBuEdBuSyBuBuStEdmsStEdmsStEdmsBuStEdStEdmsBuEdmsBuBuBu" caption="Egenskaper för uppladdningskö">
 		<control caption="_Namn:" />
 		<control/>
 		<control caption="_Kriterium:" />
@@ -3636,7 +3639,7 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<control caption="Maximal storlek av källfilen:" />
 		<control/>
 		<control caption="Markerade filer:" />
-		<control/>
+		<control caption="Popular|Release"/>
 		<control caption="Filnamnsmatchning:" />
 		<control/>
 		<control caption="Protokoll:" />
@@ -3665,7 +3668,6 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<control caption="Avbryt" />
 		<control caption="Reward uploaders"/>
 	</dialog>
-
 	<dialog name="CWizardWelcomePage" cookie="StStStStStStStStStStStSt" caption="Välkommen till Shareaza">
 		<control caption="Välkommen till Shareaza!" />
 		<control caption="Om du inte har använt Shareaza eller andra fildelningsnätverk förut kan denna snabbstartsguide hjälpa dig att anpassa din kopia genom några enkla steg." />
@@ -3758,7 +3760,6 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<control caption="Starta Shareaza när Windows startas" />
 		<control caption="Ha kul med Shareaza!" />
 	</dialog>
-
 	<dialog name="CProfileManagerDlg" cookie="SyBuBuBu#3" caption="Redigera min profil">
 		<control/>
 		<control caption="OK"/>
@@ -3780,7 +3781,6 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<control caption="Ålder:" />
 		<control caption="Tillåt andra att visa min profil" />
 	</dialog>
-
 	<dialog name="CContactProfilePage" cookie="BuStEdBuStEdStEdStEdStEdStEd" caption="Kontakt">
 		<control caption="_Epostadresser:" />
 		<control caption="Primär:" />
@@ -3797,7 +3797,6 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<control caption="Jabber ID:"/>
 		<control/>
 	</dialog>
-
 	<dialog name="CProfileProfilePage" cookie="BuStCoStCoBuStEdStEdBuLiBuBuCo" caption="Profil">
 		<control caption="_Plats:" />
 		<control caption="Land:" />
@@ -3815,11 +3814,9 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<control caption="Readera &gt;" />
 		<control/>
 	</dialog>
-
 	<dialog name="CBioProfilePage" cookie="Ed" caption="Biografi">
 		<control/>
 	</dialog>
-
 	<dialog name="CAvatarProfilePage" cookie="BuStBuStBuBu" caption="Avatar">
 		<control caption="_Förhandsvisning:" />
 		<control/>
@@ -3843,7 +3840,6 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<control caption="Favoritfiler är rekommenderade för användare som läser din profil. Du kan skapa favoritfiler genom att lägga till dem till din favoritmapp i ditt bibliotek." />
 		<control/>
 	</dialog>
-
 	<dialog name="CCertificateProfilePage" cookie="StBuStStStStBu" caption="Certifikat">
 		<control caption="Gnutellaanvändare identifieras med en global unik identitet och tillhörande publika och privata nyckelpar. Normalt finns det inget behov av att generera ett nytt ID, men Shareaza ger denna möjlighet för avancerade användare." />
 		<control caption="_Gnutellas globala unika identifikationscertifikat:" />
@@ -3853,7 +3849,8 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<control/>
 		<control caption="Skapa nytt" />
 	</dialog>
-	<dialog name="CLanguageDlg" cookie="" caption="Välj språk" />
+	<dialog name="CLanguageDlg" cookie="" caption="Välj språk">
+	</dialog>
 	<dialog name="CConnectToDlg" cookie="BuCoEdBuCoBuBuBu" caption="Anslut till|Visa värdens filer">
 		<control caption="Skapa en ny anslutning till värden eller servern:|Visa värdens filer" />
 		<control/>
@@ -3881,10 +3878,10 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<control caption="Sök" />
 		<control caption="Avbryt" />
 	</dialog>
-
-	<dialog name="CFilterSearchDlg" cookie="BuEdStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBu" caption="Filtrera träffar">
+	<dialog name="CFilterSearchDlg" cookie="BuEdBuStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuBuBuCoBuBuBuBuBu" caption="Filtrera träffar">
 		<control caption="Visa endast träffar som innehåller dessa _ord:" />
 		<control/>
+		<control caption="Reg. Exp."/>
 		<control caption="(du kan också välja bort ord med -ord)" />
 		<control caption="Och är av _storleken (KB):" />
 		<control caption="Minsta:" />
@@ -3902,16 +3899,16 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<control caption="Filer som inte matchar" />
 		<control caption="Filer du redan har" />
 		<control caption="Bluffresultat" />
-		<control caption="Filter"/>
-		<control caption="Avbryt"/>
+		<control caption="DRM filer"/>
+		<control caption="Filer med åldersgräns"/>
+		<control caption="Misstänkta filer"/>
+		<control caption="Filter:"/>
 		<control/>
 		<control caption="Välj som standard"/>
 		<control caption="_Spara som"/>
 		<control caption="_Radera"/>
-		<control caption="Filter:"/>
-		<control caption="DRM filer"/>
-		<control caption="Misstänkta filer"/>
-		<control caption="Filer med åldersgräns"/>
+		<control caption="Filter"/>
+		<control caption="Avbryt"/>
 	</dialog>
 	<dialog name="CSaveFilterAsDlg" cookie="EdBuBuSt" caption="Spara filter som">
 		<control/>
@@ -3919,13 +3916,14 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<control caption="Avbryt"/>
 		<control caption="Spara nuvarande filter som"/>
 	</dialog>
-	<dialog name="CDiscoveryServiceDlg" cookie="BuEdStCoBuBu" caption="Upptäckstjänst">
+	<dialog name="CDiscoveryServiceDlg" cookie="BuEdStCoBuBuSt" caption="Upptäckstjänst">
 		<control caption="Tjänst_adress:"/>
 		<control/>
 		<control caption="Typ av upptäckstjänst:"/>
 		<control caption="Gnutella Bootstrap|GWebCache|Server.met URL|Blocked"/>
 		<control caption="OK"/>
 		<control caption="Avbryt"/>
+		<control/>
 	</dialog>
 	<dialog name="CDownloadMonitorDlg" cookie="StStStStStStStStStStStStStBuBuBuBuBu" caption="Ladda ned : Shareaza">
 		<control caption="Shareaza laddas ned:" />
@@ -3977,7 +3975,6 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<control/>
 		<control/>
 	</dialog>
-
 	<dialog name="CFileSharingPage" cookie="StBuBuBuStCoStSyEd" caption="Utdelas">
 		<control caption="Enkel utdelning" />
 		<control caption="Dela ut denna fil om mappen som filen finns i är utdelad" />
@@ -4037,7 +4034,7 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<control caption="OK"/>
 		<control caption="Avbryt" />
 	</dialog>
-	<dialog name="CGraphItemDlg" cookie="BuBuBuCoCoStStEdBuBuStBu" caption="Egenskaper för diagramartikel">
+	<dialog name="CGraphItemDlg" cookie="BuBuBuCoStEdStEdBuBuStBu" caption="Egenskaper för diagramartikel">
 		<control caption="OK"/>
 		<control caption="Avbryt"/>
 		<control caption="_Källa:"/>
@@ -4058,7 +4055,7 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<control caption="Avbryt" />
 		<control caption="Välj ett schema från listan. Välj sedan fälten att visa som kolumner." />
 	</dialog>
-	<dialog name="CSecureRuleDlg" cookie="BuStCoStEdBuStEdEdEdEdStEdEdEdEdBuEdBuBuBuStCoStCoEdStEdStEdStBuBu" caption="Säkerhetsregel">
+	<dialog name="CSecureRuleDlg" cookie="BuStCoStEdBuStEdEdEdEdStEdEdEdEdBuEdBuBuBuBuStCoStCoEdStEdStEdStBuBu" caption="Säkerhetsregel">
 		<control caption="_Regel:" />
 		<control caption="Typ:" />
 		<control caption="Network (IP) Address|Content Filter"/>
@@ -4079,6 +4076,7 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<control/>
 		<control caption="Matcha någon" />
 		<control caption="Matcha alla" />
+		<control caption="Reg. Exp."/>
 		<control caption="_Alternativ:" />
 		<control caption="Effekt:" />
 		<control caption="Ingen|Acceptera|Neka" />
@@ -4111,7 +4109,6 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<control caption="Inkludera _mig själv som en bestämd källa i URLen" />
 		<control caption="Avbryt" />
 	</dialog>
-
 	<dialog name="CURLExportDlg" cookie="StStEdStCoStCoBuBumsBu" caption="Exportera URI">
 		<control/>
 		<control caption="Du har valt att exportera %lu filer som Shareaza-URI-referenser. Välj formatet för dina URI och klicka på Save." />
@@ -4119,7 +4116,7 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<control caption="Infoga symbol:" />
 		<control caption="Tiger Root|SHA1|MD5|ED2K (CMD4)|Filename|Filename (URI)|Base Filename|File Extension|File Size|File Size (bytes)|Folder Path|Local Host|Local Port"/>
 		<control caption="Välj förinställd:" />
-		<control/>
+		<control caption="Magnet|eDonkey|Magnet HTML|eDonkey HTML"/>
 		<control caption="Avbryt" />
 		<control caption="Spara…" />
 		<control/>
@@ -4178,7 +4175,7 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<control caption="http://shareaza.sourceforge.net/"/>
 		<control caption="OK"/>
 	</dialog>
-	<dialog name="CExistingFileDlg" cookie="StStStStStBuBuBuBuBuSt" caption="Eisterande fil">
+	<dialog name="CExistingFileDlg" cookie="StStStStStBuBuBuBuBuStSt" caption="Eisterande fil">
 		<control/>
 		<control/>
 		<control/>
@@ -4214,7 +4211,6 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<control caption="Stäng" />
 		<control/>
 	</dialog>
-
 	<dialog name="CDeleteFileDlg" cookie="StStBuBuBuStStBuStCoStCoStEd" caption="Radera fil">
 		<control caption="Är du säker på att du vill radera:" />
 		<control/>
@@ -4245,7 +4241,7 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<control caption="_Nästa|Exportera..."/>
 		<control caption="_Avbryt"/>
 	</dialog>
-	<dialog name="CDownloadEditDlg" cookie="StBuStEdEdStEdBuStStEdBuStEdBuStEdBuBuStStStStBuStEdStEdBuBuBuBu" caption="Redigera nedladdning">
+	<dialog name="CDownloadEditPage" cookie="StBuStEdEdStEdBuStStEdBuStEdBuStEdBuBuStStStStStBuStEdStEdBu" caption="Redigera nedladdning">
 		<control caption="VARNING: Denna dialog tillhandahåller avancerade nedladdningsinställningar för avancerade användare. Felaktiga användning kan leda till korrupta filer." />
 		<control caption="Filnamn och stor_lek:"/>
 		<control caption="Fil_namn:" />
@@ -4269,15 +4265,13 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<control caption="Anta att filen är 100% färdig och återverifiera" />
 		<control caption="Glöm alla kända källor" />
 		<control caption="Slå ihop med lokal fil och verifiera"/>
+		<control caption="Avbryt (save incomplete file)"/>
 		<control caption="Data_borttagning:"/>
 		<control caption="Ta bort bytes:" />
 		<control/>
 		<control caption="till"/>
 		<control/>
 		<control caption="Ta bort" />
-		<control caption="_Torrentinformation…" />
-		<control caption="OK"/>
-		<control caption="Avbryt" />
 	</dialog>
 	<dialog name="CTorrentSeedDlg" cookie="StStBuBuBuStms" caption="Öppna torrentfil">
 		<control/>
@@ -4341,6 +4335,7 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<control caption="OK"/>
 		<control caption="Avbryt" />
 		<control caption="Färdiga _filmappar:" />
+		<control/>
 		<control/>
 	</dialog>
 	<dialog name="CMediaVisDlg" cookie="StBuSyCoBuBuBu" caption="Välj visualisering">

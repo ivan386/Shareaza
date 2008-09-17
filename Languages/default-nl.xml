@@ -245,6 +245,8 @@
 	<toolbar name="CLibraryFileView.Physical.Basic">
 		<button id="ID_LIBRARY_LAUNCH" text="Openen of afspelen"/>
 		<button id="ID_LIBRARY_ENQUEUE" text="Toevoegen aan afspeellijst"/>
+		<separator/>
+		<button id="ID_WEBSERVICES_LIST" text="Web Services"/>
 		<rightAlign/>
 		<separator/>
 		<control id="IDC_SEARCH_BOX" width="120"/>
@@ -253,6 +255,8 @@
 	<toolbar name="CLibraryFileView.Physical">
 		<button id="ID_LIBRARY_LAUNCH" text="Openen of afspelen"/>
 		<button id="ID_LIBRARY_ENQUEUE" text="Toevoegen aan afspeellijst"/>
+		<separator/>
+		<button id="ID_LIBRARY_PROPERTIES" text="Properties"/>
 		<separator/>
 		<button id="ID_LIBRARY_PROPERTIES" text="Eigenschappen"/>
 		<separator/>
@@ -268,6 +272,8 @@
 		<button id="ID_LIBRARY_LAUNCH" text="Openen of afspelen"/>
 		<button id="ID_LIBRARY_ENQUEUE" text="Toevoegen aan afspeellijst"/>
 		<button id="ID_LIBRARY_FOLDER_ENQUEUE" text="Album afspelen"/>
+		<separator/>
+		<button id="ID_WEBSERVICES_LIST" text="Web Services"/>
 		<rightAlign/>
 		<separator/>
 		<control id="IDC_SEARCH_BOX" width="120"/>
@@ -277,6 +283,8 @@
 		<button id="ID_LIBRARY_LAUNCH" text="Openen of afspelen"/>
 		<button id="ID_LIBRARY_ENQUEUE" text="Toevoegen aan afspeellijst"/>
 		<button id="ID_LIBRARY_FOLDER_ENQUEUE" text="Album afspelen"/>
+		<separator/>
+		<button id="ID_LIBRARY_PROPERTIES" text="Properties"/>
 		<separator/>
 		<button id="ID_LIBRARY_PROPERTIES" text="Eigenschappen"/>
 		<rightAlign/>
@@ -400,6 +408,8 @@
 		<button id="ID_HOSTCACHE_G2_CACHE" text="G2 cache"/>
 		<button id="ID_HOSTCACHE_G1_CACHE" text="G1 cache"/>
 		<button id="ID_HOSTCACHE_ED2K_CACHE" text="eDonkey cache"/>
+		<button id="ID_HOSTCACHE_BT_CACHE" text="BitTorrent Cache"/>
+		<button id="ID_HOSTCACHE_KAD_CACHE" text="Kademlia Cache"/>
 	</toolbar>
 	<!-- PRIVATE CHAT FRAME -->
 	<toolbar name="CPrivateChatFrame">
@@ -1548,7 +1558,6 @@
 			<heading align="middle">V E R B I N D I N G &#160; M A K E N</heading>
 			<newline gap="8" indent="42"/>
 			<text>Welcome bij Shareaza!</text>
-			
 			<newline gap="8" indent="42"/>
 			<text>Je bent momenteel niet verbonden met één van de peer-to-peer netwerken. &#160;</text>
 			<link target="raza:command:ID_NETWORK_CONNECT">Klik hier om te starten!</link>
@@ -3220,6 +3229,8 @@
 </strings>
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
 <dialogs>
+	<dialog name="CGeneralSettingsGroup" cookie="" caption="Algemeen">
+	</dialog>
 	<dialog name="CSettingSheet" cookie="SyBuBuBu#3" caption="Shareaza instellingen">
 		<control/>
 		<control caption="OK"/>
@@ -3227,7 +3238,6 @@
 		<control caption="Toepassen"/>
 		<control/>
 	</dialog>
-	<dialog name="CGeneralSettingsGroup" cookie="" caption="Algemeen"/>
 	<dialog name="CGeneralSettingsPage" cookie="BuBuBuBuStCoBuBuBuBuBuBuBuBuBuSyStEdmsStmsBuStCoStCo" caption="Algemeen">
 		<control caption="_Algemeen:"/>
 		<control caption="Verbind bij opstarten van Shareaza"/>
@@ -3256,7 +3266,7 @@
 		<control caption="Als ik minimaliseer:"/>
 		<control caption="Normaal|Minimaliseer"/>
 	</dialog>
-	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBuBu" caption="Bibliotheek">
+	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBuBuBu" caption="Bibliotheek">
 		<control caption="_Opties:"/>
 		<control caption="Herinner de mappenweergave"/>
 		<control caption="Bewaak bibliotheekmappen"/>
@@ -3284,6 +3294,7 @@
 		<control/>
 		<control/>
 		<control caption="Maak een spookbestand aan tijdens verwijderen"/>
+		<control caption="Smart video series detection"/>
 	</dialog>
 	<dialog name="CMediaSettingsPage" cookie="BuCoBuBuBuCoBuBuBuBuBuStSt" caption="Media Player">
 		<control caption="_Opties:"/>
@@ -3361,7 +3372,8 @@
 		<control caption="_Verwijderen"/>
 		<control caption="De plugin voor de downloadbeheerder zal alleen de bestandstypes uit deze lijst proberen te downloaden. Andere bestandstypes zullen worden behandeld door je internetbrowser. Shareaza moet wel werkend zijn om downloads te kunnen beheren."/>
 	</dialog>
-	<dialog name="CInternetSettingsGroup" caption="Verkeer"/>
+	<dialog name="CInternetSettingsGroup" caption="Verkeer">
+	</dialog>
 	<dialog name="CConnectionSettingsPage" cookie="BuStCoStCoStEdBuBuBuStCoStCoBuStCoBuBuBuStEdmsStEdms" caption="Verbinding">
 		<control caption="_Inkomend adres:"/>
 		<control caption="Adres:"/>
@@ -3597,26 +3609,29 @@
 		<control caption="_Instellingen..."/>
 		<control caption="Meer..."/>
 	</dialog>
-	<dialog name="CAdvancedSettingsPage" cookie="SyBuStEdmsStEd" caption="Uitgebreid">
+	<dialog name="CAdvancedSettingsPage" cookie="SyEdmsBuBuStStEd" caption="Uitgebreid">
 		<control/>
+		<control/>
+		<control/>
+		<control caption="Set Default"/>
 		<control caption="Eigenschappen van de instelling:"/>
 		<control caption="Waarde:"/>
-		<control/>
-		<control/>
 		<control caption="Beschrijving:"/>
 		<control/>
 	</dialog>
-	<dialog name="CQueuePropertiesDlg" cookie="BuEdBuBuBuEdBuEdBuCoBuEdBuSyBuBuStEdmsStEdmsStEdmsBuStEdStEdmsBuEdmsBuBuBu" caption="Eigenschappen van de uploadwachtrij">
+	<dialog name="CQueuePropertiesDlg" cookie="BuEdBuBuBuBuBuEdBuEdBuCoBuEdBuSyBuBuStEdmsStEdmsStEdmsBuStEdStEdmsBuEdmsBuBuBu" caption="Eigenschappen van de uploadwachtrij">
 		<control caption="_Naam:"/>
 		<control/>
 		<control caption="_Ingangscriteria:"/>
 		<control caption="Alleen gedeeltelijke bestanden"/>
+		<control caption="Shared Library files only"/>
+		<control caption="Both partial and library files"/>
 		<control caption="Minimale bestandsgrootte:"/>
 		<control/>
 		<control caption="Maximale bestandsgrootte:"/>
 		<control/>
 		<control caption="Gemarkeerd als:"/>
-		<control/>
+		<control caption="Popular|Release"/>
 		<control caption="Gelijk aan bestand:"/>
 		<control/>
 		<control caption="Protocollen:"/>
@@ -3826,7 +3841,8 @@
 		<control/>
 		<control caption="Nieuwe genereren"/>
 	</dialog>
-	<dialog name="CLanguageDlg" cookie="" caption="Een taal kiezen..."/>
+	<dialog name="CLanguageDlg" cookie="" caption="Een taal kiezen...">
+	</dialog>
 	<dialog name="CConnectToDlg" cookie="BuCoEdBuCoBuBuBu" caption="Verbinden met|Gastheer bekijken">
 		<control caption="Een nieuwe verbinding met deze gastheer of server aanmaken:|Deze gastheer bekijken:"/>
 		<control/>
@@ -3854,9 +3870,10 @@
 		<control caption="Zoeken"/>
 		<control caption="Annuleren"/>
 	</dialog>
-	<dialog name="CFilterSearchDlg" cookie="BuEdStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuCoBuBuBuBuBuBuBu" caption="Filter resultaten">
+	<dialog name="CFilterSearchDlg" cookie="BuEdBuStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuBuBuCoBuBuBuBuBu" caption="Filter resultaten">
 		<control caption="Alleen resultaten tonen die deze _woorden bevatten:"/>
 		<control/>
+		<control caption="Reg. Exp."/>
 		<control caption="( je kunt ook woorden uitsluiten met &quot;-woord&quot; )"/>
 		<control caption="En met _grootte:"/>
 		<control caption="Minimaal:"/>
@@ -3874,16 +3891,16 @@
 		<control caption="Ongeschikte bestanden"/>
 		<control caption="Bestanden die je al hebt"/>
 		<control caption="Nepresultaten"/>
-		<control caption="Filter"/>
-		<control caption="Annuleren"/>
+		<control caption="DRM bestanden"/>
+		<control caption="16+ resultaten"/>
+		<control caption="Verdachte bestanden"/>
+		<control caption="Filters:"/>
 		<control/>
 		<control caption="Markeer als standaard"/>
 		<control caption="_Opslaan als"/>
 		<control caption="_Verwijder"/>
-		<control caption="Filters:"/>
-		<control caption="DRM bestanden"/>
-		<control caption="Verdachte bestanden"/>
-		<control caption="16+ resultaten"/>
+		<control caption="Filter"/>
+		<control caption="Annuleren"/>
 	</dialog>
 	<dialog name="CSaveFilterAsDlg" cookie="EdBuBuSt" caption="Filter opslaan als">
 		<control/>
@@ -3891,13 +3908,14 @@
 		<control caption="Annuleren"/>
 		<control caption="Geef een filternaam:"/>
 	</dialog>
-	<dialog name="CDiscoveryServiceDlg" cookie="BuEdStCoBuBu" caption="Discovery service">
+	<dialog name="CDiscoveryServiceDlg" cookie="BuEdStCoBuBuSt" caption="Discovery service">
 		<control caption="Service_adres:"/>
 		<control/>
 		<control caption="Discovery service type:"/>
 		<control caption="Gnutella Bootstrap|GWebCache|Server.met URL|Blocked"/>
 		<control caption="OK"/>
 		<control caption="Annuleren"/>
+		<control/>
 	</dialog>
 	<dialog name="CDownloadMonitorDlg" cookie="StStStStStStStStStStStStStBuBuBuBuBu" caption="Download: Shareaza">
 		<control caption="Shareaza is bezig met downloaden:"/>
@@ -4029,7 +4047,7 @@
 		<control caption="Annuleren"/>
 		<control caption="Selecteer een schema uit de lijst, selecteer vervolgens de gewenste kolommen."/>
 	</dialog>
-	<dialog name="CSecureRuleDlg" cookie="BuStCoStEdBuStEdEdEdEdStEdEdEdEdBuEdBuBuBuStCoStCoEdStEdStEdStBuBu" caption="Beveiligingsregel">
+	<dialog name="CSecureRuleDlg" cookie="BuStCoStEdBuStEdEdEdEdStEdEdEdEdBuEdBuBuBuBuStCoStCoEdStEdStEdStBuBu" caption="Beveiligingsregel">
 		<control caption="_Regel:"/>
 		<control caption="Type:"/>
 		<control caption="Netwerk (IP) adres|Inhoudfilter"/>
@@ -4050,6 +4068,7 @@
 		<control/>
 		<control caption="Elk woord"/>
 		<control caption="Complete regel"/>
+		<control caption="Reg. Exp."/>
 		<control caption="_Opties:"/>
 		<control caption="Actie:"/>
 		<control caption="Geen|Accepteer|Weiger"/>
@@ -4205,16 +4224,16 @@
 		<control/>
 		<control caption="Sjabloon Informatie:"/>
 		<control caption="Naam:"/>
-		<control/>
+		<control caption="..."/>
 		<control caption="Auteur:"/>
-		<control/>
+		<control caption="..."/>
 		<control caption="Beschrijving:"/>
 		<control/>
 		<control caption="Verwijderen|_Terug"/>
 		<control caption="_Volgende|Exporteren..."/>
 		<control caption="_Annuleren"/>
 	</dialog>
-	<dialog name="CDownloadEditDlg" cookie="StBuStEdEdStEdBuStStEdBuStEdBuStEdBuBuStStStStBuStEdStEdBuBuBuBu" caption="Download aanpassen (uitgebreid)">
+	<dialog name="CDownloadEditPage" cookie="StBuStEdEdStEdBuStStEdBuStEdBuStEdBuBuStStStStStBuStEdStEdBu" caption="Download aanpassen (uitgebreid)">
 		<control caption="WAARSCHUWING: De hier weergegeven opties zijn alleen voor gevorderde gebruikers. Bij incorrect gebruik is de kans op datacorruptie zeer groot."/>
 		<control caption="_Bestandsnaam en bestandsgrootte:"/>
 		<control caption="Bestandsnaam:"/>
@@ -4238,15 +4257,13 @@
 		<control caption="Veronderstel bestand is 100% voltooid en controleer opnieuw"/>
 		<control caption="Vergeet alle bekende bronnen"/>
 		<control caption="Voeg met lokaal bestand samen en controleer"/>
+		<control caption="Annuleren (save incomplete file)"/>
 		<control caption="Data _verwijderaar:"/>
 		<control caption="Wis Bytes:"/>
 		<control/>
 		<control caption="tot"/>
 		<control/>
 		<control caption="Wissen"/>
-		<control caption="_Torrentinfo..."/>
-		<control caption="OK"/>
-		<control caption="Annuleren"/>
 	</dialog>
 	<dialog name="CTorrentSeedDlg" cookie="StStBuBuBuStms" caption="Torrentbestand openen">
 		<control/>
@@ -4257,7 +4274,7 @@
 		<control caption="Om volledige bestanden te delen via BitTorrent moeten ze eerst worden uitgezaaid. Als dit proces klaar is verschijnt de torrent als een nieuw item in je downloadlijst."/>
 		<control/>
 	</dialog>
-	<dialog name="CTorrentTrackerDlg" cookie="BuStEdStEdStEdStEdStEdBuStEdStEdBuStCoBuSyBuCoBu" caption="BitTorrent tracker venster">
+	<dialog name="CTorrentGeneralPage" cookie="BuStEdStEdStEdStEdBuStCoEdStStEd" caption="BitTorrent tracker venster">
 		<control caption="Torrent_informatie:"/>
 		<control caption="Naam:"/>
 		<control/>
@@ -4267,21 +4284,37 @@
 		<control/>
 		<control caption="Commentaar:"/>
 		<control/>
-		<control caption="Tracker:"/>
-		<control/>
-		<control caption="_Downloaders:"/>
-		<control caption="Volledig (seeds):"/>
-		<control/>
-		<control caption="Onvolledig:"/>
-		<control/>
 		<control caption="Overdrachten:"/>
 		<control caption="Start nieuwe download verplaatsingen:"/>
 		<control caption="Indien nodig|Wanneer verhouding over 100% is|Alleen op verzoek|Nooit"/>
+		<control/>
+		<control caption="Total Uploaded:"/>
+		<control caption="Notes:"/>
+		<control/>
+	</dialog>
+	<dialog name="CTorrentFilesPage" cookie="BuStEdBuSy" caption="Files">
+		<control caption="Torrent _Information:"/>
+		<control caption="Naam:"/>
+		<control/>
 		<control caption="_Bestanden:"/>
 		<control/>
-		<control caption="_Verversen"/>
+	</dialog>
+	<dialog name="CTorrentTrackersPage" cookie="BuStEdStEdBuStEdStEdBuBuSyStCo" caption="Trackers">
+		<control caption="Torrent _Information:"/>
+		<control caption="Naam:"/>
 		<control/>
-		<control caption="Sluiten"/>
+		<control caption="Tracker:"/>
+		<control/>
+		<control caption="_Current Tracker:"/>
+		<control caption="Volledig (Seeds):"/>
+		<control/>
+		<control caption="Incomplete:"/>
+		<control/>
+		<control caption="_Refresh"/>
+		<control caption="_Trackers:"/>
+		<control/>
+		<control caption="Tracker Mode:"/>
+		<control caption="Disabled|Custom|Single Tracker|Multi-tracker|Multi-tracker (locked)"/>
 	</dialog>
 	<dialog name="CDownloadGroupDlg" cookie="BuEdSyBuCoBuBuBuBuBuEdBu" caption="Downloadgroep eigenschappen">
 		<control caption="_Naam:"/>
@@ -4294,6 +4327,7 @@
 		<control caption="OK"/>
 		<control caption="Annuleren"/>
 		<control caption="_Map voor de voltooide bestanden:"/>
+		<control/>
 		<control/>
 	</dialog>
 	<dialog name="CMediaVisDlg" cookie="StBuSyCoBuBuBu" caption="Visualisatie selecteren">

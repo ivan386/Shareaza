@@ -3141,6 +3141,9 @@
 
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
 <dialogs>
+	<dialog name="CGeneralSettingsGroup" cookie="" caption="Ogólne"/>
+	</dialog>
+
 	<dialog name="CSettingSheet" cookie="SyBuBuBu#3" caption="Ustawienia Shareazy">
 		<control/>
 		<control caption="OK"/>
@@ -3148,8 +3151,6 @@
 		<control caption="Zastosuj"/>
 		<control/>
 	</dialog>
-
-	<dialog name="CGeneralSettingsGroup" cookie="" caption="Ogólne"/>
 
 	<dialog name="CGeneralSettingsPage" cookie="BuBuBuBuStCoBuBuBuBuBuBuBuBuBuSyStEdmsStmsBuStCoStCo" caption="Ogólne">
 		<control caption="Ogólne:"/>
@@ -3180,7 +3181,7 @@
 		<control caption="Normalnie|Minimalizuj do zasobnika"/>
 	</dialog>
 
-	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBuBu" caption="Zasoby">
+	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBuBuBu" caption="Zasoby">
 		<control caption="Opcje:"/>
 		<control caption="Zapamiętaj widok folderów"/>
 		<control caption="Pilnuj folderów zasobów"/>
@@ -3208,10 +3209,12 @@
 		<control/>
 		<control/>
 		<control caption="Create ghost files when deleting"/>
+		<control caption="Smart video series detection"/>
 	</dialog>
 
-	<dialog name="CMediaSettingsPage" cookie="BuBuBuBuCoBuBuBuBuBuCo" caption="Media Player">
+	<dialog name="CMediaSettingsPage" cookie="BuCoBuBuBuCoBuBuBuBuBuStSt" caption="Media Player">
 		<control caption="Opcje:"/>
+		<control/>
 		<control caption="Użyj Media player'a Shareazy do odtwarzania typów plików wymienionych poniżej"/>
 		<control caption="Użyj Media player'a Shareazy do zakolejkowania typów plików wymienionych poniżej"/>
 		<control caption="Typy plików:"/>
@@ -3220,8 +3223,9 @@
 		<control caption="Usuń"/>
 		<control caption="Wtyczka wizualizacji:"/>
 		<control caption="Wybierz wtyczkę..."/>
+		<control caption="_Media Handling"/>
 		<control caption="Wtyczka mediów:"/>
-		<control/>
+		<control caption="Warning: Choosing an external Media Handler will automatically disable all Media and Visualisation Plugins!"/>
 	</dialog>
 
 	<dialog name="CCommunitySettingsPage" cookie="BuStBuBuBuBuBuBu" caption="Społeczność">
@@ -3253,7 +3257,7 @@
 
 	<dialog name="CInternetSettingsGroup" caption="Internet"/>
 
-	<dialog name="CConnectionSettingsPage" cookie="BuStCoStCoStEdBuBuBuStCoStCoBuStCoBuBuStEdmsStEdms" caption="Połączenie">
+	<dialog name="CConnectionSettingsPage" cookie="BuStCoStCoStEdBuBuBuStCoStCoBuStCoBuBuBuStEdmsStEdms" caption="Połączenie">
 		<control caption="Adres wejściowy:"/>
 		<control caption="Adres:"/>
 		<control caption="Automatycznie"/>
@@ -3272,6 +3276,7 @@
 		<control caption="Akceptuje połączenia przychodzące"/>
 		<control/>
 		<control caption="Ignoruj prywatne/lokalne adresy IP"/>
+		<control caption="Enable UPnP connection devices setup"/>
 		<control caption="Czas oczekiwania:"/>
 		<control caption="Łączenie:"/>
 		<control/>
@@ -3337,7 +3342,7 @@
 		<control caption="Zdalny dostęp Shareazy pozwala ci na pozostawienie włączonej Shareazy na twoim komputerze i kontrolowanie jej zdalnie używając przeglądarki internetowej. Musisz mieć możliwość akceptowania połączeń przychodzących, aby użyć tej funkcji."/>
 		<control caption="Włącz:"/>
 		<control caption="Włącz zdalny dostęp Shareazy:"/>
-		<control/>
+		<control caption="URL"/>
 		<control caption="Szczegóły:"/>
 		<control caption="Wybierz nazwę użytkownika:"/>
 		<control/>
@@ -3421,7 +3426,7 @@
 		<control caption="Hub z Hubem"/>
 	</dialog>
 
-	<dialog name="CDonkeySettingsPage" cookie="BuBuBuBuBuStEdmsStBuStEdmsStBuStBuStBu" caption="eDonkey2000">
+	<dialog name="CDonkeySettingsPage" cookie="BuBuBuBuBuStEdmsStBuBuStEdmsStBuStBu" caption="eDonkey2000">
 		<control caption="Sieć eDonkey2000:"/>
 		<control caption="Połącz z eDonkey2000 teraz"/>
 		<control caption="Zawsze łącz z eDonkey2000"/>
@@ -3437,8 +3442,6 @@
 		<control/>
 		<control caption="innymi klientami eDonkey."/>
 		<control caption="Narzędzia eDonkey2000:"/>
-		<control caption="Importuj częściowe pobierania eDonkey/eMule (pliki .part):"/>
-		<control caption="Importuj..."/>
 		<control caption="Pobierz listę serwerów eDonkey2000 z sieci:"/>
 		<control caption="Pobierz..."/>
 	</dialog>
@@ -3456,7 +3459,7 @@
 		<control caption="Czyść pobrane torrenty&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;Kiedy share ratio osiągnie"/>
 		<control/>
 		<control/>
-		<control/>
+		<control caption="%"/>
 		<control caption="&#160;Prefer torrent sources"/>
 		<control caption="GraKońcowa:"/>
 		<control caption="Włącz tryb GryKońcowej, gdy Shareaza kończy pobierać torrenty"/>
@@ -3500,21 +3503,24 @@
 		<control caption="Zdobądź więcej"/>
 	</dialog>
 
-	<dialog name="CAdvancedSettingsPage" cookie="SyBuStEdmsStEd" caption="Zaawansowane">
+	<dialog name="CAdvancedSettingsPage" cookie="SyEdmsBuBuStStEd" caption="Zaawansowane">
 		<control/>
+		<control/>
+		<control/>
+		<control caption="Set Default"/>
 		<control caption="Właściwości ustawienia:"/>
 		<control caption="Wartość:"/>
-		<control/>
-		<control/>
 		<control caption="Opis:"/>
 		<control/>
 	</dialog>
 
-	<dialog name="CQueuePropertiesDlg" cookie="BuEdBuBuBuEdBuEdBuCoBuEdBuSyBuBuStEdmsStEdmsStEdmsBuStEdStEdmsBuEdmsBuBuBu" caption="Właściwości kolejki wysyłań">
+	<dialog name="CQueuePropertiesDlg" cookie="BuEdBuBuBuBuBuEdBuEdBuCoBuEdBuSyBuBuStEdmsStEdmsStEdmsBuStEdStEdmsBuEdmsBuBuBu" caption="Właściwości kolejki wysyłań">
 		<control caption="Nazwa:"/>
 		<control/>
 		<control caption="Kryteria umieszczania w kolejce:"/>
 		<control caption="Tylko częściowo pobrane pliki"/>
+		<control caption="Shared Library files only"/>
+		<control caption="Both partial and library files"/>
 		<control caption="Minimalny rozmiar pliku:"/>
 		<control/>
 		<control caption="Maksymalny rozmiar pliku:"/>
@@ -3613,7 +3619,7 @@
 	<dialog name="CWizardInterfacePage" cookie="StBuBuBuStStBuBuBu" caption="Witaj w Shareazie (4/6)">
 		<control caption="Shareaza posiada dwa różne interfejsy użytkownika. Możesz wybrać ten, który jest dla ciebie najwygodniejszy."/>
 		<control caption="Proszę wybrać jeden z poniższych interfejsów:"/>
-		<control caption="Tryb Normalny"/>
+		<control caption="Tryb Basicny"/>
 		<control caption="Tryb Zaawansowany"/>
 		<control caption="Prosty i przyjazny w użyciu. Znajomy dla użytkowników innych programów do wymiany plików."/>
 		<control caption="Tryb Zaawansowany oferuje ekspertom dużo dodatkowych poleceń, okien, etc."/>
@@ -3749,7 +3755,8 @@
 		<control caption="Generuj nowy"/>
 	</dialog>
 
-	<dialog name="CLanguageDlg" cookie="" caption="Wybierz Język"/>
+	<dialog name="CLanguageDlg" cookie="" caption="Wybierz Język">
+	</dialog>
 
 	<dialog name="CConnectToDlg" cookie="BuCoEdBuCoBuBuBu" caption="Połącz z|Przeglądaj Hosta">
 		<control caption="Inicjuj nowe połączenie do hosta lub serwera:|Przeglądaj tego hosta:"/>
@@ -3781,9 +3788,10 @@
 		<control caption="Anuluj"/>
 	</dialog>
 
-	<dialog name="CFilterSearchDlg" cookie="BuEdStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuCoBuBuBuBuBuBuBu" caption="Filtruj wyniki">
+	<dialog name="CFilterSearchDlg" cookie="BuEdBuStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuBuBuCoBuBuBuBuBu" caption="Filtruj wyniki">
 		<control caption="Pokaż tylko te wyniki, które zawierają słowa:"/>
 		<control/>
+		<control caption="Reg. Exp."/>
 		<control caption="( możesz także wykluczać wyrazy za pomocą -wyraz )"/>
 		<control caption="I mają rozmiar:"/>
 		<control caption="Minimum:"/>
@@ -3801,16 +3809,16 @@
 		<control caption="Nie pasujące pliki"/>
 		<control caption="Pliki które już masz"/>
 		<control caption="Fałszywe wyniki"/>
-		<control caption="Filtruj"/>
-		<control caption="Anuluj"/>
+		<control caption="DRM files"/>
+		<control caption="Adult results"/>
+		<control caption="Suspicious files"/>
+		<control caption="Filtry:"/>
 		<control/>
 		<control caption="Ustaw jako domyślne"/>
 		<control caption="Zapisz jako"/>
 		<control caption="Usuń"/>
-		<control caption="Filtry:"/>
-		<control caption="DRM files"/>
-		<control caption="Suspicious files"/>
-		<control caption="Adult results"/>
+		<control caption="Filtruj"/>
+		<control caption="Anuluj"/>
 	</dialog>
 
 	<dialog name="CSaveFilterAsDlg" cookie="EdBuBuSt" caption="Zapisz filtr jako">
@@ -3827,6 +3835,7 @@
 		<control caption="Gnutella Bootstrap|GWebCache|Server.met URL"/>
 		<control caption="OK"/>
 		<control caption="Anuluj"/>
+		<control/>
 	</dialog>
 
 	<dialog name="CDownloadMonitorDlg" cookie="StStStStStStStStStStStStStBuBuBuBuBu" caption="Pobieranie : Shareaza">
@@ -3947,13 +3956,13 @@
 		<control caption="Anuluj"/>
 	</dialog>
 
-	<dialog name="CGraphItemDlg" cookie="BuBuBuCoCoStStEdBuBuStBu" caption="Właściwość przedmiotu Wykresu">
+	<dialog name="CGraphItemDlg" cookie="BuBuBuCoStEdStEdBuBuStBu" caption="Właściwość przedmiotu Wykresu">
 		<control caption="OK"/>
 		<control caption="Anuluj"/>
 		<control caption="Źródło:"/>
 		<control/>
-		<control/>
 		<control caption="Parametr:"/>
+		<control/>
 		<control caption="Jednostki:"/>
 		<control/>
 		<control caption="Wyświetl:"/>
@@ -3970,7 +3979,7 @@
 		<control caption="Wybierz scheme z listy, potem wybierz pola do wyświetlenia jako kolumny."/>
 	</dialog>
 
-	<dialog name="CSecureRuleDlg" cookie="BuStCoStEdBuStEdEdEdEdStEdEdEdEdBuEdBuBuBuStCoStCoEdStEdStEdStBuBu" caption="Reguła bezpieczeństwa">
+	<dialog name="CSecureRuleDlg" cookie="BuStCoStEdBuStEdEdEdEdStEdEdEdEdBuEdBuBuBuBuStCoStCoEdStEdStEdStBuBu" caption="Reguła bezpieczeństwa">
 		<control caption="Reguła:"/>
 		<control caption="Typ:"/>
 		<control caption="Adres sieciowy (IP)|Filtr zawartości"/>
@@ -3991,6 +4000,7 @@
 		<control/>
 		<control caption="Którekolwiek"/>
 		<control caption="Wszystkie"/>
+		<control caption="Reg. Exp."/>
 		<control caption="Opcje:"/>
 		<control caption="Akcja:"/>
 		<control caption="Żadna|Akceptuj|Odmawiaj"/>
@@ -4098,7 +4108,7 @@
 		<control caption="OK"/>
 	</dialog>
 
-	<dialog name="CExistingFileDlg" cookie="StStStStStBuBuBuBuBuSt" caption="Existing File">
+	<dialog name="CExistingFileDlg" cookie="StStStStStBuBuBuBuBuStSt" caption="Existing File">
 		<control/>
 		<control/>
 		<control/>
@@ -4110,6 +4120,7 @@
 		<control caption="OK"/>
 		<control caption="Anuluj"/>
 		<control caption="Już sciągnąłeś ten plik ale go usunąłeś.  co chciałbyś zrobić?"/>
+		<control caption="Warning! Duplicate files detected. Some malicious software may infect your Library. Make sure that you downloaded this file or placed it manually. Otherwise, shutdown Shareaza and scan your computer with an antivirus program."/>
 	</dialog>
 
 	<dialog name="CCloseModeDlg" cookie="StStBuBuBuBuBu" caption="Close Button">
@@ -4137,7 +4148,7 @@
 		<control/>
 	</dialog>
 
-	<dialog name="CDeleteFileDlg" cookie="StStBuBuBuStStBuBuBuBuStEd" caption="Delete File">
+	<dialog name="CDeleteFileDlg" cookie="StStBuBuBuStStBuStCoStCoStEd" caption="Delete File">
 		<control caption="Czy napewno chcesz usunąć ten plik:"/>
 		<control/>
 		<control caption="Usuń"/>
@@ -4147,42 +4158,59 @@
 		<control caption="Shareaza może zapamiętać ten plik i ostrzec cię jeżeli będziesz go chciał pobrać ponownie. Co chcesz zrobić :"/>
 		<control caption="Nie chcę tego komentować."/>
 		<control caption="Plik jest nazwany niepoprawnie."/>
-		<control caption="Plik jest kiepskiej jakości."/>
 		<control caption="Ten plik to fake, jestuszkodzony lub niestabilny."/>
+		<control caption="File rating:"/>
+		<control caption="(No Rating)|Fake/Corrupt/Misleading|Poor|Average|Good|Very Good|Excellent"/>
 		<control caption="Możesz napisać krótki komentarz dlaczego ten plik jest zły:"/>
 		<control/>
 	</dialog>
 
-	<dialog name="CCollectionExportDlg" cookie="StBuBu" caption="Export Folder">
+	<dialog name="CCollectionExportDlg" cookie="StSyBuStStStStStEdBuBuBu" caption="Export Folder">
 		<control caption="This feature is used to export the contents of an album folder as a rich collection file."/>
-		<control caption="Export..."/>
+		<control/>
+		<control caption="Template Information:"/>
+		<control caption="Name:"/>
+		<control caption="..."/>
+		<control caption="Author:"/>
+		<control caption="..."/>
+		<control caption="Description:"/>
+		<control/>
+		<control caption="Delete|_Back"/>
+		<control caption="_Next|_Export..."/>
 		<control caption="Anuluj"/>
 	</dialog>
 
-	<dialog name="CDownloadEditDlg" cookie="StBuEdBuStEdStEdStEdBuStStStBuStEdStEdBuBuBuBu" caption="Zaawansowana edycja pobierania">
+	<dialog name="CDownloadEditPage" cookie="StBuStEdEdStEdBuStStEdBuStEdBuStEdBuBuStStStStStBuStEdStEdBu" caption="Zaawansowana edycja pobierania">
 		<control caption="UWAGA: To okno umożliwia zaawansowaną edycję pobierania. Jeśli zostanie nieprawidłowo użyte może i prawdopodobnie uszkodzi pobierany plik."/>
+		<control caption="_Nazwa pliku & Rozmiar"/>
 		<control caption="_Nazwa pliku:"/>
 		<control/>
+		<control/>
+		<control caption="File rozmiar (Byte):"/>
+		<control/>
 		<control caption="URN:"/>
+		<control caption="Trusted"/>
 		<control caption="SHA1:"/>
+		<control/>
 		<control/>
 		<control caption="Tiger-Root:"/>
 		<control/>
+		<control/>
 		<control caption="ED2K:"/>
+		<control/>
 		<control/>
 		<control caption="Akcje:"/>
 		<control caption="Zapomnij aktualny stan weryfikacji (i zweryfikuj ponownie)"/>
 		<control caption="Przyjmij, że plik jest w 100% kompletny i zweryfikuj ponownie"/>
 		<control caption="Zapomnij wszystkie znane źródła"/>
+		<control caption="Merge with local file and verify"/>
+		<control caption="Anuluj (keep incomplete file)"/>
 		<control caption="Wymazywanie danych:"/>
 		<control caption="Wymaż bajty:"/>
 		<control/>
 		<control caption="do"/>
 		<control/>
 		<control caption="Wymaż"/>
-		<control caption="Torrent Info..."/>
-		<control caption="OK"/>
-		<control caption="Anuluj"/>
 	</dialog>
 
 	<dialog name="CTorrentSeedDlg" cookie="StStBuBuBuStms" caption="Otwórz plik Torrent">
@@ -4195,7 +4223,7 @@
 		<control/>
 	</dialog>
 
-	<dialog name="CTorrentTrackerDlg" cookie="BuStEdStEdStEdStEdStEdBuStEdStEdBuStCoBuSyBuCoBu" caption="BitTorrent - Zaawansowane Informacje">
+	<dialog name="CTorrentGeneralPage" cookie="BuStEdStEdStEdStEdBuStCoEdStStEd" caption="BitTorrent - Zaawansowane Informacje">
 		<control caption="Informacje o Torrencie:"/>
 		<control caption="Nazwa:"/>
 		<control/>
@@ -4205,21 +4233,39 @@
 		<control/>
 		<control caption="Komentarze:"/>
 		<control/>
-		<control caption="Tracker:"/>
-		<control/>
-		<control caption="Pobierający:"/>
-		<control caption="Kompletne (Seed):"/>
-		<control/>
-		<control caption="Niekompletne:"/>
-		<control/>
 		<control caption="Transfery:"/>
 		<control caption="Rozpocznij nowe pobierania:"/>
 		<control caption="Jeśli potrzeba|Kiedy ratio jest ponad 100%|Tylko kiedy żądane|Nigdy"/>
-		<control caption="Pliki:"/>
 		<control/>
-		<control caption="Odśwież"/>
+		<control caption="Total Uploaded:"/>
+		<control caption="Notes:"/>
 		<control/>
-		<control caption="Zamknij"/>
+	</dialog>
+
+	<dialog name="CTorrentFilesPage" cookie="BuStEdBuSy" caption="Files">
+		<control caption="Torrent _Information:"/>
+		<control caption="Nazwa:"/>
+		<control/>
+		<control caption="_Files:"/>
+		<control/>
+	</dialog>
+
+	<dialog name="CTorrentTrackersPage" cookie="BuStEdStEdBuStEdStEdBuBuSyStCo" caption="Trackers">
+		<control caption="Torrent _Information:"/>
+		<control caption="Nazwa:"/>
+		<control/>
+		<control caption="Tracker:"/>
+		<control/>
+		<control caption="_Current Tracker:"/>
+		<control caption="Kompletne (Seeds):"/>
+		<control/>
+		<control caption="Niekompletne:"/>
+		<control/>
+		<control caption="_Refresh"/>
+		<control caption="_Trackers:"/>
+		<control/>
+		<control caption="Tracker Mode:"/>
+		<control caption="Disabled|Custom|Single Tracker|Multi-tracker|Multi-tracker (locked)"/>
 	</dialog>
 
 	<dialog name="CDownloadGroupDlg" cookie="BuEdSyBuCoBuBuBuBuBuEdBu" caption="Właściwości grupy pobierań">
@@ -4233,6 +4279,7 @@
 		<control caption="OK"/>
 		<control caption="Anuluj"/>
 		<control caption="Folder ukończonych plików:"/>
+		<control/>
 		<control/>
 	</dialog>
 

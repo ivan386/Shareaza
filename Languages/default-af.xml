@@ -3319,7 +3319,7 @@
 		<control caption="As ek minimeer kliek:"/>
 		<control caption="Normaal|Minimeer na Taakbalk"/>
 	</dialog>
-	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBuBu" caption="Biblioteek">
+	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBuBuBu" caption="Biblioteek">
 		<control caption="_Verstellings:"/>
 		<control caption="Onthou gidsaansigte"/>
 		<control caption="Hou biblioteekgidse dop"/>
@@ -3349,7 +3349,7 @@
 		<control caption="Create ghost files when deleting"/>
 		<control caption="Smart video series detection"/>
 	</dialog>
-	<dialog name="CMediaSettingsPage" cookie="BuBuBuBuCoBuBuBuBuBuCo" caption="Media Speler">
+	<dialog name="CMediaSettingsPage" cookie="BuCoBuBuBuCoBuBuBuBuBuStSt" caption="Media Speler">
 		<control caption="_Verstellings:"/>
 		<control/>
 		<control caption="Gebruik die Shareaza Media Speler om die volgende tipes lêers te SPEEL"/>
@@ -3427,7 +3427,7 @@
 	</dialog>
 	<dialog name="CInternetSettingsGroup" caption="Internet">
 	</dialog>
-	<dialog name="CConnectionSettingsPage" cookie="BuStCoStCoStEdBuBuBuStCoStCoBuStCoBuBuStEdmsStEdms" caption="Konneksie">
+	<dialog name="CConnectionSettingsPage" cookie="BuStCoStCoStEdBuBuBuStCoStCoBuStCoBuBuBuStEdmsStEdms" caption="Konneksie">
 		<control caption="_Inkomende Adres:"/>
 		<control caption="Adres:"/>
 		<control caption="Outomaties"/>
@@ -3589,7 +3589,7 @@
 		<control caption="Leaf na Hub"/>
 		<control caption="Hub na Hub"/>
 	</dialog>
-	<dialog name="CDonkeySettingsPage" cookie="BuBuBuBuBuStEdmsStBuStEdmsStBuStBuStBu" caption="eDonkey2000">
+	<dialog name="CDonkeySettingsPage" cookie="BuBuBuBuBuStEdmsStBuBuStEdmsStBuStBu" caption="eDonkey2000">
 		<control caption="_eDonkey2000 Netwerk:"/>
 		<control caption="Konnekteer aan eDonkey2000"/>
 		<control caption="Konnekteer elke sessie"/>
@@ -3662,7 +3662,7 @@
 		<control caption="_Verstel..."/>
 		<control caption="Kry meer"/>
 	</dialog>
-	<dialog name="CAdvancedSettingsPage" cookie="SyBuStEdmsStEd" caption="Gevorderd">
+	<dialog name="CAdvancedSettingsPage" cookie="SyEdmsBuBuStStEd" caption="Gevorderd">
 		<control/>
 		<control/>
 		<control/>
@@ -3672,7 +3672,7 @@
 		<control caption="Beskrywing:"/>
 		<control/>
 	</dialog>
-	<dialog name="CQueuePropertiesDlg" cookie="BuEdBuBuBuEdBuEdBuCoBuEdBuSyBuBuStEdmsStEdmsStEdmsBuStEdStEdmsBuEdmsBuBuBu" caption="Oplaai Waglys Verstellings">
+	<dialog name="CQueuePropertiesDlg" cookie="BuEdBuBuBuBuBuEdBuEdBuCoBuEdBuSyBuBuStEdmsStEdmsStEdmsBuStEdStEdmsBuEdmsBuBuBu" caption="Oplaai Waglys Verstellings">
 		<control caption="_Naam:"/>
 		<control/>
 		<control caption="_Itemkriteria:"/>
@@ -3727,7 +3727,7 @@
 		<control/>
 		<control caption="Shareaza te begin gebruik."/>
 	</dialog>
-	<dialog name="CWizardConnectionPage" cookie="StCoStCoStCoStCoStCo" caption="Welkom by Shareaza (1/6)">
+	<dialog name="CWizardConnectionPage" cookie="StStCoStCoStCoStCoStms" caption="Welkom by Shareaza (1/6)">
 		<control caption="Vir optimale werksverrigting, benodig Shareaza inligting oor jou internet konneksie."/>
 		<control caption=" ( selekteer asseblief )| Ek gebruik nou die Internet by die huis| Ek gebruik nou die Internet vanaf 'n kampus LAN| Ek gebruik nou die Internet vanaf 'n kantoor LAN| Ek gebruik nou die Internet by 'n hotel of lughawe"/>
 		<control caption="Dial up Modem|ISDN|ADSL (256K)|ADSL (512K)|ADSL (768K)|ADSL (1.5M)|ADSL (4.0M)|ADSL2 (8.0M)|ADSL2 (12.0M)|ADSL2+ (24.0M)|Cable Modem/SDSL|T1|T3|LAN|OC3"/>
@@ -3769,10 +3769,10 @@
 		<control/>
 		<control/>
 	</dialog>
-	<dialog name="CWizardInterfacePage" cookie="StBuBuBuStStBuBuBu" caption="Welkom by Shareaza (4/6)">
+	<dialog name="CWizardInterfacePage" cookie="StBuBuBuStStBuBu" caption="Welkom by Shareaza (4/6)">
 		<control caption="Shareaza ondersteun 'n buigsame gebruikerskoppelvlak, sodat jy kan kies wat die mees gerieflikste vir jou is. Jy kan hierdie opsies enige tyd verander."/>
 		<control caption="Selekteer asseblief 'n gebruikerskoppelvlak:"/>
-		<control caption="Normale Modus"/>
+		<control caption="Basic Modus"/>
 		<control caption="Kragmodus"/>
 		<control caption="Eenvoudige, gebruikersvriendelike kieslyste en knoppies.{n}Bekend aan gebruikers van ander lêerdelingsprogramme."/>
 		<control caption="Kragmodus bied gevorderde gebruikers verskeie ekstra opdragte, vensters, ens.{n}Dit mag nuwe gebruikers dalk deurmekaar maak!"/>
@@ -3894,7 +3894,8 @@
 		<control/>
 		<control caption="Genereer Nuwe"/>
 	</dialog>
-	<dialog name="CLanguageDlg" cookie="" caption="Selekteer Taal"/>
+	<dialog name="CLanguageDlg" cookie="" caption="Selekteer Taal">
+	</dialog>
 	<dialog name="CConnectToDlg" cookie="BuCoEdBuCoBuBuBu" caption="Konnekteer Aan|Blaai deur Gebruikersinligting">
 		<control caption="Maak 'n nuwe konneksie na 'n gasheer of bediener:|Blaai deur hierdie kliënt se profiel en gedeelde lêers:"/>
 		<control/>
@@ -3922,7 +3923,7 @@
 		<control caption="Soek"/>
 		<control caption="Kanselleer"/>
 	</dialog>
-	<dialog name="CFilterSearchDlg" cookie="BuEdStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuCoBuBuBuBu" caption="Filreer Resultate">
+	<dialog name="CFilterSearchDlg" cookie="BuEdBuStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuBuBuCoBuBuBuBuBu" caption="Filreer Resultate">
 		<control caption="Vertoon net resultate wat die volgende _woorde bevat:"/>
 		<control/>
 		<control caption="Reg. Exp."/>
@@ -3960,7 +3961,7 @@
 		<control caption="Kanselleer"/>
 		<control caption="Stoor die huidige filter as"/>
 	</dialog>
-	<dialog name="CDiscoveryServiceDlg" cookie="BuEdStCoBuBu" caption="Ontdekkingsdiens">
+	<dialog name="CDiscoveryServiceDlg" cookie="BuEdStCoBuBuSt" caption="Ontdekkingsdiens">
 		<control caption="Diens _Adres:"/>
 		<control/>
 		<control caption="Ontdekkingsdiens Tipe:"/>
@@ -4100,7 +4101,7 @@
 		<control caption="Kanselleer"/>
 		<control caption="Selekteer 'n skema van die lys en selekteer dan die velde wat as kolomme vertoon moet word."/>
 	</dialog>
-	<dialog name="CSecureRuleDlg" cookie="BuStCoStEdBuStEdEdEdEdStEdEdEdEdBuEdBuBuBuStCoStCoEdStEdStEdStBuBu" caption="Sekuriteitsreëls">
+	<dialog name="CSecureRuleDlg" cookie="BuStCoStEdBuStEdEdEdEdStEdEdEdEdBuEdBuBuBuBuStCoStCoEdStEdStEdStBuBu" caption="Sekuriteitsreëls">
 		<control caption="_Reël:"/>
 		<control caption="Tipe:"/>
 		<control caption="Netwerk (IP) Adres|Inhoud Filter"/>
@@ -4220,7 +4221,7 @@
 		<control caption="http://shareaza.sourceforge.net/"/>
 		<control caption="OK"/>
 	</dialog>
-	<dialog name="CExistingFileDlg" cookie="StStStStStBuBuBuBuBuSt" caption="Aflaai van bestaande lêer">
+	<dialog name="CExistingFileDlg" cookie="StStStStStBuBuBuBuBuStSt" caption="Aflaai van bestaande lêer">
 		<control/>
 		<control/>
 		<control/>
@@ -4256,7 +4257,7 @@
 		<control caption="Maak Toe"/>
 		<control/>
 	</dialog>
-	<dialog name="CDeleteFileDlg" cookie="StStBuBuBuStStBuBuBuBuStEd" caption="Skrap Lêer">
+	<dialog name="CDeleteFileDlg" cookie="StStBuBuBuStStBuStCoStCoStEd" caption="Skrap Lêer">
 		<control caption="Is jy seker dat jy die volgende lêer wil skrap:"/>
 		<control/>
 		<control caption="Skrap"/>
@@ -4272,7 +4273,7 @@
 		<control caption="Jy kan 'n kort nota skryf om te verduidelik hoekom die lêer sleg is:"/>
 		<control/>
 	</dialog>
-	<dialog name="CCollectionExportDlg" cookie="StBuBu" caption="Voer Gids Uit">
+	<dialog name="CCollectionExportDlg" cookie="StSyBuStStStStStEdBuBuBu" caption="Voer Gids Uit">
 		<control caption="Hierdie funksie word gebruik om die inhoud van 'n albumgids uit te voer as 'n ryk versamelingslêer."/>
 		<control/>
 		<control caption="Template Information:"/>
@@ -4286,7 +4287,7 @@
 		<control caption="_Next|_Export..."/>
 		<control caption="Kanselleer"/>
 	</dialog>
-	<dialog name="CDownloadEditPage" cookie="StBuEdBuStEdStEdStEdBuStStStBuStEdStEdBuBuBuBu" caption="Verander Aflaai (Gevorderd)">
+	<dialog name="CDownloadEditPage" cookie="StBuStEdEdStEdBuStStEdBuStEdBuStEdBuBuStStStStStBuStEdStEdBu" caption="Verander Aflaai (Gevorderd)">
 		<control caption="WAARSKUWING: Hierdie venster verskaf gevorderde aflaaifunksies vir kragtige gebruikers wat, as dit verkeerdelik gebruik word, korrupsie kan veroorsaak."/>
 		<control caption="Filename and Si_ze:"/>
 		<control caption="Lêer_naam:"/>
@@ -4327,7 +4328,7 @@
 		<control caption="Om voltooide lêers te deel met BitTorrent, moet hulle eers gesaai word. Sodra hierdie proses voltooi is, sal die Torrent as 'n nuwe item op jou aflaailys verskyn."/>
 		<control/>
 	</dialog>
-	<dialog name="CTorrentTrackerPage" cookie="BuStEdStEdStEdStEdStEdBuStEdStEdBuStCoBuSyBuCoBu" caption="BitTorrent Verwyser Inligting">
+	<dialog name="CTorrentGeneralPage" cookie="BuStEdStEdStEdStEdBuStCoEdStStEd" caption="BitTorrent Verwyser Inligting">
 		<control caption="BitTorrent _Inligting:"/>
 		<control caption="Naam:"/>
 		<control/>

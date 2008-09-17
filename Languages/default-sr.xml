@@ -3754,7 +3754,9 @@
 		<control caption="Promeni"/>
 	</dialog>
 
-	<dialog name="CLanguageDlg" cookie="" caption="Odaberite Jezik"/>
+	<dialog name="CLanguageDlg" cookie="" caption="Odaberite Jezik">
+	</dialog>
+
 	<dialog name="CConnectToDlg" cookie="BuCoEdBuCoBuBuBu" caption="Spoji se|Pogledaj šta ima">
 		<control caption="Započmi novu vezu sa hostom ili serverom:|Pogledaj šta ima ovaj host:"/>
 		<control/>
@@ -4163,7 +4165,7 @@
 		<control caption="Odustani"/>
 	</dialog>
 
-	<dialog name="CDownloadEditDlg" cookie="StBuEdBuStEdStEdStEdBuStStStBuStEdStEdBuBuBuBu" caption="Edit Download (Napredno)">
+	<dialog name="CDownloadEditPage" cookie="StBuEdBuStEdStEdStEdBuStStStBuStEdStEdBuBuBuBu" caption="Edit Download (Napredno)">
 		<control caption="UPOZORENJE: Ove opcije omogućuju napredno podešavanje skidanja, ako se pogrešno koriste verovatno će uzrokovati GREŠKU u skinutoj datoteci"/>
 		<control caption="Ime datoteke:"/>
 		<control/>
@@ -4199,7 +4201,7 @@
 		<control/>
 	</dialog>
 
-	<dialog name="CTorrentTrackerDlg" cookie="BuStEdStEdStEdStEdStEdBuStEdStEdBuStCoBuSyBuCoBu" caption="Napredne Informacije o BitTorrentu">
+	<dialog name="CTorrentGeneralPage" cookie="BuStEdStEdStEdStEdStEdBuStEdStEdBuStCoBuSyBuCoBu" caption="Napredne Informacije o BitTorrentu">
 		<control caption="Torrent _Informacije:"/>
 		<control caption="Ime:"/>
 		<control/>

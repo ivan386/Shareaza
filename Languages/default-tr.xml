@@ -3320,7 +3320,7 @@
 		<control caption="Tıklandığında Küçült:"/>
 		<control caption="Normal|Boyut Küçült"/>
 	</dialog>
-	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBuBu" caption="Kütüphane">
+	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBuBuBu" caption="Kütüphane">
 		<control caption="_Seçenekler:"/>
 		<control caption="Klasör görünümlerini hatırla"/>
 		<control caption="Kütüphane klasörlerini izle"/>
@@ -3728,7 +3728,7 @@
 		<control/>
 		<control caption="Shareaza'yı kullanmaya başlayın."/>
 	</dialog>
-	<dialog name="CWizardConnectionPage" cookie="StCoStCoStCoStCoStCo" caption="Shareaza'ya Hoşgeldiniz (1/6)">
+	<dialog name="CWizardConnectionPage" cookie="StStCoStCoStCoStCoStms" caption="Shareaza'ya Hoşgeldiniz (1/6)">
 		<control caption="En iyi sonuç için Shareaza'nın bağlantınız hakkında bazı temel bilgilere ihtiyacı bulunmaktadır."/>
 		<control caption="İnternet bağlantınızı Shareaza'ya belirtin:"/>
 		<control caption="Çevirmeli Modem|ISDN|ADSL (256K)|ADSL (512K)|ADSL (768K)|ADSL (1.5M)|ADSL (4.0M)|ADSL2 (8.0M)|ADSL2 (12.0M)|ADSL2+ (24.0M)|Kablo Modemi/SDSL|T1|T3|LAN|OC3"/>
@@ -3895,7 +3895,8 @@
 		<control/>
 		<control caption="Yeni Oluştur"/>
 	</dialog>
-	<dialog name="CLanguageDlg" cookie="" caption="Dil Seçimi"/>
+	<dialog name="CLanguageDlg" cookie="" caption="Dil Seçimi">
+	</dialog>
 	<dialog name="CConnectToDlg" cookie="BuCoEdBuCoBuBuBu" caption="Bağlan|Hosta Gözat">
 		<control caption="Host ya da sunucuya yeni bir bağlantı başlat:|Hosta Gözat:"/>
 		<control/>
@@ -3923,7 +3924,7 @@
 		<control caption="Ara"/>
 		<control caption="İptal"/>
 	</dialog>
-	<dialog name="CFilterSearchDlg" cookie="BuEdStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuCoBuBuBuBuBuBuBu" caption="Filtre Eşleştirmesi">
+	<dialog name="CFilterSearchDlg" cookie="BuEdBuStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuBuBuCoBuBuBuBuBu" caption="Filtre Eşleştirmesi">
 		<control caption="Sadece kelimeyi içeren eşleştirmeleri göster:"/>
 		<control/>
 		<control caption="Reg. Exp."/>
@@ -3961,7 +3962,7 @@
 		<control caption="İptal"/>
 		<control caption="Yürürlükteki Filtreyi Farklı Kaydet"/>
 	</dialog>
-	<dialog name="CDiscoveryServiceDlg" cookie="BuEdStCoBuBu" caption="Keşif Servisi">
+	<dialog name="CDiscoveryServiceDlg" cookie="BuEdStCoBuBuSt" caption="Keşif Servisi">
 		<control caption="Servis _Adresi:"/>
 		<control/>
 		<control caption="Keşif Servis Türü:"/>
@@ -4079,7 +4080,7 @@
 		<control caption="Tamam"/>
 		<control caption="İptal"/>
 	</dialog>
-	<dialog name="CGraphItemDlg" cookie="BuBuBuCoCoStStEdBuBuStBu" caption="Grafik Özellikleri">
+	<dialog name="CGraphItemDlg" cookie="BuBuBuCoStEdStEdBuBuStBu" caption="Grafik Özellikleri">
 		<control caption="Tamam"/>
 		<control caption="İptal"/>
 		<control caption="_Kaynak:"/>
@@ -4100,7 +4101,7 @@
 		<control caption="İptal"/>
 		<control caption="Listeden bir şema seçip, sonra sütun olarak görünmesi için alanlar seçiniz."/>
 	</dialog>
-	<dialog name="CSecureRuleDlg" cookie="BuStCoStEdBuStEdEdEdEdStEdEdEdEdBuEdBuBuBuStCoStCoEdStEdStEdStBuBu" caption="Güvenlik Kuralı">
+	<dialog name="CSecureRuleDlg" cookie="BuStCoStEdBuStEdEdEdEdStEdEdEdEdBuEdBuBuBuBuStCoStCoEdStEdStEdStBuBu" caption="Güvenlik Kuralı">
 		<control caption="Kural:"/>
 		<control caption="Tür:"/>
 		<control caption="Ağ Adresi(IP)|İçerik Filtresi"/>
@@ -4220,7 +4221,7 @@
 		<control caption="http://shareaza.sourceforge.net/"/>
 		<control caption="Tamam"/>
 	</dialog>
-	<dialog name="CExistingFileDlg" cookie="StStStStStBuBuBuBuBuSt" caption="Mevcut Dosya">
+	<dialog name="CExistingFileDlg" cookie="StStStStStBuBuBuBuBuStSt" caption="Mevcut Dosya">
 		<control/>
 		<control/>
 		<control/>
@@ -4272,7 +4273,7 @@
 		<control caption="Bu dosyanın neden bozuk oldugunu küçük bir açıklama notu ile bildirebilirsiniz:"/>
 		<control/>
 	</dialog>
-	<dialog name="CCollectionExportDlg" cookie="StBuBu" caption="Klasör Gönder">
+	<dialog name="CCollectionExportDlg" cookie="StSyBuStStStStStEdBuBuBu" caption="Klasör Gönder">
 		<control caption="Bu özellik zengin kolleksiyon dosyası gibi bir albüm klasörünün içeriğini göndermeye yarar."/>
 		<control/>
 		<control caption=""/>

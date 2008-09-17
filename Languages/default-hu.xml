@@ -3409,7 +3409,8 @@
 		<control caption="_Eltávolít"/>
 		<control caption="A program csak az itt feltüntetett fájltípusokat fogja letölteni. Más típusokat a böngésző kezeli. A használatához a Shareazának futnia kell a háttérben."/>
 	</dialog>
-	<dialog name="CInternetSettingsGroup" caption="Internet"/>
+	<dialog name="CInternetSettingsGroup" caption="Internet">
+	</dialog>
 	<dialog name="CConnectionSettingsPage" cookie="BuStCoStCoStEdBuBuBuStCoStCoBuStCoBuBuBuStEdmsStEdms" caption="Kapcsolat">
 		<control caption="_Bejövő cím"/>
 		<control caption="Cím:"/>
@@ -3877,7 +3878,8 @@
 		<control/>
 		<control caption="Új generálása"/>
 	</dialog>
-	<dialog name="CLanguageDlg" cookie="" caption="Nyelv kiválasztása"/>
+	<dialog name="CLanguageDlg" cookie="" caption="Nyelv kiválasztása">
+	</dialog>
 	<dialog name="CConnectToDlg" cookie="BuCoEdBuCoBuBuBu" caption="Manuális kapcsolódás|Fájllista és adatlap">
 		<control caption="Kapcsolódás ehhez|Fájllista és adatlap"/>
 		<control/>
@@ -3943,7 +3945,7 @@
 		<control caption="Mégse"/>
 		<control caption="Jelenlegi szűrő mentése másként"/>
 	</dialog>
-	<dialog name="CDiscoveryServiceDlg" cookie="BuEdStCoBuBu" caption="Szerverkereső szolgáltatás hozzáadása">
+	<dialog name="CDiscoveryServiceDlg" cookie="BuEdStCoBuBuSt" caption="Szerverkereső szolgáltatás hozzáadása">
 		<control caption="Szolgáltatás _címe"/>
 		<control/>
 		<control caption="Típusa:"/>
@@ -4268,7 +4270,7 @@
 		<control caption="_Következő|Exportálás..."/>
 		<control caption="_Mégse"/>
 	</dialog>
-	<dialog name="CDownloadEditDlg" cookie="StBuStEdEdStEdBuStStEdBuStEdBuStEdBuBuStStStStBuStEdStEdBuBuBuBu" caption="Letöltés szerkesztése">
+	<dialog name="CDownloadEditPage" cookie="StBuStEdEdStEdBuStStEdBuStEdBuStEdBuBuStStStStStBuStEdStEdBu" caption="Letöltés szerkesztése">
 		<control caption="FIGYELEM: Ez az ablak különleges beállításokat tartalmaz. A helytelen beállítások az adatok meghibásodását okozhatják!"/>
 		<control caption="Fájlnév és méret"/>
 		<control caption="Fájlnév:"/>

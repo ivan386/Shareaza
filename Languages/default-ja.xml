@@ -3162,6 +3162,9 @@
 </strings>
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
 <dialogs>
+	<dialog name="CGeneralSettingsGroup" cookie="" caption="一般">
+	</dialog>
+
 	<dialog name="CSettingSheet" cookie="SyBuBuBu#3" caption="Shareaza設定">
 		<control/>
 		<control caption="OK"/>
@@ -3169,8 +3172,6 @@
 		<control caption="適用"/>
 		<control/>
 	</dialog>
-
-	<dialog name="CGeneralSettingsGroup" cookie="" caption="一般"/>
 
 	<dialog name="CGeneralSettingsPage" cookie="BuBuBuBuStCoBuBuBuBuBuBuBuBuBuSyStEdmsStmsBuStCoStCo" caption="一般">
 		<control caption="一般(_G):"/>
@@ -3201,7 +3202,7 @@
 		<control caption="通常|タスクトレイに最小化"/>
 	</dialog>
 
-	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBuBu" caption="ライブラリ">
+	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBuBuBu" caption="ライブラリ">
 		<control caption="オプション(_O):"/>
 		<control caption="フォルダ表示を記録する"/>
 		<control caption="ライブラリフォルダを監視する"/>
@@ -3229,6 +3230,7 @@
 		<control/>
 		<control/>
 		<control caption="ファイル削除時にゴーストを作成する"/>
+		<control caption="Smart video series detection"/>
 	</dialog>
 
 	<dialog name="CMediaSettingsPage" cookie="BuCoBuBuBuCoBuBuBuBuBuStSt" caption="メディアプレーヤー">
@@ -3274,7 +3276,8 @@
 		<control caption="ダウンロードマネージャプラグインはここにリストされた種類のファイルだけをダウンロードします。他のファイルタイプのダウンロードにはウェブブラウザが使用されることになります。ダウンロードを処理するためにはShareazaを起動していなければなりません"/>
 	</dialog>
 
-	<dialog name="CInternetSettingsGroup" caption="インターネット"/>
+	<dialog name="CInternetSettingsGroup" caption="インターネット">
+	</dialog>
 
 	<dialog name="CConnectionSettingsPage" cookie="BuStCoStCoStEdBuBuBuStCoStCoBuStCoBuBuBuStEdmsStEdms" caption="接続">
 		<control caption="入力アドレス(_I):"/>
@@ -3361,7 +3364,7 @@
 		<control caption="ShareazaリモートアクセスはあなたがPCの前を離れていても、ウェブブラウザを使用してShareazaを遠隔操作することができるようにします。この機能を利用するには(ルータを適切に設定する等して)入力接続を受け付けることができるようにする必要があります"/>
 		<control caption="有効(_E):"/>
 		<control caption="Shareazaリモートアクセスを有効にする:"/>
-		<control/>
+		<control caption="URL"/>
 		<control caption="認証(_C):"/>
 		<control caption="ユーザ名:"/>
 		<control/>
@@ -3445,7 +3448,7 @@
 		<control caption="ハブ → ハブ"/>
 	</dialog>
 
-	<dialog name="CDonkeySettingsPage" cookie="BuBuBuBuBuStEdmsStBuStEdmsStBuStBuStBu" caption="eDonkey2000">
+	<dialog name="CDonkeySettingsPage" cookie="BuBuBuBuBuStEdmsStBuBuStEdmsStBuStBu" caption="eDonkey2000">
 		<control caption="eDonkey2000ネットワーク(_E):"/>
 		<control caption="今回eDonkey2000に接続"/>
 		<control caption="常時eDonkey2000に接続"/>
@@ -3455,14 +3458,13 @@
 		<control/>
 		<control/>
 		<control caption="検索結果"/>
+		<control/>
 		<control caption="クライアントリンク接続(_C):"/>
 		<control caption="最大接続数:"/>
 		<control/>
 		<control/>
 		<control caption="eDonkeyクライアント"/>
 		<control caption="eDonkey2000ツール(_T):"/>
-		<control caption="eDonkey/eMule部分ダウンロード(.part)をインポート:"/>
-		<control caption="インポート..."/>
 		<control caption="ウェブからeDonkey2000サーバーリストをダウンロード:"/>
 		<control caption="ダウンロード..."/>
 	</dialog>
@@ -3480,7 +3482,7 @@
 		<control caption="&#160;次の共有比率になればダウンロードしたTorrentを自動クリアする:"/>
 		<control/>
 		<control/>
-		<control/>
+		<control caption="%"/>
 		<control caption="&#160;Torrentソースを優先する"/>
 		<control caption="EndGame(_E):"/>
 		<control caption="Torrent完了時にEndGameモードを有効にする"/>
@@ -3524,12 +3526,13 @@
 		<control caption="更に追加"/>
 	</dialog>
 
-	<dialog name="CAdvancedSettingsPage" cookie="SyBuStEdmsStEd" caption="高度設定">
+	<dialog name="CAdvancedSettingsPage" cookie="SyEdmsBuBuStStEd" caption="高度設定">
 		<control/>
+		<control/>
+		<control/>
+		<control caption="Set Default"/>
 		<control caption="設定プロパティ:"/>
 		<control caption="値:"/>
-		<control/>
-		<control/>
 		<control caption="説明:"/>
 		<control/>
 	</dialog>
@@ -3546,7 +3549,7 @@
 		<control caption="最大ソースファイルサイズ:"/>
 		<control/>
 		<control caption="マークしたファイル:"/>
-		<control/>
+		<control caption="Popular|Release"/>
 		<control caption="一致ファイル名:"/>
 		<control/>
 		<control caption="プロトコル:"/>
@@ -3637,7 +3640,7 @@
 		<control/>
 	</dialog>
 
-	<dialog name="CWizardInterfacePage" cookie="StBuBuBuStStBuBuBu" caption="Shareazaへようこそ (4/6)">
+	<dialog name="CWizardInterfacePage" cookie="StBuBuBuStStBuBu" caption="Shareazaへようこそ (4/6)">
 		<control caption="Shareazaは複数のユーザーインターフェースをサポートしている為、 その中からあなたに相応しいものを選択することができ、これらのオプションは後で何時でも変更することができます"/>
 		<control caption="ユーザーインターフェースを選択して下さい:"/>
 		<control caption="素人モード"/>
@@ -3645,7 +3648,6 @@
 		<control caption="メニューとボタンによる単純なインターフェースです。{n}他のファイル共有プログラムとよく似た操作感で使用することが出来ます。"/>
 		<control caption="玄人モードは多くの拡張コマンドやウィンドウ等を熟練ユーザーへ提供します。{n}初心者ユーザーには判りづらいかもしれません!"/>
 		<control caption="ダウンロード進行バーの表示を簡素化 (CPUの使用率を抑えることができます)"/>
-		<control caption="BitTorrentインターフェースの追加要素を表示"/>
 		<control caption="BitTorrentリンクを処理する"/>
 	</dialog>
 
@@ -3776,7 +3778,8 @@
 		<control caption="新規作成"/>
 	</dialog>
 
-	<dialog name="CLanguageDlg" cookie="" caption="使用言語を選択"/>
+	<dialog name="CLanguageDlg" cookie="" caption="使用言語を選択">
+	</dialog>
 
 	<dialog name="CConnectToDlg" cookie="BuCoEdBuCoBuBuBu" caption="接続|ホスト参照">
 		<control caption="ホスト又はサーバへの新規接続を開始:|このホストを参照:"/>
@@ -3808,9 +3811,10 @@
 		<control caption="キャンセル"/>
 	</dialog>
 
-	<dialog name="CFilterSearchDlg" cookie="BuEdStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuCoBuBuBuBuBuBuBu" caption="フィルタ一致">
+	<dialog name="CFilterSearchDlg" cookie="BuEdBuStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuBuBuCoBuBuBuBuBu" caption="フィルタ一致">
 		<control caption="フィルタに一致させようとする単語を入力して下さい(_W):"/>
 		<control/>
+		<control caption="Reg. Exp."/>
 		<control caption="( -単語 で除外設定を行うことが出来ます )"/>
 		<control caption="サイズ指定(_S):"/>
 		<control caption="最小:"/>
@@ -3828,16 +3832,16 @@
 		<control caption="一致しないファイル"/>
 		<control caption="既に所有しているファイル"/>
 		<control caption="役に立たない結果"/>
-		<control caption="フィルタ"/>
-		<control caption="キャンセル"/>
+		<control caption="DRMファイル"/>
+		<control caption="アダルトファイル"/>
+		<control caption="不審なファイル"/>
+		<control caption="フィルタ:"/>
 		<control/>
 		<control caption="デフォルトに設定"/>
 		<control caption="新規保存(_S)"/>
 		<control caption="削除(_D)"/>
-		<control caption="フィルタ:"/>
-		<control caption="DRMファイル"/>
-		<control caption="不審なファイル"/>
-		<control caption="アダルトファイル"/>
+		<control caption="フィルタ"/>
+		<control caption="キャンセル"/>
 	</dialog>
 
 	<dialog name="CSaveFilterAsDlg" cookie="EdBuBuSt" caption="フィルタに名前を付けて保存">
@@ -3974,13 +3978,13 @@
 		<control caption="キャンセル"/>
 	</dialog>
 
-	<dialog name="CGraphItemDlg" cookie="BuBuBuCoCoStStEdBuBuStBu" caption="グラフアイテムプロパティ">
+	<dialog name="CGraphItemDlg" cookie="BuBuBuCoStEdStEdBuBuStBu" caption="グラフアイテムプロパティ">
 		<control caption="OK"/>
 		<control caption="キャンセル"/>
 		<control caption="ソース(_S):"/>
 		<control/>
-		<control/>
 		<control caption="パラメータ:"/>
+		<control/>
 		<control caption="単位:"/>
 		<control/>
 		<control caption="表示(_D):"/>
@@ -3997,7 +4001,7 @@
 		<control caption="リストからスキーマを選択し、その後カラムとして表示するフィールドを選択して下さい"/>
 	</dialog>
 
-	<dialog name="CSecureRuleDlg" cookie="BuStCoStEdBuStEdEdEdEdStEdEdEdEdBuEdBuBuBuStCoStCoEdStEdStEdStBuBu" caption="セキュリティ規則">
+	<dialog name="CSecureRuleDlg" cookie="BuStCoStEdBuStEdEdEdEdStEdEdEdEdBuEdBuBuBuBuStCoStCoEdStEdStEdStBuBu" caption="セキュリティ規則">
 		<control caption="規則(_R):"/>
 		<control caption="種類:"/>
 		<control caption="ネットワーク(IP) アドレス|内容フィルタ"/>
@@ -4018,6 +4022,7 @@
 		<control/>
 		<control caption="何れかに一致"/>
 		<control caption="全て一致"/>
+		<control caption="Reg. Exp."/>
 		<control caption="オプション(_O):"/>
 		<control caption="動作:"/>
 		<control caption="無し|受理|拒否"/>
@@ -4060,7 +4065,7 @@
 		<control caption="トークン挿入:"/>
 		<control caption="Tiger Root|SHA1|MD5|ED2K (CMD4)|ファイル名|ファイル名(URI)|基本ファイル名|ファイル拡張子|ファイルサイズ|ファイルサイズ(バイト)|フォルダパス|ローカルホスト|ローカルポート"/>
 		<control caption="プリセット選択:"/>
-		<control/>
+		<control caption="Magnet|eDonkey|Magnet HTML|eDonkey HTML"/>
 		<control caption="コピー(_C)"/>
 		<control caption="保存..."/>
 		<control/>
@@ -4187,9 +4192,9 @@
 		<control/>
 		<control caption="テンプレート情報:"/>
 		<control caption="名前:"/>
-		<control/>
+		<control caption="..."/>
 		<control caption="作者:"/>
-		<control/>
+		<control caption="..."/>
 		<control caption="説明:"/>
 		<control/>
 		<control caption="削除|戻る(_B)"/>
@@ -4197,7 +4202,7 @@
 		<control caption="キャンセル(_C)"/>
 	</dialog>
 
-	<dialog name="CDownloadEditDlg" cookie="StBuStEdEdStEdBuStStEdBuStEdBuStEdBuBuStStStStBuStEdStEdBuBuBuBu" caption="ダウンロードを編集 (高度)">
+	<dialog name="CDownloadEditPage" cookie="StBuStEdEdStEdBuStStEdBuStEdBuStEdBuBuStStStStStBuStEdStEdBu" caption="ダウンロードを編集 (高度)">
 		<control caption="警告: このダイアログは熟練したユーザーに対して高度なダウンロード編集機能を提供します。 これが不当に使用された場合、恐らくそのダウンロードは不正になります。"/>
 		<control caption="ファイル名とサイズ(_Z):"/>
 		<control caption="ファイル名:"/>
@@ -4221,15 +4226,13 @@
 		<control caption="ファイルが100%完全であるとみなして再検証する"/>
 		<control caption="既知ソースを全て廃棄"/>
 		<control caption="ローカルファイルと統合して検証する"/>
+		<control caption="キャンセル (save incomplete file)"/>
 		<control caption="データ消去(_E):"/>
 		<control caption="バイト範囲:"/>
 		<control/>
 		<control caption="→"/>
 		<control/>
 		<control caption="消去"/>
-		<control caption="Torrent情報..."/>
-		<control caption="OK"/>
-		<control caption="キャンセル"/>
 	</dialog>
 
 	<dialog name="CTorrentSeedDlg" cookie="StStBuBuBuStms" caption="Torrentファイルを開く">
@@ -4298,6 +4301,7 @@
 		<control caption="OK"/>
 		<control caption="キャンセル"/>
 		<control caption="完了フォルダ(_F):"/>
+		<control/>
 		<control/>
 	</dialog>
 

@@ -3299,7 +3299,7 @@
 	<string id="20236" value="Classificação"/>
   </strings>
   <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
-<!-- Don't edit dialogs manualy! Use DialogScan feature instead -->
+  <!-- Don't edit dialogs manualy! Use DialogScan feature instead -->
   <dialogs>
 	<dialog name="CGeneralSettingsGroup" cookie="" caption="Geral">
 	</dialog>
@@ -3913,7 +3913,8 @@
 		<control/>
 		<control caption="Gerar Novo"/>
 	</dialog>
-	<dialog name="CLanguageDlg" cookie="" caption="Selecionar um Idioma"/>
+	<dialog name="CLanguageDlg" cookie="" caption="Selecionar um Idioma">
+	</dialog>
 	<dialog name="CConnectToDlg" cookie="BuCoEdBuCoBuBuBu" caption="Conectar A|Navegar Host">
 		<control caption="Iniciar uma nova conexão com um host ou servidor:|Navegar este Host:"/>
 		<control/>

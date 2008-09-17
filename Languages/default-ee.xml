@@ -3183,6 +3183,9 @@
 
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
 <dialogs>
+	<dialog name="CGeneralSettingsGroup" cookie="" caption="General">
+	</dialog>
+
 	<dialog name="CSettingSheet" cookie="SyBuBuBu#3" caption="Shareaza Seaded">
 		<control/>
 		<control caption="OK"/>
@@ -3191,7 +3194,6 @@
 		<control/>
 	</dialog>
 
-	<dialog name="CGeneralSettingsGroup" cookie="" caption="General"/>
 
 	<dialog name="CGeneralSettingsPage" cookie="BuBuBuBuStCoBuBuBuBuBuBuBuBuBuSyStEdmsStmsBuStCoStCo" caption="Üldiselt">
 		<control caption="_Üldiselt:"/>
@@ -3222,7 +3224,7 @@
 		<control caption="Tavaline|Vähenda Tööriistaribale"/>
 	</dialog>
 
-	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBuBu" caption="Raamatukogu">
+	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBuBuBu" caption="Raamatukogu">
 		<control caption="_Seaded:"/>
 		<control caption="Pea meeles kaustade vaated"/>
 		<control caption="Vaata raamatukogu kaustu"/>
@@ -3250,9 +3252,10 @@
 		<control/>
 		<control/>
 		<control caption="Create ghost files when deleting"/>
+		<control caption="Smart video series detection"/>
 	</dialog>
 
-	<dialog name="CMediaSettingsPage" cookie="BuCoBuBuBuCoBuBuBuBu" caption="Meedia">
+	<dialog name="CMediaSettingsPage" cookie="BuCoBuBuBuCoBuBuBuBuBuStSt" caption="Meedia">
 		<control caption="_Meedia Teenused:"/>
 		<control/>
 		<control caption="Kasuta Shareaza Meedia Player-it, et avada allpool loetletud failitüübid"/>
@@ -3263,6 +3266,9 @@
 		<control caption="_Remove"/>
 		<control caption="Audio _Visualisation Plugin:"/>
 		<control caption="_Select Plugin..."/>
+		<control caption="_Meedia Handling"/>
+		<control caption="Choose Meedia Handler:"/>
+		<control caption="Warning: Choosing an external Meedia Handler will automatically disable all Meedia and Visualisation Plugins"/>
 	</dialog>
 
 	<dialog name="CCommunitySettingsPage" cookie="BuStBuBuBuBuBuBu" caption="Kogukond">
@@ -3462,7 +3468,7 @@
 		<control caption="Hub to Hub"/>
 	</dialog>
 
-	<dialog name="CDonkeySettingsPage" cookie="BuBuBuBuBuStEdmsStBuStEdmsStBuStBuStBu" caption="eDonkey2000">
+	<dialog name="CDonkeySettingsPage" cookie="BuBuBuBuBuStEdmsStBuBuStEdmsStBuStBu" caption="eDonkey2000">
 		<control caption="_eDonkey2000 Võrgustik:"/>
 		<control caption="Ühenda eDonkey2000-ga täna"/>
 		<control caption="Ühenda automaatselt iga kord"/>
@@ -3472,14 +3478,13 @@
 		<control/>
 		<control/>
 		<control caption="tulemust."/>
+		<control caption="Receive and update server list from the connected server"/>
 		<control caption="_Kliendipoolsed Ühendused:"/>
 		<control caption="Ühenda kõige rohkem:"/>
 		<control/>
 		<control/>
 		<control caption="teise eDonkey kliendiga."/>
 		<control caption="eDonkey2000 _Tööriistad:"/>
-		<control caption="Impordi eDonkey/eMule poolikud allalaadimised (.part):"/>
-		<control caption="Impordi..."/>
 		<control caption="Tõmba weebist eDonkey2000 serverite nimekiri:"/>
 		<control caption="Tõmba..."/>
 	</dialog>
@@ -3497,7 +3502,7 @@
 		<control caption="&#160;Puhasta allalaaditud torrentid&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;Kui jagamissuhe jõuab"/>
 		<control/>
 		<control/>
-		<control/>
+		<control caption="%"/>
 		<control caption="&#160;Eelista torrenti allikaid"/>
 		<control caption="_EndGame:"/>
 		<control caption="Võimalda EndGame rešiim kui lõpetad torrente"/>
@@ -3541,13 +3546,14 @@
 		<control caption="Otsi lisaks"/>
 	</dialog>
 
-	<dialog name="CAdvancedSettingsPage" cookie="SyBuStEdmsStEd" caption="Täpsem">
+	<dialog name="CAdvancedSettingsPage" cookie="SyEdmsBuBuStStEd" caption="Täpsem">
 		<control/>
+		<control/>
+		<control/>
+		<control caption="Set Default"/>
+		<control caption="Kirjeldus:"/>
 		<control caption="Seadete Omadused:"/>
 		<control caption="Väärtus:"/>
-		<control/>
-		<control/>
-		<control caption="Kirjeldus:"/>
 		<control/>
 	</dialog>
 
@@ -3790,7 +3796,8 @@
 		<control caption="Genereeri Uus"/>
 	</dialog>
 
-	<dialog name="CLanguageDlg" cookie="" caption="Vali keel"/>
+	<dialog name="CLanguageDlg" cookie="" caption="Vali keel">
+	</dialog>
 
 	<dialog name="CConnectToDlg" cookie="BuCoEdBuCoBuBuBu" caption="Ühenda serveriga|Sirvi kasutajat">
 		<control caption="Alusta serveriga uut ühendust:|Sirvi seda serverit:"/>
@@ -3822,9 +3829,10 @@
 		<control caption="Tühista"/>
 	</dialog>
 
-	<dialog name="CFilterSearchDlg" cookie="BuEdStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuCoBuBuBuBuBuBuBu" caption="Filter">
+	<dialog name="CFilterSearchDlg" cookie="BuEdBuStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuBuBuCoBuBuBuBuBu" caption="Filter">
 		<control caption="Näita ainult neid vastuseid, mis sisaldavad neid s_õnu:"/>
 		<control/>
+		<control caption="Reg. Exp."/>
 		<control caption="( Sa saad ka välistada sõnu kasutades -sõna )"/>
 		<control caption="On _suuruses:"/>
 		<control caption="Vähemalt:"/>
@@ -3842,16 +3850,16 @@
 		<control caption="Ebasobivad failid"/>
 		<control caption="Failid, mis sul juba on"/>
 		<control caption="Võlts tulemused"/>
-		<control caption="Filtreeri"/>
-		<control caption="Tühista"/>
+		<control caption="DRM failid"/>
+		<control caption="Täiskasvanu tulemused"/>
+		<control caption="Kahtlased failid"/>
+		<control caption="Filtrid:"/>
 		<control/>
 		<control caption="Sea vaikimisi"/>
 		<control caption="_Salvesta nimega"/>
 		<control caption="_Kustuta"/>
-		<control caption="Filtrid:"/>
-		<control caption="DRM failid"/>
-		<control caption="Kahtlased failid"/>
-		<control caption="Täiskasvanu tulemused"/>
+		<control caption="Filtreeri"/>
+		<control caption="Tühista"/>
 	</dialog>
 
 	<dialog name="CSaveFilterAsDlg" cookie="EdBuBuSt" caption="Salvesta Filter Nimega">
@@ -4199,17 +4207,17 @@
 		<control/>
 		<control caption="Näidise Informatsioon:"/>
 		<control caption="Nimi:"/>
-		<control/>
+		<control caption="..."/>
 		<control caption="Autor:"/>
-		<control/>
+		<control caption="..."/>
 		<control caption="Kirjeldus:"/>
-		<control/>
+		<control />
 		<control caption="Kustuta|_Tagasi"/>
 		<control caption="_Järgmine|Ekspordi"/>
 		<control caption="_Tühista"/>
 	</dialog>
 
-	<dialog name="CDownloadEditDlg" cookie="StBuStEdEdStEdBuStStEdBuStEdBuStEdBuBuStStStStBuStEdStEdBuBuBuBu" caption="Muuda Allalaadimist">
+	<dialog name="CDownloadEditPage" cookie="StBuStEdEdStEdBuStStEdBuStEdBuStEdBuBuStStStStStBuStEdStEdBu" caption="Muuda Allalaadimist">
 		<control caption="HOIATUS: See aken pakub täpsemat allalaadimiste andmete muutmise võimalust arenenud kasutajatele, mida valesti kasutades võib faili kasutuks muuta."/>
 		<control caption="Faili Nimi ja _Suurus:"/>
 		<control caption="Faili Nimi:"/>
@@ -4233,15 +4241,13 @@
 		<control caption="Eelda, et fail on 100% valmis ja kinnita"/>
 		<control caption="Unusta kõik teadaolevad allikad"/>
 		<control caption="Ühilda kohaliku failiga ja kinnita"/>
+		<control caption="Tühista download but save incomplete file"/>
 		<control caption="Andmete _Kustutaja:"/>
 		<control caption="Baitide ulatus:"/>
 		<control/>
 		<control caption="kuni"/>
 		<control/>
 		<control caption="Kustuta"/>
-		<control caption="_Torrenti Info..."/>
-		<control caption="OK"/>
-		<control caption="Tühista"/>
 	</dialog>
 
 	<dialog name="CTorrentSeedDlg" cookie="StStBuBuBuStms" caption="Ava Torrent Fail">

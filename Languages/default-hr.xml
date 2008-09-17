@@ -3153,6 +3153,9 @@
 
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
 <dialogs>
+	<dialog name="CGeneralSettingsGroup" cookie="" caption="Općenito">
+	</dialog>
+
 	<dialog name="CSettingSheet" cookie="SyBuBuBu#3" caption="Shareazine Postavke">
 		<control/>
 		<control caption="OK"/>
@@ -3161,7 +3164,6 @@
 		<control/>
 	</dialog>
 
-	<dialog name="CGeneralSettingsGroup" cookie="" caption="Općenito"/>
 
 	<dialog name="CGeneralSettingsPage" cookie="BuBuBuBuStCoBuBuBuBuBuBuBuBuBuSyStEdmsStmsBuStCoStCo" caption="Općenito">
 		<control caption="Općenito:"/>
@@ -3192,7 +3194,7 @@
 		<control caption="Normalno|Spusti u Tray"/>
 	</dialog>
 
-	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBuBu" caption="Kolekcija">
+	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBuBuBu" caption="Kolekcija">
 		<control caption="_Opcije:"/>
 		<control caption="Zapamti mape"/>
 		<control caption="Prati mape moje kolekcije"/>
@@ -3220,6 +3222,7 @@
 		<control/>
 		<control/>
 		<control caption="Create ghost files when deleting"/>
+		<control caption="Smart video series detection"/>
 	</dialog>
 
 	<dialog name="CMediaSettingsPage" cookie="BuBuBuBuCoBuBuBuBuBuCo" caption="Media Player">
@@ -3512,12 +3515,13 @@
 		<control caption="Stavi Više"/>
 	</dialog>
 
-	<dialog name="CAdvancedSettingsPage" cookie="SyBuStEdmsStEd" caption="Napredno">
+	<dialog name="CAdvancedSettingsPage" cookie="SyEdmsBuBuStStEd" caption="Napredno">
 		<control/>
+		<control/>
+		<control/>
+		<control caption="Set Default"/>
 		<control caption="Postavke:"/>
 		<control caption="Vrijednost:"/>
-		<control/>
-		<control/>
 		<control caption="Opis:"/>
 		<control/>
 	</dialog>
@@ -3761,7 +3765,8 @@
 		<control caption="Promjeni"/>
 	</dialog>
 
-	<dialog name="CLanguageDlg" cookie="" caption="Odaberite Jezik"/>
+	<dialog name="CLanguageDlg" cookie="" caption="Odaberite Jezik">
+	</dialog>
 	<dialog name="CConnectToDlg" cookie="BuCoEdBuCoBuBuBu" caption="Spoji se|Pogledaj što ima">
 		<control caption="Započmi novu vezu sa hostom ili serverom:|Pogledaj što ima ovaj host:"/>
 		<control/>
@@ -3792,9 +3797,10 @@
 		<control caption="Odustani"/>
 	</dialog>
 
-	<dialog name="CFilterSearchDlg" cookie="BuEdStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuCoBuBuBuBuBuBuBu" caption="Filtrirani Rezultati">
+	<dialog name="CFilterSearchDlg" cookie="BuEdBuStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuBuBuCoBuBuBuBuBu" caption="Filtrirani Rezultati">
 		<control caption="Pokaži samo rezultate koji sadrže ove riječi:"/>
 		<control/>
+		<control caption="Reg. Exp."/>
 		<control caption="( možete i da ne sadrži riječi sa -riječ )"/>
 		<control caption="I veličine su od (KB):"/>
 		<control caption="Minimalno:"/>
@@ -3807,21 +3813,21 @@
 		<control caption="izvora."/>
 		<control caption="Sakrij:"/>
 		<control caption="Zauzete hostove"/>
+		<control caption="Non-matching files"/>
 		<control caption="Firewalled/push hosts"/>
 		<control caption="Nestabilne hostove"/>
-		<control caption="Non-matching files"/>
 		<control caption="Datoteke koje već imate"/>
 		<control caption="Lažne rezultate"/>
-		<control caption="Filter"/>
-		<control caption="Odustani"/>
+		<control caption="DMR Datoteke"/>
+		<control caption="Rezultati za odrasle"/>
+		<control caption="Sumljive datoteke"/>
+		<control caption="Filteri:"/>
 		<control/>
 		<control caption="Postavi za uvjek"/>
 		<control caption="_Spremi kao"/>
 		<control caption="Obriši"/>
-		<control caption="Filteri:"/>
-		<control caption="DMR Datoteke"/>
-		<control caption="Sumljive datoteke"/>
-		<control caption="Rezultati za odrasle"/>
+		<control caption="Filter"/>
+		<control caption="Odustani"/>
 	</dialog>
 
 	<dialog name="CSaveFilterAsDlg" cookie="EdBuBuSt" caption="Spremi filter kao">
@@ -3958,13 +3964,13 @@
 		<control caption="Odustani"/>
 	</dialog>
 
-	<dialog name="CGraphItemDlg" cookie="BuBuBuCoCoStStEdBuBuStBu" caption="Graph Item Properties">
+	<dialog name="CGraphItemDlg" cookie="BuBuBuCoStEdStEdBuBuStBu" caption="Graph Item Properties">
 		<control caption="OK"/>
 		<control caption="Odustani"/>
 		<control caption="Izvor:"/>
 		<control/>
-		<control/>
 		<control caption="Parametar:"/>
+		<control/>
 		<control caption="Jedinica:"/>
 		<control/>
 		<control caption="Ekran:"/>
@@ -4044,7 +4050,7 @@
 		<control caption="Insert Token:"/>
 		<control caption="Tiger Root|SHA1|MD5|ED2K (CMD4)|Filename|Filename (URI)|Base Filename|File Extension|File Size|File Size (bytes)|Folder Path|Local Host|Local Port"/>
 		<control caption="Select preset:"/>
-		<control/>
+		<control caption="Magnet|eDonkey|Magnet HTML|eDonkey HTML"/>
 		<control caption="Kopiraj"/>
 		<control caption="Spremi..."/>
 		<control/>
@@ -4164,36 +4170,52 @@
 		<control/>
 	</dialog>
 
-	<dialog name="CCollectionExportDlg" cookie="StBuBu" caption="Export Folder">
-		<control caption="This feature is used to export the contents of an album folder as a rich collection file."/>
-		<control caption="Export..."/>
+	<dialog name="CCollectionExportDlg" cookie="StSyBuStStStStStEdBuBuBu" caption="Export Folder">
+		<control caption="This feature is used to export the contents of a folder or playlist as a rich collection file.  Please select a template and press Next to continue.|Customize your collection by entering data below."/>
+		<control/>
+		<control caption="Template Information:"/>
+		<control caption="Name:"/>
+		<control caption="..."/>
+		<control caption="Author:"/>
+		<control caption="..."/>
+		<control caption="Description:"/>
+		<control/>
+		<control caption="Delete|_Back"/>
+		<control caption="_Next|_Export..."/>
 		<control caption="Odustani"/>
 	</dialog>
 
-	<dialog name="CDownloadEditDlg" cookie="StBuEdBuStEdStEdStEdBuStStStBuStEdStEdBuBuBuBu" caption="Edit Download (Napredno)">
+	<dialog name="CDownloadEditPage" cookie="StBuStEdEdStEdBuStStEdBuStEdBuStEdBuBuStStStStStBuStEdStEdBu" caption="Edit Download (Napredno)">
 		<control caption="UPOZORENJE: Ove opcije omogučuju napredno podešavanje skidanja, ako se pogrešno koriste vjerovatno će uzrokovati GREŠKU u skinutoj datoteci"/>
+		<control caption="Ime datoteke & Veličina:"/>
 		<control caption="Ime datoteke:"/>
 		<control/>
+		<control/>
+		<control caption="Datoteke veličina (Byte):"/>
+		<control/>
 		<control caption="_URNs:"/>
+		<control caption="Trusted"/>
 		<control caption="SHA1:"/>
+		<control/>
 		<control/>
 		<control caption="Tiger-Root:"/>
 		<control/>
+		<control/>
 		<control caption="ED2K:"/>
+		<control/>
 		<control/>
 		<control caption="_Akcije:"/>
 		<control caption="Zaboravi trenutno stanje provjere (i ponovno provjeri)"/>
 		<control caption="Pretpostavi da je datoteka 100% skinuta i ponovno provjeri"/>
 		<control caption="Zaboravi sve poznate izvore"/>
+		<control caption="Merge with local file and verify"/>
+		<control caption="Odustani download but save incomplete file"/>
 		<control caption="Brisač Podataka:"/>
 		<control caption="Obriši bajtove:"/>
 		<control/>
 		<control caption="do"/>
 		<control/>
 		<control caption="Obriši"/>
-		<control caption="_Torrent Info..."/>
-		<control caption="OK"/>
-		<control caption="Odustani"/>
 	</dialog>
 
 	<dialog name="CTorrentSeedDlg" cookie="StStBuBuBuStms" caption="Otvori Torrent Datoteku">
@@ -4206,7 +4228,7 @@
 		<control/>
 	</dialog>
 
-	<dialog name="CTorrentTrackerDlg" cookie="BuStEdStEdStEdStEdStEdBuStEdStEdBuStCoBuSyBuCoBu" caption="Napredne Informacije o BitTorrentu">
+	<dialog name="CTorrentGeneralPage" cookie="BuStEdStEdStEdStEdBuStCoEdStStEd" caption="Napredne Informacije o BitTorrentu">
 		<control caption="Torrent _Informacije:"/>
 		<control caption="Ime:"/>
 		<control/>
@@ -4216,21 +4238,39 @@
 		<control/>
 		<control caption="Komentari:"/>
 		<control/>
-		<control caption="Tracker:"/>
-		<control/>
-		<control caption="_Downloaders:"/>
-		<control caption="Completed (Seeds):"/>
-		<control/>
-		<control caption="Incomplete:"/>
-		<control/>
 		<control caption="Transfers:"/>
 		<control caption="Počni novo skidanje:"/>
 		<control caption="Po potrebi|Kad omjer prijeđe 100%|Samo po zahtjevu|Nikada"/>
-		<control caption="Datoteke:"/>
 		<control/>
 		<control caption="Osvježi"/>
-		<control/>
 		<control caption="Zatvori"/>
+		<control/>
+	</dialog>
+
+	<dialog name="CTorrentFilesPage" cookie="BuStEdBuSy" caption="Datotekes">
+		<control caption="Torrent _Information:"/>
+		<control caption="Ime:"/>
+		<control/>
+		<control caption="_Datotekes:"/>
+		<control/>
+	</dialog>
+
+	<dialog name="CTorrentTrackersPage" cookie="BuStEdStEdBuStEdStEdBuBuSyStCo" caption="Trackers">
+		<control caption="Torrent _Information:"/>
+		<control caption="Ime:"/>
+		<control/>
+		<control caption="Tracker:"/>
+		<control/>
+		<control caption="_Current Tracker:"/>
+		<control caption="Skinutim (Seeds):"/>
+		<control/>
+		<control caption="Incomplete:"/>
+		<control/>
+		<control caption="_Refresh"/>
+		<control caption="_Trackers:"/>
+		<control/>
+		<control caption="Tracker Mode:"/>
+		<control caption="Disabled|Custom|Single Tracker|Multi-tracker|Multi-tracker (locked)"/>
 	</dialog>
 
 	<dialog name="CDownloadGroupDlg" cookie="BuEdSyBuCoBuBuBuBuBuEdBu" caption="Download Group Postavke">
@@ -4244,6 +4284,7 @@
 		<control caption="OK"/>
 		<control caption="Odustani"/>
 		<control caption="Mapa sa Skinutim Datotekama:"/>
+		<control/>
 		<control/>
 	</dialog>
 

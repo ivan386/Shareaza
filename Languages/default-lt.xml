@@ -3922,7 +3922,8 @@
 		<control/>
 		<control caption="Generuoti naują"/>
 	</dialog>
-	<dialog name="CLanguageDlg" cookie="" caption="Pasirinkite kalbą"/>
+	<dialog name="CLanguageDlg" cookie="" caption="Pasirinkite kalbą">
+	</dialog>
 	<dialog name="CConnectToDlg" cookie="BuCoEdBuCoBuBuBu" caption="Jungtis prie|Naršyti adresatą">
 		<control caption="Užmegzti naują ryšį su kompiuteriu ar serveriu:|Naršyti šį kompiuterį:"/>
 		<control/>
@@ -4127,7 +4128,7 @@
 		<control caption="Atšaukti"/>
 		<control caption="Pasirinkite schemą iš sąrašo, o po to pažymėkite laukus, kuriuos rodyti kaip stulpelius."/>
 	</dialog>
-	<dialog name="CSecureRuleDlg" cookie="BuStCoStEdBuStEdEdEdEdStEdEdEdEdBuEdBuBuBuStCoStCoEdStEdStEdStBuBu" caption="Saugos taisyklė">
+	<dialog name="CSecureRuleDlg" cookie="BuStCoStEdBuStEdEdEdEdStEdEdEdEdBuEdBuBuBuBuStCoStCoEdStEdStEdStBuBu" caption="Saugos taisyklė">
 		<control caption="_Taisyklė:"/>
 		<control caption="Tipas:"/>
 		<control caption="Tinklo (IP) adresas|Turinio filtras"/>
@@ -4148,6 +4149,7 @@
 		<control/>
 		<control caption="Bet kuris žodis"/>
 		<control caption="Visi žodžiai"/>
+		<control caption="Reg. Exp."/>
 		<control caption="_Parinktys:"/>
 		<control caption="Veiksmas:"/>
 		<control caption="Jokio|Prileisti|Drausti"/>

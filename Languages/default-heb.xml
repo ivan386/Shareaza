@@ -3302,6 +3302,8 @@ PDF
 </strings>
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
 <dialogs>
+	<dialog name="CGeneralSettingsGroup" cookie="" caption="כללי"/>
+	</dialog>
 	<dialog name="CSettingSheet" cookie="SyBuBuBu#3" caption="הגדרות שרזה">
 		<control/>
 		<control caption="אישור"/>
@@ -3309,7 +3311,6 @@ PDF
 		<control caption="החל"/>
 		<control/>
 	</dialog>
-	<dialog name="CGeneralSettingsGroup" cookie="" caption="כללי"/>
 	<dialog name="CGeneralSettingsPage" cookie="BuBuBuBuStCoBuBuBuBuBuBuBuBuBuSyStEdmsStmsBuStCoStCo" caption="כללי">
 		<control caption="‪:כללי"/>
 		<control caption="‪התחבר אוטמטית באתחול של שרזה"/>
@@ -3328,7 +3329,8 @@ PDF
 		<control caption="‪‪:טיפים"/>
 		<control/>
 		<control caption="‪(ms) :השהייה"/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="‪:אטימות"/>
 		<control/>
 		<control caption="‪:שורת משימות"/>
@@ -3337,7 +3339,7 @@ PDF
 		<control caption="‪:כשאני לוחצ/ת מזער"/>
 		<control caption="‪רגיל|מזער"/>
 	</dialog>
-	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBuBu" caption="ספריה">
+	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBuBuBu" caption="ספריה">
 		<control caption=":אפשרויות"/>
 		<control caption="זכור את תצוגות התיקייה"/>
 		<control caption="צפה בתיקיות הספריה"/>
@@ -3365,8 +3367,9 @@ PDF
 		<control/>
 		<control/>
 		<control caption="Create ghost files when deleting"/>
+		<control caption="Smart video series detection"/>
 	</dialog>
-	<dialog name="CMediaSettingsPage" cookie="BuBuBuBuCoBuBuBuBuBuCo" caption="נגן המדיה">
+	<dialog name="CMediaSettingsPage" cookie="BuCoBuBuBuCoBuBuBuBuBuStSt" caption="נגן המדיה">
 		<control caption=":א_פשררויות"/>
         <control/>
         <control caption="השתמש בנגן המדיה של שרזה לניגון סוגי הקבצים שרשומים להלן"/>
@@ -3442,8 +3445,9 @@ PDF
 		<control caption="הסר"/>
 		<control caption="תוסף מנהל ההורדות אך ורק ינסה להוריד את הקבצים המופיעים ברשימה להלן. סוגים אחרים של קבצים יטופלו על ידי הדפדפן. שרזה חייבת להיות מופעלת בכדי לנהל את ההורדות."/>
 	</dialog>
-	<dialog name="CInternetSettingsGroup" caption="אינטרנט"/>
-	<dialog name="CConnectionSettingsPage" cookie="BuStCoStCoStEdBuBuBuStCoStCoBuStCoBuBuStEdmsStEdms" caption="חיבור">
+	<dialog name="CInternetSettingsGroup" caption="אינטרנט">
+	</dialog>
+	<dialog name="CConnectionSettingsPage" cookie="BuStCoStCoStEdBuBuBuStCoStCoBuStCoBuBuBuStEdmsStEdms" caption="חיבור">
 		<control caption=":כתובת נכנסת"/>
 		<control caption=":כתובת"/>
 		<control caption="אוטמטי"/>
@@ -3605,7 +3609,7 @@ PDF
 		<control caption="קו ענף אל מוקד"/>
 		<control caption="מוקד אל מוקד"/>
 	</dialog>
-	<dialog name="CDonkeySettingsPage" cookie="BuBuBuBuBuStEdmsStBuStEdmsStBuStBuStBu" caption="אי-דונקי 2000">
+	<dialog name="CDonkeySettingsPage" cookie="BuBuBuBuBuStEdmsStBuBuStEdmsStBuStBu" caption="אי-דונקי 2000">
 		<control caption=":רשת אידונקי"/>
 		<control caption="התחבר לרשת אידונקי"/>
 		<control caption="חיבור אוטמטי בכל הפעלה"/>
@@ -3637,7 +3641,8 @@ PDF
 		<control caption="מקסימום חיבורים"/>
 		<control caption="&#160;נקה טורנטים שהורדו&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;כשרמת השיתוף תגיע אל"/>
 		<control/>
-		<control/><control/>
+		<control/>
+		<control caption="%"/>
 		<control caption="&#160;תן עדיפות למקורות של טורנטים"/>
 		<control caption=":EndGame (האצה)"/>
 		<control caption="כשמסיימים הורדת טורנטים EndGame אפשר אופציית"/>
@@ -3677,16 +3682,17 @@ PDF
 		<control caption="...התקנה"/>
 		<control caption=":מידע נוסף"/>
 	</dialog>
-	<dialog name="CAdvancedSettingsPage" cookie="SyBuStEdmsStEd" caption="מתקדם">
+	<dialog name="CAdvancedSettingsPage" cookie="SyEdmsBuBuStStEd" caption="מתקדם">
+		<control/>
+		<control/>
 		<control/>
 		<control caption=":הגדרות"/>
 		<control caption=":ערך"/>
-		<control/>
-		<control/>
 		<control caption=":תיאור"/>
+		<control caption=":"/>
 		<control/>
 	</dialog>
-	<dialog name="CQueuePropertiesDlg" cookie="BuEdBuBuBuEdBuEdBuCoBuEdBuSyBuBuStEdmsStEdmsStEdmsBuStEdStEdmsBuEdmsBuBuBu" caption="מאפייני תורות העלאה">
+	<dialog name="CQueuePropertiesDlg" cookie="BuEdBuBuBuBuBuEdBuEdBuCoBuEdBuSyBuBuStEdmsStEdmsStEdmsBuStEdStEdmsBuEdmsBuBuBu" caption="מאפייני תורות העלאה">
 		<control caption=":שם"/>
 		<control/>
 		<control caption=":רישום קריטריון"/>
@@ -3741,7 +3747,7 @@ PDF
 		<control/>
 		<control caption="התחלת השימוש בשרזה"/>
 	</dialog>
-	<dialog name="CWizardConnectionPage" cookie="StCoStCoStCoStCoStCo" caption="(1/6) ברוכים הבאים לשרזה">
+	<dialog name="CWizardConnectionPage" cookie="StStCoStCoStCoStCoStms" caption="(1/6) ברוכים הבאים לשרזה">
 		<control caption="לביצועים מירביים, שרזה צריכה לדעת קצת יותר על החיבור שלך לאינטרנט"/>
 		<control caption="&#160;אנא בחר|אני משתמש באינטרנט בביתי|אני משתמש באינטרנט בקו קבוע במכללה|אני משתמש באינטרנט בקו קבוע במשרד|אני משתמש באינטרנט במלון או בשדה תעופה"/>
 		<control caption="| Dial up Modem| ISDN| ADSL (256K)| ADSL (512K)| ADSL (768K)| ADSL (1.5M)| Cable Modem/SDSL| T1| T3| LAN| OC3"/>
@@ -3783,7 +3789,7 @@ PDF
 		<control/>
 		<control/>
 	</dialog>
-	<dialog name="CWizardInterfacePage" cookie="StBuBuBuStStBuBuBu" caption="(4/6) ברוכים הבאים לשרזה">
+	<dialog name="CWizardInterfacePage" cookie="StBuBuBuStStBuBu" caption="(4/6) ברוכים הבאים לשרזה">
 		<control caption="שרזה תומך בשתי ממשקי משתמש, כך שאתה יכול לבחור את האחד שהכי נוח בשבילך"/>
 		<control caption=":אנא בחר אחד משני הממשקים"/>
 		<control caption="מצב רגיל"/>
@@ -3908,7 +3914,8 @@ PDF
 		<control/>
 		<control caption="צור כעת"/>
 	</dialog>
-	<dialog name="CLanguageDlg" cookie="" caption="בחר שפה"/>
+	<dialog name="CLanguageDlg" cookie="" caption="בחר שפה">
+	</dialog>
 	<dialog name="CConnectToDlg" cookie="BuCoEdBuCoBuBuBu" caption="התחבר אל|סייר במידע משתמש">
 		<control caption=":צור חיבור חדש עם כתובת המשתמש או השרת|סייר במידע המשתמש"/>
 		<control/>
@@ -3936,7 +3943,7 @@ PDF
 		<control caption="חפש"/>
 		<control caption="ביטול"/>
 	</dialog>
-	<dialog name="CFilterSearchDlg" cookie="BuEdStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuCoBuBuBuBuBuBuBu" caption="...מסנן תוצאות">
+	<dialog name="CFilterSearchDlg" cookie="BuEdBuStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuBuBuCoBuBuBuBuBu" caption="...מסנן תוצאות">
 		<control caption=":הראה רק תוצאות שמכילות את המילים"/>
 		<control/>
 		<control caption="Reg. Exp."/>
@@ -3957,16 +3964,16 @@ PDF
 		<control caption="קבצים לא תואמים"/>
 		<control caption="קבצים שכבר יש לך"/>
 		<control caption="תוצאות שגויות"/>
+		<control caption="DRM קבצי"/>
+		<control caption="תוצאות עם תוכן למבוגרים"/>
+		<control caption="קבצים חשודים"/>
 		<control caption="אישור"/>
-		<control caption="ביטול"/>
 		<control/>
 		<control caption="קבע כברירת מחדל"/>
 		<control caption="שמור בשם"/>
 		<control caption="מחק"/>
 		<control caption="‪:...סינון"/>
-		<control caption="DRM קבצי"/>
-		<control caption="קבצים חשודים"/>
-		<control caption="תוצאות עם תוכן למבוגרים"/>
+		<control caption="ביטול"/>
 	</dialog>
 	<dialog name="CSaveFilterAsDlg" cookie="EdBuBuSt" caption="...שמור מסנן בשם">
 		<control/>
@@ -3974,13 +3981,14 @@ PDF
 		<control caption="ביטול"/>
 		<control caption=":שמור את המסנן הנוכחי בשם"/>
 	</dialog>
-	<dialog name="CDiscoveryServiceDlg" cookie="BuEdStCoBuBu" caption="שירות משאבי חיבור">
+	<dialog name="CDiscoveryServiceDlg" cookie="BuEdStCoBuBuSt" caption="שירות משאבי חיבור">
 		<control caption=":כתובת השירות"/>
 		<control/>
 		<control caption=":סוג שירות המשאבי חיבור"/>
-		<control/>
+		<control caption="Gnutella Bootstrap|GWebCache|Server.met URL|Blocked"/>
 		<control caption="אישור"/>
 		<control caption="ביטול"/>
+		<control/>
 	</dialog>
 	<dialog name="CDownloadMonitorDlg" cookie="StStStStStStStStStStStStStBuBuBuBuBu" caption="שרזה : הורדה">
 		<control caption=":שרזה מוריד"/>
@@ -4088,13 +4096,13 @@ PDF
 		<control caption="אישור"/>
 		<control caption="ביטול"/>
 	</dialog>
-	<dialog name="CGraphItemDlg" cookie="BuBuBuCoCoStStEdBuBuStBu" caption="הגדרות רכיב גרף">
+	<dialog name="CGraphItemDlg" cookie="BuBuBuCoStEdStEdBuBuStBu" caption="הגדרות רכיב גרף">
 		<control caption="אישור"/>
 		<control caption="ביטול"/>
 		<control caption=":מקור"/>
 		<control/>
 		<control caption=":כופל"/>
-				<control/>
+		<control/>
 		<control caption=":יחידות"/>
 		<control/>
  		<control caption=":תצוגה"/>
@@ -4109,7 +4117,7 @@ PDF
 		<control caption="ביטול"/>
 		<control caption="‏כעמודות‎ ‏להצגה‎ ‏השדות‎ ‏את‎ ‏ובחר‎ ‏מהרשימה‎, ‏סכמה‎ ‏בחר"/>
 	</dialog>
-	<dialog name="CSecureRuleDlg" cookie="BuStCoStEdBuStEdEdEdEdStEdEdEdEdBuEdBuBuBuStCoStCoEdStEdStEdStBuBu" caption="חוק אבטחה">
+	<dialog name="CSecureRuleDlg" cookie="BuStCoStEdBuStEdEdEdEdStEdEdEdEdBuEdBuBuBuBuStCoStCoEdStEdStEdStBuBu" caption="חוק אבטחה">
 		<control caption=":חוק"/>
 		<control caption=":סוג"/>
 		<control caption="כתובת רשת IP|מסנן תכנים"/>
@@ -4118,11 +4126,13 @@ PDF
 		<control caption=":כתובת רשת"/>
 		<control caption=":IP כתובת"/>
 		<control/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control/>
 		<control caption=":Mask כתובת"/>
 		<control/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control/>
 		<control caption=":מסנן תוכן"/>
 		<control/>
@@ -4156,7 +4166,8 @@ PDF
 		<control/>
 		<control caption="של הרכיב הנבחר בצורות שונות, אנא בחר את הקונטקסט של הכתובת שאתה מעוניין בה על ידי לחיצה על אחד :מהכתובות שמתחת URI אתה יכול להעתיק את הכתובת"/>
 		<control/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption="URI כלול אותי כמקור תקין בכתובת"/>
 		<control caption="ביטול"/>
 	</dialog>
@@ -4225,9 +4236,10 @@ PDF
 		<control caption="http://shareaza.sourceforge.net/"/>
 		<control caption="אישור"/>
 	</dialog>
-	<dialog name="CExistingFileDlg" cookie="StStStStStBuBuBuBuBuSt" caption="קובץ קיים">
+	<dialog name="CExistingFileDlg" cookie="StStStStStBuBuBuBuBuStSt" caption="קובץ קיים">
 		<control/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control/>
 		<control caption="?כבר יש לך את הקובץ בספרייתך, מה תרצה לעשות"/>
 		<control caption="הצג לי את הקובץ שבספריה שלי"/>
@@ -4260,7 +4272,7 @@ PDF
 		<control caption="סגור"/>
 		<control/>
 	</dialog>
-	<dialog name="CDeleteFileDlg" cookie="StStBuBuBuStStBuBuBuBuStEd" caption="מחק קובץ">
+	<dialog name="CDeleteFileDlg" cookie="StStBuBuBuStStBuStCoStCoStEd" caption="מחק קובץ">
 		<control caption=":האם אתה בטוח שברצונך למחוק"/>
 		<control/>
 		<control caption="מחק"/>
@@ -4290,7 +4302,7 @@ PDF
 		<control caption="_הבא|יצא..."/>
 		<control caption="_בטל"/>
 	</dialog>
-	<dialog name="CDownloadEditDlg" cookie="StBuStEdEdStEdBuStStEdBuStEdBuStEdBuBuStStStStBuStEdStEdBuBuBuBu" caption="ערוך הורדה">
+	<dialog name="CDownloadEditPage" cookie="StBuStEdEdStEdBuStStEdBuStEdBuStEdBuBuStStStStStBuStEdStEdBu" caption="ערוך הורדה">
 		<control caption="אזהרה: תיבת דו-שיח זו מעניקה אפשרויות מתקדמות לעריכה למשתמשים כבדים אשר ים, אם יעשה בה שימוש באופן שגוי עלולה לגרום לנזק."/>
 		<control caption="שם קובץ וגודל:"/>
 		<control caption="שם קובץ:"/>
@@ -4314,15 +4326,13 @@ PDF
 		<control caption="הנח שהקובץ שלם ב-100% ואמת את הקובץ מחדש"/>
 		<control caption="שכח את כל המקורות הידועים"/>
 		<control caption="מזג עם קובץ מקומי וודא"/>
+		<control caption="ביטול"/>
 		<control caption="מוחק _מידע:"/>
 		<control caption="טווח בתים:"/>
 		<control/>
 		<control caption="עד"/>
 		<control/>
 		<control caption="מחק"/>
-		<control caption="...מידע טורנט"/>
-		<control caption="אישור"/>
-		<control caption="ביטול"/>
 	</dialog>
 	<dialog name="CTorrentSeedDlg" cookie="StStBuBuBuStms" caption="פתח קובץ טורנט">
 		<control/>
@@ -4333,7 +4343,7 @@ PDF
 		<control caption="בכדי לשתף קבצים שלמים בעזרת ביטורנט יש לפני כן להפעיל תהליך הפצה, כשהתהליך מסתיים הטורנט יופי כפריט נוסף ברשימת ההורדה שלך"/>
 		<control/>
 	</dialog>
-	<dialog name="CTorrentTrackerDlg" cookie="BuStEdStEdStEdStEdStEdBuStEdStEdBuStCoBuSyBuCoBu" caption="מידע מתקדם של ביטורנט">
+	<dialog name="CTorrentGeneralPage" cookie="BuStEdStEdStEdStEdBuStCoEdStStEd" caption="מידע מתקדם של ביטורנט">
 		<control caption=":מידע על הטורנט"/>
 		<control caption=":שם"/>
 		<control/>

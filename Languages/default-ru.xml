@@ -3890,7 +3890,8 @@
 		<control/>
 		<control caption="Генери-ть новый"/>
 	</dialog>
-	<dialog name="CLanguageDlg" cookie="" caption="Выберите язык программы"/>
+	<dialog name="CLanguageDlg" cookie="" caption="Выберите язык программы">
+	</dialog>
 	<dialog name="CConnectToDlg" cookie="BuCoEdBuCoBuBuBu" caption="Соединиться с|Просмотр хоста">
 		<control caption="Инициализировать новое соединене с хостом или сервером:|Просмотр этого хоста:"/>
 		<control/>
@@ -4095,7 +4096,7 @@
 		<control caption="Отмена"/>
 		<control caption="Выберите схему из списка, затем выберите колонки для отображения."/>
 	</dialog>
-	<dialog name="CSecureRuleDlg" cookie="BuStCoStEdBuStEdEdEdEdStEdEdEdEdBuEdBuBuBuStCoStCoEdStEdStEdStBuBu" caption="Правило безопасности">
+	<dialog name="CSecureRuleDlg" cookie="BuStCoStEdBuStEdEdEdEdStEdEdEdEdBuEdBuBuBuBuStCoStCoEdStEdStEdStBuBu" caption="Правило безопасности">
 		<control caption="_Правило:"/>
 		<control caption="Тип:"/>
 		<control caption="Адрес сети (IP)|Фильтр содержания"/>

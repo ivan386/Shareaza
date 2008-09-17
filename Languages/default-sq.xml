@@ -3176,6 +3176,8 @@
 </strings>
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
 <dialogs>
+	<dialog name="CGeneralSettingsGroup" cookie="" caption="Përgjithësi">
+	</dialog>
 	<dialog name="CSettingSheet" cookie="SyBuBuBu#3" caption="Kuadrot e Shareaza-s">
 		<control/>
 		<control caption="OK"/>
@@ -3183,7 +3185,6 @@
 		<control caption="Zbato"/>
 		<control/>
 	</dialog>
-	<dialog name="CGeneralSettingsGroup" cookie="" caption="Përgjithësi"/>
 	<dialog name="CGeneralSettingsPage" cookie="BuBuBuBuStCoBuBuBuBuBuBuBuBuBuSyStEdmsStmsBuStCoStCo" caption="Përgjithësi">
 		<control caption="_Përgjithësi:"/>
 		<control caption="Autolidhu sapo Shareaza nis"/>
@@ -3212,7 +3213,7 @@
 		<control caption="Kur klikoj 'minimizo':"/>
 		<control caption="Normale|Minimizo në Tabaka"/>
 	</dialog>
-	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBuBu" caption="Librari">
+	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBuBuBu" caption="Librari">
 		<control caption="_Mundësi:"/>
 		<control caption="Mbaje mend pamjen e dosjes"/>
 		<control caption="Shiko dosjet në librari"/>
@@ -3240,6 +3241,7 @@
 		<control/>
 		<control/>
 		<control caption="Krijo skeda fantazmë kur fshin"/>
+		<control caption="Smart video series detection"/>
 	</dialog>
 	<dialog name="CMediaSettingsPage" cookie="BuCoBuBuBuCoBuBuBuBuBuStSt" caption="Lexuesi">
 		<control caption="_Mundësi:"/>
@@ -3281,7 +3283,8 @@
 		<control caption="_Fshije"/>
 		<control caption="Priza e menaxherit shkarkues do të orvatet të shkarkojë vetëm llojet e skedave në listë. Llojet e tjera do të trajtohen nga shfletuesi juaj i rrjetit. Shareaza duhet të veprojë për të menaxhuar shkarkesat."/>
 	</dialog>
-	<dialog name="CInternetSettingsGroup" caption="Interneti"/>
+	<dialog name="CInternetSettingsGroup" caption="Interneti">
+	</dialog>
 	<dialog name="CConnectionSettingsPage" cookie="BuStCoStCoStEdBuBuBuStCoStCoBuStCoBuBuBuStEdmsStEdms" caption="Lidhja">
 		<control caption="Adresë _Përbrenda:"/>
 		<control caption="Adresa:"/>
@@ -3517,12 +3520,13 @@
 		<control caption="_Ndërto..."/>
 		<control caption="Gjej më Tepër"/>
 	</dialog>
-	<dialog name="CAdvancedSettingsPage" cookie="SyBuStEdmsStEd" caption="Përparime">
+	<dialog name="CAdvancedSettingsPage" cookie="SyEdmsBuBuStStEd" caption="Përparime">
 		<control/>
+		<control/>
+		<control/>
+		<control caption="Set Default"/>
 		<control caption="Vetitë e Kuadros:"/>
-		<control caption="Vlera:"/>
-		<control/>
-		<control/>
+		<control caption="Vlera:"/>	
 		<control caption="Përshkrimi:"/>
 		<control/>
 	</dialog>
@@ -3748,7 +3752,8 @@
 		<control/>
 		<control caption="Gjenero një të Re"/>
 	</dialog>
-	<dialog name="CLanguageDlg" cookie="" caption="Zgjidhni gjuhën"/>
+	<dialog name="CLanguageDlg" cookie="" caption="Zgjidhni gjuhën">
+	</dialog>
 	<dialog name="CConnectToDlg" cookie="BuCoEdBuCoBuBuBu" caption="Lidhuni Te|Shfletoni Hostin">
 		<control caption="Nis një lidhje të re te hosti/serveri:|Shfleto këtë host:"/>
 		<control/>
@@ -3776,9 +3781,10 @@
 		<control caption="Kërko"/>
 		<control caption="Anulo"/>
 	</dialog>
-	<dialog name="CFilterSearchDlg" cookie="BuEdStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuCoBuBuBuBuBuBuBu" caption="Filtroni Krahasimet">
+	<dialog name="CFilterSearchDlg" cookie="BuEdBuStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuBuBuCoBuBuBuBuBu" caption="Filtroni Krahasimet">
 		<control caption="Trego vetëm krahasimet me _fjalët:"/>
 		<control/>
+		<control caption="Reg. Exp."/>
 		<control caption="( mund të përjashtoni edhe fjalët me -fjalë )"/>
 		<control caption="Dhe që kanë _përmasë:"/>
 		<control caption="Minimumi:"/>
@@ -3796,16 +3802,16 @@
 		<control caption="Skedat jo të njëjta"/>
 		<control caption="Skedat e mëparshme"/>
 		<control caption="Rezultatet false"/>
-		<control caption="Filtro"/>
-		<control caption="Anulo"/>
+		<control caption="Skedat DRM"/>
+		<control caption="Rezultatet për të rritur"/>
+		<control caption="Skedat e dyshimta"/>
+		<control caption="Filtri:"/>
 		<control/>
 		<control caption="Vendose si tipik"/>
 		<control caption="_Ruaje si"/>
 		<control caption="_Fshije"/>
-		<control caption="Filtri:"/>
-		<control caption="Skedat DRM"/>
-		<control caption="Skedat e dyshimta"/>
-		<control caption="Rezultatet për të rritur"/>
+		<control caption="Filtro"/>
+		<control caption="Anulo"/>
 	</dialog>
 	<dialog name="CSaveFilterAsDlg" cookie="EdBuBuSt" caption="Ruani filtrin">
 		<control/>
@@ -3813,13 +3819,14 @@
 		<control caption="Anulo"/>
 		<control caption="Ruaje filtrin aktual si:"/>
 	</dialog>
-	<dialog name="CDiscoveryServiceDlg" cookie="BuEdStCoBuBu" caption="Shërbime Zbulimi">
+	<dialog name="CDiscoveryServiceDlg" cookie="BuEdStCoBuBuSt" caption="Shërbime Zbulimi">
 		<control caption="_Adresa e Shërbimit:"/>
 		<control/>
 		<control caption="Lloji i Shërbimit të Zbulimit:"/>
 		<control caption="Gnutella Bootstrap|GWebCache|URL Server.met|Blocked"/>
 		<control caption="OK"/>
 		<control caption="Anulo"/>
+		<control/>
 	</dialog>
 	<dialog name="CDownloadMonitorDlg" cookie="StStStStStStStStStStStStStBuBuBuBuBu" caption="Shkarko : Shareaza">
 		<control caption="Shareaza po shkarkon:"/>
@@ -3951,7 +3958,7 @@
 		<control caption="Anulo"/>
 		<control caption="Zgjidhni një skedë nga lista, pastaj zgjidhni fushat që do të shfaqni si kolona."/>
 	</dialog>
-	<dialog name="CSecureRuleDlg" cookie="BuStCoStEdBuStEdEdEdEdStEdEdEdEdBuEdBuBuBuStCoStCoEdStEdStEdStBuBu" caption="Rregulli i Sigurisë">
+	<dialog name="CSecureRuleDlg" cookie="BuStCoStEdBuStEdEdEdEdStEdEdEdEdBuEdBuBuBuBuStCoStCoEdStEdStEdStBuBu" caption="Rregulli i Sigurisë">
 		<control caption="_Rregulli:"/>
 		<control caption="Lloji:"/>
 		<control caption="Adresë Rrjeti (IP)|Filtër i Përmbajtjes"/>
@@ -3972,6 +3979,7 @@
 		<control/>
 		<control caption="Krahaso Disa"/>
 		<control caption="Krahaso Gjithçka"/>
+		<control caption="Reg. Exp."/>
 		<control caption="_Mundësi:"/>
 		<control caption="Veprimi:"/>
 		<control caption="Asnjë|Pranoje|Mohoje"/>
@@ -4011,7 +4019,7 @@
 		<control caption="Fusni Dallimin:"/>
 		<control caption="Tiger Root|SHA1|MD5|ED2K (CMD4)|Emër skede|Emër skede (URI)|Emër skede bazë|Shtojcë skede|Përmasë skede|Përmasë skede (bajte)|Shteg dosjeje|Host Lokal|Port Lokal"/>
 		<control caption="Zgjidhni një paraprake:"/>
-		<control/>
+		<control caption="Magnet|eDonkey|Magnet HTML|eDonkey HTML"/>
 		<control caption="_Kopjoje"/>
 		<control caption="Ruaje..."/>
 		<control/>
@@ -4136,7 +4144,7 @@
 		<control caption="_Vijo|Eksporto..."/>
 		<control caption="_Anulo"/>
 	</dialog>
-	<dialog name="CDownloadEditDlg" cookie="StBuStEdEdStEdBuStStEdBuStEdBuStEdBuBuStStStStBuStEdStEdBuBuBuBu" caption="Editoni Shkarkesën">
+	<dialog name="CDownloadEditPage" cookie="StBuStEdEdStEdBuStStEdBuStEdBuStEdBuBuStStStStStBuStEdStEdBu" caption="Editoni Shkarkesën">
 		<control caption="KUJDES: Kjo tabelë paraqet veçori të përparuara për editimin e shkarkimit, të cilat nëse përdoren jokorrekt mund, dhe mbase do të shkaktojnë korruptim."/>
 		<control caption="Emri dhe Për_masa e skedës:"/>
 		<control caption="Emri i skedës:"/>
@@ -4160,15 +4168,13 @@
 		<control caption="Supozo që skeda ka përfunduar 100% dhe riverifiko"/>
 		<control caption="Harro gjithë burimet e njohura"/>
 		<control caption="Bashkoje me skedën lokale dhe riverifiko"/>
+		<control caption="Cancel download but save incomplete file(s)"/>
 		<control caption="_Fshirësi i të Dhënave:"/>
 		<control caption="Caku i bajtit:"/>
 		<control/>
 		<control caption="tek"/>
 		<control/>
 		<control caption="Fshije"/>
-		<control caption="Mbi _Torrentin..."/>
-		<control caption="OK"/>
-		<control caption="Anulo"/>
 	</dialog>
 	<dialog name="CTorrentSeedDlg" cookie="StStBuBuBuStms" caption="Hap Skedë Torrent">
 		<control/>
@@ -4232,6 +4238,7 @@
 		<control caption="OK"/>
 		<control caption="Anulo"/>
 		<control caption="_Dosja e Skedave të Përfunduara:"/>
+		<control/>
 		<control/>
 	</dialog>
 	<dialog name="CMediaVisDlg" cookie="StBuSyCoBuBuBu" caption="Zgjidhni Vegimin">

@@ -3660,7 +3660,7 @@
 		<control caption="_Einstellungen..."/>
 		<control caption="Mehr.."/>
 	</dialog>
-	<dialog name="CAdvancedSettingsPage" cookie="SyBuStEdmsStEd" caption="Erweitert">
+	<dialog name="CAdvancedSettingsPage" cookie="SyEdmsBuBuStStEd" caption="Erweitert">
 		<control/>
 		<control/>
 		<control/>
@@ -3892,7 +3892,8 @@
 		<control/>
 		<control caption="Neue GUID erstellen"/>
 	</dialog>
-	<dialog name="CLanguageDlg" cookie="" caption="Sprache wählen"/>
+	<dialog name="CLanguageDlg" cookie="" caption="Sprache wählen">
+	</dialog>
 	<dialog name="CConnectToDlg" cookie="BuCoEdBuCoBuBuBu" caption="Verbinden mit|Benutzer durchsuchen">
 		<control caption="Verbinden mit:|Benutzer durchsuchen:"/>
 		<control/>
@@ -3920,7 +3921,7 @@
 		<control caption="Suchen"/>
 		<control caption="Abbrechen"/>
 	</dialog>
-	<dialog name="CFilterSearchDlg" cookie="BuEdStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuCoBuBuBuBuBuBuBu" caption="Ergebnisse filtern">
+	<dialog name="CFilterSearchDlg" cookie="BuEdBuStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuBuBuCoBuBuBuBuBu" caption="Ergebnisse filtern">
 		<control caption="Nur Ergebnisse, die folgende _Wörter enthalten:"/>
 		<control/>
 		<control caption="Reg. Exp."/>
@@ -3941,16 +3942,16 @@
 		<control caption="Unpassende Ergebnisse"/>
 		<control caption="Lokal vorhand. Dateien"/>
 		<control caption="Gefälschte Ergebnisse"/>
+		<control caption="DRM-gesch. Dateien"/>
+		<control caption="Erotikfilter"/>
+		<control caption="Spamverdacht"/>
 		<control caption="Filtern"/>
-		<control caption="Abbrechen"/>
 		<control/>
 		<control caption="Als Standard"/>
 		<control caption="_Speichern als..."/>
 		<control caption="_Löschen"/>
 		<control caption="Filter:"/>
-		<control caption="DRM-gesch. Dateien"/>
-		<control caption="Spamverdacht"/>
-		<control caption="Erotikfilter"/>
+		<control caption="Abbrechen"/>
 	</dialog>
 	<dialog name="CSaveFilterAsDlg" cookie="EdBuBuSt" caption="Filter speichern als">
 		<control/>
@@ -3958,7 +3959,7 @@
 		<control caption="Abbrechen"/>
 		<control caption="Aktuellen Filter speichern als"/>
 	</dialog>
-	<dialog name="CDiscoveryServiceDlg" cookie="BuEdStCoBuBu" caption="Discovery-Service">
+	<dialog name="CDiscoveryServiceDlg" cookie="BuEdStCoBuBuSt" caption="Discovery-Service">
 		<control caption="Service _Adresse:"/>
 		<control/>
 		<control caption="Service Typ:"/>
@@ -4097,7 +4098,7 @@
 		<control caption="Abbrechen"/>
 		<control caption="Wählen Sie ein Schema aus der Liste und anschließend die gewünschten Felder."/>
 	</dialog>
-	<dialog name="CSecureRuleDlg" cookie="BuStCoStEdBuStEdEdEdEdStEdEdEdEdBuEdBuBuBuStCoStCoEdStEdStEdStBuBu" caption="Regel">
+	<dialog name="CSecureRuleDlg" cookie="BuStCoStEdBuStEdEdEdEdStEdEdEdEdBuEdBuBuBuBuStCoStCoEdStEdStEdStBuBu" caption="Regel">
 		<control caption="_Regel:"/>
 		<control caption="Typ:"/>
 		<control caption="IP-Adresse|Inhaltsfilter"/>
@@ -4283,7 +4284,7 @@
 		<control caption="W_eiter|Exportieren"/>
 		<control caption="Abbre_chen"/>
 	</dialog>
-	<dialog name="CDownloadEditDlg" cookie="StBuStEdEdStEdBuStStEdBuStEdBuStEdBuBuStStStStBuStEdStEdBuBuBuBu" caption="Download bearbeiten (erweitert)">
+	<dialog name="CDownloadEditPage" cookie="StBuStEdEdStEdBuStStEdBuStEdBuStEdBuBuStStStStStBuStEdStEdBu" caption="Download bearbeiten (erweitert)">
 		<control caption="ACHTUNG: Dieser Dialog stellt erweiterte Funktionen für Poweruser zur Verfügung. Diese Funktionen zerstören bei falscher Anwendung ihre Downloads."/>
 		<control caption="Dateiname und -größe:"/>
 		<control caption="Datei_name:"/>

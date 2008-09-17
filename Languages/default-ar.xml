@@ -2995,7 +2995,6 @@
     <string id="16996" value="Part of this file could not be played, you may need to download additional codecs." />
     <string id="16997" value="There is no file playing.  Double-click a media file in your library to play it." />
     <string id="16998" value="S     H     A     R     E     A     Z     A           M     E     D     I     A           S     Y     S     T     E     M" />
-    <!-- on one line -->
     <string id="16999" value="P L A Y L I S T" />
     <string id="17024" value="Initiating a connection to %s..." />
     <string id="17025" value="Unable to create a connection to %s." />
@@ -3203,8 +3202,7 @@
     <string id="20216" value="Excellent" />
     <string id="20217" value="Select the eDonkey/eMule temp folder:" />
     <!-- Column headers in Library Album View -->
-    <string id="20230" value="#" />
-    <!-- Track number -->
+    <string id="20230" value="#" /> <!-- Track number -->
     <string id="20231" value="Title" />
     <string id="20232" value="Length" />
     <string id="20233" value="Bitrate" />
@@ -3214,6 +3212,8 @@
   </strings>
   <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
   <dialogs>
+    <dialog name="CGeneralSettingsGroup" cookie="" caption="عام">
+	</dialog>
     <dialog name="CSettingSheet" cookie="SyBuBuBu#3" caption="إعدادات شير-أزا">
       <control />
       <control caption="حسنا" />
@@ -3221,7 +3221,6 @@
       <control caption="تطبيق" />
       <control />
     </dialog>
-    <dialog name="CGeneralSettingsGroup" cookie="" caption="عام" />
     <dialog name="CGeneralSettingsPage" cookie="BuBuBuBuStCoBuBuBuBuBuBuBuBuBuSyStEdmsStmsBuStCoStCo" caption="عام">
       <control caption=":_عام" />
       <control caption="Shareaza إتصال تلقائي عند بدء تشغيل" />
@@ -3250,7 +3249,7 @@
       <control caption=":عند النقر على تصغير" />
       <control caption="تصغير عادي|تصغير إلى جوار الساعة" />
     </dialog>
-    <dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBuBu" caption="المكتبة">
+    <dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBuBuBu" caption="المكتبة">
       <control caption=":_خيارات" />
       <control caption="تذكر طرق عرض المجلدات" />
       <control caption="مشاهدة مجلدات المكتبة" />
@@ -3278,6 +3277,7 @@
       <control />
       <control />
       <control caption="إنشاء ملفات وهمية عند الحذف" />
+      <control />
     </dialog>
     <dialog name="CMediaSettingsPage" cookie="BuCoBuBuBuCoBuBuBuBuBuStSt" caption="مشغل الوسائط">
       <control caption="_:خصائص" />
@@ -3319,7 +3319,8 @@
       <control caption="_إزالة" />
       <control caption="وظيفة مدير التحميل الإضافية ستحاول فقط تحميل أنواع الملفات المدرجة هنا . أما أنواع الملفات الأخرى فستعالج بواسطة متصفحك . يجب أن يكون &quot;شير-أزا&quot; شغال لإدارة التحميلات" />
     </dialog>
-    <dialog name="CInternetSettingsGroup" caption="انترنت" />
+    <dialog name="CInternetSettingsGroup" caption="انترنت">
+    </dialog>
     <dialog name="CConnectionSettingsPage" cookie="BuStCoStCoStEdBuBuBuStCoStCoBuStCoBuBuBuStEdmsStEdms" caption="الإتصال">
       <control caption="_:عنوان الوارد" />
       <control caption=":العنوان" />
@@ -3528,7 +3529,7 @@
       <control caption="متتبع إفتراضي" />
       <control />
     </dialog>
-    <dialog name="CProtocolsSettingsPage" cookie="مشغول" caption="بروتوكول">
+    <dialog name="CProtocolsSettingsPage" cookie="BuSy" caption="بروتوكول">
       <control caption=": المشترك Shareaza مستكشف بروتوكول بنية" />
       <control />
     </dialog>
@@ -3557,10 +3558,11 @@
     </dialog>
     <dialog name="CAdvancedSettingsPage" cookie="SyBuStEdmsStEd" caption="متقدم">
       <control />
+      <control />
+      <control />
+      <control caption="Set Default"/>
       <control caption=":إعداد الخصائص" />
       <control caption=":القيمة" />
-      <control />
-      <control />
       <control caption=":الوصف" />
       <control />
     </dialog>
@@ -3786,7 +3788,8 @@
       <control />
       <control caption="توليد الآن" />
     </dialog>
-    <dialog name="CLanguageDlg" cookie="" caption="تحديد اللغة" />
+    <dialog name="CLanguageDlg" cookie="" caption="تحديد اللغة">
+    </dialog>
     <dialog name="CConnectToDlg" cookie="BuCoEdBuCoBuBuBu" caption="الإتصال بـ|استعرض المستضيف">
       <control caption=":تحضير إتصال جديد إلى مضيف أو ملقم|:تصفح هذا المضيف" />
       <control />
@@ -3851,13 +3854,14 @@
       <control caption="إلغاء الأمر" />
       <control caption="حفظ المرشح الحالي باسم" />
     </dialog>
-    <dialog name="CDiscoveryServiceDlg" cookie="BuEdStCoBuBu" caption="خدمة الإكتشاف">
+    <dialog name="CDiscoveryServiceDlg" cookie="BuEdStCoBuBuSt" caption="خدمة الإكتشاف">
       <control caption=":عنوان ال_خدمة" />
       <control />
       <control caption=": نوع خدمة الإكتشاف" />
       <control caption="Gnutella Bootstrap|GWebCache|Server.met رابط|المحجوبة" />
       <control caption="حسنا" />
       <control caption="إلغاء الأمر" />
+      <control />
     </dialog>
     <dialog name="CDownloadMonitorDlg" cookie="StStStStStStStStStStStStStBuBuBuBuBu" caption="تحميل : Shareaza">
       <control caption=":يقوم بالتحميل Shareaza" />
@@ -4165,16 +4169,16 @@
       <control />
       <control caption="Template Information:" />
       <control caption="Name:" />
-      <control />
+      <control caption="..."/>
       <control caption="Author:" />
-      <control />
+      <control caption="..."/>
       <control caption="Description:" />
       <control />
       <control caption="حذف|_Back" />
       <control caption="_Next|Export..." />
       <control caption="_إلغاء الأمر" />
     </dialog>
-    <dialog name="CDownloadEditDlg" cookie="StBuStEdEdStEdBuStStEdBuStEdBuStEdBuBuStStStStBuStEdStEdBuBuBuBu" caption="Edit Download">
+    <dialog name="CDownloadEditPage" cookie="StBuStEdEdStEdBuStStEdBuStEdBuStEdBuBuStStStStStBuStEdStEdBu" caption="Download Properties">
       <control caption="WARNING: This dialog provides advanced download editing features for power users which if used incorrectly can and probably will cause corruption." />
       <control caption="Filename and Si_ze:" />
       <control caption="Filename:" />
@@ -4198,15 +4202,13 @@
       <control caption="Assume file is 100% complete and reverify" />
       <control caption="Forget all known sources" />
       <control caption="Merge with local file and verify" />
+      <control caption="Cancel download but save incomplete file"/>
       <control caption="Data _Eraser:" />
       <control caption="Byte range:" />
       <control />
       <control caption="to" />
       <control />
       <control caption="مسح" />
-      <control caption="معلومات _Torrent..." />
-      <control caption="حسنا" />
-      <control caption="إلغاء الأمر" />
     </dialog>
     <dialog name="CTorrentSeedDlg" cookie="StStBuBuBuStms" caption=" فتح ملف Torrent">
       <control />

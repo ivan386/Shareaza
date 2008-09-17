@@ -3913,7 +3913,8 @@
 		<control/>
 		<control caption="Generate New"/>
 	</dialog>
-	<dialog name="CLanguageDlg" cookie="" caption="Select Language"/>
+	<dialog name="CLanguageDlg" cookie="" caption="Select Language">
+	</dialog>
 	<dialog name="CConnectToDlg" cookie="BuCoEdBuCoBuBuBu" caption="Connect To|Browse Host">
 		<control caption="Initiate a new connection to host or server:|Browse this host:"/>
 		<control/>
