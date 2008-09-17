@@ -239,6 +239,7 @@
 		<button id="ID_LIBRARY_FOLDER_NEW" text="Créer un album..."/>
 		<button id="ID_LIBRARY_ALBUM_DELETE" text="Supprimer l'album"/>
 		<rightAlign/>
+		<separator/>
 		<control id="IDC_SEARCH_BOX" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Trouver"/>
 	</toolbar>
@@ -384,7 +385,7 @@
 	<!-- HIT MONITOR WINDOW -->
 	<toolbar name="CHitMonitorWnd">
 		<button id="ID_SEARCH_DOWNLOAD" text="Télécharger"/>
-		<button id="ID_HITMONITOR_SEARCH" text="Requiert à nouveau"/>
+		<button id="ID_HITMONITOR_SEARCH" text="Interroger à nouveau"/>
 		<separator/>
 		<button id="ID_HITMONITOR_PAUSE" text="Pause"/>
 		<button id="ID_SEARCH_CLEAR" text="Nettoyer"/>
@@ -683,7 +684,7 @@
 			<item id="ID_VIEW_DISCOVERY" text="Décou_verte" shortcut="F9"/>
 			<item id="ID_VIEW_TRAFFIC" text="_Graphique" shortcut="F10"/>
 			<separator/>
-			<item id="ID_VIEW_PACKETS" text="_Décharge à paquet" shortcut="Ctrl+F1"/>
+			<item id="ID_VIEW_PACKETS" text="_Décharge à paquets" shortcut="Ctrl+F1"/>
 			<item id="ID_VIEW_SEARCH_MONITOR" text="Moniteur de _recherche" shortcut="Ctrl+F2"/>
 			<item id="ID_VIEW_RESULTS_MONITOR" text="Mon_iteur d'accès" shortcut="Ctrl+F3"/>
 			<separator/>
@@ -772,7 +773,7 @@
 		<item id="ID_VIEW_DISCOVERY" text="Décou_verte"/>
 		<item id="ID_VIEW_TRAFFIC" text="_Graphique"/>
 		<separator/>
-		<item id="ID_VIEW_PACKETS" text="_Décharge à paquet"/>
+		<item id="ID_VIEW_PACKETS" text="_Décharge à paquets"/>
 		<item id="ID_VIEW_SEARCH_MONITOR" text="Moniteur de _recherche"/>
 		<item id="ID_VIEW_RESULTS_MONITOR" text="Mon_iteur d'accès"/>
 	</menu>
@@ -791,7 +792,7 @@
 		<item id="ID_VIEW_DISCOVERY" text="Décou_verte"/>
 		<item id="ID_VIEW_TRAFFIC" text="_Graphique"/>
 		<separator/>
-		<item id="ID_VIEW_PACKETS" text="_Décharge à paquet"/>
+		<item id="ID_VIEW_PACKETS" text="_Décharge à paquets"/>
 		<item id="ID_VIEW_SEARCH_MONITOR" text="Moniteur de _recherche"/>
 		<item id="ID_VIEW_RESULTS_MONITOR" text="Mon_iteur d'accès"/>
 	</menu>
@@ -858,7 +859,7 @@
 		<item id="ID_VIEW_DISCOVERY" text="Décou_verte"/>
 		<item id="ID_VIEW_TRAFFIC" text="_Graphique"/>
 		<separator/>
-		<item id="ID_VIEW_PACKETS" text="_Décharge à paquet"/>
+		<item id="ID_VIEW_PACKETS" text="_Décharge à paquets"/>
 		<item id="ID_VIEW_SEARCH_MONITOR" text="Moniteur de _recherche"/>
 		<item id="ID_VIEW_RESULTS_MONITOR" text="Mon_iteur d'accès"/>
 	</menu>
@@ -1658,7 +1659,7 @@
 			<newline gap="8" indent="42"/>
 			<text colour="FF0000">Shareaza a détecté que vous êtes derrière un fare-feu ou un routeur NAT,
 			et il est dans l'incapacité actuelle de recevoir des connexions TCP entrantes depuis internet.  </text>
-			<text colour="FF0000" format="b">Ceci peut entraîner une faible performance en cherchant, envoi et téléchargement.</text>
+			<text colour="FF0000" format="b">Ceci peut entraîner une faible performance pour les recherches, envois et téléchargements.</text>
 			<newline gap="6"/>
 			<link target="raza:command:ID_HELP_ROUTER">Cliquez ici pour apprendre à configurer votre routeur ou pare-feu</link>
 			<newline gap="18" indent="0"/>
@@ -2542,7 +2543,7 @@
 	<tip id="ID_VIEW_LIBRARY" message="Afficher ou masquer la fenêtre BIBLIOTHÈQUE."/>
 	<tip id="ID_VIEW_MEDIA" message="Afficher ou masquer la fenêtre LECTEUR MULTIMEDIA."/>
 	<tip id="ID_VIEW_NEIGHBOURS" message="Afficher ou masquer la fenêtre VOISINS."/>
-	<tip id="ID_VIEW_PACKETS" message="Afficher ou masquer la fenêtre DÉCHARGE DE PAQUET."/>
+	<tip id="ID_VIEW_PACKETS" message="Afficher ou masquer la fenêtre DÉCHARGE DE PAQUETS."/>
 	<tip id="ID_VIEW_RESULTS_MONITOR" message="Afficher ou masquer la fenêtre MONITEUR D'ACCÈS."/>
 	<tip id="ID_VIEW_SEARCH_MONITOR" message="Afficher ou masquer la fenêtre MONITEUR DE RECHERCHE."/>
 	<tip id="ID_VIEW_SECURITY" message="Afficher ou masquer la fenêtre SÉCURITÉ."/>
@@ -2932,7 +2933,7 @@
 	<string id="16367" value="eDonkey noyau"/>
 	<string id="16368" value="eDonkey partiels"/>
 	<string id="16369" value="eDonkey garde"/>
-	<string id="16370" value="Fichiers petits"/>
+	<string id="16370" value="Petits fichiers"/>
 	<string id="16371" value="Fichiers moyens"/>
 	<string id="16372" value="Fichiers larges"/>
 	<string id="16373" value="Fichiers partiels"/>
@@ -2940,7 +2941,7 @@
 	<string id="16375" value="Partiel"/>
 	<string id="16376" value="Tous les fichiers"/>
 	<string id="16377" value="Garde HTTP"/>
-	<string id="16379" value="Fichiers du bibliothèque"/>
+	<string id="16379" value="Fichiers de la bibliothèque"/>
 	<string id="16384" value="Voulez-vous vraiment ouvrir fichier &#171;&#160;%s&#160;&#187;&#160;?\n\nCertains fichiers exécutables peuvent endommager votre système s'ils comportent des virus."/>
 	<string id="16385" value="Vous allez modifier les métadonnées de %i fichiers, voulez-vous continuer&#160;?"/>
 	<string id="16386" value="Édition des métadonnées de %i fichiers."/>
@@ -3038,14 +3039,14 @@
 	<string id="16811" value="Automatique"/>
 	<string id="16812" value="Veuillez patienter&#160;: découverte et réglage des services UPnP ..."/>
 	<string id="16813" value="Veuillez patienter&#160;: mise à jour des services de découverte..."/>
-	<string id="16814" value="Veuillez patienter&#160;: mise à jour du liste d'hôte eDonkey ..."/>
+	<string id="16814" value="Veuillez patienter&#160;: mise à jour de la liste d'hôtes eDonkey ..."/>
 	<string id="16815" value="Le service UPnP n'est pas actif sur votre ordinateur.\nVeuillez régler le service pour qu'il démarre automatiquement (Windows Service Startup type)."/>
 	<string id="16816" value="Le réseau eDonkey utilise de larges files d'attente avec de longs temps d'attente. En acceptant de limiter trop strictement le nombre maximum de place dans la file d'attente, vous pourriez avoir des problèmes pour avoir des téléchargements qui commencent.\nÊtes-vous certain de vouloir limiter le nombre de positions en file d'attente que vous acceptez&#160;?"/>
 	<string id="16817" value="Windows ne supporte pas les chemins d'accès au fichier de plus de 256 caractères.\nMerci de sélectionner un dossier avec un chemin plus court."/>
 	<string id="16818" value="Les dossiers complete et incomplete ne doivent pas être les mêmes"/>
 	<string id="16819" value="Le dossier des fichiers incomplets ne doit pas être dans la bibliothèque, car cela réduirait l'exécution. Les fichiers incomplets peuvent être directement partagés à partir de la fenêtre des transferts."/>
-	<string id="16864" value="Requiert le service Découverte de l'hôte..."/>
-	<string id="16865" value="Requiert le service Découverte &#171;&#160;%s&#160;&#187;..."/>
+	<string id="16864" value="Interrogation du service Découverte de l'hôte..."/>
+	<string id="16865" value="Interrogation du service Découverte &#171;&#160;%s&#160;&#187;..."/>
 	<string id="16866" value="Transaction GWebCache réussie (&#171;&#160;%s&#160;&#187;)."/>
 	<string id="16867" value="Échec du service Découverte &#171;&#160;%s&#160;&#187;, nombre d'échec(s) %i."/>
 	<string id="16868" value="Le service Découverte &#171;%s&#160;&#160;&#187; a échoué %i fois, suppression."/>
@@ -3194,7 +3195,7 @@
 	<string id="17498" value="Erreur détectée dans le fichier &#171;&#160;%s&#160;&#187;."/>
 	<string id="17500" value="Le traqueur n'a pas répondu - Nouvel essai de l'annonce (%i de %i)"/>
 	<string id="17501" value="Impossible de communiquer avec le traqueur"/>
-	<string id="17503" value="Échec de laConnexion au Traqueur - Essayons le prochain traqueur (%i of %i)"/>
+	<string id="17503" value="Échec de la connexion au traqueur - Essayons le prochain traqueur (%i of %i)"/>
 	<string id="17505" value="Connexion BitTorrent avec %s été terminée."/>
 	<string id="17506" value="BitTorrent handshake avec %s été terminée."/>
 	<string id="17507" value="Connexion BitTorrent avec %s été terminée."/>
@@ -3390,10 +3391,10 @@
 		<control caption="Activer la discussion avec les clients P2P compatibles"/>
 		<control caption="Activer la discussion sur tous les réseaux"/>
 		<control caption="Filtrer le spam sur les messages de discussion"/>
-		<control caption="Censurer les grossièretés dans la discussion"/>
+		<control caption="Censurer les grossièretés dans les discussions"/>
 	</dialog>
 		<dialog name="CIRCSettingsPage" cookie="BuBuBuEdStBuStCoBuBuStBuStBuStBuStBuStBuStBuStEdStEdStEdStEdStEdStEd" caption="IRC">
-		<control caption="_Options du client:"/>
+		<control caption="_Options du client&#160;:"/>
 		<control caption="Montrer l'intégration IRC"/>
 		<control caption="Protection contre le flood&#160;:"/>
 		<control/>
@@ -3617,7 +3618,7 @@
 		<control/>
 		<control/>
 		<control caption="résultats."/>
-		<control caption="Mise à jour d'auprès le serveur connecter la liste des serveurs"/>
+		<control caption="Mettre la liste des serveurs à jour via le serveur contacté"/>
 		<control caption="Connexions aux _clients&#160;:"/>
 		<control caption="Ne pas se connecter à + de&#160;:"/>
 		<control/>
@@ -4019,7 +4020,7 @@
 		<control/>
 		<control caption="Type&#160;:"/>
 		<control/>
-		<control caption="Modifié&#160;:"/>
+		<control caption="Modifié le&#160;:"/>
 		<control/>
 		<control caption="Taille&#160;:"/>
 		<control/>
@@ -4275,15 +4276,15 @@
 		<control/>
 	</dialog>
 	<dialog name="CDeleteFileDlg" cookie="StStBuBuBuStStBuStCoStCoStEd" caption="Supprimer un fichier">
-		<control caption="Êtes-vous certain de vouloir supprimer ce fichier&#160;?:"/>
+		<control caption="Êtes-vous certain de vouloir supprimer ce fichier&#160;?"/>
 		<control/>
 		<control caption="Supprimer"/>
 		<control caption="Tout suppr."/>
 		<control caption="Annuler"/>
 		<control/>
 		<control caption="Shareaza peut mémoriser ce fichier et vous avertir si vous le rencontrez à nouveau lors d'une autre recherche. Un fichier fantôme sera créé avec vos commentaires:"/>
-		<control caption="Créé un fichier fantôme."/>
-		<control caption="Les raisons de la suppression&#160;:"/>
+		<control caption="Créér un fichier fantôme."/>
+		<control caption="Raisons de la suppression&#160;:"/>
 		<control caption="Je supprime, mais garder mes commentaires|Ce fichier est mal nommé|Ce fichier est de pauvre qualité|Ce fichier est un faux, est corrompu ou inutilisable|Éditer mes anciens commentaires"/>
 		<control caption="Évaluation&#160;:"/>
 		<control caption="(Pas d'évaluation)|Faux/Corrompu/Trompeur|Pauvre|Moyen|Bon|Très bon|Excellent"/>
@@ -4446,12 +4447,12 @@
 <listColumns>
 	<list name="CLibraryWnd">
 		<column from="File" to="Nom du fichier"/>
-		<column from="Extension" to=""/>
+		<column from="Extension" to="Extension"/>
 		<column from="Size" to="Taille"/>
 		<column from="Folder" to="Dossier"/>
 		<column from="Hits" to="Accès"/>
 		<column from="Uploads" to="Envois"/>
-		<column from="Modified" to="Modifié"/>
+		<column from="Modified" to="Modifié le"/>
 	</list>
 	<list name="CDownloadCtrl">
 		<column from="Downloaded File" to="Fichier téléchargé"/>

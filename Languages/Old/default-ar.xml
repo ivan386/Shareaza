@@ -4176,7 +4176,7 @@
 		<control caption="_Cancel"/>
 	</dialog>
 
-	<dialog name="CDownloadEditDlg" cookie="StBuEdBuStEdStEdStEdBuStStStBuStEdStEdBuBuBuBu" caption="Edit Download (Advanced)">
+	<dialog name="CDownloadEditPage" cookie="StBuEdBuStEdStEdStEdBuStStStBuStEdStEdBuBuBuBu" caption="Edit Download (Advanced)">
 		<control caption="WARNING: This dialog provides advanced download editing features for power users which if used incorrectly can and probably will cause corruption."/>
 		<control caption="اسم _ الملف:"/>
 		<control/>
