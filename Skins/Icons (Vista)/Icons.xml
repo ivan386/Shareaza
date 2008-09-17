@@ -6,7 +6,7 @@
   description="Windows Vista Shell Icon Set"
   link="http://shareaza.sf.net/"
   email="Contact@ShareazaProject.com"
-  version="1"
+  version="1.0"
   type="Skin"
   language="en"
 />
@@ -24,6 +24,7 @@
  <icon id="302" path="TickOpened.ico" types="16" rtl="0"/>
  <icon id="307" path="TickClosedHover.ico" types="16" rtl="0"/>
  <icon id="308" path="TickOpenedHover.ico" types="16" rtl="0"/>
+ <icon id="317" path="StarVista.ico" types="16" rtl="0"/>
 
 <bitmap path="ShellBaseVista.bmp" mask="00FF00">
  <image id="IDI_FILE"/>
