@@ -3077,7 +3077,7 @@
 	<string id="16997" value="There is no file playing. Double-click a media file in your library to play it."/>
 	<string id="16998" value="S &#160; &#160; H &#160; &#160; A &#160; &#160; R &#160; &#160; E &#160; &#160; A &#160; &#160; Z &#160; &#160; A &#160; &#160; &#160; &#160; &#160; M &#160; &#160; E &#160; &#160; D &#160; &#160; I &#160; &#160; A &#160; &#160; &#160; &#160; &#160; S &#160; &#160; Y &#160; &#160; S &#160; &#160; T &#160; &#160; E &#160; &#160; M"/><!-- on one line -->
 	<string id="16999" value="P L A Y L I S T"/>
-	<string id="17017" value="Chat!"/>
+	<string id="17017" value="Send:"/>
 	<string id="17018" value="Welcome to Shareaza Chat!"/>
 	<string id="17019" value="Please respect others while using this service"/>
 	<string id="17020" value="Add"/>

@@ -3930,7 +3930,7 @@ END
 
 STRINGTABLE 
 BEGIN
-    IDS_IRC_INPUT_CAPTION   "Chat!"
+    IDS_IRC_INPUT_CAPTION   "Send:"
     IDS_IRC_PANEL_TITLE     "Welcome to Shareaza Chat!"
     IDS_IRC_PANEL_SUBTITLE  "Please respect others while using this service"
     IDS_IRC_PANEL_ADDCHANNEL "Add"
