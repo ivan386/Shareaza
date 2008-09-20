@@ -968,8 +968,6 @@
 		<item id="ID_DOWNLOADS_CLEAR_INCOMPLETE" text="_Cancel·la"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_SOURCES" text="_Cerca més fonts"/>
-
-
 		<separator/>
 		<menu text="_Avançat">
 			<item id="ID_DOWNLOADS_SHARE" text="_Comparteix arxiu"/>
@@ -1777,10 +1775,13 @@
 		<gap size="4"/>
 		<text>Configura el teu perfil, xat i serveis de missatgeria.</text>
 		<newline gap="10"/>
+		<link target="raza:page:CIRCSettingsPage" format="b">Chat:</link>
+		<gap size="4"/>
+		<text>IRC chatroom visual appearance and connection settings.</text>
+		<newline gap="10"/>
 		<link target="raza:page:CWebSettingsPage" format="b">Web:</link>
 		<gap size="4"/>
 		<text>Integra Shareaza amb el teu navegador d'internet, per a acceptar enllaços peer-to-peer i controlar les descàrregues.</text>
-		<newline gap="10"/>
 	</document>
 	<document name="CInternetSettingsGroup" title="Internet" leftMargin="8" topMargin="8">
 		<styles>
@@ -1790,14 +1791,10 @@
 		</styles>
 		<text format="b">Configuració de Shareaza</text>
 		<newline gap="16"/>
-		<text>
-			Aquesta pantalla permet configurar una gran quantitat de paràmetres del funcionament
-			de Shareaza.  La configuració de
-		</text>
+		<text>Aquesta pantalla permet configurar una gran quantitat de paràmetres del funcionament de Shareaza.  
+		La configuració de </text>
 		<text format="b">Internet </text>
-		<text>
-			permet configurar la interacció de Shareaza amb les xarxes peer-to-peer.
-		</text>
+		<text>permet configurar la interacció de Shareaza amb les xarxes peer-to-peer.</text>
 		<newline gap="16" indent="16"/>
 		<link target="raza:page:CConnectionSettingsPage" format="b">Connexió:</link>
 		<gap size="4"/>
@@ -1815,6 +1812,9 @@
 		<gap size="4"/>
 		<text>Configura Shareaza per a ser controlat remotament des d'un navegador d'internet.</text>
 		<newline gap="10"/>
+		<link target="raza:page:CSchedulerSettingsPage" format="b">Scheduler:</link>
+		<gap size="4"/>
+		<text>Limit download connections based on a periodic schedule.</text>
 	</document>
 	<!-- Browse User Profile -->
 	<document name="CBrowseHostProfile.1">
@@ -1991,8 +1991,6 @@
 		<newline gap="8"/>
 		<text>Desafortunadament hi ha cassos en que la persona que té l'arxiu que vols no està connectada. L'única cosa que pots fer és
 		esperar o cancel·lar la transferència i descarregar un arxiu similar que sí estigui disponible.</text>
-
-
 	</document>
 	<document name="DownloadHelp.Creating">
 		<text format="b">Creant l'arxiu de descàrrega</text>
@@ -2043,18 +2041,14 @@
 		<newline gap="8"/>
 		<text>Shareaza ha aturat els intents de connexió per a no perdre els servidors que estan al caxè.</text>
 	</document>
-
 	<document name="GeneralHelp.AdultFilter">
 		<text format="b">Filtre de contingut sols apte per a adults actiu</text>
 		<newline gap="8"/>
-<text>Si us plau, recorda que, com qualsevol filtre automàtic, potser no sigui 100% efectiu.
+		<text>Si us plau, recorda que, com qualsevol filtre automàtic, potser no sigui 100% efectiu.
 		Està disenyat simplement per aliminar resultats no desitjats, no un bloqueig 100% segur.</text>
-
-
 		<newline gap="8"/>
 		<text>Si un menor/a està utilitzant Internet (incloent-ne el P2P) sempre ha de tenir supervisió dels pares.</text>
 	</document>
-
 	<document name="GeneralHelp.BadTorrentEncoding">
 		<text format="b">Sembla que aquest torrent té un error de codificació</text>
 		<newline gap="8"/>
@@ -2065,8 +2059,6 @@
 		<text>Quasi tots els programes de creació del torrent han de deixar-te reparar aquest torrent i
 		assegurar que funcionarà en més aplicacions torrent. <link target="http://shareaza.sourceforge.net/help/?torrentencoding">Fes clic aquí per a obtenir ajuda addicional</link>
 		</text>
-
-
 	</document>
 	<document name="GeneralHelp.DonkeyServerList">
 		<text format="b">La teva llista de servidors eDonkey està buida</text>

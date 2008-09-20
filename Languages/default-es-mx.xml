@@ -2879,7 +2879,6 @@
 	<string id="16408" value="Copiar &amp;URI"/>
 	<string id="16409" value="Exportar &amp;URIs..."/>
 	<string id="16410" value="Las carpetas Completas e Incompletas deben de no ser las mismas"/>
-
 	<string id="16448" value="Conectando a %s, handshaking..."/>
 	<string id="16449" value="Chateando con %s (%s)."/>
 	<string id="16450" value="La conexión con %s fué cerrada."/>
@@ -2915,6 +2914,7 @@
 	<string id="16535" value="Ancho de banda total de transmición UDP"/>
 	<string id="16536" value="Gnutella Ratio of Received/Sent Pings"/>
 	<string id="16537" value="Gnutella Ratio of Received/Sent Pongs"/>
+	<string id="16538" value="Errores de Conexión (%)"/>
 	<string id="16768" value="URL &quot;%s&quot; recibido"/>
 	<string id="16769" value="Shareaza no entendió el URL."/>
 	<string id="16770" value="La ventana de URL no pudo ser mostrada, Shareaza está ocupado."/>
@@ -3187,6 +3187,15 @@
 	<string id="20214" value="Bueno"/>
 	<string id="20215" value="Muy Bueno"/>
 	<string id="20216" value="Excelente"/>
+	<string id="20217" value="Selecciona la carpeta temporal de eDonkey/eMule:"/>
+	<!-- Column headers in Library Album View -->
+	<string id="20230" value="#"/><!-- Track number -->
+	<string id="20231" value="Título"/>
+	<string id="20232" value="Tamaño"/>
+	<string id="20233" value="Bitrate"/>
+	<string id="20234" value="Album"/>
+	<string id="20235" value="Artista"/>
+	<string id="20236" value="Ratio"/>
 </strings>
 
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
@@ -3230,8 +3239,7 @@
 		<control caption="Cuando hago click a minimizar:"/>
 		<control caption="Normal|Minimizar a barra de tareas"/>
 	</dialog>
-
-	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBuBu" caption="Mi Colección">
+	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBuBuBu" caption="Mi Colección">
 		<control caption="_Opciones:"/>
 		<control caption="Recordar vistas de carpetas"/>
 		<control caption="Ver carpetas de Mi Colección"/>
@@ -3258,7 +3266,8 @@
 		<control caption="Guardar _Colecciones Aquí:"/>
 		<control/>
 		<control/>
-		<control caption="Create ghost files when deleting"/>
+		<control caption="Crear huellas de archivos (ghost files) cuando sean borrados"/>
+		<control caption="Smart video series detection"/>
 	</dialog>
 
 	<dialog name="CMediaSettingsPage" cookie="BuCoBuBuBuCoBuBuBuStSt" caption="Reproductor">
@@ -3422,7 +3431,7 @@
 		<control/>
 		<control caption="Ayuda"/>
 		<control caption="El Calendario esta diseñado para que puedas asignar tiempos de cuando Shareaza se va a conectar y descargar archivos. {n}Nota: Si tienes Shareaza abierto cuando el calendario esta activo, puede que veas que este cambiando configuraciones- ¡Esto es normal!-"/>
-</dialog>
+	</dialog>
 
 	<dialog name="CNetworksSettingsPage" cookie="StBuStBuStBuStBuStBuStBuSt" caption="Redes">
 		<control caption="Shareaza tiene la habilidad de acceder varias redes de compartimiento de archivos. En esta página se pueden seleccionar las redes que serán usadas, y ajustar las configuraciones de las mismás."/>
@@ -3566,7 +3575,7 @@
 		<control/>
 	</dialog>
 
-	<dialog name="CQueuePropertiesDlg" cookie="BuEdBuBuBuEdBuEdBuCoBuEdBuSyBuBuStEdmsStEdmsStEdmsBuStEdStEdmsBuEdmsBuBuBu" caption="Propiedades de Cola de Subida">
+	<dialog name="CQueuePropertiesDlg" cookie="BuEdBuBuBuBuBuEdBuEdBuCoBuEdBuSyBuBuStEdmsStEdmsStEdmsBuStEdStEdmsBuEdmsBuBuBu" caption="Propiedades de Cola de Subida">
 		<control caption="_Nombre:"/>
 		<control/>
 		<control caption="_Criteria de Entrada:"/>
@@ -3578,7 +3587,7 @@
 		<control caption="Maximo del tamaño del archivo fuente:"/>
 		<control/>
 		<control caption="Archivos Marcados:"/>
-		<control/>
+		<control caption="Popular|Release"/>
 		<control caption="Nombre de Archivo que son iguales:"/>
 		<control/>
 		<control caption="Protocolos:"/>
@@ -3623,16 +3632,15 @@
 		<control caption="Empezar usando Shareza."/>
 	</dialog>
 
-	<dialog name="CWizardConnectionPage" cookie="StCoStCoStCoStCoStCo" caption="Bienvenido a Shareaza (1/6)">
+	<dialog name="CWizardConnectionPage" cookie="StStCoStCoStCoStCoStms" caption="Bienvenido a Shareaza (1/6)">
 		<control caption="Para un rendimiento optimo, Shareaza necesita saber un poco más sobre tu conexión a Internet."/>
-		<control caption="&#160;( por favor selecciona )| Estoy usando Internet en casa| Estoy usando Internet en una RED colegial| Estoy usando Internet en una RED de oficina| Estoy usando Internet en un hotel o aeropuerto"/>
-		<control caption="Esta tu red o campus protegido por un firewall o NAT router?"/>
-		<control caption="&#160;No, Yo puedo aceptar todas las conexiones entrantes| Sí, y no puedo aceptar conexiones entrantes de Internet| No lo se, AUTO-DETECTA el estado"/>
-		<control caption="Tienes un firewall o NAT router en tu conexión de Internet de tu casa?"/>
-		<control caption="&#160;No, Tengo completo acceso a Internet| Sí, pero voy a configurar redireccin de puertos a Shareaza| Sí, y no puedo aceptar conexiones entrantes de Internet| No lo se, AUTO-DETECTA el estado"/>
-		<control caption="Si sabes que tan rápido es tu conexión a internet, selecciona la mejor opción de abajo:"/>
-		<control caption="| Dial up Modem| ISDN| ADSL (256K)| ADSL (512K)| ADSL (768K)| ADSL (1.5M)| Cable Modem/SDSL| T1| T3| LAN| OC3"/>
-		<control caption="O, escoge:"/>
+		<control caption="Elije el tipo de tu conexión a Internet"/>
+		<control caption="Dial up Modem|ISDN|ADSL (256K)|ADSL (512K)|ADSL (768K)|ADSL (1.5M)|ADSL (4.0M)|ADSL2 (8.0M)|ADSL2 (12.0M)|ADSL2+ (24.0M)|Cable Modem/SDSL|T1|T3|LAN|OC3"/>
+		<control caption="O escoge la velocidad de descarga:"/>
+		<control/>
+		<control caption="y la velocidad de subida:"/>
+		<control/>
+		<control caption="¿Desea configurar automáticamente el puerto de reenvío utilizando UPnP?"/>
 		<control/>
 		<control caption="Estado:"/>
 		<control/>
@@ -4475,7 +4483,7 @@
 		<column from="File" to="Archivo"/>
 		<column from="Extension" to="Extensión"/>
 		<column from="Size" to="Tamaño"/>
-		<column from="Rating" to=""/>
+		<column from="Rating" to="Valoración"/>
 		<column from="Status" to="Estado"/>
 		<column from="Host/Count" to=""/>
 		<column from="Speed" to="Velocidad"/>
@@ -4513,7 +4521,7 @@
 	</list>
 	<list name="CReviewList">
 		<column from="User" to="Usuario"/>
-		<column from="Rating" to=""/>
+		<column from="Rating" to="Valoración"/>
 		<column from="Comments" to="Comentarios"/>
 		<column from="Order" to="Orden"/>
 	</list>

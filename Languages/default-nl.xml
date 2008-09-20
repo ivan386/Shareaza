@@ -256,8 +256,6 @@
 		<button id="ID_LIBRARY_LAUNCH" text="Openen of afspelen"/>
 		<button id="ID_LIBRARY_ENQUEUE" text="Toevoegen aan afspeellijst"/>
 		<separator/>
-		<button id="ID_LIBRARY_PROPERTIES" text="Properties"/>
-		<separator/>
 		<button id="ID_LIBRARY_PROPERTIES" text="Eigenschappen"/>
 		<separator/>
 		<button id="ID_LIBRARY_MOVE" text="Verplaatsen"/>
@@ -283,8 +281,6 @@
 		<button id="ID_LIBRARY_LAUNCH" text="Openen of afspelen"/>
 		<button id="ID_LIBRARY_ENQUEUE" text="Toevoegen aan afspeellijst"/>
 		<button id="ID_LIBRARY_FOLDER_ENQUEUE" text="Album afspelen"/>
-		<separator/>
-		<button id="ID_LIBRARY_PROPERTIES" text="Properties"/>
 		<separator/>
 		<button id="ID_LIBRARY_PROPERTIES" text="Eigenschappen"/>
 		<rightAlign/>

@@ -3994,7 +3994,8 @@ PDF
 		<control caption=":שרזה מוריד"/>
 		<control caption="..."/>
 		<control/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control caption=":הורדה כוללת"/>
 		<control caption="..."/>
 		<control caption=":זמן שנותר"/>
@@ -4012,7 +4013,8 @@ PDF
 	<dialog name="CFileGeneralPage" cookie="StEdEdEdEdStStEdStEdStEdStEdEdEd" caption="כללי">
 		<control caption="שמות משאבים אוניברסליים (URNs)"/>
 		<control/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control/>
 		<control caption="מאפייני קובץ"/>
 		<control caption=":מיקום"/>
@@ -4023,7 +4025,8 @@ PDF
 		<control/>
 		<control caption=":גודל"/>
 		<control/>
-		<control/><control/>
+		<control/>
+		<control/>
 	</dialog>
 	<dialog name="CFileMetadataPage" cookie="CoEd" caption="Meta ‏מידע">
 		<control/>
@@ -4190,7 +4193,8 @@ PDF
 		<control caption=":לחצת על כתובת URI אשר מחברת לשרת או המשתמש הבא ברשת"/>
 		<control caption="‪:אשר מאפשר לסייר בקבצים המשותפים הזמינים אצל המשתמש הבא URI לחצת על כתובת"/>
 		<control/>
-		<control/><control/>
+		<control/>
+		<control/>
 		<control/>
 		<control caption="‪:אנא בחר את הפעולה שברצונך ששרזה תבצע"/>
 		<control caption="‪הורדה כעת"/>

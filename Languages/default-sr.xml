@@ -347,8 +347,8 @@
 		<button id="ID_NEIGHBOURS_CHAT" text="Popričaj sa Osobom"/>
 		<rightAlign/>
 		<button id="ID_NETWORK_G2" text="Gnutella2"/>
-		<button id="ID_NETWORK_ED2K" text="eDonkey2000"/>
 		<button id="ID_NETWORK_G1" text="Gnutella1"/>
+		<button id="ID_NETWORK_ED2K" text="eDonkey2000"/>
 		<separator/>
 		<button id="ID_NEIGHBOURS_SETTINGS" text="Podešavanja"/>
 	</toolbar>
@@ -361,8 +361,8 @@
 		<button id="ID_SECURITY_BAN" text="Blokiraj ga"/>
 		<rightAlign/>
 		<button id="ID_NETWORK_G2" text="Gnutella2"/>
-		<button id="ID_NETWORK_ED2K" text="eDonkey2000"/>
 		<button id="ID_NETWORK_G1" text="Gnutella1"/>
+		<button id="ID_NETWORK_ED2K" text="eDonkey2000"/>
 		<separator/>
 		<button id="ID_NEIGHBOURS_SETTINGS" text="Podešavanja"/>
 	</toolbar>
@@ -435,8 +435,8 @@
 			<separator/>
 			<menu text="Odaberi _Mrežu">
 				<item id="ID_NETWORK_G2" text="Spoji se na _Gnutellu2"/>
-				<item id="ID_NETWORK_ED2K" text="Spoji se na _eDonkey2000"/>
 				<item id="ID_NETWORK_G1" text="Spoji se na Gnutellu_1"/>
+				<item id="ID_NETWORK_ED2K" text="Spoji se na _eDonkey2000"/>
 			</menu>
 			<separator/>
 			<item id="ID_NETWORK_AUTO_CLOSE" text="Izađi po završetku razmene"/>
@@ -503,8 +503,8 @@
 			<separator/>
 			<menu text="Odaberi _Mrežu">
 				<item id="ID_NETWORK_G2" text="Spoji se na _Gnutellu2"/>
-				<item id="ID_NETWORK_ED2K" text="Spoji se na _eDonkey2000"/>
 				<item id="ID_NETWORK_G1" text="Spoji se na Gnutellu_1"/>
+				<item id="ID_NETWORK_ED2K" text="Spoji se na _eDonkey2000"/>
 			</menu>
 			<separator/>
 			<item id="ID_NETWORK_CONNECT_TO" text="Spoji se na..." shortcut="Ctrl+T"/>
@@ -599,8 +599,8 @@
 			<separator/>
 			<menu text="Odaberite _Mrežu">
 				<item id="ID_NETWORK_G2" text="Spoji se na _Gnutellu2"/>
-				<item id="ID_NETWORK_ED2K" text="Spoji se na _eDonkey2000"/>
 				<item id="ID_NETWORK_G1" text="Spoji se na Gnutellu_1"/>
+				<item id="ID_NETWORK_ED2K" text="Spoji se na _eDonkey2000"/>
 			</menu>
 			<separator/>
 			<item id="ID_NETWORK_AUTO_CLOSE" text="Z_atvori Po Završetku"/>
@@ -1376,8 +1376,8 @@
 			<item id="ID_NETWORK_DISCONNECT" text="_Isključi"/>
 			<separator/>
 			<item id="ID_NETWORK_G2" text="_Gnutella2"/>
-			<item id="ID_NETWORK_ED2K" text="_eDonkey2000"/>
 			<item id="ID_NETWORK_G1" text="Gnutella_1"/>
+			<item id="ID_NETWORK_ED2K" text="_eDonkey2000"/>
 		</menu>
 		<menu text="Praćenje">
 			<item id="ID_NEIGHBOURS_VIEW_ALL" text="Pok_aži Sav Promet"/>
@@ -1630,19 +1630,19 @@
 		<text group="25" align="middle" id="G2Leaves">%i leavesa</text>
 		<newline group="20" gap="2"/>
 
-		<icon group="30" command="ID_NETWORK_ED2K"/><gap group="30" size="4"/>
-		<text group="30" align="middle" format="b">eDonkey:</text>
-		<text group="31" align="middle">Isključeno</text>
-		<text group="32" align="middle">Spajam...</text>
-		<text group="33" align="middle">Spojeno</text>
-		<newline group="30" gap="2"/>
-
 		<icon group="10" command="ID_NETWORK_G1"/><gap group="10" size="4"/>
 		<text group="10" align="middle" format="b">Gnutella1: </text>
 		<text group="11" align="middle">Isključeno</text>
 		<text group="12" align="middle">Spajam...</text>
 		<text group="13" align="middle">Spojeno</text>
 		<newline group="10" gap="2"/>
+
+		<icon group="30" command="ID_NETWORK_ED2K"/><gap group="30" size="4"/>
+		<text group="30" align="middle" format="b">eDonkey:</text>
+		<text group="31" align="middle">Isključeno</text>
+		<text group="32" align="middle">Spajam...</text>
+		<text group="33" align="middle">Spojeno</text>
+		<newline group="30" gap="2"/>
 
 		<group id="2">
 			<para align="center">
@@ -3146,6 +3146,9 @@
 
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
 <dialogs>
+	<dialog name="CGeneralSettingsGroup" cookie="" caption="Opšta">
+	</dialog>
+
 	<dialog name="CSettingSheet" cookie="SyBuBuBu#3" caption="Shareazina Podešavanja">
 		<control/>
 		<control caption="OK"/>
@@ -3153,8 +3156,6 @@
 		<control caption="Potvrdi"/>
 		<control/>
 	</dialog>
-
-	<dialog name="CGeneralSettingsGroup" cookie="" caption="Opšta"/>
 
 	<dialog name="CGeneralSettingsPage" cookie="BuBuBuBuStCoBuBuBuBuBuBuBuBuBuSyStEdmsStmsBuStCoStCo" caption="Opšta">
 		<control caption="Opšta:"/>
@@ -3185,7 +3186,7 @@
 		<control caption="Normalno|Spusti u Tray"/>
 	</dialog>
 
-	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBuBu" caption="Kolekcija">
+	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBuBuBu" caption="Kolekcija">
 		<control caption="_Opcije:"/>
 		<control caption="Zapamti fascikle"/>
 		<control caption="Prati fascikle moje kolekcije"/>
@@ -3213,10 +3214,12 @@
 		<control/>
 		<control/>
 		<control caption="Create ghost files when deleting"/>
+		<control caption="Smart video series detection"/>
 	</dialog>
 
-	<dialog name="CMediaSettingsPage" cookie="BuBuBuBuCoBuBuBuBuBuCo" caption="Media Player">
+	<dialog name="CMediaSettingsPage" cookie="BuCoBuBuBuCoBuBuBuBuBuStSt" caption="Media Player">
 		<control caption="_Opcije:"/>
+		<control/>
 		<control caption="Koristi Media Player za POKRETANJE datoteka samo ovih vrsta"/>
 		<control caption="Koristi Media Player za DODAVANJE datoteka samo ovih vrsta"/>
 		<control caption="Vrs_te Datoteka:"/>
@@ -3225,8 +3228,9 @@
 		<control caption="Ukloni"/>
 		<control caption="Audio _Vizualizacijski Pluginovi:"/>
 		<control caption="Odaberi Plugin..."/>
-		<control caption="Media Services _Plugin:"/>
-		<control/>
+		<control caption="_Media Handling"/>
+		<control caption="Choose Media Handler:"/>
+		<control caption="Warning: Choosing an external Media Handler will automatically disable all Media and Visualisation Plugins!"/>
 	</dialog>
 
 	<dialog name="CCommunitySettingsPage" cookie="BuStBuBuBuBuBuBu" caption="Zajednica">
@@ -3256,7 +3260,8 @@
 		<control caption="Upravitelj Skidanja plugin skida samo datoteke onih prsta koje su na listi.Ostale tipove otvara Vaš internet preglednik.Shareaza mora biti pokrenuta da bi Upravitelj Skidanja radio."/>
 	</dialog>
 
-	<dialog name="CInternetSettingsGroup" caption="Internet"/>
+	<dialog name="CInternetSettingsGroup" caption="Internet">
+	</dialog>
 
 	<dialog name="CConnectionSettingsPage" cookie="BuStCoStCoStEdBuBuBuStCoStCoBuStCoBuBuStEdmsStEdms" caption="Veza">
 		<control caption="Dolazna Adresa:"/>
@@ -3426,7 +3431,7 @@
 		<control caption="Hub u Hub"/>
 	</dialog>
 
-	<dialog name="CDonkeySettingsPage" cookie="BuBuBuBuBuStEdmsStBuStEdmsStBuStBuStBu" caption="eDonkey2000">
+	<dialog name="CDonkeySettingsPage" cookie="BuBuBuBuBuStEdmsStBuBuStEdmsStBuStBu" caption="eDonkey2000">
 		<control caption="_eDonkey2000 Mreža:"/>
 		<control caption="Spoji se na eDonkey2000"/>
 		<control caption="Spoji se svaki put(Automatski)"/>
@@ -3442,8 +3447,6 @@
 		<control/>
 		<control caption="drugih eDonkey klijenta."/>
 		<control caption="eDonkey2000 Ala_ti:"/>
-		<control caption="Ubaci eDonkey/eMule delimična skidanja (.part):"/>
-		<control caption="Ubaci..."/>
 		<control caption="Skini eDonkey2000 listu servera sa neta:"/>
 		<control caption="Skini..."/>
 	</dialog>
@@ -3505,12 +3508,13 @@
 		<control caption="Stavi Više"/>
 	</dialog>
 
-	<dialog name="CAdvancedSettingsPage" cookie="SyBuStEdmsStEd" caption="Napredno">
+	<dialog name="CAdvancedSettingsPage" cookie="SyEdmsBuBuStStEd" caption="Napredno">
 		<control/>
+		<control/>
+		<control/>
+		<control caption="Set Default"/>
 		<control caption="Podešavanja:"/>
 		<control caption="Vrednost:"/>
-		<control/>
-		<control/>
 		<control caption="Opis:"/>
 		<control/>
 	</dialog>
@@ -3525,7 +3529,7 @@
 		<control caption="Maximalna veličina izvorne datoteke:"/>
 		<control/>
 		<control caption="Označene datoteke:"/>
-		<control/>
+		<control caption="Popular|Release"/>
 		<control caption="Filename match:"/>
 		<control/>
 		<control caption="Protocols:"/>
@@ -3570,32 +3574,21 @@
 		<control caption="Započeti koristiti Shareazu."/>
 	</dialog>
 
-	<dialog name="CWizardInterfacePage" cookie="StBuBuBuStStBuBuBu" caption="Dobrodošli u Shareazu">
-		<control caption="Shareaza podržava dva korisnička izgleda, ovde možete izabrati koji vam više odgovara."/>
-		<control caption="Molim odaberite korisničko izgled:"/>
-		<control caption="Normalan Izgled(interface)"/>
-		<control caption="Power Izgled(interface)"/>
-		<control caption="Jednostavno, lagano za korištenje.{n}Za korisnike koji su već radili sa sličnim programima."/>
-		<control caption="Power izgled naprednim korisnicima nudi više naredbi, prozora i sl."/>
-		<control caption="Pokaži jednostavni pokazivač napretka."/>
-		<control caption="Prikaži dodatne BitTorrent elemente."/>
-		<control caption="Preuzmi torrent linkove."/>
-	</dialog>
-
-	<dialog name="CWizardConnectionPage" cookie="StCoStCoStCoStCoStCo" caption="Dobrodošli u Shareazu [3 od 7]">
+	<dialog name="CWizardConnectionPage" cookie="StStCoStCoStCoStCoStms" caption="Dobrodošli u Shareazu (1/6)">
 		<control caption="Da bi ispravno radila, Shareaza treba znati nešto i o Vašoj vezi prema internetu."/>
-		<control caption="&#160;( odaberite )| Internet koristim za kućne potrebe| Internet koristim preko LAN-a na faxu| Internet koristim preko LAN-a u kancelariji| Internet koristim u hotelu ili aerodromu"/>
-		<control caption="Da li je Vaša mreža zaštićena firewallom ili NAT routerom?"/>
-		<control caption="&#160;Ne, MOGU primiti sve dolazne pozive| Da, ja NE MOGU primati dolazne pozive sa Interneta| Neznam, molim da Shareza OTKRIJE"/>
-		<control caption="Da li imate vatrozid ili NAT router na vašoj kućnoj Internet vezi?"/>
-		<control caption="&#160;Ne, MOGU primiti sve dolazne pozive| Da, ali ću podesiti port-forwarding za Shareazu| Da, ja NE MOGU primati dolazne pozive sa Interneta| Neznam, molim da Shareza OTKRIJE"/>
 		<control caption="Ako znate brzinu vaše veze na Internet molim da odaberete najbolju opciju:"/>
 		<control caption="| Običan Modem (56K)| ISDN| ADSL (256K)| ADSL (512K)| ADSL (768K)| ADSL (1.5M)| ADSL (4.0M)| ADSL2 (8.0M)| ADSL2 (12.0M)| ADSL2+ (24.0M)| Kablovski Modem/SDSL| T1| T3| LAN| OC3"/>
-		<control caption="ILI, odaberite:"/>
+		<control caption="Or choose the download speed:"/>
+		<control/>
+		<control caption="and the upload speed:"/>
+		<control/>
+		<control caption="Do you want to automatically setup port-forwarding by using UPnP?"/>
+		<control/>
+		<control caption="Status:"/>
 		<control/>
 	</dialog>
 
-	<dialog name="CWizardSharePage" cookie="StStStSyBuBuSt" caption="Dobrodošli u Shareazu [4 of 7]">
+	<dialog name="CWizardSharePage" cookie="StStStSyBuBuSt" caption="Dobrodošli u Shareazu (2/6)">
 		<control caption="P2P mreže su dobre onoliko koliko i ljudi koji ih koriste.Sve šta je vama dostupno za skidanje, neko to deli sa vama."/>
 		<control caption="Ne morate ništa deliti da bi ste koristili Shareazu, iako neki programi se ponašaju drugačije prema korisnicima koji samo skidaju a ništa ne dele."/>
 		<control caption="Molim odaberite koje fascile, ako želite, želite deliti.Jednostavno kliknite na Dodaj botun za dodati fasciklu."/>
@@ -3615,7 +3608,7 @@
 		<control caption="Zatvori"/>
 	</dialog>
 
-	<dialog name="CWizardProfilePage" cookie="StStEdStCoCoStCoCo" caption="Dobrodošli u Shareazu [5 of 7]">
+	<dialog name="CWizardProfilePage" cookie="StStEdStCoCoStCoCo" caption="Dobrodošli u Shareazu (3/6)">
 		<control caption="Shareaza izgleda lepše i prijateljskije kada svatko napiše neke osnovne podatke o sebi."/>
 		<control caption="Moje ime je:"/>
 		<control/>
@@ -3627,7 +3620,18 @@
 		<control/>
 	</dialog>
 
-	<dialog name="CWizardNetworksPage" cookie="StBuStBuStBuSt" caption="Dobrodošli u Shareazu [6 of 7]">
+	<dialog name="CWizardInterfacePage" cookie="StBuBuBuStStBuBu" caption="Dobrodošli u Shareazu (4/6)">
+		<control caption="Shareaza podržava dva korisnička izgleda, ovde možete izabrati koji vam više odgovara."/>
+		<control caption="Molim odaberite korisničko izgled:"/>
+		<control caption="Basic Izgled(interface)"/>
+		<control caption="Power Izgled(interface)"/>
+		<control caption="Jednostavno, lagano za korištenje.{n}Za korisnike koji su već radili sa sličnim programima."/>
+		<control caption="Power izgled naprednim korisnicima nudi više naredbi, prozora i sl."/>
+		<control caption="Pokaži jednostavni pokazivač napretka."/>
+		<control caption="Preuzmi torrent linkove."/>
+	</dialog>
+
+	<dialog name="CWizardNetworksPage" cookie="StBuStBuStBuSt" caption="Dobrodošli u Shareazu (5/6)">
 		<control caption="Shareaza je program za deljenje i skidanje datoteka opšteg sadržaja, i može se istovremeno spojiti na više P2P mreža.Ovde možete odabrati kojim mrežama želite pristupiti.Posle možete promeniti odabrane mreže."/>
 		<control caption="Spoji se na Gnutellu2 (Preporučeno)"/>
 		<control caption="Gnutella2 mreža je Shareazina osnovna mreža, nudi najviše opcija i najbrža je od svih ostalih P2P mreža."/>
@@ -3646,7 +3650,7 @@
 		<control caption="Zatvori"/>
 	</dialog>
 
-	<dialog name="CWizardFinishedPage" cookie="StStStBuBuBuSt" caption="Dobrodošli u Shareazu [7 of 7]">
+	<dialog name="CWizardFinishedPage" cookie="StStStBuBuBuSt" caption="Dobrodošli u Shareazu (6/6)">
 		<control caption="To je to!Shareaza je prilagođena za rad na Vašem računaru."/>
 		<control caption="Ukoliko kasnije želite da promenite podešavanja, možete odabrati Brzo i Lagano pomoćnika iz menija Alati."/>
 		<control caption="Nakon zatvaranja ovog pomoćnika klikom na Gotovo, možete se spojiti na odabrane mreže i započeti sa traženjem i skidanjem sadržaja."/>
@@ -3787,9 +3791,10 @@
 		<control caption="Odustani"/>
 	</dialog>
 
-	<dialog name="CFilterSearchDlg" cookie="BuEdStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuCoBuBuBuBuBuBuBu" caption="Filtrirani Rezultati">
+	<dialog name="CFilterSearchDlg" cookie="BuEdBuStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuBuBuCoBuBuBuBuBu" caption="Filtrirani Rezultati">
 		<control caption="Pokaži samo rezultate koji sadrže ove reči:"/>
 		<control/>
+		<control caption="Reg. Exp."/>
 		<control caption="( možete i da ne sadrži reči sa -reč )"/>
 		<control caption="I veličine su od (KB):"/>
 		<control caption="Minimalno:"/>
@@ -3802,21 +3807,21 @@
 		<control caption="izvora."/>
 		<control caption="Sakrij:"/>
 		<control caption="Zauzete hostove"/>
+		<control caption="Non-matching files"/>
 		<control caption="Firewalled/push hosts"/>
 		<control caption="Nestabilne hostove"/>
-		<control caption="Non-matching files"/>
 		<control caption="Datoteke koje već imate"/>
 		<control caption="Lažne rezultate"/>
-		<control caption="Filter"/>
-		<control caption="Odustani"/>
+		<control caption="DRM files"/>
+		<control caption="Adult results"/>
+		<control caption="Suspicious files"/>
+		<control caption="Filteri:"/>
 		<control/>
 		<control caption="Postavi za uvek"/>
 		<control caption="_Sačuvaj kao"/>
 		<control caption="Obriši"/>
-		<control caption="Filteri:"/>
-		<control caption="DRM files"/>
-		<control caption="Suspicious files"/>
-		<control caption="Adult results"/>
+		<control caption="Filter"/>
+		<control caption="Odustani"/>
 	</dialog>
 
 	<dialog name="CSaveFilterAsDlg" cookie="EdBuBuSt" caption="Sačuvaj filter kao">
@@ -3953,13 +3958,13 @@
 		<control caption="Odustani"/>
 	</dialog>
 
-	<dialog name="CGraphItemDlg" cookie="BuBuBuCoCoStStEdBuBuStBu" caption="Graph Item Properties">
+	<dialog name="CGraphItemDlg" cookie="BuBuBuCoStEdStEdBuBuStBu" caption="Graph Item Properties">
 		<control caption="OK"/>
 		<control caption="Odustani"/>
 		<control caption="Izvor:"/>
 		<control/>
-		<control/>
 		<control caption="Parametar:"/>
+		<control/>
 		<control caption="Jedinica:"/>
 		<control/>
 		<control caption="Ekran:"/>
@@ -3976,7 +3981,7 @@
 		<control caption="Izaberite šemu sa liste, zatim odaberite detalje koje želite da prikažete uz datoteke u fasckli, kao kolone ."/>
 	</dialog>
 
-	<dialog name="CSecureRuleDlg" cookie="BuStCoStEdBuStEdEdEdEdStEdEdEdEdBuEdBuBuBuStCoStCoEdStEdStEdStBuBu" caption="Sigurnosna Pravila">
+	<dialog name="CSecureRuleDlg" cookie="BuStCoStEdBuStEdEdEdEdStEdEdEdEdBuEdBuBuBuBuStCoStCoEdStEdStEdStBuBu" caption="Sigurnosna Pravila">
 		<control caption="P_ravilo:"/>
 		<control caption="Tip:"/>
 		<control caption="Network (IP) Address|Content Filter"/>
@@ -3997,6 +4002,7 @@
 		<control/>
 		<control caption="Nešto Isto"/>
 		<control caption="Sve Isto"/>
+		<control caption="Reg. Exp."/>
 		<control caption="_Opcije:"/>
 		<control caption="Akcija:"/>
 		<control caption="Ništa|Prihvatam|Odbijam"/>
@@ -4039,7 +4045,7 @@
 		<control caption="Insert Token:"/>
 		<control caption="Tiger Root|SHA1|MD5|ED2K (CMD4)|Filename|Filename (URI)|Base Filename|File Extension|File Size|File Size (bytes)|Folder Path|Local Host|Local Port"/>
 		<control caption="Select preset:"/>
-		<control/>
+		<control caption="Magnet|eDonkey|Magnet HTML|eDonkey HTML"/>
 		<control caption="Kopiraj"/>
 		<control caption="Sačuvaj..."/>
 		<control/>
@@ -4143,7 +4149,7 @@
 		<control/>
 	</dialog>
 
-	<dialog name="CDeleteFileDlg" cookie="StStBuBuBuStStBuBuBuBuStEd" caption="Obriši Datoteku">
+	<dialog name="CDeleteFileDlg" cookie="StStBuBuBuStStBuStCoStCoStEd" caption="Obriši Datoteku">
 		<control caption="Jeste li sigurni da želite obrisati:"/>
 		<control/>
 		<control caption="Obriši"/>
@@ -4151,44 +4157,60 @@
 		<control caption="Odustani"/>
 		<control/>
 		<control caption="Shareaza može zapamtiti ovu datoteku i upozoriti vas ako ponovno naiđete na nju. Odaberite razlog zašto želite obrisati ovu datoteku:"/>
-		<control caption="Ne želim da kažem razlog."/>
-		<control caption="Datoteka ima pogrešno ime, i može zavesti korisnike."/>
-		<control caption="Jako je lošeg kvaliteta."/>
-		<control caption="Ova datoteka je lažnjak ili ima grešku, uglavnom nekorisna je."/>
+		<control caption="Create a ghost file"/>
+		<control caption="The reason for deleting:"/>
+		<control caption="Just deleting, keep my comments|This file is named incorrectly, and could be misleading|This file is of very poor quality|This file is a fake, or is corrupt or somehow unusable|Replace my comments with the new ones"/>
+		<control caption="File rating:"/>
+		<control caption="(No Rating)|Fake/Corrupt/Misleading|Poor|Average|Good|Very Good|Excellent"/>
 		<control caption="Možete napisati kratki opis zašto je ova datoteka loša:"/>
 		<control/>
 	</dialog>
 
-	<dialog name="CCollectionExportDlg" cookie="StBuBu" caption="Export Folder-Izvezi Fasciklu">
+	<dialog name="CCollectionExportDlg" cookie="StSyBuStStStStStEdBuBuBu" caption="Export Folder-Izvezi Fasciklu">
 		<control caption="Ova funkcija se koristi za izvoz sadržaja album fascikle kao rich collection file."/>
-		<control caption="Izvezi..."/>
+		<control/>
+		<control caption="Template Information:"/>
+		<control caption="Name:"/>
+		<control caption="..."/>
+		<control caption="Author:"/>
+		<control caption="..."/>
+		<control caption="Description:"/>
+		<control/>
+		<control caption="Delete|_Back"/>
+		<control caption="_Next|_Export..."/>
 		<control caption="Odustani"/>
 	</dialog>
 
-	<dialog name="CDownloadEditPage" cookie="StBuEdBuStEdStEdStEdBuStStStBuStEdStEdBuBuBuBu" caption="Edit Download (Napredno)">
+	<dialog name="CDownloadEditPage" cookie="StBuStEdEdStEdBuStStEdBuStEdBuStEdBuBuStStStStStBuStEdStEdBu" caption="Download Properties (Napredno)">
 		<control caption="UPOZORENJE: Ove opcije omogućuju napredno podešavanje skidanja, ako se pogrešno koriste verovatno će uzrokovati GREŠKU u skinutoj datoteci"/>
+		<control caption="Ime Datoteke and Size:"/>
 		<control caption="Ime datoteke:"/>
 		<control/>
+		<control/>
+		<control caption="Filesize (Byte):"/>
+		<control/>
 		<control caption="_URNs:"/>
+		<control caption="Trusted"/>
 		<control caption="SHA1:"/>
+		<control/>
 		<control/>
 		<control caption="Tiger-Root:"/>
 		<control/>
+		<control/>
 		<control caption="ED2K:"/>
+		<control/>
 		<control/>
 		<control caption="_Akcije:"/>
 		<control caption="Zaboravi trenutno stanje provere (i ponovno proveri)"/>
 		<control caption="Pretpostavi da je datoteka 100% skinuta i ponovno proveri"/>
 		<control caption="Zaboravi sve poznate izvore"/>
+		<control caption="Odustani (save incomplete file)"/>
 		<control caption="Brisač Podataka:"/>
 		<control caption="Obriši bajtove:"/>
 		<control/>
 		<control caption="do"/>
 		<control/>
 		<control caption="Obriši"/>
-		<control caption="_Torrent Info..."/>
-		<control caption="OK"/>
-		<control caption="Odustani"/>
 	</dialog>
 
 	<dialog name="CTorrentSeedDlg" cookie="StStBuBuBuStms" caption="Otvori Torrent Datoteku">
@@ -4212,20 +4234,38 @@
 		<control caption="Komentari:"/>
 		<control/>
 		<control caption="Tracker:"/>
+		<control caption="Start new download transfers:"/>
+		<control caption=" As needed| When ratio over 100%| Only when requested| Never"/>
 		<control/>
 		<control caption="_Downloaders:"/>
 		<control caption="Završeni(celi) (Seeds):"/>
 		<control/>
-		<control caption="Nepotpun:"/>
+	</dialog>
+
+	<dialog name="CTorrentFilesPage" cookie="BuStEdBuSy" caption="Files">
+		<control caption="Torrent _Information:"/>
+		<control caption="Ime:"/>
 		<control/>
-		<control caption="Transfers:"/>
-		<control caption="Počni novo skidanje:"/>
-		<control caption="Po potrebi|Kad veličina pređe 100%|Samo po zahtevu|Nikada"/>
-		<control caption="Datoteke:"/>
+		<control caption="_Datoteke:"/>
 		<control/>
-		<control caption="Osveži"/>
+	</dialog>
+
+	<dialog name="CTorrentTrackersPage" cookie="BuStEdStEdBuStEdStEdBuBuSyStCo" caption="Trackers">
+		<control caption="Torrent _Information:"/>
+		<control caption="Ime:"/>
 		<control/>
-		<control caption="Zatvori"/>
+		<control caption="Tracker:"/>
+		<control/>
+		<control caption="_Current Tracker:"/>
+		<control caption="Completed (Seeds):"/>
+		<control/>
+		<control caption="Incomplete:"/>
+		<control/>
+		<control caption="_Refresh"/>
+		<control caption="_Trackers:"/>
+		<control/>
+		<control caption="Tracker Mode:"/>
+		<control caption="Disabled|Custom|Single Tracker|Multi-tracker|Multi-tracker (locked)"/>
 	</dialog>
 
 	<dialog name="CDownloadGroupDlg" cookie="BuEdSyBuCoBuBuBuBuBuEdBu" caption="Download Group Podešavanja">

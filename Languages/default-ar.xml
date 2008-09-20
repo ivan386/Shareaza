@@ -360,8 +360,8 @@
       <button id="ID_SECURITY_BAN" text="حظر مضيف" />
       <rightAlign />
       <button id="ID_NETWORK_G2" text="Gnutella2" />
-      <button id="ID_NETWORK_ED2K" text="eDonkey" />
       <button id="ID_NETWORK_G1" text="Gnutella1" />
+      <button id="ID_NETWORK_ED2K" text="eDonkey" />
       <separator />
       <button id="ID_NEIGHBOURS_SETTINGS" text="إعدادات" />
     </toolbar>
@@ -441,8 +441,8 @@
         <separator />
         <menu text="تحديد _الشبكات">
           <item id="ID_NETWORK_G2" text="_الإتصال بـ Gnutella2" />
-          <item id="ID_NETWORK_ED2K" text="_الإتصال بـ eDonkey2000" />
           <item id="ID_NETWORK_G1" text="الإتصال بـ Gnutella_1" />
+          <item id="ID_NETWORK_ED2K" text="_الإتصال بـ eDonkey2000" />
         </menu>
         <separator />
         <item id="ID_NETWORK_AUTO_CLOSE" text="الخروج عند إنتهاء _ نقل البيانات" />
@@ -610,8 +610,8 @@
 			<separator/>
 			<menu text="تحديد _الشبكات">
 				<item id="ID_NETWORK_G2" text="_Gnutella2 الإتصال بـ"/>
-				<item id="ID_NETWORK_ED2K" text="_eDonkey2000 الإتصال بـ "/>
 				<item id="ID_NETWORK_G1" text="Gnutella_1 الإتصال بـ "/>
+				<item id="ID_NETWORK_ED2K" text="_eDonkey2000 الإتصال بـ "/>
 			</menu>
 			<separator/>
 			<item id="ID_NETWORK_AUTO_CLOSE" text="الإغلاق _عند اتمام نقل البيانات"/>
@@ -4297,15 +4297,26 @@
       <control />
       <control />
     </dialog>
-    <dialog name="CDecodeMetadataDlg" cookie="BuBuStCo" caption="Metadata Localisation">
-      <control caption="حسنا" />
-      <control caption="إلغاء الأمر" />
+    <dialog name="CDecodeMetadataDlg" cookie="StCoBuBuBuStStBuBu" caption="Metadata Localisation">
       <control caption="Please select the method of re-encoding" />
       <control caption="Arabic|Baltic|Central European|Chinese simplified|Chinese traditional|Cyrillic|Greek|Hebrew|Japanese|Korean|Thai|Turkish|Vietnamese" />
+      <control caption="Preview:"/>
+      <control />
+      <control />
+      <control />
+      <control />
+      <control caption="حسنا" />
+      <control caption="إلغاء الأمر" />
     </dialog>
-  </dialogs>
-  <!-- Columns Definitions -->
-  <listColumns>
+	<dialog name="CIrcInputDlg" cookie="EdBuBuSt" caption="Channel Name|Why reason">
+		<control/>
+		<control caption="حسنا" />
+		<control caption="إلغاء الأمر" />
+		<control caption="Add a channel name:|Enter kick/ban reason:"/>
+	</dialog>
+</dialogs>
+<!-- Columns Definitions -->
+<listColumns>
     <list name="CLibraryWnd">
       <column from="File" to="ملف" />
       <column from="Extension" to="" />
@@ -4427,7 +4438,7 @@
     </list>
     <list name="CTorrentFileList">
       <column from="Filename" to="" />
-      <column from="Size" to="" />
+      <column from="Size" to="الحجم" />
     </list>
     <list name="CTorrentTrackerList">
       <column from="Tracker" to="" />

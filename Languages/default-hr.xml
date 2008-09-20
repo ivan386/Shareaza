@@ -345,8 +345,8 @@
 		<button id="ID_NEIGHBOURS_CHAT" text="Popričaj sa Osobom"/>
 		<rightAlign/>
 		<button id="ID_NETWORK_G2" text="Gnutella2"/>
-		<button id="ID_NETWORK_ED2K" text="eDonkey2000"/>
 		<button id="ID_NETWORK_G1" text="Gnutella1"/>
+		<button id="ID_NETWORK_ED2K" text="eDonkey2000"/>
 		<separator/>
 		<button id="ID_NEIGHBOURS_SETTINGS" text="Postavke"/>
 	</toolbar>
@@ -359,8 +359,8 @@
 		<button id="ID_SECURITY_BAN" text="Blokiraj ga"/>
 		<rightAlign/>
 		<button id="ID_NETWORK_G2" text="Gnutella2"/>
-		<button id="ID_NETWORK_ED2K" text="eDonkey2000"/>
 		<button id="ID_NETWORK_G1" text="Gnutella1"/>
+		<button id="ID_NETWORK_ED2K" text="eDonkey2000"/>
 		<separator/>
 		<button id="ID_NEIGHBOURS_SETTINGS" text="Postavke"/>
 	</toolbar>
@@ -433,8 +433,8 @@
 			<separator/>
 			<menu text="Odaberi _Mrežu">
 				<item id="ID_NETWORK_G2" text="Spoji se na _Gnutellu2"/>
-				<item id="ID_NETWORK_ED2K" text="Spoji se na _eDonkey2000"/>
 				<item id="ID_NETWORK_G1" text="Spoji se na Gnutellu_1"/>
+				<item id="ID_NETWORK_ED2K" text="Spoji se na _eDonkey2000"/>
 			</menu>
 			<separator/>
 			<item id="ID_NETWORK_AUTO_CLOSE" text="Izađi po završetku razmjene"/>
@@ -501,8 +501,8 @@
 			<separator/>
 			<menu text="Odaberi _Mrežu">
 				<item id="ID_NETWORK_G2" text="Spoji se na _Gnutellu2"/>
-				<item id="ID_NETWORK_ED2K" text="Spoji se na _eDonkey2000"/>
 				<item id="ID_NETWORK_G1" text="Spoji se na Gnutellu_1"/>
+				<item id="ID_NETWORK_ED2K" text="Spoji se na _eDonkey2000"/>
 			</menu>
 			<separator/>
 			<item id="ID_NETWORK_CONNECT_TO" text="Spoji se na..." shortcut="Ctrl+T"/>
@@ -597,8 +597,8 @@
 			<separator/>
 			<menu text="Odaberite _Mrežu">
 				<item id="ID_NETWORK_G2" text="Spoji se na _Gnutellu2"/>
-				<item id="ID_NETWORK_ED2K" text="Spoji se na _eDonkey2000"/>
 				<item id="ID_NETWORK_G1" text="Spoji se na Gnutellu_1"/>
+				<item id="ID_NETWORK_ED2K" text="Spoji se na _eDonkey2000"/>
 			</menu>
 			<separator/>
 			<item id="ID_NETWORK_AUTO_CLOSE" text="Z_atvori Po Završetku"/>
@@ -1374,8 +1374,8 @@
 			<item id="ID_NETWORK_DISCONNECT" text="_Isključi"/>
 			<separator/>
 			<item id="ID_NETWORK_G2" text="_Gnutella2"/>
-			<item id="ID_NETWORK_ED2K" text="_eDonkey2000"/>
 			<item id="ID_NETWORK_G1" text="Gnutella_1"/>
+			<item id="ID_NETWORK_ED2K" text="_eDonkey2000"/>
 		</menu>
 		<menu text="Praćenje">
 			<item id="ID_NEIGHBOURS_VIEW_ALL" text="Pok_aži Sav Promet"/>
@@ -3164,7 +3164,6 @@
 		<control/>
 	</dialog>
 
-
 	<dialog name="CGeneralSettingsPage" cookie="BuBuBuBuStCoBuBuBuBuBuBuBuBuBuSyStEdmsStmsBuStCoStCo" caption="Općenito">
 		<control caption="Općenito:"/>
 		<control caption="Spoji se kad pokrenem Shareazu"/>
@@ -3266,7 +3265,8 @@
 		<control caption="Upravitelj Skidanja plugin skida samo datoteke onih prsta koje su na listi.Ostale tipove otvara Vaš internet preglednik.Shareaza mora biti pokrenuta da bi Upravitelj Skidanja radio."/>
 	</dialog>
 
-	<dialog name="CInternetSettingsGroup" caption="Internet"/>
+	<dialog name="CInternetSettingsGroup" caption="Internet">
+	</dialog>
 
 	<dialog name="CConnectionSettingsPage" cookie="BuStCoStCoStEdBuBuBuStCoStCoBuStCoBuBuStEdmsStEdms" caption="Veza">
 		<control caption="Dolazna Adresa:"/>
