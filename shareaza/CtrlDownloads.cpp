@@ -1777,14 +1777,22 @@ void CDownloadsCtrl::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 	switch ( nChar )
 	{
 	case VK_HOME:
+		if ( GetAsyncKeyState( VK_CONTROL ) & 0x8000 )
+		{
+			GetAt( m_nFocus, &pDownload, &pSource );
+			Downloads.Move( pDownload, -2 );
+		}
 		SelectTo( 0 );
 		return;
 	case VK_END:
+		if ( GetAsyncKeyState( VK_CONTROL ) & 0x8000 )
 		{
-			INT nMin, nMax;
-			GetScrollRange( SB_VERT, &nMin, &nMax );
-			SelectTo( max( 0, nMax - 1 ) );
+			GetAt( m_nFocus, &pDownload, &pSource );
+			Downloads.Move( pDownload, 2 );
 		}
+		INT nMin, nMax;
+		GetScrollRange( SB_VERT, &nMin, &nMax );
+		SelectTo( max( 0, nMax - 1 ) );
 		return;
 	case VK_UP:
 		if ( GetAsyncKeyState( VK_CONTROL ) & 0x8000 )

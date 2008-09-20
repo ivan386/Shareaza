@@ -702,14 +702,17 @@ BOOL CDownloads::Move(CDownload* pDownload, int nDelta)
 
 	POSITION posOther = posMe;
 
-	if ( nDelta < 0 )
+	if ( nDelta == -1 )
 		m_pList.GetPrev( posOther );
-	else
+	else if ( nDelta == 1 )
 		m_pList.GetNext( posOther );
-
+	else if ( nDelta < -1 )
+		posOther = m_pList.GetHeadPosition() ;
+	else if ( nDelta > 1 )
+		posOther = m_pList.GetTailPosition() ;
 	if ( posOther == NULL) return FALSE;
 
-	if ( nDelta < 0 )
+	if ( nDelta <= 0 )
 		m_pList.InsertBefore( posOther, pDownload );
 	else
 		m_pList.InsertAfter( posOther, pDownload );
