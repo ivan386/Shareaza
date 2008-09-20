@@ -1866,7 +1866,7 @@
 		<gap size="4"/>
 		<text>Seu perfil, configurações da conversa e das mensagens instantâneas.</text>
 		<newline gap="10"/>
-		<link target="raza:page:CIRCSettingsPage" format="b">Web:</link>
+		<link target="raza:page:CIRCSettingsPage" format="b">Chat:</link>
 		<gap size="4"/>
 		<text>Aparência visual da sala de chat do IRC e configurações da conexão.</text>
 		<newline gap="10"/>
@@ -3077,9 +3077,9 @@
 	<string id="16997" value="Não há arquivo tocando. Clique duas vezes num arquivo de mídia na sua biblioteca para tocá-lo."/>
 	<string id="16998" value="S &#160; &#160; H &#160; &#160; A &#160; &#160; R &#160; &#160; E &#160; &#160; A &#160; &#160; Z &#160; &#160; A &#160; &#160; &#160; &#160; &#160; M &#160; &#160; E &#160; &#160; D &#160; &#160; I &#160; &#160; A &#160; &#160; &#160; &#160; &#160; S &#160; &#160; Y &#160; &#160; S &#160; &#160; T &#160; &#160; E &#160; &#160; M"/><!-- on one line -->
 	<string id="16999" value="LISTA	 DE	 EXECUÇÕES"/>
-	<string id="17017" value="Chat:"/>
+	<string id="17017" value="Enviar:"/>
 	<string id="17018" value="Bem-Vindo ao Chat do Shareaza!"/>
-	<string id="17019" value="Por favor respeite os outros enquanto usa este serviço"/>
+	<string id="17019" value="Por favor respeite os outros enquanto usar este serviço"/>
 	<string id="17020" value="Adicionar"/>
 	<string id="17021" value="Remover"/>
 	<string id="17022" value="Usuários"/>
