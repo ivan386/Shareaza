@@ -3954,7 +3954,7 @@
 	<dialog name="CFilterSearchDlg" cookie="BuEdBuStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuBuBuCoBuBuBuBuBu" caption="Filtruoti radinius">
 		<control caption="Rodyti tik atitikimus, kuriuose yra ž_odžiai:"/>
 		<control/>
-		<control caption="Reg. išr."/>
+		<control caption="Reg. reišk."/>
 		<control caption="( Jūs galite išbraukti iš radinių žodžius su -žodis )"/>
 		<control caption="Ir yra tokio _dydžio:"/>
 		<control caption="Mažiausiai:"/>
@@ -4149,7 +4149,7 @@
 		<control/>
 		<control caption="Bet kuris žodis"/>
 		<control caption="Visi žodžiai"/>
-		<control caption="Reg. Exp."/>
+		<control caption="Reg. reišk."/>
 		<control caption="_Parinktys:"/>
 		<control caption="Veiksmas:"/>
 		<control caption="Jokio|Prileisti|Drausti"/>
