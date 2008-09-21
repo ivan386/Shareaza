@@ -367,7 +367,7 @@ CSettings::CSettings()
 	Add( _T("eDonkey"), _T("FrameSize"), &eDonkey.FrameSize, 10240, 1024, 1, 500, _T(" KB") );
 	Add( _T("eDonkey"), _T("GetSourcesThrottle"), &eDonkey.GetSourcesThrottle, 8*60*60*1000, 60*60*1000, 1, 24, _T(" h") );
 	Add( _T("eDonkey"), _T("LargeFileSupport"), &eDonkey.LargeFileSupport, false );
-	Add( _T("eDonkey"), _T("LearnNewServers"), &eDonkey.LearnNewServers, true );
+	Add( _T("eDonkey"), _T("LearnNewServers"), &eDonkey.LearnNewServers, false );
 	Add( _T("eDonkey"), _T("LearnNewServersClient"), &eDonkey.LearnNewServersClient, false );
 	Add( _T("eDonkey"), _T("MagnetSearch"), &eDonkey.MagnetSearch, true );
 	Add( _T("eDonkey"), _T("MaxLinks"), &eDonkey.MaxLinks, 200 );
