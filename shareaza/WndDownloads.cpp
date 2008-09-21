@@ -1801,6 +1801,8 @@ void CDownloadsWnd::OnDownloadsHelp()
 	CString strHelp;
 	if ( pDownload == NULL )
 		strHelp = L"DownloadHelp.Select";
+	else if ( pDownload->IsSeeding() )
+		strHelp = L"DownloadHelp.Seeding";
 	else if ( pDownload->IsMoving() )
 		strHelp = pDownload->IsCompleted() ? L"DownloadHelp.Completed"
 										   : L"DownloadHelp.Moving";

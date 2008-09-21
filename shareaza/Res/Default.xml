@@ -1036,8 +1036,9 @@
 	<menu name="CDownloadsWnd.Seeding">
 		<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Open or Play"/>
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="_Stop Seeding"/>
+		<item id="ID_DOWNLOADS_HELP" text="_Help..."/>
 		<separator/>
-		<item id="ID_DOWNLOADS_EDIT" text="_Properties"/>
+		<item id="ID_DOWNLOADS_EDIT" text="_Properties..."/>
 	</menu>
 	<menu name="CDownloadsWnd.Nothing">
 		<item id="ID_DOWNLOADS_HELP" text="_Help..."/>
@@ -1965,8 +1966,17 @@
 		<text>This is where files currently being downloaded are displayed. You can view
 		individual sources by expanding each file with the small + on the left.</text>
 		<newline gap="8"/>
+		<text>Drag'n'Drop downloads higher in the list for priority, or onto Download Group 
+		tabs for better organization (in Power Mode).</text>
+		<newline gap="16"/>
 		<text>You can also use this command to get help information on a specific download.
-		Simply select a download and choose this command again.</text>
+		Simply select a download and choose this Help command again.</text>
+	</document>
+	<document name="DownloadHelp.Seeding">
+		<text format="b">This Torrent is Seeding</text>
+		<newline gap="8"/>
+		<text>Shareaza has verified this complete download, and is actively sharing it
+		with other downloaders through BitTorrent. Please share at least 100%.</text>
 	</document>
 	<document name="DownloadHelp.Completed">
 		<text format="b">This Download has Completed</text>
