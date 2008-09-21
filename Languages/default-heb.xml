@@ -1087,8 +1087,9 @@ PDF
 	<menu name="CDownloadsWnd.Seeding">
 		<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="‪_פתח"/>
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="‪הפסק בקשות להעלאות"/>
+		<item id="ID_DOWNLOADS_HELP" text="‪...ע_זרה"/>
 		<separator/>
-		<item id="ID_DOWNLOADS_EDIT" text="‪מידע על ה_טורנט"/>
+		<item id="ID_DOWNLOADS_EDIT" text="...‪מידע על ה_טורנט"/>
 	</menu>
 	<menu name="CDownloadsWnd.Nothing">
 		<item id="ID_DOWNLOADS_HELP" text="‪...ע_זרה"/>

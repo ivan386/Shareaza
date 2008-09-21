@@ -1016,8 +1016,9 @@
 	<menu name="CDownloadsWnd.Seeding">
 		<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Apri"/>
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="_Ferma condivisione"/>
+		<item id="ID_DOWNLOADS_HELP" text="Aiuto..."/>
 		<separator/>
-		<item id="ID_DOWNLOADS_EDIT" text="Torrent _Info"/>
+		<item id="ID_DOWNLOADS_EDIT" text="Torrent _Info..."/>
 	</menu>
 	<menu name="CDownloadsWnd.Nothing">
 		<item id="ID_DOWNLOADS_HELP" text="Aiuto..."/>

@@ -1015,8 +1015,9 @@
 	<menu name="CDownloadsWnd.Seeding">
 		<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="打开(_O)"/>
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="停止做种(_S)"/>
+		<item id="ID_DOWNLOADS_HELP" text="帮助(_H)..."/>
 		<separator/>
-		<item id="ID_DOWNLOADS_EDIT" text="信息(_E)"/>
+		<item id="ID_DOWNLOADS_EDIT" text="信息(_E)..."/>
 	</menu>
 	<menu name="CDownloadsWnd.Nothing">
 		<item id="ID_DOWNLOADS_HELP" text="帮助(_H)..."/>

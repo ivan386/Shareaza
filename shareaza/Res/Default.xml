@@ -404,6 +404,7 @@
 		<button id="ID_CHAT_CONNECT" text="Connect" visible="false"/>
 		<button id="ID_CHAT_DISCONNECT" text="Disconnect"/>
 	</toolbar>
+	<!-- WEBSERVICES -->
 	<toolbar name="WebServices.ShareMonkey">
 		<button id="ID_SHAREMONKEY_DOWNLOAD" text="Get Data"/>
 		<separator/>
@@ -1967,7 +1968,7 @@
 		individual sources by expanding each file with the small + on the left.</text>
 		<newline gap="8"/>
 		<text>Drag'n'Drop downloads higher in the list for priority, or onto Download Group 
-		tabs for better organization (in Power Mode).</text>
+		tabs for better organisation (in Power Mode).</text>
 		<newline gap="16"/>
 		<text>You can also use this command to get help information on a specific download.
 		Simply select a download and choose this Help command again.</text>

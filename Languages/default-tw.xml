@@ -1008,7 +1008,7 @@
 		<item id="ID_DOWNLOADS_ENQUEUE" text="新增至播放清單"/>
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="清除"/>
 		<separator/>
-		<item id="ID_DOWNLOADS_COPY" text="複製 URI"/>
+		<item id="ID_DOWNLOADS_COPY" text="複製 _URI"/>
 		<item id="ID_DOWNLOADS_EDIT" text="資訊"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_FILE_DELETE" text="刪除檔案"/>
@@ -1017,8 +1017,9 @@
 	<menu name="CDownloadsWnd.Seeding">
 		<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="開啟"/>
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="停止做種"/>
+		<item id="ID_DOWNLOADS_HELP" text="說明..."/>
 		<separator/>
-		<item id="ID_DOWNLOADS_EDIT" text="Torrent 資訊..."/>
+		<item id="ID_DOWNLOADS_EDIT" text="_Torrent 資訊..."/>
 	</menu>
 	<menu name="CDownloadsWnd.Nothing">
 		<item id="ID_DOWNLOADS_HELP" text="說明..."/>

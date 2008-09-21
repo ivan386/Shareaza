@@ -1018,8 +1018,9 @@
 	<menu name="CDownloadsWnd.Seeding">
 		<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Otevřít"/>
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="Za_stavit Seedování"/>
+		<item id="ID_DOWNLOADS_HELP" text="_Nápověda..."/>
 		<separator/>
-		<item id="ID_DOWNLOADS_EDIT" text="_Vlastnosti"/>
+		<item id="ID_DOWNLOADS_EDIT" text="_Vlastnosti..."/>
 	</menu>
 	<menu name="CDownloadsWnd.Nothing">
 		<item id="ID_DOWNLOADS_HELP" text="_Nápověda..."/>

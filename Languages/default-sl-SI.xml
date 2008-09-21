@@ -1001,8 +1001,9 @@
 	<menu name="CDownloadsWnd.Seeding">
 		<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Odpri"/>
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="_Končaj sejanje (seeding)"/>
+		<item id="ID_DOWNLOADS_HELP" text="_Pomoč..."/>
 		<separator/>
-		<item id="ID_DOWNLOADS_EDIT" text="Informacija o _Torrentu..."/>
+		<item id="ID_DOWNLOADS_EDIT" text="_Informacija o Torrentu..."/>
 	</menu>
 	<menu name="CDownloadsWnd.Nothing">
 		<item id="ID_DOWNLOADS_HELP" text="_Pomoč..."/>

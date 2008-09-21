@@ -1077,8 +1077,9 @@
 	<menu name="CDownloadsWnd.Seeding">
 		<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Открыть"/>
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="_Убрать"/>
+		<item id="ID_DOWNLOADS_HELP" text="_Справка..."/>
 		<separator/>
-		<item id="ID_DOWNLOADS_EDIT" text="_Свойства"/>
+		<item id="ID_DOWNLOADS_EDIT" text="_Свойства..."/>
 	</menu>
 	<menu name="CDownloadsWnd.Nothing">
 		<item id="ID_DOWNLOADS_HELP" text="_Справка..."/>

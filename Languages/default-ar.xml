@@ -1017,6 +1017,7 @@
     <menu name="CDownloadsWnd.Seeding">
       <item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_فتح" />
       <item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="_إيقاف الإرسال" />
+      <item id="ID_DOWNLOADS_HELP" text="_تعليمات..." />
       <separator />
       <item id="ID_DOWNLOADS_EDIT" text="_معلومات" />
     </menu>

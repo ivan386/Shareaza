@@ -1077,8 +1077,9 @@
 	<menu name="CDownloadsWnd.Seeding">
 		<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Open"/>
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="_Hou op Saai"/>
+		<item id="ID_DOWNLOADS_HELP" text="_Hulp..."/>
 		<separator/>
-		<item id="ID_DOWNLOADS_EDIT" text="_Properties"/>	
+		<item id="ID_DOWNLOADS_EDIT" text="_Properties..."/>	
 	</menu>
 	<menu name="CDownloadsWnd.Nothing">
 		<item id="ID_DOWNLOADS_HELP" text="_Hulp..."/>

@@ -1077,8 +1077,9 @@
 	<menu name="CDownloadsWnd.Seeding">
 		<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="Άνοιγμα"/>
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="Ματαίωση Seeding"/>
+		<item id="ID_DOWNLOADS_HELP" text="_Βοήθεια..."/>
 		<separator/>
-		<item id="ID_DOWNLOADS_EDIT" text="Ιδιότητες"/>
+		<item id="ID_DOWNLOADS_EDIT" text="_Ιδιότητες..."/>
 	</menu>
 	<menu name="CDownloadsWnd.Nothing">
 		<item id="ID_DOWNLOADS_HELP" text="_Βοήθεια..."/>

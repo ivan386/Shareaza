@@ -999,6 +999,7 @@
 	<menu name="CDownloadsWnd.Seeding">
 		<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Otvori"/>
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="_Stani Seeding"/>
+		<item id="ID_DOWNLOADS_HELP" text="Pomoć..."/>
 		<separator/>
 		<item id="ID_DOWNLOADS_EDIT" text="_Informacije o Torrentu"/>
 	</menu>

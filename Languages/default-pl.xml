@@ -992,20 +992,21 @@
 		<item id="ID_DOWNLOADS_ENQUEUE" text="Dodaj do listy odtwarzania"/>
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="Wyczyść"/>
 		<separator/>
-		<item id="ID_DOWNLOADS_COPY" text="Kopiuj URI"/>
-		<item id="ID_DOWNLOADS_EDIT" text="Info"/>
+		<item id="ID_DOWNLOADS_COPY" text="Kopiuj _URI"/>
+		<item id="ID_DOWNLOADS_EDIT" text="_Info"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_FILE_DELETE" text="Usuń plik"/>
-		<item id="ID_DOWNLOADS_RATE" text="Oceń plik"/>
+		<item id="ID_DOWNLOADS_RATE" text=_Oceń plik"/>
 	</menu>
 	<menu name="CDownloadsWnd.Seeding">
-		<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="Otwórz"/>
-		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="Zakończ udostępnianie"/>
+		<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Otwórz"/>
+		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="_Zakończ udostępnianie"/>
+		<item id="ID_DOWNLOADS_HELP" text="_Pomoc..."/>
 		<separator/>
-		<item id="ID_DOWNLOADS_EDIT" text="Torrent Info..."/>
+		<item id="ID_DOWNLOADS_EDIT" text="Torrent _Info..."/>
 	</menu>
 	<menu name="CDownloadsWnd.Nothing">
-		<item id="ID_DOWNLOADS_HELP" text="Pomoc..."/>
+		<item id="ID_DOWNLOADS_HELP" text="_Pomoc..."/>
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="Wyczyść zakończone"/>
 		<item id="ID_DOWNLOADS_AUTO_CLEAR" text="Autoczyszczenie"/>
 	</menu>

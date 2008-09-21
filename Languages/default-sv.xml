@@ -1047,11 +1047,12 @@
 	<menu name="CDownloadsWnd.Seeding">
 		<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_ppna"/>
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="_Sluta dela ut"/>
+		<item id="ID_DOWNLOADS_HELP" text="_Hjälp..."/>
 		<separator/>
-		<item id="ID_DOWNLOADS_EDIT" text="_Torrentinformation.." />
+		<item id="ID_DOWNLOADS_EDIT" text="_Torrentinformation..." />
 	</menu>
 	<menu name="CDownloadsWnd.Nothing">
-		<item id="ID_DOWNLOADS_HELP" text="_Hjälp"/>
+		<item id="ID_DOWNLOADS_HELP" text="_Hjälp..."/>
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="_Rensa avslutade nedladdningar"/>
 		<item id="ID_DOWNLOADS_AUTO_CLEAR" text="Rensa _automatiskt"/>
 	</menu>

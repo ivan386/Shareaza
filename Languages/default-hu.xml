@@ -1077,8 +1077,9 @@
 	<menu name="CDownloadsWnd.Seeding">
 		<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Megnyitás"/>
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="_Seedelés leállítása"/>
+		<item id="ID_DOWNLOADS_HELP" text="_Súgó..."/>
 		<separator/>
-		<item id="ID_DOWNLOADS_EDIT" text="_Torrent infó"/>
+		<item id="ID_DOWNLOADS_EDIT" text="_Torrent infó..."/>
 	</menu>
 	<menu name="CDownloadsWnd.Nothing">
 		<item id="ID_DOWNLOADS_HELP" text="_Súgó..."/>
