@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 
 <!-- Shareaza Default Serbian Skin File -->
-<!-- Translation based on default-en.xml SVN rev.xxxx -->
+<!-- Translation is based on default-en.xml SVN rev.6090 -->
 
 <!-- This skin basically represents the current Shareaza defaults. You can use this file as -->
 <!-- a basis for creating new skins, however in a new skin be sure to ONLY include the sections -->
@@ -14,41 +14,41 @@
 <!-- Manifest -->
 <manifest	name="Srpski"
 		author="Biza"
-		updatedBy="Woodstoock"
+		updatedBy="Woodstoock, Душан Мишић"
 		description="Shareaza Default Serbian Skin File"
 		link="http://shareaza.sourceforge.net/"
 		email=""
-		version="2.2.0.2"
+		version="2.3.2.0"
 		type="Language"
 		language="sr"
-		prompt="Ovde odaberi Shareazu na srpskom jeziku..."
+		prompt="Кликните овде да би сте изабрали Српски као свој језик."
 />
 
 <!-- Toolbar Definitions -->
 <toolbars>
 	<!-- MAIN WINDOW -->
 	<toolbar name="CMainWnd.Basic">
-		<button id="ID_NETWORK_CONNECT" text="Spoji"/>
+		<button id="ID_NETWORK_CONNECT" text="Повежи се"/>
 		<separator/>
-		<button id="ID_TAB_HOME" text="Početak"/>
-		<button id="ID_TAB_LIBRARY" text="Sadržaj"/>
-		<button id="ID_TAB_MEDIA" text="Media"/>
-		<button id="ID_TAB_SEARCH" text="Traži"/>
-		<button id="ID_TAB_TRANSFERS" text="Razmena"/>
+		<button id="ID_TAB_HOME" text="Почетна"/>
+		<button id="ID_TAB_LIBRARY" text="Библиотека"/>
+		<button id="ID_TAB_MEDIA" text="Медија"/>
+		<button id="ID_TAB_SEARCH" text="Претрага"/>
+		<button id="ID_TAB_TRANSFERS" text="Преузимања"/>
 	</toolbar>
 	<toolbar name="CMainWnd.Tabbed">
-		<button id="ID_TAB_CONNECT" text="Spoji"/>
+		<button id="ID_TAB_CONNECT" text="Повежи се"/>
 		<separator/>
-		<button id="ID_TAB_HOME" text="Početak"/>
-		<button id="ID_TAB_LIBRARY" text="Sadržaj"/>
-		<button id="ID_TAB_MEDIA" text="Media"/>
-		<button id="ID_TAB_SEARCH" text="Traži"/>
-		<button id="ID_TAB_TRANSFERS" text="Razmena"/>
-		<button id="ID_TAB_NETWORK" text="Mreža"/>
+		<button id="ID_TAB_HOME" text="Почетна"/>
+		<button id="ID_TAB_LIBRARY" text="Библиотека"/>
+		<button id="ID_TAB_MEDIA" text="Медија"/>
+		<button id="ID_TAB_SEARCH" text="Претрага"/>
+		<button id="ID_TAB_TRANSFERS" text="Преузимања"/>
+		<button id="ID_TAB_NETWORK" text="Мрежа"/>
 		<button id="ID_TAB_IRC" text="IRC"/>
 	</toolbar>
 	<toolbar name="CMainWnd.Windowed">
-		<button id="ID_NETWORK_CONNECT" text="Spoji"/>
+		<button id="ID_NETWORK_CONNECT" text="Повежи се"/>
 		<button id="ID_NETWORK_DISCONNECT"/>
 		<separator/>
 		<button id="ID_TAB_HOME"/>
@@ -74,256 +74,256 @@
 		<button id="ID_WINDOW_TILE_HORZ"/>
 		<button id="ID_WINDOW_TILE_VERT"/>
 		<separator/>
-		<button id="ID_NETWORK_SEARCH" text="Nova Potraga"/>
+		<button id="ID_NETWORK_SEARCH" text="Нова претрага"/>
 	</toolbar>
 	<!-- SEARCH WINDOW -->
 	<toolbar name="CSearchWnd.Panel.Basic">
-		<button id="ID_SEARCH_DOWNLOAD" text="Skini"/>
-		<button id="ID_BROWSE_LAUNCH" text="Prikaži šta deli"/>
+		<button id="ID_SEARCH_DOWNLOAD" text="Преузимање"/>
+		<button id="ID_BROWSE_LAUNCH" text="Претражи корисника"/>
 		<separator/>
-		<button id="ID_SEARCH_PANEL" text="Prikaži Traži Panel"/>
-		<button id="ID_SEARCH_DETAILS" text="Prikaži Detalje"/>
+		<button id="ID_SEARCH_PANEL" text="Прикажи претрагу"/>
+		<button id="ID_SEARCH_DETAILS" text="Прикажи детаље"/>
 		<rightAlign/>
-		<label text="Filter:" tip="Upiši reči za filtriranje rezultata potrage"/>
+		<label text="Filter:" tip="Укуцајте неку реч да би сте филтрирали резултат"/>
 		<control id="IDC_FILTER_BOX" width="130"/>
-		<button id="ID_SEARCH_FILTER_RAW" text="Više..."/>
+		<button id="ID_SEARCH_FILTER_RAW" text="Више ..."/>
 	</toolbar>
 	<toolbar name="CSearchWnd.Panel">
-		<button id="ID_SEARCH_DOWNLOAD" text="Skini"/>
-		<button id="ID_BROWSE_LAUNCH" text="Prikaži šta deli"/>
+		<button id="ID_SEARCH_DOWNLOAD" text="Преузимање"/>
+		<button id="ID_BROWSE_LAUNCH" text="Претражи корисника"/>
 		<separator/>
-		<button id="ID_SEARCH_PANEL" text="Prikaži Traži Panel"/>
-		<button id="ID_SEARCH_DETAILS" text="Prikaži Detalje"/>
+		<button id="ID_SEARCH_PANEL" text="Прикажи претрагу"/>
+		<button id="ID_SEARCH_DETAILS" text="Прикажи детаље"/>
 		<rightAlign/>
-		<label text="Filter:" tip="Upiši reči za filtriranje rezultata potrage"/>
+		<label text="Filter:" tip="Укуцајте неку реч да би сте филтрирали резултат"/>
 		<control id="IDC_FILTER_BOX" width="160"/>
-		<button id="ID_SEARCH_FILTER_RAW" text="Više..."/>
+		<button id="ID_SEARCH_FILTER_RAW" text=" Више ..."/>
 	</toolbar>
 	<toolbar name="CSearchWnd.Full">
-		<button id="ID_SEARCH_SEARCH" text="Ponovi Potragu..."/>
-		<button id="ID_SEARCH_STOP" text="Prestani Tražiti "/>
+		<button id="ID_SEARCH_SEARCH" text="Претражи поново ..."/>
+		<button id="ID_SEARCH_STOP" text="Заустави претрагу"/>
 		<separator/>
-		<button id="ID_SEARCH_DOWNLOAD" text="Skini"/>
-		<button id="ID_BROWSE_LAUNCH" text="Pogledaj Šta Ima"/>
+		<button id="ID_SEARCH_DOWNLOAD" text="Преузимање"/>
+		<button id="ID_BROWSE_LAUNCH" text="Претражи корисника"/>
 		<separator/>
-		<button id="ID_SEARCH_PANEL" text="Prikaži Traži Panel"/>
-		<button id="ID_SEARCH_DETAILS" text="Pokaži Detalje"/>
+		<button id="ID_SEARCH_PANEL" text="Прикажи претрагу"/>
+		<button id="ID_SEARCH_DETAILS" text="Прикажи детаље"/>
 		<rightAlign/>
-		<label text="Filter:" tip="Upišite reči za filtriranje rezultata potrage"/>
+		<label text="Filter:" tip="Укуцајте неку реч да би сте филтрирали резултат"/>
 		<control id="IDC_FILTER_BOX" width="150"/>
-		<button id="ID_SEARCH_FILTER_RAW" text="Više..."/>
+		<button id="ID_SEARCH_FILTER_RAW" text="Више ..."/>
 	</toolbar>
 	<!-- BROWSE HOST WINDOW -->
 	<toolbar name="CBrowseHeaderCtrl">
-		<button id="ID_BROWSE_PROFILE" text="Profil"/>
-		<button id="ID_BROWSE_FILES" text="Deljene Datoteke"/>
+		<button id="ID_BROWSE_PROFILE" text="Профил"/>
+		<button id="ID_BROWSE_FILES" text="Дељени фајлови"/>
 	</toolbar>
 	<toolbar name="CBrowseTree.Top">
-		<button id="ID_LIBRARY_TREE_PHYSICAL" text="Fascikle(folderi)"/>
-		<button id="ID_LIBRARY_TREE_VIRTUAL" text="Organizator"/>
+		<button id="ID_LIBRARY_TREE_PHYSICAL" text="Фолдери"/>
+		<button id="ID_LIBRARY_TREE_VIRTUAL" text="Планер"/>
 	</toolbar>
 	<toolbar name="CBrowseHostWnd.Basic">
-		<button id="ID_SEARCH_DOWNLOAD" text="Skini to"/>
-		<button id="ID_SEARCH_CHAT" text="Popričaj sa osobom"/>
+		<button id="ID_SEARCH_DOWNLOAD" text="Преузми фајл"/>
+		<button id="ID_SEARCH_CHAT" text="Ћаскај са корисником"/>
 		<separator/>
-		<button id="ID_SEARCH_DETAILS" text="Detalji"/>
+		<button id="ID_SEARCH_DETAILS" text="Прикажи детаље"/>
 		<rightAlign/>
-		<label text="Filter:" tip="Upišite reči za filtriranje rezultata potrage"/>
+		<label text="Filter:" tip="Укуцајте неку реч да би сте филтрирали резултат"/>
 		<control id="IDC_FILTER_BOX" width="160"/>
-		<button id="ID_SEARCH_FILTER_RAW" text="Više..."/>
+		<button id="ID_SEARCH_FILTER_RAW" text="Више..."/>
 	</toolbar>
 	<toolbar name="CBrowseHostWnd">
-		<button id="ID_SEARCH_DOWNLOAD" text="Skini to"/>
-		<button id="ID_SEARCH_CHAT" text="Popričaj sa osobom"/>
+		<button id="ID_SEARCH_DOWNLOAD" text="Преузми фајл"/>
+		<button id="ID_SEARCH_CHAT" text="Ћаскај са корисником"/>
 		<separator/>
-		<button id="ID_BROWSE_STOP" text="Stani"/>
-		<button id="ID_BROWSE_REFRESH" text="Osveži"/>
+		<button id="ID_BROWSE_STOP" text="Заустави"/>
+		<button id="ID_BROWSE_REFRESH" text="Освежи"/>
 		<separator/>
-		<button id="ID_SEARCH_DETAILS" text="Detalji"/>
+		<button id="ID_SEARCH_DETAILS" text="Прикажи детаље"/>
 		<rightAlign/>
-		<label text="Filter:" tip="Upišite reči za filtriranje rezultata potrage"/>
+		<label text="Filter:" tip="Укуцајте неку реч да би сте филтрирали резултат"/>
 		<control id="IDC_FILTER_BOX" width="160"/>
-		<button id="ID_SEARCH_FILTER_RAW" text="Više..."/>
+		<button id="ID_SEARCH_FILTER_RAW" text="Више ..."/>
 	</toolbar>
 	<!-- DOWNLOADS WINDOW -->
 	<toolbar name="CDownloadsWnd.Basic">
-		<button id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="Otvori ili Pokreni"/>
-		<button id="ID_DOWNLOADS_LAUNCH" text="Pregledaj"/>
-		<button id="ID_DOWNLOADS_FILE_DELETE" text="Obriši"/>
+		<button id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="Отвори или пусти"/>
+		<button id="ID_DOWNLOADS_LAUNCH" text="Преглед фајла"/>
+		<button id="ID_DOWNLOADS_FILE_DELETE" text="Обриши фајл"/>
 		<separator/>
-		<button id="ID_DOWNLOADS_RESUME" text="Nastavi Skidanje"/>
-		<button id="ID_DOWNLOADS_PAUSE" text="Pauziraj Skidanje"/>
-		<button id="ID_DOWNLOADS_CLEAR_INCOMPLETE" text="Prekini Skidanje"/>
-		<button id="ID_DOWNLOADS_CLEAR_COMPLETE" text="Očisti Skinuto"/>
+		<button id="ID_DOWNLOADS_RESUME" text="Настави преузимање"/>
+		<button id="ID_DOWNLOADS_PAUSE" text="Паузирај преузимање"/>
+		<button id="ID_DOWNLOADS_CLEAR_INCOMPLETE" text="Прекини преузимање"/>
+		<button id="ID_DOWNLOADS_CLEAR_COMPLETE" text="Очисти завршено"/>
 		<separator/>
-		<button id="ID_DOWNLOADS_MONITOR" text="Pokaži Praćenje Prometa"/>
+		<button id="ID_DOWNLOADS_MONITOR" text="Прикажи преузимање"/>
 		<rightAlign/>
-		<button id="ID_TOOLS_DOWNLOAD" text="Dodaj za Skinuti/Torrent..."/>
-		<button id="ID_DOWNLOADS_CLEAR_COMPLETED" text="Očisti Gotove"/>
+		<button id="ID_TOOLS_DOWNLOAD" text="Додај за преузимање / Torrent ..."/>
+		<button id="ID_DOWNLOADS_CLEAR_COMPLETED" text="Очисти завршено"/>
 	</toolbar>
 	<toolbar name="CDownloadsWnd">
-		<button id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="Otvori ili Pokreni"/>
-		<button id="ID_DOWNLOADS_FILE_DELETE" text="Obriši"/>
-		<button id="ID_DOWNLOADS_LAUNCH" text="Pregledaj"/>
+		<button id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="Отвори или пусти"/>
+		<button id="ID_DOWNLOADS_FILE_DELETE" text="Обриши фајл"/>
+		<button id="ID_DOWNLOADS_LAUNCH" text="Преглед фајла"/>
 		<separator/>
-		<button id="ID_DOWNLOADS_RESUME" text="Nastavi Skidanje"/>
-		<button id="ID_DOWNLOADS_PAUSE" text="Pauziraj Skidanje"/>
-		<button id="ID_DOWNLOADS_CLEAR_INCOMPLETE" text="Prekini Skidanje"/>
-		<button id="ID_DOWNLOADS_CLEAR_COMPLETE" text="Očisti Skinuto"/>
+		<button id="ID_DOWNLOADS_RESUME" text="Настави преузимање"/>
+		<button id="ID_DOWNLOADS_PAUSE" text="Паузирај преузимање"/>
+		<button id="ID_DOWNLOADS_CLEAR_INCOMPLETE" text="Прекини преузимање"/>
+		<button id="ID_DOWNLOADS_CLEAR_COMPLETE" text="Очисти завршено"/>
 		<separator/>
-		<button id="ID_DOWNLOADS_MONITOR" text="Pokaži Praćenje Prometa"/>
-		<button id="ID_DOWNLOADS_EDIT" text="Info"/>
+		<button id="ID_DOWNLOADS_MONITOR" text="Прикажи преузимање"/>
+		<button id="ID_DOWNLOADS_TORRENT_INFO" text="Информације о Torrent-у"/>
 		<rightAlign/>
-		<button id="ID_TOOLS_DOWNLOAD" text="Dodaj za Skinuti/Torrent..."/>
-		<button id="ID_DOWNLOADS_CLEAR_COMPLETED" text="Očisti Gotove"/>
+		<button id="ID_TOOLS_DOWNLOAD" text="Додај за преузимање / Torrent ..."/>
+		<button id="ID_DOWNLOADS_CLEAR_COMPLETED" text="Очисти завршено"/>
 		<separator/>
 		<button id="ID_DOWNLOADS_FILTER_MENU" text="Filter"/>
 	</toolbar>
 	<!-- UPLOADS WINDOW -->
 	<toolbar name="CUploadsWnd.Basic">
-		<button id="ID_BROWSE_LAUNCH" text="Prikaži šta deli"/>
-		<button id="ID_UPLOADS_CHAT" text="Popričaj sa Osobom"/>
+		<button id="ID_BROWSE_LAUNCH" text="Претражи корисника"/>
+		<button id="ID_UPLOADS_CHAT" text="Ћаскај са корисником"/>
 		<rightAlign/>
-		<button id="ID_UPLOADS_CLEAR_COMPLETED" text="Očisti Gotove"/>
+		<button id="ID_UPLOADS_CLEAR_COMPLETED" text="Очисти завршено"/>
 	</toolbar>
 	<toolbar name="CUploadsWnd">
-		<button id="ID_UPLOADS_LAUNCH" text="Pokreni"/>
+		<button id="ID_UPLOADS_LAUNCH" text="Отвори или пусти"/>
 		<separator/>
-		<button id="ID_UPLOADS_START" text="Kreni"/>
-		<button id="ID_UPLOADS_CLEAR" text="Očisti Skidane"/>
+		<button id="ID_UPLOADS_START" text="Стартуј одмах"/>
+		<button id="ID_UPLOADS_CLEAR" text="Очисти послато"/>
 		<separator/>
-		<button id="ID_BROWSE_LAUNCH" text="Prikaži šta deli"/>
-		<button id="ID_UPLOADS_CHAT" text="Popričaj sa Osobom"/>
-		<button id="ID_SECURITY_BAN" text="Zabrani mu"/>
+		<button id="ID_BROWSE_LAUNCH" text="Претражи корисника"/>
+		<button id="ID_UPLOADS_CHAT" text="Ћаскај са корисником"/>
+		<button id="ID_SECURITY_BAN" text="Забрани корисника"/>
 		<rightAlign/>
-		<button id="ID_UPLOADS_CLEAR_COMPLETED" text="Očisti Gotove"/>
+		<button id="ID_UPLOADS_CLEAR_COMPLETED" text="Очисти завршено"/>
 		<separator/>
 		<button id="ID_UPLOADS_FILTER_MENU" text="Filter"/>
 	</toolbar>
 	<!-- LIBRARY FRAME -->
 	<toolbar name="CLibraryTree.Top">
-		<button id="ID_LIBRARY_TREE_PHYSICAL" text="Fascikle"/>
-		<button id="ID_LIBRARY_TREE_VIRTUAL" text="Organizator"/>
+		<button id="ID_LIBRARY_TREE_PHYSICAL" text="Фолдери"/>
+		<button id="ID_LIBRARY_TREE_VIRTUAL" text="Планер"/>
 	</toolbar>
 	<toolbar name="CLibraryTree.Virtual">
-		<button id="ID_LIBRARY_FOLDERS" text="Deli ...."/>
+		<button id="ID_LIBRARY_FOLDERS" text="Дели фајлове ..."/>
 	</toolbar>
 	<toolbar name="CLibraryHeaderBar.Physical">
-		<button id="ID_LIBRARY_VIEW" text="Pogled"/>
-		<button id="ID_LIBRARY_PANEL" text="Pokaži Detalje"/>
-		<button id="ID_LIBRARY_PARENT" text="Gore"/>
+		<button id="ID_LIBRARY_VIEW" text="Поглед"/>
+		<button id="ID_LIBRARY_PANEL" text="Прикажи детаље"/>
+		<button id="ID_LIBRARY_PARENT" text="Горе"/>
 	</toolbar>
 	<toolbar name="CLibraryHeaderBar.Virtual">
-		<button id="ID_LIBRARY_VIEW" text="Pogled"/>
-		<button id="ID_LIBRARY_PANEL" text="Pokaži Detalje"/>
-		<button id="ID_LIBRARY_PARENT" text="Gore"/>
+		<button id="ID_LIBRARY_VIEW" text="Поглед"/>
+		<button id="ID_LIBRARY_PANEL" text="Прикажи детаље"/>
+		<button id="ID_LIBRARY_PARENT" text="Горе"/>
 	</toolbar>
 	<!-- LIBRARY VIEWS -->
 	<toolbar name="CLibraryHomeView.Physical">
-		<button id="ID_LIBRARY_FOLDERS" text="Deli ...."/>
+		<button id="ID_LIBRARY_FOLDERS" text="Дели фајлове..."/>
 		<rightAlign/>
 		<separator/>
 		<control id="IDC_SEARCH_BOX" width="120"/>
-		<button id="ID_LIBRARY_SEARCH_QUICK" text="Traži"/>
+		<button id="ID_LIBRARY_SEARCH_QUICK" text="Нађи"/>
 	</toolbar>
 	<toolbar name="CLibraryHomeView.Virtual">
-		<button id="ID_LIBRARY_FOLDER_NEW" text="Napravi Album..."/>
-		<button id="ID_LIBRARY_ALBUM_DELETE" text="Obriši Album"/>
+		<button id="ID_LIBRARY_FOLDER_NEW" text="Направи албум ..."/>
+		<button id="ID_LIBRARY_ALBUM_DELETE" text="Обриши албум"/>
 		<rightAlign/>
 		<separator/>
 		<control id="IDC_SEARCH_BOX" width="120"/>
-		<button id="ID_LIBRARY_SEARCH_QUICK" text="Nađi"/>
+		<button id="ID_LIBRARY_SEARCH_QUICK" text="Нађи"/>
 	</toolbar>
 	<toolbar name="CLibraryTileView.Virtual">
-		<button id="ID_LIBRARY_FOLDER_NEW" text="Napravi Album..."/>
-		<button id="ID_LIBRARY_ALBUM_DELETE" text="Obriši Album"/>
+		<button id="ID_LIBRARY_FOLDER_NEW" text="Направи албум ..."/>
+		<button id="ID_LIBRARY_ALBUM_DELETE" text="Обриши албум"/>
 		<rightAlign/>
 		<separator/>
 		<control id="IDC_SEARCH_BOX" width="120"/>
-		<button id="ID_LIBRARY_SEARCH_QUICK" text="Traži"/>
+		<button id="ID_LIBRARY_SEARCH_QUICK" text="Нађи"/>
 	</toolbar>
 	<toolbar name="CLibraryFileView.Physical.Basic">
-		<button id="ID_LIBRARY_LAUNCH" text="Pokreni"/>
-		<button id="ID_LIBRARY_ENQUEUE" text="Ubaci u Playlistu"/>
+		<button id="ID_LIBRARY_LAUNCH" text="Отвори или пусти"/>
+		<button id="ID_LIBRARY_ENQUEUE" text="Додај у плејлисту"/>
 		<rightAlign/>
 		<separator/>
 		<control id="IDC_SEARCH_BOX" width="120"/>
-		<button id="ID_LIBRARY_SEARCH_QUICK" text="Nađi"/>
+		<button id="ID_LIBRARY_SEARCH_QUICK" text="Нађи"/>
 	</toolbar>
 	<toolbar name="CLibraryFileView.Physical">
-		<button id="ID_LIBRARY_LAUNCH" text="Pokreni"/>
-		<button id="ID_LIBRARY_ENQUEUE" text="Ubaci u Playlistu"/>
+		<button id="ID_LIBRARY_LAUNCH" text="Отвори или пусти"/>
+		<button id="ID_LIBRARY_ENQUEUE" text="Додај у плејлисту"/>
 		<separator/>
-		<button id="ID_LIBRARY_PROPERTIES" text="Svojstva"/>
+		<button id="ID_LIBRARY_PROPERTIES" text="Својства"/>
 		<separator/>
-		<button id="ID_LIBRARY_MOVE" text="Premesti"/>
-		<button id="ID_LIBRARY_COPY" text="Kopiraj"/>
-		<button id="ID_LIBRARY_DELETE" text="Obriši"/>
+		<button id="ID_LIBRARY_MOVE" text="Премести"/>
+		<button id="ID_LIBRARY_COPY" text="Копирај"/>
+		<button id="ID_LIBRARY_DELETE" text="Обриши"/>
 		<rightAlign/>
 		<separator/>
 		<control id="IDC_SEARCH_BOX" width="120"/>
-		<button id="ID_LIBRARY_SEARCH_QUICK" text="Nađi"/>
+		<button id="ID_LIBRARY_SEARCH_QUICK" text="Нађи"/>
 	</toolbar>
 	<toolbar name="CLibraryFileView.Virtual.Basic">
-		<button id="ID_LIBRARY_LAUNCH" text="Pokreni"/>
-		<button id="ID_LIBRARY_ENQUEUE" text="Ubaci u Playlistu"/>
-		<button id="ID_LIBRARY_FOLDER_ENQUEUE" text="Pokreni Album"/>
+		<button id="ID_LIBRARY_LAUNCH" text="OОтвори или пусти"/>
+		<button id="ID_LIBRARY_ENQUEUE" text="Додај у плејлисту"/>
+		<button id="ID_LIBRARY_FOLDER_ENQUEUE" text="Пусти албум"/>
 		<rightAlign/>
 		<separator/>
 		<control id="IDC_SEARCH_BOX" width="120"/>
-		<button id="ID_LIBRARY_SEARCH_QUICK" text="Nađi"/>
+		<button id="ID_LIBRARY_SEARCH_QUICK" text="Нађи"/>
 	</toolbar>
 	<toolbar name="CLibraryFileView.Virtual">
-		<button id="ID_LIBRARY_LAUNCH" text="Pokreni"/>
-		<button id="ID_LIBRARY_ENQUEUE" text="Ubaci u Playlistu"/>
-		<button id="ID_LIBRARY_FOLDER_ENQUEUE" text="Pokreni Album"/>
+		<button id="ID_LIBRARY_LAUNCH" text="Отвори или пусти"/>
+		<button id="ID_LIBRARY_ENQUEUE" text="Додај у плејлисту"/>
+		<button id="ID_LIBRARY_FOLDER_ENQUEUE" text="Пусти албум"/>
 		<separator/>
-		<button id="ID_LIBRARY_PROPERTIES" text="Svojstva"/>
+		<button id="ID_LIBRARY_PROPERTIES" text="Својства"/>
 		<rightAlign/>
 		<separator/>
 		<control id="IDC_SEARCH_BOX" width="120"/>
-		<button id="ID_LIBRARY_SEARCH_QUICK" text="Nađi"/>
+		<button id="ID_LIBRARY_SEARCH_QUICK" text="Нађи"/>
 	</toolbar>
 	<toolbar name="CLibraryCollectionView.Virtual">
-		<button id="ID_LIBRARY_FOLDER_ENQUEUE" text="Pokreni Ceo Album"/>
+		<button id="ID_LIBRARY_FOLDER_ENQUEUE" text="Пусти албум"/>
 		<separator/>
-		<button id="ID_LIBRARY_FOLDER_DOWNLOAD" text="Skini Sve"/>
+		<button id="ID_LIBRARY_FOLDER_DOWNLOAD" text="Преузми све фајлове"/>
 		<rightAlign/>
 		<separator/>
 		<control id="IDC_SEARCH_BOX" width="120"/>
-		<button id="ID_LIBRARY_SEARCH_QUICK" text="Nađi"/>
+		<button id="ID_LIBRARY_SEARCH_QUICK" text="Нађи"/>
 	</toolbar>
 	<!-- MEDIA WINDOW -->
 	<toolbar name="CMediaFrame.Basic">
-		<button id="ID_MEDIA_PLAY" text="Pokreni"/>
-		<button id="ID_MEDIA_PAUSE" text="Pauziraj" visible="false"/>
-		<button id="ID_MEDIA_STOP" text="Stani"/>
+		<button id="ID_MEDIA_PLAY" text="Пусти&#160;&#160;&#160;"/>
+		<button id="ID_MEDIA_PAUSE" text="Пауза" visible="false"/>
+		<button id="ID_MEDIA_STOP" text="Заустави"/>
 		<separator/>
-		<label text="Traži:" tip="Brzo Traži u Datoteci"/>
+		<label text="Seek:" tip="Скочи на позицију у фајлу"/>
 		<control id="IDC_MEDIA_POSITION" width="190" height="22"/>
-		<label text="Jačina:" tip="Namesti Jačinu"/>
+		<label text="Volume:" tip="Подеси јачину звука"/>
 		<control id="IDC_MEDIA_VOLUME" width="50" height="22"/>
 		<separator/>
-		<button id="ID_MEDIA_OPEN" text="Otvori"/>
+		<button id="ID_MEDIA_OPEN" text="Отвори фајл"/>
 		<rightAlign/>
-		<button id="ID_MEDIA_PREVIOUS" text="Prethodni"/>
-		<button id="ID_MEDIA_NEXT" text="Sledeći"/>
+		<button id="ID_MEDIA_PREVIOUS" text="Предходни"/>
+		<button id="ID_MEDIA_NEXT" text="Следећи"/>
 		<separator/>
-		<button id="ID_MEDIA_PLAYLIST" text="Playlista"/>
+		<button id="ID_MEDIA_PLAYLIST" text="Плејлиста"/>
 	</toolbar>
 	<toolbar name="CMediaFrame">
-		<button id="ID_MEDIA_PLAY" text="Pokreni"/>
-		<button id="ID_MEDIA_PAUSE" text="Pauziraj" visible="false"/>
-		<button id="ID_MEDIA_STOP" text="Stani"/>
+		<button id="ID_MEDIA_PLAY" text="Пусти&#160;&#160;&#160;"/>
+		<button id="ID_MEDIA_PAUSE" text="Паузирај" visible="false"/>
+		<button id="ID_MEDIA_STOP" text="Заустави"/>
 		<separator/>
-		<label text="Traži:" tip="Brzo Traži u Datoteci"/>
+		<label text="Seek:" tip="Скочи на позицију у фајлу"/>
 		<control id="IDC_MEDIA_POSITION" width="190" height="22"/>
-		<label text="Brzina:" tip="Namesti Brzinu Odvijanja"/>
+		<label text="Speed:" tip="Промени брзину репродукције"/>
 		<control id="IDC_MEDIA_SPEED" width="40" height="22"/>
-		<label text="Jačina:" tip="Namesti Jačinu"/>
+		<label text="Volume:" tip="Промени јачину звука"/>
 		<control id="IDC_MEDIA_VOLUME" width="50" height="22"/>
 		<separator/>
-		<button id="ID_MEDIA_OPEN" text="Otvori"/>
+		<button id="ID_MEDIA_OPEN" text="Отвори"/>
 		<separator/>
 		<button id="ID_MEDIA_FULLSCREEN"/>
 		<button id="ID_MEDIA_ZOOM"/>
@@ -332,62 +332,62 @@
 		<button id="ID_MEDIA_PREVIOUS"/>
 		<button id="ID_MEDIA_NEXT"/>
 		<separator/>
-		<button id="ID_MEDIA_PLAYLIST" text="Playlista"/>
+		<button id="ID_MEDIA_PLAYLIST" text="Плејлиста"/>
 	</toolbar>
 	<toolbar name="CMediaList">
 		<button id="ID_MEDIA_ADD"/>
 		<button id="ID_MEDIA_REMOVE"/>
 		<rightAlign/>
-		<button id="ID_MEDIA_CLEAR" text="Očisti"/>
-		<button id="ID_MEDIA_SAVE" text="Sačuvaj"/>
+		<button id="ID_MEDIA_CLEAR" text="Очисти"/>
+		<button id="ID_MEDIA_SAVE" text="Запамти"/>
 	</toolbar>
 	<!-- NEIGHBOURS WINDOW -->
 	<toolbar name="CNeighboursWnd.Basic">
-		<button id="ID_BROWSE_LAUNCH" text="Prikaži šta deli"/>
-		<button id="ID_NEIGHBOURS_CHAT" text="Popričaj sa Osobom"/>
+		<button id="ID_BROWSE_LAUNCH" text="Претражи корисника"/>
+		<button id="ID_NEIGHBOURS_CHAT" text="Ћаскај са корисником"/>
 		<rightAlign/>
 		<button id="ID_NETWORK_G2" text="Gnutella2"/>
 		<button id="ID_NETWORK_G1" text="Gnutella1"/>
 		<button id="ID_NETWORK_ED2K" text="eDonkey2000"/>
 		<separator/>
-		<button id="ID_NEIGHBOURS_SETTINGS" text="Podešavanja"/>
+		<button id="ID_NEIGHBOURS_SETTINGS" text="Подешавања"/>
 	</toolbar>
 	<toolbar name="CNeighboursWnd">
-		<button id="ID_NETWORK_CONNECT_TO" text="Spoji se na"/>
-		<button id="ID_NEIGHBOURS_DISCONNECT" text="Isključi"/>
+		<button id="ID_NETWORK_CONNECT_TO" text="Повежи се на ...."/>
+		<button id="ID_NEIGHBOURS_DISCONNECT" text="Прекини везу"/>
 		<separator/>
-		<button id="ID_BROWSE_LAUNCH" text="Prikaži šta deli"/>
-		<button id="ID_NEIGHBOURS_CHAT" text="Popričaj sa Osobom"/>
-		<button id="ID_SECURITY_BAN" text="Blokiraj ga"/>
+		<button id="ID_BROWSE_LAUNCH" text="Претражи корисника"/>
+		<button id="ID_NEIGHBOURS_CHAT" text="Ћаскај са корисником"/>
+		<button id="ID_SECURITY_BAN" text="Забрани корисника"/>
 		<rightAlign/>
 		<button id="ID_NETWORK_G2" text="Gnutella2"/>
 		<button id="ID_NETWORK_G1" text="Gnutella1"/>
 		<button id="ID_NETWORK_ED2K" text="eDonkey2000"/>
 		<separator/>
-		<button id="ID_NEIGHBOURS_SETTINGS" text="Podešavanja"/>
+		<button id="ID_NEIGHBOURS_SETTINGS" text="Подешавања"/>
 	</toolbar>
 	<!-- HIT MONITOR WINDOW -->
 	<toolbar name="CHitMonitorWnd">
-		<button id="ID_SEARCH_DOWNLOAD" text="Skini"/>
-		<button id="ID_HITMONITOR_SEARCH" text="Ponovi"/>
+		<button id="ID_SEARCH_DOWNLOAD" text="Преузимања"/>
+		<button id="ID_HITMONITOR_SEARCH" text="Реупит"/>
 		<separator/>
-		<button id="ID_HITMONITOR_PAUSE" text="Pauziraj"/>
-		<button id="ID_HITMONITOR_CLEAR" text="Očisti"/>
+		<button id="ID_HITMONITOR_PAUSE" text="Паузирај"/>
+		<button id="ID_HITMONITOR_CLEAR" text="Очисти"/>
 		<rightAlign/>
-		<label text="Filter:" tip="Upiši reči za filtriranje rezultata potrage"/>
+		<label text="Filter:" tip="Укуцајте неку реч да би сте филтрирали резултат"/>
 		<control id="IDC_FILTER_BOX" width="160"/>
-		<button id="ID_SEARCH_FILTER_RAW" text="Više..."/>
+		<button id="ID_SEARCH_FILTER_RAW" text="Више ..."/>
 	</toolbar>
 	<!-- HOST CACHE WINDOW -->
 	<toolbar name="CHostCacheWnd.Basic">
-		<button id="ID_HOSTCACHE_CONNECT" text="Spoji Se Na"/>
-		<button id="ID_HOSTCACHE_DISCONNECT" text="Isključi"/>
-		<button id="ID_HOSTCACHE_REMOVE" text="Ukloni"/>
+		<button id="ID_HOSTCACHE_CONNECT" text="Повежи се на"/>
+		<button id="ID_HOSTCACHE_DISCONNECT" text="Прекини везу"/>
+		<button id="ID_HOSTCACHE_REMOVE" text="Уклони"/>
 	</toolbar>
 	<toolbar name="CHostCacheWnd">
-		<button id="ID_HOSTCACHE_CONNECT" text="Spoji Se Na"/>
-		<button id="ID_HOSTCACHE_DISCONNECT" text="Isključi"/>
-		<button id="ID_HOSTCACHE_REMOVE" text="Ukloni"/>
+		<button id="ID_HOSTCACHE_CONNECT" text="Повежи се на"/>
+		<button id="ID_HOSTCACHE_DISCONNECT" text="Прекини везу"/>
+		<button id="ID_HOSTCACHE_REMOVE" text="Уклони"/>
 		<rightAlign/>
 		<button id="ID_HOSTCACHE_G2_HORIZON" text="G2 Cluster"/>
 		<button id="ID_HOSTCACHE_G2_CACHE" text="G2 Cache"/>
@@ -402,92 +402,100 @@
 		<button id="ID_CHAT_COLOUR" text="C"/>
 		<button id="ID_CHAT_EMOTICONS"/>
 		<separator/>
-		<button id="ID_CHAT_BROWSE" text="Pogledaj Šta Ima"/>
-		<!-- <button id="ID_CHAT_SEND_FILE" text="Pošalji"/> -->
-		<button id="ID_CHAT_PRIORITY" text="Daj Prioritet"/>
+		<button id="ID_CHAT_BROWSE" text="Претражи корисника"/>
+		<button id="ID_CHAT_PRIORITY" text="Додели приоритет"/>
+		<!-- <button id="ID_CHAT_SEND_FILE" text="Send File"/> -->
 		<separator/>
-		<button id="ID_CHAT_CONNECT" text="Spoji" visible="false"/>
-		<button id="ID_CHAT_DISCONNECT" text="Isključi"/>
+		<button id="ID_CHAT_CONNECT" text="Повежи се" visible="false"/>
+		<button id="ID_CHAT_DISCONNECT" text="Прекини везу"/>
 	</toolbar>
 	<!-- WEBSERVICES -->
-	<!-- IMAGE VIEWER ? -->
+	<!-- IMAGE VIEWER WINDOW -->
+	<toolbar name="ImageViewer_Toolbar">
+		<button id="ImageViewer_BestFit" text="Препоручена величина"/>
+		<button id="ImageViewer_ActualSize" text="Стварна величина"/>
+		<separator/>
+		<button id="ImageViewer_Refresh" text="Освежи"/>
+		<separator/>
+		<button id="ImageViewer_Close" text="Затвори"/>
+	</toolbar>
 </toolbars>
-
 <!-- Menu Definitions -->
 <menus>
 	<!-- SIMPLE POPUP MENU -->
 	<menu name="Simple">
-		<item id="ID_CHILD_CLOSE" text="_Close Window"/>
+		<item id="ID_CHILD_CLOSE" text="_Затвори прозор"/>
 	</menu>
 	<!-- CHILD POPUP MENU -->
 	<menu name="Child">
-		<item id="ID_CHILD_MAXIMISE" text="_Full Screen"/>
+		<item id="ID_CHILD_MAXIMISE" text="_Цео екран"/>
 		<separator/>
-		<item id="ID_CHILD_RESTORE" text="_Restore"/>
-		<item id="ID_CHILD_MINIMISE" text="_Minimise"/>
+		<item id="ID_CHILD_RESTORE" text="_Врати"/>
+		<item id="ID_CHILD_MINIMISE" text="_Смањи"/>
 		<separator/>
-		<item id="ID_CHILD_CLOSE" text="_Close Window"/>
+		<item id="ID_CHILD_CLOSE" text="_Затвори прозор"/>
 	</menu>
 	<!-- MAIN WINDOW MENU BAR -->
 	<menu name="CMainWnd.Basic" type="bar">
 		<menu text="_Mreža">
-			<item id="ID_NETWORK_CONNECT" text="_Spoji" shortcut="Ctrl+S"/>
+			<item id="ID_NETWORK_CONNECT" text="_Повежи се" shortcut="Ctrl+G"/>
 			<separator/>
 			<menu text="Odaberi _Mrežu">
-				<item id="ID_NETWORK_G2" text="Spoji se na _Gnutellu2"/>
-				<item id="ID_NETWORK_G1" text="Spoji se na Gnutellu_1"/>
-				<item id="ID_NETWORK_ED2K" text="Spoji se na _eDonkey2000"/>
+				<item id="ID_NETWORK_G2" text="Повежи се на _Gnutellu2"/>
+				<item id="ID_NETWORK_G1" text="SПовежи се на Gnutellu_1"/>
+				<item id="ID_NETWORK_ED2K" text="Повежи се на _eDonkey2000"/>
 			</menu>
 			<separator/>
-			<item id="ID_NETWORK_AUTO_CLOSE" text="Izađi po završetku razmene"/>
-			<item id="ID_NETWORK_EXIT" text="Izlaz"/>
+			<item id="ID_NETWORK_AUTO_CLOSE" text="Изађи _након преузимања"/>
+			<item id="ID_NETWORK_EXIT" text="И_злаз"/>
 		</menu>
-		<menu text="Prikaz">
-			<item id="ID_TAB_HOME" text="Početak"/>
-			<item id="ID_TAB_LIBRARY" text="Ko_lekcija"/>
-			<item id="ID_TAB_MEDIA" text="_Media Player"/>
-			<item id="ID_TAB_SEARCH" text="_Traži"/>
-			<item id="ID_TAB_TRANSFERS" text="Skidam"/>
-			<item id="ID_WINDOW_REMOTE" text="Pokaži _Remote"/>
+		<menu text="_Prikaz">
+			<item id="ID_TAB_HOME" text="_Почетна"/>
+			<item id="ID_TAB_LIBRARY" text="_Библиотека"/>
+			<item id="ID_TAB_MEDIA" text="_Медија плејер"/>
+			<item id="ID_TAB_SEARCH" text="_Претрага"/>
+			<item id="ID_TAB_TRANSFERS" text="_Преузимања"/>
+			<item id="ID_WINDOW_REMOTE" text="_Даљински"/>
 			<separator/>
 			<menu text="N_apredno">
-				<item id="ID_VIEW_NEIGHBOURS" text="Susedi"/>
-				<item id="ID_VIEW_UPLOADS" text="_Uzimanje"/>
+				<item id="ID_VIEW_NEIGHBOURS" text="_Комшије"/>
+				<item id="ID_VIEW_UPLOADS" text="_Послато"/>
 				<separator/>
-				<item id="ID_VIEW_SECURITY" text="Sigurnost"/>
-				<item id="ID_VIEW_HOSTS" text="H_ost Cache"/>
-				<item id="ID_VIEW_DISCOVERY" text="Disco_very"/>
+				<item id="ID_VIEW_SECURITY" text="С_игурност"/>
+				<item id="ID_VIEW_HOSTS" text="Кеш _домаћина"/>
+				<item id="ID_VIEW_DISCOVERY" text="Прон_алажење"/>
 			</menu>
 			<separator/>
-			<item id="ID_VIEW_BASIC" text="Normalni Prikaz"/>
-			<item id="ID_VIEW_TABBED" text="Napredni Prikaz"/>
+			<item id="ID_VIEW_BASIC" text="_Нормални режим"/>
+			<item id="ID_VIEW_TABBED" text="_Напредни режим"/>
 		</menu>
 		<menu text="Ala_ti">
-			<item id="ID_LIBRARY_FOLDERS" text="Deli..."/>
-			<item id="ID_TOOLS_DOWNLOAD" text="Skini _Datoteku/Torrent..."/>
+			<item id="ID_LIBRARY_FOLDERS" text="Дели _Фајлове ..."/>
+			<item id="ID_TOOLS_DOWNLOAD" text="_Преузми фајл/Torrent ..."/>
 			<separator/>
-			<item id="ID_TOOLS_SKIN" text="Odaberite Izgled..."/>
-			<item id="ID_TOOLS_LANGUAGE" text="Promenite jezik..."/>
+			<item id="ID_TOOLS_SKIN" text="Изаберите  и_зглед ..."/>
+			<item id="ID_TOOLS_LANGUAGE" text="Изаберите _језик..."/>
 			<separator/>
-			<item id="ID_TOOLS_PROFILE" text="Izmeni Moj _Profil..."/>
-			<item id="ID_TOOLS_WIZARD" text="Brzo i Lagano - Pomoćnik..."/>
+			<item id="ID_TOOLS_PROFILE" text="Измени Мој _профил ..."/>
+			<item id="ID_TOOLS_WIZARD" text="QuickStart _ чаробњак..."/>
 			<separator/>
-			<item id="ID_TOOLS_SETTINGS" text="_Shareazin Podešavanja..."/>
+			<item id="ID_TOOLS_SETTINGS" text="_Shareazin подешавања ..."/>
 		</menu>
 		<menu text="Pomoć">
 			<item id="ID_HELP_FAQ" text="Shareazin _FAQ"/>
 			<separator/>
 			<menu text="Upute">
-				<item id="ID_HELP_GUIDE" text="Shareazine Upute za Korisnike"/>
-				<item id="ID_HELP_ROUTER" text="Pomoć oko _Routera"/>
-				<item id="ID_HELP_SECURITY" text="Pomoć oko _Sigurnosti"/>
-				<item id="ID_HELP_CODEC" text="Pomoć oko _Codeca"/>
+				<item id="ID_HELP_GUIDE" text="Shareazine _водич за кориснике"/>
+				<item id="ID_HELP_ROUTER" text="_Помоћ око рутера"/>
+				<item id="ID_HELP_SECURITY" text="_Помоћ око сигурности"/>
+				<item id="ID_HELP_CODEC" text="_Помоћ око кодека"/>
+				<item id="ID_HELP_TEST" text="_Тестирање конекције"/>
 			</menu>
 			<separator/>
 			<menu text="_WebStranice">
-				<item id="ID_HELP_HOMEPAGE" text="_Shareaza site"/>
+				<item id="ID_HELP_HOMEPAGE" text="_Сајт Shareaza"/>
 				<separator/>
-				<item id="ID_HELP_FORUMS" text="Shareazin _Forum"/>
+				<item id="ID_HELP_FORUMS" text="Shareazin форуми"/>
 				<!-- <item id="ID_HELP_UPDATE" text="Novosti"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
 				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>	-->
@@ -498,87 +506,91 @@
 	</menu>
 	<menu name="CMainWnd.Tabbed" type="bar">
 		<menu text="_Mreža">
-			<item id="ID_NETWORK_CONNECT" text="_Spoji" shortcut="Ctrl+S"/>
-			<item id="ID_NETWORK_DISCONNECT" text="_Isključi"/>
+			<item id="ID_NETWORK_CONNECT" text="_Повежи се" shortcut="Ctrl+G"/>
+			<item id="ID_NETWORK_DISCONNECT" text="_Прекини везу"/>
 			<separator/>
 			<menu text="Odaberi _Mrežu">
-				<item id="ID_NETWORK_G2" text="Spoji se na _Gnutellu2"/>
-				<item id="ID_NETWORK_G1" text="Spoji se na Gnutellu_1"/>
-				<item id="ID_NETWORK_ED2K" text="Spoji se na _eDonkey2000"/>
+				<item id="ID_NETWORK_G2" text="Повежи се на _Gnutellu2"/>
+				<item id="ID_NETWORK_G1" text="Повежи се на Gnutellu_1"/>
+				<item id="ID_NETWORK_ED2K" text="Повежи се на _eDonkey2000"/>
 			</menu>
 			<separator/>
-			<item id="ID_NETWORK_CONNECT_TO" text="Spoji se na..." shortcut="Ctrl+T"/>
-			<item id="ID_NETWORK_BROWSE_TO" text="Pogledaj Šta Ima..."/>
+			<item id="ID_NETWORK_CONNECT_TO" text="Повежи се на ..." shortcut="Ctrl+T"/>
+			<item id="ID_NETWORK_BROWSE_TO" text="Претражи корисника ..."/>
 			<separator/>
-			<item id="ID_NETWORK_AUTO_CLOSE" text="Iz_ađi po završetku"/>
-			<item id="ID_NETWORK_EXIT" text="Izlaz"/>
+			<item id="ID_NETWORK_AUTO_CLOSE" text="Изађи _након преузимања"/>
+			<item id="ID_NETWORK_EXIT" text="И_злаз"/>
 		</menu>
 		<menu text="Prikaz">
-			<item id="ID_TAB_HOME" text="Početak"/>
-			<item id="ID_TAB_LIBRARY" text="Ko_lekcija"/>
-			<item id="ID_TAB_MEDIA" text="_Media Player"/>
-			<item id="ID_TAB_SEARCH" text="_Traži"/>
-			<item id="ID_TAB_TRANSFERS" text="Skidanje"/>
-			<item id="ID_TAB_NETWORK" text="_Mreža"/>
+			<item id="ID_TAB_HOME" text="_Почетна"/>
+			<item id="ID_TAB_LIBRARY" text="_Библиотека"/>
+			<item id="ID_TAB_MEDIA" text="_Медија плејер"/>
+			<item id="ID_TAB_SEARCH" text="_Претрага"/>
+			<item id="ID_TAB_TRANSFERS" text="_Преузимања"/>
+			<item id="ID_TAB_NETWORK" text="_Мрежа"/>
 			<separator/>
-			<item id="ID_VIEW_SECURITY" text="Sigurnost"/>
-			<item id="ID_VIEW_HOSTS" text="H_ost Cache"/>
+			<item id="ID_VIEW_SECURITY" text="Си_гурност"/>
+			<item id="ID_VIEW_HOSTS" text="К_еш домаћина"/>
 			<separator/>
 			<menu text="Napre_dno">
-				<item id="ID_VIEW_SYSTEM" text="Sistem" shortcut="F11"/>
-				<item id="ID_VIEW_NEIGHBOURS" text="Sus_edi" shortcut="Ctrl+F11"/>
-				<item id="ID_VIEW_DOWNLOADS" text="Skinuto" shortcut="F3"/>
-				<item id="ID_VIEW_UPLOADS" text="Dano" shortcut="F4"/>
-				<item id="ID_VIEW_LIBRARY" text="Ko_lekcija" shortcut="F5"/>
-				<item id="ID_VIEW_MEDIA" text="_Media" shortcut="F6"/>
+				<item id="ID_VIEW_SYSTEM" text="С_истем" shortcut="F11"/>
+				<item id="ID_VIEW_NEIGHBOURS" text="К_омшије" shortcut="Ctrl+F11"/>
+				<item id="ID_VIEW_DOWNLOADS" text="_Преузимања" shortcut="F3"/>
+				<item id="ID_VIEW_UPLOADS" text="_Послато" shortcut="F4"/>
+				<item id="ID_VIEW_LIBRARY" text="_Библиотека" shortcut="F5"/>
+				<item id="ID_VIEW_MEDIA" text="_Медија" shortcut="F6"/>
 				<separator/>
-				<item id="ID_VIEW_SECURITY" text="Sigurnost" shortcut="F7"/>
-				<item id="ID_VIEW_HOSTS" text="H_ost Cache" shortcut="F8"/>
-				<item id="ID_VIEW_DISCOVERY" text="Disco_very" shortcut="F9"/>
-				<item id="ID_VIEW_TRAFFIC" text="_Graf Prometa" shortcut="F10"/>
+				<item id="ID_VIEW_SECURITY" text="Си_гурност" shortcut="F7"/>
+				<item id="ID_VIEW_HOSTS" text="К_еш домаћина" shortcut="F8"/>
+				<item id="ID_VIEW_DISCOVERY" text="Проналаж_ење" shortcut="F9"/>
+				<item id="ID_VIEW_TRAFFIC" text="_Графикон" shortcut="F10"/>
 				<separator/>
-				<item id="ID_VIEW_PACKETS" text="_Packet Dump" shortcut="Ctrl+F1"/>
-				<item id="ID_VIEW_SEARCH_MONITOR" text="Pr_aćenje Traženja" shortcut="Ctrl+F2"/>
-				<item id="ID_VIEW_RESULTS_MONITOR" text="Praćenje Pogodaka" shortcut="Ctrl+F3"/>
+				<item id="ID_VIEW_PACKETS" text="_Преглед пакета" shortcut="Ctrl+F1"/>
+				<item id="ID_VIEW_SEARCH_MONITOR" text="Пре_глед претрага" shortcut="Ctrl+F2"/>
+				<item id="ID_VIEW_RESULTS_MONITOR" text="Прег_лед погодака" shortcut="Ctrl+F3"/>
 			</menu>
 			<separator/>
-			<item id="ID_VIEW_BASIC" text="N_ormalni Prikaz"/>
-			<item id="ID_VIEW_TABBED" text="Prikaz s Karticama"/>
-			<item id="ID_VIEW_WINDOWED" text="U Prozoru"/>
+			<item id="ID_VIEW_BASIC" text="Н_ормални режим"/>
+			<item id="ID_VIEW_TABBED" text="Т_абовани режим"/>
+			<item id="ID_VIEW_WINDOWED" text="_Прозорни режим"/>
 		</menu>
 		<menu text="Ala_ti">
-			<item id="ID_LIBRARY_FOLDERS" text="Deli..."/>
-			<item id="ID_TOOLS_DOWNLOAD" text="Skini/Torrent..."/>
+			<item id="ID_LIBRARY_FOLDERS" text="Дели _фајлове ..."/>
+			<item id="ID_TOOLS_DOWNLOAD" text="_Преузимање фајла/Torrent..."/>
+			<item id="IDC_IMPORT_DOWNLOADS" text="_Увези eMule парцијално преузето..."/>
+			<item id="ID_OPEN_DOWNLOADS_FOLDER" text="_Отвори фолдер са преузетим фајловима"/>
 			<separator/>
-			<item id="ID_TOOLS_SKIN" text="Odaberi Izgled..."/>
-			<item id="ID_TOOLS_LANGUAGE" text="Promeni Jezik"/>
+			<item id="ID_TOOLS_SKIN" text="Изабери и_зглед..."/>
+			<item id="ID_TOOLS_LANGUAGE" text="Изабери _језик ..."/>
 			<separator/>
-			<item id="ID_TOOLS_PROFILE" text="Izmeni Moj _Profil..."/>
-			<item id="ID_TOOLS_WIZARD" text="Brzo i Lagano - Pomoćnik..."/>
+			<item id="ID_TOOLS_PROFILE" text="Измени Мој _профил ..."/>
+			<item id="ID_TOOLS_WIZARD" text="QuickStart _чаробњак..."/>
 			<separator/>
-			<item id="ID_TOOLS_SETTINGS" text="_Shareazina Podešavanja..."/>
+			<item id="ID_TOOLS_SETTINGS" text="_Shareazina подешавања..."/>
 		</menu>
 		<menu text="Prozori">
-			<item id="ID_WINDOW_NAVBAR" text="Navigacijska Traka"/>
-			<item id="ID_WINDOW_TOOLBAR" text="_Traka s Alatima"/>
-			<item id="ID_WINDOW_TABBAR" text="Traka s Ta_bovima"/>
-			<item id="ID_WINDOW_MONITOR" text="Pokaži Praćenje Pro_meta"/>
-			<item id="ID_WINDOW_REMOTE" text="Pokaži _Remote"/>
+			<item id="ID_WINDOW_NAVBAR" text="Прикажи _навигациону траку"/>
+			<item id="ID_WINDOW_TOOLBAR" text="прикажи _траку са алатима"/>
+			<separator/>
+			<item id="ID_WINDOW_TABBAR" text="Прикажи Табуларну _траку"/>
+			<item id="ID_WINDOW_MONITOR" text="Прикажи _монитор"/>
+			<item id="ID_WINDOW_REMOTE" text="Прикажи _даљински"/>
 		</menu>
 		<menu text="Pomoć">
 			<item id="ID_HELP_FAQ" text="Shareazin _FAQ"/>
 			<separator/>
 			<menu text="Upute">
-				<item id="ID_HELP_GUIDE" text="Shareazine Upute za Korisnike"/>
-				<item id="ID_HELP_ROUTER" text="Pomoć oko _Routera"/>
-				<item id="ID_HELP_SECURITY" text="Pomoć oko _Sigurnosti"/>
-				<item id="ID_HELP_CODEC" text="Pomoć oko _Codeca"/>
+				<item id="ID_HELP_GUIDE" text="Shareazine водич за кориснике"/>
+				<item id="ID_HELP_ROUTER" text="_Помоћ око рутера"/>
+				<item id="ID_HELP_SECURITY" text="По_моћ око сигурности"/>
+				<item id="ID_HELP_CODEC" text="П_омоћ око кодека"/>
+				<item id="ID_HELP_TEST" text="_Тестирање конекције"/>
 			</menu>
 			<separator/>
 			<menu text="_Web stranice">
-				<item id="ID_HELP_HOMEPAGE" text="_Shareaza site"/>
+				<item id="ID_HELP_HOMEPAGE" text="Сајт _Shareaza"/>
 				<separator/>
-				<item id="ID_HELP_FORUMS" text="Shareazin _Forum"/>
+				<item id="ID_HELP_FORUMS" text="Shareazin форуми"/>
 				<!-- <item id="ID_HELP_UPDATE" text="Novosti"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
 				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>	-->
@@ -589,13 +601,13 @@
 	</menu>
 	<menu name="CMainWnd.Windowed" type="bar">
 		<menu text="Mreža">
-			<item id="ID_NETWORK_SEARCH" text="Nova Po_traga..."/> shortcut="Ctrl+T"/>
+			<item id="ID_NETWORK_SEARCH" text="Нова _претрага ..." shortcut="Ctrl+S"/>
 			<separator/>
-			<item id="ID_NETWORK_CONNECT" text="_Spoji" shortcut="Ctrl+S"/>
-			<item id="ID_NETWORK_DISCONNECT" text="_Isključi"/>
+			<item id="ID_NETWORK_CONNECT" text="_Повежи се" shortcut="Ctrl+G"/>
+			<item id="ID_NETWORK_DISCONNECT" text="_Прекини везу"/>
 			<separator/>
-			<item id="ID_NETWORK_CONNECT_TO" text="Spoji Se _Na..." shortcut="Ctrl+N"/>
-			<item id="ID_NETWORK_BROWSE_TO" text="Pogledaj Šta Ima..."/>
+			<item id="ID_NETWORK_CONNECT_TO" text="Повежи се _на ..." shortcut="Ctrl+T"/>
+			<item id="ID_NETWORK_BROWSE_TO" text="_Претражи корисника ..."/>
 			<separator/>
 			<menu text="Odaberite _Mrežu">
 				<item id="ID_NETWORK_G2" text="Spoji se na _Gnutellu2"/>
@@ -603,8 +615,8 @@
 				<item id="ID_NETWORK_ED2K" text="Spoji se na _eDonkey2000"/>
 			</menu>
 			<separator/>
-			<item id="ID_NETWORK_AUTO_CLOSE" text="Z_atvori Po Završetku"/>
-			<item id="ID_NETWORK_EXIT" text="Izlaz"/>
+			<item id="ID_NETWORK_AUTO_CLOSE" text="Затвори _након преузимања"/>
+			<item id="ID_NETWORK_EXIT" text="И_злаз"/>
 		</menu>
 		<menu text="Prikaz">
 			<item id="ID_VIEW_SYSTEM" text="_Sistem" shortcut="F11"/>
@@ -623,13 +635,15 @@
 			<item id="ID_VIEW_SEARCH_MONITOR" text="Pr_aćenje Traženja" shortcut="Ctrl+F2"/>
 			<item id="ID_VIEW_RESULTS_MONITOR" text="Praćenje Pogodaka" shortcut="Ctrl+F3"/>
 			<separator/>
-			<item id="ID_VIEW_BASIC" text="Normalni Prikaz"/>
+			<item id="ID_VIEW_BASIC" text="Basicni Prikaz"/>
 			<item id="ID_VIEW_TABBED" text="Prikaz s Tabovima"/>
 			<item id="ID_VIEW_WINDOWED" text="U Prozoru"/>
 		</menu>
 		<menu text="Ala_ti">
 			<item id="ID_LIBRARY_FOLDERS" text="Deli..."/>
 			<item id="ID_TOOLS_DOWNLOAD" text="Skini/Torrent..."/>
+			<item id="IDC_IMPORT_DOWNLOADS" text="_Import eMule partial downloads..."/>
+			<item id="ID_OPEN_DOWNLOADS_FOLDER" text="_Open completed Downloads folder"/>
 			<separator/>
 			<item id="ID_TOOLS_SKIN" text="Odaberi Izgled..."/>
 			<item id="ID_TOOLS_LANGUAGE" text="Promeni Jezik"/>
@@ -646,12 +660,14 @@
 			<separator/>
 			<item id="ID_WINDOW_NAVBAR" text="Navigacijska Traka"/>
 			<item id="ID_WINDOW_TOOLBAR" text="_Traka s Alatima"/>
+			<separator/>
 			<item id="ID_WINDOW_TABBAR" text="Traka s Tabovima"/>
 			<item id="ID_WINDOW_MONITOR" text="Pokaži Praćenje Pro_meta"/>
 			<item id="ID_WINDOW_REMOTE" text="Pokaži _Remote"/>
 		</menu>
 		<menu text="Pomoć">
 			<item id="ID_HELP_FAQ" text="Shareazin _FAQ"/>
+			<item id="ID_HELP_TEST" text="_Connection Test"/>
 			<separator/>
 			<menu text="Upute">
 				<item id="ID_HELP_GUIDE" text="Shareazini Uputi za Korisnike"/>
@@ -661,7 +677,7 @@
 			</menu>
 			<separator/>
 			<menu text="_WebStranice">
-				<item id="ID_HELP_HOMEPAGE" text="_Shareaza site"/>
+				<item id="ID_HELP_HOMEPAGE" text="Сајт _Shareaza"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareazin _Forum"/>
 				<!-- <item id="ID_HELP_UPDATE" text="Novosti"/>
@@ -793,6 +809,7 @@
 	<menu name="CHostCacheWnd">
 		<item id="ID_HOSTCACHE_CONNECT" text="_Sad se Spoji"/>
 		<item id="ID_HOSTCACHE_DISCONNECT" text="_Iskljući"/>
+		<item id="ID_NEIGHBOURS_COPY" text="Copy _URI"/>
 		<item id="ID_HOSTCACHE_PRIORITY" text="Server s _Prioritetom"/>
 		<separator/>
 		<item id="ID_HOSTCACHE_REMOVE" text="Ukloni Hosta(ove)"/>
@@ -1333,6 +1350,8 @@
 	</menu>
 	<menu name="CMediaList">
 		<item id="ID_MEDIA_SELECT" text="_Pokreni"/>
+		<item id="ID_MEDIA_RATE" text="Ra_te File..."/>
+		<item id="ID_MEDIA_PROPERTIES" text="_Properties..."/>
 		<separator/>
 		<item id="ID_MEDIA_ADD" text="Dod_aj Datoteku..."/>
 		<item id="ID_MEDIA_ADD_FOLDER" text="Dodaj Fasciklu..."/>
@@ -1343,6 +1362,7 @@
 		<separator/>
 		<item id="ID_MEDIA_OPEN" text="_Otvori Playlistu..."/>
 		<item id="ID_MEDIA_SAVE" text="_Sačuvaj Playlistu..."/>
+		<item id="ID_MEDIA_EXPORT_COLLECTION" text="E_xport Collection..."/>
 		<item id="ID_MEDIA_CLEAR" text="Očisti Playlistu"/>
 		<separator/>
 		<item id="ID_MEDIA_PLAYLIST" text="Pokaži Pla_ylistu"/>
@@ -1351,6 +1371,8 @@
 	<menu name="CSystemWnd">
 		<item id="ID_SYSTEM_VERBOSE" text="_Verbose Mode"/>
 		<item id="ID_SYSTEM_TIMESTAMP" text="Timestam_p"/>
+		<separator/>
+		<item id="ID_SYSTEM_COPY" text="_Copy" shortcut="Ctrl+C"/>
 		<separator/>
 		<item id="ID_SYSTEM_CLEAR" text="Očisti _Buffer"/>
 	</menu>
@@ -1461,6 +1483,7 @@
 		<item id="ID_CHAT_TIMESTAMP" text="_Timestamp"/>
 		<item id="ID_CHAT_CLEAR" text="Očisti Prozor"/>
 	</menu>
+	<!-- IMAGEVIEWER -->
 </menus>
 <!-- Documents -->
 <documents>
@@ -1492,7 +1515,6 @@
 			<anchor id="SearchBox" width="256" height="80"/>
 			<newline gap="12" indent="0"/>
 		</group>
-
 		<group id="3">
 			<icon res="128" width="32" height="32"/><gap size="8"/>
 			<heading align="middle">O B A V E S T E N J E&#160; O &#160; N A D O O G R A D N J I</heading>
@@ -1502,7 +1524,6 @@
 			<link target="raza:upgrade">Klikni ovde za nadogradnju</link>
 			<newline gap="18" indent="0"/>
 		</group>
-
 		<group id="4">
 			<icon res="252" width="32" height="32"/><gap size="8"/>
 			<heading align="middle">U P O Z O R E NJ E &#160; - &#160; V I &#160; S T E &#160; P O D &#160; V A T R O Z I D O M</heading>
@@ -1510,33 +1531,49 @@
 			<text colour="FF0000">Shareaza je otkrila da ste iza NAT routera ili vatrozida,
 			i u nemogućnosti ste primiti dolazeće veze. &#160;</text>
 			<text colour="FF0000" format="b">To može uzrokovati usporeno skidanje.</text>
-			<newline gap="6"/>
 			<link target="raza:command:ID_HELP_ROUTER">Kliknite ovde za uputstva kako podesiti Vaš router ili vatrozid</link>
 			<newline gap="18" indent="0"/>
 		</group>
-
+		<group id="6">
+			<icon res="252" width="32" height="32"/><gap size="8"/>
+			<heading align="middle">W A R N I N G &#160; - &#160; Y O U R &#160; T C P &#160; P O R T &#160; I S &#160; F I R E W A L L E D</heading>
+			<newline gap="8" indent="42"/>
+			<text colour="FF0000">Shareaza has detected that you are behind a NAT router or firewall,
+			and are unable to receive TCP connections from the Internet. &#160;</text>
+			<text colour="FF0000" format="b">This may cause poor download performance.</text>
+			<newline gap="6"/>
+			<link target="raza:command:ID_HELP_ROUTER">Click here to learn how to configure your router or firewall</link>
+			<newline gap="18" indent="0"/>
+		</group>
+		<group id="7">
+			<icon res="252" width="32" height="32"/><gap size="8"/>
+			<heading align="middle">W A R N I N G &#160; - &#160; Y O U R &#160; U D P &#160; P O R T &#160; I S &#160; F I R E W A L L E D</heading>
+			<newline gap="8" indent="42"/>
+			<text colour="FF0000">Shareaza has detected that you are behind a NAT router or firewall,
+			and are unable to receive UDP messages from the Internet. &#160;</text>
+			<text colour="FF0000" format="b">This may cause poor search performance.</text>
+			<newline gap="6"/>
+			<link target="raza:command:ID_HELP_ROUTER">Click here to learn how to configure your router or firewall</link>
+			<newline gap="18" indent="0"/>
+		</group>
 		<icon res="236" width="32" height="32"/><gap size="8"/>
 		<heading align="middle">P O D E S I T E &#160; S H A R E A Z U</heading>
 		<newline gap="12" indent="42"/>
-
 		<icon res="237" width="32" height="32" target="raza:command:ID_TOOLS_SKIN"/>
 		<gap size="8"/>
 		<link target="raza:command:ID_TOOLS_SKIN" format="bu" align="middle">Skinovi</link>
 		<text align="middle">&#160;- Promeni Shareazin Izgled i doživljaj</text>
 		<newline gap="8"/>
-
 		<icon res="236" width="32" height="32" target="raza:command:ID_TOOLS_WIZARD"/>
 		<gap size="8"/>
 		<link target="raza:command:ID_TOOLS_WIZARD" format="bu" align="middle">Pomoćnik s Podešavanjima</link>
 		<text align="middle">&#160;- Podesi Shareazina Podešavanja</text>
 		<newline gap="8"/>
-
 		<icon res="147" width="32" height="32" target="raza:command:ID_HELP_FAQ"/>
 		<gap size="8"/>
 		<link target="raza:command:ID_HELP_FAQ" format="bu" align="middle">Hitna Pomoć</link>
 		<text align="middle">&#160;- Na brzinu nauči osnove rada sa Shareazom</text>
 		<newline gap="18" indent="0"/>
-
 		<icon res="136" width="32" height="32" target="raza:shell:downloads"/>
 		<gap size="8"/>
 		<heading align="middle">U P R A V O &#160; S K I D A M</heading>
@@ -1544,7 +1581,6 @@
 		<text>To open the folder with your downloads </text>
 		<link target="raza:shell:downloads">click here</link>
 		<newline gap="18" indent="0"/>
-
 		<group id="5">
 			<icon res="128" width="32" height="32"/><gap size="8"/>
 			<heading align="middle">P R I S T U P &#160; N A &#160; D A LJ I N U &#160; - &#160; U K LJ U Č E N</heading>
@@ -1556,9 +1592,7 @@
 			<link id="RemoteAccessURL2"/>
 			<newline gap="16" indent="0"/>
 		</group>
-
 	</document>
-
 	<document name="CHomeDownloadsBox" title="Upravo Skidam" leftMargin="6" topMargin="6">
 		<styles>
 			<style name="default">
@@ -1575,7 +1609,6 @@
 			<link id="DownloadsMany" format="bu" target="raza:command:ID_VIEW_DOWNLOADS">Odi na Skidanje (%i)</link>
 		</para>
 	</document>
-
 	<document name="CHomeLibraryBox" title="Moja Kolekcija" leftMargin="6" topMargin="6">
 		<styles>
 			<style name="default">
@@ -1607,7 +1640,6 @@
 			</group>
 		</para>
 	</document>
-
 	<document name="CHomeConnectionBox" title="Spajam" leftMargin="6" topMargin="6">
 		<styles>
 			<style name="default">
@@ -1621,7 +1653,6 @@
 				<link target="raza:command:ID_NETWORK_CONNECT">Za spajanje kliknite ovde</link>
 			</para>
 		</group>
-
 		<icon group="20" command="ID_NETWORK_G2"/><gap group="20" size="4"/>
 		<text group="20" align="middle" format="b">Gnutella2:</text>
 		<text group="21" align="middle">Isključeno</text>
@@ -1630,21 +1661,18 @@
 		<text group="24" align="middle" id="G2Hubs">%i hubova</text>
 		<text group="25" align="middle" id="G2Leaves">%i leavesa</text>
 		<newline group="20" gap="2"/>
-
 		<icon group="10" command="ID_NETWORK_G1"/><gap group="10" size="4"/>
 		<text group="10" align="middle" format="b">Gnutella1: </text>
 		<text group="11" align="middle">Isključeno</text>
 		<text group="12" align="middle">Spajam...</text>
 		<text group="13" align="middle">Spojeno</text>
 		<newline group="10" gap="2"/>
-
 		<icon group="30" command="ID_NETWORK_ED2K"/><gap group="30" size="4"/>
 		<text group="30" align="middle" format="b">eDonkey:</text>
 		<text group="31" align="middle">Isključeno</text>
 		<text group="32" align="middle">Spajam...</text>
 		<text group="33" align="middle">Spojeno</text>
 		<newline group="30" gap="2"/>
-
 		<group id="2">
 			<para align="center">
 				<newline gap="6"/>
@@ -1656,7 +1684,6 @@
 			</para>
 		</group>
 	</document>
-
 	<document name="CHomeUploadsBox" title="Deljenje" leftMargin="6" topMargin="6">
 		<styles>
 			<style name="default">
@@ -1667,15 +1694,12 @@
 			<text id="UploadsNone" format="b">Niko ne skida ništa od vas</text>
 			<link id="UploadsOne" format="bu" target="raza:command:ID_VIEW_UPLOADS">Trenutno dajete jednu datoteku</link>
 			<link id="UploadsMany" format="bu" target="raza:command:ID_VIEW_UPLOADS">Trenutno dajete %i datoteka</link>
-
 			<newline gap="4"/>
-
 			<text id="UploadedNone">Danas još niste ništa dali.</text>
 			<text id="UploadedOne">Danas ste dali 1 datoteku (%s).</text>
 			<text id="UploadedMany">Danas ste dali %i datoteke(a) (%s).</text>
 		</para>
 	</document>
-
 	<document name="CHomeTorrentsBox" title="Torrents" leftMargin="6" topMargin="6">
 		<styles>
 			<style name="default">
@@ -1696,19 +1720,14 @@
 				<link id="SeedTorrent" format="bu" target="raza:command:ID_TOOLS_SEEDTORRENT">Seed torrent</link>
 			</group>
 		</para>
-
 	</document>
-
 	<!-- Settings Pages -->
-
 	<document name="CGeneralSettingsGroup" title="Opšta" leftMargin="8" topMargin="8">
-
 		<styles>
 			<style name="default">
 				<colours link="000080"/>
 			</style>
 		</styles>
-
 		<text format="b">Dobrodošli u Shareazin Pomoćnik za Podešavanja</text>
 		<newline gap="16"/>
 		<text>Shareazin Pomoćnik za Podešavanja omogućuje naprednim korisnicima da
@@ -1739,17 +1758,13 @@
 		<link target="raza:page:CWebSettingsPage" format="b">Web:</link>
 		<gap size="4"/>
 		<text>Povežite Shareazu sa preglednikom interneta da prihvata skidanje i P2P linkove.</text>
-
 	</document>
-
 	<document name="CInternetSettingsGroup" title="Internet" leftMargin="8" topMargin="8">
-
 		<styles>
 			<style name="default">
 				<colours link="000080"/>
 			</style>
 		</styles>
-
 		<text format="b">Dobrodošli u Shareazazin Pomoćnik za Podešavanja</text>
 		<newline gap="16"/>
 		<text>Shareazin Pomoćnik za Podešavanja omogućuje naprednim korisnicima da
@@ -1777,29 +1792,23 @@
 		<gap size="4"/>
 		<text>Limit download connections based on a periodic schedule.</text>
 	</document>
-
 	<!-- Browse User Profile -->
-
 	<document name="CBrowseHostProfile.1">
-
 		<heading id="Nick"/>
 		<heading> Profil</heading>
 		<newline gap="8"/>
-
 		<group id="1">
 			<newline gap="8" indent="0"/>
 			<text format="b">Ime</text>
 			<newline gap="2" indent="8"/>
 			<text id="FullName"/>
 		</group>
-
 		<group id="2">
 			<newline gap="8" indent="0"/>
 			<text format="b">Mesto Stanovanja</text>
 			<newline gap="2" indent="8"/>
 			<text id="FullLocation"/>
 		</group>
-
 		<group id="3">
 			<newline gap="8" indent="0"/>
 			<text format="b">Pol</text>
@@ -1809,7 +1818,6 @@
 			<text>, </text>
 			<text id="Age"/>
 		</group>
-
 		<group id="4">
 			<newline gap="8" indent="0"/>
 			<text format="b">Kontakt Informacije</text>
@@ -1845,31 +1853,25 @@
 			<icon res="207"/><gap size="5"/>
 			<link id="ContactJabber"/>
 		</group>
-
 		<group id="5">
 			<newline gap="8" indent="0"/>
 			<text format="b">Zanimacije</text>
 			<newline gap="2" indent="8"/>
 			<text id="Interests"/>
 		</group>
-
 		<group id="6">
 			<newline gap="8" indent="0"/>
 			<text format="b">Bio</text>
 			<newline gap="2" indent="8"/>
 			<text id="BioText"/>
 		</group>
-
 	</document>
-
 	<document name="CBrowseHostProfile.2">
-
 		<newline gap="40" indent="0"/>
 		<text format="b">Deljene Datoteke</text>
 		<newline gap="4" indent="8"/>
 		<icon res="137" target="raza:command:ID_BROWSE_FILES"/><gap size="5"/>
 		<link target="raza:command:ID_BROWSE_FILES" align="middle">Pogledaj Šta Deli</link>
-
 		<group id="2">
 			<newline gap="16" indent="0"/>
 			<text format="b">Zajednica</text>
@@ -1878,19 +1880,14 @@
 			<gap size="5"/>
 			<link target="raza:command:ID_SEARCH_CHAT" align="middle">Popričaj sa Osobom</link>
 		</group>
-
 		<group id="3">
 		<newline gap="16" indent="0"/>
 		<text format="b">Preporučene Web Adrese</text>
 		<newline gap="4" indent="8" id="Bookmarks"/>
 		</group>
-
 		<newline gap="16" indent="0"/>
-
 	</document>
-
 	<!-- Download help documents -->
-
 	<document name="DownloadHelp.Select">
 		<text format="b">Praćenje Skidanja</text>
 		<newline gap="8"/>
@@ -1900,28 +1897,24 @@
 		<text>Ovom naredbom možete dobiti pomoć i za stanje određene datoteke.
 		Jednostavno odaberite datoteku i ponovno stisnite pomoć.</text>
 	</document>
-
 	<document name="DownloadHelp.Completed">
 		<text format="b">Ovo Skidanje je Završeno</text>
 		<newline gap="8"/>
 		<text>Shareaza je završila skidanje ove datoteke, takođe je proverila
 		da je 100% ispravna.Još je i premestila datoteku u direktorijum za skinute datoteke.</text>
 	</document>
-
 	<document name="DownloadHelp.Moving">
 		<text format="b">Premeštam Skinuto</text>
 		<newline gap="8"/>
 		<text>Shareaza je završila skidanje, proverom je utvrđeno da je skinuto
 		u redu. Trenutno se datoteka premešta u direktorijum za skinute datoteke.</text>
 	</document>
-
 	<document name="DownloadHelp.Paused">
 		<text format="b">Ovo Skidanje je Pauzirano</text>
 		<newline gap="8"/>
 		<text>Pauzirali ste skidanje. Kada poželite nastaviti možete pritisnuti </text>
 		<text format="b">Nastavi Skidanje </text><text> naredbu.</text>
 	</document>
-
 	<document name="DownloadHelp.DiskFull">
 		<text format="b">Nema Više Mesta na Disku</text>
 		<newline gap="8"/>
@@ -1930,15 +1923,12 @@
 		morate ili očistiti disk ili proverite da li je omogućeno zapisivanje u direktorijum
 		za nedovršena skidanja, potom možete nastaviti skidanje.</text>
 	</document>
-
 	<document name="DownloadHelp.Verifying">
 		<text format="b">Proveravam Skinuto</text>
 		<newline gap="8"/>
 		<text>Ova datoteka je skinuta, Shareaza proverava da li je ispravna.
 		ako se nađe koja greška ili oštećenje Shareaza će to automatski ispraviti.</text>
-
 	</document>
-
 	<document name="DownloadHelp.Downloading">
 		<text format="b">Ovo Skidanje je u Toku!</text>
 		<newline gap="8"/>
@@ -1948,7 +1938,6 @@
 		može biti da korisnici koji dele imaju malu brzinu davanja.
 		Brzina skidanja se obično poveća s vremenom.</text>
 	</document>
-
 	<document name="DownloadHelp.Pending">
 		<text format="b">Ovo Skidanje je na Čekanju</text>
 		<newline gap="8"/>
@@ -1959,7 +1948,6 @@
 		see each queue you are waiting in. If you are sharing files yourself, it may
 		improve the chances of a download transfer starting quickly.</text>
 	</document>
-
 	<document name="DownloadHelp.Queued">
 		<text format="b">Ovo Skidanje Čeka</text>
 		<newline gap="8"/>
@@ -1969,7 +1957,6 @@
 		bandwidth.You can change these settings via Tools, Shareaza Settings.
 		Alternatively, you may manually start this download with the resume command.</text>
 	</document>
-
 	<document name="DownloadHelp.Searching">
 		<text format="b">Ovo Skidanje Traži Izvore</text>
 		<newline gap="8"/>
@@ -1984,14 +1971,12 @@
 		someone to come online, or cancel it and try to find a similar file which is
 		more widely available.</text>
 	</document>
-
 	<document name="DownloadHelp.Creating">
 		<text format="b">Ovo Skidanje je u Fazi Nastanka</text>
 		<newline gap="8"/>
 		<text>Shareaza stvara datoteku u koju će sačuvati skinuti sadržaj.
 		Time se kasnije štedi vreme.</text>
 	</document>
-
 	<document name="DownloadHelp.Tracker">
 		<text format="b">BitTorrent Tracker Down</text>
 		<newline gap="8"/>
@@ -1999,18 +1984,14 @@
 		down or malfunctioning.Shareaza is unable to contact it to receive
 		a list of downloader peers.</text>
 	</document>
-
 	<!-- Upload help documents -->
-
 	<document name="UploadHelp">
 		<text format="b">Praćenje Davanja</text>
 		<newline gap="8"/>
 		<text>Ovde se nalaze datoteke koje trenutno dajete. Pritiskom na maleni +	na levoj
 		strani otvara se red čekanja, a dole desno pored windows trake sa alatima imate koristan filter.</text>
 	</document>
-
 	<!-- General help documents -->
-
 	<document name="GeneralHelp.DiskSpace">
 		<text format="b">Imate Malo Mesta na Disku</text>
 		<newline gap="8"/>
@@ -2020,7 +2001,6 @@
 		Programi mogu postati nestabilni, i temporary datoteke se mogu izbrisati. Trebali biste
 		pokrenuti disk clean-up, Obrisati nepotrebne datoteke, ili un-install programe koji vam nisu potrebni.</text>
 	</document>
-
 	<document name="GeneralHelp.DiskWriteFail">
 		<text format="b">U odabranu fasciklu se ne može pisati</text>
 		<newline gap="8"/>
@@ -2030,7 +2010,6 @@
 		to a selected directory. Please check directories and permissions, or change the
 		temporary files location.</text>
 	</document>
-
 	<document name="GeneralHelp.ConnectionFail">
 		<text format="b">Internet veza je prekinuta</text>
 		<newline gap="8"/>
@@ -2041,7 +2020,6 @@
 		<newline gap="8"/>
 		<text>Shareaza se više ne pokušava spojiti da izbegne mogući gubitak svih hostova u cachu.</text>
 	</document>
-
 	<document name="GeneralHelp.AdultFilter">
 		<text format="b">Filter za sadržaje za odrasle je uključen</text>
 		<newline gap="8"/>
@@ -2051,7 +2029,6 @@
 		<newline gap="8"/>
 		<text>Kada deca koriste internet (uključujući P2P deljenje) moraju uvek biti pod roditeljskim nadzorom.</text>
 	</document>
-
 	<document name="GeneralHelp.BadTorrentEncoding">
 		<text format="b">This torrent appears to have an encoding error</text>
 		<newline gap="8"/>
@@ -2065,7 +2042,6 @@
 		<link target="http://shareaza.sourceforge.net/help/?torrentencoding">Click here for additional help</link>
 		<text>, or to download software to repair the torrent.</text>
 	</document>
-
 	<document name="GeneralHelp.DonkeyServerList">
 		<text format="b">Vaša eDonkey server lista je prazna</text>
 		<newline gap="8"/>
@@ -2075,7 +2051,6 @@
 		<text>Možete skinuti server listu iz stranice podešavanja za ed2k,ili sa discovery services
 		prozora. (F9 otvara discovery services prozor)</text>
 	</document>
-
 	<document name="GeneralHelp.UploadWarning">
 		<text format="b">Ograničenje brzine davanja može usporiti skidanje</text>
 		<newline gap="8"/>
@@ -2091,7 +2066,6 @@
 		downloads that are available.</text>
 	</document>
     <!-- Search help documents -->
-
 	<document name="SearchHelp.BadSearch1">
 		<text format="b">Molim da promenite frazu za traženje</text>
 		<newline gap="8"/>
@@ -2103,7 +2077,6 @@
 		<text>Većina klijenata na mreži ignoriše potragu za npr. svim mp3-ama,
 		iz jednostavnog razloga što nije dovoljno određena, a i ima previše rezultata.</text>
 	</document>
-
 	<document name="SearchHelp.BadSearch2">
 		<text format="b">Molim da promenite frazu za traženje</text>
 		<newline gap="8"/>
@@ -2114,7 +2087,6 @@
 		other terms as well when creating the search. Punctuation and wildcards are not used
 		in searches, just the text you enter.</text>
 	</document>
-
 	<document name="SearchHelp.BadSearch3">
 		<text format="b">Molim da promenite frazu za traženje</text>
 		<newline gap="8"/>
@@ -2130,7 +2102,6 @@
 		<newline gap="8"/>
 		<text>Further help is available on the Shareaza web site.</text>
 	</document>
-
 	<document name="SearchHelp.AdultSearch">
 		<text format="b">Ovu potragu ne mogu početi</text>
 		<newline gap="8"/>
@@ -2141,17 +2112,14 @@
 		<text>To disable the filter, go into Tools &gt; Settings &gt; General and un-check the
 		adult content filter.</text>
 	</document>
-
 	<!-- Share help documents -->
-
-	<document name="ShareHelp.AlreadyShared">
+<document name="ShareHelp.AlreadyShared">
 		<text format="b">Već Delite</text>
 		<newline gap="8"/>
 		<text>Fasciklu koju ste odabrali već delite kao deo postojećeg deljenja.</text>
 		<newline gap="8"/>
 		<text>%s</text>
 	</document>
-
 	<document name="ShareHelp.BadShare">
 		<text format="b">Ovu fascikluu ne biste smeli deliti</text>
 		<newline gap="8"/>
@@ -2166,10 +2134,8 @@
 		<text>Shareazina 'incomplete' fascikla nebi smela biti deljena kroz kolekciju,
 		 jer proveravanje i dodavanje sadržaja koji se još uvijek skida može značajno usporiti rad.</text>
 	</document>
-
 </documents>
-
-<!-- Localised Command Tip Text.The "message" is displayed in the status bar, while the "tip" is shown in a tooltip -->
+<!-- Localised Command Tip Text. The "message" is displayed in the status bar, while the "tip" is shown in a tooltip -->
 <commandTips>
 	<tip id="ID_BROWSE_FILES" message="Pogledaj koje datoteke deli"/>
 	<tip id="ID_BROWSE_LAUNCH" message="Pogledaj profil i datoteke koje deli odabrani korisnik."/>
@@ -2252,6 +2218,7 @@
 	<tip id="ID_HELP_HOMEPAGE" message="Posetite Shareaza web stranicu."/>
 	<tip id="ID_HELP_SECURITY" message="Zaštite Vaš sistem od neprijateljskih programa - pomoć."/>
 	<tip id="ID_HELP_UPDATE" message="Pogledajte novosti."/>
+	<tip id="ID_HELP_TEST" message="Run the connection test."/>
 	<tip id="ID_HELP_WEB_1" message="Poseti ovu web stranicu"/>
 	<tip id="ID_HELP_WEB_2" message="Poseti ovu web stranicu"/>
 	<tip id="ID_HELP_WEB_3" message="Poseti ovu web stranicu"/>
@@ -2471,6 +2438,7 @@
 	<tip id="ID_WINDOW_TILE_HORZ" message="Složi otvorene prozore naporedno vodoravno, bez preklapanja."/>
 	<tip id="ID_WINDOW_TILE_VERT" message="Složi otvorene prozore naporedno uspravno, bez preklapanja."/>
 	<tip id="ID_WINDOW_TOOLBAR" message="Prikaži ili sakrij traku sa alatima."/>
+	<!-- PLUGIN TIPS -->
 </commandTips>
 
 <!-- Localised Strings -->
@@ -3144,12 +3112,10 @@
 	<string id="20215" value="Vrlo Dobro"/>
 	<string id="20216" value="Odlično"/>
 </strings>
-
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
 <dialogs>
 	<dialog name="CGeneralSettingsGroup" cookie="" caption="Opšta">
 	</dialog>
-
 	<dialog name="CSettingSheet" cookie="SyBuBuBu#3" caption="Shareazina Podešavanja">
 		<control/>
 		<control caption="OK"/>
@@ -3157,7 +3123,6 @@
 		<control caption="Potvrdi"/>
 		<control/>
 	</dialog>
-
 	<dialog name="CGeneralSettingsPage" cookie="BuBuBuBuStCoBuBuBuBuBuBuBuBuBuSyStEdmsStmsBuStCoStCo" caption="Opšta">
 		<control caption="Opšta:"/>
 		<control caption="Spoji se kad pokrenem Shareazu"/>
@@ -3186,7 +3151,6 @@
 		<control caption="Kada pritisnem spusti:"/>
 		<control caption="Normalno|Spusti u Tray"/>
 	</dialog>
-
 	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBuBuBu" caption="Kolekcija">
 		<control caption="_Opcije:"/>
 		<control caption="Zapamti fascikle"/>
@@ -3217,7 +3181,6 @@
 		<control caption="Create ghost files when deleting"/>
 		<control caption="Smart video series detection"/>
 	</dialog>
-
 	<dialog name="CMediaSettingsPage" cookie="BuCoBuBuBuCoBuBuBuBuBuStSt" caption="Media Player">
 		<control caption="_Opcije:"/>
 		<control/>
@@ -3233,7 +3196,6 @@
 		<control caption="Choose Media Handler:"/>
 		<control caption="Warning: Choosing an external Media Handler will automatically disable all Media and Visualisation Plugins!"/>
 	</dialog>
-
 	<dialog name="CCommunitySettingsPage" cookie="BuStBuBuBuBuBuBu" caption="Zajednica">
 		<control caption="Moj _Profil:"/>
 		<control caption="Možete koristiti vaš Gnutella Profil kako biste dali informacije o vama, šta vas zanima i koje datoteke i web stranice preporučujete"/>
@@ -3244,7 +3206,6 @@
 		<control caption="Filtriraj poruke koje sadrže smeće"/>
 		<control caption="Cenzuriši prostačenje"/>
 	</dialog>
-
 	<dialog name="CWebSettingsPage" cookie="BuStBuBuBuBuBuBuBuCoBuBuSt" caption="Web">
 		<control caption="Upravljanje _Peer to Peer Linkovima:"/>
 		<control caption="Koristi Shareazu za otvaranje ovih vrsta linkova:"/>
@@ -3260,10 +3221,8 @@
 		<control caption="Ukloni"/>
 		<control caption="Upravitelj Skidanja plugin skida samo datoteke onih prsta koje su na listi.Ostale tipove otvara Vaš internet preglednik.Shareaza mora biti pokrenuta da bi Upravitelj Skidanja radio."/>
 	</dialog>
-
 	<dialog name="CInternetSettingsGroup" caption="Internet">
 	</dialog>
-
 	<dialog name="CConnectionSettingsPage" cookie="BuStCoStCoStEdBuBuBuStCoStCoBuStCoBuBuStEdmsStEdms" caption="Veza">
 		<control caption="Dolazna Adresa:"/>
 		<control caption="Adresa:"/>
@@ -3291,7 +3250,6 @@
 		<control/>
 		<control/>
 	</dialog>
-
 	<dialog name="CDownloadsSettingsPage" cookie="BuEdBuBuEdBuBuStEdmsStEdmsStEdmsBuStCoStCoBuBu" caption="Skidanje">
 		<control caption="Skinute Datoteke Sačuvaj Ovde:"/>
 		<control/>
@@ -3317,7 +3275,6 @@
 		<control/>
 		<control caption="Skidaj i deli samo sa spojenih mreža"/>
 	</dialog>
-
 	<dialog name="CUploadsSettingsPage" cookie="BuBuBuBuStEdmsBuCoBuBuBuStCoStCoBuSyBuBuBuSt" caption="Deljenje">
 		<control caption="_Opcije:"/>
 		<control caption="Deli DELIMIČNO Skinute Datoteke"/>
@@ -3342,7 +3299,6 @@
 		<control caption="Obriši"/>
 		<control caption="(promene deluju odmah)"/>
 	</dialog>
-
 	<dialog name="CRemoteSettingsPage" cookie="BuStBuBuStBuStEdStEd" caption="Pristup na Daljinu">
 		<control caption="Vodič:"/>
 		<control caption="Shareazin pristup na daljinu vam omogućava da ostavite upaljen PC sa pokrenutom Shareazom, i njome upravljate sa druge lokacije. Da bi ste koristili ovu opciju morate biti u mogućnosti primati dolazeće veze(npr. podešen ruter, itd)."/>
@@ -3355,7 +3311,6 @@
 		<control caption="Odaberi Lozinku:"/>
 		<control/>
 	</dialog>
-
 	<dialog name="CSchedulerSettingsPage" cookie="BuBuEdmsBuBuStStStStStStStStStStStEdBuSt" caption="Plan Skidanja">
 		<control caption="_Opcije:"/>
 		<control caption="Uključi Plan"/>
@@ -3378,7 +3333,6 @@
 		<control caption="Pomoć"/>
 		<control caption="Planer skidanja je osmišljen da omoguči Shareazi spajanje i skidanje u određeno doba dana. {n}{n}{n}Napomena: Ako je Shareaza pokrenuta i plan uključen, možete videti promene podešavanja- to je normalno!-"/>
 	</dialog>
-
 	<dialog name="CNetworksSettingsPage" cookie="StBuStBuStBuStBuStBuStBuSt" caption="Mreže">
 		<control caption="Shareaza je program za deljenje i skidanje datoteka opšteg sadržaja, i može se istovremeno spojiti na više P2P mreža.Ovde možete odabrati kojim mrežama želite pristupiti, te podesiti svaku posebno."/>
 		<control caption="Gnutella2 Mreža:"/>
@@ -3394,7 +3348,6 @@
 		<control caption="Spoji se na Originalnu Gnutellu"/>
 		<control caption="Podesi Gnutellu1"/>
 	</dialog>
-
 	<dialog name="CGnutellaSettingsPage" cookie="BuBuBuStCoBuStEdmsStEdmsStEdmsBuBuBuStCoBuStEdmsStEdmsStEdmsBuBuBuBu" caption="Gnutella">
 		<control caption="Gnutella2 Mreža:"/>
 		<control caption="Uvek se spoji na Gnutellu2"/>
@@ -3431,7 +3384,6 @@
 		<control caption="Leaf u Hub"/>
 		<control caption="Hub u Hub"/>
 	</dialog>
-
 	<dialog name="CDonkeySettingsPage" cookie="BuBuBuBuBuStEdmsStBuBuStEdmsStBuStBu" caption="eDonkey2000">
 		<control caption="_eDonkey2000 Mreža:"/>
 		<control caption="Spoji se na eDonkey2000"/>
@@ -3451,7 +3403,6 @@
 		<control caption="Skini eDonkey2000 listu servera sa neta:"/>
 		<control caption="Skini..."/>
 	</dialog>
-
 	<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsStEdmsStBuEdmsStBuBuBuBuEdBuBuEdBuStEd" caption="BitTorrent">
 		<control caption="Izgled(interface):"/>
 		<control caption="Prikaži dodatne BitTorrent elemente"/>
@@ -3478,12 +3429,10 @@
 		<control caption="Default Tracker:"/>
 		<control/>
 	</dialog>
-
 	<dialog name="CProtocolsSettingsPage" cookie="BuSy" caption="Protokoli">
 		<control caption="Shareaza Common Architecture Protocol Explorer:"/>
 		<control/>
 	</dialog>
-
 	<dialog name="CSkinsSettingsPage" cookie="SyBuStStStStStEdBuBuBu" caption="Skinovi">
 		<control/>
 		<control caption="Informacije o Skinu:"/>
@@ -3497,7 +3446,6 @@
 		<control caption="Instaliraj..."/>
 		<control caption="Stavi Više"/>
 	</dialog>
-
 	<dialog name="CPluginsSettingsPage" cookie="SyBuStStStEdBuBu" caption="Pluginovi">
 		<control/>
 		<control caption="Informacije o Pluginu:"/>
@@ -3508,7 +3456,6 @@
 		<control caption="_Podesi..."/>
 		<control caption="Stavi Više"/>
 	</dialog>
-
 	<dialog name="CAdvancedSettingsPage" cookie="SyEdmsBuBuStStEd" caption="Napredno">
 		<control/>
 		<control/>
@@ -3519,7 +3466,6 @@
 		<control caption="Opis:"/>
 		<control/>
 	</dialog>
-
 	<dialog name="CQueuePropertiesDlg" cookie="BuEdBuBuBuEdBuEdBuCoBuEdBuSyBuBuStEdmsStEdmsStEdmsBuStEdStEdmsBuEdmsBuBuBu" caption="Podešavanja davanja">
 		<control caption="Ime:"/>
 		<control/>
@@ -3559,7 +3505,6 @@
 		<control caption="Odustani"/>
 		<control caption="Reward uploaders"/>
 	</dialog>
-
 	<dialog name="CWizardWelcomePage" cookie="StStStStStStStStStStStSt" caption="Dobrodošli u Shareazu">
 		<control caption="Dobrodošli u Shareazu!"/>
 		<control caption="Ako još niste koristili Shareazu ili neki drugi P2P klijent,brzo i lagano pomoćnik će vam u nekoliko jednostavnih koraka pomoći prilikom podešavanja osnovnih opcija."/>
@@ -3574,7 +3519,6 @@
 		<control/>
 		<control caption="Započeti koristiti Shareazu."/>
 	</dialog>
-
 	<dialog name="CWizardConnectionPage" cookie="StStCoStCoStCoStCoStms" caption="Dobrodošli u Shareazu (1/6)">
 		<control caption="Da bi ispravno radila, Shareaza treba znati nešto i o Vašoj vezi prema internetu."/>
 		<control caption="Ako znate brzinu vaše veze na Internet molim da odaberete najbolju opciju:"/>
@@ -3588,7 +3532,6 @@
 		<control caption="Status:"/>
 		<control/>
 	</dialog>
-
 	<dialog name="CWizardSharePage" cookie="StStStSyBuBuSt" caption="Dobrodošli u Shareazu (2/6)">
 		<control caption="P2P mreže su dobre onoliko koliko i ljudi koji ih koriste.Sve šta je vama dostupno za skidanje, neko to deli sa vama."/>
 		<control caption="Ne morate ništa deliti da bi ste koristili Shareazu, iako neki programi se ponašaju drugačije prema korisnicima koji samo skidaju a ništa ne dele."/>
@@ -3598,7 +3541,6 @@
 		<control caption="Ukloni"/>
 		<control caption="UPOZORENJE: Distribucija autorski zaštičenih dela je prekršaj u većini zemalja."/>
 	</dialog>
-
 	<dialog name="CFolderScanDlg" cookie="StStStStStStBu" caption="Skeniram Fasiciklu...">
 		<control/>
 		<control caption="..."/>
@@ -3608,7 +3550,6 @@
 		<control caption="0"/>
 		<control caption="Zatvori"/>
 	</dialog>
-
 	<dialog name="CWizardProfilePage" cookie="StStEdStCoCoStCoCo" caption="Dobrodošli u Shareazu (3/6)">
 		<control caption="Shareaza izgleda lepše i prijateljskije kada svatko napiše neke osnovne podatke o sebi."/>
 		<control caption="Moje ime je:"/>
@@ -3620,7 +3561,6 @@
 		<control/>
 		<control/>
 	</dialog>
-
 	<dialog name="CWizardInterfacePage" cookie="StBuBuBuStStBuBu" caption="Dobrodošli u Shareazu (4/6)">
 		<control caption="Shareaza podržava dva korisnička izgleda, ovde možete izabrati koji vam više odgovara."/>
 		<control caption="Molim odaberite korisničko izgled:"/>
@@ -3631,7 +3571,6 @@
 		<control caption="Pokaži jednostavni pokazivač napretka."/>
 		<control caption="Preuzmi torrent linkove."/>
 	</dialog>
-
 	<dialog name="CWizardNetworksPage" cookie="StBuStBuStBuSt" caption="Dobrodošli u Shareazu (5/6)">
 		<control caption="Shareaza je program za deljenje i skidanje datoteka opšteg sadržaja, i može se istovremeno spojiti na više P2P mreža.Ovde možete odabrati kojim mrežama želite pristupiti.Posle možete promeniti odabrane mreže."/>
 		<control caption="Spoji se na Gnutellu2 (Preporučeno)"/>
@@ -3641,7 +3580,6 @@
 		<control caption="Spoji se na Originalnu Gnutellu"/>
 		<control caption="Iako originalna Gnutellina mreža ima manje mogućnosti od Gnutelle2,manje datoteka od eDonkey2000, i dalje je vredan izvor datoteka."/>
 	</dialog>
-
 	<dialog name="CDonkeyImportDlg" cookie="StStBuBuEdBu" caption="Ubaci eDonkey2000 Skidanje">
 		<control/>
 		<control caption="Shareaza je našla da već imate neki eDonkey2000 program instaliran.Želite li ubaciti nedovršena skidanja u Shareazu?"/>
@@ -3650,7 +3588,6 @@
 		<control/>
 		<control caption="Zatvori"/>
 	</dialog>
-
 	<dialog name="CWizardFinishedPage" cookie="StStStBuBuBuSt" caption="Dobrodošli u Shareazu (6/6)">
 		<control caption="To je to!Shareaza je prilagođena za rad na Vašem računaru."/>
 		<control caption="Ukoliko kasnije želite da promenite podešavanja, možete odabrati Brzo i Lagano pomoćnika iz menija Alati."/>
@@ -3660,7 +3597,6 @@
 		<control caption="Upali Shareazu sa Windowsom"/>
 		<control caption="Uživajte koristeći Shareazu!"/>
 	</dialog>
-
 	<dialog name="CProfileManagerDlg" cookie="SyBuBuBu#3" caption="Promena Moga Profila">
 		<control/>
 		<control caption="OK"/>
@@ -3668,7 +3604,6 @@
 		<control caption="Potvrdi"/>
 		<control/>
 	</dialog>
-
 	<dialog name="CIdentityProfilePage" cookie="BuStEdStEdEdBuCoStCoStBu" caption="Identitet">
 		<control caption="Ime:"/>
 		<control caption="Nadimak:"/>
@@ -3683,7 +3618,6 @@
 		<control caption="Starost:"/>
 		<control caption="Dopusti ostalima da pogledaju šta delim"/>
 	</dialog>
-
 	<dialog name="CContactProfilePage" cookie="BuStEdBuStEdStEdStEdStEdStEd" caption="Kontakt">
 		<control caption="_Email Adresa:"/>
 		<control caption="Glavna:"/>
@@ -3700,7 +3634,6 @@
 		<control caption="Jabber ID:"/>
 		<control/>
 	</dialog>
-
 	<dialog name="CProfileProfilePage" cookie="BuStCoStCoBuStEdStEdBuLiBuBuCo" caption="Profil">
 		<control caption="Mesto Stanovanja"/>
 		<control caption="Država:"/>
@@ -3718,11 +3651,9 @@
 		<control caption="Ukloni &gt;"/>
 		<control/>
 	</dialog>
-
 	<dialog name="CBioProfilePage" cookie="Ed" caption="Bio">
 		<control/>
 	</dialog>
-
 	<dialog name="CAvatarProfilePage" cookie="BuStBuStBuBu" caption="Avatar">
 		<control caption="_Pregled:"/>
 		<control/>
@@ -3731,7 +3662,6 @@
 		<control caption="Traži"/>
 		<control caption="Ukloni"/>
 	</dialog>
-
 	<dialog name="CFavouritesProfilePage" cookie="SyBuStEdStEdBuBu" caption="Moje Preporuke">
 		<control/>
 		<control caption="Prom_eni:"/>
@@ -3742,13 +3672,11 @@
 		<control caption="Novi"/>
 		<control caption="Ukloni"/>
 	</dialog>
-
 	<dialog name="CFilesProfilePage" cookie="BuStSy" caption="Datoteke">
 		<control caption="Vaše Datoteke Koje Preporučutje Ostalim Korisnicima:"/>
 		<control caption="Datoteke koje preporučite su vidljive svima koji pogledaju Vaš profil.Datoteku možete staviti u preporuke tako da je stavite u &quot;Favourites&quot; fasciklu u kolekciji."/>
 		<control/>
 	</dialog>
-
 	<dialog name="CCertificateProfilePage" cookie="StBuStStStStBu" caption="Certifikat">
 		<control caption="Gnutella korisnici se identificiraju po jedinstvenom broju i pripadajućim javnim i privatnim parom ključa. U normalnom radu nema potrebe za menjanjem ID broja, ipak Shareaza to omogućuje naprednim korisnicima."/>
 		<control caption="_Gnutella Globally Unique Identification Certificate:"/>
@@ -3758,10 +3686,8 @@
 		<control/>
 		<control caption="Promeni"/>
 	</dialog>
-
 	<dialog name="CLanguageDlg" cookie="" caption="Odaberite Jezik">
 	</dialog>
-
 	<dialog name="CConnectToDlg" cookie="BuCoEdBuCoBuBuBu" caption="Spoji se|Pogledaj šta ima">
 		<control caption="Započmi novu vezu sa hostom ili serverom:|Pogledaj šta ima ovaj host:"/>
 		<control/>
@@ -3772,7 +3698,6 @@
 		<control caption="Spoji"/>
 		<control caption="Odustani"/>
 	</dialog>
-
 	<dialog name="CDownloadDlg" cookie="StStStEdBuBuStStBu" caption="Skini Datoteku ili Torrent">
 		<control/>
 		<control/>
@@ -3784,14 +3709,12 @@
 		<control caption="Shareaza još može skinuti BitTorrent datoteke.Torrent može biti xyz.torrent datoteka, ili HTTP link na .torrent datoteku.Za skinuti torrent HTTP link, zalepi ga u gornji prostor.Ako već imate .torrent datoteku, kliknite na Otvori Torrent:"/>
 		<control caption="Otvori _Torrent..."/>
 	</dialog>
-
 	<dialog name="CNewSearchDlg" cookie="EdCoBuBu" caption="Nova Potraga|Ponovi Potragu|Nađi u Kolekciji">
 		<control/>
 		<control/>
 		<control caption="Traži"/>
 		<control caption="Odustani"/>
 	</dialog>
-
 	<dialog name="CFilterSearchDlg" cookie="BuEdBuStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuBuBuCoBuBuBuBuBu" caption="Filtrirani Rezultati">
 		<control caption="Pokaži samo rezultate koji sadrže ove reči:"/>
 		<control/>
@@ -3824,14 +3747,12 @@
 		<control caption="Filter"/>
 		<control caption="Odustani"/>
 	</dialog>
-
 	<dialog name="CSaveFilterAsDlg" cookie="EdBuBuSt" caption="Sačuvaj filter kao">
 		<control/>
 		<control caption="OK"/>
 		<control caption="Odustani"/>
 		<control caption="Sačuvaj trenutni filter kao"/>
 	</dialog>
-
 	<dialog name="CDiscoveryServiceDlg" cookie="BuEdStCoBuBu" caption="Discovery Service">
 		<control caption="Service _Address:"/>
 		<control/>
@@ -3840,7 +3761,6 @@
 		<control caption="OK"/>
 		<control caption="Odustani"/>
 	</dialog>
-
 	<dialog name="CDownloadMonitorDlg" cookie="StStStStStStStStStStStStStBuBuBuBuBu" caption="Skidanje : Shareaza">
 		<control caption="Shareaza trenutno skida:"/>
 		<control caption="..."/>
@@ -3861,7 +3781,6 @@
 		<control caption="Poništi Skidanje"/>
 		<control caption="Sakrij"/>
 	</dialog>
-
 	<dialog name="CFileGeneralPage" cookie="StEdEdEdEdStStEdStEdStEdStEdEdEd" caption="Opšti">
 		<control caption="Universal Resource Names (URNs)"/>
 		<control/>
@@ -3880,12 +3799,10 @@
 		<control/>
 		<control/>
 	</dialog>
-
 	<dialog name="CFileMetadataPage" cookie="CoEd" caption="Metadata">
 		<control/>
 		<control/>
 	</dialog>
-
 	<dialog name="CFileCommentsPage" cookie="StStCoStEdEd" caption="Moja Kritika">
 		<control caption="Moja Ocena"/>
 		<control caption="Ja ocenjujem s:"/>
@@ -3894,7 +3811,6 @@
 		<control/>
 		<control/>
 	</dialog>
-
 	<dialog name="CFileSharingPage" cookie="StBuBuBuStCoStSyEd" caption="Deljenje">
 		<control caption="Jednostavno Deljenje"/>
 		<control caption="Deli datoteku ako je gornja fascikla deljena"/>
@@ -3906,7 +3822,6 @@
 		<control/>
 		<control/>
 	</dialog>
-
 	<dialog name="CFileSourcesPage" cookie="StStEdSyBuBuEd" caption="Izvori">
 		<control caption="Poznati Izvori"/>
 		<control caption="Dodaj Novi Izvor"/>
@@ -3916,7 +3831,6 @@
 		<control caption="Ukloni"/>
 		<control/>
 	</dialog>
-
 	<dialog name="CFileCopyDlg" cookie="StStmsBuBumsStSt" caption="Kopiraj Datoteke|Premesti Datoteke">
 		<control caption="Odabrali ste %i Datoteka(u) za kopiranje u sledeću fasciklu:"/>
 		<control/>
@@ -3927,7 +3841,6 @@
 		<control caption="Spremno..."/>
 		<control caption="Odabrali ste %i Datoteka(u) za kopiranje u sledeću fasciklu:"/>
 	</dialog>
-
 	<dialog name="CFolderPropertiesDlg" cookie="StEdStCoBuStBuBu" caption="Podešavanje Fascikle sa Albumima">
 		<control caption="Ime Fascikle sa Albumima:"/>
 		<control/>
@@ -3938,7 +3851,6 @@
 		<control caption="OK"/>
 		<control caption="Odustani"/>
 	</dialog>
-
 	<dialog name="CGraphListDlg" cookie="SyBuBuBuBuBuBuBuBuStEdmsStBuEdBuBu" caption="Graf Prometa">
 		<control/>
 		<control caption="Dod_aj..."/>
@@ -3958,7 +3870,6 @@
 		<control caption="OK"/>
 		<control caption="Odustani"/>
 	</dialog>
-
 	<dialog name="CGraphItemDlg" cookie="BuBuBuCoStEdStEdBuBuStBu" caption="Graph Item Properties">
 		<control caption="OK"/>
 		<control caption="Odustani"/>
@@ -3973,7 +3884,6 @@
 		<control/>
 		<control caption="Ukloni"/>
 	</dialog>
-
 	<dialog name="CSchemaColumnsDlg" cookie="CoSyBuBuSt" caption="Odaberite Kolonu iz Šeme">
 		<control/>
 		<control/>
@@ -3981,7 +3891,6 @@
 		<control caption="Odustani"/>
 		<control caption="Izaberite šemu sa liste, zatim odaberite detalje koje želite da prikažete uz datoteke u fasckli, kao kolone ."/>
 	</dialog>
-
 	<dialog name="CSecureRuleDlg" cookie="BuStCoStEdBuStEdEdEdEdStEdEdEdEdBuEdBuBuBuBuStCoStCoEdStEdStEdStBuBu" caption="Sigurnosna Pravila">
 		<control caption="P_ravilo:"/>
 		<control caption="Tip:"/>
@@ -4018,7 +3927,6 @@
 		<control caption="OK"/>
 		<control caption="Odustani"/>
 	</dialog>
-
 	<dialog name="CShareManagerDlg" cookie="StStSyBuBuBuBu" caption="Pomoćnik oko Deljenih Fascikala">
 		<control/>
 		<control caption="Ovde je lista fascikala u vašoj kolekciji.Možete ukloniti ili dodati fascikle koristeći dugmad na levoj strani.Kada dodate novu fasciklu ona je inicijalno deljena sa ostalim korisnicima, ipak Vi kasnije možete da je isključite iz deljenja ukoliko to želite(iz kolekcije-library)."/>
@@ -4028,7 +3936,6 @@
 		<control caption="OK"/>
 		<control caption="Odustani"/>
 	</dialog>
-
 	<dialog name="CURLCopyDlg" cookie="StStStStStBuBu" caption="Kopiraj URI">
 		<control/>
 		<control caption="Vi možete kopirati URI za selektovanu datoteku u više različith formata. Molimo Vas izaberite foramat koji želite da koristite tako što ćete kliknuti na URIe ispod:"/>
@@ -4038,7 +3945,6 @@
 		<control caption="Uključi _sebe kao stalni izvor u URL"/>
 		<control caption="Odustani"/>
 	</dialog>
-
 	<dialog name="CURLExportDlg" cookie="StStEdStCoStCoBuBumsBu" caption="Export URIs">
 		<control/>
 		<control caption="You have selected %lu files to export as Shareaza-powered URI references.Please select the format for the URIs, and click Save:"/>
@@ -4052,7 +3958,6 @@
 		<control/>
 		<control caption="Odustani"/>
 	</dialog>
-
 	<dialog name="CURLActionDlg" cookie="StStStStStEdStEdStBuBuBuBuBuSt" caption="Shareaza URI Manager">
 		<control/>
 		<control caption="You have clicked on a Shareaza-powered URI which links to the following content on the network:"/>
@@ -4070,7 +3975,6 @@
 		<control caption="Otvori prozor skidanja"/>
 		<control caption="You have clicked on a Shareaza-powered URI which will add the following Discovery Service to your Discovery Services cache."/>
 	</dialog>
-
 	<dialog name="CBitziDownloadDlg" cookie="StStmsBuSySt" caption="Skidam Metadate...">
 		<control/>
 		<control caption="Shareaza pokušava da skine metadata od Bitzi(TM)..."/>
@@ -4079,7 +3983,6 @@
 		<control/>
 		<control caption="www.bitzi.com"/>
 	</dialog>
-
 	<dialog name="CFilePreviewDlg" cookie="StStStmsStBu" caption="Pametni pregled skinutog...">
 		<control/>
 		<control caption="Shareaza stvara pregled skinutog dela:"/>
@@ -4088,7 +3991,6 @@
 		<control caption="(kopiram skinute delove u novu datoteku za pregled)"/>
 		<control caption="Odustani"/>
 	</dialog>
-
 	<dialog name="CWarningsDlg" cookie="StStStStStStStBu" caption="Shareaza Poštuje Svoje Korisnike">
 		<control/>
 		<control caption="Jeste li znali da je Shareaza 100% besplatni proizvod?"/>
@@ -4099,7 +4001,6 @@
 		<control caption="http://shareaza.sourceforge.net/"/>
 		<control caption="Zatvori"/>
 	</dialog>
-
 	<dialog name="CPromoteDlg" cookie="StStStStStStStBu" caption="Razglasi">
 		<control/>
 		<control caption="Pomognite Nam Da Raširimo Reč"/>
@@ -4110,7 +4011,6 @@
 		<control caption="http://shareaza.sourceforge.net/"/>
 		<control caption="OK"/>
 	</dialog>
-
 	<dialog name="CExistingFileDlg" cookie="StStStStStBuBuBuBuBuSt" caption="Postojeća Datoteka">
 		<control/>
 		<control/>
@@ -4124,7 +4024,6 @@
 		<control caption="Odustani"/>
 		<control caption="Ovu datoteku ste već skinuli, pa obrisali.  Šta želite učiniti?"/>
 	</dialog>
-
 	<dialog name="CCloseModeDlg" cookie="StStBuBuBuBuBu" caption="Zatvaranje">
 		<control/>
 		<control caption="Ovo je prvi puta da zatvarate Shareazu.Molim da odaberete šta će Shareaza učiniti kada ubuduće kliknete na zatvori:"/>
@@ -4134,7 +4033,6 @@
 		<control caption="OK"/>
 		<control caption="Odustani"/>
 	</dialog>
-
 	<dialog name="CDonkeyServersDlg" cookie="StStEdmsBuBu" caption="Download Server.met File">
 		<control/>
 		<control caption="Možete skinuti eDonkey2000 server.met datoteku sa neta da bi obnovili vašu listu servera."/>
@@ -4143,13 +4041,11 @@
 		<control caption="OK"/>
 		<control caption="Odustani"/>
 	</dialog>
-
 	<dialog name="CHelpDlg" cookie="StBuAf" caption="Shareazina Pomoć">
 		<control/>
 		<control caption="Zatvori"/>
 		<control/>
 	</dialog>
-
 	<dialog name="CDeleteFileDlg" cookie="StStBuBuBuStStBuStCoStCoStEd" caption="Obriši Datoteku">
 		<control caption="Jeste li sigurni da želite obrisati:"/>
 		<control/>
@@ -4166,7 +4062,6 @@
 		<control caption="Možete napisati kratki opis zašto je ova datoteka loša:"/>
 		<control/>
 	</dialog>
-
 	<dialog name="CCollectionExportDlg" cookie="StSyBuStStStStStEdBuBuBu" caption="Export Folder-Izvezi Fasciklu">
 		<control caption="Ova funkcija se koristi za izvoz sadržaja album fascikle kao rich collection file."/>
 		<control/>
@@ -4181,7 +4076,6 @@
 		<control caption="_Next|_Export..."/>
 		<control caption="Odustani"/>
 	</dialog>
-
 	<dialog name="CDownloadEditPage" cookie="StBuStEdEdStEdBuStStEdBuStEdBuStEdBuBuStStStStStBuStEdStEdBu" caption="Download Properties (Napredno)">
 		<control caption="UPOZORENJE: Ove opcije omogućuju napredno podešavanje skidanja, ako se pogrešno koriste verovatno će uzrokovati GREŠKU u skinutoj datoteci"/>
 		<control caption="Ime Datoteke and Size:"/>
@@ -4213,7 +4107,6 @@
 		<control/>
 		<control caption="Obriši"/>
 	</dialog>
-
 	<dialog name="CTorrentSeedDlg" cookie="StStBuBuBuStms" caption="Otvori Torrent Datoteku">
 		<control/>
 		<control caption="Otvorili ste BitTorrent torrent datoteku.Želite je skinuti, ili re-seed?"/>
@@ -4223,7 +4116,6 @@
 		<control caption="Da bi ste delili komletne(seed) datoteke koristeći BitTorrent one moraju prvo biti seeded.Nakon toga Torrent  će se pojaviti kao nova stavaka na Vasoj download listi."/>
 		<control/>
 	</dialog>
-
 	<dialog name="CTorrentGeneralPage" cookie="BuStEdStEdStEdStEdStEdBuStEdStEdBuStCoBuSyBuCoBu" caption="Napredne Informacije o BitTorrentu">
 		<control caption="Torrent _Informacije:"/>
 		<control caption="Ime:"/>
@@ -4242,7 +4134,6 @@
 		<control caption="Završeni(celi) (Seeds):"/>
 		<control/>
 	</dialog>
-
 	<dialog name="CTorrentFilesPage" cookie="BuStEdBuSy" caption="Files">
 		<control caption="Torrent _Information:"/>
 		<control caption="Ime:"/>
@@ -4250,7 +4141,6 @@
 		<control caption="_Datoteke:"/>
 		<control/>
 	</dialog>
-
 	<dialog name="CTorrentTrackersPage" cookie="BuStEdStEdBuStEdStEdBuBuSyStCo" caption="Trackers">
 		<control caption="Torrent _Information:"/>
 		<control caption="Ime:"/>
@@ -4268,7 +4158,6 @@
 		<control caption="Tracker Mode:"/>
 		<control caption="Disabled|Custom|Single Tracker|Multi-tracker|Multi-tracker (locked)"/>
 	</dialog>
-
 	<dialog name="CDownloadGroupDlg" cookie="BuEdSyBuCoBuBuBuBuBuEdBu" caption="Download Group Podešavanja">
 		<control caption="Ime:"/>
 		<control/>
@@ -4282,7 +4171,6 @@
 		<control caption="Fascikla sa Skinutim Datotekama:"/>
 		<control/>
 	</dialog>
-
 	<dialog name="CMediaVisDlg" cookie="StBuSyCoBuBuBu" caption="Odaberite Vizualizaciju">
 		<control/>
 		<control caption="Odaberi audio vizualizaciju sa popisa:"/>
@@ -4292,7 +4180,6 @@
 		<control caption="OK"/>
 		<control caption="Odustani"/>
 	</dialog>
-
 	<dialog name="CUpgradeDlg" cookie="StStStBuBuBu" caption="Uzbuna o Poboljšanju">
 		<control/>
 		<control caption="Dostupna je nova verzija Shareaze. Želite li je unaprediti(update)?"/>
@@ -4301,14 +4188,12 @@
 		<control caption="Ne proveravaj da li ima novih verzija."/>
 		<control caption="Nemoj Unaprediti"/>
 	</dialog>
-
 	<dialog name="CDownloadReviewDlg" cookie="StBuSyEd" caption="Skini Kritike">
 		<control/>
 		<control caption="OK"/>
 		<control/>
 		<control/>
 	</dialog>
-
 	<dialog name="CDecodeMetadataDlg" cookie="StCoBuBuBuStStBuBu" caption="Lokalizacija Metadate">
 		<control caption="Molim odaberite metodu re-encodinga"/>
 		<control caption="Arabic|Baltic|Central European|Chinese simplified|Chinese traditional|Cyrillic|Greek|Hebrew|Japanese|Korean|Thai|Turkish|Vietnamese"/>
@@ -4320,16 +4205,13 @@
 		<control caption="OK"/>
 		<control caption="Odustani"/>
 	</dialog>
-
 	<dialog name="CIrcInputDlg" cookie="EdBuBuSt" caption="Channel Name|Why reason">
 		<control/>
 		<control caption="OK"/>
 		<control caption="Odustani"/>
 		<control caption="Enter a channel you want to add:|Enter kick/ban reason:"/>
 	</dialog>
-
 </dialogs>
-
 <!-- Columns Definitions -->
 <listColumns>
 	<list name="CLibraryWnd">
