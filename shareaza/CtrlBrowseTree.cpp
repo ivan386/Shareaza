@@ -441,9 +441,9 @@ void CBrowseTreeCtrl::OnMouseMove(UINT nFlags, CPoint point)
 	CWnd::OnMouseMove( nFlags, point );
 
 	// [+] or [-] Hoverstates
-	if ( ! nFlags && point.x < 20 )
+	if ( ! nFlags && point.x < 32 )
 	{
-		CRect rcRefresh( 1, point.y - 48, 18, point.y + 48 );
+		CRect rcRefresh( 1, point.y - 48, 32, point.y + 48 );
 		RedrawWindow(rcRefresh);
 	}
 }
