@@ -1,49 +1,56 @@
-M http://gwc.frodoslair.net/skulls/skulls
-M http://gwc.eod.cc/skulls.php
+M http://aniraws.com/bootstrap/skulls.php
+M http://grantgalitz.com/Beacon/gwc.php
 M http://gwc.cluephone.com/skulls.php
+M http://gwc.eod.cc/skulls.php
+M http://gwc.frodoslair.net/skulls/skulls
+M http://gwc.mitigated.net/gwc.php
 M http://gwc.movingpages.org/skulls.php
 M http://gweb.4octets.co.uk/skulls.php
-M http://aniraws.com/bootstrap/skulls.php
-M http://gwc.mitigated.net/gwc.php
-M http://grantgalitz.com/Beacon/gwc.php
 M http://silvers.servehttp.com/Beacon/gwc.php
+M http://wc.neoboffins.com/
 
-2 http://cache.trillinux.org/g2/bazooka.php
-2 http://gwc2.wodi.org/skulls.php
-2 http://midian.jayl.de/g2/bazooka.php
-2 http://gwc.guufshop.com/skulls/skulls.php
-2 http://dogma.cloud.bishopston.net:33559/
-2 http://karma.cloud.bishopston.net:33559/
 2 http://bbs.robertwoolley.co.uk/GWebCache/skulls.php
+2 http://cache.trillinux.org/g2/bazooka.php
+2 http://dogma.cloud.bishopston.net:33559/
+2 http://gwc2.wodi.org/skulls.php
+2 http://gwc.guufshop.com/skulls/skulls.php
+2 http://karma.cloud.bishopston.net:33559/
+2 http://midian.jayl.de/g2/bazooka.php
 
-U uhc:yin.cloud.bishopston.net:33558
-U uhc:yang.cloud.bishopston.net:33558
+U uhc:ec2-67-202-41-17.compute-1.amazonaws.com:1337
+U uhc:ec2-72-44-40-255.z-2.compute-1.amazonaws.com:9999
+U uhc:ec2-72-44-47-123.z-2.compute-1.amazonaws.com:9999
 U uhc:ein.gtkg.net:60666
 U uhc:drei.gtkg.net:62666
+U uhc:leet.gtkg.org:1337
 U uhc:sissy.gtkg.org:51557
-U uhc:uhc.udp-host-cache.com:9999
-U uhc:ec2-72-44-40-255.z-2.compute-1.amazonaws.com:9999
+U uhc:yin.cloud.bishopston.net:33558
+U uhc:yang.cloud.bishopston.net:33558
+U uhc:zwei.gtkg.net:61666
 
 D http://ocbmaurice.dyndns.org/pl/slist.pl/server.met?download/server-best.met
 D http://peerates.net/servers.php
 D http://www.gruk.org/server.met
-D http://www.esel-paradies.de/server/server.met
-D http://www.emule-server.de/server.met/max/server.met
 
-X http://gwebcache.spearforensics.com/
-X http://geocities.com/prae2rian/GNUTELLA.net
 X http://bbs.robertwoolley.co.uk/gwebcache/gcache.php
 X http://bbs.robertwoolley.co.uk/GWebCache/gcache.php
-X http://gwc.frodoslair.net.nyud.net/skulls/skulls.php
+X http://flox-network.com/Beacon/gwc.php
+X http://geocities.com/prae2rian/GNUTELLA.net
 X http://gwc.eod.cc.nyud.net/skulls.php
+X http://gwc.frodoslair.net.nyud.net/skulls/skulls.php
+# X http://gwc.frodoslair.net/skulls/skulls.php # Dupe
+X http://gwc.iblinx.com:2108/gwc/cgi-bin/fc
+X http://gwc.nickstallman.net/
+X http://gwc.nickstallman.net/gcache
 X http://gwc.nickstallman.net.nyud.net/
 X http://gwc.nickstallman.net/beta.php
-X http://gwc.nickstallman.net/
-X http://gwebcache.ns1.net/index.php
-X http://gwc.iblinx.com:2108/gwc/cgi-bin/fc
-X http://fischaleck.net/cache/mcache.php
+# X http://gwebcache.ns1.net/index.php # Dupe
+X http://g2.tjtech.org/g2/
 X http://reukiodo.dyndns.org/gwebcache/gwcii.php
-X http://portal.homeunix.org/Beacon/gwc.php
+# X http://wc.neoboffins.com/index.php # Dupe
+X http://wc.neoboffins.com.nyud.net/
+X http://www.dom2porno.info/skulls/skulls.php
+X http://www.k33bz.com/g2/bazooka.php
 X http://www.lo7.wroc.pl/~stash/g2-moved/bazooka.php
 
 #
