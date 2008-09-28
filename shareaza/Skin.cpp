@@ -241,7 +241,7 @@ BOOL CSkin::LoadFromResource(HINSTANCE hInstance, UINT nResourceID)
 	HMODULE hModule = ( hInstance != NULL ) ? hInstance : GetModuleHandle( NULL );
 	CString strBody( ::LoadHTML( hModule, nResourceID ) );
 	CString strPath;
-	strPath.Format( _T("%Iu$"), reinterpret_cast< HANDLE_PTR >( hModule ) );
+	strPath.Format( _T("%I64u$"), reinterpret_cast< HANDLE_PTR >( hModule ) );
 	return LoadFromString( strBody, strPath );
 }
 
@@ -472,6 +472,7 @@ CMenu* CSkin::GetMenu(LPCTSTR pszName) const
 			break;
 		}
 	}
+	ASSERT( ( "Menu not found!", pMenu ) );
 	return pMenu;
 }
 
@@ -480,7 +481,8 @@ BOOL CSkin::LoadMenus(CXMLElement* pBase)
 	for ( POSITION pos = pBase->GetElementIterator() ; pos ; )
 	{
 		CXMLElement* pXML = pBase->GetNextElement( pos );
-		if ( pXML->IsNamed( _T("menu") ) && ! LoadMenu( pXML ) ) return FALSE;
+		if ( pXML->IsNamed( _T("menu") ) && ! LoadMenu( pXML ) )
+			return FALSE;
 	}
 
 	return TRUE;
@@ -489,7 +491,8 @@ BOOL CSkin::LoadMenus(CXMLElement* pBase)
 BOOL CSkin::LoadMenu(CXMLElement* pXML)
 {
 	CString strName = pXML->GetAttributeValue( _T("name") );
-	if ( strName.IsEmpty() ) return FALSE;
+	if ( strName.IsEmpty() )
+		return FALSE;
 
 	CMenu* pMenu = NULL;
 
@@ -500,26 +503,35 @@ BOOL CSkin::LoadMenu(CXMLElement* pXML)
 	}
 
 	pMenu = new CMenu();
+	if ( ! pMenu )
+		return FALSE;
 
 	if ( pXML->GetAttributeValue( _T("type"), _T("popup") ).CompareNoCase( _T("bar") ) == 0 )
 	{
-		pMenu->CreateMenu();
+		if ( ! pMenu->CreateMenu() )
+		{
+			delete pMenu;
+			return FALSE;
+		}
 	}
 	else
 	{
-		pMenu->CreatePopupMenu();
+		if ( ! pMenu->CreatePopupMenu() )
+		{
+			delete pMenu;
+			return FALSE;
+		}
 	}
 
-	if ( CreateMenu( pXML, pMenu->GetSafeHmenu() ) )
-	{
-		m_pMenus.SetAt( strName, pMenu );
-		return TRUE;
-	}
-	else
+	if ( ! CreateMenu( pXML, pMenu->GetSafeHmenu() ) )
 	{
 		delete pMenu;
 		return FALSE;
 	}
+
+	m_pMenus.SetAt( strName, pMenu );
+
+	return TRUE;
 }
 
 CMenu* CSkin::CreatePopupMenu(LPCTSTR pszName)
@@ -1686,7 +1698,9 @@ BOOL CSkin::LoadCommandIcon(CXMLElement* pXML, const CString& strPath)
 		pXML->GetAttributeValue( _T("path") );
 
 	UINT nIconID = LookupCommandID( pXML, _T("res") );
-	HINSTANCE hInstance = (HINSTANCE)(__int64)( nIconID ? _tstol( strPath ) : NULL );
+	HINSTANCE hInstance = NULL;
+	if ( nIconID )
+		_stscanf( strPath, _T("%I64u"), &hInstance );
 
 	UINT nID = LookupCommandID( pXML );
 	if ( nID == 0 )
@@ -2177,8 +2191,10 @@ HBITMAP CSkin::LoadBitmap(CString& strName)
 		HINSTANCE hInstance = NULL;
 		UINT nID = 0;
 
-		if ( _stscanf( strName.Left( nPos ), _T("%lu"), &hInstance ) != 1 ) return NULL;
-		if ( _stscanf( strName.Mid( nPos + 1 ), _T("%lu"), &nID ) != 1 ) return NULL;
+		if ( _stscanf( strName.Left( nPos ), _T("%I64u"), &hInstance ) != 1 )
+			return NULL;
+		if ( _stscanf( strName.Mid( nPos + 1 ), _T("%lu"), &nID ) != 1 )
+			return NULL;
 
 		if ( LPCTSTR pszType = _tcsrchr( strName, '.' ) )
 		{
