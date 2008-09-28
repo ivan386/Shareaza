@@ -190,6 +190,6 @@ CG2Neighbour* CNeighboursWithG2::GetRandomHub(CG2Neighbour* pExcept, const Hashe
 	if ( ! nSize ) return NULL;
 
 	// Choose a random number between 0 and nSize - 1, use it as an index, and return the neighbour at it
-	nSize = GetRandomNum( 0, nSize - 1 );
+	nSize = GetRandomNum( 0, (int)nSize - 1 );
 	return pRandom.GetAt( nSize );
 }

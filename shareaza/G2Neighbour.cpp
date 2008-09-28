@@ -556,7 +556,7 @@ BOOL CG2Neighbour::OnPing(CG2Packet* pPacket, BOOL bTCP)
 
 		for ( INT_PTR nCur = 0; (nCur < nCount && nCur < nRelayTo); nCur++ )
 		{
-			INT_PTR nRand = GetRandomNum( 0, pG2Nodes.GetCount() - 1 );
+			INT_PTR nRand = GetRandomNum( 0, (int)pG2Nodes.GetCount() - 1 );
 
 			CG2Neighbour* pNeighbour = pG2Nodes.GetAt( nRand );
 			pNeighbour->Send( pPacket, FALSE );
