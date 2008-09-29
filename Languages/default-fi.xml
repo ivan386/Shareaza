@@ -433,8 +433,8 @@
 			<separator/>
 			<menu text="Valitse _Verkot">
 				<item id="ID_NETWORK_G2" text="Yhdistä _Gnutella2"/>
-				<item id="ID_NETWORK_ED2K" text="Yhdistä _eDonkey2000"/>
 				<item id="ID_NETWORK_G1" text="Yhdistä Gnutella_1"/>
+				<item id="ID_NETWORK_ED2K" text="Yhdistä _eDonkey2000"/>
 			</menu>
 			<separator/>
 			<item id="ID_NETWORK_AUTO_CLOSE" text="Poistu Siirtojen Jälkeen"/>
@@ -501,8 +501,8 @@
 			<separator/>
 			<menu text="Valitse _Verkot">
 				<item id="ID_NETWORK_G2" text="Yhdistä _Gnutella2"/>
-				<item id="ID_NETWORK_ED2K" text="Yhdistä _eDonkey2000"/>
 				<item id="ID_NETWORK_G1" text="Yhdistä Gnutella1"/>
+				<item id="ID_NETWORK_ED2K" text="Yhdistä _eDonkey2000"/>
 			</menu>
 			<separator/>
 			<item id="ID_NETWORK_CONNECT_TO" text="Yhdistä..." shortcut="Ctrl+T"/>
@@ -597,8 +597,8 @@
 			<separator/>
 			<menu text="Valitse _Verkot">
 				<item id="ID_NETWORK_G2" text="Yhdistä _Gnutella2"/>
-				<item id="ID_NETWORK_ED2K" text="Yhdistä _eDonkey2000"/>
 				<item id="ID_NETWORK_G1" text="Yhdistä Gnutella_1"/>
+				<item id="ID_NETWORK_ED2K" text="Yhdistä _eDonkey2000"/>
 			</menu>
 			<separator/>
 			<item id="ID_NETWORK_AUTO_CLOSE" text="Sulje _Siirtojen Jälkeen"/>
@@ -1167,8 +1167,11 @@
 			<item id="ID_LIBRARY_COPY" text="_Kopioi Tiedostoja..."/>
 		</menu>
 		<item id="ID_LIBRARY_REBUILD_ANSI" text="_Paikallista Metadata"/>
+		<item id="ID_LIBRARY_REFRESH_METADATA" text="_Refresh Metadata"/>
 		<separator/>
 		<item id="ID_LIBRARY_COLUMNS" text="Valitse _Kolumnit..."/>
+		<separator/>
+		<item id="ID_SHELL_MENU" text="S_hell menu"/>
 		<separator/>
 		<item id="ID_LIBRARY_PROPERTIES" text="_Ominaisuudet"/>
 	</menu>
@@ -1375,8 +1378,8 @@
 			<item id="ID_NETWORK_DISCONNECT" text="_Katkaise Yhteys"/>
 			<separator/>
 			<item id="ID_NETWORK_G2" text="_Gnutella2"/>
-			<item id="ID_NETWORK_ED2K" text="_eDonkey2000"/>
 			<item id="ID_NETWORK_G1" text="Gnutella_1"/>
+			<item id="ID_NETWORK_ED2K" text="_eDonkey2000"/>
 		</menu>
 		<menu text="_Monitori">
 			<item id="ID_NEIGHBOURS_VIEW_ALL" text="Näytä _Kaikki Liikenne"/>
@@ -1629,8 +1632,9 @@
 		<newline group="30" gap="2"/>
 		<group id="2">
 			<para align="center">
-				<newline gap="6"/>
+				<newline gap="4"/>
 				<text>Olet ollut yhteydessä </text>
+				<newline gap="0"/>
 				<text id="ConnectedHours" format="b">%i </text>
 				<text>tuntia ja </text>
 				<text id="ConnectedMinutes" format="b">%i </text>

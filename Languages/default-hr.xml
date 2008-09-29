@@ -1167,8 +1167,11 @@
 			<item id="ID_LIBRARY_COPY" text="Kopiraj Datoteke..."/>
 		</menu>
 		<item id="ID_LIBRARY_REBUILD_ANSI" text="_Lokaliziraj Metadate"/>
+		<item id="ID_LIBRARY_REFRESH_METADATA" text="_Refresh Metadata"/>
 		<separator/>
 		<item id="ID_LIBRARY_COLUMNS" text="Odaberi Stupac..."/>
+		<separator/>
+		<item id="ID_SHELL_MENU" text="S_hell menu"/>
 		<separator/>
 		<item id="ID_LIBRARY_PROPERTIES" text="_Postavke"/>
 	</menu>
@@ -1643,8 +1646,9 @@
 
 		<group id="2">
 			<para align="center">
-				<newline gap="6"/>
+				<newline gap="4"/>
 				<text>Spojen sam već </text>
+				<newline gap="0"/>
 				<text id="ConnectedHours" format="b">%i </text>
 				<text>sati i </text>
 				<text id="ConnectedMinutes" format="b">%i </text>

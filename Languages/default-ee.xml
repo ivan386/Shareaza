@@ -352,8 +352,8 @@
 		<button id="ID_NEIGHBOURS_CHAT" text="Vestle kasutajaga"/>
 		<rightAlign/>
 		<button id="ID_NETWORK_G2" text="Gnutella2"/>
-		<button id="ID_NETWORK_ED2K" text="eDonkey2000"/>
 		<button id="ID_NETWORK_G1" text="Gnutella1"/>
+		<button id="ID_NETWORK_ED2K" text="eDonkey2000"/>
 		<separator/>
 		<button id="ID_NEIGHBOURS_SETTINGS" text="Seaded"/>
 	</toolbar>
@@ -366,8 +366,8 @@
 		<button id="ID_SECURITY_BAN" text="Keela omanik"/>
 		<rightAlign/>
 		<button id="ID_NETWORK_G2" text="Gnutella2"/>
-		<button id="ID_NETWORK_ED2K" text="eDonkey2000"/>
 		<button id="ID_NETWORK_G1" text="Gnutella1"/>
+		<button id="ID_NETWORK_ED2K" text="eDonkey2000"/>
 		<separator/>
 		<button id="ID_NEIGHBOURS_SETTINGS" text="Seaded"/>
 	</toolbar>
@@ -440,8 +440,8 @@
 			<separator/>
 			<menu text="Vali _Võrk">
 				<item id="ID_NETWORK_G2" text="Ühenda _Gnutella2"/>
-				<item id="ID_NETWORK_ED2K" text="Ühenda _eDonkey2000"/>
 				<item id="ID_NETWORK_G1" text="Ühenda Gnutella_1"/>
+				<item id="ID_NETWORK_ED2K" text="Ühenda _eDonkey2000"/>
 			</menu>
 			<separator/>
 			<item id="ID_NETWORK_AUTO_CLOSE" text="Välju _Ülekande lõpus"/>
@@ -508,8 +508,8 @@
 			<separator/>
 			<menu text="Vali _Võrk">
 				<item id="ID_NETWORK_G2" text="Ühenda _Gnutella2"/>
-				<item id="ID_NETWORK_ED2K" text="Ühenda _eDonkey2000"/>
 				<item id="ID_NETWORK_G1" text="Ühenda Gnutella_1"/>
+				<item id="ID_NETWORK_ED2K" text="Ühenda _eDonkey2000"/>
 			</menu>
 			<separator/>
 			<item id="ID_NETWORK_CONNECT_TO" text="Ühenda _Aadressil..." shortcut="Ctrl+T"/>
@@ -604,8 +604,8 @@
 			<separator/>
 			<menu text="Vali _Võrgud">
 				<item id="ID_NETWORK_G2" text="Ühenda _Gnutella2"/>
-				<item id="ID_NETWORK_ED2K" text="Ühenda _eDonkey2000"/>
 				<item id="ID_NETWORK_G1" text="Ühenda Gnutella_1"/>
+				<item id="ID_NETWORK_ED2K" text="Ühenda _eDonkey2000"/>
 			</menu>
 			<separator/>
 			<item id="ID_NETWORK_AUTO_CLOSE" text="Välju _Ülekande Lõpus"/>
@@ -1173,8 +1173,11 @@
 			<item id="ID_LIBRARY_COPY" text="_Kopeeri Faile..."/>
 		</menu>
 		<item id="ID_LIBRARY_REBUILD_ANSI" text="_Kohanda Andmebaas"/>
+		<item id="ID_LIBRARY_REFRESH_METADATA" text="_Refresh Metadata"/>
 		<separator/>
 		<item id="ID_LIBRARY_COLUMNS" text="Seadista _Veerg..."/>
+		<separator/>
+		<item id="ID_SHELL_MENU" text="S_hell menu"/>
 		<separator/>
 		<item id="ID_LIBRARY_PROPERTIES" text="_Omadused"/>
 	</menu>
@@ -1382,8 +1385,8 @@
 			<item id="ID_NETWORK_DISCONNECT" text="_Katkesta Ühendus"/>
 			<separator/>
 			<item id="ID_NETWORK_G2" text="_Gnutella2"/>
-			<item id="ID_NETWORK_ED2K" text="_eDonkey2000"/>
 			<item id="ID_NETWORK_G1" text="Gnutella_1"/>
+			<item id="ID_NETWORK_ED2K" text="_eDonkey2000"/>
 		</menu>
 		<menu text="_Vaatleja">
 			<item id="ID_NEIGHBOURS_VIEW_ALL" text="Vaata _Kogu Liiklust"/>

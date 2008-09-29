@@ -345,8 +345,8 @@
 		<button id="ID_NEIGHBOURS_CHAT" text="Bisedo"/>
 		<rightAlign/>
 		<button id="ID_NETWORK_G2" text="Gnutella2"/>
-		<button id="ID_NETWORK_ED2K" text="eDonkey"/>
 		<button id="ID_NETWORK_G1" text="Gnutella1"/>
+		<button id="ID_NETWORK_ED2K" text="eDonkey"/>
 		<separator/>
 		<button id="ID_NEIGHBOURS_SETTINGS" text="Kuadro"/>
 	</toolbar>
@@ -359,8 +359,8 @@
 		<button id="ID_SECURITY_BAN" text="Dëboje"/>
 		<rightAlign/>
 		<button id="ID_NETWORK_G2" text="Gnutella2"/>
-		<button id="ID_NETWORK_ED2K" text="eDonkey"/>
 		<button id="ID_NETWORK_G1" text="Gnutella1"/>
+		<button id="ID_NETWORK_ED2K" text="eDonkey"/>
 		<separator/>
 		<button id="ID_NEIGHBOURS_SETTINGS" text="Kuadro"/>
 	</toolbar>
@@ -440,8 +440,8 @@
 			<separator/>
 			<menu text="Zgjidhe _Rrjetin">
 				<item id="ID_NETWORK_G2" text="_Gnutella2"/>
-				<item id="ID_NETWORK_ED2K" text="_eDonkey"/>
 				<item id="ID_NETWORK_G1" text="Gnutella_1"/>
+				<item id="ID_NETWORK_ED2K" text="_eDonkey"/>
 			</menu>
 			<separator/>
 			<item id="ID_NETWORK_AUTO_CLOSE" text="Dil _Kur Përfundon"/>
@@ -509,8 +509,8 @@
 			<separator/>
 			<menu text="Zgjidhe _Rrjetin">
 				<item id="ID_NETWORK_G2" text="_Gnutella2"/>
-				<item id="ID_NETWORK_ED2K" text="_eDonkey"/>
 				<item id="ID_NETWORK_G1" text="Gnutella_1"/>
+				<item id="ID_NETWORK_ED2K" text="_eDonkey"/>
 			</menu>
 			<separator/>
 			<item id="ID_NETWORK_CONNECT_TO" text="Lidhu _Te..." shortcut="Ctrl+T"/>
@@ -609,8 +609,8 @@
 			<separator/>
 			<menu text="Zgjidhe _Rrjetin">
 				<item id="ID_NETWORK_G2" text="_Gnutella2"/>
-				<item id="ID_NETWORK_ED2K" text="_eDonkey"/>
 				<item id="ID_NETWORK_G1" text="Gnutella_1"/>
+				<item id="ID_NETWORK_ED2K" text="_eDonkey"/>
 			</menu>
 			<separator/>
 			<item id="ID_NETWORK_AUTO_CLOSE" text="Mbylle _Kur Përfundon"/>
@@ -1184,8 +1184,11 @@
 			<item id="ID_LIBRARY_COPY" text="_Kopjo Skedën..."/>
 		</menu>
 		<item id="ID_LIBRARY_REBUILD_ANSI" text="_Lokalizo Metadatat"/>
+		<item id="ID_LIBRARY_REFRESH_METADATA" text="_Refresh Metadata"/>
 		<separator/>
 		<item id="ID_LIBRARY_COLUMNS" text="Zgjidhi _Kolonat..."/>
+		<separator/>
+		<item id="ID_SHELL_MENU" text="S_hell menu"/>
 		<separator/>
 		<item id="ID_LIBRARY_PROPERTIES" text="_Veti"/>
 	</menu>
@@ -1397,8 +1400,8 @@
 			<item id="ID_NETWORK_DISCONNECT" text="_Shkëputu"/>
 			<separator/>
 			<item id="ID_NETWORK_G2" text="_Gnutella2"/>
-			<item id="ID_NETWORK_ED2K" text="_eDonkey"/>
 			<item id="ID_NETWORK_G1" text="Gnutella_1"/>
+			<item id="ID_NETWORK_ED2K" text="_eDonkey"/>
 		</menu>
 		<menu text="_Monitori">
 			<item id="ID_NEIGHBOURS_VIEW_ALL" text="Shiko _Gjithë Trafikun"/>
@@ -1670,18 +1673,18 @@
 		<text group="24" align="middle" id="G2Hubs">%i nyje</text>
 		<text group="25" align="middle" id="G2Leaves">%i gjethe</text>
 		<newline group="20" gap="2"/>
-		<icon group="30" command="ID_NETWORK_ED2K"/><gap group="30" size="4"/>
-		<text group="30" align="middle" format="b">eDonkey: </text>
-		<text group="31" align="middle">I shkëputur</text>
-		<text group="32" align="middle">Po lidhem...</text>
-		<text group="33" align="middle">I Lidhur</text>
-		<newline group="30" gap="2"/>
 		<icon group="10" command="ID_NETWORK_G1"/><gap group="10" size="4"/>
 		<text group="10" align="middle" format="b">Gnutella1: </text>
 		<text group="11" align="middle">I shkëputur</text>
 		<text group="12" align="middle">Po lidhem...</text>
 		<text group="13" align="middle">I Lidhur</text>
 		<newline group="10" gap="2"/>
+		<icon group="30" command="ID_NETWORK_ED2K"/><gap group="30" size="4"/>
+		<text group="30" align="middle" format="b">eDonkey: </text>
+		<text group="31" align="middle">I shkëputur</text>
+		<text group="32" align="middle">Po lidhem...</text>
+		<text group="33" align="middle">I Lidhur</text>
+		<newline group="30" gap="2"/>
 		<group id="2">
 			<para align="center">
 				<newline gap="6"/>

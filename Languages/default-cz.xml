@@ -345,8 +345,8 @@
 		<button id="ID_NEIGHBOURS_CHAT" text="Pokec s uživatelem"/>
 		<rightAlign/>
 		<button id="ID_NETWORK_G2" text="Gnutella2"/>
-		<button id="ID_NETWORK_ED2K" text="eDonkey"/>
 		<button id="ID_NETWORK_G1" text="Gnutella1"/>
+		<button id="ID_NETWORK_ED2K" text="eDonkey"/>
 		<separator/>
 		<button id="ID_NEIGHBOURS_SETTINGS" text="Nastavení"/>
 	</toolbar>
@@ -359,8 +359,8 @@
 		<button id="ID_SECURITY_BAN" text="Blokovat uživatele"/>
 		<rightAlign/>
 		<button id="ID_NETWORK_G2" text="Gnutella2"/>
-		<button id="ID_NETWORK_ED2K" text="eDonkey"/>
 		<button id="ID_NETWORK_G1" text="Gnutella1"/>
+		<button id="ID_NETWORK_ED2K" text="eDonkey"/>
 		<separator/>
 		<button id="ID_NEIGHBOURS_SETTINGS" text="Nastavení"/>
 	</toolbar>
@@ -440,8 +440,8 @@
 			<separator/>
 			<menu text="Zvolte si _Síť">
 				<item id="ID_NETWORK_G2" text="Připojit ke _Gnutelle2"/>
-				<item id="ID_NETWORK_ED2K" text="Připojit k _eDonkey"/>
 				<item id="ID_NETWORK_G1" text="Připojit ke Gnutelle_1"/>
+				<item id="ID_NETWORK_ED2K" text="Připojit k _eDonkey"/>
 			</menu>
 			<separator/>
 			<item id="ID_NETWORK_AUTO_CLOSE" text="Ukončit po _stažení"/>
@@ -454,6 +454,7 @@
 			<item id="ID_TAB_SEARCH" text="_Hledat"/>
 			<item id="ID_TAB_TRANSFERS" text="_Stahování"/>
 			<item id="ID_WINDOW_REMOTE" text="Zob_razit dálkové ovládání"/>
+			<item id="ID_TAB_IRC" text="_Chat"/>
 			<separator/>
 			<menu text="_Pokročilé">
 				<item id="ID_VIEW_NEIGHBOURS" text="O_kolní počítače"/>
@@ -509,8 +510,8 @@
 			<separator/>
 			<menu text="Zvolte si _Síť">
 				<item id="ID_NETWORK_G2" text="Připojit ke _Gnutelle2"/>
-				<item id="ID_NETWORK_ED2K" text="Připojit k _eDonkey"/>
 				<item id="ID_NETWORK_G1" text="Připojit ke Gnutelle_1"/>
+				<item id="ID_NETWORK_ED2K" text="Připojit k _eDonkey"/>
 			</menu>
 			<separator/>
 			<item id="ID_NETWORK_CONNECT_TO" text="Připojit _ke..." shortcut="Ctrl+T"/>
@@ -609,8 +610,8 @@
 			<separator/>
 			<menu text="Zvolte si _Síť">
 				<item id="ID_NETWORK_G2" text="Připojit ke _Gnutelle2"/>
-				<item id="ID_NETWORK_ED2K" text="Připojit k _eDonkey"/>
 				<item id="ID_NETWORK_G1" text="Připojit ke Gnutelle_1"/>
+				<item id="ID_NETWORK_ED2K" text="Připojit k _eDonkey"/>
 			</menu>
 			<separator/>
 			<item id="ID_NETWORK_AUTO_CLOSE" text="Ukončit po _stažení"/>
@@ -1187,8 +1188,11 @@
 			<item id="ID_LIBRARY_COPY" text="_Kopírovat soubory..."/>
 		</menu>
 		<item id="ID_LIBRARY_REBUILD_ANSI" text="_Místní popisky"/>
+		<item id="ID_LIBRARY_REFRESH_METADATA" text="_Refresh Metadata"/>
 		<separator/>
 		<item id="ID_LIBRARY_COLUMNS" text="Vyberte _sloupce..."/>
+		<separator/>
+		<item id="ID_SHELL_MENU" text="S_hell menu"/>
 		<separator/>
 		<item id="ID_LIBRARY_PROPERTIES" text="_Vlastnosti"/>
 	</menu>
@@ -1400,8 +1404,8 @@
 			<item id="ID_NETWORK_DISCONNECT" text="_Odpojit"/>
 			<separator/>
 			<item id="ID_NETWORK_G2" text="_Gnutella2"/>
-			<item id="ID_NETWORK_ED2K" text="_eDonkey"/>
 			<item id="ID_NETWORK_G1" text="Gnutella_1"/>
+			<item id="ID_NETWORK_ED2K" text="_eDonkey"/>
 		</menu>
 		<menu text="_Monitor">
 			<item id="ID_NEIGHBOURS_VIEW_ALL" text="Ukázat _všechen provoz"/>

@@ -455,8 +455,8 @@
 			<separator/>
 			<menu text="_Netwerken Kiezen">
 				<item id="ID_NETWORK_G2" text="Verbinden met _Gnutella2"/>
-				<item id="ID_NETWORK_ED2K" text="Verbinden met _eDonkey"/>
 				<item id="ID_NETWORK_G1" text="Verbinden met Gnutella_1"/>
+				<item id="ID_NETWORK_ED2K" text="Verbinden met _eDonkey"/>
 			</menu>
 			<separator/>
 			<item id="ID_NETWORK_AUTO_CLOSE" text="Afsluiten na ver_keer"/>
@@ -527,8 +527,8 @@
 			<separator/>
 			<menu text="Net_werken kiezen">
 				<item id="ID_NETWORK_G2" text="Verbinden met _Gnutella2"/>
-				<item id="ID_NETWORK_ED2K" text="Verbinden met _eDonkey"/>
 				<item id="ID_NETWORK_G1" text="Verbinden met Gnutella_1"/>
+				<item id="ID_NETWORK_ED2K" text="Verbinden met _eDonkey"/>
 			</menu>
 			<separator/>
 			<item id="ID_NETWORK_CONNECT_TO" text="Verbinden _met..." shortcut="Ctrl+T"/>
@@ -630,8 +630,8 @@
 			<separator/>
 			<menu text="Net_werken kiezen">
 				<item id="ID_NETWORK_G2" text="Verbinden met _Gnutella2"/>
-				<item id="ID_NETWORK_ED2K" text="Verbinden met _eDonkey"/>
 				<item id="ID_NETWORK_G1" text="Verbinden met Gnutella_1"/>
+				<item id="ID_NETWORK_ED2K" text="Verbinden met _eDonkey"/>
 			</menu>
 			<separator/>
 			<item id="ID_NETWORK_AUTO_CLOSE" text="Afsluiten na ver_keer"/>
@@ -1208,6 +1208,7 @@
 			<item id="ID_LIBRARY_COPY" text="Bestanden _kopiëren..."/>
 		</menu>
 		<item id="ID_LIBRARY_REBUILD_ANSI" text="_Lokaliseer metadata"/>
+		<item id="ID_LIBRARY_REFRESH_METADATA" text="_Refresh metadata"/>
 		<separator/>
 		<item id="ID_LIBRARY_COLUMNS" text="Kolommen uit_kiezen..."/>
 		<separator/>
@@ -1729,7 +1730,7 @@
 		<newline group="30" gap="2"/>
 		<group id="2">
 			<para align="center">
-				<newline gap="6"/>
+				<newline gap="4"/>
 				<text>Je bent al </text>
 				<text id="ConnectedHours" format="b">%i </text>
 				<text>uur en </text>

@@ -487,8 +487,8 @@
 			<separator/>
 			<menu text="_Choisir les réseaux">
 				<item id="ID_NETWORK_G2" text="Se connecter à _Gnutella2"/>
-				<item id="ID_NETWORK_ED2K" text="Se connecter à _eDonkey"/>
 				<item id="ID_NETWORK_G1" text="Se connecter à Gnutella_1"/>
+				<item id="ID_NETWORK_ED2K" text="Se connecter à _eDonkey"/>
 			</menu>
 			<separator/>
 			<item id="ID_NETWORK_AUTO_CLOSE" text="Quitter à la _fin des transferts"/>
@@ -664,8 +664,8 @@
 			<separator/>
 			<menu text="_Choisir les réseaux">
 				<item id="ID_NETWORK_G2" text="Se connecter à _Gnutella2"/>
-				<item id="ID_NETWORK_ED2K" text="Se connecter à _eDonkey"/>
 				<item id="ID_NETWORK_G1" text="Se connecter à Gnutella_1"/>
+				<item id="ID_NETWORK_ED2K" text="Se connecter à _eDonkey"/>
 			</menu>
 			<separator/>
 			<item id="ID_NETWORK_AUTO_CLOSE" text="Quitter à la _fin des transferts"/>
@@ -1250,7 +1250,7 @@
 		<separator/>
 		<item id="ID_LIBRARY_COLUMNS" text="Choisir les _colonnes..."/>
 		<separator/>
-		<item id="ID_SHELL_MENU" text="Menu"/>
+		<item id="ID_SHELL_MENU" text="_Menu"/>
 		<separator/>
 		<item id="ID_LIBRARY_PROPERTIES" text="_Propriétés"/>
 	</menu>

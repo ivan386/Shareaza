@@ -345,8 +345,8 @@
 		<button id="ID_NEIGHBOURS_CHAT" text="Parla amb l'usuari"/>
 		<rightAlign/>
 		<button id="ID_NETWORK_G2" text="Gnutella2"/>
-		<button id="ID_NETWORK_ED2K" text="eDonkey"/>
 		<button id="ID_NETWORK_G1" text="Gnutella1"/>
+		<button id="ID_NETWORK_ED2K" text="eDonkey"/>
 		<separator/>
 		<button id="ID_NEIGHBOURS_SETTINGS" text="Configurar..."/>
 	</toolbar>
@@ -359,8 +359,8 @@
 		<button id="ID_SECURITY_BAN" text="Bloca"/>
 		<rightAlign/>
 		<button id="ID_NETWORK_G2" text="Gnutella2"/>
-		<button id="ID_NETWORK_ED2K" text="eDonkey"/>
 		<button id="ID_NETWORK_G1" text="Gnutella1"/>
+		<button id="ID_NETWORK_ED2K" text="eDonkey"/>
 		<separator/>
 		<button id="ID_NEIGHBOURS_SETTINGS" text="Configuració..."/>
 	</toolbar>
@@ -440,8 +440,8 @@
 			<separator/>
 			<menu text="Escollir _Xarxes">
 				<item id="ID_NETWORK_G2" text="Connecta a _Gnutella2"/>
-				<item id="ID_NETWORK_ED2K" text="Connecta a _eDonkey"/>
 				<item id="ID_NETWORK_G1" text="Connecta a Gnutella_1"/>
+				<item id="ID_NETWORK_ED2K" text="Connecta a _eDonkey"/>
 			</menu>
 			<separator/>
 			<item id="ID_NETWORK_AUTO_CLOSE" text="_Surt després de les transferències"/>
@@ -509,8 +509,8 @@
 			<separator/>
 			<menu text="Escollir _Xarxes">
 				<item id="ID_NETWORK_G2" text="Connecta a _Gnutella2"/>
-				<item id="ID_NETWORK_ED2K" text="Connecta a _eDonkey"/>
 				<item id="ID_NETWORK_G1" text="Connecta a _Gnutella 1"/>
+				<item id="ID_NETWORK_ED2K" text="Connecta a _eDonkey"/>
 			</menu>
 			<separator/>
 			<item id="ID_NETWORK_CONNECT_TO" text="Connecta _a..." shortcut="Ctrl+T"/>
@@ -609,8 +609,8 @@
 			<separator/>
 			<menu text="Connectar _A">
 				<item id="ID_NETWORK_G2" text="Connecta a _Gnutella2"/>
-				<item id="ID_NETWORK_ED2K" text="Connecta a _eDonkey"/>
 				<item id="ID_NETWORK_G1" text="Connecta a _Gnutella_1"/>
+				<item id="ID_NETWORK_ED2K" text="Connecta a _eDonkey"/>
 			</menu>
 			<separator/>
 			<item id="ID_NETWORK_AUTO_CLOSE" text="Tanca _després de les transferències"/>
@@ -1184,8 +1184,11 @@
 			<item id="ID_LIBRARY_COPY" text="_Copia arxius..."/>
 		</menu>
 		<item id="ID_LIBRARY_REBUILD_ANSI" text="_Localitza la metainformació"/>
+		<item id="ID_LIBRARY_REFRESH_METADATA" text="_Refresh Metadata"/>
 		<separator/>
 		<item id="ID_LIBRARY_COLUMNS" text="Tria _columnes..."/>
+		<separator/>
+		<item id="ID_SHELL_MENU" text="S_hell menu"/>
 		<separator/>
 		<item id="ID_LIBRARY_PROPERTIES" text="_Propietats"/>
 	</menu>
@@ -1397,8 +1400,8 @@
 			<item id="ID_NETWORK_DISCONNECT" text="_Desconnecta"/>
 			<separator/>
 			<item id="ID_NETWORK_G2" text="_Gnutella2"/>
-			<item id="ID_NETWORK_ED2K" text="_eDonkey"/>
 			<item id="ID_NETWORK_G1" text="Gnutella_1"/>
+			<item id="ID_NETWORK_ED2K" text="_eDonkey"/>
 		</menu>
 		<menu text="_Monitor">
 			<item id="ID_NEIGHBOURS_VIEW_ALL" text="Mostra _tot el trànsit"/>

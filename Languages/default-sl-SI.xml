@@ -347,8 +347,8 @@
 		<button id="ID_NEIGHBOURS_CHAT" text="Kramljanje z uporabnikom"/>
 		<rightAlign/>
 		<button id="ID_NETWORK_G2" text="Gnutella2"/>
-		<button id="ID_NETWORK_ED2K" text="eDonkey2000"/>
 		<button id="ID_NETWORK_G1" text="Gnutella1"/>
+		<button id="ID_NETWORK_ED2K" text="eDonkey2000"/>
 		<separator/>
 		<button id="ID_NEIGHBOURS_SETTINGS" text="Nastavitve"/>
 	</toolbar>
@@ -361,8 +361,8 @@
 		<button id="ID_SECURITY_BAN" text="Izobči uporabnika (ban)"/>
 		<rightAlign/>
 		<button id="ID_NETWORK_G2" text="Gnutella2"/>
-		<button id="ID_NETWORK_ED2K" text="eDonkey2000"/>
 		<button id="ID_NETWORK_G1" text="Gnutella1"/>
+		<button id="ID_NETWORK_ED2K" text="eDonkey2000"/>
 		<separator/>
 		<button id="ID_NEIGHBOURS_SETTINGS" text="Nastavitve"/>
 	</toolbar>
@@ -435,8 +435,8 @@
 			<separator/>
 			<menu text="Izbira _omrežja">
 				<item id="ID_NETWORK_G2" text="Poveži se z _Gnutella2"/>
-				<item id="ID_NETWORK_ED2K" text="Poveži se z _eDonkey2000"/>
 				<item id="ID_NETWORK_G1" text="Poveži se z Gnutella_1"/>
+				<item id="ID_NETWORK_ED2K" text="Poveži se z _eDonkey2000"/>
 			</menu>
 			<separator/>
 			<item id="ID_NETWORK_AUTO_CLOSE" text="Izhod po p_renosih"/>
@@ -503,8 +503,8 @@
 			<separator/>
 			<menu text="Izbira _omrežja">
 				<item id="ID_NETWORK_G2" text="Poveži se z _Gnutella2"/>
-				<item id="ID_NETWORK_ED2K" text="Poveži se z _eDonkey2000"/>
 				<item id="ID_NETWORK_G1" text="Poveži se z Gnutella_1"/>
+				<item id="ID_NETWORK_ED2K" text="Poveži se z _eDonkey2000"/>
 			</menu>
 			<separator/>
 			<item id="ID_NETWORK_CONNECT_TO" text="_Poveži se z..." shortcut="Ctrl+T"/>
@@ -599,8 +599,8 @@
 			<separator/>
 			<menu text="Izbira _omrežja">
 				<item id="ID_NETWORK_G2" text="Poveži se z _Gnutella2"/>
-				<item id="ID_NETWORK_ED2K" text="Poveži se z _eDonkey2000"/>
 				<item id="ID_NETWORK_G1" text="Poveži se z Gnutella_1"/>
+				<item id="ID_NETWORK_ED2K" text="Poveži se z _eDonkey2000"/>
 			</menu>
 			<separator/>
 			<item id="ID_NETWORK_AUTO_CLOSE" text="Zapri po p_renosih"/>
@@ -1169,8 +1169,11 @@
 			<item id="ID_LIBRARY_COPY" text="_Kopiraj datoteke..."/>
 		</menu>
 		<item id="ID_LIBRARY_REBUILD_ANSI" text="_Lokaliziraj metapodatke"/>
+		<item id="ID_LIBRARY_REFRESH_METADATA" text="_Refresh Metadata"/>
 		<separator/>
 		<item id="ID_LIBRARY_COLUMNS" text="Izberi _stolpce..."/>
+		<separator/>
+		<item id="ID_SHELL_MENU" text="S_hell menu"/>
 		<separator/>
 		<item id="ID_LIBRARY_PROPERTIES" text="_Lastnosti"/>
 	</menu>
@@ -1378,8 +1381,8 @@
 			<item id="ID_NETWORK_DISCONNECT" text="_Prekini povezavo"/>
 			<separator/>
 			<item id="ID_NETWORK_G2" text="_Gnutella2"/>
-			<item id="ID_NETWORK_ED2K" text="_eDonkey2000"/>
 			<item id="ID_NETWORK_G1" text="Gnutella_1"/>
+			<item id="ID_NETWORK_ED2K" text="_eDonkey2000"/>
 		</menu>
 		<menu text="_Nadzornik">
 			<item id="ID_NEIGHBOURS_VIEW_ALL" text="Poglej _ves promet"/>

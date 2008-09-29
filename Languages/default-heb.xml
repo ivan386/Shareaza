@@ -28,7 +28,7 @@ PDF
 		description="Shareaza Default Hebrew Skin File"
 		link="http://shareaza.sourceforge.net/"
 		email="peer_l_(at)hotmail, omega09(at)sourceforge.net"
-		version="2.3.1.5"
+		version="2.3.2.0"
 		type="Language"
 		language="heb"
 		prompt="לחץ כאן לקביעת עברית כשפת ברירת המחדל"		
@@ -373,8 +373,8 @@ PDF
 		<button id="ID_NEIGHBOURS_CHAT" text="‪שוחח עם משתמש"/>
 		<rightAlign/>
 		<button id="ID_NETWORK_G2" text="‪גנוטלה 2"/>
-		<button id="ID_NETWORK_ED2K" text="‪אי-דונקי 2000"/>
 		<button id="ID_NETWORK_G1" text="‪גנוטלה 1"/>
+		<button id="ID_NETWORK_ED2K" text="‪אי-דונקי 2000"/>
 		<separator/>
 		<button id="ID_NEIGHBOURS_SETTINGS" text="‪הגדרות"/>
 	</toolbar>
@@ -387,8 +387,8 @@ PDF
 		<button id="ID_SECURITY_BAN" text="חסום מארח (הוסט)"/>
 		<rightAlign/>
 		<button id="ID_NETWORK_G2" text="‪גנוטלה 2"/>
-		<button id="ID_NETWORK_ED2K" text="‪אי-דונקי"/>
 		<button id="ID_NETWORK_G1" text="‪גנוטלה 1"/>
+		<button id="ID_NETWORK_ED2K" text="‪אי-דונקי"/>
 		<separator/>
 		<button id="ID_NEIGHBOURS_SETTINGS" text="‪הגדרות"/>
 	</toolbar>
@@ -1262,6 +1262,8 @@ PDF
 		<separator/>
 		<item id="ID_LIBRARY_COLUMNS" text="‪...בחר עמודות"/>
 		<separator/>
+		<item id="ID_SHELL_MENU" text="S_hell menu"/>
+		<separator/>
 		<item id="ID_LIBRARY_PROPERTIES" text="‪מ_אפיינים"/>
 	</menu>
 	<menu name="CLibraryFileView.Virtual.Basic">
@@ -1480,8 +1482,8 @@ PDF
 			<item id="ID_NETWORK_DISCONNECT" text="‪ה_תנתק"/>
 			<separator/>
 			<item id="ID_NETWORK_G2" text="‪גנוטלה 2"/>
-			<item id="ID_NETWORK_ED2K" text="‪אידונקי 2000"/>
 			<item id="ID_NETWORK_G1" text="‪גנוטלה 1"/>
+			<item id="ID_NETWORK_ED2K" text="‪אידונקי 2000"/>
 		</menu>
 		<menu text="‪מוניטור">
 			<item id="ID_NEIGHBOURS_VIEW_ALL" text="‪הצג את כל תעבורת הרשת"/>
@@ -1779,18 +1781,18 @@ PDF
 		<text group="24" align="middle" id="G2Hubs">‪(hubs) מוקדים ‎%i</text>
 		<text group="25" align="middle" id="G2Leaves">‪&#160; ענפי קו‎ %i.</text>
 		<newline group="20" gap="2"/>
-		<icon group="30" command="ID_NETWORK_ED2K"/><gap group="30" size="4"/>
-		<text group="30" align="middle" format="b">אידונקי: </text>
-		<text group="31" align="middle">מנותק.</text>
-		<text group="32" align="middle"> מתחבר...</text>
-		<text group="33" align="middle">מחובר.</text>
-		<newline group="30" gap="2"/>
 		<icon group="10" command="ID_NETWORK_G1"/><gap group="10" size="4"/>
 		<text group="10" align="middle" format="b">גונוטלה1: </text>
 		<text group="11" align="middle"> מנותק.</text>
 		<text group="12" align="middle"> מתחבר...</text>
 		<text group="13" align="middle"> מחובר.</text>
 		<newline group="10" gap="2"/>
+		<icon group="30" command="ID_NETWORK_ED2K"/><gap group="30" size="4"/>
+		<text group="30" align="middle" format="b">אידונקי: </text>
+		<text group="31" align="middle">מנותק.</text>
+		<text group="32" align="middle"> מתחבר...</text>
+		<text group="33" align="middle">מחובר.</text>
+		<newline group="30" gap="2"/>
 		<group id="2">
 			<para align="center">
 				<newline gap="6"/>

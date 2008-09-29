@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 
 <!-- Shareaza Default Russian Skin File -->
-<!-- Translation based on default-en.xml SVN rev.7300 -->
+<!-- Translation based on default-en.xml SVN rev.7350 -->
 
 <!-- This skin basically represents the current Shareaza defaults. You can use this file as -->
 <!-- a basis for creating new skins, however in a new skin be sure to ONLY include the sections -->
@@ -664,8 +664,8 @@
 			<separator/>
 			<menu text="_Выбор сетей">
 				<item id="ID_NETWORK_G2" text="Подключиться к _Gnutella2"/>
-				<item id="ID_NETWORK_ED2K" text="Подключиться кс _eDonkey"/>
 				<item id="ID_NETWORK_G1" text="Подключиться к Gnutella_1"/>
+				<item id="ID_NETWORK_ED2K" text="Подключиться кс _eDonkey"/>
 			</menu>
 			<separator/>
 			<item id="ID_NETWORK_AUTO_CLOSE" text="_Закрыть после пересылок"/>

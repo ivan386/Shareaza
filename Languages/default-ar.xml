@@ -1190,6 +1190,8 @@
       <separator />
       <item id="ID_LIBRARY_COLUMNS" text="أختيار الا_عمدة..." />
       <separator />
+      <item id="ID_SHELL_MENU" text="S_hell menu"/>
+      <separator />
       <item id="ID_LIBRARY_PROPERTIES" text="_خصائص" />
     </menu>
     <menu name="CLibraryFileView.Virtual.Basic">
@@ -3278,7 +3280,7 @@
       <control />
       <control />
       <control caption="إنشاء ملفات وهمية عند الحذف" />
-      <control />
+      <control caption=""/>
     </dialog>
     <dialog name="CMediaSettingsPage" cookie="BuCoBuBuBuCoBuBuBuBuBuStSt" caption="مشغل الوسائط">
       <control caption="_:خصائص" />
@@ -4430,7 +4432,7 @@
       <column from="Value" to="" />
     </list>
     <list name="CFavouritesProfileList">
-      <column from="Name" to="" />
+      <column from="Name" to="الاسم" />
       <column from="URL" to="" />
     </list>
     <list name="CFileSourcesPageList">
@@ -4438,7 +4440,7 @@
       <column from="Expires" to="" />
     </list>
     <list name="CTorrentFileList">
-      <column from="Filename" to="" />
+      <column from="Filename" to="الاسم" />
       <column from="Size" to="الحجم" />
     </list>
     <list name="CTorrentTrackerList">

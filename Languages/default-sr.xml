@@ -1186,8 +1186,11 @@
 			<item id="ID_LIBRARY_COPY" text="Kopiraj Datoteke..."/>
 		</menu>
 		<item id="ID_LIBRARY_REBUILD_ANSI" text="_Lokalizuj Metadate"/>
+		<item id="ID_LIBRARY_REFRESH_METADATA" text="_Refresh Metadata"/>
 		<separator/>
 		<item id="ID_LIBRARY_COLUMNS" text="Odaberi Kolonu..."/>
+		<separator/>
+		<item id="ID_SHELL_MENU" text="S_hell menu"/>
 		<separator/>
 		<item id="ID_LIBRARY_PROPERTIES" text="_Podešavanja"/>
 	</menu>

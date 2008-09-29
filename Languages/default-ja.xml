@@ -353,8 +353,8 @@
 		<button id="ID_NEIGHBOURS_CHAT" text="チャット"/>
 		<rightAlign/>
 		<button id="ID_NETWORK_G2" text="Gnutella2"/>
-		<button id="ID_NETWORK_ED2K" text="eDonkey2000"/>
 		<button id="ID_NETWORK_G1" text="Gnutella1"/>
+		<button id="ID_NETWORK_ED2K" text="eDonkey2000"/>
 		<separator/>
 		<button id="ID_NEIGHBOURS_SETTINGS" text="設定"/>
 	</toolbar>
@@ -367,8 +367,8 @@
 		<button id="ID_SECURITY_BAN" text="ホストをBAN"/>
 		<rightAlign/>
 		<button id="ID_NETWORK_G2" text="Gnutella2"/>
-		<button id="ID_NETWORK_ED2K" text="eDonkey2000"/>
 		<button id="ID_NETWORK_G1" text="Gnutella1"/>
+		<button id="ID_NETWORK_ED2K" text="eDonkey2000"/>
 		<separator/>
 		<button id="ID_NEIGHBOURS_SETTINGS" text="設定"/>
 	</toolbar>
@@ -448,8 +448,8 @@
 			<separator/>
 			<menu text="ネットワーク選択(_N)">
 				<item id="ID_NETWORK_G2" text="Gnutella2へ接続(_G)"/>
-				<item id="ID_NETWORK_ED2K" text="eDonkey2000へ接続(_E)"/>
 				<item id="ID_NETWORK_G1" text="Gnutella1へ接続(_1)"/>
+				<item id="ID_NETWORK_ED2K" text="eDonkey2000へ接続(_E)"/>
 			</menu>
 			<separator/>
 			<item id="ID_NETWORK_AUTO_CLOSE" text="転送後に終了(_A)"/>
@@ -517,8 +517,8 @@
 			<separator/>
 			<menu text="ネットワーク選択(_N)">
 				<item id="ID_NETWORK_G2" text="Gnutella2へ接続(_G)"/>
-				<item id="ID_NETWORK_ED2K" text="eDonkey2000へ接続(_E)"/>
 				<item id="ID_NETWORK_G1" text="Gnutella1へ接続(_1)"/>
+				<item id="ID_NETWORK_ED2K" text="eDonkey2000へ接続(_E)"/>
 			</menu>
 			<separator/>
 			<item id="ID_NETWORK_CONNECT_TO" text="接続先(_T)..." shortcut="Ctrl+T"/>
@@ -613,8 +613,8 @@
 			<separator/>
 			<menu text="ネットワーク選択(_N)">
 				<item id="ID_NETWORK_G2" text="Gnutella2へ接続(_G)"/>
-				<item id="ID_NETWORK_ED2K" text="eDonkey2000へ接続(_E)"/>
 				<item id="ID_NETWORK_G1" text="Gnutella1へ接続(_1)"/>
+				<item id="ID_NETWORK_ED2K" text="eDonkey2000へ接続(_E)"/>
 			</menu>
 			<separator/>
 			<item id="ID_NETWORK_AUTO_CLOSE" text="転送後に終了(_A)"/>
@@ -1188,8 +1188,11 @@
 			<item id="ID_LIBRARY_COPY" text="ファイルをコピー(_C)..."/>
 		</menu>
 		<item id="ID_LIBRARY_REBUILD_ANSI" text="メタデータをローカライズ(_L)"/>
+		<item id="ID_LIBRARY_REFRESH_METADATA" text="_Refresh Metadata"/>
 		<separator/>
 		<item id="ID_LIBRARY_COLUMNS" text="カラム選択(_C)..."/>
+		<separator/>
+		<item id="ID_SHELL_MENU" text="S_hell menu"/>
 		<separator/>
 		<item id="ID_LIBRARY_PROPERTIES" text="プロパティ(_P)"/>
 	</menu>
@@ -1401,8 +1404,8 @@
 			<item id="ID_NETWORK_DISCONNECT" text="切断(_D)"/>
 			<separator/>
 			<item id="ID_NETWORK_G2" text="Gnutella2(_G)"/>
-			<item id="ID_NETWORK_ED2K" text="eDonkey2000(_E)"/>
 			<item id="ID_NETWORK_G1" text="Gnutella1(_1)"/>
+			<item id="ID_NETWORK_ED2K" text="eDonkey2000(_E)"/>
 		</menu>
 		<menu text="モニタ(_M)">
 			<item id="ID_NEIGHBOURS_VIEW_ALL" text="全ての転送を表示(_A)"/>
@@ -1689,8 +1692,9 @@
 		<newline group="30" gap="2"/>
 		<group id="2">
 			<para align="center">
-				<newline gap="6"/>
+				<newline gap="4"/>
 				<text>接続時間:</text>
+				<newline gap="0"/>
 				<text id="ConnectedHours" format="b">%i </text>
 				<text>時間</text>
 				<text id="ConnectedMinutes" format="b">%i </text>

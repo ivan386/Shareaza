@@ -345,8 +345,8 @@
 		<button id="ID_NEIGHBOURS_CHAT" text="Chat"/>
 		<rightAlign/>
 		<button id="ID_NETWORK_G2" text="Gnutella2"/>
-		<button id="ID_NETWORK_ED2K" text="eDonkey"/>
 		<button id="ID_NETWORK_G1" text="Gnutella1"/>
+		<button id="ID_NETWORK_ED2K" text="eDonkey"/>
 		<separator/>
 		<button id="ID_NEIGHBOURS_SETTINGS" text="Opzioni"/>
 	</toolbar>
@@ -359,8 +359,8 @@
 		<button id="ID_SECURITY_BAN" text="Blocca host"/>
 		<rightAlign/>
 		<button id="ID_NETWORK_G2" text="Gnutella2"/>
-		<button id="ID_NETWORK_ED2K" text="eDonkey"/>
 		<button id="ID_NETWORK_G1" text="Gnutella1"/>
+		<button id="ID_NETWORK_ED2K" text="eDonkey"/>
 		<separator/>
 		<button id="ID_NEIGHBOURS_SETTINGS" text="Opzioni"/>
 	</toolbar>
@@ -440,8 +440,8 @@
 			<separator/>
 			<menu text="Scegli le _reti">
 				<item id="ID_NETWORK_G2" text="Connetti a _Gnutella2"/>
-				<item id="ID_NETWORK_ED2K" text="Connetti a _eDonkey"/>
 				<item id="ID_NETWORK_G1" text="Connetti a Gnutella_1"/>
+				<item id="ID_NETWORK_ED2K" text="Connetti a _eDonkey"/>
 			</menu>
 			<separator/>
 			<item id="ID_NETWORK_AUTO_CLOSE" text="Esci al termine dei trasferimenti"/>
@@ -454,6 +454,7 @@
 			<item id="ID_TAB_SEARCH" text="_Cerca"/>
 			<item id="ID_TAB_TRANSFERS" text="_Download"/>
 			<item id="ID_WINDOW_REMOTE" text="Controllo _remoto"/>
+			<item id="ID_TAB_IRC" text="_Chat"/>
 			<separator/>
 			<menu text="A_vanzate">
 				<item id="ID_VIEW_NEIGHBOURS" text="_Host"/>
@@ -509,8 +510,8 @@
 			<separator/>
 			<menu text="Scegli le _reti">
 				<item id="ID_NETWORK_G2" text="Connetti a _Gnutella2"/>
-				<item id="ID_NETWORK_ED2K" text="Connetti a _eDonkey"/>
 				<item id="ID_NETWORK_G1" text="Connetti a Gnutella_1"/>
+				<item id="ID_NETWORK_ED2K" text="Connetti a _eDonkey"/>
 			</menu>
 			<separator/>
 			<item id="ID_NETWORK_CONNECT_TO" text="Connetti a..." shortcut="Ctrl+T"/>
@@ -609,8 +610,8 @@
 			<separator/>
 			<menu text="Scegli le _reti">
 				<item id="ID_NETWORK_G2" text="Connetti a _Gnutella2"/>
-				<item id="ID_NETWORK_ED2K" text="Connetti a _eDonkey"/>
 				<item id="ID_NETWORK_G1" text="Connetti a Gnutella_1"/>
+				<item id="ID_NETWORK_ED2K" text="Connetti a _eDonkey"/>
 			</menu>
 			<separator/>
 			<item id="ID_NETWORK_AUTO_CLOSE" text="Esci al termine dei trasferimenti"/>
@@ -1184,8 +1185,11 @@
 			<item id="ID_LIBRARY_COPY" text="Copia i file..."/>
 		</menu>
 		<item id="ID_LIBRARY_REBUILD_ANSI" text="_Localizza metadata"/>
+		<item id="ID_LIBRARY_REFRESH_METADATA" text="_Refresh Metadata"/>
 		<separator/>
 		<item id="ID_LIBRARY_COLUMNS" text="Modifica colonne..."/>
+		<separator/>
+		<item id="ID_SHELL_MENU" text="S_hell menu"/>
 		<separator/>
 		<item id="ID_LIBRARY_PROPERTIES" text="Proprietà"/>
 	</menu>
@@ -1397,8 +1401,8 @@
 			<item id="ID_NETWORK_DISCONNECT" text="Disconnetti"/>
 			<separator/>
 			<item id="ID_NETWORK_G2" text="Gnutella2"/>
-			<item id="ID_NETWORK_ED2K" text="eDonkey"/>
 			<item id="ID_NETWORK_G1" text="Gnutella1"/>
+			<item id="ID_NETWORK_ED2K" text="eDonkey"/>
 		</menu>
 		<menu text="Monitor">
 			<item id="ID_NEIGHBOURS_VIEW_ALL" text="Visualizza tutto il traffico"/>
@@ -1684,8 +1688,9 @@
 		<newline group="30" gap="2"/>
 		<group id="2">
 			<para align="center">
-				<newline gap="6"/>
+				<newline gap="4"/>
 				<text>Sei stato connesso per </text>
+				<newline gap="0"/>
 				<text id="ConnectedHours" format="b">%i </text>
 				<text>ore e </text>
 				<text id="ConnectedMinutes" format="b">%i </text>

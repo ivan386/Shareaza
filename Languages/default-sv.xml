@@ -363,8 +363,8 @@
 		<button id="ID_NEIGHBOURS_CHAT" text="Chatta med användaren" />
 		<rightAlign/>
 		<button id="ID_NETWORK_G2" text="Gnutella2"/>
-		<button id="ID_NETWORK_ED2K" text="eDonkey"/>
 		<button id="ID_NETWORK_G1" text="Gnutella1"/>
+		<button id="ID_NETWORK_ED2K" text="eDonkey"/>
 		<separator/>
 		<button id="ID_NEIGHBOURS_SETTINGS" text="Inställningar" />
 	</toolbar>
@@ -377,8 +377,8 @@
 		<button id="ID_SECURITY_BAN" text="Utestäng värd" />
 		<rightAlign/>
 		<button id="ID_NETWORK_G2" text="Gnutella2"/>
-		<button id="ID_NETWORK_ED2K" text="eDonkey"/>
 		<button id="ID_NETWORK_G1" text="Gnutella1"/>
+		<button id="ID_NETWORK_ED2K" text="eDonkey"/>
 		<separator/>
 		<button id="ID_NEIGHBOURS_SETTINGS" text="Inställningar" />
 	</toolbar>
@@ -458,8 +458,8 @@
 			<separator/>
 			<menu text="Välj _Nätverk">
 				<item id="ID_NETWORK_G2" text="Anslut till _Gnutella2" />
-				<item id="ID_NETWORK_ED2K" text="Anslut till _eDonkey" />
 				<item id="ID_NETWORK_G1" text="Anslut till Gnutella_1" />
+				<item id="ID_NETWORK_ED2K" text="Anslut till _eDonkey" />
 			</menu>
 			<separator/>
 			<item id="ID_NETWORK_AUTO_CLOSE" text="Avsluta _efter överföringar" />
@@ -531,8 +531,8 @@
 			<separator/>
 			<menu text="Välj _Nätverk">
 				<item id="ID_NETWORK_G2" text="Anslut till _Gnutella2" />
-				<item id="ID_NETWORK_ED2K" text="Anslut till _eDonkey" />
 				<item id="ID_NETWORK_G1" text="Anslut till Gnutella_1" />
+				<item id="ID_NETWORK_ED2K" text="Anslut till _eDonkey" />
 			</menu>
 			<separator/>
 			<item id="ID_NETWORK_CONNECT_TO" text="Anslut _till…" shortcut="Ctrl+T" />
@@ -635,8 +635,8 @@
 			<separator/>
 			<menu text="Välj _Nätverk">
 				<item id="ID_NETWORK_G2" text="Anslut till _Gnutella2" />
-				<item id="ID_NETWORK_ED2K" text="Anslut till _eDonkey" />
 				<item id="ID_NETWORK_G1" text="Anslut till Gnutella_1" />
+				<item id="ID_NETWORK_ED2K" text="Anslut till _eDonkey" />
 			</menu>
 			<separator/>
 			<item id="ID_NETWORK_AUTO_CLOSE" text="Stäng _efter överföringar" />
@@ -1745,8 +1745,9 @@
 		<newline group="30" gap="2"/>
 		<group id="2">
 			<para align="center">
-				<newline gap="6"/>
+				<newline gap="4"/>
 				<text>Du har varit ansluten i </text>
+				<newline gap="0"/>
 				<text id="ConnectedHours" format="b">%i </text>
 				<text>timmar och </text>
 				<text id="ConnectedMinutes" format="b">%i </text>

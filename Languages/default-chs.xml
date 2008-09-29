@@ -367,8 +367,8 @@
 		<button id="ID_SECURITY_BAN" text="禁止用户"/>
 		<rightAlign/>
 		<button id="ID_NETWORK_G2" text="Gnutella2"/>
-		<button id="ID_NETWORK_ED2K" text="eDonkey"/>
 		<button id="ID_NETWORK_G1" text="Gnutella1"/>
+		<button id="ID_NETWORK_ED2K" text="eDonkey"/>
 		<separator/>
 		<button id="ID_NEIGHBOURS_SETTINGS" text="设置"/>
 	</toolbar>
@@ -449,8 +449,8 @@
 			<separator/>
 			<menu text="选择网络(_N)">
 				<item id="ID_NETWORK_G2" text="连接到 Gnutella2(_G)"/>
-				<item id="ID_NETWORK_ED2K" text="连接到 edonkey(_E)"/>
 				<item id="ID_NETWORK_G1" text="连接到 Gnutella1(_1)"/>
+				<item id="ID_NETWORK_ED2K" text="连接到 edonkey(_E)"/>
 			</menu>
 			<separator/>
 			<item id="ID_NETWORK_AUTO_CLOSE" text="传送后退出(_A)"/>
@@ -463,6 +463,7 @@
 			<item id="ID_TAB_SEARCH" text="搜索(_S)"/>
 			<item id="ID_TAB_TRANSFERS" text="下载(_D)"/>
 			<item id="ID_WINDOW_REMOTE" text="远程(_R)"/>
+			<item id="ID_TAB_IRC" text="_Chat"/>
 			<separator/>
 			<menu text="高级(_A)">
 				<item id="ID_VIEW_NEIGHBOURS" text="邻居(_N)"/>
@@ -517,8 +518,8 @@
 			<separator/>
 			<menu text="选择网络(_N)">
 				<item id="ID_NETWORK_G2" text="连接到 Gnutella2(_G)"/>
-				<item id="ID_NETWORK_ED2K" text="连接到 edonkey(_E)"/>
 				<item id="ID_NETWORK_G1" text="连接到 Gnutella1(_1)"/>
+				<item id="ID_NETWORK_ED2K" text="连接到 edonkey(_E)"/>
 			</menu>
 			<separator/>
 			<item id="ID_NETWORK_CONNECT_TO" text="连接到(_T)..." shortcut="Ctrl+T"/>
@@ -613,8 +614,8 @@
 			<separator/>
 			<menu text="选择网络(_N)">
 				<item id="ID_NETWORK_G2" text="连接到 Gnutella2(_G)"/>
-				<item id="ID_NETWORK_ED2K" text="连接到 edonkey(_E)"/>
 				<item id="ID_NETWORK_G1" text="连接到 Gnutella1(_1)"/>
+				<item id="ID_NETWORK_ED2K" text="连接到 edonkey(_E)"/>
 			</menu>
 			<separator/>
 			<item id="ID_NETWORK_AUTO_CLOSE" text="传送后关闭(_A)"/>
@@ -816,6 +817,8 @@
 			<item id="ID_HOSTCACHE_G2_CACHE" text="Gnutella2 缓存(_2)"/>
 			<item id="ID_HOSTCACHE_G1_CACHE" text="Gnutella1 缓存(_1)"/>
 			<item id="ID_HOSTCACHE_ED2K_CACHE" text="eDonkey 服务器(_E)"/>
+			<item id="ID_HOSTCACHE_BT_CACHE" text="_BitTorrent Cache"/>
+			<item id="ID_HOSTCACHE_KAD_CACHE" text="_Kademlia Cache"/>
 		</menu>
 		<separator/>
 		<item id="ID_HOSTCACHE_IMPORT" text="导入 MET 文件(_I)..."/>
@@ -1185,6 +1188,8 @@
 		<item id="ID_LIBRARY_REBUILD_ANSI" text="本地化元数据"/>
 		<separator/>
 		<item id="ID_LIBRARY_COLUMNS" text="选择列(_C)..."/>
+		<separator/>
+		<item id="ID_SHELL_MENU" text="S_hell menu"/>
 		<separator/>
 		<item id="ID_LIBRARY_PROPERTIES" text="属性(_P)"/>
 	</menu>
@@ -4252,7 +4257,7 @@
 		<control caption="假设文件 100％ 完整并重检"/>
 		<control caption="忽略所有已知资源"/>
 		<control caption="与本地文件合并且校验"/>
-		<control caption="取消(save incomplete file)"/>
+		<control caption="取消(save incomplete files)"/>
 		<control caption="数据擦除(_E):"/>
 		<control caption="字节范围:"/>
 		<control/>

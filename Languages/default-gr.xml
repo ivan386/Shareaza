@@ -14,7 +14,7 @@
 <!-- Manifest -->
 <manifest	name="Ελληνικά"
 		author="erimitis"
-		updatedBy="erimitis, Maria Tatsiou (v2.3.2.0)"
+		updatedBy="erimitis, Maria Tatsiou (2.4)"
 		description="Shareaza Default Greek Skin File"
 		link="http://shareaza.sourceforge.net/"
 		email="erimitis(at)users.sourceforge.net"
@@ -363,8 +363,8 @@
 		<button id="ID_NEIGHBOURS_CHAT" text="Συνομιλία με Χρήστη"/>
 		<rightAlign/>
 		<button id="ID_NETWORK_G2" text="Gnutella2"/>
-		<button id="ID_NETWORK_ED2K" text="ED2K"/>
 		<button id="ID_NETWORK_G1" text="Gnutella"/>
+		<button id="ID_NETWORK_ED2K" text="ED2K"/>
 		<separator/>
 		<button id="ID_NEIGHBOURS_SETTINGS" text="Ρυθμίσεις"/>
 	</toolbar>
@@ -377,8 +377,8 @@
 		<button id="ID_SECURITY_BAN" text="Αποκλεισμός Host"/>
 		<rightAlign/>
 		<button id="ID_NETWORK_G2" text="Gnutella2"/>
-		<button id="ID_NETWORK_ED2K" text="ED2K"/>
 		<button id="ID_NETWORK_G1" text="Gnutella"/>
+		<button id="ID_NETWORK_ED2K" text="ED2K"/>
 		<separator/>
 		<button id="ID_NEIGHBOURS_SETTINGS" text="Ρυθμίσεις"/>
 	</toolbar>
@@ -1470,8 +1470,8 @@
 			<item id="ID_NETWORK_DISCONNECT" text="Αποσύνδεση"/>
 			<separator/>
 			<item id="ID_NETWORK_G2" text="Gnutella_2"/>
-			<item id="ID_NETWORK_ED2K" text="ED2K"/>
 			<item id="ID_NETWORK_G1" text="Gnutella"/>
+			<item id="ID_NETWORK_ED2K" text="ED2K"/>
 		</menu>
 		<menu text="Εποπτεία">
 			<item id="ID_NEIGHBOURS_VIEW_ALL" text="Προβολή Όλων"/>

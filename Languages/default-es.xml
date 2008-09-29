@@ -345,8 +345,8 @@
 		<button id="ID_NEIGHBOURS_CHAT" text="Chatear con Usuario"/>
 		<rightAlign/>
 		<button id="ID_NETWORK_G2" text="Gnutella2"/>
-		<button id="ID_NETWORK_ED2K" text="eDonkey"/>
 		<button id="ID_NETWORK_G1" text="Gnutella1"/>
+		<button id="ID_NETWORK_ED2K" text="eDonkey"/>
 		<separator/>
 		<button id="ID_NEIGHBOURS_SETTINGS" text="Configurar..."/>
 	</toolbar>
@@ -359,8 +359,8 @@
 		<button id="ID_SECURITY_BAN" text="Bloquear"/>
 		<rightAlign/>
 		<button id="ID_NETWORK_G2" text="Gnutella2"/>
-		<button id="ID_NETWORK_ED2K" text="eDonkey"/>
 		<button id="ID_NETWORK_G1" text="Gnutella1"/>
+		<button id="ID_NETWORK_ED2K" text="eDonkey"/>
 		<separator/>
 		<button id="ID_NEIGHBOURS_SETTINGS" text="Configurar..."/>
 	</toolbar>
@@ -440,8 +440,8 @@
 			<separator/>
 			<menu text="Seleccionar _Redes">
 				<item id="ID_NETWORK_G2" text="Conectar a_Gnutella2"/>
-				<item id="ID_NETWORK_ED2K" text="Conectar a _eDonkey"/>
 				<item id="ID_NETWORK_G1" text="Conectar a _Gnutella 1"/>
+				<item id="ID_NETWORK_ED2K" text="Conectar a _eDonkey"/>
 			</menu>
 			<separator/>
 			<item id="ID_NETWORK_AUTO_CLOSE" text="_Salir Después de Transferencias"/>
@@ -454,6 +454,7 @@
 			<item id="ID_TAB_SEARCH" text="_Búsqueda"/>
 			<item id="ID_TAB_TRANSFERS" text="_Descargas"/>
 			<item id="ID_WINDOW_REMOTE" text="_Mostrar Control Remoto"/>
+			<item id="ID_TAB_IRC" text="_Chat"/>
 			<separator/>
 			<menu text="_Avanzado">
 				<item id="ID_VIEW_NEIGHBOURS" text="_Red" shortcut="F7"/>
@@ -509,8 +510,8 @@
 			<separator/>
 			<menu text="Seleccionar Redes">
 				<item id="ID_NETWORK_G2" text="Conectar a _Gnutella2"/>
-				<item id="ID_NETWORK_ED2K" text="Conectar a _eDonkey"/>
 				<item id="ID_NETWORK_G1" text="Conectar a _Gnutella 1"/>
+				<item id="ID_NETWORK_ED2K" text="Conectar a _eDonkey"/>
 			</menu>
 			<separator/>
 			<item id="ID_NETWORK_CONNECT_TO" text="Conectar _A..." shortcut="Ctrl+T"/>
@@ -609,8 +610,8 @@
 			<separator/>
 			<menu text="Conectar _A">
 				<item id="ID_NETWORK_G2" text="Conectar a _Gnutella2"/>
-				<item id="ID_NETWORK_ED2K" text="Conectar a _eDonkey"/>
 				<item id="ID_NETWORK_G1" text="Conectar a _Gnutella1"/>
+				<item id="ID_NETWORK_ED2K" text="Conectar a _eDonkey"/>
 			</menu>
 			<separator/>
 			<item id="ID_NETWORK_AUTO_CLOSE" text="_Salir Después de Transferencias"/>
@@ -1184,8 +1185,11 @@
 			<item id="ID_LIBRARY_COPY" text="_Copiar Archivos..."/>
 		</menu>
 		<item id="ID_LIBRARY_REBUILD_ANSI" text="_Ubicar Metadata"/>
+		<item id="ID_LIBRARY_REFRESH_METADATA" text="_Refresh Metadata"/>
 		<separator/>
 		<item id="ID_LIBRARY_COLUMNS" text="Seleccionar _Columnas..."/>
+		<separator/>
+		<item id="ID_SHELL_MENU" text="S_hell menu"/>
 		<separator/>
 		<item id="ID_LIBRARY_PROPERTIES" text="_Propiedades"/>
 	</menu>
@@ -1397,8 +1401,8 @@
 			<item id="ID_NETWORK_DISCONNECT" text="_Desconectar"/>
 			<separator/>
 			<item id="ID_NETWORK_G2" text="_Gnutella2"/>
-			<item id="ID_NETWORK_ED2K" text="_eDonkey"/>
 			<item id="ID_NETWORK_G1" text="Gnutella_1"/>
+			<item id="ID_NETWORK_ED2K" text="_eDonkey"/>
 		</menu>
 		<menu text="_Monitor">
 			<item id="ID_NEIGHBOURS_VIEW_ALL" text="Ver _Todo el Tráfico"/>

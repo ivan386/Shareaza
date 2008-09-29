@@ -369,8 +369,8 @@
 		<button id="ID_SECURITY_BAN" text="封鎖主機"/>
 		<rightAlign/>
 		<button id="ID_NETWORK_G2" text="Gnutella2"/>
-		<button id="ID_NETWORK_ED2K" text="eDonkey2000"/>
 		<button id="ID_NETWORK_G1" text="Gnutella1"/>
+		<button id="ID_NETWORK_ED2K" text="eDonkey2000"/>
 		<separator/>
 		<button id="ID_NEIGHBOURS_SETTINGS" text="設定"/>
 	</toolbar>
@@ -451,8 +451,8 @@
 			<separator/>
 			<menu text="選擇網路">
 				<item id="ID_NETWORK_G2" text="連線至 Gnutella2"/>
-				<item id="ID_NETWORK_ED2K" text="連線至 eDonkey2000"/>
 				<item id="ID_NETWORK_G1" text="連線至 Gnutella 1"/>
+				<item id="ID_NETWORK_ED2K" text="連線至 eDonkey2000"/>
 			</menu>
 			<separator/>
 			<item id="ID_NETWORK_AUTO_CLOSE" text="傳輸後離開"/>
@@ -519,8 +519,8 @@
 			<separator/>
 			<menu text="選擇網路">
 				<item id="ID_NETWORK_G2" text="連線至 Gnutella2"/>
-				<item id="ID_NETWORK_ED2K" text="連線至 eDonkey2000"/>
 				<item id="ID_NETWORK_G1" text="連線至 Gnutella 1"/>
+				<item id="ID_NETWORK_ED2K" text="連線至 eDonkey2000"/>
 			</menu>
 			<separator/>
 			<item id="ID_NETWORK_CONNECT_TO" text="連線至..." shortcut="Ctrl+T"/>
@@ -615,8 +615,8 @@
 			<separator/>
 			<menu text="選擇網路">
 				<item id="ID_NETWORK_G2" text="連線至 Gnutella2"/>
-				<item id="ID_NETWORK_ED2K" text="連線至 eDonkey2000"/>
 				<item id="ID_NETWORK_G1" text="連線至 Gnutella 1"/>
+				<item id="ID_NETWORK_ED2K" text="連線至 eDonkey2000"/>
 			</menu>
 			<separator/>
 			<item id="ID_NETWORK_AUTO_CLOSE" text="傳輸後關閉"/>
@@ -1185,8 +1185,11 @@
 			<item id="ID_LIBRARY_COPY" text="複製檔案..."/>
 		</menu>
 		<item id="ID_LIBRARY_REBUILD_ANSI" text="將解釋資料本地化"/>
+		<item id="ID_LIBRARY_REFRESH_METADATA" text="_Refresh Metadata"/>
 		<separator/>
 		<item id="ID_LIBRARY_COLUMNS" text="選擇欄位..."/>
+		<separator/>
+		<item id="ID_SHELL_MENU" text="S_hell menu"/>
 		<separator/>
 		<item id="ID_LIBRARY_PROPERTIES" text="屬性"/>
 	</menu>

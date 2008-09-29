@@ -347,8 +347,8 @@
 		<button id="ID_NEIGHBOURS_CHAT" text="Rozmowa z użytkownikiem"/>
 		<rightAlign/>
 		<button id="ID_NETWORK_G2" text="Gnutella2"/>
-		<button id="ID_NETWORK_ED2K" text="eDonkey2000"/>
 		<button id="ID_NETWORK_G1" text="Gnutella1"/>
+		<button id="ID_NETWORK_ED2K" text="eDonkey2000"/>
 		<separator/>
 		<button id="ID_NEIGHBOURS_SETTINGS" text="Ustawienia"/>
 	</toolbar>
@@ -361,8 +361,8 @@
 		<button id="ID_SECURITY_BAN" text="Ban"/>
 		<rightAlign/>
 		<button id="ID_NETWORK_G2" text="Gnutella2"/>
-		<button id="ID_NETWORK_ED2K" text="eDonkey2000"/>
 		<button id="ID_NETWORK_G1" text="Gnutella1"/>
+		<button id="ID_NETWORK_ED2K" text="eDonkey2000"/>
 		<separator/>
 		<button id="ID_NEIGHBOURS_SETTINGS" text="Ustawienia"/>
 	</toolbar>
@@ -435,8 +435,8 @@
 			<separator/>
 			<menu text="Wybierz sieci">
 				<item id="ID_NETWORK_G2" text="Połącz z Gnutella2"/>
-				<item id="ID_NETWORK_ED2K" text="Połącz z eDonkey2000"/>
 				<item id="ID_NETWORK_G1" text="Połącz z Gnutella1"/>
+				<item id="ID_NETWORK_ED2K" text="Połącz z eDonkey2000"/>
 			</menu>
 			<separator/>
 			<item id="ID_NETWORK_AUTO_CLOSE" text="Zakończ po pobieraniu"/>
@@ -503,8 +503,8 @@
 			<separator/>
 			<menu text="Wybierz sieci">
 				<item id="ID_NETWORK_G2" text="Połącz z Gnutella2"/>
-				<item id="ID_NETWORK_ED2K" text="Połącz z eDonkey2000"/>
 				<item id="ID_NETWORK_G1" text="Połącz z Gnutella1"/>
+				<item id="ID_NETWORK_ED2K" text="Połącz z eDonkey2000"/>
 			</menu>
 			<separator/>
 			<item id="ID_NETWORK_CONNECT_TO" text="Połącz z..." shortcut="Ctrl+T"/>
@@ -599,8 +599,8 @@
 			<separator/>
 			<menu text="Wybierz sieci">
 				<item id="ID_NETWORK_G2" text="Połącz z Gnutella2"/>
-				<item id="ID_NETWORK_ED2K" text="Połącz z eDonkey2000"/>
 				<item id="ID_NETWORK_G1" text="Połącz z Gnutella1"/>
+				<item id="ID_NETWORK_ED2K" text="Połącz z eDonkey2000"/>
 			</menu>
 			<separator/>
 			<item id="ID_NETWORK_AUTO_CLOSE" text="Zakończ po pobieraniu"/>
@@ -1169,8 +1169,11 @@
 			<item id="ID_LIBRARY_COPY" text="Kopiuj pliki..."/>
 		</menu>
 		<item id="ID_LIBRARY_REBUILD_ANSI" text="Lokalizuj Metadane"/>
+		<item id="ID_LIBRARY_REFRESH_METADATA" text="_Refresh Metadata"/>
 		<separator/>
 		<item id="ID_LIBRARY_COLUMNS" text="Wybierz kolumny..."/>
+		<separator/>
+		<item id="ID_SHELL_MENU" text="S_hell menu"/>
 		<separator/>
 		<item id="ID_LIBRARY_PROPERTIES" text="Właściwości"/>
 	</menu>
@@ -1377,7 +1380,6 @@
 			<item id="ID_NETWORK_DISCONNECT" text="Rozłącz"/>
 			<separator/>
 			<item id="ID_NETWORK_G2" text="Gnutella2"/>
-			<item id="ID_NETWORK_ED2K" text="eDonkey2000"/>
 			<item id="ID_NETWORK_G1" text="Gnutella1"/>
 		</menu>
 		<menu text="Monitor">
