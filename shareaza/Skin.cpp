@@ -2191,7 +2191,7 @@ HBITMAP CSkin::LoadBitmap(CString& strName)
 		HINSTANCE hInstance = NULL;
 		UINT nID = 0;
 
-		if ( _stscanf( strName.Left( nPos ), _T("%I64u"), &hInstance ) != 1 )
+		if ( _stscanf( strName.Left( nPos ), _T("%l64u"), &hInstance ) != 1 )
 			return NULL;
 		if ( _stscanf( strName.Mid( nPos + 1 ), _T("%lu"), &nID ) != 1 )
 			return NULL;
