@@ -4462,6 +4462,7 @@
 	<list name="CTorrentFileList">
 		<column from="Filename" to="Ime Datoteke"/>
 		<column from="Size" to="Veličina"/>
+	</list>
 	<list name="CTorrentTrackerList">
 		<column from="Tracker" to=""/>
 		<column from="Status" to=""/>

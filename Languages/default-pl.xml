@@ -996,7 +996,7 @@
 		<item id="ID_DOWNLOADS_EDIT" text="_Info"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_FILE_DELETE" text="Usuń plik"/>
-		<item id="ID_DOWNLOADS_RATE" text=_Oceń plik"/>
+		<item id="ID_DOWNLOADS_RATE" text="_Oceń plik"/>
 	</menu>
 	<menu name="CDownloadsWnd.Seeding">
 		<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Otwórz"/>
@@ -1381,6 +1381,7 @@
 			<separator/>
 			<item id="ID_NETWORK_G2" text="Gnutella2"/>
 			<item id="ID_NETWORK_G1" text="Gnutella1"/>
+			<item id="ID_NETWORK_ED2K" text="eDonkey2000"/>
 		</menu>
 		<menu text="Monitor">
 			<item id="ID_NEIGHBOURS_VIEW_ALL" text="Pokaż wszystkie pakiety"/>
@@ -3144,7 +3145,7 @@
 
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
 <dialogs>
-	<dialog name="CGeneralSettingsGroup" cookie="" caption="Ogólne"/>
+	<dialog name="CGeneralSettingsGroup" cookie="" caption="Ogólne">
 	</dialog>
 
 	<dialog name="CSettingSheet" cookie="SyBuBuBu#3" caption="Ustawienia Shareazy">

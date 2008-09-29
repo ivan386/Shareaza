@@ -1007,7 +1007,7 @@
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="_Lõpeta Jagamine"/>
 		<item id="ID_DOWNLOADS_HELP" text="_Abi..."/>
 		<separator/>
-		<item id="ID_DOWNLOADS_EDIT text="_Info..."/>
+		<item id="ID_DOWNLOADS_EDIT" text="_Info..."/>
 	</menu>
 	<menu name="CDownloadsWnd.Nothing">
 		<item id="ID_DOWNLOADS_HELP" text="_Abi..."/>
