@@ -74,7 +74,7 @@ IDR_MAINFRAME           ICON                    "res\\TorrentWizard.ico"
 
 VS_VERSION_INFO VERSIONINFO
  FILEVERSION 1,0,0,7
- PRODUCTVERSION 1,0,0,7
+ PRODUCTVERSION 2,4,0,0
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -97,7 +97,7 @@ BEGIN
             VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2003-2008."
             VALUE "OriginalFilename", "TorrentWizard.exe"
             VALUE "ProductName", "Shareaza"
-            VALUE "ProductVersion", "1, 0, 0, 7"
+            VALUE "ProductVersion", "2, 4, 0, 0"
         END
     END
     BLOCK "VarFileInfo"

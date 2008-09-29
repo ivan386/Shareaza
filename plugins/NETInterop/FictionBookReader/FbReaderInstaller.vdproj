@@ -261,21 +261,21 @@
             {
             "Name" = "8:HKLM presence"
             "Condition" = "8:REGISTRYVALUE1"
-            "Message" = "8:The plugin requires Shareaza 2.3.1.4 or higher. Do you want to download it now?"
+            "Message" = "8:The plugin requires Shareaza 2.4.0.0 or higher. Do you want to download it now?"
             "InstallUrl" = "8:http://shareaza.sourceforge.net/daily"
             }
             "{836E08B8-0285-4809-BA42-01DB6754A45D}:_2605E82A0C314F349AC3A1D9DA6D0275"
             {
             "Name" = "8:RazaExists"
             "Condition" = "8:FILEEXISTS1"
-            "Message" = "8:The plugin requires Shareaza 2.3.1.4 or higher. Do you want to download it now?"
+            "Message" = "8:The plugin requires Shareaza 2.4.0.0 or higher. Do you want to download it now?"
             "InstallUrl" = "8:http://shareaza.sourceforge.net/daily"
             }
             "{836E08B8-0285-4809-BA42-01DB6754A45D}:_F28F2CE5367B4041A47DC8BBEA3E54FE"
             {
             "Name" = "8:HKCU presence"
             "Condition" = "8:REGISTRYVALUE2"
-            "Message" = "8:The plugin requires Shareaza 2.3.1.4 or higher. Do you want to download it now?"
+            "Message" = "8:The plugin requires Shareaza 2.4.0.0 or higher. Do you want to download it now?"
             "InstallUrl" = "8:http://shareaza.sourceforge.net/daily"
             }
         }
@@ -287,7 +287,7 @@
             "Folder" = "8:[ProgramFilesFolder]\\[Manufacturer]"
             "Depth" = "2:0"
             "FileName" = "8:Shareaza.exe"
-            "MinVesion" = "8:2.3.1.3"
+            "MinVesion" = "8:2.3.1.4"
             "MaxVersion" = "8:"
             "MinSize" = "8:"
             "MaxSize" = "8:"

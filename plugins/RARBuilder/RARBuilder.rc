@@ -28,7 +28,7 @@ LANGUAGE LANG_NEUTRAL, SUBLANG_NEUTRAL
 
 VS_VERSION_INFO VERSIONINFO
  FILEVERSION 1,0,0,1
- PRODUCTVERSION 2,3,0,0
+ PRODUCTVERSION 2,4,0,0
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -48,10 +48,10 @@ BEGIN
             VALUE "FileDescription", "RAR Builder"
             VALUE "FileVersion", "1, 0, 0, 1"
             VALUE "InternalName", "RARBuilder"
-            VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2007. All rights reserved."
+            VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2008. All rights reserved."
             VALUE "OriginalFilename", "RARBuilder.dll"
             VALUE "ProductName", "Shareaza"
-            VALUE "ProductVersion", "2, 3, 0, 0"
+            VALUE "ProductVersion", "2, 4, 0, 0"
         END
     END
     BLOCK "VarFileInfo"
