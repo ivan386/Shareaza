@@ -468,11 +468,11 @@ CMenu* CSkin::GetMenu(LPCTSTR pszName) const
 		if ( m_pMenus.Lookup( strName +
 			m_pszModeSuffix[ Settings.General.GUIMode ][ nModeTry ], pMenu ) )
 		{
-			ASSERT( pMenu != NULL && ::IsMenu( pMenu->m_hMenu ) );
 			break;
 		}
 	}
-	ASSERT( ( "Menu not found!", pMenu ) );
+	ASSERT_VALID( pMenu );
+	ASSERT( pMenu->GetMenuItemCount() > 0 );
 	return pMenu;
 }
 
@@ -492,44 +492,48 @@ BOOL CSkin::LoadMenu(CXMLElement* pXML)
 {
 	CString strName = pXML->GetAttributeValue( _T("name") );
 	if ( strName.IsEmpty() )
-		return FALSE;
-
-	CMenu* pMenu = NULL;
-
-	if ( m_pMenus.Lookup( strName, pMenu ) )
 	{
-		delete pMenu;
+		ASSERT( ("No [name] attribute in [menu] tag", 0 ) );
+		return FALSE;
+	}
+
+	CMenu* pOldMenu = NULL;
+	if ( m_pMenus.Lookup( strName, pOldMenu ) )
+	{
+		ASSERT_VALID( pOldMenu );
+		delete pOldMenu;
 		m_pMenus.RemoveKey( strName );
 	}
 
-	pMenu = new CMenu();
-	if ( ! pMenu )
+	auto_ptr< CMenu > pMenu( new CMenu() );
+	ASSERT_VALID( pMenu.get() );
+	if ( ! pMenu.get() )
 		return FALSE;
 
 	if ( pXML->GetAttributeValue( _T("type"), _T("popup") ).CompareNoCase( _T("bar") ) == 0 )
 	{
-		if ( ! pMenu->CreateMenu() )
+		if( ! pMenu->CreateMenu() )
 		{
-			delete pMenu;
+			ASSERT( ("Cannot create menu", 0 ) );
 			return FALSE;
 		}
 	}
 	else
 	{
-		if ( ! pMenu->CreatePopupMenu() )
+		if( ! pMenu->CreatePopupMenu() )
 		{
-			delete pMenu;
+			ASSERT( ("Cannot create popup menu", 0 ) );
 			return FALSE;
 		}
 	}
 
 	if ( ! CreateMenu( pXML, pMenu->GetSafeHmenu() ) )
 	{
-		delete pMenu;
+		ASSERT( ("Cannot load menu", 0 ) );
 		return FALSE;
 	}
-
-	m_pMenus.SetAt( strName, pMenu );
+		
+	m_pMenus.SetAt( strName, pMenu.release() );
 
 	return TRUE;
 }
@@ -569,11 +573,15 @@ BOOL CSkin::CreateMenu(CXMLElement* pRoot, HMENU hMenu)
 
 				VERIFY( AppendMenu( hMenu, MF_STRING, nID, strText ) );
 			}
+			else
+			{
+				ASSERT( ( "Unknown command ID in [item] element inside [menu] tag", 0 ) );
+			}
 		}
 		else if ( pXML->IsNamed( _T("menu") ) )
 		{
 			HMENU hSubMenu = ::CreatePopupMenu();
-
+			ASSERT( hSubMenu );
 			if ( ! CreateMenu( pXML, hSubMenu ) )
 			{
 				DestroyMenu( hSubMenu );
@@ -585,6 +593,10 @@ BOOL CSkin::CreateMenu(CXMLElement* pRoot, HMENU hMenu)
 		else if ( pXML->IsNamed( _T("separator") ) )
 		{
 			VERIFY( AppendMenu( hMenu, MF_SEPARATOR, ID_SEPARATOR, NULL ) );
+		}
+		else
+		{
+			ASSERT( ( "Unknown element inside [menu] tag", 0 ) );
 		}
 	}
 
@@ -1700,7 +1712,11 @@ BOOL CSkin::LoadCommandIcon(CXMLElement* pXML, const CString& strPath)
 	UINT nIconID = LookupCommandID( pXML, _T("res") );
 	HINSTANCE hInstance = NULL;
 	if ( nIconID )
-		_stscanf( strPath, _T("%I64u"), &hInstance );
+	{
+		__int64 nInstance = 0;
+		if ( _stscanf( strPath, _T("%I64u"), &nInstance ) == 1 )
+			hInstance = (HINSTANCE)nInstance;
+	}
 
 	UINT nID = LookupCommandID( pXML );
 	if ( nID == 0 )
@@ -1932,7 +1948,8 @@ UINT_PTR CSkin::TrackPopupMenu(LPCTSTR pszMenu, const CPoint& point,
 	UINT nDefaultID, UINT nFlags, const CStringList& oFiles, CWnd* pWnd) const
 {
 	CMenu* pPopup = GetMenu( pszMenu );
-	if ( pPopup == NULL ) return 0;
+	if ( pPopup == NULL )
+		return 0;
 
 	if ( nDefaultID != 0 )
 	{
@@ -2189,10 +2206,12 @@ HBITMAP CSkin::LoadBitmap(CString& strName)
 	else
 	{
 		HINSTANCE hInstance = NULL;
-		UINT nID = 0;
-
-		if ( _stscanf( strName.Left( nPos ), _T("%l64u"), &hInstance ) != 1 )
+		__int64 nInstance = 0;
+		if ( _stscanf( strName.Left( nPos ), _T("%I64u"), &nInstance ) != 1 )
 			return NULL;
+		hInstance = (HINSTANCE)nInstance;
+
+		UINT nID = 0;
 		if ( _stscanf( strName.Mid( nPos + 1 ), _T("%lu"), &nID ) != 1 )
 			return NULL;
 
