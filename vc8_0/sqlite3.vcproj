@@ -215,6 +215,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				OutputFile="$(OutDir)$(ProjectName).dll"
+				GenerateDebugInformation="true"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				OptimizeForWindows98="1"
@@ -291,6 +292,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				OutputFile="$(OutDir)$(ProjectName).dll"
+				GenerateDebugInformation="true"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				OptimizeForWindows98="1"
