@@ -2516,7 +2516,7 @@
 	<string id="8010" value="Questa è una versione pre-release di Shareaza e il periodo di beta testing è terminato. Scarica la versione completa e ufficiale da http://shareaza.sourceforge.net/."/>
 	<string id="8011" value="Cambiando la visualizzazione qualsiasi finestra aperta si chiuderà. Desideri cambiare ora?"/>
 	<string id="8012" value="Informazioni sul torrent"/>
-	<string id="8013" value="Nessuna nuova versione Shareaza rilevato."/>
+	<string id="8013" value="Nessuna nuova versione Shareaza rilevata."/>
 	<string id="8014" value="Scarica Proprietà"/>
 	<string id="8060" value="Modalità Hub/Ultrapeer con %lu vicino(i). %s nella libreria locale."/>
 	<string id="8061" value="Modalità Ultrapeer con %lu vicino(i). %s nella libreria locale."/>

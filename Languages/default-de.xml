@@ -500,7 +500,7 @@
 			<item id="ID_TAB_SEARCH" text="_Suchen"/>
 			<item id="ID_TAB_TRANSFERS" text="_Downloads"/>
 			<item id="ID_WINDOW_REMOTE" text="_Fernbedienung"/>
-			<item id="ID_TAB_IRC" text="Internet Relay _Chat"/>
+			<item id="ID_TAB_IRC" text="Internet Relay _Chat (IRC)"/>
 			<separator/>
 			<menu text="_Erweitert">
 				<item id="ID_VIEW_NEIGHBOURS" text="_Netzwerk"/>
@@ -547,9 +547,9 @@
 			</menu>
 			<separator/>
 			<item id="ID_HELP_VERSION_CHECK" text="Auf neuere _Version prüfen"/>
+			<item id="ID_HELP_DONATE" text="_Für das Shareaza-Projekt spenden"/>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="_Über Shareaza..."/>
-			<item id="ID_HELP_DONATE" text="_Spenden an das Shareaza Projekt!"/>
 		</menu>
 	</menu>
 	<menu name="CMainWnd.Tabbed" type="bar">
@@ -576,7 +576,7 @@
 			<item id="ID_TAB_SEARCH" text="_Suchen"/>
 			<item id="ID_TAB_TRANSFERS" text="_Transfer"/>
 			<item id="ID_TAB_NETWORK" text="_Netzwerk"/>
-			<item id="ID_TAB_IRC" text="Internet Relay _Chat"/>
+			<item id="ID_TAB_IRC" text="Internet Relay _Chat (IRC)"/>
 			<separator/>
 			<item id="ID_VIEW_SECURITY" text="S_icherheit"/>
 			<item id="ID_VIEW_HOSTS" text="H_ost-Cache"/>
@@ -646,7 +646,7 @@
 			</menu>
 			<separator/>
 			<item id="ID_HELP_VERSION_CHECK" text="Nach _Update suchen"/>
-			<item id="ID_HELP_DONATE" text="_An das Shareaza-Projekt spenden"/>
+			<item id="ID_HELP_DONATE" text="_Für das Shareaza-Projekt spenden"/>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="_Über Shareaza..."/>
 		</menu>
@@ -738,7 +738,7 @@
 			</menu>
 			<separator/>
 			<item id="ID_HELP_VERSION_CHECK" text="Nach _Update suchen"/>
-			<item id="ID_HELP_DONATE" text="_An das Shareaza-Projekt spenden"/>
+			<item id="ID_HELP_DONATE" text="_Für das Shareaza-Projekt spenden"/>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="_Über Shareaza..."/>
 		</menu>
@@ -765,7 +765,7 @@
 		<item id="ID_TAB_SEARCH" text="_Suchen"/>
 		<item id="ID_TAB_TRANSFERS" text="_Transfer"/>
 		<item id="ID_TAB_NETWORK" text="_Netzwerk"/>
-		<item id="ID_TAB_IRC" text="Internet Relay _Chat"/>
+		<item id="ID_TAB_IRC" text="Internet Relay _Chat (IRC)"/>
 		<separator/>
 		<item id="ID_VIEW_SECURITY" text="_Sicherheit"/>
 		<item id="ID_VIEW_HOSTS" text="_Host-Cache"/>
@@ -851,7 +851,7 @@
 		<item id="ID_TAB_SEARCH" text="_Suchen"/>
 		<item id="ID_TAB_TRANSFERS" text="_Transfer"/>
 		<item id="ID_TAB_NETWORK" text="_Netzwerk"/>
-		<item id="ID_TAB_IRC" text="Internet Relay _Chat"/>
+		<item id="ID_TAB_IRC" text="Internet Relay _Chat (IRC)"/>
 		<separator/>
 		<item id="ID_VIEW_SECURITY" text="_Sicherheit"/>
 		<item id="ID_VIEW_HOSTS" text="_Host Cache"/>
@@ -2603,8 +2603,8 @@
 	<string id="8010" value="Das ist eine Vorabversion von Shareaza. Die Betatest-Periode ist abgelaufen. Bitte laden Sie die offizielle Version von http://shareaza.sourceforge.net/ herunter."/>
 	<string id="8011" value="Das Wechseln der Ansicht schließt alle offenen Fenster.  Wollen Sie die Ansicht jetzt wechseln?"/>
 	<string id="8012" value="Torrent-Informationen"/>
-	<string id="8013" value="Keine neuen Shareaza-Version erkannt."/>
-	<string id="8014" value="Download Properties"/>
+	<string id="8013" value="Es wurde keine neue Shareaza-Version gefunden."/>
+	<string id="8014" value="Download-Eigenschaften"/>
 	<string id="8060" value="Hub/Ultrapeer-Modus mit %lu Leaves.  %s in ihrer Bibliothek."/>
 	<string id="8061" value="Ultrapeer-Modus mit %lu Leaves.  %s in ihrer Bibliothek."/>
 	<string id="8062" value="Hub-Modus mit %lu Leaves.  %s in ihrer Bibliothek."/>
@@ -4420,7 +4420,7 @@
 		<control caption="OK"/>
 		<control caption="Abbrechen"/>	
 	</dialog>
-	<dialog name="CIrcInputDlg" cookie="EdBuBuSt" caption="Channel Name|Why reason">
+	<dialog name="CIrcInputDlg" cookie="EdBuBuSt" caption="Channel-Name|Grund">
 		<control/>
 		<control caption="OK"/>
 		<control caption="Abbrechen"/>
