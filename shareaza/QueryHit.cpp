@@ -592,11 +592,11 @@ CQueryHit* CQueryHit::FromG2Packet(CG2Packet* pPacket, int* pnHops)
 			{
 				// These files always must have metadata in Shareaza clients
 				LPCTSTR pszExt = PathFindExtension( (LPCTSTR)pLastHit->m_sName );
-				if ( _tcsicmp( pszExt, L".wma" ) == 0 || _tcsicmp( pszExt, L".wmw" ) == 0 )
+				if ( _tcsicmp( pszExt, L".wma" ) == 0 || _tcsicmp( pszExt, L".wmv" ) == 0 )
 				{
 					CString strVendorCode( pLastHit->m_pVendor->m_sCode );
 					if ( strVendorCode == L"RAZA" || strVendorCode == L"RAZB" || 
-						 strVendorCode == L"RZCB" )
+						 strVendorCode == L"RZCB" || strVendorCode == L"PEER" )
 					{
 						bSpam = true;
 					}
