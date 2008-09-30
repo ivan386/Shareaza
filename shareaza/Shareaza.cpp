@@ -277,6 +277,8 @@ BOOL CShareazaApp::InitInstance()
 		return FALSE;
 	}
 
+	ShowStartupText();
+
 	m_bInteractive = TRUE;
 
 	DDEServer.Create();
@@ -532,6 +534,12 @@ int CShareazaApp::ExitInstance()
 
 	if ( m_pMutex != NULL )
 		CloseHandle( m_pMutex );
+
+	{
+		CQuickLock pLock( m_csMessage );
+		while ( ! m_oMessages.IsEmpty() )
+			delete m_oMessages.RemoveHead();
+	}
 
 	return CWinApp::ExitInstance();
 }
@@ -911,7 +919,32 @@ bool CShareazaApp::IsLogDisabled(WORD nType) const
 		( ( nType & MSG_FACILITY_MASK ) == MSG_FACILITY_SEARCH && ! Settings.General.SearchLog );
 }
 
-void CShareazaApp::Message(WORD nType, UINT nID, ...) const
+void CShareazaApp::ShowStartupText()
+{
+	CString strBody;
+	LoadString( strBody, IDS_SYSTEM_MESSAGE );
+
+	strBody.Replace( _T("(version)"), (LPCTSTR)(theApp.m_sVersion + _T(" (") + theApp.m_sBuildDate + _T(")")) );
+
+	for ( strBody += '\n' ; strBody.GetLength() ; )
+	{
+		CString strLine = strBody.SpanExcluding( _T("\r\n") );
+		strBody = strBody.Mid( strLine.GetLength() + 1 );
+
+		strLine.TrimLeft();
+		strLine.TrimRight();
+		if ( strLine.IsEmpty() ) continue;
+
+		if ( strLine == _T(".") ) strLine.Empty();
+
+		if ( _tcsnicmp( strLine, _T("!"), 1 ) == 0 )
+			PrintMessage( MSG_NOTICE, (LPCTSTR)strLine + 1 );
+		else
+			PrintMessage( MSG_INFO, strLine );
+	}
+}
+
+void CShareazaApp::Message(WORD nType, UINT nID, ...)
 {
 	// Check if logging this type of message is enabled
 	if ( IsLogDisabled( nType ) )
@@ -919,7 +952,7 @@ void CShareazaApp::Message(WORD nType, UINT nID, ...) const
 
 	// Load the format string from the resource file
 	CString strFormat;
-	strFormat.LoadString( nID );
+	LoadString( strFormat, nID );
 
 	// Initialize variable arguments list
 	va_list pArgs;
@@ -942,7 +975,7 @@ void CShareazaApp::Message(WORD nType, UINT nID, ...) const
 	return;
 }
 
-void CShareazaApp::Message(WORD nType, LPCTSTR pszFormat, ...) const
+void CShareazaApp::Message(WORD nType, LPCTSTR pszFormat, ...)
 {
 	// Check if logging this type of message is enabled
 	if ( IsLogDisabled( nType ) )
@@ -966,45 +999,21 @@ void CShareazaApp::Message(WORD nType, LPCTSTR pszFormat, ...) const
 	return;
 }
 
-void CShareazaApp::PrintMessage(WORD nType, const CString& strLog) const
+void CShareazaApp::PrintMessage(WORD nType, const CString& strLog)
 {
-	// Check if there is a valid pointer to the main window
-	// and we are not shutting down
-	if ( m_pMainWnd && IsWindow( m_pMainWnd->m_hWnd )
-		&& !static_cast< CMainWnd* >( m_pMainWnd )->m_pWindows.m_bClosing )
-	{
-		// Allocate a new character array on the heap (including null terminator)
-		LPTSTR pszLog = new TCHAR[ strLog.GetLength() + 1 ];	// Released by CMainWnd::OnLog()
+	if ( Settings.General.DebugLog )
+		LogMessage( strLog );
 
-		if ( pszLog )
-		{
-			// Make a copy of the log message into the heap array
-			_tcscpy( pszLog, strLog );
+	CQuickLock pLock( m_csMessage );
 
-			// Try to send to the message pump for processing
-			if( !m_pMainWnd->PostMessage( WM_LOG, nType, (LPARAM)pszLog ) )
-			{
-				// Sometimes a 10,000 item message queue just isn't enough
-				// Release memory from the heap
-				delete [] pszLog;
-				pszLog = NULL;
+	// Max 1000 lines
+	if ( m_oMessages.GetCount() >= 1000 )
+		delete m_oMessages.RemoveHead();
 
-				// Add log message to log file if required
-				if ( Settings.General.DebugLog )
-					LogMessage( _T("Overflow: ") + strLog );
-			}
-		}
-	}
-	else if ( Settings.General.DebugLog )
-	{
-		// We are shutting down and logging to file
-		LogMessage( _T("ShutDown: ") + strLog );
-	}
-
-	return;
+	m_oMessages.AddTail( new CLogMessage( nType, strLog ) );
 }
 
-void CShareazaApp::LogMessage(LPCTSTR pszLog) const
+void CShareazaApp::LogMessage(const CString& strLog)
 {
 	CQuickLock pLock( m_csMessage );
 
@@ -1050,7 +1059,7 @@ void CShareazaApp::LogMessage(LPCTSTR pszLog) const
 		pFile.Write( (LPCTSTR)strLine, sizeof(TCHAR) * strLine.GetLength() );
 	}
 
-	pFile.Write( pszLog, static_cast< UINT >( sizeof(TCHAR) * _tcslen(pszLog) ) );
+	pFile.Write( (LPCTSTR)strLog, static_cast< UINT >( sizeof(TCHAR) * strLog.GetLength() ) );
 	pFile.Write( _T("\r\n"), sizeof(TCHAR) * 2 );
 
 	pFile.Close();

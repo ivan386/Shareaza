@@ -119,7 +119,6 @@ protected:
 	afx_msg LRESULT OnOpenSearch(WPARAM wParam, LPARAM lParam);
 	afx_msg LRESULT OnTray(WPARAM wParam, LPARAM lParam);
 	afx_msg LRESULT OnChangeAlpha(WPARAM wParam, LPARAM lParam);
-	afx_msg LRESULT OnLog(WPARAM wParam, LPARAM lParam);
 	afx_msg LRESULT OnSkinChanged(WPARAM wParam, LPARAM lParam);
 	afx_msg LRESULT OnSetMessageString(WPARAM wParam, LPARAM lParam);
 	afx_msg LRESULT OnSetText(WPARAM wParam, LPARAM lParam);

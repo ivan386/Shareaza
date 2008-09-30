@@ -128,7 +128,6 @@ BEGIN_MESSAGE_MAP(CMainWnd, CMDIFrameWnd)
 	ON_MESSAGE(WM_OPENSEARCH, OnOpenSearch)
 	ON_MESSAGE(WM_TRAY, OnTray)
 	ON_MESSAGE(WM_SETALPHA, OnChangeAlpha)
-	ON_MESSAGE(WM_LOG, OnLog)
 	ON_MESSAGE(WM_SKINCHANGED, OnSkinChanged)
 	ON_MESSAGE(WM_AFX_SETMESSAGESTRING, OnSetMessageString)
 	ON_MESSAGE(WM_SETTEXT, OnSetText)
@@ -869,33 +868,6 @@ void CMainWnd::OnGetMinMaxInfo(MINMAXINFO FAR* lpMMI)
 	lpMMI->ptMinTrackSize.y = 240;
 
 	if ( m_pSkin ) m_pSkin->OnGetMinMaxInfo( lpMMI );
-}
-
-LRESULT CMainWnd::OnLog(WPARAM wParam, LPARAM lParam)
-{
-	// Convert low parameter back to log message
-	LPTSTR pszLog = reinterpret_cast< LPTSTR >( lParam );
-
-	// Check if the windows are being closed
-	if ( !m_pWindows.m_bClosing )
-	{
-		// Try to find the log window
-		CSystemWnd* pWnd = static_cast< CSystemWnd* >( m_pWindows.Find( RUNTIME_CLASS(CSystemWnd) ) );
-
-		// Add log message to log window if it was found
-		if ( pWnd )
-			pWnd->Add( static_cast< int >( wParam ), pszLog );
-	}
-
-	// Add log message to log file if required
-	if ( Settings.General.DebugLog )
-		theApp.LogMessage( pszLog );
-
-	// Release memory from the heap
-	delete [] pszLog;	// Allocated by CShareazaApp::PrintMessage()
-	pszLog = NULL;
-
-	return 0;
 }
 
 /////////////////////////////////////////////////////////////////////////////

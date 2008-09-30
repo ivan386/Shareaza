@@ -39,6 +39,7 @@ IMPLEMENT_SERIAL(CSystemWnd, CPanelWnd, 0)
 
 BEGIN_MESSAGE_MAP(CSystemWnd, CPanelWnd)
 	ON_WM_CREATE()
+	ON_WM_TIMER()
 	ON_WM_SIZE()
 	ON_WM_CONTEXTMENU()
 	ON_COMMAND(ID_SYSTEM_CLEAR, OnSystemClear)
@@ -69,54 +70,6 @@ CSystemWnd::CSystemWnd() : CPanelWnd( TRUE, TRUE )
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// CSystemWnd operations
-
-void CSystemWnd::Add(int nType, const CString& strText)
-{
-	m_wndText.Add( (WORD)nType, strText );
-}
-
-void CSystemWnd::Clear()
-{
-	m_wndText.Clear();
-}
-
-void CSystemWnd::OnSkinChange()
-{
-	CPanelWnd::OnSkinChange();
-	m_wndText.Clear( FALSE );
-	if ( Settings.Live.LoadWindowState == FALSE )
-	{
-		ShowStartupText();
-	}
-}
-
-void CSystemWnd::ShowStartupText()
-{
-	CString strBody;
-	Skin.LoadString( strBody, IDS_SYSTEM_MESSAGE );
-
-	strBody.Replace( _T("(version)"), (LPCTSTR)(theApp.m_sVersion + _T(" (") + theApp.m_sBuildDate + _T(")")) );
-
-	for ( strBody += '\n' ; strBody.GetLength() ; )
-	{
-		CString strLine = strBody.SpanExcluding( _T("\r\n") );
-		strBody = strBody.Mid( strLine.GetLength() + 1 );
-
-		strLine.TrimLeft();
-		strLine.TrimRight();
-		if ( strLine.IsEmpty() ) continue;
-
-		if ( strLine == _T(".") ) strLine.Empty();
-
-		if ( _tcsnicmp( strLine, _T("!"), 1 ) == 0 )
-			m_wndText.AddLine( MSG_NOTICE, (LPCTSTR)strLine + 1 );
-		else
-			m_wndText.AddLine( MSG_INFO, strLine );
-	}
-}
-
-/////////////////////////////////////////////////////////////////////////////
 // CSystemWnd message handlers
 
 int CSystemWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
@@ -128,13 +81,31 @@ int CSystemWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	LoadState( _T("CSystemWnd"), FALSE );
 
+	SetTimer( 1, 250, NULL );
+
 	return 0;
 }
 
 void CSystemWnd::OnDestroy()
 {
+	KillTimer( 1 );
+
 	SaveState( _T("CSystemWnd") );
+
 	CPanelWnd::OnDestroy();
+}
+
+void CSystemWnd::OnTimer(UINT_PTR /*nIDEvent*/)
+{
+	CQuickLock pLock( theApp.m_csMessage );
+
+	// Max 200 lines per second
+	for ( int i = 0; i < 50 && ! theApp.m_oMessages.IsEmpty(); i++ )
+	{
+		CLogMessage* pMsg = theApp.m_oMessages.RemoveHead();
+		m_wndText.Add( pMsg->m_nType, pMsg->m_strLog );
+		delete pMsg;
+	}
 }
 
 void CSystemWnd::OnSize(UINT nType, int cx, int cy)
@@ -254,7 +225,7 @@ void CSystemWnd::OnSystemTimestamp()
 
 void CSystemWnd::OnSystemClear()
 {
-	Clear();
+	m_wndText.Clear();
 }
 
 void CSystemWnd::OnSystemCopy()

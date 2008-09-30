@@ -49,6 +49,20 @@ private:
 	CShareazaCommandLineInfo& operator=(const CShareazaCommandLineInfo&);
 };
 
+class __declspec(novtable) CLogMessage
+{
+public:
+	inline CLogMessage(WORD nType, const CString& strLog) :
+		m_strLog( strLog ),
+		m_nType( nType )
+	{
+	}
+	CString m_strLog;
+	WORD	m_nType;
+};
+
+typedef CList< CLogMessage* > CLogMessageList;
+
 class CShareazaApp : public CWinApp
 {
 public:
@@ -114,12 +128,18 @@ public:
 
 	HINSTANCE			CustomLoadLibrary(LPCTSTR);
 	CMainWnd*			SafeMainWnd() const;
-	bool				IsLogDisabled(WORD nType) const;
-	void				Message(WORD nType, UINT nID, ...) const;
-	void				Message(WORD nType, LPCTSTR pszFormat, ...) const;
 	BOOL				InternalURI(LPCTSTR pszURI);
-	void				PrintMessage(WORD nType, const CString& strLog) const;
-	void				LogMessage(LPCTSTR pszLog) const;
+
+	// Logging functions
+	CLogMessageList		m_oMessages;	// Log temporary storage
+	CCriticalSection	m_csMessage;	// m_oMessages guard
+	bool				IsLogDisabled(WORD nType) const;
+	void				ShowStartupText();
+	void				Message(WORD nType, UINT nID, ...);
+	void				Message(WORD nType, LPCTSTR pszFormat, ...);
+	void				PrintMessage(WORD nType, const CString& strLog);
+	void				LogMessage(const CString& strLog);
+
 	void				SplashStep(LPCTSTR pszMessage = NULL, int nMax = 0, bool bClosing = false);
 
 	CString				GetCountryCode(IN_ADDR pAddress) const;
@@ -142,7 +162,6 @@ public:
 
 protected:
 	CSplashDlg*					m_dlgSplash;
-	mutable CCriticalSection	m_csMessage;
 	CShareazaCommandLineInfo	m_ocmdInfo;
 
 	virtual BOOL		InitInstance();
@@ -395,7 +414,6 @@ inline __int64 GetRandomNum<__int64>(const __int64& min, const __int64& max)
 #define WM_SKINCHANGED	(WM_APP+106)
 #define WM_COLLECTION	(WM_APP+107)
 #define WM_OPENSEARCH	(WM_APP+108)
-#define WM_LOG			(WM_APP+109)
 #define WM_LIBRARYSEARCH (WM_APP+110)
 #define WM_PLAYFILE		(WM_APP+111)
 #define WM_ENQUEUEFILE	(WM_APP+112)
