@@ -1,7 +1,7 @@
 //
 // NeighboursWithG2.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -190,6 +190,6 @@ CG2Neighbour* CNeighboursWithG2::GetRandomHub(CG2Neighbour* pExcept, const Hashe
 	if ( ! nSize ) return NULL;
 
 	// Choose a random number between 0 and nSize - 1, use it as an index, and return the neighbour at it
-	nSize = GetRandomNum( 0, (int)nSize - 1 );
+	nSize = GetRandomNum< INT_PTR >( 0, nSize - 1 );
 	return pRandom.GetAt( nSize );
 }

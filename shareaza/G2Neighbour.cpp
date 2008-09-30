@@ -554,15 +554,15 @@ BOOL CG2Neighbour::OnPing(CG2Packet* pPacket, BOOL bTCP)
 
 		INT_PTR nCount = pG2Nodes.GetCount();
 
-		for ( INT_PTR nCur = 0; (nCur < nCount && nCur < nRelayTo); nCur++ )
+		for ( INT_PTR nCur( 0 ) ; nCur < nCount && nCur < nRelayTo ; ++nCur )
 		{
-			INT_PTR nRand = GetRandomNum( 0, (int)pG2Nodes.GetCount() - 1 );
+			INT_PTR nRand( GetRandomNum< INT_PTR >( 0, pG2Nodes.GetCount() - 1 ) );
 
-			CG2Neighbour* pNeighbour = pG2Nodes.GetAt( nRand );
+			CG2Neighbour* pNeighbour( pG2Nodes.GetAt( nRand ) );
 			pNeighbour->Send( pPacket, FALSE );
 			pNeighbour->m_tLastRelayedPingOut = tNow;
-			pNeighbour->m_nCountRelayedPingOut++;
-			Statistics.Current.Gnutella2.PingsSent++;
+			++pNeighbour->m_nCountRelayedPingOut;
+			++Statistics.Current.Gnutella2.PingsSent;
 			pG2Nodes.RemoveAt( nRand );
 		}
 	}
