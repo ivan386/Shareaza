@@ -14,7 +14,7 @@
 <!-- Manifest -->
 <manifest	name="Deutsch"
 		author="Jann Röder"
-		updatedBy="OldDeath, Frontier, Jann Röder, ZeRO (Daisuke)"
+		updatedBy="OldDeath, Frontier, Jann Röder, ZeRO"
 		description="Shareaza Default German Skin File"
 		link="http://shareaza.sourceforge.net/"
 		email="zero9999(at)gmail.com"
@@ -243,10 +243,10 @@
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Suchen"/>
 	</toolbar>
 	<toolbar name="CLibraryFileView.Physical.Basic">
-		<button id="ID_LIBRARY_LAUNCH" text="Öffnen oder abspielen"/>
+		<button id="ID_LIBRARY_LAUNCH" text="Öffnen"/>
 		<button id="ID_LIBRARY_ENQUEUE" text="In Wiedergabeliste"/>
 		<separator/>
-		<button id="ID_WEBSERVICES_LIST" text="Internet-Dienste"/>
+		<button id="ID_WEBSERVICES_LIST" text="Internetdienste"/>
 		<rightAlign/>
 		<separator/>
 		<control id="IDC_SEARCH_BOX" width="120"/>
@@ -258,7 +258,7 @@
 		<separator/>
 		<button id="ID_LIBRARY_PROPERTIES" text="Eigenschaften"/>
 		<separator/>
-		<button id="ID_WEBSERVICES_LIST" text="Internet-Dienste"/>
+		<button id="ID_WEBSERVICES_LIST" text="Internetdienste"/>
 		<separator/>
 		<button id="ID_LIBRARY_MOVE" text="Verschieben"/>
 		<button id="ID_LIBRARY_COPY" text="Kopieren"/>
@@ -273,7 +273,7 @@
 		<button id="ID_LIBRARY_ENQUEUE" text="In Wiedergabeliste"/>
 		<button id="ID_LIBRARY_FOLDER_ENQUEUE" text="Album wiedergeben"/>
 		<separator/>
-		<button id="ID_WEBSERVICES_LIST" text="Internet-Dienste"/>
+		<button id="ID_WEBSERVICES_LIST" text="Internetdienste"/>
 		<rightAlign/>
 		<separator/>
 		<control id="IDC_SEARCH_BOX" width="120"/>
@@ -351,8 +351,8 @@
 	</toolbar>
 	<!-- IRC WINDOW -->
 	<toolbar name="CIRCFrame">
-		<button id="ID_IRC_CONNECT" text="Verbinden" tip="Mit IRC verbinden"/>
-		<button id="ID_IRC_DISCONNECT" text="Verbindung trennen" tip="Verbindung mit IRC-Chat trennen"/>
+		<button id="ID_IRC_CONNECT" text="Verbinden" tip="Mit dem IRC-Server verbinden"/>
+		<button id="ID_IRC_DISCONNECT" text="Verbindung trennen" tip="Verbindung zum IRC-Server trennen"/>
 		<rightAlign/>
 		<button id="ID_IRC_SETTINGS" text="Einstellungen" tip="IRC-Einstellungen konfigurieren"/>
 	</toolbar>
@@ -428,31 +428,31 @@
 	</toolbar>
 	<!-- WEBSERVICES -->
 	<toolbar name="WebServices.ShareMonkey">
-		<button id="ID_SHAREMONKEY_DOWNLOAD" text="Daten holen" /> 
-		<separator /> 
-		<button id="ID_SHAREMONKEY_PREVIOUS" text="Zurück" /> 
-		<button id="ID_SHAREMONKEY_NEXT" text="Vor" /> 
-		<separator /> 
-		<button id="ID_SHAREMONKEY_PRICES" text="Preisanfrage" /> 
-		<button id="ID_SHAREMONKEY_COMPARE" text="Vergleichen" /> 
-		<button id="ID_SHAREMONKEY_BUY" text="Kaufen" /> 
+		<button id="ID_SHAREMONKEY_DOWNLOAD" text="Daten holen"/> 
+		<separator/> 
+		<button id="ID_SHAREMONKEY_PREVIOUS" text="Zurück"/> 
+		<button id="ID_SHAREMONKEY_NEXT" text="Vor"/> 
+		<separator/> 
+		<button id="ID_SHAREMONKEY_PRICES" text="Preisanfrage"/> 
+		<button id="ID_SHAREMONKEY_COMPARE" text="Vergleichen"/> 
+		<button id="ID_SHAREMONKEY_BUY" text="Kaufen"/> 
 	</toolbar>
 	<toolbar name="WebServices.ShareMonkey.WithSave">
-		<button id="ID_SHAREMONKEY_DOWNLOAD" text="Daten holen" /> 
-		<button id="ID_SHAREMONKEY_SAVE" text="Speichern" /> 
+		<button id="ID_SHAREMONKEY_DOWNLOAD" text="Daten holen"/> 
+		<button id="ID_SHAREMONKEY_SAVE" text="Speichern"/> 
 		<control id="ID_SHAREMONKEY_SAVE_OPTION" text="Vorschau speichern" width="100" checked="true"/>
-		<separator /> 
-		<button id="ID_SHAREMONKEY_PREVIOUS" text="Zurück" /> 
-		<button id="ID_SHAREMONKEY_NEXT" text="Vor" /> 
-		<separator /> 
-		<button id="ID_SHAREMONKEY_PRICES" text="Preisanfrage" /> 
-		<button id="ID_SHAREMONKEY_COMPARE" text="Vergleichen" /> 
-		<button id="ID_SHAREMONKEY_BUY" text="Kaufen" /> 
+		<separator/> 
+		<button id="ID_SHAREMONKEY_PREVIOUS" text="Zurück"/> 
+		<button id="ID_SHAREMONKEY_NEXT" text="Vor"/> 
+		<separator/> 
+		<button id="ID_SHAREMONKEY_PRICES" text="Preisanfrage"/> 
+		<button id="ID_SHAREMONKEY_COMPARE" text="Vergleichen"/> 
+		<button id="ID_SHAREMONKEY_BUY" text="Kaufen"/> 
 	</toolbar>
 	<toolbar name="WebServices.MusicBrainz">
-		<button id="ID_MUSICBRAINZ_MATCHES" text="Treffer anzeigen" /> 
-		<button id="ID_MUSICBRAINZ_ALBUMS" text="Alle Alben ansehen" /> 
-		<separator /> 
+		<button id="ID_MUSICBRAINZ_MATCHES" text="Treffer anzeigen"/> 
+		<button id="ID_MUSICBRAINZ_ALBUMS" text="Alle Alben ansehen"/> 
+		<separator/> 
 	</toolbar>
 	<!-- IMAGE VIEWER WINDOW -->
 	<toolbar name="ImageViewer_Toolbar">
@@ -500,7 +500,7 @@
 			<item id="ID_TAB_SEARCH" text="_Suchen"/>
 			<item id="ID_TAB_TRANSFERS" text="_Downloads"/>
 			<item id="ID_WINDOW_REMOTE" text="_Fernbedienung"/>
-			<item id="ID_TAB_IRC" text="_Chat"/>
+			<item id="ID_TAB_IRC" text="Internet Relay _Chat"/>
 			<separator/>
 			<menu text="_Erweitert">
 				<item id="ID_VIEW_NEIGHBOURS" text="_Netzwerk"/>
@@ -576,7 +576,7 @@
 			<item id="ID_TAB_SEARCH" text="_Suchen"/>
 			<item id="ID_TAB_TRANSFERS" text="_Transfer"/>
 			<item id="ID_TAB_NETWORK" text="_Netzwerk"/>
-			<item id="ID_TAB_IRC" text="_Chat"/>
+			<item id="ID_TAB_IRC" text="Internet Relay _Chat"/>
 			<separator/>
 			<item id="ID_VIEW_SECURITY" text="S_icherheit"/>
 			<item id="ID_VIEW_HOSTS" text="H_ost-Cache"/>
@@ -646,7 +646,7 @@
 			</menu>
 			<separator/>
 			<item id="ID_HELP_VERSION_CHECK" text="Nach _Update suchen"/>
-			<item id="ID_HELP_DONATE" text="_An das Shareaza Projekt spenden!"/>
+			<item id="ID_HELP_DONATE" text="_An das Shareaza-Projekt spenden"/>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="_Über Shareaza..."/>
 		</menu>
@@ -738,7 +738,7 @@
 			</menu>
 			<separator/>
 			<item id="ID_HELP_VERSION_CHECK" text="Nach _Update suchen"/>
-			<item id="ID_HELP_DONATE" text="_An das Shareaza Projekt spenden!"/>
+			<item id="ID_HELP_DONATE" text="_An das Shareaza-Projekt spenden"/>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="_Über Shareaza..."/>
 		</menu>
@@ -765,7 +765,7 @@
 		<item id="ID_TAB_SEARCH" text="_Suchen"/>
 		<item id="ID_TAB_TRANSFERS" text="_Transfer"/>
 		<item id="ID_TAB_NETWORK" text="_Netzwerk"/>
-		<item id="ID_TAB_IRC" text="_Chat"/>
+		<item id="ID_TAB_IRC" text="Internet Relay _Chat"/>
 		<separator/>
 		<item id="ID_VIEW_SECURITY" text="_Sicherheit"/>
 		<item id="ID_VIEW_HOSTS" text="_Host-Cache"/>
@@ -851,7 +851,7 @@
 		<item id="ID_TAB_SEARCH" text="_Suchen"/>
 		<item id="ID_TAB_TRANSFERS" text="_Transfer"/>
 		<item id="ID_TAB_NETWORK" text="_Netzwerk"/>
-		<item id="ID_TAB_IRC" text="_Chat"/>
+		<item id="ID_TAB_IRC" text="Internet Relay _Chat"/>
 		<separator/>
 		<item id="ID_VIEW_SECURITY" text="_Sicherheit"/>
 		<item id="ID_VIEW_HOSTS" text="_Host Cache"/>
@@ -1212,7 +1212,7 @@
 			<item id="ID_LIBRARY_COPY" text="Datei(en) _kopieren..."/>
 		</menu>
 		<item id="ID_LIBRARY_REBUILD_ANSI" text="_Metadaten lokalisieren"/>
-		<item id="ID_LIBRARY_REFRESH_METADATA" text="_Refresh Metadata"/>
+		<item id="ID_LIBRARY_REFRESH_METADATA" text="Metadaten _aktualisieren"/>
 		<separator/>
 		<item id="ID_LIBRARY_PROPERTIES" text="_Eigenschaften"/>
 	</menu>
@@ -1433,11 +1433,11 @@
 	</menu>
 	<!-- SYSTEM WINDOW -->
 	<menu name="CSystemWnd">
-		<menu id="ID_SYSTEM_VERBOSE" text="_Modus"> 
-			<item id="ID_SYSTEM_VERBOSE_ERROR" text="_Error"/>
-			<item id="ID_SYSTEM_VERBOSE_WARNING" text="_Warning"/>
-			<item id="ID_SYSTEM_VERBOSE_NOTICE" text="_Notice"/>
-			<item id="ID_SYSTEM_VERBOSE_INFO" text="_Info"/>
+		<menu id="ID_SYSTEM_VERBOSE" text="_Log-Level"> 
+			<item id="ID_SYSTEM_VERBOSE_ERROR" text="_Fehler"/>
+			<item id="ID_SYSTEM_VERBOSE_WARNING" text="_Warnungen"/>
+			<item id="ID_SYSTEM_VERBOSE_NOTICE" text="_Hinweise"/>
+			<item id="ID_SYSTEM_VERBOSE_INFO" text="_Informationen"/>
 			<item id="ID_SYSTEM_VERBOSE_DEBUG" text="_Debug"/>
 		</menu>
 		<item id="ID_SYSTEM_TIMESTAMP" text="Zeitstem_pel"/>
@@ -1558,12 +1558,12 @@
 		<item id="ID_IRC_CLOSETAB" text="_Schließen"/>
 	</menu>
 	<menu name="CIRCUserList">
-		<item id="ID_IRC_WHOIS" text="_Whois"/><!-- TRNASLATION STILL NEEDED````````````````````~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-		<item id="ID_IRC_QUERY" text="_Abfragen"/>
+		<item id="ID_IRC_WHOIS" text="_Whois"/>
+		<item id="ID_IRC_QUERY" text="_Private Unterhaltung"/>
 		<separator/>
 		<menu text="Actions">
-			<item id="ID_IRC_TIME" text="_Zeit"/>
-			<item id="ID_IRC_VERSION" text="_Version"/>
+			<item id="ID_IRC_TIME" text="Client-_Zeit anfordern"/>
+			<item id="ID_IRC_VERSION" text="Client-_Version anfordern"/>
 		</menu>
 		<separator/>
 		<menu text="Control">
@@ -1574,11 +1574,11 @@
 			<item id="ID_IRC_VOICE" text="_Voice"/>
 			<item id="ID_IRC_DEVOICE" text="D_evoice"/>
 			<item id="ID_IRC_KICK" text="_Hinauswerfen"/>
-			<item id="ID_IRC_KICKWHY" text="Hinauswerfen (Grund?)"/>
+			<item id="ID_IRC_KICKWHY" text="Hinauswerfen (mit Grund)"/>
 			<item id="ID_IRC_BAN" text="_Verbannen"/>
 			<item id="ID_IRC_UNBAN" text="_Verbannung aufheben"/>
-			<item id="ID_IRC_BANKICK" text="Hinauswerfen+Verbannen"/>
-			<item id="ID_IRC_BANKICKWHY" text="Hinauswerfen+Verbannen (Grund?)"/>
+			<item id="ID_IRC_BANKICK" text="Hinauswerfen &amp; Verbannen"/>
+			<item id="ID_IRC_BANKICKWHY" text="Hinausw. &amp; Verb. (mit Grund)"/>
 		</menu>
 	</menu>
 	<menu name="WebServices.List.Menu">
@@ -1607,7 +1607,7 @@
 			<newline gap="8" indent="42"/>
 			<text>Willkommen bei Shareaza!</text>
 			<newline gap="8" indent="42"/>
-			<text>Sie sind zur Zeit mit keinem Netzwerk verbunden. &#160;</text>
+			<text>Sie sind zur Zeit mit keinem Netzwerk verbunden.  </text>
 			<link target="raza:command:ID_NETWORK_CONNECT">Klicken Sie hier um sich mit den ausgewählten Netzwerken zu verbinden.</link>
 			<newline gap="18" indent="0"/>
 		</group>
@@ -1616,7 +1616,7 @@
 			<heading align="middle">D O W N L O A D &#160; S T A R T E N </heading>
 			<newline gap="8" indent="42"/>
 			<link target="raza:command:ID_TOOLS_DOWNLOAD" format="bu">Klicken Sie hier</link>
-			<text align="middle">&#160; um eine neue Datei oder einen Torrent herunterzuladen.</text>
+			<text align="middle">  um eine neue Datei oder einen Torrent herunterzuladen.</text>
 			<newline gap="24" indent="0"/>
 			<icon res="134" width="32" height="32" target="raza:command:ID_TAB_SEARCH"/><gap size="8"/>
 			<heading align="middle">N A C H &#160; E I N E R &#160; D A T E I &#160; S U C H E N</heading>
@@ -1688,7 +1688,7 @@
 			<icon res="128" width="32" height="32"/><gap size="8"/>
 			<heading align="middle">R E M O T E  &#160; A C C E S S &#160; I S T &#160; A K T I V I E R T</heading>
 			<newline gap="8" indent="42"/>
-			<text>Shareaza-Remote-Access ist aktiviert.  Sie können Shareaza über ihren Webbrowser steuern:</text>
+			<text>Shareazas Remote-Zugriff ist aktiviert.  Sie können Shareaza über ihren Webbrowser steuern:</text>
 			<newline gap="6"/>
 			<link id="RemoteAccessURL1"/>
 			<text> - oder - </text>
@@ -1834,12 +1834,9 @@
 				<colours link="000080"/>
 			</style>
 		</styles>
-		<text format="b">Willkommen beim Shareaza-Einstellungsmanager</text>
+		<text format="b">Willkommen bei den allgemeinen Shareaza-Einstellungen</text>
 		<newline gap="16"/>
-		<text>Der Einstellungsmanager erlaubt es Ihnen, Shareaza völlig ihren Wünschen anzupassen.
-			In der Sektion</text>
-		<text format="b">Allgemein </text>
-		<text>kann das Verhalten von Shareaza gegenüber dem Benutzer angepasst werden.</text>
+			<text>In dieser Sektion kann das Verhalten von Shareaza gegenüber dem Benutzer angepasst werden.</text>
 		<newline gap="16" indent="16"/>
 		<link target="raza:page:CGeneralSettingsPage" format="b">Allgemein:</link>
 		<gap size="4"/>
@@ -1857,9 +1854,9 @@
 		<gap size="4"/>
 		<text>Ihr Profil, Chat und Instant Messaging-Einstellungen.</text>
 		<newline gap="10"/>
-		<link target="raza:page:CIRCSettingsPage" format="b">IRC-Chat:</link>
+		<link target="raza:page:CIRCSettingsPage" format="b">IRC:</link>
 		<gap size="4"/>
-		<text>Grafische Einstellungen und Verbindungseinstellungen des IRC-Chats.</text>
+		<text>Darstellungs- und Verbindungseinstellungen des Internet Relay Chats.</text>
 		<newline gap="10"/>
 		<link target="raza:page:CWebSettingsPage" format="b">Web:</link>
 		<gap size="4"/>
@@ -1871,12 +1868,9 @@
 				<colours link="000080"/>
 			</style>
 		</styles>
-		<text format="b">Willkommen beim Shareaza-Einstellungsmanager</text>
+		<text format="b">Willkommen bei den Interneteinstellungen</text>
 		<newline gap="16"/>
-		<text>Der Einstellungsmanager erlaubt es Ihnen, Shareaza völlig ihren Wünschen anzupassen.
-			In der Sektion</text>
-		<text format="b">Internet </text>
-		<text>können Sie festlegen, wie sich Shareaza in P2P-Netzen verhält.</text>
+		<text>In dieser Sektion können Sie festlegen, wie sich Shareaza in P2P-Netzen verhält.</text>
 		<newline gap="16" indent="16"/>
 		<link target="raza:page:CConnectionSettingsPage" format="b">Verbindung:</link>
 		<gap size="4"/>
@@ -1890,7 +1884,7 @@
 		<gap size="4"/>
 		<text>Uploadkapazität, Warteschlange, Bannen, Timeouts und spezielle Freigaben.</text>
 		<newline gap="10"/>
-		<link target="raza:page:CRemoteSettingsPage" format="b">Remote-Access:</link>
+		<link target="raza:page:CRemoteSettingsPage" format="b">Remote-Zugriff:</link>
 		<gap size="4"/>
 		<text>Shareaza konfigurieren, um die Bedienung über einen Webbrowser zu ermöglichen.</text>
 		<newline gap="10"/>
@@ -2334,14 +2328,14 @@
 	<tip id="ID_HELP_WEB_4" message="Webseite4 besuchen"/>
 	<tip id="ID_HELP_WEB_5" message="Webseite5 besuchen"/>
 	<tip id="ID_HELP_WEB_6" message="Webseite6 besuchen"/>
-	<tip id="ID_HELP_DONATE" message="Wenn Sie möchten, können Sie für unsere gerichtlichen Geldmittel spenden und um Ihre Wertschätzung zu zeigen."/>
+	<tip id="ID_HELP_DONATE" message="Wenn Sie möchten, können Sie an unser Projekt spenden, um Ihre Wertschätzung zu zeigen."/>
 	<tip id="ID_HITMONITOR_CLEAR" message="Den Treffermonitor-Puffer leeren." tip="Puffer leeren"/>
 	<tip id="ID_HITMONITOR_PAUSE" message="Den Treffermonitor anhalten." tip="Anzeige anhalten"/>
 	<tip id="ID_HITMONITOR_SEARCH" message="Das Netzwerk nach dem markierten Ausdruck durchsuchen." tip="Danach suchen"/>
 	<tip id="ID_HOSTCACHE_CONNECT" message="Mit markierten Host(s) verbinden." tip="Jetzt verbinden"/>
 	<tip id="ID_HOSTCACHE_DISCONNECT" message="Verbindung zu markierten Host(s) beenden." tip="Verbindung beenden"/>
 	<tip id="ID_HOSTCACHE_ED2K_CACHE" message="eDonkey-Server anzeigen."/>
-	<tip id="ID_HOSTCACHE_ED2K_DOWNLOAD" message="Ein &quot;server.met&quot;-Datei für eDonkey herunterladen..."/>
+	<tip id="ID_HOSTCACHE_ED2K_DOWNLOAD" message="Eine &quot;server.met&quot;-Datei für eDonkey herunterladen..."/>
 	<tip id="ID_HOSTCACHE_G1_CACHE" message="Gecachte Hosts anzeigen (G1)."/>
 	<tip id="ID_HOSTCACHE_G2_CACHE" message="Gecachte Hosts anzeigen (G2)."/>
 	<tip id="ID_HOSTCACHE_G2_HORIZON" message="Horizont anzeigen (G2)."/>
@@ -2550,8 +2544,8 @@
 	<tip id="ID_WINDOW_TILE_HORZ" message="Die geöffneten Fenster übereinander anordnen." tip="Übereinander"/>
 	<tip id="ID_WINDOW_TILE_VERT" message="Die geöffneten Fenster nebeneinander anordnen." tip="Nebeneinander"/>
 	<tip id="ID_WINDOW_TOOLBAR" message="Die Werkzeugleiste ein- oder ausblenden." tip="Werkzeugleiste anzeigen"/>
-	<tip id="ID_WEBSERVICES_LIST" message="Wählen Sie einen Internet-Dienst, um mehr Informationen über die gewählte Datei zu erhalten."/>
-	<tip id="ID_WEBSERVICES_SHAREMONKEY" message="Mit Sharemonkey nach vorhandenen Datei-Informationen suchen."/>
+	<tip id="ID_WEBSERVICES_LIST" message="Wählen Sie einen Internetdienst, um mehr Informationen über die gewählte Datei zu erhalten."/>
+	<tip id="ID_WEBSERVICES_SHAREMONKEY" message="Mit ShareMonkey nach vorhandenen Datei-Informationen suchen."/>
 	<!-- PLUGIN TIPS -->
 	<tip id="ImageViewer_BestFit" message="Das Bild auf Fenstergröße skalieren."/>
 	<tip id="ImageViewer_ActualSize" message="Das Bild in Originalgröße anzeigen."/>
@@ -2586,6 +2580,7 @@
 	<string id="WINDOW_MEDIA" value="Medienwiedergabe"/>
 	<string id="WINDOW_SEARCHPAD" value="Suchen"/>
 	<string id="WINDOW_HELP" value="Shareaza Hilfe"/>
+	<string id="WINDOW_IRC" value="Shareaza Internet Relay Chat"/>
 	<string id="7000" value="Sind Sie sicher, dass Sie diesen Filter löschen möchten ?"/>
 	<string id="7001" value="&amp;Schemas"/>
 	<string id="7002" value="Mehrfache Einträge"/>
@@ -2755,7 +2750,7 @@
 	<string id="16077" value="Die Adresse %s wird von ihren Sicherheitsregeln bereits blockiert."/>
 	<string id="16078" value="Eine Regel, um %s zu blockieren, wurde hinzugefügt."/>
 	<string id="16079" value="Sind Sie sicher, dass Sie die Verbindung trennen möchten?"/>
-	<string id="16080" value="Sie benutzen die Zeitsteuerung nur mit dem G2-Netzwerk. Möchten Sie dies ausschalten und zu allen aktivierten Netzwerken verbinden ?"/>
+	<string id="16080" value="Ihre Zeitsteuerungsoptionen beschränken Sie derzeit auf die Nutzung des G2-Netzwerks. Möchten Sie diese Beschränkung aufheben und sich mit allen aktivierten Netzwerken verbinden ?"/>
 	<string id="16081" value="Suchanfrage für &quot;%s&quot; an %s senden."/>
 	<string id="16083" value="Das Erzwingen des HUB-Modus kann negative Auswirkungen auf das Netzwerk und die Ausführgeschwindigkeit von Shareaza haben. Es ist generell besser Shareaza diese Entscheidung selbst treffen zu lassen.\n\nDer Hub Modus führt NICHT zu besseren Suchergebnissen, und hat auch keine anderen Vorteile für Sie.\n\nSind Sie SICHER, dass Sie das wollen?"/>
 	<string id="16084" value="Die Deaktivierung des Gnutella1-Protokolls kann ihre Suchergebnisse begrenzen. Wenn Sie ein Hub sind, trifft dies auch für andere Benutzer zu. Sind Sie SICHER, dass Sie das wollen?"/>
@@ -3029,7 +3024,7 @@
 	<string id="16813" value="Bitte warten: Service Provider werden aktualisiert..."/>
 	<string id="16814" value="Bitte warten: eDonkey-Server-Liste wird aktualisiert..."/>
 	<string id="16815" value="SSDP-Host-Service ist nicht gestartet. Dieser Dienst wird benötigt, um die Installation durchzuführen.\nEs ist erforderlich, dass das Merkmal dieses Dienstes auf Automatisch eingestellt ist."/>
-	<string id="16816" value="Das eDonkey-Netzwerk benutzt lange Warteschlangen mit langen Wartezeiten. Wenn Sie die Maximale Warteschlangenlänge zu strikt einstellen, könnten Sie Probleme bekommen, Dateien herunterzuladen.\nSind Sie sicher, dass Sie die Maximale Warteschlangenposition auf diesen Wert setzen wollen?"/>
+	<string id="16816" value="eDonkey-Clients benutzen meist nicht-lineare Warteschlangen. Hohe Warteschlangenpositionen bedeuten nicht unbedingt lange Wartezeiten. Wenn Sie die Maximale Warteschlangenlänge zu strikt einstellen, könnten Sie Probleme bekommen, Dateien herunterzuladen.\nSind Sie sicher, dass Sie die Maximale Warteschlangenposition auf diesen Wert setzen wollen?"/>
 	<string id="16817" value="Windows unterstützt keine Dateipfade länger als 256 Zeichen.\nBitte wählen Sie einen Ordner mit einem kürzeren Pfad."/>
 	<string id="16818" value="Das Verzeichnis für unvollständige Dateien darf sich nicht im Downloadverzeichnis befinden."/>
 	<string id="16819" value="Ein Unterordner des gewählten Ordners &quot;%s&quot; ist schon in ihrer Bibliothek.\nBeim Hinzufügen des Ordners müssen einige Dateien neu verifiziert werden.\n\nWollen Sie fortfahren ?"/>
@@ -3063,8 +3058,15 @@
 	<string id="16995" value="Die Datei ist möglicherweise beschädigt, oder die Datei benutzt einen Codec, den Sie nicht installiert haben."/>
 	<string id="16996" value="Ein Teil dieser Datei kann nicht abgespielt werden. Möglicherweise mûssen Sie zusätzliche Decoder herunterladen."/>
 	<string id="16997" value="Es wird keine Datei wiedergegeben. Doppelklicken Sie eine Datei in Ihrer Bibliothek an, um sie abzuspielen."/>
-	<string id="16998" value="S &#160; &#160; H &#160; &#160; A &#160; &#160; R &#160; &#160; E &#160; &#160; A &#160; &#160; Z &#160; &#160; A &#160; &#160; &#160; &#160; &#160; M &#160; &#160; E &#160; &#160; D &#160; &#160; I &#160; &#160; A &#160; &#160; &#160; &#160; &#160; P &#160; &#160; L &#160; &#160; A &#160; &#160; Y &#160; &#160; E &#160; &#160; R"/><!-- on one line -->
+	<string id="16998" value="S     H     A     R     E     A     Z     A           M     E     D     I     A           P     L     A     Y     E     R"/><!-- on one line -->
 	<string id="16999" value="P L A Y L I S T"/>
+	<string id="17017" value="Nachricht:"/>
+	<string id="17018" value="Wilkommen beim Shareaza-Chat"/>
+	<string id="17019" value="Bitte gehen Sie respektvoll mit anderen um und drücken sich in einer angemessenen Sprache aus."/>
+	<string id="17020" value="Neu"/>
+	<string id="17021" value="Entfernen"/>
+	<string id="17022" value="Benutzer"/>
+	<string id="17023" value="Channels"/>
 	<string id="17024" value="Verbindung herstellen mit %s..."/>
 	<string id="17025" value="Verbindungsversuch mit %s fehlgeschlagen."/>
 	<string id="17026" value="Push-Verbindung von %s anfordern..."/>
@@ -3200,7 +3202,7 @@
 	<string id="18509" value="Sie können diesen Download nicht als komplett annehemen und verifizieren, weil Sie keine Verifizierungsdaten (tiger-tree-Volumen, eD2k-Hashset oder BitTorrent-Hashset) haben. Ohne Verifizierungsinformationen kann der Download nicht erneut verifiziert werden."/>
 	<string id="18510" value="Sind Sie sicher, dass Sie diesen Download als komplett annehmen und neu verifizieren wollen?  Die ganze Datei wird untersucht und Shareaza wird die Teile akzeptieren, die die Verifizierung bestehen und die, die sie nicht bestehen neu herunterladen."/>
 	<string id="18511" value="Sie wollen Änderungen an der Dateigröße vornehmen. Sind Sie sicher, dass Sie die Dateigröße dieses Downloads ändern wollen?"/>
-	<string id="19000" value="Remote-Access ist deaktiviert."/>
+	<string id="19000" value="Remote-Zugriff ist deaktiviert."/>
 	<string id="19001" value="Sie müssen Benutzername und Passwort angeben."/>
 	<string id="19002" value="Kann keine eingehenden Verbindungen akzeptieren, URL nicht verfügbar."/>
 	<string id="20000" value="Keine URN verfügbar."/>
@@ -3322,7 +3324,7 @@
 		<control caption="_Optionen:"/>
 		<control caption="Ansichtoptionen speichern"/>
 		<control caption="Ordner überwachen"/>
-		<control caption="Schnell hashen (Mehr CPU)"/>
+		<control caption="Schnell hashen (CPU-intensiver)"/>
 		<control caption="Durchsuchen erlauben"/>
 		<control caption="_Neue Dateien:"/>
 		<control caption="Merken:"/>
@@ -3346,7 +3348,7 @@
 		<control/>
 		<control/>
 		<control caption="Erst. Ghost-Dateien beim Löschen"/>
-		<control caption="Smart video series detection"/> <!-- still needs to be translated!!! kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk-->
+		<control caption="Intellig. Episodenerkennung"/>
 	</dialog>
 	<dialog name="CMediaSettingsPage" cookie="BuCoBuBuBuCoBuBuBuBuBuStSt" caption="Medienwiedergabe">
 		<control caption="_Optionen:"/>
@@ -3374,7 +3376,7 @@
 		<control caption="Vulgäre Sprache im Chat filtern"/>
 	</dialog>
 	<dialog name="CIRCSettingsPage" cookie="BuBuBuEdStBuStCoBuBuStBuStBuStBuStBuStBuStBuStEdStEdStEdStEdStEdStEd" caption="Chat">
-		<control caption="IRC _Optionen:"/>
+		<control caption="IRC-_Optionen:"/>
 		<control caption="Zeige IRC im Menü an"/>
 		<control caption="Flooding-Schutz:"/>
 		<control/>
@@ -3388,9 +3390,9 @@
 		<control/>
 		<control caption="Themen"/>
 		<control/>
-		<control caption="Channel Actions"/>
+		<control caption="Channel-Aktionen"/>
 		<control/>
-		<control caption="Notizen"/>
+		<control caption="Hinweise"/>
 		<control/>
 		<control caption="Hintergrund "/>
 		<control/>
@@ -3503,11 +3505,11 @@
 		<control caption="_Löschen"/>
 		<control caption="Änderungen treten sofort in Kraft"/>
 	</dialog>
-	<dialog name="CRemoteSettingsPage" cookie="BuStBuBuStBuStEdStEd" caption="Remote-Access">
+	<dialog name="CRemoteSettingsPage" cookie="BuStBuBuStBuStEdStEd" caption="Remote-Zugriff">
 		<control caption="_Erklärung:"/>
-		<control caption="Shareaza's Remote-Access erlaubt es Ihnen, Shareaza auf ihrem PC laufen zu lassen und es über einen Webbrowser zu bedienen. Sie müssen eingehende Verbindungen akzeptieren können, um diese Funktion zu benutzen. (Korrekt konfigurierter Router, usw.)"/>
+		<control caption="Shareazas Remote-Zugriff erlaubt es Ihnen, Shareaza auf ihrem PC laufen zu lassen und es über einen Webbrowser zu bedienen. Sie müssen eingehende Verbindungen akzeptieren können, um diese Funktion zu benutzen. (Korrekt konfigurierter Router, usw.)"/>
 		<control caption="_Aktivieren:"/>
-		<control caption="Remote-Access aktivieren:"/>
+		<control caption="Remote-Zugriff aktivieren:"/>
 		<control/>
 		<control caption="_Zugangsdaten:"/>
 		<control caption="Benutzername:"/>
@@ -3666,7 +3668,7 @@
 		<control/>
 		<control/>
 		<control caption="Standard"/>
-		<control caption="Einstellungswert:"/>
+		<control caption="Einstellung"/>
 		<control caption="Wert:"/>
 		<control caption="Beschreibung:"/>
 		<control/>
@@ -3925,7 +3927,7 @@
 	<dialog name="CFilterSearchDlg" cookie="BuEdBuStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuBuBuCoBuBuBuBuBu" caption="Ergebnisse filtern">
 		<control caption="Nur Ergebnisse, die folgende _Wörter enthalten:"/>
 		<control/>
-		<control caption="Reg. Exp."/>
+		<control caption="RegEx"/>
 		<control caption="( Sie können Wörter mit &quot;-Wort&quot; ausschließen )"/>
 		<control caption="Und folgende _Größe haben:"/>
 		<control caption="Minimum:"/>
@@ -4120,7 +4122,7 @@
 		<control/>
 		<control caption="logisch UND"/>
 		<control caption="logisch ODER"/>
-		<control caption="Reg. Exp."/>
+		<control caption="RegEx"/>
 		<control caption="_Optionen:"/>
 		<control caption="Aktion:"/>
 		<control caption="Keine|Erlauben|Verweigern"/>
@@ -4420,7 +4422,7 @@
 		<control/>
 		<control caption="OK"/>
 		<control caption="Abbrechen"/>
-		<control caption="Add a channel name:|Enter kick/ban reason:"/>
+		<control caption="Geben Sie einen Channel-Namen ein:|Geben Sie einen Grund ein:"/>
 	</dialog>
 </dialogs>
 <!-- Columns Definitions -->
