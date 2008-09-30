@@ -2512,6 +2512,8 @@
 	<string id="8010" value="これはShareazaのプレリリースバージョンで、ベータテスト期間は終了しています。http://shareaza.sourceforge.net/からオフィシャルリリースをダウンロードして下さい"/>
 	<string id="8011" value="画面表示の変更は現在開いている全てのウィンドウを閉じます。今すぐ変更しますか?"/>
 	<string id="8012" value="Torrent情報"/>
+	<string id="8013" value="Shareazaも新しいバージョンを検出しました。"/>
+	<string id="8014" value="プロフィールを編集"/>
 	<string id="8060" value="ハブ/ウルトラピアモード 近隣接続 %lu, 共有 %s"/>
 	<string id="8061" value="ウルトラピアモード 近隣接続 %lu, 共有 %s"/>
 	<string id="8062" value="ハブモード 近隣接続 %lu, 共有 %s"/>

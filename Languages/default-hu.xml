@@ -2592,6 +2592,7 @@
 	<string id="8010" value="Ez a Shareaza tesztverziója és a tesztelési időszak lejárt. Töltse le a legújabb stabil verziót a http://shareaza.sourceforge.net -ről."/>
 	<string id="8011" value="A kinézet megváltoztatása bezár minden megnyitott ablakot. Most akarja megvátoztatni?"/>
 	<string id="8012" value="Torrent adatok"/>
+	<string id="8013" value="Nem új Shareaza változat kinyomoz."/>
 	<string id="8014" value="Letöltés tulajdonságai"/>
 	<string id="8060" value="Hub/Ultrapeer mód %lu szomszéddal.  %s a helyi könyvtárban."/>
 	<string id="8061" value="Ultrapeer mód %lu szomszéddal.  %s a helyi könyvtárban."/>

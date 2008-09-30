@@ -2614,6 +2614,8 @@
 	<string id="8010" value="Hierdie is 'n voorvrysteluitgawe van Shareaza en die beta toetsingsperiode het ge-ëindig. Laai asseblief die volle, offisiële weergawe af vanaf http://shareaza.sourceforge.net/."/>
 	<string id="8011" value="Verandering van die aansig sal enige oop vensters toemaak.  Wil jy nou verander?"/>
 	<string id="8012" value="Torrent Information"/>
+	<string id="8013" value="Geen nuwe Shareaza uitgawe ontdek."/>
+	<string id="8014" value="Download Properties"/>
 	<string id="8060" value="Hub/Ultrapeer modus met %lu kliënt(e).  %s in lokale biblioteek."/>
 	<string id="8061" value="Ultrapeer modus met %lu kliënt(e).  %s in lokale biblioteek."/>
 	<string id="8062" value="Hub modus met %lu kliënt(e).  %s in lokale biblioteek."/>

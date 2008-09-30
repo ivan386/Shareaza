@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 
 <!-- Shareaza Default English Skin File -->
-<!-- Translation based on default-en.xml SVN rev.7350 -->
+<!-- Translation based on default-en.xml SVN rev.7400 -->
 
 <!-- This skin basically represents the current Shareaza defaults. You can use this file as -->
 <!-- a basis for creating new skins, however in a new skin be sure to ONLY include the sections -->
@@ -2629,6 +2629,7 @@
 	<string id="8010" value="This is a pre-release version of Shareaza, and the beta testing period has ended. Please download the full, official release from http://shareaza.sourceforge.net/."/>
 	<string id="8011" value="Changing view will close any windows you have open. Would you like to change now?"/>
 	<string id="8012" value="Torrent Information"/>
+	<string id="8013" value="No new Shareaza version detected."/>
 	<string id="8014" value="Download Properties"/>
 	<string id="8060" value="Hub/Ultrapeer mode with %lu neighbour(s). %s in local library."/>
 	<string id="8061" value="Ultrapeer mode with %lu neighbour(s). %s in local library."/>

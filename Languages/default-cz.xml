@@ -2514,6 +2514,8 @@
 	<string id="8010" value="Toto je předběžně uvolněná verze Shareazy, beta testovací doba skončila. Prosím stáhněte si plnou oficiální verzi z http://shareaza.sourceforge.net/."/>
 	<string id="8011" value="Změna prohlížeče musí zavřít všechna okna které máte otevřená. Chcete pokračovat"/>
 	<string id="8012" value="Informace o torrentu"/>
+	<string id="8013" value="Žádné nové Shareaza verze zjištěna."/>
+	<string id="8014" value="Stáhnout Vlastnosti"/>
 	<string id="8060" value="Režim Hub/Ultrapeer s uživatelem %lu. %s v místní knihovně."/>
 	<string id="8061" value="Režim Ultrapeer s uživatelem %lu. %s v místní knihovně."/>
 	<string id="8062" value="Režim uzle se sousedem(y) %lu. %s v místní knihovně."/>

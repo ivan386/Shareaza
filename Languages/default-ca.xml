@@ -2515,6 +2515,8 @@
 	<string id="8010" value="Aquesta és una versió pre-llançament de Shareaza, i el període de proves (Beta) s'ha acabat. Si us plau, descarrega la versió completa de http://shareaza.sourceforge.net/."/>
 	<string id="8011" value="El canvi de vista tancarà totes les finestres que tens obertes. Vols canviar ara?"/>
 	<string id="8012" value="Informació del Torrent"/>
+	<string id="8013" value="No hi ha nova versió de Shareaza detecta."/>
+	<string id="8014" value="Download Properties"/>
 	<string id="8060" value="Mode Hub/Ultrapeer amb %lu veí(ïns. %s a la meva col·lecció local."/>
 	<string id="8061" value="Mode Ultrapeer amb %lu veí(ïns).  %s a la col·lecció local."/>
 	<string id="8062" value="Mode Hub amb %lu veí(ïns). %s a la meva col·lecció."/>

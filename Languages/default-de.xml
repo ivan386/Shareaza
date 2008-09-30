@@ -2603,6 +2603,8 @@
 	<string id="8010" value="Das ist eine Vorabversion von Shareaza. Die Betatest-Periode ist abgelaufen. Bitte laden Sie die offizielle Version von http://shareaza.sourceforge.net/ herunter."/>
 	<string id="8011" value="Das Wechseln der Ansicht schließt alle offenen Fenster.  Wollen Sie die Ansicht jetzt wechseln?"/>
 	<string id="8012" value="Torrent-Informationen"/>
+	<string id="8013" value="Keine neuen Shareaza-Version erkannt."/>
+	<string id="8014" value="Download Properties"/>
 	<string id="8060" value="Hub/Ultrapeer-Modus mit %lu Leaves.  %s in ihrer Bibliothek."/>
 	<string id="8061" value="Ultrapeer-Modus mit %lu Leaves.  %s in ihrer Bibliothek."/>
 	<string id="8062" value="Hub-Modus mit %lu Leaves.  %s in ihrer Bibliothek."/>

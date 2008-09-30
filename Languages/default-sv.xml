@@ -2567,6 +2567,8 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 	<string id="8010" value="Detta är en förhandsversion av Shareaza och förhandstestningen har avslutats. Ladda ned en fullständig officiell version från Shareaza.Sourceforge.net." />
 	<string id="8011" value="Vid vyändring stängs alla öppna fönster. Vill du ändra vy nu?" />
 	<string id="8012" value="Torrentinformation"/>
+	<string id="8013" value="Inga nya Shareaza version upptäcks."/>
+	<string id="8014" value="Egenskaper"/>
 	<string id="8060" value="Nav/Ultralikeläge med %lu grannar. %s i ditt lokala bibliotek."/>
 	<string id="8061" value="Ultralikeläge med %lu grannar. %s i ditt lokala bibliotek."/>
 	<string id="8062" value="Navläge med %lu grannar. %s i ditt lokala bibliotek." />

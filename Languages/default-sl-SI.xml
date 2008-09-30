@@ -2526,6 +2526,8 @@
 	<string id="8010" value="To je pred-izdaja različice Shareaza. Obdobje beta testiranja je končano. Prenesite si celotno, uradno izdajo s spletne strani http://shareaza.sourceforge.net/."/>
 	<string id="8011" value="Spreminjanje pogleda bo zaprlo morebitna okna, ki jim imate odprte. Želite spremeniti takoj?"/>
 	<string id="8012" value="Informacije o torrent-u"/>
+	<string id="8013" value="Ni novih Shareaza različica odkriti."/>
+	<string id="8014" value="Lastnosti prenesi "/>
 	<string id="8060" value="Način Hub/Ultrapeer s številom sosedov: %lu.  V lokalni knjižnici: %s."/>
 	<string id="8061" value="Način Ultrapeer s številom sosedov: %lu. V lokalni knjižnici: %s."/>
 	<string id="8062" value="Način vozlišča s številom sosedov: %lu. V lokalni knjižnici: %s."/>

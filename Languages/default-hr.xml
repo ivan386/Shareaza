@@ -2524,6 +2524,9 @@
 	<string id="8009" value="Jeste li sigurni da želite izbrisati &quot;%s&quot; skin?Ne može se povratiti."/>
 	<string id="8010" value="Ovo je testna verzija Shareaze, i period beta testiranja je završio.Molimo vas da skinete cijelo, službeno izdanje sa http://shareaza.sourceforge.net/."/>
 	<string id="8011" value="Mjenjanje pogleda zatvara sve otvorene prozore. Želite li nastaviti s promjenom pogleda?"/>
+	<string id="8012" value="Torrent Informacije"/>
+	<string id="8013" value="Nema novih Shareaza verziji otkrivena."/>
+	<string id="8014" value="Preuzmite Nekretnine"/>
 	<string id="8060" value="Hub/Ultrapeer način sa %lu susjeda.%s u vašoj kolekciji."/>
 	<string id="8061" value="Ultrapeer način sa %lu susjeda.%s u vašoj kolekciji."/>
 	<string id="8062" value="Hub način sa %lu susjeda.%s u vašoj kolekciji."/>

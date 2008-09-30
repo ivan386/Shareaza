@@ -2543,6 +2543,8 @@
     <string id="8010" value="هذا هي نسخة مبدئية من Shareaza ، و قد أنتهت فترة الإختبار لها . الرجاء حمل الإطلاق الرسمي الكامل من http://shareaza.sourceforge.net/." />
     <string id="8011" value="Changing view will close any windows you have open.  Would you like to change now?" />
     <string id="8012" value="Torrent Information" />
+	<string id="8013" value="ا Shareaza النسخة الجديدة المكتشفة"/>
+	<string id="8014" value="Download Properties"/>
     <string id="8060" value="Hub/Ultrapeer mode with %lu neighbour(s).  %s in local library." />
     <string id="8061" value="Ultrapeer mode with %lu neighbour(s).  %s in local library." />
     <string id="8062" value="Hub mode with %lu neighbour(s).  %s in local library." />

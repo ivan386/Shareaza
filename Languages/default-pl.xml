@@ -2513,6 +2513,9 @@
 	<string id="8009" value="Czy jesteś pewien że chcesz usunąć skórę ? &quot;%s&quot;  Ta operacja jest nieodwracalna."/>
 	<string id="8010" value="To jest wersja beta Shareazy wydana tylko na czas testów.  Proszę ściągnąć pełną oficjalną wersje ze strony http://shareaza.sourceforge.net/."/>
 	<string id="8011" value="Zmiana widoku spowoduje zamknięcie wszystkich okien .  Czy chciałbyś zrobić to teraz?"/>
+	<string id="8012" value="Torrent informacji"/>
+	<string id="8013" value="Nie nowy Shareaza wersja wykryte."/>
+	<string id="8014" value="Właściwości pobierz"/>
 	<string id="8060" value="Tryb Hub/Ultrapeer z %lu Sąsiadem(ami).  %s w lokalnej bibliotece."/>
 	<string id="8061" value="Tryb Ultrapeer z %lu Sąsiadem(ami).  %s w lokalnej bibliotece."/>
 	<string id="8062" value="Tryb Hub z %lu Sąsiadem(ami).  %s w lokalnej bibliotece."/>

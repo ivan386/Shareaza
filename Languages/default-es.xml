@@ -2519,6 +2519,8 @@ Puede comenzar a transferir en cualquier momento.</text>
 	<string id="8010" value="Esta es una versión pre-release de Shareaza, y el periodo de Beta Testing ha terminado.  Por favor descarga la versión completa de http://shareaza.sourceforge.net/."/>
 	<string id="8011" value="Cambiado de vista va a cerrar todas las ventanas que tienes abiertas.  ¿Deseas cambiar ahora?"/>
 	<string id="8012" value="Información Torrent"/>
+	<string id="8013" value="No hay nueva versión de Shareaza detecta."/>
+	<string id="8014" value="Descargar Propiedades"/>
 	<string id="8060" value="Modo Hub/Ultrapeer %lu en red(s).  %s en Mi Colección."/>
 	<string id="8061" value="Modo Ultrapeer en %lu vecino(s) .  %s en Mi Colección."/>
 	<string id="8062" value="Modo Hub %lu en red(s).  %s en Mi Colección."/>

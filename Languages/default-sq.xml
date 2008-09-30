@@ -2510,6 +2510,8 @@
 	<string id="8010" value="Ky është një version i paralëshuar i Shareaza dhe periudha beta e testimit ka përfunduar. Ju lutemi shkarkoni lëshimin e plotë, zyrtar, në http://shareaza.sourceforge.net/."/>
 	<string id="8011" value="Ndryshimi i pamjes do të mbyllë gjithë dritaret e hapura. A jeni i sigurt për këtë?"/>
 	<string id="8012" value="Informacion mbi Torrentin"/>
+	<string id="8013" value="No new Shareaza version detected."/>
+	<string id="8014" value="Vetitë"/>
 	<string id="8060" value="Mënyrë Nyje/Ultrapikë me %lu hoste.  %s në librarinë lokale."/>
 	<string id="8061" value="Mënyrë Ultrapikë me %lu hoste.  %s në librarinë lokale."/>
 	<string id="8062" value="Mënyrë Nyje me %lu hoste.  %s në librarinë lokale."/>

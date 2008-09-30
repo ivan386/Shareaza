@@ -2539,6 +2539,8 @@
 	<string id="8010" value="这是 Shareaza 的内部测试版本， beta 测试期已经结束。请下载 http://shareaza.sourceforge.net/ 完整的官方版本。"/>
 	<string id="8011" value="更改显示模式将关闭您已经打开的窗口。您要立即更改吗？"/>
 	<string id="8012" value="Torrent 信息"/>
+	<string id="8013" value="没有新的发现Shareaza版本。"/>
+	<string id="8014" value="Download Properties"/>
 	<string id="8060" value="集端/超对等模式有 %lu 个邻居。%s 处于本地收藏中。"/>
 	<string id="8061" value="超对等模式有 %lu 个邻居。%s 处于本地收藏中。"/>
 	<string id="8062" value="集端模式有 %lu 个邻居。%s 处于本地收藏中。"/>

@@ -2493,6 +2493,8 @@
 	<string id="8010" value="這是一個 Shareaza 的測試版. 測試期已經結束. 請從 http://shareaza.sourceforge.net/ 下載完整的官方版本."/>
 	<string id="8011" value="切換檢視方式將關閉任何已開啟的視窗. 您確定要切換嗎?"/>
 	<string id="8012" value="Torrent 資訊"/>
+	<string id="8013" value="沒有新的發現Shareaza版本."/>
+	<string id="8014" value="Download Properties"/>
 	<string id="8060" value="結點/超級用戶模式 with %lu 鄰居.  %s 在本地的收藏."/>
 	<string id="8061" value="超級用戶模式 with %lu 鄰居.  %s 在本地的收藏."/>
 	<string id="8062" value="結點模式 with %lu 鄰居.  %s 在本地的收藏."/>

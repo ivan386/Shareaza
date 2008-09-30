@@ -2441,6 +2441,9 @@
 	<string id="8009" value="Er du sikker på at du vil slette dette &quot;%s&quot; skinnet? Det kan ikke gjenopprettes."/>
 	<string id="8010" value="Dette er en test-versjon av Shareaza, beta test perioden er over. Vennligst last ned den offisielle fullversjonen fra http://shareaza.sourceforge.net/."/>
 	<string id="8011" value="Når du endrer utseende vil alle åpne vinduer lukkes. Vil du endre nå?"/>
+	<string id="8012" value="Torrent Informasjon"/>
+	<string id="8013" value="Ingen nye Shareaza versjon oppdaget."/>
+	<string id="8014" value="Egenskaper"/>
 	<string id="8060" value="Hub/Ultrapeer-modus med %lu nabo(er).  %s in local library."/>
 	<string id="8061" value="Ultrapeer-modus med %lu nabo(er).  %s in local library."/>
 	<string id="8062" value="Hub-modus med %lu nabo(er). %s i lokalt bibliotek."/>
