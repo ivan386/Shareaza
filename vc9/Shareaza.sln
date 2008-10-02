@@ -45,6 +45,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Skin", "..\skin-installer\S
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TorrentWizard", "..\torrentaid\TorrentWizard_9.vcproj", "{F02EDE36-E2AC-40E8-B6DC-76B1D53F9A5A}"
+	ProjectSection(ProjectDependencies) = postProject
+		{196C99FC-9A4E-421F-B44C-8E3FD177122F} = {196C99FC-9A4E-421F-B44C-8E3FD177122F}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Installer", "..\setup\Installer_9.vcproj", "{3D7C87D6-A044-4334-8BB4-3B88B4E1757D}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -68,6 +71,8 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "zlibwapi", "..\shareaza\zlib\zlibwapi_9.vcproj", "{39F34F2C-D42A-41D2-A0BC-54D7972E2BC5}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sqlite3", "..\sqlite3\sqlite3_9.vcproj", "{0A0B10C7-CDF6-4A48-8F7B-B66A88154AAE}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HashLib", "..\HashLib\HashLib_9.vcproj", "{196C99FC-9A4E-421F-B44C-8E3FD177122F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -221,6 +226,14 @@ Global
 		{0A0B10C7-CDF6-4A48-8F7B-B66A88154AAE}.Release|Win32.Build.0 = Release|Win32
 		{0A0B10C7-CDF6-4A48-8F7B-B66A88154AAE}.Release|x64.ActiveCfg = Release|x64
 		{0A0B10C7-CDF6-4A48-8F7B-B66A88154AAE}.Release|x64.Build.0 = Release|x64
+		{196C99FC-9A4E-421F-B44C-8E3FD177122F}.Debug|Win32.ActiveCfg = Debug|Win32
+		{196C99FC-9A4E-421F-B44C-8E3FD177122F}.Debug|Win32.Build.0 = Debug|Win32
+		{196C99FC-9A4E-421F-B44C-8E3FD177122F}.Debug|x64.ActiveCfg = Debug|x64
+		{196C99FC-9A4E-421F-B44C-8E3FD177122F}.Debug|x64.Build.0 = Debug|x64
+		{196C99FC-9A4E-421F-B44C-8E3FD177122F}.Release|Win32.ActiveCfg = Release|Win32
+		{196C99FC-9A4E-421F-B44C-8E3FD177122F}.Release|Win32.Build.0 = Release|Win32
+		{196C99FC-9A4E-421F-B44C-8E3FD177122F}.Release|x64.ActiveCfg = Release|x64
+		{196C99FC-9A4E-421F-B44C-8E3FD177122F}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
