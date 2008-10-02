@@ -241,7 +241,7 @@ BOOL CSkin::LoadFromResource(HINSTANCE hInstance, UINT nResourceID)
 	HMODULE hModule = ( hInstance != NULL ) ? hInstance : GetModuleHandle( NULL );
 	CString strBody( ::LoadHTML( hModule, nResourceID ) );
 	CString strPath;
-	strPath.Format( _T("%I64u$"), reinterpret_cast< HANDLE_PTR >( hModule ) );
+	strPath.Format( _T("%p$"), hModule );
 	return LoadFromString( strBody, strPath );
 }
 
@@ -1710,13 +1710,9 @@ BOOL CSkin::LoadCommandIcon(CXMLElement* pXML, const CString& strPath)
 		pXML->GetAttributeValue( _T("path") );
 
 	UINT nIconID = LookupCommandID( pXML, _T("res") );
-	HINSTANCE hInstance = NULL;
+	HINSTANCE hInstance( NULL );
 	if ( nIconID )
-	{
-		__int64 nInstance = 0;
-		if ( _stscanf( strPath, _T("%I64u"), &nInstance ) == 1 )
-			hInstance = (HINSTANCE)nInstance;
-	}
+		_stscanf( strPath, _T("%p"), &hInstance );
 
 	UINT nID = LookupCommandID( pXML );
 	if ( nID == 0 )
@@ -2205,13 +2201,12 @@ HBITMAP CSkin::LoadBitmap(CString& strName)
 	}
 	else
 	{
-		HINSTANCE hInstance = NULL;
-		__int64 nInstance = 0;
-		if ( _stscanf( strName.Left( nPos ), _T("%I64u"), &nInstance ) != 1 )
-			return NULL;
-		hInstance = (HINSTANCE)nInstance;
+		HINSTANCE hInstance( NULL );
+		UINT nID( 0u );
 
-		UINT nID = 0;
+		if ( _stscanf( strName, _T("%p"), &hInstance ) != 1 )
+			return NULL;
+
 		if ( _stscanf( strName.Mid( nPos + 1 ), _T("%lu"), &nID ) != 1 )
 			return NULL;
 
