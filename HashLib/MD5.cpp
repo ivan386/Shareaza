@@ -40,31 +40,15 @@ CMD5::CMD5()
 	Reset();
 }
 
-//////////////////////////////////////////////////////////////////////
-// CMD5 reset m_nState
-
 void CMD5::Reset()
 {
 	m_State.m_nCount = 0;
-	/* Load magic initialization constants. */
+	// Load magic initialization constants
 	m_State.m_nState[ 0 ] = 0x67452301;
 	m_State.m_nState[ 1 ] = 0xefcdab89;
 	m_State.m_nState[ 2 ] = 0x98badcfe;
 	m_State.m_nState[ 3 ] = 0x10325476;
 }
-
-//////////////////////////////////////////////////////////////////////
-// CMD5 fetch digest
-
-void CMD5::GetHash(MD5Digest& oHash) const
-{
-	std::transform( m_State.m_nState,
-		m_State.m_nState + sizeof( m_State.m_nState ) / sizeof( m_State.m_nState[ 0 ] ),
-		&oHash[ 0 ], transformToLE< uint32 > );
-}
-
-//////////////////////////////////////////////////////////////////////
-// CMD5 finish hash operation
 
 void CMD5::Finish()
 {

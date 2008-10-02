@@ -29,13 +29,20 @@ public:
 	void Add(const void* pData, size_t nLength);
 	void Finish();
 
-	struct HASHLIB_API SHADigest // 160 bit
+	struct HASHLIB_API Digest // 160 bit
 	{
 		uint32& operator[](size_t i) { return data[ i ]; }
 		const uint32& operator[](size_t i) const { return data[ i ]; }
 		uint32 data[ 5 ];
 	};
-	void GetHash(SHADigest& oHash) const;
+
+	template< typename T >
+	inline void GetHash(T& oHash) const
+	{
+		std::transform( m_State.m_nState,
+			m_State.m_nState + sizeof( m_State.m_nState ) / sizeof( m_State.m_nState[ 0 ] ),
+			&oHash[ 0 ], transformToBE< uint32 > );
+	}
 
 #ifndef HASHLIB_USE_ASM
 	struct TransformArray
@@ -55,7 +62,7 @@ private:
 		static const size_t	blockSize = 64;
 		uint64	m_nCount;
 		uint32	m_nState[ 5 ];
-		uint8	m_oBuffer[ blockSize ];
+		uchar	m_oBuffer[ blockSize ];
 	};
 	SHA1State m_State;
 

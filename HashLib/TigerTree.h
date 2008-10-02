@@ -31,6 +31,22 @@ public:
 
 class HASHLIB_API CTigerTree
 {
+private:
+	class HASHLIB_API __declspec(novtable) CSectionLock
+	{
+	public:
+		CSectionLock( CRITICAL_SECTION* pSection ) :
+			m_pSection( pSection )
+		{
+			EnterCriticalSection( m_pSection );
+		}
+		~CSectionLock()
+		{
+			LeaveCriticalSection( m_pSection );
+		}
+		CRITICAL_SECTION* m_pSection;
+	};
+
 public:
 	CTigerTree();
 	virtual ~CTigerTree();
@@ -38,6 +54,9 @@ public:
 	void	SetupAndAllocate(uint32 nHeight, uint64 nLength);
 	void	SetupParameters(uint64 nLength);
 	void	Clear();
+	void	Serialize(BOOL bStoring, uchar* pBuf);
+	uint32	GetHeight() const;
+	void	SetHeight(uint32 nHeight);
 	uint32	GetSerialSize() const;
 
 	struct HASHLIB_API TigerTreeDigest // 192 bit
@@ -47,7 +66,15 @@ public:
 		uint64 data[ 3 ];
 	};
 
-	BOOL	GetRoot(TigerTreeDigest& oTiger) const;
+	template< typename T >
+	inline BOOL GetRoot(T& oTiger) const
+	{
+		CSectionLock oLock( &m_pSection );
+		if ( m_pNode == NULL )
+			return FALSE;
+		std::copy( &m_pNode->value[ 0 ], &m_pNode->value[ 3 ], &oTiger[ 0 ] );
+		return TRUE;
+	}
 	void	Assume(CTigerTree* pSource);
 
 	void	BeginFile(uint32 nHeight, uint64 nLength);

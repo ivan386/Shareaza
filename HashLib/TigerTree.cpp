@@ -666,21 +666,6 @@ namespace
 
 #endif // HASHLIB_USE_ASM
 
-class __declspec(novtable) CSectionLock
-{
-public:
-	CSectionLock( CRITICAL_SECTION* pSection ) :
-		m_pSection( pSection )
-	{
-		EnterCriticalSection( m_pSection );
-	}
-	~CSectionLock()
-	{
-		LeaveCriticalSection( m_pSection );
-	}
-	CRITICAL_SECTION* m_pSection;
-};
-
 CTigerTree::CTigerTree() :
 	m_nHeight		( 0 )
 ,	m_pNode			( NULL )
@@ -779,26 +764,72 @@ void CTigerTree::Clear()
 	m_nNodeCount	= 0;
 }
 
+void CTigerTree::Serialize(BOOL bStoring, uchar* pBuf)
+{
+	CSectionLock oLock( &m_pSection );
+
+	if ( bStoring )
+	{
+		if ( m_nHeight  )
+		{
+			CTigerNode* pNode = m_pNode;
+			for ( DWORD nStep = m_nNodeCount ; nStep ; nStep--, pNode++ )
+			{
+				CopyMemory( pBuf, pNode->value, TIGER_SIZE );
+				pBuf += TIGER_SIZE;
+				*(bool*)pBuf = pNode->bValid;
+				pBuf += sizeof( bool );
+			}
+		}
+	}
+	else
+	{
+		if ( m_nHeight )
+		{
+			m_nNodeCount = 1;
+			for ( DWORD nStep = m_nHeight ; nStep ; nStep-- )
+			{
+				m_nNodeCount *= 2;
+				if ( m_nNodeCount > 0xFFFFFFFF / 2 )
+					return;
+			}
+			m_nNodeCount --;
+			CTigerNode* pNode = new CTigerNode[ m_nNodeCount ];
+			if ( pNode )
+			{
+				m_pNode = pNode;
+				for ( DWORD nStep = m_nNodeCount ; nStep ; nStep--, pNode++ )
+				{
+					CopyMemory( pNode->value, pBuf, TIGER_SIZE );
+					pBuf += TIGER_SIZE;
+					pNode->bValid = *(bool*)pBuf;
+					pBuf += sizeof( bool );
+				}
+			}
+		}
+	}
+}
+
+uint32 CTigerTree::GetHeight() const
+{
+	CSectionLock oLock( &m_pSection );
+
+	return m_nHeight;
+}
+
+void CTigerTree::SetHeight(uint32 nHeight)
+{
+	CSectionLock oLock( &m_pSection );
+
+	Clear();
+	m_nHeight = nHeight;
+}
+
 uint32 CTigerTree::GetSerialSize() const
 {
 	CSectionLock oLock( &m_pSection );
 
 	return 4 + m_nNodeCount * ( TIGER_SIZE + 1 );
-}
-
-//////////////////////////////////////////////////////////////////////
-// CTigerTree root output
-
-BOOL CTigerTree::GetRoot(TigerTreeDigest& oTiger) const
-{
-	CSectionLock oLock( &m_pSection );
-
-	if ( m_pNode == NULL )
-		return FALSE;
-
-	std::copy( &m_pNode->value[ 0 ], &m_pNode->value[ 3 ], &oTiger[ 0 ] );
-
-	return TRUE;
 }
 
 //////////////////////////////////////////////////////////////////////

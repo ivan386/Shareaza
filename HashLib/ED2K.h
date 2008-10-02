@@ -31,24 +31,42 @@ public:
 
 	void	Clear();
 	uint32	GetSerialSize() const;
-    void	GetRoot(CMD4::MD4Digest& oHash) const;
+	LPCVOID	GetRawPtr() const;
+
+	template< typename T >
+	inline void GetRoot(T& oHash) const
+	{
+		std::copy( &m_pRoot[ 0 ], &m_pRoot[ 4 ], &oHash[ 0 ] );
+	}
+
+	template< typename T >
+	inline void FromRoot(const T& oHash)
+	{
+		Clear();
+		m_nList = 1;
+		m_pList = new CMD4::Digest[ m_nList ];
+		std::copy( &oHash[ 0 ], &oHash[ 4 ], &m_pRoot[ 0 ] );
+		std::copy( &oHash[ 0 ], &oHash[ 4 ], &m_pList[ 0 ][ 0 ] );
+	}
+
 	void	BeginFile(uint64 nLength);
 	void	AddToFile(LPCVOID pInput, uint32 nLength);
 	BOOL	FinishFile();
+
 	void	BeginBlockTest();
 	void	AddToTest(LPCVOID pInput, uint32 nLength);
 	BOOL	FinishBlockTest(uint32 nBlock);
-	LPCVOID	GetRawPtr() const;
+	
 	BOOL	ToBytes(BYTE** pOutput, uint32* pnOutput);
 	BOOL	FromBytes(BYTE* pOutput, uint32 nOutput, uint64 nSize = 0);
-    void	FromRoot(const CMD4::MD4Digest& oHash);
 	BOOL	CheckIntegrity();
+	
 	BOOL	IsAvailable() const;
 	uint32	GetBlockCount() const;
 
 private:
-    CMD4::MD4Digest m_pRoot;
-    CMD4::MD4Digest* m_pList;
+    CMD4::Digest m_pRoot;
+    CMD4::Digest* m_pList;
 	uint32	m_nList;
 	CMD4	m_pSegment;
 	uint32	m_nCurHash;

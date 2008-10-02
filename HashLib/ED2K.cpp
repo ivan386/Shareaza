@@ -28,13 +28,16 @@
 CED2K::CED2K() :
 	m_pList			( NULL )
 ,	m_nList			( 0 )
+,	m_nCurHash		( 0 )
+,	m_nCurByte		( 0 )
 ,	m_bNullBlock	( FALSE )
 {
+    std::fill_n( &m_pRoot[ 0 ], 4, 0 );
 }
 
 CED2K::~CED2K()
 {
-	Clear();
+	delete [] m_pList;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -43,25 +46,20 @@ CED2K::~CED2K()
 void CED2K::Clear()
 {
     std::fill_n( &m_pRoot[ 0 ], 4, 0 );
-	if ( m_pList != NULL ) delete [] m_pList;
+	delete [] m_pList;
 	m_pList = NULL;
 	m_nList = 0;
+	m_pSegment.Reset();
+	m_nCurHash = 0;
+	m_nCurByte = 0;
 }
 
 uint32 CED2K::GetSerialSize() const
 {
 	uint32 nSize = 4;
-    if ( m_nList > 0 ) nSize += sizeof( CMD4::MD4Digest );
-    if ( m_nList > 1 ) nSize += sizeof( CMD4::MD4Digest ) * m_nList;
+    if ( m_nList > 0 ) nSize += sizeof( CMD4::Digest );
+    if ( m_nList > 1 ) nSize += sizeof( CMD4::Digest ) * m_nList;
 	return nSize;
-}
-
-//////////////////////////////////////////////////////////////////////
-// CED2K root value
-
-void CED2K::GetRoot(CMD4::MD4Digest& oHash) const
-{
-	oHash = m_pRoot;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -69,14 +67,12 @@ void CED2K::GetRoot(CMD4::MD4Digest& oHash) const
 
 void CED2K::BeginFile(uint64 nLength)
 {
+	Clear();
+
 	m_nList = nLength ? (uint32)( ( nLength + ED2K_PART_SIZE ) / ED2K_PART_SIZE ) : 0;
 	if ( nLength % ED2K_PART_SIZE == 0 && nLength ) 
 		m_bNullBlock = true;
-    m_pList	= new CMD4::MD4Digest[ m_nList ];
-	
-	m_pSegment.Reset();
-	m_nCurHash = 0;
-	m_nCurByte = 0;
+    m_pList	= new CMD4::Digest[ m_nList ];
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -139,7 +135,7 @@ BOOL CED2K::FinishFile()
 	else
 	{
 		CMD4 pOverall;
-        pOverall.Add( m_pList, sizeof( CMD4::MD4Digest ) * m_nList );
+        pOverall.Add( m_pList, sizeof( CMD4::Digest ) * m_nList );
 		pOverall.Finish();
 		pOverall.GetHash( m_pRoot );
 	}
@@ -174,7 +170,7 @@ BOOL CED2K::FinishBlockTest(uint32 nBlock)
 {
 	if ( nBlock >= m_nList ) return FALSE;
 	
-    CMD4::MD4Digest pMD4;
+    CMD4::Digest pMD4;
 
 	m_pSegment.Finish();
 	m_pSegment.GetHash( pMD4 );
@@ -189,7 +185,7 @@ BOOL CED2K::ToBytes(BYTE** ppOutput, uint32* pnOutput)
 {
 	if ( m_nList == 0 ) return FALSE;
 
-    *pnOutput = sizeof( CMD4::MD4Digest ) * m_nList;
+    *pnOutput = sizeof( CMD4::Digest ) * m_nList;
 	*ppOutput = new BYTE[ *pnOutput ];
 	CopyMemory( *ppOutput, m_pList, *pnOutput );
 
@@ -208,7 +204,7 @@ BOOL CED2K::FromBytes(BYTE* pOutput, uint32 nOutput, uint64 nSize)
 {
 	Clear();
 	
-    if ( pOutput == NULL || nOutput == 0 || ( nOutput % sizeof( CMD4::MD4Digest ) ) != 0 ) return FALSE;
+    if ( pOutput == NULL || nOutput == 0 || ( nOutput % sizeof( CMD4::Digest ) ) != 0 ) return FALSE;
 	
 	if ( nSize > 0 )
 	{
@@ -219,12 +215,12 @@ BOOL CED2K::FromBytes(BYTE* pOutput, uint32 nOutput, uint64 nSize)
 		if ( m_bNullBlock )
 			nValidBlocks++;
 
-		if ( nOutput / sizeof( CMD4::MD4Digest ) != nValidBlocks )
+		if ( nOutput / sizeof( CMD4::Digest ) != nValidBlocks )
 			return FALSE;
 	}
 	
-    m_nList	= nOutput / sizeof( CMD4::MD4Digest );
-    m_pList = new CMD4::MD4Digest[ m_nList ];
+    m_nList	= nOutput / sizeof( CMD4::Digest );
+    m_pList = new CMD4::Digest[ m_nList ];
 	
 	CopyMemory( m_pList, pOutput, nOutput );
 
@@ -235,23 +231,12 @@ BOOL CED2K::FromBytes(BYTE* pOutput, uint32 nOutput, uint64 nSize)
 	else
 	{
 		CMD4 pOverall;
-        pOverall.Add( m_pList, sizeof( CMD4::MD4Digest ) * m_nList );
+        pOverall.Add( m_pList, sizeof( CMD4::Digest ) * m_nList );
 		pOverall.Finish();
 		pOverall.GetHash( m_pRoot );
 	}
 
 	return TRUE;
-}
-
-void CED2K::FromRoot(const CMD4::MD4Digest& oHash)
-{
-	Clear();
-
-	m_nList = 1;
-    m_pList = new CMD4::MD4Digest[ m_nList ];
-
-    m_pRoot = oHash;
-    m_pList[ 0 ] = oHash;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -266,9 +251,9 @@ BOOL CED2K::CheckIntegrity()
 	else
 	{
 		CMD4 pOverall;
-        CMD4::MD4Digest pRoot;
+        CMD4::Digest pRoot;
 		
-        pOverall.Add( m_pList, sizeof( CMD4::MD4Digest ) * m_nList );
+        pOverall.Add( m_pList, sizeof( CMD4::Digest ) * m_nList );
 		pOverall.Finish();
 		pOverall.GetHash( pRoot );
 		

@@ -21,6 +21,7 @@
 
 #pragma once
 
+#include <algorithm>
 #include <boost/cstdint.hpp>
 
 //! \brief plattfrom independent signed 8 bit integer type.

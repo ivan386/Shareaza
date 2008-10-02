@@ -50,13 +50,6 @@ void CSHA::Reset()
 	m_State.m_nState[ 4 ] = 0xc3d2e1f0;
 }
 
-void CSHA::GetHash(SHADigest& oHash) const
-{
-	std::transform( m_State.m_nState,
-		m_State.m_nState + sizeof( m_State.m_nState ) / sizeof( m_State.m_nState[ 0 ] ),
-		&oHash[ 0 ], transformToBE< uint32 > );
-}
-
 void CSHA::Finish()
 {
 	// Save number of bits

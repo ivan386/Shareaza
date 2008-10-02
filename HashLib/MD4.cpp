@@ -40,18 +40,8 @@ CMD4::CMD4()
 	Reset();
 }
 
-// Fetch hash
-void CMD4::GetHash(MD4Digest& oHash) const
-{
-	std::transform( m_State.m_nState,
-		m_State.m_nState + sizeof( m_State.m_nState ) / sizeof( m_State.m_nState[ 0 ] ),
-		&oHash[ 0 ], transformToLE< uint32 > );
-}
-
-// MD4 initialization. Begins an MD4 operation, writing a new context
 void CMD4::Reset()
 {
-	// Clear counts
 	m_State.m_nCount = 0;
 	// Load magic initialization constants
 	m_State.m_nState[ 0 ] = 0x67452301;
@@ -60,8 +50,6 @@ void CMD4::Reset()
 	m_State.m_nState[ 3 ] = 0x10325476;
 }
 
-// MD4 finalization. Ends an MD4 message-digest operation, writing the
-// the message digest and zeroizing the context.
 void CMD4::Finish()
 {
 	// Save number of bits
