@@ -1814,6 +1814,7 @@
 #define ID_HELP_DISKWRITEFAIL           33131
 #define ID_HELP_CONNECTIONFAIL          33132
 #define ID_HELP_DONKEYSERVERS           33133
+#define ID_HELP_FAKESHAREAZA            33134
 #define ID_MEDIA_PROPERTIES             33137
 #define ID_MEDIA_RATE                   33138
 #define ID_MEDIA_STATE_STOP             33200
@@ -1869,7 +1870,7 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_3D_CONTROLS                     1
+#define _APS_3D_CONTROLS                1
 #define _APS_NEXT_RESOURCE_VALUE        325
 #define _APS_NEXT_COMMAND_VALUE         33318
 #define _APS_NEXT_CONTROL_VALUE         1564

@@ -519,7 +519,9 @@
 				<item id="ID_HELP_HOMEPAGE" text="_Shareaza site"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareaza _Forums"/>
-				<!-- <item id="ID_HELP_UPDATE" text="Latest news"/>
+				<item id="ID_HELP_WEB_6" text="Shareaza S_kin Site"/>
+				<item id="ID_HELP_FAKESHAREAZA" text="FakeShareaza.com I_nfo"/> <!-- 
+				<item id="ID_HELP_UPDATE" text="Latest news"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
 				<item id="ID_HELP_WEB_2" text="P2PForums.com"/> -->
 			</menu>
@@ -618,7 +620,9 @@
 				<item id="ID_HELP_HOMEPAGE" text="_Shareaza site"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareaza _Forums"/>
-				<!-- <item id="ID_HELP_UPDATE" text="Latest news"/>
+				<item id="ID_HELP_WEB_6" text="Shareaza S_kin Site"/>
+				<item id="ID_HELP_FAKESHAREAZA" text="FakeShareaza.com I_nfo"/> <!-- 
+				<item id="ID_HELP_UPDATE" text="Latest news"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
 				<item id="ID_HELP_WEB_2" text="P2PForums.com"/> -->
 			</menu>
@@ -710,7 +714,9 @@
 				<item id="ID_HELP_HOMEPAGE" text="_Shareaza site"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareaza _Forums"/>
-				<!-- <item id="ID_HELP_UPDATE" text="Latest news"/>
+				<item id="ID_HELP_WEB_6" text="Shareaza S_kin Site"/>
+				<item id="ID_HELP_FAKESHAREAZA" text="FakeShareaza.com I_nfo"/> <!-- 
+				<item id="ID_HELP_UPDATE" text="Latest news"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
 				<item id="ID_HELP_WEB_2" text="P2PForums.com"/> -->
 			</menu>
@@ -2581,6 +2587,7 @@
 	<icon res="WINDOW_MAIN" id="WINDOW_MAIN" types="16,32,48" rtl="0"/>
 	<icon res="WINDOW_MAIN" id="ID_TRAY_OPEN" types="16" rtl="0"/>
 	<icon res="WINDOW_MAIN" id="ID_HELP_HOMEPAGE" types="16" rtl="0"/>
+  <icon res="WINDOW_MAIN" id="ID_HELP_FAKESHAREAZA" types="16" rtl="0"/>
 	<icon res="IDI_DOWNLOAD_MONITOR" id="ID_DOWNLOADS_MONITOR" types="16" rtl="0"/>
 	<icon res="IDI_FILE" id="IDI_FILE" types="16,32,48" rtl="0"/>
 	<icon res="IDI_PLUS" id="IDI_PLUS" types="16" rtl="0"/>

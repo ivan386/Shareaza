@@ -167,6 +167,7 @@ BEGIN_MESSAGE_MAP(CMainWnd, CMDIFrameWnd)
 	ON_COMMAND(ID_HELP_ABOUT, OnHelpAbout)
 	ON_COMMAND(ID_HELP_VERSION_CHECK, OnHelpVersionCheck)
 	ON_COMMAND(ID_HELP_HOMEPAGE, OnHelpHomepage)
+	ON_COMMAND(ID_HELP_FAKESHAREAZA, OnHelpFakeShareaza)
 	ON_COMMAND(ID_HELP_WEB_1, OnHelpWeb1)
 	ON_COMMAND(ID_HELP_WEB_2, OnHelpWeb2)
 	ON_COMMAND(ID_HELP_WEB_3, OnHelpWeb3)
@@ -2640,6 +2641,21 @@ void CMainWnd::OnHelpPromote()
 		theApp.WriteProfileInt( _T("Windows"), _T("RunPromote"), TRUE );
 		CPromoteDlg dlg;
 		dlg.DoModal();
+	}
+}
+
+void CMainWnd::OnHelpFakeShareaza()
+{
+	if ( Settings.General.Language == _T("en") )
+	{
+		ShellExecute( GetSafeHwnd(), _T("open"), _T("http://fakeshareaza.com"),
+		NULL, NULL, SW_SHOWNORMAL );
+	}
+	else
+	{
+		ShellExecute( GetSafeHwnd(), _T("open"), 
+		_T("http://translate.google.com/translate?u=fakeshareaza.com&hl=en&tl=") + Settings.General.Language.Left(2), 
+		NULL, NULL, SW_SHOWNORMAL );
 	}
 }
 
