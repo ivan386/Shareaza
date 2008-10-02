@@ -66,7 +66,7 @@ void CImageServices::OnRun()
 		// Create plugin
 		CComPtr< IImageServicePlugin > pService;
 		HRESULT hr = pService.CoCreateInstance( m_inCLSID );
-		ASSERT( SUCCEEDED( hr ) );
+
 		if ( SUCCEEDED( hr ) )
 		{
 			// Add to cache
