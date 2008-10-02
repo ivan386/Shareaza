@@ -1,7 +1,7 @@
 //
 // BENode.cpp
 //
-// Copyright (c) Shareaza Development Team, 2003.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of Shareaza Torrent Wizard (shareaza.sourceforge.net).
 //
 // Shareaza Torrent Wizard is free software; you can redistribute it
@@ -23,7 +23,6 @@
 #include "TorrentWizard.h"
 #include "BENode.h"
 #include "Buffer.h"
-#include "SHA1.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -84,12 +83,12 @@ void CBENode::Clear()
 //////////////////////////////////////////////////////////////////////
 // CBENode add a child node
 
-CBENode* CBENode::Add(const LPBYTE pKey, int nKey)
+CBENode* CBENode::Add(const LPBYTE pKey, size_t nKey)
 {
 	switch ( m_nType )
 	{
 	case beNull:
-		m_nType		= ( pKey && nKey ) ? beDict : beList;
+		m_nType		= ( pKey != NULL && nKey > 0 ) ? beDict : beList;
 		m_pValue	= NULL;
 		m_nValue	= 0;
 		break;
@@ -104,53 +103,59 @@ CBENode* CBENode::Add(const LPBYTE pKey, int nKey)
 		break;
 	}
 	
-	CBENode* pNew = new CBENode();
+	auto_ptr< CBENode > pNew( new CBENode );
+	CBENode* pNew_ = pNew.get();
+
+	// Overflow check
+	ASSERT ( m_nValue <= SIZE_T_MAX );
+	size_t nValue = static_cast< size_t >( m_nValue );
 	
 	if ( m_nType == beList )
 	{
-		CBENode** pList = new CBENode*[ (DWORD)m_nValue + 1 ];
+		// Overflow check
+		ASSERT( nValue + 1 <= SIZE_T_MAX );
+		auto_array< CBENode* > pList( new CBENode*[ nValue + 1 ] );
 		
-		if ( m_pValue != NULL )
+		if ( m_pValue )
 		{
-			CopyMemory( pList, m_pValue, 4 * (DWORD)m_nValue );
+			// Overflow check
+			ASSERT( nValue * sizeof( CBENode* ) <= SIZE_T_MAX );
+			memcpy( pList.get(), m_pValue, nValue * sizeof( CBENode* ) );
+
 			delete [] (CBENode**)m_pValue;
 		}
 		
-		pList[ m_nValue++ ] = pNew;
-		m_pValue = pList;
+		pList[ nValue ] = pNew.release();
+		m_pValue = pList.release();
+		++m_nValue;
 	}
 	else
 	{
-		CBENode** pList = new CBENode*[ (DWORD)m_nValue * 2 + 2 ];
+		// Overflow check
+		ASSERT( nValue * 2 + 2 <= SIZE_T_MAX );
+		auto_array< CBENode* > pList( new CBENode*[ nValue * 2 + 2 ] );
 		
-		if ( m_pValue != NULL )
+		if ( m_pValue )
 		{
-			CopyMemory( pList, m_pValue, 8 * (DWORD)m_nValue );
+			// Overflow check
+			ASSERT( 2 * nValue * sizeof( CBENode* ) <= SIZE_T_MAX );
+			memcpy( pList.get(), m_pValue, 2 * nValue * sizeof( CBENode* ) );
+
 			delete [] (CBENode**)m_pValue;
 		}
 		
-		BYTE* pxKey = new BYTE[ nKey + 1 ];
-		CopyMemory( pxKey, pKey, nKey );
+		auto_array< BYTE > pxKey( new BYTE[ nKey + 1 ] );
+		memcpy( pxKey.get(), pKey, nKey );
 		pxKey[ nKey ] = 0;
 		
-		pList[ m_nValue * 2 ]		= pNew;
-		pList[ m_nValue * 2 + 1 ]	= (CBENode*)pxKey;
+		pList[ nValue * 2 ]		= pNew.release();
+		pList[ nValue * 2 + 1 ]	= (CBENode*)pxKey.release();
 		
-		m_pValue = pList;
-		m_nValue ++;
-		
-		qsort( m_pValue, (size_t)m_nValue, sizeof(*pList) * 2, SortDict );
+		m_pValue = pList.release();
+		++m_nValue;
 	}
 	
-	return pNew;
-}
-
-int __cdecl CBENode::SortDict(const void * pA, const void * pB)
-{
-	LPCSTR* pszA = (LPCSTR*)pA + 1;
-	LPCSTR* pszB = (LPCSTR*)pB + 1;
-	
-	return strcmp( *pszA, *pszB );
+	return pNew_;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -164,7 +169,7 @@ CBENode* CBENode::GetNode(LPCSTR pszKey) const
 	
 	for ( DWORD nNode = (DWORD)m_nValue ; nNode ; nNode--, pNode += 2 )
 	{
-		if ( stricmp( pszKey, (LPCSTR)pNode[1] ) == 0 ) return *pNode;
+		if ( strcmp( pszKey, (LPCSTR)pNode[1] ) == 0 ) return *pNode;
 	}
 	
 	return NULL;
@@ -187,17 +192,17 @@ CBENode* CBENode::GetNode(const LPBYTE pKey, int nKey) const
 //////////////////////////////////////////////////////////////////////
 // CBENode SHA1 computation
 
-CHashSHA1 CBENode::GetSHA1() const
+CSHA CBENode::GetSHA1() const
 {
 	ASSERT( this != NULL );
 	
 	CBuffer pBuffer;
 	Encode( &pBuffer );
 	
-	CSHA1 pDigest;
-	pDigest.Add( pBuffer.m_pBuffer, pBuffer.m_nLength );
-	pDigest.Finish();
-	return pDigest;
+	CSHA pSHA;
+	pSHA.Add( pBuffer.m_pBuffer, pBuffer.m_nLength );
+	pSHA.Finish();
+	return pSHA;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -205,7 +210,7 @@ CHashSHA1 CBENode::GetSHA1() const
 
 void CBENode::Encode(CBuffer* pBuffer) const
 {
-	CHAR szBuffer[128];
+	CHAR szBuffer[64];
 	
 	ASSERT( this != NULL );
 	ASSERT( pBuffer != NULL );
@@ -244,7 +249,8 @@ void CBENode::Encode(CBuffer* pBuffer) const
 		for ( DWORD nItem = 0 ; nItem < m_nValue ; nItem++, pNode += 2 )
 		{
 			LPCSTR pszKey = (LPCSTR)pNode[1];
-			sprintf( szBuffer, "%i:", strlen( pszKey ) );
+			size_t nKeyLength = strlen( pszKey );
+			sprintf( szBuffer, "%i:", nKeyLength );
 			pBuffer->Print( szBuffer );
 			pBuffer->Print( pszKey );
 			(*pNode)->Encode( pBuffer );

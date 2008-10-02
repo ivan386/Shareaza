@@ -129,6 +129,11 @@ BOOL COutputPage::OnSetActive()
 		{
 			if ( m_sFolder.IsEmpty() ) 
 				m_sFolder = theApp.GetProfileString( _T("Folders"), _T("Last") );
+			if ( ! m_sFolder.IsEmpty() )
+			{
+				m_sName = PathFindFileName( m_sFolder );
+				m_sName += _T(".torrent");
+			}
 		}
 		
 		UpdateData( FALSE );

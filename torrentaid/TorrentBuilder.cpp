@@ -24,8 +24,6 @@
 #include "TorrentBuilder.h"
 #include "Buffer.h"
 #include "BENode.h"
-#include "SHA1.h"
-#include "ED2K.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -47,10 +45,18 @@ CTorrentBuilder::CTorrentBuilder()
 , m_bFinished ( FALSE )
 , m_bAbort( FALSE )
 , m_nTotalSize( 0 )
+, m_pFileSize( NULL )
+, m_pFileSHA1( NULL )
+, m_pFileED2K( NULL )
+, m_pFileMD5( NULL )
+, m_pPieceSHA1( NULL )
 , m_nPieceSize( 0 )
-, m_nBuffer( 0 )
+, m_nPieceCount( 0 )
+, m_nPiecePos( 0 )
+, m_nPieceUsed( 0 )
+, m_bAutoPieces( TRUE )
 , m_pBuffer( NULL )
-, m_bAutoPieces( true )
+, m_nBuffer( 0 )
 {
 	m_bAutoDelete = FALSE;
 }
@@ -239,6 +245,7 @@ int CTorrentBuilder::Run()
 		m_pFileSize		= NULL;
 		m_pFileSHA1		= NULL;
 		m_pFileED2K		= NULL;
+		m_pFileMD5		= NULL;
 		m_pPieceSHA1	= NULL;
 		m_pSection.Unlock();
 	}
@@ -256,10 +263,16 @@ int CTorrentBuilder::Run()
 	
 	if ( m_pSection.Lock() )
 	{
-		if ( m_pPieceSHA1 ) delete [] m_pPieceSHA1;
-		if ( m_pFileED2K ) delete [] m_pFileED2K;
-		if ( m_pFileSHA1 ) delete [] m_pFileSHA1;
-		if ( m_pFileSize ) delete [] m_pFileSize;
+		delete [] m_pPieceSHA1;
+		m_pPieceSHA1	= NULL;
+		delete [] m_pFileMD5;
+		m_pFileMD5		= NULL;
+		delete [] m_pFileED2K;
+		m_pFileED2K		= NULL;
+		delete [] m_pFileSHA1;
+		m_pFileSHA1		= NULL;
+		delete [] m_pFileSize;
+		m_pFileSize		= NULL;
 		
 		m_sThisFile.Empty();
 		m_bActive = FALSE;
@@ -282,6 +295,7 @@ BOOL CTorrentBuilder::ScanFiles()
 	m_sThisFile = _T(" Prescanning files...");
 	m_pSection.Unlock();
 	
+	delete [] m_pFileSize;
 	m_pFileSize = new QWORD[ m_pFiles.GetCount() ];
 	int nFile = 0;
 	
@@ -346,34 +360,31 @@ BOOL CTorrentBuilder::ScanFiles()
 
 BOOL CTorrentBuilder::ProcessFiles()
 {
-	m_phPieceSHA1	= new CSHA1();
-	m_phFullSHA1	= new CSHA1();
-	m_phFileSHA1	= new CSHA1();
-	m_phFullED2K	= new CED2K();
-	m_phFileED2K	= new CED2K();
-	
+	m_oDataSHA1.Reset();
+	m_oDataED2K.BeginFile( m_nTotalSize );
+	m_oDataMD5.Reset();
+	m_oPieceSHA1.Reset();
+
 	m_nPieceUsed	= 0;
 	m_nPiecePos		= 0;
 	m_nPieceCount	= (DWORD)( ( m_nTotalSize + (QWORD)m_nPieceSize - 1 ) / (QWORD)m_nPieceSize );
-	m_pPieceSHA1	= new CHashSHA1[ m_nPieceCount ];
-	m_pFileSHA1		= new CHashSHA1[ m_pFiles.GetCount() ];
-	m_pFileED2K		= new CHashMD4[ m_pFiles.GetCount() ];
-	
-	m_phFullSHA1->Reset();
-	m_phFullED2K->Reset();
-	
-	m_phPieceSHA1->Reset();
-	
+
+	delete [] m_pPieceSHA1;
+	m_pPieceSHA1	= new CSHA[ m_nPieceCount ];
+	delete [] m_pFileSHA1;
+	m_pFileSHA1		= new CSHA[ m_pFiles.GetCount() ];
+	delete [] m_pFileED2K;
+	m_pFileED2K		= new CED2K[ m_pFiles.GetCount() ];
+	delete [] m_pFileMD5;
+	m_pFileMD5		= new CMD5[ m_pFiles.GetCount() ];
+
 	int nFile = 0;
 	
 	for ( POSITION pos = m_pFiles.GetHeadPosition() ; pos && ! m_bAbort ; nFile++ )
 	{
 		CString strFile = m_pFiles.GetNext( pos );
-		
-		m_phFileSHA1->Reset();
-		m_phFileED2K->Reset();
-		
-		if ( ! ProcessFile( strFile ) )
+
+		if ( ! ProcessFile( nFile, strFile ) )
 		{
 			if ( m_bAbort ) break;
 			m_pSection.Lock();
@@ -384,50 +395,41 @@ BOOL CTorrentBuilder::ProcessFiles()
 			m_pSection.Unlock();
 			break;
 		}
-		
-		m_phFileSHA1->Finish();
-		m_pFileSHA1[ nFile ] = *m_phFileSHA1;
-
-		m_phFileED2K->Finish();
-		m_pFileED2K[ nFile ] = *m_phFileED2K;
 	}
 	
 	if ( m_nPieceUsed > 0 )
 	{
-		m_phPieceSHA1->Finish();
-		m_pPieceSHA1[ m_nPiecePos++ ] = *m_phPieceSHA1;
+		m_oPieceSHA1.Finish();
+		m_pPieceSHA1[ m_nPiecePos++ ] = m_oPieceSHA1;
 	}
 	
-	m_phFullSHA1->Finish();
-	m_pDataSHA1 = *m_phFullSHA1;
+	m_oDataSHA1.Finish();
+	m_oDataED2K.FinishFile();
+	m_oDataMD5.Finish();
 	
-	m_phFullED2K->Finish();
-	m_pDataED2K = *m_phFullED2K;
-	
-	delete m_phPieceSHA1;
-	delete m_phFullSHA1;
-	delete m_phFileSHA1;
-	delete m_phFullED2K;
-	delete m_phFileED2K;
-	
-	return m_bAbort == FALSE;
+	return ( m_bAbort == FALSE );
 }
 
 /////////////////////////////////////////////////////////////////////////////
 // CTorrentBuilder run : process a single file
 
-BOOL CTorrentBuilder::ProcessFile(LPCTSTR pszFile)
+BOOL CTorrentBuilder::ProcessFile(DWORD nFile, LPCTSTR pszFile)
 {
 	m_pSection.Lock();
 	m_sThisFile = pszFile;
 	m_pSection.Unlock();
 	
 	HANDLE hFile = CreateFile( pszFile, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, 0, NULL );
-	if ( hFile == INVALID_HANDLE_VALUE ) return FALSE;
+	if ( hFile == INVALID_HANDLE_VALUE )
+		return FALSE;
 	
 	DWORD nLow, nHigh;
 	nLow = GetFileSize( hFile, &nHigh );
 	QWORD nSize = ( (QWORD)nHigh << 32 ) + (QWORD)nLow;
+
+	m_pFileSHA1[ nFile ].Reset();
+	m_pFileED2K[ nFile ].BeginFile( nSize );
+	m_pFileMD5[ nFile ].Reset();
 	
 	while ( nSize > 0 && ! m_bAbort )
 	{
@@ -440,26 +442,34 @@ BOOL CTorrentBuilder::ProcessFile(LPCTSTR pszFile)
 		nSize -= (QWORD)nRead;
 		m_nTotalPos += (QWORD)nRead;
 		
-		m_phPieceSHA1->Add( m_pBuffer, nRead );
+		m_oPieceSHA1.Add( m_pBuffer, nRead );
 		m_nPieceUsed += nRead;
 		
-		m_phFullSHA1->Add( m_pBuffer, nRead );
-		m_phFileSHA1->Add( m_pBuffer, nRead );
-		m_phFullED2K->Add( m_pBuffer, nRead );
-		m_phFileED2K->Add( m_pBuffer, nRead );
-		
+		m_oDataSHA1.Add( m_pBuffer, nRead );
+		m_pFileSHA1[ nFile ].Add( m_pBuffer, nRead );
+
+		m_oDataED2K.AddToFile( m_pBuffer, nRead );
+		m_pFileED2K[ nFile ].AddToFile( m_pBuffer, nRead );
+
+		m_oDataMD5.Add( m_pBuffer, nRead );
+		m_pFileMD5[ nFile ].Add( m_pBuffer, nRead );
+
 		if ( m_nPieceUsed >= m_nPieceSize )
 		{
-			m_phPieceSHA1->Finish();
-			m_pPieceSHA1[ m_nPiecePos++ ] = *m_phPieceSHA1;
-			m_phPieceSHA1->Reset();
+			m_oPieceSHA1.Finish();
+			m_pPieceSHA1[ m_nPiecePos++ ] = m_oPieceSHA1;
+			m_oPieceSHA1.Reset();
 			m_nPieceUsed = 0;
 		}
 	}
-	
+
+	m_pFileSHA1[ nFile ].Finish();
+	m_pFileED2K[ nFile ].FinishFile();
+	m_pFileMD5[ nFile ].Finish();
+
 	CloseHandle( hFile );
 	
-	return nSize == 0;
+	return ( nSize == 0 );
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -468,30 +478,46 @@ BOOL CTorrentBuilder::ProcessFile(LPCTSTR pszFile)
 BOOL CTorrentBuilder::WriteOutput()
 {
 	CBENode pRoot;
-	
 	if ( m_sTracker.GetLength() > 0 )
 	{
 		CBENode* pAnnounce = pRoot.Add( "announce" );
 		pAnnounce->SetString( m_sTracker );
 	}
-	
-	CBENode* pDate = pRoot.Add( "creation date" );
-	pDate->SetInt( (QWORD)time( NULL ) );
-	
-	CBENode* pInfo = pRoot.Add( "info" );
-	
-	CBENode* pPL = pInfo->Add( "piece length" );
-	pPL->SetInt( m_nPieceSize );
-	
-	CBENode* pPieces = pInfo->Add( "pieces" );
-	pPieces->SetString( m_pPieceSHA1, m_nPieceCount * sizeof CHashSHA1 );
-	
-	CBENode* pSHA1 = pInfo->Add( "sha1" );
-	pSHA1->SetString( &m_pDataSHA1, sizeof CHashSHA1 );
-	
-	CBENode* pED2K = pInfo->Add( "ed2k" );
-	pED2K->SetString( &m_pDataED2K, sizeof CHashMD4 );
-	
+	{
+		CBENode* pDate = pRoot.Add( "creation date" );
+		pDate->SetInt( (QWORD)time( NULL ) );
+	}
+	CBENode* pInfo = pRoot.Add( "info" );	
+	{
+		CBENode* pPL = pInfo->Add( "piece length" );
+		pPL->SetInt( m_nPieceSize );
+	}
+	{
+		CSHA::Digest* pPieceSHA1 = new CSHA::Digest[ m_nPieceCount ];
+		for ( DWORD i = 0 ; i < m_nPieceCount; ++i )
+			m_pPieceSHA1[ i ].GetHash( pPieceSHA1[ i ] );
+		CBENode* pPieces = pInfo->Add( "pieces" );
+		pPieces->SetString( pPieceSHA1, m_nPieceCount * sizeof CSHA::Digest );
+		delete [] pPieceSHA1;
+	}
+	{
+		CSHA::Digest pDataSHA1;
+		m_oDataSHA1.GetHash( pDataSHA1 );
+		CBENode* pSHA1 = pInfo->Add( "sha1" );
+		pSHA1->SetString( &pDataSHA1, sizeof CSHA::Digest );
+	}
+	{
+		CMD4::Digest pDataED2K;
+		m_oDataED2K.GetRoot( pDataED2K );
+		CBENode* pED2K = pInfo->Add( "ed2k" );
+		pED2K->SetString( &pDataED2K, sizeof CMD4::Digest );
+	}
+	{
+		CMD5::Digest pDataMD5;
+		m_oDataMD5.GetHash( pDataMD5 );
+		CBENode* pMD5 = pInfo->Add( "md5sum" );
+		pMD5->SetString( &pDataMD5, sizeof CMD5::Digest );
+	}	
 	CString strFirst = m_pFiles.GetHead();
 	
 	if ( m_pFiles.GetCount() == 1 )
@@ -499,21 +525,24 @@ BOOL CTorrentBuilder::WriteOutput()
 		int nPos = strFirst.ReverseFind( '\\' );
 		if ( nPos >= 0 ) strFirst = strFirst.Mid( nPos + 1 );
 		
-		CBENode* pName = pInfo->Add( "name" );
-		pName->SetString( strFirst );
-		
-		CBENode* pLength = pInfo->Add( "length" );
-		pLength->SetInt( m_nTotalSize );
+		{
+			CBENode* pName = pInfo->Add( "name" );
+			pName->SetString( strFirst );
+		}
+		{
+			CBENode* pLength = pInfo->Add( "length" );
+			pLength->SetInt( m_nTotalSize );
+		}
 	}
 	else
 	{
-		CBENode* pName = pInfo->Add( "name" );
-		pName->SetString( m_sName );
-		
+		{
+			CBENode* pName = pInfo->Add( "name" );
+			pName->SetString( m_sName );
+		}	
 		CBENode* pFiles = pInfo->Add( "files" );
 		int nCommonPath = 32000;
-		int nFile = 0;
-		
+		int nFile = 0;		
 		POSITION pos = m_pFiles.GetHeadPosition();
 		for ( ; pos ; nFile++ )
 		{
@@ -538,44 +567,55 @@ BOOL CTorrentBuilder::WriteOutput()
 				}
 			}
 		}
-		
 		nCommonPath ++;
-		
 		pos = m_pFiles.GetHeadPosition();
 		for ( nFile = 0 ; pos ; nFile++ )
 		{
 			CString strFile = m_pFiles.GetNext( pos );
 			CBENode* pFile = pFiles->Add( NULL, NULL );
-			
-			CBENode* pLength = pFile->Add( "length" );
-			pLength->SetInt( m_pFileSize[ nFile ] );
-			
-			CBENode* pPath = pFile->Add( "path" );
-			strFile = strFile.Mid( nCommonPath );
-			
-			while ( strFile.GetLength() )
 			{
-				CString strPart = strFile.SpanExcluding( _T("\\/") );
-				if ( strPart.IsEmpty() ) break;
-				
-				pPath->Add( NULL, NULL )->SetString( strPart );
-				
-				strFile = strFile.Mid( strPart.GetLength() );
-				if ( strFile.GetLength() ) strFile = strFile.Mid( 1 );
+				CBENode* pLength = pFile->Add( "length" );
+				pLength->SetInt( m_pFileSize[ nFile ] );
 			}
-			
-			pSHA1 = pFile->Add( "sha1" );
-			pSHA1->SetString( &m_pFileSHA1[ nFile ], sizeof CHashSHA1 );
-			
-			pED2K = pFile->Add( "ed2k" );
-			pED2K->SetString( &m_pFileED2K[ nFile ], sizeof CHashMD4 );
+			{
+				CBENode* pPath = pFile->Add( "path" );
+				strFile = strFile.Mid( nCommonPath );			
+				while ( strFile.GetLength() )
+				{
+					CString strPart = strFile.SpanExcluding( _T("\\/") );
+					if ( strPart.IsEmpty() ) break;
+					
+					pPath->Add( NULL, NULL )->SetString( strPart );
+					
+					strFile = strFile.Mid( strPart.GetLength() );
+					if ( strFile.GetLength() ) strFile = strFile.Mid( 1 );
+				}
+			}
+			{
+				CSHA::Digest pFileSHA1;
+				m_pFileSHA1[ nFile ].GetHash( pFileSHA1 );
+				CBENode* pSHA1 = pFile->Add( "sha1" );
+				pSHA1->SetString( &pFileSHA1, sizeof CSHA::Digest );
+			}
+			{
+				CMD4::Digest pFileED2K;
+				m_pFileED2K[ nFile ].GetRoot( pFileED2K );
+				CBENode* pED2K = pFile->Add( "ed2k" );
+				pED2K->SetString( &pFileED2K, sizeof CMD4::Digest );
+			}
+			{
+				CMD5::Digest pFileMD5;
+				m_pFileMD5[ nFile ].GetHash( pFileMD5 );
+				CBENode* pMD5 = pFile->Add( "md5sum" );
+				pMD5->SetString( &pFileMD5, sizeof CMD5::Digest );
+			}
 		}
 	}
-	
-	CBENode* pAgent = pRoot.Add( "created by" );
-	CString strAgent = _T("Shareaza ") + theApp.m_sVersion;
-	pAgent->SetString( strAgent );
-	
+	{
+		CBENode* pAgent = pRoot.Add( "created by" );
+		CString strAgent = _T("Shareaza ") + theApp.m_sVersion;
+		pAgent->SetString( strAgent );
+	}	
 	if ( m_sComment.GetLength() > 0 )
 	{
 		CBENode* pComment = pRoot.Add( "comment" );

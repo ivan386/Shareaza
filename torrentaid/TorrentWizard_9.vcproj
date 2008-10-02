@@ -30,6 +30,8 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
+				Description="Get HashLib DLL..."
+				CommandLine="copy /b /y &quot;..\HashLib\$(PlatformName)\$(ConfigurationName)\HashLib.dll&quot; &quot;$(TargetDir)&quot;"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -52,7 +54,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_CRT_NONSTDC_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE"
+				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_CRT_NONSTDC_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_SCL_SECURE_NO_WARNINGS"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="1"
 				EnableFunctionLevelLinking="true"
@@ -78,6 +80,7 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="version.lib"
 				LinkIncremental="2"
+				GenerateManifest="false"
 				IgnoreDefaultLibraryNames=""
 				GenerateDebugInformation="true"
 				SubSystem="2"
@@ -118,6 +121,8 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
+				Description="Get HashLib DLL..."
+				CommandLine="copy /b /y &quot;..\HashLib\$(PlatformName)\$(ConfigurationName)\HashLib.dll&quot; &quot;$(TargetDir)&quot;"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -135,7 +140,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				PreprocessorDefinitions="WIN64;_DEBUG;_WINDOWS;_CRT_NONSTDC_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE"
+				PreprocessorDefinitions="WIN64;_DEBUG;_WINDOWS;_CRT_NONSTDC_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_SCL_SECURE_NO_WARNINGS"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="1"
 				RuntimeTypeInfo="false"
@@ -159,6 +164,7 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="version.lib"
 				LinkIncremental="2"
+				GenerateManifest="false"
 				IgnoreDefaultLibraryNames=""
 				GenerateDebugInformation="true"
 				SubSystem="2"
@@ -200,6 +206,8 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
+				Description="Get HashLib DLL..."
+				CommandLine="copy /b /y &quot;..\HashLib\$(PlatformName)\$(ConfigurationName)\HashLib.dll&quot; &quot;$(TargetDir)&quot;"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -221,7 +229,7 @@
 				FavorSizeOrSpeed="1"
 				OmitFramePointers="true"
 				EnableFiberSafeOptimizations="true"
-				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_CRT_NONSTDC_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE"
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_CRT_NONSTDC_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_SCL_SECURE_NO_WARNINGS"
 				StringPooling="true"
 				RuntimeLibrary="0"
 				RuntimeTypeInfo="false"
@@ -244,6 +252,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="version.lib"
+				GenerateManifest="false"
 				IgnoreDefaultLibraryNames=""
 				SubSystem="2"
 				OptimizeReferences="2"
@@ -287,6 +296,8 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
+				Description="Get HashLib DLL..."
+				CommandLine="copy /b /y &quot;..\HashLib\$(PlatformName)\$(ConfigurationName)\HashLib.dll&quot; &quot;$(TargetDir)&quot;"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -309,7 +320,7 @@
 				FavorSizeOrSpeed="1"
 				OmitFramePointers="true"
 				EnableFiberSafeOptimizations="true"
-				PreprocessorDefinitions="WIN64;NDEBUG;_WINDOWS;_CRT_NONSTDC_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE"
+				PreprocessorDefinitions="WIN64;NDEBUG;_WINDOWS;_CRT_NONSTDC_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_SCL_SECURE_NO_WARNINGS"
 				StringPooling="true"
 				RuntimeLibrary="0"
 				RuntimeTypeInfo="false"
@@ -331,6 +342,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="version.lib"
+				GenerateManifest="false"
 				IgnoreDefaultLibraryNames=""
 				SubSystem="2"
 				OptimizeReferences="2"
@@ -376,62 +388,12 @@
 				>
 			</File>
 			<File
-				RelativePath="Buffer.cpp"
+				RelativePath=".\Buffer.cpp"
 				>
 			</File>
 			<File
 				RelativePath="CmdLine.cpp"
 				>
-			</File>
-			<File
-				RelativePath="ED2K.cpp"
-				>
-			</File>
-			<File
-				RelativePath="MD4.cpp"
-				>
-			</File>
-			<File
-				RelativePath="MD4_asm.asm"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-						CommandLine="ml.exe /c /Cx /coff /Zi /nologo /Fo &quot;$(IntDir)\$(InputName).obj&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;"
-						Outputs="&quot;$(IntDir)\$(InputName).obj&quot;"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|x64"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-						CommandLine="ml.exe /c /Cx /coff /Zi /nologo /Fo &quot;$(IntDir)\$(InputName).obj&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;"
-						Outputs="&quot;$(IntDir)\$(InputName).obj&quot;"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-						CommandLine="ml.exe /c /Cx /coff /Zi /nologo /Fo &quot;$(IntDir)\$(InputName).obj&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;"
-						Outputs="&quot;$(IntDir)\$(InputName).obj&quot;"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|x64"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-						CommandLine="ml.exe /c /Cx /coff /Zi /nologo /Fo &quot;$(IntDir)\$(InputName).obj&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;"
-						Outputs="&quot;$(IntDir)\$(InputName).obj&quot;"
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="PageCommandline.cpp"
@@ -464,52 +426,6 @@
 			<File
 				RelativePath="PageWelcome.cpp"
 				>
-			</File>
-			<File
-				RelativePath="SHA1.cpp"
-				>
-			</File>
-			<File
-				RelativePath="SHA_asm.asm"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-						CommandLine="ml.exe /c /Cx /coff /Zi /nologo /Fo &quot;$(ProjectDir)$(IntDir)\$(InputName).obj&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;"
-						Outputs="&quot;$(ProjectDir)$(IntDir)\$(InputName).obj&quot;"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|x64"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-						CommandLine="ml.exe /c /Cx /coff /Zi /nologo /Fo &quot;$(ProjectDir)$(IntDir)\$(InputName).obj&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;"
-						Outputs="&quot;$(ProjectDir)$(IntDir)\$(InputName).obj&quot;"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-						CommandLine="ml.exe /c /Cx /coff /Zi /nologo /Fo &quot;$(ProjectDir)$(IntDir)\$(InputName).obj&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;"
-						Outputs="&quot;$(ProjectDir)$(IntDir)\$(InputName).obj&quot;"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|x64"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-						CommandLine="ml.exe /c /Cx /coff /Zi /nologo /Fo &quot;$(ProjectDir)$(IntDir)\$(InputName).obj&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;"
-						Outputs="&quot;$(ProjectDir)$(IntDir)\$(InputName).obj&quot;"
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="StdAfx.cpp"
@@ -570,19 +486,11 @@
 				>
 			</File>
 			<File
-				RelativePath="Buffer.h"
+				RelativePath=".\Buffer.h"
 				>
 			</File>
 			<File
 				RelativePath="CmdLine.h"
-				>
-			</File>
-			<File
-				RelativePath="ED2K.h"
-				>
-			</File>
-			<File
-				RelativePath="MD4.h"
 				>
 			</File>
 			<File
@@ -619,10 +527,6 @@
 			</File>
 			<File
 				RelativePath="resource.h"
-				>
-			</File>
-			<File
-				RelativePath="SHA1.h"
 				>
 			</File>
 			<File

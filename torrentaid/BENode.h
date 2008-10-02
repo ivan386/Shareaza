@@ -1,7 +1,7 @@
 //
 // BENode.h
 //
-// Copyright (c) Shareaza Development Team, 2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of Shareaza Torrent Wizard (shareaza.sourceforge.net).
 //
 // Shareaza Torrent Wizard is free software; you can redistribute it
@@ -19,12 +19,8 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_BENODE_H__8E447816_68F5_461A_A032_09A0CB97F3CB__INCLUDED_)
-#define AFX_BENODE_H__8E447816_68F5_461A_A032_09A0CB97F3CB__INCLUDED_
-
 #pragma once
 
-class CHashSHA1;
 class CBuffer;
 
 class CBENode  
@@ -45,19 +41,11 @@ public:
 // Operations
 public:
 	void		Clear();
-	CBENode*	Add(const LPBYTE pKey, int nKey);
+	CBENode*	Add(const LPBYTE pKey, size_t nKey);
 	CBENode*	GetNode(LPCSTR pszKey) const;
 	CBENode*	GetNode(const LPBYTE pKey, int nKey) const;
-	CHashSHA1	GetSHA1() const;
+	CSHA		GetSHA1() const;
 	void		Encode(CBuffer* pBuffer) const;
-#ifdef _BE_DECODE_
-public:
-	static CBENode*	Decode(CBuffer* pBuffer);
-private:
-	void		Decode(LPBYTE& pInput, DWORD& nInput);
-	static int	DecodeLen(LPBYTE& pInput, DWORD& nInput);
-#endif
-private:
 	static int __cdecl SortDict(const void * pA, const void * pB);
 
 // Inline
@@ -87,29 +75,54 @@ public:
 		if ( m_nType != beString ) return str;
 		str = (LPCSTR)m_pValue;
 
+		int nLength = MultiByteToWideChar( CP_UTF8, MB_ERR_INVALID_CHARS, (LPCSTR)m_pValue, -1, NULL, 0 );
+		if ( nLength > 0 )
+			MultiByteToWideChar( CP_UTF8, 0, (LPCSTR)m_pValue, -1, str.GetBuffer( nLength ), nLength );
+		else
+		{
+			// Bad encoding
+			str.ReleaseBuffer();
+			str = _T("#ERROR#");
+			return str;
+		}
+		str.ReleaseBuffer();
+
 		return str;
 	}
-	
-	inline void SetString(LPCTSTR psz)
+
+	// Check if a string is a valid path/file name.
+	inline BOOL IsValid(LPCTSTR psz) const
 	{
-		Clear();
-		m_nType		= beString;	
-		m_pValue	= MakeStr( psz, FALSE );
-		m_nValue	= strlen( (LPCSTR)m_pValue );
+		if ( _tcsclen( psz ) == 0 ) return FALSE;
+		if ( _tcschr( psz, '?' ) != NULL ) return FALSE;
+		if ( _tcsicmp( psz , _T("#ERROR#") ) == 0 ) return FALSE;
+
+		return TRUE;
+	}
+
+	inline void SetString(LPCSTR psz)
+	{
+		SetString( psz, strlen(psz), TRUE );
+	}
+
+	inline void SetString(LPCWSTR psz)
+	{
+		CW2A pszASCII( psz );
+		SetString( (LPCSTR)pszASCII, strlen(pszASCII), TRUE );
 	}
 	
-	inline void SetString(LPCVOID pString, DWORD nLength)
+	inline void SetString(LPCVOID pString, size_t nLength, BOOL bNull = FALSE)
 	{
 		Clear();
 		m_nType		= beString;
 		m_nValue	= (QWORD)nLength;
-		m_pValue	= new BYTE[ nLength ];
-		CopyMemory( m_pValue, pString, nLength );
+		m_pValue	= new BYTE[ nLength + ( bNull ? 1 : 0 ) ];
+		CopyMemory( m_pValue, pString, nLength + ( bNull ? 1 : 0 ) );
 	}
 	
-	inline CBENode* Add(LPCSTR psz = NULL)
+	inline CBENode* Add(LPCSTR pszKey = NULL)
 	{
-		return Add( (LPBYTE)psz, psz ? (int)strlen(psz) : 0 );
+		return Add( (LPBYTE)pszKey, pszKey != NULL ? strlen( pszKey ) : 0 );
 	}
 	
 	inline int GetCount() const
@@ -125,14 +138,4 @@ public:
 		if ( nItem < 0 || nItem >= (int)m_nValue ) return NULL;
 		return *( (CBENode**)m_pValue + nItem );
 	}
-	
-	static inline LPVOID MakeStr(LPCTSTR psz, BOOL bNull)
-	{
-		int nLen = WideCharToMultiByte( CP_UTF8,  0, psz, -1, NULL, 0, NULL, NULL ) + ( bNull ? 1 : 0 );
-		LPSTR pStr	= new CHAR[ nLen ];
-		WideCharToMultiByte( CP_UTF8, 0, psz, -1, pStr, nLen, NULL, NULL );
-		return pStr;
-	}
 };
-
-#endif // !defined(AFX_BENODE_H__8E447816_68F5_461A_A032_09A0CB97F3CB__INCLUDED_)

@@ -31,10 +31,19 @@
 #include <afxext.h>         // MFC extensions
 #include <afxcmn.h>			// MFC support for Windows Common Controls
 #include <afxmt.h>			// MFC multithreading
-
 #include <shlobj.h>			// Shell objects
+#include <shlwapi.h>
+
+#include <boost\type_traits\is_same.hpp>
+#include <boost\checked_delete.hpp>
+#include "..\shareaza\augment\auto_ptr.hpp"
+#include "..\shareaza\augment\auto_array.hpp"
+
+#include "..\HashLib\HashLib.h"
 
 typedef unsigned __int64 QWORD;
 
 #define BIF_NEWDIALOGSTYLE	0x0040
 #define OFN_ENABLESIZING	0x00800000
+
+using namespace augment;
