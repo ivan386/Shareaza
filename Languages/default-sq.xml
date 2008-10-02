@@ -494,10 +494,14 @@
 				<item id="ID_HELP_HOMEPAGE" text="Trualli i _Shareaza-s"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="_Forumet e Shareaza-s"/>
-				<!-- <item id="ID_HELP_UPDATE" text="Latest news"/>
+				<item id="ID_HELP_WEB_6" text="S_kins i Shareaza-s "/>
+				<item id="ID_HELP_FAKESHAREAZA" text="FakeShareaza_.com"/> <!--
+				<item id="ID_HELP_UPDATE" text="Latest news"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
 				<item id="ID_HELP_WEB_2" text="P2PForums.com"/> -->
 			</menu>
+			<separator/>
+			<item id="ID_HELP_VERSION_CHECK" text="Check _version"/>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="_Info të Shareaza-s..."/>
 		</menu>
@@ -589,10 +593,14 @@
 				<item id="ID_HELP_HOMEPAGE" text="Trualli i _Shareaza-s"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="_Forumet e Shareaza-s"/>
-				<!-- <item id="ID_HELP_UPDATE" text="Latest news"/>
+				<item id="ID_HELP_WEB_6" text="S_kins i Shareaza-s "/>
+				<item id="ID_HELP_FAKESHAREAZA" text="FakeShareaza_.com"/> <!--
+				<item id="ID_HELP_UPDATE" text="Latest news"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
 				<item id="ID_HELP_WEB_2" text="P2PForums.com"/> -->
 			</menu>
+			<separator/>
+			<item id="ID_HELP_VERSION_CHECK" text="Check _version"/>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="_Info të Shareaza-s..."/>
 		</menu>
@@ -678,10 +686,14 @@
 				<item id="ID_HELP_HOMEPAGE" text="Trualli i _Shareaza-s"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="_Forumet e Shareaza-s"/>
-				<!-- <item id="ID_HELP_UPDATE" text="Lajme të Reja"/>
+				<item id="ID_HELP_WEB_6" text="S_kins i Shareaza-s "/>
+				<item id="ID_HELP_FAKESHAREAZA" text="FakeShareaza_.com"/> <!--
+				<item id="ID_HELP_UPDATE" text="Latest news"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
 				<item id="ID_HELP_WEB_2" text="P2PForums.com"/> -->
 			</menu>
+			<separator/>
+			<item id="ID_HELP_VERSION_CHECK" text="Check _version"/>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="_Info të Shareaza-s..."/>
 		</menu>

@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 
 <!-- Shareaza Default German Skin File -->
-<!-- Translation based on default-en.xml SVN rev.7300 -->
+<!-- Translation based on default-en.xml SVN rev.7405 -->
 
 <!-- This skin basically represents the current Shareaza defaults. You can use this file as -->
 <!-- a basis for creating new skins, however in a new skin be sure to ONLY include the sections -->
@@ -541,7 +541,9 @@
 				<item id="ID_HELP_HOMEPAGE" text="_Shareaza's Homepage"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareaza-_Forum"/>
-				<!-- <item id="ID_HELP_UPDATE" text="Shareaza _News"/>
+				<item id="ID_HELP_WEB_6" text="Shareazas S_kin-Seite"/>
+				<item id="ID_HELP_FAKESHAREAZA" text="FakeShareaza_.com"/> <!-- 
+				<item id="ID_HELP_UPDATE" text="Shareaza _News"/>
 				<item id="ID_HELP_WEB_1" text="File Sharing Portal"/>
 				<item id="ID_HELP_WEB_2" text="P2PForums.com"/> -->
 			</menu>
@@ -640,7 +642,9 @@
 				<item id="ID_HELP_HOMEPAGE" text="_Shareaza's Homepage"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareaza-_Forum"/>
-				<!-- <item id="ID_HELP_UPDATE" text="Shareaza _News"/>
+				<item id="ID_HELP_WEB_6" text="Shareazas S_kin-Seite"/>
+				<item id="ID_HELP_FAKESHAREAZA" text="FakeShareaza_.com"/> <!-- 
+				<item id="ID_HELP_UPDATE" text="Shareaza _News"/>
 				<item id="ID_HELP_WEB_1" text="File Sharing Portal"/>
 				<item id="ID_HELP_WEB_2" text="P2PForums.com"/> -->
 			</menu>
@@ -732,7 +736,9 @@
 				<item id="ID_HELP_HOMEPAGE" text="_Shareaza's Homepage"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareaza-_Forum"/>
-				<!-- <item id="ID_HELP_UPDATE" text="Shareaza _News"/>
+				<item id="ID_HELP_WEB_6" text="Shareazas S_kin-Seite"/>
+				<item id="ID_HELP_FAKESHAREAZA" text="FakeShareaza_.com"/> <!-- 
+				<item id="ID_HELP_UPDATE" text="Shareaza _News"/>
 				<item id="ID_HELP_WEB_1" text="File Sharing Portal"/>
 				<item id="ID_HELP_WEB_2" text="P2PForums.com"/> -->
 			</menu>
@@ -1608,15 +1614,15 @@
 			<text>Willkommen bei Shareaza!</text>
 			<newline gap="8" indent="42"/>
 			<text>Sie sind zur Zeit mit keinem Netzwerk verbunden.  </text>
-			<link target="raza:command:ID_NETWORK_CONNECT">Klicken Sie hier um sich mit den ausgewählten Netzwerken zu verbinden.</link>
+			<link target="raza:command:ID_NETWORK_CONNECT">Klicken Sie hier, um sich mit den ausgewählten Netzwerken zu verbinden.</link>
 			<newline gap="18" indent="0"/>
 		</group>
 		<group id="2">
 			<icon res="136" width="32" height="32" target="raza:command:ID_TOOLS_DOWNLOAD"/><gap size="8"/>
 			<heading align="middle">D O W N L O A D &#160; S T A R T E N </heading>
 			<newline gap="8" indent="42"/>
-			<link target="raza:command:ID_TOOLS_DOWNLOAD" format="bu">Klicken Sie hier</link>
-			<text align="middle">  um eine neue Datei oder einen Torrent herunterzuladen.</text>
+			<link target="raza:command:ID_TOOLS_DOWNLOAD" format="bu">Klicken Sie hier,</link>
+			<text align="middle">&#160; um eine neue Datei oder einen Torrent herunterzuladen.</text>
 			<newline gap="24" indent="0"/>
 			<icon res="134" width="32" height="32" target="raza:command:ID_TAB_SEARCH"/><gap size="8"/>
 			<heading align="middle">N A C H &#160; E I N E R &#160; D A T E I &#160; S U C H E N</heading>
@@ -1649,7 +1655,7 @@
 			<heading align="middle">W A R N U N G &#160; - &#160; I H R &#160; T C P - P O R T &#160; I S T &#160; N I C H T &#160; E R R E I C H B A R</heading>
 			<newline gap="8" indent="42"/>
 			<text colour="FF0000">Shareaza hat festgestellt, dass sich Ihr PC hinter einem NAT-Router und/oder einer Firewall befindet
-				und keine TCP-Verbindungen aus dem Internet empfangen kann. &#160;</text>
+				und keine TCP-Verbindungen aus dem Internet empfangen kann.  </text>
 			<text colour="FF0000" format="b">Das kann ihre Suchergebnisse und Downloads verschlechtern.</text>
 			<newline gap="6"/>
 			<link target="raza:command:ID_HELP_ROUTER">Klicken Sie hier um herauszufinden, wie Sie ihre Firewall bzw. ihren Router für Shareaza konfigurieren müssen</link>
@@ -1660,14 +1666,14 @@
 			<heading align="middle">W A R N U N G &#160; - &#160; I H R &#160; UDP - PORT &#160; I S T &#160; N I C H T &#160; E R R E I C H B A R</heading>
 			<newline gap="8" indent="42"/>
 			<text colour="FF0000">Shareaza hat festgestellt, dass sich Ihr PC hinter einem NAT-Router und/oder einer Firewall befindet
-				und keine UDP-Daten aus dem Internet empfangen kann. &#160;</text>
+				und keine UDP-Daten aus dem Internet empfangen kann.  </text>
 			<text colour="FF0000" format="b">Das kann ihre Suchergebnisse verschlechtern.</text>
 			<newline gap="6"/>
 			<link target="raza:command:ID_HELP_ROUTER">Klicken Sie hier um herauszufinden, wie Sie ihre Firewall bzw. ihren Router für Shareaza konfigurieren müssen</link>
 			<newline gap="18" indent="0"/>
 		</group>
 		<icon res="236" width="32" height="32"/><gap size="8"/>
-		<heading align="middle">S H A R E A Z A  &#160; A N P A S S E N</heading>
+		<heading align="middle">S H A R E A Z A &#160; A N P A S S E N</heading>
 		<newline gap="12" indent="42"/>
 		<icon res="237" width="32" height="32" target="raza:command:ID_TOOLS_SKIN"/>
 		<gap size="8"/>
@@ -1676,7 +1682,7 @@
 		<newline gap="8"/>
 		<icon res="236" width="32" height="32" target="raza:command:ID_TOOLS_WIZARD"/>
 		<gap size="8"/>
-		<link target="raza:command:ID_TOOLS_WIZARD" format="bu" align="middle">Einstellungsassistent</link>
+		<link target="raza:command:ID_TOOLS_WIZARD" format="bu" align="middle">Schnellstartsassistent</link>
 		<text align="middle"> - Einstellungen anpassen</text>
 		<newline gap="8"/>
 		<icon res="147" width="32" height="32" target="raza:command:ID_HELP_FAQ"/>
@@ -2329,6 +2335,7 @@
 	<tip id="ID_HELP_WEB_5" message="Webseite5 besuchen"/>
 	<tip id="ID_HELP_WEB_6" message="Webseite6 besuchen"/>
 	<tip id="ID_HELP_DONATE" message="Wenn Sie möchten, können Sie an unser Projekt spenden, um Ihre Wertschätzung zu zeigen."/>
+	<tip id="ID_HELP_FAKESHAREAZA" message="Besuchen Sie FakeShareaza.com um mehr über die aktuellen Geschehnisse rund um Shareaza zu erfahren."/>
 	<tip id="ID_HITMONITOR_CLEAR" message="Den Treffermonitor-Puffer leeren." tip="Puffer leeren"/>
 	<tip id="ID_HITMONITOR_PAUSE" message="Den Treffermonitor anhalten." tip="Anzeige anhalten"/>
 	<tip id="ID_HITMONITOR_SEARCH" message="Das Netzwerk nach dem markierten Ausdruck durchsuchen." tip="Danach suchen"/>

@@ -495,10 +495,14 @@
 				<item id="ID_HELP_HOMEPAGE" text="Sito di _Shareaza"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="_Forum di Shareaza"/>
-				<!-- <item id="ID_HELP_UPDATE" text="Ultime notizie"/>
+				<item id="ID_HELP_WEB_6" text="Shareaza S_kin Site"/>
+				<item id="ID_HELP_FAKESHAREAZA" text="FakeShareaza_.com"/> <!-- 
+				<item id="ID_HELP_UPDATE" text="Ultime notizie"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
 				<item id="ID_HELP_WEB_2" text="P2PForums.com"/> -->
 			</menu>
+			<separator/>
+			<item id="ID_HELP_VERSION_CHECK" text="Ultime notizie"/>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="_Informazioni su Shareaza..."/>
 		</menu>
@@ -590,10 +594,14 @@
 				<item id="ID_HELP_HOMEPAGE" text="Sito di _Shareaza"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="_Forum di Shareaza"/>
-				<!-- <item id="ID_HELP_UPDATE" text="Ultime notizie"/>
+				<item id="ID_HELP_WEB_6" text="Shareaza S_kin Site"/>
+				<item id="ID_HELP_FAKESHAREAZA" text="FakeShareaza_.com"/> <!-- 
+				<item id="ID_HELP_UPDATE" text="Ultime notizie"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
 				<item id="ID_HELP_WEB_2" text="P2PForums.com"/> -->
 			</menu>
+			<separator/>
+			<item id="ID_HELP_VERSION_CHECK" text="Ultime notizie"/>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="_Informazioni su Shareaza..."/>
 		</menu>
@@ -679,10 +687,14 @@
 				<item id="ID_HELP_HOMEPAGE" text="Sito di _Shareaza"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="_Forum di Shareaza"/>
-				<!-- <item id="ID_HELP_UPDATE" text="Ultime notizie"/>
+				<item id="ID_HELP_WEB_6" text="Shareaza S_kin Site"/>
+				<item id="ID_HELP_FAKESHAREAZA" text="FakeShareaza_.com"/> <!-- 
+				<item id="ID_HELP_UPDATE" text="Ultime notizie"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
 				<item id="ID_HELP_WEB_2" text="P2PForums.com"/> -->
 			</menu>
+			<separator/>
+			<item id="ID_HELP_VERSION_CHECK" text="Ultime notizie"/>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="_Informazioni su Shareaza..."/>
 		</menu>

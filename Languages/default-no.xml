@@ -487,10 +487,14 @@
 				<item id="ID_HELP_HOMEPAGE" text="Shareaza site"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareaza forum"/>
-				<!-- <item id="ID_HELP_UPDATE" text="Siste nytt"/>
+				<item id="ID_HELP_WEB_6" text="Shareaza s_kin site"/>
+				<item id="ID_HELP_FAKESHAREAZA" text="FakeShareaza_.com"/> <!-- 
+				<item id="ID_HELP_UPDATE" text="Siste nytt"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
 				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>	-->
 			</menu>
+			<separator/>
+			<item id="ID_HELP_VERSION_CHECK" text="Check _Version"/>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="Om Shareaza..."/>
 		</menu>
@@ -578,10 +582,14 @@
 				<item id="ID_HELP_HOMEPAGE" text="Shareaza site"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareaza forum"/>
-				<!-- <item id="ID_HELP_UPDATE" text="Siste nytt"/>
+				<item id="ID_HELP_WEB_6" text="Shareaza s_kin site"/>
+				<item id="ID_HELP_FAKESHAREAZA" text="FakeShareaza_.com"/> <!-- 
+				<item id="ID_HELP_UPDATE" text="Siste nytt"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
 				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>	-->
 			</menu>
+			<separator/>
+			<item id="ID_HELP_VERSION_CHECK" text="Check _Version"/>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="Om Shareaza..."/>
 		</menu>
@@ -663,12 +671,15 @@
 				<item id="ID_HELP_HOMEPAGE" text="Shareaza site"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareaza forum"/>
-				<!-- <item id="ID_HELP_UPDATE" text="Siste nytt"/>
+				<item id="ID_HELP_WEB_6" text="Shareaza s_kin site"/>
+				<item id="ID_HELP_FAKESHAREAZA" text="FakeShareaza_.com"/> <!-- 
+				<item id="ID_HELP_UPDATE" text="Siste nytt"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
 				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>	-->
 			</menu>
 			<separator/>
-			<item id="ID_HELP_ABOUT" text="Om Shareaza..."/>
+			<item id="ID_HELP_VERSION_CHECK" text="Check _Version"/>
+			<separator/>
 		</menu>
 	</menu>
 	<!-- VIEW POPUP -->

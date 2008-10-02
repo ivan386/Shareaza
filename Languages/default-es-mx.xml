@@ -487,10 +487,14 @@
 				<item id="ID_HELP_HOMEPAGE" text="_Shareaza site"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Foros de _Shareaza"/>
-				<!-- <item id="ID_HELP_UPDATE" text="Últimas Noticias"/>
+				<item id="ID_HELP_WEB_6" text="Shareaza S_kin Site"/>
+				<item id="ID_HELP_FAKESHAREAZA" text="FakeShareaza_.com"/> <!-- 
+				<item id="ID_HELP_UPDATE" text="Últimas Noticias"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
 				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>	-->
 			</menu>
+			<separator/>
+			<item id="ID_HELP_VERSION_CHECK" text="Actualización de _Versión"/>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="_Acerca de Shareaza..."/>
 		</menu>
@@ -580,10 +584,14 @@
 				<item id="ID_HELP_HOMEPAGE" text="_Shareaza site"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Foros de _Shareaza"/>
-				<!-- <item id="ID_HELP_UPDATE" text="Últimas Noticias"/>
+				<item id="ID_HELP_WEB_6" text="Shareaza S_kin Site"/>
+				<item id="ID_HELP_FAKESHAREAZA" text="FakeShareaza_.com"/> <!-- 
+				<item id="ID_HELP_UPDATE" text="Últimas Noticias"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
 				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>	-->
 			</menu>
+			<separator/>
+			<item id="ID_HELP_VERSION_CHECK" text="Actualización de _Versión"/>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="_Acerca de Shareaza..."/>
 		</menu>
@@ -666,10 +674,14 @@
 				<item id="ID_HELP_HOMEPAGE" text="_Shareaza site"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Foros de _Shareaza"/>
-				<!-- <item id="ID_HELP_UPDATE" text="Últimas Noticias"/>
+				<item id="ID_HELP_WEB_6" text="Shareaza S_kin Site"/>
+				<item id="ID_HELP_FAKESHAREAZA" text="FakeShareaza_.com"/> <!-- 
+				<item id="ID_HELP_UPDATE" text="Últimas Noticias"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
 				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>	-->
 			</menu>
+			<separator/>
+			<item id="ID_HELP_VERSION_CHECK" text="Actualización de _Versión"/>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="_Acerca de Shareaza..."/>
 		</menu>

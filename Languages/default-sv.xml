@@ -513,15 +513,17 @@
 				<item id="ID_HELP_HOMEPAGE" text="_Shareazas hemsida"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareaza _Forum"/>
-				<!-- <item id="ID_HELP_UPDATE" text="Senaste _nyheter"/>
+				<item id="ID_HELP_WEB_6" text="Shareaza S_kin Site"/>
+				<item id="ID_HELP_FAKESHAREAZA" text="FakeShareaza_.com"/> <!-- 
+				<item id="ID_HELP_UPDATE" text="Senaste _nyheter"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
 				<item id="ID_HELP_WEB_2" text="P2PForums.com"/> -->
 			</menu>
 			<separator/>
 			<item id="ID_HELP_VERSION_CHECK" text="_Leta efter nya versioner"/>
+			<item id="ID_HELP_DONATE" text="_Donera till Shareaza projektet"/>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="_Om Shareaza"/>
-			<item id="ID_HELP_DONATE" text="_Donera till Shareaza projektet!"/>
 		</menu>
 	</menu>
 	<menu name="CMainWnd.Tabbed" type="bar">
@@ -612,15 +614,17 @@
 				<item id="ID_HELP_HOMEPAGE" text="_Shareazas hemsida"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareaza _Forum"/>
-				<!-- <item id="ID_HELP_UPDATE" text="Senaste nyheter"/>
+				<item id="ID_HELP_WEB_6" text="Shareaza S_kin Site"/>
+				<item id="ID_HELP_FAKESHAREAZA" text="FakeShareaza_.com"/> <!-- 
+				<item id="ID_HELP_UPDATE" text="Senaste _nyheter"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
 				<item id="ID_HELP_WEB_2" text="P2PForums.com"/> -->
 			</menu>
 			<separator/>
-			<item id="ID_HELP_VERSION_CHECK" text="Leta efter ny version"/>
+			<item id="ID_HELP_VERSION_CHECK" text="_Leta efter nya versioner"/>
+			<item id="ID_HELP_DONATE" text="_Donera till Shareaza projektet"/>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="_Om Shareaza"/>
-			<item id="ID_HELP_DONATE" text="_Donera till Shareaza projektet!"/>
 		</menu>
 	</menu>
 	<menu name="CMainWnd.Windowed" type="bar">
@@ -704,15 +708,17 @@
 				<item id="ID_HELP_HOMEPAGE" text="_Shareazas hemsida"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareaza _Forum"/>
-				<!-- <item id="ID_HELP_UPDATE" text="Senaste nyheter"/>
+				<item id="ID_HELP_WEB_6" text="Shareaza S_kin Site"/>
+				<item id="ID_HELP_FAKESHAREAZA" text="FakeShareaza_.com"/> <!-- 
+				<item id="ID_HELP_UPDATE" text="Senaste _nyheter"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
 				<item id="ID_HELP_WEB_2" text="P2PForums.com"/> -->
 			</menu>
 			<separator/>
-			<item id="ID_HELP_VERSION_CHECK" text="Leta efter ny _version"/>
+			<item id="ID_HELP_VERSION_CHECK" text="_Leta efter nya versioner"/>
+			<item id="ID_HELP_DONATE" text="_Donera till Shareaza projektet"/>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="_Om Shareaza"/>
-			<item id="ID_HELP_DONATE" text="_Donera till Shareaza projektet!"/>
 		</menu>
 	</menu>
 	<!-- VIEW POPUP -->

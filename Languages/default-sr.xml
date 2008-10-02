@@ -496,10 +496,14 @@
 				<item id="ID_HELP_HOMEPAGE" text="_Сајт Shareaza"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareazin форуми"/>
-				<!-- <item id="ID_HELP_UPDATE" text="Novosti"/>
+				<item id="ID_HELP_WEB_6" text="Shareazin S_kins"/>
+				<item id="ID_HELP_FAKESHAREAZA" text="FakeShareaza_.com"/> <!-- 
+				<item id="ID_HELP_UPDATE" text="Novosti"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
 				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>	-->
 			</menu>
+			<separator/>
+			<item id="ID_HELP_VERSION_CHECK" text="Novosti _version"/>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="_O Shareazi..."/>
 		</menu>
@@ -591,10 +595,14 @@
 				<item id="ID_HELP_HOMEPAGE" text="Сајт _Shareaza"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareazin форуми"/>
-				<!-- <item id="ID_HELP_UPDATE" text="Novosti"/>
+				<item id="ID_HELP_WEB_6" text="Shareazin S_kins"/>
+				<item id="ID_HELP_FAKESHAREAZA" text="FakeShareaza_.com"/> <!-- 
+				<item id="ID_HELP_UPDATE" text="Novosti"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
 				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>	-->
 			</menu>
+			<separator/>
+			<item id="ID_HELP_VERSION_CHECK" text="Novosti _version"/>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="_O Shareazi..."/>
 		</menu>
@@ -679,11 +687,15 @@
 			<menu text="_WebStranice">
 				<item id="ID_HELP_HOMEPAGE" text="Сајт _Shareaza"/>
 				<separator/>
-				<item id="ID_HELP_FORUMS" text="Shareazin _Forum"/>
-				<!-- <item id="ID_HELP_UPDATE" text="Novosti"/>
+				<item id="ID_HELP_FORUMS" text="Shareazin форуми"/>
+				<item id="ID_HELP_WEB_6" text="Shareazin S_kins"/>
+				<item id="ID_HELP_FAKESHAREAZA" text="FakeShareaza_.com"/> <!-- 
+				<item id="ID_HELP_UPDATE" text="Novosti"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
 				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>	-->
 			</menu>
+			<separator/>
+			<item id="ID_HELP_VERSION_CHECK" text="Novosti _version"/>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="_O Shareazi..."/>
 		</menu>

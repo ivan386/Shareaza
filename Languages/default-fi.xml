@@ -486,10 +486,14 @@
 				<item id="ID_HELP_HOMEPAGE" text="_Shareaza site (en)"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareaza _Foorumit (en)"/>
-				<!-- <item id="ID_HELP_UPDATE" text="Viimeisimmät uutiset (en)"/>
+				<item id="ID_HELP_WEB_6" text="Shareaza S_kin Site (en)"/>
+				<item id="ID_HELP_FAKESHAREAZA" text="FakeShareaza_.com"/> <!-- 
+				<item id="ID_HELP_UPDATE" text="Viimeisimmät uutiset (en)"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com (en)"/>
 				<item id="ID_HELP_WEB_2" text="P2PForums.com (en)"/> -->
 			</menu>
+			<separator/>
+			<item id="ID_HELP_VERSION_CHECK" text="Viimeisimmät uutiset"/>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="_Tietoja Shareaza..."/>
 		</menu>
@@ -577,10 +581,14 @@
 				<item id="ID_HELP_HOMEPAGE" text="_Shareaza site (en)"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareaza _Foorumit (en)"/>
-				<!-- <item id="ID_HELP_UPDATE" text="Viimeisimmät uutiset (en)"/>
+				<item id="ID_HELP_WEB_6" text="Shareaza S_kin Site (en)"/>
+				<item id="ID_HELP_FAKESHAREAZA" text="FakeShareaza_.com"/> <!-- 
+				<item id="ID_HELP_UPDATE" text="Viimeisimmät uutiset (en)"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com (en)"/>
 				<item id="ID_HELP_WEB_2" text="P2PForums.com (en)"/> -->
 			</menu>
+			<separator/>
+			<item id="ID_HELP_VERSION_CHECK" text="Viimeisimmät uutiset"/>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="_Tietoja Shareazasta..."/>
 		</menu>
@@ -662,10 +670,14 @@
 				<item id="ID_HELP_HOMEPAGE" text="_Shareaza site (en)"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareaza _Foorumit (en)"/>
-				<!-- <item id="ID_HELP_UPDATE" text="Viimeisimmät uutiset (en)"/>
+				<item id="ID_HELP_WEB_6" text="Shareaza S_kin Site (en)"/>
+				<item id="ID_HELP_FAKESHAREAZA" text="FakeShareaza_.com"/> <!-- 
+				<item id="ID_HELP_UPDATE" text="Viimeisimmät uutiset (en)"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com (en)"/>
 				<item id="ID_HELP_WEB_2" text="P2PForums.com (en)"/> -->
 			</menu>
+			<separator/>
+			<item id="ID_HELP_VERSION_CHECK" text="Viimeisimmät uutiset"/>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="_Tietoja Shareazasta..."/>
 		</menu>

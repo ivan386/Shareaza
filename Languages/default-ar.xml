@@ -495,9 +495,11 @@
           <item id="ID_HELP_HOMEPAGE" text="_Shareaza.Sourceforge.net" />
           <separator />
           <item id="ID_HELP_FORUMS" text="_منتديات Shareaza" />
-          <!-- <item id="ID_HELP_UPDATE" text="آخر الأخبار"/>
+          <item id="ID_HELP_WEB_6" text="Shareaza S_kin Site"/>
+          <item id="ID_HELP_FAKESHAREAZA" text="FakeShareaza_.com"/> <!-- 
+          <item id="ID_HELP_UPDATE" text="آخر الأخبار"/>
           <item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
-	  <item id="ID_HELP_WEB_2" text="P2PForums.com"/> -->
+          <item id="ID_HELP_WEB_2" text="P2PForums.com"/> -->
         </menu>
         <separator />
         <item id="ID_HELP_ABOUT" text="_معلومات عن Shareaza ..." />
@@ -590,10 +592,14 @@
           <item id="ID_HELP_HOMEPAGE" text="_Shareaza.Sourceforge.net" />
           <separator />
           <item id="ID_HELP_FORUMS" text="_منتديات Shareaza" />
+          <item id="ID_HELP_WEB_6" text="Shareaza S_kin Site"/>
+          <item id="ID_HELP_FAKESHAREAZA" text="FakeShareaza_.com"/> <!-- 
           <item id="ID_HELP_UPDATE" text="آخر الأخبار"/>
-		<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
-		<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
+          <item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
+          <item id="ID_HELP_WEB_2" text="P2PForums.com"/> -->
 		</menu>
+	  <separator/>
+      <item id="ID_HELP_VERSION_CHECK" text="آخر الأخبار"/>
 	  <separator/>
 	  <item id="ID_HELP_ABOUT" text="_معلومات عن Shareaza..."/>
 	</menu>
@@ -676,9 +682,11 @@
 			</menu>
 			<separator/>
 			<menu text="_Websites">
-				<item id="ID_HELP_HOMEPAGE" text="_Sourceforge.net"/>
+				<item id="ID_HELP_HOMEPAGE" text="_Shareaza.Sourceforge.net"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareaza _منتديات"/>
+				<item id="ID_HELP_WEB_6" text="Shareaza S_kin Site"/>
+				<item id="ID_HELP_FAKESHAREAZA" text="FakeShareaza_.com"/> <!-- 
 				<item id="ID_HELP_UPDATE" text="آخر الأخبار"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
 				<item id="ID_HELP_WEB_2" text="P2PForums.com"/> -->

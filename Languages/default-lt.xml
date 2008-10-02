@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 
 <!-- Shareaza Default Lithuanian Skin File -->
-<!-- Translation based on default-en.xml SVN rev.7350 -->
+<!-- Translation based on default-en.xml SVN rev.7405 -->
 
 <!-- This skin basically represents the current Shareaza defaults. You can use this file as -->
 <!-- a basis for creating new skins, however in a new skin be sure to ONLY include the sections -->
@@ -541,7 +541,9 @@
 				<item id="ID_HELP_HOMEPAGE" text="_Shareaza site"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="„Shareaza“ _forumai"/>
-				<!-- <item id="ID_HELP_UPDATE" text="Paskutinės naujienos"/>
+				<item id="ID_HELP_WEB_6" text="„Shareaza“ S_kin Site"/>
+				<item id="ID_HELP_FAKESHAREAZA" text="FakeShareaza_.com"/> <!-- 
+				<item id="ID_HELP_UPDATE" text="Paskutinės naujienos"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
 				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>	-->
 			</menu>
@@ -640,7 +642,9 @@
 				<item id="ID_HELP_HOMEPAGE" text="_Shareaza site"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="„Shareaza“ _forumai"/>
-				<!-- <item id="ID_HELP_UPDATE" text="Paskutinės naujienos"/>
+				<item id="ID_HELP_WEB_6" text="„Shareaza“ S_kin Site"/>
+				<item id="ID_HELP_FAKESHAREAZA" text="FakeShareaza_.com"/> <!-- 
+				<item id="ID_HELP_UPDATE" text="Paskutinės naujienos"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
 				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>	-->
 			</menu>
@@ -732,7 +736,9 @@
 				<item id="ID_HELP_HOMEPAGE" text="_Shareaza site"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="„Shareaza“ _forumai"/>
-				<!-- <item id="ID_HELP_UPDATE" text="Paskutinės naujienos"/>
+				<item id="ID_HELP_WEB_6" text="„Shareaza“ S_kin Site"/>
+				<item id="ID_HELP_FAKESHAREAZA" text="FakeShareaza_.com"/> <!-- 
+				<item id="ID_HELP_UPDATE" text="Paskutinės naujienos"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
 				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>	-->
 			</menu>

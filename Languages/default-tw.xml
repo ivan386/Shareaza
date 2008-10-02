@@ -504,10 +504,14 @@
 				<item id="ID_HELP_HOMEPAGE" text="Shareaza site"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareaza 討論區"/>
+				<item id="ID_HELP_WEB_6" text="Shareaza S_kin Site"/>
+				<item id="ID_HELP_FAKESHAREAZA" text="FakeShareaza_.com"/> <!-- 
 				<item id="ID_HELP_UPDATE" text="最新消息"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
-				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
+				<item id="ID_HELP_WEB_2" text="P2PForums.com"/> -->
 			</menu>
+			<separator/>
+			<item id="ID_HELP_VERSION_CHECK" text="最新消息"/>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="關於 Shareaza..."/>
 		</menu>
@@ -595,10 +599,14 @@
 				<item id="ID_HELP_HOMEPAGE" text="Shareaza site"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareaza 討論區"/>
+				<item id="ID_HELP_WEB_6" text="Shareaza S_kin Site"/>
+				<item id="ID_HELP_FAKESHAREAZA" text="FakeShareaza_.com"/> <!-- 
 				<item id="ID_HELP_UPDATE" text="最新消息"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
-				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
+				<item id="ID_HELP_WEB_2" text="P2PForums.com"/> -->
 			</menu>
+			<separator/>
+			<item id="ID_HELP_VERSION_CHECK" text="最新消息"/>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="關於 Shareaza..."/>
 		</menu>
@@ -680,10 +688,14 @@
 				<item id="ID_HELP_HOMEPAGE" text="Shareaza site"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareaza 討論區"/>
+				<item id="ID_HELP_WEB_6" text="Shareaza S_kin Site"/>
+				<item id="ID_HELP_FAKESHAREAZA" text="FakeShareaza_.com"/> <!-- 
 				<item id="ID_HELP_UPDATE" text="最新消息"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
-				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>
+				<item id="ID_HELP_WEB_2" text="P2PForums.com"/> -->
 			</menu>
+			<separator/>
+			<item id="ID_HELP_VERSION_CHECK" text="最新消息"/>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="關於 Shareaza..."/>
 		</menu>

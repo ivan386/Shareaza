@@ -510,12 +510,16 @@
 				<item id="ID_HELP_HOMEPAGE" text="_Shareaza site"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareaza _forums"/>
-				<!-- <item id="ID_HELP_UPDATE" text="Laatste nieuws"/>
+				<item id="ID_HELP_WEB_6" text="Shareaza S_kin Site"/>
+				<item id="ID_HELP_FAKESHAREAZA" text="FakeShareaza_.com"/> <!-- 
+				<item id="ID_HELP_UPDATE" text="Laatste nieuws"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
 				<item id="ID_HELP_WEB_2" text="P2PForums.com"/> -->
 				<item id="ID_HELP_VERSION_CHECK" text="Check voor een beschikbare update"/>
 				<separator/>
 			</menu>
+			<separator/>
+			<item id="ID_HELP_VERSION_CHECK" text="Check _Version"/>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="_Over Shareaza..."/>
 		</menu>
@@ -608,12 +612,16 @@
 				<item id="ID_HELP_HOMEPAGE" text="_Shareaza site"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareaza _forums"/>
-				<!-- <item id="ID_HELP_UPDATE" text="Laatste nieuws"/>
+				<item id="ID_HELP_WEB_6" text="Shareaza S_kin Site"/>
+				<item id="ID_HELP_FAKESHAREAZA" text="FakeShareaza_.com"/> <!-- 
+				<item id="ID_HELP_UPDATE" text="Laatste nieuws"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
 				<item id="ID_HELP_WEB_2" text="P2PForums.com"/> -->
 				<item id="ID_HELP_VERSION_CHECK" text="Check voor een beschikbare update"/>
 				<separator/>
 			</menu>
+			<separator/>
+			<item id="ID_HELP_VERSION_CHECK" text="Check _Version"/>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="_Over Shareaza..."/>
 		</menu>
@@ -699,12 +707,16 @@
 				<item id="ID_HELP_HOMEPAGE" text="_Shareaza site"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareaza _forums"/>
-				<!-- <item id="ID_HELP_UPDATE" text="Laatste nieuws"/>
+				<item id="ID_HELP_WEB_6" text="Shareaza S_kin Site"/>
+				<item id="ID_HELP_FAKESHAREAZA" text="FakeShareaza_.com"/> <!-- 
+				<item id="ID_HELP_UPDATE" text="Laatste nieuws"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
-				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>	-->
+				<item id="ID_HELP_WEB_2" text="P2PForums.com"/> -->
 				<item id="ID_HELP_VERSION_CHECK" text="Check voor een beschikbare update"/>
 				<separator/>
 			</menu>
+			<separator/>
+			<item id="ID_HELP_VERSION_CHECK" text="Check _Version"/>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="_Over Shareaza..."/>
 		</menu>

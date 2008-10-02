@@ -494,7 +494,9 @@
 				<item id="ID_HELP_HOMEPAGE" text="Lloc web de _Shareaza"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Fòrums de _Shareaza"/>
-				<!-- <item id="ID_HELP_UPDATE" text="Darreres notícies"/>
+				<item id="ID_HELP_WEB_6" text="Shareaza S_kin Site"/>
+				<item id="ID_HELP_FAKESHAREAZA" text="FakeShareaza_.com"/> <!-- 
+				<item id="ID_HELP_UPDATE" text="Darreres notícies"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
 				<item id="ID_HELP_WEB_2" text="P2PForums.com"/> -->
 			</menu>
@@ -589,7 +591,9 @@
 				<item id="ID_HELP_HOMEPAGE" text="_Shareaza site"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Fòrums de _Shareaza"/>
-				<!-- <item id="ID_HELP_UPDATE" text="Darreres Notícies"/>
+				<item id="ID_HELP_WEB_6" text="Shareaza S_kin Site"/>
+				<item id="ID_HELP_FAKESHAREAZA" text="FakeShareaza_.com"/> <!-- 
+				<item id="ID_HELP_UPDATE" text="Darreres Notícies"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
 				<item id="ID_HELP_WEB_2" text="P2PForums.com"/> -->
 			</menu>
@@ -678,10 +682,14 @@
 				<item id="ID_HELP_HOMEPAGE" text="_Shareaza site"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Fòrums del _Shareaza"/>
-				<!-- <item id="ID_HELP_UPDATE" text="Darreres notícies"/>
+				<item id="ID_HELP_WEB_6" text="Shareaza S_kin Site"/>
+				<item id="ID_HELP_FAKESHAREAZA" text="FakeShareaza_.com"/> <!-- 
+				<item id="ID_HELP_UPDATE" text="Darreres notícies"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
 				<item id="ID_HELP_WEB_2" text="P2PForums.com"/> -->
 			</menu>
+			<separator/>
+			<item id="ID_HELP_VERSION_CHECK" text="Darreres notícies"/>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="_Quant a Shareaza..."/>
 		</menu>
