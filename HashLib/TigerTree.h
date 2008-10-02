@@ -55,7 +55,6 @@ public:
 	void	SetupParameters(uint64 nLength);
 	void	Clear();
 	void	Serialize(BOOL bStoring, uchar* pBuf);
-	uint32	GetHeight() const;
 	void	SetHeight(uint32 nHeight);
 	uint32	GetSerialSize() const;
 

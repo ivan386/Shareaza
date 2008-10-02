@@ -810,13 +810,6 @@ void CTigerTree::Serialize(BOOL bStoring, uchar* pBuf)
 	}
 }
 
-uint32 CTigerTree::GetHeight() const
-{
-	CSectionLock oLock( &m_pSection );
-
-	return m_nHeight;
-}
-
 void CTigerTree::SetHeight(uint32 nHeight)
 {
 	CSectionLock oLock( &m_pSection );
