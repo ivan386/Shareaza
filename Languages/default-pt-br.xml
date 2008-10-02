@@ -542,7 +542,7 @@
 			<item id="ID_HELP_HOMEPAGE" text="_Site do Shareaza"/>
 			<separator/>
 			<item id="ID_HELP_FORUMS" text="Fóruns do _Shareaza"/>
-				<item id="ID_HELP_WEB_6" text="S_kinSite do Shareaza"/>
+				<item id="ID_HELP_WEB_6" text="Site das S_kins do Shareaza"/>
 				<item id="ID_HELP_FAKESHAREAZA" text="FakeShareaza_.com"/> <!-- 
 				<item id="ID_HELP_UPDATE" text="Últimas notícias"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
@@ -643,7 +643,7 @@
 			<item id="ID_HELP_HOMEPAGE" text="Site do Shareaza"/>
 			<separator/>
 			<item id="ID_HELP_FORUMS" text="Fóruns do _Shareaza"/>
-				<item id="ID_HELP_WEB_6" text="S_kinSite do Shareaza"/>
+				<item id="ID_HELP_WEB_6" text="Site das S_kins do Shareaza"/>
 				<item id="ID_HELP_FAKESHAREAZA" text="FakeShareaza_.com"/> <!-- 
 				<item id="ID_HELP_UPDATE" text="Últimas notícias"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
@@ -737,7 +737,7 @@
 			<item id="ID_HELP_HOMEPAGE" text="Site do Shareaza"/>
 			<separator/>
 			<item id="ID_HELP_FORUMS" text="Fóruns do _Shareaza"/>
-				<item id="ID_HELP_WEB_6" text="S_kinSite do Shareaza"/>
+				<item id="ID_HELP_WEB_6" text="Site das S_kins do Shareaza"/>
 				<item id="ID_HELP_FAKESHAREAZA" text="FakeShareaza_.com"/> <!-- 
 				<item id="ID_HELP_UPDATE" text="Últimas notícias"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
@@ -2351,6 +2351,7 @@
 	<tip id="ID_HELP_WEB_5" message="Visite este site"/>
 	<tip id="ID_HELP_WEB_6" message="Visite este site"/>
 	<tip id="ID_HELP_DONATE" message="Se você quiser, você pode doar para o nosso fundo legal e mostrar a sua apreciação."/>
+	<tip id="ID_HELP_FAKESHAREAZA" message="Traduzir o FakeShareaza.com para aprender mais sobre os eventos recentes."/>
 	<tip id="ID_HITMONITOR_CLEAR" message="Limpar o buffer do monitor de acerto."/>
 	<tip id="ID_HITMONITOR_PAUSE" message="Pausar a monitoração de acerto."/>
 	<tip id="ID_HITMONITOR_SEARCH" message="Procurar na rede o termo selecionado."/>

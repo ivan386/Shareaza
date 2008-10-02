@@ -1666,7 +1666,7 @@ PDF
 		</group>
 		<group id="6">
 			<newline indent="16"/><icon res="145" width="32" height="32"/><gap size="8"/>
-			<heading align="middle" colour="6060FF">א ז ה ר ה&#160; - &#160; פ ת ח ת  ( פ ו ר ט ) &#160; ה - T C P &#160; ש ל ך &#160; ח ס ו מ ה &#160; ע " י  ח ו מ ת - ש א</heading>
+			<heading align="middle" colour="6060FF">א ז ה ר ה&#160; - &#160; פ ת ח ת  ( פ ו ר ט ) &#160; ה - T C P &#160; ש ל ך &#160; ח ס ו מ ה &#160; ע ` י  ח ו מ ת - ש א</heading>
 			<newline gap="8" indent="42"/>
 			<text colour="FF0000"> (NAT) שרזה זיהה שאתה מאחורי חומת-אש או ראוטר,	
 			ואינך מצליח לקבל חיבורי UDP מהאינטרנט. &#160;</text>
@@ -1884,7 +1884,7 @@ PDF
 		<newline gap="10"/>
 		<link target="raza:page:CIRCSettingsPage" format="b">חדר שיחה:</link>
 		<gap size="4"/>
-		<text>הגדרות הפרופיל שלך, הצ'אט והמסרים מיידים</text>
+		<text>הגדרות הפרופיל שלך, הצ`אט והמסרים מיידים</text>
 		<newline gap="10"/>
 		<link target="raza:page:CWebSettingsPage" format="b">האינטרנט:</link>
 		<gap size="4"/>
@@ -2028,7 +2028,7 @@ PDF
 		<text format="b">אזור הורדות</text>
 		<newline gap="8"/>
 		<text>כאן יוצגו הקבצים שכרגע בהורדה. תוכל/י לראות
-		כל מקור בנפרד ע"י הרחבת כל קובץ בעזרת ה-'+' שמימינו.</text>
+		כל מקור בנפרד ע`י הרחבת כל קובץ בעזרת ה-'+' שמימינו.</text>
 		<newline gap="8"/>
 		<text>תוכל להשתמש בפקודה זו לקבלת עזרה לגבי הורדה ספציפית
 		פשוט לחץ על ההורדה ובחר את פקודה זו שנית.</text>
@@ -2074,7 +2074,7 @@ PDF
 		.תוכל לנסות לחפש את הרשת עבור עוד מקורות בעזרת פקודת
 		'מצא עוד מקורות'
 		.אם המהירות לא משתפרת, ייתכן שזה נובע ממהירות העלאה מוגבלת
-		של המשתמשים מהם אתה מוריד, מהירות ההורדה בד"כ משתפרת עם הזמן.</text>
+		של המשתמשים מהם אתה מוריד, מהירות ההורדה בד'כ משתפרת עם הזמן.</text>
 	</document>
 	<document name="DownloadHelp.Pending">
 		<text format="b">ההורדה בהמתנה לתשובה</text>
@@ -3313,7 +3313,7 @@ PDF
 </strings>
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
 <dialogs>
-	<dialog name="CGeneralSettingsGroup" cookie="" caption="כללי"/>
+	<dialog name="CGeneralSettingsGroup" cookie="" caption="כללי">
 	</dialog>
 	<dialog name="CSettingSheet" cookie="SyBuBuBu#3" caption="הגדרות שרזה">
 		<control/>
