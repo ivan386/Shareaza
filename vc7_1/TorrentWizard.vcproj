@@ -2,7 +2,7 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="7.10"
-	Name="Torrentaid"
+	Name="TorrentWizard"
 	ProjectGUID="{2EFD2DB3-DC1D-4D81-9488-EAFBBB87471D}">
 	<Platforms>
 		<Platform
@@ -328,22 +328,22 @@
 			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}">
 			<File
-				RelativePath="..\torrentaid\BENode.cpp">
+				RelativePath="..\TorrentWizard\BENode.cpp">
 			</File>
 			<File
-				RelativePath="..\torrentaid\Buffer.cpp">
+				RelativePath="..\TorrentWizard\Buffer.cpp">
 			</File>
 			<File
-				RelativePath="..\torrentaid\CmdLine.cpp">
+				RelativePath="..\TorrentWizard\CmdLine.cpp">
 			</File>
 			<File
-				RelativePath="..\torrentaid\ED2K.cpp">
+				RelativePath="..\TorrentWizard\ED2K.cpp">
 			</File>
 			<File
-				RelativePath="..\torrentaid\MD4.cpp">
+				RelativePath="..\TorrentWizard\MD4.cpp">
 			</File>
 			<File
-				RelativePath="..\torrentaid\MD4_asm.asm">
+				RelativePath="..\TorrentWizard\MD4_asm.asm">
 				<FileConfiguration
 					Name="DebugWin32|Win32">
 					<Tool
@@ -378,34 +378,34 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\torrentaid\PageCommandline.cpp">
+				RelativePath="..\TorrentWizard\PageCommandline.cpp">
 			</File>
 			<File
-				RelativePath="..\torrentaid\PageComment.cpp">
+				RelativePath="..\TorrentWizard\PageComment.cpp">
 			</File>
 			<File
-				RelativePath="..\torrentaid\PageFinished.cpp">
+				RelativePath="..\TorrentWizard\PageFinished.cpp">
 			</File>
 			<File
-				RelativePath="..\torrentaid\PageOutput.cpp">
+				RelativePath="..\TorrentWizard\PageOutput.cpp">
 			</File>
 			<File
-				RelativePath="..\torrentaid\PagePackage.cpp">
+				RelativePath="..\TorrentWizard\PagePackage.cpp">
 			</File>
 			<File
-				RelativePath="..\torrentaid\PageSingle.cpp">
+				RelativePath="..\TorrentWizard\PageSingle.cpp">
 			</File>
 			<File
-				RelativePath="..\torrentaid\PageTracker.cpp">
+				RelativePath="..\TorrentWizard\PageTracker.cpp">
 			</File>
 			<File
-				RelativePath="..\torrentaid\PageWelcome.cpp">
+				RelativePath="..\TorrentWizard\PageWelcome.cpp">
 			</File>
 			<File
-				RelativePath="..\torrentaid\SHA1.cpp">
+				RelativePath="..\TorrentWizard\SHA1.cpp">
 			</File>
 			<File
-				RelativePath="..\torrentaid\SHA_asm.asm">
+				RelativePath="..\TorrentWizard\SHA_asm.asm">
 				<FileConfiguration
 					Name="DebugWin32|Win32">
 					<Tool
@@ -440,7 +440,7 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\torrentaid\StdAfx.cpp">
+				RelativePath="..\TorrentWizard\StdAfx.cpp">
 				<FileConfiguration
 					Name="DebugWin32|Win32">
 					<Tool
@@ -467,13 +467,13 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\torrentaid\TorrentBuilder.cpp">
+				RelativePath="..\TorrentWizard\TorrentBuilder.cpp">
 			</File>
 			<File
-				RelativePath="..\torrentaid\TorrentWizard.cpp">
+				RelativePath="..\TorrentWizard\TorrentWizard.cpp">
 			</File>
 			<File
-				RelativePath="..\torrentaid\WizardSheet.cpp">
+				RelativePath="..\TorrentWizard\WizardSheet.cpp">
 			</File>
 		</Filter>
 		<Filter
@@ -481,61 +481,61 @@
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
 			<File
-				RelativePath="..\torrentaid\BENode.h">
+				RelativePath="..\TorrentWizard\BENode.h">
 			</File>
 			<File
-				RelativePath="..\torrentaid\Buffer.h">
+				RelativePath="..\TorrentWizard\Buffer.h">
 			</File>
 			<File
-				RelativePath="..\torrentaid\CmdLine.h">
+				RelativePath="..\TorrentWizard\CmdLine.h">
 			</File>
 			<File
-				RelativePath="..\torrentaid\ED2K.h">
+				RelativePath="..\TorrentWizard\ED2K.h">
 			</File>
 			<File
-				RelativePath="..\torrentaid\MD4.h">
+				RelativePath="..\TorrentWizard\MD4.h">
 			</File>
 			<File
-				RelativePath="..\torrentaid\PageCommandline.h">
+				RelativePath="..\TorrentWizard\PageCommandline.h">
 			</File>
 			<File
-				RelativePath="..\torrentaid\PageComment.h">
+				RelativePath="..\TorrentWizard\PageComment.h">
 			</File>
 			<File
-				RelativePath="..\torrentaid\PageFinished.h">
+				RelativePath="..\TorrentWizard\PageFinished.h">
 			</File>
 			<File
-				RelativePath="..\torrentaid\PageOutput.h">
+				RelativePath="..\TorrentWizard\PageOutput.h">
 			</File>
 			<File
-				RelativePath="..\torrentaid\PagePackage.h">
+				RelativePath="..\TorrentWizard\PagePackage.h">
 			</File>
 			<File
-				RelativePath="..\torrentaid\PageSingle.h">
+				RelativePath="..\TorrentWizard\PageSingle.h">
 			</File>
 			<File
-				RelativePath="..\torrentaid\PageTracker.h">
+				RelativePath="..\TorrentWizard\PageTracker.h">
 			</File>
 			<File
-				RelativePath="..\torrentaid\PageWelcome.h">
+				RelativePath="..\TorrentWizard\PageWelcome.h">
 			</File>
 			<File
-				RelativePath="..\torrentaid\resource.h">
+				RelativePath="..\TorrentWizard\resource.h">
 			</File>
 			<File
-				RelativePath="..\torrentaid\SHA1.h">
+				RelativePath="..\TorrentWizard\SHA1.h">
 			</File>
 			<File
-				RelativePath="..\torrentaid\StdAfx.h">
+				RelativePath="..\TorrentWizard\StdAfx.h">
 			</File>
 			<File
-				RelativePath="..\torrentaid\TorrentBuilder.h">
+				RelativePath="..\TorrentWizard\TorrentBuilder.h">
 			</File>
 			<File
-				RelativePath="..\torrentaid\TorrentWizard.h">
+				RelativePath="..\TorrentWizard\TorrentWizard.h">
 			</File>
 			<File
-				RelativePath="..\torrentaid\WizardSheet.h">
+				RelativePath="..\TorrentWizard\WizardSheet.h">
 			</File>
 		</Filter>
 		<Filter
@@ -543,25 +543,25 @@
 			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx"
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}">
 			<File
-				RelativePath="..\torrentaid\Res\Hand.cur">
+				RelativePath="..\TorrentWizard\Res\Hand.cur">
 			</File>
 			<File
-				RelativePath="..\torrentaid\Res\Manifest.xml">
+				RelativePath="..\TorrentWizard\Res\Manifest.xml">
 			</File>
 			<File
-				RelativePath="..\torrentaid\Res\TorrentWizard.ico">
+				RelativePath="..\TorrentWizard\Res\TorrentWizard.ico">
 			</File>
 			<File
-				RelativePath="..\torrentaid\TorrentWizard.rc">
+				RelativePath="..\TorrentWizard\TorrentWizard.rc">
 			</File>
 			<File
-				RelativePath="..\torrentaid\Res\TorrentWizard.rc2">
+				RelativePath="..\TorrentWizard\Res\TorrentWizard.rc2">
 			</File>
 			<File
-				RelativePath="..\torrentaid\Res\Uninstall.ICO">
+				RelativePath="..\TorrentWizard\Res\Uninstall.ICO">
 			</File>
 			<File
-				RelativePath="..\torrentaid\Res\Wizard.bmp">
+				RelativePath="..\TorrentWizard\Res\Wizard.bmp">
 			</File>
 		</Filter>
 	</Files>

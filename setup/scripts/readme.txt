@@ -16,7 +16,7 @@ Compile procedure for Shareaza:
 4)	Compile repair.iss
 5)	Compile main.iss
 
-Compile procedure for TorrentAid:
+Compile procedure for TorrentWizard:
 1)	Place TorrentWizard.exe in \setup\builds\
 2)	Compile torrent.iss 
 

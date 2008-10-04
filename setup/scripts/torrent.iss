@@ -37,7 +37,7 @@ UninstallDisplayIcon={app}\TorrentWizard.exe
 UninstallDisplayName={cm:NameAndVersion,TorrentWizard,{#version}}
 UninstallFilesDir={app}\Uninstall
 LicenseFile=setup\license\default.rtf
-SetupIconFile=torrentaid\Res\TorrentWizard.ico
+SetupIconFile=TorrentWizard\Res\TorrentWizard.ico
 WizardImageFile=setup\misc\WizardImages\SetupModern16.bmp
 WizardSmallImageFile=setup\misc\WizardImages\Small\OtherModernSmall01.bmp
 
@@ -57,7 +57,7 @@ Source: "setup\builds\unicows.dll"; DestDir: "{app}"; Flags: overwritereadonly r
 Source: "{#root}\TorrentWizard.exe"; DestDir: "{app}"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension
 
 ; Uninstall icon for software panel
-Source: "torrentaid\Res\uninstall.ico"; DestDir: "{app}\Uninstall"; Flags: ignoreversion sortfilesbyextension
+Source: "TorrentWizard\Res\uninstall.ico"; DestDir: "{app}\Uninstall"; Flags: ignoreversion sortfilesbyextension
 
 [Icons]
 Name: "{group}\Torrent Wizard"; Filename: "{app}\TorrentWizard.exe"; WorkingDir: "{app}"; Comment: "Shareaza Torrent Wizard"

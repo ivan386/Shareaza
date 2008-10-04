@@ -95,7 +95,7 @@ Name: "resetdiscoveryhostcache"; Description: "{cm:tasks_resetdiscoveryhostcache
 ; Main files
 Source: "Shareaza\{#PlatformName}\{#ConfigurationName}\Shareaza.exe";        DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 Source: "Skin-Installer\{#PlatformName}\{#ConfigurationName}\Skin.exe";      DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
-Source: "torrentaid\{#PlatformName}\{#ConfigurationName}\TorrentWizard.exe"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+Source: "TorrentWizard\{#PlatformName}\{#ConfigurationName}\TorrentWizard.exe"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 
 ; Save/Restore scripts
 Source: "setup\builds\SaveSettings.bat";    DestDir: "{app}"; DestName: "SaveSettings.bat";    Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension skipifsourcedoesntexist
@@ -107,6 +107,9 @@ Source: "setup\builds\zlibwapi.dll"; DestDir: "{app}";         DestName: "zlibwa
 #elif PlatformName == "x64"
 Source: "setup\builds\zlibwapi_x64.dll"; DestDir: "{app}";         DestName: "zlibwapi.dll"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 #endif
+
+; HashLib
+Source: "HashLib\{#PlatformName}\{#ConfigurationName}\HashLib.dll"; DestDir: "{app}"; DestName: "HashLib.dll"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 
 ; SQLite
 Source: "sqlite3\{#PlatformName}\{#ConfigurationName}\sqlite3.dll"; DestDir: "{app}"; DestName: "sqlite3.dll"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
@@ -406,7 +409,7 @@ Root: HKCR; Subkey: "Shareaza.AVIThumb"; Flags: dontcreatekey deletekey
 Root: HKCR; Subkey: "Shareaza.AVIThumb.1"; Flags: dontcreatekey deletekey
 Root: HKCR; Subkey: "CLSID\{{17BF74FD-69AF-4BD5-A982-EA6DE6F3449C}"; Flags: dontcreatekey deletekey
 
-; Create TorrentAid default dir locations
+; Create TorrentWizard default dir locations
 Root: HKCU; Subkey: "Software\Shareaza\TorrentWizard\Folders"; ValueType: string; ValueName: "001.Path"; ValueData: "{userappdata}\Shareaza\Torrents"; Flags: createvalueifdoesntexist; Tasks: multiuser
 Root: HKCU; Subkey: "Software\Shareaza\TorrentWizard\Folders"; ValueType: string; ValueName: "Last"; ValueData: "{userappdata}\Shareaza\Torrents"; Flags: createvalueifdoesntexist; Tasks: multiuser
 Root: HKCU; Subkey: "Software\Shareaza\TorrentWizard\Folders"; ValueType: string; ValueName: "001.Path"; ValueData: "{app}\Torrents"; Flags: createvalueifdoesntexist; Tasks: not multiuser

@@ -1,0 +1,47 @@
+//
+// TORRENTWIZARD.RC2 - resources Microsoft Visual C++ does not edit directly
+//
+
+#ifdef APSTUDIO_INVOKED
+	#error this file is not editable by Microsoft Visual C++
+#endif //APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+// Add manually edited resources here...
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// RT_MANIFEST
+//
+
+#define IDR_MANIFEST 1 // 2 for a DLL
+
+IDR_MANIFEST RT_MANIFEST
+{
+    "<assembly xmlns=""urn:schemas-microsoft-com:asm.v1"" manifestVersion=""1.0"">
+       <assemblyIdentity type=""win32"" name=""Shareaza.TorrentWizard"" version=""1.0.0.7""
+#ifdef WIN64
+		 processorArchitecture=""amd64""
+#else
+	     processorArchitecture=""x86""
+#endif
+		 publicKeyToken=""dfbe2673baf698eb"" />
+       <description>Shareaza Torrent Wizard</description>
+       <dependency>
+         <dependentAssembly>
+           <assemblyIdentity type=""win32"" name=""Microsoft.Windows.Common-Controls"" version=""6.0.0.0"" processorArchitecture=""*"" publicKeyToken=""6595b64144ccf1df"" language=""*"" />
+         </dependentAssembly>
+       </dependency>
+       <asmv2:trustInfo xmlns:asmv2=""urn:schemas-microsoft-com:asm.v2"">
+         <asmv2:security>
+           <asmv2:requestedPrivileges>
+             <asmv2:requestedExecutionLevel level=""asInvoker"" uiAccess=""false"" />
+           </asmv2:requestedPrivileges>
+         </asmv2:security>
+       </asmv2:trustInfo>
+     </assembly>"
+}
+
+/////////////////////////////////////////////////////////////////////////////

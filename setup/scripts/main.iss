@@ -387,7 +387,7 @@ Root: HKCR; Subkey: "Shareaza.AVIThumb"; Flags: dontcreatekey deletekey
 Root: HKCR; Subkey: "Shareaza.AVIThumb.1"; Flags: dontcreatekey deletekey
 Root: HKCR; Subkey: "CLSID\{{17BF74FD-69AF-4BD5-A982-EA6DE6F3449C}"; Flags: dontcreatekey deletekey
 
-; Create TorrentAid default dir locations
+; Create TorrentWizard default dir locations
 Root: HKCU; Subkey: "Software\Shareaza\TorrentWizard\Folders"; ValueType: string; ValueName: "001.Path"; ValueData: "{userappdata}\Shareaza\Torrents"; Flags: createvalueifdoesntexist; Tasks: multiuser
 Root: HKCU; Subkey: "Software\Shareaza\TorrentWizard\Folders"; ValueType: string; ValueName: "Last"; ValueData: "{userappdata}\Shareaza\Torrents"; Flags: createvalueifdoesntexist; Tasks: multiuser
 Root: HKCU; Subkey: "Software\Shareaza\TorrentWizard\Folders"; ValueType: string; ValueName: "001.Path"; ValueData: "{app}\Torrents"; Flags: createvalueifdoesntexist; Tasks: not multiuser

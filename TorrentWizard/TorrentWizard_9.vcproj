@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8,00"
+	Version="9,00"
 	Name="TorrentWizard"
-	ProjectGUID="{2EFD2DB3-DC1D-4D81-9488-EAFBBB87471D}"
+	ProjectGUID="{F02EDE36-E2AC-40E8-B6DC-76B1D53F9A5A}"
 	RootNamespace="TorrentWizard"
+	Keyword="MFCProj"
+	TargetFrameworkVersion="131072"
 	>
 	<Platforms>
 		<Platform
@@ -15,29 +17,24 @@
 		/>
 	</Platforms>
 	<ToolFiles>
-		<DefaultToolFile
-			FileName="masm.rules"
-		/>
 	</ToolFiles>
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)\"
-			IntermediateDirectory="$(OutDir)$(ProjectName)"
+			OutputDirectory="$(PlatformName)\$(ConfigurationName)"
+			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
 			ConfigurationType="1"
 			UseOfMFC="1"
-			UseOfATL="1"
+			UseOfATL="0"
 			CharacterSet="1"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
+				Description="Get HashLib DLL..."
+				CommandLine="copy /b /y &quot;..\HashLib\$(PlatformName)\$(ConfigurationName)\HashLib.dll&quot; &quot;$(TargetDir)&quot;"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
-			/>
-			<Tool
-				Name="MASM"
-				WarningLevel="4"
 			/>
 			<Tool
 				Name="VCXMLDataGeneratorTool"
@@ -47,20 +44,26 @@
 			/>
 			<Tool
 				Name="VCMIDLTool"
+				PreprocessorDefinitions="_DEBUG"
+				MkTypLibCompatible="true"
+				SuppressStartupBanner="true"
+				TargetEnvironment="1"
+				TypeLibraryName="$(ConfigurationName)/TorrentWizard.tlb"
+				HeaderFileName=""
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_CRT_SECURE_NO_DEPRECATE"
-				MinimalRebuild="true"
+				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_CRT_NONSTDC_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_SCL_SECURE_NO_WARNINGS"
 				BasicRuntimeChecks="3"
-				SmallerTypeCheck="true"
 				RuntimeLibrary="1"
+				EnableFunctionLevelLinking="true"
 				RuntimeTypeInfo="false"
 				UsePrecompiledHeader="2"
-				ProgramDataBaseFileName="$(TargetDir)$(TargetName).pdb"
+				PrecompiledHeaderThrough="StdAfx.h"
+				PrecompiledHeaderFile="$(IntDir)/$(TargetName).pch"
 				WarningLevel="4"
-				Detect64BitPortabilityProblems="true"
+				SuppressStartupBanner="true"
 				DebugInformationFormat="4"
 			/>
 			<Tool
@@ -76,20 +79,26 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="version.lib"
-				OutputFile="$(OutDir)$(ProjectName).exe"
+				LinkIncremental="2"
+				GenerateManifest="false"
+				IgnoreDefaultLibraryNames=""
 				GenerateDebugInformation="true"
+				SubSystem="2"
+				TargetMachine="1"
 			/>
 			<Tool
 				Name="VCALinkTool"
 			/>
 			<Tool
 				Name="VCManifestTool"
+				InputResourceManifests="$(TargetPath)"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
 			/>
 			<Tool
 				Name="VCBscMakeTool"
+				OutputFile=""
 			/>
 			<Tool
 				Name="VCFxCopTool"
@@ -98,29 +107,25 @@
 				Name="VCAppVerifierTool"
 			/>
 			<Tool
-				Name="VCWebDeploymentTool"
-			/>
-			<Tool
 				Name="VCPostBuildEventTool"
 			/>
 		</Configuration>
 		<Configuration
 			Name="Debug|x64"
-			OutputDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)\"
-			IntermediateDirectory="$(OutDir)$(ProjectName)"
+			OutputDirectory="$(PlatformName)\$(ConfigurationName)"
+			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
 			ConfigurationType="1"
 			UseOfMFC="1"
-			UseOfATL="1"
+			UseOfATL="0"
 			CharacterSet="1"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
+				Description="Get HashLib DLL..."
+				CommandLine="copy /b /y &quot;..\HashLib\$(PlatformName)\$(ConfigurationName)\HashLib.dll&quot; &quot;$(TargetDir)&quot;"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
-			/>
-			<Tool
-				Name="MASM"
 			/>
 			<Tool
 				Name="VCXMLDataGeneratorTool"
@@ -135,14 +140,13 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				PreprocessorDefinitions="WIN64;_DEBUG;_WINDOWS;_CRT_SECURE_NO_DEPRECATE"
-				MinimalRebuild="true"
+				PreprocessorDefinitions="WIN64;_DEBUG;_WINDOWS;_CRT_NONSTDC_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_SCL_SECURE_NO_WARNINGS"
 				BasicRuntimeChecks="3"
-				SmallerTypeCheck="true"
 				RuntimeLibrary="1"
 				RuntimeTypeInfo="false"
 				UsePrecompiledHeader="2"
-				ProgramDataBaseFileName="$(TargetDir)$(TargetName).pdb"
+				PrecompiledHeaderThrough="StdAfx.h"
+				PrecompiledHeaderFile="$(IntDir)/$(TargetName).pch"
 				WarningLevel="4"
 				DebugInformationFormat="3"
 			/>
@@ -159,8 +163,11 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="version.lib"
-				OutputFile="$(OutDir)$(ProjectName).exe"
+				LinkIncremental="2"
+				GenerateManifest="false"
+				IgnoreDefaultLibraryNames=""
 				GenerateDebugInformation="true"
+				SubSystem="2"
 				TargetMachine="17"
 			/>
 			<Tool
@@ -168,12 +175,14 @@
 			/>
 			<Tool
 				Name="VCManifestTool"
+				InputResourceManifests="$(TargetPath)"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
 			/>
 			<Tool
 				Name="VCBscMakeTool"
+				OutputFile=""
 			/>
 			<Tool
 				Name="VCFxCopTool"
@@ -182,31 +191,26 @@
 				Name="VCAppVerifierTool"
 			/>
 			<Tool
-				Name="VCWebDeploymentTool"
-			/>
-			<Tool
 				Name="VCPostBuildEventTool"
 			/>
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)\"
-			IntermediateDirectory="$(OutDir)$(ProjectName)"
+			OutputDirectory="$(PlatformName)\$(ConfigurationName)"
+			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
 			ConfigurationType="1"
-			UseOfMFC="2"
-			UseOfATL="2"
+			UseOfMFC="1"
+			UseOfATL="0"
 			CharacterSet="1"
 			WholeProgramOptimization="1"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
+				Description="Get HashLib DLL..."
+				CommandLine="copy /b /y &quot;..\HashLib\$(PlatformName)\$(ConfigurationName)\HashLib.dll&quot; &quot;$(TargetDir)&quot;"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
-			/>
-			<Tool
-				Name="MASM"
-				WarningLevel="2"
 			/>
 			<Tool
 				Name="VCXMLDataGeneratorTool"
@@ -219,15 +223,21 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_CRT_SECURE_NO_DEPRECATE"
-				MinimalRebuild="true"
-				RuntimeLibrary="2"
+				Optimization="3"
+				InlineFunctionExpansion="2"
+				EnableIntrinsicFunctions="true"
+				FavorSizeOrSpeed="1"
+				OmitFramePointers="true"
+				EnableFiberSafeOptimizations="true"
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_CRT_NONSTDC_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_SCL_SECURE_NO_WARNINGS"
+				StringPooling="true"
+				RuntimeLibrary="0"
 				RuntimeTypeInfo="false"
 				UsePrecompiledHeader="2"
-				ProgramDataBaseFileName="$(TargetDir)$(TargetName).pdb"
+				PrecompiledHeaderThrough="StdAfx.h"
+				PrecompiledHeaderFile="$(IntDir)/$(TargetName).pch"
 				WarningLevel="4"
-				Detect64BitPortabilityProblems="true"
-				DebugInformationFormat="3"
+				SuppressStartupBanner="true"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -242,23 +252,27 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="version.lib"
-				OutputFile="$(OutDir)$(ProjectName).exe"
-				GenerateDebugInformation="true"
+				GenerateManifest="false"
+				IgnoreDefaultLibraryNames=""
+				SubSystem="2"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
-				OptimizeForWindows98="1"
+				SetChecksum="true"
+				TargetMachine="1"
 			/>
 			<Tool
 				Name="VCALinkTool"
 			/>
 			<Tool
 				Name="VCManifestTool"
+				InputResourceManifests="$(TargetPath)"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
 			/>
 			<Tool
 				Name="VCBscMakeTool"
+				OutputFile=""
 			/>
 			<Tool
 				Name="VCFxCopTool"
@@ -267,30 +281,26 @@
 				Name="VCAppVerifierTool"
 			/>
 			<Tool
-				Name="VCWebDeploymentTool"
-			/>
-			<Tool
 				Name="VCPostBuildEventTool"
 			/>
 		</Configuration>
 		<Configuration
 			Name="Release|x64"
-			OutputDirectory="$(SolutionDir)$(ConfigurationName)$(PlatformName)\"
-			IntermediateDirectory="$(OutDir)$(ProjectName)"
+			OutputDirectory="$(PlatformName)\$(ConfigurationName)"
+			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
 			ConfigurationType="1"
-			UseOfMFC="2"
-			UseOfATL="2"
+			UseOfMFC="1"
+			UseOfATL="0"
 			CharacterSet="1"
 			WholeProgramOptimization="1"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
+				Description="Get HashLib DLL..."
+				CommandLine="copy /b /y &quot;..\HashLib\$(PlatformName)\$(ConfigurationName)\HashLib.dll&quot; &quot;$(TargetDir)&quot;"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
-			/>
-			<Tool
-				Name="MASM"
 			/>
 			<Tool
 				Name="VCXMLDataGeneratorTool"
@@ -304,14 +314,20 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				PreprocessorDefinitions="WIN64;NDEBUG;_WINDOWS;_CRT_SECURE_NO_DEPRECATE"
-				MinimalRebuild="true"
-				RuntimeLibrary="2"
+				Optimization="3"
+				InlineFunctionExpansion="2"
+				EnableIntrinsicFunctions="true"
+				FavorSizeOrSpeed="1"
+				OmitFramePointers="true"
+				EnableFiberSafeOptimizations="true"
+				PreprocessorDefinitions="WIN64;NDEBUG;_WINDOWS;_CRT_NONSTDC_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_SCL_SECURE_NO_WARNINGS"
+				StringPooling="true"
+				RuntimeLibrary="0"
 				RuntimeTypeInfo="false"
 				UsePrecompiledHeader="2"
-				ProgramDataBaseFileName="$(TargetDir)$(TargetName).pdb"
+				PrecompiledHeaderThrough="StdAfx.h"
+				PrecompiledHeaderFile="$(IntDir)/$(TargetName).pch"
 				WarningLevel="4"
-				DebugInformationFormat="3"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -326,11 +342,12 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="version.lib"
-				OutputFile="$(OutDir)$(ProjectName).exe"
-				GenerateDebugInformation="true"
+				GenerateManifest="false"
+				IgnoreDefaultLibraryNames=""
+				SubSystem="2"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
-				OptimizeForWindows98="1"
+				SetChecksum="true"
 				TargetMachine="17"
 			/>
 			<Tool
@@ -338,21 +355,20 @@
 			/>
 			<Tool
 				Name="VCManifestTool"
+				InputResourceManifests="$(TargetPath)"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
 			/>
 			<Tool
 				Name="VCBscMakeTool"
+				OutputFile=""
 			/>
 			<Tool
 				Name="VCFxCopTool"
 			/>
 			<Tool
 				Name="VCAppVerifierTool"
-			/>
-			<Tool
-				Name="VCWebDeploymentTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
@@ -368,103 +384,51 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath="..\TorrentWizard\BENode.cpp"
+				RelativePath="BENode.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\TorrentWizard\Buffer.cpp"
+				RelativePath=".\Buffer.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\TorrentWizard\CmdLine.cpp"
+				RelativePath="CmdLine.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\TorrentWizard\ED2K.cpp"
+				RelativePath="PageCommandline.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\TorrentWizard\MD4.cpp"
+				RelativePath="PageComment.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\TorrentWizard\MD4_asm.asm"
-				>
-					<FileConfiguration
-						Name="Debug|x64"
-						ExcludedFromBuild="true"
-						>
-						<Tool
-							Name="MASM"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|x64"
-						ExcludedFromBuild="true"
-						>
-						<Tool
-							Name="MASM"
-						/>
-					</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\TorrentWizard\PageCommandline.cpp"
+				RelativePath="PageFinished.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\TorrentWizard\PageComment.cpp"
+				RelativePath="PageOutput.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\TorrentWizard\PageFinished.cpp"
+				RelativePath="PagePackage.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\TorrentWizard\PageOutput.cpp"
+				RelativePath="PageSingle.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\TorrentWizard\PagePackage.cpp"
+				RelativePath="PageTracker.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\TorrentWizard\PageSingle.cpp"
+				RelativePath="PageWelcome.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\TorrentWizard\PageTracker.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\TorrentWizard\PageWelcome.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\TorrentWizard\SHA1.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\TorrentWizard\SHA_asm.asm"
-				>
-					<FileConfiguration
-						Name="Debug|x64"
-						ExcludedFromBuild="true"
-						>
-						<Tool
-							Name="MASM"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|x64"
-						ExcludedFromBuild="true"
-						>
-						<Tool
-							Name="MASM"
-						/>
-					</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\TorrentWizard\StdAfx.cpp"
+				RelativePath="StdAfx.cpp"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
@@ -500,15 +464,15 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\TorrentWizard\TorrentBuilder.cpp"
+				RelativePath="TorrentBuilder.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\TorrentWizard\TorrentWizard.cpp"
+				RelativePath="TorrentWizard.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\TorrentWizard\WizardSheet.cpp"
+				RelativePath="WizardSheet.cpp"
 				>
 			</File>
 		</Filter>
@@ -518,79 +482,67 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath="..\TorrentWizard\BENode.h"
+				RelativePath="BENode.h"
 				>
 			</File>
 			<File
-				RelativePath="..\TorrentWizard\Buffer.h"
+				RelativePath=".\Buffer.h"
 				>
 			</File>
 			<File
-				RelativePath="..\TorrentWizard\CmdLine.h"
+				RelativePath="CmdLine.h"
 				>
 			</File>
 			<File
-				RelativePath="..\TorrentWizard\ED2K.h"
+				RelativePath="PageCommandline.h"
 				>
 			</File>
 			<File
-				RelativePath="..\TorrentWizard\MD4.h"
+				RelativePath="PageComment.h"
 				>
 			</File>
 			<File
-				RelativePath="..\TorrentWizard\PageCommandline.h"
+				RelativePath="PageFinished.h"
 				>
 			</File>
 			<File
-				RelativePath="..\TorrentWizard\PageComment.h"
+				RelativePath="PageOutput.h"
 				>
 			</File>
 			<File
-				RelativePath="..\TorrentWizard\PageFinished.h"
+				RelativePath="PagePackage.h"
 				>
 			</File>
 			<File
-				RelativePath="..\TorrentWizard\PageOutput.h"
+				RelativePath="PageSingle.h"
 				>
 			</File>
 			<File
-				RelativePath="..\TorrentWizard\PagePackage.h"
+				RelativePath="PageTracker.h"
 				>
 			</File>
 			<File
-				RelativePath="..\TorrentWizard\PageSingle.h"
+				RelativePath="PageWelcome.h"
 				>
 			</File>
 			<File
-				RelativePath="..\TorrentWizard\PageTracker.h"
+				RelativePath="resource.h"
 				>
 			</File>
 			<File
-				RelativePath="..\TorrentWizard\PageWelcome.h"
+				RelativePath="StdAfx.h"
 				>
 			</File>
 			<File
-				RelativePath="..\TorrentWizard\resource.h"
+				RelativePath="TorrentBuilder.h"
 				>
 			</File>
 			<File
-				RelativePath="..\TorrentWizard\SHA1.h"
+				RelativePath="TorrentWizard.h"
 				>
 			</File>
 			<File
-				RelativePath="..\TorrentWizard\StdAfx.h"
-				>
-			</File>
-			<File
-				RelativePath="..\TorrentWizard\TorrentBuilder.h"
-				>
-			</File>
-			<File
-				RelativePath="..\TorrentWizard\TorrentWizard.h"
-				>
-			</File>
-			<File
-				RelativePath="..\TorrentWizard\WizardSheet.h"
+				RelativePath="WizardSheet.h"
 				>
 			</File>
 		</Filter>
@@ -600,27 +552,27 @@
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
 			>
 			<File
-				RelativePath="..\TorrentWizard\Res\Hand.cur"
+				RelativePath="res\Hand.cur"
 				>
 			</File>
 			<File
-				RelativePath="..\TorrentWizard\Res\TorrentWizard.ico"
+				RelativePath="res\TorrentWizard.ico"
 				>
 			</File>
 			<File
-				RelativePath="..\TorrentWizard\TorrentWizard.rc"
+				RelativePath="TorrentWizard.rc"
 				>
 			</File>
 			<File
-				RelativePath="..\TorrentWizard\Res\TorrentWizard.rc2"
+				RelativePath="Res\TorrentWizard.rc2"
 				>
 			</File>
 			<File
-				RelativePath="..\TorrentWizard\Res\Uninstall.ICO"
+				RelativePath="Res\Uninstall.ICO"
 				>
 			</File>
 			<File
-				RelativePath="..\TorrentWizard\Res\Wizard.bmp"
+				RelativePath="Res\Wizard.bmp"
 				>
 			</File>
 		</Filter>
