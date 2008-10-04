@@ -54,9 +54,46 @@ void CED2K::Clear()
 	m_nCurByte = 0;
 }
 
+void CED2K::SetSize(uint32 nSize)
+{
+	Clear();
+
+	m_nList = nSize;
+}
+
+uint32 CED2K::GetSize() const
+{
+	return m_nList;
+}
+
+void CED2K::Save(uchar* pBuf) const
+{
+	if ( m_nList )
+	{
+		CopyMemory( pBuf, &m_pRoot[ 0 ], sizeof( CMD4::Digest ) );
+		pBuf += sizeof( CMD4::Digest );
+		if ( m_nList > 1 )
+			CopyMemory( pBuf, m_pList, sizeof( CMD4::Digest ) * m_nList );
+	}
+}
+
+void CED2K::Load(const uchar* pBuf)
+{
+	if ( m_nList )
+	{
+		CopyMemory( &m_pRoot[ 0 ], pBuf, sizeof( CMD4::Digest ) );
+		pBuf += sizeof( CMD4::Digest );
+		m_pList = new CMD4::Digest[ m_nList ];
+		if ( m_nList > 1 )
+			CopyMemory( m_pList, pBuf, sizeof( CMD4::Digest ) * m_nList );
+		else if ( m_nList == 1 )
+			std::copy( &m_pRoot[ 0 ], &m_pRoot[ 4 ], &m_pList[ 0 ][ 0 ] );
+	}
+}
+
 uint32 CED2K::GetSerialSize() const
 {
-	uint32 nSize = 4;
+	uint32 nSize = 0;
     if ( m_nList > 0 ) nSize += sizeof( CMD4::Digest );
     if ( m_nList > 1 ) nSize += sizeof( CMD4::Digest ) * m_nList;
 	return nSize;
@@ -98,7 +135,7 @@ void CED2K::AddToFile(LPCVOID pInput, uint32 nLength)
 		if ( m_nCurByte >= ED2K_PART_SIZE )
 		{
 			m_pSegment.Finish();
-			m_pSegment.GetHash( m_pList[ m_nCurHash ] );
+			m_pSegment.GetHash( (uchar*)&m_pList[ m_nCurHash ][ 0 ] );
 			m_pSegment.Reset();
 			m_nCurHash++;
 			m_nCurByte = 0;
@@ -114,13 +151,13 @@ BOOL CED2K::FinishFile()
 	if ( !m_bNullBlock && m_nCurHash < m_nList )
 	{
 		m_pSegment.Finish();
-		m_pSegment.GetHash( m_pList[ m_nCurHash++ ] );
+		m_pSegment.GetHash( (uchar*)&m_pList[ m_nCurHash++ ][ 0 ] );
 	}
 
 	if ( m_bNullBlock && m_nCurHash <= m_nList )
 	{
 		m_pSegment.Finish();
-		m_pSegment.GetHash( m_pList[ m_nCurHash ] );
+		m_pSegment.GetHash( (uchar*)&m_pList[ m_nCurHash ][ 0 ] );
 	}
 
 	if ( m_nList == 1 )
@@ -130,14 +167,14 @@ BOOL CED2K::FinishFile()
 	else if ( m_nList == 0 )
 	{
 		m_pSegment.Finish();
-		m_pSegment.GetHash( m_pRoot );
+		m_pSegment.GetHash( (uchar*)&m_pRoot[ 0 ] );
 	}
 	else
 	{
 		CMD4 pOverall;
         pOverall.Add( m_pList, sizeof( CMD4::Digest ) * m_nList );
 		pOverall.Finish();
-		pOverall.GetHash( m_pRoot );
+		pOverall.GetHash( (uchar*)&m_pRoot[ 0 ] );
 	}
 
 	return TRUE;
@@ -173,7 +210,7 @@ BOOL CED2K::FinishBlockTest(uint32 nBlock)
     CMD4::Digest pMD4;
 
 	m_pSegment.Finish();
-	m_pSegment.GetHash( pMD4 );
+	m_pSegment.GetHash( (uchar*)&pMD4[ 0 ] );
 	
     return std::equal( &pMD4[ 0 ], &pMD4[ 4 ], &m_pList[ nBlock ][ 0 ] );
 }
@@ -195,6 +232,11 @@ BOOL CED2K::ToBytes(BYTE** ppOutput, uint32* pnOutput)
 LPCVOID CED2K::GetRawPtr() const
 {
 	return (LPCVOID)m_pList;
+}
+
+void CED2K::GetRoot(__in_bcount(16) uchar* pHash) const
+{
+	std::copy( &m_pRoot[ 0 ], &m_pRoot[ 4 ], (uint32*)pHash );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -233,7 +275,7 @@ BOOL CED2K::FromBytes(BYTE* pOutput, uint32 nOutput, uint64 nSize)
 		CMD4 pOverall;
         pOverall.Add( m_pList, sizeof( CMD4::Digest ) * m_nList );
 		pOverall.Finish();
-		pOverall.GetHash( m_pRoot );
+		pOverall.GetHash( (uchar*)&m_pRoot[ 0 ] );
 	}
 
 	return TRUE;
@@ -255,7 +297,7 @@ BOOL CED2K::CheckIntegrity()
 		
         pOverall.Add( m_pList, sizeof( CMD4::Digest ) * m_nList );
 		pOverall.Finish();
-		pOverall.GetHash( pRoot );
+		pOverall.GetHash( (uchar*)&pRoot[ 0 ] );
 		
 		return std::equal( &m_pRoot[ 0 ], &m_pRoot[ 4 ], &pRoot[ 0 ] );
 	}

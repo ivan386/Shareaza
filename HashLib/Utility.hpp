@@ -21,7 +21,6 @@
 
 #pragma once
 
-#include <algorithm>
 #include <boost/cstdint.hpp>
 
 //! \brief plattfrom independent signed 8 bit integer type.
@@ -236,19 +235,19 @@ inline void for_each_if(InputIterator first, InputIterator last,
 template<typename T> inline T rotateLeft(T value, uint8 shift);
 template<> inline uint8 rotateLeft(uint8 value, uint8 shift)
 {
-	return int8( value << shift | value >> ( 8 - shift ) );
+	return uint8( value << shift | value >> ( 8 - shift ) );
 }
 template<> inline uint16 rotateLeft(uint16 value, uint8 shift)
 {
-	return int16( value << shift | value >> ( 16 - shift ) );
+	return uint16( value << shift | value >> ( 16 - shift ) );
 }
 template<> inline uint32 rotateLeft(uint32 value, uint8 shift)
 {
-	return value << shift | value >> ( 32 - shift );
+	return uint32( value << shift | value >> ( 32 - shift ) );
 }
 template<> inline uint64 rotateLeft(uint64 value, uint8 shift)
 {
-	return value << shift | value >> ( 64 - shift );
+	return uint64( value << shift | value >> ( 64 - shift ) );
 }
 
 //! \brief Determines the highest bit set in the argument.

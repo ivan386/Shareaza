@@ -40,6 +40,13 @@ CSHA::CSHA()
 	Reset();
 }
 
+void CSHA::GetHash(__in_bcount(20) uchar* pHash) const
+{
+	std::transform( m_State.m_nState,
+		m_State.m_nState + sizeof( m_State.m_nState ) / sizeof( m_State.m_nState[ 0 ] ),
+		(uint32*)pHash, transformToBE< uint32 > );
+}
+
 void CSHA::Reset()
 {
 	m_State.m_nCount = 0;

@@ -25,8 +25,6 @@
 #define HASHLIB_API __declspec(dllimport)
 #endif
 
-// define HASHLIB_USE_ASM for assembler use (several times faster)
-
 #include "Utility.hpp"
 
 #include "SHA.h"

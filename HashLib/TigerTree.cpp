@@ -34,6 +34,20 @@ typedef union
 	uint64	w[3];
 } TIGEROOT;
 
+struct CSectionLock
+{
+	CSectionLock( CRITICAL_SECTION* pSection ) :
+		m_pSection( pSection )
+	{
+		EnterCriticalSection( m_pSection );
+	}
+	~CSectionLock()
+	{
+		LeaveCriticalSection( m_pSection );
+	}
+	CRITICAL_SECTION* m_pSection;
+};
+
 CTigerNode::CTigerNode() :
 	bValid( false )
 {
@@ -670,6 +684,11 @@ CTigerTree::CTigerTree() :
 	m_nHeight		( 0 )
 ,	m_pNode			( NULL )
 ,	m_nNodeCount	( 0 )
+,	m_nNodeBase		( 0 )
+,	m_nNodePos		( 0 )
+,	m_nBaseUsed		( 0 )
+,	m_nBlockCount	( 0 )
+,	m_nBlockPos		( 0 )
 ,	m_pStackBase	( NULL )
 ,	m_pStackTop		( NULL )
 {
@@ -680,7 +699,7 @@ CTigerTree::~CTigerTree()
 {
 	Clear();
 
-	if ( m_pStackBase != NULL ) delete [] m_pStackBase;
+	delete [] m_pStackBase;
 
 	DeleteCriticalSection( &m_pSection );
 }
@@ -757,54 +776,46 @@ void CTigerTree::Clear()
 {
 	CSectionLock oLock( &m_pSection );
 
-	if ( m_pNode != NULL ) delete [] m_pNode;
+	delete [] m_pNode;
 
 	m_nHeight		= 0;
 	m_pNode			= NULL;
 	m_nNodeCount	= 0;
 }
 
-void CTigerTree::Serialize(BOOL bStoring, uchar* pBuf)
+void CTigerTree::Save(uchar* pBuf) const
 {
 	CSectionLock oLock( &m_pSection );
 
-	if ( bStoring )
+	if ( m_nHeight )
 	{
-		if ( m_nHeight  )
+		CTigerNode* pNode = m_pNode;
+		for ( DWORD nStep = m_nNodeCount ; nStep ; nStep--, pNode++ )
 		{
-			CTigerNode* pNode = m_pNode;
-			for ( DWORD nStep = m_nNodeCount ; nStep ; nStep--, pNode++ )
-			{
-				CopyMemory( pBuf, pNode->value, TIGER_SIZE );
-				pBuf += TIGER_SIZE;
-				*(bool*)pBuf = pNode->bValid;
-				pBuf += sizeof( bool );
-			}
+			CopyMemory( pBuf, pNode->value, TIGER_SIZE );
+			pBuf += TIGER_SIZE;
+			*(bool*)pBuf = pNode->bValid;
+			pBuf += sizeof( bool );
 		}
 	}
-	else
+}
+
+void CTigerTree::Load(const uchar* pBuf)
+{
+	CSectionLock oLock( &m_pSection );
+
+	if ( m_nHeight )
 	{
-		if ( m_nHeight )
+		CTigerNode* pNode = new CTigerNode[ m_nNodeCount ];
+		if ( pNode )
 		{
-			m_nNodeCount = 1;
-			for ( DWORD nStep = m_nHeight ; nStep ; nStep-- )
+			m_pNode = pNode;
+			for ( DWORD nStep = m_nNodeCount ; nStep ; nStep--, pNode++ )
 			{
-				m_nNodeCount *= 2;
-				if ( m_nNodeCount > 0xFFFFFFFF / 2 )
-					return;
-			}
-			m_nNodeCount --;
-			CTigerNode* pNode = new CTigerNode[ m_nNodeCount ];
-			if ( pNode )
-			{
-				m_pNode = pNode;
-				for ( DWORD nStep = m_nNodeCount ; nStep ; nStep--, pNode++ )
-				{
-					CopyMemory( pNode->value, pBuf, TIGER_SIZE );
-					pBuf += TIGER_SIZE;
-					pNode->bValid = *(bool*)pBuf;
-					pBuf += sizeof( bool );
-				}
+				CopyMemory( pNode->value, pBuf, TIGER_SIZE );
+				pBuf += TIGER_SIZE;
+				pNode->bValid = *(bool*)pBuf;
+				pBuf += sizeof( bool );
 			}
 		}
 	}
@@ -815,14 +826,36 @@ void CTigerTree::SetHeight(uint32 nHeight)
 	CSectionLock oLock( &m_pSection );
 
 	Clear();
+
 	m_nHeight = nHeight;
+	m_nNodeCount = 1;
+	for ( DWORD nStep = m_nHeight ; nStep ; nStep-- )
+	{
+		m_nNodeCount *= 2;
+		if ( m_nNodeCount > 0xFFFFFFFF / 2 )
+		{
+			m_nHeight		= 0;
+			m_nNodeCount	= 0;
+			return;
+		}
+	}
+	m_nNodeCount --;
 }
 
 uint32 CTigerTree::GetSerialSize() const
 {
 	CSectionLock oLock( &m_pSection );
 
-	return 4 + m_nNodeCount * ( TIGER_SIZE + 1 );
+	return m_nNodeCount * ( TIGER_SIZE + 1 );
+}
+
+BOOL CTigerTree::GetRoot(__in_bcount(24) uchar* pHash) const
+{
+	CSectionLock oLock( &m_pSection );
+	if ( m_pNode == NULL )
+		return FALSE;
+	std::copy( &m_pNode->value[ 0 ], &m_pNode->value[ 3 ], (uint64*)pHash );
+	return TRUE;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -910,7 +943,7 @@ BOOL CTigerTree::FinishFile()
 
 	if ( m_nNodePos > m_nNodeBase ) return FALSE;
 
-	if ( m_pStackBase != NULL ) delete [] m_pStackBase;
+	delete [] m_pStackBase;
 
 	m_pStackBase	= NULL;
 	m_pStackTop		= NULL;

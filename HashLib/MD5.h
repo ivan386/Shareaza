@@ -25,6 +25,8 @@ class HASHLIB_API CMD5
 {
 public:
 	CMD5();
+	virtual ~CMD5() {}
+
 	void Reset();
 	void Add(const void* pData, size_t nLength);
 	void Finish();
@@ -36,13 +38,7 @@ public:
 		uint32 data[ 4 ];
 	};
 
-	template< typename T >
-	inline void GetHash(T& oHash) const
-	{
-		std::transform( m_State.m_nState,
-			m_State.m_nState + sizeof( m_State.m_nState ) / sizeof( m_State.m_nState[ 0 ] ),
-			&oHash[ 0 ], transformToLE< uint32 > );
-	}
+	void GetHash(__in_bcount(16) uchar* pHash) const;
 
 private:
 	struct MD5State

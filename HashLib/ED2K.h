@@ -30,14 +30,12 @@ public:
 	virtual ~CED2K();
 
 	void	Clear();
+	void	Save(uchar* pBuf) const;
+	void	Load(const uchar* pBuf);
 	uint32	GetSerialSize() const;
 	LPCVOID	GetRawPtr() const;
 
-	template< typename T >
-	inline void GetRoot(T& oHash) const
-	{
-		std::copy( &m_pRoot[ 0 ], &m_pRoot[ 4 ], &oHash[ 0 ] );
-	}
+	void	GetRoot(__in_bcount(16) uchar* pHash) const;
 
 	template< typename T >
 	inline void FromRoot(const T& oHash)
@@ -62,6 +60,8 @@ public:
 	BOOL	CheckIntegrity();
 	
 	BOOL	IsAvailable() const;
+	void	SetSize(uint32 nSize);
+	uint32	GetSize() const;
 	uint32	GetBlockCount() const;
 
 private:

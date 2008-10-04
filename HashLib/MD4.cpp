@@ -40,6 +40,13 @@ CMD4::CMD4()
 	Reset();
 }
 
+void CMD4::GetHash(__in_bcount(16) uchar* pHash) const
+{
+	std::transform( m_State.m_nState,
+		m_State.m_nState + sizeof( m_State.m_nState ) / sizeof( m_State.m_nState[ 0 ] ),
+		(uint32*)pHash, transformToLE< uint32 > );
+}
+
 void CMD4::Reset()
 {
 	m_State.m_nCount = 0;
