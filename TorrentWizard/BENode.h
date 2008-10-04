@@ -23,7 +23,8 @@
 
 class CBuffer;
 
-class CBENode  
+
+class CBENode
 {
 // Construction
 public:
@@ -35,9 +36,9 @@ public:
 	int			m_nType;
 	LPVOID		m_pValue;
 	QWORD		m_nValue;
-	
+
 	enum { beNull, beString, beInt, beList, beDict };
-	
+
 // Operations
 public:
 	void		Clear();
@@ -55,20 +56,20 @@ public:
 		if ( this == NULL ) return false;
 		return m_nType == nType;
 	}
-	
+
 	inline QWORD GetInt() const
 	{
 		if ( m_nType != beInt ) return 0;
 		return m_nValue;
 	}
-	
+
 	inline void SetInt(QWORD nValue)
 	{
 		Clear();
 		m_nType		= beInt;
 		m_nValue	= nValue;
 	}
-	
+
 	inline CString GetString() const
 	{
 		CString str;
@@ -107,10 +108,16 @@ public:
 
 	inline void SetString(LPCWSTR psz)
 	{
-		CW2A pszASCII( psz );
-		SetString( (LPCSTR)pszASCII, strlen(pszASCII), TRUE );
+		int nLength = WideCharToMultiByte( CP_UTF8, 0, psz, -1, NULL, 0, NULL, NULL );
+		if ( nLength > 0 )
+		{
+			CStringA str;
+			WideCharToMultiByte( CP_UTF8, 0, psz, -1, str.GetBuffer( nLength ), nLength, NULL, NULL );
+			str.ReleaseBuffer();
+			SetString( str, str.GetLength(), TRUE );
+		}
 	}
-	
+
 	inline void SetString(LPCVOID pString, size_t nLength, BOOL bNull = FALSE)
 	{
 		Clear();
@@ -119,18 +126,18 @@ public:
 		m_pValue	= new BYTE[ nLength + ( bNull ? 1 : 0 ) ];
 		CopyMemory( m_pValue, pString, nLength + ( bNull ? 1 : 0 ) );
 	}
-	
+
 	inline CBENode* Add(LPCSTR pszKey = NULL)
 	{
 		return Add( (LPBYTE)pszKey, pszKey != NULL ? strlen( pszKey ) : 0 );
 	}
-	
+
 	inline int GetCount() const
 	{
 		if ( m_nType != beList && m_nType != beDict ) return 0;
 		return (int)m_nValue;
 	}
-	
+
 	inline CBENode* GetNode(int nItem) const
 	{
 		if ( m_nType != beList && m_nType != beDict ) return NULL;
