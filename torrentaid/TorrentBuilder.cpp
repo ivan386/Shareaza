@@ -495,26 +495,26 @@ BOOL CTorrentBuilder::WriteOutput()
 	{
 		CSHA::Digest* pPieceSHA1 = new CSHA::Digest[ m_nPieceCount ];
 		for ( DWORD i = 0 ; i < m_nPieceCount; ++i )
-			m_pPieceSHA1[ i ].GetHash( pPieceSHA1[ i ] );
+			m_pPieceSHA1[ i ].GetHash( (uchar*)&pPieceSHA1[ i ][ 0 ] );
 		CBENode* pPieces = pInfo->Add( "pieces" );
 		pPieces->SetString( pPieceSHA1, m_nPieceCount * sizeof CSHA::Digest );
 		delete [] pPieceSHA1;
 	}
 	{
 		CSHA::Digest pDataSHA1;
-		m_oDataSHA1.GetHash( pDataSHA1 );
+		m_oDataSHA1.GetHash( (uchar*)&pDataSHA1[ 0 ] );
 		CBENode* pSHA1 = pInfo->Add( "sha1" );
 		pSHA1->SetString( &pDataSHA1, sizeof CSHA::Digest );
 	}
 	{
 		CMD4::Digest pDataED2K;
-		m_oDataED2K.GetRoot( pDataED2K );
+		m_oDataED2K.GetRoot( (uchar*)&pDataED2K[ 0 ] );
 		CBENode* pED2K = pInfo->Add( "ed2k" );
 		pED2K->SetString( &pDataED2K, sizeof CMD4::Digest );
 	}
 	{
 		CMD5::Digest pDataMD5;
-		m_oDataMD5.GetHash( pDataMD5 );
+		m_oDataMD5.GetHash( (uchar*)&pDataMD5[ 0 ] );
 		CBENode* pMD5 = pInfo->Add( "md5sum" );
 		pMD5->SetString( &pDataMD5, sizeof CMD5::Digest );
 	}	
@@ -593,19 +593,19 @@ BOOL CTorrentBuilder::WriteOutput()
 			}
 			{
 				CSHA::Digest pFileSHA1;
-				m_pFileSHA1[ nFile ].GetHash( pFileSHA1 );
+				m_pFileSHA1[ nFile ].GetHash( (uchar*)&pFileSHA1[ 0 ] );
 				CBENode* pSHA1 = pFile->Add( "sha1" );
 				pSHA1->SetString( &pFileSHA1, sizeof CSHA::Digest );
 			}
 			{
 				CMD4::Digest pFileED2K;
-				m_pFileED2K[ nFile ].GetRoot( pFileED2K );
+				m_pFileED2K[ nFile ].GetRoot( (uchar*)&pFileED2K[ 0 ] );
 				CBENode* pED2K = pFile->Add( "ed2k" );
 				pED2K->SetString( &pFileED2K, sizeof CMD4::Digest );
 			}
 			{
 				CMD5::Digest pFileMD5;
-				m_pFileMD5[ nFile ].GetHash( pFileMD5 );
+				m_pFileMD5[ nFile ].GetHash( (uchar*)&pFileMD5[ 0 ] );
 				CBENode* pMD5 = pFile->Add( "md5sum" );
 				pMD5->SetString( &pFileMD5, sizeof CMD5::Digest );
 			}
