@@ -432,7 +432,7 @@ BOOL CShareazaApp::InitInstance()
 
 	ProcessShellCommand( m_ocmdInfo );
 
-	afxMemDF = allocMemDF | delayFreeMemDF | checkAlwaysMemDF;
+//	afxMemDF = allocMemDF | delayFreeMemDF | checkAlwaysMemDF;
 
 	return TRUE;
 }
