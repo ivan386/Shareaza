@@ -188,6 +188,11 @@ CShareazaApp::CShareazaApp() :
 
 BOOL CShareazaApp::InitInstance()
 {
+	// Set Build Date
+	COleDateTime tCompileTime;
+	tCompileTime.ParseDateTime( _T(__DATE__), LOCALE_NOUSEROVERRIDE, 1033 );
+	m_sBuildDate = tCompileTime.Format( _T("%Y%m%d") );
+
 	CWinApp::InitInstance();
 
 	CWaitCursor pCursor;
@@ -283,11 +288,6 @@ BOOL CShareazaApp::InitInstance()
 
 	DDEServer.Create();
 	IEProtocol.Create();
-
-	// Set Build Date
-	COleDateTime tCompileTime;
-	tCompileTime.ParseDateTime( _T(__DATE__), LOCALE_NOUSEROVERRIDE, 1033 );
-	m_sBuildDate = tCompileTime.Format( _T("%Y%m%d") );
 
 	// ***********
 	//*
@@ -431,6 +431,8 @@ BOOL CShareazaApp::InitInstance()
 	m_bLive = TRUE;
 
 	ProcessShellCommand( m_ocmdInfo );
+
+	afxMemDF = allocMemDF | delayFreeMemDF | checkAlwaysMemDF;
 
 	return TRUE;
 }
