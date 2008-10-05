@@ -308,7 +308,7 @@
 			IntermediateDirectory="$(OutDir)$(ProjectName)"
 			ConfigurationType="2"
 			UseOfATL="2"
-			CharacterSet="2"
+			CharacterSet="1"
 			WholeProgramOptimization="1"
 			>
 			<Tool
