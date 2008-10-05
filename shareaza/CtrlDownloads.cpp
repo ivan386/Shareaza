@@ -110,9 +110,9 @@ CDownloadsCtrl::CDownloadsCtrl() :
 
 BOOL CDownloadsCtrl::Create(CWnd* pParentWnd, UINT nID)
 {
-	CRect rect( 0, 0, 0, 0 );
-	return CWnd::CreateEx( 0, NULL, _T("CDownloadsCtrl"), WS_CHILD | WS_CLIPSIBLINGS |
-		 WS_TABSTOP | WS_GROUP, rect, pParentWnd, nID );
+	CRect rc( 0, 0, 0, 0 );
+	return CWnd::CreateEx( 0, NULL, _T("CDownloadsCtrl"),
+		WS_CHILD | WS_CLIPSIBLINGS | WS_TABSTOP, rc, pParentWnd, nID );
 }
 
 BOOL CDownloadsCtrl::Update()
@@ -772,7 +772,9 @@ void CDownloadsCtrl::OnSize(UINT nType, int cx, int cy)
 	int nScroll = GetScrollPos( SB_HORZ );
 	m_wndHeader.SetWindowPos( NULL, -nScroll, 0, rcClient.right + nScroll, HEADER_HEIGHT, SWP_SHOWWINDOW );
 
-	CSingleLock pLock( &Transfers.m_pSection, TRUE );
+	CSingleLock pLock( &Transfers.m_pSection, FALSE );
+	if ( ! pLock.Lock( 250 ) )
+		return;
 
 	for ( POSITION posDownload = Downloads.GetIterator() ; posDownload ; )
 	{
@@ -2232,5 +2234,5 @@ int CDownloadsCtrl::GetExpandableColumnX() const
 
 UINT CDownloadsCtrl::OnGetDlgCode()
 {
-	return DLGC_WANTALLKEYS;
+	return DLGC_WANTARROWS;
 }
