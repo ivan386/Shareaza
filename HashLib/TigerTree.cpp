@@ -1038,11 +1038,12 @@ BOOL CTigerTree::FinishBlockTest(uint32 nBlock)
 //////////////////////////////////////////////////////////////////////
 // CTigerTree breadth-first serialize
 
-BOOL CTigerTree::ToBytes(uint8** pOutput, uint32* pnOutput, uint32 nHeight)
+BOOL CTigerTree::ToBytes(uint8** ppOutput, uint32* pnOutput, uint32 nHeight)
 {
 	CSectionLock oLock( &m_pSection );
 
-	if ( m_pNode == NULL ) return FALSE;
+	if ( m_pNode == NULL )
+		return FALSE;
 
 	if ( nHeight < 1 || nHeight > m_nHeight ) nHeight = m_nHeight;
 
@@ -1052,10 +1053,12 @@ BOOL CTigerTree::ToBytes(uint8** pOutput, uint32* pnOutput, uint32 nHeight)
 
 	nNodeCount	= min( nNodeCount, m_nNodeCount );
 	*pnOutput	= nNodeCount * TIGER_SIZE;
-	*pOutput	= new uint8[ *pnOutput ];
+	*ppOutput	= (uint8*)GlobalAlloc( GPTR, *pnOutput );
+	if ( ! *ppOutput )
+		return FALSE;
 
 	CTigerNode* pNode = m_pNode;
-	uint8* pOut = *pOutput;
+	uint8* pOut = *ppOutput;
 
 	for ( uint32 nNode = 0 ; nNode < nNodeCount ; nNode++, pNode++ )
 	{

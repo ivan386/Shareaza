@@ -55,7 +55,8 @@ public:
 	void	AddToTest(LPCVOID pInput, uint32 nLength);
 	BOOL	FinishBlockTest(uint32 nBlock);
 	
-	BOOL	ToBytes(BYTE** pOutput, uint32* pnOutput);
+	// To free ppOutput, use the GlobalFree function
+	BOOL	ToBytes(BYTE** ppOutput, uint32* pnOutput);
 	BOOL	FromBytes(BYTE* pOutput, uint32 nOutput, uint64 nSize = 0);
 	BOOL	CheckIntegrity();
 	

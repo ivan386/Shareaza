@@ -60,7 +60,8 @@ public:
 	void	AddToTest(const void* pInput, uint32 nLength);
 	BOOL	FinishBlockTest(uint32 nBlock);
 
-	BOOL	ToBytes(uint8** pOutput, uint32* pnOutput, uint32 nHeight = 0);
+	// To free ppOutput, use the GlobalFree function
+	BOOL	ToBytes(uint8** ppOutput, uint32* pnOutput, uint32 nHeight = 0);
 	BOOL	FromBytes(const uint8* pOutput, uint32 nOutput, uint32 nHeight, uint64 nLength);
 	BOOL	CheckIntegrity();
 

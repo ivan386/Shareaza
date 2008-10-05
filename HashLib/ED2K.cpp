@@ -220,10 +220,15 @@ BOOL CED2K::FinishBlockTest(uint32 nBlock)
 
 BOOL CED2K::ToBytes(BYTE** ppOutput, uint32* pnOutput)
 {
-	if ( m_nList == 0 ) return FALSE;
+	if ( m_nList == 0 )
+		return FALSE;
 
     *pnOutput = sizeof( CMD4::Digest ) * m_nList;
-	*ppOutput = new BYTE[ *pnOutput ];
+
+	*ppOutput = (uint8*)GlobalAlloc( GPTR, *pnOutput );
+	if ( ! *ppOutput )
+		return FALSE;
+
 	CopyMemory( *ppOutput, m_pList, *pnOutput );
 
 	return TRUE;
