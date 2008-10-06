@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 
 <!-- Shareaza Default English Skin File -->
-<!-- Translation based on default-en.xml SVN rev.7405 -->
+<!-- Translation based on default-en.xml SVN rev.7428 -->
 
 <!-- This skin basically represents the current Shareaza defaults. You can use this file as -->
 <!-- a basis for creating new skins, however in a new skin be sure to ONLY include the sections -->
@@ -3413,7 +3413,7 @@
 	</dialog>
 	<dialog name="CIRCSettingsPage" cookie="BuBuBuEdStBuStCoBuBuStBuStBuStBuStBuStBuStBuStEdStEdStEdStEdStEdStEd" caption="Chat">
 		<control caption="Client _Options:"/>
-		<control caption="Show chat  integration"/>
+		<control caption="Show chat integration"/>
 		<control caption="Flood protection:"/>
 		<control/>
 		<control caption="lines per second"/>
