@@ -117,8 +117,12 @@ BOOL CDownloadGroup::Link(CDownload* pDownload)
 		if ( strFilter.GetAt( 0 ) == _T('.') )
 		{
 			// Filter by extension
+			// Special case for BitTorrents, they are filtered by type.
 			int nPos( pDownload->m_sName.ReverseFind( _T('.') ) );
-			if ( nPos != -1 && ! strFilter.CompareNoCase( pDownload->m_sName.Mid( nPos ) ) )
+			if ( ( nPos != -1
+					&& !strFilter.CompareNoCase( pDownload->m_sName.Mid( nPos ) ) )
+				|| ( pDownload->IsTorrent()
+					&& !strFilter.CompareNoCase( _T(".torrent") ) ) )
 			{
 				Add( pDownload );
 				return TRUE;
