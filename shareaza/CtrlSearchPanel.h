@@ -42,7 +42,7 @@ public:
 
 // Attributes
 public:
-	CAutocompleteEdit	m_wndSearch;
+	CEdit /*CAutocompleteEdit*/	m_wndSearch;
 	CSchemaCombo	m_wndSchemas;
 	CIconButtonCtrl	m_wndStart;
 	CIconButtonCtrl	m_wndStop;
