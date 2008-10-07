@@ -38,10 +38,6 @@
 #include "RouteCache.h"
 #include "Security.h"
 
-#include "SHA.h"
-#include "TigerTree.h"
-#include "ED2K.h"
-
 #ifdef _DEBUG
 #undef THIS_FILE
 static char THIS_FILE[]=__FILE__;
@@ -1599,6 +1595,11 @@ BOOL CQueryHit::ReadEDPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer, DWORD m_n
 					pSchema->FilterType( strType ) )
 		{	// ROM Image
 			m_sSchemaURI = CSchema::uriROM;
+		}
+		else if ( ( pSchema = SchemaCache.Get( CSchema::uriCollection ) ) != NULL && 
+					pSchema->FilterType( strType ) )
+		{	// Collection
+			m_sSchemaURI = CSchema::uriCollection;
 		}
 	}
 	

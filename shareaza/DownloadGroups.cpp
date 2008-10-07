@@ -159,7 +159,7 @@ void CDownloadGroups::CreateDefault()
 	pGroup->SetSchema( CSchema::uriBitTorrent );
 
 	pGroup = Add( _T("Collection") );
-	pGroup->SetSchema( CSchema::uriCollectionsFolder );
+	pGroup->SetSchema( CSchema::uriCollection );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -189,7 +189,8 @@ void CDownloadGroups::Clear()
 {
 	CQuickLock pLock( m_pSection );
 
-	for ( POSITION pos = GetIterator() ; pos ; ) delete GetNext( pos );
+	for ( POSITION pos = GetIterator() ; pos ; )
+		delete GetNext( pos );
 	m_pList.RemoveAll();
 
 	m_pSuper = NULL;
@@ -332,7 +333,7 @@ void CDownloadGroups::Serialize(CArchive& ar)
 			pGroup->SetSchema( CSchema::uriImage );
 
 			pGroup = Add( _T("Collection") );
-			pGroup->SetSchema( CSchema::uriCollectionsFolder );
+			pGroup->SetSchema( CSchema::uriCollection );
 		}
 
 		GetSuperGroup();

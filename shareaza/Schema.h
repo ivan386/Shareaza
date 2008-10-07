@@ -154,6 +154,7 @@ public:
 	static LPCTSTR	uriDocument;
 	static LPCTSTR	uriSpreadsheet;
 	static LPCTSTR	uriPresentation;
+	static LPCTSTR	uriCollection;
 	static LPCTSTR	uriLibrary;
 	static LPCTSTR	uriFolder;
 	static LPCTSTR	uriCollectionsFolder;

@@ -801,16 +801,17 @@ BOOL CSchemaBitzi::Load(CXMLElement* pXML)
 //////////////////////////////////////////////////////////////////////
 // CSchema common schema URIs
 
-LPCTSTR	CSchema::uriApplication	= _T("http://www.shareaza.com/schemas/application.xsd");
-LPCTSTR	CSchema::uriAudio		= _T("http://www.limewire.com/schemas/audio.xsd");
-LPCTSTR CSchema::uriArchive		= _T("http://www.shareaza.com/schemas/archive.xsd");
-LPCTSTR	CSchema::uriBook		= _T("http://www.limewire.com/schemas/book.xsd");
-LPCTSTR	CSchema::uriImage		= _T("http://www.shareaza.com/schemas/image.xsd");
-LPCTSTR	CSchema::uriVideo		= _T("http://www.limewire.com/schemas/video.xsd");
-LPCTSTR	CSchema::uriROM			= _T("http://www.shareaza.com/schemas/rom.xsd");
-LPCTSTR	CSchema::uriDocument	 = _T("http://www.shareaza.com/schemas/wordProcessing.xsd");
-LPCTSTR	CSchema::uriSpreadsheet	 = _T("http://www.shareaza.com/schemas/spreadsheet.xsd");
-LPCTSTR CSchema::uriPresentation = _T("http://www.shareaza.com/schemas/presentation.xsd");
+LPCTSTR	CSchema::uriApplication				= _T("http://www.shareaza.com/schemas/application.xsd");
+LPCTSTR	CSchema::uriAudio					= _T("http://www.limewire.com/schemas/audio.xsd");
+LPCTSTR CSchema::uriArchive					= _T("http://www.shareaza.com/schemas/archive.xsd");
+LPCTSTR	CSchema::uriBook					= _T("http://www.limewire.com/schemas/book.xsd");
+LPCTSTR	CSchema::uriImage					= _T("http://www.shareaza.com/schemas/image.xsd");
+LPCTSTR	CSchema::uriVideo					= _T("http://www.limewire.com/schemas/video.xsd");
+LPCTSTR	CSchema::uriROM						= _T("http://www.shareaza.com/schemas/rom.xsd");
+LPCTSTR	CSchema::uriDocument				= _T("http://www.shareaza.com/schemas/wordProcessing.xsd");
+LPCTSTR	CSchema::uriSpreadsheet				= _T("http://www.shareaza.com/schemas/spreadsheet.xsd");
+LPCTSTR CSchema::uriPresentation			= _T("http://www.shareaza.com/schemas/presentation.xsd");
+LPCTSTR CSchema::uriCollection				= _T("http://www.shareaza.com/schemas/collection.xsd");
 
 LPCTSTR CSchema::uriLibrary					= _T("http://www.shareaza.com/schemas/libraryRoot.xsd");
 
