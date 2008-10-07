@@ -24,7 +24,6 @@
 #include "Settings.h"
 #include "BENode.h"
 #include "Buffer.h"
-#include "SHA.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -304,7 +303,8 @@ void CBENode::GetBth(Hashes::BtHash& oBTH) const
 	CSHA pSHA;
 	pSHA.Add( pBuffer.m_pBuffer, pBuffer.m_nLength );
 	pSHA.Finish();
-	pSHA.GetHash( oBTH );
+	pSHA.GetHash( &oBTH[ 0 ] );
+	oBTH.validate();
 }
 
 //////////////////////////////////////////////////////////////////////

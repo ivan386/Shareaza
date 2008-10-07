@@ -34,11 +34,6 @@
 #include "SchemaCache.h"
 #include "ID3.h"
 
-#include "SHA.h"
-#include "TigerTree.h"
-#include "MD5.h"
-#include "ED2K.h"
-
 #ifdef _DEBUG
 #undef THIS_FILE
 static char THIS_FILE[]=__FILE__;
@@ -46,7 +41,6 @@ static char THIS_FILE[]=__FILE__;
 #endif
 
 CLibraryBuilder LibraryBuilder;
-
 
 //////////////////////////////////////////////////////////////////////
 // CLibraryBuilder construction
@@ -539,10 +533,14 @@ bool CLibraryBuilder::HashFile(LPCTSTR szPath, HANDLE hFile, DWORD nIndex)
 		pFile->m_nVirtualBase	= bVirtual ? nFileBase : 0;
 		pFile->m_nVirtualSize	= bVirtual ? nFileSize : 0;
 
-		pSHA1.GetHash( pFile->m_oSHA1 );
-		pMD5.GetHash( pFile->m_oMD5 );
-		pTiger.GetRoot( pFile->m_oTiger );
-		pED2K.GetRoot( pFile->m_oED2K );
+		pSHA1.GetHash( &pFile->m_oSHA1[ 0 ] );
+		pFile->m_oSHA1.validate();
+		pMD5.GetHash( &pFile->m_oMD5[ 0 ] );
+		pFile->m_oMD5.validate();
+		pTiger.GetRoot( &pFile->m_oTiger[ 0 ] );
+		pFile->m_oTiger.validate();
+		pED2K.GetRoot( &pFile->m_oED2K[ 0 ] );
+		pFile->m_oED2K.validate();
 
 		LibraryMaps.CullDeletedFiles( pFile );
 		Library.AddFile( pFile );

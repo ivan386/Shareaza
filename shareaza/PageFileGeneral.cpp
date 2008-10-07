@@ -28,11 +28,6 @@
 #include "ShellIcons.h"
 #include "PageFileGeneral.h"
 
-#include "SHA.h"
-#include "TigerTree.h"
-#include "MD5.h"
-#include "ED2K.h"
-
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #undef THIS_FILE

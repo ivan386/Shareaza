@@ -33,10 +33,6 @@
 #include "Schema.h"
 #include "XML.h"
 
-#include "SHA.h"
-#include "ED2K.h"
-#include "TigerTree.h"
-
 #include "UploadQueues.h"
 
 #ifdef _DEBUG

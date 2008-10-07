@@ -24,6 +24,7 @@
 
 #pragma once
 
+#include "AutocompleteEdit.h"
 #include "CtrlTaskPanel.h"
 #include "CtrlSchemaCombo.h"
 #include "CtrlNetworkCombo.h"
@@ -41,7 +42,7 @@ public:
 
 // Attributes
 public:
-	CEdit			m_wndSearch;
+	CAutocompleteEdit	m_wndSearch;
 	CSchemaCombo	m_wndSchemas;
 	CIconButtonCtrl	m_wndStart;
 	CIconButtonCtrl	m_wndStop;

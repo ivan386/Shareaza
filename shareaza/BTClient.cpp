@@ -27,7 +27,6 @@
 #include "BTPacket.h"
 #include "BENode.h"
 #include "Buffer.h"
-#include "SHA.h"
 
 #include "Download.h"
 #include "Downloads.h"

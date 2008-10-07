@@ -501,7 +501,8 @@ void CRemote::PageLogin()
 		pSHA1.Add( (LPCTSTR)strPassword, strPassword.GetLength() * sizeof(TCHAR) );
 		pSHA1.Finish();
         Hashes::Sha1Hash tmp;
-        pSHA1.GetHash( tmp );
+        pSHA1.GetHash( &tmp[ 0 ] );
+		tmp.validate();
         strPassword = tmp.toString();
 	}
 	

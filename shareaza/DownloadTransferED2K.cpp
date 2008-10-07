@@ -34,7 +34,6 @@
 #include "EDPacket.h"
 #include "Network.h"
 #include "Buffer.h"
-#include "ED2K.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE

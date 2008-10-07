@@ -30,6 +30,8 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
+				Description="Copy SQLite DLL, zlib DLL, HashLib DLL ..."
+				CommandLine="copy /b /y &quot;..\sqlite3\$(PlatformName)\$(ConfigurationName)\sqlite3.dll&quot; &quot;$(TargetDir)&quot;&#x0D;&#x0A;copy /b /y &quot;zlib\$(PlatformName)\$(ConfigurationName)\zlibwapi.dll&quot; &quot;$(TargetDir)&quot;&#x0D;&#x0A;copy /b /y &quot;..\HashLib\$(PlatformName)\$(ConfigurationName)\HashLib.dll&quot; &quot;$(TargetDir)&quot;"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -121,6 +123,8 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
+				Description="Copy SQLite DLL, zlib DLL, HashLib DLL ..."
+				CommandLine="copy /b /y &quot;..\sqlite3\$(PlatformName)\$(ConfigurationName)\sqlite3.dll&quot; &quot;$(TargetDir)&quot;&#x0D;&#x0A;copy /b /y &quot;zlib\$(PlatformName)\$(ConfigurationName)\zlibwapi.dll&quot; &quot;$(TargetDir)&quot;&#x0D;&#x0A;copy /b /y &quot;..\HashLib\$(PlatformName)\$(ConfigurationName)\HashLib.dll&quot; &quot;$(TargetDir)&quot;"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -214,6 +218,8 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
+				Description="Copy SQLite DLL, zlib DLL, HashLib DLL ..."
+				CommandLine="copy /b /y &quot;..\sqlite3\$(PlatformName)\$(ConfigurationName)\sqlite3.dll&quot; &quot;$(TargetDir)&quot;&#x0D;&#x0A;copy /b /y &quot;zlib\$(PlatformName)\$(ConfigurationName)\zlibwapi.dll&quot; &quot;$(TargetDir)&quot;&#x0D;&#x0A;copy /b /y &quot;..\HashLib\$(PlatformName)\$(ConfigurationName)\HashLib.dll&quot; &quot;$(TargetDir)&quot;"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -311,6 +317,8 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
+				Description="Copy SQLite DLL, zlib DLL, HashLib DLL ..."
+				CommandLine="copy /b /y &quot;..\sqlite3\$(PlatformName)\$(ConfigurationName)\sqlite3.dll&quot; &quot;$(TargetDir)&quot;&#x0D;&#x0A;copy /b /y &quot;zlib\$(PlatformName)\$(ConfigurationName)\zlibwapi.dll&quot; &quot;$(TargetDir)&quot;&#x0D;&#x0A;copy /b /y &quot;..\HashLib\$(PlatformName)\$(ConfigurationName)\HashLib.dll&quot; &quot;$(TargetDir)&quot;"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -366,10 +374,10 @@
 				GenerateManifest="false"
 				IgnoreDefaultLibraryNames=""
 				SubSystem="2"
-				DataExecutionPrevention="0"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				SetChecksum="true"
+				DataExecutionPrevention="0"
 				TargetMachine="17"
 				KeyFile=""
 			/>
@@ -411,6 +419,10 @@
 			</File>
 			<File
 				RelativePath="Application.cpp"
+				>
+			</File>
+			<File
+				RelativePath="AutocompleteEdit.cpp"
 				>
 			</File>
 			<File
@@ -587,10 +599,6 @@
 			</File>
 			<File
 				RelativePath="DownloadWithTransfers.cpp"
-				>
-			</File>
-			<File
-				RelativePath="ED2K.cpp"
 				>
 			</File>
 			<File
@@ -2380,190 +2388,6 @@
 			<Filter
 				Name="Hash algorithms"
 				>
-				<File
-					RelativePath="MD4.cpp"
-					>
-				</File>
-				<File
-					RelativePath="asm\MD4_asm.asm"
-					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCustomBuildTool"
-							CommandLine="ml.exe /c /Cx /coff /Zi /nologo /Fo &quot;$(ProjectDir)$(IntDir)\$(InputName).obj&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;"
-							Outputs="&quot;$(ProjectDir)$(IntDir)\$(InputName).obj&quot;"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Debug|x64"
-						ExcludedFromBuild="true"
-						>
-						<Tool
-							Name="VCCustomBuildTool"
-							CommandLine="ml.exe /c /Cx /coff /Zi /nologo /Fo &quot;$(ProjectDir)$(IntDir)\$(InputName).obj&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;"
-							Outputs="&quot;$(ProjectDir)$(IntDir)\$(InputName).obj&quot;"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCustomBuildTool"
-							CommandLine="ml.exe /c /Cx /coff /Zi /nologo /Fo &quot;$(ProjectDir)$(IntDir)\$(InputName).obj&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;"
-							Outputs="&quot;$(ProjectDir)$(IntDir)\$(InputName).obj&quot;"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|x64"
-						ExcludedFromBuild="true"
-						>
-						<Tool
-							Name="VCCustomBuildTool"
-							CommandLine="ml.exe /c /Cx /coff /Zi /nologo /Fo &quot;$(ProjectDir)$(IntDir)\$(InputName).obj&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;"
-							Outputs="&quot;$(ProjectDir)$(IntDir)\$(InputName).obj&quot;"
-						/>
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath="MD5.cpp"
-					>
-				</File>
-				<File
-					RelativePath="asm\MD5_asm.asm"
-					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCustomBuildTool"
-							CommandLine="ml.exe /c /Cx /coff /Zi /nologo /Fo &quot;$(ProjectDir)$(IntDir)\$(InputName).obj&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;"
-							Outputs="&quot;$(ProjectDir)$(IntDir)\$(InputName).obj&quot;"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Debug|x64"
-						ExcludedFromBuild="true"
-						>
-						<Tool
-							Name="VCCustomBuildTool"
-							CommandLine="ml.exe /c /Cx /coff /Zi /nologo /Fo &quot;$(ProjectDir)$(IntDir)\$(InputName).obj&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;"
-							Outputs="&quot;$(ProjectDir)$(IntDir)\$(InputName).obj&quot;"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCustomBuildTool"
-							CommandLine="ml.exe /c /Cx /coff /Zi /nologo /Fo &quot;$(ProjectDir)$(IntDir)\$(InputName).obj&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;"
-							Outputs="&quot;$(ProjectDir)$(IntDir)\$(InputName).obj&quot;"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|x64"
-						ExcludedFromBuild="true"
-						>
-						<Tool
-							Name="VCCustomBuildTool"
-							CommandLine="ml.exe /c /Cx /coff /Zi /nologo /Fo &quot;$(ProjectDir)$(IntDir)\$(InputName).obj&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;"
-							Outputs="&quot;$(ProjectDir)$(IntDir)\$(InputName).obj&quot;"
-						/>
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath="SHA.cpp"
-					>
-				</File>
-				<File
-					RelativePath="asm\SHA_asm.asm"
-					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCustomBuildTool"
-							CommandLine="ml.exe /c /Cx /coff /Zi /nologo /Fo &quot;$(ProjectDir)$(IntDir)\$(InputName).obj&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;"
-							Outputs="&quot;$(ProjectDir)$(IntDir)\$(InputName).obj&quot;"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Debug|x64"
-						ExcludedFromBuild="true"
-						>
-						<Tool
-							Name="VCCustomBuildTool"
-							CommandLine="ml.exe /c /Cx /coff /Zi /nologo /Fo &quot;$(ProjectDir)$(IntDir)\$(InputName).obj&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;"
-							Outputs="&quot;$(ProjectDir)$(IntDir)\$(InputName).obj&quot;"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCustomBuildTool"
-							CommandLine="ml.exe /c /Cx /coff /Zi /nologo /Fo &quot;$(ProjectDir)$(IntDir)\$(InputName).obj&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;"
-							Outputs="&quot;$(ProjectDir)$(IntDir)\$(InputName).obj&quot;"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|x64"
-						ExcludedFromBuild="true"
-						>
-						<Tool
-							Name="VCCustomBuildTool"
-							CommandLine="ml.exe /c /Cx /coff /Zi /nologo /Fo &quot;$(ProjectDir)$(IntDir)\$(InputName).obj&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;"
-							Outputs="&quot;$(ProjectDir)$(IntDir)\$(InputName).obj&quot;"
-						/>
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath="asm\Tiger_asm.asm"
-					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCustomBuildTool"
-							CommandLine="ml.exe /c /Cx /coff /Zi /nologo /Fo &quot;$(ProjectDir)$(IntDir)\$(InputName).obj&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;"
-							Outputs="&quot;$(ProjectDir)$(IntDir)\$(InputName).obj&quot;"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Debug|x64"
-						ExcludedFromBuild="true"
-						>
-						<Tool
-							Name="VCCustomBuildTool"
-							CommandLine="ml.exe /c /Cx /coff /Zi /nologo /Fo &quot;$(ProjectDir)$(IntDir)\$(InputName).obj&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;"
-							Outputs="&quot;$(ProjectDir)$(IntDir)\$(InputName).obj&quot;"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCustomBuildTool"
-							CommandLine="ml.exe /c /Cx /coff /Zi /nologo /Fo &quot;$(ProjectDir)$(IntDir)\$(InputName).obj&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;"
-							Outputs="&quot;$(ProjectDir)$(IntDir)\$(InputName).obj&quot;"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|x64"
-						ExcludedFromBuild="true"
-						>
-						<Tool
-							Name="VCCustomBuildTool"
-							CommandLine="ml.exe /c /Cx /coff /Zi /nologo /Fo &quot;$(ProjectDir)$(IntDir)\$(InputName).obj&quot; &quot;$(InputPath)&quot;&#x0D;&#x0A;"
-							Outputs="&quot;$(ProjectDir)$(IntDir)\$(InputName).obj&quot;"
-						/>
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath="TigerTree.cpp"
-					>
-				</File>
 				<Filter
 					Name="Policies"
 					>
@@ -2835,6 +2659,10 @@
 				>
 			</File>
 			<File
+				RelativePath="AutocompleteEdit.h"
+				>
+			</File>
+			<File
 				RelativePath="BENode.h"
 				>
 			</File>
@@ -3008,10 +2836,6 @@
 			</File>
 			<File
 				RelativePath="DownloadWithTransfers.h"
-				>
-			</File>
-			<File
-				RelativePath="ED2K.h"
 				>
 			</File>
 			<File
@@ -3500,10 +3324,6 @@
 			</File>
 			<File
 				RelativePath="UPnPFinder.h"
-				>
-			</File>
-			<File
-				RelativePath="Utility.hpp"
 				>
 			</File>
 			<File
@@ -4179,26 +3999,6 @@
 				</File>
 				<File
 					RelativePath="Hashes.hpp"
-					>
-				</File>
-				<File
-					RelativePath="MD4.h"
-					>
-				</File>
-				<File
-					RelativePath="MD5.h"
-					>
-				</File>
-				<File
-					RelativePath="SHA.h"
-					>
-				</File>
-				<File
-					RelativePath="TigerBoxes.h"
-					>
-				</File>
-				<File
-					RelativePath="TigerTree.h"
 					>
 				</File>
 				<Filter

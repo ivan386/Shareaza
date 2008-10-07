@@ -25,10 +25,6 @@
 #include "QueryHit.h"
 #include "MatchListView.h"
 
-#include "TigerTree.h"
-#include "ED2K.h"
-#include "SHA.h"
-
 #ifdef _DEBUG
 #undef THIS_FILE
 static char THIS_FILE[]=__FILE__;

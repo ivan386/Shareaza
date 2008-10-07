@@ -35,11 +35,6 @@
 #include "ShareazaURL.h"
 #include "SharedFile.h"
 
-#include "SHA.h"
-#include "MD5.h"
-#include "ED2K.h"
-#include "TigerTree.h"
-
 #ifdef _DEBUG
 #undef THIS_FILE
 static char THIS_FILE[]=__FILE__;

@@ -91,8 +91,8 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				Description="Copy SQLite to Shareaza folder..."
-				CommandLine="copy /b /y &quot;$(TargetPath)&quot; &quot;..\shareaza\$(PlatformName)\$(ConfigurationName)\&quot;"
+				Description=""
+				CommandLine=""
 			/>
 		</Configuration>
 		<Configuration
@@ -167,8 +167,8 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				Description="Copy SQLite to Shareaza folder..."
-				CommandLine="copy /b /y &quot;$(TargetPath)&quot; &quot;..\shareaza\$(PlatformName)\$(ConfigurationName)\&quot;"
+				Description=""
+				CommandLine=""
 			/>
 		</Configuration>
 		<Configuration
@@ -248,8 +248,8 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				Description="Copy SQLite to Shareaza folder..."
-				CommandLine="copy /b /y &quot;$(TargetPath)&quot; &quot;..\shareaza\$(PlatformName)\$(ConfigurationName)\&quot;"
+				Description=""
+				CommandLine=""
 			/>
 		</Configuration>
 		<Configuration
@@ -330,8 +330,8 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				Description="Copy SQLite to Shareaza folder..."
-				CommandLine="copy /b /y &quot;$(TargetPath)&quot; &quot;..\shareaza\$(PlatformName)\$(ConfigurationName)\&quot;"
+				Description=""
+				CommandLine=""
 			/>
 		</Configuration>
 	</Configurations>

@@ -33,9 +33,6 @@
 #include "Schema.h"
 #include "SchemaCache.h"
 #include "VendorCache.h"
-#include "TigerTree.h"
-#include "SHA.h"
-#include "ED2K.h"
 #include "Flags.h"
 
 #ifdef _DEBUG

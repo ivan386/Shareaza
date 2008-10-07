@@ -36,7 +36,6 @@
 #include "FragmentedFile.h"
 #include "FragmentBar.h"
 #include "Skin.h"
-#include "SHA.h"
 #include "GraphLine.h"
 #include "GraphItem.h"
 #include "CtrlDownloadTip.h"

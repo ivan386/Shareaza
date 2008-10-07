@@ -29,7 +29,6 @@
 #include "Schema.h"
 #include "SchemaCache.h"
 #include "Library.h"
-#include "SHA.h"
 
 #include "CoolInterface.h"
 #include "ImageServices.h"

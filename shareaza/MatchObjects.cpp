@@ -38,10 +38,6 @@
 #include "XML.h"
 #include "Download.h"
 
-#include "TigerTree.h"
-#include "SHA.h"
-#include "ED2K.h"
-
 #include "CtrlMatch.h"
 #include "LiveList.h"
 #include "ResultFilters.h"

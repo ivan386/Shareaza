@@ -31,10 +31,6 @@
 #include "CoolInterface.h"
 #include "CtrlIconButton.h"
 
-#include "SHA.h"
-#include "MD5.h"
-#include "ED2K.h"
-#include "TigerTree.h"
 #include "Transfer.h" 
 #include "CtrlWizard.h"
 

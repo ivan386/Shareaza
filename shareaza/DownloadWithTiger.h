@@ -25,8 +25,6 @@
 #pragma once
 
 #include "DownloadWithTorrent.h"
-#include "TigerTree.h"
-#include "ED2K.h"
 
 
 class CDownloadWithTiger : public CDownloadWithTorrent

@@ -29,7 +29,6 @@
 #include "Network.h"
 #include "GProfile.h"
 #include "DiscoveryServices.h"
-#include "SHA.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE

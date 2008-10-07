@@ -30,7 +30,6 @@
 #include "EDPacket.h"
 #include "Datagrams.h"
 #include "Network.h"
-#include "ED2K.h"
 
 // If we are compiling in debug mode, replace the text "THIS_FILE" in the code with the name of this file
 #ifdef _DEBUG

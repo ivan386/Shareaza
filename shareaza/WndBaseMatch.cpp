@@ -38,8 +38,6 @@
 #include "ChatWindows.h"
 #include "MatchListView.h"
 #include "RelatedSearch.h"
-#include "SHA.h"
-#include "ED2K.h"
 
 #include "Skin.h"
 #include "WndMain.h"

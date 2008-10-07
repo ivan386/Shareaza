@@ -54,10 +54,6 @@
 #include "GProfile.h"
 #include "Security.h"
 
-#include "SHA.h"
-#include "ED2K.h"
-#include "TigerTree.h"
-
 #ifdef _DEBUG
 #undef THIS_FILE
 static char THIS_FILE[]=__FILE__;
@@ -1348,7 +1344,10 @@ BOOL CUploadTransferHTTP::RequestMetadata(CXMLElement* pMetadata)
 
 BOOL CUploadTransferHTTP::RequestTigerTreeRaw(CTigerTree* pTigerTree, BOOL bDelete)
 {
-	if ( pTigerTree == NULL )
+	BYTE* pSerialTree = NULL;
+	DWORD nSerialTree = 0;
+
+	if ( ! pTigerTree || ! pTigerTree->ToBytes( &pSerialTree, &nSerialTree ) )
 	{
 		ClearHashes();
 		m_sLocations.Empty();
@@ -1358,13 +1357,10 @@ BOOL CUploadTransferHTTP::RequestTigerTreeRaw(CTigerTree* pTigerTree, BOOL bDele
 		
 		return TRUE;
 	}
-	
-	BYTE* pSerialTree;
-	DWORD nSerialTree;
-	
-	pTigerTree->ToBytes( &pSerialTree, &nSerialTree );
-	if ( bDelete ) delete pTigerTree;
-	
+
+	if ( bDelete )
+		delete pTigerTree;
+
 	if ( m_bRange )
 	{
 		if ( m_nOffset >= nSerialTree ) m_nLength = SIZE_UNKNOWN;
@@ -1416,7 +1412,7 @@ BOOL CUploadTransferHTTP::RequestTigerTreeRaw(CTigerTree* pTigerTree, BOOL bDele
 		theApp.Message( MSG_ERROR, IDS_UPLOAD_BAD_RANGE, (LPCTSTR)m_sAddress, (LPCTSTR)m_sFileName );
 	}
 	
-	delete [] pSerialTree;
+	GlobalFree( pSerialTree );
 	
 	return TRUE;
 }
@@ -1426,7 +1422,13 @@ BOOL CUploadTransferHTTP::RequestTigerTreeRaw(CTigerTree* pTigerTree, BOOL bDele
 
 BOOL CUploadTransferHTTP::RequestTigerTreeDIME(CTigerTree* pTigerTree, int nDepth, CED2K* pHashset, BOOL bDelete)
 {
-	if ( pTigerTree == NULL )
+	DWORD nSerialTree = 0;
+	BYTE* pSerialTree = NULL;
+	
+	if ( pTigerTree && ( nDepth < 1 || nDepth > (int)pTigerTree->GetHeight() ) )
+		nDepth = pTigerTree->GetHeight();
+
+	if ( ! pTigerTree || ! pTigerTree->ToBytes( &pSerialTree, &nSerialTree, nDepth ) )
 	{
 		ClearHashes();
 		m_sLocations.Empty();
@@ -1439,20 +1441,11 @@ BOOL CUploadTransferHTTP::RequestTigerTreeDIME(CTigerTree* pTigerTree, int nDept
 		return TRUE;
 	}
 	
-	DWORD nSerialTree;
-	BYTE* pSerialTree;
-	CBuffer pDIME;
-	
-	if ( nDepth < 1 ) nDepth = pTigerTree->GetHeight();
-	else if ( nDepth > (int)pTigerTree->GetHeight() ) nDepth = pTigerTree->GetHeight();
-	
-	pTigerTree->ToBytes( &pSerialTree, &nSerialTree, nDepth );
-	if ( bDelete ) delete pTigerTree;
+	if ( bDelete )
+		delete pTigerTree;
 	
 	CString strUUID, strXML;
-
 	Hashes::Guid oGUID;
-	
 	Network.CreateID( oGUID );
 	GUID pUUID;
 	std::memcpy( &pUUID, &oGUID[ 0 ], sizeof( pUUID ) );
@@ -1477,23 +1470,24 @@ BOOL CUploadTransferHTTP::RequestTigerTreeDIME(CTigerTree* pTigerTree, int nDept
 	LPSTR pszUUID = new CHAR[ nUUID ];
 	WideCharToMultiByte( CP_ACP, 0, strUUID, -1, pszUUID, nUUID, NULL, NULL );
 	
+	CBuffer pDIME;
 	pDIME.WriteDIME( 1, _P(""), _P("text/xml"), pszXML, nXML - 1 );
 	pDIME.WriteDIME( pHashset ? 0 : 2, pszUUID, nUUID - 1,
 		_P("http://open-content.net/spec/thex/breadthfirst"), pSerialTree, nSerialTree );
-	delete [] pSerialTree;
+	GlobalFree( pSerialTree );
 	
 	delete [] pszUUID;
 	delete [] pszXML;
 	
-	if ( pHashset != NULL )
+	if ( pHashset && pHashset->ToBytes( &pSerialTree, &nSerialTree ) )
 	{
-		pHashset->ToBytes( &pSerialTree, &nSerialTree );
-		if ( bDelete ) delete pHashset;
-		
 		pDIME.WriteDIME( 2, _P(""),
 			_P("http://edonkey2000.com/spec/md4-hashset"), pSerialTree, nSerialTree );
-		delete [] pSerialTree;
+		GlobalFree( pSerialTree );
 	}
+
+	if ( bDelete )
+		delete pHashset;
 	
 	if ( m_bRange )
 	{

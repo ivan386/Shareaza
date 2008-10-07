@@ -36,7 +36,6 @@
 #include "Transfers.h"
 #include "FragmentedFile.h"
 #include "Buffer.h"
-#include "SHA.h"
 #include "LibraryFolders.h"
 #include "GProfile.h"
 #include "Uploads.h"

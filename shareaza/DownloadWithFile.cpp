@@ -32,9 +32,6 @@
 #include "Uploads.h"
 
 #include "ID3.h"
-#include "SHA.h"
-#include "TigerTree.h"
-#include "ED2K.h"
 #include "XML.h"
 #include "SchemaCache.h"
 #include "LibraryBuilder.h"

@@ -33,8 +33,6 @@
 #include "CoolInterface.h"
 #include "ShellIcons.h"
 #include "Skin.h"
-#include "SHA.h"
-#include "ED2K.h"
 #include "XML.h"
 
 #include "WndSearch.h"

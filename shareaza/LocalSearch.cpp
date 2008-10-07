@@ -56,10 +56,6 @@
 #include "Schema.h"
 #include "SchemaCache.h"
 
-#include "SHA.h"
-#include "TigerTree.h"
-#include "ED2K.h"
-
 #ifdef _DEBUG
 #undef THIS_FILE
 static char THIS_FILE[]=__FILE__;

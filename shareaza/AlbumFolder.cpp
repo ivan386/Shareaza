@@ -29,7 +29,6 @@
 #include "SchemaChild.h"
 #include "SchemaCache.h"
 #include "XML.h"
-#include "SHA.h"
 #include "Settings.h"
 
 #ifdef _DEBUG

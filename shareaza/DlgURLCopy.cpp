@@ -25,9 +25,6 @@
 #include "DlgURLCopy.h"
 #include "Transfer.h"
 #include "Network.h"
-#include "SHA.h"
-#include "TigerTree.h"
-#include "ED2K.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW

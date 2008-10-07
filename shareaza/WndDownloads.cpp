@@ -38,7 +38,6 @@
 #include "SharedFile.h"
 #include "FileExecutor.h"
 #include "ShareazaURL.h"
-#include "SHA.h"
 #include "ChatWindows.h"
 
 #include "WindowManager.h"

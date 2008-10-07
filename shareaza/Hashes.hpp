@@ -139,6 +139,4 @@ enum
 	HASH_TORRENT = 5    //!< use Bittorrent info hash
 };
 
-extern const unsigned char hashPadding[ 64 ];
-
 #endif // #ifndef HASHES_HPP_INCLUDED

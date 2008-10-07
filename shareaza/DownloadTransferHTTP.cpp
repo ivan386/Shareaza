@@ -32,9 +32,6 @@
 #include "Buffer.h"
 #include "ShareazaURL.h"
 #include "GProfile.h"
-#include "SHA.h"
-#include "ED2K.h"
-#include "TigerTree.h"
 #include "XML.h"
 #include "VendorCache.h"
 

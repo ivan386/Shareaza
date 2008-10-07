@@ -28,7 +28,6 @@
 #include "AlbumFolder.h"
 #include "LiveList.h"
 #include "XML.h"
-#include "SHA.h"
 #include "Schema.h"
 #include "SchemaCache.h"
 

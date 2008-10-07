@@ -29,7 +29,6 @@
 #include "Network.h"
 #include "Packet.h"
 #include "ZLib.h"
-#include "SHA.h"
 #include "Buffer.h"
 #include "WndMain.h"
 #include "WndPacket.h"
@@ -481,7 +480,8 @@ BOOL CPacket::GetRazaHash(Hashes::Sha1Hash& oHash, DWORD nLength) const
 	CSHA pSHA;
 	pSHA.Add( m_pBuffer, nLength ); // Add the bytes of the packet to those it needs to hash
 	pSHA.Finish();                  // Tell it that's all we have
-	pSHA.GetHash( oHash );          // Ask it to write the hash under the pHash pointer
+	pSHA.GetHash( &oHash[ 0 ] );    // Ask it to write the hash under the pHash pointer
+	oHash.validate();
 	return TRUE;                    // Report success
 }
 

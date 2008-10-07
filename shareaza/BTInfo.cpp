@@ -1016,7 +1016,8 @@ BOOL CBTInfo::FinishBlockTest(DWORD nBlock)
 
     Hashes::BtHash oBTH;
 	m_pTestSHA1.Finish();
-	m_pTestSHA1.GetHash( oBTH );
+	m_pTestSHA1.GetHash( &oBTH[ 0 ] );
+	oBTH.validate();
 	
 	return m_pBlockBTH[ nBlock ] == oBTH;
 }

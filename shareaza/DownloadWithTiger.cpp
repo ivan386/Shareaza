@@ -26,6 +26,7 @@
 #include "Downloads.h"
 #include "DownloadWithTiger.h"
 #include "FragmentedFile.h"
+#include "HashDatabase.h"
 
 #include "Neighbours.h"
 #include "Transfers.h"
@@ -203,7 +204,8 @@ BOOL CDownloadWithTiger::SetTigerTree(BYTE* pTiger, DWORD nTiger)
 	}
 
 	Hashes::TigerHash oRoot;
-	m_pTigerTree.GetRoot( oRoot );
+	m_pTigerTree.GetRoot( &oRoot[ 0 ] );
+	oRoot.validate();
 
 	if ( validAndUnequal( m_oTiger, oRoot ) )
 	{
@@ -263,7 +265,8 @@ BOOL CDownloadWithTiger::SetHashset(BYTE* pSource, DWORD nSource)
 	else if ( m_pHashset.FromBytes( pSource, nSource, m_nSize ) )
 	{
 		Hashes::Ed2kHash oRoot;
-		m_pHashset.GetRoot( oRoot );
+		m_pHashset.GetRoot( &oRoot[ 0 ] );
+		oRoot.validate();
 
 		if ( validAndUnequal( m_oED2K, oRoot ) )
 		{
@@ -764,7 +767,7 @@ void CDownloadWithTiger::Serialize(CArchive& ar, int nVersion)
 
 	CDownloadWithTorrent::Serialize( ar, nVersion );
 
-	m_pTigerTree.Serialize( ar );
+	CHashDatabase::Serialize( ar, &m_pTigerTree );
 
 	if ( m_pTigerTree.IsAvailable() )
 	{
@@ -790,7 +793,7 @@ void CDownloadWithTiger::Serialize(CArchive& ar, int nVersion)
 
 	if ( nVersion >= 19 )
 	{
-		m_pHashset.Serialize( ar );
+		CHashDatabase::Serialize( ar, &m_pHashset );
 
 		if ( m_pHashset.IsAvailable() )
 		{

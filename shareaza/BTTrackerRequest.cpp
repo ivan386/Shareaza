@@ -28,7 +28,6 @@
 #include "Transfers.h"
 #include "Downloads.h"
 #include "Download.h"
-#include "SHA.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW

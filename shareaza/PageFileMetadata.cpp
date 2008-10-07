@@ -26,7 +26,6 @@
 #include "SchemaCache.h"
 #include "Schema.h"
 #include "XML.h"
-#include "SHA.h"
 #include "PageFileMetadata.h"
 
 #ifdef _DEBUG

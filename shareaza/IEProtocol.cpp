@@ -29,7 +29,6 @@
 #include "LibraryFolders.h"
 #include "CollectionFile.h"
 #include "XML.h"
-#include "SHA.h"
 #include "ZIPFile.h"
 #include "ShellIcons.h"
 #include "Connection.h"

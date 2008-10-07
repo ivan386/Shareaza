@@ -39,7 +39,6 @@
 #include "EDClient.h"
 #include "EDPacket.h"
 #include "ShareazaURL.h"
-#include "SHA.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE

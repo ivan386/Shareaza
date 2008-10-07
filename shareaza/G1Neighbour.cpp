@@ -49,7 +49,6 @@
 #include "Downloads.h"
 #include "Uploads.h"
 #include "Library.h"
-#include "SHA.h"
 #include "WndMain.h"
 #include "WndChild.h"
 #include "WndSearchMonitor.h"

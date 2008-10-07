@@ -34,7 +34,6 @@
 #include "ShareazaURL.h"
 #include "IEProtocol.h"
 #include "CollectionFile.h"
-#include "SHA.h"
 
 #include "Skin.h"
 #include "CtrlWeb.h"

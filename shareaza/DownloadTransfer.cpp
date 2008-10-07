@@ -29,8 +29,6 @@
 #include "FragmentedFile.h"
 #include "Network.h"
 #include "Buffer.h"
-#include "SHA.h"
-#include "ED2K.h"
 #include "XML.h"
 #include "DownloadTransferBT.h"
 

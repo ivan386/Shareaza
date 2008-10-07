@@ -28,8 +28,6 @@
 #include "SharedFolder.h"
 #include "ShellIcons.h"
 #include "Schema.h"
-#include "TigerTree.h"
-#include "SHA.h"
 #include "XML.h"
 
 #ifdef _DEBUG

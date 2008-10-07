@@ -24,11 +24,7 @@
 
 #pragma once
 
-#include "SHA.h"
-#include "ED2K.h"
-#include "MD5.h"
 #include "Buffer.h"
-#include "TigerTree.h"
 #include "ShareazaFile.h"
 
 class CBuffer;

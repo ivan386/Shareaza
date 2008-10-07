@@ -31,8 +31,6 @@
 #include "FileExecutor.h"
 #include "CoolInterface.h"
 #include "Skin.h"
-#include "SHA.h"
-#include "ED2K.h"
 #include "CtrlLibraryFrame.h"
 #include "CtrlLibraryFileView.h"
 #include "CtrlLibraryTip.h"

@@ -33,8 +33,6 @@
 #include "G2Packet.h"
 #include "XML.h"
 #include "ZLib.h"
-#include "SHA.h"
-#include "ED2K.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE

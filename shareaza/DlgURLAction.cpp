@@ -38,11 +38,6 @@
 #include "WndDownloads.h"
 #include "WndBrowseHost.h"
 
-#include "TigerTree.h"
-#include "SHA.h"
-#include "MD5.h"
-#include "ED2K.h"
-
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #undef THIS_FILE

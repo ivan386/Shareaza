@@ -26,8 +26,6 @@
 #include "Network.h"
 #include "Downloads.h"
 #include "ShareazaURL.h"
-#include "SHA.h"
-#include "TigerTree.h"
 #include "DlgUpgrade.h"
 #include "WndMain.h"
 #include "WndDownloads.h"

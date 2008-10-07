@@ -30,7 +30,6 @@
 #include "EDPacket.h"
 #include "GProfile.h"
 #include "HostCache.h"
-#include "ED2K.h"
 
 #include "Library.h"
 #include "SharedFile.h"

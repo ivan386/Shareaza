@@ -27,10 +27,6 @@
 #include "SharedFolder.h"
 #include "Transfer.h"
 #include "Network.h"
-#include "TigerTree.h"
-#include "SHA.h"
-#include "MD5.h"
-#include "ED2K.h"
 #include "DlgURLExport.h"
 #include "DlgURLCopy.h"
 

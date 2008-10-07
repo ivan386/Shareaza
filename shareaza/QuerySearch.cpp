@@ -34,10 +34,6 @@
 #include "QueryHashTable.h"
 #include "GGEP.h"
 #include "XML.h"
-#include "SHA.h"
-#include "MD5.h"
-#include "ED2K.h"
-#include "TigerTree.h"
 
 #include "WndSearch.h"
 #include "DlgHelp.h"

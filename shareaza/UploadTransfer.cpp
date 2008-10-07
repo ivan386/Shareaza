@@ -35,10 +35,6 @@
 #include "Download.h"
 #include "Downloads.h"
 
-#include "TigerTree.h"
-#include "SHA.h"
-#include "ED2K.h"
-
 #ifdef _DEBUG
 #undef THIS_FILE
 static char THIS_FILE[]=__FILE__;

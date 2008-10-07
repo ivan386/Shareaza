@@ -28,10 +28,6 @@
 #include "QuerySearch.h"
 #include "DiscoveryServices.h"
 #include "Network.h"
-#include "TigerTree.h"
-#include "SHA.h"
-#include "MD5.h"
-#include "ED2K.h"
 #include "BTInfo.h"
 #include "Skin.h"
 

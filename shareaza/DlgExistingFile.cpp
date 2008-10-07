@@ -26,8 +26,6 @@
 #include "Library.h"
 #include "SharedFile.h"
 #include "DlgExistingFile.h"
-#include "TigerTree.h"
-#include "SHA.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW

@@ -30,7 +30,6 @@
 #include "Statistics.h"
 #include "EDClient.h"
 #include "EDPacket.h"
-#include "ED2K.h"
 
 #include "Buffer.h"
 #include "Library.h"

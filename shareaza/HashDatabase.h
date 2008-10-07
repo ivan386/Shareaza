@@ -82,6 +82,8 @@ public:
 	BOOL	StoreED2K(DWORD nIndex, CED2K* pSet);
 	BOOL	DeleteED2K(DWORD nIndex);
 
+	static void Serialize(CArchive& ar, CTigerTree* pTree);
+	static void Serialize(CArchive& ar, CED2K* pSet);
 };
 
 extern CHashDatabase LibraryHashDB;

@@ -38,10 +38,6 @@
 #include "MatchObjects.h"
 #include "ShareazaURL.h"
 
-#include "SHA.h"
-#include "ED2K.h"
-#include "TigerTree.h"
-
 #include "WndMain.h"
 
 #ifdef _DEBUG

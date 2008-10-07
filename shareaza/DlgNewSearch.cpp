@@ -28,10 +28,6 @@
 #include "Skin.h"
 #include "DlgNewSearch.h"
 
-#include "SHA.h"
-#include "ED2K.h"
-#include "TigerTree.h"
-
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #undef THIS_FILE

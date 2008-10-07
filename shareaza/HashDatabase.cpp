@@ -23,8 +23,6 @@
 #include "Shareaza.h"
 #include "Settings.h"
 #include "HashDatabase.h"
-#include "TigerTree.h"
-#include "ED2K.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -292,7 +290,7 @@ BOOL CHashDatabase::GetTiger(DWORD nIndex, CTigerTree* pTree)
 	{
 		m_pFile.Seek( pIndex->nOffset, 0 );
 		CArchive ar( &m_pFile, CArchive::load );
-		pTree->Serialize( ar );
+		Serialize( ar, pTree );
 	}
 	catch ( CException* pException )
 	{
@@ -303,21 +301,46 @@ BOOL CHashDatabase::GetTiger(DWORD nIndex, CTigerTree* pTree)
 	return TRUE;
 }
 
+void CHashDatabase::Serialize(CArchive& ar, CTigerTree* pTree)
+{
+	if ( ar.IsLoading() )
+	{
+		uint32 nHeight = 0;
+		ar >> nHeight;
+		pTree->SetHeight( nHeight );
+		if ( uint32 nSize = pTree->GetSerialSize() )
+		{
+			auto_array< uchar > pBuf( new uchar[ nSize ] );
+			ReadArchive( ar, pBuf.get(), nSize );
+			pTree->Load( pBuf.get() );
+		}
+	}
+	else
+	{
+		ar << pTree->GetHeight();
+		if ( uint32 nSize = pTree->GetSerialSize() )
+		{
+			auto_array< uchar > pBuf( new uchar[ nSize ] );
+			pTree->Save( pBuf.get() );
+			ar.Write( pBuf.get(), nSize );
+		}
+	}
+}
+
 BOOL CHashDatabase::StoreTiger(DWORD nIndex, CTigerTree* pTree)
 {
 	CSingleLock pLock( &m_pSection, TRUE );
 	if ( m_bOpen == FALSE ) return FALSE;
 
-	DWORD nLength = pTree->GetSerialSize();
-
-	HASHDB_INDEX* pIndex = PrepareToStore( nIndex, HASH_TIGERTREE, nLength );
+	HASHDB_INDEX* pIndex = PrepareToStore( nIndex, HASH_TIGERTREE,
+		pTree->GetSerialSize() + sizeof( uint32 ) );
 	if ( pIndex == NULL ) return FALSE;
 
 	try
 	{
 		m_pFile.Seek( pIndex->nOffset, 0 );
 		CArchive ar( &m_pFile, CArchive::store );
-		pTree->Serialize( ar );
+		Serialize( ar, pTree );
 	}
 	catch ( CException* pException )
 	{
@@ -353,7 +376,7 @@ BOOL CHashDatabase::GetED2K(DWORD nIndex, CED2K* pSet)
 	{
 		m_pFile.Seek( pIndex->nOffset, 0 );
 		CArchive ar( &m_pFile, CArchive::load );
-		pSet->Serialize( ar );
+		Serialize( ar, pSet );
 	}
 	catch ( CException* pException )
 	{
@@ -364,21 +387,46 @@ BOOL CHashDatabase::GetED2K(DWORD nIndex, CED2K* pSet)
 	return TRUE;
 }
 
+void CHashDatabase::Serialize(CArchive& ar, CED2K* pSet)
+{
+	if ( ar.IsLoading() )
+	{
+		uint32 nListSize = 0;
+		ar >> nListSize;
+		pSet->SetSize( nListSize );
+		if ( uint32 nSize = pSet->GetSerialSize() )
+		{
+			auto_array< uchar >pBuf( new uchar[ nSize ] );
+			ReadArchive( ar, pBuf.get(), nSize );
+			pSet->Load( pBuf.get() );
+		}
+	}
+	else
+	{
+		ar << pSet->GetSize();
+		if ( uint32 nSize = pSet->GetSerialSize() )
+		{
+			auto_array< uchar >pBuf( new uchar[ nSize ] );
+			pSet->Save( pBuf.get() );
+			ar.Write( pBuf.get(), nSize );
+		}
+	}
+}
+
 BOOL CHashDatabase::StoreED2K(DWORD nIndex, CED2K* pSet)
 {
 	CSingleLock pLock( &m_pSection, TRUE );
 	if ( m_bOpen == FALSE ) return FALSE;
 
-	DWORD nLength = pSet->GetSerialSize();
-
-	HASHDB_INDEX* pIndex = PrepareToStore( nIndex, HASH_ED2K, nLength );
+	HASHDB_INDEX* pIndex = PrepareToStore( nIndex, HASH_ED2K,
+		pSet->GetSerialSize() + sizeof( uint32 ) );
 	if ( pIndex == NULL ) return FALSE;
 
 	try
 	{
 		m_pFile.Seek( pIndex->nOffset, 0 );
 		CArchive ar( &m_pFile, CArchive::store );
-		pSet->Serialize( ar );
+		Serialize( ar, pSet );
 	}
 	catch ( CException* pException )
 	{

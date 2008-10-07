@@ -26,7 +26,6 @@
 #include "Network.h"
 #include "Handshakes.h"
 #include "PageSettingsRemote.h"
-#include "SHA.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -106,7 +105,8 @@ void CRemoteSettingsPage::OnNewPassword()
 		pSHA1.Add( (LPCTSTR)m_sPassword, m_sPassword.GetLength() * sizeof(TCHAR) );
 		pSHA1.Finish();
         Hashes::Sha1Hash tmp;
-        pSHA1.GetHash( tmp );
+		pSHA1.GetHash( &tmp[ 0 ] );
+		tmp.validate();
         Settings.Remote.Password = tmp.toString();
 	}
 

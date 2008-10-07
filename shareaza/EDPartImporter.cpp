@@ -24,7 +24,6 @@
 #include "Settings.h"
 #include "EDPartImporter.h"
 #include "EDPacket.h"
-#include "ED2K.h"
 #include "Transfers.h"
 #include "Downloads.h"
 #include "Download.h"
@@ -201,14 +200,15 @@ BOOL CEDPartImporter::ImportFile(LPCTSTR pszPath, LPCTSTR pszFile)
 	}
 	else if ( nParts > 0 )
 	{
-		CMD4::MD4Digest* pHashset = new CMD4::MD4Digest[ nParts ];
-		pFile.Read( pHashset, sizeof( CMD4::MD4Digest ) * nParts );
-		BOOL bSuccess = pED2K.FromBytes( (BYTE*)pHashset, sizeof(  CMD4::MD4Digest ) * nParts );
+		CMD4::Digest* pHashset = new CMD4::Digest[ nParts ];
+		pFile.Read( pHashset, sizeof( CMD4::Digest ) * nParts );
+		BOOL bSuccess = pED2K.FromBytes( (BYTE*)pHashset, sizeof(  CMD4::Digest ) * nParts );
 		delete [] pHashset;
 		if ( ! bSuccess ) return FALSE;
 
 		Hashes::Ed2kHash pCheck;
-		pED2K.GetRoot( pCheck );
+		pED2K.GetRoot( &pCheck[ 0 ] );
+		pCheck.validate();
 		if ( validAndUnequal( pCheck, oED2K ) ) return FALSE;
 	}
 	else

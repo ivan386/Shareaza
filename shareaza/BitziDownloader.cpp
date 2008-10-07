@@ -24,8 +24,6 @@
 #include "Settings.h"
 #include "Library.h"
 #include "SharedFile.h"
-#include "SHA.h"
-#include "TigerTree.h"
 #include "XML.h"
 #include "Schema.h"
 #include "SchemaCache.h"

@@ -91,9 +91,9 @@ CDownloadTabBar::~CDownloadTabBar()
 
 BOOL CDownloadTabBar::Create(CWnd* pParentWnd, DWORD dwStyle, UINT nID)
 {
-	CRect rc;
-	dwStyle |= WS_CHILD;
-	return CWnd::Create( NULL, NULL, dwStyle, rc, pParentWnd, nID, NULL );
+	CRect rc( 0, 0, 0, 0 );
+	return CWnd::CreateEx( 0, NULL, _T("CDownloadTabBar"),
+		dwStyle | WS_CHILD | WS_CLIPSIBLINGS | WS_TABSTOP, rc, pParentWnd, nID, NULL );
 }
 
 void CDownloadTabBar::SetWatermark(HBITMAP hBitmap)

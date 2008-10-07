@@ -31,11 +31,6 @@
 #include "LiveList.h"
 #include "CoolInterface.h"
 
-#include "SHA.h"
-#include "MD5.h"
-#include "ED2K.h"
-#include "TigerTree.h"
-
 #include "DlgCollectionExport.h"
 
 #ifdef _DEBUG

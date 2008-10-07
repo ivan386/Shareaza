@@ -42,11 +42,6 @@
 #include "Schema.h"
 #include "SchemaCache.h"
 
-#include "SHA.h"
-#include "MD5.h"
-#include "ED2K.h"
-#include "TigerTree.h"
-
 #include "Application.h"
 #include "VersionChecker.h"
 #include "DlgFolderScan.h"
@@ -456,7 +451,8 @@ CTigerTree* CLibraryFile::GetTigerTree()
 	if ( LibraryHashDB.GetTiger( m_nIndex, pTiger ) )
 	{
 		Hashes::TigerHash oRoot;
-		pTiger->GetRoot( oRoot );
+		pTiger->GetRoot( &oRoot[ 0 ] );
+		oRoot.validate();
 		if ( ! m_oTiger || m_oTiger == oRoot ) return pTiger;
 
 		LibraryHashDB.DeleteTiger( m_nIndex );
@@ -480,7 +476,8 @@ CED2K* CLibraryFile::GetED2K()
 	if ( LibraryHashDB.GetED2K( m_nIndex, pED2K ) )
 	{
 		Hashes::Ed2kHash oRoot;
-		pED2K->GetRoot( oRoot );
+		pED2K->GetRoot( &oRoot[ 0 ] );
+		oRoot.validate();
 		if ( m_oED2K == oRoot ) return pED2K;
 
 		LibraryHashDB.DeleteED2K( m_nIndex );

@@ -27,9 +27,6 @@
 #include "WndSearch.h"
 #include "LiveList.h"
 #include "XML.h"
-#include "SHA.h"
-#include "ED2K.h"
-#include "TigerTree.h"
 #include "Skin.h"
 
 #ifdef _DEBUG
