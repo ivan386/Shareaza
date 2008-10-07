@@ -45,7 +45,8 @@ CDownloadGroup::CDownloadGroup(const LPCTSTR szName, const BOOL bTemporary) :
 	m_sName				( szName ? szName : _T("") ),
 	m_nImage			( SHI_FOLDER_OPEN ),
 	m_bRemoteSelected	( TRUE ),
-	m_bTemporary		( bTemporary ? TRI_FALSE : TRI_UNKNOWN )
+	m_bTemporary		( bTemporary ? TRI_FALSE : TRI_UNKNOWN ),
+	m_bTorrent			( FALSE )
 {
 }
 
@@ -107,6 +108,13 @@ void CDownloadGroup::CopyList(CList< CDownload* >& pList)
 
 BOOL CDownloadGroup::Link(CDownload* pDownload)
 {
+	// Filter by BitTorrent flag
+	if ( m_bTorrent && pDownload->IsTorrent() )
+	{
+		Add( pDownload );
+		return TRUE;
+	}
+
 	if ( m_pFilters.IsEmpty() )
 		return FALSE;
 
@@ -156,49 +164,86 @@ int CDownloadGroup::LinkAll()
 }
 
 //////////////////////////////////////////////////////////////////////
-// CDownloadGroup add a filter
+// CDownloadGroup add/remove a filter
 
-void CDownloadGroup::AddFilter(LPCTSTR pszFilter)
+void CDownloadGroup::AddFilter(const CString& strFilter)
 {
-	if ( m_pFilters.Find( pszFilter ) == NULL )
-		m_pFilters.AddTail( pszFilter );
+	if ( ! strFilter.IsEmpty () )
+	{
+		if ( m_pFilters.Find( strFilter ) == NULL )
+			m_pFilters.AddTail( strFilter );
+	}
+}
+
+void CDownloadGroup::RemoveFilter(const CString& strFilter)
+{
+	if ( ! strFilter.IsEmpty () )
+	{
+		while ( POSITION pos = m_pFilters.Find( strFilter ) )
+			m_pFilters.RemoveAt( pos );
+	}
 }
 
 //////////////////////////////////////////////////////////////////////
 // CDownloadGroup schema
 
-void CDownloadGroup::SetSchema(LPCTSTR pszURI)
+void CDownloadGroup::SetSchema(LPCTSTR pszURI, BOOL bRemoveOldFilters)
 {
-	if ( m_sSchemaURI != pszURI ) m_sSchemaURI = pszURI;
+	if ( m_sSchemaURI != pszURI )
+	{
+		// Remove auto filters only
+		if ( bRemoveOldFilters && ! m_pFilters.IsEmpty() )
+		{
+			if ( CSchema* pOldSchema = SchemaCache.Get( m_sSchemaURI ) )
+			{
+				for ( LPCTSTR start = pOldSchema->m_sTypeFilter; *start; start++ )
+				{
+					LPCTSTR c = _tcschr( start, _T('|') );
+					int len = c ? (int) ( c - start ) : (int) _tcslen( start );
+					if ( len > 0 )
+					{
+						RemoveFilter( CString( start, len ) );
+					}
+					if ( ! c )
+						break;
+					start = c;
+				}
+			}
+		}
 
-	if ( CSchema* pSchema = SchemaCache.Get( pszURI ) )
+		m_sSchemaURI = pszURI;
+	}
+
+	if ( CSchema* pSchema = SchemaCache.Get( m_sSchemaURI ) )
 	{
 		m_nImage = pSchema->m_nIcon16;
 		if ( pSchema->m_sHeaderTitle.IsEmpty() )
 			m_sName = pSchema->m_sTitle;
 		else
 			m_sName = pSchema->m_sHeaderTitle;
+	}
+	else
+	{
+		m_nImage = SHI_FOLDER_OPEN;
+	}
+}
 
+void CDownloadGroup::SetDefaultFilters()
+{
+	if ( CSchema* pSchema = SchemaCache.Get( m_sSchemaURI ) )
+	{
 		for ( LPCTSTR start = pSchema->m_sTypeFilter; *start; start++ )
 		{
 			LPCTSTR c = _tcschr( start, _T('|') );
 			int len = c ? (int) ( c - start ) : (int) _tcslen( start );
 			if ( len > 0 )
 			{
-				CString tmp;
-				tmp.Append( start, len );
-				ASSERT( tmp.GetLength() > 1 );
-				ASSERT( tmp[0] == _T('.') );
-				AddFilter( tmp );
+				AddFilter( CString( start, len ) );
 			}
 			if ( ! c )
 				break;
 			start = c;
 		}
-	}
-	else
-	{
-		m_nImage = SHI_FOLDER_OPEN;
 	}
 }
 
@@ -230,6 +275,8 @@ void CDownloadGroup::Serialize(CArchive& ar, int nVersion)
 
 		ASSERT( m_bTemporary == TRI_UNKNOWN || m_bTemporary == TRI_FALSE );
 		ar << m_bTemporary;
+
+		ar << m_bTorrent;
 	}
 	else
 	{
@@ -274,15 +321,33 @@ void CDownloadGroup::Serialize(CArchive& ar, int nVersion)
 			ASSERT( m_bTemporary == TRI_UNKNOWN || m_bTemporary == TRI_FALSE );
 		}
 
+		if ( nVersion >= 7 )
+		{
+			ar >> m_bTorrent;
+		}
+
+		// Fix collection schema (nVersion < 7)
 		if ( CheckURI( m_sSchemaURI, CSchema::uriCollectionsFolder ) )
 		{
-			AddFilter( L".co" );
-			AddFilter( L".collection" );
-			AddFilter( L".emulecollection" );
+			m_sSchemaURI = CSchema::uriCollection;
+			SetDefaultFilters();
+		}
 
+		// Restore default folder for Collections
+		if ( CheckURI( m_sSchemaURI, CSchema::uriCollection ) )
+		{
 			if ( m_sFolder.IsEmpty() || ! PathIsDirectory( m_sFolder ) )
 			{
 				m_sFolder = Settings.Downloads.CollectionPath;
+			}
+		}
+
+		// Restore default folder for Torrents
+		if ( CheckURI( m_sSchemaURI, CSchema::uriBitTorrent ) )
+		{
+			if ( m_sFolder.IsEmpty() || ! PathIsDirectory( m_sFolder ) )
+			{
+				m_sFolder = Settings.Downloads.TorrentPath;
 			}
 		}
 

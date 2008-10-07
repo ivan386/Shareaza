@@ -1,7 +1,7 @@
 //
 // DownloadGroups.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -18,9 +18,6 @@
 // along with Shareaza; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
-
-#if !defined(AFX_DOWNLOADGROUPS_H__3B37C337_3DD2_4335_BEF1_EA98F348286E__INCLUDED_)
-#define AFX_DOWNLOADGROUPS_H__3B37C337_3DD2_4335_BEF1_EA98F348286E__INCLUDED_
 
 #pragma once
 
@@ -48,7 +45,7 @@ protected:
 // Operations
 public:
 	CDownloadGroup*		GetSuperGroup();
-	CDownloadGroup*		Add(const LPCTSTR pszName = NULL, const BOOL bTemporary = FALSE);
+	CDownloadGroup*		Add(LPCTSTR pszName = NULL, BOOL bTemporary = FALSE, BOOL bUseExisting = FALSE);
 	void				Remove(CDownloadGroup* pGroup);
 	void				Link(CDownload* pDownload);
 	void				Unlink(CDownload* pDownload, BOOL bAndSuper = TRUE);
@@ -96,5 +93,3 @@ public:
 };
 
 extern CDownloadGroups DownloadGroups;
-
-#endif // !defined(AFX_DOWNLOADGROUPS_H__3B37C337_3DD2_4335_BEF1_EA98F348286E__INCLUDED_)

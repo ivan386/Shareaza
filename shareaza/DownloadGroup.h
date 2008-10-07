@@ -1,7 +1,7 @@
 //
 // DownloadGroup.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -33,20 +33,21 @@ public:
 
 // Attributes
 protected:
-	CList< CDownload* >	m_pDownloads;
-	// Temporary group:
-	//	TRI_UNKNOWN	- Persistent group;
-	//	TRI_FALSE	- Temporary group, not completed yet;
-	//	TRI_TRUE	- Temporary group, feel free to delete.
+	CList< CDownload* >	m_pDownloads;		// List of linked downloads
+
+	// Temporary group: TRI_UNKNOWN	- Persistent group;
+	//                  TRI_FALSE	- Temporary group, not completed yet;
+	//                  TRI_TRUE	- Temporary group, feel free to delete.
 	TRISTATE			m_bTemporary;
 
 public:
-	CString				m_sName;
-	CString				m_sSchemaURI;
-	CString				m_sFolder;
-	CList< CString >	m_pFilters;
-	int					m_nImage;
-	BOOL				m_bRemoteSelected;
+	CString				m_sName;			// Group name
+	CString				m_sSchemaURI;		// Default schema (used to fill filters list)
+	CString				m_sFolder;			// Folder for completed downloads
+	CList< CString >	m_pFilters;			// Filters list
+	int					m_nImage;			// 16x16 group icon
+	BOOL				m_bRemoteSelected;	// Active(selected) group for Remote Interface
+	BOOL				m_bTorrent;			// Filter BitTorrent downloads
 
 // Operations
 public:
@@ -57,10 +58,12 @@ public:
 	void		CopyList(CList< CDownload* >& pList);
 	BOOL		Link(CDownload* pDownload);
 	int			LinkAll();
-	void		AddFilter(LPCTSTR pszFilter);
-	void		SetSchema(LPCTSTR pszURI);
+	void		AddFilter(const CString& strFilter);
+	void		RemoveFilter(const CString& strFilter);
+	void		SetSchema(LPCTSTR pszURI, BOOL bRemoveOldFilters = FALSE);
 	void		Serialize(CArchive& ar, const int nVersion);
 	BOOL		IsTemporary();
+	void		SetDefaultFilters();	// Load file extensions from schema
 
 // Inlines
 public:

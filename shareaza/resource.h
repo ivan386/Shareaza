@@ -546,7 +546,6 @@
 #define IDC_FILTER_LIST                 1331
 #define IDC_FILTER_ADD                  1332
 #define IDC_FILTER_REMOVE               1333
-#define IDC_ICON_LIST                   1334
 #define IDC_TORRENT_NAME                1335
 #define IDC_TORRENT_UPLOADTOTAL         1336
 #define IDC_TORRENT_FILES               1337
@@ -775,6 +774,8 @@
 #define IDC_PREVIEW2                    1561
 #define IDC_CANCEL_DOWNLOAD             1562
 #define IDC_SMART_SERIES_DETECTION      1563
+#define IDC_DOWNLOADS_DEFAULT           1566
+#define IDC_DOWNLOADS_TORRENT           1567
 #define IDS_FILTER_DELETE_CONFIRM       7000
 #define IDS_SCHEMAS                     7001
 #define IDS_MULTIPLE_VALUES             7002
@@ -1870,10 +1871,10 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_3D_CONTROLS                1
+#define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        325
 #define _APS_NEXT_COMMAND_VALUE         33318
-#define _APS_NEXT_CONTROL_VALUE         1564
+#define _APS_NEXT_CONTROL_VALUE         1568
 #define _APS_NEXT_SYMED_VALUE           104
 #endif
 #endif

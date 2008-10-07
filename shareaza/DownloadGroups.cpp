@@ -1,7 +1,7 @@
 //
 // DownloadGroups.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -76,9 +76,21 @@ CDownloadGroup* CDownloadGroups::GetSuperGroup()
 //////////////////////////////////////////////////////////////////////
 // CDownloadGroups add group
 
-CDownloadGroup* CDownloadGroups::Add(const LPCTSTR pszName, const BOOL bTemporary)
+CDownloadGroup* CDownloadGroups::Add(LPCTSTR pszName, BOOL bTemporary, BOOL bUseExisting)
 {
 	CQuickLock pLock( m_pSection );
+
+	if ( bUseExisting )
+	{
+		for ( POSITION pos = m_pList.GetHeadPosition(); pos; )
+		{
+			CDownloadGroup* pGroup = m_pList.GetNext( pos );
+			if ( ! pGroup->m_sName.CompareNoCase( pszName ) )
+			{
+				return pGroup;
+			}
+		}
+	}
 
 	CDownloadGroup* pGroup = new CDownloadGroup( pszName, bTemporary );
 	m_pList.AddTail( pGroup );
@@ -148,18 +160,23 @@ void CDownloadGroups::CreateDefault()
 
 	pGroup = Add( _T("Audio") );
 	pGroup->SetSchema( CSchema::uriAudio );
+	pGroup->SetDefaultFilters();
 
 	pGroup = Add( _T("Video") );
 	pGroup->SetSchema( CSchema::uriVideo );
+	pGroup->SetDefaultFilters();
 
 	pGroup = Add( _T("Image") );
 	pGroup->SetSchema( CSchema::uriImage );
+	pGroup->SetDefaultFilters();
 
 	pGroup = Add( _T("BitTorrent") );
 	pGroup->SetSchema( CSchema::uriBitTorrent );
+	pGroup->SetDefaultFilters();
 
 	pGroup = Add( _T("Collection") );
 	pGroup->SetSchema( CSchema::uriCollection );
+	pGroup->SetDefaultFilters();
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -265,10 +282,12 @@ BOOL CDownloadGroups::Save(BOOL bForce)
 //////////////////////////////////////////////////////////////////////
 // CDownloadGroups serialize
 
-#define GROUPS_SER_VERSION	6
+#define GROUPS_SER_VERSION	7
 // History:
 // 4 - Added m_bTemporary (ryo-oh-ki)
-// 5 - New download groups added
+// 5 - New download groups added (i.e. Image, Collection)
+// 6 - ???
+// 7 - Added m_bTorrent (ryo-oh-ki), fixed collection schema
 
 void CDownloadGroups::Serialize(CArchive& ar)
 {
@@ -331,9 +350,11 @@ void CDownloadGroups::Serialize(CArchive& ar)
 		{
 			CDownloadGroup* pGroup = Add( _T("Image") );
 			pGroup->SetSchema( CSchema::uriImage );
+			pGroup->SetDefaultFilters();
 
 			pGroup = Add( _T("Collection") );
 			pGroup->SetSchema( CSchema::uriCollection );
+			pGroup->SetDefaultFilters();
 		}
 
 		GetSuperGroup();

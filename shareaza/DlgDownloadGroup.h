@@ -19,56 +19,47 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(DLGDOWNLOADGROUP_H)
-#define DLGDOWNLOADGROUP_H
-
 #pragma once
 
 #include "DlgSkinDialog.h"
 #include "CtrlIconButton.h"
+#include "CtrlSchemaCombo.h"
 
 class CDownloadGroup;
 
 
 class CDownloadGroupDlg : public CSkinDialog
 {
-// Construction
 public:
 	CDownloadGroupDlg(CDownloadGroup* pGroup, CWnd* pParent = NULL);
 
-// Dialog Data
-public:
 	enum { IDD = IDD_DOWNLOAD_GROUP };
+
+protected:
 	CIconButtonCtrl	m_wndBrowse;
-	CListCtrl		m_wndImages;
+	CIconButtonCtrl	m_wndCancel;
+	CSchemaCombo	m_wndSchemas;
 	CEdit			m_wndFolder;
 	CButton			m_wndFilterAdd;
 	CButton			m_wndFilterRemove;
 	CComboBox		m_wndFilterList;
 	CString			m_sName;
 	CString			m_sFolder;
-
+	BOOL			m_bTorrent;
 	CDownloadGroup*	m_pGroup;
+	CString			m_sOldSchemaURI;
 
-protected:
-	bool			m_bInitializing;
-
-// Overrides
-protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-
-// Implementation
-protected:
 	virtual BOOL OnInitDialog();
+	virtual void OnOK();
+
 	afx_msg void OnFilterAdd();
 	afx_msg void OnFilterRemove();
 	afx_msg void OnEditChangeFilterList();
 	afx_msg void OnSelChangeFilterList();
-	virtual void OnOK();
 	afx_msg void OnBrowse();
-	afx_msg void OnLvnItemchangingIconList(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg void OnCbnCloseupSchemas();
+	afx_msg void OnBnClickedDownloadDefault();
 
 	DECLARE_MESSAGE_MAP()
 };
-
-#endif // !defined(DLGDOWNLOADGROUP_H)

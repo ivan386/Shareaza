@@ -41,12 +41,13 @@ static char THIS_FILE[] = __FILE__;
 #endif
 
 BEGIN_MESSAGE_MAP(CDownloadGroupDlg, CSkinDialog)
-	ON_BN_CLICKED(IDC_FILTER_ADD, OnFilterAdd)
-	ON_BN_CLICKED(IDC_FILTER_REMOVE, OnFilterRemove)
-	ON_CBN_EDITCHANGE(IDC_FILTER_LIST, OnEditChangeFilterList)
-	ON_CBN_SELCHANGE(IDC_FILTER_LIST, OnSelChangeFilterList)
-	ON_BN_CLICKED(IDC_DOWNLOADS_BROWSE, OnBrowse)
-	ON_NOTIFY(LVN_ITEMCHANGING, IDC_ICON_LIST, OnLvnItemchangingIconList)
+	ON_BN_CLICKED(IDC_FILTER_ADD, &CDownloadGroupDlg::OnFilterAdd)
+	ON_BN_CLICKED(IDC_FILTER_REMOVE, &CDownloadGroupDlg::OnFilterRemove)
+	ON_CBN_EDITCHANGE(IDC_FILTER_LIST, &CDownloadGroupDlg::OnEditChangeFilterList)
+	ON_CBN_SELCHANGE(IDC_FILTER_LIST, &CDownloadGroupDlg::OnSelChangeFilterList)
+	ON_BN_CLICKED(IDC_DOWNLOADS_BROWSE, &CDownloadGroupDlg::OnBrowse)
+	ON_CBN_CLOSEUP(IDC_SCHEMAS, &CDownloadGroupDlg::OnCbnCloseupSchemas)
+	ON_BN_CLICKED(IDC_DOWNLOADS_DEFAULT, &CDownloadGroupDlg::OnBnClickedDownloadDefault)
 END_MESSAGE_MAP()
 
 
@@ -55,21 +56,25 @@ END_MESSAGE_MAP()
 
 CDownloadGroupDlg::CDownloadGroupDlg(CDownloadGroup* pGroup, CWnd* pParent) :
 	CSkinDialog( CDownloadGroupDlg::IDD, pParent ),
-	m_pGroup( pGroup )
+	m_pGroup( pGroup ),
+	m_bTorrent( FALSE )
 {
 }
 
 void CDownloadGroupDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CSkinDialog::DoDataExchange(pDX);
+
 	DDX_Control(pDX, IDC_DOWNLOADS_BROWSE, m_wndBrowse);
-	DDX_Control(pDX, IDC_ICON_LIST, m_wndImages);
+	DDX_Control(pDX, IDC_DOWNLOADS_DEFAULT, m_wndCancel);
 	DDX_Control(pDX, IDC_FOLDER, m_wndFolder);
 	DDX_Control(pDX, IDC_FILTER_ADD, m_wndFilterAdd);
 	DDX_Control(pDX, IDC_FILTER_REMOVE, m_wndFilterRemove);
 	DDX_Control(pDX, IDC_FILTER_LIST, m_wndFilterList);
+	DDX_Control(pDX, IDC_SCHEMAS, m_wndSchemas);
 	DDX_Text(pDX, IDC_NAME, m_sName);
 	DDX_Text(pDX, IDC_FOLDER, m_sFolder);
+	DDX_Check(pDX, IDC_DOWNLOADS_TORRENT, m_bTorrent);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -78,15 +83,16 @@ void CDownloadGroupDlg::DoDataExchange(CDataExchange* pDX)
 BOOL CDownloadGroupDlg::OnInitDialog()
 {
 	CSkinDialog::OnInitDialog();
-	m_bInitializing = true;
 
 	SkinMe( _T("CDownloadGroupDlg") );
 
-	m_wndImages.SetImageList( ShellIcons.GetObject( 16 ), LVSIL_SMALL );
-	m_wndImages.SetColumnWidth( 0, 36 );
-	m_wndImages.SetExtendedStyle( LVS_EX_CHECKBOXES );
-	m_wndImages.SetItemCount( 28 );
+	m_wndSchemas.SetDroppedWidth( 200 );
+	LoadString( m_wndSchemas.m_sNoSchemaText, IDS_SEARCH_PANEL_AFT );
+	m_wndSchemas.Load( m_pGroup->m_sSchemaURI );
+	m_sOldSchemaURI = m_pGroup->m_sSchemaURI;
+	
 	m_wndBrowse.SetCoolIcon( IDI_BROWSE, Settings.General.LanguageRTL );
+	m_wndCancel.SetCoolIcon( IDI_FAKE, Settings.General.LanguageRTL );
 
 	CSingleLock pLock( &DownloadGroups.m_pSection, TRUE );
 
@@ -98,36 +104,12 @@ BOOL CDownloadGroupDlg::OnInitDialog()
 
 	m_sName		= m_pGroup->m_sName;
 	m_sFolder	= m_pGroup->m_sFolder;
+	m_bTorrent	= m_pGroup->m_bTorrent;
 
 	for ( POSITION pos = m_pGroup->m_pFilters.GetHeadPosition() ; pos ; )
 	{
 		m_wndFilterList.AddString( m_pGroup->m_pFilters.GetNext( pos ) );
 	}
-
-	CList<CString>	pUsedIcons;
-	int nSelectedIndex = 0;
-	for ( POSITION pos = SchemaCache.GetIterator() ; pos ; )
-	{
-		CSchema* pSchema = SchemaCache.GetNext( pos );
-
-		if ( pUsedIcons.Find( pSchema->m_sIcon ) == NULL ||
-			 pSchema->CheckURI( m_pGroup->m_sSchemaURI ) )
-		{
-			pUsedIcons.AddTail( pSchema->m_sIcon );
-
-			int nIndex = m_wndImages.InsertItem( LVIF_IMAGE|LVIF_PARAM,
-				m_wndImages.GetItemCount(), NULL, 0, 0, pSchema->m_nIcon16,
-				(LPARAM)pSchema );
-
-			if ( pSchema->CheckURI( m_pGroup->m_sSchemaURI ) )
-			{
-				m_wndImages.SetItemState( nIndex, LVIS_SELECTED, LVIS_SELECTED );
-				m_wndImages.SetCheck( nIndex );
-				nSelectedIndex = nIndex;
-			}
-		}
-	}
-	m_wndImages.EnsureVisible( nSelectedIndex, FALSE );
 
 	UpdateData( FALSE );
 
@@ -138,7 +120,6 @@ BOOL CDownloadGroupDlg::OnInitDialog()
 	m_wndFilterAdd.EnableWindow( m_wndFilterList.GetWindowTextLength() > 0 );
 	m_wndFilterRemove.EnableWindow( m_wndFilterList.GetCurSel() >= 0 );
 
-	m_bInitializing = false;
 	return TRUE;
 }
 
@@ -194,32 +175,23 @@ void CDownloadGroupDlg::OnOK()
 	{
 		m_pGroup->m_sName	= m_sName;
 		m_pGroup->m_sFolder	= m_sFolder;
+		m_pGroup->m_bTorrent = m_bTorrent;
 
 		m_pGroup->m_pFilters.RemoveAll();
-
 		for ( int nItem = 0 ; nItem < m_wndFilterList.GetCount() ; nItem++ )
 		{
 			CString str;
 			m_wndFilterList.GetLBText( nItem, str );
-			if ( str.GetLength() ) m_pGroup->m_pFilters.AddTail( str );
+			m_pGroup->AddFilter( str );
 		}
 
-		int nIndex = m_wndImages.GetNextItem( -1, LVNI_SELECTED );
+		// Change schema and remove old schema filters (preserve custom ones)
+		m_pGroup->SetSchema( m_wndSchemas.GetSelectedURI(), TRUE );
 
-		if ( nIndex >= 0 )
-		{
-			CSchema* pSchema = (CSchema*)m_wndImages.GetItemData( nIndex );
-			m_pGroup->SetSchema( pSchema->GetURI() );
-			
-			// Why should we force users to have groups named after the schema?
-			// Because we add new schema related types without asking?
-			if ( m_sName.GetLength() && m_pGroup->m_sName != m_sName )
-				m_pGroup->m_sName = m_sName;
-		}
-		else
-		{
-			m_pGroup->SetSchema( _T("") );
-		}
+		// Why should we force users to have groups named after the schema?
+		// Because we add new schema related types without asking?
+		if ( m_sName.GetLength() && m_pGroup->m_sName != m_sName )
+			m_pGroup->m_sName = m_sName;
 	}
 
 	if ( m_sFolder.GetLength() && ! LibraryFolders.IsFolderShared( m_sFolder ) )
@@ -279,8 +251,9 @@ void CDownloadGroupDlg::OnOK()
 
 void CDownloadGroupDlg::OnBrowse()
 {
-	CString strPath( BrowseForFolder( _T("Select folder for downloads:"),
-		m_sFolder ) );
+	UpdateData();
+
+	CString strPath( BrowseForFolder( _T("Select folder for downloads:"), m_sFolder ) );
 	if ( strPath.IsEmpty() )
 		return;
 
@@ -295,58 +268,74 @@ void CDownloadGroupDlg::OnBrowse()
 
 	// If the group folder and download folders are the same, use the default download folder
 	if ( _tcsicmp( strPath, Settings.Downloads.CompletePath ) == 0 )
-	{
-		UpdateData( TRUE );
 		m_sFolder.Empty();
-		UpdateData( FALSE );
-		return;
-	}
+	else
+		m_sFolder = strPath;
 
-	UpdateData( TRUE );
-	m_sFolder = strPath;
 	UpdateData( FALSE );
 }
 
-void CDownloadGroupDlg::OnLvnItemchangingIconList(NMHDR *pNMHDR, LRESULT *pResult)
+void CDownloadGroupDlg::OnCbnCloseupSchemas()
 {
-	LPNMLISTVIEW pNMLV = reinterpret_cast<LPNMLISTVIEW>(pNMHDR);
-	*pResult = 0;
-	
-	if ( m_bInitializing ) return;
-	int nLength = m_wndImages.GetItemCount();
+	// Get filters
+	CList< CString > oList;
+	for ( int nItem = 0 ; nItem < m_wndFilterList.GetCount() ; nItem++ )
+	{
+		CString strFilter;
+		m_wndFilterList.GetLBText( nItem, strFilter );
+		if ( oList.Find( strFilter ) == NULL )
+			oList.AddTail( strFilter );
+	}
 
-	// Set check and selection states on first mouse click
-	if ( ( pNMLV->uOldState == 0x1000 && pNMLV->uNewState == 0x2000 ) ||
-		 ( pNMLV->uOldState == 0x0000 && pNMLV->uNewState == 0x0003 ) )
+	// Remove old schema filters (preserve custom ones)
+	if ( CSchema* pOldSchema = SchemaCache.Get( m_sOldSchemaURI ) )
 	{
-		int nOldIndex = -1;
-		for ( int nIndex = 0; nIndex < nLength; ++nIndex )
+		for ( LPCTSTR start = pOldSchema->m_sTypeFilter; *start; start++ )
 		{
-			if ( pNMLV->iItem != nIndex && m_wndImages.GetCheck( nIndex ) )
+			LPCTSTR c = _tcschr( start, _T('|') );
+			int len = c ? (int) ( c - start ) : (int) _tcslen( start );
+			if ( len > 0 )
 			{
-				nOldIndex = nIndex;
+				CString strFilter( start, len );
+				while ( POSITION pos = oList.Find( strFilter ) )
+					oList.RemoveAt( pos );
+			}
+			if ( ! c )
 				break;
-			}
+			start = c;
 		}
-		m_bInitializing = true;
-		m_wndImages.SetCheck( pNMLV->iItem );
-		if ( nOldIndex != -1 )
-			m_wndImages.SetCheck( nOldIndex, FALSE );
-		m_bInitializing = false;
-		m_wndImages.SetItemState( pNMLV->iItem, LVIS_SELECTED, LVIS_SELECTED );
 	}
-	// Disable removing check on other mouse clicks
-	else if ( pNMLV->uOldState == 0x2000 && pNMLV->uNewState == 0x1000 )
+
+	// Add new schema filters
+	if ( CSchema* pNewSchema = SchemaCache.Get( m_wndSchemas.GetSelectedURI() ) )
 	{
-		int nCount = 0;
-		for ( int nIndex = 0; nIndex < nLength; ++nIndex )
+		for ( LPCTSTR start = pNewSchema->m_sTypeFilter; *start; start++ )
 		{
-			if ( m_wndImages.GetCheck( nIndex ) )
+			LPCTSTR c = _tcschr( start, _T('|') );
+			int len = c ? (int) ( c - start ) : (int) _tcslen( start );
+			if ( len > 0 )
 			{
-				nCount++;
+				oList.AddTail( CString( start, len ) );
 			}
+			if ( ! c )
+				break;
+			start = c;
 		}
-		if ( nCount == 1 )
-			*pResult = 1;
 	}
+
+	// Refill interface filters list
+	m_wndFilterList.ResetContent();
+	for ( POSITION pos = oList.GetHeadPosition() ; pos ; )
+		m_wndFilterList.AddString( oList.GetNext( pos ) );
+
+	m_sOldSchemaURI = m_wndSchemas.GetSelectedURI();
+}
+
+void CDownloadGroupDlg::OnBnClickedDownloadDefault()
+{
+	UpdateData();
+
+	m_sFolder.Empty();
+
+	UpdateData( FALSE );
 }
