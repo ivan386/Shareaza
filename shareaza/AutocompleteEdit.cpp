@@ -5,27 +5,29 @@
 #include "Shareaza.h"
 #include "AutocompleteEdit.h"
 
-#define MAX_AUTOCOMPLETE 100
+#define MAX_AUTOCOMPLETE 200
 
-BEGIN_INTERFACE_MAP(CAutocompleteEdit::CEnumString, CComObject)
-	INTERFACE_PART(CAutocompleteEdit::CEnumString, IID_IEnumString, EnumString)
+IMPLEMENT_DYNAMIC(CRegEnum, CComObject)
+
+BEGIN_INTERFACE_MAP(CRegEnum, CComObject)
+	INTERFACE_PART(CRegEnum, IID_IEnumString, EnumString)
 END_INTERFACE_MAP()
 
-CAutocompleteEdit::CEnumString::CEnumString() :
+CRegEnum::CRegEnum() :
 	m_sect( _T("Autocomplete") ),
-	m_root( _T("Default.") ),
+	m_root( _T("Recent.%.2i.Text") ),
 	m_iter( 0 )
 {
 }
 
-IMPLEMENT_UNKNOWN(CAutocompleteEdit::CEnumString, EnumString)
+IMPLEMENT_UNKNOWN(CRegEnum, EnumString)
 
-STDMETHODIMP CAutocompleteEdit::CEnumString::XEnumString::Next(
+STDMETHODIMP CRegEnum::XEnumString::Next(
 	/* [in] */ ULONG celt,
 	/* [length_is][size_is][out] */ LPOLESTR* rgelt,
 	/* [out] */ ULONG *pceltFetched)
 {
-	METHOD_PROLOGUE( CAutocompleteEdit::CEnumString, EnumString )
+	METHOD_PROLOGUE( CRegEnum, EnumString )
 
 	if ( rgelt == NULL || ( celt != 1 && pceltFetched == NULL ) )
 		return E_POINTER;
@@ -35,9 +37,9 @@ STDMETHODIMP CAutocompleteEdit::CEnumString::XEnumString::Next(
 	HRESULT hr = S_OK;
 	while ( SUCCEEDED( hr ) && nActual < celt )
 	{
-		CString strKey;
-		strKey.Format( _T("%s%02u"), pThis->m_root, pThis->m_iter );
-		CString strValue( AfxGetApp()->GetProfileString( pThis->m_sect, strKey ) );
+		CString strEntry;
+		strEntry.Format( pThis->m_root, pThis->m_iter + 1 );
+		CString strValue( AfxGetApp()->GetProfileString( pThis->m_sect, strEntry ) );
 		if ( strValue.IsEmpty() )
 			break;
 		size_t len = ( strValue.GetLength() + 1 ) * sizeof( WCHAR );
@@ -56,17 +58,17 @@ STDMETHODIMP CAutocompleteEdit::CEnumString::XEnumString::Next(
 	return hr;
 }
 
-STDMETHODIMP CAutocompleteEdit::CEnumString::XEnumString::Skip(
+STDMETHODIMP CRegEnum::XEnumString::Skip(
 	/* [in] */ ULONG celt)
 {
-	METHOD_PROLOGUE( CAutocompleteEdit::CEnumString, EnumString )
+	METHOD_PROLOGUE( CRegEnum, EnumString )
 
 	HRESULT hr = S_OK;
 	while ( celt-- )
 	{
-		CString strKey;
-		strKey.Format( _T("%s%02u"), pThis->m_root, pThis->m_iter );
-		CString strValue( AfxGetApp()->GetProfileString( pThis->m_sect, strKey ) );
+		CString strEntry;
+		strEntry.Format( pThis->m_root, pThis->m_iter + 1 );
+		CString strValue( AfxGetApp()->GetProfileString( pThis->m_sect, strEntry ) );
 		if ( strValue.IsEmpty() )
 		{
 			hr = S_FALSE;
@@ -77,26 +79,26 @@ STDMETHODIMP CAutocompleteEdit::CEnumString::XEnumString::Skip(
 	return hr;
 }
 
-STDMETHODIMP CAutocompleteEdit::CEnumString::XEnumString::Reset(void)
+STDMETHODIMP CRegEnum::XEnumString::Reset(void)
 {
-	METHOD_PROLOGUE( CAutocompleteEdit::CEnumString, EnumString )
+	METHOD_PROLOGUE( CRegEnum, EnumString )
 
 	pThis->m_iter = 0;
 
 	return S_OK;
 }
 
-STDMETHODIMP CAutocompleteEdit::CEnumString::XEnumString::Clone(
+STDMETHODIMP CRegEnum::XEnumString::Clone(
 	/* [out] */ IEnumString** ppEnum)
 {
-	METHOD_PROLOGUE( CAutocompleteEdit::CEnumString, EnumString )
+	METHOD_PROLOGUE( CRegEnum, EnumString )
 
 	HRESULT hr = E_POINTER;
 	if ( ppEnum != NULL )
 	{
 		*ppEnum = NULL;
 		hr = E_OUTOFMEMORY;
-		CEnumString* p = new CEnumString();
+		CRegEnum* p = new CRegEnum();
 		if ( p )
 		{
 			p->m_root = pThis->m_root;
@@ -108,29 +110,40 @@ STDMETHODIMP CAutocompleteEdit::CEnumString::XEnumString::Clone(
 	return hr;
 }
 
-void CAutocompleteEdit::CEnumString::AddString(CString& rString) const
+void CRegEnum::AddString(CString& rString) const
 {
 	rString.Trim();
 	if ( rString.IsEmpty() )
 		return;
 
-	size_t count = 0;
-	for( ;; count++ )
+	// Load list
+	CStringList oList;
+	for ( int i = 1;; ++i )
 	{
-		CString strKey;
-		strKey.Format( _T("%s%02u"), m_root, count );
-		CString strValue( AfxGetApp()->GetProfileString( m_sect, strKey ) );
+		CString strEntry;
+		strEntry.Format( m_root, i );
+		CString strValue( AfxGetApp()->GetProfileString( m_sect, strEntry ) );
 		if ( strValue.IsEmpty() )
 			break;
-		if ( strValue == rString )
-			return;
+		if ( strValue.CompareNoCase( rString ) )
+			oList.AddTail( strValue );
 	}
-	if ( count >= MAX_AUTOCOMPLETE )
-		count = 0;
 
-	CString strKey;
-	strKey.Format( _T("%s%02u"), m_root, count );
-	AfxGetApp()->WriteProfileString( m_sect, strKey, rString );
+	// Cut to MAX_AUTOCOMPLETE items
+	while ( oList.GetCount() >= MAX_AUTOCOMPLETE )
+		oList.RemoveHead();
+
+	// Add as most recent
+	oList.AddHead( rString );
+
+	// Save list
+	int i = 1;
+	for ( POSITION pos = oList.GetHeadPosition(); pos; ++i )
+	{
+		CString strEntry;
+		strEntry.Format( m_root, i );
+		AfxGetApp()->WriteProfileString( m_sect, strEntry, oList.GetNext( pos ) );
+	}
 }
 
 IMPLEMENT_DYNAMIC(CAutocompleteEdit, CEdit)
@@ -156,8 +169,6 @@ int CAutocompleteEdit::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if ( CEdit::OnCreate( lpCreateStruct ) == -1 )
 		return -1;
-
-	m_oData.m_root.Format( _T("Edit.%08x."), GetDlgCtrlID() );
 
 	HRESULT hr = m_pIAutoComplete.CoCreateInstance( CLSID_AutoComplete );
 	if ( SUCCEEDED( hr ) )
@@ -189,8 +200,8 @@ int CAutocompleteEdit::GetWindowText(LPTSTR lpszStringBuf, int nMaxCount) const
 	int n = CEdit::GetWindowText( lpszStringBuf, nMaxCount );
 	if ( n > 0 )
 	{
-		CString strString( lpszStringBuf );
-		m_oData.AddString( strString );
+		CString tmp( lpszStringBuf );
+		m_oData.AddString( tmp );
 	}
 	return n;
 }
@@ -198,6 +209,5 @@ int CAutocompleteEdit::GetWindowText(LPTSTR lpszStringBuf, int nMaxCount) const
 void CAutocompleteEdit::GetWindowText(CString& rString) const
 {
 	CEdit::GetWindowText( rString );
-
 	m_oData.AddString( rString );
 }
