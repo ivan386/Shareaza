@@ -502,6 +502,7 @@ int CSearchInputBox::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	
 	m_wndSearch.SetFont( &theApp.m_gdiFont );
 	m_wndSearch.ModifyStyleEx( 0, WS_EX_CLIENTEDGE );
+	m_wndSearch.SetRegistryKey( _T("Search"), _T("Search.%.2i") );
 	
 	if ( ! m_wndSchemas.Create( WS_TABSTOP, rc, this, IDC_SCHEMAS ) ) return -1;
 	
