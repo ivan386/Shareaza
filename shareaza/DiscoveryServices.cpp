@@ -1144,14 +1144,26 @@ BOOL CDiscoveryServices::RunWebCacheGet(BOOL bCaches)
 	m_pWebCache->OnAccess();
 
 	if ( bCaches )
-		strURL = m_pWebCache->m_sAddress + _T("?get=1&urlfile=1&ping=1");
+		strURL = m_pWebCache->m_sAddress + _T("?get=1&urlfile=1");
 	else
-		strURL = m_pWebCache->m_sAddress + _T("?get=1&hostfile=1&ping=1");
+		strURL = m_pWebCache->m_sAddress + _T("?get=1&hostfile=1");
 
 	//strURL += _T("&support=1");	// GWC network and status - todo : Use this parameter's output to check GWCs for self-network support relay.
 	//strURL += _T("&info=1");		// Maintainer Info - todo : Use this parameter's output to add info (about the maintainer, etc.) into new columns inside the Discovery window.
 
-	if ( m_nLastQueryProtocol == PROTOCOL_G2 ) strURL += _T("&net=gnutella2");
+	if ( m_nLastQueryProtocol == PROTOCOL_G2 )
+	{
+		strURL += _T("&net=gnutella2&ping=1");
+		strURL += _T("&client=")_T(VENDOR_CODE);	//Version number is combined with client parameter for spec2
+		strURL += theApp.m_sVersion;
+	}
+	else
+	{
+		//gnutella assumed
+		strURL += _T("&net=gnutella");	//Some gnutella GWCs that serve specification 1 will not serve right on host/url requests combined with the ping request.
+		strURL += _T("&client=")_T(VENDOR_CODE)_T("&version=");	//Version parameter is spec1
+		strURL += theApp.m_sVersion;
+	}
 
 	pLock.Unlock();
 
@@ -1201,7 +1213,7 @@ BOOL CDiscoveryServices::RunWebCacheGet(BOOL bCaches)
 			}
 			return FALSE;
 		}
-		else if ( _tcsistr( strLine, _T("too early") ) != NULL )
+		else if ( _tcsistr( strLine, _T("early") ) != NULL )
 		{
 			// Did we flood?
 			theApp.Message( MSG_ERROR, _T("GWebCache %s : Too many connection attempts"), (LPCTSTR)m_pWebCache->m_sAddress );
@@ -1269,6 +1281,16 @@ BOOL CDiscoveryServices::RunWebCacheGet(BOOL bCaches)
 			{
 				// pong v2
 			}
+			/*else if ( _tcsnicmp( strLine, _T("i|networks|"), 11 ) == 0 )
+			{
+				//Beacon Cache type output
+				//Networks supported -TODO: Use this to check if cache supports requested network.
+			}
+			else if ( _tcsnicmp( strLine, _T("i|nets|"), 7 ) == 0 )
+			{
+				//Skulls type output
+				//Networks supported -TODO: Use this to check if cache supports requested network.
+			}*/
 			else if ( _tcsnicmp( strLine, _T("i|warning|"), 10 ) == 0 )
 			{
 				// Something wrong
@@ -1387,7 +1409,19 @@ BOOL CDiscoveryServices::RunWebCacheUpdate()
 		strURL += URLEncode( strSubmit );
 	}
 
-	if ( m_nLastUpdateProtocol == PROTOCOL_G2 ) strURL += _T("&net=gnutella2");
+	if ( m_nLastUpdateProtocol == PROTOCOL_G2 )
+	{
+		strURL += _T("&net=gnutella2");
+		strURL += _T("&client=")_T(VENDOR_CODE);	//Version number is combined with client parameter for spec2
+		strURL += theApp.m_sVersion;
+	}
+	else
+	{
+		//gnutella assumed
+		strURL += _T("&net=gnutella");	//Some gnutella GWCs that serve specification 1 will not serve right on host/url requests combined with the ping request.
+		strURL += _T("&client=")_T(VENDOR_CODE)_T("&version=");	//Version parameter is spec1
+		strURL += theApp.m_sVersion;
+	}
 
 	pLock.Unlock();
 
@@ -1430,7 +1464,18 @@ BOOL CDiscoveryServices::RunWebCacheUpdate()
 			}
 			else if ( _tcsistr( strLine, _T("i|update|OK") ) )
 			{
-				theApp.Message( MSG_INFO, _T("GWebCache(v2) Update Passed: %s"), (LPCTSTR)strLine );
+				if ( _tcsistr( strLine, _T("i|update|OK|URL|WARNING") ) )
+				{
+					theApp.Message( MSG_INFO, _T("GWebCache(v2) URL Update Warning: %s"), (LPCTSTR)strLine );
+				}
+				else if ( _tcsistr( strLine, _T("i|update|OK|HOST|WARNING") ) )
+				{
+					theApp.Message( MSG_INFO, _T("GWebCache(v2) IP Update Warning: %s"), (LPCTSTR)strLine );
+				}
+				else
+				{
+					theApp.Message( MSG_INFO, _T("GWebCache(v2) Update Passed: %s"), (LPCTSTR)strLine );
+				}
 				m_pWebCache->m_tUpdated = (DWORD)time( NULL );
 				m_pWebCache->m_nUpdates++;
 				m_pWebCache->OnSuccess();
@@ -1445,9 +1490,8 @@ BOOL CDiscoveryServices::RunWebCacheUpdate()
 				return TRUE;
 			}
 		}
-		else if ( _tcsistr( strLine, _T("i|warning|You came back too early") ) != NULL || _tcsistr( strLine, _T("WARNING: You came back too early") ) != NULL )
+		else if ( _tcsistr( strLine, _T("i|warning|client|early") ) != NULL || _tcsistr( strLine, _T("i|warning|You came back too early") ) != NULL || _tcsistr( strLine, _T("WARNING: You came back too early") ) != NULL )
 		{
-			//Beacon Cache type flood warning (Should only be logged for older Beacons, as 404s are given with the newer verions 0.4.1+).
 			theApp.Message( MSG_ERROR, _T("GWebCache(update) Too many connection attempts") );
 			//Did we flood a gwc? It's always nice to know. :)
 			return FALSE;
@@ -1491,9 +1535,6 @@ BOOL CDiscoveryServices::RunWebCacheUpdate()
 BOOL CDiscoveryServices::SendWebCacheRequest(CString strURL, CString& strOutput)
 {
 	strOutput.Empty();
-
-	strURL += _T("&client=")_T(VENDOR_CODE)_T("&version=");
-	strURL += theApp.m_sVersion;
 
 	theApp.Message( MSG_DEBUG, _T("DiscoveryService URL: %s"), (LPCTSTR)strURL );
 
