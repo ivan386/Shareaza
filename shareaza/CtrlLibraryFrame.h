@@ -27,6 +27,7 @@
 #include "CtrlLibraryHeaderPanel.h"
 #include "CtrlLibraryTip.h"
 #include "CtrlSchemaCombo.h"
+#include "AutocompleteEdit.h"
 
 class CLibraryView;
 class CLibraryPanel;
@@ -108,7 +109,7 @@ protected:
 	CLibraryHeaderBar	m_wndViewTop;
 	CCoolBarCtrl		m_wndViewBottom;
 	CCoolBarCtrl		m_wndBottomDynamic;
-	CEdit				m_wndSearch;
+	CAutocompleteEdit	m_wndSearch;
 	CButton				m_wndSaveOption;
 	CLibraryViewList	m_pViews;
 	CLibraryView*		m_pView;

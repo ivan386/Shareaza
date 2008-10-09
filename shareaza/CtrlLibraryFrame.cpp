@@ -167,6 +167,7 @@ int CLibraryFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	if ( ! m_wndSearch.Create( WS_CHILD|WS_TABSTOP|ES_AUTOHSCROLL, rcTypes, &m_wndViewBottom, IDC_SEARCH_BOX ) ) return -1;
 	m_wndSearch.SetFont( &theApp.m_gdiFont );
+	m_wndSearch.SetRegistryKey( _T("Search"), _T("Search.%.2i") );
 
 	if ( ! m_wndSaveOption.Create( NULL, WS_CHILD|WS_TABSTOP|BS_AUTOCHECKBOX, rcTypes, &m_wndBottomDynamic, 
 		ID_SHAREMONKEY_SAVE_OPTION ) ) return -1;
