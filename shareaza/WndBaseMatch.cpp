@@ -160,6 +160,7 @@ int CBaseMatchWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	if ( ! m_wndFilter.Create( WS_CHILD|WS_TABSTOP|WS_VISIBLE|ES_AUTOHSCROLL, rectDefault, &m_wndToolBar, IDC_FILTER_BOX ) ) return -1;
 	m_wndFilter.SetFont( &theApp.m_gdiFont );
+	m_wndFilter.SetRegistryKey( _T("Search"), _T("Filter.%.2i") );
 
 	SetTimer( 2, 500, NULL );
 

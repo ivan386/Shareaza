@@ -23,6 +23,7 @@
 
 #include "WndPanel.h"
 #include "CtrlMatch.h"
+#include "AutocompleteEdit.h"
 
 class CMatchList;
 class CCoolMenu;
@@ -41,7 +42,7 @@ public:
 public:
 	CMatchCtrl		m_wndList;
 	CCoolBarCtrl	m_wndToolBar;
-	CEdit			m_wndFilter;
+	CAutocompleteEdit	m_wndFilter;
 
 protected:
 	CMatchList*		m_pMatches;
