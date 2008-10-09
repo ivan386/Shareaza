@@ -5,9 +5,7 @@
 #include "Shareaza.h"
 #include "AutocompleteEdit.h"
 
-#define MAX_AUTOCOMPLETE 200
-
-IMPLEMENT_DYNAMIC(CRegEnum, CComObject)
+IMPLEMENT_DYNCREATE(CRegEnum, CComObject)
 
 BEGIN_INTERFACE_MAP(CRegEnum, CComObject)
 	INTERFACE_PART(CRegEnum, IID_IEnumString, EnumString)
@@ -15,7 +13,7 @@ END_INTERFACE_MAP()
 
 CRegEnum::CRegEnum() :
 	m_sect( _T("Autocomplete") ),
-	m_root( _T("Recent.%.2i.Text") ),
+	m_root( _T("%.2i") ),
 	m_iter( 0 )
 {
 }
@@ -42,6 +40,9 @@ STDMETHODIMP CRegEnum::XEnumString::Next(
 		CString strValue( AfxGetApp()->GetProfileString( pThis->m_sect, strEntry ) );
 		if ( strValue.IsEmpty() )
 			break;
+		int lf = strValue.Find( _T('\n') );
+		if ( lf != -1 )
+			strValue = strValue.Left( lf );
 		size_t len = ( strValue.GetLength() + 1 ) * sizeof( WCHAR );
 			*pelt = (LPWSTR)CoTaskMemAlloc( len );
 		if ( ! *pelt )
@@ -110,43 +111,83 @@ STDMETHODIMP CRegEnum::XEnumString::Clone(
 	return hr;
 }
 
-void CRegEnum::AddString(CString& rString) const
+BOOL CRegEnum::AttachTo(HWND hWnd)
 {
-	rString.Trim();
-	if ( rString.IsEmpty() )
+	HRESULT hr;
+
+	if ( ! m_pIAutoComplete )
+	{
+		hr = m_pIAutoComplete.CoCreateInstance( CLSID_AutoComplete );
+		if ( FAILED( hr ) )
+			return FALSE;
+	}
+
+	CComPtr< IUnknown > pIUnknown;
+	hr = InternalQueryInterface( &IID_IUnknown, (LPVOID*)&pIUnknown );
+	if ( SUCCEEDED( hr ) )
+	{
+		hr = m_pIAutoComplete->Init( hWnd, pIUnknown, NULL, NULL );
+		if ( FAILED( hr ) )
+			return FALSE;
+
+		CComPtr< IAutoComplete2 > pIAutoComplete2;
+		hr = m_pIAutoComplete->QueryInterface( IID_IAutoComplete2,
+			(LPVOID*)&pIAutoComplete2 );
+		if ( SUCCEEDED( hr ) )
+		{
+			hr = pIAutoComplete2->SetOptions( ACO_AUTOSUGGEST |
+				ACO_AUTOAPPEND | ACO_UPDOWNKEYDROPSLIST );
+		}
+	}
+
+	return TRUE;
+}
+
+void CRegEnum::SetRegistryKey(LPCTSTR szSection, LPCTSTR szRoot)
+{
+	m_sect = szSection;
+	m_root = szRoot;
+}
+
+void CRegEnum::AddString(const CString& rString) const
+{
+	int lf = rString.Find( _T('\n') );
+	CString sKeyString( ( lf != -1 )? rString.Left( lf ) : rString );
+	if ( sKeyString.IsEmpty() )
 		return;
 
 	// Load list
 	CStringList oList;
-	for ( int i = 1;; ++i )
+	for ( int i = 0; ; ++i )
 	{
 		CString strEntry;
-		strEntry.Format( m_root, i );
+		strEntry.Format( m_root, i + 1 );
 		CString strValue( AfxGetApp()->GetProfileString( m_sect, strEntry ) );
 		if ( strValue.IsEmpty() )
 			break;
-		if ( strValue.CompareNoCase( rString ) )
+		int lf = strValue.Find( _T('\n') );
+		if ( sKeyString .CompareNoCase( ( lf != -1 ) ? strValue.Left( lf ) : strValue ) )
 			oList.AddTail( strValue );
 	}
 
-	// Cut to MAX_AUTOCOMPLETE items
-	while ( oList.GetCount() >= MAX_AUTOCOMPLETE )
-		oList.RemoveHead();
+	// Cut to 200 items
+	while ( oList.GetCount() >= 200 )
+		oList.RemoveTail();
 
 	// Add as most recent
 	oList.AddHead( rString );
 
 	// Save list
-	int i = 1;
-	for ( POSITION pos = oList.GetHeadPosition(); pos; ++i )
+	POSITION pos = oList.GetHeadPosition();
+	for ( int i = 0; pos; ++i )
 	{
 		CString strEntry;
-		strEntry.Format( m_root, i );
+		strEntry.Format( m_root, i + 1 );
 		AfxGetApp()->WriteProfileString( m_sect, strEntry, oList.GetNext( pos ) );
 	}
 }
 
-IMPLEMENT_DYNAMIC(CAutocompleteEdit, CEdit)
+IMPLEMENT_DYNCREATE(CAutocompleteEdit, CEdit)
 
 CAutocompleteEdit::CAutocompleteEdit()
 {
@@ -161,8 +202,7 @@ END_MESSAGE_MAP()
 
 void CAutocompleteEdit::SetRegistryKey(LPCTSTR szSection, LPCTSTR szRoot)
 {
-	m_oData.m_sect = szSection;
-	m_oData.m_root = szRoot;
+	m_oData.SetRegistryKey( szSection, szRoot );
 }
 
 int CAutocompleteEdit::OnCreate(LPCREATESTRUCT lpCreateStruct)
@@ -170,27 +210,7 @@ int CAutocompleteEdit::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	if ( CEdit::OnCreate( lpCreateStruct ) == -1 )
 		return -1;
 
-	HRESULT hr = m_pIAutoComplete.CoCreateInstance( CLSID_AutoComplete );
-	if ( SUCCEEDED( hr ) )
-	{
-		CComPtr< IUnknown > pIUnknown;
-		hr = m_oData.InternalQueryInterface( &IID_IUnknown, (LPVOID*)&pIUnknown );
-		if ( SUCCEEDED( hr ) )
-		{
-			hr = m_pIAutoComplete->Init( GetSafeHwnd(), pIUnknown, NULL, NULL );
-			if ( SUCCEEDED( hr ) )
-			{
-				CComPtr< IAutoComplete2 > pIAutoComplete2;
-				hr = m_pIAutoComplete->QueryInterface( IID_IAutoComplete2,
-					(LPVOID*)&pIAutoComplete2 );
-				if ( SUCCEEDED( hr ) )
-				{
-					hr = pIAutoComplete2->SetOptions( ACO_AUTOSUGGEST |
-						ACO_UPDOWNKEYDROPSLIST );
-				}
-			}
-		}
-	}
+	m_oData.AttachTo( GetSafeHwnd() );
 
 	return 0;
 }

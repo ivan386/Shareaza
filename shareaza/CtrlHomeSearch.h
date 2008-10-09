@@ -26,12 +26,13 @@
 
 class CHomeSearchCtrl : public CWnd
 {
+	DECLARE_DYNCREATE(CHomeSearchCtrl)
+
 public:
 	CHomeSearchCtrl();
 
-	DECLARE_DYNAMIC(CHomeSearchCtrl)
-
 	void	OnSkinChange(COLORREF crWindow);
+	void	Activate();
 
 	virtual BOOL Create(CWnd* pParentWnd, UINT nID);
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
@@ -53,7 +54,6 @@ protected:
 	afx_msg void OnSelChangeText();
 	afx_msg void OnSearchStart();
 	afx_msg void OnSearchAdvanced();
-	afx_msg void OnSetFocus(CWnd* pOldWnd);
 
 	DECLARE_MESSAGE_MAP()
 };

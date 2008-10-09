@@ -133,7 +133,8 @@ void CHomeWnd::OnMDIActivate(BOOL bActivate, CWnd* pActivateWnd, CWnd* pDeactiva
 	{
 		m_wndView.Update();
 		m_wndPanel.Update();
-		m_wndView.SetFocus();
+
+		m_wndView.Activate();
 	}
 
 	CPanelWnd::OnMDIActivate( bActivate, pActivateWnd, pDeactivateWnd );

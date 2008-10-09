@@ -37,7 +37,8 @@ typedef struct
 
 class CRichViewCtrl : public CWnd
 {
-// Construction
+	DECLARE_DYNCREATE(CRichViewCtrl)
+
 public:
 	CRichViewCtrl();
 	virtual ~CRichViewCtrl();

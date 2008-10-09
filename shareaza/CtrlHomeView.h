@@ -28,12 +28,11 @@
 
 class CHomeViewCtrl : public CRichViewCtrl
 {
-// Construction
+	DECLARE_DYNCREATE(CHomeViewCtrl)
+
 public:
 	CHomeViewCtrl();
 
-// Attributes
-public:
 	CRichDocument	m_pDocument;
 	CRichElement*	m_peHeader;
 	CRichElement*	m_peSearch;
@@ -44,22 +43,19 @@ public:
 	CBitmap			m_bmHeader1;
 	CBitmap			m_bmHeader2;
 
-// Operations
-public:
 	virtual BOOL	Create(const RECT& rect, CWnd* pParentWnd);
 	void			OnSkinChange();
+	void			Activate();
 	void			Update();
+
 protected:
 	virtual void	OnLayoutComplete();
 	virtual void	OnPaintBegin(CDC* pDC);
 	virtual void	OnVScrolled();
 
-// Implementation
-protected:
-	DECLARE_MESSAGE_MAP()
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
-	afx_msg void OnSetFocus(CWnd* pOldWnd);
 
+	DECLARE_MESSAGE_MAP()
 };
 
 #define IDC_HOME_VIEW		150

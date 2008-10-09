@@ -38,9 +38,10 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 
+IMPLEMENT_DYNCREATE(CHomeViewCtrl, CRichViewCtrl)
+
 BEGIN_MESSAGE_MAP(CHomeViewCtrl, CRichViewCtrl)
 	ON_WM_CREATE()
-	ON_WM_SETFOCUS()
 END_MESSAGE_MAP()
 
 #define GROUP_DISCONNECTED		1
@@ -110,6 +111,12 @@ void CHomeViewCtrl::OnSkinChange()
 
 	SetDocument( &m_pDocument );
 	Update();
+}
+
+void CHomeViewCtrl::Activate()
+{
+	if ( m_wndSearch.IsWindowVisible() )
+		m_wndSearch.Activate();
 }
 
 void CHomeViewCtrl::Update()
@@ -258,8 +265,3 @@ void CHomeViewCtrl::OnVScrolled()
 	OnLayoutComplete();
 }
 
-void CHomeViewCtrl::OnSetFocus(CWnd* pOldWnd)
-{
-	CRichViewCtrl::OnSetFocus( pOldWnd );
-	if ( m_wndSearch.IsWindowVisible() ) m_wndSearch.SetFocus();
-}

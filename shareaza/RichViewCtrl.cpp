@@ -35,6 +35,8 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 
+IMPLEMENT_DYNCREATE(CRichViewCtrl, CWnd)
+
 BEGIN_MESSAGE_MAP(CRichViewCtrl, CWnd)
 	//{{AFX_MSG_MAP(CRichViewCtrl)
 	ON_WM_CREATE()

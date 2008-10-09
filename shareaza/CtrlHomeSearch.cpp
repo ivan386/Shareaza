@@ -39,7 +39,7 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 
-IMPLEMENT_DYNAMIC(CHomeSearchCtrl, CWnd)
+IMPLEMENT_DYNCREATE(CHomeSearchCtrl, CWnd)
 
 BEGIN_MESSAGE_MAP(CHomeSearchCtrl, CWnd)
 	ON_WM_CREATE()
@@ -49,7 +49,6 @@ BEGIN_MESSAGE_MAP(CHomeSearchCtrl, CWnd)
 	ON_CBN_SELCHANGE(IDC_SEARCH_TEXT, OnSelChangeText)
 	ON_COMMAND(IDC_SEARCH_START, OnSearchStart)
 	ON_COMMAND(IDC_SEARCH_ADVANCED, OnSearchAdvanced)
-	ON_WM_SETFOCUS()
 END_MESSAGE_MAP()
 
 
@@ -130,17 +129,20 @@ void CHomeSearchCtrl::OnSkinChange(COLORREF crWindow)
 
 void CHomeSearchCtrl::FillHistory()
 {
-	int nCount = theApp.GetProfileInt( _T("Search"), _T("Recent.Count"), 0 );
-
 	m_wndText.ResetContent();
 
-	for ( int nItem = 0 ; nItem < nCount ; nItem++ )
+	// Load all
+	for ( int i = 0; ; i++ )
 	{
 		CString strEntry;
-		strEntry.Format( _T("Recent.%.2i.Text"), nItem + 1 );
-		int nIndex = m_wndText.InsertString( 0, theApp.GetProfileString( _T("Search"), strEntry ) );
-		strEntry.Format( _T("Recent.%.2i.SchemaURI"), nItem + 1 );
-		CSchema* pSchema = SchemaCache.Get( theApp.GetProfileString( _T("Search"), strEntry ) );
+		strEntry.Format( _T("Search.%.2i"), i + 1 );
+		CString strValue( theApp.GetProfileString( _T("Search"), strEntry ) );
+		if ( strValue.IsEmpty() )
+			break;
+		int lf = strValue.Find( _T('\n') );
+		int nIndex = m_wndText.InsertString( i,
+			( lf != -1 ) ? strValue.Left( lf ) : strValue );
+		CSchema* pSchema = ( lf != -1 ) ? SchemaCache.Get( strValue.Mid( lf + 1 ) ) : NULL;
 		m_wndText.SetItemData( nIndex, (DWORD_PTR)pSchema );
 	}
 
@@ -220,7 +222,18 @@ void CHomeSearchCtrl::OnCloseUpText()
 	if ( nSel == m_wndText.GetCount() - 1 )
 	{
 		m_wndText.SetWindowText( _T("") );
-		theApp.WriteProfileInt( _T("Search"), _T("Recent.Count"), 0 );
+
+		// Delete all
+		for ( int i = 0; ; i++ )
+		{
+			CString strEntry;
+			strEntry.Format( _T("Search.%.2i"), i + 1 );
+			CString strValue( theApp.GetProfileString( _T("Search"), strEntry ) );
+			if ( strValue.IsEmpty() )
+				break;
+			theApp.WriteProfileString( _T("Search"), strEntry, NULL );
+		}
+
 		m_wndSchema.Select( (CSchema*)NULL );
 		FillHistory();
 	}
@@ -279,29 +292,35 @@ void CHomeSearchCtrl::Search(bool bAutostart)
 		{
 			if ( bValid )
 			{
-				int nCount = theApp.GetProfileInt( _T("Search"), _T("Recent.Count"), 0 );
-				int nItem = 0;
-				for ( ; nItem < nCount ; nItem++ )
+				// Load all
+				CStringList oList;
+				for ( int i = 0; ; i++ )
 				{
-					strEntry.Format( _T("Recent.%.2i.Text"), nItem + 1 );
-
-					if ( strText.CompareNoCase( theApp.GetProfileString( _T("Search"), strEntry ) ) == 0 )
-					{
-						strEntry.Format( _T("Recent.%.2i.SchemaURI"), nItem + 1 );
-						theApp.WriteProfileString( _T("Search"), strEntry, strURI );
-						m_wndText.SetItemData( nItem, (DWORD_PTR)pSchema );
+					strEntry.Format( _T("Search.%.2i"), i + 1 );
+					CString strValue( theApp.GetProfileString( _T("Search"), strEntry ) );
+					if ( strValue.IsEmpty() )
 						break;
-					}
+					int lf = strValue.Find( _T('\n') );
+					if ( strText.CompareNoCase( ( lf != -1 ) ? strValue.Left( lf ) : strValue ) )
+						oList.AddTail( strValue );
 				}
-				if ( nItem >= nCount )
+
+				// Cut to 200 items
+				while ( oList.GetCount() >= 200 )
+					oList.RemoveTail();
+
+				// New one (at top)
+				oList.AddHead( strURI.IsEmpty() ? strText : ( strText + _T('\n') + strURI ) );
+
+				// Save list
+				POSITION pos = oList.GetHeadPosition();
+				for ( int i = 0; pos; ++i )
 				{
-					theApp.WriteProfileInt( _T("Search"), _T("Recent.Count"), ++nCount );
-					strEntry.Format( _T("Recent.%.2i.Text"), nItem + 1 );
-					theApp.WriteProfileString( _T("Search"), strEntry, strText );
-					strEntry.Format( _T("Recent.%.2i.SchemaURI"), nItem + 1 );
-					theApp.WriteProfileString( _T("Search"), strEntry, strURI );
-					m_wndText.SetItemData( m_wndText.InsertString( 0, strText ), (DWORD_PTR)pSchema );
+					strEntry.Format( _T("Search.%.2i"), i + 1 );
+					theApp.WriteProfileString( _T("Search"), strEntry, oList.GetNext( pos ) );
 				}
+
+				FillHistory();
 			}
 
 			new CSearchWnd( pSearch );
@@ -321,9 +340,8 @@ void CHomeSearchCtrl::OnSearchAdvanced()
 	Search( false );
 }
 
-void CHomeSearchCtrl::OnSetFocus(CWnd* pOldWnd)
+void CHomeSearchCtrl::Activate()
 {
-	CWnd::OnSetFocus(pOldWnd);
-
+	FillHistory();
 	m_wndText.SetFocus();
 }
