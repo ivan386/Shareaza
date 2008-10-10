@@ -21,7 +21,7 @@
 IDR_MANIFEST RT_MANIFEST
 {
     "<assembly xmlns=""urn:schemas-microsoft-com:asm.v1"" manifestVersion=""1.0"">
-       <assemblyIdentity type=""win32"" name=""Shareaza.TorrentWizard"" version=""1.0.0.7""
+       <assemblyIdentity type=""win32"" name=""Shareaza.TorrentWizard"" version=""1.0.1.0""
 #ifdef WIN64
 		 processorArchitecture=""amd64""
 #else
