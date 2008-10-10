@@ -244,6 +244,16 @@ void CED2K::GetRoot(__in_bcount(16) uchar* pHash) const
 	std::copy( &m_pRoot[ 0 ], &m_pRoot[ 4 ], (uint32*)pHash );
 }
 
+void CED2K::FromRoot(__in_bcount(16) const uchar* pHash)
+{
+	Clear();
+
+	m_nList = 1;
+	m_pList = new CMD4::Digest[ m_nList ];
+	std::copy( (uint32*)pHash, ( (uint32*)pHash ) + 4, &m_pRoot[ 0 ] );
+	std::copy( (uint32*)pHash, ( (uint32*)pHash ) + 4, &m_pList[ 0 ][ 0 ] );
+}
+
 //////////////////////////////////////////////////////////////////////
 // CED2K decode from bytes
 

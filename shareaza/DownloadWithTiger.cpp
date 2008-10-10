@@ -260,7 +260,7 @@ BOOL CDownloadWithTiger::SetHashset(BYTE* pSource, DWORD nSource)
 
 	if ( nSource == 0 && m_oED2K )
 	{
-		m_pHashset.FromRoot( m_oED2K );
+		m_pHashset.FromRoot( &m_oED2K[ 0 ] );
 	}
 	else if ( m_pHashset.FromBytes( pSource, nSource, m_nSize ) )
 	{

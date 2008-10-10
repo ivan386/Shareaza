@@ -36,16 +36,7 @@ public:
 	LPCVOID	GetRawPtr() const;
 
 	void	GetRoot(__in_bcount(16) uchar* pHash) const;
-
-	template< typename T >
-	inline void FromRoot(const T& oHash)
-	{
-		Clear();
-		m_nList = 1;
-		m_pList = new CMD4::Digest[ m_nList ];
-		std::copy( &oHash[ 0 ], &oHash[ 4 ], &m_pRoot[ 0 ] );
-		std::copy( &oHash[ 0 ], &oHash[ 4 ], &m_pList[ 0 ][ 0 ] );
-	}
+	void	FromRoot(__in_bcount(16) const uchar* pHash);
 
 	void	BeginFile(uint64 nLength);
 	void	AddToFile(LPCVOID pInput, uint32 nLength);

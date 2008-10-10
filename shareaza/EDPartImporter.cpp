@@ -196,7 +196,7 @@ BOOL CEDPartImporter::ImportFile(LPCTSTR pszPath, LPCTSTR pszFile)
 
 	if ( nParts == 0 )
 	{
-		pED2K.FromRoot( oED2K );
+		pED2K.FromRoot( &oED2K[ 0 ] );
 	}
 	else if ( nParts > 0 )
 	{
