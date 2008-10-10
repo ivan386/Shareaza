@@ -91,6 +91,7 @@
 				AdditionalDependencies="wininet.lib msi.lib iphlpapi.lib version.lib winmm.lib powrprof.lib"
 				OutputFile="$(OutDir)$(ProjectName).exe"
 				GenerateDebugInformation="true"
+				DataExecutionPrevention="0"
 				KeyFile="$(SolutionDir)..\$(ProjectName)\$(ProjectName).snk"
 				DelaySign="true"
 			/>
@@ -190,6 +191,7 @@
 				AdditionalDependencies="wininet.lib msi.lib iphlpapi.lib version.lib winmm.lib powrprof.lib"
 				OutputFile="$(OutDir)$(ProjectName).exe"
 				GenerateDebugInformation="true"
+				DataExecutionPrevention="0"
 				TargetMachine="17"
 				KeyFile="$(SolutionDir)..\$(ProjectName)\$(ProjectName).snk"
 				DelaySign="true"
@@ -292,6 +294,7 @@
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				OptimizeForWindows98="1"
+				DataExecutionPrevention="0"
 				KeyFile="$(SolutionDir)..\$(ProjectName)\$(ProjectName).snk"
 				DelaySign="true"
 			/>
@@ -392,6 +395,7 @@
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				OptimizeForWindows98="1"
+				DataExecutionPrevention="0"
 				TargetMachine="17"
 				KeyFile="$(SolutionDir)..\$(ProjectName)\$(ProjectName).snk"
 				DelaySign="true"
@@ -437,6 +441,10 @@
 			</File>
 			<File
 				RelativePath="..\shareaza\Application.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\shareaza\AutocompleteEdit.cpp"
 				>
 			</File>
 			<File
@@ -613,10 +621,6 @@
 			</File>
 			<File
 				RelativePath="..\shareaza\DownloadWithTransfers.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\shareaza\ED2K.cpp"
 				>
 			</File>
 			<File
@@ -1766,102 +1770,6 @@
 			<Filter
 				Name="Hash algorithms"
 				>
-				<File
-					RelativePath="..\shareaza\MD4.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\shareaza\asm\MD4_asm.asm"
-					>
-					<FileConfiguration
-						Name="Debug|x64"
-						ExcludedFromBuild="true"
-						>
-						<Tool
-							Name="MASM"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|x64"
-						ExcludedFromBuild="true"
-						>
-						<Tool
-							Name="MASM"
-						/>
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath="..\shareaza\MD5.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\shareaza\asm\MD5_asm.asm"
-					>
-					<FileConfiguration
-						Name="Debug|x64"
-						ExcludedFromBuild="true"
-						>
-						<Tool
-							Name="MASM"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|x64"
-						ExcludedFromBuild="true"
-						>
-						<Tool
-							Name="MASM"
-						/>
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath="..\shareaza\SHA.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\shareaza\asm\SHA_asm.asm"
-					>
-					<FileConfiguration
-						Name="Debug|x64"
-						ExcludedFromBuild="true"
-						>
-						<Tool
-							Name="MASM"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|x64"
-						ExcludedFromBuild="true"
-						>
-						<Tool
-							Name="MASM"
-						/>
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath="..\shareaza\asm\Tiger_asm.asm"
-					>
-					<FileConfiguration
-						Name="Debug|x64"
-						ExcludedFromBuild="true"
-						>
-						<Tool
-							Name="MASM"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|x64"
-						ExcludedFromBuild="true"
-						>
-						<Tool
-							Name="MASM"
-						/>
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath="..\shareaza\TigerTree.cpp"
-					>
-				</File>
 				<Filter
 					Name="Policies"
 					>
@@ -2126,6 +2034,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\shareaza\AutocompleteEdit.h"
+				>
+			</File>
+			<File
 				RelativePath="..\shareaza\BENode.h"
 				>
 			</File>
@@ -2299,10 +2211,6 @@
 			</File>
 			<File
 				RelativePath="..\shareaza\DownloadWithTransfers.h"
-				>
-			</File>
-			<File
-				RelativePath="..\shareaza\ED2K.h"
 				>
 			</File>
 			<File
@@ -2787,10 +2695,6 @@
 			</File>
 			<File
 				RelativePath="..\shareaza\UPnPFinder.h"
-				>
-			</File>
-			<File
-				RelativePath="..\shareaza\Utility.hpp"
 				>
 			</File>
 			<File
@@ -3422,26 +3326,6 @@
 				</File>
 				<File
 					RelativePath="..\shareaza\Hashes.hpp"
-					>
-				</File>
-				<File
-					RelativePath="..\shareaza\MD4.h"
-					>
-				</File>
-				<File
-					RelativePath="..\shareaza\MD5.h"
-					>
-				</File>
-				<File
-					RelativePath="..\shareaza\SHA.h"
-					>
-				</File>
-				<File
-					RelativePath="..\shareaza\TigerBoxes.h"
-					>
-				</File>
-				<File
-					RelativePath="..\shareaza\TigerTree.h"
 					>
 				</File>
 				<Filter
