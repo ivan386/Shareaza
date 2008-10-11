@@ -15,9 +15,6 @@
 		/>
 	</Platforms>
 	<ToolFiles>
-		<DefaultToolFile
-			FileName="masm.rules"
-		/>
 	</ToolFiles>
 	<Configurations>
 		<Configuration
@@ -38,10 +35,6 @@
 			/>
 			<Tool
 				Name="VCPreBuildEventTool"
-			/>
-			<Tool
-				Name="MASM"
-				WarningLevel="2"
 			/>
 			<Tool
 				Name="VCXMLDataGeneratorTool"
@@ -91,7 +84,6 @@
 				AdditionalDependencies="wininet.lib msi.lib iphlpapi.lib version.lib winmm.lib powrprof.lib"
 				OutputFile="$(OutDir)$(ProjectName).exe"
 				GenerateDebugInformation="true"
-				DataExecutionPrevention="0"
 				KeyFile="$(SolutionDir)..\$(ProjectName)\$(ProjectName).snk"
 				DelaySign="true"
 			/>
@@ -141,9 +133,6 @@
 				Name="VCPreBuildEventTool"
 			/>
 			<Tool
-				Name="MASM"
-			/>
-			<Tool
 				Name="VCXMLDataGeneratorTool"
 			/>
 			<Tool
@@ -191,7 +180,6 @@
 				AdditionalDependencies="wininet.lib msi.lib iphlpapi.lib version.lib winmm.lib powrprof.lib"
 				OutputFile="$(OutDir)$(ProjectName).exe"
 				GenerateDebugInformation="true"
-				DataExecutionPrevention="0"
 				TargetMachine="17"
 				KeyFile="$(SolutionDir)..\$(ProjectName)\$(ProjectName).snk"
 				DelaySign="true"
@@ -243,10 +231,6 @@
 				Name="VCPreBuildEventTool"
 			/>
 			<Tool
-				Name="MASM"
-				WarningLevel="2"
-			/>
-			<Tool
 				Name="VCXMLDataGeneratorTool"
 			/>
 			<Tool
@@ -294,7 +278,6 @@
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				OptimizeForWindows98="1"
-				DataExecutionPrevention="0"
 				KeyFile="$(SolutionDir)..\$(ProjectName)\$(ProjectName).snk"
 				DelaySign="true"
 			/>
@@ -345,9 +328,6 @@
 				Name="VCPreBuildEventTool"
 			/>
 			<Tool
-				Name="MASM"
-			/>
-			<Tool
 				Name="VCXMLDataGeneratorTool"
 			/>
 			<Tool
@@ -395,7 +375,6 @@
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				OptimizeForWindows98="1"
-				DataExecutionPrevention="0"
 				TargetMachine="17"
 				KeyFile="$(SolutionDir)..\$(ProjectName)\$(ProjectName).snk"
 				DelaySign="true"
@@ -1768,84 +1747,80 @@
 				</File>
 			</Filter>
 			<Filter
-				Name="Hash algorithms"
+				Name="Hashes"
 				>
-				<Filter
-					Name="Policies"
+				<File
+					RelativePath="..\shareaza\Hashes\HashDescriptors.cpp"
 					>
-					<File
-						RelativePath="..\shareaza\Hashes\HashDescriptors.cpp"
+					<FileConfiguration
+						Name="Debug|Win32"
 						>
-						<FileConfiguration
-							Name="Debug|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								PrecompiledHeaderThrough="..\StdAfx.h"
-							/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="Debug|x64"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								PrecompiledHeaderThrough="..\StdAfx.h"
-							/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="Release|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								PrecompiledHeaderThrough="..\StdAfx.h"
-							/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="Release|x64"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								PrecompiledHeaderThrough="..\StdAfx.h"
-							/>
-						</FileConfiguration>
-					</File>
-					<File
-						RelativePath="..\shareaza\Hashes\HashStringConversion.cpp"
+						<Tool
+							Name="VCCLCompilerTool"
+							PrecompiledHeaderThrough="..\StdAfx.h"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Debug|x64"
 						>
-						<FileConfiguration
-							Name="Debug|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								PrecompiledHeaderThrough="..\StdAfx.h"
-							/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="Debug|x64"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								PrecompiledHeaderThrough="..\StdAfx.h"
-							/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="Release|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								PrecompiledHeaderThrough="..\StdAfx.h"
-							/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="Release|x64"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								PrecompiledHeaderThrough="..\StdAfx.h"
-							/>
-						</FileConfiguration>
-					</File>
-				</Filter>
+						<Tool
+							Name="VCCLCompilerTool"
+							PrecompiledHeaderThrough="..\StdAfx.h"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							PrecompiledHeaderThrough="..\StdAfx.h"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|x64"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							PrecompiledHeaderThrough="..\StdAfx.h"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath="..\shareaza\Hashes\HashStringConversion.cpp"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							PrecompiledHeaderThrough="..\StdAfx.h"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Debug|x64"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							PrecompiledHeaderThrough="..\StdAfx.h"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							PrecompiledHeaderThrough="..\StdAfx.h"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|x64"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							PrecompiledHeaderThrough="..\StdAfx.h"
+						/>
+					</FileConfiguration>
+				</File>
 			</Filter>
 			<Filter
 				Name="Pages"
@@ -3318,14 +3293,26 @@
 				</File>
 			</Filter>
 			<Filter
-				Name="Hash algorithms"
+				Name="Hashes"
 				>
+				<File
+					RelativePath="..\shareaza\Hashes\Compatibility.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\shareaza\Hashes\HashDescriptors.hpp"
+					>
+				</File>
 				<File
 					RelativePath="..\shareaza\Hashes\Hashes.dox"
 					>
 				</File>
 				<File
 					RelativePath="..\shareaza\Hashes.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\shareaza\Hashes\HashStringConversion.hpp"
 					>
 				</File>
 				<Filter
@@ -3336,19 +3323,7 @@
 						>
 					</File>
 					<File
-						RelativePath="..\shareaza\Hashes\Compatibility.hpp"
-						>
-					</File>
-					<File
 						RelativePath="..\shareaza\Hashes\Hash.hpp"
-						>
-					</File>
-					<File
-						RelativePath="..\shareaza\Hashes\HashDescriptors.hpp"
-						>
-					</File>
-					<File
-						RelativePath="..\shareaza\Hashes\HashStringConversion.hpp"
 						>
 					</File>
 					<File
@@ -4383,80 +4358,6 @@
 				>
 			</File>
 			<File
-				RelativePath="Releasex64\shareaza\Shareaza_i.c"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|x64"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|x64"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-						DisableSpecificWarnings="4255;4619;4668;4820;4826"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="Debugx64\shareaza\Shareaza_i.c"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|x64"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-						DisableSpecificWarnings="4255;4619;4668;4820;4826"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|x64"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
 				RelativePath="DebugWin32\shareaza\Shareaza_i.c"
 				>
 				<FileConfiguration
@@ -4519,6 +4420,80 @@
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"
 						DisableSpecificWarnings="4255;4619;4668;4820;4826"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|x64"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="Releasex64\shareaza\Shareaza_i.c"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|x64"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|x64"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+						DisableSpecificWarnings="4255;4619;4668;4820;4826"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="Debugx64\shareaza\Shareaza_i.c"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|x64"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+						DisableSpecificWarnings="4255;4619;4668;4820;4826"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
