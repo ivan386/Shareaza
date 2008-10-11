@@ -80,7 +80,7 @@
 	<!-- SEARCH WINDOW -->
 	<toolbar name="CSearchWnd.Panel.Basic">
 		<button id="ID_SEARCH_DOWNLOAD" text="Baixar"/>
-		<button id="ID_BROWSE_LAUNCH" text="Navegar Usuário"/>
+		<button id="ID_BROWSE_LAUNCH" text="Navegar"/>
 		<separator/>
 		<button id="ID_SEARCH_PANEL" text="Mostrar Busca"/>
 		<button id="ID_SEARCH_DETAILS" text="Mostrar Detalhes"/>
@@ -91,7 +91,7 @@
 	</toolbar>
 	<toolbar name="CSearchWnd.Panel">
 		<button id="ID_SEARCH_DOWNLOAD" text="Baixar"/>
-		<button id="ID_BROWSE_LAUNCH" text="Navegar Usuário"/>
+		<button id="ID_BROWSE_LAUNCH" text="Navegar"/>
 		<separator/>
 		<button id="ID_SEARCH_PANEL" text="Mostrar Busca"/>
 		<button id="ID_SEARCH_DETAILS" text="Mostrar Detalhes"/>
@@ -105,7 +105,7 @@
 		<button id="ID_SEARCH_STOP" text="Parar"/>
 		<separator/>
 		<button id="ID_SEARCH_DOWNLOAD" text="Baixar"/>
-		<button id="ID_BROWSE_LAUNCH" text="Navegar Usuário"/>
+		<button id="ID_BROWSE_LAUNCH" text="Navegar"/>
 		<separator/>
 		<button id="ID_SEARCH_PANEL" text="Mostrar Busca"/>
 		<button id="ID_SEARCH_DETAILS" text="Mostrar Detalhes"/>
@@ -125,7 +125,7 @@
 	</toolbar>
 	<toolbar name="CBrowseHostWnd.Basic">
 		<button id="ID_SEARCH_DOWNLOAD" text="Baixar Arquivo"/>
-		<button id="ID_SEARCH_CHAT" text="Conversar com Usuário"/>
+		<button id="ID_SEARCH_CHAT" text="Conversar"/>
 		<separator/>
 		<button id="ID_SEARCH_DETAILS" text="Mostrar Detalhes"/>
 		<rightAlign/>
@@ -135,7 +135,7 @@
 	</toolbar>
 	<toolbar name="CBrowseHostWnd">
 		<button id="ID_SEARCH_DOWNLOAD" text="Baixar Arquivo"/>
-		<button id="ID_SEARCH_CHAT" text="Conversar com Usuário"/>
+		<button id="ID_SEARCH_CHAT" text="Conversar"/>
 		<separator/>
 		<button id="ID_BROWSE_STOP" text="Parar"/>
 		<button id="ID_BROWSE_REFRESH" text="Atualizar"/>
@@ -152,40 +152,40 @@
 		<button id="ID_DOWNLOADS_LAUNCH" text="Prever Arquivo"/>
 		<button id="ID_DOWNLOADS_FILE_DELETE" text="Apagar Arquivo"/>
 		<separator/>
-		<button id="ID_DOWNLOADS_RESUME" text="Resumir Download"/>
-		<button id="ID_DOWNLOADS_PAUSE" text="Pausar Download"/>
-		<button id="ID_DOWNLOADS_CLEAR_INCOMPLETE" text="Cancelar Download"/>
+		<button id="ID_DOWNLOADS_RESUME" text="Resumir"/>
+		<button id="ID_DOWNLOADS_PAUSE" text="Pausar"/>
+		<button id="ID_DOWNLOADS_CLEAR_INCOMPLETE" text="Cancelar"/>
 		<button id="ID_DOWNLOADS_CLEAR_COMPLETE" text="Limpar Download"/>
 		<separator/>
 		<button id="ID_DOWNLOADS_MONITOR" text="Mostrar Monitor"/>
 		<rightAlign/>
 		<button id="ID_TOOLS_DOWNLOAD" text="Adicionar Download/Torrent..."/>
-		<button id="ID_DOWNLOADS_CLEAR_COMPLETED" text="Limpar Completados"/>
+		<button id="ID_DOWNLOADS_CLEAR_COMPLETED" text="Limpar"/>
 	</toolbar>
 	<toolbar name="CDownloadsWnd">
 		<button id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="Abrir/Tocar"/>
 		<button id="ID_DOWNLOADS_FILE_DELETE" text="Apagar Arquivo"/>
 		<button id="ID_DOWNLOADS_LAUNCH" text="Prever Arquivo"/>
 		<separator/>
-		<button id="ID_DOWNLOADS_RESUME" text="Resumir Download"/>
-		<button id="ID_DOWNLOADS_PAUSE" text="Pausar Download"/>
-		<button id="ID_DOWNLOADS_CLEAR_INCOMPLETE" text="Cancelar Download"/>
+		<button id="ID_DOWNLOADS_RESUME" text="Resumir"/>
+		<button id="ID_DOWNLOADS_PAUSE" text="Pausar"/>
+		<button id="ID_DOWNLOADS_CLEAR_INCOMPLETE" text="Cancelar"/>
 		<button id="ID_DOWNLOADS_CLEAR_COMPLETE" text="Limpar Download"/>
 		<separator/>
 		<button id="ID_DOWNLOADS_MONITOR" text="Mostrar Monitor"/>
 		<button id="ID_DOWNLOADS_EDIT" text="Propriedades"/>
 		<rightAlign/>
 		<button id="ID_TOOLS_DOWNLOAD" text="Adicionar Download/Torrent..."/>
-		<button id="ID_DOWNLOADS_CLEAR_COMPLETED" text="Limpar Completados"/>
+		<button id="ID_DOWNLOADS_CLEAR_COMPLETED" text="Limpar"/>
 		<separator/>
 		<button id="ID_DOWNLOADS_FILTER_MENU" text="Filtrar"/>
 	</toolbar>
 	<!-- UPLOADS WINDOW -->
 	<toolbar name="CUploadsWnd.Basic">
-		<button id="ID_BROWSE_LAUNCH" text="Navegar Usuário"/>
-		<button id="ID_UPLOADS_CHAT" text="Conversar com Usuário"/>
+		<button id="ID_BROWSE_LAUNCH" text="Navegar"/>
+		<button id="ID_UPLOADS_CHAT" text="Conversar"/>
 		<rightAlign/>
-		<button id="ID_UPLOADS_CLEAR_COMPLETED" text="Limpar Completados"/>
+		<button id="ID_UPLOADS_CLEAR_COMPLETED" text="Limpar"/>
 	</toolbar>
 	<toolbar name="CUploadsWnd">
 		<button id="ID_UPLOADS_LAUNCH" text="Abrir/Tocar"/>
@@ -193,11 +193,11 @@
 		<button id="ID_UPLOADS_START" text="Iniciar Agora"/>
 		<button id="ID_UPLOADS_CLEAR" text="Limpar Upload"/>
 		<separator/>
-		<button id="ID_BROWSE_LAUNCH" text="Navegar Usuário"/>
-		<button id="ID_UPLOADS_CHAT" text="Conversar com Usuário"/>
+		<button id="ID_BROWSE_LAUNCH" text="Navegar"/>
+		<button id="ID_UPLOADS_CHAT" text="Conversar"/>
 		<button id="ID_SECURITY_BAN" text="Banir Usuário"/>
 		<rightAlign/>
-		<button id="ID_UPLOADS_CLEAR_COMPLETED" text="Limpar Completados"/>
+		<button id="ID_UPLOADS_CLEAR_COMPLETED" text="Limpar"/>
 		<separator/>
 		<button id="ID_UPLOADS_FILTER_MENU" text="Filtrar"/>
 	</toolbar>
@@ -245,7 +245,7 @@
 	</toolbar>
 	<toolbar name="CLibraryFileView.Physical.Basic">
 		<button id="ID_LIBRARY_LAUNCH" text="Abrir/Tocar"/>
-		<button id="ID_LIBRARY_ENQUEUE" text="Adicionar a Lista de Execuções"/>
+		<button id="ID_LIBRARY_ENQUEUE" text="Adicionar a Lista"/>
 		<separator/>
 		<button id="ID_WEBSERVICES_LIST" text="Serviços da Web"/>
 		<rightAlign/>
@@ -255,7 +255,7 @@
 	</toolbar>
 	<toolbar name="CLibraryFileView.Physical">
 		<button id="ID_LIBRARY_LAUNCH" text="Abrir/Tocar"/>
-		<button id="ID_LIBRARY_ENQUEUE" text="Adicionar a Lista de Execuções"/>
+		<button id="ID_LIBRARY_ENQUEUE" text="Adicionar a Lista"/>
 		<separator/>
 		<button id="ID_LIBRARY_PROPERTIES" text="Propriedades"/>
 		<separator/>
@@ -271,8 +271,8 @@
 	</toolbar>
 	<toolbar name="CLibraryFileView.Virtual.Basic">
 		<button id="ID_LIBRARY_LAUNCH" text="Abrir/Tocar"/>
-		<button id="ID_LIBRARY_ENQUEUE" text="Adicionar a Lista de Execuções"/>
-		<button id="ID_LIBRARY_FOLDER_ENQUEUE" text="Tocar Álbum"/>
+		<button id="ID_LIBRARY_ENQUEUE" text="Adicionar a Lista"/>
+		<button id="ID_LIBRARY_FOLDER_ENQUEUE" text="Tocar"/>
 		<separator/>
 		<button id="ID_WEBSERVICES_LIST" text="Serviços da Web"/>
 		<rightAlign/>
@@ -282,8 +282,8 @@
 	</toolbar>
 	<toolbar name="CLibraryFileView.Virtual">
 		<button id="ID_LIBRARY_LAUNCH" text="Abrir/Tocar"/>
-		<button id="ID_LIBRARY_ENQUEUE" text="Adicionar a Lista de Execuções"/>
-		<button id="ID_LIBRARY_FOLDER_ENQUEUE" text="Tocar Álbum"/>
+		<button id="ID_LIBRARY_ENQUEUE" text="Adicionar a Lista"/>
+		<button id="ID_LIBRARY_FOLDER_ENQUEUE" text="Tocar"/>
 		<separator/>
 		<button id="ID_LIBRARY_PROPERTIES" text="Propriedades"/>
 		<separator/>
@@ -310,7 +310,7 @@
 		<separator/>
 		<label text="Procurar:" tip="Procurar uma posição no arquivo de mídia"/>
 		<control id="IDC_MEDIA_POSITION" width="190" height="22"/>
-		<label text="Volume:" tip="Ajustar o volume do áudio"/>
+		<label text="Vol:" tip="Ajustar o volume do áudio"/>
 		<control id="IDC_MEDIA_VOLUME" width="50" height="22"/>
 		<separator/>
 		<button id="ID_MEDIA_OPEN" text="Abrir Arquivo"/>
@@ -327,9 +327,9 @@
 		<separator/>
 		<label text="Procurar:" tip="Procurar uma posição no arquivo de mídia"/>
 		<control id="IDC_MEDIA_POSITION" width="190" height="22"/>
-		<label text="Velocidade:" tip="Ajustar a velocidade do arquivo de mídia"/>
+		<label text="Veloc:" tip="Ajustar a velocidade do arquivo de mídia"/>
 		<control id="IDC_MEDIA_SPEED" width="40" height="22"/>
-		<label text="Volume:" tip="Ajustar o volume do áudio"/>
+		<label text="Vol:" tip="Ajustar o volume do áudio"/>
 		<control id="IDC_MEDIA_VOLUME" width="50" height="22"/>
 		<separator/>
 		<button id="ID_MEDIA_OPEN" text="Abrir"/>
@@ -359,8 +359,8 @@
 	</toolbar>
 	<!-- NEIGHBOURS WINDOW -->
 	<toolbar name="CNeighboursWnd.Basic">
-		<button id="ID_BROWSE_LAUNCH" text="Navegar Usuário"/>
-		<button id="ID_NEIGHBOURS_CHAT" text="Conversar com Usuário"/>
+		<button id="ID_BROWSE_LAUNCH" text="Navegar"/>
+		<button id="ID_NEIGHBOURS_CHAT" text="Conversar"/>
 		<rightAlign/>
 		<button id="ID_NETWORK_G2" text="Gnutella 2"/>
 		<button id="ID_NETWORK_G1" text="Gnutella 1"/>
@@ -372,8 +372,8 @@
 		<button id="ID_NETWORK_CONNECT_TO" text="Conectar na"/>
 		<button id="ID_NEIGHBOURS_DISCONNECT" text="Desconectar"/>
 		<separator/>
-		<button id="ID_BROWSE_LAUNCH" text="Navegar Usuário"/>
-		<button id="ID_NEIGHBOURS_CHAT" text="Conversar com Usuário"/>
+		<button id="ID_BROWSE_LAUNCH" text="Navegar"/>
+		<button id="ID_NEIGHBOURS_CHAT" text="Conversar"/>
 		<button id="ID_SECURITY_BAN" text="Banir Host"/>
 		<rightAlign/>
 		<button id="ID_NETWORK_G2" text="Gnutella2"/>
@@ -420,7 +420,7 @@
 		<button id="ID_CHAT_COLOUR" text="C"/>
 		<button id="ID_CHAT_EMOTICONS"/>
 		<separator/>
-		<button id="ID_CHAT_BROWSE" text="Navegar Usuário"/>
+		<button id="ID_CHAT_BROWSE" text="Navegar"/>
 		<!-- <button id="ID_CHAT_SEND_FILE" text="Enviar Arquivo"/> -->
 		<button id="ID_CHAT_PRIORITY" text="Garantir Prioridade"/>
 		<separator/>
@@ -1028,7 +1028,7 @@
 		<item id="ID_DOWNLOADS_LAUNCH" text="_Prévia"/>
 		<item id="ID_DOWNLOADS_REMOTE_PREVIEW" text="P_révia Remota"/>
 		<!-- <item id="ID_DOWNLOADS_LAUNCH_COPY" text="Pré_via da Cópia"/> -->
-		<item id="ID_DOWNLOADS_ENQUEUE" text="Adicionar a Lis_ta de Execuções"/>
+		<item id="ID_DOWNLOADS_ENQUEUE" text="Adicionar a Lis_ta"/>
 		<item id="ID_DOWNLOADS_VIEW_REVIEWS" text="_Ver Comentários"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_RESUME" text="_Resumir"/>
@@ -1225,7 +1225,7 @@
 	</menu>
 	<menu name="CLibraryFileView.Physical">
 		<item id="ID_LIBRARY_LAUNCH" text="_Abrir/Tocar"/>
-		<item id="ID_LIBRARY_ENQUEUE" text="Adicionar a lis_ta de execuções"/>
+		<item id="ID_LIBRARY_ENQUEUE" text="Adicionar a lis_ta"/>
 		<separator/>
 		<item id="ID_LIBRARY_SHARED_FILE" text="_Compartilhado"/>
 		<separator/>
@@ -1262,7 +1262,7 @@
 	</menu>
 	<menu name="CLibraryFileView.Virtual.Basic">
 		<item id="ID_LIBRARY_LAUNCH" text="_Abrir/Tocar"/>
-		<item id="ID_LIBRARY_ENQUEUE" text="Adicionar a lis_ta de execuções"/>
+		<item id="ID_LIBRARY_ENQUEUE" text="Adicionar a lis_ta"/>
 		<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Tocar _Álbum"/>
 		<separator/>
 		<item id="ID_LIBRARY_SHARED_FILE" text="_Compartilhado"/>
@@ -1297,7 +1297,7 @@
 	</menu>
 	<menu name="CLibraryFileView.Virtual">
 		<item id="ID_LIBRARY_LAUNCH" text="_Abrir/Tocar"/>
-		<item id="ID_LIBRARY_ENQUEUE" text="Adicionar a lis_ta de execuções"/>
+		<item id="ID_LIBRARY_ENQUEUE" text="Adicionar a lis_ta"/>
 		<separator/>
 		<item id="ID_LIBRARY_SHARED_FILE" text="_Compartilhado"/>
 		<separator/>
@@ -1890,7 +1890,7 @@
 		<text format="b">Bem-vindo ao Gerente das Configurações do Shareaza</text>
 		<newline gap="16"/>
 		<text>O Gerente das Configurações do Shareaza permite aos usuários avançados modificar
-			completamente o Shareaza. As configurações na seção</text>
+			completamente o Shareaza. As configurações na seção </text>
 		<text format="b">Internet </text>
 		<text>  controlam como o Shareaza interage com outros nodes dentro das redes peer-to-peer. </text>
 		<newline gap="16" indent="16"/>
@@ -1910,7 +1910,7 @@
 		<gap size="4"/>
 		<text>Configurar a habilidade de controlar o Shareaza remotamente através de um navegador da web.</text>
 		<newline gap="10"/>
-		<link target="raza:page:CSchedulerSettingsPage" format="b">Agendador:</link>
+		<link target="raza:page:CSchedulerSettingsPage" format="b">Agenda:</link>
 		<gap size="4"/>
 		<text>Limitar as conexões de download baseado numa agenda periódica.</text>
 	</document>
@@ -2000,7 +2000,7 @@
 		  <newline gap="4" indent="8"/>
 		  <icon res="140" target="raza:command:ID_SEARCH_CHAT"/>
 		  <gap size="5"/>
-		  <link target="raza:command:ID_SEARCH_CHAT" align="middle">Conversar com Usuário</link>
+		  <link target="raza:command:ID_SEARCH_CHAT" align="middle">Conversar</link>
 		</group>
 		<group id="3">
 		  <newline gap="16" indent="0"/>
@@ -2060,7 +2060,7 @@
 		você poderia tentar procurar na rede por mais fontes com o comando &apos;</text>
 		<text format="b">Achar Mais Fontes</text><text>&apos;. Se a velocidade não
 		melhorar pode ser devido a velocidades de upload limitadas dos usuários de quem você está baixando.
-		A velocidade de download geralmente aumenta com o tempo.</text>
+		A velocidade do download geralmente aumenta com o tempo.</text>
 	</document>
 	<document name="DownloadHelp.Pending">
 		<text format="b">Este Download está Pendente</text>
@@ -2629,7 +2629,7 @@
 	<string id="8012" value="Informação do Torrent"/>
 	<string id="8013" value="Nenhuma versão nova do shareaza detectada."/>
 	<string id="8014" value="Propriedades do Download"/>
-	<string id="8060" value="Modo Hub/Ultrapeer com %lu vizinho(s). %s na sua bilioteca local."/>
+	<string id="8060" value="Modo Hub/Ultrapeer com %lu vizinho(s). %s na sua biblioteca local."/>
 	<string id="8061" value="Modo Ultrapeer com %lu vizinho(s). %s na sua biblioteca Local."/>
 	<string id="8062" value="Modo Hub com %lu vizinho(s). %s na biblioteca local."/>
 	<string id="8063" value="Conectado. %s na sua biblioteca local."/>
@@ -2665,8 +2665,8 @@
 	<string id="8141" value="Mostrar o Painel da Busca"/>
 	<string id="8142" value="Esconder o Painel da Busca"/>
 	<string id="8143" value="Procurando"/>
-	<string id="8144" value="Iniciar Busca"/>
-	<string id="8145" value="Procurar Mais"/>
+	<string id="8144" value="Procurar"/>
+	<string id="8145" value="Mais"/>
 	<string id="8146" value="Parar"/>
 	<string id="8147" value="Qualquer Tipo de Arquivo"/>
 	<string id="8148" value="Digite sua busca aqui:"/>
@@ -2776,7 +2776,7 @@
 	<string id="16077" value="O endereço %s já está sendo bloqueado pelas suas regras de segurança."/>
 	<string id="16078" value="Adicionada uma regra de segurança para bloquear %s."/>
 	<string id="16079" value="Você tem certeza que você quer desconectar?"/>
-	<string id="16080" value="Você está executando o Agendador no modo 'apenas G2'. Você gostaria de desativar esta modo, para que todas as redes ativas permaneçam conectadas?"/>
+	<string id="16080" value="Você está executando a Agenda no modo 'apenas G2'. Você gostaria de desativar esta modo, para que todas as redes ativas permaneçam conectadas?"/>
 	<string id="16081" value="Enviando inquisição para &quot;%s&quot; para %s."/>
 	<string id="16083" value="Forçar o seu PC em modo de HUB pode ter resultados adversos na perfomance e na rede P2P. É geralmente melhor deixar o Shareaza decidir se o modo hub deve ou não ser usado.\n\nModo hub NÃO produz melhores resultados de busca, ou tem quaisquer outras vantagens a você.\n\nVocê realmente quer fazer isso, apesar destas desvantagens?"/>
 	<string id="16084" value="Desativar o suporte aos protocolos Gnutella-1 pode limitar os seus resultados de busca, e se você está agindo como um hub pode também ter um impacto sob os resultados de outros usuários. Você tem certeza que você quer fazer isto?"/>
@@ -3243,7 +3243,7 @@
 	<string id="20009" value="Customizar"/>
 	<string id="20010" value="&amp;Voltar"/>
 	<string id="20011" value="&amp;Próximo"/>
-	<string id="20012" value="Terminar"/>
+	<string id="20012" value="Concluir"/>
 	<string id="20013" value="Todos"/>
 	<string id="20100" value="Conectando"/>
 	<string id="20101" value="Pedindo"/>
@@ -3358,7 +3358,7 @@
 		<control/>
 		<control/>
 		<control caption="arquivos"/>
-		<control caption="Para até:"/>
+		<control caption="Por até:"/>
 		<control/>
 		<control/>
 		<control caption="dias"/>
@@ -3375,7 +3375,7 @@
 		<control/>
 		<control/>
 		<control caption="Criar arquivos ghost quando apagar"/>
-		<control caption="Detecção da série de vídeos inteligentes"/>
+		<control caption="Detecção das séries de vídeos"/>
 	</dialog>
 	<dialog name="CMediaSettingsPage" cookie="BuCoBuBuBuCoBuBuBuBuBuStSt" caption="Media Player">
 		<control caption="_Opções:"/>
@@ -3494,10 +3494,10 @@
 		<control caption="Máximo de Arquivos:"/>
 		<control/>
 		<control/>
-		<control caption="Máximo de Transferências:"/>
+		<control caption="Máximo de Transfers:"/>
 		<control/>
 		<control/>
-		<control caption="Transferências por Arquivo:"/>
+		<control caption="Transfers por Arq:"/>
 		<control/>
 		<control/>
 		<control caption="_Limites:"/>
@@ -3534,19 +3534,19 @@
 	</dialog>
 	<dialog name="CRemoteSettingsPage" cookie="BuStBuBuStBuStEdStEd" caption="Acesso Remoto">
 		<control caption="_Guia:"/>
-		<control caption="O Acesso Remoto do Shareaza permite a você deixar o Shareaza rodando no seu PC, e controlá-lo remotamente usando um navegador da rede. Você precisará ser capaz de aceitar conexões de entrada para usar esta função (i.e. roteador apropriadamente configurado, etc)"/>
+		<control caption="O Acesso Remoto do Shareaza permite a você deixar o Shareaza rodando no seu PC, e controlá-lo remotamente usando um navegador da rede. Você precisará ser capaz de aceitar conexões de entrada para usar esta função (ex: roteador apropriadamente configurado, etc)"/>
 		<control caption="_Ativar:"/>
 		<control caption="Ativar o Acesso Remoto do Shareaza:"/>
 		<control caption="URL"/>
 		<control caption="_Credenciais:"/>
-		<control caption="Escolha um Nome de Usuário:"/>
+		<control caption="Escolha um Nome:"/>
 		<control/>
 		<control caption="Escolha uma Senha:"/>
 		<control/>
 	</dialog>
-	<dialog name="CSchedulerSettingsPage" cookie="BuBuEdmsBuBuStStStStStStStStStStStEdBuSt" caption="Agendador">
+	<dialog name="CSchedulerSettingsPage" cookie="BuBuEdmsBuBuStStStStStStStStStStStEdBuSt" caption="Agenda">
 		<control caption="_Opções:"/>
-		<control caption=" _Ativar o Agendador"/>
+		<control caption=" _Ativar a agenda"/>
 		<control/>
 		  <control/>
 		<control caption="_Conectar na G2 só quando limitado"/>
@@ -3564,10 +3564,10 @@
 		<control caption="% da _banda sob o limite"/>
 		<control/>
 		<control caption="Ajuda"/>
-		<control caption="O agendador é designado para permitir a você definir os horários quando o Shareaza conectará e baixará arquivos. {n}{n}{n}Nota: Se você tem o Shareaza aberto enquanto o agendador está ativo, você pode vê-lo mudando as configurações- Isto é normal!"/>
+		<control caption="A agenda é designada para permitir a você definir os horários quando o Shareaza conectará e baixará arquivos. {n}{n}{n}Nota: Se você tem o Shareaza aberto enquanto a agenda está ativa, você pode vê-lo mudando as configurações - Isto é normal!"/>
 	</dialog>
 	<dialog name="CNetworksSettingsPage" cookie="StBuStBuStBuStBuStBuStBuSt" caption="Redes">
-		<control caption="Shareaza é uma aplicação de compartilhamento de arquivos de propósito geral que pode acessar várias redes P2P ao mesmo tempo. Nesta página você seleciona quais redes P2P você quer conectar, e ajustar opções específicas pra cada rede."/>
+		<control caption="Shareaza é uma aplicação de compartilhamento de arquivos de propósito geral que pode acessar várias redes P2P ao mesmo tempo. Nesta página você seleciona a quais redes P2P você quer conectar, e ajustar opções específicas pra cada rede."/>
 		<control caption="Rede Gnutella 2:"/>
 		<control caption="A rede Gnutella 2 é a rede premiére do Shareaza, oferecendo mais funções e performance do que qualquer outra rede P2P. Altamente Recomendada."/>
 		<control caption="Conectar a Gnutella 2 (G2)"/>
@@ -3707,13 +3707,13 @@
 		<control caption="Só arquivos parcialmente baixados"/>
 		<control caption="Só arquivos da biblioteca compartilhados"/>
 		<control caption="Ambos os arquivos parciais e da biblioteca"/>
-		<control caption="Tamanho mínimo do arquivo da fonte:"/>
+		<control caption="Tamanho mín do arq da fonte:"/>
 		<control/>
-		<control caption="Tamanho máximo do arquivo da fonte:"/>
+		<control caption="Tamanho máx do arq da fonte:"/>
 		<control/>
-		<control caption="Arquivos marcados:"/>
+		<control caption="Arqs. marcados:"/>
 		<control caption="Popular|Lançamento"/>
-		<control caption="Combinação do nome do arq:"/>
+		<control caption="Comb. nome arq:"/>
 		<control/>
 		<control caption="Protocolos:"/>
 		<control/>
@@ -3745,9 +3745,9 @@
 		<control caption="Bem-Vindo ao Shareaza!"/>
 		<control caption="Se você não usou o Shareaza ou qualquer outro cliente P2P antes, este assistente de configuração pode ajudá-lo a configurar a sua cópia em alguns simples passos."/>
 		<control caption="Se você é um usuário mais avançado, você pode acessar o alcance completo das configurações do Shareaza via o menu Ferramentas. Clique em Sair para fechar o assitente a qualquer hora."/>
-		<control caption="Este Assistente vai ajudá-lo a:"/>
+		<control caption="Este assistente ajudará você a:"/>
 		<control/>
-		<control caption="Falar pro Shareaza a respeito da sua conexão com a Internet"/>
+		<control caption="Dizer ao Shareaza sobre a sua conexão com a Internet"/>
 		<control/>
 		<control caption="Escolher quais arquivos compartilhar"/>
 		<control/>
@@ -3759,9 +3759,9 @@
 		<control caption="Para ótima performance, Shareaza precisa saber um pouco sobre sua conexão com a Internet."/>
 		<control caption="Escolha o tipo da sua conexão com a Internet:"/>
 		<control caption="Modem Dial up|ISDN|ADSL (256K)|ADSL (512K)|ADSL (768K)|ADSL (1.5M)|ADSL (4.0M)|ADSL2 (8.0M)|ADSL2 (12.0M)|ADSL2+ (24.0M)|Modem a Cabo/SDSL|T1|T3|LAN|OC3"/>
-		<control caption="Ou escolha a velocidade de download:"/>
+		<control caption="Ou escolha a velocidade do download:"/>
 		<control/>
-		<control caption="e a velocidade de upload:"/>
+		<control caption="e a velocidade do upload:"/>
 		<control/>
 		<control caption="Você quer automaticamente configurar o port-forwarding usando o UPnP?"/>
 		<control/>
@@ -3798,23 +3798,23 @@
 		<control/>
 	</dialog>
 	<dialog name="CWizardInterfacePage" cookie="StBuBuBuStStBuBu" caption="Bem-Vindo ao Shareaza (4/6)">
-		<control caption="Shareaza suporta uma interface do usuário flexível, assim você pode escolher o que é mais confortável para você. Você pode mudar estas opções a qualquer hora."/>
+		<control caption="Shareaza suporta uma interface do usuário flexível, assim você pode escolher qual a mais confortável pra você. Você pode mudar as opções a qualquer hora."/>
 		<control caption="Por favor selecione a interface do usuário:"/>
 		<control caption="Modo Básico"/>
 		<control caption="Modo Power"/>
-		<control caption="Menus e botões simples, fáceis de usar.{n}Familiar aos usuários de outros programas de compartilhamento de arquivos."/>
-		<control caption="O modo Power oferece aos usuários expert muitos comandos extras, janelas, etc.{n}Pode ser um pouco confuso para novos usuários!"/>
+		<control caption="Menus e botões simples, fáceis de usar.{n}Familiar aos usuários de outros programas de compartilhamento de arqs."/>
+		<control caption="Modo Power oferece aos usuários muitos comandos extras, janelas, etc.{n}Pode ser um pouco confuso para novos usuários!"/>
 		<control caption="Exibir barras de progresso do download simplificadas. (Reduz o uso da CPU)"/>
-		<control caption="Manejar links torrent."/>
+		<control caption="Gerenciar os links torrent."/>
 	</dialog>
 	<dialog name="CWizardNetworksPage" cookie="StBuStBuStBuSt" caption="Bem-Vindo ao Shareaza (5/6)">
-		<control caption="O Shareaza é um aplicativo de compartilhamento de arquivos de propósito geral que pode acessar muitas redes P2p ao mesmo tempo.  Aqui você pode selecionar quais redes você gostaria de acessar.  Note que você pode sempre selecionar diferentes redes mais tarde."/>
+		<control caption="O Shareaza é um aplicativo de compartilhamento de arqs de propósito geral que acessa muitas redes P2P ao mesmo tempo.  Aqui você seleciona quais redes você gostaria de acessar.  Note que você pode sempre selecionar redes diferentes."/>
 		<control caption="Conectar a Gnutella2 (Altamente Recomendado)"/>
 		<control caption="A rede Gnutella2 é a rede premiere do Shareaza, oferecendo mais funções e performance do que qualquer outra rede P2P."/>
 		<control caption="Conectar ao eDonkey"/>
-		<control caption="A rede eDonkey é uma rede popular baseada em servidores. Enquanto não tão rica em funções como Gnutella2, eDonkey tem uma impressionante coleção de arquivos."/>
+		<control caption="Rede eDonkey é uma rede baseada em servidores. Enquanto não tão rica em funções como Gnutella2, eDonkey tem uma impressionante coleção de arqs."/>
 		<control caption="Conectar a Gnutella Original"/>
-		<control caption="Embora a rede Gnutella original é menos rica em funções do que a Gnutella2, e tenha menos arquivos do que o eDonkey, ela permanece um recurso valioso."/>
+		<control caption="Embora a rede Gnutella original é menos rica em funções que a Gnutella2, e tenha menos arquivos que o eDonkey, ela permanece um recurso valioso."/>
 	</dialog>
 	<dialog name="CDonkeyImportDlg" cookie="StStBuBuEdBu" caption="Importar Downloads do eDonkey">
 		<control/>
@@ -3827,7 +3827,7 @@
 	<dialog name="CWizardFinishedPage" cookie="StStStBuBuBuSt" caption="Bem Vindo ao Shareaza (6/6)">
 		<control caption="Pronto! O Shareaza foi configurado para trabalhar com o seu computador."/>
 		<control caption="Se você precisar mudar as suas configurações, você pode re-executar este assistente de configuração selecionando-o no menu Ferramentas."/>
-	  <control caption="After closing this wizard by clicking Finish, you can connect to the networks you selected and start searching and downloading content."/>
+	    <control caption="Após fechar este assistente clicando em Concluir, você pode conectar as redes que você selecionou e iniciar a busca e download de conteúdo."/>
 		<control caption="Conectar a rede quando eu fechar este assistente"/>
 		<control caption="Conectar a rede toda vez que eu iniciar o Shareaza"/>
 		<control caption="Iniciar o Shareaza toda vez que o Windows iniciar"/>
@@ -3961,14 +3961,14 @@
 		<control/>
 		<control caption="Máximo:"/>
 		<control/>
-		<control caption="Com pelo menos:"/>
+		<control caption="Com ao menos:"/>
 		<control/>
 		<control/>
 		<control caption="fontes."/>
 		<control caption="_Esconder:"/>
 		<control caption="Hosts ocupados"/>
-		<control caption="Arquivos que não combinam"/>
-		<control caption="Hosts atrás de Firewall/push"/>
+		<control caption="Arqs que não combinam"/>
+		<control caption="Hosts com Firewall/push"/>
 		<control caption="Arqs que você já tem"/>
 		<control caption="Hosts instáveis"/>
 		<control caption="Resultados falsos"/>
@@ -4004,7 +4004,7 @@
 		<control/>
 		<control/>
 		<control/>
-		<control caption="Velocidade de transferência:"/>
+		<control caption="Velocidade total da transferência:"/>
 		<control caption="..."/>
 		<control caption="Tempo restante estimado:"/>
 		<control caption="..."/>
@@ -4012,7 +4012,7 @@
 		<control caption="..."/>
 		<control caption="Número de fontes:"/>
 		<control caption="..."/>
-		<control caption="Fechar esta janela quando o download terminar"/>
+		<control caption="Fechar esta janela quando o download completar"/>
 		<control caption="Abrir Arquivo"/>
 		<control caption="Ver Biblioteca"/>
 		<control caption="Cancelar Download"/>
@@ -4320,7 +4320,7 @@
 		<control caption="Arquivo:"/>
 		<control/>
 		  <control/>
-		<control caption="Tamanho do arquivo (Byte):"/>
+		<control caption="File size (Byte):"/>
 		<control/>
 		<control caption="_URNs:"/>
 		<control caption="Confia"/>
@@ -4334,13 +4334,13 @@
 		<control/>
 		<control/>
 		<control caption="_Ações"/>
-		<control caption="Esquecer a verificação atual e re-verificar"/>
-		<control caption="Assumir que o arq está 100% completo e reverificar"/>
-		<control caption="Esquecer todas fontes conhecidas"/>
+		<control caption="Esquecer o status da verificação atual e re-verificar"/>
+		<control caption="Assumir que o arquivo está 100% completo e re-verificar"/>
+		<control caption="Esquecer todas as fontes conhecidas"/>
 		<control caption="Unir com o arquivo local e verificar"/>
-		<control caption="Cancelar o download mas salvar arquivo(s) incompleto(s)"/>
-		<control caption="Apagar dos _Dados:"/>
-		<control caption="Alcance dos bytes:"/>
+		<control caption="Cancelar o download mas salvar o(s) arquivo(s) incompleto(s)"/>
+		<control caption="Apagador dos _Dados:"/>
+		<control caption="Byte range:"/>
 		<control/>
 		<control caption="até"/>
 		<control/>
