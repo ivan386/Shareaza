@@ -228,6 +228,11 @@ void CDownloadGroup::SetSchema(LPCTSTR pszURI, BOOL bRemoveOldFilters)
 	}
 }
 
+void CDownloadGroup::SetFolder(LPCTSTR pszFolder)
+{
+	m_sFolder = pszFolder;
+}
+
 void CDownloadGroup::SetDefaultFilters()
 {
 	if ( CSchema* pSchema = SchemaCache.Get( m_sSchemaURI ) )

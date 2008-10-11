@@ -173,10 +173,12 @@ void CDownloadGroups::CreateDefault()
 	pGroup = Add( _T("BitTorrent") );
 	pGroup->SetSchema( CSchema::uriBitTorrent );
 	pGroup->SetDefaultFilters();
+	pGroup->SetFolder( Settings.Downloads.TorrentPath );
 
 	pGroup = Add( _T("Collection") );
 	pGroup->SetSchema( CSchema::uriCollection );
 	pGroup->SetDefaultFilters();
+	pGroup->SetFolder( Settings.Downloads.CollectionPath );
 }
 
 //////////////////////////////////////////////////////////////////////

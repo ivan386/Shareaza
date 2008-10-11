@@ -266,8 +266,12 @@ void CDownloadGroupDlg::OnBrowse()
 		return;
 	}
 
-	// If the group folder and download folders are the same, use the default download folder
-	if ( _tcsicmp( strPath, Settings.Downloads.CompletePath ) == 0 )
+	// If the group folder and schema default download folders are the same,
+	// use the default download folder
+	CString sSchema = m_wndSchemas.GetSelectedURI();
+	if ( sSchema != CSchema::uriBitTorrent &&
+		 sSchema != CSchema::uriCollection && 
+		! strPath.CompareNoCase( Settings.Downloads.CompletePath ) )
 		m_sFolder.Empty();
 	else
 		m_sFolder = strPath;
@@ -335,7 +339,13 @@ void CDownloadGroupDlg::OnBnClickedDownloadDefault()
 {
 	UpdateData();
 
-	m_sFolder.Empty();
+	CString sSchema = m_wndSchemas.GetSelectedURI();
+	if ( sSchema == CSchema::uriBitTorrent )
+		m_sFolder = Settings.Downloads.TorrentPath;
+	else if ( sSchema == CSchema::uriCollection )
+		m_sFolder = Settings.Downloads.CollectionPath;
+	else
+		m_sFolder.Empty();
 
 	UpdateData( FALSE );
 }

@@ -61,6 +61,7 @@ public:
 	void		AddFilter(const CString& strFilter);
 	void		RemoveFilter(const CString& strFilter);
 	void		SetSchema(LPCTSTR pszURI, BOOL bRemoveOldFilters = FALSE);
+	void		SetFolder(LPCTSTR pszFolder);
 	void		Serialize(CArchive& ar, const int nVersion);
 	BOOL		IsTemporary();
 	void		SetDefaultFilters();	// Load file extensions from schema
