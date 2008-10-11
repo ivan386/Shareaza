@@ -251,8 +251,6 @@ CString CBENode::GetStringFromSubNode(LPCSTR pszKey, UINT nEncoding, bool& bEnco
 		}
 	}
 
-	if ( _tcsicmp( strValue , _T("#ERROR#") ) == 0 ) strValue.Empty();
-
 	return strValue;
 }
 
@@ -563,4 +561,79 @@ int CBENode::DecodeLen(LPBYTE& pInput, DWORD& nInput)
 		AfxThrowUserException();
 
 	return nLen;
+}
+
+CString CBENode::GetString() const
+{
+	if ( m_nType != beString )
+		return CString();
+
+	// Decode from UTF-8
+	int nLength = MultiByteToWideChar( CP_UTF8, MB_ERR_INVALID_CHARS,
+		(LPCSTR)m_pValue, -1, NULL, 0 );
+	if ( nLength > 0 )
+	{
+		CString str;
+		MultiByteToWideChar( CP_UTF8, 0,
+			(LPCSTR)m_pValue, -1, str.GetBuffer( nLength ), nLength );
+		str.ReleaseBuffer();
+		return str;
+	}
+
+	// Use as is
+	return CString( (LPCSTR)m_pValue );
+}
+
+CString CBENode::DecodeString(UINT nCodePage) const
+{
+	if ( m_nType != beString )
+		return CString();
+
+	int nLength = 0;
+
+	// Use the torrent code page (if present)
+	if ( nCodePage != CP_ACP )
+		nLength = MultiByteToWideChar( nCodePage, MB_ERR_INVALID_CHARS,
+			(LPCSTR)m_pValue, -1 , NULL, 0 );
+	if ( nLength > 0 )
+	{
+		CString str;
+		MultiByteToWideChar( nCodePage, 0,
+			(LPCSTR)m_pValue, -1, str.GetBuffer( nLength ), nLength );
+		str.ReleaseBuffer();
+		return str;
+	}
+
+	// Try the user-specified code page if it's set, else use the system code page
+	if ( Settings.BitTorrent.TorrentCodePage != CP_ACP )
+		nCodePage = Settings.BitTorrent.TorrentCodePage;
+	else
+		nCodePage = GetOEMCP();
+
+	if ( nCodePage != CP_ACP )
+		nLength = MultiByteToWideChar( nCodePage, MB_ERR_INVALID_CHARS,
+			(LPCSTR)m_pValue, -1, NULL, 0 );
+	if ( nLength > 0 )
+	{
+		CString str;
+		MultiByteToWideChar( nCodePage, 0,
+			(LPCSTR)m_pValue, -1, str.GetBuffer( nLength ), nLength );
+		str.ReleaseBuffer();
+		return str;
+	}
+
+	// Try ACP. (Should convert anything, but badly)
+	nLength = MultiByteToWideChar( CP_ACP, MB_ERR_INVALID_CHARS,
+		(LPCSTR)m_pValue, -1, NULL, 0 );
+	if ( nLength > 0 )
+	{
+		CString str;
+		MultiByteToWideChar( CP_ACP, 0,
+			(LPCSTR)m_pValue, -1, str.GetBuffer( nLength ), nLength );
+		str.ReleaseBuffer();
+		return str;
+	}
+
+	// Use as is
+	return CString( (LPCSTR)m_pValue );
 }

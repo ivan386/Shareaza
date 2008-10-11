@@ -77,79 +77,10 @@ public:
 		m_nValue	= nValue;
 	}
 
-	inline CString GetString() const
-	{
-		CString str;
-		if ( m_nType != beString ) return str;
-		str = (LPCSTR)m_pValue;
-
-		int nLength = MultiByteToWideChar( CP_UTF8, MB_ERR_INVALID_CHARS, (LPCSTR)m_pValue, -1, NULL, 0 );
-		if ( nLength > 0 )
-			MultiByteToWideChar( CP_UTF8, 0, (LPCSTR)m_pValue, -1, str.GetBuffer( nLength ), nLength );
-		else
-		{
-			// Bad encoding
-			str.ReleaseBuffer();
-			str = _T("#ERROR#");
-			return str;
-		}
-		str.ReleaseBuffer();
-
-		return str;
-	}
+	CString GetString() const;
 
 	// If a torrent is badly encoded, you can try forcing a code page.
-	inline CString DecodeString(UINT nCodePage) const
-	{
-		CString str;
-		if ( m_nType != beString ) return str;
-		str = (LPCSTR)m_pValue;
-		int nSource = str.GetLength();
-		if ( nSource == 0 ) return str;
-		int nLength = 0;
-
-		// Use the torrent code page (if present)
-		if ( nCodePage != 0 )
-		{
-			nLength = MultiByteToWideChar( nCodePage, MB_ERR_INVALID_CHARS,
-				(LPCSTR)m_pValue, -1 , NULL, 0 );
-		}
-
-		if ( nLength > 0 )
-			MultiByteToWideChar( nCodePage, 0, (LPCSTR)m_pValue, -1 , str.GetBuffer( nLength ), nLength );
-		else
-		{
-			// Try the user-specified code page if it's set, else use the system code page
-			if ( Settings.BitTorrent.TorrentCodePage != 0 )
-				nCodePage = Settings.BitTorrent.TorrentCodePage;
-			else
-				nCodePage = GetOEMCP();
-
-			nLength = MultiByteToWideChar( nCodePage, MB_ERR_INVALID_CHARS,
-				(LPCSTR)m_pValue, nSource, NULL, 0 );
-
-			if ( nLength > 0 )
-				MultiByteToWideChar( nCodePage, 0, (LPCSTR)m_pValue, nSource, str.GetBuffer( nLength ), nLength );
-			else
-			{
-				// Try ACP. (Should convert anything, but badly)
-				nCodePage = CP_ACP;
-				nLength = MultiByteToWideChar( nCodePage, MB_ERR_INVALID_CHARS,
-					(LPCSTR)m_pValue, nSource, NULL, 0 );
-				if ( nLength > 0 )
-					MultiByteToWideChar( nCodePage, 0, (LPCSTR)m_pValue, nSource, str.GetBuffer( nLength ), nLength );
-				else
-				{
-					// Nothing more we can do
-					str = _T("#ERROR#");
-					return str;
-				}
-			}
-		}
-		str.ReleaseBuffer();
-
-		return str;
-	}
+	CString DecodeString(UINT nCodePage) const;
 
 	// Check if a string is a valid path/file name.
 	inline BOOL IsValid(LPCTSTR psz) const
