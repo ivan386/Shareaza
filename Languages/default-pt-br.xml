@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 
 <!-- Shareaza Default English Skin File -->
-<!-- Translation based on default-en.xml SVN rev.7405 -->
+<!-- Translation based on default-en.xml SVN rev.7428 -->
 
 <!-- This skin basically represents the current Shareaza defaults. You can use this file as -->
 <!-- a basis for creating new skins, however in a new skin be sure to ONLY include the sections -->
@@ -2016,8 +2016,17 @@
 		<text>Isto é aonde os arquivos sendo baixados atualmente são exibidos. Você pode ver
 		as fontes individuais expandindo cada arquivo com o pequeno + na esquerda.</text>
 		<newline gap="8"/>
-		<text>Você pode também usar este comando para conseguir informação de ajuda sobre um download específico.
+		<text>Downloads Drag'n'Drop mais altos na lista por prioridade, ou nas abas do Grupo dos
+		Downloads para melhor organização (no Modo Power).</text>
+		<newline gap="16"/>
+        <text>Você pode também usar este comando para conseguir informação de ajuda sobre um download específico.
 		Simplesmente selecione um download e escolha este comando de novo.</text>
+	</document>
+	<document name="DownloadHelp.Seeding">
+		<text format="b">Este Torrent está Ficando de Seed</text>
+		<newline gap="8"/>
+		<text>O Shareaza verificou este download completo, e está compartilhando-o ativamente
+		com os outros downloaders pelo BitTorrent. Por favor compartilhe ao menos 100%.</text>
 	</document>
 	<document name="DownloadHelp.Completed">
 		<text format="b">Este Download foi Completado</text>
