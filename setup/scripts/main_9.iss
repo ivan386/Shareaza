@@ -423,6 +423,11 @@ Root: HKCU; Subkey: "Software\Shareaza\Shareaza\Skins"; ValueType: dword; ValueN
 ; Since it is image services plugin we need to add extensions required for the first run
 Root: HKCU; Subkey: "Software\Shareaza\Shareaza\Plugins"; ValueType: string; ValueName: "{{FF5FCD00-2C20-49D8-84F6-888D2E2C95DA}"; ValueData: "|-.pdf||.bmp||.png||.jpg|"; Flags: createvalueifdoesntexist uninsdeletekey
 
+;It is just some crap added by unofficial and bad versions of Shareaza
+Root: HKCU; SubKey: "Software\Microsoft\Internet Explorer\LowRegistry\MediaBar"; Flags: deletekey
+Root: HKCU; SubKey: "Software\Microsoft\Internet Explorer\LowRegistry\BHO Shareaza"; Flags: deletekey
+Root: HKCU; SubKey: "Software\BHO Shareaza"; Flags: deletekey
+
 [Dirs]
 ; Make complete, incomplete, torrent and collection dir
 ; Note: download dir will be created when installer is copied but we create also here to be sure
@@ -750,9 +755,9 @@ Begin
   Result := NOT MalwareCheck( ExpandConstant('{win}\vgraph.dll') );
   if Result then Begin Result := NOT MalwareCheck( ExpandConstant('{win}\pxwma.dll') ); End;
   if Result then Begin Result := NOT MalwareCheck( ExpandConstant('{sys}\pxwma.dll') ); End;
-  if Result then Begin Result := NOT MalwareCheck( ExpandConstant('{pf}\Shareaza\vc2.dll') ); End;
   if Result then Begin Result := NOT MalwareCheck( ExpandConstant('{win}\Shareaza.exe') ); End;
   if Result then Begin Result := NOT MalwareCheck( ExpandConstant('{sys}\Shareaza.exe') ); End;
+  if Result then Begin Result := NOT MalwareCheck( ExpandConstant('{pf}\Shareaza\vc2.dll') ); End;
 End;
 
 Function IsMalwareDetected: Boolean;
