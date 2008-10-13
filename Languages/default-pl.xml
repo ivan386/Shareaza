@@ -753,7 +753,7 @@
 		<item id="ID_TAB_LIBRARY" text="_Biblioteka"/>
 		<item id="ID_TAB_MEDIA" text="Odtwarzacz _multimedialny"/>
 		<item id="ID_TAB_SEARCH" text="_Szukaj"/>
-		<item id="ID_TAB_TRANSFERS" text="_PPobierania"/>
+		<item id="ID_TAB_TRANSFERS" text="_Pobierania"/>
 		<separator/>
 		<menu text="Zaawansowane">
 			<item id="ID_VIEW_NEIGHBOURS" text="Sieć (Neighbours)"/>
@@ -4403,19 +4403,22 @@
 		<control caption="Tryb Trackera:"/>
 		<control caption="Wyłącz|Custom|Pojedynczy Tracker|Multi-tracker|Multi-tracker (locked)"/>
 	</dialog>
-	<dialog name="CDownloadGroupDlg" cookie="BuEdSyBuCoBuBuBuBuBuEdBu" caption="Właściwości grupy pobierań">
-		<control caption="Nazwa:"/>
+	<dialog name="CDownloadGroupDlg" cookie="BuBuEdCoBuCoBuBuEdBuBuBuBuBuBu" caption="Właściwości grupy pobierań">
+		<control caption="OK"/>
+		<control caption="Anuluj"/>
 		<control/>
 		<control/>
-		<control caption="Filtry:"/>
+		<control caption="_BitTorrent"/>
 		<control/>
 		<control caption="Dodaj"/>
 		<control caption="Usuń"/>
-		<control caption="OK"/>
-		<control caption="Anuluj"/>
+		<control/>
+		<control/>
+		<control/>
+		<control caption="Nazwa:"/>
+		<control caption="Filtry:"/>
 		<control caption="Folder ukończonych plików:"/>
-		<control/>
-		<control/>
+		<control caption="Rodzaj pliku:"/>
 	</dialog>
 	<dialog name="CMediaVisDlg" cookie="StBuSyCoBuBuBu" caption="Wybierz wizualizację">
 		<control/>

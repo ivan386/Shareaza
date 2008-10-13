@@ -4309,19 +4309,22 @@
 		<control caption="無効|カスタム|単一トラッカー|複数トラッカー|複数トラッカー (固定)"/>
 	</dialog>
 
-	<dialog name="CDownloadGroupDlg" cookie="BuEdSyBuCoBuBuBuBuBuEdBu" caption="ダウンロードグループプロパティ">
-		<control caption="名前(_N):"/>
+	<dialog name="CDownloadGroupDlg" cookie="BuBuEdCoBuCoBuBuEdBuBuBuBuBuBu" caption="ダウンロードグループプロパティ">
+		<control caption="OK"/>
+		<control caption="キャンセル"/>
 		<control/>
 		<control/>
-		<control caption="フィルタ(_F):"/>
+		<control caption="_BitTorrent"/>
 		<control/>
 		<control caption="追加(_A)"/>
 		<control caption="削除(_R)"/>
-		<control caption="OK"/>
-		<control caption="キャンセル"/>
+		<control/>
+		<control/>
+		<control/>
+		<control caption="名前(_N):"/>
+		<control caption="フィルタ(_F):"/>
 		<control caption="完了フォルダ(_F):"/>
-		<control/>
-		<control/>
+		<control caption="全てのファイルタイプ(_T):"/>
 	</dialog>
 
 	<dialog name="CMediaVisDlg" cookie="StBuSyCoBuBuBu" caption="視覚効果を選択">

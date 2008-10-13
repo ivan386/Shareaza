@@ -4350,19 +4350,22 @@
 		<control caption="Modalità tracker:"/>	
 		<control caption="Disabilitato|Personalizzato|Tracker singolo|Multi-tracker|Multi-tracker (bloccato)"/>
 	</dialog>
-	<dialog name="CDownloadGroupDlg" cookie="BuEdSyBuCoBuBuBuBuBuEdBu" caption="Proprietà gruppo di download">
-		<control caption="_Nome:"/>
+	<dialog name="CDownloadGroupDlg" cookie="BuBuEdCoBuCoBuBuEdBuBuBuBuBuBu" caption="Proprietà gruppo di download">
+		<control caption="OK"/>
+		<control caption="Annulla"/>
 		<control/>
 		<control/>
-		<control caption="_Filtri:"/>
+		<control caption="_BitTorrent"/>
 		<control/>
 		<control caption="_Aggiungi"/>
 		<control caption="_Rimuovi"/>
-		<control caption="OK"/>
-		<control caption="Annulla"/>
+		<control/>
+		<control/>
+		<control/>
+		<control caption="_Nome:"/>
+		<control caption="_Filtri:"/>
 		<control caption="_Cartella dei file completati:"/>
-		<control/>
-		<control/>
+		<control caption="_Tipo file:"/>
 	</dialog>
 	<dialog name="CMediaVisDlg" cookie="StBuSyCoBuBuBu" caption="Scegli visualizzazione">
 		<control/>

@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 
 <!-- Shareaza Default German Skin File -->
-<!-- Translation based on default-en.xml SVN rev.7405 -->
+<!-- Translation based on default-en.xml SVN rev.7455 -->
 
 <!-- This skin basically represents the current Shareaza defaults. You can use this file as -->
 <!-- a basis for creating new skins, however in a new skin be sure to ONLY include the sections -->
@@ -4379,19 +4379,22 @@
 		<control caption="Tracker-Modus:"/>
 		<control caption="Deaktiviert|Benutzerdefiniert|Einzel-Tracker|Multi-Tracker|Multi-Tracker (locked)"/>
 	</dialog>
-	<dialog name="CDownloadGroupDlg" cookie="BuEdSyBuCoBuBuBuBuBuEdBu" caption="Downloadgruppen-Eigenschaften">
-		<control caption="_Name:"/>
+	<dialog name="CDownloadGroupDlg" cookie="BuBuEdCoBuCoBuBuEdBuBuBuBuBuBu" caption="Downloadgruppen-Eigenschaften">
+		<control caption="OK"/>
+		<control caption="Abbrechen"/>
 		<control/>
 		<control/>
-		<control caption="_Filter:"/>
+		<control caption="_BitTorrent"/>
 		<control/>
 		<control caption="_Hinzufügen"/>
 		<control caption="_Entfernen"/>
-		<control caption="OK"/>
-		<control caption="Abbrechen"/>
+		<control/>
+		<control/>
+		<control/>
+		<control caption="_Name:"/>
+		<control caption="_Filter:"/>
 		<control caption="Ziel_ordner:"/>
-		<control/>
-		<control/>
+		<control caption="_Dateityp:"/>
 	</dialog>
 	<dialog name="CMediaVisDlg" cookie="StBuSyCoBuBuBu" caption="Visualisierung wählen">
 		<control/>

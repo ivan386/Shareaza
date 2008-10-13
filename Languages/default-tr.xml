@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 
 <!-- Shareaza Default Turkish Skin File -->
-<!-- Translation based on default-en.xml SVN rev.7405 -->
+<!-- Translation based on default-en.xml SVN rev.7455 -->
 
 <!-- This skin basically represents the current Shareaza defaults. You can use this file as -->
 <!-- a basis for creating new skins, however in a new skin be sure to ONLY include the sections -->
@@ -4378,19 +4378,22 @@
 		<control caption="Tracker Modu:"/>
 		<control caption="Etkisiz|Kişisel değer|Tek Tracker|Birçok tracker|Birçok tracker (kilitli)"/>
 	</dialog>
-	<dialog name="CDownloadGroupDlg" cookie="BuEdSyBuCoBuBuBuBuBuEdBu" caption="İndirme Grup Özellikleri">
-		<control caption="_İsim:"/>
+	<dialog name="CDownloadGroupDlg" cookie="BuBuEdCoBuCoBuBuEdBuBuBuBuBuBu" caption="İndirme Grup Özellikleri">
+		<control caption="Tamam"/>
+		<control caption="İptal"/>
 		<control/>
 		<control/>
-		<control caption="_Filtreler:"/>
+		<control caption="_BitTorrent"/>
 		<control/>
 		<control caption="_Ekle"/>
 		<control caption="_Kaldır"/>
-		<control caption="Tamam"/>
-		<control caption="İptal"/>
+		<control/>
+		<control/>
+		<control/>
+		<control caption="_İsim:"/>
+		<control caption="_Filtreler:"/>
 		<control caption="_Dosya klasörleri tamamlandı:"/>
-		<control/>
-		<control/>
+		<control caption="Dosya _türlerini:"/>
 	</dialog>
 	<dialog name="CMediaVisDlg" cookie="StBuSyCoBuBuBu" caption="Biçim Seçimi">
 		<control/>

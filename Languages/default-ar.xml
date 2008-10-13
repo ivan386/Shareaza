@@ -2123,22 +2123,22 @@
       <text format="b">الرجاء إعادة كتابة عبارة البحث</text>
       <newline gap="8" />
       <text>هذا البحث مكتوب بشكل سيئ و قد لا يفيد في النتائج
-عمليات البحث يجب أن تتضمن عدة شروط و يجب أن يتم
-تعيين نوع الملف . علاوة على ذلك ، عمليات بحث لا يجب أن
-تحتوى أرقام و يجب أن تتفادى الإستفسارات العامة</text>
+		عمليات البحث يجب أن تتضمن عدة شروط و يجب أن يتم
+		تعيين نوع الملف . علاوة على ذلك ، عمليات بحث لا يجب أن
+		تحتوى أرقام و يجب أن تتفادى الإستفسارات العامة</text>
       <newline gap="8" />
       <text>أغلب التوابع على الشبكة تتجاهل البحث عن جميع
-لأنها ليست مميزة بما فيه الكفاية و تولد الكثير من النتائج MP3 ملفات</text>
+		لأنها ليست مميزة بما فيه الكفاية و تولد الكثير من النتائج MP3 ملفات</text>
     </document>
     <document name="SearchHelp.BadSearch2">
       <text format="b">الرجاء إعادة كتابة عبارة البحث</text>
       <newline gap="8" />
       <text>هذا البحث لا يحتوي شروط كافية . جميع عمليات البحث تحتاج
- إلى أقل عدد من الرموز الحرفية للعثور على نتائج لها</text>
+		إلى أقل عدد من الرموز الحرفية للعثور على نتائج لها</text>
       <newline gap="8" />
-      <text>للبحث عن إمتدادات الملفات المشتركة
- (و الأعداد) يجب
-أن تدخل شروط أخرى أيضا مثل الفواصل و علامات التنقيط و كلمات البدل</text>
+      <text>للبحث عن إمتدادات الملفات المشتركة (و الأعداد) يجب
+		أن تدخل شروط أخرى أيضا مثل الفواصل و علامات التنقيط و كلمات البدل
+		</text>
     </document>
     <document name="SearchHelp.BadSearch3">
       <text format="b">الرجاء إعادة كتابة عبارة البحث</text>
@@ -4274,18 +4274,22 @@
       <control caption="Tracker Mode:" />
       <control caption="Disabled|Custom|Single Tracker|Multi-tracker|Multi-tracker (locked)" />
     </dialog>
-    <dialog name="CDownloadGroupDlg" cookie="BuEdSyBuCoBuBuBuBuBuEdBu" caption="Download Group Properties">
-      <control caption="_Name:" />
+    <dialog name="CDownloadGroupDlg" cookie="BuBuEdCoBuCoBuBuEdBuBuBuBuBuBu" caption="Download Group Properties">
+      <control caption="حسنا" />
+      <control caption="إلغاء الأمر" />
       <control />
       <control />
-      <control caption="_Filters:" />
+      <control caption="_BitTorrent"/>
       <control />
       <control caption="إ_ضافة" />
       <control caption="إ_زالة" />
-      <control caption="حسنا" />
-      <control caption="إلغاء الأمر" />
-      <control caption="Completed File _Folder:" />
       <control />
+      <control />
+      <control />
+      <control caption="_Name:" />
+      <control caption="_Filters:" />
+      <control caption="Completed File _Folder:" />
+      <control caption="_Type of file:"/>
     </dialog>
     <dialog name="CMediaVisDlg" cookie="StBuSyCoBuBuBu" caption="Select Visualisation">
       <control />

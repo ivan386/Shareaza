@@ -4400,18 +4400,22 @@ PDF
         <control caption="Tracker Mode:"/>
 		<control caption="Disabled|Custom|Single Tracker|Multi-tracker|Multi-tracker (locked)"/>
 	</dialog>
-	<dialog name="CDownloadGroupDlg" cookie="BuEdSyBuCoBuBuBuBuBuEdBu" caption="הורד מאפייני קבוצה">
-		<control caption=":שם"/>
+	<dialog name="CDownloadGroupDlg" cookie="BuBuEdCoBuCoBuBuEdBuBuBuBuBuBu" caption="הורד מאפייני קבוצה">
+		<control caption="אישור"/>
+		<control caption="ביטול"/>
 		<control/>
 		<control/>
-		<control caption=":מסננים"/>
+		<control caption="_BitTorrent"/>
 		<control/>
 		<control caption="הוסף"/>
 		<control caption="הסר"/>
-		<control caption="אישור"/>
-		<control caption="ביטול"/>
-		<control caption=":התיקייה לשמירת קבצים כשמסתיימת ההורדה"/>
 		<control/>
+		<control/>
+		<control/>
+		<control caption=":שם"/>
+		<control caption=":מסננים"/>
+		<control caption=":התיקייה לשמירת קבצים כשמסתיימת ההורדה"/>
+		<control caption=":כל סוג קובץ"/>
 	</dialog>
 	<dialog name="CMediaVisDlg" cookie="StBuSyCoBuBuBu" caption="בחר אפקט ויזואלי">
 		<control/>

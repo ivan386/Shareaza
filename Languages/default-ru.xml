@@ -4373,19 +4373,22 @@
 		<control caption="Режим трекера:"/>
 		<control caption="Отключен|Настраиваемый|Один трекер|Мультитрекер|Мультитрекер (заблокир.)"/>
 	</dialog>
-	<dialog name="CDownloadGroupDlg" cookie="BuEdSyBuCoBuBuBuBuBuEdBu" caption="Свойства группы загрузки">
-		<control caption="_Название:"/>
+	<dialog name="CDownloadGroupDlg" cookie="BuBuEdCoBuCoBuBuEdBuBuBuBuBuBu" caption="Свойства группы загрузки">
+		<control caption="OK"/>
+		<control caption="Отмена"/>
 		<control/>
 		<control/>
-		<control caption="_Фильтры:"/>
+		<control caption="_BitTorrent"/>
 		<control/>
 		<control caption="_Добавить"/>
 		<control caption="_Удалить"/>
-		<control caption="OK"/>
-		<control caption="Отмена"/>
+		<control/>
+		<control/>
+		<control/>
+		<control caption="_Название:"/>
+		<control caption="_Фильтры:"/>
 		<control caption="_Папка завершенных файлов:"/>
-		<control/>
-		<control/>
+		<control caption="_тип файла:"/>
 	</dialog>
 	<dialog name="CMediaVisDlg" cookie="StBuSyCoBuBuBu" caption="Выбор визуализации">
 		<control/>

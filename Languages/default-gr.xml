@@ -4383,19 +4383,22 @@
 		<control caption="Κατάσταση Tracker:"/>
 		<control caption="Απενεργοποιημένος|Προσαρμοσμένος|Μονός Tracker|Πολλαπλός Tracker|Πολλαπλός Tracker (κλειδωμένος)"/>
 	</dialog>
-	<dialog name="CDownloadGroupDlg" cookie="BuEdSyBuCoBuBuBuBuBuEdBu" caption="Ιδιότητες Ομάδας Λήψεων">
-		<control caption="Όνομα:"/>
+	<dialog name="CDownloadGroupDlg" cookie="BuBuEdCoBuCoBuBuEdBuBuBuBuBuBu" caption="Ιδιότητες Ομάδας Λήψεων">
+		<control caption="OK"/>
+		<control caption="Άκυρο"/>
 		<control/>
 		<control/>
-		<control caption="Φίλτρα:"/>
+		<control caption="_BitTorrent"/>
 		<control/>
 		<control caption="Προσθήκη"/>
 		<control caption="Αφαίρεση"/>
-		<control caption="OK"/>
-		<control caption="Άκυρο"/>
+		<control/>
+		<control/>
+		<control/>
+		<control caption="Όνομα:"/>
+		<control caption="Φίλτρα:"/>
 		<control caption="Ολοκλήρωση _Φακέλου Αρχείων:"/>
-		<control/>
-		<control/>
+		<control caption="_Aαρχείων:"/>
 	</dialog>
 	<dialog name="CMediaVisDlg" cookie="StBuSyCoBuBuBu" caption="Επιλογή Απεικόνισης">
 		<control/>

@@ -4245,18 +4245,22 @@
 		<control caption="Mode del rastrejador:"/>
 		<control caption="Deshabilitat|Personalitzat|Tracker únic|Multi-tracker|Multi-tracker (blocat)"/>
 	</dialog>
-	<dialog name="CDownloadGroupDlg" cookie="BuEdSyBuCoBuBuBuBuBuEdBu" caption="Propietats del grup de descàrrega">
-		<control caption="_Nom:"/>
+	<dialog name="CDownloadGroupDlg" cookie="BuBuEdCoBuCoBuBuEdBuBuBuBuBuBu" caption="Propietats del grup de descàrrega">
+		<control caption="Sí"/>
+		<control caption="Cancel·la"/>
 		<control/>
 		<control/>
-		<control caption="_Filtres:"/>
+		<control caption="_BitTorrent downloads"/>
 		<control/>
 		<control caption="_Afegeix"/>
 		<control caption="_Esborra"/>
-		<control caption="Sí"/>
-		<control caption="Cancel·la"/>
-		<control caption="Carpeta d'_arxius completats:"/>
 		<control/>
+		<control/>
+		<control/>
+		<control caption="_Nom:"/>
+		<control caption="_Filtres:"/>
+		<control caption="Carpeta d'_arxius completats:"/>
+		<control caption="_Tipus d'arxiu:"/>
 	</dialog>
 	<dialog name="CMediaVisDlg" cookie="StBuSyCoBuBuBu" caption="Selecciona una visualització">
 		<control/>

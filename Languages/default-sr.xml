@@ -3237,7 +3237,7 @@
 		<control/>
 		<control caption="Dod_aj"/>
 		<control caption="Ukloni"/>
-		<control caption="Upravitelj Skidanja plugin skida samo datoteke onih prsta koje su na listi.Ostale tipove otvara Vaš internet preglednik.Shareaza mora biti pokrenuta da bi Upravitelj Skidanja radio."/>
+		<control caption="Upravitelj Skidanja plugin skida samo datoteke onih prsta koje su na listi. Ostale tipove otvara Vaš internet preglednik. Shareaza mora biti pokrenuta da bi Upravitelj Skidanja radio."/>
 	</dialog>
 	<dialog name="CInternetSettingsGroup" caption="Internet">
 	</dialog>
@@ -4176,18 +4176,22 @@
 		<control caption="Tracker Mode:"/>
 		<control caption="Disabled|Custom|Single Tracker|Multi-tracker|Multi-tracker (locked)"/>
 	</dialog>
-	<dialog name="CDownloadGroupDlg" cookie="BuEdSyBuCoBuBuBuBuBuEdBu" caption="Download Group Podešavanja">
-		<control caption="Ime:"/>
+	<dialog name="CDownloadGroupDlg" cookie="BuBuEdCoBuCoBuBuEdBuBuBuBuBuBu" caption="Download Group Podešavanja">
+		<control caption="OK"/>
+		<control caption="Odustani"/>
 		<control/>
 		<control/>
-		<control caption="_Filteri:"/>
+		<control caption="_BitTorrent"/>
 		<control/>
 		<control caption="Dod_aj"/>
 		<control caption="Ukloni"/>
-		<control caption="OK"/>
-		<control caption="Odustani"/>
-		<control caption="Fascikla sa Skinutim Datotekama:"/>
 		<control/>
+		<control/>
+		<control/>
+		<control caption="Ime:"/>
+		<control caption="_Filteri:"/>
+		<control caption="Fascikla sa Skinutim Datotekama:"/>
+		<control caption="_Datoteke (schema):"/>
 	</dialog>
 	<dialog name="CMediaVisDlg" cookie="StBuSyCoBuBuBu" caption="Odaberite Vizualizaciju">
 		<control/>

@@ -4282,18 +4282,22 @@
 		<control caption="停用|自訂|單一伺服器|多部伺服器|多部伺服器 (已鎖定)"/>
 	</dialog>
 
-	<dialog name="CDownloadGroupDlg" cookie="BuEdSyBuCoBuBuBuBuBuEdBu" caption="下載群組的屬性">
-		<control caption="名稱:"/>
+	<dialog name="CDownloadGroupDlg" cookie="BuBuEdCoBuCoBuBuEdBuBuBuBuBuBu" caption="下載群組的屬性">
+		<control caption="確定"/>
+		<control caption="取消"/>
 		<control/>
 		<control/>
-		<control caption="過濾:"/>
+		<control caption="_BitTorrent"/>
 		<control/>
 		<control caption="新增"/>
 		<control caption="移除"/>
-		<control caption="確定"/>
-		<control caption="取消"/>
-		<control caption="完成的檔案的資料夾:"/>
 		<control/>
+		<control/>
+		<control/>
+		<control caption="名稱:"/>
+		<control caption="過濾:"/>
+		<control caption="完成的檔案的資料夾:"/>
+		<control caption="任何檔案類型:"/>
 	</dialog>
 
 	<dialog name="CMediaVisDlg" cookie="StBuSyCoBuBuBu" caption="選擇視覺效果">

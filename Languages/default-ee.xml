@@ -4323,18 +4323,22 @@
 		<control caption="Väljas|Vaba|Üks Jälitaja|Mitu Jälitajat|Mitu Jälitajat (lukustatud)"/>
 	</dialog>
 
-	<dialog name="CDownloadGroupDlg" cookie="BuEdSyBuCoBuBuBuBuBuEdBu" caption="Allalaadimisgrupi Omadused">
-		<control caption="_Nimi:"/>
+	<dialog name="CDownloadGroupDlg" cookie="BuBuEdCoBuCoBuBuEdBuBuBuBuBuBu" caption="Allalaadimisgrupi Omadused">
+		<control caption="OK"/>
+		<control caption="Tühista"/>
 		<control/>
 		<control/>
-		<control caption="_Filtrid:"/>
+		<control caption="_BitTorrent"/>
 		<control/>
 		<control caption="_Lisa"/>
 		<control caption="_Eemalda"/>
-		<control caption="OK"/>
-		<control caption="Tühista"/>
-		<control caption="Valmis Failide _Kaust:"/>
 		<control/>
+		<control/>
+		<control/>
+		<control caption="_Nimi:"/>
+		<control caption="_Filtrid:"/>
+		<control caption="Valmis Failide _Kaust:"/>
+		<control caption="Faili _tüüp:" />
 	</dialog>
 
 	<dialog name="CMediaVisDlg" cookie="StBuSyCoBuBuBu" caption="Vali Visualisation">

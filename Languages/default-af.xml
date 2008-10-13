@@ -2186,7 +2186,7 @@
 	<!-- Search help documents -->
 	<document name="SearchHelp.BadSearch1">
 		<text format="b">Herbewoord asseblief die soektog</text>
-		<newline gap="8"/>
+ 		<newline gap="8"/>
 		<text>Hierdie soektog is swak bewoord, en mag dalk nie korrek funksioneer nie.
 		Soektogte moet 'n paar terme insluit waar moontlik, asook 'n skema (lêertipe).
 		Verder moet soektogte nie slegs syfers of negatiewe terme bevat nie, en
@@ -4379,19 +4379,22 @@
 		<control caption="Tracker Mode:"/>
 		<control caption="Disabled|Custom|Single Tracker|Multi-tracker|Multi-tracker (locked)"/>
 	</dialog>
-	<dialog name="CDownloadGroupDlg" cookie="BuEdSyBuCoBuBuBuBuBuEdBu" caption="Aflaaigroep Eienskappe">
-		<control caption="_Naam:"/>
-		<control/>
-		<control/>
-		<control caption="_Filters:"/>
-		<control/>
-		<control caption="Voeg _By"/>
-		<control caption="_Verwyder"/>
+	<dialog name="CDownloadGroupDlg" cookie="BuBuEdCoBuCoBuBuEdBuBuBuBuBuBu" caption="Aflaaigroep Eienskappe">
 		<control caption="OK"/>
 		<control caption="Kanselleer"/>
+		<control/>
+		<control/>
+		<control caption="_BitTorrent"/>
+		<control/> 
+		<control caption="Voeg _By"/>
+		<control caption="_Verwyder"/>
+		<control/>
+		<control/>
+		<control/>
+		<control caption="_Naam:"/>
+		<control caption="_Filters:"/>
 		<control caption="Gids vir _Voltooide Lêers:"/>
-		<control/>
-		<control/>
+		<control caption="Lêer_Tipe:"/>
 	</dialog>
 	<dialog name="CMediaVisDlg" cookie="StBuSyCoBuBuBu" caption="Selekteer Visualisering">
 		<control/>

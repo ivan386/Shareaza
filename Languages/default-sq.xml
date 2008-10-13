@@ -4245,19 +4245,22 @@
 		<control caption="Mënyra e Gjurmuesit:"/>
 		<control caption="E çaktivizuar|Me porosi|Gjurmues i vetëm|Multi-gjurmues|Multi-gjurmues (i kyçur)"/>
 	</dialog>
-	<dialog name="CDownloadGroupDlg" cookie="BuEdSyBuCoBuBuBuBuBuEdBu" caption="Vetitë e Grupit në Shkarkim">
-		<control caption="_Emri:"/>
+	<dialog name="CDownloadGroupDlg" cookie="BuBuEdCoBuCoBuBuEdBuBuBuBuBuBu" caption="Vetitë e Grupit në Shkarkim">
+		<control caption="OK"/>
+		<control caption="Anulo"/>
 		<control/>
 		<control/>
-		<control caption="_Filtrat:"/>
+		<control caption="_BitTorrent"/>
 		<control/>
 		<control caption="_Shto"/>
 		<control caption="_Fshije"/>
-		<control caption="OK"/>
-		<control caption="Anulo"/>
+		<control/>
+		<control/>
+		<control/>
+		<control caption="_Emri:"/>
+		<control caption="_Filtrat:"/>
 		<control caption="_Dosja e Skedave të Përfunduara:"/>
-		<control/>
-		<control/>
+		<control caption="_Tip Skede:"/>
 	</dialog>
 	<dialog name="CMediaVisDlg" cookie="StBuSyCoBuBuBu" caption="Zgjidhni Vegimin">
 		<control/>

@@ -4293,19 +4293,22 @@
 		<control caption="Disabled|Custom|Single Tracker|Multi-tracker|Multi-tracker (locked)"/>
 	</dialog>
 
-	<dialog name="CDownloadGroupDlg" cookie="BuEdSyBuCoBuBuBuBuBuEdBu" caption="Download Group Postavke">
-		<control caption="Ime:"/>
+	<dialog name="CDownloadGroupDlg" cookie="BuBuEdCoBuCoBuBuEdBuBuBuBuBuBu" caption="Download Group Postavke">
+		<control caption="OK"/>
+		<control caption="Odustani"/>
 		<control/>
 		<control/>
-		<control caption="_Filteri:"/>
+		<control caption="_BitTorrent"/>
 		<control/>
 		<control caption="Dod_aj"/>
 		<control caption="Makni"/>
-		<control caption="OK"/>
-		<control caption="Odustani"/>
+		<control/>
+		<control/>
+		<control/>
+		<control caption="Ime:"/>
+		<control caption="_Filteri:"/>
 		<control caption="Mapa sa Skinutim Datotekama:"/>
-		<control/>
-		<control/>
+		<control caption="_Datoteka:"/>
 	</dialog>
 
 	<dialog name="CMediaVisDlg" cookie="StBuSyCoBuBuBu" caption="Odaberite Vizualizaciju">

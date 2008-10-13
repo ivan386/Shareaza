@@ -4138,19 +4138,22 @@
 		<control caption="Tracker Mode:"/>
 		<control caption="Disabled|Custom|Single Tracker|Multi-tracker|Multi-tracker (locked)"/>
 	</dialog>
-	<dialog name="CDownloadGroupDlg" cookie="BuEdSyBuCoBuBuBuBuBuEdBu" caption="Gruppeegenskaper">
-		<control caption="_Navn:"/>
+	<dialog name="CDownloadGroupDlg" cookie="BuBuEdCoBuCoBuBuEdBuBuBuBuBuBu" caption="Gruppeegenskaper">
+		<control caption="OK"/>
+		<control caption="Avbryt"/>
 		<control/>
 		<control/>
-		<control caption="_Filter:"/>
+		<control caption="_BitTorrent"/>
 		<control/>
 		<control caption="Legg til"/>
 		<control caption="Fjern"/>
-		<control caption="OK"/>
-		<control caption="Avbryt"/>
+		<control/>
+		<control/>
+		<control/>
+		<control caption="_Navn:"/>
+		<control caption="_Filter:"/>
 		<control caption="Ferdige filer i mappe:"/>
-		<control/>
-		<control/>
+		<control caption="_Filtype (schema):"/>
 	</dialog>
 	<dialog name="CMediaVisDlg" cookie="StBuSyCoBuBuBu" caption="Velg effekter">
 		<control/>

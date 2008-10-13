@@ -4336,17 +4336,21 @@
 	</dialog>
 
 	<dialog name="CDownloadGroupDlg" cookie="BuEdSyBuCoBuBuBuBuBuEdBu" caption="下载组属性">
-		<control caption="名称(_N):"/>
+		<control caption="确定"/>
+		<control caption="取消"/>
 		<control/>
 		<control/>
-		<control caption="过滤_F):"/>
+		<control caption="_BitTorrent"/>
 		<control/>
 		<control caption="添加(_A)"/>
 		<control caption="移除(_R)"/>
-		<control caption="确定"/>
-		<control caption="取消"/>
-		<control caption="已完成文件文件夹(_F):"/>
 		<control/>
+		<control/>
+		<control/>
+		<control caption="名称(_N):"/>
+		<control caption="过滤_F):"/>
+		<control caption="已完成文件文件夹(_F):"/>
+		<control caption="文件类型:"/>
 	</dialog>
 
 	<dialog name="CMediaVisDlg" cookie="StBuSyCoBuBuBu" caption="选择可视化效果">

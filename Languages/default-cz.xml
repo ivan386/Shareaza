@@ -4243,18 +4243,22 @@
 		<control caption="Tracker Mód:"/>
 		<control caption="zakázano|vlastní|Single Tracker|Multi-tracker|Multi-tracker (zamčeno)"/>
 	</dialog>
-	<dialog name="CDownloadGroupDlg" cookie="BuEdSyBuCoBuBuBuBuBuEdBu" caption="Stažení vlastností skupiny">
-		<control caption="_Jméno:"/>
+	<dialog name="CDownloadGroupDlg" cookie="BuBuEdCoBuCoBuBuEdBuBuBuBuBuBu" caption="Stažení vlastností skupiny">
+		<control caption="OK"/>
+		<control caption="Zrušit"/>
 		<control/>
 		<control/>
-		<control caption="_Filtry:"/>
+		<control caption="_BitTorrent"/>
 		<control/>
 		<control caption="Přid_at"/>
 		<control caption="Odst_ranit"/>
-		<control caption="OK"/>
-		<control caption="Zrušit"/>
-		<control caption="Dokončený soubor _Složka:"/>
 		<control/>
+		<control/>
+		<control/>
+		<control caption="_Jméno:"/>
+		<control caption="_Filtry:"/>
+		<control caption="Dokončený soubor _Složka:"/>
+		<control caption="_Typ souboru:"/>
 	</dialog>
 	<dialog name="CMediaVisDlg" cookie="StBuSyCoBuBuBu" caption="Zvolte zobrazení">
 		<control/>

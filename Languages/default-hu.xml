@@ -4361,19 +4361,22 @@
 		<control caption="Trackermód:"/>
 		<control caption="Letiltva|Saját|Egy tracker|Multi-tracker|Multi-tracker (zárt)"/>
 	</dialog>
-	<dialog name="CDownloadGroupDlg" cookie="BuEdSyBuCoBuBuBuBuBuEdBu" caption="Letöltési csoportok tulajdonságai">
-		<control caption="Név"/>
+	<dialog name="CDownloadGroupDlg" cookie="BuBuEdCoBuCoBuBuEdBuBuBuBuBuBu" caption="Letöltési csoportok tulajdonságai">
+		<control caption="OK"/>
+		<control caption="Mégse"/>
 		<control/>
 		<control/>
-		<control caption="_Szűrők"/>
+		<control caption="_BitTorrent"/>
 		<control/>
 		<control caption="_Hozzáad"/>
 		<control caption="_Eltávolít"/>
-		<control caption="OK"/>
-		<control caption="Mégse"/>
+		<control/>
+		<control/>
+		<control/>
+		<control caption="Név"/>
+		<control caption="_Szűrők"/>
 		<control caption="E_lkészült letöltések"/>
-		<control/>
-		<control/>
+		<control caption="_Fájltípus:"/>
 	</dialog>
 	<dialog name="CMediaVisDlg" cookie="StBuSyCoBuBuBu" caption="Képi megjelenítések">
 		<control/>

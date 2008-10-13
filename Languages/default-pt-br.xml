@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 
 <!-- Shareaza Default English Skin File -->
-<!-- Translation based on default-en.xml SVN rev.7428 -->
+<!-- Translation based on default-en.xml SVN rev.7455 -->
 
 <!-- This skin basically represents the current Shareaza defaults. You can use this file as -->
 <!-- a basis for creating new skins, however in a new skin be sure to ONLY include the sections -->
@@ -2829,7 +2829,7 @@
 	<string id="16199" value="O Vizinho %s repassou um pacote desconhecido (0x%.2x), ignorando."/>
 	<string id="16200" value="O Vizinho %s repassou um pong com dados de endereço inválidos, ignorando."/>
 	<string id="16201" value="Recebendo um pacote de pesquisa malformatado de %s, ignorando."/>
-	<string id="16202" value="Recebendo um pacote de acerto malformatado de %s, ignorando."/>"/>
+	<string id="16202" value="Recebendo um pacote de acerto malformatado de %s, ignorando."/>
 	<string id="16203" value="O Vizinho %s repassou uma conexão de push com comprimento inválido, ignorando."/>
 	<string id="16208" value="Recebendo uma atualização da tabela de roteamento de pesquisa inesperada do vizinho %s."/>
 	<string id="16209" value="O Vizinho %s enviou uma atualização da tabela de roteamento de pesquisa inválida, descartando conexão."/>
@@ -4406,19 +4406,22 @@
 		<control caption="Modo Tracker:"/>
 		<control caption="Desativado|Modificado|Tracker Único|Multi-tracker|Multi-tracker (trancado)"/>
 	</dialog>
-	<dialog name="CDownloadGroupDlg" cookie="BuEdSyBuCoBuBuBuBuBuEdBu" caption="Propriedades dos Grupos de Download">
-		<control caption="_Nome:"/>
+	<dialog name="CDownloadGroupDlg" cookie="BuBuEdCoBuCoBuBuEdBuBuBuBuBuBu" caption="Propriedades dos Grupos de Download">
+		<control caption="OK"/>
+		<control caption="Cancelar"/>
 		<control/>
 		<control/>
-		<control caption="_Filtros:"/>
+		<control caption="_BitTorrent"/>
 		<control/>
 		<control caption="_Adicionar"/>
 		<control caption="_Remover"/>
-		<control caption="OK"/>
-		  <control caption="Cancelar"/>
-		<control caption="Pasta do _Arquivo Completado:"/>
-		  <control/>
 		<control/>
+		<control/>
+		<control/>
+		<control caption="_Nome:"/>
+		<control caption="_Filtros:"/>
+		<control caption="Pasta do _Arquivo Completado:"/>
+		<control caption="_Tipos de Arquivos:"/>
 	</dialog>
 	<dialog name="CMediaVisDlg" cookie="StBuSyCoBuBuBu" caption="Selecionar Visualisação">
 		<control/>

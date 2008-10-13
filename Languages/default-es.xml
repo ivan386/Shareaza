@@ -4255,19 +4255,22 @@ Puede comenzar a transferir en cualquier momento.</text>
 		<control caption="Tracker Mode:"/>
 		<control caption="Deshabilitado|Custom|Single Tracker|Multi-tracker|Multi-tracker (locked)"/>
 	</dialog>
-	<dialog name="CDownloadGroupDlg" cookie="BuEdSyBuCoBuBuBuBuBuEdBu" caption="Propiedades del Grupo de Descarga">
-		<control caption="_Nombre:"/>
+	<dialog name="CDownloadGroupDlg" cookie="BuBuEdCoBuCoBuBuEdBuBuBuBuBuBu" caption="Propiedades del Grupo de Descarga">
+		<control caption="OK"/>
+		<control caption="Cancelar"/>
 		<control/>
 		<control/>
-		<control caption="_Filtros:"/>
+		<control caption="_BitTorrent"/>
 		<control/>
 		<control caption="_Agregar"/>
 		<control caption="_Eliminar"/>
-		<control caption="OK"/>
-		<control caption="Cancelar"/>
+		<control/>
+		<control/>
+		<control/>
+		<control caption="_Nombre:"/>
+		<control caption="_Filtros:"/>
 		<control caption="Carpeta de_Archivos Completados:"/>
-		<control/>
-		<control/>
+		<control caption="_Tipo de archivo:"/>
 	</dialog>
 	<dialog name="CMediaVisDlg" cookie="StBuSyCoBuBuBu" caption="Selecciona Visualización">
 		<control/>

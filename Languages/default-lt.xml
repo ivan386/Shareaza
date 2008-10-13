@@ -4405,19 +4405,22 @@
 		<control caption="Seklio veiksena:"/>
 		<control caption="Neįgalinta|Pasirinktinė|Vienas seklys|Daug seklių|Daug seklių (užrakinta)"/>
 	</dialog>
-	<dialog name="CDownloadGroupDlg" cookie="BuEdSyBuCoBuBuBuBuBuEdBu" caption="Atsisiuntimų grupės ypatybės">
-		<control caption="Pa_vadinimas:"/>
+	<dialog name="CDownloadGroupDlg" cookie="BuBuEdCoBuCoBuBuEdBuBuBuBuBuBu" caption="Atsisiuntimų grupės ypatybės">
+		<control caption="Gerai"/>
+		<control caption="Atšaukti"/>
 		<control/>
 		<control/>
-		<control caption="_Filtrai:"/>
+		<control caption="_BitTorrent"/>
 		<control/>
 		<control caption="_Pridėti"/>
 		<control caption="Š_alinti"/>
-		<control caption="Gerai"/>
-		<control caption="Atšaukti"/>
+		<control/>
+		<control/>
+		<control/>
+		<control caption="Pa_vadinimas:"/>
+		<control caption="_Filtrai:"/>
 		<control caption="_Aplankas, į kurį išsaugoti atsisiuntus"/>
-		<control/>
-		<control/>
+		<control caption="_Failo plėtinys:"/>
 	</dialog>
 	<dialog name="CMediaVisDlg" cookie="StBuSyCoBuBuBu" caption="Pasirinkite muzikos vaizdą">
 		<control/>

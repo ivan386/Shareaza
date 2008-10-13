@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 
 <!-- Shareaza Default English Skin File -->
-<!-- Translation based on default-en.xml SVN rev.7428 -->
+<!-- Translation based on default-en.xml SVN rev.7455 -->
 
 <!-- This skin basically represents the current Shareaza defaults. You can use this file as -->
 <!-- a basis for creating new skins, however in a new skin be sure to ONLY include the sections -->
@@ -14,11 +14,11 @@
 <!-- Manifest -->
 <manifest	name="English (Default)"
 		author="Michael Stokes"
-		updatedBy="Rolandas Rudomanskis, ryo-oh-ki, ceceboy, ale5000"
+		updatedBy="Rolandas Rudomanskis, ryo-oh-ki, ceceboy, ale5000, SkinVista"
 		description="Shareaza Default English Skin File"
 		link="http://shareaza.sourceforge.net/"
 		email="Contact(at)ShareazaProject.com"
-		version="2.4.0.0"
+		version="2.4.0.1"
 		type="Language"
 		language="en"
 		prompt="Click here to select English as your natural language."
@@ -4406,19 +4406,22 @@
 		<control caption="Tracker Mode:"/>
 		<control caption="Disabled|Custom|Single Tracker|Multi-tracker|Multi-tracker (locked)"/>
 	</dialog>
-	<dialog name="CDownloadGroupDlg" cookie="BuEdSyBuCoBuBuBuBuBuEdBu" caption="Download Group Properties">
-		<control caption="_Name:"/>
+	<dialog name="CDownloadGroupDlg" cookie="BuBuEdCoBuCoBuBuEdBuBuBuBuBuBu" caption="Download Group Properties">
+		<control caption="OK"/>
+		<control caption="Cancel"/>
 		<control/>
 		<control/>
-		<control caption="_Filters:"/>
+		<control caption="_BitTorrent downloads"/>
 		<control/>
 		<control caption="_Add"/>
 		<control caption="_Remove"/>
-		<control caption="OK"/>
-		<control caption="Cancel"/>
-		<control caption="Completed File _Folder:"/>
 		<control/>
 		<control/>
+		<control/>
+		<control caption="_Name:"/>
+		<control caption="_Filters:"/>
+		<control caption="_Completed File Folder:"/>
+		<control caption="_Type of file:"/>
 	</dialog>
 	<dialog name="CMediaVisDlg" cookie="StBuSyCoBuBuBu" caption="Select Visualisation">
 		<control/>

@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 
 <!-- Shareaza Default French Skin File -->
-<!-- Translation based on default-en.xml SVN rev.7405 -->
+<!-- Translation based on default-en.xml SVN rev.7455 -->
 
 <!-- This skin basically represents the current Shareaza defaults. You can use this file as -->
 <!-- a basis for creating new skins, however in a new skin be sure to ONLY include the sections -->
@@ -4396,19 +4396,22 @@
 		<control caption="Mode&#160;:"/>
 		<control caption="Inemployé|Déterminer|Traqueur unique|Multi-traqueur|Multi-tracker (défini)"/>
 	</dialog>
-	<dialog name="CDownloadGroupDlg" cookie="BuEdSyBuCoBuBuBuBuBuEdBu" caption="Propriétés du groupe de téléchargement">
-		<control caption="_Nom&#160;:"/>
+	<dialog name="CDownloadGroupDlg" cookie="BuBuEdCoBuCoBuBuEdBuBuBuBuBuBu" caption="Propriétés du groupe de téléchargement">
+		<control caption="Valider"/>
+		<control caption="Annuler"/>
 		<control/>
 		<control/>
-		<control caption="_Filtres&#160;:"/>
+		<control caption="_BitTorrent"/>
 		<control/>
 		<control caption="_Ajouter&#160;"/>
 		<control caption="Enleve_r"/>
-		<control caption="Valider"/>
-		<control caption="Annuler"/>
+		<control/>
+		<control/>
+		<control/>
+		<control caption="_Nom&#160;:"/>
+		<control caption="_Filtres&#160;:"/>
 		<control caption="Dossiers des _fichiers terminés&#160;:"/>
-		<control/>
-		<control/>
+		<control caption="_Type de fichier:"/>
 	</dialog>
 	<dialog name="CMediaVisDlg" cookie="StBuSyCoBuBuBu" caption="Sélectionner la visualisation">
 		<control/>

@@ -4310,18 +4310,22 @@
 		<control caption="Onemogočen|Prilagojen|Sledilnik|Sledilniki|Sledilniki (zaklenjeno)"/>
 	</dialog>
 
-	<dialog name="CDownloadGroupDlg" cookie="BuEdSyBuCoBuBuBuBuBuEdBu" caption="Lastnosti prenosne skupine">
-		<control caption="_Ime:"/>
+	<dialog name="CDownloadGroupDlg" cookie="BuBuEdCoBuCoBuBuEdBuBuBuBuBuBu" caption="Lastnosti prenosne skupine">
+		<control caption="V redu"/>
+		<control caption="Prekliči"/>
 		<control/>
 		<control/>
-		<control caption="_Filtri:"/>
+		<control caption="_BitTorrent"/>
 		<control/>
 		<control caption="_Dodaj"/>
 		<control caption="_Odstrani"/>
-		<control caption="V redu"/>
-		<control caption="Prekliči"/>
-		<control caption="_Mapa z dokončanimi datotekami:"/>
 		<control/>
+		<control/>
+		<control/>
+		<control caption="_Ime:"/>
+		<control caption="_Filtri:"/>
+		<control caption="_Mapa z dokončanimi datotekami:"/>
+		<control caption="_Datotečnih tipov:"/>
 	</dialog>
 
 	<dialog name="CMediaVisDlg" cookie="StBuSyCoBuBuBu" caption="Izberi vizualizacijo">

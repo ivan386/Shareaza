@@ -4328,19 +4328,22 @@
 		<control caption="Tracker Mode:"/>
 		<control caption="Disabled|Custom|Single Tracker|Multi-tracker|Multi-tracker (locked)"/>
 	</dialog>
-	<dialog name="CDownloadGroupDlg" cookie="BuEdSyBuCoBuBuBuBuBuEdBu" caption="Downloadgroep eigenschappen">
-		<control caption="_Naam:"/>
+	<dialog name="CDownloadGroupDlg" cookie="BuBuEdCoBuCoBuBuEdBuBuBuBuBuBu" caption="Downloadgroep eigenschappen">
+		<control caption="OK"/>
+		<control caption="Annuleren"/>
 		<control/>
 		<control/>
-		<control caption="_Filter:"/>
+		<control caption="_BitTorrent"/>
 		<control/>
 		<control caption="_Toevoegen"/>
 		<control caption="_Verwijder"/>
-		<control caption="OK"/>
-		<control caption="Annuleren"/>
+		<control/>
+		<control/>
+		<control/>
+		<control caption="_Naam:"/>
+		<control caption="_Filter:"/>
 		<control caption="_Map voor de voltooide bestanden:"/>
-		<control/>
-		<control/>
+		<control caption="_Bestandstype (schema):"/>
 	</dialog>
 	<dialog name="CMediaVisDlg" cookie="StBuSyCoBuBuBu" caption="Visualisatie selecteren">
 		<control/>

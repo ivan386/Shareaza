@@ -4334,19 +4334,22 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 		<control caption="Trackerläge:"/>
 		<control caption="Avstängd|Anpassad|Enkel tracker|Multi-tracker|Multi-tracker (låst)"/>
 	</dialog>
-	<dialog name="CDownloadGroupDlg" cookie="BuEdSyBuCoBuBuBuBuBuEdBu" caption="Egenskaper för nedladdningsgruppen">
-		<control caption="_Namn:"/>
+	<dialog name="CDownloadGroupDlg" cookie="BuBuEdCoBuCoBuBuEdBuBuBuBuBuBu" caption="Egenskaper för nedladdningsgruppen">
+		<control caption="OK"/>
+		<control caption="Avbryt" />
 		<control/>
 		<control/>
-		<control caption="_Filter:" />
+		<control caption="_BitTorrent" />
 		<control/>
 		<control caption="_Lägg till" />
 		<control caption="_Readera" />
-		<control caption="OK"/>
-		<control caption="Avbryt" />
+		<control/>
+		<control/>
+		<control/>
+		<control caption="_Namn:" />
+		<control caption="_Filter:" />
 		<control caption="Färdiga _filmappar:" />
-		<control/>
-		<control/>
+		<control caption="Fil_typ:" />
 	</dialog>
 	<dialog name="CMediaVisDlg" cookie="StBuSyCoBuBuBu" caption="Välj visualisering">
 		<control/>
