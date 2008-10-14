@@ -1310,6 +1310,13 @@ BOOL LoadString(CString& str, UINT nID)
 	return Skin.LoadString( str, nID );
 }
 
+CString LoadString(UINT nID)
+{
+	CString str;
+	LoadString( str, nID );
+	return str;
+}
+
 BOOL LoadSourcesString(CString& str, DWORD num, bool bFraction)
 {
 	if ( bFraction )

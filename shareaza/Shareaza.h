@@ -186,6 +186,7 @@ BOOL PostMainWndMessage(UINT Msg, WPARAM wParam = NULL, LPARAM lParam = NULL);
 CRuntimeClass* AfxClassForName(LPCTSTR pszClass);
 
 BOOL LoadString(CString& str, UINT nID);
+CString LoadString(UINT nID);
 LPCTSTR _tcsistr(LPCTSTR pszString, LPCTSTR pszSubString);
 LPCTSTR _tcsnistr(LPCTSTR pszString, LPCTSTR pszPattern, size_t plen);
 void Split(const CString& strSource, TCHAR cDelimiter, CStringArray& pAddIt, BOOL bAddFirstEmpty = FALSE);
