@@ -942,7 +942,7 @@ CString CDownloadWithTorrent::FindTorrentFile(LPVOID pVoid)
 	CBTInfo::CBTFile* pFile = reinterpret_cast<CBTInfo::CBTFile*>(pVoid);
 	CString strFile;
 	
-	CString strPath = pFile->m_pInfo->m_sPath;
+	CString strPath = pFile->GetPath();
 	int nSlash = strPath.ReverseFind( '\\' );
 	if ( nSlash >= 0 ) strPath = strPath.Left( nSlash + 1 );
 

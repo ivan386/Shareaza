@@ -47,8 +47,28 @@ public:
 		CBTFile(CBTInfo* pInfo);
 		void		Copy(CBTFile* pSource);
 		void		Serialize(CArchive& ar, int nVersion);
-		int			nFilePriority;
+		float		GetProgress() const;
+		
+		inline int	GetPriority() const
+		{
+			return m_nFilePriority;
+		}
+
+		inline void	SetPriority(int nFilePriority)
+		{
+			m_nFilePriority = nFilePriority; 
+		}
+
+		inline CString GetPath() const
+		{
+			return m_pInfo->m_sPath;
+		}
+
+	protected:
+		int			m_nFilePriority;
 		CBTInfo*	m_pInfo;
+
+		friend class CBTInfo;
 	};
 	enum { prNotWanted, prLow, prNormal, prHigh };
 

@@ -64,12 +64,12 @@ CBTInfo::~CBTInfo()
 	Clear();
 }
 
-CBTInfo::CBTFile::CBTFile(CBTInfo* pInfo) : m_pInfo( pInfo ), nFilePriority	( prNormal )
+CBTInfo::CBTFile::CBTFile(CBTInfo* pInfo) : m_pInfo( pInfo ), m_nFilePriority	( prNormal )
 {
 	m_nSize = 0;
 }
 
-CBTInfo::CBTFile::CBTFile()	: m_pInfo( NULL ), nFilePriority ( prNormal )
+CBTInfo::CBTFile::CBTFile()	: m_pInfo( NULL ), m_nFilePriority ( prNormal )
 {
 	m_nSize = 0;
 }
@@ -348,7 +348,7 @@ void CBTInfo::CBTFile::Copy(CBTFile* pSource)
 	m_oED2K			= pSource->m_oED2K;
 	m_oTiger		= pSource->m_oTiger;
 	m_oMD5			= pSource->m_oMD5;
-	nFilePriority	= pSource->nFilePriority;
+	m_nFilePriority	= pSource->m_nFilePriority;
 	m_pInfo			= NULL;	 // Clear it, needs reassigning
 }
 
@@ -364,7 +364,7 @@ void CBTInfo::CBTFile::Serialize(CArchive& ar, int nVersion)
         SerializeOut( ar, m_oSHA1 );
 		SerializeOut( ar, m_oED2K );
 		SerializeOut( ar, m_oTiger );
-		ar << nFilePriority;
+		ar << m_nFilePriority;
 		SerializeOut( ar, m_oMD5 );
 	}
 	else
@@ -387,7 +387,7 @@ void CBTInfo::CBTFile::Serialize(CArchive& ar, int nVersion)
 		{
 			SerializeIn( ar, m_oED2K, nVersion );
 			SerializeIn( ar, m_oTiger, nVersion );
-            ar >> nFilePriority;
+            ar >> m_nFilePriority;
 		}
 
 		if ( nVersion >= 6 )
@@ -395,6 +395,11 @@ void CBTInfo::CBTFile::Serialize(CArchive& ar, int nVersion)
 			SerializeIn( ar, m_oMD5, nVersion );
 		}
 	}
+}
+
+float CBTInfo::CBTFile::GetProgress() const
+{
+	return 100.f;
 }
 
 //////////////////////////////////////////////////////////////////////
