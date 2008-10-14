@@ -474,6 +474,10 @@
 				>
 			</File>
 			<File
+				RelativePath="ComboListCtrl.cpp"
+				>
+			</File>
+			<File
 				RelativePath="ComMenu.cpp"
 				>
 			</File>
@@ -2708,6 +2712,10 @@
 			</File>
 			<File
 				RelativePath="CollectionFile.h"
+				>
+			</File>
+			<File
+				RelativePath="ComboListCtrl.h"
 				>
 			</File>
 			<File
