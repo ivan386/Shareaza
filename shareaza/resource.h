@@ -48,10 +48,14 @@
 #define IDC_HAND                        147
 #define IDR_HELPFRAME                   147
 #define IDD_ABOUT                       148
+#define IDS_PRIORITY_OFF                148
 #define IDD_FILTER_SAVE_AS              149
+#define IDS_PRIORITY_LOW                149
 #define IDD_GRAPH_LIST                  150
+#define IDS_PRIORITY_NORMAL             150
 #define IDD_GRAPH_ITEM                  151
 #define IDB_COLOURDOT                   151
+#define IDS_PRIORITY_HIGH               151
 #define IDD_WIZARD_WELCOME              152
 #define IDD_WIZARD_CONNECTION           153
 #define IDB_WIZARD                      154

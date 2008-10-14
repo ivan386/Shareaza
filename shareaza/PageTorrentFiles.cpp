@@ -81,9 +81,18 @@ BOOL CTorrentFilesPage::OnInitDialog()
 	m_wndFiles.GetClientRect( &rc );
 	rc.right -= GetSystemMetrics( SM_CXVSCROLL );
 	m_wndFiles.SetImageList( ShellIcons.GetObject( 16 ), LVSIL_SMALL );
-	m_wndFiles.InsertColumn( 0, _T("Filename"), LVCFMT_LEFT, rc.right - 80, -1 );
-	m_wndFiles.InsertColumn( 1, _T("Size"), LVCFMT_RIGHT, 80, 0 );
+	m_wndFiles.InsertColumn( 0, _T("Filename"), LVCFMT_LEFT, rc.right - 70 - 60 - 60, -1 );
+	m_wndFiles.InsertColumn( 1, _T("Size"), LVCFMT_RIGHT, 70, 0 );
+	m_wndFiles.InsertColumn( 2, _T("Status"), LVCFMT_RIGHT, 60, 0 );
+	m_wndFiles.InsertColumn( 3, _T("Priority"), LVCFMT_RIGHT, 60, 0 );
 	Skin.Translate( _T("CTorrentFileList"), m_wndFiles.GetHeaderCtrl() );
+
+	BEGIN_COLUMN_MAP()
+		COLUMN_MAP( CBTInfo::prNotWanted,	LoadString( IDS_PRIORITY_OFF ) )
+		COLUMN_MAP( CBTInfo::prLow,			LoadString( IDS_PRIORITY_LOW ) )
+		COLUMN_MAP( CBTInfo::prNormal,		LoadString( IDS_PRIORITY_NORMAL ) )
+		COLUMN_MAP( CBTInfo::prHigh,		LoadString( IDS_PRIORITY_HIGH ) )
+	END_COLUMN_MAP( m_wndFiles, 3 )
 
 	for ( int nFile = 0 ; nFile < pInfo->m_nFiles ; nFile++ )
 	{
@@ -98,6 +107,10 @@ BOOL CTorrentFilesPage::OnInitDialog()
 		pItem.iItem		= m_wndFiles.InsertItem( &pItem );
 		
 		m_wndFiles.SetItemText( pItem.iItem, 1, Settings.SmartVolume( pFile->m_nSize ) );
+		CString sCompleted;
+		sCompleted.Format( _T("%.2f%%"), pFile->GetProgress() );
+		m_wndFiles.SetItemText( pItem.iItem, 2, sCompleted );
+		m_wndFiles.SetColumnData( pItem.iItem, 3, pFile->GetPriority() );
 	}
 
 	UpdateData( FALSE );
@@ -108,6 +121,15 @@ BOOL CTorrentFilesPage::OnInitDialog()
 void CTorrentFilesPage::OnOK()
 {
 	UpdateData();
+
+	CSingleLock pLock( &Transfers.m_pSection, TRUE );
+	CBTInfo* pInfo = &((CDownloadSheet*)GetParent())->m_pDownload->m_pTorrent;
+
+	for ( int i = 0; i < m_wndFiles.GetItemCount(); ++i )
+	{
+		CBTInfo::CBTFile* pFile = pInfo->m_pFiles + m_wndFiles.GetItemData( i );
+		pFile->SetPriority( m_wndFiles.GetColumnData( i, 3 ) );
+	}
 
 	CPropertyPageAdv::OnOK();
 }

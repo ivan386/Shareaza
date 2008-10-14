@@ -3119,6 +3119,10 @@ BEGIN
     IDR_MEDIAFRAME          "Media Player"
     IDR_SEARCHPADFRAME      "Search"
     IDR_HELPFRAME           "Shareaza Help"
+    IDS_PRIORITY_OFF        "Off"
+    IDS_PRIORITY_LOW        "Low"
+    IDS_PRIORITY_NORMAL     "Normal"
+    IDS_PRIORITY_HIGH       "High"
 END
 
 STRINGTABLE 
@@ -4649,7 +4653,7 @@ BEGIN
     ID_HELP_CODEC           "All about codecs and video problems."
     ID_HELP_TEST            "Run the connection test."
     ID_HELP_DONATE          "You can donate to our legal fund and show your appreciation."
-	ID_HELP_FAKESHAREAZA    "Visit FakeShareaza.com to learn more."
+    ID_HELP_FAKESHAREAZA    "Visit FakeShareaza.com to learn more."
 END
 
 STRINGTABLE 

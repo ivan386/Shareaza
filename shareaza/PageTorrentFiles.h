@@ -22,6 +22,7 @@
 #pragma once
 
 #include "PagePropertyAdv.h"
+#include "ComboListCtrl.h"
 
 
 class CTorrentFilesPage : public CPropertyPageAdv
@@ -36,7 +37,7 @@ public:
 
 protected:
 	CString			m_sName;
-	CListCtrl		m_wndFiles;
+	CComboListCtrl	m_wndFiles;
 
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	virtual BOOL OnInitDialog();
