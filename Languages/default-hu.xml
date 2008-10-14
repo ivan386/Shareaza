@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 
 <!-- Shareaza Default Hungarian Skin File -->
-<!-- Translation based on default-en.xml SVN rev.7300 -->
+<!-- Translation based on default-en.xml SVN rev.7455 -->
 
 <!-- This skin basically represents the current Shareaza defaults. You can use this file as -->
 <!-- a basis for creating new skins, however in a new skin be sure to ONLY include the sections -->
@@ -173,7 +173,7 @@
 		<button id="ID_DOWNLOADS_CLEAR_COMPLETE" text="Letöltés törlése"/>
 		<separator/>
 		<button id="ID_DOWNLOADS_MONITOR" text="Monitor megjelenítése"/>
-		<button id="ID_DOWNLOADS_EDIT" text="Infó"/>
+		<button id="ID_DOWNLOADS_EDIT" text="Tulajdonságok"/>
 		<rightAlign/>
 		<button id="ID_TOOLS_DOWNLOAD" text="Torrent/Link hozzáadása..."/>
 		<button id="ID_DOWNLOADS_CLEAR_COMPLETED" text="Kész törlése"/>
@@ -531,7 +531,7 @@
 			<item id="ID_HELP_TEST" text="Kapcsolat tesztelése"/>
 			<separator/>
 			<menu text="_Ismertetők">
-				<item id="ID_HELP_GUIDE" text="A Shareaza _használati utasítása"/>
+				<item id="ID_HELP_GUIDE" text="Shareaza _használati utasítás"/>
 				<item id="ID_HELP_ROUTER" text="_Router beállítása"/>
 				<item id="ID_HELP_SECURITY" text="_Biztonság súgó"/>
 				<item id="ID_HELP_CODEC" text="_Kodek súgó"/>
@@ -587,7 +587,7 @@
 				<item id="ID_VIEW_SYSTEM" text="_Rendszer" shortcut="F11"/>
 				<item id="ID_VIEW_NEIGHBOURS" text="_Hálózat" shortcut="Ctrl+F11"/>
 				<item id="ID_VIEW_DOWNLOADS" text="_Letöltések" shortcut="F3"/>
-				<item id="ID_VIEW_UPLOADS" text="_Feltöltés" shortcut="F4"/>
+				<item id="ID_VIEW_UPLOADS" text="_Feltöltések" shortcut="F4"/>
 				<item id="ID_VIEW_LIBRARY" text="_Könyvtár" shortcut="F5"/>
 				<item id="ID_VIEW_MEDIA" text="_Médialejátszó" shortcut="F6"/>
 				<separator/>
@@ -632,7 +632,7 @@
 			<item id="ID_HELP_TEST" text="_Kapcsolat tesztelése"/>
 			<separator/>
 			<menu text="_Ismertetők">
-				<item id="ID_HELP_GUIDE" text="A Shareaza _használati utasítása"/>
+				<item id="ID_HELP_GUIDE" text="Shareaza _használati utasítás"/>
 				<item id="ID_HELP_ROUTER" text="_Router beállítása"/>
 				<item id="ID_HELP_SECURITY" text="_Biztonság súgó"/>
 				<item id="ID_HELP_CODEC" text="_Kodek súgó"/>
@@ -678,7 +678,7 @@
 			<item id="ID_VIEW_SYSTEM" text="_Rendszer" shortcut="F11"/>
 			<item id="ID_VIEW_NEIGHBOURS" text="_Hálózat" shortcut="Ctrl+F11"/>
 			<item id="ID_VIEW_DOWNLOADS" text="_Letöltések" shortcut="F3"/>
-			<item id="ID_VIEW_UPLOADS" text="_Feltöltés" shortcut="F4"/>
+			<item id="ID_VIEW_UPLOADS" text="_Feltöltések" shortcut="F4"/>
 			<item id="ID_VIEW_LIBRARY" text="Kö_nyvtár" shortcut="F5"/>
 			<item id="ID_VIEW_MEDIA" text="_Médialejátszó" shortcut="F6"/>
 			<separator/>
@@ -726,7 +726,7 @@
 			<item id="ID_HELP_TEST" text="_Kapcsolat tesztelése"/>
 			<separator/>
 			<menu text="_Ismertetők">
-				<item id="ID_HELP_GUIDE" text="A Shareaza _használati utasítása"/>
+				<item id="ID_HELP_GUIDE" text="Shareaza _használati utasítás"/>
 				<item id="ID_HELP_ROUTER" text="_Router beállítása"/>
 				<item id="ID_HELP_SECURITY" text="_Biztonság súgó"/>
 				<item id="ID_HELP_CODEC" text="_Kodek súgó"/>
@@ -759,7 +759,7 @@
 		<separator/>
 		<menu text="_Fejlett">
 			<item id="ID_VIEW_NEIGHBOURS" text="_Hálózat"/>
-			<item id="ID_VIEW_UPLOADS" text="_Feltöltés"/>
+			<item id="ID_VIEW_UPLOADS" text="_Feltöltések"/>
 			<item id="ID_VIEW_SECURITY" text="_Biztonság"/>
 			<item id="ID_VIEW_HOSTS" text="_Kiszolgálók listája"/>
 		</menu>
@@ -788,7 +788,7 @@
 		<item id="ID_VIEW_SYSTEM" text="_Rendszer"/>
 		<item id="ID_VIEW_NEIGHBOURS" text="_Hálózat"/>
 		<item id="ID_VIEW_DOWNLOADS" text="_Letöltések"/>
-		<item id="ID_VIEW_UPLOADS" text="_Feltöltés"/>
+		<item id="ID_VIEW_UPLOADS" text="_Feltöltések"/>
 		<item id="ID_VIEW_LIBRARY" text="Kö_nyvtár"/>
 		<item id="ID_VIEW_MEDIA" text="_Médialejátszó"/>
 		<separator/>
@@ -845,7 +845,7 @@
 		<separator/>
 		<menu text="Fejlett">
 			<item id="ID_VIEW_NEIGHBOURS" text="_Hálózat"/>
-			<item id="ID_VIEW_UPLOADS" text="_Feltöltés"/>
+			<item id="ID_VIEW_UPLOADS" text="_Feltöltések"/>
 			<item id="ID_VIEW_SECURITY" text="Biztonság"/>
 			<item id="ID_VIEW_HOSTS" text="K_iszolgálók listája"/>
 		</menu>
@@ -1075,7 +1075,7 @@
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="_Töröl"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_COPY" text="_URI másolása"/>
-		<item id="ID_DOWNLOADS_EDIT" text="_Infó"/>
+		<item id="ID_DOWNLOADS_EDIT" text="_Tulajdonságok"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_FILE_DELETE" text="_Fájl törlése"/>
 		<item id="ID_DOWNLOADS_RATE" text="Fájl _osztályozása..."/>
@@ -1827,10 +1827,10 @@
 			<link id="ReseedTorrent" format="bu" target="raza:command:ID_TOOLS_SEEDTORRENT">Újraseedel: %s</link>
 			<newline gap="4"/>
 			<group id="1">
-				<link id="SeedTorrent" format="bu" target="raza:command:ID_TOOLS_SEEDTORRENT">Újabb torrent seedelése</link>
+			<link id="SeedTorrent" format="bu" target="raza:command:ID_TOOLS_SEEDTORRENT">Újabb torrent seedelése</link>
 			</group>
 			<group id="2">
-				<link id="SeedTorrent" format="bu" target="raza:command:ID_TOOLS_SEEDTORRENT">Torrent seedelése</link>
+			<link id="SeedTorrent" format="bu" target="raza:command:ID_TOOLS_SEEDTORRENT">Torrent seedelése</link>
 			</group>
 		</para>
 	</document>
@@ -1843,14 +1843,10 @@
 		</styles>
 		<text format="b">Shareaza részletes beállítások</text>
 		<newline gap="16"/>
-		<text>
-			Itt mindent megtalál, ami a Shareaza részletes beállításához kellhet.
-			Az
-		</text>
+		<text>Itt mindent megtalál, ami a Shareaza részletes beállításához kellhet. 
+			Az </text>
 		<text format="b">Általános </text>
-		<text>
-			részben a felhasználói szokásaihoz igazíthatja a programot.
-		</text>
+		<text>részben a felhasználói szokásaihoz igazíthatja a programot.</text>
 		<newline gap="16" indent="16"/>
 		<link target="raza:page:CGeneralSettingsPage" format="b">Általános:</link>
 		<gap size="4"/>
@@ -1884,15 +1880,10 @@
 		</styles>
 		<text format="b">Shareaza részletes beállítások</text>
 		<newline gap="16"/>
-		<text>
-			Itt mindent megtalál, ami a Shareaza részletes beállításához kellhet.
-			Az
-		</text>
+		<text>Itt mindent megtalál, ami a Shareaza részletes beállításához kellhet. 
+			Az </text>
 		<text format="b">Internet </text>
-		<text>
-			részben a különböző hálózatok beállításai
-			találhatók.
-		</text>
+		<text>részben a különböző hálózatok beállításai	találhatók.</text>
 		<newline gap="16" indent="16"/>
 		<link target="raza:page:CConnectionSettingsPage" format="b">Kapcsolat:</link>
 		<gap size="4"/>
@@ -2598,7 +2589,7 @@
 	<string id="8010" value="Ez a Shareaza tesztverziója és a tesztelési időszak lejárt. Töltse le a legújabb stabil verziót a http://shareaza.sourceforge.net -ről."/>
 	<string id="8011" value="A kinézet megváltoztatása bezár minden megnyitott ablakot. Most akarja megvátoztatni?"/>
 	<string id="8012" value="Torrent adatok"/>
-	<string id="8013" value="Nem új Shareaza változat kinyomoz."/>
+	<string id="8013" value="Nem találtam frissebb Shareaza verziót."/>
 	<string id="8014" value="Letöltés tulajdonságai"/>
 	<string id="8060" value="Hub/Ultrapeer mód %lu szomszéddal.  %s a helyi könyvtárban."/>
 	<string id="8061" value="Ultrapeer mód %lu szomszéddal.  %s a helyi könyvtárban."/>
@@ -2636,8 +2627,8 @@
 	<string id="8141" value="Keresési ablak megjelenítése"/>
 	<string id="8142" value="Keresési ablak elrejtése"/>
 	<string id="8143" value="Keresés..."/>
-	<string id="8144" value="Keresést indít"/>
-	<string id="8145" value="Keresés újra"/>
+	<string id="8144" value="Keresés"/>
+	<string id="8145" value="Újrakeres"/>
 	<string id="8146" value="Stop"/>
 	<string id="8147" value="Bármilyen"/>
 	<string id="8148" value="Keresendő kifejezések:"/>
@@ -4301,7 +4292,7 @@
 		<control caption="Újraellenőrzés"/>
 		<control caption="Fájl 100%-osnak vétele, és így újraellenőrzése"/>
 		<control caption="Minden ismert forrás elfelejtése"/>
-		<control caption="Helyi fájllal való egyesítés és újraellenőrzés"/>
+		<control caption="Helyi letöltött fájllal való egyesítés és újraellenőrzés"/>
 		<control caption="Letöltés leállítása, de mentse a félkész fájlt"/>
 		<control caption="Adattörlő"/>
 		<control caption="Törlés (tól-ig):"/>
@@ -4353,12 +4344,12 @@
 		<control caption="_Jelenlegi trackerek"/>
 		<control caption="Kész (Seedek):"/>
 		<control/>
-		<control caption="Félkész (Peerek):"/>
+		<control caption="Félkész:"/>
 		<control/>
 		<control caption="_Frissít"/>
 		<control caption="_Trackerek"/>
 		<control/>
-		<control caption="Trackermód:"/>
+		<control caption="Tracker mód:"/>
 		<control caption="Letiltva|Saját|Egy tracker|Multi-tracker|Multi-tracker (zárt)"/>
 	</dialog>
 	<dialog name="CDownloadGroupDlg" cookie="BuBuEdCoBuCoBuBuEdBuBuBuBuBuBu" caption="Letöltési csoportok tulajdonságai">
@@ -4403,7 +4394,7 @@
 	</dialog>
 	<dialog name="CDecodeMetadataDlg" cookie="StCoBuBuBuStStBuBu" caption="Metaadat javítása">
 		<control caption="Válasszon egy másik karakterkódolást:"/>
-		<control caption="Arab|Balti|Közép-Európai|Egyszerűsített kínai|hagyományos kínai|Cirill|Görög|Héber|Japán|Koreai|Thai|Török|Vietnami"/>
+		<control caption="Arab|Balti|Közép-európai|Egyszerűsített kínai|Hagyományos kínai|Cirill|Görög|Héber|Japán|Koreai|Thai|Török|Vietnami"/>
 		<control caption="Előnézet:"/>
 		<control/>
 		<control/>
@@ -4412,11 +4403,11 @@
 		<control caption="OK"/>
 		<control caption="Mégse"/>
 	</dialog>
-	<dialog name="CIrcInputDlg" cookie="EdBuBuSt" caption="Channel Name|Why reason">
+	<dialog name="CIrcInputDlg" cookie="EdBuBuSt" caption="Csatorna neve|Ok megadása">
 		<control/>
 		<control caption="OK"/>
 		<control caption="Mégse"/>
-		<control caption="Add a channel name:|Enter kick/ban reason:"/>
+		<control caption="Csatorna nevének megadása:|Kirúgás/kitiltás oka:"/>
 	</dialog>
 </dialogs>
 <!-- Columns Definitions -->
