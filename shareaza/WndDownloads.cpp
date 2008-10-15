@@ -951,7 +951,7 @@ void CDownloadsWnd::OnDownloadsLaunch()
 
 			if ( pDownload->IsCompleted() )
 			{
-				if ( pDownload->m_pTorrent.m_nFiles > 1 )
+				if ( pDownload->m_pTorrent.GetCount() > 1 )
 				{
 					CString strPath = DownloadGroups.GetCompletedPath( pDownload );
 					strPath += _T("\\");

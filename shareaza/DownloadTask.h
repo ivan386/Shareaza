@@ -61,7 +61,7 @@ private:
 	void	Construct(CDownload* pDownload);
 
 protected:
-	int			m_nTorrentFile;
+	POSITION	m_posTorrentFile;	// Torrent file list current position
 	CEvent*		m_pEvent;
 
 	void	RunAllocate();

@@ -25,7 +25,6 @@
 #include "BTInfo.h"
 #include "BENode.h"
 #include "Buffer.h"
-
 #include "DownloadTask.h"
 
 #ifdef _DEBUG
@@ -45,8 +44,6 @@ CBTInfo::CBTInfo() :
 ,	m_pBlockBTH			( NULL )
 ,	m_nTotalUpload		( 0ull )
 ,	m_nTotalDownload	( 0ull )
-,	m_nFiles			( 0 )
-,	m_pFiles			( NULL )
 ,	m_pAnnounceTracker	( NULL )
 ,	m_nTrackerIndex		( -1 )
 ,	m_nTrackerMode		( tNull )
@@ -64,14 +61,25 @@ CBTInfo::~CBTInfo()
 	Clear();
 }
 
-CBTInfo::CBTFile::CBTFile(CBTInfo* pInfo) : m_pInfo( pInfo ), m_nFilePriority	( prNormal )
-{
-	m_nSize = 0;
-}
+//////////////////////////////////////////////////////////////////////
+// CBTFile construction
 
-CBTInfo::CBTFile::CBTFile()	: m_pInfo( NULL ), m_nFilePriority ( prNormal )
+CBTInfo::CBTFile::CBTFile(const CBTInfo* pInfo, const CBTFile* pBTFile) :
+	m_pInfo				( pInfo )
+,	m_nFilePriority		( pBTFile ? pBTFile->m_nFilePriority : CBTInfo::prNormal )
 {
-	m_nSize = 0;
+	if ( pBTFile )
+	{
+		m_sName			= pBTFile->m_sName;
+		m_nSize			= pBTFile->m_nSize;
+		m_oSHA1			= pBTFile->m_oSHA1;
+		m_oTiger		= pBTFile->m_oTiger;
+		m_oED2K			= pBTFile->m_oED2K;
+		m_oBTH			= pBTFile->m_oBTH;
+		m_oMD5			= pBTFile->m_oMD5;
+		m_sPath			= pBTFile->m_sPath;
+		m_sURL			= pBTFile->m_sURL;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -79,11 +87,12 @@ CBTInfo::CBTFile::CBTFile()	: m_pInfo( NULL ), m_nFilePriority ( prNormal )
 
 void CBTInfo::Clear()
 {
-	// Delete BTH
-	if ( m_pBlockBTH != NULL ) delete [] m_pBlockBTH;
-	// Delete files
-	if ( m_pFiles != NULL ) delete [] m_pFiles;
-	
+	delete [] m_pBlockBTH;
+
+	for ( POSITION pos = m_pFiles.GetHeadPosition(); pos; )
+		delete m_pFiles.GetNext( pos );
+	m_pFiles.RemoveAll();
+
     m_oBTH.clear();
 	m_oSHA1.clear();
 	m_oTiger.clear();
@@ -93,8 +102,6 @@ void CBTInfo::Clear()
 	m_nBlockSize	= 0;
 	m_nBlockCount	= 0;
 	m_pBlockBTH 	= NULL;
-	m_nFiles		= 0;
-	m_pFiles		= NULL;
 
 	// Delete trackers
 	if ( IsMultiTracker() )
@@ -136,7 +143,6 @@ void CBTInfo::Copy(CBTInfo* pSource)
 	m_nTotalDownload	= pSource->m_nTotalDownload;
 
 	m_sName				= pSource->m_sName;
-	m_nFiles			= pSource->m_nFiles;
 
 	m_sTracker			= pSource->m_sTracker;
 	m_nTrackerIndex		= pSource->m_nTrackerIndex;
@@ -158,14 +164,10 @@ void CBTInfo::Copy(CBTInfo* pSource)
 	}
 	
 	// Copy files
-	if ( pSource->m_pFiles != NULL )
+	for ( POSITION pos = pSource->m_pFiles.GetHeadPosition(); pos; )
 	{
-		m_pFiles = new CBTFile[ m_nFiles ];
-		for ( int nFile = 0 ; nFile < m_nFiles ; nFile++ )
-		{
-			m_pFiles[ nFile ].Copy( &pSource->m_pFiles[ nFile ] );
-			m_pFiles[ nFile ].m_pInfo = this;
-		}
+		CBTFile* pBTFile = new CBTFile( this, pSource->m_pFiles.GetNext( pos ) );
+		m_pFiles.AddTail( pBTFile );
 	}
 
 	// Copy announce trackers
@@ -173,16 +175,14 @@ void CBTInfo::Copy(CBTInfo* pSource)
 	{
 		for ( int nCount = 0 ; nCount < pSource->m_pTrackerList.GetCount() ; nCount++ )
 		{
-			CBTTracker* pTracker = new CBTTracker;
-			pTracker->Copy( pSource->m_pTrackerList.GetAt( nCount ) );
+			CBTTracker* pTracker = new CBTTracker( *pSource->m_pTrackerList.GetAt( nCount ) );
 			m_pTrackerList.Add( pTracker );
 		}
 		m_pAnnounceTracker = m_pTrackerList.GetAt( m_nTrackerIndex );
 	}
 	else if ( pSource->m_pAnnounceTracker != NULL ) 
 	{
-		m_pAnnounceTracker = new CBTTracker;
-		m_pAnnounceTracker->Copy( pSource->m_pAnnounceTracker );
+		m_pAnnounceTracker = new CBTTracker( *pSource->m_pAnnounceTracker );
 	}
 }
 
@@ -219,9 +219,9 @@ void CBTInfo::Serialize(CArchive& ar)
 		ar << m_sCreatedBy;
 		ar << m_bPrivate;
 		
-		ar.WriteCount( m_nFiles );
-		for ( int nFile = 0 ; nFile < m_nFiles ; nFile++ )
-			m_pFiles[ nFile ].Serialize( ar, nVersion );
+		ar.WriteCount( m_pFiles.GetCount() );
+		for ( POSITION pos = m_pFiles.GetHeadPosition(); pos ; )
+			m_pFiles.GetNext( pos )->Serialize( ar, nVersion );
 		
 		ar << m_sTracker;
 
@@ -289,12 +289,12 @@ void CBTInfo::Serialize(CArchive& ar)
 
 		if ( nVersion >= 5 ) ar >> m_bPrivate;
 		
-		m_nFiles = (int)ar.ReadCount();
-		m_pFiles = new CBTFile[ m_nFiles ];
-		for ( int nFile = 0 ; nFile < m_nFiles ; nFile++ )
+		int nFiles = (int)ar.ReadCount();
+		for ( int nFile = 0 ; nFile < nFiles ; nFile++ )
 		{
-			m_pFiles[ nFile ].Serialize( ar, nVersion );
-			m_pFiles[ nFile ].m_pInfo = this;
+			CBTFile* pBTFile = new CBTFile( this );
+			m_pFiles.AddTail( pBTFile );
+			pBTFile->Serialize( ar, nVersion );
 		}
 		
 		ar >> m_sTracker;
@@ -335,21 +335,6 @@ void CBTInfo::Serialize(CArchive& ar)
 			m_pAnnounceTracker->m_sAddress = m_sTracker;
 		}
 	}
-}
-
-//////////////////////////////////////////////////////////////////////
-// CBTInfo::CBTFile copy
-
-void CBTInfo::CBTFile::Copy(CBTFile* pSource)
-{
-	m_sPath			= pSource->m_sPath;
-	m_nSize			= pSource->m_nSize;
-	m_oSHA1			= pSource->m_oSHA1;
-	m_oED2K			= pSource->m_oED2K;
-	m_oTiger		= pSource->m_oTiger;
-	m_oMD5			= pSource->m_oMD5;
-	m_nFilePriority	= pSource->m_nFilePriority;
-	m_pInfo			= NULL;	 // Clear it, needs reassigning
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -399,6 +384,7 @@ void CBTInfo::CBTFile::Serialize(CArchive& ar, int nVersion)
 
 float CBTInfo::CBTFile::GetProgress() const
 {
+	//m_pInfo->
 	return 100.f;
 }
 
@@ -583,7 +569,7 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 
 				if ( ! pTrackers.IsEmpty() )
 				{
-					// Randomise the tracker order in this tier
+					// Randomize the tracker order in this tier
 					if ( pTrackers.GetCount() > 1 )
 					{
 						for ( POSITION pos = pTrackers.GetHeadPosition() ; pos ; )
@@ -737,15 +723,16 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 		m_nTotalSize = pLength->GetInt();
 		if ( ! m_nTotalSize ) return FALSE;
 		
-		m_nFiles = 1;
-		m_pFiles = new CBTFile[ m_nFiles ];
-		m_pFiles[0].m_sPath = m_sName;
-		m_pFiles[0].m_nSize = m_nTotalSize;
-		m_pFiles[0].m_oSHA1 = m_oSHA1;
-		m_pFiles[0].m_oTiger = m_oTiger;
-		m_pFiles[0].m_oED2K = m_oED2K;
-		m_pFiles[0].m_oMD5 = m_oMD5;
-		m_pFiles[0].m_pInfo = this;
+		{
+			CBTFile* pBTFile = new CBTFile( this );
+			m_pFiles.AddTail( pBTFile );
+			pBTFile->m_sPath = m_sName;
+			pBTFile->m_nSize = m_nTotalSize;
+			pBTFile->m_oSHA1 = m_oSHA1;
+			pBTFile->m_oTiger = m_oTiger;
+			pBTFile->m_oED2K = m_oED2K;
+			pBTFile->m_oMD5 = m_oMD5;
+		}
 
 		// Add sources from torrents - DWK
 		CBENode* pSources = pRoot->GetNode( "sources" );
@@ -765,21 +752,22 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 		CString strPath;
 
 		if ( ! pFiles->IsType( CBENode::beList ) ) return FALSE;
-		m_nFiles = pFiles->GetCount();
-		if ( ! m_nFiles || m_nFiles > 8192 * 8 ) return FALSE;
-		m_pFiles = new CBTFile[ m_nFiles ];
+		int nFiles = pFiles->GetCount();
+		if ( ! nFiles || nFiles > 8192 * 8 ) return FALSE;
 		
 		m_nTotalSize = 0;
 		
-		for ( int nFile = 0 ; nFile < m_nFiles ; nFile++ )
+		for ( int nFile = 0 ; nFile < nFiles ; nFile++ )
 		{
+			CBTFile* pBTFile = new CBTFile( this );
+			m_pFiles.AddTail( pBTFile );
+
 			CBENode* pFile = pFiles->GetNode( nFile );
 			if ( ! pFile || ! pFile->IsType( CBENode::beDict ) ) return FALSE;
 			
 			CBENode* pLength = pFile->GetNode( "length" );
 			if ( ! pLength || ! pLength->IsType( CBENode::beInt ) ) return FALSE;
-			m_pFiles[ nFile ].m_nSize = pLength->GetInt();
-			m_pFiles[ nFile ].m_pInfo = this;
+			pBTFile->m_nSize = pLength->GetInt();
 
 			strPath.Empty();
 			CBENode* pPath;
@@ -795,7 +783,6 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 					if ( pPart && pPart->IsType( CBENode::beString ) ) strPath = pPart->GetString();
 				}
 			}
-
 
 			// Get the regular path
 			pPath = pFile->GetNode( "path" );
@@ -832,7 +819,8 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 				if ( pPath )
 				{
 					CBENode* pPart = pPath->GetNode( 0 );
-					if ( pPart->IsType( CBENode::beString ) ) strPath = pPart->DecodeString(m_nEncoding);
+					if ( pPart->IsType( CBENode::beString ) )
+						strPath = pPart->DecodeString(m_nEncoding);
 				}
 			}
 		
@@ -841,16 +829,18 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 			if ( pPath->GetCount() > 32 ) return FALSE;
 			if ( _tcsicmp( strPath.GetString() , _T("#ERROR#") ) == 0 ) return FALSE;
 
+			pBTFile->m_sName = PathFindFileName( strPath );
+
 			// Hack to prefix all
-			m_pFiles[ nFile ].m_sPath = CDownloadTask::SafeFilename( m_sName );
+			pBTFile->m_sPath = CDownloadTask::SafeFilename( m_sName );
 			
 			for ( int nPath = 0 ; nPath < pPath->GetCount() ; nPath++ )
 			{
 				CBENode* pPart = pPath->GetNode( nPath );
 				if ( ! pPart || ! pPart->IsType( CBENode::beString ) ) return FALSE;
 				
-				if ( m_pFiles[ nFile ].m_sPath.GetLength() )
-					m_pFiles[ nFile ].m_sPath += '\\';
+				if ( pBTFile->m_sPath.GetLength() )
+					pBTFile->m_sPath += '\\';
 
 				// Get the path
 				strPath = pPart->GetString();
@@ -859,24 +849,26 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 				if ( _tcsicmp( strPath.GetString() , _T("#ERROR#") ) == 0 )
 					strPath = CDownloadTask::SafeFilename( pPart->DecodeString( m_nEncoding ) );
 
-				m_pFiles[ nFile ].m_sPath += strPath;
+				pBTFile->m_sPath += strPath;
 			}
 			
 			if ( CBENode* pSHA1 = pFile->GetNode( "sha1" ) )
 			{
-				if ( ! pSHA1->IsType( CBENode::beString ) || pSHA1->m_nValue != Hashes::Sha1Hash::byteCount ) return FALSE;
-				m_pFiles[ nFile ].m_oSHA1 = 
+				if ( ! pSHA1->IsType( CBENode::beString ) ||
+					   pSHA1->m_nValue != Hashes::Sha1Hash::byteCount ) return FALSE;
+				pBTFile->m_oSHA1 = 
 					*static_cast< Hashes::Sha1Hash::RawStorage* >( pSHA1->m_pValue );
 			}
 
-			if ( CBENode* pED2K = pInfo->GetNode( "ed2k" ) )
+			if ( CBENode* pED2K = pFile->GetNode( "ed2k" ) )
 			{
-				if ( ! pED2K->IsType( CBENode::beString ) || pED2K->m_nValue != Hashes::Ed2kHash::byteCount ) return FALSE;
-				m_pFiles[ nFile ].m_oED2K = 
+				if ( ! pED2K->IsType( CBENode::beString ) ||
+					   pED2K->m_nValue != Hashes::Ed2kHash::byteCount ) return FALSE;
+				pBTFile->m_oED2K = 
 					*static_cast< Hashes::Ed2kHash::RawStorage* >( pED2K->m_pValue );
 			}
 
-			if ( CBENode* pMD5 = pInfo->GetNode( "md5sum" ) )
+			if ( CBENode* pMD5 = pFile->GetNode( "md5sum" ) )
 			{
 				if ( ! pMD5->IsType( CBENode::beString ) )
 				{
@@ -884,13 +876,14 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 				}
 				else if ( pMD5->m_nValue == Hashes::Md5Hash::byteCount )
 				{
-					m_pFiles[ nFile ].m_oMD5 = *static_cast< const Hashes::Md5Hash::RawStorage* >( pMD5->m_pValue );
+					pBTFile->m_oMD5 =
+						*static_cast< const Hashes::Md5Hash::RawStorage* >( pMD5->m_pValue );
 				}
 				else if ( pMD5->m_nValue == Hashes::Md5Hash::byteCount * 2 )
 				{
 					CStringA tmp;
 					tmp.Append( (const char*)pMD5->m_pValue, (int)pMD5->m_nValue );
-					m_pFiles[ nFile ].m_oMD5.fromString( CA2W( tmp ) );
+					pBTFile->m_oMD5.fromString( CA2W( tmp ) );
 				}
 				else
 				{
@@ -898,17 +891,18 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 				}
 			}
 
-			if ( CBENode* pTiger = pInfo->GetNode( "tiger" ) )
+			if ( CBENode* pTiger = pFile->GetNode( "tiger" ) )
 			{
-				if ( ! pTiger->IsType( CBENode::beString ) || pTiger->m_nValue != Hashes::TigerHash::byteCount ) return FALSE;
-				m_pFiles[ nFile ].m_oTiger = 
+				if ( ! pTiger->IsType( CBENode::beString ) ||
+					   pTiger->m_nValue != Hashes::TigerHash::byteCount ) return FALSE;
+				pBTFile->m_oTiger = 
 					*static_cast< Hashes::TigerHash::RawStorage* >( pTiger->m_pValue );
 			}
 
-			m_nTotalSize += m_pFiles[ nFile ].m_nSize;
+			m_nTotalSize += pBTFile->m_nSize;
 		}
 
-		if ( m_nFiles == 1 )
+		if ( nFiles == 1 )
 		{
 			// Single file in a multi-file torrent
 
@@ -916,38 +910,40 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 			m_sName = strPath;
 
 			// Set data/file hashes (if they aren't)
-			if ( m_pFiles[0].m_oSHA1 )
+			if ( m_pFiles.GetHead()->m_oSHA1 )
 			{
-				m_oSHA1 = m_pFiles[0].m_oSHA1;
+				m_oSHA1 = m_pFiles.GetHead()->m_oSHA1;
 			}
 			else if ( m_oSHA1 )
 			{
-				m_pFiles[0].m_oSHA1 = m_oSHA1;
-
+				m_pFiles.GetHead()->m_oSHA1 = m_oSHA1;
 			}
-			if ( m_pFiles[0].m_oED2K )
+
+			if ( m_pFiles.GetHead()->m_oED2K )
 			{
-				m_oED2K = m_pFiles[0].m_oED2K;
+				m_oED2K = m_pFiles.GetHead()->m_oED2K;
 			}
 			else if ( m_oED2K )
 			{
-				m_pFiles[0].m_oED2K = m_oED2K;
+				m_pFiles.GetHead()->m_oED2K = m_oED2K;
 			}
-			if ( m_pFiles[0].m_oMD5 )
+
+			if ( m_pFiles.GetHead()->m_oMD5 )
 			{
-				m_oMD5 = m_pFiles[0].m_oMD5;
+				m_oMD5 = m_pFiles.GetHead()->m_oMD5;
 			}
 			else if ( m_oMD5 )
 			{
-				m_pFiles[0].m_oMD5 = m_oMD5;
+				m_pFiles.GetHead()->m_oMD5 = m_oMD5;
 			}
-			if ( m_pFiles[0].m_oTiger )
+
+			if ( m_pFiles.GetHead()->m_oTiger )
 			{
-				m_oTiger = m_pFiles[0].m_oTiger;
+				m_oTiger = m_pFiles.GetHead()->m_oTiger;
 			}
 			else if ( m_oTiger )
 			{
-				m_pFiles[0].m_oTiger = m_oTiger;
+				m_pFiles.GetHead()->m_oTiger = m_oTiger;
 			}
 		}
 	}
@@ -971,12 +967,13 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 
 BOOL CBTInfo::CheckFiles()
 {
-	for ( int nFile = 0 ; nFile < m_nFiles ; nFile++ )
+	for ( POSITION pos = m_pFiles.GetHeadPosition(); pos ; )
 	{
-		m_pFiles[ nFile ].m_sPath.TrimLeft();
-		m_pFiles[ nFile ].m_sPath.TrimRight();
+		CBTFile* pBTFile = m_pFiles.GetNext( pos );
+		pBTFile->m_sPath.TrimLeft();
+		pBTFile->m_sPath.TrimRight();
 		
-		LPCTSTR pszPath = m_pFiles[ nFile ].m_sPath;
+		LPCTSTR pszPath = pBTFile->m_sPath;
 		
 		if ( pszPath == NULL || *pszPath == 0 ) return FALSE;
 		if ( pszPath[1] == ':' ) return FALSE;
@@ -984,8 +981,8 @@ BOOL CBTInfo::CheckFiles()
 		if ( _tcsstr( pszPath, _T("..\\") ) != NULL ) return FALSE;
 		if ( _tcsstr( pszPath, _T("../") ) != NULL ) return FALSE;
 	}
-	
-	return ( m_nFiles > 0 );
+
+	return m_pFiles.GetCount();
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -1149,7 +1146,7 @@ DWORD CBTInfo::GetTrackerFailures() const
 }
 
 //////////////////////////////////////////////////////////////////////
-// CBTInfo::CBTTracker construction and destruction
+// CBTInfo::CBTTracker construction
 
 CBTInfo::CBTTracker::CBTTracker() :
 	m_tLastAccess		( 0 )
@@ -1161,23 +1158,15 @@ CBTInfo::CBTTracker::CBTTracker() :
 {
 }
 
-CBTInfo::CBTTracker::~CBTTracker()
+CBTInfo::CBTTracker::CBTTracker(const CBTTracker& oSource) :
+	m_sAddress			( oSource.m_sAddress )
+,	m_tLastAccess		( oSource.m_tLastAccess )
+,	m_tLastSuccess		( oSource.m_tLastSuccess )
+,	m_tNextTry			( oSource.m_tNextTry )
+,	m_nFailures			( oSource.m_nFailures )
+,	m_nTier				( oSource.m_nTier )
+,	m_nType				( oSource.m_nType )
 {
-}
-
-
-//////////////////////////////////////////////////////////////////////
-// CBTInfo::CBTTracker copy
-
-void CBTInfo::CBTTracker::Copy(CBTTracker* pSource)
-{
-	m_sAddress			= pSource->m_sAddress;
-	m_tLastAccess		= pSource->m_tLastAccess;
-	m_tLastSuccess		= pSource->m_tLastSuccess;
-	m_tNextTry			= pSource->m_tNextTry;
-	m_nFailures			= pSource->m_nFailures;
-	m_nTier				= pSource->m_nTier;
-	m_nType				= pSource->m_nType;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -1204,7 +1193,5 @@ void CBTInfo::CBTTracker::Serialize(CArchive& ar, int /*nVersion*/)
 		ar >> m_nFailures;
 		ar >> m_nTier;
 		ar >> m_nType;
-
 	}
 }
-

@@ -28,6 +28,7 @@
 #include "PageTorrentFiles.h"
 #include "Skin.h"
 #include "Transfers.h"
+#include "CtrlLibraryTip.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -38,11 +39,8 @@ static char THIS_FILE[] = __FILE__;
 IMPLEMENT_DYNCREATE(CTorrentFilesPage, CPropertyPageAdv)
 
 BEGIN_MESSAGE_MAP(CTorrentFilesPage, CPropertyPageAdv)
-	//{{AFX_MSG_MAP(CTorrentFilesPage)
 	ON_WM_PAINT()
-	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
-
 
 /////////////////////////////////////////////////////////////////////////////
 // CTorrentFilesPage property page
@@ -59,10 +57,8 @@ CTorrentFilesPage::~CTorrentFilesPage()
 void CTorrentFilesPage::DoDataExchange(CDataExchange* pDX)
 {
 	CPropertyPageAdv::DoDataExchange(pDX);
-	//{{AFX_DATA_MAP(CTorrentFilesPage)
 	DDX_Text(pDX, IDC_TORRENT_NAME, m_sName);
 	DDX_Control(pDX, IDC_TORRENT_FILES, m_wndFiles);
-	//}}AFX_DATA_MAP
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -71,6 +67,10 @@ void CTorrentFilesPage::DoDataExchange(CDataExchange* pDX)
 BOOL CTorrentFilesPage::OnInitDialog()
 {
 	CPropertyPageAdv::OnInitDialog();
+
+	auto_ptr< CCoolTipCtrl > pTip( new CLibraryTipCtrl );
+	pTip->Create( this, &Settings.Interface.TipDownloads );
+	m_wndFiles.EnableTips( pTip );
 
 	CSingleLock pLock( &Transfers.m_pSection, TRUE );
 	CBTInfo* pInfo = &((CDownloadSheet*)GetParent())->m_pDownload->m_pTorrent;
@@ -94,14 +94,14 @@ BOOL CTorrentFilesPage::OnInitDialog()
 		COLUMN_MAP( CBTInfo::prHigh,		LoadString( IDS_PRIORITY_HIGH ) )
 	END_COLUMN_MAP( m_wndFiles, 3 )
 
-	for ( int nFile = 0 ; nFile < pInfo->m_nFiles ; nFile++ )
+	for ( POSITION pos = pInfo->m_pFiles.GetHeadPosition(); pos ; )
 	{
-		CBTInfo::CBTFile* pFile = pInfo->m_pFiles + nFile;
+		CBTInfo::CBTFile* pFile = pInfo->m_pFiles.GetNext( pos );
 		
 		LV_ITEM pItem = {};
 		pItem.mask		= LVIF_TEXT|LVIF_IMAGE|LVIF_PARAM;
 		pItem.iItem		= m_wndFiles.GetItemCount();
-		pItem.lParam	= (LPARAM)nFile;
+		pItem.lParam	= (LPARAM)pFile;
 		pItem.iImage	= ShellIcons.Get( pFile->m_sPath, 16 );
 		pItem.pszText	= (LPTSTR)(LPCTSTR)pFile->m_sPath;
 		pItem.iItem		= m_wndFiles.InsertItem( &pItem );
@@ -127,10 +127,14 @@ void CTorrentFilesPage::OnOK()
 
 	for ( int i = 0; i < m_wndFiles.GetItemCount(); ++i )
 	{
-		CBTInfo::CBTFile* pFile = pInfo->m_pFiles + m_wndFiles.GetItemData( i );
-		pFile->SetPriority( m_wndFiles.GetColumnData( i, 3 ) );
+		CBTInfo::CBTFile* pFile = (CBTInfo::CBTFile*)m_wndFiles.GetItemData( i );
+		
+		// Check if file still valid
+		if ( POSITION pos = pInfo->m_pFiles.Find( pFile ) )
+		{
+			pFile->SetPriority( m_wndFiles.GetColumnData( i, 3 ) );
+		}
 	}
 
 	CPropertyPageAdv::OnOK();
 }
-

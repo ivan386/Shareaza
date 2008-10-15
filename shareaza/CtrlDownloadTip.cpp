@@ -135,7 +135,7 @@ void CDownloadTipCtrl::OnPaint(CDC* pDC)
 
 void CDownloadTipCtrl::OnCalcSize(CDC* pDC, CDownload* pDownload)
 {
-	PrepareFileInfo( pDownload );
+	PrepareDownloadInfo( pDownload );
 
 	AddSize( pDC, m_sName );
 	m_sz.cy += TIP_TEXTHEIGHT;
@@ -497,11 +497,106 @@ void CDownloadTipCtrl::OnPaint(CDC* pDC, CDownload* pDownload)
 	pt.y += TIP_GAP;
 }
 
-void CDownloadTipCtrl::PrepareFileInfo(CDownload* pDownload)
+void CDownloadTipCtrl::PrepareDownloadInfo(CDownload* pDownload)
+{
+	PrepareFileInfo( pDownload );
+	
+	if ( Settings.General.GUIMode == GUI_BASIC )
+		return;
+
+	// We also report on if we have a hashset, and if hash is trusted (Debug mode only)
+	CString strNoHashset, strUntrusted;
+	LoadString( strNoHashset, IDS_TIP_NOHASHSET );
+	LoadString( strUntrusted, IDS_TIP_UNTRUSTED );
+
+	m_sSHA1 = pDownload->m_oSHA1.toShortUrn();
+	if ( m_sSHA1.GetLength() )
+	{
+		if ( ! pDownload->m_bSHA1Trusted )
+		{
+			m_sSHA1 += _T(" (") + strUntrusted + _T(")");
+		}
+	}
+
+	m_sTiger = pDownload->m_oTiger.toShortUrn();
+	if ( m_sTiger.GetLength() )
+	{
+		if ( ! pDownload->m_pTigerBlock )
+		{
+			if ( pDownload->m_bTigerTrusted )
+			{
+				m_sTiger += _T(" (") + strNoHashset + _T(")");
+			}
+			else
+			{
+				m_sTiger += _T(" (") + strNoHashset + _T(", ") + strUntrusted + _T(")");
+			}
+		}
+		else if ( ! pDownload->m_bTigerTrusted )
+		{
+			m_sTiger += _T(" (") + strUntrusted + _T(")");
+		}
+	}
+
+	m_sED2K = pDownload->m_oED2K.toShortUrn();
+	if ( m_sED2K.GetLength() )
+	{
+		if ( ! pDownload->m_pHashsetBlock )
+		{
+			if ( pDownload->m_bED2KTrusted )
+			{
+				m_sED2K += _T(" (") + strNoHashset + _T(")");
+			}
+			else
+			{
+				m_sED2K += _T(" (") + strNoHashset + _T(", ") + strUntrusted + _T(")");
+			}
+		}
+		else if ( ! pDownload->m_bED2KTrusted )
+		{
+			m_sED2K += _T(" (") + strUntrusted + _T(")");
+		}
+	}
+
+	m_sBTH = pDownload->m_oBTH.toShortUrn();
+	if ( m_sBTH.GetLength() )
+	{
+		if ( ! pDownload->m_pTorrentBlock )
+		{
+			if ( pDownload->m_bBTHTrusted )
+			{
+				m_sBTH += _T(" (") + strNoHashset + _T(")");
+			}
+			else
+			{
+				m_sBTH += _T(" (") + strNoHashset + _T(", ") + strUntrusted + _T(")");
+			}
+		}
+		else if ( ! pDownload->m_bBTHTrusted )
+		{
+			m_sBTH += _T(" (") + strUntrusted + _T(")");
+		}
+	}
+
+	if ( pDownload->IsTorrent() )
+		m_sURL = pDownload->m_pTorrent.m_sTracker;
+
+	m_sMD5 = pDownload->m_oMD5.toShortUrn();
+	if ( m_sMD5.GetLength() )
+	{
+		if ( ! pDownload->m_bMD5Trusted )
+		{
+			m_sMD5+= _T(" (") + strUntrusted + _T(")");
+		}
+	}
+}
+
+void CDownloadTipCtrl::PrepareFileInfo(CShareazaFile* pDownload)
 {
 	m_sName = pDownload->m_sName;
 	m_sSize = Settings.SmartVolume( pDownload->m_nSize );
-	if ( pDownload->m_nSize == SIZE_UNKNOWN ) m_sSize = _T("?");
+	if ( pDownload->m_nSize == SIZE_UNKNOWN )
+		m_sSize = _T("?");
 
 	m_sSHA1.Empty();
 	m_sTiger.Empty();
@@ -509,95 +604,6 @@ void CDownloadTipCtrl::PrepareFileInfo(CDownload* pDownload)
 	m_sBTH.Empty();
 	m_sURL.Empty();
 	m_sMD5.Empty();
-	
-	if ( Settings.General.GUIMode != GUI_BASIC )
-	{
-		// We also report on if we have a hashset, and if hash is trusted (Debug mode only)
-		CString strNoHashset, strUntrusted;
-		LoadString( strNoHashset, IDS_TIP_NOHASHSET );
-		LoadString( strUntrusted, IDS_TIP_UNTRUSTED );
-
-		m_sSHA1 = pDownload->m_oSHA1.toShortUrn();
-		if ( m_sSHA1.GetLength() )
-		{
-			if ( ! pDownload->m_bSHA1Trusted )
-			{
-				m_sSHA1 += _T(" (") + strUntrusted + _T(")");
-			}
-		}
-
-		m_sTiger = pDownload->m_oTiger.toShortUrn();
-		if ( m_sTiger.GetLength() )
-		{
-			if ( ! pDownload->m_pTigerBlock )
-			{
-				if ( pDownload->m_bTigerTrusted )
-				{
-					m_sTiger += _T(" (") + strNoHashset + _T(")");
-				}
-				else
-				{
-					m_sTiger += _T(" (") + strNoHashset + _T(", ") + strUntrusted + _T(")");
-				}
-			}
-			else if ( ! pDownload->m_bTigerTrusted )
-			{
-				m_sTiger += _T(" (") + strUntrusted + _T(")");
-			}
-		}
-
-		m_sED2K = pDownload->m_oED2K.toShortUrn();
-		if ( m_sED2K.GetLength() )
-		{
-			if ( ! pDownload->m_pHashsetBlock )
-			{
-				if ( pDownload->m_bED2KTrusted )
-				{
-					m_sED2K += _T(" (") + strNoHashset + _T(")");
-				}
-				else
-				{
-					m_sED2K += _T(" (") + strNoHashset + _T(", ") + strUntrusted + _T(")");
-				}
-			}
-			else if ( ! pDownload->m_bED2KTrusted )
-			{
-				m_sED2K += _T(" (") + strUntrusted + _T(")");
-			}
-		}
-
-		m_sBTH = pDownload->m_oBTH.toShortUrn();
-		if ( m_sBTH.GetLength() )
-		{
-			if ( ! pDownload->m_pTorrentBlock )
-			{
-				if ( pDownload->m_bBTHTrusted )
-				{
-					m_sBTH += _T(" (") + strNoHashset + _T(")");
-				}
-				else
-				{
-					m_sBTH += _T(" (") + strNoHashset + _T(", ") + strUntrusted + _T(")");
-				}
-			}
-			else if ( ! pDownload->m_bBTHTrusted )
-			{
-				m_sBTH += _T(" (") + strUntrusted + _T(")");
-			}
-		}
-
-		if ( pDownload->IsTorrent() )
-			m_sURL = pDownload->m_pTorrent.m_sTracker;
-
-		m_sMD5 = pDownload->m_oMD5.toShortUrn();
-		if ( m_sMD5.GetLength() )
-		{
-			if ( ! pDownload->m_bMD5Trusted )
-			{
-				m_sMD5+= _T(" (") + strUntrusted + _T(")");
-			}
-		}
-	}
 
 	int nPeriod = m_sName.ReverseFind( '.' );
 
@@ -623,7 +629,8 @@ void CDownloadTipCtrl::PrepareFileInfo(CDownload* pDownload)
 		}
 	}
 
-	if ( m_sType.IsEmpty() ) m_sType = _T("Unknown");
+	if ( m_sType.IsEmpty() )
+		LoadString( m_sType, IDS_STATUS_UNKNOWN );
 }
 
 /////////////////////////////////////////////////////////////////////////////

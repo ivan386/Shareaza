@@ -26,9 +26,7 @@
 #include "MetaList.h"
 
 
-class CLibraryTipCtrl :
-	public CCoolTipCtrl,
-	public CThreadImpl
+class CLibraryTipCtrl : public CCoolTipCtrl, public CThreadImpl
 {
 // Construction
 public:
@@ -49,7 +47,6 @@ protected:
 	CString			m_sED2K;
 	CString			m_sBTH;
 	CString			m_sMD5;
-	int				m_nIndex;
 	int				m_nIcon;
 	CMetaList		m_pMetadata;
 	int				m_nKeyWidth;

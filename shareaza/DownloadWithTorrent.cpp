@@ -937,23 +937,38 @@ BOOL CDownloadWithTorrent::UploadExists(const Hashes::BtGuid& oGUID) const
 	return FALSE;
 }
 
-CString CDownloadWithTorrent::FindTorrentFile(LPVOID pVoid)
+CString CDownloadWithTorrent::FindTorrentFile(CBTInfo::CBTFile* pFile)
 {
-	CBTInfo::CBTFile* pFile = reinterpret_cast<CBTInfo::CBTFile*>(pVoid);
 	CString strFile;
 	
 	CString strPath = pFile->GetPath();
 	int nSlash = strPath.ReverseFind( '\\' );
 	if ( nSlash >= 0 ) strPath = strPath.Left( nSlash + 1 );
 
-	if ( pFile->m_oSHA1 )
+	if ( pFile->IsHashed() )
 	{
 		CSingleLock oLibraryLock( &Library.m_pSection, TRUE );
-		if ( CLibraryFile* pShared = LibraryMaps.LookupFileBySHA1( pFile->m_oSHA1, FALSE, TRUE ) )
+		if ( CLibraryFile* pShared = LibraryMaps.LookupFileByHash(
+			pFile->m_oSHA1, pFile->m_oTiger, pFile->m_oED2K, pFile->m_oBTH,
+			pFile->m_oMD5, pFile->m_nSize, pFile->m_nSize, FALSE, TRUE ) )
 		{
+			// Refill missed hashes
+			if ( ! pFile->m_oSHA1 && pShared->m_oSHA1 )
+				pFile->m_oSHA1 = pShared->m_oSHA1;
+			if ( ! pFile->m_oTiger && pShared->m_oTiger )
+				pFile->m_oTiger = pShared->m_oTiger;
+			if ( ! pFile->m_oED2K && pShared->m_oED2K )
+				pFile->m_oED2K = pShared->m_oED2K;
+			if ( ! pFile->m_oBTH && pShared->m_oBTH )
+				pFile->m_oBTH = pShared->m_oBTH;
+			if ( ! pFile->m_oMD5 && pShared->m_oMD5 )
+				pFile->m_oMD5 = pShared->m_oMD5;
+
 			strFile = pShared->GetPath();
 			oLibraryLock.Unlock();
-			if ( GetFileAttributes( strFile ) != INVALID_FILE_ATTRIBUTES ) return strFile;
+
+			if ( GetFileAttributes( strFile ) != INVALID_FILE_ATTRIBUTES )
+				return strFile;
 		}
 	}
 

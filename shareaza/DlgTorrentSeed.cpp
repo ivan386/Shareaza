@@ -187,7 +187,7 @@ void CTorrentSeedDlg::OnSeed()
 		{
 			CHelpDlg::Show( _T("GeneralHelp.BadTorrentEncoding") );
 		}
-		if ( Downloads.FindByBTH( m_pInfo.m_oBTH ) == NULL || m_pInfo.m_nFiles == 1 )
+		if ( Downloads.FindByBTH( m_pInfo.m_oBTH ) == NULL || m_pInfo.GetCount() == 1 )
 		{
 			// Connect if (we aren't)
 			if ( ! Network.IsConnected() ) Network.Connect();
@@ -257,15 +257,15 @@ BOOL CTorrentSeedDlg::CheckFiles()
 	m_nVolume = m_nTotal = 0;
 	m_nScaled = m_nOldScaled = 0;
 
-	for ( int nFile = 0 ; nFile < m_pInfo.m_nFiles ; nFile++ )
+	for ( POSITION pos = m_pInfo.m_pFiles.GetHeadPosition() ; pos ; )
 	{
-		CBTInfo::CBTFile* pFile = &m_pInfo.m_pFiles[ nFile ];
+		CBTInfo::CBTFile* pFile = m_pInfo.m_pFiles.GetNext( pos );
 		m_nTotal += pFile->m_nSize;
 	}
 
-	for ( int nFile = 0 ; nFile < m_pInfo.m_nFiles ; nFile++ )
+	for ( POSITION pos = m_pInfo.m_pFiles.GetHeadPosition() ; pos ; )
 	{
-		CBTInfo::CBTFile* pFile = &m_pInfo.m_pFiles[ nFile ];
+		CBTInfo::CBTFile* pFile = m_pInfo.m_pFiles.GetNext( pos );
 		CString strSource = CDownloadWithTorrent::FindTorrentFile( pFile );
 		HANDLE hSource = INVALID_HANDLE_VALUE;
 
@@ -339,7 +339,7 @@ void CTorrentSeedDlg::OnTimer(UINT_PTR nIDEvent)
 
 void CTorrentSeedDlg::OnRun()
 {
-	if ( m_pInfo.m_nFiles == 1 )
+	if ( m_pInfo.GetCount() == 1 )
 	{
 		RunSingleFile();
 	}
@@ -351,16 +351,27 @@ void CTorrentSeedDlg::OnRun()
 
 void CTorrentSeedDlg::RunSingleFile()
 {
-	m_sTarget = CDownloadWithTorrent::FindTorrentFile( &m_pInfo.m_pFiles[0] );
+	CBTInfo::CBTFile* pFile = m_pInfo.m_pFiles.GetHead();
+	m_sTarget = CDownloadWithTorrent::FindTorrentFile( pFile );
 
 	if ( m_sTarget.IsEmpty() || GetFileAttributes( m_sTarget ) == INVALID_FILE_ATTRIBUTES )
 	{
 		CString strFormat;
 		LoadString(strFormat, IDS_BT_SEED_SOURCE_LOST );
-		m_sMessage.Format( strFormat, (LPCTSTR)m_pInfo.m_pFiles[0].m_sPath );
+		m_sMessage.Format( strFormat, (LPCTSTR)m_pInfo.m_pFiles.GetHead()->m_sPath );
 		PostMessage( WM_TIMER, 2 );
 		return;
 	}
+
+	// Refill missed hashes
+	if ( ! m_pInfo.m_oSHA1 && pFile->m_oSHA1 )
+		m_pInfo.m_oSHA1 = pFile->m_oSHA1;
+	if ( ! m_pInfo.m_oTiger && pFile->m_oTiger )
+		m_pInfo.m_oTiger = pFile->m_oTiger;
+	if ( ! m_pInfo.m_oED2K && pFile->m_oED2K )
+		m_pInfo.m_oED2K = pFile->m_oED2K;
+	if ( ! m_pInfo.m_oMD5 && pFile->m_oMD5 )
+		m_pInfo.m_oMD5 = pFile->m_oMD5;
 
 	if ( CreateDownload() )
 	{
@@ -404,7 +415,7 @@ HANDLE CTorrentSeedDlg::CreateTarget()
 	m_sTarget = Settings.Downloads.IncompletePath + '\\';
 	m_sTarget += m_pInfo.m_oBTH.toString< Hashes::base16Encoding >();
 
-	HANDLE hTarget = CreateFile( m_sTarget, GENERIC_WRITE, 0, NULL, CREATE_NEW,
+	HANDLE hTarget = CreateFile( m_sTarget, GENERIC_WRITE, 0, NULL, CREATE_ALWAYS,
 		FILE_ATTRIBUTE_NORMAL, NULL );
 	VERIFY_FILE_ACCESS( hTarget, m_sTarget )
 	if ( hTarget == INVALID_HANDLE_VALUE )
@@ -422,7 +433,7 @@ BOOL CTorrentSeedDlg::CreateDownload()
 	CSingleLock pTransfersLock( &Transfers.m_pSection );
 	if ( ! pTransfersLock.Lock( 2000 ) ) return FALSE;
 
-	if ( Downloads.FindByBTH( m_pInfo.m_oBTH ) != NULL && m_pInfo.m_nFiles != 1 )
+	if ( Downloads.FindByBTH( m_pInfo.m_oBTH ) != NULL && m_pInfo.GetCount() != 1 )
 	{
 		CString strFormat;
 		LoadString(strFormat, IDS_BT_SEED_ALREADY );
@@ -437,7 +448,7 @@ BOOL CTorrentSeedDlg::CreateDownload()
 
 	if ( pDownload != NULL && pDownload->SeedTorrent( m_sTarget ) )
 	{
-		if ( pInfo->m_nFiles == 1 )
+		if ( pInfo->GetCount() == 1 )
 		{
 			pDownload->MakeComplete();
 			pDownload->ResetVerification();

@@ -19,9 +19,6 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_BTINFO_H__AA44CA36_464F_4FB8_9D79_884D8092ADA0__INCLUDED_)
-#define AFX_BTINFO_H__AA44CA36_464F_4FB8_9D79_884D8092ADA0__INCLUDED_
-
 #pragma once
 
 #include "Buffer.h"
@@ -43,11 +40,7 @@ public:
 	class CBTFile : public CShareazaFile
 	{
 	public:
-		CBTFile();
-		CBTFile(CBTInfo* pInfo);
-		void		Copy(CBTFile* pSource);
-		void		Serialize(CArchive& ar, int nVersion);
-		float		GetProgress() const;
+		float GetProgress() const;
 		
 		inline int	GetPriority() const
 		{
@@ -64,9 +57,12 @@ public:
 			return m_pInfo->m_sPath;
 		}
 
-	protected:
-		int			m_nFilePriority;
-		CBTInfo*	m_pInfo;
+	private:
+		const CBTInfo*	m_pInfo;
+		int				m_nFilePriority;
+
+		CBTFile(const CBTInfo* pInfo, const CBTFile* pFile = NULL);
+		void Serialize(CArchive& ar, int nVersion);
 
 		friend class CBTInfo;
 	};
@@ -77,11 +73,6 @@ public:
 	class CBTTracker
 	{
 	public:
-		CBTTracker();
-		virtual ~CBTTracker();
-		void		Copy(CBTTracker* pSource);
-		void		Serialize(CArchive& ar, int nVersion);
-	public:
 		CString		m_sAddress;
 		DWORD		m_tLastAccess;
 		DWORD		m_tLastSuccess;
@@ -89,6 +80,13 @@ public:
 		DWORD		m_nFailures;
 		INT			m_nTier;
 		INT			m_nType;
+
+	private:
+		CBTTracker();
+		CBTTracker(const CBTTracker& oSource);
+		void Serialize(CArchive& ar, int nVersion);
+
+		friend class CBTInfo;
 	};
 	
 // Attributes
@@ -100,8 +98,7 @@ public:
     Hashes::BtPureHash* m_pBlockBTH;
 	QWORD		m_nTotalUpload;					// Total amount uploaded
 	QWORD		m_nTotalDownload;				// Total amount downloaded
-	int			m_nFiles;						// Number of files
-	CBTFile*	m_pFiles;						// List of files
+	CList< CBTFile* > m_pFiles;					// List of files
 	CString		m_sTracker;						// Address of tracker we are using
 	CBTTracker*	m_pAnnounceTracker;				// Tracker in the announce key
 	CArray< CBTTracker* > m_pTrackerList;		// Multi-tracker list
@@ -145,7 +142,11 @@ protected:
 
 // Inlines
 public:
+	// Count of files
+	int		GetCount() const { return m_pFiles.GetCount(); }
+
 	bool	IsAvailable() const { return m_oBTH; }
+
 	bool	HasEncodingError() const { return m_bEncodingError; }
 
 	// Check if a string is a valid path/file name.
@@ -168,5 +169,3 @@ enum { tNull, tCustom, tSingle, tMultiFinding, tMultiFound };
 // When to initiate new torrent transfers
 enum { dtAlways, dtWhenRatio, dtWhenRequested, dtNever };
 // Whenever wanted, when download ratio > 100%, only when another client requests, never
-
-#endif // !defined(AFX_BTINFO_H__AA44CA36_464F_4FB8_9D79_884D8092ADA0__INCLUDED_)

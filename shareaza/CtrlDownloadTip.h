@@ -19,13 +19,11 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_CTRLDOWNLOADTIP_H__8F881E85_89E4_48CE_81DB_F59065A37A2C__INCLUDED_)
-#define AFX_CTRLDOWNLOADTIP_H__8F881E85_89E4_48CE_81DB_F59065A37A2C__INCLUDED_
-
 #pragma once
 
 #include "CtrlCoolTip.h"
 
+class CShareazaFile;
 class CDownload;
 class CDownloadSource;
 class CLineGraph;
@@ -78,7 +76,8 @@ protected:
 	void OnPaint(CDC* pDC, CDownload* pDownload);
 	void OnPaint(CDC* pDC, CDownloadSource* pSource);
 protected:
-	void PrepareFileInfo(CDownload* pDownload);
+	void PrepareDownloadInfo(CDownload* pDownload);
+	void PrepareFileInfo(CShareazaFile* pDownload);
 	void DrawProgressBar(CDC* pDC, CPoint* pPoint, CDownload* pDownload);
 	void DrawProgressBar(CDC* pDC, CPoint* pPoint, CDownloadSource* pSource);
 
@@ -95,8 +94,3 @@ protected:
 	DECLARE_MESSAGE_MAP()
 
 };
-
-//{{AFX_INSERT_LOCATION}}
-
-#endif // !defined(AFX_CTRLDOWNLOADTIP_H__8F881E85_89E4_48CE_81DB_F59065A37A2C__INCLUDED_)
-

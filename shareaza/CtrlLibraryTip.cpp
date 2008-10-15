@@ -70,21 +70,32 @@ BOOL CLibraryTipCtrl::OnPrepare()
 {
 	{
 		CQuickLock oLock( Library.m_pSection );
-		CLibraryFile* pFile = Library.LookupFile( reinterpret_cast< DWORD_PTR >( m_pContext ) );
-		if ( pFile == NULL ) return FALSE;
+
+		CLibraryFile* pLibraryFile = Library.LookupFile(
+			reinterpret_cast< DWORD_PTR >( m_pContext ) );
+
+		CShareazaFile* pFile = pLibraryFile ? 
+			static_cast< CShareazaFile* >( pLibraryFile ) :
+			reinterpret_cast< CShareazaFile* >( m_pContext );
+
+		if ( ! pLibraryFile )
+			if ( CLibraryFile* pShared = LibraryMaps.LookupFileByHash(
+				pFile->m_oSHA1, pFile->m_oTiger, pFile->m_oED2K, pFile->m_oBTH,
+				pFile->m_oMD5, pFile->m_nSize, pFile->m_nSize, FALSE, TRUE ) )
+				pLibraryFile = pShared;
 
 		CSingleLock pLock( &m_pSection, TRUE );
 
 		// Basic data
 
-		m_sName = pFile->m_sName;
-		m_sPath = pFile->GetPath();
-		m_nIndex = pFile->m_nIndex;
+		m_sName = pFile->m_sName.IsEmpty() ? pFile->m_sPath : pFile->m_sName;
+		if ( pLibraryFile )
+			m_sPath = pLibraryFile->GetPath();
 		m_sSize = Settings.SmartVolume( pFile->GetSize() );
 		m_nIcon = 0;
 
-		if ( pFile->m_pFolder != NULL ) 
-			m_sFolder = pFile->m_pFolder->m_sPath;
+		if ( pLibraryFile && pLibraryFile->m_pFolder ) 
+			m_sFolder = pLibraryFile->m_pFolder->m_sPath;
 		else
 			m_sFolder.Empty(); // Ghost files have no location
 
@@ -112,32 +123,45 @@ BOOL CLibraryTipCtrl::OnPrepare()
 
 		// Metadata
 
-		CSchema* pSchema = pFile->m_pSchema;
+		CSchema* pSchema = pLibraryFile ? pLibraryFile->m_pSchema : NULL;
 		CString str, sData, sFormat;
 
 		m_pMetadata.Clear();
 
-		LoadString( str, IDS_TIP_LOCATION );
-		m_pMetadata.Add( str, m_sFolder );
-		LoadString( str, IDS_TIP_TYPE );
-		m_pMetadata.Add( str, m_sType );
-		LoadString( str, IDS_TIP_SIZE );
-		m_pMetadata.Add( str, m_sSize );
-
-		LoadString( sFormat, IDS_TIP_TODAYTOTAL );
-
-		sData.Format( sFormat, pFile->m_nHitsToday, pFile->m_nHitsTotal );
-		LoadString( str, IDS_TIP_HITS );
-		m_pMetadata.Add( str, sData );
-		sData.Format( sFormat, pFile->m_nUploadsToday, pFile->m_nUploadsTotal );
-		LoadString( str, IDS_TIP_UPLOADS );
-		m_pMetadata.Add( str, sData );
-
-		if ( pFile->m_pMetadata && pSchema )
+		if ( ! m_sFolder.IsEmpty() )
 		{
-			m_pMetadata.Setup( pSchema, FALSE );
-			m_pMetadata.Combine( pFile->m_pMetadata );
-			m_pMetadata.Clean();
+			LoadString( str, IDS_TIP_LOCATION );
+			m_pMetadata.Add( str, m_sFolder );
+		}
+
+		if ( ! m_sType.IsEmpty() )
+		{
+			LoadString( str, IDS_TIP_TYPE );
+			m_pMetadata.Add( str, m_sType );
+		}
+
+		if ( m_sSize )
+		{
+			LoadString( str, IDS_TIP_SIZE );
+			m_pMetadata.Add( str, m_sSize );
+		}
+
+		if ( pLibraryFile )
+		{
+			LoadString( sFormat, IDS_TIP_TODAYTOTAL );
+			sData.Format( sFormat, pLibraryFile->m_nHitsToday, pLibraryFile->m_nHitsTotal );
+			LoadString( str, IDS_TIP_HITS );
+			m_pMetadata.Add( str, sData );
+			sData.Format( sFormat, pLibraryFile->m_nUploadsToday, pLibraryFile->m_nUploadsTotal );
+			LoadString( str, IDS_TIP_UPLOADS );
+			m_pMetadata.Add( str, sData );
+
+			if ( pLibraryFile->m_pMetadata && pSchema )
+			{
+				m_pMetadata.Setup( pSchema, FALSE );
+				m_pMetadata.Combine( pLibraryFile->m_pMetadata );
+				m_pMetadata.Clean();
+			}
 		}
 	}
 
@@ -355,11 +379,15 @@ void CLibraryTipCtrl::OnRun()
 	while ( IsThreadEnabled() )
 	{
 		Doze();
-		if ( ! IsThreadEnabled() ) break;
+		if ( ! IsThreadEnabled() )
+			break;
 
 		m_pSection.Lock();
 		CString strPath = m_sPath;
 		m_pSection.Unlock();
+
+		if ( strPath.IsEmpty() ) // TODO: Make preview requests by hash
+			break;
 
 		CImageFile pFile;
 		if ( CThumbCache::Cache( strPath, &pFile ) )

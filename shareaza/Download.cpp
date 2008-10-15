@@ -74,7 +74,7 @@ CDownload::~CDownload()
 	if ( m_pTask != NULL ) m_pTask->Abort();
 	DownloadGroups.Unlink( this );
 
-	if ( m_pTorrent.m_nFiles > 1 && m_bComplete )
+	if ( m_pTorrent.GetCount() > 1 && m_bComplete )
 	{
 		CloseTransfers();
 		CloseTorrentUploads();
