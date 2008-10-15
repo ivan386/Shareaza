@@ -22,6 +22,7 @@
 #include "stdafx.h"
 #include "Shareaza.h"
 #include "ComboListCtrl.h"
+#include "Settings.h"
 
 
 IMPLEMENT_DYNAMIC(CComboListCtrl, CListCtrl)
@@ -76,21 +77,26 @@ void CComboListCtrl::OnNMClick(NMHDR *pNMHDR, LRESULT *pResult)
 
 	Hide();
 
-	CPoint pt;
-	pt.x = 16;
-	pt.y = pNMItemActivate->ptAction.y;
-	UINT flags = 0;
-	int iItem = HitTest( pt, &flags );
+	int iItem = HitTest( pNMItemActivate->ptAction );
 	if ( iItem >= 0 && pNMItemActivate->iSubItem > 0 )
 	{
 		Show( iItem, pNMItemActivate->iSubItem );
 	}
 }
 
+int CComboListCtrl::HitTest(const CPoint& ptAction)
+{
+	CPoint pt( 16, ptAction.y );
+	UINT flags = 0;
+	return CListCtrl::HitTest( pt, &flags );
+}
+
 void CComboListCtrl::OnMouseMove(UINT nFlags, CPoint point)
 {
 	if ( m_pCombo )
 	{
+		if ( m_pTip.get() ) m_pTip->Hide();
+
 		CPoint pt; 
 		GetCursorPos( &pt );
 		CRect rc;
@@ -100,7 +106,18 @@ void CComboListCtrl::OnMouseMove(UINT nFlags, CPoint point)
 			Hide();
 		}
 	}
-
+	else if ( m_pTip.get() ) 
+	{
+		int iItem = HitTest( point );
+		if ( iItem >= 0 )
+		{
+			m_pTip->Show( (void*)GetItemData( iItem ) );
+		}
+		else
+		{
+			m_pTip->Hide();
+		}
+	}
 	CListCtrl::OnMouseMove(nFlags, point);
 }
 
@@ -161,4 +178,9 @@ void CComboListCtrl::Hide()
 		m_iSelectedItem = -1;
 		m_iSelectedSubItem = -1;
 	}
+}
+
+void CComboListCtrl::EnableTips(auto_ptr< CCoolTipCtrl > pTip)
+{
+	m_pTip = pTip;
 }

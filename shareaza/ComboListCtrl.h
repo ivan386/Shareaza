@@ -21,6 +21,8 @@
 
 #pragma once
 
+#include "CtrlCoolTip.h"
+
 
 class CComboListCtrl : public CListCtrl
 {
@@ -35,17 +37,20 @@ public:
 	typedef std::vector< CIntIntMap > CIntIntMapVector;
 	typedef std::map< int, CIntStringMap > CIntIntStringMapMap;
 
+	void EnableTips(auto_ptr< CCoolTipCtrl > pTip);
 	int GetColumnData(int iItem, int iColumn) const;
 	void SetColumnData(int iItem, int iColumn, int iData);
 	void SetColumnValues(int iColumn, const CIntStringMap& oValues);
 
 protected:
-	CComboBox*			m_pCombo;
-	int					m_iSelectedItem;
-	int					m_iSelectedSubItem;
-	CIntIntMapVector	m_oData;
-	CIntIntStringMapMap	m_oColumns;
+	auto_ptr< CCoolTipCtrl >	m_pTip;
+	CComboBox*					m_pCombo;
+	int							m_iSelectedItem;
+	int							m_iSelectedSubItem;
+	CIntIntMapVector			m_oData;
+	CIntIntStringMapMap			m_oColumns;
 
+	int HitTest(const CPoint& ptAction);
 	void Show(int iItem, int iSubItem);
 	void Hide();
 

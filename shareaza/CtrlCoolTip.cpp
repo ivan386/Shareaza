@@ -96,13 +96,14 @@ void CCoolTipCtrl::Show(void* pContext, HWND hAltWnd)
 {
 	if ( pContext == NULL )
 		return;
-	if ( AfxGetMainWnd() != GetForegroundWindow() )
-		return;
 	if ( m_pbEnable != NULL && *m_pbEnable == 0 )
 		return;
 
 	CPoint point;
 	GetCursorPos( &point );
+
+	if ( ! WindowFromPointBelongsToOwner( point ) )
+		return;
 
 	m_hAltWnd = hAltWnd;
 
@@ -385,17 +386,7 @@ void CCoolTipCtrl::OnTimer(UINT_PTR /*nIDEvent*/)
 	CPoint point;
 	GetCursorPos( &point );
 
-	if ( WindowFromPointBelongsToOwner( point ) )
-	{
-		CWnd* pWnd = GetForegroundWindow();
-
-		if ( pWnd != this && pWnd != AfxGetMainWnd() )
-		{
-			if ( m_bVisible ) Hide();
-			return;
-		}
-	}
-	else
+	if ( ! WindowFromPointBelongsToOwner( point ) )
 	{
 		if ( m_bVisible ) Hide();
 		return;
