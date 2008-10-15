@@ -613,7 +613,7 @@ BOOL CTorrentBuilder::WriteOutput()
 	}
 	{
 		CBENode* pAgent = pRoot.Add( "created by" );
-		CString strAgent = _T("Shareaza ") + theApp.m_sVersion;
+		CString strAgent = _T("TorrentWizard ") + theApp.m_sVersion;
 		pAgent->SetString( strAgent );
 	}	
 	if ( m_sComment.GetLength() > 0 )
