@@ -39,7 +39,7 @@ public:
 	Hashes::Sha1Hash	m_oSHA1;	// SHA1 (Base32)
 	Hashes::TigerHash	m_oTiger;	// TigerTree Root Hash (Base32)
 	Hashes::Ed2kHash	m_oED2K;	// ED2K (MD4, Base16)
-	Hashes::BtHash		m_oBTH;		// BitTorrent Info Hash (Base32
+	Hashes::BtHash		m_oBTH;		// BitTorrent Info Hash (Base32)
 	Hashes::Md5Hash		m_oMD5;		// MD5 (Base16)
 	CString				m_sPath;	/*
 									Use:
@@ -64,5 +64,11 @@ public:
 	inline bool IsHashed() const throw()
 	{
 		return m_oSHA1 || m_oTiger || m_oED2K || m_oBTH || m_oMD5;
+	}
+	
+	// Printable file size
+	inline QWORD GetSize() const
+	{
+		return ( ( m_nSize == SIZE_UNKNOWN ) ? 0 : m_nSize );
 	}
 };
