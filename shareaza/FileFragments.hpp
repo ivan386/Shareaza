@@ -45,6 +45,10 @@ public:
 	range_size_type limit() const { return m_limit; }
 	range_size_type length_sum() const { return m_length_sum; }
 	range_size_type missing() const { return limit() - length_sum(); }
+	void ensure(range_size_type limit)
+	{
+		m_limit = max( m_limit, limit );
+	}
 
 // the following functions have to be declared
 protected:
