@@ -19,32 +19,31 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(PAGEOUTPUT_H)
-#define PAGEOUTPUT_H
-
 #pragma once
+
 #include "WizardSheet.h"
-#include "afxwin.h"
 
 class COutputPage : public CWizardPage
 {
 // Construction
 public:
 	COutputPage();
-	virtual ~COutputPage();
 
 	DECLARE_DYNCREATE(COutputPage)
 
 // Dialog Data
 public:
 	enum { IDD = IDD_OUTPUT_PAGE };
-	CEdit	m_wndName;
+	CEdit		m_wndName;
 	CComboBox	m_wndFolders;
-	CString	m_sFolder;
-	CString	m_sName;
-	BOOL m_bAutoPieces;
-	CComboBox m_wndPieceSize;
-	int m_nPieceIndex;
+	CString		m_sFolder;
+	CString		m_sName;
+	BOOL		m_bAutoPieces;
+	CComboBox	m_wndPieceSize;
+	int			m_nPieceIndex;
+	BOOL		m_bSHA1;
+	BOOL		m_bED2K;
+	BOOL		m_bMD5;
 
 // Overrides
 protected:
@@ -64,5 +63,3 @@ protected:
 
 	DECLARE_MESSAGE_MAP()
 };
-
-#endif // !defined(PAGEOUTPUT_H)

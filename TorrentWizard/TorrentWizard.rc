@@ -13,6 +13,263 @@
 #undef APSTUDIO_READONLY_SYMBOLS
 
 /////////////////////////////////////////////////////////////////////////////
+// Neutral (Default) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_NEUD)
+#ifdef _WIN32
+LANGUAGE LANG_NEUTRAL, SUBLANG_DEFAULT
+#pragma code_page(1251)
+#endif //_WIN32
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO 
+BEGIN
+    IDD_WELCOME_PAGE, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 315
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 218
+    END
+
+    IDD_SINGLE_PAGE, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 315
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 218
+    END
+
+    IDD_PACKAGE_PAGE, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 315
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 218
+    END
+
+    IDD_TRACKER_PAGE, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 315
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 218
+    END
+
+    IDD_OUTPUT_PAGE, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 315
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 218
+    END
+
+    IDD_FINISHED_PAGE, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 315
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 218
+    END
+
+    IDD_COMMENT_PAGE, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 315
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 218
+    END
+
+    IDD_COMMANDLINE_PAGE, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 315
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 218
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_WELCOME_PAGE DIALOGEX 0, 0, 322, 225
+STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
+CAPTION "Shareaza Torrent Wizard - Choose Torrent Type"
+FONT 8, "Tahoma", 0, 0, 0x0
+BEGIN
+    LTEXT           "Welcome to the Torrent Wizard!",IDC_TITLE,15,15,300,10
+    LTEXT           "This wizard will guide you through creating a ""torrent file"", a meta-file that describes a BitTorrent download.",IDC_STATIC,15,35,300,20
+    LTEXT           "What kind of Torrent would you like to create?",IDC_STATIC,15,80,300,10
+    CONTROL         "Single File (recommended)",IDC_TYPE_SINGLE,"Button",BS_AUTORADIOBUTTON | WS_GROUP,35,105,280,10
+    CONTROL         "Package (more than one file)",IDC_TYPE_PACKAGE,"Button",BS_AUTORADIOBUTTON,35,125,280,10
+    LTEXT           "When you have made your selection, click Next to choose which file(s) to include in the Torrent.",IDC_STATIC,15,180,300,20
+END
+
+IDD_SINGLE_PAGE DIALOGEX 0, 0, 322, 225
+STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
+CAPTION "Shareaza Torrent Wizard - Select File"
+FONT 8, "Tahoma", 0, 0, 0x0
+BEGIN
+    LTEXT           "Select a File",IDC_TITLE,15,15,300,10
+    LTEXT           "You have chosen to create a single file Torrent.  Please select the file you want to include in the Torrent using the browser below:",IDC_STATIC,15,35,300,20
+    PUSHBUTTON      "&Browse...",IDC_BROWSE_FILE,250,115,65,15
+    LTEXT           "Include this file:",IDC_STATIC,15,80,300,10
+    EDITTEXT        IDC_FILE_NAME,15,95,300,12,ES_AUTOHSCROLL | ES_READONLY
+    LTEXT           "File size:",IDC_STATIC,15,115,45,15,SS_CENTERIMAGE
+    LTEXT           "0 KB",IDC_FILE_SIZE,70,115,55,15,SS_CENTERIMAGE
+    LTEXT           "When you have made your selection, click Next to choose a BitTorrent tracker.",IDC_STATIC,15,190,300,10
+END
+
+IDD_PACKAGE_PAGE DIALOGEX 0, 0, 322, 225
+STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
+CAPTION "Shareaza Torrent Wizard - Create Package"
+FONT 8, "Tahoma", 0, 0, 0x0
+BEGIN
+    LTEXT           "Create File Package",IDC_TITLE,15,15,300,10
+    LTEXT           "You have chosen to create a package Torrent, which includes more than one file.  Use the Add and Remove buttons below to select the files to include in the package.",-1,15,35,300,20
+    LTEXT           "Files in this Torrent package:",-1,15,64,290,10
+    CONTROL         "List1",IDC_FILE_LIST,"SysListView32",LVS_REPORT | LVS_SHOWSELALWAYS | LVS_SORTASCENDING | LVS_SHAREIMAGELISTS | WS_BORDER | WS_GROUP | WS_TABSTOP,15,75,290,85
+    PUSHBUTTON      "Choose &Folder...",IDC_ADD_FOLDER,15,165,70,15,WS_GROUP
+    PUSHBUTTON      "Add &File...",IDC_ADD_FILE,210,165,45,15
+    PUSHBUTTON      "&Remove",IDC_REMOVE_FILE,260,165,45,15
+    LTEXT           "When you have made your selection, click Next to choose a BitTorrent tracker.",-1,15,190,300,10
+END
+
+IDD_TRACKER_PAGE DIALOGEX 0, 0, 322, 225
+STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
+CAPTION "Shareaza Torrent Wizard - Tracker Selection"
+FONT 8, "Tahoma", 0, 0, 0x0
+BEGIN
+    LTEXT           "Select a Tracker URL",IDC_TITLE,15,15,300,10
+    LTEXT           "The Torrent wizard creates Torrent files that do not depend on a tracker to find peers, if the user is running a BitTorrent client that supports decentralised searching.",IDC_STATIC,15,35,300,20
+    LTEXT           "However many users are running BitTorrent clients that do not support decentralised searching, and so still need a centralised BitTorrent tracker.  A tracker server maintains a list of downloaders for each Torrent file.",IDC_STATIC,15,60,300,25
+    LTEXT           "Your Torrent may reference a tracker URL that clients will contact when downloading it.  Please type your tracker URL in the box below, or select from one of the URLs you have used recently.",IDC_STATIC,15,95,300,25
+    LTEXT           "Type or select a tracker URL:",IDC_STATIC,15,130,300,10
+    COMBOBOX        IDC_TRACKER,15,145,300,140,CBS_DROPDOWN | CBS_AUTOHSCROLL | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "&Clear List",IDC_CLEAR_TRACKERS,265,165,50,15
+    LTEXT           "When you have made your selection, click Next to add comments to your Torrent file.",IDC_STATIC,15,190,300,10
+END
+
+IDD_OUTPUT_PAGE DIALOGEX 0, 0, 322, 225
+STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
+CAPTION "Shareaza Torrent Wizard - Save Torrent File"
+FONT 8, "Tahoma", 0, 0, 0x0
+BEGIN
+    LTEXT           "Save Torrent File",IDC_TITLE,15,15,300,10
+    LTEXT           "The Torrent Wizard now has enough information to create your Torrent file, but needs to know where to save it.",IDC_STATIC,15,35,300,20
+    LTEXT           "A default location has been provided below.  If you want to save the completed Torrent file to a different location, type or browse to it.  Otherwise, click Next.",IDC_STATIC,15,56,300,20
+    LTEXT           "Save Torrent to folder:",IDC_STATIC,15,79,300,10
+    COMBOBOX        IDC_FOLDER,15,89,300,140,CBS_DROPDOWN | CBS_AUTOHSCROLL | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "&Browse...",IDC_BROWSE_FOLDER,210,105,50,15
+    PUSHBUTTON      "&Clear List",IDC_CLEAR_FOLDERS,265,105,50,15
+    LTEXT           "Save Torrent with the name:",IDC_STATIC,15,111,175,10
+    EDITTEXT        IDC_TORRENT_NAME,15,123,300,12,ES_AUTOHSCROLL
+    LTEXT           "If these settings are correct, click Next to create the Torrent.",IDC_STATIC,15,189,300,10
+    CONTROL         "Automatic",IDC_AUTO_PIECE_SIZE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,194,160,48,10
+    COMBOBOX        IDC_PIECE_SIZE,251,157,48,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    GROUPBOX        "Create additional hashes",IDC_STATIC,15,144,140,35
+    CONTROL         "SHA1",IDC_CHECK_SHA1,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,34,160,33,10
+    CONTROL         "ED2K",IDC_CHECK_ED2K,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,73,160,33,10
+    CONTROL         "MD5",IDC_CHECK_MD5,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,112,160,30,10
+    GROUPBOX        "Piece size selection",IDC_STATIC,175,144,140,35
+END
+
+IDD_FINISHED_PAGE DIALOGEX 0, 0, 322, 225
+STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
+CAPTION "Shareaza Torrent Wizard - Creating Torrent"
+FONT 8, "Tahoma", 0, 0, 0x0
+BEGIN
+    LTEXT           "Creating Torrent File",IDC_TITLE,15,15,300,10
+    LTEXT           "The Torrent Wizard is processing the files you selected and creating a Torrent file:",IDC_STATIC,15,35,300,10
+    LTEXT           "The Torrent Wizard has finished creating your Torrent file!  The finished file has been saved as:",IDC_DONE_1,15,105,300,20,NOT WS_VISIBLE
+    CONTROL         "Progress1",IDC_PROGRESS,"msctls_progress32",WS_BORDER,15,60,305,10
+    LTEXT           "File:",IDC_STATIC,15,76,30,10
+    CONTROL         "Ready",IDC_FILE_NAME,"Static",SS_LEFTNOWORDWRAP | WS_GROUP,50,76,265,10
+    PUSHBUTTON      "&Abort",IDC_ABORT,270,130,45,15,NOT WS_VISIBLE
+    CONTROL         "Slider1",IDC_SPEED_SLIDER,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | NOT WS_VISIBLE | WS_TABSTOP,45,130,135,15
+    LTEXT           "You can change the speed of the Torrent creation process to reduce CPU usage if you want to use other applications while the process completes.",IDC_SPEED_MESSAGE,15,105,300,20,NOT WS_VISIBLE
+    RTEXT           "Slow",IDC_SPEED_SLOW,15,130,25,15,SS_CENTERIMAGE | NOT WS_VISIBLE
+    LTEXT           "Fast",IDC_SPEED_FAST,185,130,25,15,SS_CENTERIMAGE | NOT WS_VISIBLE
+    EDITTEXT        IDC_TORRENT_NAME,15,130,300,12,ES_AUTOHSCROLL | ES_READONLY | NOT WS_VISIBLE
+    PUSHBUTTON      "&Copy",IDC_TORRENT_COPY,170,150,45,15,NOT WS_VISIBLE
+    PUSHBUTTON      "&Open",IDC_TORRENT_OPEN,220,150,45,15,NOT WS_VISIBLE
+    PUSHBUTTON      "&Seed",IDC_TORRENT_SEED,270,150,45,15,NOT WS_VISIBLE
+    LTEXT           "Click Finish to close the Torrent Wizard, or click Back to start over and create another Torrent.",IDC_DONE_2,15,185,300,20,NOT WS_VISIBLE
+END
+
+IDD_COMMENT_PAGE DIALOGEX 0, 0, 322, 225
+STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
+CAPTION "Shareaza Torrent Wizard - Add Comments"
+FONT 8, "Tahoma", 0, 0, 0x0
+BEGIN
+    LTEXT           "Add Comments",IDC_TITLE,15,15,300,10
+    LTEXT           "If you wish, you can include some comments text in your Torrent file.  This is an optional step, as a Torrent file does not need comments to work correctly.",IDC_STATIC,15,35,300,20
+    LTEXT           "If you wish, type some comments in the space below:",IDC_STATIC,15,75,300,10
+    EDITTEXT        IDC_COMMENT,15,90,300,60,ES_MULTILINE | ES_AUTOVSCROLL | ES_WANTRETURN | WS_VSCROLL
+    LTEXT           "When you have finished, or if you do not wish to add comments to this Torrent, click the Next button to choose where to save your completed Torrent file.",IDC_STATIC,15,180,300,20
+END
+
+IDD_COMMANDLINE_PAGE DIALOGEX 0, 0, 322, 225
+STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
+CAPTION "Shareaza Torrent Wizard - Creating Torrent"
+FONT 8, "Tahoma", 0, 0, 0x0
+BEGIN
+    LTEXT           "Creating Torrent File",IDC_TITLE,15,15,300,10
+    LTEXT           "The Torrent Wizard is processing the files you selected and creating a Torrent file:",IDC_STATIC,15,35,300,10
+    LTEXT           "The Torrent Wizard has finished creating your Torrent file!  The finished file has been saved as:",IDC_DONE_1,15,105,300,20,NOT WS_VISIBLE
+    CONTROL         "Progress1",IDC_PROGRESS,"msctls_progress32",WS_BORDER,15,60,305,10
+    LTEXT           "File:",IDC_STATIC,15,76,30,10
+    CONTROL         "Ready",IDC_FILE_NAME,"Static",SS_LEFTNOWORDWRAP | WS_GROUP,50,76,265,10
+    PUSHBUTTON      "&Abort",IDC_ABORT,270,130,45,15,NOT WS_VISIBLE
+    CONTROL         "Slider1",IDC_SPEED_SLIDER,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | NOT WS_VISIBLE | WS_TABSTOP,45,130,135,15
+    LTEXT           "You can change the speed of the Torrent creation process to reduce CPU usage if you want to use other applications while the process completes.",IDC_SPEED_MESSAGE,15,105,300,20,NOT WS_VISIBLE
+    RTEXT           "Slow",IDC_SPEED_SLOW,15,130,25,15,SS_CENTERIMAGE | NOT WS_VISIBLE
+    LTEXT           "Fast",IDC_SPEED_FAST,185,130,25,15,SS_CENTERIMAGE | NOT WS_VISIBLE
+    EDITTEXT        IDC_TORRENT_NAME,15,130,300,12,ES_AUTOHSCROLL | ES_READONLY | NOT WS_VISIBLE
+    PUSHBUTTON      "&Open",IDC_TORRENT_OPEN,220,150,45,15,NOT WS_VISIBLE
+    PUSHBUTTON      "&Seed",IDC_TORRENT_SEED,270,150,45,15,NOT WS_VISIBLE
+    LTEXT           "Click Finish to close the Torrent Wizard.",IDC_DONE_2,15,185,300,20,NOT WS_VISIBLE
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog Info
+//
+
+IDD_OUTPUT_PAGE DLGINIT
+BEGIN
+    IDC_PIECE_SIZE, 0x403, 7, 0
+0x3320, 0x2032, 0x424b, "\000" 
+    IDC_PIECE_SIZE, 0x403, 7, 0
+0x3620, 0x2034, 0x424b, "\000" 
+    IDC_PIECE_SIZE, 0x403, 8, 0
+0x3120, 0x3832, 0x4b20, 0x0042, 
+    IDC_PIECE_SIZE, 0x403, 8, 0
+0x3220, 0x3635, 0x4b20, 0x0042, 
+    IDC_PIECE_SIZE, 0x403, 8, 0
+0x3520, 0x3231, 0x4b20, 0x0042, 
+    IDC_PIECE_SIZE, 0x403, 9, 0
+0x3120, 0x3230, 0x2034, 0x424b, "\000" 
+    IDC_PIECE_SIZE, 0x403, 9, 0
+0x3220, 0x3430, 0x2038, 0x424b, "\000" 
+    0
+END
+
+#endif    // Neutral (Default) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////
 // English (Australia) resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENA)
@@ -106,6 +363,7 @@ BEGIN
     END
 END
 
+
 /////////////////////////////////////////////////////////////////////////////
 //
 // Bitmap
@@ -146,302 +404,6 @@ BEGIN
 END
 
 #endif    // English (Australia) resources
-/////////////////////////////////////////////////////////////////////////////
-
-
-/////////////////////////////////////////////////////////////////////////////
-// Neutral (Default) resources
-
-#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_NEUD)
-#ifdef _WIN32
-LANGUAGE LANG_NEUTRAL, SUBLANG_DEFAULT
-#pragma code_page(1257)
-#endif //_WIN32
-
-/////////////////////////////////////////////////////////////////////////////
-//
-// DESIGNINFO
-//
-
-#ifdef APSTUDIO_INVOKED
-GUIDELINES DESIGNINFO 
-BEGIN
-    IDD_WELCOME_PAGE, DIALOG
-    BEGIN
-        LEFTMARGIN, 7
-        RIGHTMARGIN, 315
-        TOPMARGIN, 7
-        BOTTOMMARGIN, 218
-    END
-
-    IDD_SINGLE_PAGE, DIALOG
-    BEGIN
-        LEFTMARGIN, 7
-        RIGHTMARGIN, 315
-        TOPMARGIN, 7
-        BOTTOMMARGIN, 218
-    END
-
-    IDD_PACKAGE_PAGE, DIALOG
-    BEGIN
-        LEFTMARGIN, 7
-        RIGHTMARGIN, 315
-        TOPMARGIN, 7
-        BOTTOMMARGIN, 218
-    END
-
-    IDD_TRACKER_PAGE, DIALOG
-    BEGIN
-        LEFTMARGIN, 7
-        RIGHTMARGIN, 315
-        TOPMARGIN, 7
-        BOTTOMMARGIN, 218
-    END
-
-    IDD_OUTPUT_PAGE, DIALOG
-    BEGIN
-        LEFTMARGIN, 7
-        RIGHTMARGIN, 315
-        TOPMARGIN, 7
-        BOTTOMMARGIN, 218
-    END
-
-    IDD_FINISHED_PAGE, DIALOG
-    BEGIN
-        LEFTMARGIN, 7
-        RIGHTMARGIN, 315
-        TOPMARGIN, 7
-        BOTTOMMARGIN, 218
-    END
-
-    IDD_COMMENT_PAGE, DIALOG
-    BEGIN
-        LEFTMARGIN, 7
-        RIGHTMARGIN, 315
-        TOPMARGIN, 7
-        BOTTOMMARGIN, 218
-    END
-
-    IDD_COMMANDLINE_PAGE, DIALOG
-    BEGIN
-        LEFTMARGIN, 7
-        RIGHTMARGIN, 315
-        TOPMARGIN, 7
-        BOTTOMMARGIN, 218
-    END
-END
-#endif    // APSTUDIO_INVOKED
-
-
-/////////////////////////////////////////////////////////////////////////////
-//
-// Dialog
-//
-
-IDD_WELCOME_PAGE DIALOGEX 0, 0, 322, 225
-STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
-CAPTION "Shareaza Torrent Wizard - Choose Torrent Type"
-FONT 8, "Tahoma", 0, 0, 0x0
-BEGIN
-    LTEXT           "Welcome to the Torrent Wizard!",IDC_TITLE,15,15,300,10
-    LTEXT           "This wizard will guide you through creating a ""torrent file"", a meta-file that describes a BitTorrent download.",
-                    IDC_STATIC,15,35,300,20
-    LTEXT           "What kind of Torrent would you like to create?",
-                    IDC_STATIC,15,80,300,10
-    CONTROL         "Single File (recommended)",IDC_TYPE_SINGLE,"Button",
-                    BS_AUTORADIOBUTTON | WS_GROUP,35,105,280,10
-    CONTROL         "Package (more than one file)",IDC_TYPE_PACKAGE,"Button",
-                    BS_AUTORADIOBUTTON,35,125,280,10
-    LTEXT           "When you have made your selection, click Next to choose which file(s) to include in the Torrent.",
-                    IDC_STATIC,15,180,300,20
-END
-
-IDD_SINGLE_PAGE DIALOGEX 0, 0, 322, 225
-STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
-CAPTION "Shareaza Torrent Wizard - Select File"
-FONT 8, "Tahoma", 0, 0, 0x0
-BEGIN
-    LTEXT           "Select a File",IDC_TITLE,15,15,300,10
-    LTEXT           "You have chosen to create a single file Torrent.  Please select the file you want to include in the Torrent using the browser below:",
-                    IDC_STATIC,15,35,300,20
-    PUSHBUTTON      "&Browse...",IDC_BROWSE_FILE,250,115,65,15
-    LTEXT           "Include this file:",IDC_STATIC,15,80,300,10
-    EDITTEXT        IDC_FILE_NAME,15,95,300,12,ES_AUTOHSCROLL | ES_READONLY
-    LTEXT           "File size:",IDC_STATIC,15,115,45,15,SS_CENTERIMAGE
-    LTEXT           "0 KB",IDC_FILE_SIZE,70,115,55,15,SS_CENTERIMAGE
-    LTEXT           "When you have made your selection, click Next to choose a BitTorrent tracker.",
-                    IDC_STATIC,15,190,300,10
-END
-
-IDD_PACKAGE_PAGE DIALOGEX 0, 0, 322, 225
-STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
-CAPTION "Shareaza Torrent Wizard - Create Package"
-FONT 8, "Tahoma", 0, 0, 0x0
-BEGIN
-    LTEXT           "Create File Package",IDC_TITLE,15,15,300,10
-    LTEXT           "You have chosen to create a package Torrent, which includes more than one file.  Use the Add and Remove buttons below to select the files to include in the package.",
-                    -1,15,35,300,20
-    LTEXT           "Files in this Torrent package:",-1,15,64,290,10
-    CONTROL         "List1",IDC_FILE_LIST,"SysListView32",LVS_REPORT | 
-                    LVS_SHOWSELALWAYS | LVS_SORTASCENDING | 
-                    LVS_SHAREIMAGELISTS | WS_BORDER | WS_GROUP | WS_TABSTOP,
-                    15,75,290,85
-    PUSHBUTTON      "Choose &Folder...",IDC_ADD_FOLDER,15,165,70,15,WS_GROUP
-    PUSHBUTTON      "Add &File...",IDC_ADD_FILE,210,165,45,15
-    PUSHBUTTON      "&Remove",IDC_REMOVE_FILE,260,165,45,15
-    LTEXT           "When you have made your selection, click Next to choose a BitTorrent tracker.",
-                    -1,15,190,300,10
-END
-
-IDD_TRACKER_PAGE DIALOGEX 0, 0, 322, 225
-STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
-CAPTION "Shareaza Torrent Wizard - Tracker Selection"
-FONT 8, "Tahoma", 0, 0, 0x0
-BEGIN
-    LTEXT           "Select a Tracker URL",IDC_TITLE,15,15,300,10
-    LTEXT           "The Torrent wizard creates Torrent files that do not depend on a tracker to find peers, if the user is running a BitTorrent client that supports decentralised searching.",
-                    IDC_STATIC,15,35,300,20
-    LTEXT           "However many users are running BitTorrent clients that do not support decentralised searching, and so still need a centralised BitTorrent tracker.  A tracker server maintains a list of downloaders for each Torrent file.",
-                    IDC_STATIC,15,60,300,25
-    LTEXT           "Your Torrent may reference a tracker URL that clients will contact when downloading it.  Please type your tracker URL in the box below, or select from one of the URLs you have used recently.",
-                    IDC_STATIC,15,95,300,25
-    LTEXT           "Type or select a tracker URL:",IDC_STATIC,15,130,300,10
-    COMBOBOX        IDC_TRACKER,15,145,300,140,CBS_DROPDOWN | 
-                    CBS_AUTOHSCROLL | CBS_SORT | WS_VSCROLL | WS_TABSTOP
-    PUSHBUTTON      "&Clear List",IDC_CLEAR_TRACKERS,265,165,50,15
-    LTEXT           "When you have made your selection, click Next to add comments to your Torrent file.",
-                    IDC_STATIC,15,190,300,10
-END
-
-IDD_OUTPUT_PAGE DIALOGEX 0, 0, 322, 225
-STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
-CAPTION "Shareaza Torrent Wizard - Save Torrent File"
-FONT 8, "Tahoma", 0, 0, 0x0
-BEGIN
-    LTEXT           "Save Torrent File",IDC_TITLE,15,15,300,10
-    LTEXT           "The Torrent Wizard now has enough information to create your Torrent file, but needs to know where to save it.",
-                    IDC_STATIC,15,35,300,20
-    LTEXT           "A default location has been provided below.  If you want to save the completed Torrent file to a different location, type or browse to it.  Otherwise, click Next.",
-                    IDC_STATIC,15,56,300,20
-    LTEXT           "Save Torrent to folder:",IDC_STATIC,15,79,300,10
-    COMBOBOX        IDC_FOLDER,15,95,300,140,CBS_DROPDOWN | CBS_AUTOHSCROLL | 
-                    CBS_SORT | WS_VSCROLL | WS_TABSTOP
-    PUSHBUTTON      "&Browse...",IDC_BROWSE_FOLDER,210,114,50,15
-    PUSHBUTTON      "&Clear List",IDC_CLEAR_FOLDERS,265,114,50,15
-    LTEXT           "Save Torrent with the name:",IDC_STATIC,15,120,175,10
-    EDITTEXT        IDC_TORRENT_NAME,15,136,300,12,ES_AUTOHSCROLL
-    LTEXT           "If these settings are correct, click Next to create the Torrent.",
-                    IDC_STATIC,15,189,300,10
-    CONTROL         "Automatic piece size selection.",IDC_AUTO_PIECE_SIZE,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,160,113,10
-    COMBOBOX        IDC_PIECE_SIZE,131,158,48,30,CBS_DROPDOWNLIST | 
-                    WS_VSCROLL | WS_TABSTOP
-END
-
-IDD_FINISHED_PAGE DIALOGEX 0, 0, 322, 225
-STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
-CAPTION "Shareaza Torrent Wizard - Creating Torrent"
-FONT 8, "Tahoma", 0, 0, 0x0
-BEGIN
-    LTEXT           "Creating Torrent File",IDC_TITLE,15,15,300,10
-    LTEXT           "The Torrent Wizard is processing the files you selected and creating a Torrent file:",
-                    IDC_STATIC,15,35,300,10
-    LTEXT           "The Torrent Wizard has finished creating your Torrent file!  The finished file has been saved as:",
-                    IDC_DONE_1,15,105,300,20,NOT WS_VISIBLE
-    CONTROL         "Progress1",IDC_PROGRESS,"msctls_progress32",WS_BORDER,
-                    15,60,305,10
-    LTEXT           "File:",IDC_STATIC,15,76,30,10
-    CONTROL         "Ready",IDC_FILE_NAME,"Static",SS_LEFTNOWORDWRAP | 
-                    WS_GROUP,50,76,265,10
-    PUSHBUTTON      "&Abort",IDC_ABORT,270,130,45,15,NOT WS_VISIBLE
-    CONTROL         "Slider1",IDC_SPEED_SLIDER,"msctls_trackbar32",TBS_BOTH | 
-                    TBS_NOTICKS | NOT WS_VISIBLE | WS_TABSTOP,45,130,135,15
-    LTEXT           "You can change the speed of the Torrent creation process to reduce CPU usage if you want to use other applications while the process completes.",
-                    IDC_SPEED_MESSAGE,15,105,300,20,NOT WS_VISIBLE
-    RTEXT           "Slow",IDC_SPEED_SLOW,15,130,25,15,SS_CENTERIMAGE | NOT 
-                    WS_VISIBLE
-    LTEXT           "Fast",IDC_SPEED_FAST,185,130,25,15,SS_CENTERIMAGE | NOT 
-                    WS_VISIBLE
-    EDITTEXT        IDC_TORRENT_NAME,15,130,300,12,ES_AUTOHSCROLL | 
-                    ES_READONLY | NOT WS_VISIBLE
-    PUSHBUTTON      "&Copy",IDC_TORRENT_COPY,170,150,45,15,NOT WS_VISIBLE
-    PUSHBUTTON      "&Open",IDC_TORRENT_OPEN,220,150,45,15,NOT WS_VISIBLE
-    PUSHBUTTON      "&Seed",IDC_TORRENT_SEED,270,150,45,15,NOT WS_VISIBLE
-    LTEXT           "Click Finish to close the Torrent Wizard, or click Back to start over and create another Torrent.",
-                    IDC_DONE_2,15,185,300,20,NOT WS_VISIBLE
-END
-
-IDD_COMMENT_PAGE DIALOGEX 0, 0, 322, 225
-STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
-CAPTION "Shareaza Torrent Wizard - Add Comments"
-FONT 8, "Tahoma", 0, 0, 0x0
-BEGIN
-    LTEXT           "Add Comments",IDC_TITLE,15,15,300,10
-    LTEXT           "If you wish, you can include some comments text in your Torrent file.  This is an optional step, as a Torrent file does not need comments to work correctly.",
-                    IDC_STATIC,15,35,300,20
-    LTEXT           "If you wish, type some comments in the space below:",
-                    IDC_STATIC,15,75,300,10
-    EDITTEXT        IDC_COMMENT,15,90,300,60,ES_MULTILINE | ES_AUTOVSCROLL | 
-                    ES_WANTRETURN | WS_VSCROLL
-    LTEXT           "When you have finished, or if you do not wish to add comments to this Torrent, click the Next button to choose where to save your completed Torrent file.",
-                    IDC_STATIC,15,180,300,20
-END
-
-IDD_COMMANDLINE_PAGE DIALOGEX 0, 0, 322, 225
-STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
-CAPTION "Shareaza Torrent Wizard - Creating Torrent"
-FONT 8, "Tahoma", 0, 0, 0x0
-BEGIN
-    LTEXT           "Creating Torrent File",IDC_TITLE,15,15,300,10
-    LTEXT           "The Torrent Wizard is processing the files you selected and creating a Torrent file:",
-                    IDC_STATIC,15,35,300,10
-    LTEXT           "The Torrent Wizard has finished creating your Torrent file!  The finished file has been saved as:",
-                    IDC_DONE_1,15,105,300,20,NOT WS_VISIBLE
-    CONTROL         "Progress1",IDC_PROGRESS,"msctls_progress32",WS_BORDER,
-                    15,60,305,10
-    LTEXT           "File:",IDC_STATIC,15,76,30,10
-    CONTROL         "Ready",IDC_FILE_NAME,"Static",SS_LEFTNOWORDWRAP | 
-                    WS_GROUP,50,76,265,10
-    PUSHBUTTON      "&Abort",IDC_ABORT,270,130,45,15,NOT WS_VISIBLE
-    CONTROL         "Slider1",IDC_SPEED_SLIDER,"msctls_trackbar32",TBS_BOTH | 
-                    TBS_NOTICKS | NOT WS_VISIBLE | WS_TABSTOP,45,130,135,15
-    LTEXT           "You can change the speed of the Torrent creation process to reduce CPU usage if you want to use other applications while the process completes.",
-                    IDC_SPEED_MESSAGE,15,105,300,20,NOT WS_VISIBLE
-    RTEXT           "Slow",IDC_SPEED_SLOW,15,130,25,15,SS_CENTERIMAGE | NOT WS_VISIBLE
-    LTEXT           "Fast",IDC_SPEED_FAST,185,130,25,15,SS_CENTERIMAGE | NOT WS_VISIBLE
-    EDITTEXT        IDC_TORRENT_NAME,15,130,300,12,ES_AUTOHSCROLL | ES_READONLY | NOT WS_VISIBLE
-    PUSHBUTTON      "&Open",IDC_TORRENT_OPEN,220,150,45,15,NOT WS_VISIBLE
-    PUSHBUTTON      "&Seed",IDC_TORRENT_SEED,270,150,45,15,NOT WS_VISIBLE
-    LTEXT           "Click Finish to close the Torrent Wizard.",IDC_DONE_2,
-                    15,185,300,20,NOT WS_VISIBLE
-END
-
-
-/////////////////////////////////////////////////////////////////////////////
-//
-// Dialog Info
-//
-
-IDD_OUTPUT_PAGE DLGINIT
-BEGIN
-    IDC_PIECE_SIZE, 0x403, 7, 0
-0x3320, 0x2032, 0x424b, "\000" 
-    IDC_PIECE_SIZE, 0x403, 7, 0
-0x3620, 0x2034, 0x424b, "\000" 
-    IDC_PIECE_SIZE, 0x403, 8, 0
-0x3120, 0x3832, 0x4b20, 0x0042, 
-    IDC_PIECE_SIZE, 0x403, 8, 0
-0x3220, 0x3635, 0x4b20, 0x0042, 
-    IDC_PIECE_SIZE, 0x403, 8, 0
-0x3520, 0x3231, 0x4b20, 0x0042, 
-    IDC_PIECE_SIZE, 0x403, 9, 0
-0x3120, 0x3230, 0x2034, 0x424b, "\000" 
-    IDC_PIECE_SIZE, 0x403, 9, 0
-0x3220, 0x3430, 0x2038, 0x424b, "\000" 
-    0
-END
-
-#endif    // Neutral (Default) resources
 /////////////////////////////////////////////////////////////////////////////
 
 

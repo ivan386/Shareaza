@@ -113,6 +113,7 @@ void CFinishedPage::Start()
 		m_pBuilder->SetPieceSize( -1 );
 	else
 		m_pBuilder->SetPieceSize( pOutput->m_nPieceIndex );
+	m_pBuilder->Enable( pOutput->m_bSHA1, pOutput->m_bED2K, pOutput->m_bMD5 );
 
 	GET_PAGE( CTrackerPage, pTracker );
 	m_pBuilder->AddTrackerURL( pTracker->m_sTracker );

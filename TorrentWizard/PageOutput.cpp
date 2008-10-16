@@ -45,22 +45,19 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // COutputPage property page
 
-COutputPage::COutputPage() : CWizardPage(COutputPage::IDD)
-, m_sFolder( _T("") )
-, m_sName( _T("") )
-, m_bAutoPieces( FALSE )
-, m_nPieceIndex(0)
-{
-}
-
-COutputPage::~COutputPage()
+COutputPage::COutputPage() :
+  CWizardPage(COutputPage::IDD)
+, m_bAutoPieces( TRUE )
+, m_nPieceIndex( 0 )
+, m_bSHA1( TRUE )
+, m_bED2K( TRUE )
+, m_bMD5( TRUE )
 {
 }
 
 void COutputPage::DoDataExchange(CDataExchange* pDX)
 {
 	CWizardPage::DoDataExchange(pDX);
-	//{{AFX_DATA_MAP(COutputPage)
 	DDX_Control(pDX, IDC_TORRENT_NAME, m_wndName);
 	DDX_Control(pDX, IDC_FOLDER, m_wndFolders);
 	DDX_CBString(pDX, IDC_FOLDER, m_sFolder);
@@ -68,7 +65,9 @@ void COutputPage::DoDataExchange(CDataExchange* pDX)
 	DDX_Check(pDX, IDC_AUTO_PIECE_SIZE, m_bAutoPieces);
 	DDX_CBIndex(pDX, IDC_PIECE_SIZE, m_nPieceIndex);
 	DDX_Control(pDX, IDC_PIECE_SIZE, m_wndPieceSize);
-	//}}AFX_DATA_MAP
+	DDX_Check(pDX, IDC_CHECK_SHA1, m_bSHA1);
+	DDX_Check(pDX, IDC_CHECK_ED2K, m_bED2K);
+	DDX_Check(pDX, IDC_CHECK_MD5, m_bMD5);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -79,8 +78,11 @@ BOOL COutputPage::OnInitDialog()
 	CWizardPage::OnInitDialog();
 	
 	int nCount = theApp.GetProfileInt( _T("Folders"), _T("Count"), 0 );
-	m_bAutoPieces = theApp.GetProfileInt( _T("Folders"), _T("AutoPieceSize"), 0 );
+	m_bAutoPieces = theApp.GetProfileInt( _T("Folders"), _T("AutoPieceSize"), TRUE );
 	m_nPieceIndex = theApp.GetProfileInt( _T("Folders"), _T("PieceSize"), 0 );
+	m_bSHA1 = theApp.GetProfileInt( _T("Folders"), _T("SHA1"), TRUE );
+	m_bED2K = theApp.GetProfileInt( _T("Folders"), _T("ED2K"), TRUE );
+	m_bMD5 = theApp.GetProfileInt( _T("Folders"), _T("MD5"), TRUE );
 
 	for ( int nItem = 0 ; nItem < nCount ; nItem++ )
 	{
@@ -172,7 +174,10 @@ void COutputPage::OnBrowseFolder()
 void COutputPage::OnClearFolders() 
 {
 	theApp.WriteProfileInt( _T("Folders"), _T("Count"), 0 );
-	theApp.WriteProfileInt( _T("Folders"), _T("AutoPieceSize"), m_bAutoPieces ? 1 : 0 );
+	theApp.WriteProfileInt( _T("Folders"), _T("AutoPieceSize"), m_bAutoPieces );
+	theApp.WriteProfileInt( _T("Folders"), _T("SHA1"), m_bSHA1 );
+	theApp.WriteProfileInt( _T("Folders"), _T("ED2K"), m_bED2K );
+	theApp.WriteProfileInt( _T("Folders"), _T("MD5"), m_bMD5 );
 	theApp.WriteProfileInt( _T("Folders"), _T("PieceSize"), m_nPieceIndex );
 	m_sFolder.Empty();
 	UpdateData( FALSE );
@@ -269,7 +274,10 @@ LRESULT COutputPage::OnWizardNext()
 	}
 	
 	theApp.WriteProfileString( _T("Folders"), _T("Last"), m_sFolder );
-	theApp.WriteProfileInt( _T("Folders"), _T("AutoPieceSize"), m_bAutoPieces ? 1 : 0 );
+	theApp.WriteProfileInt( _T("Folders"), _T("AutoPieceSize"), m_bAutoPieces );
+	theApp.WriteProfileInt( _T("Folders"), _T("SHA1"), m_bSHA1 );
+	theApp.WriteProfileInt( _T("Folders"), _T("ED2K"), m_bED2K );
+	theApp.WriteProfileInt( _T("Folders"), _T("MD5"), m_bMD5 );
 	theApp.WriteProfileInt( _T("Folders"), _T("PieceSize"), m_nPieceIndex );
 
 	return IDD_FINISHED_PAGE;
