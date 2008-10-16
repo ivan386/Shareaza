@@ -217,6 +217,15 @@ BOOL CTransferFile::Open(BOOL bWrite, BOOL bCreate)
 	return m_hFile != INVALID_HANDLE_VALUE;
 }
 
+QWORD CTransferFile::GetSize() const
+{
+	LARGE_INTEGER nSize;
+	if ( m_hFile != INVALID_HANDLE_VALUE && GetFileSizeEx( m_hFile, &nSize ) )
+		return nSize.QuadPart;
+	else
+		return SIZE_UNKNOWN;
+}
+
 //////////////////////////////////////////////////////////////////////
 // CTransferFile write access management
 

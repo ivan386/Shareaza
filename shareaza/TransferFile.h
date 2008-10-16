@@ -86,6 +86,7 @@ public:
 	void		Release(BOOL bWrite);
 	HANDLE		GetHandle(BOOL bWrite = FALSE);
 	BOOL		IsOpen();
+	QWORD		GetSize() const;
 	BOOL		Read(QWORD nOffset, LPVOID pBuffer, QWORD nBuffer, QWORD* pnRead);
 	BOOL		Write(QWORD nOffset, LPCVOID pBuffer, QWORD nBuffer, QWORD* pnWritten);
 protected:
