@@ -44,7 +44,7 @@ protected:
 	DWORD m_tStableTime;				// The time at least one has been connected (do)
 	SOCKET m_hSocket;					// Our one listening socket
 	CList< CHandshake* > m_pList;		// The list of pointers to CHandshake objects
-	mutable CCriticalSection m_pSection;// Use to make sure only one thread accesses the list at a time
+	mutable CMutex m_pSection;			// Use to make sure only one thread accesses the list at a time
 
 	void Substitute(CHandshake* pOld, CHandshake* pNew);	// Replace an old CHandshake object in the list with a new one
 	void Remove(CHandshake* pHandshake);					// Remove a CHandshake object from the list
