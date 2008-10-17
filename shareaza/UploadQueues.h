@@ -37,7 +37,7 @@ public:
 
 // Attributes
 public:
-	CCriticalSection	m_pSection;
+	CMutex				m_pSection;
 	CUploadQueue*		m_pTorrentQueue;
 	CUploadQueue*		m_pHistoryQueue;
 protected:

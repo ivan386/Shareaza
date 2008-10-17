@@ -336,16 +336,22 @@ void CEDClients::OnRun()
 {
 	// Delay to limit the rate of ed2k packets being sent.
 	// keep ed2k transfers under 10 KB/s per source
-	DWORD tNow = GetTickCount();
-	if ( tNow - m_tLastRun < Settings.eDonkey.PacketThrottle )
+	if ( GetTickCount() - m_tLastRun < Settings.eDonkey.PacketThrottle )
 		return;
 
-	m_tLastRun = tNow;
+	CSingleLock oCTranfersLock( &Transfers.m_pSection );
+	if ( ! oCTranfersLock.Lock( 250 ) )
+		return;
 
-	CQuickLock oCTranfersLock( Transfers.m_pSection );
-	CQuickLock oCEDClientsLock( m_pSection );
+	CSingleLock oCEDClientsLock( &m_pSection );
+	if ( ! oCEDClientsLock.Lock( 250 ) )
+		return;
 
-	if ( Settings.eDonkey.ServerWalk && Network.IsConnected() && Settings.eDonkey.EnableToday )
+	DWORD tNow = GetTickCount();
+
+	if ( Settings.eDonkey.ServerWalk &&
+		 Network.IsConnected() &&
+		 Settings.eDonkey.EnableToday )
 		RunGlobalStatsRequests( tNow );
 
 	for ( CEDClient* pClient = m_pFirst ; pClient ; )
@@ -354,6 +360,8 @@ void CEDClients::OnRun()
 		pClient->OnRunEx( tNow );
 		pClient = pNext;
 	}
+
+	m_tLastRun = tNow;
 }
 
 //////////////////////////////////////////////////////////////////////

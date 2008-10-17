@@ -151,11 +151,9 @@ void CTransfers::OnRun()
 		if ( !IsThreadEnabled() )
 			break;
 
-		{
-			CQuickLock oLock( m_pSection );
-			Uploads.OnRun();
-			OnCheckExit();
-		}
+		Uploads.OnRun();
+		
+		OnCheckExit();
 
 		TransferFiles.CommitDeferred();
 	}
@@ -166,7 +164,9 @@ void CTransfers::OnRun()
 
 void CTransfers::OnRunTransfers()
 {
-	CQuickLock oLock( m_pSection );
+	CSingleLock oLock( &m_pSection );
+	if ( ! oLock.Lock( 250 ) )
+		return;
 
 	++m_nRunCookie;
 
@@ -181,6 +181,10 @@ void CTransfers::OnRunTransfers()
 
 void CTransfers::OnCheckExit()
 {
+	CSingleLock oLock( &m_pSection );
+	if ( ! oLock.Lock( 250 ) )
+		return;
+
 	if ( m_pList.GetCount() == 0 && Downloads.GetCount() == 0 )
 		Exit();
 

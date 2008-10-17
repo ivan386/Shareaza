@@ -290,7 +290,14 @@ BOOL CUploads::EnforcePerHostLimit(CUploadTransfer* pHit, BOOL bRequest)
 
 void CUploads::OnRun()
 {
-	CSingleLock pLock( &UploadQueues.m_pSection, TRUE );
+	CSingleLock oTransfersLock( &Transfers.m_pSection );
+	if ( ! oTransfersLock.Lock( 250 ) )
+		return;
+
+	CSingleLock oUploadQueuesLock( &UploadQueues.m_pSection );
+	if ( ! oUploadQueuesLock.Lock( 250 ) )
+		return;
+
 	int nCountTorrent = 0;
 	POSITION pos;
 
@@ -373,8 +380,9 @@ void CUploads::OnRun()
 
 BOOL CUploads::OnAccept(CConnection* pConnection)
 {
-	CSingleLock pLock( &Transfers.m_pSection );
-	if ( ! pLock.Lock( 250 ) ) return FALSE;
+	CSingleLock oTransfersLock( &Transfers.m_pSection );
+	if ( ! oTransfersLock.Lock( 250 ) )
+		return FALSE;
 
 	if ( Settings.Remote.Enable &&
 		( pConnection->StartsWith( _P("GET /remote/") ) ||
@@ -412,22 +420,20 @@ BOOL CUploads::OnAccept(CConnection* pConnection)
 
 bool CUploads::OnRename(const CString& strSource, LPCTSTR pszTarget, bool bRemoving)
 {
-	CSingleLock pLock( &Transfers.m_pSection );
-
-	if ( !pLock.Lock( 50ul ) )
+	CSingleLock oTransfersLock( &Transfers.m_pSection );
+	if ( ! oTransfersLock.Lock( 250 ) )
 		return false;
 
 	for ( POSITION pos = GetIterator() ; pos ; )
 		GetNext( pos )->OnRename( strSource, pszTarget );
 
-	pLock.Unlock();
+	oTransfersLock.Unlock();
 
-	if ( !bRemoving )
+	if ( ! bRemoving )
 		return true;
 
-	CSingleLock pLock2( &theApp.m_pSection );
-
-	if ( !pLock2.Lock( 50ul ) )
+	CSingleLock otheAppLock( &theApp.m_pSection );
+	if ( ! otheAppLock.Lock( 250 ) )
 		return false;
 
 	if ( CMainWnd* pMainWnd = (CMainWnd*)theApp.m_pSafeWnd )
@@ -438,8 +444,6 @@ bool CUploads::OnRename(const CString& strSource, LPCTSTR pszTarget, bool bRemov
 		if ( pMediaWnd )
 			pMediaWnd->OnFileDelete( strSource );
 	}
-
-	pLock2.Unlock();
 
 	return true;
 }
