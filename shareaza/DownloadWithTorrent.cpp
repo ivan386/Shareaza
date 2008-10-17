@@ -88,6 +88,23 @@ CDownloadWithTorrent::~CDownloadWithTorrent()
 
 	{
 		CSingleLock oLock( &m_pRequestsSection, TRUE );
+
+		// Wait 5 seconds
+		for( DWORD i = 0; ! m_pRequests.IsEmpty() && i < 50; ++i )
+		{
+			oLock.Unlock();
+			Sleep( 100 );
+			oLock.Lock();
+		}
+
+		// Cancel all pending requests
+		for ( POSITION pos = m_pRequests.GetHeadPosition(); pos; )
+		{
+			CBTTrackerRequest* pRequest = m_pRequests.GetNext( pos );
+			pRequest->Cancel();
+		}
+
+		// Wait infinite
 		while( ! m_pRequests.IsEmpty() )
 		{
 			oLock.Unlock();
@@ -100,8 +117,8 @@ CDownloadWithTorrent::~CDownloadWithTorrent()
 
 	CloseTorrentUploads();
 
-	if ( m_pTorrentBlock )
-		delete [] m_pTorrentBlock;
+	delete [] m_pTorrentBlock;
+	m_pTorrentBlock = NULL;
 }
 
 void CDownloadWithTorrent::Add(CBTTrackerRequest* pRequest)

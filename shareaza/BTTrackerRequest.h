@@ -36,6 +36,11 @@ public:
     static CString	Escape(const Hashes::BtHash& oBTH);
     static CString	Escape(const Hashes::BtGuid& oGUID);
 
+	void Cancel()
+	{
+		m_pRequest.Cancel();
+	}
+
 protected:
 	CDownloadWithTorrent*	m_pDownload;
 	bool					m_bProcess;
