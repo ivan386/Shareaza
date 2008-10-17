@@ -135,6 +135,7 @@ void CPackagePage::OnAddFolder()
 	pMalloc->Free( pPath );
 	pMalloc->Release();
 	
+	CWaitCursor wc;
 	AddFolder( szPath, 0 );
 }
 
@@ -150,6 +151,7 @@ void CPackagePage::OnAddFile()
 	
 	if ( dlg.DoModal() != IDOK ) return;
 	
+	CWaitCursor wc;
 	CString strFolder	= CString( szFiles );
 	LPCTSTR pszFile		= szFiles + strFolder.GetLength() + 1;
 	
@@ -169,11 +171,14 @@ void CPackagePage::OnAddFile()
 
 void CPackagePage::OnRemoveFile() 
 {
+	CWaitCursor wc;
+
 	for ( int nItem = m_wndList.GetItemCount() - 1 ; nItem >= 0 ; nItem-- )
 	{
 		if ( m_wndList.GetItemState( nItem, LVIS_SELECTED ) )
 		{
 			m_wndList.DeleteItem( nItem );
+			UpdateWindow();
 		}
 	}
 }
@@ -215,6 +220,8 @@ void CPackagePage::AddFile(LPCTSTR pszFile)
 		pszFile, 0, 0, pInfo.iIcon, NULL );
 	
 	m_wndList.SetItemText( nItem, 1, SmartSize( nSize ) );
+
+	UpdateWindow();
 }
 
 void CPackagePage::AddFolder(LPCTSTR pszPath, int nRecursive)

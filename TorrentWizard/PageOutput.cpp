@@ -108,38 +108,68 @@ void COutputPage::OnReset()
 
 BOOL COutputPage::OnSetActive() 
 {
-	if ( m_sName.IsEmpty() )
+	GET_PAGE( CWelcomePage, pWelcome );
+	
+	if ( pWelcome->m_nType == 0 )
 	{
-		GET_PAGE( CWelcomePage, pWelcome );
+		GET_PAGE( CSinglePage, pSingle );
 		
-		if ( pWelcome->m_nType == 0 )
+		CString strFile = pSingle->m_sFileName;
+		
+		if ( LPCTSTR pszSlash = _tcsrchr( strFile, '\\' ) )
 		{
-			GET_PAGE( CSinglePage, pSingle );
+			m_sName = pszSlash + 1;
+			m_sName += _T(".torrent");
 			
-			CString strFile = pSingle->m_sFileName;
-			
-			if ( LPCTSTR pszSlash = _tcsrchr( strFile, '\\' ) )
-			{
-				m_sName = pszSlash + 1;
-				m_sName += _T(".torrent");
-				
-				if ( m_sFolder.IsEmpty() ) 
-					m_sFolder = strFile.Left( (int)( pszSlash - strFile ) );
-			}
-		}
-		else
-		{
 			if ( m_sFolder.IsEmpty() ) 
-				m_sFolder = theApp.GetProfileString( _T("Folders"), _T("Last") );
-			if ( ! m_sFolder.IsEmpty() )
+				m_sFolder = strFile.Left( (int)( pszSlash - strFile ) );
+		}
+	}
+	else
+	{
+		GET_PAGE( CPackagePage, pPackage );
+
+		CString sName = pPackage->m_wndList.GetItemText( 0, 0 );
+		
+		// Get same part of first and last files
+		int nCount = pPackage->m_wndList.GetItemCount();
+		if ( nCount > 1 )
+		{
+			CString sName2 = pPackage->m_wndList.GetItemText( nCount - 1, 0 );
+			LPCTSTR pszName1 = sName;
+			LPCTSTR pszName2 = sName2;
+			for ( int i = 0; *pszName1 && *pszName2; ++pszName1, ++pszName2, ++i )
 			{
-				m_sName = PathFindFileName( m_sFolder );
-				m_sName += _T(".torrent");
+				if ( *pszName1 != *pszName2 )
+				{
+					sName = sName.Left( i + 1 );
+					break;
+				}
 			}
 		}
-		
-		UpdateData( FALSE );
+
+		// Use parent folder name as torrent name
+		int nSlash = sName.ReverseFind( _T('\\') );
+		if ( nSlash != -1 )
+		{
+			sName = sName.Left( nSlash );
+			nSlash = sName.ReverseFind( _T('\\') );
+			if ( nSlash != -1 )
+			{
+				m_sName = sName.Mid( nSlash + 1 ) + _T(".torrent");
+			}
+		}
+
+		if ( m_sFolder.IsEmpty() ) 
+			m_sFolder = theApp.GetProfileString( _T("Folders"), _T("Last") );
+		if ( ! m_sFolder.IsEmpty() && m_sName.IsEmpty() )
+		{
+			m_sName = PathFindFileName( m_sFolder );
+			m_sName += _T(".torrent");
+		}
 	}
+	
+	UpdateData( FALSE );
 	
 	SetWizardButtons( PSWIZB_BACK | PSWIZB_NEXT );
 	return CWizardPage::OnSetActive();
