@@ -982,7 +982,7 @@ BOOL CBTInfo::CheckFiles()
 		if ( _tcsstr( pszPath, _T("../") ) != NULL ) return FALSE;
 	}
 
-	return m_pFiles.GetCount();
+	return m_pFiles.GetCount() > 0;
 }
 
 //////////////////////////////////////////////////////////////////////
