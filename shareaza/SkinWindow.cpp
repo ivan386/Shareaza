@@ -133,8 +133,6 @@ BOOL CSkinWindow::Parse(CXMLElement* pBase, const CString& strPath)
 		NULL
 	};
 
-	if ( ! pBase->IsNamed( _T("windowSkin") ) ) return FALSE;
-
 	CString str;
 	CRect rc;
 
@@ -161,8 +159,11 @@ BOOL CSkinWindow::Parse(CXMLElement* pBase, const CString& strPath)
 			for ( POSITION posInner = pGroup->GetElementIterator() ; posInner ; )
 			{
 				CXMLElement* pXML = pGroup->GetNextElement( posInner );
-				if ( ! pXML->IsNamed( _T("part") ) ) continue;
-
+				if ( ! pXML->IsNamed( _T("part") ) )
+				{
+					theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Unknown element in [parts] element"), pXML->ToString() );
+					continue;
+				}
 				if ( ! ParseRect( pXML, &rc ) ) continue;
 				if ( ! rc.Width() ) rc.right++;
 				if ( ! rc.Height() ) rc.bottom++;
@@ -211,7 +212,11 @@ BOOL CSkinWindow::Parse(CXMLElement* pBase, const CString& strPath)
 			for ( POSITION posInner = pGroup->GetElementIterator() ; posInner ; )
 			{
 				CXMLElement* pXML = pGroup->GetNextElement( posInner );
-				if ( ! pXML->IsNamed( _T("anchor") ) ) continue;
+				if ( ! pXML->IsNamed( _T("anchor") ) )
+				{
+					theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Unknown element in [anchors] element"), pXML->ToString() );
+					continue;
+				}
 
 				if ( ! ParseRect( pXML, &rc ) ) continue;
 
@@ -362,7 +367,11 @@ BOOL CSkinWindow::Parse(CXMLElement* pBase, const CString& strPath)
 			else if ( strRes.GetLength() > 0 )
 			{
 				UINT nResID = 0;
-				if ( _stscanf( strRes, _T("%lu"), &nResID ) != 1 ) return FALSE;
+				if ( _stscanf( strRes, _T("%lu"), &nResID ) != 1 )
+				{
+					theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Unknown [res] attribute in [image] element"), pGroup->ToString() );
+					return FALSE;
+				}
 				if ( nResID == IDB_NAVBAR_IMAGE && Settings.General.LanguageRTL )
 					 nResID = IDB_NAVBAR_IMAGE_RTL;
 				else if ( nResID == IDB_NAVBAR_ALPHA && Settings.General.LanguageRTL )
@@ -371,7 +380,11 @@ BOOL CSkinWindow::Parse(CXMLElement* pBase, const CString& strPath)
 					MAKEINTRESOURCE(nResID), IMAGE_BITMAP, 0, 0, 0 );
 			}
 
-			if ( hBitmap == NULL ) return FALSE;
+			if ( hBitmap == NULL )
+			{
+				theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Cannot load image"), pGroup->ToString() );
+				return FALSE;
+			}
 
 			str = pGroup->GetAttributeValue( _T("type") );
 			ToLower( str );
@@ -411,6 +424,8 @@ BOOL CSkinWindow::Parse(CXMLElement* pBase, const CString& strPath)
 			str = pGroup->GetAttributeValue( _T("height") );
 			_stscanf( str, _T("%i"), &m_szMinSize.cy );
 		}
+		else
+			theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Unknown element in [windowSkin] element"), pGroup->ToString() );
 	}
 
 	return ( m_bmSkin.m_hObject != NULL );

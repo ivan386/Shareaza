@@ -1332,7 +1332,6 @@ BOOL CSkin::LoadWindowSkins(CXMLElement* pSub, const CString& strPath)
 			}
 			else
 			{
-				theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Failed to parse [windowSkin] element"), pSkinElement->ToString() );
 				delete pSkin;
 			}
 		}
