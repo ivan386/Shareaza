@@ -3123,6 +3123,8 @@ BEGIN
     IDS_PRIORITY_LOW        "Low"
     IDS_PRIORITY_NORMAL     "Normal"
     IDS_PRIORITY_HIGH       "High"
+    IDS_SKIN_ERROR          "Skin load error: %s. Element: %s"
+    IDS_SKIN_LOAD           "Loading skin: %s"
 END
 
 STRINGTABLE 

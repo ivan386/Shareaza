@@ -57,7 +57,9 @@
 #define IDB_COLOURDOT                   151
 #define IDS_PRIORITY_HIGH               151
 #define IDD_WIZARD_WELCOME              152
+#define IDS_SKIN_ERROR                  152
 #define IDD_WIZARD_CONNECTION           153
+#define IDS_SKIN_LOAD                   153
 #define IDB_WIZARD                      154
 #define IDD_WIZARD_SHARING              154
 #define IDD_WIZARD_FINISHED             155
@@ -1870,6 +1872,10 @@
 #define ID_SYSTEM_VERBOSE_INFO          33315
 #define ID_SYSTEM_VERBOSE_DEBUG         33316
 #define ID_SHAREMONKEY_SAVE_OPTION      33317
+#define ImageViewer_BestFit             33318
+#define ImageViewer_ActualSize          33319
+#define ImageViewer_Refresh             33320
+#define ImageViewer_Close               33321
 
 // Next default values for new objects
 // 
@@ -1877,7 +1883,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        325
-#define _APS_NEXT_COMMAND_VALUE         33318
+#define _APS_NEXT_COMMAND_VALUE         33322
 #define _APS_NEXT_CONTROL_VALUE         1568
 #define _APS_NEXT_SYMED_VALUE           104
 #endif
