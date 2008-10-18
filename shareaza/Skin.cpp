@@ -354,7 +354,6 @@ BOOL CSkin::LoadFromXML(CXMLElement* pXML, const CString& strPath)
 		bSuccess = TRUE;
 	}
 
-	ASSERT( bSuccess );
 	return bSuccess;
 }
 
