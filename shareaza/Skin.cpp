@@ -258,7 +258,11 @@ BOOL CSkin::LoadFromString(const CString& strXML, const CString& strPath)
 
 BOOL CSkin::LoadFromXML(CXMLElement* pXML, const CString& strPath)
 {
-	if ( ! pXML->IsNamed( _T("skin") ) ) return FALSE;
+	if ( ! pXML->IsNamed( _T("skin") ) )
+	{
+		theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Unknown [skin] element"), pXML->ToString() );
+		return FALSE;
+	}
 
 	BOOL bSuccess = FALSE;
 
@@ -339,14 +343,13 @@ BOOL CSkin::LoadFromXML(CXMLElement* pXML, const CString& strPath)
 			else if ( strType == _T("skin") )
 			{
 				CString strSkinName = pSub->GetAttributeValue( _T("name"), _T("") );
-
-				TRACE( _T("Loading skin: %s\r\n"), strSkinName );
+				theApp.Message( MSG_NOTICE, IDS_SKIN_LOAD, strSkinName );
 			}
 			else
-				ASSERT( FALSE );
+				theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Unknown [type] attribute in [manifest] element"), pSub->ToString() );
 		}
 		else
-			ASSERT( FALSE );
+			theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Unknown element in [skin] element"), pSub->ToString() );
 
 		bSuccess = TRUE;
 	}
@@ -398,8 +401,7 @@ BOOL CSkin::LoadStrings(CXMLElement* pBase)
 				m_pStrings.SetAt( nID, strValue );
 			}
 			else
-				TRACE( _T("LookupCommandID failed in CSkin::LoadStrings for string \"%s\"\r\n"),
-					pXML->GetAttributeValue( _T("id") ) );
+				theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Unknown [id] attribute in [string] element"), pXML->ToString() );
 		}
 		else if ( pXML->IsNamed( _T("tip") ) )
 		{
@@ -411,11 +413,10 @@ BOOL CSkin::LoadStrings(CXMLElement* pBase)
 				m_pStrings.SetAt( nID, strMessage );
 			}
 			else
-				TRACE( _T("LookupCommandID failed in CSkin::LoadStrings for tip \"%s\"\r\n"),
-					pXML->GetAttributeValue( _T("id") ) );
+				theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Unknown [id] attribute in [tip] element"), pXML->ToString() );
 		}
 		else
-			ASSERT( FALSE );
+			theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Unknown element in [strings] element"), pXML->ToString() );
 	}
 
 	return TRUE;
@@ -481,8 +482,13 @@ BOOL CSkin::LoadMenus(CXMLElement* pBase)
 	for ( POSITION pos = pBase->GetElementIterator() ; pos ; )
 	{
 		CXMLElement* pXML = pBase->GetNextElement( pos );
-		if ( pXML->IsNamed( _T("menu") ) && ! LoadMenu( pXML ) )
-			return FALSE;
+		if ( pXML->IsNamed( _T("menu") ) )
+		{
+			if ( ! LoadMenu( pXML ) )
+				return FALSE;
+		}
+		else
+			theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Unknown element in [menu] element"), pXML->ToString() );
 	}
 
 	return TRUE;
@@ -493,7 +499,7 @@ BOOL CSkin::LoadMenu(CXMLElement* pXML)
 	CString strName = pXML->GetAttributeValue( _T("name") );
 	if ( strName.IsEmpty() )
 	{
-		ASSERT( ("No [name] attribute in [menu] tag", 0 ) );
+		theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("No [name] attribute in [menu] element"), pXML->ToString() );
 		return FALSE;
 	}
 
@@ -514,7 +520,7 @@ BOOL CSkin::LoadMenu(CXMLElement* pXML)
 	{
 		if( ! pMenu->CreateMenu() )
 		{
-			ASSERT( ("Cannot create menu", 0 ) );
+			theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Cannot create menu"), pXML->ToString() );
 			return FALSE;
 		}
 	}
@@ -522,16 +528,13 @@ BOOL CSkin::LoadMenu(CXMLElement* pXML)
 	{
 		if( ! pMenu->CreatePopupMenu() )
 		{
-			ASSERT( ("Cannot create popup menu", 0 ) );
+			theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Cannot create popup menu"), pXML->ToString() );
 			return FALSE;
 		}
 	}
 
 	if ( ! CreateMenu( pXML, pMenu->GetSafeHmenu() ) )
-	{
-		ASSERT( ("Cannot load menu", 0 ) );
 		return FALSE;
-	}
 		
 	m_pMenus.SetAt( strName, pMenu.release() );
 
@@ -574,9 +577,7 @@ BOOL CSkin::CreateMenu(CXMLElement* pRoot, HMENU hMenu)
 				VERIFY( AppendMenu( hMenu, MF_STRING, nID, strText ) );
 			}
 			else
-			{
-				ASSERT( ( "Unknown command ID in [item] element inside [menu] tag", 0 ) );
-			}
+				theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Unknown [id] attribute in menu [item] element"), pXML->ToString() );
 		}
 		else if ( pXML->IsNamed( _T("menu") ) )
 		{
@@ -595,9 +596,7 @@ BOOL CSkin::CreateMenu(CXMLElement* pRoot, HMENU hMenu)
 			VERIFY( AppendMenu( hMenu, MF_SEPARATOR, ID_SEPARATOR, NULL ) );
 		}
 		else
-		{
-			ASSERT( ( "Unknown element inside [menu] tag", 0 ) );
-		}
+			theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Unknown element in [menu] element"), pXML->ToString() );
 	}
 
 	return TRUE;
@@ -704,10 +703,14 @@ BOOL CSkin::LoadToolbars(CXMLElement* pBase)
 	for ( POSITION pos = pBase->GetElementIterator() ; pos ; )
 	{
 		CXMLElement* pXML = pBase->GetNextElement( pos );
-		BOOL bToolbar = pXML->IsNamed( _T("toolbar") );
 
-		ASSERT( bToolbar );
-		if ( bToolbar && ! CreateToolBar( pXML ) ) return FALSE;
+		if ( pXML->IsNamed( _T("toolbar") ) )
+		{
+			if ( ! CreateToolBar( pXML ) )
+				return FALSE;
+		}
+		else
+			theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Unknown element in [toolbars] element"), pXML->ToString() );
 	}
 
 	return TRUE;
@@ -758,6 +761,8 @@ BOOL CSkin::CreateToolBar(CXMLElement* pBase)
 				if ( strTemp.CompareNoCase( L"false" ) == 0 )
 					pItem->Show( FALSE );
 			}
+			else
+				theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Unknown [id] attribute in [button] element"), pXML->ToString() );
 		}
 		else if ( pXML->IsNamed( _T("separator") ) )
 		{
@@ -799,6 +804,9 @@ BOOL CSkin::CreateToolBar(CXMLElement* pBase)
 					pItem->SetText( strTemp );
 				}
 			}
+			else
+				theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Unknown [id] attribute in [control] element"), pXML->ToString() );
+
 		}
 		else if ( pXML->IsNamed( _T("label") ) )
 		{
@@ -806,6 +814,8 @@ BOOL CSkin::CreateToolBar(CXMLElement* pBase)
 			pItem->m_crText = 0;
 			pItem->SetTip( pXML->GetAttributeValue( _T("tip") ) );
 		}
+		else
+			theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Unknown element in [toolbar] element"), pXML->ToString() );
 	}
 
 	CString strName = pBase->GetAttributeValue( _T("name") );
@@ -826,14 +836,18 @@ BOOL CSkin::LoadDocuments(CXMLElement* pBase)
 	for ( POSITION posDoc = pBase->GetElementIterator() ; posDoc ; )
 	{
 		CXMLElement* pDoc = pBase->GetNextElement( posDoc );
-		if ( ! pDoc->IsNamed( _T("document") ) ) continue;
 
-		CString strName = pDoc->GetAttributeValue( _T("name") );
+		if ( pDoc->IsNamed( _T("document") ) )
+		{
+			CString strName = pDoc->GetAttributeValue( _T("name") );
 
-		CXMLElement* pOld = NULL;
-		if ( m_pDocuments.Lookup( strName, pOld ) ) delete pOld;
+			CXMLElement* pOld = NULL;
+			if ( m_pDocuments.Lookup( strName, pOld ) ) delete pOld;
 
-		m_pDocuments.SetAt( strName, pDoc->Detach() );
+			m_pDocuments.SetAt( strName, pDoc->Detach() );
+		}
+		else
+			theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Unknown element in [documents] element"), pDoc->ToString() );
 	}
 
 	return TRUE;
@@ -883,7 +897,11 @@ BOOL CSkin::LoadWatermarks(CXMLElement* pSub, const CString& strPath)
 				strFile = strPath + strFile;
 				m_pWatermarks.SetAt( strName, strFile );
 			}
+			else
+				theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Missed [target] and/or [path] attributes in [watermark] element"), pMark->ToString() );
 		}
+		else
+			theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Unknown element in [watermarks] element"), pMark->ToString() );
 	}
 
 	return TRUE;
@@ -956,30 +974,36 @@ BOOL CSkin::LoadListColumns(CXMLElement* pBase)
 	for ( POSITION pos = pBase->GetElementIterator() ; pos ; )
 	{
 		CXMLElement* pXML = pBase->GetNextElement( pos );
-		if ( ! pXML->IsNamed( _T("list") ) ) continue;
 
-		CString strName = pXML->GetAttributeValue( _T("name") );
-		if ( strName.IsEmpty() ) continue;
-
-		CString strEdit;
-
-		for ( POSITION posCol = pXML->GetElementIterator() ; posCol ; )
+		if ( pXML->IsNamed( _T("list") ) )
 		{
-			CXMLElement* pCol = pXML->GetNextElement( posCol );
-			if ( ! pCol->IsNamed( _T("column") ) ) continue;
+			CString strName = pXML->GetAttributeValue( _T("name") );
+			if ( strName.IsEmpty() ) continue;
 
-			CString strFrom	= pCol->GetAttributeValue( _T("from") );
-			CString strTo	= pCol->GetAttributeValue( _T("to") );
+			CString strEdit;
+			for ( POSITION posCol = pXML->GetElementIterator() ; posCol ; )
+			{
+				CXMLElement* pCol = pXML->GetNextElement( posCol );
+				if ( pCol->IsNamed( _T("column") ) )
+				{
+					CString strFrom	= pCol->GetAttributeValue( _T("from") );
+					CString strTo	= pCol->GetAttributeValue( _T("to") );
 
-			if ( strFrom.IsEmpty() || strTo.IsEmpty() ) continue;
+					if ( strFrom.IsEmpty() || strTo.IsEmpty() ) continue;
 
-			if ( strEdit.GetLength() ) strEdit += '|';
-			strEdit += strFrom;
-			strEdit += '=';
-			strEdit += strTo;
+					if ( strEdit.GetLength() ) strEdit += '|';
+					strEdit += strFrom;
+					strEdit += '=';
+					strEdit += strTo;
+				}
+				else
+					theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Unknown element in [list] element"), pCol->ToString() );
+			}
+
+			m_pLists.SetAt( strName, strEdit );
 		}
-
-		m_pLists.SetAt( strName, strEdit );
+		else
+			theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Unknown element in [listColumns] element"), pXML->ToString() );
 	}
 
 	return TRUE;
@@ -1227,6 +1251,8 @@ BOOL CSkin::LoadDialogs(CXMLElement* pBase)
 			pXML->Detach();
 			m_pDialogs.SetAt( strName, pXML );
 		}
+		else
+			theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Unknown element in [dialogs] element"), pXML->ToString() );
 	}
 
 	return TRUE;
@@ -1306,9 +1332,12 @@ BOOL CSkin::LoadWindowSkins(CXMLElement* pSub, const CString& strPath)
 			}
 			else
 			{
+				theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Failed to parse [windowSkin] element"), pSkinElement->ToString() );
 				delete pSkin;
 			}
 		}
+		else
+			theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Unknown element in [windowSkins] element"), pSkinElement->ToString() );
 	}
 
 	return TRUE;
@@ -1487,42 +1516,48 @@ BOOL CSkin::LoadColourScheme(CXMLElement* pBase)
 	for ( POSITION pos = pBase->GetElementIterator() ; pos ; )
 	{
 		CXMLElement* pXML = pBase->GetNextElement( pos );
-		if ( ! pXML->IsNamed( _T("colour") ) && ! pXML->IsNamed( _T("color") ) ) continue;
-
-		CString strName		= pXML->GetAttributeValue( _T("name") );
-		CString strValue	= pXML->GetAttributeValue( _T("value") );
-		ToLower( strName );
-
-		COLORREF* pColour;
-
-		if ( pColours.Lookup( strName, (void*&)pColour ) )
+		if ( pXML->IsNamed( _T("colour") ) ||
+			 pXML->IsNamed( _T("color") ) )
 		{
-			if ( strValue.GetLength() == 6 )
+			CString strName		= pXML->GetAttributeValue( _T("name") );
+			CString strValue	= pXML->GetAttributeValue( _T("value") );
+			ToLower( strName );
+
+			COLORREF* pColour;
+
+			if ( pColours.Lookup( strName, (void*&)pColour ) )
 			{
-				int nRed, nGreen, nBlue;
-
-				_stscanf( strValue.Mid( 0, 2 ), _T("%x"), &nRed );
-				_stscanf( strValue.Mid( 2, 2 ), _T("%x"), &nGreen );
-				_stscanf( strValue.Mid( 4, 2 ), _T("%x"), &nBlue );
-
-				if ( strName.Find( _T("system.") ) >= 0 )
+				if ( strValue.GetLength() == 6 )
 				{
-					bSystem = TRUE;
+					int nRed, nGreen, nBlue;
 
-					if ( ! bNonBase && strName.Find( _T(".base.") ) < 0 )
+					_stscanf( strValue.Mid( 0, 2 ), _T("%x"), &nRed );
+					_stscanf( strValue.Mid( 2, 2 ), _T("%x"), &nGreen );
+					_stscanf( strValue.Mid( 4, 2 ), _T("%x"), &nBlue );
+
+					if ( strName.Find( _T("system.") ) >= 0 )
 					{
-						bNonBase = TRUE;
-						CoolInterface.CalculateColours( TRUE );
-					}
-				}
+						bSystem = TRUE;
 
-				*pColour = RGB( nRed, nGreen, nBlue );
+						if ( ! bNonBase && strName.Find( _T(".base.") ) < 0 )
+						{
+							bNonBase = TRUE;
+							CoolInterface.CalculateColours( TRUE );
+						}
+					}
+
+					*pColour = RGB( nRed, nGreen, nBlue );
+				}
+				else if ( strValue.GetLength() == 0 )
+				{
+					*pColour = CLR_NONE;
+				}
 			}
-			else if ( strValue.GetLength() == 0 )
-			{
-				*pColour = CLR_NONE;
-			}
+			else
+				theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Unknown [name] attribute in [colourScheme] element"), pXML->ToString() );
 		}
+		else
+			theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Unknown element in [colourScheme] element"), pXML->ToString() );
 	}
 
 	if ( bSystem && ! bNonBase ) CoolInterface.CalculateColours( TRUE );
@@ -1547,7 +1582,9 @@ BOOL CSkin::LoadResourceMap(CXMLElement* pBase)
 	{
 		CXMLElement* pXML = pBase->GetNextElement( pos );
 
-		if ( pXML->IsNamed( L"command" ) || pXML->IsNamed( L"control" ) || pXML->IsNamed( L"resource" ) )
+		if ( pXML->IsNamed( L"command" ) ||
+			 pXML->IsNamed( L"control" ) ||
+			 pXML->IsNamed( L"resource" ) )
 		{
 			CString strTemp = pXML->GetAttributeValue( _T("code") );
 			UINT nID;
@@ -1557,6 +1594,8 @@ BOOL CSkin::LoadResourceMap(CXMLElement* pBase)
 
 			CoolInterface.NameCommand( nID, pXML->GetAttributeValue( _T("id") ) );
 		}
+		else
+			theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Unknown element in [...Map] element"), pXML->ToString() );
 	}
 
 	return TRUE;
@@ -1660,7 +1699,11 @@ BOOL CSkin::LoadFonts(CXMLElement* pBase, const CString& strPath)
 
 			if ( bSuccess )
 				m_pFontPaths.AddTail( strFile );
+			else
+				theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Failed to import font"), pXML->ToString() );
 		}
+		else
+			theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Unknown element in [fonts] element"), pXML->ToString() );
 	}
 
 	return TRUE;
@@ -1685,15 +1728,16 @@ BOOL CSkin::LoadCommandImages(CXMLElement* pBase, const CString& strPath)
 
 		if ( pXML->IsNamed( _T("icon") ) )
 		{
-			LoadCommandIcon( pXML, strPath );
+			if ( ! LoadCommandIcon( pXML, strPath ) )
+				return FALSE;
 		}
 		else if ( pXML->IsNamed( _T("bitmap") ) )
 		{
-			LoadCommandBitmap( pXML, strPath );
+			if ( ! LoadCommandBitmap( pXML, strPath ) )
+				return FALSE;
 		}
 		else
-			TRACE( _T("Unknown tag \"%s\" inside \"%s\" in CSkin::LoadCommandImages\r\n"),
-				pXML->GetName(), pBase->GetName() );
+			theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Unknown element in [commandImages] element"), pXML->ToString() );
 	}
 
 	return TRUE;
@@ -1717,8 +1761,7 @@ BOOL CSkin::LoadCommandIcon(CXMLElement* pXML, const CString& strPath)
 	UINT nID = LookupCommandID( pXML );
 	if ( nID == 0 )
 	{
-		TRACE( _T("Icon \"%s\" has unknown ID \"%s\" in CSkin::LoadCommandIcon\r\n"),
-			strFile, pXML->GetAttributeValue( _T("id") ) );
+		theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Unknown [id] attribute in [icon] element"), pXML->ToString() );
 		return FALSE;
 	}
 
@@ -1745,8 +1788,7 @@ BOOL CSkin::LoadCommandIcon(CXMLElement* pXML, const CString& strPath)
 			nType = LVSIL_BIG;
 			break;
 		default:
-			TRACE( _T("Icon \"%s\" has invalid size \"%s\" in CSkin::LoadCommandIcon\r\n"),
-				strFile, strSize );
+			theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Icon has invalid size"), pXML->ToString() );
 			return FALSE;
 		}
 
@@ -1775,8 +1817,7 @@ BOOL CSkin::LoadCommandIcon(CXMLElement* pXML, const CString& strPath)
 		}
 		else
 		{
-			TRACE( _T("Icon \"%s\" (%dx%d) failed to load in CSkin::LoadCommandIcon\r\n"),
-				strFile, cx, cx );
+			theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Failed to load icon"), pXML->ToString() );
 			return FALSE;
 		}
 	}
@@ -1807,16 +1848,14 @@ BOOL CSkin::LoadCommandBitmap(CXMLElement* pBase, const CString& strPath)
 	}
 	else
 	{
-		TRACE( _T("Bitmap \"%s\" has invalid mask \"%s\" in CSkin::LoadCommandBitmap\r\n"),
-			strFile, strMask );
+		theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Image has invalid mask"), pBase->ToString() );
 		return FALSE;
 	}
 
 	HBITMAP hBitmap = LoadBitmap( strFile );
 	if ( hBitmap == NULL )
 	{
-		TRACE( _T("Bitmap \"%s\" failed to load in CSkin::LoadCommandBitmap\r\n"),
-			strFile );
+		theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Failed to load image"), pBase->ToString() );
 		return FALSE;
 	}
 	if ( Settings.General.LanguageRTL )
@@ -1826,8 +1865,7 @@ BOOL CSkin::LoadCommandBitmap(CXMLElement* pBase, const CString& strPath)
 	DeleteObject( hBitmap );
 	if ( ! bResult )
 	{
-		TRACE( _T("Bitmap \"%s\" failed to add in CSkin::LoadCommandBitmap\r\n"),
-			strFile );
+		theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Failed to add image"), pBase->ToString() );
 		return FALSE;
 	}
 
