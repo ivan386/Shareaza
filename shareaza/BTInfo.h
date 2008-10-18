@@ -143,7 +143,7 @@ protected:
 // Inlines
 public:
 	// Count of files
-	int		GetCount() const { return m_pFiles.GetCount(); }
+	INT_PTR	GetCount() const { return m_pFiles.GetCount(); }
 
 	bool	IsAvailable() const { return m_oBTH; }
 
