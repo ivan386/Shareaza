@@ -151,8 +151,6 @@ BOOL CDownloadGroup::Link(CDownload* pDownload)
 
 int CDownloadGroup::LinkAll()
 {
-	if ( m_pFilters.IsEmpty() ) return 0;
-
 	int nCount = 0;
 
 	for ( POSITION pos = Downloads.GetIterator() ; pos ; )
