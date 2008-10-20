@@ -654,8 +654,8 @@ void CDownloadsWnd::OnUpdateDownloadsPause(CCmdUI* pCmdUI)
 {
 	Prepare();
 	if ( CCoolBarItem* pcCmdUI = CCoolBarItem::FromCmdUI( pCmdUI ) )
-		pcCmdUI->Show( m_bSelNotPausedOrMoving || ! m_bSelDownload );
-	pCmdUI->Enable( m_bSelNotPausedOrMoving );
+		pcCmdUI->Show( ! m_bSelCompletedAndNoPreview && ( m_bSelNotPausedOrMoving || ! m_bSelDownload ) );
+	pCmdUI->Enable( ! m_bSelCompletedAndNoPreview && m_bSelNotPausedOrMoving );
 }
 
 void CDownloadsWnd::OnDownloadsPause()
@@ -925,8 +925,8 @@ void CDownloadsWnd::OnUpdateDownloadsLaunch(CCmdUI* pCmdUI)
 	Prepare();
 
 	if ( CCoolBarItem* pcCmdUI = CCoolBarItem::FromCmdUI( pCmdUI ) )
-		pcCmdUI->Show( m_bSelStartedAndNotMoving || ! m_bSelCompleted );
-	pCmdUI->Enable( m_bSelCompleted || m_bSelStartedAndNotMoving );
+		pcCmdUI->Show( ! m_bSelCompletedAndNoPreview && ( m_bSelStartedAndNotMoving || ! m_bSelCompleted ) );
+	pCmdUI->Enable( ! m_bSelCompletedAndNoPreview && ( m_bSelCompleted || m_bSelStartedAndNotMoving ) );
 }
 
 void CDownloadsWnd::OnDownloadsLaunch()
@@ -949,21 +949,14 @@ void CDownloadsWnd::OnDownloadsLaunch()
 		{
 			CString strName = pDownload->m_sPath;
 
+			if ( GetFileAttributes( strName ) & FILE_ATTRIBUTE_DIRECTORY )
+			{
+				ShellExecute( NULL, NULL, strName, NULL, NULL, SW_SHOWNORMAL );
+				continue;
+			}
+
 			if ( pDownload->IsCompleted() )
 			{
-				if ( pDownload->m_pTorrent.GetCount() > 1 )
-				{
-					CString strPath = DownloadGroups.GetCompletedPath( pDownload );
-					strPath += _T("\\");
-					strPath += pDownload->m_pTorrent.m_sName;
-
-					if ( GetFileAttributes( strPath ) & FILE_ATTRIBUTE_DIRECTORY )
-					{
-						ShellExecute( NULL, NULL, strPath, NULL, NULL, SW_SHOWNORMAL );
-						continue;
-					}
-				}
-
 				if ( pDownload->m_bVerify == TRI_FALSE )
 				{
 					CString strFormat, strMessage;

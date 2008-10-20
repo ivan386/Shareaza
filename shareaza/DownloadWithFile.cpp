@@ -70,7 +70,7 @@ BOOL CDownloadWithFile::OpenFile()
 
 	if ( m_pFile->IsValid() )
 	{
-		if ( m_pFile->Open( m_sPath ) ) return TRUE;
+		if ( m_pFile->Open( m_sPath, 0, SIZE_UNKNOWN, FALSE, FALSE ) ) return TRUE;
 		theApp.Message( MSG_ERROR, IDS_DOWNLOAD_FILE_OPEN_ERROR, (LPCTSTR)m_sPath );
 	}
 	else if ( m_nSize != SIZE_UNKNOWN && !Downloads.IsSpaceAvailable( m_nSize, Downloads.dlPathIncomplete ) )
@@ -97,7 +97,7 @@ BOOL CDownloadWithFile::OpenFile()
 
 			theApp.Message( MSG_INFO, IDS_DOWNLOAD_FILE_CREATE, (LPCTSTR)strName );
 
-			if ( m_pFile->Create( strName, m_nSize ) )
+			if ( m_pFile->Open( strName, 0, m_nSize, TRUE, TRUE ) )
 			{
 				theApp.WriteProfileString( _T("Delete"), strName, NULL );
 				MoveFile( strLocalName + _T(".sd"), strName + _T(".sd") );
@@ -530,12 +530,7 @@ QWORD CDownloadWithFile::EraseRange(QWORD nOffset, QWORD nLength)
 
 BOOL CDownloadWithFile::MakeComplete()
 {
-	if ( m_sPath.IsEmpty() ) return FALSE;
-
-	if ( !PrepareFile() )
-		return FALSE;
-
-	return m_pFile->MakeComplete();
+	return PrepareFile() && m_pFile->MakeComplete();
 }
 
 //////////////////////////////////////////////////////////////////////
