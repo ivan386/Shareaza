@@ -87,7 +87,7 @@ INT_PTR CDownloadSheet::DoModal(int nPage)
 	CTorrentFilesPage		pFiles;
 	CTorrentTrackersPage	pTrackers;
 
-	if ( ! m_pDownload->IsMoving() )
+	if ( ! m_pDownload->IsMoving() && ! m_pDownload->IsCompleted() )
 	{
 		SetTabTitle( &pDownload, m_sDownloadTitle );
 		AddPage( &pDownload );
