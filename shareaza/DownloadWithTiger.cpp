@@ -346,17 +346,15 @@ BOOL CDownloadWithTiger::ValidationCanFinish() const
 //////////////////////////////////////////////////////////////////////
 // CDownloadWithTiger run validation
 
-void CDownloadWithTiger::RunValidation(BOOL bSeeding)
+void CDownloadWithTiger::RunValidation()
 {
 	CQuickLock oLock( m_pTigerSection );
 
-	if ( m_pTigerBlock == NULL && m_pHashsetBlock == NULL && m_pTorrentBlock == NULL ) return;
-	if ( m_sPath.IsEmpty() ) return;
+	if ( m_pTigerBlock == NULL && m_pHashsetBlock == NULL && m_pTorrentBlock == NULL )
+		return;
 
-	if ( ! bSeeding )
-	{
-		if ( m_pFile == NULL || ! OpenFile() ) return;
-	}
+	if ( ! OpenFile() )
+		return;
 
 	if ( m_nVerifyHash > HASH_NULL && m_nVerifyBlock < 0xFFFFFFFF )
 	{

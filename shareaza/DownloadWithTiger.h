@@ -72,7 +72,7 @@ public:
 protected:
 	QWORD		GetVerifyLength(int nHash = HASH_NULL) const;
 	BOOL		ValidationCanFinish() const;
-	void		RunValidation(BOOL bSeeding);
+	void		RunValidation();
 	virtual void	Serialize(CArchive& ar, int nVersion);
 private:
 	DWORD		GetValidationCookie() const;
