@@ -33,6 +33,7 @@ class CBTInfo : public CShareazaFile
 // Construction
 public:
 	CBTInfo();
+	CBTInfo(const CBTInfo& oSource);
 	virtual ~CBTInfo();
 	
 // Subclass
@@ -120,13 +121,13 @@ private:
 // Operations
 public:
 	void		Clear();
-	void		Copy(CBTInfo* pSource);
+	CBTInfo&	Copy(const CBTInfo& oSource);
 	void		Serialize(CArchive& ar);
 public:
 	BOOL		LoadTorrentFile(LPCTSTR pszFile);
 	BOOL		LoadTorrentBuffer(CBuffer* pBuffer);
 	BOOL		LoadTorrentTree(CBENode* pRoot);
-	BOOL		SaveTorrentFile(LPCTSTR pszPath);
+	BOOL		SaveTorrentFile(LPCTSTR pszPath) const;
 public:
 	void		BeginBlockTest();
 	void		AddToTest(LPCVOID pInput, DWORD nLength);
