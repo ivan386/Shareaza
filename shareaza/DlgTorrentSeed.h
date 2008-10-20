@@ -29,51 +29,36 @@ class CTorrentSeedDlg :
 	public CSkinDialog,
 	public CThreadImpl
 {
-// Construction
+	DECLARE_DYNAMIC(CTorrentSeedDlg)
+
 public:
 	CTorrentSeedDlg(LPCTSTR pszTorrent, BOOL bForceSeed = FALSE, CWnd* pParent = NULL);
-	virtual ~CTorrentSeedDlg();
 
-	DECLARE_DYNAMIC(CTorrentSeedDlg)
 	enum { IDD = IDD_TORRENT_SEED };
 
-// Dialog Data
 protected:
 	CProgressCtrl	m_wndProgress;
 	CButton			m_wndDownload;
 	CButton			m_wndSeed;
-protected:
 	BOOL			m_bCancel;
 	CString			m_sTorrent;
 	BOOL			m_bForceSeed;
-	CString			m_sTarget;
 	CBTInfo			m_pInfo;
-	DWORD			m_nBlockNumber;
-	DWORD			m_nBlockLength;
-protected:
 	CString			m_sMessage;
-	QWORD			m_nVolume;
-	QWORD			m_nTotal;
 	int				m_nScaled;
 	int				m_nOldScaled;
 
-// Implementation
-protected:
 	void		OnRun();
-	void		RunSingleFile();
-	void		RunMultiFile();
-	BOOL		CheckFiles();
-	HANDLE		CreateTarget();
 	BOOL		CreateDownload();
 
-// Message Map
-protected:
-	DECLARE_MESSAGE_MAP()
 	virtual void DoDataExchange(CDataExchange* pDX);
 	virtual BOOL OnInitDialog();
+	virtual void OnCancel();
+
 	afx_msg void OnDownload();
 	afx_msg void OnSeed();
-	virtual void OnCancel();
 	afx_msg void OnDestroy();
 	afx_msg void OnTimer(UINT_PTR nIDEvent);
+
+	DECLARE_MESSAGE_MAP()
 };

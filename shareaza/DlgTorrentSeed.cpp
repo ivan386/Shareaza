@@ -35,7 +35,7 @@
 #include "WndDownloads.h"
 #include "DlgHelp.h"
 #include "DownloadTask.h"
-
+#include "FragmentedFile.h"
 #include "LibraryHistory.h"
 
 #ifdef _DEBUG
@@ -59,13 +59,10 @@ const DWORD BUFFER_SIZE = 2 * 1024 * 1024u;
 /////////////////////////////////////////////////////////////////////////////
 // CTorrentSeedDlg construction
 
-CTorrentSeedDlg::CTorrentSeedDlg(LPCTSTR pszTorrent, BOOL bForceSeed, CWnd* pParent) : CSkinDialog( CTorrentSeedDlg::IDD, pParent )
-{
-	m_sTorrent	= pszTorrent;
-	m_bForceSeed	= bForceSeed;
-}
-
-CTorrentSeedDlg::~CTorrentSeedDlg()
+CTorrentSeedDlg::CTorrentSeedDlg(LPCTSTR pszTorrent, BOOL bForceSeed, CWnd* pParent) :
+	CSkinDialog( CTorrentSeedDlg::IDD, pParent )
+,	m_sTorrent( pszTorrent )
+,	m_bForceSeed( bForceSeed )
 {
 }
 
@@ -113,16 +110,14 @@ void CTorrentSeedDlg::OnDownload()
 			CHelpDlg::Show( _T("GeneralHelp.BadTorrentEncoding") );
 		}
 
-		CShareazaURL* pURL = new CShareazaURL( pTorrent );
-		//if ( ! pWnd->PostMessage( WM_URL, (WPARAM)pURL ) ) delete pURL;
-		CLibraryFile* pFile;
-
+		CShareazaURL oURL( pTorrent );
+		CLibraryFile* pFile = NULL;
 
 		CSingleLock oLibraryLock( &Library.m_pSection, TRUE );
-		if ( ( pFile = LibraryMaps.LookupFileBySHA1( pURL->m_oSHA1 ) ) != NULL
-			|| ( pFile = LibraryMaps.LookupFileByED2K( pURL->m_oED2K ) ) != NULL
-			|| ( pFile = LibraryMaps.LookupFileByBTH( pURL->m_oBTH ) ) != NULL
-			|| ( pFile = LibraryMaps.LookupFileByMD5( pURL->m_oMD5 ) ) != NULL )
+		if ( ( pFile = LibraryMaps.LookupFileBySHA1( oURL.m_oSHA1 ) ) != NULL
+			|| ( pFile = LibraryMaps.LookupFileByED2K( oURL.m_oED2K ) ) != NULL
+			|| ( pFile = LibraryMaps.LookupFileByBTH( oURL.m_oBTH ) ) != NULL
+			|| ( pFile = LibraryMaps.LookupFileByMD5( oURL.m_oMD5 ) ) != NULL )
 		{
 			CString strFormat, strMessage;
 			LoadString( strFormat, IDS_URL_ALREADY_HAVE );
@@ -131,7 +126,6 @@ void CTorrentSeedDlg::OnDownload()
 
 			if ( AfxMessageBox( strMessage, MB_ICONINFORMATION|MB_YESNOCANCEL|MB_DEFBUTTON2 ) == IDNO )
 			{
-				delete pURL;
 				EndDialog( IDOK );
 				return;
 			}
@@ -141,10 +135,7 @@ void CTorrentSeedDlg::OnDownload()
 			oLibraryLock.Unlock();
 		}
 
-		CDownload* pDownload = Downloads.Add( pURL );
-
-		// Downloads.Add() took a copy of the CBTInfo, so we need to delete the original
-		delete pURL;
+		CDownload* pDownload = Downloads.Add( oURL );
 
 		if ( pDownload == NULL )
 		{
@@ -252,61 +243,6 @@ void CTorrentSeedDlg::OnDestroy()
 	CSkinDialog::OnDestroy();
 }
 
-BOOL CTorrentSeedDlg::CheckFiles()
-{
-	m_nVolume = m_nTotal = 0;
-	m_nScaled = m_nOldScaled = 0;
-
-	for ( POSITION pos = m_pInfo.m_pFiles.GetHeadPosition() ; pos ; )
-	{
-		CBTInfo::CBTFile* pFile = m_pInfo.m_pFiles.GetNext( pos );
-		m_nTotal += pFile->m_nSize;
-	}
-
-	for ( POSITION pos = m_pInfo.m_pFiles.GetHeadPosition() ; pos ; )
-	{
-		CBTInfo::CBTFile* pFile = m_pInfo.m_pFiles.GetNext( pos );
-		CString strSource = CDownloadWithTorrent::FindTorrentFile( pFile );
-		HANDLE hSource = INVALID_HANDLE_VALUE;
-
-		if ( strSource.GetLength() > 0 )
-		{
-			hSource = CreateFile( strSource, GENERIC_READ,
-				FILE_SHARE_READ | FILE_SHARE_DELETE,
-				NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL );
-			VERIFY_FILE_ACCESS( hSource, strSource )
-		}
-
-		if ( hSource == INVALID_HANDLE_VALUE )
-		{
-			CString strFormat;
-			LoadString( strFormat, IDS_BT_SEED_SOURCE_LOST );
-			m_sMessage.Format( strFormat, (LPCTSTR)pFile->m_sPath );
-			return FALSE;
-		}
-
-		DWORD nSizeHigh	= 0;
-		DWORD nSizeLow	= GetFileSize( hSource, &nSizeHigh );
-		QWORD nSize		= (QWORD)nSizeLow + ( (QWORD)nSizeHigh << 32 );
-
-		if ( nSize != pFile->m_nSize )
-		{
-			CloseHandle( hSource );
-			m_sMessage.Format( IDS_BT_SEED_SOURCE_SIZE,
-				pFile->m_sPath,
-				Settings.SmartVolume( pFile->m_nSize ),
-				Settings.SmartVolume( nSize ) );
-			return FALSE;
-		}
-
-		CloseHandle( hSource );
-
-		if ( m_bCancel ) return FALSE;
-	}
-
-	return TRUE;
-}
-
 void CTorrentSeedDlg::OnTimer(UINT_PTR nIDEvent)
 {
 	CSkinDialog::OnTimer( nIDEvent );
@@ -339,40 +275,6 @@ void CTorrentSeedDlg::OnTimer(UINT_PTR nIDEvent)
 
 void CTorrentSeedDlg::OnRun()
 {
-	if ( m_pInfo.GetCount() == 1 )
-	{
-		RunSingleFile();
-	}
-	else
-	{
-		RunMultiFile();
-	}
-}
-
-void CTorrentSeedDlg::RunSingleFile()
-{
-	CBTInfo::CBTFile* pFile = m_pInfo.m_pFiles.GetHead();
-	m_sTarget = CDownloadWithTorrent::FindTorrentFile( pFile );
-
-	if ( m_sTarget.IsEmpty() || GetFileAttributes( m_sTarget ) == INVALID_FILE_ATTRIBUTES )
-	{
-		CString strFormat;
-		LoadString(strFormat, IDS_BT_SEED_SOURCE_LOST );
-		m_sMessage.Format( strFormat, (LPCTSTR)m_pInfo.m_pFiles.GetHead()->m_sPath );
-		PostMessage( WM_TIMER, 2 );
-		return;
-	}
-
-	// Refill missed hashes
-	if ( ! m_pInfo.m_oSHA1 && pFile->m_oSHA1 )
-		m_pInfo.m_oSHA1 = pFile->m_oSHA1;
-	if ( ! m_pInfo.m_oTiger && pFile->m_oTiger )
-		m_pInfo.m_oTiger = pFile->m_oTiger;
-	if ( ! m_pInfo.m_oED2K && pFile->m_oED2K )
-		m_pInfo.m_oED2K = pFile->m_oED2K;
-	if ( ! m_pInfo.m_oMD5 && pFile->m_oMD5 )
-		m_pInfo.m_oMD5 = pFile->m_oMD5;
-
 	if ( CreateDownload() )
 	{
 		PostMessage( WM_TIMER, 1 );
@@ -383,89 +285,35 @@ void CTorrentSeedDlg::RunSingleFile()
 	}
 }
 
-void CTorrentSeedDlg::RunMultiFile()
-{
-	HANDLE hTarget = CreateTarget();
-
-	if ( hTarget != INVALID_HANDLE_VALUE )
-	{
-		BOOL bChecked = TRUE;
-		if ( Settings.Experimental.TestBTPartials )
-			bChecked = CheckFiles();
-		CloseHandle( hTarget );
-
-		if ( bChecked && CreateDownload() )
-		{
-			PostMessage( WM_TIMER, 1 );
-		}
-		else
-		{
-			DeleteFile( m_sTarget );
-			PostMessage( WM_TIMER, 2 );
-		}
-	}
-	else
-	{
-		PostMessage( WM_TIMER, 2 );
-	}
-}
-
-HANDLE CTorrentSeedDlg::CreateTarget()
-{
-	m_sTarget = Settings.Downloads.IncompletePath + '\\';
-	m_sTarget += m_pInfo.m_oBTH.toString< Hashes::base16Encoding >();
-
-	HANDLE hTarget = CreateFile( m_sTarget, GENERIC_WRITE, 0, NULL, CREATE_ALWAYS,
-		FILE_ATTRIBUTE_NORMAL, NULL );
-	VERIFY_FILE_ACCESS( hTarget, m_sTarget )
-	if ( hTarget == INVALID_HANDLE_VALUE )
-	{
-		CString strFormat;
-		LoadString(strFormat, IDS_BT_SEED_CREATE_FAIL );
-		m_sMessage.Format( strFormat, (LPCTSTR)m_sTarget );
-	}
-
-	return hTarget;
-}
-
 BOOL CTorrentSeedDlg::CreateDownload()
 {
 	CSingleLock pTransfersLock( &Transfers.m_pSection );
-	if ( ! pTransfersLock.Lock( 2000 ) ) return FALSE;
-
-	if ( Downloads.FindByBTH( m_pInfo.m_oBTH ) != NULL && m_pInfo.GetCount() != 1 )
+	if ( pTransfersLock.Lock( 2000 ) )
 	{
-		CString strFormat;
-		LoadString(strFormat, IDS_BT_SEED_ALREADY );
-		m_sMessage.Format( strFormat, (LPCTSTR)m_pInfo.m_sName );
-		return FALSE;
-	}
-
-	CBTInfo* pInfo = new CBTInfo();
-	pInfo->Copy( &m_pInfo );
-	CShareazaURL pURL( pInfo );
-	CDownload* pDownload = Downloads.Add( &pURL );
-
-	if ( pDownload != NULL && pDownload->SeedTorrent( m_sTarget ) )
-	{
-		if ( pInfo->GetCount() == 1 )
+		if ( Downloads.FindByBTH( m_pInfo.m_oBTH ) )
 		{
-			pDownload->MakeComplete();
-			pDownload->ResetVerification();
-			pDownload->SetModified();
+			// Already seeding
+			CString strFormat;
+			LoadString(strFormat, IDS_BT_SEED_ALREADY );
+			m_sMessage.Format( strFormat, (LPCTSTR)m_pInfo.m_sName );
 		}
 		else
 		{
-			new CDownloadTask( pDownload, CDownloadTask::dtaskCreateBatch );
+			CDownload* pDownload = Downloads.Add( CShareazaURL( new CBTInfo( m_pInfo ) ) );
+			if ( pDownload && pDownload->SeedTorrent( m_sMessage ) )
+			{
+				return TRUE;
+			}
+			pDownload->Remove();
 		}
-
-		return TRUE;
 	}
-	else
+
+	if ( m_sMessage.IsEmpty() )
 	{
 		CString strFormat;
 		LoadString(strFormat, IDS_BT_SEED_ERROR );
 		m_sMessage.Format( strFormat, (LPCTSTR)m_pInfo.m_sName );
-		return FALSE;
 	}
+
+	return FALSE;
 }
