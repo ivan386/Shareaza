@@ -101,7 +101,7 @@ void CUpgradeDlg::OnOK()
 		}
 	}
 
-	Downloads.Add( &pURL );
+	Downloads.Add( pURL );
 
 	if ( ! Network.IsWellConnected() ) Network.Connect( TRUE );
 

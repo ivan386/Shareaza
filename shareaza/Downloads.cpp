@@ -207,25 +207,25 @@ CDownload* CDownloads::Add(CMatchFile* pFile, BOOL bAddToHead)
 //////////////////////////////////////////////////////////////////////
 // CDownloads add download from a URL
 
-CDownload* CDownloads::Add(CShareazaURL* pURL)
+CDownload* CDownloads::Add(const CShareazaURL& oURL)
 {
-	if ( pURL->m_nAction != CShareazaURL::uriDownload &&
-		 pURL->m_nAction != CShareazaURL::uriSource ) return NULL;
+	if ( oURL.m_nAction != CShareazaURL::uriDownload &&
+		 oURL.m_nAction != CShareazaURL::uriSource ) return NULL;
 
 	CSingleLock pLock( &Transfers.m_pSection, TRUE );
 	CDownload* pDownload = NULL;
 	BOOL bNew = TRUE;
 
-	if ( pDownload == NULL && pURL->m_oSHA1 )
-		pDownload = FindBySHA1( pURL->m_oSHA1 );
-	if ( pDownload == NULL && pURL->m_oTiger )
-		pDownload = FindByTiger( pURL->m_oTiger );
-	if ( pDownload == NULL && pURL->m_oED2K )
-		pDownload = FindByED2K( pURL->m_oED2K );
-	if ( pDownload == NULL && pURL->m_oBTH )
-		pDownload = FindByBTH( pURL->m_oBTH );
-	if ( pDownload == NULL && pURL->m_oMD5 )
-		pDownload = FindByMD5( pURL->m_oMD5 );
+	if ( pDownload == NULL && oURL.m_oSHA1 )
+		pDownload = FindBySHA1( oURL.m_oSHA1 );
+	if ( pDownload == NULL && oURL.m_oTiger )
+		pDownload = FindByTiger( oURL.m_oTiger );
+	if ( pDownload == NULL && oURL.m_oED2K )
+		pDownload = FindByED2K( oURL.m_oED2K );
+	if ( pDownload == NULL && oURL.m_oBTH )
+		pDownload = FindByBTH( oURL.m_oBTH );
+	if ( pDownload == NULL && oURL.m_oMD5 )
+		pDownload = FindByMD5( oURL.m_oMD5 );
 
 	if ( pDownload != NULL && !pDownload->IsSeeding() )
 	{
@@ -237,50 +237,50 @@ CDownload* CDownloads::Add(CShareazaURL* pURL)
 	else
 		pDownload = new CDownload();
 
-	if ( ! pDownload->m_oSHA1 && pURL->m_oSHA1 )
+	if ( ! pDownload->m_oSHA1 && oURL.m_oSHA1 )
 	{
-		pDownload->m_oSHA1			= pURL->m_oSHA1;
+		pDownload->m_oSHA1			= oURL.m_oSHA1;
 		pDownload->m_bSHA1Trusted = true;
 	}
-	if ( ! pDownload->m_oTiger && pURL->m_oTiger )
+	if ( ! pDownload->m_oTiger && oURL.m_oTiger )
 	{
-		pDownload->m_oTiger			= pURL->m_oTiger;
+		pDownload->m_oTiger			= oURL.m_oTiger;
 		pDownload->m_bTigerTrusted = true;
 	}
-	if ( ! pDownload->m_oED2K && pURL->m_oED2K )
+	if ( ! pDownload->m_oED2K && oURL.m_oED2K )
 	{
-		pDownload->m_oED2K			= pURL->m_oED2K;
+		pDownload->m_oED2K			= oURL.m_oED2K;
 		pDownload->m_bED2KTrusted = true;
 		pDownload->Share( TRUE );
 	}
-	if ( ! pDownload->m_oBTH && pURL->m_oBTH )
+	if ( ! pDownload->m_oBTH && oURL.m_oBTH )
 	{
-		pDownload->m_oBTH			= pURL->m_oBTH;
+		pDownload->m_oBTH			= oURL.m_oBTH;
 		pDownload->m_bBTHTrusted = true;
 		pDownload->Share( TRUE );
 	}
-	if ( ! pDownload->m_oMD5 && pURL->m_oMD5 )
+	if ( ! pDownload->m_oMD5 && oURL.m_oMD5 )
 	{
-		pDownload->m_oMD5			= pURL->m_oMD5;
+		pDownload->m_oMD5			= oURL.m_oMD5;
 		pDownload->m_bMD5Trusted = true;
 		pDownload->Share( TRUE );
 	}
 
-	if ( ! pDownload->m_sName.GetLength() && pURL->m_sName.GetLength() )
+	if ( ! pDownload->m_sName.GetLength() && oURL.m_sName.GetLength() )
 	{
-		pDownload->m_sName = pURL->m_sName;
+		pDownload->m_sName = oURL.m_sName;
 	}
 
-	if ( pDownload->m_nSize == SIZE_UNKNOWN && pURL->m_bSize )
+	if ( pDownload->m_nSize == SIZE_UNKNOWN && oURL.m_bSize )
 	{
-		pDownload->m_nSize = pURL->m_nSize;
+		pDownload->m_nSize = oURL.m_nSize;
 	}
 
-	if ( pURL->m_sURL.GetLength() )
+	if ( oURL.m_sURL.GetLength() )
 	{
-		if ( ! pDownload->AddSourceURLs( pURL->m_sURL, FALSE ) && bNew )
+		if ( ! pDownload->AddSourceURLs( oURL.m_sURL, FALSE ) && bNew )
 		{
-			if ( pURL->m_nAction == CShareazaURL::uriSource )
+			if ( oURL.m_nAction == CShareazaURL::uriSource )
 			{
 				delete pDownload;
 				return NULL;
@@ -289,15 +289,15 @@ CDownload* CDownloads::Add(CShareazaURL* pURL)
 	}
 
 	// Add sources from torrents - DWK
-	pDownload->SetTorrent( pURL->m_pTorrent );
-	if ( pURL->m_pTorrent && pURL->m_pTorrent->m_sURLs.GetCount() > 0 )
+	pDownload->SetTorrent( *oURL.m_pTorrent );
+	if ( oURL.m_pTorrent && oURL.m_pTorrent->m_sURLs.GetCount() > 0 )
 	{
-		for ( POSITION pos = pURL->m_pTorrent->m_sURLs.GetHeadPosition() ; pos ; )
+		for ( POSITION pos = oURL.m_pTorrent->m_sURLs.GetHeadPosition() ; pos ; )
 		{
-			CString pCurrentUrl = pURL->m_pTorrent->m_sURLs.GetNext( pos );
+			CString pCurrentUrl = oURL.m_pTorrent->m_sURLs.GetNext( pos );
 			pDownload->AddSourceURLs( (LPCTSTR)pCurrentUrl , FALSE  );
 		}
-		pURL->m_pTorrent->m_sURLs.RemoveAll();
+		oURL.m_pTorrent->m_sURLs.RemoveAll();
 	}
 
 	if ( bNew )
@@ -890,16 +890,17 @@ BOOL CDownloads::IsSpaceAvailable(QWORD nVolume, int nPath)
 
 void CDownloads::OnRun()
 {
-	DWORD tNow = GetTickCount();
+	CSingleLock oLock( &Transfers.m_pSection );
+	if ( ! oLock.Lock( 250 ) )
+		return;
 
+	DWORD tNow = GetTickCount();
 
 	// Re-calculating bandwidth may be a little CPU heavy if there are a lot of transfers- limit
 	// it to 4 times per second
 	if ( ( ( tNow - m_tBandwidthLastCalc ) < 250 ) && ( tNow > m_tBandwidthLastCalc ) )
 	{
 		// Just run the downloads, don't bother re-calulating bandwidth
-		CQuickLock oLock( Transfers.m_pSection );
-
 		m_nValidation = 0;
 		++m_nRunCookie;
 
@@ -930,7 +931,6 @@ void CDownloads::OnRun()
 		BOOL bDonkeyRatioActive		= FALSE;
 
 		{	// Lock transfers section
-			CQuickLock oLock( Transfers.m_pSection );
 			CList<CDownloadTransfer*> pTransfersToLimit;
 			m_nValidation = 0;
 			++m_nRunCookie;

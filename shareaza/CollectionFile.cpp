@@ -603,7 +603,7 @@ BOOL CCollectionFile::File::Download()
 	pURL.m_bSize	= ( m_nSize != SIZE_UNKNOWN );
 	pURL.m_nSize	= m_nSize;
 
-	return Downloads.Add( &pURL ) != NULL;
+	return Downloads.Add( pURL ) != NULL;
 }
 
 /////////////////////////////////////////////////////////////////////////////

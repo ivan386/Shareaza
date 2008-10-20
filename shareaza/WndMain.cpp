@@ -2217,13 +2217,13 @@ void CMainWnd::OnToolsDownload()
 
 		if ( pURL.m_nAction == CShareazaURL::uriDownload )
 		{
-			Downloads.Add( &pURL );
+			Downloads.Add( pURL );
 			if ( ! Network.IsWellConnected() ) Network.Connect( TRUE );
 			m_pWindows.Open( RUNTIME_CLASS(CDownloadsWnd) );
 		}
 		else if ( pURL.m_nAction == CShareazaURL::uriSource )
 		{
-			Downloads.Add( &pURL );
+			Downloads.Add( pURL );
 			m_pWindows.Open( RUNTIME_CLASS(CDownloadsWnd) );
 		}
 		else

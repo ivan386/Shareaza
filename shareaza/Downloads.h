@@ -68,7 +68,7 @@ public:
 	CDownload*	Add();
 	CDownload*	Add(CQueryHit* pHit, BOOL bAddToHead = FALSE);
 	CDownload*	Add(CMatchFile* pFile, BOOL bAddToHead = FALSE);
-	CDownload*	Add(CShareazaURL* pURL);
+	CDownload*	Add(const CShareazaURL& oURL);
 	void		PauseAll();
 	void		ClearCompleted();
 	void		ClearPaused();

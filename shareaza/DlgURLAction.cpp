@@ -364,7 +364,7 @@ void CURLActionDlg::OnUrlDownload()
 				}
 			}
 
-			CDownload* pDownload = Downloads.Add( pURL );
+			CDownload* pDownload = Downloads.Add( *pURL );
 
 			if ( pDownload == NULL ) continue;
 

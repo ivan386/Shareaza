@@ -1154,7 +1154,7 @@ void CRemote::PageNewDownload()
 	if ( CheckCookie() ) return;
 	
 	CShareazaURL pURI;
-	if ( pURI.Parse( GetKey( _T("uri") ) ) ) Downloads.Add( &pURI );
+	if ( pURI.Parse( GetKey( _T("uri") ) ) ) Downloads.Add( pURI );
 	
 	m_sRedirect = _T("downloads?group_reveal=all");
 }
