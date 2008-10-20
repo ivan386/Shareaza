@@ -1,7 +1,7 @@
 //
 // TransferFile.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -18,9 +18,6 @@
 // along with Shareaza; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
-
-#if !defined(AFX_TRANSFERFILE_H__FF7BC368_5878_4BCF_A2AD_055B0355AC3A__INCLUDED_)
-#define AFX_TRANSFERFILE_H__FF7BC368_5878_4BCF_A2AD_055B0355AC3A__INCLUDED_
 
 #pragma once
 
@@ -55,13 +52,29 @@ protected:
 
 class CTransferFile
 {
-// Construction
 public:
 	CTransferFile(LPCTSTR pszPath);
 	virtual ~CTransferFile();
 
-// Deferred Write Structure
+	void		AddRef();
+	void		Release(BOOL bWrite);
+	HANDLE		GetHandle(BOOL bWrite = FALSE);
+	QWORD		GetSize() const;
+	BOOL		Read(QWORD nOffset, LPVOID pBuffer, QWORD nBuffer, QWORD* pnRead);
+	BOOL		Write(QWORD nOffset, LPCVOID pBuffer, QWORD nBuffer, QWORD* pnWritten);
+
+	inline BOOL	IsOpen() const
+	{
+		return ( m_hFile != INVALID_HANDLE_VALUE );
+	}
+
+	inline BOOL	IsExists() const
+	{
+		return m_bExists;
+	}
+
 protected:
+	// Deferred Write Structure
 	class DefWrite
 	{
 	public:
@@ -70,36 +83,20 @@ protected:
 		BYTE*	m_pBuffer;
 	};
 
-// Attributes
-protected:
 	CString		m_sPath;
 	HANDLE		m_hFile;
-	BOOL		m_bWrite;
+	BOOL		m_bExists;			// File exists before open
+	BOOL		m_bWrite;			// File opened for write operations
 	DWORD		m_nReference;
-protected:
 	DefWrite	m_pDeferred[DEFERRED_MAX];
 	int			m_nDeferred;
 
-// Operations
-public:
-	void		AddRef();
-	void		Release(BOOL bWrite);
-	HANDLE		GetHandle(BOOL bWrite = FALSE);
-	BOOL		IsOpen();
-	QWORD		GetSize() const;
-	BOOL		Read(QWORD nOffset, LPVOID pBuffer, QWORD nBuffer, QWORD* pnRead);
-	BOOL		Write(QWORD nOffset, LPCVOID pBuffer, QWORD nBuffer, QWORD* pnWritten);
-protected:
 	BOOL		Open(BOOL bWrite, BOOL bCreate);
 	BOOL		EnsureWrite();
 	BOOL		CloseWrite();
 	void		DeferredWrite(BOOL bOffline = FALSE);
 
 	friend class CTransferFiles;
-
 };
 
-
 extern CTransferFiles TransferFiles;
-
-#endif // !defined(AFX_TRANSFERFILE_H__FF7BC368_5878_4BCF_A2AD_055B0355AC3A__INCLUDED_)

@@ -134,13 +134,15 @@ void CTransferFiles::Remove(CTransferFile* pFile)
 //////////////////////////////////////////////////////////////////////
 // CTransferFile construction
 
-CTransferFile::CTransferFile(LPCTSTR pszPath)
+CTransferFile::CTransferFile(LPCTSTR pszPath) :
+	m_sPath( pszPath )
+,	m_hFile( INVALID_HANDLE_VALUE )
+,	m_bExists( FALSE )
+,	m_bWrite( FALSE )
+,	m_nReference( 0 )
+,	m_nDeferred( 0 )
 {
-	m_sPath				= pszPath;
-	m_hFile				= INVALID_HANDLE_VALUE;
-	m_nReference		= 0;
-	m_bWrite			= FALSE;
-	m_nDeferred			= 0;
+	ZeroMemory( m_pDeferred, sizeof( m_pDeferred ) );
 }
 
 CTransferFile::~CTransferFile()
@@ -188,11 +190,6 @@ HANDLE CTransferFile::GetHandle(BOOL bWrite)
 	return m_hFile;
 }
 
-BOOL CTransferFile::IsOpen()
-{
-	return m_hFile != INVALID_HANDLE_VALUE;
-}
-
 //////////////////////////////////////////////////////////////////////
 // CTransferFile open
 
@@ -208,13 +205,20 @@ BOOL CTransferFile::Open(BOOL bWrite, BOOL bCreate)
 				return FALSE;
 	}
 
+	ASSERT( ! bCreate || bWrite );
+
+	m_bExists = ( GetFileAttributes( m_sPath ) != INVALID_FILE_ATTRIBUTES );
 	m_hFile = CreateFile( m_sPath, GENERIC_READ | ( bWrite ? GENERIC_WRITE : 0 ),
 		FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE,
-		NULL, ( bCreate ? CREATE_ALWAYS : OPEN_EXISTING ), FILE_ATTRIBUTE_NORMAL, NULL );
+		NULL, ( bCreate ? OPEN_ALWAYS : OPEN_EXISTING ), FILE_ATTRIBUTE_NORMAL, NULL );
 	VERIFY_FILE_ACCESS( m_hFile, m_sPath )
-	if ( m_hFile != INVALID_HANDLE_VALUE ) m_bWrite = bWrite;
-
-	return m_hFile != INVALID_HANDLE_VALUE;
+	if ( m_hFile != INVALID_HANDLE_VALUE )
+	{
+		m_bWrite = bWrite;
+		return TRUE;
+	}
+	else
+		return FALSE;
 }
 
 QWORD CTransferFile::GetSize() const
