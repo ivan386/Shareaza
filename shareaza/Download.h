@@ -21,7 +21,7 @@
 
 #pragma once
 
-#define DOWNLOAD_SER_VERSION	39
+#define DOWNLOAD_SER_VERSION	40
 // History:
 // 33 - added m_sSearchKeyword to CDownloadBase (CyberBob)
 // 34 - added m_bSeeding and m_sServingFileName to CDownloadWithTorrent (Rolandas)
@@ -30,6 +30,7 @@
 // 37 - added m_oBTH to CDownloadBase, m_bBTH and m_bMD5 to CDownloadSource (Ryo-oh-ki)
 // 38 - added m_sCountryName to CDownloadSource (dcat)
 // 39 - added m_bClientExtended to CDownloadSource (Ryo-oh-ki)
+// 40 - added virtual fragmented file (Ryo-oh-ki)
 
 #include "DownloadWithExtras.h"
 

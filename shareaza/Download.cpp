@@ -188,7 +188,6 @@ void CDownload::Remove(bool bDelete)
 		theApp.Message( MSG_NOTICE, IDS_DOWNLOAD_REMOVE, (LPCTSTR)GetDisplayName() );
 	}
 
-	DeleteFile( bDelete );
 	DeletePreviews();
 
 	if ( m_bSeeding )
@@ -200,7 +199,11 @@ void CDownload::Remove(bool bDelete)
 			::DeleteFile( m_sPath );
 	}
 	else
+	{
+		DeleteFile( bDelete );
 		::DeleteFile( m_sPath + _T(".sd") );
+	}
+
 	::DeleteFile( m_sPath + _T(".png") );
 
 	Downloads.Remove( this );
@@ -384,7 +387,7 @@ void CDownload::OnRun()
 					if ( !Settings.General.DebugBTSources && m_bExpanded )
 						m_bExpanded = FALSE;
 
-					RunValidation( TRUE );
+					RunValidation();
 					if ( Settings.BitTorrent.AutoSeed )
 					{
 						if ( m_tBegan == 0 )
@@ -399,7 +402,7 @@ void CDownload::OnRun()
 				}
 				else if ( m_pFile != NULL )
 				{
-					RunValidation( FALSE );
+					RunValidation();
 
 					if ( RunFile( tNow ) )
 					{
@@ -521,11 +524,6 @@ void CDownload::OnTaskComplete(CDownloadTask* pTask)
 	else if ( pTask->m_nTask == CDownloadTask::dtaskMergeFile )
 	{
 		// Merge Complete.
-	}
-	else if ( pTask->m_nTask == CDownloadTask::dtaskCreateBatch )
-	{
-		MakeComplete();
-		SetModified();
 	}
 	else
 	{
