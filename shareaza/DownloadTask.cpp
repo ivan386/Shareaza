@@ -99,7 +99,7 @@ CDownloadTask::CDownloadTask(CDownload* pDownload, dtask nTask, LPCTSTR szParam1
 
 	if ( m_pDownload->IsTorrent() )
 	{
-		m_pTorrent.Copy( &m_pDownload->m_pTorrent );
+		m_pTorrent.Copy( m_pDownload->m_pTorrent );
 
 		m_posTorrentFile = m_pTorrent.m_pFiles.GetHeadPosition();
 
@@ -176,9 +176,6 @@ int CDownloadTask::Run()
 		break;
 	case dtaskMergeFile:
 		RunMerge();
-		break;
-	case dtaskCreateBatch:
-		MakeBatchTorrent();
 		break;
 	}
 
@@ -534,7 +531,7 @@ void CDownloadTask::RunMerge()
 					break;
 				}
 			}
-			m_pDownload->RunValidation(FALSE);
+			m_pDownload->RunValidation();
 		}
 	}
 
@@ -700,123 +697,3 @@ CBuffer* CDownloadTask::IsPreviewAnswerValid()
 	return pBuffer;
 }
 
-BOOL CDownloadTask::MakeBatchTorrent()
-{
-	QWORD nOffset = 0;
-	QWORD nTotal = 0;
-	ASSERT( m_pDownload->m_pFile == NULL );
-
-	for ( POSITION pos = m_pDownload->m_pTorrent.m_pFiles.GetHeadPosition() ; pos ; )
-	{
-		CBTInfo::CBTFile* pFile = m_pDownload->m_pTorrent.m_pFiles.GetNext( pos );
-		nTotal += pFile->m_nSize;
-	}
-
-	m_pDownload->m_pFile = new CFragmentedFile();
-	m_pDownload->m_pFile->Create( m_pDownload->m_sPath, nTotal );
-	bool bMissingFile = false;
-
-	for ( POSITION pos = m_pDownload->m_pTorrent.m_pFiles.GetHeadPosition() ; pos ; )
-	{
-		CBTInfo::CBTFile* pFile = m_pDownload->m_pTorrent.m_pFiles.GetNext( pos );
-		CString strSource = m_pDownload->FindTorrentFile( pFile );
-		HANDLE hSource = INVALID_HANDLE_VALUE;
-
-		if ( strSource.GetLength() > 0 )
-		{
-			hSource = CreateFile( strSource, GENERIC_READ,
-				FILE_SHARE_READ | FILE_SHARE_DELETE,
-				NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL );
-			VERIFY_FILE_ACCESS( hSource, strSource )
-		}
-
-		if ( hSource == INVALID_HANDLE_VALUE )
-		{
-			//CString strFormat;
-			//LoadString(strFormat, IDS_BT_SEED_SOURCE_LOST );
-			//m_sMessage.Format( strFormat, (LPCTSTR)pFile->m_sPath );
-			if ( Settings.Experimental.TestBTPartials )
-			{
-				bMissingFile = true;
-				nOffset += pFile->m_nSize;
-				continue;
-			}
-			else
-				return FALSE;
-		}
-
-		DWORD nSizeHigh	= 0;
-		DWORD nSizeLow	= GetFileSize( hSource, &nSizeHigh );
-		QWORD nSize		= (QWORD)nSizeLow + ( (QWORD)nSizeHigh << 32 );
-
-		if ( nSize != pFile->m_nSize )
-		{
-			CloseHandle( hSource );
-			//  m_sMessage.Format( IDS_BT_SEED_SOURCE_SIZE,
-			//	pFile->m_sPath,
-			//	Settings.SmartVolume( pFile->m_nSize ),
-			//	Settings.SmartVolume( nSize ) );
-			if ( Settings.Experimental.TestBTPartials )
-			{
-				bMissingFile = true;
-				nOffset += pFile->m_nSize;
-				continue;
-			}
-			else
-				return FALSE;
-		}
-
-		BOOL bSuccess = CopyFileToBatch( hSource, nOffset, pFile->m_nSize, pFile->m_sPath );
-
-		CloseHandle( hSource );
-
-		if ( ! bSuccess )
-			return FALSE;
-		else
-			nOffset += pFile->m_nSize;
-	}
-
-	if ( bMissingFile )
-	{
-		m_pDownload->ClearVerification();
-		m_pDownload->m_bSeeding = FALSE;
-		m_pDownload->m_bComplete = FALSE;
-	}
-
-	return TRUE;
-}
-
-BOOL CDownloadTask::CopyFileToBatch(HANDLE hSource, QWORD nOffset, QWORD nLength, LPCTSTR /*pszPath*/)
-{
-	auto_array< BYTE > pBuffer( new BYTE[ BUFFER_SIZE ] );
-
-	while ( nLength )
-	{
-		DWORD nBuffer	= (DWORD)min( nLength, BUFFER_SIZE );
-		DWORD tStart	= GetTickCount();
-
-		if ( ! ReadFile( hSource, pBuffer.get(), nBuffer, &nBuffer, NULL ) ||
-			 ! m_pDownload->m_pFile->WriteRange( nOffset, pBuffer.get(), nBuffer ) )
-		{
-			return FALSE;
-		}
-
-		nOffset += nBuffer;
-		nLength -= nBuffer;
-
-		tStart = ( GetTickCount() - tStart ) / 2;
-		Sleep( min( tStart, 50ul ) );
-	};
-
-	if ( nLength == 0 )
-	{
-		return TRUE;
-	}
-	else
-	{
-		// CString strFormat;
-		// LoadString(strFormat, IDS_BT_SEED_COPY_FAIL );
-		// m_sMessage.Format( strFormat, (LPCTSTR)pszPath );
-		return FALSE;
-	}
-}

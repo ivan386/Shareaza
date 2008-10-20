@@ -30,15 +30,21 @@ class CDownload;
 
 class CDownloadTask : public CRazaThread
 {
+	DECLARE_DYNAMIC(CDownloadTask)
+
 public:
-	enum dtask { dtaskAllocate, dtaskCopySimple, dtaskCopyTorrent, 
-		dtaskPreviewRequest, dtaskCheckHash, dtaskMergeFile, dtaskCreateBatch
+	enum dtask
+	{
+		dtaskAllocate,
+		dtaskCopySimple,
+		dtaskCopyTorrent, 
+		dtaskPreviewRequest,
+		dtaskCheckHash,
+		dtaskMergeFile
 	};
 
 	CDownloadTask(CDownload* pDownload, dtask nTask, LPCTSTR szParam1 = NULL);
 	virtual ~CDownloadTask();
-
-	DECLARE_DYNAMIC(CDownloadTask)
 
 	void			Abort();
 	BOOL			WasAborted();
@@ -46,21 +52,21 @@ public:
 	CBuffer*		IsPreviewAnswerValid();
 
 	dtask		m_nTask;
-	CDownload*	m_pDownload;
 	BOOL		m_bSuccess;
-	QWORD		m_nSize;
 	CString		m_sName;
 	CString		m_sFilename;
 	CString		m_sPath;
-	CBTInfo		m_pTorrent;
 	CHttpRequest m_pRequest;
 	DWORD		m_dwFileError;
-	CString		m_sMergeFilename;
 
 private:
+	CDownload*	m_pDownload;
+	QWORD		m_nSize;
+	CBTInfo		m_pTorrent;
+	CString		m_sMergeFilename;
+
 	void	Construct(CDownload* pDownload);
 
-protected:
 	POSITION	m_posTorrentFile;	// Torrent file list current position
 	CEvent*		m_pEvent;
 
