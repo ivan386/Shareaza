@@ -71,7 +71,7 @@ public:
 	static	CString	FindTorrentFile(CBTInfo::CBTFile* pFile);
 	void			AddUpload(CUploadTransferBT* pUpload);
 	void			RemoveUpload(CUploadTransferBT* pUpload);
-	BOOL			SeedTorrent(LPCTSTR pszTarget);
+	BOOL			SeedTorrent(CString& sErrorMessage);
 	inline BOOL		IsSeeding() const { return m_bSeeding; }
 	inline BOOL		IsTorrent() const { return m_pTorrent.IsAvailable(); }
 	inline BOOL		IsSingleFileTorrent() const { return IsTorrent() && ( m_pTorrent.GetCount() == 1 ); }
@@ -82,7 +82,7 @@ public:
 	void			ChokeTorrent(DWORD tNow = 0);
 	CDownloadTransferBT*	CreateTorrentTransfer(CBTClient* pClient);
 	CBTPacket*		CreateBitfieldPacket();
-	BOOL			SetTorrent(CBTInfo* pTorrent);
+	BOOL			SetTorrent(const CBTInfo& oTorrent);
 protected:
 	bool			RunTorrent(DWORD tNow);
 	void			SendCompleted();

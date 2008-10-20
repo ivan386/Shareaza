@@ -214,13 +214,12 @@ void CDownloadWithTorrent::Serialize(CArchive& ar, int nVersion)
 //////////////////////////////////////////////////////////////////////
 // CDownloadWithTorrent set torrent
 
-BOOL CDownloadWithTorrent::SetTorrent(CBTInfo* pTorrent)
+BOOL CDownloadWithTorrent::SetTorrent(const CBTInfo& oTorrent)
 {
-	if ( pTorrent == NULL ) return FALSE;
 	if ( IsTorrent() ) return FALSE;
-	if ( ! pTorrent->IsAvailable() ) return FALSE;
+	if ( ! oTorrent.IsAvailable() ) return FALSE;
 	
-	m_pTorrent.Copy( pTorrent );
+	m_pTorrent.Copy( oTorrent );
 	
 	m_oBTH = m_pTorrent.m_oBTH;
 	m_bBTHTrusted = true;
@@ -254,7 +253,7 @@ BOOL CDownloadWithTorrent::SetTorrent(CBTInfo* pTorrent)
 	
 	CreateDirectory( Settings.Downloads.TorrentPath );
 	LibraryFolders.AddFolder( Settings.Downloads.TorrentPath, FALSE );
-	pTorrent->SaveTorrentFile( Settings.Downloads.TorrentPath );
+	oTorrent.SaveTorrentFile( Settings.Downloads.TorrentPath );
 
 	if ( ! Settings.BitTorrent.AdvancedInterfaceSet )
 	{
@@ -847,14 +846,13 @@ BOOL CDownloadWithTorrent::FindMoreSources()
 //////////////////////////////////////////////////////////////////////
 // CDownloadWithTorrent seed
 
-BOOL CDownloadWithTorrent::SeedTorrent(LPCTSTR pszTarget)
+BOOL CDownloadWithTorrent::SeedTorrent(CString& sErrorMessage)
 {
+	sErrorMessage.Empty();
+
 	if ( IsMoving() || IsCompleted() )
 		return FALSE;
 
-	if ( m_sPath == pszTarget )
-		return FALSE;
-	
 	ASSERT( m_pFile != NULL );
 	if ( m_pFile == NULL )
 		return FALSE;
@@ -863,30 +861,66 @@ BOOL CDownloadWithTorrent::SeedTorrent(LPCTSTR pszTarget)
 	if ( m_pFile->IsOpen() )
 		return FALSE;
 
-	delete m_pFile;
-	m_pFile = NULL;
-
-	GenerateTorrentDownloadID();
-	
-	CDownload* pDownload	= static_cast< CDownload* >( this );
-	pDownload->m_bSeeding	= TRUE;
-	pDownload->m_bComplete	= TRUE;
-	pDownload->m_tCompleted	= GetTickCount();
-	pDownload->m_bVerify	= TRI_TRUE;
-	
-	memset( m_pTorrentBlock, TRI_TRUE, m_nTorrentBlock );
-	m_nTorrentSuccess = m_nTorrentBlock;
-	
+	ASSERT( m_sPath.IsEmpty() );
 	if ( m_sPath.GetLength() > 0 )
 	{
-		ASSERT( FALSE );
 		::DeleteFile( m_sPath );
 		::DeleteFile( m_sPath + _T(".sd") );
 	}
-	
-	m_sPath = pszTarget;
-	SetModified();
-	
+
+	GenerateTorrentDownloadID();
+
+	CDownload* pDownload	= static_cast< CDownload* >( this );
+	m_bSeeding	= TRUE;
+	pDownload->m_bComplete	= TRUE;
+	pDownload->m_tCompleted	= GetTickCount();
+	pDownload->m_bVerify	= TRI_TRUE;
+
+	memset( m_pTorrentBlock, TRI_TRUE, m_nTorrentBlock );
+	m_nTorrentSuccess = m_nTorrentBlock;
+
+	ASSERT( m_pTorrent.GetCount() );
+
+	QWORD nOffset = 0;
+	for ( POSITION pos = m_pTorrent.m_pFiles.GetHeadPosition() ; pos ; )
+	{
+		CBTInfo::CBTFile* pFile = m_pTorrent.m_pFiles.GetNext( pos );
+
+		CString strSource = FindTorrentFile( pFile );
+
+		if ( ! m_pFile->Open( strSource, nOffset, pFile->m_nSize, FALSE, FALSE ) )
+		{
+			// Right file not found
+			CString strFormat;
+			LoadString( strFormat, IDS_BT_SEED_SOURCE_LOST );
+			sErrorMessage.Format( strFormat, (LPCTSTR)pFile->m_sPath );
+			return FALSE;
+		}
+
+		// Refill missed hashes for single-file torrent
+		if ( m_pTorrent.GetCount() == 1 )
+		{
+			m_sPath = strSource;
+			if ( ! m_pTorrent.m_oSHA1 && pFile->m_oSHA1 )
+				m_pTorrent.m_oSHA1 = pFile->m_oSHA1;
+			if ( ! m_pTorrent.m_oTiger && pFile->m_oTiger )
+				m_pTorrent.m_oTiger = pFile->m_oTiger;
+			if ( ! m_pTorrent.m_oED2K && pFile->m_oED2K )
+				m_pTorrent.m_oED2K = pFile->m_oED2K;
+			if ( ! m_pTorrent.m_oMD5 && pFile->m_oMD5 )
+				m_pTorrent.m_oMD5 = pFile->m_oMD5;
+		}
+		else if ( m_sPath.IsEmpty() )
+		{
+			m_sPath = strSource.Left( strSource.ReverseFind( _T('\\') ) + 1 );
+		}
+
+		nOffset += pFile->m_nSize;
+	}
+
+	pDownload->MakeComplete();
+	pDownload->ResetVerification();
+
 	SendStarted( Settings.BitTorrent.UploadCount * 4ul );	
 
 	return TRUE;
