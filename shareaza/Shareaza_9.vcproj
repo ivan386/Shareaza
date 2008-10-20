@@ -31,7 +31,7 @@
 			<Tool
 				Name="VCPreBuildEventTool"
 				Description="Copy SQLite DLL, zlib DLL, HashLib DLL ..."
-				CommandLine="copy /b /y &quot;..\sqlite3\$(PlatformName)\$(ConfigurationName)\sqlite3.dll&quot; &quot;$(TargetDir)&quot;&#x0D;&#x0A;copy /b /y &quot;zlib\$(PlatformName)\$(ConfigurationName)\zlibwapi.dll&quot; &quot;$(TargetDir)&quot;&#x0D;&#x0A;copy /b /y &quot;..\HashLib\$(PlatformName)\$(ConfigurationName)\HashLib.dll&quot; &quot;$(TargetDir)&quot;"
+				CommandLine="copy /b /y &quot;..\sqlite3\$(PlatformName)\$(ConfigurationName)\sqlite3.dll&quot; &quot;$(TargetDir)&quot;&#x0D;&#x0A;copy /b /y &quot;zlib\$(PlatformName)\$(ConfigurationName)\zlibwapi.dll&quot; &quot;$(TargetDir)&quot;&#x0D;&#x0A;copy /b /y &quot;..\HashLib\$(PlatformName)\$(ConfigurationName)\HashLib.dll&quot; &quot;$(TargetDir)&quot;&#x0D;&#x0A;"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -124,7 +124,7 @@
 			<Tool
 				Name="VCPreBuildEventTool"
 				Description="Copy SQLite DLL, zlib DLL, HashLib DLL ..."
-				CommandLine="copy /b /y &quot;..\sqlite3\$(PlatformName)\$(ConfigurationName)\sqlite3.dll&quot; &quot;$(TargetDir)&quot;&#x0D;&#x0A;copy /b /y &quot;zlib\$(PlatformName)\$(ConfigurationName)\zlibwapi.dll&quot; &quot;$(TargetDir)&quot;&#x0D;&#x0A;copy /b /y &quot;..\HashLib\$(PlatformName)\$(ConfigurationName)\HashLib.dll&quot; &quot;$(TargetDir)&quot;"
+				CommandLine="copy /b /y &quot;..\sqlite3\$(PlatformName)\$(ConfigurationName)\sqlite3.dll&quot; &quot;$(TargetDir)&quot;&#x0D;&#x0A;copy /b /y &quot;zlib\$(PlatformName)\$(ConfigurationName)\zlibwapi.dll&quot; &quot;$(TargetDir)&quot;&#x0D;&#x0A;copy /b /y &quot;..\HashLib\$(PlatformName)\$(ConfigurationName)\HashLib.dll&quot; &quot;$(TargetDir)&quot;&#x0D;&#x0A;"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -219,7 +219,7 @@
 			<Tool
 				Name="VCPreBuildEventTool"
 				Description="Copy SQLite DLL, zlib DLL, HashLib DLL ..."
-				CommandLine="copy /b /y &quot;..\sqlite3\$(PlatformName)\$(ConfigurationName)\sqlite3.dll&quot; &quot;$(TargetDir)&quot;&#x0D;&#x0A;copy /b /y &quot;zlib\$(PlatformName)\$(ConfigurationName)\zlibwapi.dll&quot; &quot;$(TargetDir)&quot;&#x0D;&#x0A;copy /b /y &quot;..\HashLib\$(PlatformName)\$(ConfigurationName)\HashLib.dll&quot; &quot;$(TargetDir)&quot;"
+				CommandLine="copy /b /y &quot;..\sqlite3\$(PlatformName)\$(ConfigurationName)\sqlite3.dll&quot; &quot;$(TargetDir)&quot;&#x0D;&#x0A;copy /b /y &quot;zlib\$(PlatformName)\$(ConfigurationName)\zlibwapi.dll&quot; &quot;$(TargetDir)&quot;&#x0D;&#x0A;copy /b /y &quot;..\HashLib\$(PlatformName)\$(ConfigurationName)\HashLib.dll&quot; &quot;$(TargetDir)&quot;&#x0D;&#x0A;"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -318,7 +318,7 @@
 			<Tool
 				Name="VCPreBuildEventTool"
 				Description="Copy SQLite DLL, zlib DLL, HashLib DLL ..."
-				CommandLine="copy /b /y &quot;..\sqlite3\$(PlatformName)\$(ConfigurationName)\sqlite3.dll&quot; &quot;$(TargetDir)&quot;&#x0D;&#x0A;copy /b /y &quot;zlib\$(PlatformName)\$(ConfigurationName)\zlibwapi.dll&quot; &quot;$(TargetDir)&quot;&#x0D;&#x0A;copy /b /y &quot;..\HashLib\$(PlatformName)\$(ConfigurationName)\HashLib.dll&quot; &quot;$(TargetDir)&quot;"
+				CommandLine="copy /b /y &quot;..\sqlite3\$(PlatformName)\$(ConfigurationName)\sqlite3.dll&quot; &quot;$(TargetDir)&quot;&#x0D;&#x0A;copy /b /y &quot;zlib\$(PlatformName)\$(ConfigurationName)\zlibwapi.dll&quot; &quot;$(TargetDir)&quot;&#x0D;&#x0A;copy /b /y &quot;..\HashLib\$(PlatformName)\$(ConfigurationName)\HashLib.dll&quot; &quot;$(TargetDir)&quot;&#x0D;&#x0A;"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -2541,10 +2541,6 @@
 					>
 				</File>
 				<File
-					RelativePath="PageSettingsBandwidth.cpp"
-					>
-				</File>
-				<File
 					RelativePath="PageSettingsBitTorrent.cpp"
 					>
 				</File>
@@ -4103,10 +4099,6 @@
 				</File>
 				<File
 					RelativePath="PagePropertyAdv.h"
-					>
-				</File>
-				<File
-					RelativePath="PageSettingsBandwidth.h"
 					>
 				</File>
 				<File
