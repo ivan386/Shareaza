@@ -3404,10 +3404,6 @@
 					>
 				</File>
 				<File
-					RelativePath="..\shareaza\PageSettingsBandwidth.h"
-					>
-				</File>
-				<File
 					RelativePath="..\shareaza\PageSettingsBitTorrent.h"
 					>
 				</File>
