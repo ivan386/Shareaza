@@ -70,7 +70,7 @@ BOOL CDownloadWithFile::OpenFile()
 
 	if ( m_pFile->IsValid() )
 	{
-		if ( m_pFile->Open( m_sPath, 0, SIZE_UNKNOWN, FALSE, FALSE ) ) return TRUE;
+		if ( m_pFile->Open( m_sPath, 0, m_nSize, TRUE, FALSE ) ) return TRUE;
 		theApp.Message( MSG_ERROR, IDS_DOWNLOAD_FILE_OPEN_ERROR, (LPCTSTR)m_sPath );
 	}
 	else if ( m_nSize != SIZE_UNKNOWN && !Downloads.IsSpaceAvailable( m_nSize, Downloads.dlPathIncomplete ) )

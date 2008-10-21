@@ -288,16 +288,20 @@ CDownload* CDownloads::Add(const CShareazaURL& oURL)
 		}
 	}
 
-	// Add sources from torrents - DWK
-	pDownload->SetTorrent( *oURL.m_pTorrent );
-	if ( oURL.m_pTorrent && oURL.m_pTorrent->m_sURLs.GetCount() > 0 )
+	if ( oURL.m_pTorrent )
 	{
-		for ( POSITION pos = oURL.m_pTorrent->m_sURLs.GetHeadPosition() ; pos ; )
+		pDownload->SetTorrent( *oURL.m_pTorrent );
+
+		// Add sources from torrents - DWK
+		if ( oURL.m_pTorrent->m_sURLs.GetCount() > 0 )
 		{
-			CString pCurrentUrl = oURL.m_pTorrent->m_sURLs.GetNext( pos );
-			pDownload->AddSourceURLs( (LPCTSTR)pCurrentUrl , FALSE  );
+			for ( POSITION pos = oURL.m_pTorrent->m_sURLs.GetHeadPosition() ; pos ; )
+			{
+				CString pCurrentUrl = oURL.m_pTorrent->m_sURLs.GetNext( pos );
+				pDownload->AddSourceURLs( (LPCTSTR)pCurrentUrl , FALSE  );
+			}
+			oURL.m_pTorrent->m_sURLs.RemoveAll();
 		}
-		oURL.m_pTorrent->m_sURLs.RemoveAll();
 	}
 
 	if ( bNew )

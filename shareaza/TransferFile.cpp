@@ -207,7 +207,7 @@ BOOL CTransferFile::Open(BOOL bWrite, BOOL bCreate)
 
 	ASSERT( ! bCreate || bWrite );
 
-	m_bExists = ( GetFileAttributes( m_sPath ) != INVALID_FILE_ATTRIBUTES );
+	m_bExists = ! bCreate && ( GetFileAttributes( m_sPath ) != INVALID_FILE_ATTRIBUTES );
 	m_hFile = CreateFile( m_sPath, GENERIC_READ | ( bWrite ? GENERIC_WRITE : 0 ),
 		FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE,
 		NULL, ( bCreate ? OPEN_ALWAYS : OPEN_EXISTING ), FILE_ATTRIBUTE_NORMAL, NULL );

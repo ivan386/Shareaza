@@ -27,11 +27,18 @@
 class CEDPartImporter;
 
 
-class CFragmentedFile
+class CFragmentedFile : public CObject
 {
+	DECLARE_DYNCREATE( CFragmentedFile )
+
 public:
 	CFragmentedFile();
 	virtual ~CFragmentedFile();
+
+#ifdef _DEBUG
+	virtual void AssertValid() const;
+	virtual void Dump(CDumpContext& dc) const;
+#endif
 
 private:
 	struct CVirtualFilePart
