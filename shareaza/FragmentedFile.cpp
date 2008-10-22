@@ -56,15 +56,18 @@ void CFragmentedFile::AssertValid() const
 	ASSERT( m_oFile.size() != 0 );
 	if ( m_oFile.size() != 0 )
 	{
+		QWORD nTotal = 0;
 		ASSERT( m_oFile.front().m_nOffset == 0 );
 		CVirtualFile::const_iterator j;
 		for ( CVirtualFile::const_iterator i = m_oFile.begin(); i != m_oFile.end(); ++i )
 		{
 			ASSERT( (*i).m_nLength != 0 && (*i).m_nLength != SIZE_UNKNOWN );
+			nTotal += (*i).m_nLength;
 			if ( i != m_oFile.begin() )
 				ASSERT( (*j).m_nOffset + (*j).m_nLength == (*i).m_nOffset );
 			j = i;
 		}
+		ASSERT( GetTotal() == nTotal );
 	}
 }
 
@@ -81,16 +84,6 @@ void CFragmentedFile::Dump(CDumpContext& dc) const
 }
 
 #endif
-
-QWORD CFragmentedFile::GetSize() const
-{
-	CQuickLock oLock( m_pSection );
-
-	QWORD nLength = 0;
-	for ( CVirtualFile::const_iterator i = m_oFile.begin(); i != m_oFile.end(); ++i )
-		nLength += (*i).m_nLength;
-	return nLength;
-}
 
 //////////////////////////////////////////////////////////////////////
 // CFragmentedFile open
@@ -136,7 +129,7 @@ BOOL CFragmentedFile::Open(LPCTSTR pszFile, QWORD nOffset, QWORD nLength, BOOL b
 	m_oFile.push_back( part );
 	m_oFile.sort();
 
-	m_oFList.ensure( GetSize() );
+	m_oFList.ensure( m_oFile.back().m_nOffset + m_oFile.back().m_nLength );
 
 	if ( ! pFile->IsExists() )
 	{
@@ -302,6 +295,18 @@ QWORD CFragmentedFile::GetRangeOverlap(QWORD nOffset, QWORD nLength) const
 	CQuickLock oLock( m_pSection );
 
 	return m_oFList.overlapping_sum( Fragments::Fragment( nOffset, nOffset + nLength ) );
+}
+
+QWORD CFragmentedFile::GetCompleted(QWORD nOffset, QWORD nLength) const
+{
+	CQuickLock oLock( m_pSection );
+
+	// TODO: Optimize this
+	Fragments::List oList( m_oFList );	
+	oList.insert( Fragments::Fragment( 0, nOffset ) );
+	oList.insert( Fragments::Fragment( nOffset + nLength, m_oFList.limit() ) );
+
+	return oList.missing();
 }
 
 //////////////////////////////////////////////////////////////////////

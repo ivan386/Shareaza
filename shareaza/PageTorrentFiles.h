@@ -1,7 +1,7 @@
 //
 // PageTorrentFiles.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -36,12 +36,17 @@ public:
 	enum { IDD = IDD_TORRENT_FILES };
 
 protected:
-	CString			m_sName;
 	CComboListCtrl	m_wndFiles;
+
+	// Update interface
+	void Update();
 
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	virtual BOOL OnInitDialog();
 	virtual void OnOK();
+
+	afx_msg void OnTimer(UINT_PTR nIDEvent);
+	afx_msg void OnDestroy();
 
 	DECLARE_MESSAGE_MAP()
 };

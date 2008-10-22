@@ -2481,6 +2481,10 @@
 				Name="Pages"
 				>
 				<File
+					RelativePath="PageDownloadActions.cpp"
+					>
+				</File>
+				<File
 					RelativePath="PageDownloadEdit.cpp"
 					>
 				</File>
@@ -4041,6 +4045,10 @@
 			<Filter
 				Name="Pages"
 				>
+				<File
+					RelativePath="PageDownloadActions.h"
+					>
+				</File>
 				<File
 					RelativePath="PageDownloadEdit.h"
 					>

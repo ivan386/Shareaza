@@ -1,7 +1,7 @@
 //
 // PageDownloadEdit.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -43,28 +43,19 @@ protected:
 	CString m_sSHA1;
 	CString m_sTiger;
 	CString m_sED2K;
+	CString m_sMD5;
+	CString m_sBTH;
 	BOOL m_bSHA1Trusted;
 	BOOL m_bTigerTrusted;
 	BOOL m_bED2KTrusted;
-	CStatic m_wndForgetVerify;
-	CStatic m_wndForgetSources;
-	CString m_sEraseFrom;
-	CString m_sEraseTo;
-	CStatic m_wndCompleteVerify;
-	CStatic m_wndMergeVerify;
-	CStatic m_wndCancelDownload;
+	BOOL m_bMD5Trusted;
+	BOOL m_bBTHTrusted;
 
 	BOOL	Commit();
 
 	virtual void DoDataExchange(CDataExchange* pDX);
 	virtual BOOL OnInitDialog();
 	virtual void OnOK();
-
-	afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
-	afx_msg BOOL OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message);
-	afx_msg void OnLButtonUp(UINT nFlags, CPoint point);
-	afx_msg void OnErase();
-	afx_msg void OnMergeAndVerify();
 
 	DECLARE_MESSAGE_MAP()
 };

@@ -1,7 +1,7 @@
 //
 // PageTorrentGeneral.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -40,6 +40,8 @@ IMPLEMENT_DYNCREATE(CTorrentFilesPage, CPropertyPageAdv)
 
 BEGIN_MESSAGE_MAP(CTorrentFilesPage, CPropertyPageAdv)
 	ON_WM_PAINT()
+	ON_WM_TIMER()
+	ON_WM_DESTROY()
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -57,7 +59,7 @@ CTorrentFilesPage::~CTorrentFilesPage()
 void CTorrentFilesPage::DoDataExchange(CDataExchange* pDX)
 {
 	CPropertyPageAdv::DoDataExchange(pDX);
-	DDX_Text(pDX, IDC_TORRENT_NAME, m_sName);
+
 	DDX_Control(pDX, IDC_TORRENT_FILES, m_wndFiles);
 }
 
@@ -74,8 +76,6 @@ BOOL CTorrentFilesPage::OnInitDialog()
 
 	CSingleLock pLock( &Transfers.m_pSection, TRUE );
 	CBTInfo* pInfo = &((CDownloadSheet*)GetParent())->m_pDownload->m_pTorrent;
-
-	m_sName			= pInfo->m_sName;
 
 	CRect rc;
 	m_wndFiles.GetClientRect( &rc );
@@ -107,21 +107,18 @@ BOOL CTorrentFilesPage::OnInitDialog()
 		pItem.iItem		= m_wndFiles.InsertItem( &pItem );
 		
 		m_wndFiles.SetItemText( pItem.iItem, 1, Settings.SmartVolume( pFile->m_nSize ) );
-		CString sCompleted;
-		sCompleted.Format( _T("%.2f%%"), pFile->GetProgress() );
-		m_wndFiles.SetItemText( pItem.iItem, 2, sCompleted );
 		m_wndFiles.SetColumnData( pItem.iItem, 3, pFile->GetPriority() );
 	}
 
-	UpdateData( FALSE );
+	Update();
+
+	SetTimer( 1, 2000, NULL );
 
 	return TRUE;
 }
 
 void CTorrentFilesPage::OnOK()
 {
-	UpdateData();
-
 	CSingleLock pLock( &Transfers.m_pSection, TRUE );
 	CBTInfo* pInfo = &((CDownloadSheet*)GetParent())->m_pDownload->m_pTorrent;
 
@@ -137,4 +134,44 @@ void CTorrentFilesPage::OnOK()
 	}
 
 	CPropertyPageAdv::OnOK();
+}
+
+void CTorrentFilesPage::OnTimer(UINT_PTR nIDEvent) 
+{
+	CPropertyPageAdv::OnTimer( nIDEvent );
+
+	Update();
+}
+
+void CTorrentFilesPage::Update()
+{
+	CSingleLock oLock( &Transfers.m_pSection );
+	if ( ! oLock.Lock( 250 ) )
+		return;
+
+	CBTInfo* pInfo = &((CDownloadSheet*)GetParent())->m_pDownload->m_pTorrent;
+
+	for ( int i = 0; i < m_wndFiles.GetItemCount(); ++i )
+	{
+		CBTInfo::CBTFile* pFile = (CBTInfo::CBTFile*)m_wndFiles.GetItemData( i );
+
+		CString sCompleted;
+
+		// Check if file still valid
+		if ( POSITION pos = pInfo->m_pFiles.Find( pFile ) )
+		{
+			float fProgress = pFile->GetProgress();
+			if ( fProgress >= 0.0 )
+				sCompleted.Format( _T("%.2f%%"), fProgress );
+		}
+
+		m_wndFiles.SetItemText( i, 2, sCompleted );
+	}
+}
+
+void CTorrentFilesPage::OnDestroy() 
+{
+	KillTimer( 1 );
+
+	CPropertyPageAdv::OnDestroy();
 }

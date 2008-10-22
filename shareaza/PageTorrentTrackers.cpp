@@ -1,7 +1,7 @@
 //
 // PageTorrentTrackers.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2006.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -41,12 +41,10 @@ static char THIS_FILE[] = __FILE__;
 IMPLEMENT_DYNCREATE(CTorrentTrackersPage, CPropertyPageAdv)
 
 BEGIN_MESSAGE_MAP(CTorrentTrackersPage, CPropertyPageAdv)
-	//{{AFX_MSG_MAP(CTorrentTrackersPage)
 	ON_WM_PAINT()
 	ON_BN_CLICKED(IDC_TORRENT_REFRESH, OnTorrentRefresh)
 	ON_WM_TIMER()
 	ON_WM_DESTROY()
-	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 
@@ -66,15 +64,12 @@ CTorrentTrackersPage::~CTorrentTrackersPage()
 void CTorrentTrackersPage::DoDataExchange(CDataExchange* pDX)
 {
 	CPropertyPageAdv::DoDataExchange(pDX);
-	//{{AFX_DATA_MAP(CTorrentTrackersPage)
-	DDX_Text(pDX, IDC_TORRENT_NAME, m_sName);
 	DDX_Text(pDX, IDC_TORRENT_TRACKER, m_sTracker);
 	DDX_Control(pDX, IDC_TORRENT_COMPLETED, m_wndComplete);
 	DDX_Control(pDX, IDC_TORRENT_INCOMPLETE, m_wndIncomplete);
 	DDX_Control(pDX, IDC_TORRENT_REFRESH, m_wndRefresh);
 	DDX_Control(pDX, IDC_TORRENT_TRACKERS, m_wndTrackers);
 	DDX_Control(pDX, IDC_TORRENT_TRACKERMODE, m_wndTrackerMode);
-	//}}AFX_DATA_MAP
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -88,7 +83,6 @@ BOOL CTorrentTrackersPage::OnInitDialog()
 	m_pDownload = ((CDownloadSheet*)GetParent())->m_pDownload;
 	CBTInfo* pInfo = &m_pDownload->m_pTorrent;
 
-	m_sName			= pInfo->m_sName;
 	m_sTracker		= pInfo->m_sTracker;
 
 	m_wndTrackerMode.SetItemData( 0, tNull );
@@ -183,7 +177,6 @@ BOOL CTorrentTrackersPage::OnInitDialog()
 
 	return TRUE;
 }
-
 
 void CTorrentTrackersPage::OnDestroy() 
 {

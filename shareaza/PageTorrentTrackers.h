@@ -1,7 +1,7 @@
 //
 // PageTorrentTrackers.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2006.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -39,7 +39,6 @@ public:
 
 protected:
 	CDownload*		m_pDownload;
-	CString			m_sName;
 	CString			m_sTracker;
 	CButton			m_wndRefresh;
 	CEdit			m_wndComplete;

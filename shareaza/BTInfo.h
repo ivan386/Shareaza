@@ -41,26 +41,31 @@ public:
 	class CBTFile : public CShareazaFile
 	{
 	public:
+		// Returns file download progress ( < 0 - unknown or 0..100% )
 		float GetProgress() const;
-		
-		inline int	GetPriority() const
+
+		// Returns file download priority
+		inline int GetPriority() const
 		{
 			return m_nFilePriority;
 		}
 
+		// Set file download priority
 		inline void	SetPriority(int nFilePriority)
 		{
 			m_nFilePriority = nFilePriority; 
 		}
 
+		// Get internal path (including file name) of file inside torrent
 		inline CString GetPath() const
 		{
 			return m_pInfo->m_sPath;
 		}
 
 	private:
-		const CBTInfo*	m_pInfo;
-		int				m_nFilePriority;
+		const CBTInfo*	m_pInfo;			// Parent torrent handler
+		int				m_nFilePriority;	// Download priority (NotWanted, Low, Normal or High)
+		QWORD			m_nOffset;			// File offset inside torrent (cached)
 
 		CBTFile(const CBTInfo* pInfo, const CBTFile* pFile = NULL);
 		void Serialize(CArchive& ar, int nVersion);

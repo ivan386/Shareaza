@@ -1620,41 +1620,35 @@ BEGIN
     CONTROL         "",IDC_PROGRESS,"msctls_progress32",WS_BORDER,7,109,276,11
 END
 
-IDD_DOWNLOAD_EDIT DIALOGEX 0, 0, 292, 294
+IDD_DOWNLOAD_EDIT DIALOGEX 0, 0, 300, 220
 STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Download Properties"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
-    LTEXT           "WARNING: This dialog provides advanced download editing features for power users which if used incorrectly can and probably will cause corruption.",IDC_STATIC,7,7,278,18
-    GROUPBOX        "Filename and Si&ze:",IDC_STATIC,7,28,278,50,WS_GROUP
-    LTEXT           "Filename:",IDC_STATIC,15,42,50,10
-    EDITTEXT        IDC_NAME,71,40,206,12,ES_AUTOHSCROLL
-    EDITTEXT        IDC_DISKNAME,15,58,131,12,ES_AUTOHSCROLL | ES_READONLY
-    RTEXT           "File size (Byte):",IDC_STATIC,148,59,60,11
-    EDITTEXT        IDC_FILESIZE,213,58,64,12,ES_RIGHT | ES_AUTOHSCROLL
-    GROUPBOX        "&URNs:",IDC_STATIC,7,80,278,74,WS_GROUP
-    RTEXT           "Trusted",IDC_STATIC,183,85,97,11
-    LTEXT           "SHA1:",IDC_STATIC,15,96,42,12,SS_CENTERIMAGE
-    EDITTEXT        IDC_URN_SHA1,61,96,198,12,ES_AUTOHSCROLL
-    CONTROL         "",IDC_TRUST_SHA1,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,267,98,16,8
-    LTEXT           "Tiger-Root:",IDC_STATIC,15,114,42,12,SS_CENTERIMAGE
-    EDITTEXT        IDC_URN_TIGER,61,114,198,12,ES_AUTOHSCROLL
-    CONTROL         "",IDC_TRUST_TIGER,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,267,116,16,8
-    LTEXT           "ED2K:",IDC_STATIC,15,132,42,12,SS_CENTERIMAGE
-    EDITTEXT        IDC_URN_ED2K,61,132,198,12,ES_AUTOHSCROLL
-    CONTROL         "",IDC_TRUST_ED2K,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,267,135,16,8
-    GROUPBOX        "&Actions:",IDC_STATIC,7,156,278,90,WS_GROUP
-    LTEXT           "Forget current verification status and reverify",IDC_FORGET_VERIFY,15,171,236,8
-    LTEXT           "Assume file is 100% complete and reverify",IDC_COMPLETE_AND_VERIFY,15,185,236,8
-    LTEXT           "Forget all known sources",IDC_FORGET_SOURCES,15,199,236,8
-    LTEXT           "Merge with local file and verify",IDC_MERGE_AND_VERIFY,15,213,236,8
-    LTEXT           "Cancel download but save incomplete file(s)",IDC_CANCEL_DOWNLOAD,15,227,236,8
-    GROUPBOX        "Data &Eraser:",IDC_STATIC,7,249,278,38,WS_GROUP
-    LTEXT           "Byte range:",IDC_STATIC,15,264,42,12,SS_CENTERIMAGE
-    EDITTEXT        IDC_ERASE_FROM,61,264,65,12,ES_AUTOHSCROLL
-    CTEXT           "to",IDC_STATIC,134,264,12,12,SS_CENTERIMAGE
-    EDITTEXT        IDC_ERASE_TO,151,264,65,12,ES_AUTOHSCROLL
-    PUSHBUTTON      "Erase",IDC_ERASE,227,263,50,15
+    EDITTEXT        IDC_NAME,80,40,206,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_FILESIZE,222,59,64,12,ES_RIGHT | ES_AUTOHSCROLL
+    EDITTEXT        IDC_DISKNAME,14,78,272,12,ES_AUTOHSCROLL | ES_READONLY
+    EDITTEXT        IDC_URN_SHA1,61,122,207,12,ES_AUTOHSCROLL
+    CONTROL         "",IDC_TRUST_SHA1,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,276,124,10,8
+    EDITTEXT        IDC_URN_TIGER,61,140,207,12,ES_AUTOHSCROLL
+    CONTROL         "",IDC_TRUST_TIGER,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,276,142,10,8
+    EDITTEXT        IDC_URN_ED2K,61,158,207,12,ES_AUTOHSCROLL
+    CONTROL         "",IDC_TRUST_ED2K,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,276,160,10,8
+    EDITTEXT        IDC_URN_MD5,61,176,207,12,ES_AUTOHSCROLL
+    CONTROL         "",IDC_TRUST_MD5,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,276,178,10,8
+    EDITTEXT        IDC_URN_BTH,61,194,207,12,ES_AUTOHSCROLL
+    CONTROL         "",IDC_TRUST_BTH,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,276,195,10,8
+    LTEXT           "WARNING: This dialog provides advanced download editing features for power users which if used incorrectly can and probably will cause corruption.",IDC_STATIC,7,7,286,18
+    GROUPBOX        "Filename and Si&ze:",IDC_STATIC,7,28,286,69,WS_GROUP
+    LTEXT           "Filename:",IDC_STATIC,14,41,64,10
+    RTEXT           "File size (Byte):",IDC_STATIC,14,60,206,11
+    GROUPBOX        "&URNs:",IDC_STATIC,7,100,286,113,WS_GROUP
+    RTEXT           "Trusted",IDC_STATIC,14,109,272,11
+    LTEXT           "SHA1:",IDC_STATIC,14,122,45,12,SS_CENTERIMAGE
+    LTEXT           "Tiger-Root:",IDC_STATIC,14,140,45,12,SS_CENTERIMAGE
+    LTEXT           "ED2K:",IDC_STATIC,14,158,45,12,SS_CENTERIMAGE
+    LTEXT           "MD5:",IDC_STATIC,14,176,45,12,SS_CENTERIMAGE
+    LTEXT           "BitTorrent:",IDC_STATIC,14,194,45,12,SS_CENTERIMAGE
 END
 
 IDD_SETTINGS_REMOTE DIALOGEX 0, 0, 282, 220
@@ -1827,61 +1821,53 @@ BEGIN
     LTEXT           "Enter channel you want to add:|Enter kick/ban reason:",IDC_IRC_PROMPT,7,7,129,8
 END
 
-IDD_TORRENT_GENERAL DIALOGEX 0, 0, 292, 294
+IDD_TORRENT_GENERAL DIALOGEX 0, 0, 300, 220
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Download Properties"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
-    GROUPBOX        "Torrent &Information:",-1,7,3,278,173
-    LTEXT           "Name:",-1,14,13,44,12,SS_CENTERIMAGE
-    EDITTEXT        IDC_TORRENT_NAME,60,13,218,12,ES_AUTOHSCROLL | ES_READONLY
-    LTEXT           "Created:",-1,14,27,44,12,SS_CENTERIMAGE
-    EDITTEXT        IDC_TORRENT_CREATIONDATE,60,27,74,12,ES_AUTOHSCROLL | ES_READONLY
-    LTEXT           "By:",-1,136,27,35,12,SS_CENTERIMAGE,WS_EX_RIGHT
-    EDITTEXT        IDC_TORRENT_CREATEDBY,173,27,105,12,ES_AUTOHSCROLL | ES_READONLY
-    LTEXT           "Comments:",-1,14,42,44,12,SS_CENTERIMAGE
-    EDITTEXT        IDC_TORRENT_COMMENTS,60,41,218,113,ES_MULTILINE | ES_AUTOVSCROLL | ES_AUTOHSCROLL | ES_READONLY | WS_VSCROLL
-    GROUPBOX        "Transfers:",-1,7,180,278,43
-    RTEXT           "Start new download transfers:",-1,14,192,141,9
-    COMBOBOX        IDC_TORRENT_STARTDOWNLOADS,163,190,115,66,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
-    EDITTEXT        IDC_TORRENT_UPLOADTOTAL,163,204,115,12,ES_AUTOHSCROLL | ES_READONLY | NOT WS_TABSTOP
-    RTEXT           "Total Uploaded:",-1,14,206,141,9,SS_CENTERIMAGE
-    LTEXT           "Notes:",-1,14,156,46,12,SS_CENTERIMAGE
-    EDITTEXT        IDC_TORRENT_OTHER,60,156,218,12,ES_AUTOHSCROLL | ES_READONLY
+    EDITTEXT        IDC_TORRENT_NAME,60,14,226,12,ES_AUTOHSCROLL | ES_READONLY
+    EDITTEXT        IDC_TORRENT_CREATIONDATE,60,34,74,12,ES_AUTOHSCROLL | ES_READONLY
+    EDITTEXT        IDC_TORRENT_CREATEDBY,173,34,113,12,ES_AUTOHSCROLL | ES_READONLY
+    EDITTEXT        IDC_TORRENT_COMMENTS,60,53,226,76,ES_MULTILINE | ES_AUTOVSCROLL | ES_AUTOHSCROLL | ES_READONLY | WS_VSCROLL
+    EDITTEXT        IDC_TORRENT_OTHER,60,136,226,12,ES_AUTOHSCROLL | ES_READONLY
+    COMBOBOX        IDC_TORRENT_STARTDOWNLOADS,163,175,123,66,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_TORRENT_UPLOADTOTAL,163,194,123,12,ES_AUTOHSCROLL | ES_READONLY | NOT WS_TABSTOP
+    GROUPBOX        "Torrent &Information:",-1,7,3,286,153
+    LTEXT           "Name:",-1,14,14,44,12,SS_CENTERIMAGE
+    LTEXT           "Created:",-1,14,34,44,12,SS_CENTERIMAGE
+    LTEXT           "By:",-1,136,34,35,12,SS_CENTERIMAGE,WS_EX_RIGHT
+    LTEXT           "Comments:",-1,14,54,44,12,SS_CENTERIMAGE
+    GROUPBOX        "Transfers:",-1,7,162,286,51
+    RTEXT           "Start new download transfers:",-1,14,176,142,9
+    RTEXT           "Total Uploaded:",-1,14,195,142,9,SS_CENTERIMAGE
+    LTEXT           "Notes:",-1,14,136,46,12,SS_CENTERIMAGE
 END
 
-IDD_TORRENT_TRACKERS DIALOGEX 0, 0, 292, 294
+IDD_TORRENT_TRACKERS DIALOGEX 0, 0, 300, 220
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Download Properties"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
-    GROUPBOX        "Torrent &Information:",IDC_STATIC,7,3,278,28
-    LTEXT           "Name:",IDC_STATIC,14,13,44,12,SS_CENTERIMAGE
-    EDITTEXT        IDC_TORRENT_NAME,60,13,218,12,ES_AUTOHSCROLL | ES_READONLY | NOT WS_TABSTOP
-    LTEXT           "Tracker:",IDC_STATIC,14,50,44,12,SS_CENTERIMAGE
-    EDITTEXT        IDC_TORRENT_TRACKER,60,49,218,12,ES_AUTOHSCROLL
-    GROUPBOX        "&Current Tracker:",IDC_STATIC,7,33,278,66
-    LTEXT           "Completed (Seeds):",IDC_STATIC,14,65,78,12,SS_CENTERIMAGE
-    EDITTEXT        IDC_TORRENT_COMPLETED,100,65,50,12,ES_CENTER | ES_AUTOHSCROLL | ES_READONLY | NOT WS_TABSTOP
-    RTEXT           "Incomplete:",IDC_STATIC,157,65,64,12,SS_CENTERIMAGE
-    EDITTEXT        IDC_TORRENT_INCOMPLETE,228,65,50,12,ES_CENTER | ES_AUTOHSCROLL | ES_READONLY | NOT WS_TABSTOP
-    PUSHBUTTON      "&Refresh",IDC_TORRENT_REFRESH,228,81,50,14
-    GROUPBOX        "&Trackers:",IDC_STATIC,7,101,278,185
-    CONTROL         "",IDC_TORRENT_TRACKERS,"SysListView32",LVS_REPORT | LVS_SHAREIMAGELISTS | WS_BORDER | WS_TABSTOP,14,112,264,166
-    LTEXT           "Tracker Mode:",IDC_STATIC,14,83,78,9
-    COMBOBOX        IDC_TORRENT_TRACKERMODE,100,81,97,66,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_TORRENT_TRACKER,100,14,186,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_TORRENT_COMPLETED,100,34,58,12,ES_CENTER | ES_AUTOHSCROLL | ES_READONLY | NOT WS_TABSTOP
+    EDITTEXT        IDC_TORRENT_INCOMPLETE,228,34,58,12,ES_CENTER | ES_AUTOHSCROLL | ES_READONLY | NOT WS_TABSTOP
+    COMBOBOX        IDC_TORRENT_TRACKERMODE,100,53,120,66,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "&Refresh",IDC_TORRENT_REFRESH,228,53,58,14
+    CONTROL         "",IDC_TORRENT_TRACKERS,"SysListView32",LVS_REPORT | LVS_SHAREIMAGELISTS | WS_BORDER | WS_TABSTOP,7,81,286,132
+    LTEXT           "Tracker:",IDC_STATIC,14,14,84,12,SS_CENTERIMAGE
+    GROUPBOX        "&Current Tracker:",IDC_STATIC,7,3,286,71
+    LTEXT           "Completed (Seeds):",IDC_STATIC,14,34,84,12,SS_CENTERIMAGE
+    RTEXT           "Incomplete:",IDC_STATIC,159,34,67,12,SS_CENTERIMAGE
+    LTEXT           "Tracker Mode:",IDC_STATIC,14,54,78,9
 END
 
-IDD_TORRENT_FILES DIALOGEX 0, 0, 292, 294
+IDD_TORRENT_FILES DIALOGEX 0, 0, 300, 220
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Download Properties"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
-    GROUPBOX        "Torrent &Information:",IDC_STATIC,7,3,278,28
-    LTEXT           "Name:",IDC_STATIC,14,13,44,12,SS_CENTERIMAGE
-    EDITTEXT        IDC_TORRENT_NAME,60,13,218,12,ES_AUTOHSCROLL | ES_READONLY | NOT WS_TABSTOP
-    GROUPBOX        "&Files:",IDC_STATIC,7,33,278,254
-    CONTROL         "",IDC_TORRENT_FILES,"SysListView32",LVS_REPORT | LVS_SHAREIMAGELISTS | WS_BORDER | WS_TABSTOP,14,50,264,230
+    CONTROL         "",IDC_TORRENT_FILES,"SysListView32",LVS_REPORT | LVS_SHAREIMAGELISTS | WS_BORDER | WS_TABSTOP,7,7,286,206
 END
 
 IDD_PLUGIN_EXT_SETUP DIALOGEX 0, 0, 100, 147
@@ -1891,6 +1877,26 @@ FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
     DEFPUSHBUTTON   "OK",IDOK,25,125,50,14
     CONTROL         "",IDC_ASSOCIATIONS,"SysListView32",LVS_REPORT | LVS_SINGLESEL | LVS_SORTASCENDING | LVS_ALIGNLEFT | LVS_NOCOLUMNHEADER | WS_BORDER | WS_TABSTOP,19,7,60,112,WS_EX_CLIENTEDGE
+END
+
+IDD_DOWNLOAD_ACTIONS DIALOGEX 0, 0, 300, 220
+STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Download Properties"
+FONT 8, "Tahoma", 0, 0, 0x1
+BEGIN
+    LTEXT           "Forget current verification status and reverify",IDC_FORGET_VERIFY,14,41,272,8
+    LTEXT           "Assume file is 100% complete and reverify",IDC_COMPLETE_AND_VERIFY,14,55,272,8
+    LTEXT           "Forget all known sources",IDC_FORGET_SOURCES,14,69,272,8
+    LTEXT           "Merge with local file and verify",IDC_MERGE_AND_VERIFY,14,83,272,8
+    LTEXT           "Cancel download but save incomplete file(s)",IDC_CANCEL_DOWNLOAD,14,97,272,8
+    EDITTEXT        IDC_ERASE_FROM,74,194,65,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ERASE_TO,164,194,65,12,ES_AUTOHSCROLL
+    PUSHBUTTON      "Erase",IDC_ERASE,236,193,50,14
+    GROUPBOX        "&Actions:",IDC_STATIC,7,28,286,147,WS_GROUP
+    GROUPBOX        "Data &Eraser:",IDC_STATIC,7,180,286,33,WS_GROUP
+    LTEXT           "Byte range:",IDC_STATIC,14,194,57,12,SS_CENTERIMAGE
+    CTEXT           "to",IDC_STATIC,141,192,21,12,SS_CENTERIMAGE
+    LTEXT           "WARNING: This dialog provides advanced download editing features for power users which if used incorrectly can and probably will cause corruption.",IDC_STATIC,7,7,286,18
 END
 
 
@@ -2502,15 +2508,15 @@ BEGIN
     IDD_DOWNLOAD_EDIT, DIALOG
     BEGIN
         LEFTMARGIN, 7
-        RIGHTMARGIN, 285
-        VERTGUIDE, 15
-        VERTGUIDE, 57
+        RIGHTMARGIN, 293
+        VERTGUIDE, 14
         VERTGUIDE, 61
-        VERTGUIDE, 259
-        VERTGUIDE, 267
-        VERTGUIDE, 277
+        VERTGUIDE, 268
+        VERTGUIDE, 276
+        VERTGUIDE, 286
         TOPMARGIN, 7
-        BOTTOMMARGIN, 287
+        BOTTOMMARGIN, 213
+        HORZGUIDE, 206
     END
 
     IDD_SETTINGS_REMOTE, DIALOG
@@ -2564,45 +2570,45 @@ BEGIN
     IDD_TORRENT_GENERAL, DIALOG
     BEGIN
         LEFTMARGIN, 7
-        RIGHTMARGIN, 285
+        RIGHTMARGIN, 293
         VERTGUIDE, 14
         VERTGUIDE, 60
         VERTGUIDE, 134
-        VERTGUIDE, 155
+        VERTGUIDE, 156
         VERTGUIDE, 163
         VERTGUIDE, 173
-        VERTGUIDE, 278
+        VERTGUIDE, 286
         TOPMARGIN, 7
-        BOTTOMMARGIN, 287
+        BOTTOMMARGIN, 213
+        HORZGUIDE, 14
+        HORZGUIDE, 206
     END
 
     IDD_TORRENT_TRACKERS, DIALOG
     BEGIN
         LEFTMARGIN, 7
-        RIGHTMARGIN, 285
+        RIGHTMARGIN, 293
         VERTGUIDE, 14
-        VERTGUIDE, 60
-        VERTGUIDE, 92
         VERTGUIDE, 100
-        VERTGUIDE, 150
-        VERTGUIDE, 157
-        VERTGUIDE, 221
         VERTGUIDE, 228
-        VERTGUIDE, 278
+        VERTGUIDE, 286
         TOPMARGIN, 7
-        BOTTOMMARGIN, 286
-        BOTTOMMARGIN, 230
+        BOTTOMMARGIN, 213
+        BOTTOMMARGIN, 212
+        HORZGUIDE, 14
+        HORZGUIDE, 206
     END
 
     IDD_TORRENT_FILES, DIALOG
     BEGIN
         LEFTMARGIN, 7
-        RIGHTMARGIN, 285
+        RIGHTMARGIN, 293
         VERTGUIDE, 14
-        VERTGUIDE, 278
+        VERTGUIDE, 286
         TOPMARGIN, 7
-        BOTTOMMARGIN, 287
-        HORZGUIDE, 280
+        BOTTOMMARGIN, 213
+        HORZGUIDE, 14
+        HORZGUIDE, 206
     END
 
     IDD_PLUGIN_EXT_SETUP, DIALOG
@@ -2611,6 +2617,18 @@ BEGIN
         RIGHTMARGIN, 93
         TOPMARGIN, 7
         BOTTOMMARGIN, 139
+    END
+
+    IDD_DOWNLOAD_ACTIONS, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 293
+        VERTGUIDE, 14
+        VERTGUIDE, 286
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 213
+        HORZGUIDE, 14
+        HORZGUIDE, 206
     END
 END
 #endif    // APSTUDIO_INVOKED
@@ -4099,18 +4117,10 @@ STRINGTABLE
 BEGIN
     IDS_DOWNLOAD_EDIT_RENAME 
                             "You have made changes to the name field.  Are you sure you want to rename this download?"
-    IDS_DOWNLOAD_EDIT_BAD_SHA1 
-                            "You have typed a SHA1 value, however it is invalid.  Please check it and try again."
-    IDS_DOWNLOAD_EDIT_BAD_TIGER 
-                            "You have typed a root tiger-tree value, however it is invalid.  Please check it and try again."
-    IDS_DOWNLOAD_EDIT_BAD_ED2K 
-                            "You have typed an eDonkey hash value, however it is invalid.  Please check it and try again."
-    IDS_DOWNLOAD_EDIT_CHANGE_SHA1 
-                            "You have provided a SHA1 hash value which is different to the one currently associated with this download.  Are you sure you want to change the SHA1 hash now?"
-    IDS_DOWNLOAD_EDIT_CHANGE_TIGER 
-                            "You have provided a root tiger-tree hash value which is different to the one currently associated with this download.  Are you sure you want to change the tiger-tree root hash now?"
-    IDS_DOWNLOAD_EDIT_CHANGE_ED2K 
-                            "You have provided an eDonkey hash value which is different to the one currently associated with this download.  Are you sure you want to change the eDonkey hash now?"
+    IDS_DOWNLOAD_EDIT_BAD_HASH 
+                            "You have typed an %s hash value, however it is invalid.  Please check it and try again."
+    IDS_DOWNLOAD_EDIT_CHANGE_HASH 
+                            "You have provided an %s hash value which is different to the one currently associated with this download.  Are you sure you want to change the %s hash now?"
     IDS_DOWNLOAD_EDIT_FORGET_VERIFY 
                             "Are you sure you want to forget the current verification status?  All downloaded data will be treated as untrusted, and cached hashtrees and hashsets will be flushed."
     IDS_DOWNLOAD_EDIT_FORGET_SOURCES 

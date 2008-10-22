@@ -212,6 +212,7 @@
 #define IDI_RATING_AVERAGE              323
 #define IDI_RATING_GOOD                 324
 #define IDR_CHANSFRAME                  991
+#define IDD_DOWNLOAD_ACTIONS            993
 #define IDR_IRCFRAME                    994
 #define IDR_USERSFRAME                  995
 #define IDB_FONT_SYMBOLS                996
@@ -582,6 +583,7 @@
 #define IDC_URN_SHA1                    1362
 #define IDC_URN_TIGER                   1363
 #define IDC_URN_ED2K                    1364
+#define IDC_URN_MD5                     1365
 #define IDC_TRAY_MINIMISE               1366
 #define IDC_FORGET_VERIFY               1367
 #define IDC_FORGET_SOURCES              1368
@@ -782,6 +784,9 @@
 #define IDC_SMART_SERIES_DETECTION      1563
 #define IDC_DOWNLOADS_DEFAULT           1566
 #define IDC_DOWNLOADS_TORRENT           1567
+#define IDC_URN_BTH                     1568
+#define IDC_TRUST_MD5                   1569
+#define IDC_TRUST_BTH                   1570
 #define IDS_FILTER_DELETE_CONFIRM       7000
 #define IDS_SCHEMAS                     7001
 #define IDS_MULTIPLE_VALUES             7002
@@ -1416,6 +1421,8 @@
 #define IDS_DOWNLOAD_EDIT_COMPLETE_VERIFY 18510
 #define IDS_DOWNLOAD_EDIT_CHANGE_SIZE   18511
 #define IDS_DOWNLOAD_EDIT_CANCEL_DOWNLOAD 18512
+#define IDS_DOWNLOAD_EDIT_BAD_HASH      18513
+#define IDS_DOWNLOAD_EDIT_CHANGE_HASH   18514
 #define IDS_REMOTE_DISABLED             19000
 #define IDS_REMOTE_ENABLED              19001
 #define IDS_REMOTE_UNAVAILABLE          19002
@@ -1884,7 +1891,7 @@
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        325
 #define _APS_NEXT_COMMAND_VALUE         33322
-#define _APS_NEXT_CONTROL_VALUE         1568
+#define _APS_NEXT_CONTROL_VALUE         1571
 #define _APS_NEXT_SYMED_VALUE           104
 #endif
 #endif

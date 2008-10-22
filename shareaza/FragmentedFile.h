@@ -127,9 +127,6 @@ public:
 	BOOL	ReadRange(QWORD nOffset, LPVOID pData, QWORD nLength);
 	QWORD	InvalidateRange(QWORD nOffset, QWORD nLength);
 	
-	// Combined size
-	QWORD	GetSize() const;
-
 	inline BOOL IsValid() const
 	{
 		CQuickLock oLock( m_pSection );
@@ -144,12 +141,12 @@ public:
 		return ! m_oFile.empty();
 	}
 
-//	inline QWORD GetTotal() const
-//	{
-//		CQuickLock oLock( m_pSection );
-//
-//		return m_oFList.limit();
-//	}
+	inline QWORD GetTotal() const
+	{
+		CQuickLock oLock( m_pSection );
+
+		return m_oFList.limit();
+	}
 	
 	inline QWORD GetRemaining() const
 	{
@@ -158,13 +155,17 @@ public:
 		return ( m_oFList.limit() == SIZE_UNKNOWN && m_oFList.length_sum() ) ?
 			SIZE_UNKNOWN : m_oFList.length_sum();
 	}
-	
+
+	// Get completed size of whole file (in bytes)
 	inline QWORD GetCompleted() const
 	{
 		CQuickLock oLock( m_pSection );
 
 		return m_oFList.missing();
 	}
+
+	// Get completed size of defined range (in bytes)
+	QWORD GetCompleted(QWORD nOffset, QWORD nLength) const;
 	
 	const Fragments::List& GetEmptyFragmentList() const
 	{

@@ -1,7 +1,7 @@
 //
 // PageTorrentGeneral.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -36,9 +36,7 @@ static char THIS_FILE[] = __FILE__;
 IMPLEMENT_DYNCREATE(CTorrentGeneralPage, CPropertyPageAdv)
 
 BEGIN_MESSAGE_MAP(CTorrentGeneralPage, CPropertyPageAdv)
-	//{{AFX_MSG_MAP(CTorrentGeneralPage)
 	ON_WM_PAINT()
-	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 
@@ -87,7 +85,7 @@ BOOL CTorrentGeneralPage::OnInitDialog()
 		m_sCreationDate = pTime.Format( _T("%Y-%m-%d  %H:%M") );
 	}
 
-	// Assember 'other' string
+	// Assembler 'other' string
 	if ( pInfo->m_bPrivate )
 	{
 		CString str;

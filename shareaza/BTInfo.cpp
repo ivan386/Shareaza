@@ -26,6 +26,10 @@
 #include "BENode.h"
 #include "Buffer.h"
 #include "DownloadTask.h"
+#include "Download.h"
+#include "Downloads.h"
+#include "FragmentedFile.h"
+#include "Transfers.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -87,6 +91,7 @@ CBTInfo::~CBTInfo()
 CBTInfo::CBTFile::CBTFile(const CBTInfo* pInfo, const CBTFile* pBTFile) :
 	m_pInfo				( pInfo )
 ,	m_nFilePriority		( pBTFile ? pBTFile->m_nFilePriority : CBTInfo::prNormal )
+,	m_nOffset			( pBTFile ? pBTFile->m_nOffset : 0 )
 {
 	if ( pBTFile )
 	{
@@ -310,11 +315,14 @@ void CBTInfo::Serialize(CArchive& ar)
 		if ( nVersion >= 5 ) ar >> m_bPrivate;
 		
 		int nFiles = (int)ar.ReadCount();
+		QWORD nOffset = 0;
 		for ( int nFile = 0 ; nFile < nFiles ; nFile++ )
 		{
 			CBTFile* pBTFile = new CBTFile( this );
 			m_pFiles.AddTail( pBTFile );
 			pBTFile->Serialize( ar, nVersion );
+			pBTFile->m_nOffset = nOffset;
+			nOffset += pBTFile->m_nSize;
 		}
 		
 		ar >> m_sTracker;
@@ -404,8 +412,18 @@ void CBTInfo::CBTFile::Serialize(CArchive& ar, int nVersion)
 
 float CBTInfo::CBTFile::GetProgress() const
 {
-	//m_pInfo->
-	return 100.f;
+	CSingleLock pLock( &Transfers.m_pSection, TRUE );
+
+	if ( CDownload* pDownload = Downloads.FindByBTH( m_pInfo->m_oBTH ) )
+	{
+		if ( pDownload->m_pFile )
+		{
+			return ( (float)pDownload->m_pFile->GetCompleted( m_nOffset, m_nSize ) *
+				100.f ) / (float)m_nSize;
+		}
+	}
+
+	return -1.f;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -778,7 +796,8 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 		if ( ! nFiles || nFiles > 8192 * 8 ) return FALSE;
 		
 		m_nTotalSize = 0;
-		
+
+		QWORD nOffset = 0;
 		for ( int nFile = 0 ; nFile < nFiles ; nFile++ )
 		{
 			CBTFile* pBTFile = new CBTFile( this );
@@ -790,6 +809,8 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 			CBENode* pLength = pFile->GetNode( "length" );
 			if ( ! pLength || ! pLength->IsType( CBENode::beInt ) ) return FALSE;
 			pBTFile->m_nSize = pLength->GetInt();
+
+			pBTFile->m_nOffset = nOffset;
 
 			strPath.Empty();
 			CBENode* pPath;
@@ -922,6 +943,7 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 			}
 
 			m_nTotalSize += pBTFile->m_nSize;
+			nOffset += pBTFile->m_nSize;
 		}
 
 		if ( nFiles == 1 )

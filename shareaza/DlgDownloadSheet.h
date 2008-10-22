@@ -1,7 +1,7 @@
 //
 // DlgDownloadSheet.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2006.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -43,6 +43,7 @@ protected:
 	CSkinWindow*	m_pSkin;
 	CBrush			m_brDialog;
 	CString			m_sDownloadTitle;
+	CString			m_sActionsTitle;
 	CString			m_sGeneralTitle;
 	CString			m_sFilesTitle;
 	CString			m_sTrackersTitle;
