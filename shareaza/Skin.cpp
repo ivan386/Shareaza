@@ -1154,9 +1154,15 @@ BOOL CSkin::Apply(LPCTSTR pszName, CDialog* pDialog, UINT nIconID, CToolTipCtrl*
 	}
 
 	CXMLElement* pBase = NULL;
-	if ( ! m_pDialogs.Lookup( strName, pBase ) ) return FALSE;
+	if ( ! m_pDialogs.Lookup( strName, pBase ) )
+		// Naked dialog
+		return FALSE;
 
-	if ( strCaption != pBase->GetAttributeValue( _T("cookie") ) ) return FALSE;
+	if ( strCaption != pBase->GetAttributeValue( _T("cookie") ) )
+	{
+		theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Invalid [cookie] attribute in [dialog] element"), pBase->ToString() );
+		return FALSE;
+	}
 
 	strCaption = pBase->GetAttributeValue( _T("caption") );
 	if ( strCaption.GetLength() ) pDialog->SetWindowText( strCaption );
