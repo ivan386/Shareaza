@@ -43,7 +43,7 @@ protected:
 
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	virtual BOOL OnInitDialog();
-	virtual void OnOK();
+	virtual BOOL OnApply();
 
 	afx_msg void OnTimer(UINT_PTR nIDEvent);
 	afx_msg void OnDestroy();

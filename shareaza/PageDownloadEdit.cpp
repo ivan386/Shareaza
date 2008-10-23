@@ -116,15 +116,11 @@ BOOL CDownloadEditPage::OnInitDialog()
 	return TRUE;
 }
 
-void CDownloadEditPage::OnOK()
+BOOL CDownloadEditPage::OnApply()
 {
-	if ( ! Commit() ) return;
+	if ( ! UpdateData() )
+		return FALSE;
 
-	CPropertyPageAdv::OnOK();
-}
-
-BOOL CDownloadEditPage::Commit()
-{
 	CString strFormat, strMessage;
 	Hashes::Sha1Hash oSHA1;
 	Hashes::TigerHash oTiger;
@@ -132,8 +128,6 @@ BOOL CDownloadEditPage::Commit()
 	Hashes::Md5Hash oMD5;
 	Hashes::BtHash oBTH;
 
-	UpdateData();
-	
     oSHA1.fromString( m_sSHA1 );
     oTiger.fromString( m_sTiger );
     oED2K.fromString( m_sED2K );
@@ -320,5 +314,5 @@ BOOL CDownloadEditPage::Commit()
 		pDownload->SetModified();
 	}
 
-	return TRUE;
+	return CPropertyPageAdv::OnApply();
 }

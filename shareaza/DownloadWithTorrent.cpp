@@ -306,10 +306,6 @@ bool CDownloadWithTorrent::RunTorrent(DWORD tNow)
 	if ( m_pTask )
 		return false;
 
-	// Can't send an announce for a trackerless torrent
-	if ( !m_pTorrent.m_pAnnounceTracker )
-		return true;
-
 	// Generate a peerid if there isn't one
 	if ( !m_pPeerID )
 		GenerateTorrentDownloadID();
@@ -440,7 +436,7 @@ void CDownloadWithTorrent::SendStarted(DWORD nNumWant)
 		return;
 
 	// Return if there is no tracker
-	if ( m_pTorrent.m_sTracker.IsEmpty() )
+	if ( ! m_pTorrent.HasTracker() )
 		return;
 
 	// Log the 'start' event
@@ -464,7 +460,7 @@ void CDownloadWithTorrent::SendUpdate(DWORD nNumWant)
 		return;
 
 	// Return if there is no tracker
-	if ( m_pTorrent.m_sTracker.IsEmpty() )
+	if ( ! m_pTorrent.HasTracker() )
 		return;
 
 	// Log the 'update' event
@@ -486,7 +482,7 @@ void CDownloadWithTorrent::SendCompleted()
 		return;
 
 	// Return if there is no tracker
-	if ( m_pTorrent.m_sTracker.IsEmpty() )
+	if ( ! m_pTorrent.HasTracker() )
 		return;
 
 	// Log the 'complete' event
@@ -504,7 +500,7 @@ void CDownloadWithTorrent::SendStopped()
 		return;
 
 	// Return if there is no tracker
-	if ( m_pTorrent.m_sTracker.IsEmpty() )
+	if ( ! m_pTorrent.HasTracker() )
 		return;
 
 	// Log the 'stop' event
@@ -541,11 +537,11 @@ void CDownloadWithTorrent::OnTrackerEvent(bool bSuccess, LPCTSTR pszReason, LPCT
 		theApp.Message( MSG_INFO, _T("%s"), pszReason );
 
 		// Lock on this tracker if we were searching for one
-		if ( m_pTorrent.m_nTrackerMode == tMultiFinding )
+		if ( m_pTorrent.GetTrackerMode() == CBTInfo::tMultiFinding )
 		{
 			theApp.Message( MSG_DEBUG , _T("[BT] Locked onto tracker %s"),
-				m_pTorrent.m_sTracker );
-			m_pTorrent.m_nTrackerMode = tMultiFound;
+				m_pTorrent.GetTrackerAddress() );
+			m_pTorrent.SetTrackerMode( CBTInfo::tMultiFound );
 		}
 	}
 	else
@@ -553,7 +549,7 @@ void CDownloadWithTorrent::OnTrackerEvent(bool bSuccess, LPCTSTR pszReason, LPCT
 		// There was a problem with the tracker
 		m_bTorrentTrackerError = TRUE;
 		m_sTorrentTrackerError = ( pszTip ? pszTip : pszReason );
-		m_pTorrent.m_pAnnounceTracker->m_nFailures++;
+		m_pTorrent.OnTrackerFailure();
 		m_bTorrentRequested = m_bTorrentStarted = FALSE;
 		m_tTorrentTracker = tNow + GetRetryTime();
 		m_pTorrent.SetTrackerRetry( m_tTorrentTracker );
@@ -566,12 +562,12 @@ void CDownloadWithTorrent::OnTrackerEvent(bool bSuccess, LPCTSTR pszReason, LPCT
 			m_pTorrent.SetTrackerNext( tNow );
 
 			// Set retry time
-			m_tTorrentTracker = m_pTorrent.m_pAnnounceTracker->m_tNextTry;
+			m_tTorrentTracker = m_pTorrent.GetTrackerNextTry();
 			
 			// Load the error message string
 			CString strFormat, strErrorMessage;
 			LoadString( strFormat, IDS_BT_TRACKER_MULTI );
-			strErrorMessage.Format( strFormat, m_pTorrent.m_nTrackerIndex + 1, m_pTorrent.m_pTrackerList.GetCount() );
+			strErrorMessage.Format( strFormat, m_pTorrent.GetTrackerIndex() + 1, m_pTorrent.GetTrackerCount() );
 			m_sTorrentTrackerError = m_sTorrentTrackerError + _T(" | ") + strErrorMessage;
 		}
 	}
@@ -954,9 +950,9 @@ BOOL CDownloadWithTorrent::CheckTorrentRatio() const
 {
 	if ( ! IsTorrent() ) return TRUE;									// Not a torrent
 	
-	if ( m_pTorrent.m_nStartDownloads == dtAlways ) return TRUE;// Torrent is set to download as needed
+	if ( m_pTorrent.m_nStartDownloads == CBTInfo::dtAlways ) return TRUE;// Torrent is set to download as needed
 
-	if ( m_pTorrent.m_nStartDownloads == dtWhenRatio )			// Torrent is set to download only when ratio is okay
+	if ( m_pTorrent.m_nStartDownloads == CBTInfo::dtWhenRatio )			// Torrent is set to download only when ratio is okay
 	{
 		if ( m_nTorrentUploaded > m_nTorrentDownloaded ) return TRUE;	// Ratio OK
 		if ( GetVolumeComplete() < 5 * 1024 * 1024 ) return TRUE;		// Always get at least 5 MB so you have something to upload	

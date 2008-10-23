@@ -51,11 +51,9 @@ protected:
 	BOOL m_bMD5Trusted;
 	BOOL m_bBTHTrusted;
 
-	BOOL	Commit();
-
 	virtual void DoDataExchange(CDataExchange* pDX);
 	virtual BOOL OnInitDialog();
-	virtual void OnOK();
+	virtual BOOL OnApply();
 
 	DECLARE_MESSAGE_MAP()
 };

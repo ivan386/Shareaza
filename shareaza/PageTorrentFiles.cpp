@@ -28,6 +28,7 @@
 #include "PageTorrentFiles.h"
 #include "Skin.h"
 #include "Transfers.h"
+#include "Downloads.h"
 #include "CtrlLibraryTip.h"
 
 #ifdef _DEBUG
@@ -68,14 +69,22 @@ void CTorrentFilesPage::DoDataExchange(CDataExchange* pDX)
 
 BOOL CTorrentFilesPage::OnInitDialog()
 {
-	CPropertyPageAdv::OnInitDialog();
+	if ( ! CPropertyPageAdv::OnInitDialog() )
+		return FALSE;
+
+	CSingleLock oLock( &Transfers.m_pSection );
+	if ( ! oLock.Lock( 250 ) )
+		return FALSE;
+
+	CDownload* pDownload = ((CDownloadSheet*)GetParent())->m_pDownload;
+	if ( ! Downloads.Check( pDownload ) || ! pDownload->IsTorrent() )
+		return FALSE;
+	
+	CBTInfo& oInfo = pDownload->m_pTorrent;
 
 	auto_ptr< CCoolTipCtrl > pTip( new CLibraryTipCtrl );
 	pTip->Create( this, &Settings.Interface.TipDownloads );
 	m_wndFiles.EnableTips( pTip );
-
-	CSingleLock pLock( &Transfers.m_pSection, TRUE );
-	CBTInfo* pInfo = &((CDownloadSheet*)GetParent())->m_pDownload->m_pTorrent;
 
 	CRect rc;
 	m_wndFiles.GetClientRect( &rc );
@@ -94,9 +103,9 @@ BOOL CTorrentFilesPage::OnInitDialog()
 		COLUMN_MAP( CBTInfo::prHigh,		LoadString( IDS_PRIORITY_HIGH ) )
 	END_COLUMN_MAP( m_wndFiles, 3 )
 
-	for ( POSITION pos = pInfo->m_pFiles.GetHeadPosition(); pos ; )
+	for ( POSITION pos = oInfo.m_pFiles.GetHeadPosition(); pos ; )
 	{
-		CBTInfo::CBTFile* pFile = pInfo->m_pFiles.GetNext( pos );
+		CBTInfo::CBTFile* pFile = oInfo.m_pFiles.GetNext( pos );
 		
 		LV_ITEM pItem = {};
 		pItem.mask		= LVIF_TEXT|LVIF_IMAGE|LVIF_PARAM;
@@ -117,30 +126,40 @@ BOOL CTorrentFilesPage::OnInitDialog()
 	return TRUE;
 }
 
-void CTorrentFilesPage::OnOK()
+BOOL CTorrentFilesPage::OnApply()
 {
-	CSingleLock pLock( &Transfers.m_pSection, TRUE );
-	CBTInfo* pInfo = &((CDownloadSheet*)GetParent())->m_pDownload->m_pTorrent;
+	CSingleLock oLock( &Transfers.m_pSection );
+	if ( ! oLock.Lock( 250 ) )
+		return FALSE;
+
+	CDownload* pDownload = ((CDownloadSheet*)GetParent())->m_pDownload;
+	if ( ! Downloads.Check( pDownload ) || ! pDownload->IsTorrent() )
+		return FALSE;
+
+	CBTInfo& oInfo = pDownload->m_pTorrent;
 
 	for ( int i = 0; i < m_wndFiles.GetItemCount(); ++i )
 	{
 		CBTInfo::CBTFile* pFile = (CBTInfo::CBTFile*)m_wndFiles.GetItemData( i );
 		
 		// Check if file still valid
-		if ( POSITION pos = pInfo->m_pFiles.Find( pFile ) )
+		if ( POSITION pos = oInfo.m_pFiles.Find( pFile ) )
 		{
 			pFile->SetPriority( m_wndFiles.GetColumnData( i, 3 ) );
 		}
 	}
 
-	CPropertyPageAdv::OnOK();
+	return CPropertyPageAdv::OnApply();
 }
 
 void CTorrentFilesPage::OnTimer(UINT_PTR nIDEvent) 
 {
 	CPropertyPageAdv::OnTimer( nIDEvent );
 
-	Update();
+	if ( static_cast< CPropertySheet* >( GetParent() )->GetActivePage() == this )
+	{
+		Update();
+	}
 }
 
 void CTorrentFilesPage::Update()
@@ -149,7 +168,11 @@ void CTorrentFilesPage::Update()
 	if ( ! oLock.Lock( 250 ) )
 		return;
 
-	CBTInfo* pInfo = &((CDownloadSheet*)GetParent())->m_pDownload->m_pTorrent;
+	CDownload* pDownload = ((CDownloadSheet*)GetParent())->m_pDownload;
+	if ( ! Downloads.Check( pDownload ) || ! pDownload->IsTorrent() )
+		return;
+
+	CBTInfo& oInfo = pDownload->m_pTorrent;
 
 	for ( int i = 0; i < m_wndFiles.GetItemCount(); ++i )
 	{
@@ -158,7 +181,7 @@ void CTorrentFilesPage::Update()
 		CString sCompleted;
 
 		// Check if file still valid
-		if ( POSITION pos = pInfo->m_pFiles.Find( pFile ) )
+		if ( POSITION pos = oInfo.m_pFiles.Find( pFile ) )
 		{
 			float fProgress = pFile->GetProgress();
 			if ( fProgress >= 0.0 )

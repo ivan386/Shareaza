@@ -1,7 +1,7 @@
 //
 // PagePropertyAdv.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2006.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -31,22 +31,16 @@ public:
 	CPropertyPageAdv(UINT nIDD);
 	virtual ~CPropertyPageAdv();
 
-// Members
 protected:
-	CToolTipCtrl m_wndToolTip;
-
-public:
 	int	m_nIcon;
 
-// Implementation
-private:
 	void	PaintStaticHeader(CDC* pDC, CRect* prc, LPCTSTR psz);
 
-protected:
 	virtual BOOL OnInitDialog();
-	virtual BOOL PreTranslateMessage(MSG* pMsg);
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
+
 	afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
 	afx_msg void OnPaint();
+
 	DECLARE_MESSAGE_MAP()
 };

@@ -485,7 +485,7 @@ BOOL CBTClient::OnHandshake2()
 			ASSERT( m_pDownloadTransfer == NULL );
 
 			// Download from uploaders, unless the user has turned off downloading for this torrent
-			if ( m_pDownload->m_pTorrent.m_nStartDownloads != dtNever )
+			if ( m_pDownload->m_pTorrent.m_nStartDownloads != CBTInfo::dtNever )
 			{
 				// This seems to be set to null sometimes... DownloadwithTorrent: if ( pSource->m_pTransfer != NULL )
 				// May just be clients sending duplicate connection requests, though...

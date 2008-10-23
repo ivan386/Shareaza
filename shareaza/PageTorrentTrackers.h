@@ -38,7 +38,6 @@ public:
 	enum { IDD = IDD_TORRENT_TRACKERS };
 
 protected:
-	CDownload*		m_pDownload;
 	CString			m_sTracker;
 	CButton			m_wndRefresh;
 	CEdit			m_wndComplete;
@@ -48,16 +47,21 @@ protected:
 	CHttpRequest	m_pRequest;
 	int				m_nComplete;
 	int				m_nIncomplete;
+	CDownload*		m_pDownload;
 
-	void			OnRun();
-	BOOL			OnTree(CBENode* pNode);
+	void OnRun();
+	BOOL OnTree(CBENode* pNode);
 
-	virtual void	DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	virtual BOOL	OnInitDialog();
-	virtual void	OnOK();
-	afx_msg void	OnTorrentRefresh();
-	afx_msg void	OnTimer(UINT_PTR nIDEvent);
-	afx_msg void	OnDestroy();
+	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
+	virtual BOOL OnInitDialog();
+	virtual BOOL OnApply();
+
+	afx_msg void OnTorrentRefresh();
+	afx_msg void OnTimer(UINT_PTR nIDEvent);
+	afx_msg void OnDestroy();
+	afx_msg void OnEnChangeTorrentTracker();
+	afx_msg void OnNMClickTorrentTrackers(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg void OnCbnSelchangeTorrentTrackermode();
 
 	DECLARE_MESSAGE_MAP()
 };

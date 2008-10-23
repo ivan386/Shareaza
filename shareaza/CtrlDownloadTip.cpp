@@ -579,7 +579,7 @@ void CDownloadTipCtrl::PrepareDownloadInfo(CDownload* pDownload)
 	}
 
 	if ( pDownload->IsTorrent() )
-		m_sURL = pDownload->m_pTorrent.m_sTracker;
+		m_sURL = pDownload->m_pTorrent.GetTrackerAddress();
 
 	m_sMD5 = pDownload->m_oMD5.toShortUrn();
 	if ( m_sMD5.GetLength() )

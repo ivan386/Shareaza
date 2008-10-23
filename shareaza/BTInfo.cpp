@@ -37,6 +37,11 @@ static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
 #endif
 
+// Check if a string is a valid path/file name.
+static bool IsValid(const CString& str)
+{
+	return ! str.IsEmpty() && ( str.Find( _T('?') ) == -1 ) && ( str != _T("#ERROR#") );
+}
 
 //////////////////////////////////////////////////////////////////////
 // CBTInfo construction
@@ -48,7 +53,6 @@ CBTInfo::CBTInfo() :
 ,	m_pBlockBTH			( NULL )
 ,	m_nTotalUpload		( 0ull )
 ,	m_nTotalDownload	( 0ull )
-,	m_pAnnounceTracker	( NULL )
 ,	m_nTrackerIndex		( -1 )
 ,	m_nTrackerMode		( tNull )
 ,	m_nEncoding			( Settings.BitTorrent.TorrentCodePage )
@@ -67,7 +71,6 @@ CBTInfo::CBTInfo(const CBTInfo& oSource) :
 ,	m_pBlockBTH			( NULL )
 ,	m_nTotalUpload		( 0ull )
 ,	m_nTotalDownload	( 0ull )
-,	m_pAnnounceTracker	( NULL )
 ,	m_nTrackerIndex		( -1 )
 ,	m_nTrackerMode		( tNull )
 ,	m_nEncoding			( Settings.BitTorrent.TorrentCodePage )
@@ -127,24 +130,9 @@ void CBTInfo::Clear()
 	m_nBlockSize	= 0;
 	m_nBlockCount	= 0;
 	m_pBlockBTH 	= NULL;
-
-	// Delete trackers
-	if ( IsMultiTracker() )
-	{
-		while ( !m_pTrackerList.IsEmpty() )
-		{
-			CBTTracker* pTracker = m_pTrackerList.GetAt( 0 );
-			delete pTracker;
-			m_pTrackerList.RemoveAt( 0 );
-		}
-	}
-	else if ( m_pAnnounceTracker != NULL )
-	{
-		delete m_pAnnounceTracker;
-	}
-	m_pAnnounceTracker	= NULL;
-	m_nTrackerIndex		= -1;
-	m_nTrackerMode		= tNull;
+	m_oTrackers.RemoveAll();
+	m_nTrackerIndex	= -1;
+	m_nTrackerMode	= tNull;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -165,19 +153,19 @@ CBTInfo& CBTInfo::Copy(const CBTInfo& oSource)
 	m_nBlockCount		= oSource.m_nBlockCount;
 	m_nTotalUpload		= oSource.m_nTotalUpload;
 	m_nTotalDownload	= oSource.m_nTotalDownload;
-
 	m_sName				= oSource.m_sName;
 
-	m_sTracker			= oSource.m_sTracker;
+	m_oTrackers.RemoveAll();
+	for ( INT_PTR i = 0; i < oSource.m_oTrackers.GetCount(); ++i )
+		m_oTrackers.Add( oSource.m_oTrackers[ i ] );
+
 	m_nTrackerIndex		= oSource.m_nTrackerIndex;
 	m_nTrackerMode		= oSource.m_nTrackerMode;
-
 	m_nEncoding			= oSource.m_nEncoding;
 	m_sComment			= oSource.m_sComment;
 	m_tCreationDate		= oSource.m_tCreationDate;
 	m_sCreatedBy		= oSource.m_sCreatedBy;
 	m_bPrivate			= oSource.m_bPrivate;
-
 	m_nStartDownloads	= oSource.m_nStartDownloads;
 	
 	if ( oSource.m_pBlockBTH != NULL )
@@ -193,31 +181,20 @@ CBTInfo& CBTInfo::Copy(const CBTInfo& oSource)
 		m_pFiles.AddTail( pBTFile );
 	}
 
-	// Copy announce trackers
-	if ( oSource.IsMultiTracker() )
-	{
-		for ( int nCount = 0 ; nCount < oSource.m_pTrackerList.GetCount() ; nCount++ )
-		{
-			CBTTracker* pTracker = new CBTTracker( *oSource.m_pTrackerList.GetAt( nCount ) );
-			m_pTrackerList.Add( pTracker );
-		}
-		m_pAnnounceTracker = m_pTrackerList.GetAt( m_nTrackerIndex );
-	}
-	else if ( oSource.m_pAnnounceTracker != NULL ) 
-	{
-		m_pAnnounceTracker = new CBTTracker( *oSource.m_pAnnounceTracker );
-	}
-
 	return *this;
 }
 
 //////////////////////////////////////////////////////////////////////
 // CBTInfo serialize
 
+#define BTINFO_SER_VERSION 7
+// History:
+// 7 - redesigned tracker list (ryo-oh-ki)
+
 void CBTInfo::Serialize(CArchive& ar)
 {
-	int nVersion = 6;
-	
+	int nVersion = BTINFO_SER_VERSION;
+
 	if ( ar.IsStoring() )
 	{
 		ar << nVersion;
@@ -248,27 +225,28 @@ void CBTInfo::Serialize(CArchive& ar)
 		for ( POSITION pos = m_pFiles.GetHeadPosition(); pos ; )
 			m_pFiles.GetNext( pos )->Serialize( ar, nVersion );
 		
-		ar << m_sTracker;
+		// removed in v.7
+		// ar << m_sTracker;
 
 		ar << m_nTrackerIndex;
 		ar << m_nTrackerMode;
 
+		// removed in v.7
+		//if ( IsMultiTracker() || m_pAnnounceTracker == NULL )
+		//{
+		//	ar.WriteCount( 0 );
+		//}
+		//else
+		//{
+		//	ar.WriteCount( 1 );
+		//	m_pAnnounceTracker->Serialize( ar, nVersion );
+		//}
 
-		if ( IsMultiTracker() || m_pAnnounceTracker == NULL )
-		{
-			ar.WriteCount( 0 );
-		}
-		else 
-		{
-			ar.WriteCount( 1 );
-			m_pAnnounceTracker->Serialize( ar, nVersion );
-		}
-
-		int nTrackers = (int)m_pTrackerList.GetCount();
+		int nTrackers = (int)m_oTrackers.GetCount();
 		ar.WriteCount( nTrackers );
 		for ( int nTracker = 0 ; nTracker < nTrackers ; nTracker++ )
 		{
-			m_pTrackerList[nTracker]->Serialize( ar, nVersion );
+			m_oTrackers[ nTracker ].Serialize( ar, nVersion );
 		}
 	}
 	else
@@ -325,43 +303,42 @@ void CBTInfo::Serialize(CArchive& ar)
 			nOffset += pBTFile->m_nSize;
 		}
 		
-		ar >> m_sTracker;
+		if ( nVersion < 7 )
+		{
+			CString sTracker;
+			ar >> sTracker;
+			SetTracker( sTracker );
+		}
 
 		if ( nVersion >= 4 )
 		{
-			int nTrackers;
 			ar >> m_nTrackerIndex;
 			ar >> m_nTrackerMode;
 
-			nTrackers = (int)ar.ReadCount();
-			if ( nTrackers )
+			if ( nVersion < 7 )
 			{
-				m_pAnnounceTracker = new CBTTracker;
-				m_pAnnounceTracker->Serialize( ar, nVersion );
+				int nTrackers = (int)ar.ReadCount();
+				if ( nTrackers )
+				{
+					CBTTracker oTracker;
+					oTracker.Serialize( ar, nVersion );
+					AddTracker( oTracker );
+				}
 			}
 
-			nTrackers = (int)ar.ReadCount();
+			int nTrackers = (int)ar.ReadCount();
 			if ( nTrackers )
 			{
 				for ( int nTracker = 0 ; nTracker < nTrackers ; nTracker++ )
 				{
-					CBTTracker* pTracker = new CBTTracker;
-					pTracker->Serialize( ar, nVersion );
-					m_pTrackerList.Add( pTracker );
+					CBTTracker oTracker;
+					oTracker.Serialize( ar, nVersion );
+					AddTracker( oTracker );
 				}
-				SetTrackerNext();
 			}
 		}
 
-		// Compatability fix for torrents that haven't been upgraded properly
-		// from before version 4.
-		// If there is a Tracker URL but no Tracker then create the Tracker
-		if ( !m_pAnnounceTracker && !m_sTracker.IsEmpty() )
-		{
-			m_nTrackerMode = tSingle;
-			m_pAnnounceTracker = new CBTTracker;
-			m_pAnnounceTracker->m_sAddress = m_sTracker;
-		}
+		SetTrackerNext();
 	}
 }
 
@@ -633,10 +610,10 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 					for ( POSITION pos = pTrackers.GetHeadPosition() ; pos ; )
 					{
 						// Create the tracker and add it to the list
-						CBTTracker* pTracker	= new CBTTracker;
-						pTracker->m_sAddress	= pTrackers.GetNext( pos );
-						pTracker->m_nTier		= nTier;
-						m_pTrackerList.Add( pTracker );
+						CBTTracker oTracker;
+						oTracker.m_sAddress	= pTrackers.GetNext( pos );
+						oTracker.m_nTier	= nTier;
+						AddTracker( oTracker );
 					}
 					// Delete temporary storage
 					pTrackers.RemoveAll();
@@ -657,13 +634,11 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 		if ( _tcsncicmp( (LPCTSTR)strTracker, _T("http://"), 7 ) == 0 ) 
 		{
 			// Announce node is ignored by multi-tracker torrents
-			if ( !IsMultiTracker() )
+			if ( m_oTrackers.IsEmpty() )
 			{
 				// Set the torrent to be a single-tracker torrent
-				m_nTrackerMode = tSingle;
-				m_sTracker = strTracker;
-				m_pAnnounceTracker = new CBTTracker;
-				m_pAnnounceTracker->m_sAddress = strTracker;
+				SetTracker( strTracker );
+				SetTrackerMode( tSingle );
 			}
 		}
 		// else if ( _tcsncicmp( (LPCTSTR)strTracker, _T("udp://"), 6 ) == 0 )
@@ -1074,119 +1049,204 @@ BOOL CBTInfo::FinishBlockTest(DWORD nBlock)
 void CBTInfo::SetTrackerAccess(DWORD tNow)
 {
 	// Check that there should be a tracker
-	ASSERT ( m_nTrackerMode != tNull );
-	
-	// Can't do anything with user-entered trackers
-	if ( m_nTrackerMode == tCustom )
+	if ( m_oTrackers.IsEmpty() )
 		return;
 
-	// Check that there is a tracker
-	ASSERT ( m_pAnnounceTracker );
+	ASSERT( m_nTrackerIndex >= 0 && m_nTrackerIndex < m_oTrackers.GetCount() );
 
 	// Set the current tracker's access time
-	m_pAnnounceTracker->m_tLastAccess = tNow;
-
-	return;
+	m_oTrackers[ m_nTrackerIndex ].m_tLastAccess = tNow;
 }
 
 void CBTInfo::SetTrackerSucceeded(DWORD tNow)
 {
 	// Check that there should be a tracker
-	ASSERT ( m_nTrackerMode != tNull );
-
-	// Can't do anything with user-entered trackers
-	if ( m_nTrackerMode == tCustom )
+	if ( m_oTrackers.IsEmpty() )
 		return;
 
-	// Check that there is a tracker
-	ASSERT ( m_pAnnounceTracker );
+	ASSERT( m_nTrackerIndex >= 0 && m_nTrackerIndex < m_oTrackers.GetCount() );
 
 	// Set the current tracker's success time
-	m_pAnnounceTracker->m_tLastSuccess = tNow;
+	m_oTrackers[ m_nTrackerIndex ].m_tLastSuccess = tNow;
 
 	// Reset the failure count
-	m_pAnnounceTracker->m_nFailures = 0;
-
-	return;
+	m_oTrackers[ m_nTrackerIndex ].m_nFailures = 0;
 }
 
 void CBTInfo::SetTrackerRetry(DWORD tTime)
 {
 	// Check that there should be a tracker
-	ASSERT ( m_nTrackerMode != tNull );
-	
-	// Can't do anything with user-entered trackers
-	if ( m_nTrackerMode == tCustom )
+	if ( m_oTrackers.IsEmpty() )
 		return;
 
-	// Check that there is a tracker
-	ASSERT ( m_pAnnounceTracker );
+	ASSERT( m_nTrackerIndex >= 0 && m_nTrackerIndex < m_oTrackers.GetCount() );
 
 	// Set the current tracker's next allowable access attempt time
-	m_pAnnounceTracker->m_tNextTry = tTime;
-
-	return;
+	m_oTrackers[ m_nTrackerIndex ].m_tNextTry = tTime;
 }
 
 void CBTInfo::SetTrackerNext(DWORD tTime)
 {
-	// Make sure this is a multitracker torrent
-	if ( !IsMultiTracker() )
+	if ( m_oTrackers.IsEmpty() )
+	{
+		m_nTrackerMode = tNull;
+		m_nTrackerIndex = -1;
 		return;
+	}
+
+	// Make sure this is a multitracker torrent
+	if ( m_oTrackers.GetCount() < 2 )
+	{
+		m_nTrackerMode = tSingle;
+		m_nTrackerIndex = 0;
+		return;
+	}
 
 	// Get current time
-	if ( !tTime )
+	if ( ! tTime )
 		tTime = GetTickCount();
 
 	// Set current mode to searching
 	m_nTrackerMode = tMultiFinding;
 
-	// Start with the first tracker in the list
-	m_nTrackerIndex = 0;
-
-	// Assign the first track as the current one
-	m_pAnnounceTracker = m_pTrackerList.GetAt( m_nTrackerIndex );
-
 	// Search through the list for an available tracker or the first one that
 	// will become available
-	for ( int nTracker = 0 ; nTracker < m_pTrackerList.GetCount() ; nTracker++ )
+	int nBestTracker = 0;
+	for ( int nTracker = 0; nTracker < m_oTrackers.GetCount(); nTracker++ )
 	{
 		// Get the next tracker in the list
-		CBTTracker* pTracker = m_pTrackerList.GetAt( nTracker );
-
-		// If it's available, reset the retry time
-		if ( pTracker->m_tNextTry && pTracker->m_tNextTry < tTime )
-			pTracker->m_tNextTry = 0;
+		CBTTracker& oTracker = m_oTrackers.GetAt( nTracker );
 
 		// If this tracker will become available before the current one, make
 		// it the current tracker
-		if ( m_pAnnounceTracker->m_tNextTry > pTracker->m_tNextTry )
+		if ( oTracker.m_tNextTry < m_oTrackers[ nBestTracker ].m_tNextTry )
 		{
-			m_pAnnounceTracker = pTracker;
-			m_nTrackerIndex = nTracker;
+			nBestTracker = nTracker;
 		}
 	}
 
-	// Check that a tracker was selected
-	ASSERT ( m_pAnnounceTracker );
-
-	// Set the tracker name to the new one
-	m_sTracker = m_pAnnounceTracker->m_sAddress;
-
-	return;
+	m_nTrackerIndex = nBestTracker;
 }
 
 DWORD CBTInfo::GetTrackerFailures() const
 {
-	// Can't do anything with user-entered trackers
-	if ( m_nTrackerMode <= tCustom )
+	if ( ! HasTracker() )
 		return 0;
 
-	// Check that there is a tracker
-	ASSERT ( m_pAnnounceTracker );
+	ASSERT( m_nTrackerIndex >= 0 && m_nTrackerIndex < m_oTrackers.GetCount() );
 
 	// Return the # of failures
-	return m_pAnnounceTracker->m_nFailures;
+	return m_oTrackers[ m_nTrackerIndex ].m_nFailures;
+}
+
+CString CBTInfo::GetTrackerAddress(int nTrackerIndex) const	
+{
+	if ( m_oTrackers.IsEmpty() )
+		return CString();
+
+	if ( nTrackerIndex == -1 )
+		nTrackerIndex = m_nTrackerIndex;
+
+	if ( nTrackerIndex == -1 )
+		return CString();
+
+	ASSERT( nTrackerIndex >= 0 && nTrackerIndex < m_oTrackers.GetCount() );
+
+	return m_oTrackers[ nTrackerIndex ].m_sAddress;
+}
+
+TRISTATE CBTInfo::GetTrackerStatus(int nTrackerIndex) const
+{
+	if ( m_oTrackers.IsEmpty() )
+		return TRI_UNKNOWN;
+
+	if ( nTrackerIndex == -1 )
+		nTrackerIndex = m_nTrackerIndex;
+
+	if ( nTrackerIndex == -1 )
+		return TRI_UNKNOWN;
+
+	ASSERT( nTrackerIndex >= 0 && nTrackerIndex < m_oTrackers.GetCount() );
+
+	if ( ! m_oTrackers[ nTrackerIndex ].m_tNextTry &&
+		 ! m_oTrackers[ nTrackerIndex ].m_tLastSuccess )
+		return TRI_UNKNOWN;
+	else if ( m_oTrackers[ nTrackerIndex ].m_tNextTry >
+		m_oTrackers[ nTrackerIndex ].m_tLastSuccess )
+		return TRI_FALSE;
+	else
+		return TRI_TRUE;
+}
+
+int CBTInfo::GetTrackerTier(int nTrackerIndex) const
+{
+	if ( m_oTrackers.IsEmpty() )
+		return 0;
+
+	if ( nTrackerIndex == -1 )
+		nTrackerIndex = m_nTrackerIndex;
+
+	if ( nTrackerIndex == -1 )
+		return 0;
+
+	ASSERT( nTrackerIndex >= 0 && nTrackerIndex < m_oTrackers.GetCount() );
+
+	return m_oTrackers[ nTrackerIndex ].m_nTier;
+}
+
+DWORD CBTInfo::GetTrackerNextTry() const
+{
+	if ( ! HasTracker() )
+		return (DWORD)-1;
+
+	ASSERT( m_nTrackerIndex >= 0 && m_nTrackerIndex < m_oTrackers.GetCount() );
+
+	return m_oTrackers[ m_nTrackerIndex ].m_tNextTry;
+}
+
+void CBTInfo::OnTrackerFailure()
+{
+	if ( ! HasTracker() )
+		return;
+
+	ASSERT( m_nTrackerIndex >= 0 && m_nTrackerIndex < m_oTrackers.GetCount() );
+
+	m_oTrackers[ m_nTrackerIndex ].m_nFailures++;
+}
+
+void CBTInfo::SetTracker(const CString& sTracker)
+{
+	CBTTracker oTracker;
+	oTracker.m_sAddress = sTracker;
+	m_nTrackerIndex = AddTracker( oTracker );
+}
+
+void CBTInfo::SetTrackerMode(int nTrackerMode)
+{
+	// Check it's valid
+	INT_PTR nCount = m_oTrackers.GetCount();
+	if ( ( nTrackerMode == CBTInfo::tMultiFound		&& nCount > 1 ) ||
+		 ( nTrackerMode == CBTInfo::tMultiFinding	&& nCount > 1 ) ||
+		 ( nTrackerMode == CBTInfo::tSingle			&& nCount > 0 ) ||
+		   nTrackerMode == CBTInfo::tNull )
+	{
+		m_nTrackerMode = nTrackerMode;
+
+		if ( nTrackerMode == CBTInfo::tNull )
+			m_nTrackerIndex = -1;
+		else if ( m_nTrackerIndex == -1 )
+			SetTrackerNext();
+	}
+}
+
+int CBTInfo::AddTracker(const CBTTracker& oTracker)
+{
+	for ( int i = 0; i < (int)m_oTrackers.GetCount(); ++i )
+		if ( m_oTrackers[ i ].m_sAddress == oTracker.m_sAddress )
+			// Already have
+			return i;
+
+	return (int)m_oTrackers.Add( oTracker );
 }
 
 //////////////////////////////////////////////////////////////////////

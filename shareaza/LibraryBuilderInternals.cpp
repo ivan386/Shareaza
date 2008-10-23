@@ -4039,8 +4039,8 @@ bool CLibraryBuilderInternals::ReadTorrent(DWORD nIndex, HANDLE /*hFile*/, LPCTS
 		{
 			if ( oTorrent.m_oBTH )
 				pXML->AddAttribute( L"hash", oTorrent.m_oBTH.toString() );
-			if ( oTorrent.m_sTracker.GetLength() )
-				pXML->AddAttribute( L"tracker", oTorrent.m_sTracker );
+			if ( oTorrent.HasTracker() )
+				pXML->AddAttribute( L"tracker", oTorrent.GetTrackerAddress() );
 			if ( oTorrent.m_nEncoding )
 			{
 				CString sEncoding;

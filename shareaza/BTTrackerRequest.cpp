@@ -49,7 +49,7 @@ CBTTrackerRequest::CBTTrackerRequest(CDownloadWithTorrent* pDownload, LPCTSTR ps
 	CString strURL;
 	// Create the basic URL
 	strURL.Format( _T("%s?info_hash=%s&peer_id=%s&port=%i&uploaded=%I64i&downloaded=%I64i&left=%I64i&compact=1"),
-		pDownload->m_pTorrent.m_sTracker,
+		pDownload->m_pTorrent.GetTrackerAddress(),
 		Escape( pDownload->m_oBTH ),
 		Escape( m_pDownload->m_pPeerID ),
 		Network.m_pHost.sin_port ? (int)htons( Network.m_pHost.sin_port ) : (int)Settings.Connection.InPort,
