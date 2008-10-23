@@ -167,7 +167,7 @@ public:
 	// Get completed size of defined range (in bytes)
 	QWORD GetCompleted(QWORD nOffset, QWORD nLength) const;
 	
-	const Fragments::List& GetEmptyFragmentList() const
+	inline Fragments::List GetEmptyFragmentList() const
 	{
 		CQuickLock oLock( m_pSection );
 

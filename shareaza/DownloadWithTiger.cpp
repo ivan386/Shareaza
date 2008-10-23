@@ -440,9 +440,9 @@ BOOL CDownloadWithTiger::FindNewValidationBlock(int nHash)
 		DWORD nRetry = 0xFFFFFFFF;
 		QWORD nPrevious = 0;
 
-		Fragments::List::const_iterator pEnd = m_pFile->GetEmptyFragmentList().end();
-		for ( Fragments::List::const_iterator pFragment = m_pFile->GetEmptyFragmentList().begin();
-			pFragment != pEnd; ++pFragment )
+		Fragments::List oList( GetEmptyFragmentList() );
+		for ( Fragments::List::const_iterator pFragment = oList.begin();
+			pFragment != oList.end(); ++pFragment )
 		{
 			if ( pFragment->begin() - nPrevious >= nBlockSize )
 			{

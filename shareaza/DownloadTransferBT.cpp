@@ -316,8 +316,9 @@ void CDownloadTransferBT::ShowInterest()
 	}
 	else if ( QWORD nBlockSize = m_pDownload->m_pTorrent.m_nBlockSize )
 	{
-		for ( Fragments::List::const_iterator pFragment = m_pDownload->GetEmptyFragmentList().begin();
-			!bInterested && pFragment != m_pDownload->GetEmptyFragmentList().end(); ++pFragment )
+		Fragments::List oList( m_pDownload->GetEmptyFragmentList() );
+		for ( Fragments::List::const_iterator pFragment = oList.begin();
+			!bInterested && pFragment != oList.end(); ++pFragment )
 		{
 			DWORD nBlock = DWORD( pFragment->begin() / nBlockSize );
 

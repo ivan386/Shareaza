@@ -22,9 +22,7 @@
 #pragma once
 
 #include "DownloadWithTransfers.h"
-#include "FileFragments.hpp"
-
-class CFragmentedFile;
+#include "FragmentedFile.h"
 
 class CDownloadWithFile : public CDownloadWithTransfers
 {
@@ -46,8 +44,12 @@ public:
 	QWORD			GetVolumeRemaining() const;
 	DWORD			GetTimeRemaining() const;
 	CString			GetDisplayName() const;
-public:
-	const Fragments::List& GetEmptyFragmentList() const;
+
+	inline Fragments::List GetEmptyFragmentList() const
+	{
+		return m_pFile ? m_pFile->GetEmptyFragmentList() : Fragments::List( 0 );
+	}
+
 	BOOL			GetFragment(CDownloadTransfer* pTransfer);
 	BOOL			IsPositionEmpty(QWORD nOffset);
 	BOOL			AreRangesUseful(const Fragments::List& oAvailable);
@@ -59,6 +61,7 @@ public:
 	BOOL			SubmitData(QWORD nOffset, LPBYTE pData, QWORD nLength);
 	QWORD			EraseRange(QWORD nOffset, QWORD nLength);
 	BOOL			MakeComplete();
+
 protected:
 	virtual CString	GetAvailableRanges() const;
 	BOOL			OpenFile();
@@ -67,6 +70,7 @@ protected:
 	BOOL			RunFile(DWORD tNow);
 	BOOL			AppendMetadata();
 	virtual void	Serialize(CArchive& ar, int nVersion);
+
 private:
 	Fragments::List	GetPossibleFragments(const Fragments::List& oAvailable, Fragments::Fragment& oLargest);
 	BOOL			AppendMetadataID3v1(HANDLE hFile, CXMLElement* pXML);

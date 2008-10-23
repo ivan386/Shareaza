@@ -165,9 +165,10 @@ void CFragmentBar::DrawDownload(CDC* pDC, CRect* prcBar, CDownload* pDownload, C
 			bvSuccess ? CoolInterface.m_crFragmentPass : CoolInterface.m_crFragmentFail );
 		nvOffset += nvLength;
 	}
-		
-	for ( Fragments::List::const_iterator pFragment = pDownload->GetEmptyFragmentList().begin();
-		pFragment != pDownload->GetEmptyFragmentList().end(); ++pFragment )
+	
+	Fragments::List oList( pDownload->GetEmptyFragmentList() );
+	for ( Fragments::List::const_iterator pFragment = oList.begin();
+		pFragment != oList.end(); ++pFragment )
 	{
 		DrawFragment( pDC, prcBar, pDownload->m_nSize,
 			pFragment->begin(), pFragment->size(), crNatural, FALSE );

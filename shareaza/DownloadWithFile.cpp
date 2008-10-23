@@ -229,15 +229,6 @@ CString CDownloadWithFile::GetDisplayName() const
 }
 
 //////////////////////////////////////////////////////////////////////
-// CDownloadWithFile get the first empty fragment
-
-const Fragments::List& CDownloadWithFile::GetEmptyFragmentList() const
-{
-	static const Fragments::List dummy( 0 );
-	return m_pFile ? m_pFile->GetEmptyFragmentList() : dummy;
-}
-
-//////////////////////////////////////////////////////////////////////
 // CDownloadWithFile get a list of possible download fragments
 
 Fragments::List CDownloadWithFile::GetPossibleFragments(
@@ -248,11 +239,11 @@ Fragments::List CDownloadWithFile::GetPossibleFragments(
 
 	if ( oAvailable.empty() )
 	{
-		oPossible = m_pFile->GetEmptyFragmentList();
+		oPossible = GetEmptyFragmentList();
 	}
 	else
 	{
-		Fragments::List tmp( inverse( m_pFile->GetEmptyFragmentList() ) );
+		Fragments::List tmp( inverse( GetEmptyFragmentList() ) );
 		oPossible.erase( tmp.begin(), tmp.end() );
 	}
 
@@ -388,7 +379,7 @@ BOOL CDownloadWithFile::AreRangesUseful(const Fragments::List& oAvailable)
 	if ( m_pFile == NULL || !m_pFile->IsValid() )
 		return FALSE;
 
-	return m_pFile->GetEmptyFragmentList().overlaps( oAvailable );
+	return GetEmptyFragmentList().overlaps( oAvailable );
 }
 
 BOOL CDownloadWithFile::IsRangeUseful(QWORD nOffset, QWORD nLength)
@@ -396,7 +387,7 @@ BOOL CDownloadWithFile::IsRangeUseful(QWORD nOffset, QWORD nLength)
 	if ( m_pFile == NULL || !m_pFile->IsValid() )
 		return FALSE;
 
-	return m_pFile->GetEmptyFragmentList().overlaps( Fragments::Fragment( nOffset, nOffset + nLength ) );
+	return GetEmptyFragmentList().overlaps( Fragments::Fragment( nOffset, nOffset + nLength ) );
 }
 
 // like IsRangeUseful( ) but take the amount of useful ranges relative to the amount of garbage
@@ -414,8 +405,7 @@ BOOL CDownloadWithFile::IsRangeUsefulEnough(CDownloadTransfer* pTransfer, QWORD 
 		if ( !pTransfer->m_bRecvBackwards ) nOffset += nLength - nLength2;
 		nLength = nLength2;
 	}
-	return m_pFile->GetEmptyFragmentList().overlaps(
-		Fragments::Fragment( nOffset, nOffset + nLength ) );
+	return GetEmptyFragmentList().overlaps( Fragments::Fragment( nOffset, nOffset + nLength ) );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -428,7 +418,7 @@ CString CDownloadWithFile::GetAvailableRanges() const
 	if ( m_pFile == NULL || !m_pFile->IsValid() )
 		return strRanges;
 
-	const Fragments::List oAvailable = inverse( m_pFile->GetEmptyFragmentList() );
+	Fragments::List oAvailable( inverse( GetEmptyFragmentList() ) );
 
 	for ( Fragments::List::const_iterator pFragment = oAvailable.begin();
 		pFragment != oAvailable.end(); ++pFragment )
@@ -463,7 +453,7 @@ BOOL CDownloadWithFile::ClipUploadRange(QWORD nOffset, QWORD& nLength) const
 
 	if ( nOffset + nLength > m_nSize ) nLength = m_nSize - nOffset;
 
-	Fragments::List::const_iterator_pair match( m_pFile->GetEmptyFragmentList().equal_range(
+	Fragments::List::const_iterator_pair match( GetEmptyFragmentList().equal_range(
 		Fragments::Fragment( nOffset, nOffset + nLength ) ) );
 
 	if ( match.first != match.second )
@@ -484,9 +474,9 @@ BOOL CDownloadWithFile::GetRandomRange(QWORD& nOffset, QWORD& nLength) const
 	if ( m_pFile == NULL || !m_pFile->IsValid() )
 		return FALSE;
 
-	if ( m_pFile->GetEmptyFragmentList().missing() == 0 ) return FALSE;
+	if ( m_pFile->GetCompleted() == 0 ) return FALSE;
 
-	Fragments::List oFilled = inverse( m_pFile->GetEmptyFragmentList() );
+	Fragments::List oFilled = inverse( GetEmptyFragmentList() );
 	Fragments::List::const_iterator pRandom = oFilled.random_range();
 
 	nOffset = pRandom->begin();
