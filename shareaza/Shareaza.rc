@@ -1829,19 +1829,19 @@ BEGIN
     EDITTEXT        IDC_TORRENT_NAME,60,14,226,12,ES_AUTOHSCROLL | ES_READONLY
     EDITTEXT        IDC_TORRENT_CREATIONDATE,60,34,74,12,ES_AUTOHSCROLL | ES_READONLY
     EDITTEXT        IDC_TORRENT_CREATEDBY,173,34,113,12,ES_AUTOHSCROLL | ES_READONLY
-    EDITTEXT        IDC_TORRENT_COMMENTS,60,53,226,76,ES_MULTILINE | ES_AUTOVSCROLL | ES_AUTOHSCROLL | ES_READONLY | WS_VSCROLL
-    EDITTEXT        IDC_TORRENT_OTHER,60,136,226,12,ES_AUTOHSCROLL | ES_READONLY
-    COMBOBOX        IDC_TORRENT_STARTDOWNLOADS,163,175,123,66,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
-    EDITTEXT        IDC_TORRENT_UPLOADTOTAL,163,194,123,12,ES_AUTOHSCROLL | ES_READONLY | NOT WS_TABSTOP
+    EDITTEXT        IDC_TORRENT_COMMENTS,60,53,226,77,ES_MULTILINE | ES_AUTOVSCROLL | ES_AUTOHSCROLL | ES_READONLY | WS_VSCROLL
+    EDITTEXT        IDC_TORRENT_OTHER,60,137,226,12,ES_AUTOHSCROLL | ES_READONLY
+    COMBOBOX        IDC_TORRENT_STARTDOWNLOADS,173,174,113,66,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_TORRENT_UPLOADTOTAL,173,194,113,12,ES_AUTOHSCROLL | ES_READONLY | NOT WS_TABSTOP
     GROUPBOX        "Torrent &Information:",-1,7,3,286,153
     LTEXT           "Name:",-1,14,14,44,12,SS_CENTERIMAGE
     LTEXT           "Created:",-1,14,34,44,12,SS_CENTERIMAGE
-    LTEXT           "By:",-1,136,34,35,12,SS_CENTERIMAGE,WS_EX_RIGHT
+    LTEXT           "By:",-1,136,34,32,12,SS_CENTERIMAGE,WS_EX_RIGHT
     LTEXT           "Comments:",-1,14,54,44,12,SS_CENTERIMAGE
-    GROUPBOX        "Transfers:",-1,7,162,286,51
-    RTEXT           "Start new download transfers:",-1,14,176,142,9
-    RTEXT           "Total Uploaded:",-1,14,195,142,9,SS_CENTERIMAGE
-    LTEXT           "Notes:",-1,14,136,46,12,SS_CENTERIMAGE
+    GROUPBOX        "Transfers:",-1,7,161,286,52
+    RTEXT           "Start new download transfers:",-1,14,175,154,9
+    RTEXT           "Total Uploaded:",-1,14,195,154,9,SS_CENTERIMAGE
+    LTEXT           "Notes:",-1,14,137,46,12,SS_CENTERIMAGE
 END
 
 IDD_TORRENT_TRACKERS DIALOGEX 0, 0, 300, 220
@@ -1854,7 +1854,7 @@ BEGIN
     EDITTEXT        IDC_TORRENT_INCOMPLETE,228,34,58,12,ES_CENTER | ES_AUTOHSCROLL | ES_READONLY | NOT WS_TABSTOP
     COMBOBOX        IDC_TORRENT_TRACKERMODE,100,53,120,66,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
     PUSHBUTTON      "&Refresh",IDC_TORRENT_REFRESH,228,53,58,14
-    CONTROL         "",IDC_TORRENT_TRACKERS,"SysListView32",LVS_REPORT | LVS_SHAREIMAGELISTS | WS_BORDER | WS_TABSTOP,7,81,286,132
+    CONTROL         "",IDC_TORRENT_TRACKERS,"SysListView32",LVS_REPORT | LVS_SHAREIMAGELISTS | WS_BORDER | WS_TABSTOP,7,82,286,131
     LTEXT           "Tracker:",IDC_STATIC,14,14,84,12,SS_CENTERIMAGE
     GROUPBOX        "&Current Tracker:",IDC_STATIC,7,3,286,71
     LTEXT           "Completed (Seeds):",IDC_STATIC,14,34,84,12,SS_CENTERIMAGE
@@ -2574,8 +2574,7 @@ BEGIN
         VERTGUIDE, 14
         VERTGUIDE, 60
         VERTGUIDE, 134
-        VERTGUIDE, 156
-        VERTGUIDE, 163
+        VERTGUIDE, 168
         VERTGUIDE, 173
         VERTGUIDE, 286
         TOPMARGIN, 7
@@ -2596,7 +2595,6 @@ BEGIN
         BOTTOMMARGIN, 213
         BOTTOMMARGIN, 212
         HORZGUIDE, 14
-        HORZGUIDE, 206
     END
 
     IDD_TORRENT_FILES, DIALOG
@@ -3024,8 +3022,6 @@ IDD_TORRENT_TRACKERS DLGINIT
 BEGIN
     IDC_TORRENT_TRACKERMODE, 0x403, 9, 0
 0x6944, 0x6173, 0x6c62, 0x6465, "\000" 
-    IDC_TORRENT_TRACKERMODE, 0x403, 7, 0
-0x7543, 0x7473, 0x6d6f, "\000" 
     IDC_TORRENT_TRACKERMODE, 0x403, 15, 0
 0x6953, 0x676e, 0x656c, 0x5420, 0x6172, 0x6b63, 0x7265, "\000" 
     IDC_TORRENT_TRACKERMODE, 0x403, 14, 0
@@ -4117,10 +4113,6 @@ STRINGTABLE
 BEGIN
     IDS_DOWNLOAD_EDIT_RENAME 
                             "You have made changes to the name field.  Are you sure you want to rename this download?"
-    IDS_DOWNLOAD_EDIT_BAD_HASH 
-                            "You have typed an %s hash value, however it is invalid.  Please check it and try again."
-    IDS_DOWNLOAD_EDIT_CHANGE_HASH 
-                            "You have provided an %s hash value which is different to the one currently associated with this download.  Are you sure you want to change the %s hash now?"
     IDS_DOWNLOAD_EDIT_FORGET_VERIFY 
                             "Are you sure you want to forget the current verification status?  All downloaded data will be treated as untrusted, and cached hashtrees and hashsets will be flushed."
     IDS_DOWNLOAD_EDIT_FORGET_SOURCES 
@@ -4143,6 +4135,10 @@ STRINGTABLE
 BEGIN
     IDS_DOWNLOAD_EDIT_CANCEL_DOWNLOAD 
                             "Are you sure you want to cancel this download but save incomplete file(s)?"
+    IDS_DOWNLOAD_EDIT_BAD_HASH 
+                            "You have typed an %s hash value, however it is invalid.  Please check it and try again."
+    IDS_DOWNLOAD_EDIT_CHANGE_HASH 
+                            "You have provided an %s hash value which is different to the one currently associated with this download.  Are you sure you want to change the %s hash now?"
 END
 
 STRINGTABLE 
