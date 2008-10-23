@@ -144,7 +144,7 @@ CSettings::CSettings()
 	Add( _T("Library"), _T("SourceExpire"), &Library.SourceExpire, 24*60*60, 60, 60, 7*24*60*60, _T(" m") );
 	Add( _T("Library"), _T("SourceMesh"), &Library.SourceMesh, true );
 	Add( _T("Library"), _T("StoreViews"), &Library.StoreViews, true );
-	Add( _T("Library"), _T("ThumbSize"), &Library.ThumbSize, 96, 1, 16, 256, _T(" px") );
+	Add( _T("Library"), _T("ThumbSize"), &Library.ThumbSize, 128, 1, 16, 256, _T(" px") );
 	Add( _T("Library"), _T("TigerHeight"), &Library.TigerHeight, 9, 1, 1, 64 );
 	Add( _T("Library"), _T("TreeSize"), &Library.TreeSize, 200, 1, 0, 1024, _T(" px") );
 	Add( _T("Library"), _T("UseCustomFolders"), &Library.UseCustomFolders, true );
