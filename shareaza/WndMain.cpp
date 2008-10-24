@@ -292,10 +292,7 @@ CMainWnd::CMainWnd() :
 	theApp.m_pMainWnd = this;
 
 	// Bypass CMDIFrameWnd::LoadFrame
-	if ( theApp.m_bIsVistaOrNewer )
-		VERIFY( CFrameWnd::LoadFrame( IDR_MAINFRAME, WS_VISIBLE ) );
-	else
-		VERIFY( CFrameWnd::LoadFrame( IDR_MAINFRAME, WS_OVERLAPPEDWINDOW ) );
+	VERIFY( CFrameWnd::LoadFrame( IDR_MAINFRAME ) );
 
 	theApp.m_pSafeWnd = this;
 }
@@ -342,7 +339,7 @@ BOOL CMainWnd::PreCreateWindow(CREATESTRUCT& cs)
 {
 	WNDCLASS wndcls = {};
 
-	wndcls.style			= CS_DBLCLKS | CS_OWNDC;
+	wndcls.style			= CS_DBLCLKS | CS_PARENTDC;
 	wndcls.lpfnWndProc		= AfxWndProc;
 	wndcls.hInstance		= AfxGetInstanceHandle();
 	wndcls.hIcon			= CoolInterface.ExtractIcon( IDR_MAINFRAME, FALSE, LVSIL_NORMAL );
