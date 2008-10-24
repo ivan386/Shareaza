@@ -554,6 +554,8 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 	CBENode* pAnnounceList = pRoot->GetNode( "announce-list" );
 	if ( ( pAnnounceList ) && ( pAnnounceList->IsType( CBENode::beList ) ) )
 	{
+		m_nTrackerMode = tMultiFinding;
+
 		// Loop through all the tiers
 		for ( int nTier = 0 ; nTier < pAnnounceList->GetCount() ; nTier++ )
 		{
@@ -620,6 +622,7 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 				}
 			}
 		}
+
 		SetTrackerNext();
 	}
 
@@ -637,8 +640,8 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 			if ( m_oTrackers.IsEmpty() )
 			{
 				// Set the torrent to be a single-tracker torrent
+				m_nTrackerMode = tSingle;
 				SetTracker( strTracker );
-				SetTrackerMode( tSingle );
 			}
 		}
 		// else if ( _tcsncicmp( (LPCTSTR)strTracker, _T("udp://"), 6 ) == 0 )
@@ -1093,6 +1096,9 @@ void CBTInfo::SetTrackerNext(DWORD tTime)
 		m_nTrackerIndex = -1;
 		return;
 	}
+
+	if ( m_nTrackerMode = tNull || m_nTrackerMode == tSingle )
+		return;
 
 	// Make sure this is a multitracker torrent
 	if ( m_oTrackers.GetCount() < 2 )
