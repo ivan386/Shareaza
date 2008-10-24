@@ -56,18 +56,15 @@ void CFragmentedFile::AssertValid() const
 	ASSERT( m_oFile.size() != 0 );
 	if ( m_oFile.size() != 0 )
 	{
-		QWORD nTotal = 0;
 		ASSERT( m_oFile.front().m_nOffset == 0 );
 		CVirtualFile::const_iterator j;
 		for ( CVirtualFile::const_iterator i = m_oFile.begin(); i != m_oFile.end(); ++i )
 		{
 			ASSERT( (*i).m_nLength != 0 && (*i).m_nLength != SIZE_UNKNOWN );
-			nTotal += (*i).m_nLength;
 			if ( i != m_oFile.begin() )
 				ASSERT( (*j).m_nOffset + (*j).m_nLength == (*i).m_nOffset );
 			j = i;
 		}
-		ASSERT( GetTotal() == nTotal );
 	}
 }
 
