@@ -46,7 +46,7 @@ static char THIS_FILE[]=__FILE__;
 
 CMediaWnd* CFileExecutor::GetMediaWindow(BOOL bFocus)
 {
-	CMainWnd* pMainWnd = (CMainWnd*)theApp.m_pSafeWnd;
+	CMainWnd* pMainWnd = theApp.SafeMainWnd();
 	if ( pMainWnd == NULL ) return NULL;
 	if ( pMainWnd->IsKindOf( RUNTIME_CLASS(CMainWnd) ) == FALSE ) return NULL;
 	return (CMediaWnd*)pMainWnd->m_pWindows.Open( RUNTIME_CLASS(CMediaWnd), FALSE, bFocus );
@@ -54,7 +54,7 @@ CMediaWnd* CFileExecutor::GetMediaWindow(BOOL bFocus)
 
 CLibraryWnd* CFileExecutor::GetLibraryWindow()
 {
-	CMainWnd* pMainWnd = (CMainWnd*)theApp.m_pSafeWnd;
+	CMainWnd* pMainWnd = theApp.SafeMainWnd();
 	if ( pMainWnd == NULL ) return NULL;
 	if ( pMainWnd->IsKindOf( RUNTIME_CLASS(CMainWnd) ) == FALSE ) return NULL;
 	return (CLibraryWnd*)pMainWnd->m_pWindows.Open( RUNTIME_CLASS(CLibraryWnd), FALSE, TRUE );

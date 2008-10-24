@@ -436,7 +436,7 @@ bool CUploads::OnRename(const CString& strSource, LPCTSTR pszTarget, bool bRemov
 	if ( ! otheAppLock.Lock( 250 ) )
 		return false;
 
-	if ( CMainWnd* pMainWnd = (CMainWnd*)theApp.m_pSafeWnd )
+	if ( CMainWnd* pMainWnd = theApp.SafeMainWnd() )
 	{
 		CMediaWnd* pMediaWnd = (CMediaWnd*)pMainWnd->m_pWindows.Find(
 			RUNTIME_CLASS(CMediaWnd) );

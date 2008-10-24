@@ -305,8 +305,8 @@ BOOL CMainWnd::Create(LPCTSTR lpszClassName, LPCTSTR lpszWindowName, DWORD dwSty
 	DWORD dwExStyle, CCreateContext* pContext)
 {
 	// Bypass menu creation
-	return CMDIFrameWnd::Create( lpszClassName, lpszWindowName, dwStyle, rect, pParentWnd,
-		NULL, dwExStyle, pContext );
+	return CMDIFrameWnd::Create( lpszClassName, lpszWindowName, dwStyle,
+		rect, pParentWnd, NULL, dwExStyle, pContext );
 }
 
 BOOL CMainWnd::OnCreateClient(LPCREATESTRUCT lpcs, CCreateContext* /* pContext */)
@@ -532,21 +532,33 @@ void CMainWnd::OnClose()
 {
 	CWaitCursor pCursor;
 
-	if ( m_pWindows.m_bClosing )
-		return;
-	m_pWindows.m_bClosing = TRUE;
-
-	theApp.m_pSafeWnd = NULL;
-
 	int nSplashSteps = 6
 		+ ( Settings.Connection.DeleteFirewallException ? 1 : 0 )
 		+ ( theApp.m_pUPnPFinder ? 1 : 0 )
 		+ ( theApp.m_bLive ? 1 : 0 );
 	theApp.SplashStep( L"Closing Server Processes", nSplashSteps, true );
 
+	if ( theApp.m_bBusy )
+	{
+		// Delayed close
+		if ( ! theApp.m_bClosing )
+		{
+			SetTimer( 2, 1000, NULL );
+			return;
+		}
+	}
+
+	if ( theApp.m_bClosing )
+		// Already closing
+		return;
+	theApp.m_bClosing = true;
+
+	theApp.m_pSafeWnd = NULL;
+
 	DISABLE_DROP()
 
 	KillTimer( 1 );
+	KillTimer( 2 );
 
 	if ( m_bTrayIcon )
 	{
@@ -555,9 +567,11 @@ void CMainWnd::OnClose()
 	}
 
 	SaveState();
-
 	m_pWindows.SaveSearchWindows();
 	m_pWindows.SaveBrowseHostWindows();
+
+	theApp.HideApplication();
+
 	m_pWindows.Close();
 
 	CDownloadMonitorDlg::CloseAll();
@@ -570,17 +584,19 @@ void CMainWnd::OnClose()
 
 	if ( m_wndRemoteWnd.IsVisible() ) m_wndRemoteWnd.DestroyWindow();
 
-	Network.Disconnect();
-
 	m_brshDockbar.DeleteObject();
 
+	// Destroy main window
 	CMDIFrameWnd::OnClose();
 }
 
+// TODO: Replace this with OnQueryEndSession()
 void CMainWnd::OnEndSession(BOOL bEnding)
 {
 	CMDIFrameWnd::OnEndSession( bEnding );
-	if ( bEnding ) SendMessage( WM_CLOSE );
+
+	if ( bEnding )
+		SendMessage( WM_CLOSE );
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -757,8 +773,17 @@ void CMainWnd::OnWindowPosChanging(WINDOWPOS* lpwndpos)
 /////////////////////////////////////////////////////////////////////////////
 // CMainWnd common timer
 
-void CMainWnd::OnTimer(UINT_PTR /*nIDEvent*/)
+void CMainWnd::OnTimer(UINT_PTR nIDEvent)
 {
+	CMDIFrameWnd::OnTimer( nIDEvent );
+
+	// Delayed close
+	if ( nIDEvent == 2 )
+	{
+		PostMessage( WM_CLOSE );
+		return;
+	}
+
 	// Fix resource handle
 
 	ASSERT( AfxGetResourceHandle() == m_hInstance );
@@ -767,7 +792,8 @@ void CMainWnd::OnTimer(UINT_PTR /*nIDEvent*/)
 
 	// Propagate to children
 
-	if ( m_bTimer ) return;
+	if ( m_bTimer )
+		return;
 	m_bTimer = TRUE;
 
 	for ( POSITION pos = m_pWindows.GetIterator() ; pos ; )

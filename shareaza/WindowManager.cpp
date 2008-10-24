@@ -1,7 +1,7 @@
 //
 // WindowManager.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2006.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -36,12 +36,13 @@
 #include "WndSearch.h"
 #include "WndBrowseHost.h"
 
-
 #ifdef _DEBUG
 #undef THIS_FILE
 static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
 #endif
+
+IMPLEMENT_DYNCREATE(CWindowManager, CWnd)
 
 BEGIN_MESSAGE_MAP(CWindowManager, CWnd)
 	//{{AFX_MSG_MAP(CWindowManager)
@@ -58,7 +59,6 @@ END_MESSAGE_MAP()
 CWindowManager::CWindowManager(CMDIFrameWnd* pParent)
 {
 	m_bIgnoreActivate	= FALSE;
-	m_bClosing			= FALSE;
 
 	if ( pParent ) SetOwner( pParent );
 }
@@ -629,7 +629,7 @@ BOOL CWindowManager::OnEraseBkgnd(CDC* pDC)
 {
 	CRect rc;
 	GetClientRect( &rc );
-	pDC->FillSolidRect( &rc, ( Settings.General.GUIMode != GUI_WINDOWED && ! m_bClosing ) ?
+	pDC->FillSolidRect( &rc, ( Settings.General.GUIMode != GUI_WINDOWED ) ?
 		RGB( 0xBE, 0, 0 ) : GetSysColor( COLOR_APPWORKSPACE ) );
 	return TRUE;
 }

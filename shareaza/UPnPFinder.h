@@ -53,12 +53,9 @@ public:
 			m_pDeviceFinder->CancelAsyncFind( m_nAsyncFindHandle );
 			m_bAsyncFindRunning = false;
 		}
-		MSG msg;
-		while ( PeekMessage( &msg, NULL, 0, 0, PM_REMOVE ) )
-		{
-			TranslateMessage( &msg );
-			DispatchMessage( &msg );
-		}
+
+		SafeMessageLoop();
+
 		return m_bAsyncFindRunning;
 	}
 

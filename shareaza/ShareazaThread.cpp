@@ -212,12 +212,8 @@ void CloseThread(HANDLE* phThread, DWORD dwTimeout)
 
 			while( *phThread )
 			{
-				MSG msg;
-				while ( PeekMessage( &msg, NULL, NULL, NULL, PM_REMOVE ) )
-				{
-					TranslateMessage( &msg );
-					DispatchMessage( &msg );
-				}
+				SafeMessageLoop();
+
 				DWORD res = MsgWaitForMultipleObjects( 1, phThread,
 					FALSE, dwTimeout, QS_ALLINPUT | QS_ALLPOSTMESSAGE );
 				if ( res == WAIT_OBJECT_0 + 1 )

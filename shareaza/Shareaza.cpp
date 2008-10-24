@@ -153,8 +153,10 @@ CShareazaApp theApp;
 CShareazaApp::CShareazaApp() :
 	m_pMutex				( NULL )
 ,	m_pSafeWnd				( NULL )
-,	m_bLive					( false )
+,	m_bBusy					( 0 )
 ,	m_bInteractive			( false )
+,	m_bLive					( false )
+,	m_bClosing				( false )
 ,	m_bIsServer				( false )
 ,	m_bIsWin2000			( false )
 ,	m_bIsVistaOrNewer		( false )
@@ -571,9 +573,11 @@ void CShareazaApp::SplashStep(LPCTSTR pszMessage, int nMax, bool bClosing)
 		}
 	}
 	else if ( ! m_dlgSplash && nMax )
+	{
 		m_dlgSplash = new CSplashDlg( nMax, bClosing );
-
-	if ( m_dlgSplash )
+		m_dlgSplash->Step( pszMessage );
+	}
+	else if ( m_dlgSplash && ! nMax )
 		m_dlgSplash->Step( pszMessage );
 
 	TRACE( _T("Step: %s\n"), pszMessage ? pszMessage : _T("Done") );
@@ -903,10 +907,9 @@ HINSTANCE CShareazaApp::CustomLoadLibrary(LPCTSTR pszFileName)
 
 CMainWnd* CShareazaApp::SafeMainWnd() const
 {
-	CMainWnd* pMainWnd = (CMainWnd*)theApp.m_pSafeWnd;
-	if ( pMainWnd == NULL ) return NULL;
-	ASSERT_KINDOF( CMainWnd, pMainWnd );
-	return IsWindow( pMainWnd->m_hWnd ) ? pMainWnd : NULL;
+	if ( m_pSafeWnd == NULL ) return NULL;
+	ASSERT_KINDOF( CMainWnd, m_pSafeWnd );
+	return static_cast< CMainWnd* >( IsWindow( m_pSafeWnd->m_hWnd ) ? m_pSafeWnd : NULL );
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -2270,4 +2273,22 @@ BOOL PostMainWndMessage(UINT Msg, WPARAM wParam, LPARAM lParam)
 		return pWnd->PostMessage( Msg, wParam, lParam );
 	else
 		return FALSE;
+}
+
+void SafeMessageLoop()
+{
+	InterlockedIncrement( &theApp.m_bBusy );
+	__try
+	{
+		MSG msg;
+		while ( PeekMessage( &msg, NULL, NULL, NULL, PM_REMOVE ) )
+		{
+			TranslateMessage( &msg );
+			DispatchMessage( &msg );
+		}
+	}
+	__except( EXCEPTION_EXECUTE_HANDLER )
+	{
+	}
+	InterlockedDecrement( &theApp.m_bBusy );
 }

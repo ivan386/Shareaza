@@ -222,6 +222,9 @@ BOOL CNetwork::ReadyToTransfer(DWORD tNow) const
 
 BOOL CNetwork::Connect(BOOL bAutoConnect)
 {
+	if ( theApp.m_bClosing )
+		return FALSE;
+
 	CSingleLock pLock( &m_pSection, TRUE );
 
 	Settings.Live.AutoClose = FALSE;

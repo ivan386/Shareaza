@@ -79,6 +79,9 @@ BOOL CTransfers::IsConnectedTo(const IN_ADDR* pAddress) const
 
 BOOL CTransfers::StartThread()
 {
+	if ( theApp.m_bClosing )
+		return FALSE;
+
 	CQuickLock oLock( m_pSection );
 
 	if ( m_pList.GetCount() == 0 && Downloads.GetCount() == 0 )

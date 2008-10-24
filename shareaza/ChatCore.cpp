@@ -208,6 +208,9 @@ void CChatCore::Close()
 
 void CChatCore::StartThread()
 {
+	if ( theApp.m_bClosing )
+		return;
+
 	if ( GetCount() == 0 ) return;
 	
 	BeginThread( "ChatCore" );

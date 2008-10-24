@@ -446,7 +446,7 @@ void CPacket::SmartDump(const SOCKADDR_IN* pAddress, BOOL bUDP, BOOL bOutgoing, 
 	if ( pLock.Lock( 50 ) ) // If we wait more than 1/20th of a second for access, Lock will return false so we can just give up
 	{
 		// Get a pointer to the main Shareaza window
-		if ( CMainWnd* pMainWnd = (CMainWnd*)theApp.m_pSafeWnd )
+		if ( CMainWnd* pMainWnd = theApp.SafeMainWnd() )
 		{
 			// Get pointers to the window manager, and null a pointer to a packet window
 			CWindowManager* pWindows = &pMainWnd->m_pWindows;

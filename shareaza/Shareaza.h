@@ -79,8 +79,10 @@ public:
 	CFont				m_gdiFontBold;
 	CFont				m_gdiFontLine;
 	CWnd*				m_pSafeWnd;
-	volatile bool		m_bLive;
+	volatile LONG		m_bBusy;					// Shareaza is busy
 	volatile bool		m_bInteractive;				// Shareaza begins initialization
+	volatile bool		m_bLive;					// Shareaza fully initialized
+	volatile bool		m_bClosing;					// Shareaza begins closing
 	bool				m_bIsServer;				// Is OS a Server version
 	bool				m_bIsWin2000;				// Is OS Windows 2000
 	bool				m_bIsVistaOrNewer;			// Is OS Vista or newer
@@ -248,6 +250,9 @@ CString GetErrorString(DWORD dwError = GetLastError());
 // Displays a dialog box enabling the user to select a Shell folder
 CString BrowseForFolder(UINT nTitle, LPCTSTR szInitialPath = NULL, HWND hWnd = NULL);
 CString BrowseForFolder(LPCTSTR szTitle, LPCTSTR szInitialPath = NULL, HWND hWnd = NULL);
+
+// Do message loop
+void SafeMessageLoop();
 
 typedef enum
 {
