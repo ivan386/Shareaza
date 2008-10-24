@@ -154,7 +154,7 @@ CShareazaApp::CShareazaApp() :
 	m_pMutex				( NULL )
 ,	m_pSafeWnd				( NULL )
 ,	m_bLive					( false )
-,	m_bInteractive			( FALSE )
+,	m_bInteractive			( false )
 ,	m_bIsServer				( false )
 ,	m_bIsWin2000			( false )
 ,	m_bIsVistaOrNewer		( false )
@@ -171,13 +171,29 @@ CShareazaApp::CShareazaApp() :
 ,	m_nLastInput			( 0ul )
 ,	m_hHookKbd				( NULL )
 ,	m_hHookMouse			( NULL )
+
+,	m_hCryptProv			( NULL )
+
+,	m_pRegisterApplicationRestart( NULL )
+
 ,	m_hTheme				( NULL )
+,	m_pfnSetWindowTheme		( NULL )
+,	m_pfnIsThemeActive		( NULL )
+,	m_pfnOpenThemeData		( NULL )
+,	m_pfnCloseThemeData		( NULL )
+,	m_pfnDrawThemeBackground( NULL )
+
 ,	m_hShlWapi				( NULL )
+,	m_pfnAssocIsDangerous	( NULL )
+
 ,	m_hGeoIP				( NULL )
 ,	m_pGeoIP				( NULL )
+,	m_pfnGeoIP_country_code_by_addr( NULL )
+,	m_pfnGeoIP_country_name_by_addr( NULL )
+
 ,	m_hLibGFL				( NULL )
+
 ,	m_dlgSplash				( NULL )
-,	m_hCryptProv			( 0 )
 {
 	ZeroMemory( m_nVersion, sizeof( m_nVersion ) );
 	ZeroMemory( m_pBTVersion, sizeof( m_pBTVersion ) );
@@ -194,8 +210,6 @@ BOOL CShareazaApp::InitInstance()
 	m_sBuildDate = tCompileTime.Format( _T("%Y%m%d") );
 
 	CWinApp::InitInstance();
-
-	CWaitCursor pCursor;
 
 	SetRegistryKey( _T("Shareaza") );
 	GetVersionNumber();
@@ -282,9 +296,12 @@ BOOL CShareazaApp::InitInstance()
 		return FALSE;
 	}
 
-	ShowStartupText();
+	m_bInteractive = true;
 
-	m_bInteractive = TRUE;
+	if ( m_pRegisterApplicationRestart )
+		m_pRegisterApplicationRestart( NULL, 0 );
+
+	ShowStartupText();
 
 	DDEServer.Create();
 	IEProtocol.Create();
@@ -414,7 +431,6 @@ BOOL CShareazaApp::InitInstance()
 			m_pMainWnd->UpdateWindow();
 		}
 
-	// From this point translations are available and LoadString returns correct strings
 	SplashStep( L"Download Manager" );
 		Downloads.Load();
 	SplashStep( L"Upload Manager" );
@@ -424,11 +440,9 @@ BOOL CShareazaApp::InitInstance()
 	SplashStep( L"Upgrade Manager" );
 		VersionChecker.Start();
 
-	pCursor.Restore();
-
 	SplashStep();
 
-	m_bLive = TRUE;
+	m_bLive = true;
 
 	ProcessShellCommand( m_ocmdInfo );
 
@@ -785,6 +799,12 @@ void CShareazaApp::GetVersionNumber()
 
 void CShareazaApp::InitResources()
 {
+	// Get pointers to some functions that require Windows Vista or greater
+	if ( HMODULE hKernel32 = GetModuleHandle( _T("kernel32.dll") ) )
+	{
+		(FARPROC&)m_pRegisterApplicationRestart = GetProcAddress( hKernel32, "RegisterApplicationRestart" );
+	}
+
 	// Get pointers to some functions that require Windows XP or greater
 	if ( ( m_hTheme = LoadLibrary( _T("UxTheme.dll") ) ) != NULL )
 	{
@@ -794,45 +814,25 @@ void CShareazaApp::InitResources()
 		(FARPROC&)m_pfnCloseThemeData = GetProcAddress( m_hTheme, "CloseThemeData" );
 		(FARPROC&)m_pfnDrawThemeBackground = GetProcAddress( m_hTheme, "DrawThemeBackground" );
 	}
-	else
-	{
-		m_pfnSetWindowTheme = NULL;
-		m_pfnIsThemeActive = NULL;
-		m_pfnOpenThemeData = NULL;
-		m_pfnCloseThemeData = NULL;
-	}
 
 	// Get pointers to some functions that require Internet Explorer 6.01 or greater
 	if ( ( m_hShlWapi = LoadLibrary( _T("shlwapi.dll") ) ) != NULL )
 	{
 		(FARPROC&)m_pfnAssocIsDangerous = GetProcAddress( m_hShlWapi, "AssocIsDangerous" );
 	}
-	else
-	{
-		m_pfnAssocIsDangerous = NULL;
-	}
 
 	// Load the GeoIP library for mapping IPs to countries
-	m_hGeoIP = CustomLoadLibrary( _T("geoip.dll") );
-	if ( m_hGeoIP )
+	if ( ( m_hGeoIP = CustomLoadLibrary( _T("geoip.dll") ) ) != NULL )
 	{
 		GeoIP_newFunc pfnGeoIP_new = (GeoIP_newFunc)GetProcAddress( m_hGeoIP, "GeoIP_new" );
 		m_pfnGeoIP_country_code_by_addr = (GeoIP_country_code_by_addrFunc)GetProcAddress( m_hGeoIP, "GeoIP_country_code_by_addr" );
 		m_pfnGeoIP_country_name_by_addr = (GeoIP_country_name_by_addrFunc)GetProcAddress( m_hGeoIP, "GeoIP_country_name_by_addr" );
-
-		m_pGeoIP = pfnGeoIP_new( GEOIP_MEMORY_CACHE );
-	}
-	else
-	{
-		m_pfnGeoIP_country_code_by_addr = NULL;
-		m_pfnGeoIP_country_name_by_addr = NULL;
+		if ( pfnGeoIP_new ) 
+			m_pGeoIP = pfnGeoIP_new( GEOIP_MEMORY_CACHE );
 	}
 
 	// We load it in a custom way, so Shareaza plugins can use this library also when it isn't in its search path but loaded by CustomLoadLibrary (very useful when running Shareaza inside Visual Studio)
 	m_hLibGFL = CustomLoadLibrary( _T("libgfl280.dll") );
-
-	// Get the amount of installed memory.
-	m_nPhysicalMemory = 0;
 
 	// Use GlobalMemoryStatusEx if possible (WinXP)
 	MEMORYSTATUSEX pMemory = {};

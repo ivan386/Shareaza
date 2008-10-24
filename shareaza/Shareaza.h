@@ -80,7 +80,7 @@ public:
 	CFont				m_gdiFontLine;
 	CWnd*				m_pSafeWnd;
 	volatile bool		m_bLive;
-	BOOL				m_bInteractive;
+	volatile bool		m_bInteractive;				// Shareaza begins initialization
 	bool				m_bIsServer;				// Is OS a Server version
 	bool				m_bIsWin2000;				// Is OS Windows 2000
 	bool				m_bIsVistaOrNewer;			// Is OS Vista or newer
@@ -105,8 +105,11 @@ public:
 	// Cryptography Context handle
 	HCRYPTPROV			m_hCryptProv;
 
+	// Kernel functions
+	HRESULT		(WINAPI *m_pRegisterApplicationRestart)( __in_opt PCWSTR pwzCommandline, __in DWORD dwFlags );
+
 	// For themes functions
-	HINSTANCE	m_hTheme;
+	HINSTANCE			m_hTheme;
 	HRESULT		(WINAPI *m_pfnSetWindowTheme)(HWND, LPCWSTR, LPCWSTR);
 	BOOL		(WINAPI *m_pfnIsThemeActive)(VOID);
 	HANDLE		(WINAPI *m_pfnOpenThemeData)(HWND, LPCWSTR);
@@ -114,16 +117,16 @@ public:
 	HRESULT		(WINAPI *m_pfnDrawThemeBackground)(HANDLE, HDC, int, int, const RECT*, const RECT*);
 
 	// Shell functions
-	HINSTANCE	m_hShlWapi;
+	HINSTANCE			m_hShlWapi;
 	BOOL		(WINAPI *m_pfnAssocIsDangerous)(LPCWSTR);
 
 	// GeoIP - IP to Country lookup
-	HINSTANCE	m_hGeoIP;
-	GeoIP*		m_pGeoIP;
+	HINSTANCE			m_hGeoIP;
+	GeoIP*				m_pGeoIP;
 	GeoIP_country_code_by_addrFunc	m_pfnGeoIP_country_code_by_addr;
 	GeoIP_country_name_by_addrFunc	m_pfnGeoIP_country_name_by_addr;
 
-	HINSTANCE	m_hLibGFL;
+	HINSTANCE			m_hLibGFL;
 
 	HINSTANCE			CustomLoadLibrary(LPCTSTR);
 	CMainWnd*			SafeMainWnd() const;
