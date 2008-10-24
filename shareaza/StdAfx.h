@@ -136,6 +136,7 @@
 
 #include <winsock2.h>		// Windows sockets V2
 #include <wininet.h>		// Internet
+#include <wincrypt.h>		// Cryptographic API
 #include <ddeml.h>			// DDE
 #include <math.h>			// Math
 #include <winsvc.h>			// Services (excluded by VC_EXTRALEAN)

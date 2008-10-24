@@ -24,7 +24,6 @@
 #include "Resource.h"
 #include "ComObject.h"
 #include "Buffer.h"
-#include <wincrypt.h>
 
 class CUPnPFinder;
 class CMainWnd;
