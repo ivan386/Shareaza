@@ -56,6 +56,7 @@ void CPropertyPageAdv::DoDataExchange(CDataExchange* pDX)
 BEGIN_MESSAGE_MAP(CPropertyPageAdv, CPropertyPage)
 	ON_WM_CTLCOLOR()
 	ON_WM_PAINT()
+	ON_WM_ERASEBKGND()
 END_MESSAGE_MAP()
 
 // CPropertyPageAdv message handlers
@@ -124,6 +125,16 @@ void CPropertyPageAdv::PaintStaticHeader(CDC* pDC, CRect* prc, LPCTSTR psz)
 
 	pDC->SelectObject( pOldFont );
 }
+
+BOOL CPropertyPageAdv::OnEraseBkgnd(CDC* pDC)
+{
+	CRect rc;
+	GetClientRect( &rc );
+	pDC->FillSolidRect( &rc, Skin.m_crDialog );
+
+	return TRUE;
+}
+
 
 HBRUSH CPropertyPageAdv::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 {
