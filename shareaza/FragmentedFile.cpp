@@ -105,9 +105,18 @@ BOOL CFragmentedFile::Open(LPCTSTR pszFile, QWORD nOffset, QWORD nLength, BOOL b
 	CTransferFile* pFile = TransferFiles.Open( pszFile, bWrite, bCreate );
 	if ( pFile == NULL )
 	{
-		// Failed to open
-		Close();
-		return FALSE;
+		if ( bWrite && ! bCreate &&
+			GetFileAttributes( pszFile ) == INVALID_FILE_ATTRIBUTES )
+		{
+			// Recreate file
+			pFile = TransferFiles.Open( pszFile, bWrite, TRUE );
+		}
+		if ( pFile == NULL )
+		{
+			// Failed to open
+			Close();
+			return FALSE;
+		}
 	}
 
 	if ( ! bWrite && pFile->GetSize() != nLength )
@@ -227,6 +236,8 @@ void CFragmentedFile::Serialize(CArchive& ar, int nVersion)
 
 	if ( ar.IsStoring() )
 	{
+		ASSERT_VALID( this );
+
 		SerializeOut1( ar, m_oFList );
 
 		if ( nVersion >= 40 )
