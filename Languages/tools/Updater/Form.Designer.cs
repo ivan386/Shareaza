@@ -1,11 +1,16 @@
 ﻿namespace ShareazaDialogUpdater
 {
+	using System;
+	using System.Drawing;
+	using System.Windows.Forms;
+	using System.ComponentModel;
+	
 	partial class form
 	{
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
-		private System.ComponentModel.IContainer components = null;
+		private IContainer components = null;
 
 		/// <summary>
 		/// Clean up any resources being used.
@@ -35,7 +40,7 @@
 			System.Windows.Forms.Label lblEnOld;
 			System.Windows.Forms.Label lblEnNew;
 			this.splitVertical = new System.Windows.Forms.SplitContainer();
-			this.richEnOld = new System.Windows.Forms.RichTextBox();
+			this.richEnOld = new XmlViewBox();
 			this.contextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.undoItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.redoItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -44,7 +49,7 @@
 			this.pasteItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.deleteItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.selectAllItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.richEnNew = new System.Windows.Forms.RichTextBox();
+			this.richEnNew = new XmlViewBox();
 			this.txtEnNew = new System.Windows.Forms.TextBox();
 			this.btnEnNew = new System.Windows.Forms.Button();
 			this.txtEnOld = new System.Windows.Forms.TextBox();
@@ -52,7 +57,7 @@
 			this.tableBottomAll = new System.Windows.Forms.TableLayoutPanel();
 			this.btnDoWork = new System.Windows.Forms.Button();
 			this.splitHorizontal = new System.Windows.Forms.SplitContainer();
-			this.richTranslation = new System.Windows.Forms.RichTextBox();
+			this.richTranslation = new XmlViewBox();
 			this.cmbDialogs = new System.Windows.Forms.ComboBox();
 			this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
 			this.menuStrip = new System.Windows.Forms.MenuStrip();
@@ -330,9 +335,7 @@
 			this.Name = "form";
 			this.TopMost = true;
 			this.ResizeBegin += new System.EventHandler(this.form_ResizeBegin);
-			this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.form_KeyUp);
 			this.Resize += new System.EventHandler(this.form_Resize);
-			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.form_KeyDown);
 			tableTopAll.ResumeLayout(false);
 			tableTopAll.PerformLayout();
 			this.splitVertical.Panel1.ResumeLayout(false);
@@ -356,30 +359,30 @@
 
 		#endregion
 
-		private System.Windows.Forms.SplitContainer splitHorizontal;
-		private System.Windows.Forms.SplitContainer splitVertical;
-		private System.Windows.Forms.TextBox txtEnOld;
-		private System.Windows.Forms.Button btnEnOld;
-		private System.Windows.Forms.TextBox txtEnNew;
-		private System.Windows.Forms.Button btnEnNew;
-		private System.Windows.Forms.OpenFileDialog openFileDialog;
-		private System.Windows.Forms.Button btnDoWork;
-		private System.Windows.Forms.TableLayoutPanel tableBottomAll;
-		private System.Windows.Forms.ComboBox cmbDialogs;
-		private System.Windows.Forms.RichTextBox richTranslation;
-		private System.Windows.Forms.RichTextBox richEnOld;
-		private System.Windows.Forms.RichTextBox richEnNew;
-		private System.Windows.Forms.ContextMenuStrip contextMenu;
-		private System.Windows.Forms.ToolStripMenuItem undoItem;
-		private System.Windows.Forms.ToolStripMenuItem cutItem;
-		private System.Windows.Forms.ToolStripMenuItem copyItem;
-		private System.Windows.Forms.ToolStripMenuItem pasteItem;
-		private System.Windows.Forms.ToolStripMenuItem deleteItem;
-		private System.Windows.Forms.ToolStripMenuItem selectAllItem;
-		private System.Windows.Forms.ToolStripMenuItem redoItem;
-		private System.Windows.Forms.MenuStrip menuStrip;
-		private System.Windows.Forms.ToolStripMenuItem changeFontToolStripMenuItem;
-		private System.Windows.Forms.FontDialog fontDialog;
+		private SplitContainer splitHorizontal;
+		private SplitContainer splitVertical;
+		private TextBox txtEnOld;
+		private Button btnEnOld;
+		private TextBox txtEnNew;
+		private Button btnEnNew;
+		private OpenFileDialog openFileDialog;
+		private Button btnDoWork;
+		private TableLayoutPanel tableBottomAll;
+		private ComboBox cmbDialogs;
+		private XmlViewBox richTranslation;
+		private XmlViewBox richEnOld;
+		private XmlViewBox richEnNew;
+		private ContextMenuStrip contextMenu;
+		private ToolStripMenuItem undoItem;
+		private ToolStripMenuItem cutItem;
+		private ToolStripMenuItem copyItem;
+		private ToolStripMenuItem pasteItem;
+		private ToolStripMenuItem deleteItem;
+		private ToolStripMenuItem selectAllItem;
+		private ToolStripMenuItem redoItem;
+		private MenuStrip menuStrip;
+		private ToolStripMenuItem changeFontToolStripMenuItem;
+		private FontDialog fontDialog;
 	}
 }
 

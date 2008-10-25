@@ -27,7 +27,7 @@ namespace ShareazaDialogUpdater
 		}
 		
 		[PermissionSet(SecurityAction.Demand, Name = "FullTrust")]
-		public static T Read(string filePath) {
+		public static T Read(string filePath, out Exception exception) {
 			
 			XmlReader reader = null;
 
@@ -41,11 +41,13 @@ namespace ShareazaDialogUpdater
 
 			FileStream stream = null;
 			T file = null;
+			exception = null;
 			try {
 				stream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read|FileShare.Delete);
 				reader = XmlReader.Create(stream, newSettings);
 				file = (T)serializer.Deserialize(reader);
-			} catch {
+			} catch (Exception ex) {
+				exception = ex;
 			} finally {
 				if (stream != null)
 					stream.Close();

@@ -41,7 +41,7 @@ public class skinManifest
 public class skinDialog
 {
 	[XmlElement("control")]
-	public skinDialogControl[] control;
+	public skinDialogControl[] controls;
 
 	[XmlText()]
 	public string[] Text;
@@ -59,7 +59,7 @@ public class skinDialog
 		return new skinDialog()
 		{
 			caption = this.caption,
-			control = (skinDialogControl[])this.control.Clone(),
+			controls = this.controls == null ? null : (skinDialogControl[])this.controls.Clone(),
 			cookie  = this.cookie,
 			name    = this.name
 		};

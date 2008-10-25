@@ -30,17 +30,6 @@ namespace ShareazaDialogUpdater
 			vertPerc = (float)this.splitVertical.SplitterDistance / this.tableBottomAll.Width;
 			horizPerc = (float)this.splitHorizontal.SplitterDistance / this.tableBottomAll.Height;
 			deleteItem.Enabled = false; // Don't send Delete keys
-
-			richEnOld.MouseWheel += new MouseEventHandler(OnMouseWheel);
-			richEnNew.MouseWheel += new MouseEventHandler(OnMouseWheel);
-			richTranslation.MouseWheel += new MouseEventHandler(OnMouseWheel);
-
-			// Turn off the crappy autofont detection
-			richTranslation.LanguageOption = RichTextBoxLanguageOptions.UIFonts;
-
-			richEnOld.DetectUrls = false;
-			richEnNew.DetectUrls = false;
-			richTranslation.DetectUrls = false;
 		}
 
 		#endregion
@@ -59,61 +48,62 @@ namespace ShareazaDialogUpdater
 			this.splitHorizontal.SplitterDistance = (int)(this.tableBottomAll.Height * horizPerc);
 		}
 
-		void OnMouseWheel(object sender, MouseEventArgs args) {
-			if (ctrlPressed) {
-				RichTextBox box = (RichTextBox)sender;
-				int numberOfTextLinesToMove = args.Delta * SystemInformation.MouseWheelScrollLines / 120;
-				int numberOfPixelsToMove = (int)(numberOfTextLinesToMove * box.Font.Size);
-				if (numberOfPixelsToMove == 0)
-					numberOfPixelsToMove = args.Delta > 0 ? 1 : -1;
-				Rectangle rec = Screen.FromControl(box).Bounds;
-				if (numberOfPixelsToMove > 0)
-					box.ZoomFactor *= (float)(rec.Height - numberOfPixelsToMove) / rec.Height;
-				else
-					box.ZoomFactor *= (float)rec.Height / (rec.Height - numberOfPixelsToMove);
-				box.Tag = box.ZoomFactor; // backup the value, because stupid MS resets it to 1.0
-			}
-		}
-
 		#endregion
 
 		#region Button Events
 
+		bool showedInvalidWarning = false;
+
 		private void btnEnOld_Click(object sender, EventArgs e) {
 			skinManifest manifest;
-			oldEnList = GetDialogList(txtEnOld, out manifest);
-			if (oldEnList != null && manifest.lang != "en") {
-				MessageBox.Show(Settings.Default.Error_NotEnglish, "Information", MessageBoxButtons.OK,
-								MessageBoxIcon.Information);
-				oldEnList = null;
-				txtEnOld.Text = String.Empty;
+			List<skinDialog> list = new List<skinDialog>();
+			if (GetDialogList(txtEnOld, ref list, out manifest)) {
+				showedInvalidWarning = false;
+				if (manifest == null || manifest.lang != "en") {
+					MessageBox.Show(Settings.Default.Error_NotEnglish, "Information", MessageBoxButtons.OK,
+									MessageBoxIcon.Information);
+					oldEnList = null;
+					txtEnOld.Text = String.Empty;
+					richEnOld.Clear();
+				} else {
+					oldEnList = list;
+					if (oldEnList != null)
+						UpdateBoxes();
+				}
 			}
-			if (oldEnList != null)
-				UpdateBoxes();
 		}
 
 		private void btnEnNew_Click(object sender, EventArgs e) {
 			skinManifest manifest;
-			newEnList = GetDialogList(txtEnNew, out manifest);
-			if (oldEnList != null && manifest.lang != "en") {
-				MessageBox.Show(Settings.Default.Error_NotEnglish, "Information", MessageBoxButtons.OK,
-								MessageBoxIcon.Information);
-				newEnList = null;
-				txtEnNew.Text = String.Empty;
-			}
-			if (newEnList != null) {
-				cmbDialogs.Items.AddRange(newEnList.Select(s => s.name).ToArray());
-				cmbDialogs.SelectedIndex = 0;
+			List<skinDialog> list = new List<skinDialog>();
+			if (GetDialogList(txtEnNew, ref list, out manifest)) {
+				if (manifest == null || manifest.lang != "en") {
+					MessageBox.Show(Settings.Default.Error_NotEnglish, "Information", MessageBoxButtons.OK,
+									MessageBoxIcon.Information);
+					newEnList = null;
+					txtEnNew.Text = String.Empty;
+					richEnNew.Clear();
+				} else {
+					newEnList = list;
+					if (newEnList != null) {
+						cmbDialogs.Items.AddRange(newEnList.Select(s => s.name).ToArray());
+						cmbDialogs.SelectedIndex = 0;
+					}
+				}
 			}
 		}
 
 		private void btnDoWork_Click(object sender, EventArgs e) {
 			skinManifest manifest;
-			translation = GetDialogList(null, out manifest);
-			if (manifest != null)
-				UpdateRtfLanguage(richTranslation, manifest);
-			if (translation != null) 
-				UpdateBoxes();
+			List<skinDialog> list = new List<skinDialog>();
+			if (GetDialogList(null, ref list, out manifest)) {
+				if (manifest != null)
+					richTranslation.SetLanguage(manifest.lang, manifest.name);
+				translation = list;
+				showedInvalidWarning = false;
+				if (translation != null)
+					UpdateBoxes();
+			}
 		}
 
 		#endregion
@@ -132,32 +122,32 @@ namespace ShareazaDialogUpdater
 				skinDialog oldEn = oldEnList.FirstOrDefault(dialog => dialog.name == newDialog.name);
 				richEnOld.Text = GetXml(oldEn);
 				// Fix the resetting of ZoomFactor, when the text is empty
-				if (richEnOld.Tag != null)
-					richEnOld.ZoomFactor = (float)richEnOld.Tag;
+				//if (richEnOld.Tag != null)
+				//    richEnOld.ZoomFactor = (float)richEnOld.Tag;
 			}
 			if (newEnList != null) {
 				skinDialog newEn = newEnList.FirstOrDefault(dialog => dialog.name == newDialog.name);
 				richEnNew.Text = GetXml(newEn);
-				if (richEnNew.Tag != null)
-					richEnNew.ZoomFactor = (float)richEnNew.Tag;
+				//if (richEnNew.Tag != null)
+				//    richEnNew.ZoomFactor = (float)richEnNew.Tag;
 			}
 			if (translation != null) {
 				skinDialog tr;
 				UpdateDialogTranslation(newDialog.name, out tr);
 				richTranslation.Text = GetXml(tr);
-				if (richTranslation.Tag != null) {
-					float oldValue = (float)richTranslation.Tag;
-					richTranslation.ZoomFactor = oldValue;
-					if (oldValue != richTranslation.ZoomFactor) { // wtf happens here ????
-						richTranslation.ZoomFactor = oldValue;
-						Trace.WriteLine(String.Format("Old value: {0}, new value: {1}",
-										(float)richTranslation.Tag, richTranslation.ZoomFactor));
-					}
-					richTranslation.Tag = richTranslation.ZoomFactor;
-				}
+				//if (richTranslation.Tag != null) {
+				//    float oldValue = (float)richTranslation.Tag;
+				//    richTranslation.ZoomFactor = oldValue;
+				//    if (oldValue != richTranslation.ZoomFactor) { // wtf happens here ????
+				//        richTranslation.ZoomFactor = oldValue;
+				//        Trace.WriteLine(String.Format("Old value: {0}, new value: {1}",
+				//                        (float)richTranslation.Tag, richTranslation.ZoomFactor));
+				//    }
+				//    richTranslation.Tag = richTranslation.ZoomFactor;
+				//}
 			}
 		}
-		
+
 		void UpdateDialogTranslation(string dialogName, out skinDialog dialog) {
 			// Always not null
 			skinDialog newEn = newEnList.FirstOrDefault(d => d.name == dialogName);
@@ -168,9 +158,14 @@ namespace ShareazaDialogUpdater
 				dialog = newEn;
 				return;
 			} else {
-				skinDialog oldEn = oldEnList.FirstOrDefault(d => d.name == dialogName);
-				if (oldEn == null || oldEn.control.Length != tr.control.Length) {
-					MessageBox.Show("The old english file doesn't match your translation file!");
+				skinDialog oldEn = oldEnList.Where(d => d.name == dialogName).DefaultIfEmpty().First();
+				int oldControlCount = oldEn == null || oldEn.controls == null ? 0 : oldEn.controls.Length;
+				int trControlCount = tr.controls == null ? 0 : tr.controls.Length;
+				if (oldEn == null || oldControlCount != trControlCount) {
+					if (!showedInvalidWarning) {
+						MessageBox.Show("The old english file doesn't match your translation file!");
+						showedInvalidWarning = true;
+					}
 					dialog = tr;
 					return;
 				}
@@ -180,19 +175,23 @@ namespace ShareazaDialogUpdater
 					updatedDialog.caption = newEn.caption;
 				else
 					updatedDialog.caption = tr.caption;
-				// Same controls, no translation updates are needed
-				var sameControls = from cNew in newEn.control
-								   join cOld in oldEn.control on cNew.caption equals cOld.caption
-								   select new { 
-									  NewControl = cNew,
-									  OldIndex = Array.IndexOf(oldEn.control, cOld),
-									  NewIndex = Array.IndexOf(newEn.control, cNew)
-								   };
-				for (int i = 0; i < newEn.control.Length; i++) {
-					var matched = sameControls.Where(s => s.NewControl.Equals(newEn.control[i]))
-											  .FirstOrDefault();
-					if (matched != null) {
-						updatedDialog.control[matched.NewIndex] = tr.control[matched.OldIndex];
+
+				if (newEn.controls != null) {
+					// Same controls, no translation updates are needed
+					var sameControls = from cNew in newEn.controls
+									   join cOld in oldEn.controls on cNew.caption equals cOld.caption
+									   select new
+									   {
+										   NewControl = cNew,
+										   OldIndex = Array.IndexOf(oldEn.controls, cOld),
+										   NewIndex = Array.IndexOf(newEn.controls, cNew)
+									   };
+					for (int i = 0; i < newEn.controls.Length; i++) {
+						var matched = sameControls.Where(s => s.NewControl.Equals(newEn.controls[i]))
+												  .FirstOrDefault();
+						if (matched != null) {
+							updatedDialog.controls[matched.NewIndex] = tr.controls[matched.OldIndex];
+						}
 					}
 				}
 				dialog = updatedDialog;
@@ -215,20 +214,34 @@ namespace ShareazaDialogUpdater
 			return xml;
 		}
 
-		List<skinDialog> GetDialogList(TextBox pathToSet, out skinManifest manifest) {
+		/// <summary>
+		/// If error happens, the list is null
+		/// </summary>
+		/// <returns>True, if a new list was loaded</returns>
+		bool GetDialogList(TextBox pathToSet, ref List<skinDialog> list, out skinManifest manifest) {
 			openFileDialog.FileName = String.Empty;
 			openFileDialog.ShowDialog();
-			if (pathToSet != null)
-				pathToSet.Text = openFileDialog.FileName;
-			manifest = null;
 			if (!String.IsNullOrEmpty(openFileDialog.FileName)) {
-				var skin = XmlSerializerBase<skin>.Read(openFileDialog.FileName);
-				if (skin != null && skin.dialogs != null && skin.dialogs.Length > 0) {
+				Exception exception;
+				var skin = XmlSerializerBase<skin>.Read(openFileDialog.FileName, out exception);
+				if (exception != null) {
+					if (exception.InnerException != null)
+						MessageBox.Show(exception.InnerException.Message, "Error", MessageBoxButtons.OK,
+										MessageBoxIcon.Information);
+					else
+						MessageBox.Show(exception.Message, "Error", MessageBoxButtons.OK,
+										MessageBoxIcon.Error);
+					list = null;
+				} else if (skin != null && skin.dialogs != null && skin.dialogs.Length > 0) {
 					manifest = skin.manifest;
-					return skin.dialogs.OrderBy(s => s.name).ToList();
+					list = skin.dialogs.OrderBy(s => s.name).ToList();
+					if (pathToSet != null)
+						pathToSet.Text = openFileDialog.FileName;
+					return true;
 				}
 			}
-			return null;
+			manifest = null;
+			return false;
 		}
 
 		private void richTranslation_TextChanged(object sender, EventArgs e) {
@@ -253,10 +266,10 @@ namespace ShareazaDialogUpdater
 				selectAllItem.Enabled = box.Text.Length > 0;
 				deleteItem.Enabled = false;
 			} else {
-				cutItem.Enabled = true;
+				cutItem.Enabled = !box.ReadOnly;
 				copyItem.Enabled = true;
 				selectAllItem.Enabled = box.Text.Length != box.SelectionLength;
-				deleteItem.Enabled = true;
+				deleteItem.Enabled = !box.ReadOnly;
 			}
 			undoItem.Enabled = box.CanUndo;
 			redoItem.Enabled = box.CanRedo;
@@ -326,110 +339,13 @@ namespace ShareazaDialogUpdater
 
 		#endregion
 
-		bool ctrlPressed = false;
-
-		private void form_KeyDown(object sender, KeyEventArgs e) {
-			if ((e.Modifiers & Keys.Control) != 0)
-				ctrlPressed = true;
-		}
-
-		private void form_KeyUp(object sender, KeyEventArgs e) {
-			if ((e.Modifiers & Keys.Control) == 0)
-				ctrlPressed = false;
-		}
-
-		private void UpdateRtfLanguage(RichTextBox richBox, skinManifest manifest) {
-			CultureInfo cultureInfo = null;
-			try {
-				cultureInfo = CultureInfo.CreateSpecificCulture(String.Format("{0}-{1}", manifest.lang, manifest.lang));
-				if (cultureInfo.IsNeutralCulture)
-					cultureInfo = null;
-			} catch {
-				var cultures = CultureInfo.GetCultures(CultureTypes.SpecificCultures);
-				cultureInfo = (from c in cultures
-							   let subLanguage = c.Name.Substring(c.Name.Length - 2, 2)
-							   where c.NativeName == manifest.name ||
-									 String.Compare(subLanguage, manifest.lang, true) == 0 ||
-									 String.Compare(c.Name, manifest.lang, true) == 0
-							   select c).FirstOrDefault();
-			}
-			int currCodepage = GetDefaultCodepage(Thread.CurrentThread.CurrentCulture);
-			if (currCodepage == 0 || cultureInfo == null) {
-				var languageSelection = new LanguageSelection();
-				if (languageSelection.ShowDialog() == DialogResult.OK) {
-					string langCode = languageSelection.GetSelectedLangCode();
-					cultureInfo = CultureInfo.CreateSpecificCulture(langCode);
-				} else return;
-			}
-			richBox.Clear(); // Clear the content
-			richBox.Rtf = richBox.Rtf.Replace("ansicpg" + currCodepage.ToString(),
-											  "ansicpg" + cultureInfo.TextInfo.ANSICodePage.ToString());
-			richBox.Rtf = richBox.Rtf.Replace("deflang" + Thread.CurrentThread.CurrentCulture.LCID.ToString(),
-											  "deflang" + cultureInfo.LCID.ToString());
-			int gdiCharSet = GetFontCharset(cultureInfo.TextInfo.ANSICodePage);
-			Font oldFont = richBox.Font;
-			richBox.Font = new Font(richBox.Font.FontFamily, richBox.Font.SizeInPoints, richBox.Font.Style,
-									GraphicsUnit.Point, (byte)gdiCharSet);
-			oldFont.Dispose();
-			richBox.Rtf = richBox.Rtf.Replace("fcharset" + this.Font.GdiCharSet.ToString(),
-											  "fcharset" + gdiCharSet.ToString());
-		}
-
-		private int GetDefaultCodepage(CultureInfo ci) {
-			if (ci.IsNeutralCulture)
-				ci = null;
-			return ci == null ? 0 : ci.TextInfo.ANSICodePage;
-		}
-
-		private int GetFontCharset(int codePage) {
-			switch (codePage) {
-				case 932:
-				case 943:
-					return 128;		// ShiftJIS
-				case 1361:
-					return 130;		// Johab
-				case 949:
-					return 129;		// Hangul
-				case 950:
-					return 134;		// GB2312
-				case 936:
-					return 136;		// Chinese BIG5
-				case 1253:
-					return 161;		// Greek
-				case 1254:
-					return 162;		// Turkish
-				case 1258:
-					return 163;		// Vietnamese
-				case 1255:
-					return 177;		// Hebrew
-				case 1256:
-					return 178;		// Arabic
-				case 862:
-					return 181;		// Hebrew user
-				case 1257:
-					return 186;		// Baltic
-				case 1251:
-					return 204;		// Russian
-				case 874:
-					return 222;		// Thai
-				case 852:
-					return 238;		// Eastern European
-				default:
-					// return 0;	// ANSI charset
-					return 1;		// Default charset
-			}
-		}
-
 		private void changeFontToolStripMenuItem_Click(object sender, EventArgs e) {
 			// The dialog doesn't display GdiCharSet as selected (Script)
 			using (fontDialog.Font = (Font)richTranslation.Font.Clone()) {
 				if (fontDialog.ShowDialog() == DialogResult.OK) {
-					// Create new font, since the GdiCharSet can not be changes otherwise
-					Font oldFont = richTranslation.Font;
 					richTranslation.Font = new Font(fontDialog.Font.FontFamily, fontDialog.Font.SizeInPoints,
-													fontDialog.Font.Style, GraphicsUnit.Point, 
+													fontDialog.Font.Style, GraphicsUnit.Point,
 													fontDialog.Font.GdiCharSet);
-					oldFont.Dispose();
 				}
 			}
 		}
