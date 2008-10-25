@@ -236,8 +236,6 @@ void CFragmentedFile::Serialize(CArchive& ar, int nVersion)
 
 	if ( ar.IsStoring() )
 	{
-		ASSERT_VALID( this );
-
 		SerializeOut1( ar, m_oFList );
 
 		if ( nVersion >= 40 )
