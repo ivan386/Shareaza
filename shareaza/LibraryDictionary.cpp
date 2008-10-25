@@ -417,6 +417,7 @@ BOOL CLibraryDictionary::BuildHashTable()
 				theApp.Message( MSG_INFO, str );
 */
 			}
+			CRazaThread::YieldProc();
 		}
 	}
 	
@@ -459,6 +460,7 @@ BOOL CLibraryDictionary::BuildHashTable()
 */
 			}
 		}
+		CRazaThread::YieldProc();
 	}
 	
 	m_bTable = TRUE;

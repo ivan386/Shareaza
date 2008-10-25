@@ -464,6 +464,7 @@ void CLibrary::OnRun()
 	while ( IsThreadEnabled() )
 	{
 		ThreadScan();
+		CRazaThread::YieldProc();
 		Doze( 1000 );
 	}
 }
