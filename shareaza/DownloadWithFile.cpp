@@ -447,20 +447,25 @@ BOOL CDownloadWithFile::ClipUploadRange(QWORD nOffset, QWORD& nLength) const
 	if ( m_pFile == NULL || !m_pFile->IsValid() )
 		return FALSE;
 
-	if ( nOffset >= m_nSize ) return FALSE;
+	if ( nOffset >= m_nSize )
+		return FALSE;
 
-	if ( m_pFile->IsPositionRemaining( nOffset ) ) return FALSE;
+	if ( m_pFile->IsPositionRemaining( nOffset ) )
+		return FALSE;
 
-	if ( nOffset + nLength > m_nSize ) nLength = m_nSize - nOffset;
+	if ( nOffset + nLength > m_nSize )
+		nLength = m_nSize - nOffset;
 
-	Fragments::List::const_iterator_pair match( GetEmptyFragmentList().equal_range(
-		Fragments::Fragment( nOffset, nOffset + nLength ) ) );
+	Fragments::Fragment oMatch( nOffset, nOffset + nLength );
+	Fragments::List oList( GetEmptyFragmentList() );
+	Fragments::List::const_iterator_pair pMatches = oList.equal_range( oMatch );
 
-	if ( match.first != match.second )
+	if ( pMatches.first != pMatches.second )
 	{
-		if ( match.first->begin() <= nOffset ) return ( nLength = 0 ) > 0;
-		nLength = match.first->end() - nOffset;
-		return TRUE;
+		if ( pMatches.first->begin() <= nOffset )
+			nLength = 0;
+		else
+			nLength = pMatches.first->end() - nOffset;
 	}
 
 	return nLength > 0;
