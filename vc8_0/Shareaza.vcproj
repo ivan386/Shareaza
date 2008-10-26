@@ -1830,6 +1830,10 @@
 				Name="Pages"
 				>
 				<File
+					RelativePath="..\shareaza\PageDownloadActions.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\shareaza\PageDownloadEdit.cpp"
 					>
 				</File>
@@ -3344,6 +3348,10 @@
 				Name="Pages"
 				>
 				<File
+					RelativePath="..\shareaza\PageDownloadActions.h"
+					>
+				</File>
+				<File
 					RelativePath="..\shareaza\PageDownloadEdit.h"
 					>
 				</File>
@@ -4358,43 +4366,6 @@
 				>
 			</File>
 			<File
-				RelativePath="Releasex64\shareaza\Shareaza_i.c"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|x64"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|x64"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-						DisableSpecificWarnings="4255;4619;4668;4820;4826"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
 				RelativePath="Debugx64\shareaza\Shareaza_i.c"
 				>
 				<FileConfiguration
@@ -4502,6 +4473,43 @@
 					>
 					<Tool
 						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="Releasex64\shareaza\Shareaza_i.c"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|x64"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|x64"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+						DisableSpecificWarnings="4255;4619;4668;4820;4826"
 					/>
 				</FileConfiguration>
 			</File>
