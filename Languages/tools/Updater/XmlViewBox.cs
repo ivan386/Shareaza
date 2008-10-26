@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using System.Globalization;
 using System.Threading;
 using System.Diagnostics;
+using System.Xml.Linq;
 
 namespace ShareazaDialogUpdater
 {
@@ -32,6 +33,29 @@ namespace ShareazaDialogUpdater
 					zoomFactor = this.ZoomFactor;
 				}
 			}
+		}
+
+		[DebuggerBrowsable(DebuggerBrowsableState.Never)]
+		[DebuggerHidden()]
+		public string Xml {
+			get {
+				try {
+					_xmlError = String.Empty;
+					XDocument doc = XDocument.Parse(this.Text);
+					return doc.ToString();
+				} catch (Exception ex) {
+					if (ex.InnerException != null)
+						_xmlError = ex.InnerException.Message;
+					else
+						_xmlError = ex.Message;
+					return String.Empty;
+				}
+			}
+		}
+		
+		string _xmlError = String.Empty;
+		public string XmlError {
+			get { return _xmlError; }
 		}
 
 		public override Font Font {

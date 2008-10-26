@@ -39,8 +39,9 @@
 			System.Windows.Forms.TableLayoutPanel tableTopLeft;
 			System.Windows.Forms.Label lblEnOld;
 			System.Windows.Forms.Label lblEnNew;
+			System.Windows.Forms.StatusStrip statusStrip;
 			this.splitVertical = new System.Windows.Forms.SplitContainer();
-			this.richEnOld = new XmlViewBox();
+			this.richEnOld = new ShareazaDialogUpdater.XmlViewBox();
 			this.contextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.undoItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.redoItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -49,20 +50,23 @@
 			this.pasteItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.deleteItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.selectAllItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.richEnNew = new XmlViewBox();
+			this.richEnNew = new ShareazaDialogUpdater.XmlViewBox();
 			this.txtEnNew = new System.Windows.Forms.TextBox();
 			this.btnEnNew = new System.Windows.Forms.Button();
 			this.txtEnOld = new System.Windows.Forms.TextBox();
 			this.btnEnOld = new System.Windows.Forms.Button();
+			this.lblStatus = new System.Windows.Forms.ToolStripStatusLabel();
 			this.tableBottomAll = new System.Windows.Forms.TableLayoutPanel();
 			this.btnDoWork = new System.Windows.Forms.Button();
 			this.splitHorizontal = new System.Windows.Forms.SplitContainer();
-			this.richTranslation = new XmlViewBox();
+			this.richTranslation = new ShareazaDialogUpdater.XmlViewBox();
 			this.cmbDialogs = new System.Windows.Forms.ComboBox();
 			this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
 			this.menuStrip = new System.Windows.Forms.MenuStrip();
 			this.changeFontToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.fontDialog = new System.Windows.Forms.FontDialog();
+			this.exportChangesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
 			tableTopAll = new System.Windows.Forms.TableLayoutPanel();
 			toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
@@ -70,6 +74,7 @@
 			tableTopLeft = new System.Windows.Forms.TableLayoutPanel();
 			lblEnOld = new System.Windows.Forms.Label();
 			lblEnNew = new System.Windows.Forms.Label();
+			statusStrip = new System.Windows.Forms.StatusStrip();
 			tableTopAll.SuspendLayout();
 			this.splitVertical.Panel1.SuspendLayout();
 			this.splitVertical.Panel2.SuspendLayout();
@@ -77,6 +82,7 @@
 			this.contextMenu.SuspendLayout();
 			tableTopRight.SuspendLayout();
 			tableTopLeft.SuspendLayout();
+			statusStrip.SuspendLayout();
 			this.tableBottomAll.SuspendLayout();
 			this.splitHorizontal.Panel1.SuspendLayout();
 			this.splitHorizontal.Panel2.SuspendLayout();
@@ -254,6 +260,21 @@
 			resources.ApplyResources(lblEnNew, "lblEnNew");
 			lblEnNew.Name = "lblEnNew";
 			// 
+			// statusStrip
+			// 
+			statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.lblStatus});
+			resources.ApplyResources(statusStrip, "statusStrip");
+			statusStrip.Name = "statusStrip";
+			// 
+			// lblStatus
+			// 
+			this.lblStatus.ForeColor = System.Drawing.Color.Red;
+			this.lblStatus.Margin = new System.Windows.Forms.Padding(10, 3, 0, 2);
+			this.lblStatus.Name = "lblStatus";
+			resources.ApplyResources(this.lblStatus, "lblStatus");
+			this.lblStatus.Spring = true;
+			// 
 			// tableBottomAll
 			// 
 			resources.ApplyResources(this.tableBottomAll, "tableBottomAll");
@@ -312,7 +333,8 @@
 			// menuStrip
 			// 
 			this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.changeFontToolStripMenuItem});
+            this.changeFontToolStripMenuItem,
+            this.exportChangesToolStripMenuItem});
 			resources.ApplyResources(this.menuStrip, "menuStrip");
 			this.menuStrip.Name = "menuStrip";
 			// 
@@ -322,10 +344,22 @@
 			resources.ApplyResources(this.changeFontToolStripMenuItem, "changeFontToolStripMenuItem");
 			this.changeFontToolStripMenuItem.Click += new System.EventHandler(this.changeFontToolStripMenuItem_Click);
 			// 
+			// exportChangesToolStripMenuItem
+			// 
+			resources.ApplyResources(this.exportChangesToolStripMenuItem, "exportChangesToolStripMenuItem");
+			this.exportChangesToolStripMenuItem.Name = "exportChangesToolStripMenuItem";
+			this.exportChangesToolStripMenuItem.Click += new System.EventHandler(this.exportChangesToolStripMenuItem_Click);
+			// 
+			// saveFileDialog
+			// 
+			this.saveFileDialog.DefaultExt = "xml";
+			resources.ApplyResources(this.saveFileDialog, "saveFileDialog");
+			// 
 			// form
 			// 
 			resources.ApplyResources(this, "$this");
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.Controls.Add(statusStrip);
 			this.Controls.Add(this.menuStrip);
 			this.Controls.Add(tableTopAll);
 			this.Controls.Add(this.tableBottomAll);
@@ -333,7 +367,6 @@
 			this.KeyPreview = true;
 			this.MainMenuStrip = this.menuStrip;
 			this.Name = "form";
-			this.TopMost = true;
 			this.ResizeBegin += new System.EventHandler(this.form_ResizeBegin);
 			this.Resize += new System.EventHandler(this.form_Resize);
 			tableTopAll.ResumeLayout(false);
@@ -346,6 +379,8 @@
 			tableTopRight.PerformLayout();
 			tableTopLeft.ResumeLayout(false);
 			tableTopLeft.PerformLayout();
+			statusStrip.ResumeLayout(false);
+			statusStrip.PerformLayout();
 			this.tableBottomAll.ResumeLayout(false);
 			this.splitHorizontal.Panel1.ResumeLayout(false);
 			this.splitHorizontal.Panel2.ResumeLayout(false);
@@ -383,6 +418,9 @@
 		private MenuStrip menuStrip;
 		private ToolStripMenuItem changeFontToolStripMenuItem;
 		private FontDialog fontDialog;
+		private ToolStripStatusLabel lblStatus;
+		private ToolStripMenuItem exportChangesToolStripMenuItem;
+		private SaveFileDialog saveFileDialog;
 	}
 }
 

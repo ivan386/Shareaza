@@ -28,9 +28,7 @@ namespace ShareazaDialogUpdater
 		
 		[PermissionSet(SecurityAction.Demand, Name = "FullTrust")]
 		public static T Read(string filePath, out Exception exception) {
-			
 			XmlReader reader = null;
-
 			var newSettings = new XmlReaderSettings()
 			{
 				CheckCharacters = false,
@@ -40,12 +38,12 @@ namespace ShareazaDialogUpdater
 			};
 
 			FileStream stream = null;
-			T file = null;
+			T objectTo = null;
 			exception = null;
 			try {
 				stream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read|FileShare.Delete);
 				reader = XmlReader.Create(stream, newSettings);
-				file = (T)serializer.Deserialize(reader);
+				objectTo = (T)serializer.Deserialize(reader);
 			} catch (Exception ex) {
 				exception = ex;
 			} finally {
@@ -53,8 +51,35 @@ namespace ShareazaDialogUpdater
 					stream.Close();
 			}
 
-			return file;
+			return objectTo;
 		}
+
+		public static T ReadString(string xml, out Exception exception) {
+			XmlReader reader = null;
+			var newSettings = new XmlReaderSettings()
+			{
+				CheckCharacters = false,
+				IgnoreWhitespace = true,
+				IgnoreComments = true,
+				XmlResolver = null
+			};
+
+			StringReader stream = null;
+			T objectTo = null;
+			exception = null;
+			try {
+				stream = new StringReader(xml);
+				reader = XmlReader.Create(stream, newSettings);
+				objectTo = (T)serializer.Deserialize(reader);
+			} catch (Exception ex) {
+				exception = ex;
+			} finally {
+				if (stream != null)
+					stream.Close();
+			}
+
+			return objectTo;
+		}		
 
 		[PermissionSet(SecurityAction.Demand, Name = "FullTrust")]
 		public static void Write(T file, string filePath) {

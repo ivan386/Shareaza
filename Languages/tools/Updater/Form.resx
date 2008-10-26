@@ -143,22 +143,6 @@
   <data name="tableTopRight.ColumnCount" type="System.Int32, mscorlib">
     <value>2</value>
   </data>
-  <data name="txtEnNew.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Left, Right</value>
-  </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="txtEnNew.Location" type="System.Drawing.Point, System.Drawing">
-    <value>2, 2</value>
-  </data>
-  <data name="txtEnNew.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
-  </data>
-  <data name="txtEnNew.Size" type="System.Drawing.Size, System.Drawing">
-    <value>209, 20</value>
-  </data>
-  <data name="txtEnNew.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
   <data name="&gt;&gt;txtEnNew.Name" xml:space="preserve">
     <value>txtEnNew</value>
   </data>
@@ -170,24 +154,6 @@
   </data>
   <data name="&gt;&gt;txtEnNew.ZOrder" xml:space="preserve">
     <value>0</value>
-  </data>
-  <data name="btnEnNew.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Left</value>
-  </data>
-  <data name="btnEnNew.Location" type="System.Drawing.Point, System.Drawing">
-    <value>213, 0</value>
-  </data>
-  <data name="btnEnNew.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>0, 0, 0, 0</value>
-  </data>
-  <data name="btnEnNew.Size" type="System.Drawing.Size, System.Drawing">
-    <value>23, 23</value>
-  </data>
-  <data name="btnEnNew.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="btnEnNew.Text" xml:space="preserve">
-    <value>…</value>
   </data>
   <data name="&gt;&gt;btnEnNew.Name" xml:space="preserve">
     <value>btnEnNew</value>
@@ -201,6 +167,7 @@
   <data name="&gt;&gt;btnEnNew.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="tableTopRight.Location" type="System.Drawing.Point, System.Drawing">
     <value>238, 26</value>
   </data>
@@ -243,21 +210,6 @@
   <data name="tableTopLeft.ColumnCount" type="System.Int32, mscorlib">
     <value>2</value>
   </data>
-  <data name="txtEnOld.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Left, Right</value>
-  </data>
-  <data name="txtEnOld.Location" type="System.Drawing.Point, System.Drawing">
-    <value>2, 2</value>
-  </data>
-  <data name="txtEnOld.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>2, 2, 2, 2</value>
-  </data>
-  <data name="txtEnOld.Size" type="System.Drawing.Size, System.Drawing">
-    <value>209, 20</value>
-  </data>
-  <data name="txtEnOld.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
   <data name="&gt;&gt;txtEnOld.Name" xml:space="preserve">
     <value>txtEnOld</value>
   </data>
@@ -269,24 +221,6 @@
   </data>
   <data name="&gt;&gt;txtEnOld.ZOrder" xml:space="preserve">
     <value>0</value>
-  </data>
-  <data name="btnEnOld.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Left</value>
-  </data>
-  <data name="btnEnOld.Location" type="System.Drawing.Point, System.Drawing">
-    <value>213, 1</value>
-  </data>
-  <data name="btnEnOld.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>0, 0, 0, 0</value>
-  </data>
-  <data name="btnEnOld.Size" type="System.Drawing.Size, System.Drawing">
-    <value>23, 23</value>
-  </data>
-  <data name="btnEnOld.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="btnEnOld.Text" xml:space="preserve">
-    <value>…</value>
   </data>
   <data name="&gt;&gt;btnEnOld.Name" xml:space="preserve">
     <value>btnEnOld</value>
@@ -336,6 +270,9 @@
   <data name="lblEnOld.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
+  <data name="lblEnOld.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>On</value>
+  </data>
   <data name="lblEnOld.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 4</value>
   </data>
@@ -368,6 +305,9 @@
   </metadata>
   <data name="lblEnNew.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
+  </data>
+  <data name="lblEnNew.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>On</value>
   </data>
   <data name="lblEnNew.Location" type="System.Drawing.Point, System.Drawing">
     <value>242, 4</value>
@@ -418,7 +358,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;tableTopAll.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>3</value>
   </data>
   <data name="tableTopAll.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
     <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="tableTopRight" Row="1" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="tableTopLeft" Row="1" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="lblEnOld" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="lblEnNew" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,50,Percent,50,Absolute,20" /&gt;&lt;Rows Styles="Percent,50,Percent,50,Absolute,20" /&gt;&lt;/TableLayoutSettings&gt;</value>
@@ -435,6 +375,153 @@
   <metadata name="contextMenu.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>141, 17</value>
   </metadata>
+  <metadata name="toolStripSeparator1.GenerateMember" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>False</value>
+  </metadata>
+  <metadata name="toolStripSeparator2.GenerateMember" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>False</value>
+  </metadata>
+  <data name="contextMenu.Size" type="System.Drawing.Size, System.Drawing">
+    <value>132, 170</value>
+  </data>
+  <data name="&gt;&gt;contextMenu.Name" xml:space="preserve">
+    <value>contextMenu</value>
+  </data>
+  <data name="&gt;&gt;contextMenu.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="richEnOld.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Verdana, 8.25pt</value>
+  </data>
+  <data name="richEnOld.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>On</value>
+  </data>
+  <data name="richEnOld.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="richEnOld.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>0, 0, 0, 0</value>
+  </data>
+  <data name="richEnOld.Size" type="System.Drawing.Size, System.Drawing">
+    <value>234, 179</value>
+  </data>
+  <data name="richEnOld.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="richEnOld.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="richEnOld.WordWrap" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="&gt;&gt;richEnOld.Name" xml:space="preserve">
+    <value>richEnOld</value>
+  </data>
+  <data name="&gt;&gt;richEnOld.Type" xml:space="preserve">
+    <value>ShareazaDialogUpdater.XmlViewBox, ShareazaDialogUpdater, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;richEnOld.Parent" xml:space="preserve">
+    <value>splitVertical.Panel1</value>
+  </data>
+  <data name="&gt;&gt;richEnOld.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="splitVertical.Panel1.RightToLeft" type="System.Windows.Forms.RightToLeft, System.Windows.Forms">
+    <value>No</value>
+  </data>
+  <data name="&gt;&gt;splitVertical.Panel1.Name" xml:space="preserve">
+    <value>splitVertical.Panel1</value>
+  </data>
+  <data name="&gt;&gt;splitVertical.Panel1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.SplitterPanel, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;splitVertical.Panel1.Parent" xml:space="preserve">
+    <value>splitVertical</value>
+  </data>
+  <data name="&gt;&gt;splitVertical.Panel1.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="splitVertical.Panel1MinSize" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="richEnNew.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left, Right</value>
+  </data>
+  <data name="richEnNew.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Verdana, 8.25pt</value>
+  </data>
+  <data name="richEnNew.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>On</value>
+  </data>
+  <data name="richEnNew.Location" type="System.Drawing.Point, System.Drawing">
+    <value>-1, 0</value>
+  </data>
+  <data name="richEnNew.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>0, 0, 0, 0</value>
+  </data>
+  <data name="richEnNew.Size" type="System.Drawing.Size, System.Drawing">
+    <value>232, 179</value>
+  </data>
+  <data name="richEnNew.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="richEnNew.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="richEnNew.WordWrap" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="&gt;&gt;richEnNew.Name" xml:space="preserve">
+    <value>richEnNew</value>
+  </data>
+  <data name="&gt;&gt;richEnNew.Type" xml:space="preserve">
+    <value>ShareazaDialogUpdater.XmlViewBox, ShareazaDialogUpdater, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;richEnNew.Parent" xml:space="preserve">
+    <value>splitVertical.Panel2</value>
+  </data>
+  <data name="&gt;&gt;richEnNew.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="splitVertical.Panel2.RightToLeft" type="System.Windows.Forms.RightToLeft, System.Windows.Forms">
+    <value>No</value>
+  </data>
+  <data name="&gt;&gt;splitVertical.Panel2.Name" xml:space="preserve">
+    <value>splitVertical.Panel2</value>
+  </data>
+  <data name="&gt;&gt;splitVertical.Panel2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.SplitterPanel, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;splitVertical.Panel2.Parent" xml:space="preserve">
+    <value>splitVertical</value>
+  </data>
+  <data name="&gt;&gt;splitVertical.Panel2.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="splitVertical.Panel2MinSize" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="splitVertical.Size" type="System.Drawing.Size, System.Drawing">
+    <value>471, 180</value>
+  </data>
+  <data name="splitVertical.SplitterDistance" type="System.Int32, mscorlib">
+    <value>235</value>
+  </data>
+  <data name="splitVertical.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;splitVertical.Name" xml:space="preserve">
+    <value>splitVertical</value>
+  </data>
+  <data name="&gt;&gt;splitVertical.Type" xml:space="preserve">
+    <value>System.Windows.Forms.SplitContainer, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;splitVertical.Parent" xml:space="preserve">
+    <value>splitHorizontal.Panel1</value>
+  </data>
+  <data name="&gt;&gt;splitVertical.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
   <data name="undoItem.ImageScaling" type="System.Windows.Forms.ToolStripItemImageScaling, System.Windows.Forms">
     <value>None</value>
   </data>
@@ -555,146 +642,161 @@
   <data name="selectAllItem.TextImageRelation" type="System.Windows.Forms.TextImageRelation, System.Windows.Forms">
     <value>TextAboveImage</value>
   </data>
-  <data name="contextMenu.Size" type="System.Drawing.Size, System.Drawing">
-    <value>132, 170</value>
+  <data name="txtEnNew.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Left, Right</value>
   </data>
-  <data name="&gt;&gt;contextMenu.Name" xml:space="preserve">
-    <value>contextMenu</value>
+  <data name="txtEnNew.Location" type="System.Drawing.Point, System.Drawing">
+    <value>2, 2</value>
   </data>
-  <data name="&gt;&gt;contextMenu.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="txtEnNew.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
   </data>
-  <data name="richEnOld.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Verdana, 8.25pt</value>
+  <data name="txtEnNew.Size" type="System.Drawing.Size, System.Drawing">
+    <value>209, 20</value>
   </data>
-  <data name="richEnOld.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+  <data name="txtEnNew.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;txtEnNew.Name" xml:space="preserve">
+    <value>txtEnNew</value>
+  </data>
+  <data name="&gt;&gt;txtEnNew.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;txtEnNew.Parent" xml:space="preserve">
+    <value>tableTopRight</value>
+  </data>
+  <data name="&gt;&gt;txtEnNew.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="btnEnNew.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Left</value>
+  </data>
+  <data name="btnEnNew.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>On</value>
   </data>
-  <data name="richEnOld.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
+  <data name="btnEnNew.Location" type="System.Drawing.Point, System.Drawing">
+    <value>213, 0</value>
   </data>
-  <data name="richEnOld.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+  <data name="btnEnNew.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>0, 0, 0, 0</value>
   </data>
-  <data name="richEnOld.Size" type="System.Drawing.Size, System.Drawing">
-    <value>234, 179</value>
+  <data name="btnEnNew.Size" type="System.Drawing.Size, System.Drawing">
+    <value>23, 23</value>
   </data>
-  <data name="richEnOld.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="richEnOld.Text" xml:space="preserve">
-    <value />
-  </data>
-  <data name="richEnOld.WordWrap" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="&gt;&gt;richEnOld.Name" xml:space="preserve">
-    <value>richEnOld</value>
-  </data>
-  <data name="&gt;&gt;richEnOld.Type" xml:space="preserve">
-    <value>System.Windows.Forms.RichTextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;richEnOld.Parent" xml:space="preserve">
-    <value>splitVertical.Panel1</value>
-  </data>
-  <data name="&gt;&gt;richEnOld.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="splitVertical.Panel1.RightToLeft" type="System.Windows.Forms.RightToLeft, System.Windows.Forms">
-    <value>No</value>
-  </data>
-  <data name="&gt;&gt;splitVertical.Panel1.Name" xml:space="preserve">
-    <value>splitVertical.Panel1</value>
-  </data>
-  <data name="&gt;&gt;splitVertical.Panel1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.SplitterPanel, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;splitVertical.Panel1.Parent" xml:space="preserve">
-    <value>splitVertical</value>
-  </data>
-  <data name="&gt;&gt;splitVertical.Panel1.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="splitVertical.Panel1MinSize" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="richEnNew.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom, Left, Right</value>
-  </data>
-  <data name="richEnNew.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Verdana, 8.25pt</value>
-  </data>
-  <data name="richEnNew.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>On</value>
-  </data>
-  <data name="richEnNew.Location" type="System.Drawing.Point, System.Drawing">
-    <value>-1, 0</value>
-  </data>
-  <data name="richEnNew.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>0, 0, 0, 0</value>
-  </data>
-  <data name="richEnNew.Size" type="System.Drawing.Size, System.Drawing">
-    <value>232, 179</value>
-  </data>
-  <data name="richEnNew.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="richEnNew.Text" xml:space="preserve">
-    <value />
-  </data>
-  <data name="richEnNew.WordWrap" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="&gt;&gt;richEnNew.Name" xml:space="preserve">
-    <value>richEnNew</value>
-  </data>
-  <data name="&gt;&gt;richEnNew.Type" xml:space="preserve">
-    <value>System.Windows.Forms.RichTextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;richEnNew.Parent" xml:space="preserve">
-    <value>splitVertical.Panel2</value>
-  </data>
-  <data name="&gt;&gt;richEnNew.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="splitVertical.Panel2.RightToLeft" type="System.Windows.Forms.RightToLeft, System.Windows.Forms">
-    <value>No</value>
-  </data>
-  <data name="&gt;&gt;splitVertical.Panel2.Name" xml:space="preserve">
-    <value>splitVertical.Panel2</value>
-  </data>
-  <data name="&gt;&gt;splitVertical.Panel2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.SplitterPanel, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;splitVertical.Panel2.Parent" xml:space="preserve">
-    <value>splitVertical</value>
-  </data>
-  <data name="&gt;&gt;splitVertical.Panel2.ZOrder" xml:space="preserve">
+  <data name="btnEnNew.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
-  <data name="splitVertical.Panel2MinSize" type="System.Int32, mscorlib">
+  <data name="btnEnNew.Text" xml:space="preserve">
+    <value>…</value>
+  </data>
+  <data name="&gt;&gt;btnEnNew.Name" xml:space="preserve">
+    <value>btnEnNew</value>
+  </data>
+  <data name="&gt;&gt;btnEnNew.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnEnNew.Parent" xml:space="preserve">
+    <value>tableTopRight</value>
+  </data>
+  <data name="&gt;&gt;btnEnNew.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="txtEnOld.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Left, Right</value>
+  </data>
+  <data name="txtEnOld.Location" type="System.Drawing.Point, System.Drawing">
+    <value>2, 2</value>
+  </data>
+  <data name="txtEnOld.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>2, 2, 2, 2</value>
+  </data>
+  <data name="txtEnOld.Size" type="System.Drawing.Size, System.Drawing">
+    <value>209, 20</value>
+  </data>
+  <data name="txtEnOld.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
-  <data name="splitVertical.Size" type="System.Drawing.Size, System.Drawing">
-    <value>471, 180</value>
+  <data name="&gt;&gt;txtEnOld.Name" xml:space="preserve">
+    <value>txtEnOld</value>
   </data>
-  <data name="splitVertical.SplitterDistance" type="System.Int32, mscorlib">
-    <value>235</value>
+  <data name="&gt;&gt;txtEnOld.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="splitVertical.TabIndex" type="System.Int32, mscorlib">
+  <data name="&gt;&gt;txtEnOld.Parent" xml:space="preserve">
+    <value>tableTopLeft</value>
+  </data>
+  <data name="&gt;&gt;txtEnOld.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="&gt;&gt;splitVertical.Name" xml:space="preserve">
-    <value>splitVertical</value>
+  <data name="btnEnOld.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Left</value>
   </data>
-  <data name="&gt;&gt;splitVertical.Type" xml:space="preserve">
-    <value>System.Windows.Forms.SplitContainer, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="btnEnOld.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>On</value>
   </data>
-  <data name="&gt;&gt;splitVertical.Parent" xml:space="preserve">
-    <value>splitHorizontal.Panel1</value>
+  <data name="btnEnOld.Location" type="System.Drawing.Point, System.Drawing">
+    <value>213, 1</value>
   </data>
-  <data name="&gt;&gt;splitVertical.ZOrder" xml:space="preserve">
-    <value>0</value>
+  <data name="btnEnOld.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>0, 0, 0, 0</value>
+  </data>
+  <data name="btnEnOld.Size" type="System.Drawing.Size, System.Drawing">
+    <value>23, 23</value>
+  </data>
+  <data name="btnEnOld.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="btnEnOld.Text" xml:space="preserve">
+    <value>…</value>
+  </data>
+  <data name="&gt;&gt;btnEnOld.Name" xml:space="preserve">
+    <value>btnEnOld</value>
+  </data>
+  <data name="&gt;&gt;btnEnOld.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnEnOld.Parent" xml:space="preserve">
+    <value>tableTopLeft</value>
+  </data>
+  <data name="&gt;&gt;btnEnOld.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <metadata name="statusStrip.GenerateMember" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>False</value>
+  </metadata>
+  <metadata name="statusStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>468, 17</value>
+  </metadata>
+  <data name="statusStrip.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 420</value>
+  </data>
+  <data name="statusStrip.Size" type="System.Drawing.Size, System.Drawing">
+    <value>501, 22</value>
+  </data>
+  <data name="statusStrip.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;statusStrip.Name" xml:space="preserve">
+    <value>statusStrip</value>
+  </data>
+  <data name="&gt;&gt;statusStrip.Type" xml:space="preserve">
+    <value>System.Windows.Forms.StatusStrip, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;statusStrip.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;statusStrip.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="lblStatus.Size" type="System.Drawing.Size, System.Drawing">
+    <value>476, 17</value>
+  </data>
+  <data name="lblStatus.Text" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="lblStatus.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
   </data>
   <data name="tableBottomAll.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Bottom, Left, Right</value>
@@ -702,14 +804,80 @@
   <data name="tableBottomAll.ColumnCount" type="System.Int32, mscorlib">
     <value>2</value>
   </data>
+  <data name="&gt;&gt;btnDoWork.Name" xml:space="preserve">
+    <value>btnDoWork</value>
+  </data>
+  <data name="&gt;&gt;btnDoWork.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnDoWork.Parent" xml:space="preserve">
+    <value>tableBottomAll</value>
+  </data>
+  <data name="&gt;&gt;btnDoWork.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;splitHorizontal.Name" xml:space="preserve">
+    <value>splitHorizontal</value>
+  </data>
+  <data name="&gt;&gt;splitHorizontal.Type" xml:space="preserve">
+    <value>System.Windows.Forms.SplitContainer, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;splitHorizontal.Parent" xml:space="preserve">
+    <value>tableBottomAll</value>
+  </data>
+  <data name="&gt;&gt;splitHorizontal.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;cmbDialogs.Name" xml:space="preserve">
+    <value>cmbDialogs</value>
+  </data>
+  <data name="&gt;&gt;cmbDialogs.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cmbDialogs.Parent" xml:space="preserve">
+    <value>tableBottomAll</value>
+  </data>
+  <data name="&gt;&gt;cmbDialogs.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="tableBottomAll.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 79</value>
+  </data>
+  <data name="tableBottomAll.RowCount" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="tableBottomAll.Size" type="System.Drawing.Size, System.Drawing">
+    <value>477, 338</value>
+  </data>
+  <data name="tableBottomAll.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;tableBottomAll.Name" xml:space="preserve">
+    <value>tableBottomAll</value>
+  </data>
+  <data name="&gt;&gt;tableBottomAll.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tableBottomAll.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;tableBottomAll.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="tableBottomAll.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="btnDoWork" Row="2" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="splitHorizontal" Row="0" RowSpan="2" Column="0" ColumnSpan="2" /&gt;&lt;Control Name="cmbDialogs" Row="2" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,50,Percent,50" /&gt;&lt;Rows Styles="Percent,65,60693,Percent,34,39306,Absolute,28" /&gt;&lt;/TableLayoutSettings&gt;</value>
+  </data>
   <data name="btnDoWork.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Left</value>
   </data>
   <data name="btnDoWork.AutoSizeMode" type="System.Windows.Forms.AutoSizeMode, System.Windows.Forms">
     <value>GrowAndShrink</value>
   </data>
+  <data name="btnDoWork.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>On</value>
+  </data>
   <data name="btnDoWork.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 325</value>
+    <value>0, 312</value>
   </data>
   <data name="btnDoWork.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>0, 0, 0, 0</value>
@@ -775,7 +943,7 @@
     <value>0, 0, 0, 0</value>
   </data>
   <data name="richTranslation.Size" type="System.Drawing.Size, System.Drawing">
-    <value>469, 130</value>
+    <value>469, 117</value>
   </data>
   <data name="richTranslation.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -790,7 +958,7 @@
     <value>richTranslation</value>
   </data>
   <data name="&gt;&gt;richTranslation.Type" xml:space="preserve">
-    <value>System.Windows.Forms.RichTextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>ShareazaDialogUpdater.XmlViewBox, ShareazaDialogUpdater, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;richTranslation.Parent" xml:space="preserve">
     <value>splitHorizontal.Panel2</value>
@@ -811,7 +979,7 @@
     <value>1</value>
   </data>
   <data name="splitHorizontal.Size" type="System.Drawing.Size, System.Drawing">
-    <value>471, 316</value>
+    <value>471, 303</value>
   </data>
   <data name="splitHorizontal.SplitterDistance" type="System.Int32, mscorlib">
     <value>180</value>
@@ -835,7 +1003,7 @@
     <value>Bottom, Right</value>
   </data>
   <data name="cmbDialogs.Location" type="System.Drawing.Point, System.Drawing">
-    <value>241, 327</value>
+    <value>241, 314</value>
   </data>
   <data name="cmbDialogs.Size" type="System.Drawing.Size, System.Drawing">
     <value>233, 21</value>
@@ -855,33 +1023,6 @@
   <data name="&gt;&gt;cmbDialogs.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
-  <data name="tableBottomAll.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 79</value>
-  </data>
-  <data name="tableBottomAll.RowCount" type="System.Int32, mscorlib">
-    <value>3</value>
-  </data>
-  <data name="tableBottomAll.Size" type="System.Drawing.Size, System.Drawing">
-    <value>477, 351</value>
-  </data>
-  <data name="tableBottomAll.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;tableBottomAll.Name" xml:space="preserve">
-    <value>tableBottomAll</value>
-  </data>
-  <data name="&gt;&gt;tableBottomAll.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tableBottomAll.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;tableBottomAll.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="tableBottomAll.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="btnDoWork" Row="2" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="splitHorizontal" Row="0" RowSpan="2" Column="0" ColumnSpan="2" /&gt;&lt;Control Name="cmbDialogs" Row="2" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,50,Percent,50" /&gt;&lt;Rows Styles="Percent,65,60693,Percent,34,39306,Absolute,28" /&gt;&lt;/TableLayoutSettings&gt;</value>
-  </data>
   <metadata name="openFileDialog.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
@@ -889,14 +1030,8 @@
     <value>XML files (*.xml)|*.xml</value>
   </data>
   <metadata name="menuStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>256, 17</value>
+    <value>0, 0</value>
   </metadata>
-  <data name="changeFontToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>81, 20</value>
-  </data>
-  <data name="changeFontToolStripMenuItem.Text" xml:space="preserve">
-    <value>Change &amp;Font</value>
-  </data>
   <data name="menuStrip.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 0</value>
   </data>
@@ -919,11 +1054,32 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;menuStrip.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>2</value>
+  </data>
+  <data name="changeFontToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>81, 20</value>
+  </data>
+  <data name="changeFontToolStripMenuItem.Text" xml:space="preserve">
+    <value>Change &amp;Font</value>
   </data>
   <metadata name="fontDialog.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>358, 17</value>
+    <value>244, 17</value>
   </metadata>
+  <data name="exportChangesToolStripMenuItem.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="exportChangesToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>96, 20</value>
+  </data>
+  <data name="exportChangesToolStripMenuItem.Text" xml:space="preserve">
+    <value>&amp;Export Changes</value>
+  </data>
+  <metadata name="saveFileDialog.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>346, 17</value>
+  </metadata>
+  <data name="saveFileDialog.Filter" xml:space="preserve">
+    <value>XML files (*.xml)|*.xml</value>
+  </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
@@ -1002,6 +1158,12 @@
   <data name="&gt;&gt;selectAllItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="&gt;&gt;lblStatus.Name" xml:space="preserve">
+    <value>lblStatus</value>
+  </data>
+  <data name="&gt;&gt;lblStatus.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripStatusLabel, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="&gt;&gt;openFileDialog.Name" xml:space="preserve">
     <value>openFileDialog</value>
   </data>
@@ -1019,6 +1181,18 @@
   </data>
   <data name="&gt;&gt;fontDialog.Type" xml:space="preserve">
     <value>System.Windows.Forms.FontDialog, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;exportChangesToolStripMenuItem.Name" xml:space="preserve">
+    <value>exportChangesToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;exportChangesToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;saveFileDialog.Name" xml:space="preserve">
+    <value>saveFileDialog</value>
+  </data>
+  <data name="&gt;&gt;saveFileDialog.Type" xml:space="preserve">
+    <value>System.Windows.Forms.SaveFileDialog, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>form</value>

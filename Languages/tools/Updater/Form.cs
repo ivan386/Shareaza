@@ -11,6 +11,8 @@ using ShareazaDialogUpdater.Properties;
 using System.Globalization;
 using System.Threading;
 using System.Diagnostics;
+using System.Collections.Specialized;
+using System.Xml.Linq;
 
 namespace ShareazaDialogUpdater
 {
@@ -19,6 +21,14 @@ namespace ShareazaDialogUpdater
 		float vertPerc;
 		float horizPerc;
 		List<skinDialog> oldEnList, newEnList, translation;
+		StringDictionary updatedTranslation = new StringDictionary();
+		StringDictionary finalTranslation = new StringDictionary();
+		Func<skinDialog, bool> currDialogFunc = null;
+
+		readonly string envelope = "<skin xmlns=\"http://www.shareaza.com/schemas/Skin.xsd\" version=\"1.0\">\r\n" +
+								   "<dialogs>\r\n{0}\r\n" +
+								   "</dialogs>\r\n" +
+								   "</skin>";
 
 		#region Initialization
 
@@ -30,6 +40,8 @@ namespace ShareazaDialogUpdater
 			vertPerc = (float)this.splitVertical.SplitterDistance / this.tableBottomAll.Width;
 			horizPerc = (float)this.splitHorizontal.SplitterDistance / this.tableBottomAll.Height;
 			deleteItem.Enabled = false; // Don't send Delete keys
+			lblStatus.Text = String.Empty;
+			currDialogFunc = dialog => dialog.name == (string)cmbDialogs.Items[cmbDialogs.SelectedIndex];
 		}
 
 		#endregion
@@ -52,13 +64,10 @@ namespace ShareazaDialogUpdater
 
 		#region Button Events
 
-		bool showedInvalidWarning = false;
-
 		private void btnEnOld_Click(object sender, EventArgs e) {
 			skinManifest manifest;
 			List<skinDialog> list = new List<skinDialog>();
 			if (GetDialogList(txtEnOld, ref list, out manifest)) {
-				showedInvalidWarning = false;
 				if (manifest == null || manifest.lang != "en") {
 					MessageBox.Show(Settings.Default.Error_NotEnglish, "Information", MessageBoxButtons.OK,
 									MessageBoxIcon.Information);
@@ -100,51 +109,60 @@ namespace ShareazaDialogUpdater
 				if (manifest != null)
 					richTranslation.SetLanguage(manifest.lang, manifest.name);
 				translation = list;
-				showedInvalidWarning = false;
 				if (translation != null)
 					UpdateBoxes();
 			}
+			exportChangesToolStripMenuItem.Enabled = translation != null;
 		}
 
 		#endregion
 
+		int lastIndex = -1;
 		private void cmbDialogs_SelectedIndexChanged(object sender, EventArgs e) {
+			if (lastIndex == cmbDialogs.SelectedIndex)
+				return; // stupid, why to call it when the index doesn't change?
+			if (_dirty && !AutoSaveTranslation()) {
+				var result = MessageBox.Show("Your changes are incorrect!\r\n\r\nDo you want to revert to automatic XML?",
+											 "Error", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+				string dialogName = (string)cmbDialogs.Items[lastIndex];
+				if (result == DialogResult.No) {
+					if (updatedTranslation.ContainsKey(dialogName))
+						updatedTranslation[dialogName] = richTranslation.Text;
+					else
+						updatedTranslation.Add(dialogName, richTranslation.Text);
+					cmbDialogs.SelectedIndex = lastIndex;
+					return;
+				} else {
+					updatedTranslation.Remove(dialogName);
+				}
+			}
 			UpdateBoxes();
+			lastIndex = cmbDialogs.SelectedIndex;
 		}
 
 		void UpdateBoxes() {
+			lblStatus.Text = String.Empty;
 			if (newEnList == null)
 				return;
-			var match = newEnList.Where(s => s.name == (string)cmbDialogs.Items[cmbDialogs.SelectedIndex]);
-			skinDialog newDialog = match.First();
+			skinDialog newDialog = newEnList.FirstOrDefault(currDialogFunc);
 
 			if (oldEnList != null) {
 				skinDialog oldEn = oldEnList.FirstOrDefault(dialog => dialog.name == newDialog.name);
 				richEnOld.Text = GetXml(oldEn);
-				// Fix the resetting of ZoomFactor, when the text is empty
-				//if (richEnOld.Tag != null)
-				//    richEnOld.ZoomFactor = (float)richEnOld.Tag;
 			}
 			if (newEnList != null) {
 				skinDialog newEn = newEnList.FirstOrDefault(dialog => dialog.name == newDialog.name);
 				richEnNew.Text = GetXml(newEn);
-				//if (richEnNew.Tag != null)
-				//    richEnNew.ZoomFactor = (float)richEnNew.Tag;
 			}
 			if (translation != null) {
-				skinDialog tr;
-				UpdateDialogTranslation(newDialog.name, out tr);
-				richTranslation.Text = GetXml(tr);
-				//if (richTranslation.Tag != null) {
-				//    float oldValue = (float)richTranslation.Tag;
-				//    richTranslation.ZoomFactor = oldValue;
-				//    if (oldValue != richTranslation.ZoomFactor) { // wtf happens here ????
-				//        richTranslation.ZoomFactor = oldValue;
-				//        Trace.WriteLine(String.Format("Old value: {0}, new value: {1}",
-				//                        (float)richTranslation.Tag, richTranslation.ZoomFactor));
-				//    }
-				//    richTranslation.Tag = richTranslation.ZoomFactor;
-				//}
+				if (updatedTranslation.ContainsKey(newDialog.name)) {
+					richTranslation.Text = updatedTranslation[newDialog.name];
+				} else {
+					skinDialog tr;
+					UpdateDialogTranslation(newDialog.name, out tr);
+					richTranslation.Text = GetXml(tr);
+					updatedTranslation.Add(newDialog.name, richTranslation.Text);
+				}
 			}
 		}
 
@@ -158,14 +176,11 @@ namespace ShareazaDialogUpdater
 				dialog = newEn;
 				return;
 			} else {
-				skinDialog oldEn = oldEnList.Where(d => d.name == dialogName).DefaultIfEmpty().First();
+				skinDialog oldEn = oldEnList.FirstOrDefault(d => d.name == dialogName);
 				int oldControlCount = oldEn == null || oldEn.controls == null ? 0 : oldEn.controls.Length;
 				int trControlCount = tr.controls == null ? 0 : tr.controls.Length;
 				if (oldEn == null || oldControlCount != trControlCount) {
-					if (!showedInvalidWarning) {
-						MessageBox.Show("The old english file doesn't match your translation file!");
-						showedInvalidWarning = true;
-					}
+					lblStatus.Text = "The old english file doesn't match your translation file!";
 					dialog = tr;
 					return;
 				}
@@ -187,8 +202,7 @@ namespace ShareazaDialogUpdater
 										   NewIndex = Array.IndexOf(newEn.controls, cNew)
 									   };
 					for (int i = 0; i < newEn.controls.Length; i++) {
-						var matched = sameControls.Where(s => s.NewControl.Equals(newEn.controls[i]))
-												  .FirstOrDefault();
+						var matched = sameControls.FirstOrDefault(s => s.NewControl.Equals(newEn.controls[i]));
 						if (matched != null) {
 							updatedDialog.controls[matched.NewIndex] = tr.controls[matched.OldIndex];
 						}
@@ -244,8 +258,68 @@ namespace ShareazaDialogUpdater
 			return false;
 		}
 
+		bool _dirty = false;
 		private void richTranslation_TextChanged(object sender, EventArgs e) {
+			if (lastIndex == cmbDialogs.SelectedIndex)
+				_dirty = true;
+		}
 
+		bool AutoSaveTranslation() {
+			if (!_dirty && String.IsNullOrEmpty(richTranslation.Text)) // can not be empty
+				return true;
+			string xml = richTranslation.Xml;
+			skinDialog currDialog = newEnList[lastIndex];
+
+			if (_dirty) {
+				if (String.IsNullOrEmpty(xml)) {
+					lblStatus.Text = richTranslation.XmlError;
+					return false;
+				} else {
+					Exception exeption;
+					skin testSkin = XmlSerializerBase<skin>.ReadString(String.Format(envelope, xml),
+																	   out exeption);
+					if (testSkin == null || exeption != null) {
+						lblStatus.Text = exeption.InnerException != null ? exeption.InnerException.Message :
+																		   exeption.Message;
+						return false;
+					} else {
+						if (testSkin.dialogs == null || testSkin.dialogs.Length == 0) {
+							lblStatus.Text = "Invalid XML";
+							return false;
+						}
+						if (currDialog.cookie != testSkin.dialogs[0].cookie) {
+							lblStatus.Text = "Cookie is invalid";
+							return false;
+						}
+						if (currDialog.name != testSkin.dialogs[0].name) {
+							lblStatus.Text = "Dialog name is invalid";
+							return false;
+						}
+						int count = currDialog.controls == null ? 0 : currDialog.controls.Length;
+						int trCount = testSkin.dialogs[0].controls == null ? 0 : testSkin.dialogs[0].controls.Length;
+						if (trCount != count) {
+							lblStatus.Text = "<control> count is invalid";
+							return false;
+						}
+						for (int i = 0; i < count; i++) {
+							if (currDialog.controls[i].caption == String.Empty &&
+								testSkin.dialogs[0].controls[i].caption != String.Empty ||
+								currDialog.controls[i].caption != String.Empty &&
+								testSkin.dialogs[0].controls[i].caption == String.Empty) {
+								lblStatus.Text = String.Format("<control> #{0} is invalid", i + 1);
+								return false;
+							}
+						}
+						_dirty = false;
+					}
+				}
+			}
+
+			if (!updatedTranslation.ContainsKey(currDialog.name))
+				updatedTranslation.Add(currDialog.name, xml);
+			else
+				updatedTranslation[currDialog.name] = xml;
+			return true;
 		}
 
 		#region Context Menu
@@ -340,12 +414,45 @@ namespace ShareazaDialogUpdater
 		#endregion
 
 		private void changeFontToolStripMenuItem_Click(object sender, EventArgs e) {
-			// The dialog doesn't display GdiCharSet as selected (Script)
-			using (fontDialog.Font = (Font)richTranslation.Font.Clone()) {
-				if (fontDialog.ShowDialog() == DialogResult.OK) {
-					richTranslation.Font = new Font(fontDialog.Font.FontFamily, fontDialog.Font.SizeInPoints,
-													fontDialog.Font.Style, GraphicsUnit.Point,
-													fontDialog.Font.GdiCharSet);
+			if (fontDialog.ShowDialog() == DialogResult.OK) {
+				richTranslation.Font = new Font(fontDialog.Font.FontFamily, fontDialog.Font.SizeInPoints,
+												fontDialog.Font.Style, GraphicsUnit.Point,
+												fontDialog.Font.GdiCharSet);
+			}
+		}
+
+		private void exportChangesToolStripMenuItem_Click(object sender, EventArgs e) {
+			if (translation == null)
+				return;
+			_dirty = true; // save the last window changes
+			if (!AutoSaveTranslation())
+				return;
+			StringBuilder sb = new StringBuilder();
+			foreach (var dialog in newEnList) {
+				string xml = String.Empty;
+				if (!updatedTranslation.ContainsKey(dialog.name)) {
+					try {
+						XDocument doc = XDocument.Parse(GetXml(dialog));
+						xml = doc.ToString();
+					} catch { }
+				} else {
+					xml = updatedTranslation[dialog.name];
+				}
+				if (!String.IsNullOrEmpty(xml)) {
+					sb.Append("\r\n");
+					sb.Append(xml);
+				}
+			}
+			saveFileDialog.ShowDialog();
+			if (!String.IsNullOrEmpty(saveFileDialog.FileName)) {
+				try {
+					using (var fs = new FileStream(saveFileDialog.FileName, FileMode.Create, FileAccess.Write))
+					using (TextWriter writer = new StreamWriter(fs)) {
+						writer.Write(envelope, sb.ToString());
+						writer.Flush();
+					}
+				} catch (Exception ex) {
+					MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				}
 			}
 		}
