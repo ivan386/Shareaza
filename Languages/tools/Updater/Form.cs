@@ -12,6 +12,7 @@ using System.Globalization;
 using System.Threading;
 using System.Diagnostics;
 using System.Collections.Specialized;
+using System.Xml;
 using System.Xml.Linq;
 
 namespace ShareazaDialogUpdater
@@ -432,8 +433,8 @@ namespace ShareazaDialogUpdater
 				string xml = String.Empty;
 				if (!updatedTranslation.ContainsKey(dialog.name)) {
 					try {
-						XDocument doc = XDocument.Parse(GetXml(dialog));
-						xml = doc.ToString();
+						XElement elem = XElement.Parse(GetXml(dialog));
+						xml = elem.ToString();
 					} catch { }
 				} else {
 					xml = updatedTranslation[dialog.name];
@@ -445,11 +446,22 @@ namespace ShareazaDialogUpdater
 			}
 			saveFileDialog.ShowDialog();
 			if (!String.IsNullOrEmpty(saveFileDialog.FileName)) {
+				var newSettings = new XmlWriterSettings()
+				{
+					Indent = true,
+					IndentChars = "\t",
+					Encoding = new UTF8Encoding(false, false),
+					CloseOutput = false,
+					CheckCharacters = false,
+					NewLineHandling = NewLineHandling.Replace,
+				};			
 				try {
-					using (var fs = new FileStream(saveFileDialog.FileName, FileMode.Create, FileAccess.Write))
-					using (TextWriter writer = new StreamWriter(fs)) {
-						writer.Write(envelope, sb.ToString());
+					using (var fs = new FileStream(saveFileDialog.FileName, FileMode.Create, FileAccess.Write)) 
+					using (XmlWriter writer = XmlWriter.Create(fs, newSettings)) {
+						XDocument doc = XDocument.Parse(String.Format(envelope, sb.ToString()));
+						doc.WriteTo(writer);
 						writer.Flush();
+						fs.Flush();
 					}
 				} catch (Exception ex) {
 					MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
