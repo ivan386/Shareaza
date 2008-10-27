@@ -1,7 +1,7 @@
 //
 // GGEP.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -123,7 +123,8 @@ const LPCTSTR GGEP_HEADER_GDNA_PACKED_IPPORTS	= _T("DIPP");
 const LPCTSTR GGEP_HEADER_HASH					= _T("H");
 // URN but without "urn:" prefix
 const LPCTSTR GGEP_HEADER_URN					= _T("u");
-
+// up to 64-bit file size
+const LPCTSTR GGEP_HEADER_LARGE_FILE			= _T("LF");
 
 class CGGEPBlock;
 class CGGEPItem;
@@ -195,7 +196,7 @@ public:
 	void		Write(LPCVOID pData, int nLength);
 	void		WriteByte(BYTE nValue);
 	CString		ToString() const;
-	void		WriteUTF8( LPCWSTR pszText);
+	void		WriteUTF8(LPCWSTR pszText, size_t nLength);
 
 protected:
 	BOOL		ReadFrom(CGGEPBlock* pBlock, BYTE nFlags);

@@ -1,7 +1,7 @@
 //
 // GGEP.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -300,11 +300,11 @@ void CGGEPItem::WriteByte(BYTE nValue)
 	Write( &nValue, 1 );
 }
 
-void CGGEPItem::WriteUTF8( LPCWSTR pszText )
+void CGGEPItem::WriteUTF8(LPCWSTR pszText, size_t nLength)
 {
 	CBuffer pBuffer;
 
-	pBuffer.Print( pszText, CP_UTF8 );
+	pBuffer.Print( pszText, nLength, CP_UTF8 );
 	Write( pBuffer.m_pBuffer, pBuffer.m_nLength );
 }
 

@@ -1,7 +1,7 @@
 //
 // G1Packet.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -49,7 +49,8 @@ typedef struct
 } GNUTELLAPACKET;
 
 // Each CG1Packet object represents a received or preparing to send Gnutella packet
-class CG1Packet : public CPacket // Inherit from CPacket to get memory management, and methods to read and write ASCII text, bytes, and DWORDs
+class CG1Packet : public CPacket // Inherit from CPacket to get memory management, and methods to read 
+								 // and write ASCII text, bytes, and DWORDs
 {
 
 protected:
@@ -67,7 +68,8 @@ public:
 	BYTE  m_nHops; // The number of hops this packet has travelled across the Internet to get here
 
 	// Data about the packet
-	int   m_nTypeIndex; // Packet type like ping or pong, except as an enumeration this program defines instead of the byte code used by the packet itself
+	int   m_nTypeIndex; // Packet type like ping or pong, except as an enumeration this program defines instead of the byte code 
+						// used by the packet itself
 	DWORD m_nHash;      // Used by CacheHash, but doesn't seem to ever get a hash written into it (do)
 
 public:
@@ -78,7 +80,8 @@ public:
 	// Hash the packet
 	void         CacheHash();                                       // Calculate a simple hash of the packet payload in m_nHash
     // ????????????????????????????????? redefinition of default Parameter!!!
-	virtual BOOL GetRazaHash(Hashes::Sha1Hash& oHash, DWORD nLength = 0) const; // Compute the SHA hash of the packet GUID, type byte, and payload
+	virtual BOOL GetRazaHash(Hashes::Sha1Hash& oHash, DWORD nLength = 0) const; // Compute the SHA hash of the packet GUID, 
+																				// type byte, and payload
 
 	// Get the packet's type, GUID, and all its bytes
 	virtual CString GetType()                  const; // Returns a pointer to a text literal like "Ping" or "Pong"
@@ -105,7 +108,8 @@ public:
 protected:
 
 	// Create a nested class, CG1PacketPool, that holds arrays of Gnutella packets we can use quickly
-	class CG1PacketPool : public CPacketPool // Inherit from CPacketPool to get methods to create arrays of packets and break them off for speedy use
+	class CG1PacketPool : public CPacketPool // Inherit from CPacketPool to get methods to create arrays of 
+											 // packets and break them off for speedy use
 	{
 
 	public:
@@ -192,46 +196,48 @@ inline void CG1Packet::CG1PacketPool::FreePoolImpl(CPacket* pPacket)
 #pragma pack() // Same as pragma pack(pop)
 
 // Gnutella packet type codes, m_nType in the header will be one of these values to show the type
-#define G1_PACKET_PING        0x00 // Ping packet
-#define G1_PACKET_PONG        0x01 // Pong packet, response to a ping
-#define G1_PACKET_BYE         0x02 // Goodbye packet, the remote computer telling us why it's disconnecting
-#define G1_PACKET_QUERY_ROUTE 0x30 // Packet about query routing table (do)
-#define G1_PACKET_VENDOR      0x31 // Vendor-specific packets (do)
-#define G1_PACKET_VENDOR_APP  0x32
-#define G1_PACKET_PUSH        0x40 // Packet asking that we push open a connection to a remote computer that can't connect directly to us
-#define G1_PACKET_QUERY       0x80 // Search query
-#define G1_PACKET_HIT         0x81 // Response to search query, a hit
+#define G1_PACKET_PING			0x00 // Ping packet
+#define G1_PACKET_PONG			0x01 // Pong packet, response to a ping
+#define G1_PACKET_BYE			0x02 // Goodbye packet, the remote computer telling us why it's disconnecting
+#define G1_PACKET_QUERY_ROUTE	0x30 // Packet about query routing table (do)
+#define G1_PACKET_VENDOR		0x31 // Vendor-specific packets (do)
+#define G1_PACKET_VENDOR_APP	0x32
+#define G1_PACKET_PUSH			0x40 // Packet asking that we push open a connection to a remote computer 
+									 // that can't connect directly to us
+#define G1_PACKET_RUDP			0x41 // Packet used for F2F RUDP transfers
+#define G1_PACKET_QUERY			0x80 // Search query
+#define G1_PACKET_HIT			0x81 // Response to search query, a hit
 
 // Packet type indices, another enumeration for Gnutella packets, GnutellaTypeToIndex translates from the byte code to this number
-#define G1_PACKTYPE_UNKNOWN     0
-#define G1_PACKTYPE_PING        1
-#define G1_PACKTYPE_PONG        2
-#define G1_PACKTYPE_BYE         3
-#define G1_PACKTYPE_QUERY_ROUTE 4
-#define G1_PACKTYPE_VENDOR      5
-#define G1_PACKTYPE_PUSH        6
-#define G1_PACKTYPE_QUERY       7
-#define G1_PACKTYPE_HIT         8
-#define G1_PACKTYPE_MAX         9 // There are 9 packet type indices, with values 0 through 8
+#define G1_PACKTYPE_UNKNOWN		0
+#define G1_PACKTYPE_PING		1
+#define G1_PACKTYPE_PONG		2
+#define G1_PACKTYPE_BYE			3
+#define G1_PACKTYPE_QUERY_ROUTE	4
+#define G1_PACKTYPE_VENDOR		5
+#define G1_PACKTYPE_PUSH		6
+#define G1_PACKTYPE_QUERY		7
+#define G1_PACKTYPE_HIT			8
+#define G1_PACKTYPE_MAX			9 // There are 9 packet type indices, with values 0 through 8
 
 // MinSpeed Flags (do)
-#define G1_QF_TAG        0x8000
-#define G1_QF_FIREWALLED 0x4000
-#define G1_QF_XML        0x2000
-#define G1_QF_DYNAMIC    0x1000
-#define G1_QF_BIN_HASH   0x800
-#define G1_QF_OOB        0x400
+#define G1_QF_TAG				0x8000
+#define G1_QF_FIREWALLED		0x4000
+#define G1_QF_XML				0x2000
+#define G1_QF_DYNAMIC			0x1000
+#define G1_QF_BIN_HASH			0x800
+#define G1_QF_OOB				0x400
 
 // QHD Flags (do)
-#define G1_QHD_PUSH   0x01
-#define G1_QHD_BAD    0x02
-#define G1_QHD_BUSY   0x04
-#define G1_QHD_STABLE 0x08
-#define G1_QHD_SPEED  0x10
-#define G1_QHD_GGEP   0x20
-#define G1_QHD_MASK   0x3D
+#define G1_QHD_PUSH				0x01
+#define G1_QHD_BAD				0x02
+#define G1_QHD_BUSY				0x04
+#define G1_QHD_STABLE			0x08
+#define G1_QHD_SPEED			0x10
+#define G1_QHD_GGEP				0x20
+#define G1_QHD_MASK				0x3D
 
-#define G1_PACKET_HIT_SEP	0x1C // Query hit extension separator
+#define G1_PACKET_HIT_SEP		0x1C // Query hit extension separator
 
 // End the group of lines to only include once, pragma once doesn't require an endif at the bottom
 #endif // !defined(AFX_G1PACKET_H__6B611C29_56C1_4E2A_AA72_249AB7BD76D0__INCLUDED_)

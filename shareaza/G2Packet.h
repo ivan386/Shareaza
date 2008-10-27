@@ -161,6 +161,43 @@ const G2_PACKET G2_PACKET_VENDOR			= MAKE_G2_PACKET( 'V',  0 ,  0 ,  0 ,  0 ,  0
 const G2_PACKET G2_PACKET_VERSION			= MAKE_G2_PACKET( 'C', 'V',  0 ,  0 ,  0 ,  0 ,  0 ,  0  );
 const G2_PACKET G2_PACKET_VIRTUAL_FOLDER	= MAKE_G2_PACKET( 'V', 'F',  0 ,  0 ,  0 ,  0 ,  0 ,  0  );
 const G2_PACKET G2_PACKET_XML				= MAKE_G2_PACKET( 'X', 'M', 'L',  0 ,  0 ,  0 ,  0 ,  0  );
+// GnucDNA Extensions
+const G2_PACKET G2_PACKET_CONNECT_REQUEST	= MAKE_G2_PACKET( 'C', 'R',  0 ,  0 ,  0 ,  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_MODE_CHANGE_REQ	= MAKE_G2_PACKET( 'M', 'C', 'R',  0 ,  0 ,  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_MODE_CHANGE_ACK	= MAKE_G2_PACKET( 'M', 'C', 'A',  0 ,  0 ,  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_PRIVATE_MESSAGE	= MAKE_G2_PACKET( 'P', 'M',  0 ,  0 ,  0 ,  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_IDENT				= MAKE_G2_PACKET( 'I', 'D', 'E', 'N', 'T',  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_TEST_FIREWALL		= MAKE_G2_PACKET( 'T', 'F', 'W',  0 ,  0 ,  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_CLOSE				= MAKE_G2_PACKET( 'C', 'L', 'O', 'S', 'E',  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_dna				= MAKE_G2_PACKET( 'd', 'n', 'a',  0 ,  0 ,  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_HUB_ABLE			= MAKE_G2_PACKET( 'H', 'A',  0 ,  0 ,  0 ,  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_PEER_BEHINDROUTER	= MAKE_G2_PACKET( 'R', 'T', 'R',  0 ,  0 ,  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_CPU_AND_MEMORY	= MAKE_G2_PACKET( 'H', 'A',  0 ,  0 ,  0 ,  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_UPTIME			= MAKE_G2_PACKET( 'U', 'P',  0 ,  0 ,  0 ,  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_NETWORK_BANDWIDTH	= MAKE_G2_PACKET( 'N', 'B', 'W',  0 ,  0 ,  0 ,  0 ,  0  );
+// Shareaza Plus Extras
+const G2_PACKET G2_PACKET_WEB_FW_CHECK		= MAKE_G2_PACKET( 'J', 'C', 'T',  0 ,  0 ,  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_NAT_DESC			= MAKE_G2_PACKET( 'N', 'A', 'T',  0 ,  0 ,  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_SFL_DESC			= MAKE_G2_PACKET( 'S', 'F', 'L',  0 ,  0 ,  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_VER_DESC			= MAKE_G2_PACKET( 'V', 'E', 'R',  0 ,  0 ,  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_AGENT_NAME		= MAKE_G2_PACKET( 'A', 'N',  0 ,  0 ,  0 ,  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_AGENT_VERSION		= MAKE_G2_PACKET( 'A', 'V',  0 ,  0 ,  0 ,  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_VENDORCODE		= MAKE_G2_PACKET( 'V', 'C',  0 ,  0 ,  0 ,  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_FOLDERNAME		= MAKE_G2_PACKET( 'F', 'N',  0 ,  0 ,  0 ,  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_SRC_IP_AND_PORT	= MAKE_G2_PACKET( 'S', 'I', 'P', 'P',  0 ,  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_DST_IP_AND_PORT	= MAKE_G2_PACKET( 'D', 'I', 'P', 'P',  0 ,  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_G2DESC			= MAKE_G2_PACKET( 'G', '2',  0 ,  0 ,  0 ,  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_UDPKHL_DESC		= MAKE_G2_PACKET( 'U', 'D', 'P', 'K', 'H', 'L',  0 ,  0  );
+const G2_PACKET G2_PACKET_PEER_NOTFIREWALLED= MAKE_G2_PACKET( 'N', 'F', 'W',  0 ,  0 ,  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_TCP_NOT_FIREWALLED= MAKE_G2_PACKET( 'T', 'C', 'P', 'N', 'F', 'W',  0 ,  0  );
+const G2_PACKET G2_PACKET_UDP_NOT_FIREWALLED= MAKE_G2_PACKET( 'U', 'D', 'P', 'N', 'F', 'W',  0 ,  0  );
+const G2_PACKET G2_PACKET_TCP_FIREWALLED	= MAKE_G2_PACKET( 'T', 'C', 'P', 'F', 'W',  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_UDP_FIREWALLED	= MAKE_G2_PACKET( 'U', 'D', 'P', 'F', 'W',  0 ,  0 ,  0  );
+const G2_PACKET G2_PACKET_CONNECT			= MAKE_G2_PACKET( 'C', 'O', 'N', 'N', 'E', 'C', 'T',  0  );
+const G2_PACKET G2_PACKET_CONNECT_ACK		= MAKE_G2_PACKET( 'C', 'O', 'N', 'N', 'A', 'C', 'K',  0  );
+const G2_PACKET G2_PACKET_YOURIP			= MAKE_G2_PACKET( 'Y', 'O', 'U', 'R', 'I', 'P',  0 ,  0  );	// Your IP extension for KHLA
+const G2_PACKET G2_PACKET_HASHED_URN		= MAKE_G2_PACKET( 'H', 'U', 'R', 'N',  0 ,  0 ,  0 ,  0  );	// hashed URNs
+const G2_PACKET G2_PACKET_HASHED_KEYWORD	= MAKE_G2_PACKET( 'H', 'K', 'E', 'Y',  0 ,  0 ,  0 ,  0  );	// hashed keywords
 
 //
 // G2 SS
