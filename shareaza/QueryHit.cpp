@@ -119,6 +119,8 @@ CQueryHit* CQueryHit::FromG1Packet(CG1Packet* pPacket, int* pnHops)
 		if ( pnHops ) *pnHops = pPacket->m_nHops + 1;
 	}
 	
+	oQueryID.validate();
+
 	try
 	{
 		BYTE	nCount		= pPacket->ReadByte();
@@ -126,7 +128,9 @@ CQueryHit* CQueryHit::FromG1Packet(CG1Packet* pPacket, int* pnHops)
 		DWORD	nAddress	= pPacket->ReadLongLE();
 		DWORD	nSpeed		= pPacket->ReadLongLE();
 		
-		if ( Network.IsReserved( (IN_ADDR*)&nAddress ), false )
+		if ( Network.IsReserved( (IN_ADDR*)&nAddress, false ) )
+			AfxThrowUserException();
+		else if ( Security.IsDenied( (IN_ADDR*)&nAddress ) )
 			AfxThrowUserException();
 
 		if ( ! nCount ) 
@@ -135,6 +139,7 @@ CQueryHit* CQueryHit::FromG1Packet(CG1Packet* pPacket, int* pnHops)
 		while ( nCount-- )
 		{
 			CQueryHit* pHit = new CQueryHit( PROTOCOL_G1, oQueryID );
+
 			if ( pFirstHit ) pLastHit->m_pNext = pHit;
 			else pFirstHit = pHit;
 			pLastHit = pHit;
@@ -289,7 +294,7 @@ CQueryHit* CQueryHit::FromG2Packet(CG2Packet* pPacket, int* pnHops)
 	
 	CString		strNick;
 	DWORD		nGroupState[8][4] = {};
-	
+
 	typedef std::pair< DWORD, u_short > AddrPortPair;
 	typedef std::map< DWORD, u_short >::iterator NodeIter;
 
@@ -302,11 +307,11 @@ CQueryHit* CQueryHit::FromG2Packet(CG2Packet* pPacket, int* pnHops)
 		G2_PACKET nType;
 		DWORD nLength;
 		bool bSpam = false;
-		
+
 		while ( pPacket->ReadPacket( nType, nLength, &bCompound ) )
 		{
 			DWORD nSkip = pPacket->m_nPosition + nLength;
-			
+
 			if ( bCompound )
 			{
 				if ( nType != G2_PACKET_HIT_DESCRIPTOR &&
@@ -934,8 +939,6 @@ BOOL CQueryHit::ReadGGEP(CG1Packet* pPacket, BOOL* pbBrowseHost, BOOL* pbChat)
 
 void CQueryHit::ReadG1Packet(CG1Packet* pPacket)
 {
-	CString strData;
-	
 	m_nIndex	= pPacket->ReadLongLE();
 	m_bSize		= TRUE;
 	m_nSize		= pPacket->ReadLongLE();
@@ -949,8 +952,6 @@ void CQueryHit::ReadG1Packet(CG1Packet* pPacket)
 		m_sName	= pPacket->ReadStringASCII();
 	}
 
-	strData		= pPacket->ReadStringASCII();
-
 	if ( m_sName.GetLength() > 160 )
 	{
 		m_bBogus = TRUE;
@@ -958,7 +959,7 @@ void CQueryHit::ReadG1Packet(CG1Packet* pPacket)
 	else
 	{
 		int nCurWord = 0, nMaxWord = 0;
-		
+
 		for ( LPCTSTR pszName = m_sName ; *pszName ; pszName++ )
 		{
 			if ( _istgraph( *pszName ) )
@@ -971,74 +972,221 @@ void CQueryHit::ReadG1Packet(CG1Packet* pPacket)
 				nCurWord = 0;
 			}
 		}
-		
 		if ( nMaxWord > 30 ) m_bBogus = TRUE;
 	}
-	
-	LPCTSTR pszData	= strData;
-	LPCTSTR pszEnd	= pszData + _tcslen( pszData );
+
+	Hashes::Sha1Hash	oSHA1;
+	Hashes::TigerHash	oTiger;
+	Hashes::Ed2kHash	oED2K;
+	Hashes::BtHash		oBTH;
+	Hashes::Md5Hash		oMD5;
+
+	std::string	strData		= std::string( (LPCSTR)pPacket->m_pBuffer + pPacket->m_nPosition,
+											int(pPacket->m_nBuffer - pPacket->m_nPosition) );
+	LPCSTR		pszData		= (LPCSTR)strData.c_str();
+	size_t		nDataLength	= strlen( (char*)pszData );
+	LPCSTR		pszEnd		= pszData + nDataLength;
+
+	pPacket->m_nPosition = pPacket->m_nPosition + nDataLength + 1;
 	
 	while ( *pszData && pszData < pszEnd )
 	{
 		if ( (BYTE)( (*pszData) & 0xff ) == GGEP_MAGIC )
 		{
 			if ( ! Settings.Gnutella1.EnableGGEP ) break;
-			
+
 			CGGEPBlock pGGEP;
-			pGGEP.ReadFromString( pszData );
-			
-			if ( CGGEPItem* pItem = pGGEP.Find( GGEP_HEADER_HASH, 21 ) )
+			pGGEP.ReadFromBuffer( (LPVOID)pszData, pszEnd - pszData );
+
+			CGGEPItem* pItemPos = pGGEP.m_pFirst;
+			if ( pItemPos != NULL && pGGEP.m_nItemCount != 0 )
 			{
-				if ( pItem->m_pBuffer[0] > 0 && pItem->m_pBuffer[0] < 3 )
+				BYTE nItemCount = 0;
+				while ( nItemCount < pGGEP.m_nItemCount )
 				{
-                    std::copy( &pItem->m_pBuffer[1], &pItem->m_pBuffer[1] + 20, &m_oSHA1[ 0 ] );
-                    m_oSHA1.validate();
+					if ( pItemPos->IsNamed( GGEP_HEADER_HASH ) )
+					{
+						if (  pItemPos->m_pBuffer[0] == GGEP_H_SHA1 )
+						{
+							if ( pItemPos->m_nLength >= 20 + 1 )
+							{
+								oSHA1 = reinterpret_cast< Hashes::Sha1Hash::RawStorage& >(
+									pItemPos->m_pBuffer[ 1 ] );
+							}
+						}
+						else if ( pItemPos->m_pBuffer[0] == GGEP_H_BITPRINT )
+						{
+							if ( pItemPos->m_nLength >= 24 + 20 + 1 )
+							{
+								oSHA1 = reinterpret_cast< Hashes::Sha1Hash::RawStorage& >(
+									pItemPos->m_pBuffer[ 1 ] );
+								oTiger = reinterpret_cast< Hashes::TigerHash::RawStorage& >(
+									pItemPos->m_pBuffer[ 21 ] );
+							}
+						}
+						else if ( pItemPos->m_pBuffer[0] == GGEP_H_MD5 )
+						{
+							if ( pItemPos->m_nLength >= 17 )
+							{
+								oMD5 = reinterpret_cast< Hashes::Md5Hash::RawStorage& >(
+									pItemPos->m_pBuffer[ 1 ] );
+							}
+						}
+					}
+					else if ( pItemPos->IsNamed( GGEP_HEADER_URN ) )
+					{
+						CString strUrn = "urn:" + pItemPos->ToString();
+
+						oSHA1.fromUrn( strUrn );
+						oTiger.fromUrn( strUrn );
+						oED2K.fromUrn( strUrn );
+						oMD5.fromUrn( strUrn );
+						oBTH.fromUrn( strUrn );
+					}
+					else if ( pItemPos->IsNamed( GGEP_HEADER_LARGE_FILE ) )
+					{
+						if ( pItemPos->m_nLength <= 8 )
+						{
+							QWORD nFileSize = 0;
+
+							pItemPos->Read( &nFileSize , pItemPos->m_nLength );
+
+							if ( m_nSize != 0 )
+								m_nSize = nFileSize;
+							else
+								m_nSize = SIZE_UNKNOWN;
+						}
+					}
+					else if ( pItemPos->IsNamed( GGEP_HEADER_ALTS ) )
+					{
+						// the ip-addresses need not be stored, as they are sent upon the download request in the ALT-loc header
+						m_nSources = pItemPos->m_nLength / 6;	// 6 bytes per source (see ALT GGEP extension specification)
+					}
+
+					if ( oSHA1.isValid() )
+					{
+						if ( validAndUnequal( oSHA1, m_oSHA1 ) )
+							AfxThrowUserException();	// security/polution issue - fake or spam packet.
+						else
+							m_oSHA1  = oSHA1;
+						oSHA1.clear();
+					}
+
+					if ( oTiger.isValid() )
+					{
+						if ( validAndUnequal( oTiger, m_oTiger ) )
+							AfxThrowUserException();	// security/polution issue - fake or spam packet.
+						else
+							m_oTiger  = oTiger;
+						oTiger.clear();
+					}
+
+					if ( oED2K.isValid() )
+					{
+						if ( validAndUnequal( oED2K, m_oED2K ) )
+							AfxThrowUserException();	// security/polution issue - fake or spam packet.
+						else
+							m_oED2K  = oED2K;
+						oED2K.clear();
+					}
+
+					if ( oMD5.isValid() )
+					{
+						if ( validAndUnequal( oMD5, m_oMD5 ) )
+							AfxThrowUserException();	// security/polution issue - fake or spam packet.
+						else
+							m_oMD5  = oMD5;
+						oMD5.clear();
+					}
+	
+					if ( oBTH.isValid() )
+					{
+						if ( validAndUnequal( oBTH, m_oBTH ) )
+							AfxThrowUserException();	// security/polution issue - fake or spam packet.
+						else
+							m_oBTH  = oBTH;
+						oBTH.clear();
+					}
+
+					pItemPos = pItemPos->m_pNext;
+					nItemCount++;
 				}
-				if ( pItem->m_pBuffer[0] == 2 && pItem->m_nLength >= 24 + 20 + 1 )
-				{
-                    std::copy( &pItem->m_pBuffer[21], &pItem->m_pBuffer[21] + 24, &m_oTiger[ 0 ] );
-                    m_oTiger.validate();
-				}
+				break;
 			}
-			else if ( CGGEPItem* pItem = pGGEP.Find( GGEP_HEADER_URN, 5 + 32 ) )
-			{
-				strData = pItem->ToString();
-				
-				if ( !m_oSHA1 ) m_oSHA1.fromUrn( strData );
-				if ( !m_oTiger ) m_oTiger.fromUrn( strData );
-				if ( !m_oED2K ) m_oED2K.fromUrn( strData );
-				if ( !m_oBTH ) m_oBTH.fromUrn( pszData );
-				if ( !m_oMD5 ) m_oMD5.fromUrn( pszData );
-			}
-			
-			if ( CGGEPItem* pItem = pGGEP.Find( GGEP_HEADER_ALTS, 6 ) )
-			{
-				// the ip-addresses need not be stored, as they are sent upon the download request in the ALT-loc header
-				m_nSources = pItem->m_nLength / 6;	// 6 bytes per source (see ALT GGEP extension specification)
-			}
-			
-			break;
 		}
-		
-		LPCTSTR pszSep = _tcschr( pszData, 0x1C );
-		size_t nLength = pszSep ? pszSep - pszData : _tcslen( pszData );
-		
-		if ( _tcsnicmp( pszData, _T("urn:"), 4 ) == 0 )
+
+		LPCSTR pszSep = strchr( pszData, G1_PACKET_HIT_SEP );
+		size_t nLength = pszSep ? pszSep - pszData : strlen( pszData );
+
+		if ( _strnicmp( pszData, "urn:", 4 ) == 0 )
 		{
-			if ( !m_oSHA1 ) m_oSHA1.fromUrn( pszData );
-			if ( !m_oTiger ) m_oTiger.fromUrn( pszData );
-			if ( !m_oED2K ) m_oED2K.fromUrn( pszData );
-			if ( !m_oBTH ) m_oBTH.fromUrn( pszData );
-			if ( !m_oMD5 ) m_oMD5.fromUrn( pszData );
+			CString strUrn(pszData);
+			oSHA1.fromUrn( strUrn );
+			oTiger.fromUrn( strUrn );
+			oED2K.fromUrn( strUrn );
+			oMD5.fromUrn( strUrn );
+			oBTH.fromUrn( strUrn );
+
+			// in case of multiple HUGE section.
+			if ( oSHA1.isValid() )
+			{
+				if ( validAndUnequal( oSHA1, m_oSHA1 ) )
+					AfxThrowUserException();	// security/polution issue - fake or spam packet.
+				else
+					m_oSHA1  = oSHA1;
+				oSHA1.clear();
+			}
+
+			if ( oTiger.isValid() )
+			{
+				if ( validAndUnequal( oTiger, m_oTiger ) )
+					AfxThrowUserException();	// security/polution issue - fake or spam packet.
+				else
+					m_oTiger  = oTiger;
+				oTiger.clear();
+			}
+
+			if ( oED2K.isValid() )
+			{
+				if ( validAndUnequal( oED2K, m_oED2K ) )
+					AfxThrowUserException();	// security/polution issue - fake or spam packet.
+				else
+					m_oED2K  = oED2K;
+				oED2K.clear();
+			}
+
+			if ( oMD5.isValid() )
+			{
+				if ( validAndUnequal( oMD5, m_oMD5 ) )
+					AfxThrowUserException();	// security/polution issue - fake or spam packet.
+				else
+					m_oMD5  = oMD5;
+				oMD5.clear();
+			}
+
+			if ( oBTH.isValid() )
+			{
+				if ( validAndUnequal( oBTH, m_oBTH ) )
+					AfxThrowUserException();	// security/polution issue - fake or spam packet.
+				else
+					m_oBTH  = oBTH;
+				oBTH.clear();
+			}
 		}
 		else if ( nLength > 4 )
 		{
-			AutoDetectSchema( pszData );
+			CBuffer pConvertWork;
+			pConvertWork.Print( pszData, nLength );
+			CString strXML = pConvertWork.ReadString( nLength, CP_UTF8 );
+			m_pXML = CXMLElement::FromString( strXML );
+
+			AutoDetectSchema( strXML );
 		}
-		
+
 		if ( pszSep ) pszData = pszSep + 1;
 		else break;
 	}
+
 	if ( !m_oSHA1 && !m_oTiger && !m_oED2K && !m_oBTH && !m_oMD5 )
 		AfxThrowUserException();
 }
@@ -1332,14 +1480,14 @@ BOOL CQueryHit::ReadEDPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer, DWORD m_n
 	CString strLength(_T("")), strBitrate(_T("")), strCodec(_T(""));
 	DWORD nLength = 0;
 	pPacket->Read( m_oED2K );
-	
+
 	ReadEDAddress( pPacket, pServer );
-	
+
 	DWORD nTags = pPacket->ReadLongLE();
 
 	ULARGE_INTEGER nSize;
 	nSize.QuadPart = 0;
-	
+
 	while ( nTags-- > 0 )
 	{
 		if ( pPacket->GetRemaining() < 1 ) return FALSE;
@@ -1350,7 +1498,7 @@ BOOL CQueryHit::ReadEDPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer, DWORD m_n
 			theApp.Message( MSG_ERROR | MSG_FACILITY_SEARCH, _T("ED2K search result packet read error") ); //debug check
 			return FALSE;
 		}
-	
+
 		if ( pTag.m_nKey == ED2K_FT_FILENAME )
 		{
 			m_sName = pTag.m_sValue;
@@ -1541,7 +1689,7 @@ BOOL CQueryHit::ReadEDPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer, DWORD m_n
 				  pSchema->FilterType( strType ) )
 		{	// Video
 			m_sSchemaURI = CSchema::uriVideo;
-			
+
 			// Add metadata
 			if ( nLength > 0 )
 			{
@@ -1602,15 +1750,18 @@ BOOL CQueryHit::ReadEDPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer, DWORD m_n
 			m_sSchemaURI = CSchema::uriCollection;
 		}
 	}
-	
+
 	return TRUE;
 }
 
 void CQueryHit::ReadEDAddress(CEDPacket* pPacket, SOCKADDR_IN* pServer)
 {
 	DWORD nAddress = m_pAddress.S_un.S_addr = pPacket->ReadLongLE();
-	if ( Network.IsReserved( (IN_ADDR*)&nAddress ), false )
-		nAddress = 0;
+	if ( ! CEDPacket::IsLowID( nAddress ) && (
+		Network.IsReserved( (IN_ADDR*)&nAddress, false ) ||
+		Security.IsDenied( (IN_ADDR*)&nAddress ) ) )
+		AfxThrowUserException();
+
 	m_nPort = pPacket->ReadShortLE();
 	
 	Hashes::Guid::iterator i = m_oClientID.begin();
@@ -1618,7 +1769,8 @@ void CQueryHit::ReadEDAddress(CEDPacket* pPacket, SOCKADDR_IN* pServer)
 	*i++ = htons( pServer->sin_port );
 	*i++ = nAddress;
 	*i++ = m_nPort;
-	
+	m_oClientID.validate();
+
 	if ( nAddress == 0 )
 	{
 		m_bResolveURL = FALSE;
@@ -1653,7 +1805,7 @@ void CQueryHit::Resolve()
 	}
 	else if ( ! m_bResolveURL )
 		return;
-	
+
 	m_nSources++;
 
 	if ( m_nProtocol == PROTOCOL_ED2K )
@@ -1703,21 +1855,21 @@ BOOL CQueryHit::ParseXML(CXMLElement* pMetaData, DWORD nRealIndex)
 {
 	CString strRealIndex;
 	strRealIndex.Format( _T("%i"), nRealIndex );
-	
+
 	for ( POSITION pos1 = pMetaData->GetElementIterator() ; pos1 && ! m_pXML ; )
 	{
 		CXMLElement* pXML = pMetaData->GetNextElement( pos1 );
-		
+
 		for ( POSITION pos2 = pXML->GetElementIterator() ; pos2 ; )
 		{
 			CXMLElement* pHit		= pXML->GetNextElement( pos2 );
 			CXMLAttribute* pIndex	= pHit->GetAttribute( _T("index") );
-			
+
 			if ( pIndex != NULL && pIndex->GetValue() == strRealIndex )
 			{
 				m_sSchemaPlural	= pXML->GetName();
 				m_sSchemaURI	= pXML->GetAttributeValue( CXMLAttribute::schemaName, _T("") );
-				
+
 				if ( m_sSchemaPlural.GetLength() > 0 && m_sSchemaURI.GetLength() > 0 )
 				{
 					if ( m_pXML )
@@ -1728,12 +1880,12 @@ BOOL CQueryHit::ParseXML(CXMLElement* pMetaData, DWORD nRealIndex)
 					if ( HasBogusMetadata() )
 						m_bBogus = TRUE;
 				}
-				
+
 				break;
 			}
 		}
 	}
-	
+
 	return m_pXML != NULL;
 }
 
@@ -1748,7 +1900,7 @@ BOOL CQueryHit::AutoDetectSchema(LPCTSTR pszInfo)
 	{
 		if ( AutoDetectAudio( pszInfo ) ) return TRUE;
 	}
-	
+
 	return FALSE;
 }
 
