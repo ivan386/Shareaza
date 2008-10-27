@@ -110,8 +110,10 @@ namespace ShareazaDialogUpdater
 				if (manifest != null)
 					richTranslation.SetLanguage(manifest.lang, manifest.name);
 				translation = list;
-				if (translation != null)
+				if (translation != null) {
+					updatedTranslation.Clear();
 					UpdateBoxes();
+				}
 			}
 		}
 
