@@ -41,7 +41,6 @@
 			System.Windows.Forms.Label lblEnNew;
 			System.Windows.Forms.StatusStrip statusStrip;
 			this.splitVertical = new System.Windows.Forms.SplitContainer();
-			this.richEnOld = new ShareazaDialogUpdater.XmlViewBox();
 			this.contextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.undoItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.redoItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -50,7 +49,6 @@
 			this.pasteItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.deleteItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.selectAllItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.richEnNew = new ShareazaDialogUpdater.XmlViewBox();
 			this.txtEnNew = new System.Windows.Forms.TextBox();
 			this.btnEnNew = new System.Windows.Forms.Button();
 			this.txtEnOld = new System.Windows.Forms.TextBox();
@@ -59,14 +57,16 @@
 			this.tableBottomAll = new System.Windows.Forms.TableLayoutPanel();
 			this.btnDoWork = new System.Windows.Forms.Button();
 			this.splitHorizontal = new System.Windows.Forms.SplitContainer();
-			this.richTranslation = new ShareazaDialogUpdater.XmlViewBox();
 			this.cmbDialogs = new System.Windows.Forms.ComboBox();
 			this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
 			this.menuStrip = new System.Windows.Forms.MenuStrip();
 			this.changeFontToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.fontDialog = new System.Windows.Forms.FontDialog();
 			this.exportChangesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.fontDialog = new System.Windows.Forms.FontDialog();
 			this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
+			this.richEnOld = new ShareazaDialogUpdater.XmlViewBox();
+			this.richEnNew = new ShareazaDialogUpdater.XmlViewBox();
+			this.richTranslation = new ShareazaDialogUpdater.XmlViewBox();
 			tableTopAll = new System.Windows.Forms.TableLayoutPanel();
 			toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
@@ -114,17 +114,6 @@
 			// 
 			this.splitVertical.Panel2.Controls.Add(this.richEnNew);
 			resources.ApplyResources(this.splitVertical.Panel2, "splitVertical.Panel2");
-			// 
-			// richEnOld
-			// 
-			this.richEnOld.AcceptsTab = true;
-			resources.ApplyResources(this.richEnOld, "richEnOld");
-			this.richEnOld.BackColor = System.Drawing.SystemColors.Window;
-			this.richEnOld.BorderStyle = System.Windows.Forms.BorderStyle.None;
-			this.richEnOld.ContextMenuStrip = this.contextMenu;
-			this.richEnOld.Name = "richEnOld";
-			this.richEnOld.ReadOnly = true;
-			this.richEnOld.TabStop = false;
 			// 
 			// contextMenu
 			// 
@@ -198,17 +187,6 @@
 			this.selectAllItem.Name = "selectAllItem";
 			resources.ApplyResources(this.selectAllItem, "selectAllItem");
 			this.selectAllItem.Click += new System.EventHandler(this.selectAllItem_Click);
-			// 
-			// richEnNew
-			// 
-			this.richEnNew.AcceptsTab = true;
-			resources.ApplyResources(this.richEnNew, "richEnNew");
-			this.richEnNew.BackColor = System.Drawing.SystemColors.Window;
-			this.richEnNew.BorderStyle = System.Windows.Forms.BorderStyle.None;
-			this.richEnNew.ContextMenuStrip = this.contextMenu;
-			this.richEnNew.Name = "richEnNew";
-			this.richEnNew.ReadOnly = true;
-			this.richEnNew.TabStop = false;
 			// 
 			// tableTopRight
 			// 
@@ -308,16 +286,6 @@
 			this.splitHorizontal.Panel2.Controls.Add(this.richTranslation);
 			this.tableBottomAll.SetRowSpan(this.splitHorizontal, 2);
 			// 
-			// richTranslation
-			// 
-			this.richTranslation.AcceptsTab = true;
-			resources.ApplyResources(this.richTranslation, "richTranslation");
-			this.richTranslation.BorderStyle = System.Windows.Forms.BorderStyle.None;
-			this.richTranslation.ContextMenuStrip = this.contextMenu;
-			this.richTranslation.Name = "richTranslation";
-			this.richTranslation.TabStop = false;
-			this.richTranslation.TextChanged += new System.EventHandler(this.richTranslation_TextChanged);
-			// 
 			// cmbDialogs
 			// 
 			resources.ApplyResources(this.cmbDialogs, "cmbDialogs");
@@ -354,6 +322,38 @@
 			// 
 			this.saveFileDialog.DefaultExt = "xml";
 			resources.ApplyResources(this.saveFileDialog, "saveFileDialog");
+			// 
+			// richEnOld
+			// 
+			this.richEnOld.AcceptsTab = true;
+			resources.ApplyResources(this.richEnOld, "richEnOld");
+			this.richEnOld.BackColor = System.Drawing.SystemColors.Window;
+			this.richEnOld.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.richEnOld.ContextMenuStrip = this.contextMenu;
+			this.richEnOld.Name = "richEnOld";
+			this.richEnOld.ReadOnly = true;
+			this.richEnOld.TabStop = false;
+			// 
+			// richEnNew
+			// 
+			this.richEnNew.AcceptsTab = true;
+			resources.ApplyResources(this.richEnNew, "richEnNew");
+			this.richEnNew.BackColor = System.Drawing.SystemColors.Window;
+			this.richEnNew.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.richEnNew.ContextMenuStrip = this.contextMenu;
+			this.richEnNew.Name = "richEnNew";
+			this.richEnNew.ReadOnly = true;
+			this.richEnNew.TabStop = false;
+			// 
+			// richTranslation
+			// 
+			this.richTranslation.AcceptsTab = true;
+			resources.ApplyResources(this.richTranslation, "richTranslation");
+			this.richTranslation.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.richTranslation.ContextMenuStrip = this.contextMenu;
+			this.richTranslation.Name = "richTranslation";
+			this.richTranslation.TabStop = false;
+			this.richTranslation.TextChanged += new System.EventHandler(this.richTranslation_TextChanged);
 			// 
 			// form
 			// 

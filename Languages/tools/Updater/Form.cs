@@ -113,7 +113,6 @@ namespace ShareazaDialogUpdater
 				if (translation != null)
 					UpdateBoxes();
 			}
-			exportChangesToolStripMenuItem.Enabled = translation != null;
 		}
 
 		#endregion
@@ -142,6 +141,8 @@ namespace ShareazaDialogUpdater
 		}
 
 		void UpdateBoxes() {
+			exportChangesToolStripMenuItem.Enabled = translation != null && newEnList != null && oldEnList != null;
+			
 			lblStatus.Text = String.Empty;
 			if (newEnList == null)
 				return;
@@ -158,7 +159,7 @@ namespace ShareazaDialogUpdater
 			if (translation != null) {
 				if (updatedTranslation.ContainsKey(newDialog.name)) {
 					richTranslation.Text = updatedTranslation[newDialog.name];
-				} else {
+				} else if (oldEnList != null) {
 					skinDialog tr;
 					UpdateDialogTranslation(newDialog.name, out tr);
 					richTranslation.Text = GetXml(tr);
@@ -168,6 +169,7 @@ namespace ShareazaDialogUpdater
 		}
 
 		void UpdateDialogTranslation(string dialogName, out skinDialog dialog) {
+			dialog = null;
 			// Always not null
 			skinDialog newEn = newEnList.FirstOrDefault(d => d.name == dialogName);
 			// Can be null
@@ -176,7 +178,7 @@ namespace ShareazaDialogUpdater
 				translation.Add(newEn);
 				dialog = newEn;
 				return;
-			} else {
+			} else if (oldEnList != null) {
 				skinDialog oldEn = oldEnList.FirstOrDefault(d => d.name == dialogName);
 				int oldControlCount = oldEn == null || oldEn.controls == null ? 0 : oldEn.controls.Length;
 				int trControlCount = tr.controls == null ? 0 : tr.controls.Length;
@@ -266,7 +268,7 @@ namespace ShareazaDialogUpdater
 		}
 
 		bool AutoSaveTranslation() {
-			if (!_dirty && String.IsNullOrEmpty(richTranslation.Text)) // can not be empty
+			if (lastIndex < 0 || !_dirty && String.IsNullOrEmpty(richTranslation.Text)) // can not be empty
 				return true;
 			string xml = richTranslation.Xml;
 			skinDialog currDialog = newEnList[lastIndex];
