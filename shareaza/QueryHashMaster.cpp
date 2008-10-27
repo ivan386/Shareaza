@@ -158,20 +158,25 @@ void CQueryHashMaster::Build()
 			{
 				AddExactString( pDownload->m_oSHA1.toUrn() );
 			}
-			
+
+			if ( pDownload->m_oTiger )
+			{
+				AddExactString( pDownload->m_oTiger.toUrn() );
+			}
+
 			if ( pDownload->m_oED2K )
 			{
                 AddExactString( pDownload->m_oED2K.toUrn() );
-			}
-			
-			if ( pDownload->m_oBTH )
-			{
-				AddExactString( pDownload->m_oBTH.toUrn() );
 			}
 
 			if ( pDownload->m_oMD5 )
 			{
 				AddExactString( pDownload->m_oMD5.toUrn() );
+			}
+
+			if ( pDownload->m_oBTH )
+			{
+				AddExactString( pDownload->m_oBTH.toUrn() );
 			}
 		}
 
