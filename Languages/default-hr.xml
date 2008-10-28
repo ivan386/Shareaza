@@ -4207,7 +4207,7 @@
 
 	<dialog name="CDownloadEditPage" cookie="StBuStEdEdStEdBuStStEdBuStEdBuStEdBuBuStStStStStBuStEdStEdBu" caption="Edit Download (Napredno)">
 		<control caption="UPOZORENJE: Ove opcije omogučuju napredno podešavanje skidanja, ako se pogrešno koriste vjerovatno će uzrokovati GREŠKU u skinutoj datoteci"/>
-		<control caption="Ime datoteke & Veličina:"/>
+		<control caption="Ime datoteke &amp; Veličina:"/>
 		<control caption="Ime datoteke:"/>
 		<control/>
 		<control/>
