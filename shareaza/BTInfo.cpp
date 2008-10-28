@@ -30,6 +30,9 @@
 #include "Downloads.h"
 #include "FragmentedFile.h"
 #include "Transfers.h"
+#include "SharedFile.h"
+#include "SharedFolder.h"
+#include "Library.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -108,6 +111,75 @@ CBTInfo::CBTFile::CBTFile(const CBTInfo* pInfo, const CBTFile* pBTFile) :
 		m_sPath			= pBTFile->m_sPath;
 		m_sURL			= pBTFile->m_sURL;
 	}
+}
+
+CString	CBTInfo::CBTFile::FindFile()
+{
+	CSingleLock oLibraryLock( &Library.m_pSection, TRUE );
+
+	CString strFile;
+	CLibraryFile* pShared = NULL;
+
+	if ( IsHashed() )
+	{
+		pShared = LibraryMaps.LookupFileByHash( m_oSHA1, m_oTiger, m_oED2K,
+			m_oBTH, m_oMD5, m_nSize, m_nSize, FALSE, TRUE );
+		if ( pShared )
+		{
+			strFile = pShared->GetPath();
+		}
+	}
+
+	if ( GetFileSize( strFile ) != m_nSize )
+	{
+		strFile = Settings.Downloads.CompletePath + _T("\\") + m_sPath;
+		if ( GetFileSize( strFile ) != m_nSize )
+		{
+			CString strPath = GetPath();
+			int nSlash = strPath.ReverseFind( '\\' );
+			if ( nSlash >= 0 )
+				strPath = strPath.Left( nSlash + 1 );
+			strFile = strPath + m_sPath;
+			if ( GetFileSize( strFile ) != m_nSize )
+			{
+				//Try removing the outer directory in case of multi-file torrent oddities
+				LPCTSTR pszName = _tcsrchr( m_sPath, _T('\\') );
+				if ( pszName == NULL )
+					pszName = m_sPath;
+				else
+					pszName ++;
+				strFile = Settings.Downloads.CompletePath + _T("\\") + pszName;
+				if ( GetFileSize( strFile ) != m_nSize )
+				{
+					strFile = strPath + pszName;
+					if ( GetFileSize( strFile ) != m_nSize )
+					{
+						return CString();
+					}
+				}
+			}
+		}
+	}
+
+	if ( ! pShared )
+		pShared = LibraryMaps.LookupFileByPath( strFile, FALSE, FALSE );
+
+	if ( pShared )
+	{
+		// Refill missed hashes
+		if ( ! m_oSHA1 && pShared->m_oSHA1 )
+			m_oSHA1 = pShared->m_oSHA1;
+		if ( ! m_oTiger && pShared->m_oTiger )
+			m_oTiger = pShared->m_oTiger;
+		if ( ! m_oED2K && pShared->m_oED2K )
+			m_oED2K = pShared->m_oED2K;
+		if ( ! m_oBTH && pShared->m_oBTH )
+			m_oBTH = pShared->m_oBTH;
+		if ( ! m_oMD5 && pShared->m_oMD5 )
+			m_oMD5 = pShared->m_oMD5;
+	}
+
+	return strFile;
 }
 
 //////////////////////////////////////////////////////////////////////

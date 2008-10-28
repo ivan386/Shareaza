@@ -80,6 +80,9 @@ public:
 			return m_pInfo->m_sPath;
 		}
 
+		// Find file on disk
+		CString	FindFile();
+
 	private:
 		const CBTInfo*	m_pInfo;			// Parent torrent handler
 		int				m_nFilePriority;	// Download priority (NotWanted, Low, Normal or High)
