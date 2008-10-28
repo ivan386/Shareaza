@@ -53,7 +53,6 @@ void CFragmentedFile::AssertValid() const
 {
 	CObject::AssertValid();
 
-	ASSERT( m_oFile.size() != 0 );
 	if ( m_oFile.size() != 0 )
 	{
 		ASSERT( m_oFile.front().m_nOffset == 0 );
@@ -272,8 +271,10 @@ void CFragmentedFile::Serialize(CArchive& ar, int nVersion)
 				if ( ! Open( sPath, nOffset, nLength, bWrite, FALSE ) )
 					AfxThrowArchiveException( CArchiveException::genericException );
 			}
+
 			ASSERT_VALID( this );
-			ASSERT( m_oFile.back().m_nOffset + m_oFile.back().m_nLength == m_oFList.limit() );
+			ASSERT( m_oFile.empty() || ( ( m_oFile.back().m_nOffset +
+				m_oFile.back().m_nLength ) == m_oFList.limit() ) );
 		}
 	}
 }
