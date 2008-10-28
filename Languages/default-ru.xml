@@ -1909,7 +1909,7 @@
 	<!-- Browse User Profile -->
 	<document name="CBrowseHostProfile.1">
 		<heading id="Nick"/>
-		<heading> &nbsp;Профиль</heading>
+		<heading> &#160;Профиль</heading>
 		<newline gap="8"/>
 		<group id="1">
 			<newline gap="8" indent="0"/>
