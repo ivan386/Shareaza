@@ -133,7 +133,7 @@ namespace ShareazaDialogUpdater
 							   select c).FirstOrDefault();
 			}
 
-			if (_cultureInfo == null || _cultureInfo.Name != cultureInfo.Name)
+			if (_cultureInfo == null || cultureInfo == null || _cultureInfo.Name != cultureInfo.Name)
 				_cultureInfo = cultureInfo;
 			else return;
 

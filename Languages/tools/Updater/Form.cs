@@ -227,6 +227,7 @@ namespace ShareazaDialogUpdater
 				try {
 					xml = new String((new UTF8Encoding()).GetChars(stream.ToArray()));
 					xml = xml.Replace(" xmlns=\"http://www.shareaza.com/schemas/Skin.xsd\"", String.Empty);
+					xml = xml.Replace("<?xml version=\"1.0\"?>\r\n", String.Empty);
 				} catch { }
 				stream.Close();
 			}
@@ -298,6 +299,15 @@ namespace ShareazaDialogUpdater
 						}
 						if (currDialog.name != testSkin.dialogs[0].name) {
 							lblStatus.Text = "Dialog name is invalid";
+							return false;
+						}
+						if (!String.IsNullOrEmpty(currDialog.caption) &&
+							String.IsNullOrEmpty(testSkin.dialogs[0].caption)) {
+							lblStatus.Text = "Caption is missing";
+							return false;
+						}
+						if (testSkin.dialogs[0].Text != null) {
+							lblStatus.Text = "XML contains a text junk";
 							return false;
 						}
 						int count = currDialog.controls == null ? 0 : currDialog.controls.Length;
