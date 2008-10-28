@@ -25,6 +25,7 @@
 #include "TransferFile.h"
 
 class CEDPartImporter;
+class CBTInfo;
 
 
 class CFragmentedFile : public CObject
@@ -114,6 +115,7 @@ private:
 
 public:
 	BOOL	Open(LPCTSTR pszFile, QWORD nOffset, QWORD nLength, BOOL bWrite, BOOL bCreate);
+	BOOL	Open(const CBTInfo& oInfo, BOOL bWrite, BOOL bCreate);
 	BOOL	Flush();
 	void	Close();
 	void	Clear();
@@ -123,9 +125,11 @@ public:
 	BOOL	IsPositionRemaining(QWORD nOffset) const;
 	BOOL	DoesRangeOverlap(QWORD nOffset, QWORD nLength) const;
 	QWORD	GetRangeOverlap(QWORD nOffset, QWORD nLength) const;
-	BOOL	WriteRange(QWORD nOffset, LPCVOID pData, QWORD nLength);
-	BOOL	ReadRange(QWORD nOffset, LPVOID pData, QWORD nLength);
+	BOOL	WriteRange(QWORD nOffset, LPCVOID pData, QWORD nLength, QWORD* pnWritten = NULL);
+	BOOL	ReadRange(QWORD nOffset, LPVOID pData, QWORD nLength, QWORD* pnRead = NULL);
 	QWORD	InvalidateRange(QWORD nOffset, QWORD nLength);
+
+	CFragmentedFile& operator=(const CFragmentedFile& pFile);
 	
 	inline BOOL IsValid() const
 	{

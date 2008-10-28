@@ -24,6 +24,7 @@
 #include "Settings.h"
 #include "FragmentedFile.h"
 #include "TransferFile.h"
+#include "BTInfo.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -87,7 +88,7 @@ void CFragmentedFile::Dump(CDumpContext& dc) const
 BOOL CFragmentedFile::Open(LPCTSTR pszFile, QWORD nOffset, QWORD nLength, BOOL bWrite, BOOL bCreate)
 {
 	ASSERT( pszFile && AfxIsValidString( pszFile ) );
-	ASSERT( nLength != 0 && nLength != SIZE_UNKNOWN );
+	ASSERT( nLength != 0 );
 	ASSERT( ! bCreate || bWrite );
 
 	CQuickLock oLock( m_pSection );
@@ -118,7 +119,12 @@ BOOL CFragmentedFile::Open(LPCTSTR pszFile, QWORD nOffset, QWORD nLength, BOOL b
 		}
 	}
 
-	if ( ! bWrite && pFile->GetSize() != nLength )
+	QWORD nRealLength = pFile->GetSize();
+	if ( pFile->IsExists() && nLength == SIZE_UNKNOWN )
+	{
+		nLength = nRealLength;
+	}
+	else if ( ! bWrite && nRealLength != nLength )
 	{
 		// Wrong file
 		Close();
@@ -145,6 +151,62 @@ BOOL CFragmentedFile::Open(LPCTSTR pszFile, QWORD nOffset, QWORD nLength, BOOL b
 	ASSERT_VALID( this );
 
 	return TRUE;
+}
+
+BOOL CFragmentedFile::Open(const CBTInfo& oInfo, BOOL bWrite, BOOL bCreate)
+{
+	QWORD nOffset = 0;
+	for ( POSITION pos = oInfo.m_pFiles.GetHeadPosition() ; pos ; )
+	{
+		CBTInfo::CBTFile* pFile = oInfo.m_pFiles.GetNext( pos );
+
+		CString strSource = pFile->FindFile();
+
+		if ( ! Open( strSource, nOffset, pFile->m_nSize, bWrite, bCreate ) )
+		{
+			// Right file not found
+			CString sErrorMessage, strFormat;
+			LoadString( strFormat, IDS_BT_SEED_SOURCE_LOST );
+			sErrorMessage.Format( strFormat, (LPCTSTR)pFile->m_sPath );
+			return FALSE;
+		}
+
+		nOffset += pFile->m_nSize;
+	}
+
+	return TRUE;
+}
+
+CFragmentedFile& CFragmentedFile::operator=(const CFragmentedFile& pFile)
+{
+	CQuickLock oLock1( pFile.m_pSection );
+	CQuickLock oLock2( m_pSection );
+
+	Clear();
+
+	// Copy files
+	for ( CVirtualFile::const_iterator i = pFile.m_oFile.begin();
+		i != pFile.m_oFile.end(); ++i )
+	{
+		CVirtualFilePart part;
+		part.m_sPath = (*i).m_sPath;
+		part.m_pFile = (*i).m_pFile;
+		part.m_pFile->AddRef();
+		part.m_nOffset = (*i).m_nOffset;
+		part.m_nLength = (*i).m_nLength;
+		part.m_bWrite = (*i).m_bWrite;
+		m_oFile.push_back( part );
+	}
+	m_oFile.sort();
+
+	// Copy fragments
+	m_oFList = pFile.m_oFList;
+
+	m_nUnflushed = pFile.m_nUnflushed;
+
+	ASSERT_VALID( this );
+
+	return *this;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -318,7 +380,7 @@ QWORD CFragmentedFile::GetCompleted(QWORD nOffset, QWORD nLength) const
 //////////////////////////////////////////////////////////////////////
 // CFragmentedFile write some data to a range
 
-BOOL CFragmentedFile::WriteRange(QWORD nOffset, LPCVOID pData, QWORD nLength)
+BOOL CFragmentedFile::WriteRange(QWORD nOffset, LPCVOID pData, QWORD nLength, QWORD* pnWritten)
 {
 	ASSERT_VALID( this );
 	ASSERT( m_oFile.back().m_nOffset + m_oFile.back().m_nLength == m_oFList.limit() );
@@ -339,21 +401,24 @@ BOOL CFragmentedFile::WriteRange(QWORD nOffset, LPCVOID pData, QWORD nLength)
 		// Empty range
 		return FALSE;
 
-	QWORD nResult, nProcessed = 0;
-
+	QWORD nProcessed = 0;
 	for ( ; pMatches.first != pMatches.second; ++pMatches.first )
 	{
 		QWORD nStart = max( pMatches.first->begin(), oMatch.begin() );
-		nResult = min( pMatches.first->end(), oMatch.end() ) - nStart;
+		QWORD nToWrite = min( pMatches.first->end(), oMatch.end() ) - nStart;
 
 		const char* pSource
 			= static_cast< const char* >( pData ) + ( nStart - oMatch.begin() );
 
-		if ( ! VirtualWrite( nStart, pSource, nResult, &nResult ) )
+		QWORD nWritten = 0;
+		if ( ! VirtualWrite( nStart, pSource, nToWrite, &nWritten ) )
 			// Write error
 			return FALSE;
 
-		nProcessed += nResult;
+		if ( pnWritten )
+			*pnWritten += nWritten;
+
+		nProcessed += nWritten;
 	}
 
 	m_nUnflushed += nProcessed;
@@ -364,7 +429,7 @@ BOOL CFragmentedFile::WriteRange(QWORD nOffset, LPCVOID pData, QWORD nLength)
 //////////////////////////////////////////////////////////////////////
 // CFragmentedFile read some data from a range
 
-BOOL CFragmentedFile::ReadRange(QWORD nOffset, LPVOID pData, QWORD nLength)
+BOOL CFragmentedFile::ReadRange(QWORD nOffset, LPVOID pData, QWORD nLength, QWORD* pnRead)
 {
 	ASSERT_VALID( this );
 	ASSERT( m_oFile.back().m_nOffset + m_oFile.back().m_nLength == m_oFList.limit() );
@@ -383,7 +448,7 @@ BOOL CFragmentedFile::ReadRange(QWORD nOffset, LPVOID pData, QWORD nLength)
 		// No data available yet
 		return FALSE;
 
-	return VirtualRead( nOffset, (char*)pData, nLength, NULL );
+	return VirtualRead( nOffset, (char*)pData, nLength, pnRead );
 }
 
 BOOL CFragmentedFile::VirtualRead(QWORD nOffset, char* pBuffer, QWORD nBuffer, QWORD* pnRead)
@@ -397,6 +462,9 @@ BOOL CFragmentedFile::VirtualRead(QWORD nOffset, char* pBuffer, QWORD nBuffer, Q
 		bind2nd( Greater(), nOffset ) );
 	ASSERT( i != m_oFile.begin() );
 	--i;
+	
+	if ( pnRead )
+		*pnRead = 0;
 
 	while( nBuffer )
 	{
@@ -440,6 +508,9 @@ BOOL CFragmentedFile::VirtualWrite(QWORD nOffset, const char* pBuffer, QWORD nBu
 	ASSERT( i != m_oFile.begin() );
 	--i;
 
+	if ( pnWritten )
+		*pnWritten = 0;
+
 	while( nBuffer )
 	{
 		ASSERT( i != m_oFile.end() );
@@ -456,6 +527,7 @@ BOOL CFragmentedFile::VirtualWrite(QWORD nOffset, const char* pBuffer, QWORD nBu
 		pBuffer += nWritten;
 		nOffset += nWritten;
 		nBuffer -= nWritten;
+
 		if ( pnWritten )
 			*pnWritten += nWritten;
 
