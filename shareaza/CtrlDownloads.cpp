@@ -1871,7 +1871,8 @@ void CDownloadsCtrl::OnEnterKey()
 			if ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 )						// And the control key is pressed...
 			{
 				GetOwner()->PostMessage( WM_TIMER, 5 );
-				GetOwner()->PostMessage( WM_COMMAND, ID_DOWNLOADS_LAUNCH );		// Launch the current file
+				GetOwner()->PostMessage( WM_COMMAND, pDownload->IsCompleted() ?
+					ID_DOWNLOADS_LAUNCH_COMPLETE : ID_DOWNLOADS_LAUNCH );		// Launch the current file
 			}
 		}
 		else if ( pSource != NULL )												// If the selected object is a download source...
@@ -1984,7 +1985,8 @@ void CDownloadsCtrl::OnLButtonDblClk(UINT nFlags, CPoint point)
 		else if ( pDownload != NULL )
 		{
 			GetOwner()->PostMessage( WM_TIMER, 5 );
-			GetOwner()->PostMessage( WM_COMMAND, ID_DOWNLOADS_LAUNCH );
+			GetOwner()->PostMessage( WM_COMMAND, pDownload->IsCompleted() ?
+				ID_DOWNLOADS_LAUNCH_COMPLETE : ID_DOWNLOADS_LAUNCH );
 		}
 		else if ( pSource != NULL )
 		{

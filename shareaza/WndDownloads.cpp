@@ -426,13 +426,13 @@ void CDownloadsWnd::OnContextMenu(CWnd* /*pWnd*/, CPoint point)
 		else if ( pDownload->IsSeeding() )
 		{
 			pLock.Unlock();
-			Skin.TrackPopupMenu( _T("CDownloadsWnd.Seeding"), point, ID_DOWNLOADS_LAUNCH );
+			Skin.TrackPopupMenu( _T("CDownloadsWnd.Seeding"), point, ID_DOWNLOADS_LAUNCH_COMPLETE );
 			return;
 		}
 		else if ( pDownload->IsCompleted() )
 		{
 			pLock.Unlock();
-			Skin.TrackPopupMenu( _T("CDownloadsWnd.Completed"), point, ID_DOWNLOADS_LAUNCH );
+			Skin.TrackPopupMenu( _T("CDownloadsWnd.Completed"), point, ID_DOWNLOADS_LAUNCH_COMPLETE );
 			return;
 		}
 	}

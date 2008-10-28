@@ -680,9 +680,11 @@ void CDownloadMonitorDlg::OnContextMenu(CWnd* /*pWnd*/, CPoint point)
 	MENUITEMINFO pInfo;
 	pInfo.cbSize	= sizeof(pInfo);
 	pInfo.fMask		= MIIM_STATE;
-	GetMenuItemInfo( pPopup->GetSafeHmenu(), ID_DOWNLOADS_LAUNCH, FALSE, &pInfo );
+	GetMenuItemInfo( pPopup->GetSafeHmenu(), m_pDownload->IsCompleted() ?
+		ID_DOWNLOADS_LAUNCH_COMPLETE : ID_DOWNLOADS_LAUNCH, FALSE, &pInfo );
 	pInfo.fState	|= MFS_DEFAULT;
-	SetMenuItemInfo( pPopup->GetSafeHmenu(), ID_DOWNLOADS_LAUNCH, FALSE, &pInfo );
+	SetMenuItemInfo( pPopup->GetSafeHmenu(), m_pDownload->IsCompleted() ?
+		ID_DOWNLOADS_LAUNCH_COMPLETE : ID_DOWNLOADS_LAUNCH, FALSE, &pInfo );
 
 	CoolMenu.AddMenu( pPopup, TRUE );
 
