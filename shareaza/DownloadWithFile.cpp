@@ -93,20 +93,20 @@ BOOL CDownloadWithFile::OpenFile()
 			if ( nTry == 0 )
 				strName = m_sPath;
 			else
-				strName.Format( _T("%s.x%i"), (LPCTSTR)m_sPath, GetRandomNum( 0, 127 ) );
-
-			theApp.Message( MSG_INFO, IDS_DOWNLOAD_FILE_CREATE, (LPCTSTR)strName );
+				strName.Format( _T("%s.%i.partial"), (LPCTSTR)m_sPath.Left( m_sPath.GetLength() - 8 ), GetRandomNum( 0, 100000 ) );
 
 			if ( m_pFile->Open( strName, 0, m_nSize, TRUE, TRUE ) )
 			{
+				theApp.Message( MSG_INFO, IDS_DOWNLOAD_FILE_CREATE, (LPCTSTR)strName );
+
 				theApp.WriteProfileString( _T("Delete"), strName, NULL );
 				MoveFile( strLocalName + _T(".sd"), strName + _T(".sd") );
 				m_sPath = strName;
 				return TRUE;
 			}
-
-			theApp.Message( MSG_ERROR, IDS_DOWNLOAD_FILE_CREATE_ERROR, (LPCTSTR)strName );
 		}
+
+		theApp.Message( MSG_ERROR, IDS_DOWNLOAD_FILE_CREATE_ERROR, (LPCTSTR)m_sPath );
 
 		m_sPath = strLocalName;
 	}
