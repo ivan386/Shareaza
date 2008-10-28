@@ -645,3 +645,12 @@ inline bool IsFileNewerThan(LPCTSTR pszFile, const QWORD nMilliseconds)
 
 	return true;
 }
+
+inline QWORD GetFileSize(LPCTSTR pszFile)
+{
+	WIN32_FILE_ATTRIBUTE_DATA fd = {};
+	if ( GetFileAttributesEx( pszFile, GetFileExInfoStandard, &fd ) )
+		return MAKEQWORD( fd.nFileSizeLow, fd.nFileSizeHigh );
+	else
+		return SIZE_UNKNOWN;
+}
