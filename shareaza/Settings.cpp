@@ -334,7 +334,7 @@ CSettings::CSettings()
 	Add( _T("Gnutella2"), _T("LNIPeriod"), &Gnutella2.LNIPeriod, 60000, 1000, 1, 60*60, _T(" s") );
 #ifdef LAN_MODE
 	Add( _T("Gnutella2"), _T("NumHubs"), &Gnutella2.NumHubs, 1, 1, 1, 3 );
-	Add( _T("Gnutella2"), _T("NumLeafs"), &Gnutella2.NumLeafs, 300, 1, 50, 1024 );
+	Add( _T("Gnutella2"), _T("NumLeafs"), &Gnutella2.NumLeafs, 1024, 1, 50, 1024 );
 	Add( _T("Gnutella2"), _T("NumPeers"), &Gnutella2.NumPeers, 1, 1, 0, 64 );
 #else // LAN_MODE
 	Add( _T("Gnutella2"), _T("NumHubs"), &Gnutella2.NumHubs, 2, 1, 1, 3 );
@@ -345,7 +345,11 @@ CSettings::CSettings()
 	Add( _T("Gnutella2"), _T("PingRelayLimit"), &Gnutella2.PingRelayLimit, 10, 1, 10, 30 );
 	Add( _T("Gnutella2"), _T("QueryGlobalThrottle"), &Gnutella2.QueryGlobalThrottle, 125, 1, 1, 60*1000, _T(" ms") );
 	Add( _T("Gnutella2"), _T("QueryHostDeadline"), &Gnutella2.QueryHostDeadline, 10*60, 1, 1, 120*60, _T(" s") );
+#ifdef LAN_MODE
+	Add( _T("Gnutella2"), _T("QueryHostThrottle"), &Gnutella2.QueryHostThrottle, 0, 1, 0, 10*60, _T(" s") );
+#else // LAN_MODE
 	Add( _T("Gnutella2"), _T("QueryHostThrottle"), &Gnutella2.QueryHostThrottle, 120, 1, 10, 10*60, _T(" s") );
+#endif // LAN_MODE
 	Add( _T("Gnutella2"), _T("QueryLimit"), &Gnutella2.QueryLimit, 2400, 1, 0, 10000 );
 	Add( _T("Gnutella2"), _T("RequeryDelay"), &Gnutella2.RequeryDelay, 4*60*60, 60*60, 1, 24, _T(" h") );
 	Add( _T("Gnutella2"), _T("UdpBuffers"), &Gnutella2.UdpBuffers, 512, 1, 16, 2048 );
@@ -370,9 +374,9 @@ CSettings::CSettings()
 	Add( _T("eDonkey"), _T("LearnNewServers"), &eDonkey.LearnNewServers, false );
 	Add( _T("eDonkey"), _T("LearnNewServersClient"), &eDonkey.LearnNewServersClient, false );
 	Add( _T("eDonkey"), _T("MagnetSearch"), &eDonkey.MagnetSearch, true );
-	Add( _T("eDonkey"), _T("MaxLinks"), &eDonkey.MaxLinks, 200 );
-	Add( _T("eDonkey"), _T("MaxResults"), &eDonkey.MaxResults, 100 );
-	Add( _T("eDonkey"), _T("MaxShareCount"), &eDonkey.MaxShareCount, 1000, 1, 0, 20000 );
+	Add( _T("eDonkey"), _T("MaxLinks"), &eDonkey.MaxLinks, 200, 1, 1, 2048 );
+	Add( _T("eDonkey"), _T("MaxResults"), &eDonkey.MaxResults, 100, 1, 1, 200 );
+	Add( _T("eDonkey"), _T("MaxShareCount"), &eDonkey.MaxShareCount, 1000, 1, 25, 20000 );
 	Add( _T("eDonkey"), _T("MetAutoQuery"), &eDonkey.MetAutoQuery, true );
 	Add( _T("eDonkey"), _T("MinServerFileSize"), &eDonkey.MinServerFileSize, 0, 1, 0, 50, _T(" MB") );
 	Add( _T("eDonkey"), _T("NumServers"), &eDonkey.NumServers, 1, 1, 0, 1 );
@@ -1049,6 +1053,7 @@ void CSettings::SmartUpgrade()
 
 void CSettings::OnChangeConnectionSpeed()
 {
+#ifndef LAN_MODE
 	bool bLimited = theApp.m_bLimitedConnections && !General.IgnoreXPsp2;
 
 	if ( Connection.InSpeed <= 80 )
@@ -1160,6 +1165,7 @@ void CSettings::OnChangeConnectionSpeed()
 
 		General.ItWasLimited			= false;
 	}
+#endif // LAN_MODE
 }
 
 //////////////////////////////////////////////////////////////////////

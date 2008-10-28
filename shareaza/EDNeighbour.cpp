@@ -659,7 +659,7 @@ BOOL CEDNeighbour::OnFoundSources(CEDPacket* pPacket)
 void CEDNeighbour::SendSharedFiles()
 {
 	// Set the limits for number of files sent to the ed2k server
-	m_nFileLimit = max( Settings.eDonkey.MaxShareCount, 25ul );
+	m_nFileLimit = Settings.eDonkey.MaxShareCount;
 
 	{
 		CQuickLock oLock( HostCache.eDonkey.m_pSection );

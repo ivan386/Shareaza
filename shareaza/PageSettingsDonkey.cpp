@@ -95,8 +95,8 @@ BOOL CDonkeySettingsPage::OnInitDialog()
 	UpdateData( FALSE );
 
 	m_wndResults.EnableWindow( m_bServerWalk );
-	m_wndResultsSpin.SetRange( 0, 201 );
-	m_wndLinksSpin.SetRange( 0, 2048 );
+	Settings.SetRange( &Settings.eDonkey.MaxResults, m_wndResultsSpin );
+	Settings.SetRange( &Settings.eDonkey.MaxLinks, m_wndLinksSpin );
 
 	return TRUE;
 }
@@ -163,6 +163,14 @@ void CDonkeySettingsPage::OnOK()
 	Settings.eDonkey.ServerWalk		= m_bServerWalk != FALSE;
 	Settings.eDonkey.MaxResults		= m_nResults;
 	Settings.eDonkey.LearnNewServers = m_bLearnServers != FALSE;
+
+	Settings.Normalize( &Settings.eDonkey.MaxResults );
+	Settings.Normalize( &Settings.eDonkey.MaxLinks );
+
+	// Update display in case settings were changed
+	m_nResults = Settings.eDonkey.MaxResults;
+	m_nLinks = Settings.eDonkey.MaxLinks;
+	UpdateData( FALSE );
 
 	CSettingsPage::OnOK();
 }

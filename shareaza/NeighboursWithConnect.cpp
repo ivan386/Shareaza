@@ -1067,7 +1067,7 @@ void CNeighboursWithConnect::Maintain()
 	} // We're a leaf on the Gnutella network
 	else if ( m_bG1Leaf )
 	{
-		nLimit[ PROTOCOL_G1 ][ ntHub ] = min( Settings.Gnutella1.NumHubs, 5ul );
+		nLimit[ PROTOCOL_G1 ][ ntHub ] = Settings.Gnutella1.NumHubs;
 
 	} // We're an ultrapeer on the Gnutella network
 	else
@@ -1087,7 +1087,7 @@ void CNeighboursWithConnect::Maintain()
 	else if ( m_bG2Leaf )
 	{	// We're a leaf on the Gnutella2 network
 		// Set the limit for Gnutella2 hub connections as whichever is smaller, the number from settings, or 3
-		nLimit[ PROTOCOL_G2 ][ ntHub ] = min( Settings.Gnutella2.NumHubs, 3ul ); // NumHubs is 2 by default
+		nLimit[ PROTOCOL_G2 ][ ntHub ] = Settings.Gnutella2.NumHubs; // NumHubs is 2 by default
 
 	}
 	else
@@ -1102,7 +1102,7 @@ void CNeighboursWithConnect::Maintain()
 	if ( Settings.eDonkey.EnableToday )
 	{
 		// Set the limit for eDonkey2000 hub connections as whichever is smaller, 1, or the number from settings
-		nLimit[ PROTOCOL_ED2K ][ ntHub ] = min( 1ul, Settings.eDonkey.NumServers ); // NumServers is 1 by default
+		nLimit[ PROTOCOL_ED2K ][ ntHub ] = Settings.eDonkey.NumServers; // NumServers is 1 by default
 	}
 
 	// Add the count of connections where we don't know the network yet to the 0 column of both Gnutella and Gnutella2
