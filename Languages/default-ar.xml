@@ -2495,7 +2495,7 @@
     <tip id="ID_WINDOW_TILE_HORZ" message="Arrange open windows as horizontal, non-overlapping tiles." />
     <tip id="ID_WINDOW_TILE_VERT" message="Arrange open windows as vertical, non-overlapping tiles." />
     <tip id="ID_WINDOW_TOOLBAR" message="Show or hide the toolbar." />
-    <!-- PLUGIN TIPS -->
+
     <tip id="ImageViewer_BestFit" message="Resize the image to fit within the window." />
     <tip id="ImageViewer_ActualSize" message="Show the image at its natural size." />
     <tip id="ImageViewer_Refresh" message="Refresh the image." />
