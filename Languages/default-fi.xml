@@ -2061,8 +2061,8 @@
 		hauissa joten vain se teksti mink annat.</text>
 	</document>
 
-	<!-- Untranslated Documents -->
-<!--<document name="SearchHelp.BadSearch3">
+	<!-- Untranslated Documents
+	<document name="SearchHelp.BadSearch3">
 		<text format="b">Please re-phrase the search</text>
 		<newline gap="8"/>
 		<text>This search seems to contain only common file extentions, or no searchable
@@ -2076,8 +2076,8 @@
 		search performance, as well as high bandwidth use during searches.</text>
 		<newline gap="8"/>
 		<text>Further help is available on the Shareaza web site.</text>
-	</document>-->
-<!--<document name="SearchHelp.AdultSearch">
+	</document>
+	<document name="SearchHelp.AdultSearch">
 		<text format="b">This search cannot be started</text>
 		<newline gap="8"/>
 		<text>The specified search would probably return a large number of results with adult
@@ -2087,15 +2087,15 @@
 		<text>To disable the filter, go into Tools &gt; Settings &gt; General and un-check the
 		adult content filter.</text>
 	</document>
-	<!-- Share help documents -->
-<!--<document name="ShareHelp.AlreadyShared">
+
+	<document name="ShareHelp.AlreadyShared">
 		<text format="b">Already Shared</text>
 		<newline gap="8"/>
 		<text>The folder you have selected is already being shared as part of an existing share.</text>
 		<newline gap="8"/>
 		<text> %s</text>
-	</document>-->
-<!--<document name="ShareHelp.BadShare">
+	</document>
+	<document name="ShareHelp.BadShare">
 		<text format="b">This folder should not be shared</text>
 		<newline gap="8"/>
 		<text>This folder is (or contains) a system folder. Sharing this folder is not
@@ -2108,7 +2108,7 @@
 		<newline gap="8"/>
 		<text>The Shareaza 'incomplete' folder should also not be shared through the
 		library, since attempting to hash downloads in progress may impact on performance.</text>
-	</document>-->
+	</document>
 -->
 </documents>
 
