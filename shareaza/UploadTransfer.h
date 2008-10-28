@@ -26,10 +26,10 @@
 
 #include "Transfer.h"
 #include "ShareazaFile.h"
+#include "FragmentedFile.h"
 
 class CUploadQueue;
 class CUploadFile;
-class CTransferFile;
 class CLibraryFile;
 class CDownload;
 
@@ -48,7 +48,7 @@ public:
 	int				m_nState;		// Common state code
 	CUploadQueue*	m_pQueue;		// Queue reference
 	CUploadFile*	m_pBaseFile;	// Reference file
-	CTransferFile*	m_pDiskFile;	// Disk file
+	CFragmentedFile m_pDiskFile;	// Disk file
 	DWORD			m_nBandwidth;	// Bandwidth
 	CString			m_sNick;		// User Nick
 	DWORD			m_nUserRating;	// Has the downloader uploaded anything?

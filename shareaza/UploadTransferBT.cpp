@@ -115,7 +115,7 @@ void CUploadTransferBT::Close(BOOL bMessage)
 		m_pClient = NULL;
 	}
 	
-	if ( m_pDiskFile != NULL ) CloseFile();
+	CloseFile();
 	
 	if ( m_pDownload != NULL ) m_pDownload->RemoveUpload( this );
 	m_pDownload = NULL;
@@ -256,13 +256,34 @@ BOOL CUploadTransferBT::OpenFile()
 {
 	ASSERT( m_nState == upsRequest || m_nState == upsUploading );
 	ASSERT( m_pBaseFile != NULL );
-	
-	if ( m_pDiskFile != NULL ) return TRUE;
-	m_pDiskFile = TransferFiles.Open( m_sFilePath, FALSE, FALSE );
-	if ( m_pDiskFile != NULL ) return TRUE;
-	
+
+	if ( m_pDiskFile.IsOpen() )
+		return TRUE;
+
+	if ( m_pClient->m_pDownload )
+	{
+		// Try to get copy of existing file object
+		if ( m_pClient->m_pDownload->m_pFile && m_pClient->m_pDownload->m_pFile->IsOpen() )
+		{
+			m_pDiskFile = *m_pClient->m_pDownload->m_pFile;
+			return TRUE;
+		}
+
+		// Open from disk (complete)
+		if ( m_pDiskFile.Open( m_pClient->m_pDownload->m_pTorrent, FALSE, FALSE ) )
+		{
+			return TRUE;
+		}
+	}
+
+	// Open from disk (incomplete)
+	if ( m_pDiskFile.Open( m_pBaseFile->m_sPath, 0, SIZE_UNKNOWN, FALSE, FALSE ) )
+	{
+		return TRUE;
+	}
+
 	theApp.Message( MSG_ERROR, IDS_UPLOAD_CANTOPEN, (LPCTSTR)m_sFileName , (LPCTSTR)m_sAddress);
-	
+
 	Close();
 	return FALSE;
 }
@@ -306,7 +327,7 @@ BOOL CUploadTransferBT::ServeRequests()
 		
 		BT_PIECE_HEADER* pHeader = (BT_PIECE_HEADER*)( pBuffer.m_pBuffer + pBuffer.m_nLength );
 		
-		if ( ! m_pDiskFile->Read( m_nOffset + m_nPosition, &pHeader[1], m_nLength, &m_nLength ) ) return FALSE;
+		if ( ! m_pDiskFile.ReadRange( m_nOffset + m_nPosition, &pHeader[1], m_nLength, &m_nLength ) ) return FALSE;
 
 		pHeader->nLength	= swapEndianess( 1 + 8 + (DWORD)m_nLength );
 		pHeader->nType		= BT_PACKET_PIECE;

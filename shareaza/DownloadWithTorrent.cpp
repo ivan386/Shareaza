@@ -877,42 +877,42 @@ BOOL CDownloadWithTorrent::SeedTorrent(CString& sErrorMessage)
 
 	ASSERT( m_pTorrent.GetCount() );
 
-	QWORD nOffset = 0;
-	for ( POSITION pos = m_pTorrent.m_pFiles.GetHeadPosition() ; pos ; )
+	if ( ! m_pFile->Open( m_pTorrent, FALSE, FALSE ) )
 	{
-		CBTInfo::CBTFile* pFile = m_pTorrent.m_pFiles.GetNext( pos );
+		return FALSE;
+	}
 
-		CString strSource = FindTorrentFile( pFile );
-
-		if ( ! m_pFile->Open( strSource, nOffset, pFile->m_nSize, FALSE, FALSE ) )
-		{
-			// Right file not found
-			CString strFormat;
-			LoadString( strFormat, IDS_BT_SEED_SOURCE_LOST );
-			sErrorMessage.Format( strFormat, (LPCTSTR)pFile->m_sPath );
-			return FALSE;
-		}
+	CBTInfo::CBTFile* pFile = m_pTorrent.m_pFiles.GetHead();
+	CString sPath = pFile->FindFile();
+	if ( m_pTorrent.GetCount() == 1 )
+	{
+		m_sPath = sPath;
 
 		// Refill missed hashes for single-file torrent
-		if ( m_pTorrent.GetCount() == 1 )
-		{
-			m_sPath = strSource;
-			if ( ! m_pTorrent.m_oSHA1 && pFile->m_oSHA1 )
-				m_pTorrent.m_oSHA1 = pFile->m_oSHA1;
-			if ( ! m_pTorrent.m_oTiger && pFile->m_oTiger )
-				m_pTorrent.m_oTiger = pFile->m_oTiger;
-			if ( ! m_pTorrent.m_oED2K && pFile->m_oED2K )
-				m_pTorrent.m_oED2K = pFile->m_oED2K;
-			if ( ! m_pTorrent.m_oMD5 && pFile->m_oMD5 )
-				m_pTorrent.m_oMD5 = pFile->m_oMD5;
-		}
-		else if ( m_sPath.IsEmpty() )
-		{
-			m_sPath = strSource.Left( strSource.ReverseFind( _T('\\') ) + 1 );
-		}
-
-		nOffset += pFile->m_nSize;
+		if ( ! m_pTorrent.m_oSHA1 && pFile->m_oSHA1 )
+			m_pTorrent.m_oSHA1 = pFile->m_oSHA1;
+		if ( ! m_pTorrent.m_oTiger && pFile->m_oTiger )
+			m_pTorrent.m_oTiger = pFile->m_oTiger;
+		if ( ! m_pTorrent.m_oED2K && pFile->m_oED2K )
+			m_pTorrent.m_oED2K = pFile->m_oED2K;
+		if ( ! m_pTorrent.m_oMD5 && pFile->m_oMD5 )
+			m_pTorrent.m_oMD5 = pFile->m_oMD5;
 	}
+	else if ( m_sPath.IsEmpty() )
+	{
+		// Folder
+		m_sPath = sPath.Left( sPath.ReverseFind( _T('\\') ) + 1 );
+	}
+		
+	// Refill missed hashes
+	if ( ! m_oSHA1 && m_pTorrent.m_oSHA1 )
+		m_oSHA1 = m_pTorrent.m_oSHA1;
+	if ( ! m_oTiger && m_pTorrent.m_oTiger )
+		 m_oTiger = m_pTorrent.m_oTiger;
+	if ( ! m_oED2K && m_pTorrent.m_oED2K )
+		m_oED2K = m_pTorrent.m_oED2K;
+	if ( ! m_oMD5 && m_pTorrent.m_oMD5 )
+		m_oMD5 = m_pTorrent.m_oMD5;
 
 	pDownload->MakeComplete();
 	pDownload->ResetVerification();
@@ -990,59 +990,4 @@ BOOL CDownloadWithTorrent::UploadExists(const Hashes::BtGuid& oGUID) const
 			return TRUE;
 	}
 	return FALSE;
-}
-
-CString CDownloadWithTorrent::FindTorrentFile(CBTInfo::CBTFile* pFile)
-{
-	CString strFile;
-	
-	CString strPath = pFile->GetPath();
-	int nSlash = strPath.ReverseFind( '\\' );
-	if ( nSlash >= 0 ) strPath = strPath.Left( nSlash + 1 );
-
-	if ( pFile->IsHashed() )
-	{
-		CSingleLock oLibraryLock( &Library.m_pSection, TRUE );
-		if ( CLibraryFile* pShared = LibraryMaps.LookupFileByHash(
-			pFile->m_oSHA1, pFile->m_oTiger, pFile->m_oED2K, pFile->m_oBTH,
-			pFile->m_oMD5, pFile->m_nSize, pFile->m_nSize, FALSE, TRUE ) )
-		{
-			// Refill missed hashes
-			if ( ! pFile->m_oSHA1 && pShared->m_oSHA1 )
-				pFile->m_oSHA1 = pShared->m_oSHA1;
-			if ( ! pFile->m_oTiger && pShared->m_oTiger )
-				pFile->m_oTiger = pShared->m_oTiger;
-			if ( ! pFile->m_oED2K && pShared->m_oED2K )
-				pFile->m_oED2K = pShared->m_oED2K;
-			if ( ! pFile->m_oBTH && pShared->m_oBTH )
-				pFile->m_oBTH = pShared->m_oBTH;
-			if ( ! pFile->m_oMD5 && pShared->m_oMD5 )
-				pFile->m_oMD5 = pShared->m_oMD5;
-
-			strFile = pShared->GetPath();
-			oLibraryLock.Unlock();
-
-			if ( GetFileAttributes( strFile ) != INVALID_FILE_ATTRIBUTES )
-				return strFile;
-		}
-	}
-
-	strFile = Settings.Downloads.CompletePath + "\\" + pFile->m_sPath;
-	if ( GetFileAttributes( strFile ) != INVALID_FILE_ATTRIBUTES ) return strFile;
-
-	strFile = strPath + pFile->m_sPath;
-	if ( GetFileAttributes( strFile ) != INVALID_FILE_ATTRIBUTES ) return strFile;
-	
-	//Try removing the outer directory in case of multi-file torrent oddities
-	LPCTSTR pszName = _tcsrchr( pFile->m_sPath, '\\' );
-	if ( pszName == NULL ) pszName = pFile->m_sPath; else pszName ++;
-
-	strFile = Settings.Downloads.CompletePath + "\\" + pszName;
-	if ( GetFileAttributes( strFile ) != INVALID_FILE_ATTRIBUTES ) return strFile;
-
-	strFile = strPath + pszName;
-	if ( GetFileAttributes( strFile ) != INVALID_FILE_ATTRIBUTES ) return strFile;
-
-	strFile.Empty();
-	return strFile;
 }

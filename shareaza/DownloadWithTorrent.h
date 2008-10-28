@@ -68,7 +68,6 @@ private:
 
 // Operations
 public:
-	static	CString	FindTorrentFile(CBTInfo::CBTFile* pFile);
 	void			AddUpload(CUploadTransferBT* pUpload);
 	void			RemoveUpload(CUploadTransferBT* pUpload);
 	BOOL			SeedTorrent(CString& sErrorMessage);

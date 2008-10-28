@@ -27,7 +27,6 @@
 #include "UploadFiles.h"
 #include "UploadQueue.h"
 #include "UploadQueues.h"
-#include "TransferFile.h"
 #include "UploadTransfer.h"
 #include "UploadTransferHTTP.h"
 
@@ -49,7 +48,6 @@ CUploadTransfer::CUploadTransfer(PROTOCOLID nProtocol) :
 	m_nState( upsNull ),
 	m_pQueue( NULL ),
 	m_pBaseFile( NULL ),
-	m_pDiskFile( NULL ),
 	m_nBandwidth( Settings.Bandwidth.Request ),
 	m_nUserRating( urNew ),
 	m_bClientExtended( FALSE ),
@@ -149,12 +147,10 @@ BOOL CUploadTransfer::OnRename(LPCTSTR pszSource, LPCTSTR pszTarget)
 	{
 		CloseFile();
 	}
-	else if ( m_pDiskFile == NULL )
+	else if ( ! m_pDiskFile.IsOpen() )
 	{
 		m_sFilePath = pszTarget;
-		m_pDiskFile = TransferFiles.Open( m_sFilePath, FALSE, FALSE );
-
-		if ( m_pDiskFile == NULL )
+		if ( ! m_pDiskFile.Open( m_sFilePath, 0, SIZE_UNKNOWN, FALSE, FALSE ) )
 		{
 			theApp.Message( MSG_ERROR, IDS_UPLOAD_DELETED, (LPCTSTR)m_sFileName, (LPCTSTR)m_sAddress );
 			Close();
@@ -526,9 +522,5 @@ void CUploadTransfer::AllocateBaseFile()
 
 void CUploadTransfer::CloseFile()
 {
-	if ( m_pDiskFile != NULL )
-	{
-		m_pDiskFile->Release( FALSE );
-		m_pDiskFile = NULL;
-	}
+	m_pDiskFile.Close();
 }

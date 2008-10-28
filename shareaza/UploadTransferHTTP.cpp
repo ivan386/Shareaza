@@ -1051,13 +1051,11 @@ void CUploadTransferHTTP::SendFileHeaders()
 
 BOOL CUploadTransferHTTP::OpenFileSendHeaders()
 {
-	ASSERT( m_pDiskFile == NULL );
-	
-	m_pDiskFile = TransferFiles.Open( m_sFilePath, FALSE, FALSE );
-	
-	// If there's an error reading the file from disk
-	if ( m_pDiskFile == NULL )
+	ASSERT( ! m_pDiskFile.IsOpen() );
+
+	if ( ! m_pDiskFile.Open( m_sFilePath, 0, SIZE_UNKNOWN, FALSE, FALSE ) )
 	{
+		// If there's an error reading the file from disk
 		SendResponse( IDR_HTML_FILENOTFOUND );
 		theApp.Message( MSG_ERROR, IDS_UPLOAD_CANTOPEN, (LPCTSTR)m_sFileName, (LPCTSTR)m_sAddress );
 		return TRUE;
@@ -1117,8 +1115,7 @@ BOOL CUploadTransferHTTP::OpenFileSendHeaders()
 	
 	if ( m_bHead )
 	{
-		m_pDiskFile->Release( FALSE );
-		m_pDiskFile = NULL;
+		m_pDiskFile.Close();
 		
 		theApp.Message( MSG_INFO, IDS_UPLOAD_HEADERS, (LPCTSTR)m_sFileName,
 			(LPCTSTR)m_sAddress, (LPCTSTR)m_sUserAgent );
@@ -1167,7 +1164,7 @@ BOOL CUploadTransferHTTP::OpenFileSendHeaders()
 
 BOOL CUploadTransferHTTP::OnWrite()
 {
-	if ( m_nState == upsUploading && m_pDiskFile != NULL && GetOutputLength() == 0 )
+	if ( m_nState == upsUploading && m_pDiskFile.IsOpen() && GetOutputLength() == 0 )
 	{
 		if ( m_nPosition >= m_nLength )
 		{
@@ -1182,13 +1179,13 @@ BOOL CUploadTransferHTTP::OnWrite()
 		if ( m_bBackwards )
 		{
 			QWORD nRead = 0;
-			m_pDiskFile->Read( m_nFileBase + m_nOffset + m_nLength - m_nPosition - nPacket, pBuffer.get(), nPacket, &nRead );
+			m_pDiskFile.ReadRange( m_nFileBase + m_nOffset + m_nLength - m_nPosition - nPacket, pBuffer.get(), nPacket, &nRead );
 			if ( nRead != nPacket ) return TRUE;
 			WriteReversed( pBuffer.get(), (DWORD)nPacket );
 		}
 		else
 		{
-			m_pDiskFile->Read( m_nFileBase + m_nOffset + m_nPosition, pBuffer.get(), nPacket, &nPacket );
+			m_pDiskFile.ReadRange( m_nFileBase + m_nOffset + m_nPosition, pBuffer.get(), nPacket, &nPacket );
 			if ( nPacket == 0 ) return TRUE;
 			Write( pBuffer.get(), (DWORD)nPacket );
 		}
@@ -1214,8 +1211,7 @@ void CUploadTransferHTTP::OnCompleted()
 {
 	Uploads.SetStable( GetAverageSpeed() );
 	
-	m_pDiskFile->Release( FALSE );
-	m_pDiskFile	= NULL;
+	m_pDiskFile.Close();
 	m_nState	= upsRequest;
 	m_tRequest	= GetTickCount();
 	
