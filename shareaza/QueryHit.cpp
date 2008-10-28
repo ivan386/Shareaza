@@ -655,72 +655,87 @@ CQueryHit* CQueryHit::FromEDPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer, DWO
 {
 	CQueryHit* pFirstHit	= NULL;
 	CQueryHit* pLastHit		= NULL;
-    Hashes::Ed2kHash oHash;
-	
-	if ( pPacket->m_nType == ED2K_S2C_SEARCHRESULTS ||
-		 pPacket->m_nType == ED2K_S2CG_SEARCHRESULT )
+
+	try
 	{
-		DWORD nCount = 1;
-		
-		if ( pPacket->m_nType == ED2K_S2C_SEARCHRESULTS )
+		Hashes::Ed2kHash oHash;
+		if ( pPacket->m_nType == ED2K_S2C_SEARCHRESULTS ||
+			 pPacket->m_nType == ED2K_S2CG_SEARCHRESULT )
 		{
-			if ( pPacket->GetRemaining() < 4 ) return NULL;
-			nCount = pPacket->ReadLongLE();
-		}
-		
-        while ( nCount-- > 0 && pPacket->GetRemaining() >= Hashes::Ed2kHash::byteCount + 10 )
-		{
-			CQueryHit* pHit = new CQueryHit( PROTOCOL_ED2K, oSearchID );
-			if ( pFirstHit ) pLastHit->m_pNext = pHit;
-			else pFirstHit = pHit;
-			pLastHit = pHit;
-
-			// Enable chat for ed2k hits
-			pHit->m_bChat = TRUE;
+			DWORD nCount = 1;
 			
-			pHit->m_pVendor = VendorCache.Lookup( _T("ED2K") );
-			if ( ! pHit->m_pVendor ) pHit->m_pVendor = VendorCache.m_pNull;
-			if ( ! pHit->ReadEDPacket( pPacket, pServer, m_nServerFlags ) ) break;
-			pHit->Resolve();
-
-			if ( pHit->m_bPush == TRI_TRUE )
+			if ( pPacket->m_nType == ED2K_S2C_SEARCHRESULTS )
 			{
-				//pHit->m_sNick		= _T("(Low ID)");
-				pHit->m_nPort		= 0;
+				if ( pPacket->GetRemaining() < 4 )
+					AfxThrowUserException();
+				nCount = pPacket->ReadLongLE();
+			}
+			
+			while ( nCount-- > 0 && pPacket->GetRemaining() >= Hashes::Ed2kHash::byteCount + 10 )
+			{
+				auto_ptr< CQueryHit >pHit( new CQueryHit( PROTOCOL_ED2K, oSearchID ) );
+
+				// Enable chat for ed2k hits
+				pHit->m_bChat = TRUE;
+				
+				pHit->m_pVendor = VendorCache.Lookup( _T("ED2K") );
+				if ( ! pHit->m_pVendor ) pHit->m_pVendor = VendorCache.m_pNull;
+				pHit->ReadEDPacket( pPacket, pServer, m_nServerFlags );
+				pHit->Resolve();
+
+				if ( pHit->m_bPush == TRI_TRUE )
+				{
+					//pHit->m_sNick		= _T("(Low ID)");
+					pHit->m_nPort		= 0;
+				}
+
+				if ( pFirstHit )
+					pLastHit->m_pNext = pHit.get();
+				else
+					pFirstHit = pHit.get();
+				pLastHit = pHit.release();
 			}
 		}
-	}
-	else if (	pPacket->m_nType == ED2K_S2C_FOUNDSOURCES ||
-				pPacket->m_nType == ED2K_S2CG_FOUNDSOURCES )
-	{
-        if ( pPacket->GetRemaining() < Hashes::Ed2kHash::byteCount + 1 ) return NULL;
-		pPacket->Read( oHash );
-
-		BYTE nCount = pPacket->ReadByte();
-		
-		while ( nCount-- > 0 && pPacket->GetRemaining() >= 6 )
+		else if (	pPacket->m_nType == ED2K_S2C_FOUNDSOURCES ||
+					pPacket->m_nType == ED2K_S2CG_FOUNDSOURCES )
 		{
-			CQueryHit* pHit = new CQueryHit( PROTOCOL_ED2K, oSearchID );
-			if ( pFirstHit ) pLastHit->m_pNext = pHit;
-			else pFirstHit = pHit;
-			pLastHit = pHit;
-			
-			// Enable chat for ed2k hits
-			pHit->m_bChat = TRUE;
+			if ( pPacket->GetRemaining() < Hashes::Ed2kHash::byteCount + 1 )
+				AfxThrowUserException();
+			pPacket->Read( oHash );
 
-			pHit->m_oED2K = oHash;
-			pHit->m_pVendor = VendorCache.Lookup( _T("ED2K") );
-			if ( ! pHit->m_pVendor ) pHit->m_pVendor = VendorCache.m_pNull;
-			pHit->ReadEDAddress( pPacket, pServer );
-			pHit->Resolve();
+			BYTE nCount = pPacket->ReadByte();
+			
+			while ( nCount-- > 0 && pPacket->GetRemaining() >= 6 )
+			{
+				auto_ptr< CQueryHit >pHit( new CQueryHit( PROTOCOL_ED2K, oSearchID ) );
+				
+				// Enable chat for ed2k hits
+				pHit->m_bChat = TRUE;
+
+				pHit->m_oED2K = oHash;
+				pHit->m_pVendor = VendorCache.Lookup( _T("ED2K") );
+				if ( ! pHit->m_pVendor ) pHit->m_pVendor = VendorCache.m_pNull;
+				pHit->ReadEDAddress( pPacket, pServer );
+				pHit->Resolve();
+
+				if ( pFirstHit )
+					pLastHit->m_pNext = pHit.get();
+				else
+					pFirstHit = pHit.get();
+				pLastHit = pHit.release();
+			}
 		}
+
+		// Enable chat for ed2k hits
+		//pFirstHit->m_bChat = TRUE;
+		
+		//CheckBogus( pFirstHit );
+	}
+	catch ( CException* pException )
+	{
+		pException->Delete();
 	}
 
-	// Enable chat for ed2k hits
-	//pFirstHit->m_bChat = TRUE;
-	
-	//CheckBogus( pFirstHit );
-	
 	return pFirstHit;
 }
 
@@ -1475,7 +1490,8 @@ bool CQueryHit::ReadG2Packet(CG2Packet* pPacket, DWORD nLength)
 //////////////////////////////////////////////////////////////////////
 // CQueryHit ED2K result entry reader
 
-BOOL CQueryHit::ReadEDPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer, DWORD m_nServerFlags )
+void CQueryHit::ReadEDPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer,
+							 DWORD m_nServerFlags ) throw(...)
 {
 	CString strLength(_T("")), strBitrate(_T("")), strCodec(_T(""));
 	DWORD nLength = 0;
@@ -1490,14 +1506,12 @@ BOOL CQueryHit::ReadEDPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer, DWORD m_n
 
 	while ( nTags-- > 0 )
 	{
-		if ( pPacket->GetRemaining() < 1 ) return FALSE;
+		if ( pPacket->GetRemaining() < 1 )
+			AfxThrowUserException();
 
 		CEDTag pTag;
 		if ( ! pTag.Read( pPacket, m_nServerFlags ) ) 
-		{
-			theApp.Message( MSG_ERROR | MSG_FACILITY_SEARCH, _T("ED2K search result packet read error") ); //debug check
-			return FALSE;
-		}
+			AfxThrowUserException();
 
 		if ( pTag.m_nKey == ED2K_FT_FILENAME )
 		{
@@ -1580,7 +1594,9 @@ BOOL CQueryHit::ReadEDPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer, DWORD m_n
 			// We could use this in the future to weight the rating...
 		}
 		//Note: Maybe ignore these keys? They seem to have a lot of bad values....
-		else if ( ( pTag.m_nKey == 0 ) && ( pTag.m_nType == ED2K_TAG_STRING ) && ( pTag.m_sKey == _T("length") )  )
+		else if ( ( pTag.m_nKey == 0 ) &&
+				  ( pTag.m_nType == ED2K_TAG_STRING ) &&
+				  ( pTag.m_sKey == _T("length") )  )
 		{	//Length- old style (As a string- x:x:x, x:x or x)
 			DWORD nSecs = 0, nMins = 0, nHours = 0;
 
@@ -1599,11 +1615,15 @@ BOOL CQueryHit::ReadEDPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer, DWORD m_n
 
 			nLength = (nHours * 60 * 60) + (nMins * 60) + (nSecs);
 		}
-		else if ( ( pTag.m_nKey == 0 ) && ( pTag.m_nType == ED2K_TAG_INT ) && ( pTag.m_sKey == _T("bitrate") ) )
+		else if ( ( pTag.m_nKey == 0 ) &&
+				  ( pTag.m_nType == ED2K_TAG_INT ) &&
+				  ( pTag.m_sKey == _T("bitrate") ) )
 		{	//Bitrate- old style			
 			strBitrate.Format( _T("%lu"), pTag.m_nValue );
 		}
-		else if ( ( pTag.m_nKey == 0 ) && ( pTag.m_nType == ED2K_TAG_STRING ) && ( pTag.m_sKey == _T("codec") ) )
+		else if ( ( pTag.m_nKey == 0 ) &&
+				  ( pTag.m_nType == ED2K_TAG_STRING ) &&
+				  ( pTag.m_sKey == _T("codec") ) )
 		{	//Codec - old style
 			strCodec = pTag.m_sValue;
 		}
@@ -1750,11 +1770,9 @@ BOOL CQueryHit::ReadEDPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer, DWORD m_n
 			m_sSchemaURI = CSchema::uriCollection;
 		}
 	}
-
-	return TRUE;
 }
 
-void CQueryHit::ReadEDAddress(CEDPacket* pPacket, SOCKADDR_IN* pServer)
+void CQueryHit::ReadEDAddress(CEDPacket* pPacket, SOCKADDR_IN* pServer) throw(...)
 {
 	DWORD nAddress = m_pAddress.S_un.S_addr = pPacket->ReadLongLE();
 	if ( ! CEDPacket::IsLowID( nAddress ) && (
@@ -1776,7 +1794,8 @@ void CQueryHit::ReadEDAddress(CEDPacket* pPacket, SOCKADDR_IN* pServer)
 		m_bResolveURL = FALSE;
 		m_bPush = TRI_UNKNOWN;
 	}
-	else if ( CEDPacket::IsLowID( nAddress ) || Network.IsFirewalledAddress( &nAddress ) || ! m_nPort )
+	else if ( CEDPacket::IsLowID( nAddress ) ||
+		Network.IsFirewalledAddress( &nAddress ) || ! m_nPort )
 	{
 		m_bPush = TRI_TRUE;
 	}

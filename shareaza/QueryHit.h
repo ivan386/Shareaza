@@ -91,7 +91,7 @@ protected:
 public:
 	static CQueryHit*	FromG1Packet(CG1Packet* pPacket, int* pnHops = NULL);
 	static CQueryHit*	FromG2Packet(CG2Packet* pPacket, int* pnHops = NULL);
-	static CQueryHit*	FromEDPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer, DWORD m_nServerFlags, const Hashes::Guid& pSearchID = Hashes::Guid());
+	static CQueryHit*	FromEDPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer, DWORD m_nServerFlags, const Hashes::Guid& pSearchID = Hashes::Guid()) throw();
 protected:
 	static BOOL			CheckBogus(CQueryHit* pFirstHit);
 	static CXMLElement*	ReadXML(CG1Packet* pPacket, int nSize);
@@ -108,8 +108,8 @@ protected:
 	void		ParseAttributes(const Hashes::Guid& pClientID, CVendor* pVendor, BYTE* nFlags, BOOL bChat, BOOL bBrowseHost);
 	void		ReadG1Packet(CG1Packet* pPacket);
 	bool		ReadG2Packet(CG2Packet* pPacket, DWORD nLength);
-	BOOL		ReadEDPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer, DWORD m_nServerFlags = 0);
-	void		ReadEDAddress(CEDPacket* pPacket, SOCKADDR_IN* pServer);
+	void		ReadEDPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer, DWORD m_nServerFlags = 0) throw(...);
+	void		ReadEDAddress(CEDPacket* pPacket, SOCKADDR_IN* pServer) throw(...);
 	BOOL		ParseXML(CXMLElement* pXML, DWORD nRealIndex);
 	BOOL		HasBogusMetadata();
 	void		Resolve();
