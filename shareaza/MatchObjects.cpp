@@ -172,8 +172,15 @@ void CMatchList::AddHits(CQueryHit* pHit, CQuerySearch* pFilter)
 		// The size may be zero or match the size of the file.
 		// Empty file names are caught by the next clause and deleted.
 
-		if ( pHit->m_nSize == 0 || pHit->m_sName.IsEmpty() ||
-			Security.IsDenied( &pHit->m_pAddress ) || Security.IsDenied( pHit ) )
+		if ( Security.IsDenied( &pHit->m_pAddress ) ||
+			Security.IsDenied( pHit ) ||
+			pHit->m_sName.IsEmpty() ||		// Empty name
+			pHit->m_nSize == 0 ||			// size is 0
+			pHit->m_nSize == SIZE_UNKNOWN )	// size is SIZE_UNKNOWN (0xFFFFFFFFFFFFFFFF). NOTE because of Gnutella without GGEP
+											// "LF" extension can only handle up to 4GB-1B size(can be 2GB-1 depending on sign
+											// handling of the value), large files can have SIZE_UNKNOWN value if no GGEP "LF"
+											// was on QueryHit packet. but because of current implementation of list (always
+											// added to filesize maps without check) these hit has to be rejected.
 		{
 			delete pHit;
 			pHit = pNext;
