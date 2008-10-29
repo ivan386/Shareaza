@@ -1169,7 +1169,7 @@ void CBTInfo::SetTrackerNext(DWORD tTime)
 		return;
 	}
 
-	if ( m_nTrackerMode = tNull || m_nTrackerMode == tSingle )
+	if ( m_nTrackerMode == tNull || m_nTrackerMode == tSingle )
 		return;
 
 	// Make sure this is a multitracker torrent
