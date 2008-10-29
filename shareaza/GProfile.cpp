@@ -166,11 +166,8 @@ BOOL CGProfile::Save(LPCTSTR pszFile)
 	else
 		strXML.Empty();
 
-	int nASCII = WideCharToMultiByte( CP_UTF8, 0, strXML, strXML.GetLength(), NULL, 0, NULL, NULL );
-	LPSTR pszASCII = new CHAR[ nASCII ];
-	WideCharToMultiByte( CP_UTF8, 0, strXML, strXML.GetLength(), pszASCII, nASCII, NULL, NULL );
-	pFile.Write( pszASCII, nASCII );
-	delete [] pszASCII;
+	CStringA strUTF8 = UTF8Encode( strXML );
+	pFile.Write( (LPCSTR)strUTF8, strUTF8.GetLength() );
 
 	pFile.Close();
 

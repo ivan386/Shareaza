@@ -1190,9 +1190,7 @@ void CQueryHit::ReadG1Packet(CG1Packet* pPacket)
 		}
 		else if ( nLength > 4 )
 		{
-			CBuffer pConvertWork;
-			pConvertWork.Print( pszData, nLength );
-			CString strXML = pConvertWork.ReadString( nLength, CP_UTF8 );
+			CString strXML = UTF8Decode( pszData, nLength );
 			m_pXML = CXMLElement::FromString( strXML );
 
 			AutoDetectSchema( strXML );

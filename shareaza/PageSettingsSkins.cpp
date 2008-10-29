@@ -203,10 +203,7 @@ BOOL CSkinsSettingsPage::AddSkin(LPCTSTR pszPath, LPCTSTR pszName)
 			pByte += 3; nByte -= 3;
 		}
 
-		DWORD nWide = MultiByteToWideChar( CP_UTF8, 0, (LPCSTR)pByte, nByte, NULL, 0 );
-
-		MultiByteToWideChar( CP_UTF8, 0, (LPCSTR)pByte, nByte, strXML.GetBuffer( nWide ), nWide );
-		strXML.ReleaseBuffer( nWide );
+		strXML = UTF8Decode( (LPCSTR)pByte, nByte );
 	}
 
 	delete [] pSource;

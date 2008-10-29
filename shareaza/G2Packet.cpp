@@ -350,11 +350,7 @@ CString CG2Packet::ReadString(DWORD nMaximum)
 		pszScan ++;
 	}
 
-	int nWide = MultiByteToWideChar( CP_UTF8, 0, pszInput, nLength, NULL, 0 );
-	MultiByteToWideChar( CP_UTF8, 0, pszInput, nLength, strString.GetBuffer( nWide ), nWide );
-	strString.ReleaseBuffer( nWide );
-
-	return strString;
+	return UTF8Decode( pszInput, nLength );
 }
 
 void CG2Packet::WriteString(LPCTSTR pszString, BOOL bNull)
@@ -365,25 +361,14 @@ void CG2Packet::WriteString(LPCTSTR pszString, BOOL bNull)
 		return;
 	}
 
-	int nWide		= static_cast< int >( _tcslen(pszString) );
-	int nByte		= WideCharToMultiByte( CP_UTF8, 0, pszString, nWide, NULL, 0, NULL, NULL );
-
-	auto_array< CHAR > pszByte( new CHAR[ nByte + 1 ] );
-	if ( pszByte.get() == NULL )
-	{
-		theApp.Message( MSG_ERROR, _T("Memory allocation error in CG2Packet::WriteString()") );
-		return;
-	}
-
-	WideCharToMultiByte( CP_UTF8, 0, pszString, nWide, pszByte.get(), nByte, NULL, NULL );
+	CStringA strUTF8 = UTF8Encode( pszString, _tcslen( pszString ) );
 
 	if ( bNull )
 	{
-		pszByte[ nByte ] = 0;
-		Write( pszByte.get(), nByte + 1 );
+		Write( (LPCSTR)strUTF8, strUTF8.GetLength() + 1 );
 	}
 	else
-		Write( pszByte.get(), nByte );
+		Write( (LPCSTR)strUTF8, strUTF8.GetLength() );
 }
 
 void CG2Packet::WriteString(LPCSTR pszString, BOOL bNull)

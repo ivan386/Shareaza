@@ -698,11 +698,7 @@ bool CLibraryBuilderInternals::CopyID3v2Field(CXMLElement* pXML, LPCTSTR pszAttr
 		}
 		else if ( nEncoding == 3 )
 		{
-			int nWide = MultiByteToWideChar( CP_UTF8, 0, (LPCSTR)pBuffer + nOffset, nLength - nOffset, NULL, 0 );
-			LPTSTR pszOutput = strValue.GetBuffer( nWide + 1 );
-			MultiByteToWideChar( CP_UTF8, 0, (LPCSTR)pBuffer + nOffset, nLength - nOffset, pszOutput, nWide );
-			pszOutput[ nWide ] = 0;
-			strValue.ReleaseBuffer();
+			strValue = UTF8Decode( (LPCSTR)pBuffer + nOffset, nLength - nOffset );
 			nOffset += (DWORD)strlen( (LPCSTR)pBuffer + nOffset ) + 1;
 		}
 
@@ -2016,13 +2012,8 @@ bool CLibraryBuilderInternals::ReadOGG(DWORD nIndex, HANDLE hFile)
 			pszDest[ nLen ] = (CHAR) pszSource[ nLen ];
 		delete pszSource;
 
-		int nWide = MultiByteToWideChar( CP_UTF8, 0, pszDest, nLength, NULL, 0 );
-		LPWSTR pszWide = new WCHAR[ nWide + 1 ];
-		MultiByteToWideChar( CP_UTF8, 0, pszDest, nLength, pszWide, nWide );
-		pszWide[ nWide ] = 0;
-		strValue = pszWide;
+		strValue = UTF8Decode( pszDest, nLength );
 
-		delete [] pszWide;
 		delete pszDest;
 
 		strValue.TrimLeft(); strValue.TrimRight();
@@ -2287,13 +2278,8 @@ bool CLibraryBuilderInternals::ReadAPE(DWORD nIndex, HANDLE hFile, bool bPreferF
 		if ( nLength != nRead )
 			break;
 
-		int nWide = MultiByteToWideChar( CP_UTF8, 0, pszInput, nLength, NULL, 0 );
-		LPWSTR pszWide = new WCHAR[ nWide + 1 ];
-		MultiByteToWideChar( CP_UTF8, 0, pszInput, nLength, pszWide, nWide );
-		pszWide[ nWide ] = 0;
-		strValue = pszWide;
+		strValue = UTF8Decode( pszInput, nLength );
 
-		delete [] pszWide;
 		delete [] pszInput;
 
 		strKey.TrimLeft(); strKey.TrimRight();

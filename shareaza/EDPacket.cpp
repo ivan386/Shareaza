@@ -596,9 +596,7 @@ BOOL CEDTag::Read(CFile* pFile)
 				return FALSE;
 			if ( pFile->Read( psz.get(), nLen ) != nLen )
 				return FALSE;
-			int nWide = MultiByteToWideChar( CP_UTF8, 0, psz.get(), nLen, NULL, 0 );
-			MultiByteToWideChar( CP_UTF8, 0, psz.get(), nLen, m_sValue.GetBuffer( nWide ), nWide );
-			m_sValue.ReleaseBuffer( nWide );
+			m_sValue = UTF8Decode( psz.get(), nLen );
 		}
 		break;
 
@@ -664,9 +662,7 @@ BOOL CEDTag::Read(CFile* pFile)
 				return FALSE;
 			if ( pFile->Read( psz.get(), nLen ) != nLen )
 				return FALSE;
-			int nWide = MultiByteToWideChar( CP_UTF8, 0, psz.get(), nLen, NULL, 0 );
-			MultiByteToWideChar( CP_UTF8, 0, psz.get(), nLen, m_sValue.GetBuffer( nWide ), nWide );
-			m_sValue.ReleaseBuffer( nWide );
+			m_sValue = UTF8Decode( psz.get(), nLen );
 		}
 		else
 		{

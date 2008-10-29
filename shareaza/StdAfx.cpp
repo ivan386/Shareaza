@@ -142,6 +142,30 @@ UINT GetBestHashTableSize(UINT nCount)
 		( nCount + nCount / 5 ), std::less< UINT >() );	// + 20%
 }
 
+CStringA UTF8Encode(__in_bcount(nInput) LPCWSTR szInput, __in int nInput)
+{
+	int nUTF8 = WideCharToMultiByte( CP_UTF8, 0, szInput, nInput, NULL, 0, NULL, NULL );
+	CStringA sUTF8;
+	if ( nUTF8 > 0 )
+	{
+		WideCharToMultiByte( CP_UTF8, 0, szInput, nInput, sUTF8.GetBuffer( nUTF8 ), nUTF8, NULL, NULL );
+		sUTF8.ReleaseBuffer( nUTF8 );
+	}
+	return sUTF8;
+}
+
+CStringW UTF8Decode(__in_bcount(nInput) LPCSTR szInput, __in int nInput)
+{
+	int nWide = MultiByteToWideChar( CP_UTF8, 0, szInput, nInput, NULL, 0 );
+	CStringW sWide;
+	if ( nWide > 0 )
+	{
+		MultiByteToWideChar( CP_UTF8, 0, szInput, nInput, sWide.GetBuffer( nWide ), nWide );
+		sWide.ReleaseBuffer( nWide );
+	}
+	return sWide;
+}
+
 // Encodes unsafe characters in a string, turning "hello world" into "hello%20world", for instance
 // Takes text and returns a string
 CString URLEncode(LPCTSTR pszInputT)

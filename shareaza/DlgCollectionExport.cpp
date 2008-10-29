@@ -377,15 +377,10 @@ void CCollectionExportDlg::OnOK()
 
 		if ( pFile.Open( strFile, CFile::modeWrite|CFile::modeCreate ) )
 		{
-			int nBytes = WideCharToMultiByte( CP_UTF8, 0, strXML, strXML.GetLength(), 
-				NULL, 0, NULL, NULL );
-			LPSTR pszXML = new CHAR[ nBytes ];
-			WideCharToMultiByte( CP_UTF8, 0, strXML, strXML.GetLength(), pszXML, 
-				nBytes, NULL, NULL );
+			CStringA strXMLUTF8 = UTF8Encode( strXML );
 
-			pFile.Write( pszXML, nBytes );
+			pFile.Write( (LPCSTR)strXMLUTF8, strXMLUTF8.GetLength() );
 			pFile.Close();
-			delete [] pszXML;
 					
 			int nPosTpl = 0;
 			while ( nPosTpl < m_wndWizard.m_pTemplatePaths.GetSize() )
@@ -531,17 +526,12 @@ void CCollectionExportDlg::OnOK()
 				CFile pFile;
 				if ( pFile.Open( strNewFilePath , CFile::modeWrite|CFile::modeCreate ) )
 				{
-					int nBytes = WideCharToMultiByte( CP_UTF8, 0, strSource, strSource.GetLength(), 
-						NULL, 0, NULL, NULL );
-					LPSTR pszBytes = new CHAR[ nBytes ];
-					WideCharToMultiByte( CP_UTF8, 0, strSource, strSource.GetLength(), pszBytes, 
-						nBytes, NULL, NULL );
+					CStringA strSourceUTF8 = UTF8Encode( strSource );
 
-					pFile.Write( pszBytes, nBytes );
+					pFile.Write( (LPCSTR)strSourceUTF8, strSourceUTF8.GetLength() );
 					pFile.Close();
 
 					// clean-up;
-					delete [] pszBytes;
 					strSource.Empty();
 					strSource.ReleaseBuffer();
 				}

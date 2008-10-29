@@ -572,6 +572,20 @@ __int64 GetMicroCount();
 // Produces the best hash table size for CMap::InitHashTable use
 UINT GetBestHashTableSize(UINT nCount);
 
+// Encode Unicode text to UTF-8 text
+CStringA UTF8Encode(__in_bcount(nInput) LPCWSTR szInput, __in int nInput);
+inline CStringA UTF8Encode(__in const CStringW& strInput)
+{
+	return UTF8Encode( strInput, strInput.GetLength() );
+}
+
+// Decode UTF-8 text to Unicode text
+CStringW UTF8Decode(__in_bcount(nInput) LPCSTR szInput, __in int nInput);
+inline CStringW UTF8Decode(__in const CStringA& strInput)
+{
+	return UTF8Decode( strInput, strInput.GetLength() );
+}
+
 // Encode and decode URL text, and see if a string starts with a tag
 CString URLEncode(LPCTSTR pszInput);                   // Encode "hello world" into "hello%20world"
 CString URLDecode(LPCTSTR pszInput);                   // Decode "hello%20world" back to "hello world"
