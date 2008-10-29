@@ -19,9 +19,6 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_DLGSKINDIALOG_H__A87746E3_AE87_49DA_A466_3F8C64364750__INCLUDED_)
-#define AFX_DLGSKINDIALOG_H__A87746E3_AE87_49DA_A466_3F8C64364750__INCLUDED_
-
 #pragma once
 
 class CSkinWindow;
@@ -29,37 +26,20 @@ class CSkinWindow;
 
 class CSkinDialog : public CDialog
 {
-// Construction
+	DECLARE_DYNAMIC(CSkinDialog)
+
 public:
 	CSkinDialog(UINT nResID = 0, CWnd* pParent = NULL);
 
-	DECLARE_DYNAMIC(CSkinDialog)
-
-// Dialog Data
-public:
-	//{{AFX_DATA(CSkinDialog)
-	//}}AFX_DATA
-
-// Skin Support
-public:
 	BOOL	SkinMe(LPCTSTR pszSkin = NULL, UINT nIcon = 0, BOOL bLanguage = TRUE);
 	BOOL	SelectCaption(CWnd* pWnd, int nIndex);
-	CToolTipCtrl m_wndToolTip;
+
 protected:
 	CSkinWindow*	m_pSkin;
 
-// Overrides
-public:
-	//{{AFX_VIRTUAL(CSkinDialog)
-	protected:
 	virtual void DoDataExchange(CDataExchange* pDX);
 	virtual BOOL OnInitDialog();
-	virtual BOOL PreTranslateMessage(MSG* pMsg);
-	//}}AFX_VIRTUAL
 
-// Implementation
-protected:
-	//{{AFX_MSG(CSkinDialog)
 	afx_msg void OnNcCalcSize(BOOL bCalcValidRects, NCCALCSIZE_PARAMS FAR* lpncsp);
 	afx_msg ONNCHITTESTRESULT OnNcHitTest(CPoint point);
 	afx_msg BOOL OnNcActivate(BOOL bActive);
@@ -75,11 +55,6 @@ protected:
 	afx_msg void OnWindowPosChanging(WINDOWPOS* lpwndpos);
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg BOOL OnHelpInfo(HELPINFO* pHelpInfo);
-	//}}AFX_MSG
 
 	DECLARE_MESSAGE_MAP()
 };
-
-//{{AFX_INSERT_LOCATION}}
-
-#endif // !defined(AFX_DLGSKINDIALOG_H__A87746E3_AE87_49DA_A466_3F8C64364750__INCLUDED_)

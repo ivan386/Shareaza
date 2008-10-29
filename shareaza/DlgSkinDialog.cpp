@@ -59,18 +59,15 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CSkinDialog dialog
 
-CSkinDialog::CSkinDialog(UINT nResID, CWnd* pParent) : CDialog( nResID, pParent )
+CSkinDialog::CSkinDialog(UINT nResID, CWnd* pParent) :
+	CDialog( nResID, pParent ),
+	m_pSkin( NULL )
 {
-	//{{AFX_DATA_INIT(CSkinDialog)
-	//}}AFX_DATA_INIT
-	m_pSkin = NULL;
 }
 
 void CSkinDialog::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
-	//{{AFX_DATA_MAP(CSkinDialog)
-	//}}AFX_DATA_MAP
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -94,7 +91,7 @@ BOOL CSkinDialog::SkinMe(LPCTSTR pszSkin, UINT nIcon, BOOL bLanguage)
 
 	if ( bLanguage )
 	{
-		bSuccess = ::Skin.Apply( strSkin, this, nIcon, &m_wndToolTip );
+		bSuccess = ::Skin.Apply( strSkin, this, nIcon );
 	}
 	if ( nIcon )
 	{
@@ -271,19 +268,15 @@ int CSkinDialog::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	if (CDialog::OnCreate(lpCreateStruct) == -1)
 		return -1;
 
-	if ( Settings.General.LanguageRTL ) ModifyStyleEx( 0, WS_EX_LAYOUTRTL|WS_EX_RTLREADING, 0 );
+	if ( Settings.General.LanguageRTL )
+		ModifyStyleEx( 0, WS_EX_LAYOUTRTL|WS_EX_RTLREADING, 0 );
+
 	return 0;
 }
 
 BOOL CSkinDialog::OnInitDialog()
 {
 	CDialog::OnInitDialog();
-
-	m_wndToolTip.Create( this );
-	m_wndToolTip.Activate( TRUE );
-	m_wndToolTip.SetMaxTipWidth( 200 );
-	// Show the tooltip for 20 seconds
-	m_wndToolTip.SetDelayTime( TTDT_AUTOPOP, 20 * 1000 );
 
 	if ( Settings.General.LanguageRTL )
 	{
@@ -306,27 +299,4 @@ BOOL CSkinDialog::OnInitDialog()
 BOOL CSkinDialog::OnHelpInfo(HELPINFO* /*pHelpInfo*/)
 {
 	return FALSE;
-}
-
-BOOL CSkinDialog::PreTranslateMessage(MSG* pMsg)
-{
-	if ( pMsg->message >= WM_MOUSEFIRST && pMsg->message <= WM_MOUSELAST )
-	{
-		MSG msg;
-		CopyMemory( &msg, pMsg, sizeof(MSG) );
-		HWND hWndParent = ::GetParent( msg.hwnd );
-
-		while ( hWndParent && hWndParent != m_hWnd )
-		{
-			msg.hwnd = hWndParent;
-			hWndParent = ::GetParent( hWndParent );
-		}
-
-		if ( msg.hwnd )
-		{
-			m_wndToolTip.RelayEvent( &msg );
-		}
-	}
-
-	return CDialog::PreTranslateMessage(pMsg);
 }
