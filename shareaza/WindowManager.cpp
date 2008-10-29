@@ -621,7 +621,9 @@ void CWindowManager::PostSkinRemove()
 
 void CWindowManager::OnSize(UINT nType, int cx, int cy)
 {
-	if ( nType != 1982 ) CWnd::OnSize( nType, cx, cy );
+	if ( nType != 1982 )
+		CWnd::OnSize( nType, cx, cy );
+
 	AutoResize();
 }
 
@@ -629,8 +631,8 @@ BOOL CWindowManager::OnEraseBkgnd(CDC* pDC)
 {
 	CRect rc;
 	GetClientRect( &rc );
-	pDC->FillSolidRect( &rc, ( Settings.General.GUIMode != GUI_WINDOWED ) ?
-		RGB( 0xBE, 0, 0 ) : GetSysColor( COLOR_APPWORKSPACE ) );
+	pDC->FillSolidRect( &rc, Skin.m_crPanelBack );
+
 	return TRUE;
 }
 
@@ -638,4 +640,3 @@ void CWindowManager::OnPaint()
 {
 	CPaintDC dc( this );
 }
-

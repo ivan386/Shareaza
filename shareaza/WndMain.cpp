@@ -292,7 +292,7 @@ CMainWnd::CMainWnd() :
 	theApp.m_pMainWnd = this;
 
 	// Bypass CMDIFrameWnd::LoadFrame
-	VERIFY( CFrameWnd::LoadFrame( IDR_MAINFRAME ) );
+	VERIFY( CFrameWnd::LoadFrame( IDR_MAINFRAME, WS_OVERLAPPEDWINDOW ) );
 
 	theApp.m_pSafeWnd = this;
 }
@@ -302,8 +302,10 @@ BOOL CMainWnd::Create(LPCTSTR lpszClassName, LPCTSTR lpszWindowName, DWORD dwSty
 	DWORD dwExStyle, CCreateContext* pContext)
 {
 	// Bypass menu creation
-	return CMDIFrameWnd::Create( lpszClassName, lpszWindowName, dwStyle,
-		rect, pParentWnd, NULL, dwExStyle, pContext );
+	return CMDIFrameWnd::Create( lpszClassName, lpszWindowName,
+		dwStyle, rect, pParentWnd, NULL,
+		dwExStyle | ( Settings.General.LanguageRTL ? WS_EX_LAYOUTRTL : 0 ) |
+		WS_EX_APPWINDOW, pContext );
 }
 
 BOOL CMainWnd::OnCreateClient(LPCREATESTRUCT lpcs, CCreateContext* /* pContext */)
@@ -357,12 +359,8 @@ BOOL CMainWnd::PreCreateWindow(CREATESTRUCT& cs)
 
 int CMainWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
-	if ( Settings.General.LanguageRTL )
-		lpCreateStruct->dwExStyle |= WS_EX_LAYOUTRTL;
-
-	SetWindowLongPtr( GetSafeHwnd(), GWL_EXSTYLE, lpCreateStruct->dwExStyle );
-
-	if ( CMDIFrameWnd::OnCreate( lpCreateStruct ) == -1 ) return -1;
+	if ( CMDIFrameWnd::OnCreate( lpCreateStruct ) == -1 )
+		return -1;
 
 	// Tray
 
