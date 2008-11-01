@@ -365,6 +365,9 @@ BOOL CSkin::LoadString(CString& str, UINT nStringID)
 	if ( m_pStrings.Lookup( nStringID, str ) ||
 		( IS_INTRESOURCE( nStringID ) && str.LoadString( nStringID ) ) )
 		return TRUE;
+#ifdef _DEBUG
+	theApp.Message( MSG_ERROR, _T("Failed to load string %d."), nStringID );
+#endif // _DEBUG
 	str.Empty();
 	return FALSE;
 }
@@ -1932,12 +1935,6 @@ void CSkin::CreateDefault()
 		CoolInterface.AddIcon( ID_CHECKMARK, hIcon );
 		VERIFY( DestroyIcon( hIcon ) );
 	}
-
-	// Default Menu
-
-	CMenu* pMenuBar = new CMenu();
-	pMenuBar->LoadMenu( IDR_MAINFRAME );
-	m_pMenus.SetAt( _T("CMainWnd"), pMenuBar );
 
 	// Load Definitions
 
