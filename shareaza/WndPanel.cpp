@@ -225,6 +225,8 @@ void CPanelWnd::PaintCaption(CDC& dc)
 	pBuffer->SelectObject( pOldFont );
 
 	dc.BitBlt( rc.left, rc.top, rc.Width(), rc.Height(), pBuffer, 0, 0, SRCCOPY );
+
+	dc.SelectStockObject( SYSTEM_FONT ); // GDI font leak fix
 }
 
 BOOL CPanelWnd::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)
