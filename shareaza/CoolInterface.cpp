@@ -213,6 +213,10 @@ HICON CCoolInterface::ExtractIcon(UINT nID, BOOL bMirrored, int nImageListType)
 			MAKEINTRESOURCE( nID ), IMAGE_ICON, cx, cx, 0 );
 		if ( hIcon )
 			AddIcon( nID, hIcon, nImageListType );
+#ifdef _DEBUG
+		else
+			theApp.Message( MSG_ERROR, _T("Failed to load icon %d (%dx%d)."), nID, cx, cx );
+#endif // _DEBUG
 	}
 	if ( hIcon )
 	{
