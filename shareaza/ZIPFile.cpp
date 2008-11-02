@@ -20,6 +20,7 @@
 //
 
 #include "StdAfx.h"
+#include "Shareaza.h"
 #include "ZIPFile.h"
 #include "Buffer.h"
 
@@ -501,7 +502,7 @@ BOOL CZIPFile::File::Extract(LPCTSTR pszFile)
 
 	if ( nUncompressed >= m_nSize ) return TRUE;
 
-	DeleteFile( pszFile );
+	DeleteFile( pszFile, FALSE, TRUE );
 	return FALSE;
 }
 

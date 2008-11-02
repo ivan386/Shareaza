@@ -1180,7 +1180,7 @@ void CDownloads::Load()
 					if ( !Settings.BitTorrent.AutoSeed ||
 						 GetFileAttributes( pDownload->m_sServingFileName ) == INVALID_FILE_ATTRIBUTES )
 					{
-						::DeleteFile( strPath );
+						::DeleteFile( strPath, FALSE, TRUE );
 						delete pDownload;
 						continue;
 					}
@@ -1235,11 +1235,11 @@ void CDownloads::LoadFromCompoundFiles()
 		// Good
 	}
 
-	DeleteFile( Settings.Downloads.IncompletePath + _T("\\Shareaza Downloads.dat") );
-	DeleteFile( Settings.Downloads.IncompletePath + _T("\\Shareaza Downloads.bak") );
-	DeleteFile( Settings.Downloads.IncompletePath + _T("\\Shareaza.dat") );
-	DeleteFile( Settings.Downloads.IncompletePath + _T("\\Shareaza1.dat") );
-	DeleteFile( Settings.Downloads.IncompletePath + _T("\\Shareaza2.dat") );
+	DeleteFile( Settings.Downloads.IncompletePath + _T("\\Shareaza Downloads.dat"), TRUE, TRUE );
+	DeleteFile( Settings.Downloads.IncompletePath + _T("\\Shareaza Downloads.bak"), TRUE, TRUE );
+	DeleteFile( Settings.Downloads.IncompletePath + _T("\\Shareaza.dat"), TRUE, TRUE );
+	DeleteFile( Settings.Downloads.IncompletePath + _T("\\Shareaza1.dat"), TRUE, TRUE );
+	DeleteFile( Settings.Downloads.IncompletePath + _T("\\Shareaza2.dat"), TRUE, TRUE );
 }
 
 BOOL CDownloads::LoadFromCompoundFile(LPCTSTR pszFile)
@@ -1361,7 +1361,7 @@ void CDownloads::PurgeDeletes()
 		if ( ERROR_SUCCESS != RegEnumValue( hKey, nIndex, szPath, &nPath, NULL,
 			NULL, NULL, NULL ) ) break;
 
-		if ( GetFileAttributes( szPath ) == 0xFFFFFFFF || DeleteFile( szPath ) )
+		if ( DeleteFile( szPath, FALSE, FALSE ) )
 		{
 			pRemove.AddTail( szPath );
 		}
@@ -1390,7 +1390,7 @@ void CDownloads::PurgePreviews()
 		if ( _tcsnicmp( pFind.cFileName, _T("Preview of "), 11 ) == 0 )
 		{
 			strPath = Settings.Downloads.IncompletePath + '\\' + pFind.cFileName;
-			DeleteFile( strPath );
+			DeleteFile( strPath, FALSE, TRUE );
 		}
 	}
 	while ( FindNextFile( hSearch, &pFind ) );

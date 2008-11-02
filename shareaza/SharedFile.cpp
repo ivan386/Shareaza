@@ -313,44 +313,14 @@ BOOL CLibraryFile::Delete(BOOL bDeleteGhost)
 {
 	if ( m_pFolder != NULL )
 	{
-		// Close the file handle
-		while( !Uploads.OnRename( GetPath(), NULL, TRUE ) );
-
-		// Should be double zeroed path
-		TCHAR szPath[MAX_PATH] = { 0 };
-		_tcsncpy( szPath, GetPath(), MAX_PATH - 2 );
-
-		SHFILEOPSTRUCT pOp = { 0 };
-		pOp.wFunc	= FO_DELETE;
-		pOp.pFrom	= szPath;
-		pOp.fFlags	= FOF_ALLOWUNDO|FOF_NOCONFIRMATION;
-
-		if ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 ) pOp.fFlags &= ~FOF_ALLOWUNDO;
-
-		int nReturn = SHFileOperation( &pOp );
-
-		if ( nReturn != 0 )
+		if ( ! DeleteFile( GetPath(),
+			( ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 ) == 0 ), TRUE ) )
 		{
-			// Failure. Continue using its old name
-			while( !Uploads.OnRename( GetPath(), GetPath() ) );
 			return FALSE;
 		}
-
-/*		if ( m_pMetadata != NULL || m_sComments.GetLength() || m_nRating > 0 )
-		{
-			CString strMetaFolder	= m_pFolder->m_sPath + _T("\\Metadata");
-			CString strMetaFile		= strMetaFolder + '\\' + m_sName + _T(".xml");
-
-			if ( DeleteFile( strMetaFile ) )
-			{
-				RemoveDirectory( strMetaFolder );
-			}
-		}*/
 	}
-	else
-	{
-		OnDelete( bDeleteGhost );
-	}
+
+	OnDelete( bDeleteGhost );
 
 	return TRUE;
 }

@@ -252,7 +252,7 @@ BOOL CDownloadGroups::Save(BOOL bForce)
 	m_nSaveCookie = m_nBaseCookie;
 
 	CString strPath = Settings.General.UserPath + _T("\\Data\\DownloadGroups.dat");
-	DeleteFile( strPath + _T(".tmp") );
+	DeleteFile( strPath + _T(".tmp"), FALSE, FALSE );
 
 	CFile pFile;
 	if ( ! pFile.Open( strPath + _T(".tmp"), CFile::modeWrite | CFile::modeCreate ) ) return FALSE;
@@ -275,7 +275,7 @@ BOOL CDownloadGroups::Save(BOOL bForce)
 
 	pFile.Close();
 
-	DeleteFile( strPath );
+	DeleteFile( strPath, FALSE, FALSE );
 	MoveFile( strPath + _T(".tmp"), strPath );
 
 	return TRUE;

@@ -506,7 +506,8 @@ void CWindowManager::SaveSearchWindows()
 
 	theApp.Message( MSG_DEBUG, _T("Searches successfully saved to: %s"), strFile );
 
-	if ( ! nCount ) DeleteFile( strFile );
+	if ( ! nCount )
+		DeleteFile( strFile, FALSE, FALSE );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -570,7 +571,8 @@ void CWindowManager::SaveBrowseHostWindows()
 
 	theApp.Message( MSG_DEBUG, _T("Browses successfully saved to: %s"), strFile );
 
-	if ( ! nCount ) DeleteFile( strFile );
+	if ( ! nCount )
+		DeleteFile( strFile, FALSE, FALSE );
 }
 
 //////////////////////////////////////////////////////////////////////

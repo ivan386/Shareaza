@@ -419,7 +419,7 @@ bool CFileCopyDlg::CheckTarget(const CString& strTarget)
 		return false;
 	}
 
-	if ( DeleteFile( strTarget ) )
+	if ( DeleteFile( strTarget, FALSE, FALSE ) )
 		return true;
 
 	CString strError = GetErrorString();
@@ -454,7 +454,7 @@ bool CFileCopyDlg::ProcessMove(const CString& strSource, const CString& strTarge
 	{
 		// Success. Tell the file to use its new name
 		while( !Uploads.OnRename( strSource, strTarget ) );
-		return DeleteFile( strSource ) != 0;
+		return DeleteFile( strSource, FALSE, FALSE ) != 0;
 	}
 
 	// Failure. Continue using its old name
@@ -475,7 +475,7 @@ bool CFileCopyDlg::ProcessCopy(const CString& strSource, const CString& strTarge
 		&m_bCancel, COPY_FILE_FAIL_IF_EXISTS ) != 0;
 
 	if ( !bResult && !IsThreadAlive() )
-		DeleteFile( strTarget );
+		DeleteFile( strTarget, FALSE, FALSE );
 
 	return bResult;
 }

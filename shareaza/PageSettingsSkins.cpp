@@ -511,7 +511,7 @@ void CSkinsSettingsPage::OnSkinsDelete()
 	strPath.Format( _T("%s\\Skins\\%s"),
 		(LPCTSTR)Settings.General.Path, (LPCTSTR)strBase );
 
-	DeleteFile( strPath );
+	DeleteFile( strPath, TRUE, TRUE );
 
 	int nSlash = strPath.ReverseFind( '\\' );
 	strPath = strPath.Left( nSlash ) + _T("\\*.xml");
@@ -535,7 +535,7 @@ void CSkinsSettingsPage::OnSkinsDelete()
 			do
 			{
 				if ( pFind.cFileName[0] == '.' ) continue;
-				DeleteFile( strPath + pFind.cFileName );
+				DeleteFile( strPath + pFind.cFileName, TRUE, TRUE );
 			}
 			while ( FindNextFile( hSearch, &pFind ) );
 

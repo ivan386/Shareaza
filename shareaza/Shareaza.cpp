@@ -1025,25 +1025,26 @@ void CShareazaApp::LogMessage(const CString& strLog)
 	CFile pFile;
 	if ( pFile.Open( Settings.General.UserPath + _T("\\Data\\Shareaza.log"), CFile::modeReadWrite ) )
 	{
+		pFile.Seek( 0, CFile::end ); // go to the end of the file to add entires.
+
 		if ( ( Settings.General.MaxDebugLogSize ) &&					// If log rotation is on
 			( pFile.GetLength() > Settings.General.MaxDebugLogSize ) )	// and file is too long...
 		{
 			// Close the file
 			pFile.Close();
+			
 			// Rotate the logs
-			DeleteFile( Settings.General.UserPath + _T("\\Data\\Shareaza.old.log") );
-			MoveFile( Settings.General.UserPath + _T("\\Data\\Shareaza.log"),
-				Settings.General.UserPath + _T("\\Data\\Shareaza.old.log") );
-			// Start a new log
-			if ( ! pFile.Open( Settings.General.UserPath + _T("\\Data\\Shareaza.log"),
-				CFile::modeWrite|CFile::modeCreate ) ) return;
-			// Unicode marker
-			WORD nByteOrder = 0xFEFF;
-			pFile.Write( &nByteOrder, 2 );
-		}
-		else
-		{
-			pFile.Seek( 0, CFile::end ); // Otherwise, go to the end of the file to add entires.
+			if ( DeleteFile( Settings.General.UserPath + _T("\\Data\\Shareaza.old.log"), TRUE, TRUE ) )
+			{
+				MoveFile( Settings.General.UserPath + _T("\\Data\\Shareaza.log"),
+					Settings.General.UserPath + _T("\\Data\\Shareaza.old.log") );
+				// Start a new log
+				if ( ! pFile.Open( Settings.General.UserPath + _T("\\Data\\Shareaza.log"),
+					CFile::modeWrite|CFile::modeCreate ) ) return;
+				// Unicode marker
+				WORD nByteOrder = 0xFEFF;
+				pFile.Write( &nByteOrder, 2 );
+			}
 		}
 	}
 	else
@@ -1904,6 +1905,52 @@ BOOL CreateDirectory(LPCTSTR szPath)
 		nStart = nSlash + 1;
 	}
 	return CreateDirectory( szPath, NULL );
+}
+
+BOOL DeleteFile(LPCTSTR lpFileName, BOOL bToRecycleBin, BOOL bEnableDelayed)
+{
+	// Should be double zeroed long path
+	DWORD len = GetLongPathName( lpFileName, NULL, 0 );
+	if ( len )
+	{
+		auto_array< TCHAR > szPath( new TCHAR[ len + 1 ] );
+		GetLongPathName( lpFileName, szPath.get(), len );
+		szPath[ len ] = 0;
+
+		DWORD dwAttr = GetFileAttributes( szPath.get() );
+		if ( ( dwAttr != INVALID_FILE_ATTRIBUTES ) && 
+			( dwAttr & FILE_ATTRIBUTE_DIRECTORY ) == 0 )
+		{
+			// Close the file handle
+			while( ! Uploads.OnRename( szPath.get(), NULL, TRUE ) );
+
+			SHFILEOPSTRUCT sfo = {};
+			sfo.hwnd = GetDesktopWindow();
+			sfo.wFunc = FO_DELETE;
+			sfo.pFrom = szPath.get();
+			sfo.fFlags = ( bToRecycleBin ? FOF_ALLOWUNDO : 0 ) |
+				FOF_FILESONLY | FOF_NORECURSION | FOF_NO_UI;
+			SHFileOperation( &sfo );
+
+			dwAttr = GetFileAttributes( szPath.get() );
+			if ( dwAttr != INVALID_FILE_ATTRIBUTES )
+			{
+				if ( bEnableDelayed )
+					// Set delayed deletion
+					theApp.WriteProfileString( _T("Delete"), szPath.get(), _T("") );
+				else
+					// Continue using old file
+					while( ! Uploads.OnRename( szPath.get(), szPath.get() ) );
+
+				return FALSE;
+			}
+		}
+
+		// Cancel delayed deletion
+		theApp.WriteProfileString( _T("Delete"), szPath.get(), NULL );
+	}
+
+	return TRUE;
 }
 
 CString LoadHTML(HINSTANCE hInstance, UINT nResourceID)

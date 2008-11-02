@@ -700,11 +700,12 @@ void CLibraryFolder::Maintain(BOOL bAdd)
 
 	if ( bAdd && ( bOur || dwDesktopINIAttr == INVALID_FILE_ATTRIBUTES ) )
 	{
-		if ( dwDesktopINIAttr != INVALID_FILE_ATTRIBUTES )
-		{
-			SetFileAttributes( sDesktopINI, dwDesktopINIAttr &
+		// Remove Hidden and System attributes
+		BOOL bChanged = FALSE;
+		if ( ( dwDesktopINIAttr != INVALID_FILE_ATTRIBUTES ) &&
+			 ( dwDesktopINIAttr & ( FILE_ATTRIBUTE_HIDDEN | FILE_ATTRIBUTE_SYSTEM ) ) )
+			bChanged = SetFileAttributes( sDesktopINI, dwDesktopINIAttr &
 				~( FILE_ATTRIBUTE_HIDDEN | FILE_ATTRIBUTE_SYSTEM ) );
-		}
 
 		CString sIconFile = Skin.GetImagePath( IDI_COLLECTION );
 		CString sIconIndex( _T("0") );
@@ -722,14 +723,11 @@ void CLibraryFolder::Maintain(BOOL bAdd)
 		WritePrivateProfileString( _T(".ShellClassInfo"), _T("IconIndex"), sIconIndex, sDesktopINI );
 		WritePrivateProfileString( _T(".ShellClassInfo"), _T("InfoTip"), sTip, sDesktopINI );
 
-		dwDesktopINIAttr = GetFileAttributes( sDesktopINI );
-		if ( dwDesktopINIAttr != INVALID_FILE_ATTRIBUTES )
-		{
+		if ( bChanged )
 			SetFileAttributes( sDesktopINI, dwDesktopINIAttr |
 				( FILE_ATTRIBUTE_HIDDEN | FILE_ATTRIBUTE_SYSTEM ) );
 
-			PathMakeSystemFolder( m_sPath );
-		}
+		PathMakeSystemFolder( m_sPath );
 	}
 	else if ( bOur )
 	{
@@ -740,7 +738,7 @@ void CLibraryFolder::Maintain(BOOL bAdd)
 			SetFileAttributes( sDesktopINI, dwDesktopINIAttr &
 				~( FILE_ATTRIBUTE_HIDDEN | FILE_ATTRIBUTE_SYSTEM ) );
 
-			DeleteFile( sDesktopINI );
+			DeleteFile( sDesktopINI, FALSE, TRUE );
 		}
 	}
 }
