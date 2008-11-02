@@ -357,9 +357,6 @@
   <data name="lblEnOld.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
   </data>
-  <data name="lblEnOld.Text" xml:space="preserve">
-    <value>1. Open old english XML:</value>
-  </data>
   <data name="&gt;&gt;lblEnOld.Name" xml:space="preserve">
     <value>lblEnOld</value>
   </data>
@@ -392,9 +389,6 @@
   </data>
   <data name="lblEnNew.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
-  </data>
-  <data name="lblEnNew.Text" xml:space="preserve">
-    <value>2. Open new english XML:</value>
   </data>
   <data name="&gt;&gt;lblEnNew.Name" xml:space="preserve">
     <value>lblEnNew</value>
@@ -771,9 +765,6 @@
   <data name="btnDoWork.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
   </data>
-  <data name="btnDoWork.Text" xml:space="preserve">
-    <value>3. Select your XML (Zoom: Ctrl+Mouse Wheel)</value>
-  </data>
   <data name="btnDoWork.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
     <value>MiddleLeft</value>
   </data>
@@ -945,17 +936,11 @@
   <data name="changeFontToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>81, 20</value>
   </data>
-  <data name="changeFontToolStripMenuItem.Text" xml:space="preserve">
-    <value>Change &amp;Font</value>
-  </data>
   <data name="exportChangesToolStripMenuItem.Enabled" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
   <data name="exportChangesToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>96, 20</value>
-  </data>
-  <data name="exportChangesToolStripMenuItem.Text" xml:space="preserve">
-    <value>&amp;Export Changes</value>
   </data>
   <data name="menuStrip.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 0</value>
@@ -1010,9 +995,6 @@
   </data>
   <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
     <value>CenterScreen</value>
-  </data>
-  <data name="$this.Text" xml:space="preserve">
-    <value>Shareaza Dialog Translation Updater</value>
   </data>
   <data name="&gt;&gt;undoItem.Name" xml:space="preserve">
     <value>undoItem</value>

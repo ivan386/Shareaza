@@ -70,7 +70,8 @@ namespace ShareazaDialogUpdater
 			List<skinDialog> list = new List<skinDialog>();
 			if (GetDialogList(txtEnOld, ref list, out manifest)) {
 				if (manifest == null || manifest.lang != "en") {
-					MessageBox.Show(Settings.Default.Error_NotEnglish, "Information", MessageBoxButtons.OK,
+					MessageBox.Show(Settings.Default.Error_NotEnglish, 
+									Settings.Default.Information, MessageBoxButtons.OK,
 									MessageBoxIcon.Information);
 					oldEnList = null;
 					txtEnOld.Text = String.Empty;
@@ -88,7 +89,8 @@ namespace ShareazaDialogUpdater
 			List<skinDialog> list = new List<skinDialog>();
 			if (GetDialogList(txtEnNew, ref list, out manifest)) {
 				if (manifest == null || manifest.lang != "en") {
-					MessageBox.Show(Settings.Default.Error_NotEnglish, "Information", MessageBoxButtons.OK,
+					MessageBox.Show(Settings.Default.Error_NotEnglish, 
+									Settings.Default.Information, MessageBoxButtons.OK,
 									MessageBoxIcon.Information);
 					newEnList = null;
 					txtEnNew.Text = String.Empty;
@@ -124,8 +126,9 @@ namespace ShareazaDialogUpdater
 			if (lastIndex == cmbDialogs.SelectedIndex)
 				return; // stupid, why to call it when the index doesn't change?
 			if (_dirty && !AutoSaveTranslation()) {
-				var result = MessageBox.Show("Your changes are incorrect!\r\n\r\nDo you want to revert to automatic XML?",
-											 "Error", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+				var result = MessageBox.Show(Settings.Default.RevertQuestion,
+											 Settings.Default.Error, 
+											 MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 				string dialogName = (string)cmbDialogs.Items[lastIndex];
 				if (result == DialogResult.No) {
 					if (updatedTranslation.ContainsKey(dialogName))
@@ -185,7 +188,7 @@ namespace ShareazaDialogUpdater
 				int oldControlCount = oldEn == null || oldEn.controls == null ? 0 : oldEn.controls.Length;
 				int trControlCount = tr.controls == null ? 0 : tr.controls.Length;
 				if (oldEn == null || oldControlCount != trControlCount) {
-					lblStatus.Text = "The old english file doesn't match your translation file!";
+					lblStatus.Text = Settings.Default.TranslationMismatch;
 					dialog = tr;
 					return;
 				}
@@ -246,11 +249,11 @@ namespace ShareazaDialogUpdater
 				var skin = XmlSerializerBase<skin>.Read(openFileDialog.FileName, out exception);
 				if (exception != null) {
 					if (exception.InnerException != null)
-						MessageBox.Show(exception.InnerException.Message, "Error", MessageBoxButtons.OK,
-										MessageBoxIcon.Information);
+						MessageBox.Show(exception.InnerException.Message, Settings.Default.Error,
+										MessageBoxButtons.OK, MessageBoxIcon.Information);
 					else
-						MessageBox.Show(exception.Message, "Error", MessageBoxButtons.OK,
-										MessageBoxIcon.Error);
+						MessageBox.Show(exception.Message, Settings.Default.Error, 
+										MessageBoxButtons.OK, MessageBoxIcon.Error);
 					list = null;
 				} else if (skin != null && skin.dialogs != null && skin.dialogs.Length > 0) {
 					manifest = skin.manifest;
@@ -290,38 +293,46 @@ namespace ShareazaDialogUpdater
 						return false;
 					} else {
 						if (testSkin.dialogs == null || testSkin.dialogs.Length == 0) {
-							lblStatus.Text = "Invalid XML";
+							lblStatus.Text = Settings.Default.InvalidXml;
 							return false;
 						}
 						if (currDialog.cookie != testSkin.dialogs[0].cookie) {
-							lblStatus.Text = "Cookie is invalid";
+							lblStatus.Text = Settings.Default.InvalidCookie;
 							return false;
 						}
 						if (currDialog.name != testSkin.dialogs[0].name) {
-							lblStatus.Text = "Dialog name is invalid";
+							lblStatus.Text = Settings.Default.InvalidDialogName;
 							return false;
 						}
 						if (!String.IsNullOrEmpty(currDialog.caption) &&
 							String.IsNullOrEmpty(testSkin.dialogs[0].caption)) {
-							lblStatus.Text = "Caption is missing";
+							lblStatus.Text = Settings.Default.MissingCaption;
 							return false;
 						}
 						if (testSkin.dialogs[0].Text != null) {
-							lblStatus.Text = "XML contains a text junk";
+							lblStatus.Text = Settings.Default.TextJunk;
+							return false;
+						}
+						if (testSkin.dialogs[0].junk != null) {
+							lblStatus.Text = Settings.Default.ExtraDialogText;
 							return false;
 						}
 						int count = currDialog.controls == null ? 0 : currDialog.controls.Length;
 						int trCount = testSkin.dialogs[0].controls == null ? 0 : testSkin.dialogs[0].controls.Length;
 						if (trCount != count) {
-							lblStatus.Text = "<control> count is invalid";
+							lblStatus.Text = Settings.Default.InvalidControlCount;
 							return false;
 						}
 						for (int i = 0; i < count; i++) {
+							if (testSkin.dialogs[0].controls[i].junk != null) {
+								lblStatus.Text = String.Format(Settings.Default.ExtraControlAttributes, i + 1);
+								return false;							
+							}
 							if (currDialog.controls[i].caption == String.Empty &&
 								testSkin.dialogs[0].controls[i].caption != String.Empty ||
 								currDialog.controls[i].caption != String.Empty &&
 								testSkin.dialogs[0].controls[i].caption == String.Empty) {
-								lblStatus.Text = String.Format("<control> #{0} is invalid", i + 1);
+								lblStatus.Text = String.Format(Settings.Default.InvalidControl, i + 1);
 								return false;
 							}
 						}
@@ -478,7 +489,8 @@ namespace ShareazaDialogUpdater
 						fs.Flush();
 					}
 				} catch (Exception ex) {
-					MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+					MessageBox.Show(ex.Message, Settings.Default.Error, 
+									MessageBoxButtons.OK, MessageBoxIcon.Error);
 				}
 			}
 		}

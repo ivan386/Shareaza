@@ -54,6 +54,9 @@ public class skinDialog
 
 	[XmlAttribute()]
 	public string caption;
+	
+	[XmlAnyAttribute()]
+	public XmlAttribute[] junk;
 
 	public skinDialog Clone() {
 		return new skinDialog()
@@ -72,4 +75,7 @@ public class skinDialogControl
 {
 	[XmlAttribute()]
 	public string caption;
+
+	[XmlAnyAttribute()]
+	public XmlAttribute[] junk;	
 }

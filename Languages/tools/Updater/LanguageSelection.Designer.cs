@@ -41,8 +41,27 @@
 			lblText.Name = "lblText";
 			lblText.Size = new System.Drawing.Size(262, 26);
 			lblText.TabIndex = 0;
-			lblText.Text = "Could not guess the language from the XML manifest.\r\nPlease select the desired la" +
-				"nguage from the list below:";
+			lblText.Text = global::ShareazaDialogUpdater.Properties.Settings.Default.SelectLanguageExplanation;
+			// 
+			// btnOK
+			// 
+			btnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
+			btnOK.Location = new System.Drawing.Point(75, 79);
+			btnOK.Name = "btnOK";
+			btnOK.Size = new System.Drawing.Size(54, 23);
+			btnOK.TabIndex = 2;
+			btnOK.Text = global::ShareazaDialogUpdater.Properties.Settings.Default.ButtonOk;
+			btnOK.UseVisualStyleBackColor = true;
+			// 
+			// btnCancel
+			// 
+			btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+			btnCancel.Location = new System.Drawing.Point(149, 79);
+			btnCancel.Name = "btnCancel";
+			btnCancel.Size = new System.Drawing.Size(58, 23);
+			btnCancel.TabIndex = 3;
+			btnCancel.Text = global::ShareazaDialogUpdater.Properties.Settings.Default.ButtonCancel;
+			btnCancel.UseVisualStyleBackColor = true;
 			// 
 			// cmbLanguage
 			// 
@@ -54,26 +73,6 @@
 			this.cmbLanguage.Sorted = true;
 			this.cmbLanguage.TabIndex = 1;
 			// 
-			// btnOK
-			// 
-			btnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
-			btnOK.Location = new System.Drawing.Point(75, 79);
-			btnOK.Name = "btnOK";
-			btnOK.Size = new System.Drawing.Size(54, 23);
-			btnOK.TabIndex = 2;
-			btnOK.Text = "OK";
-			btnOK.UseVisualStyleBackColor = true;
-			// 
-			// btnCancel
-			// 
-			btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			btnCancel.Location = new System.Drawing.Point(149, 79);
-			btnCancel.Name = "btnCancel";
-			btnCancel.Size = new System.Drawing.Size(58, 23);
-			btnCancel.TabIndex = 3;
-			btnCancel.Text = "Cancel";
-			btnCancel.UseVisualStyleBackColor = true;
-			// 
 			// LanguageSelection
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -84,11 +83,12 @@
 			this.Controls.Add(btnOK);
 			this.Controls.Add(this.cmbLanguage);
 			this.Controls.Add(lblText);
+			this.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::ShareazaDialogUpdater.Properties.Settings.Default, "SelectLanguage", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
 			this.Name = "LanguageSelection";
 			this.ShowInTaskbar = false;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-			this.Text = "  Select Language";
+			this.Text = global::ShareazaDialogUpdater.Properties.Settings.Default.SelectLanguage;
 			this.TopMost = true;
 			this.Load += new System.EventHandler(this.LanguageSelection_Load);
 			this.ResumeLayout(false);
