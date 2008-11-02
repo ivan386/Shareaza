@@ -19,9 +19,6 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_UPLOADTRANSFER_H__16B2B6A4_C939_4018_81B6_B1C4460B3CD0__INCLUDED_)
-#define AFX_UPLOADTRANSFER_H__16B2B6A4_C939_4018_81B6_B1C4460B3CD0__INCLUDED_
-
 #pragma once
 
 #include "Transfer.h"
@@ -38,29 +35,26 @@ class CDownload;
 
 class CUploadTransfer : public CTransfer, public CShareazaFile
 {
-// Construction
 public:
 	CUploadTransfer(PROTOCOLID nProtocol);
 	virtual ~CUploadTransfer();
 
-// Attributes
 public:
 	int				m_nState;		// Common state code
 	CUploadQueue*	m_pQueue;		// Queue reference
 	CUploadFile*	m_pBaseFile;	// Reference file
-	CFragmentedFile m_pDiskFile;	// Disk file
 	DWORD			m_nBandwidth;	// Bandwidth
 	CString			m_sNick;		// User Nick
 	DWORD			m_nUserRating;	// Has the downloader uploaded anything?
 	BOOL			m_bClientExtended;// Does the user support extended (G2) functions? (In practice, this means can we use G2 chat, browse, etc...)
-public:
+
 	CString			m_sFileName;	// Name of requested file
 	CString			m_sFilePath;	// Path of requested file
 	QWORD			m_nFileBase;	// Base offset in requested file
 	QWORD			m_nFileSize;	// Size of requested file
 	BOOL			m_bFilePartial;	// Partial file flag
 	CString			m_sFileTags;	// File sharing tags
-public:
+
 	BOOL			m_bLive;		// Live connection tag
 	DWORD			m_nRequests;	// Request count
 	QWORD			m_nUploaded;	// Bytes uploaded
@@ -68,33 +62,37 @@ public:
 	QWORD			m_nOffset;		// Fragment offset
 	QWORD			m_nLength;		// Fragment length
 	QWORD			m_nPosition;	// Send position
+
 protected:
-	BOOL			m_bStopTransfer;	// Should this transfer stop? (to allow queue rotation, etc)
+	BOOL			m_bStopTransfer;// Should this transfer stop? (to allow queue rotation, etc)
 	DWORD			m_tRotateTime;
 	DWORD			m_tAverageTime;
 	int				m_nAveragePos;
 	DWORD			m_nAverageRate[ULA_SLOTS];
-	DWORD			m_nMaxRate;			// Maximum average speed we got
-	DWORD			m_tRatingTime;		// When rating was last calculated
-	
-// Operations
+	DWORD			m_nMaxRate;		// Maximum average speed we got
+	DWORD			m_tRatingTime;	// When rating was last calculated
+
+private:
+	CFragmentedFile* m_pFile;		// Disk file
+
 public:
 	virtual void	Remove(BOOL bMessage = TRUE);
 	virtual void	Close(BOOL bMessage = FALSE);
 	virtual BOOL	Promote();
 	virtual BOOL	OnRename(LPCTSTR pszSource, LPCTSTR pszTarget);
-public:
+
 	virtual float	GetProgress() const;
 	virtual DWORD	GetAverageSpeed();
 	virtual DWORD	GetMeasuredSpeed();
 	virtual DWORD	GetMaxSpeed() const;
 	virtual void	SetSpeedLimit(DWORD nLimit);
+
 protected:
 	virtual BOOL	OnRun();
 	virtual BOOL	OnRead();
 	virtual BOOL	OnWrite();
 	virtual void	OnQueueKick() {};
-protected:
+
 	void		LongTermAverage(DWORD tNow);
 	void		RotatingQueue(DWORD tNow);
 	void		CalculateRating(DWORD tNow);
@@ -105,8 +103,14 @@ protected:
 	BOOL		RequestPartial(CDownload* pFile);
 	void		StartSending(int nState);
 	void		AllocateBaseFile();
-	void		CloseFile();
 
+	BOOL		IsFileOpen() const;
+	BOOL		OpenFile(LPCTSTR pszFile, BOOL bWrite, BOOL bCreate);
+	BOOL		OpenFile(const CBTInfo& pInfo, BOOL bWrite, BOOL bCreate);
+	void		CloseFile();
+	BOOL		WriteFile(QWORD nOffset, LPCVOID pData, QWORD nLength, QWORD* pnWritten = NULL);
+	BOOL		ReadFile(QWORD nOffset, LPVOID pData, QWORD nLength, QWORD* pnRead = NULL);
+	void		AttachFile(CFragmentedFile* pFile);
 };
 
 enum UserRating
@@ -126,5 +130,3 @@ enum UploadState
 	upsUploading, upsResponse,
 	upsBrowse, upsTigerTree, upsMetadata, upsPreview, upsPreQueue
 };
-
-#endif // !defined(AFX_UPLOADTRANSFER_H__16B2B6A4_C939_4018_81B6_B1C4460B3CD0__INCLUDED_)

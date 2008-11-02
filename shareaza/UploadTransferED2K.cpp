@@ -527,10 +527,10 @@ BOOL CUploadTransferED2K::OpenFile()
 	ASSERT( m_nState == upsRequest || m_nState == upsUploading );
 	ASSERT( m_pBaseFile != NULL );
 
-	if ( m_pDiskFile.IsOpen() )
+	if ( IsFileOpen() )
 		return TRUE;
 
-	if ( m_pDiskFile.Open( m_sFilePath, 0, SIZE_UNKNOWN, FALSE, FALSE ) )
+	if ( CUploadTransfer::OpenFile( m_sFilePath, FALSE, FALSE ) )
 	{
 		CQuickLock oLock( Library.m_pSection );
 		if ( CLibraryFile* pFile = LibraryMaps.LookupFileByPath( m_sFilePath, TRUE, TRUE ) )
@@ -560,7 +560,7 @@ BOOL CUploadTransferED2K::OpenFile()
 BOOL CUploadTransferED2K::StartNextRequest()
 {
 	ASSERT( m_nState == upsUploading || m_nState == upsRequest );
-	ASSERT( m_pDiskFile.IsOpen() );
+	ASSERT( IsFileOpen() );
 
 	while ( !m_oRequested.empty() && m_nLength == SIZE_UNKNOWN )
 	{
@@ -612,7 +612,7 @@ BOOL CUploadTransferED2K::DispatchNextChunk()
 {
 	ASSERT( m_nState == upsUploading );
 
-	if ( ! m_pDiskFile.IsOpen() )
+	if ( ! IsFileOpen() )
 		return FALSE;
 
 	ASSERT( m_nLength < SIZE_UNKNOWN );
@@ -635,7 +635,7 @@ BOOL CUploadTransferED2K::DispatchNextChunk()
 		pPacket->WriteLongLE( ( m_nOffset + m_nPosition + nChunk ) & 0x00000000ffffffff );
 		pPacket->WriteLongLE( ( ( m_nOffset + m_nPosition + nChunk ) & 0xffffffff00000000 ) >> 32);
 
-		m_pDiskFile->Read( m_nFileBase + m_nOffset + m_nPosition, pPacket->GetWritePointer( nChunk ), nChunk, &nChunk );
+		ReadFile( m_nFileBase + m_nOffset + m_nPosition, pPacket->GetWritePointer( nChunk ), nChunk, &nChunk );
 		// SetFilePointer( hFile, m_nFileBase + m_nOffset + m_nPosition, NULL, FILE_BEGIN );
 		// ReadFile( hFile, pPacket->WriteGetPointer( nChunk ), nChunk, &nChunk, NULL );
 
@@ -656,7 +656,7 @@ BOOL CUploadTransferED2K::DispatchNextChunk()
 		pPacket->WriteLongLE( m_nOffset + m_nPosition );
 		pPacket->WriteLongLE( m_nOffset + m_nPosition + nChunk );
 
-		m_pDiskFile->Read( m_nFileBase + m_nOffset + m_nPosition, pPacket->GetWritePointer( nChunk ), nChunk, &nChunk );
+		ReadFile( m_nFileBase + m_nOffset + m_nPosition, pPacket->GetWritePointer( nChunk ), nChunk, &nChunk );
 		// SetFilePointer( hFile, m_nFileBase + m_nOffset + m_nPosition, NULL, FILE_BEGIN );
 		// ReadFile( hFile, pPacket->WriteGetPointer( nChunk ), nChunk, &nChunk, NULL );
 
@@ -680,7 +680,7 @@ BOOL CUploadTransferED2K::DispatchNextChunk()
 
 		ED2K_PART_HEADER_I64* pHeader = (ED2K_PART_HEADER_I64*)( pBuffer.m_pBuffer + pBuffer.m_nLength );
 
-		if ( ! m_pDiskFile.ReadRange( m_nFileBase + m_nOffset + m_nPosition, &pHeader[1], nChunk, &nChunk ) ) return FALSE;
+		if ( ! ReadFile( m_nFileBase + m_nOffset + m_nPosition, &pHeader[1], nChunk, &nChunk ) ) return FALSE;
 		// SetFilePointer( hFile, m_nFileBase + m_nOffset + m_nPosition, NULL, FILE_BEGIN );
 		// ReadFile( hFile, &pHeader[1], nChunk, &nChunk, NULL );
 		if ( nChunk == 0 ) return FALSE;
@@ -704,7 +704,7 @@ BOOL CUploadTransferED2K::DispatchNextChunk()
 
 		ED2K_PART_HEADER* pHeader = (ED2K_PART_HEADER*)( pBuffer.m_pBuffer + pBuffer.m_nLength );
 
-		if ( ! m_pDiskFile.ReadRange( m_nFileBase + m_nOffset + m_nPosition, &pHeader[1], nChunk, &nChunk ) ) return FALSE;
+		if ( ! ReadFile( m_nFileBase + m_nOffset + m_nPosition, &pHeader[1], nChunk, &nChunk ) ) return FALSE;
 		// SetFilePointer( hFile, m_nFileBase + m_nOffset + m_nPosition, NULL, FILE_BEGIN );
 		// ReadFile( hFile, &pHeader[1], nChunk, &nChunk, NULL );
 		if ( nChunk == 0 ) return FALSE;

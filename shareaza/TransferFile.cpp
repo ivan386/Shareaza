@@ -53,26 +53,30 @@ CTransferFiles::~CTransferFiles()
 CTransferFile* CTransferFiles::Open(LPCTSTR pszFile, BOOL bWrite, BOOL bCreate)
 {
 	CSingleLock pLock( &m_pSection, TRUE );
-	CTransferFile* pFile = NULL;
 
+	CTransferFile* pFile = NULL;
 	if ( m_pMap.Lookup( pszFile, pFile ) )
 	{
-		if ( bWrite && ! pFile->EnsureWrite() ) return NULL;
+		if ( bWrite && ! pFile->EnsureWrite() )
+			return NULL;
+	
+		pFile->AddRef();
+
+		TRACE( _T("Transfer Files : Reused file \"%s\" [%d/%d]\n"), pszFile, bWrite, bCreate );
 	}
 	else
 	{
 		pFile = new CTransferFile( pszFile );
-
 		if ( ! pFile->Open( bWrite, bCreate ) )
 		{
-			delete pFile;
+			pFile->Release( FALSE );
 			return NULL;
 		}
 
 		m_pMap.SetAt( pFile->m_sPath, pFile );
-	}
 
-	pFile->AddRef();
+		TRACE( _T("Transfer Files : Opened file \"%s\" [%d/%d]\n"), pszFile, bWrite, bCreate );
+	}
 
 	return pFile;
 }
@@ -88,9 +92,11 @@ void CTransferFiles::Close()
 	{
 		CTransferFile* pFile;
 		CString strPath;
-
 		m_pMap.GetNextAssoc( pos, strPath, pFile );
-		delete pFile;
+
+		TRACE( _T("Transfer Files : Closed file \"%s\" [%d]\n"), (LPCTSTR)pFile->m_sPath, pFile->m_bWrite );
+
+		pFile->Release( FALSE );
 	}
 
 	m_pMap.RemoveAll();
@@ -118,7 +124,10 @@ void CTransferFiles::CommitDeferred()
 
 void CTransferFiles::QueueDeferred(CTransferFile* pFile)
 {
-	if ( NULL == m_pDeferred.Find( pFile ) ) m_pDeferred.AddTail( pFile );
+	CSingleLock pLock( &m_pSection, TRUE );
+
+	if ( NULL == m_pDeferred.Find( pFile ) )
+		m_pDeferred.AddTail( pFile );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -126,10 +135,15 @@ void CTransferFiles::QueueDeferred(CTransferFile* pFile)
 
 void CTransferFiles::Remove(CTransferFile* pFile)
 {
-	m_pMap.RemoveKey( pFile->m_sPath );
-	if ( POSITION pos = m_pDeferred.Find( pFile ) ) m_pDeferred.RemoveAt( pos );
-}
+	CSingleLock pLock( &m_pSection, TRUE );
 
+	TRACE( _T("Transfer Files : Closed file \"%s\" [%d]\n"), (LPCTSTR)pFile->m_sPath, pFile->m_bWrite );
+
+	m_pMap.RemoveKey( pFile->m_sPath );
+
+	if ( POSITION pos = m_pDeferred.Find( pFile ) )
+		m_pDeferred.RemoveAt( pos );
+}
 
 //////////////////////////////////////////////////////////////////////
 // CTransferFile construction
@@ -139,7 +153,7 @@ CTransferFile::CTransferFile(LPCTSTR pszPath) :
 ,	m_hFile( INVALID_HANDLE_VALUE )
 ,	m_bExists( FALSE )
 ,	m_bWrite( FALSE )
-,	m_nReference( 0 )
+,	m_nReference( 1 )
 ,	m_nDeferred( 0 )
 {
 	ZeroMemory( m_pDeferred, sizeof( m_pDeferred ) );
@@ -147,6 +161,8 @@ CTransferFile::CTransferFile(LPCTSTR pszPath) :
 
 CTransferFile::~CTransferFile()
 {
+	ASSERT( m_nReference == 0 );
+
 	if ( m_hFile != INVALID_HANDLE_VALUE )
 	{
 		DeferredWrite();
@@ -174,7 +190,8 @@ void CTransferFile::Release(BOOL bWrite)
 		return;
 	}
 
-	if ( m_bWrite && bWrite ) CloseWrite();
+	if ( m_bWrite && bWrite )
+		CloseWrite();
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -276,7 +293,13 @@ BOOL CTransferFile::Read(QWORD nOffset, LPVOID pBuffer, QWORD nBuffer, QWORD* pn
 	DWORD nOffsetHigh	= (DWORD)( ( nOffset & 0xFFFFFFFF00000000 ) >> 32 );
 	SetFilePointer( m_hFile, nOffsetLow, (PLONG)&nOffsetHigh, FILE_BEGIN );
 
-	return ReadFile( m_hFile, pBuffer, (DWORD)nBuffer, (DWORD*)pnRead, NULL );
+	if ( ! ReadFile( m_hFile, pBuffer, (DWORD)nBuffer, (DWORD*)pnRead, NULL ) )
+	{
+		theApp.Message( MSG_ERROR, _T("Can't read from file \"%s\". %s"), m_sPath, GetErrorString() );
+		return FALSE;
+	}
+
+	return TRUE;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -320,7 +343,13 @@ BOOL CTransferFile::Write(QWORD nOffset, LPCVOID pBuffer, QWORD nBuffer, QWORD* 
 	DWORD nOffsetHigh	= (DWORD)( ( nOffset & 0xFFFFFFFF00000000 ) >> 32 );
 	SetFilePointer( m_hFile, nOffsetLow, (PLONG)&nOffsetHigh, FILE_BEGIN );
 
-	return WriteFile( m_hFile, pBuffer, (DWORD)nBuffer, (LPDWORD)pnWritten, NULL );
+	if ( ! WriteFile( m_hFile, pBuffer, (DWORD)nBuffer, (LPDWORD)pnWritten, NULL ) )
+	{
+		theApp.Message( MSG_ERROR, _T("Can't write to file \"%s\". %s"), m_sPath, GetErrorString() );
+		return FALSE;
+	}
+
+	return TRUE;
 }
 
 //////////////////////////////////////////////////////////////////////

@@ -40,12 +40,29 @@ IMPLEMENT_DYNCREATE( CFragmentedFile, CObject )
 CFragmentedFile::CFragmentedFile() :
 	m_nUnflushed	( 0 )
 ,	m_oFList		( 0 )
+,	m_nRefCount		( 1 )
 {
 }
 
 CFragmentedFile::~CFragmentedFile()
 {
-	Clear();
+	ASSERT( m_nRefCount == 0 );
+
+	Close();
+}
+
+ULONG CFragmentedFile::AddRef()
+{
+	return (ULONG)InterlockedIncrement( &m_nRefCount );
+}
+
+ULONG CFragmentedFile::Release()
+{
+	ULONG ref_count = (ULONG)InterlockedDecrement( &m_nRefCount );
+	if ( ref_count )
+		return ref_count;
+	delete this;
+	return 0;
 }
 
 #ifdef _DEBUG
@@ -177,37 +194,50 @@ BOOL CFragmentedFile::Open(const CBTInfo& oInfo, BOOL bWrite, BOOL bCreate)
 	return TRUE;
 }
 
-CFragmentedFile& CFragmentedFile::operator=(const CFragmentedFile& pFile)
+BOOL CFragmentedFile::IsOpen() const
+{
+	CQuickLock oLock( m_pSection );
+
+	if ( m_oFile.empty() )
+		// No subfiles
+		return FALSE;
+
+	for ( CVirtualFile::const_iterator i = m_oFile.begin(); i != m_oFile.end(); ++i )
+		if ( ! (*i).m_pFile->IsOpen() )
+			// Closed subfile
+			return FALSE;
+
+	return TRUE;
+}
+
+/*CFragmentedFile& CFragmentedFile::operator=(const CFragmentedFile& pFile)
 {
 	CQuickLock oLock1( pFile.m_pSection );
 	CQuickLock oLock2( m_pSection );
 
-	Clear();
+	Close();
+
+	// Copy fragments
+	m_oFList = pFile.m_oFList;
+
+	// Copy other data
+	m_nUnflushed = pFile.m_nUnflushed;
 
 	// Copy files
 	for ( CVirtualFile::const_iterator i = pFile.m_oFile.begin();
 		i != pFile.m_oFile.end(); ++i )
 	{
-		CVirtualFilePart part;
-		part.m_sPath = (*i).m_sPath;
-		part.m_pFile = (*i).m_pFile;
-		part.m_pFile->AddRef();
-		part.m_nOffset = (*i).m_nOffset;
-		part.m_nLength = (*i).m_nLength;
-		part.m_bWrite = (*i).m_bWrite;
-		m_oFile.push_back( part );
+		if ( ! Open( (*i).m_sPath, (*i).m_nOffset, (*i).m_nLength, (*i).m_bWrite, FALSE ) )
+		{
+			Close();
+			return *this;
+		}
 	}
-	m_oFile.sort();
-
-	// Copy fragments
-	m_oFList = pFile.m_oFList;
-
-	m_nUnflushed = pFile.m_nUnflushed;
 
 	ASSERT_VALID( this );
 
 	return *this;
-}
+}*/
 
 //////////////////////////////////////////////////////////////////////
 // CFragmentedFile flush
@@ -244,19 +274,6 @@ void CFragmentedFile::Close()
 	m_oFile.clear();
 
 	m_nUnflushed = 0;
-}
-
-//////////////////////////////////////////////////////////////////////
-// CFragmentedFile clear
-
-void CFragmentedFile::Clear()
-{
-	CQuickLock oLock( m_pSection );
-
-	Close();
-
-	Fragments::List oNewList( 0 );
-	m_oFList.swap( oNewList );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -380,7 +397,7 @@ QWORD CFragmentedFile::GetCompleted(QWORD nOffset, QWORD nLength) const
 //////////////////////////////////////////////////////////////////////
 // CFragmentedFile write some data to a range
 
-BOOL CFragmentedFile::WriteRange(QWORD nOffset, LPCVOID pData, QWORD nLength, QWORD* pnWritten)
+BOOL CFragmentedFile::Write(QWORD nOffset, LPCVOID pData, QWORD nLength, QWORD* pnWritten)
 {
 	ASSERT_VALID( this );
 	ASSERT( m_oFile.back().m_nOffset + m_oFile.back().m_nLength == m_oFList.limit() );
@@ -429,7 +446,7 @@ BOOL CFragmentedFile::WriteRange(QWORD nOffset, LPCVOID pData, QWORD nLength, QW
 //////////////////////////////////////////////////////////////////////
 // CFragmentedFile read some data from a range
 
-BOOL CFragmentedFile::ReadRange(QWORD nOffset, LPVOID pData, QWORD nLength, QWORD* pnRead)
+BOOL CFragmentedFile::Read(QWORD nOffset, LPVOID pData, QWORD nLength, QWORD* pnRead)
 {
 	ASSERT_VALID( this );
 	ASSERT( m_oFile.back().m_nOffset + m_oFile.back().m_nLength == m_oFList.limit() );
@@ -476,7 +493,6 @@ BOOL CFragmentedFile::VirtualRead(QWORD nOffset, char* pBuffer, QWORD nBuffer, Q
 
 		QWORD nRead = 0;
 		if ( ! (*i).m_pFile->Read( nPartOffset, pBuffer, nPartLength, &nRead ) )
-			// Read error
 			return FALSE;
 
 		pBuffer += nRead;
@@ -521,7 +537,6 @@ BOOL CFragmentedFile::VirtualWrite(QWORD nOffset, const char* pBuffer, QWORD nBu
 
 		QWORD nWritten = 0;
 		if ( !  (*i).m_pFile->Write( nPartOffset, pBuffer, nPartLength, &nWritten ) )
-			// Write error
 			return FALSE;
 
 		pBuffer += nWritten;

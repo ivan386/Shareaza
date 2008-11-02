@@ -538,9 +538,12 @@ BOOL CDownloadTransferBT::OnPiece(CBTPacket* pPacket)
 	m_pSource->AddFragment( nOffset, nLength );
 	m_pSource->SetValid();
 	m_oRequested.erase( Fragments::Fragment( nOffset, nOffset + nLength ) );
-	
-	m_pDownload->SubmitData( nOffset,
+
+	BOOL bSuccess = m_pDownload->SubmitData( nOffset,
 		pPacket->m_pBuffer + pPacket->m_nPosition, nLength );
+	if ( ! bSuccess )
+		TRACE( _T("Failed to submit data %I64u-%I64u to \"%s\".\n"), nOffset, nOffset + nLength, m_pDownload->m_sPath );
+
 	// TODO: SendRequests and ShowInterest could be combined.. SendRequests
 	// is probably going to tell us if we are interested or not
 	ShowInterest();

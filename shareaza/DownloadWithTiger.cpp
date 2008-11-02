@@ -544,7 +544,8 @@ void CDownloadWithTiger::ContinueValidation()
 
 		if ( m_pFile != NULL )
 		{
-			m_pFile->ReadRange( m_nVerifyOffset, pChunk.get(), nChunk );
+			if ( ! m_pFile->Read( m_nVerifyOffset, pChunk.get(), nChunk ) )
+				break;
 		}
 		else
 		{

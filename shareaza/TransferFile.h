@@ -23,27 +23,27 @@
 
 class CTransferFile;
 
+
 class CTransferFiles
 {
-// Construction
 public:
 	CTransferFiles();
 	virtual ~CTransferFiles();
 
-// Attributes
-public:
-	CCriticalSection	m_pSection;
-	CMap< CString, const CString&, CTransferFile*, CTransferFile* > m_pMap;
-	CList< CTransferFile* > m_pDeferred;
+	typedef CMap< CString, const CString&, CTransferFile*, CTransferFile* > CTransferFileMap;
+	typedef CList< CTransferFile* > CTransferFileList;
 
-// Operations
-public:
-	CTransferFile*	Open(LPCTSTR pszFile, BOOL bWrite, BOOL bCreate);
-	void			Close();
-	void			CommitDeferred();
+	CTransferFile*		Open(LPCTSTR pszFile, BOOL bWrite, BOOL bCreate);
+	void				CommitDeferred();
+
 protected:
-	void			QueueDeferred(CTransferFile* pFile);
-	void			Remove(CTransferFile* pFile);
+	CCriticalSection	m_pSection;
+	CTransferFileMap	m_pMap;
+	CTransferFileList	m_pDeferred;
+
+	void				Close();
+	void				QueueDeferred(CTransferFile* pFile);
+	void				Remove(CTransferFile* pFile);
 
 	friend class CTransferFile;
 };
@@ -54,9 +54,7 @@ class CTransferFile
 {
 public:
 	CTransferFile(LPCTSTR pszPath);
-	virtual ~CTransferFile();
 
-	void		AddRef();
 	void		Release(BOOL bWrite);
 	HANDLE		GetHandle(BOOL bWrite = FALSE);
 	QWORD		GetSize() const;
@@ -74,6 +72,8 @@ public:
 	}
 
 protected:
+	virtual ~CTransferFile();
+
 	// Deferred Write Structure
 	class DefWrite
 	{
@@ -91,6 +91,7 @@ protected:
 	DefWrite	m_pDeferred[DEFERRED_MAX];
 	int			m_nDeferred;
 
+	void		AddRef();
 	BOOL		Open(BOOL bWrite, BOOL bCreate);
 	BOOL		EnsureWrite();
 	BOOL		CloseWrite();

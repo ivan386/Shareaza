@@ -79,9 +79,6 @@ CDownload::~CDownload()
 		CloseTransfers();
 		CloseTorrentUploads();
 
-		// Close the file handle
-		while( !Uploads.OnRename( m_sPath, NULL ) );
-
 		if ( m_bSeeding )
 		{
 			// Auto-clear activated or we don't want to seed
@@ -90,14 +87,12 @@ CDownload::~CDownload()
 				 !Settings.BitTorrent.AutoClear &&
 				 !Settings.BitTorrent.AutoSeed )
 			{
-				if ( ! ::DeleteFile( m_sPath ) )
-					theApp.WriteProfileString( L"Delete", m_sPath, L"" );
-				if ( ! ::DeleteFile( m_sPath + ".sd" ) )
-					theApp.WriteProfileString( L"Delete", m_sPath + L".sd", L"" );
+				::DeleteFile( m_sPath, FALSE, TRUE );
+				::DeleteFile( m_sPath + _T(".sd"), TRUE, TRUE );
 			}
 		}
-		else if ( ! ::DeleteFile( m_sPath ) )
-			theApp.WriteProfileString( L"Delete", m_sPath, L"" );
+		else
+			::DeleteFile( m_sPath, FALSE, TRUE );
 	}
 }
 
@@ -192,19 +187,19 @@ void CDownload::Remove(bool bDelete)
 
 	if ( m_bSeeding )
 	{
-		::DeleteFile( Settings.Downloads.IncompletePath + L"\\" + m_sSafeName + L".sd" );
+		::DeleteFile( Settings.Downloads.IncompletePath + L"\\" + m_sSafeName + L".sd", TRUE, TRUE );
 		int nBackSlash = m_sPath.ReverseFind( '\\' );
 		CString strTempFileName = m_sPath.Mid( nBackSlash + 1 );
 		if ( m_oBTH.toString< Hashes::base16Encoding >() == strTempFileName )
-			::DeleteFile( m_sPath );
+			::DeleteFile( m_sPath, FALSE, TRUE );
 	}
 	else
 	{
 		DeleteFile( bDelete );
-		::DeleteFile( m_sPath + _T(".sd") );
+		::DeleteFile( m_sPath + _T(".sd"), TRUE, TRUE );
 	}
 
-	::DeleteFile( m_sPath + _T(".png") );
+	::DeleteFile( m_sPath + _T(".png"), FALSE, TRUE );
 
 	Downloads.Remove( this );
 }
@@ -486,8 +481,7 @@ void CDownload::OnDownloaded()
 
 	if ( m_pFile != NULL )
 	{
-		m_pFile->Close();
-		delete m_pFile;
+		m_pFile->Release();
 		m_pFile = NULL;
 		AppendMetadata();
 	}
@@ -587,7 +581,7 @@ void CDownload::OnMoved(CDownloadTask* pTask)
 
 
 	// Delete the SD file
-	::DeleteFile( strDiskFileName + _T(".sd") );
+	::DeleteFile( strDiskFileName + _T(".sd"), TRUE, TRUE );
 
 	{
 		CQuickLock oLibraryLock( Library.m_pSection );
@@ -703,7 +697,7 @@ BOOL CDownload::Save(BOOL bFlush)
 			m_sSafeName = CDownloadTask::SafeFilename( m_sName.Right( 64 ) );
 	}
 
-	::DeleteFile( m_sPath + _T(".sd.sav") );
+	::DeleteFile( m_sPath + _T(".sd.sav"), FALSE, TRUE );
 
 	if ( ! pFile.Open( m_sPath + _T(".sd.sav"),
 		CFile::modeReadWrite|CFile::modeCreate|CFile::osWriteThrough ) ) return FALSE;
@@ -735,17 +729,14 @@ BOOL CDownload::Save(BOOL bFlush)
 	pFile.Read( szID, 3 );
 	pFile.Close();
 
-	BOOL bResult = TRUE;
+	BOOL bResult = FALSE;
 	if ( szID[0] == 'S' && szID[1] == 'D' && szID[2] == 'L' )
 	{
-		::DeleteFile( m_sPath + _T(".sd") );
-		MoveFile( m_sPath + _T(".sd.sav"), m_sPath + _T(".sd") );
+		if ( ::DeleteFile( m_sPath + _T(".sd"), FALSE, FALSE ) )
+			bResult = MoveFile( m_sPath + _T(".sd.sav"), m_sPath + _T(".sd") );
 	}
 	else
-	{
-		::DeleteFile( m_sPath + _T(".sd.sav") );
-		bResult = FALSE;
-	}
+		::DeleteFile( m_sPath + _T(".sd.sav"), FALSE, TRUE );
 
 	if ( m_bSeeding )
 	{

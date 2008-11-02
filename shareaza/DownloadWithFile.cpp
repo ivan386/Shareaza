@@ -55,7 +55,11 @@ CDownloadWithFile::CDownloadWithFile() :
 
 CDownloadWithFile::~CDownloadWithFile()
 {
-	if ( m_pFile != NULL ) delete m_pFile;
+	if ( m_pFile )
+	{
+		m_pFile->Release();
+		m_pFile = NULL;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -146,8 +150,7 @@ void CDownloadWithFile::DeleteFile(bool bForce)
 	{
 		if ( GetVolumeComplete() == 0 || ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 ) == 0 )
 		{
-			if ( !::DeleteFile( m_sPath ) )
-				theApp.WriteProfileString( _T("Delete"), m_sPath, _T("") );
+			::DeleteFile( m_sPath, FALSE, TRUE );
 		}
 		else
 		{
@@ -156,8 +159,7 @@ void CDownloadWithFile::DeleteFile(bool bForce)
 	}
 	else if ( bForce ) // be careful, do not delete completed BT seeding file
 	{
-		if ( !::DeleteFile( m_sPath ) )
-			theApp.WriteProfileString( _T("Delete"), m_sPath, _T("") );
+		::DeleteFile( m_sPath, FALSE, TRUE );
 	}
 
 	SetModified();
@@ -502,11 +504,12 @@ BOOL CDownloadWithFile::SubmitData(QWORD nOffset, LPBYTE pData, QWORD nLength)
 	{
 		for ( CDownloadTransfer* pTransfer = GetFirstTransfer() ; pTransfer ; pTransfer = pTransfer->m_pDlNext )
 		{
-			if ( pTransfer->m_nProtocol == PROTOCOL_BT ) pTransfer->UnrequestRange( nOffset, nLength );
+			if ( pTransfer->m_nProtocol == PROTOCOL_BT )
+				pTransfer->UnrequestRange( nOffset, nLength );
 		}
 	}
 
-	return m_pFile != NULL && m_pFile->WriteRange( nOffset, pData, nLength );
+	return ( m_pFile && m_pFile->Write( nOffset, pData, nLength ) );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -668,7 +671,7 @@ void CDownloadWithFile::Serialize(CArchive& ar, int nVersion)
 		}
 		else
 		{
-			delete m_pFile;
+			m_pFile->Release();
 			m_pFile = NULL;
 		}
 	}

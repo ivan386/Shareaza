@@ -25,6 +25,7 @@
 #include "BTClient.h"
 #include "BTPacket.h"
 #include "Download.h"
+#include "Downloads.h"
 #include "DownloadTransferBT.h"
 #include "Uploads.h"
 #include "UploadFile.h"
@@ -257,34 +258,35 @@ BOOL CUploadTransferBT::OpenFile()
 	ASSERT( m_nState == upsRequest || m_nState == upsUploading );
 	ASSERT( m_pBaseFile != NULL );
 
-	if ( m_pDiskFile.IsOpen() )
+	if ( IsFileOpen() )
+		// File already open
 		return TRUE;
 
-	if ( m_pClient->m_pDownload )
+	if ( m_pClient && Downloads.Check( m_pClient->m_pDownload ) )
 	{
-		// Try to get copy of existing file object
-		if ( m_pClient->m_pDownload->m_pFile && m_pClient->m_pDownload->m_pFile->IsOpen() )
+		// Try to get existing file object from download
+		if ( m_pClient->m_pDownload->m_pFile )
 		{
-			m_pDiskFile = *m_pClient->m_pDownload->m_pFile;
+			AttachFile( m_pClient->m_pDownload->m_pFile );
 			return TRUE;
 		}
 
-		// Open from disk (complete)
-		if ( m_pDiskFile.Open( m_pClient->m_pDownload->m_pTorrent, FALSE, FALSE ) )
+		// HACK: Open from disk (replace this with SeedTorrent in OnDownloadComplete)
+		if ( m_pClient->m_pDownload->IsSeeding() )
 		{
-			return TRUE;
+			if ( CUploadTransfer::OpenFile(
+				m_pClient->m_pDownload->m_pTorrent, FALSE, FALSE ) )
+			{
+				return TRUE;
+			}
 		}
 	}
-
-	// Open from disk (incomplete)
-	if ( m_pDiskFile.Open( m_pBaseFile->m_sPath, 0, SIZE_UNKNOWN, FALSE, FALSE ) )
-	{
-		return TRUE;
-	}
+	// else Something wrong...
 
 	theApp.Message( MSG_ERROR, IDS_UPLOAD_CANTOPEN, (LPCTSTR)m_sFileName , (LPCTSTR)m_sAddress);
 
 	Close();
+
 	return FALSE;
 }
 
@@ -327,7 +329,8 @@ BOOL CUploadTransferBT::ServeRequests()
 		
 		BT_PIECE_HEADER* pHeader = (BT_PIECE_HEADER*)( pBuffer.m_pBuffer + pBuffer.m_nLength );
 		
-		if ( ! m_pDiskFile.ReadRange( m_nOffset + m_nPosition, &pHeader[1], m_nLength, &m_nLength ) ) return FALSE;
+		if ( ! ReadFile( m_nOffset + m_nPosition, &pHeader[1], m_nLength, &m_nLength ) )
+			return FALSE;
 
 		pHeader->nLength	= swapEndianess( 1 + 8 + (DWORD)m_nLength );
 		pHeader->nType		= BT_PACKET_PIECE;

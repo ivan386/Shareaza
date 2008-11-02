@@ -34,7 +34,6 @@ class CFragmentedFile : public CObject
 
 public:
 	CFragmentedFile();
-	virtual ~CFragmentedFile();
 
 #ifdef _DEBUG
 	virtual void AssertValid() const;
@@ -42,6 +41,8 @@ public:
 #endif
 
 private:
+	virtual ~CFragmentedFile();
+
 	struct CVirtualFilePart
 	{
 		bool operator ==(LPCTSTR pszFile) const
@@ -109,27 +110,29 @@ private:
 	CVirtualFile				m_oFile;
 	QWORD						m_nUnflushed;
 	Fragments::List				m_oFList;
+	volatile LONG				m_nRefCount;
 
 	BOOL	VirtualRead(QWORD nOffset, char* pBuffer, QWORD nBuffer, QWORD* pnRead);
 	BOOL	VirtualWrite(QWORD nOffset, const char* pBuffer, QWORD nBuffer, QWORD* pnWritten);
 
 public:
+	ULONG	AddRef();
+	ULONG	Release();
 	BOOL	Open(LPCTSTR pszFile, QWORD nOffset, QWORD nLength, BOOL bWrite, BOOL bCreate);
 	BOOL	Open(const CBTInfo& oInfo, BOOL bWrite, BOOL bCreate);
 	BOOL	Flush();
 	void	Close();
-	void	Clear();
 	BOOL	MakeComplete();
 	void	Serialize(CArchive& ar, int nVersion);
 
 	BOOL	IsPositionRemaining(QWORD nOffset) const;
 	BOOL	DoesRangeOverlap(QWORD nOffset, QWORD nLength) const;
 	QWORD	GetRangeOverlap(QWORD nOffset, QWORD nLength) const;
-	BOOL	WriteRange(QWORD nOffset, LPCVOID pData, QWORD nLength, QWORD* pnWritten = NULL);
-	BOOL	ReadRange(QWORD nOffset, LPVOID pData, QWORD nLength, QWORD* pnRead = NULL);
+	BOOL	Write(QWORD nOffset, LPCVOID pData, QWORD nLength, QWORD* pnWritten = NULL);
+	BOOL	Read(QWORD nOffset, LPVOID pData, QWORD nLength, QWORD* pnRead = NULL);
 	QWORD	InvalidateRange(QWORD nOffset, QWORD nLength);
 
-	CFragmentedFile& operator=(const CFragmentedFile& pFile);
+	//CFragmentedFile& operator=(const CFragmentedFile& pFile);
 	
 	inline BOOL IsValid() const
 	{
@@ -138,12 +141,7 @@ public:
 		return m_oFList.limit() > 0;
 	}
 	
-	inline BOOL IsOpen() const
-	{
-		CQuickLock oLock( m_pSection );
-
-		return ! m_oFile.empty();
-	}
+	BOOL IsOpen() const;
 
 	inline QWORD GetTotal() const
 	{

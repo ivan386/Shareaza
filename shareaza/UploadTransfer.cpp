@@ -66,7 +66,8 @@ CUploadTransfer::CUploadTransfer(PROTOCOLID nProtocol) :
 	m_tAverageTime( 0 ),
 	m_nAveragePos( 0 ),
 	m_tRatingTime( 0 ),
-	m_nMaxRate( 0 )
+	m_nMaxRate( 0 ),
+	m_pFile( NULL )
 {
 	m_nProtocol = nProtocol;
 	ZeroMemory( m_nAverageRate, sizeof( m_nAverageRate ) );
@@ -147,10 +148,10 @@ BOOL CUploadTransfer::OnRename(LPCTSTR pszSource, LPCTSTR pszTarget)
 	{
 		CloseFile();
 	}
-	else if ( ! m_pDiskFile.IsOpen() )
+	else if ( ! IsFileOpen() )
 	{
 		m_sFilePath = pszTarget;
-		if ( ! m_pDiskFile.Open( m_sFilePath, 0, SIZE_UNKNOWN, FALSE, FALSE ) )
+		if ( ! OpenFile( m_sFilePath, FALSE, FALSE ) )
 		{
 			theApp.Message( MSG_ERROR, IDS_UPLOAD_DELETED, (LPCTSTR)m_sFileName, (LPCTSTR)m_sAddress );
 			Close();
@@ -520,7 +521,70 @@ void CUploadTransfer::AllocateBaseFile()
 					m_sFileName, m_sFilePath, m_nFileSize );
 }
 
+BOOL CUploadTransfer::IsFileOpen() const
+{
+	return ( m_pFile != NULL );
+}
+
+BOOL CUploadTransfer::OpenFile(LPCTSTR pszFile, BOOL bWrite, BOOL bCreate)
+{
+	if ( IsFileOpen() )
+		return TRUE;
+
+	m_pFile = new CFragmentedFile;
+	if ( m_pFile && m_pFile->Open( pszFile, 0, SIZE_UNKNOWN, bWrite, bCreate) )
+		return TRUE;
+
+	CloseFile();
+
+	return FALSE;
+}
+
+BOOL CUploadTransfer::OpenFile(const CBTInfo& pInfo, BOOL bWrite, BOOL bCreate)
+{
+	if ( IsFileOpen() )
+		return TRUE;
+
+	m_pFile = new CFragmentedFile;
+	if ( m_pFile && m_pFile->Open( pInfo, bWrite, bCreate) )
+		return TRUE;
+
+	CloseFile();
+
+	return FALSE;
+}
+
 void CUploadTransfer::CloseFile()
 {
-	m_pDiskFile.Close();
+	if ( m_pFile )
+	{
+		m_pFile->Release();
+		m_pFile = NULL;
+	}
+}
+
+BOOL CUploadTransfer::WriteFile(QWORD nOffset, LPCVOID pData, QWORD nLength, QWORD* pnWritten)
+{
+	if ( ! IsFileOpen() )
+		return FALSE;
+
+	return m_pFile->Write( nOffset, pData, nLength, pnWritten);
+}
+
+BOOL CUploadTransfer::ReadFile(QWORD nOffset, LPVOID pData, QWORD nLength, QWORD* pnRead)
+{
+	if ( ! IsFileOpen() )
+		return FALSE;
+
+	return m_pFile->Read( nOffset, pData, nLength, pnRead );
+}
+
+void CUploadTransfer::AttachFile(CFragmentedFile* pFile)
+{
+	if ( pFile )
+		pFile->AddRef();
+
+	CloseFile();
+
+	m_pFile = pFile;
 }
