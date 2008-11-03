@@ -40,7 +40,6 @@ public:
 public:
 	//{{AFX_DATA(CWizardNetworksPage)
 	enum { IDD = IDD_WIZARD_NETWORKS };
-	CButton	m_wndG2Enable;
 	BOOL	m_bG2Enable;
 	BOOL	m_bG1Enable;
 	BOOL	m_bEDEnable;

@@ -50,6 +50,7 @@ CGnutellaSettingsPage::CGnutellaSettingsPage() : CSettingsPage( CGnutellaSetting
 {
 	//{{AFX_DATA_INIT(CGnutellaSettingsPage)
 	m_bG2Today = FALSE;
+	m_bG2Always = FALSE;
 	m_bG1Today = FALSE;
 	m_bG1Always = FALSE;
 	m_nG1Hubs = 0;
@@ -79,7 +80,7 @@ void CGnutellaSettingsPage::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_G1_LEAFS_SPIN, m_wndG1Leafs);
 	DDX_Control(pDX, IDC_G1_HUBS_SPIN, m_wndG1Hubs);
 	DDX_Check(pDX, IDC_G2_TODAY, m_bG2Today);
-	DDX_Control(pDX, IDC_G2_ALWAYS, m_wndG2Always);
+	DDX_Check(pDX, IDC_G2_ALWAYS, m_bG2Always);
 	DDX_Check(pDX, IDC_G1_TODAY, m_bG1Today);
 	DDX_Check(pDX, IDC_G1_ALWAYS, m_bG1Always);
 	DDX_Text(pDX, IDC_G1_HUBS, m_nG1Hubs);
@@ -105,14 +106,19 @@ BOOL CGnutellaSettingsPage::OnInitDialog()
 
 	//Load initial values from the settings variables
 	m_bG2Today			= Settings.Gnutella2.EnableToday;
+	m_bG2Always			= Settings.Gnutella2.EnableAlways;
+
 	m_bG1Today			= Settings.Gnutella1.EnableToday;
 	m_bG1Always			= Settings.Gnutella1.EnableAlways;
+
 	m_bDeflateHub2Hub	= Settings.Gnutella.DeflateHub2Hub;
 	m_bDeflateLeaf2Hub	= Settings.Gnutella.DeflateLeaf2Hub;
 	m_bDeflateHub2Leaf	= Settings.Gnutella.DeflateHub2Leaf;
+
 	m_nG1Hubs			= Settings.Gnutella1.NumHubs;
 	m_nG1Leafs			= Settings.Gnutella1.NumLeafs;
 	m_nG1Peers			= Settings.Gnutella1.NumPeers;
+
 	m_nG2Hubs			= Settings.Gnutella2.NumHubs;
 	m_nG2Leafs			= Settings.Gnutella2.NumLeafs;
 	m_nG2Peers			= Settings.Gnutella2.NumPeers;
@@ -141,8 +147,6 @@ BOOL CGnutellaSettingsPage::OnInitDialog()
 	//********************
 
 	m_wndG2ClientMode.SetCurSel( Settings.Gnutella2.ClientMode );
-
-	m_wndG2Always.SetCheck( BST_INDETERMINATE );
 
 #ifdef LAN_MODE
 	GetDlgItem( IDC_G2_TODAY )->EnableWindow( FALSE );
@@ -177,6 +181,23 @@ BOOL CGnutellaSettingsPage::OnSetActive()
 	}
 
 	return CSettingsPage::OnSetActive();
+}
+
+void CGnutellaSettingsPage::OnG2Always()
+{
+	UpdateData();
+
+	if ( ! m_bG2Always )
+	{
+		CString strMessage;
+		LoadString( strMessage, IDS_NETWORK_DISABLE_G2 );
+
+		if ( AfxMessageBox( strMessage, MB_ICONEXCLAMATION|MB_YESNO|MB_DEFBUTTON2 ) != IDYES )
+		{
+			m_bG2Always = TRUE;
+			UpdateData( FALSE );
+		}
+	}
 }
 
 void CGnutellaSettingsPage::OnG2Today()
@@ -257,6 +278,7 @@ void CGnutellaSettingsPage::OnOK()
 
 	//Load values into the settings variables
 	Settings.Gnutella2.EnableToday		= m_bG2Today != FALSE;
+	Settings.Gnutella2.EnableAlways		= m_bG2Always != FALSE;
 	Settings.Gnutella1.EnableToday		= m_bG1Today != FALSE;
 	Settings.Gnutella1.EnableAlways		= m_bG1Always != FALSE;
 	Settings.Gnutella.DeflateHub2Hub	= m_bDeflateHub2Hub != FALSE;
@@ -292,9 +314,4 @@ void CGnutellaSettingsPage::OnOK()
 	UpdateData( FALSE );
 
 	CSettingsPage::OnOK();
-}
-
-void CGnutellaSettingsPage::OnG2Always()
-{
-	m_wndG2Always.SetCheck( BST_INDETERMINATE );
 }

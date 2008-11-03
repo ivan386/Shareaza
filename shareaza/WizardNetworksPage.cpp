@@ -62,7 +62,6 @@ void CWizardNetworksPage::DoDataExchange(CDataExchange* pDX)
 {
 	CWizardPage::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CWizardNetworksPage)
-	DDX_Control(pDX, IDC_G2_ENABLE, m_wndG2Enable);
 	DDX_Check(pDX, IDC_G2_ENABLE, m_bG2Enable);
 	DDX_Check(pDX, IDC_G1_ENABLE, m_bG1Enable);
 	DDX_Check(pDX, IDC_ED2K_ENABLE, m_bEDEnable);
@@ -82,7 +81,6 @@ BOOL CWizardNetworksPage::OnInitDialog()
 	m_bG1Enable = Settings.Gnutella1.EnableAlways;
 	m_bEDEnable = Settings.eDonkey.EnableAlways;
 
-	m_wndG2Enable.EnableWindow( ! m_bG2Enable );
 	UpdateData( FALSE );
 
 	return TRUE;
@@ -97,6 +95,18 @@ BOOL CWizardNetworksPage::OnSetActive()
 LRESULT CWizardNetworksPage::OnWizardNext() 
 {
 	UpdateData();
+
+	if ( ! m_bG2Enable )
+	{
+		CString strMessage;
+		LoadString( strMessage, IDS_NETWORK_DISABLE_G2 );
+
+		if ( AfxMessageBox( strMessage, MB_ICONEXCLAMATION|MB_YESNO|MB_DEFBUTTON2 ) != IDYES )
+		{
+			m_bG2Enable = TRUE;
+			UpdateData( FALSE );
+		}
+	}
 
 	Settings.Gnutella2.EnableAlways	= m_bG2Enable != FALSE;
 	Settings.Gnutella2.EnableToday	= m_bG2Enable != FALSE;
