@@ -23,6 +23,7 @@
 
 
 #ifdef _DEBUG
+	#define MS_VC_EXCEPTION	0x406D1388
 	#define ALMOST_INFINITE	INFINITE
 #else
 	#define ALMOST_INFINITE	20000
