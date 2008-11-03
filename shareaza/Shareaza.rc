@@ -520,7 +520,7 @@ END
 
 IDD_WIZARD_WELCOME DIALOGEX 0, 0, 277, 174
 STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
-CAPTION "Welcome to Shareaza (3/6)"
+CAPTION "Welcome to Shareaza"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
     LTEXT           "Welcome to Shareaza!",IDC_STATIC,10,10,265,10
@@ -567,6 +567,53 @@ BEGIN
     PUSHBUTTON      "&Add...",IDC_SHARE_ADD,215,90,45,15
     PUSHBUTTON      "&Remove",IDC_SHARE_REMOVE,215,118,45,15,WS_DISABLED
     LTEXT           "WARNING: Distributing copyrighted works is an offence in most countries.",IDC_STATIC,10,140,265,15,SS_CENTERIMAGE
+END
+
+IDD_WIZARD_PROFILE DIALOGEX 0, 0, 277, 174
+STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
+CAPTION "Welcome to Shareaza (3/6)"
+FONT 8, "Tahoma", 0, 0, 0x1
+BEGIN
+    LTEXT           "Shareaza is a much friendlier place when everyone writes a few basic details about themselves.",IDC_STATIC,10,10,265,20
+    RTEXT           "I use the name:",IDC_STATIC,12,48,60,12,SS_CENTERIMAGE
+    EDITTEXT        IDC_PROFILE_NICK,84,48,168,12,ES_AUTOHSCROLL
+    RTEXT           "and I'm a:",IDC_STATIC,6,72,66,12,SS_CENTERIMAGE
+    COMBOBOX        IDC_PROFILE_AGE,84,72,84,216,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_PROFILE_GENDER,174,72,78,216,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    RTEXT           "from:",IDC_STATIC,12,97,60,12,SS_CENTERIMAGE
+    COMBOBOX        IDC_LOC_COUNTRY,84,96,168,155,CBS_DROPDOWN | CBS_AUTOHSCROLL | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_LOC_CITY,84,120,168,155,CBS_DROPDOWN | CBS_AUTOHSCROLL | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+END
+
+IDD_WIZARD_INTERFACE DIALOGEX 0, 0, 277, 174
+STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
+CAPTION "Welcome to Shareaza (4/6)"
+FONT 8, "Tahoma", 0, 0, 0x1
+BEGIN
+    LTEXT           "Shareaza supports a flexible user interface, so you can choose what is most comfortable for you. You can change these options at any time.",IDC_STATIC,12,7,258,20
+    GROUPBOX        "Please select user interface:",IDC_STATIC,7,27,269,83
+    CONTROL         "Basic Mode",IDC_INTERFACE_0,"Button",BS_AUTORADIOBUTTON | WS_GROUP,14,39,250,10
+    CONTROL         "Power Mode",IDC_INTERFACE_1,"Button",BS_AUTORADIOBUTTON,14,75,250,10
+    LTEXT           "Simple, easy to use menus and buttons.\nFamiliar to users of other file sharing programs.",IDC_DESCRIPTION_0,27,51,243,21
+    LTEXT           "Power mode offers expert users lots of extra commands, windows, etc.\nIt may be a little confusing for new users!",IDC_DESCRIPTION_1,27,87,243,21
+    CONTROL         "Display simplified download progress bars. (Reduces CPU use)",IDC_DOWNLOADS_SIMPLEBAR,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,14,114,256,10
+    CONTROL         "Handle torrent links.",IDC_URI_TORRENT,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,14,127,256,10
+END
+
+IDD_WIZARD_NETWORKS DIALOGEX 0, 0, 277, 174
+STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
+CAPTION "Welcome to Shareaza (5/6)"
+FONT 8, "Tahoma", 0, 0, 0x1
+BEGIN
+    LTEXT           "Shareaza is a general-purpose file-sharing application that can access many P2P networks at the same time.  Here you can select which networks you'd like to access.  Note that you can always select different networks later.",IDC_STATIC,10,10,265,30
+    CONTROL         "Connect to Gnutella2 (Highly Recommended)",IDC_G2_ENABLE,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,10,45,260,10
+    LTEXT           "The Gnutella2 network is Shareaza's premiere network, offering more features and performance than any other P2P net.",IDC_STATIC,25,57,250,18
+    CONTROL         "Connect to eDonkey",IDC_ED2K_ENABLE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,10,79,260,10
+    LTEXT           "The eDonkey network is a popular server-based network.  While not as feature-rich as Gnutella2, eDonkey has an impressive file collection.",IDC_STATIC,25,91,250,18
+    CONTROL         "Connect to Original Gnutella",IDC_G1_ENABLE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,10,113,260,10
+    LTEXT           "Although the original Gnutella network is less feature-rich than Gnutella2, and has fewer files than eDonkey, it remains a valuable resource.",IDC_STATIC,25,126,250,18
 END
 
 IDD_WIZARD_FINISHED DIALOGEX 0, 0, 277, 174
@@ -706,22 +753,6 @@ BEGIN
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,10,135,125,15
     CONTROL         "Open a download &monitor window",IDC_NEW_WINDOW,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,155,135,125,15
     LTEXT           "You have clicked on a Shareaza-powered URI which will add the following Discovery Service to your Discovery Services cache.",IDC_MESSAGE_4,20,40,250,20,NOT WS_VISIBLE
-END
-
-IDD_WIZARD_INTERFACE DIALOGEX 0, 0, 277, 174
-STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
-CAPTION "Welcome to Shareaza (4/6)"
-FONT 8, "Tahoma", 0, 0, 0x1
-BEGIN
-    LTEXT           "Shareaza supports a flexible user interface, so you can choose what is most comfortable for you. You can change these options at any time.",IDC_STATIC,12,7,258,20
-    GROUPBOX        "Please select user interface:",IDC_STATIC,7,27,269,83
-    CONTROL         "Basic Mode",IDC_INTERFACE_0,"Button",BS_AUTORADIOBUTTON | WS_GROUP,14,39,250,10
-    CONTROL         "Power Mode",IDC_INTERFACE_1,"Button",BS_AUTORADIOBUTTON,14,75,250,10
-    LTEXT           "Simple, easy to use menus and buttons.\nFamiliar to users of other file sharing programs.",IDC_DESCRIPTION_0,27,51,243,21
-    LTEXT           "Power mode offers expert users lots of extra commands, windows, etc.\nIt may be a little confusing for new users!",IDC_DESCRIPTION_1,27,87,243,21
-    CONTROL         "Display simplified download progress bars. (Reduces CPU use)",IDC_DOWNLOADS_SIMPLEBAR,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,14,114,256,10
-    CONTROL         "Handle torrent links.",IDC_URI_TORRENT,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,14,127,256,10
 END
 
 IDD_URL_COPY DIALOGEX 0, 0, 292, 149
@@ -1250,22 +1281,6 @@ BEGIN
     PUSHBUTTON      "Cancel",IDCANCEL,239,180,45,15
 END
 
-IDD_WIZARD_PROFILE DIALOGEX 0, 0, 277, 174
-STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
-CAPTION "Welcome to Shareaza (3/6)"
-FONT 8, "Tahoma", 0, 0, 0x1
-BEGIN
-    LTEXT           "Shareaza is a much friendlier place when everyone writes a few basic details about themselves.",IDC_STATIC,10,10,265,20
-    RTEXT           "I use the name:",IDC_STATIC,12,48,60,12,SS_CENTERIMAGE
-    EDITTEXT        IDC_PROFILE_NICK,84,48,168,12,ES_AUTOHSCROLL
-    RTEXT           "and I'm a:",IDC_STATIC,6,72,66,12,SS_CENTERIMAGE
-    COMBOBOX        IDC_PROFILE_AGE,84,72,84,216,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
-    COMBOBOX        IDC_PROFILE_GENDER,174,72,78,216,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
-    RTEXT           "from:",IDC_STATIC,12,97,60,12,SS_CENTERIMAGE
-    COMBOBOX        IDC_LOC_COUNTRY,84,96,168,155,CBS_DROPDOWN | CBS_AUTOHSCROLL | CBS_SORT | WS_VSCROLL | WS_TABSTOP
-    COMBOBOX        IDC_LOC_CITY,84,120,168,155,CBS_DROPDOWN | CBS_AUTOHSCROLL | CBS_SORT | WS_VSCROLL | WS_TABSTOP
-END
-
 IDD_SETTINGS_UPLOADS DIALOGEX 0, 0, 282, 220
 STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Uploads"
@@ -1486,21 +1501,6 @@ BEGIN
     CONTROL         "Progress1",IDC_PROGRESS,"msctls_progress32",WS_BORDER,10,85,270,10
     DEFPUSHBUTTON   "OK",IDOK,180,102,50,14
     PUSHBUTTON      "Cancel",IDCANCEL,235,102,50,14
-END
-
-IDD_WIZARD_NETWORKS DIALOGEX 0, 0, 277, 174
-STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
-CAPTION "Welcome to Shareaza (5/6)"
-FONT 8, "Tahoma", 0, 0, 0x1
-BEGIN
-    LTEXT           "Shareaza is a general-purpose file-sharing application that can access many P2P networks at the same time.  Here you can select which networks you'd like to access.  Note that you can always select different networks later.",IDC_STATIC,10,10,265,30
-    CONTROL         "Connect to Gnutella2 (Highly Recommended)",IDC_G2_ENABLE,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,10,45,260,10
-    LTEXT           "The Gnutella2 network is Shareaza's premiere network, offering more features and performance than any other P2P net.",IDC_STATIC,25,57,250,18
-    CONTROL         "Connect to eDonkey",IDC_ED2K_ENABLE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,10,79,260,10
-    LTEXT           "The eDonkey network is a popular server-based network.  While not as feature-rich as Gnutella2, eDonkey has an impressive file collection.",IDC_STATIC,25,91,250,18
-    CONTROL         "Connect to Original Gnutella",IDC_G1_ENABLE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,10,113,260,10
-    LTEXT           "Although the original Gnutella network is less feature-rich than Gnutella2, and has fewer files than eDonkey, it remains a valuable resource.",IDC_STATIC,25,126,250,18
 END
 
 IDD_FILE_SHARING DIALOGEX 0, 0, 246, 218
