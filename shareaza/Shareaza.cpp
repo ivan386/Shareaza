@@ -345,12 +345,15 @@ BOOL CShareazaApp::InitInstance()
 		+ ( ( Settings.Connection.EnableUPnP && ! Settings.Live.FirstRun ) ? 1 : 0 );
 
 	SplashStep( L"Winsock", ( ( m_ocmdInfo.m_bNoSplash || ! m_ocmdInfo.m_bShowSplash ) ? 0 : nSplashSteps ), false );
-	WSADATA wsaData;
-	for ( int i = 1; i <= 2; i++ )
+	WSADATA wsaData = { 0 };
+	for ( int i( 1 ); i <= 2; ++i )
 	{
-		if ( WSAStartup( MAKEWORD( 1, 1 ), &wsaData ) ) return FALSE;
-		if ( wsaData.wVersion == MAKEWORD( 1, 1 ) ) break;
-		if ( i == 2 ) return FALSE;
+		if ( WSAStartup( MAKEWORD( 1, 1 ), &wsaData ) )
+			return FALSE;
+		if ( wsaData.wVersion == MAKEWORD( 1, 1 ) )
+			break;
+		if ( i == 2 )
+			return FALSE;
 		WSACleanup();
 	}
 
