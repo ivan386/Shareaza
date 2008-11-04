@@ -537,7 +537,7 @@ BOOL CSkin::LoadMenu(CXMLElement* pXML)
 
 	if ( ! CreateMenu( pXML, pMenu->GetSafeHmenu() ) )
 		return FALSE;
-
+		
 	m_pMenus.SetAt( strName, pMenu.release() );
 
 	return TRUE;
@@ -918,8 +918,8 @@ BOOL CSkin::Translate(LPCTSTR pszName, CHeaderCtrl* pCtrl)
 
 	if ( ! m_pLists.Lookup( pszName, strEdit ) ) return FALSE;
 
-	TCHAR szColumn[128] = { 0 };
-	HD_ITEM pColumn = { 0 };
+	TCHAR szColumn[128] = {};
+	HD_ITEM pColumn = {};
 
 	if ( Settings.General.LanguageRTL )
 		pCtrl->ModifyStyleEx( 0, WS_EX_LAYOUTRTL, 0 );
@@ -1994,7 +1994,7 @@ UINT_PTR CSkin::TrackPopupMenu(LPCTSTR pszMenu, const CPoint& point,
 	if ( oFiles.GetCount() )
 	{
 		// Change ID_SHELL_MENU item to shell submenu
-		MENUITEMINFO pInfo = { 0 };
+		MENUITEMINFO pInfo = {};
 		pInfo.cbSize = sizeof( pInfo );
 		pInfo.fMask = MIIM_SUBMENU;
 		HMENU hSubMenu = pInfo.hSubMenu = ::CreatePopupMenu();

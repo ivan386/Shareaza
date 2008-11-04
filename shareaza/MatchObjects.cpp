@@ -241,7 +241,7 @@ void CMatchList::AddHits(CQueryHit* pHit, CQuerySearch* pFilter)
 		FilterHit( pHit );
 
 		CMatchFile* pFile	= NULL;
-		FILESTATS Stats = { 0 };
+		FILESTATS Stats = {};
 
 		if ( pHit->m_oSHA1 )
 		{

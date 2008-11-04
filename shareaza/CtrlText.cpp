@@ -173,7 +173,7 @@ void CTextCtrl::Clear(BOOL bInvalidate)
 
 void CTextCtrl::UpdateScroll(BOOL bFull)
 {
-	SCROLLINFO si = { 0 };
+	SCROLLINFO si = {};
 
 	si.cbSize = sizeof(si);
 
@@ -208,7 +208,7 @@ CFont* CTextCtrl::GetFont()
 void CTextCtrl::OnVScroll(UINT nSBCode, UINT /*nPos*/, CScrollBar* /*pScrollBar*/)
 {
 	CQuickLock pLock( m_pSection );
-	SCROLLINFO si = { 0 };
+	SCROLLINFO si = {};
 
 	si.cbSize	= sizeof(si);
 	si.fMask	= SIF_ALL;
@@ -487,7 +487,7 @@ BOOL CTextCtrl::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
 	if ( WHEEL_PAGESCROLL == m_nScrollWheelLines )
 	{
 		// scroll by page is activated
-		SCROLLINFO si = { 0 };
+		SCROLLINFO si = {};
 
 		si.cbSize	= sizeof( si );
 		si.fMask	= SIF_ALL;

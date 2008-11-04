@@ -1183,7 +1183,7 @@ BOOL CSettings::LoadWindow(LPCTSTR pszName, CWnd* pWindow)
 	int nShowCmd = CRegistry::GetInt( _T("Windows"), strEntry + _T(".ShowCmd"), -1 );
 	if ( nShowCmd == -1 ) return FALSE;
 
-	WINDOWPLACEMENT pPos = { 0 };
+	WINDOWPLACEMENT pPos = {};
 	pPos.length = sizeof(pPos);
 
 	pPos.rcNormalPosition.left		= CRegistry::GetInt( _T("Windows"), strEntry + _T(".Left"), 0 );

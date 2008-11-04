@@ -264,7 +264,7 @@ BOOL CRichViewCtrl::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)
 
 		CRichFragment* pFrag = m_bSelecting ? NULL : PointToFrag( pt );
 
-		RVN_ELEMENTEVENT pNotify = { 0 };
+		RVN_ELEMENTEVENT pNotify = {};
 		pNotify.hdr.hwndFrom	= GetSafeHwnd();
 		pNotify.hdr.idFrom		= GetDlgCtrlID();
 		pNotify.hdr.code		= RVN_SETCURSOR;

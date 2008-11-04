@@ -84,7 +84,7 @@ void CCoolMenu::OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu)
 
 	if ( m_pContextMenu2 )
 	{
-		MENUITEMINFO mii = { 0 };
+		MENUITEMINFO mii = {};
 		mii.cbSize = sizeof( mii );
 		mii.fMask = MIIM_ID;
 		for ( UINT i = 0; i < pPopupMenu->GetMenuItemCount(); i++ )
@@ -117,10 +117,10 @@ BOOL CCoolMenu::AddMenu(CMenu* pMenu, BOOL bChild)
 
 	for ( int i = 0 ; i < (int)pMenu->GetMenuItemCount() ; i++ )
 	{
-		TCHAR szBuffer[128] = { 0 };
+		TCHAR szBuffer[128] = {};
 		CString strText;
 
-		MENUITEMINFO mii = { 0 };
+		MENUITEMINFO mii = {};
 		mii.cbSize		= sizeof(mii);
 		mii.fMask		= MIIM_DATA|MIIM_ID|MIIM_FTYPE|MIIM_STRING|MIIM_SUBMENU;
 		mii.dwTypeData	= szBuffer;
@@ -631,7 +631,7 @@ UINT_PTR CCoolMenu::DoExplorerMenu(HWND hwnd, const CStringList& oFiles, POINT p
 			// If a command was selected from the shell menu, execute it.
 			if ( nCmd >= ID_SHELL_MENU_MIN && nCmd <= ID_SHELL_MENU_MAX )
 			{
-				CMINVOKECOMMANDINFOEX ici = { 0 };
+				CMINVOKECOMMANDINFOEX ici = {};
 				ici.cbSize = sizeof( CMINVOKECOMMANDINFOEX );
 				ici.hwnd = hwnd;
 				ici.lpVerb = reinterpret_cast< LPCSTR >( nCmd - ID_SHELL_MENU_MIN );

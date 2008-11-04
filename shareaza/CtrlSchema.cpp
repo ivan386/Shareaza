@@ -1,7 +1,7 @@
 //
 // CtrlSchema.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -74,20 +74,20 @@ CSchemaCtrl::CSchemaCtrl()
 /////////////////////////////////////////////////////////////////////////////
 // CSchemaCtrl create and destroy
 
-BOOL CSchemaCtrl::Create(DWORD dwStyle, const RECT& rect, CWnd* pParentWnd, UINT nID)
+BOOL CSchemaCtrl::Create(DWORD dwStyle, const RECT& rect, CWnd* pParentWnd, UINT nID) 
 {
 	return CreateEx( WS_EX_CONTROLPARENT | ( Settings.General.LanguageRTL ? WS_EX_LAYOUTRTL : 0 ),
 		NULL, NULL, dwStyle | WS_CHILD | WS_VSCROLL | WS_CLIPCHILDREN,
 		rect, pParentWnd, nID );
 }
 
-void CSchemaCtrl::OnDestroy()
+void CSchemaCtrl::OnDestroy() 
 {
 	SetSchema( NULL );
 	CWnd::OnDestroy();
 }
 
-void CSchemaCtrl::OnSize(UINT nType, int cx, int cy)
+void CSchemaCtrl::OnSize(UINT nType, int cx, int cy) 
 {
 	CWnd::OnSize( nType, cx, cy );
 	m_nScroll = 0;
@@ -102,19 +102,19 @@ void CSchemaCtrl::SetSchema(CSchema* pSchema, BOOL bPromptOnly)
 {
 	CArray< CWnd* > pRemove;
 	pRemove.Append( m_pControls );
-
+	
 	m_pControls.RemoveAll();
 	m_pCaptions.RemoveAll();
-
+	
 	for ( int nControl = 0 ; nControl < pRemove.GetSize() ; nControl++ )
 	{
 		CWnd* pControl = (CWnd*)pRemove.GetAt( nControl );
 		pControl->DestroyWindow();
 		delete pControl;
 	}
-
+	
 	m_nScroll = 0;
-
+	
 	if ( ( m_pSchema = pSchema ) == NULL )
 	{
 		Layout();
@@ -125,25 +125,25 @@ void CSchemaCtrl::SetSchema(CSchema* pSchema, BOOL bPromptOnly)
 	for ( POSITION pos = pSchema->GetMemberIterator() ; pos ; )
 	{
 		CSchemaMember* pMember = pSchema->GetNextMember( pos );
-
+		
 		if ( bPromptOnly && ! pMember->m_bPrompt || pMember->m_bHidden ) continue;
-
+		
 		CWnd* pControl = NULL;
 		CRect rc;
-
+		
 		if ( pMember->GetItemCount() )
 		{
 			CComboBox* pCombo = new CComboBox();
-
+			
 			pCombo->Create( WS_CHILD|WS_VISIBLE|WS_BORDER|WS_TABSTOP|CBS_DROPDOWN|
 				CBS_AUTOHSCROLL|WS_VSCROLL,	rc, this, IDC_METADATA_CONTROL );
-
+			
 			for ( POSITION pos = pMember->GetItemIterator() ; pos ; )
 			{
 				CString strSelection = pMember->GetNextItem( pos );
 				pCombo->AddString( strSelection );
 			}
-
+			
 			pControl = pCombo;
 		}
 		else
@@ -155,16 +155,16 @@ void CSchemaCtrl::SetSchema(CSchema* pSchema, BOOL bPromptOnly)
 			if ( pMember->m_nMaxLength ) pEdit->LimitText( pMember->m_nMaxLength );
 			pControl = pEdit;
 		}
-
+		
 		CString strCaption = pMember->m_sTitle + ':';
-
+		
 		m_pCaptions.Add( strCaption );
 		m_pControls.Add( pControl );
 
 		SetWindowLongPtr( pControl->GetSafeHwnd(), GWLP_USERDATA, (LONG_PTR_ARG)(LONG_PTR)pMember );
 		pControl->SetFont( &theApp.m_gdiFont );
 	}
-
+	
 	Layout();
 	Invalidate();
 }
@@ -180,11 +180,11 @@ CString CSchemaCtrl::GetSchemaURI() const
 BOOL CSchemaCtrl::UpdateData(CXMLElement* pBase, BOOL bSaveAndValidate)
 {
 	if ( m_pSchema == NULL || pBase == NULL ) return FALSE;
-
+	
 	if ( pBase->GetName().CompareNoCase( m_pSchema->m_sSingular ) ) return FALSE;
-
+	
 	POSITION pos = m_pSchema->GetMemberIterator();
-
+	
 	for ( INT_PTR nControl = 0 ; nControl < m_pControls.GetSize() && pos ; nControl++ )
 	{
 		CWnd* pControl = m_pControls.GetAt( nControl );
@@ -195,9 +195,9 @@ BOOL CSchemaCtrl::UpdateData(CXMLElement* pBase, BOOL bSaveAndValidate)
 			if ( (LONG_PTR)pMember == GetWindowLongPtr( pControl->GetSafeHwnd(), GWLP_USERDATA ) ) break;
 			pMember = NULL;
 		}
-
+		
 		if ( pMember == NULL ) break;
-
+		
 		if ( bSaveAndValidate )
 		{
 			CString strNewValue;
@@ -216,7 +216,7 @@ BOOL CSchemaCtrl::UpdateData(CXMLElement* pBase, BOOL bSaveAndValidate)
 		else
 		{
 			CString strValue = pMember->GetValueFrom( pBase, NO_VALUE, FALSE, TRUE );
-
+			
 			if ( strValue == MULTI_VALUE )
 			{
 				pControl->SetWindowText( strMultipleString );
@@ -227,7 +227,7 @@ BOOL CSchemaCtrl::UpdateData(CXMLElement* pBase, BOOL bSaveAndValidate)
 			}
 		}
 	}
-
+	
 	return TRUE;
 }
 
@@ -237,10 +237,10 @@ BOOL CSchemaCtrl::UpdateData(CXMLElement* pBase, BOOL bSaveAndValidate)
 void CSchemaCtrl::Layout()
 {
 	CRect rcClient, rcNew;
-
+	
 	GetClientRect( &rcClient );
 
-	SCROLLINFO pScroll = { 0 };
+	SCROLLINFO pScroll = {};
 	pScroll.cbSize	= sizeof(pScroll);
 	pScroll.fMask	= SIF_PAGE|SIF_POS|SIF_RANGE;
 	pScroll.nPage	= rcClient.Height();
@@ -276,17 +276,17 @@ void CSchemaCtrl::Layout()
 			rcNew.top		= nTop + m_nItemHeight - 18 - 4;
 			rcNew.bottom	= nTop + m_nItemHeight - 4;
 		}
-
+		
 		if ( pControl->IsKindOf( RUNTIME_CLASS( CComboBox ) ) )
 		{
 			rcNew.top --;
 			rcNew.bottom += 128;
 		}
-
+		
 		hDWP = DeferWindowPos( hDWP, pControl->GetSafeHwnd(), NULL, rcNew.left, rcNew.top,
 			rcNew.Width(), rcNew.Height(),
 			SWP_SHOWWINDOW | SWP_NOACTIVATE | SWP_NOZORDER );
-
+		
 		pScroll.nMax += m_nItemHeight;
 		nTop += m_nItemHeight;
 	}
@@ -303,14 +303,14 @@ void CSchemaCtrl::Layout()
 void CSchemaCtrl::Disable()
 {
 	if ( m_pSchema == NULL ) return;
-
+	
 	POSITION pos = m_pSchema->GetMemberIterator();
-
+	
 	for ( INT_PTR nControl = 0 ; nControl < m_pControls.GetSize() && pos ; nControl++ )
 	{
 		m_pControls.GetAt( nControl )->EnableWindow( FALSE );
 	}
-
+	
 	return;
 }
 
@@ -321,14 +321,14 @@ void CSchemaCtrl::Disable()
 void CSchemaCtrl::Enable()
 {
 	if ( m_pSchema == NULL ) return;
-
+	
 	POSITION pos = m_pSchema->GetMemberIterator();
-
+	
 	for ( INT_PTR nControl = 0 ; nControl < m_pControls.GetSize() && pos ; nControl++ )
 	{
 		m_pControls.GetAt( nControl )->EnableWindow( TRUE );
 	}
-
+	
 	return;
 }
 
@@ -336,9 +336,9 @@ void CSchemaCtrl::Enable()
 /////////////////////////////////////////////////////////////////////////////
 // CSchemaCtrl scrolling
 
-void CSchemaCtrl::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* /*pScrollBar*/)
+void CSchemaCtrl::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* /*pScrollBar*/) 
 {
-	SCROLLINFO pScroll = { 0 };
+	SCROLLINFO pScroll = {};
 
 	pScroll.cbSize	= sizeof(pScroll);
 	pScroll.fMask	= SIF_ALL;
@@ -380,16 +380,16 @@ void CSchemaCtrl::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* /*pScrollBar*/)
 void CSchemaCtrl::ScrollBy(int nDelta)
 {
 	int nBefore = m_nScroll;
-
+	
 	m_nScroll += nDelta;
 	m_nScroll = max( 0, min( GetScrollLimit( SB_VERT ), m_nScroll ) );
 	nDelta = m_nScroll - nBefore;
-
+	
 	for ( CWnd* pWnd = GetWindow( GW_CHILD ) ; pWnd ; pWnd = pWnd->GetNextWindow() )
 	{
 		pWnd->ModifyStyle( WS_VISIBLE, 0 );
 	}
-
+	
 	ScrollWindowEx( 0, -nDelta, NULL, NULL, NULL, NULL, SW_SCROLLCHILDREN|SW_INVALIDATE );
 	Layout();
 	UpdateWindow();
@@ -402,7 +402,7 @@ void CSchemaCtrl::OnLButtonDown(UINT /*nFlags*/, CPoint /*point*/)
 
 BOOL CSchemaCtrl::OnMouseWheel(UINT /*nFlags*/, short zDelta, CPoint /*pt*/)
 {
-	OnVScroll( SB_THUMBPOSITION, (int)( GetScrollPos( SB_VERT ) -
+	OnVScroll( SB_THUMBPOSITION, (int)( GetScrollPos( SB_VERT ) - 
 		zDelta / WHEEL_DELTA * m_nScrollWheelLines * 8 ), NULL );
 	return TRUE;
 }
@@ -410,12 +410,12 @@ BOOL CSchemaCtrl::OnMouseWheel(UINT /*nFlags*/, short zDelta, CPoint /*pt*/)
 /////////////////////////////////////////////////////////////////////////////
 // CSchemaCtrl painting
 
-BOOL CSchemaCtrl::OnEraseBkgnd(CDC* /*pDC*/)
+BOOL CSchemaCtrl::OnEraseBkgnd(CDC* /*pDC*/) 
 {
 	return TRUE;
 }
 
-void CSchemaCtrl::OnNcPaint()
+void CSchemaCtrl::OnNcPaint() 
 {
 	CWnd::OnNcPaint();
 
@@ -432,7 +432,7 @@ void CSchemaCtrl::OnNcPaint()
 	}
 }
 
-void CSchemaCtrl::OnPaint()
+void CSchemaCtrl::OnPaint() 
 {
 	CRect rcClient, rcItem;
 	CPaintDC dc( this );
@@ -442,24 +442,24 @@ void CSchemaCtrl::OnPaint()
 
 	rcItem.bottom = rcItem.top + m_nItemHeight;
 	rcItem.OffsetRect( 0, -m_nScroll );
-
+	
 	CFont* pOldFont = (CFont*)dc.SelectObject( &theApp.m_gdiFont );
 	dc.SetBkMode( OPAQUE );
 
 	int nOffset = m_nItemHeight;
-
+	
 	if ( ! m_nCaptionWidth ) nOffset -= 18 + 4;
 
 	nOffset = nOffset / 2 - dc.GetTextExtent( _T("Xg") ).cy / 2 - 1;
-
+	
 	for ( INT_PTR nControl = 0 ; nControl < m_pControls.GetSize() ; nControl++ )
 	{
 		// dc.SetBkColor( nControl & 1 ? RGB( 240, 240, 255 ) : RGB( 255, 255, 255 ) );
 		dc.SetBkColor( Skin.m_crSchemaRow[ nControl & 1 ] );
-
+		
 		dc.ExtTextOut( rcItem.left + 4, rcItem.top + nOffset, ETO_OPAQUE|ETO_CLIPPED,
 			&rcItem, m_pCaptions.GetAt( nControl ), NULL );
-
+		
 		rcItem.OffsetRect( 0, m_nItemHeight );
 	}
 
@@ -475,10 +475,10 @@ void CSchemaCtrl::OnPaint()
 /////////////////////////////////////////////////////////////////////////////
 // CSchemaCtrl command handler
 
-BOOL CSchemaCtrl::OnCommand(WPARAM wParam, LPARAM lParam)
+BOOL CSchemaCtrl::OnCommand(WPARAM wParam, LPARAM lParam) 
 {
 	if ( HIWORD( wParam ) != EN_CHANGE ) return CWnd::OnCommand( wParam, lParam );
-
+	
 	CEdit* pEdit = (CEdit*)CWnd::FromHandle( (HWND)lParam );
 	if ( ! pEdit->IsKindOf( RUNTIME_CLASS(CEdit) ) ) return TRUE;
 
@@ -488,13 +488,13 @@ BOOL CSchemaCtrl::OnCommand(WPARAM wParam, LPARAM lParam)
 	{
 		CString strTextIn, strTextOut;
 		BOOL bChanged = FALSE;
-
+		
 		pEdit->GetWindowText( strTextIn );
 
 		if ( strTextIn != strMultipleString )
 		{
 			LPTSTR pszOut = strTextOut.GetBuffer( strTextIn.GetLength() );
-
+			
 			for ( LPCTSTR pszIn = strTextIn ; *pszIn ; pszIn++ )
 			{
 				if ( ( *pszIn >= '0' && *pszIn <= '9' ) || *pszIn == '.' || *pszIn == '-' )
@@ -503,7 +503,7 @@ BOOL CSchemaCtrl::OnCommand(WPARAM wParam, LPARAM lParam)
 				}
 				else bChanged = TRUE;
 			}
-
+			
 			*pszOut = 0;
 			strTextOut.ReleaseBuffer();
 		}
@@ -514,7 +514,7 @@ BOOL CSchemaCtrl::OnCommand(WPARAM wParam, LPARAM lParam)
 			pEdit->SetSel( strTextOut.GetLength(), strTextOut.GetLength() );
 		}
 	}
-
+	
 	return CWnd::OnCommand( wParam, lParam );
 }
 

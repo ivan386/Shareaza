@@ -105,7 +105,7 @@ CSearchDetailPanel::~CSearchDetailPanel()
 /////////////////////////////////////////////////////////////////////////////
 // CSearchDetailPanel operations
 
-BOOL CSearchDetailPanel::Create(CWnd* pParentWnd)
+BOOL CSearchDetailPanel::Create(CWnd* pParentWnd) 
 {
 	CRect rect( 0, 0, 0, 0 );
 	return CreateEx( WS_EX_CONTROLPARENT, NULL, _T("CSearchDetailPanel"), WS_CHILD |
@@ -115,11 +115,11 @@ BOOL CSearchDetailPanel::Create(CWnd* pParentWnd)
 void CSearchDetailPanel::Update(CMatchFile* pFile)
 {
 	CSingleLock pLock( &m_pSection, TRUE );
-
+	
 	CancelPreview();
 	ClearReviews();
 	m_pMetadata.Clear();
-
+	
 	if ( pFile == NULL || ( ! pFile->IsValid() ) )
 	{
 		if ( m_bValid )
@@ -129,7 +129,7 @@ void CSearchDetailPanel::Update(CMatchFile* pFile)
 		}
 		return;
 	}
-
+	
 	bool bFileChanged = m_pFile != pFile;
 	m_pMatches	= pFile->m_pList;
 	m_bValid	= TRUE;
@@ -140,7 +140,7 @@ void CSearchDetailPanel::Update(CMatchFile* pFile)
 	m_nIcon32	= ShellIcons.Get( pFile->m_sName, 32 );
 	m_nIcon48	= ShellIcons.Get( pFile->m_sName, 48 );
 	m_nRating	= pFile->m_nRated ? pFile->m_nRating / pFile->m_nRated : 0;
-
+	
 	m_pSchema		= pFile->AddHitsToMetadata( m_pMetadata );
 	DWORD nSpeed	= pFile->GetTotalHitsSpeed();
 	m_bCanPreview	= pFile->AddHitsToPreviewURLs( m_pPreviewURLs );
@@ -149,12 +149,12 @@ void CSearchDetailPanel::Update(CMatchFile* pFile)
 	m_pMetadata.Vote();
 	m_pMetadata.CreateLinks();
 	m_pMetadata.Clean( 4096 );
-
+	
 	if ( IsWindowVisible() || bFileChanged )
 	{
 		CString strPart;
 		m_sStatus.Empty();
-
+		
 		if ( pFile->m_nSources == 1 )
 		{
 			strPart.Format( IDS_SEARCH_DETAILS_SOURCES_ONE,
@@ -170,7 +170,7 @@ void CSearchDetailPanel::Update(CMatchFile* pFile)
 				Settings.SmartVolume( nSpeed, KiloBytes ) );
 			m_sStatus += strPart;
 		}
-
+		
 		if ( m_pReviews.GetCount() > 1 )
 		{
 			strPart.Format( IDS_SEARCH_DETAILS_REVIEWS_MANY,
@@ -182,18 +182,18 @@ void CSearchDetailPanel::Update(CMatchFile* pFile)
 			LoadString( strPart, IDS_SEARCH_DETAILS_REVIEWS_ONE );
 			m_sStatus += strPart;
 		}
-
+		
 		if ( pFile->m_pPreview != NULL && pFile->m_nPreview > 0 )
 		{
 			CImageFile pImage;
-
+			
 			if ( pImage.LoadFromMemory( _T(".jpg"), (LPCVOID)pFile->m_pPreview, pFile->m_nPreview, FALSE, TRUE ) )
 			{
 				pLock.Unlock();
 				OnPreviewLoaded( m_oSHA1, &pImage );
 			}
 		}
-
+		
 		OnSize( SIZE_INTERNAL, 0, 0 );
 	}
 }
@@ -204,20 +204,20 @@ void CSearchDetailPanel::ClearReviews()
 	{
 		delete m_pReviews.GetNext( pos );
 	}
-
+	
 	m_pReviews.RemoveAll();
 }
 
 /////////////////////////////////////////////////////////////////////////////
 // CSearchDetailPanel message handlers
 
-int CSearchDetailPanel::OnCreate(LPCREATESTRUCT lpCreateStruct)
+int CSearchDetailPanel::OnCreate(LPCREATESTRUCT lpCreateStruct) 
 {
 	if ( CWnd::OnCreate( lpCreateStruct ) == -1 ) return -1;
 	return 0;
 }
 
-void CSearchDetailPanel::OnDestroy()
+void CSearchDetailPanel::OnDestroy() 
 {
 	ClearReviews();
 
@@ -228,26 +228,26 @@ void CSearchDetailPanel::OnDestroy()
 	CWnd::OnDestroy();
 }
 
-void CSearchDetailPanel::OnSize(UINT nType, int cx, int cy)
+void CSearchDetailPanel::OnSize(UINT nType, int cx, int cy) 
 {
 	if ( nType != SIZE_INTERNAL ) CWnd::OnSize( nType, cx, cy );
-
+	
 	SCROLLINFO pInfo;
 	CRect rc;
-
+	
 	GetWindowRect( &rc );
 	rc.OffsetRect( -rc.left, -rc.top );
 	rc.right -= GetSystemMetrics( SM_CXVSCROLL );
-
+	
 	int nThumbSize = rc.Height() - 16;
 	nThumbSize = max( nThumbSize, 64 );
 	nThumbSize = min( nThumbSize, 128 );
 	rc.left += nThumbSize + 16;
 	rc.right -= 8;
-
+	
 	CClientDC dc( this );
 	int nHeight = 54 + m_pMetadata.Layout( &dc, rc.Width() );
-
+	
 	for ( POSITION pos = m_pReviews.GetHeadPosition() ; pos ; )
 	{
 		Review* pReview = m_pReviews.GetNext( pos );
@@ -255,9 +255,9 @@ void CSearchDetailPanel::OnSize(UINT nType, int cx, int cy)
 		pReview->Layout( this, &rcReview );
 		nHeight += rcReview.Height();
 	}
-
+	
 	if ( ! m_bValid ) nHeight = 0;
-
+	
 	pInfo.cbSize	= sizeof(pInfo);
 	pInfo.fMask		= SIF_ALL & ~SIF_TRACKPOS;
 	pInfo.nMin		= 0;
@@ -265,21 +265,21 @@ void CSearchDetailPanel::OnSize(UINT nType, int cx, int cy)
 	pInfo.nPage		= rc.Height();
 	pInfo.nPos		= 0;
 	pInfo.nPos		= max( 0, min( pInfo.nPos, pInfo.nMax - (int)pInfo.nPage + 1 ) );
-
+	
 	SetScrollInfo( SB_VERT, &pInfo, TRUE );
-
+	
 	Invalidate();
 }
 
-void CSearchDetailPanel::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* /*pScrollBar*/)
+void CSearchDetailPanel::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* /*pScrollBar*/) 
 {
-	SCROLLINFO pScroll = { 0 };
-
+	SCROLLINFO pScroll = {};
+	
 	pScroll.cbSize	= sizeof(pScroll);
 	pScroll.fMask	= SIF_ALL;
-
+	
 	GetScrollInfo( SB_VERT, &pScroll );
-
+	
 	switch ( nSBCode )
 	{
 	case SB_TOP:
@@ -305,10 +305,10 @@ void CSearchDetailPanel::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* /*pScrol
 		pScroll.nPos = nPos;
 		break;
 	}
-
+	
 	pScroll.fMask	= SIF_POS;
 	pScroll.nPos	= max( 0, min( pScroll.nPos, pScroll.nMax ) );
-
+	
 	SetScrollInfo( SB_VERT, &pScroll );
 
 	for ( POSITION pos = m_pReviews.GetHeadPosition() ; pos ; )
@@ -316,7 +316,7 @@ void CSearchDetailPanel::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* /*pScrol
 		Review* pReview = m_pReviews.GetNext( pos );
 		pReview->Reposition( pScroll.nPos );
 	}
-
+	
 	Invalidate();
 }
 
@@ -331,25 +331,25 @@ BOOL CSearchDetailPanel::OnMouseWheel(UINT /*nFlags*/, short zDelta, CPoint /*pt
 	return TRUE;
 }
 
-BOOL CSearchDetailPanel::OnEraseBkgnd(CDC* /*pDC*/)
+BOOL CSearchDetailPanel::OnEraseBkgnd(CDC* /*pDC*/) 
 {
 	return TRUE;
 }
 
-void CSearchDetailPanel::OnPaint()
+void CSearchDetailPanel::OnPaint() 
 {
 	CSingleLock pLock( &m_pSection, TRUE );
 	CPaintDC dc( this );
 	CRect rcClient;
 	CString str;
-
+	
 	GetClientRect( &rcClient );
-
+	
 	CFont* pOldFont = dc.GetCurrentFont();
 	dc.SetBkColor( CoolInterface.m_crWindow );
 	dc.SetBkMode( OPAQUE );
 	dc.SetTextColor( CoolInterface.m_crText );
-
+	
 	if ( ! m_bValid )
 	{
 		dc.SelectObject( &CoolInterface.m_fntNormal );
@@ -361,17 +361,17 @@ void CSearchDetailPanel::OnPaint()
 		dc.SelectObject( pOldFont );
 		return;
 	}
-
+	
 	CRect rcWork( 0, 0, 0, 0 );
 	DrawThumbnail( &dc, rcClient, rcWork );
-
+	
 	dc.SetViewportOrg( 0, -GetScrollPos( SB_VERT ) );
-
+	
 	dc.SetBkColor( CoolInterface.m_crWindow );
 	dc.SetTextColor( CoolInterface.m_crText );
-
+	
 	CPoint ptStar( rcWork.right - 3, rcWork.top - 2 );
-
+	
 	if ( m_nRating > 1 )
 	{
 		for ( int nRating = m_nRating - 1 ; nRating ; nRating-- )
@@ -389,16 +389,16 @@ void CSearchDetailPanel::OnPaint()
 	}
 
 	dc.SelectObject( &CoolInterface.m_fntCaption );
-	DrawText( &dc, rcWork.left, rcWork.top, m_sName, NULL,
+	DrawText( &dc, rcWork.left, rcWork.top, m_sName, NULL, 
 		m_nRating > 0 ? rcWork.Width() - m_nRating * 16 - 3 : rcWork.Width() - 4 );
 
 	rcWork.top += 20;
-
+	
 	dc.FillSolidRect( rcWork.left, rcWork.top, rcWork.Width(), 1, CoolInterface.m_crMargin );
 	dc.ExcludeClipRect( rcWork.left, rcWork.top, rcWork.right, rcWork.top + 1 );
 	dc.SetBkColor( CoolInterface.m_crWindow );
 	rcWork.top += 4;
-
+	
 	dc.SelectObject( &CoolInterface.m_fntBold );
 	LoadString( str, IDS_TIP_SIZE );
 	DrawText( &dc, rcWork.right - 125, rcWork.top, str + ':' );
@@ -411,20 +411,20 @@ void CSearchDetailPanel::OnPaint()
 	}
 	DrawText( &dc, rcWork.left, rcWork.top, m_sStatus, &m_rcStatus );
 	rcWork.top += 18;
-
+	
 	m_pMetadata.Paint( &dc, &rcWork );
-
+	
 	dc.SetViewportOrg( 0, 0 );
 	dc.SelectObject( &CoolInterface.m_fntCaption );
 	dc.SetBkColor( CoolInterface.m_crWindow );
 	dc.SetTextColor( 0 );
-
+	
 	for ( POSITION pos = m_pReviews.GetHeadPosition() ; pos ; )
 	{
 		Review* pReview = m_pReviews.GetNext( pos );
 		pReview->Paint( &dc, GetScrollPos( SB_VERT ) );
 	}
-
+	
 	dc.SelectObject( pOldFont );
 	dc.FillSolidRect( &rcClient, CoolInterface.m_crWindow );
 }
@@ -442,7 +442,7 @@ void CSearchDetailPanel::DrawText(CDC* pDC, int nX, int nY, LPCTSTR pszText, REC
 
 	pDC->ExtTextOut( nX, nY, ETO_CLIPPED|ETO_OPAQUE, &rc, pszText, static_cast< UINT >( _tcslen( pszText ) ), NULL );
 	pDC->ExcludeClipRect( &rc );
-
+	
 	if ( pRect != NULL ) CopyMemory( pRect, &rc, sizeof(RECT) );
 }
 
@@ -451,38 +451,38 @@ void CSearchDetailPanel::DrawThumbnail(CDC* pDC, CRect& rcClient, CRect& rcWork)
 	int nThumbSize = rcClient.Height() - 16;
 	nThumbSize = max( nThumbSize, 64 );
 	nThumbSize = min( nThumbSize, 128 );
-
+	
 	CRect rcThumb( rcClient.left + 8, rcClient.top + 8,
 		rcClient.left + 8 + nThumbSize, rcClient.top + 8 + nThumbSize );
-
+	
 	rcWork.CopyRect( &rcThumb );
-
+	
 	pDC->Draw3dRect( &rcWork, CoolInterface.m_crMargin, CoolInterface.m_crMargin );
 	rcWork.DeflateRect( 1, 1 );
 	m_nThumbSize = rcWork.Width();
-
+	
 	DrawThumbnail( pDC, rcWork );
-
+	
 	pDC->ExcludeClipRect( &rcThumb );
-
+	
 	rcWork.SetRect( rcThumb.right + 8, rcThumb.top, rcClient.right - 8, rcClient.bottom );
 }
 
 void CSearchDetailPanel::DrawThumbnail(CDC* pDC, CRect& rcThumb)
 {
 	m_rcThumb = rcThumb;
-
+	
 	if ( m_bmThumb.m_hObject != NULL &&
 		 m_szThumb.cx != m_nThumbSize && m_szThumb.cy != m_nThumbSize )
 	{
 		CSingleLock pLock( &m_pMatches->m_pSection, TRUE );
-
+		
 		if ( m_pMatches->FileToItem( m_pFile ) < 0xFFFFFFFF )
 		{
 			if ( m_pFile->m_pPreview != NULL && m_pFile->m_nPreview > 0 )
 			{
 				CImageFile pImage;
-
+				
 				if ( pImage.LoadFromMemory( _T(".jpg"), (LPCVOID)m_pFile->m_pPreview, m_pFile->m_nPreview, FALSE, TRUE ) )
 				{
 					pLock.Unlock();
@@ -491,43 +491,43 @@ void CSearchDetailPanel::DrawThumbnail(CDC* pDC, CRect& rcThumb)
 			}
 		}
 	}
-
+	
 	if ( m_bmThumb.m_hObject &&
 			( m_szThumb.cx == m_nThumbSize || m_szThumb.cy == m_nThumbSize ) )
 	{
 		CDC dcMem;
 		dcMem.CreateCompatibleDC( pDC );
-
+		
 		CBitmap* pOld = (CBitmap*)dcMem.SelectObject( &m_bmThumb );
-
+		
 		CPoint ptImage(	( rcThumb.left + rcThumb.right ) / 2 - m_szThumb.cx / 2,
 						( rcThumb.top + rcThumb.bottom ) / 2 - m_szThumb.cy / 2 );
-
+		
 		pDC->BitBlt( ptImage.x, ptImage.y, m_szThumb.cx, m_szThumb.cy,
 			&dcMem, 0, 0, SRCCOPY );
 		pDC->ExcludeClipRect( ptImage.x, ptImage.y,
 			ptImage.x + m_szThumb.cx, ptImage.y + m_szThumb.cy );
-
+		
 		dcMem.SelectObject( pOld );
-
+		
 		pDC->FillSolidRect( &rcThumb, m_crLight );
 	}
 	else
 	{
 		CPoint pt(	( rcThumb.left + rcThumb.right ) / 2 - 24,
 					( rcThumb.top + rcThumb.bottom ) / 2 - 24 );
-
+		
 		if ( m_bCanPreview )
 		{
 			CString str;
 			LoadString( str, m_bIsPreviewing ? IDS_SEARCH_DETAILS_PREVIEWING : IDS_SEARCH_DETAILS_PREVIEW );
-
+			
 			pDC->SetBkColor( m_crLight );
 			pDC->SetTextColor( m_bIsPreviewing ? CoolInterface.m_crTextAlert : CoolInterface.m_crTextLink );
 			pDC->SelectObject( m_bIsPreviewing ? &theApp.m_gdiFontBold : &theApp.m_gdiFontLine );
-
+			
 			CSize sz = pDC->GetTextExtent( str );
-
+			
 			if ( sz.cx + 4 < rcThumb.Width() )
 			{
 				pt.y -= sz.cy / 2;
@@ -554,14 +554,14 @@ void CSearchDetailPanel::DrawThumbnail(CDC* pDC, CRect& rcThumb)
 					DrawText( pDC, ptText.x, ptText.y, strFirstHalf );
 					CSize sz2 = pDC->GetTextExtent( str );
 
-					if ( sz2.cx + 4 < rcThumb.Width() &&
+					if ( sz2.cx + 4 < rcThumb.Width() && 
 						 pt.y + sz2.cy + 57 < rcThumb.Height() )
 					{
 						pt.y -= sz2.cy / 2;
 						CPoint ptText(
 							( rcThumb.left + rcThumb.right ) / 2 - sz2.cx / 2,
 							pt.y + sz.cy + 57 );
-						DrawText( pDC, ptText.x, ptText.y, str );
+						DrawText( pDC, ptText.x, ptText.y, str );						
 					}
 					else
 						// append ellipsis if the second half does not fit
@@ -569,7 +569,7 @@ void CSearchDetailPanel::DrawThumbnail(CDC* pDC, CRect& rcThumb)
 				}
 			}
 		}
-
+		
 		if ( m_nIcon48 >= 0 )
 		{
 			ShellIcons.Draw( pDC, m_nIcon48, 48, pt.x, pt.y, m_crLight );
@@ -581,50 +581,50 @@ void CSearchDetailPanel::DrawThumbnail(CDC* pDC, CRect& rcThumb)
 			ShellIcons.Draw( pDC, m_nIcon32, 32, pt.x, pt.y, m_crLight );
 			pDC->ExcludeClipRect( pt.x, pt.y, pt.x + 32, pt.y + 32 );
 		}
-
+		
 		pDC->FillSolidRect( &rcThumb, m_crLight );
 	}
 }
 
-BOOL CSearchDetailPanel::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)
+BOOL CSearchDetailPanel::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message) 
 {
 	CPoint point;
-
+	
 	GetCursorPos( &point );
 	ScreenToClient( &point );
-
+	
 	if ( m_bValid && m_bCanPreview && ! m_bIsPreviewing && m_rcThumb.PtInRect( point ) )
 	{
 		SetCursor( AfxGetApp()->LoadCursor( IDC_HAND ) );
 		return TRUE;
 	}
-
+	
 	point.y += GetScrollPos( SB_VERT );
-
+	
 	if ( m_bValid && m_pReviews.GetCount() > 0 && m_rcStatus.PtInRect( point ) )
 	{
 		SetCursor( AfxGetApp()->LoadCursor( IDC_HAND ) );
 		return TRUE;
 	}
-
+	
 	if ( m_bValid && m_pMetadata.HitTest( point, TRUE ) != NULL )
 	{
 		SetCursor( AfxGetApp()->LoadCursor( IDC_HAND ) );
 		return TRUE;
 	}
-
+	
 	return CWnd::OnSetCursor( pWnd, nHitTest, message );
 }
 
-void CSearchDetailPanel::OnLButtonUp(UINT nFlags, CPoint point)
+void CSearchDetailPanel::OnLButtonUp(UINT nFlags, CPoint point) 
 {
 	if ( m_bValid && m_bCanPreview && ! m_bIsPreviewing && m_rcThumb.PtInRect( point ) )
 	{
 		RequestPreview();
 	}
-
+	
 	point.y += GetScrollPos( SB_VERT );
-
+	
 	if ( m_bValid && m_pReviews.GetCount() > 0 && m_rcStatus.PtInRect( point ) )
 	{
 		int nHeight = 54 + m_pMetadata.m_nHeight;
@@ -632,9 +632,9 @@ void CSearchDetailPanel::OnLButtonUp(UINT nFlags, CPoint point)
 		OnVScroll( SB_THUMBPOSITION, nHeight, NULL );
 		Invalidate();
 	}
-
+	
 	m_pMetadata.OnClick( point );
-
+	
 	CWnd::OnLButtonUp( nFlags, point );
 }
 
@@ -645,7 +645,7 @@ Review::Review(const Hashes::Guid& oGUID, IN_ADDR* pAddress, LPCTSTR pszNick, in
 {
 	m_oGUID		= oGUID;
 	m_nRating	= nRating;
-
+	
 	if ( pszNick != NULL && *pszNick != 0 )
 	{
 		m_sNick.Format( _T("%s (%s)"), pszNick,
@@ -655,7 +655,7 @@ Review::Review(const Hashes::Guid& oGUID, IN_ADDR* pAddress, LPCTSTR pszNick, in
 	{
 		m_sNick = inet_ntoa( *pAddress );
 	}
-
+	
 	if ( pszComments != NULL )
 	{
 		m_pComments.m_szMargin = CSize( 6, 0 );
@@ -671,7 +671,7 @@ Review::~Review()
 void Review::Layout(CSearchDetailPanel* pParent, CRect* pRect)
 {
 	pRect->bottom += 22;
-
+	
 	if ( m_pComments.GetCount() )
 	{
 		if ( m_wndComments.m_hWnd == NULL )
@@ -680,7 +680,7 @@ void Review::Layout(CSearchDetailPanel* pParent, CRect* pRect)
 			m_wndComments.SetSelectable( TRUE );
 			m_wndComments.SetDocument( &m_pComments );
 		}
-
+		
 		pRect->bottom += m_wndComments.FullHeightMove( pRect->left, pRect->bottom, pRect->Width(), TRUE );
 		pRect->bottom += 4;
 	}
@@ -688,7 +688,7 @@ void Review::Layout(CSearchDetailPanel* pParent, CRect* pRect)
 	{
 		pRect->bottom += 2;
 	}
-
+	
 	m_rc.CopyRect( pRect );
 }
 
@@ -705,21 +705,21 @@ void Review::Paint(CDC* pDC, int nScroll)
 {
 	CRect rc( &m_rc );
 	rc.OffsetRect( 0, -nScroll );
-
+	
 	pDC->FillSolidRect( rc.left, rc.top, rc.Width(), 1, CoolInterface.m_crMargin );
 	pDC->ExcludeClipRect( rc.left, rc.top, rc.right, rc.top + 1 );
 	rc.top += 4;
-
+	
 	CString strFormat, strCaption;
-
+	
 	LoadString( strFormat, m_pComments.GetCount() > 0 ? IDS_SEARCH_DETAILS_WRITES : IDS_SEARCH_DETAILS_RATES );
 	strCaption.Format( strFormat, (LPCTSTR)m_sNick );
-
+	
 	pDC->SetBkColor( CoolInterface.m_crWindow );
 	CSearchDetailPanel::DrawText( pDC, rc.left, rc.top, strCaption );
 
 	CPoint ptStar( rc.right - 3, rc.top );
-
+	
 	if ( m_nRating > 1 )
 	{
 		for ( int nRating = m_nRating - 1 ; nRating ; nRating-- )
@@ -735,7 +735,7 @@ void Review::Paint(CDC* pDC, int nScroll)
 		CoolInterface.Draw( pDC, IDI_FAKE, 16, ptStar.x, ptStar.y, CoolInterface.m_crWindow );
 		pDC->ExcludeClipRect( ptStar.x, ptStar.y, ptStar.x + 16, ptStar.y + 16 );
 	}
-
+	
 	rc.top += 20;
 }
 
@@ -753,50 +753,50 @@ void CSearchDetailPanel::OnClickReview(NMHDR* pNotify, LRESULT* /*pResult*/)
 BOOL CSearchDetailPanel::RequestPreview()
 {
 	CSingleLock pLock( &m_pSection, TRUE );
-
+	
 	if ( ! m_bValid || ! m_bCanPreview || m_pPreviewURLs.IsEmpty() ) return FALSE;
-
+	
 	BeginThread( "CtrlSearchDetailPanel" );
-
+	
 	m_bRunPreview = TRUE;
-
+	
 	pLock.Unlock();
-
+	
 	Wakeup();
-
+	
 	return TRUE;
 }
 
 void CSearchDetailPanel::CancelPreview()
 {
 	CSingleLock pLock( &m_pSection, TRUE );
-
+	
 	m_bRunPreview = FALSE;
 	m_pPreviewURLs.RemoveAll();
-
+	
 	if ( m_bmThumb.m_hObject != NULL )
 	{
 		m_bmThumb.DeleteObject();
 		Invalidate();
 	}
-
+	
 	if ( m_bIsPreviewing )
 	{
 		m_bIsPreviewing = FALSE;
 		Invalidate();
 	}
-
+	
 	m_pRequest.Cancel();
 }
 
 void CSearchDetailPanel::OnRun()
 {
 	CSingleLock pLock( &m_pSection );
-
+	
 	while ( IsThreadEnabled() )
 	{
 		pLock.Lock();
-
+		
 		if ( ! m_bValid || ! m_bRunPreview || m_pPreviewURLs.IsEmpty() )
 		{
 			if ( m_bIsPreviewing )
@@ -805,31 +805,31 @@ void CSearchDetailPanel::OnRun()
 				m_bCanPreview = ! m_pPreviewURLs.IsEmpty();
 				Invalidate();
 			}
-
+			
 			pLock.Unlock();
 			Doze();
-
+			
 			continue;
 		}
-
+		
 		CString strURL	= m_pPreviewURLs.RemoveHead();
-		Hashes::Sha1Hash oSHA1( m_oSHA1 );
-
+        Hashes::Sha1Hash oSHA1( m_oSHA1 );
+		
 		if ( ! m_bIsPreviewing )
 		{
 			m_bIsPreviewing = TRUE;
 			Invalidate();
 		}
-
+		
 		pLock.Unlock();
-
+		
 		BYTE* pBuffer;
 		DWORD nBuffer;
-
+		
 		if ( ExecuteRequest( strURL, &pBuffer, &nBuffer ) )
 		{
 			CImageFile pImage;
-
+			
 			if ( pImage.LoadFromMemory( _T(".jpg"), (LPCVOID)pBuffer, nBuffer, FALSE, TRUE ) )
 			{
 				OnPreviewLoaded( oSHA1, &pImage );
@@ -839,7 +839,7 @@ void CSearchDetailPanel::OnRun()
 			{
 				theApp.Message( MSG_ERROR, IDS_SEARCH_DETAILS_PREVIEW_FAILED, (LPCTSTR)strURL );
 			}
-
+			
 			free( pBuffer );
 		}
 		else
@@ -855,24 +855,24 @@ BOOL CSearchDetailPanel::ExecuteRequest(CString strURL, BYTE** ppBuffer, DWORD* 
 	m_pRequest.SetURL( strURL );
 	m_pRequest.AddHeader( _T("Accept"), _T("image/jpeg") );
 	m_pRequest.LimitContentLength( Settings.Search.MaxPreviewLength );
-
+	
 	if ( ! m_pRequest.Execute( FALSE ) )
 	{
 		theApp.Message( MSG_DEBUG, _T("Preview failed: unable to execute request.") );
 		return FALSE;
 	}
-
+	
 	/*int nCode =*/ m_pRequest.GetStatusCode();
-
+	
 	if ( m_pRequest.GetStatusSuccess() == FALSE )
 	{
 		theApp.Message( MSG_DEBUG, _T("Preview failed: HTTP status code %i"),
 			m_pRequest.GetStatusCode() );
 		return FALSE;
 	}
-
+	
 	CString strURN = m_pRequest.GetHeader( _T("X-Previewed-URN") );
-
+	
 	if ( strURN.GetLength() )
 	{
 		Hashes::Sha1Hash oSHA1;
@@ -883,18 +883,18 @@ BOOL CSearchDetailPanel::ExecuteRequest(CString strURL, BYTE** ppBuffer, DWORD* 
 			return FALSE;
 		}
 	}
-
+	
 	CString strMIME = m_pRequest.GetHeader( _T("Content-Type") );
-
+	
 	if ( strMIME.CompareNoCase( _T("image/jpeg") ) != 0 )
 	{
 		theApp.Message( MSG_DEBUG, _T("Preview failed: unacceptable content type.") );
 		return FALSE;
 	}
-
+	
 	CBuffer* pBuffer = m_pRequest.GetResponseBuffer();
 	if ( pBuffer == NULL ) return FALSE;
-
+	
 	*pnBuffer = pBuffer->m_nLength;
 	*ppBuffer = (BYTE*)malloc( *pnBuffer );
 	if ( ! *ppBuffer )
@@ -905,28 +905,28 @@ BOOL CSearchDetailPanel::ExecuteRequest(CString strURL, BYTE** ppBuffer, DWORD* 
 	}
 
 	CopyMemory( *ppBuffer, pBuffer->m_pBuffer, *pnBuffer );
-
+	
 	return TRUE;
 }
 
 void CSearchDetailPanel::OnPreviewLoaded(const Hashes::Sha1Hash& oSHA1, CImageFile* pImage)
 {
 	if ( m_nThumbSize == 0 ) return;
-
+	
 	pImage->FitTo( m_nThumbSize, m_nThumbSize );
-
+	
 	CSingleLock pLock( &m_pSection, TRUE );
-
+	
 	if ( validAndUnequal( m_oSHA1, oSHA1 ) ) return;
-
+	
 	m_bCanPreview = m_bRunPreview = m_bIsPreviewing = FALSE;
-
+	
 	if ( m_bmThumb.m_hObject ) m_bmThumb.DeleteObject();
-
+	
 	m_bmThumb.Attach( pImage->CreateBitmap() );
 	m_szThumb.cx = pImage->m_nWidth;
 	m_szThumb.cy = pImage->m_nHeight;
-
+	
 	pLock.Unlock();
 	Invalidate();
 }
@@ -934,18 +934,18 @@ void CSearchDetailPanel::OnPreviewLoaded(const Hashes::Sha1Hash& oSHA1, CImageFi
 BOOL CSearchDetailPanel::CachePreviewImage(const Hashes::Sha1Hash& /*oSHA1*/, LPBYTE pBuffer, DWORD nBuffer)
 {
 	CSingleLock pLock( &m_pMatches->m_pSection, TRUE );
-
+	
 	if ( m_pMatches->FileToItem( m_pFile ) != 0xFFFFFFFF )
 	{
 		if ( m_pFile->m_pPreview != NULL ) delete [] m_pFile->m_pPreview;
-
+		
 		m_pFile->m_nPreview = nBuffer;
 		m_pFile->m_pPreview = new BYTE[ nBuffer ];
 		CopyMemory( m_pFile->m_pPreview, pBuffer, nBuffer );
-
+		
 		return TRUE;
 	}
-
+	
 	return FALSE;
 }
 

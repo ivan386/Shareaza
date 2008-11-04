@@ -362,7 +362,7 @@ void CMediaFrame::SetFullScreen(BOOL bFullScreen)
 		HMONITOR hMonitor = MonitorFromWindow( AfxGetMainWnd()->GetSafeHwnd(),
 			MONITOR_DEFAULTTOPRIMARY );
 
-		MONITORINFO oMonitor = { 0 };
+		MONITORINFO oMonitor = {0};
 		oMonitor.cbSize = sizeof( MONITORINFO );
 		GetMonitorInfo( hMonitor, &oMonitor );
 
@@ -982,7 +982,7 @@ LRESULT CMediaFrame::OnMediaKey(WPARAM wParam, LPARAM lParam)
 		if ( result != MMSYSERR_NOERROR ) return 0;
 
 		// get the speaker line of the mixer device
-		MIXERLINE ml = { 0 };
+		MIXERLINE ml = {0};
 		ml.cbStruct = sizeof(MIXERLINE);
 		ml.dwComponentType = MIXERLINE_COMPONENTTYPE_DST_SPEAKERS;
 		result = mixerGetLineInfo( reinterpret_cast<HMIXEROBJ>(hMixer), &ml,
@@ -990,8 +990,8 @@ LRESULT CMediaFrame::OnMediaKey(WPARAM wParam, LPARAM lParam)
 		if ( result != MMSYSERR_NOERROR ) return 0;
 
 		// get the mute control of the speaker line
-		MIXERLINECONTROLS mlc = { 0 };
-		MIXERCONTROL mc = { 0 };
+		MIXERLINECONTROLS mlc = {0};
+		MIXERCONTROL mc = {0};
 		mlc.cbStruct = sizeof(MIXERLINECONTROLS);
 		mlc.dwLineID = ml.dwLineID;
 		mlc.dwControlType = MIXERCONTROL_CONTROLTYPE_MUTE;
@@ -1007,7 +1007,7 @@ LRESULT CMediaFrame::OnMediaKey(WPARAM wParam, LPARAM lParam)
 			ml.cChannels = 1;
 
 		// get the current mute values for all channels
-		MIXERCONTROLDETAILS mcd = { 0 };
+		MIXERCONTROLDETAILS mcd = {0};
 		MIXERCONTROLDETAILS_BOOLEAN* pmcd_b = new MIXERCONTROLDETAILS_BOOLEAN[ ml.cChannels ];
 		mcd.cbStruct = sizeof(mcd);
 		mcd.cChannels = ml.cChannels;

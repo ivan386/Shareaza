@@ -249,7 +249,7 @@ void CSkinDialog::OnWindowPosChanging(WINDOWPOS* lpwndpos)
 	HMONITOR hMonitor = MonitorFromWindow( GetSafeHwnd(),
 		MONITOR_DEFAULTTOPRIMARY );
 
-	MONITORINFO oMonitor = { 0 };
+	MONITORINFO oMonitor = {0};
 	oMonitor.cbSize = sizeof( MONITORINFO );
 	GetMonitorInfo( hMonitor, &oMonitor );
 

@@ -1,7 +1,7 @@
 //
 // DlgHitColumns.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -70,7 +70,7 @@ BOOL CSchemaColumnsDlg::OnInitDialog()
 
 	LoadString( m_wndSchemas.m_sNoSchemaText, IDS_SEARCH_NO_SCHEMA );
 	m_wndSchemas.Load( m_pSchema ? m_pSchema->GetURI() : _T("") );
-
+	
 	OnSelChangeSchemas();
 
 	for ( int nMember = 0 ; nMember < m_wndColumns.GetItemCount() ; nMember++ )
@@ -101,7 +101,7 @@ void CSchemaColumnsDlg::OnSelChangeSchemas()
 
 		if ( !pMember->m_bHidden )
 		{
-			LV_ITEM pItem = { 0 };
+			LV_ITEM pItem = {};
 			pItem.mask		= LVIF_TEXT|LVIF_PARAM;
 			pItem.iItem		= m_wndColumns.GetItemCount();
 			pItem.lParam	= (LPARAM)pMember;
@@ -263,3 +263,4 @@ BOOL CSchemaColumnsDlg::ToggleColumnHelper(CSchema* pSchema, CList< CSchemaMembe
 
 	return FALSE;
 }
+

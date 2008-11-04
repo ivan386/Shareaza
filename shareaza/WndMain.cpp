@@ -339,7 +339,7 @@ void CMainWnd::SaveState()
 
 BOOL CMainWnd::PreCreateWindow(CREATESTRUCT& cs)
 {
-	WNDCLASS wndcls = { 0 };
+	WNDCLASS wndcls = {};
 
 	wndcls.style			= CS_DBLCLKS | CS_PARENTDC;
 	wndcls.lpfnWndProc		= AfxWndProc;
@@ -751,7 +751,7 @@ void CMainWnd::OnWindowPosChanging(WINDOWPOS* lpwndpos)
 	HMONITOR hMonitor = MonitorFromWindow( GetSafeHwnd(),
 		MONITOR_DEFAULTTOPRIMARY );
 
-	MONITORINFO oMonitor = { 0 };
+	MONITORINFO oMonitor = {0};
 	oMonitor.cbSize = sizeof( MONITORINFO );
 	GetMonitorInfo( hMonitor, &oMonitor );
 
@@ -2674,8 +2674,8 @@ void CMainWnd::OnHelpFakeShareaza()
 	}
 	else
 	{
-		ShellExecute( GetSafeHwnd(), _T("open"),
-		_T("http://translate.google.com/translate?u=fakeshareaza.com&hl=en&tl=") + Settings.General.Language.Left(2),
+		ShellExecute( GetSafeHwnd(), _T("open"), 
+		_T("http://translate.google.com/translate?u=fakeshareaza.com&hl=en&tl=") + Settings.General.Language.Left(2), 
 		NULL, NULL, SW_SHOWNORMAL );
 	}
 }

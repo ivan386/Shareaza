@@ -345,15 +345,12 @@ BOOL CShareazaApp::InitInstance()
 		+ ( ( Settings.Connection.EnableUPnP && ! Settings.Live.FirstRun ) ? 1 : 0 );
 
 	SplashStep( L"Winsock", ( ( m_ocmdInfo.m_bNoSplash || ! m_ocmdInfo.m_bShowSplash ) ? 0 : nSplashSteps ), false );
-	WSADATA wsaData = { 0 };
-	for ( int i( 1 ); i <= 2; ++i )
+	WSADATA wsaData;
+	for ( int i = 1; i <= 2; i++ )
 	{
-		if ( WSAStartup( MAKEWORD( 1, 1 ), &wsaData ) )
-			return FALSE;
-		if ( wsaData.wVersion == MAKEWORD( 1, 1 ) )
-			break;
-		if ( i == 2 )
-			return FALSE;
+		if ( WSAStartup( MAKEWORD( 1, 1 ), &wsaData ) ) return FALSE;
+		if ( wsaData.wVersion == MAKEWORD( 1, 1 ) ) break;
+		if ( i == 2 ) return FALSE;
 		WSACleanup();
 	}
 
@@ -834,7 +831,7 @@ void CShareazaApp::InitResources()
 		GeoIP_newFunc pfnGeoIP_new = (GeoIP_newFunc)GetProcAddress( m_hGeoIP, "GeoIP_new" );
 		m_pfnGeoIP_country_code_by_addr = (GeoIP_country_code_by_addrFunc)GetProcAddress( m_hGeoIP, "GeoIP_country_code_by_addr" );
 		m_pfnGeoIP_country_name_by_addr = (GeoIP_country_name_by_addrFunc)GetProcAddress( m_hGeoIP, "GeoIP_country_name_by_addr" );
-		if ( pfnGeoIP_new )
+		if ( pfnGeoIP_new ) 
 			m_pGeoIP = pfnGeoIP_new( GEOIP_MEMORY_CACHE );
 	}
 
@@ -842,7 +839,7 @@ void CShareazaApp::InitResources()
 	m_hLibGFL = CustomLoadLibrary( _T("libgfl280.dll") );
 
 	// Use GlobalMemoryStatusEx if possible (WinXP)
-	MEMORYSTATUSEX pMemory = { 0 };
+	MEMORYSTATUSEX pMemory = {};
 	pMemory.dwLength = sizeof(pMemory);
 	if ( GlobalMemoryStatusEx( &pMemory ) )
 		m_nPhysicalMemory = pMemory.ullTotalPhys;
@@ -1456,7 +1453,7 @@ DWORD TimeFromString(LPCTSTR pszTime)
 	LPCTSTR psz;
 	int nTemp;
 
-	tm pTime = { 0 };
+	tm pTime = {};
 
 	if ( _stscanf( pszTime, _T("%i"), &nTemp ) != 1 ) return 0;
 	pTime.tm_year = nTemp - 1900;
@@ -1518,7 +1515,7 @@ BOOL TimeFromString(LPCTSTR pszTime, FILETIME* pTime)
 	LPCTSTR psz;
 	int nTemp;
 
-	SYSTEMTIME pOut = { 0 };
+	SYSTEMTIME pOut = {};
 
 	if ( _stscanf( pszTime, _T("%i"), &nTemp ) != 1 ) return FALSE;
 	pOut.wYear = WORD( nTemp );
@@ -2247,7 +2244,7 @@ static int CALLBACK BrowseCallbackProc(HWND hWnd, UINT uMsg, LPARAM lParam, LPAR
 	case BFFM_SELCHANGED:
 		{
 			// Fail if non-filesystem
-			TCHAR szDir[ MAX_PATH ] = { 0 };
+			TCHAR szDir[ MAX_PATH ] = {};
 			BOOL bResult = SHGetPathFromIDList( (LPITEMIDLIST)lParam, szDir );
 			if ( bResult )
 			{
@@ -2256,7 +2253,7 @@ static int CALLBACK BrowseCallbackProc(HWND hWnd, UINT uMsg, LPARAM lParam, LPAR
 				if ( bResult )
 				{
 					// Fail if pidl is a link
-					SHFILEINFO sfi = { 0 };
+					SHFILEINFO sfi = {};
 					bResult = ( SHGetFileInfo( (LPCTSTR)lParam, 0, &sfi, sizeof( sfi ),
 						SHGFI_PIDL | SHGFI_ATTRIBUTES ) &&
 						( sfi.dwAttributes & SFGAO_LINK ) == 0 );
@@ -2281,7 +2278,7 @@ CString BrowseForFolder(UINT nTitle, LPCTSTR szInitialPath, HWND hWnd)
 CString BrowseForFolder(LPCTSTR szTitle, LPCTSTR szInitialPath, HWND hWnd)
 {
 	// Get last used folder
-	static TCHAR szDefaultPath[ MAX_PATH ] = { 0 };
+	static TCHAR szDefaultPath[ MAX_PATH ] = {};
 	if ( ! szInitialPath || ! *szInitialPath )
 	{
 		if ( ! *szDefaultPath )
@@ -2289,8 +2286,8 @@ CString BrowseForFolder(LPCTSTR szTitle, LPCTSTR szInitialPath, HWND hWnd)
 		szInitialPath = szDefaultPath;
 	}
 
-	TCHAR szDisplayName[ MAX_PATH ] = { 0 };
-	BROWSEINFO pBI = { 0 };
+	TCHAR szDisplayName[ MAX_PATH ] = {};
+	BROWSEINFO pBI = {};
 	pBI.hwndOwner = hWnd ? hWnd : AfxGetMainWnd()->GetSafeHwnd();
 	pBI.pszDisplayName = szDisplayName;
 	pBI.lpszTitle = szTitle;
@@ -2301,7 +2298,7 @@ CString BrowseForFolder(LPCTSTR szTitle, LPCTSTR szInitialPath, HWND hWnd)
 	if ( pPath == NULL )
 		return CString();
 
-	TCHAR szPath[ MAX_PATH ] = { 0 };
+	TCHAR szPath[ MAX_PATH ] = {};
 	BOOL bResult = SHGetPathFromIDList( pPath, szPath );
 
 	CComPtr< IMalloc > pMalloc;

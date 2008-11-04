@@ -253,7 +253,7 @@ HBITMAP CImageFile::CreateBitmap(HDC hUseDC)
 	if ( ! m_bLoaded ) return NULL;
 	if ( m_nComponents != 3 ) return NULL;
 
-	BITMAPV5HEADER pV5Header = { 0 };
+	BITMAPV5HEADER pV5Header = {};
 
 	pV5Header.bV5Size			= sizeof(BITMAPV5HEADER);
 	pV5Header.bV5Width			= (LONG)m_nWidth;

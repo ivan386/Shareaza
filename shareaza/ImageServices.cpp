@@ -120,7 +120,7 @@ BOOL CImageServices::LoadFromMemory(CImageFile* pFile, LPCTSTR pszType, LPCVOID 
 					HINSTANCE hRes = AfxGetResourceHandle();
 
 					SAFEARRAY* pArray = NULL;
-					IMAGESERVICEDATA pParams = { 0 };
+					IMAGESERVICEDATA pParams = {};
 					pParams.cbSize = sizeof( pParams );
 					if ( bScanOnly ) pParams.nFlags |= IMAGESERVICE_SCANONLY;
 					if ( bPartialOk ) pParams.nFlags |= IMAGESERVICE_PARTIAL_IN;
@@ -159,7 +159,7 @@ BOOL CImageServices::LoadFromFile(CImageFile* pFile, LPCTSTR szFilename, BOOL bS
 		HINSTANCE hRes = AfxGetResourceHandle();
 
 		SAFEARRAY* pArray = NULL;
-		IMAGESERVICEDATA pParams = { 0 };
+		IMAGESERVICEDATA pParams = {};
 		pParams.cbSize = sizeof( pParams );
 		if ( bScanOnly ) pParams.nFlags |= IMAGESERVICE_SCANONLY;
 		if ( bPartialOk ) pParams.nFlags |= IMAGESERVICE_PARTIAL_IN;
@@ -269,7 +269,7 @@ BOOL CImageServices::SaveToMemory(CImageFile* pFile, LPCTSTR pszType, int nQuali
 	SAFEARRAY* pSource = ImageToArray( pFile );
 	if ( pSource == NULL ) return FALSE;
 
-	IMAGESERVICEDATA pParams = { 0 };
+	IMAGESERVICEDATA pParams = {};
 	pParams.cbSize		= sizeof(pParams);
 	pParams.nWidth		= pFile->m_nWidth;
 	pParams.nHeight		= pFile->m_nHeight;
@@ -312,7 +312,7 @@ BOOL CImageServices::SaveToMemory(CImageFile* pFile, LPCTSTR pszType, int nQuali
 	SAFEARRAY* pSource = ImageToArray( pFile );
 	if ( pSource == NULL ) return FALSE;
 
-	IMAGESERVICEDATA pParams = { 0 };
+	IMAGESERVICEDATA pParams = {};
 	pParams.cbSize		= sizeof(pParams);
 	pParams.nWidth		= pFile->m_nWidth;
 	pParams.nHeight		= pFile->m_nHeight;

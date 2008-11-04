@@ -283,7 +283,7 @@ BOOL CSkinWindow::Parse(CXMLElement* pBase, const CString& strPath)
 				_stscanf( strSize, _T("%i"), &nFontSize );
 				_stscanf( strBold, _T("%i"), &nFontWeight );
 
-				LOGFONT lf = { 0 };
+				LOGFONT lf = {};
 				lf.lfHeight			= nFontSize;
 				lf.lfWeight			= nFontWeight;
 				lf.lfCharSet		= DEFAULT_CHARSET;
@@ -527,7 +527,7 @@ void CSkinWindow::OnGetMinMaxInfo(MINMAXINFO* lpMMI)
 	HMONITOR hMonitor = MonitorFromWindow( AfxGetMainWnd()->GetSafeHwnd(),
 		MONITOR_DEFAULTTOPRIMARY );
 
-	MONITORINFO oMonitor = { 0 };
+	MONITORINFO oMonitor = {0};
 	oMonitor.cbSize = sizeof( MONITORINFO );
 	GetMonitorInfo( hMonitor, &oMonitor );
 
@@ -681,7 +681,7 @@ void CSkinWindow::OnSize(CWnd* pWnd)
 		HMONITOR hMonitor = MonitorFromWindow( pWnd->GetSafeHwnd(),
 			MONITOR_DEFAULTTONEAREST );
 
-		MONITORINFO oMonitor = { 0 };
+		MONITORINFO oMonitor = {0};
 		oMonitor.cbSize = sizeof( MONITORINFO );
 		GetMonitorInfo( hMonitor, &oMonitor );
 
@@ -1453,9 +1453,9 @@ CSize CSkinWindow::GetRegionSize()
 
 BOOL CSkinWindow::PreBlend(CBitmap* pbmTarget, const CRect& rcTarget, const CRect& rcSource)
 {
-	BITMAPINFO pTargeInfo = { 0 };
-	BITMAPINFO pImageInfo = { 0 };
-	BITMAPINFO pAlphaInfo = { 0 };
+	BITMAPINFO pTargeInfo = {};
+	BITMAPINFO pImageInfo = {};
+	BITMAPINFO pAlphaInfo = {};
 
 	pTargeInfo.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
 	pImageInfo.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);

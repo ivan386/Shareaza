@@ -1,7 +1,7 @@
 //
 // PageFileSources.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -49,7 +49,7 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CFileSourcesPage property page
 
-CFileSourcesPage::CFileSourcesPage() :
+CFileSourcesPage::CFileSourcesPage() : 
 	CFilePropertiesPage(CFileSourcesPage::IDD), m_sSource()
 {
 }
@@ -114,7 +114,7 @@ void CFileSourcesPage::AddSource(CSharedSource* pSource)
 	CString strURL = pSource->m_sURL;
 	if ( Settings.General.LanguageRTL ) strURL = _T("\x202A") + strURL;
 
-	LV_ITEM pItem = { 0 };
+	LV_ITEM pItem = {};
 	pItem.mask		= LVIF_TEXT|LVIF_PARAM|LVIF_IMAGE;
 	pItem.pszText	= (LPTSTR)(LPCTSTR)strURL;
 	pItem.iImage	= 0;

@@ -583,7 +583,7 @@ BOOL CDownloadWithFile::AppendMetadataID3v1(HANDLE hFile, CXMLElement* pXML)
 	DWORD nBytes;
 	CString str;
 
-	ID3V1 pID3 = { 0 };
+	ID3V1 pID3 = {};
 	SetFilePointer( hFile, 0, NULL, FILE_BEGIN );
 
 	if ( !ReadFile( hFile, &pID3, 3, &nBytes, NULL ) )

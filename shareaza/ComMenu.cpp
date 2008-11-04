@@ -1,7 +1,7 @@
 //
 // ComMenu.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -165,7 +165,7 @@ STDMETHODIMP CComMenu::XSMenu::put_CommandID(LONG nCommandID)
 	METHOD_PROLOGUE( CComMenu, SMenu )
 	if ( pThis->m_hMenu != NULL ) return E_FAIL;
 
-	MENUITEMINFO pItem = { 0 };
+	MENUITEMINFO pItem = {};
 	pItem.cbSize	= sizeof(pItem);
 	pItem.fMask		= MIIM_ID;
 	pItem.wID		= (WORD)nCommandID;
@@ -196,7 +196,7 @@ STDMETHODIMP CComMenu::XSMenu::put_Text(BSTR sText)
 
 	CString strText( sText );
 
-	MENUITEMINFO pItem = { 0 };
+	MENUITEMINFO pItem = {};
 	pItem.cbSize		= sizeof(pItem);
 	pItem.fMask			= MIIM_TYPE;
 	pItem.fType			= MFT_STRING;
@@ -297,24 +297,24 @@ STDMETHODIMP CComMenu::XEnumVARIANT::Next(ULONG celt, VARIANT FAR* rgvar, ULONG 
 
 STDMETHODIMP CComMenu::XEnumVARIANT::Skip(ULONG celt)
 {
-	METHOD_PROLOGUE( CComMenu, EnumVARIANT )
+    METHOD_PROLOGUE( CComMenu, EnumVARIANT )
 
 	int nCount = GetMenuItemCount( pThis->m_hMenu );
 
 	while ( celt-- && m_nIndex++ < (UINT)nCount );
 
-	return ( celt == 0 ? S_OK : S_FALSE );
+    return ( celt == 0 ? S_OK : S_FALSE );
 }
 
 STDMETHODIMP CComMenu::XEnumVARIANT::Reset()
 {
-	METHOD_PROLOGUE( CComMenu, EnumVARIANT )
+    METHOD_PROLOGUE( CComMenu, EnumVARIANT )
 	m_nIndex = 0;
-	return S_OK;
+    return S_OK;
 }
 
 STDMETHODIMP CComMenu::XEnumVARIANT::Clone(IEnumVARIANT FAR* FAR* /*ppenum*/)
 {
-	METHOD_PROLOGUE( CComMenu, EnumVARIANT )
-	return E_NOTIMPL;
+    METHOD_PROLOGUE( CComMenu, EnumVARIANT )
+    return E_NOTIMPL;
 }

@@ -118,13 +118,13 @@ BOOL CUploadsCtrl::Update()
 int CUploadsCtrl::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if ( CWnd::OnCreate( lpCreateStruct ) == -1 ) return -1;
-
+	
 	CRect rect( 0, 0, 0, 0 );
 	m_wndHeader.Create( WS_CHILD|HDS_DRAGDROP|HDS_HOTTRACK|HDS_FULLDRAG, rect, this, AFX_IDW_PANE_FIRST );
 	m_wndHeader.SetFont( &theApp.m_gdiFont );
-
+	
 	m_wndTip.Create( this, &Settings.Interface.TipUploads );
-
+	
 	InsertColumn( UPLOAD_COLUMN_TITLE, _T("Uploaded File"), LVCFMT_LEFT, 210 );
 	InsertColumn( UPLOAD_COLUMN_USER, _T("Remote User"), LVCFMT_LEFT, 100 );
 	InsertColumn( UPLOAD_COLUMN_SIZE, _T("Size"), LVCFMT_CENTER, 80 );
@@ -133,23 +133,23 @@ int CUploadsCtrl::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	InsertColumn( UPLOAD_COLUMN_CLIENT, _T("Client"), LVCFMT_CENTER, 100 );
 	InsertColumn( UPLOAD_COLUMN_RATING, _T("Rating"), LVCFMT_CENTER, 0 );
 	InsertColumn( UPLOAD_COLUMN_COUNTRY, _T("Country"), LVCFMT_LEFT, 60 );
-
-
+	
+	
 	LoadColumnState();
-
+	
 	CBitmap bmImages;
 	bmImages.LoadBitmap( IDB_PROTOCOLS );
-	if ( Settings.General.LanguageRTL )
+	if ( Settings.General.LanguageRTL ) 
 		bmImages.m_hObject = CreateMirroredBitmap( (HBITMAP)bmImages.m_hObject );
 
 	m_pProtocols.Create( 16, 16, ILC_COLOR32|ILC_MASK, 7, 1 ) ||
 	m_pProtocols.Create( 16, 16, ILC_COLOR24|ILC_MASK, 7, 1 ) ||
 	m_pProtocols.Create( 16, 16, ILC_COLOR16|ILC_MASK, 7, 1 );
 	m_pProtocols.Add( &bmImages, RGB( 0, 255, 0 ) );
-
+	
 	m_nFocus	= 0;
 	m_pDeselect	= NULL;
-
+	
 	return 0;
 }
 
@@ -164,34 +164,34 @@ void CUploadsCtrl::OnDestroy()
 
 void CUploadsCtrl::InsertColumn(int nColumn, LPCTSTR pszCaption, int nFormat, int nWidth)
 {
-	HDITEM pColumn = { 0 };
-
+	HDITEM pColumn = {};
+	
 	pColumn.mask	= HDI_FORMAT | HDI_LPARAM | HDI_TEXT | HDI_WIDTH;
 	pColumn.cxy		= nWidth;
 	pColumn.pszText	= (LPTSTR)pszCaption;
 	pColumn.fmt		= nFormat;
 	pColumn.lParam	= nColumn;
-
+	
 	m_wndHeader.InsertItem( m_wndHeader.GetItemCount(), &pColumn );
 }
 
 void CUploadsCtrl::SaveColumnState()
 {
 	HDITEM pItem = { HDI_WIDTH|HDI_ORDER };
-
+	
 	CString strOrdering, strWidths, strItem;
-
+	
 	for ( int nColumns = 0 ; m_wndHeader.GetItem( nColumns, &pItem ) ; nColumns++ )
 	{
 		m_wndHeader.GetItem( nColumns, &pItem );
-
+		
 		strItem.Format( _T("%.2x"), pItem.iOrder );
 		strOrdering += strItem;
-
+		
 		strItem.Format( _T("%.4x"), pItem.cxy );
 		strWidths += strItem;
 	}
-
+	
 	theApp.WriteProfileString( _T("ListStates"), _T("CUploadCtrl.Ordering"), strOrdering );
 	theApp.WriteProfileString( _T("ListStates"), _T("CUploadCtrl.Widths"), strWidths );
 }
@@ -199,32 +199,32 @@ void CUploadsCtrl::SaveColumnState()
 BOOL CUploadsCtrl::LoadColumnState()
 {
 	CString strOrdering, strWidths, strItem;
-
+	
 	strOrdering = theApp.GetProfileString( _T("ListStates"), _T("CUploadCtrl.Ordering"), _T("") );
 	strWidths = theApp.GetProfileString( _T("ListStates"), _T("CUploadCtrl.Widths"), _T("") );
-
+	
 	HDITEM pItem = { HDI_WIDTH|HDI_ORDER };
-
+	
 	if ( _tcsncmp( strWidths, _T("0000"), 4 ) == 0 &&
 		 _tcsncmp( strOrdering, _T("00"), 2 ) == 0 )
 	{
 		strWidths = strWidths.Mid( 4 );
 		strOrdering = strOrdering.Mid( 2 );
 	}
-
+	
 	for ( int nColumns = 0 ; m_wndHeader.GetItem( nColumns, &pItem ) ; nColumns++ )
 	{
 		if ( strWidths.GetLength() < 4 || strOrdering.GetLength() < 2 ) return FALSE;
-
+		
 		_stscanf( strWidths.Left( 4 ), _T("%x"), &pItem.cxy );
 		_stscanf( strOrdering.Left( 2 ), _T("%x"), &pItem.iOrder );
-
+		
 		strWidths = strWidths.Mid( 4 );
 		strOrdering = strOrdering.Mid( 2 );
-
+		
 		m_wndHeader.SetItem( nColumns, &pItem );
 	}
-
+	
 	return TRUE;
 }
 
@@ -234,22 +234,22 @@ BOOL CUploadsCtrl::LoadColumnState()
 void CUploadsCtrl::SelectTo(int nIndex)
 {
 	CSingleLock pLock( &Transfers.m_pSection, TRUE );
-
+	
 	BOOL bShift		= GetAsyncKeyState( VK_SHIFT ) & 0x8000;
 	BOOL bControl	= GetAsyncKeyState( VK_CONTROL ) & 0x8000;
 	BOOL bRight		= GetAsyncKeyState( VK_RBUTTON ) & 0x8000;
-
+	
 	if ( ! bShift && ! bControl && ! bRight && m_pDeselect == NULL ) DeselectAll();
-
+	
 	Update();
-
+	
 	INT nMin, nMax;
 	GetScrollRange( SB_VERT, &nMin, &nMax );
 	nIndex = max( 0, min( nIndex, nMax - 1 ) );
-
+	
 	CUploadFile* pFile;
 	CUploadQueue* pQueue;
-
+	
 	if ( bShift )
 	{
 		if ( m_nFocus < nIndex )
@@ -270,14 +270,14 @@ void CUploadsCtrl::SelectTo(int nIndex)
 				if ( pFile != NULL ) pFile->m_bSelected = TRUE;
 			}
 		}
-
+		
 		m_nFocus = nIndex;
 	}
 	else
 	{
 		m_nFocus = nIndex;
 		GetAt( m_nFocus, &pQueue, &pFile );
-
+		
 		if ( bControl )
 		{
 			if ( pQueue != NULL ) pQueue->m_bSelected = ! pQueue->m_bSelected;
@@ -289,14 +289,14 @@ void CUploadsCtrl::SelectTo(int nIndex)
 			if ( pFile != NULL ) pFile->m_bSelected = TRUE;
 		}
 	}
-
+	
 	CRect rcClient;
 	GetClientRect( &rcClient );
-
+	
 	int nScroll = GetScrollPos( SB_VERT );
 	int nHeight = ( rcClient.bottom - HEADER_HEIGHT ) / ITEM_HEIGHT - 1;
 	nHeight = max( 0, nHeight );
-
+	
 	if ( m_nFocus < nScroll )
 	{
 		SetScrollPos( SB_VERT, m_nFocus );
@@ -317,49 +317,49 @@ void CUploadsCtrl::DeselectAll(CUploadFile* /*pExcept*/)
 {
 	CSingleLock pLock( &Transfers.m_pSection, TRUE );
 	POSITION pos;
-
+	
 	UploadQueues.m_pTorrentQueue->m_bSelected = FALSE;
 	UploadQueues.m_pHistoryQueue->m_bSelected = FALSE;
-
+	
 	for ( pos = UploadQueues.GetIterator() ; pos ; )
 	{
 		CUploadQueue* pQueue = UploadQueues.GetNext( pos );
 		pQueue->m_bSelected = FALSE;
 	}
-
+	
 	for ( pos = UploadFiles.GetIterator() ; pos ; )
 	{
 		CUploadFile* pFile = UploadFiles.GetNext( pos );
 		pFile->m_bSelected = FALSE;
 	}
-
+	
 	Invalidate();
 }
 
 BOOL CUploadsCtrl::HitTest(const CPoint& point, CUploadQueue** ppQueue, CUploadFile** ppFile, int* pnIndex, RECT* prcItem)
 {
 	CRect rcClient, rcItem;
-
+	
 	GetClientRect( &rcClient );
 	rcClient.top += HEADER_HEIGHT;
-
+	
 	rcItem.CopyRect( &rcClient );
 	rcItem.left -= GetScrollPos( SB_HORZ );
 	rcItem.bottom = rcItem.top + ITEM_HEIGHT;
-
+	
 	int nScroll = GetScrollPos( SB_VERT );
 	int nIndex = 0;
-
+	
 	if ( ppQueue != NULL ) *ppQueue = NULL;
 	if ( ppFile != NULL ) *ppFile = NULL;
-
+	
 	for ( POSITION posQueue = GetQueueIterator() ; posQueue && rcItem.top < rcClient.bottom ; )
 	{
 		CUploadQueue* pQueue = GetNextQueue( posQueue );
-
+		
 		POSITION posFile = GetFileIterator( pQueue );
 		if ( posFile == NULL ) continue;
-
+		
 		if ( nScroll > 0 )
 		{
 			nScroll --;
@@ -375,15 +375,15 @@ BOOL CUploadsCtrl::HitTest(const CPoint& point, CUploadQueue** ppQueue, CUploadF
 			}
 			rcItem.OffsetRect( 0, ITEM_HEIGHT );
 		}
-
+		
 		nIndex ++;
 		if ( ! pQueue->m_bExpanded ) continue;
-
+		
 		while ( posFile && rcItem.top < rcClient.bottom )
 		{
 			CUploadFile* pFile = GetNextFile( pQueue, posFile );
 			if ( pFile == NULL ) continue;
-
+			
 			if ( nScroll > 0 )
 			{
 				nScroll --;
@@ -399,11 +399,11 @@ BOOL CUploadsCtrl::HitTest(const CPoint& point, CUploadQueue** ppQueue, CUploadF
 				}
 				rcItem.OffsetRect( 0, ITEM_HEIGHT );
 			}
-
+			
 			nIndex ++;
 		}
 	}
-
+	
 	return FALSE;
 }
 
@@ -411,30 +411,30 @@ BOOL CUploadsCtrl::GetAt(int nSelect, CUploadQueue** ppQueue, CUploadFile** ppFi
 {
 	/*int nScroll =*/ GetScrollPos( SB_VERT );
 	int nIndex = 0;
-
+	
 	if ( ppQueue != NULL ) *ppQueue = NULL;
 	if ( ppFile != NULL ) *ppFile = NULL;
-
+	
 	for ( POSITION posQueue = GetQueueIterator() ; posQueue ; )
 	{
 		CUploadQueue* pQueue = GetNextQueue( posQueue );
-
+		
 		POSITION posFile = GetFileIterator( pQueue );
 		if ( posFile == NULL ) continue;
-
+		
 		if ( nIndex++ == nSelect )
 		{
 			if ( ppQueue != NULL ) *ppQueue = pQueue;
 			return TRUE;
 		}
-
+		
 		if ( ! pQueue->m_bExpanded ) continue;
-
+		
 		while ( posFile )
 		{
 			CUploadFile* pFile = GetNextFile( pQueue, posFile );
 			if ( pFile == NULL ) continue;
-
+			
 			if ( nIndex++ == nSelect )
 			{
 				if ( ppFile != NULL ) *ppFile = pFile;
@@ -442,7 +442,7 @@ BOOL CUploadsCtrl::GetAt(int nSelect, CUploadQueue** ppQueue, CUploadFile** ppFi
 			}
 		}
 	}
-
+	
 	return FALSE;
 }
 
@@ -472,7 +472,7 @@ POSITION CUploadsCtrl::GetQueueIterator()
 CUploadQueue* CUploadsCtrl::GetNextQueue(POSITION& pos)
 {
 	ASSERT( pos != NULL );
-
+	
 	if ( pos == (POSITION)UploadQueues.m_pTorrentQueue )
 	{
 		if ( Settings.Uploads.FilterMask & ( ULF_ACTIVE | ULF_QUEUED ) )
@@ -488,7 +488,7 @@ CUploadQueue* CUploadsCtrl::GetNextQueue(POSITION& pos)
 		{
 			pos = NULL;
 		}
-
+		
 		return UploadQueues.m_pTorrentQueue;
 	}
 	else if ( pos == (POSITION)UploadQueues.m_pHistoryQueue )
@@ -499,7 +499,7 @@ CUploadQueue* CUploadsCtrl::GetNextQueue(POSITION& pos)
 	else
 	{
 		CUploadQueue* pQueue = UploadQueues.GetNext( pos );
-
+		
 		if ( pos == NULL )
 		{
 			if ( Settings.Uploads.FilterMask & ULF_HISTORY )
@@ -507,7 +507,7 @@ CUploadQueue* CUploadsCtrl::GetNextQueue(POSITION& pos)
 				pos = (POSITION)UploadQueues.m_pHistoryQueue;
 			}
 		}
-
+		
 		return pQueue;
 	}
 }
@@ -525,7 +525,7 @@ POSITION CUploadsCtrl::GetFileIterator(CUploadQueue* pQueue)
 			if ( pTransfer->m_nProtocol != PROTOCOL_BT ) continue;
 			return posThis;
 		}
-
+		
 		return NULL;
 	}
 	else if ( pQueue == UploadQueues.m_pHistoryQueue )
@@ -542,7 +542,7 @@ POSITION CUploadsCtrl::GetFileIterator(CUploadQueue* pQueue)
 			}
 			return posThis;
 		}
-
+		
 		return NULL;
 	}
 	else
@@ -554,7 +554,7 @@ POSITION CUploadsCtrl::GetFileIterator(CUploadQueue* pQueue)
 				return pQueue->m_pActive.GetHeadPosition();
 			}
 		}
-
+		
 		if ( Settings.Uploads.FilterMask & ULF_QUEUED )
 		{
 			if ( pQueue->m_pQueued.GetCount() > 0 )
@@ -562,7 +562,7 @@ POSITION CUploadsCtrl::GetFileIterator(CUploadQueue* pQueue)
 				return (POSITION)1;
 			}
 		}
-
+		
 		return NULL;
 	}
 }
@@ -570,13 +570,13 @@ POSITION CUploadsCtrl::GetFileIterator(CUploadQueue* pQueue)
 CUploadFile* CUploadsCtrl::GetNextFile(CUploadQueue* pQueue, POSITION& pos, int* pnPosition)
 {
 	ASSERT( pos != NULL );
-
+	
 	if ( pnPosition != NULL ) *pnPosition = -1;
-
+	
 	if ( pQueue == UploadQueues.m_pTorrentQueue )
 	{
 		CUploadFile* pReturn = UploadFiles.GetNext( pos );
-
+		
 		for ( ; pos ; )
 		{
 			POSITION posThis = pos;
@@ -587,13 +587,13 @@ CUploadFile* CUploadsCtrl::GetNextFile(CUploadQueue* pQueue, POSITION& pos, int*
 			pos = posThis;
 			break;
 		}
-
+		
 		return pReturn;
 	}
 	else if ( pQueue == UploadQueues.m_pHistoryQueue )
 	{
 		CUploadFile* pReturn = UploadFiles.GetNext( pos );
-
+		
 		for ( ; pos ; )
 		{
 			POSITION posThis = pos;
@@ -608,13 +608,13 @@ CUploadFile* CUploadsCtrl::GetNextFile(CUploadQueue* pQueue, POSITION& pos, int*
 			pos = posThis;
 			break;
 		}
-
+		
 		return pReturn;
 	}
 	else if ( (INT_PTR)pos > pQueue->m_pQueued.GetSize() )
 	{
 		CUploadTransfer* pTransfer = (CUploadTransfer*)pQueue->m_pActive.GetNext( pos );
-
+		
 		if ( pos == NULL )
 		{
 			if ( Settings.Uploads.FilterMask & ULF_QUEUED )
@@ -625,7 +625,7 @@ CUploadFile* CUploadsCtrl::GetNextFile(CUploadQueue* pQueue, POSITION& pos, int*
 				}
 			}
 		}
-
+		
 		if ( pnPosition != NULL ) *pnPosition = 0;
 		return pTransfer->m_pBaseFile;
 	}
@@ -648,46 +648,46 @@ void CUploadsCtrl::OnSize(UINT nType, int cx, int cy)
 {
 	int nWidth = 0, nHeight = 0;
 	CRect rcClient;
-
+	
 	if ( nType != 1982 ) CWnd::OnSize( nType, cx, cy );
-
+	
 	GetClientRect( &rcClient );
-
-	HDITEM pColumn = { 0 };
+	
+	HDITEM pColumn ={};
 	pColumn.mask = HDI_WIDTH;
-
+	
 	for ( int nColumn = 0 ; m_wndHeader.GetItem( nColumn, &pColumn ) ; nColumn ++ )
 		nWidth += pColumn.cxy;
-
-	SCROLLINFO pScroll = { 0 };
+	
+	SCROLLINFO pScroll = {};
 	pScroll.cbSize	= sizeof(pScroll);
 	pScroll.fMask	= SIF_RANGE|SIF_PAGE;
 	pScroll.nMin	= 0;
 	pScroll.nMax	= nWidth;
 	pScroll.nPage	= rcClient.right;
 	SetScrollInfo( SB_HORZ, &pScroll, TRUE );
-
+	
 	int nScroll = GetScrollPos( SB_HORZ );
 	m_wndHeader.SetWindowPos( NULL, -nScroll, 0, rcClient.right + nScroll, HEADER_HEIGHT, SWP_SHOWWINDOW );
-
+	
 	CSingleLock pLock( &Transfers.m_pSection, FALSE );
 	if ( ! pLock.Lock( 250 ) )
 		return;
-
+	
 	for ( POSITION posQueue = GetQueueIterator() ; posQueue ; )
 	{
 		CUploadQueue* pQueue = GetNextQueue( posQueue );
-
+		
 		POSITION posFile = GetFileIterator( pQueue );
-
+		
 		if ( posFile == NULL )
 		{
 			pQueue->m_bSelected = FALSE;
 			continue;
 		}
-
+		
 		nHeight ++;
-
+		
 		if ( ! pQueue->m_bExpanded ) continue;
 
 		while ( posFile )
@@ -695,9 +695,9 @@ void CUploadsCtrl::OnSize(UINT nType, int cx, int cy)
 			if ( GetNextFile( pQueue, posFile ) ) nHeight ++;
 		}
 	}
-
+	
 	pLock.Unlock();
-
+	
 	ZeroMemory( &pScroll, sizeof(pScroll) );
 	pScroll.cbSize	= sizeof(pScroll);
 	pScroll.fMask	= SIF_RANGE|SIF_PAGE;
@@ -705,9 +705,9 @@ void CUploadsCtrl::OnSize(UINT nType, int cx, int cy)
 	pScroll.nMax	= nHeight;
 	pScroll.nPage	= ( rcClient.bottom - HEADER_HEIGHT ) / ITEM_HEIGHT + 1;
 	SetScrollInfo( SB_VERT, &pScroll, TRUE );
-
+	
 	m_nFocus = min( m_nFocus, max( 0, nHeight - 1 ) );
-
+	
 	Invalidate();
 }
 
@@ -723,24 +723,24 @@ void CUploadsCtrl::OnPaint()
 
 	GetClientRect( &rcClient );
 	rcClient.top += HEADER_HEIGHT;
-
+	
 	rcItem.CopyRect( &rcClient );
 	rcItem.left -= GetScrollPos( SB_HORZ );
 	rcItem.bottom = rcItem.top + ITEM_HEIGHT;
-
+	
 	int nScroll = GetScrollPos( SB_VERT );
 	int nIndex = 0;
-
+	
 	CFont* pfOld = (CFont*)dc.SelectObject( &theApp.m_gdiFont );
 	BOOL bFocus = ( GetFocus() == this );
 
 	for ( POSITION posQueue = GetQueueIterator() ; posQueue && rcItem.top < rcClient.bottom ; )
 	{
 		CUploadQueue* pQueue = GetNextQueue( posQueue );
-
+		
 		POSITION posFile = GetFileIterator( pQueue );
 		if ( posFile == NULL ) continue;
-
+		
 		if ( nScroll > 0 )
 		{
 			nScroll --;
@@ -750,17 +750,17 @@ void CUploadsCtrl::OnPaint()
 			PaintQueue( dc, rcItem, pQueue, bFocus && ( m_nFocus == nIndex ) );
 			rcItem.OffsetRect( 0, ITEM_HEIGHT );
 		}
-
+		
 		nIndex ++;
-
+		
 		if ( ! pQueue->m_bExpanded ) continue;
-
+		
 		while ( posFile && rcItem.top < rcClient.bottom && rcItem.top < rcClient.bottom )
 		{
 			int nPosition;
 			CUploadFile* pFile = GetNextFile( pQueue, posFile, &nPosition );
 			if ( pFile == NULL ) continue;
-
+			
 			if ( nScroll > 0 )
 			{
 				nScroll --;
@@ -770,13 +770,13 @@ void CUploadsCtrl::OnPaint()
 				PaintFile( dc, rcItem, pQueue, pFile, nPosition, bFocus && ( m_nFocus == nIndex ) );
 				rcItem.OffsetRect( 0, ITEM_HEIGHT );
 			}
-
+			
 			nIndex ++;
 		}
 	}
-
+	
 	dc.SelectObject( pfOld );
-
+	
 	rcClient.top = rcItem.top;
 	if ( rcClient.top < rcClient.bottom )
 		dc.FillSolidRect( &rcClient, CoolInterface.m_crWindow );
@@ -790,24 +790,24 @@ void CUploadsCtrl::PaintQueue(CDC& dc, const CRect& rcRow, CUploadQueue* pQueue,
 
 	dc.SetBkColor( crBack );
 	dc.SetBkMode( OPAQUE );
-
+	
 	if ( pQueue->m_bSelected )
 		dc.SetTextColor( CoolInterface.m_crHiText );
 	else
 		dc.SetTextColor( CoolInterface.m_crText );
-
+	
 	int nTextLeft = rcRow.right, nTextRight = rcRow.left;
-	HDITEM pColumn = { 0 };
-
+	HDITEM pColumn = {};
+	
 	pColumn.mask = HDI_FORMAT | HDI_LPARAM;
-
+	
 	dc.SelectObject( &theApp.m_gdiFontBold );
-
+	
 	for ( int nColumn = 0 ; m_wndHeader.GetItem( nColumn, &pColumn ) ; nColumn++ )
 	{
 		CString strText;
 		CRect rcCell;
-
+		
 		m_wndHeader.GetItemRect( nColumn, &rcCell );
 		rcCell.left		+= rcRow.left;
 		rcCell.right	+= rcRow.left;
@@ -862,41 +862,41 @@ void CUploadsCtrl::PaintQueue(CDC& dc, const CRect& rcRow, CUploadQueue* pQueue,
 			rcCell.left += 16;
 			dc.FillSolidRect( rcCell.left, rcCell.top, 1, rcCell.Height(), crLeftAligned );
 			rcCell.left += 1;
-
+			
 			strText = pQueue->m_sName;
 			break;
-
+			
 		case UPLOAD_COLUMN_SIZE:
 			if ( pQueue == UploadQueues.m_pTorrentQueue )
 				strText.Format( _T("%i/%i"), pQueue->m_nMinTransfers, pQueue->m_nMaxTransfers ); //No. Clients was loaded into these variables
 			else if ( pQueue != UploadQueues.m_pHistoryQueue )
 				strText.Format( _T("%i/%i"), pQueue->GetTransferCount(), pQueue->GetQueuedCount() );
 			break;
-
+			
 		case UPLOAD_COLUMN_SPEED:
 			if ( pQueue != UploadQueues.m_pHistoryQueue )
 				strText = Settings.SmartSpeed( pQueue->GetMeasuredSpeed() );
 			break;
 		}
-
+		
 		nTextLeft	= min( nTextLeft, rcCell.left );
 		nTextRight	= max( nTextRight, rcCell.right );
-
+		
 		if ( rcCell.Width() < 8 ) strText.Empty();
-
+		
 		if ( dc.GetTextExtent( strText ).cx > rcCell.Width() - 8 )
 		{
 			while ( dc.GetTextExtent( strText + _T('\x2026') ).cx > ( rcCell.Width() - 8 ) && strText.GetLength() > 0 )
 			{
 				strText.Truncate( strText.GetLength() - 1 );
 			}
-
+			
 			if ( strText.GetLength() > 0 ) strText += _T('\x2026');
 		}
-
+		
 		int nWidth		= dc.GetTextExtent( strText ).cx;
 		int nPosition	= 0;
-
+		
 		switch ( pColumn.fmt & LVCFMT_JUSTIFYMASK )
 		{
 		default:
@@ -909,20 +909,20 @@ void CUploadsCtrl::PaintQueue(CDC& dc, const CRect& rcRow, CUploadQueue* pQueue,
 			nPosition = ( rcCell.right - 4 - nWidth );
 			break;
 		}
-
+		
 		dc.SetBkColor( crBack );
 		dc.ExtTextOut( nPosition, rcCell.top + 2, ETO_CLIPPED|ETO_OPAQUE,
 			&rcCell, strText, NULL );
 	}
-
+	
 	if ( nTextRight < rcRow.right )
 	{
 		CRect rcBlank( nTextRight, rcRow.top, rcRow.right, rcRow.bottom );
 		dc.FillSolidRect( &rcBlank, crBack );
 	}
-
+	
 	dc.SelectObject( &theApp.m_gdiFont );
-
+	
 	if ( bFocus )
 	{
 		CRect rcFocus( nTextLeft, rcRow.top, max( rcRow.right, nTextRight ), rcRow.bottom );
@@ -941,30 +941,30 @@ void CUploadsCtrl::PaintFile(CDC& dc, const CRect& rcRow, CUploadQueue* /*pQueue
 
 	dc.SetBkColor( crBack );
 	dc.SetBkMode( OPAQUE );
-
+	
 	if ( pFile->m_bSelected )
 		dc.SetTextColor( CoolInterface.m_crHiText );
 	else if ( pTransfer == NULL || pTransfer->m_nState == upsNull )
 		dc.SetTextColor( CoolInterface.m_crDisabled );
 	else
 		dc.SetTextColor( CoolInterface.m_crText );
-
+	
 	int nTextLeft = rcRow.right, nTextRight = rcRow.left;
-	HDITEM pColumn = { 0 };
-
+	HDITEM pColumn = {};
+	
 	pColumn.mask = HDI_FORMAT | HDI_LPARAM;
 
 	for ( int nColumn = 0 ; m_wndHeader.GetItem( nColumn, &pColumn ) ; nColumn++ )
 	{
 		CString strText;
 		CRect rcCell;
-
+		
 		m_wndHeader.GetItemRect( nColumn, &rcCell );
 		rcCell.left		+= rcRow.left;
 		rcCell.right	+= rcRow.left;
 		rcCell.top		= rcRow.top;
 		rcCell.bottom	= rcRow.bottom;
-
+		
 		crLeftAligned = ( rcRow.left == rcCell.left ? crNatural : crBack ) ;
 
 		switch ( pColumn.lParam )
@@ -980,7 +980,7 @@ void CUploadsCtrl::PaintFile(CDC& dc, const CRect& rcRow, CUploadQueue* /*pQueue
 			rcCell.left += 1;
 			strText = pFile->m_sName;
 			break;
-
+			
 		case UPLOAD_COLUMN_USER:
 			if ( pTransfer == NULL )
 				strText.Empty();
@@ -989,11 +989,11 @@ void CUploadsCtrl::PaintFile(CDC& dc, const CRect& rcRow, CUploadQueue* /*pQueue
 			else
 				strText = pTransfer->m_sNick + _T(" (") + pTransfer->m_sAddress + _T(")");
 			break;
-
+			
 		case UPLOAD_COLUMN_SIZE:
 			strText = Settings.SmartVolume( pFile->m_nSize );
 			break;
-
+			
 		case UPLOAD_COLUMN_PROGRESS:
 			dc.Draw3dRect( &rcCell, crBack, crBack );
 			rcCell.DeflateRect( 1, 1 );
@@ -1003,14 +1003,14 @@ void CUploadsCtrl::PaintFile(CDC& dc, const CRect& rcRow, CUploadQueue* /*pQueue
 			rcCell.DeflateRect( 1, 1 );
 			CFragmentBar::DrawUpload( &dc, &rcCell, pFile, crNatural );
 			break;
-
+			
 		case UPLOAD_COLUMN_SPEED:
 			if ( pTransfer == NULL || pTransfer->m_nState == upsNull )
 				LoadString( strText, IDS_STATUS_COMPLETED );
 			else if ( pTransfer->m_nProtocol == PROTOCOL_BT )
 			{
 				CUploadTransferBT* pBT = (CUploadTransferBT*)pTransfer;
-
+				
 				if ( ! pBT->m_bInterested )
 					LoadString( strText, IDS_STATUS_UNINTERESTED );
 				else if ( pBT->m_bChoked )
@@ -1037,7 +1037,7 @@ void CUploadsCtrl::PaintFile(CDC& dc, const CRect& rcRow, CUploadQueue* /*pQueue
 					LoadString( strText, IDS_STATUS_NEXT );
 			}
 			break;
-
+			
 		case UPLOAD_COLUMN_CLIENT:
 			if ( pTransfer != NULL ) strText = pTransfer->m_sUserAgent;
 			break;
@@ -1057,27 +1057,27 @@ void CUploadsCtrl::PaintFile(CDC& dc, const CRect& rcRow, CUploadQueue* /*pQueue
 			strText = pTransfer->m_sCountry;
 			break;
 		}
-
+		
 		nTextLeft	= min( nTextLeft, rcCell.left );
 		nTextRight	= max( nTextRight, rcCell.right );
-
+		
 		if ( pColumn.lParam == UPLOAD_COLUMN_PROGRESS ) continue;
-
+		
 		if ( rcCell.Width() < 8 ) strText.Empty();
-
+		
 		if ( dc.GetTextExtent( strText ).cx > rcCell.Width() - 8 )
 		{
 			while ( dc.GetTextExtent( strText + _T('\x2026') ).cx > ( rcCell.Width() - 8 ) && strText.GetLength() > 0 )
 			{
 				strText.Truncate( strText.GetLength() - 1 );
 			}
-
+			
 			if ( strText.GetLength() > 0 ) strText += _T('\x2026');
 		}
-
+		
 		int nWidth		= dc.GetTextExtent( strText ).cx;
 		int nPosition	= 0;
-
+		
 		switch ( pColumn.fmt & LVCFMT_JUSTIFYMASK )
 		{
 		default:
@@ -1090,18 +1090,18 @@ void CUploadsCtrl::PaintFile(CDC& dc, const CRect& rcRow, CUploadQueue* /*pQueue
 			nPosition = ( rcCell.right - 4 - nWidth );
 			break;
 		}
-
+		
 		dc.SetBkColor( crBack );
 		dc.ExtTextOut( nPosition, rcCell.top + 2, ETO_CLIPPED|ETO_OPAQUE,
 			&rcCell, strText, NULL );
 	}
-
+	
 	if ( nTextRight < rcRow.right )
 	{
 		CRect rcBlank( nTextRight, rcRow.top, rcRow.right, rcRow.bottom );
 		dc.FillSolidRect( &rcBlank, crBack );
 	}
-
+	
 	if ( bFocus )
 	{
 		CRect rcFocus( nTextLeft, rcRow.top, max( rcRow.right, nTextRight ), rcRow.bottom );
@@ -1128,13 +1128,13 @@ void CUploadsCtrl::OnSkinChange()
 void CUploadsCtrl::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* /*pScrollBar*/)
 {
 	SCROLLINFO pInfo;
-
+	
 	pInfo.cbSize	= sizeof(pInfo);
 	pInfo.fMask		= SIF_ALL & ~SIF_TRACKPOS;
-
+	
 	GetScrollInfo( SB_VERT, &pInfo );
 	int nDelta = pInfo.nPos;
-
+	
 	switch ( nSBCode )
 	{
 	case SB_BOTTOM:
@@ -1160,10 +1160,10 @@ void CUploadsCtrl::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* /*pScrollBar*/
 		pInfo.nPos = 0;
 		break;
 	}
-
+	
 	pInfo.nPos = max( 0, min( pInfo.nPos, pInfo.nMax - (int)pInfo.nPage + 1 ) );
 	if ( pInfo.nPos == nDelta ) return;
-
+	
 	SetScrollInfo( SB_VERT, &pInfo, TRUE );
 	Invalidate();
 }
@@ -1171,13 +1171,13 @@ void CUploadsCtrl::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* /*pScrollBar*/
 void CUploadsCtrl::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* /*pScrollBar*/)
 {
 	SCROLLINFO pInfo;
-
+	
 	pInfo.cbSize	= sizeof(pInfo);
 	pInfo.fMask		= SIF_ALL & ~SIF_TRACKPOS;
-
+	
 	GetScrollInfo( SB_HORZ, &pInfo );
 	int nDelta = pInfo.nPos;
-
+	
 	switch ( nSBCode )
 	{
 	case SB_BOTTOM:
@@ -1203,18 +1203,18 @@ void CUploadsCtrl::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* /*pScrollBar*/
 		pInfo.nPos = 0;
 		break;
 	}
-
+	
 	pInfo.nPos = max( 0, min( pInfo.nPos, pInfo.nMax - (int)pInfo.nPage + 1 ) );
 	if ( pInfo.nPos == nDelta ) return;
-
+	
 	SetScrollInfo( SB_HORZ, &pInfo, TRUE );
-
+	
 	CRect rcClient;
 	GetClientRect( &rcClient );
-
+	
 	m_wndHeader.SetWindowPos( NULL, -pInfo.nPos, 0,
 		rcClient.right + pInfo.nPos, HEADER_HEIGHT, SWP_NOZORDER );
-
+	
 	RedrawWindow( NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW );
 }
 
@@ -1234,9 +1234,9 @@ void CUploadsCtrl::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 	CSingleLock pLock( &Transfers.m_pSection, TRUE );
 	CUploadFile* pFile;
 	CUploadQueue* pQueue;
-
+	
 	m_wndTip.Hide();
-
+	
 	switch ( nChar )
 	{
 	case VK_HOME:
@@ -1283,7 +1283,7 @@ void CUploadsCtrl::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 		}
 		return;
 	}
-
+	
 	CWnd::OnKeyDown( nChar, nRepCnt, nFlags );
 }
 
@@ -1294,10 +1294,10 @@ void CUploadsCtrl::OnLButtonDown(UINT nFlags, CPoint point)
 	CUploadQueue* pQueue;
 	CRect rcItem;
 	int nIndex;
-
+	
 	SetFocus();
 	m_wndTip.Hide();
-
+	
 	if ( HitTest( point, &pQueue, &pFile, &nIndex, &rcItem ) )
 	{
 		int nTitleStarts = GetExpandableColumnX();
@@ -1306,7 +1306,7 @@ void CUploadsCtrl::OnLButtonDown(UINT nFlags, CPoint point)
 			if ( pQueue != NULL )
 			{
 				pQueue->m_bExpanded = ! pQueue->m_bExpanded;
-
+				
 				if ( ! pQueue->m_bExpanded )
 				{
 					for ( POSITION posActive = pQueue->m_pActive.GetHeadPosition() ; posActive ; )
@@ -1314,14 +1314,14 @@ void CUploadsCtrl::OnLButtonDown(UINT nFlags, CPoint point)
 						CUploadTransfer* pTransfer = (CUploadTransfer*)pQueue->m_pActive.GetNext( posActive );
 						if ( pTransfer->m_pBaseFile != NULL ) pTransfer->m_pBaseFile->m_bSelected = FALSE;
 					}
-
+					
 					for ( int nPos = 0 ; nPos < pQueue->m_pQueued.GetSize() ; nPos ++ )
 					{
 						CUploadTransfer* pTransfer = (CUploadTransfer*)pQueue->m_pQueued.GetAt( nPos );
 						if ( pTransfer->m_pBaseFile != NULL ) pTransfer->m_pBaseFile->m_bSelected = FALSE;
 					}
 				}
-
+				
 				Update();
 			}
 		}
@@ -1338,7 +1338,7 @@ void CUploadsCtrl::OnLButtonDown(UINT nFlags, CPoint point)
 			{
 				DeselectAll();
 			}
-
+			
 			SelectTo( nIndex );
 		}
 	}
@@ -1362,16 +1362,16 @@ void CUploadsCtrl::OnLButtonDblClk(UINT nFlags, CPoint point)
 	CUploadFile* pFile;
 	CUploadQueue* pQueue;
 	CRect rcItem;
-
+	
 	SetFocus();
-
+	
 	if ( HitTest( point, &pQueue, &pFile, NULL, &rcItem ) )
 	{
 		int nTitleStarts = GetExpandableColumnX();
 		if ( pQueue != NULL && point.x > nTitleStarts && point.x <= nTitleStarts + rcItem.left + 16 )
 		{
 			pQueue->m_bExpanded = ! pQueue->m_bExpanded;
-
+			
 			if ( ! pQueue->m_bExpanded )
 			{
 				for ( POSITION posActive = pQueue->m_pActive.GetHeadPosition() ; posActive ; )
@@ -1379,14 +1379,14 @@ void CUploadsCtrl::OnLButtonDblClk(UINT nFlags, CPoint point)
 					CUploadTransfer* pTransfer = (CUploadTransfer*)pQueue->m_pActive.GetNext( posActive );
 					if ( pTransfer->m_pBaseFile != NULL ) pTransfer->m_pBaseFile->m_bSelected = FALSE;
 				}
-
+				
 				for ( int nPos = 0 ; nPos < pQueue->m_pQueued.GetSize() ; nPos ++ )
 				{
 					CUploadTransfer* pTransfer = (CUploadTransfer*)pQueue->m_pQueued.GetAt( nPos );
 					if ( pTransfer->m_pBaseFile != NULL ) pTransfer->m_pBaseFile->m_bSelected = FALSE;
 				}
 			}
-
+			
 			Update();
 		}
 		else if ( pQueue != NULL )
@@ -1400,19 +1400,19 @@ void CUploadsCtrl::OnLButtonDblClk(UINT nFlags, CPoint point)
 			GetOwner()->PostMessage( WM_COMMAND, ID_UPLOADS_LAUNCH );
 		}
 	}
-
+	
 	CWnd::OnLButtonDblClk( nFlags, point );
 }
 
 void CUploadsCtrl::OnMouseMove(UINT nFlags, CPoint point)
 {
 	CWnd::OnMouseMove( nFlags, point );
-
+	
 	if ( ( nFlags & ( MK_LBUTTON|MK_RBUTTON) ) == 0 )
 	{
 		CUploadFile* pFile;
 		CRect rcItem;
-
+		
 		if ( HitTest( point, NULL, &pFile, NULL, &rcItem ) )
 		{
 			// [+] or [-] Hoverstates
@@ -1428,7 +1428,7 @@ void CUploadsCtrl::OnMouseMove(UINT nFlags, CPoint point)
 			}
 		}
 	}
-
+	
 	m_wndTip.Hide();
 }
 
@@ -1439,7 +1439,7 @@ void CUploadsCtrl::OnLButtonUp(UINT nFlags, CPoint point)
 		DeselectAll( m_pDeselect );
 		m_pDeselect = NULL;
 	}
-
+	
 	CWnd::OnLButtonUp( nFlags, point );
 }
 
@@ -1450,7 +1450,7 @@ void CUploadsCtrl::OnRButtonUp(UINT nFlags, CPoint point)
 		DeselectAll( m_pDeselect );
 		m_pDeselect = NULL;
 	}
-
+	
 	CWnd::OnRButtonUp( nFlags, point );
 }
 
@@ -1469,8 +1469,8 @@ void CUploadsCtrl::OnKillFocus(CWnd* pNewWnd)
 int CUploadsCtrl::GetExpandableColumnX() const
 {
 	int nTitleStarts = 0;
-
-	HDITEM pColumn = { 0 };
+	
+	HDITEM pColumn = {};
 	pColumn.mask = HDI_LPARAM | HDI_WIDTH;
 
 	for ( int nColumn = 0 ; m_wndHeader.GetItem( m_wndHeader.OrderToIndex( nColumn ), &pColumn ) ; nColumn++ )

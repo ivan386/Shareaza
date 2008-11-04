@@ -668,7 +668,7 @@ BOOL CG1Neighbour::OnPong(CG1Packet* pPacket)
 			// Read vendor code
 			if ( CGGEPItem* pVC = pGGEP.Find( GGEP_HEADER_VENDOR_INFO, 4 ) )
 			{
-				CHAR szaVendor[ 4 ] = { 0 };
+				CHAR szaVendor[ 4 ] = {};
 				pVC->Read( szaVendor, 4 );
 				TCHAR szVendor[ 5 ] = { szaVendor[0], szaVendor[1], szaVendor[2], szaVendor[3], 0 };
 				strVendorCode = szVendor;
