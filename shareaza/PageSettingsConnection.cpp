@@ -148,7 +148,7 @@ BOOL CConnectionSettingsPage::OnInitDialog()
 			ip = ipAddr->table[ nIf ].dwAddr;
 			if ( ip == 0x0100007f || ip == 0x0 ) continue; // loopback or 0.0.0.0
 
-			MIB_IFROW ifRow = {};
+			MIB_IFROW ifRow = { 0 };
 			ifRow.dwIndex = ipAddr->table[ nIf ].dwIndex;
 			// Check interface
 			if ( GetIfEntry( &ifRow ) != NO_ERROR || ifRow.dwAdminStatus != MIB_IF_ADMIN_STATUS_UP )

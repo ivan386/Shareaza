@@ -115,7 +115,7 @@ BOOL CDatagrams::Listen()
 	if ( Network.Resolve( Settings.Connection.InHost, Settings.Connection.InPort, &saHost ) )
 	{
 		// Inbound resolved
-		if ( ! Settings.Connection.InBind ) 
+		if ( ! Settings.Connection.InBind )
 			saHost.sin_addr.S_un.S_addr = 0;
 		else
 		{
@@ -131,7 +131,7 @@ BOOL CDatagrams::Listen()
 	else
 	{
 		saHost = Network.m_pHost;
-		if ( ! Settings.Connection.InBind ) 
+		if ( ! Settings.Connection.InBind )
 			saHost.sin_addr.S_un.S_addr = 0;
 		else
 		{
@@ -231,7 +231,7 @@ void CDatagrams::Disconnect()
 
 BOOL CDatagrams::Send(IN_ADDR* pAddress, WORD nPort, CPacket* pPacket, BOOL bRelease, LPVOID pToken, BOOL bAck)
 {
-	SOCKADDR_IN pHost = {};
+	SOCKADDR_IN pHost = { 0 };
 	pHost.sin_family = PF_INET;
 	pHost.sin_addr = *pAddress;
 	pHost.sin_port = htons( nPort );
@@ -483,7 +483,7 @@ BOOL CDatagrams::TryWrite()
 
 	while ( nLimit > 0 )
 	{
-        CDatagramOut* pDG = m_pOutputFirst;
+		CDatagramOut* pDG = m_pOutputFirst;
 		for ( ; pDG ; pDG = pDG->m_pPrevTime )
 		{
 			BYTE* pPacket;
@@ -606,7 +606,7 @@ BOOL CDatagrams::TryRead()
 		return FALSE;
 
 	std::vector< BYTE > pBuffer( 65536 );	// Maximal UDP size 64KB
-	SOCKADDR_IN pFrom = {};
+	SOCKADDR_IN pFrom = { 0 };
 	int nFromLen = sizeof( pFrom );
 	int nLength	= recvfrom( m_hSocket, (char*)&pBuffer[ 0 ], (int)pBuffer.size(), 0,
 		(SOCKADDR*)&pFrom, &nFromLen );
@@ -799,7 +799,7 @@ BOOL CDatagrams::OnReceiveSGP(SOCKADDR_IN* pHost, SGP_HEADER* pHeader, DWORD nLe
 
 	CDatagramIn** pHash = m_pInputHash + ( nHash & HASH_MASK );
 
-    CDatagramIn* pDG = *pHash;
+	CDatagramIn* pDG = *pHash;
 	for ( ; pDG ; pDG = pDG->m_pNextHash )
 	{
 		if (	pDG->m_pHost.sin_addr.S_un.S_addr == pHost->sin_addr.S_un.S_addr &&
@@ -995,7 +995,7 @@ BOOL CDatagrams::OnPacket(SOCKADDR_IN* pHost, CG1Packet* pPacket)
 		case G1_PACKET_PONG:
 			return OnPong( pHost, pPacket );
 		default:
-			pPacket->Debug( CString( _T("Received unexpected UDP packet from ") ) + 
+			pPacket->Debug( CString( _T("Received unexpected UDP packet from ") ) +
 				CString( inet_ntoa( pHost->sin_addr ) ) );
 	}
 
@@ -1058,7 +1058,7 @@ BOOL CDatagrams::OnPacket(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 	case G2_PACKET_KHL:
 		return OnKHL( pHost, pPacket );
 	default:
-		pPacket->Debug( CString( _T("Received unexpected UDP packet from ") ) + 
+		pPacket->Debug( CString( _T("Received unexpected UDP packet from ") ) +
 			CString( inet_ntoa( pHost->sin_addr ) ) );
 	}
 
@@ -1216,7 +1216,7 @@ BOOL CDatagrams::OnPong(SOCKADDR_IN* pHost, CG1Packet* pPacket)
 			CString strVendorCode;
 			if ( CGGEPItem* pVC = pGGEP.Find( GGEP_HEADER_VENDOR_INFO, 4 ) )
 			{
-				CHAR szaVendor[ 4 ] = {};
+				CHAR szaVendor[ 4 ] = { 0 };
 				pVC->Read( szaVendor,4 );
 				TCHAR szVendor[5] = { szaVendor[0], szaVendor[1], szaVendor[2], szaVendor[3], 0 };
 				strVendorCode = szVendor;
@@ -1333,7 +1333,7 @@ BOOL CDatagrams::OnQuery(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 		delete pSearch;
 		return TRUE;
 	}
-	
+
 	if ( ! Network.QueryRoute->Add( pSearch->m_oGUID, &pSearch->m_pEndpoint ) )
 	{
 		CG2Packet* pAnswer = CG2Packet::New( G2_PACKET_QUERY_ACK, TRUE );
@@ -1356,9 +1356,9 @@ BOOL CDatagrams::OnQuery(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 
 	CLocalSearch pLocal( pSearch, &pSearch->m_pEndpoint );
 	pLocal.Execute();
-	
+
 	Send( &pSearch->m_pEndpoint, Neighbours.CreateQueryWeb( pSearch->m_oGUID ), TRUE );
-	
+
 	delete pSearch;
 
 	return TRUE;
@@ -1377,7 +1377,7 @@ BOOL CDatagrams::OnQueryAck(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 	}
 
 	Hashes::Guid oGUID;
-	
+
 	if ( SearchManager.OnQueryAck( pPacket, pHost, oGUID ) )
 	{
 		CNeighbour* pNeighbour = NULL;
@@ -1611,7 +1611,7 @@ BOOL CDatagrams::OnPush(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 
 	if ( ! pPacket->SkipCompound( nLength, 6 ) )
 	{
-		theApp.Message( MSG_ERROR, _T("G2UDP: Invalid PUSH packet received from %s"), 
+		theApp.Message( MSG_ERROR, _T("G2UDP: Invalid PUSH packet received from %s"),
 			(LPCTSTR)inet_ntoa( pHost->sin_addr ) );
 		Statistics.Current.Gnutella2.Dropped++;
 		return FALSE;

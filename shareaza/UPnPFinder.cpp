@@ -564,7 +564,7 @@ CString CUPnPFinder::GetLocalRoutableIP(ServicePointer pService)
 	if ( ip == INADDR_NONE || hrRes != NO_ERROR )
 		return CString();
 
-	MIB_IFROW ifRow = {};
+	MIB_IFROW ifRow = { 0 };
 	ifRow.dwIndex = nInterfaceIndex;
 	hrRes = GetIfEntry( &ifRow );
 

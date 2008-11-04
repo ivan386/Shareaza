@@ -645,11 +645,11 @@ inline void SafeRelease(CComPtr< T >& pObj) throw()
 
 inline bool IsFileNewerThan(LPCTSTR pszFile, const QWORD nMilliseconds)
 {
-	WIN32_FILE_ATTRIBUTE_DATA fd = {};
+	WIN32_FILE_ATTRIBUTE_DATA fd = { 0 };
 	if ( ! GetFileAttributesEx( pszFile, GetFileExInfoStandard, &fd ) )
 		return false;
 
-	FILETIME ftNow = {};
+	FILETIME ftNow = { 0 };
 	GetSystemTimeAsFileTime( &ftNow );
 
 	if ( ( MAKEQWORD( ftNow.dwLowDateTime, ftNow.dwHighDateTime ) -
@@ -662,7 +662,7 @@ inline bool IsFileNewerThan(LPCTSTR pszFile, const QWORD nMilliseconds)
 
 inline QWORD GetFileSize(LPCTSTR pszFile)
 {
-	WIN32_FILE_ATTRIBUTE_DATA fd = {};
+	WIN32_FILE_ATTRIBUTE_DATA fd = { 0 };
 	if ( GetFileAttributesEx( pszFile, GetFileExInfoStandard, &fd ) )
 		return MAKEQWORD( fd.nFileSizeLow, fd.nFileSizeHigh );
 	else

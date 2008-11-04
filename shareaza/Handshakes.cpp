@@ -104,7 +104,7 @@ BOOL CHandshakes::Listen()
 	SOCKADDR_IN saListen = Network.m_pHost; // This is the address of our computer as visible to remote computers on the Internet
 
 	// If the program connection settings disallow binding, zero the 4 bytes of the IP address
-	if ( ! Settings.Connection.InBind ) 
+	if ( ! Settings.Connection.InBind )
 		saListen.sin_addr.s_addr = INADDR_ANY; // s_addr is the IP address formatted as a single u_long
 	else
 	{
@@ -376,7 +376,7 @@ void CHandshakes::RunHandshakes()
 BOOL CHandshakes::AcceptConnection()
 {
 	// Local variables to receive the IP address and port number of the remote computer
-	SOCKADDR_IN pHost = {};
+	SOCKADDR_IN pHost = { 0 };
 	int nHost = sizeof( pHost );
 
 	// Accept the connection in a new socket, hSocket
@@ -452,7 +452,7 @@ int CALLBACK CHandshakes::AcceptCheck(IN LPWSABUF lpCallerId,
 
 	// Copy out the IP address and port number of the remote computer
 	SOCKADDR_IN* pHost = (SOCKADDR_IN*)lpCallerId->buf;
-	
+
 	// If the remote computer's IP address is on the list of blocked IPs
 	if ( Security.IsDenied( &pHost->sin_addr ) )
 	{

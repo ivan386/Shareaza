@@ -1,7 +1,7 @@
 //
 // CtrlMediaList.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -103,7 +103,7 @@ CMediaListCtrl::~CMediaListCtrl()
 /////////////////////////////////////////////////////////////////////////////
 // CMediaListCtrl operations
 
-BOOL CMediaListCtrl::Create(CWnd* pParentWnd, UINT nID) 
+BOOL CMediaListCtrl::Create(CWnd* pParentWnd, UINT nID)
 {
 	CRect rect;
 
@@ -115,13 +115,13 @@ BOOL CMediaListCtrl::Create(CWnd* pParentWnd, UINT nID)
 BOOL CMediaListCtrl::Open(LPCTSTR pszFile)
 {
 	Clear();
-	
+
 	Enqueue( pszFile, FALSE );
-	
+
 	if ( GetItemCount() == 0 ) return FALSE;
-	
+
 	GetNext();
-	
+
 	return TRUE;
 }
 
@@ -136,9 +136,9 @@ BOOL CMediaListCtrl::Enqueue(LPCTSTR pszFile, BOOL bStart)
 	{
 		Add( pszFile );
 	}
-	
+
 	if ( bStart && GetItemCount() == 1 ) GetNext();
-	
+
 	return TRUE;
 }
 
@@ -148,20 +148,20 @@ int CMediaListCtrl::RecursiveEnqueue(LPCTSTR pszPath)
 	CString strPath;
 	HANDLE hSearch;
 	int nCount = 0;
-	
+
 	strPath.Format( _T("%s\\*.*"), pszPath );
-	
+
 	hSearch = FindFirstFile( strPath, &pFind );
-	
+
 	if ( hSearch != INVALID_HANDLE_VALUE )
 	{
 		do
 		{
 			if ( pFind.cFileName[0] == '.' ) continue;
 			if ( _tcsicmp( pFind.cFileName, _T("Metadata") ) == 0 ) continue;
-			
+
 			strPath.Format( _T("%s\\%s"), pszPath, pFind.cFileName );
-			
+
 			if ( pFind.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY )
 			{
 				nCount += RecursiveEnqueue( strPath );
@@ -172,10 +172,10 @@ int CMediaListCtrl::RecursiveEnqueue(LPCTSTR pszPath)
 			}
 		}
 		while ( FindNextFile( hSearch, &pFind ) );
-		
+
 		FindClose( hSearch );
 	}
-	
+
 	return nCount;
 }
 
@@ -194,18 +194,18 @@ BOOL CMediaListCtrl::LoadTextList(LPCTSTR pszFile)
 {
 	CString strPath, strItem;
 	CFile pFile;
-	
+
 	strPath = pszFile;
 	strPath = strPath.Left( strPath.ReverseFind( '\\' ) + 1 );
-	
+
 	if ( ! pFile.Open( pszFile, CFile::modeRead ) ) return FALSE;
-	
+
 	CBuffer pBuffer;
 	pBuffer.EnsureBuffer( (DWORD)pFile.GetLength() );
 	pBuffer.m_nLength = (DWORD)pFile.GetLength();
 	pFile.Read( pBuffer.m_pBuffer, pBuffer.m_nLength );
 	pFile.Close();
-	
+
 	while ( pBuffer.ReadLine( strItem ) )
 	{
 		strItem.TrimLeft();
@@ -221,7 +221,7 @@ BOOL CMediaListCtrl::LoadTextList(LPCTSTR pszFile)
 				Enqueue( strItem, FALSE );
 		}
 	}
-	
+
 	return TRUE;
 }
 
@@ -229,7 +229,7 @@ int CMediaListCtrl::Add(LPCTSTR pszPath, int nItem)
 {
 	LPCTSTR pszFile = _tcsrchr( pszPath, '\\' );
 	pszFile = pszFile ? pszFile + 1 : pszPath;
-	
+
 	DWORD nFile = 0;
 	{
 		CQuickLock oLock( Library.m_pSection );
@@ -238,12 +238,12 @@ int CMediaListCtrl::Add(LPCTSTR pszPath, int nItem)
 			nFile = pFile->m_nIndex;
 		}
 	}
-	
+
 	CString strTemp = (LPTSTR)pszFile;
 	int nDotPos = strTemp.ReverseFind( '.' );
 	if ( nDotPos != -1 ) strTemp = strTemp.Left( nDotPos );
 	LPTSTR pszFileTmp = strTemp.GetBuffer( strTemp.GetLength() );
-	LV_ITEM pItem = {};
+	LV_ITEM pItem = { 0 };
 	pItem.mask		= LVIF_TEXT|LVIF_IMAGE|LVIF_PARAM;
 	pItem.iItem		= nItem >= 0 ? nItem : GetItemCount();
 	pItem.iImage	= ShellIcons.Get( pszFile, 16 );
@@ -261,10 +261,10 @@ int CMediaListCtrl::Add(LPCTSTR pszPath, int nItem)
 void CMediaListCtrl::Remove(int nItem)
 {
 	if ( nItem < 0 || nItem >= GetItemCount() ) return;
-	
+
 	BOOL bActive = GetItemState( nItem, STATE_CURRENT );
 	DeleteItem( nItem );
-	
+
 	if ( bActive ) SetCurrent( nItem );
 }
 
@@ -363,28 +363,28 @@ CString CMediaListCtrl::GetPath(int nItem)
 /////////////////////////////////////////////////////////////////////////////
 // CMediaListCtrl message handlers
 
-int CMediaListCtrl::OnCreate(LPCREATESTRUCT lpCreateStruct) 
+int CMediaListCtrl::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if ( CListCtrl::OnCreate( lpCreateStruct ) == -1 ) return -1;
-	
+
 	SetImageList( ShellIcons.GetObject( 16 ), LVSIL_SMALL );
 	InsertColumn( 0, _T("Name"), LVCFMT_LEFT, 100, -1 );
 	InsertColumn( 1, _T("Path"), LVCFMT_LEFT, 0, 0 );
 
 	// SendMessage( LVM_SETEXTENDEDLISTVIEWSTYLE, LVS_EX_LABELTIP, LVS_EX_LABELTIP );
-	
+
 	m_wndTip.Create( this, &Settings.Interface.TipMedia );
 
 	return 0;
 }
 
-void CMediaListCtrl::OnSize(UINT nType, int cx, int cy) 
+void CMediaListCtrl::OnSize(UINT nType, int cx, int cy)
 {
 	CListCtrl::OnSize( nType, cx, cy );
-	
+
 	CRect rc;
 	GetWindowRect( &rc );
-	
+
 	LV_COLUMN pColumn;
 	pColumn.mask	= LVCF_WIDTH;
 	pColumn.cx		= rc.Width() - GetSystemMetrics( SM_CXVSCROLL ) - 8;
@@ -421,31 +421,31 @@ void CMediaListCtrl::OnCustomDraw(NMHDR* pNotify, LRESULT* pResult)
 	}
 }
 
-void CMediaListCtrl::OnDoubleClick(NMHDR* /*pNMHDR*/, LRESULT* pResult) 
+void CMediaListCtrl::OnDoubleClick(NMHDR* /*pNMHDR*/, LRESULT* pResult)
 {
 	OnMediaSelect();
 	*pResult = 0;
 }
 
-void CMediaListCtrl::OnContextMenu(CWnd* /*pWnd*/, CPoint point) 
+void CMediaListCtrl::OnContextMenu(CWnd* /*pWnd*/, CPoint point)
 {
 	Skin.TrackPopupMenu( _T("CMediaList"), point, ID_MEDIA_SELECT );
 }
 
-void CMediaListCtrl::OnKeyDown(NMHDR* pNMHDR, LRESULT* pResult) 
+void CMediaListCtrl::OnKeyDown(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	LV_KEYDOWN* pLVKeyDow = (LV_KEYDOWN*)pNMHDR;
-	
+
 	if ( pLVKeyDow->wVKey == VK_RETURN )
 		PostMessage( WM_COMMAND, ID_MEDIA_SELECT );
 	else if ( pLVKeyDow->wVKey == VK_DELETE )
 		PostMessage( WM_COMMAND, ID_MEDIA_REMOVE );
-	
+
 	m_wndTip.Hide();
 	*pResult = 0;
 }
 
-void CMediaListCtrl::OnBeginDrag(NMHDR* pNMHDR, LRESULT* pResult) 
+void CMediaListCtrl::OnBeginDrag(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	NM_LISTVIEW* pNMListView = (NM_LISTVIEW*)pNMHDR;
 	*pResult = 0;
@@ -475,19 +475,19 @@ void CMediaListCtrl::OnBeginDrag(NMHDR* pNMHDR, LRESULT* pResult)
 	m_pDragImage->DragEnter( this, ptAction );
 }
 
-void CMediaListCtrl::OnLButtonDown(UINT nFlags, CPoint point) 
+void CMediaListCtrl::OnLButtonDown(UINT nFlags, CPoint point)
 {
 	m_wndTip.Hide();
 	CListCtrl::OnLButtonDown( nFlags, point );
 }
 
-void CMediaListCtrl::OnRButtonDown(UINT nFlags, CPoint point) 
+void CMediaListCtrl::OnRButtonDown(UINT nFlags, CPoint point)
 {
 	m_wndTip.Hide();
 	CListCtrl::OnRButtonDown( nFlags, point );
 }
 
-void CMediaListCtrl::OnMouseMove(UINT nFlags, CPoint point) 
+void CMediaListCtrl::OnMouseMove(UINT nFlags, CPoint point)
 {
 	int nHit = HitTest( point );
 
@@ -524,7 +524,7 @@ void CMediaListCtrl::OnMouseMove(UINT nFlags, CPoint point)
 	CListCtrl::OnMouseMove( nFlags, point );
 }
 
-void CMediaListCtrl::OnLButtonUp(UINT nFlags, CPoint point) 
+void CMediaListCtrl::OnLButtonUp(UINT nFlags, CPoint point)
 {
 	if ( m_pDragImage == NULL )
 	{
@@ -602,32 +602,32 @@ void CMediaListCtrl::ShowFilePropertiesDlg( int nPage )
 	dlg.DoModal( nPage );
 }
 
-void CMediaListCtrl::OnUpdateMediaRate(CCmdUI* pCmdUI) 
+void CMediaListCtrl::OnUpdateMediaRate(CCmdUI* pCmdUI)
 {
 	pCmdUI->Enable( AreSelectedFilesInLibrary() );
 }
 
-void CMediaListCtrl::OnMediaRate() 
+void CMediaListCtrl::OnMediaRate()
 {
 	ShowFilePropertiesDlg( 2 );
 }
 
-void CMediaListCtrl::OnUpdateMediaProperties(CCmdUI* pCmdUI) 
+void CMediaListCtrl::OnUpdateMediaProperties(CCmdUI* pCmdUI)
 {
 	pCmdUI->Enable( AreSelectedFilesInLibrary() );
 }
 
-void CMediaListCtrl::OnMediaProperties() 
+void CMediaListCtrl::OnMediaProperties()
 {
 	ShowFilePropertiesDlg();
 }
 
-void CMediaListCtrl::OnUpdateMediaSelect(CCmdUI* pCmdUI) 
+void CMediaListCtrl::OnUpdateMediaSelect(CCmdUI* pCmdUI)
 {
 	pCmdUI->Enable( GetSelectedCount() == 1 );
 }
 
-void CMediaListCtrl::OnMediaSelect() 
+void CMediaListCtrl::OnMediaSelect()
 {
 	int nItem = GetNextItem( -1, LVNI_SELECTED );
 
@@ -639,10 +639,10 @@ void CMediaListCtrl::OnMediaSelect()
 	}
 }
 
-void CMediaListCtrl::OnMediaAdd() 
+void CMediaListCtrl::OnMediaAdd()
 {
 	if ( ! AfxGetMainWnd()->IsWindowEnabled() ) return;
-	
+
 	CString strFilter;
 	Skin.LoadString( strFilter, IDS_MEDIA_FILTER );
 
@@ -658,7 +658,7 @@ void CMediaListCtrl::OnMediaAdd()
 	dlg.m_ofn.nMaxFile	= nLimit;
 
 	if ( dlg.DoModal() != IDOK ) return;
-	
+
 	CString strFolder( szFiles.get() );
 	LPCTSTR pszFile = szFiles.get() + strFolder.GetLength() + 1;
 
@@ -680,7 +680,7 @@ void CMediaListCtrl::OnMediaAdd()
 	if ( GetItemCount() > 0 && bWasEmpty ) GetNext();
 }
 
-void CMediaListCtrl::OnMediaAddFolder() 
+void CMediaListCtrl::OnMediaAddFolder()
 {
 	if ( ! AfxGetMainWnd()->IsWindowEnabled() ) return;
 
@@ -689,18 +689,18 @@ void CMediaListCtrl::OnMediaAddFolder()
 		return;
 
 	BOOL bWasEmpty = ( GetItemCount() == 0 );
-	
+
 	RecursiveEnqueue( strPath );
 
 	if ( GetItemCount() > 0 && bWasEmpty ) GetNext();
 }
 
-void CMediaListCtrl::OnUpdateMediaRemove(CCmdUI* pCmdUI) 
+void CMediaListCtrl::OnUpdateMediaRemove(CCmdUI* pCmdUI)
 {
 	pCmdUI->Enable( GetSelectedCount() > 0 );
 }
 
-void CMediaListCtrl::OnMediaRemove() 
+void CMediaListCtrl::OnMediaRemove()
 {
 	for ( int nItem = GetItemCount() - 1 ; nItem >= 0 ; nItem-- )
 	{
@@ -708,17 +708,17 @@ void CMediaListCtrl::OnMediaRemove()
 	}
 }
 
-void CMediaListCtrl::OnUpdateMediaClear(CCmdUI* pCmdUI) 
+void CMediaListCtrl::OnUpdateMediaClear(CCmdUI* pCmdUI)
 {
 	pCmdUI->Enable( GetItemCount() > 0 );
 }
 
-void CMediaListCtrl::OnMediaClear() 
+void CMediaListCtrl::OnMediaClear()
 {
 	Clear();
 }
 
-void CMediaListCtrl::OnMediaOpen() 
+void CMediaListCtrl::OnMediaOpen()
 {
 	CString strFilter;
 	Skin.LoadString( strFilter, IDS_MEDIA_FILTER );
@@ -729,12 +729,12 @@ void CMediaListCtrl::OnMediaOpen()
 	Open( dlg.GetPathName() );
 }
 
-void CMediaListCtrl::OnUpdateMediaSave(CCmdUI* pCmdUI) 
+void CMediaListCtrl::OnUpdateMediaSave(CCmdUI* pCmdUI)
 {
 	pCmdUI->Enable( GetItemCount() > 0 );
 }
 
-void CMediaListCtrl::OnMediaSave() 
+void CMediaListCtrl::OnMediaSave()
 {
 	CFileDialog dlg( FALSE, _T("m3u"), NULL, OFN_HIDEREADONLY|OFN_ENABLESIZING,
 		_T("Media Playlists|*.m3u|All Files|*.*||"), this );
@@ -750,7 +750,7 @@ void CMediaListCtrl::OnMediaSave()
 	for ( int nItem = 0 ; nItem < GetItemCount() ; nItem++ )
 	{
 		CString strItem = GetItemText( nItem, 1 );
-		
+
 		if ( _tcsnicmp( strPath, strItem, strPath.GetLength() ) == 0 )
 			strItem = strItem.Mid( strPath.GetLength() );
 
@@ -760,48 +760,48 @@ void CMediaListCtrl::OnMediaSave()
 	if ( ! pFile.Open( dlg.GetPathName(), CFile::modeWrite|CFile::modeCreate ) ) return;
 
 	CT2CA pszFile( (LPCTSTR)strFile );
-	
+
 	pFile.Write( pszFile, static_cast< UINT >( strlen(pszFile) ) );
 	pFile.Close();
 }
 
-void CMediaListCtrl::OnUpdateMediaPrevious(CCmdUI* pCmdUI) 
+void CMediaListCtrl::OnUpdateMediaPrevious(CCmdUI* pCmdUI)
 {
 	pCmdUI->Enable( GetCurrent() > 0 );
 }
 
-void CMediaListCtrl::OnMediaPrevious() 
+void CMediaListCtrl::OnMediaPrevious()
 {
 	int nCurrent = GetCurrent();
 	if ( nCurrent > 0 ) SetCurrent( nCurrent - 1 );
 }
 
-void CMediaListCtrl::OnUpdateMediaNext(CCmdUI* pCmdUI) 
+void CMediaListCtrl::OnUpdateMediaNext(CCmdUI* pCmdUI)
 {
 	pCmdUI->Enable( GetItemCount() > 1 );
 }
 
-void CMediaListCtrl::OnMediaNext() 
+void CMediaListCtrl::OnMediaNext()
 {
 	GetNext();
 }
 
-void CMediaListCtrl::OnUpdateMediaRepeat(CCmdUI* pCmdUI) 
+void CMediaListCtrl::OnUpdateMediaRepeat(CCmdUI* pCmdUI)
 {
 	pCmdUI->SetCheck( Settings.MediaPlayer.Repeat );
 }
 
-void CMediaListCtrl::OnMediaRepeat() 
+void CMediaListCtrl::OnMediaRepeat()
 {
 	Settings.MediaPlayer.Repeat = ! Settings.MediaPlayer.Repeat;
 }
 
-void CMediaListCtrl::OnUpdateMediaRandom(CCmdUI* pCmdUI) 
+void CMediaListCtrl::OnUpdateMediaRandom(CCmdUI* pCmdUI)
 {
 	pCmdUI->SetCheck( Settings.MediaPlayer.Random );
 }
 
-void CMediaListCtrl::OnMediaRandom() 
+void CMediaListCtrl::OnMediaRandom()
 {
 	Settings.MediaPlayer.Random = ! Settings.MediaPlayer.Random;
 }

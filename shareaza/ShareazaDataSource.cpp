@@ -93,7 +93,7 @@ void DumpIDataObject(IDataObject* pIDataObject)
 		pIEnumFORMATETC->Reset();
 		for (;;)
 		{
-			FORMATETC formatetc = {};
+			FORMATETC formatetc = { 0 };
 			ULONG celtFetched = 0;
 			if ( pIEnumFORMATETC->Next( 1, &formatetc, &celtFetched ) != S_OK )
 				break;
@@ -301,7 +301,7 @@ UINT CShareazaDataSource::DragDropThread(LPVOID param)
 			(LPVOID*)&pIDataObject );
 		if ( SUCCEEDED( hr ) )
 		{
-			// Create drag-n-drop source object							
+			// Create drag-n-drop source object
 			// TODO: next line returns E_NOINTERFACE for unknown reason
 			// CComQIPtr< IDropSource > pIDropSource( pIDataObject );
 			// therefore we used some hack since IDropSource object is
@@ -490,7 +490,7 @@ BOOL CShareazaDataSource::DropToFolder(IDataObject* pIDataObject, DWORD grfKeySt
 		return FALSE;
 
 	*pdwEffect = DROPEFFECT_NONE;
-	
+
 	if ( ( grfKeyState & MK_CONTROL ) && ( grfKeyState & MK_SHIFT ) )
 		return FALSE;
 
@@ -546,7 +546,7 @@ BOOL CShareazaDataSource::DropToFolder(IDataObject* pIDataObject, DWORD grfKeySt
 	{
 		// UNICODE
 		for ( LPCWSTR pFrom = (LPCWSTR)( (char*)pdf + pdf->pFiles ); *pFrom; offset += len + 1, pFrom += len + 1 )
-		{ 
+		{
 			len = lstrlenW( pFrom );
 			if ( len > 4 && ! lstrcmpiW( pFrom + len - 4, L".lnk" ) )
 			{
@@ -680,8 +680,8 @@ BOOL CShareazaDataSource::DropToAlbum(IDataObject* pIDataObject, DWORD grfKeySta
 						if ( pFile )
 						{
 							Hashes::Guid oGUID;
-							CopyMemory( oGUID.begin(), p + sizeof( DWORD ), 16 );							
-							CAlbumFolder* pFolder = 
+							CopyMemory( oGUID.begin(), p + sizeof( DWORD ), 16 );
+							CAlbumFolder* pFolder =
 								LibraryFolders.GetAlbumRoot()->FindFolder( oGUID );
 							if ( pFolder && *pAlbumFolder == *pFolder )
 							{
@@ -776,12 +776,12 @@ BOOL CShareazaDataSource::DropToAlbum(IDataObject* pIDataObject, DWORD grfKeySta
 								pAlbumFolder->m_nUpdateCookie++;
 
 								// Keep album
-								pFolder = NULL;								
+								pFolder = NULL;
 							}
 						}
 					}
 					catch (...)
-					{						
+					{
 					}
 					delete pFolder;
 				}
@@ -826,7 +826,7 @@ HRESULT CShareazaDataSource::Add(IDataObject* pIDataObject)
 {
 	FORMATETC formatetc = { (CLIPFORMAT) RegisterClipboardFormat( CF_SHAREAZA ), NULL, DVASPECT_CONTENT, -1, TYMED_HGLOBAL };
 	STGMEDIUM medium = { TYMED_HGLOBAL, NULL, NULL };
-	
+
 	CHGlobal < BOOL > oHGlobal;
 	if ( ! oHGlobal.IsValid() )
 	{
@@ -882,7 +882,7 @@ HRESULT CShareazaDataSource::AddFiles(IDataObject* pIDataObject, const T* pSelFi
 	oHDROP->pFiles = sizeof( DROPFILES );
 	GetCursorPos( &oHDROP->pt );
 	oHDROP->fNC = TRUE;
-	oHDROP->fWide = ( sizeof( TCHAR ) != sizeof( char ) );	
+	oHDROP->fWide = ( sizeof( TCHAR ) != sizeof( char ) );
 
 	// Initialize CF_SHAREAZA_ALBUMS
 	CStreamArchive buf_Archive ( CArchive::store );
@@ -929,7 +929,7 @@ HRESULT CShareazaDataSource::AddFiles(IDataObject* pIDataObject, const T* pSelFi
 	}
 
 	// Finalize CF_HDROP and optional CFSTR_PREFERREDDROPEFFECT
-	if ( size_HDROP ) 
+	if ( size_HDROP )
 	{
 		STGMEDIUM medium_HDROP = { TYMED_HGLOBAL, NULL, NULL };
 		FORMATETC formatetc_HDROP = { CF_HDROP, NULL, DVASPECT_CONTENT, -1, TYMED_HGLOBAL };
@@ -967,7 +967,7 @@ HRESULT CShareazaDataSource::AddFiles(IDataObject* pIDataObject, const T* pSelFi
 	}
 
 	// Finalize CF_SHAREAZA_FILES
-	if ( size_Files ) 
+	if ( size_Files )
 	{
 		STGMEDIUM medium_Files = { TYMED_HGLOBAL, NULL, NULL };
 		FORMATETC formatetc_Files = { (CLIPFORMAT) RegisterClipboardFormat( CF_SHAREAZA_FILES ), NULL, DVASPECT_CONTENT, -1, TYMED_HGLOBAL };
@@ -1109,11 +1109,11 @@ STDMETHODIMP CShareazaDataSource::XDataObject::GetData(FORMATETC *pformatetc, ST
 		return E_POINTER;
 
 	LPDATAENTRY pde = NULL;
-    HRESULT hr = pThis->FindFORMATETC( pformatetc, &pde, FALSE );
-    if ( SUCCEEDED ( hr ) )
+	HRESULT hr = pThis->FindFORMATETC( pformatetc, &pde, FALSE );
+	if ( SUCCEEDED ( hr ) )
 	{
-        hr = pThis->AddRefStgMedium( &pde->stgm, pmedium, FALSE );
-    }
+		hr = pThis->AddRefStgMedium( &pde->stgm, pmedium, FALSE );
+	}
 
 #ifdef _DEBUG
 	if ( FAILED ( hr ) )
@@ -1140,7 +1140,7 @@ STDMETHODIMP CShareazaDataSource::XDataObject::QueryGetData (FORMATETC* pformate
 	if ( pformatetc == NULL )
 		return E_POINTER;
 
-    LPDATAENTRY pde = NULL;
+	LPDATAENTRY pde = NULL;
 	HRESULT hr = pThis->FindFORMATETC( pformatetc, &pde, FALSE );
 	if ( SUCCEEDED( hr ) ) hr = S_OK;
 

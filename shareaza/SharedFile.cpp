@@ -474,7 +474,7 @@ CSharedSource* CLibraryFile::AddAlternateSources(LPCTSTR pszURLs)
 	for ( POSITION pos = oUrls.GetStartPosition(); pos; )
 	{
 		CString strURL;
-		FILETIME tSeen = {};
+		FILETIME tSeen = { 0 };
 		oUrls.GetNextAssoc( pos, strURL, tSeen );
 
 		if ( CSharedSource* pSource = AddAlternateSource( strURL ) )

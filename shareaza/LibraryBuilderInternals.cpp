@@ -2530,8 +2530,8 @@ bool CLibraryBuilderInternals::ReadAPE(DWORD nIndex, HANDLE hFile, bool bPreferF
 	}
 
 	SetFilePointer( hFile, 0, NULL, FILE_BEGIN );
-	APE_HEADER pAPE = {0};
-	APE_HEADER_NEW pNewAPE = {0};
+	APE_HEADER pAPE = { 0 };
+	APE_HEADER_NEW pNewAPE = { 0 };
 	int nValidSize = sizeof(pAPE);
 
 	ReadFile( hFile, &pAPE, nValidSize, &nRead, NULL );
@@ -3793,8 +3793,8 @@ bool CLibraryBuilderInternals::ReadCHM(DWORD nIndex, HANDLE hFile, LPCTSTR pszPa
 		return false;
 
 	// Read no more than 8192 bytes to find "HHA Version" string
-	CHAR szByte[1];
-	CHAR szFragment[16] = {}; // // "HA Version" string
+	CHAR szByte[1] = { 0 };
+	CHAR szFragment[16] = { 0 }; // // "HA Version" string
 	bool bCorrupted = false;
 	bool bHFound = false;
 	int nFragmentPos = 0;

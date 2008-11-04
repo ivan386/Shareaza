@@ -120,7 +120,7 @@ BOOL CLanguageDlg::OnInitDialog()
 
 	rc.bottom += ( m_nRows ) * ITEM_HEIGHT;
 
-	SCROLLINFO pScroll = {};
+	SCROLLINFO pScroll = { 0 };
 	pScroll.cbSize	= sizeof(pScroll);
 	pScroll.fMask	= SIF_RANGE|SIF_PAGE|SIF_DISABLENOSCROLL;
 	pScroll.nMin	= 0;

@@ -1,7 +1,7 @@
 //
 // CtrlWizard.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -31,7 +31,7 @@
 #include "CoolInterface.h"
 #include "CtrlIconButton.h"
 
-#include "Transfer.h" 
+#include "Transfer.h"
 #include "CtrlWizard.h"
 
 #include "RegExp\regexpr2.h"
@@ -77,10 +77,10 @@ CString CWizardCtrl::ReadFile(LPCTSTR pszPath)
 	CString strXML( pszPath );
 
 	if ( ! pFile.Open( strXML, CFile::modeRead ) ) return _T("");
-	
+
 	DWORD nSource = (DWORD)pFile.GetLength();
 	if ( nSource > 4096*1024 ) return _T("");
-	
+
 	CHAR* pSource = new CHAR[ nSource ];
 
 	try
@@ -95,15 +95,15 @@ CString CWizardCtrl::ReadFile(LPCTSTR pszPath)
 
 	BYTE* pByte = (BYTE*)pSource;
 	DWORD nByte = nSource;
-	
+
 	if ( nByte >= 2 && ( ( pByte[0] == 0xFE && pByte[1] == 0xFF ) || ( pByte[0] == 0xFF && pByte[1] == 0xFE ) ) )
 	{
 		nByte = nByte / 2 - 1;
-		
+
 		if ( pByte[0] == 0xFE && pByte[1] == 0xFF )
 		{
 			pByte += 2;
-			
+
 			for ( DWORD nSwap = 0 ; nSwap < nByte ; nSwap ++ )
 			{
 				register CHAR nTemp = pByte[ ( nSwap << 1 ) + 0 ];
@@ -113,9 +113,9 @@ CString CWizardCtrl::ReadFile(LPCTSTR pszPath)
 		}
 		else
 		{
-			pByte += 2; 
+			pByte += 2;
 		}
-		
+
 		CopyMemory( strXML.GetBuffer( nByte ), pByte, nByte * sizeof( TCHAR ) );
 		strXML.ReleaseBuffer( nByte );
 	}
@@ -125,10 +125,10 @@ CString CWizardCtrl::ReadFile(LPCTSTR pszPath)
 		{
 			pByte += 3; nByte -= 3;
 		}
-		
+
 		strXML = UTF8Decode( (LPCSTR)pByte, nByte );
 	}
-	
+
 	delete [] pSource;
 	return strXML;
 }
@@ -161,7 +161,7 @@ void CWizardCtrl::OnPaint()
 	CRect rcClient, rcItem;
 	int nOffsetX, nOffsetY;
 	CPaintDC dc( this );  // device context for painting
-		
+
 	GetClientRect( &rcClient );
 	rcItem.CopyRect( &rcClient );
 	dc.FillSolidRect( &rcItem, CoolInterface.m_crWindow );
@@ -172,7 +172,7 @@ void CWizardCtrl::OnPaint()
 		{
 		rcItem.bottom = rcItem.top + m_nItemHeight + 4;
 		rcItem.OffsetRect( 0, -m_nScroll );
-		
+
 		nOffsetY = m_nItemHeight;
 		nOffsetY = nOffsetY / 2 - dc.GetTextExtent( _T("Xg") ).cy / 2 - 1;
 		int nRows = 0;
@@ -210,7 +210,7 @@ void CWizardCtrl::OnPaint()
 					{
 						// show only song name if possible
 						int nDashPos = strFileName.ReverseFind( '-' );
-						if ( nDashPos != -1 ) 
+						if ( nDashPos != -1 )
 							strFileName = _T("\x2026") + strFileName.Right( strFileName.GetLength() - nDashPos - 1 );
 					}
 					DWORD dwOptions = Settings.General.LanguageRTL ? ETO_RTLREADING : 0;
@@ -228,7 +228,7 @@ void CWizardCtrl::OnPaint()
 		CString str;
 		if ( ! m_bValid )
 			LoadString( str, IDS_COLLECTION_WIZARD_NOTVALID );
-		else 
+		else
 			LoadString( str, IDS_COLLECTION_WIZARD_NOCUSTOM );
 		nOffsetX = rcClient.Width() / 2 - dc.GetTextExtent( str ).cx / 2 - 1;
 		nOffsetY = rcClient.Height() / 2 - dc.GetTextExtent( _T("Xg") ).cy / 2 - 1;
@@ -268,16 +268,16 @@ void CWizardCtrl::OnNcPaint()
 void CWizardCtrl::ScrollBy(int nDelta)
 {
 	int nBefore = m_nScroll;
-	
+
 	m_nScroll += nDelta;
 	m_nScroll = max( 0, min( GetScrollLimit( SB_VERT ), m_nScroll ) );
 	nDelta = m_nScroll - nBefore;
-	
+
 	for ( CWnd* pWnd = GetWindow( GW_CHILD ) ; pWnd ; pWnd = pWnd->GetNextWindow() )
 	{
 		pWnd->ModifyStyle( WS_VISIBLE, 0 );
 	}
-	
+
 	ScrollWindowEx( 0, -nDelta, NULL, NULL, NULL, NULL, SW_SCROLLCHILDREN|SW_INVALIDATE );
 	Layout();
 	UpdateWindow();
@@ -285,7 +285,7 @@ void CWizardCtrl::ScrollBy(int nDelta)
 
 void CWizardCtrl::OnVScroll(UINT nSBCode, UINT /*nPos*/, CScrollBar* /*pScrollBar*/)
 {
-	SCROLLINFO pScroll = {};
+	SCROLLINFO pScroll = { 0 };
 
 	pScroll.cbSize	= sizeof(pScroll);
 	pScroll.fMask	= SIF_ALL;
@@ -341,7 +341,7 @@ void CWizardCtrl::OnShowWindow(BOOL bShow, UINT /*nStatus*/)
 	{
 		CString strXML = ReadFile( (LPCTSTR)m_sXMLPath );
 		if ( strXML.IsEmpty() ) return;
-		
+
 		CXMLElement* pBase = NULL;
 		pBase = CXMLElement::FromString( strXML, FALSE );
 
@@ -360,9 +360,9 @@ void CWizardCtrl::OnShowWindow(BOOL bShow, UINT /*nStatus*/)
 		std::sort( pList.begin(), pList.end(), CompareFiles() );
 
 		MakeControls( pBase, pList );
-		
+
 		if ( pBase ) delete pBase;
-		// in case when there was no multi-pickers in the XML 
+		// in case when there was no multi-pickers in the XML
 		// we need to prepare docs separately
 		if ( m_pFileDocs.GetCount() == 0 )
 		{
@@ -419,7 +419,7 @@ BOOL CWizardCtrl::CollectImages(CXMLElement* pBase)
 	if ( pBase == NULL ) return FALSE;
 
 	CXMLElement* pTemplate = pBase->GetElementByName( _T("images"), FALSE );
-	if ( pTemplate ) 
+	if ( pTemplate )
 	{
 		for ( POSITION pos = pTemplate->GetElementIterator() ; pos ; )
 		{
@@ -429,7 +429,7 @@ BOOL CWizardCtrl::CollectImages(CXMLElement* pBase)
 		}
 	}
 	else return FALSE;
-	
+
 	return TRUE;
 }
 
@@ -443,7 +443,7 @@ BOOL CWizardCtrl::MakeControls(CXMLElement* pBase, std::vector< CLibraryFile* > 
 	CWnd* pControl = NULL;
 	CRect rc;
 
-	if ( pTemplate ) 
+	if ( pTemplate )
 	{
 		for ( POSITION pos = pTemplate->GetElementIterator() ; pos ; )
 		{
@@ -451,7 +451,7 @@ BOOL CWizardCtrl::MakeControls(CXMLElement* pBase, std::vector< CLibraryFile* > 
 			CString strLang = pLangGroup->GetAttributeValue( _T("language") );
 
 			// Collect only english and language specific data
-			if ( pLangGroup->IsNamed( _T("text") ) && 
+			if ( pLangGroup->IsNamed( _T("text") ) &&
 					( strLang == Settings.General.Language || ( strLang == "en" && m_pControls.IsEmpty() ) ) )
 			{
 				// If english data loaded but language specific data found later
@@ -471,19 +471,19 @@ BOOL CWizardCtrl::MakeControls(CXMLElement* pBase, std::vector< CLibraryFile* > 
 
 						if ( strType == "textbox" || bPickers )
 						{
-							// Do we need to check if the current text id is actually used 
+							// Do we need to check if the current text id is actually used
 							// in EvenFile.tpl and OddFile.tpl ?
 							int nFileCount = 0;
-							
+
 							for ( std::size_t pos = 0; pos != pList.size(); ++pos )
 							{
 								CEdit* pEdit = new CEdit();
-								
+
 								DWORD dwStyle = WS_CHILD|WS_VISIBLE|WS_TABSTOP|ES_AUTOHSCROLL;
 								if ( bPickers ) dwStyle |= ES_READONLY;
 								pEdit->Create( dwStyle, rc, this, IDC_WIZARD_CONTROL + nItemCount );
 								pEdit->ModifyStyleEx( 0, WS_EX_CLIENTEDGE );
-								if ( bPickers && Settings.General.LanguageRTL ) 
+								if ( bPickers && Settings.General.LanguageRTL )
 									pEdit->ModifyStyleEx( WS_EX_RTLREADING, WS_EX_RIGHT, 0 );
 
 								CString strText = pItem->GetAttributeValue( _T("default") );
@@ -500,8 +500,8 @@ BOOL CWizardCtrl::MakeControls(CXMLElement* pBase, std::vector< CLibraryFile* > 
 								CString strUINT;
 								strUINT.Format( _T("%d"), IDC_WIZARD_CONTROL + nItemCount );
 								strText.Format( _T("%d"), nFileCount );
-								strText += _T("|") + pItem->GetAttributeValue( _T("id") ) + _T("|"); 
-								if ( strType.Find( _T("multi-") ) != -1 ) 
+								strText += _T("|") + pItem->GetAttributeValue( _T("id") ) + _T("|");
+								if ( strType.Find( _T("multi-") ) != -1 )
 									strText += 'm';
 								else if ( strType.Find( _T("single-") ) != -1 )
 									strText += 's';
@@ -514,9 +514,9 @@ BOOL CWizardCtrl::MakeControls(CXMLElement* pBase, std::vector< CLibraryFile* > 
 								if ( bPickers ) // add buttons after control
 								{
 									CIconButtonCtrl* pButton = new CIconButtonCtrl();
-									CString strCaption; 
+									CString strCaption;
 									pButton->Create( rc, this, IDC_WIZARD_CONTROL + nItemCount );
-									if ( bFilePickers ) 
+									if ( bFilePickers )
 									{
 										// a kind of hack to store button type
 										pButton->SetText( _T(" ") );
@@ -534,9 +534,9 @@ BOOL CWizardCtrl::MakeControls(CXMLElement* pBase, std::vector< CLibraryFile* > 
 									SetWindowLongPtr( pControl->GetSafeHwnd(), GWLP_USERDATA, (LONG_PTR_ARG)(LONG_PTR)pItem );
 								}
 								nFileCount++;
-								if ( strType == "multi-filepicker" ) 
+								if ( strType == "multi-filepicker" )
 								{
-									if ( nFileCount > m_pFileDocs.GetCount() ) 
+									if ( nFileCount > m_pFileDocs.GetCount() )
 										PrepareDoc( pList[ pos ], nFileCount % 2 == 0 ? m_sEvenFilePath : m_sOddFilePath );
 								}
 								else break;
@@ -555,15 +555,15 @@ BOOL CWizardCtrl::MakeControls(CXMLElement* pBase, std::vector< CLibraryFile* > 
 void CWizardCtrl::Layout()
 {
 	CRect rcClient, rcNew;
-	
+
 	GetClientRect( &rcClient );
 
-	SCROLLINFO pScroll = {};
+	SCROLLINFO pScroll = { 0 };
 	pScroll.cbSize	= sizeof(pScroll);
 	pScroll.fMask	= SIF_PAGE|SIF_POS|SIF_RANGE|SIF_DISABLENOSCROLL;
 	pScroll.nPage	= rcClient.Height();
 	pScroll.nPos	= m_nScroll;
-	if ( ! m_bValid ) 
+	if ( ! m_bValid )
 	{
 		pScroll.nMax = 0;
 		SetScrollInfo( SB_VERT, &pScroll );
@@ -587,7 +587,7 @@ void CWizardCtrl::Layout()
 			strUINT.Format( _T("%d"), IDC_WIZARD_CONTROL + nControl - 1 );
 			m_pItems.Lookup( strUINT, strValue );
 			if ( strValue.Right( 1 ) == "m" ) nFactor = 2;
-				
+
 			rcNew.left = rcClient.right - 35;
 			rcNew.right = rcClient.right - 9;
 			rcNew.top = nTop - (int)(m_nItemHeight / 2 * nFactor) - 13;
@@ -612,7 +612,7 @@ void CWizardCtrl::Layout()
 			rcNew.bottom	= nTop + m_nItemHeight / 2 + 9;
 			bSameRow = FALSE;
 		}
-		
+
 		hDWP = DeferWindowPos( hDWP, pControl->GetSafeHwnd(), NULL, rcNew.left, rcNew.top,
 			rcNew.Width(), rcNew.Height(), SWP_SHOWWINDOW | SWP_NOACTIVATE | SWP_NOZORDER );
 
@@ -630,12 +630,12 @@ void CWizardCtrl::Layout()
 }
 
 // PrepareDoc is used for "multi-filepicker" item processing.
-// Only meta data are replaced from the template file 
+// Only meta data are replaced from the template file
 // and the doc is added to the collection.
 
 BOOL CWizardCtrl::PrepareDoc(CLibraryFile* pFile, LPCTSTR pszTemplate)
 {
-	CString strDoc, strReplace, strOld;	
+	CString strDoc, strReplace, strOld;
 	CString strTemplate = m_sXMLPath;
 	int nSlash = strTemplate.ReverseFind( '\\' );
 	strTemplate = strTemplate.Left( nSlash + 1 ) + pszTemplate;
@@ -657,7 +657,7 @@ BOOL CWizardCtrl::PrepareDoc(CLibraryFile* pFile, LPCTSTR pszTemplate)
 			strReplace = pNode->GetValue();
 			if ( str == _T("seconds") || str == _T("minutes") )
 			{
-				double nTotalSecs = str == _T("minutes") ? 
+				double nTotalSecs = str == _T("minutes") ?
 					_tstof( (LPCTSTR)strReplace ) * 60 : _tstof( (LPCTSTR)strReplace );
 				int nSecs = int( nTotalSecs );
 				int nHours = nSecs / 3600;
@@ -706,7 +706,7 @@ BOOL CWizardCtrl::PrepareDoc(CLibraryFile* pFile, LPCTSTR pszTemplate)
 		ReplaceNoCase( strDoc, _T("$meta:sizebytes$"), strSize );
 	}
 
-	if ( pFile->m_oSHA1 ) 
+	if ( pFile->m_oSHA1 )
 	{
 		strSHA1 = pFile->m_oSHA1.toString();
 		strMagnet = _T("xt=urn:sha1:") + strSHA1;
@@ -716,7 +716,7 @@ BOOL CWizardCtrl::PrepareDoc(CLibraryFile* pFile, LPCTSTR pszTemplate)
 		strReplace = _T("gnutella://urn:sha1:") + strSHA1 + '/' + strNameURI + '/';
 		ReplaceNoCase( strDoc, _T("$meta:gnutella$"), strReplace );
 	}
-	if ( pFile->m_oTiger ) 
+	if ( pFile->m_oTiger )
 	{
 		strTiger = pFile->m_oTiger.toString();
 		strMagnet = _T("xt=urn:tree:tiger/:") + strTiger;
@@ -760,11 +760,11 @@ BOOL CWizardCtrl::PrepareDoc(CLibraryFile* pFile, LPCTSTR pszTemplate)
 			strSize.Format( _T("%.2f MB"), (float)pFile->m_nSize / 1024 / 1024 );
 		else
 			strSize.Format( _T("%.2f KB"), (float)pFile->m_nSize / 1024 );
-		ReplaceNoCase( strDoc, _T("$meta:size$"), strSize ); 
+		ReplaceNoCase( strDoc, _T("$meta:size$"), strSize );
 	}
 
 	ReplaceNoCase( strDoc, _T("$meta:name$"), strFileName );
-	if ( ! pFile->m_sComments.IsEmpty() ) 
+	if ( ! pFile->m_sComments.IsEmpty() )
 		ReplaceNoCase( strDoc, _T("$meta:comments$"), pFile->m_sComments );
 
 	pLock.Unlock();
@@ -773,7 +773,7 @@ BOOL CWizardCtrl::PrepareDoc(CLibraryFile* pFile, LPCTSTR pszTemplate)
 
 	// Replace all "$meta:xxx$" which were left in the file to "N/A"
 	using namespace regex;
-	const rpattern regExpPattern( _T("\\$meta:.*\\$"), _T("N/A"), 
+	const rpattern regExpPattern( _T("\\$meta:.*\\$"), _T("N/A"),
 		NOCASE|GLOBAL|MULTILINE|NOBACKREFS, MODE_SAFE );
 	subst_results results;
 	std::wstring strTemp( strDoc, strDoc.GetLength() );
@@ -824,7 +824,7 @@ fail:		result.push_back( nChar );
 	sInStr.SetString( &result[ 0 ], static_cast< int >( result.size() ) );
 }
 
-BOOL CWizardCtrl::OnCommand(WPARAM wParam, LPARAM lParam) 
+BOOL CWizardCtrl::OnCommand(WPARAM wParam, LPARAM lParam)
 {
 	CString str;
 	if ( HIWORD( wParam ) != BN_CLICKED ) return CWnd::OnCommand( wParam, lParam );
@@ -846,14 +846,14 @@ BOOL CWizardCtrl::OnCommand(WPARAM wParam, LPARAM lParam)
 			// find default color
 			int r, g, b;
 			int nLen = pEdit->GetWindowTextLength();
-			LPTSTR pszSource = new TCHAR[ nLen + 1 ]; 
+			LPTSTR pszSource = new TCHAR[ nLen + 1 ];
 			CHAR* pszDest = new CHAR[ nLen + 1 ];
 
 			pEdit->GetWindowText( pszSource, nLen + 1 );
 			for ( unsigned int nLen = 0; nLen < _tcslen( pszSource ); nLen++ )
 				pszDest[nLen] = (CHAR) pszSource[nLen];
-			
-			COLORREF crColor = sscanf( pszDest, "#%2x%2x%2x", &r, &g, &b ) != 3 ? 
+
+			COLORREF crColor = sscanf( pszDest, "#%2x%2x%2x", &r, &g, &b ) != 3 ?
 								RGB(0, 0, 0) : RGB(r, g, b);
 
 			delete [] pszSource;
@@ -863,7 +863,7 @@ BOOL CWizardCtrl::OnCommand(WPARAM wParam, LPARAM lParam)
 			if ( dlg.DoModal() == IDOK )
 			{
 				crColor = dlg.GetColor();
-				str.Format( _T("#%0.2x%0.2x%0.2x"), 
+				str.Format( _T("#%0.2x%0.2x%0.2x"),
 						GetRValue(crColor), GetGValue(crColor), GetBValue(crColor) );
 				pEdit->SetWindowText( str.MakeUpper() ); // no need to use CharUpper
 			}
@@ -884,20 +884,20 @@ BOOL CWizardCtrl::OnTab()
 {
 	CWnd* pFocus	= GetFocus();
 	CWnd* pPrevious	= NULL;
-	
+
 	BOOL bShift	= GetAsyncKeyState( VK_SHIFT ) & 0x8000;
 	BOOL bNext	= FALSE;
-	
+
 	if ( pFocus == GetWindow( GW_HWNDPREV ) )
 	{
 		if ( bShift ) return FALSE;
 		bNext = TRUE;
 	}
-	
+
 	for ( INT_PTR nControl = 0 ; nControl < m_pControls.GetSize() ; nControl++ )
 	{
 		CWnd* pControl = m_pControls.GetAt( nControl );
-		
+
 		if ( bNext )
 		{
 			SetFocusTo( pControl );
@@ -927,7 +927,7 @@ BOOL CWizardCtrl::OnTab()
 
 		pPrevious = pControl;
 	}
-	
+
 	if ( bNext )
 	{
 		pFocus = GetWindow( GW_HWNDNEXT );
@@ -935,7 +935,7 @@ BOOL CWizardCtrl::OnTab()
 		if ( pFocus ) pFocus->SetFocus();
 		return TRUE;
 	}
-	
+
 	return FALSE;
 }
 

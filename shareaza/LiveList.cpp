@@ -1,7 +1,7 @@
 //
 // LiveList.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -226,7 +226,7 @@ int CLiveItem::Add(CListCtrl* pCtrl, int nItem, int nColumns)
 	ASSERT_VALID( this );
 	ASSERT_VALID( pCtrl );
 
-	LV_ITEM pItem = {};
+	LV_ITEM pItem = { 0 };
 	pItem.mask		= LVIF_PARAM|LVIF_TEXT|LVIF_IMAGE|LVIF_STATE;
 	pItem.iItem		= nItem >= 0 ? nItem : pCtrl->GetItemCount();
 	pItem.lParam	= (LPARAM)m_nParam;
@@ -258,7 +258,7 @@ BOOL CLiveItem::Update(CListCtrl* pCtrl, int nItem, int nColumns)
 
 	BOOL bModified = FALSE;
 
-	LV_ITEM pItem = {};
+	LV_ITEM pItem = { 0 };
 	pItem.mask		= LVIF_PARAM|LVIF_IMAGE|LVIF_STATE;
 	pItem.iItem		= nItem;
 	pItem.stateMask	= LVIS_OVERLAYMASK|LVIS_STATEIMAGEMASK;
@@ -305,7 +305,7 @@ BOOL CLiveItem::SetImage(CListCtrl* pCtrl, int nParam, int nColumn, int nImageIn
 	pFind.lParam	= nParam;
 	nItem = pCtrl->FindItem( &pFind );
 
-	LV_ITEM pItem = {};
+	LV_ITEM pItem = { 0 };
 	pItem.mask	= LVIF_IMAGE;
 	pItem.iItem	= nItem;
 	pItem.iSubItem = nColumn;
@@ -370,7 +370,7 @@ void CLiveList::Sort(CListCtrl* pCtrl, int nColumn, BOOL bGraphic)
 		ASSERT_VALID( pHeader );
 		for ( int nCol = 0 ; ; nCol++ )
 		{
-			HDITEM pColumn = {};
+			HDITEM pColumn = { 0 };
 			pColumn.mask = HDI_BITMAP|HDI_FORMAT;
 
 			if ( ! pHeader->GetItem( nCol, &pColumn ) ) break;
@@ -486,7 +486,7 @@ int CLiveList::SortProc(LPCTSTR sA, LPCTSTR sB, BOOL bNumeric)
 		TCHAR* pA = (TCHAR*)_tcschr( sA, '/' );
 		TCHAR* pB = (TCHAR*)_tcschr( sB, '/' );
 		DWORD maskA = 0xffffffff, maskB = 0xffffffff;
-		if ( ( ! pA || atoip( pA + 1, maskA ) ) && 
+		if ( ( ! pA || atoip( pA + 1, maskA ) ) &&
 			 ( ! pB || atoip( pB + 1, maskB ) ) )
 		{
 			QWORD nA = ( ( (QWORD) ipA ) << 32 ) | maskA;
@@ -817,7 +817,7 @@ void CLiveListCtrl::Sort(int nColumn)
 	CHeaderCtrl* pHeader = GetHeaderCtrl();
 	for ( int nCol = 0 ; ; nCol++ )
 	{
-		HDITEM pColumn = {};
+		HDITEM pColumn = { 0 };
 		pColumn.mask = HDI_BITMAP|HDI_FORMAT;
 
 		if ( ! pHeader->GetItem( nCol, &pColumn ) ) break;
@@ -880,18 +880,18 @@ void CLiveListCtrl::OnLvnGetdispinfoW(NMHDR *pNMHDR, LRESULT *pResult)
 			pDispInfo->item.cchTextMax );
 	}
 
-	if ( pDispInfo->item.mask & LVIF_IMAGE ) 
+	if ( pDispInfo->item.mask & LVIF_IMAGE )
 	{
 		pDispInfo->item.iImage = pItem->m_nImage;
 	}
 
-	if ( pDispInfo->item.mask & LVIF_STATE ) 
+	if ( pDispInfo->item.mask & LVIF_STATE )
 	{
 		pDispInfo->item.state = INDEXTOOVERLAYMASK( pItem->m_nMaskOverlay ) |
 			INDEXTOSTATEIMAGEMASK( pItem->m_nMaskState );
 	}
 
-	if ( pDispInfo->item.mask & LVFI_PARAM ) 
+	if ( pDispInfo->item.mask & LVFI_PARAM )
 	{
 		pDispInfo->item.lParam = pItem->m_nParam;
 	}
@@ -914,18 +914,18 @@ void CLiveListCtrl::OnLvnGetdispinfoA(NMHDR *pNMHDR, LRESULT *pResult)
 			pDispInfo->item.cchTextMax );
 	}
 
-	if ( pDispInfo->item.mask & LVIF_IMAGE ) 
+	if ( pDispInfo->item.mask & LVIF_IMAGE )
 	{
 		pDispInfo->item.iImage = pItem->m_nImage;
 	}
 
-	if ( pDispInfo->item.mask & LVIF_STATE ) 
+	if ( pDispInfo->item.mask & LVIF_STATE )
 	{
 		pDispInfo->item.state = INDEXTOOVERLAYMASK( pItem->m_nMaskOverlay ) |
 			INDEXTOSTATEIMAGEMASK( pItem->m_nMaskState );
 	}
 
-	if ( pDispInfo->item.mask & LVFI_PARAM ) 
+	if ( pDispInfo->item.mask & LVFI_PARAM )
 	{
 		pDispInfo->item.lParam = pItem->m_nParam;
 	}

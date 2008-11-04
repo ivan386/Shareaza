@@ -1,5 +1,5 @@
 //
-// PageTorrentGeneral.cpp
+// PageTorrentFiles.cpp
 //
 // Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
@@ -48,7 +48,7 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CTorrentFilesPage property page
 
-CTorrentFilesPage::CTorrentFilesPage() : 
+CTorrentFilesPage::CTorrentFilesPage() :
 	CPropertyPageAdv( CTorrentFilesPage::IDD )
 {
 }
@@ -79,7 +79,7 @@ BOOL CTorrentFilesPage::OnInitDialog()
 	CDownload* pDownload = ((CDownloadSheet*)GetParent())->m_pDownload;
 	if ( ! Downloads.Check( pDownload ) || ! pDownload->IsTorrent() )
 		return FALSE;
-	
+
 	CBTInfo& oInfo = pDownload->m_pTorrent;
 
 	auto_ptr< CCoolTipCtrl > pTip( new CLibraryTipCtrl );
@@ -106,15 +106,15 @@ BOOL CTorrentFilesPage::OnInitDialog()
 	for ( POSITION pos = oInfo.m_pFiles.GetHeadPosition(); pos ; )
 	{
 		CBTInfo::CBTFile* pFile = oInfo.m_pFiles.GetNext( pos );
-		
-		LV_ITEM pItem = {};
+
+		LV_ITEM pItem = { 0 };
 		pItem.mask		= LVIF_TEXT|LVIF_IMAGE|LVIF_PARAM;
 		pItem.iItem		= m_wndFiles.GetItemCount();
 		pItem.lParam	= (LPARAM)pFile;
 		pItem.iImage	= ShellIcons.Get( pFile->m_sPath, 16 );
 		pItem.pszText	= (LPTSTR)(LPCTSTR)pFile->m_sPath;
 		pItem.iItem		= m_wndFiles.InsertItem( &pItem );
-		
+
 		m_wndFiles.SetItemText( pItem.iItem, 1, Settings.SmartVolume( pFile->m_nSize ) );
 		m_wndFiles.SetColumnData( pItem.iItem, 3, pFile->GetPriority() );
 	}
@@ -141,7 +141,7 @@ BOOL CTorrentFilesPage::OnApply()
 	for ( int i = 0; i < m_wndFiles.GetItemCount(); ++i )
 	{
 		CBTInfo::CBTFile* pFile = (CBTInfo::CBTFile*)m_wndFiles.GetItemData( i );
-		
+
 		// Check if file still valid
 		if ( POSITION pos = oInfo.m_pFiles.Find( pFile ) )
 		{
@@ -152,7 +152,7 @@ BOOL CTorrentFilesPage::OnApply()
 	return CPropertyPageAdv::OnApply();
 }
 
-void CTorrentFilesPage::OnTimer(UINT_PTR nIDEvent) 
+void CTorrentFilesPage::OnTimer(UINT_PTR nIDEvent)
 {
 	CPropertyPageAdv::OnTimer( nIDEvent );
 
@@ -192,7 +192,7 @@ void CTorrentFilesPage::Update()
 	}
 }
 
-void CTorrentFilesPage::OnDestroy() 
+void CTorrentFilesPage::OnDestroy()
 {
 	KillTimer( 1 );
 

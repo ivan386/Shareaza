@@ -228,7 +228,7 @@ void CMatchTipCtrl::ShowInternal()
 
 	HMONITOR hMonitor = MonitorFromPoint( m_pOpen, MONITOR_DEFAULTTONEAREST );
 
-	MONITORINFO oMonitor = {0};
+	MONITORINFO oMonitor = { 0 };
 	oMonitor.cbSize = sizeof( MONITORINFO );
 	GetMonitorInfo( hMonitor, &oMonitor );
 

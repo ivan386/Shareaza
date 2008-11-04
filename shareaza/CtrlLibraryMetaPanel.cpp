@@ -540,7 +540,7 @@ CMetaPanel* CLibraryMetaPanel::GetServicePanel()
 
 void CLibraryMetaPanel::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* /*pScrollBar*/)
 {
-	SCROLLINFO pScroll = {};
+	SCROLLINFO pScroll = { 0 };
 
 	pScroll.cbSize	= sizeof(pScroll);
 	pScroll.fMask	= SIF_ALL;

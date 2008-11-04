@@ -831,7 +831,7 @@ void CShareazaApp::InitResources()
 		GeoIP_newFunc pfnGeoIP_new = (GeoIP_newFunc)GetProcAddress( m_hGeoIP, "GeoIP_new" );
 		m_pfnGeoIP_country_code_by_addr = (GeoIP_country_code_by_addrFunc)GetProcAddress( m_hGeoIP, "GeoIP_country_code_by_addr" );
 		m_pfnGeoIP_country_name_by_addr = (GeoIP_country_name_by_addrFunc)GetProcAddress( m_hGeoIP, "GeoIP_country_name_by_addr" );
-		if ( pfnGeoIP_new ) 
+		if ( pfnGeoIP_new )
 			m_pGeoIP = pfnGeoIP_new( GEOIP_MEMORY_CACHE );
 	}
 
@@ -839,7 +839,7 @@ void CShareazaApp::InitResources()
 	m_hLibGFL = CustomLoadLibrary( _T("libgfl280.dll") );
 
 	// Use GlobalMemoryStatusEx if possible (WinXP)
-	MEMORYSTATUSEX pMemory = {};
+	MEMORYSTATUSEX pMemory = { 0 };
 	pMemory.dwLength = sizeof(pMemory);
 	if ( GlobalMemoryStatusEx( &pMemory ) )
 		m_nPhysicalMemory = pMemory.ullTotalPhys;
@@ -1453,7 +1453,7 @@ DWORD TimeFromString(LPCTSTR pszTime)
 	LPCTSTR psz;
 	int nTemp;
 
-	tm pTime = {};
+	tm pTime = { 0 };
 
 	if ( _stscanf( pszTime, _T("%i"), &nTemp ) != 1 ) return 0;
 	pTime.tm_year = nTemp - 1900;
@@ -1515,7 +1515,7 @@ BOOL TimeFromString(LPCTSTR pszTime, FILETIME* pTime)
 	LPCTSTR psz;
 	int nTemp;
 
-	SYSTEMTIME pOut = {};
+	SYSTEMTIME pOut = { 0 };
 
 	if ( _stscanf( pszTime, _T("%i"), &nTemp ) != 1 ) return FALSE;
 	pOut.wYear = WORD( nTemp );
@@ -2244,7 +2244,7 @@ static int CALLBACK BrowseCallbackProc(HWND hWnd, UINT uMsg, LPARAM lParam, LPAR
 	case BFFM_SELCHANGED:
 		{
 			// Fail if non-filesystem
-			TCHAR szDir[ MAX_PATH ] = {};
+			TCHAR szDir[ MAX_PATH ] = { 0 };
 			BOOL bResult = SHGetPathFromIDList( (LPITEMIDLIST)lParam, szDir );
 			if ( bResult )
 			{
@@ -2253,7 +2253,7 @@ static int CALLBACK BrowseCallbackProc(HWND hWnd, UINT uMsg, LPARAM lParam, LPAR
 				if ( bResult )
 				{
 					// Fail if pidl is a link
-					SHFILEINFO sfi = {};
+					SHFILEINFO sfi = { 0 };
 					bResult = ( SHGetFileInfo( (LPCTSTR)lParam, 0, &sfi, sizeof( sfi ),
 						SHGFI_PIDL | SHGFI_ATTRIBUTES ) &&
 						( sfi.dwAttributes & SFGAO_LINK ) == 0 );
@@ -2278,7 +2278,7 @@ CString BrowseForFolder(UINT nTitle, LPCTSTR szInitialPath, HWND hWnd)
 CString BrowseForFolder(LPCTSTR szTitle, LPCTSTR szInitialPath, HWND hWnd)
 {
 	// Get last used folder
-	static TCHAR szDefaultPath[ MAX_PATH ] = {};
+	static TCHAR szDefaultPath[ MAX_PATH ] = { 0 };
 	if ( ! szInitialPath || ! *szInitialPath )
 	{
 		if ( ! *szDefaultPath )
@@ -2286,8 +2286,8 @@ CString BrowseForFolder(LPCTSTR szTitle, LPCTSTR szInitialPath, HWND hWnd)
 		szInitialPath = szDefaultPath;
 	}
 
-	TCHAR szDisplayName[ MAX_PATH ] = {};
-	BROWSEINFO pBI = {};
+	TCHAR szDisplayName[ MAX_PATH ] = { 0 };
+	BROWSEINFO pBI = { 0 };
 	pBI.hwndOwner = hWnd ? hWnd : AfxGetMainWnd()->GetSafeHwnd();
 	pBI.pszDisplayName = szDisplayName;
 	pBI.lpszTitle = szTitle;
@@ -2298,7 +2298,7 @@ CString BrowseForFolder(LPCTSTR szTitle, LPCTSTR szInitialPath, HWND hWnd)
 	if ( pPath == NULL )
 		return CString();
 
-	TCHAR szPath[ MAX_PATH ] = {};
+	TCHAR szPath[ MAX_PATH ] = { 0 };
 	BOOL bResult = SHGetPathFromIDList( pPath, szPath );
 
 	CComPtr< IMalloc > pMalloc;
