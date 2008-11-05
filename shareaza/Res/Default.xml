@@ -1449,7 +1449,10 @@
 	<menu name="CSearchMonitorWnd">
 		<item id="ID_HITMONITOR_SEARCH" text="_Search for This"/>
 		<separator/>
-		<item id="ID_SEARCHMONITOR_PAUSE" text="_Pause Display"/>
+    <item id="ID_BROWSE_LAUNCH" text="_Browse User"/>
+    <item id="ID_SECURITY_BAN" text="B_an User"/>
+    <separator/>
+    <item id="ID_SEARCHMONITOR_PAUSE" text="_Pause Display"/>
 		<item id="ID_SEARCHMONITOR_CLEAR" text="_Clear Buffer"/>
 	</menu>
 	<!-- GRAPH/TRAFFIC WINDOW -->

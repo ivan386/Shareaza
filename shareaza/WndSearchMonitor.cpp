@@ -28,6 +28,8 @@
 #include "LiveList.h"
 #include "XML.h"
 #include "Skin.h"
+#include "Security.h"
+#include "WndBrowseHost.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -48,6 +50,10 @@ BEGIN_MESSAGE_MAP(CSearchMonitorWnd, CPanelWnd)
 	ON_COMMAND(ID_SEARCHMONITOR_CLEAR, OnSearchMonitorClear)
 	ON_UPDATE_COMMAND_UI(ID_HITMONITOR_SEARCH, OnUpdateSearchMonitorSearch)
 	ON_COMMAND(ID_HITMONITOR_SEARCH, OnSearchMonitorSearch)
+	ON_UPDATE_COMMAND_UI(ID_SECURITY_BAN, OnUpdateSecurityBan)
+	ON_COMMAND(ID_SECURITY_BAN, OnSecurityBan)
+	ON_UPDATE_COMMAND_UI(ID_BROWSE_LAUNCH, OnUpdateBrowseLaunch)
+	ON_COMMAND(ID_BROWSE_LAUNCH, OnBrowseLaunch)
 	ON_NOTIFY(LVN_COLUMNCLICK, IDC_SEARCHES, OnDblClkList)
 	ON_WM_TIMER()
 	//}}AFX_MSG_MAP
@@ -87,8 +93,9 @@ int CSearchMonitorWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_wndList.SetImageList( &m_gdiImageList, LVSIL_SMALL );
 
 	m_wndList.InsertColumn( 0, _T("Search"), LVCFMT_LEFT, 200, -1 );
-	m_wndList.InsertColumn( 1, _T("URN"), LVCFMT_LEFT, 120, 0 );
-	m_wndList.InsertColumn( 2, _T("Schema"), LVCFMT_LEFT, 120, 1 );
+	m_wndList.InsertColumn( 1, _T("URN"), LVCFMT_LEFT, 400, 0 );
+	m_wndList.InsertColumn( 2, _T("Schema"), LVCFMT_LEFT, 100, 1 );
+	m_wndList.InsertColumn( 3, _T("Host"), LVCFMT_LEFT, 100, 2 );
 
 	m_wndList.SetFont( &theApp.m_gdiFont );
 	
@@ -202,11 +209,13 @@ void CSearchMonitorWnd::OnQuerySearch(CQuerySearch* pSearch)
 
 	if ( m_bPaused ) return;
 
-	CLiveItem* pItem = new CLiveItem( 3, NULL );
+	CLiveItem* pItem = new CLiveItem( 4, NULL );
 
 	CString strSearch	= pSearch->m_sSearch;
 	CString strSchema	= _T("None");
 	CString strURN		= _T("None");
+	CString strNode;
+	strNode.Format( _T("%hs:%u"), inet_ntoa( pSearch->m_pEndpoint.sin_addr ), ntohs( pSearch->m_pEndpoint.sin_port ) );
 
 	if ( pSearch->m_oSHA1 && pSearch->m_oTiger )
 	{
@@ -250,6 +259,7 @@ void CSearchMonitorWnd::OnQuerySearch(CQuerySearch* pSearch)
 	pItem->Set( 0, strSearch );
 	pItem->Set( 1, strURN );
 	pItem->Set( 2, strSchema );
+	pItem->Set( 3, strNode );
 		
 	m_pQueue.AddTail( pItem );
 }
@@ -276,10 +286,54 @@ void CSearchMonitorWnd::OnTimer(UINT_PTR nIDEvent)
 			m_wndList.DeleteItem( 0 );
 		}
 
-		/*int nItem =*/ pItem->Add( &m_wndList, -1, 3 );
+		/*int nItem =*/ pItem->Add( &m_wndList, -1, 4 );
 
 		delete pItem;
 	}
 
 	if ( bScroll ) m_wndList.EnsureVisible( m_wndList.GetItemCount() - 1, FALSE );
+}
+
+void CSearchMonitorWnd::OnUpdateSecurityBan(CCmdUI* pCmdUI)
+{
+	pCmdUI->Enable( m_wndList.GetNextItem( -1, LVNI_SELECTED ) >= 0 );
+}
+
+void CSearchMonitorWnd::OnSecurityBan()
+{
+	CSingleLock pLock( &m_pSection, TRUE );
+
+	int nItem = m_wndList.GetNextItem( -1, LVNI_SELECTED );
+	if ( nItem >= 0 )
+	{
+		SOCKADDR_IN pHost = { 0 };
+		pHost.sin_family = AF_INET;
+		CString strNode = m_wndList.GetItemText( nItem, 3 );
+		int nPos = strNode.Find( _T(':') );
+		pHost.sin_addr.s_addr = inet_addr( CT2CA( (LPCTSTR)strNode.Left( nPos ) ) );
+		pHost.sin_port = htons( (WORD)_tstoi( strNode.Mid( nPos + 1 ) ) );
+		Security.Ban( &pHost.sin_addr, banSession );
+	}
+}
+
+void CSearchMonitorWnd::OnUpdateBrowseLaunch(CCmdUI* pCmdUI)
+{
+	pCmdUI->Enable( m_wndList.GetNextItem( -1, LVNI_SELECTED ) >= 0 );
+}
+
+void CSearchMonitorWnd::OnBrowseLaunch()
+{
+	CSingleLock pLock( &m_pSection, TRUE );
+
+	int nItem = m_wndList.GetNextItem( -1, LVNI_SELECTED );
+	if ( nItem >= 0 )
+	{
+		SOCKADDR_IN pHost = { 0 };
+		pHost.sin_family = AF_INET;
+		CString strNode = m_wndList.GetItemText( nItem, 3 );
+		int nPos = strNode.Find( _T(':') );
+		pHost.sin_addr.s_addr = inet_addr( CT2CA( (LPCTSTR)strNode.Left( nPos ) ) );
+		pHost.sin_port = htons( (WORD)_tstoi( strNode.Mid( nPos + 1 ) ) );
+		new CBrowseHostWnd( &pHost );
+	}
 }

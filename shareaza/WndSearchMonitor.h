@@ -69,6 +69,10 @@ protected:
 	afx_msg void OnSearchMonitorClear();
 	afx_msg void OnUpdateSearchMonitorSearch(CCmdUI* pCmdUI);
 	afx_msg void OnSearchMonitorSearch();
+	afx_msg void OnUpdateSecurityBan(CCmdUI* pCmdUI);
+	afx_msg void OnSecurityBan();
+	afx_msg void OnUpdateBrowseLaunch(CCmdUI* pCmdUI);
+	afx_msg void OnBrowseLaunch();
 	afx_msg void OnDblClkList(NMHDR* pNotifyStruct, LRESULT *pResult);
 	afx_msg void OnTimer(UINT_PTR nIDEvent);
 	//}}AFX_MSG
