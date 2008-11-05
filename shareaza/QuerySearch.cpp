@@ -980,9 +980,10 @@ BOOL CQuerySearch::ReadG2Packet(CG2Packet* pPacket, SOCKADDR_IN* pEndpoint)
 
 BOOL CQuerySearch::CheckValid(bool bExpression)
 {
-	bool bHashOk = false;
+	BuildWordList( bExpression );
 
 	// Searches by hash are ok
+	bool bHashOk = false;
 	if ( IsHashed() )
 	{
 		if ( m_oURNs.empty() )
@@ -1020,8 +1021,6 @@ BOOL CQuerySearch::CheckValid(bool bExpression)
 
 		bHashOk = true;
 	}
-
-	BuildWordList( bExpression );
 
 	if ( m_oKeywordHashList.size() )
 	{
