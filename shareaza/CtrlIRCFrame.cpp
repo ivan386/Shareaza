@@ -1053,11 +1053,10 @@ void CIRCFrame::OnTimer(UINT_PTR nIDEvent)
 			if ( nRetVal > 0 ) pszData[ nRetVal + 1 ] = '\0';
 			CString strTmp = pszData;
 			strTmp = m_sWsaBuffer + strTmp;
-				strTmp = TrimString( strTmp );
+			strTmp = TrimString( strTmp );
 			delete[] pszData;
 			m_sWsaBuffer.Empty();
 
-			// ToDo: convert UTF-8 strings to CP_ACP here
 			if ( nRetVal == 0 )
 			{
 				OnStatusMessage( strTmp, ID_COLOR_NOTICE );
@@ -1090,7 +1089,7 @@ void CIRCFrame::OnTimer(UINT_PTR nIDEvent)
 						strMessage = strTmp.Left( nIndex + 1 );
 						strMessage = TrimString( strMessage );
 						if ( strMessage.Find( ' ' ) != -1 && !strMessage.IsEmpty() )
-							OnNewMessage( strMessage );
+							OnNewMessage( UTF8Decode( CStringA( strMessage ) ) );
 						strTmp = strTmp.Mid( nIndex + 1 );
 						nIndex = strTmp.Find( _T("\x000D\x000A") );
 					}
@@ -1111,15 +1110,8 @@ void CIRCFrame::SendString(CString strMessage)
 {
 	strMessage = strMessage.Trim();
 	strMessage = strMessage + _T("\x000D\x000A");
-	// ToDo: convert to UTF-8 depending on the settings
-	int nBytes = WideCharToMultiByte( CP_UTF8, 0, strMessage, strMessage.GetLength(), NULL, 0, NULL, NULL );
-	LPSTR pBytes = new CHAR[ nBytes + 1 ];
-	WideCharToMultiByte( CP_UTF8, 0, strMessage, strMessage.GetLength(), pBytes, nBytes, NULL, NULL );
-	pBytes[nBytes] = '\0';
- 	int nLength, nBytesSent;
-	nLength = int( strlen( pBytes ) );
-	nBytesSent = int( send( m_nSocket, pBytes, nLength, 0 ) );
-	delete [] pBytes;
+	CStringA strEncoded = UTF8Encode( strMessage );
+	send( m_nSocket, (LPCSTR)strEncoded, strEncoded.GetLength(), 0 );
 }
 
 void CIRCFrame::OnStatusMessage(LPCTSTR pszText, int nFlags)
@@ -1781,6 +1773,7 @@ void CIRCFrame::ActivateMessageByID(CString strMessage, CIRCNewMessage* oNewMess
 		{
 			CString strChannelName( m_pWords.GetAt( 7 ) );
 			int nTab = 	AddTab( strChannelName, ID_KIND_CHANNEL );
+			if (nTab==-1) return;
 			m_wndTab.SetCurSel( nTab );
 			m_wndPanel.m_boxUsers.m_wndUserList.ResetContent();
 			m_pIrcUsersBuffer[ nTab ].RemoveAll();
@@ -2259,7 +2252,7 @@ int CIRCFrame::AddTab(CString strTabName, int nKindOfTab)
 {
 	if ( m_wndTab.GetItemCount() + 1 == MAX_CHANNELS )
 	{
-		OnLocalText( _T("You have exceeded the maximum number of opened channels") );
+		OnStatusMessage( _T("You have exceeded the maximum number of opened channels"), ID_COLOR_NOTICE );
 		return -1;
 	}
 	int m_nTab = IsTabExist( strTabName );
