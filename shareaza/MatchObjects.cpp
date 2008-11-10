@@ -444,6 +444,10 @@ CMatchFile* CMatchList::FindFileAndAddHit(CQueryHit* pHit, const findType nFindF
 			bool bHadED2K = pSeek->m_oED2K;
 			bool bHadBTH = pSeek->m_oBTH;
 			bool bHadMD5 = pSeek->m_oMD5;
+
+			if (pSeek->m_bExpanded)
+				m_nItems -= pSeek->GetItemCount();
+
 			if ( pSeek->Add( pHit, ( nFindFlag != fSize ) ) )
 			{
 				Stats->bHadSHA1	 |= bHadSHA1;
@@ -451,10 +455,16 @@ CMatchFile* CMatchList::FindFileAndAddHit(CQueryHit* pHit, const findType nFindF
 				Stats->bHadED2K	 |= bHadED2K;
 				Stats->bHadBTH	 |= bHadBTH;
 				Stats->bHadMD5	 |= bHadMD5;
+				if (pSeek->m_bExpanded)
+					m_nItems += pSeek->GetItemCount();
+
 				return pSeek;
 			}
 			//else
 				// TODO: Equal hashes for different files or bad hit
+
+			if (pSeek->m_bExpanded)
+				m_nItems += pSeek->GetItemCount();
 		}
 
 		if ( nFindFlag == fSize )
