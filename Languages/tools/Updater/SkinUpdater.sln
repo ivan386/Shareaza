@@ -1,7 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShareazaDialogUpdater", "ShareazaDialogUpdater.csproj", "{1D1ACC34-60BE-4C54-BB3D-0F176F3097D7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkinUpdater", "SkinUpdater.csproj", "{1D1ACC34-60BE-4C54-BB3D-0F176F3097D7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpdaterCommon", "..\UpdaterCommon\UpdaterCommon.csproj", "{04497E86-5EE6-4496-AD5B-9B224ACD25BE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,6 +15,10 @@ Global
 		{1D1ACC34-60BE-4C54-BB3D-0F176F3097D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1D1ACC34-60BE-4C54-BB3D-0F176F3097D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1D1ACC34-60BE-4C54-BB3D-0F176F3097D7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{04497E86-5EE6-4496-AD5B-9B224ACD25BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04497E86-5EE6-4496-AD5B-9B224ACD25BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04497E86-5EE6-4496-AD5B-9B224ACD25BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04497E86-5EE6-4496-AD5B-9B224ACD25BE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,5 +1,5 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="ShareazaDialogUpdater.Properties" GeneratedClassName="Settings">
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Updater.Common.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
     <Setting Name="Error_NotEnglish" Type="System.String" Scope="Application">
@@ -48,7 +48,7 @@
       <Value Profile="(Default)">&amp;Export Changes</Value>
     </Setting>
     <Setting Name="FormTitle" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">Shareaza Dialog Translation Updater</Value>
+      <Value Profile="(Default)">Shareaza Translation Updater</Value>
     </Setting>
     <Setting Name="StepOneExplanation" Type="System.String" Scope="Application">
       <Value Profile="(Default)">1. Open old english XML:</Value>

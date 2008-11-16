@@ -4,7 +4,7 @@ using System.Linq;
 using System.Windows.Forms;
 using System.Xml.Linq;
 
-namespace ShareazaDialogUpdater
+namespace Updater.Common
 {
 	static class Program
 	{

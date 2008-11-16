@@ -8,7 +8,7 @@
     <ProjectGuid>{1D1ACC34-60BE-4C54-BB3D-0F176F3097D7}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ShareazaDialogUpdater</RootNamespace>
+    <RootNamespace>Updater.Common</RootNamespace>
     <AssemblyName>ShareazaDialogUpdater</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -45,23 +45,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="XmlViewBox.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="XmlViewBox.Designer.cs">
-      <DependentUpon>XmlViewBox.cs</DependentUpon>
-    </Compile>
     <Compile Include="Form.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form.Designer.cs">
       <DependentUpon>Form.cs</DependentUpon>
-    </Compile>
-    <Compile Include="LanguageSelection.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="LanguageSelection.Designer.cs">
-      <DependentUpon>LanguageSelection.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -69,38 +57,22 @@
       <DependentUpon>Form.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="LanguageSelection.resx">
-      <DependentUpon>LanguageSelection.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="XmlViewBox.resx">
-      <DependentUpon>XmlViewBox.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
     <None Include="app.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <None Include="ShareazaDialog.xsd" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="ShareazaDialog.cs">
-      <DependentUpon>ShareazaDialog.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="XmlSerializerBase.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\UpdaterCommon\UpdaterCommon.csproj">
+      <Project>{04497E86-5EE6-4496-AD5B-9B224ACD25BE}</Project>
+      <Name>UpdaterCommon</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

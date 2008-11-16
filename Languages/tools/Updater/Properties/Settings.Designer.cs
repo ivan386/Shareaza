@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ShareazaDialogUpdater.Properties {
+namespace Updater.Common.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
@@ -160,7 +160,7 @@ namespace ShareazaDialogUpdater.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Shareaza Dialog Translation Updater")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Shareaza Translation Updater")]
         public string FormTitle {
             get {
                 return ((string)(this["FormTitle"]));
