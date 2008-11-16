@@ -1,0 +1,80 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Updater.Resources" GeneratedClassName="Resources">
+  <Profiles />
+  <Settings>
+    <Setting Name="Error_NotEnglish" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">Not an english file!</Value>
+    </Setting>
+    <Setting Name="Information" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">Information</Value>
+    </Setting>
+    <Setting Name="Error" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">Error</Value>
+    </Setting>
+    <Setting Name="TranslationMismatch" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">The old english file doesn't match your translation file!</Value>
+    </Setting>
+    <Setting Name="InvalidXml" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">Invalid XML</Value>
+    </Setting>
+    <Setting Name="InvalidCookie" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">Cookie is invalid</Value>
+    </Setting>
+    <Setting Name="InvalidDialogName" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">Dialog name is invalid</Value>
+    </Setting>
+    <Setting Name="MissingCaption" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">Caption is missing</Value>
+    </Setting>
+    <Setting Name="TextJunk" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">XML contains a text junk</Value>
+    </Setting>
+    <Setting Name="ExtraDialogText" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">Dialog contains not needed attributes</Value>
+    </Setting>
+    <Setting Name="InvalidControlCount" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">&lt;control&gt; count is invalid</Value>
+    </Setting>
+    <Setting Name="ExtraControlAttributes" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">&lt;control&gt; #{0} has not needed attributes</Value>
+    </Setting>
+    <Setting Name="InvalidControl" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">&lt;control&gt; #{0} is invalid</Value>
+    </Setting>
+    <Setting Name="ChangeFont" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">Change &amp;Font</Value>
+    </Setting>
+    <Setting Name="ExportChanges" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">&amp;Export Changes</Value>
+    </Setting>
+    <Setting Name="FormTitle" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">Shareaza Dialog Translation Updater</Value>
+    </Setting>
+    <Setting Name="StepOneExplanation" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">1. Open old english XML:</Value>
+    </Setting>
+    <Setting Name="StepTwoExplanation" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">2. Open new english XML:</Value>
+    </Setting>
+    <Setting Name="StepThreeExplanation" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">3. Select your XML (Zoom: Ctrl+Mouse Wheel)</Value>
+    </Setting>
+    <Setting Name="SelectLanguage" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">  Select Language</Value>
+    </Setting>
+    <Setting Name="SelectLanguageExplanation" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">Could not guess the language from the XML manifest.
+Please select the desired language from the list below:</Value>
+    </Setting>
+    <Setting Name="ButtonOk" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">OK</Value>
+    </Setting>
+    <Setting Name="ButtonCancel" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">Cancel</Value>
+    </Setting>
+    <Setting Name="RevertQuestion" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">Your changes are incorrect!
+Do you want to revert to automatic XML?</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
