@@ -26,7 +26,7 @@ namespace Updater.Common
 		public static Dictionary<string, Type> GetElementMappings() {
 			var info = from FieldInfo fieldInfo in typeof(skin).GetFields(BindingFlags.Public |
 																		  BindingFlags.Instance)
-					   where fieldInfo.FieldType.IsArray && fieldInfo.FieldType.Name.EndsWith(@"[]")
+					   where fieldInfo.FieldType.IsArray
 					   select fieldInfo;
 
 			var valid = from f in info

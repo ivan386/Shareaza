@@ -22,7 +22,6 @@ namespace Updater.Common
 												"<{0}>\r\n{1}\r\n" +
 												"</{0}>\r\n" +
 												"</skin>";
-
 		public AbstractGenericPageView() {
 			InitializeComponent();
 			this.splitVertical.SplitterDistance = this.tableBottomAll.Width / 2 - this.tableBottomAll.Margin.Left;
@@ -30,6 +29,11 @@ namespace Updater.Common
 			vertPerc = (float)this.splitVertical.SplitterDistance / this.tableBottomAll.Width;
 			horizPerc = (float)this.splitHorizontal.SplitterDistance / this.tableBottomAll.Height;
 			currElementFunc = element => ((INamedElement)element).Id == (string)cmbElements.Items[cmbElements.SelectedIndex];
+			if (IsRunningInMono) {
+				richEnOld.MouseClick += new MouseEventHandler(OnMouseClicked);
+				richEnNew.MouseClick += new MouseEventHandler(OnMouseClicked);
+				richUpdate.MouseClick += new MouseEventHandler(OnMouseClicked);
+			}
 		}
 
 		public AbstractGenericPageView(string oldFilePath, string newFilePath, string translationFilePath)
@@ -39,6 +43,7 @@ namespace Updater.Common
 			this.UpdatedFilePath = translationFilePath;
 		}
 
+	
 		public event EventHandler<PageViewErrorArgs> OnError;
 		public event EventHandler<ExportStatusChangedArgs> OnUpdate;
 
@@ -46,6 +51,11 @@ namespace Updater.Common
 			if (OnError != null)
 				OnError(this, new PageViewErrorArgs(errorMessage));
 		}
+
+		static bool _bMono = Type.GetType("Mono.Runtime") != null;
+		public static bool IsRunningInMono {
+			get { return _bMono; }
+		}		
 		
 		int lastIndex = -1;
 		public int ElementIndex {
@@ -277,16 +287,13 @@ namespace Updater.Common
 			set { richUpdate.Font = value;	}
 		}
 
-
 		#region Context Menu
 
 		private void contextMenu_Opening(object sender, CancelEventArgs e) {
-			RichTextBox box = (RichTextBox)contextMenu.SourceControl;
+			RichTextBox box = (RichTextBox)(contextMenu.SourceControl ?? contextMenu.Tag);
 			box.Focus();
-			IDataObject iData = Clipboard.GetDataObject();
-			if (!box.ReadOnly && iData.GetDataPresent(DataFormats.Text)) {
-				string text = (string)iData.GetData(DataFormats.Text);
-				pasteItem.Enabled = !String.IsNullOrEmpty(text);
+			if (!box.ReadOnly) {
+				pasteItem.Enabled = !String.IsNullOrEmpty(Clipboard.GetText());
 			} else {
 				pasteItem.Enabled = false;
 			}
@@ -306,53 +313,45 @@ namespace Updater.Common
 		}
 
 		private void cutItem_Click(object sender, EventArgs e) {
-			RichTextBox box = (RichTextBox)contextMenu.SourceControl;
+			RichTextBox box = (RichTextBox)(contextMenu.SourceControl ?? contextMenu.Tag);
 			box.Cut();
 		}
 
 		private void copyItem_Click(object sender, EventArgs e) {
-			RichTextBox box = (RichTextBox)contextMenu.SourceControl;
+			RichTextBox box = (RichTextBox)(contextMenu.SourceControl ?? contextMenu.Tag);
 			box.Copy();
 		}
 
 		private void pasteItem_Click(object sender, EventArgs e) {
-			RichTextBox box = (RichTextBox)contextMenu.SourceControl;
+			RichTextBox box = (RichTextBox)(contextMenu.SourceControl ?? contextMenu.Tag);
 			IDataObject iData = Clipboard.GetDataObject();
 			if (iData.GetDataPresent(DataFormats.Text))
 				box.Paste();
 		}
 
 		private void deleteItem_Click(object sender, EventArgs e) {
-			RichTextBox box = (RichTextBox)contextMenu.SourceControl;
+			RichTextBox box = (RichTextBox)(contextMenu.SourceControl ?? contextMenu.Tag);
 			if (box == null)
 				box = richUpdate; // No other should send this event
-			IDataObject iData = Clipboard.GetDataObject();
-			if (box != null && box.SelectionLength > 0) {
-				if (iData.GetDataPresent(DataFormats.Text)) {
-					object oldContent = iData.GetData(DataFormats.Text);
-					box.Cut();
-					iData.SetData(oldContent);
-				} else {
-					box.Cut();
-				}
-			}
+			if (box != null && box.SelectionLength > 0)
+				box.SelectedText = "";
 			deleteItem.Enabled = false;
 		}
 
 		private void selectAllItem_Click(object sender, EventArgs e) {
-			RichTextBox box = (RichTextBox)contextMenu.SourceControl;
+			RichTextBox box = (RichTextBox)(contextMenu.SourceControl ?? contextMenu.Tag);
 			if (box.CanSelect)
 				box.SelectAll();
 		}
 
 		private void undoItem_Click(object sender, EventArgs e) {
-			RichTextBox box = (RichTextBox)contextMenu.SourceControl;
+			RichTextBox box = (RichTextBox)(contextMenu.SourceControl ?? contextMenu.Tag);
 			if (box.CanUndo)
 				box.Undo();
 		}
 
 		private void redoItem_Click(object sender, EventArgs e) {
-			RichTextBox box = (RichTextBox)contextMenu.SourceControl;
+			RichTextBox box = (RichTextBox)(contextMenu.SourceControl ?? contextMenu.Tag);
 			if (box.CanRedo)
 				box.Redo();
 		}
@@ -367,6 +366,11 @@ namespace Updater.Common
 			redoItem.Enabled = false;
 		}
 
-		#endregion		
+		#endregion
+
+		private void OnMouseClicked(object sender, MouseEventArgs e) {
+			if (IsRunningInMono)
+				contextMenu.Tag = sender as Control;
+		}
 	}
 }

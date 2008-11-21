@@ -16,10 +16,14 @@ namespace Updater.Common
 			this.LanguageOption = RichTextBoxLanguageOptions.UIFonts;
 		}
 
+		bool clearing = false;
 		protected override void OnTextChanged(EventArgs args) {
+			if (clearing) return;
 			if (String.IsNullOrEmpty(this.Text)) {
+				clearing = true;
 				// Clear formatting (fonts, colors etc.) which is not cleared by default
 				this.Clear();
+				clearing = false;
 			}
 			base.OnTextChanged(args);
 			

@@ -27,6 +27,10 @@
 			this.tableBottomAll = new System.Windows.Forms.TableLayoutPanel();
 			this.splitHorizontal = new System.Windows.Forms.SplitContainer();
 			this.splitVertical = new System.Windows.Forms.SplitContainer();
+			this.richEnOld = new Updater.Common.XmlViewBox();
+			this.richEnNew = new Updater.Common.XmlViewBox();
+			this.richUpdate = new Updater.Common.XmlViewBox();
+			this.cmbElements = new System.Windows.Forms.ComboBox();
 			this.contextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.undoItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.redoItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -35,10 +39,6 @@
 			this.pasteItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.deleteItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.selectAllItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.cmbElements = new System.Windows.Forms.ComboBox();
-			this.richEnOld = new Updater.Common.XmlViewBox();
-			this.richEnNew = new Updater.Common.XmlViewBox();
-			this.richUpdate = new Updater.Common.XmlViewBox();
 			toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
 			this.tableBottomAll.SuspendLayout();
@@ -124,6 +124,80 @@
 			this.splitVertical.Size = new System.Drawing.Size(482, 212);
 			this.splitVertical.SplitterDistance = 239;
 			this.splitVertical.TabIndex = 0;
+			// 
+			// richEnOld
+			// 
+			this.richEnOld.AcceptsTab = true;
+			this.richEnOld.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+						| System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
+			this.richEnOld.BackColor = System.Drawing.SystemColors.Window;
+			this.richEnOld.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.richEnOld.ContextMenuStrip = this.contextMenu;
+			this.richEnOld.Font = new System.Drawing.Font("Verdana", 8.25F);
+			this.richEnOld.ImeMode = System.Windows.Forms.ImeMode.On;
+			this.richEnOld.Location = new System.Drawing.Point(0, 0);
+			this.richEnOld.Margin = new System.Windows.Forms.Padding(0);
+			this.richEnOld.Name = "richEnOld";
+			this.richEnOld.ReadOnly = true;
+			this.richEnOld.Size = new System.Drawing.Size(238, 211);
+			this.richEnOld.TabIndex = 0;
+			this.richEnOld.TabStop = false;
+			this.richEnOld.Text = "";
+			this.richEnOld.WordWrap = false;
+			this.richEnOld.MouseClick += new System.Windows.Forms.MouseEventHandler(this.OnMouseClicked);
+			// 
+			// richEnNew
+			// 
+			this.richEnNew.AcceptsTab = true;
+			this.richEnNew.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+						| System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
+			this.richEnNew.BackColor = System.Drawing.SystemColors.Window;
+			this.richEnNew.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.richEnNew.ContextMenuStrip = this.contextMenu;
+			this.richEnNew.Font = new System.Drawing.Font("Verdana", 8.25F);
+			this.richEnNew.ImeMode = System.Windows.Forms.ImeMode.On;
+			this.richEnNew.Location = new System.Drawing.Point(-1, 0);
+			this.richEnNew.Margin = new System.Windows.Forms.Padding(0);
+			this.richEnNew.Name = "richEnNew";
+			this.richEnNew.ReadOnly = true;
+			this.richEnNew.Size = new System.Drawing.Size(239, 211);
+			this.richEnNew.TabIndex = 0;
+			this.richEnNew.TabStop = false;
+			this.richEnNew.Text = "";
+			this.richEnNew.WordWrap = false;
+			// 
+			// richUpdate
+			// 
+			this.richUpdate.AcceptsTab = true;
+			this.richUpdate.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+						| System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
+			this.richUpdate.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.richUpdate.ContextMenuStrip = this.contextMenu;
+			this.richUpdate.Font = new System.Drawing.Font("Verdana", 8.25F);
+			this.richUpdate.ImeMode = System.Windows.Forms.ImeMode.On;
+			this.richUpdate.Location = new System.Drawing.Point(0, 0);
+			this.richUpdate.Margin = new System.Windows.Forms.Padding(0);
+			this.richUpdate.Name = "richUpdate";
+			this.richUpdate.Size = new System.Drawing.Size(480, 150);
+			this.richUpdate.TabIndex = 0;
+			this.richUpdate.TabStop = false;
+			this.richUpdate.Text = "";
+			this.richUpdate.WordWrap = false;
+			this.richUpdate.TextChanged += new System.EventHandler(this.richTranslation_TextChanged);
+			// 
+			// cmbElements
+			// 
+			this.cmbElements.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.cmbElements.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.cmbElements.FormattingEnabled = true;
+			this.cmbElements.Location = new System.Drawing.Point(315, 379);
+			this.cmbElements.Name = "cmbElements";
+			this.cmbElements.Size = new System.Drawing.Size(170, 21);
+			this.cmbElements.TabIndex = 3;
+			this.cmbElements.SelectedIndexChanged += new System.EventHandler(this.cmbElements_SelectedIndexChanged);
 			// 
 			// contextMenu
 			// 
@@ -216,79 +290,6 @@
 			this.selectAllItem.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.selectAllItem.TextImageRelation = System.Windows.Forms.TextImageRelation.TextAboveImage;
 			this.selectAllItem.Click += new System.EventHandler(this.selectAllItem_Click);
-			// 
-			// cmbElements
-			// 
-			this.cmbElements.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.cmbElements.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.cmbElements.FormattingEnabled = true;
-			this.cmbElements.Location = new System.Drawing.Point(315, 379);
-			this.cmbElements.Name = "cmbElements";
-			this.cmbElements.Size = new System.Drawing.Size(170, 21);
-			this.cmbElements.TabIndex = 3;
-			this.cmbElements.SelectedIndexChanged += new System.EventHandler(this.cmbElements_SelectedIndexChanged);
-			// 
-			// richEnOld
-			// 
-			this.richEnOld.AcceptsTab = true;
-			this.richEnOld.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-						| System.Windows.Forms.AnchorStyles.Left)
-						| System.Windows.Forms.AnchorStyles.Right)));
-			this.richEnOld.BackColor = System.Drawing.SystemColors.Window;
-			this.richEnOld.BorderStyle = System.Windows.Forms.BorderStyle.None;
-			this.richEnOld.ContextMenuStrip = this.contextMenu;
-			this.richEnOld.Font = new System.Drawing.Font("Verdana", 8.25F);
-			this.richEnOld.ImeMode = System.Windows.Forms.ImeMode.On;
-			this.richEnOld.Location = new System.Drawing.Point(0, 0);
-			this.richEnOld.Margin = new System.Windows.Forms.Padding(0);
-			this.richEnOld.Name = "richEnOld";
-			this.richEnOld.ReadOnly = true;
-			this.richEnOld.Size = new System.Drawing.Size(238, 211);
-			this.richEnOld.TabIndex = 0;
-			this.richEnOld.TabStop = false;
-			this.richEnOld.Text = "";
-			this.richEnOld.WordWrap = false;
-			// 
-			// richEnNew
-			// 
-			this.richEnNew.AcceptsTab = true;
-			this.richEnNew.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-						| System.Windows.Forms.AnchorStyles.Left)
-						| System.Windows.Forms.AnchorStyles.Right)));
-			this.richEnNew.BackColor = System.Drawing.SystemColors.Window;
-			this.richEnNew.BorderStyle = System.Windows.Forms.BorderStyle.None;
-			this.richEnNew.ContextMenuStrip = this.contextMenu;
-			this.richEnNew.Font = new System.Drawing.Font("Verdana", 8.25F);
-			this.richEnNew.ImeMode = System.Windows.Forms.ImeMode.On;
-			this.richEnNew.Location = new System.Drawing.Point(-1, 0);
-			this.richEnNew.Margin = new System.Windows.Forms.Padding(0);
-			this.richEnNew.Name = "richEnNew";
-			this.richEnNew.ReadOnly = true;
-			this.richEnNew.Size = new System.Drawing.Size(239, 211);
-			this.richEnNew.TabIndex = 0;
-			this.richEnNew.TabStop = false;
-			this.richEnNew.Text = "";
-			this.richEnNew.WordWrap = false;
-			// 
-			// richTranslation
-			// 
-			this.richUpdate.AcceptsTab = true;
-			this.richUpdate.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-						| System.Windows.Forms.AnchorStyles.Left)
-						| System.Windows.Forms.AnchorStyles.Right)));
-			this.richUpdate.BorderStyle = System.Windows.Forms.BorderStyle.None;
-			this.richUpdate.ContextMenuStrip = this.contextMenu;
-			this.richUpdate.Font = new System.Drawing.Font("Verdana", 8.25F);
-			this.richUpdate.ImeMode = System.Windows.Forms.ImeMode.On;
-			this.richUpdate.Location = new System.Drawing.Point(0, 0);
-			this.richUpdate.Margin = new System.Windows.Forms.Padding(0);
-			this.richUpdate.Name = "richTranslation";
-			this.richUpdate.Size = new System.Drawing.Size(480, 150);
-			this.richUpdate.TabIndex = 0;
-			this.richUpdate.TabStop = false;
-			this.richUpdate.Text = "";
-			this.richUpdate.WordWrap = false;
-			this.richUpdate.TextChanged += new System.EventHandler(this.richTranslation_TextChanged);
 			// 
 			// AbstractGenericPageView
 			// 
