@@ -17,12 +17,17 @@ using System.Xml.Linq;
 
 namespace Updater.Common
 {
-	public partial class form : Form
+	public partial class MainForm : Form
 	{
 		#region Initialization
 
-		public form() {
+		public MainForm() {
 			InitializeComponent();
+			
+			// Fix column and row count under Mono
+			tableTopAll.ColumnCount = 2;
+			tableTopAll.RowCount = 2;
+						
 			lblStatus.Text = String.Empty;
 			editor.OnError += delegate(object sender, PageViewErrorArgs args)
 			{

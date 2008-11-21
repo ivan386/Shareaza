@@ -5,7 +5,7 @@
 	using System.Windows.Forms;
 	using System.ComponentModel;
 	
-	partial class form
+	partial class MainForm
 	{
 		/// <summary>
 		/// Required designer variable.
@@ -30,8 +30,7 @@
 		/// the contents of this method with the code editor.
 		/// </summary>
 		private void InitializeComponent() {
-			System.Windows.Forms.TableLayoutPanel tableTopAll;
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(form));
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
 			System.Windows.Forms.TableLayoutPanel tableTopRight;
 			System.Windows.Forms.TableLayoutPanel tableTopLeft;
 			System.Windows.Forms.Label lblEnOld;
@@ -39,6 +38,7 @@
 			System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
 			System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
 			System.Windows.Forms.StatusStrip statusStrip;
+			this.tableTopAll = new System.Windows.Forms.TableLayoutPanel();
 			this.txtEnNew = new System.Windows.Forms.TextBox();
 			this.btnEnNew = new System.Windows.Forms.Button();
 			this.txtEnOld = new System.Windows.Forms.TextBox();
@@ -52,7 +52,6 @@
 			this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
 			this.btnDoWork = new System.Windows.Forms.Button();
 			this.editor = new Updater.Common.EditorTabControl();
-			tableTopAll = new System.Windows.Forms.TableLayoutPanel();
 			tableTopRight = new System.Windows.Forms.TableLayoutPanel();
 			tableTopLeft = new System.Windows.Forms.TableLayoutPanel();
 			lblEnOld = new System.Windows.Forms.Label();
@@ -60,7 +59,7 @@
 			toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
 			statusStrip = new System.Windows.Forms.StatusStrip();
-			tableTopAll.SuspendLayout();
+			this.tableTopAll.SuspendLayout();
 			tableTopRight.SuspendLayout();
 			tableTopLeft.SuspendLayout();
 			statusStrip.SuspendLayout();
@@ -69,12 +68,12 @@
 			// 
 			// tableTopAll
 			// 
-			resources.ApplyResources(tableTopAll, "tableTopAll");
-			tableTopAll.Controls.Add(tableTopRight, 1, 1);
-			tableTopAll.Controls.Add(tableTopLeft, 0, 1);
-			tableTopAll.Controls.Add(lblEnOld, 0, 0);
-			tableTopAll.Controls.Add(lblEnNew, 1, 0);
-			tableTopAll.Name = "tableTopAll";
+			resources.ApplyResources(this.tableTopAll, "tableTopAll");
+			this.tableTopAll.Controls.Add(tableTopRight, 1, 1);
+			this.tableTopAll.Controls.Add(tableTopLeft, 0, 1);
+			this.tableTopAll.Controls.Add(lblEnOld, 0, 0);
+			this.tableTopAll.Controls.Add(lblEnNew, 1, 0);
+			this.tableTopAll.Name = "tableTopAll";
 			// 
 			// tableTopRight
 			// 
@@ -196,12 +195,12 @@
 			// 
 			resources.ApplyResources(this.editor, "editor");
 			this.editor.Name = "editor";
-			this.editor.NewFilePath = "";
-			this.editor.OldFilePath = "";
+			this.editor.NewFilePath = null;
+			this.editor.OldFilePath = null;
 			this.editor.UpdatedFilePath = null;
 			this.editor.UpdatePaneFont = new System.Drawing.Font("Verdana", 8.25F);
 			// 
-			// form
+			// MainForm
 			// 
 			resources.ApplyResources(this, "$this");
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -209,15 +208,15 @@
 			this.Controls.Add(this.editor);
 			this.Controls.Add(statusStrip);
 			this.Controls.Add(this.menuStrip);
-			this.Controls.Add(tableTopAll);
+			this.Controls.Add(this.tableTopAll);
 			this.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::Updater.Common.Properties.Settings.Default, "FormTitle", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
 			this.DoubleBuffered = true;
 			this.MainMenuStrip = this.menuStrip;
-			this.Name = "form";
+			this.Name = "MainForm";
 			this.Text = global::Updater.Common.Properties.Settings.Default.FormTitle;
 			this.ResizeBegin += new System.EventHandler(this.form_ResizeBegin);
-			tableTopAll.ResumeLayout(false);
-			tableTopAll.PerformLayout();
+			this.tableTopAll.ResumeLayout(false);
+			this.tableTopAll.PerformLayout();
 			tableTopRight.ResumeLayout(false);
 			tableTopRight.PerformLayout();
 			tableTopLeft.ResumeLayout(false);
@@ -246,6 +245,7 @@
 		private SaveFileDialog saveFileDialog;
 		private Button btnDoWork;
 		private EditorTabControl editor;
+		private TableLayoutPanel tableTopAll;
 	}
 }
 
