@@ -151,7 +151,8 @@ void CDownloadWithSearch::StartAutomaticSearch()
 
 BOOL CDownloadWithSearch::CanSearch() const
 {
-	if ( !m_pFile ) return FALSE;
+	if ( IsMoving() || IsCompleted() )
+		return FALSE;
 	if ( ( m_oSHA1 || m_oTiger ) && ( Settings.Gnutella1.EnableToday || Settings.Gnutella2.EnableToday ) )
 		return TRUE;
 	if ( m_oED2K && ( Settings.Gnutella2.EnableToday || Settings.eDonkey.EnableToday ) )
