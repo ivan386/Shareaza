@@ -52,10 +52,10 @@ namespace Updater.Common {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("The old english file doesn\'t match your translation file!")]
-        public string TranslationMismatch {
+        [global::System.Configuration.DefaultSettingValueAttribute("The old english file doesn\'t match your updated file!")]
+        public string UpdateMismatch {
             get {
-                return ((string)(this["TranslationMismatch"]));
+                return ((string)(this["UpdateMismatch"]));
             }
         }
         

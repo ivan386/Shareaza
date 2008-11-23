@@ -11,6 +11,7 @@ namespace Updater.Common
 
 		protected override void UpdateElement(string elementId, out skinDialog dialog) {
 			dialog = null;
+
 			// Always not null
 			skinDialog newEn = newEnList.FirstOrDefault(d => d.name == elementId);
 			// Can be null
@@ -24,7 +25,7 @@ namespace Updater.Common
 				int oldControlCount = oldEn == null || oldEn.controls == null ? 0 : oldEn.controls.Length;
 				int trControlCount = tr.controls == null ? 0 : tr.controls.Length;
 				if (oldEn == null || oldControlCount != trControlCount) {
-					base.SetError(Settings.Default.TranslationMismatch);
+					base.SetError(Settings.Default.UpdateMismatch);
 					dialog = tr;
 					return;
 				}
@@ -36,20 +37,16 @@ namespace Updater.Common
 					updatedDialog.caption = tr.caption;
 
 				if (newEn.controls != null) {
-					// Same controls, no translation updates are needed
-					var sameControls = from cNew in newEn.controls
-									   join cOld in oldEn.controls on cNew.caption equals cOld.caption
-									   select new
-									   {
-										   NewControl = cNew,
-										   OldIndex = Array.IndexOf(oldEn.controls, cOld),
-										   NewIndex = Array.IndexOf(newEn.controls, cNew)
-									   };
 					for (int i = 0; i < newEn.controls.Length; i++) {
-						var matched = sameControls.FirstOrDefault(s => s.NewControl.Equals(newEn.controls[i]));
-						if (matched != null) {
-							updatedDialog.controls[matched.NewIndex] = tr.controls[matched.OldIndex];
-						}
+						if (String.IsNullOrEmpty(newEn.controls[i].caption))
+							continue; // remains the same in the cloned object
+						// Well, it would be worth to check for changed spaces, since the
+						// translation wouldn't change
+						var oldMatches = oldEn.controls.Where(c => c.caption == newEn.controls[i].caption);
+						if (!oldMatches.Any())
+							continue;
+						int oldIndex = Array.IndexOf(oldEn.controls, oldMatches.First());
+						updatedDialog.controls[i] = tr.controls[oldIndex];
 					}
 				}
 				dialog = updatedDialog;

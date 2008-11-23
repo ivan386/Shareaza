@@ -7,6 +7,7 @@ using System.Text;
 using System.Drawing;
 using System.ComponentModel;
 using System.Windows.Forms;
+using System.Xml.Linq;
 
 namespace Updater.Common
 {
@@ -278,7 +279,7 @@ namespace Updater.Common
 		public static string Envelope {
 			get {
 				string elementName = skin.GetElementName(typeof(T));
-				return String.Format(envelopeFormat, elementName);
+				return String.Format(envelopeFormat, elementName, @"{0}");
 			}
 		}
 		
@@ -371,6 +372,38 @@ namespace Updater.Common
 		private void OnMouseClicked(object sender, MouseEventArgs e) {
 			if (IsRunningInMono)
 				contextMenu.Tag = sender as Control;
+		}
+		
+		public virtual string ExportChanges() {
+			if (updatesList == null)
+				return String.Empty;
+			Dirty = true; // save the last window changes
+			if (!AutoSaveUpdates())
+				return String.Empty;
+			StringBuilder sb = new StringBuilder();
+			string rootName = skin.GetElementName(typeof(T));
+			sb.Append("<");
+			sb.Append(rootName);
+			sb.Append(">");
+			foreach (var element in newEnList) {
+				string xml = String.Empty;
+				if (updatedXmlDic.ContainsKey(element.Id)) {
+					xml = updatedXmlDic[element.Id];
+				} else if (oldEnList != null) {
+					T tr;
+					UpdateElement(element.Id, out tr);
+					updatedXmlDic.Add(element.Id, GetXml(tr));
+					xml = updatedXmlDic[element.Id];
+				}
+				if (!String.IsNullOrEmpty(xml)) {
+					sb.Append("\r\n");
+					sb.Append(xml);
+				}
+			}
+			sb.Append("\r\n</");
+			sb.Append(rootName);
+			sb.Append(">");
+			return sb.ToString();
 		}
 	}
 }

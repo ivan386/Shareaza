@@ -26,5 +26,6 @@ namespace Updater.Common
 		void UpdatePanes();
 
 		bool AutoSaveUpdates();
+		string ExportChanges();
 	}
 }

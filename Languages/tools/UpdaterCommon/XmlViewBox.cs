@@ -14,6 +14,7 @@ namespace Updater.Common
 		public XmlViewBox() {
 			this.MouseWheel += new MouseEventHandler(OnMouseWheel);
 			this.LanguageOption = RichTextBoxLanguageOptions.UIFonts;
+			this.DetectUrls = false; // Mono wants it in the constructor
 		}
 
 		bool clearing = false;

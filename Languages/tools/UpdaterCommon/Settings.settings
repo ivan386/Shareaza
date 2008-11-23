@@ -1,5 +1,5 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Updater.Resources" GeneratedClassName="Resources">
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Updater.Common" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
     <Setting Name="Error_NotEnglish" Type="System.String" Scope="Application">
@@ -11,8 +11,8 @@
     <Setting Name="Error" Type="System.String" Scope="Application">
       <Value Profile="(Default)">Error</Value>
     </Setting>
-    <Setting Name="TranslationMismatch" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">The old english file doesn't match your translation file!</Value>
+    <Setting Name="UpdateMismatch" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">The old english file doesn't match your updated file!</Value>
     </Setting>
     <Setting Name="InvalidXml" Type="System.String" Scope="Application">
       <Value Profile="(Default)">Invalid XML</Value>

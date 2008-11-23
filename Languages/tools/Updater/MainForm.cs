@@ -23,11 +23,11 @@ namespace Updater.Common
 
 		public MainForm() {
 			InitializeComponent();
-			
+
 			// Fix column and row count under Mono
 			tableTopAll.ColumnCount = 2;
 			tableTopAll.RowCount = 2;
-						
+
 			lblStatus.Text = String.Empty;
 			editor.OnError += delegate(object sender, PageViewErrorArgs args)
 			{
@@ -80,51 +80,28 @@ namespace Updater.Common
 		}
 
 		private void exportChangesToolStripMenuItem_Click(object sender, EventArgs e) {
-			//if (translation == null)
-			//    return;
-			//_dirty = true; // save the last window changes
-			//if (!AutoSaveTranslation())
-			//    return;
-			//StringBuilder sb = new StringBuilder();
-			//foreach (var dialog in newEnList) {
-			//    string xml = String.Empty;
-			//    if (!updatedTranslation.ContainsKey(dialog.name)) {
-			//        try {
-			//            XElement elem = XElement.Parse(GetXml(dialog));
-			//            xml = elem.ToString();
-			//        } catch { }
-			//    } else {
-			//        xml = updatedTranslation[dialog.name];
-			//    }
-			//    if (!String.IsNullOrEmpty(xml)) {
-			//        sb.Append("\r\n");
-			//        sb.Append(xml);
-			//    }
-			//}
-			//saveFileDialog.ShowDialog();
-			//if (!String.IsNullOrEmpty(saveFileDialog.FileName)) {
-			//    var newSettings = new XmlWriterSettings()
-			//    {
-			//        Indent = true,
-			//        IndentChars = "\t",
-			//        Encoding = new UTF8Encoding(false, false),
-			//        CloseOutput = false,
-			//        CheckCharacters = false,
-			//        NewLineHandling = NewLineHandling.Replace,
-			//    };
-			//    try {
-			//        using (var fs = new FileStream(saveFileDialog.FileName, FileMode.Create, FileAccess.Write))
-			//        using (XmlWriter writer = XmlWriter.Create(fs, newSettings)) {
-			//            XDocument doc = XDocument.Parse(String.Format(envelope, sb.ToString()));
-			//            doc.WriteTo(writer);
-			//            writer.Flush();
-			//            fs.Flush();
-			//        }
-			//    } catch (Exception ex) {
-			//        MessageBox.Show(ex.Message, Settings.Default.Error,
-			//                        MessageBoxButtons.OK, MessageBoxIcon.Error);
-			//    }
-			//}
+			DialogResult result = saveFileDialog.ShowDialog();
+			if (result != DialogResult.OK)
+				return;
+			var newSettings = new XmlWriterSettings()
+			{
+				Indent = true,
+				IndentChars = "\t",
+				Encoding = new UTF8Encoding(false, false),
+				CloseOutput = false,
+				CheckCharacters = false,
+				NewLineHandling = NewLineHandling.Replace,
+			};
+			try {
+				using (var fs = new FileStream(saveFileDialog.FileName, FileMode.Create, FileAccess.Write))
+				using (XmlWriter writer = XmlWriter.Create(fs, newSettings)) {
+					editor.ExportChanges(writer);
+					fs.Flush();
+				}
+			} catch (Exception ex) {
+				MessageBox.Show(ex.Message, Settings.Default.Error,
+								MessageBoxButtons.OK, MessageBoxIcon.Error);
+			}
 		}
 
 		private void form_ResizeBegin(object sender, EventArgs e) {

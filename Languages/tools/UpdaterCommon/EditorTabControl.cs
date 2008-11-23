@@ -6,11 +6,15 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Xml;
+using System.Xml.Linq;
 
 namespace Updater.Common
 {
 	public partial class EditorTabControl : UserControl
 	{
+		static readonly string envelopeFormat = "<skin xmlns=\"http://www.shareaza.com/schemas/Skin.xsd\" version=\"1.0\">{0}</skin>";
+		
 		public EditorTabControl() {
 			InitializeComponent();
 			this.SuspendLayout();
@@ -179,6 +183,26 @@ namespace Updater.Common
 
 		void OnTabIndexChanged(object sender, EventArgs args) {
 			// tabControl.SelectedTab.Controls[
+		}
+
+		public void ExportChanges(XmlWriter writer) {
+			StringBuilder sb = new StringBuilder();
+			foreach (TabPage page in tabControl.TabPages) {
+				IPageView view = (IPageView)page.Controls[0];
+				string xml = view.ExportChanges();
+				if (!String.IsNullOrEmpty(xml)) {
+					sb.Append(xml);
+					sb.Append("\r\n");
+				}
+			}
+			try {
+				XDocument doc = XDocument.Parse(String.Format(envelopeFormat, sb.ToString()));
+				doc.WriteTo(writer);
+				writer.Flush();
+			} catch (Exception ex) {
+				MessageBox.Show(ex.Message, Settings.Default.Error,
+								MessageBoxButtons.OK, MessageBoxIcon.Error);
+			}
 		}
 	}
 }
