@@ -1885,26 +1885,26 @@ CString GetLocalAppDataFolder()
 
 BOOL CreateDirectory(LPCTSTR szPath)
 {
-	DWORD dwAttr = GetFileAttributes( szPath );
+	DWORD dwAttr = GetFileAttributes( CString( _T("\\\\?\\") ) + szPath );
 	if ( ( dwAttr != INVALID_FILE_ATTRIBUTES ) &&
 		( dwAttr & FILE_ATTRIBUTE_DIRECTORY ) )
 		return TRUE;
 
 	CString strDir( szPath );
-	for ( int nStart = 2; ; )
+	for ( int nStart = 3; ; )
 	{
 		int nSlash = strDir.Find( _T('\\'), nStart );
 		if ( ( nSlash == -1 ) || ( nSlash == strDir.GetLength() - 1 ) )
 			break;
-		CString strSubDir( strDir.Left( nSlash ) );
-		dwAttr = GetFileAttributes( strSubDir );
+		CString strSubDir( strDir.Left( nSlash + 1 ) );
+		dwAttr = GetFileAttributes( CString( _T("\\\\?\\") ) + strSubDir );
 		if ( ( dwAttr == INVALID_FILE_ATTRIBUTES ) ||
 			! ( dwAttr & FILE_ATTRIBUTE_DIRECTORY ) )
-			if ( ! CreateDirectory( strSubDir, NULL ) )
+			if ( ! CreateDirectory( CString( _T("\\\\?\\") ) + strSubDir, NULL ) )
 				return FALSE;
 		nStart = nSlash + 1;
 	}
-	return CreateDirectory( szPath, NULL );
+	return CreateDirectory( CString( _T("\\\\?\\") ) + szPath, NULL );
 }
 
 BOOL DeleteFile(LPCTSTR lpFileName, BOOL bToRecycleBin, BOOL bEnableDelayed)
