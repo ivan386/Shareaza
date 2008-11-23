@@ -130,17 +130,17 @@ CString	CBTInfo::CBTFile::FindFile()
 		}
 	}
 
-	if ( GetFileSize( strFile ) != m_nSize )
+	if ( GetFileSize( CString( _T("\\\\?\\") ) + strFile ) != m_nSize )
 	{
 		strFile = Settings.Downloads.CompletePath + _T("\\") + m_sPath;
-		if ( GetFileSize( strFile ) != m_nSize )
+		if ( GetFileSize( CString( _T("\\\\?\\") ) + strFile ) != m_nSize )
 		{
 			CString strPath = GetPath();
 			int nSlash = strPath.ReverseFind( '\\' );
 			if ( nSlash >= 0 )
 				strPath = strPath.Left( nSlash + 1 );
 			strFile = strPath + m_sPath;
-			if ( GetFileSize( strFile ) != m_nSize )
+			if ( GetFileSize( CString( _T("\\\\?\\") ) + strFile ) != m_nSize )
 			{
 				//Try removing the outer directory in case of multi-file torrent oddities
 				LPCTSTR pszName = _tcsrchr( m_sPath, _T('\\') );
@@ -149,10 +149,10 @@ CString	CBTInfo::CBTFile::FindFile()
 				else
 					pszName ++;
 				strFile = Settings.Downloads.CompletePath + _T("\\") + pszName;
-				if ( GetFileSize( strFile ) != m_nSize )
+				if ( GetFileSize( CString( _T("\\\\?\\") ) + strFile ) != m_nSize )
 				{
 					strFile = strPath + pszName;
-					if ( GetFileSize( strFile ) != m_nSize )
+					if ( GetFileSize( CString( _T("\\\\?\\") ) + strFile ) != m_nSize )
 					{
 						return CString();
 					}

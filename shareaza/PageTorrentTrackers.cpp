@@ -272,55 +272,45 @@ void CTorrentTrackersPage::OnRun()
 			m_pRequest.Clear();
 
 			CString strURL = m_sTracker;
-			strURL.Replace( _T("/announce"), _T("/scrape") );
-
-			if ( ( strURL.Find( _T("http") ) == 0 ) && ( strURL.Find( _T("/scrape") ) != -1 ) )
+			if ( strURL.Replace( _T("/announce"), _T("/scrape") ) == 1 )
 			{
-				// Skip obviously invalid trackers
-				if ( strURL.GetLength() > 7 ) 
+				// Fetch scrape only for the given info hash
+				strURL = strURL.TrimRight( _T('&') ) +
+					( ( strURL.Find( _T('?') ) != -1 ) ? _T('&') : _T('?') ) +
+					_T("info_hash=") +
+						CBTTrackerRequest::Escape( m_pDownload->m_pTorrent.m_oBTH ) +
+					_T("&peer_id=") +
+						CBTTrackerRequest::Escape( m_pDownload->m_pPeerID );
+
+				oLock.Unlock();
+
+				m_pRequest.SetURL( strURL );
+				m_pRequest.AddHeader( _T("Accept-Encoding"), _T("deflate, gzip") );
+				m_pRequest.EnableCookie( false );
+				m_pRequest.SetUserAgent( Settings.SmartAgent() );
+
+				theApp.Message( MSG_DEBUG | MSG_FACILITY_OUTGOING,
+					_T("[BT] Sending BitTorrent tracker scrape: %s"), strURL );
+
+				if ( m_pRequest.Execute( FALSE ) && m_pRequest.InflateResponse() )
 				{
-					// Fetch scrape only for the given info hash
-					CString strParam = CBTTrackerRequest::Escape( m_pDownload->m_pTorrent.m_oBTH );
-					if ( strURL.Find( _T("/scrape?") ) != -1 )
+					CBuffer* pResponse = m_pRequest.GetResponseBuffer();
+
+					if ( pResponse != NULL && pResponse->m_pBuffer != NULL )
 					{
-						strURL.Append( L"&info_hash=" + strParam );
-					}
-					else
-					{
-						strURL.Append( L"?info_hash=" + strParam );
-					}
-					strURL.Append( L"&peer_id=" + CBTTrackerRequest::Escape( m_pDownload->m_pPeerID ) );
-
-					oLock.Unlock();
-
-					m_pRequest.SetURL( strURL );
-					m_pRequest.AddHeader( _T("Accept-Encoding"), _T("deflate, gzip") );
-					m_pRequest.EnableCookie( false );
-					m_pRequest.SetUserAgent( Settings.SmartAgent() );
-
-					theApp.Message( MSG_DEBUG | MSG_FACILITY_OUTGOING,
-						_T("[BT] Sending BitTorrent tracker scrape: %s"), strURL );
-
-					if ( m_pRequest.Execute( FALSE ) && m_pRequest.InflateResponse() )
-					{
-						CBuffer* pResponse = m_pRequest.GetResponseBuffer();
-
-						if ( pResponse != NULL && pResponse->m_pBuffer != NULL )
+						if ( CBENode* pNode = CBENode::Decode( pResponse ) )
 						{
-							if ( CBENode* pNode = CBENode::Decode( pResponse ) )
-							{
-								theApp.Message( MSG_DEBUG | MSG_FACILITY_INCOMING,
-									_T("[BT] Recieved BitTorrent tracker response: %s"), pNode->Encode() );
+							theApp.Message( MSG_DEBUG | MSG_FACILITY_INCOMING,
+								_T("[BT] Recieved BitTorrent tracker response: %s"), pNode->Encode() );
 
-								if ( OnTree( pNode ) )
-								{
-									delete pNode;
-									PostMessage( WM_TIMER, 3 );
-									return;
-								}
-								
+							if ( OnTree( pNode ) )
+							{
 								delete pNode;
+								PostMessage( WM_TIMER, 3 );
+								return;
 							}
+							
+							delete pNode;
 						}
 					}
 				}
