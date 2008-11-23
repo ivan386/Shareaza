@@ -114,13 +114,13 @@ namespace Updater.Common
 				CloseOutput = false,
 				CheckCharacters = false,
 				NewLineHandling = NewLineHandling.Replace,
-				OmitXmlDeclaration = false,
+				OmitXmlDeclaration = true,
 			};
 
 			stream = new MemoryStream();
-
+			XmlWriter writer = XmlWriter.Create(stream, newSettings);
 			try {
-				serializer.Serialize(stream, objectClass, xns);
+				serializer.Serialize(writer, objectClass, xns);
 				return true;
 			} catch {
 				stream.Close();
