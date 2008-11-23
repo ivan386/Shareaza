@@ -300,7 +300,8 @@ void CDiscoveryWnd::OnDiscoveryQuery()
 		
 		if ( pService != NULL )
 		{
-			pService->Execute( ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 ) ?
+			DiscoveryServices.Execute( pService,
+				( GetAsyncKeyState( VK_SHIFT ) & 0x8000 ) ?
 				CDiscoveryServices::wcmCaches : CDiscoveryServices::wcmHosts );
 			break;
 		}
@@ -330,7 +331,7 @@ void CDiscoveryWnd::OnDiscoveryAdvertise()
 
 	if ( pService )
 	{
-		pService->Execute( CDiscoveryServices::wcmSubmit );
+		DiscoveryServices.Execute( pService, CDiscoveryServices::wcmSubmit );
 	}
 }
 

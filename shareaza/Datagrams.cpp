@@ -1195,7 +1195,7 @@ BOOL CDatagrams::OnPong(SOCKADDR_IN* pHost, CG1Packet* pPacket)
 	UNUSED_ALWAYS(nVolume);
 
 	CDiscoveryService* pService = DiscoveryServices.GetByAddress(
-		&(pHost->sin_addr) , ntohs( pHost->sin_port ), 3 );
+		&(pHost->sin_addr) , ntohs( pHost->sin_port ), CDiscoveryService::dsGnutellaUDPHC );
 
 	// If that IP address is in our list of computers to not talk to, except ones in UHC list in discovery
 	if ( pService == NULL && Security.IsDenied( (IN_ADDR*)&nAddress ) )
@@ -1835,7 +1835,8 @@ BOOL CDatagrams::OnKHLA(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 		return FALSE; // if it is not Compound packet, it is basically malformed packet
 	}
 
-	CDiscoveryService * pService = DiscoveryServices.GetByAddress( &(pHost->sin_addr) , ntohs(pHost->sin_port), 4 );
+	CDiscoveryService * pService = DiscoveryServices.GetByAddress(
+		&(pHost->sin_addr) , ntohs(pHost->sin_port), CDiscoveryService::dsGnutella2UDPKHL );
 
 	if (	pService == NULL &&
 		(	Network.IsFirewalledAddress( (LPVOID*)&pHost->sin_addr, TRUE ) ||

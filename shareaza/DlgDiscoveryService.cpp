@@ -120,7 +120,20 @@ void CDiscoveryServiceDlg::OnOK()
 		m_pService = new CDiscoveryService();
 
 	m_pService->m_sAddress	= m_sAddress;
-	m_pService->m_nType		= m_nType + 1;
+	switch( m_nType )
+	{
+	case 0:
+		m_pService->m_nType = CDiscoveryService::dsGnutella;
+		break;
+	case 1:
+		m_pService->m_nType = CDiscoveryService::dsWebCache;
+		break;
+	case 2:
+		m_pService->m_nType = CDiscoveryService::dsServerMet;
+		break;
+	default:
+		m_pService->m_nType = CDiscoveryService::dsBlocked;
+	}
 
 	if ( m_pService->m_nType == CDiscoveryService::dsGnutella )
 	{
@@ -128,25 +141,25 @@ void CDiscoveryServiceDlg::OnOK()
 		{
 			m_pService->m_bGnutella1 = TRUE;
 			m_pService->m_bGnutella2 = FALSE;
-			m_pService->m_nSubType = 1;
+			m_pService->m_nSubType = CDiscoveryService::dsGnutellaTCP;
 		}
 		else if ( _tcsnicmp( m_sAddress, _T("gnutella2:host:"), 15 ) == 0 )
 		{
 			m_pService->m_bGnutella1 = FALSE;
 			m_pService->m_bGnutella2 = TRUE;
-			m_pService->m_nSubType = 2;
+			m_pService->m_nSubType = CDiscoveryService::dsGnutella2TCP;
 		}
 		else if ( _tcsnicmp( m_sAddress, _T("uhc:"), 4 ) == 0 )
 		{
 			m_pService->m_bGnutella1 = TRUE;
 			m_pService->m_bGnutella2 = FALSE;
-			m_pService->m_nSubType = 3;
+			m_pService->m_nSubType = CDiscoveryService::dsGnutellaUDPHC;
 		}
 		else if ( _tcsnicmp( m_sAddress, _T("ukhl:"), 5 ) == 0 )
 		{
 			m_pService->m_bGnutella1 = FALSE;
 			m_pService->m_bGnutella2 = TRUE;
-			m_pService->m_nSubType = 4;
+			m_pService->m_nSubType = CDiscoveryService::dsGnutella2UDPKHL;
 		}
 	}
 

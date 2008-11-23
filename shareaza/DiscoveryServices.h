@@ -23,92 +23,28 @@
 
 #include "ThreadImpl.h"
 
-class CDiscoveryService;
-
 
 // TODO: Remove Network locks
 // TODO: Add support for concurrent webcache requests
 
-class CDiscoveryServices :
-	public CThreadImpl
-{
-// Construction
-public:
-	CDiscoveryServices();
-	virtual ~CDiscoveryServices();
-	
-	enum { wcmHosts, wcmCaches, wcmUpdate, wcmSubmit, wcmServerMet };
-
-// Attributes
-protected:
-	CList< CDiscoveryService* > m_pList;
-	HINTERNET			m_hInternet;
-	HINTERNET			m_hRequest;
-	CDiscoveryService*	m_pWebCache;
-	int					m_nWebCache;
-	CDiscoveryService*	m_pSubmit;
-	PROTOCOLID			m_nLastQueryProtocol;		// Protocol that was queried most recently
-	DWORD				m_tUpdated;					// Time a webcache was last updated
-	PROTOCOLID			m_nLastUpdateProtocol;		// Protocol that had a service update most recently
-	BOOL				m_bFirstTime;
-	DWORD				m_tExecute;					// Time the Execute() function was last run
-	DWORD				m_tQueried;					// Time a webcache/MET was last queried
-	DWORD				m_tMetQueried;				// Time a MET was last queried
-
-// Operations
-public:
-	POSITION			GetIterator() const;
-	CDiscoveryService*	GetNext(POSITION& pos) const;
-	BOOL				Check(CDiscoveryService* pService, int nType = -1) const;
-	CDiscoveryService*	Add(CDiscoveryService* pService);
-	CDiscoveryService*	Add(LPCTSTR pszAddress, int nType, PROTOCOLID nProtocol = PROTOCOL_NULL);
-	BOOL				CheckMinimumServices();
-//	DWORD				MetQueried() const;
-	DWORD				LastExecute() const;
-	CDiscoveryService*	GetByAddress(LPCTSTR pszAddress) const;
-	CDiscoveryService*	GetByAddress( IN_ADDR* pAddress, WORD nPort, int nSubType );
-	BOOL				Load();
-	BOOL				Save();
-	BOOL				Update();
-	BOOL				Execute(BOOL bDiscovery, PROTOCOLID nProtocol, USHORT nForceDiscovery);
-	void				Stop();
-	void				OnGnutellaAdded(IN_ADDR* pAddress, int nCount);
-	void				OnGnutellaFailed(IN_ADDR* pAddress);
-
-protected:
-	void				Remove(CDiscoveryService* pService, BOOL bCheck = TRUE);
-	DWORD				GetCount(int nType = 0, PROTOCOLID nProtocol = PROTOCOL_NULL) const;
-	BOOL				CheckWebCacheValid(LPCTSTR pszAddress);
-	void				Clear();
-	int					ExecuteBootstraps( int nCount, BOOL bUDP = FALSE, PROTOCOLID nProtocol = PROTOCOL_NULL );
-	void				Serialize(CArchive& ar);
-	BOOL				RequestRandomService(PROTOCOLID nProtocol);	
-	CDiscoveryService*  GetRandomService(PROTOCOLID nProtocol);
-	CDiscoveryService*	GetRandomWebCache(PROTOCOLID nProtocol, BOOL bWorkingOnly, CDiscoveryService* pExclude = NULL, BOOL bForUpdate = FALSE);
-	BOOL				RequestWebCache(CDiscoveryService* pService, int nMode, PROTOCOLID nProtocol);
-	void				StopWebRequest();
-	void				OnRun();
-	BOOL				RunWebCacheGet(BOOL bCache);
-	BOOL				RunWebCacheUpdate();
-	BOOL				RunServerMet();
-	BOOL				SendWebCacheRequest(CString strURL, CString& strOutput);
-	BOOL				EnoughServices() const;
-	void				AddDefaults();
-
-	friend class CDiscoveryService;
-};
-
 
 class CDiscoveryService
 {
-// Construction
 public:
-	CDiscoveryService(int nType = 0, LPCTSTR pszAddress = NULL);
+	enum Type
+	{
+		dsNull, dsGnutella, dsWebCache, dsServerMet, dsBlocked
+	};
+
+	enum SubType
+	{
+		dsOldBootStrap, dsGnutellaTCP, dsGnutella2TCP, dsGnutellaUDPHC, dsGnutella2UDPKHL
+	};
+
+	CDiscoveryService(Type nType = dsNull, LPCTSTR pszAddress = NULL);
 	virtual ~CDiscoveryService();
 
-// Attributes
-public:
-	int			m_nType;
+	Type		m_nType;
 	CString		m_sAddress;
 	BOOL		m_bGnutella2;			// Webcache supports Gnutella 2
 	BOOL		m_bGnutella1;			// Webcache supports Gnutella
@@ -121,19 +57,11 @@ public:
 	DWORD		m_nFailures;
 	DWORD		m_nAccessPeriod;
 	DWORD		m_nUpdatePeriod;
-	int			m_nSubType; // 0 = old BootStrap, 1 = Gnutella TCP, 2 = Gnutella2 TCP, 3 = Gnutella UDPHC, 4 = Gnutella2 UDPKHL
+	SubType		m_nSubType;
 	IN_ADDR		m_pAddress;
 	WORD		m_nPort;
 
-	enum
-	{
-		dsNull, dsGnutella, dsWebCache, dsServerMet, dsBlocked
-	};
-	
-// Operations
-public:
 	void		Remove(BOOL bCheck = TRUE);
-	BOOL		Execute(int nMode = 0);
 	void		OnSuccess();
 	void		OnFailure();
 
@@ -142,8 +70,78 @@ protected:
 	void		OnHostAdd(int nCount = 1);
 	void		Serialize(CArchive& ar, int nVersion);
 	BOOL		ResolveGnutella();
-	
+
 	friend class CDiscoveryServices;	
+};
+
+class CDiscoveryServices :
+	public CThreadImpl
+{
+public:
+	CDiscoveryServices();
+	virtual ~CDiscoveryServices();
+	
+	enum Mode
+	{
+		wcmHosts, wcmCaches, wcmUpdate, wcmSubmit, wcmServerMet
+	};
+
+protected:
+	CList< CDiscoveryService* > m_pList;
+	HINTERNET			m_hInternet;
+	HINTERNET			m_hRequest;
+	CDiscoveryService*	m_pWebCache;
+	Mode				m_nWebCache;
+	CDiscoveryService*	m_pSubmit;
+	PROTOCOLID			m_nLastQueryProtocol;		// Protocol that was queried most recently
+	DWORD				m_tUpdated;					// Time a webcache was last updated
+	PROTOCOLID			m_nLastUpdateProtocol;		// Protocol that had a service update most recently
+	BOOL				m_bFirstTime;
+	DWORD				m_tExecute;					// Time the Execute() function was last run
+	DWORD				m_tQueried;					// Time a webcache/MET was last queried
+	DWORD				m_tMetQueried;				// Time a MET was last queried
+
+public:
+	POSITION			GetIterator() const;
+	CDiscoveryService*	GetNext(POSITION& pos) const;
+	BOOL				Check(CDiscoveryService* pService, CDiscoveryService::Type nType = CDiscoveryService::dsNull) const;
+	CDiscoveryService*	Add(CDiscoveryService* pService);
+	CDiscoveryService*	Add(LPCTSTR pszAddress, int nType, PROTOCOLID nProtocol = PROTOCOL_NULL);
+	BOOL				CheckMinimumServices();
+//	DWORD				MetQueried() const;
+	DWORD				LastExecute() const;
+	CDiscoveryService*	GetByAddress(LPCTSTR pszAddress) const;
+	CDiscoveryService*	GetByAddress( IN_ADDR* pAddress, WORD nPort, CDiscoveryService::SubType nSubType );
+	BOOL				Load();
+	BOOL				Save();
+	BOOL				Update();
+	BOOL				Execute(BOOL bDiscovery, PROTOCOLID nProtocol, USHORT nForceDiscovery);
+	void				Stop();
+	void				OnGnutellaAdded(IN_ADDR* pAddress, int nCount);
+	void				OnGnutellaFailed(IN_ADDR* pAddress);
+	BOOL				Execute(CDiscoveryService* pService, Mode nMode);
+
+protected:
+	void				Remove(CDiscoveryService* pService, BOOL bCheck = TRUE);
+	DWORD				GetCount(int nType = 0, PROTOCOLID nProtocol = PROTOCOL_NULL) const;
+	BOOL				CheckWebCacheValid(LPCTSTR pszAddress);
+	void				Clear();
+	int					ExecuteBootstraps( int nCount, BOOL bUDP = FALSE, PROTOCOLID nProtocol = PROTOCOL_NULL );
+	void				Serialize(CArchive& ar);
+	BOOL				RequestRandomService(PROTOCOLID nProtocol);	
+	CDiscoveryService*  GetRandomService(PROTOCOLID nProtocol);
+	CDiscoveryService*	GetRandomWebCache(PROTOCOLID nProtocol, BOOL bWorkingOnly, CDiscoveryService* pExclude = NULL, BOOL bForUpdate = FALSE);
+	BOOL				RequestWebCache(CDiscoveryService* pService, Mode nMode, PROTOCOLID nProtocol);
+	void				StopWebRequest();
+	void				OnRun();
+	BOOL				RunWebCacheGet(BOOL bCache);
+	BOOL				RunWebCacheUpdate();
+	BOOL				RunServerMet();
+	BOOL				SendWebCacheRequest(CString strURL, CString& strOutput);
+	BOOL				EnoughServices() const;
+	void				AddDefaults();
+
+	friend class CDiscoveryService;
 };
 
 extern CDiscoveryServices DiscoveryServices;
