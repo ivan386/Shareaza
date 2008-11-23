@@ -106,10 +106,10 @@ namespace Updater.Common {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Dialog contains not needed attributes")]
-        public string ExtraDialogText {
+        [global::System.Configuration.DefaultSettingValueAttribute("Xml contains not needed text")]
+        public string ExtraText {
             get {
-                return ((string)(this["ExtraDialogText"]));
+                return ((string)(this["ExtraText"]));
             }
         }
         
@@ -237,6 +237,15 @@ namespace Updater.Common {
         public string RevertQuestion {
             get {
                 return ((string)(this["RevertQuestion"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Invalid id attribute")]
+        public string InvalidId {
+            get {
+                return ((string)(this["InvalidId"]));
             }
         }
     }

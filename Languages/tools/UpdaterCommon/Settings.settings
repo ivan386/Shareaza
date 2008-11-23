@@ -29,8 +29,8 @@
     <Setting Name="TextJunk" Type="System.String" Scope="Application">
       <Value Profile="(Default)">XML contains a text junk</Value>
     </Setting>
-    <Setting Name="ExtraDialogText" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">Dialog contains not needed attributes</Value>
+    <Setting Name="ExtraText" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">Xml contains not needed text</Value>
     </Setting>
     <Setting Name="InvalidControlCount" Type="System.String" Scope="Application">
       <Value Profile="(Default)">&lt;control&gt; count is invalid</Value>
@@ -75,6 +75,9 @@ Please select the desired language from the list below:</Value>
     <Setting Name="RevertQuestion" Type="System.String" Scope="Application">
       <Value Profile="(Default)">Your changes are incorrect!
 Do you want to revert to automatic XML?</Value>
+    </Setting>
+    <Setting Name="InvalidId" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">Invalid id attribute</Value>
     </Setting>
   </Settings>
 </SettingsFile>

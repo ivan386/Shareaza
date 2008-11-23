@@ -37,9 +37,8 @@ namespace Updater.Common
 						select new { Name = f.Name, Attributes = attributes, Type = type };
 
 			var mappings = from f in valid
-						   let attribute = f.Attributes == null || f.Attributes.Length == 0
-										   ? f.Name : ((XmlArrayItemAttribute)f.Attributes[0]).ElementName
-						   let mapping = Char.ToUpper(attribute[0]) + attribute.Substring(1) + 's'
+						   let attribute = f.Name
+						   let mapping = Char.ToUpper(attribute[0]) + attribute.Substring(1)
 						   select new { Name = mapping, Type = f.Type };
 			return mappings.ToDictionary(m => m.Name, m => m.Type);
 		}

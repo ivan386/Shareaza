@@ -31,7 +31,7 @@ namespace Updater.Common
 				}
 				skinDialog updatedDialog = newEn.Clone();
 				// Update caption
-				if (newEn.caption != oldEn.caption)
+				if (oldEn == null || newEn.caption != oldEn.caption)
 					updatedDialog.caption = newEn.caption;
 				else
 					updatedDialog.caption = tr.caption;
@@ -94,7 +94,7 @@ namespace Updater.Common
 							return false;
 						}
 						if (testSkin.dialogs[0].junk != null) {
-							base.SetError(Settings.Default.ExtraDialogText);
+							base.SetError(Settings.Default.ExtraText);
 							return false;
 						}
 						int count = currDialog.controls == null ? 0 : currDialog.controls.Length;

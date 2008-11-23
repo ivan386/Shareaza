@@ -45,6 +45,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ControlTipPageViewImpl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ControlTipPageViewImpl.Designer.cs">
+      <DependentUpon>ControlTipPageViewImpl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommandTipPageViewImpl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CommandTipPageViewImpl.Designer.cs">
+      <DependentUpon>CommandTipPageViewImpl.cs</DependentUpon>
+    </Compile>
     <Compile Include="DialogPageViewImpl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -80,6 +92,12 @@
     </Compile>
     <Compile Include="ShareazaSkin.cs">
       <DependentUpon>ShareazaSkin.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="StringPageViewImpl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="StringPageViewImpl.Designer.cs">
+      <DependentUpon>StringPageViewImpl.cs</DependentUpon>
     </Compile>
     <Compile Include="XmlSerializerBase.cs" />
     <Compile Include="XmlViewBox.cs">
