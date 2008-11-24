@@ -1,0 +1,40 @@
+// RazaWebHook.idl : IDL source for RazaWebHook
+//
+
+import "oaidl.idl";
+import "ocidl.idl";
+import "objsafe.idl";
+import "exdisp.idl";	// Internet Explorer
+
+[
+	object,
+	uuid(974BFF32-401C-45CD-B60D-764E6E34540D),
+	dual,
+	nonextensible,
+	helpstring("Shareaza Web Download Hook Interface"),
+	pointer_default(unique)
+]
+interface IRazaWebHook : IDispatch
+{
+	[id(1)] HRESULT AddLink([in] VARIANT oLink);
+};
+
+[
+	uuid(6B207D90-4C7A-43C5-863C-AC110209D745),
+	version(1.0),
+	helpstring("Shareaza Web Download Hook")
+]
+library RazaWebHookLib
+{
+	importlib("stdole2.tlb");
+
+	[
+		uuid(0EEDB912-C5FA-486F-8334-57288578C627),
+		helpstring("Shareaza Web Download Hook")
+	]
+	coclass RazaWebHook
+	{
+		[default] interface IRazaWebHook;
+		interface IObjectWithSite;
+	};
+};

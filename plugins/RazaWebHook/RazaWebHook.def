@@ -1,0 +1,10 @@
+; RazaWebHook.def : Declares the module parameters.
+
+LIBRARY      "RazaWebHook.dll"
+
+EXPORTS
+	DllCanUnloadNow		PRIVATE
+	DllGetClassObject	PRIVATE
+	DllRegisterServer	PRIVATE
+	DllUnregisterServer	PRIVATE
+	DllInstall		PRIVATE
