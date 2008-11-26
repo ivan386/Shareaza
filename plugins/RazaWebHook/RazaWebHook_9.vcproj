@@ -43,20 +43,18 @@
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="_DEBUG"
-				MkTypLibCompatible="false"
 				TargetEnvironment="1"
 				GenerateStublessProxies="true"
-				TypeLibraryName="$(IntDir)/RazaWebHook.tlb"
 				HeaderFileName="RazaWebHook_i.h"
 				DLLDataFileName=""
 				InterfaceIdentifierFileName="RazaWebHook_i.c"
-				ProxyFileName="RazaWebHook_p.c"
+				ProxyFileName=""
 				ValidateParameters="true"
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG;_USRDLL;_MERGE_PROXYSTUB"
+				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG;_USRDLL"
 				ExceptionHandling="0"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="1"
@@ -133,19 +131,17 @@
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="_DEBUG"
-				MkTypLibCompatible="false"
 				TargetEnvironment="3"
 				GenerateStublessProxies="true"
-				TypeLibraryName="$(IntDir)/RazaWebHook.tlb"
 				HeaderFileName="RazaWebHook_i.h"
 				DLLDataFileName=""
 				InterfaceIdentifierFileName="RazaWebHook_i.c"
-				ProxyFileName="RazaWebHook_p.c"
+				ProxyFileName=""
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG;_USRDLL;_MERGE_PROXYSTUB"
+				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG;_USRDLL"
 				ExceptionHandling="0"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="1"
@@ -221,14 +217,12 @@
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="NDEBUG"
-				MkTypLibCompatible="false"
 				TargetEnvironment="1"
 				GenerateStublessProxies="true"
-				TypeLibraryName="$(IntDir)/RazaWebHook.tlb"
 				HeaderFileName="RazaWebHook_i.h"
 				DLLDataFileName=""
 				InterfaceIdentifierFileName="RazaWebHook_i.c"
-				ProxyFileName="RazaWebHook_p.c"
+				ProxyFileName=""
 				ValidateParameters="true"
 			/>
 			<Tool
@@ -238,7 +232,7 @@
 				EnableIntrinsicFunctions="true"
 				FavorSizeOrSpeed="1"
 				OmitFramePointers="true"
-				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_USRDLL;_MERGE_PROXYSTUB"
+				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_USRDLL"
 				ExceptionHandling="0"
 				RuntimeLibrary="0"
 				RuntimeTypeInfo="false"
@@ -314,14 +308,12 @@
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="NDEBUG"
-				MkTypLibCompatible="false"
 				TargetEnvironment="3"
 				GenerateStublessProxies="true"
-				TypeLibraryName="$(IntDir)/RazaWebHook.tlb"
 				HeaderFileName="RazaWebHook_i.h"
 				DLLDataFileName=""
 				InterfaceIdentifierFileName="RazaWebHook_i.c"
-				ProxyFileName="RazaWebHook_p.c"
+				ProxyFileName=""
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
@@ -330,7 +322,7 @@
 				EnableIntrinsicFunctions="true"
 				FavorSizeOrSpeed="1"
 				OmitFramePointers="true"
-				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_USRDLL;_MERGE_PROXYSTUB"
+				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_USRDLL"
 				ExceptionHandling="0"
 				RuntimeLibrary="0"
 				RuntimeTypeInfo="false"
@@ -390,86 +382,6 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath=".\dlldatax.c"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-						CompileAsManaged="0"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|x64"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-						CompileAsManaged="0"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-						CompileAsManaged="0"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|x64"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-						CompileAsManaged="0"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath=".\dllmain.cpp"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-						CompileAsManaged="0"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|x64"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-						CompileAsManaged="0"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-						CompileAsManaged="0"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|x64"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="0"
-						CompileAsManaged="0"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
 				RelativePath=".\Object.cpp"
 				>
 			</File>
@@ -527,14 +439,6 @@
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
-			<File
-				RelativePath=".\dlldatax.h"
-				>
-			</File>
-			<File
-				RelativePath=".\dllmain.h"
-				>
-			</File>
 			<File
 				RelativePath=".\Object.h"
 				>
