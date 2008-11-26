@@ -675,6 +675,10 @@ BOOL CShareazaURL::ParseShareaza(LPCTSTR pszURL)
 	{
 		return ParseDiscovery( pszURL, CDiscoveryService::dsGnutella );
 	}
+	else if ( _tcsnicmp( pszURL, _T("url:"), 4 ) == 0 )
+	{
+		return Parse( pszURL + 4 );
+	}
 	else
 	{
 		return ParseShareazaFile( pszURL );
