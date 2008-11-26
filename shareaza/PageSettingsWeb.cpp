@@ -91,29 +91,19 @@ BOOL CWebSettingsPage::OnInitDialog()
 	m_bUriED2K		= Settings.Web.ED2K;
 	m_bUriPiolet	= Settings.Web.Piolet;
 	m_bUriTorrent	= Settings.Web.Torrent;
-	
-	HKEY hKey;
-	if ( RegOpenKeyEx( HKEY_LOCAL_MACHINE, _T("Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Browser Helper Objects\\{0EEDB912-C5FA-486F-8334-57288578C627}"), 0, KEY_READ, &hKey ) == ERROR_SUCCESS )
+
+	m_bWebHook		= Settings.Downloads.WebHookEnable;
+
+	for ( string_set::const_iterator i = Settings.Downloads.WebHookExtensions.begin() ;
+		i != Settings.Downloads.WebHookExtensions.end(); i++ )
 	{
-		RegCloseKey( hKey );
-		m_bWebHook = TRUE;
+		m_wndExtensions.AddString( (*i) );
 	}
-	
-	CString strList = theApp.GetProfileString( _T("Downloads"), _T("WebHookExtensions"),
-		_T("|zip|exe|bin|gz|z|tar|arj|lzh|sit|hqx|fml|tgz|grs|mp3|rar|r0|ace|iso|msi|") );
-	
-	for ( strList += '|' ; strList.GetLength() ; )
-	{
-		CString strType = strList.SpanExcluding( _T(" |") );
-		strList = strList.Mid( strType.GetLength() + 1 );
-		strType.TrimLeft();
-		strType.TrimRight();
-		if ( strType.GetLength() ) m_wndExtensions.AddString( strType );
-	}
-	
+
 	UpdateData( FALSE );
+
 	OnWebHook();
-	
+
 	return TRUE;
 }
 
@@ -167,57 +157,21 @@ void CWebSettingsPage::OnOK()
 	Settings.Web.ED2K		= m_bUriED2K != FALSE;
 	Settings.Web.Piolet		= m_bUriPiolet != FALSE;
 	Settings.Web.Torrent	= m_bUriTorrent != FALSE;
-	
-	CShareazaURL::Register();
-	
-	if ( HINSTANCE hInstance = LoadLibrary( Settings.General.Path + _T("\\RazaWebHook.dll") ) )
-	{
-		HRESULT (WINAPI *pfnRegister)();
-		(FARPROC&)pfnRegister = GetProcAddress( hInstance, m_bWebHook ? "DllRegisterServer" : "DllUnregisterServer" );
-		if ( pfnRegister != NULL ) (*pfnRegister)();
-		FreeLibrary( hInstance );
-	}
-	
-	HKEY hKey;
-	
-	if ( RegOpenKeyEx( HKEY_LOCAL_MACHINE, _T("Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Browser Helper Objects"), 0, KEY_READ, &hKey ) == ERROR_SUCCESS )
-	{
-		if ( m_bWebHook )
-		{
-			DWORD dwDisposition;
-			HKEY hCLSID = NULL;
-			
-			RegCreateKeyEx( hKey, _T("{0EEDB912-C5FA-486F-8334-57288578C627}"), 0, NULL,
-				REG_OPTION_NON_VOLATILE, KEY_ALL_ACCESS, NULL, &hCLSID, &dwDisposition );
-			
-			if ( hCLSID ) RegCloseKey( hCLSID );
-		}
-		else
-		{
-			RegDeleteKey( hKey, _T("{0EEDB912-C5FA-486F-8334-57288578C627}") );
-		}
-		
-		RegCloseKey( hKey );
-	}
-	
-	CString strExtensions;
-	
+
+	Settings.Downloads.WebHookEnable = m_bWebHook != FALSE;
+
+	Settings.Downloads.WebHookExtensions.clear();
 	for ( int nItem = 0 ; nItem < m_wndExtensions.GetCount() ; nItem++ )
 	{
 		CString str;
 		m_wndExtensions.GetLBText( nItem, str );
-		
 		if ( str.GetLength() )
 		{
-			if ( strExtensions.IsEmpty() ) strExtensions += '|';
-			strExtensions += str;
-			strExtensions += '|';
+			Settings.Downloads.WebHookExtensions.insert( str );
 		}
 	}
 	
-	theApp.WriteProfileInt( _T("Downloads"), _T("WebHookEnable"), m_bWebHook );
-	theApp.WriteProfileString( _T("Downloads"), _T("WebHookExtensions"), strExtensions );
-	
+	CShareazaURL::Register();
+
 	CSettingsPage::OnOK();
 }
-

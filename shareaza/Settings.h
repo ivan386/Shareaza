@@ -494,6 +494,8 @@ public:
 		DWORD		SourcesWanted;				// Number of sources Shareaza 'wants'. (Will not request more than this number of sources from ed2k)
 		DWORD		MaxReviews;					// Maximum number of reviews to store per download
 		DWORD		StartDroppingFailedSourcesNumber;	// The number of sources where Shareaza start dropping failed sources after only one attempt
+		bool		WebHookEnable;
+		string_set	WebHookExtensions;
 	} Downloads;
 	
 	struct sUploads
