@@ -148,6 +148,13 @@ BOOL CFragmentedFile::Open(LPCTSTR pszFile, QWORD nOffset, QWORD nLength, BOOL b
 		return FALSE;
 	}
 
+	if ( nLength == SIZE_UNKNOWN )
+	{
+		// Unknown size
+		Close();
+		return FALSE;
+	}
+
 	CVirtualFilePart part;
 	part.m_sPath = pszFile;
 	part.m_pFile = pFile;
