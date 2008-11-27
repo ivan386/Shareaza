@@ -29,7 +29,8 @@
 
 #define _ATL_FREE_THREADED
 #define _ATL_NO_AUTOMATIC_NAMESPACE
-#define _ATL_CSTRING_EXPLICIT_CONSTRUCTORS	// some CString constructors will be explicit
+#define _ATL_CSTRING_EXPLICIT_CONSTRUCTORS
+#define _ATL_CSTRING_NO_CRT
 
 #include "resource.h"
 

@@ -34,6 +34,17 @@ CRazaWebHookModule _AtlModule;
 
 extern "C" BOOL WINAPI DllMain(HINSTANCE /*hInstance*/, DWORD dwReason, LPVOID lpReserved)
 {
+	// Black-listed processes
+	if ( dwReason == DLL_PROCESS_ATTACH )
+	{
+		TCHAR szName[ MAX_PATH ] = {};
+		DWORD dwLength = GetModuleFileName( NULL, szName, _countof( szName ) );
+
+		// Windows Explorer
+		if ( lstrcmpi( szName + dwLength - 13, _T("\\explorer.exe") ) == 0 )
+			return FALSE;
+	}
+
 	return _AtlModule.DllMain( dwReason, lpReserved ); 
 }
 

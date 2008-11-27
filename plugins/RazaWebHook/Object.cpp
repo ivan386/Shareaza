@@ -31,16 +31,8 @@ CRazaWebHook::CRazaWebHook() :
 
 HRESULT CRazaWebHook::FinalConstruct()
 {
-	TCHAR szName[ MAX_PATH ] = {};
-	DWORD dwLength = GetModuleFileName( NULL, szName, _countof( szName ) );
-	ATLTRACE( _T("[Raza Web Hook] Loading to: %s\n"), szName );
-	if ( lstrcmpi( szName + dwLength - 13, _T("\\explorer.exe") ) == 0 )
-		return E_FAIL;
-
 	if ( ! IsEnabled() )
 		return E_FAIL;
-
-	ATLTRACE( _T("[Raza Web Hook] Successfuly loaded.\n") );
 
 	return CoCreateFreeThreadedMarshaler(
 		GetControllingUnknown(), &m_pUnkMarshaler.p);

@@ -49,7 +49,6 @@
 				DLLDataFileName=""
 				InterfaceIdentifierFileName="RazaWebHook_i.c"
 				ProxyFileName=""
-				ValidateParameters="true"
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
@@ -79,7 +78,7 @@
 				Name="VCLinkerTool"
 				RegisterOutput="true"
 				IgnoreImportLibrary="true"
-				LinkIncremental="2"
+				OutputFile="$(OutDir)\$(ProjectName)32.dll"
 				ModuleDefinitionFile=".\RazaWebHook.def"
 				GenerateDebugInformation="true"
 				SubSystem="2"
@@ -163,8 +162,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				RegisterOutput="true"
 				IgnoreImportLibrary="true"
-				LinkIncremental="2"
+				OutputFile="$(OutDir)\$(ProjectName)64.dll"
 				ModuleDefinitionFile=".\RazaWebHook.def"
 				GenerateDebugInformation="true"
 				SubSystem="2"
@@ -223,7 +223,6 @@
 				DLLDataFileName=""
 				InterfaceIdentifierFileName="RazaWebHook_i.c"
 				ProxyFileName=""
-				ValidateParameters="true"
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
@@ -254,6 +253,7 @@
 				Name="VCLinkerTool"
 				RegisterOutput="true"
 				IgnoreImportLibrary="true"
+				OutputFile="$(OutDir)\$(ProjectName)32.dll"
 				ModuleDefinitionFile=".\RazaWebHook.def"
 				SubSystem="2"
 				OptimizeReferences="2"
@@ -342,7 +342,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				RegisterOutput="true"
 				IgnoreImportLibrary="true"
+				OutputFile="$(OutDir)\$(ProjectName)64.dll"
 				ModuleDefinitionFile=".\RazaWebHook.def"
 				SubSystem="2"
 				OptimizeReferences="2"
