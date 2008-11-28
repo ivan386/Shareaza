@@ -13,13 +13,13 @@ namespace Updater.Common
 	public class XmlSerializerBase<T> where T : class
 	{
 		static XmlSerializer serializer;
-		
+
 		static XmlSerializerBase() {
 			serializer = new XmlSerializer(typeof(T), new Type[] { typeof(XmlElement) });
 			serializer.UnknownNode += new XmlNodeEventHandler(OnUnknownNode);
 			serializer.UnknownAttribute += new XmlAttributeEventHandler(OnUnknownAttribute);
 		}
-		
+
 		[PermissionSet(SecurityAction.Demand, Name = "FullTrust")]
 		public static T Read(string filePath, out Exception exception) {
 			XmlReader reader = null;
@@ -35,9 +35,15 @@ namespace Updater.Common
 			T objectTo = null;
 			exception = null;
 			try {
-				stream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read|FileShare.Delete);
+				stream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read | FileShare.Delete);
 				reader = XmlReader.Create(stream, newSettings);
 				objectTo = (T)serializer.Deserialize(reader);
+				if (typeof(T) == typeof(skin)) {
+					stream.Position = 0;
+					XmlDocument doc = new XmlDocument();
+					doc.Load(stream);
+					(objectTo as skin).RootElement = doc.DocumentElement;
+				}
 			} catch (Exception ex) {
 				exception = ex;
 			} finally {
@@ -73,7 +79,7 @@ namespace Updater.Common
 			}
 
 			return objectTo;
-		}		
+		}
 
 		[PermissionSet(SecurityAction.Demand, Name = "FullTrust")]
 		public static void Write(T file, string filePath) {
@@ -127,12 +133,12 @@ namespace Updater.Common
 				stream = null;
 				return false;
 			}
-		}		
-		
+		}
+
 		static void OnUnknownNode(object sender, XmlNodeEventArgs args) {
 			// Ignore
 		}
-		
+
 		static void OnUnknownAttribute(object sender, XmlAttributeEventArgs args) {
 			// Ignore		
 		}

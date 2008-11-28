@@ -33,6 +33,9 @@ namespace Updater.Common
 		[XmlAttribute]
 		public string version;
 
+		[XmlIgnore]
+		public XmlElement RootElement { get; set; }
+
 		public skin() {
 			this.version = "1.0";
 		}
@@ -63,6 +66,13 @@ namespace Updater.Common
 								  fieldInfo.FieldType.Name == elementType.Name + @"[]"
 							select fieldInfo.Name).FirstOrDefault();
 			return match;
+		}
+		
+		public static string GetElementChildName(Type elementType) {
+			object[] attributes = elementType.GetCustomAttributes(typeof(XmlRootAttribute), false);
+			if (attributes != null && attributes.Length > 0)
+				return (attributes[0] as XmlRootAttribute).ElementName;
+			return String.Empty;		
 		}
 	}
 
@@ -113,9 +123,13 @@ namespace Updater.Common
 
 		#region INamedElement Members
 
+		[XmlIgnore]
 		public string Id {
 			get { return name; }
 		}
+
+		[XmlIgnore]
+		public XmlNodeList NodeList { get; set; }
 
 		#endregion
 	}
@@ -162,9 +176,13 @@ namespace Updater.Common
 
 		#region INamedElement Members
 
+		[XmlIgnore]
 		public string Id {
 			get { return name; }
 		}
+
+		[XmlIgnore]
+		public XmlNodeList NodeList { get; set; }
 
 		#endregion
 
@@ -293,9 +311,13 @@ namespace Updater.Common
 
 		#region INamedElement Members
 
+		[XmlIgnore]
 		public string Id {
 			get { return id; }
 		}
+		
+		[XmlIgnore]
+		public XmlNodeList NodeList { get; set; }
 
 		#endregion
 	}
@@ -319,9 +341,13 @@ namespace Updater.Common
 
 		#region INamedElement Members
 
+		[XmlIgnore]
 		public string Id {
 			get { return id; }
 		}
+
+		[XmlIgnore]
+		public XmlNodeList NodeList { get; set; }
 
 		#endregion
 

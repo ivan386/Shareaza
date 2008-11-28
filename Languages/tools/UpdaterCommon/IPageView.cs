@@ -2,12 +2,15 @@
 using System.Drawing;
 using System.Windows.Forms;
 using System.Collections.Generic;
+using System.Xml;
+using System.Xml.Serialization;
 
 namespace Updater.Common
 {
 	public interface INamedElement
 	{
 		string Id { get; }
+		XmlNodeList NodeList { get; set; }
 	}
 
 	interface IPageView

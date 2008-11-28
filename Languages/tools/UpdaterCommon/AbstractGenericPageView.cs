@@ -7,6 +7,7 @@ using System.Text;
 using System.Drawing;
 using System.ComponentModel;
 using System.Windows.Forms;
+using System.Xml;
 using System.Xml.Linq;
 
 namespace Updater.Common
@@ -138,6 +139,21 @@ namespace Updater.Common
 				if (elements != null && elements.Length > 0) {
 					manifest = skin.manifest;
 					list = elements.Cast<T>().OrderBy(s => s.Id).ToList();
+					
+					XmlNameTable nameTable = skin.RootElement.OwnerDocument.NameTable;
+					var nsmgr = new XmlNamespaceManager(nameTable);
+					nsmgr.AddNamespace("ss", "http://www.shareaza.com/schemas/Skin.xsd");
+					XmlElement root = skin.RootElement;
+					
+					foreach (var element in list) {
+						if (!(element is INamedElement)) continue;
+						INamedElement ne = (INamedElement)element;
+						string nodeName = skin.GetElementName(typeof(T));
+						string childName = skin.GetElementChildName(typeof(T));
+						ne.NodeList = root.SelectNodes(String.Format("/ss:skin/ss:{0}/ss:{1}", 
+																	 nodeName, childName), nsmgr);
+					}
+					
 					if (fileType == FileType.OldEnglish)
 						_oldFilePath = filePath;
 					else if (fileType == FileType.NewEnglish)
