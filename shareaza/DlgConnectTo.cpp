@@ -268,8 +268,7 @@ BOOL CConnectToDlg::UpdateItems()
 	if ( ! UpdateData() )
 		return FALSE;
 
-	m_sHost.Trim( _T(" \t\r\n:\"") );
-	ToLower( m_sHost );
+	m_sHost.Trim( _T(" \t\r\n:\"\'\\") ).MakeLower();
 	int n = m_sHost.Find( _T(':') );
 	if ( n != -1 )
 	{
