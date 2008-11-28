@@ -117,56 +117,59 @@ CString	CBTInfo::CBTFile::FindFile()
 {
 	CSingleLock oLibraryLock( &Library.m_pSection, TRUE );
 
+	// Try find file by hash/size
 	CString strFile;
-	CLibraryFile* pShared = NULL;
-
-	if ( IsHashed() )
+	CLibraryFile* pShared = LibraryMaps.LookupFileByHash( m_oSHA1, m_oTiger,
+		m_oED2K, m_oBTH, m_oMD5, m_nSize, m_nSize, FALSE, TRUE );
+	if ( pShared )
+		strFile = pShared->GetPath();
+	if ( ! pShared ||
+		 GetFileSize( CString( _T("\\\\?\\") ) + strFile ) != m_nSize )
 	{
-		pShared = LibraryMaps.LookupFileByHash( m_oSHA1, m_oTiger, m_oED2K,
-			m_oBTH, m_oMD5, m_nSize, m_nSize, FALSE, TRUE );
-		if ( pShared )
-		{
-			strFile = pShared->GetPath();
-		}
-	}
-
-	if ( GetFileSize( CString( _T("\\\\?\\") ) + strFile ) != m_nSize )
-	{
+		// Try complete folder
 		strFile = Settings.Downloads.CompletePath + _T("\\") + m_sPath;
 		if ( GetFileSize( CString( _T("\\\\?\\") ) + strFile ) != m_nSize )
 		{
-			CString strPath = GetPath();
-			int nSlash = strPath.ReverseFind( '\\' );
-			if ( nSlash >= 0 )
-				strPath = strPath.Left( nSlash + 1 );
-			strFile = strPath + m_sPath;
+			// Try folder of original .torrent
+			CString strTorrentPath = m_pInfo->m_sPath.Left(
+				m_pInfo->m_sPath.ReverseFind( _T('\\') ) + 1 );
+			strFile = strTorrentPath + m_sPath;
 			if ( GetFileSize( CString( _T("\\\\?\\") ) + strFile ) != m_nSize )
 			{
-				//Try removing the outer directory in case of multi-file torrent oddities
-				LPCTSTR pszName = _tcsrchr( m_sPath, _T('\\') );
-				if ( pszName == NULL )
-					pszName = m_sPath;
-				else
-					pszName ++;
-				strFile = Settings.Downloads.CompletePath + _T("\\") + pszName;
-				if ( GetFileSize( CString( _T("\\\\?\\") ) + strFile ) != m_nSize )
+				// Try complete folder without outer file directory
+				CString strShortPath;
+				int nSlash = m_sPath.Find( _T('\\') );
+				if ( nSlash != -1 )
+					strShortPath = m_sPath.Mid( nSlash + 1 );
+				strFile = Settings.Downloads.CompletePath + _T("\\") + strShortPath;
+				if ( strShortPath.IsEmpty() ||
+					 GetFileSize( CString( _T("\\\\?\\") ) + strFile ) != m_nSize )
 				{
-					strFile = strPath + pszName;
-					if ( GetFileSize( CString( _T("\\\\?\\") ) + strFile ) != m_nSize )
+					// Try folder of original .torrent without outer file directory
+					strFile = strTorrentPath + strShortPath;
+					if ( strShortPath.IsEmpty() ||
+						GetFileSize( CString( _T("\\\\?\\") ) + strFile ) != m_nSize )
 					{
-						return CString();
+						// Try find by name only
+						pShared = LibraryMaps.LookupFileByName( m_sName, FALSE, TRUE );
+						if ( pShared )
+							strFile = pShared->GetPath();
+						if ( ! pShared ||
+							 GetFileSize( CString( _T("\\\\?\\") ) + strFile ) != m_nSize )
+						{
+							return CString();
+						}
 					}
 				}
 			}
 		}
 	}
 
+	// Refill missed hashes
 	if ( ! pShared )
 		pShared = LibraryMaps.LookupFileByPath( strFile, FALSE, FALSE );
-
 	if ( pShared )
 	{
-		// Refill missed hashes
 		if ( ! m_oSHA1 && pShared->m_oSHA1 )
 			m_oSHA1 = pShared->m_oSHA1;
 		if ( ! m_oTiger && pShared->m_oTiger )
@@ -226,6 +229,7 @@ CBTInfo& CBTInfo::Copy(const CBTInfo& oSource)
 	m_nTotalUpload		= oSource.m_nTotalUpload;
 	m_nTotalDownload	= oSource.m_nTotalDownload;
 	m_sName				= oSource.m_sName;
+	m_sPath				= oSource.m_sPath;
 
 	m_oTrackers.RemoveAll();
 	for ( INT_PTR i = 0; i < oSource.m_oTrackers.GetCount(); ++i )

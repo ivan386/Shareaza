@@ -74,12 +74,6 @@ public:
 			m_nFilePriority = nFilePriority; 
 		}
 
-		// Get internal path (including file name) of file inside torrent
-		inline CString GetPath() const
-		{
-			return m_pInfo->m_sPath;
-		}
-
 		// Find file on disk
 		CString	FindFile();
 
