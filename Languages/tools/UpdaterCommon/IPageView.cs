@@ -11,6 +11,7 @@ namespace Updater.Common
 	{
 		string Id { get; }
 		XmlNodeList NodeList { get; set; }
+		string IdName { get; }
 	}
 
 	interface IPageView

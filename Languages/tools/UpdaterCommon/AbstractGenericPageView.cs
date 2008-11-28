@@ -45,7 +45,7 @@ namespace Updater.Common
 			this.UpdatedFilePath = translationFilePath;
 		}
 
-	
+
 		public event EventHandler<PageViewErrorArgs> OnError;
 		public event EventHandler<ExportStatusChangedArgs> OnUpdate;
 
@@ -57,8 +57,8 @@ namespace Updater.Common
 		static bool _bMono = Type.GetType("Mono.Runtime") != null;
 		public static bool IsRunningInMono {
 			get { return _bMono; }
-		}		
-		
+		}
+
 		int lastIndex = -1;
 		public int ElementIndex {
 			get { return lastIndex; }
@@ -139,21 +139,27 @@ namespace Updater.Common
 				if (elements != null && elements.Length > 0) {
 					manifest = skin.manifest;
 					list = elements.Cast<T>().OrderBy(s => s.Id).ToList();
-					
+
 					XmlNameTable nameTable = skin.RootElement.OwnerDocument.NameTable;
 					var nsmgr = new XmlNamespaceManager(nameTable);
 					nsmgr.AddNamespace("ss", "http://www.shareaza.com/schemas/Skin.xsd");
 					XmlElement root = skin.RootElement;
-					
+					string nodeName = skin.GetElementName(typeof(T));
+					string childName = skin.GetElementChildName(typeof(T));
+
 					foreach (var element in list) {
 						if (!(element is INamedElement)) continue;
 						INamedElement ne = (INamedElement)element;
-						string nodeName = skin.GetElementName(typeof(T));
-						string childName = skin.GetElementChildName(typeof(T));
-						ne.NodeList = root.SelectNodes(String.Format("/ss:skin/ss:{0}/ss:{1}", 
-																	 nodeName, childName), nsmgr);
+						string xpath = String.Format("/ss:skin/ss:{0}/ss:{1}[@{2}='{3}']",
+													 nodeName, childName, element.IdName, element.Id);
+						XmlNodeList nl = root.SelectNodes(xpath, nsmgr);
+						if (nl.Count > 0) {
+							var xe = nl[0] as XmlElement;
+							if (xe != null)
+								element.NodeList = xe.ChildNodes;
+						}
 					}
-					
+
 					if (fileType == FileType.OldEnglish)
 						_oldFilePath = filePath;
 					else if (fileType == FileType.NewEnglish)
@@ -182,7 +188,7 @@ namespace Updater.Common
 		public void UpdatePanes() {
 			if (OnUpdate != null)
 				OnUpdate(this, new ExportStatusChangedArgs(IsReadyForExport));
-				
+
 			SetError(String.Empty);
 
 			if (newEnList == null)
@@ -298,10 +304,10 @@ namespace Updater.Common
 				return String.Format(envelopeFormat, elementName, @"{0}");
 			}
 		}
-		
+
 		public Font UpdatePaneFont {
 			get { return richUpdate.Font; }
-			set { richUpdate.Font = value;	}
+			set { richUpdate.Font = value; }
 		}
 
 		#region Context Menu
@@ -389,7 +395,7 @@ namespace Updater.Common
 			if (IsRunningInMono)
 				contextMenu.Tag = sender as Control;
 		}
-		
+
 		public virtual string ExportChanges() {
 			if (updatesList == null)
 				return String.Empty;

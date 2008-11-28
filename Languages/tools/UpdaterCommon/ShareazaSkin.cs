@@ -129,6 +129,11 @@ namespace Updater.Common
 		}
 
 		[XmlIgnore]
+		public string IdName {
+			get { return "name"; }
+		}
+		
+		[XmlIgnore]
 		public XmlNodeList NodeList { get; set; }
 
 		#endregion
@@ -180,7 +185,12 @@ namespace Updater.Common
 		public string Id {
 			get { return name; }
 		}
-
+		
+		[XmlIgnore]
+		public string IdName {
+			get { return "name"; }
+		}
+		
 		[XmlIgnore]
 		public XmlNodeList NodeList { get; set; }
 
@@ -315,6 +325,11 @@ namespace Updater.Common
 		public string Id {
 			get { return id; }
 		}
+
+		[XmlIgnore]
+		public string IdName {
+			get { return "id"; }
+		}		
 		
 		[XmlIgnore]
 		public XmlNodeList NodeList { get; set; }
@@ -345,6 +360,11 @@ namespace Updater.Common
 		public string Id {
 			get { return id; }
 		}
+
+		[XmlIgnore]
+		public string IdName {
+			get { return "name"; }
+		}		
 
 		[XmlIgnore]
 		public XmlNodeList NodeList { get; set; }
