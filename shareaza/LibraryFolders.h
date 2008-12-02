@@ -49,7 +49,6 @@ public:
 	INT_PTR			GetFolderCount() const { return m_pFolders.GetCount(); }
 	CLibraryFolder*	GetFolder(LPCTSTR pszPath) const;
 	BOOL			CheckFolder(CLibraryFolder* pFolder, BOOL bRecursive = FALSE) const;
-public:
 	CLibraryFolder*	AddFolder(LPCTSTR pszPath);
 	CLibraryFolder*	AddFolder(LPCTSTR pszPath, BOOL bShared);
 	BOOL			RemoveFolder(CLibraryFolder* pFolder);
@@ -59,15 +58,15 @@ public:
 	void			Maintain();
 
 // Virtual Album Operations
-public:
 	CAlbumFolder*	GetAlbumRoot();
 	BOOL			CheckAlbum(CAlbumFolder* pFolder) const;
 	CAlbumFolder*	GetAlbumTarget(LPCTSTR pszSchemaURI, LPCTSTR pszMember, LPCTSTR pszValue) const;
     CAlbumFolder*	GetCollection(const Hashes::Sha1Hash& oSHA1);
     BOOL			MountCollection(const Hashes::Sha1Hash& oSHA1, CCollectionFile* pCollection);
+	// Remove file from all albums and folders
+	BOOL			OnFileDelete(CLibraryFile* pFile, BOOL bDeleteGhost = FALSE);
 protected:
 	void			CreateAlbumTree();
-	void			OnFileDelete(CLibraryFile* pFile, BOOL bDeleteGhost = FALSE);
 
 // Core
 protected:

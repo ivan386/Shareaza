@@ -473,17 +473,7 @@ BOOL CLibraryFolder::ThreadScan(DWORD nScanCookie)
 		
 		if ( pFile->m_nScanCookie != nScanCookie )
 		{
-			CString strNameLC( pFile->m_sName );
-			ToLower( strNameLC );
-			
-			m_nFiles	--;
-			m_nVolume	-= pFile->m_nSize;
-			
-			if ( ! pLock.IsLocked() ) pLock.Lock();
-			
 			pFile->OnDelete();
-			m_pFiles.RemoveKey( strNameLC );
-			
 			bChanged = TRUE;
 		}
 	}

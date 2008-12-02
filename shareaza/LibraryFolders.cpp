@@ -433,9 +433,16 @@ void CLibraryFolders::CreateAlbumTree()
 //////////////////////////////////////////////////////////////////////
 // CLibraryFolders file delete handler
 
-void CLibraryFolders::OnFileDelete(CLibraryFile* pFile, BOOL bDeleteGhost)
+BOOL CLibraryFolders::OnFileDelete(CLibraryFile* pFile, BOOL bDeleteGhost)
 {
-	if ( m_pAlbumRoot != NULL ) m_pAlbumRoot->OnFileDelete( pFile, bDeleteGhost );
+	if ( m_pAlbumRoot )
+		m_pAlbumRoot->OnFileDelete( pFile, bDeleteGhost );
+
+	for ( POSITION pos = GetFolderIterator() ; pos ; )
+		if ( GetNextFolder( pos )->OnFileDelete( pFile ) )
+			return TRUE;
+
+	return FALSE;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -444,13 +451,10 @@ void CLibraryFolders::OnFileDelete(CLibraryFile* pFile, BOOL bDeleteGhost)
 void CLibraryFolders::Clear()
 {
 	for ( POSITION pos = GetFolderIterator() ; pos ; )
-	{
 		delete GetNextFolder( pos );
-	}
-	
 	m_pFolders.RemoveAll();
-	
-	if ( m_pAlbumRoot != NULL ) delete m_pAlbumRoot;
+
+	delete m_pAlbumRoot;
 	m_pAlbumRoot = NULL;
 }
 

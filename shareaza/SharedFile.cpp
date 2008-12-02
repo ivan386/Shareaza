@@ -26,6 +26,8 @@
 #include "SharedFolder.h"
 #include "Library.h"
 #include "LibraryBuilder.h"
+#include "LibraryFolders.h"
+#include "LibraryHistory.h"
 #include "HashDatabase.h"
 
 #include "Network.h"
@@ -313,10 +315,22 @@ BOOL CLibraryFile::Delete(BOOL bDeleteGhost)
 {
 	if ( m_pFolder != NULL )
 	{
-		if ( ! DeleteFile( GetPath(),
-			( ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 ) == 0 ), TRUE ) )
+		// Close builder handler
+		LibraryBuilder.Remove( this );
+
+		// Close download handler
+		CDownload* pDownload = Downloads.FindByPath( GetPath() );
+		if ( pDownload )
+			// Also deletes file and closes upload handlers
+			pDownload->Remove( true );
+		else
 		{
-			return FALSE;
+			// Delete file and close upload handlers
+			if ( ! DeleteFile( GetPath(),
+				( ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 ) == 0 ), TRUE ) )
+			{
+				return FALSE;
+			}
 		}
 	}
 
@@ -897,7 +911,14 @@ void CLibraryFile::OnDelete(BOOL bDeleteGhost, TRISTATE bCreateGhost)
 		}
 	}
 
-	Library.OnFileDelete( this, bDeleteGhost );
+	// Remove file from all albums and folders
+	LibraryFolders.OnFileDelete( this, bDeleteGhost );
+
+	// Remove file from library history
+	LibraryHistory.OnFileDelete( this );
+
+	// Remove tiger/ed2k hash trees
+	LibraryHashDB.DeleteAll( m_nIndex );
 
 	delete this;
 }
@@ -907,11 +928,22 @@ void CLibraryFile::Ghost()
 	SYSTEMTIME pTime;
 	GetSystemTime( &pTime );
 	SystemTimeToFileTime( &pTime, &m_pTime );
+
+	// Remove file from library maps, builder and dictionaries
 	Library.RemoveFile( this );
+
+	// Remove file from all albums and folders (skipping ghost files)
+	LibraryFolders.OnFileDelete( this, FALSE );
+
+	// Remove file from library history
+	LibraryHistory.OnFileDelete( this );
+
+	// Remove tiger/ed2k hash trees
+	LibraryHashDB.DeleteAll( m_nIndex );
+
 	m_pFolder = NULL;
 	m_sPath.Empty();
 	Library.AddFile( this );
-	Library.OnFileDelete( this );
 }
 
 //////////////////////////////////////////////////////////////////////

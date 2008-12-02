@@ -134,15 +134,6 @@ void CLibrary::RemoveFile(CLibraryFile* pFile)
 	}
 }
 
-void CLibrary::OnFileDelete(CLibraryFile* pFile, BOOL bDeleteGhost)
-{
-	ASSERT( pFile != NULL );
-
-	LibraryFolders.OnFileDelete( pFile, bDeleteGhost );
-	LibraryHistory.OnFileDelete( pFile );
-	LibraryHashDB.DeleteAll( pFile->m_nIndex );
-}
-
 void CLibrary::CheckDuplicates(CLibraryFile* pFile, bool bForce)
 {
 	long nCount = 0;
