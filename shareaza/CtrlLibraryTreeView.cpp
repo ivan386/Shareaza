@@ -1351,12 +1351,9 @@ BOOL CLibraryTreeView::Update(CLibraryFolder* pFolder, CLibraryTreeItem* pItem, 
 	{
 		if ( bRecurse || pItem->m_bSelected )
 		{
-			CLibraryFile* pFile;
-			CString strTemp;
-
-			for ( POSITION pos = pFolder->m_pFiles.GetStartPosition() ; pos ; )
+			for ( POSITION pos = pFolder->GetFileIterator() ; pos ; )
 			{
-				pFolder->m_pFiles.GetNextAssoc( pos, strTemp, pFile );
+				CLibraryFile* pFile = pFolder->GetNextFile( pos );
 				pFile->m_nSelectCookie = nSelectCookie;
 			}
 

@@ -408,30 +408,25 @@ BOOL CLibraryFolder::ThreadScan(DWORD nScanCookie)
 			}
 			else
 			{
-				CLibraryFile* pFile = GetFile( pFind.cFileName );
-				if ( pFile != NULL )
+				pLock.Lock();
+
+				BOOL bNew;
+				CLibraryFile* pFile = AddFile( pFind.cFileName, bNew );
+				if ( ! bNew )
 				{
 					m_nVolume -= pFile->m_nSize;
-					
 					if ( pFile->m_sName != pFind.cFileName )
 					{
-						pLock.Lock();
 						Library.RemoveFile( pFile );
 						pFile->m_sName = pFind.cFileName;
 						Library.AddFile( pFile );
 						bChanged = TRUE;
-						pLock.Unlock();
 					}
 				}
 				else
-				{
-					pFile = new CLibraryFile( this, pFind.cFileName );
-					pLock.Lock();
-					m_pFiles.SetAt( pFile->GetNameLC(), pFile );
-					m_nFiles++;
 					bChanged = TRUE;
-					pLock.Unlock();
-				}
+				
+				pLock.Unlock();
 
 				QWORD nLongSize = (QWORD)pFind.nFileSizeLow |
 					( (QWORD)pFind.nFileSizeHigh << 32 );
@@ -449,7 +444,9 @@ BOOL CLibraryFolder::ThreadScan(DWORD nScanCookie)
 	}
 	
 	if ( ! Library.IsThreadEnabled() ) return FALSE;
-	
+
+	pLock.Lock();
+
 	for ( POSITION pos = GetFolderIterator() ; pos ; )
 	{
 		CLibraryFolder* pFolder = GetNextFolder( pos );
@@ -461,8 +458,6 @@ BOOL CLibraryFolder::ThreadScan(DWORD nScanCookie)
 			
 			m_nFiles	-= pFolder->m_nFiles;
 			m_nVolume	-= pFolder->m_nVolume;
-			
-			if ( ! pLock.IsLocked() ) pLock.Lock();
 			
 			m_pFolders.RemoveKey( strNameLC );
 			pFolder->OnDelete();
@@ -492,8 +487,30 @@ BOOL CLibraryFolder::ThreadScan(DWORD nScanCookie)
 			bChanged = TRUE;
 		}
 	}
-	
+
+	pLock.Unlock();
+
 	return bChanged;
+}
+
+CLibraryFile* CLibraryFolder::AddFile(LPCTSTR szName, BOOL& bNew)
+{
+	CQuickLock oLock( Library.m_pSection );
+
+	CLibraryFile* pFile = GetFile( szName );
+	if ( pFile == NULL )
+	{
+		pFile = new CLibraryFile( this, szName );
+		m_pFiles.SetAt( pFile->GetNameLC(), pFile );
+		m_nFiles++;
+		m_nUpdateCookie++;
+		bNew = TRUE;
+	}
+	else
+	{
+		bNew = FALSE;
+	}
+	return pFile;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -657,6 +674,31 @@ void CLibraryFolder::OnDelete(TRISTATE bCreateGhost)
 	m_pFiles.RemoveAll();
 	
 	delete this;
+}
+
+BOOL CLibraryFolder::OnFileDelete(CLibraryFile* pRemovingFile)
+{
+	for ( POSITION pos = GetFileIterator() ; pos ; )
+	{
+		CLibraryFile* pFile = GetNextFile( pos );
+		if ( pFile == pRemovingFile )
+		{
+			m_nFiles --;
+			m_nVolume -= pFile->m_nSize;
+			m_pFiles.RemoveKey( pFile->GetNameLC() );
+			m_nUpdateCookie++;
+			return TRUE;
+		}
+	}
+
+	for ( POSITION pos = GetFolderIterator() ; pos ; )
+	{
+		CLibraryFolder* pFolder = GetNextFolder( pos );
+		if ( pFolder->OnFileDelete( pRemovingFile ) )
+			return TRUE;
+	}
+
+	return FALSE;
 }
 
 void CLibraryFolder::OnFileRename(CLibraryFile* pFile)

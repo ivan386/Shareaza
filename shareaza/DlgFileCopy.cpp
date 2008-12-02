@@ -276,18 +276,8 @@ void CFileCopyDlg::OnRun()
 			CLibraryFolder* pTargetFolder = LibraryFolders.GetFolder( m_sTarget );
 			if ( pTargetFolder )
 			{
-				bool bNew = false;
-				CLibraryFile* pTargetFile = pTargetFolder->GetFile( strName );
-				if ( pTargetFile == NULL )
-				{
-					pTargetFile = new CLibraryFile( pTargetFolder, strName );
-					pTargetFolder->m_pFiles.SetAt(
-						pTargetFile->GetNameLC(), pTargetFile );
-					pTargetFolder->m_nFiles++;
-					pTargetFolder->m_nUpdateCookie++;
-					bNew = true;
-				}
-
+				BOOL bNew;
+				CLibraryFile* pTargetFile = pTargetFolder->AddFile( strName, bNew );
 				if ( pSchema )
 				{
 					pTargetFile->m_pSchema = pSchema;

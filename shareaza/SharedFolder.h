@@ -47,12 +47,12 @@ public:
 	BOOL			m_bExpanded;
 	DWORD			m_nFiles;
 	QWORD			m_nVolume;
-	CMap< CString, const CString&, CLibraryFile*, CLibraryFile* >	m_pFiles;
 
 protected:
 	DWORD			m_nScanCookie;
 	CString			m_sNameLC;
 	TRISTATE		m_bShared;
+	CMap< CString, const CString&, CLibraryFile*, CLibraryFile* >		m_pFiles;
 	CMap< CString, const CString&, CLibraryFolder*, CLibraryFolder* >	m_pFolders;
 	HANDLE			m_hMonitor;
 	BOOL			m_bForceScan;		// TRUE - next scan forced (root folder only)
@@ -67,7 +67,11 @@ public:
 	CLibraryFolder*	GetFolderByPath(LPCTSTR pszPath) const;
 	BOOL			CheckFolder(CLibraryFolder* pFolder, BOOL bRecursive = FALSE) const;
 	INT_PTR			GetFolderCount() const;
-
+	// Add new or get existing file
+	CLibraryFile*	AddFile(LPCTSTR szName, BOOL& bNew);
+	// Remove existing file recursively
+	// Returns: TRUE - file found and removed, FALSE - not found
+	BOOL			OnFileDelete(CLibraryFile* pRemovingFile);
 	POSITION		GetFileIterator() const;
 	CLibraryFile*	GetNextFile(POSITION& pos) const;
 	CLibraryFile*	GetFile(LPCTSTR pszName) const;
