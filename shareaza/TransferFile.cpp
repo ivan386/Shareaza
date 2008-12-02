@@ -61,21 +61,21 @@ CTransferFile* CTransferFiles::Open(LPCTSTR pszFile, BOOL bWrite, BOOL bCreate)
 			return NULL;
 	
 		pFile->AddRef();
-
-		TRACE( _T("Transfer Files : Reused file \"%s\" [%d/%d]\n"), pszFile, bWrite, bCreate );
 	}
 	else
 	{
 		pFile = new CTransferFile( pszFile );
 		if ( ! pFile->Open( bWrite, bCreate ) )
 		{
-			pFile->Release( FALSE );
+			DWORD dwError = GetLastError();
+			pFile->Release();
+			SetLastError( dwError );
 			return NULL;
 		}
 
 		m_pMap.SetAt( pFile->m_sPath, pFile );
 
-		TRACE( _T("Transfer Files : Opened file \"%s\" [%d/%d]\n"), pszFile, bWrite, bCreate );
+		TRACE( _T("Transfer Files : Opened \"%s\" [%d]\n"), pszFile, bWrite );
 	}
 
 	return pFile;
@@ -94,9 +94,9 @@ void CTransferFiles::Close()
 		CString strPath;
 		m_pMap.GetNextAssoc( pos, strPath, pFile );
 
-		TRACE( _T("Transfer Files : Closed file \"%s\" [%d]\n"), (LPCTSTR)pFile->m_sPath, pFile->m_bWrite );
+		TRACE( _T("Transfer Files : Closed \"%s\"\n"), (LPCTSTR)strPath );
 
-		pFile->Release( FALSE );
+		pFile->Release();
 	}
 
 	m_pMap.RemoveAll();
@@ -137,7 +137,7 @@ void CTransferFiles::Remove(CTransferFile* pFile)
 {
 	CSingleLock pLock( &m_pSection, TRUE );
 
-	TRACE( _T("Transfer Files : Closed file \"%s\" [%d]\n"), (LPCTSTR)pFile->m_sPath, pFile->m_bWrite );
+	TRACE( _T("Transfer Files : Closed \"%s\"\n"), (LPCTSTR)pFile->m_sPath );
 
 	m_pMap.RemoveKey( pFile->m_sPath );
 
@@ -153,7 +153,7 @@ CTransferFile::CTransferFile(LPCTSTR pszPath) :
 ,	m_hFile( INVALID_HANDLE_VALUE )
 ,	m_bExists( FALSE )
 ,	m_bWrite( FALSE )
-,	m_nReference( 1 )
+,	m_nRefCount( 1 )
 ,	m_nDeferred( 0 )
 {
 	ZeroMemory( m_pDeferred, sizeof( m_pDeferred ) );
@@ -161,37 +161,35 @@ CTransferFile::CTransferFile(LPCTSTR pszPath) :
 
 CTransferFile::~CTransferFile()
 {
-	ASSERT( m_nReference == 0 );
+	ASSERT( m_nRefCount == 0 );
+
+	DeferredWrite();
 
 	if ( m_hFile != INVALID_HANDLE_VALUE )
 	{
-		DeferredWrite();
 		CloseHandle( m_hFile );
+		m_hFile = INVALID_HANDLE_VALUE;
 	}
 }
 
 //////////////////////////////////////////////////////////////////////
 // CTransferFile reference counts
 
-void CTransferFile::AddRef()
+ULONG CTransferFile::AddRef()
 {
-	CSingleLock pLock( &TransferFiles.m_pSection, TRUE );
-	m_nReference++;
+	return (ULONG)InterlockedIncrement( &m_nRefCount );
 }
 
-void CTransferFile::Release(BOOL bWrite)
+ULONG CTransferFile::Release()
 {
+	ULONG ref_count = (ULONG)InterlockedDecrement( &m_nRefCount );
+	if ( ref_count )
+		return ref_count;
+
 	CSingleLock pLock( &TransferFiles.m_pSection, TRUE );
-
-	if ( ! --m_nReference )
-	{
-		TransferFiles.Remove( this );
-		delete this;
-		return;
-	}
-
-	if ( m_bWrite && bWrite )
-		CloseWrite();
+	TransferFiles.Remove( this );
+	delete this;
+	return 0;
 }
 
 //////////////////////////////////////////////////////////////////////

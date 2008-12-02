@@ -24,6 +24,7 @@
 #include "FileFragments.hpp"
 #include "TransferFile.h"
 
+class CShareazaFile;
 class CEDPartImporter;
 class CBTInfo;
 
@@ -40,17 +41,17 @@ public:
 	virtual void Dump(CDumpContext& dc) const;
 #endif
 
-private:
+protected:
 	virtual ~CFragmentedFile();
 
 	struct CVirtualFilePart
 	{
-		bool operator ==(LPCTSTR pszFile) const
+		inline bool operator ==(LPCTSTR pszFile) const
 		{
 			return ! m_sPath.CompareNoCase( pszFile );
 		}
 
-		bool operator <(const CVirtualFilePart& p) const
+		inline bool operator <(const CVirtualFilePart& p) const
 		{
 			return ( m_nOffset < p.m_nOffset );
 		}
@@ -66,7 +67,7 @@ private:
 
 	struct Greater : public std::binary_function< CVirtualFilePart, QWORD, bool >
 	{
-		bool operator()(const CVirtualFilePart& _Left, const QWORD& _Right) const
+		inline bool operator()(const CVirtualFilePart& _Left, QWORD _Right) const
 		{
 			return _Left.m_nOffset > _Right;
 		}
@@ -74,32 +75,50 @@ private:
 
 	struct Flusher : public std::unary_function< CVirtualFilePart, void >
 	{
-		void operator()(const CVirtualFilePart& p) const
+		inline void operator()(const CVirtualFilePart& p) const
 		{
-			FlushFileBuffers( p.m_pFile->GetHandle() );
+			if ( p.m_pFile )
+			{
+				FlushFileBuffers( p.m_pFile->GetHandle() );
+			}
 		}
 	};
 
 	struct Releaser : public std::unary_function< CVirtualFilePart, void >
 	{
-		void operator()(const CVirtualFilePart& p) const
+		inline void operator()(CVirtualFilePart& p) const
 		{
-			p.m_pFile->Release( TRUE );
+			if ( p.m_pFile )
+			{
+				p.m_pFile->Release();
+				p.m_pFile = NULL;
+			}
 		}
 	};
 
 	struct Completer : public std::unary_function< CVirtualFilePart, void >
 	{
-		void operator()(const CVirtualFilePart& p) const
+		inline void operator()(const CVirtualFilePart& p) const
 		{
-			HANDLE hFile = p.m_pFile->GetHandle( TRUE );
-			if ( hFile != INVALID_HANDLE_VALUE )
+			if ( p.m_pFile )
 			{
-				LARGE_INTEGER nLength;
-				nLength.QuadPart = p.m_nLength;
-				SetFilePointerEx( hFile, nLength, NULL, FILE_BEGIN );
-				SetEndOfFile( hFile );
+				HANDLE hFile = p.m_pFile->GetHandle( TRUE );
+				if ( hFile != INVALID_HANDLE_VALUE )
+				{
+					LARGE_INTEGER nLength;
+					nLength.QuadPart = p.m_nLength;
+					SetFilePointerEx( hFile, nLength, NULL, FILE_BEGIN );
+					SetEndOfFile( hFile );
+				}
 			}
+		}
+	};
+
+	struct EnsureWriter : public std::unary_function< CVirtualFilePart, bool >
+	{
+		inline bool operator()(const CVirtualFilePart& p) const
+		{
+			return ! p.m_pFile || p.m_pFile->EnsureWrite();
 		}
 	};
 
@@ -124,16 +143,13 @@ public:
 	void	Close();
 	BOOL	MakeComplete();
 	void	Serialize(CArchive& ar, int nVersion);
-
-	BOOL	IsPositionRemaining(QWORD nOffset) const;
-	BOOL	DoesRangeOverlap(QWORD nOffset, QWORD nLength) const;
-	QWORD	GetRangeOverlap(QWORD nOffset, QWORD nLength) const;
+	BOOL	EnsureWrite();
 	BOOL	Write(QWORD nOffset, LPCVOID pData, QWORD nLength, QWORD* pnWritten = NULL);
 	BOOL	Read(QWORD nOffset, LPVOID pData, QWORD nLength, QWORD* pnRead = NULL);
 	QWORD	InvalidateRange(QWORD nOffset, QWORD nLength);
+	// Check if specified file handled
+	BOOL	FindByPath(const CString& sPath) const;
 
-	//CFragmentedFile& operator=(const CFragmentedFile& pFile);
-	
 	inline BOOL IsValid() const
 	{
 		CQuickLock oLock( m_pSection );
@@ -143,18 +159,19 @@ public:
 	
 	BOOL IsOpen() const;
 
+	// Get total size of whole file (in bytes)
 	inline QWORD GetTotal() const
 	{
 		CQuickLock oLock( m_pSection );
 
 		return m_oFList.limit();
 	}
-	
+
 	inline QWORD GetRemaining() const
 	{
 		CQuickLock oLock( m_pSection );
 
-		return ( m_oFList.limit() == SIZE_UNKNOWN && m_oFList.length_sum() ) ?
+		return ( m_oFList.limit() == SIZE_UNKNOWN || m_oFList.empty() ) ?
 			SIZE_UNKNOWN : m_oFList.length_sum();
 	}
 
@@ -166,16 +183,47 @@ public:
 		return m_oFList.missing();
 	}
 
-	// Get completed size of defined range (in bytes)
-	QWORD GetCompleted(QWORD nOffset, QWORD nLength) const;
-	
 	inline Fragments::List GetEmptyFragmentList() const
 	{
 		CQuickLock oLock( m_pSection );
 
 		return m_oFList;
 	}
-	
+
+	inline BOOL IsPositionRemaining(QWORD nOffset) const
+	{
+		CQuickLock oLock( m_pSection );
+
+		return m_oFList.has_position( nOffset );
+	}
+
+	inline BOOL DoesRangeOverlap(QWORD nOffset, QWORD nLength) const
+	{
+		CQuickLock oLock( m_pSection );
+
+		return m_oFList.overlaps( Fragments::Fragment( nOffset, nOffset + nLength ) );
+	}
+
+	inline QWORD GetRangeOverlap(QWORD nOffset, QWORD nLength) const
+	{
+		CQuickLock oLock( m_pSection );
+
+		return m_oFList.overlapping_sum( Fragments::Fragment( nOffset, nOffset + nLength ) );
+	}
+
+	// Get completed size of defined range (in bytes)
+	inline QWORD GetCompleted(QWORD nOffset, QWORD nLength) const
+	{
+		CQuickLock oLock( m_pSection );
+
+		// TODO: Optimize this
+		Fragments::List oList( m_oFList );	
+		oList.insert( Fragments::Fragment( 0, nOffset ) );
+		oList.insert( Fragments::Fragment( nOffset + nLength, m_oFList.limit() ) );
+
+		return oList.missing();
+	}	
+
 //	inline QWORD GetEmptyFragmentCount() const
 //	{
 //		CQuickLock oLock( m_pSection );

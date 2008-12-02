@@ -44,12 +44,6 @@ public:
 	QWORD			GetVolumeRemaining() const;
 	DWORD			GetTimeRemaining() const;
 	CString			GetDisplayName() const;
-
-	inline Fragments::List GetEmptyFragmentList() const
-	{
-		return m_pFile ? m_pFile->GetEmptyFragmentList() : Fragments::List( 0 );
-	}
-
 	BOOL			GetFragment(CDownloadTransfer* pTransfer);
 	BOOL			IsPositionEmpty(QWORD nOffset);
 	BOOL			AreRangesUseful(const Fragments::List& oAvailable);
@@ -61,6 +55,16 @@ public:
 	BOOL			SubmitData(QWORD nOffset, LPBYTE pData, QWORD nLength);
 	QWORD			EraseRange(QWORD nOffset, QWORD nLength);
 	BOOL			MakeComplete();
+
+	inline Fragments::List GetEmptyFragmentList() const
+	{
+		return m_pFile ? m_pFile->GetEmptyFragmentList() : Fragments::List( 0 );
+	}
+
+	inline BOOL FindByPath(const CString& sPath) const
+	{
+		return m_pFile && m_pFile->FindByPath( sPath );
+	}
 
 protected:
 	virtual CString	GetAvailableRanges() const;

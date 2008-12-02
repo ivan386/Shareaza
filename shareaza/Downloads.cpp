@@ -525,18 +525,7 @@ CDownload* CDownloads::FindByPath(const CString& sPath) const
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
 		CDownload* pDownload = GetNext( pos );
-		if ( pDownload->IsTorrent() )
-		{
-			for ( POSITION pos = pDownload->m_pTorrent.m_pFiles.GetHeadPosition(); pos ; )
-			{
-				CBTInfo::CBTFile* pFile = pDownload->m_pTorrent.m_pFiles.GetNext( pos );
-				int len = pFile->m_sPath.GetLength();
-				if ( sPath.GetLength() >= len &&
-					pFile->m_sPath.CompareNoCase( sPath.Right( len ) ) == 0 )
-					return pDownload;
-			}
-		}
-		if ( pDownload->m_sPath.CompareNoCase( sPath ) == 0 )
+		if ( pDownload->FindByPath( sPath ) )
 			return pDownload;
 	}
 	return NULL;

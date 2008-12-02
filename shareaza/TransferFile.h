@@ -55,11 +55,13 @@ class CTransferFile
 public:
 	CTransferFile(LPCTSTR pszPath);
 
-	void		Release(BOOL bWrite);
+	ULONG		AddRef();
+	ULONG		Release();
 	HANDLE		GetHandle(BOOL bWrite = FALSE);
 	QWORD		GetSize() const;
 	BOOL		Read(QWORD nOffset, LPVOID pBuffer, QWORD nBuffer, QWORD* pnRead);
 	BOOL		Write(QWORD nOffset, LPCVOID pBuffer, QWORD nBuffer, QWORD* pnWritten);
+	BOOL		EnsureWrite();
 
 	inline BOOL	IsOpen() const
 	{
@@ -87,13 +89,11 @@ protected:
 	HANDLE		m_hFile;
 	BOOL		m_bExists;			// File exists before open
 	BOOL		m_bWrite;			// File opened for write operations
-	DWORD		m_nReference;
+	volatile LONG m_nRefCount;
 	DefWrite	m_pDeferred[DEFERRED_MAX];
 	int			m_nDeferred;
 
-	void		AddRef();
 	BOOL		Open(BOOL bWrite, BOOL bCreate);
-	BOOL		EnsureWrite();
 	BOOL		CloseWrite();
 	void		DeferredWrite(BOOL bOffline = FALSE);
 

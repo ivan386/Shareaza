@@ -25,6 +25,9 @@
 #include "FragmentedFile.h"
 #include "TransferFile.h"
 #include "BTInfo.h"
+#include "Library.h"
+#include "SharedFile.h"
+#include "Uploads.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -77,7 +80,7 @@ void CFragmentedFile::AssertValid() const
 		CVirtualFile::const_iterator j;
 		for ( CVirtualFile::const_iterator i = m_oFile.begin(); i != m_oFile.end(); ++i )
 		{
-			ASSERT( (*i).m_nLength != 0 && (*i).m_nLength != SIZE_UNKNOWN );
+			ASSERT( (*i).m_nLength != 0 );
 			if ( i != m_oFile.begin() )
 				ASSERT( (*j).m_nOffset + (*j).m_nLength == (*i).m_nOffset );
 			j = i;
@@ -104,9 +107,7 @@ void CFragmentedFile::Dump(CDumpContext& dc) const
 
 BOOL CFragmentedFile::Open(LPCTSTR pszFile, QWORD nOffset, QWORD nLength, BOOL bWrite, BOOL bCreate)
 {
-	ASSERT( pszFile && AfxIsValidString( pszFile ) );
 	ASSERT( nLength != 0 );
-	ASSERT( ! bCreate || bWrite );
 
 	CQuickLock oLock( m_pSection );
 
@@ -201,6 +202,18 @@ BOOL CFragmentedFile::Open(const CBTInfo& oInfo, BOOL bWrite, BOOL bCreate)
 	return TRUE;
 }
 
+BOOL CFragmentedFile::FindByPath(const CString& sPath) const
+{
+	CQuickLock oLock( m_pSection );
+
+	for ( CVirtualFile::const_iterator i = m_oFile.begin(); i != m_oFile.end(); ++i )
+		if ( ! (*i).m_sPath.CompareNoCase( sPath ) )
+			// Our subfile
+			return TRUE;
+
+	return FALSE;
+}
+
 BOOL CFragmentedFile::IsOpen() const
 {
 	CQuickLock oLock( m_pSection );
@@ -257,7 +270,7 @@ BOOL CFragmentedFile::Flush()
 		// No unflushed data left
 		return FALSE;
 
-	if ( ! IsOpen() )
+	if ( m_oFile.empty() )
 		// File not opened
 		return FALSE;
 
@@ -275,10 +288,13 @@ BOOL CFragmentedFile::Flush()
 
 void CFragmentedFile::Close()
 {
+	if ( m_oFile.empty() )
+		return;
+
 	CQuickLock oLock( m_pSection );
 
+	// Close own handles
 	std::for_each( m_oFile.begin(), m_oFile.end(), Releaser() );
-	m_oFile.clear();
 
 	m_nUnflushed = 0;
 }
@@ -288,16 +304,15 @@ void CFragmentedFile::Close()
 
 BOOL CFragmentedFile::MakeComplete()
 {
-	ASSERT_VALID( this );
-	ASSERT( m_oFile.back().m_nOffset + m_oFile.back().m_nLength == m_oFList.limit() );
-
 	CQuickLock oLock( m_pSection );
+
+	ASSERT_VALID( this );
 
 	if ( m_oFList.empty() )
 		// No incomplete parts left
 		return TRUE;
 
-	if ( ! IsOpen() )
+	if ( m_oFile.empty() )
 		// File is not opened
 		return FALSE;
 
@@ -359,46 +374,8 @@ void CFragmentedFile::Serialize(CArchive& ar, int nVersion)
 			}
 
 			ASSERT_VALID( this );
-			ASSERT( m_oFile.empty() || ( ( m_oFile.back().m_nOffset +
-				m_oFile.back().m_nLength ) == m_oFList.limit() ) );
 		}
 	}
-}
-
-//////////////////////////////////////////////////////////////////////
-// CFragmentedFile simple intersections
-
-BOOL CFragmentedFile::IsPositionRemaining(QWORD nOffset) const
-{
-	CQuickLock oLock( m_pSection );
-
-	return m_oFList.has_position( nOffset );
-}
-
-BOOL CFragmentedFile::DoesRangeOverlap(QWORD nOffset, QWORD nLength) const
-{
-	CQuickLock oLock( m_pSection );
-
-	return m_oFList.overlaps( Fragments::Fragment( nOffset, nOffset + nLength ) );
-}
-
-QWORD CFragmentedFile::GetRangeOverlap(QWORD nOffset, QWORD nLength) const
-{
-	CQuickLock oLock( m_pSection );
-
-	return m_oFList.overlapping_sum( Fragments::Fragment( nOffset, nOffset + nLength ) );
-}
-
-QWORD CFragmentedFile::GetCompleted(QWORD nOffset, QWORD nLength) const
-{
-	CQuickLock oLock( m_pSection );
-
-	// TODO: Optimize this
-	Fragments::List oList( m_oFList );	
-	oList.insert( Fragments::Fragment( 0, nOffset ) );
-	oList.insert( Fragments::Fragment( nOffset + nLength, m_oFList.limit() ) );
-
-	return oList.missing();
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -407,17 +384,12 @@ QWORD CFragmentedFile::GetCompleted(QWORD nOffset, QWORD nLength) const
 BOOL CFragmentedFile::Write(QWORD nOffset, LPCVOID pData, QWORD nLength, QWORD* pnWritten)
 {
 	ASSERT_VALID( this );
-	ASSERT( m_oFile.back().m_nOffset + m_oFile.back().m_nLength == m_oFList.limit() );
 
 	if ( nLength == 0 )
 		// No data to write
 		return TRUE;
 
 	CQuickLock oLock( m_pSection );
-
-	if ( ! IsOpen() )
-		// File is not opened
-		return FALSE;
 
 	Fragments::Fragment oMatch( nOffset, nOffset + nLength );
 	Fragments::List::const_iterator_pair pMatches = m_oFList.equal_range( oMatch );
@@ -456,17 +428,12 @@ BOOL CFragmentedFile::Write(QWORD nOffset, LPCVOID pData, QWORD nLength, QWORD* 
 BOOL CFragmentedFile::Read(QWORD nOffset, LPVOID pData, QWORD nLength, QWORD* pnRead)
 {
 	ASSERT_VALID( this );
-	ASSERT( m_oFile.back().m_nOffset + m_oFile.back().m_nLength == m_oFList.limit() );
 
 	if ( nLength == 0 )
 		// No data to read
 		return TRUE;
 
 	CQuickLock oLock( m_pSection );
-
-	if ( ! IsOpen() )
-		// File is not opened
-		return FALSE;
 
 	if ( DoesRangeOverlap( nOffset, nLength ) )
 		// No data available yet
@@ -477,7 +444,6 @@ BOOL CFragmentedFile::Read(QWORD nOffset, LPVOID pData, QWORD nLength, QWORD* pn
 
 BOOL CFragmentedFile::VirtualRead(QWORD nOffset, char* pBuffer, QWORD nBuffer, QWORD* pnRead)
 {
-	ASSERT( nOffset < m_oFile.back().m_nOffset + m_oFile.back().m_nLength );
 	ASSERT( nBuffer != 0 && nBuffer != SIZE_UNKNOWN );
 	ASSERT( pBuffer != NULL && AfxIsValidAddress( pBuffer, nBuffer ) );
 
@@ -499,7 +465,8 @@ BOOL CFragmentedFile::VirtualRead(QWORD nOffset, char* pBuffer, QWORD nBuffer, Q
 		QWORD nPartLength = min( nBuffer, (*i).m_nLength - nPartOffset );
 
 		QWORD nRead = 0;
-		if ( ! (*i).m_pFile->Read( nPartOffset, pBuffer, nPartLength, &nRead ) )
+		if ( ! (*i).m_pFile ||
+			 ! (*i).m_pFile->Read( nPartOffset, pBuffer, nPartLength, &nRead ) )
 			return FALSE;
 
 		pBuffer += nRead;
@@ -521,7 +488,6 @@ BOOL CFragmentedFile::VirtualRead(QWORD nOffset, char* pBuffer, QWORD nBuffer, Q
 
 BOOL CFragmentedFile::VirtualWrite(QWORD nOffset, const char* pBuffer, QWORD nBuffer, QWORD* pnWritten)
 {
-	ASSERT( nOffset < m_oFile.back().m_nOffset + m_oFile.back().m_nLength );
 	ASSERT( nBuffer != 0 && nBuffer != SIZE_UNKNOWN );
 	ASSERT( pBuffer != NULL && AfxIsValidAddress( pBuffer, nBuffer ) );
 
@@ -543,7 +509,8 @@ BOOL CFragmentedFile::VirtualWrite(QWORD nOffset, const char* pBuffer, QWORD nBu
 		QWORD nPartLength = min( nBuffer, (*i).m_nLength - nPartOffset );
 
 		QWORD nWritten = 0;
-		if ( !  (*i).m_pFile->Write( nPartOffset, pBuffer, nPartLength, &nWritten ) )
+		if ( ! (*i).m_pFile ||
+			 ! (*i).m_pFile->Write( nPartOffset, pBuffer, nPartLength, &nWritten ) )
 			return FALSE;
 
 		pBuffer += nWritten;
@@ -572,4 +539,12 @@ QWORD CFragmentedFile::InvalidateRange(QWORD nOffset, QWORD nLength)
 	CQuickLock oLock( m_pSection );
 
 	return m_oFList.insert( Fragments::Fragment( nOffset, nOffset + nLength ) );
+}
+
+BOOL CFragmentedFile::EnsureWrite()
+{
+	CQuickLock oLock( m_pSection );
+
+	return ( std::count_if( m_oFile.begin(), m_oFile.end(),
+		EnsureWriter() ) == (int)m_oFile.size() );
 }
