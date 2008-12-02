@@ -104,7 +104,7 @@ void CLibraryBuilder::Remove(CLibraryFile* pFile)
 	Remove( pFile->m_nIndex );
 
 	// Remove currently hashing file
-	if ( ! GetCurrent().CompareNoCase( pFile->GetPath() ) )
+	if ( ! GetCurrent().CompareNoCase( pFile->GetPath() ) && ! m_bSkip )
 	{
 		m_bSkip = true;
 
@@ -128,7 +128,7 @@ void CLibraryBuilder::Remove(LPCTSTR szPath)
 		Remove( nIndex );
 
 	// Remove currently hashing file
-	if ( ! GetCurrent().CompareNoCase( szPath ) )
+	if ( ! GetCurrent().CompareNoCase( szPath ) && ! m_bSkip )
 	{
 		m_bSkip = true;
 
@@ -385,7 +385,6 @@ void CLibraryBuilder::OnRun()
 				{
 					if ( ++nAttempts > 5 || m_bSkip )
 					{
-						m_bSkip = false;
 						Remove( nIndex );
 						nAttempts = 0;
 					}
@@ -405,7 +404,6 @@ void CLibraryBuilder::OnRun()
 				{
 					if ( ++nAttempts > 5 || m_bSkip )
 					{
-						m_bSkip = false;
 						Remove( nIndex );
 						nAttempts = 0;
 					}
@@ -418,6 +416,7 @@ void CLibraryBuilder::OnRun()
 				CQuickLock pLock( m_pSection );
 				m_sPath.Empty();
 				m_nProgress = 0;
+				m_bSkip = false;
 			}
 		}
 	}
@@ -547,6 +546,7 @@ bool CLibraryBuilder::HashFile(LPCTSTR szPath, HANDLE hFile, DWORD nIndex)
 		if ( !pFile )
 			return false;
 
+		m_bSkip = true;
 		Library.RemoveFile( pFile );
 
 		pFile->m_bNewFile		= TRUE;
