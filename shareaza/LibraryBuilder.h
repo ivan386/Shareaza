@@ -90,6 +90,7 @@ private:
 	LARGE_INTEGER				m_nFreq;			// (Hz)
 	QWORD						m_nReaded;			// (bytes)
 	__int64						m_nElapsed;			// (mks)
+	volatile bool				m_bSkip;			// Request to skip hashing file
 
 	// Get next file from list doing all possible tests
 	// Returns 0 if no file available, sets m_bThread = false if no files left.

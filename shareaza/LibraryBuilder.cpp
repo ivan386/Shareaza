@@ -49,7 +49,8 @@ CLibraryBuilder::CLibraryBuilder() :
 	m_bPriority( false ),
 	m_nReaded( 0 ),
 	m_nElapsed( 0 ),
-	m_nProgress( 0 )
+	m_nProgress( 0 ),
+	m_bSkip( false )
 {
 	QueryPerformanceFrequency( &m_nFreq );
 	QueryPerformanceCounter( &m_nLastCall );
@@ -99,7 +100,17 @@ void CLibraryBuilder::Remove(CLibraryFile* pFile)
 {
 	ASSERT( pFile );
 
+	// Remove file from queue
 	Remove( pFile->m_nIndex );
+
+	// Remove currently hashing file
+	if ( ! GetCurrent().CompareNoCase( pFile->GetPath() ) )
+	{
+		m_bSkip = true;
+
+		while ( m_bSkip )
+			Sleep( 100 );
+	}
 }
 
 void CLibraryBuilder::Remove(LPCTSTR szPath)
@@ -114,8 +125,15 @@ void CLibraryBuilder::Remove(LPCTSTR szPath)
 			nIndex = pFile->m_nIndex;
 	}
 	if ( nIndex )
-	{
 		Remove( nIndex );
+
+	// Remove currently hashing file
+	if ( ! GetCurrent().CompareNoCase( szPath ) )
+	{
+		m_bSkip = true;
+
+		while ( m_bSkip )
+			Sleep( 100 );
 	}
 }
 
@@ -365,8 +383,9 @@ void CLibraryBuilder::OnRun()
 				}
 				else
 				{
-					if ( ++nAttempts > 5 )
+					if ( ++nAttempts > 5 || m_bSkip )
 					{
+						m_bSkip = false;
 						Remove( nIndex );
 						nAttempts = 0;
 					}
@@ -384,8 +403,9 @@ void CLibraryBuilder::OnRun()
 					Remove( nIndex );
 				else
 				{
-					if ( ++nAttempts > 5 )
+					if ( ++nAttempts > 5 || m_bSkip )
 					{
+						m_bSkip = false;
 						Remove( nIndex );
 						nAttempts = 0;
 					}
@@ -457,7 +477,7 @@ bool CLibraryBuilder::HashFile(LPCTSTR szPath, HANDLE hFile, DWORD nIndex)
 			m_nProgress = static_cast< DWORD >( nResult );
 		}
 
-		if ( ! IsThreadEnabled() )
+		if ( ! IsThreadEnabled() || m_bSkip )
 			break;
 
 		// Exit loop on read error
