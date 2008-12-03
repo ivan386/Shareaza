@@ -150,10 +150,9 @@ public:
 	// Check if specified file handled
 	BOOL	FindByPath(const CString& sPath) const;
 
+	// Is file has size?
 	inline BOOL IsValid() const
 	{
-		CQuickLock oLock( m_pSection );
-
 		return m_oFList.limit() > 0;
 	}
 	
@@ -171,7 +170,7 @@ public:
 	{
 		CQuickLock oLock( m_pSection );
 
-		return ( m_oFList.limit() == SIZE_UNKNOWN || m_oFList.empty() ) ?
+		return ( m_oFList.limit() == SIZE_UNKNOWN && m_oFList.length_sum() ) ?
 			SIZE_UNKNOWN : m_oFList.length_sum();
 	}
 
