@@ -820,6 +820,7 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 		{
 			CBTFile* pBTFile = new CBTFile( this );
 			m_pFiles.AddTail( pBTFile );
+			pBTFile->m_sName = m_sName;
 			pBTFile->m_sPath = m_sName;
 			pBTFile->m_nSize = m_nTotalSize;
 			pBTFile->m_oSHA1 = m_oSHA1;
