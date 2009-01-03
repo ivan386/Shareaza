@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 
 <!-- Shareaza Default Greek Skin File -->
-<!-- Translation based on default-en.xml SVN rev.7300 -->
+<!-- Translation based on default-en.xml SVN rev.7455 -->
 
 <!-- This skin basically represents the current Shareaza defaults. You can use this file as -->
 <!-- a basis for creating new skins, however in a new skin be sure to ONLY include the sections -->
@@ -14,15 +14,15 @@
 <!-- Manifest -->
 <manifest	name="Ελληνικά"
 		author="erimitis"
-		updatedBy="erimitis, Maria Tatsiou (2.4)"
+		updatedBy="erimitis"
 		description="Shareaza Default Greek Skin File"
 		link="http://shareaza.sourceforge.net/"
-		email="erimitis(at)users.sourceforge.net"
-		version="2.4.0.0"
+		email="erimitis(at)users(dot)sourceforge(dot)net"
+		version="2.4.0.1"
 		type="Language"
 		language="gr"
-		prompt="Με κλικ εδώ αλλάζετε τη γλώσσα σε Ελληνικά."
-		
+		prompt="Κλικ εδώ για αλλαγή της γλώσσας σε Ελληνικά."
+		dir="ltr"
 />
 
 <!-- Toolbar Definitions -->
@@ -46,7 +46,7 @@
 		<button id="ID_TAB_SEARCH" text="Αναζήτηση"/>
 		<button id="ID_TAB_TRANSFERS" text="Μεταφορές"/>
 		<button id="ID_TAB_NETWORK" text="Δίκτυο"/>
-		<button id="ID_TAB_IRC" text="Συνομιλία με Χρήστη"/>
+		<button id="ID_TAB_IRC" text="Συνομιλία"/>
 	</toolbar>
 	<toolbar name="CMainWnd.Windowed">
 		<button id="ID_NETWORK_CONNECT" text="Σύνδεση"/>
@@ -173,7 +173,7 @@
 		<button id="ID_DOWNLOADS_CLEAR_COMPLETE" text="Απόσυρση Αρχείου"/>
 		<separator/>
 		<button id="ID_DOWNLOADS_MONITOR" text="Προβολή Εποπτείας"/>
-		<button id="ID_DOWNLOADS_EDIT" text="Πληροφορίες"/>
+		<button id="ID_DOWNLOADS_EDIT" text="Ιδιότητες"/>
 		<rightAlign/>
 		<button id="ID_TOOLS_DOWNLOAD" text="Νέα Λήψη ή Torrent..."/>
 		<button id="ID_DOWNLOADS_CLEAR_COMPLETED" text="Απόσυρση Ολοκληρωμένων"/>
@@ -247,7 +247,7 @@
 		<button id="ID_LIBRARY_LAUNCH" text="Άνοιγμα"/>
 		<button id="ID_LIBRARY_ENQUEUE" text="Προσθήκη στη Λίστα Αναπαραγωγής"/>
 		<separator/>
-		<button id="ID_WEBSERVICES_LIST" text="Υπηρεσίες Web"/>
+		<button id="ID_WEBSERVICES_LIST" text="Υπηρεσίες Ιστού"/>
 		<rightAlign/>
 		<separator/>
 		<control id="IDC_SEARCH_BOX" width="120"/>
@@ -259,7 +259,7 @@
 		<separator/>
 		<button id="ID_LIBRARY_PROPERTIES" text="Ιδιότητες"/>
 		<separator/>
-		<button id="ID_WEBSERVICES_LIST" text="Υπηρεσίες Web"/>
+		<button id="ID_WEBSERVICES_LIST" text="Υπηρεσίες Ιστού"/>
 		<separator/>
 		<button id="ID_LIBRARY_MOVE" text="Μετακίνηση"/>
 		<button id="ID_LIBRARY_COPY" text="Αντιγραφή"/>
@@ -274,7 +274,7 @@
 		<button id="ID_LIBRARY_ENQUEUE" text="Προσθήκη στη Λίστα Αναπαραγωγής"/>
 		<button id="ID_LIBRARY_FOLDER_ENQUEUE" text="Αναπαραγωγή Album"/>
 		<separator/>
-		<button id="ID_WEBSERVICES_LIST" text="Λίστα Υπηρεσιών Web"/>
+		<button id="ID_WEBSERVICES_LIST" text="Υπηρεσίες Ιστού"/>
 		<rightAlign/>
 		<separator/>
 		<control id="IDC_SEARCH_BOX" width="120"/>
@@ -287,7 +287,7 @@
 		<separator/>
 		<button id="ID_LIBRARY_PROPERTIES" text="Ιδιότητες"/>
 		<separator/>
-		<button id="ID_WEBSERVICES_LIST" text="Υπηρεσίες Web"/>
+		<button id="ID_WEBSERVICES_LIST" text="Υπηρεσίες Ιστού"/>
 		<rightAlign/>
 		<separator/>
 		<control id="IDC_SEARCH_BOX" width="120"/>
@@ -296,7 +296,7 @@
 	<toolbar name="CLibraryCollectionView.Virtual">
 		<button id="ID_LIBRARY_FOLDER_ENQUEUE" text="Αναπαραγωγή Album"/>
 		<separator/>
-		<button id="ID_LIBRARY_FOLDER_DOWNLOAD" text="Λήψην Όλων"/>
+		<button id="ID_LIBRARY_FOLDER_DOWNLOAD" text="Λήψη Όλων"/>
 		<rightAlign/>
 		<separator/>
 		<control id="IDC_SEARCH_BOX" width="120"/>
@@ -310,7 +310,7 @@
 		<separator/>
 		<label text="Θέση:" tip="Επιλογή σημείου αναπαραγωγής"/>
 		<control id="IDC_MEDIA_POSITION" width="190" height="22"/>
-		<label text="Ένταση:" tip="Αυξομείωση της έντασης του ήχου"/>
+		<label text="Ένταση:" tip="Αυξομείωση έντασης ήχου"/>
 		<control id="IDC_MEDIA_VOLUME" width="50" height="22"/>
 		<separator/>
 		<button id="ID_MEDIA_OPEN" text="Άνοιγμα"/>
@@ -327,25 +327,25 @@
 		<separator/>
 		<label text="Θέση:" tip="Επιλογή σημείου αναπαραγωγής"/>
 		<control id="IDC_MEDIA_POSITION" width="190" height="22"/>
-		<label text="Ταχύτητα:" tip="Αυξομοίωση της ταχύτητας αναπαραγωγής"/>
+		<label text="Ταχύτητα:" tip="Αυξομείωση της ταχύτητας αναπαραγωγής"/>
 		<control id="IDC_MEDIA_SPEED" width="40" height="22"/>
-		<label text="Ένταση:" tip="Αυξομοίωση της έντασης του ήχου"/>
+		<label text="Ένταση:" tip="Αυξομείωση της έντασης του ήχου"/>
 		<control id="IDC_MEDIA_VOLUME" width="50" height="22"/>
 		<separator/>
 		<button id="ID_MEDIA_OPEN" text="Άνοιγμα"/>
 		<separator/>
-		<button id="ID_MEDIA_FULLSCREEN"  text="Πλήρης Οθόνη"/>
-		<button id="ID_MEDIA_ZOOM"  text="Zoom"/>
-		<button id="ID_MEDIA_VIS"  text="Έναντι"/>
+		<button id="ID_MEDIA_FULLSCREEN" text="Πλήρης Οθόνη"/>
+		<button id="ID_MEDIA_ZOOM" text="Μεγέθυνση"/>
+		<button id="ID_MEDIA_VIS" text="Απεικόνιση"/>
 		<rightAlign/>
-		<button id="ID_MEDIA_PREVIOUS"  text="Προηγούμενο"/>
-		<button id="ID_MEDIA_NEXT"  text="Επόμενο"/>
+		<button id="ID_MEDIA_PREVIOUS" text="Προηγούμενο"/>
+		<button id="ID_MEDIA_NEXT" text="Επόμενο"/>
 		<separator/>
 		<button id="ID_MEDIA_PLAYLIST" text="Λίστα Αναπαραγωγής"/>
 	</toolbar>
 	<toolbar name="CMediaList">
-		<button id="ID_MEDIA_ADD"  text="Πρόσθεση Πολυμέσου"/>
-		<button id="ID_MEDIA_REMOVE"  text="Διαγραφή Πολυμέσου"/>
+		<button id="ID_MEDIA_ADD" text="Προσθήκη"/>
+		<button id="ID_MEDIA_REMOVE" text="Αφαίρεση"/>
 		<rightAlign/>
 		<button id="ID_MEDIA_CLEAR" text="Καθαρισμός"/>
 		<button id="ID_MEDIA_SAVE" text="Αποθήκευση"/>
@@ -355,7 +355,7 @@
 		<button id="ID_IRC_CONNECT" text="Σύνδεση" tip="Σύνδεση στο IRC"/>
 		<button id="ID_IRC_DISCONNECT" text="Αποσύνδεση" tip="Αποσύνδεση από το IRC"/>
 		<rightAlign/>
-		<button id="ID_IRC_SETTINGS" text="Ρυθμίσεις" tip="Κάντε Ρυθμίσεις στο IRC"/>
+		<button id="ID_IRC_SETTINGS" text="Ρυθμίσεις" tip="Ρυθμίσεις του IRC"/>
 	</toolbar>
 	<!-- NEIGHBOURS WINDOW -->
 	<toolbar name="CNeighboursWnd.Basic">
@@ -377,8 +377,8 @@
 		<button id="ID_SECURITY_BAN" text="Αποκλεισμός Host"/>
 		<rightAlign/>
 		<button id="ID_NETWORK_G2" text="Gnutella2"/>
-		<button id="ID_NETWORK_G1" text="Gnutella"/>
 		<button id="ID_NETWORK_ED2K" text="ED2K"/>
+		<button id="ID_NETWORK_G1" text="Gnutella"/>
 		<separator/>
 		<button id="ID_NEIGHBOURS_SETTINGS" text="Ρυθμίσεις"/>
 	</toolbar>
@@ -446,16 +446,16 @@
 		<button id="ID_SHAREMONKEY_PREVIOUS" text="Προηγούμενο"/>
 		<button id="ID_SHAREMONKEY_NEXT" text="Επόμενο"/>
 		<separator/>
-		<button id="ID_SHAREMONKEY_PRICES" text="Λήψη τιμών"/>
+		<button id="ID_SHAREMONKEY_PRICES" text="Λήψη Τιμών"/>
 		<button id="ID_SHAREMONKEY_COMPARE" text="Σύγκριση"/>
 		<button id="ID_SHAREMONKEY_BUY" text="Αγορά"/>
 	</toolbar>
 	<toolbar name="WebServices.MusicBrainz">
-		<button id="ID_MUSICBRAINZ_MATCHES" text="Προβολή ταιριαστών/παρόμοιων Album"/>
-		<button id="ID_MUSICBRAINZ_ALBUMS" text="Προβολή όλων των Album"/>
+		<button id="ID_MUSICBRAINZ_MATCHES" text="Προβολή Όμοιων Album"/>
+		<button id="ID_MUSICBRAINZ_ALBUMS" text="Προβολή Όλων των Album"/>
 		<separator/>
 	</toolbar>
-	<!-- IMAGE VIEWER WINDOW -->
+	<!-- IMAGE VIEWER WINDOW - DELETE? -->
 	<toolbar name="ImageViewer_Toolbar">
 		<button id="ImageViewer_ActualSize" text="Πραγματικό Μέγεθος"/>
 		<button id="ImageViewer_BestFit" text="Προσαρμογή"/>
@@ -487,72 +487,72 @@
 			<separator/>
 			<menu text="Επιλογή _Δικτύων">
 				<item id="ID_NETWORK_G2" text="Σύνδεση στο Gnutella_2"/>
-				<item id="ID_NETWORK_G1" text="Σύνδεση στο _Gnutella"/>
 				<item id="ID_NETWORK_ED2K" text="Σύνδεση στο _ED2K"/>
+				<item id="ID_NETWORK_G1" text="Σύνδεση στο _Gnutella"/>
 			</menu>
 			<separator/>
 			<item id="ID_NETWORK_AUTO_CLOSE" text="Έξοδος _Μετά τις Μεταφορές"/>
-			<item id="ID_NETWORK_EXIT" text="Έξοδος"/>
+			<item id="ID_NETWORK_EXIT" text="Έ_ξοδος"/>
 		</menu>
 		<menu text="_Προβολή">
-			<item id="ID_TAB_HOME" text="Αρχική"/>
-			<item id="ID_TAB_LIBRARY" text="Βιβλιοθήκη"/>
-			<item id="ID_TAB_MEDIA" text="Πολυμέσα"/>
-			<item id="ID_TAB_SEARCH" text="Αναζήτηση"/>
-			<item id="ID_TAB_TRANSFERS" text="Μεταφορές"/>
-			<item id="ID_WINDOW_REMOTE" text="Απομακρυσμένη"/>
-			<item id="ID_TAB_IRC" text="Συνομιλία με Χρήστη"/>
+			<item id="ID_TAB_HOME" text="_Αρχική"/>
+			<item id="ID_TAB_LIBRARY" text="_Βιβλιοθήκη"/>
+			<item id="ID_TAB_MEDIA" text="_Πολυμέσα"/>
+			<item id="ID_TAB_SEARCH" text="Ανα_ζήτηση"/>
+			<item id="ID_TAB_TRANSFERS" text="Μετα_φορές"/>
+			<item id="ID_WINDOW_REMOTE" text="Απο_μακρυσμένη"/>
+			<item id="ID_TAB_IRC" text="_Συνομιλία"/>
 			<separator/>
 			<menu text="Προ_χωρημένα">
-				<item id="ID_VIEW_NEIGHBOURS" text="Γείτονες"/>
-				<item id="ID_VIEW_UPLOADS" text="Αποστολές"/>
+				<item id="ID_VIEW_NEIGHBOURS" text="_Γείτονες"/>
+				<item id="ID_VIEW_UPLOADS" text="_Αποστολές"/>
 				<separator/>
-				<item id="ID_VIEW_SECURITY" text="Ασφάλεια"/>
-				<item id="ID_VIEW_HOSTS" text="Host Cache"/>
-				<item id="ID_VIEW_DISCOVERY" text="Ανακάλυψη"/>
+				<item id="ID_VIEW_SECURITY" text="Ασ_φάλεια"/>
+				<item id="ID_VIEW_HOSTS" text="H_ost Cache"/>
+				<item id="ID_VIEW_DISCOVERY" text="Ανα_κάλυψη"/>
 			</menu>
 			<separator/>
-			<item id="ID_VIEW_BASIC" text="Απλοποιημένη Μορφή"/>
-			<item id="ID_VIEW_TABBED" text="Ενισχυμένη Μορφή"/>
+			<item id="ID_VIEW_BASIC" text="_Απλοποιημένη Μορφή"/>
+			<item id="ID_VIEW_TABBED" text="_Ενισχυμένη Μορφή"/>
 		</menu>
 		<menu text="_Εργαλεία">
-			<item id="ID_LIBRARY_FOLDERS" text="Κοινοποιημένοι Φάκελοι/Φάκελοι Βιβλιοθήκης..."/>
-			<item id="ID_TOOLS_DOWNLOAD" text="Νέα Λήψη ή Torrent..."/>
+			<item id="ID_LIBRARY_FOLDERS" text="Κοινοποιημένοι _Φάκελοι..."/>
+			<item id="ID_TOOLS_DOWNLOAD" text="_Νέα Λήψη ή Torrent..."/>
 			<separator/>
-			<item id="ID_TOOLS_SKIN" text="Επιλογή Φλοιού..."/>
-			<item id="ID_TOOLS_LANGUAGE" text="Επιλογή Γλώσσας..."/>
+			<item id="ID_TOOLS_SKIN" text="Επιλογή _Φλοιού..."/>
+			<item id="ID_TOOLS_LANGUAGE" text="Επιλογή _Γλώσσας..."/>
 			<separator/>
-			<item id="ID_TOOLS_PROFILE" text="Επεξεργασία Προφίλ..."/>
-			<item id="ID_TOOLS_WIZARD" text="Οδηγός Σύντομης Εκκίνησης..."/>
+			<item id="ID_TOOLS_PROFILE" text="Επεξεργασία _Προφίλ..."/>
+			<item id="ID_TOOLS_WIZARD" text="Οδηγός Σύντομης _Εκκίνησης..."/>
 			<separator/>
 			<item id="ID_TOOLS_SETTINGS" text="_Ρυθμίσεις Shareaza..."/>
 		</menu>
 		<menu text="_Βοήθεια">
-			<item id="ID_HELP_FAQ" text="Συχνές Ερωτήσεις"/>
-			<item id="ID_HELP_TEST" text="Δοκιμή Σύνδεσης"/>
+			<item id="ID_HELP_FAQ" text="Συχνές _Ερωτήσεις"/>
+			<item id="ID_HELP_TEST" text="_Δοκιμή Σύνδεσης"/>
 			<separator/>
-			<menu text="Οδηγίες">
-				<item id="ID_HELP_GUIDE" text="Οδηγός Χρήσης"/>
-				<item id="ID_HELP_ROUTER" text="Βοήθεια για τον Router"/>
-				<item id="ID_HELP_SECURITY" text="Βοήθεια για την Ασφάλεια"/>
-				<item id="ID_HELP_CODEC" text="Βοήθεια για Codec"/>
+			<menu text="_Οδηγίες">
+				<item id="ID_HELP_GUIDE" text="Οδηγός _Χρήσης"/>
+				<item id="ID_HELP_ROUTER" text="Βοήθεια για τον _Router"/>
+				<item id="ID_HELP_SECURITY" text="Βοήθεια για την Ασ_φάλεια"/>
+				<item id="ID_HELP_CODEC" text="Βοήθεια για _Codec"/>
 			</menu>
 			<separator/>
-			<menu text="Ιστοσελίδες">
-				<item id="ID_HELP_HOMEPAGE" text="Ιστοσελίδα Shareaza"/>
+			<menu text="_Ιστοσελίδες">
+				<item id="ID_HELP_HOMEPAGE" text="_Ιστοσελίδα Shareaza"/>
 				<separator/>
-				<item id="ID_HELP_FORUMS" text="Shareaza Forums"/>
-				<item id="ID_HELP_WEB_6" text="Shareaza S_kin Site"/>
+				<item id="ID_HELP_FORUMS" text="Shareaza _Forums"/>
+				<item id="ID_HELP_WEB_6" text="Φ_λοιοί Shareaza"/>
 				<item id="ID_HELP_FAKESHAREAZA" text="FakeShareaza_.com"/> <!-- 
 				<item id="ID_HELP_UPDATE" text="Τελευταία νέα"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
 				<item id="ID_HELP_WEB_2" text="P2PForums.com"/>	-->
 			</menu>
 			<separator/>
-			<item id="ID_HELP_VERSION_CHECK" text="Ελεγχος για νέα έκδοση"/>
-			<item id="ID_HELP_DONATE" text="Δωρεά στο Shareaza"/>
+			<item id="ID_HELP_VERSION_CHECK" text="_Έλεγχος για νέα έκδοση"/>
+			<item id="ID_HELP_DONATE" text="_Δωρεά στο Shareaza Project"/>
 			<separator/>
-			<item id="ID_HELP_ABOUT" text="Σχετικά με το Shareaza..."/>
+			<item id="ID_HELP_ABOUT" text="_Σχετικά με το Shareaza..."/>
 		</menu>
 	</menu>
 	<menu name="CMainWnd.Tabbed" type="bar">
@@ -569,8 +569,8 @@
 			<item id="ID_NETWORK_CONNECT_TO" text="Σύνδεση _ με..." shortcut="Ctrl+T"/>
 			<item id="ID_NETWORK_BROWSE_TO" text="_Περιήγηση Host..."/>
 			<separator/>
-			<item id="ID_NETWORK_AUTO_CLOSE" text="Έξοδος Μετά τις Μεταφορές"/>
-			<item id="ID_NETWORK_EXIT" text="Έξοδος"/>
+			<item id="ID_NETWORK_AUTO_CLOSE" text="Έξοδος _Μετά τις Μεταφορές"/>
+			<item id="ID_NETWORK_EXIT" text="Έ_ξοδος"/>
 		</menu>
 		<menu text="_Προβολή">
 			<item id="ID_TAB_HOME" text="_Αρχική"/>
@@ -579,12 +579,12 @@
 			<item id="ID_TAB_SEARCH" text="Ανα_ζήτηση"/>
 			<item id="ID_TAB_TRANSFERS" text="_Μεταφορές"/>
 			<item id="ID_TAB_NETWORK" text="_Δίκτυα"/>
-			<item id="ID_TAB_IRC" text="Συνομιλία με Χρήστη"/>
+			<item id="ID_TAB_IRC" text="_Συνομιλία"/>
 			<separator/>
-			<item id="ID_VIEW_SECURITY" text="Ασφάλεια"/>
-			<item id="ID_VIEW_HOSTS" text="Host Cache"/>
+			<item id="ID_VIEW_SECURITY" text="Ασ_φάλεια"/>
+			<item id="ID_VIEW_HOSTS" text="H_ost Cache"/>
 			<separator/>
-			<menu text="Προχωρημένα">
+			<menu text="Προ_χωρημένα">
 				<item id="ID_VIEW_SYSTEM" text="_Σύστημα" shortcut="F11"/>
 				<item id="ID_VIEW_NEIGHBOURS" text="_Γείτονες" shortcut="Ctrl+F11"/>
 				<item id="ID_VIEW_DOWNLOADS" text="_Λήψεις" shortcut="F3"/>
@@ -606,31 +606,125 @@
 			<item id="ID_VIEW_TABBED" text="Προβολή _Καρτελών"/>
 			<item id="ID_VIEW_WINDOWED" text="Προβολή _Παραθύρων"/>
 		</menu>
-		<menu text="Εργαλεία">
-			<item id="ID_LIBRARY_FOLDERS" text="Κοινοποιημένοι Φάκελοι..."/>
-			<item id="ID_TOOLS_DOWNLOAD" text="Νέα Λήψη ή Torrent..."/>
-			<item id="IDC_IMPORT_DOWNLOADS" text="Εισαγωγή ημιτελών αρχείων του eMule..."/>
-			<item id="ID_OPEN_DOWNLOADS_FOLDER" text="Εξερεύνηση Ληφθέντων"/>
+		<menu text="_Εργαλεία">
+			<item id="ID_LIBRARY_FOLDERS" text="Κοινοποιημένοι _Φάκελοι..."/>
+			<item id="ID_TOOLS_DOWNLOAD" text="_Νέα Λήψη ή Torrent..."/>
+			<item id="IDC_IMPORT_DOWNLOADS" text="Εισαγωγή _ημιτελών αρχείων του eMule..."/>
+			<item id="ID_OPEN_DOWNLOADS_FOLDER" text="Εξερεύνηση _Ληφθέντων"/>
 			<separator/>
-			<item id="ID_TOOLS_SKIN" text="Επιλογή Φλοιού..."/>
-			<item id="ID_TOOLS_LANGUAGE" text="Επιλογή Γλώσσας..."/>
+			<item id="ID_TOOLS_SKIN" text="Επιλογή _Φλοιού..."/>
+			<item id="ID_TOOLS_LANGUAGE" text="Επιλογή _Γλώσσας..."/>
 			<separator/>
-			<item id="ID_TOOLS_PROFILE" text="Επεξεργασία Προφίλ..."/>
-			<item id="ID_TOOLS_WIZARD" text="Οδηγός Σύντομης Εκκίνησης..."/>
+			<item id="ID_TOOLS_PROFILE" text="Επεξεργασία _Προφίλ..."/>
+			<item id="ID_TOOLS_WIZARD" text="Οδηγός Σύντομης _Εκκίνησης..."/>
 			<separator/>
-			<item id="ID_TOOLS_SETTINGS" text="Ρυθμίσεις Shareaza..."/>
+			<item id="ID_TOOLS_SETTINGS" text="_Ρυθμίσεις Shareaza..."/>
 		</menu>
 		<menu text="_Window">
-			<item id="ID_WINDOW_NAVBAR" text="Μεγάλη Μπάρα Πλοήγησης"/>
-			<item id="ID_WINDOW_TOOLBAR" text="Μικρή Μπάρα Πλοήγησης"/>
+			<item id="ID_WINDOW_NAVBAR" text="Μεγάλη Μπάρα _Πλοήγησης"/>
+			<item id="ID_WINDOW_TOOLBAR" text="Μικρή _Μπάρα Πλοήγησης"/>
 			<separator/>
-			<item id="ID_WINDOW_TABBAR" text="Προβολή Μπάρας Καρτελών"/>
-			<item id="ID_WINDOW_MONITOR" text="Προβολή Εποπτείας"/>
-			<item id="ID_WINDOW_REMOTE" text="Προβολή Χειριστηρίου"/>
+			<item id="ID_WINDOW_TABBAR" text="Προβολή Μπάρας _Καρτελών"/>
+			<item id="ID_WINDOW_MONITOR" text="Προβολή _Εποπτείας"/>
+			<item id="ID_WINDOW_REMOTE" text="Προβολή _Χειριστηρίου"/>
 		</menu>
 		<menu text="_Βοήθεια">
-			<item id="ID_HELP_FAQ" text="Συχνές Ερωτήσεις"/>
-			<item id="ID_HELP_TEST" text="Δοκιμή Σύνδεσης"/>
+			<item id="ID_HELP_FAQ" text="Συχνές _Ερωτήσεις"/>
+			<item id="ID_HELP_TEST" text="_Δοκιμή Σύνδεσης"/>
+			<separator/>
+			<menu text="_Οδηγίες">
+				<item id="ID_HELP_GUIDE" text="Οδηγός _Χρήσης"/>
+				<item id="ID_HELP_ROUTER" text="Βοήθεια για τον _Router"/>
+				<item id="ID_HELP_SECURITY" text="Βοήθεια για την Ασ_φάλεια"/>
+				<item id="ID_HELP_CODEC" text="Βοήθεια για _Codec"/>
+			</menu>
+			<separator/>
+			<menu text="_Ιστοσελίδες">
+				<item id="ID_HELP_HOMEPAGE" text="_Ιστοσελίδα Shareaza"/>
+				<separator/>
+				<item id="ID_HELP_FORUMS" text="Shareaza _Forums"/>
+				<item id="ID_HELP_WEB_6" text="Φ_λοιοί Shareaza"/>
+				<item id="ID_HELP_FAKESHAREAZA" text="FakeShareaza_.com"/> <!-- 
+				<item id="ID_HELP_UPDATE" text="Τελευταία νέα"/>
+				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
+				<item id="ID_HELP_WEB_2" text="P2PForums.com"/> -->
+			</menu>
+			<separator/>
+			<item id="ID_HELP_VERSION_CHECK" text="_Έλεγχος για νέα έκδοση"/>
+			<item id="ID_HELP_DONATE" text="_Δωρεά στο Shareaza Project"/>
+			<separator/>
+			<item id="ID_HELP_ABOUT" text="_Σχετικά με το Shareaza..."/>
+		</menu>
+	</menu>
+	<menu name="CMainWnd.Windowed" type="bar">
+		<menu text="_Δίκτυα">
+			<item id="ID_NETWORK_SEARCH" text="Νέα Ανα_ζήτηση..." shortcut="Ctrl+S"/>
+			<separator/>
+			<item id="ID_NETWORK_CONNECT" text="_Σύνδεση" shortcut="Ctrl+G"/>
+			<item id="ID_NETWORK_DISCONNECT" text="_Αποσύνδεση"/>
+			<separator/>
+			<item id="ID_NETWORK_CONNECT_TO" text="Σύνδεση _Με..." shortcut="Ctrl+T"/>
+			<item id="ID_NETWORK_BROWSE_TO" text="_Περιήγηση Host..."/>
+			<separator/>
+			<menu text="Επιλογή _Δικτύων">
+				<item id="ID_NETWORK_G2" text="Σύνδεση στο Gnutella_2"/>
+				<item id="ID_NETWORK_G1" text="Σύνδεση στο _Gnutella"/>
+				<item id="ID_NETWORK_ED2K" text="Σύνδεση στο _ED2K"/>
+			</menu>
+			<separator/>
+			<item id="ID_NETWORK_AUTO_CLOSE" text="Έξοδος _Μετά τις Μεταφορές"/>
+			<item id="ID_NETWORK_EXIT" text="Έ_ξοδος"/>
+		</menu>
+		<menu text="_Προβολή">
+			<item id="ID_VIEW_SYSTEM" text="_Σύστημα" shortcut="F11"/>
+			<item id="ID_VIEW_NEIGHBOURS" text="_Γείτονες" shortcut="Ctrl+F11"/>
+			<item id="ID_VIEW_DOWNLOADS" text="_Λήψεις" shortcut="F3"/>
+			<item id="ID_VIEW_UPLOADS" text="_Αποστολές" shortcut="F4"/>
+			<item id="ID_VIEW_LIBRARY" text="_Βιβλιοθήκη" shortcut="F5"/>
+			<item id="ID_VIEW_MEDIA" text="_Πολυμέσα" shortcut="F6"/>
+			<separator/>
+			<item id="ID_VIEW_SECURITY" text="Ασ_φάλεια" shortcut="F7"/>
+			<item id="ID_VIEW_HOSTS" text="H_ost Cache" shortcut="F8"/>
+			<item id="ID_VIEW_DISCOVERY" text="Ανα_κάλυψη" shortcut="F9"/>
+			<item id="ID_VIEW_TRAFFIC" text="_Γραφήματα" shortcut="F10"/>
+			<separator/>
+			<item id="ID_VIEW_PACKETS" text="Εποπτεία _Πακέτων" shortcut="Ctrl+F1"/>
+			<item id="ID_VIEW_SEARCH_MONITOR" text="Εποπτεία Ανα_ζητήσεων" shortcut="Ctrl+F2"/>
+			<item id="ID_VIEW_RESULTS_MONITOR" text="Εποπτεία _Ευρέσεων" shortcut="Ctrl+F3"/>
+			<separator/>
+			<item id="ID_VIEW_BASIC" text="_Βασική Προβολή"/>
+			<item id="ID_VIEW_TABBED" text="Προβολή _Καρτελών"/>
+			<item id="ID_VIEW_WINDOWED" text="Προβολή _Παραθύρων"/>
+		</menu>
+		<menu text="_Εργαλεία">
+			<item id="ID_LIBRARY_FOLDERS" text="Κοινοποιημένοι _Φάκελοι..."/>
+			<item id="ID_TOOLS_DOWNLOAD" text="_Νέα Λήψη ή Torrent..."/>
+			<item id="IDC_IMPORT_DOWNLOADS" text="Εισαγωγή _ημιτελών αρχείων του eMule..."/>
+			<item id="ID_OPEN_DOWNLOADS_FOLDER" text="Εξερεύνηση _Ληφθέντων"/>
+			<separator/>
+			<item id="ID_TOOLS_SKIN" text="Επιλογή _Φλοιού..."/>
+			<item id="ID_TOOLS_LANGUAGE" text="Επιλογή _Γλώσσας..."/>
+			<separator/>
+			<item id="ID_TOOLS_PROFILE" text="Επεξεργασία _Προφίλ..."/>
+			<separator/>
+			<item id="ID_TOOLS_WIZARD" text="Οδηγός Σύντομης _Εκκίνησης..."/>
+			<item id="ID_TOOLS_SETTINGS" text="_Ρυθμίσεις Shareaza..."/>
+		</menu>
+		<menu text="_Window">
+			<item id="ID_WINDOW_CASCADE" text="_Παράθεση Κατα_ρράκτη"/>
+			<item id="ID_WINDOW_TILE_HORZ" text="_Οριζόντια Παράθεση"/>
+			<item id="ID_WINDOW_TILE_VERT" text="_Κάθετη Παράθεση"/>
+			<separator/>
+			<item id="ID_WINDOW_NAVBAR" text="Μεγάλη Μπάρα _Πλοήγησης"/>
+			<item id="ID_WINDOW_TOOLBAR" text="Μικρή _Μπάρα Πλοήγησης"/>
+			<separator/>
+			<item id="ID_WINDOW_TABBAR" text="Προβολή Μπάρας _Καρτελών"/>
+			<item id="ID_WINDOW_MONITOR" text="Προβολή _Εποπτείας"/>
+			<item id="ID_WINDOW_REMOTE" text="Προβολή _Χειριστηρίου"/>
+		</menu>
+		<menu text="_Βοήθεια">
+			<item id="ID_HELP_FAQ" text="Συχνές _Ερωτήσεις"/>
+			<item id="ID_HELP_TEST" text="_Δοκιμή Σύνδεσης"/>
 			<separator/>
 			<menu text="_Οδηγίες">
 				<item id="ID_HELP_GUIDE" text="Οδηγός _Χρήσης"/>
@@ -643,243 +737,149 @@
 				<item id="ID_HELP_HOMEPAGE" text="_Ιστοσελίδα_Shareaza"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareaza _Forums"/>
-				<item id="ID_HELP_WEB_6" text="Shareaza S_kin Site"/>
+				<item id="ID_HELP_WEB_6" text="Φ_λοιοί Shareaza"/>
 				<item id="ID_HELP_FAKESHAREAZA" text="FakeShareaza_.com"/> <!-- 
 				<item id="ID_HELP_UPDATE" text="Τελευταία νέα"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
 				<item id="ID_HELP_WEB_2" text="P2PForums.com"/> -->
 			</menu>
 			<separator/>
-			<item id="ID_HELP_VERSION_CHECK" text="Ελεγχος για νέα έκδοση"/>
-			<item id="ID_HELP_DONATE" text="Δωρίστε στο project Shareaza"/>
+			<item id="ID_HELP_VERSION_CHECK" text="_Έλεγχος για νέα έκδοση"/>
+			<item id="ID_HELP_DONATE" text="_Δωρεά στο Shareaza Project"/>
 			<separator/>
-			<item id="ID_HELP_ABOUT" text="Σχετικά με το Shareaza..."/>
-		</menu>
-	</menu>
-	<menu name="CMainWnd.Windowed" type="bar">
-		<menu text="_Δίκτυα">
-			<item id="ID_NETWORK_SEARCH" text="Νέα Αναζήτηση..." shortcut="Ctrl+S"/>
-			<separator/>
-			<item id="ID_NETWORK_CONNECT" text="Σύνδεση" shortcut="Ctrl+G"/>
-			<item id="ID_NETWORK_DISCONNECT" text="Αποσύνδεση"/>
-			<separator/>
-			<item id="ID_NETWORK_CONNECT_TO" text="Σύνδεση Με..." shortcut="Ctrl+T"/>
-			<item id="ID_NETWORK_BROWSE_TO" text="Περιήγηση Host..."/>
-			<separator/>
-			<menu text="Επιλογή _Δικτύων">
-				<item id="ID_NETWORK_G2" text="Σύνδεση στο Gnutella_2"/>
-				<item id="ID_NETWORK_G1" text="Σύνδεση στο Gnutella"/>
-				<item id="ID_NETWORK_ED2K" text="Σύνδεση στο ED2K"/>
-			</menu>
-			<separator/>
-			<item id="ID_NETWORK_AUTO_CLOSE" text="Έξοδος Μετά τις Μεταφορές"/>
-			<item id="ID_NETWORK_EXIT" text="Έξοδος"/>
-		</menu>
-		<menu text="_Προβολή">
-			<item id="ID_VIEW_SYSTEM" text="Σύστημα" shortcut="F11"/>
-			<item id="ID_VIEW_NEIGHBOURS" text="Γείτονες" shortcut="Ctrl+F11"/>
-			<item id="ID_VIEW_DOWNLOADS" text="Λήψεις" shortcut="F3"/>
-			<item id="ID_VIEW_UPLOADS" text="Αποστολές" shortcut="F4"/>
-			<item id="ID_VIEW_LIBRARY" text="Βιβλιοθήκη" shortcut="F5"/>
-			<item id="ID_VIEW_MEDIA" text="Πολυμέσα" shortcut="F6"/>
-			<separator/>
-			<item id="ID_VIEW_SECURITY" text="Ασφάλεια" shortcut="F7"/>
-			<item id="ID_VIEW_HOSTS" text="Host Cache" shortcut="F8"/>
-			<item id="ID_VIEW_DISCOVERY" text="Ανακάλυψη" shortcut="F9"/>
-			<item id="ID_VIEW_TRAFFIC" text="Γραφήματα" shortcut="F10"/>
-			<separator/>
-			<item id="ID_VIEW_PACKETS" text="Εποπτεία Πακέτων" shortcut="Ctrl+F1"/>
-			<item id="ID_VIEW_SEARCH_MONITOR" text="Εποπτεία Αναζητήσεων" shortcut="Ctrl+F2"/>
-			<item id="ID_VIEW_RESULTS_MONITOR" text="Εποπτεία Ευρέσεων" shortcut="Ctrl+F3"/>
-			<separator/>
-			<item id="ID_VIEW_BASIC" text="_Βασική Προβολή"/>
-			<item id="ID_VIEW_TABBED" text="Προβολή Καρτελών"/>
-			<item id="ID_VIEW_WINDOWED" text="Προβολή Παραθύρων"/>
-		</menu>
-		<menu text="_Εργαλεία">
-			<item id="ID_LIBRARY_FOLDERS" text="Κοινοποιημένοι Φάκελοι..."/>
-			<item id="ID_TOOLS_DOWNLOAD" text="Νέα Λήψη ή Torrent..."/>
-			<item id="IDC_IMPORT_DOWNLOADS" text="Εισαγωγή ημιτελών αρχείων του eMule..."/>
-			<item id="ID_OPEN_DOWNLOADS_FOLDER" text="Εξερεύνηση Ληφθέντων"/>
-			<separator/>
-			<item id="ID_TOOLS_SKIN" text="Επιλογή Φλοιού..."/>
-			<item id="ID_TOOLS_LANGUAGE" text="Επιλογή Γλώσσας..."/>
-			<separator/>
-			<item id="ID_TOOLS_PROFILE" text="Επεξεργασία Προφίλ..."/>
-			<separator/>
-			<item id="ID_TOOLS_WIZARD" text="Οδηγός Σύντομης Εκκίνησης..."/>
-			<item id="ID_TOOLS_SETTINGS" text="Ρυθμίσεις Shareaza..."/>
-		</menu>
-		<menu text="_Window">
-			<item id="ID_WINDOW_CASCADE" text="Παράθεση Καταρράκτη"/>
-			<item id="ID_WINDOW_TILE_HORZ" text="Οριζόντια Παράθεση"/>
-			<item id="ID_WINDOW_TILE_VERT" text="Κάθετη Παράθεση"/>
-			<separator/>
-			<item id="ID_WINDOW_NAVBAR" text="Μεγάλη Μπάρα Πλοήγησης"/>
-			<item id="ID_WINDOW_TOOLBAR" text="Μικρή Μπάρα Πλοήγησης"/>
-			<separator/>
-			<item id="ID_WINDOW_TABBAR" text="Προβολή Μπάρας Καρτελών"/>
-			<item id="ID_WINDOW_MONITOR" text="Προβολή Εποπτείας"/>
-			<item id="ID_WINDOW_REMOTE" text="Προβολή Χειριστηρίου"/>
-		</menu>
-		<menu text="_Βοήθεια">
-			<item id="ID_HELP_FAQ" text="Συχνές Ερωτήσεις"/>
-			<item id="ID_HELP_TEST" text="Δοκιμή Σύνδεσης"/>
-			<separator/>
-			<menu text="_Οδηγίες">
-				<item id="ID_HELP_GUIDE" text="Οδηγός Χρήσης"/>
-				<item id="ID_HELP_ROUTER" text="Βοήθεια για τον Router"/>
-				<item id="ID_HELP_SECURITY" text="Βοήθεια για την Ασφάλεια"/>
-				<item id="ID_HELP_CODEC" text="Βοήθεια για Codec"/>
-			</menu>
-			<separator/>
-			<menu text="_Ιστοσελίδες">
-				<item id="ID_HELP_HOMEPAGE" text="Ιστοσελίδα Shareaza"/>
-				<separator/>
-				<item id="ID_HELP_FORUMS" text="Shareaza Forums"/>
-				<item id="ID_HELP_WEB_6" text="Shareaza S_kin Site"/>
-				<item id="ID_HELP_FAKESHAREAZA" text="FakeShareaza_.com"/> <!-- 
-				<item id="ID_HELP_UPDATE" text="Τελευταία νέα"/>
-				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
-				<item id="ID_HELP_WEB_2" text="P2PForums.com"/> -->
-			</menu>
-			<separator/>
-			<item id="ID_HELP_VERSION_CHECK" text="Έλεγχος για νέα έκδοση"/>
-			<item id="ID_HELP_DONATE" text="Δωρίστε στο project Shareaza"/>
-			<separator/>
-			<item id="ID_HELP_ABOUT" text="Σχετικά με το Shareaza..."/>
+			<item id="ID_HELP_ABOUT" text="_Σχετικά με το Shareaza..."/>
 		</menu>
 	</menu>
 	<!-- VIEW POPUP -->
 	<menu name="CMainWnd.View.Basic">
-		<item id="ID_TAB_HOME" text="Αρχική"/>
-		<item id="ID_TAB_LIBRARY" text="Βιβλιοθήκη"/>
-		<item id="ID_TAB_MEDIA" text="Πολυμέσα"/>
-		<item id="ID_TAB_SEARCH" text="Αναζήτηση"/>
-		<item id="ID_TAB_TRANSFERS" text="Μεταφορές"/>
+		<item id="ID_TAB_HOME" text="_Αρχική"/>
+		<item id="ID_TAB_LIBRARY" text="_Βιβλιοθήκη"/>
+		<item id="ID_TAB_MEDIA" text="_Πολυμέσα"/>
+		<item id="ID_TAB_SEARCH" text="Ανα_ζήτηση"/>
+		<item id="ID_TAB_TRANSFERS" text="_Μεταφορές"/>
 		<separator/>
 		<menu text="Προ_χωρημένα">
-			<item id="ID_VIEW_NEIGHBOURS" text="Γείτονες"/>
-			<item id="ID_VIEW_UPLOADS" text="Αποστολές"/>
-			<item id="ID_VIEW_SECURITY" text="Ασφάλεια"/>
-			<item id="ID_VIEW_HOSTS" text="Host Cache"/>
+			<item id="ID_VIEW_NEIGHBOURS" text="_Γείτονες"/>
+			<item id="ID_VIEW_UPLOADS" text="_Αποστολές"/>
+			<item id="ID_VIEW_SECURITY" text="Ασ_φάλεια"/>
+			<item id="ID_VIEW_HOSTS" text="_Host Cache"/>
 		</menu>
 	</menu>
 	<menu name="CMainWnd.View.Tabbed">
-		<item id="ID_TAB_HOME" text="Αρχική"/>
-		<item id="ID_TAB_LIBRARY" text="Βιβλιοθήκη"/>
-		<item id="ID_TAB_MEDIA" text="Πολυμέσα"/>
-		<item id="ID_TAB_SEARCH" text="Αναζήτηση"/>
-		<item id="ID_TAB_TRANSFERS" text="Μεταφορές"/>
-		<item id="ID_TAB_NETWORK" text="Δίκτυο"/>
-		<item id="ID_TAB_IRC" text="Συνομιλία με Χρήστη"/>
+		<item id="ID_TAB_HOME" text="_Αρχική"/>
+		<item id="ID_TAB_LIBRARY" text="_Βιβλιοθήκη"/>
+		<item id="ID_TAB_MEDIA" text="_Πολυμέσα"/>
+		<item id="ID_TAB_SEARCH" text="Ανα_ζήτηση"/>
+		<item id="ID_TAB_TRANSFERS" text="_Μεταφορές"/>
+		<item id="ID_TAB_NETWORK" text="_Δίκτυο"/>
+		<item id="ID_TAB_IRC" text="_Συνομιλία"/>
 		<separator/>
-		<item id="ID_VIEW_SECURITY" text="Ασφάλεια"/>
-		<item id="ID_VIEW_HOSTS" text="Host Cache"/>
-		<item id="ID_VIEW_DISCOVERY" text="Ανακάλυψη"/>
-		<item id="ID_VIEW_TRAFFIC" text="Γραφήματα"/>
+		<item id="ID_VIEW_SECURITY" text="Ασ_φάλεια"/>
+		<item id="ID_VIEW_HOSTS" text="_Host Cache"/>
+		<item id="ID_VIEW_DISCOVERY" text="Ανα_κάλυψη"/>
+		<item id="ID_VIEW_TRAFFIC" text="_Γραφήματα"/>
 		<separator/>
-		<item id="ID_VIEW_PACKETS" text="Εποπτεία Πακέτων"/>
-		<item id="ID_VIEW_SEARCH_MONITOR" text="Εποπτεία Αναζητήσεων"/>
-		<item id="ID_VIEW_RESULTS_MONITOR" text="Εποπτεία Ευρέσεων"/>
+		<item id="ID_VIEW_PACKETS" text="Εποπτεία _Πακέτων"/>
+		<item id="ID_VIEW_SEARCH_MONITOR" text="Εποπτεία Ανα_ζητήσεων"/>
+		<item id="ID_VIEW_RESULTS_MONITOR" text="Εποπτεία _Ευρέσεων"/>
 	</menu>
 	<menu name="CMainWnd.View.Windowed">
-		<item id="ID_NETWORK_SEARCH" text="Νέα Αναζήτηση..."/>
+		<item id="ID_NETWORK_SEARCH" text="Νέα Ανα_ζήτηση..."/>
 		<separator/>
-		<item id="ID_VIEW_SYSTEM" text="Σύστημα"/>
-		<item id="ID_VIEW_NEIGHBOURS" text="Γείτονες"/>
-		<item id="ID_VIEW_DOWNLOADS" text="Λήψεις"/>
-		<item id="ID_VIEW_UPLOADS" text="Αποστολές"/>
-		<item id="ID_VIEW_LIBRARY" text="Βιβλιοθήκη"/>
-		<item id="ID_VIEW_MEDIA" text="Πολυμέσα"/>
+		<item id="ID_VIEW_SYSTEM" text="_Σύστημα"/>
+		<item id="ID_VIEW_NEIGHBOURS" text="_Γείτονες"/>
+		<item id="ID_VIEW_DOWNLOADS" text="_Λήψεις"/>
+		<item id="ID_VIEW_UPLOADS" text="_Αποστολές"/>
+		<item id="ID_VIEW_LIBRARY" text="_Βιβλιοθήκη"/>
+		<item id="ID_VIEW_MEDIA" text="_Πολυμέσα"/>
 		<separator/>
-		<item id="ID_VIEW_SECURITY" text="Ασφάλεια"/>
-		<item id="ID_VIEW_HOSTS" text="Host Cache"/>
-		<item id="ID_VIEW_DISCOVERY" text="Ανακάλυψη"/>
-		<item id="ID_VIEW_TRAFFIC" text="Γραφήματα"/>
+		<item id="ID_VIEW_SECURITY" text="Ασ_φάλεια"/>
+		<item id="ID_VIEW_HOSTS" text="_Host Cache"/>
+		<item id="ID_VIEW_DISCOVERY" text="Ανα_κάλυψη"/>
+		<item id="ID_VIEW_TRAFFIC" text="_Γραφήματα"/>
 		<separator/>
-		<item id="ID_VIEW_PACKETS" text="Εποπτεία Πακέτων"/>
-		<item id="ID_VIEW_SEARCH_MONITOR" text="Εποπτεία Αναζητήσεων"/>
-		<item id="ID_VIEW_RESULTS_MONITOR" text="Εποπτεία Ευρέσεων"/>
+		<item id="ID_VIEW_PACKETS" text="Εποπτεία _Πακέτων"/>
+		<item id="ID_VIEW_SEARCH_MONITOR" text="Εποπτεία Ανα_ζητήσεων"/>
+		<item id="ID_VIEW_RESULTS_MONITOR" text="Εποπτεία _Ευρέσεων"/>
 	</menu>
 	<!-- TRAY MENU -->
 	<menu name="CMainWnd.Tray">
-		<item id="ID_TRAY_OPEN" text="Άνοιγμα Shareaza"/>
+		<item id="ID_TRAY_OPEN" text="_Άνοιγμα Shareaza"/>
 		<separator/>
-		<item id="ID_NETWORK_SEARCH" text="Νέα Αναζήτηση..."/>
-		<item id="ID_TOOLS_DOWNLOAD" text="Λήψη Αρχείου..."/>
+		<item id="ID_NETWORK_SEARCH" text="Νέα Ανα_ζήτηση..."/>
+		<item id="ID_TOOLS_DOWNLOAD" text="_Λήψη Αρχείου..."/>
 		<separator/>
-		<item id="ID_MEDIA_PLAY" text="Έναρξη Αναπαραγωγής"/>
-		<item id="ID_MEDIA_PAUSE" text="Παύση Αναπαραγωγής"/>
-		<item id="ID_MEDIA_STOP" text="Διακοπή Αναπαραγωγής"/>
+		<item id="ID_MEDIA_PLAY" text="Έ_ναρξη Αναπαραγωγής"/>
+		<item id="ID_MEDIA_PAUSE" text="_Παύση Αναπαραγωγής"/>
+		<item id="ID_MEDIA_STOP" text="_Διακοπή Αναπαραγωγής"/>
 		<separator/>
-		<item id="ID_MEDIA_PREVIOUS" text="Προηγούμενο Κομμάτι"/>
-		<item id="ID_MEDIA_NEXT" text="Επόμενο Κομμάτι"/>
+		<item id="ID_MEDIA_PREVIOUS" text="Προ_ηγούμενο Κομμάτι"/>
+		<item id="ID_MEDIA_NEXT" text="_Επόμενο Κομμάτι"/>
 		<separator/>
-		<item id="ID_NETWORK_AUTO_CLOSE" text="Έξοδος Μετά τις Μεταφορές"/>
-		<item id="ID_NETWORK_EXIT" text="Έξοδος"/>
+		<item id="ID_NETWORK_AUTO_CLOSE" text="Έξοδος _Μετά τις Μεταφορές"/>
+		<item id="ID_NETWORK_EXIT" text="Έ_ξοδος"/>
 	</menu>
 	<!--  REMOTE MENU -->
 	<menu name="CRemoteWnd">
-		<item id="ID_TRAY_OPEN" text="Άνοιγμα Shareaza"/>
+		<item id="ID_TRAY_OPEN" text="_Άνοιγμα Shareaza"/>
 		<separator/>
-		<item id="ID_NETWORK_SEARCH" text="Νέα Αναζήτηση..."/>
-		<item id="ID_TOOLS_DOWNLOAD" text="Λήψη Αρχείου..."/>
+		<item id="ID_NETWORK_SEARCH" text="Νέα Ανα_ζήτηση..."/>
+		<item id="ID_TOOLS_DOWNLOAD" text="_Λήψη Αρχείου..."/>
 		<separator/>
-		<item id="ID_MEDIA_PLAY" text="Έναρξη Αναπαραγωγής"/>
-		<item id="ID_MEDIA_PAUSE" text="Παύση Αναπαραγωγής"/>
-		<item id="ID_MEDIA_STOP" text="Διακοπή Αναπαραγωγής"/>
+		<item id="ID_MEDIA_PLAY" text="Έ_ναρξη Αναπαραγωγής"/>
+		<item id="ID_MEDIA_PAUSE" text="_Παύση Αναπαραγωγής"/>
+		<item id="ID_MEDIA_STOP" text="_Διακοπή Αναπαραγωγής"/>
 		<separator/>
-		<item id="ID_MEDIA_PREVIOUS" text="Προηγούμενο Κομμάτι"/>
-		<item id="ID_MEDIA_NEXT" text="Επόμενο Κομμάτι"/>
+		<item id="ID_MEDIA_PREVIOUS" text="Προ_ηγούμενο Κομμάτι"/>
+		<item id="ID_MEDIA_NEXT" text="_Επόμενο Κομμάτι"/>
 		<separator/>
-		<item id="ID_NETWORK_AUTO_CLOSE" text="Έξοδος Μετά τις Μεταφορές"/>
-		<item id="ID_NETWORK_EXIT" text="Έξοδος"/>
+		<item id="ID_NETWORK_AUTO_CLOSE" text="Έξοδος _Μετά τις Μεταφορές"/>
+		<item id="ID_NETWORK_EXIT" text="Έ_ξοδος"/>
 	</menu>
 	<!-- HOME MENU -->
 	<menu name="CHomeWnd.Basic">
-		<item id="ID_TAB_HOME" text="Αρχική"/>
-		<item id="ID_TAB_LIBRARY" text="Βιβλιοθήκη"/>
-		<item id="ID_TAB_MEDIA" text="Πολυμέσα"/>
-		<item id="ID_TAB_SEARCH" text="Αναζήτηση"/>
-		<item id="ID_TAB_TRANSFERS" text="Μεταφορές"/>
+		<item id="ID_TAB_HOME" text="_Αρχική"/>
+		<item id="ID_TAB_LIBRARY" text="_Βιβλιοθήκη"/>
+		<item id="ID_TAB_MEDIA" text="_Πολυμέσα"/>
+		<item id="ID_TAB_SEARCH" text="_Αναζήτηση"/>
+		<item id="ID_TAB_TRANSFERS" text="_Μεταφορές"/>
 		<separator/>
 		<menu text="Προ_χωρημένα">
-			<item id="ID_VIEW_NEIGHBOURS" text="Γείτονες"/>
-			<item id="ID_VIEW_UPLOADS" text="Αποστολές"/>
-			<item id="ID_VIEW_SECURITY" text="Ασφάλεια"/>
-			<item id="ID_VIEW_HOSTS" text="Host Cache"/>
+			<item id="ID_VIEW_NEIGHBOURS" text="_Γείτονες"/>
+			<item id="ID_VIEW_UPLOADS" text="_Αποστολές"/>
+			<item id="ID_VIEW_SECURITY" text="Ασ_φάλεια"/>
+			<item id="ID_VIEW_HOSTS" text="_Host Cache"/>
 		</menu>
 	</menu>
 	<menu name="CHomeWnd.Tabbed">
-		<item id="ID_TAB_HOME" text="Αρχική"/>
-		<item id="ID_TAB_LIBRARY" text="Βιβλιοθήκη"/>
-		<item id="ID_TAB_MEDIA" text="Πολυμέσα"/>
-		<item id="ID_TAB_SEARCH" text="Αναζήτηση"/>
-		<item id="ID_TAB_TRANSFERS" text="Μεταφορές"/>
-		<item id="ID_TAB_NETWORK" text="Δίκτυο"/>
-		<item id="ID_TAB_IRC" text="Συνομιλία με Χρήστη"/>
+		<item id="ID_TAB_HOME" text="_Αρχική"/>
+		<item id="ID_TAB_LIBRARY" text="_Βιβλιοθήκη"/>
+		<item id="ID_TAB_MEDIA" text="_Πολυμέσα"/>
+		<item id="ID_TAB_SEARCH" text="_Αναζήτηση"/>
+		<item id="ID_TAB_TRANSFERS" text="_Μεταφορές"/>
+		<item id="ID_TAB_NETWORK" text="_Δίκτυο"/>
+		<item id="ID_TAB_IRC" text="_Συνομιλία"/>
 		<separator/>
-		<item id="ID_VIEW_SECURITY" text="Ασφάλεια"/>
-		<item id="ID_VIEW_HOSTS" text="Host Cache"/>
-		<item id="ID_VIEW_DISCOVERY" text="Ανακάλυψη"/>
-		<item id="ID_VIEW_TRAFFIC" text="Γραφήματα"/>
+		<item id="ID_VIEW_SECURITY" text="Ασ_φάλεια"/>
+		<item id="ID_VIEW_HOSTS" text="_Host Cache"/>
+		<item id="ID_VIEW_DISCOVERY" text="Ανα_κάλυψη"/>
+		<item id="ID_VIEW_TRAFFIC" text="_Γραφήματα"/>
 		<separator/>
-		<item id="ID_VIEW_PACKETS" text="Εποπτεία Πακέτων"/>
-		<item id="ID_VIEW_SEARCH_MONITOR" text="Εποπτεία Αναζητήσεων"/>
-		<item id="ID_VIEW_RESULTS_MONITOR" text="Εποπτεία Ευρέσεων"/>
+		<item id="ID_VIEW_PACKETS" text="Εποπτεία _Πακέτων"/>
+		<item id="ID_VIEW_SEARCH_MONITOR" text="Εποπτεία Ανα_ζητήσεων"/>
+		<item id="ID_VIEW_RESULTS_MONITOR" text="Εποπτεία _Ευρέσεων"/>
 	</menu>
 	<!-- HOST CACHE WINDOW -->
 	<menu name="CHostCacheWnd">
-		<item id="ID_HOSTCACHE_CONNECT" text="Άμεση Σύνδεση"/>
-		<item id="ID_HOSTCACHE_DISCONNECT" text="Αποσύνδεση"/>
-		<item id="ID_NEIGHBOURS_COPY" text="Αντιγραφή URI"/>
-		<item id="ID_HOSTCACHE_PRIORITY" text="Πρωτεύον Server"/>
+		<item id="ID_HOSTCACHE_CONNECT" text="Άμεση _Σύνδεση"/>
+		<item id="ID_HOSTCACHE_DISCONNECT" text="_Αποσύνδεση"/>
+		<item id="ID_NEIGHBOURS_COPY" text="Αντι_γραφή URI"/>
+		<item id="ID_HOSTCACHE_PRIORITY" text="_Πρωτεύον Server"/>
 		<separator/>
-		<item id="ID_HOSTCACHE_REMOVE" text="Αφαίρεση"/>
+		<item id="ID_HOSTCACHE_REMOVE" text="Α_φαίρεση"/>
 		<separator/>
 		<menu text="_Φίλτρο">
-			<item id="ID_HOSTCACHE_G2_HORIZON" text="Gnutella2 _Cluster"/>
+			<item id="ID_HOSTCACHE_G2_HORIZON" text="Gnutella2 Cl_uster"/>
 			<item id="ID_HOSTCACHE_G2_CACHE" text="Gnutella_2 Cache"/>
 			<item id="ID_HOSTCACHE_G1_CACHE" text="_Gnutella Cache"/>
 			<item id="ID_HOSTCACHE_ED2K_CACHE" text="ED2K Servers"/>
@@ -887,24 +887,24 @@
 			<item id="ID_HOSTCACHE_KAD_CACHE" text="_Kademlia Cache"/>
 		</menu>
 		<separator/>
-		<item id="ID_HOSTCACHE_IMPORT" text="Εισαγωγή αρχείου MET..."/>
+		<item id="ID_HOSTCACHE_IMPORT" text="_Εισαγωγή αρχείου MET..."/>
 		<item id="ID_HOSTCACHE_ED2K_DOWNLOAD" text="Λήψη αρχείου MET..."/>
 	</menu>
 	<!-- SEARCH WINDOW -->
 	<menu name="CSearchWnd.Basic">
-		<item id="ID_SEARCH_DOWNLOAD" text="Λήψη"/>
+		<item id="ID_SEARCH_DOWNLOAD" text="_Λήψη"/>
 		<separator/>
-		<item id="ID_BROWSE_LAUNCH" text="Περιήγηση Χρήστη"/>
-		<item id="ID_SEARCH_CHAT" text="Συνομιλία με Χρήστη"/>
+		<item id="ID_BROWSE_LAUNCH" text="Περι_ήγηση Χρήστη"/>
+		<item id="ID_SEARCH_CHAT" text="_Συνομιλία με Χρήστη"/>
 		<separator/>
 		<menu text="Ανα_ζήτηση Για">
-			<item id="ID_SEARCH_FOR_SIMILAR" text="Παρόμοια Αρχεία"/>
+			<item id="ID_SEARCH_FOR_SIMILAR" text="_Παρόμοια Αρχεία"/>
 			<separator/>
-			<item id="ID_SEARCH_FOR_ARTIST" text="Μουσική από τον ίδιο Καλλιτέχνη"/>
-			<item id="ID_SEARCH_FOR_ALBUM" text="Μουσική από το ίδιο Album"/>
-			<item id="ID_SEARCH_FOR_SERIES" text="Επεισόδια από την ίδια Σειρά"/>
+			<item id="ID_SEARCH_FOR_ARTIST" text="Μουσική από τον ίδιο _Καλλιτέχνη"/>
+			<item id="ID_SEARCH_FOR_ALBUM" text="Μουσική από το ίδιο _Album"/>
+			<item id="ID_SEARCH_FOR_SERIES" text="_Επεισόδια από την ίδια Σειρά"/>
 		</menu>
-		<menu text="_Υπηρεσίες Web">
+		<menu text="_Υπηρεσίες Ιστού">
 			<item id="ID_LIBRARY_BITZI_WEB" text="Προβολή _Bitzi Ticket"/>
 			<item id="ID_SEARCH_COPY" text="Αντι_γραφή URI..."/>
 		</menu>
@@ -914,80 +914,11 @@
 		<item id="ID_SEARCH_DOWNLOADNOW" text="_Πρωτεύουσα Λήψη"/>
 		<item id="ID_SEARCH_COPY" text="Αντι_γραφή URI"/>
 		<separator/>
-		<item id="ID_BROWSE_LAUNCH" text="Περιήγηση Χρήστη"/>
-		<item id="ID_SEARCH_CHAT" text="Συνομιλία με Χρήστη"/>
-		<item id="ID_SECURITY_BAN" text="Αποκλεισμός Χρήστη"/>
-		<separator/>
-		<menu text="Αναζήτηση Για">
-			<item id="ID_SEARCH_FOR_THIS" text="Αυτό το Αρχείο"/>
-			<item id="ID_SEARCH_FOR_SIMILAR" text="Παρόμοια Αρχεία"/>
-			<separator/>
-			<item id="ID_SEARCH_FOR_ARTIST" text="Μουσική από τον ίδιο Καλλιτέχνη"/>
-			<item id="ID_SEARCH_FOR_ALBUM" text="Μουσική από το ίδιο Album"/>
-			<item id="ID_SEARCH_FOR_SERIES" text="Επεισόδια από την ίδια Σειρά"/>
-		</menu>
-		<menu text="_Υπηρεσίες Web">
-			<item id="ID_LIBRARY_BITZI_WEB" text="Προβολή _Bitzi Ticket"/>
-		</menu>
-		<separator/>
-		<item id="ID_SEARCH_FILTER" text="_Φιλτράρισμα Αποτελεσμάτων..."/>
-		<item id="ID_SEARCH_FILTER_REMOVE" text="Αφαίρεση Φίλτρου"/>
-		<item id="ID_SEARCH_CLEAR" text="Καθαρισμός Αποτελεσμάτων"/>
-		<separator/>
-		<item id="ID_SEARCH_COLUMNS" text="Επιλογή Στηλών..."/>
-	</menu>
-	<!-- BROWSE HOST WINDOW -->
-	<menu name="CBrowseHostWnd.Basic">
-		<item id="ID_SEARCH_DOWNLOAD" text="Λήψη"/>
-		<item id="ID_SEARCH_DOWNLOADNOW" text="Πρωτεύουσα Λήψη"/>
-		<separator/>
-		<item id="ID_SEARCH_CHAT" text="Συνομιλία με Χρήστη"/>
+		<item id="ID_BROWSE_LAUNCH" text="Περι_ήγηση Χρήστη"/>
+		<item id="ID_SEARCH_CHAT" text="_Συνομιλία με Χρήστη"/>
+		<item id="ID_SECURITY_BAN" text="Απο_κλεισμός Χρήστη"/>
 		<separator/>
 		<menu text="Ανα_ζήτηση Για">
-			<item id="ID_SEARCH_FOR_SIMILAR" text="Παρόμοια Αρχεία"/>
-			<separator/>
-			<item id="ID_SEARCH_FOR_ARTIST" text="Μουσική από τον ίδιο Καλλιτέχνη"/>
-			<item id="ID_SEARCH_FOR_ALBUM" text="Μουσική από το ίδιο Album"/>
-			<item id="ID_SEARCH_FOR_SERIES" text="Επεισόδια από την ίδια Σειρά"/>
-		</menu>
-		<menu text="Πληροφορίες για Web File">
-			<item id="ID_LIBRARY_BITZI_WEB" text="Προβολή Bitzi Ticket"/>
-			<item id="ID_SEARCH_COPY" text="Αντιγραφή URI..."/>
-		</menu>
-	</menu>
-	<menu name="CBrowseHostWnd">
-		<item id="ID_SEARCH_DOWNLOAD" text="Λήψη"/>
-		<item id="ID_SEARCH_DOWNLOADNOW" text="Πρωτεύουσα Λήψη"/>
-		<item id="ID_SEARCH_COPY" text="Αντιγραφή URI"/>
-		<separator/>
-		<item id="ID_SEARCH_CHAT" text="Συνομιλία με Χρήστη"/>
-		<separator/>
-		<menu text="Ανα_ζήτηση Για">
-			<item id="ID_SEARCH_FOR_THIS" text="Αυτό το Αρχείο"/>
-			<item id="ID_SEARCH_FOR_SIMILAR" text="Παρόμοια Αρχεία"/>
-			<separator/>
-			<item id="ID_SEARCH_FOR_ARTIST" text="Μουσική από τον ίδιο Καλλιτέχνη"/>
-			<item id="ID_SEARCH_FOR_ALBUM" text="Μουσική από το ίδιο Album"/>
-			<item id="ID_SEARCH_FOR_SERIES" text="Επεισόδια από την ίδια Σειρά"/>
-		</menu>
-		<menu text="_Υπηρεσίες Web">
-			<item id="ID_LIBRARY_BITZI_WEB" text="Προβολή Bitzi Ticket"/>
-		</menu>
-		<separator/>
-		<item id="ID_SEARCH_FILTER" text="Φιλτράρισμα Αποτελεσμάτων..."/>
-		<item id="ID_SEARCH_FILTER_REMOVE" text="Αφαίρεση Φίλτρου"/>
-		<separator/>
-		<item id="ID_SEARCH_COLUMNS" text="Επιλογή/Αναζήτηση Στηλών..."/>
-	</menu>
-	<!-- HIT MONITOR WINDOW -->
-	<menu name="CHitMonitorWnd">
-		<item id="ID_SEARCH_DOWNLOAD" text="Λήψη"/>
-		<item id="ID_SEARCH_COPY" text="Αντιγραφή URI"/>
-		<separator/>
-		<item id="ID_BROWSE_LAUNCH" text="Περιήγηση Χρήστη"/>
-		<item id="ID_SEARCH_CHAT" text="Συνομιλία με Χρήστη"/>
-		<separator/>
-		<menu text="_Ψάξε για">
 			<item id="ID_SEARCH_FOR_THIS" text="_Αυτό το Αρχείο"/>
 			<item id="ID_SEARCH_FOR_SIMILAR" text="_Παρόμοια Αρχεία"/>
 			<separator/>
@@ -995,7 +926,76 @@
 			<item id="ID_SEARCH_FOR_ALBUM" text="Μουσική από το ίδιο _Album"/>
 			<item id="ID_SEARCH_FOR_SERIES" text="_Επεισόδια από την ίδια Σειρά"/>
 		</menu>
-		<menu text="_Υπηρεσίες Web">
+		<menu text="_Υπηρεσίες Ιστού">
+			<item id="ID_LIBRARY_BITZI_WEB" text="Προβολή _Bitzi Ticket"/>
+		</menu>
+		<separator/>
+		<item id="ID_SEARCH_FILTER" text="_Φιλτράρισμα Αποτελεσμάτων..."/>
+		<item id="ID_SEARCH_FILTER_REMOVE" text="_Αφαίρεση Φίλτρου"/>
+		<item id="ID_SEARCH_CLEAR" text="_Καθαρισμός Αποτελεσμάτων"/>
+		<separator/>
+		<item id="ID_SEARCH_COLUMNS" text="Επιλογή _Στηλών..."/>
+	</menu>
+	<!-- BROWSE HOST WINDOW -->
+	<menu name="CBrowseHostWnd.Basic">
+		<item id="ID_SEARCH_DOWNLOAD" text="_Λήψη"/>
+		<item id="ID_SEARCH_DOWNLOADNOW" text="_Πρωτεύουσα Λήψη"/>
+		<separator/>
+		<item id="ID_SEARCH_CHAT" text="_Συνομιλία με Χρήστη"/>
+		<separator/>
+		<menu text="Ανα_ζήτηση Για">
+			<item id="ID_SEARCH_FOR_SIMILAR" text="_Παρόμοια Αρχεία"/>
+			<separator/>
+			<item id="ID_SEARCH_FOR_ARTIST" text="Μουσική από τον ίδιο _Καλλιτέχνη"/>
+			<item id="ID_SEARCH_FOR_ALBUM" text="Μουσική από το ίδιο _Album"/>
+			<item id="ID_SEARCH_FOR_SERIES" text="_Επεισόδια από την ίδια Σειρά"/>
+		</menu>
+		<menu text="_Web File Info">
+			<item id="ID_LIBRARY_BITZI_WEB" text="Προβολή _Bitzi Ticket"/>
+			<item id="ID_SEARCH_COPY" text="Αντι_γραφή URI..."/>
+		</menu>
+	</menu>
+	<menu name="CBrowseHostWnd">
+		<item id="ID_SEARCH_DOWNLOAD" text="_Λήψη"/>
+		<item id="ID_SEARCH_DOWNLOADNOW" text="_Πρωτεύουσα Λήψη"/>
+		<item id="ID_SEARCH_COPY" text="Αντι_γραφή URI"/>
+		<separator/>
+		<item id="ID_SEARCH_CHAT" text="_Συνομιλία με Χρήστη"/>
+		<separator/>
+		<menu text="Ανα_ζήτηση Για">
+			<item id="ID_SEARCH_FOR_THIS" text="_Αυτό το Αρχείο"/>
+			<item id="ID_SEARCH_FOR_SIMILAR" text="_Παρόμοια Αρχεία"/>
+			<separator/>
+			<item id="ID_SEARCH_FOR_ARTIST" text="Μουσική από τον ίδιο _Καλλιτέχνη"/>
+			<item id="ID_SEARCH_FOR_ALBUM" text="Μουσική από το ίδιο _Album"/>
+			<item id="ID_SEARCH_FOR_SERIES" text="_Επεισόδια από την ίδια Σειρά"/>
+		</menu>
+		<menu text="_Υπηρεσίες Ιστού">
+			<item id="ID_LIBRARY_BITZI_WEB" text="Προβολή _Bitzi Ticket"/>
+		</menu>
+		<separator/>
+		<item id="ID_SEARCH_FILTER" text="_Φιλτράρισμα Αποτελεσμάτων..."/>
+		<item id="ID_SEARCH_FILTER_REMOVE" text="_Αφαίρεση Φίλτρου"/>
+		<separator/>
+		<item id="ID_SEARCH_COLUMNS" text="Επιλογή _Στηλών..."/>
+	</menu>
+	<!-- HIT MONITOR WINDOW -->
+	<menu name="CHitMonitorWnd">
+		<item id="ID_SEARCH_DOWNLOAD" text="_Λήψη"/>
+		<item id="ID_SEARCH_COPY" text="Αντι_γραφή URI"/>
+		<separator/>
+		<item id="ID_BROWSE_LAUNCH" text="Περι_ήγηση Χρήστη"/>
+		<item id="ID_SEARCH_CHAT" text="_Συνομιλία με Χρήστη"/>
+		<separator/>
+		<menu text="Ανα_ζήτηση Για">
+			<item id="ID_SEARCH_FOR_THIS" text="_Αυτό το Αρχείο"/>
+			<item id="ID_SEARCH_FOR_SIMILAR" text="_Παρόμοια Αρχεία"/>
+			<separator/>
+			<item id="ID_SEARCH_FOR_ARTIST" text="Μουσική από τον ίδιο _Καλλιτέχνη"/>
+			<item id="ID_SEARCH_FOR_ALBUM" text="Μουσική από το ίδιο _Album"/>
+			<item id="ID_SEARCH_FOR_SERIES" text="_Επεισόδια από την ίδια Σειρά"/>
+		</menu>
+		<menu text="_Υπηρεσίες Ιστού">
 			<item id="ID_LIBRARY_BITZI_WEB" text="Προβολή _Bitzi Ticket"/>
 		</menu>
 		<separator/>
@@ -1005,593 +1005,602 @@
 		<item id="ID_HITMONITOR_PAUSE" text="_Παύση Προβολής"/>
 		<item id="ID_HITMONITOR_CLEAR" text="_Καθαρισμός Προβολής"/>
 		<separator/>
-		<item id="ID_SEARCH_COLUMNS" text="Επιλογή/Επιμέλεια Στηλών..."/>
+		<item id="ID_SEARCH_COLUMNS" text="Επιλογή _Στηλών..."/>
 	</menu>
 	<!-- DOWNLOADS WINDOW -->
 	<menu name="CDownloadsWnd.Download.Basic">
-		<item id="ID_DOWNLOADS_LAUNCH" text="Προεπισκόπηση"/>
-		<item id="ID_DOWNLOADS_REMOTE_PREVIEW" text="Απομακρυσμένη Προεπισκόπηση"/>
-		<item id="ID_DOWNLOADS_VIEW_REVIEWS" text="Προβολή Κριτικών"/>
+		<item id="ID_DOWNLOADS_LAUNCH" text="_Προεπισκόπηση"/>
+		<item id="ID_DOWNLOADS_REMOTE_PREVIEW" text="_Απομακρυσμένη Προεπισκόπηση"/>
+		<item id="ID_DOWNLOADS_VIEW_REVIEWS" text="Προβολή _Κριτικών"/>
 		<separator/>
-		<item id="ID_DOWNLOADS_RESUME" text="Συνέχιση"/>
-		<item id="ID_DOWNLOADS_PAUSE" text="Διακοπή"/>
-		<item id="ID_DOWNLOADS_CLEAR_INCOMPLETE" text="Διαγραφή!"/>
+		<item id="ID_DOWNLOADS_RESUME" text="_Συνέχιση"/>
+		<item id="ID_DOWNLOADS_PAUSE" text="_Διακοπή"/>
+		<item id="ID_DOWNLOADS_CLEAR_INCOMPLETE" text="_Διαγραφή!"/>
 		<separator/>
-		<item id="ID_DOWNLOADS_SOURCES" text="Εύρεση Επιπλέον Πηγών"/>
+		<item id="ID_DOWNLOADS_SOURCES" text="Εύρεση _Επιπλέον Πηγών"/>
 		<!-- <separator/>
-		<item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="Απόσυρση Ολοκληρωμένων"/>
-		<item id="ID_DOWNLOADS_AUTO_CLEAR" text="Αυτόματη Απόσυρση"/> -->
+		<item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="Απόσυρση _Ολοκληρωμένων"/>
+		<item id="ID_DOWNLOADS_AUTO_CLEAR" text="_Αυτόματη Απόσυρση"/> -->
 		<separator/>
-		<item id="ID_DOWNLOADS_HELP" text="Βοήθεια..."/>
+		<item id="ID_DOWNLOADS_HELP" text="_Βοήθεια..."/>
 	</menu>
 	<menu name="CDownloadsWnd.Download">
-		<item id="ID_DOWNLOADS_LAUNCH" text="Προεπισκόπηση"/>
-		<item id="ID_DOWNLOADS_REMOTE_PREVIEW" text="Απομακρυσμένη Προεπισκόπηση"/>
-		<!-- <item id="ID_DOWNLOADS_LAUNCH_COPY" text="Προεπισκόπηση Αντίγραφου"/> -->
-		<item id="ID_DOWNLOADS_ENQUEUE" text="Προσθήκη στη Λίστα Αναπαραγωγής"/>
-		<item id="ID_DOWNLOADS_VIEW_REVIEWS" text="Προβολή Κριτικών"/>
+		<item id="ID_DOWNLOADS_LAUNCH" text="_Προεπισκόπηση"/>
+		<item id="ID_DOWNLOADS_REMOTE_PREVIEW" text="_Απομακρυσμένη Προεπισκόπηση"/>
+		<!-- <item id="ID_DOWNLOADS_LAUNCH_COPY" text="Προεπισκόπηση Αντί_γραφου"/> -->
+		<item id="ID_DOWNLOADS_ENQUEUE" text="Προσθήκη στη _Λίστα Αναπαραγωγής"/>
+		<item id="ID_DOWNLOADS_VIEW_REVIEWS" text="Προβολή _Κριτικών"/>
 		<separator/>
-		<item id="ID_DOWNLOADS_RESUME" text="Συνέχιση"/>
-		<item id="ID_DOWNLOADS_PAUSE" text="Διακοπή"/>
-		<item id="ID_DOWNLOADS_CLEAR_INCOMPLETE" text="Διαγραφή!"/>
+		<item id="ID_DOWNLOADS_RESUME" text="_Συνέχιση"/>
+		<item id="ID_DOWNLOADS_PAUSE" text="_Διακοπή"/>
+		<item id="ID_DOWNLOADS_CLEAR_INCOMPLETE" text="_Διαγραφή!"/>
 		<separator/>
-		<item id="ID_DOWNLOADS_SOURCES" text="Εύρεση Επιπλέον Πηγών"/>
+		<item id="ID_DOWNLOADS_SOURCES" text="Εύρεση _Επιπλέον Πηγών"/>
 		<separator/>
-		<menu text="Advanced/Προηγμένες">
-			<item id="ID_DOWNLOADS_SHARE" text="Κοινοποιημένο Αρχείο"/>
+		<menu text="_Advanced">
+			<item id="ID_DOWNLOADS_SHARE" text="_Κοινοποιημένο Αρχείο"/>
 			<separator/>
-			<item id="ID_DOWNLOADS_COPY" text="Αντιγραφή URI"/>
-			<item id="ID_DOWNLOADS_URL" text="Προσθήκη Πηγής..."/>
+			<item id="ID_DOWNLOADS_COPY" text="_Αντιγραφή URI"/>
+			<item id="ID_DOWNLOADS_URL" text="_Προσθήκη Πηγής..."/>
 			<separator/>
-			<item id="ID_DOWNLOADS_MONITOR" text="Παράθυρο Εποπτείας"/>
-		<separator/>
-			<item id="ID_DOWNLOADS_MOVE_UP" text="Μετακίνηση Πάνω"/>
-			<item id="ID_DOWNLOADS_MOVE_DOWN" text="Μετακίνηση Κάτω"/>
-			<item id="ID_DOWNLOADS_BOOST" text="Αγνόηση Ορίου Ταχύτητας"/>
-			</menu>		
-		<item id="ID_DOWNLOADS_HELP" text="Βοήθεια"/>
-		<separator/>
-			<item id="ID_DOWNLOADS_EDIT" text="Προχωρημένη Διόρθωση..."/>
+			<item id="ID_DOWNLOADS_MONITOR" text="Παράθυρο _Εποπτείας"/>
+			<separator/>
+			<item id="ID_DOWNLOADS_MOVE_UP" text="Μετακίνηση _Πάνω"/>
+			<item id="ID_DOWNLOADS_MOVE_DOWN" text="Μετακίνηση _Κάτω"/>
+			<item id="ID_DOWNLOADS_BOOST" text="_Αγνόηση Ορίου Ταχύτητας"/>
 		</menu>
-		<menu name="CDownloadsWnd.Source">
-		<item id="ID_TRANSFERS_CONNECT" text="Σύνδεση"/>
+		<item id="ID_DOWNLOADS_HELP" text="_Βοήθεια..."/>
 		<separator/>
-		<item id="ID_BROWSE_LAUNCH" text="Περιήγηση Χρήστη"/>
-		<item id="ID_TRANSFERS_CHAT" text="Συνομιλία με Χρήστη"/>
-		<item id="ID_DOWNLOADS_COPY" text="Αντιγραφή URI"/>
+		<item id="ID_DOWNLOADS_EDIT" text="_Ιδιότητες"/>
+	</menu>
+	<menu name="CDownloadsWnd.Source">
+		<item id="ID_TRANSFERS_CONNECT" text="_Σύνδεση"/>
 		<separator/>
-		<item id="ID_TRANSFERS_DISCONNECT" text="Αποσύνδεση"/>
-		<item id="ID_TRANSFERS_FORGET" text="Απολησμόνηση"/>
+		<item id="ID_BROWSE_LAUNCH" text="Περι_ήγηση Χρήστη"/>
+		<item id="ID_TRANSFERS_CHAT" text="_Συνομιλία με Χρήστη"/>
+		<item id="ID_DOWNLOADS_COPY" text="Αντι_γραφή URI"/>
+		<separator/>
+		<item id="ID_TRANSFERS_DISCONNECT" text="_Αποσύνδεση"/>
+		<item id="ID_TRANSFERS_FORGET" text="Απο_λησμόνηση"/>
 	</menu>
 	<menu name="CDownloadsWnd.Completed.Basic">
-		<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="Άνοιγμα"/>
-		<item id="ID_DOWNLOADS_ENQUEUE" text="Προσθήκη στη Λίστα Αναπαραγωγής"/>
-		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="Απόσυρση"/>
+		<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Άνοιγμα"/>
+		<item id="ID_DOWNLOADS_ENQUEUE" text="Προσθήκη στη _Λίστα Αναπαραγωγής"/>
+		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="_Απόσυρση"/>
 		<separator/>
-		<item id="ID_DOWNLOADS_FILE_DELETE" text="Διαγραφή Αρχείου!"/>
+		<item id="ID_DOWNLOADS_FILE_DELETE" text="_Διαγραφή Αρχείου!"/>
 	</menu>
 	<menu name="CDownloadsWnd.Completed">
-		<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="Άνοιγμα"/>
-		<item id="ID_DOWNLOADS_ENQUEUE" text="Προσθήκη στη Λίστα Αναπαραγωγής"/>
-		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="Απόσυρση"/>
+		<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Άνοιγμα"/>
+		<item id="ID_DOWNLOADS_ENQUEUE" text="Προσθήκη στη _Λίστα Αναπαραγωγής"/>
+		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="_Απόσυρση"/>
 		<separator/>
-		<item id="ID_DOWNLOADS_COPY" text="Αντιγραφή URI"/>
+		<item id="ID_DOWNLOADS_COPY" text="Αντι_γραφή URI"/>
 		<separator/>
-		<item id="ID_DOWNLOADS_FILE_DELETE" text="Διαγραφή Αρχείου!"/>
-		<item id="ID_DOWNLOADS_RATE" text="Κριτική Αρχείου..."/>
+		<item id="ID_DOWNLOADS_FILE_DELETE" text="_Διαγραφή Αρχείου!"/>
+		<item id="ID_DOWNLOADS_RATE" text="_Κριτική Αρχείου..."/>
 	</menu>
 	<menu name="CDownloadsWnd.Seeding">
-		<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="Άνοιγμα"/>
-		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="Ματαίωση Seeding"/>
+		<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Άνοιγμα"/>
+		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="_Ματαίωση Seeding"/>
 		<item id="ID_DOWNLOADS_HELP" text="_Βοήθεια..."/>
 		<separator/>
 		<item id="ID_DOWNLOADS_EDIT" text="_Ιδιότητες..."/>
 	</menu>
 	<menu name="CDownloadsWnd.Nothing">
 		<item id="ID_DOWNLOADS_HELP" text="_Βοήθεια..."/>
-		<item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="Απόσυρση Ολοκληρωμένων"/>
-		<item id="ID_DOWNLOADS_AUTO_CLEAR" text="Αυτόματη Απόσυρση"/>
+		<item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="Απόσυρση _Ολοκληρωμένων"/>
+		<item id="ID_DOWNLOADS_AUTO_CLEAR" text="_Αυτόματη Απόσυρση"/>
 	</menu>
 	<menu name="CDownloadTabBar">
-		<item id="ID_DOWNLOAD_GROUP_RESUME" text="Συνέχιση Όλων"/>
-		<item id="ID_DOWNLOAD_GROUP_PAUSE" text="Παύση Όλων"/>
-		<item id="ID_DOWNLOAD_GROUP_CLEAR" text="Απόσυρση Όλων"/>
+		<item id="ID_DOWNLOAD_GROUP_RESUME" text="_Συνέχιση Όλων"/>
+		<item id="ID_DOWNLOAD_GROUP_PAUSE" text="_Παύση Όλων"/>
+		<item id="ID_DOWNLOAD_GROUP_CLEAR" text="_Απόσυρση Όλων"/>
 		<separator/>
-		<item id="ID_DOWNLOAD_GROUP_NEW" text="Νέα Ομάδα..."/>
-		<item id="ID_DOWNLOAD_GROUP_REMOVE" text="Αφαίρεση Ομάδας"/>
+		<item id="ID_DOWNLOAD_GROUP_NEW" text="_Νέα Ομάδα..."/>
+		<item id="ID_DOWNLOAD_GROUP_REMOVE" text="_Αφαίρεση Ομάδας"/>
 		<separator/>
-		<item id="ID_DOWNLOAD_GROUP_SHOW" text="Προβολή Ομάδων"/>
+		<item id="ID_DOWNLOAD_GROUP_SHOW" text="_Προβολή Ομάδων"/>
 		<separator/>
-		<item id="ID_DOWNLOAD_GROUP_PROPERTIES" text="Ιδιότητες"/>
+		<item id="ID_DOWNLOAD_GROUP_PROPERTIES" text="_Ιδιότητες"/>
 	</menu>
 	<menu name="CDownloadsWnd.Filter">
-		<item id="ID_DOWNLOADS_FILTER_ALL" text="Προβολή Όλων"/>
+		<item id="ID_DOWNLOADS_FILTER_ALL" text="Προβολή _Όλων"/>
 		<separator/>
-		<item id="ID_DOWNLOADS_FILTER_ACTIVE" text="Προβολή Ενεργών"/>
-		<item id="ID_DOWNLOADS_FILTER_QUEUED" text="Προβολή Αναμενόντων"/>
-		<item id="ID_DOWNLOADS_FILTER_SOURCES" text="Προβολή Άνευ Πηγών"/>
-		<item id="ID_DOWNLOADS_FILTER_PAUSED" text="Προβολή Σταματημένων"/>
+		<item id="ID_DOWNLOADS_FILTER_ACTIVE" text="Προβολή _Ενεργών"/>
+		<item id="ID_DOWNLOADS_FILTER_QUEUED" text="Προβολή _Αναμενόντων"/>
+		<item id="ID_DOWNLOADS_FILTER_SOURCES" text="Προβολή Άνευ _Πηγών"/>
+		<item id="ID_DOWNLOADS_FILTER_PAUSED" text="Προβολή _Σταματημένων"/>
 		<separator/>
-		<item id="ID_DOWNLOADS_SHOW_SOURCES" text="Προβολή Όλων των Πηγών"/>
-		<item id="ID_DOWNLOAD_GROUP_SHOW" text="Προβολή Ομάδων"/>
+		<item id="ID_DOWNLOADS_SHOW_SOURCES" text="Προβολή _Όλων των Πηγών"/>
+		<item id="ID_DOWNLOAD_GROUP_SHOW" text="_Προβολή Ομάδων"/>
 	</menu>
 	<!-- UPLOADS WINDOW -->
 	<menu name="CUploadsWnd.Upload.Basic">
-		<item id="ID_BROWSE_LAUNCH" text="Περιήγηση Χρήστη"/>
-		<item id="ID_UPLOADS_CHAT" text="Συνομιλία με Χρήστη"/>
+		<item id="ID_BROWSE_LAUNCH" text="Περι_ήγηση Χρήστη"/>
+		<item id="ID_UPLOADS_CHAT" text="_Συνομιλία με Χρήστη"/>
 	</menu>
 	<menu name="CUploadsWnd.Upload">
-		<item id="ID_UPLOADS_START" text="Άμεση Εκκίνηση"/>
-		<item id="ID_UPLOADS_CLEAR" text="Αφαίρεση Αποστολής"/>
+		<item id="ID_UPLOADS_START" text="Άμεση _Εκκίνηση"/>
+		<item id="ID_UPLOADS_CLEAR" text="_Αφαίρεση Αποστολής"/>
 		<separator/>
-		<item id="ID_BROWSE_LAUNCH" text="Περιήγηση Χρήστη"/>
-		<item id="ID_UPLOADS_CHAT" text="Συνομιλία με Χρήστη"/>
-		<item id="ID_SECURITY_BAN" text="Αποκλεισμός Χρήστη"/>
+		<item id="ID_BROWSE_LAUNCH" text="Περι_ήγηση Χρήστη"/>
+		<item id="ID_UPLOADS_CHAT" text="_Συνομιλία με Χρήστη"/>
+		<item id="ID_SECURITY_BAN" text="Απο_κλεισμός Χρήστη"/>
 	</menu>
 	<menu name="CUploadsWnd.Queue">
-		<item id="ID_UPLOADS_EDIT_QUEUE" text="Ρυθμίσεις Ουράς"/>
-		<item id="ID_UPLOADS_CLEAR_COMPLETED" text="Απόσυρση Ολοκληρωμένων"/>
-		<item id="ID_UPLOADS_AUTO_CLEAR" text="Αυτόματη Απόσυρση"/>
+		<item id="ID_UPLOADS_EDIT_QUEUE" text="Ρυθμίσεις _Ουράς"/>
+		<item id="ID_UPLOADS_CLEAR_COMPLETED" text="Απόσυρση _Ολοκληρωμένων"/>
+		<item id="ID_UPLOADS_AUTO_CLEAR" text="_Αυτόματη Απόσυρση"/>
 	</menu>
 	<menu name="CUploadsWnd.Nothing">
-		<item id="ID_UPLOADS_HELP" text="Βοήθεια..."/>
-		<item id="ID_UPLOADS_CLEAR_COMPLETED" text="Απόσυρση Ολοκληρωμένων"/>
-		<item id="ID_UPLOADS_AUTO_CLEAR" text="Αυτόματη Απόσυρση"/>
+		<item id="ID_UPLOADS_HELP" text="_Βοήθεια..."/>
+		<item id="ID_UPLOADS_CLEAR_COMPLETED" text="Απόσυρση _Ολοκληρωμένων"/>
+		<item id="ID_UPLOADS_AUTO_CLEAR" text="_Αυτόματη Απόσυρση"/>
 	</menu>
 	<menu name="CUploadsWnd.Filter">
-		<item id="ID_UPLOADS_FILTER_ALL" text="Προβολή Όλων"/>
+		<item id="ID_UPLOADS_FILTER_ALL" text="Προβολή _Όλων"/>
 		<separator/>
-		<item id="ID_UPLOADS_FILTER_ACTIVE" text="Προβολή Ενεργών"/>
-		<item id="ID_UPLOADS_FILTER_QUEUED" text="Προβολή Αναμενόντων"/>
-		<item id="ID_UPLOADS_FILTER_TORRENT" text="Προβολή Torrent"/>
-		<item id="ID_UPLOADS_FILTER_HISTORY" text="Προβολή Ιστορικού"/>
+		<item id="ID_UPLOADS_FILTER_ACTIVE" text="Προβολή _Ενεργών"/>
+		<item id="ID_UPLOADS_FILTER_QUEUED" text="Προβολή _Αναμενόντων"/>
+		<item id="ID_UPLOADS_FILTER_TORRENT" text="Προβολή _Torrent"/>
+		<item id="ID_UPLOADS_FILTER_HISTORY" text="Προβολή _Ιστορικού"/>
 	</menu>
 	<!-- LIBRARY FRAME -->
 	<menu name="CLibraryTree.Physical.Basic">
-		<item id="ID_LIBRARY_SHARED_FOLDER" text="Κοινοποιημένο"/>
-		<item id="ID_LIBRARY_REMOVE" text="Αφαίρεση"/>
+		<item id="ID_LIBRARY_SHARED_FOLDER" text="_Κοινοποιημένο"/>
+		<item id="ID_LIBRARY_REMOVE" text="_Αφαίρεση"/>
 		<separator/>
-		<item id="ID_LIBRARY_FOLDERS" text="Κοινοποιημένοι Φάκελοι..."/>
+		<item id="ID_LIBRARY_FOLDERS" text="Κοινοποιημένοι _Φάκελοι..."/>
 	</menu>
 	<menu name="CLibraryTree.Physical">
-		<item id="ID_LIBRARY_EXPLORE" text="Εξερεύνηση"/>
-		<item id="ID_LIBRARY_REMOVE" text="Αφαίρεση"/>
+		<item id="ID_LIBRARY_EXPLORE" text="_Εξερεύνηση"/>
+		<item id="ID_LIBRARY_REMOVE" text="_Αφαίρεση"/>
 		<separator/>
-		<item id="ID_LIBRARY_SHARED_FOLDER" text="Κοινοποιημένο"/>
+		<item id="ID_LIBRARY_SHARED_FOLDER" text="_Κοινοποιημένο"/>
 		<separator/>
-		<item id="ID_LIBRARY_SCAN" text="Σάρωση"/>
-		<item id="ID_LIBRARY_REBUILD" text="Αναδόμηση"/>
-		<item id="ID_LIBRARY_FOLDERS" text="Κοινοποιημένοι Φάκελοι..."/>
+		<item id="ID_LIBRARY_SCAN" text="_Σάρωση"/>
+		<item id="ID_LIBRARY_REBUILD" text="Ανα_δόμηση"/>
+		<item id="ID_LIBRARY_FOLDERS" text="Κοινοποιημένοι _Φάκελοι..."/>
 		<separator/>
-		<item id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" text="Ιδιότητες Αρχείου"/>
+		<item id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" text="_Ιδιότητες Αρχείου"/>
 	</menu>
 	<menu name="CLibraryTree.Virtual.Basic">
-		<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Αναπαραγωγή Album"/>
-		<item id="ID_LIBRARY_FOLDER_DELETE" text="Διαγραφή"/>
+		<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="_Αναπαραγωγή Album"/>
+		<item id="ID_LIBRARY_FOLDER_DELETE" text="_Διαγραφή"/>
 		<separator/>
-		<item id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" text="Ιδιότητες Αρχείου"/>
-		<item id="ID_LIBRARY_FOLDER_PROPERTIES" text="Ιδιότητες Φακέλου"/>
+		<item id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" text="Ιδιότητες Αρ_χείου"/>
+		<item id="ID_LIBRARY_FOLDER_PROPERTIES" text="Ιδιότητες _Φακέλου"/>
 	</menu>
 	<menu name="CLibraryTree.Virtual">
-		<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Αναπαραγωγή Album"/>
-		<item id="ID_LIBRARY_FOLDER_DELETE" text="Διαγραφή"/>
+		<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="_Αναπαραγωγή Album"/>
+		<item id="ID_LIBRARY_FOLDER_DELETE" text="_Διαγραφή"/>
 		<separator/>
-		<item id="ID_LIBRARY_REBUILD" text="Αναδόμηση"/>
+		<item id="ID_LIBRARY_REBUILD" text="Ανα_δόμηση"/>
 		<item id="ID_LIBRARY_EXPORT_COLLECTION" text="_Εξαγωγή Συλλογής..."/>
 		<separator/>
-		<item id="ID_LIBRARY_FOLDER_NEW" text="Νέο Album..."/>
+		<item id="ID_LIBRARY_FOLDER_NEW" text="_Νέο Album..."/>
 		<separator/>
-		<item id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" text="Ιδιότητες Αρχείου"/>
-		<item id="ID_LIBRARY_FOLDER_PROPERTIES" text="Ιδιότητες Album"/>
+		<item id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" text="_Ιδιότητες Αρχείου"/>
+		<item id="ID_LIBRARY_FOLDER_PROPERTIES" text="Ιδιότητες _Album"/>
 	</menu>
 	<!-- LIBRARY VIEWS -->
 	<menu name="CLibraryTileView">
-		<item id="ID_LIBRARY_ALBUM_OPEN" text="Άνοιγμα"/>
-		<item id="ID_LIBRARY_ALBUM_DELETE" text="Διαγραφή"/>
+		<item id="ID_LIBRARY_ALBUM_OPEN" text="_Άνοιγμα"/>
+		<item id="ID_LIBRARY_ALBUM_DELETE" text="_Διαγραφή"/>
 		<separator/>
-		<item id="ID_LIBRARY_ALBUM_PROPERTIES" text="Ιδιότητες"/>
+		<item id="ID_LIBRARY_ALBUM_PROPERTIES" text="_Ιδιότητες"/>
 	</menu>
 	<menu name="CLibraryFileView.Physical.Basic">
-		<item id="ID_LIBRARY_LAUNCH" text="Άνοιγμα"/>
-		<item id="ID_LIBRARY_ENQUEUE" text="Προσθήκη στη Λίστα Αναπαραγωγής"/>
+		<item id="ID_LIBRARY_LAUNCH" text="_Άνοιγμα"/>
+		<item id="ID_LIBRARY_ENQUEUE" text="Προσθήκη στη _Λίστα Αναπαραγωγής"/>
 		<separator/>
-		<item id="ID_LIBRARY_SHARED_FILE" text="Κοινοποιημένο"/>
+		<item id="ID_LIBRARY_SHARED_FILE" text="_Κοινοποιημένο"/>
 		<separator/>
-		<item id="ID_LIBRARY_DELETE" text="Διαγραφή!"/>
+		<item id="ID_LIBRARY_DELETE" text="_Διαγραφή!"/>
 		<separator/>
-		<menu text="Αναζήτηση Για">
+		<menu text="Ανα_ζήτηση Για">
 			<item id="ID_SEARCH_FOR_THIS" text="_Αυτό το Αρχείο"/>
 			<item id="ID_SEARCH_FOR_SIMILAR" text="_Παρόμοια Αρχεία"/>
 			<separator/>
-			<item id="ID_SEARCH_FOR_ARTIST" text="Μουσική από τον ίδιο Καλλιτέχνη"/>
-			<item id="ID_SEARCH_FOR_ALBUM" text="Μουσική από το ίδιο Album"/>
-			<item id="ID_SEARCH_FOR_SERIES" text="Επεισόδια από την ίδια Σειρά"/>
+			<item id="ID_SEARCH_FOR_ARTIST" text="Μουσική από τον ίδιο _Καλλιτέχνη"/>
+			<item id="ID_SEARCH_FOR_ALBUM" text="Μουσική από το ίδιο _Album"/>
+			<item id="ID_SEARCH_FOR_SERIES" text="_Επεισόδια από την ίδια Σειρά"/>
 		</menu>
-		<menu text="_Υπηρεσίες web">
-			<item id="ID_LIBRARY_BITZI_WEB" text="Προβολή Bitzi Ticket"/>
-			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="Λήψη Metadata"/>
+		<menu text="_Υπηρεσίες Ιστού">
+			<item id="ID_LIBRARY_BITZI_WEB" text="Προβολή _Bitzi Ticket"/>
+			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="Λήψη _Metadata"/>
 			<separator/>
 			<item id="ID_LIBRARY_URL" text=""/>
 		</menu>
-		<menu text="Οργάνωση">
-			<item id="ID_LIBRARY_RENAME" text="Μετονομασία Αρχείου"/>
-			<item id="ID_LIBRARY_MOVE" text="Μετακίνηση Αρχείου..."/>
-			<item id="ID_LIBRARY_COPY" text="Αντιγραφή Αρχείου..."/>
+		<menu text="_Οργάνωση">
+			<item id="ID_LIBRARY_RENAME" text="_Μετονομασία Αρχείου"/>
+			<item id="ID_LIBRARY_MOVE" text="Μετα_κίνηση Αρχείου..."/>
+			<item id="ID_LIBRARY_COPY" text="_Αντιγραφή Αρχείου..."/>
 		</menu>
-		<item id="ID_LIBRARY_REBUILD_ANSI" text="Localise Metadata"/>
-		<item id="ID_LIBRARY_REFRESH_METADATA" text="Ανανέωση Metadata"/>
+		<item id="ID_LIBRARY_REBUILD_ANSI" text="_Localise Metadata"/>
+		<item id="ID_LIBRARY_REFRESH_METADATA" text="_Ανανέωση Metadata"/>
 		<separator/>
-		<item id="ID_LIBRARY_PROPERTIES" text="Ιδιότητες"/>
+		<item id="ID_LIBRARY_PROPERTIES" text="_Ιδιότητες"/>
 	</menu>
 	<menu name="CLibraryFileView.Physical">
-		<item id="ID_LIBRARY_LAUNCH" text="Άνοιγμα"/>
-		<item id="ID_LIBRARY_ENQUEUE" text="Προσθήκη στη Λίστα Αναπαραγωγής"/>
+		<item id="ID_LIBRARY_LAUNCH" text="_Άνοιγμα"/>
+		<item id="ID_LIBRARY_ENQUEUE" text="Προσθήκη στη _Λίστα Αναπαραγωγής"/>
 		<separator/>
-		<item id="ID_LIBRARY_SHARED_FILE" text="Κοινοποιημένο"/>
+		<item id="ID_LIBRARY_SHARED_FILE" text="_Κοινοποιημένο"/>
 		<separator/>
 		<item id="ID_LIBRARY_URL" text=""/>
-		<item id="ID_LIBRARY_DELETE" text="Διαγραφή!"/>
+		<item id="ID_LIBRARY_DELETE" text="_Διαγραφή!"/>
 		<separator/>
-		<menu text="Αναζήτηση Για">
-			<item id="ID_SEARCH_FOR_THIS" text="Αυτό το Αρχείο"/>
-			<item id="ID_SEARCH_FOR_SIMILAR" text="Παρόμοια Αρχεία"/>
+		<menu text="Ανα_ζήτηση Για">
+			<item id="ID_SEARCH_FOR_THIS" text="_Αυτό το Αρχείο"/>
+			<item id="ID_SEARCH_FOR_SIMILAR" text="_Παρόμοια Αρχεία"/>
 			<separator/>
-			<item id="ID_SEARCH_FOR_ARTIST" text="Μουσική απο τον ίδιο Καλλιτέχνη"/>
-			<item id="ID_SEARCH_FOR_ALBUM" text="Μουσική απο το ίδιο Album"/>
-			<item id="ID_SEARCH_FOR_SERIES" text="Επεισόδια από την ίδια Σειρά"/>
+			<item id="ID_SEARCH_FOR_ARTIST" text="Μουσική απο τον ίδιο _Καλλιτέχνη"/>
+			<item id="ID_SEARCH_FOR_ALBUM" text="Μουσική απο το ίδιο _Album"/>
+			<item id="ID_SEARCH_FOR_SERIES" text="_Επεισόδια από την ίδια Σειρά"/>
 		</menu>
-		<menu text="Υπηρεσίες web">
-			<item id="ID_LIBRARY_BITZI_WEB" text="Προβολή Bitzi Ticket"/>
-			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="Λήψη Metadata"/>
+		<menu text="_Υπηρεσίες Ιστού">
+			<item id="ID_LIBRARY_BITZI_WEB" text="Προβολή _Bitzi Ticket"/>
+			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="Λήψη _Metadata"/>
 			<separator/>
 			<item id="ID_LIBRARY_CREATETORRENT" text="Δημιουργία Αρχείου .torrent"/>
 		</menu>
 		<menu text="_Οργάνωση">
 			<item id="ID_LIBRARY_RENAME" text="_Μετονομασία Αρχείου"/>
-			<item id="ID_LIBRARY_MOVE" text="Μετακίνηση Αρχείου..."/>
-			<item id="ID_LIBRARY_COPY" text="Αντιγραφή Αρχείου..."/>
+			<item id="ID_LIBRARY_MOVE" text="Μετα_κίνηση Αρχείου..."/>
+			<item id="ID_LIBRARY_COPY" text="_Αντιγραφή Αρχείου..."/>
 		</menu>
-		<item id="ID_LIBRARY_REBUILD_ANSI" text="Localise Metadata"/>
-		<item id="ID_LIBRARY_REFRESH_METADATA" text="Ανανέωση Metadata"/>
+		<item id="ID_LIBRARY_REBUILD_ANSI" text="_Localise Metadata"/>
+		<item id="ID_LIBRARY_REFRESH_METADATA" text="_Ανανέωση Metadata"/>
 		<separator/>
-		<item id="ID_LIBRARY_COLUMNS" text="Επιλογή Στηλών..."/>
+		<item id="ID_LIBRARY_COLUMNS" text="Επιλογή _Στηλών..."/>
 		<separator/>
-		<item id="ID_SHELL_MENU" text="Shell menu"/>
+		<item id="ID_SHELL_MENU" text="S_hell menu"/>
 		<separator/>
-		<item id="ID_LIBRARY_PROPERTIES" text="Ιδιότητες"/>
+		<item id="ID_LIBRARY_PROPERTIES" text="_Ιδιότητες"/>
 	</menu>
 	<menu name="CLibraryFileView.Virtual.Basic">
-		<item id="ID_LIBRARY_LAUNCH" text="Άνοιγμα"/>
-		<item id="ID_LIBRARY_ENQUEUE" text="Προσθήκη στη Λίστα Αναπαραγωγής"/>
-		<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Αναπαραγωγή Album"/>
+		<item id="ID_LIBRARY_LAUNCH" text="_Άνοιγμα"/>
+		<item id="ID_LIBRARY_ENQUEUE" text="Προσθήκη στη _Λίστα Αναπαραγωγής"/>
+		<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Αναπαραγωγή _Album"/>
 		<separator/>
-		<item id="ID_LIBRARY_SHARED_FILE" text="Κοινοποιημένο"/>
+		<item id="ID_LIBRARY_SHARED_FILE" text="_Κοινοποιημένο"/>
 		<separator/>
-		<item id="ID_LIBRARY_DELETE" text="Διαγραφή!"/>
+		<item id="ID_LIBRARY_DELETE" text="_Διαγραφή!"/>
 		<separator/>
-		<menu text="Αναζήτηση Για">
-			<item id="ID_SEARCH_FOR_THIS" text="Αυτό το Αρχείο"/>
-			<item id="ID_SEARCH_FOR_SIMILAR" text="Παρόμοια Αρχεία"/>
+		<menu text="Ανα_ζήτηση Για">
+			<item id="ID_SEARCH_FOR_THIS" text="_Αυτό το Αρχείο"/>
+			<item id="ID_SEARCH_FOR_SIMILAR" text="_Παρόμοια Αρχεία"/>
 			<separator/>
-			<item id="ID_SEARCH_FOR_ARTIST" text="Μουσική απο τον ίδιο Καλλιτέχνη"/>
-			<item id="ID_SEARCH_FOR_ALBUM" text="Μουσική απο το ίδιο Album"/>
-			<item id="ID_SEARCH_FOR_SERIES" text="Επεισόδια από την ίδια Σειρά"/>
+			<item id="ID_SEARCH_FOR_ARTIST" text="Μουσική απο τον ίδιο _Καλλιτέχνη"/>
+			<item id="ID_SEARCH_FOR_ALBUM" text="Μουσική απο το ίδιο _Album"/>
+			<item id="ID_SEARCH_FOR_SERIES" text="_Επεισόδια από την ίδια Σειρά"/>
 		</menu>
-		<menu text="Υπηρεσίες web">
-			<item id="ID_LIBRARY_BITZI_WEB" text="Προβολή Bitzi Ticket"/>
-			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="Λήψη Metadata"/>
+		<menu text="_Υπηρεσίες Ιστού">
+			<item id="ID_LIBRARY_BITZI_WEB" text="Προβολή _Bitzi Ticket"/>
+			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="Λήψη _Metadata"/>
 			<separator/>
 			<item id="ID_LIBRARY_URL" text=""/>
 		</menu>
-		<menu text="Οργάνωση">
-			<item id="ID_LIBRARY_RENAME" text="Μετονομασία Αρχείου"/>
-			<item id="ID_LIBRARY_UNLINK" text="Αφαίρεση Αρχείων"/>
+		<menu text="_Οργάνωση">
+			<item id="ID_LIBRARY_RENAME" text="_Μετονομασία Αρχείου"/>
+			<item id="ID_LIBRARY_UNLINK" text="_Αφαίρεση Αρχείων"/>
 			<separator/>
-			<item id="ID_LIBRARY_MOVE" text="Μετακίνηση Αρχείων..."/>
-			<item id="ID_LIBRARY_COPY" text="Αντιγραφή Αρχείων..."/>
+			<item id="ID_LIBRARY_MOVE" text="Μετα_κίνηση Αρχείων..."/>
+			<item id="ID_LIBRARY_COPY" text="Αντι_γραφή Αρχείων..."/>
 		</menu>
-		<item id="ID_LIBRARY_REBUILD_ANSI" text="Localise Metadata"/>
-		<item id="ID_LIBRARY_REFRESH_METADATA" text="Ανανέωση Metadata"/>
+		<item id="ID_LIBRARY_REBUILD_ANSI" text="_Localise Metadata"/>
+		<item id="ID_LIBRARY_REFRESH_METADATA" text="_Ανανέωση Metadata"/>
 		<separator/>
-		<item id="ID_LIBRARY_PROPERTIES" text="Ιδιότητες"/>
+		<item id="ID_LIBRARY_PROPERTIES" text="_Ιδιότητες"/>
 	</menu>
 	<menu name="CLibraryFileView.Virtual">
-		<item id="ID_LIBRARY_LAUNCH" text="Άνοιγμα"/>
-		<item id="ID_LIBRARY_ENQUEUE" text="Προσθήκη στη Λίστα Αναπαραγωγής"/>
+		<item id="ID_LIBRARY_LAUNCH" text="_Άνοιγμα"/>
+		<item id="ID_LIBRARY_ENQUEUE" text="Προσθήκη στη _Λίστα Αναπαραγωγής"/>
 		<separator/>
-		<item id="ID_LIBRARY_SHARED_FILE" text="Κοινοποιημένο"/>
+		<item id="ID_LIBRARY_SHARED_FILE" text="_Κοινοποιημένο"/>
 		<separator/>
 		<item id="ID_LIBRARY_URL" text=""/>
-		<item id="ID_LIBRARY_DELETE" text="Διαγραφή!"/>
+		<item id="ID_LIBRARY_DELETE" text="_Διαγραφή!"/>
 		<separator/>
-		<menu text="Αναζήτηση Για">
-			<item id="ID_SEARCH_FOR_THIS" text="Αυτό το Αρχείο"/>
-			<item id="ID_SEARCH_FOR_SIMILAR" text="Παρόμοια Αρχεία"/>
+		<menu text="Ανα_ζήτηση Για">
+			<item id="ID_SEARCH_FOR_THIS" text="_Αυτό το Αρχείο"/>
+			<item id="ID_SEARCH_FOR_SIMILAR" text="_Παρόμοια Αρχεία"/>
 			<separator/>
-			<item id="ID_SEARCH_FOR_ARTIST" text="Μουσική απο τον ίδιο Καλλιτέχνη"/>
-			<item id="ID_SEARCH_FOR_ALBUM" text="Μουσική απο το ίδιο Album"/>
-			<item id="ID_SEARCH_FOR_SERIES" text="Επεισόδια από την ίδια Σειρά"/>
+			<item id="ID_SEARCH_FOR_ARTIST" text="Μουσική απο τον ίδιο _Καλλιτέχνη"/>
+			<item id="ID_SEARCH_FOR_ALBUM" text="Μουσική απο το ίδιο _Album"/>
+			<item id="ID_SEARCH_FOR_SERIES" text="_Επεισόδια από την ίδια Σειρά"/>
 		</menu>
-		<menu text="Yπηρεσίες web">
-			<item id="ID_LIBRARY_BITZI_WEB" text="Προβολή Bitzi Ticket"/>
-			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="Λήψη Metadata"/>
+		<menu text="_Yπηρεσίες web">
+			<item id="ID_LIBRARY_BITZI_WEB" text="Προβολή _Bitzi Ticket"/>
+			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="Λήψη _Metadata"/>
 			<separator/>
 			<item id="ID_LIBRARY_CREATETORRENT" text="Δημιουργία Αρχείου .torrent"/>
 		</menu>
-		<menu text="Οργάνωση">
-			<item id="ID_LIBRARY_UNLINK" text="Αφαίρεση Αρχείων"/>
+		<menu text="_Οργάνωση">
+			<item id="ID_LIBRARY_UNLINK" text="_Αφαίρεση Αρχείων"/>
 			<separator/>
-			<item id="ID_LIBRARY_RENAME" text="Μετονομασία Αρχείου"/>
-			<item id="ID_LIBRARY_MOVE" text="Μετακίνηση Αρχείων..."/>
-			<item id="ID_LIBRARY_COPY" text="Αντιγραφή Αρχείων..."/>
+			<item id="ID_LIBRARY_RENAME" text="_Μετονομασία Αρχείου"/>
+			<item id="ID_LIBRARY_MOVE" text="Μετα_κίνηση Αρχείων..."/>
+			<item id="ID_LIBRARY_COPY" text="Αντι_γραφή Αρχείων..."/>
 		</menu>
-		<item id="ID_LIBRARY_REBUILD_ANSI" text="Localise Metadata"/>
-		<item id="ID_LIBRARY_REFRESH_METADATA" text="Ανανέωση Metadata"/>
+		<item id="ID_LIBRARY_REBUILD_ANSI" text="_Localise Metadata"/>
+		<item id="ID_LIBRARY_REFRESH_METADATA" text="_Ανανέωση Metadata"/>
 		<separator/>
-		<item id="ID_LIBRARY_COLUMNS" text="Επιλογή Στηλών..."/>
+		<item id="ID_LIBRARY_COLUMNS" text="Επιλογή _Στηλών..."/>
 		<separator/>
-		<item id="ID_LIBRARY_PROPERTIES" text="Ιδιότητες"/>
+		<item id="ID_LIBRARY_PROPERTIES" text="_Ιδιότητες"/>
 	</menu>
 	<!-- MEDIA WINDOW -->
 	<menu name="CMediaFrame.Basic">
-		<item id="ID_MEDIA_PLAY" text="Αναπαραγωγή"/>
-		<item id="ID_MEDIA_PAUSE" text="Παύση"/>
-		<item id="ID_MEDIA_STOP" text="Διακοπή"/>
+		<item id="ID_MEDIA_PLAY" text="_Αναπαραγωγή"/>
+		<item id="ID_MEDIA_PAUSE" text="_Παύση"/>
+		<item id="ID_MEDIA_STOP" text="_Διακοπή"/>
 		<separator/>
-		<item id="ID_MEDIA_OPEN" text="Άνοιγμα Αρχείου Πολυμέσων..."/>
+		<item id="ID_MEDIA_OPEN" text="_Άνοιγμα Αρχείου Πολυμέσων..."/>
 		<separator/>
-		<menu text="Λίστα Αναπαραγωγής">
-			<item id="ID_MEDIA_PREVIOUS" text="Προηγούμενο"/>
-			<item id="ID_MEDIA_NEXT" text="Επόμενο"/>
-			<item id="ID_MEDIA_RANDOM" text="Τυχαίο"/>
-			<item id="ID_MEDIA_REPEAT" text="Επανάληψη"/>
+		<menu text="_Λίστα Αναπαραγωγής">
+			<item id="ID_MEDIA_PREVIOUS" text="Προ_ηγούμενο"/>
+			<item id="ID_MEDIA_NEXT" text="_Επόμενο"/>
+			<item id="ID_MEDIA_RANDOM" text="_Τυχαίο"/>
+			<item id="ID_MEDIA_REPEAT" text="_Επανάληψη"/>
 			<separator/>
-			<item id="ID_MEDIA_PLAYLIST" text="Προβολή Λίστας Αναπαραγωγής"/>
+			<item id="ID_MEDIA_PLAYLIST" text="Προβολή _Λίστας Αναπαραγωγής"/>
 		</menu>
 		<menu text="_Μέγεθος Video">
-			<item id="ID_MEDIA_SIZE_ONE" text="Αρχικό Μέγεθος"/>
-			<item id="ID_MEDIA_SIZE_TWO" text="Διπλάσιο Μέγεθος"/>
-			<item id="ID_MEDIA_SIZE_THREE" text="Τριπλάσιο Μέγεθος"/>
-			<item id="ID_MEDIA_SIZE_FILL" text="Μέγιστο"/>
-			<item id="ID_MEDIA_SIZE_DISTORT" text="Γέμισμα Παραθύρου"/>
+			<item id="ID_MEDIA_SIZE_ONE" text="_Αρχικό Μέγεθος"/>
+			<item id="ID_MEDIA_SIZE_TWO" text="_Διπλάσιο Μέγεθος"/>
+			<item id="ID_MEDIA_SIZE_THREE" text="_Τριπλάσιο Μέγεθος"/>
+			<item id="ID_MEDIA_SIZE_FILL" text="_Μέγιστο"/>
+			<item id="ID_MEDIA_SIZE_DISTORT" text="_Γέμισμα Παραθύρου"/>
 			<separator/>
-			<item id="ID_MEDIA_ASPECT_DEFAULT" text="Προεπιλεγμένη Αναλογία"/>
-			<item id="ID_MEDIA_ASPECT_4_3" text="4:3 (Αναλογία Τηλεόρασης)"/>
-			<item id="ID_MEDIA_ASPECT_16_9" text="16:9 (Αναλογία Κινηματογράφου)"/>
+			<item id="ID_MEDIA_ASPECT_DEFAULT" text="Προ_επιλεγμένη Αναλογία"/>
+			<item id="ID_MEDIA_ASPECT_4_3" text="_4:3 (Αναλογία Τηλεόρασης)"/>
+			<item id="ID_MEDIA_ASPECT_16_9" text="_16:9 (Αναλογία Κινηματογράφου)"/>
 			<separator/>
-			<item id="ID_MEDIA_FULLSCREEN" text="Πλήρης Οθόνη"/>
+			<item id="ID_MEDIA_FULLSCREEN" text="_Πλήρης Οθόνη"/>
 		</menu>
-		<menu text="Ρυθμίσεις">
-			<item id="ID_MEDIA_VIS" text="Επιλογή Απεικόνισης..."/>
+		<menu text="_Ρυθμίσεις">
+			<item id="ID_MEDIA_VIS" text="Επιλογή _Απεικόνισης..."/>
 			<separator/>
-			<item id="ID_MEDIA_PLAYLIST" text="Προβολή Λίστας Αναπαραγωγής"/>
-			<item id="ID_MEDIA_STATUS" text="Προβολή Γραμμής Κατάστασης"/>
+			<item id="ID_MEDIA_PLAYLIST" text="Προβολή _Λίστας Αναπαραγωγής"/>
+			<item id="ID_MEDIA_STATUS" text="Προβολή Γραμμής _Κατάστασης"/>
 			<separator/>
-			<item id="ID_MEDIA_SETTINGS" text="Ρυθμίσεις Πολυμέσων..."/>
+			<item id="ID_MEDIA_SETTINGS" text="_Ρυθμίσεις Πολυμέσων..."/>
 		</menu>
 	</menu>
 	<menu name="CMediaFrame">
-		<item id="ID_MEDIA_PLAY" text="Αναπαραγωγή"/>
-		<item id="ID_MEDIA_PAUSE" text="Παύση"/>
-		<item id="ID_MEDIA_STOP" text="Διακοπή"/>
+		<item id="ID_MEDIA_PLAY" text="_Αναπαραγωγή"/>
+		<item id="ID_MEDIA_PAUSE" text="_Παύση"/>
+		<item id="ID_MEDIA_STOP" text="_Διακοπή"/>
 		<separator/>
-		<item id="ID_MEDIA_OPEN" text="Άνοιγμα Αρχείου Πολυμέσων..."/>
-		<item id="ID_MEDIA_CLOSE" text="Κλείσιμο Αρχείου"/>
+		<item id="ID_MEDIA_OPEN" text="_Άνοιγμα Αρχείου Πολυμέσων..."/>
+		<item id="ID_MEDIA_CLOSE" text="_Κλείσιμο Αρχείου"/>
 		<separator/>
 		<menu text="_Λίστα Αναπαραγωγής">
-			<item id="ID_MEDIA_PREVIOUS" text="Προηγούμενο"/>
-			<item id="ID_MEDIA_NEXT" text="Επόμενο"/>
-			<item id="ID_MEDIA_RANDOM" text="Τυχαίο"/>
-			<item id="ID_MEDIA_REPEAT" text="Επανάληψη"/>
+			<item id="ID_MEDIA_PREVIOUS" text="Προ_ηγούμενο"/>
+			<item id="ID_MEDIA_NEXT" text="_Επόμενο"/>
+			<item id="ID_MEDIA_RANDOM" text="_Τυχαίο"/>
+			<item id="ID_MEDIA_REPEAT" text="_Επανάληψη"/>
 			<separator/>
-			<item id="ID_MEDIA_PLAYLIST" text="Προβολή Λίστας Αναπαραγωγής"/>
+			<item id="ID_MEDIA_PLAYLIST" text="Προβολή _Λίστας Αναπαραγωγής"/>
 		</menu>
 		<menu text="_Μέγεθος Video">
-			<item id="ID_MEDIA_SIZE_ONE" text="Αρχικό Μέγεθος"/>
-			<item id="ID_MEDIA_SIZE_TWO" text="Διπλάσιο Μέγεθος"/>
-			<item id="ID_MEDIA_SIZE_THREE" text="Τριπλάσιο Μέγεθος"/>
-			<item id="ID_MEDIA_SIZE_FILL" text="Μέγιστο"/>
-			<item id="ID_MEDIA_SIZE_DISTORT" text="Γέμισμα Παραθύρου"/>
+			<item id="ID_MEDIA_SIZE_ONE" text="_Αρχικό Μέγεθος"/>
+			<item id="ID_MEDIA_SIZE_TWO" text="_Διπλάσιο Μέγεθος"/>
+			<item id="ID_MEDIA_SIZE_THREE" text="_Τριπλάσιο Μέγεθος"/>
+			<item id="ID_MEDIA_SIZE_FILL" text="_Μέγιστο"/>
+			<item id="ID_MEDIA_SIZE_DISTORT" text="_Γέμισμα Παραθύρου"/>
 			<separator/>
-			<item id="ID_MEDIA_ASPECT_DEFAULT" text="Προεπιλεγμένη Αναλογία"/>
-			<item id="ID_MEDIA_ASPECT_4_3" text="4:3 (Αναλογία Τηλεόρασης)"/>
-			<item id="ID_MEDIA_ASPECT_16_9" text="16:9 (Αναλογία Κινηματογράφου)"/>
+			<item id="ID_MEDIA_ASPECT_DEFAULT" text="Προ_επιλεγμένη Αναλογία"/>
+			<item id="ID_MEDIA_ASPECT_4_3" text="_4:3 (Αναλογία Τηλεόρασης)"/>
+			<item id="ID_MEDIA_ASPECT_16_9" text="_16:9 (Αναλογία Κινηματογράφου)"/>
 			<separator/>
-			<item id="ID_MEDIA_FULLSCREEN" text="Πλήρης οθόνη"/>
+			<item id="ID_MEDIA_FULLSCREEN" text="_Πλήρης οθόνη"/>
 		</menu>
 		<menu text="Ρυθμίσεις">
-			<item id="ID_MEDIA_VIS" text="Επιλογή Απεικόνισης..."/>
+			<item id="ID_MEDIA_VIS" text="Επιλογή _Απεικόνισης..."/>
 			<separator/>
-			<item id="ID_MEDIA_PLAYLIST" text="Προβολή Λίστας Αναπαραγωγής"/>
-			<item id="ID_MEDIA_STATUS" text="Προβολή Γραμμής Κατάστασης"/>
+			<item id="ID_MEDIA_PLAYLIST" text="Προβολή _Λίστας Αναπαραγωγής"/>
+			<item id="ID_MEDIA_STATUS" text="Προβολή Γραμμής _Κατάστασης"/>
 			<separator/>
-			<item id="ID_MEDIA_SETTINGS" text="Ρυθμίσεις Πολυμέσων..."/>
+			<item id="ID_MEDIA_SETTINGS" text="_Ρυθμίσεις Πολυμέσων..."/>
 		</menu>
 	</menu>
 	<menu name="CMediaFrame.Zoom">
-		<item id="ID_MEDIA_SIZE_ONE" text="Αρχικό Μέγεθος"/>
-		<item id="ID_MEDIA_SIZE_TWO" text="Διπλάσιο Μέγεθος"/>
-		<item id="ID_MEDIA_SIZE_THREE" text="Τριπλάσιο Μέγεθος"/>
-		<item id="ID_MEDIA_SIZE_FILL" text="Μέγιστο"/>
-		<item id="ID_MEDIA_SIZE_DISTORT" text="Γέμισμα Παραθύρου"/>
+		<item id="ID_MEDIA_SIZE_ONE" text="_Αρχικό Μέγεθος"/>
+		<item id="ID_MEDIA_SIZE_TWO" text="_Διπλάσιο Μέγεθος"/>
+		<item id="ID_MEDIA_SIZE_THREE" text="_Τριπλάσιο Μέγεθος"/>
+		<item id="ID_MEDIA_SIZE_FILL" text="_Μέγιστο"/>
+		<item id="ID_MEDIA_SIZE_DISTORT" text="_Γέμισμα Παραθύρου"/>
 		<separator/>
-		<item id="ID_MEDIA_ASPECT_DEFAULT" text="Προεπιλεγμένη Αναλογία"/>
-		<item id="ID_MEDIA_ASPECT_4_3" text="4:3 (Αναλογία Τηλεόρασης)"/>
-		<item id="ID_MEDIA_ASPECT_16_9" text="16:9 (Αναλογία Κινηματογράφου)"/>
+		<item id="ID_MEDIA_ASPECT_DEFAULT" text="Προ_επιλεγμένη Αναλογία"/>
+		<item id="ID_MEDIA_ASPECT_4_3" text="_4:3 (Αναλογία Τηλεόρασης)"/>
+		<item id="ID_MEDIA_ASPECT_16_9" text="_16:9 (Αναλογία Κινηματογράφου)"/>
 	</menu>
 	<menu name="CMediaList">
-		<item id="ID_MEDIA_SELECT" text="Αναπαραγωγή"/>
-		<item id="ID_MEDIA_RATE" text="Κριτική Αρχείου..."/>
-		<item id="ID_MEDIA_PROPERTIES" text="Ιδιότητες..."/>
+		<item id="ID_MEDIA_SELECT" text="_Αναπαραγωγή"/>
+		<item id="ID_MEDIA_RATE" text="_Κριτική Αρχείου..."/>
+		<item id="ID_MEDIA_PROPERTIES" text="_Ιδιότητες..."/>
 		<separator/>
-		<item id="ID_MEDIA_ADD" text="Προσθήκη Αρχείου..."/>
-		<item id="ID_MEDIA_ADD_FOLDER" text="Προσθήκη Φακέλου..."/>
-		<item id="ID_MEDIA_REMOVE" text="Αφαίρεση"/>
+		<item id="ID_MEDIA_ADD" text="_Προσθήκη Αρχείου..."/>
+		<item id="ID_MEDIA_ADD_FOLDER" text="Προσθήκη _Φακέλου..."/>
+		<item id="ID_MEDIA_REMOVE" text="_Αφαίρεση"/>
 		<separator/>
-		<item id="ID_MEDIA_RANDOM" text="Τυχαία Σειρά"/>
-		<item id="ID_MEDIA_REPEAT" text="Επανάληψη Σειράς"/>
+		<item id="ID_MEDIA_RANDOM" text="_Τυχαία Σειρά"/>
+		<item id="ID_MEDIA_REPEAT" text="_Επανάλειψη Σειράς"/>
 		<separator/>
-		<item id="ID_MEDIA_OPEN" text="Άνοιγμα Λίστας Αναπαραγωγής..."/>
-		<item id="ID_MEDIA_SAVE" text="Αποθήκευση Λίστας Αναπαραγωγής..."/>
-		<item id="ID_MEDIA_EXPORT_COLLECTION" text="Εξαγωγή Συλλογής..."/>
-		<item id="ID_MEDIA_CLEAR" text="Καθαρισμός Λίστας Αναπαραγωγής"/>
+		<item id="ID_MEDIA_OPEN" text="_Άνοιγμα Λίστας Αναπαραγωγής..."/>
+		<item id="ID_MEDIA_SAVE" text="Απο_θήκευση Λίστας Αναπαραγωγής..."/>
+		<item id="ID_MEDIA_EXPORT_COLLECTION" text="_Εξαγωγή Συλλογής..."/>
+		<item id="ID_MEDIA_CLEAR" text="_Καθαρισμός Λίστας Αναπαραγωγής"/>
 		<separator/>
-		<item id="ID_MEDIA_PLAYLIST" text="Προβολή Λίστας Αναπαραγωγής"/>
+		<item id="ID_MEDIA_PLAYLIST" text="Προβολή _Λίστας Αναπαραγωγής"/>
 	</menu>
 	<!-- SYSTEM WINDOW -->
 	<menu name="CSystemWnd">
-		<menu id="ID_SYSTEM_VERBOSE" text="Φλύαρη Λειτουργία">
-			<item id="ID_SYSTEM_VERBOSE_ERROR" text="Λάθος Λειτουργία"/>
-			<item id="ID_SYSTEM_VERBOSE_WARNING" text="Προειδοποίηση"/>
-			<item id="ID_SYSTEM_VERBOSE_NOTICE" text="Ειδοποίηση"/>
-			<item id="ID_SYSTEM_VERBOSE_INFO" text="Πληροφορίες"/>
-			<item id="ID_SYSTEM_VERBOSE_DEBUG" text="Debug"/>
+		<menu id="ID_SYSTEM_VERBOSE" text="_Φλύαρη Λειτουργία">
+			<item id="ID_SYSTEM_VERBOSE_ERROR" text="_Λάθη"/>
+			<item id="ID_SYSTEM_VERBOSE_WARNING" text="_Ειδοποιήσεις"/>
+			<item id="ID_SYSTEM_VERBOSE_NOTICE" text="Επι_σημάνσεις"/>
+			<item id="ID_SYSTEM_VERBOSE_INFO" text="_Πληροφορίες"/>
+			<item id="ID_SYSTEM_VERBOSE_DEBUG" text="_Αποσφαλμάτωση"/>
 		</menu>
-		<item id="ID_SYSTEM_TIMESTAMP" text="Χρονικές Επισημάνσεις"/>
+		<item id="ID_SYSTEM_TIMESTAMP" text="_Χρονικές Επισημάνσεις"/>
 		<separator/>
-		<item id="ID_SYSTEM_COPY" text="Αντιγραφή" shortcut="Ctrl+C"/>
+		<item id="ID_SYSTEM_COPY" text="_Αντιγραφή" shortcut="Ctrl+C"/>
 		<separator/>
-		<item id="ID_SYSTEM_CLEAR" text="Καθαρισμός Ιστορικού"/>
+		<item id="ID_SYSTEM_CLEAR" text="_Καθαρισμός Ιστορικού"/>
 	</menu>
 	<!-- NEIGHBOURS WINDOW -->
 	<menu name="CNeighboursWnd.Basic">
-		<item id="ID_BROWSE_LAUNCH" text="Περιήγηση Χρήστη"/>
-		<item id="ID_NEIGHBOURS_CHAT" text="Συνομιλία με Χρήστη"/>
+		<item id="ID_BROWSE_LAUNCH" text="Περι_ήγηση Χρήστη"/>
+		<item id="ID_NEIGHBOURS_CHAT" text="_Συνομιλία με Χρήστη"/>
 		<separator/>
-		<item id="ID_NEIGHBOURS_DISCONNECT" text="Αποσύνδεση"/>
+		<item id="ID_NEIGHBOURS_DISCONNECT" text="_Αποσύνδεση"/>
 		<separator/>
-		<item id="ID_NEIGHBOURS_COPY" text="Αντιγραφή URI"/>
+		<item id="ID_NEIGHBOURS_COPY" text="Αντι_γραφή URI"/>
 	</menu>
 	<menu name="CNeighboursWnd">
-		<item id="ID_BROWSE_LAUNCH" text="Περιήγηση Χρήστη"/>
-		<item id="ID_NEIGHBOURS_CHAT" text="Συνομιλία με Χρήστη"/>
-		<item id="ID_SECURITY_BAN" text="Αποκλεισμός Χρήστη"/>
+		<item id="ID_BROWSE_LAUNCH" text="Περι_ήγηση Χρήστη"/>
+		<item id="ID_NEIGHBOURS_CHAT" text="_Συνομιλία με Χρήστη"/>
+		<item id="ID_SECURITY_BAN" text="Απο_κλεισμός Χρήστη"/>
 		<separator/>
-		<item id="ID_NEIGHBOURS_DISCONNECT" text="Αποσύνδεση"/>
+		<item id="ID_NEIGHBOURS_DISCONNECT" text="_Αποσύνδεση"/>
 		<separator/>
-		<item id="ID_NEIGHBOURS_COPY" text="Αντιγραφή URI"/>
+		<item id="ID_NEIGHBOURS_COPY" text="Αντι_γραφή URI"/>
 		<separator/>
 		<menu text="_Δίκτυα">
-			<item id="ID_NETWORK_CONNECT" text="Σύνδεση"/>
-			<item id="ID_NETWORK_DISCONNECT" text="Αποσύνδεση"/>
+			<item id="ID_NETWORK_CONNECT" text="_Σύνδεση"/>
+			<item id="ID_NETWORK_DISCONNECT" text="_Αποσύνδεση"/>
 			<separator/>
 			<item id="ID_NETWORK_G2" text="Gnutella_2"/>
 			<item id="ID_NETWORK_G1" text="Gnutella"/>
 			<item id="ID_NETWORK_ED2K" text="ED2K"/>
 		</menu>
-		<menu text="Εποπτεία">
-			<item id="ID_NEIGHBOURS_VIEW_ALL" text="Προβολή Όλων"/>
-			<item id="ID_NEIGHBOURS_VIEW_INCOMING" text="Προβολή Εισερχομένων"/>
-			<item id="ID_NEIGHBOURS_VIEW_OUTGOING" text="Προβολή Εξερχομένων"/>
+		<menu text="_Εποπτεία">
+			<item id="ID_NEIGHBOURS_VIEW_ALL" text="Προβολή _Όλων"/>
+			<item id="ID_NEIGHBOURS_VIEW_INCOMING" text="Προβολή Ει_σερχομένων"/>
+			<item id="ID_NEIGHBOURS_VIEW_OUTGOING" text="Προβολή Ε_ξερχομένων"/>
 		</menu>
 	</menu>
 	<!-- SEARCH MONITOR WINDOW -->
 	<menu name="CSearchMonitorWnd">
-		<item id="ID_HITMONITOR_SEARCH" text="Αναζήτηση για Αυτό"/>
+		<item id="ID_HITMONITOR_SEARCH" text="Ανα_ζήτηση για Αυτό"/>
 		<separator/>
-		<item id="ID_SEARCHMONITOR_PAUSE" text="Πάγωμα Προβολής"/>
-		<item id="ID_SEARCHMONITOR_CLEAR" text="Καθαρισμός Buffer"/>
+		<item id="ID_SEARCHMONITOR_PAUSE" text="_Πάγωμα Προβολής"/>
+		<item id="ID_SEARCHMONITOR_CLEAR" text="_Καθαρισμός"/>
 	</menu>
 	<!-- GRAPH/TRAFFIC WINDOW -->
 	<menu name="CTrafficWnd">
-		<item id="ID_TRAFFIC_SETUP" text="Επιλογή Γραφιμάτων..."/>
+		<item id="ID_TRAFFIC_SETUP" text="_Επιλογή Γραφιμάτων..."/>
 		<separator/>
-		<item id="ID_TRAFFIC_GRID" text="Γραμμές Πλέγματος"/>
-		<item id="ID_TRAFFIC_AXIS" text="Άξονες"/>
-		<item id="ID_TRAFFIC_LEGEND" text="Λεζάντα"/>
+		<item id="ID_TRAFFIC_GRID" text="Γραμμές _Πλέγματος"/>
+		<item id="ID_TRAFFIC_AXIS" text="_Άξονες"/>
+		<item id="ID_TRAFFIC_LEGEND" text="_Λεζάντα"/>
 		<separator/>
-		<item id="ID_TRAFFIC_CLEAR" text="Καθαρισμός"/>
+		<item id="ID_TRAFFIC_CLEAR" text="_Καθαρισμός"/>
 		<separator/>
-		<item id="ID_TRAFFIC_WINDOW" text="Νέο Παράθυρο"/>
+		<item id="ID_TRAFFIC_WINDOW" text="_Νέο Παράθυρο"/>
 	</menu>
 	<!-- SECURITY WINDOW -->
 	<menu name="CSecurityWnd">
-		<item id="ID_SECURITY_ADD" text="Προσθήκη Κανόνα..."/>
+		<item id="ID_SECURITY_ADD" text="Προ_σθήκη Κανόνα..."/>
 		<separator/>
-		<item id="ID_SECURITY_REMOVE" text="Αφαίρεση"/>
-		<item id="ID_SECURITY_RESET" text="Επαναφορά"/>
+		<item id="ID_SECURITY_REMOVE" text="_Αφαίρεση"/>
+		<item id="ID_SECURITY_RESET" text="_Επαναφορά"/>
 		<separator/>
-		<item id="ID_SECURITY_MOVE_UP" text="Μετακίνηση Πάνω"/>
-		<item id="ID_SECURITY_MOVE_DOWN" text="Μετακίνηση Κάτω"/>
+		<item id="ID_SECURITY_MOVE_UP" text="Μετακίνηση _Πάνω"/>
+		<item id="ID_SECURITY_MOVE_DOWN" text="Μετακίνηση _Κάτω"/>
 		<separator/>
-		<item id="ID_SECURITY_IMPORT" text="Εισαγωγή..."/>
-		<item id="ID_SECURITY_EXPORT" text="Εξαγωγή..."/>
+		<item id="ID_SECURITY_IMPORT" text="Ει_σαγωγή..."/>
+		<item id="ID_SECURITY_EXPORT" text="Ε_ξαγωγή..."/>
 		<separator/>
-		<menu text="Default Policy">
-			<item id="ID_SECURITY_POLICY_ACCEPT" text="Αποδοχή"/>
-			<item id="ID_SECURITY_POLICY_DENY" text="Άρνηση"/>
+		<menu text="Default P_olicy">
+			<item id="ID_SECURITY_POLICY_ACCEPT" text="Απο_δοχή"/>
+			<item id="ID_SECURITY_POLICY_DENY" text="_Άρνηση"/>
 		</menu>
 		<separator/>
-		<item id="ID_SECURITY_EDIT" text="Ιδιότητες"/>
+		<item id="ID_SECURITY_EDIT" text="_Ιδιότητες"/>
 	</menu>
 	<!-- DISCOVERY SERVICES WINDOW -->
 	<menu name="CDiscoveryWnd">
-		<item id="ID_DISCOVERY_QUERY" text="Άμεση Αίτηση"/>
-		<item id="ID_DISCOVERY_ADVERTISE" text="Διαφήμιση"/>
-		<item id="ID_DISCOVERY_REMOVE" text="Αφαίρεση"/>
+		<item id="ID_DISCOVERY_QUERY" text="_Άμεση Αίτηση"/>
+		<item id="ID_DISCOVERY_ADVERTISE" text="_Διαφήμιση"/>
+		<item id="ID_DISCOVERY_REMOVE" text="Α_φαίρεση"/>
 		<separator/>
-		<item id="ID_DISCOVERY_BROWSE" text="Παράθεση Στατιστικών"/>
+		<item id="ID_DISCOVERY_BROWSE" text="Παράθεση _Στατιστικών"/>
 		<separator/>
-		<item id="ID_DISCOVERY_GNUTELLA" text="Προβολή Bootstraps"/>
-		<item id="ID_DISCOVERY_WEBCACHE" text="Προβολή GWebCaches"/>
-		<item id="ID_DISCOVERY_SERVERMET" text="Προβολή Server.met's"/>
+		<item id="ID_DISCOVERY_GNUTELLA" text="Προβολή _Bootstraps"/>
+		<item id="ID_DISCOVERY_WEBCACHE" text="Προβολή _GWebCaches"/>
+		<item id="ID_DISCOVERY_SERVERMET" text="Προβολή Ser_ver.met's"/>
 		<separator/>
-		<item id="ID_DISCOVERY_ADD" text="Προσθήκη Υπηρεσίας..."/>
+		<item id="ID_DISCOVERY_ADD" text="_Προσθήκη Υπηρεσίας..."/>
 		<separator/>
-		<item id="ID_DISCOVERY_EDIT" text="Ιδιότητες"/>
+		<item id="ID_DISCOVERY_EDIT" text="_Ιδιότητες"/>
 	</menu>
 	<!-- PRIVATE CHAT FRAME -->
 	<menu name="CPrivateChatFrame">
-		<item id="ID_CHAT_CONNECT" text="Σύνδεση"/>
-		<item id="ID_CHAT_DISCONNECT" text="Αποσύνδεση"/>
+		<item id="ID_CHAT_CONNECT" text="_Σύνδεση"/>
+		<item id="ID_CHAT_DISCONNECT" text="_Αποσύνδεση"/>
 		<separator/>
-		<item id="ID_CHAT_BROWSE" text="Περιήγηση Χρήστη"/>
-		<!-- <item id="ID_CHAT_SEND_FILE" text="Αποστολή Αρχείου..."/> -->
+		<item id="ID_CHAT_BROWSE" text="Περι_ήγηση Χρήστη"/>
+		<!-- <item id="ID_CHAT_SEND_FILE" text="Απο_στολή Αρχείου..."/> -->
 		<item id="ID_CHAT_PRIORITY" text="Χορήγηση _Προτεραιότητας"/>
 		<separator/>
-		<menu text="Format">
-			<item id="ID_CHAT_BOLD" text="Εφαρμογή Έντονων"/>
-			<item id="ID_CHAT_ITALIC" text="Εφαρμογή Πλάγιων"/>
-			<item id="ID_CHAT_UNDERLINE" text="Εφαρμογή Υπογραμμισμένων"/>
-			<item id="ID_CHAT_COLOUR" text="Αλλαγή Χρώματος"/>
-			<item id="ID_CHAT_EMOTICONS" text="Εικονίδια"/>
+		<menu text="_Format">
+			<item id="ID_CHAT_BOLD" text="Εφαρμογή _Έντονων"/>
+			<item id="ID_CHAT_ITALIC" text="Εφαρμογή _Πλαγίων"/>
+			<item id="ID_CHAT_UNDERLINE" text="Εφαρμογή _Υπογραμμισμένων"/>
+			<item id="ID_CHAT_COLOUR" text="Αλλαγή _Χρώματος"/>
+			<item id="ID_CHAT_EMOTICONS" text="_Εικονίδια"/>
 		</menu>
 		<separator/>
-		<item id="ID_CHAT_TIMESTAMP" text="Χρονική Επισήμανση"/>
-		<item id="ID_CHAT_CLEAR" text="Καθαρισμός Παραθύρου"/>
+		<item id="ID_CHAT_TIMESTAMP" text="_Χρονική Επισήμανση"/>
+		<item id="ID_CHAT_CLEAR" text="_Καθαρισμός Παραθύρου"/>
+	</menu>
+	<!-- PLUGIN MENUS -->
+	<menu name="ImageViewer_Context">
+		<item id="ImageViewer_BestFit" text="_Προσαρμογή"/>
+		<item id="ImageViewer_ActualSize" text="_Πραγματικό Μέγεθος"/>
+		<separator/>
+		<item id="ImageViewer_Refresh" text="_Ανανέωση"/>
+		<separator/>
+		<item id="ImageViewer_Close" text="_Κλείσιμο"/>
 	</menu>
 	<!-- IRC WINDOW -->
 	<menu name="CIRCTabRClick">
-		<item id="ID_IRC_CLOSETAB" text="έξοδος"/>
+		<item id="ID_IRC_CLOSETAB" text="_Κλείσιμο"/>
 	</menu>
 	<menu name="CIRCUserList">
-		<item id="ID_IRC_WHOIS" text="Ποιός είναι;"/>
-		<item id="ID_IRC_QUERY" text="Ερώτημα"/>
+		<item id="ID_IRC_WHOIS" text="_Whois"/>
+		<item id="ID_IRC_QUERY" text="_Query"/>
 		<separator/>
-		<menu text="Actions">
-			<item id="ID_IRC_TIME" text="Χρόνος"/>
-			<item id="ID_IRC_VERSION" text="Έκδοση"/>
+		<menu text="Ενέργειες">
+			<item id="ID_IRC_TIME" text="_Ώρα"/>
+			<item id="ID_IRC_VERSION" text="_Έκδοση"/>
 		</menu>
 		<separator/>
-		<menu text="Control">
-			<item id="ID_IRC_IGNORE" text="Αγνόηση"/>
-			<item id="ID_IRC_UNIGNORE" text="Ακύρωση Αγνόησης"/>
-			<item id="ID_IRC_OP" text="Op"/>
-			<item id="ID_IRC_DEOP" text="Deop"/>
-			<item id="ID_IRC_VOICE" text="Voice"/>
-			<item id="ID_IRC_DEVOICE" text="Devoice"/>
-			<item id="ID_IRC_KICK" text="Kick"/>
-			<item id="ID_IRC_KICKWHY" text="Kick (why?)"/>
-			<item id="ID_IRC_BAN" text="Ban"/>
-			<item id="ID_IRC_UNBAN" text="Unban"/>
-			<item id="ID_IRC_BANKICK" text="Kick+Ban"/>
-			<item id="ID_IRC_BANKICKWHY" text="Kick+Ban (why?)"/>
+		<menu text="Έλεγχος">
+			<item id="ID_IRC_IGNORE" text="_Αγνόηση"/>
+			<item id="ID_IRC_UNIGNORE" text="_Αποαγνόηση"/>
+			<item id="ID_IRC_OP" text="_Op"/>
+			<item id="ID_IRC_DEOP" text="_Deop"/>
+			<item id="ID_IRC_VOICE" text="_Voice"/>
+			<item id="ID_IRC_DEVOICE" text="D_evoice"/>
+			<item id="ID_IRC_KICK" text="_Αποπομπή"/>
+			<item id="ID_IRC_KICKWHY" text="Αποπομπή (γιατί;)"/>
+			<item id="ID_IRC_BAN" text="_Αποκλεισμός"/>
+			<item id="ID_IRC_UNBAN" text="_Αποκατάσταση"/>
+			<item id="ID_IRC_BANKICK" text="Αποπομπή+Αποκλεισμός"/>
+			<item id="ID_IRC_BANKICKWHY" text="Αποπομπή+Αποκλεισμός (γιατί;)"/>
 		</menu>
 	</menu>
 	<menu name="WebServices.List.Menu">
-		<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="Λήψη Bitzi"/>
-		<item id="ID_WEBSERVICES_MUSICBRAINZ" text="MusicBrainz"/>
-		<item id="ID_WEBSERVICES_SHAREMONKEY" text="ShareMonkey"/>
+		<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Bitzi"/>
+		<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
+		<item id="ID_WEBSERVICES_SHAREMONKEY" text="_ShareMonkey"/>
 	</menu>
 </menus>
 <!-- Documents -->
@@ -1843,14 +1852,10 @@
 		</styles>
 		<text format="b">Καλώς ήρθατε στον Διαχειριστή Ρυθμίσεων του Shareaza</text>
 		<newline gap="16"/>
-		<text>
-		Ο Διαχειριστής Ρυθμίσεων επιτρέπει στους προχωρημένους χρήστες να προσαρμόσουν ολοκληρωτικά το πώς
-		δουλεύει το Shareaza. Οι ρυθμίσεις στον τομέα
-		</text>
+		<text>Ο Διαχειριστής Ρυθμίσεων επιτρέπει στους προχωρημένους χρήστες να προσαρμόσουν ολοκληρωτικά το πώς
+		δουλεύει το Shareaza. Οι ρυθμίσεις στον τομέα </text>
 		<text format="b">Γενικά </text>
-		<text>
-		αφορούν την εμπειρία του χρήστη.
-		</text>
+		<text>αφορούν την εμπειρία του χρήστη.</text>
 		<newline gap="16" indent="16"/>
 		<link target="raza:page:CGeneralSettingsPage" format="b">Γενικά:</link>
 		<gap size="4"/>
@@ -1868,9 +1873,9 @@
 		<gap size="4"/>
 		<text>Οι ρυθμίσεις για το προφίλ σας, τις συνομιλίες και τα άμεσα μηνύματα.</text>
 		<newline gap="10"/>
-		<link target="raza:page:CIRCSettingsPage" format="b">Συνομιλία με Χρήστη:</link>
+		<link target="raza:page:CIRCSettingsPage" format="b">Συνομιλία:</link>
 		<gap size="4"/>
-		<text>Οπτική εμφάνιση του Δωματίου Συνομιλιών IRC και ρυθμίσεις σύνδεσης.</text>
+		<text>Ρυθμίσεις περιβάλλοντος και συνδέσεων IRC.</text>
 		<newline gap="10"/>
 		<link target="raza:page:CWebSettingsPage" format="b">Ιστός:</link>
 		<gap size="4"/>
@@ -1885,10 +1890,9 @@
 		<text format="b">Καλώς ήρθατε στον Διαχειριστή Ρυθμίσεων του Shareaza</text>
 		<newline gap="16"/>
 		<text>Ο Διαχειριστής Ρυθμίσεων επιτρέπει στους προχωρημένους χρήστες να προσαρμόσουν ολοκληρωτικά το πώς
-		δουλεύει το Shareaza. Οι ρυθμίσεις στον τομέα</text>
+		δουλεύει το Shareaza. Οι ρυθμίσεις στον τομέα </text>
 		<text format="b">Διαδίκτυο </text>
-		<text>ελέγχουν το πώς το Shareaza αλληλεπιδρά με τα άλλα peers μέσα στα peer-to-peer δίκτυα.
-		</text>
+		<text>ελέγχουν το πώς το Shareaza αλληλεπιδρά με τα άλλα peers μέσα στα peer-to-peer δίκτυα. </text>
 		<newline gap="16" indent="16"/>
 		<link target="raza:page:CConnectionSettingsPage" format="b">Σύνδεση:</link>
 		<gap size="4"/>
@@ -1906,9 +1910,9 @@
 		<gap size="4"/>
 		<text>Ρυθμίστε τη δυνατότητα να χειρίζεστε το Shareaza από απομακρυσμένα προγράμματα περιήγησης.</text>
 		<newline gap="10"/>
-		<link target="raza:page:CSchedulerSettingsPage" format="b">Προγραμματιστής:</link>
+		<link target="raza:page:CSchedulerSettingsPage" format="b">Χρονοδιάγραμμα:</link>
 		<gap size="4"/>
-		<text>Περιορίστε τις συνδέσεις λήψης με βάσει ένα περιοδικό πρόγραμμα.</text>
+		<text>Καθορισμός εβδομαδιαίων ωρών σύνδεσης του Shareaza.</text>
 	</document>
 	<!-- Browse User Profile -->
 	<document name="CBrowseHostProfile.1">
@@ -2012,8 +2016,17 @@
 		<text>Εδώ εμφανίζονται τα τρέχοντα λαμβανόμενα αρχεία. Μπορείτε να δείτε
 		ξεχωριστές πηγές επεκτείνοντας κάθε αρχείο με το μικρό + στα αριστερά.</text>
 		<newline gap="8"/>
+		<text>Σύρετε τις λήψεις άνω ή κάτω στη λίστα για αλλαγή της προτεραιότητάς τους ή στις Καρτέλες Ομάδων
+		για καλύτερη οργάνωση (στην Ενισχυμένη Μορφή).</text>
+		<newline gap="16"/>
 		<text>Μπορείτε επίσης να χρησιμοποιήσετε αυτήν την εντολή για να λάβετε βοηθητική πληροφόρηση πάνω σε ένα συγκεκριμένο αρχείο.
 		Απλά επιλέξτε ένα αρχείο και διαλέξτε αυτήν την επιλογή ξανά.</text>
+	</document>
+	<document name="DownloadHelp.Seeding">
+		<text format="b">This Torrent is Seeding</text>
+		<newline gap="8"/>
+		<text>Shareaza has verified this complete download, and is actively sharing it
+		with other downloaders through BitTorrent. Please share at least 100%.</text>
 	</document>
 	<document name="DownloadHelp.Completed">
 		<text format="b">Αυτή η Λήψη Ολοκληρώθηκε</text>
@@ -2148,7 +2161,7 @@
 		απόκρυψη περιεχομένου. Είναι σχεδιασμένο απλά για να φιλτράρει υπερβολικά ανεπιθύμητα αποτελέσματα, παρά
 		ως ένα 100% ασφαλές εμπόδιο.</text>
 		<newline gap="8"/>
-		<text>Η χρήση του Web (συμπεριλαμβανομένου και του P2P) από παιδιά θα πρέπει να γίνετε πάντα υπό γονική επίβλεψη.</text>
+		<text>Η χρήση του Διαδικτύου (συμπεριλαμβανομένου και του P2P) από παιδιά θα πρέπει να γίνετε πάντα υπό γονική επίβλεψη.</text>
 	</document>
 	<document name="GeneralHelp.BadTorrentEncoding">
 		<text format="b">Αυτό το torrent φαίνεται να έχει ένα σφάλμα κωδικοποίησης</text>
@@ -2256,7 +2269,7 @@
 		Βιβλιοθήκης, επειδή η επαναλαμβανόμενη σάρωση των λήψεων σε εξέλιξη θα μειώσει τις επιδόσεις του συστήματος.</text>
 	</document>
 </documents>
-<!-- Localised Command Tip Text. The "message" is displayed in the status bar, while the "tip" is shown in a tooltip -->
+<!-- Localised Command Tip Text.  The "message" is displayed in the status bar, while the "tip" is shown in a tooltip -->
 <commandTips>
 	<tip id="ID_BROWSE_FILES" message="Προβολή κοινοποιημένων αρχείων χρήστη."/>
 	<tip id="ID_BROWSE_LAUNCH" message="Περιήγηση στο προφίλ και τα κοινοποιημένα αρχεία του επιλεγμένου χρήστη."/>
@@ -2267,8 +2280,8 @@
 	<tip id="ID_CHAT_BROWSE" message="Περιήγηση στο προφίλ και τα κοινοποιημένα αρχεία του χρήστη."/>
 	<tip id="ID_CHAT_CLEAR" message="Καθαρισμός κειμένου σε αυτό το παράθυρο."/>
 	<tip id="ID_CHAT_COLOUR" message="Επιλογή χρώματος κειμένου (Ctrl+K)"/>
-	<tip id="ID_CHAT_CONNECT" message="Σύνδεση Συνομιλία με Χρήστης."/>
-	<tip id="ID_CHAT_DISCONNECT" message="Αποσύνδεση Συνομιλία με Χρήστης."/>
+	<tip id="ID_CHAT_CONNECT" message="Σύνδεση συνομιλίας."/>
+	<tip id="ID_CHAT_DISCONNECT" message="Αποσύνδεση συνομιλίας."/>
 	<tip id="ID_CHAT_EMOTICONS" message="Εισαγωγή εικονιδίου."/>
 	<tip id="ID_CHAT_ITALIC" message="Εφαρμογή πλάγιας μορφοποήσης (Ctrl+I)"/>
 	<tip id="ID_CHAT_PRIORITY" message="Χορήγηση προτεραιότητας αποστολής σε αυτόν τον χρήστη."/>
@@ -2346,7 +2359,8 @@
 	<tip id="ID_HELP_WEB_4" message="Επίσκεψη σε αυτόν τον ιστότοπο."/>
 	<tip id="ID_HELP_WEB_5" message="Επίσκεψη σε αυτόν τον ιστότοπο."/>
 	<tip id="ID_HELP_WEB_6" message="Επίσκεψη σε αυτόν τον ιστότοπο."/>
-	<tip id="ID_HELP_DONATE" message="Εάν θέλετε, μπορείτε να κάνετε δωρεά στο νόμιμο «ταμείο» μας και να δείξετε την εκτίμηση σας."/>
+	<tip id="ID_HELP_DONATE" message="Εάν θέλετε να δείξετε την εκτίμησή σας, μπορείτε να συμμετάσχετε στον έρανό μας."/>
+	<tip id="ID_HELP_FAKESHAREAZA" message="Μάθετε για τις εξελίξεις του FakeShareaza.com"/>
 	<tip id="ID_HITMONITOR_CLEAR" message="Καθαρισμός buffer εποπτείας ευρέσεων."/>
 	<tip id="ID_HITMONITOR_PAUSE" message="Παύση εποπτείας ευρέσεων."/>
 	<tip id="ID_HITMONITOR_SEARCH" message="Αναζήτηση στο δίκτυο για τον επιλεγμένο όρο."/>
@@ -2445,7 +2459,7 @@
 	<tip id="ID_MEDIA_VIS" message="Επιλογή plugin ηχητικής απεικόνισης..."/>
 	<tip id="ID_MEDIA_ZOOM" message="Επιλογή μεγέθυνσης και αναλογιών video."/>
 	<tip id="ID_MONITOR_CLOSE" message="Κλείσιμο παραθύρου εποπτείας."/>
-	<tip id="ID_NEIGHBOURS_CHAT" message="Έναρξη Συνομιλία με Χρήστης με τον επιλεγμένο χρήστη."/>
+	<tip id="ID_NEIGHBOURS_CHAT" message="Έναρξη συνομιλίας με τον επιλεγμένο χρήστη."/>
 	<tip id="ID_NEIGHBOURS_COPY" message="Αντιγραφή ενός URI για πρόσβαση στον επιλεγμένο host."/>
 	<tip id="ID_NEIGHBOURS_DISCONNECT" message="Αποσύνδεση επιλεγμένων γειτόνων."/>
 	<tip id="ID_NEIGHBOURS_SETTINGS" message="Παραμετροποίηση ρυθμίσεων δικτύου..."/>
@@ -2462,7 +2476,7 @@
 	<tip id="ID_NETWORK_G1" message="Σύνδεση στο δίκτυο Gnutella."/>
 	<tip id="ID_NETWORK_G2" message="Σύνδεση στο δίκτυο Gnutella2 (συνιστώμενη)."/>
 	<tip id="ID_NETWORK_SEARCH" message="Έναρξη νέας αναζήτησης στο δίκτυο..."/>
-	<tip id="ID_SEARCH_CHAT" message="Έναρξη Συνομιλία με Χρήστης με τον επιλεγμένο χρήστη."/>
+	<tip id="ID_SEARCH_CHAT" message="Έναρξη συνομιλίας με τον επιλεγμένο χρήστη."/>
 	<tip id="ID_SEARCH_CLEAR" message="Καθαρισμός αποτελεσμάτων αναζήτησης."/>
 	<tip id="ID_SEARCH_COLUMNS" message="Επιλογή στηλών metadata που θα εμφανίζονται..."/>
 	<tip id="ID_SEARCH_COPY" message="Αντιγραφή των URI των επιλεγμένων αρχείων."/>
@@ -2499,6 +2513,7 @@
 	<tip id="ID_TAB_CONNECT" message="Σύνδεση ή αποσύνδεση από το δίκτυο."/>
 	<tip id="ID_TAB_HELP" message="Παροχή βοήθειας χρήσης του Shareaza."/>
 	<tip id="ID_TAB_HOME" message="Μετάβαση στην οθόνη υποδοχής του Shareaza."/>
+	<tip id="ID_TAB_IRC" message="Παράθυρο συνομιλιών IRC."/>
 	<tip id="ID_TAB_LIBRARY" message="Οργάνωση και διαχείριση των τοπικών αρχείων."/>
 	<tip id="ID_TAB_MEDIA" message="Αναπαραγωγή αρχείων πολυμέσων."/>
 	<tip id="ID_TAB_NETWORK" message="Έλεγχος ποιότητας σύνδεσης στο δίκτυο."/>
@@ -2518,13 +2533,13 @@
 	<tip id="ID_TRAFFIC_LEGEND" message="Εμφάνιση λεζάντας."/>
 	<tip id="ID_TRAFFIC_SETUP" message="Επιλογή και παραμετροποίηση συναρτήσεων γραφήματος..."/>
 	<tip id="ID_TRAFFIC_WINDOW" message="Άνοιγμα νέου παραθύρου γραφημάτων..."/>
-	<tip id="ID_TRANSFERS_CHAT" message="Έναρξη Συνομιλία με Χρήστης με τον επιλεγμένο χρήστη."/>
+	<tip id="ID_TRANSFERS_CHAT" message="Έναρξη συνομιλίας με τον επιλεγμένο χρήστη."/>
 	<tip id="ID_TRANSFERS_CONNECT" message="Άμεση σύνδεση στις επιλεγμένες πηγές και προσπάθεια λήψης."/>
 	<tip id="ID_TRANSFERS_DISCONNECT" message="Αποσύνδεση των επιλεγμένων πηγών."/>
 	<tip id="ID_TRANSFERS_FORGET" message="Αποσύνδεση των επιλεγμένων πηγών και αφαίρεσή τους από τη μνήμη."/>
 	<tip id="ID_TRAY_OPEN" message="Άνοιγμα του παραθύρου του Shareaza."/>
 	<tip id="ID_UPLOADS_AUTO_CLEAR" message="Αυτόματη απόσυρση ολοκληρωμένων αποστολών."/>
-	<tip id="ID_UPLOADS_CHAT" message="Έναρξη Συνομιλία με Χρήστης με τον επιλεγμένο παραλήπτη."/>
+	<tip id="ID_UPLOADS_CHAT" message="Έναρξη συνομιλίας με τον επιλεγμένο παραλήπτη."/>
 	<tip id="ID_UPLOADS_CLEAR" message="Αφαίρεση των επιλεγμένων αποστολών από τη λίστα."/>
 	<tip id="ID_UPLOADS_CLEAR_COMPLETED" message="Απόσυρση ολοκληρωμένων αποστολών."/>
 	<tip id="ID_UPLOADS_DISCONNECT" message="Αποσύνδεση των επιλεγμένων παραληπτών."/>
@@ -2562,8 +2577,8 @@
 	<tip id="ID_WINDOW_TILE_HORZ" message="Οριζόντια παράθεση όλων τα ανοικτών παραθύρων ως μη αλληλοεπικαλυπτόμενα πλακίδια."/>
 	<tip id="ID_WINDOW_TILE_VERT" message="Κάθετη παράθεση όλων τα ανοικτών παραθύρων ως μη αλληλοεπικαλυπτόμενα πλακίδια."/>
 	<tip id="ID_WINDOW_TOOLBAR" message="Προβολή της μικρής μπάρας πλοήγησης."/>
-	<tip id="ID_WEBSERVICES_LIST" message="Επιλέξτε τις υπηρεσίες διαδικτύου, για να λάβετε περισσότερες πληροφορίες για το επιλεγόμενο αρχείο"/>
-	<tip id="ID_WEBSERVICES_SHAREMONKEY" message="Κάντε έρευνα για τις πληροφορίες αρχείου, χρησιμοποιώντας την υπηρεσία ShareMonkey"/>	
+	<tip id="ID_WEBSERVICES_LIST" message="Επιλέξτε μια υπηρεσία ιστού από την οποία να λάβετε πληροφορίες για το επιλεγμένο αρχείο."/>
+	<tip id="ID_WEBSERVICES_SHAREMONKEY" message="Αναζήτηση πληροφοριών για το αρχείο χρησιμοποιώντας την υπηρεσία ShareMonkey."/>
 	<!-- PLUGIN TIPS -->
 	<tip id="ImageViewer_BestFit" message="Προσαρμογή του μεγέθους της εικόνας ώστε να χωρέσει στο παράθυρο."/>
 	<tip id="ImageViewer_ActualSize" message="Προβολή της εικόνας στο φυσικό της μέγεθος."/>
@@ -2573,7 +2588,7 @@
 <!-- Tips displayed when mouse is moved over controls in the dialogs -->
 <controlTips>
 	<tip id="IDC_THROTTLE_MODE" message="Στη μέγιστη λειτουργία, το εύρος ζώνης δεν θα ξεπεράσει την καθορισμένη τιμή. Στη λειτουργία μέσου όρου, θα διακυμαίνεται γύρω από την τιμή."/>
-	<tip id="IDC_REGEXP" message="Χρησιμοποιείστε συνηθείς εκφράσεις στη σύνταξη.{n} Οι λέξεις-κλειδιά μπορούν να καθοριστούν στη μορφή &lt;n&gt;, όπου n είναι ένας αριθμός από το 1 μέχρι το 9. Εάν θέλετε οι λέξεις-κλειδιά να ακολουθούν η μία την άλλη χρησιμοποιείστε τα σύμβολα &lt;_&gt;"/>
+	<tip id="IDC_REGEXP" message="Εισάγετε κανονικοποιημένες εκφράσεις σε σύνταξη perl.{n}Οι λέξεις κλειδιά της αναζήτησης μπορούν να οριστούν με τη μορφή &lt;n&gt;, όπου n αριθμός από 1 ως 9. Για συνεχόμενη χρήση λέξεων κλειδιών, χρησιμοποιείστε τα σύμβολα &lt;_&gt;."/>
 	<tip id="IDC_SHARE_PARTIALS" message="Αυτή η ρύθμιση δεν επιδρά σε αρχεία με ED2K hash (εφόσον το δίκτυο ED2K είναι ενεργό), ούτε σε μη σταματημένες λήψεις, ούτε σε torrent.{n}ΠΡΟΣΟΧΗ: Χρησιμοποιείστε τη μόνο σε περίπτωση πραγματικής ανάγκης. Αν την καταχραστείτε, ενδέχεται να σας αποκλείσουν."/>
 </controlTips>
 <!-- Localised Strings -->
@@ -2590,7 +2605,7 @@
 	<string id="WINDOW_LIBRARY" value="Βιβλιοθήκη"/>
 	<string id="WINDOW_UPLOADS" value="Αποστολές"/>
 	<string id="WINDOW_TRAFFIC" value="Γραφήματα"/>
-	<string id="WINDOW_CHAT" value="Συνομιλία με Χρήστη"/>
+	<string id="WINDOW_CHAT" value="Συνομιλία"/>
 	<string id="WINDOW_SECURITY" value="Ασφάλεια"/>
 	<string id="WINDOW_DISCOVERY" value="Υπηρεσίες Ανακάλυψης"/>
 	<string id="WINDOW_BROWSEHOST" value="Περιήγηση"/>
@@ -2598,6 +2613,7 @@
 	<string id="WINDOW_MEDIA" value="Πολυμέσα"/>
 	<string id="WINDOW_SEARCHPAD" value="Αναζήτηση"/>
 	<string id="WINDOW_HELP" value="Βοήθεια Shareaza"/>
+	<string id="WINDOW_IRC" value="Συνομιλία με Χρήστη"/>
 	<string id="7000" value="Θέλετε σίγουρα να διαγράψετε αυτό το φίλτρο;"/>
 	<string id="7001" value="&amp;Schemas"/>
 	<string id="7002" value="Multiple Values"/>
@@ -2620,8 +2636,8 @@
 	<string id="8010" value="Αυτή είναι μία έκδοση προδημοσίευσης του Shareaza και η περίοδος δοκιμών έληξε. Παρακαλώ λέβετ την πλήρη επίσημη έκδοση από το http://shareaza.sourceforge.net/."/>
 	<string id="8011" value="Η αλλαγή της προβολής θα κλείσει ό,τι παράθυρα έχετε ανοιχτά. Θέλετε να γίνει τώρα;"/>
 	<string id="8012" value="Πληροφορίες Torrent"/>
-	<string id="8013" value="Δεν Shareaza νέα έκδοση που εντοπίστηκαν."/>
-	<string id="8014" value="Download Properties"/>
+	<string id="8013" value="Δεν βρέθηκε νεότερη έκδοση Shareaza."/>
+	<string id="8014" value="Προχωρημένη Διόρθωση Λήψης"/>
 	<string id="8060" value="Λειτουργία Κόμβου/Ultrapeer με %lu γείτονες. %s στην τοπική Βιβλιοθήκη."/>
 	<string id="8061" value="Λειτουργία Ultrapeer με %lu γείτονες. %s στην τοπική Βιβλιοθήκη."/>
 	<string id="8062" value="Λειτουργία Κόμβου με %lu γείτονες. %s στην τοπική Βιβλιοθήκη."/>
@@ -2769,7 +2785,7 @@
 	<string id="16077" value="Η διεύθυνση %s είναι ήδη φραγμένη από τους κανόνες ασφαλείας."/>
 	<string id="16078" value="Προσθήκη κανόνα ασφαλείας για φραγή του %s."/>
 	<string id="16079" value="Θέλετε σίγουρα να αποσυνδεθείτε;"/>
-	<string id="16080" value="Τρέχετε το Scheduler με ‘G2 μόνο’ Θέλετε να κλείσετε τον τρόπο αυτό, έτσι ώστε ολά τα ενεργά δίκτυα να παραμείνουν συνδεδεμένα;"/>
+	<string id="16080" value="Εκτελείτε το Χρονοδιάγραμμα σε περιορισμό 'μόνο G2'. Θέλετε να αφαιρέσετε αυτόν τον περιορισμό, ώστε να παραμένουν συνδεδεμένα όλα τα ενεργά δίκτυα;"/>
 	<string id="16081" value="Αποστολή αίτησης για &quot;%s&quot; προς %s."/>
 	<string id="16083" value="Η επιβολή στον υπολογιστή σας της λειτουργία κόμβου, ίσως προκαλέσει δυσμενείς επιδράσεις στις επιδόσεις και το δίκτυο P2P. Γενικά είναι καλύτερο να αφήσετε το Shareaza να αποφασίζει το πότε θα χρησιμοποιεί τη λειτουργία κόμβου.\n\nΗ λειτουργία κόμβου ΔΕΝ παράγει καλύτερα αποτελέσματα, ούτε έχει άλλα πλεονεκτήματα για σας!\n\nΘέλετε σίγουρα να το κάνετε, παρά αυτά τα μειονεκτήματα;"/>
 	<string id="16084" value="Η απενεργοποίηση της υποστήριξης του Gnutella ίσως περιορίσει τα αποτελέσματα των αναζητήσεών σας και, αν λειτουργείτε ως κόμβος, ίσως επηρεάσει και τα αποτελέσματα άλλων χρηστών! Θέλετε σίγουρα να το κάνετε;"/>
@@ -2973,14 +2989,14 @@
 	<string id="16410" value="Ένας υποφάκελος του επιλεγμένου φακέλου &quot;%s&quot; είναι ήδη μέρος της Βιβλιοθήκης.\nΠροσθέτοντας αυτόν τον φάκελο θα προκαλέσει επανασάρωση μερικών αρχείων.\n\nΘέλετε να συνεχίσετε;"/>
 	<string id="16411" value="Αδυναμία μετακίνησης του αρχείου %s. Το αρχείο ίσως χρησιμοποιείται απο άλλη εφαρμογή.\n\nΘέλετε εναλλακτικά να δοκιμάσετε να το αντιγράψετε;"/>
 	<string id="16412" value="Αρχείο Φάντασμα"/>
-	<string id="16413" value="Νέο Γκρουπ"/>
+	<string id="16413" value="Νέα Ομάδα"/>
 	<string id="16448" value="Ενωμένο στο %s, χειραψία..."/>
 	<string id="16449" value="Τώρα συνομιλείτε με τον/την %s (%s)!"/>
 	<string id="16450" value="Κλείσιμο σύνδεσης με %s."/>
 	<string id="16451" value="Απώλεια σύνδεσης με %s."/>
 	<string id="16452" value="Μη αναγνωρίσιμη εντολή &quot;%s&quot;."/>
-	<string id="16453" value="Σύνδεση με %s για Συνομιλία με Χρήστη..."/>
-	<string id="16454" value="Αποδοχή εισερχόμενης αίτησης Συνομιλία με Χρήστης από %s, χειραψία..."/>
+	<string id="16453" value="Σύνδεση με %s για συνομιλία..."/>
+	<string id="16454" value="Αποδοχή εισερχόμενης αίτησης συνομιλίας από %s, χειραψία..."/>
 	<string id="16455" value="%s είναι πλέον γνωστός ως %s."/>
 	<string id="16456" value="Αδυναμία σύνδεσης με τον host %s."/>
 	<string id="16457" value="Αποτυχία σύνδεσης, λόγω μη έγκυρων δεδομένων στο καλώδιο."/>
@@ -3079,20 +3095,27 @@
 	<string id="16997" value="Κανένα αρχείο υπό αναπαραγωγή. Για αναπαραγωγή, διπλό κλικ σε ένα αρχείο στη Βιβλιοθήκη."/>
 	<string id="16998" value="S &#160; &#160; H &#160; &#160; A &#160; &#160; R &#160; &#160; E &#160; &#160; A &#160; &#160; Z &#160; &#160; A &#160; &#160; &#160; &#160; &#160; M &#160; &#160; E &#160; &#160; D &#160; &#160; I &#160; &#160; A &#160; &#160; &#160; &#160; &#160; S &#160; &#160; Y &#160; &#160; S &#160; &#160; T &#160; &#160; E &#160; &#160; M"/><!-- on one line -->
 	<string id="16999" value="Λ Ι Σ Τ Α &#160; Α Ν Α Π Α Ρ Α Γ Ω Γ Η Σ"/>
+	<string id="17017" value="Αποστολή:"/>
+	<string id="17018" value="Καλώς ήρθατε στη συνομιλία του Shareaza!"/>
+	<string id="17019" value="Παρακαλώ, σεβαστείτε τους άλλους που χρησιμοποιούν την ίδια υπηρεσία."/>
+	<string id="17020" value="Προσθήκη"/>
+	<string id="17021" value="Αφαίρεση"/>
+	<string id="17022" value="Χρήστες"/>
+	<string id="17023" value="Κανάλια"/>
 	<string id="17024" value="Εγκαινίαση σύνδεσης με %s..."/>
 	<string id="17025" value="Αδυναμία δημιουργίας σύνδεσης με %s."/>
 	<string id="17026" value="Αίτηση προς %s για σύνδεση προώθησης πίσω από firewall..."/>
 	<string id="17027" value="Αποδοχή σύνδεσης προώθησης από %s, χειραψία..."/>
 	<string id="17028" value="Σύναψη σύνδεσης, χειραψία..."/>
 	<string id="17029" value="Αποτυχία χειραψίας, ο host ίσως δεν υποστηρίζει συνομιλίες."/>
-	<string id="17030" value="Ολοκλήρωση χειραψίας, έκδοση πρωτοκόλου Συνομιλία με Χρήστης %s."/>
+	<string id="17030" value="Ολοκλήρωση χειραψίας, έκδοση πρωτοκόλου συνομιλίας %s."/>
 	<string id="17031" value="Ανταλλαγή πληροφοριών προφίλ..."/>
 	<string id="17032" value="Πιστοποιημένος χρήστης "/>
-	<string id="17033" value="Αίτηση Συνομιλία με Χρήστης με τον χρήστη..."/>
-	<string id="17034" value="Αποδοχή Συνομιλία με Χρήστης, τώρα συνομιλείτε με τον/την %s!"/>
+	<string id="17033" value="Αίτηση συνομιλίας με τον χρήστη..."/>
+	<string id="17034" value="Αποδοχή συνομιλίας, τώρα συνομιλείτε με τον/την %s!"/>
 	<string id="17035" value="%s δεν δέχεται συνομιλίες."/>
 	<string id="17036" value="%s έχει απομακρυνθεί: %s"/>
-	<string id="17037" value="Απώλεια σύνδεσης Συνομιλία με Χρήστης."/>
+	<string id="17037" value="Απώλεια σύνδεσης συνομιλίας."/>
 	<string id="17038" value="Κλείσιμο σύνδεσης."/>
 	<string id="17039" value="Αδυναμία αίτησης σύνδεσης προώθησης από %s, μη διαθέσιμη διαδρομή."/>
 	<string id="17040" value="Αδυναμία αποστολής μηνύματος, λόγω διακοπής σύνδεσης. Προσπάθεια επανασύνδεσης..."/>
@@ -3205,8 +3228,8 @@
 	<string id="18500" value="Εισάγατε ένα SHA1 διαφορετικό από το τρέχον της λήψης! Θέλετε σίγουρα να το αλλάξετε τώρα;"/>
 	<string id="18501" value="Εισάγατε ένα tiger-tree ρίζας διαφορετικό από το τρέχον της λήψης! Θέλετε σίγουρα να το αλλάξετε τώρα;"/>
 	<string id="18502" value="Εισάγατε ένα ED2K hash διαφορετικό από το τρέχον της λήψης! Θέλετε σίγουρα να το αλλάξετε τώρα;"/>
-	<string id="18503" value="Θέλετε σίγουρα αποΑπολησμόνηση της τρέχουσας κατάστασης επαλήθευσης; Όλα τα ληφθέντα δεδομένα θα αντιμετωπιστούν ως αφερέγγυα και τα cached hashtrees και hashsets θα διαγραφούν!"/>
-	<string id="18504" value="Θέλετε σίγουρα αποΑπολησμόνηση όλων των πηγών των επιλεγμένων λήψεων;"/>
+	<string id="18503" value="Θέλετε σίγουρα απολησμόνηση της τρέχουσας κατάστασης επαλήθευσης; Όλα τα ληφθέντα δεδομένα θα αντιμετωπιστούν ως αφερέγγυα και τα cached hashtrees και hashsets θα διαγραφούν!"/>
+	<string id="18504" value="Θέλετε σίγουρα απολησμόνηση όλων των πηγών των επιλεγμένων λήψεων;"/>
 	<string id="18505" value="Παρακαλώ εισάγεται μια έγκυρη σειρά προς διαγραφή. Το πεδίο &quot;από&quot; είναι το πρώτο byte που θα διαγραφεί και το πεδίο &quot;ως και&quot; είναι το τελευταίο."/>
 	<string id="18506" value="Αδυναμία διαγραφής της καθορισμένης σειράς από τη λήψη, επειδή δεν περιέχει κανένα τεμάχιο."/>
 	<string id="18507" value="Διαγράφηκαν %I64i bytes από τη λήψη."/>
@@ -3230,7 +3253,7 @@
 	<string id="20010" value="&amp;Πίσω"/>
 	<string id="20011" value="&amp;Επόμενο"/>
 	<string id="20012" value="Τέλος"/>
-	<string id="20013" value="Όλα"/>	
+	<string id="20013" value="Όλα"/>
 	<string id="20100" value="Σύνδεση..."/>
 	<string id="20101" value="Αίτηση..."/>
 	<string id="20102" value="Απάντηση"/>
@@ -3334,12 +3357,12 @@
 		<control caption="Ελαχιστ. στην Μπάρα Έναρξης|Ελαχιστ. στη Γραμμή Συστήματος"/>
 	</dialog>
 	<dialog name="CLibrarySettingsPage" cookie="BuBuBuBuBuBuStEdmsStStEdmsStBuBuCoBuBuBuCoBuBuBuEdBuBuBu" caption="Βιβλιοθήκη">
-		<control caption="Επιλογές:"/>
+		<control caption="_Επιλογές:"/>
 		<control caption="Απομνημόν. προβολών φακέλων"/>
 		<control caption="Παρακολούθ. φακέλων Βιβλιοθήκης"/>
 		<control caption="Γρήγορη σάρωση (Αυξημένη CPU)"/>
 		<control caption="Επίτρεψη περιήγησης κοινοποιημέν."/>
-		<control caption="Εμφάνιση Πρόσφατων:"/>
+		<control caption="Εμφάνιση _Πρόσφατων:"/>
 		<control caption="Τελευταίων"/>
 		<control/>
 		<control/>
@@ -3349,79 +3372,79 @@
 		<control/>
 		<control caption="ημερών"/>
 		<control caption="Καθαρισμός Ιστορικού"/>
-		<control caption="Άφοβο Άνοιγμα:"/>
+		<control caption="Ά_φοβο Άνοιγμα:"/>
 		<control/>
-		<control caption="Προσθήκη"/>
-		<control caption="Αφαίρεση"/>
-		<control caption="Αποκλεισμός Κοινοποίησης:"/>
+		<control caption="_Προσθήκη"/>
+		<control caption="_Αφαίρεση"/>
+		<control caption="Απο_κλεισμός Κοινοποίησης:"/>
 		<control/>
-		<control caption="Προσθήκη"/>
-		<control caption="Αφαίρεση"/>
+		<control caption="_Προσθήκη"/>
+		<control caption="_Αφαίρεση"/>
 		<control caption="Αποθήκευση Συλλογών Σε:"/>
 		<control/>
 		<control/>
 		<control caption="Δημιουργία αρχείων φαντασμάτων"/>
-		<control caption="Εντόπιση σειρών έξυπνων video"/>
+		<control caption="Έξυπνος εντοπισμός σειρών video"/>
 	</dialog>
 	<dialog name="CMediaSettingsPage" cookie="BuCoBuBuBuCoBuBuBuBuBuStSt" caption="Πολυμέσα">
 		<control caption="_Επιλογές:"/>
 		<control/>
 		<control caption="Χρήση Αναπαρ. Πολυμέσων για ΑΝΑΠΑΡΑΓΩΓΗ αρχείων των εξής τύπων"/>
 		<control caption="Χρήση Αναπαρ. Πολυμέσων για ΑΝΑΡΤΗΣΗ αρχείων των εξής τύπων"/>
-		<control caption="Τύποι Αρχείων:"/>
+		<control caption="_Τύποι Αρχείων:"/>
 		<control/>
-		<control caption="Προσθήκη"/>
-		<control caption="Αφαίρεση"/>
+		<control caption="_Προσθήκη"/>
+		<control caption="_Αφαίρεση"/>
 		<control caption="Πρόσθετο (plugin) _Ηχητικής Απεικόνισης:"/>
-		<control caption="Επιλογή..."/>
-		<control caption="Χειρισμός Πολυμέσων"/>
+		<control caption="_Επιλογή..."/>
+		<control caption="_Χειρισμός Πολυμέσων"/>
 		<control caption="Επιλογή Χειρισμού Πολυμέσων:"/>
 		<control caption="Προειδοποίηση: Η επιλογή εξωτερικού Χειρισμού Πολυμέσων αυτομάτως θα απενεργοποιήσει όλα τα Πρόσθετα (plugins) Πολυμέσων και Απεικόνισης!"/>
 	</dialog>
 	<dialog name="CCommunitySettingsPage" cookie="BuStBuBuBuBuBuBu" caption="Κοινότητα">
-		<control caption="Προφίλ:"/>
+		<control caption="_Προφίλ:"/>
 		<control caption="Χρησιμοποιήστε το Προφίλ για να κοινοποιήσετε πληροφορίες για τον εαυτό σας και τα ενδιαφέροντά σας, και να συστήσετε αρχεία και ιστοσελίδες."/>
 		<control caption="Επεξεργασία Προφίλ"/>
-		<control caption="Συνομιλία με Χρήστη:"/>
-		<control caption="Ενεργοποίηση Συνομιλία με Χρήστης peer to peer με συμβατά προγράμματα"/>
-		<control caption="Ενεργοποίηση Συνομιλία με Χρήστης σε όλα τα δίκτυα"/>
+		<control caption="_Συνομιλία:"/>
+		<control caption="Ενεργοποίηση συνομιλίας peer to peer με συμβατά προγράμματα"/>
+		<control caption="Ενεργοποίηση συνομιλίας σε όλα τα δίκτυα"/>
 		<control caption="Φιλτράρισμα ενοχλητικών μηνυμάτων"/>
 		<control caption="Φιλτράρισμα αισχρόλογων"/>
 	</dialog>
-	<dialog name="CIRCSettingsPage" cookie="BuBuBuEdStBuStCoBuBuStBuStBuStBuStBuStBuStBuStEdStEdStEdStEdStEdStEd" caption="Συνομιλία με Χρήστη">
- 		<control caption="Επιλογές Πελάτη:"/>
- 		<control caption="Παρουσίαση ολοκληρωμένης συνομιλίας με χρήστη"/>
- 		<control caption="Προστασία από παρανομίες:"/>
- 		<control/>
- 		<control caption="Γραμμές ανά δευτερόλεπτο"/>
- 		<control caption="Παρουσίαση timestamp"/>
- 		<control caption="Φόντο Οθόνης:"/>
- 		<control/>
- 		<control caption="Χρώματα:"/>
- 		<control/>
- 		<control caption="Μηνύματα Server"/>
- 		<control/>
- 		<control caption="Θέματα"/>
- 		<control/>
- 		<control caption="Ενέργειες Καναλιών"/>
- 		<control/>
- 		<control caption="Παρατηρήσεις"/>
- 		<control/>
- 		<control caption="Φόντο Συνομιλίας με Χρήστη "/>
- 		<control/>
- 		<control caption="Κείμενο"/>
-		<control caption="Ρυθμίσεις Σύνδεσης:"/>
- 		<control caption="Ορατό Όνομα:"/>
+	<dialog name="CIRCSettingsPage" cookie="BuBuBuEdStBuStCoBuBuStBuStBuStBuStBuStBuStBuStEdStEdStEdStEdStEdStEd" caption="Συνομιλία">
+		<control caption="_Επιλογές Client:"/>
+		<control caption="Εμφάνιση ενσωμάτωσης συνομιλίας"/>
+		<control caption="Προστασία λογοδιάρροιας:"/>
 		<control/>
-		<control caption="Όνομα Χρήστη:"/>
+		<control caption="γραμμές ανά δευτερόλεπτο"/>
+		<control caption="Προβολή χρονικών επισημάνσεων"/>
+		<control caption="Γραμματοσειρά Οθόνης:"/>
 		<control/>
-		<control caption="Εναλλακτικό Ορατό Όνομα:"/>		
+		<control caption="_Χρώματα:"/>
 		<control/>
-		<control caption="Αληθινό Όνομα Χρήστη:"/>> 		
+		<control caption="Μηνύματα server"/>
 		<control/>
- 		<control caption="Server:"/>
- 		<control/>
-		<control caption="Πύλη:"/>
+		<control caption="Θέματα"/>
+		<control/>
+		<control caption="Ενέργειες Καναλιών"/>
+		<control/>
+		<control caption="Σημειώσεις"/>
+		<control/>
+		<control caption="Φόντο συνομιλίας"/>
+		<control/>
+		<control caption="Κείμενο"/>
+		<control caption="Ρυθμίσεις _Σύνδεσης:"/>
+		<control caption="Ψευδώνυμο:"/>
+		<control/>
+		<control caption="Όνομα χρήστη:"/>
+		<control/>
+		<control caption="Εφεδρικό Ψευδώνυμο:"/>
+		<control/>
+		<control caption="Αληθινό όνομα:"/>
+		<control/>
+		<control caption="Server:"/>
+		<control/>
+		<control caption="Θύρα:"/>
 		<control/>
 	</dialog>
 	<dialog name="CWebSettingsPage" cookie="BuStBuBuBuBuBuBuBuCoBuBuSt" caption="Ιστός">
@@ -3439,10 +3462,10 @@
 		<control caption="_Αφαίρεση"/>
 		<control caption="Το πρόσθετο (plugin) διαχείρισης λήψεων θα επιχειρεί να λάβει τύπους αρχείων αυτής της λίστας. Ο χειρισμός των υπόλοιπων τύπων παραμένει στο πρόγραμμα περιήγησής σας. Για να διαχειρίζεται τις λήψεις, το Shareaza πρέπει να είναι ανοιγμένο!"/>
 	</dialog>
-	<dialog name="CInternetSettingsGroup" cookie="" caption="Διαδίκτυο">
+	<dialog name="CInternetSettingsGroup" caption="Διαδίκτυο">
 	</dialog>
 	<dialog name="CConnectionSettingsPage" cookie="BuStCoStCoStEdBuBuBuStCoStCoBuStCoBuBuBuStEdmsStEdms" caption="Σύνδεση">
-		<control caption="Εισερχόμενη Διεύθυνση:"/>
+		<control caption="Ει_σερχόμενη Διεύθυνση:"/>
 		<control caption="Διεύθυνση:"/>
 		<control caption="Αυτόματο"/>
 		<control caption="Ταχύτητα:"/>
@@ -3451,7 +3474,7 @@
 		<control/>
 		<control caption="Τυχαία"/>
 		<control caption="Επιβολή διεύθυνσης ένωσης"/>
-		<control caption="Εξερχόμενη Διεύθυνση:"/>
+		<control caption="Ε_ξερχόμενη Διεύθυνση:"/>
 		<control caption="Διεύθυν.:"/>
 		<control caption="Αυτόματο"/>
 		<control caption="Ταχύτητα:"/>
@@ -3495,44 +3518,44 @@
 		<control caption="Λήψεις και αποστολές μόνο σε ενωμένα δίκτυα."/>
 	</dialog>
 	<dialog name="CUploadsSettingsPage" cookie="BuBuBuBuStEdmsBuCoBuBuBuStCoStCoBuSyBuBuBuSt" caption="Αποστολές">
-		<control caption="Επιλογές:"/>
+		<control caption="_Επιλογές:"/>
 		<control caption="Κοινοποίηση ημιτελών λήψεων"/>
 		<control caption="Περιορισμοί σε λειτουργία κόμβου"/>
 		<control caption="Κοινοπ. αρχείων προεπισκόπησης"/>
 		<control caption="Όριο ανά παραλήπτη:"/>
 		<control/>
 		<control/>
-		<control caption="Φραγή Προγραμμάτων:"/>
+		<control caption="Φραγή _Προγραμμάτων:"/>
 		<control/>
 		<control caption="+"/>
 		<control caption="-"/>
-		<control caption="Συνολικό Εύρος Ζώνης Αποστολής:"/>
+		<control caption="Συνολικό Εύρος _Ζώνης Αποστολής:"/>
 		<control caption="Όριο:"/>
 		<control/>
 		<control caption="Λειτουργία:"/>
 		<control caption="Μέγιστου|Μέσου Όρου"/>
-		<control caption="Ουρές:"/>
+		<control caption="_Ουρές:"/>
 		<control/>
-		<control caption="Νέα..."/>
-		<control caption="Αλλαγές..."/>
-		<control caption="Διαγραφή"/>
+		<control caption="_Νέα..."/>
+		<control caption="_Αλλαγές..."/>
+		<control caption="_Διαγραφή"/>
 		<control caption="(Οι αλλαγές επιδρούν αμέσως!)"/>
 	</dialog>
 	<dialog name="CRemoteSettingsPage" cookie="BuStBuBuStBuStEdStEd" caption="Απομακρυσμένη Πρόσβαση">
-		<control caption="Περιγραφή:"/>
+		<control caption="_Περιγραφή:"/>
 		<control caption="Η Απομακρυσμένη Πρόσβαση επιτρέπει, κατά την εκτέλεση του Shareaza στον υπολογιστή σας, τον χειρισμό του από απομακρυσμένα προγράμματα περιήγησης. Για να χρησιμοποιήσετε αυτήν τη δυνατότητα, πρέπει να δέχεστε εισερχόμενες συνδέσεις (π.χ. κατάλληλα ρυθμισμένο router κτλ)."/>
-		<control caption="Ενεργοποίηση:"/>
+		<control caption="_Ενεργοποίηση:"/>
 		<control caption="Ενεργοποίηση Απομακρυσμένης Πρόσβασης Shareaza:"/>
+		<control caption="URL"/>
+		<control caption="_Στοιχεία Εισόδου:"/>
+		<control caption="Όνομα (Username):"/>
 		<control/>
-		<control caption="Στοιχεία Εισόδου:"/>
-		<control caption="Όνομα (username):"/>
-		<control/>
-		<control caption="Κωδικός (password):"/>
+		<control caption="Κωδικός (Password):"/>
 		<control/>
 	</dialog>
 	<dialog name="CSchedulerSettingsPage" cookie="BuBuEdmsBuBuStStStStStStStStStStStEdBuSt" caption="Χρονοδιάγραμμα">
-		<control caption="Ενεργοποίηση και Επιλογές ΔΛ:"/>
-		<control caption="Ενεργοποίηση Χρονοδιαγράμματος"/>
+		<control caption="_Ενεργοποίηση και Επιλογές ΔΛ:"/>
+		<control caption="_Ενεργοποίηση Χρονοδιαγράμματος"/>
 		<control/>
 		<control/>
 		<control caption="Σε ώρα ΔΛ, σύνδεση μόνο στο G2"/>
@@ -3567,7 +3590,7 @@
 		<control caption="Σύνδεση στο Gnutella (G1)"/>
 		<control caption="Παραμετροποίηση Gnutella"/>
 	</dialog>
-	<dialog name="CGnutellaSettingsPage" cookie="BuBuBuStCoBuStEdmsStEdmsStEdmsBuBuBuStCoBuStEdmsStEdmsStEdmsBuBuBuBu" caption="Gnutella">
+	<dialog name="CGnutellaSettingsPage" cookie="BuBuBuStCoBuStEdmsStEdmsStEdmsBuBuBuStCoBuStEdmsStEdmsStEdmsBuBuBuBu" caption="G2 &amp; G1">
 		<control caption="Δίκτυο Gnutella2:"/>
 		<control caption="Πάντα σύνδεση στο Gnutella2"/>
 		<control caption="Σύνδεση στο Gnutella2 σήμερα"/>
@@ -3598,9 +3621,9 @@
 		<control caption="Peer σε Peer:"/>
 		<control/>
 		<control/>
-		<control caption="Συμπίεση Επικοινωνίας:"/>
+		<control caption="Συμπίεση _Επικοινωνίας:"/>
 		<control caption="Κόμβου σε Φύλλο"/>
-		<control caption="Φύλλου σε Κόμβο"/>
+		<control caption="Φύλλου σε  Κόμβο"/>
 		<control caption="Κόμβου σε Κόμβο"/>
 	</dialog>
 	<dialog name="CDonkeySettingsPage" cookie="BuBuBuBuBuStEdmsStBuBuStEdmsStBuStBu" caption="ED2K">
@@ -3624,20 +3647,20 @@
 		<control caption="Λήψη..."/>
 	</dialog>
 	<dialog name="CBitTorrentSettingsPage" cookie="BuBuBuEdmsStEdmsStBuEdmsStBuBuBuBuEdBuBuEdBuStEd" caption="BitTorrent">
-		<control caption="Περιβάλλον:"/>
+		<control caption="_Περιβάλλον:"/>
 		<control caption="Προβολή επιπρόσθετων στοιχείων περιβάλλοντος για BitTorrent"/>
-		<control caption="Συνδέσεις Λήψης:"/>
+		<control caption="Συνδέσεις _Λήψης:"/>
 		<control/>
 		<control/>
 		<control caption="Ταυτόχρονα Torrents"/>
 		<control/>
 		<control/>
 		<control caption="Συνδέσεις Client"/>
-		<control caption="&#160;Απόσυρση ληφθέντων torrents με αναλογία ανταλλαγής &gt;"/>
+		<control caption=" Απόσυρση ληφθέντων torrents με αναλογία ανταλλαγής &gt;"/>
 		<control/>
 		<control/>
 		<control caption="%"/>
-		<control caption="&#160;Προτίμηση πηγών torrent"/>
+		<control caption="Προτίμηση πηγών torrent"/>
 		<control caption="_Παιχνίδι Τέλους:"/>
 		<control caption="Με την ολοκλήρωση ενός torrent, ενεργ. λειτουργίας Παιχνιδιού Τέλους"/>
 		<control caption="_Αποθήκευση Torrents Σε:"/>
@@ -3676,16 +3699,16 @@
 		<control caption="_Εγκατάσταση..."/>
 		<control caption="Λήψη επιπλέων"/>
 	</dialog>
-	<dialog name="CAdvancedSettingsPage" cookie="SyEdmsBuBuStStEd" caption="Advanced">
- 		<control/>
- 		<control/>
- 		<control/>
-		<control caption="Ορισμός Default"/>
-		<control caption="Ρυθμίσεις Ιδιοτήτων:"/>
- 		<control caption="Τιμή:"/>
- 		<control caption="Περιγραφή:"/>
- 		<control/>
- 	</dialog>
+	<dialog name="CAdvancedSettingsPage" cookie="SyBuStEdmsStEd" caption="Προχωρημένες">
+		<control/>
+		<control/>
+		<control/>
+		<control caption="Ορισμός Προεπιλογής"/>
+		<control caption="Εφαρμογή Τιμής:"/>
+		<control caption="Τιμή:"/>
+		<control caption="Περιγραφή:"/>
+		<control/>
+	</dialog>
 	<dialog name="CQueuePropertiesDlg" cookie="BuEdBuBuBuBuBuEdBuEdBuCoBuEdBuSyBuBuStEdmsStEdmsStEdmsBuStEdStEdmsBuEdmsBuBuBu" caption="Ιδιότητες Ουράς Αποστολών">
 		<control caption="_Όνομα:"/>
 		<control/>
@@ -3698,7 +3721,7 @@
 		<control caption="Μέγιστο μέγεθος αρχείου:"/>
 		<control/>
 		<control caption="Επισήμανση:"/>
-		<control/>
+		<control caption="Δημοφιλές|Νέο"/>
 		<control caption="Ταίριασμα ονόμ.:"/>
 		<control/>
 		<control caption="Πρωτόκολλα:"/>
@@ -3777,8 +3800,8 @@
 		<control caption="Χρήση ονόματος:"/>
 		<control/>
 		<control caption="Είμαι:"/>
-		<control caption="&#160;(διαλέξτε)"/>
-		<control caption="&#160;(διαλέξτε)| αγόρι| κορίτσι| άνδρας| γυναίκα"/>
+		<control caption=" (διαλέξτε)"/>
+		<control caption=" (διαλέξτε)| αγόρι| κορίτσι| άνδρας| γυναίκα"/>
 		<control caption="από:"/>
 		<control/>
 		<control/>
@@ -3827,7 +3850,7 @@
 		<control/>
 	</dialog>
 	<dialog name="CIdentityProfilePage" cookie="BuStEdStEdEdBuCoStCoStBu" caption="Ταυτότητα">
-		<control caption="Όνομα:"/>
+		<control caption="_Όνομα:"/>
 		<control caption="Ορατό Όνομα:"/>
 		<control/>
 		<control caption="Ονομ/νυμο:"/>
@@ -3841,10 +3864,10 @@
 		<control caption="Επίτρεψη περιήγησης στο προφίλ από άλλους"/>
 	</dialog>
 	<dialog name="CContactProfilePage" cookie="BuStEdBuStEdStEdStEdStEdStEd" caption="Επαφή">
-		<control caption="Ηλεκτρονική Διεύθυνση (email):"/>
+		<control caption="_Ηλεκτρονική Διεύθυνση (email):"/>
 		<control caption="Κύρια:"/>
 		<control/>
-		<control caption="Άμεσα Μηνύματα:"/>
+		<control caption="Άμεσα _Μηνύματα:"/>
 		<control caption="Διαβατήριο MSN/.NET:"/>
 		<control/>
 		<control caption="Yahoo ID:"/>
@@ -3857,17 +3880,17 @@
 		<control/>
 	</dialog>
 	<dialog name="CProfileProfilePage" cookie="BuStCoStCoBuStEdStEdBuLiBuBuCo" caption="Λοιπά Στοιχεία">
-		<control caption="Τοποθεσία:"/>
+		<control caption="_Τοποθεσία:"/>
 		<control caption="Χώρα:"/>
 		<control/>
 		<control caption="Πόλη:"/>
 		<control/>
-		<control caption="Χαρτογράφηση:"/>
+		<control caption="_Χαρτογράφηση:"/>
 		<control caption="Γ. Πλάτος:"/>
 		<control/>
 		<control caption="Γ. Μήκος:"/>
 		<control/>
-		<control caption="Ενδιαφέροντα:"/>
+		<control caption="_Ενδιαφέροντα:"/>
 		<control/>
 		<control caption="&lt; Προσθήκη"/>
 		<control caption="Αφαίρεση &gt;"/>
@@ -3879,10 +3902,10 @@
 	<dialog name="CAvatarProfilePage" cookie="BuStBuStBuBu" caption="Πορτραίτο">
 		<control caption="_Προεπισκόπηση:"/>
 		<control/>
-		<control caption="Επιλογή:"/>
+		<control caption="_Επιλογή:"/>
 		<control caption="Το πορτραίτο σας θα εμφανίζεται σε όσους χρήστες περιηγούνται το προφίλ σας και τα κοινοποιημένα αρχεία σας, και μπορεί να είναι οποιοδήποτε υποστηριζόμενο αρχείο εικόνας μέγεθους 128x128 εικονοστοιχείων."/>
-		<control caption="Άνοιγμα..."/>
-		<control caption="Αφαίρεση"/>
+		<control caption="_Άνοιγμα..."/>
+		<control caption="_Αφαίρεση"/>
 	</dialog>
 	<dialog name="CFavouritesProfilePage" cookie="SyBuStEdStEdBuBu" caption="Αγαπημένα">
 		<control/>
@@ -3901,7 +3924,7 @@
 	</dialog>
 	<dialog name="CCertificateProfilePage" cookie="StBuStStStStBu" caption="Πιστοποιητικό">
 		<control caption="Οι χρήστες Gnutella ταυτοποιούνται από ένα παγκόσμια μοναδικό αναγνωριστικό, και το αντίστοιχο ζεύγος δημόσιου και ιδιωτικού κλειδιού. Κανονικά, δεν χρειάζεται να παράγετε ένα νέο αναγνωριστικό, πάντως το Shareaza παρέχει αυτήν την επιλογή για τους προχωρημένους χρήστες."/>
-		<control caption="Παγκόσμια μοναδικό πιστοποιητικό αναγνώρισης Gnutella:"/>
+		<control caption="_Παγκόσμια μοναδικό πιστοποιητικό αναγνώρισης Gnutella:"/>
 		<control caption="GUID:"/>
 		<control/>
 		<control caption="Δημιουργημένο:"/>
@@ -3914,9 +3937,9 @@
 		<control caption="Εγκαινίαση νέας σύνδεσης με host ή server:|Περιήγηση του εξής host:"/>
 		<control/>
 		<control/>
-		<control caption="Πρωτόκολλο Δικτύου:"/>
+		<control caption="_Πρωτόκολλο Δικτύου:"/>
 		<control caption="Gnutella (auto)|Gnutella2 (auto)|ED2K"/>
-		<control caption="Suppress Ultrapeer"/>
+		<control caption="_Suppress Ultrapeer"/>
 		<control caption="Σύνδεση"/>
 		<control caption="Άκυρο"/>
 	</dialog>
@@ -3929,7 +3952,7 @@
 		<control caption="Άκυρο"/>
 		<control caption="Το Shareaza μπορεί να λάβει αρχεία από τον Ιστό (HTTP) και αυτόματα να ψάξει και να κατεβάσει συνδέσμους P2P (Magnet, Gnutella, eDonkey, mP2P)."/>
 		<control caption="Μπορεί επίσης να λάβει αρχεία BitTorrent. Ένα torrent δηλώνετε με ένα αρχείο τύπου .torrent ή έναν HTTP σύνδεσμο προς αυτό. Αν έχετε τον σύνδεσμο, επικολλήστε τον στο παραπάνω πεδίο. Αν έχετε το αρχείο, κλικ στο Άνοιγμα Torrent:"/>
-		<control caption="Άνοιγμα Torrent..."/>
+		<control caption="Άνοιγμα _Torrent..."/>
 	</dialog>
 	<dialog name="CNewSearchDlg" cookie="EdCoBuBu" caption="Νέα Αναζήτηση|Επαναζήτηση|Εύρεση στη Βιβλιοθήκη">
 		<control/>
@@ -3938,36 +3961,36 @@
 		<control caption="Άκυρο"/>
 	</dialog>
 	<dialog name="CFilterSearchDlg" cookie="BuEdBuStBuStEdStEdStEdmsStBuBuBuBuBuBuBuBuBuBuBuCoBuBuBuBuBu" caption="Φίλτρο Αποτελεσμάτων">
-		<control caption="Παρουσίαση αποτελεσμάτων που περιέχουν τις πιο πάνω λέξεις:"/>
- 		<control/>
- 		<control caption="Συνηθείς Εκφράσεις"/>
- 		<control caption="(Μπορείτε επίσης να αποκλείσετε λέξεις με -λέξη )"/>
- 		<control caption="Και να είναι του μεγέθους:"/>
- 		<control caption="Ελάχιστο:"/>
- 		<control/>
- 		<control caption="Μέγιστο:"/>
- 		<control/>
- 		<control caption="Με το λιγότερο:"/>
- 		<control/>
- 		<control/>
- 		<control caption="Πηγές."/>
- 		<control caption="Απόκρυψη:"/>
- 		<control caption="Απασχολημένα Host"/>
- 		<control caption="Μη συμβατά/ταιριαστά αρχεία"/>
- 		<control caption="Hosts με Firewall"/>
- 		<control caption="Αρχεία που έχετε ήδη"/>
- 		<control caption="Ασταθή hosts"/>
- 		<control caption="Ψεύτικα αποτελέσματα"/>
- 		<control caption="Αρχεία DRM"/>
- 		<control caption="Αποτελέσματα για ενηλίκους"/>
- 		<control caption="Ύποπτα/Βλαβερά αρχεία"/>
- 		<control caption="Φίλτρα:"/>
- 		<control/>
- 		<control caption="Ορισμός ως default"/>
- 		<control caption="Αποθήκευση ως"/>
- 		<control caption="Διαγραφή"/>
- 		<control caption="Φίλτρο"/>
- 		<control caption="Ματαίωση"/>	
+		<control caption="Προβολή μόνο όσων αποτελεσμάτων περιέχουν τις _λέξεις:"/>
+		<control/>
+		<control caption="Καν. Έκφ."/>
+		<control caption="( μπορείτε επίσης να αποκλείσετε λέξεις με -λέξη )"/>
+		<control caption="Και είναι _μεγέθους:"/>
+		<control caption="Ελάχιστο:"/>
+		<control/>
+		<control caption="Μέγιστο:"/>
+		<control/>
+		<control caption="Με τουλάχιστον:"/>
+		<control/>
+		<control/>
+		<control caption="πηγές."/>
+		<control caption="_Απόκρυψη:"/>
+		<control caption="Απασχολημένων hosts"/>
+		<control caption="Αταίριαχτων αρχείων"/>
+		<control caption="Hosts οπίσω Firewall"/>
+		<control caption="Υπαρχόντων αρχείων"/>
+		<control caption="Ασταθών hosts"/>
+		<control caption="Πλαστών αποτελεσμάτ."/>
+		<control caption="Αρχείων DRM"/>
+		<control caption="Αρχείων για Ενήλικες"/>
+		<control caption="Ύποπτων αρχείων"/>
+		<control caption="Φίλτρα:"/>
+		<control/>
+		<control caption="Ορισμός προεπιλογής"/>
+		<control caption="_Αποθήκευση ως"/>
+		<control caption="_Διαγραφή"/>
+		<control caption="Φιλτράρισμα"/>
+		<control caption="Άκυρο"/>
 	</dialog>
 	<dialog name="CSaveFilterAsDlg" cookie="EdBuBuSt" caption="Αποθήκευση φίλτρου ως">
 		<control/>
@@ -4050,8 +4073,8 @@
 		<control caption="Προσθήκη Πηγής"/>
 		<control/>
 		<control/>
-		<control caption="Προσθήκη"/>
-		<control caption="Αφαίρεση"/>
+		<control caption="_Προσθήκη"/>
+		<control caption="_Αφαίρεση"/>
 		<control/>
 	</dialog>
 	<dialog name="CFileCopyDlg" cookie="StStmsBuBumsStSt" caption="Αντιγραφή Αρχείων|Μετακίνηση Αρχείων">
@@ -4076,10 +4099,10 @@
 	</dialog>
 	<dialog name="CGraphListDlg" cookie="SyBuBuBuBuBuBuBuBuStEdmsStBuEdBuBu" caption="Γραφήματα Δραστηριότ.">
 		<control/>
-		<control caption="Προσθήκη..."/>
-		<control caption="Διόρθωση..."/>
-		<control caption="Αφαίρεση"/>
-		<control caption="Προβολή:"/>
+		<control caption="_Προσθήκη..."/>
+		<control caption="_Διόρθωση..."/>
+		<control caption="_Αφαίρεση"/>
+		<control caption="_Προβολή:"/>
 		<control caption="Πλέγμα"/>
 		<control caption="Άξονες"/>
 		<control caption="Λεζάντα"/>
@@ -4088,7 +4111,7 @@
 		<control/>
 		<control/>
 		<control caption="ms"/>
-		<control caption="Όνομα:"/>
+		<control caption="_Όνομα:"/>
 		<control/>
 		<control caption="OK"/>
 		<control caption="Άκυρο"/>
@@ -4096,7 +4119,7 @@
 	<dialog name="CGraphItemDlg" cookie="BuBuBuCoStEdStEdBuBuStBu" caption="Ιδιότητες Αντικ. Γραφήματος">
 		<control caption="OK"/>
 		<control caption="Άκυρο"/>
-		<control caption="Πηγή:"/>
+		<control caption="_Πηγή:"/>
 		<control/>
 		<control caption="Πολλαπλασιαστής:"/>
 		<control/>
@@ -4131,11 +4154,11 @@
 		<control/>
 		<control/>
 		<control/>
-		<control caption="Φίλτρο Περιεχομένου:"/>
+		<control caption="Φίλτρο _Περιεχομένου:"/>
 		<control/>
 		<control caption="Ταίριασμα Κάποιου"/>
 		<control caption="Ταίριασμα Όλων"/>
-		<control caption="Reg. Exp."/>
+		<control caption="Καν. Έκφ."/>
 		<control caption="_Επιλογές:"/>
 		<control caption="Ενέργεια:"/>
 		<control caption="Καμία|Αποδοχή|Άρνηση"/>
@@ -4177,7 +4200,7 @@
 		<control caption="Επιλογή preset:"/>
 		<control caption="Magnet|eDonkey|Magnet HTML|eDonkey HTML"/>
 		<control caption="_Αντιγραφή"/>
-		<control caption="Αποθήκευση..."/>
+		<control caption="Απο_θήκευση..."/>
 		<control/>
 		<control caption="Άκυρο"/>
 	</dialog>
@@ -4194,7 +4217,7 @@
 		<control caption="Άμεση _Λήψη"/>
 		<control caption="Ανα_ζήτηση Αρχείων"/>
 		<control caption="Άκυρο"/>
-		<control caption="Απομνημόνευση επιλογής"/>
+		<control caption="_Απομνημόνευση επιλογής"/>
 		<control caption="Άνοιγμα παραθύρου _εποπτίας λήψης"/>
 		<control caption="Κάνατε κλικ σε ένα URI που προσθέτει την εξής Υπηρεσία Ανακάλυψης:"/>
 	</dialog>
@@ -4291,9 +4314,9 @@
 		<control/>
 		<control caption="Πληροφορίες Προτύπου:"/>
 		<control caption="Όνομα:"/>
-		<control/>
+		<control caption="..."/>
 		<control caption="Συγγραφέας:"/>
-		<control/>
+		<control caption="..."/>
 		<control caption="Περιγραφή:"/>
 		<control/>
 		<control caption="Διαγραφή|_Πίσω"/>
@@ -4319,18 +4342,18 @@
 		<control caption="ED2K:"/>
 		<control/>
 		<control/>
-		<control caption="Ενέργειες:"/>
+		<control caption="_Actions:"/>
 		<control caption="Αφαίρεση τρέχουσας επαλήθευσης και επαναεπαλήθευση"/>
 		<control caption="Θεώρηση της λήψης ως ολοκληρωμένης και επαναεπαλήθευσή της"/>
 		<control caption="Απολησμόνηση όλων των γνωστών πηγών"/>
 		<control caption="Συγχώνευση με το τοπικό αρχείο και επαλήθευση"/>
-		<control caption="Ακύρωση λήψης και αποθήκευση ολοκληρωμένων αρχείων"/>
-		<control caption="Απαλειφή Δεδομένων:"/>
+		<control caption="Ακύρωση λήψης, αλλά αποθήκευση ημιτελών αρχείων"/>
+		<control caption="Απαλειφή _Δεδομένων:"/>
 		<control caption="Σειρά bytes:"/>
 		<control/>
 		<control caption="ως"/>
 		<control/>
-		<control caption="Διαγραφή"/>
+		<control caption="Απαλειφή"/>
 	</dialog>
 	<dialog name="CTorrentSeedDlg" cookie="StStBuBuBuStms" caption="Άνοιγμα Αρχείου Torrent">
 		<control/>
@@ -4342,7 +4365,7 @@
 		<control/>
 	</dialog>
 	<dialog name="CTorrentGeneralPage" cookie="BuStEdStEdStEdStEdBuStCoEdStStEd" caption="Προχωρημένες Πληροφορίες BitTorrent">
-		<control caption="Πληροφορίες Torrent:"/>
+		<control caption="Πληροφορίες _Torrent:"/>
 		<control caption="Όνομα:"/>
 		<control/>
 		<control caption="Δημιουργημένο:"/>
@@ -4353,32 +4376,32 @@
 		<control/>
 		<control caption="Μεταφορές:"/>
 		<control caption="Έναρξη νέων μεταφορών:"/>
-		<control caption="&#160;Βάσει αναγκών| Όταν η αναλογία υπερβαίνει το 100%| Μόνο κατά απαίτηση| Ποτέ"/>
+		<control caption=" Βάσει αναγκών| Όταν η αναλογία υπερβαίνει το 100%| Μόνο κατά απαίτηση| Ποτέ"/>
 		<control/>
 		<control caption="Σύνολο Απεσταλμένων:"/>
 		<control caption="Σημειώσεις:"/>
 		<control/>
 	</dialog>
 	<dialog name="CTorrentFilesPage" cookie="BuStEdBuSy" caption="Αρχεία">
-		<control caption="Πληροφορίες Torrent:"/>
+		<control caption="Πληροφορίες _Torrent:"/>
 		<control caption="Όνομα:"/>
 		<control/>
-		<control caption="Αρχεία:"/>
+		<control caption="_Αρχεία:"/>
 		<control/>
 	</dialog>
 	<dialog name="CTorrentTrackersPage" cookie="BuStEdStEdBuStEdStEdBuBuSyStCo" caption="Trackers">
-		<control caption="Πληροφορίες Torrent:"/>
+		<control caption="Πληροφορίες _Torrent:"/>
 		<control caption="Όνομα:"/>
 		<control/>
 		<control caption="Tracker:"/>
 		<control/>
-		<control caption="Τρέχον Tracker:"/>
+		<control caption="_Τρέχον Tracker:"/>
 		<control caption="Ολοκληρωμένο (Seeds):"/>
 		<control/>
 		<control caption="Ημιτελές:"/>
 		<control/>
-		<control caption="Ανανέωση"/>
-		<control caption="Trackers:"/>
+		<control caption="_Ανανέωση"/>
+		<control caption="_Trackers:"/>
 		<control/>
 		<control caption="Κατάσταση Tracker:"/>
 		<control caption="Απενεργοποιημένος|Προσαρμοσμένος|Μονός Tracker|Πολλαπλός Tracker|Πολλαπλός Tracker (κλειδωμένος)"/>
@@ -4388,34 +4411,34 @@
 		<control caption="Άκυρο"/>
 		<control/>
 		<control/>
-		<control caption="_BitTorrent"/>
+		<control caption="λήψεις _BitTorrent"/>
 		<control/>
-		<control caption="Προσθήκη"/>
-		<control caption="Αφαίρεση"/>
+		<control caption="_Προσθήκη"/>
+		<control caption="_Αφαίρεση"/>
 		<control/>
 		<control/>
 		<control/>
-		<control caption="Όνομα:"/>
-		<control caption="Φίλτρα:"/>
+		<control caption="_Όνομα:"/>
+		<control caption="_Φίλτρα:"/>
 		<control caption="Ολοκλήρωση _Φακέλου Αρχείων:"/>
-		<control caption="_Aαρχείων:"/>
+		<control caption="_Τύπος αρχείου:"/>
 	</dialog>
 	<dialog name="CMediaVisDlg" cookie="StBuSyCoBuBuBu" caption="Επιλογή Απεικόνισης">
 		<control/>
 		<control caption="Επιλογή ηχητικής απεικόνισης από τη λίστα:"/>
 		<control/>
 		<control caption="Εμφάνιση στο Υποσέλιδο|Εμφάνιση Πλήρους Μεγέθους|Μεγάλη Εμφάνιση|Μέτρια Εμφάνιση|Μικρή Εμφάνιση"/>
-		<control caption="Ρυθμίσεις..."/>
+		<control caption="_Ρυθμίσεις..."/>
 		<control caption="OK"/>
 		<control caption="Άκυρο"/>
 	</dialog>
 	<dialog name="CUpgradeDlg" cookie="StStStBuBuBu" caption="Συναγερμός Αναβάθμισης">
 		<control/>
 		<control caption="Μια νέα έκδοση του Shareaza είναι διαθέσιμη. Θέλετε να αναβαθμίσετε;"/>
-		<control caption="Αν επιλέκετε Άμεση Αναβάθμιση, το Shareaza θα προσθέση την αναβάθμιση στη λίστα λήψεων και θα ξεκινήσει αυτόματα να τη λαμβάνει."/>
-		<control caption="Άμεση Αναβάθμιση"/>
-		<control caption="Μη πραγματοποίηση ελέγχου για νέες εκδόσεις"/>
-		<control caption="Μη πραγματοποίηση αναβάθμισης"/>
+		<control caption="Αν επιλέξετε Άμεση Αναβάθμιση, το Shareaza θα προσθέση την αναβάθμιση στη λίστα λήψεων και θα ξεκινήσει αυτόματα να τη λαμβάνει."/>
+		<control caption="_Άμεση Αναβάθμιση"/>
+		<control caption="Μη έλεγχος για νέες εκδόσεις"/>
+		<control caption="Μη αναβάθμιση"/>
 	</dialog>
 	<dialog name="CDownloadReviewDlg" cookie="StBuSyEd" caption="Κριτικές Λήψης">
 		<control/>
@@ -4426,7 +4449,7 @@
 	<dialog name="CDecodeMetadataDlg" cookie="StCoBuBuBuStStBuBu" caption="Metadata Localisation">
 		<control caption="Επιλογή μεθόδου επανακωδικοποίησης"/>
 		<control caption="Αραβική|Βαλτικής|Κεντροευρωπαϊκή|Κινέζικη απλοποιημένη|Κινέζικη παραδοσιακή|Κυριλλική|Ελληνική|Εβραϊκή|Ιαπωνική|Κορεατική|Τάι|Τούρκικη|Βιετναμέζικη"/>
-		<control caption="Προεπισκόπηση:"/>
+		<control caption="Προεπισκόπιση:"/>
 		<control/>
 		<control/>
 		<control/>
@@ -4434,11 +4457,11 @@
 		<control caption="OK"/>
 		<control caption="Άκυρο"/>
 	</dialog>
-	<dialog name="CIrcInputDlg" cookie="EdBuBuSt" caption="Channel Name|Why reason">
+	<dialog name="CIrcInputDlg" cookie="EdBuBuSt" caption="Προσθήκη Καναλιού|Αιτιολόγηση">
 		<control/>
 		<control caption="OK"/>
 		<control caption="Άκυρο"/>
-		<control caption="Add a channel name:|Enter kick/ban reason:"/>
+		<control caption="Εισαγωγή ονόματος καναλιού:|Εισαγωγή αιτίας αποπομπής/αποκλεισμού:"/>
 	</dialog>
 </dialogs>
 <!-- Columns Definitions -->
@@ -4579,13 +4602,3 @@
 	</list>
 </listColumns>
 </skin>
-
-
-
-<!-- 
-the words "Server" and "Host(s)" on many places in the file;
-l. 1869 
-l. 1905
-l. 4130: "regular expression" needs to be translated;
-l. 4307
-l. 4409-->
