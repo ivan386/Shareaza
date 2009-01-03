@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
   <!-- 
 	Name:		Shareaza OS
 	Author:		RocketX
@@ -1022,19 +1022,19 @@
           <part name="_ID_TAB_TRANSFERS.Checked" rect="502,28,114,29"/>
           <part name="_ID_TAB_TRANSFERS.Hover"	rect="502,28,114,29"/>
           <part name="_ID_TAB_TRANSFERS.Down"	rect="502,0,114,29"/>
-          <part name="_ID_TAB_IRC.Up"		rect="616,0,70,29"/>
-          <part name="_ID_TAB_IRC.Checked"	rect="616,28,70,29"/>
-          <part name="_ID_TAB_IRC.Hover" 	rect="616,28,70,29"/>
-          <part name="_ID_TAB_IRC.Down" 	rect="616,0,70,29"/>
+          <part name="_ID_TAB_IRC.Up"		rect="695,0,71,29"/>
+          <part name="_ID_TAB_IRC.Checked"	rect="695,28,71,29"/>
+          <part name="_ID_TAB_IRC.Hover" 	rect="695,28,71,29"/>
+          <part name="_ID_TAB_IRC.Down" 	rect="695,0,71,29"/>
         </parts>
         <anchors>
-          <anchor name="Background"		rect="15,0,710,38"/>
+          <anchor name="Background"		rect="15,0,711,38"/>
           <anchor name="_ID_TAB_HOME"		rect="15,2,91,29"/>
           <anchor name="_ID_TAB_LIBRARY"		rect="106,2,125,29"/>
           <anchor name="_ID_TAB_MEDIA"		rect="231,2,171,29"/>
           <anchor name="_ID_TAB_SEARCH" 	rect="402,2,115,29"/>
           <anchor name="_ID_TAB_TRANSFERS"	rect="517,2,114,29"/>
-          <anchor name="_ID_TAB_IRC"		rect="631,2,70,29"/>
+          <anchor name="_ID_TAB_IRC"		rect="631,2,71,29"/>
         </anchors>
       </windowSkin>
       <!-- end navbar language for fr -->
