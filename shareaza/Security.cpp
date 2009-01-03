@@ -457,15 +457,19 @@ BOOL CSecurity::IsDenied(CQuerySearch::const_iterator itStart, CQuerySearch::con
 		POSITION posLast = pos;
 		CSecureRule* pRule = GetNextRegExp( pos );
 
-		if ( pRule->IsExpired( nNow ) )
+		BOOL bRuleExpired = FALSE;
+		if ( pRule->IsExpired(nNow, TRUE ) )
 		{
 			m_pRegExpRules.RemoveAt( posLast );
 			POSITION posAll = m_pRules.Find( pRule );
 			if ( posAll )
 				m_pRules.RemoveAt( posAll );
 			delete pRule;
+			bRuleExpired=TRUE;
 		}
-		else if ( pRule->Match( itStart, itEnd, pszContent ) )
+		
+
+		if (bRuleExpired==FALSE && pRule->Match( itStart, itEnd, pszContent ) )
 		{
 			pRule->m_nToday ++;
 			pRule->m_nEver ++;
