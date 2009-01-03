@@ -84,6 +84,23 @@ BOOL CDiscoveryServiceDlg::OnInitDialog()
 
 	m_sAddress	= m_pService->m_sAddress;
 	m_nType		= m_pService->m_nType - 1;
+	
+	//Reassigning the combo-box placeholder:
+	if ( m_nType == 1 )
+	{
+		if ( m_pService->m_bGnutella1 && m_pService->m_bGnutella2 )
+		{
+			m_nType = 3;
+		}
+		else if ( m_pService->m_bGnutella2 )
+		{
+			m_nType = 2;
+		}
+	}
+	else if ( m_nType > 1 ) 
+	{
+		m_nType += 2;
+	}
 
 	if ( m_bNew ) m_nType = 1;
 
@@ -127,8 +144,20 @@ void CDiscoveryServiceDlg::OnOK()
 		break;
 	case 1:
 		m_pService->m_nType = CDiscoveryService::dsWebCache;
+		m_pService->m_bGnutella1 = TRUE;
+		m_pService->m_bGnutella2 = FALSE;
 		break;
 	case 2:
+		m_pService->m_nType = CDiscoveryService::dsWebCache;
+		m_pService->m_bGnutella1 = FALSE;
+		m_pService->m_bGnutella2 = TRUE;
+		break;
+	case 3:
+		m_pService->m_nType = CDiscoveryService::dsWebCache;
+		m_pService->m_bGnutella1 = TRUE;
+		m_pService->m_bGnutella2 = TRUE;
+		break;
+	case 4:
 		m_pService->m_nType = CDiscoveryService::dsServerMet;
 		break;
 	default:

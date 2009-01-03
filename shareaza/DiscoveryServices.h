@@ -134,12 +134,14 @@ protected:
 	BOOL				RequestWebCache(CDiscoveryService* pService, Mode nMode, PROTOCOLID nProtocol);
 	void				StopWebRequest();
 	void				OnRun();
+	BOOL 				WebCacheStore(CString Line, LPCTSTR ID, int SubmitType, PROTOCOLID AddrProtocol);
 	BOOL				RunWebCacheGet(BOOL bCache);
 	BOOL				RunWebCacheUpdate();
 	BOOL				RunServerMet();
 	BOOL				SendWebCacheRequest(CString strURL, CString& strOutput);
 	BOOL				EnoughServices() const;
 	void				AddDefaults();
+	void				MergeURLs();
 
 	friend class CDiscoveryService;
 };
