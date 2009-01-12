@@ -1089,7 +1089,7 @@
 	</menu>
 	<menu name="CDownloadsWnd.Nothing">
 		<item id="ID_DOWNLOADS_HELP" text="_Ajuda..."/>
-		<item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="L_impar Completado"/>
+		<item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="L_impar os Completados"/>
 		<item id="ID_DOWNLOADS_AUTO_CLEAR" text="Aut_o Limpar"/>
 	</menu>
 	<menu name="CDownloadTabBar">
@@ -1130,12 +1130,12 @@
 	</menu>
 	<menu name="CUploadsWnd.Queue">
 		<item id="ID_UPLOADS_EDIT_QUEUE" text="_Configurações da Fila"/>
-		<item id="ID_UPLOADS_CLEAR_COMPLETED" text="L_impar Completado"/>
+		<item id="ID_UPLOADS_CLEAR_COMPLETED" text="L_impar os Completados"/>
 		<item id="ID_UPLOADS_AUTO_CLEAR" text="Aut_o Limpar"/>
 	</menu>
 	<menu name="CUploadsWnd.Nothing">
 		<item id="ID_UPLOADS_HELP" text="_Ajuda..."/>
-		<item id="ID_UPLOADS_CLEAR_COMPLETED" text="L_impar Completado"/>
+		<item id="ID_UPLOADS_CLEAR_COMPLETED" text="L_impar os Completados"/>
 		<item id="ID_UPLOADS_AUTO_CLEAR" text="Aut_o Limpar"/>
 	</menu>
 	<menu name="CUploadsWnd.Filter">
@@ -2878,7 +2878,7 @@
 	<string id="16294" value="Incapaz de resolver &quot;%s&quot;."/>
 	<string id="16295" value="Acelerando o download &quot;%s&quot; removendo o limite de banda."/>
 	<string id="16296" value="Download verificado com sucesso &quot;%s&quot;."/>
-	<string id="16297" value="ATENÇÃO: O Download &quot;%s&quot; falhou na verificação, e pode não ser o arquivo que você pretendia baixar!"/>
+	<string id="16297" value="ATENÇÃO: O Download &quot;%s&quot; falhou na verificação, ele pode não ser o arquivo que você pretendia baixar!"/>
 	<string id="16298" value="O host de download %s está ocupado, esperando na posição #%i de %i da fila de espera (&quot;%s&quot;)."/>
 	<string id="16299" value="Você tem certeza que você quer limpar todos os downloads pausados? Uma vez que um download for limpo da janela de Downloads, ele não pode ser resumido."/>
 	<string id="16300" value="Você tem certeza que você quer apagar o download &quot;%s&quot;?"/>
@@ -3399,7 +3399,7 @@
 		<control caption="_Selecionar Plugin..."/>
 		<control caption="_Gerenciamento de Mídia"/>
 		<control caption="Escolha o Gerenciador de Mídia:"/>
-		<control caption="Aviso: Escolher um Gerenciador de Mídia externo desativará automaticamente todos os Plugins de Visualização e Mídia!"/>
+		<control caption="Aviso: Escolher um Gerenciador de Mídia externo desativará automaticamente todos os Plugins de Mídia e Visualização!"/>
 	</dialog>
 	<dialog name="CCommunitySettingsPage" cookie="BuStBuBuBuBuBuBu" caption="Comunidade">
 		<control caption="Meu _Perfil:"/>
@@ -4002,7 +4002,7 @@
 		<control caption="Endereço do _Serviço:"/>
 		<control/>
 		<control caption="Tipo de Serviço de Descobrimento:"/>
-		<control caption="Gnutella Bootstrap|GWebCache|Server.met URL|Bloqueada"/>
+		<control caption="Gnutella Bootstrap|G1 GWebCache|G2 GWebCache|G1/G2 GWebCache|Server.met URL|Bloqueado"/>
 		<control caption="OK"/>
 		<control caption="Cancelar"/>
 		<control/>
