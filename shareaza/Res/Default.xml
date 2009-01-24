@@ -1659,6 +1659,11 @@
 		<gap size="8"/>
 		<link target="raza:command:ID_HELP_FAQ" format="bu" align="middle">Quick Help</link>
 		<text align="middle">&#160;- Get some basic help using Shareaza</text>
+		<newline gap="8"/>
+		<icon res="141" width="32" height="32" target="raza:command:ID_VIEW_SECURITY"/>
+		<gap size="8"/>
+		<link target="raza:command:ID_VIEW_SECURITY" format="bu" align="middle">Security Filters</link>
+		<text align="middle">&#160;- Add/Remove filters to improve your search results</text>
 		<newline gap="18" indent="0"/>
 		<group id="5">
 			<icon res="128" width="32" height="32"/><gap size="8"/>
