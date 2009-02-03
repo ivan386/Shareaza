@@ -68,33 +68,61 @@ void CHashProgressBar::Create(CWnd* pParent)
 
 void CHashProgressBar::Run()
 {
-	if ( Settings.Library.HashWindow && LibraryBuilder.GetRemaining() )
-	{
-		m_sCurrent = LibraryBuilder.GetCurrent();
-		int nPos = m_sCurrent.ReverseFind( '\\' );
-		if ( nPos > 0 ) m_sCurrent = m_sCurrent.Mid( nPos + 1 );
+   if ( Settings.Library.HashWindow && LibraryBuilder.GetRemaining() )
+   {
+      m_sCurrent = LibraryBuilder.GetCurrent();
+      int nPos = m_sCurrent.ReverseFind( '\\' );
+      if ( nPos > 0 ) m_sCurrent = m_sCurrent.Mid( nPos + 1 );
 
-		if ( m_hWnd == NULL )
-		{
-			CreateEx( WS_EX_TOPMOST | WS_EX_TOOLWINDOW,
-				AfxRegisterWndClass( CS_SAVEBITS | CS_DROPSHADOW ),
-				_T("Shareaza Hashing..."), WS_POPUP, 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT,
-				NULL, 0 );
-		}
-		if ( m_hWnd != NULL ) 
-		{
-			Update();
-		}
-	}
-	else
-	{
-		if ( m_hWnd != NULL )
-		{
-			DestroyWindow();
-			m_sCurrent.Empty();
-			m_sPrevious.Empty();
-		}
-	}
+      if ( m_hWnd == NULL )
+      {
+         CString strHashProgressWndClass;         
+         
+         if ( theApp.m_bIsWin2000 == true || theApp.m_nWindowsVersion < 5 ) // Class Style CS_DROPSHADOW requires Windows XP or above
+         {
+            try
+             {
+                strHashProgressWndClass = AfxRegisterWndClass(
+                        CS_SAVEBITS );
+             }
+             catch (CResourceException* pEx)
+             {
+                    AfxMessageBox(_T("AfxRegisterWndClass error in Hash Progresss Bar with Class Style CS_SAVEBITS."));
+                    pEx->Delete();
+             }
+         }
+         else // Use CS_DROPSHADOW on Windows XP and above
+         {
+            try
+             {
+                strHashProgressWndClass = AfxRegisterWndClass(
+                        CS_SAVEBITS | CS_DROPSHADOW );
+             }
+             catch (CResourceException* pEx)
+             {
+                    AfxMessageBox(_T("AfxRegisterWndClass error in Hash Progresss Bar with Class Styles CS_SAVEBITS and CS_DROPSHADOW."));
+                    pEx->Delete();
+             }
+         }
+          CreateEx( WS_EX_TOPMOST | WS_EX_TOOLWINDOW,
+             strHashProgressWndClass,
+             _T("Shareaza Hashing..."), WS_POPUP, 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT,
+             NULL, 0 );
+      }
+      if ( m_hWnd != NULL )
+      {
+         Update();
+      }
+   }
+   else
+   {
+      if ( m_hWnd != NULL )
+      {
+         DestroyWindow();
+         m_sCurrent.Empty();
+         m_sPrevious.Empty();
+      }
+   }
 }
 
 void CHashProgressBar::Update()
