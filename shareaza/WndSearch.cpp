@@ -825,7 +825,7 @@ void CSearchWnd::UpdateMessages(BOOL bActive, CManagedSearch* pManaged)
 /////////////////////////////////////////////////////////////////////////////
 // CSearchWnd event handlers
 
-BOOL CSearchWnd::OnQueryHits(CQueryHit* pHits)
+BOOL CSearchWnd::OnQueryHits(const CQueryHit* pHits)
 {
 	if ( m_bPaused || m_hWnd == NULL )
 		return FALSE;

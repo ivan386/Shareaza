@@ -158,34 +158,32 @@ CMatchList::~CMatchList()
 //////////////////////////////////////////////////////////////////////
 // CMatchList add hits
 
-void CMatchList::AddHits(CQueryHit* pHit, CQuerySearch* pFilter)
+void CMatchList::AddHits(const CQueryHit* pHits, CQuerySearch* pFilter)
 {
 	CSingleLock pLock( &m_pSection, TRUE );
-	CMatchFile **pMap;
-
-	while ( pHit )
+	CMatchFile** pMap = NULL;
+	for ( const CQueryHit* pNext = pHits; pNext; pNext = pNext->m_pNext )
 	{
-		CQueryHit* pNext = pHit->m_pNext;
-
 		// Empty file names mean a hit for the currently downloading file.
 		// We just clicked the search result while the search was in progress.
 		// The size may be zero or match the size of the file.
 		// Empty file names are caught by the next clause and deleted.
 
-		if ( Security.IsDenied( &pHit->m_pAddress ) ||
-			Security.IsDenied( pHit ) ||
-			pHit->m_sName.IsEmpty() ||		// Empty name
-			pHit->m_nSize == 0 ||			// size is 0
-			pHit->m_nSize == SIZE_UNKNOWN )	// size is SIZE_UNKNOWN (0xFFFFFFFFFFFFFFFF). NOTE because of Gnutella without GGEP
+		if ( Security.IsDenied( &pNext->m_pAddress ) ||
+			Security.IsDenied( pNext ) ||
+			pNext->m_sName.IsEmpty() ||		// Empty name
+			pNext->m_nSize == 0 ||			// size is 0
+			pNext->m_nSize == SIZE_UNKNOWN )	// size is SIZE_UNKNOWN (0xFFFFFFFFFFFFFFFF). NOTE because of Gnutella without GGEP
 											// "LF" extension can only handle up to 4GB-1B size(can be 2GB-1 depending on sign
 											// handling of the value), large files can have SIZE_UNKNOWN value if no GGEP "LF"
 											// was on QueryHit packet. but because of current implementation of list (always
 											// added to filesize maps without check) these hit has to be rejected.
 		{
-			delete pHit;
-			pHit = pNext;
+			// Skip bad hit
 			continue;
 		}
+
+		CQueryHit* pHit = new CQueryHit( *pNext );
 
 		pHit->m_bNew = m_bNew;
 
@@ -380,8 +378,6 @@ void CMatchList::AddHits(CQueryHit* pHit, CQuerySearch* pFilter)
 			pFile->m_pNextMD5 = *pMap;
 			*pMap = pFile;
 		}
-
-		pHit = pNext;
 	}
 }
 
@@ -1603,7 +1599,7 @@ BOOL CMatchFile::Add(CQueryHit* pHit, BOOL bForce)
 					m_nSpeed -= pOld->m_nSpeed;
 				}
 
-				pOld->Copy( pHit );
+				*pOld = *pHit;
 				delete pHit;
 
 				pHit = pOld;
@@ -1761,7 +1757,8 @@ DWORD CMatchFile::Filter()
 	if ( m_pList->m_bFilterDRM && m_bDRM ) return 0;
 	if ( m_pList->m_bFilterSuspicious && m_bSuspicious ) return 0;
 
-	if ( m_nSources < m_pList->m_nFilterSources ) return 0;
+	if ( m_nSources < m_pList->m_nFilterSources )
+		return 0;
 	// if ( m_nFiltered < m_pList->m_nFilterSources ) return 0;
 
 	if ( m_nFiltered == 1 || ! m_bExpanded )
@@ -1868,10 +1865,12 @@ void CMatchFile::Added(CQueryHit* pHit)
 	for ( CQueryHit* pFileHits = m_pHits; pFileHits ;
 			pFileHits = pFileHits->m_pNext, nTotal++ )
 	{
+#ifndef LAN_MODE
 		if ( pFileHits->m_pNext && validAndEqual( pFileHits->m_oClientID, pFileHits->m_pNext->m_oClientID ) )
 			pFileHits->m_bBogus = TRUE;
 		if ( pFileHits->m_bBogus )
 			nBogusCount++;
+#endif // LAN_MODE
 	}
 
 	// Mark/unmark a file as suspicious depending on the percentage of the spam hits

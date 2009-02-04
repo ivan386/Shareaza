@@ -199,7 +199,7 @@ void CDownloadWithSources::ClearSources()
 //////////////////////////////////////////////////////////////////////
 // CDownloadWithSources add a query-hit source
 
-BOOL CDownloadWithSources::AddSourceHit(CQueryHit* pHit, BOOL bForce)
+BOOL CDownloadWithSources::AddSourceHit(const CQueryHit* pHit, BOOL bForce)
 {
 	CQuickLock pLock( Transfers.m_pSection );
 
@@ -802,11 +802,12 @@ CString	CDownloadWithSources::GetTopFailedSources(int nMaximum, PROTOCOLID nProt
 //////////////////////////////////////////////////////////////////////
 // CDownloadWithSources query hit handler
 
-BOOL CDownloadWithSources::OnQueryHits(CQueryHit* pHits)
+BOOL CDownloadWithSources::OnQueryHits(const CQueryHit* pHits)
 {
-	for ( ; pHits ; pHits = pHits->m_pNext )
+	for ( const CQueryHit* pHit = pHits; pHit ; pHit = pHit->m_pNext )
 	{
-		if ( pHits->m_sURL.GetLength() ) AddSourceHit( pHits );
+		if ( pHit->m_sURL.GetLength() )
+			AddSourceHit( pHit );
 	}
 
 	return TRUE;

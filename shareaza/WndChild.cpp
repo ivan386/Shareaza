@@ -503,7 +503,7 @@ void CChildWnd::OnQuerySearch(CQuerySearch* /*pSearch*/)
 {
 }
 
-BOOL CChildWnd::OnQueryHits(CQueryHit* /*pHits*/)
+BOOL CChildWnd::OnQueryHits(const CQueryHit* /*pHits*/)
 {
 	return FALSE;
 }

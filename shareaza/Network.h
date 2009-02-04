@@ -109,7 +109,7 @@ public:
 	BOOL		RouteHits(CQueryHit* pHits, CPacket* pPacket);
 	void		OnWinsock(WPARAM wParam, LPARAM lParam);
 	void		OnQuerySearch(CQuerySearch* pSearch);
-	void		OnQueryHits(CQueryHit* pHits);
+	void		OnQueryHits(CQueryHit* pHits);	// Handle and destroy query hits
 public:
 	void		UDPHostCache(IN_ADDR* pAddress, WORD nPort);
 	void		UDPKnownHubCache(IN_ADDR* pAddress, WORD nPort);

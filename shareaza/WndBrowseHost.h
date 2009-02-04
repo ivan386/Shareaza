@@ -54,7 +54,7 @@ public:
 	void			Serialize(CArchive& ar);
 	virtual void	OnSkinChange();
 	virtual void	OnProfileReceived();
-	virtual void	OnBrowseHits(CQueryHit* pHits);
+	virtual void	OnBrowseHits(const CQueryHit* pHits);
 	virtual void	OnHeadPacket(CG2Packet* pPacket);
 	virtual void	OnPhysicalTree(CG2Packet* pPacket);
 	virtual void	OnVirtualTree(CG2Packet* pPacket);

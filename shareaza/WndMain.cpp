@@ -1,7 +1,7 @@
 //
 // WndMain.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -35,6 +35,7 @@
 #include "LibraryFolders.h"
 #include "Plugins.h"
 #include "QuerySearch.h"
+#include "QueryHit.h"
 #include "VersionChecker.h"
 #include "GraphItem.h"
 #include "ShareazaURL.h"
@@ -47,6 +48,7 @@
 #include "Scheduler.h"
 #include "DlgHelp.h"
 #include "LibraryHistory.h"
+#include "SharedFile.h"
 #include "DiscoveryServices.h"
 #include "DlgDonkeyImport.h"
 
@@ -269,7 +271,8 @@ BEGIN_MESSAGE_MAP(CMainWnd, CMDIFrameWnd)
 	ON_COMMAND(ID_HELP_TEST, OnHelpConnectiontest)
 	ON_UPDATE_COMMAND_UI_RANGE(ID_SHELL_MENU_MIN, ID_SHELL_MENU_MAX, OnUpdateShell)
 	ON_WM_MENUCHAR()
-	ON_MESSAGE(WM_SANITY_CHECK, OnSanityCheck)
+	ON_MESSAGE(WM_SANITY_CHECK, &CMainWnd::OnSanityCheck)
+	ON_MESSAGE(WM_QUERYHITS, &CMainWnd::OnQueryHits)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -2791,6 +2794,55 @@ LRESULT CMainWnd::OnSanityCheck(WPARAM /*wParam*/, LPARAM /*lParam*/)
 	}
 
 	return 0L;
+}
+
+LRESULT CMainWnd::OnQueryHits(WPARAM /*wParam*/, LPARAM lParam)
+{
+	CQueryHit* pHits = (CQueryHit*)lParam;
+
+	// Update downloads
+	Downloads.OnQueryHits( pHits );
+
+	// Update library files alternate sources
+	CSingleLock oLock( &Library.m_pSection );
+	if ( oLock.Lock( 250 ) )
+	{
+		for ( const CQueryHit* pHit = pHits ; pHit; pHit = pHit->m_pNext )
+		{
+			if ( ! pHit->m_sURL.IsEmpty() )
+			{
+				if ( CLibraryFile* pFile = LibraryMaps.LookupFileByHash( pHit->m_oSHA1,
+					pHit->m_oTiger, pHit->m_oED2K, pHit->m_oBTH, pHit->m_oMD5,
+					pHit->m_nSize, pHit->m_nSize ) )
+				{
+					pFile->AddAlternateSources( pHit->m_sURL );
+				}
+			}
+		}
+		oLock.Unlock();
+	}
+
+	// Update search window(s)
+	CChildWnd* pMonitorWnd		= NULL;
+	CRuntimeClass* pMonitorType	= RUNTIME_CLASS(CHitMonitorWnd);
+	CChildWnd* pChildWnd		= NULL;
+	while ( ( pChildWnd = m_pWindows.Find( NULL, pChildWnd ) ) != NULL )
+	{
+		if ( pChildWnd->GetRuntimeClass() == pMonitorType )
+		{
+			pMonitorWnd = pChildWnd;
+		}
+		else if ( pChildWnd->OnQueryHits( pHits ) )
+			pMonitorWnd = NULL;
+	}
+
+	// Drop rest to hit window
+	if ( pMonitorWnd != NULL )
+		pMonitorWnd->OnQueryHits( pHits );
+
+	pHits->Delete();
+
+	return 0;
 }
 
 /////////////////////////////////////////////////////////////////////////////

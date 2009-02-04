@@ -147,7 +147,7 @@ void CHitMonitorWnd::OnSkinChange()
 	Skin.CreateToolBar( _T("CHitMonitorWnd"), &m_wndToolBar );
 }
 
-BOOL CHitMonitorWnd::OnQueryHits(CQueryHit* pHits)
+BOOL CHitMonitorWnd::OnQueryHits(const CQueryHit* pHits)
 {
 	if ( m_bPaused || m_hWnd == NULL ) return FALSE;
 

@@ -1,7 +1,7 @@
 //
 // QueryHit.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -68,7 +68,7 @@ CQueryHit::CQueryHit(PROTOCOLID nProtocol, const Hashes::Guid& oSearchID) :
 //	m_bBTH			( FALSE ),
 	m_nIndex		( 0 ),
 	m_bSize			( FALSE ),
-	m_nSources		( 0 ),
+	m_nHitSources	( 0 ),
 	m_nPartial		( 0 ),
 	m_bPreview		( FALSE ),
 	m_nUpSlots		( 0 ),
@@ -86,6 +86,13 @@ CQueryHit::CQueryHit(PROTOCOLID nProtocol, const Hashes::Guid& oSearchID) :
 	m_bResolveURL	( TRUE )
 {
 	m_pAddress.s_addr = 0;
+}
+
+CQueryHit::CQueryHit(const CQueryHit& pHit) :
+	m_pNext			( NULL ),
+	m_pXML			( NULL )
+{
+	*this = pHit;
 }
 
 CQueryHit::~CQueryHit()
@@ -277,12 +284,11 @@ CQueryHit* CQueryHit::FromG2Packet(CG2Packet* pPacket, int* pnHops)
 	}
 
 	CQueryHit* pFirstHit	= NULL;
-	CQueryHit* pLastHit		= NULL;
 	CXMLElement* pXML		= NULL;
-	
+
 	Hashes::Guid oSearchID;
 	Hashes::Guid oClientID;
-	
+
 	DWORD		nAddress	= 0;
 	WORD		nPort		= 0;
 	BOOL		bBusy		= FALSE;
@@ -291,7 +297,7 @@ CQueryHit* CQueryHit::FromG2Packet(CG2Packet* pPacket, int* pnHops)
 	BOOL		bBrowseHost	= FALSE;
 	BOOL		bPeerChat	= FALSE;
 	CVendor*	pVendor		= VendorCache.m_pNull;
-	
+	bool		bSpam		= false;
 	CString		strNick;
 	DWORD		nGroupState[8][4] = {};
 
@@ -303,10 +309,10 @@ CQueryHit* CQueryHit::FromG2Packet(CG2Packet* pPacket, int* pnHops)
 
 	try
 	{
-		BOOL bCompound; 
+		CQueryHit* pLastHit;
+		BOOL bCompound;
 		G2_PACKET nType;
 		DWORD nLength;
-		bool bSpam = false;
 
 		while ( pPacket->ReadPacket( nType, nLength, &bCompound ) )
 		{
@@ -395,7 +401,7 @@ CQueryHit* CQueryHit::FromG2Packet(CG2Packet* pPacket, int* pnHops)
 							if ( ip != INADDR_NONE && strcmp( inet_ntoa( *(IN_ADDR*)&ip ), pszIP ) == 0 &&
 								nAddress != ip )
 								bSpam = true;
-							if ( strNick.Compare( L"RAZA" ) == 0 || strNick.Compare( L"RAZB" ) == 0 )
+							if ( ! strNick.CompareNoCase( _T( VENDOR_CODE ) ) )
 								bSpam = true; // VendorCode Nick Spam
 						}
 						pPacket->m_nPosition = nSkipInner;
@@ -408,18 +414,16 @@ CQueryHit* CQueryHit::FromG2Packet(CG2Packet* pPacket, int* pnHops)
 			case G2_PACKET_NEIGHBOUR_HUB:
 				if ( nLength >= 6 )
 				{
-					SOCKADDR_IN pHub;					
+					SOCKADDR_IN pHub;
 					pHub.sin_addr.S_un.S_addr = pPacket->ReadLongLE();
 					pHub.sin_port = htons( pPacket->ReadShortBE() );
 					nodeTested = pTestNodeList.insert(
 						AddrPortPair( pHub.sin_addr.S_un.S_addr, pHub.sin_port ) );
-#ifndef LAN_MODE
 					if ( ! nodeTested.second )
 					{
 						// Not a unique IP and port pair
 						bSpam = true;
 					}
-#endif // LAN_MODE
 				}
 				else
 					theApp.Message( MSG_DEBUG, _T("[G2] Hit Error: Got neighbour hub with invalid length (%u bytes)"), nLength );
@@ -550,87 +554,6 @@ CQueryHit* CQueryHit::FromG2Packet(CG2Packet* pPacket, int* pnHops)
 		
 		pPacket->Read( oSearchID );
 		oSearchID.validate();
-		
-		if ( !bPush )
-			bPush = ( nPort == 0 || Network.IsFirewalledAddress( &nAddress ) );
-		
-		DWORD nIndex = 0;
-		
-		for ( pLastHit = pFirstHit ; pLastHit ; pLastHit = pLastHit->m_pNext, nIndex++ )
-		{
-			if ( nGroupState[ pLastHit->m_nGroup ][0] == FALSE )
-				pLastHit->m_nGroup = 0;
-			
-			pLastHit->m_oSearchID	= oSearchID;
-			pLastHit->m_oClientID	= oClientID;
-			pLastHit->m_pAddress	= *(IN_ADDR*)&nAddress;
-			pLastHit->m_sCountry	= theApp.GetCountryCode( pLastHit->m_pAddress );
-			pLastHit->m_nPort		= nPort;
-			pLastHit->m_pVendor		= pVendor;
-			pLastHit->m_nSpeed		= nGroupState[ pLastHit->m_nGroup ][3];
-			pLastHit->m_bBusy		= bBusy   ? TRI_TRUE : TRI_FALSE;
-			pLastHit->m_bPush		= bPush   ? TRI_TRUE : TRI_FALSE;
-			pLastHit->m_bStable		= bStable ? TRI_TRUE : TRI_FALSE;
-			pLastHit->m_bMeasured	= pLastHit->m_bStable;
-			pLastHit->m_nUpSlots	= nGroupState[ pLastHit->m_nGroup ][2];
-			pLastHit->m_nUpQueue	= nGroupState[ pLastHit->m_nGroup ][1];
-			pLastHit->m_bChat		= bPeerChat;
-			pLastHit->m_bBrowseHost	= bBrowseHost;
-			pLastHit->m_sNick		= strNick;
-			pLastHit->m_bPreview	&= pLastHit->m_bPush == TRI_FALSE;
-			
-			if ( pLastHit->m_nUpSlots > 0 )
-			{
-				pLastHit->m_bBusy = ( pLastHit->m_nUpSlots <= pLastHit->m_nUpQueue ) ? TRI_TRUE : TRI_FALSE;
-			}
-			
-			pLastHit->Resolve();
-			if ( pXML && pLastHit->ParseXML( pXML, nIndex ) ) 
-			{
-				// Everything is fine
-			}
-			else if ( pLastHit->m_sName.GetLength() > 0 )
-			{
-				// These files always must have metadata in Shareaza clients
-				LPCTSTR pszExt = PathFindExtension( (LPCTSTR)pLastHit->m_sName );
-				if ( _tcsicmp( pszExt, L".wma" ) == 0 || _tcsicmp( pszExt, L".wmv" ) == 0 )
-				{
-					CString strVendorCode( pLastHit->m_pVendor->m_sCode );
-					if ( strVendorCode == L"RAZA" || strVendorCode == L"RAZB" || 
-						 strVendorCode == L"RZCB" || strVendorCode == L"PEER" )
-					{
-						bSpam = true;
-					}
-				}
-			}
-		}
-		
-		if ( bSpam )
-		{
-			if ( pFirstHit )
-			{
-				for ( CQueryHit* pHit = pFirstHit ; pHit ; pHit = pHit->m_pNext )
-				{
-					pHit->m_bBogus = TRUE;
-				}
-			}
-		}
-		else if ( !CheckBogus( pFirstHit ) )
-		{
-			// Now add all hub list to the route cache
-			for ( NodeIter iter = pTestNodeList.begin( ) ; 
-				  iter != pTestNodeList.end( ) ; iter++ )
-			{
-				SOCKADDR_IN pHub;
-
-				pHub.sin_addr.S_un.S_addr	= iter->first;
-				pHub.sin_port				= iter->second;
-
-				oClientID[15]++;
-				oClientID.validate();
-				Network.NodeRoute->Add( oClientID, &pHub );
-			}
-		}
 	}
 	catch ( CException* pException )
 	{
@@ -641,6 +564,87 @@ CQueryHit* CQueryHit::FromG2Packet(CG2Packet* pPacket, int* pnHops)
 			pFirstHit->Delete();
 		return NULL;
 	}
+
+	if ( !bPush )
+		bPush = ( nPort == 0 || Network.IsFirewalledAddress( &nAddress ) );
+	
+	DWORD nIndex = 0;
+	for ( CQueryHit* pHit = pFirstHit ; pHit ; pHit = pHit->m_pNext, nIndex++ )
+	{
+		if ( nGroupState[ pHit->m_nGroup ][0] == FALSE )
+			pHit->m_nGroup = 0;
+		
+		pHit->m_oSearchID	= oSearchID;
+		pHit->m_oClientID	= oClientID;
+		pHit->m_pAddress	= *(IN_ADDR*)&nAddress;
+		pHit->m_sCountry	= theApp.GetCountryCode( pHit->m_pAddress );
+		pHit->m_nPort		= nPort;
+		pHit->m_pVendor		= pVendor;
+		pHit->m_nSpeed		= nGroupState[ pHit->m_nGroup ][3];
+		pHit->m_bBusy		= bBusy   ? TRI_TRUE : TRI_FALSE;
+		pHit->m_bPush		= bPush   ? TRI_TRUE : TRI_FALSE;
+		pHit->m_bStable		= bStable ? TRI_TRUE : TRI_FALSE;
+		pHit->m_bMeasured	= pHit->m_bStable;
+		pHit->m_nUpSlots	= nGroupState[ pHit->m_nGroup ][2];
+		pHit->m_nUpQueue	= nGroupState[ pHit->m_nGroup ][1];
+		pHit->m_bChat		= bPeerChat;
+		pHit->m_bBrowseHost	= bBrowseHost;
+		pHit->m_sNick		= strNick;
+		pHit->m_bPreview	&= pHit->m_bPush == TRI_FALSE;
+		
+		if ( pHit->m_nUpSlots > 0 )
+		{
+			pHit->m_bBusy = ( pHit->m_nUpSlots <= pHit->m_nUpQueue ) ? TRI_TRUE : TRI_FALSE;
+		}
+		
+		pHit->Resolve();
+
+		// Apply external metadata if available
+		if ( pXML )
+			pHit->ParseXML( pXML, nIndex );
+
+		// These files always must have metadata in Shareaza clients
+		if ( pHit->m_pVendor->m_bExtended &&
+			! pHit->m_pXML && ! pHit->m_sName.IsEmpty() )
+		{
+			LPCTSTR pszExt = PathFindExtension( (LPCTSTR)pHit->m_sName );
+			if ( _tcsicmp( pszExt, L".wma" ) == 0 ||
+				 _tcsicmp( pszExt, L".wmv" ) == 0 )
+			{
+				bSpam = true;
+			}
+		}
+	}
+	
+	if ( bSpam )
+	{
+		if ( pFirstHit )
+		{
+#ifndef LAN_MODE
+			for ( CQueryHit* pHit = pFirstHit ; pHit ; pHit = pHit->m_pNext )
+			{
+				pHit->m_bBogus = TRUE;
+			}
+#endif // LAN_MODE
+		}
+	}
+	else if ( !CheckBogus( pFirstHit ) )
+	{
+		// Now add all hub list to the route cache
+		for ( NodeIter iter = pTestNodeList.begin( ) ; 
+			  iter != pTestNodeList.end( ) ; iter++ )
+		{
+			SOCKADDR_IN pHub;
+
+			pHub.sin_addr.S_un.S_addr	= iter->first;
+			pHub.sin_port				= iter->second;
+
+			oClientID[15]++;
+			oClientID.validate();
+			Network.NodeRoute->Add( oClientID, &pHub );
+		}
+	}
+
 	
 	if ( pXML )
 		delete pXML;
@@ -987,7 +991,8 @@ void CQueryHit::ReadG1Packet(CG1Packet* pPacket)
 				nCurWord = 0;
 			}
 		}
-		if ( nMaxWord > 30 ) m_bBogus = TRUE;
+		if ( nMaxWord > 30 )
+			m_bBogus = TRUE;
 	}
 
 	Hashes::Sha1Hash	oSHA1;
@@ -1075,7 +1080,7 @@ void CQueryHit::ReadG1Packet(CG1Packet* pPacket)
 					else if ( pItemPos->IsNamed( GGEP_HEADER_ALTS ) )
 					{
 						// the ip-addresses need not be stored, as they are sent upon the download request in the ALT-loc header
-						m_nSources = pItemPos->m_nLength / 6;	// 6 bytes per source (see ALT GGEP extension specification)
+						m_nHitSources += pItemPos->m_nLength / 6;	// 6 bytes per source (see ALT GGEP extension specification)
 					}
 
 					if ( oSHA1.isValid() )
@@ -1406,7 +1411,7 @@ bool CQueryHit::ReadG2Packet(CG2Packet* pPacket, DWORD nLength)
 			case G2_PACKET_CACHED_SOURCES:
 				if ( nPacket >= 2 )
 				{
-					m_nSources = pPacket->ReadShortBE();
+					m_nHitSources += pPacket->ReadShortBE();
 				}
 				else
 					theApp.Message( MSG_DEBUG, _T("[G2] Hit Error: Got invalid cached sources") );
@@ -1470,7 +1475,7 @@ bool CQueryHit::ReadG2Packet(CG2Packet* pPacket, DWORD nLength)
 
 			pPacket->m_nPosition = nSkip;
 		}
-		
+
 		if ( ! m_oSHA1 && ! m_oTiger && ! m_oED2K && ! m_oBTH && ! m_oMD5 )
 		{
 			theApp.Message( MSG_DEBUG, _T("[G2] Hit Error: Got no hash") );
@@ -1535,11 +1540,11 @@ void CQueryHit::ReadEDPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer,
 		}
 		else if ( pTag.m_nKey == ED2K_FT_SOURCES )
 		{
-			m_nSources = (DWORD)pTag.m_nValue;
-			if ( m_nSources == 0 )
+			m_nHitSources = (DWORD)pTag.m_nValue;
+			if ( m_nHitSources == 0 )
 				m_bResolveURL = FALSE;
 			else
-				m_nSources--;
+				m_nHitSources--;
 		}
 		else if ( pTag.m_nKey == ED2K_FT_COMPLETESOURCES )
 		{
@@ -1817,13 +1822,13 @@ void CQueryHit::Resolve()
 
 	if ( m_sURL.GetLength() )
 	{
-		m_nSources ++;
+		m_nHitSources ++;
 		return;
 	}
 	else if ( ! m_bResolveURL )
 		return;
 
-	m_nSources++;
+	m_nHitSources++;
 
 	if ( m_nProtocol == PROTOCOL_ED2K )
 	{
@@ -1954,46 +1959,63 @@ BOOL CQueryHit::AutoDetectAudio(LPCTSTR pszInfo)
 //////////////////////////////////////////////////////////////////////
 // CQueryHit copy and delete helpers
 
-void CQueryHit::Copy(CQueryHit* pOther)
+CQueryHit& CQueryHit::operator=(const CQueryHit& pOther)
 {
+	m_pNext;
+	m_oSearchID		= pOther.m_oSearchID;
+	m_nProtocol		= pOther.m_nProtocol;
+	m_oClientID		= pOther.m_oClientID;
+	m_pAddress		= pOther.m_pAddress;
+	m_sCountry		= pOther.m_sCountry;
+	m_nPort			= pOther.m_nPort;
+	m_nSpeed		= pOther.m_nSpeed;
+	m_sSpeed		= pOther.m_sSpeed;
+	m_pVendor		= pOther.m_pVendor;
+	m_bPush			= pOther.m_bPush;
+	m_bBusy			= pOther.m_bBusy;
+	m_bStable		= pOther.m_bStable;
+	m_bMeasured		= pOther.m_bMeasured;
+	m_bChat			= pOther.m_bChat;
+	m_bBrowseHost	= pOther.m_bBrowseHost;
+	m_sNick			= pOther.m_sNick;
+	m_sKeywords		= pOther.m_sKeywords;
+	m_nGroup		= pOther.m_nGroup;
+	m_nIndex		= pOther.m_nIndex;
+	m_bSize			= pOther.m_bSize;
+	m_nPartial		= pOther.m_nPartial;
+	m_bPreview		= pOther.m_bPreview;
+	m_sPreview		= pOther.m_sPreview;
+	m_nUpSlots		= pOther.m_nUpSlots;
+	m_nUpQueue		= pOther.m_nUpQueue;
+	m_bCollection	= pOther.m_bCollection;
+	m_sSchemaURI	= pOther.m_sSchemaURI;
+	m_sSchemaPlural	= pOther.m_sSchemaPlural;
 	if ( m_pXML ) delete m_pXML;
+	m_pXML			= pOther.m_pXML ? pOther.m_pXML->Clone() : NULL;
+	m_nRating		= pOther.m_nRating;
+	m_sComments		= pOther.m_sComments;
+	m_bBogus		= pOther.m_bBogus;
+	m_bMatched		= pOther.m_bMatched;
+	m_bExactMatch	= pOther.m_bExactMatch;
+	m_bFiltered		= pOther.m_bFiltered;
+	m_bDownload		= pOther.m_bDownload;
+	m_bNew			= pOther.m_bNew;
+	m_bSelected		= pOther.m_bSelected;
+	m_bResolveURL	= pOther.m_bResolveURL;
+	m_nHitSources	= pOther.m_nHitSources;
 
-	m_oSearchID		= pOther->m_oSearchID;
-	m_oClientID		= pOther->m_oClientID;
-	m_pAddress		= pOther->m_pAddress;
-	m_sCountry		= pOther->m_sCountry;
-	m_nPort			= pOther->m_nPort;
-	m_nSpeed		= pOther->m_nSpeed;
-	m_sSpeed		= pOther->m_sSpeed;
-	m_pVendor		= pOther->m_pVendor;
-	m_bPush			= pOther->m_bPush;
-	m_bBusy			= pOther->m_bBusy;
-	m_bStable		= pOther->m_bStable;
-	m_bMeasured		= pOther->m_bMeasured;
-	m_bChat			= pOther->m_bChat;
-	m_bBrowseHost	= pOther->m_bBrowseHost;
+// CShareazaFile
+	m_sName			= pOther.m_sName;
+	m_nSize			= pOther.m_nSize;
+	m_oSHA1			= pOther.m_oSHA1;
+	m_oTiger		= pOther.m_oTiger;
+	m_oED2K			= pOther.m_oED2K;
+	m_oBTH			= pOther.m_oBTH;
+	m_oMD5			= pOther.m_oMD5;
+	m_sPath			= pOther.m_sPath;
+	m_sURL			= pOther.m_sURL;
 
-	m_oSHA1			= pOther->m_oSHA1;
-	m_oTiger		= pOther->m_oTiger;
-	m_oED2K			= pOther->m_oED2K;
-	m_oBTH			= pOther->m_oBTH;
-	m_oMD5			= pOther->m_oMD5;
-	m_sURL			= pOther->m_sURL;
-	m_sName			= pOther->m_sName;
-	m_nIndex		= pOther->m_nIndex;
-	m_bSize			= pOther->m_bSize;
-	m_nSize			= pOther->m_nSize;
-	m_sSchemaURI	= pOther->m_sSchemaURI;
-	m_sSchemaPlural	= pOther->m_sSchemaPlural;
-	m_pXML			= pOther->m_pXML;
-
-	m_bMatched		= pOther->m_bMatched;
-	m_bExactMatch	= pOther->m_bExactMatch;
-	m_bBogus		= pOther->m_bBogus;
-	m_bFiltered		= pOther->m_bFiltered;
-	m_bDownload		= pOther->m_bDownload;
-
-	pOther->m_pXML = NULL;
+	return *this;
 }
 
 void CQueryHit::Delete()
@@ -2061,7 +2083,7 @@ void CQueryHit::Serialize(CArchive& ar, int nVersion)
 		ar << m_nIndex;
 		ar << m_bSize;
 		ar << m_nSize;
-		ar << m_nSources;
+		ar << m_nHitSources;
 		ar << m_nPartial;
 		ar << m_bPreview;
 		ar << m_sPreview;
@@ -2132,7 +2154,7 @@ void CQueryHit::Serialize(CArchive& ar, int nVersion)
 			m_nSize = nSize;
 		}
 		
-		ar >> m_nSources;
+		ar >> m_nHitSources;
 		ar >> m_nPartial;
 		ar >> m_bPreview;
 		ar >> m_sPreview;
@@ -2155,7 +2177,7 @@ void CQueryHit::Serialize(CArchive& ar, int nVersion)
 		ar >> m_bBogus;
 		ar >> m_bDownload;
 		
-		if ( m_nSources == 0 && m_sURL.GetLength() ) m_nSources = 1;
+		if ( m_nHitSources == 0 && m_sURL.GetLength() ) m_nHitSources = 1;
 	}
 }
 

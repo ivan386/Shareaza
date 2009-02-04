@@ -71,7 +71,7 @@ public:
 public:
 	virtual void	OnSkinChange();
 	virtual void	OnQuerySearch(CQuerySearch* pSearch);
-	virtual BOOL	OnQueryHits(CQueryHit* pHits);
+	virtual BOOL	OnQueryHits(const CQueryHit* pHits);
 	virtual void	SanityCheck();
 	virtual BOOL	OnPush(const Hashes::Guid& pClientID, CConnection* pConnection);
 	virtual HRESULT	GetGenericView(IGenericView** ppView);

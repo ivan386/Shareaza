@@ -86,7 +86,7 @@ protected:
 	BOOL			DoSizeDetails();
 public:	
 	virtual void	OnSkinChange();
-	virtual BOOL	OnQueryHits(CQueryHit* pHits);
+	virtual BOOL	OnQueryHits(const CQueryHit* pHits);
 	virtual void	UpdateMessages(BOOL bActive = TRUE);
 	virtual void	UpdateMessages(BOOL bActive, CManagedSearch* pManaged);
 

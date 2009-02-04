@@ -345,7 +345,7 @@ void CBrowseHostWnd::OnProfileReceived()
 	}
 }
 
-void CBrowseHostWnd::OnBrowseHits(CQueryHit* pHits)
+void CBrowseHostWnd::OnBrowseHits(const CQueryHit* pHits)
 {
 	if ( m_bPaused || m_hWnd == NULL ) return;
 

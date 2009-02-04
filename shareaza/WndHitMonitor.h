@@ -41,7 +41,7 @@ protected:
 
 // Operations
 public:
-	virtual BOOL	OnQueryHits(CQueryHit* pHits);
+	virtual BOOL	OnQueryHits(const CQueryHit* pHits);
 	virtual void	OnSkinChange();
 
 // Overrides
