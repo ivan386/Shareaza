@@ -297,7 +297,6 @@ BOOL CUploadTransferBT::ServeRequests()
 {
 	ASSERT( m_nState == upsRequest || m_nState == upsUploading );
 	ASSERT( m_pBaseFile != NULL );
-	ASSERT( m_nLength == SIZE_UNKNOWN );
 	
 	if ( m_bChoked ) return TRUE;
 	if ( m_pClient->GetOutputLength() > Settings.BitTorrent.RequestSize / 3 ) return TRUE;
