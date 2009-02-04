@@ -1,7 +1,7 @@
 //
 // SharedFile.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -480,6 +480,9 @@ CED2K* CLibraryFile::GetED2K()
 
 CSharedSource* CLibraryFile::AddAlternateSources(LPCTSTR pszURLs)
 {
+	if ( pszURLs == NULL ) return NULL;
+	if ( *pszURLs == 0 ) return NULL;
+
 	CSharedSource* pFirst = NULL;
 
 	CMapStringToFILETIME oUrls;
@@ -490,8 +493,7 @@ CSharedSource* CLibraryFile::AddAlternateSources(LPCTSTR pszURLs)
 		CString strURL;
 		FILETIME tSeen = {};
 		oUrls.GetNextAssoc( pos, strURL, tSeen );
-
-		if ( CSharedSource* pSource = AddAlternateSource( strURL ) )
+		if ( CSharedSource* pSource = AddAlternateSource( strURL, &tSeen ) )
 		{
 			pFirst = pSource;
 		}
@@ -500,7 +502,7 @@ CSharedSource* CLibraryFile::AddAlternateSources(LPCTSTR pszURLs)
 	return pFirst;
 }
 
-CSharedSource* CLibraryFile::AddAlternateSource(LPCTSTR pszURL)
+CSharedSource* CLibraryFile::AddAlternateSource(LPCTSTR pszURL, FILETIME* tSeen)
 {
 	if ( pszURL == NULL ) return NULL;
 	if ( *pszURL == 0 ) return NULL;
@@ -508,8 +510,15 @@ CSharedSource* CLibraryFile::AddAlternateSource(LPCTSTR pszURL)
 	CString strURL( pszURL );
 	CShareazaURL pURL;
 
-	FILETIME tSeen = { 0, 0 };
-	BOOL bSeen = FALSE;
+	BOOL bSeen;
+	FILETIME tSeenLocal = { 0, 0 };
+	if ( tSeen && tSeen->dwLowDateTime && tSeen->dwHighDateTime )
+		bSeen = TRUE;
+	else
+	{
+		tSeen = &tSeenLocal;
+		bSeen = FALSE;
+	}
 
 	int nPos = strURL.ReverseFind( ' ' );
 	if ( nPos > 0 )
@@ -517,7 +526,7 @@ CSharedSource* CLibraryFile::AddAlternateSource(LPCTSTR pszURL)
 		CString strTime = strURL.Mid( nPos + 1 );
 		strURL = strURL.Left( nPos );
 		strURL.TrimRight();
-		bSeen = TimeFromString( strTime, &tSeen );
+		bSeen = TimeFromString( strTime, tSeen );
 	}
 
 	if ( ! pURL.Parse( strURL ) ) return NULL;
@@ -535,12 +544,12 @@ CSharedSource* CLibraryFile::AddAlternateSource(LPCTSTR pszURL)
 
 		if ( pSource->m_sURL.CompareNoCase( strURL ) == 0 )
 		{
-			pSource->Freshen( bSeen ? &tSeen : NULL );
+			pSource->Freshen( bSeen ? tSeen : NULL );
 			return pSource;
 		}
 	}
 
-	CSharedSource* pSource = new CSharedSource( strURL, bSeen ? &tSeen : NULL );
+	CSharedSource* pSource = new CSharedSource( strURL, bSeen ? tSeen : NULL );
 	m_pSources.AddTail( pSource );
 
 	return pSource;
