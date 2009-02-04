@@ -480,7 +480,7 @@ void CLocalSearch::AddHitG2(CLibraryFile const * const pFile, int /*nIndex*/)
 			}
 		}
 
-		if ( pFile->IsAvailable() && ( m_pSearch == NULL || m_pSearch->m_bWantURL ) )
+		if ( m_pSearch == NULL || m_pSearch->m_bWantURL )
 		{
 			if ( bCalculate )
 				nGroup += G2_PACKET_LEN( G2_PACKET_URL, 0 );
