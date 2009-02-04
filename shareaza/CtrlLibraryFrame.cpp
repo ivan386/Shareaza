@@ -612,16 +612,15 @@ void CLibraryFrame::SetView(CLibraryView* pView, BOOL bUpdate, BOOL bUser)
 		}
 	}
 
-	if ( pFolderSelection && pFolderSelection->m_pVirtual && pView )
+	if ( pView )
 	{
-		ASSERT_VALID( pFolderSelection );
-		ASSERT_VALID( pView );
-
-		if ( Settings.Library.ShowVirtual && m_pView &&
-			 pFolderSelection->m_pVirtual->m_pSchema )
-			pView->m_bGhostFolder = 
-				( pFolderSelection->m_pVirtual->m_pSchema->CheckURI( CSchema::uriGhostFolder ) );
-		else 
+		if ( Settings.Library.ShowVirtual &&
+			pFolderSelection &&
+			pFolderSelection->m_pVirtual &&
+			pFolderSelection->m_pVirtual->m_pSchema &&
+			pFolderSelection->m_pVirtual->m_pSchema->CheckURI( CSchema::uriGhostFolder ) )
+			pView->m_bGhostFolder = TRUE;
+		else
 			pView->m_bGhostFolder = FALSE;
 	}
 
