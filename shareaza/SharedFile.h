@@ -122,10 +122,11 @@ protected:
 	void			Ghost();
     BOOL			OnVerifyDownload(
 						const Hashes::Sha1ManagedHash& oSHA1,
+						const Hashes::TigerManagedHash& oTiger,
 						const Hashes::Ed2kManagedHash& oED2K,
 						const Hashes::BtManagedHash& oBTH,
 						const Hashes::Md5ManagedHash& oMD5,
-						LPCTSTR pszSources );
+						LPCTSTR pszSources);
 	
 // Inlines
 public:

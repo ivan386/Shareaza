@@ -588,8 +588,25 @@ void CDownload::OnMoved(CDownloadTask* pTask)
 
 		LibraryBuilder.RequestPriority( m_sPath );
 
-		VERIFY( LibraryHistory.Add( m_sPath, m_oSHA1, m_oED2K, m_oBTH, m_oMD5,
-			GetSourceURLs( NULL, 0, PROTOCOL_NULL, NULL ) ) );
+		{
+			Hashes::Sha1ManagedHash oSHA1( m_oSHA1 );
+			if ( m_bSHA1Trusted )
+				oSHA1.signalTrusted();
+			Hashes::TigerManagedHash oTiger( m_oTiger );
+			if ( m_bTigerTrusted )
+				oTiger.signalTrusted();
+			Hashes::Ed2kManagedHash oED2K( m_oED2K );
+			if ( m_bED2KTrusted )
+				oED2K.signalTrusted();
+			Hashes::BtManagedHash oBTH( m_oBTH );
+			if ( m_bBTHTrusted )
+				oBTH.signalTrusted();
+			Hashes::Md5ManagedHash oMD5( m_oMD5 );
+			if ( m_bMD5Trusted )
+				oMD5.signalTrusted();
+			LibraryHistory.Add( m_sPath, oSHA1, oTiger, oED2K, oBTH, oMD5,
+				GetSourceURLs( NULL, 0, PROTOCOL_NULL, NULL ) );
+		}
 
 		if ( CLibraryFile* pFile = LibraryMaps.LookupFileByPath( m_sPath ) )
 			pFile->UpdateMetadata( this );

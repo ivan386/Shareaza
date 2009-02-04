@@ -1,7 +1,7 @@
 //
 // LibraryHistory.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -19,9 +19,6 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_LIBRARYHISTORY_H__71D206EC_CDA8_46AD_9800_4A11C9EBAEA5__INCLUDED_)
-#define AFX_LIBRARYHISTORY_H__71D206EC_CDA8_46AD_9800_4A11C9EBAEA5__INCLUDED_
-
 #pragma once
 
 #include "ShareazaFile.h"
@@ -32,16 +29,10 @@ class CLibraryFile;
 
 class CLibraryHistory
 {
-// Construction
 public:
 	CLibraryHistory();
 	virtual ~CLibraryHistory();
 
-// Attributes
-protected:
-	CList< CLibraryRecent* > m_pList;
-
-public:
 	struct sTorrentDetails
 	{
 		CString			m_sName;
@@ -51,71 +42,65 @@ public:
 		QWORD			m_nUploaded;
 		QWORD			m_nDownloaded;
 	};
-	
-	sTorrentDetails	LastSeededTorrent;			// Most recently seeded torrent (for home page button)
-	sTorrentDetails	LastCompletedTorrent;		// Most recently completed torrent that didn't reach 100% ratio
 
+	sTorrentDetails	LastSeededTorrent;		// Most recently seeded torrent (for home page button)
+	sTorrentDetails	LastCompletedTorrent;	// Most recently completed torrent that didn't reach 100% ratio
 
-// Operations
-public:
 	POSITION		GetIterator() const;
 	CLibraryRecent*	GetNext(POSITION& pos) const;
 	INT_PTR			GetCount() const { return m_pList.GetCount(); }
 	void			Clear();
-public:
+
 	BOOL			Check(CLibraryRecent* pRecent, int nScope = 0) const;
-	CLibraryRecent*	GetByPath(LPCTSTR pszPath) const;
-    CLibraryRecent*	Add(
+    void			Add(
 						LPCTSTR pszPath,
 						const Hashes::Sha1ManagedHash& oSHA1,
+						const Hashes::TigerManagedHash& oTiger,
 						const Hashes::Ed2kManagedHash& oED2K,
 						const Hashes::BtManagedHash& oBTH,
 						const Hashes::Md5ManagedHash& oMD5,
-						LPCTSTR pszSources );
-	BOOL			Submit(CLibraryFile* pFile);
+						LPCTSTR pszSources = _T(""));
+	void			Submit(CLibraryFile* pFile);
 	void			OnFileDelete(CLibraryFile* pFile);
-	void			ClearTodays();
-	int				Prune();
 	void			Serialize(CArchive& ar, int nVersion);
 
+protected:
+	CList< CLibraryRecent* > m_pList;
+
+	CLibraryRecent*	GetByPath(LPCTSTR pszPath) const;
+//	void			ClearTodays();
+	void			Prune();
 };
 
 
 class CLibraryRecent : public CShareazaFile
 {
-// Construction
 public:
+	FILETIME					m_tAdded;
+//	BOOL						m_bToday;
+	CLibraryFile*				m_pFile;
+	CString						m_sSources;
+    Hashes::Sha1ManagedHash		m_oSHA1;
+    Hashes::TigerManagedHash	m_oTiger;
+    Hashes::Md5ManagedHash		m_oMD5;
+    Hashes::Ed2kManagedHash		m_oED2K;
+    Hashes::BtManagedHash		m_oBTH;
+
+protected:
 	CLibraryRecent();
     CLibraryRecent(
 		LPCTSTR pszPath,
 		const Hashes::Sha1ManagedHash& oSHA1,
+		const Hashes::TigerManagedHash&	oTiger,
 		const Hashes::Ed2kManagedHash& oED2K,
 		const Hashes::BtManagedHash& oBTH,
 		const Hashes::Md5ManagedHash& oMD5,
-		LPCTSTR pszSources );
-	virtual ~CLibraryRecent();
+		LPCTSTR pszSources);
 
-// Attributes
-public:
-	FILETIME		m_tAdded;
-	BOOL			m_bToday;
-public:
-	CLibraryFile*	m_pFile;
-	CString			m_sSources;
-public:
-    Hashes::Sha1ManagedHash m_oSHA1;
-    Hashes::TigerManagedHash m_oTiger;
-    Hashes::Md5ManagedHash m_oMD5;
-    Hashes::Ed2kManagedHash m_oED2K;
-    Hashes::BtManagedHash m_oBTH;
-
-// Operations
-public:
 	void	RunVerify(CLibraryFile* pFile);
 	void	Serialize(CArchive& ar, int nVersion);
 
+	friend class CLibraryHistory;
 };
 
 extern CLibraryHistory LibraryHistory;
-
-#endif // !defined(AFX_LIBRARYHISTORY_H__71D206EC_CDA8_46AD_9800_4A11C9EBAEA5__INCLUDED_)

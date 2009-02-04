@@ -1,7 +1,7 @@
 //
 // LibraryHistory.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -79,7 +79,8 @@ CLibraryRecent* CLibraryHistory::GetNext(POSITION& pos) const
 
 void CLibraryHistory::Clear()
 {
-	for ( POSITION pos = GetIterator() ; pos ; ) delete GetNext( pos );
+	for ( POSITION pos = GetIterator() ; pos ; )
+		delete GetNext( pos );
 	m_pList.RemoveAll();
 }
 
@@ -88,13 +89,18 @@ void CLibraryHistory::Clear()
 
 BOOL CLibraryHistory::Check(CLibraryRecent* pRecent, int nScope) const
 {
-	if ( nScope == 0 ) return m_pList.Find( pRecent ) != NULL;
+	CSingleLock pLock( &Library.m_pSection, TRUE );
+
+	if ( nScope == 0 )
+		return ( m_pList.Find( pRecent ) != NULL );
 
 	for ( POSITION pos = m_pList.GetHeadPosition() ; pos && nScope > 0 ; )
 	{
 		CLibraryRecent* pExisting = m_pList.GetNext( pos );
-		if ( pRecent == pExisting ) return TRUE;
-		if ( pExisting->m_pFile != NULL ) nScope--;
+		if ( pRecent == pExisting )
+			return TRUE;
+		if ( pExisting->m_pFile != NULL )
+			nScope--;
 	}
 
 	return FALSE;
@@ -108,7 +114,8 @@ CLibraryRecent* CLibraryHistory::GetByPath(LPCTSTR pszPath) const
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
 		CLibraryRecent* pRecent = GetNext( pos );
-		if ( pRecent->m_sPath.CompareNoCase( pszPath ) == 0 ) return pRecent;
+		if ( pRecent->m_sPath.CompareNoCase( pszPath ) == 0 )
+			return pRecent;
 	}
 
 	return NULL;
@@ -117,87 +124,79 @@ CLibraryRecent* CLibraryHistory::GetByPath(LPCTSTR pszPath) const
 //////////////////////////////////////////////////////////////////////
 // CLibraryHistory add new download
 
-CLibraryRecent* CLibraryHistory::Add(
+void CLibraryHistory::Add(
 	LPCTSTR pszPath,
 	const Hashes::Sha1ManagedHash& oSHA1,
+	const Hashes::TigerManagedHash& oTiger,
 	const Hashes::Ed2kManagedHash& oED2K,
 	const Hashes::BtManagedHash& oBTH,
 	const Hashes::Md5ManagedHash& oMD5,
-	LPCTSTR pszSources )
+	LPCTSTR pszSources)
 {
 	CSingleLock pLock( &Library.m_pSection, TRUE );
 
 	CLibraryRecent* pRecent = GetByPath( pszPath );
-	if ( pRecent != NULL ) return pRecent;
-	
-	pRecent = new CLibraryRecent( pszPath, oSHA1, oED2K, oBTH, oMD5, pszSources );
-	m_pList.AddHead( pRecent );
+	if ( pRecent == NULL )
+	{
+		pRecent = new CLibraryRecent( pszPath, oSHA1, oTiger, oED2K, oBTH, oMD5, pszSources );
+		m_pList.AddHead( pRecent );
 
-	Prune();
-
-	return pRecent;
+		Prune();
+	}
 }
 
 //////////////////////////////////////////////////////////////////////
 // CLibraryHistory submit a library file
 
-BOOL CLibraryHistory::Submit(CLibraryFile* pFile)
+void CLibraryHistory::Submit(CLibraryFile* pFile)
 {
+	CSingleLock pLock( &Library.m_pSection, TRUE );
+
 	CLibraryRecent* pRecent = GetByPath( pFile->GetPath() );
-	if ( pRecent == NULL ) return FALSE;
+	if ( pRecent )
+	{
+		pRecent->RunVerify( pFile );
 
-	pRecent->RunVerify( pFile );
-
-	Prune();
-
-	return TRUE;
+		Prune();
+	}
 }
 
 //////////////////////////////////////////////////////////////////////
 // CLibraryHistory clear today flags
 
-void CLibraryHistory::ClearTodays()
-{
-	for ( POSITION pos = GetIterator() ; pos ; )
-	{
-		GetNext( pos )->m_bToday = FALSE;
-	}
-}
+//void CLibraryHistory::ClearTodays()
+//{
+//	for ( POSITION pos = GetIterator() ; pos ; )
+//	{
+//		GetNext( pos )->m_bToday = FALSE;
+//	}
+//}
 
 //////////////////////////////////////////////////////////////////////
 // CLibraryHistory prune list to a fixed size
 
-int CLibraryHistory::Prune()
+void CLibraryHistory::Prune()
 {
-	LONGLONG tNow, tRecent;
-	SYSTEMTIME pNow;
-	int nCount = 0;
-
-	GetSystemTime( &pNow );
-	SystemTimeToFileTime( &pNow, (FILETIME*)&tNow );
+	FILETIME tNow;
+	GetSystemTimeAsFileTime( &tNow );
 
 	for ( POSITION pos = m_pList.GetTailPosition() ; pos ; )
 	{
 		POSITION posCur = pos;
 		CLibraryRecent* pRecent = m_pList.GetPrev( pos );
 
-		CopyMemory( &tRecent, &pRecent->m_tAdded, sizeof(LONGLONG) );
-
-		if ( tNow - tRecent > (LONGLONG)Settings.Library.HistoryDays * 0xC92A69C000 )
+		DWORD nDays = (DWORD)( ( MAKEQWORD( tNow.dwLowDateTime, tNow.dwHighDateTime ) -
+			 MAKEQWORD( pRecent->m_tAdded.dwLowDateTime, pRecent->m_tAdded.dwHighDateTime ) ) / 
+			 ( 10000000ull * 60 * 60 * 24 ) );
+		if ( nDays > Settings.Library.HistoryDays )
 		{
 			delete pRecent;
 			m_pList.RemoveAt( posCur );
-			nCount++;
 		}
 	}
 
 	while ( GetCount() > (int)Settings.Library.HistoryTotal )
-	{
 		delete m_pList.RemoveTail();
-		nCount++;
-	}
-
-	return nCount;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -205,6 +204,8 @@ int CLibraryHistory::Prune()
 
 void CLibraryHistory::OnFileDelete(CLibraryFile* pFile)
 {
+	CSingleLock pLock( &Library.m_pSection, TRUE );
+
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
 		POSITION posCur = pos;
@@ -224,6 +225,8 @@ void CLibraryHistory::OnFileDelete(CLibraryFile* pFile)
 
 void CLibraryHistory::Serialize(CArchive& ar, int nVersion)
 {
+	CSingleLock pLock( &Library.m_pSection, TRUE );
+
 	if ( nVersion < 7 ) return;
 
 	DWORD_PTR nCount = 0;
@@ -284,6 +287,8 @@ void CLibraryHistory::Serialize(CArchive& ar, int nVersion)
 				LastSeededTorrent.m_oBTH = tmp;
 			}
 		}
+
+		Prune();
 	}
 }
 
@@ -291,38 +296,32 @@ void CLibraryHistory::Serialize(CArchive& ar, int nVersion)
 //////////////////////////////////////////////////////////////////////
 // CLibraryRecent construction
 
-CLibraryRecent::CLibraryRecent()
+CLibraryRecent::CLibraryRecent() :
+//	m_bToday	( FALSE ),
+	m_pFile		( NULL )
 {
 	ZeroMemory( &m_tAdded, sizeof(FILETIME) );
-
-	m_bToday	= FALSE;
-	m_pFile		= NULL;
 }
 
 CLibraryRecent::CLibraryRecent(
 	LPCTSTR pszPath,
 	const Hashes::Sha1ManagedHash& oSHA1,
+	const Hashes::TigerManagedHash& oTiger,
 	const Hashes::Ed2kManagedHash& oED2K,
 	const Hashes::BtManagedHash& oBTH,
 	const Hashes::Md5ManagedHash& oMD5,
-	LPCTSTR pszSources )
+	LPCTSTR pszSources ) :
+//	m_bToday	( TRUE ),
+	m_pFile		( NULL ),
+	m_sSources	( pszSources ),
+	m_oSHA1		( oSHA1 ),
+	m_oTiger	( oTiger ),
+	m_oED2K		( oED2K ),
+	m_oBTH		( oBTH ),
+	m_oMD5		( oMD5 )
 {
-	SYSTEMTIME pTime;
-	GetSystemTime( &pTime );
-	SystemTimeToFileTime( &pTime, &m_tAdded );
-
-	m_pFile		= NULL;
 	m_sPath		= pszPath;
-	m_sSources	= pszSources;
-	m_oSHA1		= oSHA1;
-	m_oED2K		= oED2K;
-	m_oBTH		= oBTH;
-	m_oMD5		= oMD5;
-	
-}
-
-CLibraryRecent::~CLibraryRecent()
-{
+	GetSystemTimeAsFileTime( &m_tAdded );	
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -333,7 +332,7 @@ void CLibraryRecent::RunVerify(CLibraryFile* pFile)
 	if ( m_pFile == NULL )
 	{
 		m_pFile = pFile;
-		m_pFile->OnVerifyDownload( m_oSHA1, m_oED2K, m_oBTH, m_oMD5, m_sSources );
+		m_pFile->OnVerifyDownload( m_oSHA1, m_oTiger, m_oED2K, m_oBTH, m_oMD5, m_sSources );
 	}
 }
 
@@ -360,10 +359,10 @@ void CLibraryRecent::Serialize(CArchive& ar, int /*nVersion*/)
 		{
 			m_sPath = m_pFile->GetPath();
 			m_oSHA1 = m_pFile->m_oSHA1;
+			m_oTiger = m_pFile->m_oTiger;
 			m_oED2K = m_pFile->m_oED2K;
 			m_oBTH = m_pFile->m_oBTH;
 			m_oMD5 = m_pFile->m_oMD5;
 		}
 	}
 }
-
