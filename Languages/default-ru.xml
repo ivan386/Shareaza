@@ -1711,7 +1711,7 @@
 		</styles>
 		<para align="center">
 			<group id="1">
-				<text>Вы еще не загрузили никаких файлов.</text>
+				<text>Нет активных загрузок</text>
 				<newline gap="4"/>
 			</group>
 			<link id="DownloadsNone" format="bu" target="raza:command:ID_VIEW_DOWNLOADS">Перейти к загрузкам</link>
@@ -1760,9 +1760,9 @@
 		</styles>
 		<group id="1">
 			<para align="center">
-				<text format="b">Не подключены</text>
+				<text format="b">Нет подключения</text>
 				<newline gap="4"/>
-				<link target="raza:command:ID_NETWORK_CONNECT">Щелкните здесь, чтобы подключиться</link>
+				<link target="raza:command:ID_NETWORK_CONNECT" format="bu">Подключиться!</link>
 			</para>
 		</group>
 		<icon group="20" command="ID_NETWORK_G2"/><gap group="20" size="4"/>
@@ -1808,9 +1808,9 @@
 			<link id="UploadsOne" format="bu" target="raza:command:ID_VIEW_UPLOADS">1 раздача активна</link>
 			<link id="UploadsMany" format="bu" target="raza:command:ID_VIEW_UPLOADS">%i раздача(и) активна(ы)</link>
 			<newline gap="4"/>
-			<text id="UploadedNone">Вы ничего сегодня не раздавали</text>
-			<text id="UploadedOne">Вы раздали 1 файл (%s)</text>
-			<text id="UploadedMany">Вы раздали %i файла(ов) (%s)</text>
+			<text id="UploadedNone">Cегодня раздач не было</text>
+			<text id="UploadedOne">Всего 1 файл (%s)</text>
+			<text id="UploadedMany">Всего %i файла(ов) (%s)</text>
 		</para>
 	</document>
 	<document name="CHomeTorrentsBox" title="Torrents" leftMargin="6" topMargin="6">
@@ -1827,10 +1827,10 @@
 			<link id="ReseedTorrent" format="bu" target="raza:command:ID_TOOLS_RESEEDTORRENT">Раздавать %s</link>
 			<newline gap="4"/>
 			<group id="1">
-			<link id="SeedTorrent" format="bu" target="raza:command:ID_TOOLS_SEEDTORRENT">Раздавать другой торрент</link>
+			<link id="SeedTorrent" format="bu" target="raza:command:ID_TOOLS_SEEDTORRENT">Начать раздачу</link>
 			</group>
 			<group id="2">
-			<link id="SeedTorrent" format="bu" target="raza:command:ID_TOOLS_SEEDTORRENT">Раздавать торрент</link>
+			<link id="SeedTorrent" format="bu" target="raza:command:ID_TOOLS_SEEDTORRENT">Начать раздачу</link>
 			</group>
 		</para>
 	</document>
@@ -2637,9 +2637,9 @@
 	<string id="8104" value="Предпросматриваю..."/>
 	<string id="8105" value="Невозможно загрузить содержимое просмотра с «%s»."/>
 	<string id="8128" value="Щелкните здесь для поиска снова"/>
-	<string id="8129" value="Поиск еще не был запущен в этом окне."/>
+	<string id="8129" value="Поиск ещё не был запущен в этом окне."/>
 	<string id="8130" value="Shareaza ищет файлы в сети ..."/>
-	<string id="8131" value="Сеть все еще не возвратила никаких результатов."/>
+	<string id="8131" value="Сеть все ещё не возвратила никаких результатов."/>
 	<string id="8132" value="Некоторые результаты доступны, но были отфильтрованы."/>
 	<string id="8133" value="Shareaza активно ищет файлы в сети ..."/>
 	<string id="8134" value="Вы собираетесь начать новый поиск. Хотите ли Вы очистить результаты предыдущего поиска?"/>
