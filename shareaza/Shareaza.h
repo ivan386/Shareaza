@@ -417,20 +417,21 @@ inline __int64 GetRandomNum<__int64>(const __int64& min, const __int64& max)
 #define MSG_FACILITY_INCOMING	0x0200
 #define MSG_FACILITY_OUTGOING	0x0300
 
-#define WM_WINSOCK		(WM_APP+101)
-#define WM_VERSIONCHECK	(WM_APP+102)
-#define WM_OPENCHAT		(WM_APP+103)
-#define WM_TRAY			(WM_APP+104)
-#define WM_URL			(WM_APP+105)
-#define WM_SKINCHANGED	(WM_APP+106)
-#define WM_COLLECTION	(WM_APP+107)
-#define WM_OPENSEARCH	(WM_APP+108)
-#define WM_LIBRARYSEARCH (WM_APP+110)
-#define WM_PLAYFILE		(WM_APP+111)
-#define WM_ENQUEUEFILE	(WM_APP+112)
-#define WM_SETALPHA		(WM_APP+113)
-#define WM_METADATA		(WM_APP+114)
-#define WM_SANITY_CHECK	(WM_APP+115)	// Run allsystem check against banned hosts
+#define WM_WINSOCK			(WM_APP+101)
+#define WM_VERSIONCHECK		(WM_APP+102)
+#define WM_OPENCHAT			(WM_APP+103)
+#define WM_TRAY				(WM_APP+104)
+#define WM_URL				(WM_APP+105)
+#define WM_SKINCHANGED		(WM_APP+106)	// Skin change ( WPARAM: unused, LPARAM: unused )
+#define WM_COLLECTION		(WM_APP+107)	// Open collection file ( WPARAM: unused, LPARAM: LPTSTR szFilename )
+#define WM_OPENSEARCH		(WM_APP+108)	// Open new search ( WPARAM: CQuerySearch* pSearch, LPARAM: unused )
+#define WM_LIBRARYSEARCH	(WM_APP+110)	// Start file library search ( WPARAM: LPTSTR pszSearch, LPARAM: unused )
+#define WM_PLAYFILE			(WM_APP+111)	// Play file by media system ( WPARAM: unused, LPARAM: CString* pFilename )
+#define WM_ENQUEUEFILE		(WM_APP+112)	// Enqueue file to media system ( WPARAM: unused, LPARAM: CString* pFilename )
+#define WM_SETALPHA			(WM_APP+113)	// Increase/decrease main window transparency ( WPARAM: 0 - to decrease or 1 - to increase, LPARAM: unused )
+#define WM_METADATA			(WM_APP+114)	// Set/clear library meatapanel data and status message ( WPARAM: CMetaPanel* pPanelData, LPARAM: LPCTSTR pszMessage )
+#define WM_SANITY_CHECK		(WM_APP+115)	// Run allsystem check against banned hosts ( WPARAM: unused, LPARAM: unused )
+#define WM_QUERYHITS		(WM_APP+116)	// Route query hits over windows ( WPARAM: unused, LPARAM: CQueryHit* pHits )
 
 #define WM_AFX_SETMESSAGESTRING 0x0362
 #define WM_AFX_POPMESSAGESTRING 0x0375
