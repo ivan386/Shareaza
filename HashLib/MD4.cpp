@@ -1,7 +1,7 @@
 //
 // MD4.cpp
 //
-// Copyright © Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -230,7 +230,7 @@ void CMD4::Add(const void* pData, std::size_t nLength)
 //
 
 
-// Copyright © 1990-2, RSA Data Security, Inc. All rights reserved.
+// Copyright (C) 1990-2, RSA Data Security, Inc. All rights reserved.
 
 // License to copy and use this software is granted provided that it
 // is identified as the "RSA Data Security, Inc. MD4 Message-Digest

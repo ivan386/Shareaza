@@ -1,7 +1,7 @@
 //
 // Plugins.h
 //
-// Copyright © Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2006.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it

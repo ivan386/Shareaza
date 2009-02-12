@@ -351,7 +351,7 @@ BEGIN
             VALUE "FileDescription", "Shareaza Torrent Wizard"
             VALUE "FileVersion", "1, 0, 1, 0"
             VALUE "InternalName", "TorrentWizard"
-            VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2002-2009."
+            VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2003-2008."
             VALUE "OriginalFilename", "TorrentWizard.exe"
             VALUE "ProductName", "Shareaza"
             VALUE "ProductVersion", "2, 4, 0, 0"

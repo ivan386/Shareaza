@@ -1,7 +1,7 @@
 //
 // SWFReader.h : Declaration of the CSWFReader
 //
-// Copyright © Nikolay Raspopov, 2005.
+// Copyright (c) Nikolay Raspopov, 2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it

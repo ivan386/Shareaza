@@ -3,7 +3,7 @@
 // GFLImageServices.pch will be the pre-compiled header
 // stdafx.obj will contain the pre-compiled type information
 //
-// Copyright © Nikolay Raspopov, 2005.
+// Copyright (c) Nikolay Raspopov, 2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it

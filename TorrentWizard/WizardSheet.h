@@ -1,7 +1,7 @@
 //
 // WizardSheet.h
 //
-// Copyright © Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2007.
 // This file is part of Shareaza Torrent Wizard (shareaza.sourceforge.net).
 //
 // Shareaza Torrent Wizard is free software; you can redistribute it

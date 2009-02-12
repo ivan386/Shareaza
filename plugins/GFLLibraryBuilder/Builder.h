@@ -1,11 +1,11 @@
 //
 // Builder.h : Declaration of the CBuilder
 //
-// Copyright © Nikolay Raspopov, 2005.
+// Copyright (c) Nikolay Raspopov, 2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // GFL Library, GFL SDK and XnView
-// Copyright © 1991-2004 Pierre-E Gougelet
+// Copyright (c) 1991-2004 Pierre-E Gougelet
 //
 // Shareaza is free software; you can redistribute it
 // and/or modify it under the terms of the GNU General Public License

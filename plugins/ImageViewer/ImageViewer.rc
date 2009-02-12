@@ -86,7 +86,7 @@ BEGIN
             VALUE "FileDescription", "Shareaza Image Viewer Plugin"
             VALUE "FileVersion", "1, 2, 1, 7"
             VALUE "InternalName", "ImageViewer"
-            VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2002-2009. All rights reserved."
+            VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2002-2008. All rights reserved."
             VALUE "OriginalFilename", "ImageViewer.dll"
             VALUE "ProductName", "Shareaza"
             VALUE "ProductVersion", "2, 4, 0, 0"
@@ -144,7 +144,7 @@ IDB_COMMANDS            BITMAP                  "Commands.bmp"
 STRINGTABLE 
 BEGIN
     IDS_PROJNAME            "ImageViewer"
-    IDS_ABOUT               "Shareaza Image Viewer Plugin\nCopyright © Shareaza Development Team, 2002-2009."
+    IDS_ABOUT               "Shareaza Image Viewer Plugin\nCopyright © Shareaza Development Team, 2002-2007."
 END
 
 #endif    // English (Australia) resources

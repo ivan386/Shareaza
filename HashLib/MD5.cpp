@@ -1,7 +1,7 @@
 //
 // MD5.cpp
 //
-// Copyright © Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2008.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -254,7 +254,7 @@ void CMD5::Add(const void* pData, std::size_t nLength)
 
 // MD5.CPP - RSA Data Security, Inc., MD5 message-digest algorithm
 
-// Copyright © 1991-2, RSA Data Security, Inc. Created 1991. All
+// Copyright (C) 1991-2, RSA Data Security, Inc. Created 1991. All
 // Copyrights reserved.
 //
 // License to copy and use this software is granted provided that it

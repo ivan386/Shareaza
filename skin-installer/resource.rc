@@ -123,7 +123,7 @@ BEGIN
             VALUE "FileDescription", "Shareaza Skin Installer"
             VALUE "FileVersion", "1, 0, 12, 5"
             VALUE "InternalName", "skin-installer"
-            VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2002-2009. All rights reserved."
+            VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2002-2008. All rights reserved."
             VALUE "OriginalFilename", "skin.exe"
             VALUE "ProductName", "Shareaza"
             VALUE "ProductVersion", "2, 4, 0, 0"

@@ -2,7 +2,7 @@
 //                                                                            //
 // Hashes/Compatibility.hpp                                                   //
 //                                                                            //
-// Copyright © Shareaza Development Team, 2002-2009.                              //
+// Copyright (C) 2005 Shareaza Development Team.                              //
 // This file is part of SHAREAZA (shareaza.sourceforge.net).                          //
 //                                                                            //
 // Shareaza is free software; you can redistribute it                         //

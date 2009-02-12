@@ -1,7 +1,7 @@
 //
 // Builder.cpp : Implementation of CBuilder
 //
-// Copyright © Nikolay Raspopov, 2005-2007.
+// Copyright (c) Nikolay Raspopov, 2005-2007.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
