@@ -3,7 +3,7 @@
 // 7ZipBuilder.pch will be the pre-compiled header
 // stdafx.obj will contain the pre-compiled type information
 //
-// Copyright (c) Shareaza Development Team, 2007.
+// Copyright © Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it

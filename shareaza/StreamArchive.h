@@ -1,7 +1,7 @@
 //
 // StreamArchive.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2006.
+// Copyright © Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it

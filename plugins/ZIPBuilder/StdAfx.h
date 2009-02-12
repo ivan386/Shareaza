@@ -3,7 +3,7 @@
 // or project specific include files that are used frequently,
 // but are changed infrequently
 //
-// Copyright (c) Shareaza Development Team, 2007.
+// Copyright © Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it

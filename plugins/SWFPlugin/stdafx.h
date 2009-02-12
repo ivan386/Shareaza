@@ -2,7 +2,7 @@
 // or project specific include files that are used frequently,
 // but are changed infrequently
 //
-// Copyright (c) Nikolay Raspopov, 2005.
+// Copyright © Nikolay Raspopov, 2005.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it

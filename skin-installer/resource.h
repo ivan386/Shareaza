@@ -3,8 +3,8 @@ This software is released into the public domain.  You are free to
 redistribute and modify without any restrictions with the exception of
 the following:
 
-The Zlib library is Copyright (C) 1995-2002 Jean-loup Gailly and Mark Adler.
-The Unzip library is Copyright (C) 1998-2003 Gilles Vollant.
+The Zlib library is Copyright © 1995-2002 Jean-loup Gailly and Mark Adler.
+The Unzip library is Copyright © 1998-2003 Gilles Vollant.
 */
 #define IDI_ICON                        101
 #define IDR_VERSION						102

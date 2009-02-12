@@ -1,7 +1,7 @@
 //
 // MD5.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright © Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -338,7 +338,7 @@ void CSHA::Add(const void* pData, std::size_t nLength)
 #endif // HASHLIB_USE_ASM
 
 // ---------------------------------------------------------------------------
-// Copyright (c) 2002, Dr Brian Gladman <brg@gladman.me.uk>, Worcester, UK.
+// Copyright © 2002, Dr Brian Gladman <brg@gladman.me.uk>, Worcester, UK.
 // All rights reserved.
 
 // LICENSE TERMS

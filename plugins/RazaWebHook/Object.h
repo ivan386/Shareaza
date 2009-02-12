@@ -1,7 +1,7 @@
 //
 // Object.h : Declaration of the CRazaWebHook
 //
-// Copyright (c) Shareaza Development Team, 2008.
+// Copyright © Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it

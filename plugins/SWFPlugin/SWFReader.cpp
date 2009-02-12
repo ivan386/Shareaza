@@ -1,11 +1,11 @@
 //
 // SWFReader.cpp : Implementation of CSWFReader
 //
-// Copyright (c) Nikolay Raspopov, 2005-2008.
+// Copyright © Nikolay Raspopov, 2005-2008.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // GFL Library, GFL SDK and XnView
-// Copyright (c) 1991-2004 Pierre-E Gougelet
+// Copyright © 1991-2004 Pierre-E Gougelet
 //
 // Shareaza is free software; you can redistribute it
 // and/or modify it under the terms of the GNU General Public License

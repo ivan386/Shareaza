@@ -86,7 +86,7 @@ BEGIN
             VALUE "FileDescription", "Media Image Services Plugin"
             VALUE "FileVersion", "1, 0, 0, 9"
             VALUE "InternalName", "MediaImageServices"
-            VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2005-2008. All rights reserved."
+            VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2002-2009. All rights reserved."
             VALUE "OriginalFilename", "MediaImageServices.dll"
             VALUE "ProductName", "Shareaza"
             VALUE "ProductVersion", "2, 4, 0, 0"

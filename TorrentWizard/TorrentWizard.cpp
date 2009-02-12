@@ -1,7 +1,7 @@
 //
 // TorrentWizard.cpp
 //
-// Copyright (c) Shareaza Development Team, 2003-2007.
+// Copyright © Shareaza Development Team, 2002-2009.
 // This file is part of Shareaza Torrent Wizard (shareaza.sourceforge.net).
 //
 // Shareaza Torrent Wizard is free software; you can redistribute it
