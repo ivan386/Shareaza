@@ -18,7 +18,7 @@
 		description="Shareaza Default English Skin File"
 		link="http://shareaza.sourceforge.net/"
 		email="Contact(at)ShareazaProject.com"
-		version="2.4.0.1"
+		version="2.4.0.2"
 		type="Language"
 		language="en"
 		prompt="Click here to select English as your natural language."
@@ -149,7 +149,7 @@
 	<!-- DOWNLOADS WINDOW -->
 	<toolbar name="CDownloadsWnd.Basic">
 		<button id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="Open or Play"/>
-		<button id="ID_DOWNLOADS_LAUNCH" text="Preview File"/>
+		<button id="ID_DOWNLOADS_LAUNCH_COPY" text="Preview File"/>
 		<button id="ID_DOWNLOADS_FILE_DELETE" text="Delete File"/>
 		<separator/>
 		<button id="ID_DOWNLOADS_RESUME" text="Resume Download"/>
@@ -165,7 +165,7 @@
 	<toolbar name="CDownloadsWnd">
 		<button id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="Open or Play"/>
 		<button id="ID_DOWNLOADS_FILE_DELETE" text="Delete File"/>
-		<button id="ID_DOWNLOADS_LAUNCH" text="Preview File"/>
+		<button id="ID_DOWNLOADS_LAUNCH_COPY" text="Preview File"/>
 		<separator/>
 		<button id="ID_DOWNLOADS_RESUME" text="Resume Download"/>
 		<button id="ID_DOWNLOADS_PAUSE" text="Pause Download"/>
@@ -539,11 +539,11 @@
 			</menu>
 			<separator/>
 			<menu text="_Websites">
-				<item id="ID_HELP_HOMEPAGE" text="_Shareaza Site"/>
+				<item id="ID_HELP_HOMEPAGE" text="_Shareaza site"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareaza _Forums"/>
 				<item id="ID_HELP_WEB_6" text="Shareaza S_kin Site"/>
-				<item id="ID_HELP_FAKESHAREAZA" text="FakeShareaza_.com"/> <!-- 
+				<item id="ID_HELP_FAKESHAREAZA" text="FakeShareaza.com I_nfo"/> <!-- 
 				<item id="ID_HELP_UPDATE" text="Latest news"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
 				<item id="ID_HELP_WEB_2" text="P2PForums.com"/> -->
@@ -644,7 +644,7 @@
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareaza _Forums"/>
 				<item id="ID_HELP_WEB_6" text="Shareaza S_kin Site"/>
-				<item id="ID_HELP_FAKESHAREAZA" text="FakeShareaza_.com"/> <!-- 
+				<item id="ID_HELP_FAKESHAREAZA" text="FakeShareaza.com I_nfo"/> <!-- 
 				<item id="ID_HELP_UPDATE" text="Latest news"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
 				<item id="ID_HELP_WEB_2" text="P2PForums.com"/> -->
@@ -738,7 +738,7 @@
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Shareaza _Forums"/>
 				<item id="ID_HELP_WEB_6" text="Shareaza S_kin Site"/>
-				<item id="ID_HELP_FAKESHAREAZA" text="FakeShareaza_.com"/> <!-- 
+				<item id="ID_HELP_FAKESHAREAZA" text="FakeShareaza.com I_nfo"/> <!-- 
 				<item id="ID_HELP_UPDATE" text="Latest news"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
 				<item id="ID_HELP_WEB_2" text="P2PForums.com"/> -->
@@ -1009,7 +1009,7 @@
 	</menu>
 	<!-- DOWNLOADS WINDOW -->
 	<menu name="CDownloadsWnd.Download.Basic">
-		<item id="ID_DOWNLOADS_LAUNCH" text="_Preview"/>
+		<item id="ID_DOWNLOADS_LAUNCH_COPY" text="Previe_w File"/>
 		<item id="ID_DOWNLOADS_REMOTE_PREVIEW" text="R_emote Preview"/>
 		<item id="ID_DOWNLOADS_VIEW_REVIEWS" text="_View Reviews"/>
 		<separator/>
@@ -1025,9 +1025,9 @@
 		<item id="ID_DOWNLOADS_HELP" text="_Help..."/>
 	</menu>
 	<menu name="CDownloadsWnd.Download">
-		<item id="ID_DOWNLOADS_LAUNCH" text="_Preview"/>
+		<item id="ID_DOWNLOADS_LAUNCH_COPY" text="Previe_w File"/>
+		<item id="ID_DOWNLOADS_LAUNCH" text="Prev_iew Partial File"/>
 		<item id="ID_DOWNLOADS_REMOTE_PREVIEW" text="R_emote Preview"/>
-		<!-- <item id="ID_DOWNLOADS_LAUNCH_COPY" text="Pre_view Copy"/> -->
 		<item id="ID_DOWNLOADS_ENQUEUE" text="Add to Pla_ylist"/>
 		<item id="ID_DOWNLOADS_VIEW_REVIEWS" text="_View Reviews"/>
 		<separator/>
@@ -1489,7 +1489,10 @@
 	<menu name="CSearchMonitorWnd">
 		<item id="ID_HITMONITOR_SEARCH" text="_Search for This"/>
 		<separator/>
-		<item id="ID_SEARCHMONITOR_PAUSE" text="_Pause Display"/>
+    <item id="ID_BROWSE_LAUNCH" text="_Browse User"/>
+    <item id="ID_SECURITY_BAN" text="B_an User"/>
+    <separator/>
+    <item id="ID_SEARCHMONITOR_PAUSE" text="_Pause Display"/>
 		<item id="ID_SEARCHMONITOR_CLEAR" text="_Clear Buffer"/>
 	</menu>
 	<!-- GRAPH/TRAFFIC WINDOW -->
@@ -1699,6 +1702,11 @@
 		<gap size="8"/>
 		<link target="raza:command:ID_HELP_FAQ" format="bu" align="middle">Quick Help</link>
 		<text align="middle">&#160;- Get some basic help using Shareaza</text>
+		<newline gap="8"/>
+		<icon res="141" width="32" height="32" target="raza:command:ID_VIEW_SECURITY"/>
+		<gap size="8"/>
+		<link target="raza:command:ID_VIEW_SECURITY" format="bu" align="middle">Security Filters</link>
+		<text align="middle">&#160;- Add/Remove filters to improve your search results</text>
 		<newline gap="18" indent="0"/>
 		<group id="5">
 			<icon res="128" width="32" height="32"/><gap size="8"/>
@@ -1852,8 +1860,8 @@
 		</styles>
 		<text format="b">Welcome to Shareaza's Settings Manager</text>
 		<newline gap="16"/>
-		<text>The Shareaza Settings Manager allows advanced users to completely customise
-			how	Shareaza works. The settings in the </text>
+		<text>The Shareaza Settings Manager allows advanced users to completely customise how
+			Shareaza works. The settings in the </text>
 		<text format="b">General </text>
 		<text>section relate to the user experience.</text>
 		<newline gap="16" indent="16"/>
@@ -1875,7 +1883,7 @@
 		<newline gap="10"/>
 		<link target="raza:page:CIRCSettingsPage" format="b">Chat:</link>
 		<gap size="4"/>
-		<text>IRC chatroom visual appearance and connection settings.</text>
+		<text>IRC chatroom visual appearances and connection settings.</text>
 		<newline gap="10"/>
 		<link target="raza:page:CWebSettingsPage" format="b">Web Integration:</link>
 		<gap size="4"/>

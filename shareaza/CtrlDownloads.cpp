@@ -1889,7 +1889,7 @@ void CDownloadsCtrl::OnEnterKey()
 			{
 				GetOwner()->PostMessage( WM_TIMER, 5 );
 				GetOwner()->PostMessage( WM_COMMAND, pDownload->IsCompleted() ?
-					ID_DOWNLOADS_LAUNCH_COMPLETE : ID_DOWNLOADS_LAUNCH );		// Launch the current file
+					ID_DOWNLOADS_LAUNCH_COMPLETE : ID_DOWNLOADS_LAUNCH_COPY );	// Launch the current file
 			}
 		}
 		else if ( pSource != NULL )												// If the selected object is a download source...
@@ -2003,7 +2003,7 @@ void CDownloadsCtrl::OnLButtonDblClk(UINT nFlags, CPoint point)
 		{
 			GetOwner()->PostMessage( WM_TIMER, 5 );
 			GetOwner()->PostMessage( WM_COMMAND, pDownload->IsCompleted() ?
-				ID_DOWNLOADS_LAUNCH_COMPLETE : ID_DOWNLOADS_LAUNCH );
+				ID_DOWNLOADS_LAUNCH_COMPLETE : ID_DOWNLOADS_LAUNCH_COPY );
 		}
 		else if ( pSource != NULL )
 		{

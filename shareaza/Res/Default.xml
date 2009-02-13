@@ -126,7 +126,7 @@
 	<!-- DOWNLOADS WINDOW -->
 	<toolbar name="CDownloadsWnd.Basic">
 		<button id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="Open or Play"/>
-		<button id="ID_DOWNLOADS_LAUNCH" text="Preview File"/>
+		<button id="ID_DOWNLOADS_LAUNCH_COPY" text="Preview File"/>
 		<button id="ID_DOWNLOADS_FILE_DELETE" text="Delete File"/>
 		<separator/>
 		<button id="ID_DOWNLOADS_RESUME" text="Resume Download"/>
@@ -142,7 +142,7 @@
 	<toolbar name="CDownloadsWnd">
 		<button id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="Open or Play"/>
 		<button id="ID_DOWNLOADS_FILE_DELETE" text="Delete File"/>
-		<button id="ID_DOWNLOADS_LAUNCH" text="Preview File"/>
+		<button id="ID_DOWNLOADS_LAUNCH_COPY" text="Preview File"/>
 		<separator/>
 		<button id="ID_DOWNLOADS_RESUME" text="Resume Download"/>
 		<button id="ID_DOWNLOADS_PAUSE" text="Pause Download"/>
@@ -969,7 +969,7 @@
 	</menu>
 	<!-- DOWNLOADS WINDOW -->
 	<menu name="CDownloadsWnd.Download.Basic">
-		<item id="ID_DOWNLOADS_LAUNCH" text="_Preview File"/>
+		<item id="ID_DOWNLOADS_LAUNCH_COPY" text="Previe_w File"/>
 		<item id="ID_DOWNLOADS_REMOTE_PREVIEW" text="R_emote Preview"/>
 		<item id="ID_DOWNLOADS_VIEW_REVIEWS" text="_View Reviews"/>
 		<separator/>
@@ -985,9 +985,9 @@
 		<item id="ID_DOWNLOADS_HELP" text="_Help..."/>
 	</menu>
 	<menu name="CDownloadsWnd.Download">
-		<item id="ID_DOWNLOADS_LAUNCH" text="_Preview File"/>
+		<item id="ID_DOWNLOADS_LAUNCH_COPY" text="Previe_w File"/>
+		<item id="ID_DOWNLOADS_LAUNCH" text="Prev_iew Partial File"/>
 		<item id="ID_DOWNLOADS_REMOTE_PREVIEW" text="R_emote Preview"/>
-		<!-- <item id="ID_DOWNLOADS_LAUNCH_COPY" text="Pre_view Copy"/> -->
 		<item id="ID_DOWNLOADS_ENQUEUE" text="Add to Pla_ylist"/>
 		<item id="ID_DOWNLOADS_VIEW_REVIEWS" text="_View Reviews"/>
 		<separator/>
@@ -2446,7 +2446,7 @@
 		<image id="ID_DOWNLOADS_RESUME" id1="ID_DOWNLOAD_GROUP_RESUME"/>
 		<image id="ID_DOWNLOADS_PAUSE" id1="ID_DOWNLOAD_GROUP_PAUSE"/>
 		<image id="ID_DOWNLOADS_CLEAR" id1="ID_DOWNLOAD_GROUP_CLEAR" id2="ID_DOWNLOADS_CLEAR_COMPLETE" id3="ID_DOWNLOADS_CLEAR_INCOMPLETE"/>
-		<image id="ID_DOWNLOADS_LAUNCH_COPY" id1="ID_LIBRARY_ALBUM_OPEN" id2="ID_LIBRARY_EXPLORE"/>
+		<image id="ID_LIBRARY_ALBUM_OPEN" id1="ID_LIBRARY_EXPLORE"/>
 		<image id="ID_DOWNLOADS_ENQUEUE"/>
 		<image id="ID_DOWNLOADS_SOURCES"/>
 		<image id="ID_DOWNLOADS_URL"/>
@@ -2526,7 +2526,7 @@
 		<image id="ID_LIBRARY_PANEL" id1="ID_SEARCH_DETAILS" id2="ID_WEBSERVICES_LIST"/>
 		<!-- Media Player -->
 		<image id="ID_VIEW_MEDIA" id1="ID_TAB_MEDIA"/>
-		<image id="ID_MEDIA_PLAY" id1="ID_MEDIA_SELECT" id2="ID_LIBRARY_LAUNCH" id3="ID_DOWNLOADS_LAUNCH" id4="ID_UPLOADS_LAUNCH" id5="ID_DOWNLOADS_LAUNCH_COMPLETE" id6="ID_LIBRARY_FOLDER_ENQUEUE"/>
+		<image id="ID_MEDIA_PLAY" id1="ID_MEDIA_SELECT" id2="ID_LIBRARY_LAUNCH" id3="ID_DOWNLOADS_LAUNCH" id4="ID_UPLOADS_LAUNCH" id5="ID_DOWNLOADS_LAUNCH_COMPLETE" id6="ID_LIBRARY_FOLDER_ENQUEUE" id7="ID_DOWNLOADS_LAUNCH_COPY"/>
 		<image id="ID_MEDIA_STOP"/>
 		<image id="ID_MEDIA_PREVIOUS" id1="ID_SHAREMONKEY_PREVIOUS"/>
 		<image id="ID_MEDIA_NEXT" id1="ID_SHAREMONKEY_NEXT"/>

@@ -1,7 +1,7 @@
 //
 // DlgDownloadMonitor.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -681,10 +681,10 @@ void CDownloadMonitorDlg::OnContextMenu(CWnd* /*pWnd*/, CPoint point)
 	pInfo.cbSize	= sizeof(pInfo);
 	pInfo.fMask		= MIIM_STATE;
 	GetMenuItemInfo( pPopup->GetSafeHmenu(), m_pDownload->IsCompleted() ?
-		ID_DOWNLOADS_LAUNCH_COMPLETE : ID_DOWNLOADS_LAUNCH, FALSE, &pInfo );
+		ID_DOWNLOADS_LAUNCH_COMPLETE : ID_DOWNLOADS_LAUNCH_COPY, FALSE, &pInfo );
 	pInfo.fState	|= MFS_DEFAULT;
 	SetMenuItemInfo( pPopup->GetSafeHmenu(), m_pDownload->IsCompleted() ?
-		ID_DOWNLOADS_LAUNCH_COMPLETE : ID_DOWNLOADS_LAUNCH, FALSE, &pInfo );
+		ID_DOWNLOADS_LAUNCH_COMPLETE : ID_DOWNLOADS_LAUNCH_COPY, FALSE, &pInfo );
 
 	CoolMenu.AddMenu( pPopup, TRUE );
 
