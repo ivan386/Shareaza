@@ -1,7 +1,7 @@
 //
 // FileExecutor.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -118,6 +118,25 @@ void CFileExecutor::DetectFileType(LPCTSTR pszFile, LPCTSTR szType, bool& bVideo
 	}
 }
 
+TRISTATE CFileExecutor::IsSafeExecute(LPCTSTR szExt, LPCTSTR szFile)
+{
+	BOOL bSafe = ! szExt || IsIn( Settings.Library.SafeExecute, szExt + 1 ) ||
+		( theApp.m_pfnAssocIsDangerous && ! theApp.m_pfnAssocIsDangerous( szExt ) );
+
+	if ( ! bSafe && szFile )
+	{
+		CString strFormat, strPrompt;
+		Skin.LoadString( strFormat, IDS_LIBRARY_CONFIRM_EXECUTE );
+		strPrompt.Format( strFormat, szFile );
+		if ( AfxMessageBox( strPrompt,
+			MB_ICONQUESTION | MB_YESNOCANCEL | MB_DEFBUTTON2 )  == IDCANCEL )
+			// Cancel file operation
+			return TRI_UNKNOWN;
+	}
+
+	return bSafe ? TRI_TRUE : TRI_FALSE;
+}
+
 BOOL CFileExecutor::Execute(LPCTSTR pszFile, BOOL bSkipSecurityCheck, LPCTSTR pszExt)
 {
 	CWaitCursor pCursor;
@@ -151,7 +170,8 @@ BOOL CFileExecutor::Execute(LPCTSTR pszFile, BOOL bSkipSecurityCheck, LPCTSTR ps
 	if ( strType == _T(".partial") && pszExt )
 	{
 		bPartial = true;
-		strType = ( CString( _T('.') ) + pszExt ).MakeLower();
+		strType = pszExt;
+		strType.MakeLower();
 	}
 
 	// Detect type
@@ -160,40 +180,14 @@ BOOL CFileExecutor::Execute(LPCTSTR pszFile, BOOL bSkipSecurityCheck, LPCTSTR ps
 	bool bImage = false;
 	DetectFileType( pszFile, strType, bVideo, bAudio, bImage );
 
-	// Detect dangerous files by internal safe list
-	bool bDangerous = false;
-	if ( ! ( bAudio || bVideo || bImage ) &&
-		( strType.GetLength() < 2 ||
-		! IsIn( Settings.Library.SafeExecute, (LPCTSTR)strType + 1 ) ) )
+	// Detect dangerous files
+	if ( ! ( bAudio || bVideo || bImage ) && ! bSkipSecurityCheck )
 	{
-		bDangerous = true;
-	}
-
-	// TODO: Should check Zone.Identifier stream for safety
-
-	// Detect dangerous files by system (requires Internet Explorer 6)
-	if ( ! bSkipSecurityCheck && ! bDangerous && theApp.m_pfnAssocIsDangerous &&
-		theApp.m_pfnAssocIsDangerous( (LPCTSTR)strType ) )
-	{
-		bDangerous = true;
-	}
-
-	// Ask user
-	if ( ! bSkipSecurityCheck && bDangerous )
-	{
-		CString strFormat, strPrompt;
-		Skin.LoadString( strFormat, IDS_LIBRARY_CONFIRM_EXECUTE );
-		strPrompt.Format( strFormat, pszFile );
-		switch( AfxMessageBox( strPrompt,
-			MB_ICONQUESTION | MB_YESNOCANCEL | MB_DEFBUTTON2 ) )
-		{
-		case IDCANCEL:
-			// Cancel file operation
+		TRISTATE bSafe = IsSafeExecute( strType, pszFile );
+		if ( bSafe == TRI_UNKNOWN )
 			return FALSE;
-		case IDNO:
-			// Skip file
+		else if ( bSafe == TRI_FALSE )
 			return TRUE;
-		}
 	}
 
 	// Handle video and audio files by internal player
@@ -231,7 +225,7 @@ BOOL CFileExecutor::Execute(LPCTSTR pszFile, BOOL bSkipSecurityCheck, LPCTSTR ps
 	// Handle all by plugins
 	if ( ! bShiftKey )
 	{
-		if ( Plugins.OnExecuteFile( pszFile, bImage || bPartial ) )
+		if ( Plugins.OnExecuteFile( pszFile, bImage ) )
 			return TRUE;
 	}
 
@@ -260,7 +254,10 @@ BOOL CFileExecutor::Enqueue(LPCTSTR pszFile, BOOL /*bSkipSecurityCheck*/, LPCTST
 
 	// Prepare partials
 	if ( strType == _T(".partial") && pszExt )
-		strType = ( CString( _T('.') ) + pszExt ).MakeLower();
+	{
+		strType = pszExt;
+		strType.MakeLower();
+	}
 
 	// Detect type
 	bool bVideo = false;
