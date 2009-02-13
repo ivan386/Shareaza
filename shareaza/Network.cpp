@@ -1,7 +1,7 @@
 //
 // Network.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -72,8 +72,6 @@ CNetwork::CNetwork() :
 	QueryRoute				( new CRouteCache() ),
 	QueryKeys				( new CQueryKeys() ),
 	m_bAutoConnect			( FALSE ),
-	m_bTCPListeningReady	( FALSE ),
-	m_bUDPListeningReady	( FALSE ),
 	m_tStartedConnecting	( 0 ),
 	m_tLastConnect			( 0 ),
 	m_tLastED2KServerHop	( 0 ),
@@ -234,69 +232,9 @@ BOOL CNetwork::Connect(BOOL bAutoConnect)
 		m_bAutoConnect = TRUE;
 	}
 
-	// Make sure WinINet is connected (IE is not in offline mode)
-	if ( Settings.Connection.ForceConnectedState )
-	{
-		INTERNET_CONNECTED_INFO ici = { 0 };
-		HINTERNET hInternet = InternetOpen( Settings.SmartAgent(), INTERNET_OPEN_TYPE_DIRECT, NULL, NULL, 0 );
-
-		ici.dwConnectedState = INTERNET_STATE_CONNECTED;
-		InternetSetOption( hInternet, INTERNET_OPTION_CONNECTED_STATE, &ici, sizeof(ici) );
-		InternetCloseHandle( hInternet );
-	}
-
 	// If we are already connected exit.
 	if ( IsConnected() )
 		return TRUE;
-
-	// Begin network startup
-	theApp.Message( MSG_NOTICE, IDS_NETWORK_STARTUP );
-
-	gethostname( m_sHostName.GetBuffer( 255 ), 255 );
-	m_sHostName.ReleaseBuffer();
-	if( hostent* h = gethostbyname( m_sHostName ) )
-	{
-		for ( char** p = h->h_addr_list ; p && *p ; p++ )
-		{
-			m_pHostAddresses.AddTail( *(ULONG*)*p );
-		}
-	}
-
-	Resolve( Settings.Connection.InHost, Settings.Connection.InPort, &m_pHost );
-
-	if ( /*IsFirewalled()*/Settings.Connection.FirewallState == CONNECTION_FIREWALLED ) // Temp disable
-		theApp.Message( MSG_INFO, IDS_NETWORK_FIREWALLED );
-
-	SOCKADDR_IN pOutgoing;
-
-	if ( Resolve( Settings.Connection.OutHost, 0, &pOutgoing ) )
-	{
-		theApp.Message( MSG_INFO, IDS_NETWORK_OUTGOING,
-			(LPCTSTR)CString( inet_ntoa( pOutgoing.sin_addr ) ),
-			htons( pOutgoing.sin_port ) );
-	}
-	else if ( Settings.Connection.OutHost.GetLength() )
-	{
-		theApp.Message( MSG_ERROR, IDS_NETWORK_CANT_OUTGOING,
-			(LPCTSTR)Settings.Connection.OutHost );
-	}
-
-	m_bTCPListeningReady = Handshakes.Listen();
-	m_bUDPListeningReady = Datagrams.Listen();
-
-	if ( !m_bTCPListeningReady || !m_bUDPListeningReady )
-	{
-		theApp.Message( MSG_ERROR, _T("The connection process is failed.") );
-		Handshakes.Disconnect();
-		Datagrams.Disconnect();
-		m_pHostAddresses.RemoveAll();
-		return FALSE;
-	}
-
-	Neighbours.Connect();
-
-	NodeRoute->SetDuration( Settings.Gnutella.RouteCache );
-	QueryRoute->SetDuration( Settings.Gnutella.RouteCache );
 
 	m_tStartedConnecting	= GetTickCount();
 	BeginThread( "Network" );
@@ -317,47 +255,12 @@ void CNetwork::Disconnect()
 	theApp.Message( MSG_NOTICE, IDS_NETWORK_DISCONNECTING );
 
 	m_bAutoConnect			= FALSE;
-	m_bTCPListeningReady	= FALSE;
-	m_bUDPListeningReady	= FALSE;
 	m_tStartedConnecting	= 0;
 
-	Neighbours.Close();
 
 	pLock.Unlock();
 
 	CloseThread();
-
-	Handshakes.Disconnect();
-	pLock.Lock();
-
-	Neighbours.Close();
-	Datagrams.Disconnect();
-
-	NodeRoute->Clear();
-	QueryRoute->Clear();
-
-	{
-		for ( POSITION pos = m_pLookups.GetStartPosition() ; pos ; )
-		{
-			HANDLE pAsync;
-			ResolveStruct* pBuffer;
-			m_pLookups.GetNextAssoc( pos, pAsync, pBuffer );
-			WSACancelAsyncRequest( pAsync );
-			delete pBuffer->m_sAddress;
-			delete pBuffer;
-		}
-
-		m_pLookups.RemoveAll();
-	}
-
-	m_pHostAddresses.RemoveAll();
-
-	pLock.Unlock();
-
-	DiscoveryServices.Stop();
-
-	theApp.Message( MSG_NOTICE, IDS_NETWORK_DISCONNECTED );
-	theApp.Message( MSG_NOTICE, _T("") );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -605,41 +508,137 @@ WORD CNetwork::RandomPort() const
 //////////////////////////////////////////////////////////////////////
 // CNetwork thread run
 
-void CNetwork::OnRun()
+BOOL CNetwork::PreRun()
 {
+	// Begin network startup
+	theApp.Message( MSG_NOTICE, IDS_NETWORK_STARTUP );
+
+	// Make sure WinINet is connected (IE is not in offline mode)
+	if ( Settings.Connection.ForceConnectedState )
+	{
+		INTERNET_CONNECTED_INFO ici = { 0 };
+		HINTERNET hInternet = InternetOpen( Settings.SmartAgent(), INTERNET_OPEN_TYPE_DIRECT, NULL, NULL, 0 );
+
+		ici.dwConnectedState = INTERNET_STATE_CONNECTED;
+		InternetSetOption( hInternet, INTERNET_OPTION_CONNECTED_STATE, &ici, sizeof(ici) );
+		InternetCloseHandle( hInternet );
+	}
+
+	InternetAttemptConnect( 0 );
+
+	gethostname( m_sHostName.GetBuffer( 255 ), 255 );
+	m_sHostName.ReleaseBuffer();
+	if( hostent* h = gethostbyname( m_sHostName ) )
+	{
+		for ( char** p = h->h_addr_list ; p && *p ; p++ )
+		{
+			m_pHostAddresses.AddTail( *(ULONG*)*p );
+		}
+	}
+
+	Resolve( Settings.Connection.InHost, Settings.Connection.InPort, &m_pHost );
+
+	if ( /*IsFirewalled()*/Settings.Connection.FirewallState == CONNECTION_FIREWALLED ) // Temp disable
+		theApp.Message( MSG_INFO, IDS_NETWORK_FIREWALLED );
+
+	SOCKADDR_IN pOutgoing;
+
+	if ( Resolve( Settings.Connection.OutHost, 0, &pOutgoing ) )
+	{
+		theApp.Message( MSG_INFO, IDS_NETWORK_OUTGOING,
+			(LPCTSTR)CString( inet_ntoa( pOutgoing.sin_addr ) ),
+			htons( pOutgoing.sin_port ) );
+	}
+	else if ( Settings.Connection.OutHost.GetLength() )
+	{
+		theApp.Message( MSG_ERROR, IDS_NETWORK_CANT_OUTGOING,
+			(LPCTSTR)Settings.Connection.OutHost );
+	}
+
+	if ( ! Handshakes.Listen() || ! Datagrams.Listen() )
+	{
+		theApp.Message( MSG_ERROR, _T("The connection process is failed.") );
+		return FALSE;
+	}
+
+	Neighbours.Connect();
+
+	NodeRoute->SetDuration( Settings.Gnutella.RouteCache );
+	QueryRoute->SetDuration( Settings.Gnutella.RouteCache );
+
 	Neighbours.IsG2HubCapable( TRUE );
 	Neighbours.IsG1UltrapeerCapable( TRUE );
 
 	// It will check if it is needed inside the function
 	DiscoveryServices.Execute( TRUE, PROTOCOL_NULL, FALSE );
 
-	while ( IsThreadEnabled() )
+	return TRUE;
+}
+
+void CNetwork::OnRun()
+{
+	if ( PreRun() )
 	{
-		HostCache.PruneOldHosts();
-
-		Sleep( 50 );
-		Doze( 100 );
-
-		if ( !theApp.m_bLive )
-			continue;
-
-		if ( theApp.m_pUPnPFinder && theApp.m_pUPnPFinder->IsAsyncFindRunning() )
-			continue;
-
-		if ( IsThreadEnabled() && m_pSection.Lock() )
+		while ( IsThreadEnabled() )
 		{
-			Datagrams.OnRun();
-			SearchManager.OnRun();
-			QueryHashMaster.Build();
+			HostCache.PruneOldHosts();
 
-			if ( CrawlSession.m_bActive )
-				CrawlSession.OnRun();
+			Sleep( 50 );
+			Doze( 100 );
 
-			m_pSection.Unlock();
+			if ( !theApp.m_bLive )
+				continue;
+
+			if ( theApp.m_pUPnPFinder && theApp.m_pUPnPFinder->IsAsyncFindRunning() )
+				continue;
+
+			if ( IsThreadEnabled() && m_pSection.Lock() )
+			{
+				Datagrams.OnRun();
+				SearchManager.OnRun();
+				QueryHashMaster.Build();
+
+				if ( CrawlSession.m_bActive )
+					CrawlSession.OnRun();
+
+				m_pSection.Unlock();
+			}
+
+			Neighbours.OnRun();
 		}
-
-		Neighbours.OnRun();
 	}
+
+	PostRun();
+}
+
+void CNetwork::PostRun()
+{
+	Neighbours.Close();
+	Handshakes.Disconnect();
+
+	Neighbours.Close();
+	Datagrams.Disconnect();
+
+	NodeRoute->Clear();
+	QueryRoute->Clear();
+
+	for ( POSITION pos = m_pLookups.GetStartPosition() ; pos ; )
+	{
+		HANDLE pAsync;
+		ResolveStruct* pBuffer;
+		m_pLookups.GetNextAssoc( pos, pAsync, pBuffer );
+		WSACancelAsyncRequest( pAsync );
+		delete pBuffer->m_sAddress;
+		delete pBuffer;
+	}
+	m_pLookups.RemoveAll();
+
+	m_pHostAddresses.RemoveAll();
+
+	DiscoveryServices.Stop();
+
+	theApp.Message( MSG_NOTICE, IDS_NETWORK_DISCONNECTED );
+	theApp.Message( MSG_NOTICE, _T("") );
 }
 
 //////////////////////////////////////////////////////////////////////
