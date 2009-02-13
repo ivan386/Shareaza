@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="windows-1251"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9,00"
+	Version="9.00"
 	Name="Installer"
 	ProjectGUID="{3D7C87D6-A044-4334-8BB4-3B88B4E1757D}"
 	RootNamespace="Installer"

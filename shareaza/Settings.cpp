@@ -397,6 +397,7 @@ CSettings::CSettings()
 
 	Add( _T("BitTorrent"), _T("AdvancedInterface"), &BitTorrent.AdvancedInterface, false );
 	Add( _T("BitTorrent"), _T("AdvancedInterfaceSet"), &BitTorrent.AdvancedInterfaceSet, false );
+	Add( _T("BitTorrent"), _T("AllocationType"), &BitTorrent.AllocationType, LtHook::bit::sparse_allocation );
 	Add( _T("BitTorrent"), _T("AutoClear"), &BitTorrent.AutoClear, false );
 	Add( _T("BitTorrent"), _T("AutoSeed"), &BitTorrent.AutoSeed, true );
 	Add( _T("BitTorrent"), _T("BandwidthPercentage"), &BitTorrent.BandwidthPercentage, 80, 1, 50, 95, _T(" %") );
@@ -409,6 +410,7 @@ CSettings::CSettings()
 	Add( _T("BitTorrent"), _T("Endgame"), &BitTorrent.Endgame, true );
 	Add( _T("BitTorrent"), _T("LinkPing"), &BitTorrent.LinkPing, 120*1000, 1000, 10, 60*10, _T(" s") );
 	Add( _T("BitTorrent"), _T("LinkTimeout"), &BitTorrent.LinkTimeout, 180*1000, 1000, 10, 60*10, _T(" s") );
+	Add( _T("BitTorrent"), _T("ManagedTorrent"), &BitTorrent.ManagedTorrent, true );
 	Add( _T("BitTorrent"), _T("PreferenceBTSources"), &BitTorrent.PreferenceBTSources, true );
 	Add( _T("BitTorrent"), _T("RandomPeriod"), &BitTorrent.RandomPeriod, 30*1000, 1000, 1, 60*5, _T(" s") );
 	Add( _T("BitTorrent"), _T("RequestLimit"), &BitTorrent.RequestLimit, 128*1024, 1024, 1, 1024, _T(" KB") );
@@ -466,6 +468,9 @@ CSettings::CSettings()
 	Add( _T("Downloads"), _T("StarveGiveUp"), &Downloads.StarveGiveUp, 3, 1, 3, 120, _T(" h") );
 	Add( _T("Downloads"), _T("StarveTimeout"), &Downloads.StarveTimeout, 45*60, 60, 45, 24*60, _T(" m") );
 	Add( _T("Downloads"), _T("TorrentPath"), &Downloads.TorrentPath );
+	Add( _T("Downloads"), _T("TorrentUseTemp"), &Downloads.TorrentUseTemp, false );
+	Add( _T("Downloads"), _T("TorrentStartPaused"), &Downloads.TorrentStartPaused, false );
+	Add( _T("Downloads"), _T("TorrentSavePrompt"), &Downloads.TorrentSavePrompt, false );
 	Add( _T("Downloads"), _T("VerifyED2K"), &Downloads.VerifyED2K, true );
 	Add( _T("Downloads"), _T("VerifyFiles"), &Downloads.VerifyFiles, true );
 	Add( _T("Downloads"), _T("VerifyTiger"), &Downloads.VerifyTiger, true );

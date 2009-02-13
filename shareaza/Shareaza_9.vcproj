@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9,00"
+	Version="9.00"
 	Name="Shareaza"
 	ProjectGUID="{F9C719B3-35FB-427D-A795-91105DFECAAF}"
 	RootNamespace="Shareaza"
@@ -2217,7 +2217,7 @@
 					>
 				</File>
 				<File
-					RelativePath="DlgTorrentSeed.cpp"
+					RelativePath=".\DlgTorrentAdd.cpp"
 					>
 				</File>
 				<File
@@ -2646,6 +2646,22 @@
 				</File>
 				<File
 					RelativePath="RegExp\syntax2.cpp"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="libtorrent Hook"
+				>
+				<File
+					RelativePath=".\LtHookEvent.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\LtHookSession.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\LtHookTorrent.cpp"
 					>
 				</File>
 			</Filter>
@@ -3938,7 +3954,7 @@
 					>
 				</File>
 				<File
-					RelativePath="DlgTorrentSeed.h"
+					RelativePath=".\DlgTorrentAdd.h"
 					>
 				</File>
 				<File
@@ -4255,6 +4271,42 @@
 				</File>
 				<File
 					RelativePath="RegExp\syntax2.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="libtorrent Hook"
+				>
+				<File
+					RelativePath=".\LtHookEvent.hpp"
+					>
+				</File>
+				<File
+					RelativePath=".\LtHookIni.hpp"
+					>
+				</File>
+				<File
+					RelativePath=".\LtHookSession.hpp"
+					>
+				</File>
+				<File
+					RelativePath=".\LtHookSignaler.hpp"
+					>
+				</File>
+				<File
+					RelativePath=".\LtHookTorrent.hpp"
+					>
+				</File>
+				<File
+					RelativePath=".\LtHookTorrentDefines.hpp"
+					>
+				</File>
+				<File
+					RelativePath=".\LtHookTorrentInternal.hpp"
+					>
+				</File>
+				<File
+					RelativePath=".\LtHookTypes.hpp"
 					>
 				</File>
 			</Filter>

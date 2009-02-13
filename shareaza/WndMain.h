@@ -113,6 +113,7 @@ protected:
 	afx_msg void OnEndSession(BOOL bEnding);
 	afx_msg LRESULT OnWinsock(WPARAM wParam, LPARAM lParam);
 	afx_msg LRESULT OnHandleURL(WPARAM wParam, LPARAM lParam);
+	afx_msg void OnHandleTorrent(LPCTSTR lpszPath);
 	afx_msg LRESULT OnHandleCollection(WPARAM wParam, LPARAM lParam);
 	afx_msg LRESULT OnVersionCheck(WPARAM wParam, LPARAM lParam);
 	afx_msg LRESULT OnOpenChat(WPARAM wParam, LPARAM lParam);
