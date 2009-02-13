@@ -1,7 +1,7 @@
 //
 // WndDownloads.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -455,11 +455,6 @@ BOOL CDownloadsWnd::PreTranslateMessage(MSG* pMsg)
 			GetManager()->Open( RUNTIME_CLASS(CUploadsWnd) );
 			return TRUE;
 		}
-		else if ( ( pMsg->wParam == 'V' || pMsg->wParam == VK_INSERT ) &&
-			( GetAsyncKeyState( VK_CONTROL ) & 0x8000 ) )
-		{
-			PostMainWndMessage( WM_COMMAND, ID_TOOLS_DOWNLOAD );
-		}
 	}
 
 	return CPanelWnd::PreTranslateMessage( pMsg );
@@ -678,7 +673,7 @@ void CDownloadsWnd::OnDownloadsPause()
 void CDownloadsWnd::OnUpdateDownloadsClear(CCmdUI* pCmdUI)
 {
 	Prepare();
-	pCmdUI->Enable( m_bSelNoPreview );
+	pCmdUI->Enable( m_bSelNoPreview || m_bSelSource );
 }
 
 void CDownloadsWnd::OnDownloadsClear()
@@ -691,6 +686,10 @@ void CDownloadsWnd::OnDownloadsClear()
 		CDownload* pDownload = Downloads.GetNext( pos );
 		if ( pDownload->m_bSelected ) pList.AddTail( pDownload );
 	}
+
+	// If no downloads selected then process selected sources
+	if ( pList.IsEmpty() )
+		OnTransfersForget();
 
 	while ( ! pList.IsEmpty() )
 	{
@@ -972,7 +971,7 @@ void CDownloadsWnd::OnDownloadsLaunch()
 				}
 
 				int nDot = pDownload->m_sName.ReverseFind( '.' );
-				CString strExt = pDownload->m_sName.Mid( nDot + 1 );
+				CString strExt = pDownload->m_sName.Mid( nDot );
 				pLock.Unlock();
 				if ( ! CFileExecutor::Execute( strName, FALSE, strExt ) ) break;
 				pLock.Lock();
@@ -990,7 +989,7 @@ void CDownloadsWnd::OnDownloadsLaunch()
 				else
 				{
 					int nDot = pDownload->m_sName.ReverseFind( '.' );
-					CString strExt = pDownload->m_sName.Mid( nDot + 1 );
+					CString strExt = pDownload->m_sName.Mid( nDot );
 					pLock.Unlock();
 					if ( ! CFileExecutor::Execute( strName, FALSE, strExt ) ) break;
 					pLock.Lock();
@@ -1100,8 +1099,8 @@ void CDownloadsWnd::OnDownloadsEnqueue()
 			if ( pDownload->IsStarted() )
 			{
 				CString strPath = pDownload->m_sPath;
-				int nDot = pDownload->m_sName.ReverseFind( '.' );
-				CString strExt = pDownload->m_sName.Mid( nDot + 1 );
+				CString strExt = pDownload->m_sName.Mid(
+					pDownload->m_sName.ReverseFind( '.' ) );
 
 				pLock.Unlock();
 				CFileExecutor::Enqueue( strPath, FALSE, strExt );
@@ -1799,8 +1798,8 @@ void CDownloadsWnd::OnDownloadsHelp()
 		strHelp = pDownload->IsCompleted() ? L"DownloadHelp.Completed"
 										   : L"DownloadHelp.Moving";
 	else if ( pDownload->IsPaused() )
-		strHelp = pDownload->m_bDiskFull ? L"DownloadHelp.DiskFull"
-										 : L"DownloadHelp.Paused";
+		strHelp = pDownload->m_bDiskFull ?
+			L"DownloadHelp.DiskFull" : L"DownloadHelp.Paused";
 	else if ( pDownload->IsStarted() && pDownload->GetProgress() == 100.0f )
 		strHelp = L"DownloadHelp.Verifying";
 	else if ( pDownload->IsDownloading() )

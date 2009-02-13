@@ -1,7 +1,7 @@
 //
 // CtrlDownloads.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -1775,11 +1775,14 @@ void CDownloadsCtrl::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 	CDownload* pDownload;
 	
 	m_wndTip.Hide();
-	
+
+	bool bControl = ( GetAsyncKeyState( VK_CONTROL ) & 0x8000 ) != 0;
+	bool bShift = ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 ) != 0;
+
 	switch ( nChar )
 	{
 	case VK_HOME:
-		if ( GetAsyncKeyState( VK_CONTROL ) & 0x8000 )
+		if ( bControl )
 		{
 			GetAt( m_nFocus, &pDownload, &pSource );
 			Downloads.Move( pDownload, -2 );
@@ -1787,7 +1790,7 @@ void CDownloadsCtrl::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 		SelectTo( 0 );
 		return;
 	case VK_END:
-		if ( GetAsyncKeyState( VK_CONTROL ) & 0x8000 )
+		if ( bControl )
 		{
 			GetAt( m_nFocus, &pDownload, &pSource );
 			Downloads.Move( pDownload, 2 );
@@ -1797,13 +1800,13 @@ void CDownloadsCtrl::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 		SelectTo( max( 0, nMax - 1 ) );
 		return;
 	case VK_UP:
-		if ( GetAsyncKeyState( VK_CONTROL ) & 0x8000 )
+		if ( bControl )
 			MoveSelected( -1 );
 		else
 			SelectTo( m_nFocus - 1 );
 		return;
 	case VK_DOWN:
-		if ( GetAsyncKeyState( VK_CONTROL ) & 0x8000 )
+		if ( bControl )
 			MoveSelected( 1 );
 		else
 			SelectTo( m_nFocus + 1 );
@@ -1835,18 +1838,32 @@ void CDownloadsCtrl::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 		}
 		return;
 	case 'A':
-		if ( GetAsyncKeyState( VK_CONTROL ) & 0x8000 )
+		if ( bControl )
 			SelectAll();
 		return;
+	case 'C':
+		if ( bControl )
+			GetOwner()->PostMessage( WM_COMMAND, ID_DOWNLOADS_COPY );
+		return;
+	case 'V':
+		if ( bControl )
+			GetOwner()->PostMessage( WM_COMMAND, ID_TOOLS_DOWNLOAD );
+		return;
+	case VK_INSERT:
+		if ( bControl )
+			GetOwner()->PostMessage( WM_COMMAND, ID_DOWNLOADS_COPY );
+		else if ( bShift )
+			GetOwner()->PostMessage( WM_COMMAND, ID_TOOLS_DOWNLOAD );
+		return;
 	case 'E':
-		if ( GetAsyncKeyState( VK_CONTROL ) & 0x8000 )
+		if ( bControl )
 		{
 			GetOwner()->PostMessage( WM_TIMER, 5 );
 			GetOwner()->PostMessage( WM_COMMAND, ID_DOWNLOADS_ENQUEUE );	// Add the current file to playlist
 		}
 		return;
 	case 'R':
-		if ( GetAsyncKeyState( VK_CONTROL ) & 0x8000 )
+		if ( bControl )
 			GetOwner()->PostMessage( WM_COMMAND, ID_DOWNLOADS_VIEW_REVIEWS );
 		return;
 	case VK_DELETE:
