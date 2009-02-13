@@ -1,7 +1,7 @@
 //
 // UploadTransferED2K.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -489,9 +489,13 @@ BOOL CUploadTransferED2K::ServeRequests()
 		}
 
 		if ( !OpenFile() )
+		{
 			return FALSE;
+		}
 
-		if ( !StartNextRequest() )
+		PostMainWndMessage( WM_NOWUPLOADING, 0, (LPARAM)new CString( m_sPath ) );
+
+		if ( ! StartNextRequest() )
 			return FALSE;
 	}
 
@@ -532,13 +536,6 @@ BOOL CUploadTransferED2K::OpenFile()
 
 	if ( CUploadTransfer::OpenFile( m_sFilePath, FALSE, FALSE ) )
 	{
-		CQuickLock oLock( Library.m_pSection );
-		if ( CLibraryFile* pFile = LibraryMaps.LookupFileByPath( m_sFilePath, TRUE, TRUE ) )
-		{
-			pFile->m_nUploadsToday++;
-			pFile->m_nUploadsTotal++;
-		}
-
 		return TRUE;
 	}
 

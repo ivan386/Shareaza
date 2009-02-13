@@ -1,7 +1,7 @@
 //
 // Shareaza.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -417,11 +417,11 @@ inline __int64 GetRandomNum<__int64>(const __int64& min, const __int64& max)
 #define MSG_FACILITY_INCOMING	0x0200
 #define MSG_FACILITY_OUTGOING	0x0300
 
-#define WM_WINSOCK			(WM_APP+101)
-#define WM_VERSIONCHECK		(WM_APP+102)
-#define WM_OPENCHAT			(WM_APP+103)
-#define WM_TRAY				(WM_APP+104)
-#define WM_URL				(WM_APP+105)
+#define WM_WINSOCK			(WM_APP+101)	// Winsock messages proxy to Network object ( used by WSAAsyncGetHostByName() function )
+#define WM_VERSIONCHECK		(WM_APP+102)	// Version check ( WAPARM: VERSION_CHECK nCode, LPARAM: unused )
+#define WM_OPENCHAT			(WM_APP+103)	// Open chat window ( WAPARM: CChatSession* pChat, LPARAM: unused )
+#define WM_TRAY				(WM_APP+104)	// Tray icon notification ( WPARAM: unused, LPARAM: uMouseMessage )
+#define WM_URL				(WM_APP+105)	// Open URL ( WPARAM: CShareazaURL* pURL, LPARAM: unused )
 #define WM_SKINCHANGED		(WM_APP+106)	// Skin change ( WPARAM: unused, LPARAM: unused )
 #define WM_COLLECTION		(WM_APP+107)	// Open collection file ( WPARAM: unused, LPARAM: LPTSTR szFilename )
 #define WM_OPENSEARCH		(WM_APP+108)	// Open new search ( WPARAM: CQuerySearch* pSearch, LPARAM: unused )
@@ -432,6 +432,7 @@ inline __int64 GetRandomNum<__int64>(const __int64& min, const __int64& max)
 #define WM_METADATA			(WM_APP+114)	// Set/clear library meatapanel data and status message ( WPARAM: CMetaPanel* pPanelData, LPARAM: LPCTSTR pszMessage )
 #define WM_SANITY_CHECK		(WM_APP+115)	// Run allsystem check against banned hosts ( WPARAM: unused, LPARAM: unused )
 #define WM_QUERYHITS		(WM_APP+116)	// Route query hits over windows ( WPARAM: unused, LPARAM: CQueryHit* pHits )
+#define WM_NOWUPLOADING		(WM_APP+117)	// New upload notification ( WPARAM: unused, LPARAM: CString* pFilename )
 
 #define WM_AFX_SETMESSAGESTRING 0x0362
 #define WM_AFX_POPMESSAGESTRING 0x0375

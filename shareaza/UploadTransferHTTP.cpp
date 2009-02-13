@@ -1,7 +1,7 @@
 //
 // UploadTransferHTTP.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -1187,16 +1187,7 @@ BOOL CUploadTransferHTTP::OpenFileSendHeaders()
 			theApp.Message( MSG_NOTICE, IDS_UPLOAD_FILE,
 				(LPCTSTR)m_sFileName, (LPCTSTR)m_sAddress );
 			
-			CSingleLock oLock( &Library.m_pSection );
-			if ( oLock.Lock( 1000 ) )
-			{
-				if ( CLibraryFile* pFile = LibraryMaps.LookupFileByPath( m_sFilePath, TRUE, TRUE ) )
-				{
-					pFile->m_nUploadsToday++;
-					pFile->m_nUploadsTotal++;
-				}
-			}
-			// else Just leave it...
+			PostMainWndMessage( WM_NOWUPLOADING, 0, (LPARAM)new CString( m_sPath ) );
 		}
 		
 		theApp.Message( MSG_INFO,

@@ -273,6 +273,7 @@ BEGIN_MESSAGE_MAP(CMainWnd, CMDIFrameWnd)
 	ON_WM_MENUCHAR()
 	ON_MESSAGE(WM_SANITY_CHECK, &CMainWnd::OnSanityCheck)
 	ON_MESSAGE(WM_QUERYHITS, &CMainWnd::OnQueryHits)
+	ON_MESSAGE(WM_NOWUPLOADING, &CMainWnd::OnNowUploading)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -2841,6 +2842,23 @@ LRESULT CMainWnd::OnQueryHits(WPARAM /*wParam*/, LPARAM lParam)
 		pMonitorWnd->OnQueryHits( pHits );
 
 	pHits->Delete();
+
+	return 0;
+}
+
+LRESULT CMainWnd::OnNowUploading(WPARAM /*wParam*/, LPARAM lParam)
+{
+	CString* pFilename = (CString*)lParam;
+
+	CQuickLock oLock( Library.m_pSection );
+
+	if ( CLibraryFile* pFile = LibraryMaps.LookupFileByPath( *pFilename ) )
+	{
+		pFile->m_nUploadsToday++;
+		pFile->m_nUploadsTotal++;
+	}
+
+	delete pFilename;
 
 	return 0;
 }
