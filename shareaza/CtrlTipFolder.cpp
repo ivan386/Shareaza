@@ -1,7 +1,7 @@
 //
 // CtrlTipFolder.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -123,11 +123,11 @@ void CFolderTipCtrl::OnPaint(CDC* pDC)
 	CString strText;
 	LoadString( strText, IDS_TIP_TOTAL_FILES );
 	DrawText( pDC, &pt, strText, 40 );
-	DrawText( pDC, &pt, m_sFiles, 120 );
+	DrawText( pDC, &pt, m_sFiles, 150 );
 	pt.y += TIP_TEXTHEIGHT;
 	LoadString( strText, IDS_TIP_TOTAL_VOLUME );
 	DrawText( pDC, &pt, strText, 40 );
-	DrawText( pDC, &pt, m_sVolume, 120 );
+	DrawText( pDC, &pt, m_sVolume, 150 );
 	pt.y += TIP_TEXTHEIGHT;
 	DrawText( pDC, &pt, m_sPercentage, 40 );
 	pt.y += TIP_TEXTHEIGHT;
