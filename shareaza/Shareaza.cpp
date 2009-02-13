@@ -660,43 +660,6 @@ BOOL CShareazaApp::OpenTorrent(LPCTSTR lpszFileName, BOOL bDoIt)
 	return bResult;
 }
 
-void CShareazaApp::ProcessTorrent( LPCTSTR lpszPath )
-{
-	try
-	{
-	
-	wstring default_save_folder = ;
-	wstring default_move_folder = ;
-	bool use_move_to = hal::config().use_move_to_;
-	bool startPaused = false;
-	bool managed = false;
-	hal::bit::allocations allocation_type = hal::bit::sparse_allocation;
-	
-	if (!boost::filesystem::exists(default_save_folder))
-		boost::filesystem::create_directory(default_save_folder);
-
-	if (hal::config().save_prompt_)
-	{
-		AddTorrentDialog addTorrent(default_save_folder, default_move_folder, use_move_to, startPaused, managed, allocation_type);	
-		
-		if (IDOK != addTorrent.DoModal())
-			return;
-	}
-	
-	wpath file(lpszPath, boost::filesystem::native);	
-	hal::bittorrent().add_torrent(file, wpath(default_save_folder), startPaused, managed, allocation_type, 
-		wpath(default_move_folder), use_move_to);
-
-	issueUiUpdate();
-
-	}
-	catch(const boost::filesystem::filesystem_error&)
-	{
-		hal::event_log.post(shared_ptr<hal::EventDetail>(
-			new hal::EventDebug(hal::event_logger::warning, L"filesystem error")));
-	}
-}
-
 BOOL CShareazaApp::OpenCollection(LPCTSTR lpszFileName, BOOL bDoIt)
 {
 	if ( ! bDoIt )

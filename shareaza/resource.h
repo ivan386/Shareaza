@@ -160,7 +160,6 @@
 #define IDD_COLLECTION_EXPORT           245
 #define IDB_NAVBAR_ALPHA                246
 #define IDD_TORRENT_SEED                247
-#define IDD_TORRENT_ADD                 247
 #define IDB_REMOTE_SKIN                 248
 #define IDD_DOWNLOAD_EDIT               248
 #define IDD_SETTINGS_REMOTE             249
@@ -788,18 +787,6 @@
 #define IDC_URN_BTH                     1568
 #define IDC_TRUST_MD5                   1569
 #define IDC_TRUST_BTH                   1570
-#define IDC_STATIC_TORRENT_SAVE         1571
-#define IDC_EDIT_SAVE                   1572
-#define IDC_CHECK_TEMP                  1573
-#define IDC_EDIT_TEMP                   1574
-#define IDC_COMBO_ALLOCATION            1575
-#define IDC_CHECK_MANAGED               1576
-#define IDC_CHECK_PAUSE                 1577
-#define IDC_CHECK_PAUSED                1577
-#define IDC_STATIC_ALLOCATION           1578
-#define IDC_TEMP_BROWSE                 1580
-#define IDC_COMPLETE_BROWSE             1580
-#define IDC_TEMPORARY_BROWSE            1581
 #define IDS_FILTER_DELETE_CONFIRM       7000
 #define IDS_SCHEMAS                     7001
 #define IDS_MULTIPLE_VALUES             7002
@@ -1904,7 +1891,7 @@
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        325
 #define _APS_NEXT_COMMAND_VALUE         33322
-#define _APS_NEXT_CONTROL_VALUE         1582
+#define _APS_NEXT_CONTROL_VALUE         1571
 #define _APS_NEXT_SYMED_VALUE           104
 #endif
 #endif
