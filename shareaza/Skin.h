@@ -1,7 +1,7 @@
 //
 // Skin.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -54,14 +54,15 @@ protected:
 
 // Strings
 public:
-	BOOL	LoadString(CString& str, UINT nStringID);
+	void	AddString(const CString& strString, UINT nStringID);
+	BOOL	LoadString(CString& str, UINT nStringID) const;
 	BOOL	LoadControlTip(CString& str, UINT nCtrlID);
 	int		GetTextFlowChange(LPCTSTR pszText, BOOL* bIsRTL);
 protected:
 	BOOL	LoadStrings(CXMLElement* pBase);
 	BOOL	LoadControlTips(CXMLElement* pBase);
-	CMap<UINT, UINT, CString, CString&>	m_pStrings;
-	CMap<UINT, UINT, CString, CString&>	m_pControlTips;
+	CMap<UINT, UINT, CString, const CString&>	m_pStrings;
+	CMap<UINT, UINT, CString, const CString&>	m_pControlTips;
 
 // Menus
 public:

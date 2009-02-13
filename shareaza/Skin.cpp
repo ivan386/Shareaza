@@ -1,7 +1,7 @@
 //
 // Skin.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -360,14 +360,25 @@ BOOL CSkin::LoadFromXML(CXMLElement* pXML, const CString& strPath)
 //////////////////////////////////////////////////////////////////////
 // CSkin strings
 
-BOOL CSkin::LoadString(CString& str, UINT nStringID)
+void CSkin::AddString(const CString& strString, UINT nStringID)
 {
+	m_pStrings.SetAt( nStringID, strString );
+}
+
+BOOL CSkin::LoadString(CString& str, UINT nStringID) const
+{
+	if ( nStringID < 10 )
+		// Popup menus
+		return FALSE;
+
 	if ( m_pStrings.Lookup( nStringID, str ) ||
 		( IS_INTRESOURCE( nStringID ) && str.LoadString( nStringID ) ) )
 		return TRUE;
+
 #ifdef _DEBUG
 	theApp.Message( MSG_ERROR, _T("Failed to load string %d."), nStringID );
 #endif // _DEBUG
+
 	str.Empty();
 	return FALSE;
 }

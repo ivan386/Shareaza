@@ -219,6 +219,7 @@
 #define IDD_SETTINGS_IRC                997
 #define IDD_IRC_INPUTBOX                998
 #define IDB_IRCICONS                    999
+#define IDD_SELECT                      999
 #define IDC_CONNECT_HOST                1000
 #define IDC_CONNECT_PORT                1001
 #define IDC_SCHEMAS                     1002

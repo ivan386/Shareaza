@@ -45,12 +45,11 @@ BEGIN
     "#define _AFX_NO_TRACKER_RESOURCES\r\n"
     "#define _AFX_NO_PROPERTY_RESOURCES\r\n"
     "#define _AFX_NO_NEWTYPEDLG_RESOURCES\r\n"
+    "#define _AFX_NO_MOUSE_RESOURCES\r\n"
     "\r\n"
     "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)\r\n"
-    "#ifdef _WIN32\r\n"
     "LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_AUS\r\n"
     "#pragma code_page(1252)\r\n"
-    "#endif\r\n"
     "#include ""Res\\Shareaza.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
     "#include ""afxres.rc""         // Standard components\r\n"
     "#endif\r\n"
@@ -1899,6 +1898,17 @@ BEGIN
     LTEXT           "WARNING: This dialog provides advanced download editing features for power users which if used incorrectly can and probably will cause corruption.",IDC_STATIC,7,7,286,18
 END
 
+IDD_SELECT DIALOGEX 0, 0, 257, 70
+STYLE DS_SETFONT | DS_MODALFRAME | WS_MINIMIZEBOX | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Select"
+FONT 8, "Tahoma", 0, 0, 0x1
+BEGIN
+    LTEXT           "Please select:",IDC_STATIC,7,7,243,10
+    PUSHBUTTON      "OK",IDOK,143,49,50,14
+    COMBOBOX        IDC_FILE_LIST,7,22,243,150,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "Cancel",IDCANCEL,200,49,50,14
+END
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -2032,6 +2042,30 @@ BEGIN
         BOTTOMMARGIN, 167
     END
 
+    IDD_WIZARD_PROFILE, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 270
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 167
+    END
+
+    IDD_WIZARD_INTERFACE, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 270
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 166
+    END
+
+    IDD_WIZARD_NETWORKS, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 270
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 167
+    END
+
     IDD_WIZARD_FINISHED, DIALOG
     BEGIN
         LEFTMARGIN, 7
@@ -2086,14 +2120,6 @@ BEGIN
         RIGHTMARGIN, 285
         TOPMARGIN, 7
         BOTTOMMARGIN, 147
-    END
-
-    IDD_WIZARD_INTERFACE, DIALOG
-    BEGIN
-        LEFTMARGIN, 7
-        RIGHTMARGIN, 270
-        TOPMARGIN, 7
-        BOTTOMMARGIN, 166
     END
 
     IDD_URL_COPY, DIALOG
@@ -2340,14 +2366,6 @@ BEGIN
         BOTTOMMARGIN, 192
     END
 
-    IDD_WIZARD_PROFILE, DIALOG
-    BEGIN
-        LEFTMARGIN, 7
-        RIGHTMARGIN, 270
-        TOPMARGIN, 7
-        BOTTOMMARGIN, 167
-    END
-
     IDD_SETTINGS_UPLOADS, DIALOG
     BEGIN
         LEFTMARGIN, 7
@@ -2434,14 +2452,6 @@ BEGIN
         RIGHTMARGIN, 285
         TOPMARGIN, 7
         BOTTOMMARGIN, 117
-    END
-
-    IDD_WIZARD_NETWORKS, DIALOG
-    BEGIN
-        LEFTMARGIN, 7
-        RIGHTMARGIN, 270
-        TOPMARGIN, 7
-        BOTTOMMARGIN, 167
     END
 
     IDD_FILE_SHARING, DIALOG
@@ -2627,6 +2637,14 @@ BEGIN
         BOTTOMMARGIN, 215
         HORZGUIDE, 14
         HORZGUIDE, 206
+    END
+
+    IDD_SELECT, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 250
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 63
     END
 END
 #endif    // APSTUDIO_INVOKED
@@ -4249,6 +4267,7 @@ END
 STRINGTABLE 
 BEGIN
     ID_HELP_ABOUT           "Display the Shareaza about dialog..."
+    ID_HELP_VERSION_CHECK   "Check for new version"
     ID_NETWORK_EXIT         "Exit Shareaza"
     ID_NETWORK_CONNECT      "Connect to selected networks."
     ID_NETWORK_DISCONNECT   "Disconnect from all networks, this will also stop all downloads and uploads."
@@ -4322,6 +4341,7 @@ BEGIN
     ID_HOSTCACHE_G1_CACHE   "Show Gnutella1 cached hosts."
     ID_SEARCH_COLUMNS       "Select metadata columns to be displayed..."
     ID_SEARCH_DOWNLOADNOW   "Download the selected file(s) with priority."
+    ID_OPEN_DOWNLOADS_FOLDER "Open my folder of completed Downloads"
     ID_DOWNLOADS_RESUME     "Resume the selected download(s)."
     ID_HOSTCACHE_BT_CACHE   "Show BitTorrent cached hosts."
     ID_DOWNLOADS_CLEAR_COMPLETED "Clear downloads which have been completed."
@@ -4379,6 +4399,7 @@ BEGIN
     ID_LIBRARY_BITZI_WEB    "View the Bitzi(TM) ticket for the selected file on the web."
     ID_LIBRARY_BITZI_DOWNLOAD 
                             "Download metadata for the selected file(s) from Bitzi(TM)..."
+    ID_LIBRARY_REFRESH_METADATA "Refresh file metadata"
     ID_VIEW_SECURITY        "Show or hide the SECURITY window."
 END
 
@@ -4676,6 +4697,7 @@ END
 
 STRINGTABLE 
 BEGIN
+    ID_WINDOW_ARRANGE       "Arrange icons at the bottom of the window\nArrange Icons"
     ID_WINDOW_CASCADE       "Expand all open windows to fill the screen."
     ID_WINDOW_TILE_HORZ     "Arrange open windows as horizontal, non-overlapping tiles."
     ID_WINDOW_TILE_VERT     "Arrange open windows as vertical, non-overlapping tiles."
@@ -4732,6 +4754,40 @@ BEGIN
     ID_MUSICBRAINZ_ALBUMS   "Look at all albums for this artist."
 END
 
+STRINGTABLE 
+BEGIN
+    AFX_IDS_SCSIZE          "Change the window size"
+    AFX_IDS_SCMOVE          "Change the window position"
+    AFX_IDS_SCMINIMIZE      "Reduce the window to an icon"
+    AFX_IDS_SCMAXIMIZE      "Enlarge the window to full size"
+    AFX_IDS_SCNEXTWINDOW    "Switch to the next document window"
+    AFX_IDS_SCPREVWINDOW    "Switch to the previous document window"
+    AFX_IDS_SCCLOSE         "Close the active window and prompts to save the documents"
+END
+
+STRINGTABLE 
+BEGIN
+    AFX_IDS_SCRESTORE       "Restore the window to normal size"
+    AFX_IDS_SCTASKLIST      "Activate Task List"
+    AFX_IDS_MDICHILD        "Activate this window"
+END
+
+STRINGTABLE 
+BEGIN
+    AFX_IDS_PREVIEW_CLOSE   "Close print preview mode\nCancel Preview"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_NEXT_PANE            "Switch to the next window pane\nNext Pane"
+    ID_PREV_PANE            "Switch back to the previous window pane\nPrevious Pane"
+END
+
+STRINGTABLE 
+BEGIN
+    IDC_IMPORT_DOWNLOADS    "Import eMule partial downloads..."
+END
+
 #endif    // English (Australia) resources
 /////////////////////////////////////////////////////////////////////////////
 
@@ -4747,12 +4803,11 @@ END
 #define _AFX_NO_TRACKER_RESOURCES
 #define _AFX_NO_PROPERTY_RESOURCES
 #define _AFX_NO_NEWTYPEDLG_RESOURCES
+#define _AFX_NO_MOUSE_RESOURCES
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
-#ifdef _WIN32
 LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_AUS
 #pragma code_page(1252)
-#endif
 #include "Res\Shareaza.rc2"  // non-Microsoft Visual C++ edited resources
 #include "afxres.rc"         // Standard components
 #endif
