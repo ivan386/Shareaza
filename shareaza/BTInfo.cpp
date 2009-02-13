@@ -1,7 +1,7 @@
 //
 // BTInfo.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2000.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -471,8 +471,11 @@ float CBTInfo::CBTFile::GetProgress() const
 	{
 		if ( pDownload->m_pFile )
 		{
-			return ( (float)pDownload->m_pFile->GetCompleted( m_nOffset, m_nSize ) *
-				100.f ) / (float)m_nSize;
+			if ( m_nSize == 0 )
+				return 100.f;
+			else
+				return ( (float)pDownload->m_pFile->GetCompleted( m_nOffset, m_nSize ) *
+					100.f ) / (float)m_nSize;
 		}
 	}
 
