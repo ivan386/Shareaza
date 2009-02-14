@@ -222,7 +222,7 @@ BOOL CFragmentedFile::IsOpen() const
 		return FALSE;
 
 	for ( CVirtualFile::const_iterator i = m_oFile.begin(); i != m_oFile.end(); ++i )
-		if ( ! (*i).m_pFile->IsOpen() )
+		if ( ! (*i).m_pFile || ! (*i).m_pFile->IsOpen() )
 			// Closed subfile
 			return FALSE;
 
