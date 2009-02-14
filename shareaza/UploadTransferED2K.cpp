@@ -493,7 +493,7 @@ BOOL CUploadTransferED2K::ServeRequests()
 			return FALSE;
 		}
 
-		PostMainWndMessage( WM_NOWUPLOADING, 0, (LPARAM)new CString( m_sPath ) );
+		PostMainWndMessage( WM_NOWUPLOADING, 0, (LPARAM)new CString( m_sFilePath ) );
 
 		if ( ! StartNextRequest() )
 			return FALSE;

@@ -1187,7 +1187,7 @@ BOOL CUploadTransferHTTP::OpenFileSendHeaders()
 			theApp.Message( MSG_NOTICE, IDS_UPLOAD_FILE,
 				(LPCTSTR)m_sFileName, (LPCTSTR)m_sAddress );
 			
-			PostMainWndMessage( WM_NOWUPLOADING, 0, (LPARAM)new CString( m_sPath ) );
+			PostMainWndMessage( WM_NOWUPLOADING, 0, (LPARAM)new CString( m_sFilePath ) );
 		}
 		
 		theApp.Message( MSG_INFO,
