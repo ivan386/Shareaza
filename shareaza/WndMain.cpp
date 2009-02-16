@@ -921,7 +921,10 @@ LRESULT CMainWnd::OnTray(WPARAM /*wParam*/, LPARAM lParam)
 {
 	if ( LOWORD(lParam) == WM_LBUTTONDBLCLK )
 	{
-		OpenFromTray();
+		if ( m_bTrayHide )
+			OpenFromTray();
+		else
+			CloseToTray();
 	}
 	else if ( LOWORD(lParam) == WM_RBUTTONDOWN )
 	{
