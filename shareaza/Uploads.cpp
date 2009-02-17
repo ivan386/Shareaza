@@ -420,6 +420,9 @@ BOOL CUploads::OnAccept(CConnection* pConnection)
 
 bool CUploads::OnRename(const CString& strSource, LPCTSTR pszTarget, bool bRemoving)
 {
+	if ( GetIterator() == NULL )
+		return true;
+
 	CSingleLock oTransfersLock( &Transfers.m_pSection );
 	if ( ! oTransfersLock.Lock( 250 ) )
 		return false;

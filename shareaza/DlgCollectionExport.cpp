@@ -1,7 +1,7 @@
 //
 // DlgCollectionExport.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -712,7 +712,7 @@ void CCollectionExportDlg::OnTemplatesDeleteOrBack()
 			strPath.Format( _T("%s\\Templates\\%s"),
 				(LPCTSTR)Settings.General.Path, (LPCTSTR)strBase );
 
-			DeleteFile( strPath, TRUE, TRUE );
+			DeleteFileEx( strPath, FALSE, TRUE, TRUE );
 
 			int nSlash = strPath.ReverseFind( '\\' );
 			strPath = strPath.Left( nSlash ) + _T("\\*.xml");
@@ -736,7 +736,7 @@ void CCollectionExportDlg::OnTemplatesDeleteOrBack()
 					do
 					{
 						if ( pFind.cFileName[0] == '.' ) continue;
-						DeleteFile( strPath + pFind.cFileName, TRUE, TRUE );
+						DeleteFileEx( strPath + pFind.cFileName, FALSE, TRUE, TRUE );
 					}
 					while ( FindNextFile( hSearch, &pFind ) );
 

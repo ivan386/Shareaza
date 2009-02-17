@@ -1,7 +1,7 @@
 //
 // ZIPFile.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -502,7 +502,8 @@ BOOL CZIPFile::File::Extract(LPCTSTR pszFile)
 
 	if ( nUncompressed >= m_nSize ) return TRUE;
 
-	DeleteFile( pszFile, FALSE, TRUE );
+	DeleteFileEx( pszFile, FALSE, FALSE, TRUE );
+
 	return FALSE;
 }
 

@@ -363,6 +363,7 @@ BOOL CShareazaApp::InitInstance()
 		Settings.General.GUIMode = GUI_BASIC;
 
 	SplashStep( L"Shareaza Database" );
+		PurgeDeletes();
 		CThumbCache::InitDatabase();
 	SplashStep( L"P2P URIs" );
 		CShareazaURL::Register( TRUE );
@@ -1034,7 +1035,7 @@ void CShareazaApp::LogMessage(const CString& strLog)
 			pFile.Close();
 			
 			// Rotate the logs
-			if ( DeleteFile( Settings.General.UserPath + _T("\\Data\\Shareaza.old.log"), TRUE, TRUE ) )
+			if ( DeleteFileEx( Settings.General.UserPath + _T("\\Data\\Shareaza.old.log"), FALSE, FALSE, FALSE ) )
 			{
 				MoveFile( Settings.General.UserPath + _T("\\Data\\Shareaza.log"),
 					Settings.General.UserPath + _T("\\Data\\Shareaza.old.log") );
@@ -1907,53 +1908,98 @@ BOOL CreateDirectory(LPCTSTR szPath)
 	return CreateDirectory( CString( _T("\\\\?\\") ) + szPath, NULL );
 }
 
-BOOL DeleteFile(LPCTSTR lpFileName, BOOL bToRecycleBin, BOOL bEnableDelayed)
+BOOL DeleteFileEx(LPCTSTR szFileName, BOOL bShared, BOOL bToRecycleBin, BOOL bEnableDelayed)
 {
 	// Should be double zeroed long path
-	DWORD len = GetLongPathName( lpFileName, NULL, 0 );
+	DWORD len = GetLongPathName( szFileName, NULL, 0 );
 	if ( len )
 	{
 		auto_array< TCHAR > szPath( new TCHAR[ len + 1 ] );
-		GetLongPathName( lpFileName, szPath.get(), len );
+		GetLongPathName( szFileName, szPath.get(), len );
 		szPath[ len ] = 0;
 
 		DWORD dwAttr = GetFileAttributes( szPath.get() );
-		if ( ( dwAttr != INVALID_FILE_ATTRIBUTES ) && 
-			( dwAttr & FILE_ATTRIBUTE_DIRECTORY ) == 0 )
+		if ( ( dwAttr != INVALID_FILE_ATTRIBUTES ) &&		// Filename exist
+			( dwAttr & FILE_ATTRIBUTE_DIRECTORY ) == 0 )	// Not a folder
 		{
-			// Stop builder
-			LibraryBuilder.Remove( szPath.get() );
+			if ( bShared )
+			{
+				// Stop builder
+				LibraryBuilder.Remove( szPath.get() );
 
-			// Stop uploads
-			while( ! Uploads.OnRename( szPath.get(), NULL, TRUE ) );
+				// Stop uploads
+				while( ! Uploads.OnRename( szPath.get(), NULL, true ) );
+			}
 
-			SHFILEOPSTRUCT sfo = {};
-			sfo.hwnd = GetDesktopWindow();
-			sfo.wFunc = FO_DELETE;
-			sfo.pFrom = szPath.get();
-			sfo.fFlags = ( bToRecycleBin ? FOF_ALLOWUNDO : 0 ) |
-				FOF_FILESONLY | FOF_NORECURSION | FOF_NO_UI;
-			SHFileOperation( &sfo );
+			if ( bToRecycleBin )
+			{
+				SHFILEOPSTRUCT sfo = {};
+				sfo.hwnd = GetDesktopWindow();
+				sfo.wFunc = FO_DELETE;
+				sfo.pFrom = szPath.get();
+				sfo.fFlags = FOF_ALLOWUNDO | FOF_FILESONLY | FOF_NORECURSION | FOF_NO_UI;
+				SHFileOperation( &sfo );
+			}
+			else
+				DeleteFile( szPath.get() );
 
 			dwAttr = GetFileAttributes( szPath.get() );
 			if ( dwAttr != INVALID_FILE_ATTRIBUTES )
 			{
+				// File still exist
 				if ( bEnableDelayed )
+				{
 					// Set delayed deletion
-					theApp.WriteProfileString( _T("Delete"), szPath.get(), _T("") );
-				else
-					// Continue using old file
-					while( ! Uploads.OnRename( szPath.get(), szPath.get() ) );
-
+					CString sJob;
+					sJob.Format( _T("%d%d"), bShared, bToRecycleBin );
+					theApp.WriteProfileString( _T("Delete"), szPath.get(), sJob );
+				}
 				return FALSE;
 			}
 		}
 
-		// Cancel delayed deletion
+		// Cancel delayed deletion (if any)
 		theApp.WriteProfileString( _T("Delete"), szPath.get(), NULL );
 	}
 
 	return TRUE;
+}
+
+void PurgeDeletes()
+{
+	HKEY hKey = NULL;
+	LSTATUS nResult = RegOpenKeyEx( HKEY_CURRENT_USER,
+		_T("Software\\Shareaza\\Shareaza\\Delete"), 0, KEY_ALL_ACCESS, &hKey );
+	if ( ERROR_SUCCESS == nResult )
+	{
+		CList< CString > pRemove;
+		for ( DWORD nIndex = 0 ; ; ++nIndex )
+		{
+			DWORD nPath = MAX_PATH * 2;
+			TCHAR szPath[ MAX_PATH * 2 ] = {};
+			DWORD nType;
+			DWORD nMode = 8;
+			TCHAR szMode[ 8 ] = {};
+			nResult = RegEnumValue( hKey, nIndex, szPath, &nPath, 0,
+				&nType, (LPBYTE)szMode, &nMode );
+			if ( ERROR_SUCCESS != nResult )
+				break;
+
+			BOOL bShared = ( nType == REG_SZ ) && ( szMode[ 0 ] == '1' );
+			BOOL bToRecycleBin = ( nType == REG_SZ ) && ( szMode[ 1 ] == '1' );
+			if ( DeleteFileEx( szPath, bShared, bToRecycleBin, TRUE ) )
+			{
+				pRemove.AddTail( szPath );
+			}
+		}
+
+		while ( ! pRemove.IsEmpty() )
+		{
+			nResult = RegDeleteValue( hKey, pRemove.RemoveHead() );
+		}
+
+		nResult = RegCloseKey( hKey );
+	}
 }
 
 CString LoadHTML(HINSTANCE hInstance, UINT nResourceID)

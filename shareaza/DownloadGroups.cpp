@@ -1,7 +1,7 @@
 //
 // DownloadGroups.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -252,7 +252,7 @@ BOOL CDownloadGroups::Save(BOOL bForce)
 	m_nSaveCookie = m_nBaseCookie;
 
 	CString strPath = Settings.General.UserPath + _T("\\Data\\DownloadGroups.dat");
-	DeleteFile( strPath + _T(".tmp"), FALSE, FALSE );
+	DeleteFileEx( strPath + _T(".tmp"), FALSE, FALSE, FALSE );
 
 	CFile pFile;
 	if ( ! pFile.Open( strPath + _T(".tmp"), CFile::modeWrite | CFile::modeCreate ) ) return FALSE;
@@ -275,7 +275,7 @@ BOOL CDownloadGroups::Save(BOOL bForce)
 
 	pFile.Close();
 
-	DeleteFile( strPath, FALSE, FALSE );
+	DeleteFileEx( strPath, FALSE, FALSE, FALSE );
 	MoveFile( strPath + _T(".tmp"), strPath );
 
 	return TRUE;

@@ -1,7 +1,7 @@
 //
 // DlgFileCopy.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -409,7 +409,7 @@ bool CFileCopyDlg::CheckTarget(const CString& strTarget)
 		return false;
 	}
 
-	if ( DeleteFile( strTarget, FALSE, FALSE ) )
+	if ( DeleteFileEx( strTarget, TRUE, FALSE, FALSE ) )
 		return true;
 
 	CString strError = GetErrorString();
@@ -444,7 +444,7 @@ bool CFileCopyDlg::ProcessMove(const CString& strSource, const CString& strTarge
 	{
 		// Success. Tell the file to use its new name
 		while( !Uploads.OnRename( strSource, strTarget ) );
-		return DeleteFile( strSource, FALSE, FALSE ) != 0;
+		return DeleteFileEx( strSource, TRUE, FALSE, FALSE ) != 0;
 	}
 
 	// Failure. Continue using its old name
@@ -465,7 +465,7 @@ bool CFileCopyDlg::ProcessCopy(const CString& strSource, const CString& strTarge
 		&m_bCancel, COPY_FILE_FAIL_IF_EXISTS ) != 0;
 
 	if ( !bResult && !IsThreadAlive() )
-		DeleteFile( strTarget, FALSE, FALSE );
+		DeleteFileEx( strTarget, TRUE, FALSE, FALSE );
 
 	return bResult;
 }

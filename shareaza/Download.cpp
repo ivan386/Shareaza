@@ -1,7 +1,7 @@
 //
 // Download.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -87,12 +87,12 @@ CDownload::~CDownload()
 				 !Settings.BitTorrent.AutoClear &&
 				 !Settings.BitTorrent.AutoSeed )
 			{
-				::DeleteFile( m_sPath, FALSE, TRUE );
-				::DeleteFile( m_sPath + _T(".sd"), TRUE, TRUE );
+				DeleteFileEx( m_sPath, TRUE, FALSE, TRUE );
+				DeleteFileEx( m_sPath + _T(".sd"), FALSE, TRUE, TRUE );
 			}
 		}
 		else
-			::DeleteFile( m_sPath, FALSE, TRUE );
+			DeleteFileEx( m_sPath, TRUE, FALSE, TRUE );
 	}
 }
 
@@ -187,19 +187,19 @@ void CDownload::Remove(bool bDelete)
 
 	if ( m_bSeeding )
 	{
-		::DeleteFile( Settings.Downloads.IncompletePath + L"\\" + m_sSafeName + L".sd", TRUE, TRUE );
+		DeleteFileEx( Settings.Downloads.IncompletePath + L"\\" + m_sSafeName + L".sd", FALSE, FALSE, TRUE );
 		int nBackSlash = m_sPath.ReverseFind( '\\' );
 		CString strTempFileName = m_sPath.Mid( nBackSlash + 1 );
 		if ( m_oBTH.toString< Hashes::base16Encoding >() == strTempFileName )
-			::DeleteFile( m_sPath, FALSE, TRUE );
+			DeleteFileEx( m_sPath, TRUE, FALSE, TRUE );
 	}
 	else
 	{
 		DeleteFile( bDelete );
-		::DeleteFile( m_sPath + _T(".sd"), TRUE, TRUE );
+		DeleteFileEx( m_sPath + _T(".sd"), FALSE, FALSE, TRUE );
 	}
 
-	::DeleteFile( m_sPath + _T(".png"), FALSE, TRUE );
+	DeleteFileEx( m_sPath + _T(".png"), FALSE, FALSE, TRUE );
 
 	Downloads.Remove( this );
 }
@@ -581,7 +581,7 @@ void CDownload::OnMoved(CDownloadTask* pTask)
 
 
 	// Delete the SD file
-	::DeleteFile( strDiskFileName + _T(".sd"), TRUE, TRUE );
+	DeleteFileEx( strDiskFileName + _T(".sd"), FALSE, FALSE, TRUE );
 
 	{
 		CQuickLock oLibraryLock( Library.m_pSection );
@@ -714,7 +714,7 @@ BOOL CDownload::Save(BOOL bFlush)
 			m_sSafeName = CDownloadTask::SafeFilename( m_sName.Right( 64 ) );
 	}
 
-	::DeleteFile( m_sPath + _T(".sd.sav"), FALSE, TRUE );
+	DeleteFileEx( m_sPath + _T(".sd.sav"), FALSE, FALSE, TRUE );
 
 	if ( ! pFile.Open( m_sPath + _T(".sd.sav"),
 		CFile::modeReadWrite|CFile::modeCreate|CFile::osWriteThrough ) ) return FALSE;
@@ -734,7 +734,6 @@ BOOL CDownload::Save(BOOL bFlush)
 			ar.Abort();
 			pFile.Abort();
 			theApp.Message( MSG_ERROR, _T("Serialize Error: %s"), pException->m_strFileName );
-//			pException->ReportError(); // Currently causes deadlock in GUI with Transfers mutex
 			pException->Delete();
 			return FALSE;
 		}
@@ -749,11 +748,11 @@ BOOL CDownload::Save(BOOL bFlush)
 	BOOL bResult = FALSE;
 	if ( szID[0] == 'S' && szID[1] == 'D' && szID[2] == 'L' )
 	{
-		if ( ::DeleteFile( m_sPath + _T(".sd"), FALSE, FALSE ) )
+		if ( DeleteFileEx( m_sPath + _T(".sd"), FALSE, FALSE, FALSE ) )
 			bResult = MoveFile( m_sPath + _T(".sd.sav"), m_sPath + _T(".sd") );
 	}
 	else
-		::DeleteFile( m_sPath + _T(".sd.sav"), FALSE, TRUE );
+		DeleteFileEx( m_sPath + _T(".sd.sav"), FALSE, FALSE, FALSE );
 
 	if ( m_bSeeding )
 	{

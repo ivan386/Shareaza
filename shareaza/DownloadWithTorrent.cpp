@@ -860,8 +860,8 @@ BOOL CDownloadWithTorrent::SeedTorrent(CString& sErrorMessage)
 	ASSERT( m_sPath.IsEmpty() );
 	if ( m_sPath.GetLength() > 0 )
 	{
-		::DeleteFile( m_sPath, FALSE, TRUE );
-		::DeleteFile( m_sPath + _T(".sd"), TRUE, TRUE );
+		DeleteFileEx( m_sPath, TRUE, FALSE, TRUE );
+		DeleteFileEx( m_sPath + _T(".sd"), FALSE, TRUE, TRUE );
 	}
 
 	GenerateTorrentDownloadID();

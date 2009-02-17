@@ -1,7 +1,7 @@
 //
 // DlgFilePreview.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -42,10 +42,8 @@ static char THIS_FILE[] = __FILE__;
 IMPLEMENT_DYNAMIC(CFilePreviewDlg, CSkinDialog)
 
 BEGIN_MESSAGE_MAP(CFilePreviewDlg, CSkinDialog)
-	//{{AFX_MSG_MAP(CFilePreviewDlg)
 	ON_WM_TIMER()
 	ON_WM_DESTROY()
-	//}}AFX_MSG_MAP
 	ON_WM_CLOSE()
 END_MESSAGE_MAP()
 
@@ -55,7 +53,6 @@ END_INTERFACE_MAP()
 
 const DWORD BUFFER_SIZE = 40960u;
 CList< CFilePreviewDlg* > CFilePreviewDlg::m_pWindows;
-
 
 /////////////////////////////////////////////////////////////////////////////
 // CFilePreviewDlg dialog
@@ -322,6 +319,8 @@ void CFilePreviewDlg::OnRun()
 		CloseHandle( hFile );
 	}
 
+	Sleep( 2000 );
+
 	PostMessage( WM_TIMER, 3 );
 }
 
@@ -352,8 +351,6 @@ BOOL CFilePreviewDlg::RunPlugin(HANDLE hFile)
 	m_pPlugin = NULL;
 	m_pSection.Unlock();
 
-	if ( hr != S_OK ) Sleep( 1000 );
-
 	return ( hr != S_FALSE );	// Fall through if it's S_FALSE
 }
 
@@ -381,7 +378,7 @@ BOOL CFilePreviewDlg::RunManual(HANDLE hFile)
 
 	m_nRange = m_nPosition = 0;
 
-	for ( int nRange = 0 ; nRange < m_pRanges.GetSize() ; nRange += 2 )
+	for ( QWORD nRange = 0 ; nRange < m_pRanges.GetSize() ; nRange += 2 )
 	{
 		m_nRange += m_pRanges.GetAt( nRange + 1 );
 	}
@@ -390,27 +387,29 @@ BOOL CFilePreviewDlg::RunManual(HANDLE hFile)
 
 	BYTE* pData = new BYTE[ BUFFER_SIZE ];
 
-	for ( int nRange = 0 ; nRange < m_pRanges.GetSize() ; nRange += 2 )
+	for ( QWORD nRange = 0 ; nRange < m_pRanges.GetSize() ; nRange += 2 )
 	{
-		DWORD nOffset = m_pRanges.GetAt( nRange );
-		DWORD nLength = m_pRanges.GetAt( nRange + 1 );
+		QWORD nOffset = m_pRanges.GetAt( nRange );
+		QWORD nLength = m_pRanges.GetAt( nRange + 1 );
 
-		SetFilePointer( hFile, nOffset, 0, FILE_BEGIN );
-		// SetFilePointer( hTarget, nOffset, 0, FILE_BEGIN );
+		DWORD nOffsetLow	= (DWORD)( nOffset & 0x00000000FFFFFFFF );
+		DWORD nOffsetHigh	= (DWORD)( ( nOffset & 0xFFFFFFFF00000000 ) >> 32 );
+		SetFilePointer( hFile, nOffsetLow, (PLONG)&nOffsetHigh, FILE_BEGIN );
+		// SetFilePointer( hTarget, nOffsetLow, (PLONG)&nOffsetHigh, FILE_BEGIN );
 
 		while ( nLength )
 		{
-			DWORD nChunk = min( BUFFER_SIZE, nLength );
+			DWORD nChunk = (DWORD)min( BUFFER_SIZE, nLength );
 
 			if ( ! ReadFile( hFile, pData, nChunk, &nChunk, NULL ) || nChunk == 0 )
 			{
-				theApp.Message( MSG_DEBUG, _T("Preview: read error.") );
+				theApp.Message( MSG_DEBUG, _T("Preview: read error %d."), GetLastError() );
 				m_bCancel = TRUE;
 			}
 
 			if ( ! WriteFile( hTarget, pData, nChunk, &nChunk, NULL ) || nChunk == 0 )
 			{
-				theApp.Message( MSG_DEBUG, _T("Preview: write error.") );
+				theApp.Message( MSG_DEBUG, _T("Preview: write error %d."), GetLastError() );
 				m_bCancel = TRUE;
 			}
 
@@ -428,7 +427,7 @@ BOOL CFilePreviewDlg::RunManual(HANDLE hFile)
 
 	if ( m_bCancel )
 	{
-		DeleteFile( m_sTargetName, FALSE, TRUE );
+		DeleteFileEx( m_sTargetName, FALSE, FALSE, TRUE );
 		return FALSE;
 	}
 

@@ -1,7 +1,7 @@
 //
 // WindowManager.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -507,7 +507,7 @@ void CWindowManager::SaveSearchWindows()
 	theApp.Message( MSG_DEBUG, _T("Searches successfully saved to: %s"), strFile );
 
 	if ( ! nCount )
-		DeleteFile( strFile, FALSE, FALSE );
+		DeleteFileEx( strFile, FALSE, FALSE, FALSE );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -572,7 +572,7 @@ void CWindowManager::SaveBrowseHostWindows()
 	theApp.Message( MSG_DEBUG, _T("Browses successfully saved to: %s"), strFile );
 
 	if ( ! nCount )
-		DeleteFile( strFile, FALSE, FALSE );
+		DeleteFileEx( strFile, FALSE, FALSE, FALSE );
 }
 
 //////////////////////////////////////////////////////////////////////

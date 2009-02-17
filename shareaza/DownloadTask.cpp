@@ -1,7 +1,7 @@
 //
 // DownloadTask.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -579,7 +579,7 @@ BOOL CDownloadTask::CopyFile(HANDLE hSource, LPCTSTR pszTarget, QWORD nLength)
 
 	CloseHandle( hTarget );
 	if ( nLength > 0 )
-		DeleteFile( pszTarget, FALSE, TRUE );
+		DeleteFileEx( pszTarget, TRUE, FALSE, TRUE );
 
 	return ( nLength == 0 );
 }

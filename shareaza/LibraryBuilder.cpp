@@ -119,6 +119,7 @@ void CLibraryBuilder::Remove(LPCTSTR szPath)
 	ASSERT( szPath );
 
 	DWORD nIndex = 0;
+	if ( GetRemaining() )
 	{
 		CQuickLock oLibraryLock( Library.m_pSection );
 		CLibraryFile* pFile = LibraryMaps.LookupFileByPath( szPath );

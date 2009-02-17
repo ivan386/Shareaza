@@ -150,7 +150,7 @@ void CDownloadWithFile::DeleteFile(bool bForce)
 	{
 		if ( GetVolumeComplete() == 0 || ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 ) == 0 )
 		{
-			::DeleteFile( m_sPath, FALSE, TRUE );
+			DeleteFileEx( m_sPath, TRUE, FALSE, TRUE );
 		}
 		else
 		{
@@ -159,7 +159,7 @@ void CDownloadWithFile::DeleteFile(bool bForce)
 	}
 	else if ( bForce ) // be careful, do not delete completed BT seeding file
 	{
-		::DeleteFile( m_sPath, FALSE, TRUE );
+		DeleteFileEx( m_sPath, TRUE, FALSE, TRUE );
 	}
 
 	SetModified();

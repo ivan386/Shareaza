@@ -1,7 +1,7 @@
 //
 // DlgFilePreview.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -19,9 +19,6 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_DLGFILEPREVIEW_H__E2307205_BEF2_4A77_A7FA_BC92F46BCBF6__INCLUDED_)
-#define AFX_DLGFILEPREVIEW_H__E2307205_BEF2_4A77_A7FA_BC92F46BCBF6__INCLUDED_
-
 #pragma once
 
 #include "DlgSkinDialog.h"
@@ -33,15 +30,19 @@ class CFilePreviewDlg :
 	public CSkinDialog,
 	public CThreadImpl
 {
-// Construction
+	DECLARE_DYNAMIC(CFilePreviewDlg)
+
 public:
 	CFilePreviewDlg(CDownload* pDownload, CWnd* pParent = NULL);
 	virtual ~CFilePreviewDlg();
-	DECLARE_DYNAMIC(CFilePreviewDlg)
 
-// Attributes
-public:
-	CCriticalSection m_pSection;
+	enum { IDD = IDD_FILE_PREVIEW };
+
+	BOOL		Create();
+	static void	OnSkinChange(BOOL bSet);
+	static void	CloseAll();
+
+	CCriticalSection		m_pSection;
 	CDownload*		m_pDownload;
 	CString			m_sDisplayName;
 	CString			m_sSourceName;
@@ -52,20 +53,18 @@ public:
 	DWORD			m_nOldScaled;
 	CString			m_sStatus;
 	CString			m_sOldStatus;
-	CArray< DWORD >	m_pRanges;
+	CArray< QWORD >	m_pRanges;
+
 protected:
+	CButton			m_wndCancel;
+	CProgressCtrl	m_wndProgress;
+	CStatic			m_wndStatus;
+	CStatic			m_wndName;
 	BOOL			m_bCancel;
 	CString			m_sExecute;
-protected:
-	IDownloadPreviewPlugin*	m_pPlugin;
-	static CList< CFilePreviewDlg* > m_pWindows;
+	IDownloadPreviewPlugin*				m_pPlugin;
+	static CList< CFilePreviewDlg* >	m_pWindows;
 
-// Operations
-public:
-	BOOL		Create();
-	static void	OnSkinChange(BOOL bSet);
-	static void	CloseAll();
-protected:
 	void		SetDownload(CDownload* pDownload);
 	void		OnRun();
 	BOOL		RunPlugin(HANDLE hFile);
@@ -75,37 +74,17 @@ protected:
 	BOOL		ExecuteFile(LPCTSTR pszFile);
 	void		UpdateProgress(BOOL bRange, QWORD nRange, BOOL bPosition, QWORD nPosition);
 
-// Dialog Data
-public:
-	//{{AFX_DATA(CFilePreviewDlg)
-	enum { IDD = IDD_FILE_PREVIEW };
-	CButton	m_wndCancel;
-	CProgressCtrl	m_wndProgress;
-	CStatic	m_wndStatus;
-	CStatic	m_wndName;
-	//}}AFX_DATA
-
-// Overrides
-public:
-	//{{AFX_VIRTUAL(CFilePreviewDlg)
-	protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	virtual void PostNcDestroy();
-	//}}AFX_VIRTUAL
-
-// Implementation
-protected:
-	//{{AFX_MSG(CFilePreviewDlg)
 	virtual BOOL OnInitDialog();
 	virtual void OnCancel();
 	afx_msg void OnTimer(UINT_PTR nIDEvent);
 	afx_msg void OnDestroy();
-	//}}AFX_MSG
+	afx_msg void OnClose();
 
 	DECLARE_MESSAGE_MAP()
 
 // IDownloadPreviewSite
-protected:
 	BEGIN_INTERFACE_PART(DownloadPreviewSite, IDownloadPreviewSite)
 		STDMETHOD(GetSuggestedFilename)(BSTR FAR* psFile);
 		STDMETHOD(GetAvailableRanges)(SAFEARRAY FAR* FAR* ppArray);
@@ -117,11 +96,4 @@ protected:
 	END_INTERFACE_PART(DownloadPreviewSite)
 
 	DECLARE_INTERFACE_MAP()
-
-public:
-	afx_msg void OnClose();
 };
-
-//{{AFX_INSERT_LOCATION}}
-
-#endif // !defined(AFX_DLGFILEPREVIEW_H__E2307205_BEF2_4A77_A7FA_BC92F46BCBF6__INCLUDED_)

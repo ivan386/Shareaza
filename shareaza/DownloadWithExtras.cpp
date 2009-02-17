@@ -1,7 +1,7 @@
 //
 // DownloadWithExtras.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2006.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -123,7 +123,7 @@ void CDownloadWithExtras::DeletePreviews()
 		POSITION posRemove = pos;
 		CString strPath = m_pPreviews.GetNext( pos );
 		
-		if ( ::DeleteFile( strPath, FALSE, TRUE ) )
+		if ( DeleteFileEx( strPath, FALSE, FALSE, TRUE ) )
 			m_pPreviews.RemoveAt( posRemove );
 	}
 	
@@ -427,6 +427,9 @@ void CDownloadWithExtras::OnPreviewRequestComplete(CDownloadTask* pTask)
 {
 	m_bWaitingPreview = FALSE;
 
+	if ( m_sPath.IsEmpty() )
+		return;
+
 	CBuffer* pBuffer = NULL;
 
 	if ( ( pBuffer = pTask->IsPreviewAnswerValid() ) == NULL )
@@ -454,7 +457,7 @@ void CDownloadWithExtras::OnPreviewRequestComplete(CDownloadTask* pTask)
 	}
 
 	CFile pFile;
-	CString strPath = m_sPath + L".png";
+	CString strPath = m_sPath + _T(".png");
 	if ( pFile.Open( strPath, CFile::modeCreate|CFile::modeWrite ) )
 	{
 		pFile.Write( pBuffer2, nImageSize );

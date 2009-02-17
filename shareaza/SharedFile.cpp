@@ -326,8 +326,8 @@ BOOL CLibraryFile::Delete(BOOL bDeleteGhost)
 		else
 		{
 			// Delete file and close upload handlers
-			if ( ! DeleteFile( GetPath(),
-				( ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 ) == 0 ), TRUE ) )
+			BOOL bToRecycleBin = ( ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 ) == 0 );
+			if ( ! DeleteFileEx( GetPath(), TRUE, bToRecycleBin, TRUE ) )
 			{
 				return FALSE;
 			}

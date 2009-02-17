@@ -776,6 +776,8 @@ void CMainWnd::OnTimer(UINT_PTR nIDEvent)
 {
 	CMDIFrameWnd::OnTimer( nIDEvent );
 
+	DWORD tNow = static_cast< DWORD >( time( NULL ) );
+
 	// Delayed close
 	if ( nIDEvent == 2 )
 	{
@@ -854,11 +856,19 @@ void CMainWnd::OnTimer(UINT_PTR nIDEvent)
 	// Periodic saves
 
 	static DWORD tLastSave = static_cast< DWORD >( time( NULL ) );
-	DWORD tNow = static_cast< DWORD >( time( NULL ) );
 	if ( tNow - tLastSave > 60 )
 	{
 		tLastSave = tNow;
 		SaveState();
+	}
+
+	// Periodic cleanup
+
+	static DWORD tLastPurge = static_cast< DWORD >( time( NULL ) );
+	if ( tNow - tLastPurge > 5 )
+	{
+		tLastPurge = tNow;
+		PurgeDeletes();
 	}
 }
 
