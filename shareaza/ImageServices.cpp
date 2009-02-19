@@ -1,7 +1,7 @@
 //
 // ImageServices.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -393,20 +393,24 @@ bool CImageServices::GetService(LPCTSTR szFilename, IImageServicePlugin** ppIIma
 		return false;
 
 	// Check cached one
-	CQuickLock oLock( m_pSection );
-	services_map::iterator i = m_services.find( oCLSID );
-	if ( i == m_services.end() )
+	DWORD dwCachedIndex;
 	{
-		// Create new one
-		m_inCLSID = oCLSID;							// Set input parameter
-		if ( ! BeginThread( "ImageServices" ) )
-			return false;
-		Wakeup();									// Start process
-		WaitForSingleObject( m_pReady, INFINITE );	// Wait for result
-		i = m_services.find( oCLSID );				// Get result
+		CQuickLock oLock( m_pSection );
+		services_map::iterator i = m_services.find( oCLSID );
 		if ( i == m_services.end() )
-			// No plugin
-			return false;
+		{
+			// Create new one
+			m_inCLSID = oCLSID;							// Set input parameter
+			if ( ! BeginThread( "ImageServices" ) )
+				return false;
+			Wakeup();									// Start process
+			WaitForSingleObject( m_pReady, INFINITE );	// Wait for result
+			i = m_services.find( oCLSID );				// Get result
+			if ( i == m_services.end() )
+				// No plugin
+				return false;
+		}
+		dwCachedIndex = (*i).second;
 	}
 
 	// Just add to the plugin collection for the reference of CLSID.
@@ -423,7 +427,7 @@ bool CImageServices::GetService(LPCTSTR szFilename, IImageServicePlugin** ppIIma
 */
 
 	// Get interface from cache
-	CComGITPtr< IImageServicePlugin > oGIT( (*i).second );
+	CComGITPtr< IImageServicePlugin > oGIT( dwCachedIndex );
 	HRESULT hr = oGIT.CopyTo( ppIImageServicePlugin );
 	ASSERT( SUCCEEDED( hr ) );
 
