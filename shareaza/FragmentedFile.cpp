@@ -1,7 +1,7 @@
 //
 // FragmentedFile.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -337,17 +337,15 @@ void CFragmentedFile::Serialize(CArchive& ar, int nVersion)
 	{
 		SerializeOut1( ar, m_oFList );
 
-		if ( nVersion >= 40 )
+		ar << (DWORD)m_oFile.size();
+		for ( CVirtualFile::const_iterator i = m_oFile.begin();
+			i != m_oFile.end(); ++i )
 		{
-			ar << m_oFile.size();
-			for ( CVirtualFile::const_iterator i = m_oFile.begin();
-				i != m_oFile.end(); ++i )
-			{
-				ar << (*i).m_sPath;
-				ar << (*i).m_nOffset;
-				ar << (*i).m_nLength;
-				ar << (*i).m_bWrite;
-			}
+			ASSERT( ! (*i).m_sPath.IsEmpty() );
+			ar << (*i).m_sPath;
+			ar << (*i).m_nOffset;
+			ar << (*i).m_nLength;
+			ar << (*i).m_bWrite;
 		}
 	}
 	else
@@ -356,9 +354,9 @@ void CFragmentedFile::Serialize(CArchive& ar, int nVersion)
 
 		if ( nVersion >= 40 )
 		{
-			size_t count = 0;
+			DWORD count = 0;
 			ar >> count;
-			for ( size_t i = 0; i < count; ++i )
+			for ( DWORD i = 0; i < count; ++i )
 			{
 				CString sPath;
 				ar >> sPath;
@@ -369,7 +367,10 @@ void CFragmentedFile::Serialize(CArchive& ar, int nVersion)
 				BOOL bWrite = FALSE;
 				ar >> bWrite;
 				if ( ! Open( sPath, nOffset, nLength, bWrite, FALSE ) )
+				{
+					theApp.Message( MSG_ERROR, IDS_DOWNLOAD_FILE_OPEN_ERROR, sPath );
 					AfxThrowArchiveException( CArchiveException::genericException );
+				}
 			}
 
 			ASSERT_VALID( this );
