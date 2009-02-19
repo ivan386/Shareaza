@@ -72,7 +72,7 @@ BOOL CCoolMenu::IsModernVersion()
 	pVersion.dwOSVersionInfoSize = sizeof(pVersion);
 	GetVersionEx( &pVersion );
 
-	return theApp.GetProfileInt( _T(""), _T("CoolMenuEnable"), TRUE ) &&
+	return Settings.General.CoolMenuEnable &&
 		( pVersion.dwMajorVersion >= 5 ||
 		( pVersion.dwMajorVersion == 4 && pVersion.dwMinorVersion >= 10 ) );
 }
@@ -700,7 +700,7 @@ LRESULT CALLBACK CCoolMenu::MsgHook(int nCode, WPARAM wParam, LPARAM lParam)
 
 		if ( ! SetProp( pCWP->hwnd, wpnOldProc, pWndProc ) ) break;
 
-		if ( ! SetWindowLongPtr( pCWP->hwnd, GWLP_WNDPROC, (DWORD)(DWORD_PTR)MenuProc ) )
+		if ( ! SetWindowLongPtr( pCWP->hwnd, GWLP_WNDPROC, (LONG_PTR)MenuProc ) )
 		{
 			::RemoveProp( pCWP->hwnd, wpnOldProc );
 			break;

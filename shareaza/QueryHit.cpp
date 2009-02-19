@@ -1003,11 +1003,10 @@ void CQueryHit::ReadG1Packet(CG1Packet* pPacket)
 
 	std::string	strData		= std::string( (LPCSTR)pPacket->m_pBuffer + pPacket->m_nPosition,
 											int(pPacket->m_nBuffer - pPacket->m_nPosition) );
-	LPCSTR		pszData		= (LPCSTR)strData.c_str();
-	size_t		nDataLength	= strlen( (char*)pszData );
-	LPCSTR		pszEnd		= pszData + nDataLength;
+	LPCSTR		pszData		= strData.c_str();
+	LPCSTR		pszEnd		= pszData + strData.size();
 
-	pPacket->m_nPosition = pPacket->m_nPosition + nDataLength + 1;
+	pPacket->m_nPosition = pPacket->m_nPosition + (DWORD)strData.size() + 1;
 	
 	while ( *pszData && pszData < pszEnd )
 	{
@@ -1195,7 +1194,7 @@ void CQueryHit::ReadG1Packet(CG1Packet* pPacket)
 		}
 		else if ( nLength > 4 )
 		{
-			CString strXML = UTF8Decode( pszData, nLength );
+			CString strXML = UTF8Decode( pszData, (int)nLength );
 			m_pXML = CXMLElement::FromString( strXML );
 
 			AutoDetectSchema( strXML );

@@ -1,7 +1,7 @@
 //
 // Settings.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -71,6 +71,7 @@ CSettings::CSettings()
 	Add( _T(""), _T("LogLevel"), &General.LogLevel, MSG_INFO, 1, MSG_ERROR, MSG_DEBUG, _T(" level") );
 	Add( _T(""), _T("SearchLog"), &General.SearchLog, true );
 	Add( _T(""), _T("UserPath"), &General.UserPath );
+	Add( _T(""), _T("CoolMenuEnable"), &General.CoolMenuEnable, true );
 
 	Add( _T("Settings"), _T("AlwaysOpenURLs"), &General.AlwaysOpenURLs, false );
 	Add( _T("Settings"), _T("CloseMode"), &General.CloseMode, 0, 1, 0, 3 );

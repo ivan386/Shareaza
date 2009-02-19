@@ -2279,10 +2279,10 @@ static int CALLBACK BrowseCallbackProc(HWND hWnd, UINT uMsg, LPARAM lParam, LPAR
 	case BFFM_INITIALIZED:
 		{
 			// Remove context help button from dialog caption
-			SetWindowLong( hWnd, GWL_STYLE,
-				GetWindowLong( hWnd, GWL_STYLE ) & ~DS_CONTEXTHELP );
-			SetWindowLong( hWnd, GWL_EXSTYLE,
-				GetWindowLong( hWnd, GWL_EXSTYLE ) & ~WS_EX_CONTEXTHELP );
+			SetWindowLongPtr( hWnd, GWL_STYLE,
+				GetWindowLongPtr( hWnd, GWL_STYLE ) & ~DS_CONTEXTHELP );
+			SetWindowLongPtr( hWnd, GWL_EXSTYLE,
+				GetWindowLongPtr( hWnd, GWL_EXSTYLE ) & ~WS_EX_CONTEXTHELP );
 
 			// Set initial directory
 			SendMessage( hWnd, BFFM_SETSELECTION, TRUE, lpData );

@@ -1,7 +1,7 @@
 //
 // CtrlSchemaCombo.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -190,8 +190,8 @@ LRESULT CSchemaCombo::OnCtlColorListBox(WPARAM wParam, LPARAM lParam)
 			m_hListBox = (HWND)lParam;
 
 			m_pWndProc = (WNDPROC)(LONG_PTR)GetWindowLongPtr( m_hListBox, GWLP_WNDPROC );
-			SetWindowLongPtr( m_hListBox, GWLP_USERDATA, (LONG_PTR_ARG)(LONG_PTR)this );
-			SetWindowLongPtr( m_hListBox, GWLP_WNDPROC, (LONG_PTR_ARG)(LONG_PTR)&ListWndProc );
+			SetWindowLongPtr( m_hListBox, GWLP_USERDATA, (LONG_PTR)this );
+			SetWindowLongPtr( m_hListBox, GWLP_WNDPROC, (LONG_PTR)&ListWndProc );
 
 			::InvalidateRect( m_hListBox, NULL, TRUE );
 		}

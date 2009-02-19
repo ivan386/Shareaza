@@ -1,7 +1,7 @@
 //
 // CtrlSchema.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -161,7 +161,7 @@ void CSchemaCtrl::SetSchema(CSchema* pSchema, BOOL bPromptOnly)
 		m_pCaptions.Add( strCaption );
 		m_pControls.Add( pControl );
 
-		SetWindowLongPtr( pControl->GetSafeHwnd(), GWLP_USERDATA, (LONG_PTR_ARG)(LONG_PTR)pMember );
+		SetWindowLongPtr( pControl->GetSafeHwnd(), GWLP_USERDATA, (LONG_PTR)pMember );
 		pControl->SetFont( &theApp.m_gdiFont );
 	}
 	

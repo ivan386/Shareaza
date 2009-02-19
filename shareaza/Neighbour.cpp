@@ -1,7 +1,7 @@
 //
 // Neighbour.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -359,7 +359,7 @@ BOOL CNeighbour::OnRead()
 	if ( m_pZInput == NULL || pInput->m_nLength == 0 ) return TRUE;
 
 	// Store original buffer size
-	size_t nLength = m_pZInput->m_nLength;
+	DWORD nLength = m_pZInput->m_nLength;
 
 	// Try to decompress the stream
 	pInput->InflateStreamTo( *m_pZInput, m_pZSInput );

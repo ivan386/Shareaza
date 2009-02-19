@@ -378,7 +378,7 @@ BOOL CFilePreviewDlg::RunManual(HANDLE hFile)
 
 	m_nRange = m_nPosition = 0;
 
-	for ( QWORD nRange = 0 ; nRange < m_pRanges.GetSize() ; nRange += 2 )
+	for ( QWORD nRange = 0 ; nRange < (QWORD)m_pRanges.GetSize() ; nRange += 2 )
 	{
 		m_nRange += m_pRanges.GetAt( nRange + 1 );
 	}
@@ -387,7 +387,7 @@ BOOL CFilePreviewDlg::RunManual(HANDLE hFile)
 
 	BYTE* pData = new BYTE[ BUFFER_SIZE ];
 
-	for ( QWORD nRange = 0 ; nRange < m_pRanges.GetSize() ; nRange += 2 )
+	for ( QWORD nRange = 0 ; nRange < (QWORD)m_pRanges.GetSize() ; nRange += 2 )
 	{
 		QWORD nOffset = m_pRanges.GetAt( nRange );
 		QWORD nLength = m_pRanges.GetAt( nRange + 1 );

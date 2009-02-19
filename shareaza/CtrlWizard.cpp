@@ -1,7 +1,7 @@
 //
 // CtrlWizard.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -507,7 +507,7 @@ BOOL CWizardCtrl::MakeControls(CXMLElement* pBase, std::vector< CLibraryFile* > 
 									strText += 's';
 								m_pItems.SetAt( strUINT, strText );
 								// is it correct?
-								SetWindowLongPtr( pControl->GetSafeHwnd(), GWLP_USERDATA, (LONG_PTR_ARG)(LONG_PTR)pItem );
+								SetWindowLongPtr( pControl->GetSafeHwnd(), GWLP_USERDATA, (LONG_PTR)pItem );
 								pControl->SetFont( &theApp.m_gdiFont );
 								nItemCount++;
 
@@ -531,7 +531,7 @@ BOOL CWizardCtrl::MakeControls(CXMLElement* pBase, std::vector< CLibraryFile* > 
 									m_pControls.Add( pControl );
 									nItemCount++;
 									// is it correct?
-									SetWindowLongPtr( pControl->GetSafeHwnd(), GWLP_USERDATA, (LONG_PTR_ARG)(LONG_PTR)pItem );
+									SetWindowLongPtr( pControl->GetSafeHwnd(), GWLP_USERDATA, (LONG_PTR)pItem );
 								}
 								nFileCount++;
 								if ( strType == "multi-filepicker" ) 

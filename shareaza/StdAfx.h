@@ -1,7 +1,7 @@
 //
 // StdAfx.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -255,22 +255,6 @@ template<> AFX_INLINE UINT AFXAPI HashKey(DWORD_PTR key)
 {
 	return static_cast< UINT >( key >> 4 );
 }
-
-#ifndef _WIN64
-typedef ULONG ULONG_PTR_ARG;
-typedef ULONG ULONG_PTR_RESULT;
-typedef LONG LONG_PTR_ARG;
-typedef LONG LONG_PTR_RESULT;
-typedef uint32 DWORD_PTR_ARG;
-typedef uint32 DWORD_PTR_RESULT;
-#else
-typedef ULONG_PTR ULONG_PTR_ARG;
-typedef ULONG_PTR ULONG_PTR_RESULT;
-typedef LONG_PTR LONG_PTR_ARG;
-typedef LONG_PTR LONG_PTR_RESULT;
-typedef DWORD_PTR DWORD_PTR_ARG;
-typedef DWORD_PTR DWORD_PTR_RESULT;
-#endif
 
 #include "Hashes.hpp"
 
@@ -621,7 +605,7 @@ public:
 		T sum = 0;
 		for ( CAverageList::const_iterator i = m_Data.begin(); i != m_Data.end(); ++i )
 			sum += (*i).first;
-		return sum / m_Data.size();
+		return sum / (T)m_Data.size();
 	}
 
 protected:

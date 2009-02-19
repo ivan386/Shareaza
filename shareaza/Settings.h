@@ -1,7 +1,7 @@
 //
 // Settings.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -67,6 +67,7 @@ public:
 		bool		FirstRun;
 		DWORD		SmartVersion;				// Settings version
 		bool		Running;
+		bool		CoolMenuEnable;				// Use cool skinned menus
 	} General;
 
 	struct sVersionCheck
