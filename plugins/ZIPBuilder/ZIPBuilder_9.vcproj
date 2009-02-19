@@ -84,9 +84,7 @@
 				ModuleDefinitionFile="$(ProjectName).def"
 				GenerateDebugInformation="true"
 				SubSystem="2"
-				SetChecksum="false"
 				BaseAddress="0x1a700000"
-				ImportLibrary=""
 				TargetMachine="1"
 			/>
 			<Tool
@@ -180,9 +178,6 @@
 				GenerateDebugInformation="true"
 				GenerateMapFile="false"
 				SubSystem="2"
-				SetChecksum="false"
-				BaseAddress="0x1a700000"
-				ImportLibrary=""
 				TargetMachine="17"
 			/>
 			<Tool
@@ -281,7 +276,6 @@
 				EnableCOMDATFolding="2"
 				SetChecksum="true"
 				BaseAddress="0x1a700000"
-				ImportLibrary=""
 				TargetMachine="1"
 			/>
 			<Tool
@@ -380,8 +374,6 @@
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				SetChecksum="true"
-				BaseAddress="0x1a700000"
-				ImportLibrary=""
 				TargetMachine="17"
 			/>
 			<Tool

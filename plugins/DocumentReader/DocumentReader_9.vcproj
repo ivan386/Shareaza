@@ -167,7 +167,6 @@
 				AdditionalLibraryDirectories="..\..\shareaza\zlib"
 				ModuleDefinitionFile="DocumentReader.def"
 				GenerateDebugInformation="true"
-				BaseAddress="0x22000000"
 				TargetMachine="17"
 			/>
 			<Tool
@@ -364,7 +363,6 @@
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				SetChecksum="true"
-				BaseAddress="0x22000000"
 				TargetMachine="17"
 			/>
 			<Tool

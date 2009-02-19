@@ -178,7 +178,6 @@
 				ModuleDefinitionFile="ImageViewer.def"
 				GenerateDebugInformation="true"
 				SubSystem="2"
-				BaseAddress="0x22100000"
 				TargetMachine="17"
 			/>
 			<Tool
@@ -386,7 +385,6 @@
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				SetChecksum="true"
-				BaseAddress="0x22100000"
 				TargetMachine="17"
 			/>
 			<Tool

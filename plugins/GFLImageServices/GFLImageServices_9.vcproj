@@ -85,9 +85,7 @@
 				ModuleDefinitionFile="GFLImageServices.def"
 				GenerateDebugInformation="true"
 				SubSystem="2"
-				SetChecksum="false"
 				BaseAddress="0x1af40000"
-				ImportLibrary="$(OutDir)/GFLImageServices.lib"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -180,9 +178,6 @@
 				ModuleDefinitionFile="GFLImageServices.def"
 				GenerateDebugInformation="true"
 				SubSystem="2"
-				SetChecksum="false"
-				BaseAddress="0x1af40000"
-				ImportLibrary="$(OutDir)/GFLImageServices.lib"
 				TargetMachine="17"
 			/>
 			<Tool
@@ -286,7 +281,6 @@
 				EnableCOMDATFolding="2"
 				SetChecksum="true"
 				BaseAddress="0x1af40000"
-				ImportLibrary=""
 				TargetMachine="1"
 			/>
 			<Tool
@@ -389,8 +383,6 @@
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				SetChecksum="true"
-				BaseAddress="0x1af40000"
-				ImportLibrary=""
 				TargetMachine="17"
 			/>
 			<Tool

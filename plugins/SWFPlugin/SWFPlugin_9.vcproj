@@ -84,7 +84,6 @@
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				BaseAddress="0x1af20000"
-				ImportLibrary="$(OutDir)/SWFPlugin.lib"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -175,8 +174,6 @@
 				ModuleDefinitionFile="SWFPlugin.def"
 				GenerateDebugInformation="true"
 				SubSystem="2"
-				BaseAddress="0x1af20000"
-				ImportLibrary="$(OutDir)/SWFPlugin.lib"
 				TargetMachine="17"
 			/>
 			<Tool
@@ -276,7 +273,6 @@
 				EnableCOMDATFolding="2"
 				SetChecksum="true"
 				BaseAddress="0x1af20000"
-				ImportLibrary=""
 				TargetMachine="1"
 			/>
 			<Tool
@@ -374,8 +370,6 @@
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				SetChecksum="true"
-				BaseAddress="0x1af20000"
-				ImportLibrary=""
 				TargetMachine="17"
 			/>
 			<Tool

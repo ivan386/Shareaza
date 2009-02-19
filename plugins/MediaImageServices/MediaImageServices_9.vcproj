@@ -84,9 +84,7 @@
 				ModuleDefinitionFile="MediaImageServices.def"
 				GenerateDebugInformation="true"
 				SubSystem="2"
-				SetChecksum="false"
 				BaseAddress="0x1af60000"
-				ImportLibrary="$(OutDir)/MediaImageServices.lib"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -178,9 +176,6 @@
 				ModuleDefinitionFile="MediaImageServices.def"
 				GenerateDebugInformation="true"
 				SubSystem="2"
-				SetChecksum="false"
-				BaseAddress="0x1af60000"
-				ImportLibrary="$(OutDir)/MediaImageServices.lib"
 				TargetMachine="17"
 			/>
 			<Tool
@@ -284,7 +279,6 @@
 				EnableCOMDATFolding="2"
 				SetChecksum="true"
 				BaseAddress="0x1af60000"
-				ImportLibrary=""
 				TargetMachine="1"
 			/>
 			<Tool
@@ -387,8 +381,6 @@
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				SetChecksum="true"
-				BaseAddress="0x1af60000"
-				ImportLibrary=""
 				TargetMachine="17"
 			/>
 			<Tool
