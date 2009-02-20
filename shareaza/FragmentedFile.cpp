@@ -106,13 +106,13 @@ void CFragmentedFile::Dump(CDumpContext& dc) const
 
 BOOL CFragmentedFile::Open(LPCTSTR pszFile, QWORD nOffset, QWORD nLength, BOOL bWrite, BOOL bCreate)
 {
-	ASSERT( nLength != 0 );
-
-	CQuickLock oLock( m_pSection );
-
 	if ( ! pszFile || ! *pszFile )
+	{
 		// Bad file name
 		return FALSE;
+	}
+
+	CQuickLock oLock( m_pSection );
 
 	CVirtualFile::const_iterator i = std::find( m_oFile.begin(), m_oFile.end(), pszFile );
 	if ( i != m_oFile.end() )
@@ -180,22 +180,23 @@ BOOL CFragmentedFile::Open(LPCTSTR pszFile, QWORD nOffset, QWORD nLength, BOOL b
 BOOL CFragmentedFile::Open(const CBTInfo& oInfo, BOOL bWrite, BOOL bCreate)
 {
 	QWORD nOffset = 0;
+
 	for ( POSITION pos = oInfo.m_pFiles.GetHeadPosition() ; pos ; )
 	{
-		CBTInfo::CBTFile* pFile = oInfo.m_pFiles.GetNext( pos );
+		CBTInfo::CBTFile* pBTFile = oInfo.m_pFiles.GetNext( pos );
 
-		CString strSource = pFile->FindFile();
+		CString strSource = pBTFile->FindFile();
 
-		if ( ! Open( strSource, nOffset, pFile->m_nSize, bWrite, bCreate ) )
+		if ( ! Open( strSource, nOffset, pBTFile->m_nSize, bWrite, bCreate ) )
 		{
 			// Right file not found
 			CString sErrorMessage, strFormat;
 			LoadString( strFormat, IDS_BT_SEED_SOURCE_LOST );
-			sErrorMessage.Format( strFormat, (LPCTSTR)pFile->m_sPath );
+			sErrorMessage.Format( strFormat, (LPCTSTR)pBTFile->m_sPath );
 			return FALSE;
 		}
 
-		nOffset += pFile->m_nSize;
+		nOffset += pBTFile->m_nSize;
 	}
 
 	return TRUE;
@@ -366,7 +367,13 @@ void CFragmentedFile::Serialize(CArchive& ar, int nVersion)
 				ar >> nLength;
 				BOOL bWrite = FALSE;
 				ar >> bWrite;
-				if ( ! Open( sPath, nOffset, nLength, bWrite, FALSE ) )
+
+				if ( ! Open( sPath, nOffset, nLength, bWrite, FALSE ) &&
+					// Try to open file for write from current incomplete folder
+					// (in case of changed folder)
+					( ! bWrite || ! Open( Settings.Downloads.IncompletePath +
+						sPath.Mid( sPath.ReverseFind( _T('\\') ) ), nOffset,
+						nLength, bWrite, FALSE ) ) )
 				{
 					theApp.Message( MSG_ERROR, IDS_DOWNLOAD_FILE_OPEN_ERROR, sPath );
 					AfxThrowArchiveException( CArchiveException::genericException );
