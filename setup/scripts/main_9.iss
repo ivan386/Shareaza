@@ -136,7 +136,11 @@ Source: "plugins\MediaImageServices\{#PlatformName}\{#ConfigurationName}\MediaIm
 Source: "plugins\MediaLibraryBuilder\{#PlatformName}\{#ConfigurationName}\MediaLibraryBuilder.dll";   DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
 
 Source: "plugins\RARBuilder\{#PlatformName}\{#ConfigurationName}\RARBuilder.dll";   DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
+#if PlatformName == "Win32"
 Source: "plugins\RARBuilder\{#PlatformName}\{#ConfigurationName}\unrar.dll"; DestDir: "{app}";         Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+#elif PlatformName == "x64"
+Source: "plugins\RARBuilder\{#PlatformName}\{#ConfigurationName}\unrar64.dll"; DestDir: "{app}";         Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+#endif
 
 Source: "plugins\RatDVDPlugin\{#PlatformName}\{#ConfigurationName}\RatDVDReader.dll";   DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
 

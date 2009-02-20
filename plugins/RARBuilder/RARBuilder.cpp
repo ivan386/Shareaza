@@ -52,7 +52,12 @@ CModule::~CModule()
 
 bool CModule::LoadUnrar()
 {
-	m_hUnrar = LoadLibrary( _T("unrar.dll") );
+#ifdef _WIN64
+	LPCTSTR szUnRAR = _T("unrar64.dll");
+#else
+	LPCTSTR szUnRAR = _T("unrar.dll");
+#endif
+	m_hUnrar = LoadLibrary( szUnRAR );
 	if ( ! m_hUnrar )
 	{
 		TCHAR szPath[ MAX_PATH ] = {};
@@ -60,7 +65,7 @@ bool CModule::LoadUnrar()
 		LPTSTR c = _tcsrchr( szPath, _T('\\') );
 		if ( ! c )
 			return false;
-		lstrcpy( c + 1, _T("unrar.dll") );
+		lstrcpy( c + 1, szUnRAR );
 		m_hUnrar = LoadLibrary( szPath );
 		if ( ! m_hUnrar )
 		{
@@ -68,7 +73,7 @@ bool CModule::LoadUnrar()
 			c = _tcsrchr( szPath, _T('\\') );
 			if ( ! c )
 				return false;
-			lstrcpy( c + 1, _T("unrar.dll") );
+			lstrcpy( c + 1, szUnRAR );
 			m_hUnrar = LoadLibrary( szPath );
 			if ( ! m_hUnrar )
 				return false;
