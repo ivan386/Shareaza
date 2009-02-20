@@ -1,7 +1,7 @@
 //
 // Library.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -539,6 +539,8 @@ BOOL CLibrary::IsBadFile(LPCTSTR pszFilenameOnly, LPCTSTR pszPathOnly, DWORD dwF
 		if ( _tcsicmp( pszFilenameOnly, _T("dxva_sig.txt") ) == 0 ) return TRUE;
 		// uTorrent part files
 		if ( _tcsnicmp( pszFilenameOnly, _T("~uTorrentPartFile_"), 18 ) == 0 ) return TRUE;
+		// Ares Galaxy partials
+		if ( _tcsnicmp( pszFilenameOnly, _T("___ARESTRA___"), 13 ) == 0 ) return TRUE;
 
 		LPCTSTR pszExt = _tcsrchr( pszFilenameOnly, _T('.') );
 		if ( pszExt++ )
