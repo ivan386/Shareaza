@@ -1,7 +1,7 @@
 //
 // StdAfx.h
 //
-// Copyright (c) Shareaza Development Team, 2007.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of Shareaza Torrent Wizard (shareaza.sourceforge.net).
 //
 // Shareaza Torrent Wizard is free software; you can redistribute it
@@ -26,6 +26,7 @@
 #define _WIN32_WINNT 0x0400
 #define _WIN32_WINDOWS 0x0410
 #define _WIN32_IE 0x0400
+#define BOOST_USE_WINDOWS_H
 
 #include <afxwin.h>         // MFC core and standard components
 #include <afxext.h>         // MFC extensions

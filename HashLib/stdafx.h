@@ -1,7 +1,7 @@
 //
 // stdafx.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -33,6 +33,7 @@
 
 #define STRICT
 #define WIN32_LEAN_AND_MEAN
+#define BOOST_USE_WINDOWS_H
 
 #include <windows.h>
 #include <algorithm>

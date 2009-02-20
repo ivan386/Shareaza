@@ -112,6 +112,7 @@
 
 #define VC_EXTRALEAN
 #define _ATL_NO_COM_SUPPORT
+#define BOOST_USE_WINDOWS_H
 
 #pragma warning( push, 0 )			// Suppress Microsoft warnings
 
