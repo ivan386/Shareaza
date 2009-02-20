@@ -1,7 +1,7 @@
 //
 // WndMain.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -206,7 +206,6 @@ protected:
 	afx_msg void OnViewWindowed();
 	afx_msg void OnUpdateViewDiscovery(CCmdUI* pCmdUI);
 	afx_msg void OnViewDiscovery();
-	afx_msg void OnActivateApp(BOOL bActive, DWORD dwThreadID);
 	afx_msg void OnActivate(UINT nState, CWnd* pWndOther, BOOL bMinimized);
 	afx_msg void OnUpdateTabHome(CCmdUI* pCmdUI);
 	afx_msg void OnTabHome();

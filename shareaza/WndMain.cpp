@@ -108,7 +108,6 @@ BEGIN_MESSAGE_MAP(CMainWnd, CMDIFrameWnd)
 	ON_WM_TIMER()
 	ON_WM_CONTEXTMENU()
 	ON_WM_SYSCOMMAND()
-	ON_WM_ACTIVATEAPP()
 	ON_WM_ACTIVATE()
 	ON_WM_NCLBUTTONDBLCLK()
 	ON_WM_NCCALCSIZE()
@@ -869,17 +868,6 @@ void CMainWnd::OnTimer(UINT_PTR nIDEvent)
 	{
 		tLastPurge = tNow;
 		PurgeDeletes();
-	}
-}
-
-void CMainWnd::OnActivateApp(BOOL bActive, DWORD dwTask)
-{
-	CMDIFrameWnd::OnActivateApp( bActive, dwTask );
-
-	if ( ! bActive )
-	{
-		CoFreeUnusedLibraries();
-		// SetProcessWorkingSetSize( GetCurrentProcess(), 0xFFFFFFFF, 0xFFFFFFFF );
 	}
 }
 
