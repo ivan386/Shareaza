@@ -31,7 +31,11 @@ IDR_MANIFEST RT_MANIFEST
        <description>Shareaza Ultimate File Sharing</description>
        <dependency>
          <dependentAssembly>
-           <assemblyIdentity type=""win32"" name=""Microsoft.Windows.Common-Controls"" version=""6.0.0.0"" processorArchitecture=""*"" publicKeyToken=""6595b64144ccf1df"" language=""*"" />
+#ifdef WIN64
+           <assemblyIdentity type=""win32"" name=""Microsoft.Windows.Common-Controls"" version=""6.0.0.0"" processorArchitecture=""amd64"" publicKeyToken=""6595b64144ccf1df"" language=""*"" />
+#else
+           <assemblyIdentity type=""win32"" name=""Microsoft.Windows.Common-Controls"" version=""6.0.0.0"" processorArchitecture=""x86""   publicKeyToken=""6595b64144ccf1df"" language=""*"" />
+#endif
          </dependentAssembly>
        </dependency>
        <asmv2:trustInfo xmlns:asmv2=""urn:schemas-microsoft-com:asm.v2"">
