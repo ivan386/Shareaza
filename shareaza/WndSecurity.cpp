@@ -1,7 +1,7 @@
 //
 // WndSecurity.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -179,7 +179,7 @@ void CSecurityWnd::Update(int nColumn, BOOL bSort)
 					unsigned( pRule->m_nMask[2] ), unsigned( pRule->m_nMask[3] ) );
 			}
 		}
-		else if ( pRule->m_nType == CSecureRule::srContent )
+		else
 		{
 			pItem->Set( 0, pRule->GetContentWords() );
 		}

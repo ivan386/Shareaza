@@ -1,7 +1,7 @@
 //
 // Security.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -25,6 +25,11 @@
 
 class CSecureRule;
 class CXMLElement;
+
+
+#define SECURITY_SER_VERSION	5
+// History:
+// 5 - extended security rule type (ryo-oh-ki)
 
 enum
 {
@@ -53,7 +58,6 @@ protected:
 	typedef CMap< DWORD, DWORD, CComplain*, CComplain* > CComplainMap;
 
 	CList< CSecureRule* >		m_pRules;
-	CList< CSecureRule* >		m_pRegExpRules;
 	CComplainMap				m_Complains;
 
 // Operations
@@ -61,9 +65,6 @@ public:
 	POSITION		GetIterator() const;
 	CSecureRule*	GetNext(POSITION& pos) const;
 	INT_PTR			GetCount() const;
-	POSITION		GetRegExpIterator() const;
-	CSecureRule*	GetNextRegExp(POSITION& pos) const;
-	INT_PTR			GetRegExpCount() const;
 	BOOL			Check(CSecureRule* pRule) const;
 	void			Add(CSecureRule* pRule);
 	void			Remove(CSecureRule* pRule);
@@ -110,16 +111,17 @@ protected:
 
 class CSecureRule
 {
-// Construction
 public:
 	CSecureRule(BOOL bCreate = TRUE);
 	CSecureRule(const CSecureRule& pRule);
 	CSecureRule& operator=(const CSecureRule& pRule);
 	virtual ~CSecureRule();
 
-// Attributes
-public:
-	int			m_nType;
+	typedef enum { srAddress, srContentAny, srContentAll, srContentRegExp } RuleType;
+	enum { srNull, srAccept, srDeny };
+	enum { srIndefinite = 0, srSession = 1 };
+
+	RuleType	m_nType;
 	BYTE		m_nAction;
 	CString		m_sComment;
 	GUID		m_pGUID;
@@ -131,12 +133,6 @@ public:
 	TCHAR*		m_pContent;
 	DWORD		m_nContentLength;
 
-	enum { srAddress, srContent };
-	enum { srNull, srAccept, srDeny };
-	enum { srIndefinite = 0, srSession = 1 };
-
-// Operations
-public:
 	void	Remove();
 	void	Reset();
 	void	MaskFix();
@@ -147,17 +143,12 @@ public:
 	BOOL	Match(CQuerySearch::const_iterator itStart, 
 				  CQuerySearch::const_iterator itEnd, LPCTSTR pszContent) const;
 	void	SetContentWords(const CString& strContent);
-	CString	GetRegExpFilter(CQuerySearch::const_iterator itStart, 
-							CQuerySearch::const_iterator itEnd) const;
 	CString	GetContentWords();
-
-public:
 	void			Serialize(CArchive& ar, int nVersion);
 	CXMLElement*	ToXML();
 	BOOL			FromXML(CXMLElement* pXML);
 	CString			ToGnucleusString();
 	BOOL			FromGnucleusString(CString& str);
-
 };
 
 // An adult filter class, used in searches, chat, etc
