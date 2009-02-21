@@ -199,6 +199,17 @@ CShareazaApp::CShareazaApp() :
 {
 	ZeroMemory( m_nVersion, sizeof( m_nVersion ) );
 	ZeroMemory( m_pBTVersion, sizeof( m_pBTVersion ) );
+
+// BugTrap http://www.intellesoft.net/
+#ifdef _DEBUG
+	BT_InstallSehFilter();
+	BT_SetTerminate();
+	BT_SetFlags( BTF_INTERCEPTSUEF | BTF_SHOWADVANCEDUI | BTF_DESCRIBEERROR | BTF_DETAILEDMODE );
+	//BT_SetSupportEMail( _T("support@pantheraproject.com") );
+	//BT_SetSupportServer( _T("http://www.pantheraproject.com/BugTrapWebServer/RequestHandler.aspx"), 80 );
+	BT_SetSupportURL( _T("http://shareaza.sourceforge.net/?id=support") );
+	BT_AddRegFile( _T("settings.reg"), _T("HKEY_CURRENT_USER\\Software\\Shareaza\\Shareaza") );
+#endif
 }
 
 /////////////////////////////////////////////////////////////////////////////

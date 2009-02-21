@@ -227,6 +227,16 @@ using augment::IUnknownImplementation;
 
 #include "../HashLib/HashLib.h"
 
+// BugTrap http://www.intellesoft.net/
+#ifdef _DEBUG
+	#include "../BugTrap/BugTrap.h"
+	#ifdef _WIN64
+		#pragma comment(lib, "../BugTrap/BugTrapU-x64.lib")
+	#else
+		#pragma comment(lib, "../BugTrap/BugTrapU.lib")
+	#endif
+#endif
+
 typedef CString StringType;
 
 //! \brief Hash function needed for CMap with const CString& as ARG_KEY.

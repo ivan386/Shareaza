@@ -137,9 +137,9 @@ Source: "plugins\MediaLibraryBuilder\{#PlatformName}\{#ConfigurationName}\MediaL
 
 Source: "plugins\RARBuilder\{#PlatformName}\{#ConfigurationName}\RARBuilder.dll";   DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
 #if PlatformName == "Win32"
-Source: "plugins\RARBuilder\{#PlatformName}\{#ConfigurationName}\unrar.dll"; DestDir: "{app}";         Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+Source: "plugins\RARBuilder\unrar.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 #elif PlatformName == "x64"
-Source: "plugins\RARBuilder\{#PlatformName}\{#ConfigurationName}\unrar64.dll"; DestDir: "{app}";         Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+Source: "plugins\RARBuilder\unrar64.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 #endif
 
 Source: "plugins\RatDVDPlugin\{#PlatformName}\{#ConfigurationName}\RatDVDReader.dll";   DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
@@ -156,16 +156,24 @@ Source: "plugins\MediaPlayer.dll"; DestDir: "{app}"; Flags: overwritereadonly re
 Source: "plugins\RazaWebHook.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 
 
-#if ConfigurationName == "Debug"
 ;--== Debug Databases ==--
+#if ConfigurationName == "Debug"
+
 ; Main files
 Source: "Shareaza\{#PlatformName}\{#ConfigurationName}\shareaza.pdb"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 ; ** The next line can be uncommented to include geoip, skin & zlibwapi debug database files
 ;Source: "{#root}\*.pdb"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 
+#if PlatformName == "Win32"
+Source: "BugTrap\BugTrapU.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+#elif PlatformName == "x64"
+Source: "BugTrap\BugTrapU-x64.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+#endif
+
 ; Plugins
 ; ** This section can be uncommented to include the debug database files for all the plugins
 ;Source: "{#root}\plugins\*.pdb"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+
 #endif
 
 
