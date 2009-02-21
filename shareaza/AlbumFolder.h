@@ -1,7 +1,7 @@
 //
 // AlbumFolder.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -21,9 +21,9 @@
 
 #pragma once
 
-class CLibrary;
-class CLibraryFile;
 class CCollectionFile;
+class CLibraryFile;
+class CLibraryList;
 class CSchema;
 class CSchemaMember;
 class CXMLElement;
@@ -44,7 +44,7 @@ public:
 	CString					m_sSchemaURI;
 	CSchema*				m_pSchema;
 	CXMLElement*			m_pXML;
-    Hashes::Sha1Hash		m_oCollSHA1;
+	Hashes::Sha1Hash		m_oCollSHA1;
 	CString					m_sName;
 	BOOL					m_bExpanded;
 	BOOL					m_bAutoDelete;
@@ -67,7 +67,7 @@ public:
 	INT_PTR			GetFolderCount() const { return m_pFolders.GetCount(); }
 	BOOL			CheckFolder(CAlbumFolder* pFolder, BOOL bRecursive = FALSE) const;
 	CAlbumFolder*	GetTarget(CSchemaMember* pMember, LPCTSTR pszValue) const;
-    CAlbumFolder*	FindCollection(const Hashes::Sha1Hash& oSHA1);
+	CAlbumFolder*	FindCollection(const Hashes::Sha1Hash& oSHA1);
 	CAlbumFolder*	FindFolder(const Hashes::Guid& oGUID);
 public:
 	void			AddFile(CLibraryFile* pFile);
@@ -84,13 +84,13 @@ public:
 	BOOL			MetaFromFile(CLibraryFile* pFile);
 	BOOL			MetaToFiles(BOOL bAggressive = FALSE);
 	BOOL			OrganiseFile(CLibraryFile* pFile);
-    BOOL			MountCollection(const Hashes::Sha1Hash& oSHA1, CCollectionFile* pCollection, BOOL bForce = FALSE);
+	BOOL			MountCollection(const Hashes::Sha1Hash& oSHA1, CCollectionFile* pCollection, BOOL bForce = FALSE);
 	CCollectionFile*GetCollection();
 	CString			GetBestView() const;
 	void			Serialize(CArchive& ar, int nVersion);
 	bool			operator==(const CAlbumFolder& val) const;
 	void			RenewGUID();
-    void			SetCollection(const Hashes::Sha1Hash& oSHA1, CCollectionFile* pCollection);
+	void			SetCollection(const Hashes::Sha1Hash& oSHA1, CCollectionFile* pCollection);
 	bool			OnFolderDelete(CAlbumFolder* pFolder);
 	void			OnFileDelete(CLibraryFile* pFile, BOOL bDeleteGhost = FALSE);
 	void			Clear();

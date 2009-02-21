@@ -21,6 +21,9 @@
 
 #pragma once
 
+#include "Shareaza.h"
+
+
 enum
 {
 	bits = 1, Bytes = 8, Kilobits = 1024, KiloBytes = 8192
@@ -34,7 +37,7 @@ class CSettings : private boost::noncopyable
 public:
 	CSettings();
 	virtual ~CSettings();
-	
+
 // Attributes
 public:
 
@@ -97,7 +100,7 @@ public:
 		bool		TipMedia;
 		bool		LowResMode;
 	} Interface;
-	
+
 	struct sLibrary
 	{
 		bool		WatchFolders;
@@ -180,12 +183,12 @@ public:
 		bool		AdultFilter;
 		bool		AdvancedPanel;
 		DWORD		SpamFilterThreshold;		// Percentage of spam hits which triggers file sources to be treated as a spam
-		DWORD		GeneralThrottle;			// A general throttle for how often each individual search may run. Low values may cause source finding to get overlooked. 
+		DWORD		GeneralThrottle;			// A general throttle for how often each individual search may run. Low values may cause source finding to get overlooked.
 		CString		ShareMonkeyBaseURL;
 		DWORD		ClearPrevious;				// Clear previous search results? 0 - ask user; 1 - no; 2 - yes.
 		bool		SanityCheck;				// Drop hits of banned hosts
 	} Search;
-	
+
 	struct sMediaPlayer
 	{
 		bool		EnablePlay;
@@ -211,7 +214,7 @@ public:
 		CString		ServicePath;
 		bool		ShortPaths;					// Some players differently handle unicode paths but they can launch files using 8.3 paths
 	} MediaPlayer;
-	
+
 	struct sWeb
 	{
 		bool		Magnet;
@@ -221,7 +224,7 @@ public:
 		bool		Piolet;
 		bool		Torrent;
 	} Web;
-	
+
 	struct sConnection
 	{
 		bool		AutoConnect;
@@ -310,7 +313,7 @@ public:
 		DWORD		ConnectThrottle;			// Delay between connection attempts (seconds)
 		bool		SpecifyProtocol;			// Specify G1 or G2 when initiating a connection
 	} Gnutella;
-	
+
 	struct sGnutella1
 	{
 		DWORD		ClientMode;					// Desired mode of operation: MODE_AUTO, MODE_LEAF, MODE_ULTRAPEER
@@ -377,7 +380,7 @@ public:
 		DWORD		HubHorizonSize;
 		DWORD		QueryLimit;
 	} Gnutella2;
-	
+
 	struct seDonkey
 	{
 		bool		EnableToday;
@@ -415,7 +418,7 @@ public:
 		bool		Endgame;					// Allow endgame mode when completing downloads. (Download same chunk from multiple sources)
 		bool		LargeFileSupport;			// Allow 64 bit file sizes
 	} eDonkey;
-	
+
 	struct sBitTorrent
 	{
 		bool		AdvancedInterface;			// Display BT 'extras' (Seed Torrent box, etc)
@@ -498,7 +501,7 @@ public:
 		bool		WebHookEnable;
 		string_set	WebHookExtensions;
 	} Downloads;
-	
+
 	struct sUploads
 	{
 		DWORD		MaxPerHost;					// Max simultaneous uploads to one remote client
@@ -526,7 +529,7 @@ public:
 		DWORD		FilterMask;
 		DWORD		RewardQueuePercentage;		// The percentage of each reward queue reserved for uploaders
 	} Uploads;
-	
+
 	struct sRemote
 	{
 		bool		Enable;
@@ -541,7 +544,7 @@ public:
 		bool		LimitedNetworks;			// Only connect to G2/BT when limited
 		bool		AllowHub;					// Allow hub mode while scheduler is active
 	} Scheduler;
-	
+
 	struct sIRC
 	{
 		COLORREF		Colors[11];
@@ -558,7 +561,7 @@ public:
 		bool			Updated;
 		CString			ScreenFont;
 	} IRC;
-	
+
 	struct sLive
 	{
 		bool		DiskSpaceWarning;			// Has the user been warned of low disk space?
@@ -722,7 +725,7 @@ public:
 		const DWORD			m_nMin;
 		const DWORD			m_nMax;
 		const LPCTSTR		m_szSuffix;
-		
+
 		const bool			m_bHidden;
 	};
 

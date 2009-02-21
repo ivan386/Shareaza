@@ -1,7 +1,7 @@
 //
 // LibraryFolders.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -24,7 +24,6 @@
 class CLibraryFolder;
 class CAlbumFolder;
 class CLibraryFile;
-class CXMLElement;
 class CCollectionFile;
 
 
@@ -51,18 +50,19 @@ public:
 	BOOL			CheckFolder(CLibraryFolder* pFolder, BOOL bRecursive = FALSE) const;
 	CLibraryFolder*	AddFolder(LPCTSTR pszPath);
 	CLibraryFolder*	AddFolder(LPCTSTR pszPath, BOOL bShared);
+	bool			AddSharedFolder(CListCtrl& oList);
 	BOOL			RemoveFolder(CLibraryFolder* pFolder);
-	CLibraryFolder*	IsFolderShared(LPCTSTR pszPath);
-	CLibraryFolder*	IsSubFolderShared(LPCTSTR pszPath);
-	static BOOL		IsShareable(LPCTSTR pszPath);
+	CLibraryFolder*	IsFolderShared(const CString& strPath) const;
+	CLibraryFolder*	IsSubFolderShared(const CString& strPath) const;
+	bool			IsShareable(const CString& strPath) const;
 	void			Maintain();
 
 // Virtual Album Operations
 	CAlbumFolder*	GetAlbumRoot();
 	BOOL			CheckAlbum(CAlbumFolder* pFolder) const;
 	CAlbumFolder*	GetAlbumTarget(LPCTSTR pszSchemaURI, LPCTSTR pszMember, LPCTSTR pszValue) const;
-    CAlbumFolder*	GetCollection(const Hashes::Sha1Hash& oSHA1);
-    BOOL			MountCollection(const Hashes::Sha1Hash& oSHA1, CCollectionFile* pCollection);
+	CAlbumFolder*	GetCollection(const Hashes::Sha1Hash& oSHA1);
+	BOOL			MountCollection(const Hashes::Sha1Hash& oSHA1, CCollectionFile* pCollection);
 	// Remove file from all albums and folders
 	BOOL			OnFileDelete(CLibraryFile* pFile, BOOL bDeleteGhost = FALSE);
 protected:

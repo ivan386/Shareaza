@@ -1,7 +1,7 @@
 //
 // LibraryFolders.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -21,19 +21,22 @@
 
 #include "StdAfx.h"
 #include "Shareaza.h"
-#include "Settings.h"
-#include "Library.h"
-#include "LibraryMaps.h"
+
 #include "LibraryFolders.h"
-#include "SharedFile.h"
-#include "SharedFolder.h"
+
 #include "AlbumFolder.h"
 #include "Application.h"
 #include "CollectionFile.h"
-
-#include "XML.h"
+#include "DlgHelp.h"
+#include "Settings.h"
+#include "Library.h"
+#include "LibraryMaps.h"
 #include "Schema.h"
 #include "SchemaCache.h"
+#include "SharedFile.h"
+#include "SharedFolder.h"
+#include "ShellIcons.h"
+#include "XML.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -87,7 +90,7 @@ CLibraryFolder* CLibraryFolders::GetFolder(LPCTSTR pszPath) const
 		CLibraryFolder* pFolder = GetNextFolder( pos )->GetFolderByPath( pszPath );
 		if ( pFolder != NULL ) return pFolder;
 	}
-	
+
 	return NULL;
 }
 
@@ -95,12 +98,12 @@ BOOL CLibraryFolders::CheckFolder(CLibraryFolder* pFolder, BOOL bRecursive) cons
 {
 	if ( m_pFolders.Find( pFolder ) != NULL ) return TRUE;
 	if ( ! bRecursive ) return FALSE;
-	
+
 	for ( POSITION pos = GetFolderIterator() ; pos ; )
 	{
 		if ( GetNextFolder( pos )->CheckFolder( pFolder, TRUE ) ) return TRUE;
 	}
-	
+
 	return FALSE;
 }
 
@@ -110,10 +113,10 @@ BOOL CLibraryFolders::CheckFolder(CLibraryFolder* pFolder, BOOL bRecursive) cons
 CLibraryFolder* CLibraryFolders::AddFolder(LPCTSTR pszPath)
 {
 	CString strPath = pszPath;
-	
+
 	if ( strPath.GetLength() == 3 && strPath.GetAt( 2 ) == '\\' )
 		strPath = strPath.Left( 2 );
-	
+
 	if ( IsFolderShared( strPath ) ) return NULL;
 	if ( IsSubFolderShared( strPath ) ) return NULL;
 
@@ -126,7 +129,7 @@ CLibraryFolder* CLibraryFolders::AddFolder(LPCTSTR pszPath)
 		for ( POSITION pos = GetFolderIterator() ; pos ; )
 		{
 			POSITION posAdd = pos;
-			
+
 			if ( GetNextFolder( pos )->m_sName.CompareNoCase( pFolder->m_sName ) >= 0 )
 			{
 				m_pFolders.InsertBefore( posAdd, pFolder );
@@ -134,14 +137,14 @@ CLibraryFolder* CLibraryFolders::AddFolder(LPCTSTR pszPath)
 				break;
 			}
 		}
-		
+
 		if ( ! bAdded ) m_pFolders.AddTail( pFolder );
 
 		pFolder->Maintain( TRUE );
 
 		Library.Update();
 	}
-	
+
 	return pFolder;
 }
 
@@ -156,13 +159,103 @@ CLibraryFolder* CLibraryFolders::AddFolder(LPCTSTR pszPath, BOOL bShared)
 }
 
 //////////////////////////////////////////////////////////////////////
+// CLibraryFolders add a shared folder to a List Control
+
+bool CLibraryFolders::AddSharedFolder(CListCtrl& oList)
+{
+	// Store the last path selected
+	static CString strLastPath;
+	if ( strLastPath.IsEmpty() )
+		strLastPath = oList.GetItemText( 0, 0 );
+
+	// Let user select a path to share
+	CString strPath( BrowseForFolder( _T("Select folder to share:"), strLastPath ) );
+	if ( strPath.IsEmpty() )
+		return false;
+
+	// Convert path to lowercase
+	CString strPathLC( strPath );
+	ToLower( strPathLC );
+
+	// Check if path is valid
+	if ( !IsShareable( strPathLC ) )
+	{
+		CHelpDlg::Show( _T("ShareHelp.BadShare") );
+		return false;
+	}
+
+	// Check if path is already shared
+	bool bForceAdd( false );
+	for ( int nItem( 0 ) ; nItem < oList.GetItemCount() ; ++nItem )
+	{
+		bool bSubFolder( false );
+		CString strOldLC( oList.GetItemText( nItem, 0 ) );
+		ToLower( strOldLC );
+
+		if ( strPathLC == strOldLC )
+		{
+			// Matches exactly
+		}
+		else if ( strPathLC.GetLength() > strOldLC.GetLength() )
+		{
+			if ( strPathLC.Left( strOldLC.GetLength() + 1 ) != strOldLC + '\\' )
+				continue;
+		}
+		else if ( strPathLC.GetLength() < strOldLC.GetLength() )
+		{
+			bSubFolder = true;
+			if ( strOldLC.Left( strPathLC.GetLength() + 1 ) != strPathLC + _T('\\') )
+				continue;
+		}
+		else
+		{
+			continue;
+		}
+
+		if ( bSubFolder )
+		{
+			CString strMessage;
+			strMessage.Format( IDS_LIBRARY_SUBFOLDER_IN_LIBRARY, strPath );
+
+			if ( bForceAdd || AfxMessageBox( strMessage, MB_ICONQUESTION|MB_YESNO ) == IDYES )
+			{
+				// Don't bother asking again- remove all sub-folders
+				bForceAdd = true;
+
+				// Remove the sub-folder
+				oList.DeleteItem( nItem );
+				--nItem;
+			}
+			else
+			{
+				return false;
+			}
+		}
+		else
+		{
+			CString strMessage;
+			strMessage.Format( IDS_WIZARD_SHARE_ALREADY, strOldLC );
+			AfxMessageBox( strMessage, MB_ICONINFORMATION );
+			return false;
+		}
+	}
+
+	//Add path to shared list
+	oList.InsertItem( LVIF_TEXT|LVIF_IMAGE, oList.GetItemCount(), strPath, 0,
+		0, SHI_FOLDER_OPEN, 0 );
+
+	// Return success
+	return true;
+}
+
+//////////////////////////////////////////////////////////////////////
 // CLibraryFolders remove a root physical folder
 
 BOOL CLibraryFolders::RemoveFolder(CLibraryFolder* pFolder)
 {
 	CWaitCursor pCursor;
 	CQuickLock pLock( Library.m_pSection );
-	
+
 	POSITION pos = m_pFolders.Find( pFolder );
 	if ( pos == NULL ) return FALSE;
 
@@ -170,32 +263,33 @@ BOOL CLibraryFolders::RemoveFolder(CLibraryFolder* pFolder)
 
 	pFolder->OnDelete( Settings.Library.CreateGhosts ? TRI_TRUE : TRI_FALSE );
 	m_pFolders.RemoveAt( pos );
-	
+
 	Library.Update();
-	
+
 	return TRUE;
 }
 
 //////////////////////////////////////////////////////////////////////
 // CLibraryFolders check if a physical folder is part of the library
 
-CLibraryFolder* CLibraryFolders::IsFolderShared(LPCTSTR pszPath)
+CLibraryFolder* CLibraryFolders::IsFolderShared(const CString& strPath) const
 {
-	CString strPathLC( pszPath );
+	// Convert path to lowercase
+	CString strPathLC( strPath );
 	ToLower( strPathLC );
-	
+
 	for ( POSITION pos = GetFolderIterator() ; pos ; )
 	{
 		CLibraryFolder* pFolder = GetNextFolder( pos );
-		
+
 		CString strOldLC( pFolder->m_sPath );
 		ToLower( strOldLC );
-		
+
 		if ( strPathLC.GetLength() > strOldLC.GetLength() )
 		{
 			int nLength = strOldLC.GetLength();
-			if ( strPathLC.Left( nLength ) == strOldLC && 
-				 strPathLC.GetAt( nLength ) == _T('\\') ) 
+			if ( strPathLC.Left( nLength ) == strOldLC &&
+				 strPathLC.GetAt( nLength ) == _T('\\') )
 				return pFolder;
 		}
 		else
@@ -203,43 +297,45 @@ CLibraryFolder* CLibraryFolders::IsFolderShared(LPCTSTR pszPath)
 			if ( strPathLC == strOldLC ) return pFolder;
 		}
 	}
-	
+
 	return NULL;
 }
 
 //////////////////////////////////////////////////////////////////////
 // CLibraryFolders check if a subfolder of a physical folder is part of the library
 
-CLibraryFolder* CLibraryFolders::IsSubFolderShared(LPCTSTR pszPath)
+CLibraryFolder* CLibraryFolders::IsSubFolderShared(const CString& strPath) const
 {
-	CString strPathLC( pszPath );
+	// Convert path to lowercase
+	CString strPathLC( strPath );
 	ToLower( strPathLC );
-	
+
 	for ( POSITION pos = GetFolderIterator() ; pos ; )
 	{
 		CLibraryFolder* pFolder = GetNextFolder( pos );
-		
+
 		CString strOldLC( pFolder->m_sPath );
 		ToLower( strOldLC );
-		
+
 		if ( strPathLC.GetLength() < strOldLC.GetLength() )
 		{
 			int nLength = strPathLC.GetLength();
-			if ( strOldLC.Left( nLength ) == strPathLC && 
-				 strOldLC.GetAt( nLength ) == _T('\\') ) 
+			if ( strOldLC.Left( nLength ) == strPathLC &&
+				 strOldLC.GetAt( nLength ) == _T('\\') )
 				 return pFolder;
 		}
 	}
-	
+
 	return NULL;
 }
 
 //////////////////////////////////////////////////////////////////////
 // CLibraryFolders check if folder is not a system directory, incomplete folder etc...
 
-BOOL CLibraryFolders::IsShareable(LPCTSTR pszPath)
+bool CLibraryFolders::IsShareable(const CString& strPath) const
 {
-	CString strPathLC( pszPath );
+	// Convert path to lowercase
+	CString strPathLC( strPath );
 	ToLower( strPathLC );
 
 	//Get system paths (to compare)
@@ -275,7 +371,7 @@ CAlbumFolder* CLibraryFolders::GetAlbumRoot()
 	{
 		m_pAlbumRoot = new CAlbumFolder( NULL, CSchema::uriLibrary );
 	}
-	
+
 	return m_pAlbumRoot;
 }
 
@@ -291,19 +387,19 @@ BOOL CLibraryFolders::CheckAlbum(CAlbumFolder* pFolder) const
 CAlbumFolder* CLibraryFolders::GetAlbumTarget(LPCTSTR pszSchemaURI, LPCTSTR pszMember, LPCTSTR pszValue) const
 {
 	if ( m_pAlbumRoot == NULL ) return NULL;
-	
+
 	CSchema* pSchema = SchemaCache.Get( pszSchemaURI );
 	if ( pSchema == NULL ) return NULL;
-	
+
 	CSchemaMember* pMember = pSchema->GetMember( pszMember );
-	
+
 	if ( pMember == NULL )
 	{
 		if ( pSchema->GetMemberCount() == 0 ) return NULL;
 		POSITION pos = pSchema->GetMemberIterator();
 		pMember = pSchema->GetNextMember( pos );
 	}
-	
+
 	if ( pszValue != NULL )
 	{
 		CString strValue( pszValue );
@@ -331,15 +427,15 @@ BOOL CLibraryFolders::MountCollection(const Hashes::Sha1Hash& oSHA1, CCollection
 {
 	CSingleLock pLock( &Library.m_pSection );
 	BOOL bSuccess = FALSE;
-	
+
 	if ( ! pLock.Lock( 500 ) ) return FALSE;
-	
+
 	if ( pCollection->GetThisURI().GetLength() )
 	{
 		bSuccess |= GetAlbumRoot()->MountCollection( oSHA1, pCollection );
 	}
 
-/*	
+/*
 	if ( pCollection->GetParentURI().GetLength() )
 	{
 		if ( CAlbumFolder* pFolder = GetAlbumTarget( pCollection->GetParentURI(), NULL, NULL ) )
@@ -347,7 +443,7 @@ BOOL CLibraryFolders::MountCollection(const Hashes::Sha1Hash& oSHA1, CCollection
 			bSuccess |= pFolder->MountCollection( oSHA1, pCollection, TRUE );
 		}
 	}
-*/	
+*/
 	return bSuccess;
 }
 
@@ -357,30 +453,30 @@ BOOL CLibraryFolders::MountCollection(const Hashes::Sha1Hash& oSHA1, CCollection
 void CLibraryFolders::CreateAlbumTree()
 {
 	INT_PTR nCount = GetAlbumRoot()->GetFolderCount();
-	
+
 	if ( m_pAlbumRoot->GetFolderByURI( CSchema::uriAllFiles ) == NULL )
 	{
 		/*CAlbumFolder* pAllFiles		=*/ m_pAlbumRoot->AddFolder( CSchema::uriAllFiles );
 	}
-	
+
 	if ( m_pAlbumRoot->GetFolderByURI( CSchema::uriApplicationRoot ) == NULL )
 	{
 		CAlbumFolder* pAppRoot		= m_pAlbumRoot->AddFolder( CSchema::uriApplicationRoot );
 		/*CAlbumFolder* pAppAll		=*/ pAppRoot->AddFolder( CSchema::uriApplicationAll );
 	}
-	
+
 	if ( m_pAlbumRoot->GetFolderByURI( CSchema::uriBookRoot ) == NULL )
 	{
 		CAlbumFolder* pBookRoot		= m_pAlbumRoot->AddFolder( CSchema::uriBookRoot );
 		/*CAlbumFolder* pBookAll		=*/ pBookRoot->AddFolder( CSchema::uriBookAll );
 	}
-	
+
 	if ( m_pAlbumRoot->GetFolderByURI( CSchema::uriImageRoot ) == NULL )
 	{
 		CAlbumFolder* pImageRoot	= m_pAlbumRoot->AddFolder( CSchema::uriImageRoot );
 		/*CAlbumFolder* pImageAll		=*/ pImageRoot->AddFolder( CSchema::uriImageAll );
 	}
-	
+
 	if ( m_pAlbumRoot->GetFolderByURI( CSchema::uriMusicRoot ) == NULL )
 	{
 		CAlbumFolder* pMusicRoot	= m_pAlbumRoot->AddFolder( CSchema::uriMusicRoot );
@@ -389,7 +485,7 @@ void CLibraryFolders::CreateAlbumTree()
 		/*CAlbumFolder* pMusicArtist	=*/ pMusicRoot->AddFolder( CSchema::uriMusicArtistCollection );
 		/*CAlbumFolder* pMusicGenre	=*/ pMusicRoot->AddFolder( CSchema::uriMusicGenreCollection );
 	}
-	
+
 	if ( m_pAlbumRoot->GetFolderByURI( CSchema::uriVideoRoot ) == NULL )
 	{
 		CAlbumFolder* pVideoRoot	= m_pAlbumRoot->AddFolder( CSchema::uriVideoRoot );
@@ -398,17 +494,17 @@ void CLibraryFolders::CreateAlbumTree()
 		/*CAlbumFolder* pVideoFilm	=*/ pVideoRoot->AddFolder( CSchema::uriVideoFilmCollection );
 		/*CAlbumFolder* pVideoMusic	=*/ pVideoRoot->AddFolder( CSchema::uriVideoMusicCollection );
 	}
-	
+
 	if ( m_pAlbumRoot->GetFolderByURI( CSchema::uriFavouritesFolder ) == NULL )
 	{
 		/*CAlbumFolder* pFavourites	=*/ m_pAlbumRoot->AddFolder( CSchema::uriFavouritesFolder );
 	}
-	
+
 	if ( m_pAlbumRoot->GetFolderByURI( CSchema::uriCollectionsFolder ) == NULL )
 	{
 		/*CAlbumFolder* pCollections	=*/ m_pAlbumRoot->AddFolder( CSchema::uriCollectionsFolder );
 	}
-	
+
 	if ( m_pAlbumRoot->GetFolderByURI( CSchema::uriDocumentRoot ) == NULL )
 	{
 		CAlbumFolder* pDocumentRoot		= m_pAlbumRoot->AddFolder( CSchema::uriDocumentRoot );
@@ -468,7 +564,7 @@ BOOL CLibraryFolders::ThreadScan(const BOOL bForce)
 	for ( POSITION pos = GetFolderIterator() ; pos && Library.IsThreadEnabled() ; )
 	{
 		CLibraryFolder* pFolder = GetNextFolder( pos );
-		
+
 		if ( GetFileAttributes( pFolder->m_sPath ) != INVALID_FILE_ATTRIBUTES )
 		{
 			if ( pFolder->SetOnline() ) bChanged = TRUE;
@@ -481,7 +577,7 @@ BOOL CLibraryFolders::ThreadScan(const BOOL bForce)
 		else
 			if ( pFolder->SetOffline() ) bChanged = TRUE;
 	}
-	
+
 	return bChanged;
 }
 
@@ -493,7 +589,7 @@ void CLibraryFolders::Serialize(CArchive& ar, int nVersion)
 	if ( ar.IsStoring() )
 	{
 		ar.WriteCount( GetFolderCount() );
-		
+
 		for ( POSITION pos = GetFolderIterator() ; pos ; )
 		{
 			GetNextFolder( pos )->Serialize( ar, nVersion );
@@ -510,7 +606,7 @@ void CLibraryFolders::Serialize(CArchive& ar, int nVersion)
 			pFolder->Maintain( TRUE );
 		}
 	}
-	
+
 	if ( nVersion >= 6 ) GetAlbumRoot()->Serialize( ar, nVersion );
 }
 
@@ -552,7 +648,7 @@ STDMETHODIMP CLibraryFolders::XLibraryFolders::get_Item(VARIANT vIndex, ILibrary
 
 	CLibraryFolder* pFolder = NULL;
 	*ppFolder = NULL;
-	
+
 	if ( vIndex.vt == VT_BSTR )
 	{
 		CString strName( vIndex.bstrVal );
@@ -567,7 +663,7 @@ STDMETHODIMP CLibraryFolders::XLibraryFolders::get_Item(VARIANT vIndex, ILibrary
 			return E_INVALIDARG;
 		if ( va.lVal < 0 || va.lVal >= pThis->GetFolderCount() )
 			return E_INVALIDARG;
-		
+
 		for ( POSITION pos = pThis->GetFolderIterator() ; pos ; )
 		{
 			pFolder = pThis->GetNextFolder( pos );
@@ -575,9 +671,9 @@ STDMETHODIMP CLibraryFolders::XLibraryFolders::get_Item(VARIANT vIndex, ILibrary
 			pFolder = NULL;
 		}
 	}
-	
+
 	*ppFolder = pFolder ? (ILibraryFolder*)pFolder->GetInterface( IID_ILibraryFolder, TRUE ) : NULL;
-	
+
 	return S_OK;
 }
 

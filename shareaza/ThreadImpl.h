@@ -1,7 +1,7 @@
 //
 // ThreadImpl.h
 //
-// Copyright (c) Shareaza Development Team, 2008.
+// Copyright (c) Shareaza Development Team, 2008-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -21,7 +21,7 @@
 
 #pragma once
 
-
+#include "Shareaza.h"
 #include "ShareazaThread.h"
 
 

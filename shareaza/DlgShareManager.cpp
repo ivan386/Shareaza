@@ -1,7 +1,7 @@
 //
 // DlgShareManager.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -20,17 +20,14 @@
 //
 
 #include "StdAfx.h"
-#include "Shareaza.h"
-#include "Settings.h"
+
+#include "DlgShareManager.h"
+
+#include "DlgFolderScan.h"
 #include "Library.h"
 #include "LibraryFolders.h"
 #include "SharedFolder.h"
 #include "ShellIcons.h"
-#include "DlgShareManager.h"
-#include "DlgFolderScan.h"
-#include "LiveList.h"
-#include "Skin.h"
-#include "DlgHelp.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -110,88 +107,7 @@ void CShareManagerDlg::OnItemChangedShareFolders(NMHDR* /*pNMHDR*/, LRESULT* pRe
 
 void CShareManagerDlg::OnShareAdd()
 {
-	static CString strLatestPath;
-	if ( strLatestPath.IsEmpty() )
-		strLatestPath = m_wndList.GetItemText( 0, 0 );
-
-	//Let user select path to share
-	CString strPath( BrowseForFolder( _T("Select folder to share:"), strLatestPath ) );
-	if ( strPath.IsEmpty() )
-		return;
-
-	strLatestPath = strPath;
-
-	CString strPathLC( strPath );
-	ToLower( strPathLC );
-
-	//Check shared path isn't invalid
-	if ( !LibraryFolders.IsShareable( strPathLC ) )
-	{
-		CHelpDlg::Show( _T("ShareHelp.BadShare") );
-		return;
-	}
-
-	BOOL bForceAdd = FALSE;
-	//Check shared path isn't already shared
-	for ( int nItem = 0 ; nItem < m_wndList.GetItemCount() ; nItem++ )
-	{
-		BOOL bSubFolder = FALSE;
-		CString strOldLC( m_wndList.GetItemText( nItem, 0 ) );
-		ToLower( strOldLC );
-
-		if ( strPathLC == strOldLC )
-		{
-			// Matches exactly
-		}
-		else if ( strPathLC.GetLength() > strOldLC.GetLength() )
-		{
-			if ( strPathLC.Left( strOldLC.GetLength() + 1 ) != strOldLC + '\\' )
-				continue;
-		}
-		else if ( strPathLC.GetLength() < strOldLC.GetLength() )
-		{
-			bSubFolder = TRUE;
-			if ( strOldLC.Left( strPathLC.GetLength() + 1 ) != strPathLC + '\\' )
-				continue;
-		}
-		else
-		{
-			continue;
-		}
-
-		if ( bSubFolder )
-		{
-			CString strFormat, strMessage;
-			LoadString( strFormat, IDS_LIBRARY_SUBFOLDER_IN_LIBRARY );
-			strMessage.Format( strFormat, (LPCTSTR)strPath );
-
-			if ( bForceAdd || AfxMessageBox( strMessage, MB_ICONQUESTION|MB_YESNO ) == IDYES )
-			{
-				// Don't bother asking again- remove all sub-folders
-				bForceAdd = TRUE;
-				// Remove the sub-folder
-				m_wndList.DeleteItem( nItem );
-				nItem--;
-			}
-			else
-			{
-				return;
-			}
-		}
-		else
-		{
-			CString strFormat, strMessage;
-			Skin.LoadString( strFormat, IDS_WIZARD_SHARE_ALREADY );
-			strMessage.Format( strFormat, (LPCTSTR)strOldLC );
-			AfxMessageBox( strMessage, MB_ICONINFORMATION );
-			//CHelpDlg::Show(  _T( "ShareHelp.AlreadyShared" ) );
-			return;
-		}
-	}
-
-	//Add path to shared list
-	m_wndList.InsertItem( LVIF_TEXT|LVIF_IMAGE, m_wndList.GetItemCount(),
-		strPath, 0, 0, SHI_FOLDER_OPEN, 0 );
+	LibraryFolders.AddSharedFolder( m_wndList );
 }
 
 void CShareManagerDlg::OnShareRemove()
