@@ -2381,8 +2381,13 @@ void SafeMessageLoop()
 			TranslateMessage( &msg );
 			DispatchMessage( &msg );
 		}
-		LONG lIdle = 0;
-		while ( AfxGetApp()->OnIdle( lIdle++ ) );
+
+		if ( GetWindowThreadProcessId( AfxGetMainWnd()->GetSafeHwnd(), NULL ) ==
+			GetCurrentThreadId() )
+		{
+			LONG lIdle = 0;
+			while ( AfxGetApp()->OnIdle( lIdle++ ) );
+		}
 	}
 	__except( EXCEPTION_EXECUTE_HANDLER )
 	{
