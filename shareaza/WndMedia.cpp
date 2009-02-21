@@ -1,7 +1,7 @@
 //
 // WndMedia.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -47,7 +47,7 @@ BEGIN_MESSAGE_MAP(CMediaWnd, CPanelWnd)
 	ON_WM_NCACTIVATE()
 	//}}AFX_MSG_MAP
 	ON_MESSAGE(WM_IDLEUPDATECMDUI, OnIdleUpdateCmdUI)
-	ON_MESSAGE(0x0319, OnMediaKey)
+	ON_MESSAGE(WM_APPCOMMAND, OnMediaKey)
 	ON_MESSAGE(WM_DEVMODECHANGE, OnDevModeChange)
 	ON_MESSAGE(WM_DISPLAYCHANGE, OnDisplayChange)
 	ON_MESSAGE(WM_ENQUEUEFILE, OnEnqueueFile)

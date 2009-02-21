@@ -130,9 +130,9 @@ BEGIN_MESSAGE_MAP(CMainWnd, CMDIFrameWnd)
 	ON_MESSAGE(WM_TRAY, OnTray)
 	ON_MESSAGE(WM_SETALPHA, OnChangeAlpha)
 	ON_MESSAGE(WM_SKINCHANGED, OnSkinChanged)
-	ON_MESSAGE(WM_AFX_SETMESSAGESTRING, OnSetMessageString)
+	ON_MESSAGE(WM_SETMESSAGESTRING, OnSetMessageString)
 	ON_MESSAGE(WM_SETTEXT, OnSetText)
-	ON_MESSAGE(0x0319, OnMediaKey)
+	ON_MESSAGE(WM_APPCOMMAND, OnMediaKey)
 	ON_MESSAGE(WM_DEVMODECHANGE, OnDevModeChange)
 	ON_MESSAGE(WM_DISPLAYCHANGE, OnDisplayChange)
 	ON_MESSAGE(WM_LIBRARYSEARCH, OnLibrarySearch)
@@ -2679,8 +2679,8 @@ void CMainWnd::OnHelpFakeShareaza()
 	}
 	else
 	{
-		ShellExecute( GetSafeHwnd(), _T("open"), 
-		_T("http://translate.google.com/translate?u=fakeshareaza.com&hl=en&tl=") + Settings.General.Language.Left(2), 
+		ShellExecute( GetSafeHwnd(), _T("open"),
+		_T("http://translate.google.com/translate?u=fakeshareaza.com&hl=en&tl=") + Settings.General.Language.Left(2),
 		NULL, NULL, SW_SHOWNORMAL );
 	}
 }

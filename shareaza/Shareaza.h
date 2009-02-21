@@ -435,10 +435,6 @@ inline __int64 GetRandomNum<__int64>(const __int64& min, const __int64& max)
 #define WM_QUERYHITS		(WM_APP+116)	// Route query hits over windows ( WPARAM: unused, LPARAM: CQueryHit* pHits )
 #define WM_NOWUPLOADING		(WM_APP+117)	// New upload notification ( WPARAM: unused, LPARAM: CString* pFilename )
 
-#define WM_AFX_SETMESSAGESTRING 0x0362
-#define WM_AFX_POPMESSAGESTRING 0x0375
-#define WM_IDLEUPDATECMDUI		0x0363
-
 #define ID_PLUGIN_FIRST	27000
 #define ID_PLUGIN_LAST	27999
 
