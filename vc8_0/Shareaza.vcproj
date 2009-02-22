@@ -28,9 +28,9 @@
 			>
 			<Tool
 				Name="VCCustomBuildTool"
-				Description="Copying LibGFL280 dll..."
-				CommandLine="if not exist &quot;$(OutDir)libgfl280.dll&quot; (&#x0D;&#x0A;xcopy &quot;$(SolutionDir)..\plugins\libGFL\$(ConfigurationName)$(PlatformName)\libgfl280.dll&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;)&#x0D;&#x0A;"
-				Outputs="$(OutDir)libgfl280.dll"
+				Description="Copying LibGFL280 &amp; BugTrap dlls..."
+				CommandLine="if not exist &quot;$(OutDir)libgfl280.dll&quot; (&#x0D;&#x0A;xcopy &quot;$(SolutionDir)..\plugins\libGFL\$(ConfigurationName)$(PlatformName)\libgfl280.dll&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;)&#x0D;&#x0A;if not exist &quot;$(OutDir)BugTrapU.dll&quot; (&#x0D;&#x0A;xcopy &quot;$(SolutionDir)..\BugTrap\BugTrapU.dll&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;)&#x0D;&#x0A;"
+				Outputs="$(OutDir)libgfl280.dll;$(OutDir)BugTrapU"
 				ExecutionBucket="1"
 			/>
 			<Tool
@@ -54,7 +54,7 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/Wall"
 				Optimization="0"
-				AdditionalIncludeDirectories="$(IntDir);$(SolutionDir)..\shareaza\zlib"
+				AdditionalIncludeDirectories="$(IntDir)"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_SHAREAZA;SHAREAZA_USE_ASM;ZLIB_WINAPI;ZLIB_DLL"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -124,9 +124,9 @@
 			>
 			<Tool
 				Name="VCCustomBuildTool"
-				Description="Copying LibGFL280 dll..."
-				CommandLine="if not exist &quot;$(OutDir)libgfl280.dll&quot; (&#x0D;&#x0A;xcopy &quot;$(SolutionDir)..\plugins\libGFL\$(ConfigurationName)$(PlatformName)\libgfl280.dll&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;)&#x0D;&#x0A;"
-				Outputs="$(OutDir)libgfl280.dll"
+				Description="Copying LibGFL280 &amp; BugTrap dlls..."
+				CommandLine="if not exist &quot;$(OutDir)libgfl280.dll&quot; (&#x0D;&#x0A;xcopy &quot;$(SolutionDir)..\plugins\libGFL\$(ConfigurationName)$(PlatformName)\libgfl280.dll&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;)&#x0D;&#x0A;if not exist &quot;$(OutDir)BugTrapU-x64.dll&quot; (&#x0D;&#x0A;xcopy &quot;$(SolutionDir)..\BugTrap\BugTrapU-x64.dll&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;)&#x0D;&#x0A;"
+				Outputs="$(OutDir)libgfl280.dll;$(OutDir)BugTrapU-x64.dll"
 				ExecutionBucket="1"
 			/>
 			<Tool
@@ -151,7 +151,7 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/Wall"
 				Optimization="0"
-				AdditionalIncludeDirectories="$(IntDir);$(SolutionDir)..\shareaza\zlib"
+				AdditionalIncludeDirectories="$(IntDir)"
 				PreprocessorDefinitions="WIN64;_DEBUG;_WINDOWS;_SHAREAZA;ZLIB_WINAPI;ZLIB_DLL"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -247,7 +247,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/Wall"
-				AdditionalIncludeDirectories="$(IntDir);$(SolutionDir)..\shareaza\zlib"
+				AdditionalIncludeDirectories="$(IntDir)"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_SHAREAZA;SHAREAZA_USE_ASM;ZLIB_WINAPI;ZLIB_DLL"
 				MinimalRebuild="true"
 				RuntimeLibrary="2"
@@ -345,7 +345,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/Wall"
-				AdditionalIncludeDirectories="$(IntDir);$(SolutionDir)..\shareaza\zlib"
+				AdditionalIncludeDirectories="$(IntDir)"
 				PreprocessorDefinitions="WIN64;NDEBUG;_WINDOWS;_SHAREAZA;ZLIB_WINAPI;ZLIB_DLL"
 				MinimalRebuild="true"
 				RuntimeLibrary="2"
@@ -4510,6 +4510,66 @@
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="0"
 						DisableSpecificWarnings="4255;4619;4668;4820;4826"
+					/>
+				</FileConfiguration>
+			</File>
+		</Filter>
+		<Filter
+			Name="Library Files"
+			>
+			<File
+				RelativePath="..\BugTrap\BugTrapU.lib"
+				>
+				<FileConfiguration
+					Name="Debug|x64"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|x64"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\BugTrap\BugTrapU-x64.lib"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|x64"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
 					/>
 				</FileConfiguration>
 			</File>
