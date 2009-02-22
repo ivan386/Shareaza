@@ -103,6 +103,7 @@ Name: "deleteoldsetup"; Description: "{cm:tasks_deleteoldsetup}"; Check: EnableD
 Name: "resetdiscoveryhostcache"; Description: "{cm:tasks_resetdiscoveryhostcache}"; Flags: unchecked
 
 [Files]
+;--== Executables ==--
 ; Main files
 Source: "{#root}\Shareaza.exe";      DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 Source: "{#root}\Skin.exe";          DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
@@ -125,24 +126,16 @@ Source: "plugins\MediaPlayer.dll"; DestDir: "{app}"; Flags: overwritereadonly re
 Source: "plugins\RazaWebHook.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 
 
-;--== Debug Databases ==--
 #if ConfigurationName == "Debug"
-
+;--== Debug Databases ==--
 ; Main files
 Source: "{#root}\shareaza.pdb"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 ; ** The next line can be uncommented to include geoip, skin & zlibwapi debug database files
 ;Source: "{#root}\*.pdb"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 
-#if PlatformName == "Win32"
-Source: "BugTrap\BugTrapU.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
-#elif PlatformName == "x64"
-Source: "BugTrap\BugTrapU-x64.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
-#endif
-
 ; Plugins
 ; ** This section can be uncommented to include the debug database files for all the plugins
 ;Source: "{#root}\plugins\*.pdb"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
-
 #endif
 
 
