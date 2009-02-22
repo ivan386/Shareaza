@@ -1,7 +1,7 @@
 //
 // DownloadWithSources.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -180,8 +180,6 @@ BOOL CDownloadWithSources::CheckSource(CDownloadSource* pCheck) const
 
 void CDownloadWithSources::ClearSources()
 {
-	CQuickLock pLock( Transfers.m_pSection );
-
 	for ( CDownloadSource* pSource = m_pSourceFirst ; pSource ; )
 	{
 		CDownloadSource* pNext = pSource->m_pNext;

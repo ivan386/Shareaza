@@ -47,6 +47,7 @@
 #include "Application.h"
 #include "VersionChecker.h"
 #include "DlgFolderScan.h"
+#include "Transfers.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -319,6 +320,7 @@ BOOL CLibraryFile::Delete(BOOL bDeleteGhost)
 		LibraryBuilder.Remove( this );
 
 		// Close download handler
+		CQuickLock pLock( Transfers.m_pSection );
 		CDownload* pDownload = Downloads.FindByPath( GetPath() );
 		if ( pDownload )
 			// Also deletes file and closes upload handlers

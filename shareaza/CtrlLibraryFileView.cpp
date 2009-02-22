@@ -1,7 +1,7 @@
 //
 // CtrlLibraryFileView.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -47,6 +47,7 @@
 #include "Schema.h"
 #include "XML.h"
 #include "ShareMonkeyData.h"
+#include "Transfers.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -479,7 +480,8 @@ void CLibraryFileView::OnUpdateLibraryDelete(CCmdUI* pCmdUI)
 
 void CLibraryFileView::OnLibraryDelete() 
 {
-	CSingleLock pLock( &Library.m_pSection, TRUE );
+	CSingleLock pTransfersLock( &Transfers.m_pSection, TRUE ); // Can clear uploads and downloads
+	CSingleLock pLibraryLock( &Library.m_pSection, TRUE );
 	CLibraryList pList;
 	
 	StartSelectedFileLoop();
@@ -518,9 +520,13 @@ void CLibraryFileView::OnLibraryDelete()
 			dlg.m_nRateValue = pFile->m_nRating;
 			dlg.m_bAll	= pList.GetCount() > 1;
 			
-			pLock.Unlock();
+			pLibraryLock.Unlock();
+			pTransfersLock.Unlock();
+
 			if ( dlg.DoModal() != IDOK ) break;
-			pLock.Lock();
+
+			pTransfersLock.Lock();
+			pLibraryLock.Lock();
 			
 			for ( INT_PTR nProcess = dlg.m_bAll ? pList.GetCount() : 1 ; nProcess > 0 && pList.GetCount() > 0 ; nProcess-- )
 			{
