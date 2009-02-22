@@ -180,13 +180,13 @@ INT_PTR CLibraryFolder::GetFileCount() const
 int CLibraryFolder::GetFileList(CLibraryList* pList, BOOL bRecursive) const
 {
 	int nCount = 0;
-	
+
 	for ( POSITION pos = GetFileIterator() ; pos ; )
 	{
 		pList->CheckAndAdd( GetNextFile( pos ) );
 		nCount++;
 	}
-	
+
 	if ( bRecursive )
 	{
 		for ( POSITION pos = GetFolderIterator() ; pos ; )
@@ -194,25 +194,25 @@ int CLibraryFolder::GetFileList(CLibraryList* pList, BOOL bRecursive) const
 			GetNextFolder( pos )->GetFileList( pList, bRecursive );
 		}
 	}
-	
+
 	return nCount;
 }
 
 int CLibraryFolder::GetSharedCount() const
 {
 	int nCount = 0;
-	
+
 	for ( POSITION pos = GetFileIterator() ; pos ; )
 	{
 		CLibraryFile* pFile = GetNextFile( pos );
 		if ( pFile->IsShared() ) nCount++;
 	}
-	
+
 	for ( POSITION pos = GetFolderIterator() ; pos ; )
 	{
 		nCount += GetNextFolder( pos )->GetSharedCount();
 	}
-	
+
 	return nCount;
 }
 
@@ -227,15 +227,15 @@ void CLibraryFolder::Clear()
 	{
 		delete GetNextFolder( pos );
 	}
-	
+
 	for ( POSITION pos = GetFileIterator() ; pos ; )
 	{
 		delete GetNextFile( pos );
 	}
-	
+
 	m_pFolders.RemoveAll();
 	m_pFiles.RemoveAll();
-	
+
 	m_nFiles	= 0;
 	m_nVolume	= 0;
 }
@@ -259,7 +259,7 @@ void CLibraryFolder::Serialize(CArchive& ar, int nVersion)
 		{
 			GetNextFolder( pos )->Serialize( ar, nVersion );
 		}
-		
+
 		ar.WriteCount( GetFileCount() );
 
 		for ( POSITION pos = GetFileIterator() ; pos ; )
@@ -285,14 +285,15 @@ void CLibraryFolder::Serialize(CArchive& ar, int nVersion)
 			ar >> bShared;
 			m_bShared = bShared ? TRI_UNKNOWN : TRI_FALSE;
 		}
-		
-		if ( nVersion >= 3 ) ar >> m_bExpanded;
+
+		if ( nVersion >= 3 )
+			ar >> m_bExpanded;
 
 		PathToName();
 
 		DWORD_PTR nCount = ar.ReadCount();
 
-		m_pFolders.InitHashTable( GetBestHashTableSize( nCount ) );
+		m_pFolders.InitHashTable( GetBestHashTableSize( nCount ), FALSE );
 
 		for ( ; nCount > 0 ; nCount-- )
 		{
@@ -309,9 +310,9 @@ void CLibraryFolder::Serialize(CArchive& ar, int nVersion)
 			m_nFiles	+= pFolder->m_nFiles;
 			m_nVolume	+= pFolder->m_nVolume;
 		}
-	
+
 		nCount = ar.ReadCount();
-		m_pFiles.InitHashTable( GetBestHashTableSize( nCount ) );
+		m_pFiles.InitHashTable( GetBestHashTableSize( nCount ), FALSE );
 
 		for ( ; nCount > 0 ; nCount-- )
 		{
@@ -335,7 +336,8 @@ void CLibraryFolder::PathToName()
 {
 	m_sName = m_sPath;
 	int nPos = m_sName.ReverseFind( '\\' );
-	if ( nPos >= 0 && nPos < m_sName.GetLength() - 1 ) m_sName = m_sName.Mid( nPos + 1 );
+	if ( nPos >= 0 && nPos < m_sName.GetLength() - 1 )
+		m_sName = m_sName.Mid( nPos + 1 );
 	m_sNameLC = m_sName;
 	ToLower( m_sNameLC );
 }
@@ -348,18 +350,18 @@ BOOL CLibraryFolder::ThreadScan(DWORD nScanCookie)
 	CSingleLock pLock( &Library.m_pSection );
 	WIN32_FIND_DATA pFind;
 	HANDLE hSearch;
-	
+
 	if ( m_sPath.CompareNoCase( Settings.Downloads.IncompletePath ) == 0 ) return FALSE;
 
 	hSearch = FindFirstFile( m_sPath + _T("\\*.*"), &pFind );
-	
+
 	pLock.Lock();
 	m_nScanCookie	= nScanCookie;
 	nScanCookie		= ++Library.m_nScanCookie;
 	pLock.Unlock();
-	
+
 	BOOL bChanged = FALSE;
-	
+
 	if ( hSearch != INVALID_HANDLE_VALUE )
 	{
 		do
@@ -374,7 +376,7 @@ BOOL CLibraryFolder::ThreadScan(DWORD nScanCookie)
 				{
 					m_nFiles	-= pFolder->m_nFiles;
 					m_nVolume	-= pFolder->m_nVolume;
-					
+
 					if ( pFolder->m_sName != pFind.cFileName )
 					{
 						CString strNameLC( pFolder->m_sName );
@@ -399,10 +401,10 @@ BOOL CLibraryFolder::ThreadScan(DWORD nScanCookie)
 					m_nUpdateCookie++;
 					pLock.Unlock();
 				}
-				
+
 				if ( pFolder->ThreadScan( nScanCookie ) )
 					bChanged = TRUE;
-				
+
 				m_nFiles	+= pFolder->m_nFiles;
 				m_nVolume	+= pFolder->m_nVolume;
 			}
@@ -425,7 +427,7 @@ BOOL CLibraryFolder::ThreadScan(DWORD nScanCookie)
 				}
 				else
 					bChanged = TRUE;
-				
+
 				pLock.Unlock();
 
 				QWORD nLongSize = (QWORD)pFind.nFileSizeLow |
@@ -439,10 +441,10 @@ BOOL CLibraryFolder::ThreadScan(DWORD nScanCookie)
 			}
 		}
 		while ( Library.IsThreadEnabled() && FindNextFile( hSearch, &pFind ) );
-		
+
 		FindClose( hSearch );
 	}
-	
+
 	if ( ! Library.IsThreadEnabled() ) return FALSE;
 
 	pLock.Lock();
@@ -450,27 +452,27 @@ BOOL CLibraryFolder::ThreadScan(DWORD nScanCookie)
 	for ( POSITION pos = GetFolderIterator() ; pos ; )
 	{
 		CLibraryFolder* pFolder = GetNextFolder( pos );
-		
+
 		if ( pFolder->m_nScanCookie != nScanCookie )
 		{
 			CString strNameLC( pFolder->m_sName );
 			ToLower( strNameLC );
-			
+
 			m_nFiles	-= pFolder->m_nFiles;
 			m_nVolume	-= pFolder->m_nVolume;
-			
+
 			m_pFolders.RemoveKey( strNameLC );
 			pFolder->OnDelete();
-			
+
 			bChanged = TRUE;
 			m_nUpdateCookie++;
 		}
 	}
-	
+
 	for ( POSITION pos = GetFileIterator() ; pos ; )
 	{
 		CLibraryFile* pFile = GetNextFile( pos );
-		
+
 		if ( pFile->m_nScanCookie != nScanCookie )
 		{
 			pFile->OnDelete();
@@ -561,7 +563,7 @@ BOOL CLibraryFolder::IsChanged()
 
 void CLibraryFolder::Scan()
 {
-    CLibraryFolder* pFolder = this;
+	CLibraryFolder* pFolder = this;
 	for ( ; pFolder->m_pParent ; pFolder = pFolder->m_pParent );
 	if ( pFolder ) pFolder->m_bForceScan = TRUE;
 	Library.Wakeup();
@@ -654,15 +656,15 @@ void CLibraryFolder::OnDelete(TRISTATE bCreateGhost)
 	{
 		GetNextFolder( pos )->OnDelete();
 	}
-	
+
 	for ( POSITION pos = GetFileIterator() ; pos ; )
 	{
 		GetNextFile( pos )->OnDelete( FALSE, bCreateGhost );
 	}
-	
+
 	m_pFolders.RemoveAll();
 	m_pFiles.RemoveAll();
-	
+
 	delete this;
 }
 
@@ -882,7 +884,7 @@ STDMETHODIMP CLibraryFolder::XLibraryFolders::get_Item(VARIANT vIndex, ILibraryF
 
 	CLibraryFolder* pFolder = NULL;
 	*ppFolder = NULL;
-	
+
 	if ( vIndex.vt == VT_BSTR )
 	{
 		CString strName( vIndex.bstrVal );
@@ -900,7 +902,7 @@ STDMETHODIMP CLibraryFolder::XLibraryFolders::get_Item(VARIANT vIndex, ILibraryF
 			return E_INVALIDARG;
 		if ( va.lVal < 0 || va.lVal >= pThis->GetFolderCount() )
 			return E_INVALIDARG;
-		
+
 		for ( POSITION pos = pThis->GetFolderIterator() ; pos ; )
 		{
 			pFolder = pThis->GetNextFolder( pos );
@@ -908,9 +910,9 @@ STDMETHODIMP CLibraryFolder::XLibraryFolders::get_Item(VARIANT vIndex, ILibraryF
 			pFolder = NULL;
 		}
 	}
-	
+
 	*ppFolder = pFolder ? (ILibraryFolder*)pFolder->GetInterface( IID_ILibraryFolder, TRUE ) : NULL;
-	
+
 	return S_OK;
 }
 
@@ -951,7 +953,7 @@ STDMETHODIMP CLibraryFolder::XLibraryFiles::get_Item(VARIANT vIndex, ILibraryFil
 
 	CLibraryFile* pFile = NULL;
 	*ppFile = NULL;
-	
+
 	if ( vIndex.vt == VT_BSTR )
 	{
 		CString strName( vIndex.bstrVal );
@@ -966,7 +968,7 @@ STDMETHODIMP CLibraryFolder::XLibraryFiles::get_Item(VARIANT vIndex, ILibraryFil
 			return E_INVALIDARG;
 		if ( va.lVal < 0 || va.lVal >= pThis->GetFileCount() )
 			return E_INVALIDARG;
-		
+
 		for ( POSITION pos = pThis->GetFileIterator() ; pos ; )
 		{
 			pFile = pThis->GetNextFile( pos );
@@ -974,9 +976,9 @@ STDMETHODIMP CLibraryFolder::XLibraryFiles::get_Item(VARIANT vIndex, ILibraryFil
 			pFile = NULL;
 		}
 	}
-	
+
 	*ppFile = pFile ? (ILibraryFile*)pFile->GetInterface( IID_ILibraryFile, TRUE ) : NULL;
-	
+
 	return S_OK;
 }
 
