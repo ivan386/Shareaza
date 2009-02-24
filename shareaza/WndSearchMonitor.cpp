@@ -1,7 +1,7 @@
 //
 // WndSearchMonitor.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -95,7 +95,7 @@ int CSearchMonitorWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_wndList.InsertColumn( 0, _T("Search"), LVCFMT_LEFT, 200, -1 );
 	m_wndList.InsertColumn( 1, _T("URN"), LVCFMT_LEFT, 400, 0 );
 	m_wndList.InsertColumn( 2, _T("Schema"), LVCFMT_LEFT, 100, 1 );
-	m_wndList.InsertColumn( 3, _T("Host"), LVCFMT_LEFT, 100, 2 );
+	m_wndList.InsertColumn( 3, _T("Endpoint"), LVCFMT_LEFT, 100, 2 );
 
 	m_wndList.SetFont( &theApp.m_gdiFont );
 	
@@ -215,7 +215,10 @@ void CSearchMonitorWnd::OnQuerySearch(CQuerySearch* pSearch)
 	CString strSchema	= _T("None");
 	CString strURN		= _T("None");
 	CString strNode;
-	strNode.Format( _T("%hs:%u"), inet_ntoa( pSearch->m_pEndpoint.sin_addr ), ntohs( pSearch->m_pEndpoint.sin_port ) );
+	if ( pSearch->m_pEndpoint.sin_addr.s_addr )
+		strNode.Format( _T("%hs:%u"),
+			inet_ntoa( pSearch->m_pEndpoint.sin_addr ),
+			ntohs( pSearch->m_pEndpoint.sin_port ) );
 
 	if ( pSearch->m_oSHA1 && pSearch->m_oTiger )
 	{
