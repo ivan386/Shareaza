@@ -1,7 +1,7 @@
 //
 // GGEP.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -132,22 +132,6 @@ BOOL CGGEPBlock::ReadFromPacket(CPacket* pPacket)
 	pPacket->m_nPosition = pPacket->m_nLength - m_nInput;
 
 	return bSuccess;
-}
-
-BOOL CGGEPBlock::ReadFromString(LPCTSTR pszData)
-{
-	m_pInput = (BYTE*)pszData;
-	m_nInput = static_cast< DWORD >( _tcslen( pszData ) );
-
-	return ReadInternal();
-}
-
-BOOL CGGEPBlock::ReadFromBuffer(LPVOID pszData, DWORD nLength)
-{
-	m_pInput = (BYTE*)pszData;
-	m_nInput = nLength;
-
-	return ReadInternal();
 }
 
 //////////////////////////////////////////////////////////////////////

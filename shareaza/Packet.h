@@ -1,7 +1,7 @@
 //
 // Packet.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -129,6 +129,11 @@ public:
 	BOOL			RazaVerify() const;
 
 public:
+	// Get current position
+	inline const BYTE* GetCurrent() const
+	{
+		return m_pBuffer + m_nPosition;
+	}
 
 	// Get the length beyond our position in the packet
 	inline DWORD GetRemaining() const

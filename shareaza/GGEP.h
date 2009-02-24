@@ -1,7 +1,7 @@
 //
 // GGEP.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -18,9 +18,6 @@
 // along with Shareaza; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
-
-#if !defined(AFX_GGEP_H__7081FCAC_A207_412A_BD18_A72F09F89F05__INCLUDED_)
-#define AFX_GGEP_H__7081FCAC_A207_412A_BD18_A72F09F89F05__INCLUDED_
 
 #pragma once
 
@@ -153,8 +150,6 @@ public:
 	CGGEPItem*	Find(LPCTSTR pszID, DWORD nMinLength = 0) const;
 public:
 	BOOL		ReadFromPacket(CPacket* pPacket);
-	BOOL		ReadFromString(LPCTSTR pszData);
-	BOOL		ReadFromBuffer(LPVOID pszData, DWORD nLength);
 	void		Write(CPacket* pPacket);
 	void		Write(CString& str);
 	static		CGGEPBlock* FromPacket(CPacket* pPacket);
@@ -230,5 +225,3 @@ public:
 
 	friend class CGGEPBlock;
 };
-
-#endif // !defined(AFX_GGEP_H__7081FCAC_A207_412A_BD18_A72F09F89F05__INCLUDED_)

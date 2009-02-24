@@ -1,7 +1,7 @@
 //
 // SchemaCache.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -82,6 +82,10 @@ public:
 		return m_pNames.Lookup( strName, pSchema ) ? pSchema : NULL;
 	}
 
+	// Decode metadata XML and Schema from string
+	CXMLElement* Decode(LPSTR pszData, int nLength, CSchema*& pSchema);
+	static CXMLElement* AutoDetectSchema(LPCTSTR pszInfo);
+	static CXMLElement* AutoDetectAudio(LPCTSTR pszInfo);
 };
 
 extern CSchemaCache	SchemaCache;

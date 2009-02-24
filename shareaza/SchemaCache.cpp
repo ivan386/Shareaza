@@ -1,7 +1,7 @@
 //
 // SchemaCache.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -24,6 +24,7 @@
 #include "Settings.h"
 #include "SchemaCache.h"
 #include "Schema.h"
+#include "XML.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -127,4 +128,85 @@ void CSchemaCache::Clear()
 	
 	m_pURIs.RemoveAll();
 	m_pNames.RemoveAll();
+}
+
+CXMLElement* CSchemaCache::Decode(LPSTR pszData, int nLength, CSchema*& pSchema)
+{
+	// HACK: Fix embedded zeros
+	char* p = pszData;
+	for ( int i = 0; i < nLength - 2; ++i, ++p )
+		// Fix <tag attribute="valueZ/> -> <tag attribute="value"/>
+		if ( *p == _T('\0') && *(p + 1) == _T('/') && *(p + 2) == _T('>') )
+			*p = _T('"');
+
+	CString strXML = UTF8Decode( pszData, nLength );
+
+	CXMLElement* pXML = CXMLElement::FromString( strXML );
+	if ( ! pXML )
+		pXML = AutoDetectSchema( strXML );
+
+	if ( pXML )
+	{
+		pSchema = Get( pXML->GetAttributeValue( CXMLAttribute::schemaName, NULL ) );
+		if ( ! pSchema )
+		{
+			// Schemas do not match by URN, get first element to compare
+			// with names map of schemas (which are singulars)
+			if ( CXMLElement* pElement = pXML->GetFirstElement() )
+			{
+				pSchema = SchemaCache.Guess( pElement->GetName() );
+			}
+			else // has no plural envelope
+			{
+				pSchema = SchemaCache.Guess( pXML->GetName() );
+			}
+			if ( ! pSchema )
+			{
+				pXML->Delete();
+				pXML = NULL;
+			}
+		}
+	}
+
+	return pXML;
+}
+
+CXMLElement* CSchemaCache::AutoDetectSchema(LPCTSTR pszInfo)
+{
+	if ( _tcsstr( pszInfo, _T(" Kbps") ) != NULL &&
+		 _tcsstr( pszInfo, _T(" kHz ") ) != NULL )
+	{
+		return AutoDetectAudio( pszInfo );
+	}
+
+	return NULL;
+}
+
+CXMLElement* CSchemaCache::AutoDetectAudio(LPCTSTR pszInfo)
+{
+	int nBitrate	= 0;
+	int nFrequency	= 0;
+	int nMinutes	= 0;
+	int nSeconds	= 0;
+	BOOL bVariable	= FALSE;
+
+	if ( _stscanf( pszInfo, _T("%i Kbps %i kHz %i:%i"), &nBitrate, &nFrequency,
+		&nMinutes, &nSeconds ) != 4 )
+	{
+		bVariable = TRUE;
+		if ( _stscanf( pszInfo, _T("%i Kbps(VBR) %i kHz %i:%i"), &nBitrate, &nFrequency,
+			&nMinutes, &nSeconds ) != 4 )
+			return NULL;
+	}
+
+	CXMLElement* pXML = new CXMLElement( NULL, _T("audio") );
+
+	CString strValue;
+	strValue.Format( _T("%lu"), nMinutes * 60 + nSeconds );
+	pXML->AddAttribute( _T("seconds"), strValue );
+
+	strValue.Format( bVariable ? _T("%lu~") : _T("%lu"), nBitrate );
+	pXML->AddAttribute( _T("bitrate"), strValue );
+
+	return pXML;
 }

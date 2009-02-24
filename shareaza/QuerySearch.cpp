@@ -1,7 +1,7 @@
 //
 // QuerySearch.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -630,19 +630,13 @@ CQuerySearch* CQuerySearch::FromPacket(CPacket* pPacket, SOCKADDR_IN* pEndpoint)
 
 BOOL CQuerySearch::ReadG1Packet(CG1Packet* pPacket)
 {
-	Hashes::Sha1Hash	oSHA1;
-	Hashes::TigerHash	oTiger;
-	Hashes::Ed2kHash	oED2K;
-	Hashes::BtHash		oBTH;
-	Hashes::Md5Hash		oMD5;
-
 	m_nTTL = pPacket->m_nHops + 2;
-	if ( m_nTTL > 7 ) m_nTTL = 7;
 
 	if ( pPacket->m_nProtocol == PROTOCOL_G2 )
 	{
 		GNUTELLAPACKET pG1;
-		if ( ! ((CG2Packet*)pPacket)->SeekToWrapped() ) return NULL;
+		if ( ! ((CG2Packet*)pPacket)->SeekToWrapped() )
+			return NULL;
 		pPacket->Read( &pG1, sizeof(pG1) );
 		m_oGUID = pG1.m_oGUID;
 	}
@@ -650,9 +644,10 @@ BOOL CQuerySearch::ReadG1Packet(CG1Packet* pPacket)
 	{
 		m_oGUID = pPacket->m_oGUID;
 	}
-
 	m_oGUID.validate();
-	if ( pPacket->GetRemaining() < 4 ) return FALSE;
+
+	if ( pPacket->GetRemaining() < 4 )
+		return FALSE;
 	
 	WORD nFlags = pPacket->ReadShortLE();
 	
@@ -662,20 +657,112 @@ BOOL CQuerySearch::ReadG1Packet(CG1Packet* pPacket)
 		m_bWantXML	= 0 != ( nFlags & G1_QF_XML );
 	}
 	
-	m_sKeywords = m_sSearch = Settings.Gnutella1.QuerySearchUTF8 ?
-		pPacket->ReadStringUTF8() : pPacket->ReadStringASCII();
-
-	if ( pPacket->GetRemaining() > 1 )
+	if ( Settings.Gnutella1.QueryHitUTF8 ) //Support UTF-8 Query
 	{
-		char* pszData = (char*)pPacket->m_pBuffer + pPacket->m_nPosition;
-		for ( int nDataLength = pPacket->GetRemaining() - 1; nDataLength > 0; )
+		m_sKeywords = m_sSearch	= pPacket->ReadStringUTF8();	
+	}
+	else
+	{
+		m_sKeywords = m_sSearch	= pPacket->ReadStringASCII();
+	}
+
+	Hashes::Sha1Hash	oSHA1;
+	Hashes::TigerHash	oTiger;
+	Hashes::Ed2kHash	oED2K;
+	Hashes::BtHash		oBTH;
+	Hashes::Md5Hash		oMD5;
+
+	while ( pPacket->GetRemaining() )
+	{
+		if ( pPacket->PeekByte() == GGEP_MAGIC )
 		{
-			const char* pszSep = (const char*)memchr( pszData, G1_PACKET_HIT_SEP, nDataLength );
-			int nLength = ( pszSep && *pszSep == G1_PACKET_HIT_SEP ) ?
-				(int)( pszSep - pszData ) : nDataLength;
-			if ( nLength >= 4 && memcmp( pszData, "urn:", 4 ) == 0 )
+			CGGEPBlock pGGEP;
+			if ( pGGEP.ReadFromPacket( pPacket ) && Settings.Gnutella1.EnableGGEP )
 			{
-				CString strURN( pszData, nLength );
+				CGGEPItem* pItemPos = pGGEP.m_pFirst;
+				for ( BYTE nItemCount = 0; pItemPos && nItemCount < pGGEP.m_nItemCount;
+					nItemCount++, pItemPos = pItemPos->m_pNext )
+				{
+					if ( pItemPos->IsNamed( GGEP_HEADER_HASH ) )
+					{
+						if ( pItemPos->m_pBuffer[0] == GGEP_H_SHA1 )
+						{
+							if ( pItemPos->m_nLength >= 20 + 1 )
+							{
+								oSHA1 = reinterpret_cast< Hashes::Sha1Hash::RawStorage& >(
+									pItemPos->m_pBuffer[ 1 ] );
+							}
+						}
+						else if ( pItemPos->m_pBuffer[0] == GGEP_H_BITPRINT )
+						{
+							if ( pItemPos->m_nLength >= 24 + 20 + 1 )
+							{
+								oSHA1 = reinterpret_cast< Hashes::Sha1Hash::RawStorage& >(
+									pItemPos->m_pBuffer[ 1 ] );
+								oTiger = reinterpret_cast< Hashes::TigerHash::RawStorage& >(
+									pItemPos->m_pBuffer[ 21 ] );
+							}
+						}
+						else if ( pItemPos->m_pBuffer[0] == GGEP_H_MD5 )
+						{
+							if ( pItemPos->m_nLength >= 17 )
+							{
+								oMD5 = reinterpret_cast< Hashes::Md5Hash::RawStorage& >(
+									pItemPos->m_pBuffer[ 1 ] );
+							}
+						}
+					}
+					else if ( pItemPos->IsNamed( GGEP_HEADER_URN ) )
+					{
+						CString strURN( "urn:" + pItemPos->ToString() );
+						if (      oSHA1.fromUrn(  strURN ) );	// Got SHA1
+						else if ( oTiger.fromUrn( strURN ) );	// Got Tiger
+						else if ( oED2K.fromUrn(  strURN ) );	// Got ED2K
+						else if ( oBTH.fromUrn(   strURN ) );	// Got BTH
+						else if ( oMD5.fromUrn(   strURN ) );	// Got MD5
+						else
+							theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G1] Got query packet with unknown GGEP URN: \"%s\""), strURN );
+					}
+					else if ( pItemPos->IsNamed( GGEP_HEADER_SECURE_OOB ) )
+					{
+						m_bOOBv3 = TRUE;
+					}
+					else if ( pItemPos->IsNamed( GGEP_HEADER_META ) )
+					{
+						m_nMeta = pItemPos->m_pBuffer[0];
+					}
+					else 
+						theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G1] Got query packet with unknown GGEP: \"%s\" (%d bytes)"), pItemPos->m_sID, pItemPos->m_nLength );
+
+					// TODO: Add GGEP_H_MD5, GGEP_H_UUID, GGEP_H_MD4 handling
+				}
+			}
+		}
+		else
+		{
+			const BYTE* pData = pPacket->GetCurrent();
+			const BYTE* pSep = (const BYTE*)memchr( pData, G1_PACKET_HIT_SEP,
+				pPacket->GetRemaining() );
+			DWORD nLength = pSep ? (DWORD)( pSep - pData ) : pPacket->GetRemaining();
+
+			// Read data as ASCII string
+			auto_array< char > pszData( new char[ nLength + 1] );
+			pPacket->Read( pszData.get(), nLength );
+			if ( nLength )
+			{
+				if ( pszData[ nLength - 1 ] )
+					pszData[ nLength ] = 0;
+				else
+					nLength--;
+			}
+			// Skip G1_PACKET_HIT_SEP byte
+			if ( pSep )
+				pPacket->ReadByte();
+
+			if ( nLength == 0 ); // Skip zero block
+			else if ( nLength >= 4 && _strnicmp( pszData.get(), "urn:", 4 ) == 0 )
+			{
+				CString strURN( pszData.get(), nLength );
 				if ( nLength == 4 );					// Got empty urn
 				else if ( oSHA1.fromUrn(  strURN ) );	// Got SHA1
 				else if ( oTiger.fromUrn( strURN ) );	// Got Tiger
@@ -683,142 +770,31 @@ BOOL CQuerySearch::ReadG1Packet(CG1Packet* pPacket)
 				else if ( oBTH.fromUrn(   strURN ) );	// Got BTH
 				else if ( oMD5.fromUrn(   strURN ) );	// Got MD5
 				else
-					theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("Got Gnutella query packet with unknown URN: \"%s\""), strURN );
+					theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G1] Got query packet with unknown URN: \"%s\""), strURN );
 			}
-			else if ( nLength >= 4 && *pszData == '<' )
+			else if ( nLength >= 4 )
 			{
-				// HACK: Fix embedded zeros
-				char* p = pszData;
-				for ( int i = 0; i < nLength - 2; ++i, ++p )
-					// Fix <tag attribute="valueZ/> -> <tag attribute="value"/>
-					if ( *p == _T('\0') && *(p + 1) == _T('/') && *(p + 2) == _T('>') )
-						*p = _T('"');
-
-				CString strXML( pszData, nLength );
-
-				ASSERT( m_pXML == NULL );
-				m_pXML = CXMLElement::FromString( strXML, FALSE );
-				if ( m_pXML == NULL )
+				if ( ! m_pXML )
 				{
-					theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("Got Gnutella query packet with bad XML: \"%s\""), strXML );
+					m_pSchema = NULL;
+					m_pXML = SchemaCache.Decode( pszData.get(), nLength, m_pSchema );
+					if ( ! m_pXML )
+						theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G1] Got query packet with bad XML: \"%s\""), CString( pszData.get(), nLength ) );
 				}
-				else
-				{
-					ASSERT( m_pSchema == NULL );
-					m_pSchema = SchemaCache.Get(
-						m_pXML->GetAttributeValue( CXMLAttribute::schemaName, NULL ) );
-					if ( m_pSchema == NULL )
-					{
-						// Schemas do not match by URN, get first element to compare
-						// with names map of schemas (which are singulars)
-						bool bFound = false;
-						if ( CXMLElement* pElement = m_pXML->GetFirstElement() )
-						{
-							m_pSchema = SchemaCache.Guess( pElement->GetName() );
-							if ( m_pSchema ) bFound = true;
-						}
-						else // has no plural envelope
-						{
-							m_pSchema = SchemaCache.Guess( m_pXML->GetName() );
-							if ( m_pSchema ) bFound = true;
-						}
-						
-						if ( !bFound )
-							theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("Got Gnutella query packet with unknown XML schema: \"%s\""), strXML );
-					}
-				}
-			}
-			else if ( *pszData == GGEP_MAGIC )
-			{
-				if ( Settings.Gnutella1.EnableGGEP )
-				{
-					CGGEPBlock pGGEP;
-					pGGEP.ReadFromBuffer( (LPVOID)pszData, nLength );
-
-					CGGEPItem* pItemPos = pGGEP.m_pFirst;
-					if ( pItemPos != NULL && pGGEP.m_nItemCount != 0 )
-					{
-						BYTE nItemCount = 0;
-						while ( nItemCount < pGGEP.m_nItemCount )
-						{
-							if ( pItemPos->IsNamed( GGEP_HEADER_HASH ) )
-							{
-								if ( pItemPos->m_pBuffer[0] == GGEP_H_SHA1 )
-								{
-									if ( pItemPos->m_nLength >= 20 + 1 )
-									{
-										oSHA1 = reinterpret_cast< Hashes::Sha1Hash::RawStorage& >(
-											pItemPos->m_pBuffer[ 1 ] );
-									}
-								}
-								else if ( pItemPos->m_pBuffer[0] == GGEP_H_BITPRINT )
-								{
-									if ( pItemPos->m_nLength >= 24 + 20 + 1 )
-									{
-										oSHA1 = reinterpret_cast< Hashes::Sha1Hash::RawStorage& >(
-											pItemPos->m_pBuffer[ 1 ] );
-										oTiger = reinterpret_cast< Hashes::TigerHash::RawStorage& >(
-											pItemPos->m_pBuffer[ 21 ] );
-									}
-								}
-								else if ( pItemPos->m_pBuffer[0] == GGEP_H_MD5 )
-								{
-									if ( pItemPos->m_nLength >= 17 )
-									{
-										oMD5 = reinterpret_cast< Hashes::Md5Hash::RawStorage& >(
-											pItemPos->m_pBuffer[ 1 ] );
-									}
-								}
-							}
-							else if ( pItemPos->IsNamed( GGEP_HEADER_URN ) )
-							{
-								CString strURN( "urn:" + pItemPos->ToString() );
-								if (      oSHA1.fromUrn(  strURN ) );	// Got SHA1
-								else if ( oTiger.fromUrn( strURN ) );	// Got Tiger
-								else if ( oED2K.fromUrn(  strURN ) );	// Got ED2K
-								else if ( oBTH.fromUrn(   strURN ) );	// Got BTH
-								else if ( oMD5.fromUrn(   strURN ) );	// Got MD5
-								else
-									theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("Got Gnutella query packet with unknown GGEP URN: \"%s\""), strURN );
-							}
-							else if ( pItemPos->IsNamed( GGEP_HEADER_SECURE_OOB ) )
-							{
-								m_bOOBv3 = TRUE;
-							}
-							else if ( pItemPos->IsNamed( GGEP_HEADER_META ) )
-							{
-								m_nMeta = pItemPos->m_pBuffer[0];
-							}
-
-							// TODO: Add GGEP_H_MD5, GGEP_H_UUID, GGEP_H_MD4 handling
-
-							pItemPos = pItemPos->m_pNext;
-							nItemCount++;
-						}
-						break; // GGEP is last
-					}
-				}
-				else
-					theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("Got GGEP Gnutella query packet, but GGEP disabled") );
+				// else Another XML?!
 			}
 			else
-				theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("Got Gnutella query packet with unknown part: \"%hs\""), CString( pszData, nLength ) );
-
-			pszData += nLength + 1;
-			nDataLength -= nLength;
+				theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G1] Got query packet with unknown part: \"%hs\""), CString( pszData.get(), nLength ) );
 		}
-
-		if ( oSHA1  && ! m_oSHA1 )  m_oSHA1  = oSHA1;
-		if ( oTiger && ! m_oTiger ) m_oTiger = oTiger;
-		if ( oED2K  && ! m_oED2K )  m_oED2K  = oED2K;
-		if ( oBTH   && ! m_oBTH )   m_oBTH   = oBTH;
-		if ( oMD5   && ! m_oMD5 )   m_oMD5   = oMD5;
-
-		// "Read all"
-		pPacket->m_nPosition = pPacket->m_nLength;
 	}
 
 	m_bAndG1 = TRUE;
+
+	if ( oSHA1  && ! m_oSHA1 )  m_oSHA1  = oSHA1;
+	if ( oTiger && ! m_oTiger ) m_oTiger = oTiger;
+	if ( oED2K  && ! m_oED2K )  m_oED2K  = oED2K;
+	if ( oBTH   && ! m_oBTH )   m_oBTH   = oBTH;
+	if ( oMD5   && ! m_oMD5 )   m_oMD5   = oMD5;
 
 	return CheckValid( false );
 }

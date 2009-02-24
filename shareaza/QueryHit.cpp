@@ -959,8 +959,9 @@ BOOL CQueryHit::ReadGGEP(CG1Packet* pPacket, BOOL* pbBrowseHost, BOOL* pbChat)
 void CQueryHit::ReadG1Packet(CG1Packet* pPacket)
 {
 	m_nIndex	= pPacket->ReadLongLE();
-	m_bSize		= TRUE;
+	
 	m_nSize		= pPacket->ReadLongLE();
+	m_bSize		= TRUE;
 
 	if ( Settings.Gnutella1.QueryHitUTF8 ) //Support UTF-8 Query
 	{
@@ -1001,27 +1002,16 @@ void CQueryHit::ReadG1Packet(CG1Packet* pPacket)
 	Hashes::BtHash		oBTH;
 	Hashes::Md5Hash		oMD5;
 
-	std::string	strData		= std::string( (LPCSTR)pPacket->m_pBuffer + pPacket->m_nPosition,
-											int(pPacket->m_nBuffer - pPacket->m_nPosition) );
-	LPCSTR		pszData		= strData.c_str();
-	LPCSTR		pszEnd		= pszData + strData.size();
-
-	pPacket->m_nPosition = pPacket->m_nPosition + (DWORD)strData.size() + 1;
-	
-	while ( *pszData && pszData < pszEnd )
+	while ( pPacket->GetRemaining() )
 	{
-		if ( (BYTE)( (*pszData) & 0xff ) == GGEP_MAGIC )
+		if ( pPacket->PeekByte() == GGEP_MAGIC )
 		{
-			if ( ! Settings.Gnutella1.EnableGGEP ) break;
-
 			CGGEPBlock pGGEP;
-			pGGEP.ReadFromBuffer( (LPVOID)pszData, pszEnd - pszData );
-
-			CGGEPItem* pItemPos = pGGEP.m_pFirst;
-			if ( pItemPos != NULL && pGGEP.m_nItemCount != 0 )
+			if ( pGGEP.ReadFromPacket( pPacket ) && Settings.Gnutella1.EnableGGEP )
 			{
-				BYTE nItemCount = 0;
-				while ( nItemCount < pGGEP.m_nItemCount )
+				CGGEPItem* pItemPos = pGGEP.m_pFirst;
+				for ( BYTE nItemCount = 0; pItemPos && nItemCount < pGGEP.m_nItemCount;
+					nItemCount++, pItemPos = pItemPos->m_pNext )
 				{
 					if ( pItemPos->IsNamed( GGEP_HEADER_HASH ) )
 					{
@@ -1054,13 +1044,14 @@ void CQueryHit::ReadG1Packet(CG1Packet* pPacket)
 					}
 					else if ( pItemPos->IsNamed( GGEP_HEADER_URN ) )
 					{
-						CString strUrn = "urn:" + pItemPos->ToString();
-
-						oSHA1.fromUrn( strUrn );
-						oTiger.fromUrn( strUrn );
-						oED2K.fromUrn( strUrn );
-						oMD5.fromUrn( strUrn );
-						oBTH.fromUrn( strUrn );
+						CString strURN( "urn:" + pItemPos->ToString() );
+						if (      oSHA1.fromUrn(  strURN ) );	// Got SHA1
+						else if ( oTiger.fromUrn( strURN ) );	// Got Tiger
+						else if ( oED2K.fromUrn(  strURN ) );	// Got ED2K
+						else if ( oBTH.fromUrn(   strURN ) );	// Got BTH
+						else if ( oMD5.fromUrn(   strURN ) );	// Got MD5
+						else
+							theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G1] Got hit packet with unknown GGEP URN: \"%s\""), strURN );
 					}
 					else if ( pItemPos->IsNamed( GGEP_HEADER_LARGE_FILE ) )
 					{
@@ -1081,11 +1072,13 @@ void CQueryHit::ReadG1Packet(CG1Packet* pPacket)
 						// the ip-addresses need not be stored, as they are sent upon the download request in the ALT-loc header
 						m_nHitSources += pItemPos->m_nLength / 6;	// 6 bytes per source (see ALT GGEP extension specification)
 					}
+					else 
+						theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G1] Got hit packet with unknown GGEP: \"%s\" (%d bytes)"), pItemPos->m_sID, pItemPos->m_nLength );
 
 					if ( oSHA1.isValid() )
 					{
 						if ( validAndUnequal( oSHA1, m_oSHA1 ) )
-							AfxThrowUserException();	// security/polution issue - fake or spam packet.
+							m_bBogus = TRUE;
 						else
 							m_oSHA1  = oSHA1;
 						oSHA1.clear();
@@ -1094,7 +1087,7 @@ void CQueryHit::ReadG1Packet(CG1Packet* pPacket)
 					if ( oTiger.isValid() )
 					{
 						if ( validAndUnequal( oTiger, m_oTiger ) )
-							AfxThrowUserException();	// security/polution issue - fake or spam packet.
+							m_bBogus = TRUE;
 						else
 							m_oTiger  = oTiger;
 						oTiger.clear();
@@ -1103,7 +1096,7 @@ void CQueryHit::ReadG1Packet(CG1Packet* pPacket)
 					if ( oED2K.isValid() )
 					{
 						if ( validAndUnequal( oED2K, m_oED2K ) )
-							AfxThrowUserException();	// security/polution issue - fake or spam packet.
+							m_bBogus = TRUE;
 						else
 							m_oED2K  = oED2K;
 						oED2K.clear();
@@ -1112,7 +1105,7 @@ void CQueryHit::ReadG1Packet(CG1Packet* pPacket)
 					if ( oMD5.isValid() )
 					{
 						if ( validAndUnequal( oMD5, m_oMD5 ) )
-							AfxThrowUserException();	// security/polution issue - fake or spam packet.
+							m_bBogus = TRUE;
 						else
 							m_oMD5  = oMD5;
 						oMD5.clear();
@@ -1121,90 +1114,122 @@ void CQueryHit::ReadG1Packet(CG1Packet* pPacket)
 					if ( oBTH.isValid() )
 					{
 						if ( validAndUnequal( oBTH, m_oBTH ) )
-							AfxThrowUserException();	// security/polution issue - fake or spam packet.
+							m_bBogus = TRUE;
 						else
 							m_oBTH  = oBTH;
 						oBTH.clear();
 					}
-
-					pItemPos = pItemPos->m_pNext;
-					nItemCount++;
 				}
-				break;
 			}
 		}
-
-		LPCSTR pszSep = strchr( pszData, G1_PACKET_HIT_SEP );
-		size_t nLength = pszSep ? pszSep - pszData : strlen( pszData );
-
-		if ( _strnicmp( pszData, "urn:", 4 ) == 0 )
+		else
 		{
-			CString strUrn(pszData);
-			oSHA1.fromUrn( strUrn );
-			oTiger.fromUrn( strUrn );
-			oED2K.fromUrn( strUrn );
-			oMD5.fromUrn( strUrn );
-			oBTH.fromUrn( strUrn );
+			const BYTE* pData = pPacket->GetCurrent();
+			const BYTE* pSep = (const BYTE*)memchr( pData, G1_PACKET_HIT_SEP,
+				pPacket->GetRemaining() );
+			DWORD nLength = pSep ? (DWORD)( pSep - pData ) : pPacket->GetRemaining();
 
-			// in case of multiple HUGE section.
-			if ( oSHA1.isValid() )
+			// Read data as ASCII string
+			auto_array< char > pszData( new char[ nLength + 1] );
+			pPacket->Read( pszData.get(), nLength );
+			if ( nLength )
 			{
-				if ( validAndUnequal( oSHA1, m_oSHA1 ) )
-					AfxThrowUserException();	// security/polution issue - fake or spam packet.
+				if ( pszData[ nLength - 1 ] )
+					pszData[ nLength ] = 0;
 				else
-					m_oSHA1  = oSHA1;
-				oSHA1.clear();
+					nLength--;
 			}
 
-			if ( oTiger.isValid() )
-			{
-				if ( validAndUnequal( oTiger, m_oTiger ) )
-					AfxThrowUserException();	// security/polution issue - fake or spam packet.
-				else
-					m_oTiger  = oTiger;
-				oTiger.clear();
-			}
+			// Skip G1_PACKET_HIT_SEP byte
+			if ( pSep )
+				pPacket->ReadByte();
 
-			if ( oED2K.isValid() )
+			if ( nLength == 0 ); // Skip zero block
+			else if ( nLength >= 4 && _strnicmp( pszData.get(), "urn:", 4 ) == 0 )
 			{
-				if ( validAndUnequal( oED2K, m_oED2K ) )
-					AfxThrowUserException();	// security/polution issue - fake or spam packet.
+				CString strURN( pszData.get(), nLength );
+				if ( nLength == 4 );					// Got empty urn
+				else if ( oSHA1.fromUrn(  strURN ) );	// Got SHA1
+				else if ( oTiger.fromUrn( strURN ) );	// Got Tiger
+				else if ( oED2K.fromUrn(  strURN ) );	// Got ED2K
+				else if ( oBTH.fromUrn(   strURN ) );	// Got BTH
+				else if ( oMD5.fromUrn(   strURN ) );	// Got MD5
 				else
-					m_oED2K  = oED2K;
-				oED2K.clear();
-			}
+					theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G1] Got hit packet with unknown URN: \"%s\""), strURN );
 
-			if ( oMD5.isValid() )
-			{
-				if ( validAndUnequal( oMD5, m_oMD5 ) )
-					AfxThrowUserException();	// security/polution issue - fake or spam packet.
-				else
-					m_oMD5  = oMD5;
-				oMD5.clear();
-			}
+				// in case of multiple HUGE section.
+				if ( oSHA1.isValid() )
+				{
+					if ( validAndUnequal( oSHA1, m_oSHA1 ) )
+						m_bBogus = TRUE;
+					else
+						m_oSHA1  = oSHA1;
+					oSHA1.clear();
+				}
 
-			if ( oBTH.isValid() )
-			{
-				if ( validAndUnequal( oBTH, m_oBTH ) )
-					AfxThrowUserException();	// security/polution issue - fake or spam packet.
-				else
-					m_oBTH  = oBTH;
-				oBTH.clear();
+				if ( oTiger.isValid() )
+				{
+					if ( validAndUnequal( oTiger, m_oTiger ) )
+						m_bBogus = TRUE;
+					else
+						m_oTiger  = oTiger;
+					oTiger.clear();
+				}
+
+				if ( oED2K.isValid() )
+				{
+					if ( validAndUnequal( oED2K, m_oED2K ) )
+						m_bBogus = TRUE;
+					else
+						m_oED2K  = oED2K;
+					oED2K.clear();
+				}
+
+				if ( oMD5.isValid() )
+				{
+					if ( validAndUnequal( oMD5, m_oMD5 ) )
+						m_bBogus = TRUE;
+					else
+						m_oMD5  = oMD5;
+					oMD5.clear();
+				}
+
+				if ( oBTH.isValid() )
+				{
+					if ( validAndUnequal( oBTH, m_oBTH ) )
+						m_bBogus = TRUE;
+					else
+						m_oBTH  = oBTH;
+					oBTH.clear();
+				}
 			}
+			else if ( nLength >= 4 )
+			{
+				if ( ! m_pXML )
+				{
+					CSchema* pSchema = NULL;
+					m_pXML = SchemaCache.Decode( pszData.get(), nLength, pSchema );
+					if ( m_pXML )
+					{
+						m_sSchemaPlural	= pSchema->m_sPlural;
+						m_sSchemaURI = pSchema->GetURI();
+					}
+					else
+					{
+						// Bad XML
+						m_bBogus = TRUE;
+						theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G1] Got hit packet with bad XML: \"%s\""), CString( pszData.get(), nLength ) );
+					}
+				}
+				else
+					m_bBogus = TRUE; // Another XML?!
+			}
+			else
+				theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G1] Got hit packet with unknown part: \"%hs\""), CString( pszData.get(), nLength ) );
 		}
-		else if ( nLength > 4 )
-		{
-			CString strXML = UTF8Decode( pszData, (int)nLength );
-			m_pXML = CXMLElement::FromString( strXML );
-
-			AutoDetectSchema( strXML );
-		}
-
-		if ( pszSep ) pszData = pszSep + 1;
-		else break;
 	}
 
-	if ( !m_oSHA1 && !m_oTiger && !m_oED2K && !m_oBTH && !m_oMD5 )
+	if ( ! IsHashed() )
 		AfxThrowUserException();
 }
 
@@ -1908,51 +1933,6 @@ BOOL CQueryHit::ParseXML(CXMLElement* pMetaData, DWORD nRealIndex)
 	}
 
 	return m_pXML != NULL;
-}
-
-//////////////////////////////////////////////////////////////////////
-// CQueryHit schema auto-detect
-
-BOOL CQueryHit::AutoDetectSchema(LPCTSTR pszInfo)
-{
-	if ( m_pXML ) return TRUE;
-
-	if ( _tcsstr( pszInfo, _T(" Kbps") ) != NULL && _tcsstr( pszInfo,  _T(" kHz ") ) != NULL )
-	{
-		if ( AutoDetectAudio( pszInfo ) ) return TRUE;
-	}
-
-	return FALSE;
-}
-
-BOOL CQueryHit::AutoDetectAudio(LPCTSTR pszInfo)
-{
-	int nBitrate	= 0;
-	int nFrequency	= 0;
-	int nMinutes	= 0;
-	int nSeconds	= 0;
-	BOOL bVariable	= FALSE;
-
-	if ( _stscanf( pszInfo, _T("%i Kbps %i kHz %i:%i"), &nBitrate, &nFrequency,
-		&nMinutes, &nSeconds ) != 4 )
-	{
-		bVariable = TRUE;
-		if ( _stscanf( pszInfo, _T("%i Kbps(VBR) %i kHz %i:%i"), &nBitrate, &nFrequency,
-			&nMinutes, &nSeconds ) != 4 ) return FALSE;
-	}
-
-	m_sSchemaURI = CSchema::uriAudio;
-
-	m_pXML = new CXMLElement( NULL, _T("audio") );
-
-	CString strValue;
-	strValue.Format( _T("%lu"), nMinutes * 60 + nSeconds );
-	m_pXML->AddAttribute( _T("seconds"), strValue );
-
-	strValue.Format( bVariable ? _T("%lu~") : _T("%lu"), nBitrate );
-	m_pXML->AddAttribute( _T("bitrate"), strValue );
-
-	return TRUE;
 }
 
 //////////////////////////////////////////////////////////////////////
