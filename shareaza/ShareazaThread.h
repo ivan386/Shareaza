@@ -1,7 +1,7 @@
 //
 // ShareazaThread.h
 //
-// Copyright (c) Shareaza Development Team, 2008.
+// Copyright (c) Shareaza Development Team, 2008-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -60,7 +60,6 @@ protected:
 
 	static CCriticalSection	m_ThreadMapSection;	// Guarding of m_ThreadMap
 	static CThreadMap		m_ThreadMap;		// Map of running threads
-	BOOL					m_bCOM;				// OLE initialized
 	AFX_THREADPROC			m_pfnThreadProcExt;
 };
 

@@ -1,7 +1,7 @@
 //
 // ShareazaThread.cpp
 //
-// Copyright (c) Shareaza Development Team, 2008.
+// Copyright (c) Shareaza Development Team, 2008-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -31,21 +31,12 @@ CRazaThread::CThreadMap	CRazaThread::m_ThreadMap;
 
 CRazaThread::CRazaThread(AFX_THREADPROC pfnThreadProc /*= NULL*/, LPVOID pParam /*= NULL*/) :
 	CWinThread( NULL, pParam ),
-	m_bCOM( FALSE ),
 	m_pfnThreadProcExt( pfnThreadProc )
 {
 }
 
 CRazaThread::~CRazaThread()
 {
-	if ( m_bCOM && m_nThreadID == GetCurrentThreadId() ) // Inside thread itself only
-	{
-		m_bCOM = FALSE;
-		OleUninitialize();
-	}
-
-	ASSERT( m_bCOM == FALSE );
-
 	Remove( m_hThread );
 }
 
@@ -75,20 +66,23 @@ BOOL CRazaThread::InitInstance()
 {
 	CWinThread::InitInstance();
 
-	ASSERT( m_nThreadID == GetCurrentThreadId() );
-	ASSERT( m_bCOM == FALSE );
-	m_bCOM = SUCCEEDED( OleInitialize( NULL ) );
-	ASSERT( m_bCOM == TRUE );
-
-	return m_bCOM;
+	return TRUE;
 }
 
 int CRazaThread::Run()
 {
+	BOOL bCOM = SUCCEEDED( OleInitialize( NULL ) );
+
+	int ret;
 	if ( m_pfnThreadProcExt )
-		return ( *m_pfnThreadProcExt )( m_pThreadParams );
+		ret = ( *m_pfnThreadProcExt )( m_pThreadParams );
 	else
-		return CWinThread::Run();
+		ret = CWinThread::Run();
+
+	if ( bCOM )
+		OleUninitialize();
+
+	return ret;
 }
 
 void CRazaThread::Add(CRazaThread* pThread, LPCSTR pszName)
