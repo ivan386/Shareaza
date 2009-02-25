@@ -165,6 +165,11 @@ void CDownloadWithFile::DeleteFile(bool bForce)
 	SetModified();
 }
 
+QWORD CDownloadWithFile::InvalidateFileRange(QWORD nOffset, QWORD nLength)
+{
+	return m_pFile && m_pFile->InvalidateRange( nOffset, nLength );
+}
+
 //////////////////////////////////////////////////////////////////////
 // CDownloadWithFile statistics
 

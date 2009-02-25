@@ -55,6 +55,7 @@ public:
 	BOOL			SubmitData(QWORD nOffset, LPBYTE pData, QWORD nLength);
 	QWORD			EraseRange(QWORD nOffset, QWORD nLength);
 	BOOL			MakeComplete();
+	QWORD			InvalidateFileRange(QWORD nOffset, QWORD nLength);
 
 	inline Fragments::List GetEmptyFragmentList() const
 	{
