@@ -1,7 +1,7 @@
 //
 // QuerySearch.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -67,8 +67,11 @@ public:
 	SOCKADDR_IN			m_pEndpoint;	// G2: Packet received from this host
 	DWORD				m_nKey;			// G2: Hub query key
 	BOOL				m_bFirewall;	// G1: Firewalled host
-	BOOL				m_bOOBv3;		// G1: OOB v3 Security Token support
+	bool				m_bOOBv3;		// G1: OOB v3 Security Token support
 	BYTE				m_nMeta;		// G1: MetaType query mask
+	bool				m_bPartial;		// G1: Partial results support
+	bool				m_bNoProxy;		// G1: Disable OOB proxying
+	bool				m_bExtQuery;	// G1: Extended query (long query)
 
 	Hash32List			m_oURNs;			// Hashed URNs
 	Hash32List			m_oKeywordHashList;	// list of hashed keywords to BOOST QUery Routing.

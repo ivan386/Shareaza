@@ -1042,6 +1042,14 @@ void CQueryHit::ReadG1Packet(CG1Packet* pPacket)
 							}
 						}
 					}
+					else if ( pItemPos->IsNamed( GGEP_HEADER_TTROOT ) )
+					{
+						if ( pItemPos->m_nLength == 24 )
+						{
+							oTiger = reinterpret_cast< Hashes::TigerHash::RawStorage& >(
+								pItemPos->m_pBuffer[ 0 ] );
+						}
+					}
 					else if ( pItemPos->IsNamed( GGEP_HEADER_URN ) )
 					{
 						CString strURN( "urn:" + pItemPos->ToString() );
@@ -1072,6 +1080,8 @@ void CQueryHit::ReadG1Packet(CG1Packet* pPacket)
 						// the ip-addresses need not be stored, as they are sent upon the download request in the ALT-loc header
 						m_nHitSources += pItemPos->m_nLength / 6;	// 6 bytes per source (see ALT GGEP extension specification)
 					}
+					else if ( pItemPos->IsNamed( GGEP_HEADER_CREATE_TIME ) );
+						// Creation time not supported yet
 					else 
 						theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G1] Got hit packet with unknown GGEP: \"%s\" (%d bytes)"), pItemPos->m_sID, pItemPos->m_nLength );
 
@@ -1203,7 +1213,7 @@ void CQueryHit::ReadG1Packet(CG1Packet* pPacket)
 					oBTH.clear();
 				}
 			}
-			else if ( nLength >= 4 )
+			else if ( nLength >= 4 && pszData[ 0 ] )
 			{
 				if ( ! m_pXML )
 				{

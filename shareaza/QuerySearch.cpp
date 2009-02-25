@@ -68,8 +68,11 @@ CQuerySearch::CQuerySearch(BOOL bGUID) :
 	m_bUDP		( FALSE ),
 	m_nKey		( 0 ),
 	m_bFirewall	( FALSE ),
-	m_bOOBv3	( FALSE ),
+	m_bOOBv3	( false ),
 	m_nMeta		( 0 ),
+	m_bPartial	( false ),
+	m_bNoProxy	( false ),
+	m_bExtQuery	( false ),
 	m_oWords	(),
 	m_oNegWords	()
 {
@@ -104,6 +107,9 @@ CQuerySearch::CQuerySearch(const CQuerySearch* pOrigin) :
 	m_bFirewall( pOrigin->m_bFirewall ),
 	m_bOOBv3( pOrigin->m_bOOBv3 ),
 	m_nMeta( pOrigin->m_nMeta ),
+	m_bPartial( pOrigin->m_bPartial ),
+	m_bNoProxy( pOrigin->m_bNoProxy ),
+	m_bExtQuery( pOrigin->m_bExtQuery ),
 	m_oURNs( pOrigin->m_oURNs ),
 	m_oKeywordHashList( pOrigin->m_oKeywordHashList )
 	//m_oWords()                //! \todo comment this - we copy the search string but not the word list
@@ -725,13 +731,25 @@ BOOL CQuerySearch::ReadG1Packet(CG1Packet* pPacket)
 					}
 					else if ( pItemPos->IsNamed( GGEP_HEADER_SECURE_OOB ) )
 					{
-						m_bOOBv3 = TRUE;
+						m_bOOBv3 = true;
 					}
 					else if ( pItemPos->IsNamed( GGEP_HEADER_META ) )
 					{
 						m_nMeta = pItemPos->m_pBuffer[0];
 					}
-					else 
+					else if ( pItemPos->IsNamed( GGEP_HEADER_PARTIAL_RESULT_PREFIX ) )
+					{
+						m_bPartial = true;
+					}
+					else if ( pItemPos->IsNamed( GGEP_HEADER_NO_PROXY ) )
+					{
+						m_bNoProxy = true;
+					}
+					else if ( pItemPos->IsNamed( GGEP_HEADER_EXTENDED_QUERY ) )
+					{
+						m_bExtQuery = true;
+					}
+					else
 						theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G1] Got query packet with unknown GGEP: \"%s\" (%d bytes)"), pItemPos->m_sID, pItemPos->m_nLength );
 
 					// TODO: Add GGEP_H_MD5, GGEP_H_UUID, GGEP_H_MD4 handling
@@ -772,7 +790,7 @@ BOOL CQuerySearch::ReadG1Packet(CG1Packet* pPacket)
 				else
 					theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G1] Got query packet with unknown URN: \"%s\""), strURN );
 			}
-			else if ( nLength >= 4 )
+			else if ( nLength >= 4 && pszData[ 0 ] )
 			{
 				if ( ! m_pXML )
 				{

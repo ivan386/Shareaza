@@ -83,6 +83,8 @@ const LPCTSTR GGEP_HEADER_PACKED_IPPORTS		= _T("IPP");
 const LPCTSTR GGEP_HEADER_PACKED_HOSTCACHES		= _T("PHC");
 // SHA1 URNs
 const LPCTSTR GGEP_HEADER_SHA1					= _T("S1");
+// Tiger Tree Root URNs (24 bytes)
+const LPCTSTR GGEP_HEADER_TTROOT				= _T("TT");
 // Determine if a SHA1 is valid
 const LPCTSTR GGEP_HEADER_SHA1_VALID			= _T("SV");
 // TLS support
@@ -122,6 +124,10 @@ const LPCTSTR GGEP_HEADER_HASH					= _T("H");
 const LPCTSTR GGEP_HEADER_URN					= _T("u");
 // up to 64-bit file size
 const LPCTSTR GGEP_HEADER_LARGE_FILE			= _T("LF");
+// The prefix of the extension header indicating support for partial results
+const LPCTSTR GGEP_HEADER_PARTIAL_RESULT_PREFIX	= _T("PR");
+// To support queries longer than previous length limit on query string fields
+const LPCTSTR GGEP_HEADER_EXTENDED_QUERY		= _T("XQ");
 
 class CGGEPBlock;
 class CGGEPItem;
