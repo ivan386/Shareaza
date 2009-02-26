@@ -998,8 +998,6 @@ void CNetwork::UDPHostCache(IN_ADDR* pAddress, WORD nPort)
 	CGGEPItem* pItem;
 
 	pItem = pBlock.Add( GGEP_HEADER_SUPPORT_CACHE_PONGS );
-	pItem->UnsetCOBS();
-	pItem->UnsetSmall();
 	pItem->WriteByte( Neighbours.IsG1Ultrapeer() ? 1 : 0 );
 
 	pBlock.Write( pPing );

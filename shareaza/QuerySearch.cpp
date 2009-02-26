@@ -224,42 +224,32 @@ CG1Packet* CQuerySearch::ToG1Packet(DWORD nTTL)
 			if (  m_oTiger.isValid() )
 			{
 				CGGEPItem* pItem = pBlock.Add( GGEP_HEADER_HASH );
-				pItem->SetCOBS();
-				pItem->SetSmall();
-				pItem->WriteByte( 2 );
+				pItem->WriteByte( GGEP_H_BITPRINT );
 				pItem->Write( &m_oSHA1[ 0 ], 20 );
 				pItem->Write( &m_oTiger[ 0 ], 24 );
 			}
 			else
 			{
 				CGGEPItem* pItem = pBlock.Add( GGEP_HEADER_HASH );
-				pItem->SetCOBS();
-				pItem->SetSmall();
-				pItem->WriteByte( 1 );
+				pItem->WriteByte( GGEP_H_SHA1 );
 				pItem->Write( &m_oSHA1[ 0 ], 20 );
 			}
 		}
 		else if ( m_oMD5.isValid() )
 		{
 			CGGEPItem* pItem = pBlock.Add( GGEP_HEADER_HASH );
-			pItem->SetCOBS();
-			pItem->SetSmall();
-			pItem->WriteByte( 3 );
+			pItem->WriteByte( GGEP_H_MD5 );
 			pItem->Write( &m_oMD5[ 0 ], 16 );
 		}
 		else if ( m_oED2K.isValid() )
 		{
 			pItem = pBlock.Add( GGEP_HEADER_URN );
-			pItem->SetCOBS();
-			pItem->SetSmall();
 			strExtra = "ed2k:"+ m_oED2K.toString();
 			pItem->WriteUTF8( strExtra, strExtra.GetLength() );
 		}
 		else if ( m_oBTH.isValid() )
 		{
 			pItem = pBlock.Add( GGEP_HEADER_URN );
-			pItem->SetCOBS();
-			pItem->SetSmall();
 			strExtra = "btih:"+ m_oBTH.toString();
 			pItem->WriteUTF8( strExtra, strExtra.GetLength() );
 		}
@@ -683,10 +673,13 @@ BOOL CQuerySearch::ReadG1Packet(CG1Packet* pPacket)
 		if ( pPacket->PeekByte() == GGEP_MAGIC )
 		{
 			CGGEPBlock pGGEP;
-			if ( pGGEP.ReadFromPacket( pPacket ) && Settings.Gnutella1.EnableGGEP )
+			if ( pGGEP.ReadFromPacket( pPacket ) )
 			{
-				CGGEPItem* pItemPos = pGGEP.m_pFirst;
-				for ( BYTE nItemCount = 0; pItemPos && nItemCount < pGGEP.m_nItemCount;
+				if ( ! Settings.Gnutella1.EnableGGEP )
+					continue;
+
+				CGGEPItem* pItemPos = pGGEP.GetFirst();
+				for ( BYTE nItemCount = 0; pItemPos && nItemCount < pGGEP.GetCount();
 					nItemCount++, pItemPos = pItemPos->m_pNext )
 				{
 					if ( pItemPos->IsNamed( GGEP_HEADER_HASH ) )
@@ -711,7 +704,7 @@ BOOL CQuerySearch::ReadG1Packet(CG1Packet* pPacket)
 						}
 						else if ( pItemPos->m_pBuffer[0] == GGEP_H_MD5 )
 						{
-							if ( pItemPos->m_nLength >= 17 )
+							if ( pItemPos->m_nLength >= 16 + 1 )
 							{
 								oMD5 = reinterpret_cast< Hashes::Md5Hash::RawStorage& >(
 									pItemPos->m_pBuffer[ 1 ] );
@@ -755,6 +748,16 @@ BOOL CQuerySearch::ReadG1Packet(CG1Packet* pPacket)
 					// TODO: Add GGEP_H_MD5, GGEP_H_UUID, GGEP_H_MD4 handling
 				}
 			}
+			else 
+			{
+				theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G1] Got query packet with malformed GGEP") );
+				AfxThrowUserException();
+			}
+		}
+		else if ( pPacket->PeekByte() == 0 )
+		{
+			// End of hit
+			pPacket->ReadByte();
 		}
 		else
 		{
@@ -777,7 +780,8 @@ BOOL CQuerySearch::ReadG1Packet(CG1Packet* pPacket)
 			if ( pSep )
 				pPacket->ReadByte();
 
-			if ( nLength == 0 ); // Skip zero block
+			if ( nLength == 0 )
+				continue; // Skip zero block
 			else if ( nLength >= 4 && _strnicmp( pszData.get(), "urn:", 4 ) == 0 )
 			{
 				CString strURN( pszData.get(), nLength );
@@ -789,20 +793,17 @@ BOOL CQuerySearch::ReadG1Packet(CG1Packet* pPacket)
 				else if ( oMD5.fromUrn(   strURN ) );	// Got MD5
 				else
 					theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G1] Got query packet with unknown URN: \"%s\""), strURN );
+				continue;
 			}
-			else if ( nLength >= 4 && pszData[ 0 ] )
+			else if ( nLength >= 4 && pszData[ 0 ] && ! m_pXML )
 			{
-				if ( ! m_pXML )
-				{
-					m_pSchema = NULL;
-					m_pXML = SchemaCache.Decode( pszData.get(), nLength, m_pSchema );
-					if ( ! m_pXML )
-						theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G1] Got query packet with bad XML: \"%s\""), CString( pszData.get(), nLength ) );
-				}
-				// else Another XML?!
+				m_pSchema = NULL;
+				m_pXML = SchemaCache.Decode( pszData.get(), nLength, m_pSchema );
+				if ( m_pXML )
+					continue;
 			}
-			else
-				theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G1] Got query packet with unknown part: \"%hs\""), CString( pszData.get(), nLength ) );
+
+			theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G1] Got query packet with unknown part: \"%hs\" (%d bytes)"), CString( pszData.get(), nLength ), nLength );
 		}
 	}
 

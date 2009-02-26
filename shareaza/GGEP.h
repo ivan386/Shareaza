@@ -26,6 +26,7 @@
 #define GGEP_HDR_LAST		0x80 // Last extension in GGEP block
 #define GGEP_HDR_COBS		0x40 // Whether COBS was used on payload
 #define GGEP_HDR_DEFLATE	0x20 // Whether payload was deflated
+#define GGEP_HDR_RESERVE	0x10 // Reserved. It must be set to 0.
 #define GGEP_HDR_IDLEN		0x0F // Where ID length is stored
 
 #define GGEP_LEN_MORE		0x80 // Continuation present
@@ -136,62 +137,61 @@ class CPacket;
 
 class CGGEPBlock
 {
-// Construction
 public:
 	CGGEPBlock();
 	virtual ~CGGEPBlock();
 
-// Attributes
-public:
-	CGGEPItem*	m_pFirst;
-	CGGEPItem*	m_pLast;
-	BYTE*		m_pInput;
-	DWORD		m_nInput;
-	BYTE		m_nItemCount;
-
-// Operations
-public:
-	void		Clear();
 	CGGEPItem*	Add(LPCTSTR pszID);
 	CGGEPItem*	Find(LPCTSTR pszID, DWORD nMinLength = 0) const;
-public:
 	BOOL		ReadFromPacket(CPacket* pPacket);
 	void		Write(CPacket* pPacket);
-	void		Write(CString& str);
-	static		CGGEPBlock* FromPacket(CPacket* pPacket);
-protected:
-	BOOL		ReadInternal();
-	BYTE		ReadByte();
-public:
+
 	inline BOOL	IsEmpty() const
 	{
 		return ( m_nItemCount == 0 );
 	}
 
-	friend class CGGEPItem;
+	inline DWORD GetCount() const
+	{
+		return m_nItemCount;
+	}
+
+	inline CGGEPItem* GetFirst() const
+	{
+		return m_pFirst;
+	}
+
+protected:
+	CGGEPItem*	m_pFirst;
+	CGGEPItem*	m_pLast;
+	BYTE		m_nItemCount;
+	const BYTE*	m_pInput;		// Current read position
+	DWORD		m_nInput;		// Remaining size available for reading
+
+	void		Clear();
+	BOOL		ReadInternal();
+	BYTE		ReadByte();
+	CGGEPItem*	ReadItem(BYTE nFlags);
 };
 
 
 class CGGEPItem
 {
-// Construction
 public:
 	CGGEPItem(LPCTSTR pszID = NULL);
 	virtual ~CGGEPItem();
 
-// Attributes
-public:
 	CGGEPItem*	m_pNext;
 	CString		m_sID;
 	BYTE*		m_pBuffer;
 	DWORD		m_nLength;
 	DWORD		m_nPosition;
-	bool		m_bCOBS;
-	bool		m_bSmall;
 
-// Operations
-public:
-	BOOL		IsNamed(LPCTSTR pszID) const;
+	inline BOOL	IsNamed(LPCTSTR pszID) const
+	{
+		return ( m_sID == pszID );
+	}
+
 	void		Read(LPVOID pData, int nLength);
 	BYTE		ReadByte();
 	void		Write(LPCVOID pData, int nLength);
@@ -200,34 +200,11 @@ public:
 	void		WriteUTF8(LPCWSTR pszText, size_t nLength);
 
 protected:
-	BOOL		ReadFrom(CGGEPBlock* pBlock, BYTE nFlags);
-	void		WriteTo(CPacket* pPacket, bool bSmall, bool bNeedCOBS);
-	void		WriteTo(CString& str, bool bSmall, bool bNeedCOBS);
-protected:
-	BOOL		Encode(BOOL bIfZeros = FALSE);
+	void		WriteTo(CPacket* pPacket);
+	BOOL		Encode();
 	BOOL		Decode();
-	BOOL		Deflate(BOOL bIfSmaller = FALSE);
+	BOOL		Deflate();
 	BOOL		Inflate();
-public:
-	inline void	SetCOBS(void)
-	{
-		m_bCOBS = true;
-	}
 
-	inline void	UnsetCOBS(void)
-	{
-		m_bCOBS = false;
-	}
-
-	inline void	SetSmall(void)
-	{
-		m_bSmall = true;
-	}
-
-	inline void	UnsetSmall(void)
-	{
-		m_bSmall = false;
-	}
-
-	friend class CGGEPBlock;
+friend class CGGEPBlock;
 };

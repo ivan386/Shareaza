@@ -1007,10 +1007,13 @@ void CQueryHit::ReadG1Packet(CG1Packet* pPacket)
 		if ( pPacket->PeekByte() == GGEP_MAGIC )
 		{
 			CGGEPBlock pGGEP;
-			if ( pGGEP.ReadFromPacket( pPacket ) && Settings.Gnutella1.EnableGGEP )
+			if ( pGGEP.ReadFromPacket( pPacket ) )
 			{
-				CGGEPItem* pItemPos = pGGEP.m_pFirst;
-				for ( BYTE nItemCount = 0; pItemPos && nItemCount < pGGEP.m_nItemCount;
+				if ( ! Settings.Gnutella1.EnableGGEP )
+					continue;
+
+				CGGEPItem* pItemPos = pGGEP.GetFirst();
+				for ( BYTE nItemCount = 0; pItemPos && nItemCount < pGGEP.GetCount();
 					nItemCount++, pItemPos = pItemPos->m_pNext )
 				{
 					if ( pItemPos->IsNamed( GGEP_HEADER_HASH ) )
@@ -1131,6 +1134,17 @@ void CQueryHit::ReadG1Packet(CG1Packet* pPacket)
 					}
 				}
 			}
+			else 
+			{
+				theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G1] Got hit packet with malformed GGEP") );
+				AfxThrowUserException();
+			}
+		}
+		else if ( pPacket->PeekByte() == 0 )
+		{
+			// End of hit
+			pPacket->ReadByte();
+			break;
 		}
 		else
 		{
@@ -1154,7 +1168,8 @@ void CQueryHit::ReadG1Packet(CG1Packet* pPacket)
 			if ( pSep )
 				pPacket->ReadByte();
 
-			if ( nLength == 0 ); // Skip zero block
+			if ( nLength == 0 )
+				continue; // Skip zero block
 			else if ( nLength >= 4 && _strnicmp( pszData.get(), "urn:", 4 ) == 0 )
 			{
 				CString strURN( pszData.get(), nLength );
@@ -1212,35 +1227,30 @@ void CQueryHit::ReadG1Packet(CG1Packet* pPacket)
 						m_oBTH  = oBTH;
 					oBTH.clear();
 				}
+				continue;
 			}
-			else if ( nLength >= 4 && pszData[ 0 ] )
+			else if ( nLength >= 4 && pszData[ 0 ] && ! m_pXML )
 			{
-				if ( ! m_pXML )
+				CSchema* pSchema = NULL;
+				m_pXML = SchemaCache.Decode( pszData.get(), nLength, pSchema );
+				if ( m_pXML )
 				{
-					CSchema* pSchema = NULL;
-					m_pXML = SchemaCache.Decode( pszData.get(), nLength, pSchema );
-					if ( m_pXML )
-					{
-						m_sSchemaPlural	= pSchema->m_sPlural;
-						m_sSchemaURI = pSchema->GetURI();
-					}
-					else
-					{
-						// Bad XML
-						m_bBogus = TRUE;
-						theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G1] Got hit packet with bad XML: \"%s\""), CString( pszData.get(), nLength ) );
-					}
+					m_sSchemaPlural	= pSchema->m_sPlural;
+					m_sSchemaURI = pSchema->GetURI();
+					continue;
 				}
-				else
-					m_bBogus = TRUE; // Another XML?!
 			}
-			else
-				theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G1] Got hit packet with unknown part: \"%hs\""), CString( pszData.get(), nLength ) );
+
+			theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G1] Got hit packet with unknown part: \"%hs\" (%d bytes)"), CString( pszData.get(), nLength ), nLength );
+			m_bBogus = TRUE;
 		}
 	}
 
 	if ( ! IsHashed() )
+	{
+		theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G1] Got hit packet with no hash") );
 		AfxThrowUserException();
+	}
 }
 
 //////////////////////////////////////////////////////////////////////
