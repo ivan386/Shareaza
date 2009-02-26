@@ -96,7 +96,6 @@ public:
 protected:
 	static BOOL			CheckBogus(CQueryHit* pFirstHit);
 	static CXMLElement*	ReadXML(CG1Packet* pPacket, int nSize);
-	static BOOL			ReadGGEP(CG1Packet* pPacket, BOOL* pbBrowseHost, BOOL* pbChat);
 
 // Operations
 public:

@@ -764,7 +764,19 @@ BOOL CQuerySearch::ReadG1Packet(CG1Packet* pPacket)
 			const BYTE* pData = pPacket->GetCurrent();
 			const BYTE* pSep = (const BYTE*)memchr( pData, G1_PACKET_HIT_SEP,
 				pPacket->GetRemaining() );
-			DWORD nLength = pSep ? (DWORD)( pSep - pData ) : pPacket->GetRemaining();
+			const BYTE* pNull = (const BYTE*)memchr( pData, 0,
+				pPacket->GetRemaining() );
+			DWORD nLength;
+			if ( pNull && ( pNull < pSep || ! pSep ) )
+			{
+				// No extra data
+				nLength = (DWORD)( pNull - pData );
+				pSep = NULL;
+			}
+			else if ( pSep )
+				nLength = (DWORD)( pSep - pData );
+			else
+				nLength = pPacket->GetRemaining();
 
 			// Read data as ASCII string
 			auto_array< char > pszData( new char[ nLength + 1] );

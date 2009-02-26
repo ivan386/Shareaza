@@ -199,17 +199,29 @@ CQueryHit* CQueryHit::FromG1Packet(CG1Packet* pPacket, int* pnHops)
 
 		while ( nPublicSize-- ) pPacket->ReadByte();
 
-		if ( pVendor && pVendor->m_bChatFlag && pPacket->GetRemaining() >= 16u + nXMLSize + 1u )
+		if ( pVendor && pVendor->m_bChatFlag &&
+			pPacket->GetRemaining() >= 16u + nXMLSize + 1u )
 		{
 			bChat = pPacket->PeekByte() == 1;
 		}
 
 		if ( pPacket->GetRemaining() < 16u + nXMLSize ) nXMLSize = 0;
 
-		if ( ( nFlags[0] & G1_QHD_GGEP ) && ( nFlags[1] & G1_QHD_GGEP ) &&
-			 Settings.Gnutella1.EnableGGEP )
+		if ( ( nFlags[0] & G1_QHD_GGEP ) && ( nFlags[1] & G1_QHD_GGEP ) )
 		{
-			ReadGGEP( pPacket, &bBrowseHost, &bChat );
+			CGGEPBlock pGGEP;
+			if ( pGGEP.ReadFromPacket( pPacket ) )
+			{
+				if ( Settings.Gnutella1.EnableGGEP )
+				{
+					if ( pGGEP.Find( GGEP_HEADER_BROWSE_HOST ) )
+						bBrowseHost = TRUE;
+					if ( pGGEP.Find( GGEP_HEADER_CHAT ) )
+						bChat = TRUE;
+				}
+			}
+			else
+				theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G1] Got hit packet with malformed GGEP") );
 		}
 
 		// Read first 2 bytes of private data
@@ -217,7 +229,7 @@ CQueryHit* CQueryHit::FromG1Packet(CG1Packet* pPacket, int* pnHops)
 		{
 			WORD nID = pPacket->ReadShortLE();
 			if ( nID > 0 )
-				theApp.Message( MSG_DEBUG, L"Private ID: 0x%x", nID );
+				theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, L"[G1] Private ID: 0x%x", nID );
 		}
 
 		if ( nXMLSize > 0 )
@@ -228,7 +240,7 @@ CQueryHit* CQueryHit::FromG1Packet(CG1Packet* pPacket, int* pnHops)
 			{
 				CString strVendorName;
 				if ( pVendor ) strVendorName = pVendor->m_sName;
-				theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, L"Invalid compressed metadata. Vendor: %s", strVendorName );
+				theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, L"[G1] Invalid compressed metadata. Vendor: %s", strVendorName );
 			}
 		}
 
@@ -939,21 +951,6 @@ CXMLElement* CQueryHit::ReadXML(CG1Packet* pPacket, int nSize)
 }
 
 //////////////////////////////////////////////////////////////////////
-// CQueryHit GGEP reader
-
-BOOL CQueryHit::ReadGGEP(CG1Packet* pPacket, BOOL* pbBrowseHost, BOOL* pbChat)
-{
-	CGGEPBlock pGGEP;
-	
-	if ( ! pGGEP.ReadFromPacket( pPacket ) ) return FALSE;
-	
-	if ( pGGEP.Find( GGEP_HEADER_BROWSE_HOST ) ) *pbBrowseHost = TRUE;
-	if ( pGGEP.Find( GGEP_HEADER_CHAT ) ) *pbChat = TRUE;
-	
-	return TRUE;
-}
-
-//////////////////////////////////////////////////////////////////////
 // CQueryHit G1 result entry reader
 
 void CQueryHit::ReadG1Packet(CG1Packet* pPacket)
@@ -1151,7 +1148,19 @@ void CQueryHit::ReadG1Packet(CG1Packet* pPacket)
 			const BYTE* pData = pPacket->GetCurrent();
 			const BYTE* pSep = (const BYTE*)memchr( pData, G1_PACKET_HIT_SEP,
 				pPacket->GetRemaining() );
-			DWORD nLength = pSep ? (DWORD)( pSep - pData ) : pPacket->GetRemaining();
+			const BYTE* pNull = (const BYTE*)memchr( pData, 0,
+				pPacket->GetRemaining() );
+			DWORD nLength;
+			if ( pNull && ( pNull < pSep || ! pSep ) )
+			{
+				// No extra data
+				nLength = (DWORD)( pNull - pData );
+				pSep = NULL;
+			}
+			else if ( pSep )
+				nLength = (DWORD)( pSep - pData );
+			else
+				nLength = pPacket->GetRemaining();
 
 			// Read data as ASCII string
 			auto_array< char > pszData( new char[ nLength + 1] );
