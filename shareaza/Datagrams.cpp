@@ -1293,7 +1293,8 @@ BOOL CDatagrams::OnPong(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 BOOL CDatagrams::OnQuery(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 {
 	CQuerySearch* pSearch = CQuerySearch::FromPacket( pPacket, pHost );
-
+	if ( pSearch == NULL || pSearch->m_bWarning )
+		pPacket->Debug( _T("Malformed query.") );
 	if ( pSearch == NULL || ! pSearch->m_bUDP )
 	{
 		if ( pSearch ) delete pSearch;

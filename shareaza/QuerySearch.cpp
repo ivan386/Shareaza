@@ -76,6 +76,7 @@ CQuerySearch::CQuerySearch(BOOL bGUID) :
 	m_bPartial	( false ),
 	m_bNoProxy	( false ),
 	m_bExtQuery	( false ),
+	m_bWarning	( false ),
 	m_oWords	(),
 	m_oNegWords	()
 {
@@ -116,6 +117,7 @@ CQuerySearch::CQuerySearch(const CQuerySearch* pOrigin) :
 	m_bPartial( pOrigin->m_bPartial ),
 	m_bNoProxy( pOrigin->m_bNoProxy ),
 	m_bExtQuery( pOrigin->m_bExtQuery ),
+	m_bWarning( pOrigin->m_bWarning ),
 	m_oURNs( pOrigin->m_oURNs ),
 	m_oKeywordHashList( pOrigin->m_oKeywordHashList )
 	//m_oWords()                //! \todo comment this - we copy the search string but not the word list
@@ -830,7 +832,10 @@ void CQuerySearch::ReadGGEP(CG1Packet* pPacket)
 		if ( oMD5   && ! m_oMD5 )   m_oMD5   = oMD5;
 	}
 	else 
+	{
+		m_bWarning = true;
 		theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G1] Got query packet with malformed GGEP") );
+	}
 }
 
 void CQuerySearch::ReadExtension(CG1Packet* pPacket)

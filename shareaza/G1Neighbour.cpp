@@ -1317,10 +1317,11 @@ BOOL CG1Neighbour::OnQuery(CG1Packet* pPacket)
 
 	// Have the CQuerySearch class turn the query search packet into a CQuerySearch object (do)
 	CQuerySearch* pSearch = CQuerySearch::FromPacket( pPacket );
+	if ( pSearch == NULL || pSearch->m_bWarning )
+		pPacket->Debug( _T("Malformed query.") );
 	if ( pSearch == NULL )
 	{
 		// The CQuerySearch class rejected the search, drop the packet
-		pPacket->Debug( _T("Malformed query.") );
 		theApp.Message( MSG_ERROR, IDS_PROTOCOL_BAD_QUERY, (LPCTSTR)m_sAddress );
 		Statistics.Current.Gnutella1.Dropped++;
 		m_nDropCount++;

@@ -1138,11 +1138,10 @@ BOOL CG2Neighbour::SendQuery(CQuerySearch* pSearch, CPacket* pPacket, BOOL bLoca
 BOOL CG2Neighbour::OnQuery(CG2Packet* pPacket)
 {
 	CQuerySearch* pSearch = CQuerySearch::FromPacket( pPacket );
-
-	// Check for invalid / blocked searches
+	if ( pSearch == NULL || pSearch->m_bWarning )
+		pPacket->Debug( _T("Malformed query.") );
 	if ( pSearch == NULL )
 	{
-		pPacket->Debug( _T("Malformed query.") );
 		theApp.Message( MSG_INFO, IDS_PROTOCOL_BAD_QUERY, (LPCTSTR)m_sAddress );
 		Statistics.Current.Gnutella2.Dropped++;
 		m_nDropCount++;
