@@ -468,8 +468,8 @@ BOOL CGGEPItem::Encode()
 	}
 
 	delete [] m_pBuffer;
-	m_pBuffer = pOutput.release();
 	m_nLength = static_cast< DWORD >( pOut - pOutput.get() );
+	m_pBuffer = pOutput.release();
 
 	return TRUE;
 }
