@@ -221,12 +221,12 @@ inline void CG1Packet::CG1PacketPool::FreePoolImpl(CPacket* pPacket)
 #define G1_PACKTYPE_MAX			9 // There are 9 packet type indices, with values 0 through 8
 
 // MinSpeed Flags (do)
-#define G1_QF_TAG				0x8000
-#define G1_QF_FIREWALLED		0x4000
-#define G1_QF_XML				0x2000
-#define G1_QF_DYNAMIC			0x1000
-#define G1_QF_BIN_HASH			0x800
-#define G1_QF_OOB				0x400
+#define G1_QF_TAG				0x8000	// If the bit 15 is 0, then this is a query with the deprecated minspeed semantic. If the bit 15 is set to 1, then this is a query with the new minimum speed semantic.
+#define G1_QF_FIREWALLED		0x4000	// Firewalled indicator. This flag can be used by the remote servent to avoid returning queryHits if it is itself firewalled, as the requesting servent won't be able to download the files.
+#define G1_QF_XML				0x2000	// XML Metadata. Set this bit to 1 if you want the servent to receive XML Metadata. This flag has been set to spare bandwidth, returning metadata in queryHits only if the requester asks for it.
+#define G1_QF_DYNAMIC			0x1000	// Leaf Guided Dynamic Query. When the bit is set to 1, this means that the query is sent by a leaf which wants to control the dynamic query mechanism. This is part of the Leaf guidance of dynamic queries proposal. This information is only used by the ultrapeers shielding this leave if they implement leaf guidance of dynamic queries.
+#define G1_QF_BIN_HASH			0x0800	// GGEP "H" allowed. If this bit is set to 1, then the sender is able to parse the GGEP "H" extension which is a replacement for the legacy HUGE GEM extension. This is meant to start replacing the GEM mechanism with GGEP extensions, as GEM extensions are now deprecated.
+#define G1_QF_OOB				0x0400	// Out of Band Query. This flag is used to recognize a Query which was sent using the Out Of Band query extension.
 
 // QHD Flags (do)
 #define G1_QHD_PUSH				0x01

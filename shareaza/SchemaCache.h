@@ -82,8 +82,8 @@ public:
 		return m_pNames.Lookup( strName, pSchema ) ? pSchema : NULL;
 	}
 
-	// Decode metadata XML and Schema from string
-	CXMLElement* Decode(LPSTR pszData, int nLength, CSchema*& pSchema);
+	// Decode metadata and Schema from text or XML deflated or plain
+	CXMLElement* Decode(BYTE* pszData, DWORD nLength, CSchema*& pSchema);
 	static CXMLElement* AutoDetectSchema(LPCTSTR pszInfo);
 	static CXMLElement* AutoDetectAudio(LPCTSTR pszInfo);
 };

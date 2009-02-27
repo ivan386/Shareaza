@@ -197,7 +197,7 @@ public:
 	void		Write(LPCVOID pData, int nLength);
 	void		WriteByte(BYTE nValue);
 	CString		ToString() const;
-	void		WriteUTF8(LPCWSTR pszText, size_t nLength);
+	void		WriteUTF8(const CString& strText);
 
 protected:
 	void		WriteTo(CPacket* pPacket);

@@ -25,6 +25,7 @@
 #include "SchemaCache.h"
 #include "Schema.h"
 #include "XML.h"
+#include "Zlib.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -130,21 +131,43 @@ void CSchemaCache::Clear()
 	m_pNames.RemoveAll();
 }
 
-CXMLElement* CSchemaCache::Decode(LPSTR pszData, int nLength, CSchema*& pSchema)
+CXMLElement* CSchemaCache::Decode(BYTE* szData, DWORD nLength, CSchema*& pSchema)
 {
-	// HACK: Fix embedded zeros
-	char* p = pszData;
-	for ( int i = 0; i < nLength - 2; ++i, ++p )
-		// Fix <tag attribute="valueZ/> -> <tag attribute="value"/>
-		if ( *p == _T('\0') && *(p + 1) == _T('/') && *(p + 2) == _T('>') )
-			*p = _T('"');
+	auto_array< BYTE > pTmp;
+	if ( nLength >= 9 && _strnicmp( (LPCSTR)szData, "{deflate}", 9 ) == 0 )
+	{
+		// Deflate data
+		DWORD nRealSize;
+		pTmp = CZLib::Decompress( (LPCSTR)szData + 9, nLength - 9, &nRealSize );
+		if ( ! pTmp.get() )
+			// Invalid data
+			return NULL;
+		szData = pTmp.get();
+		nLength = nRealSize;
+	}
+	else if ( nLength >= 11 && _strnicmp( (LPCSTR)szData, "{plaintext}", 11 ) == 0 )
+	{
+		// Plain text with long header
+		szData += 11;
+		nLength -= 11;
+	}
+	else if ( nLength >= 2 && _strnicmp( (LPCSTR)szData, "{}", 2 ) == 0 )
+	{
+		// Plain text with short header
+		szData += 2;
+		nLength -= 2;
+	}
 
-	CString strXML = UTF8Decode( pszData, nLength );
+	// Fix <tag attribute="valueZ/> -> <tag attribute="value"/>
+	for ( DWORD i = 1; i + 2 < nLength ; i++ )
+		if ( szData[ i ] == 0 && szData[ i + 1 ] == '/' && szData[ i + 2 ] == '>' )
+			szData[ i ] = '\"';
 
-	CXMLElement* pXML = CXMLElement::FromString( strXML );
+	// Decode XML
+	CXMLElement* pXML = CXMLElement::FromBytes( szData, nLength, FALSE );
 	if ( ! pXML )
-		pXML = AutoDetectSchema( strXML );
-
+		// Reconstruct XML from non-XML legacy data
+		pXML = AutoDetectSchema( CString( (LPCSTR)szData, nLength ) );
 	if ( pXML )
 	{
 		pSchema = Get( pXML->GetAttributeValue( CXMLAttribute::schemaName, NULL ) );

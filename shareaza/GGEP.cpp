@@ -328,11 +328,10 @@ void CGGEPItem::WriteByte(BYTE nValue)
 	Write( &nValue, 1 );
 }
 
-void CGGEPItem::WriteUTF8(LPCWSTR pszText, size_t nLength)
+void CGGEPItem::WriteUTF8(const CString& strText)
 {
 	CBuffer pBuffer;
-
-	pBuffer.Print( pszText, nLength, CP_UTF8 );
+	pBuffer.Print( strText, CP_UTF8 );
 	Write( pBuffer.m_pBuffer, pBuffer.m_nLength );
 }
 

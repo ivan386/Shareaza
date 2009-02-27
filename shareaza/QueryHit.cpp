@@ -130,19 +130,22 @@ CQueryHit* CQueryHit::FromG1Packet(CG1Packet* pPacket, int* pnHops)
 
 	try
 	{
-		BYTE	nCount		= pPacket->ReadByte();
-		WORD	nPort		= pPacket->ReadShortLE();
-		DWORD	nAddress	= pPacket->ReadLongLE();
-		DWORD	nSpeed		= pPacket->ReadLongLE();
-		
-		if ( Network.IsReserved( (IN_ADDR*)&nAddress, false ) )
+		BYTE nCount = pPacket->ReadByte();
+		if ( ! nCount )
+		{
+			theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G1] Got hit packet with zero hit counter") );
 			AfxThrowUserException();
-		else if ( Security.IsDenied( (IN_ADDR*)&nAddress ) )
+		}
+		WORD nPort = pPacket->ReadShortLE();
+		DWORD nAddress = pPacket->ReadLongLE();
+		if ( Network.IsReserved( (IN_ADDR*)&nAddress, false ) ||
+			Security.IsDenied( (IN_ADDR*)&nAddress ) )
+		{
+			theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G1] Got hit packet with denied address") );
 			AfxThrowUserException();
+		}
+		DWORD nSpeed = pPacket->ReadLongLE();
 
-		if ( ! nCount ) 
-			AfxThrowUserException();
-		
 		while ( nCount-- )
 		{
 			CQueryHit* pHit = new CQueryHit( PROTOCOL_G1, oQueryID );
@@ -1163,7 +1166,7 @@ void CQueryHit::ReadG1Packet(CG1Packet* pPacket)
 				nLength = pPacket->GetRemaining();
 
 			// Read data as ASCII string
-			auto_array< char > pszData( new char[ nLength + 1] );
+			auto_array< BYTE > pszData( new BYTE[ nLength + 1] );
 			pPacket->Read( pszData.get(), nLength );
 			if ( nLength )
 			{
@@ -1179,9 +1182,9 @@ void CQueryHit::ReadG1Packet(CG1Packet* pPacket)
 
 			if ( nLength == 0 )
 				continue; // Skip zero block
-			else if ( nLength >= 4 && _strnicmp( pszData.get(), "urn:", 4 ) == 0 )
+			else if ( nLength >= 4 && _strnicmp( (LPCSTR)pszData.get(), "urn:", 4 ) == 0 )
 			{
-				CString strURN( pszData.get(), nLength );
+				CString strURN( (LPCSTR)pszData.get(), nLength );
 				if ( nLength == 4 );					// Got empty urn
 				else if ( oSHA1.fromUrn(  strURN ) );	// Got SHA1
 				else if ( oTiger.fromUrn( strURN ) );	// Got Tiger
@@ -1250,7 +1253,7 @@ void CQueryHit::ReadG1Packet(CG1Packet* pPacket)
 				}
 			}
 
-			theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G1] Got hit packet with unknown part: \"%hs\" (%d bytes)"), CString( pszData.get(), nLength ), nLength );
+			theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G1] Got hit packet with unknown part: \"%hs\" (%d bytes)"), CString( (LPCSTR)pszData.get(), nLength ), nLength );
 			m_bBogus = TRUE;
 		}
 	}

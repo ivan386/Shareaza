@@ -1,7 +1,7 @@
 //
 // G2Neighbour.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -1142,6 +1142,7 @@ BOOL CG2Neighbour::OnQuery(CG2Packet* pPacket)
 	// Check for invalid / blocked searches
 	if ( pSearch == NULL )
 	{
+		pPacket->Debug( _T("Malformed query.") );
 		theApp.Message( MSG_INFO, IDS_PROTOCOL_BAD_QUERY, (LPCTSTR)m_sAddress );
 		Statistics.Current.Gnutella2.Dropped++;
 		m_nDropCount++;

@@ -66,7 +66,10 @@ public:
 	BOOL				m_bUDP;			// G2: Packet received over UDP
 	SOCKADDR_IN			m_pEndpoint;	// G2: Packet received from this host
 	DWORD				m_nKey;			// G2: Hub query key
-	BOOL				m_bFirewall;	// G1: Firewalled host
+	bool				m_bFirewall;	// G1: Firewalled host
+	bool				m_bDynamic;		// G1: Leaf Guided Dynamic Query
+	bool				m_bBinHash;		// G1: GGEP "H" allowed
+	bool				m_bOOB;			// G1: Out of Band Query
 	bool				m_bOOBv3;		// G1: OOB v3 Security Token support
 	BYTE				m_nMeta;		// G1: MetaType query mask
 	bool				m_bPartial;		// G1: Partial results support
@@ -128,6 +131,8 @@ public:
 	CEDPacket*				ToEDPacket(BOOL bUDP, DWORD nServerFlags = 0);
 private:
 	BOOL					ReadG1Packet(CG1Packet* pPacket);
+	void					ReadGGEP(CG1Packet* pPacket);
+	void					ReadExtension(CG1Packet* pPacket);
 	BOOL					ReadG2Packet(CG2Packet* pPacket, SOCKADDR_IN* pEndpoint = NULL);
 
 // Operations

@@ -1,7 +1,7 @@
 //
 // G1Neighbour.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -1286,17 +1286,8 @@ void CG1Neighbour::SendG2Push(const Hashes::Guid& oGUID, CPacket* pPacket)
 // Returns false if the remote computer sent a malformed packet and we should disconnect from it, true otherwise
 BOOL CG1Neighbour::OnQuery(CG1Packet* pPacket)
 {
-	// If the packet payload is too short
-	if ( pPacket->m_nLength < 4 )
-	{
-		// Record it and drop it
-		theApp.Message( MSG_ERROR, IDS_PROTOCOL_BAD_QUERY, (LPCTSTR)m_sAddress );
-		Statistics.Current.Gnutella1.Dropped++;
-		m_nDropCount++;
-		return TRUE; // Stay connected to the remote computer, though
-
-	} // Or, if the packet payload is too long
-	else if ( pPacket->m_nLength > Settings.Gnutella1.MaximumQuery )
+	// if the packet payload is too long
+	if ( pPacket->m_nLength > Settings.Gnutella1.MaximumQuery )
 	{
 		// Record it and drop it
 		theApp.Message( MSG_ERROR, IDS_PROTOCOL_TOO_LARGE, (LPCTSTR)m_sAddress );
@@ -1329,8 +1320,8 @@ BOOL CG1Neighbour::OnQuery(CG1Packet* pPacket)
 	if ( pSearch == NULL )
 	{
 		// The CQuerySearch class rejected the search, drop the packet
-		// pPacket->Debug( _T("BadQuery") );
-		// theApp.Message( MSG_DEBUG, IDS_PROTOCOL_BAD_QUERY, (LPCTSTR)m_sAddress );
+		pPacket->Debug( _T("Malformed query.") );
+		theApp.Message( MSG_ERROR, IDS_PROTOCOL_BAD_QUERY, (LPCTSTR)m_sAddress );
 		Statistics.Current.Gnutella1.Dropped++;
 		m_nDropCount++;
 		return TRUE; // Stay connected to the remote computer
