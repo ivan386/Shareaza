@@ -108,6 +108,9 @@ public:
 protected:
 	void		ParseAttributes(const Hashes::Guid& pClientID, CVendor* pVendor, BYTE* nFlags, BOOL bChat, BOOL bBrowseHost);
 	void		ReadG1Packet(CG1Packet* pPacket);
+	void		ReadGGEP(CG1Packet* pPacket);
+	void		ReadExtension(CG1Packet* pPacket);
+	BOOL		CheckValid() const;
 	bool		ReadG2Packet(CG2Packet* pPacket, DWORD nLength);
 	void		ReadEDPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer, DWORD m_nServerFlags = 0) throw(...);
 	void		ReadEDAddress(CEDPacket* pPacket, SOCKADDR_IN* pServer) throw(...);

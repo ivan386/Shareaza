@@ -1,7 +1,7 @@
 //
 // Hashes/HashDescriptors.cpp
 //
-// Copyright (c) Shareaza Development Team, 2005-2008.
+// Copyright (c) Shareaza Development Team, 2005-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -47,10 +47,11 @@ namespace Hashes
 		{
 			{ 39 + 16, 16, 16, L"urn:tree:tiger/:" },
 			{ 39 + 12, 12, 12, L"tree:tiger/:" },
-			{ 85,      46, 13, L"urn:bitprint:" },
-			{ 81,      42,  9, L"bitprint:" },
+			{ 39 + 46, 46, 13, L"urn:bitprint:" },
+			{ 39 + 42, 42,  9, L"bitprint:" },
 			{ 39 + 15, 15, 15, L"urn:tree:tiger:" },
-			{ 39 + 11, 11, 11, L"tree:tiger:" }
+			{ 39 + 11, 11, 11, L"tree:tiger:" },
+			{ 39 + 11, 11, 11, L"urn:ttroot:" }
 		};
 
 		const UrnString Ed2kDescriptor::urns[ Ed2kDescriptor::numUrns ] =

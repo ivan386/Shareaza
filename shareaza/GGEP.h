@@ -72,6 +72,8 @@ const LPCTSTR GGEP_HEADER_MULTICAST_RESPONSE	= _T("MCAST");
 const LPCTSTR GGEP_HEADER_PUSH_PROXY			= _T("PUSH");
 // AlternateLocation support
 const LPCTSTR GGEP_HEADER_ALTS					= _T("ALT");
+// AlternateLocations that support TLS
+const LPCTSTR GGEP_HEADER_ALTS_TLS				= _T("ALT_TLS");
 // IpPort request
 const LPCTSTR GGEP_HEADER_IPPORT				= _T("IP");
 // UDP HostCache pongs

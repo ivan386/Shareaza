@@ -138,14 +138,9 @@ CQueryHit* CQueryHit::FromG1Packet(CG1Packet* pPacket, int* pnHops)
 		}
 		WORD nPort = pPacket->ReadShortLE();
 		DWORD nAddress = pPacket->ReadLongLE();
-		if ( Network.IsReserved( (IN_ADDR*)&nAddress, false ) ||
-			Security.IsDenied( (IN_ADDR*)&nAddress ) )
-		{
-			theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G1] Got hit packet with denied address") );
-			AfxThrowUserException();
-		}
 		DWORD nSpeed = pPacket->ReadLongLE();
 
+		BOOL bBogus = FALSE;
 		while ( nCount-- )
 		{
 			CQueryHit* pHit = new CQueryHit( PROTOCOL_G1, oQueryID );
@@ -160,31 +155,35 @@ CQueryHit* CQueryHit::FromG1Packet(CG1Packet* pPacket, int* pnHops)
 			pHit->m_nSpeed		= nSpeed;
 			
 			pHit->ReadG1Packet( pPacket );
+			if ( pHit->m_bBogus )
+				bBogus = TRUE;
 		}
 
-		CVendor*	pVendor		= VendorCache.m_pNull;
-		BYTE		nPublicSize	= 0;
-		BYTE		nFlags[2]	= { 0, 0 };
-		WORD		nXMLSize	= 0;
-		BOOL		bChat		= FALSE;
-		BOOL		bBrowseHost	= FALSE;
-
+		// Read Vendor Code
+		CVendor* pVendor = VendorCache.m_pNull;
+		BYTE nPublicSize = 0;
 		if ( pPacket->GetRemaining() >= 16u + 5u )
 		{
 			CHAR szaVendor[ 4 ];
 			pPacket->Read( szaVendor, 4 );
-			TCHAR szVendor[5] = { szaVendor[0], szaVendor[1], szaVendor[2], szaVendor[3], 0 };
-			
+			TCHAR szVendor[ 5 ] = { szaVendor[0], szaVendor[1], szaVendor[2], szaVendor[3], 0 };
 			pVendor = VendorCache.Lookup( szVendor );
-			if ( ! pVendor ) pVendor = VendorCache.m_pNull;
+			if ( ! pVendor )
+				pVendor = VendorCache.m_pNull;
 			nPublicSize	= pPacket->ReadByte();
 		}
 		
-		if ( pVendor && pVendor->m_bHTMLBrowse ) bBrowseHost = TRUE;
+		BOOL bBrowseHost = FALSE;
+		if ( pVendor && pVendor->m_bHTMLBrowse )
+			bBrowseHost = TRUE;
 		
-		if ( nPublicSize + 16u > pPacket->GetRemaining() ) 
+		if ( pPacket->GetRemaining() < nPublicSize + 16u ) 
+		{
+			theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G1] Got hit packet with invalid size of public data") );
 			AfxThrowUserException();
-		
+		}
+
+		BYTE nFlags[2] = { 0, 0 };
 		if ( nPublicSize >= 2 )
 		{
 			nFlags[0]	= pPacket->ReadByte();
@@ -192,23 +191,30 @@ CQueryHit* CQueryHit::FromG1Packet(CG1Packet* pPacket, int* pnHops)
 			nPublicSize -= 2;
 		}
 		
+		WORD nXMLSize = 0;
 		if ( nPublicSize >= 2 )
 		{
 			nXMLSize = pPacket->ReadShortLE();
 			nPublicSize -= 2;
 			if ( nPublicSize + nXMLSize + 16u > pPacket->GetRemaining() ) 
+			{
+				theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G1] Got hit packet with invalid size of XML data") );
 				AfxThrowUserException();
+			}
 		}
 
-		while ( nPublicSize-- ) pPacket->ReadByte();
+		while ( nPublicSize-- )
+			pPacket->ReadByte();
 
+		BOOL bChat = FALSE;
 		if ( pVendor && pVendor->m_bChatFlag &&
 			pPacket->GetRemaining() >= 16u + nXMLSize + 1u )
 		{
-			bChat = pPacket->PeekByte() == 1;
+			bChat = ( pPacket->PeekByte() == 1 );
 		}
 
-		if ( pPacket->GetRemaining() < 16u + nXMLSize ) nXMLSize = 0;
+		if ( pPacket->GetRemaining() < 16u + nXMLSize )
+			nXMLSize = 0;
 
 		if ( ( nFlags[0] & G1_QHD_GGEP ) && ( nFlags[1] & G1_QHD_GGEP ) )
 		{
@@ -224,15 +230,10 @@ CQueryHit* CQueryHit::FromG1Packet(CG1Packet* pPacket, int* pnHops)
 				}
 			}
 			else
-				theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G1] Got hit packet with malformed GGEP") );
-		}
-
-		// Read first 2 bytes of private data
-		if ( pPacket->GetRemaining() >= 16u + 2u )
-		{
-			WORD nID = pPacket->ReadShortLE();
-			if ( nID > 0 )
-				theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, L"[G1] Private ID: 0x%x", nID );
+			{
+				theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G1] Got hit packet with malformed GGEP (main part)") );
+				AfxThrowUserException();
+			}
 		}
 
 		if ( nXMLSize > 0 )
@@ -242,7 +243,9 @@ CQueryHit* CQueryHit::FromG1Packet(CG1Packet* pPacket, int* pnHops)
 			if ( pXML == NULL && nXMLSize > 1 )
 			{
 				CString strVendorName;
-				if ( pVendor ) strVendorName = pVendor->m_sName;
+				if ( pVendor )
+					strVendorName = pVendor->m_sName;
+
 				theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, L"[G1] Invalid compressed metadata. Vendor: %s", strVendorName );
 			}
 		}
@@ -253,21 +256,25 @@ CQueryHit* CQueryHit::FromG1Packet(CG1Packet* pPacket, int* pnHops)
 			nFlags[1] |= G1_QHD_PUSH;
 		}
 		
-		Hashes::Guid oClientID;
-		
+		// Read client ID
+		Hashes::Guid oClientID;		
 		pPacket->Seek( 16, CG1Packet::seekEnd );
-		pPacket->Read( oClientID );
-		
-		DWORD nIndex = 0;
-		
+		pPacket->Read( oClientID );		
+
+		DWORD nIndex = 0;		
 		for ( pLastHit = pFirstHit ; pLastHit ; pLastHit = pLastHit->m_pNext, nIndex++ )
 		{
 			pLastHit->ParseAttributes( oClientID, pVendor, nFlags, bChat, bBrowseHost );
 			pLastHit->Resolve();
-			if ( pXML ) pLastHit->ParseXML( pXML, nIndex );
+			if ( pXML )
+				pLastHit->ParseXML( pXML, nIndex );
 		}
-		
-		CheckBogus( pFirstHit );
+
+		if ( CheckBogus( pFirstHit ) )
+			bBogus = TRUE;
+
+		if ( bBogus )
+			pPacket->Debug( _T("Malformed hit.") );
 	}
 	catch ( CException* pException )
 	{
@@ -859,21 +866,23 @@ BOOL CQueryHit::CheckBogus(CQueryHit* pFirstHit)
 		if ( std::find( pList.begin(), pList.end(), strTemp ) == pList.end() )
 			pHit->m_bBogus = TRUE;
 	}
+
+	theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("Got bogus hit packet. Cross-hit hash check failed") );
 	
 	return TRUE;
 }
 
 BOOL CQueryHit::HasBogusMetadata()
 {
-	if ( m_pXML == NULL ) return FALSE;
-
-	CXMLAttribute* pAttribute = NULL;
-	if ( ( pAttribute = m_pXML->GetAttribute( L"title" ) ) != NULL )
+	if ( m_pXML )
 	{
-		if ( _tcsnistr( (LPCTSTR)pAttribute->GetValue(), L"not related", 11 ) )
-			return TRUE;
+		if ( CXMLAttribute* pAttribute = m_pXML->GetAttribute( L"title" ) )
+		{
+			CString sValue = pAttribute->GetValue();
+			if ( _tcsnistr( (LPCTSTR)sValue, L"not related", 11 ) )
+				return TRUE;
+		}
 	}
-
 	return FALSE;
 }
 
@@ -886,12 +895,13 @@ CXMLElement* CQueryHit::ReadXML(CG1Packet* pPacket, int nSize)
 		// Empty packet
 		return NULL;
 
-	auto_array< BYTE > pRaw( new BYTE[ nSize ] );
+	auto_array< BYTE > pRaw( new BYTE[ nSize + 1 ] );
 	if ( ! pRaw.get() )
 		// Out of memory
 		return NULL;
 
 	pPacket->Read( pRaw.get(), nSize );
+	pRaw[ nSize ] = 0;
 
 	LPBYTE pszXML = NULL;
 	if ( nSize >= 9 && strncmp( (LPCSTR)pRaw.get(), "{deflate}", 9 ) == 0 )
@@ -954,12 +964,51 @@ CXMLElement* CQueryHit::ReadXML(CG1Packet* pPacket, int nSize)
 }
 
 //////////////////////////////////////////////////////////////////////
+// CQueryHit validity check
+
+BOOL CQueryHit::CheckValid() const
+{
+	if ( m_sName.GetLength() > 160 )
+	{
+		theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("Got bogus hit packet. Too long filename: %d symbols"), m_sName.GetLength() );
+		return FALSE;
+	}
+
+	int nCurWord = 0, nMaxWord = 0;
+	for ( LPCTSTR pszName = m_sName ; *pszName ; pszName++ )
+	{
+		if ( _istgraph( *pszName ) )
+		{
+			nCurWord++;
+			nMaxWord = max( nMaxWord, nCurWord );
+		}
+		else
+		{
+			nCurWord = 0;
+		}
+	}
+	if ( nMaxWord > 100 )
+	{
+		theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("Got bogus hit packet. Too many words: %d"), nMaxWord );
+		return FALSE;
+	}
+
+	if ( ! IsHashed() )
+	{
+		theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("Got bogus hit packet. No hash") );
+		return FALSE;
+	}
+
+	return TRUE;
+}
+
+//////////////////////////////////////////////////////////////////////
 // CQueryHit G1 result entry reader
 
 void CQueryHit::ReadG1Packet(CG1Packet* pPacket)
 {
 	m_nIndex	= pPacket->ReadLongLE();
-	
+
 	m_nSize		= pPacket->ReadLongLE();
 	m_bSize		= TRUE;
 
@@ -972,175 +1021,21 @@ void CQueryHit::ReadG1Packet(CG1Packet* pPacket)
 		m_sName	= pPacket->ReadStringASCII();
 	}
 
-	if ( m_sName.GetLength() > 160 )
-	{
-		m_bBogus = TRUE;
-	}
-	else
-	{
-		int nCurWord = 0, nMaxWord = 0;
-
-		for ( LPCTSTR pszName = m_sName ; *pszName ; pszName++ )
-		{
-			if ( _istgraph( *pszName ) )
-			{
-				nCurWord++;
-				nMaxWord = max( nMaxWord, nCurWord );
-			}
-			else
-			{
-				nCurWord = 0;
-			}
-		}
-		if ( nMaxWord > 30 )
-			m_bBogus = TRUE;
-	}
-
-	Hashes::Sha1Hash	oSHA1;
-	Hashes::TigerHash	oTiger;
-	Hashes::Ed2kHash	oED2K;
-	Hashes::BtHash		oBTH;
-	Hashes::Md5Hash		oMD5;
-
 	while ( pPacket->GetRemaining() )
 	{
-		if ( pPacket->PeekByte() == GGEP_MAGIC )
+		BYTE nPeek = pPacket->PeekByte();
+		
+		if ( nPeek == GGEP_MAGIC )
 		{
-			CGGEPBlock pGGEP;
-			if ( pGGEP.ReadFromPacket( pPacket ) )
-			{
-				if ( ! Settings.Gnutella1.EnableGGEP )
-					continue;
-
-				CGGEPItem* pItemPos = pGGEP.GetFirst();
-				for ( BYTE nItemCount = 0; pItemPos && nItemCount < pGGEP.GetCount();
-					nItemCount++, pItemPos = pItemPos->m_pNext )
-				{
-					if ( pItemPos->IsNamed( GGEP_HEADER_HASH ) )
-					{
-						if (  pItemPos->m_pBuffer[0] == GGEP_H_SHA1 )
-						{
-							if ( pItemPos->m_nLength >= 20 + 1 )
-							{
-								oSHA1 = reinterpret_cast< Hashes::Sha1Hash::RawStorage& >(
-									pItemPos->m_pBuffer[ 1 ] );
-							}
-						}
-						else if ( pItemPos->m_pBuffer[0] == GGEP_H_BITPRINT )
-						{
-							if ( pItemPos->m_nLength >= 24 + 20 + 1 )
-							{
-								oSHA1 = reinterpret_cast< Hashes::Sha1Hash::RawStorage& >(
-									pItemPos->m_pBuffer[ 1 ] );
-								oTiger = reinterpret_cast< Hashes::TigerHash::RawStorage& >(
-									pItemPos->m_pBuffer[ 21 ] );
-							}
-						}
-						else if ( pItemPos->m_pBuffer[0] == GGEP_H_MD5 )
-						{
-							if ( pItemPos->m_nLength >= 17 )
-							{
-								oMD5 = reinterpret_cast< Hashes::Md5Hash::RawStorage& >(
-									pItemPos->m_pBuffer[ 1 ] );
-							}
-						}
-					}
-					else if ( pItemPos->IsNamed( GGEP_HEADER_TTROOT ) )
-					{
-						if ( pItemPos->m_nLength == 24 )
-						{
-							oTiger = reinterpret_cast< Hashes::TigerHash::RawStorage& >(
-								pItemPos->m_pBuffer[ 0 ] );
-						}
-					}
-					else if ( pItemPos->IsNamed( GGEP_HEADER_URN ) )
-					{
-						CString strURN( "urn:" + pItemPos->ToString() );
-						if (      oSHA1.fromUrn(  strURN ) );	// Got SHA1
-						else if ( oTiger.fromUrn( strURN ) );	// Got Tiger
-						else if ( oED2K.fromUrn(  strURN ) );	// Got ED2K
-						else if ( oBTH.fromUrn(   strURN ) );	// Got BTH
-						else if ( oMD5.fromUrn(   strURN ) );	// Got MD5
-						else
-							theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G1] Got hit packet with unknown GGEP URN: \"%s\""), strURN );
-					}
-					else if ( pItemPos->IsNamed( GGEP_HEADER_LARGE_FILE ) )
-					{
-						if ( pItemPos->m_nLength <= 8 )
-						{
-							QWORD nFileSize = 0;
-
-							pItemPos->Read( &nFileSize , pItemPos->m_nLength );
-
-							if ( m_nSize != 0 )
-								m_nSize = nFileSize;
-							else
-								m_nSize = SIZE_UNKNOWN;
-						}
-					}
-					else if ( pItemPos->IsNamed( GGEP_HEADER_ALTS ) )
-					{
-						// the ip-addresses need not be stored, as they are sent upon the download request in the ALT-loc header
-						m_nHitSources += pItemPos->m_nLength / 6;	// 6 bytes per source (see ALT GGEP extension specification)
-					}
-					else if ( pItemPos->IsNamed( GGEP_HEADER_CREATE_TIME ) );
-						// Creation time not supported yet
-					else 
-						theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G1] Got hit packet with unknown GGEP: \"%s\" (%d bytes)"), pItemPos->m_sID, pItemPos->m_nLength );
-
-					if ( oSHA1.isValid() )
-					{
-						if ( validAndUnequal( oSHA1, m_oSHA1 ) )
-							m_bBogus = TRUE;
-						else
-							m_oSHA1  = oSHA1;
-						oSHA1.clear();
-					}
-
-					if ( oTiger.isValid() )
-					{
-						if ( validAndUnequal( oTiger, m_oTiger ) )
-							m_bBogus = TRUE;
-						else
-							m_oTiger  = oTiger;
-						oTiger.clear();
-					}
-
-					if ( oED2K.isValid() )
-					{
-						if ( validAndUnequal( oED2K, m_oED2K ) )
-							m_bBogus = TRUE;
-						else
-							m_oED2K  = oED2K;
-						oED2K.clear();
-					}
-
-					if ( oMD5.isValid() )
-					{
-						if ( validAndUnequal( oMD5, m_oMD5 ) )
-							m_bBogus = TRUE;
-						else
-							m_oMD5  = oMD5;
-						oMD5.clear();
-					}
-	
-					if ( oBTH.isValid() )
-					{
-						if ( validAndUnequal( oBTH, m_oBTH ) )
-							m_bBogus = TRUE;
-						else
-							m_oBTH  = oBTH;
-						oBTH.clear();
-					}
-				}
-			}
-			else 
-			{
-				theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G1] Got hit packet with malformed GGEP") );
-				AfxThrowUserException();
-			}
+			// GGEP extension
+			ReadGGEP( pPacket );
 		}
-		else if ( pPacket->PeekByte() == 0 )
+		else if ( nPeek == G1_PACKET_HIT_SEP )
+		{
+			// Skip extra separator byte
+			pPacket->ReadByte();
+		}
+		else if ( nPeek == 0 )
 		{
 			// End of hit
 			pPacket->ReadByte();
@@ -1148,121 +1043,218 @@ void CQueryHit::ReadG1Packet(CG1Packet* pPacket)
 		}
 		else
 		{
-			const BYTE* pData = pPacket->GetCurrent();
-			const BYTE* pSep = (const BYTE*)memchr( pData, G1_PACKET_HIT_SEP,
-				pPacket->GetRemaining() );
-			const BYTE* pNull = (const BYTE*)memchr( pData, 0,
-				pPacket->GetRemaining() );
-			DWORD nLength;
-			if ( pNull && ( pNull < pSep || ! pSep ) )
+			// HUGE, XML extensions
+			ReadExtension( pPacket );
+		}
+	}
+
+	if ( ! CheckValid() )
+		m_bBogus = TRUE;
+}
+
+void CQueryHit::ReadGGEP(CG1Packet* pPacket)
+{
+	CGGEPBlock pGGEP;
+	if ( pGGEP.ReadFromPacket( pPacket ) )
+	{
+		if ( ! Settings.Gnutella1.EnableGGEP )
+			return;
+
+		Hashes::Sha1Hash	oSHA1;
+		Hashes::TigerHash	oTiger;
+		Hashes::Ed2kHash	oED2K;
+		Hashes::BtHash		oBTH;
+		Hashes::Md5Hash		oMD5;
+
+		CGGEPItem* pItemPos = pGGEP.GetFirst();
+		for ( BYTE nItemCount = 0; pItemPos && nItemCount < pGGEP.GetCount();
+			nItemCount++, pItemPos = pItemPos->m_pNext )
+		{
+			if ( pItemPos->IsNamed( GGEP_HEADER_HASH ) )
 			{
-				// No extra data
-				nLength = (DWORD)( pNull - pData );
-				pSep = NULL;
+				switch ( pItemPos->m_pBuffer[0] )
+				{
+				case GGEP_H_SHA1:
+					if ( pItemPos->m_nLength == 20 + 1 )
+					{
+						oSHA1 = reinterpret_cast< Hashes::Sha1Hash::RawStorage& >(
+							pItemPos->m_pBuffer[ 1 ] );
+					}
+					else
+						theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G1] Got query packet with GGEP \"H\" type SH1 unknown size (%d bytes)"), pItemPos->m_nLength );
+					break;
+
+				case GGEP_H_BITPRINT:
+					if ( pItemPos->m_nLength == 24 + 20 + 1 )
+					{
+						oSHA1 = reinterpret_cast< Hashes::Sha1Hash::RawStorage& >(
+							pItemPos->m_pBuffer[ 1 ] );
+						oTiger = reinterpret_cast< Hashes::TigerHash::RawStorage& >(
+							pItemPos->m_pBuffer[ 21 ] );
+					}
+					else
+						theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G1] Got hit packet with GGEP \"H\" type SH1+TTR unknown size (%d bytes)"), pItemPos->m_nLength );
+					break;
+
+				case GGEP_H_MD5:
+					if ( pItemPos->m_nLength == 16 + 1 )
+					{
+						oMD5 = reinterpret_cast< Hashes::Md5Hash::RawStorage& >(
+							pItemPos->m_pBuffer[ 1 ] );
+					}
+					else
+						theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G1] Got hit packet with GGEP \"H\" type MD5 unknown size (%d bytes)"), pItemPos->m_nLength );
+					break;
+
+				case GGEP_H_MD4:
+					if ( pItemPos->m_nLength == 16 + 1 )
+					{
+						oED2K = reinterpret_cast< Hashes::Ed2kHash::RawStorage& >(
+							pItemPos->m_pBuffer[ 1 ] );
+					}
+					else
+						theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G1] Got hit packet with GGEP \"H\" type MD4 unknown size (%d bytes)"), pItemPos->m_nLength );
+					break;
+
+				case GGEP_H_UUID:
+					// Unsupported
+					break;
+
+				default:
+					theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G1] Got hit packet with GGEP \"H\" unknown type %d (%d bytes)"), pItemPos->m_pBuffer[0], pItemPos->m_nLength );
+				}
 			}
-			else if ( pSep )
-				nLength = (DWORD)( pSep - pData );
-			else
-				nLength = pPacket->GetRemaining();
-
-			// Read data as ASCII string
-			auto_array< BYTE > pszData( new BYTE[ nLength + 1] );
-			pPacket->Read( pszData.get(), nLength );
-			if ( nLength )
+			else if ( pItemPos->IsNamed( GGEP_HEADER_URN ) )
 			{
-				if ( pszData[ nLength - 1 ] )
-					pszData[ nLength ] = 0;
-				else
-					nLength--;
-			}
-
-			// Skip G1_PACKET_HIT_SEP byte
-			if ( pSep )
-				pPacket->ReadByte();
-
-			if ( nLength == 0 )
-				continue; // Skip zero block
-			else if ( nLength >= 4 && _strnicmp( (LPCSTR)pszData.get(), "urn:", 4 ) == 0 )
-			{
-				CString strURN( (LPCSTR)pszData.get(), nLength );
-				if ( nLength == 4 );					// Got empty urn
-				else if ( oSHA1.fromUrn(  strURN ) );	// Got SHA1
+				CString strURN( "urn:" + pItemPos->ToString() );
+				if (      oSHA1.fromUrn(  strURN ) );	// Got SHA1
 				else if ( oTiger.fromUrn( strURN ) );	// Got Tiger
 				else if ( oED2K.fromUrn(  strURN ) );	// Got ED2K
 				else if ( oBTH.fromUrn(   strURN ) );	// Got BTH
 				else if ( oMD5.fromUrn(   strURN ) );	// Got MD5
 				else
-					theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G1] Got hit packet with unknown URN: \"%s\""), strURN );
-
-				// in case of multiple HUGE section.
-				if ( oSHA1.isValid() )
-				{
-					if ( validAndUnequal( oSHA1, m_oSHA1 ) )
-						m_bBogus = TRUE;
-					else
-						m_oSHA1  = oSHA1;
-					oSHA1.clear();
-				}
-
-				if ( oTiger.isValid() )
-				{
-					if ( validAndUnequal( oTiger, m_oTiger ) )
-						m_bBogus = TRUE;
-					else
-						m_oTiger  = oTiger;
-					oTiger.clear();
-				}
-
-				if ( oED2K.isValid() )
-				{
-					if ( validAndUnequal( oED2K, m_oED2K ) )
-						m_bBogus = TRUE;
-					else
-						m_oED2K  = oED2K;
-					oED2K.clear();
-				}
-
-				if ( oMD5.isValid() )
-				{
-					if ( validAndUnequal( oMD5, m_oMD5 ) )
-						m_bBogus = TRUE;
-					else
-						m_oMD5  = oMD5;
-					oMD5.clear();
-				}
-
-				if ( oBTH.isValid() )
-				{
-					if ( validAndUnequal( oBTH, m_oBTH ) )
-						m_bBogus = TRUE;
-					else
-						m_oBTH  = oBTH;
-					oBTH.clear();
-				}
-				continue;
+					theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G1] Got hit packet with unknown GGEP URN: \"%s\""), strURN );
 			}
-			else if ( nLength >= 4 && pszData[ 0 ] && ! m_pXML )
+			else if ( pItemPos->IsNamed( GGEP_HEADER_TTROOT ) )
 			{
-				CSchema* pSchema = NULL;
-				m_pXML = SchemaCache.Decode( pszData.get(), nLength, pSchema );
-				if ( m_pXML )
+				if ( pItemPos->m_nLength == 24 ||
+					// Fix
+					pItemPos->m_nLength == 25 )
 				{
-					m_sSchemaPlural	= pSchema->m_sPlural;
-					m_sSchemaURI = pSchema->GetURI();
-					continue;
+					oTiger = reinterpret_cast< Hashes::TigerHash::RawStorage& >(
+						pItemPos->m_pBuffer[ 0 ] );
 				}
+				else
+					theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G1] Got hit packet with GGEP \"TT\" unknown size (%d bytes)"), pItemPos->m_nLength );
 			}
+			else if ( pItemPos->IsNamed( GGEP_HEADER_LARGE_FILE ) )
+			{
+				if ( pItemPos->m_nLength <= 8 )
+				{
+					QWORD nFileSize = 0;
 
-			theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G1] Got hit packet with unknown part: \"%hs\" (%d bytes)"), CString( (LPCSTR)pszData.get(), nLength ), nLength );
-			m_bBogus = TRUE;
+					pItemPos->Read( &nFileSize , pItemPos->m_nLength );
+
+					if ( m_nSize != 0 )
+						m_nSize = nFileSize;
+					else
+						m_nSize = SIZE_UNKNOWN;
+				}
+				else
+					theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G1] Got hit packet with GGEP \"LF\" unknown size (%d bytes)"), pItemPos->m_nLength );
+			}
+			else if ( pItemPos->IsNamed( GGEP_HEADER_ALTS ) )
+			{
+				// the ip-addresses need not be stored, as they are sent upon the download request in the ALT-loc header
+				m_nHitSources += pItemPos->m_nLength / 6;
+			}
+			else if ( pItemPos->IsNamed( GGEP_HEADER_CREATE_TIME ) );
+				// Creation time not supported yet
+			else if ( pItemPos->IsNamed( GGEP_HEADER_ALTS_TLS ) );
+				// AlternateLocations that support TLS not supported yet
+			else
+				theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G1] Got hit packet with unknown GGEP \"%s\" (%d bytes)"), pItemPos->m_sID, pItemPos->m_nLength );
+
+			if ( validAndUnequal( oSHA1, m_oSHA1 ) ||
+				 validAndUnequal( oTiger, m_oTiger ) ||
+				 validAndUnequal( oED2K, m_oED2K ) ||
+				 validAndUnequal( oMD5, m_oMD5 ) ||
+				 validAndUnequal( oBTH, m_oBTH ) )
+				// Hash mess
+				m_bBogus = TRUE;
 		}
-	}
 
-	if ( ! IsHashed() )
+		if ( oSHA1  && ! m_oSHA1 )  m_oSHA1  = oSHA1;
+		if ( oTiger && ! m_oTiger ) m_oTiger = oTiger;
+		if ( oED2K  && ! m_oED2K )  m_oED2K  = oED2K;
+		if ( oBTH   && ! m_oBTH )   m_oBTH   = oBTH;
+		if ( oMD5   && ! m_oMD5 )   m_oMD5   = oMD5;
+	}
+	else 
 	{
-		theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G1] Got hit packet with no hash") );
+		// Fatal error
+		theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G1] Got hit packet with malformed GGEP") );
 		AfxThrowUserException();
 	}
+}
+
+void CQueryHit::ReadExtension(CG1Packet* pPacket)
+{
+	// Find length of extension (till packet end, G1_PACKET_HIT_SEP or null bytes)
+	DWORD nLength = 0;
+	DWORD nRemaining = pPacket->GetRemaining();
+	const BYTE* pData = pPacket->GetCurrent();
+	for ( ; *pData != G1_PACKET_HIT_SEP && *pData != 0 &&
+		nLength < nRemaining; pData++, nLength++ );
+
+	// Read extension
+	auto_array< BYTE > pszData( new BYTE[ nLength + 1] );
+	pPacket->Read( pszData.get(), nLength );
+	pszData[ nLength ] = 0;
+
+	// Skip G1_PACKET_HIT_SEP byte
+	if ( *pData == G1_PACKET_HIT_SEP )
+		pPacket->ReadByte();
+
+	if ( nLength >= 4 && _strnicmp( (LPCSTR)pszData.get(), "urn:", 4 ) == 0 )
+	{
+		CString strURN( pszData.get() );
+
+		Hashes::Sha1Hash	oSHA1;
+		Hashes::TigerHash	oTiger;
+		Hashes::Ed2kHash	oED2K;
+		Hashes::BtHash		oBTH;
+		Hashes::Md5Hash		oMD5;
+
+		if ( strURN.GetLength() == 4 );			// Got empty urn
+		else if ( oSHA1.fromUrn(  strURN ) );	// Got SHA1
+		else if ( oTiger.fromUrn( strURN ) );	// Got Tiger
+		else if ( oED2K.fromUrn(  strURN ) );	// Got ED2K
+		else if ( oBTH.fromUrn(   strURN ) );	// Got BTH
+		else if ( oMD5.fromUrn(   strURN ) );	// Got MD5
+		else
+			theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G1] Got hit packet with unknown URN \"%s\" (%d bytes)"), strURN, nLength );
+
+		if ( oSHA1  && ! m_oSHA1 )  m_oSHA1  = oSHA1;
+		if ( oTiger && ! m_oTiger ) m_oTiger = oTiger;
+		if ( oED2K  && ! m_oED2K )  m_oED2K  = oED2K;
+		if ( oBTH   && ! m_oBTH )   m_oBTH   = oBTH;
+		if ( oMD5   && ! m_oMD5 )   m_oMD5   = oMD5;
+	}
+	else if ( nLength && ! m_pXML )
+	{
+		CSchema* pSchema = NULL;
+		m_pXML = SchemaCache.Decode( pszData.get(), nLength, pSchema );
+		if ( m_pXML )
+		{
+			m_sSchemaPlural	= pSchema->m_sPlural;
+			m_sSchemaURI = pSchema->GetURI();
+		}
+		else
+			theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G1] Got hit packet with malformed XML \"%hs\" (%d bytes)"), pszData.get(), nLength );
+	}
+	else
+		theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G1] Got hit packet with unknown part \"%hs\" (%d bytes)"), pszData.get(), nLength );
 }
 
 //////////////////////////////////////////////////////////////////////

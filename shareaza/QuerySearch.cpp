@@ -843,8 +843,9 @@ void CQuerySearch::ReadExtension(CG1Packet* pPacket)
 	// Find length of extension (till packet end or G1_PACKET_HIT_SEP byte)
 	DWORD nLength = 0;
 	DWORD nRemaining = pPacket->GetRemaining();
-	for ( const BYTE* pData = pPacket->GetCurrent();
-		*pData != G1_PACKET_HIT_SEP && nLength < nRemaining; pData++, nLength++ );
+	const BYTE* pData = pPacket->GetCurrent();
+	for ( ; *pData != G1_PACKET_HIT_SEP &&
+		nLength < nRemaining; pData++, nLength++ );
 
 	// Read extension
 	auto_array< BYTE > pszData( new BYTE[ nLength + 1] );
@@ -885,10 +886,10 @@ void CQuerySearch::ReadExtension(CG1Packet* pPacket)
 		m_pSchema = NULL;
 		m_pXML = SchemaCache.Decode( pszData.get(), nLength, m_pSchema );
 		if ( ! m_pXML )
-			theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G1] Got query packet with malformed XML \"%s\" (%d bytes)"), pszData.get(), nLength );
+			theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G1] Got query packet with malformed XML \"%hs\" (%d bytes)"), pszData.get(), nLength );
 	}
 	else
-		theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G1] Got query packet with unknown part \"%s\" (%d bytes)"), pszData.get(), nLength );
+		theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("[G1] Got query packet with unknown part \"%hs\" (%d bytes)"), pszData.get(), nLength );
 }
 
 //////////////////////////////////////////////////////////////////////

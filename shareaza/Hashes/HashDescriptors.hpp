@@ -2,8 +2,8 @@
 //                                                                            //
 // Hashes/HashDescriptors.hpp                                                 //
 //                                                                            //
-// Copyright (C) 2005 Shareaza Development Team.                              //
-// This file is part of SHAREAZA (shareaza.sourceforge.net).                          //
+// Copyright (c) Shareaza Development Team, 2005-2009.                        //
+// This file is part of SHAREAZA (shareaza.sourceforge.net).                  //
 //                                                                            //
 // Shareaza is free software; you can redistribute it                         //
 // and/or modify it under the terms of the GNU General Public License         //
@@ -107,7 +107,7 @@ namespace Hashes
 			typedef uint64 WordType;
 			static const size_t wordCount = 3;
 			static const size_t byteCount = wordCount * sizeof( WordType );
-			static const size_t numUrns = 6;
+			static const size_t numUrns = 7;
 			static const UrnString urns[ numUrns ];
 			static const Encoding encoding = base32Encoding;
 			typedef boost::array< uchar, byteCount > RawStorage;
