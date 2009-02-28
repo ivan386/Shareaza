@@ -343,9 +343,11 @@ BOOL CEDPartImporter::ImportFile(LPCTSTR pszPath, LPCTSTR pszFile)
 	{
 		BYTE* pHashset = NULL;
 		DWORD nHashset = 0;
-		pED2K.ToBytes( &pHashset, &nHashset );
-		pDownload->SetHashset( pHashset, nHashset );
-		delete [] pHashset;
+		if ( pED2K.ToBytes( &pHashset, &nHashset ) )
+		{
+			pDownload->SetHashset( pHashset, nHashset );
+			GlobalFree( pHashset );
+		}
 	}
 
 	if ( ! bPaused ) pDownload->Resume();
