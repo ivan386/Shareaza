@@ -1,7 +1,7 @@
 //
 // LibraryBuilder.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -42,6 +42,44 @@ static char THIS_FILE[]=__FILE__;
 #endif
 
 CLibraryBuilder LibraryBuilder;
+
+CFileHash::CFileHash(QWORD nFileSize)
+{
+	m_pTiger.BeginFile( Settings.Library.TigerHeight, nFileSize );
+	m_pED2K.BeginFile( nFileSize );
+}
+
+void CFileHash::Add(const void* pBuffer, DWORD nBlock)
+{
+	m_pSHA1.Add( pBuffer, nBlock );
+	m_pMD5.Add( pBuffer, nBlock );
+	m_pTiger.AddToFile( pBuffer, nBlock );
+	m_pED2K.AddToFile( pBuffer, nBlock );
+}
+
+void CFileHash::Finish()
+{
+	m_pSHA1.Finish();
+	m_pMD5.Finish();
+	m_pTiger.FinishFile();
+	m_pED2K.FinishFile();
+}
+
+void CFileHash::CopyTo(CLibraryFile* pFile) const
+{
+	m_pSHA1.GetHash( &pFile->m_oSHA1[ 0 ] );
+	pFile->m_oSHA1.validate();
+	m_pMD5.GetHash( &pFile->m_oMD5[ 0 ] );
+	pFile->m_oMD5.validate();
+	m_pTiger.GetRoot( &pFile->m_oTiger[ 0 ] );
+	pFile->m_oTiger.validate();
+	m_pED2K.GetRoot( &pFile->m_oED2K[ 0 ] );
+	pFile->m_oED2K.validate();
+
+	LibraryHashDB.StoreTiger( pFile->m_nIndex, const_cast< CTigerTree* >( &m_pTiger ) );
+	LibraryHashDB.StoreED2K( pFile->m_nIndex, const_cast< CED2K* >( &m_pED2K ) );
+}
+
 
 //////////////////////////////////////////////////////////////////////
 // CLibraryBuilder construction
@@ -369,7 +407,7 @@ void CLibraryBuilder::OnRun()
 				theApp.Message( MSG_DEBUG, _T("Hashing: %s"), (LPCTSTR)sPath );
 
 				// ToDo: We need MD5 hash of the audio file without tags...
-				if ( HashFile( sPath, hFile, nIndex ) )
+				if ( HashFile( sPath, hFile ) )
 				{
 					nAttempts = 0;
 					SetFilePointer( hFile, 0, NULL, FILE_BEGIN );
@@ -429,7 +467,7 @@ void CLibraryBuilder::OnRun()
 
 #define MAX_HASH_BUFFER_SIZE	1024ul*256ul	// 256 Kb
 
-bool CLibraryBuilder::HashFile(LPCTSTR szPath, HANDLE hFile, DWORD nIndex)
+bool CLibraryBuilder::HashFile(LPCTSTR szPath, HANDLE hFile)
 {
 	DWORD nSizeHigh	= 0;
 	DWORD nSizeLow	= GetFileSize( hFile, &nSizeHigh );
@@ -445,13 +483,10 @@ bool CLibraryBuilder::HashFile(LPCTSTR szPath, HANDLE hFile, DWORD nIndex)
 	nSizeHigh	= (DWORD)( nFileBase >> 32 );
 	SetFilePointer( hFile, nSizeLow, (PLONG)&nSizeHigh, FILE_BEGIN );
 
-	CTigerTree pTiger;
-	CED2K pED2K;
-	CSHA pSHA1;
-	CMD5 pMD5;
-
-	pTiger.BeginFile( Settings.Library.TigerHeight, nFileSize );
-	pED2K.BeginFile( nFileSize );
+	auto_ptr< CFileHash > pFileHash( new CFileHash( nFileSize ) );
+	if ( ! pFileHash.get() )
+		// Out of memory
+		return false;
 
 	// Reset statistics if passed more than 10 seconds
 	LARGE_INTEGER count1;
@@ -519,10 +554,7 @@ bool CLibraryBuilder::HashFile(LPCTSTR szPath, HANDLE hFile, DWORD nIndex)
 		if ( !nBlock )
 			break;
 
-		pSHA1.Add( pBuffer, nBlock );
-		pMD5.Add( pBuffer, nBlock );
-		pTiger.AddToFile( pBuffer, nBlock );
-		pED2K.AddToFile( pBuffer, nBlock );
+		pFileHash->Add( pBuffer, nBlock );
 
 		nLength -= nBlock;
 	}
@@ -537,53 +569,45 @@ bool CLibraryBuilder::HashFile(LPCTSTR szPath, HANDLE hFile, DWORD nIndex)
 	if ( nLength )
 		return false;
 
-	pSHA1.Finish();
-	pMD5.Finish();
-	pTiger.FinishFile();
-	pED2K.FinishFile();
+	pFileHash->Finish();
 
-	{
-		CQuickLock oLibraryLock( Library.m_pSection );
-		CLibraryFile* pFile = Library.LookupFile( nIndex );
-		if ( !pFile )
+	CSingleLock oLibraryLock( &Library.m_pSection, FALSE );
+	while ( ! oLibraryLock.Lock( 100 ) )
+		if ( m_bSkip )
 			return false;
 
-		m_bSkip = true;
-		Library.RemoveFile( pFile );
+	m_bSkip = true;
 
-		pFile->m_bNewFile		= TRUE;
-		pFile->m_nVirtualBase	= bVirtual ? nFileBase : 0;
-		pFile->m_nVirtualSize	= bVirtual ? nFileSize : 0;
+	CLibraryFile* pFile = LibraryMaps.LookupFileByPath( szPath );
+	if ( ! pFile )
+		return false;
 
-		pSHA1.GetHash( &pFile->m_oSHA1[ 0 ] );
-		pFile->m_oSHA1.validate();
-		pMD5.GetHash( &pFile->m_oMD5[ 0 ] );
-		pFile->m_oMD5.validate();
-		pTiger.GetRoot( &pFile->m_oTiger[ 0 ] );
-		pFile->m_oTiger.validate();
-		pED2K.GetRoot( &pFile->m_oED2K[ 0 ] );
-		pFile->m_oED2K.validate();
+	Library.RemoveFile( pFile );
 
-		LibraryMaps.CullDeletedFiles( pFile );
-		LibraryHistory.Add( szPath, pFile->m_oSHA1, pFile->m_oTiger,
-			pFile->m_oED2K, pFile->m_oBTH, pFile->m_oMD5 );
-		Library.AddFile( pFile );
+	pFile->m_bNewFile		= TRUE;
+	pFile->m_nVirtualBase	= bVirtual ? nFileBase : 0;
+	pFile->m_nVirtualSize	= bVirtual ? nFileSize : 0;
 
-		// child pornography check
-		if ( Settings.Search.AdultFilter &&
-			( AdultFilter.IsChildPornography( pFile->GetSearchName() ) ||
-			  AdultFilter.IsChildPornography( pFile->GetMetadataWords() ) ) )
-		{
-			pFile->m_bVerify = pFile->m_bShared = TRI_FALSE;
-		}
+	pFileHash->CopyTo( pFile );
 
-		theApp.Message( MSG_DEBUG, _T("Hashing completed: %s"), szPath );
+	LibraryMaps.CullDeletedFiles( pFile );
+	LibraryHistory.Add( szPath, pFile->m_oSHA1, pFile->m_oTiger,
+		pFile->m_oED2K, pFile->m_oBTH, pFile->m_oMD5 );
+	Library.AddFile( pFile );
 
-		Library.Update();
+	// child pornography check
+	if ( Settings.Search.AdultFilter &&
+		( AdultFilter.IsChildPornography( pFile->GetSearchName() ) ||
+		  AdultFilter.IsChildPornography( pFile->GetMetadataWords() ) ) )
+	{
+		pFile->m_bVerify = pFile->m_bShared = TRI_FALSE;
 	}
 
-	LibraryHashDB.StoreTiger( nIndex, &pTiger );
-	LibraryHashDB.StoreED2K( nIndex, &pED2K );
+	oLibraryLock.Unlock();
+
+	Library.Update();
+
+	theApp.Message( MSG_DEBUG, _T("Hashing completed: %s"), szPath );
 
 	return true;
 }

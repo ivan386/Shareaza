@@ -1,7 +1,7 @@
 //
 // LibraryBuilder.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -28,6 +28,21 @@
 class CLibraryFile;
 class CXMLElement;
 
+class CFileHash
+{
+public:
+	CFileHash(QWORD nFileSize);
+
+	void Add(const void* pBuffer, DWORD nBlock);
+	void Finish();
+	void CopyTo(CLibraryFile* pFile) const;
+
+protected:
+	CTigerTree	m_pTiger;
+	CED2K		m_pED2K;
+	CSHA		m_pSHA1;
+	CMD5		m_pMD5;
+};
 
 class CLibraryBuilder :
 	public CLibraryBuilderInternals
@@ -96,7 +111,7 @@ private:
 	// Returns 0 if no file available, sets m_bThread = false if no files left.
 	DWORD		GetNextFileToHash(CString& sPath);
 	void		OnRun();
-	bool		HashFile(LPCTSTR szPath, HANDLE hFile, DWORD nIndex);
+	bool		HashFile(LPCTSTR szPath, HANDLE hFile);
 	bool		DetectVirtualFile(LPCTSTR szPath, HANDLE hFile, QWORD& nOffset, QWORD& nLength);
 	bool		DetectVirtualID3v1(HANDLE hFile, QWORD& nOffset, QWORD& nLength);
 	bool		DetectVirtualID3v2(HANDLE hFile, QWORD& nOffset, QWORD& nLength);
