@@ -1,7 +1,7 @@
 //
 // HostCache.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -953,6 +953,21 @@ CHostCacheHost::CHostCacheHost(PROTOCOLID nProtocol) :
 	m_nKADVersion(0)
 {
 	m_pAddress.s_addr = 0;
+
+	// 30 sec cooldown to avoid neighbor add-remove oscillation
+	DWORD tNow = static_cast< DWORD >( time( NULL ) );
+	switch ( m_nProtocol )
+	{
+	case PROTOCOL_G1:
+	case PROTOCOL_G2:
+		m_tConnect = tNow - Settings.Gnutella.ConnectThrottle + 30;
+		break;
+	case PROTOCOL_ED2K:
+		m_tConnect = tNow - Settings.eDonkey.QueryServerThrottle + 30;
+		break;
+	default:
+		break;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -1228,11 +1243,10 @@ bool CHostCacheHost::IsThrottled(DWORD tNow) const
 	switch ( m_nProtocol )
 	{
 	case PROTOCOL_G1:
-		return m_tConnect && ( tNow - m_tConnect < Settings.Gnutella.ConnectThrottle );
 	case PROTOCOL_G2:
-		return m_tConnect && ( tNow - m_tConnect < Settings.Gnutella.ConnectThrottle );
+		return ( tNow - m_tConnect < Settings.Gnutella.ConnectThrottle );
 	case PROTOCOL_ED2K:
-		return m_tConnect && ( tNow - m_tConnect < Settings.eDonkey.QueryServerThrottle );
+		return ( tNow - m_tConnect < Settings.eDonkey.QueryServerThrottle );
 	default:
 		return false;
 	}
