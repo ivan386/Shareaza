@@ -1976,7 +1976,7 @@ bool CLibraryBuilderInternals::ReadOGG(DWORD nIndex, HANDLE hFile)
 
 	if ( !ReadOGGString( pOGG, nOGG, strComment ) || nOGG < 4 )
 	{
-		free( pOGG );
+		delete[] pOGG;
 		return false;
 	}
 

@@ -840,7 +840,7 @@ void CSearchDetailPanel::OnRun()
 				theApp.Message( MSG_ERROR, IDS_SEARCH_DETAILS_PREVIEW_FAILED, (LPCTSTR)strURL );
 			}
 			
-			free( pBuffer );
+			delete[] pBuffer;
 		}
 		else
 		{
@@ -896,11 +896,10 @@ BOOL CSearchDetailPanel::ExecuteRequest(CString strURL, BYTE** ppBuffer, DWORD* 
 	if ( pBuffer == NULL ) return FALSE;
 	
 	*pnBuffer = pBuffer->m_nLength;
-	*ppBuffer = (BYTE*)malloc( *pnBuffer );
+	*ppBuffer = new BYTE[ *pnBuffer ];
 	if ( ! *ppBuffer )
 	{
 		*pnBuffer = 0;
-		theApp.Message( MSG_ERROR, _T("Memory allocation error in CSearchDetailPanel::ExecuteRequest()") );
 		return FALSE;
 	}
 
