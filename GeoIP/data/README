@@ -1,2 +1,0 @@
-wget http://www.maxmind.com/download/geoip/database/GeoIP.dat.gz
-gunzip GeoIP.dat.gz

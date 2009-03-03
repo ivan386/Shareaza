@@ -125,8 +125,11 @@ public:
 	// GeoIP - IP to Country lookup
 	HINSTANCE			m_hGeoIP;
 	GeoIP*				m_pGeoIP;
-	GeoIP_country_code_by_addrFunc	m_pfnGeoIP_country_code_by_addr;
-	GeoIP_country_name_by_addrFunc	m_pfnGeoIP_country_name_by_addr;
+	typedef GeoIP* (*GeoIP_newFunc)(int);
+	typedef const char * (*GeoIP_country_code_by_ipnumFunc) (GeoIP* gi, unsigned long ipnum);
+	typedef const char * (*GeoIP_country_name_by_ipnumFunc) (GeoIP* gi, unsigned long ipnum);
+	GeoIP_country_code_by_ipnumFunc	m_pfnGeoIP_country_code_by_ipnum;
+	GeoIP_country_name_by_ipnumFunc	m_pfnGeoIP_country_name_by_ipnum;
 
 	HINSTANCE			m_hLibGFL;
 

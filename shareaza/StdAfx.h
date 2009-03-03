@@ -232,6 +232,9 @@ using augment::IUnknownImplementation;
 	#include "../BugTrap/BugTrap.h"
 #endif
 
+// GeoIP http://geolite.maxmind.com/
+#include "../GeoIP/GeoIP.h"
+
 typedef CString StringType;
 
 //! \brief Hash function needed for CMap with const CString& as ARG_KEY.
@@ -357,31 +360,6 @@ typedef struct _ICONDIR
 } ICONDIR, *LPICONDIR;
 
 #pragma pack( pop )
-
-// Copied from GeoIP.h
-typedef struct GeoIPTag {
-  FILE *GeoIPDatabase;
-  char *file_path;
-	unsigned char *cache;
-	unsigned char *index_cache;
-	unsigned int *databaseSegments;
-	char databaseType;
-	time_t mtime;
-	int flags;
-	char record_length;
-	int record_iter; /* used in GeoIP_next_record */
-} GeoIP;
-
-typedef enum {
-	GEOIP_STANDARD = 0,
-	GEOIP_MEMORY_CACHE = 1,
-	GEOIP_CHECK_CACHE = 2,
-	GEOIP_INDEX_CACHE = 4,
-} GeoIPOptions;
-
-typedef GeoIP* (*GeoIP_newFunc)(int);
-typedef const char * (*GeoIP_country_code_by_addrFunc) (GeoIP*, const char *);
-typedef const char * (*GeoIP_country_name_by_addrFunc) (GeoIP*, const char *);
 
 const uint64 SIZE_UNKNOWN = ~0ull;
 

@@ -190,8 +190,8 @@ CShareazaApp::CShareazaApp() :
 
 ,	m_hGeoIP				( NULL )
 ,	m_pGeoIP				( NULL )
-,	m_pfnGeoIP_country_code_by_addr( NULL )
-,	m_pfnGeoIP_country_name_by_addr( NULL )
+,	m_pfnGeoIP_country_code_by_ipnum( NULL )
+,	m_pfnGeoIP_country_name_by_ipnum( NULL )
 
 ,	m_hLibGFL				( NULL )
 
@@ -841,8 +841,8 @@ void CShareazaApp::InitResources()
 	if ( ( m_hGeoIP = CustomLoadLibrary( _T("geoip.dll") ) ) != NULL )
 	{
 		GeoIP_newFunc pfnGeoIP_new = (GeoIP_newFunc)GetProcAddress( m_hGeoIP, "GeoIP_new" );
-		m_pfnGeoIP_country_code_by_addr = (GeoIP_country_code_by_addrFunc)GetProcAddress( m_hGeoIP, "GeoIP_country_code_by_addr" );
-		m_pfnGeoIP_country_name_by_addr = (GeoIP_country_name_by_addrFunc)GetProcAddress( m_hGeoIP, "GeoIP_country_name_by_addr" );
+		m_pfnGeoIP_country_code_by_ipnum = (GeoIP_country_code_by_ipnumFunc)GetProcAddress( m_hGeoIP, "GeoIP_country_code_by_ipnum" );
+		m_pfnGeoIP_country_name_by_ipnum = (GeoIP_country_name_by_ipnumFunc)GetProcAddress( m_hGeoIP, "GeoIP_country_name_by_ipnum" );
 		if ( pfnGeoIP_new ) 
 			m_pGeoIP = pfnGeoIP_new( GEOIP_MEMORY_CACHE );
 	}
@@ -1133,15 +1133,15 @@ CString GetErrorString(DWORD dwError)
 
 CString CShareazaApp::GetCountryCode(IN_ADDR pAddress) const
 {
-	if ( m_pfnGeoIP_country_code_by_addr && m_pGeoIP )
-		return CString( m_pfnGeoIP_country_code_by_addr( m_pGeoIP, inet_ntoa( pAddress ) ) );
+	if ( m_pfnGeoIP_country_code_by_ipnum && m_pGeoIP )
+		return CString( m_pfnGeoIP_country_code_by_ipnum( m_pGeoIP, htonl( pAddress.s_addr ) ) );
 	return _T("");
 }
 
 CString CShareazaApp::GetCountryName(IN_ADDR pAddress) const
 {
-	if ( m_pfnGeoIP_country_name_by_addr && m_pGeoIP )
-		return CString( m_pfnGeoIP_country_name_by_addr( m_pGeoIP, inet_ntoa( pAddress ) ) );
+	if ( m_pfnGeoIP_country_name_by_ipnum && m_pGeoIP )
+		return CString( m_pfnGeoIP_country_name_by_ipnum( m_pGeoIP, htonl( pAddress.s_addr ) ) );
 	return _T("");
 }
 

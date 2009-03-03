@@ -31,7 +31,7 @@
 			<Tool
 				Name="VCPreBuildEventTool"
 				Description="Copy SQLite DLL, zlib DLL, HashLib DLL ..."
-				CommandLine="copy /b /y &quot;..\sqlite3\$(PlatformName)\$(ConfigurationName)\sqlite3.dll&quot; &quot;$(TargetDir)&quot;&#x0D;&#x0A;copy /b /y &quot;zlib\$(PlatformName)\$(ConfigurationName)\zlibwapi.dll&quot; &quot;$(TargetDir)&quot;&#x0D;&#x0A;copy /b /y &quot;..\HashLib\$(PlatformName)\$(ConfigurationName)\HashLib.dll&quot; &quot;$(TargetDir)&quot;&#x0D;&#x0A;copy /b /y &quot;..\BugTrap\BugTrapU.dll&quot; &quot;$(TargetDir)&quot;&#x0D;&#x0A;"
+				CommandLine="copy /b /y &quot;..\sqlite3\$(PlatformName)\$(ConfigurationName)\sqlite3.dll&quot; &quot;$(TargetDir)&quot;&#x0D;&#x0A;copy /b /y &quot;zlib\$(PlatformName)\$(ConfigurationName)\zlibwapi.dll&quot; &quot;$(TargetDir)&quot;&#x0D;&#x0A;copy /b /y &quot;..\HashLib\$(PlatformName)\$(ConfigurationName)\HashLib.dll&quot; &quot;$(TargetDir)&quot;&#x0D;&#x0A;copy /b /y &quot;..\GeoIP\$(PlatformName)\$(ConfigurationName)\GeoIP.dll&quot; &quot;$(TargetDir)&quot;&#x0D;&#x0A;copy /b /y &quot;..\GeoIP\GeoIP.dat&quot; &quot;$(TargetDir)&quot;&#x0D;&#x0A;copy /b /y &quot;..\BugTrap\BugTrapU.dll&quot; &quot;$(TargetDir)&quot;&#x0D;&#x0A;"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -123,7 +123,7 @@
 			<Tool
 				Name="VCPreBuildEventTool"
 				Description="Copy SQLite DLL, zlib DLL, HashLib DLL ..."
-				CommandLine="copy /b /y &quot;..\sqlite3\$(PlatformName)\$(ConfigurationName)\sqlite3.dll&quot; &quot;$(TargetDir)&quot;&#x0D;&#x0A;copy /b /y &quot;zlib\$(PlatformName)\$(ConfigurationName)\zlibwapi.dll&quot; &quot;$(TargetDir)&quot;&#x0D;&#x0A;copy /b /y &quot;..\HashLib\$(PlatformName)\$(ConfigurationName)\HashLib.dll&quot; &quot;$(TargetDir)&quot;&#x0D;&#x0A;copy /b /y &quot;..\BugTrap\BugTrapU-x64.dll&quot; &quot;$(TargetDir)&quot;&#x0D;&#x0A;"
+				CommandLine="copy /b /y &quot;..\sqlite3\$(PlatformName)\$(ConfigurationName)\sqlite3.dll&quot; &quot;$(TargetDir)&quot;&#x0D;&#x0A;copy /b /y &quot;zlib\$(PlatformName)\$(ConfigurationName)\zlibwapi.dll&quot; &quot;$(TargetDir)&quot;&#x0D;&#x0A;copy /b /y &quot;..\HashLib\$(PlatformName)\$(ConfigurationName)\HashLib.dll&quot; &quot;$(TargetDir)&quot;&#x0D;&#x0A;copy /b /y &quot;..\GeoIP\$(PlatformName)\$(ConfigurationName)\GeoIP.dll&quot; &quot;$(TargetDir)&quot;&#x0D;&#x0A;copy /b /y &quot;..\GeoIP\GeoIP.dat&quot; &quot;$(TargetDir)&quot;&#x0D;&#x0A;copy /b /y &quot;..\BugTrap\BugTrapU-x64.dll&quot; &quot;$(TargetDir)&quot;&#x0D;&#x0A;"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -217,7 +217,7 @@
 			<Tool
 				Name="VCPreBuildEventTool"
 				Description="Copy SQLite DLL, zlib DLL, HashLib DLL ..."
-				CommandLine="copy /b /y &quot;..\sqlite3\$(PlatformName)\$(ConfigurationName)\sqlite3.dll&quot; &quot;$(TargetDir)&quot;&#x0D;&#x0A;copy /b /y &quot;zlib\$(PlatformName)\$(ConfigurationName)\zlibwapi.dll&quot; &quot;$(TargetDir)&quot;&#x0D;&#x0A;copy /b /y &quot;..\HashLib\$(PlatformName)\$(ConfigurationName)\HashLib.dll&quot; &quot;$(TargetDir)&quot;&#x0D;&#x0A;"
+				CommandLine="copy /b /y &quot;..\sqlite3\$(PlatformName)\$(ConfigurationName)\sqlite3.dll&quot; &quot;$(TargetDir)&quot;&#x0D;&#x0A;copy /b /y &quot;zlib\$(PlatformName)\$(ConfigurationName)\zlibwapi.dll&quot; &quot;$(TargetDir)&quot;&#x0D;&#x0A;copy /b /y &quot;..\HashLib\$(PlatformName)\$(ConfigurationName)\HashLib.dll&quot; &quot;$(TargetDir)&quot;&#x0D;&#x0A;copy /b /y &quot;..\GeoIP\$(PlatformName)\$(ConfigurationName)\GeoIP.dll&quot; &quot;$(TargetDir)&quot;&#x0D;&#x0A;copy /b /y &quot;..\GeoIP\GeoIP.dat&quot; &quot;$(TargetDir)&quot;&#x0D;&#x0A;"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -315,7 +315,7 @@
 			<Tool
 				Name="VCPreBuildEventTool"
 				Description="Copy SQLite DLL, zlib DLL, HashLib DLL ..."
-				CommandLine="copy /b /y &quot;..\sqlite3\$(PlatformName)\$(ConfigurationName)\sqlite3.dll&quot; &quot;$(TargetDir)&quot;&#x0D;&#x0A;copy /b /y &quot;zlib\$(PlatformName)\$(ConfigurationName)\zlibwapi.dll&quot; &quot;$(TargetDir)&quot;&#x0D;&#x0A;copy /b /y &quot;..\HashLib\$(PlatformName)\$(ConfigurationName)\HashLib.dll&quot; &quot;$(TargetDir)&quot;&#x0D;&#x0A;"
+				CommandLine="copy /b /y &quot;..\sqlite3\$(PlatformName)\$(ConfigurationName)\sqlite3.dll&quot; &quot;$(TargetDir)&quot;&#x0D;&#x0A;copy /b /y &quot;zlib\$(PlatformName)\$(ConfigurationName)\zlibwapi.dll&quot; &quot;$(TargetDir)&quot;&#x0D;&#x0A;copy /b /y &quot;..\HashLib\$(PlatformName)\$(ConfigurationName)\HashLib.dll&quot; &quot;$(TargetDir)&quot;&#x0D;&#x0A;copy /b /y &quot;..\GeoIP\$(PlatformName)\$(ConfigurationName)\GeoIP.dll&quot; &quot;$(TargetDir)&quot;&#x0D;&#x0A;copy /b /y &quot;..\GeoIP\GeoIP.dat&quot; &quot;$(TargetDir)&quot;&#x0D;&#x0A;"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -4979,10 +4979,10 @@
 			Name="Library Files"
 			>
 			<File
-				RelativePath="..\BugTrap\BugTrapU.lib"
+				RelativePath="..\BugTrap\BugTrapU-x64.lib"
 				>
 				<FileConfiguration
-					Name="Debug|x64"
+					Name="Debug|Win32"
 					ExcludedFromBuild="true"
 					>
 					<Tool
@@ -5007,10 +5007,10 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\BugTrap\BugTrapU-x64.lib"
+				RelativePath="..\BugTrap\BugTrapU.lib"
 				>
 				<FileConfiguration
-					Name="Debug|Win32"
+					Name="Debug|x64"
 					ExcludedFromBuild="true"
 					>
 					<Tool
