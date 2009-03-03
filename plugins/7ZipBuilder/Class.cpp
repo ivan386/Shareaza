@@ -267,7 +267,7 @@ STDMETHODIMP C7ZipBuilder::Process (
 
 		// Get folder/file flag (VT_BOOL)
 		CComPropVariant propIsFolder;
-		hr = pIInArchive->GetProperty( i, kpidIsFolder, &propIsFolder );
+		hr = pIInArchive->GetProperty( i, kpidIsDir, &propIsFolder );
 		if ( FAILED( hr ) || propIsFolder.vt != VT_BOOL )
 			// Bad format. Call CLibraryBuilder::SubmitCorrupted()
 			return E_UNEXPECTED;
