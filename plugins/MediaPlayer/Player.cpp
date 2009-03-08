@@ -98,8 +98,11 @@ STDMETHODIMP CPlayer::GetVolume(
 	if ( FAILED( hr ) )
 		return hr;
 
-	// -10,000 ... +10,000 -> 0.0 ... 1.0
-	*pnVolume = ( lVolume + 10000 ) / 20000.;
+	// -10,000 ... 0 -> 0.0 ... 1.0 Conversion
+	if ( lVolume < -6000. )
+		*pnVolume = 0;
+	else 
+		*pnVolume = ( lVolume + 6000. ) / 6000.;
 
 	return S_OK;
 }
@@ -116,8 +119,8 @@ STDMETHODIMP CPlayer::SetVolume(
 	if ( ! pAudio )
 		return E_NOINTERFACE;
 
-	// 0.0 ... 1.0 -> -10,000 ... +10,000
-	return pAudio->put_Volume( (long)( ( nVolume * 20000. ) - 10000. ) );
+	// 0.0 ... 1.0 -> -10,000 ... 0 Conversion
+	return pAudio->put_Volume( (long)( ( nVolume * 6000. ) - 6000. ) );
 }
 
 STDMETHODIMP CPlayer::GetZoom(
