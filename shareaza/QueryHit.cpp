@@ -895,13 +895,12 @@ CXMLElement* CQueryHit::ReadXML(CG1Packet* pPacket, int nSize)
 		// Empty packet
 		return NULL;
 
-	auto_array< BYTE > pRaw( new BYTE[ nSize + 1 ] );
+	auto_array< BYTE > pRaw( new BYTE[ nSize ] );
 	if ( ! pRaw.get() )
 		// Out of memory
 		return NULL;
 
 	pPacket->Read( pRaw.get(), nSize );
-	pRaw[ nSize ] = 0;
 
 	LPBYTE pszXML = NULL;
 	if ( nSize >= 9 && strncmp( (LPCSTR)pRaw.get(), "{deflate}", 9 ) == 0 )
@@ -920,44 +919,52 @@ CXMLElement* CQueryHit::ReadXML(CG1Packet* pPacket, int nSize)
 	}
 	else if ( nSize >= 11 && strncmp( (LPCSTR)pRaw.get(), "{plaintext}", 11 ) == 0 )
 	{
-		if ( nSize > 12 )
-		{
-			pszXML = pRaw.get() + 11;
-			nSize -= 12;
-		}
+		pszXML = pRaw.get() + 11;
+		nSize -= 11;
 	}
 	else if ( nSize >= 2 && strncmp( (LPCSTR)pRaw.get(), "{}", 2 ) == 0 )
 	{
-		if ( nSize > 3 )
-		{
-			pszXML = pRaw.get() + 2;
-			nSize -= 3;
-		}
+		pszXML = pRaw.get() + 2;
+		nSize -= 2;
 	}
 	else if ( nSize > 1 )
 	{
 		pszXML = pRaw.get();
-		nSize -= 1;
 	}
 
 	CXMLElement* pRoot	= NULL;
-	for( ; pszXML && *pszXML;
-		pszXML = (LPBYTE)strstr( (LPCSTR)( pszXML + 1 ), "<?xml" ) )
+	while( pszXML && nSize )
 	{
-		CXMLElement* pXML = CXMLElement::FromBytes( pszXML, nSize, TRUE );
-		if ( ! pXML )
-			// Invalid XML
-			break;
+		// Skip up to "<"
+		for ( ; *pszXML && *pszXML != '<' && nSize; pszXML++, nSize--);
 
-		if ( ! pRoot )
+		// Test for "<?xml"
+		if ( nSize > 5 &&
+			  pszXML[ 0 ] == '<' &&
+			  pszXML[ 1 ] == '?' &&
+			( pszXML[ 2 ] == 'x' || pszXML[ 2 ] == 'X' ) &&
+			( pszXML[ 3 ] == 'm' || pszXML[ 3 ] == 'M' ) &&
+			( pszXML[ 4 ] == 'l' || pszXML[ 4 ] == 'L' ) )
 		{
-			pRoot = new CXMLElement( NULL, _T("Metadata") );
-			if ( ! pRoot )
-				// Out of memory
-				break;
-		}
+			CXMLElement* pXML = CXMLElement::FromBytes( pszXML, nSize, TRUE );
 
-		pRoot->AddElement( pXML );
+			pszXML += 5;
+			nSize -= 5;
+
+			if ( ! pXML )
+				// Invalid XML
+				break;
+
+			if ( ! pRoot )
+			{
+				pRoot = new CXMLElement( NULL, _T("Metadata") );
+				if ( ! pRoot )
+					// Out of memory
+					break;
+			}
+
+			pRoot->AddElement( pXML );
+		}
 	}
 
 	return pRoot;
