@@ -1,4 +1,22 @@
-// AutocompleteEdit.cpp : implementation file
+//
+// AutocompleteEdit.cpp
+//
+// Copyright (c) Shareaza Development Team, 2008-2009.
+// This file is part of SHAREAZA (shareaza.sourceforge.net)
+//
+// Shareaza is free software; you can redistribute it
+// and/or modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2 of
+// the License, or (at your option) any later version.
+//
+// Shareaza is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Shareaza; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
 #include "stdafx.h"
@@ -115,6 +133,12 @@ BOOL CRegEnum::AttachTo(HWND hWnd)
 {
 	HRESULT hr;
 
+	if ( ! hWnd )
+	{
+		m_pIAutoComplete.Release();
+		return TRUE;
+	}
+
 	if ( ! m_pIAutoComplete )
 	{
 		hr = m_pIAutoComplete.CoCreateInstance( CLSID_AutoComplete );
@@ -198,6 +222,7 @@ CAutocompleteEdit::CAutocompleteEdit()
 
 BEGIN_MESSAGE_MAP(CAutocompleteEdit, CEdit)
 	ON_WM_CREATE()
+	ON_WM_DESTROY()
 END_MESSAGE_MAP()
 
 void CAutocompleteEdit::SetRegistryKey(LPCTSTR szSection, LPCTSTR szRoot)
@@ -213,6 +238,13 @@ int CAutocompleteEdit::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_oData.AttachTo( GetSafeHwnd() );
 
 	return 0;
+}
+
+void CAutocompleteEdit::OnDestroy()
+{
+	m_oData.AttachTo( NULL );
+
+	CEdit::OnDestroy();
 }
 
 int CAutocompleteEdit::GetWindowText(LPTSTR lpszStringBuf, int nMaxCount) const
