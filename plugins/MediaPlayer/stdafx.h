@@ -22,6 +22,6 @@
 #include <atlcom.h>
 #include <atlstr.h>
 
-#include <vfw.h>
+#include <dshow.h>
 
 using namespace ATL;

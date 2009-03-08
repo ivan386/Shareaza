@@ -35,7 +35,12 @@ DECLARE_GET_CONTROLLING_UNKNOWN()
 	}
 
 protected:
-	HWND m_hWnd;
+	HWND						m_hwndOwner;
+	RECT						m_rcWindow;
+	CComPtr< IGraphBuilder >	m_pGraph;
+	CComQIPtr< IMediaControl >	m_pControl;
+	CComQIPtr< IMediaEvent >	m_pEvent;
+	CComQIPtr< IVideoWindow >	m_pWindow;
 
 // IMediaPlayer
 public:
