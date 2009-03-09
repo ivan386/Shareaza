@@ -419,8 +419,8 @@ CQueryHit* CQueryHit::FromG2Packet(CG2Packet* pPacket, int* pnHops)
 						{
 							strNick = pPacket->ReadString( nInner );
 							CT2A pszIP( (LPCTSTR)strNick );
-							ip = inet_addr( pszIP );
-							if ( ip != INADDR_NONE && strcmp( inet_ntoa( *(IN_ADDR*)&ip ), pszIP ) == 0 &&
+							ip = inet_addr( (LPCSTR)pszIP );
+							if ( ip != INADDR_NONE && strcmp( inet_ntoa( *(IN_ADDR*)&ip ), (LPCSTR)pszIP ) == 0 &&
 								nAddress != ip )
 								bSpam = true;
 							if ( ! strNick.CompareNoCase( _T( VENDOR_CODE ) ) )

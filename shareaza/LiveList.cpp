@@ -910,7 +910,7 @@ void CLiveListCtrl::OnLvnGetdispinfoA(NMHDR *pNMHDR, LRESULT *pResult)
 	if ( pDispInfo->item.mask & LVIF_TEXT )
 	{
 		lstrcpynA( (LPSTR)pDispInfo->item.pszText,
-			CT2A( pItem->m_pColumn[ pDispInfo->item.iSubItem ] ),
+			(LPCSTR)CT2A( pItem->m_pColumn[ pDispInfo->item.iSubItem ] ),
 			pDispInfo->item.cchTextMax );
 	}
 

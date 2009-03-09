@@ -863,7 +863,7 @@ void CLibraryDetailView::OnFindItemW(NMHDR* pNotify, LRESULT* pResult)
 			{
 				if ( ((NMLVFINDITEM*) pNotify)->lvfi.flags & LVFI_STRING )
 				{
-					if ( _tcsnicmp( pszFind, pFile->m_sName, _tcslen( pszFind ) ) == 0 )
+					if ( _tcsnicmp( (LPCTSTR)pszFind, pFile->m_sName, _tcslen( (LPCTSTR)pszFind ) ) == 0 )
 					{
 						*pResult = nItem;
 						return;
@@ -892,7 +892,7 @@ void CLibraryDetailView::OnFindItemA(NMHDR* pNotify, LRESULT* pResult)
 			{
 				if ( ((NMLVFINDITEM*) pNotify)->lvfi.flags & LVFI_STRING )
 				{
-					if ( _tcsnicmp( pszFind, pFile->m_sName, _tcslen( pszFind ) ) == 0 )
+					if ( _tcsnicmp( (LPCTSTR)pszFind, pFile->m_sName, _tcslen( (LPCTSTR)pszFind ) ) == 0 )
 					{
 						*pResult = nItem;
 						return;

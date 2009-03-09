@@ -100,7 +100,7 @@ public:
 	inline void SetString(LPCWSTR psz)
 	{
 		CW2A pszASCII( psz );
-		SetString( (LPCSTR)pszASCII, strlen(pszASCII), TRUE );
+		SetString( (LPCSTR)pszASCII, strlen( (LPCSTR)pszASCII ), TRUE );
 	}
 
 	inline void SetString(LPCVOID pString, size_t nLength, BOOL bNull = FALSE)

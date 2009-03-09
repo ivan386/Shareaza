@@ -259,7 +259,7 @@ STDMETHODIMP CIEProtocolRequest::XInternetProtocol::Start(LPCWSTR szUrl, IIntern
 {
 	METHOD_PROLOGUE(CIEProtocolRequest, InternetProtocol)
 	ASSERT_VALID( pThis );
-	return pThis->OnStart( CW2CT( szUrl ), pOIProtSink, pOIBindInfo, grfPI );
+	return pThis->OnStart( (LPCTSTR)CW2T( szUrl ), pOIProtSink, pOIBindInfo, grfPI );
 }
 
 STDMETHODIMP CIEProtocolRequest::XInternetProtocol::Suspend()

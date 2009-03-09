@@ -393,9 +393,9 @@ void CPacketWnd::OnContextMenu(CWnd* /*pWnd*/, CPoint point)
 		CStringA tmp;
 		tmp.Append( (LPCSTR)&m_nG2[ nType ], G2_TYPE_LEN( m_nG2[ nType ] ) );
 		if ( m_bTypeG2[ nType ] )
-			pTypes2.AppendMenu( MF_STRING|MF_CHECKED, 3100 + nType, CA2CT( tmp ) );
+			pTypes2.AppendMenu( MF_STRING|MF_CHECKED, 3100 + nType, (LPCTSTR)CA2T( tmp ) );
 		else
-			pTypes2.AppendMenu( MF_STRING, 3100 + nType, CA2CT( tmp ) );
+			pTypes2.AppendMenu( MF_STRING, 3100 + nType, (LPCTSTR)CA2T( tmp ) );
 	}
 
 	pTypes3.CreatePopupMenu();

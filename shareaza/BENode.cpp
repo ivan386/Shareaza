@@ -405,7 +405,7 @@ const CString CBENode::Encode() const
 			{
 				if ( n )
 					sOutput += _T(", ");
-				sTmp.Format( _T("\"%s\" = "), CA2T( (LPCSTR)( *( pNode + 1 ) ) ) );
+				sTmp.Format( _T("\"%s\" = "), (LPCTSTR)CA2T( (LPCSTR)pNode[ 1 ] ) );
 				sOutput += sTmp;
 				sOutput += (*pNode)->Encode();
 			}

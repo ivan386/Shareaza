@@ -554,9 +554,8 @@ CString CUPnPFinder::GetLocalRoutableIP(ServicePointer pService)
 	if ( FAILED( hr ) || strExternalIP.IsEmpty() )
 		return CString();
 
-	CT2A pszExternalIP( (LPCTSTR)strExternalIP );
 	DWORD nInterfaceIndex = 0;
-	DWORD ip = inet_addr( pszExternalIP );
+	DWORD ip = inet_addr( (LPCSTR)CT2A( (LPCTSTR)strExternalIP ) );
 
 	// Get the interface through which the UPnP device has a route
 	HRESULT hrRes = GetBestInterface( ip, &nInterfaceIndex );
