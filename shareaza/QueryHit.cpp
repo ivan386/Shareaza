@@ -933,7 +933,7 @@ CXMLElement* CQueryHit::ReadXML(CG1Packet* pPacket, int nSize)
 	}
 
 	CXMLElement* pRoot	= NULL;
-	while( pszXML && nSize )
+	for( ; pszXML && nSize; pszXML++, nSize-- )
 	{
 		// Skip up to "<"
 		for ( ; *pszXML && *pszXML != '<' && nSize; pszXML++, nSize--);
@@ -948,8 +948,8 @@ CXMLElement* CQueryHit::ReadXML(CG1Packet* pPacket, int nSize)
 		{
 			CXMLElement* pXML = CXMLElement::FromBytes( pszXML, nSize, TRUE );
 
-			pszXML += 5;
-			nSize -= 5;
+			pszXML += 4;
+			nSize -= 4;
 
 			if ( ! pXML )
 				// Invalid XML
