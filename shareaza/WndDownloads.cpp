@@ -494,7 +494,6 @@ void CDownloadsWnd::Prepare()
 {
 	DWORD tNow = GetTickCount();
 	if ( tNow - m_tSel < 250 ) return;
-	m_tSel = tNow;
 
 	m_nSelectedDownloads = 0;
 	m_bSelAny = m_bSelDownload = m_bSelSource = m_bSelTrying = m_bSelPaused = FALSE;
@@ -510,7 +509,10 @@ void CDownloadsWnd::Prepare()
 
 	m_bConnectOkay = FALSE;
 
-	CSingleLock pLock( &Transfers.m_pSection, TRUE );
+	CSingleLock pLock( &Transfers.m_pSection, FALSE );
+	if ( ! pLock.Lock( 250 ) )
+		return;
+
 	BOOL bFirstShare = TRUE;
 	BOOL bPreviewDone = FALSE;
 
@@ -614,6 +616,8 @@ void CDownloadsWnd::Prepare()
 
 	if ( ( ! Settings.Connection.RequireForTransfers ) || ( Network.IsConnected() ) )
 		m_bConnectOkay = TRUE;
+
+	m_tSel = tNow;
 }
 
 /////////////////////////////////////////////////////////////////////////////
