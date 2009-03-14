@@ -617,7 +617,7 @@ void CDownloadsWnd::Prepare()
 	if ( ( ! Settings.Connection.RequireForTransfers ) || ( Network.IsConnected() ) )
 		m_bConnectOkay = TRUE;
 
-	m_tSel = tNow;
+	m_tSel = GetTickCount();
 }
 
 /////////////////////////////////////////////////////////////////////////////
