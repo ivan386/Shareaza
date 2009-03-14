@@ -199,7 +199,6 @@ public:
 	void		OnSysColourChange();
 	static COLORREF	CalculateColour(COLORREF crFore, COLORREF crBack, int nAlpha);
 	static COLORREF	GetDialogBkColor();
-	static BOOL		IsNewWindows();
 	static BOOL		EnableTheme(CWnd* pWnd, BOOL bEnable = TRUE);
 
 protected:

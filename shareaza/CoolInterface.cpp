@@ -584,17 +584,6 @@ COLORREF CCoolInterface::GetDialogBkColor()
 	return CalculateColour( GetSysColor( COLOR_BTNFACE ), GetSysColor( COLOR_WINDOW ), 200 );
 }
 
-//////////////////////////////////////////////////////////////////////
-// CCoolInterface windows version check
-
-BOOL CCoolInterface::IsNewWindows()
-{
-	OSVERSIONINFO pVersion;
-	pVersion.dwOSVersionInfoSize = sizeof(pVersion);
-	GetVersionEx( &pVersion );
-
-	return pVersion.dwMajorVersion > 5 || ( pVersion.dwMajorVersion == 5 && pVersion.dwMinorVersion >= 1 );
-}
 
 //////////////////////////////////////////////////////////////////////
 // CCoolInterface windows XP+ themes

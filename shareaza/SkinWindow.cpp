@@ -697,7 +697,7 @@ void CSkinWindow::OnSize(CWnd* pWnd)
 	{
 		SelectRegion( pWnd );
 	}
-	else if ( CoolInterface.IsNewWindows() )
+	else if ( ! theApp.m_bIsWin2000 )
 	{
 		CRect rcWnd;
 

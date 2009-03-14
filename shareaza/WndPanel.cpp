@@ -73,7 +73,7 @@ CPanelWnd::CPanelWnd(BOOL bTabMode, BOOL bGroupMode)
 
 void CPanelWnd::OnSize(UINT nType, int cx, int cy)
 {
-	if ( m_bPanelMode && ! m_pSkin && CCoolInterface::IsNewWindows() && ! IsIconic() )
+	if ( m_bPanelMode && ! m_pSkin && ! theApp.m_bIsWin2000 && ! IsIconic() )
 	{
 		CRect rc;
 		GetWindowRect( &rc );
