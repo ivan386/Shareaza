@@ -1298,7 +1298,7 @@ BOOL CDatagrams::OnQuery(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 	if ( pSearch == NULL || ! pSearch->m_bUDP )
 	{
 		if ( pSearch ) delete pSearch;
-		theApp.Message( MSG_ERROR, IDS_PROTOCOL_BAD_QUERY,
+		theApp.Message( MSG_INFO, IDS_PROTOCOL_BAD_QUERY,
 			(LPCTSTR)CString( inet_ntoa( pHost->sin_addr ) ) );
 		Statistics.Current.Gnutella2.Dropped++;
 		return FALSE;
