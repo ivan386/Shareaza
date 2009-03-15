@@ -906,7 +906,7 @@ CXMLElement* CQueryHit::ReadXML(CG1Packet* pPacket, int nSize)
 	if ( nSize >= 9 && strncmp( (LPCSTR)pRaw.get(), "{deflate}", 9 ) == 0 )
 	{
 		// Deflate data
-		DWORD nRealSize;
+		DWORD nRealSize = 0;
 		auto_array< BYTE > pText(
 			CZLib::Decompress( pRaw.get() + 9, nSize - 10, &nRealSize ) );
 		if ( ! pText.get() )
@@ -932,15 +932,17 @@ CXMLElement* CQueryHit::ReadXML(CG1Packet* pPacket, int nSize)
 		pszXML = pRaw.get();
 	}
 
-	CXMLElement* pRoot	= NULL;
-	for( ; pszXML && nSize; pszXML++, nSize-- )
+	CXMLElement* pRoot = NULL;
+	for ( ; nSize && pszXML; pszXML++, nSize-- )
 	{
 		// Skip up to "<"
-		for ( ; *pszXML && *pszXML != '<' && nSize; pszXML++, nSize--);
+		for ( ; nSize && *pszXML && *pszXML != '<'; pszXML++, nSize--);
+
+		if ( nSize < 5 )
+			break;
 
 		// Test for "<?xml"
-		if ( nSize > 5 &&
-			  pszXML[ 0 ] == '<' &&
+		if (  pszXML[ 0 ] == '<' &&
 			  pszXML[ 1 ] == '?' &&
 			( pszXML[ 2 ] == 'x' || pszXML[ 2 ] == 'X' ) &&
 			( pszXML[ 3 ] == 'm' || pszXML[ 3 ] == 'M' ) &&
