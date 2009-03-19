@@ -111,13 +111,19 @@ bool CLibraryBuilder::Add(CLibraryFile* pFile)
 	if ( pFile->IsReadable() )
 	{
 		CQuickLock pLock( m_pSection );
+
+		// Check queue
 		if ( std::find( m_pFiles.begin(), m_pFiles.end(), pFile->m_nIndex ) == m_pFiles.end() )
 		{
-			m_pFiles.push_back( pFile->m_nIndex );
+			// Check current file
+			if ( m_sPath.CompareNoCase( pFile->GetPath() ) )
+			{
+				m_pFiles.push_back( pFile->m_nIndex );
 
-			StartThread();
+				StartThread();
 
-			return true;
+				return true;
+			}
 		}
 	}
 	return false;
