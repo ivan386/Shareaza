@@ -1,7 +1,7 @@
 //
 // SearchManager.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -147,22 +147,22 @@ void CSearchManager::OnRun()
 }
 
 //////////////////////////////////////////////////////////////////////
-// CSearchManager query acknowledgement
+// CSearchManager query acknowledgment
 
 BOOL CSearchManager::OnQueryAck(CG2Packet* pPacket, SOCKADDR_IN* pHost, Hashes::Guid& oGUID)
 {
-	if ( ! pPacket->m_bCompound ) return FALSE;
+	if ( ! pPacket->m_bCompound )
+		AfxThrowUserException();
 
 	DWORD nFromIP = pHost->sin_addr.S_un.S_addr;
-	DWORD tAdjust = 0, tNow = static_cast< DWORD >( time( NULL ) );
-	DWORD nHubs = 0, nLeaves = 0;
+	LONG tAdjust = 0;
+	DWORD tNow = static_cast< DWORD >( time( NULL ) );
+	DWORD nHubs = 0, nLeaves = 0, nSuggestedHubs = 0;
+	DWORD nRetryAfter = 0;
 	CArray< DWORD > pDone;
 
 	G2_PACKET nType;
 	DWORD nLength;
-
-	theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH, _T("Processing query acknowledge from %s:"),
-		(LPCTSTR)CString( inet_ntoa( pHost->sin_addr ) ) );
 
 	while ( pPacket->ReadPacket( nType, nLength ) )
 	{
@@ -180,31 +180,27 @@ BOOL CSearchManager::OnQueryAck(CG2Packet* pPacket, SOCKADDR_IN* pHost, Hashes::
 				HostCache.Gnutella2.Add( (IN_ADDR*)&nAddress, nPort, tNow );
 			}
 
-			if ( nLength >= 8 ) nLeaves += pPacket->ReadShortBE();
+			if ( nLength >= 8 )
+				nLeaves += pPacket->ReadShortBE();
 			nHubs ++;
-
-//			theApp.Message( MSG_DEBUG, _T("  Done %s"),
-//				(LPCTSTR)CString( inet_ntoa( *(IN_ADDR*)&nAddress ) ) );
 		}
 		else if ( nType == G2_PACKET_QUERY_SEARCH && nLength >= 6 )
 		{
 			DWORD nAddress	= pPacket->ReadLongLE();
 			WORD nPort		= pPacket->ReadShortBE();
-			DWORD tSeen		= ( nLength >= 10 ) ? pPacket->ReadLongBE() + tAdjust : tNow;
-
-//			theApp.Message( MSG_DEBUG, _T("  Try %s:%lu"),
-//				(LPCTSTR)CString( inet_ntoa( *(IN_ADDR*)&nAddress ) ), nPort );
+			DWORD tSeen		= ( nLength >= 10 ) ?
+				(DWORD)( (LONG)pPacket->ReadLongBE() + tAdjust ) : tNow;
 
 			HostCache.Gnutella2.Add( (IN_ADDR*)&nAddress, nPort, min( tNow, tSeen ) );
+
+			nSuggestedHubs ++;
 		}
-		else if ( nType == G2_PACKET_TIMESTAMP && nLength == 4 )
+		else if ( nType == G2_PACKET_TIMESTAMP && nLength >= 4 )
 		{
 			tAdjust = (LONG)tNow - (LONG)pPacket->ReadLongBE();
 		}
 		else if ( nType == G2_PACKET_RETRY_AFTER && nLength >= 2 )
 		{
-			DWORD nRetryAfter = 0;
-
 			if ( nLength >= 4 )
 			{
 				nRetryAfter = pPacket->ReadLongBE();
@@ -229,14 +225,21 @@ BOOL CSearchManager::OnQueryAck(CG2Packet* pPacket, SOCKADDR_IN* pHost, Hashes::
 		pPacket->m_nPosition = nOffset;
 	}
 
-	if ( pPacket->GetRemaining() < 16 ) return FALSE;
-	
+	if ( pPacket->GetRemaining() < 16 )
+		AfxThrowUserException();
+
 	pPacket->Read( oGUID );
+
+	theApp.Message( MSG_DEBUG | MSG_FACILITY_SEARCH,
+		_T("Processing query acknowledge from %s (time adjust %+d seconds): %d hubs, %d leaves, %d suggested hubs, retry after %d seconds."),
+		(LPCTSTR)CString( inet_ntoa( pHost->sin_addr ) ), tAdjust,
+		nHubs, nLeaves, nSuggestedHubs, nRetryAfter );
 	
 	CSingleLock pLock( &m_pSection );
 
 	if ( pLock.Lock( 100 ) )
 	{
+		// Is it our search?
 		if ( CManagedSearch* pSearch = Find( oGUID ) )
 		{
 			pSearch->m_nHubs += nHubs;
@@ -250,12 +253,13 @@ BOOL CSearchManager::OnQueryAck(CG2Packet* pPacket, SOCKADDR_IN* pHost, Hashes::
 				DWORD nAddress = pDone.GetAt( nItem );
 				pSearch->OnHostAcknowledge( nAddress );
 			}
-
-			return FALSE;
 		}
+		else
+			// Route it!
+			return TRUE;
 	}
 
-	return TRUE;
+	return FALSE;
 }
 
 //////////////////////////////////////////////////////////////////////

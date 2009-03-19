@@ -874,7 +874,7 @@ BOOL CG2Neighbour::ParseKHLPacket(CG2Packet* pPacket, SOCKADDR_IN* pHost)
 		G2_PACKET nType, nInnerType;
 		DWORD nLength, nInner;
 		BOOL bCompound;
-		DWORD tAdjust = ( pOwner ) ? pOwner->m_tAdjust : 0;
+		LONG tAdjust = ( pOwner ) ? pOwner->m_tAdjust : 0;
 		DWORD tNow = static_cast< DWORD >( time( NULL ) );
 
 		if ( pOwner && pOwner->m_pHubGroup ) pOwner->m_pHubGroup->Clear();
