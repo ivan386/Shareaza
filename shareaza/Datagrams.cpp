@@ -1,7 +1,7 @@
 //
 // Datagrams.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -657,12 +657,18 @@ BOOL CDatagrams::OnDatagram(SOCKADDR_IN* pHost, BYTE* pBuffer, DWORD nLength)
 		GNUTELLAPACKET* pG1UDP = (GNUTELLAPACKET*)pBuffer;
 		if ( ( sizeof(GNUTELLAPACKET) + pG1UDP->m_nLength ) == nLength )
 		{
-			CG1Packet* pG1Packet = CG1Packet::New( pG1UDP );
-			if ( pG1Packet )
+			if ( CG1Packet* pPacket = CG1Packet::New( pG1UDP ) )
 			{
-				bHandled = OnPacket( pHost, pG1Packet );
-
-				pG1Packet->Release();
+				try
+				{
+					bHandled = OnPacket( pHost, pPacket );
+				}
+				catch ( CException* pException )
+				{
+					pException->Delete();
+					pPacket->Debug( _T("Malformed packet.") );
+				}
+				pPacket->Release();
 
 				if ( bHandled )
 					return TRUE;
@@ -704,23 +710,31 @@ BOOL CDatagrams::OnDatagram(SOCKADDR_IN* pHost, BYTE* pBuffer, DWORD nLength)
 		case ED2K_PROTOCOL_KAD_PACKED:
 		case ED2K_PROTOCOL_REVCONNECT:
 		case ED2K_PROTOCOL_REVCONNECT_PACKED:
+			if ( CEDPacket* pPacket = CEDPacket::New( pMULE, nLength ) )
 			{
-				CEDPacket* pPacket = CEDPacket::New( pMULE, nLength );
-				if ( pPacket && ! pPacket->InflateOrRelease() )
+				if ( ! pPacket->InflateOrRelease() )
 				{
-					switch ( pMULE->nProtocol )
+					try
 					{
-					case ED2K_PROTOCOL_EDONKEY:
-					case ED2K_PROTOCOL_EMULE:
-						bHandled = EDClients.OnPacket( pHost, pPacket );
-						break;
-					case ED2K_PROTOCOL_KAD:
-						bHandled = Kademlia.OnPacket( pHost, pPacket );
-						break;
-					case ED2K_PROTOCOL_REVCONNECT:
-						// TODO: Implement RevConnect KAD
-						pPacket->Debug( _T("RevConnect KAD not implemented.") );
-						break;
+						switch ( pMULE->nProtocol )
+						{
+						case ED2K_PROTOCOL_EDONKEY:
+						case ED2K_PROTOCOL_EMULE:
+							bHandled = EDClients.OnPacket( pHost, pPacket );
+							break;
+						case ED2K_PROTOCOL_KAD:
+							bHandled = Kademlia.OnPacket( pHost, pPacket );
+							break;
+						case ED2K_PROTOCOL_REVCONNECT:
+							// TODO: Implement RevConnect KAD
+							pPacket->Debug( _T("RevConnect KAD not implemented.") );
+							break;
+						}
+					}
+					catch ( CException* pException )
+					{
+						pException->Delete();
+						pPacket->Debug( _T("Malformed packet.") );
 					}
 					pPacket->Release();
 
@@ -737,8 +751,7 @@ BOOL CDatagrams::OnDatagram(SOCKADDR_IN* pHost, BYTE* pBuffer, DWORD nLength)
 	{
 		CBuffer pInput;
 		pInput.Add( pBuffer, nLength );
-		CBENode* pRoot = CBENode::Decode( &pInput );
-		if ( pRoot )
+		if ( CBENode* pRoot = CBENode::Decode( &pInput ) )
 		{
 			bHandled = DHT.OnPacket( pHost, pRoot );
 
@@ -818,8 +831,8 @@ BOOL CDatagrams::OnReceiveSGP(SOCKADDR_IN* pHost, SGP_HEADER* pHeader, DWORD nLe
 					catch ( CException* pException )
 					{
 						pException->Delete();
+						pPacket->Debug( _T("Malformed packet.") );
 					}
-
 					pPacket->Release();
 				}
 
@@ -862,6 +875,7 @@ BOOL CDatagrams::OnReceiveSGP(SOCKADDR_IN* pHost, SGP_HEADER* pHeader, DWORD nLe
 			catch ( CException* pException )
 			{
 				pException->Delete();
+				pPacket->Debug( _T("Malformed packet.") );
 			}
 			pPacket->Release();
 		}
@@ -1850,7 +1864,8 @@ BOOL CDatagrams::OnKHLA(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 	}
 
 	G2_PACKET nType, nInner;
-	DWORD nLength, nInnerLength, tAdjust = 0;
+	DWORD nLength, nInnerLength;
+	LONG tAdjust = 0;
 	BOOL bCompound;
 	int nCount = 0;
 
@@ -1897,7 +1912,8 @@ BOOL CDatagrams::OnKHLA(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 			{
 				nAddress = pPacket->ReadLongLE();
 				nPort = pPacket->ReadShortBE();
-				if ( nLength >= 10 ) tSeen = pPacket->ReadLongBE() + tAdjust;
+				if ( nLength >= 10 )
+					tSeen = pPacket->ReadLongBE() + tAdjust;
 			}
 
 			CHostCacheHost* pCached = HostCache.Gnutella2.Add(
