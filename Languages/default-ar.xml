@@ -8,7 +8,7 @@
 <!-- Body element, don't touch -->
 <skin xmlns="http://www.shareaza.com/schemas/Skin.xsd" version="1.0">
   <!-- Manifest -->
-  <manifest name="Arabic العربية" author="Awadh A Al-Ghaamdi الأستاذ عوض الغامدي" updatedBy="Awadh A Al-Ghaamdi الأستاذ عوض الغامدي" description="Shareaza Default Arabic Skin File" link="http://shareaza.sourceforge.net/" email="awadh_al_ghaamdi@hotmail.com" version="2.4.0.0" type="Language" language="ara" prompt="أنقر هنا لإختيار اللغة العربية كلغة طبيعية بالنسبة لك" dir="rtl" />
+  <manifest name="Arabic العربية" author="Awadh A Al-Ghaamdi الأستاذ عوض الغامدي" updatedBy="Awadh A Al-Ghaamdi الأستاذ عوض الغامدي" description="Shareaza Default Arabic Skin File" link="http://shareaza.sourceforge.net/" email="awadh_al_ghaamdi@hotmail.com" version="2.4.0.0" type="Language" language="ar" prompt="أنقر هنا لإختيار اللغة العربية كلغة طبيعية بالنسبة لك" dir="rtl" />
   <!-- Toolbar Definitions-->
   <toolbars>
     <!-- MAIN WINDOW-->
@@ -4014,7 +4014,7 @@
       <control caption=":عنوان ال_خدمة" />
       <control />
       <control caption=": نوع خدمة الإكتشاف" />
-      <control caption="Gnutella Bootstrap|GWebCache|Server.met رابط|المحجوبة" />
+      <control caption="Gnutella Bootstrap|G1 GWebCache|G2 GWebCache|G1/G2 GWebCache|Server.met| رابطالمحجوبة" />
       <control caption="حسنا" />
       <control caption="إلغاء الأمر" />
       <control />
@@ -4513,7 +4513,7 @@
       <column from="Bandwidth" to="نطاق العرض" />
       <column from="Total" to="المجموع" />
       <column from="Flow" to="التدفق" />
-      <column from="Leaves" to="" />
+      <column from="Leaves" to="الفروع" />
       <column from="Mode" to="النمط" />
       <column from="Client" to="التابع" />
       <column from="Name" to="الاسم" />
@@ -4561,18 +4561,18 @@
     <list name="CSearchMonitorWnd">
       <column from="بحث" to="بحث" />
       <column from="URN" to="" />
-      <column from="Schema" to=="مخطط" />
+      <column from="Schema" to="مخطط" />
     </list>
     <list name="CMatchCtrl">
       <column from="File" to="ملف" />
-      <column from="Extension" to="" />
+      <column from="Extension" to="الإمتداد" />
       <column from="Size" to="الحجم" />
-      <column from="Rating" to="" />
+      <column from="Rating" to="التصنيف" />
       <column from="Status" to="الحالة" />
-      <column from="Host/Count" to="" />
+      <column from="Host/Count" to="المضيف/العدد" />
       <column from="Speed" to="السرعة" />
       <column from="Client" to="التابع" />
-      <column from="Time" to="" />
+      <column from="Time" to="الوقت" />
       <column from="Country" to="البلد" />
     </list>
     <list name="CUploadQueueList">
