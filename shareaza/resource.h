@@ -221,6 +221,7 @@
 #define IDB_IRCICONS                    999
 #define IDD_SELECT                      999
 #define IDC_CONNECT_HOST                1000
+#define IDD_MESSAGE                     1000
 #define IDC_CONNECT_PORT                1001
 #define IDC_SCHEMAS                     1002
 #define IDC_SEARCH                      1003
@@ -788,6 +789,13 @@
 #define IDC_URN_BTH                     1568
 #define IDC_TRUST_MD5                   1569
 #define IDC_TRUST_BTH                   1570
+#define IDC_INFO_TEXT                   1571
+#define IDC_INFO_ICON                   1572
+#define IDC_INFO_BUTTON1                1573
+#define IDC_INFO_BUTTON2                1574
+#define IDC_INFO_BUTTON3                1575
+#define IDC_INFO_SPLIT                  1576
+#define IDC_INFO_REMEMBER               1577
 #define IDS_FILTER_DELETE_CONFIRM       7000
 #define IDS_SCHEMAS                     7001
 #define IDS_MULTIPLE_VALUES             7002
@@ -1892,7 +1900,7 @@
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        325
 #define _APS_NEXT_COMMAND_VALUE         33322
-#define _APS_NEXT_CONTROL_VALUE         1571
+#define _APS_NEXT_CONTROL_VALUE         1578
 #define _APS_NEXT_SYMED_VALUE           104
 #endif
 #endif

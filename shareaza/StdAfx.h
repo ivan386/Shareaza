@@ -636,3 +636,17 @@ inline QWORD GetFileSize(LPCTSTR pszFile)
 	else
 		return SIZE_UNKNOWN;
 }
+
+// Powered version of AfxMessageBox()
+// nType				| *pnDefault
+// MB_OK				| 0 - ask, 1 - IDOK
+// MB_OKCANCEL			| 0 - ask, 1 - IDOK, 2 - IDCANCEL
+// MB_ABORTRETRYIGNORE	| 0 - ask, 1 - IDABORT, 2 - IDRETRY, 3 - IDIGNORE
+// MB_YESNOCANCEL		| 0 - ask, 1 - IDNO, 2 - IDYES, 3 - IDCANCEL
+// MB_YESNO				| 0 - ask, 1 - IDNO, 2 - IDYES
+// MB_RETRYCANCEL		| 0 - ask, 1 - IDRETRY, 2 - IDCANCEL
+// MB_CANCELTRYCONTINUE	| 0 - ask, 1 - IDCANCEL, 2 - IDTRYAGAIN, 3 - IDCONTINUE
+int MsgBox(LPCTSTR lpszText, UINT nType = MB_OK, UINT nIDHelp = 0, DWORD* pnDefault = NULL);
+int MsgBox(UINT nIDPrompt, UINT nType = MB_OK, UINT nIDHelp = 0, DWORD* pnDefault = NULL);
+//#undef AfxMessageBox
+//#define AfxMessageBox MsgBox

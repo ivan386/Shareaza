@@ -498,11 +498,8 @@ void CSearchWnd::OnSearchSearch()
 
 	if ( m_pMatches->m_nFiles > 0 )
 	{
-		CString strMessage;
-		LoadString( strMessage, IDS_SEARCH_CLEAR_PREVIOUS );
-		if ( Settings.Search.ClearPrevious == 2 ||
-			( Settings.Search.ClearPrevious == 0 &&
-			AfxMessageBox( strMessage, MB_ICONQUESTION|MB_YESNO ) == IDYES ) )
+		if ( MsgBox( IDS_SEARCH_CLEAR_PREVIOUS, MB_ICONQUESTION | MB_YESNO, 0,
+			&Settings.Search.ClearPrevious ) == IDYES )
 		{
 			CQuickLock oLock( m_pMatches->m_pSection );
 			m_pMatches->Clear();

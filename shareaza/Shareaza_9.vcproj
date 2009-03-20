@@ -85,7 +85,6 @@
 				IgnoreDefaultLibraryNames=""
 				GenerateDebugInformation="true"
 				SubSystem="2"
-				DataExecutionPrevention="0"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -178,7 +177,6 @@
 				IgnoreDefaultLibraryNames=""
 				GenerateDebugInformation="true"
 				SubSystem="2"
-				DataExecutionPrevention="0"
 				TargetMachine="17"
 				KeyFile=""
 			/>
@@ -277,7 +275,6 @@
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				SetChecksum="true"
-				DataExecutionPrevention="0"
 				TargetMachine="1"
 				KeyFile=""
 			/>
@@ -377,7 +374,6 @@
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				SetChecksum="true"
-				DataExecutionPrevention="0"
 				TargetMachine="17"
 				KeyFile=""
 			/>
@@ -2173,6 +2169,10 @@
 					>
 				</File>
 				<File
+					RelativePath="DlgMessage.cpp"
+					>
+				</File>
+				<File
 					RelativePath="DlgNewSearch.cpp"
 					>
 				</File>
@@ -3891,6 +3891,10 @@
 				</File>
 				<File
 					RelativePath="DlgMediaVis.h"
+					>
+				</File>
+				<File
+					RelativePath="DlgMessage.h"
 					>
 				</File>
 				<File
