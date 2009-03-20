@@ -464,7 +464,7 @@ STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "About Shareaza"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
-    CONTROL         154,IDC_STATIC,"Static",SS_BITMAP,0,0,367,31
+    CONTROL         154,IDC_BANNER,"Static",SS_BITMAP,0,0,367,31
     LTEXT           "Shareaza File Sharing Client ",IDC_TITLE,20,45,262,10,SS_CENTERIMAGE
     LTEXT           "Copyright © Shareaza Development Team, 2002-",IDC_COPYRIGHT,20,60,262,12
     LTEXT           "Shareaza is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.",IDC_STATIC,20,75,262,24
@@ -787,7 +787,7 @@ BEGIN
     COMBOBOX        IDC_SERVICE_TYPE,148,74,130,70,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
     DEFPUSHBUTTON   "OK",IDOK,179,124,50,14
     PUSHBUTTON      "Cancel",IDCANCEL,235,124,50,14
-    CONTROL         154,IDC_STATIC,"Static",SS_BITMAP,0,0,400,31
+    CONTROL         154,IDC_BANNER,"Static",SS_BITMAP,0,0,400,31
 END
 
 IDD_SETTINGS_BANDWIDTH DIALOG  0, 0, 282, 220

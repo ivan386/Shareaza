@@ -93,7 +93,7 @@ void CSettingsManagerDlg::OnSkinChange(BOOL bSet)
 
 	if ( bSet )
 	{
-		m_pThis->SkinMe( _T("CSettingSheet"), IDR_MAINFRAME, TRUE );
+		m_pThis->SkinMe( _T("CSettingSheet"), IDR_MAINFRAME );
 		m_pThis->Invalidate();
 	}
 	else

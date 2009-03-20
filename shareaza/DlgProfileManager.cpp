@@ -130,7 +130,7 @@ BOOL CProfileManagerDlg::OnInitDialog()
 
 	m_bmHeader.LoadBitmap( IDB_WIZARD );
 
-	SkinMe( NULL, IDR_MAINFRAME, TRUE );
+	SkinMe( NULL, IDR_MAINFRAME );
 
 	return TRUE;
 }

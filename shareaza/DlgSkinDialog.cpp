@@ -1,7 +1,7 @@
 //
 // DlgSkinDialog.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -33,6 +33,9 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 
+#define BANNER_CX		600
+#define BANNER_CY		50
+
 IMPLEMENT_DYNAMIC(CSkinDialog, CDialog)
 
 BEGIN_MESSAGE_MAP(CSkinDialog, CDialog)
@@ -59,9 +62,10 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CSkinDialog dialog
 
-CSkinDialog::CSkinDialog(UINT nResID, CWnd* pParent) :
+CSkinDialog::CSkinDialog(UINT nResID, CWnd* pParent, BOOL bAutoBanner) :
 	CDialog( nResID, pParent ),
-	m_pSkin( NULL )
+	m_pSkin( NULL ),
+	m_bAutoBanner( bAutoBanner )
 {
 }
 
@@ -269,7 +273,7 @@ int CSkinDialog::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		return -1;
 
 	if ( Settings.General.LanguageRTL )
-		ModifyStyleEx( 0, WS_EX_LAYOUTRTL|WS_EX_RTLREADING, 0 );
+		ModifyStyleEx( 0, WS_EX_LAYOUTRTL | WS_EX_RTLREADING, 0 );
 
 	return 0;
 }
@@ -278,21 +282,52 @@ BOOL CSkinDialog::OnInitDialog()
 {
 	CDialog::OnInitDialog();
 
-	if ( Settings.General.LanguageRTL )
-	{
-		CStatic* pBanner = (CStatic*)GetDlgItem( IDC_BANNER );
-		if ( pBanner )
-		{
-			if ( pBanner->GetBitmap() == NULL ) return TRUE;
-			CRect rcClient, rc;
-			pBanner->GetWindowRect( &rc );
+	CStatic* pBanner = (CStatic*)GetDlgItem( IDC_BANNER );
 
-			GetWindowRect( &rcClient );
-			ScreenToClient( &rcClient );
-			pBanner->SetWindowPos( NULL, rcClient.left + rcClient.Width() - rc.Width(),
-				0, 0, 0, SWP_NOSIZE|SWP_NOZORDER );
+	if ( ! pBanner && m_bAutoBanner )
+	{
+		// Resize window
+		CRect rcWindow;
+		GetWindowRect( &rcWindow );
+		SetWindowPos( NULL, 0, 0, rcWindow.Width(), rcWindow.Height() + BANNER_CY,
+			SWP_NOACTIVATE | SWP_NOMOVE | SWP_NOZORDER );
+
+		// Move all controls down
+		for ( CWnd* pChild = GetWindow( GW_CHILD ); pChild;
+			pChild = pChild->GetNextWindow() )
+		{
+			CRect rc;
+			pChild->GetWindowRect( &rc );
+			ScreenToClient( &rc );
+			rc.MoveToY( rc.top + BANNER_CY );
+			pChild->MoveWindow( &rc );
 		}
+
+		// Add banner
+		CRect rcBanner;
+		GetClientRect( &rcBanner );
+		rcBanner.right = rcBanner.left + BANNER_CX;
+		rcBanner.bottom = rcBanner.top + BANNER_CY;
+		VERIFY( m_oBanner.Create( NULL, WS_CHILD | WS_VISIBLE | SS_BITMAP |
+			SS_REALSIZEIMAGE, rcBanner, this, IDC_BANNER ) );
+		m_oBanner.SetBitmap( (HBITMAP)LoadImage( AfxGetResourceHandle(),
+			MAKEINTRESOURCE( IDB_WIZARD ), IMAGE_BITMAP, BANNER_CX, BANNER_CY, 0 ) );
+
+		pBanner = &m_oBanner;
 	}
+	
+	if ( pBanner && Settings.General.LanguageRTL )
+	{
+		// Adjust banner width
+		CRect rcBanner;
+		GetClientRect( &rcBanner );
+		rcBanner.left -= BANNER_CX - rcBanner.Width();
+		rcBanner.right = rcBanner.left + BANNER_CX;
+		rcBanner.bottom = rcBanner.top + BANNER_CY;
+		pBanner->MoveWindow( &rcBanner );
+		pBanner->ModifyStyle( SS_CENTERIMAGE, SS_REALSIZEIMAGE );
+	}
+
 	return TRUE;
 }
 

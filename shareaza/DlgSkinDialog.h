@@ -1,7 +1,7 @@
 //
 // DlgSkinDialog.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -29,13 +29,15 @@ class CSkinDialog : public CDialog
 	DECLARE_DYNAMIC(CSkinDialog)
 
 public:
-	CSkinDialog(UINT nResID = 0, CWnd* pParent = NULL);
+	CSkinDialog(UINT nResID = 0, CWnd* pParent = NULL, BOOL bAutoBanner = TRUE);
 
 	BOOL	SkinMe(LPCTSTR pszSkin = NULL, UINT nIcon = 0, BOOL bLanguage = TRUE);
 	BOOL	SelectCaption(CWnd* pWnd, int nIndex);
 
 protected:
 	CSkinWindow*	m_pSkin;
+	BOOL			m_bAutoBanner;	// Add banner at top of dialog (default = yes)
+	CStatic			m_oBanner;		// Banner to add (id=IDC_BANNER, bitmap=IDB_WIZARD)
 
 	virtual void DoDataExchange(CDataExchange* pDX);
 	virtual BOOL OnInitDialog();
