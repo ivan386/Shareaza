@@ -4476,83 +4476,83 @@
   <!-- Columns Definitions -->
   <listColumns>
     <list name="CLibraryWnd">
-      <column from="ملف" to="ملف" />
-      <column from="الإمتداد" to="الإمتداد" />
-      <column from="الحجم" to="الحجم" />
-      <column from="المجلد" to="مجلد" />
-      <column from="ضربات" to="ضربات" />
-      <column from="رفع الملفات" to="رفع الملفات" />
-      <column from="تعديل" to="تعديل" />
+      <column from="File" to="ملف" />
+      <column from="Extension" to="الإمتداد" />
+      <column from="Size" to="الحجم" />
+      <column from="Folder" to="مجلد" />
+      <column from="Hits" to="ضربات" />
+      <column from="Uploads" to="رفع الملفات" />
+      <column from="Modified" to="تعديل" />
     </list>
     <list name="CDownloadCtrl">
-      <column from="تحميل ملف" to="تحميل ملف" />
-      <column from="الحجم" to="الحجم" />
-      <column from="التقدم" to="التقدم" />
-      <column from="السرعة" to="السرعة" />
-      <column from="الحالة" to="الحالة" />
-      <column from="التابع" to="التابع" />
-      <column from="محمل" to="محمل" />
-      <column from="مكتمل" to="مكتمل" />
-      <column from="البلد" to="البلد" />
+      <column from="Downloaded File" to="تحميل ملف" />
+      <column from="Size" to="الحجم" />
+      <column from="Progress" to="التقدم" />
+      <column from="Speed" to="السرعة" />
+      <column from="Status" to="الحالة" />
+      <column from="Client" to="التابع" />
+      <column from="Downloaded" to="محمل" />
+      <column from="Complete" to="مكتمل" />
+      <column from="Country" to="البلد" />
     </list>
     <list name="CUploadCtrl">
-      <column from="المستخدم البعيد" to="المستخدم البعيد" />
-      <column from="الملف المرسل" to="الملف المرسل" />
-      <column from="الحجم" to="الحجم" />
-      <column from="التقدم" to="التقدم" />
-      <column from="السرعة" to="السرعة" />
-      <column from="العميل" to="العميل" />
-      <column from="التصنيف" to="التصنيف" />
-      <column from="البلد" to="البلد" />
+      <column from="Remote User" to="المستخدم البعيد" />
+      <column from="Uploaded File" to="الملف المرسل" />
+      <column from="Size" to="الحجم" />
+      <column from="Progress" to="التقدم" />
+      <column from="Speed" to="السرعة" />
+      <column from="Client" to="العميل" />
+      <column from="Rating" to="التصنيف" />
+      <column from="Country" to="البلد" />
     </list>
     <list name="CNeighboursWnd">
-      <column from="العنوان" to="العنوان" />
-      <column from="المنفذ" to="المنفذ" />
-      <column from="الوقت" to="الوقت" />
-      <column from="الحزم" to="الحزم" />
-      <column from="نطاق العرض" to="نطاق العرض" />
-      <column from="المجموع" to="المجموع" />
-      <column from="التدفق" to="التدفق" />
-      <column from="الفروع" to="" />
-      <column from="النمط" to="النمط" />
-      <column from="التابع" to="التابع" />
-      <column from="الاسم" to="الاسم" />
-      <column from="البلد" to="البلد" />
+      <column from="Address" to="العنوان" />
+      <column from="Port" to="المنفذ" />
+      <column from="Time" to="الوقت" />
+      <column from="Packets" to="الحزم" />
+      <column from="Bandwidth" to="نطاق العرض" />
+      <column from="Total" to="المجموع" />
+      <column from="Flow" to="التدفق" />
+      <column from="Leaves" to="" />
+      <column from="Mode" to="النمط" />
+      <column from="Client" to="التابع" />
+      <column from="Name" to="الاسم" />
+      <column from="Country" to="البلد" />
     </list>
     <list name="CSecurityWnd">
-      <column from="العنوان / المحتوى" to="العنوان / المحتوى" />
-      <column from="الإجراء" to="الإجراء" />
-      <column from="الإنتهاء" to="الإنتهاء" />
-      <column from="الأسبقية" to="الأسبقية" />
-      <column from="ضربات" to="ضربات" />
-      <column from="التعليق" to="التعليق" />
+      <column from="Address / Content" to="العنوان / المحتوى" />
+      <column from="Action" to="الإجراء" />
+      <column from="Expires" to="الإنتهاء" />
+      <column from="Precedence" to="الأسبقية" />
+      <column from="Hits" to="ضربات" />
+      <column from="Comment" to="التعليق" />
     </list>
     <list name="CHostCacheWnd">
-      <column from="العنوان" to="العنوان" />
-      <column from="المنفذ" to="المنفذ" />
-      <column from="التابع" to="التابع" />
-      <column from="آخر مشاهدة" to="آخر مشاهدة" />
-      <column from="وقت العمل اليومي" to="وقت العمل اليومي" />
-      <column from="الاسم" to="الاسم" />
-      <column from="الوصف" to="الوصف" />
+      <column from="Address" to="العنوان" />
+      <column from="Port" to="المنفذ" />
+      <column from="Client" to="التابع" />
+      <column from="Last Seen" to="آخر مشاهدة" />
+      <column from="Daily Uptime" to="وقت العمل اليومي" />
+      <column from="Name" to="الاسم" />
+      <column from="Description" to="الوصف" />
       <column from="CurUsers" to="" />
-      <column from="MaxUsers" to="MaxUsers" />
-      <column from="الفشل" to="الفشل" />
-      <column from="البلد" to="البلد" />
+      <column from="MaxUsers" to="اقصى مستخدمون" />
+      <column from="Failures" to="الفشل" />
+      <column from="Country" to="البلد" />
     </list>
     <list name="CDiscoveryWnd">
-      <column from="العنوان" to="العنوان" />
-      <column from="النوع" to="النوع" />
-      <column from="آخر وصول" to="آخر وصول" />
-      <column from="المضيفون" to="المضيفون" />
-      <column from="الدخول" to="الدخول" />
-      <column from="تحديث" to="تحديث" />
-      <column from="الفشل" to="الفشل" />
+      <column from="Address" to="العنوان" />
+      <column from="Type" to="النوع" />
+      <column from="Last Access" to="آخر وصول" />
+      <column from="Hosts" to="المضيفون" />
+      <column from="Accesses" to="الدخول" />
+      <column from="Updates" to="تحديث" />
+      <column from="Failures" to="الفشل" />
     </list>
     <list name="CPacketWnd">
-      <column from="العنوان" to="العنوان" />
-      <column from="البروتوكول" to="البروتوكول" />
-      <column from="النوع" to="النوع" />
+      <column from="Address" to="العنوان" />
+      <column from="Protocol" to="البروتوكول" />
+      <column from="Type" to="النوع" />
       <column from="T/H" to="" />
       <column from="Hex" to="" />
       <column from="ASCII" to="" />
@@ -4561,53 +4561,53 @@
     <list name="CSearchMonitorWnd">
       <column from="بحث" to="بحث" />
       <column from="URN" to="" />
-      <column from="مخطط" to="" />
+      <column from="Schema" to=="مخطط" />
     </list>
     <list name="CMatchCtrl">
-      <column from="ملف" to="ملف" />
-      <column from="الإمتداد" to="" />
-      <column from="الحجم" to="الحجم" />
-      <column from="التصنيف" to="" />
-      <column from="الحالة" to="الحالة" />
-      <column from="المضيف/العدد" to="" />
-      <column from="السرعة" to="السرعة" />
-      <column from="التابع" to="التابع" />
-      <column from="الوقت" to="" />
-      <column from="البلد" to="البلد" />
+      <column from="File" to="ملف" />
+      <column from="Extension" to="" />
+      <column from="Size" to="الحجم" />
+      <column from="Rating" to="" />
+      <column from="Status" to="الحالة" />
+      <column from="Host/Count" to="" />
+      <column from="Speed" to="السرعة" />
+      <column from="Client" to="التابع" />
+      <column from="Time" to="" />
+      <column from="Country" to="البلد" />
     </list>
     <list name="CUploadQueueList">
-      <column from="الاسم" to="الاسم" />
-      <column from="المعيار" to="" />
-      <column from="نطاق العرض" to="" />
-      <column from="النقل" to="" />
-      <column from="ترتيب" to="" />
+      <column from="Name" to="الاسم" />
+      <column from="Criteria" to="المعيار" />
+      <column from="Bandwidth" to="نطاق العرض" />
+      <column from="Transfers" to="النقل" />
+      <column from="Order" to="ترتيب" />
     </list>
     <list name="CAdvancedSettingsList">
-      <column from="إعداد" to="" />
-      <column from="القيمة" to="" />
+      <column from="Setting" to="إعداد" />
+      <column from="Value" to="القيمة" />
     </list>
     <list name="CFavouritesProfileList">
-      <column from="الاسم" to="الاسم" />
-      <column from="الرابط" to="" />
+      <column from="Name" to="الاسم" />
+      <column from="URL" to="الرابط" />
     </list>
     <list name="CFileSourcesPageList">
-      <column from="الرابط" to="" />
-      <column from="الإنتهاء" to="" />
+      <column from="URL" to="الرابط" />
+      <column from="Expires" to="الإنتهاء" />
     </list>
     <list name="CTorrentFileList">
-      <column from="إسم الملف" to="إسم الملف" />
-      <column from="الحجم" to="الحجم" />
+      <column from="Filename" to="إسم الملف" />
+      <column from="Size" to="الحجم" />
     </list>
     <list name="CTorrentTrackerList">
-      <column from="المتتبع" to="" />
-      <column from="الحالة" to="" />
-      <column from="النوع" to="" />
+      <column from="Tracker" to="المتتبع" />
+      <column from="Status" to="الحالة" />
+      <column from="Type" to="النوع" />
     </list>
     <list name="CReviewList">
-      <column from="المستخدم" to="" />
-      <column from="التصنيف" to="" />
-      <column from="تعليقات" to="" />
-      <column from="ترتيب" to="" />
+      <column from="User" to="المستخدم" />
+      <column from="Rating" to="التصنيف" />
+      <column from="Comments" to="تعليقات" />
+      <column from="Order" to="ترتيب" />
     </list>
   </listColumns>
 </skin>
