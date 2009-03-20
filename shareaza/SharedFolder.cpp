@@ -377,13 +377,10 @@ BOOL CLibraryFolder::ThreadScan(DWORD nScanCookie)
 					m_nFiles	-= pFolder->m_nFiles;
 					m_nVolume	-= pFolder->m_nVolume;
 
-					if ( pFolder->m_sName != pFind.cFileName )
+					if ( pFolder->m_sName.CompareNoCase( pFind.cFileName ) )
 					{
-						CString strNameLC( pFolder->m_sName );
-						ToLower( strNameLC );
-
 						pLock.Lock();
-						m_pFolders.RemoveKey( strNameLC );
+						m_pFolders.RemoveKey( pFolder->m_sNameLC );
 						pFolder->OnDelete();
 						pFolder = new CLibraryFolder( this, m_sPath + _T("\\") + pFind.cFileName );
 						m_pFolders.SetAt( pFolder->m_sNameLC, pFolder );
@@ -417,7 +414,7 @@ BOOL CLibraryFolder::ThreadScan(DWORD nScanCookie)
 				if ( ! bNew )
 				{
 					m_nVolume -= pFile->m_nSize;
-					if ( pFile->m_sName != pFind.cFileName )
+					if ( pFile->m_sName.CompareNoCase( pFind.cFileName ) )
 					{
 						Library.RemoveFile( pFile );
 						pFile->m_sName = pFind.cFileName;
@@ -455,13 +452,10 @@ BOOL CLibraryFolder::ThreadScan(DWORD nScanCookie)
 
 		if ( pFolder->m_nScanCookie != nScanCookie )
 		{
-			CString strNameLC( pFolder->m_sName );
-			ToLower( strNameLC );
-
 			m_nFiles	-= pFolder->m_nFiles;
 			m_nVolume	-= pFolder->m_nVolume;
 
-			m_pFolders.RemoveKey( strNameLC );
+			m_pFolders.RemoveKey( pFolder->m_sNameLC );
 			pFolder->OnDelete();
 
 			bChanged = TRUE;
@@ -652,18 +646,21 @@ BOOL CLibraryFolder::SetOnline()
 
 void CLibraryFolder::OnDelete(TRISTATE bCreateGhost)
 {
-	for ( POSITION pos = GetFolderIterator() ; pos ; )
+	while ( ! m_pFiles.IsEmpty() )
 	{
-		GetNextFolder( pos )->OnDelete();
+		POSITION pos = m_pFiles.GetStartPosition();
+		CLibraryFile* pFile = GetNextFile( pos );
+		m_pFiles.RemoveKey( pFile->GetNameLC() );
+		pFile->OnDelete( FALSE, bCreateGhost );
 	}
 
-	for ( POSITION pos = GetFileIterator() ; pos ; )
+	while ( ! m_pFolders.IsEmpty() )
 	{
-		GetNextFile( pos )->OnDelete( FALSE, bCreateGhost );
+		POSITION pos = m_pFolders.GetStartPosition();
+		CLibraryFolder* pFolder = GetNextFolder( pos );
+		m_pFolders.RemoveKey( pFolder->m_sNameLC );
+		pFolder->OnDelete( bCreateGhost );
 	}
-
-	m_pFolders.RemoveAll();
-	m_pFiles.RemoveAll();
 
 	delete this;
 }
