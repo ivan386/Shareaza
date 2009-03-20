@@ -1,7 +1,7 @@
 //
 // DlgAbout.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -31,14 +31,10 @@ static char THIS_FILE[] = __FILE__;
 #endif
 
 BEGIN_MESSAGE_MAP(CAboutDlg, CSkinDialog)
-	//{{AFX_MSG_MAP(CAboutDlg)
-	ON_WM_PAINT()
 	ON_WM_CTLCOLOR()
 	ON_WM_SETCURSOR()
 	ON_WM_LBUTTONDOWN()
 	ON_WM_RBUTTONDOWN()
-	ON_WM_CREATE()
-	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 
@@ -67,7 +63,7 @@ BOOL CAboutDlg::OnInitDialog()
 {
 	CSkinDialog::OnInitDialog();
 
-	SkinMe( _T("CAboutDlg"), IDR_MAINFRAME, FALSE );
+	SkinMe( _T("CAboutDlg"), IDR_MAINFRAME );
 
 	CString strCaption;
 
@@ -84,9 +80,6 @@ BOOL CAboutDlg::OnInitDialog()
 	strCaption += L" x64 Edition (" + theApp.m_sBuildDate + _T(")");
 #endif
 	m_wndTitle.SetWindowText( strCaption );
-
-	m_crWhite = CCoolInterface::GetDialogBkColor();
-	m_brWhite.CreateSolidBrush( m_crWhite );
 
 	DWORD dwSize = GetFileVersionInfoSize( theApp.m_strBinaryPath, &dwSize );
 	BYTE* pBuffer = new BYTE[ dwSize ];
@@ -107,24 +100,9 @@ BOOL CAboutDlg::OnInitDialog()
 	return TRUE;
 }
 
-void CAboutDlg::OnPaint()
-{
-	CPaintDC dc( this );
-	CRect rc;
-
-	GetClientRect( &rc );
-	rc.top += 51;
-
-	dc.Draw3dRect( 0, 50, rc.right + 1, 0,
-		RGB( 128, 128, 128 ), RGB( 128, 128, 128 ) );
-	dc.FillSolidRect( &rc, m_crWhite );
-}
-
 HBRUSH CAboutDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 {
-	/*HBRUSH hbr =*/ (HBRUSH)CSkinDialog::OnCtlColor( pDC, pWnd, nCtlColor );
-
-	pDC->SetBkColor( m_crWhite );
+	HBRUSH hbr = (HBRUSH)CSkinDialog::OnCtlColor( pDC, pWnd, nCtlColor );
 
 	if ( pWnd == &m_wndTitle )
 	{
@@ -136,7 +114,7 @@ HBRUSH CAboutDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 		pDC->SelectObject( &theApp.m_gdiFontLine );
 	}
 
-	return m_brWhite;
+	return hbr;
 }
 
 BOOL CAboutDlg::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)
@@ -186,11 +164,4 @@ void CAboutDlg::OnRButtonDown(UINT /*nFlags*/, CPoint point)
 		DWORD* pNullPtr = (DWORD*)NULL;
 		*pNullPtr = 0xFFFFFFFF;
 	}
-}
-
-int CAboutDlg::OnCreate(LPCREATESTRUCT lpCreateStruct)
-{
-	if (CDialog::OnCreate(lpCreateStruct) == -1)
-		return -1;
-	return 0;
 }
