@@ -392,7 +392,7 @@ void CConnectionSettingsPage::OnClickedEnableUpnp()
 			LoadString( strMessage, IDS_UPNP_SERVICES_ERROR );
 			CButton* pBox =  (CButton*)GetDlgItem( IDC_ENABLE_UPNP );
 			pBox->SetCheck( BST_UNCHECKED );
-			MessageBox( strMessage, NULL, MB_OK | MB_ICONEXCLAMATION );
+			AfxMessageBox( strMessage, MB_OK | MB_ICONEXCLAMATION );
 		}
 	}
 	UpdateData();

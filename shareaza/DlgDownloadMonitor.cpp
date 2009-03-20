@@ -575,7 +575,7 @@ void CDownloadMonitorDlg::OnDownloadStop()
 		strPrompt.Format( strFormat, (LPCTSTR)m_pDownload->m_sName );
 
 		pLock.Unlock();
-		if ( MessageBox( strPrompt, NULL, MB_ICONQUESTION|MB_YESNO|MB_DEFBUTTON2 ) != IDYES ) return;
+		if ( AfxMessageBox( strPrompt, MB_ICONQUESTION|MB_YESNO|MB_DEFBUTTON2 ) != IDYES ) return;
 		pLock.Lock();
 	}
 

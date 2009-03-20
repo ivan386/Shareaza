@@ -337,7 +337,7 @@ void CIRCChannelsBox::OnAddChannel()
 		{
 			if ( strChannel.CompareNoCase( m_wndChanList.GetItemText( nChannel, 0 ) ) == 0 )
 			{
-				MessageBox( strChannel, _T("Channel already is in the list!"), MB_OK );
+				AfxMessageBox( _T("Channel already is in the list!"), MB_OK );
 				return;
 			}
 		}
