@@ -1057,13 +1057,13 @@ void CLocalSearch::WriteTrailerG1()
 
 #ifdef _DEBUG
 	// Test created hit
-	CQueryHit* pDebugHit = CQueryHit::FromG1Packet( pPacket );
-	ASSERT( pDebugHit );
-	if ( pDebugHit )
+	if ( CQueryHit* pDebugHit = CQueryHit::FromG1Packet( pPacket ) )
 	{
 		pDebugHit->Delete();
 		m_pPacket->m_nPosition = 0;
 	}
+	else
+		theApp.Message( MSG_ERROR | MSG_FACILITY_SEARCH, _T("[G1] Shareaza produced search packet above but cannot parse it back!") );
 #endif // _DEBUG
 }
 
@@ -1077,13 +1077,13 @@ void CLocalSearch::WriteTrailerG2()
 
 #ifdef _DEBUG
 	// Test created hit
-	CQueryHit* pDebugHit = CQueryHit::FromG2Packet( pPacket );
-	ASSERT( pDebugHit );
-	if ( pDebugHit )
+	if ( CQueryHit* pDebugHit = CQueryHit::FromG2Packet( pPacket ) )
 	{
 		pDebugHit->Delete();
 		m_pPacket->m_nPosition = 0;
 	}
+	else
+		theApp.Message( MSG_ERROR | MSG_FACILITY_SEARCH, _T("[G2] Shareaza produced search packet above but cannot parse it back!") );
 #endif // _DEBUG
 }
 
