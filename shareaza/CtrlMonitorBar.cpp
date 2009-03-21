@@ -315,6 +315,9 @@ void CMonitorBarCtrl::PaintCurrent(CDC* pDC, CRect* prc, CGraphItem* pItem)
 	DWORD nValue = (DWORD)pItem->GetValue( pItem->m_nCode );
 	nValue = nValue * rc.Height() / m_nMaximum;
 	pDC->FillSolidRect( rc.left, rc.bottom - nValue, rc.Width(), nValue, pItem->m_nColour );
+
+	// Icon Bug Workaround
+	pDC->SetBkColor( CoolInterface.m_crMidtone );
 }
 
 void CMonitorBarCtrl::PaintTab(CDC* pDC)
