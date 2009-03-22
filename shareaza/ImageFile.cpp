@@ -1,7 +1,7 @@
 //
 // ImageFile.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -270,9 +270,16 @@ HBITMAP CImageFile::CreateBitmap(HDC hUseDC)
 	// pV5Header.bV5AlphaMask =  0xFF000000;
 
 	HDC hDC = hUseDC ? hUseDC : GetDC( 0 );
-
-	void* pBits;
-	HBITMAP hBitmap = CreateDIBSection( hDC, (BITMAPINFO*)&pV5Header, DIB_RGB_COLORS, (void**)&pBits, NULL, 0ul );
+	HBITMAP hBitmap;
+	__try
+	{
+		void* pBits = NULL;
+		hBitmap = CreateDIBSection( hDC, (BITMAPINFO*)&pV5Header, DIB_RGB_COLORS, (void**)&pBits, NULL, 0ul );
+	}
+	__except( EXCEPTION_EXECUTE_HANDLER )
+	{
+		hBitmap = NULL;
+	}
 
 	if ( hBitmap )
 	{
