@@ -1914,9 +1914,9 @@ STYLE DS_SETFONT | DS_MODALFRAME | WS_MINIMIZEBOX | WS_POPUP | WS_CLIPSIBLINGS |
 CAPTION "Shareaza"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
-    DEFPUSHBUTTON   "1",IDC_INFO_BUTTON1,243,65,50,14
-    PUSHBUTTON      "2",IDC_INFO_BUTTON2,188,65,50,14
     PUSHBUTTON      "3",IDC_INFO_BUTTON3,132,65,50,14
+    PUSHBUTTON      "2",IDC_INFO_BUTTON2,188,65,50,14
+    PUSHBUTTON      "1",IDC_INFO_BUTTON1,243,65,50,14
     CONTROL         "&Remember my selection next time",IDC_INFO_REMEMBER,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,95,286,10
     LTEXT           "",IDC_INFO_TEXT,38,7,255,58
@@ -3184,6 +3184,13 @@ BEGIN
     IDS_PRIORITY_HIGH       "High"
     IDS_SKIN_ERROR          "Skin load error: %s. Element: %s"
     IDS_SKIN_LOAD           "Loading skin: %s"
+    IDS_GENERAL_OK          "OK"
+    IDS_GENERAL_CANCEL      "Cancel"
+    IDS_GENERAL_ABORT       "Abort"
+    IDS_GENERAL_RETRY       "Retry"
+    IDS_GENERAL_IGNORE      "Ignore"
+    IDS_GENERAL_TRYAGAIN    "Try Again"
+	IDS_INFO_REMEMBER       "&Remember my selection next time"
 END
 
 STRINGTABLE 
@@ -4809,6 +4816,11 @@ END
 STRINGTABLE 
 BEGIN
     IDC_IMPORT_DOWNLOADS    "Import eMule partial downloads..."
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_GENERAL_CONTINUE    "Continue"
 END
 
 #endif    // English (Australia) resources

@@ -20,7 +20,7 @@
 //
 
 #include "stdafx.h"
-#include "resource.h"
+#include "Shareaza.h"
 #include "DlgSkinDialog.h"
 #include "DlgMessage.h"
 #include "Skin.h"
@@ -42,6 +42,12 @@ void CMessageDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CSkinDialog::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_INFO_ICON, m_Icon);
+	DDX_Control(pDX, IDC_INFO_TEXT, m_pText );
+	DDX_Control(pDX, IDC_INFO_SPLIT, m_pSplit );
+	DDX_Control(pDX, IDC_INFO_REMEMBER, m_pDefault );
+	DDX_Control(pDX, IDC_INFO_BUTTON1, m_pButton1 );
+	DDX_Control(pDX, IDC_INFO_BUTTON2, m_pButton2 );
+	DDX_Control(pDX, IDC_INFO_BUTTON3, m_pButton3 );
 	DDX_Text(pDX, IDC_INFO_TEXT, m_sText);
 	DDX_Check(pDX, IDC_INFO_REMEMBER, m_bRemember);
 }
@@ -52,20 +58,56 @@ BOOL CMessageDlg::OnInitDialog()
 
 	SkinMe( _T("CMessageDlg") );
 
-	CWnd* pSplit = GetDlgItem( IDC_INFO_SPLIT );
-	CWnd* pDefault = GetDlgItem( IDC_INFO_REMEMBER );
-	pSplit->ShowWindow( m_pnDefault ? SW_NORMAL : SW_HIDE );
-	pDefault->ShowWindow( m_pnDefault ? SW_NORMAL : SW_HIDE );
+	CRect rc, rcWindow;
+	GetWindowRect( &rcWindow );
+
+	// Adjust dialog height according text real height
+	m_pText.GetWindowRect( &rc );
+	ScreenToClient( &rc );
+	CRect rcCalc( rc );
+	CClientDC dc( &m_pText );
+	CFont* pOldFont = dc.SelectObject( m_pText.GetFont() );
+	dc.DrawText( m_sText, &rcCalc, DT_CALCRECT | DT_WORDBREAK | DT_NOPREFIX );
+	dc.SelectObject( pOldFont );
+	rcCalc.bottom += 16;
+	if ( rcCalc.Height() < 64 ) rcCalc.bottom = rc.top + 64;
+	int delta_height = rcCalc.Height() - rc.Height();
+	m_pText.MoveWindow( &rcCalc );
+	
+	m_pButton1.GetWindowRect( &rc );
+	ScreenToClient( &rc );
+	rc.MoveToY( rc.top + delta_height );
+	m_pButton1.MoveWindow( &rc );
+	
+	m_pButton2.GetWindowRect( &rc );
+	ScreenToClient( &rc );
+	rc.MoveToY( rc.top + delta_height );
+	m_pButton2.MoveWindow( &rc );
+	
+	m_pButton3.GetWindowRect( &rc );
+	ScreenToClient( &rc );
+	rc.MoveToY( rc.top + delta_height );
+	m_pButton3.MoveWindow( &rc );
+	
+	m_pSplit.GetWindowRect( &rc );
+	ScreenToClient( &rc );
+	rc.MoveToY( rc.top + delta_height );
+	m_pSplit.MoveWindow( &rc );
+	
+	m_pDefault.GetWindowRect( &rc );
+	ScreenToClient( &rc );
+	rc.MoveToY( rc.top + delta_height );
+	m_pDefault.MoveWindow( &rc );
+
 	if ( m_pnDefault == NULL )
 	{
-		// Resize window
-		CRect rcWindow, rcSplit;
-		GetWindowRect( &rcWindow );
-		pSplit->GetWindowRect( &rcSplit );
-		SetWindowPos( NULL, 0, 0, rcWindow.Width(), rcWindow.Height() -
-			( rcWindow.bottom - rcSplit.top ),
-			SWP_NOACTIVATE | SWP_NOMOVE | SWP_NOZORDER );
+		// Resize window to hide splitter and check box
+		m_pButton1.GetWindowRect( &rc );
+		delta_height = ( rc.bottom + rcWindow.right - rc.right ) - rcWindow.bottom;
 	}
+
+	SetWindowPos( NULL, 0, 0, rcWindow.Width(), rcWindow.Height() + delta_height,
+		SWP_NOACTIVATE | SWP_NOMOVE | SWP_NOZORDER );
 
 	switch ( m_nType & MB_ICONMASK )
 	{
@@ -83,66 +125,114 @@ BOOL CMessageDlg::OnInitDialog()
 		break;
 	}
 
-	CButton* pButton1 = static_cast< CButton* >( GetDlgItem( IDC_INFO_BUTTON1 ) );
-	CButton* pButton2 = static_cast< CButton* >( GetDlgItem( IDC_INFO_BUTTON2 ) );
-	CButton* pButton3 = static_cast< CButton* >( GetDlgItem( IDC_INFO_BUTTON3 ) );
-
+	int nButtons = 1;
 	switch ( m_nType & MB_TYPEMASK )
 	{
 	case MB_OK:
-		pButton1->SetWindowText( _T("Ok") );
-		pButton1->ShowWindow( SW_NORMAL );
-		pButton2->ShowWindow( SW_HIDE );
-		pButton3->ShowWindow( SW_HIDE );
+		m_pButton1.SetWindowText( LoadString( IDS_GENERAL_OK ) );
+		m_pButton1.ShowWindow( SW_NORMAL );
+		m_pButton2.ShowWindow( SW_HIDE );
+		m_pButton3.ShowWindow( SW_HIDE );
 		break;
 	case MB_OKCANCEL:
-		pButton1->SetWindowText( _T("Cancel") );
-		pButton1->ShowWindow( SW_NORMAL );
-		pButton2->SetWindowText( _T("Ok") );
-		pButton2->ShowWindow( SW_NORMAL );
-		pButton3->ShowWindow( SW_HIDE );
+		m_pButton1.SetWindowText( LoadString( IDS_GENERAL_CANCEL ) );
+		m_pButton1.ShowWindow( SW_NORMAL );
+		m_pButton2.SetWindowText( LoadString( IDS_GENERAL_OK ) );
+		m_pButton2.ShowWindow( SW_NORMAL );
+		m_pButton3.ShowWindow( SW_HIDE );
+		nButtons = 2;
 		break;
 	case MB_ABORTRETRYIGNORE:
-		pButton1->SetWindowText( _T("Ignore") );
-		pButton1->ShowWindow( SW_NORMAL );
-		pButton2->SetWindowText( _T("Retry") );
-		pButton2->ShowWindow( SW_NORMAL );
-		pButton3->SetWindowText( _T("Abort") );
-		pButton3->ShowWindow( SW_NORMAL );
+		m_pButton1.SetWindowText( LoadString( IDS_GENERAL_IGNORE ) );
+		m_pButton1.ShowWindow( SW_NORMAL );
+		m_pButton2.SetWindowText( LoadString( IDS_GENERAL_RETRY ) );
+		m_pButton2.ShowWindow( SW_NORMAL );
+		m_pButton3.SetWindowText( LoadString( IDS_GENERAL_ABORT ) );
+		m_pButton3.ShowWindow( SW_NORMAL );
+		nButtons = 3;
 		break;
 	case MB_YESNOCANCEL:
-		pButton1->SetWindowText( _T("Cancel") );
-		pButton1->ShowWindow( SW_NORMAL );
-		pButton2->SetWindowText( _T("No") );
-		pButton2->ShowWindow( SW_NORMAL );
-		pButton3->SetWindowText( _T("Yes") );
-		pButton3->ShowWindow( SW_NORMAL );
+		m_pButton1.SetWindowText( LoadString( IDS_GENERAL_CANCEL ) );
+		m_pButton1.ShowWindow( SW_NORMAL );
+		m_pButton2.SetWindowText( LoadString( IDS_GENERAL_NO ) );
+		m_pButton2.ShowWindow( SW_NORMAL );
+		m_pButton3.SetWindowText( LoadString( IDS_GENERAL_YES ) );
+		m_pButton3.ShowWindow( SW_NORMAL );
+		nButtons = 3;
 		break;
 	case MB_YESNO:
-		pButton1->SetWindowText( _T("No") );
-		pButton1->ShowWindow( SW_NORMAL );
-		pButton2->SetWindowText( _T("Yes") );
-		pButton2->ShowWindow( SW_NORMAL );
-		pButton3->ShowWindow( SW_HIDE );
+		m_pButton1.SetWindowText( LoadString( IDS_GENERAL_NO ) );
+		m_pButton1.ShowWindow( SW_NORMAL );
+		m_pButton2.SetWindowText( LoadString( IDS_GENERAL_YES ) );
+		m_pButton2.ShowWindow( SW_NORMAL );
+		m_pButton3.ShowWindow( SW_HIDE );
+		nButtons = 2;
 		break;
 	case MB_RETRYCANCEL:
-		pButton1->SetWindowText( _T("Cancel") );
-		pButton1->ShowWindow( SW_NORMAL );
-		pButton2->SetWindowText( _T("Retry") );
-		pButton2->ShowWindow( SW_NORMAL );
-		pButton3->ShowWindow( SW_HIDE );
+		m_pButton1.SetWindowText( LoadString( IDS_GENERAL_CANCEL ) );
+		m_pButton1.ShowWindow( SW_NORMAL );
+		m_pButton2.SetWindowText( LoadString( IDS_GENERAL_RETRY ) );
+		m_pButton2.ShowWindow( SW_NORMAL );
+		m_pButton3.ShowWindow( SW_HIDE );
+		nButtons = 2;
 		break;
 	case MB_CANCELTRYCONTINUE:
-		pButton1->SetWindowText( _T("Continue") );
-		pButton1->ShowWindow( SW_NORMAL );
-		pButton2->SetWindowText( _T("Try Again") );
-		pButton2->ShowWindow( SW_NORMAL );
-		pButton3->SetWindowText( _T("Cancel") );
-		pButton3->ShowWindow( SW_NORMAL );
+		m_pButton1.SetWindowText( LoadString( IDS_GENERAL_CONTINUE ) );
+		m_pButton1.ShowWindow( SW_NORMAL );
+		m_pButton2.SetWindowText( LoadString( IDS_GENERAL_TRYAGAIN ) );
+		m_pButton2.ShowWindow( SW_NORMAL );
+		m_pButton3.SetWindowText( LoadString( IDS_GENERAL_CANCEL ) );
+		m_pButton3.ShowWindow( SW_NORMAL );
+		nButtons = 3;
 		break;
 	}
 
-	return TRUE;
+	switch ( m_nType & MB_DEFMASK )
+	{
+	case MB_DEFBUTTON1:
+		switch ( nButtons )
+		{
+		case 1:
+			m_pButton1.SetButtonStyle( m_pButton1.GetButtonStyle() | BS_DEFPUSHBUTTON );
+			m_pButton1.SetFocus();
+			break;
+		case 2:
+			m_pButton2.SetButtonStyle( m_pButton2.GetButtonStyle() | BS_DEFPUSHBUTTON );
+			m_pButton2.SetFocus();
+			break;
+		case 3:
+			m_pButton3.SetButtonStyle( m_pButton3.GetButtonStyle() | BS_DEFPUSHBUTTON );
+			m_pButton3.SetFocus();
+			break;
+		}
+		break;
+	case MB_DEFBUTTON2:
+		switch ( nButtons )
+		{
+		case 1:
+		case 2:
+			m_pButton1.SetButtonStyle( m_pButton1.GetButtonStyle() | BS_DEFPUSHBUTTON );
+			m_pButton1.SetFocus();
+			break;
+		case 3:
+			m_pButton2.SetButtonStyle( m_pButton2.GetButtonStyle() | BS_DEFPUSHBUTTON );
+			m_pButton2.SetFocus();
+			break;
+		}
+		break;
+	case MB_DEFBUTTON3:
+		m_pButton1.SetButtonStyle( m_pButton1.GetButtonStyle() | BS_DEFPUSHBUTTON );
+		m_pButton1.SetFocus();
+		break;
+	}
+
+	m_pDefault.SetWindowText( LoadString( IDS_INFO_REMEMBER ) );
+
+	// Hide unused splitter and check box
+	m_pSplit.ShowWindow( m_pnDefault ? SW_NORMAL : SW_HIDE );
+	m_pDefault.ShowWindow( m_pnDefault ? SW_NORMAL : SW_HIDE );
+
+	return FALSE;
 }
 
 void CMessageDlg::OnOK()
@@ -151,6 +241,24 @@ void CMessageDlg::OnOK()
 
 void CMessageDlg::OnCancel()
 {
+	switch ( m_nType & MB_TYPEMASK )
+	{
+	case MB_OK:
+		EndDialog( IDOK );
+		break;
+	case MB_OKCANCEL:
+	case MB_YESNOCANCEL:
+	case MB_RETRYCANCEL:
+	case MB_CANCELTRYCONTINUE:
+		EndDialog( IDCANCEL );
+		break;
+	case MB_ABORTRETRYIGNORE:
+		EndDialog( IDIGNORE );
+		break;
+	case MB_YESNO:
+		EndDialog( IDNO );
+		break;
+	}
 }
 
 BEGIN_MESSAGE_MAP(CMessageDlg, CSkinDialog)

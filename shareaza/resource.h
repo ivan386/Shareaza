@@ -1516,6 +1516,14 @@
 #define IDS_LIBRARY_ALBUM_ALBUM         20234
 #define IDS_LIBRARY_ALBUM_ARTIST        20235
 #define IDS_LIBRARY_ALBUM_RATING        20236
+#define IDS_GENERAL_OK                  20237
+#define IDS_GENERAL_CANCEL              20238
+#define IDS_GENERAL_ABORT               20239
+#define IDS_GENERAL_RETRY               20240
+#define IDS_GENERAL_IGNORE              20241
+#define IDS_GENERAL_TRYAGAIN            20242
+#define IDS_GENERAL_CONTINUE            20243
+#define IDS_INFO_REMEMBER               20244
 #define ID_HELP_ABOUT                   32772
 #define ID_HELP_VERSION_CHECK           32773
 #define ID_CHECKMARK                    32774

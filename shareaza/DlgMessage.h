@@ -43,7 +43,13 @@ public:
 
 protected:
 	CStatic m_Icon;
-	BOOL	m_bRemember;		// Remember my selection next time
+	CStatic m_pText;
+	CStatic m_pSplit;
+	CButton m_pDefault;
+	CButton m_pButton1;
+	CButton m_pButton2;
+	CButton m_pButton3;
+	BOOL	m_bRemember;	// Remember my selection next time
 
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	virtual BOOL OnInitDialog();
