@@ -58,7 +58,6 @@
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_SHAREAZA;SHAREAZA_USE_ASM;ZLIB_WINAPI;ZLIB_DLL"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
-				SmallerTypeCheck="true"
 				RuntimeLibrary="1"
 				DefaultCharIsUnsigned="true"
 				RuntimeTypeInfo="false"
@@ -155,7 +154,6 @@
 				PreprocessorDefinitions="WIN64;_DEBUG;_WINDOWS;_SHAREAZA;ZLIB_WINAPI;ZLIB_DLL"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
-				SmallerTypeCheck="true"
 				RuntimeLibrary="1"
 				DefaultCharIsUnsigned="true"
 				RuntimeTypeInfo="false"
@@ -1531,6 +1529,10 @@
 				</File>
 				<File
 					RelativePath="..\shareaza\DlgMediaVis.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\shareaza\DlgMessage.cpp"
 					>
 				</File>
 				<File
@@ -3193,6 +3195,10 @@
 				</File>
 				<File
 					RelativePath="..\shareaza\DlgMediaVis.h"
+					>
+				</File>
+				<File
+					RelativePath="..\shareaza\DlgMessage.h"
 					>
 				</File>
 				<File

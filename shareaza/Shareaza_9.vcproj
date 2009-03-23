@@ -1853,7 +1853,7 @@
 					>
 				</File>
 				<File
-					RelativePath=".\CtrlFontCombo.cpp"
+					RelativePath="CtrlFontCombo.cpp"
 					>
 				</File>
 				<File
@@ -1873,11 +1873,11 @@
 					>
 				</File>
 				<File
-					RelativePath=".\CtrlIRCFrame.cpp"
+					RelativePath="CtrlIRCFrame.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\CtrlIRCPanel.cpp"
+					RelativePath="CtrlIRCPanel.cpp"
 					>
 				</File>
 				<File
@@ -2157,7 +2157,7 @@
 					>
 				</File>
 				<File
-					RelativePath=".\DlgIrcInput.cpp"
+					RelativePath="DlgIrcInput.cpp"
 					>
 				</File>
 				<File
@@ -2285,7 +2285,7 @@
 					>
 				</File>
 				<File
-					RelativePath=".\WndIRC.cpp"
+					RelativePath="WndIRC.cpp"
 					>
 				</File>
 				<File
@@ -2573,7 +2573,7 @@
 					>
 				</File>
 				<File
-					RelativePath=".\PageSettingsIRC.cpp"
+					RelativePath="PageSettingsIRC.cpp"
 					>
 				</File>
 				<File
@@ -3466,7 +3466,7 @@
 					>
 				</File>
 				<File
-					RelativePath=".\CtrlFontCombo.h"
+					RelativePath="CtrlFontCombo.h"
 					>
 				</File>
 				<File
@@ -3486,11 +3486,11 @@
 					>
 				</File>
 				<File
-					RelativePath=".\CtrlIRCFrame.h"
+					RelativePath="CtrlIRCFrame.h"
 					>
 				</File>
 				<File
-					RelativePath=".\CtrlIRCPanel.h"
+					RelativePath="CtrlIRCPanel.h"
 					>
 				</File>
 				<File
@@ -3698,7 +3698,7 @@
 					>
 				</File>
 				<File
-					RelativePath=".\WndIRC.h"
+					RelativePath="WndIRC.h"
 					>
 				</File>
 				<File
@@ -3882,7 +3882,7 @@
 					>
 				</File>
 				<File
-					RelativePath=".\DlgIrcInput.h"
+					RelativePath="DlgIrcInput.h"
 					>
 				</File>
 				<File
@@ -4142,7 +4142,7 @@
 					>
 				</File>
 				<File
-					RelativePath=".\PageSettingsIRC.h"
+					RelativePath="PageSettingsIRC.h"
 					>
 				</File>
 				<File
@@ -4309,7 +4309,7 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\Res\About.htm.gz"
+				RelativePath="Res\About.htm.gz"
 				>
 			</File>
 			<File
@@ -4375,7 +4375,7 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\Res\Browser.htm.gz"
+				RelativePath="Res\Browser.htm.gz"
 				>
 			</File>
 			<File
@@ -4508,7 +4508,7 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\Res\Default.xml.gz"
+				RelativePath="Res\Default.xml.gz"
 				>
 			</File>
 			<File
@@ -4556,7 +4556,7 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\Res\Definitions.xml.gz"
+				RelativePath="Res\Definitions.xml.gz"
 				>
 			</File>
 			<File
@@ -4855,7 +4855,7 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\Res\SchemaMappings.xml.gz"
+				RelativePath="Res\SchemaMappings.xml.gz"
 				>
 			</File>
 			<File
