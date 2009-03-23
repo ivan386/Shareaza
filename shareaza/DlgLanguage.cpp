@@ -699,7 +699,7 @@ void CLanguageDlg::Execute(int nSelected)
 
 		Settings.General.LanguageRTL = bRTL != FALSE;
 
-		if ( AfxMessageBox( str, MB_SYSTEMMODAL|MB_ICONQUESTION|MB_YESNO ) == IDYES )
+		if ( AfxMessageBox( str, MB_ICONQUESTION|MB_YESNO ) == IDYES )
 		{
 			GetParent()->PostMessage( WM_CLOSE, NULL, NULL );
 			EndDialog( IDCANCEL );

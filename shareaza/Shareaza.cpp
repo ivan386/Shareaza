@@ -251,7 +251,7 @@ BOOL CShareazaApp::InitInstance()
 			_T("-windowed\tStart application in Windowed interface mode\n")
 			_T("-regserver\tRegister application internal components\n")
 			_T("-unregserver\tUn-register application internal components\n"),
-			MB_SYSTEMMODAL | MB_ICONINFORMATION | MB_OK );
+			MB_ICONINFORMATION | MB_OK );
 		return FALSE;
 	}
 	if ( m_ocmdInfo.m_nShellCommand == CCommandLineInfo::AppUnregister )
@@ -330,7 +330,7 @@ BOOL CShareazaApp::InitInstance()
 	{
 		CString strMessage;
 		LoadString( strMessage, IDS_BETA_EXPIRED);
-		AfxMessageBox( strMessage, MB_SYSTEMMODAL|MB_ICONQUESTION|MB_OK );
+		AfxMessageBox( strMessage, MB_ICONQUESTION|MB_OK );
 		//return FALSE;
 	}
 	//*/
@@ -346,7 +346,7 @@ BOOL CShareazaApp::InitInstance()
 		L"the current stable release from http://shareaza.sourceforge.net/\n"
 		L"If you continue past this point, you may experience system instability, lose downloads, "
 		L"or corrupt system files. Corrupted downloads/files may not be recoverable. "
-		L"Do you wish to continue?", MB_SYSTEMMODAL|MB_ICONEXCLAMATION|MB_YESNO ) == IDNO )
+		L"Do you wish to continue?", MB_ICONEXCLAMATION|MB_YESNO ) == IDNO )
 		return FALSE;
 	//*/
 	// ***********

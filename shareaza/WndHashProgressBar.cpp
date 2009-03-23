@@ -76,38 +76,19 @@ void CHashProgressBar::Run()
 
 		if ( m_hWnd == NULL )
 		{
-			CString strHashProgressWndClass;         
-
-			if ( theApp.m_bIsWin2000 == true || theApp.m_nWindowsVersion < 5 ) // Class Style CS_DROPSHADOW requires Windows XP or above
+			try
 			{
-				try
-				{
-					strHashProgressWndClass = AfxRegisterWndClass(
-					CS_SAVEBITS );
-				}
-				catch (CResourceException* pEx)
-				{
-					AfxMessageBox(_T("AfxRegisterWndClass error in Hash Progresss Bar with Class Style CS_SAVEBITS."));
-					pEx->Delete();
-				}
+				CreateEx( WS_EX_TOPMOST | WS_EX_TOOLWINDOW,
+					AfxRegisterWndClass( CS_SAVEBITS |
+					// Use CS_DROPSHADOW on Windows XP and above
+					( ( theApp.m_bIsWin2000 == true || theApp.m_nWindowsVersion < 5 ) ? 0 : CS_DROPSHADOW ) ),
+					_T("Shareaza Hashing..."), WS_POPUP, 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT,
+					NULL, 0 );
 			}
-			else // Use CS_DROPSHADOW on Windows XP and above
+			catch (CResourceException* pEx)
 			{
-				try
-				{
-					strHashProgressWndClass = AfxRegisterWndClass(
-					CS_SAVEBITS | CS_DROPSHADOW );
-				}
-				catch (CResourceException* pEx)
-				{
-					AfxMessageBox(_T("AfxRegisterWndClass error in Hash Progresss Bar with Class Styles CS_SAVEBITS and CS_DROPSHADOW."));
-					pEx->Delete();
-				}
+				pEx->Delete();
 			}
-			CreateEx( WS_EX_TOPMOST | WS_EX_TOOLWINDOW,
-			strHashProgressWndClass,
-			_T("Shareaza Hashing..."), WS_POPUP, 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT,
-			NULL, 0 );
 		}
 		if ( m_hWnd != NULL )
 		{
