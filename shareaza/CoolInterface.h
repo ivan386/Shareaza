@@ -197,9 +197,9 @@ public:
 	void		CreateFonts(LPCTSTR pszFace = NULL, int nSize = 0);
 	void		CalculateColours(BOOL bCustom = FALSE);
 	void		OnSysColourChange();
+
 	static COLORREF	CalculateColour(COLORREF crFore, COLORREF crBack, int nAlpha);
-	static COLORREF	GetDialogBkColor();
-	static BOOL		EnableTheme(CWnd* pWnd, BOOL bEnable = TRUE);
+	static BOOL	EnableTheme(CWnd* pWnd, BOOL bEnable = TRUE);
 
 protected:
 	typedef CMap< UINT, UINT, int, int > CUINTintMap;

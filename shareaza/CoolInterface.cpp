@@ -579,11 +579,6 @@ COLORREF CCoolInterface::CalculateColour(COLORREF crFore, COLORREF crBack, int n
 	return RGB( nRed, nGreen, nBlue );
 }
 
-COLORREF CCoolInterface::GetDialogBkColor()
-{
-	return CalculateColour( GetSysColor( COLOR_BTNFACE ), GetSysColor( COLOR_WINDOW ), 200 );
-}
-
 
 //////////////////////////////////////////////////////////////////////
 // CCoolInterface windows XP+ themes

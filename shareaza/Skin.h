@@ -49,7 +49,7 @@ public:
 protected:
 	void	ApplyRecursive(LPCTSTR pszPath);
 	void	CreateDefault();
-	void	Finalise();
+	void	CreateDefaultColors();
 	HBITMAP	LoadBitmap(CString& strName);
 
 // Strings

@@ -19,9 +19,6 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_DLGPROMOTE_H__2EAEB2FC_31CD_4B1D_92D6_75FB346C8B8A__INCLUDED_)
-#define AFX_DLGPROMOTE_H__2EAEB2FC_31CD_4B1D_92D6_75FB346C8B8A__INCLUDED_
-
 #pragma once
 
 #include "DlgSkinDialog.h"
@@ -29,42 +26,21 @@
 
 class CPromoteDlg : public CSkinDialog
 {
-// Construction
 public:
 	CPromoteDlg(CWnd* pParent = NULL);
 
-// Dialog Data
-public:
-	//{{AFX_DATA(CPromoteDlg)
 	enum { IDD = IDD_PROMOTE };
+
+protected:
 	CStatic	m_wndWeb;
 	CStatic	m_wndTitle;
-	//}}AFX_DATA
 
-	COLORREF	m_crWhite;
-	CBrush		m_brWhite;
-
-// Overrides
-public:
-	//{{AFX_VIRTUAL(CPromoteDlg)
-	protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
+	virtual BOOL OnInitDialog();
 
-// Implementation
-protected:
-	//{{AFX_MSG(CPromoteDlg)
 	afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
 	afx_msg BOOL OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message);
 	afx_msg void OnLButtonUp(UINT nFlags, CPoint point);
-	virtual BOOL OnInitDialog();
-	afx_msg void OnPaint();
-	//}}AFX_MSG
 
 	DECLARE_MESSAGE_MAP()
-
 };
-
-//{{AFX_INSERT_LOCATION}}
-
-#endif // !defined(AFX_DLGPROMOTE_H__2EAEB2FC_31CD_4B1D_92D6_75FB346C8B8A__INCLUDED_)

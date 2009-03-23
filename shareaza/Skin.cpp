@@ -56,6 +56,10 @@ CSkin::CSkin()
 	m_pWatermarks.InitHashTable( 31 );
 	m_pLists.InitHashTable( 31 );
 	m_pDialogs.InitHashTable( 127 );
+
+	CreateDefaultColors();
+
+	m_brDialog.CreateSolidBrush( m_crDialog );
 }
 
 CSkin::~CSkin()
@@ -68,10 +72,30 @@ CSkin::~CSkin()
 
 void CSkin::Apply()
 {
+	Clear();
+
+	Settings.General.Language = _T("en");
+
 	CreateDefault();
+
 	ApplyRecursive( L"Languages\\" );
 	ApplyRecursive( NULL );
-	Finalise();
+
+	m_brDialog.CreateSolidBrush( m_crDialog );
+
+	if ( HBITMAP hPanelMark = GetWatermark( _T("CPanelWnd.Caption") ) )
+	{
+		m_bmPanelMark.Attach( hPanelMark );
+	}
+	else if ( m_crPanelBack == RGB( 60, 60, 60 ) )
+	{
+		m_bmPanelMark.LoadBitmap( IDB_PANEL_MARK );
+	}
+
+	CoolMenu.SetWatermark( GetWatermark( _T("CCoolMenu") ) );
+
+	// Disable Menubar 3D Borders
+	m_bBordersEnabled = CoolInterface.m_crSysBorders != CLR_NONE ? TRUE : FALSE ;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -134,6 +158,8 @@ void CSkin::Clear()
 
 	if ( m_brDialog.m_hObject != NULL ) m_brDialog.DeleteObject();
 	if ( m_bmPanelMark.m_hObject != NULL ) m_bmPanelMark.DeleteObject();
+
+	CoolInterface.Clear();
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -1053,6 +1079,13 @@ BOOL CSkin::Apply(LPCTSTR pszName, CDialog* pDialog, UINT nIconID, CToolTipCtrl*
 		}
 
 		GetClassName( pWnd->GetSafeHwnd(), szClass, 3 );
+		
+		// Skip added banner
+		if ( _tcsnicmp( szClass, _T("St"), 3 ) == 0 &&
+			IDC_BANNER == pWnd->GetDlgCtrlID() &&
+			pWnd->GetNextWindow() == NULL )
+			break;
+
 		strCaption += szClass;
 	}
 
@@ -1895,47 +1928,11 @@ BOOL CSkin::LoadCommandBitmap(CXMLElement* pBase, const CString& strPath)
 
 void CSkin::CreateDefault()
 {
-	// Clear
+	CreateDefaultColors();
 
-	Clear();
-
-	Settings.General.Language = _T("en");
-
-	// Base UI
-
-	CoolInterface.Clear();
 	CoolInterface.CreateFonts();
-	CoolInterface.CalculateColours( FALSE );
 
-	// Colour Scheme
-
-	m_crDialog					= CoolInterface.GetDialogBkColor();
-	m_crPanelBack				= RGB( 60, 60, 60 );
-	m_crPanelText				= RGB( 255, 255, 255 );
-	m_crPanelBorder				= RGB( 0, 0, 0 );
-	m_crBannerBack				= RGB( 122, 161, 230 );
-	m_crBannerText				= RGB( 250, 250, 255 );
-	m_crSchemaRow[0]			= RGB( 245, 245, 255 );
-	m_crSchemaRow[1]			= RGB( 214, 223, 247 );
-
-	// NavBar
-
-	m_crNavBarText				= CLR_NONE;
-	m_crNavBarTextUp			= m_crNavBarText;
-	m_crNavBarTextDown			= m_crNavBarText;
-	m_crNavBarTextHover			= m_crNavBarText;
-	m_crNavBarTextChecked		= m_crNavBarText;
-	m_crNavBarShadow			= CLR_NONE;
-	m_crNavBarShadowUp			= m_crNavBarShadow;
-	m_crNavBarShadowDown		= m_crNavBarShadow;
-	m_crNavBarShadowHover		= m_crNavBarShadow;
-	m_crNavBarShadowChecked		= m_crNavBarShadow;
-	m_crNavBarOutline			= CLR_NONE;
-	m_crNavBarOutlineUp			= m_crNavBarOutline;
-	m_crNavBarOutlineDown		= m_crNavBarOutline;
-	m_crNavBarOutlineHover		= m_crNavBarOutline;
-	m_crNavBarOutlineChecked	= m_crNavBarOutline;
-	m_rcNavBarOffset			= CRect( 0, 0, 0, 0 );
+	m_rcNavBarOffset = CRect( 0, 0, 0, 0 );
 
 	// Command Icons
 
@@ -1968,23 +1965,42 @@ void CSkin::CreateDefault()
 	Plugins.OnSkinChanged();
 }
 
-void CSkin::Finalise()
+void CSkin::CreateDefaultColors()
 {
-	m_brDialog.CreateSolidBrush( m_crDialog );
+	CoolInterface.CalculateColours( FALSE );
 
-	if ( HBITMAP hPanelMark = GetWatermark( _T("CPanelWnd.Caption") ) )
-	{
-		m_bmPanelMark.Attach( hPanelMark );
-	}
-	else if ( m_crPanelBack == RGB( 60, 60, 60 ) )
-	{
-		m_bmPanelMark.LoadBitmap( IDB_PANEL_MARK );
-	}
+	// Colour Scheme
 
-	CoolMenu.SetWatermark( GetWatermark( _T("CCoolMenu") ) );
+	m_crDialog					= CoolInterface.CalculateColour(
+		GetSysColor( COLOR_BTNFACE ), GetSysColor( COLOR_WINDOW ), 200 );
 
-	// Disable Menubar 3D Borders
-	m_bBordersEnabled = CoolInterface.m_crSysBorders != CLR_NONE ? TRUE : FALSE ;
+	m_crPanelBack				= RGB( 60, 60, 60 );
+	m_crPanelText				= RGB( 255, 255, 255 );
+	m_crPanelBorder				= RGB( 0, 0, 0 );
+
+	m_crBannerBack				= RGB( 122, 161, 230 );
+	m_crBannerText				= RGB( 250, 250, 255 );
+
+	m_crSchemaRow[0]			= RGB( 245, 245, 255 );
+	m_crSchemaRow[1]			= RGB( 214, 223, 247 );
+
+	// NavBar
+
+	m_crNavBarText				= CLR_NONE;
+	m_crNavBarTextUp			= m_crNavBarText;
+	m_crNavBarTextDown			= m_crNavBarText;
+	m_crNavBarTextHover			= m_crNavBarText;
+	m_crNavBarTextChecked		= m_crNavBarText;
+	m_crNavBarShadow			= CLR_NONE;
+	m_crNavBarShadowUp			= m_crNavBarShadow;
+	m_crNavBarShadowDown		= m_crNavBarShadow;
+	m_crNavBarShadowHover		= m_crNavBarShadow;
+	m_crNavBarShadowChecked		= m_crNavBarShadow;
+	m_crNavBarOutline			= CLR_NONE;
+	m_crNavBarOutlineUp			= m_crNavBarOutline;
+	m_crNavBarOutlineDown		= m_crNavBarOutline;
+	m_crNavBarOutlineHover		= m_crNavBarOutline;
+	m_crNavBarOutlineChecked	= m_crNavBarOutline;
 }
 
 //////////////////////////////////////////////////////////////////////

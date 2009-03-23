@@ -35,7 +35,6 @@ BEGIN_MESSAGE_MAP(CWarningsDlg, CSkinDialog)
 	ON_WM_CTLCOLOR()
 	ON_WM_SETCURSOR()
 	ON_WM_LBUTTONUP()
-	ON_WM_PAINT()
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -68,30 +67,12 @@ BOOL CWarningsDlg::OnInitDialog()
 
 	SkinMe( _T("CWarningsDlg"), IDR_MAINFRAME );
 
-	m_crWhite = CCoolInterface::GetDialogBkColor();
-	m_brWhite.CreateSolidBrush( m_crWhite );
-
 	return TRUE;
-}
-
-void CWarningsDlg::OnPaint()
-{
-	CPaintDC dc( this );
-	CRect rc;
-
-	GetClientRect( &rc );
-	rc.top += 51;
-
-	dc.Draw3dRect( 0, 50, rc.right + 1, 0,
-		RGB( 128, 128, 128 ), RGB( 128, 128, 128 ) );
-	dc.FillSolidRect( &rc, m_crWhite );
 }
 
 HBRUSH CWarningsDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 {
-	/*HBRUSH hbr =*/ (HBRUSH)CSkinDialog::OnCtlColor( pDC, pWnd, nCtlColor );
-
-	pDC->SetBkColor( m_crWhite );
+	HBRUSH hbr = (HBRUSH)CSkinDialog::OnCtlColor( pDC, pWnd, nCtlColor );
 
 	if ( pWnd == &m_wndTitle || pWnd == &m_wndRespect )
 	{
@@ -103,7 +84,7 @@ HBRUSH CWarningsDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 		pDC->SelectObject( &theApp.m_gdiFontLine );
 	}
 
-	return m_brWhite;
+	return hbr;
 }
 
 BOOL CWarningsDlg::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)

@@ -101,7 +101,7 @@ void CPropertyPageAdv::OnPaint()
 			PaintStaticHeader( &dc, &rc, str );
 	}
 
-	dc.SetBkColor( CCoolInterface::GetDialogBkColor() );
+	dc.SetBkColor( Skin.m_crDialog );
 }
 
 void CPropertyPageAdv::PaintStaticHeader(CDC* pDC, CRect* prc, LPCTSTR psz)

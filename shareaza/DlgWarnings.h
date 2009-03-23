@@ -19,9 +19,6 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_DLGWARNINGS_H__8041885F_D9E4_4279_B658_D21523E512BC__INCLUDED_)
-#define AFX_DLGWARNINGS_H__8041885F_D9E4_4279_B658_D21523E512BC__INCLUDED_
-
 #pragma once
 
 #include "DlgSkinDialog.h"
@@ -29,43 +26,22 @@
 
 class CWarningsDlg : public CSkinDialog
 {
-// Construction
 public:
 	CWarningsDlg(CWnd* pParent = NULL);
 
-// Dialog Data
-public:
-	//{{AFX_DATA(CWarningsDlg)
 	enum { IDD = IDD_WARNINGS };
+
+protected:
 	CStatic	m_wndRespect;
 	CStatic	m_wndWeb;
 	CStatic	m_wndTitle;
-	//}}AFX_DATA
 
-	COLORREF	m_crWhite;
-	CBrush		m_brWhite;
-
-
-// Overrides
-public:
-	//{{AFX_VIRTUAL(CWarningsDlg)
-	protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
+	virtual BOOL OnInitDialog();
 
-// Implementation
-protected:
-	//{{AFX_MSG(CWarningsDlg)
 	afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
 	afx_msg BOOL OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message);
 	afx_msg void OnLButtonUp(UINT nFlags, CPoint point);
-	virtual BOOL OnInitDialog();
-	afx_msg void OnPaint();
-	//}}AFX_MSG
 
 	DECLARE_MESSAGE_MAP()
 };
-
-//{{AFX_INSERT_LOCATION}}
-
-#endif // !defined(AFX_DLGWARNINGS_H__8041885F_D9E4_4279_B658_D21523E512BC__INCLUDED_)

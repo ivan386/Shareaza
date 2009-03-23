@@ -64,7 +64,7 @@ CRichSettingsPage::CRichSettingsPage(LPCTSTR pszName) : CSettingsPage(CRichSetti
 		
 		m_pDocument = new CRichDocument();
 		m_pDocument->CreateFonts( theApp.m_sDefaultFont, theApp.m_nDefaultFontSize );
-		m_pDocument->m_crBackground = CCoolInterface::GetDialogBkColor();
+		m_pDocument->m_crBackground = Skin.m_crDialog;
 		m_pDocument->LoadXML( pXML );
 	}
 }
