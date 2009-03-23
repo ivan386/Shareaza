@@ -648,5 +648,5 @@ inline QWORD GetFileSize(LPCTSTR pszFile)
 // MB_CANCELTRYCONTINUE	| 0 - ask, 1 - IDCANCEL, 2 - IDTRYAGAIN, 3 - IDCONTINUE
 int MsgBox(LPCTSTR lpszText, UINT nType = MB_OK, UINT nIDHelp = 0, DWORD* pnDefault = NULL);
 int MsgBox(UINT nIDPrompt, UINT nType = MB_OK, UINT nIDHelp = 0, DWORD* pnDefault = NULL);
-//#undef AfxMessageBox
-//#define AfxMessageBox MsgBox
+#undef AfxMessageBox
+#define AfxMessageBox MsgBox
