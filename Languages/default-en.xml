@@ -1489,10 +1489,10 @@
 	<menu name="CSearchMonitorWnd">
 		<item id="ID_HITMONITOR_SEARCH" text="_Search for This"/>
 		<separator/>
-    <item id="ID_BROWSE_LAUNCH" text="_Browse User"/>
-    <item id="ID_SECURITY_BAN" text="B_an User"/>
-    <separator/>
-    <item id="ID_SEARCHMONITOR_PAUSE" text="_Pause Display"/>
+		<item id="ID_BROWSE_LAUNCH" text="_Browse User"/>
+		<item id="ID_SECURITY_BAN" text="B_an User"/>
+		<separator/>
+		<item id="ID_SEARCHMONITOR_PAUSE" text="_Pause Display"/>
 		<item id="ID_SEARCHMONITOR_CLEAR" text="_Clear Buffer"/>
 	</menu>
 	<!-- GRAPH/TRAFFIC WINDOW -->
@@ -2348,7 +2348,6 @@
 	<tip id="ID_DOWNLOADS_SHARE" message="Share this partially downloaded file with other users."/>
 	<tip id="ID_DOWNLOADS_SHOW_SOURCES" message="Display sources which are not currently being used."/>
 	<tip id="ID_DOWNLOADS_SOURCES" message="Search for more sources for the selected download(s)."/>
-	<tip id="ID_DOWNLOADS_TORRENT_INFO" message="View information about the selected BitTorrent download..."/>
 	<tip id="ID_DOWNLOADS_URL" message="Add a source URL to the selected download..."/>
 	<tip id="ID_DOWNLOADS_VIEW_REVIEWS" message="View reviews for the selected download"/>
 	<tip id="ID_HELP_ABOUT" message="Display the Shareaza about dialog..."/>
@@ -2519,7 +2518,6 @@
 	<tip id="ID_SYSTEM_TIMESTAMP" message="Record a timestamp for each line."/>
 	<tip id="ID_SYSTEM_VERBOSE" message="Display a detailed system activity log."/>
 	<tip id="ID_TAB_CONNECT" message="Connect or disconnect from the network."/>
-	<tip id="ID_TAB_HELP" message="Get help using Shareaza."/>
 	<tip id="ID_TAB_HOME" message="Return to the Shareaza Home page"/>
 	<tip id="ID_TAB_IRC" message="Show the IRC Chat window."/>
 	<tip id="ID_TAB_LIBRARY" message="View and manage your local content library."/>
@@ -2563,7 +2561,6 @@
 	<tip id="ID_VIEW_BASIC" message="Use Shareaza in Basic mode."/>
 	<tip id="ID_VIEW_DISCOVERY" message="Show or hide the DISCOVERY SERVICES window."/>
 	<tip id="ID_VIEW_DOWNLOADS" message="Show or hide the DOWNLOADS window."/>
-	<tip id="ID_VIEW_HELP" message="Show or hide the HELP window."/>
 	<tip id="ID_VIEW_HOSTS" message="Show or hide the HOST CACHE window."/>
 	<tip id="ID_VIEW_LIBRARY" message="Show or hide the LIBRARY window."/>
 	<tip id="ID_VIEW_MEDIA" message="Show or hide the MEDIA PLAYER window."/>
@@ -3323,6 +3320,14 @@
 	<string id="20234" value="Album"/>
 	<string id="20235" value="Artist"/>
 	<string id="20236" value="Rating"/>
+	<string id="20237" value="OK"/>
+	<string id="20238" value="Cancel"/>
+	<string id="20239" value="Abort"/>
+	<string id="20240" value="Retry"/>
+	<string id="20241" value="Ignore"/>
+	<string id="20242" value="Try Again"/>
+	<string id="20243" value="Continue"/>
+	<string id="20244" value="&amp;Remember my selection next time"/>
 </strings>
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
 <!-- Don't edit dialogs manualy! Use DialogScan feature instead -->

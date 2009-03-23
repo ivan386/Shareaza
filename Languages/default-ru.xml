@@ -550,9 +550,9 @@
 			</menu>
 			<separator/>
 			<item id="ID_HELP_VERSION_CHECK" text="Проверить новую _версию"/>
+			<item id="ID_HELP_DONATE" text="_Пожертвования"/>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="_О Shareaza..."/>
-			<item id="ID_HELP_DONATE" text="_Пожертвования"/>
 		</menu>
 	</menu>
 	<menu name="CMainWnd.Tabbed" type="bar">
@@ -651,9 +651,9 @@
 			</menu>
 			<separator/>
 			<item id="ID_HELP_VERSION_CHECK" text="Проверить новую _версию"/>
+			<item id="ID_HELP_DONATE" text="_Пожертвования"/>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="_О Shareaza..."/>
-			<item id="ID_HELP_DONATE" text="_Пожертвования"/>
 		</menu>
 	</menu>
 	<menu name="CMainWnd.Windowed" type="bar">
@@ -745,9 +745,9 @@
 			</menu>
 			<separator/>
 			<item id="ID_HELP_VERSION_CHECK" text="Проверить новую _версию"/>
+			<item id="ID_HELP_DONATE" text="_Пожертвования"/>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="_О Shareaza..."/>
-			<item id="ID_HELP_DONATE" text="_Пожертвования"/>
 		</menu>
 	</menu>
 	<!-- VIEW POPUP -->
@@ -1489,6 +1489,9 @@
 	<menu name="CSearchMonitorWnd">
 		<item id="ID_HITMONITOR_SEARCH" text="_Искать это"/>
 		<separator/>
+		<item id="ID_BROWSE_LAUNCH" text="Просмотр _хоста"/>
+		<item id="ID_SECURITY_BAN" text="_Блокировать"/>
+		<separator/>
 		<item id="ID_SEARCHMONITOR_PAUSE" text="Монитор на _паузу"/>
 		<item id="ID_SEARCHMONITOR_CLEAR" text="_Очистить буфер"/>
 	</menu>
@@ -1883,8 +1886,7 @@
 		<text>	Менеджер установок Shareaza опытным пользователям позволит полностью настроить
 			работу Shareaza.  Установки в секции </text>
 		<text format="b">Интернет </text>
-		<text>	контролируют взаимодействие Shareaza с другими узлами в пределах распределенного соединения равноправных узлов.
-		</text>
+		<text>	контролируют взаимодействие Shareaza с другими узлами в пределах распределенного соединения равноправных узлов. </text>
 		<newline gap="16" indent="16"/>
 		<link target="raza:page:CConnectionSettingsPage" format="b">Соединения:</link>
 		<gap size="4"/>
@@ -2318,7 +2320,6 @@
 	<tip id="ID_DOWNLOADS_SHARE" message="Открыть доступ к частично загруженному файлу другим пользователями."/>
 	<tip id="ID_DOWNLOADS_SHOW_SOURCES" message="Показывать источники, которые в данный момент не используются."/>
 	<tip id="ID_DOWNLOADS_SOURCES" message="Искать большего кол-ва источников для помеченной загрузки(ок)."/>
-	<tip id="ID_DOWNLOADS_TORRENT_INFO" message="Просмотр информации о помеченной BitTorrent загрузке..."/>
 	<tip id="ID_DOWNLOADS_URL" message="Добавить ссылку источника к помеченной загрузке..."/>
 	<tip id="ID_DOWNLOADS_VIEW_REVIEWS" message="Просмотр оценок о помеченной загрузке."/>
 	<tip id="ID_HELP_ABOUT" message="Показать диалог «О Shareaza...»"/>
@@ -2338,6 +2339,7 @@
 	<tip id="ID_HELP_WEB_5" message="Посетить этот сайт"/>
 	<tip id="ID_HELP_WEB_6" message="Посетить этот сайт"/>
 	<tip id="ID_HELP_DONATE" message="Вы можете пожертвовать немного средств для развития этой  программы."/>
+	<tip id="ID_HELP_FAKESHAREAZA" message="Translate FakeShareaza.com to learn more about recent events."/>
 	<tip id="ID_HITMONITOR_CLEAR" message="Очистить буфер монитора хитов."/>
 	<tip id="ID_HITMONITOR_PAUSE" message="Приостановить вывод в монитор хитов."/>
 	<tip id="ID_HITMONITOR_SEARCH" message="Искать в сети указанную фразу."/>
@@ -2488,8 +2490,8 @@
 	<tip id="ID_SYSTEM_TIMESTAMP" message="Добавлять штамп времени в каждую строчку."/>
 	<tip id="ID_SYSTEM_VERBOSE" message="Показывать подробный журнал активности системы."/>
 	<tip id="ID_TAB_CONNECT" message="Соединиться или отключиться от сети."/>
-	<tip id="ID_TAB_HELP" message="Получить помощь о использовании Shareaza."/>
 	<tip id="ID_TAB_HOME" message="Вернутся на начальную страницу Shareaza"/>
+	<tip id="ID_TAB_IRC" message="Показать окно IRC чата."/>
 	<tip id="ID_TAB_LIBRARY" message="Просмотр и управление содержимым Вашего хранилища."/>
 	<tip id="ID_TAB_MEDIA" message="Воспроизводить аудио и видео медиа файлы из Вашего хранилища."/>
 	<tip id="ID_TAB_NETWORK" message="Посмотреть как хорошо Вы подсоединены к сети."/>
@@ -2531,7 +2533,6 @@
 	<tip id="ID_VIEW_BASIC" message="Использовать программу Shareaza в обычном режиме."/>
 	<tip id="ID_VIEW_DISCOVERY" message="Показать или скрыть окно Ресурсов Соединений."/>
 	<tip id="ID_VIEW_DOWNLOADS" message="Показать или скрыть окно Загрузок."/>
-	<tip id="ID_VIEW_HELP" message="Показать или скрыть окно Помощи."/>
 	<tip id="ID_VIEW_HOSTS" message="Показать или скрыть окно Кэша Хостов."/>
 	<tip id="ID_VIEW_LIBRARY" message="Показать или скрыть окно Хранилища."/>
 	<tip id="ID_VIEW_MEDIA" message="Показать или скрыть окно Проигрывателя."/>
@@ -2589,6 +2590,7 @@
 	<string id="WINDOW_MEDIA" value="Проигрыватель"/>
 	<string id="WINDOW_SEARCHPAD" value="Поиск"/>
 	<string id="WINDOW_HELP" value="Shareaza помощь"/>
+	<string id="WINDOW_IRC" value="Чат Shareaza"/>
 	<string id="7000" value="Вы уверены, что хотите удалить этот фильтр?"/>
 	<string id="7001" value="&amp;Схемы"/>
 	<string id="7002" value="Разные значения"/>
@@ -3070,6 +3072,13 @@
 	<string id="16997" value="Нет воспроизводимых файлов.  Щелкните дважды на медиа файле в Вашем хранилище для его проигрывания."/>
 	<string id="16998" value="М  &#160;  &#160; Е  &#160;  &#160; Д  &#160;  &#160; И  &#160;  &#160; А  &#160;  &#160;  &#160;  &#160;  &#160; С  &#160;  &#160; И  &#160;  &#160; С  &#160;  &#160; Т  &#160;  &#160; Е  &#160;  &#160; М  &#160;  &#160; А  &#160;  &#160;  &#160;  &#160;  &#160; S  &#160;  &#160; H  &#160;  &#160; A  &#160;  &#160; R  &#160;  &#160; E  &#160;  &#160; A  &#160;  &#160; Z  &#160;  &#160; A"/>
 	<string id="16999" value="Список &#160; Воспроизведения"/>
+	<string id="17017" value="Послать:"/>
+	<string id="17018" value="Добро пожаловать в чат Shareaza!"/>
+	<string id="17019" value="Пожалуйста уважайте других, когда пользуетесь этим сервисом"/>
+	<string id="17020" value="Добавить"/>
+	<string id="17021" value="Удалить"/>
+	<string id="17022" value="Юзера"/>
+	<string id="17023" value="Каналы"/>
 	<string id="17024" value="Инициализация соединения с %s..."/>
 	<string id="17025" value="Невозможно установить связь с %s."/>
 	<string id="17026" value="Запрашивается соединение активной доставки через брандмауэр у %s..."/>
@@ -3283,6 +3292,14 @@
 	<string id="20234" value="Альбом"/>
 	<string id="20235" value="Артист"/>
 	<string id="20236" value="Оценка"/>
+	<string id="20237" value="OK"/>
+	<string id="20238" value="Отмена"/>
+	<string id="20239" value="Прервать"/>
+	<string id="20240" value="Повторить"/>
+	<string id="20241" value="Игнорировать"/>
+	<string id="20242" value="Повторить снова"/>
+	<string id="20243" value="Продолжить"/>
+	<string id="20244" value="&amp;Запомнить мой выбор на будущее"/>
 </strings>
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
 <dialogs>
@@ -4440,7 +4457,7 @@
 		<column from="Folder" to="Папка"/>
 		<column from="Hits" to="Обращений"/>
 		<column from="Uploads" to="Раздач"/>
-	<column from="Modified" to="Изменено"/>
+		<column from="Modified" to="Изменено"/>
 	</list>
 	<list name="CDownloadCtrl">
 		<column from="Downloaded File" to="Загружаемый файл"/>
