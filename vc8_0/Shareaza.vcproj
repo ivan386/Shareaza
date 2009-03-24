@@ -1944,10 +1944,6 @@
 					>
 				</File>
 				<File
-					RelativePath="..\shareaza\PageSettingsProtocols.cpp"
-					>
-				</File>
-				<File
 					RelativePath="..\shareaza\PageSettingsRemote.cpp"
 					>
 				</File>
@@ -3463,10 +3459,6 @@
 				</File>
 				<File
 					RelativePath="..\shareaza\PageSettingsPlugins.h"
-					>
-				</File>
-				<File
-					RelativePath="..\shareaza\PageSettingsProtocols.h"
 					>
 				</File>
 				<File
