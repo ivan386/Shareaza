@@ -1,7 +1,7 @@
 //
 // CtrlHomePanel.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -126,7 +126,9 @@ int CHomePanel::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_boxUploads.Create( this, _T("Uploads"), IDR_UPLOADSFRAME );
 	m_boxConnection.Create( this, _T("Connection"), IDR_NEIGHBOURSFRAME );
 	m_boxLibrary.Create( this, _T("Library"), IDR_LIBRARYFRAME );
+#ifndef LAN_MODE
 	m_boxTorrents.Create( this, _T("Torrents"), IDR_BITTORRENT_ICON );
+#endif // LAN_MODE
 	
 	AddBox( &m_boxDownloads );
 	AddBox( &m_boxLibrary );
@@ -134,7 +136,9 @@ int CHomePanel::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	if ( ! Settings.Interface.LowResMode ) 
 	{
 		AddBox( &m_boxUploads );
+#ifndef LAN_MODE
 		if ( Settings.BitTorrent.AdvancedInterface ) AddBox( &m_boxTorrents );
+#endif // LAN_MODE
 	}
 	
 	// SetStretchBox( &m_boxLibrary );
@@ -151,7 +155,9 @@ void CHomePanel::OnSkinChange()
 	m_boxUploads.OnSkinChange();
 	m_boxConnection.OnSkinChange();
 	m_boxLibrary.OnSkinChange();
+#ifndef LAN_MODE
 	m_boxTorrents.OnSkinChange();
+#endif // LAN_MODE
 	
 	Update();
 	Invalidate();
@@ -163,7 +169,9 @@ void CHomePanel::Update()
 	m_boxUploads.Update();
 	m_boxConnection.Update();
 	m_boxLibrary.Update();
+#ifndef LAN_MODE
 	m_boxTorrents.Update();
+#endif // LAN_MODE
 }
 
 

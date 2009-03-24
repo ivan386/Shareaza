@@ -1,7 +1,7 @@
 //
 // CtrlHomePanel.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -265,7 +265,9 @@ public:
 	CHomeUploadsBox		m_boxUploads;
 	CHomeConnectionBox	m_boxConnection;
 	CHomeLibraryBox		m_boxLibrary;
+#ifndef LAN_MODE
 	CHomeTorrentsBox	m_boxTorrents;
+#endif // LAN_MODE
 
 // Operations
 public:
