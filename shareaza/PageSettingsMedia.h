@@ -61,6 +61,8 @@ public:
 
 // Implementation
 protected:
+	void Update();
+
 	//{{AFX_MSG(CMediaSettingsPage)
 	virtual BOOL OnInitDialog();
 	afx_msg void OnMediaPlay();

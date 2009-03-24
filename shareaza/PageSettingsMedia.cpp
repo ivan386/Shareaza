@@ -81,6 +81,15 @@ void CMediaSettingsPage::DoDataExchange(CDataExchange* pDX)
 
 }
 
+void CMediaSettingsPage::Update()
+{
+	UpdateData();
+
+	m_wndList.EnableWindow( m_bEnablePlay || m_bEnableEnqueue );
+	m_wndAdd.EnableWindow( ( m_bEnablePlay || m_bEnableEnqueue ) && m_wndList.GetWindowTextLength() > 0 );
+	m_wndRemove.EnableWindow( ( m_bEnablePlay || m_bEnableEnqueue ) && m_wndList.GetCurSel() >= 0 );
+}
+
 /////////////////////////////////////////////////////////////////////////////
 // CMediaSettingsPage message handlers
 
@@ -121,36 +130,29 @@ BOOL CMediaSettingsPage::OnInitDialog()
 
 	UpdateData( FALSE );
 
-	m_wndAdd.EnableWindow( m_wndList.GetWindowTextLength() > 0 );
-	m_wndRemove.EnableWindow( m_wndList.GetCurSel() >= 0 );
+	Update();
 
 	return TRUE;
 }
 
 void CMediaSettingsPage::OnMediaPlay()
 {
-	UpdateData();
-	m_wndList.EnableWindow( m_bEnablePlay || m_bEnableEnqueue );
-	m_wndAdd.EnableWindow( ( m_bEnablePlay || m_bEnableEnqueue ) && m_wndList.GetWindowTextLength() > 0 );
-	m_wndRemove.EnableWindow( ( m_bEnablePlay || m_bEnableEnqueue ) && m_wndList.GetCurSel() >= 0 );
+	Update();
 }
 
 void CMediaSettingsPage::OnMediaEnqueue()
 {
-	UpdateData();
-	m_wndList.EnableWindow( m_bEnablePlay || m_bEnableEnqueue );
-	m_wndAdd.EnableWindow( ( m_bEnablePlay || m_bEnableEnqueue ) && m_wndList.GetWindowTextLength() > 0 );
-	m_wndRemove.EnableWindow( ( m_bEnablePlay || m_bEnableEnqueue ) && m_wndList.GetCurSel() >= 0 );
+	Update();
 }
 
 void CMediaSettingsPage::OnSelChangeMediaTypes()
 {
-	m_wndRemove.EnableWindow( m_wndList.GetCurSel() >= 0 );
+	Update();
 }
 
 void CMediaSettingsPage::OnEditChangeMediaTypes()
 {
-	m_wndAdd.EnableWindow( m_wndList.GetWindowTextLength() > 0 );
+	Update();
 }
 
 void CMediaSettingsPage::OnMediaAdd()
