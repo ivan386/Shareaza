@@ -3603,41 +3603,41 @@
 		<control caption="Connect to Original Gnutella"/>
 		<control caption="Configure Gnutella1"/>
 	</dialog>
-	<dialog name="CGnutellaSettingsPage" cookie="BuBuBuStCoBuStEdmsStEdmsStEdmsBuBuBuStCoBuStEdmsStEdmsStEdmsBuBuBuBu" caption="Gnutella">
-		<control caption="Gnutella2 Network:"/>
+	<dialog name="CGnutellaSettingsPage" cookie="BuBuCoBuBuCoEdmsEdmsEdmsEdmsEdmsEdmsBuBuBuBuStBuStStStBuStBuStStStBu" caption="Gnutella">
 		<control caption="Always connect to Gnutella2"/>
 		<control caption="Connect to Gnutella2 today"/>
-		<control caption="Mode: "/>
 		<control caption="Optimal|Leaf|Hub"/>
-		<control caption="G_2 Connections:"/>
-		<control caption="Leaf to Hub:"/>
-		<control/>
-		<control/>
-		<control caption="Hub to Leaf:"/>
-		<control/>
-		<control/>
-		<control caption="Hub to Hub:"/>
-		<control/>
-		<control/>
-		<control caption="Gnutella1 Network:"/>
 		<control caption="Always connect to Gnutella1"/>
 		<control caption="Connect to Gnutella1 today"/>
-		<control caption="Mode: "/>
 		<control caption="Optimal|Leaf|Ultrapeer"/>
-		<control caption="G_1 Connections:"/>
-		<control caption="Leaf to Ultrapeer:"/>
 		<control/>
 		<control/>
-		<control caption="Ultrapeer to Leaf:"/>
 		<control/>
 		<control/>
-		<control caption="Peer to Peer:"/>
 		<control/>
 		<control/>
-		<control caption="_Link Compression:"/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
 		<control caption="Hub to Leaf"/>
 		<control caption="Leaf to Hub"/>
 		<control caption="Hub to Hub"/>
+		<control caption="Gnutella2 Network:"/>
+		<control caption="Mode: "/>
+		<control caption="G_2 Connections:"/>
+		<control caption="Leaf to Hub:"/>
+		<control caption="Hub to Leaf:"/>
+		<control caption="Hub to Hub:"/>
+		<control caption="Gnutella1 Network:"/>
+		<control caption="Mode: "/>
+		<control caption="G_1 Connections:"/>
+		<control caption="Leaf to Ultrapeer:"/>
+		<control caption="Ultrapeer to Leaf:"/>
+		<control caption="Peer to Peer:"/>
+		<control caption="_Link Compression:"/>
 	</dialog>
 	<dialog name="CDonkeySettingsPage" cookie="BuBuBuBuBuStEdmsStBuBuStEdmsStBuStBu" caption="eDonkey">
 		<control caption="_eDonkey Network:"/>
@@ -4336,37 +4336,46 @@
 		<control caption="_Next|_Export..."/>
 		<control caption="_Cancel"/>
 	</dialog>
-	<dialog name="CDownloadEditPage" cookie="StBuStEdEdStEdBuStStEdBuStEdBuStEdBuBuStStStStStBuStEdStEdBu" caption="Download Properties">
+	<dialog name="CDownloadEditPage" cookie="EdEdEdEdBuEdBuEdBuEdBuEdBuStBuStStBuStStStStStSt" caption="Download Properties">
+		<control/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
 		<control caption="WARNING: This dialog provides advanced download editing features for power users which if used incorrectly can and probably will cause corruption."/>
 		<control caption="Filename and Si_ze:"/>
 		<control caption="Filename:"/>
-		<control/>
-		<control/>
 		<control caption="File size (Byte):"/>
-		<control/>
 		<control caption="_URNs:"/>
 		<control caption="Trusted"/>
 		<control caption="SHA1:"/>
-		<control/>
-		<control/>
 		<control caption="Tiger-Root:"/>
-		<control/>
-		<control/>
 		<control caption="ED2K:"/>
-		<control/>
-		<control/>
-		<control caption="_Actions:"/>
+		<control caption="MD5:"/>
+		<control caption="BitTorrent:"/>
+	</dialog>
+	<dialog name="CDownloadActionsPage" cookie="StStStStStEdEdBuBuBuStStSt" caption="Actions">
 		<control caption="Forget current verification status and reverify"/>
 		<control caption="Assume file is 100% complete and reverify"/>
 		<control caption="Forget all known sources"/>
 		<control caption="Merge with local file and verify"/>
 		<control caption="Cancel download but save incomplete file(s)"/>
-		<control caption="Data _Eraser:"/>
-		<control caption="Byte range:"/>
 		<control/>
-		<control caption="to"/>
 		<control/>
 		<control caption="Erase"/>
+		<control caption="_Actions:"/>
+		<control caption="Data _Eraser:"/>
+		<control caption="Byte range:"/>
+		<control caption="to"/>
+		<control caption="WARNING: This dialog provides advanced download editing features for power users which if used incorrectly can and probably will cause corruption."/>
 	</dialog>
 	<dialog name="CTorrentSeedDlg" cookie="StStBuBuBuStms" caption="Open Torrent File">
 		<control/>
@@ -4377,47 +4386,39 @@
 		<control caption="To share complete files using BitTorrent they must first be seeded.  Once this process is complete the Torrent will appear as a new item in your download list."/>
 		<control/>
 	</dialog>
-	<dialog name="CTorrentGeneralPage" cookie="BuStEdStEdStEdStEdBuStCoEdStStEd" caption="General">
-		<control caption="Torrent _Information:"/>
-		<control caption="Name:"/>
+	<dialog name="CTorrentGeneralPage" cookie="EdEdEdEdEdCoEdBuStStStStBuStStSt" caption="Torrent">
 		<control/>
-		<control caption="Created:"/>
 		<control/>
-		<control caption="By:"/>
 		<control/>
-		<control caption="Comments:"/>
 		<control/>
-		<control caption="Transfers:"/>
-		<control caption="Start new download transfers:"/>
+		<control/>
 		<control caption=" As needed| When ratio over 100%| Only when requested| Never"/>
 		<control/>
+		<control caption="Torrent _Information:"/>
+		<control caption="Name:"/>
+		<control caption="Created:"/>
+		<control caption="By:"/>
+		<control caption="Comments:"/>
+		<control caption="Transfers:"/>
+		<control caption="Start new download transfers:"/>
 		<control caption="Total Uploaded:"/>
 		<control caption="Notes:"/>
+	</dialog>
+	<dialog name="CTorrentFilesPage" cookie="Sy" caption="Files">
 		<control/>
 	</dialog>
-	<dialog name="CTorrentFilesPage" cookie="BuStEdBuSy" caption="Files">
-		<control caption="Torrent _Information:"/>
-		<control caption="Name:"/>
+	<dialog name="CTorrentTrackersPage" cookie="EdEdEdCoBuSyStBuStStSt" caption="Trackers">
 		<control/>
-		<control caption="_Files:"/>
 		<control/>
-	</dialog>
-	<dialog name="CTorrentTrackersPage" cookie="BuStEdStEdBuStEdStEdBuBuSyStCo" caption="Trackers">
-		<control caption="Torrent _Information:"/>
-		<control caption="Name:"/>
+		<control/>
+		<control caption="Disabled|Single Tracker|Multi-tracker|Multi-tracker (locked)"/>
+		<control caption="_Refresh"/>
 		<control/>
 		<control caption="Tracker:"/>
-		<control/>
 		<control caption="_Current Tracker:"/>
 		<control caption="Completed (Seeds):"/>
-		<control/>
 		<control caption="Incomplete:"/>
-		<control/>
-		<control caption="_Refresh"/>
-		<control caption="_Trackers:"/>
-		<control/>
 		<control caption="Tracker Mode:"/>
-		<control caption="Disabled|Custom|Single Tracker|Multi-tracker|Multi-tracker (locked)"/>
 	</dialog>
 	<dialog name="CDownloadGroupDlg" cookie="BuBuEdCoBuCoBuBuEdBuBuBuBuBuBu" caption="Download Group Properties">
 		<control caption="OK"/>

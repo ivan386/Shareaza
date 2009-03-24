@@ -3574,41 +3574,41 @@
 		<control caption="Соединяться с оригинальной Gnutella"/>
 		<control caption="Настроить Gnutella1"/>
 	</dialog>
-	<dialog name="CGnutellaSettingsPage" cookie="BuBuBuStCoBuStEdmsStEdmsStEdmsBuBuBuStCoBuStEdmsStEdmsStEdmsBuBuBuBu" caption="Gnutella">
-		<control caption="Сеть Gnutella2:"/>
+	<dialog name="CGnutellaSettingsPage" cookie="BuBuCoBuBuCoEdmsEdmsEdmsEdmsEdmsEdmsBuBuBuBuStBuStStStBuStBuStStStBu" caption="Gnutella">
 		<control caption="Всегда соединяться с G2"/>
 		<control caption="Соединиться с G2 сегодня"/>
-		<control caption="Режим:"/>
 		<control caption="Оптимальный|Ветвь|Узел"/>
-		<control caption="G_2 соединения:"/>
-		<control caption="Узлов к ветви:"/>
-		<control/>
-		<control/>
-		<control caption="Ветвей к узлу:"/>
-		<control/>
-		<control/>
-		<control caption="Узлов к узлу:"/>
-		<control/>
-		<control/>
-		<control caption="Сеть Gnutella1:"/>
 		<control caption="Всегда соединяться с G1"/>
 		<control caption="Соединиться с G1 сегодня"/>
-		<control caption="Режим:"/>
 		<control caption="Оптимальный|Ветвь|Ведущий"/>
-		<control caption="G_1 соединения:"/>
-		<control caption="Ведущих к ветви:"/>
 		<control/>
 		<control/>
-		<control caption="Ветвей к ведущему:"/>
 		<control/>
 		<control/>
-		<control caption="Партнеров к партнеру:"/>
 		<control/>
 		<control/>
-		<control caption="_Компрессия в каналах связи:"/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
 		<control caption="Узел к ветви"/>
 		<control caption="Ветвь к узлу"/>
 		<control caption="Узел к узлу"/>
+		<control caption="Сеть Gnutella2:"/>
+		<control caption="Режим:"/>
+		<control caption="G_2 соединения:"/>
+		<control caption="Узлов к ветви:"/>
+		<control caption="Ветвей к узлу:"/>
+		<control caption="Узлов к узлу:"/>
+		<control caption="Сеть Gnutella1:"/>
+		<control caption="Режим:"/>
+		<control caption="G_1 соединения:"/>
+		<control caption="Ветвей к ведущему:"/>
+		<control caption="Ведущих к ветви:"/>
+		<control caption="Партнеров к партнеру:"/>
+		<control caption="_Компрессия в каналах связи:"/>
 	</dialog>
 	<dialog name="CDonkeySettingsPage" cookie="BuBuBuBuBuStEdmsStBuBuStEdmsStBuStBu" caption="eDonkey">
 		<control caption="_Сеть eDonkey:"/>
@@ -4307,37 +4307,46 @@
 		<control caption="_Далее|Экспорт..."/>
 		<control caption="Отмена"/>
 	</dialog>
-	<dialog name="CDownloadEditPage" cookie="StBuStEdEdStEdBuStStEdBuStEdBuStEdBuBuStStStStStBuStEdStEdBu" caption="Загрузка">
+	<dialog name="CDownloadEditPage" cookie="EdEdEdEdBuEdBuEdBuEdBuEdBuStBuStStBuStStStStStSt" caption="Загрузка">
+		<control/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
 		<control caption="ВНИМАНИЕ: Этот диалог для ОПЫТНЫХ пользователей и дает опции, которые при неправильном использовании могут разрушить загрузку."/>
 		<control caption="Имя и размер файла:"/>
 		<control caption="Имя файла:"/>
-		<control/>
-		<control/>
 		<control caption="Размер (байты):"/>
-		<control/>
 		<control caption="_URNs:"/>
 		<control caption="Верим"/>
 		<control caption="SHA1:"/>
-		<control/>
-		<control/>
 		<control caption="Tiger-Root:"/>
-		<control/>
-		<control/>
 		<control caption="ED2K:"/>
-		<control/>
-		<control/>
-		<control caption="_Действия:"/>
+		<control caption="MD5:"/>
+		<control caption="BitTorrent:"/>
+	</dialog>
+	<dialog name="CDownloadActionsPage" cookie="StStStStStEdEdBuBuBuStStSt" caption="Действия">
 		<control caption="Забыть текущий статус проверки и перепроверить"/>
 		<control caption="Считать, что файл загружен на 100% и перепроверить"/>
 		<control caption="Забыть все известные источники"/>
 		<control caption="Слить с локальным файлом и перепроверить"/>
 		<control caption="Отменить загрузку с сохранением неполных файлов"/>
-		<control caption="Стиратель:"/>
-		<control caption="Сотри с:"/>
 		<control/>
-		<control caption="по"/>
 		<control/>
 		<control caption="Стереть"/>
+		<control caption="_Действия:"/>
+		<control caption="_Стиратель:"/>
+		<control caption="Сотри с:"/>
+		<control caption="по"/>
+		<control caption="ВНИМАНИЕ: Этот диалог для ОПЫТНЫХ пользователей и дает опции, которые при неправильном использовании могут разрушить загрузку."/>
 	</dialog>
 	<dialog name="CTorrentSeedDlg" cookie="StStBuBuBuStms" caption="Открыть торрент">
 		<control/>
@@ -4348,47 +4357,39 @@
 		<control caption="Чтобы обмениваться файлами в BitTorrent, их нужно сперва раздать. Когда процесс завершится, торрент появится в Вашем списке загрузок."/>
 		<control/>
 	</dialog>
-	<dialog name="CTorrentGeneralPage" cookie="BuStEdStEdStEdStEdBuStCoEdStStEd" caption="Торрент">
+	<dialog name="CTorrentGeneralPage" cookie="EdEdEdEdEdCoEdBuStStStStBuStStSt" caption="Торрент">
+		<control/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
+		<control caption=" Когда необходимо| Когда соотношение выше 100%| Только когда запрашивают| Никогда"/>
+		<control/>
 		<control caption="_Информация о торренте:"/>
 		<control caption="Файл:"/>
-		<control/>
 		<control caption="Создан:"/>
-		<control/>
 		<control caption="Чем:"/>
-		<control/>
 		<control caption="Примечания:"/>
-		<control/>
 		<control caption="Пересылки:"/>
 		<control caption="Начать новые загрузки:"/>
-		<control caption="Когда необходимо|Когда соотношение выше 100%|Только когда запрашивают|Никогда"/>
-		<control/>
 		<control caption="Всего роздано:"/>
 		<control caption="Заметки:"/>
+	</dialog>
+	<dialog name="CTorrentFilesPage" cookie="Sy" caption="Файлы">
 		<control/>
 	</dialog>
-	<dialog name="CTorrentFilesPage" cookie="BuStEdBuSy" caption="Файлы">
-		<control caption="_Информация о торренте:"/>
-		<control caption="Файл:"/>
+	<dialog name="CTorrentTrackersPage" cookie="EdEdEdCoBuSyStBuStStSt" caption="Трекеры">
 		<control/>
-		<control caption="_Файлы:"/>
 		<control/>
-	</dialog>
-	<dialog name="CTorrentTrackersPage" cookie="BuStEdStEdBuStEdStEdBuBuSyStCo" caption="Трекеры">
-		<control caption="_Информация о торренте:"/>
-		<control caption="Файл:"/>
+		<control/>
+		<control caption="Отключен|Один трекер|Мульти-трекер|Мульти-трекер (заблокир.)"/>
+		<control caption="_Обновить"/>
 		<control/>
 		<control caption="Трекер:"/>
-		<control/>
 		<control caption="_Активный трекер:"/>
 		<control caption="_Сидеры (раздача):"/>
-		<control/>
 		<control caption="_Личеры (загрузка):"/>
-		<control/>
-		<control caption="_Обновить"/>
-		<control caption="_Трекеры:"/>
-		<control/>
 		<control caption="Режим трекера:"/>
-		<control caption="Отключен|Настраиваемый|Один трекер|Мультитрекер|Мультитрекер (заблокир.)"/>
 	</dialog>
 	<dialog name="CDownloadGroupDlg" cookie="BuBuEdCoBuCoBuBuEdBuBuBuBuBuBu" caption="Свойства группы загрузки">
 		<control caption="OK"/>
