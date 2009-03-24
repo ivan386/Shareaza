@@ -47,17 +47,18 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CSettingsSheet construction
 
-CSettingsSheet::CSettingsSheet(CWnd* /*pParent*/, UINT nCaptionID)
+CSettingsSheet::CSettingsSheet(CWnd* pParent, UINT nCaptionID) :
+	CSkinDialog( 0, pParent, FALSE )
+	, m_pPage			( NULL )
+	, m_pFirst			( NULL )
+	, m_pTemplate		( NULL )
+	, m_bModified		( FALSE )
+	, m_nLeftMargin		( 0 )
+	, m_nTopMargin		( 0 )
+	, m_nListWidth		( 120 )
+	, m_nListMargin		( 6 )
+	, m_nButtonHeight	( 20 )
 {
-	m_pPage			= NULL;
-	m_pFirst		= NULL;
-	m_pTemplate		= NULL;
-	m_bModified		= FALSE;
-	m_nLeftMargin	= 0;
-	m_nTopMargin	= 0;
-	m_nListWidth	= 120;
-	m_nListMargin	= 6;
-	m_nButtonHeight	= 20;
 
 	if ( nCaptionID ) m_sCaption.LoadString( nCaptionID );
 }

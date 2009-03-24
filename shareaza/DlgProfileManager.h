@@ -31,7 +31,7 @@ class CProfileManagerDlg : public CSettingsSheet
 {
 // Construction
 public:
-	CProfileManagerDlg();
+	CProfileManagerDlg(CWnd* pParent = NULL);
 	virtual ~CProfileManagerDlg();
 
 	DECLARE_DYNAMIC(CProfileManagerDlg)

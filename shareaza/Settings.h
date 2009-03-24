@@ -71,6 +71,7 @@ public:
 		DWORD		SmartVersion;				// Settings version
 		bool		Running;
 		bool		CoolMenuEnable;				// Use cool skinned menus
+		bool		DialogScan;					// Set Skin engine to "dialog scan" mode. This produces "C:\Dialog.xml" file with dialog templates and disables dialog translation.
 	} General;
 
 	struct sVersionCheck

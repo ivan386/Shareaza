@@ -72,6 +72,7 @@ CSettings::CSettings()
 	Add( _T(""), _T("SearchLog"), &General.SearchLog, true );
 	Add( _T(""), _T("UserPath"), &General.UserPath );
 	Add( _T(""), _T("CoolMenuEnable"), &General.CoolMenuEnable, true );
+	Add( _T(""), _T("DialogScan"), &General.DialogScan, false );
 
 	Add( _T("Settings"), _T("AlwaysOpenURLs"), &General.AlwaysOpenURLs, false );
 	Add( _T("Settings"), _T("CloseMode"), &General.CloseMode, 0, 1, 0, 3 );

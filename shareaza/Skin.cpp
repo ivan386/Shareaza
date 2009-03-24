@@ -1065,10 +1065,9 @@ BOOL CSkin::Apply(LPCTSTR pszName, CDialog* pDialog, UINT nIconID, CToolTipCtrl*
 	else
 		strName = pszName;
 
-	CWnd* pWnd = pDialog->GetWindow( GW_CHILD );
 	CString strCaption, strTip;
 
-	for ( int nCount = 0 ; pWnd ; nCount++, pWnd = pWnd->GetNextWindow() )
+	for ( CWnd* pWnd = pDialog->GetWindow( GW_CHILD ) ; pWnd ; pWnd = pWnd->GetNextWindow() )
 	{
 		TCHAR szClass[3] = { 0, 0, 0 };
 		LoadControlTip( strTip, pWnd->GetDlgCtrlID() );
@@ -1089,7 +1088,7 @@ BOOL CSkin::Apply(LPCTSTR pszName, CDialog* pDialog, UINT nIconID, CToolTipCtrl*
 		strCaption += szClass;
 	}
 
-	if ( theApp.GetProfileInt( _T(""), _T("DialogScan"), FALSE ) )
+	if ( Settings.General.DialogScan )
 	{
 		CFile pFile;
 
@@ -1134,12 +1133,18 @@ BOOL CSkin::Apply(LPCTSTR pszName, CDialog* pDialog, UINT nIconID, CToolTipCtrl*
 
 		pFile.Write( "\">\r\n", 4 );
 
-		for ( pWnd = pDialog->GetWindow( GW_CHILD ) ; pWnd ; pWnd = pWnd->GetNextWindow() )
+		for ( CWnd* pWnd = pDialog->GetWindow( GW_CHILD ) ; pWnd ; pWnd = pWnd->GetNextWindow() )
 		{
 			TCHAR szClass[64];
 
 			GetClassName( pWnd->GetSafeHwnd(), szClass, 64 );
 			strCaption.Empty();
+
+			// Skip added banner
+			if ( _tcsnicmp( szClass, _T("St"), 3 ) == 0 &&
+				IDC_BANNER == pWnd->GetDlgCtrlID() &&
+				pWnd->GetNextWindow() == NULL )
+				break;
 
 			if ( _tcsistr( szClass, _T("Static") ) ||
 				 _tcsistr( szClass, _T("Button") ) )
@@ -1214,7 +1219,7 @@ BOOL CSkin::Apply(LPCTSTR pszName, CDialog* pDialog, UINT nIconID, CToolTipCtrl*
 	strCaption = pBase->GetAttributeValue( _T("caption") );
 	if ( strCaption.GetLength() ) pDialog->SetWindowText( strCaption );
 
-	pWnd = pDialog->GetWindow( GW_CHILD );
+	CWnd* pWnd = pDialog->GetWindow( GW_CHILD );
 
 	for ( POSITION pos = pBase->GetElementIterator() ; pos && pWnd ; )
 	{
