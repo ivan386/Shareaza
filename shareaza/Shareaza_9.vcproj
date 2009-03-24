@@ -2597,10 +2597,6 @@
 					>
 				</File>
 				<File
-					RelativePath="PageSettingsProtocols.cpp"
-					>
-				</File>
-				<File
 					RelativePath="PageSettingsRemote.cpp"
 					>
 				</File>
@@ -4163,10 +4159,6 @@
 				</File>
 				<File
 					RelativePath="PageSettingsPlugins.h"
-					>
-				</File>
-				<File
-					RelativePath="PageSettingsProtocols.h"
 					>
 				</File>
 				<File

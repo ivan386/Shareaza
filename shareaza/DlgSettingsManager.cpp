@@ -41,7 +41,6 @@
 #include "PageSettingsGnutella.h"
 #include "PageSettingsDonkey.h"
 #include "PageSettingsBitTorrent.h"
-#include "PageSettingsProtocols.h"
 #include "PageSettingsSkins.h"
 #include "PageSettingsPlugins.h"
 #include "PageSettingsTraffic.h"
@@ -125,7 +124,6 @@ INT_PTR CSettingsManagerDlg::DoModal(LPCTSTR pszWindow)
 	CSkinsSettingsPage		pSkins;
 	CPluginsSettingsPage	pPlugins;
 	CAdvancedSettingsPage	pAdvanced;
-	CProtocolsSettingsPage	pProtocols;
 	CIRCSettingsPage		pIRC;
 
 	AddGroup( &gGeneral );
@@ -149,7 +147,6 @@ INT_PTR CSettingsManagerDlg::DoModal(LPCTSTR pszWindow)
 		AddPage( &pDonkey );
 		AddPage( &pTorrent );
 #endif
-		AddPage( &pProtocols );
 	}
 	AddGroup( &pSkins );
 	AddGroup( &pPlugins );
