@@ -4559,7 +4559,7 @@
       <column from="G1-ID" to="" />
     </list>
     <list name="CSearchMonitorWnd">
-      <column from="بحث" to="بحث" />
+      <column from="Search" to="بحث" />
       <column from="URN" to="" />
       <column from="Schema" to="مخطط" />
     </list>

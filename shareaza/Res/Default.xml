@@ -359,6 +359,19 @@
 		<separator/>
 		<button id="ID_NEIGHBOURS_SETTINGS" text="Settings"/>
 	</toolbar>
+	<toolbar name="CSecurityWnd">
+		<button id="ID_SECURITY_EDIT" text="Edit Rule"/>
+		<separator/>
+		<button id="ID_SECURITY_ADD" text="Add Rule"/>
+		<button id="ID_SECURITY_REMOVE" text="Remove Rule"/>
+		<separator/>
+		<button id="ID_SECURITY_MOVE_UP" text="Move Up"/>
+		<button id="ID_SECURITY_MOVE_DOWN" text="Move Down"/>
+		<rightAlign/>
+		<button id="ID_SECURITY_RESET" text="Reset List"/>
+		<button id="ID_SECURITY_IMPORT" text="Import List"/>
+		<button id="ID_SECURITY_EXPORT" text="Export List"/>
+	</toolbar>
 	<!-- HIT MONITOR WINDOW -->
 	<toolbar name="CHitMonitorWnd">
 		<button id="ID_SEARCH_DOWNLOAD" text="Download"/>
@@ -2531,8 +2544,8 @@
 		<image id="ID_MEDIA_PREVIOUS" id1="ID_SHAREMONKEY_PREVIOUS"/>
 		<image id="ID_MEDIA_NEXT" id1="ID_SHAREMONKEY_NEXT"/>
 		<image id="ID_MEDIA_PAUSE"/>
-		<image id="ID_MEDIA_OPEN" id1="ID_LIBRARY_UNLINK"/>
-		<image id="ID_MEDIA_SAVE"/>
+		<image id="ID_MEDIA_OPEN" id1="ID_SECURITY_IMPORT" id2="ID_LIBRARY_UNLINK"/>
+		<image id="ID_MEDIA_SAVE" id1="ID_SECURITY_EXPORT"/>
 		<image id="ID_MEDIA_ZOOM"/>
 		<image id="ID_MEDIA_FULLSCREEN"/>
 		<image id="ID_MEDIA_ADD"/>

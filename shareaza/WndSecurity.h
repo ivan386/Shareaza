@@ -39,6 +39,7 @@ public:
 
 // Attributes
 protected:
+	CCoolBarCtrl	m_wndToolBar;
 	CListCtrl		m_wndList;
 	CImageList		m_gdiImageList;
 	CLiveListSizer	m_pSizer;

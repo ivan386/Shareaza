@@ -87,7 +87,10 @@ CSecurityWnd::~CSecurityWnd()
 int CSecurityWnd::OnCreate(LPCREATESTRUCT lpCreateStruct) 
 {
 	if ( CPanelWnd::OnCreate( lpCreateStruct ) == -1 ) return -1;
-	
+
+	if ( ! m_wndToolBar.Create( this, WS_CHILD|WS_VISIBLE|CBRS_NOALIGN, AFX_IDW_TOOLBAR ) ) return -1;
+	m_wndToolBar.SetBarStyle( m_wndToolBar.GetBarStyle() | CBRS_TOOLTIPS | CBRS_BORDER_TOP );
+
 	m_wndList.Create( WS_VISIBLE|LVS_ICON|LVS_AUTOARRANGE|LVS_REPORT|LVS_SHOWSELALWAYS,
 		rectDefault, this, IDC_RULES );
 
@@ -244,8 +247,8 @@ CSecureRule* CSecurityWnd::GetItem(int nItem)
 void CSecurityWnd::OnSize(UINT nType, int cx, int cy) 
 {
 	CPanelWnd::OnSize( nType, cx, cy );
-	m_pSizer.Resize( cx );
-	m_wndList.SetWindowPos( NULL, 0, 0, cx, cy, SWP_NOZORDER );
+	SizeListAndBar( &m_wndList, &m_wndToolBar );
+	m_wndList.SetWindowPos( NULL, 0, 0, cx, cy - 28, SWP_NOZORDER );
 }
 
 void CSecurityWnd::OnTimer(UINT_PTR nIDEvent) 
@@ -253,7 +256,7 @@ void CSecurityWnd::OnTimer(UINT_PTR nIDEvent)
 	if ( ( nIDEvent == 1 ) && ( IsPartiallyVisible() ) )
 	{
 		DWORD tTicks = GetTickCount();
-		DWORD tDelay = max( ( 2 * (DWORD)Security.GetCount() ), 1000ul );// Delay based on size of list
+		DWORD tDelay = max( ( 2 * (DWORD)Security.GetCount() ), 1000ul ); // Delay based on size of list
 
 		if ( ( tTicks - tLastUpdate ) > tDelay )
 		{
@@ -543,6 +546,7 @@ void CSecurityWnd::OnSkinChange()
 {
 	CPanelWnd::OnSkinChange();
 	Settings.LoadList( _T("CSecurityWnd"), &m_wndList, -4 );
+	Skin.CreateToolBar( _T("CSecurityWnd"), &m_wndToolBar );
 }
 
 void CSecurityWnd::OnUpdateSecurityPolicyAccept(CCmdUI* pCmdUI) 
