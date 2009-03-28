@@ -3029,7 +3029,6 @@
 	<string id="20000" value="URN ikke tilgjengelig"/>
 	<string id="20002" value="av"/><!-- e.g. 1 of 10 -->
 	<string id="20003" value="Forandring av grensesnittets retning krever omstart. \nDu må starte Shareaza på nytt manuelt. Avslutte nå?"/>
-	<string id="20004" value="Avbryt"/>
 	<string id="20005" value="Nei"/>
 	<string id="20006" value="Ja"/>
 	<string id="20007" value="Auto"/>

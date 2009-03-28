@@ -3216,7 +3216,6 @@
 	<string id="20001" value="Kapat"/>
 	<string id="20002" value="den"/><!-- e.g. 1 of 10 -->
 	<string id="20003" value="Arayüz yönetimi değiştirildiğinde yeniden başlama gerekir. \n Shareaza elle başlatmanız gerekecek. Şimdi çık?"/>
-	<string id="20004" value="İptal"/>
 	<string id="20005" value="Hayır"/>
 	<string id="20006" value="Evet"/>
 	<string id="20007" value="Otomatik"/>

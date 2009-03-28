@@ -3130,7 +3130,6 @@ Puede comenzar a transferir en cualquier momento.</text>
 	<string id="20001" value="Cerrar"/>
 	<string id="20002" value="de"/> <!-- e.g. 1 of 10 -->
 	<string id="20003" value="Cambiando la dirección de interface requiere reiniciar. \nVas a necesitar reiniciar Shareaza manualmente. Salir ahora?"/>
-	<string id="20004" value="Cancelar"/>
 	<string id="20005" value="No"/>
 	<string id="20006" value="Sì"/>
 	<string id="20007" value="Auto"/>

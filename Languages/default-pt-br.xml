@@ -3244,7 +3244,6 @@
 	<string id="20001" value="Fechar"/>
 	<string id="20002" value="de"/><!-- e.g. 1 of 10 -->
 	<string id="20003" value="Mudar a direção da interface requer reiniciar. \nVocê precisará iniciar o Shareaza manualmente. Sair agora?"/>
-	<string id="20004" value="Cancelar"/>
 	<string id="20005" value="Não"/>
 	<string id="20006" value="Sim"/>
 	<string id="20007" value="Auto"/>

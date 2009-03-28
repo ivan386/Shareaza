@@ -3173,7 +3173,6 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 	<string id="20001" value="Stng"/>
 	<string id="20002" value="av"/><!-- e.g. 1 of 10 -->
 	<string id="20003" value="Att ändra gränssnittets riktning kräver omstart. \nDu måste starta om Shareaza manuellt. Avsluta nu?"/>
-	<string id="20004" value="Avbryt"/>
 	<string id="20005" value="Nej"/>
 	<string id="20006" value="Ja"/>
 	<string id="20007" value="Auto"/>

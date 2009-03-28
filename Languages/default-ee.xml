@@ -3139,7 +3139,6 @@
 	<string id="20001" value="Sule"/>
 	<string id="20002" value="of"/><!-- e.g. 1 of 10 -->
 	<string id="20003" value="Kasutajaliidese suundade muutmine nõuab taaskäivitust. \nSa pead Shareaza käsits taaskäivitama . Välju nüüd?"/>
-	<string id="20004" value="Tühista"/>
 	<string id="20005" value="Ei"/>
 	<string id="20006" value="Jah"/>
 	<string id="20007" value="Auto"/>

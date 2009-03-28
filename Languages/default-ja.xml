@@ -3118,7 +3118,6 @@
 	<string id="20001" value="閉じる"/>
 	<string id="20002" value="/"/><!-- e.g. 1 of 10 -->
 	<string id="20003" value="インターフェースの変更を適用するにはShareazaの再起動が必要になります。\nあなたはShareazaを手動で再起動しなければなりません。今すぐShareazaを終了しますか?"/>
-	<string id="20004" value="キャンセル"/>
 	<string id="20005" value="いいえ"/>
 	<string id="20006" value="はい"/>
 	<string id="20007" value="自動"/>

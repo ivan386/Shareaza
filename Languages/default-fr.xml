@@ -3234,7 +3234,6 @@
 	<string id="20001" value="Fermer"/>
 	<string id="20002" value="sur"/><!-- e.g. 1 of 10 -->
 	<string id="20003" value="Changer la direction de l'interface exige un redémarrage. \nVous aurez besoin de redémarrer manuellement. Quitter maintenant&#160;?"/>
-	<string id="20004" value="Annuler"/>
 	<string id="20005" value="Non"/>
 	<string id="20006" value="Oui"/>
 	<string id="20007" value="Auto"/>

@@ -3144,7 +3144,6 @@
 	<string id="20001" value="关闭"/>
 	<string id="20002" value="于"/><!-- 例如: 1 于 10 -->
 	<string id="20003" value="变更界面方向需要重新启动。\n您需要手动启动 Shareaza。立即退出？"/>
-	<string id="20004" value="取消"/>
 	<string id="20005" value="否"/>
 	<string id="20006" value="是"/>
 	<string id="20007" value="自动"/>

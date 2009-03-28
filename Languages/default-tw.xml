@@ -3091,7 +3091,6 @@
 	<string id="20001" value="關閉"/>
 	<string id="20002" value="之"/><!-- e.g. 1 of 10 -->
 	<string id="20003" value="改變介面顯示方向需要重新啟動 Shareaza. \n您必須要手動啟動. 現在要離開嗎?"/>
-	<string id="20004" value="取消"/>
 	<string id="20005" value="不行"/>
 	<string id="20006" value="可以"/>
 	<string id="20007" value="自動"/>

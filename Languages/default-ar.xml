@@ -3249,10 +3249,8 @@
     <string id="19002" value="Unable to accept connections, URL unavailable." />
     <string id="20000" value="No URN available" />
     <string id="20001" value="Close" />
-    <string id="20002" value="of" />
-    <!-- e.g. 1 of 10 -->
+    <string id="20002" value="of" />    <!-- e.g. 1 of 10 -->
     <string id="20003" value="Changing interface direction requires restart. \nYou will need to start Shareaza manually. Exit now?" />
-    <string id="20004" value="إلغاء الأمر" />
     <string id="20005" value="No" />
     <string id="20006" value="Yes" />
     <string id="20007" value="Auto" />

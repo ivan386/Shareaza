@@ -3119,7 +3119,6 @@
 	<string id="20001" value="Zavřít"/>
 	<string id="20002" value="z"/><!-- e.g. 1 of 10 -->
 	<string id="20003" value="Změna směru vyžaduje restart. \nBudete muset spustit Shareazu ručně. Ukončit?"/>
-	<string id="20004" value="Zrušit"/>
 	<string id="20005" value="Ne"/>
 	<string id="20006" value="Ano"/>
 	<string id="20007" value="Auto"/>
