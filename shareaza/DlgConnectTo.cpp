@@ -1,7 +1,7 @@
 //
 // DlgConnectTo.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -40,13 +40,11 @@ typedef struct {
 const LPCTSTR CONNECT_SECTION = _T("ConnectTo");
 
 BEGIN_MESSAGE_MAP(CConnectToDlg, CSkinDialog)
-	//{{AFX_MSG_MAP(CConnectToDlg)
 	ON_WM_MEASUREITEM()
 	ON_WM_DRAWITEM()
 	ON_WM_DESTROY()
 	ON_CBN_SELCHANGE(IDC_CONNECT_HOST, OnCbnSelchangeConnectHost)
 	ON_CBN_SELCHANGE(IDC_CONNECT_PROTOCOL, OnCbnSelchangeConnectProtocol)
-	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 
@@ -54,7 +52,7 @@ END_MESSAGE_MAP()
 // CConnectToDlg dialog
 
 CConnectToDlg::CConnectToDlg(CWnd* pParent, BOOL bBrowseHost) :
-	CSkinDialog		( CConnectToDlg::IDD, pParent )
+	CSkinDialog		( CConnectToDlg::IDD, pParent, FALSE )
 ,	m_bNoUltraPeer	( FALSE )
 ,	m_nPort			( GNUTELLA_DEFAULT_PORT )
 ,	m_nProtocol		( 1 )							// G2 Protocol
@@ -65,7 +63,6 @@ CConnectToDlg::CConnectToDlg(CWnd* pParent, BOOL bBrowseHost) :
 void CConnectToDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CSkinDialog::DoDataExchange(pDX);
-	//{{AFX_DATA_MAP(CConnectToDlg)
 	DDX_Control(pDX, IDC_CONNECT_ADVANCED, m_wndAdvanced);
 	DDX_Control(pDX, IDC_CONNECT_PROTOCOL, m_wndProtocol);
 	DDX_Control(pDX, IDC_CONNECT_ULTRAPEER, m_wndUltrapeer);
@@ -76,7 +73,6 @@ void CConnectToDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Check(pDX, IDC_CONNECT_ULTRAPEER, m_bNoUltraPeer);
 	DDX_Text(pDX, IDC_CONNECT_PORT, m_nPort);
 	DDX_CBIndex(pDX, IDC_CONNECT_PROTOCOL, m_nProtocol);
-	//}}AFX_DATA_MAP
 }
 
 /////////////////////////////////////////////////////////////////////////////

@@ -33,19 +33,16 @@ static char THIS_FILE[] = __FILE__;
 #endif
 
 BEGIN_MESSAGE_MAP(CSecureRuleDlg, CSkinDialog)
-	//{{AFX_MSG_MAP(CSecureRuleDlg)
 	ON_CBN_SELCHANGE(IDC_RULE_EXPIRE, OnSelChangeRuleExpire)
 	ON_CBN_SELCHANGE(IDC_RULE_TYPE, OnSelChangeRuleType)
-	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 
 /////////////////////////////////////////////////////////////////////////////
 // CSecureRuleDlg dialog
 
-CSecureRuleDlg::CSecureRuleDlg(CWnd* pParent, CSecureRule* pRule) : CSkinDialog(CSecureRuleDlg::IDD, pParent)
+CSecureRuleDlg::CSecureRuleDlg(CWnd* pParent, CSecureRule* pRule) : CSkinDialog(CSecureRuleDlg::IDD, pParent, FALSE)
 {
-	//{{AFX_DATA_INIT(CSecureRuleDlg)
 	m_nExpireD = 0;
 	m_nExpireH = 0;
 	m_nExpireM = 0;
@@ -55,7 +52,6 @@ CSecureRuleDlg::CSecureRuleDlg(CWnd* pParent, CSecureRule* pRule) : CSkinDialog(
 	m_nType = -1;
 	m_sContent = _T("");
 	m_nMatch = -1;
-	//}}AFX_DATA_INIT
 	m_pRule	= pRule;
 	m_bNew	= FALSE;
 }
