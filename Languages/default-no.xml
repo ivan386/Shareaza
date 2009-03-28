@@ -3083,6 +3083,8 @@
 	<string id="20214" value="God"/>
 	<string id="20215" value="Veldig god"/>
 	<string id="20216" value="Utmerket"/>
+	<string id="20237" value="OK"/>
+	<string id="20238" value="Avbryt"/>
 </strings>
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
 <dialogs>

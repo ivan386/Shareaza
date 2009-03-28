@@ -3314,6 +3314,8 @@
 	<string id="20234" value="Álbum"/>
 	<string id="20235" value="Artista"/>
 	<string id="20236" value="Classificação"/>
+	<string id="20237" value="OK"/>
+	<string id="20238" value="Cancelar"/>
   </strings>
   <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
   <!-- Don't edit dialogs manualy! Use DialogScan feature instead -->

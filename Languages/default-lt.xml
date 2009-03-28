@@ -3314,6 +3314,8 @@
 	<string id="20234" value="Albumas"/>
 	<string id="20235" value="Atlikėjas"/>
 	<string id="20236" value="Įvertinimas"/>
+	<string id="20237" value="Gerai"/>
+	<string id="20238" value="Atšaukti"/>
 </strings>
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
 <dialogs>

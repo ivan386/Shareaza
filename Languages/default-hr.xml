@@ -3168,6 +3168,8 @@
 	<string id="20214" value="Dobro"/>
 	<string id="20215" value="Vrlo Dobro"/>
 	<string id="20216" value="Odlično"/>
+	<string id="20237" value="OK"/>
+	<string id="20238" value="Odustani"/>
 </strings>
 
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->

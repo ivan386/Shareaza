@@ -3191,6 +3191,8 @@
 	<string id="20234" value="Albumi"/>
 	<string id="20235" value="Artisti"/>
 	<string id="20236" value="Vlerësimi"/>
+	<string id="20237" value="OK"/>
+	<string id="20238" value="Anulo"/>
 </strings>
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
 <dialogs>

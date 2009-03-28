@@ -3196,6 +3196,8 @@
 	<string id="20214" value="Hea"/>
 	<string id="20215" value="Väga Hea"/>
 	<string id="20216" value="Suurepärane"/>
+	<string id="20237" value="OK"/>
+	<string id="20238" value="Tühista"/>
 </strings>
 
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->

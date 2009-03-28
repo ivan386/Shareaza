@@ -3288,6 +3288,8 @@
 	<string id="20234" value="Album"/>
 	<string id="20235" value="Interpret"/>
 	<string id="20236" value="Bewertung"/>
+	<string id="20237" value="OK"/>
+	<string id="20238" value="Abbrechen"/>
 </strings>
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
 <dialogs>

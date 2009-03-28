@@ -3314,6 +3314,8 @@
 	<string id="20234" value="Album"/>
 	<string id="20235" value="Καλλιτέχνης"/>
 	<string id="20236" value="Βαθμολογία"/>
+	<string id="20237" value="OK"/>
+	<string id="20238" value="Άκυρο"/>
 </strings>
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
 <!-- Don't edit dialogs manualy! Use DialogScan feature instead -->

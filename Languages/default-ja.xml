@@ -3177,6 +3177,8 @@
 	<string id="20214" value="良い"/>
 	<string id="20215" value="とても良い"/>
 	<string id="20216" value="素薔薇しい"/>
+	<string id="20237" value="OK"/>
+	<string id="20238" value="キャンセル"/>
 </strings>
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
 <dialogs>

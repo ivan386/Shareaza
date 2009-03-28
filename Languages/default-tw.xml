@@ -3149,6 +3149,8 @@
 	<string id="20214" value="不錯(3)"/>
 	<string id="20215" value="很好(4)"/>
 	<string id="20216" value="極佳(5)"/>
+	<string id="20237" value="確定"/>
+	<string id="20238" value="取消"/>
 </strings>
 
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->

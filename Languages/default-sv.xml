@@ -3243,6 +3243,8 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 	<string id="20234" value="Album"/>
 	<string id="20235" value="Artist"/>
 	<string id="20236" value="Betyg"/>
+	<string id="20237" value="OK"/>
+	<string id="20238" value="Avbryt"/>
 </strings>
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
 <dialogs>

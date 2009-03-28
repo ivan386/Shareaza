@@ -3309,6 +3309,8 @@ PDF
 	<string id="20234" value="אלבום"/>
 	<string id="20235" value="אמן"/>
 	<string id="20236" value="דרוג"/>
+	<string id="20237" value="אישור"/>
+	<string id="20238" value="ביטול"/>
 </strings>
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
 <dialogs>

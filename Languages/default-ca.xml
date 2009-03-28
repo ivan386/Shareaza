@@ -3192,6 +3192,8 @@
 	<string id="20234" value="Àlbum"/>
 	<string id="20235" value="Artista"/>
 	<string id="20236" value="Valoració"/>
+	<string id="20237" value="Accepta"/>
+	<string id="20238" value="Cancel·la"/>
 </strings>
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
 <dialogs>
