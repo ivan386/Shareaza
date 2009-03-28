@@ -3125,7 +3125,7 @@
 	<string id="20001" value="Zapri"/>
 	<string id="20002" value="od"/><!-- e.g. 1 of 10 -->
 	<string id="20003" value="Sprememba smeri vmesnika zahteva ponovni zagon. \nProgram Shareaza boste morali zagnati ročno. Želite končati program?"/>
-	<string id="20004" value="Pisave, ki se pišejo z desne proti levi, niso podprte na vašem operacijskem sistemu."/>
+	<string id="20004" value="Prekliči"/>
 	<string id="20005" value="Ne"/>
 	<string id="20006" value="Da"/>
 	<string id="20007" value="samodejno"/>

@@ -3146,7 +3146,7 @@
 	<string id="20001" value="Cerrar"/>
 	<string id="20002" value="de"/> <!-- e.g. 1 of 10 -->
 	<string id="20003" value="Cambiando la direccin de interface requiere reiniciar. \nVas a necesitar reiniciar Shareaza manualmente. Salir ahora?"/>
-	<string id="20004" value="Lenguajes de Derecha-Izquierda no se soportan en tu SO."/>
+	<string id="20004" value="Cancelar"/>
 	<string id="20005" value="No"/>
 	<string id="20006" value="Sì"/>
 	<string id="20007" value="Auto"/>
@@ -3154,6 +3154,8 @@
 	<string id="20009" value="Custom"/>
 	<string id="20010" value="&amp;Atrs"/>
 	<string id="20011" value="&amp;Siguiente"/>
+	<string id="20012" value="Finalizar"/>
+	<string id="20013" value="Todo"/>
 	<string id="20100" value="Conectando"/>
 	<string id="20101" value="Pidiendo"/>
 	<string id="20102" value="Respuesta"/>

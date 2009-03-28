@@ -3121,7 +3121,7 @@
 	<string id="20001" value="Mbylle"/>
 	<string id="20002" value="nga"/><!-- e.g. 1 of 10 -->
 	<string id="20003" value="Ndryshimi i drejtimit të ndërfaqes kërkon rinisje. \nShareaza-n duhet ta nisni vetë. A doni të dilni?"/>
-	<string id="20004" value="Gjuhët nga e djathta në të majtë nuk përkrahen në OS-në tuaj."/>
+	<string id="20004" value="Anulo"/>
 	<string id="20005" value="Jo"/>
 	<string id="20006" value="Po"/>
 	<string id="20007" value="Auto"/>
@@ -3130,6 +3130,7 @@
 	<string id="20010" value="&amp;Pas"/>
 	<string id="20011" value="&amp;Vijo"/>
 	<string id="20012" value="Përfundo"/>
+	<string id="20013" value="Gjithçka"/>
 	<string id="20100" value="po Lidhem"/>
 	<string id="20101" value="po Kërkoj"/>
 	<string id="20102" value="Përgjigje"/>

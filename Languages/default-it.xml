@@ -3189,7 +3189,7 @@
 	<string id="20001" value="Chiudi"/>
 	<string id="20002" value="di"/><!-- e.g. 1 of 10 -->
 	<string id="20003" value="Cambiare la direzione dell'interfaccia richiede il riavvio di Shareaza. \nDovrai lanciare Shareaza manualmente. Vuoi uscire ora?"/>
-	<string id="20004" value="Le lingue da destra-a-sinistra non sono supportate dal tuo sistema operativo."/>
+	<string id="20004" value="Annulla"/>
 	<string id="20005" value="No"/>
 	<string id="20006" value="Sì"/>
 	<string id="20007" value="Auto"/>

@@ -3216,7 +3216,7 @@
 	<string id="20001" value="Sluit"/>
 	<string id="20002" value="van"/><!-- e.g. 1 of 10 -->
 	<string id="20003" value="Verandering van die koppelvlak rigting vereis die oorbegin van Shareaza. \nJy sal weer Shareaza met die hand moet begin. Verlaat Shareaza nou?"/>
-	<string id="20004" value="Regs-na-links tale word nie ondersteun deur jou bedryfstelsel nie."/>
+	<string id="20004" value="Kanselleer"/>
 	<string id="20005" value="Nee"/>
 	<string id="20006" value="Ja"/>
 	<string id="20007" value="Auto"/>

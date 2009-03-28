@@ -1444,7 +1444,7 @@
 #define IDS_GENERAL_CLOSE               20001
 #define IDS_GENERAL_OF                  20002
 #define IDS_GENERAL_RTL_WARNING         20003
-#define IDS_GENERAL_RTL_NOTSUPPORTED    20004
+#define IDS_GENERAL_CANCEL              20004
 #define IDS_GENERAL_NO                  20005
 #define IDS_GENERAL_YES                 20006
 #define IDS_GENERAL_AUTO                20007

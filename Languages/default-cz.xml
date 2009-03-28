@@ -3119,7 +3119,7 @@
 	<string id="20001" value="Zavřít"/>
 	<string id="20002" value="z"/><!-- e.g. 1 of 10 -->
 	<string id="20003" value="Změna směru vyžaduje restart. \nBudete muset spustit Shareazu ručně. Ukončit?"/>
-	<string id="20004" value="Váš OS nepodporuje jazyky se směrem psaní zprava doleva."/>
+	<string id="20004" value="Zrušit"/>
 	<string id="20005" value="Ne"/>
 	<string id="20006" value="Ano"/>
 	<string id="20007" value="Auto"/>
@@ -3128,6 +3128,7 @@
 	<string id="20010" value="&amp;Zpět"/>
 	<string id="20011" value="&amp;Vpřed"/>
 	<string id="20012" value="Ukončit"/>
+	<string id="20013" value="All"/>
 	<string id="20100" value="Připojuji"/>
 	<string id="20101" value="Žádám"/>
 	<string id="20102" value="Odezva"/>
