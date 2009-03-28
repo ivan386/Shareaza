@@ -4206,7 +4206,6 @@ BEGIN
     IDS_GENERAL_CLOSE       "Close"
     IDS_GENERAL_OF          "of"
     IDS_GENERAL_RTL_WARNING "Changing interface direction requires restart. \nYou will need to start Shareaza manually. Exit now?"
-    IDS_GENERAL_CANCEL      "Cancel"
     IDS_GENERAL_NO          "No"
     IDS_GENERAL_YES         "Yes"
     IDS_GENERAL_AUTO        "Auto"
