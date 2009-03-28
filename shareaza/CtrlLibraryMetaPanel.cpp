@@ -1,7 +1,7 @@
 //
 // CtrlLibraryMetaPanel.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -679,21 +679,23 @@ BOOL CLibraryMetaPanel::OnMouseWheel(UINT /*nFlags*/, short zDelta, CPoint /*pt*
 
 void CLibraryMetaPanel::OnRun()
 {
+	Doze();
+	if ( !IsThreadEnabled() ) 
+		return;
+
 	while ( IsThreadEnabled() )
 	{
-		Doze();
-		if ( ! IsThreadEnabled() ) break;
-		if ( ! m_bNewFile && ! m_bForceUpdate || m_bDownloadingImage )
+		m_pSection.Lock();
+		if ( !m_bNewFile && !m_bForceUpdate || m_bDownloadingImage )
 		{
 			Exit();
-			break;
+			m_pSection.Unlock();
+			return;
 		}
 
-		m_pSection.Lock();
 		CString strPath = m_sPath;
 		CString strThumbRes = m_sThumb;
 		m_bForceUpdate = FALSE;
-		m_pSection.Unlock();
 
 		CImageFile pFile;
 		BOOL bSuccess = FALSE;
@@ -702,19 +704,16 @@ void CLibraryMetaPanel::OnRun()
 		{
 			m_bDownloadingImage = TRUE;
 			bSuccess = pFile.LoadFromURL( strThumbRes ) && pFile.EnsureRGB();
-			m_bDownloadingImage = FALSE;
+			m_pSection.Unlock();
 		}
 
-		if ( ! bSuccess )
+		if ( !bSuccess )
 			bSuccess = CThumbCache::Cache( strPath, &pFile );
 
 		if ( bSuccess )
 		{
 			// Resample now to display dimensions
 			pFile.FitTo( m_nThumbSize, m_nThumbSize );
-
-			m_pSection.Lock();
-
 			if ( m_sPath == strPath )
 			{
 				if ( m_bmThumb.m_hObject )
@@ -725,8 +724,11 @@ void CLibraryMetaPanel::OnRun()
 				m_szThumb.cy = pFile.m_nHeight;
 				Invalidate();
 			}
-
-			m_pSection.Unlock();
 		}
+		
+		if ( m_bDownloadingImage )
+			m_bDownloadingImage = FALSE;
+		else
+			m_pSection.Unlock();
 	}
 }

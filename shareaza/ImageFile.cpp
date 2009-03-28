@@ -127,10 +127,12 @@ BOOL CImageFile::LoadFromURL(LPCTSTR pszURL)
 {
 	CHttpRequest pImageFetcher;
 
-	pImageFetcher.SetURL( pszURL );
+	if ( !pImageFetcher.SetURL( pszURL ) )
+		return FALSE;
 	pImageFetcher.LimitContentLength( Settings.Search.MaxPreviewLength * 100 );
 
-	pImageFetcher.Execute( TRUE );
+	if ( !pImageFetcher.Execute( TRUE ) )
+		return FALSE;
 	while ( pImageFetcher.IsPending() )
 		Sleep( 50 );
 

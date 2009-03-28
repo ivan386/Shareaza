@@ -1,7 +1,7 @@
 //
 // HttpRequest.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -81,7 +81,8 @@ void CHttpRequest::Clear()
 
 BOOL CHttpRequest::SetURL(LPCTSTR pszURL)
 {
-	if ( IsPending() ) return FALSE;
+	if ( IsPending() ) 
+		return FALSE;
 	if ( pszURL == NULL || _tcsncmp( pszURL, _T("http"), 4 ) ) return FALSE;
 	m_sURL = pszURL;
 	return TRUE;
