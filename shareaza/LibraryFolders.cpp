@@ -102,6 +102,7 @@ BOOL CLibraryFolders::CheckFolder(CLibraryFolder* pFolder, BOOL bRecursive) cons
 	for ( POSITION pos = GetFolderIterator() ; pos ; )
 	{
 		if ( GetNextFolder( pos )->CheckFolder( pFolder, TRUE ) ) return TRUE;
+		CRazaThread::YieldProc();
 	}
 
 	return FALSE;
@@ -615,6 +616,7 @@ void CLibraryFolders::Maintain()
 	for ( POSITION pos = GetFolderIterator() ; pos ; )
 	{
 		GetNextFolder( pos )->Maintain( TRUE );
+		CRazaThread::YieldProc();
 	}
 }
 

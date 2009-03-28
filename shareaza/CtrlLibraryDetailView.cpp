@@ -1,7 +1,7 @@
 //
 // CtrlLibraryDetailView.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -316,6 +316,7 @@ void CLibraryDetailView::Update()
 			pItem[ m_nList - nCount ].pText = pSaved;
 			m_nList--;
 		}
+		CRazaThread::YieldProc();
 	}
 
 	for ( POSITION pos = LibraryMaps.GetFileIterator() ; pos ; )
@@ -344,6 +345,7 @@ void CLibraryDetailView::Update()
 			
 			pFile->m_nListCookie = nCookie;
 		}
+		CRazaThread::YieldProc();
 	}
 	
 	m_nListCookie++;

@@ -1,7 +1,7 @@
 //
 // CtrlLibraryTreeView.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -1268,6 +1268,7 @@ void CLibraryTreeView::UpdatePhysical(DWORD nSelectCookie)
 
 			if ( pOld == pFolder )
 			{
+				CRazaThread::YieldProc();
 				bChanged |= Update( pFolder, &*pChild, m_pRoot, TRUE, TRUE,
 					nCleanCookie, nSelectCookie, FALSE );
 				break;
@@ -1276,6 +1277,7 @@ void CLibraryTreeView::UpdatePhysical(DWORD nSelectCookie)
 
 		if ( pChild == m_pRoot->end() )
 		{
+			CRazaThread::YieldProc();
 			bChanged |= Update( pFolder, NULL, m_pRoot, TRUE, TRUE,
 				nCleanCookie, nSelectCookie, FALSE );
 		}
@@ -1376,6 +1378,7 @@ BOOL CLibraryTreeView::Update(CLibraryFolder* pFolder, CLibraryTreeItem* pItem, 
 
 			if ( pOld == pSub )
 			{
+				CRazaThread::YieldProc();
 				bChanged |= Update( pSub, &*pChild, pItem, bVisible, bShared,
 					nCleanCookie, nSelectCookie, bRecurse );
 				break;
@@ -1384,6 +1387,7 @@ BOOL CLibraryTreeView::Update(CLibraryFolder* pFolder, CLibraryTreeItem* pItem, 
 
 		if ( pChild == pItem->end() )
 		{
+			CRazaThread::YieldProc();
 			bChanged |= Update( pSub, NULL, pItem, bVisible, bShared,
 				nCleanCookie, nSelectCookie, bRecurse );
 		}
@@ -1477,6 +1481,7 @@ BOOL CLibraryTreeView::Update(CAlbumFolder* pFolder, CLibraryTreeItem* pItem, CL
 
 			if ( pOld == pSub )
 			{
+				CRazaThread::YieldProc();
 				bChanged |= Update( pSub, &*pChild, pItem, bVisible,
 					nCleanCookie, nSelectCookie );
 				break;
@@ -1485,6 +1490,7 @@ BOOL CLibraryTreeView::Update(CAlbumFolder* pFolder, CLibraryTreeItem* pItem, CL
 
 		if ( pChild == pItem->end() )
 		{
+			CRazaThread::YieldProc();
 			bChanged |= Update( pSub, NULL, pItem, bVisible,
 				nCleanCookie, nSelectCookie );
 		}
