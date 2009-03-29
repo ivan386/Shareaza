@@ -1,7 +1,7 @@
 //
 // BTTrackerRequest.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -202,6 +202,13 @@ void CBTTrackerRequest::Process(bool bRequest)
 {
 	CString strError;
 
+	CSingleLock oLock( &Transfers.m_pSection, FALSE );
+	if ( ! oLock.Lock( 500 ) )
+	{
+		theApp.Message( MSG_DEBUG, _T("[BT] Transfers overloaded.") );
+		return;
+	}
+
 	// Abort if the download has been paused after the request was sent but
 	// before a reply was received
 	if ( !m_pDownload->m_bTorrentRequested )
@@ -293,14 +300,10 @@ void CBTTrackerRequest::Process(CBENode* pRoot)
 	nInterval = max( nInterval, 60ull * 2ull );
 	nInterval = min( nInterval, 60ull * 60ull );
 
-	{
-		CQuickLock oLock( Transfers.m_pSection );
-
-		// nInterval is now between 120 - 3600 so this cast is safe
-		m_pDownload->m_tTorrentTracker = static_cast< DWORD >( nInterval ) * 1000ul;
-		m_pDownload->m_tTorrentTracker += GetTickCount();
-		m_pDownload->m_bTorrentStarted = TRUE;
-	}
+	// nInterval is now between 120 - 3600 so this cast is safe
+	m_pDownload->m_tTorrentTracker = static_cast< DWORD >( nInterval ) * 1000ul;
+	m_pDownload->m_tTorrentTracker += GetTickCount();
+	m_pDownload->m_bTorrentStarted = TRUE;
 
 	// Get list of peers
 	CBENode* pPeers = pRoot->GetNode( "peers" );

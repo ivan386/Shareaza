@@ -52,7 +52,7 @@ END_MESSAGE_MAP()
 // CConnectToDlg dialog
 
 CConnectToDlg::CConnectToDlg(CWnd* pParent, BOOL bBrowseHost) :
-	CSkinDialog		( CConnectToDlg::IDD, pParent, FALSE )
+	CSkinDialog		( CConnectToDlg::IDD, pParent )
 ,	m_bNoUltraPeer	( FALSE )
 ,	m_nPort			( GNUTELLA_DEFAULT_PORT )
 ,	m_nProtocol		( 1 )							// G2 Protocol

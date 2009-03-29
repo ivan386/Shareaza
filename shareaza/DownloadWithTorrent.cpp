@@ -1,7 +1,7 @@
 //
 // DownloadWithTorrent.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -251,9 +251,11 @@ BOOL CDownloadWithTorrent::SetTorrent(const CBTInfo& oTorrent)
 	ZeroMemory( m_pTorrentBlock, sizeof(BYTE) * m_nTorrentBlock );
 	SetModified();
 	
-	CreateDirectory( Settings.Downloads.TorrentPath );
-	LibraryFolders.AddFolder( Settings.Downloads.TorrentPath, FALSE );
-	oTorrent.SaveTorrentFile( Settings.Downloads.TorrentPath );
+	if ( CreateDirectory( Settings.Downloads.TorrentPath ) )
+	{
+		LibraryFolders.AddFolder( Settings.Downloads.TorrentPath, FALSE );
+		oTorrent.SaveTorrentFile( Settings.Downloads.TorrentPath );
+	}
 
 	if ( ! Settings.BitTorrent.AdvancedInterfaceSet )
 	{
@@ -520,11 +522,6 @@ void CDownloadWithTorrent::SendStopped()
 
 void CDownloadWithTorrent::OnTrackerEvent(bool bSuccess, LPCTSTR pszReason, LPCTSTR pszTip)
 {
-	CSingleLock oLock( &Transfers.m_pSection );
-	if ( ! oLock.Lock( 500 ) )
-		// Abort probably due download cancel
-		return;
-
 	DWORD tNow = GetTickCount();
 
 	if ( bSuccess )

@@ -36,7 +36,7 @@ static char THIS_FILE[]=__FILE__;
 // CSaveFilterAsDlg dialog
 
 CSaveFilterAsDlg::CSaveFilterAsDlg( CWnd* pParent /*=NULL*/ )
-	: CSkinDialog(CSaveFilterAsDlg::IDD, pParent, FALSE)
+	: CSkinDialog( CSaveFilterAsDlg::IDD, pParent )
 	, m_sName( _T( "" ) )
 {
 }

@@ -51,7 +51,7 @@ const unsigned CDecodeMetadataDlg::codePages[] =
 /////////////////////////////////////////////////////////////////////////////
 // CDecodeMetadataDlg dialog
 
-CDecodeMetadataDlg::CDecodeMetadataDlg(CWnd* pParent) : CSkinDialog(CDecodeMetadataDlg::IDD, pParent, FALSE)
+CDecodeMetadataDlg::CDecodeMetadataDlg(CWnd* pParent) : CSkinDialog(CDecodeMetadataDlg::IDD, pParent)
 , m_nMethod( 0 )
 , m_sPreview1( L"" )
 , m_sPreview2( L"" )

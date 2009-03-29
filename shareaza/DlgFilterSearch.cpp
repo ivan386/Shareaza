@@ -50,7 +50,7 @@ END_MESSAGE_MAP()
 // CFilterSearchDlg dialog
 
 CFilterSearchDlg::CFilterSearchDlg(CWnd* pParent, CMatchList* pMatches) 
-: CSkinDialog(CFilterSearchDlg::IDD, pParent, FALSE)
+: CSkinDialog(CFilterSearchDlg::IDD, pParent)
 , m_bHideBusy( FALSE )
 , m_bHideLocal( FALSE )
 , m_bHidePush( FALSE )

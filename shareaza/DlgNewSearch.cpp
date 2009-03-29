@@ -47,7 +47,7 @@ END_MESSAGE_MAP()
 // CNewSearchDlg dialog
 
 CNewSearchDlg::CNewSearchDlg(CWnd* pParent, auto_ptr< CQuerySearch > pSearch, BOOL bLocal, BOOL bAgain)
-: CSkinDialog( CNewSearchDlg::IDD, pParent, FALSE ),
+: CSkinDialog( CNewSearchDlg::IDD, pParent ),
   m_pSearch( pSearch )
 {
 	m_bLocal	= bLocal;

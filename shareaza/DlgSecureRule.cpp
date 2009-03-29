@@ -41,7 +41,7 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CSecureRuleDlg dialog
 
-CSecureRuleDlg::CSecureRuleDlg(CWnd* pParent, CSecureRule* pRule) : CSkinDialog(CSecureRuleDlg::IDD, pParent, FALSE)
+CSecureRuleDlg::CSecureRuleDlg(CWnd* pParent, CSecureRule* pRule) : CSkinDialog(CSecureRuleDlg::IDD, pParent)
 {
 	m_nExpireD = 0;
 	m_nExpireH = 0;
