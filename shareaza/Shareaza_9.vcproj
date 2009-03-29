@@ -2205,6 +2205,10 @@
 					>
 				</File>
 				<File
+					RelativePath="DlgSelect.cpp"
+					>
+				</File>
+				<File
 					RelativePath="DlgSettingsManager.cpp"
 					>
 				</File>
@@ -3923,6 +3927,10 @@
 				</File>
 				<File
 					RelativePath="DlgSecureRule.h"
+					>
+				</File>
+				<File
+					RelativePath="DlgSelect.h"
 					>
 				</File>
 				<File
