@@ -28,7 +28,6 @@
 #include "SharedFile.h"
 #include "AlbumFolder.h"
 #include "Schema.h"
-#include "SchemaCache.h"
 #include "CoolInterface.h"
 #include "ShellIcons.h"
 #include "Skin.h"
@@ -46,18 +45,15 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 
-IMPLEMENT_DYNCREATE(CLibraryMetaPanel, CLibraryPanel)
+IMPLEMENT_DYNCREATE(CLibraryMetaPanel, CPanelCtrl)
 
-BEGIN_MESSAGE_MAP(CLibraryMetaPanel, CLibraryPanel)
+BEGIN_MESSAGE_MAP(CLibraryMetaPanel, CPanelCtrl)
 	ON_WM_PAINT()
-	ON_WM_VSCROLL()
-	ON_WM_SIZE()
 	ON_WM_CREATE()
 	ON_WM_DESTROY()
 	ON_WM_SETCURSOR()
 	ON_WM_LBUTTONUP()
 	ON_WM_LBUTTONDOWN()
-	ON_WM_MOUSEWHEEL()
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -74,12 +70,6 @@ CLibraryMetaPanel::CLibraryMetaPanel()
 , m_bForceUpdate( FALSE )
 {
 	m_rcFolder.SetRectEmpty();
-
-	// Try to get the number of lines to scroll when the mouse wheel is rotated
-	if( !SystemParametersInfo ( SPI_GETWHEELSCROLLLINES, 0, &m_nScrollWheelLines, 0) )
-	{
-		m_nScrollWheelLines = 3;
-	}
 }
 
 CLibraryMetaPanel::~CLibraryMetaPanel()
@@ -91,33 +81,11 @@ CLibraryMetaPanel::~CLibraryMetaPanel()
 /////////////////////////////////////////////////////////////////////////////
 // CLibraryMetaPanel operations
 
-BOOL CLibraryMetaPanel::CheckAvailable(CLibraryTreeItem* pFolders, CLibraryList* /*pObjects*/)
+CLibraryList* CLibraryMetaPanel::GetViewSelection()
 {
-	m_bAvailable = FALSE;
-
-	if ( pFolders != NULL )
-	{
-		ASSERT_VALID( pFolders );
-
-		m_bAvailable = TRUE;
-
-		if ( pFolders->m_pSelNext == NULL && pFolders->m_pVirtual != NULL )
-		{
-			// Do not display meta panel for the collection folder
-			if ( pFolders->m_pVirtual->m_oCollSHA1 &&
-				 pFolders->m_pVirtual->GetBestView().Find( _T("Collection") ) > 0 ||
-				 CheckURI( pFolders->m_pVirtual->m_sSchemaURI, CSchema::uriCollectionsFolder ) )
-			{
-				 m_bAvailable = FALSE;
-				 return FALSE;
-			}
-
-			INT_PTR nFileCount = pFolders->m_pVirtual->GetFileCount();
-			m_bAvailable = ( nFileCount != 0 );
-		}
-	}
-
-	return m_bAvailable;
+	CLibraryFrame* pFrame = (CLibraryFrame*)GetOwner();
+	ASSERT_KINDOF(CLibraryFrame, pFrame);
+	return pFrame->GetViewSelection();
 }
 
 void CLibraryMetaPanel::Update()
@@ -272,7 +240,7 @@ void CLibraryMetaPanel::Update()
 
 int CLibraryMetaPanel::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
-	if ( CLibraryPanel::OnCreate( lpCreateStruct ) == -1 ) return -1;
+	if ( CPanelCtrl::OnCreate( lpCreateStruct ) == -1 ) return -1;
 
 	return 0;
 }
@@ -281,7 +249,7 @@ void CLibraryMetaPanel::OnDestroy()
 {
 	CloseThread();
 
-	CLibraryPanel::OnDestroy();
+	CPanelCtrl::OnDestroy();
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -536,57 +504,6 @@ CMetaPanel* CLibraryMetaPanel::GetServicePanel()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// CLibraryMetaPanel scrolling
-
-void CLibraryMetaPanel::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* /*pScrollBar*/)
-{
-	SCROLLINFO pScroll = {};
-
-	pScroll.cbSize	= sizeof(pScroll);
-	pScroll.fMask	= SIF_ALL;
-
-	GetScrollInfo( SB_VERT, &pScroll );
-
-	switch ( nSBCode )
-	{
-	case SB_TOP:
-		pScroll.nPos = 0;
-		break;
-	case SB_BOTTOM:
-		pScroll.nPos = pScroll.nMax - 1;
-		break;
-	case SB_LINEUP:
-		pScroll.nPos -= 8;
-		break;
-	case SB_LINEDOWN:
-		pScroll.nPos += 8;
-		break;
-	case SB_PAGEUP:
-		pScroll.nPos -= pScroll.nPage;
-		break;
-	case SB_PAGEDOWN:
-		pScroll.nPos += pScroll.nPage;
-		break;
-	case SB_THUMBPOSITION:
-	case SB_THUMBTRACK:
-		pScroll.nPos = nPos;
-		break;
-	}
-
-	pScroll.fMask	= SIF_POS;
-	pScroll.nPos	= max( 0, min( pScroll.nPos, pScroll.nMax ) );
-
-	SetScrollInfo( SB_VERT, &pScroll );
-	Invalidate();
-}
-
-void CLibraryMetaPanel::OnSize(UINT nType, int cx, int cy)
-{
-	CLibraryPanel::OnSize( nType, cx, cy );
-	Update();
-}
-
-/////////////////////////////////////////////////////////////////////////////
 // CLibraryMetaPanel linking
 
 BOOL CLibraryMetaPanel::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)
@@ -613,7 +530,7 @@ BOOL CLibraryMetaPanel::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)
 		return TRUE;
 	}
 
-	return CLibraryPanel::OnSetCursor( pWnd, nHitTest, message );
+	return CPanelCtrl::OnSetCursor( pWnd, nHitTest, message );
 }
 
 void CLibraryMetaPanel::OnLButtonUp(UINT nFlags, CPoint point)
@@ -658,7 +575,7 @@ void CLibraryMetaPanel::OnLButtonUp(UINT nFlags, CPoint point)
 		}
 	}
 
-	CLibraryPanel::OnLButtonUp( nFlags, point );
+	CPanelCtrl::OnLButtonUp( nFlags, point );
 }
 
 void CLibraryMetaPanel::OnLButtonDown(UINT /*nFlags*/, CPoint /*point*/)
@@ -666,12 +583,6 @@ void CLibraryMetaPanel::OnLButtonDown(UINT /*nFlags*/, CPoint /*point*/)
 	SetFocus();
 	CLibraryFrame* pFrame = (CLibraryFrame*)GetOwner();
 	pFrame->HideDynamicBar();
-}
-
-BOOL CLibraryMetaPanel::OnMouseWheel(UINT /*nFlags*/, short zDelta, CPoint /*pt*/)
-{
-	OnVScroll( SB_THUMBPOSITION, (int)( GetScrollPos( SB_VERT ) - zDelta / WHEEL_DELTA * m_nScrollWheelLines * 8 ), NULL );
-	return TRUE;
 }
 
 /////////////////////////////////////////////////////////////////////////////

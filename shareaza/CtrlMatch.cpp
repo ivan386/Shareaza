@@ -1555,8 +1555,13 @@ void CMatchCtrl::OnLButtonDown(UINT nFlags, CPoint point)
 	Update();
 }
 
-void CMatchCtrl::OnMouseMove(UINT /*nFlags*/, CPoint point) 
+void CMatchCtrl::OnMouseMove(UINT nFlags, CPoint point) 
 {
+	CWnd::OnMouseMove( nFlags, point );
+
+	if ( GetFocus() != this )
+		SetFocus();
+
 	CRect rcCol;
 	
 	GetClientRect( &rcCol );

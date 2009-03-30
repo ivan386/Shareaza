@@ -240,8 +240,10 @@ void CLibraryFileView::OnContextMenu(CWnd* /*pWnd*/, CPoint point)
 	Skin.TrackPopupMenu( strName, point, ID_LIBRARY_LAUNCH, 0, oFiles );
 }
 
-void CLibraryFileView::OnMouseMove(UINT /*nFlags*/, CPoint point) 
+void CLibraryFileView::OnMouseMove(UINT nFlags, CPoint point) 
 {
+	CLibraryView::OnMouseMove( nFlags, point );
+
 	if ( DWORD_PTR nFile = HitTestIndex( point ) )
 	{
 		GetToolTip()->Show( (void*)nFile );

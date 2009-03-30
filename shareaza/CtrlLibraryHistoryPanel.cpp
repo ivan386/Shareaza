@@ -1,7 +1,7 @@
 //
 // CtrlLibraryHistoryPanel.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -20,16 +20,9 @@
 //
 
 #include "StdAfx.h"
-#include "Shareaza.h"
-#include "Settings.h"
 #include "Library.h"
 #include "LibraryHistory.h"
-#include "AlbumFolder.h"
-#include "SharedFile.h"
-#include "CoolInterface.h"
 #include "ShellIcons.h"
-#include "Skin.h"
-
 #include "CtrlLibraryFrame.h"
 #include "CtrlLibraryHistoryPanel.h"
 
@@ -39,16 +32,13 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 
-BEGIN_MESSAGE_MAP(CLibraryHistoryPanel, CLibraryPanel)
-	//{{AFX_MSG_MAP(CLibraryHistoryPanel)
-	ON_WM_SIZE()
+IMPLEMENT_DYNAMIC(CLibraryHistoryPanel, CPanelCtrl)
+
+BEGIN_MESSAGE_MAP(CLibraryHistoryPanel, CPanelCtrl)
 	ON_WM_PAINT()
-	ON_WM_VSCROLL()
 	ON_WM_SETCURSOR()
 	ON_WM_LBUTTONUP()
 	ON_WM_LBUTTONDOWN()
-	ON_WM_MOUSEWHEEL()
-	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 
@@ -57,11 +47,6 @@ END_MESSAGE_MAP()
 
 CLibraryHistoryPanel::CLibraryHistoryPanel()
 {
-	// Try to get the number of lines to scroll when the mouse wheel is rotated
-	if( !SystemParametersInfo ( SPI_GETWHEELSCROLLLINES, 0, &m_nScrollWheelLines, 0) )
-	{
-		m_nScrollWheelLines = 3;
-	}
 }
 
 CLibraryHistoryPanel::~CLibraryHistoryPanel()
@@ -74,12 +59,6 @@ CLibraryHistoryPanel::~CLibraryHistoryPanel()
 
 /////////////////////////////////////////////////////////////////////////////
 // CLibraryHistoryPanel operations
-
-BOOL CLibraryHistoryPanel::CheckAvailable(CLibraryTreeItem* pFolders, CLibraryList* /*pObjects*/)
-{
-	m_bAvailable = ( pFolders == NULL );
-	return m_bAvailable;
-}
 
 void CLibraryHistoryPanel::Update()
 {
@@ -159,12 +138,6 @@ void CLibraryHistoryPanel::Update()
 
 /////////////////////////////////////////////////////////////////////////////
 // CLibraryHistoryPanel message handlers
-
-void CLibraryHistoryPanel::OnSize(UINT nType, int cx, int cy) 
-{
-	CLibraryPanel::OnSize( nType, cx, cy );
-	Update();
-}
 
 void CLibraryHistoryPanel::OnPaint() 
 {
@@ -272,48 +245,6 @@ void CLibraryHistoryPanel::OnPaint()
 	dc.FillSolidRect( &rcClient, CoolInterface.m_crWindow );
 }
 
-void CLibraryHistoryPanel::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* /*pScrollBar*/) 
-{
-	SCROLLINFO pScroll = {};
-
-	pScroll.cbSize	= sizeof(pScroll);
-	pScroll.fMask	= SIF_ALL;
-
-	GetScrollInfo( SB_VERT, &pScroll );
-
-	switch ( nSBCode )
-	{
-	case SB_TOP:
-		pScroll.nPos = 0;
-		break;
-	case SB_BOTTOM:
-		pScroll.nPos = pScroll.nMax - 1;
-		break;
-	case SB_LINEUP:
-		pScroll.nPos -= 8;
-		break;
-	case SB_LINEDOWN:
-		pScroll.nPos += 8;
-		break;
-	case SB_PAGEUP:
-		pScroll.nPos -= pScroll.nPage;
-		break;
-	case SB_PAGEDOWN:
-		pScroll.nPos += pScroll.nPage;
-		break;
-	case SB_THUMBPOSITION:
-	case SB_THUMBTRACK:
-		pScroll.nPos = nPos;
-		break;
-	}
-	
-	pScroll.fMask	= SIF_POS;
-	pScroll.nPos	= max( 0, min( pScroll.nPos, pScroll.nMax ) );
-	
-	SetScrollInfo( SB_VERT, &pScroll );
-	Invalidate();
-}
-
 BOOL CLibraryHistoryPanel::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message) 
 {
 	CPoint point;
@@ -333,7 +264,7 @@ BOOL CLibraryHistoryPanel::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)
 		}
 	}
 	
-	return CLibraryPanel::OnSetCursor( pWnd, nHitTest, message );
+	return CPanelCtrl::OnSetCursor( pWnd, nHitTest, message );
 }
 
 void CLibraryHistoryPanel::OnLButtonUp(UINT nFlags, CPoint point) 
@@ -353,19 +284,12 @@ void CLibraryHistoryPanel::OnLButtonUp(UINT nFlags, CPoint point)
 	
 	point.y -= GetScrollPos( SB_VERT );
 	
-	CLibraryPanel::OnLButtonUp( nFlags, point );
+	CPanelCtrl::OnLButtonUp( nFlags, point );
 }
 
 void CLibraryHistoryPanel::OnLButtonDown(UINT /*nFlags*/, CPoint /*point*/)
 {
 	SetFocus();
-}
-
-BOOL CLibraryHistoryPanel::OnMouseWheel(UINT /*nFlags*/, short zDelta, CPoint /*pt*/)
-{
-	OnVScroll( SB_THUMBPOSITION, (int)( GetScrollPos( SB_VERT ) - 
-		zDelta / WHEEL_DELTA * m_nScrollWheelLines * 8 ), NULL );
-	return TRUE;
 }
 
 void CLibraryHistoryPanel::OnClickFile(DWORD nFile)

@@ -1,7 +1,7 @@
 //
 // CtrlLibraryView.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -18,9 +18,6 @@
 // along with Shareaza; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
-
-#if !defined(AFX_CTRLLIBRARYVIEW_H__9FA28C5B_A6A3_4616_9407_4661EA1C7B8A__INCLUDED_)
-#define AFX_CTRLLIBRARYVIEW_H__9FA28C5B_A6A3_4616_9407_4661EA1C7B8A__INCLUDED_
 
 #pragma once
 
@@ -85,17 +82,13 @@ public:
 
 // Implementation
 protected:
-	//{{AFX_MSG(CLibraryView)
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg void OnDestroy();
-	//}}AFX_MSG
+	afx_msg void OnMouseMove(UINT nFlags, CPoint point);
 
 	DECLARE_MESSAGE_MAP()
+
 	DECLARE_DROP()
 };
 
-//{{AFX_INSERT_LOCATION}}
-
 #define IDC_LIBRARY_VIEW	132
-
-#endif // !defined(AFX_CTRLLIBRARYVIEW_H__9FA28C5B_A6A3_4616_9407_4661EA1C7B8A__INCLUDED_)

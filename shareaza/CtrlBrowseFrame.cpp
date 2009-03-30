@@ -1,7 +1,7 @@
 //
 // CtrlBrowseFrame.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2006.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -514,7 +514,7 @@ void CBrowseFrameCtrl::SelectTree(CBrowseTreeItem* pItem, CQueryHit* pHit)
 void CBrowseFrameCtrl::OnSelChangeMatches()
 {
 	CSingleLock pLock( &m_wndList->m_pMatches->m_pSection, TRUE );
-	m_wndDetails.Update( m_wndList->m_pMatches->GetSelectedFile( TRUE ) );
+	m_wndDetails.SetFile( m_wndList->m_pMatches->GetSelectedFile( TRUE ) );
 	pLock.Unlock();
 
 	if ( m_bPanelEnable == FALSE )

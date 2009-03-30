@@ -1,7 +1,7 @@
 //
 // CtrlLibraryFrame.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -34,6 +34,7 @@
 #include "DlgNewSearch.h"
 #include "CoolInterface.h"
 #include "Skin.h"
+#include "SchemaCache.h"
 
 #include "CtrlLibraryView.h"
 #include "CtrlLibraryCollectionView.h"
@@ -41,10 +42,6 @@
 #include "CtrlLibraryThumbView.h"
 #include "CtrlLibraryAlbumView.h"
 #include "CtrlLibraryTileView.h"
-
-#include "CtrlLibraryPanel.h"
-#include "CtrlLibraryMetaPanel.h"
-#include "CtrlLibraryHistoryPanel.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -107,9 +104,6 @@ CLibraryFrame::CLibraryFrame()
 	m_pViews.AddTail( new CLibraryAlbumView() );
 	m_pViews.AddTail( new CLibraryCollectionView() );
 	m_pViews.AddTail( new CLibraryTileView() );
-
-	m_pPanels.AddTail( new CLibraryMetaPanel() );
-	m_pPanels.AddTail( new CLibraryHistoryPanel() );
 }
 
 CLibraryFrame::~CLibraryFrame()
@@ -117,11 +111,6 @@ CLibraryFrame::~CLibraryFrame()
 	for ( POSITION pos = m_pViews.GetHeadPosition() ; pos ; )
 	{
 		delete m_pViews.GetNext( pos );
-	}
-
-	for ( POSITION pos = m_pPanels.GetHeadPosition() ; pos ; )
-	{
-		delete m_pPanels.GetNext( pos );
 	}
 }
 
@@ -221,7 +210,7 @@ void CLibraryFrame::OnSkinChange()
 	m_wndHeader.OnSkinChange();
 
 	CLibraryView* pView		= m_pView;
-	CLibraryPanel* pPanel	= m_pPanel;
+	CPanelCtrl* pPanel	= m_pPanel;
 
 	SetView( NULL, TRUE, FALSE );
 	SetView( pView, TRUE, FALSE );
@@ -676,7 +665,7 @@ void CLibraryFrame::SetView(CLibraryView* pView, BOOL bUpdate, BOOL bUser)
 	Invalidate();
 }
 
-void CLibraryFrame::SetPanel(CLibraryPanel* pPanel)
+void CLibraryFrame::SetPanel(CPanelCtrl* pPanel)
 {
 	if ( pPanel == m_pPanel )
 	{
@@ -688,7 +677,7 @@ void CLibraryFrame::SetPanel(CLibraryPanel* pPanel)
 		return;
 	}
 
-	CLibraryPanel* pOld = m_pPanel;
+	CPanelCtrl* pOld = m_pPanel;
 	m_pPanel = pPanel;
 
 	if ( m_pPanel ) 
@@ -822,21 +811,26 @@ void CLibraryFrame::UpdatePanel(BOOL bForce)
 	m_bViewSelection = FALSE;
 
 	m_pViewSelection			= m_pView ? &m_pView->m_pSelection : &m_pViewEmpty;
-	CLibraryPanel* pFirstPanel	= NULL;
-
-	for ( POSITION pos = m_pPanels.GetHeadPosition() ; pos ; )
-	{
-		CLibraryPanel* pPanel = m_pPanels.GetNext( pos );
-
-		if ( pPanel->CheckAvailable( m_wndTree.GetFirstSelected(), m_pViewSelection )
-			&& pFirstPanel == NULL ) pFirstPanel = pPanel;
-	}
+	
+	CLibraryTreeItem* pFolders = m_wndTree.GetFirstSelected();
+	BOOL bMetaPanelAvailable = pFolders &&
+		( pFolders->m_pSelNext == NULL ) &&
+		( pFolders->m_pVirtual == NULL ||
+		// Do not display meta panel for the collection folder
+		( ! ( pFolders->m_pVirtual->m_oCollSHA1 &&
+		  pFolders->m_pVirtual->GetBestView().Find( _T("Collection") ) > 0 ||
+		  CheckURI( pFolders->m_pVirtual->m_sSchemaURI, CSchema::uriCollectionsFolder ) ) &&
+		  pFolders->m_pVirtual->GetFileCount() != 0 ) );
+	BOOL bHistoryPanelAvailable = ( pFolders == NULL );
 
 	if ( m_bPanelShow )
 	{
-		if ( m_pPanel == NULL || m_pPanel->m_bAvailable == FALSE )
+		if ( m_pPanel == NULL ||
+			( m_pPanel == &m_pMetaPanel    && ! bMetaPanelAvailable ) ||
+			( m_pPanel == &m_pHistoryPanel && ! bHistoryPanelAvailable ) )
 		{
-			SetPanel( pFirstPanel );
+			SetPanel( bMetaPanelAvailable ? static_cast< CPanelCtrl* >( &m_pMetaPanel ) :
+				( bHistoryPanelAvailable ? static_cast< CPanelCtrl* >( &m_pHistoryPanel ) : NULL ) );
 		}
 		else
 		{

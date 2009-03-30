@@ -1,7 +1,7 @@
 //
 // WndSearch.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -921,13 +921,13 @@ void CSearchWnd::OnTimer(UINT_PTR nIDEvent)
 
 	CBaseMatchWnd::OnTimer( nIDEvent );
 
-	if ( m_pMatches->m_nFilteredHits == 0 ) m_wndDetails.Update( NULL );
+	if ( m_pMatches->m_nFilteredHits == 0 ) m_wndDetails.SetFile( NULL );
 }
 
 void CSearchWnd::OnSelChangeMatches()
 {
 	CSingleLock pLock( &m_pMatches->m_pSection, TRUE );
-	m_wndDetails.Update( m_pMatches->GetSelectedFile( TRUE ) );
+	m_wndDetails.SetFile( m_pMatches->GetSelectedFile( TRUE ) );
 }
 
 /////////////////////////////////////////////////////////////////////////////

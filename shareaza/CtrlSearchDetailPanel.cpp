@@ -1,7 +1,7 @@
 //
 // CtrlSearchDetailPanel.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -45,27 +45,17 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 
-IMPLEMENT_DYNAMIC(CSearchDetailPanel, CWnd)
+IMPLEMENT_DYNAMIC(CSearchDetailPanel, CPanelCtrl)
 
-BEGIN_MESSAGE_MAP(CSearchDetailPanel, CWnd)
-	//{{AFX_MSG_MAP(CSearchDetailPanel)
-	ON_WM_CREATE()
+BEGIN_MESSAGE_MAP(CSearchDetailPanel, CPanelCtrl)
 	ON_WM_DESTROY()
-	ON_WM_SIZE()
 	ON_WM_VSCROLL()
 	ON_WM_PAINT()
 	ON_WM_SETCURSOR()
 	ON_WM_LBUTTONUP()
 	ON_WM_LBUTTONDOWN()
-	ON_WM_MOUSEWHEEL()
-	ON_WM_ERASEBKGND()
-	ON_NOTIFY(RVN_CLICK, IDC_REVIEW_VIEW, OnClickReview)
-	//}}AFX_MSG_MAP
-	ON_WM_CONTEXTMENU()
+	ON_NOTIFY(RVN_CLICK, IDC_REVIEW_VIEW, &CSearchDetailPanel::OnClickReview)
 END_MESSAGE_MAP()
-
-#define SIZE_INTERNAL	1982
-
 
 /////////////////////////////////////////////////////////////////////////////
 // CSearchDetailPanel construction
@@ -78,7 +68,6 @@ CSearchDetailPanel::CSearchDetailPanel() :
 	m_nIcon32( 0 ),
 	m_nRating( 0 ),
 	m_pSchema( NULL ),
-	m_nScrollWheelLines( 0 ),
 	m_bCanPreview( FALSE ),
 	m_bRunPreview( FALSE ),
 	m_bIsPreviewing( FALSE ),
@@ -89,12 +78,6 @@ CSearchDetailPanel::CSearchDetailPanel() :
 	m_rcStatus.SetRectEmpty();
 	m_szThumb.SetSize( 0, 0 );
 	m_rcThumb.SetRectEmpty();
-
-	// Try to get the number of lines to scroll when the mouse wheel is rotated
-	if( !SystemParametersInfo ( SPI_GETWHEELSCROLLLINES, 0, &m_nScrollWheelLines, 0) )
-	{
-		m_nScrollWheelLines = 3;
-	}
 }
 
 CSearchDetailPanel::~CSearchDetailPanel()
@@ -105,14 +88,7 @@ CSearchDetailPanel::~CSearchDetailPanel()
 /////////////////////////////////////////////////////////////////////////////
 // CSearchDetailPanel operations
 
-BOOL CSearchDetailPanel::Create(CWnd* pParentWnd) 
-{
-	CRect rect( 0, 0, 0, 0 );
-	return CreateEx( WS_EX_CONTROLPARENT, NULL, _T("CSearchDetailPanel"), WS_CHILD |
-		WS_TABSTOP | WS_VSCROLL | WS_CLIPCHILDREN, rect, pParentWnd, 0, NULL );
-}
-
-void CSearchDetailPanel::Update(CMatchFile* pFile)
+void CSearchDetailPanel::SetFile(CMatchFile* pFile)
 {
 	CSingleLock pLock( &m_pSection, TRUE );
 	
@@ -125,15 +101,14 @@ void CSearchDetailPanel::Update(CMatchFile* pFile)
 		if ( m_bValid )
 		{
 			m_bValid = FALSE;
-			OnSize( SIZE_INTERNAL, 0, 0 );
+			Update();
 		}
 		return;
 	}
 	
-	bool bFileChanged = m_pFile != pFile;
+	m_pFile		= pFile;
 	m_pMatches	= pFile->m_pList;
 	m_bValid	= TRUE;
-	m_pFile		= pFile;
 	m_oSHA1		= pFile->m_oSHA1;
 	m_sName		= pFile->m_sName;
 	m_sSize		= pFile->m_sSize;
@@ -150,89 +125,53 @@ void CSearchDetailPanel::Update(CMatchFile* pFile)
 	m_pMetadata.CreateLinks();
 	m_pMetadata.Clean( 4096 );
 	
-	if ( IsWindowVisible() || bFileChanged )
+	CString strPart;
+	m_sStatus.Empty();
+	
+	if ( pFile->m_nSources == 1 )
 	{
-		CString strPart;
-		m_sStatus.Empty();
-		
-		if ( pFile->m_nSources == 1 )
-		{
-			strPart.Format( IDS_SEARCH_DETAILS_SOURCES_ONE,
-				Settings.SmartVolume( nSpeed, KiloBytes ) );
-			m_sStatus += strPart;
-		}
-		else
-		{
-			if ( pFile->m_nSources == 0 )
-				nSpeed = 0;
-			strPart.Format( IDS_SEARCH_DETAILS_SOURCES_MANY,
-				pFile->m_nSources,
-				Settings.SmartVolume( nSpeed, KiloBytes ) );
-			m_sStatus += strPart;
-		}
-		
-		if ( m_pReviews.GetCount() > 1 )
-		{
-			strPart.Format( IDS_SEARCH_DETAILS_REVIEWS_MANY,
-				m_pReviews.GetCount() );
-			m_sStatus += strPart;
-		}
-		else if ( m_pReviews.GetCount() == 1 )
-		{
-			LoadString( strPart, IDS_SEARCH_DETAILS_REVIEWS_ONE );
-			m_sStatus += strPart;
-		}
-		
-		if ( pFile->m_pPreview != NULL && pFile->m_nPreview > 0 )
-		{
-			CImageFile pImage;
-			
-			if ( pImage.LoadFromMemory( _T(".jpg"), (LPCVOID)pFile->m_pPreview, pFile->m_nPreview, FALSE, TRUE ) )
-			{
-				pLock.Unlock();
-				OnPreviewLoaded( m_oSHA1, &pImage );
-			}
-		}
-		
-		OnSize( SIZE_INTERNAL, 0, 0 );
+		strPart.Format( IDS_SEARCH_DETAILS_SOURCES_ONE,
+			Settings.SmartVolume( nSpeed, KiloBytes ) );
+		m_sStatus += strPart;
 	}
-}
-
-void CSearchDetailPanel::ClearReviews()
-{
-	for ( POSITION pos = m_pReviews.GetHeadPosition() ; pos ; )
+	else
 	{
-		delete m_pReviews.GetNext( pos );
+		if ( pFile->m_nSources == 0 )
+			nSpeed = 0;
+		strPart.Format( IDS_SEARCH_DETAILS_SOURCES_MANY,
+			pFile->m_nSources,
+			Settings.SmartVolume( nSpeed, KiloBytes ) );
+		m_sStatus += strPart;
 	}
 	
-	m_pReviews.RemoveAll();
-}
-
-/////////////////////////////////////////////////////////////////////////////
-// CSearchDetailPanel message handlers
-
-int CSearchDetailPanel::OnCreate(LPCREATESTRUCT lpCreateStruct) 
-{
-	if ( CWnd::OnCreate( lpCreateStruct ) == -1 ) return -1;
-	return 0;
-}
-
-void CSearchDetailPanel::OnDestroy() 
-{
-	ClearReviews();
-
-	CancelPreview();
-
-	CloseThread();
-
-	CWnd::OnDestroy();
-}
-
-void CSearchDetailPanel::OnSize(UINT nType, int cx, int cy) 
-{
-	if ( nType != SIZE_INTERNAL ) CWnd::OnSize( nType, cx, cy );
+	if ( m_pReviews.GetCount() > 1 )
+	{
+		strPart.Format( IDS_SEARCH_DETAILS_REVIEWS_MANY,
+			m_pReviews.GetCount() );
+		m_sStatus += strPart;
+	}
+	else if ( m_pReviews.GetCount() == 1 )
+	{
+		LoadString( strPart, IDS_SEARCH_DETAILS_REVIEWS_ONE );
+		m_sStatus += strPart;
+	}
 	
-	SCROLLINFO pInfo;
+	if ( pFile->m_pPreview != NULL && pFile->m_nPreview > 0 )
+	{
+		CImageFile pImage;
+		
+		if ( pImage.LoadFromMemory( _T(".jpg"), (LPCVOID)pFile->m_pPreview, pFile->m_nPreview, FALSE, TRUE ) )
+		{
+			pLock.Unlock();
+			OnPreviewLoaded( m_oSHA1, &pImage );
+		}
+	}
+
+	Update();
+}
+
+void CSearchDetailPanel::Update()
+{
 	CRect rc;
 	
 	GetWindowRect( &rc );
@@ -258,6 +197,7 @@ void CSearchDetailPanel::OnSize(UINT nType, int cx, int cy)
 	
 	if ( ! m_bValid ) nHeight = 0;
 	
+	SCROLLINFO pInfo = {};
 	pInfo.cbSize	= sizeof(pInfo);
 	pInfo.fMask		= SIF_ALL & ~SIF_TRACKPOS;
 	pInfo.nMin		= 0;
@@ -271,69 +211,51 @@ void CSearchDetailPanel::OnSize(UINT nType, int cx, int cy)
 	Invalidate();
 }
 
-void CSearchDetailPanel::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* /*pScrollBar*/) 
+void CSearchDetailPanel::ClearReviews()
 {
-	SCROLLINFO pScroll = {};
-	
-	pScroll.cbSize	= sizeof(pScroll);
-	pScroll.fMask	= SIF_ALL;
-	
-	GetScrollInfo( SB_VERT, &pScroll );
-	
-	switch ( nSBCode )
+	for ( POSITION pos = m_pReviews.GetHeadPosition() ; pos ; )
 	{
-	case SB_TOP:
-		pScroll.nPos = 0;
-		break;
-	case SB_BOTTOM:
-		pScroll.nPos = pScroll.nMax - 1;
-		break;
-	case SB_LINEUP:
-		pScroll.nPos -= 8;
-		break;
-	case SB_LINEDOWN:
-		pScroll.nPos += 8;
-		break;
-	case SB_PAGEUP:
-		pScroll.nPos -= pScroll.nPage;
-		break;
-	case SB_PAGEDOWN:
-		pScroll.nPos += pScroll.nPage;
-		break;
-	case SB_THUMBPOSITION:
-	case SB_THUMBTRACK:
-		pScroll.nPos = nPos;
-		break;
+		delete m_pReviews.GetNext( pos );
 	}
 	
-	pScroll.fMask	= SIF_POS;
-	pScroll.nPos	= max( 0, min( pScroll.nPos, pScroll.nMax ) );
-	
-	SetScrollInfo( SB_VERT, &pScroll );
+	m_pReviews.RemoveAll();
+}
+
+/////////////////////////////////////////////////////////////////////////////
+// CSearchDetailPanel message handlers
+
+void CSearchDetailPanel::OnDestroy() 
+{
+	ClearReviews();
+
+	CancelPreview();
+
+	CloseThread();
+
+	CPanelCtrl::OnDestroy();
+}
+
+void CSearchDetailPanel::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar) 
+{
+	CPanelCtrl::OnVScroll( nSBCode, nPos, pScrollBar );
+
+	SCROLLINFO pScroll = {};
+	pScroll.cbSize	= sizeof(pScroll);
+	pScroll.fMask	= SIF_ALL;
+	GetScrollInfo( SB_VERT, &pScroll );
 
 	for ( POSITION pos = m_pReviews.GetHeadPosition() ; pos ; )
 	{
 		Review* pReview = m_pReviews.GetNext( pos );
 		pReview->Reposition( pScroll.nPos );
 	}
-	
+
 	Invalidate();
 }
 
 void CSearchDetailPanel::OnLButtonDown(UINT /*nFlags*/, CPoint /*point*/)
 {
 	SetFocus();
-}
-
-BOOL CSearchDetailPanel::OnMouseWheel(UINT /*nFlags*/, short zDelta, CPoint /*pt*/)
-{
-	OnVScroll( SB_THUMBPOSITION, (int)( GetScrollPos( SB_VERT ) - zDelta / WHEEL_DELTA * m_nScrollWheelLines * 8 ), NULL );
-	return TRUE;
-}
-
-BOOL CSearchDetailPanel::OnEraseBkgnd(CDC* /*pDC*/) 
-{
-	return TRUE;
 }
 
 void CSearchDetailPanel::OnPaint() 
@@ -613,7 +535,7 @@ BOOL CSearchDetailPanel::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)
 		return TRUE;
 	}
 	
-	return CWnd::OnSetCursor( pWnd, nHitTest, message );
+	return CPanelCtrl::OnSetCursor( pWnd, nHitTest, message );
 }
 
 void CSearchDetailPanel::OnLButtonUp(UINT nFlags, CPoint point) 
@@ -635,7 +557,7 @@ void CSearchDetailPanel::OnLButtonUp(UINT nFlags, CPoint point)
 	
 	m_pMetadata.OnClick( point );
 	
-	CWnd::OnLButtonUp( nFlags, point );
+	CPanelCtrl::OnLButtonUp( nFlags, point );
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -946,8 +868,4 @@ BOOL CSearchDetailPanel::CachePreviewImage(const Hashes::Sha1Hash& /*oSHA1*/, LP
 	}
 	
 	return FALSE;
-}
-
-void CSearchDetailPanel::OnContextMenu(CWnd* /*pWnd*/, CPoint /*point*/)
-{
 }

@@ -1,5 +1,5 @@
 //
-// CtrlLibraryHistoryPanel.h
+// CtrlPanel.h
 //
 // Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
@@ -21,48 +21,26 @@
 
 #pragma once
 
-#include "SharedFile.h"
-#include "CtrlPanel.h"
 
-
-class CLibraryHistoryPanel : public CPanelCtrl
+class CPanelCtrl : public CWnd
 {
-	DECLARE_DYNAMIC(CLibraryHistoryPanel)
+	DECLARE_DYNAMIC(CPanelCtrl)
 
 public:
-	CLibraryHistoryPanel();
-	virtual ~CLibraryHistoryPanel();
+	CPanelCtrl();
 
-	virtual void Update();
+	virtual BOOL Create(CWnd* pParentWnd);
+
+	// Recalculate content sizes and update scrollbars
+	virtual void Update() = 0;
 
 protected:
-	class Item
-	{
-	public:
-		inline Item() throw() :
-			m_pRecent( NULL ),
-			m_nIndex( 0 ),
-			m_nIcon16( 0 ) { ZeroMemory( &m_pTime, sizeof ( m_pTime ) ); }
+	int	m_nScrollWheelLines;	// Number of lines to scroll when the mouse wheel is rotated
 
-		CLibraryRecent*	m_pRecent;
-		DWORD			m_nIndex;
-		SYSTEMTIME		m_pTime;
-		CString			m_sText;
-		CString			m_sTime;
-		int				m_nIcon16;
-		CRect			m_rect;
-	};
-
-	CArray< Item* > m_pList;
-	Item*		m_pHover;
-	int			m_nColumns;
-
-	void	OnClickFile(DWORD nFile);
-
-	afx_msg void OnPaint();
-	afx_msg BOOL OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message);
-	afx_msg void OnLButtonUp(UINT nFlags, CPoint point);
-	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
+	afx_msg BOOL OnMouseWheel(UINT nFlags, short zDelta, CPoint pt);
+	afx_msg void OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
+	afx_msg void OnSize(UINT nType, int cx, int cy);
+	afx_msg void OnMouseMove(UINT nFlags, CPoint point);
 
 	DECLARE_MESSAGE_MAP()
 };

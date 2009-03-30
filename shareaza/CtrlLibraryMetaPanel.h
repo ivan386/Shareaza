@@ -1,7 +1,7 @@
 //
 // CtrlLibraryMetaPanel.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -21,7 +21,7 @@
 
 #pragma once
 
-#include "CtrlLibraryPanel.h"
+#include "CtrlPanel.h"
 #include "MetaPanel.h"
 
 class CSchema;
@@ -29,17 +29,20 @@ class CLibraryFile;
 
 
 class CLibraryMetaPanel :
-	public CLibraryPanel,
+	public CPanelCtrl,
 	public CThreadImpl
 {
-// Construction
+	DECLARE_DYNCREATE(CLibraryMetaPanel)
+
 public:
 	CLibraryMetaPanel();
 	virtual ~CLibraryMetaPanel();
 
-	DECLARE_DYNCREATE(CLibraryMetaPanel)
+	virtual void Update();
 
-// Attributes
+	BOOL		SetServicePanel(CMetaPanel* pPanel);
+	CMetaPanel*	GetServicePanel();
+
 protected:
 	int				m_nSelected;
 	DWORD			m_nIndex;
@@ -57,8 +60,7 @@ protected:
 	CMetaPanel*		m_pServiceData;
 	CRect			m_rcFolder;
 	CRect			m_rcRating;
-	int				m_nScrollWheelLines;
-protected:
+
 	CCriticalSection	m_pSection;
 	BOOL				m_bExternalData;
 	BOOL				m_bDownloadingImage;
@@ -69,32 +71,20 @@ protected:
 	int					m_nThumbSize;
 	CString				m_sThumb;
 
-// Operations
-public:
-	virtual BOOL CheckAvailable(CLibraryTreeItem* pFolders, CLibraryList* pObjects);
-	virtual void Update();
+	CLibraryList*	GetViewSelection();
 
-	BOOL		SetServicePanel(CMetaPanel* pPanel);
-	CMetaPanel*	GetServicePanel();
-
-protected:
 	void	DrawText(CDC* pDC, int nX, int nY, LPCTSTR pszText, RECT* pRect = NULL, int nMaxWidth = -1);
 	void	DrawThumbnail(CDC* pDC, CRect& rcClient, CRect& rcWork);
 	void	DrawThumbnail(CDC* pDC, CRect& rcThumb);
-protected:
-	void		OnRun();
 
-// Implementation
-protected:
+	void	OnRun();
+
 	afx_msg void OnPaint();
-	afx_msg void OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
-	afx_msg void OnSize(UINT nType, int cx, int cy);
 	afx_msg int  OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg void OnDestroy();
 	afx_msg BOOL OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message);
 	afx_msg void OnLButtonUp(UINT nFlags, CPoint point);
 	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
-	afx_msg BOOL OnMouseWheel(UINT nFlags, short zDelta, CPoint pt);
 
 	DECLARE_MESSAGE_MAP()
 };

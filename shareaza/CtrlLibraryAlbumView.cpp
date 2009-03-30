@@ -1,7 +1,7 @@
 //
 // CtrlLibraryAlbumView.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -778,6 +778,7 @@ void CLibraryAlbumView::OnMouseMove(UINT nFlags, CPoint point)
 		m_bDrag = FALSE;
 	
 	// CLibraryFileView::OnMouseMove( nFlags, point );	Overridden below!
+	CLibraryView::OnMouseMove( nFlags, point );
 	
 	CLibraryTipCtrl* pTip = ((CLibraryFrame*)GetOwner())->GetToolTip();
 	CRect rcTrack;

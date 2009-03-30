@@ -1,7 +1,7 @@
 //
 // CtrlLibraryView.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -43,10 +43,9 @@ static char THIS_FILE[] = __FILE__;
 IMPLEMENT_DYNAMIC(CLibraryView, CWnd)
 
 BEGIN_MESSAGE_MAP(CLibraryView, CWnd)
-	//{{AFX_MSG_MAP(CLibraryView)
 	ON_WM_CREATE()
 	ON_WM_DESTROY()
-	//}}AFX_MSG_MAP
+	ON_WM_MOUSEMOVE()
 END_MESSAGE_MAP()
 
 
@@ -283,6 +282,14 @@ void CLibraryView::OnDestroy()
 	DISABLE_DROP()
 
 	CWnd::OnDestroy();
+}
+
+void CLibraryView::OnMouseMove(UINT nFlags, CPoint point)
+{
+	CWnd::OnMouseMove( nFlags, point );
+
+	if ( GetFocus() != this )
+		SetFocus();
 }
 
 void CLibraryView::StartDragging(const CPoint& ptMouse)

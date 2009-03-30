@@ -1,7 +1,7 @@
 //
 // CtrlSearchDetailPanel.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -19,11 +19,9 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(CTRLSEARCHDETAILPANEL_H)
-#define CTRLSEARCHDETAILPANEL_H
-
 #pragma once
 
+#include "CtrlPanel.h"
 #include "MetaPanel.h"
 #include "RichDocument.h"
 #include "RichViewCtrl.h"
@@ -32,6 +30,7 @@
 class CMatchFile;
 class CImageFile;
 class CSearchDetailPanel;
+
 
 class Review
 {
@@ -51,20 +50,20 @@ protected:
 	CRect			m_rc;
 };
 
+
 class CSearchDetailPanel :
-	public CWnd,
+	public CPanelCtrl,
 	public CThreadImpl
 {
-// Construction
+	DECLARE_DYNAMIC(CSearchDetailPanel)
+
 public:
 	CSearchDetailPanel();
 	virtual ~CSearchDetailPanel();
 
-	DECLARE_DYNAMIC(CSearchDetailPanel)
+	virtual void Update();
 
-// Operations
-public:
-	void		Update(CMatchFile* pFile);
+	void		SetFile(CMatchFile* pFile);
 
 protected:
 	static void	DrawText(CDC* pDC, int nX, int nY, LPCTSTR pszText, RECT* pRect = NULL, int nMaxWidth = -1);
@@ -80,8 +79,6 @@ protected:
 	
 	friend class Review;
 
-// Attributes
-protected:
 	CMatchList*			m_pMatches;
 	BOOL				m_bValid;
 	CMatchFile*			m_pFile;
@@ -96,43 +93,28 @@ protected:
 	CSchema*			m_pSchema;
 	CMetaPanel			m_pMetadata;
 	CList< Review* >	m_pReviews;
-	int					m_nScrollWheelLines;
-protected:
 	CCriticalSection	m_pSection;
 	BOOL				m_bCanPreview;
 	BOOL				m_bRunPreview;
 	BOOL				m_bIsPreviewing;
 	CHttpRequest		m_pRequest;
 	CList< CString >	m_pPreviewURLs;
-protected:
 	CBitmap				m_bmThumb;
 	CSize				m_szThumb;
 	CRect				m_rcThumb;
 	COLORREF			m_crLight;
 	int					m_nThumbSize;
 
-// Overrides
-public:
-	virtual BOOL Create(CWnd* pParentWnd);
-
-// Implementation
-protected:
-	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg void OnDestroy();
-	afx_msg void OnSize(UINT nType, int cx, int cy);
 	afx_msg void OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
 	afx_msg BOOL OnMouseWheel(UINT nFlags, short zDelta, CPoint pt);
 	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
 	afx_msg void OnPaint();
 	afx_msg BOOL OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message);
 	afx_msg void OnLButtonUp(UINT nFlags, CPoint point);
-	afx_msg BOOL OnEraseBkgnd(CDC* pDC);
 	afx_msg void OnClickReview(NMHDR* pNotify, LRESULT *pResult);
-	afx_msg void OnContextMenu(CWnd* /*pWnd*/, CPoint /*point*/);
 
 	DECLARE_MESSAGE_MAP()
 };
 
 #define IDC_REVIEW_VIEW		99
-
-#endif // !defined(CTRLSEARCHDETAILPANEL_H)

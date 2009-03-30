@@ -1,7 +1,7 @@
 //
 // CtrlLibraryFrame.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -26,11 +26,13 @@
 #include "CtrlLibraryHeaderBar.h"
 #include "CtrlLibraryHeaderPanel.h"
 #include "CtrlLibraryTip.h"
+#include "CtrlLibraryMetaPanel.h"
+#include "CtrlLibraryHistoryPanel.h"
 #include "CtrlSchemaCombo.h"
 #include "AutocompleteEdit.h"
 
 class CLibraryView;
-class CLibraryPanel;
+class CPanelCtrl;
 class CMetaPanel;
 
 class CLibraryFrame : public CWnd
@@ -42,7 +44,6 @@ public:
 	DECLARE_DYNAMIC(CLibraryFrame)
 
 	typedef CList< CLibraryView* > CLibraryViewList;
-	typedef CList< CLibraryPanel* > CLibraryPanelList;
 
 	virtual BOOL	Create(CWnd* pParentWnd);
 	virtual BOOL	OnCmdMsg(UINT nID, int nCode, void* pExtra, AFX_CMDHANDLERINFO* pHandlerInfo);
@@ -113,8 +114,9 @@ protected:
 	CButton				m_wndSaveOption;
 	CLibraryViewList	m_pViews;
 	CLibraryView*		m_pView;
-	CLibraryPanelList	m_pPanels;
-	CLibraryPanel*		m_pPanel;
+	CLibraryMetaPanel	 m_pMetaPanel;
+	CLibraryHistoryPanel m_pHistoryPanel;
+	CPanelCtrl*		m_pPanel;
 	int					m_nTreeSize;
 	int					m_nPanelSize;
 	BOOL				m_bPanelShow;
@@ -134,7 +136,7 @@ protected:
 	BOOL		DoSizeTree();
 	BOOL		DoSizePanel();
 	void		UpdatePanel(BOOL bForce);
-	void		SetPanel(CLibraryPanel* pPanel);
+	void		SetPanel(CPanelCtrl* pPanel);
 	void		RunLocalSearch(auto_ptr< CQuerySearch > pSearch);
 
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
