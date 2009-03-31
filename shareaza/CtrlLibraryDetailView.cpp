@@ -51,7 +51,6 @@ IMPLEMENT_DYNCREATE(CLibraryListView, CLibraryDetailView)
 IMPLEMENT_DYNCREATE(CLibraryIconView, CLibraryDetailView)
 
 BEGIN_MESSAGE_MAP(CLibraryDetailView, CLibraryFileView)
-	//{{AFX_MSG_MAP(CLibraryDetailView)
 	ON_WM_CREATE()
 	ON_WM_DESTROY()
 	ON_WM_CONTEXTMENU()
@@ -61,7 +60,6 @@ BEGIN_MESSAGE_MAP(CLibraryDetailView, CLibraryFileView)
 	ON_COMMAND(ID_LIBRARY_RENAME, OnLibraryRename)
 	ON_COMMAND(ID_LIBRARY_COLUMNS, OnLibraryColumns)
 	ON_UPDATE_COMMAND_UI(ID_LIBRARY_COLUMNS, OnUpdateLibraryColumns)
-	//}}AFX_MSG_MAP
 	ON_NOTIFY_REFLECT(LVN_ODCACHEHINT, OnCacheHint)
 	ON_NOTIFY_REFLECT(LVN_GETDISPINFOW, OnGetDispInfoW)
 	ON_NOTIFY_REFLECT(LVN_GETDISPINFOA, OnGetDispInfoA)
@@ -88,12 +86,19 @@ END_MESSAGE_MAP()
 // CLibraryDetailView construction
 
 CLibraryDetailView::CLibraryDetailView(UINT nCommandID)
+	: m_nStyle( LVS_REPORT )
+	, m_pSchema( NULL )
+	, m_pCoolMenu( NULL )
+	, m_bCreateDragImage( FALSE )
+	, m_pList( NULL )
+	, m_nList( 0 )
+	, m_nBuffer( 0 )
+	, m_nListCookie( 0 )
+	, m_nSortColumn( 0 )
+	, m_bSortFlip( FALSE )
 {
 	switch ( m_nCommandID = nCommandID )
 	{
-	case ID_LIBRARY_VIEW_DETAIL:
-		m_nStyle = LVS_REPORT;
-		break;
 	case ID_LIBRARY_VIEW_LIST:
 		m_nStyle = LVS_LIST;
 		break;
@@ -101,13 +106,6 @@ CLibraryDetailView::CLibraryDetailView(UINT nCommandID)
 		m_nStyle = LVS_ICON;
 		break;
 	}
-	
-	m_pCoolMenu	= NULL;
-	m_pSchema	= NULL;
-}
-
-CLibraryDetailView::~CLibraryDetailView()
-{
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -117,8 +115,9 @@ BOOL CLibraryDetailView::Create(CWnd* pParentWnd)
 {
 	CRect rect( 0, 0, 0, 0 );
 	SelClear( FALSE );
-	return CWnd::CreateEx( ( Settings.General.LanguageRTL ? WS_EX_RTLREADING : 0 ), WC_LISTVIEW,
-		_T("CLibraryDetailView"), m_nStyle | WS_CHILD | WS_TABSTOP | WS_GROUP | LVS_ICON |
+	return CWnd::CreateEx( ( Settings.General.LanguageRTL ? WS_EX_RTLREADING : 0 ),
+		WC_LISTVIEW, _T("CLibraryDetailView"), m_nStyle | WS_CHILD | WS_TABSTOP |
+		WS_GROUP | WS_CLIPCHILDREN | WS_CLIPSIBLINGS | LVS_ICON |
 		LVS_AUTOARRANGE | LVS_SHOWSELALWAYS | LVS_SHAREIMAGELISTS | LVS_EDITLABELS |
 		LVS_OWNERDATA, rect, pParentWnd, IDC_LIBRARY_VIEW );
 }
@@ -568,7 +567,7 @@ void CLibraryDetailView::OnGetDispInfoA(NMHDR* pNotify, LRESULT* pResult)
 /////////////////////////////////////////////////////////////////////////////
 // CLibraryDetailView sorting
 
-CLibraryDetailView* CLibraryDetailView::m_pThis;
+CLibraryDetailView* CLibraryDetailView::m_pThis = NULL;
 
 void CLibraryDetailView::SortItems(int nColumn)
 {

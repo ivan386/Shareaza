@@ -119,9 +119,10 @@ CLibraryFrame::~CLibraryFrame()
 
 BOOL CLibraryFrame::Create(CWnd* pParentWnd)
 {
-	CRect rect;
+	CRect rect( 0, 0, 0, 0 );
 	return CWnd::CreateEx( WS_EX_CONTROLPARENT, NULL, _T("CLibraryFrame"),
-		WS_CHILD|WS_VISIBLE, rect, pParentWnd, 0, NULL );
+		WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN,
+		rect, pParentWnd, 0, NULL );
 }
 
 int CLibraryFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
@@ -129,36 +130,36 @@ int CLibraryFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	if ( CWnd::OnCreate( lpCreateStruct ) == -1 ) return -1;
 
 	m_wndTreeTop.EnableDrop();
-	if ( ! m_wndTreeTop.Create( this, WS_CHILD|WS_VISIBLE|CBRS_NOALIGN, AFX_IDW_TOOLBAR ) ) return -1;
+	if ( ! m_wndTreeTop.Create( this, WS_CHILD|WS_CLIPSIBLINGS|WS_VISIBLE|CBRS_NOALIGN, AFX_IDW_TOOLBAR ) ) return -1;
 	m_wndTreeTop.SetBarStyle( m_wndTreeTop.GetBarStyle() | CBRS_TOOLTIPS|CBRS_BORDER_BOTTOM );
 	m_wndTreeTop.SetOwner( GetOwner() );
 
-	if ( ! m_wndTreeBottom.Create( this, WS_CHILD|CBRS_NOALIGN, AFX_IDW_TOOLBAR ) ) return -1;
+	if ( ! m_wndTreeBottom.Create( this, WS_CHILD|WS_CLIPSIBLINGS|CBRS_NOALIGN, AFX_IDW_TOOLBAR ) ) return -1;
 	m_wndTreeBottom.SetBarStyle( m_wndTreeBottom.GetBarStyle() | CBRS_TOOLTIPS|CBRS_BORDER_TOP );
 	m_wndTreeBottom.SetOwner( GetOwner() );
 
 	CRect rcTypes( 0, 0, 128, BAR_HEIGHT );
-	if ( ! m_wndTreeTypes.Create( WS_CHILD, rcTypes, this, AFX_IDW_TOOLBAR ) ) return -1;
+	if ( ! m_wndTreeTypes.Create( WS_CHILD|WS_CLIPSIBLINGS, rcTypes, this, AFX_IDW_TOOLBAR ) ) return -1;
 	m_wndTreeTypes.GetWindowRect( &rcTypes );
 	m_nTreeTypesHeight = rcTypes.Height();
 
-	if ( ! m_wndViewTop.Create( this, WS_CHILD|WS_VISIBLE|CBRS_NOALIGN, AFX_IDW_TOOLBAR ) ) return -1;
+	if ( ! m_wndViewTop.Create( this, WS_CHILD|WS_CLIPSIBLINGS|WS_VISIBLE|CBRS_NOALIGN, AFX_IDW_TOOLBAR ) ) return -1;
 	m_wndViewTop.SetBarStyle( m_wndViewTop.GetBarStyle() | CBRS_TOOLTIPS );
 	m_wndViewTop.SetOwner( GetOwner() );
 
-	if ( ! m_wndViewBottom.Create( this, WS_CHILD|WS_VISIBLE|CBRS_NOALIGN, AFX_IDW_TOOLBAR ) ) return -1;
+	if ( ! m_wndViewBottom.Create( this, WS_CHILD|WS_CLIPSIBLINGS|WS_VISIBLE|CBRS_NOALIGN, AFX_IDW_TOOLBAR ) ) return -1;
 	m_wndViewBottom.SetBarStyle( m_wndViewBottom.GetBarStyle() | CBRS_TOOLTIPS|CBRS_BORDER_TOP );
 	m_wndViewBottom.SetOwner( GetOwner() );
 
-	if ( ! m_wndBottomDynamic.Create( this, WS_CHILD|CBRS_NOALIGN, AFX_IDW_TOOLBAR ) ) return -1;
+	if ( ! m_wndBottomDynamic.Create( this, WS_CHILD|WS_CLIPSIBLINGS|CBRS_NOALIGN, AFX_IDW_TOOLBAR ) ) return -1;
 	m_wndBottomDynamic.SetBarStyle( m_wndBottomDynamic.GetBarStyle() | CBRS_TOOLTIPS|CBRS_BORDER_TOP );
 	m_wndBottomDynamic.SetOwner( GetOwner() );
 
-	if ( ! m_wndSearch.Create( WS_CHILD|WS_TABSTOP|ES_AUTOHSCROLL, rcTypes, &m_wndViewBottom, IDC_SEARCH_BOX ) ) return -1;
+	if ( ! m_wndSearch.Create( WS_CHILD|WS_CLIPSIBLINGS|WS_TABSTOP|ES_AUTOHSCROLL, rcTypes, &m_wndViewBottom, IDC_SEARCH_BOX ) ) return -1;
 	m_wndSearch.SetFont( &theApp.m_gdiFont );
 	m_wndSearch.SetRegistryKey( _T("Search"), _T("Search.%.2i") );
 
-	if ( ! m_wndSaveOption.Create( NULL, WS_CHILD|WS_TABSTOP|BS_AUTOCHECKBOX, rcTypes, &m_wndBottomDynamic, 
+	if ( ! m_wndSaveOption.Create( NULL, WS_CHILD|WS_CLIPSIBLINGS|WS_TABSTOP|BS_AUTOCHECKBOX, rcTypes, &m_wndBottomDynamic, 
 		ID_SHAREMONKEY_SAVE_OPTION ) ) return -1;
 	m_wndSaveOption.EnableWindow( FALSE );
 	m_wndSaveOption.SetCheck( Settings.WebServices.ShareMonkeySaveThumbnail );
@@ -589,6 +590,12 @@ void CLibraryFrame::SetView(CLibraryView* pView, BOOL bUpdate, BOOL bUser)
 
 	CLibraryTreeItem* pFolderSelection	= m_wndTree.GetFirstSelected();
 
+	if ( pView && pFolderSelection && pFolderSelection->m_pPhysical )
+	{
+		Settings.Library.LastUsedView = pView->GetRuntimeClass()->m_lpszClassName;
+		Settings.Save();
+	}
+
 	if ( bUser && pView != NULL )
 	{
 		for (	CLibraryTreeItem* pItem = pFolderSelection; pItem ;
@@ -756,8 +763,14 @@ BOOL CLibraryFrame::Update(BOOL bForce, BOOL bBestView)
 
 		if ( pView->CheckAvailable( m_wndTree.GetFirstSelected() ) )
 		{
-			if ( pFirstView == NULL ) pFirstView = pView;
-			if ( strBest.CompareNoCase( CString( pView->GetRuntimeClass()->m_lpszClassName ) ) == 0 )
+			CString sViewName( pView->GetRuntimeClass()->m_lpszClassName );
+
+			if ( pFirstView == NULL ||
+				( pFolderSelection && pFolderSelection->m_pPhysical &&
+				sViewName.CompareNoCase( Settings.Library.LastUsedView ) == 0 ) )
+				pFirstView = pView;
+
+			if ( sViewName.CompareNoCase( strBest ) == 0 )
 				pBestView = pView;
 		}
 	}

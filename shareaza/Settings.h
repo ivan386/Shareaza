@@ -148,6 +148,7 @@ public:
 		bool		ScanOGG;					// Enable .ogg metadata extraction by internals
 		bool		ScanPDF;					// Enable .pdf metadata extraction by internals
 		bool		SmartSeriesDetection;		// Organize video files in Library by using predefined patterns
+		CString		LastUsedView;				// Name of last used view
 	} Library;
 
 	struct sWebServices

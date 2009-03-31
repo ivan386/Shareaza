@@ -102,6 +102,8 @@ BOOL CSkinDialog::SkinMe(LPCTSTR pszSkin, UINT nIcon, BOOL bLanguage)
 		CoolInterface.SetIcon( nIcon, m_pSkin && Settings.General.LanguageRTL, FALSE, this );
 	}
 
+	CoolInterface.EnableTheme( this, ( m_pSkin == NULL ) );
+
 	if ( m_pSkin != NULL )
 	{
 		if ( GetStyle() & WS_CAPTION ) ModifyStyle( WS_CAPTION, 0 );

@@ -1,7 +1,7 @@
 //
 // WndChild.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -88,8 +88,8 @@ BOOL CChildWnd::Create(UINT nID, BOOL bVisible)
 	LoadString( strCaption, m_nResID );
 
 	return CMDIChildWnd::Create( NULL, strCaption, WS_CHILD |
-		 WS_OVERLAPPEDWINDOW | ( bVisible ? WS_VISIBLE : 0 ) |
-		 WS_CLIPCHILDREN | WS_CLIPSIBLINGS );
+		WS_OVERLAPPEDWINDOW | ( bVisible ? WS_VISIBLE : 0 ) |
+		WS_CLIPCHILDREN | WS_CLIPSIBLINGS );
 }
 
 CMainWnd* CChildWnd::GetMainWnd()
@@ -478,6 +478,8 @@ LRESULT CChildWnd::OnSetText(WPARAM /*wParam*/, LPARAM /*lParam*/)
 void CChildWnd::OnSkinChange()
 {
 	m_pSkin = Skin.GetWindowSkin( this );
+
+	CoolInterface.EnableTheme( this, ( m_pSkin == NULL ) );
 
 	if ( m_nResID )
 	{
