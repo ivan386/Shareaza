@@ -1282,10 +1282,6 @@
 					>
 				</File>
 				<File
-					RelativePath="..\shareaza\CtrlLibraryPanel.cpp"
-					>
-				</File>
-				<File
 					RelativePath="..\shareaza\CtrlLibraryThumbView.cpp"
 					>
 				</File>
@@ -1335,6 +1331,10 @@
 				</File>
 				<File
 					RelativePath="..\shareaza\CtrlNetworkCombo.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\shareaza\CtrlPanel.cpp"
 					>
 				</File>
 				<File
@@ -2832,10 +2832,6 @@
 					>
 				</File>
 				<File
-					RelativePath="..\shareaza\CtrlLibraryPanel.h"
-					>
-				</File>
-				<File
 					RelativePath="..\shareaza\CtrlLibraryThumbView.h"
 					>
 				</File>
@@ -2885,6 +2881,10 @@
 				</File>
 				<File
 					RelativePath="..\shareaza\CtrlNetworkCombo.h"
+					>
+				</File>
+				<File
+					RelativePath="..\shareaza\CtrlPanel.h"
 					>
 				</File>
 				<File
