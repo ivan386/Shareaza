@@ -44,7 +44,7 @@ extern "C" {
 	#define GFLAPI
 #endif
 
-#define GFL_VERSION  "2.80"
+#define GFL_VERSION  "2.90"
 
 #define GFL_FALSE    0
 #define GFL_TRUE     1

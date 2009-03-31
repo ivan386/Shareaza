@@ -27,9 +27,9 @@
 			>
 			<Tool
 				Name="VCCustomBuildTool"
-				Description="Copying LibGFL280 dll..."
-				CommandLine="if not exist &quot;$(OutDir)libgfl280.dll&quot; (&#x0D;&#x0A;xcopy &quot;$(SolutionDir)..\plugins\libGFL\$(ConfigurationName)$(PlatformName)\libgfl280.dll&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;)&#x0D;&#x0A;"
-				Outputs="$(OutDir)libgfl280.dll"
+				Description="Copying libgfl290 dll..."
+				CommandLine="if not exist &quot;$(OutDir)libgfl290.dll&quot; (&#x0D;&#x0A;xcopy &quot;$(SolutionDir)..\plugins\libGFL\$(ConfigurationName)$(PlatformName)\libgfl290.dll&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;)&#x0D;&#x0A;"
+				Outputs="$(OutDir)libgfl290.dll"
 				ExecutionBucket="1"
 			/>
 			<Tool
@@ -121,9 +121,9 @@
 			>
 			<Tool
 				Name="VCCustomBuildTool"
-				Description="Copying LibGFL280 dll..."
-				CommandLine="if not exist &quot;$(OutDir)libgfl280.dll&quot; (&#x0D;&#x0A;xcopy &quot;$(SolutionDir)..\plugins\libGFL\$(ConfigurationName)$(PlatformName)\libgfl280.dll&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;)&#x0D;&#x0A;"
-				Outputs="$(OutDir)libgfl280.dll"
+				Description="Copying libgfl290 dll..."
+				CommandLine="if not exist &quot;$(OutDir)libgfl290.dll&quot; (&#x0D;&#x0A;xcopy &quot;$(SolutionDir)..\plugins\libGFL\$(ConfigurationName)$(PlatformName)\libgfl290.dll&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;)&#x0D;&#x0A;"
+				Outputs="$(OutDir)libgfl290.dll"
 				ExecutionBucket="1"
 			/>
 			<Tool
@@ -216,9 +216,9 @@
 			>
 			<Tool
 				Name="VCCustomBuildTool"
-				Description="Copying LibGFL280 dll..."
-				CommandLine="if not exist &quot;$(OutDir)libgfl280.dll&quot; (&#x0D;&#x0A;xcopy &quot;$(SolutionDir)..\plugins\libGFL\$(ConfigurationName)$(PlatformName)\libgfl280.dll&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;)&#x0D;&#x0A;"
-				Outputs="$(OutDir)libgfl280.dll"
+				Description="Copying libgfl290 dll..."
+				CommandLine="if not exist &quot;$(OutDir)libgfl290.dll&quot; (&#x0D;&#x0A;xcopy &quot;$(SolutionDir)..\plugins\libGFL\$(ConfigurationName)$(PlatformName)\libgfl290.dll&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;)&#x0D;&#x0A;"
+				Outputs="$(OutDir)libgfl290.dll"
 				ExecutionBucket="1"
 			/>
 			<Tool
@@ -310,9 +310,9 @@
 			>
 			<Tool
 				Name="VCCustomBuildTool"
-				Description="Copying LibGFL280 dll..."
-				CommandLine="if not exist &quot;$(OutDir)libgfl280.dll&quot; (&#x0D;&#x0A;xcopy &quot;$(SolutionDir)..\plugins\libGFL\$(ConfigurationName)$(PlatformName)\libgfl280.dll&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;)&#x0D;&#x0A;"
-				Outputs="$(OutDir)libgfl280.dll"
+				Description="Copying libgfl290 dll..."
+				CommandLine="if not exist &quot;$(OutDir)libgfl290.dll&quot; (&#x0D;&#x0A;xcopy &quot;$(SolutionDir)..\plugins\libGFL\$(ConfigurationName)$(PlatformName)\libgfl290.dll&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;)&#x0D;&#x0A;"
+				Outputs="$(OutDir)libgfl290.dll"
 				ExecutionBucket="1"
 			/>
 			<Tool

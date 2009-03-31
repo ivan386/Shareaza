@@ -848,7 +848,7 @@ void CShareazaApp::InitResources()
 	}
 
 	// We load it in a custom way, so Shareaza plugins can use this library also when it isn't in its search path but loaded by CustomLoadLibrary (very useful when running Shareaza inside Visual Studio)
-	m_hLibGFL = CustomLoadLibrary( _T("libgfl280.dll") );
+	m_hLibGFL = CustomLoadLibrary( _T("libgfl290.dll") );
 
 	// Use GlobalMemoryStatusEx if possible (WinXP)
 	MEMORYSTATUSEX pMemory = {};

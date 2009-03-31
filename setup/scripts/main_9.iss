@@ -125,7 +125,7 @@ Source: "plugins\7ZipBuilder\{#PlatformName}\{#ConfigurationName}\7zxr.dll"; Des
 Source: "plugins\DocumentReader\{#PlatformName}\{#ConfigurationName}\DocumentReader.dll";   DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
 
 Source: "plugins\GFLImageServices\{#PlatformName}\{#ConfigurationName}\GFLImageServices.dll";   DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
-Source: "plugins\GFLImageServices\{#PlatformName}\{#ConfigurationName}\libgfl280.dll"; DestDir: "{app}";         Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+Source: "plugins\GFLImageServices\{#PlatformName}\{#ConfigurationName}\libgfl290.dll"; DestDir: "{app}";         Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 
 Source: "plugins\GFLLibraryBuilder\{#PlatformName}\{#ConfigurationName}\GFLLibraryBuilder.dll";   DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
 
