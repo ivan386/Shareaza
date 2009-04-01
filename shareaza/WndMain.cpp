@@ -344,7 +344,7 @@ BOOL CMainWnd::PreCreateWindow(CREATESTRUCT& cs)
 {
 	WNDCLASS wndcls = {};
 
-	wndcls.style			= CS_HREDRAW | CS_VREDRAW | CS_DBLCLKS | CS_PARENTDC;
+	wndcls.style			= CS_PARENTDC | CS_DBLCLKS;
 	wndcls.lpfnWndProc		= AfxWndProc;
 	wndcls.hInstance		= AfxGetInstanceHandle();
 	wndcls.hIcon			= CoolInterface.ExtractIcon( IDR_MAINFRAME, FALSE, LVSIL_NORMAL );
