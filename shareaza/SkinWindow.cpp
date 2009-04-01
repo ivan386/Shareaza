@@ -1,7 +1,7 @@
 //
 // SkinWindow.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -643,30 +643,19 @@ UINT CSkinWindow::OnNcHitTest(CWnd* pWnd, CPoint point, BOOL bResizable)
 
 void CSkinWindow::OnNcPaint(CWnd* pWnd)
 {
-	CWindowDC dc( pWnd );
-	if ( Settings.General.LanguageRTL )
-		SetLayout( dc.m_hDC, LAYOUT_RTL );
-	Paint( pWnd, dc, FALSE );
-	dc.SelectObject( GetStockObject( ANSI_VAR_FONT ) ); // Comctl32.dll font leak fix
+	Paint( pWnd );
 }
 
 BOOL CSkinWindow::OnNcActivate(CWnd* pWnd, BOOL bActive)
 {
-	CWindowDC dc( pWnd );
-	if ( Settings.General.LanguageRTL )
-		SetLayout( dc.m_hDC, LAYOUT_RTL );
-	Paint( pWnd, dc, TRUE, bActive ? TRI_TRUE : TRI_FALSE );
-	dc.SelectObject( GetStockObject( ANSI_VAR_FONT ) ); // Comctl32.dll font leak fix
+	Paint( pWnd, bActive ? TRI_TRUE : TRI_FALSE );
+
 	return FALSE;
 }
 
 void CSkinWindow::OnSetText(CWnd* pWnd)
 {
-	CWindowDC dc( pWnd );
-	if ( Settings.General.LanguageRTL )
-		SetLayout( dc.m_hDC, LAYOUT_RTL );
-	Paint( pWnd, dc, TRUE );
-	dc.SelectObject( GetStockObject( ANSI_VAR_FONT ) ); // Comctl32.dll font leak fix
+	Paint( pWnd );
 }
 
 void CSkinWindow::OnSize(CWnd* pWnd)
@@ -750,15 +739,9 @@ void CSkinWindow::OnNcMouseMove(CWnd* pWnd, UINT nHitTest, CPoint /*point*/)
 		nAnchor = 0;
 	}
 
-	if ( nAnchor != m_nHoverAnchor )
-	{
-		m_nHoverAnchor = nAnchor;
-		CWindowDC dc( pWnd );
-		if ( Settings.General.LanguageRTL )
-			SetLayout( dc.m_hDC, LAYOUT_RTL );
-		Paint( pWnd, dc, TRUE );
-		dc.SelectObject( GetStockObject( ANSI_VAR_FONT ) ); // Comctl32.dll font leak fix
-	}
+	m_nHoverAnchor = nAnchor;
+
+	Paint( pWnd );
 }
 
 BOOL CSkinWindow::OnNcLButtonDown(CWnd* pWnd, UINT nHitTest, CPoint point)
@@ -780,10 +763,7 @@ BOOL CSkinWindow::OnNcLButtonDown(CWnd* pWnd, UINT nHitTest, CPoint point)
 		ResolveAnchor( rcWindow, rcSystem, SKINANCHOR_SYSTEM );
 		CMenu* pPopup = pWnd->GetSystemMenu( FALSE );
 
-		CWindowDC dc( pWnd );
-		if ( Settings.General.LanguageRTL )
-			SetLayout( dc.m_hDC, LAYOUT_RTL );
-		Paint( pWnd, dc, TRUE );
+		Paint( pWnd );
 
 		DWORD nTime = GetTickCount();
 
@@ -807,43 +787,35 @@ BOOL CSkinWindow::OnNcLButtonDown(CWnd* pWnd, UINT nHitTest, CPoint point)
 		}
 	}
 
-	CWindowDC dc( pWnd );
-	if ( Settings.General.LanguageRTL )
-		SetLayout( dc.m_hDC, LAYOUT_RTL );
-	Paint( pWnd, dc, TRUE );
-	dc.SelectObject( GetStockObject( ANSI_VAR_FONT ) ); // Comctl32.dll font leak fix
+	Paint( pWnd );
 
 	return TRUE;
 }
 
 BOOL CSkinWindow::OnNcLButtonUp(CWnd* pWnd, UINT /*nHitTest*/, CPoint /*point*/)
 {
-	if ( ! m_nDownAnchor ) return FALSE;
-
-	if ( m_nDownAnchor == m_nHoverAnchor )
+	if ( m_nDownAnchor )
 	{
-		switch ( m_nDownAnchor )
+		if ( m_nDownAnchor == m_nHoverAnchor )
 		{
-		case SKINANCHOR_MINIMISE:
-			pWnd->PostMessage( WM_SYSCOMMAND, SC_MINIMIZE );
-			break;
-		case SKINANCHOR_MAXIMISE:
-			pWnd->PostMessage( WM_SYSCOMMAND, pWnd->IsZoomed() ? SC_RESTORE : SC_MAXIMIZE );
-			break;
-		case SKINANCHOR_CLOSE:
-			pWnd->PostMessage( WM_SYSCOMMAND, SC_CLOSE );
-			break;
+			switch ( m_nDownAnchor )
+			{
+			case SKINANCHOR_MINIMISE:
+				pWnd->PostMessage( WM_SYSCOMMAND, SC_MINIMIZE );
+				break;
+			case SKINANCHOR_MAXIMISE:
+				pWnd->PostMessage( WM_SYSCOMMAND, pWnd->IsZoomed() ? SC_RESTORE : SC_MAXIMIZE );
+				break;
+			case SKINANCHOR_CLOSE:
+				pWnd->PostMessage( WM_SYSCOMMAND, SC_CLOSE );
+				break;
+			}
 		}
+		m_nHoverAnchor = 0;
+		m_nDownAnchor = 0;
 	}
 
-	m_nHoverAnchor = 0;
-	m_nDownAnchor = 0;
-
-	CWindowDC dc( pWnd );
-	if ( Settings.General.LanguageRTL )
-		SetLayout( dc.m_hDC, LAYOUT_RTL );
-	Paint( pWnd, dc, TRUE );
-	dc.SelectObject( GetStockObject( ANSI_VAR_FONT ) ); // Comctl32.dll font leak fix
+	Paint( pWnd );
 
 	return FALSE;
 }
@@ -872,11 +844,16 @@ void CSkinWindow::Prepare(CDC* pDC)
 		SetLayout( m_dcSkin.m_hDC, LAYOUT_BITMAPORIENTATIONPRESERVED );
 }
 
-void CSkinWindow::Paint(CWnd* pWnd, CDC& dc, BOOL bCaption, TRISTATE bActive)
+void CSkinWindow::Paint(CWnd* pWnd, TRISTATE bActive)
 {
 	HICON hIcon = NULL;
 	CString strCaption;
 	CRect rc, rcItem;
+
+	CWindowDC dc( pWnd );
+
+	if ( Settings.General.LanguageRTL )
+		SetLayout( dc.m_hDC, LAYOUT_RTL );
 
 	Prepare( &dc );
 
@@ -920,6 +897,7 @@ void CSkinWindow::Paint(CWnd* pWnd, CDC& dc, BOOL bCaption, TRISTATE bActive)
 	if ( m_bPart[ SKINPART_TOP_RIGHT ] ) nCaptionHeight = max( nCaptionHeight, m_rcPart[ SKINPART_TOP_RIGHT ].Height() );
 	CSize size( rc.Width(), nCaptionHeight );
 	CDC* pDC = CoolInterface.GetBuffer( dc, size );
+	COLORREF crOldTextColor = pDC->GetTextColor();
 
 	for ( int nAnchor = SKINANCHOR_SYSTEM ; nAnchor <= SKINANCHOR_CLOSE ; nAnchor++ )
 	{
@@ -935,20 +913,17 @@ void CSkinWindow::Paint(CWnd* pWnd, CDC& dc, BOOL bCaption, TRISTATE bActive)
 			if ( m_bPart[ nPart ] )
 			{
 				ResolveAnchor( rc, rcItem, nAnchor );
-				// Buttons like "Close" are mirrored for RTL layout
-				// Maybe <anchor name="Close" rect="-31,5,23,23" can_be_mirrored="true"/>
-				// should be used instead? Small design flaws appear sometimes with the
-				// current implementation if all buttons in caption are mirrored although
-				// they are barely noticeable.
+
 				if ( m_bPart[ SKINPART_TOP ] && Settings.General.LanguageRTL && nAnchor == SKINANCHOR_CLOSE )
 					pDC->StretchBlt( m_rcPart[ nPart ].Width() + rcItem.left - 1, rcItem.top,
-					-m_rcPart[ nPart ].Width(), m_rcPart[ nPart ].Height(),
-					&m_dcSkin, m_rcPart[ nPart ].left, m_rcPart[ nPart ].top,
-					m_rcPart[ nPart ].Width(), m_rcPart[ nPart ].Height(), SRCCOPY );
+						-m_rcPart[ nPart ].Width(), m_rcPart[ nPart ].Height(),
+						&m_dcSkin, m_rcPart[ nPart ].left, m_rcPart[ nPart ].top,
+						m_rcPart[ nPart ].Width(), m_rcPart[ nPart ].Height(), SRCCOPY );
 				else
 					pDC->BitBlt( rcItem.left, rcItem.top,
-					m_rcPart[ nPart ].Width(), m_rcPart[ nPart ].Height(), &m_dcSkin,
-					m_rcPart[ nPart ].left, m_rcPart[ nPart ].top, SRCCOPY );
+						m_rcPart[ nPart ].Width(), m_rcPart[ nPart ].Height(), &m_dcSkin,
+						m_rcPart[ nPart ].left, m_rcPart[ nPart ].top, SRCCOPY );
+
 				pDC->ExcludeClipRect( rcItem.left, rcItem.top,
 					rcItem.left + m_rcPart[ nPart ].Width(),
 					rcItem.top + m_rcPart[ nPart ].Height() );
@@ -1041,7 +1016,7 @@ void CSkinWindow::Paint(CWnd* pWnd, CDC& dc, BOOL bCaption, TRISTATE bActive)
 		rcRight.top += m_rcPart[ SKINPART_TOP_RIGHT ].Height();
 	}
 
-	if ( m_bPart[ SKINPART_BOTTOM_LEFT ] && ! bCaption )
+	if ( m_bPart[ SKINPART_BOTTOM_LEFT ] )
 	{
 		dc.BitBlt( 0, rc.Height() - m_rcPart[ SKINPART_BOTTOM_LEFT ].Height(),
 			m_rcPart[ SKINPART_BOTTOM_LEFT ].Width(),
@@ -1052,7 +1027,7 @@ void CSkinWindow::Paint(CWnd* pWnd, CDC& dc, BOOL bCaption, TRISTATE bActive)
 		rcLeft.bottom -= m_rcPart[ SKINPART_BOTTOM_LEFT ].Height();
 	}
 
-	if ( m_bPart[ SKINPART_BOTTOM_RIGHT ] && ! bCaption )
+	if ( m_bPart[ SKINPART_BOTTOM_RIGHT ] )
 	{
 		dc.BitBlt( rc.Width() - m_rcPart[ SKINPART_BOTTOM_RIGHT ].Width(),
 			rc.Height() - m_rcPart[ SKINPART_BOTTOM_RIGHT ].Height(),
@@ -1064,7 +1039,7 @@ void CSkinWindow::Paint(CWnd* pWnd, CDC& dc, BOOL bCaption, TRISTATE bActive)
 		rcBottom.right -= m_rcPart[ SKINPART_BOTTOM_RIGHT ].Width();
 	}
 
-	if ( m_bPart[ SKINPART_LEFT_TOP ] && ! bCaption )
+	if ( m_bPart[ SKINPART_LEFT_TOP ] )
 	{
 		dc.BitBlt( 0, rcLeft.top, m_rcPart[ SKINPART_LEFT_TOP ].Width(),
 			m_rcPart[ SKINPART_LEFT_TOP ].Height(), &m_dcSkin,
@@ -1073,7 +1048,7 @@ void CSkinWindow::Paint(CWnd* pWnd, CDC& dc, BOOL bCaption, TRISTATE bActive)
 		rcLeft.top += m_rcPart[ SKINPART_LEFT_TOP ].Height();
 	}
 
-	if ( m_bPart[ SKINPART_LEFT_BOTTOM ] && ! bCaption )
+	if ( m_bPart[ SKINPART_LEFT_BOTTOM ] )
 	{
 		dc.BitBlt( 0, rcLeft.bottom - m_rcPart[ SKINPART_LEFT_BOTTOM ].Height(),
 			m_rcPart[ SKINPART_LEFT_BOTTOM ].Width(),
@@ -1083,7 +1058,7 @@ void CSkinWindow::Paint(CWnd* pWnd, CDC& dc, BOOL bCaption, TRISTATE bActive)
 		rcLeft.bottom -= m_rcPart[ SKINPART_LEFT_BOTTOM ].Height();
 	}
 
-	if ( m_bPart[ SKINPART_RIGHT_TOP ] && ! bCaption )
+	if ( m_bPart[ SKINPART_RIGHT_TOP ] )
 	{
 		dc.BitBlt( rcRight.right - m_rcPart[ SKINPART_RIGHT_TOP ].Width(),
 			rcRight.top, m_rcPart[ SKINPART_RIGHT_TOP ].Width(),
@@ -1093,7 +1068,7 @@ void CSkinWindow::Paint(CWnd* pWnd, CDC& dc, BOOL bCaption, TRISTATE bActive)
 		rcRight.top += m_rcPart[ SKINPART_RIGHT_TOP ].Height();
 	}
 
-	if ( m_bPart[ SKINPART_RIGHT_BOTTOM ] && ! bCaption )
+	if ( m_bPart[ SKINPART_RIGHT_BOTTOM ] )
 	{
 		dc.BitBlt( rcRight.right - m_rcPart[ SKINPART_RIGHT_BOTTOM ].Width(),
 			rcRight.bottom - m_rcPart[ SKINPART_RIGHT_BOTTOM ].Height(),
@@ -1104,7 +1079,7 @@ void CSkinWindow::Paint(CWnd* pWnd, CDC& dc, BOOL bCaption, TRISTATE bActive)
 		rcRight.bottom -= m_rcPart[ SKINPART_RIGHT_BOTTOM ].Height();
 	}
 
-	if ( m_bPart[ SKINPART_LEFT ] && rcLeft.top < rcLeft.bottom && ! bCaption )
+	if ( m_bPart[ SKINPART_LEFT ] && rcLeft.top < rcLeft.bottom )
 	{
 		CRect* pRect = &m_rcPart[ SKINPART_LEFT ];
 
@@ -1166,7 +1141,7 @@ void CSkinWindow::Paint(CWnd* pWnd, CDC& dc, BOOL bCaption, TRISTATE bActive)
 		}
 	}
 
-	if ( m_bPart[ SKINPART_RIGHT ] && rcRight.top < rcRight.bottom && ! bCaption )
+	if ( m_bPart[ SKINPART_RIGHT ] && rcRight.top < rcRight.bottom )
 	{
 		CRect* pRect = &m_rcPart[ SKINPART_RIGHT ];
 
@@ -1188,7 +1163,7 @@ void CSkinWindow::Paint(CWnd* pWnd, CDC& dc, BOOL bCaption, TRISTATE bActive)
 		}
 	}
 
-	if ( m_bPart[ SKINPART_BOTTOM ] && rcTop.left < rcTop.right && ! bCaption )
+	if ( m_bPart[ SKINPART_BOTTOM ] && rcTop.left < rcTop.right )
 	{
 		CRect* pRect = &m_rcPart[ SKINPART_BOTTOM ];
 
@@ -1274,10 +1249,11 @@ void CSkinWindow::Paint(CWnd* pWnd, CDC& dc, BOOL bCaption, TRISTATE bActive)
 		pDC->SelectObject( pOldFont );
 	}
 
-	dc.BitBlt( 0, 0, rc.Width(), nCaptionHeight, pDC, 0, 0, SRCCOPY );
-	pDC->SelectClipRgn( NULL );
+	pDC->SetTextColor( crOldTextColor );
 
-	dc.SetTextColor( 0 );
+	dc.BitBlt( 0, 0, rc.Width(), nCaptionHeight, pDC, 0, 0, SRCCOPY );
+
+	dc.SelectObject( GetStockObject( ANSI_VAR_FONT ) ); // Comctl32.dll font leak fix
 }
 
 //////////////////////////////////////////////////////////////////////

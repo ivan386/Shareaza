@@ -344,7 +344,7 @@ BOOL CMainWnd::PreCreateWindow(CREATESTRUCT& cs)
 {
 	WNDCLASS wndcls = {};
 
-	wndcls.style			= CS_DBLCLKS | CS_PARENTDC;
+	wndcls.style			= CS_HREDRAW | CS_VREDRAW | CS_DBLCLKS | CS_PARENTDC;
 	wndcls.lpfnWndProc		= AfxWndProc;
 	wndcls.hInstance		= AfxGetInstanceHandle();
 	wndcls.hIcon			= CoolInterface.ExtractIcon( IDR_MAINFRAME, FALSE, LVSIL_NORMAL );
@@ -1111,20 +1111,12 @@ LRESULT CMainWnd::OnSkinChanged(WPARAM /*wParam*/, LPARAM /*lParam*/)
 
 	m_pSkin = Skin.GetWindowSkin( this );
 
+	CoolInterface.EnableTheme( this, ( m_pSkin == NULL ) );
+
+	SetWindowRgn( NULL, TRUE );
+
 	if ( m_pSkin != NULL )
-	{
-		// Windows Vista Skinning Workaround
-		ModifyStyle( theApp.m_bIsVistaOrNewer ? WS_OVERLAPPEDWINDOW : WS_CAPTION , 0 );
-		m_pWindows.ModifyStyleEx( WS_EX_CLIENTEDGE , 0 );
-		SetWindowRgn( NULL, TRUE );
 		m_pSkin->OnSize( this );
-	}
-	else
-	{
-		ModifyStyle( 0, WS_OVERLAPPEDWINDOW );
-		m_pWindows.ModifyStyleEx( 0 , WS_EX_CLIENTEDGE );
-		SetWindowRgn( NULL, TRUE );
-	}
 
 	m_wndRemoteWnd.OnSkinChange();
 	m_wndMonitorBar.OnSkinChange();
@@ -2741,6 +2733,9 @@ void CMainWnd::OnNcLButtonDown(UINT nHitTest, CPoint point)
 {
 	if ( m_pSkin && m_pSkin->OnNcLButtonDown( this, nHitTest, point ) ) return;
 	CMDIFrameWnd::OnNcLButtonDown( nHitTest, point );
+
+	// Windows Vista skinning workaround (system caption buttons over skin drawing)
+	if ( m_pSkin ) m_pSkin->OnNcPaint( this );
 }
 
 void CMainWnd::OnNcLButtonUp(UINT nHitTest, CPoint point)
