@@ -95,7 +95,6 @@ BEGIN_MESSAGE_MAP(CSearchResultsBox, CTaskBox)
 END_MESSAGE_MAP()
 
 #define BOX_MARGIN	6
-#define PANEL_WIDTH	200
 
 /////////////////////////////////////////////////////////////////////////////
 // CSearchPanel construction

@@ -479,7 +479,8 @@ void CChildWnd::OnSkinChange()
 {
 	m_pSkin = Skin.GetWindowSkin( this );
 
-	CoolInterface.EnableTheme( this, ( m_pSkin == NULL ) );
+	CoolInterface.EnableTheme( this, ( m_pSkin == NULL ) &&
+		( Settings.General.GUIMode == GUI_WINDOWED ) );
 
 	if ( m_nResID )
 	{

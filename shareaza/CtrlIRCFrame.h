@@ -97,7 +97,6 @@ protected:
 class CIRCFrame : public CWnd
 {
 protected:
-	static const int PANEL_WIDTH	    = 200;
 	static const int IRCHEADER_HEIGHT   = 70;
 	static const int TOOLBAR_HEIGHT	    = 28;
 	static const int EDITBOX_HEIGHT		= 20;

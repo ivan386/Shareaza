@@ -1,7 +1,7 @@
 //
 // WndHome.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -50,7 +50,6 @@ static char THIS_FILE[] = __FILE__;
 IMPLEMENT_DYNCREATE(CHomeWnd, CPanelWnd)
 
 BEGIN_MESSAGE_MAP(CHomeWnd, CPanelWnd)
-	//{{AFX_MSG_MAP(CHomeWnd)
 	ON_WM_CREATE()
 	ON_WM_SIZE()
 	ON_WM_CONTEXTMENU()
@@ -58,13 +57,8 @@ BEGIN_MESSAGE_MAP(CHomeWnd, CPanelWnd)
 	ON_WM_MDIACTIVATE()
 	ON_NOTIFY(RVN_CLICK, IDC_HOME_VIEW, OnClickView)
 	ON_NOTIFY(RVN_CLICK, 1, OnClickView)
-	ON_WM_PAINT()
 	ON_WM_DESTROY()
-	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
-
-#define PANEL_WIDTH		200
-
 
 /////////////////////////////////////////////////////////////////////////////
 // CHomeWnd construction
@@ -110,7 +104,7 @@ void CHomeWnd::OnSize(UINT nType, int cx, int cy)
 	CPanelWnd::OnSize( nType, cx, cy );
 
 	m_wndPanel.SetWindowPos( NULL, 0, 0, PANEL_WIDTH, cy, SWP_NOZORDER );
-	m_wndView.SetWindowPos( NULL, PANEL_WIDTH + 1, 0, cx - PANEL_WIDTH - 1, cy, SWP_NOZORDER|SWP_SHOWWINDOW );
+	m_wndView.SetWindowPos( NULL, PANEL_WIDTH, 0, cx - PANEL_WIDTH, cy, SWP_NOZORDER|SWP_SHOWWINDOW );
 }
 
 void CHomeWnd::OnContextMenu(CWnd* /*pWnd*/, CPoint point)
@@ -138,18 +132,6 @@ void CHomeWnd::OnMDIActivate(BOOL bActivate, CWnd* pActivateWnd, CWnd* pDeactiva
 	}
 
 	CPanelWnd::OnMDIActivate( bActivate, pActivateWnd, pDeactivateWnd );
-}
-
-void CHomeWnd::OnPaint()
-{
-	CPaintDC dc( this );
-	CRect rc;
-
-	m_wndPanel.GetWindowRect( &rc );
-	ScreenToClient( &rc );
-
-	dc.MoveTo( rc.right, rc.top );
-	dc.LineTo( rc.right, rc.bottom + 1 );
 }
 
 void CHomeWnd::OnClickView(NMHDR* pNotify, LRESULT* /*pResult*/)

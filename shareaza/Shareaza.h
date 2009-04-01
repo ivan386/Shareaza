@@ -442,6 +442,7 @@ inline __int64 GetRandomNum<__int64>(const __int64& min, const __int64& max)
 #define ID_PLUGIN_LAST	27999
 
 
+#define PANEL_WIDTH			200				// Left panel size in pixels (Home, Search, IRC tabs)
 #define THUMB_STORE_SIZE	128
 
 
