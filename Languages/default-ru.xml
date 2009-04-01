@@ -2603,7 +2603,7 @@
 	<string id="8000" value="Установки Shareaza"/>
 	<string id="8001" value="Добро пожаловать в Shareaza"/>
 	<string id="8002" value="Свойства файла"/>
-	<string id="8003" value="Редактировать профиль"/>
+	<string id="8003" value="Профиль"/>
 	<string id="8004" value="!Добро пожаловать в Shareaza (version) !\n.\nShareaza полностью бесплатная программа.\nПожалуйста используйте её с уважением к законам интеллектуальной собственности.\n."/>
 	<string id="8005" value="(закрытие после загрузок)"/>
 	<string id="8006" value="Вы не подключены.  Щелкните кнопку «Подключиться», чтобы начать работу."/>
@@ -2636,7 +2636,7 @@
 	<string id="8101" value="%s пишет:"/>
 	<string id="8102" value="%s оценивает этот файл:"/>
 	<string id="8103" value="&#160;&#160;Щелкните для&#160; просмотра"/>
-	<string id="8104" value="Предпросматриваю..."/>
+	<string id="8104" value="Ждите..."/>
 	<string id="8105" value="Невозможно загрузить содержимое просмотра с «%s»."/>
 	<string id="8128" value="Щелкните здесь для поиска снова"/>
 	<string id="8129" value="Поиск ещё не был запущен в этом окне."/>
@@ -2692,7 +2692,7 @@
 	<string id="8230" value="Shareaza ищет источники для:"/>
 	<string id="8231" value="Нет источников"/>
 	<string id="8232" value="Открыть"/>
-	<string id="8233" value="Предпросмотр"/>
+	<string id="8233" value="Просмотр"/>
 	<string id="8235" value="Скорость передачи:"/>
 	<string id="8236" value="Примерно осталось:"/>
 	<string id="8237" value="Загрузили|Всего|%:"/>
@@ -3302,7 +3302,7 @@
 </strings>
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
 <dialogs>
-	<dialog name="CGeneralSettingsGroup" cookie="" caption="Основное">
+	<dialog name="CGeneralSettingsGroup" cookie="" caption="Главное">
 	</dialog>
 	<dialog name="CSettingSheet" cookie="SyBuBuBu#3" caption="Установки Shareaza">
 		<control/>
@@ -4214,7 +4214,7 @@
 	</dialog>
 	<dialog name="CFilePreviewDlg" cookie="StStStmsStBu" caption="Просмотр копии загрузки...">
 		<control/>
-		<control caption="Shareaza готовит предпросмотр загрузки:"/>
+		<control caption="Shareaza готовит просмотр загрузки:"/>
 		<control/>
 		<control/>
 		<control caption="(копируются загруженные части в новый файл)"/>
