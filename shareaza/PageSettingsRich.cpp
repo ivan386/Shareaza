@@ -91,6 +91,8 @@ BOOL CRichSettingsPage::OnInitDialog()
 	SetWindowText( m_sCaption );
 	Skin.Apply( m_sName, this );
 
+	m_pDocument->m_crBackground = Skin.m_crDialog;
+
 	CRect rc;
 	GetClientRect( &rc );
 	m_wndView.Create( WS_VISIBLE, rc, this, IDC_RICH_VIEW );
