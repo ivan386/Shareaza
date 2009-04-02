@@ -54,7 +54,7 @@ CWizardWelcomePage::~CWizardWelcomePage()
 
 void CWizardWelcomePage::DoDataExchange(CDataExchange* pDX)
 {
-	CPropertyPage::DoDataExchange(pDX);
+	CWizardPage::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CWizardWelcomePage)
 	//}}AFX_DATA_MAP
 }

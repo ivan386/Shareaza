@@ -63,7 +63,7 @@ CWizardSharePage::~CWizardSharePage()
 
 void CWizardSharePage::DoDataExchange(CDataExchange* pDX)
 {
-	CPropertyPage::DoDataExchange(pDX);
+	CWizardPage::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CWizardSharePage)
 	DDX_Control(pDX, IDC_SHARE_FOLDERS, m_wndList);
 	DDX_Control(pDX, IDC_SHARE_REMOVE, m_wndRemove);
@@ -75,7 +75,7 @@ void CWizardSharePage::DoDataExchange(CDataExchange* pDX)
 
 BOOL CWizardSharePage::OnInitDialog()
 {
-	CPropertyPage::OnInitDialog();
+	CWizardPage::OnInitDialog();
 
 	Skin.Apply( _T("CWizardSharePage"), this );
 

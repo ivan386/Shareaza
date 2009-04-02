@@ -59,7 +59,7 @@ CFileCommentsPage::~CFileCommentsPage()
 
 void CFileCommentsPage::DoDataExchange(CDataExchange* pDX)
 {
-	CPropertyPage::DoDataExchange(pDX);
+	CFilePropertiesPage::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CFileCommentsPage)
 	DDX_Control(pDX, IDC_FILE_COMMENTS, m_wndComments);
 	DDX_Control(pDX, IDC_FILE_RATING, m_wndRating);

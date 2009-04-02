@@ -61,7 +61,7 @@ CWizardFinishedPage::~CWizardFinishedPage()
 
 void CWizardFinishedPage::DoDataExchange(CDataExchange* pDX)
 {
-	CPropertyPage::DoDataExchange(pDX);
+	CWizardPage::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CWizardFinishedPage)
 	DDX_Check(pDX, IDC_WIZARD_AUTO, m_bAutoConnect);
 	DDX_Check(pDX, IDC_WIZARD_CONNECT, m_bConnect);
@@ -74,7 +74,7 @@ void CWizardFinishedPage::DoDataExchange(CDataExchange* pDX)
 
 BOOL CWizardFinishedPage::OnInitDialog()
 {
-	CPropertyPage::OnInitDialog();
+	CWizardPage::OnInitDialog();
 
 	Skin.Apply( _T("CWizardFinishedPage"), this );
 

@@ -60,7 +60,7 @@ CWizardInterfacePage::~CWizardInterfacePage()
 
 void CWizardInterfacePage::DoDataExchange(CDataExchange* pDX)
 {
-	CPropertyPage::DoDataExchange(pDX);
+	CWizardPage::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CWizardInterfacePage)
 	DDX_Control(pDX, IDC_DESCRIPTION_1, m_wndDescription1);
 	DDX_Control(pDX, IDC_DESCRIPTION_0, m_wndDescription0);

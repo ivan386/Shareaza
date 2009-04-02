@@ -1,7 +1,7 @@
 //
 // DlgDownloadSheet.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -21,27 +21,22 @@
 
 #pragma once
 
-class CSkinWindow;
-
-#include "BTInfo.h"
+#include "PagePropertyAdv.h"
 #include "Download.h"
 
 
-class CDownloadSheet : public CPropertySheet
+class CDownloadSheet : public CPropertySheetAdv
 {
+	DECLARE_DYNAMIC(CDownloadSheet)
+
 public:
 	CDownloadSheet(CDownload* pDownload);
-	virtual ~CDownloadSheet();
-
-	DECLARE_DYNAMIC(CDownloadSheet)
 
 	CDownload*		m_pDownload;
 
 	virtual INT_PTR DoModal(int nPage = -1);
 
 protected:
-	CSkinWindow*	m_pSkin;
-	CBrush			m_brDialog;
 	CString			m_sDownloadTitle;
 	CString			m_sActionsTitle;
 	CString			m_sGeneralTitle;
@@ -49,21 +44,6 @@ protected:
 	CString			m_sTrackersTitle;
 
 	virtual BOOL OnInitDialog();
-	void SetTabTitle(CPropertyPage* pPage, CString& strTitle);
-
-	afx_msg void OnNcCalcSize(BOOL bCalcValidRects, NCCALCSIZE_PARAMS FAR* lpncsp);
-	afx_msg ONNCHITTESTRESULT OnNcHitTest(CPoint point);
-	afx_msg BOOL OnNcActivate(BOOL bActive);
-	afx_msg void OnNcPaint();
-	afx_msg void OnNcLButtonDown(UINT nHitTest, CPoint point);
-	afx_msg void OnNcLButtonUp(UINT nHitTest, CPoint point);
-	afx_msg void OnNcLButtonDblClk(UINT nHitTest, CPoint point);
-	afx_msg void OnNcMouseMove(UINT nHitTest, CPoint point);
-	afx_msg void OnSize(UINT nType, int cx, int cy);
-	afx_msg BOOL OnEraseBkgnd(CDC* pDC);
-	afx_msg LRESULT OnSetText(WPARAM wParam, LPARAM lParam);
-	afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
-	afx_msg BOOL OnHelpInfo(HELPINFO* pHelpInfo);
 
 	DECLARE_MESSAGE_MAP()
 };

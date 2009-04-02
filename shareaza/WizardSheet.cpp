@@ -1,7 +1,7 @@
 //
 // WizardSheet.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -22,12 +22,10 @@
 #include "StdAfx.h"
 #include "Shareaza.h"
 #include "Settings.h"
-#include "Skin.h"
-#include "SkinWindow.h"
 #include "CoolInterface.h"
 #include "GProfile.h"
-
 #include "WizardSheet.h"
+
 #include "WizardWelcomePage.h"
 #include "WizardInterfacePage.h"
 #include "WizardConnectionPage.h"
@@ -42,25 +40,14 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 
-
 /////////////////////////////////////////////////////////////////////////////
 // CWizardSheet
 
-BEGIN_MESSAGE_MAP(CWizardSheet, CPropertySheet)
-	//{{AFX_MSG_MAP(CWizardSheet)
+IMPLEMENT_DYNAMIC(CWizardSheet, CPropertySheetAdv)
+
+BEGIN_MESSAGE_MAP(CWizardSheet, CPropertySheetAdv)
 	ON_WM_PAINT()
-	ON_WM_ERASEBKGND()
 	ON_WM_SIZE()
-	ON_WM_NCHITTEST()
-	ON_WM_NCACTIVATE()
-	ON_WM_NCPAINT()
-	ON_WM_NCLBUTTONDOWN()
-	ON_WM_NCLBUTTONUP()
-	ON_WM_NCLBUTTONDBLCLK()
-	ON_WM_NCMOUSEMOVE()
-	ON_MESSAGE(WM_SETTEXT, OnSetText)
-	ON_WM_HELPINFO()
-	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -100,15 +87,9 @@ BOOL CWizardSheet::RunWizard(CWnd* pParent)
 
 CWizardSheet::CWizardSheet(CWnd *pParentWnd, UINT iSelectPage)
 {
-	m_pSkin = NULL;
-	m_psh.dwFlags &= ~PSP_HASHELP;
-
 	Construct( _T(""), pParentWnd, iSelectPage );
-	SetWizardMode();
-}
 
-CWizardSheet::~CWizardSheet()
-{
+	SetWizardMode();
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -116,7 +97,7 @@ CWizardSheet::~CWizardSheet()
 
 BOOL CWizardSheet::OnInitDialog()
 {
-	CPropertySheet::OnInitDialog();
+	CPropertySheetAdv::OnInitDialog();
 	CRect rc;
 
 	CString strMessage;
@@ -125,14 +106,6 @@ BOOL CWizardSheet::OnInitDialog()
 	SetFont( &theApp.m_gdiFont );
 
 	GetClientRect( &rc );
-
-	/*
-	if ( m_pSkin = Skin.GetWindowSkin( _T("CWizardSheet") ) )
-	{
-		m_pSkin->CalcWindowRect( &rc );
-		SetWindowPos( NULL, 0, 0, rc.Width(), rc.Height(), SWP_NOMOVE|SWP_NOZORDER|SWP_NOACTIVATE );
-	}
-	*/
 
 	GetDlgItem( ID_WIZBACK )->GetWindowRect( &rc );
 	ScreenToClient( &rc );
@@ -208,14 +181,12 @@ BOOL CWizardSheet::OnChildNotify(UINT message, WPARAM wParam, LPARAM lParam, LRE
 		pWnd = pWnd->GetNextWindow();
 	}
 
-	return CPropertySheet::OnChildNotify( message, wParam, lParam, pLResult );
+	return CPropertySheetAdv::OnChildNotify( message, wParam, lParam, pLResult );
 }
 
 void CWizardSheet::OnSize(UINT nType, int cx, int cy)
 {
-	if ( m_pSkin ) m_pSkin->OnSize( this );
-
-	CPropertySheet::OnSize( nType, cx, cy );
+	CPropertySheetAdv::OnSize( nType, cx, cy );
 
 	if ( CWnd* pWnd = GetWindow( GW_CHILD ) )
 	{
@@ -227,11 +198,6 @@ void CWizardSheet::OnSize(UINT nType, int cx, int cy)
 		pWnd->SetWindowPos( NULL, m_rcPage.left, m_rcPage.top, m_rcPage.Width(),
 			m_rcPage.Height(), SWP_NOSIZE );
 	}
-}
-
-BOOL CWizardSheet::OnEraseBkgnd(CDC* /*pDC*/)
-{
-	return TRUE;
 }
 
 void CWizardSheet::OnPaint()
@@ -258,133 +224,28 @@ void CWizardSheet::OnPaint()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// CWizardSheet skin support
-
-void CWizardSheet::OnNcCalcSize(BOOL bCalcValidRects, NCCALCSIZE_PARAMS FAR* lpncsp)
-{
-	if ( m_pSkin )
-		m_pSkin->OnNcCalcSize( this, bCalcValidRects, lpncsp );
-	else
-		CPropertySheet::OnNcCalcSize( bCalcValidRects, lpncsp );
-}
-
-ONNCHITTESTRESULT CWizardSheet::OnNcHitTest(CPoint point)
-{
-	if ( m_pSkin )
-		return m_pSkin->OnNcHitTest( this, point, FALSE );
-	else
-		return CPropertySheet::OnNcHitTest( point );
-}
-
-BOOL CWizardSheet::OnNcActivate(BOOL bActive)
-{
-	if ( m_pSkin )
-	{
-		BOOL bVisible = IsWindowVisible();
-		if ( bVisible ) ModifyStyle( WS_VISIBLE, 0 );
-		BOOL bResult = CPropertySheet::OnNcActivate( bActive );
-		if ( bVisible ) ModifyStyle( 0, WS_VISIBLE );
-		m_pSkin->OnNcActivate( this, bActive || ( m_nFlags & WF_STAYACTIVE ) );
-		return bResult;
-	}
-	else
-	{
-		return CPropertySheet::OnNcActivate( bActive );
-	}
-}
-
-void CWizardSheet::OnNcPaint()
-{
-	if ( m_pSkin )
-		m_pSkin->OnNcPaint( this );
-	else
-		CPropertySheet::OnNcPaint();
-}
-
-void CWizardSheet::OnNcLButtonDown(UINT nHitTest, CPoint point)
-{
-	if ( m_pSkin && m_pSkin->OnNcLButtonDown( this, nHitTest, point ) ) return;
-	CPropertySheet::OnNcLButtonDown(nHitTest, point);
-}
-
-void CWizardSheet::OnNcLButtonUp(UINT nHitTest, CPoint point)
-{
-	if ( m_pSkin && m_pSkin->OnNcLButtonUp( this, nHitTest, point ) ) return;
-	CPropertySheet::OnNcLButtonUp( nHitTest, point );
-}
-
-void CWizardSheet::OnNcLButtonDblClk(UINT nHitTest, CPoint point)
-{
-	if ( m_pSkin && m_pSkin->OnNcLButtonDblClk( this, nHitTest, point ) ) return;
-	CPropertySheet::OnNcLButtonDblClk( nHitTest, point );
-}
-
-void CWizardSheet::OnNcMouseMove(UINT nHitTest, CPoint point)
-{
-	if ( m_pSkin ) m_pSkin->OnNcMouseMove( this, nHitTest, point );
-	CPropertySheet::OnNcMouseMove( nHitTest, point );
-}
-
-LRESULT CWizardSheet::OnSetText(WPARAM /*wParam*/, LPARAM /*lParam*/)
-{
-	if ( m_pSkin )
-	{
-		BOOL bVisible = IsWindowVisible();
-		if ( bVisible ) ModifyStyle( WS_VISIBLE, 0 );
-		LRESULT lResult = Default();
-		if ( bVisible ) ModifyStyle( 0, WS_VISIBLE );
-		if ( m_pSkin ) m_pSkin->OnSetText( this );
-		return lResult;
-	}
-	else
-	{
-		return Default();
-	}
-}
-
-BOOL CWizardSheet::OnHelpInfo(HELPINFO* /*pHelpInfo*/)
-{
-	return FALSE;
-}
-
-/////////////////////////////////////////////////////////////////////////////
 // CWizardPage
 
-IMPLEMENT_DYNCREATE(CWizardPage, CPropertyPage)
+IMPLEMENT_DYNCREATE(CWizardPage, CPropertyPageAdv)
 
-BEGIN_MESSAGE_MAP(CWizardPage, CPropertyPage)
-	//{{AFX_MSG_MAP(CWizardPage)
+BEGIN_MESSAGE_MAP(CWizardPage, CPropertyPageAdv)
 	ON_WM_SIZE()
-	ON_WM_CTLCOLOR()
-	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 
 /////////////////////////////////////////////////////////////////////////////
 // CWizardPage construction
 
-CWizardPage::CWizardPage(UINT nID) : CPropertyPage( nID )
-{
-	m_crWhite = RGB( 255, 255, 255 );
-	m_brWhite.CreateSolidBrush( m_crWhite );
-}
-
-CWizardPage::~CWizardPage()
+CWizardPage::CWizardPage(UINT nID) : CPropertyPageAdv( nID )
 {
 }
 
 /////////////////////////////////////////////////////////////////////////////
 // CWizardPage message handlers
 
-HBRUSH CWizardPage::OnCtlColor(CDC* pDC, CWnd* /*pWnd*/, UINT /*nCtlColor*/)
-{
-	pDC->SetBkColor( m_crWhite );
-	return (HBRUSH)m_brWhite.GetSafeHandle();
-}
-
 void CWizardPage::OnSize(UINT nType, int cx, int cy)
 {
-	CPropertyPage::OnSize(nType, cx, cy);
+	CPropertyPageAdv::OnSize(nType, cx, cy);
 
 	CWizardSheet* pSheet = (CWizardSheet*)GetParent();
 
