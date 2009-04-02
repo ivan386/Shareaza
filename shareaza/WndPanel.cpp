@@ -48,6 +48,7 @@ BEGIN_MESSAGE_MAP(CPanelWnd, CChildWnd)
 	ON_MESSAGE(WM_SETTEXT, OnSetText)
 END_MESSAGE_MAP()
 
+#define CAPTION_HEIGHT	20
 #define CLOSEBOX		10
 
 
@@ -90,7 +91,7 @@ void CPanelWnd::OnNcCalcSize(BOOL bCalcValidRects, NCCALCSIZE_PARAMS FAR* lpncsp
 	{
 		NCCALCSIZE_PARAMS* pSize = (NCCALCSIZE_PARAMS*)lpncsp;
 			
-		BITMAP info = {};
+		BITMAP info = { 0, 0, CAPTION_HEIGHT };
 		if ( Skin.m_bmPanelMark.m_hObject) Skin.m_bmPanelMark.GetBitmap( &info );
 
 		pSize->rgrc[0].top += info.bmHeight;
@@ -104,7 +105,7 @@ ONNCHITTESTRESULT CPanelWnd::OnNcHitTest(CPoint point)
 {
 	if ( m_bPanelMode && ! m_pSkin )
 	{
-		BITMAP info = {};
+		BITMAP info = { 0, 0, CAPTION_HEIGHT };
 		if ( Skin.m_bmPanelMark.m_hObject) Skin.m_bmPanelMark.GetBitmap( &info );
 
 		CRect rc;
@@ -178,7 +179,7 @@ void CPanelWnd::PaintCaption(CDC& dc)
 	CString strCaption;
 	CRect rc, rcWnd;
 	
-	BITMAP info = {};
+	BITMAP info = { 0, 0, CAPTION_HEIGHT };
 	if ( Skin.m_bmPanelMark.m_hObject) Skin.m_bmPanelMark.GetBitmap( &info );
 
 	GetWindowRect( &rcWnd );
