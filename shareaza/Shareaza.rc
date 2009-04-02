@@ -142,6 +142,7 @@ IDI_COMMERCIAL          ICON                    "Res\\Commercial.ico"
 IDI_RATING_FAKE         ICON                    "Res\\RatingFake.ico"
 IDI_RATING_AVERAGE      ICON                    "Res\\RatingAverage.ico"
 IDI_RATING_GOOD         ICON                    "Res\\RatingGood.ico"
+IDI_WIZARD_DOT          ICON                    "Res\\WizardDot.ico"
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -193,7 +194,6 @@ IDB_SORT_ASC            BITMAP                  "Res\\SortAsc.bmp"
 IDB_SORT_DESC           BITMAP                  "Res\\SortDesc.bmp"
 IDB_COLOURDOT           BITMAP                  "Res\\ColourDot.bmp"
 IDB_WIZARD              BITMAP                  "Res\\Wizard.bmp"
-IDB_WIZARD_DOT          BITMAP                  "Res\\WizardDot.bmp"
 IDB_SECURITY            BITMAP                  "Res\\Security.bmp"
 IDB_SMALL_STAR          BITMAP                  "Res\\SmallStar.bmp"
 IDB_BANNER_MARK         BITMAP                  "Res\\BannerMark.bmp"
@@ -526,13 +526,13 @@ BEGIN
     LTEXT           "If you haven't used Shareaza or another P2P client before, this QuickStart wizard can help you configure your copy in a few simple steps.",IDC_STATIC,10,25,265,20
     LTEXT           "If you're a more advanced user, you can access the full range of Shareaza's options via the Tools menu.  Click Exit to close the wizard at any time.",IDC_STATIC,10,50,265,25
     LTEXT           "This wizard will assist you to:",IDC_STATIC,10,80,265,10
-    CONTROL         158,IDC_STATIC,"Static",SS_BITMAP,15,96,11,10
+    ICON            IDI_WIZARD_DOT,IDC_STATIC,15,96,16,16,SS_REALSIZEIMAGE
     LTEXT           "Tell Shareaza about your Internet connection",IDC_STATIC,30,96,245,10,SS_CENTERIMAGE
-    CONTROL         158,IDC_STATIC,"Static",SS_BITMAP,15,111,11,10
+    ICON            IDI_WIZARD_DOT,IDC_STATIC,15,111,16,16,SS_REALSIZEIMAGE
     LTEXT           "Choose which files to share",IDC_STATIC,30,111,245,10,SS_CENTERIMAGE
-    CONTROL         158,IDC_STATIC,"Static",SS_BITMAP,15,126,11,10
+    ICON            IDI_WIZARD_DOT,IDC_STATIC,15,126,16,16,SS_REALSIZEIMAGE
     LTEXT           "Connect to your choice of P2P networks, and",IDC_STATIC,30,126,245,10,SS_CENTERIMAGE
-    CONTROL         158,IDC_STATIC,"Static",SS_BITMAP,15,140,11,10
+    ICON            IDI_WIZARD_DOT,IDC_STATIC,15,140,16,16,SS_REALSIZEIMAGE
     LTEXT           "Get started using Shareaza.",IDC_STATIC,30,140,245,10,SS_CENTERIMAGE
 END
 
@@ -3184,13 +3184,29 @@ BEGIN
     IDS_PRIORITY_HIGH       "High"
     IDS_SKIN_ERROR          "Skin load error: %s. Element: %s"
     IDS_SKIN_LOAD           "Loading skin: %s"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_LIBRARY_ALBUM_TRACK "#"
+    IDS_LIBRARY_ALBUM_TITLE "Title"
+    IDS_LIBRARY_ALBUM_LENGTH "Length"
+    IDS_LIBRARY_ALBUM_BITRATE "Bitrate"
+    IDS_LIBRARY_ALBUM_ALBUM "Album"
+    IDS_LIBRARY_ALBUM_ARTIST "Artist"
+    IDS_LIBRARY_ALBUM_RATING "Rating"
     IDS_GENERAL_OK          "OK"
     IDS_GENERAL_CANCEL      "Cancel"
     IDS_GENERAL_ABORT       "Abort"
+END
+
+STRINGTABLE 
+BEGIN
     IDS_GENERAL_RETRY       "Retry"
     IDS_GENERAL_IGNORE      "Ignore"
     IDS_GENERAL_TRYAGAIN    "Try Again"
-	IDS_INFO_REMEMBER       "&Remember my selection next time"
+    IDS_GENERAL_CONTINUE    "Continue"
+    IDS_INFO_REMEMBER       "&Remember my selection next time"
 END
 
 STRINGTABLE 
@@ -4750,17 +4766,6 @@ END
 
 STRINGTABLE 
 BEGIN
-    IDS_LIBRARY_ALBUM_TRACK "#"
-    IDS_LIBRARY_ALBUM_TITLE "Title"
-    IDS_LIBRARY_ALBUM_LENGTH "Length"
-    IDS_LIBRARY_ALBUM_BITRATE "Bitrate"
-    IDS_LIBRARY_ALBUM_ALBUM "Album"
-    IDS_LIBRARY_ALBUM_ARTIST "Artist"
-    IDS_LIBRARY_ALBUM_RATING "Rating"
-END
-
-STRINGTABLE 
-BEGIN
     ID_TAB_IRC              "Show the IRC Chat window."
 END
 
@@ -4814,11 +4819,6 @@ END
 STRINGTABLE 
 BEGIN
     IDC_IMPORT_DOWNLOADS    "Import eMule partial downloads..."
-END
-
-STRINGTABLE 
-BEGIN
-    IDS_GENERAL_CONTINUE    "Continue"
 END
 
 #endif    // English (Australia) resources

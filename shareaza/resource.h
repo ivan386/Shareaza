@@ -63,7 +63,7 @@
 #define IDB_WIZARD                      154
 #define IDD_WIZARD_SHARING              154
 #define IDD_WIZARD_FINISHED             155
-#define IDB_WIZARD_DOT                  158
+#define IDI_WIZARD_DOT                  158
 #define IDB_CHILDFRAME                  159
 #define IDD_FOLDER_SCAN                 160
 #define IDB_SECURITY                    160
