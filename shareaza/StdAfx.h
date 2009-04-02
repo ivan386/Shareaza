@@ -93,7 +93,7 @@
 #endif
 
 // Target features available from Windows XP onwards.
-//	To show features that need guards for Windows 2000 compatability use:
+//	To show features that need guards for Windows 2000 compatibility use:
 //	#define NTDDI_VERSION	NTDDI_WIN2K
 //	#define _WIN32_WINNT	0x0500
 #define NTDDI_VERSION	NTDDI_WINXP	// Minimum build target
@@ -196,7 +196,7 @@
 #include <boost/bind.hpp>
 #include <boost/bind/placeholders.hpp>
 #include <boost/type_traits.hpp>
-#include <boost/smart_ptr.hpp>
+#include <boost/shared_ptr.hpp>
 #include <boost/utility.hpp>
 #include <boost/array.hpp>
 #include <boost/ptr_container/ptr_list.hpp>
@@ -222,7 +222,6 @@
 using augment::implicit_cast;
 using augment::auto_ptr;
 using augment::auto_array;
-using augment::com_ptr;
 using augment::IUnknownImplementation;
 
 #include "../HashLib/HashLib.h"

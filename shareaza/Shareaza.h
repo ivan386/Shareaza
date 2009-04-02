@@ -96,7 +96,7 @@ public:
 	CString				m_sDefaultFont;				// Main font. (Tahoma)
 	CString				m_sPacketDumpFont;			// Packet Window. (Lucida Console)
 	CString				m_sSystemLogFont;			// System Window. (Courier New)
-	boost::scoped_ptr< CUPnPFinder > m_pUPnPFinder;
+	CAutoPtr< CUPnPFinder > m_pUPnPFinder;
 	TRISTATE			m_bUPnPPortsForwarded;		// UPnP values are assigned when the discovery is complete
 	TRISTATE			m_bUPnPDeviceConnected;		// or when the service notifies
 	DWORD				m_nUPnPExternalAddress;

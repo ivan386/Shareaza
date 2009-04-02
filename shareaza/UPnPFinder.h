@@ -21,9 +21,9 @@
 
 #pragma once
 
-typedef com_ptr< IUPnPDeviceFinder > FinderPointer;
-typedef com_ptr< IUPnPDevice > DevicePointer;
-typedef com_ptr< IUPnPService > ServicePointer;
+typedef CComPtr< IUPnPDeviceFinder > FinderPointer;
+typedef CComPtr< IUPnPDevice > DevicePointer;
+typedef CComPtr< IUPnPService > ServicePointer;
 
 CString translateUPnPResult(HRESULT hr);
 HRESULT UPnPMessage(HRESULT hr);
@@ -84,7 +84,7 @@ private:
 	HRESULT	MapPort(const ServicePointer& service);
 	void	DeleteExistingPortMappings(ServicePointer pService);
 	void	CreatePortMappings(ServicePointer pService);
-	HRESULT SaveServices(com_ptr< IEnumUnknown >, const LONG nTotalItems);
+	HRESULT SaveServices(CComPtr< IEnumUnknown >, const LONG nTotalItems);
 
 	HRESULT InvokeAction(ServicePointer pService, CComBSTR action,
 		LPCTSTR pszInArgString, CString& strResult);
@@ -104,11 +104,11 @@ public:
 
 // Private members
 private:
-	std::vector< DevicePointer >  m_pDevices;
-	std::vector< ServicePointer > m_pServices;
+	std::vector< CAdapt< DevicePointer > >  m_pDevices;
+	std::vector< CAdapt< ServicePointer>  > m_pServices;
 	FinderPointer m_pDeviceFinder;
-	com_ptr< IUPnPDeviceFinderCallback > m_pDeviceFinderCallback;
-	com_ptr< IUPnPServiceCallback >      m_pServiceCallback;
+	CComPtr< IUPnPDeviceFinderCallback > m_pDeviceFinderCallback;
+	CComPtr< IUPnPServiceCallback >      m_pServiceCallback;
 
 	LONG	m_nAsyncFindHandle;
 	bool	m_bAsyncFindRunning;

@@ -38,7 +38,6 @@ namespace augment
 
 #include "auto_ptr.hpp"
 #include "auto_array.hpp"
-#include "com_ptr.hpp"
 #include "IUnknownImplementation.hpp"
 
 #endif // #ifndef AUGMENT_AUGMENT_HPP_INCLUDED

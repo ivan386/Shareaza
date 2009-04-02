@@ -64,16 +64,15 @@ void CUPnPFinder::Init()
 
 FinderPointer CUPnPFinder::CreateFinderInstance()
 {
-	void* pNewDeviceFinder = NULL;
-	if ( FAILED( CoCreateInstance( CLSID_UPnPDeviceFinder, NULL, CLSCTX_INPROC_SERVER,
-							IID_IUPnPDeviceFinder, &pNewDeviceFinder ) ) )
+	FinderPointer pNewDeviceFinder;
+	if ( FAILED( pNewDeviceFinder.CoCreateInstance( CLSID_UPnPDeviceFinder ) ) )
 	{
 		// Should we ask to disable auto-detection?
 		theApp.Message( MSG_INFO, L"UPnP discovery is not supported or not installed." );
 
 		throw UPnPError();
 	}
-	return FinderPointer( static_cast< IUPnPDeviceFinder* >( pNewDeviceFinder ), false );
+	return pNewDeviceFinder;
 }
 
 CUPnPFinder::~CUPnPFinder()
@@ -153,7 +152,7 @@ void CUPnPFinder::ProcessAsyncFind(CComBSTR bsSearchType)
 		return theApp.Message( MSG_ERROR, L"DeviceFinderCallback object is not available." );
 
 	if ( FAILED( m_pDeviceFinder->CreateAsyncFind( bsSearchType, NULL,
-				 m_pDeviceFinderCallback.get(), &m_nAsyncFindHandle ) ) )
+				 m_pDeviceFinderCallback, &m_nAsyncFindHandle ) ) )
 		return theApp.Message( MSG_ERROR, L"CreateAsyncFind failed in UPnP finder." );
 
 	m_bAsyncFindRunning = true;
@@ -241,7 +240,7 @@ void CUPnPFinder::AddDevice(DevicePointer device, bool bAddChilds, int nLevel)
 		return (void)UPnPMessage( hr );
 
 	// Add the item at the end of the device list if not found
-	std::vector< DevicePointer >::iterator deviceSet
+	std::vector< CAdapt< DevicePointer > >::iterator deviceSet
 		= std::find_if( m_pDevices.begin(), m_pDevices.end(), FindDevice( bsUniqueName ) );
 
 	if ( deviceSet == m_pDevices.end() )
@@ -250,38 +249,35 @@ void CUPnPFinder::AddDevice(DevicePointer device, bool bAddChilds, int nLevel)
 		theApp.Message( MSG_DEBUG, L"Found UPnP device: %s (ChildLevel: %i, UID: %s)", bsFriendlyName, nLevel, bsUniqueName );
 	}
 
-	if ( !bAddChilds )
+	if ( ! bAddChilds )
 		return;
 
 	// Recursive add any child devices, see comment on StartDiscovery
-	IUPnPDevices* pChildDevices_;
-	if ( SUCCEEDED( device->get_Children( &pChildDevices_ ) ) )
+	CComPtr< IUPnPDevices > pChildDevices;
+	if ( SUCCEEDED( device->get_Children( &pChildDevices ) ) )
 	{
-		com_ptr< IUPnPDevices > pChildDevices( pChildDevices_ );
-		if ( !pChildDevices )
+		if ( ! pChildDevices )
+			return;
+
+		CComPtr< IUnknown > pIUnknown;
+		if ( FAILED( hr = pChildDevices->get__NewEnum( &pIUnknown ) ) )
 			return (void)UPnPMessage( hr );
 
-		IUnknown* pEnumVar_;
-		HRESULT hr = S_OK;
-
-		if ( FAILED( hr = pChildDevices->get__NewEnum( &pEnumVar_ ) ) )
-			return (void)UPnPMessage( hr );
-
-		com_ptr< IEnumVARIANT > pEnumVar( pEnumVar_ );
-		if ( !pEnumVar )
-			return (void)UPnPMessage( hr );
+		CComQIPtr< IEnumVARIANT > pEnumVar( pIUnknown );
+		if ( ! pEnumVar )
+			return (void)UPnPMessage( E_NOINTERFACE );
 
 		CComVariant var;
 		ULONG lFetch;
-		IDispatch* pDisp;
-
 		hr = pEnumVar->Next( 1, &var, &lFetch );
 		while ( hr == S_OK )
 		{
 			if ( lFetch == 1 )
 			{
-				pDisp = V_DISPATCH(&var);
-				DevicePointer pChildDevice( pDisp );
+				CComQIPtr< IUPnPDevice > pChildDevice( V_DISPATCH( &var ) );
+				if ( ! pChildDevice )
+					return (void)UPnPMessage( E_NOINTERFACE );
+
 				if ( SUCCEEDED(pChildDevice->get_FriendlyName( &bsFriendlyName )) &&
 					 SUCCEEDED(pChildDevice->get_UniqueDeviceName( &bsUniqueName )) )
 					AddDevice( pChildDevice, true, nLevel + 1 );
@@ -298,7 +294,7 @@ void CUPnPFinder::RemoveDevice(CComBSTR bsUDN)
 {
 	theApp.Message( MSG_DEBUG, L"Finder asked to remove: %s", bsUDN );
 
-	std::vector< DevicePointer >::iterator device
+	std::vector< CAdapt< DevicePointer > >::iterator device
 		= std::find_if( m_pDevices.begin(), m_pDevices.end(), FindDevice( bsUDN ) );
 
 	if ( device != m_pDevices.end() )
@@ -352,10 +348,9 @@ HRESULT	CUPnPFinder::GetDeviceServices(DevicePointer pDevice)
 	HRESULT hr = S_OK;
 
 	m_pServices.clear();
-	IUPnPServices* pServices_ = NULL;
-	if ( FAILED( hr = pDevice->get_Services( &pServices_ ) ) )
+	CComPtr< IUPnPServices > pServices;
+	if ( FAILED( hr = pDevice->get_Services( &pServices ) ) )
 		return UPnPMessage( hr ), hr;
-	com_ptr< IUPnPServices > pServices( pServices_ );
 
 	LONG nCount = 0;
 	if ( FAILED( hr = pServices->get_Count( &nCount ) ) )
@@ -368,14 +363,14 @@ HRESULT	CUPnPFinder::GetDeviceServices(DevicePointer pDevice)
 		return hr;
 	}
 
-	IUnknown* pEU_ = NULL;
 	// We have to get a IEnumUnknown pointer
-	if ( FAILED( hr = pServices->get__NewEnum( &pEU_ ) ) )
+	CComPtr< IUnknown > pIUnknown;
+	if ( FAILED( hr = pServices->get__NewEnum( &pIUnknown ) ) )
 		return UPnPMessage( hr ), hr;
 
-	com_ptr< IEnumUnknown > pEU( pEU_ );
-	if ( !pEU )
-		return hr;
+	CComQIPtr< IEnumUnknown > pEU( pIUnknown );
+	if ( ! pEU )
+		return UPnPMessage( E_NOINTERFACE ), E_NOINTERFACE;
 
 	hr = SaveServices( pEU, nCount );
 
@@ -383,17 +378,15 @@ HRESULT	CUPnPFinder::GetDeviceServices(DevicePointer pDevice)
 }
 
 // Saves services from enumeration to member m_pServices
-HRESULT CUPnPFinder::SaveServices(com_ptr< IEnumUnknown > pEU, const LONG nTotalItems)
+HRESULT CUPnPFinder::SaveServices(CComPtr< IEnumUnknown > pEU, const LONG nTotalItems)
 {
 	HRESULT hr = S_OK;
 	CComBSTR bsServiceId;
 
 	for ( LONG nIndex = 0 ; nIndex < nTotalItems ; nIndex++ )
 	{
-		IUnknown* punkService_ = NULL;
-		hr = pEU->Next( 1, &punkService_, NULL );
-		com_ptr< IUnknown > punkService( punkService_ );
-
+		CComPtr< IUnknown > punkService;
+		hr = pEU->Next( 1, &punkService, NULL );
 		if ( FAILED( hr ) )
 		{
 			// Happens with MS ICS sometimes when the device is disconnected, reboot fixes that
@@ -402,7 +395,9 @@ HRESULT CUPnPFinder::SaveServices(com_ptr< IEnumUnknown > pEU, const LONG nTotal
 		}
 
 		// Get a IUPnPService pointer to the service just got
-		ServicePointer pService( punkService );
+		CComQIPtr< IUPnPService > pService( punkService );
+		if ( ! pService )
+			return UPnPMessage( E_NOINTERFACE ), E_NOINTERFACE;
 
 		if ( FAILED( hr = pService->get_Id( &bsServiceId ) ) )
 			return UPnPMessage( hr ), hr;
@@ -487,7 +482,7 @@ HRESULT CUPnPFinder::MapPort(const ServicePointer& service)
 		// Add a callback to detect device status changes
 		// ??? How it will work if two devices are active ???
 
-		hr = service->AddCallback( m_pServiceCallback.get() );
+		hr = service->AddCallback( m_pServiceCallback );
 		// Marshaller adds a ref here, so we should release it
 		// m_pServiceCallback->Release();
 		if ( FAILED( hr ) )

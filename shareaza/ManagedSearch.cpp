@@ -155,7 +155,7 @@ void CManagedSearch::Stop()
 
 BOOL CManagedSearch::Execute()
 {
-	if ( ! m_bActive || ! m_pSearch ) return FALSE;
+	if ( ! m_bActive || ! m_pSearch.get() ) return FALSE;
 
 	DWORD tTicks	= GetTickCount();
 	DWORD tSecs		= static_cast< DWORD >( time( NULL ) );

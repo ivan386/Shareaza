@@ -260,7 +260,7 @@ LRESULT CWizardConnectionPage::OnWizardNext()
 		try
 		{
 			if ( !theApp.m_pUPnPFinder )
-				theApp.m_pUPnPFinder.reset( new CUPnPFinder );
+				theApp.m_pUPnPFinder.Attach( new CUPnPFinder );
 			if ( theApp.m_pUPnPFinder->AreServicesHealthy() )
 				theApp.m_pUPnPFinder->StartDiscovery();
 		}

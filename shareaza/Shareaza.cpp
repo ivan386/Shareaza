@@ -421,7 +421,7 @@ BOOL CShareazaApp::InitInstance()
 		SplashStep( L"Firewall/Router Setup" );
 		try
 		{
-			m_pUPnPFinder.reset( new CUPnPFinder );
+			m_pUPnPFinder.Attach( new CUPnPFinder );
 			if ( m_pUPnPFinder->AreServicesHealthy() )
 				m_pUPnPFinder->StartDiscovery();
 		}
@@ -510,7 +510,7 @@ int CShareazaApp::ExitInstance()
 			m_pUPnPFinder->StopAsyncFind();
 			if ( Settings.Connection.DeleteUPnPPorts )
 				m_pUPnPFinder->DeletePorts();
-			m_pUPnPFinder.reset();
+			m_pUPnPFinder.Free();
 		}
 
 		if ( m_bLive )

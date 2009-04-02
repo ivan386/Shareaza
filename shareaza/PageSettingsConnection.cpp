@@ -283,7 +283,7 @@ void CConnectionSettingsPage::OnOK()
 			try
 			{
 				if ( !theApp.m_pUPnPFinder )
-					theApp.m_pUPnPFinder.reset( new CUPnPFinder );
+					theApp.m_pUPnPFinder.Attach( new CUPnPFinder );
 				if ( theApp.m_pUPnPFinder->AreServicesHealthy() )
 					theApp.m_pUPnPFinder->StartDiscovery();
 			}
@@ -380,7 +380,7 @@ void CConnectionSettingsPage::OnClickedEnableUpnp()
 	if ( !m_bEnableUPnP )
 	{
 		if ( !theApp.m_pUPnPFinder )
-			theApp.m_pUPnPFinder.reset( new CUPnPFinder );
+			theApp.m_pUPnPFinder.Attach( new CUPnPFinder );
 
 		// If the UPnP Device Host service is not running ask the user to start it.
 		// It is not wise to have a delay up to 1 minute, especially that we would need

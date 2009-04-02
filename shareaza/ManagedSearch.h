@@ -42,7 +42,7 @@ public:
 
 // Attributes
 public:
-	boost::scoped_ptr< CQuerySearch > m_pSearch;
+	auto_ptr< CQuerySearch > m_pSearch;
 	int				m_nPriority;
 	BOOL			m_bAllowG2;
 	BOOL			m_bAllowG1;
