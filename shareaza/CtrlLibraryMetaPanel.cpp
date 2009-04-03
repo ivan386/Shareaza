@@ -60,9 +60,7 @@ END_MESSAGE_MAP()
 // CLibraryMetaPanel construction
 
 CLibraryMetaPanel::CLibraryMetaPanel()
-: m_nThumbSize( Settings.Library.ThumbSize )
-, m_crLight( CCoolInterface::CalculateColour( CoolInterface.m_crTipBack, RGB( 255, 255, 255 ), 128 ) )
-, m_bNewFile( TRUE )
+: m_bNewFile( TRUE )
 , m_pMetadata( new CMetaPanel() )
 , m_pServiceData( NULL )
 , m_bExternalData( FALSE )
@@ -74,8 +72,7 @@ CLibraryMetaPanel::CLibraryMetaPanel()
 
 CLibraryMetaPanel::~CLibraryMetaPanel()
 {
-	if ( m_pMetadata != NULL )
-		delete m_pMetadata;
+	delete m_pMetadata;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -200,9 +197,7 @@ void CLibraryMetaPanel::Update()
 
 	GetClientRect( &rc );
 
-	int nThumbSize = rc.Height() - 16;
-	nThumbSize = max( nThumbSize, 64 );
-	nThumbSize = min( nThumbSize, 128 );
+	int nThumbSize = min( max( rc.Height() - 16, 64 ), (int)Settings.Library.ThumbSize );
 
 	int nHeight = 54 + m_pMetadata->Layout( &dc, rc.Width() - 24 - nThumbSize );
 
@@ -282,8 +277,12 @@ void CLibraryMetaPanel::OnPaint()
 		return;
 	}
 
-	CRect rcWork;
-	DrawThumbnail( &dc, rcClient, rcWork );
+	// Draw thumbnail or icon
+	int nThumbSize = min( max( rcClient.Height() - 16, 64 ), (int)Settings.Library.ThumbSize );
+	CRect rcWork( rcClient.left + 8, rcClient.top + 8,
+		rcClient.left + 8 + nThumbSize, rcClient.top + 8 + nThumbSize );
+	CoolInterface.DrawThumbnail( &dc, rcWork, IsThreadAlive(), FALSE, m_bmThumb, m_nIcon48, m_nIcon32 );
+	rcWork.SetRect( rcWork.right + 8, rcWork.top, rcClient.right - 8, rcClient.bottom );
 
 	dc.SetViewportOrg( 0, -GetScrollPos( SB_VERT ) );
 
@@ -395,74 +394,6 @@ void CLibraryMetaPanel::DrawText(CDC* pDC, int nX, int nY, LPCTSTR pszText, RECT
 	if ( pRect != NULL ) CopyMemory( pRect, &rc, sizeof(RECT) );
 }
 
-/////////////////////////////////////////////////////////////////////////////
-// CLibraryMetaPanel thumbnail painting
-
-void CLibraryMetaPanel::DrawThumbnail(CDC* pDC, CRect& rcClient, CRect& rcWork)
-{
-	int nThumbSize = rcClient.Height() - 16;
-	nThumbSize = max( nThumbSize, 64 );
-	nThumbSize = min( nThumbSize, 128 );
-
-	CRect rcThumb( rcClient.left + 8, rcClient.top + 8,
-		rcClient.left + 8 + nThumbSize, rcClient.top + 8 + nThumbSize );
-
-	rcWork.CopyRect( &rcThumb );
-	pDC->Draw3dRect( &rcWork, CoolInterface.m_crMargin, CoolInterface.m_crMargin );
-	rcWork.DeflateRect( 1, 1 );
-	m_nThumbSize = rcWork.Width();
-
-	DrawThumbnail( pDC, rcWork );
-	pDC->ExcludeClipRect( &rcThumb );
-
-	rcWork.SetRect( rcThumb.right + 8, rcThumb.top, rcClient.right - 8, rcClient.bottom );
-}
-
-void CLibraryMetaPanel::DrawThumbnail(CDC* pDC, CRect& rcThumb)
-{
-	if ( m_bmThumb.m_hObject &&
-		 ( m_szThumb.cx == m_nThumbSize || m_szThumb.cy == m_nThumbSize ) )
-	{
-		CDC dcMem;
-		dcMem.CreateCompatibleDC( pDC );
-
-		CBitmap* pOld = (CBitmap*)dcMem.SelectObject( &m_bmThumb );
-
-		CPoint ptImage(	( rcThumb.left + rcThumb.right ) / 2 - m_szThumb.cx / 2,
-						( rcThumb.top + rcThumb.bottom ) / 2 - m_szThumb.cy / 2 );
-
-		pDC->BitBlt( ptImage.x, ptImage.y, m_szThumb.cx, m_szThumb.cy,
-			&dcMem, 0, 0, SRCCOPY );
-		pDC->ExcludeClipRect( ptImage.x, ptImage.y,
-			ptImage.x + m_szThumb.cx, ptImage.y + m_szThumb.cy );
-
-		dcMem.SelectObject( pOld );
-
-		pDC->FillSolidRect( &rcThumb, m_crLight );
-	}
-	else
-	{
-		CPoint pt(	( rcThumb.left + rcThumb.right ) / 2 - 24,
-					( rcThumb.top + rcThumb.bottom ) / 2 - 24 );
-
-		if ( m_nIcon48 >= 0 )
-		{
-			ImageList_DrawEx( ShellIcons.GetHandle( 48 ), m_nIcon48, pDC->GetSafeHdc(),
-				pt.x, pt.y, 48, 48, m_crLight, CLR_NONE, ILD_NORMAL );
-			pDC->ExcludeClipRect( pt.x, pt.y, pt.x + 48, pt.y + 48 );
-		}
-		else if ( m_nIcon32 >= 0 )
-		{
-			pt.x += 8; pt.y += 8;
-			ImageList_DrawEx( ShellIcons.GetHandle( 32 ), m_nIcon32, pDC->GetSafeHdc(),
-				pt.x, pt.y, 32, 32, m_crLight, CLR_NONE, ILD_NORMAL );
-			pDC->ExcludeClipRect( pt.x, pt.y, pt.x + 32, pt.y + 32 );
-		}
-
-		pDC->FillSolidRect( &rcThumb, m_crLight );
-	}
-}
-
 BOOL CLibraryMetaPanel::SetServicePanel(CMetaPanel* pPanel)
 {
 	m_pSection.Lock();
@@ -539,8 +470,7 @@ void CLibraryMetaPanel::OnLButtonUp(UINT nFlags, CPoint point)
 
 	if ( m_nSelected > 0 && m_rcFolder.PtInRect( point ) )
 	{
-		CLibraryFolder* pFolder = LibraryFolders.GetFolder( m_sFolder );
-		if ( pFolder )
+		if ( CLibraryFolder* pFolder = LibraryFolders.GetFolder( m_sFolder ) )
 		{
 			if ( Settings.Library.ShowVirtual )
 			{
@@ -590,14 +520,10 @@ void CLibraryMetaPanel::OnLButtonDown(UINT /*nFlags*/, CPoint /*point*/)
 
 void CLibraryMetaPanel::OnRun()
 {
-	Doze();
-	if ( !IsThreadEnabled() ) 
-		return;
-
 	while ( IsThreadEnabled() )
 	{
 		m_pSection.Lock();
-		if ( !m_bNewFile && !m_bForceUpdate || m_bDownloadingImage )
+		if ( ! m_bNewFile && ! m_bForceUpdate || m_bDownloadingImage )
 		{
 			Exit();
 			m_pSection.Unlock();
@@ -614,32 +540,28 @@ void CLibraryMetaPanel::OnRun()
 		if ( m_bExternalData )
 		{
 			m_bDownloadingImage = TRUE;
-			bSuccess = pFile.LoadFromURL( strThumbRes ) && pFile.EnsureRGB();
 			m_pSection.Unlock();
+			bSuccess = pFile.LoadFromURL( strThumbRes ) && pFile.EnsureRGB();
 		}
+		else
+			m_pSection.Unlock();
 
-		if ( !bSuccess )
+		if ( ! bSuccess )
 			bSuccess = CThumbCache::Cache( strPath, &pFile );
 
+		m_pSection.Lock();
 		if ( bSuccess )
 		{
-			// Resample now to display dimensions
-			pFile.FitTo( m_nThumbSize, m_nThumbSize );
 			if ( m_sPath == strPath )
 			{
 				if ( m_bmThumb.m_hObject )
 					m_bmThumb.DeleteObject();
 				m_sThumb = m_sPath;
 				m_bmThumb.Attach( pFile.CreateBitmap() );
-				m_szThumb.cx = pFile.m_nWidth;
-				m_szThumb.cy = pFile.m_nHeight;
 				Invalidate();
 			}
 		}
-		
-		if ( m_bDownloadingImage )
-			m_bDownloadingImage = FALSE;
-		else
-			m_pSection.Unlock();
+		m_bDownloadingImage = FALSE;
+		m_pSection.Unlock();
 	}
 }

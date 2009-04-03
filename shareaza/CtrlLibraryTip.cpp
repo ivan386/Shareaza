@@ -1,7 +1,7 @@
 //
 // CtrlLibraryTip.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -54,12 +54,6 @@ END_MESSAGE_MAP()
 // CLibraryTipCtrl construction
 
 CLibraryTipCtrl::CLibraryTipCtrl()
-{
-	m_crLight = CCoolInterface::CalculateColour( CoolInterface.m_crTipBack, RGB( 255, 255, 255 ), 128 );
-	m_szThumbSize = CSize( Settings.Library.ThumbSize, Settings.Library.ThumbSize );
-}
-
-CLibraryTipCtrl::~CLibraryTipCtrl()
 {
 }
 
@@ -264,7 +258,7 @@ void CLibraryTipCtrl::OnPaint(CDC* pDC)
 	CRect rcThumb( pt.x, pt.y,
 		pt.x + Settings.Library.ThumbSize + 2, pt.y + Settings.Library.ThumbSize + 2 );
 	CRect rcWork( &rcThumb );
-	DrawThumb( pDC, rcWork );
+	CoolInterface.DrawThumbnail( pDC, rcWork, IsThreadAlive(), FALSE, m_bmThumb, m_nIcon, -1 );
 	pDC->ExcludeClipRect( &rcThumb );
 
 	int nCount = 0;
@@ -289,43 +283,6 @@ void CLibraryTipCtrl::OnPaint(CDC* pDC)
 			DrawRule( pDC, &pt, TRUE );
 			pt.x -= 4; pt.y -= 2;
 		}
-	}
-}
-
-void CLibraryTipCtrl::DrawThumb(CDC* pDC, CRect& rcThumb)
-{
-	pDC->Draw3dRect( &rcThumb, CoolInterface.m_crTipBorder, CoolInterface.m_crTipBorder );
-	rcThumb.DeflateRect( 1, 1 );
-
-	if ( m_bmThumb.m_hObject )
-	{
-		CDC dcMem;
-		dcMem.CreateCompatibleDC( pDC );
-
-		CBitmap* pOld = (CBitmap*)dcMem.SelectObject( &m_bmThumb );
-
-		CPoint ptImage(	( rcThumb.left + rcThumb.right ) / 2 - m_szThumb.cx / 2,
-						( rcThumb.top + rcThumb.bottom ) / 2 - m_szThumb.cy / 2 );
-
-		pDC->BitBlt( ptImage.x, ptImage.y, m_szThumb.cx, m_szThumb.cy,
-			&dcMem, 0, 0, SRCCOPY );
-		pDC->ExcludeClipRect( ptImage.x, ptImage.y,
-			ptImage.x + m_szThumb.cx, ptImage.y + m_szThumb.cy );
-
-		dcMem.SelectObject( pOld );
-
-		pDC->FillSolidRect( &rcThumb, m_crLight );
-	}
-	else
-	{
-		CPoint pt(	( rcThumb.left + rcThumb.right ) / 2 - 24,
-					( rcThumb.top + rcThumb.bottom ) / 2 - 24 );
-
-		ImageList_DrawEx( ShellIcons.GetHandle( 48 ), m_nIcon, pDC->GetSafeHdc(),
-			pt.x, pt.y, 48, 48, m_crLight, CLR_NONE, ILD_NORMAL );
-
-		pDC->ExcludeClipRect( pt.x, pt.y, pt.x + 48, pt.y + 48 );
-		pDC->FillSolidRect( &rcThumb, m_crLight );
 	}
 }
 
@@ -392,8 +349,6 @@ void CLibraryTipCtrl::OnRun()
 		CImageFile pFile;
 		if ( CThumbCache::Cache( strPath, &pFile ) )
 		{
-			pFile.FitTo( m_szThumbSize.cx, m_szThumbSize.cy );
-
 			m_pSection.Lock();
 
 			if ( m_bmThumb.m_hObject ) m_bmThumb.DeleteObject();
@@ -401,8 +356,6 @@ void CLibraryTipCtrl::OnRun()
 			if ( m_sPath == strPath )
 			{
 				m_bmThumb.Attach( pFile.CreateBitmap() );
-				m_szThumb.cx = pFile.m_nWidth;
-				m_szThumb.cy = pFile.m_nHeight;
 				Invalidate();
 			}
 

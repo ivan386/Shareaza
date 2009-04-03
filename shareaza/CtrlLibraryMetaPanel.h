@@ -60,22 +60,16 @@ protected:
 	CMetaPanel*		m_pServiceData;
 	CRect			m_rcFolder;
 	CRect			m_rcRating;
-
 	CCriticalSection	m_pSection;
 	BOOL				m_bExternalData;
 	BOOL				m_bDownloadingImage;
 	BOOL				m_bForceUpdate;
-	CSize				m_szThumb;
 	CBitmap				m_bmThumb;
-	COLORREF			m_crLight;
-	int					m_nThumbSize;
 	CString				m_sThumb;
 
 	CLibraryList*	GetViewSelection();
 
 	void	DrawText(CDC* pDC, int nX, int nY, LPCTSTR pszText, RECT* pRect = NULL, int nMaxWidth = -1);
-	void	DrawThumbnail(CDC* pDC, CRect& rcClient, CRect& rcWork);
-	void	DrawThumbnail(CDC* pDC, CRect& rcThumb);
 
 	void	OnRun();
 

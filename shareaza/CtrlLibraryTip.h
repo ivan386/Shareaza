@@ -1,7 +1,7 @@
 //
 // CtrlLibraryTip.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -31,7 +31,6 @@ class CLibraryTipCtrl : public CCoolTipCtrl, public CThreadImpl
 // Construction
 public:
 	CLibraryTipCtrl();
-	virtual ~CLibraryTipCtrl();
 
 	DECLARE_DYNAMIC(CLibraryTipCtrl)
 
@@ -50,11 +49,7 @@ protected:
 	int				m_nIcon;
 	CMetaList		m_pMetadata;
 	int				m_nKeyWidth;
-	COLORREF		m_crLight;
-protected:
 	CCriticalSection	m_pSection;
-	CSize				m_szThumbSize;
-	CSize				m_szThumb;
 	CBitmap				m_bmThumb;
 	DWORD				m_tHidden;
 
@@ -66,7 +61,6 @@ public:
 	virtual void OnHide();
 	virtual void OnPaint(CDC* pDC);
 protected:
-	void		DrawThumb(CDC* pDC, CRect& rcThumb);
 	void		StopThread();
 	void		OnRun();
 

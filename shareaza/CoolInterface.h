@@ -1,7 +1,7 @@
 //
 // CoolInterface.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -192,8 +192,11 @@ public:
 	BOOL		Draw(CDC* pDC, int nImage, POINT pt, UINT nStyle = ILD_NORMAL, int nImageListType = LVSIL_SMALL) const;
 	BOOL		DrawEx(CDC* pDC, int nImage, POINT pt, SIZE sz = CSize( 16, 16 ), COLORREF clrBk = CLR_NONE, COLORREF clrFg = CLR_DEFAULT, UINT nStyle = ILD_NORMAL, int nImageListType = LVSIL_SMALL) const;
 	BOOL		Draw(CDC* pDC, UINT nID, int nSize, int nX, int nY, COLORREF crBack = CLR_NONE, BOOL bSelected = FALSE, BOOL bExclude = TRUE) const;
-	CDC*		GetBuffer(CDC& dcScreen, CSize& szItem);
+	CDC*		GetBuffer(CDC& dcScreen, const CSize& szItem);
 	BOOL		DrawWatermark(CDC* pDC, CRect* pRect, CBitmap* pMark, int nOffX = 0, int nOffY = 0);
+	void		DrawThumbnail(CDC* pDC, const CRect& rcThumb, BOOL bWaiting, BOOL bSelected,
+					CBitmap& bmThumb, int nIcon48 = -1, int nIcon32 = -1,
+					const CString& strLabel = CString());
 	void		CreateFonts(LPCTSTR pszFace = NULL, int nSize = 0);
 	void		CalculateColours(BOOL bCustom = FALSE);
 	void		OnSysColourChange();

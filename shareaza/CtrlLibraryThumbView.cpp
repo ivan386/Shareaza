@@ -1,7 +1,7 @@
 //
 // CtrlLibraryThumbView.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -63,7 +63,8 @@ BEGIN_MESSAGE_MAP(CLibraryThumbView, CLibraryFileView)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
-#define THUMB_ICON			48
+#define CX	( (int)Settings.Library.ThumbSize + 32 )
+#define CY	( (int)Settings.Library.ThumbSize + 44 )
 
 /////////////////////////////////////////////////////////////////////////////
 // CLibraryThumbView construction
@@ -89,11 +90,7 @@ int CLibraryThumbView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	if ( CLibraryFileView::OnCreate( lpCreateStruct ) == -1 ) return -1;
 
 	m_nInvalidate	= 0;
-	m_bRush			= FALSE;
 
-	m_szThumb		= CSize( Settings.Library.ThumbSize, Settings.Library.ThumbSize );
-	m_szBlock.cx	= m_szThumb.cx + 32;
-	m_szBlock.cy	= m_szThumb.cy + 44;
 	m_nColumns		= 0;
 	m_nRows			= 0;
 
@@ -164,7 +161,7 @@ void CLibraryThumbView::Update()
 	{
 		CRect rcClient;
 		GetClientRect( &rcClient );
-		int nMax	= ( ( m_nCount + m_nColumns - 1 ) / m_nColumns ) * m_szBlock.cy;
+		int nMax	= ( ( m_nCount + m_nColumns - 1 ) / m_nColumns ) * CY;
 		m_nScroll	= max( 0, min( m_nScroll, nMax - rcClient.Height() + 1 ) );
 	}
 
@@ -440,8 +437,8 @@ void CLibraryThumbView::OnSize(UINT nType, int cx, int cy)
 {
 	CLibraryFileView::OnSize( nType, cx, cy );
 
-	m_nColumns	= cx / m_szBlock.cx;
-	m_nRows		= cy / m_szBlock.cy + 1;
+	m_nColumns	= cx / CX;
+	m_nRows		= cy / CY + 1;
 
 	UpdateScroll();
 }
@@ -458,7 +455,7 @@ void CLibraryThumbView::UpdateScroll()
 	pInfo.cbSize	= sizeof(pInfo);
 	pInfo.fMask		= SIF_ALL & ~SIF_TRACKPOS;
 	pInfo.nMin		= 0;
-	pInfo.nMax		= ( ( m_nCount + m_nColumns - 1 ) / m_nColumns ) * m_szBlock.cy;
+	pInfo.nMax		= ( ( m_nCount + m_nColumns - 1 ) / m_nColumns ) * CY;
 	pInfo.nPage		= rc.Height();;
 	pInfo.nPos		= m_nScroll = max( 0, min( m_nScroll, pInfo.nMax - (int)pInfo.nPage + 1 ) );
 
@@ -503,7 +500,7 @@ void CLibraryThumbView::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* /*pScroll
 
 BOOL CLibraryThumbView::OnMouseWheel(UINT /*nFlags*/, short zDelta, CPoint /*pt*/)
 {
-	ScrollBy( zDelta * -m_szBlock.cy / WHEEL_DELTA / 2 );
+	ScrollBy( zDelta * -CY / WHEEL_DELTA / 2 );
 	return TRUE;
 }
 
@@ -537,50 +534,32 @@ void CLibraryThumbView::OnPaint()
 	CSingleLock pLock( &m_pSection, TRUE );
 	CPaintDC dc( this );
 
-	CDC* pBuffer = CoolInterface.GetBuffer( dc, m_szBlock );
-	CRect rcBuffer( 0, 0, m_szBlock.cx, m_szBlock.cy );
-
-	CFont* pOldFont = (CFont*)pBuffer->SelectObject( &CoolInterface.m_fntNormal );
-	pBuffer->SetBkMode( OPAQUE );
-	pBuffer->SetBkColor( CoolInterface.m_crWindow );
-	pBuffer->SetTextColor( CoolInterface.m_crText );
-
-	CDC dcMem;
-	dcMem.CreateCompatibleDC( &dc );
-
 	CRect rcClient;
 	GetClientRect( &rcClient );
 	CPoint pt( rcClient.left, rcClient.top - m_nScroll );
 
 	CLibraryThumbItem** pList = m_pList;
-	m_bRush = FALSE;
 
 	for ( int nItem = m_nCount ; nItem && pt.y < rcClient.bottom ; nItem--, pList++ )
 	{
 		CLibraryThumbItem* pThumb = *pList;
 
-		CRect rcBlock( pt.x, pt.y, pt.x + m_szBlock.cx, pt.y + m_szBlock.cy );
+		CRect rcBlock( pt.x, pt.y, pt.x + CX, pt.y + CY );
 
 		if ( rcBlock.bottom >= rcClient.top && dc.RectVisible( &rcBlock ) )
 		{
-			pBuffer->FillSolidRect( &rcBuffer, CoolInterface.m_crWindow );
-			pThumb->Paint( pBuffer, rcBuffer, m_szThumb, &dcMem );
-			dc.BitBlt( rcBlock.left, rcBlock.top, m_szBlock.cx, m_szBlock.cy,
-				pBuffer, 0, 0, SRCCOPY );
-			dc.ExcludeClipRect( &rcBlock );
-			if ( pThumb->m_nThumb == CLibraryThumbItem::thumbWaiting ) m_bRush = TRUE;
+			pThumb->Paint( &dc, rcBlock );
 		}
 
-		pt.x += m_szBlock.cx;
+		pt.x += CX;
 
-		if ( pt.x + m_szBlock.cx > rcClient.right )
+		if ( pt.x + CX > rcClient.right )
 		{
 			pt.x = rcClient.left;
-			pt.y += m_szBlock.cy;
+			pt.y += CY;
 		}
 	}
 
-	pBuffer->SelectObject( pOldFont );
 	dc.FillSolidRect( &rcClient, CoolInterface.m_crWindow );
 }
 
@@ -597,16 +576,16 @@ CLibraryThumbItem* CLibraryThumbView::HitTest(const CPoint& point) const
 	{
 		CLibraryThumbItem* pThumb = *pList;
 
-		CRect rcBlock( pt.x, pt.y, pt.x + m_szBlock.cx, pt.y + m_szBlock.cy );
+		CRect rcBlock( pt.x, pt.y, pt.x + CX, pt.y + CY );
 
 		if ( rcBlock.PtInRect( point ) ) return pThumb;
 
-		pt.x += m_szBlock.cx;
+		pt.x += CX;
 
-		if ( pt.x + m_szBlock.cx > rcClient.right )
+		if ( pt.x + CX > rcClient.right )
 		{
 			pt.x = rcClient.left;
-			pt.y += m_szBlock.cy;
+			pt.y += CY;
 		}
 	}
 
@@ -624,7 +603,7 @@ BOOL CLibraryThumbView::GetItemRect(CLibraryThumbItem* pThumb, CRect* pRect)
 
 	for ( int nItem = m_nCount ; nItem ; nItem--, pList++ )
 	{
-		CRect rcBlock( pt.x, pt.y, pt.x + m_szBlock.cx, pt.y + m_szBlock.cy );
+		CRect rcBlock( pt.x, pt.y, pt.x + CX, pt.y + CY );
 
 		if ( pThumb == *pList )
 		{
@@ -632,12 +611,12 @@ BOOL CLibraryThumbView::GetItemRect(CLibraryThumbItem* pThumb, CRect* pRect)
 			return TRUE;
 		}
 
-		pt.x += m_szBlock.cx;
+		pt.x += CX;
 
-		if ( pt.x + m_szBlock.cx > rcClient.right )
+		if ( pt.x + CX > rcClient.right )
 		{
 			pt.x = rcClient.left;
-			pt.y += m_szBlock.cy;
+			pt.y += CY;
 		}
 	}
 
@@ -795,8 +774,8 @@ HBITMAP CLibraryThumbView::CreateDragImage(const CPoint& ptMouse, CPoint& ptMidd
 		dcDrag.SelectClipRgn( &pRgn );
 	}
 
-	CDC* pBuffer = CoolInterface.GetBuffer( dcClient, m_szBlock );
-	CRect rcBuffer( 0, 0, m_szBlock.cx, m_szBlock.cy );
+	CDC* pBuffer = CoolInterface.GetBuffer( dcClient, CSize( CX, CY ) );
+	CRect rcBuffer( 0, 0, CX, CY );
 
 	CFont* pOldFont = (CFont*)pBuffer->SelectObject( &CoolInterface.m_fntNormal );
 
@@ -809,9 +788,9 @@ HBITMAP CLibraryThumbView::CreateDragImage(const CPoint& ptMouse, CPoint& ptMidd
 		if ( rcDummy.IntersectRect( &rcAll, &rcOne ) )
 		{
 			pBuffer->FillSolidRect( &rcBuffer, DRAG_COLOR_KEY );
-			pThumb->Paint( pBuffer, rcBuffer, m_szThumb, &dcMem );
+			pThumb->Paint( pBuffer, rcBuffer );
 			dcDrag.BitBlt( rcOne.left - rcAll.left, rcOne.top - rcAll.top,
-				m_szBlock.cx, m_szBlock.cy, pBuffer, 0, 0, SRCCOPY );
+				CX, CY, pBuffer, 0, 0, SRCCOPY );
 		}
 	}
 
@@ -855,96 +834,79 @@ void CLibraryThumbView::StopThread()
 
 void CLibraryThumbView::OnRun()
 {
-	CSingleLock pLock( &m_pSection );
-
 	while ( IsThreadEnabled() )
 	{
-		CLibraryThumbItem* pThumb = NULL;
+		// Get next file without thumbnail
+
+		bool bWaiting = false;
 		DWORD nIndex = 0;
 		CString strPath;
-
-		pLock.Lock();
-
-		CLibraryThumbItem** pList = m_pList;
-		for ( int nItem = m_nCount ; nItem && IsThreadEnabled(); nItem--, pList++ )
 		{
-			if ( (*pList)->m_nThumb == CLibraryThumbItem::thumbWaiting )
+			CQuickLock pLock( m_pSection );
+
+			for ( int i = 0 ; i < m_nCount && IsThreadEnabled(); ++i )
 			{
-				CSingleLock oLock( &Library.m_pSection );
-				if ( oLock.Lock( 100 ) )
+				if ( m_pList[ i ]->m_nThumb == CLibraryThumbItem::thumbWaiting )
 				{
-					if ( CLibraryFile* pFile = Library.LookupFile( (*pList)->m_nIndex ) )
+					bWaiting = true;
+
+					CSingleLock oLock( &Library.m_pSection, FALSE );
+					if ( oLock.Lock( 100 ) )
 					{
-						pThumb	= *pList;
-						nIndex	= pFile->m_nIndex;
-						strPath	= pFile->GetPath();
+						if ( CLibraryFile* pFile = Library.LookupFile( m_pList[ i ]->m_nIndex ) )
+						{
+							nIndex	= pFile->m_nIndex;
+							strPath	= pFile->GetPath();
+							oLock.Unlock();
+							break;
+						}
 						oLock.Unlock();
-						break;
 					}
-					oLock.Unlock();
+					else
+						break;
 				}
 			}
 		}
 
-		pLock.Unlock();
+		if ( ! bWaiting )
+			// Complete
+			break;
 
-		if ( pThumb == NULL ) break;
-		pThumb = NULL;
+		if ( ! nIndex )
+		{
+			// Too busy
+			Sleep( 250 );
+			continue;
+		}
 
-//		DWORD tNow = GetTickCount();
+		// Load thumbnail from file and save it to cache
 
 		CImageFile pFile;
-		BOOL bSuccess = FALSE;
-		if ( CThumbCache::Cache( strPath, &pFile ) )
-		{
-			bSuccess = pFile.FitTo( m_szThumb.cx, m_szThumb.cy );
-		}
+		BOOL bSuccess = CThumbCache::Cache( strPath, &pFile );
 
-		pLock.Lock();
-
-		pList = m_pList;
-		for ( int nItem = m_nCount ; nItem ; nItem--, pList++ )
+		// Save thumbnail to item
 		{
-			if ( (*pList)->m_nIndex == nIndex )
+			CQuickLock pLock( m_pSection );
+
+			for ( int i = 0 ; i < m_nCount ; ++i )
 			{
-				pThumb = *pList;
-				break;
+				if ( m_pList[ i ]->m_nIndex == nIndex )
+				{
+					if ( m_pList[ i ]->m_bmThumb.m_hObject )
+						m_pList[ i ]->m_bmThumb.DeleteObject();
+
+					if ( bSuccess )
+					{
+						m_pList[ i ]->m_bmThumb.Attach( pFile.CreateBitmap() );
+						m_pList[ i ]->m_nThumb = CLibraryThumbItem::thumbValid;
+					}
+					else
+						m_pList[ i ]->m_nThumb = CLibraryThumbItem::thumbError;
+
+					m_nInvalidate++;
+					break;
+				}
 			}
-		}
-
-		if ( pThumb )
-		{
-			if ( pThumb->m_bmThumb.m_hObject ) pThumb->m_bmThumb.DeleteObject();
-
-			if ( bSuccess )
-			{
-				pThumb->m_bmThumb.Attach( pFile.CreateBitmap() );
-				pThumb->m_szThumb.cx = pFile.m_nWidth;
-				pThumb->m_szThumb.cy = pFile.m_nHeight;
-				pThumb->m_nThumb = CLibraryThumbItem::thumbValid;
-			}
-			else
-			{
-				pThumb->m_nThumb = CLibraryThumbItem::thumbError;
-			}
-
-			m_nInvalidate++;
-		}
-
-		pLock.Unlock();
-
-		if ( ! m_bRush )
-		{
-			//DWORD tDelay = GetTickCount() - tNow;
-			//if ( tDelay > 400 ) tDelay = 400;
-			//if ( tDelay < 20 ) tDelay = 20;
-
-			//while ( tDelay && m_bThread )
-			//{
-			//	DWORD tNow = min( tDelay, 50u );
-			//	tDelay -= tNow;
-			//	Sleep( tNow );
-			//}
 		}
 	}
 }
@@ -960,8 +922,8 @@ CLibraryThumbItem::CLibraryThumbItem(CLibraryFile* pFile)
 	m_sText		= pFile->m_sName;
 	m_bShared	= pFile->IsShared();
 	m_bSelected	= FALSE;
-	m_nThumb	= 0;
-	m_nShell	= ShellIcons.Get( m_sText, THUMB_ICON );
+	m_nThumb	= thumbWaiting;
+	m_nShell	= ShellIcons.Get( m_sText, 48 );
 }
 
 CLibraryThumbItem::~CLibraryThumbItem()
@@ -990,60 +952,35 @@ BOOL CLibraryThumbItem::Update(CLibraryFile* pFile)
 /////////////////////////////////////////////////////////////////////////////
 // CLibraryThumbItem paint
 
-void CLibraryThumbItem::Paint(CDC* pDC, const CRect& rcBlock, const CSize& szThumb, CDC* pMemDC)
+void CLibraryThumbItem::Paint(CDC* pDC, const CRect& rcBlock)
 {
 	CRect rcThumb;
-
-	rcThumb.left	= ( rcBlock.left + rcBlock.right ) / 2 - szThumb.cx / 2;
-	rcThumb.right	= rcThumb.left + szThumb.cx;
+	rcThumb.left	= ( rcBlock.left + rcBlock.right - Settings.Library.ThumbSize ) / 2;
+	rcThumb.right	= rcThumb.left + Settings.Library.ThumbSize;
 	rcThumb.top		= rcBlock.top + 7;
-	rcThumb.bottom	= rcThumb.top + szThumb.cy;
+	rcThumb.bottom	= rcThumb.top + Settings.Library.ThumbSize;
 
-	CRect rcFrame( &rcThumb );
+	// Draw thumbnail
 
-	if ( m_bSelected )
-	{
-		for ( int nBorder = 3 ; nBorder ; nBorder-- )
-		{
-			rcFrame.InflateRect( 1, 1 );
-			pDC->Draw3dRect( &rcFrame, CoolInterface.m_crHighlight, CoolInterface.m_crHighlight );
-		}
-	}
-	else
-	{
-		rcFrame.InflateRect( 1, 1 );
-		pDC->Draw3dRect( &rcFrame, CoolInterface.m_crMargin, CoolInterface.m_crMargin );
-	}
+	CoolInterface.DrawThumbnail( pDC, rcThumb, ( m_nThumb == thumbWaiting ),
+		m_bSelected, m_bmThumb, m_nShell, -1 );
 
-	if ( m_bmThumb.m_hObject != NULL )
-	{
-		CBitmap* pOldBitmap = pMemDC->SelectObject( &m_bmThumb );
+	// Draw label
 
-		CPoint ptImage(	( rcThumb.left + rcThumb.right ) / 2 - m_szThumb.cx / 2,
-						( rcThumb.top + rcThumb.bottom ) / 2 - m_szThumb.cy / 2 );
-
-		pDC->BitBlt( ptImage.x, ptImage.y, m_szThumb.cx, m_szThumb.cy,
-			pMemDC, 0, 0, SRCCOPY );
-
-		pMemDC->SelectObject( pOldBitmap );
-	}
-	else
-	{
-		if ( m_nThumb == thumbWaiting )
-			pDC->FillSolidRect( &rcThumb, RGB( 255, 255, 255 ) );
-		else
-			pDC->FillSolidRect( &rcThumb, CoolInterface.m_crBackNormal );
-
-		ImageList_DrawEx( ShellIcons.GetHandle( THUMB_ICON ), m_nShell, pDC->GetSafeHdc(),
-			( rcThumb.left + rcThumb.right ) / 2 - THUMB_ICON / 2,
-			( rcThumb.top + rcThumb.bottom ) / 2 - THUMB_ICON / 2,
-			THUMB_ICON, THUMB_ICON, CLR_NONE, CLR_NONE, ILD_NORMAL );
-	}
-
+	CFont* pOldFont = pDC->SelectObject( &CoolInterface.m_fntNormal );
+	const UINT nStyle = DT_CENTER | DT_TOP | DT_WORDBREAK | DT_EDITCONTROL |
+		DT_NOPREFIX | DT_END_ELLIPSIS;
+	CRect rcText( rcBlock.left + 4, rcThumb.bottom + 4,
+		rcBlock.right - 4, rcBlock.bottom );
 	if ( m_bSelected )
 	{
 		pDC->SetBkColor( CoolInterface.m_crHighlight );
 		pDC->SetTextColor( CoolInterface.m_crHiText );
+
+		CRect rcCalc( rcText );
+		int nHeight = pDC->DrawText( m_sText, &rcCalc, nStyle | DT_CALCRECT );
+		if ( nHeight > rcText.Height() )
+			rcText.bottom = rcText.top + nHeight;
 	}
 	else if ( ! m_bShared )
 	{
@@ -1055,33 +992,15 @@ void CLibraryThumbItem::Paint(CDC* pDC, const CRect& rcBlock, const CSize& szThu
 		pDC->SetBkColor( CoolInterface.m_crWindow );
 		pDC->SetTextColor( CoolInterface.m_crText );
 	}
+	pDC->FillSolidRect( &rcText, pDC->GetBkColor() );
+	pDC->DrawText( m_sText, &rcText, nStyle );
+	pDC->ExcludeClipRect( &rcText );
+	pDC->SelectObject( pOldFont );
 
-	rcThumb.top		= rcThumb.bottom + 4;
-	rcThumb.bottom	= rcThumb.top + 27;
-	rcThumb.left	-= 3;
-	rcThumb.right	+= 3;
+	// Draw background
 
-	CSize szText = pDC->GetTextExtent( m_sText );
-
-	if ( szText.cx < rcThumb.Width() - 4 )
-	{
-		rcThumb.left = ( rcThumb.left + rcThumb.right ) / 2 - szText.cx / 2 - 2;
-		rcThumb.right = rcThumb.left + szText.cx + 4;
-		rcThumb.bottom = rcThumb.top + szText.cy + 2;
-		pDC->FillSolidRect( &rcThumb, pDC->GetBkColor() );
-		pDC->ExtTextOut( rcThumb.left + 2, rcThumb.top, ETO_CLIPPED|ETO_OPAQUE,
-			&rcThumb, m_sText, NULL );
-	}
-	else
-	{
-		int nSaveX		= rcThumb.right;
-		int nSaveY		= rcThumb.bottom;
-		int nHeight		= pDC->DrawText( m_sText, &rcThumb, DT_CENTER|DT_WORDBREAK|DT_CALCRECT|DT_NOPREFIX );
-		rcThumb.bottom	= min( nSaveY, rcThumb.top + nHeight + 2 );
-		rcThumb.right	= nSaveX;
-		pDC->FillSolidRect( &rcThumb, pDC->GetBkColor() );
-		pDC->DrawText( m_sText, &rcThumb, DT_CENTER|DT_WORDBREAK|DT_NOPREFIX );
-	}
+	pDC->FillSolidRect( &rcBlock, CoolInterface.m_crWindow );
+	pDC->ExcludeClipRect( &rcBlock );
 }
 
 UINT CLibraryThumbView::OnGetDlgCode()

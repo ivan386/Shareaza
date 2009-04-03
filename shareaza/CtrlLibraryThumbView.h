@@ -1,7 +1,7 @@
 //
 // CtrlLibraryThumbView.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -44,18 +44,12 @@ public:
 protected:
 	CCriticalSection	m_pSection;
 	DWORD				m_nInvalidate;
-	BOOL				m_bRush;
-protected:
-	CSize				m_szThumb;
-	CSize				m_szBlock;
 	int					m_nColumns;
 	int					m_nRows;
-protected:
 	CLibraryThumbItem**	m_pList;
 	int					m_nCount;
 	int					m_nBuffer;
 	int					m_nScroll;
-protected:
 	int					m_nSelected;
 	CLibraryThumbItem*	m_pFocus;
 	CLibraryThumbItem*	m_pFirst;
@@ -137,7 +131,6 @@ public:
 	BOOL	m_bSelected;
 	int		m_nThumb;
 	CBitmap	m_bmThumb;
-	CSize	m_szThumb;
 	int		m_nShell;
 
 	enum { thumbWaiting, thumbValid, thumbError };
@@ -145,7 +138,7 @@ public:
 // Operations
 public:
 	BOOL	Update(CLibraryFile* pFile);
-	void	Paint(CDC* pDC, const CRect& rcBlock, const CSize& szThumb, CDC* pMemDC);
+	void	Paint(CDC* pDC, const CRect& rcBlock);
 
 };
 

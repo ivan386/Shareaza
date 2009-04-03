@@ -1,7 +1,7 @@
 //
 // CoolInterface.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -23,6 +23,7 @@
 #include "Shareaza.h"
 #include "Settings.h"
 #include "CoolInterface.h"
+#include "ShellIcons.h"
 #include "XML.h"
 
 #ifdef _DEBUG
@@ -322,7 +323,7 @@ BOOL CCoolInterface::ConfirmImageList()
 //////////////////////////////////////////////////////////////////////
 // CCoolInterface double buffer
 
-CDC* CCoolInterface::GetBuffer(CDC& dcScreen, CSize& szItem)
+CDC* CCoolInterface::GetBuffer(CDC& dcScreen, const CSize& szItem)
 {
 	if ( szItem.cx <= m_czBuffer.cx && szItem.cy <= m_czBuffer.cy )
 	{
@@ -380,6 +381,100 @@ BOOL CCoolInterface::DrawWatermark(CDC* pDC, CRect* pRect, CBitmap* pMark, int n
 	dcMark.DeleteDC();
 
 	return TRUE;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+// CCoolInterface thumbnail painting
+
+void CCoolInterface::DrawThumbnail(CDC* pDC, const CRect& rcThumb,
+	BOOL bWaiting, BOOL bSelected, CBitmap& bmThumb, int nIcon48, int nIcon32,
+	const CString& strLabel)
+{
+	CRect rcFrame( &rcThumb );
+	rcFrame.DeflateRect( 1, 1, 1, 1 );
+
+	if ( bmThumb.m_hObject )
+	{
+		BITMAP info = {};
+		bmThumb.GetBitmap( &info );
+
+		CDC dcMem;
+		dcMem.CreateCompatibleDC( pDC );
+
+		CBitmap* pOld = dcMem.SelectObject( &bmThumb );
+
+		int cx;
+		int cy;
+		if ( rcFrame.Width() < info.bmWidth || rcFrame.Height() < info.bmHeight )
+		{
+			cx = rcFrame.Width();
+			cy = rcFrame.Height();
+		}
+		else
+		{
+			cx = info.bmWidth;
+			cy = info.bmHeight;
+		}
+		if ( info.bmWidth > info.bmHeight )
+			cy = ( cx * info.bmHeight ) / info.bmWidth;
+		else
+			cx = ( cx * info.bmWidth ) / info.bmHeight;
+
+		int x = rcFrame.left + ( rcFrame.Width() - cx ) / 2;
+		int y = rcFrame.top + ( rcFrame.Height() - cy ) / 2;
+
+		pDC->SetStretchBltMode( HALFTONE );
+		pDC->StretchBlt( x, y, cx, cy, &dcMem, 0, 0, info.bmWidth, info.bmHeight, SRCCOPY );
+
+		dcMem.SelectObject( pOld );
+
+		pDC->ExcludeClipRect( x, y, x + cx, y + cy );
+	}
+	else
+	{
+		if ( int size = ( ( nIcon48 >= 0 ) ? 48 : ( ( nIcon32 >= 0 ) ? 32 : 0 ) ) )
+		{
+			int x = rcFrame.left + ( rcFrame.Width() - 2 - size ) / 2;
+			int y = rcFrame.top + ( rcFrame.Height() - 2 - size ) / 2;
+
+			ImageList_DrawEx( ShellIcons.GetHandle( size ),
+				( ( nIcon48 >= 0 ) ? nIcon48 : nIcon32 ), pDC->GetSafeHdc(),
+				x, y, size, size, ( bWaiting ? m_crWindow : m_crBackNormal ),
+				CLR_NONE, ILD_NORMAL );
+
+			pDC->ExcludeClipRect( x, y, x + size, y + size );
+		}
+
+		if ( ! strLabel.IsEmpty() )
+		{
+			CRect rcLabel( rcFrame.left + 2, rcFrame.top + ( rcFrame.Height() + 48 + 4 ) / 2,
+				rcFrame.right - 2, rcFrame.bottom - 2 );
+
+			CFont* pOldFont = pDC->SelectObject( bWaiting ? &theApp.m_gdiFontBold : &theApp.m_gdiFontLine );
+			pDC->SetBkColor( bWaiting ? m_crWindow : m_crBackNormal );
+			pDC->SetTextColor( bWaiting ? m_crTextAlert : m_crTextLink );
+			pDC->FillSolidRect( &rcLabel, ( bWaiting ? m_crWindow : m_crBackNormal ) );
+			pDC->DrawText( strLabel, &rcLabel, DT_CENTER | DT_VCENTER | DT_WORDBREAK |
+				DT_EDITCONTROL | DT_NOPREFIX | DT_END_ELLIPSIS );
+			pDC->ExcludeClipRect( &rcLabel );
+			pDC->SelectObject( pOldFont );
+		}
+	}
+
+	pDC->FillSolidRect( &rcFrame, ( bWaiting ? m_crWindow : m_crBackNormal ) );
+	pDC->Draw3dRect( &rcThumb, m_crMargin, m_crMargin );
+	pDC->ExcludeClipRect( &rcThumb );
+
+	if ( bSelected )
+	{
+		rcFrame.InflateRect( 2, 2 );
+		pDC->Draw3dRect( &rcFrame, CoolInterface.m_crBackCheck, CoolInterface.m_crBackCheck );
+		rcFrame.InflateRect( 1, 1 );
+		pDC->Draw3dRect( &rcFrame, CoolInterface.m_crHighlight, CoolInterface.m_crHighlight );
+		rcFrame.InflateRect( 1, 1 );
+		pDC->Draw3dRect( &rcFrame, CoolInterface.m_crBackCheck, CoolInterface.m_crBackCheck );
+		pDC->ExcludeClipRect( &rcFrame );
+	}
 }
 
 //////////////////////////////////////////////////////////////////////

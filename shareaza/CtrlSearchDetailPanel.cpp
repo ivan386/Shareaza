@@ -70,13 +70,9 @@ CSearchDetailPanel::CSearchDetailPanel() :
 	m_pSchema( NULL ),
 	m_bCanPreview( FALSE ),
 	m_bRunPreview( FALSE ),
-	m_bIsPreviewing( FALSE ),
-	m_crLight( CCoolInterface::CalculateColour(
-		CoolInterface.m_crTipBack, RGB( 255, 255, 255 ), 128 ) ),
-	m_nThumbSize( 0 )
+	m_bIsPreviewing( FALSE )
 {
 	m_rcStatus.SetRectEmpty();
-	m_szThumb.SetSize( 0, 0 );
 	m_rcThumb.SetRectEmpty();
 }
 
@@ -178,9 +174,7 @@ void CSearchDetailPanel::Update()
 	rc.OffsetRect( -rc.left, -rc.top );
 	rc.right -= GetSystemMetrics( SM_CXVSCROLL );
 	
-	int nThumbSize = rc.Height() - 16;
-	nThumbSize = max( nThumbSize, 64 );
-	nThumbSize = min( nThumbSize, 128 );
+	int nThumbSize = min( max( rc.Height() - 16, 64 ), (int)Settings.Library.ThumbSize );
 	rc.left += nThumbSize + 16;
 	rc.right -= 8;
 	
@@ -284,8 +278,22 @@ void CSearchDetailPanel::OnPaint()
 		return;
 	}
 	
-	CRect rcWork( 0, 0, 0, 0 );
-	DrawThumbnail( &dc, rcClient, rcWork );
+	// Draw thumbnail or icon
+	int nThumbSize = min( max( rcClient.Height() - 16, 64 ), (int)Settings.Library.ThumbSize );
+	CRect rcWork( rcClient.left + 8, rcClient.top + 8,
+		rcClient.left + 8 + nThumbSize, rcClient.top + 8 + nThumbSize );
+
+	m_rcThumb = rcWork;
+
+	CString strLabel;
+	if ( m_bCanPreview )
+		LoadString( strLabel,
+			m_bIsPreviewing ? IDS_SEARCH_DETAILS_PREVIEWING : IDS_SEARCH_DETAILS_PREVIEW );
+
+	CoolInterface.DrawThumbnail( &dc, rcWork, m_bIsPreviewing, FALSE,
+		m_bmThumb, m_nIcon48, m_nIcon32, strLabel );
+
+	rcWork.SetRect( rcWork.right + 8, rcWork.top, rcClient.right - 8, rcClient.bottom );
 	
 	dc.SetViewportOrg( 0, -GetScrollPos( SB_VERT ) );
 	
@@ -366,146 +374,6 @@ void CSearchDetailPanel::DrawText(CDC* pDC, int nX, int nY, LPCTSTR pszText, REC
 	pDC->ExcludeClipRect( &rc );
 	
 	if ( pRect != NULL ) CopyMemory( pRect, &rc, sizeof(RECT) );
-}
-
-void CSearchDetailPanel::DrawThumbnail(CDC* pDC, CRect& rcClient, CRect& rcWork)
-{
-	int nThumbSize = rcClient.Height() - 16;
-	nThumbSize = max( nThumbSize, 64 );
-	nThumbSize = min( nThumbSize, 128 );
-	
-	CRect rcThumb( rcClient.left + 8, rcClient.top + 8,
-		rcClient.left + 8 + nThumbSize, rcClient.top + 8 + nThumbSize );
-	
-	rcWork.CopyRect( &rcThumb );
-	
-	pDC->Draw3dRect( &rcWork, CoolInterface.m_crMargin, CoolInterface.m_crMargin );
-	rcWork.DeflateRect( 1, 1 );
-	m_nThumbSize = rcWork.Width();
-	
-	DrawThumbnail( pDC, rcWork );
-	
-	pDC->ExcludeClipRect( &rcThumb );
-	
-	rcWork.SetRect( rcThumb.right + 8, rcThumb.top, rcClient.right - 8, rcClient.bottom );
-}
-
-void CSearchDetailPanel::DrawThumbnail(CDC* pDC, CRect& rcThumb)
-{
-	m_rcThumb = rcThumb;
-	
-	if ( m_bmThumb.m_hObject != NULL &&
-		 m_szThumb.cx != m_nThumbSize && m_szThumb.cy != m_nThumbSize )
-	{
-		CSingleLock pLock( &m_pMatches->m_pSection, TRUE );
-		
-		if ( m_pMatches->FileToItem( m_pFile ) < 0xFFFFFFFF )
-		{
-			if ( m_pFile->m_pPreview != NULL && m_pFile->m_nPreview > 0 )
-			{
-				CImageFile pImage;
-				
-				if ( pImage.LoadFromMemory( _T(".jpg"), (LPCVOID)m_pFile->m_pPreview, m_pFile->m_nPreview, FALSE, TRUE ) )
-				{
-					pLock.Unlock();
-					OnPreviewLoaded( m_oSHA1, &pImage );
-				}
-			}
-		}
-	}
-	
-	if ( m_bmThumb.m_hObject &&
-			( m_szThumb.cx == m_nThumbSize || m_szThumb.cy == m_nThumbSize ) )
-	{
-		CDC dcMem;
-		dcMem.CreateCompatibleDC( pDC );
-		
-		CBitmap* pOld = (CBitmap*)dcMem.SelectObject( &m_bmThumb );
-		
-		CPoint ptImage(	( rcThumb.left + rcThumb.right ) / 2 - m_szThumb.cx / 2,
-						( rcThumb.top + rcThumb.bottom ) / 2 - m_szThumb.cy / 2 );
-		
-		pDC->BitBlt( ptImage.x, ptImage.y, m_szThumb.cx, m_szThumb.cy,
-			&dcMem, 0, 0, SRCCOPY );
-		pDC->ExcludeClipRect( ptImage.x, ptImage.y,
-			ptImage.x + m_szThumb.cx, ptImage.y + m_szThumb.cy );
-		
-		dcMem.SelectObject( pOld );
-		
-		pDC->FillSolidRect( &rcThumb, m_crLight );
-	}
-	else
-	{
-		CPoint pt(	( rcThumb.left + rcThumb.right ) / 2 - 24,
-					( rcThumb.top + rcThumb.bottom ) / 2 - 24 );
-		
-		if ( m_bCanPreview )
-		{
-			CString str;
-			LoadString( str, m_bIsPreviewing ? IDS_SEARCH_DETAILS_PREVIEWING : IDS_SEARCH_DETAILS_PREVIEW );
-			
-			pDC->SetBkColor( m_crLight );
-			pDC->SetTextColor( m_bIsPreviewing ? CoolInterface.m_crTextAlert : CoolInterface.m_crTextLink );
-			pDC->SelectObject( m_bIsPreviewing ? &theApp.m_gdiFontBold : &theApp.m_gdiFontLine );
-			
-			CSize sz = pDC->GetTextExtent( str );
-			
-			if ( sz.cx + 4 < rcThumb.Width() )
-			{
-				pt.y -= sz.cy / 2;
-				CPoint ptText(
-					( rcThumb.left + rcThumb.right ) / 2 - sz.cx / 2,
-					pt.y + 50 );
-				DrawText( pDC, ptText.x, ptText.y, str );
-			}
-			else
-			{
-				// split text to two lines and try to draw
-				int nLength = str.GetLength();
-				int nSpace = str.Find( ' ', nLength / 2 - 1 );
-				CString strFirstHalf = str.Left( nSpace );
-				str = str.Right( nLength - nSpace - 1 );
-				sz = pDC->GetTextExtent( strFirstHalf );
-
-				if ( sz.cx + 4 < rcThumb.Width() && pt.y + 50 < rcThumb.Height() )
-				{
-					pt.y -= sz.cy / 2;
-					CPoint ptText(
-						( rcThumb.left + rcThumb.right ) / 2 - sz.cx / 2,
-						pt.y + 50 );
-					DrawText( pDC, ptText.x, ptText.y, strFirstHalf );
-					CSize sz2 = pDC->GetTextExtent( str );
-
-					if ( sz2.cx + 4 < rcThumb.Width() && 
-						 pt.y + sz2.cy + 57 < rcThumb.Height() )
-					{
-						pt.y -= sz2.cy / 2;
-						CPoint ptText(
-							( rcThumb.left + rcThumb.right ) / 2 - sz2.cx / 2,
-							pt.y + sz.cy + 57 );
-						DrawText( pDC, ptText.x, ptText.y, str );						
-					}
-					else
-						// append ellipsis if the second half does not fit
-						DrawText( pDC, ptText.x + sz.cx + 1, ptText.y, _T("\x2026") );
-				}
-			}
-		}
-		
-		if ( m_nIcon48 >= 0 )
-		{
-			ShellIcons.Draw( pDC, m_nIcon48, 48, pt.x, pt.y, m_crLight );
-			pDC->ExcludeClipRect( pt.x, pt.y, pt.x + 48, pt.y + 48 );
-		}
-		else if ( m_nIcon32 >= 0 )
-		{
-			pt.x += 8; pt.y += 8;
-			ShellIcons.Draw( pDC, m_nIcon32, 32, pt.x, pt.y, m_crLight );
-			pDC->ExcludeClipRect( pt.x, pt.y, pt.x + 32, pt.y + 32 );
-		}
-		
-		pDC->FillSolidRect( &rcThumb, m_crLight );
-	}
 }
 
 BOOL CSearchDetailPanel::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message) 
@@ -832,10 +700,6 @@ BOOL CSearchDetailPanel::ExecuteRequest(CString strURL, BYTE** ppBuffer, DWORD* 
 
 void CSearchDetailPanel::OnPreviewLoaded(const Hashes::Sha1Hash& oSHA1, CImageFile* pImage)
 {
-	if ( m_nThumbSize == 0 ) return;
-	
-	pImage->FitTo( m_nThumbSize, m_nThumbSize );
-	
 	CSingleLock pLock( &m_pSection, TRUE );
 	
 	if ( validAndUnequal( m_oSHA1, oSHA1 ) ) return;
@@ -845,8 +709,6 @@ void CSearchDetailPanel::OnPreviewLoaded(const Hashes::Sha1Hash& oSHA1, CImageFi
 	if ( m_bmThumb.m_hObject ) m_bmThumb.DeleteObject();
 	
 	m_bmThumb.Attach( pImage->CreateBitmap() );
-	m_szThumb.cx = pImage->m_nWidth;
-	m_szThumb.cy = pImage->m_nHeight;
 	
 	pLock.Unlock();
 	Invalidate();

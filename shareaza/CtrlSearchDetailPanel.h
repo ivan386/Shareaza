@@ -67,8 +67,6 @@ public:
 
 protected:
 	static void	DrawText(CDC* pDC, int nX, int nY, LPCTSTR pszText, RECT* pRect = NULL, int nMaxWidth = -1);
-	void		DrawThumbnail(CDC* pDC, CRect& rcClient, CRect& rcWork);
-	void		DrawThumbnail(CDC* pDC, CRect& rcThumb);
 	void		ClearReviews();
 	BOOL		RequestPreview();
 	void		CancelPreview();
@@ -99,11 +97,8 @@ protected:
 	BOOL				m_bIsPreviewing;
 	CHttpRequest		m_pRequest;
 	CList< CString >	m_pPreviewURLs;
-	CBitmap				m_bmThumb;
-	CSize				m_szThumb;
-	CRect				m_rcThumb;
-	COLORREF			m_crLight;
-	int					m_nThumbSize;
+	CBitmap				m_bmThumb;			// Thumbnail
+	CRect				m_rcThumb;			// Thumbnail rect used for mouse click detection
 
 	afx_msg void OnDestroy();
 	afx_msg void OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
