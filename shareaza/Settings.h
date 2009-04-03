@@ -189,6 +189,7 @@ public:
 		CString		ShareMonkeyBaseURL;
 		DWORD		ClearPrevious;				// Clear previous search results? 0 - ask user; 1 - no; 2 - yes.
 		bool		SanityCheck;				// Drop hits of banned hosts
+		bool		AutoPreview;				// Auto-previewing selected hit
 	} Search;
 
 	struct sMediaPlayer

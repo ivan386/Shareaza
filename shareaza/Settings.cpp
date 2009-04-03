@@ -190,6 +190,7 @@ CSettings::CSettings()
 	Add( _T("Search"), _T("ShareMonkeyBaseURL"), &Search.ShareMonkeyBaseURL, _T("http://tools.sharemonkey.com/xml/") );
 	Add( _T("Search"), _T("ClearPrevious"), &Search.ClearPrevious, 0, 1, 0, 2 );
 	Add( _T("Search"), _T("SanityCheck"), &Search.SanityCheck, true );
+	Add( _T("Search"), _T("AutoPreview"), &Search.AutoPreview, true );
 
 	Add( _T("MediaPlayer"), _T("Aspect"), &MediaPlayer.Aspect, smaDefault );
 	Add( _T("MediaPlayer"), _T("AviPreviewCLSID"), &MediaPlayer.AviPreviewCLSID, _T("{394011F0-6D5C-42a3-96C6-24B9AD6B010C}") );

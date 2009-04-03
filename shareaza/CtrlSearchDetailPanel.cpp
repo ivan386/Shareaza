@@ -164,6 +164,11 @@ void CSearchDetailPanel::SetFile(CMatchFile* pFile)
 	}
 
 	Update();
+
+	if ( m_bCanPreview && ! m_bIsPreviewing && Settings.Search.AutoPreview )
+	{
+		RequestPreview();
+	}
 }
 
 void CSearchDetailPanel::Update()
