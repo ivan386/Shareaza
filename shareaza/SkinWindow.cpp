@@ -24,6 +24,7 @@
 #include "Settings.h"
 #include "CoolInterface.h"
 #include "SkinWindow.h"
+#include "ImageFile.h"
 #include "XML.h"
 
 #ifdef _DEBUG
@@ -361,8 +362,20 @@ BOOL CSkinWindow::Parse(CXMLElement* pBase, const CString& strPath)
 			if ( strFile.GetLength() > 0 )
 			{
 				strFile = strPath + strFile;
-				hBitmap = (HBITMAP)LoadImage( AfxGetInstanceHandle(), strFile,
-					IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE );
+
+				if ( strFile.Right( 4 ) == ".bmp" )
+				{
+					hBitmap = (HBITMAP)LoadImage( AfxGetInstanceHandle(), strFile,
+								IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE );
+				}
+				else //.png
+				{
+					CImageFile pFile;
+
+					pFile.LoadFromFile( strFile );
+					pFile.EnsureRGB();	// Remove Alpha
+					hBitmap = pFile.CreateBitmap();
+				}				
 			}
 			else if ( strRes.GetLength() > 0 )
 			{
