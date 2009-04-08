@@ -768,8 +768,13 @@ void CLibraryTreeView::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* /*pScrollB
 	}
 }
 
-BOOL CLibraryTreeView::OnMouseWheel(UINT /*nFlags*/, short zDelta, CPoint /*pt*/)
+BOOL CLibraryTreeView::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
 {
+	// Scroll window under cursor
+	if ( CWnd* pWnd = WindowFromPoint( pt ) )
+		if ( pWnd != this )
+			return pWnd->SendMessage( WM_MOUSEWHEEL, MAKEWPARAM( nFlags, zDelta ), MAKELPARAM( pt.x, pt.y ) );
+
 	ScrollBy( zDelta * 3 * -ITEM_HEIGHT / WHEEL_DELTA );
 	return TRUE;
 }

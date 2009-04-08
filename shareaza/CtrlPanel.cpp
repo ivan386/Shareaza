@@ -34,7 +34,6 @@ BEGIN_MESSAGE_MAP(CPanelCtrl, CWnd)
 	ON_WM_MOUSEWHEEL()
 	ON_WM_VSCROLL()
 	ON_WM_SIZE()
-	ON_WM_MOUSEMOVE()
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -59,8 +58,13 @@ BOOL CPanelCtrl::Create(CWnd* pParentWnd)
 		WS_VSCROLL | WS_CLIPCHILDREN | WS_CLIPSIBLINGS, rect, pParentWnd, 0, NULL );
 }
 
-BOOL CPanelCtrl::OnMouseWheel(UINT /*nFlags*/, short zDelta, CPoint /*pt*/)
+BOOL CPanelCtrl::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
 {
+	// Scroll window under cursor
+	if ( CWnd* pWnd = WindowFromPoint( pt ) )
+		if ( pWnd != this )
+			return pWnd->SendMessage( WM_MOUSEWHEEL, MAKEWPARAM( nFlags, zDelta ), MAKELPARAM( pt.x, pt.y ) );
+
 	PostMessage( WM_VSCROLL, MAKEWPARAM( SB_THUMBPOSITION, GetScrollPos( SB_VERT ) -
 		zDelta / WHEEL_DELTA * m_nScrollWheelLines * 8 ), NULL );
 
@@ -115,12 +119,4 @@ void CPanelCtrl::OnSize(UINT nType, int cx, int cy)
 	Update();
 
 	UpdateWindow();
-}
-
-void CPanelCtrl::OnMouseMove(UINT nFlags, CPoint point)
-{
-	CWnd::OnMouseMove( nFlags, point );
-
-	if ( GetFocus() != this )
-		SetFocus();
 }

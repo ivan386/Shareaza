@@ -1,7 +1,7 @@
 //
 // CtrlLibraryTileView.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -496,8 +496,13 @@ void CLibraryTileView::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* /*pScrollB
 	}
 }
 
-BOOL CLibraryTileView::OnMouseWheel(UINT /*nFlags*/, short zDelta, CPoint /*pt*/)
+BOOL CLibraryTileView::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
 {
+	// Scroll window under cursor
+	if ( CWnd* pWnd = WindowFromPoint( pt ) )
+		if ( pWnd != this )
+			return pWnd->SendMessage( WM_MOUSEWHEEL, MAKEWPARAM( nFlags, zDelta ), MAKELPARAM( pt.x, pt.y ) );
+
 	CSingleLock oLock( &m_pSection, TRUE );
 
 	ScrollBy( zDelta * -m_szBlock.cy / WHEEL_DELTA / 2 );

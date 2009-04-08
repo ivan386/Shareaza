@@ -43,9 +43,9 @@ static char THIS_FILE[] = __FILE__;
 IMPLEMENT_DYNAMIC(CLibraryView, CWnd)
 
 BEGIN_MESSAGE_MAP(CLibraryView, CWnd)
+	ON_WM_MOUSEWHEEL()
 	ON_WM_CREATE()
 	ON_WM_DESTROY()
-	ON_WM_MOUSEMOVE()
 END_MESSAGE_MAP()
 
 
@@ -284,14 +284,6 @@ void CLibraryView::OnDestroy()
 	CWnd::OnDestroy();
 }
 
-void CLibraryView::OnMouseMove(UINT nFlags, CPoint point)
-{
-	CWnd::OnMouseMove( nFlags, point );
-
-	if ( GetFocus() != this )
-		SetFocus();
-}
-
 void CLibraryView::StartDragging(const CPoint& ptMouse)
 {
 	CPoint ptMiddle( 0, 0 );
@@ -362,4 +354,14 @@ BOOL CLibraryView::OnDrop(IDataObject* pDataObj, DWORD grfKeyState, POINT ptScre
 	}
 
 	return FALSE;
+}
+
+BOOL CLibraryView::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt) 
+{
+	// Scroll window under cursor
+	if ( CWnd* pWnd = WindowFromPoint( pt ) )
+		if ( pWnd != this )
+			return pWnd->SendMessage( WM_MOUSEWHEEL, MAKEWPARAM( nFlags, zDelta ), MAKELPARAM( pt.x, pt.y ) );
+
+	return CWnd::OnMouseWheel( nFlags, zDelta, pt );
 }
