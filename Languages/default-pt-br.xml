@@ -586,6 +586,7 @@
 					<item id="ID_VIEW_UPLOADS" text="_Uploads" shortcut="F4"/>
 					<item id="ID_VIEW_LIBRARY" text="_Biblioteca" shortcut="F5"/>
 					<item id="ID_VIEW_MEDIA" text="_Media Player" shortcut="F6"/>
+					<item id="ID_TAB_IRC" text="IR_C" shortcut="F12"/>
 					<separator/>
 					<item id="ID_VIEW_SECURITY" text="Se_gurança" shortcut="F7"/>
 					<item id="ID_VIEW_HOSTS" text="C_ache dos Hosts" shortcut="F8"/>
@@ -675,6 +676,7 @@
 				<item id="ID_VIEW_UPLOADS" text="_Uploads" shortcut="F4"/>
 				<item id="ID_VIEW_LIBRARY" text="_Biblioteca" shortcut="F5"/>
 				<item id="ID_VIEW_MEDIA" text="_Media Player" shortcut="F6"/>
+				<item id="ID_TAB_IRC" text="IRC _Chat" shortcut="F12"/>
 				<separator/>
 				<item id="ID_VIEW_SECURITY" text="Se_gurança" shortcut="F7"/>
 				<item id="ID_VIEW_HOSTS" text="C_ache dos Hosts" shortcut="F8"/>

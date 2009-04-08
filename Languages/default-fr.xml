@@ -591,6 +591,7 @@
 				<item id="ID_VIEW_UPLOADS" text="_Envois" shortcut="F4"/>
 				<item id="ID_VIEW_LIBRARY" text="_Bibliothèque" shortcut="F5"/>
 				<item id="ID_VIEW_MEDIA" text="Lecteur _Multimédia" shortcut="F6"/>
+				<item id="ID_TAB_IRC" text="_IRC" shortcut="F12"/>
 				<separator/>
 				<item id="ID_VIEW_SECURITY" text="Sé_curité" shortcut="F7"/>
 				<item id="ID_VIEW_HOSTS" text="_Hôtes en cache" shortcut="F8"/>
@@ -682,6 +683,7 @@
 			<item id="ID_VIEW_UPLOADS" text="_Envois" shortcut="F4"/>
 			<item id="ID_VIEW_LIBRARY" text="_Bibliothèque" shortcut="F5"/>
 			<item id="ID_VIEW_MEDIA" text="Lecteur _Multimédia" shortcut="F6"/>
+			<item id="ID_TAB_IRC" text="_IRC" shortcut="F12"/>
 			<separator/>
 			<item id="ID_VIEW_SECURITY" text="Sé_curité" shortcut="F7"/>
 			<item id="ID_VIEW_HOSTS" text="_Hôtes en cache" shortcut="F8"/>

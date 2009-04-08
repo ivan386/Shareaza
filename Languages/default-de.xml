@@ -681,6 +681,7 @@
 			<item id="ID_VIEW_UPLOADS" text="_Uploads" shortcut="F4"/>
 			<item id="ID_VIEW_LIBRARY" text="_Bibliothek" shortcut="F5"/>
 			<item id="ID_VIEW_MEDIA" text="_Medienwiedergabe" shortcut="F6"/>
+			<item id="ID_TAB_IRC" text="Internet Relay _Chat (IRC)" shortcut="F12"/>
 			<separator/>
 			<item id="ID_VIEW_SECURITY" text="S_icherheit" shortcut="F7"/>
 			<item id="ID_VIEW_HOSTS" text="_Host-Cache" shortcut="F8"/>
