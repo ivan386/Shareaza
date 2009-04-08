@@ -1,7 +1,7 @@
 //
 // DiscoveryServices.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -105,8 +105,8 @@ public:
 	POSITION			GetIterator() const;
 	CDiscoveryService*	GetNext(POSITION& pos) const;
 	BOOL				Check(CDiscoveryService* pService, CDiscoveryService::Type nType = CDiscoveryService::dsNull) const;
-	CDiscoveryService*	Add(CDiscoveryService* pService);
-	CDiscoveryService*	Add(LPCTSTR pszAddress, int nType, PROTOCOLID nProtocol = PROTOCOL_NULL);
+	BOOL				Add(CDiscoveryService* pService);
+	BOOL				Add(LPCTSTR pszAddress, int nType, PROTOCOLID nProtocol = PROTOCOL_NULL);
 	BOOL				CheckMinimumServices();
 //	DWORD				MetQueried() const;
 	DWORD				LastExecute() const;
@@ -134,7 +134,6 @@ protected:
 	BOOL				RequestWebCache(CDiscoveryService* pService, Mode nMode, PROTOCOLID nProtocol);
 	void				StopWebRequest();
 	void				OnRun();
-	BOOL 				WebCacheStore(CString Line, LPCTSTR ID, int SubmitType, PROTOCOLID AddrProtocol);
 	BOOL				RunWebCacheGet(BOOL bCache);
 	BOOL				RunWebCacheUpdate();
 	BOOL				RunServerMet();

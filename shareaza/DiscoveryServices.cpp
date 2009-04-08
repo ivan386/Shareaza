@@ -1,7 +1,7 @@
 //
 // DiscoveryServices.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -32,6 +32,7 @@
 #include "Buffer.h"
 #include "Datagrams.h"
 #include "Kademlia.h"
+#include "VendorCache.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -110,7 +111,7 @@ DWORD CDiscoveryServices::GetCount(int nType, PROTOCOLID nProtocol) const
 //////////////////////////////////////////////////////////////////////
 // CDiscoveryServices list modification
 
-CDiscoveryService* CDiscoveryServices::Add(LPCTSTR pszAddress, int nType, PROTOCOLID nProtocol)
+BOOL CDiscoveryServices::Add(LPCTSTR pszAddress, int nType, PROTOCOLID nProtocol)
 {
 	CString strAddress( pszAddress );
 
@@ -123,20 +124,18 @@ CDiscoveryService* CDiscoveryServices::Add(LPCTSTR pszAddress, int nType, PROTOC
 
 	if ( bEndSlash ) strAddress.Append( L"/" );
 
-	/*
-	// Although this is part of the spec, it was removed at the request of the GDF.
-	// Trim trailing '/'
-	if ( strAddress.GetAt( strAddress.GetLength() - 1 ) == '/' )
-		strAddress = strAddress.Left( strAddress.GetLength() - 1 );
-	*/
-
-	// Reject impossibly short services
-	if ( strAddress.GetLength() < 8 ) return NULL;
+	if ( strAddress.GetLength() < 8 )
+		// Reject impossibly short services
+		return FALSE;
 
 	CSingleLock pNetworkLock( &Network.m_pSection );
-	if ( ! pNetworkLock.Lock( 250 ) ) return NULL;
+	if ( ! pNetworkLock.Lock( 250 ) )
+		// Too busy
+		return FALSE;
 
-	if ( GetByAddress( strAddress ) != NULL ) return NULL;
+	if ( GetByAddress( strAddress ) != NULL )
+		// Already in list
+		return TRUE;
 
 	CDiscoveryService* pService = NULL;
 
@@ -192,7 +191,7 @@ CDiscoveryService* CDiscoveryServices::Add(LPCTSTR pszAddress, int nType, PROTOC
 				{
 					pItem->m_nType = CDiscoveryService::dsBlocked;
 					delete pService;
-					return NULL;
+					return FALSE;
 				}
 			}
 		}
@@ -200,7 +199,8 @@ CDiscoveryService* CDiscoveryServices::Add(LPCTSTR pszAddress, int nType, PROTOC
 		break;
 	}
 
-	if ( pService == NULL ) return NULL;
+	if ( pService == NULL )
+		return FALSE;
 
 	// Set the appropriate protocol flags
 	switch( nProtocol )
@@ -226,12 +226,16 @@ CDiscoveryService* CDiscoveryServices::Add(LPCTSTR pszAddress, int nType, PROTOC
 	return Add( pService );
 }
 
-CDiscoveryService* CDiscoveryServices::Add(CDiscoveryService* pService)
+BOOL CDiscoveryServices::Add(CDiscoveryService* pService)
 {
-	if ( pService == NULL ) return NULL; // Can't add a null
+	if ( pService == NULL )
+		// Can't add a null
+		return FALSE;
 
 	// If it's a webcache with no protocols set, assume it's for both.
-	if ( ( pService->m_bGnutella2 == FALSE ) && ( pService->m_bGnutella1 == FALSE ) && ( pService->m_nType == CDiscoveryService::dsWebCache ) )
+	if ( ( pService->m_bGnutella2 == FALSE ) &&
+		 ( pService->m_bGnutella1 == FALSE ) &&
+		 ( pService->m_nType == CDiscoveryService::dsWebCache ) )
 	{
 		pService->m_bGnutella2 = TRUE;
 		pService->m_bGnutella1 = TRUE;
@@ -247,12 +251,12 @@ CDiscoveryService* CDiscoveryServices::Add(CDiscoveryService* pService)
 			// It's a new service, but we don't want more. We should delete it.
 			theApp.Message( MSG_DEBUG, _T("Maximum discovery service count reached- %s not added"), pService->m_sAddress );
 			delete pService;
-			return NULL;
+			return FALSE;
 		}
 		else
 		{
 			// We already had this service on the list. Do nothing.
-			return pService;
+			return TRUE;
 		}
 	}
 
@@ -262,7 +266,8 @@ CDiscoveryService* CDiscoveryServices::Add(CDiscoveryService* pService)
 		m_pList.AddTail( pService );
 		MergeURLs();
 	}
-	return pService;
+
+	return TRUE;
 }
 
 void CDiscoveryServices::Remove(CDiscoveryService* pService, BOOL bCheck)
@@ -1300,25 +1305,6 @@ void CDiscoveryServices::OnRun()
 }
 
 //////////////////////////////////////////////////////////////////////
-// CDiscoveryServices URL (specification 2) Pre-Add:
-
-BOOL CDiscoveryServices::WebCacheStore(CString Line, LPCTSTR ID, int SubmitType, PROTOCOLID AddrProtocol)
-{
-	CString Marker = ID;
-	int len_marker = Marker.GetLength();
-	Marker += _T("||");
-	// Make sure the address of the gwebcache isn't empty
-	if ( _tcsnicmp( Line, (LPCTSTR)Marker, len_marker + 2 ) == 0 )
-	{
-		return false;
-	}
-
-	Add( Line.Mid( len_marker + 1 ).SpanExcluding( _T("|") ), SubmitType, AddrProtocol );
-		
-	return true;
-}
-
-//////////////////////////////////////////////////////////////////////
 // CDiscoveryServices execute hosts request
 
 BOOL CDiscoveryServices::RunWebCacheGet(BOOL bCaches)
@@ -1339,7 +1325,7 @@ BOOL CDiscoveryServices::RunWebCacheGet(BOOL bCaches)
 
 	if ( m_nLastQueryProtocol == PROTOCOL_G2 )
 	{
-		strURL += _T("&net=gnutella2&ping=1&pv=6");
+		strURL += _T("&net=gnutella2&ping=1&pv=4");
 		strURL += _T("&client=")_T(VENDOR_CODE);	//Version number is combined with client parameter for spec2
 		strURL += theApp.m_sVersion;
 	}
@@ -1350,6 +1336,8 @@ BOOL CDiscoveryServices::RunWebCacheGet(BOOL bCaches)
 		strURL += _T("&client=")_T(VENDOR_CODE)_T("&version=");	//Version parameter is spec1
 		strURL += theApp.m_sVersion;
 	}
+	
+	strURL += _T("&getleaves=1&getnetworks=1&getclusters=1&getvendors=1&getuptime=1");	//Specification 2.1 additions...
 
 	pLock.Unlock();
 
@@ -1358,260 +1346,250 @@ BOOL CDiscoveryServices::RunWebCacheGet(BOOL bCaches)
 
 	if ( ! Check( m_pWebCache ) ) return FALSE;
 
-	BOOL bSuccess = FALSE;
-	int nIP[4], nIPs = 0;
+	int nHosts = 0, nCaches = 0;
 	
-	////GWC-Output Network Validation Variables (Coolg1026's network validation update):
-	CString lineline;
-	int TokenNumber;
-	BOOL IsNetwork, URLCheck;
-
-	for ( strOutput += '\n' ; strOutput.GetLength() ; )
+	// Split answer to lines
+	while ( strOutput.GetLength() )
 	{
-		CString strLine	= strOutput.SpanExcluding( _T("\r\n") );
-		strOutput		= strOutput.Mid( strLine.GetLength() + 1 );
+		CString strLine = strOutput.SpanExcluding( _T("\r\n") );
+		strOutput = strOutput.Mid( strLine.GetLength() + 1 );
+		strLine.Trim( _T("\r\n \t") );
+		if ( strLine.IsEmpty() )
+			continue;
 
-		strLine.Trim();
-		if ( strLine.IsEmpty() ) continue;
+		theApp.Message( MSG_DEBUG, _T("GWebCache %s : %s"),
+			(LPCTSTR)m_pWebCache->m_sAddress, (LPCTSTR)strLine );
 
-		theApp.Message( MSG_DEBUG, _T("GWebCache %s : %s"), (LPCTSTR)m_pWebCache->m_sAddress, (LPCTSTR)strLine );
-
-		if ( _tcsistr( strLine, _T("http") ) == NULL )
+		// Split line to parts
+		CArray< CString > oParts;
+		for ( int i = 0 ; ; )
 		{
-			//Many checks were added under this category to prevent exploitation or tripping when introduced as part of a URL.
-			if ( ( _tcsistr( strOutput, _T("<") ) != NULL ) )
+			CString sPart = strLine.Tokenize( _T("|"), i ).MakeLower();
+			if ( i == -1 )
+				break;
+			oParts.Add( sPart );
+		}
+
+		if ( oParts[ 0 ] == _T("h") )
+		{
+			// Hosts: "h|Host:Port|Age[|Vendor|Uptime]"
+			if ( oParts.GetCount() >= 3 )
 			{
-				// Error- getting HMTL response.
-				return FALSE;
-			}
-			else if ( _tcsistr( strLine, _T("early") ) != NULL )
-			{
-				// Did we flood?
-				theApp.Message( MSG_ERROR, _T("GWebCache %s : Too many connection attempts"), (LPCTSTR)m_pWebCache->m_sAddress );
-				return FALSE;
-			}
-			else if ( ( _tcsistr( strLine, _T("not supported") ) != NULL ) ||
-			 ( _tcsistr( strLine, _T("not-supported") ) != NULL ) )
-			{
-				// ERROR CONDITION
-				theApp.Message( MSG_ERROR, _T("GWebCache %s : Not supported"), (LPCTSTR)m_pWebCache->m_sAddress );
-				if ( m_nLastQueryProtocol == PROTOCOL_G2 )
+				DWORD nAddress = INADDR_NONE;
+				int nPort = 0, nSeconds = 0;
+				int nPos = oParts[ 1 ].Find( _T(':') );
+				if ( nPos > 6 &&
+					( nAddress = inet_addr( CT2CA( (LPCTSTR)oParts[ 1 ].Left( nPos ) ) ) ) != INADDR_NONE &&
+					_stscanf( oParts[ 1 ].Mid( nPos + 1 ), _T("%i"), &nPort ) == 1 &&
+					nPort > 0 && nPort < 65536 &&
+					_stscanf( oParts[ 2 ], _T("%i"), &nSeconds ) == 1 &&
+					nSeconds >= 0 && nSeconds < 60 * 60 * 24 * 3 ) // 3 days
 				{
-					m_pWebCache->m_bGnutella1 = TRUE;
-					m_pWebCache->m_bGnutella2 = FALSE;
+					DWORD tSeen	= static_cast< DWORD >( time( NULL ) ) - nSeconds;
+					CVendor* pVendor = NULL;
+					DWORD tUptime = 0;
+					if ( oParts.GetCount() >= 4 )
+					{
+						pVendor = VendorCache.Lookup( oParts[ 3 ].Left( 4 ) );
+						if ( oParts.GetCount() >= 5 )
+						{
+							int tUptimeTmp;
+							if ( _stscanf( oParts[ 4 ], _T("%i"), &tUptimeTmp ) == 1 &&
+								tUptimeTmp > 60 && tUptimeTmp < 60 * 60 * 24 * 365 )
+							{
+								tUptime = tUptimeTmp;
+							}
+							else
+								// Bad uptime format
+								return FALSE;
+						}
+					}
+
+					if ( ( m_nLastQueryProtocol == PROTOCOL_G2 ) ? 
+						HostCache.Gnutella2.Add( (IN_ADDR*)&nAddress, (WORD)nPort,
+							tSeen, ( pVendor ? (LPCTSTR)pVendor->m_sCode : NULL ), tUptime ) :
+						HostCache.Gnutella1.Add( (IN_ADDR*)&nAddress, (WORD)nPort,
+							tSeen, ( pVendor ? (LPCTSTR)pVendor->m_sCode : NULL ), tUptime ) )
+					{
+						m_pWebCache->OnHostAdd();
+						nHosts++;
+					}
 				}
 				else
-				{
-					m_pWebCache->m_bGnutella1 = FALSE;
-					m_pWebCache->m_bGnutella2 = TRUE;
-				}
-				return FALSE;
+					// Invalid format
+					return FALSE;
 			}
-		}
-		if ( _tcsnicmp( strLine, _T("h|"), 2 ) == 0 )
-		{
-			// IP ADDRESS AT: strLine.Mid( 2 )
-			// CORRECT (REQUESTED) NETWORK
-
-			strLine = strLine.Mid( 2 );
-			int nBreak	= strLine.Find( '|' );
-			DWORD tSeen	= 0;
-
-			if ( nBreak > 0 )
-			{
-				int nSeconds = 0;
-				_stscanf( strLine.Mid( nBreak + 1 ), _T("%i"), &nSeconds );
-				nSeconds = max( 0, min( 18000, nSeconds ) );
-				strLine = strLine.Left( nBreak );
-				tSeen = static_cast< DWORD >( time( NULL ) ) - nSeconds;
-			}
-
-			if ( m_nLastQueryProtocol == PROTOCOL_G2 )
-				HostCache.Gnutella2.Add( strLine, tSeen );
 			else
-				HostCache.Gnutella1.Add( strLine, tSeen );
-
-			m_pWebCache->OnHostAdd();
-			bSuccess = TRUE;
-			nIPs ++;
+				// Empty
+				return FALSE;
 		}
-		else if ( _tcsnicmp( strLine, _T("u|"), 2 ) == 0 )
+		else if ( oParts[ 0 ] == _T("u") )
 		{
-			URLCheck = false;
-			if ( _tcsnicmp( strLine, _T("u|http://"), 9 ) == 0 )
+			// URLs: "u|URL|Age"
+			if ( oParts.GetCount() >= 2 )
 			{
-				URLCheck = WebCacheStore( strLine, _T("u"), CDiscoveryService::dsWebCache, m_nLastQueryProtocol );
-			}
-			else if ( _tcsnicmp( strLine, _T("u|uhc://"), 8 ) == 0 )
-			{
-				if ( m_nLastQueryProtocol != PROTOCOL_G2 )
+				if ( _tcsnicmp( oParts[ 1 ], _T("http://"), 7 ) == 0 )
 				{
-					URLCheck = WebCacheStore( strLine, _T("u"), CDiscoveryService::dsGnutella, m_nLastQueryProtocol );
+					if ( Add( oParts[ 1 ], CDiscoveryService::dsWebCache, m_nLastQueryProtocol ) )
+					{
+						nCaches++;
+					}
+				}
+				else if ( ( _tcsnicmp( oParts[ 1 ], _T("uhc://") , 6 ) == 0 && m_nLastQueryProtocol != PROTOCOL_G2 ) ||
+						  ( _tcsnicmp( oParts[ 1 ], _T("ukhl://"), 7 ) == 0 && m_nLastQueryProtocol == PROTOCOL_G2 ) )
+				{
+					if ( Add( oParts[ 1 ], CDiscoveryService::dsGnutella, m_nLastQueryProtocol ) )
+					{
+						nCaches++;
+					}
 				}
 			}
-			else if ( _tcsnicmp( strLine, _T("u|ukhl://"), 9 ) == 0 )
+			else
+				// Empty
+				return FALSE;
+		}
+		else if ( oParts[ 0 ] == _T("UHC") )
+		{
+			// UDP Host Cache URL (For Gnutella1 ONLY)
+			if ( oParts.GetCount() >= 2 )
+			{
+				if (  m_nLastQueryProtocol != PROTOCOL_G2 )
+				{
+					if ( Add( oParts[ 1 ], CDiscoveryService::dsGnutella, m_nLastQueryProtocol ) )
+					{
+						nCaches++;
+					}
+				}
+			}
+			else
+				// Empty
+				return FALSE;
+		}
+		else if ( oParts[ 0 ] == _T("UKHL") )
+		{
+			// UDP Known Hub List URL (For Gnutella2 ONLY)
+			if ( oParts.GetCount() >= 2 )
 			{
 				if ( m_nLastQueryProtocol == PROTOCOL_G2 )
 				{
-					URLCheck = WebCacheStore( strLine, _T("u"), CDiscoveryService::dsGnutella, m_nLastQueryProtocol );
+					if ( Add( oParts[ 1 ], CDiscoveryService::dsGnutella, m_nLastQueryProtocol ) )
+					{
+						nCaches++;
+					}
 				}
 			}
-			else if ( _tcsistr( strLine, _T("u||") ) == NULL )
-			{
-				theApp.Message( MSG_ERROR, _T("GWebCache %s : Unknown URL %s was given"), (LPCTSTR)m_pWebCache->m_sAddress, (LPCTSTR)strLine );
-				return false;
-			}
-			if ( !URLCheck )
-			{
-				continue;
-			}
 			else
-			{
-				m_bFirstTime = FALSE;
-				bSuccess = TRUE;
-			}
-		}
-		else if ( _tcsnicmp( strLine, _T("UHC|"), 4 ) == 0 && m_nLastQueryProtocol != PROTOCOL_G2 )
-		{
-			//UDP Host Cache URL (For Gnutella1 ONLY):
-			if ( !WebCacheStore( strLine, _T("UHC"), CDiscoveryService::dsGnutella, m_nLastQueryProtocol ) )
-			{
-				continue;
-			}
-			else
-			{
-				m_bFirstTime = FALSE;
-				bSuccess = TRUE;
-			}
-		}
-		else if ( _tcsnicmp( strLine, _T("UKHL|"), 5 ) == 0 && m_nLastQueryProtocol == PROTOCOL_G2 )
-		{
-			//UDP Known Hub List URL (For Gnutella2 ONLY):
-			if ( !WebCacheStore( strLine, _T("UKHL"), CDiscoveryService::dsGnutella, m_nLastQueryProtocol ) )
-			{
-				continue;
-			}
-			else
-			{
-				m_bFirstTime = FALSE;
-				bSuccess = TRUE;
-			}
-		}
-		else if ( _tcsnicmp( strLine, _T("i|"), 2 ) == 0 )
-		{
-			// INFORMATIONAL
-
-			// Don't count as success if it's only informational
-			// bSuccess = TRUE;
-
-			if ( _tcsnicmp( strLine, _T("i|access|period|"), 16 ) == 0 )
-			{
-				_stscanf( (LPCTSTR)strLine + 16, _T("%u"), &m_pWebCache->m_nAccessPeriod );
-			}
-			else if ( ( _tcsnicmp( strLine, _T("i|force|remove"), 14 ) == 0 ) ||
-					  ( _tcsnicmp( strLine, _T("i|update|warning|bad url"), 24 ) == 0 ) )
-			{
-				m_pWebCache->Remove();
+				// Empty
 				return FALSE;
-			}
-			else if ( _tcsnicmp( strLine, _T("i|pong|"), 7 ) == 0 )
+		}
+		else if ( oParts[ 0 ] == _T("i") )
+		{
+			// Informational Response: "i|command|...."
+			if ( oParts.GetCount() >= 2 )
 			{
-				// pong v2 (Skulls-type PONG network extension usage)
-				//Usage here: Used to check if cache supports requested network.
-				if ( m_nLastQueryProtocol != PROTOCOL_G2 )
+				if ( oParts[ 1 ] == _T("access") )
 				{
-					//Mystery pong received - possibly a hosted static webpage.
-					theApp.Message( MSG_ERROR, _T("GWebCache %s : PONG received when no ping was given"), (LPCTSTR)m_pWebCache->m_sAddress );
-					return FALSE;
-				}
-				TokenNumber = 7;
-				IsNetwork = FALSE;
-				if ( strLine.Find( _T("|"), TokenNumber ) > 1 )
-				{
-					TokenNumber = strLine.Find( _T("|"), TokenNumber ) + 1;
-					lineline = strLine.Tokenize( _T("-"), TokenNumber );
-					while ( lineline != "" )
+					// "i|access|..."
+					if ( oParts.GetCount() >= 4 && oParts[ 2 ] == _T("period") )
 					{
-						if ( ( _tcsnicmp( lineline, _T("gnutella2"), 9 ) == 0 && m_nLastQueryProtocol == PROTOCOL_G2 ) ||
-						( _tcsnicmp( lineline, _T("gnutella"), 8 ) == 0 && m_nLastQueryProtocol != PROTOCOL_G2 && _tcsnicmp( lineline, _T("gnutella2"), 9 ) == -1 ) )
+						// "i|access|period|access period"
+						DWORD nAccessPeriod;
+						if ( _stscanf( oParts[ 3 ], _T("%u"), &nAccessPeriod ) == 1 )
 						{
-							IsNetwork = TRUE;
-							theApp.Message( MSG_DEBUG, _T("GWebCache %s : Correct Network : %s"), (LPCTSTR)m_pWebCache->m_sAddress, (LPCTSTR)strLine );
+							m_pWebCache->m_nAccessPeriod = nAccessPeriod;
 						}
-						lineline = strLine.Tokenize( _T("-"), TokenNumber );
-					};
-					if ( !IsNetwork )
-					{
-						theApp.Message( MSG_ERROR, _T("GWebCache %s : Wrong Network : %s"), (LPCTSTR)m_pWebCache->m_sAddress, (LPCTSTR)strLine );
-						return false;
 					}
 				}
-			}
-			else if ( _tcsnicmp( strLine, _T("i|networks|"), 11 ) == 0 )
-			{
-				//Beacon Cache type output
-				//Used to check if cache supports requested network.
-				TokenNumber = 11;
-				IsNetwork = FALSE;
-				lineline = strLine.Tokenize( _T("|"), TokenNumber );
-				while ( lineline != "" )
+				else if ( oParts[ 1 ] == _T("force") )
 				{
-					if ( ( _tcsnicmp( lineline, _T("gnutella2"), 9 ) == 0 && m_nLastQueryProtocol == PROTOCOL_G2 ) ||
-					( _tcsnicmp( lineline, _T("gnutella"), 8 ) == 0 && m_nLastQueryProtocol != PROTOCOL_G2 && _tcsnicmp( lineline, _T("gnutella2"), 9 ) == -1 ) )
+					// "i|force|..."
+					if ( oParts.GetCount() >= 3 && oParts[ 2 ] == _T("remove") )
 					{
-						IsNetwork = TRUE;
-						theApp.Message( MSG_DEBUG, _T("GWebCache %s : Correct Network : %s"), (LPCTSTR)m_pWebCache->m_sAddress, (LPCTSTR)strLine );
+						// "i|force|remove"
+						m_pWebCache->Remove();
+						return FALSE;
 					}
-					lineline = strLine.Tokenize( _T("|"), TokenNumber );
-				};
-				if ( !IsNetwork )
-				{
-					theApp.Message( MSG_ERROR, _T("GWebCache %s : Wrong Network : %s"), (LPCTSTR)m_pWebCache->m_sAddress, (LPCTSTR)strLine );
-					return false;
 				}
-			}
-			else if ( _tcsnicmp( strLine, _T("i|nets|"), 7 ) == 0 )
-			{
-				//Skulls type output
-				//Used to check if cache supports requested network.
-				TokenNumber = 7;
-				IsNetwork = FALSE;
-				lineline = strLine.Tokenize( _T("-"), TokenNumber );
-				while ( lineline != "" )
+				else if ( oParts[ 1 ] == _T("update") )
 				{
-					if ( ( _tcsnicmp( lineline, _T("gnutella2"), 9 ) == 0 && m_nLastQueryProtocol == PROTOCOL_G2 ) ||
-					( _tcsnicmp( lineline, _T("gnutella"), 8 ) == 0 && m_nLastQueryProtocol != PROTOCOL_G2 && _tcsnicmp( lineline, _T("gnutella2"), 9 ) == -1 ) )
+					// "i|update|..."
+					if ( oParts.GetCount() >= 4 && oParts[ 2 ] == _T("warning") && oParts[ 3 ] == _T("bad url") )
 					{
-						IsNetwork = TRUE;
-						theApp.Message( MSG_DEBUG, _T("GWebCache %s : Correct Network : %s"), (LPCTSTR)m_pWebCache->m_sAddress, (LPCTSTR)strLine );
+						// "i|update|warning|bad url"
+						m_pWebCache->Remove();
+						return FALSE;
 					}
-					lineline = strLine.Tokenize( _T("-"), TokenNumber );
-				};
-				if ( !IsNetwork )
-				{
-					theApp.Message( MSG_ERROR, _T("GWebCache %s : Wrong Network : %s"), (LPCTSTR)m_pWebCache->m_sAddress, (LPCTSTR)strLine );
-					return false;
 				}
-			}
-			else if ( _tcsnicmp( strLine, _T("i|warning|"), 10 ) == 0 )
-			{
-				// Something wrong
-				theApp.Message( MSG_INFO, _T("GWebCache %s : Warning : %s"), (LPCTSTR)m_pWebCache->m_sAddress, (LPCTSTR)strLine.Mid( 10 ) );
-			}
-			else if ( _tcsnicmp( strLine, _T("i|NO-URL-NO-HOSTS"), 17) == 0 )
-			{
-				// GWC is totally empty!
-				theApp.Message( MSG_DEBUG, _T("GWebCache %s : Totally empty : %s"), (LPCTSTR)m_pWebCache->m_sAddress, (LPCTSTR)strLine );
-			}
-			else if ( _tcsnicmp( strLine, _T("i|NO-URL"), 8) == 0)
-			{
-				// GWC doesn't have URLs!
-				theApp.Message( MSG_DEBUG, _T("GWebCache %s : No alternative URLs : %s"), (LPCTSTR)m_pWebCache->m_sAddress, (LPCTSTR)strLine );
-			}
-			else if ( _tcsnicmp( strLine, _T("i|NO-HOSTS"), 10) == 0)
-			{
-				// GWC doesn't have hosts!
-				theApp.Message( MSG_DEBUG, _T("GWebCache %s : No hosts : %s"), (LPCTSTR)m_pWebCache->m_sAddress, (LPCTSTR)strLine );
+				else if ( oParts[ 1 ] == _T("pong") )
+				{
+					// "i|pong|vendor x.x.x[|networks]"
+					// pong v2 (Skulls-type PONG network extension usage)
+					// Usage here: Used to check if cache supports requested network.
+					if ( m_nLastQueryProtocol != PROTOCOL_G2 )
+					{
+						//Mystery pong received - possibly a hosted static webpage.
+						theApp.Message( MSG_ERROR, _T("GWebCache %s : PONG received when no ping was given"), (LPCTSTR)m_pWebCache->m_sAddress );
+						return FALSE;
+					}
+					if ( oParts.GetCount() >= 4 )
+					{
+						BOOL IsNetwork = FALSE;
+						for ( int i = 0 ; ; )
+						{
+							CString sNetwork = oParts[ 3 ].Tokenize( _T("-"), i );
+							if ( i == -1 )
+								break;
+							if ( ( sNetwork == _T("gnutella2") && m_nLastQueryProtocol == PROTOCOL_G2 ) ||
+								 ( sNetwork == _T("gnutella")  && m_nLastQueryProtocol != PROTOCOL_G2 ) )
+							{
+								IsNetwork = TRUE;
+							}
+						}
+						if ( ! IsNetwork )
+							return FALSE;
+					}
+				}
+				else if ( oParts[ 1 ] == _T("networks") )
+				{
+					// Beacon Cache type output
+					// Used to check if cache supports requested network.
+					if ( oParts.GetCount() >= 3 )
+					{
+						BOOL IsNetwork = FALSE;
+						for ( int i = 2 ; i < oParts.GetCount(); i++ )
+						{
+							if ( ( oParts[ i ] == _T("gnutella2") && m_nLastQueryProtocol == PROTOCOL_G2 ) ||
+								 ( oParts[ i ] == _T("gnutella")  && m_nLastQueryProtocol != PROTOCOL_G2 ) )
+							{
+								IsNetwork = TRUE;
+							}
+						}
+						if ( ! IsNetwork )
+							return FALSE;
+					}
+				}
+				else if ( oParts[ 1 ] == _T("nets") )
+				{
+					// Skulls type output
+					// Used to check if cache supports requested network.
+					if ( oParts.GetCount() >= 3 )
+					{
+						BOOL IsNetwork = FALSE;
+						for ( int i = 0 ; ; )
+						{
+							if ( i == -1 )
+								break;
+							CString sNetwork = oParts[ 2 ].Tokenize( _T("-"), i );
+							if ( ( sNetwork == _T("gnutella2") && m_nLastQueryProtocol == PROTOCOL_G2 ) ||
+								 ( sNetwork == _T("gnutella")  && m_nLastQueryProtocol != PROTOCOL_G2 ) )
+							{
+								IsNetwork = TRUE;
+							}
+						}
+						if ( ! IsNetwork )
+							return FALSE;
+					}
+				}
 			}
 		}
 		else if ( _tcsnicmp( strLine, _T("PONG"), 4 ) == 0 )
@@ -1620,7 +1598,6 @@ BOOL CDiscoveryServices::RunWebCacheGet(BOOL bCaches)
 			if ( m_nLastQueryProtocol != PROTOCOL_G2 )
 			{
 				//Mystery pong received - possibly a hosted static webpage.
-				theApp.Message( MSG_ERROR, _T("GWebCache %s : PONG received when no ping was given"), (LPCTSTR)m_pWebCache->m_sAddress );
 				return FALSE;
 			}
 		}
@@ -1629,40 +1606,38 @@ BOOL CDiscoveryServices::RunWebCacheGet(BOOL bCaches)
 			if ( _tcsistr( strLine, _T("Something Failed") ) != NULL )
 			{
 				// Some Bazooka GWCs are bugged but ok.
-				theApp.Message( MSG_INFO, _T("GWebCache %s : Warning : %s"), (LPCTSTR)m_pWebCache->m_sAddress, (LPCTSTR)strLine );
 			}
 			else
 			{
 				// Misc error. (Often CGI limits error)
-				theApp.Message( MSG_ERROR, _T("GWebCache %s : Error : %s"), (LPCTSTR)m_pWebCache->m_sAddress, (LPCTSTR)strLine );
 				return FALSE;
 			}
 		}
-		else if ( _stscanf( strLine, _T("%i.%i.%i.%i"), &nIP[0], &nIP[1], &nIP[2], &nIP[3] ) == 4 )
+		else if ( HostCache.Gnutella1.Add( strLine ) )
 		{
-			// Plain IP, NOT G2
-			HostCache.Gnutella1.Add( strLine );
+			// Plain IP, G1
 			m_pWebCache->OnHostAdd();
+			nHosts++;
 			m_pWebCache->m_bGnutella2 = FALSE;
 			m_pWebCache->m_bGnutella1 = TRUE;
-			bSuccess = TRUE;
+		}
+		else if ( Add( strLine.SpanExcluding( _T(" ") ), CDiscoveryService::dsWebCache, PROTOCOL_G1 ) )
+		{
+			// Plain URL, G1
+			nCaches++;
+			m_pWebCache->m_bGnutella2 = FALSE;
+			m_pWebCache->m_bGnutella1 = TRUE;
 		}
 		else
-		{
-			// Plain URL, WRONG NETWORK
-			Add( strLine.SpanExcluding( _T(" ") ),
-				CDiscoveryService::dsWebCache, PROTOCOL_G1 );
-			m_pWebCache->m_bGnutella2 = FALSE;
-			m_pWebCache->m_bGnutella1 = TRUE;
-			m_bFirstTime = FALSE;
-		}
+			return FALSE;
 	}
 
-	if ( bSuccess )
+	if ( nCaches )
+		m_bFirstTime = FALSE;
+
+	if ( nHosts || nCaches )
 	{
 		m_pWebCache->OnSuccess();
-		if ( HostCache.Gnutella2.GetNewest() != NULL && nIPs > 0 )
-			m_tQueried = static_cast< DWORD >( time( NULL ) );
 		return TRUE;
 	}
 
@@ -1684,11 +1659,12 @@ BOOL CDiscoveryServices::RunWebCacheUpdate()
 	{
 		if ( ! Network.IsListening() ) return TRUE;
 
-		strURL.Format( _T("%s?ip=%s:%hu&x.leaves=%i"),
+		strURL.Format( _T("%s?ip=%s:%hu&x.leaves=%i&uptime=%i"),
 			(LPCTSTR)m_pWebCache->m_sAddress,
 			(LPCTSTR)CString( inet_ntoa( Network.m_pHost.sin_addr ) ),
 			htons( Network.m_pHost.sin_port ),
-			Neighbours.GetCount( PROTOCOL_ANY, -1, ntLeaf ) );		//ToDo: Check this
+			Neighbours.GetCount( PROTOCOL_ANY, -1, ntLeaf ),
+			Network.GetStableTime() );		//ToDo: Check this
 	}
 
 	if ( m_pSubmit != NULL && Check( m_pSubmit, CDiscoveryService::dsWebCache ) )
@@ -1740,48 +1716,30 @@ BOOL CDiscoveryServices::RunWebCacheUpdate()
 	pLock.Lock();
 	if ( ! Check( m_pWebCache, CDiscoveryService::dsWebCache ) ) return FALSE;
 
-	for ( strOutput += '\n' ; strOutput.GetLength() ; )
+	// Split answer to lines
+	while ( strOutput.GetLength() )
 	{
-		CString strLine	= strOutput.SpanExcluding( _T("\r\n") );
-		strOutput		= strOutput.Mid( strLine.GetLength() + 1 );
+		CString strLine = strOutput.SpanExcluding( _T("\r\n") );
+		strOutput = strOutput.Mid( strLine.GetLength() + 1 );
+		strLine.Trim( _T("\r\n \t") );
+		if ( strLine.IsEmpty() )
+			continue;
 
-		strLine.TrimLeft();
-		strLine.TrimRight();
+		theApp.Message( MSG_DEBUG, _T("GWebCache(update) %s : %s"),
+			(LPCTSTR)m_pWebCache->m_sAddress, (LPCTSTR)strLine );
 
-		if ( strLine.IsEmpty() ) continue;
-
-		theApp.Message( MSG_DEBUG, _T("GWebCache(update): %s"), (LPCTSTR)strLine );
+		// Split line to parts
+/*		CArray< CString > oParts;
+		for ( int i = 0 ; ; )
+		{
+			CString sPart = strLine.Tokenize( _T("|"), i ).MakeLower();
+			if ( i == -1 )
+				break;
+			oParts.Add( sPart );
+		}*/
 
 		if ( _tcsstr( strLine, _T("OK") ) != NULL )
 		{
-			if ( _tcsistr( strLine, _T("i|update|OK|IP already updated") ) != NULL || _tcsistr( strLine, _T("i|update|OK|Host already updated") ) != NULL )
-			{
-				theApp.Message( MSG_INFO, _T("GWebCache(v2) IP Updated Already: %s"), (LPCTSTR)strLine );
-			}
-			else if ( _tcsistr( strLine, _T("i|update|OK|URL already updated") ) != NULL || _tcsistr( strLine, _T("i|update|OK|Updated URL timestamp") ) != NULL )
-			{
-				theApp.Message( MSG_INFO, _T("GWebCache(v2) URL Updated Already: %s"), (LPCTSTR)strLine );
-			}
-			else if ( _tcsistr( strLine, _T("i|update|OK") ) != NULL )
-			{
-				if ( _tcsistr( strLine, _T("i|update|OK|URL|WARNING") ) != NULL )
-				{
-					theApp.Message( MSG_INFO, _T("GWebCache(v2) URL Update Warning: %s"), (LPCTSTR)strLine );
-				}
-				else if ( _tcsistr( strLine, _T("i|update|OK|HOST|WARNING") ) != NULL )
-				{
-					theApp.Message( MSG_INFO, _T("GWebCache(v2) IP Update Warning: %s"), (LPCTSTR)strLine );
-				}
-				else
-				{
-					theApp.Message( MSG_INFO, _T("GWebCache(v2) Update Passed: %s"), (LPCTSTR)strLine );
-				}
-			}
-			else if ( _tcsstr( strLine, _T("OK") ) != NULL )
-			{
-				theApp.Message( MSG_INFO, _T("GWebCache(v1) Update Passed: %s"), (LPCTSTR)strLine );
-				
-			}
 			m_pWebCache->m_tUpdated = (DWORD)time( NULL );
 			m_pWebCache->m_nUpdates++;
 			m_pWebCache->OnSuccess();
@@ -1789,7 +1747,6 @@ BOOL CDiscoveryServices::RunWebCacheUpdate()
 		}
 		else if ( _tcsistr( strLine, _T("i|warning|client|early") ) != NULL || _tcsistr( strLine, _T("i|warning|You came back too early") ) != NULL || _tcsistr( strLine, _T("WARNING: You came back too early") ) != NULL )
 		{
-			theApp.Message( MSG_ERROR, _T("GWebCache(update) Too many connection attempts") );
 			//Did we flood a gwc? It's always nice to know. :)
 			return FALSE;
 		}
@@ -1798,15 +1755,9 @@ BOOL CDiscoveryServices::RunWebCacheUpdate()
 			if ( _tcsistr( strLine, _T("ERROR: Client returned too early") ) != NULL )
 			{
 				//GhostWhiteCrab type flood warning.
-				theApp.Message( MSG_ERROR, _T("GWebCache(update) Too many connection attempts") );
-				//Did we flood a gwc? It's always nice to know. :)
-				return FALSE;
 			}
-			else
-			{
-			// Misc error. (Often CGI limits error)
+			// else Misc error. (Often CGI limits error)
 			return FALSE;
-			}
 		}
 		else if ( _tcsnicmp( strLine, _T("i|access|period|"), 16 ) == 0 )
 		{
@@ -1819,7 +1770,7 @@ BOOL CDiscoveryServices::RunWebCacheUpdate()
 		else if ( strLine == _T("i|force|remove") )
 		{
 			m_pWebCache->Remove();
-			break;
+			return FALSE;
 		}
 	}
 
