@@ -356,10 +356,12 @@ BOOL CHostCacheList::Add(LPCTSTR pszHost, DWORD tSeen, LPCTSTR pszVendor, DWORD 
 	if ( nPos < 0 ) return FALSE;
 	
 	int nPort = GNUTELLA_DEFAULT_PORT;
-	if ( _stscanf( strHost.Mid( nPos + 1 ), _T("%i"), &nPort ) != 1 ) return FALSE;
+	if ( _stscanf( strHost.Mid( nPos + 1 ), _T("%i"), &nPort ) != 1 ||
+		nPort <= 0 || nPort >= 65536 ) return FALSE;
 	strHost = strHost.Left( nPos );
 	
 	DWORD nAddress = inet_addr( CT2CA( (LPCTSTR)strHost ) );
+	if ( nAddress == INADDR_NONE ) return FALSE;
 
 	return ( Add( (IN_ADDR*)&nAddress, (WORD)nPort, tSeen, pszVendor, nUptime ) != NULL );
 }
