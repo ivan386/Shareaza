@@ -1,7 +1,7 @@
 //
 // G1Packet.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -22,19 +22,12 @@
 // CG1Packet represents a Gnutella packet, and CG1PacketPool keeps lists of them
 // http://shareazasecurity.be/wiki/index.php?title=Developers.Code.CG1Packet
 
-// Make the compiler only include the lines here once, this is the same thing as pragma once
-#if !defined(AFX_G1PACKET_H__6B611C29_56C1_4E2A_AA72_249AB7BD76D0__INCLUDED_)
-#define AFX_G1PACKET_H__6B611C29_56C1_4E2A_AA72_249AB7BD76D0__INCLUDED_
-
-// Only include the lines beneath this one once
 #pragma once
 
-// Copy in the contents of these files here before compiling
 #include "Packet.h"
 #include "GGEP.h"
 
-// Instruct the compiler to align bytes and DWORDs in a structure on a 1 byte boundary
-#pragma pack(1) // This means, don't put any space between anything
+#pragma pack(1)
 
 // We can cast a pointer as a GNUTELLAPACKET structure to easily read the parts of the Gnutella packet header
 typedef struct
@@ -104,6 +97,12 @@ public:
 	// Received SCP GGEP, send 5 random hosts from the cache
 	// Since we do not provide leaves, ignore the preference data
 	static int GGEPWriteRandomCache(CGGEPItem* pItem);
+
+	// Is Out of Band queries enabled?
+	static bool IsOOBEnabled();
+
+	// Is we firewalled in terms of Gnutella 1?
+	static bool IsFirewalled();
 
 protected:
 
@@ -226,7 +225,16 @@ inline void CG1Packet::CG1PacketPool::FreePoolImpl(CPacket* pPacket)
 #define G1_QF_XML				0x2000	// XML Metadata. Set this bit to 1 if you want the servent to receive XML Metadata. This flag has been set to spare bandwidth, returning metadata in queryHits only if the requester asks for it.
 #define G1_QF_DYNAMIC			0x1000	// Leaf Guided Dynamic Query. When the bit is set to 1, this means that the query is sent by a leaf which wants to control the dynamic query mechanism. This is part of the Leaf guidance of dynamic queries proposal. This information is only used by the ultrapeers shielding this leave if they implement leaf guidance of dynamic queries.
 #define G1_QF_BIN_HASH			0x0800	// GGEP "H" allowed. If this bit is set to 1, then the sender is able to parse the GGEP "H" extension which is a replacement for the legacy HUGE GEM extension. This is meant to start replacing the GEM mechanism with GGEP extensions, as GEM extensions are now deprecated.
-#define G1_QF_OOB				0x0400	// Out of Band Query. This flag is used to recognize a Query which was sent using the Out Of Band query extension.
+#define G1_QF_OOB				0x0400	// OOB v2. Out of Band Query. This flag is used to recognize a Query which was sent using the Out Of Band query extension.
+#define G1_QF_FWTRANS			0x0200	// Firewalled transfers supported.
+
+#define OLD_LW_MAX_QUERY_FIELD_LEN	30
+#define WHAT_IS_NEW_QUERY_STRING	"WhatIsNewXOXO"
+#define DEFAULT_URN_QUERY			"\\"
+
+#define QUERY_KEY_LIFETIME		2 * 60 * 60
+#define MIN_QK_SIZE_IN_BYTES	4
+#define MAX_QK_SIZE_IN_BYTES	16
 
 // QHD Flags (do)
 #define G1_QHD_PUSH				0x01
@@ -238,6 +246,3 @@ inline void CG1Packet::CG1PacketPool::FreePoolImpl(CPacket* pPacket)
 #define G1_QHD_MASK				0x3D
 
 #define G1_PACKET_HIT_SEP		0x1C // Query hit extension separator
-
-// End the group of lines to only include once, pragma once doesn't require an endif at the bottom
-#endif // !defined(AFX_G1PACKET_H__6B611C29_56C1_4E2A_AA72_249AB7BD76D0__INCLUDED_)

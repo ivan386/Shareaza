@@ -150,9 +150,12 @@ CG1Packet* CQuerySearch::ToG1Packet(DWORD nTTL)
 		m_oGUID );
 
 	WORD nFlags = G1_QF_TAG | G1_QF_BIN_HASH | G1_QF_DYNAMIC;
-	if ( Network.IsFirewalled( CHECK_TCP ) )
+	if ( CG1Packet::IsFirewalled() )
+	{
 		nFlags |= G1_QF_FIREWALLED;
-	if ( ! Network.IsFirewalled( CHECK_UDP ) )
+		// TODO: nFlags |= G1_QF_FWTRANS;
+	}
+	if ( CG1Packet::IsOOBEnabled() )
 		nFlags |= G1_QF_OOB;
 	if ( m_bWantXML )
 		nFlags |= G1_QF_XML;
@@ -184,7 +187,7 @@ CG1Packet* CQuerySearch::ToG1Packet(DWORD nTTL)
 
 	// HUGE extension
 
-	// Some Gnutella Node does not like forwarding Query containing URN with "HUGE" extension.
+	// Deprecated. Replaced by GGEP_HEADER_HASH (G1_QF_BIN_HASH).
 	/* if ( m_oSHA1 )
 	{
 		strExtra = m_oSHA1.toUrn();

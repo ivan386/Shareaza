@@ -1,7 +1,7 @@
 //
 // G1Packet.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -22,7 +22,6 @@
 // CG1Packet represents a Gnutella packet, and CG1PacketPool keeps lists of them
 // http://shareazasecurity.be/wiki/index.php?title=Developers.Code.CG1Packet
 
-// Copy in the contents of these files here before compiling
 #include "StdAfx.h"
 #include "Shareaza.h"
 #include "Settings.h"
@@ -32,7 +31,6 @@
 #include "HostCache.h"
 #include "VendorCache.h"
 
-// If we are compiling in debug mode, replace the text "THIS_FILE" in the code with the name of this file
 #ifdef _DEBUG
 #undef THIS_FILE
 static char THIS_FILE[]=__FILE__;
@@ -396,4 +394,14 @@ int CG1Packet::GGEPWriteRandomCache(CGGEPItem* pItem)
 		}
 	}
 	return Settings.Gnutella1.MaxHostsInPongs - nCount;
+}
+
+bool CG1Packet::IsOOBEnabled()
+{
+	return ( Network.IsFirewalled( CHECK_UDP ) == FALSE && Settings.Gnutella1.EnableOOB );
+}
+
+bool CG1Packet::IsFirewalled()
+{
+	return ( Network.IsFirewalled( CHECK_TCP ) != FALSE );
 }

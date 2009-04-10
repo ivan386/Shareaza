@@ -335,6 +335,7 @@ public:
 		DWORD		MaximumQuery;
 		bool		StrictPackets;
 		bool		EnableGGEP;
+		bool		EnableOOB;
 		bool		VendorMsg;
 		DWORD		QueryThrottle;
 		DWORD		RequeryDelay;
