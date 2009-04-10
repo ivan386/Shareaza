@@ -54,20 +54,27 @@ public:
 	DWORD		m_tUpdated;
 	DWORD		m_nUpdates;
 	DWORD		m_nHosts;
+	DWORD		m_nTotalHosts;
+	DWORD		m_nURLs;
+	DWORD		m_nTotalURLs;
 	DWORD		m_nFailures;
 	DWORD		m_nAccessPeriod;
 	DWORD		m_nUpdatePeriod;
 	SubType		m_nSubType;
 	IN_ADDR		m_pAddress;
 	WORD		m_nPort;
+	CString		m_sPong;
 
 	void		Remove(BOOL bCheck = TRUE);
 	void		OnSuccess();
 	void		OnFailure();
+	void		OnCopyGiven();			//Used in Datagrams.cpp
 
 protected:
 	void		OnAccess();
+	void		OnGivenHosts();
 	void		OnHostAdd(int nCount = 1);
+	void		OnURLAdd(int nCount = 1);
 	void		Serialize(CArchive& ar, int nVersion);
 	BOOL		ResolveGnutella();
 

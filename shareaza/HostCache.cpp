@@ -302,7 +302,7 @@ void CHostCacheList::Clear()
 //////////////////////////////////////////////////////////////////////
 // CHostCacheList host add
 
-CHostCacheHostPtr CHostCacheList::Add(IN_ADDR* pAddress, WORD nPort, DWORD tSeen, LPCTSTR pszVendor, DWORD nUptime)
+CHostCacheHostPtr CHostCacheList::Add(IN_ADDR* pAddress, WORD nPort, DWORD tSeen, LPCTSTR pszVendor, DWORD nUptime, DWORD nCurrentLeaves, DWORD nLeafLimit)
 {
 	// Don't add invalid addresses
 	if ( ! nPort ) 
@@ -327,10 +327,10 @@ CHostCacheHostPtr CHostCacheList::Add(IN_ADDR* pAddress, WORD nPort, DWORD tSeen
 		return NULL;
 
 	// Try adding it to the cache. (duplicates will be rejected)
-	return AddInternal( pAddress, nPort, tSeen, pszVendor, nUptime );
+	return AddInternal( pAddress, nPort, tSeen, pszVendor, nUptime, nCurrentLeaves, nLeafLimit );
 }
 
-BOOL CHostCacheList::Add(LPCTSTR pszHost, DWORD tSeen, LPCTSTR pszVendor, DWORD nUptime)
+BOOL CHostCacheList::Add(LPCTSTR pszHost, DWORD tSeen, LPCTSTR pszVendor, DWORD nUptime, DWORD nCurrentLeaves, DWORD nLeafLimit)
 {
 	CString strHost( pszHost );
 	
@@ -363,13 +363,13 @@ BOOL CHostCacheList::Add(LPCTSTR pszHost, DWORD tSeen, LPCTSTR pszVendor, DWORD 
 	DWORD nAddress = inet_addr( CT2CA( (LPCTSTR)strHost ) );
 	if ( nAddress == INADDR_NONE ) return FALSE;
 
-	return ( Add( (IN_ADDR*)&nAddress, (WORD)nPort, tSeen, pszVendor, nUptime ) != NULL );
+	return ( Add( (IN_ADDR*)&nAddress, (WORD)nPort, tSeen, pszVendor, nUptime, nCurrentLeaves, nLeafLimit ) != NULL );
 }
 
 // This function actually add the remote client to the host cache. Private, but used by the public 
 // functions. No security checking, etc.
 CHostCacheHostPtr CHostCacheList::AddInternal(const IN_ADDR* pAddress, WORD nPort, 
-											DWORD tSeen, LPCTSTR pszVendor, DWORD nUptime)
+											DWORD tSeen, LPCTSTR pszVendor, DWORD nUptime, DWORD nCurrentLeaves, DWORD nLeafLimit)
 {
 	CQuickLock oLock( m_pSection );
 
@@ -390,7 +390,7 @@ CHostCacheHostPtr CHostCacheList::AddInternal(const IN_ADDR* pAddress, WORD nPor
 
 			// Add host to map and index
 			pHost->m_pAddress = *pAddress;
-			pHost->Update( nPort, tSeen, pszVendor, nUptime );
+			pHost->Update( nPort, tSeen, pszVendor, nUptime, nCurrentLeaves, nLeafLimit );
 			m_Hosts.insert( CHostCacheMapPair( *pAddress, pHost ) );
 			m_HostsTime.insert( pHost );
 
@@ -399,12 +399,12 @@ CHostCacheHostPtr CHostCacheList::AddInternal(const IN_ADDR* pAddress, WORD nPor
 	}
 	else
 	{
-		Update( pHost, nPort, tSeen, pszVendor, nUptime );
+		Update( pHost, nPort, tSeen, pszVendor, nUptime, nCurrentLeaves, nLeafLimit );
 	}
 	return pHost;
 }
 
-void CHostCacheList::Update(CHostCacheHostPtr pHost, WORD nPort, DWORD tSeen, LPCTSTR pszVendor, DWORD nUptime)
+void CHostCacheList::Update(CHostCacheHostPtr pHost, WORD nPort, DWORD tSeen, LPCTSTR pszVendor, DWORD nUptime, DWORD nCurrentLeaves, DWORD nLeafLimit)
 {
 	CQuickLock oLock( m_pSection );
 
@@ -413,7 +413,7 @@ void CHostCacheList::Update(CHostCacheHostPtr pHost, WORD nPort, DWORD tSeen, LP
 	ASSERT( m_Hosts.size() == m_HostsTime.size() );
 
 	// Update host
-	if ( pHost->Update( nPort, tSeen, pszVendor, nUptime ) )
+	if ( pHost->Update( nPort, tSeen, pszVendor, nUptime, nCurrentLeaves, nLeafLimit ) )
 	{
 		// Remove host from old and now invalid position
 		m_HostsTime.erase(
@@ -1127,7 +1127,7 @@ void CHostCacheHost::Serialize(CArchive& ar, int nVersion)
 //////////////////////////////////////////////////////////////////////
 // CHostCacheHost update
 
-bool CHostCacheHost::Update(WORD nPort, DWORD tSeen, LPCTSTR pszVendor, DWORD nUptime)
+bool CHostCacheHost::Update(WORD nPort, DWORD tSeen, LPCTSTR pszVendor, DWORD nUptime, DWORD nCurrentLeaves, DWORD nLeafLimit)
 {
 	bool bChanged = FALSE;
 
@@ -1148,7 +1148,17 @@ bool CHostCacheHost::Update(WORD nPort, DWORD tSeen, LPCTSTR pszVendor, DWORD nU
 
 	if ( nUptime )
 	{
-		m_nDailyUptime = ( nUptime > 86400 ) ? 86400 : nUptime;
+		m_nDailyUptime = nUptime;
+	}
+
+	if ( nCurrentLeaves )
+	{
+		m_nUserCount = nCurrentLeaves;
+	}
+
+	if ( nLeafLimit )
+	{
+		m_nUserLimit = nLeafLimit;
 	}
 
 	if ( pszVendor != NULL )

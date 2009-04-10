@@ -1,7 +1,7 @@
 //
 // WndDiscovery.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -110,9 +110,13 @@ int CDiscoveryWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_wndList.InsertColumn( 1, _T("Type"), LVCFMT_CENTER, 80, 0 );
 	m_wndList.InsertColumn( 2, _T("Last Access"), LVCFMT_CENTER, 130, 1 );
 	m_wndList.InsertColumn( 3, _T("Hosts"), LVCFMT_CENTER, 50, 2 );
-	m_wndList.InsertColumn( 4, _T("Accesses"), LVCFMT_CENTER, 70, 3 );
-	m_wndList.InsertColumn( 5, _T("Updates"), LVCFMT_CENTER, 55, 4 );
-	m_wndList.InsertColumn( 6, _T("Failures"), LVCFMT_CENTER, 55, 5 );
+	m_wndList.InsertColumn( 4, _T("Total Hosts"), LVCFMT_CENTER, 70, 3 );
+	m_wndList.InsertColumn( 5, _T("URLs"), LVCFMT_CENTER, 50, 4 );
+	m_wndList.InsertColumn( 6, _T("Total URLs"), LVCFMT_CENTER, 70, 5 );
+	m_wndList.InsertColumn( 7, _T("Accesses"), LVCFMT_CENTER, 70, 6 );
+	m_wndList.InsertColumn( 8, _T("Updates"), LVCFMT_CENTER, 55, 7 );
+	m_wndList.InsertColumn( 9, _T("Failures"), LVCFMT_CENTER, 55, 8 );
+	m_wndList.InsertColumn( 10, _T("Pong"), LVCFMT_CENTER, 150, 9 );
 
 	m_wndList.SetFont( &theApp.m_gdiFont );
 	
@@ -131,8 +135,7 @@ int CDiscoveryWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 void CDiscoveryWnd::OnDestroy() 
 {
-	CSingleLock pLock( &Network.m_pSection );
-	if ( pLock.Lock( 250 ) ) DiscoveryServices.Save();
+	DiscoveryServices.Save();
 
 	Settings.SaveList( _T("CDiscoveryWnd"), &m_wndList );		
 	SaveState( _T("CDiscoveryWnd") );
@@ -145,8 +148,11 @@ void CDiscoveryWnd::OnDestroy()
 
 void CDiscoveryWnd::Update()
 {
-	CSingleLock pLock( &Network.m_pSection, TRUE );
-	CLiveList pLiveList( 7 );
+	CSingleLock pLock( &Network.m_pSection, FALSE );
+	if ( ! pLock.Lock( 250 ) )
+		return;
+
+	CLiveList pLiveList( 11 );
 
 	for ( POSITION pos = DiscoveryServices.GetIterator() ; pos ; )
 	{
@@ -214,13 +220,21 @@ void CDiscoveryWnd::Update()
 		
 		if ( pService->m_nType != CDiscoveryService::dsBlocked )
 		{
-			pItem->Format( 4, _T("%u"), pService->m_nAccesses );
-			pItem->Format( 6, _T("%u"), pService->m_nFailures );
+			pItem->Format( 7, _T("%u"), pService->m_nAccesses );
+			pItem->Format( 9, _T("%u"), pService->m_nFailures );
 			
 			if ( pService->m_tAccessed )
 			{
 				pItem->Format( 3, _T("%u"), pService->m_nHosts );
-				pItem->Format( 5, _T("%u"), pService->m_nUpdates );
+				pItem->Format( 4, _T("%u"), pService->m_nTotalHosts );
+				pItem->Format( 8, _T("%u"), pService->m_nUpdates );
+				pItem->Format( 5, _T("%u"), pService->m_nURLs );
+				pItem->Format( 6, _T("%u"), pService->m_nTotalURLs );
+				
+				if ( ( ! pService->m_sPong.IsEmpty() ) && pService->m_nType == CDiscoveryService::dsWebCache && pService->m_bGnutella2 )
+				{
+					pItem->Set( 10, pService->m_sPong );
+				}
 			}
 		}
 	}
@@ -292,7 +306,9 @@ void CDiscoveryWnd::OnUpdateDiscoveryQuery(CCmdUI* pCmdUI)
 
 void CDiscoveryWnd::OnDiscoveryQuery() 
 {
-	CSingleLock pLock( &Network.m_pSection, TRUE );
+	CSingleLock pLock( &Network.m_pSection, FALSE );
+	if ( ! pLock.Lock( 250 ) )
+		return;
 	
 	for ( int nItem = -1 ; ( nItem = m_wndList.GetNextItem( nItem, LVIS_SELECTED ) ) >= 0 ; )
 	{
@@ -325,7 +341,9 @@ void CDiscoveryWnd::OnUpdateDiscoveryAdvertise(CCmdUI* pCmdUI)
 
 void CDiscoveryWnd::OnDiscoveryAdvertise() 
 {
-	CSingleLock pLock( &Network.m_pSection, TRUE );
+	CSingleLock pLock( &Network.m_pSection, FALSE );
+	if ( ! pLock.Lock( 250 ) )
+		return;
 
 	CDiscoveryService* pService = GetItem( m_wndList.GetNextItem( -1, LVIS_SELECTED ) );
 
@@ -342,7 +360,9 @@ void CDiscoveryWnd::OnUpdateDiscoveryBrowse(CCmdUI* pCmdUI)
 
 void CDiscoveryWnd::OnDiscoveryBrowse() 
 {
-	CSingleLock pLock( &Network.m_pSection, TRUE );
+	CSingleLock pLock( &Network.m_pSection, FALSE );
+	if ( ! pLock.Lock( 250 ) )
+		return;
 
 	CDiscoveryService* pService = GetItem( m_wndList.GetNextItem( -1, LVIS_SELECTED ) );
 	CString strURL;
@@ -365,7 +385,9 @@ void CDiscoveryWnd::OnUpdateDiscoveryRemove(CCmdUI* pCmdUI)
 
 void CDiscoveryWnd::OnDiscoveryRemove() 
 {
-	CSingleLock pLock( &Network.m_pSection, TRUE );
+	CSingleLock pLock( &Network.m_pSection, FALSE );
+	if ( ! pLock.Lock( 250 ) )
+		return;
 
 	for ( int nItem = -1 ; ( nItem = m_wndList.GetNextItem( nItem, LVIS_SELECTED ) ) >= 0 ; )
 	{
@@ -385,7 +407,9 @@ void CDiscoveryWnd::OnUpdateDiscoveryEdit(CCmdUI* pCmdUI)
 
 void CDiscoveryWnd::OnDiscoveryEdit() 
 {
-	CSingleLock pLock( &Network.m_pSection, TRUE );
+	CSingleLock pLock( &Network.m_pSection, FALSE );
+	if ( ! pLock.Lock( 250 ) )
+		return;
 
 	CDiscoveryService* pService = GetItem( m_wndList.GetNextItem( -1, LVIS_SELECTED ) );
 	if ( ! pService ) return;

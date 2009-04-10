@@ -1266,6 +1266,7 @@ BOOL CDatagrams::OnPong(SOCKADDR_IN* pHost, CG1Packet* pPacket)
 			{
 				pService->OnSuccess();
 				pService->m_nHosts = nCount;
+				pService->OnCopyGiven();
 			}
 		}
 		else
