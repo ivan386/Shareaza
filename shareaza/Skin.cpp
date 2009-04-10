@@ -401,6 +401,12 @@ BOOL CSkin::LoadString(CString& str, UINT nStringID) const
 		( IS_INTRESOURCE( nStringID ) && str.LoadString( nStringID ) ) )
 		return TRUE;
 
+	if ( IsWindow( (HWND)nStringID ) )
+	{
+		CWnd::FromHandle( (HWND)nStringID )->GetWindowText( str );
+		return TRUE;
+	}
+
 #ifdef _DEBUG
 	theApp.Message( MSG_ERROR, _T("Failed to load string %d."), nStringID );
 #endif // _DEBUG
