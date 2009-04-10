@@ -531,7 +531,7 @@ CSettings::CSettings()
 	Add( _T("IRC"), _T("FloodEnable"), &IRC.FloodEnable, TRUE );
 	Add( _T("IRC"), _T("Nick"), &IRC.Nick );
 	Add( _T("IRC"), _T("Alternate"), &IRC.Alternate );
-	Add( _T("IRC"), _T("ServerName"), &IRC.ServerName, _T("irc.p2pchat.net") );
+	Add( _T("IRC"), _T("ServerName"), &IRC.ServerName, _T("shareaza.p2pchat.net") );
 	Add( _T("IRC"), _T("ServerPort"), &IRC.ServerPort, _T("6667") );
 	Add( _T("IRC"), _T("FloodLimit"), &IRC.FloodLimit, _T("24") );
 	Add( _T("IRC"), _T("Timestamp"), &IRC.Timestamp, FALSE );
