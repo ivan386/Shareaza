@@ -190,10 +190,7 @@ void CPacket::WriteString(LPCTSTR pszString, BOOL bNull)
 
 	auto_array< CHAR > pszByte( new CHAR[ nByte ] );
 	if ( pszByte.get() == NULL )
-	{
-		theApp.Message( MSG_ERROR, _T("Memory allocation error in CPacket::WriteString") );
 		return;
-	}
 
 	// Convert the wide characters into bytes of ANSI text
 	WideCharToMultiByte( CP_ACP, 0, pszString, -1, pszByte.get(), nByte, NULL, NULL );
@@ -238,10 +235,7 @@ void CPacket::WriteStringUTF8(LPCTSTR pszString, BOOL bNull)
 
 	auto_array< CHAR > pszByte( new CHAR[ nByte ] );
 	if ( pszByte.get() == NULL )
-	{
-		theApp.Message( MSG_ERROR, _T("Memory allocation error in CPacket::WriteStringUTF8") );
 		return;
-	}
 
 	// Convert the wide characters into bytes of ASCII text
 	WideCharToMultiByte( CP_UTF8, 0, pszString, -1, pszByte.get(), nByte, NULL, NULL );
@@ -325,10 +319,7 @@ BYTE* CPacket::WriteGetPointer(DWORD nLength, DWORD nOffset)
 		m_nBuffer += max( nLength, PACKET_GROW ); // Packet grow is 128 bytes
 		LPBYTE pNew = new BYTE[ m_nBuffer ];             // Allocate a new buffer of that size
 		if ( pNew == NULL )
-		{
-			theApp.Message( MSG_ERROR, _T("Memory allocation error in CPacket::WriteGetPointer") );
 			return NULL;
-		}
 		CopyMemory( pNew, m_pBuffer, m_nLength );        // Copy all the memory of the old buffer into the new bigger one
 		if ( m_pBuffer ) delete [] m_pBuffer;            // Free the old buffer
 		m_pBuffer = pNew;                                // Point this packet object at its new, bigger buffer

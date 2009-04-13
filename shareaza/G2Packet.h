@@ -294,10 +294,6 @@ inline void CG2Packet::CG2PacketPool::NewPoolImpl(int nSize, CPacket*& pPool, in
 {
 	nPitch	= sizeof(CG2Packet);
 	pPool	= new CG2Packet[ nSize ];
-	if ( pPool == NULL )
-	{
-		theApp.Message( MSG_ERROR, _T("Memory allocation error in CG2Packet::CG2PacketPool::NewPoolImpl()") );
-	}
 }
 
 inline void CG2Packet::CG2PacketPool::FreePoolImpl(CPacket* pPacket)

@@ -183,10 +183,6 @@ inline void CEDPacket::CEDPacketPool::NewPoolImpl(int nSize, CPacket*& pPool, in
 {
 	nPitch	= sizeof(CEDPacket);
 	pPool	= new CEDPacket[ nSize ];
-	if ( pPool == NULL )
-	{
-		theApp.Message( MSG_ERROR, _T("Memory allocation error in CEDPacket::CEDPacketPool::NewPoolImpl()") );
-	}
 }
 
 inline void CEDPacket::CEDPacketPool::FreePoolImpl(CPacket* pPacket)

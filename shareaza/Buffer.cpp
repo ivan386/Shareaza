@@ -210,7 +210,6 @@ bool CBuffer::EnsureBuffer(const size_t nLength)
 	// Out of memory
 	m_nLength = 0;
 	m_nBuffer = 0;
-	theApp.Message( MSG_ERROR, _T("Memory allocation error in CBuffer::EnsureBuffer()") );
 	return false;
 }
 

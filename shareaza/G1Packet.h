@@ -177,10 +177,6 @@ inline void CG1Packet::CG1PacketPool::NewPoolImpl(int nSize, CPacket*& pPool, in
 
 	// Allocate a new array of nSize CG1Packet objects, and point pPool at it
 	pPool = new CG1Packet[ nSize ];
-	if ( pPool == NULL )
-	{
-		theApp.Message( MSG_ERROR, _T("Memory allocation error in CG1Packet::CG1PacketPool::NewPoolImpl()") );
-	}
 }
 
 // Takes a pointer to an array of packets, which is called a packet pool
