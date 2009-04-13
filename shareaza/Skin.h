@@ -50,7 +50,7 @@ protected:
 	void	ApplyRecursive(LPCTSTR pszPath);
 	void	CreateDefault();
 	void	CreateDefaultColors();
-	HBITMAP	LoadBitmap(CString& strName);
+	HBITMAP	LoadBitmap(const CString& strName);
 
 // Strings
 public:

@@ -1,7 +1,7 @@
 //
 // RichElement.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -208,15 +208,11 @@ void CRichElement::PrePaintBitmap(CDC* /*pDC*/)
 	if ( _tcsnicmp( m_sText, _T("res:"), 4 ) == 0 )
 	{
 		LPCTSTR pszDot = _tcschr( m_sText, '.' );
-		CBitmap pBitmap;
 		UINT nID;
 
 		if ( pszDot == NULL || _stscanf( (LPCTSTR)m_sText + 4, _T("%lu"), &nID ) != 1 ) return;
 
-		if ( CImageServices::LoadBitmap( &pBitmap, nID, pszDot + 1 ) )
-		{
-			m_hImage = pBitmap.Detach();
-		}
+		m_hImage = CImageFile::LoadBitmapFromResource( nID, pszDot + 1 );
 	}
 	else
 	{

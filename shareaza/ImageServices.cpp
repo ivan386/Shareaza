@@ -435,23 +435,3 @@ bool CImageServices::GetService(LPCTSTR szFilename, IImageServicePlugin** ppIIma
 
 	return SUCCEEDED( hr );
 }
-
-/////////////////////////////////////////////////////////////////////////////
-// CImageServices load bitmap
-
-BOOL CImageServices::LoadBitmap(CBitmap* pBitmap, UINT nResourceID, LPCTSTR pszType)
-{
-	if ( pBitmap->m_hObject == NULL ) pBitmap->DeleteObject();
-
-	// Use MFC to load BMPs
-	if ( pszType == RT_BITMAP || _tcscmp( pszType, RT_BMP ) == 0 ) {
-		return pBitmap->LoadBitmap( nResourceID );
-	}
-
-	CImageFile pFile;
-	if ( ! pFile.LoadFromResource( AfxGetResourceHandle(), nResourceID, pszType ) ) return FALSE;
-	if ( ! pFile.EnsureRGB() ) return FALSE;
-	pBitmap->Attach( pFile.CreateBitmap() );
-
-	return TRUE;
-}

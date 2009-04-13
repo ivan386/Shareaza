@@ -2267,38 +2267,27 @@ void CSkin::DrawWrappedText(CDC* pDC, CRect* pBox, LPCTSTR pszText, CPoint ptSta
 //////////////////////////////////////////////////////////////////////
 // CSkin load bitmap helper
 
-HBITMAP CSkin::LoadBitmap(CString& strName)
+HBITMAP CSkin::LoadBitmap(const CString& strName)
 {
-	CImageFile pFile;
 	int nPos = strName.Find( '$' );
-
 	if ( nPos < 0 )
 	{
-		pFile.LoadFromFile( strName );
+		return CImageFile::LoadBitmapFromFile( strName );
 	}
 	else
 	{
-		HINSTANCE hInstance( NULL );
-		UINT nID( 0u );
-
-		if ( _stscanf( strName, _T("%p"), &hInstance ) != 1 )
+		HINSTANCE hInstance = NULL;
+		if ( _stscanf( (LPCTSTR)strName, _T("%p"), &hInstance ) != 1 )
 			return NULL;
 
-		if ( _stscanf( strName.Mid( nPos + 1 ), _T("%lu"), &nID ) != 1 )
+		UINT nID = 0;
+		if ( _stscanf( (LPCTSTR)strName + nPos + 1, _T("%lu"), &nID ) != 1 )
 			return NULL;
 
-		if ( LPCTSTR pszType = _tcsrchr( strName, '.' ) )
-		{
-			pszType ++;
-			pFile.LoadFromResource( hInstance, nID, pszType );
-		}
-		else
-		{
-			return (HBITMAP)LoadImage( hInstance, MAKEINTRESOURCE(nID), IMAGE_BITMAP, 0, 0, 0 );
-		}
+		nPos = strName.ReverseFind( '.' );		
+		return CImageFile::LoadBitmapFromResource( nID,
+			( nPos < 0 ? RT_BITMAP : ( (LPCTSTR)strName + nPos + 1 ) ), hInstance );
 	}
-
-	return pFile.EnsureRGB() ? pFile.CreateBitmap() : NULL;
 }
 
 //////////////////////////////////////////////////////////////////////

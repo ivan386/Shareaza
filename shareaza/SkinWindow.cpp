@@ -362,20 +362,8 @@ BOOL CSkinWindow::Parse(CXMLElement* pBase, const CString& strPath)
 			if ( strFile.GetLength() > 0 )
 			{
 				strFile = strPath + strFile;
-
-				if ( strFile.Right( 4 ) == ".bmp" )
-				{
-					hBitmap = (HBITMAP)LoadImage( AfxGetInstanceHandle(), strFile,
-								IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE );
-				}
-				else //.png
-				{
-					CImageFile pFile;
-
-					pFile.LoadFromFile( strFile );
-					pFile.EnsureRGB();	// Remove Alpha
-					hBitmap = pFile.CreateBitmap();
-				}				
+				hBitmap = CImageFile::LoadBitmapFromFile( strFile );
+			
 			}
 			else if ( strRes.GetLength() > 0 )
 			{
