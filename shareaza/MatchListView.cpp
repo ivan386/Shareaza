@@ -1,7 +1,7 @@
 //
 // MatchListView.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -78,40 +78,39 @@ POSITION CMatchListView::GetIterator() const
 	return m_pSelection.GetHeadPosition();
 }
 
-// TODO
 void CMatchListView::GetNext(POSITION& pos, CMatchFile** ppFile, CQueryHit** ppHit) const
 {
-	LPVOID pItem = (LPVOID)( pos != NULL ? m_pSelection.GetNext( pos ) : NULL );
+	LPVOID pItem = pos ? m_pSelection.GetNext( pos ) : NULL;
 
 	if ( ppFile != NULL )
 	{
-		if ( m_pList->m_pSelectedFiles.Find( static_cast< CMatchFile* >( pItem ) ) != NULL )
+		if ( pItem && m_pList->m_pSelectedFiles.Find( static_cast< CMatchFile* >( pItem ) ) )
 		{
 			*ppFile = static_cast< CMatchFile* >( pItem );
 		}
-	}
-	else
-	{
-		*ppFile = NULL;
+		else
+		{
+			*ppFile = NULL;
+		}
 	}
 
 	if ( ppHit != NULL )
 	{
-		if ( m_pList->m_pSelectedHits.Find( static_cast< CQueryHit* >( pItem ) ) != NULL )
+		if ( pItem && m_pList->m_pSelectedHits.Find( static_cast< CQueryHit* >( pItem ) ) )
 		{
 			*ppHit = static_cast< CQueryHit* >( pItem );
 		}
-	}
-	else
-	{
-		*ppHit = NULL;
+		else
+		{
+			*ppHit = NULL;
+		}
 	}
 }
 
 void CMatchListView::GetNext(POSITION& pos, VARIANT* pVar) const
 {
-	CMatchFile* pFile;
-	CQueryHit* pHit;
+	CMatchFile* pFile = NULL;
+	CQueryHit* pHit = NULL;
 
 	GetNext( pos, &pFile, &pHit );
 	if ( pVar == NULL ) return;
