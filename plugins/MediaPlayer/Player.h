@@ -2,7 +2,9 @@
 
 #pragma once
 
-#include "MediaPlayer.h"
+#include "MediaPlayer_h.h"
+#include "Filter.h"
+
 
 // CPlayer
 
@@ -22,17 +24,8 @@ END_COM_MAP()
 
 DECLARE_PROTECT_FINAL_CONSTRUCT()
 
-DECLARE_GET_CONTROLLING_UNKNOWN()
-
-	HRESULT FinalConstruct()
-	{
-		return S_OK;
-	}
-
-	void FinalRelease()
-	{
-		Destroy();
-	}
+	HRESULT FinalConstruct();
+	void FinalRelease();
 
 protected:
 	HWND						m_hwndOwner;

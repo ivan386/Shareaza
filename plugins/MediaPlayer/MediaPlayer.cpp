@@ -1,7 +1,8 @@
 // MediaPlayer.cpp : Implementation of DLL Exports.
 
 #include "stdafx.h"
-#include "MediaPlayer.h"
+#include "MediaPlayer_h.h"
+#include "MediaPlayer_i.c"
 
 class CMediaPlayerModule : public CAtlDllModuleT< CMediaPlayerModule >
 {

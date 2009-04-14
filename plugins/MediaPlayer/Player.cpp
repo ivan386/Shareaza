@@ -11,6 +11,16 @@ CPlayer::CPlayer() :
 {
 }
 
+HRESULT CPlayer::FinalConstruct()
+{
+	return S_OK;
+}
+
+void CPlayer::FinalRelease()
+{
+	Destroy();
+}
+
 STDMETHODIMP CPlayer::Create(
 	/* [in] */ HWND hWnd)
 {
@@ -169,18 +179,185 @@ STDMETHODIMP CPlayer::SetAspect(
 	return E_NOTIMPL;
 }
 
+HRESULT FindPin(IBaseFilter* pFilter, int count, PIN_DIRECTION dir, IPin** ppPin)
+{
+	*ppPin = NULL;
+
+	CComPtr< IEnumPins > pPins;
+	HRESULT hr = pFilter->EnumPins( &pPins );
+	if ( FAILED( hr ) )
+		return hr;
+
+	pPins->Reset();
+
+	for (;;)
+	{
+		CComPtr< IPin > pPin;
+		hr = pPins->Next( 1, &pPin, NULL );
+		if ( hr != S_OK )
+			break;
+
+		PIN_INFO PinInfo = {};
+		hr = pPin->QueryPinInfo( &PinInfo );
+		if ( FAILED( hr ) )
+			break;
+
+		if ( PinInfo.dir == dir )
+		{
+			if ( count-- == 0 )
+			{
+				*ppPin = pPin.Detach();
+				return S_OK;
+			}
+		}
+	}
+
+	return E_FAIL;
+}
+
 STDMETHODIMP CPlayer::Open(
 	/* [in] */ BSTR sFilename)
 {
+	HRESULT hr;
+
 	if ( ! sFilename )
 		return E_POINTER;
 
 	if ( ! m_pGraph )
 		return E_INVALIDARG;
 
-	HRESULT hr = m_pGraph->RenderFile( sFilename, NULL );
+	hr = m_pGraph->RenderFile( sFilename, NULL );
 	if ( FAILED( hr ) )
 		return hr;
+
+#ifdef _DEBUG
+	CComPtr< IPin > pAudioInPin;
+	ATLTRACE( _T("Filter Graph for: %s\n"), sFilename );
+	CComQIPtr< IFilterGraph > pFilterGraph( m_pGraph );
+	if ( pFilterGraph )
+	{
+		CComPtr< IEnumFilters > pFilters;
+		hr = pFilterGraph->EnumFilters( &pFilters );
+		if ( SUCCEEDED( hr ) )
+		{
+			pFilters->Reset();
+			for (;;)
+			{
+				CComPtr< IBaseFilter > pFilter;
+				hr = pFilters->Next( 1, &pFilter, NULL );
+				if ( hr != S_OK )
+					break;
+
+				FILTER_INFO FilterInfo = {};
+				pFilter->QueryFilterInfo( &FilterInfo );
+
+				ATLTRACE( _T("Filter: \"%s\"\n"), FilterInfo.achName );
+
+				bool bOutPin = false;
+
+				CComPtr< IEnumPins > pPins;
+				hr = pFilter->EnumPins( &pPins );
+				if ( SUCCEEDED( hr ) )
+				{
+					pPins->Reset();
+					for (;;)
+					{
+						CComPtr< IPin > pPin;
+						hr = pPins->Next( 1, &pPin, NULL );
+						if ( hr != S_OK )
+							break;
+
+						PIN_INFO PinInfo = {};
+						pPin->QueryPinInfo( &PinInfo );
+
+						AM_MEDIA_TYPE MediaType = {};
+						pPin->ConnectionMediaType( &MediaType );
+
+						if ( ! pAudioInPin )
+						{
+							if ( PinInfo.dir == PINDIR_OUTPUT )
+								bOutPin = true;
+							if ( PinInfo.dir == PINDIR_INPUT && 
+								 MediaType.formattype == FORMAT_WaveFormatEx )
+								pAudioInPin = pPin;
+						}
+
+						ATLTRACE( _T("\tPin: %s %s \"%s\"\n"),
+							( ( PinInfo.dir == PINDIR_INPUT )  ? _T(" in") :
+							( ( PinInfo.dir == PINDIR_OUTPUT ) ? _T("out") :
+							_T("...") ) ),
+							( ( MediaType.formattype == FORMAT_WaveFormatEx ) ? _T("audio ") :
+							( ( MediaType.formattype == FORMAT_VideoInfo )    ? _T("video ") :
+							( ( MediaType.formattype == FORMAT_VideoInfo2 )   ? _T("video2") :
+							_T("......") ) ) ),
+							PinInfo.achName );
+
+						if ( PinInfo.pFilter )
+							PinInfo.pFilter->Release();
+					}
+				}
+
+				if ( FilterInfo.pGraph )
+					FilterInfo.pGraph->Release();
+
+				if ( pAudioInPin && bOutPin )
+					pAudioInPin.Release();
+			}
+		}
+	}
+
+	if ( pAudioInPin )
+	{
+		// Found filter with audio input pin and without any output pins
+
+		ATLTRACE( _T("Connecting to...\n") );
+
+		CComPtr< IPin > pSource;
+		hr = pAudioInPin->ConnectedTo( &pSource );
+		if ( SUCCEEDED( hr ) )
+		{
+			AM_MEDIA_TYPE MediaType = {};
+			hr = pSource->ConnectionMediaType( &MediaType );
+
+			CComPtr< IBaseFilter > pInfTree;
+			hr = pInfTree.CoCreateInstance( CLSID_InfTee );
+			hr = m_pGraph->AddFilter( pInfTree, L"Tee" );
+			if ( FAILED( hr ) )
+				return hr;
+
+			CComPtr< IBaseFilter > pMyFilter;
+			hr = pMyFilter.CoCreateInstance( CLSID_Filter );
+			hr = m_pGraph->AddFilter( pMyFilter, L"Spy" );
+			if ( FAILED( hr ) )
+				return hr;
+
+			hr = m_pGraph->Disconnect( pAudioInPin );
+			hr = m_pGraph->Disconnect( pSource );
+
+			ATLTRACE( _T("Connecting Audio source to Tee...\n") );
+
+			CComPtr< IPin > pInfTreeInPin;
+			hr = FindPin( pInfTree, 0, PINDIR_INPUT, &pInfTreeInPin );
+			hr = pInfTreeInPin->ReceiveConnection( pSource, &MediaType );
+			hr = pSource->Connect( pInfTreeInPin, &MediaType );
+			hr = m_pGraph->Connect( pSource, pInfTreeInPin );
+
+			ATLTRACE( _T("Connecting Tee to Audio filter...\n") );
+
+			CComPtr< IPin > pInfTreeOut1Pin;
+			hr = FindPin( pInfTree, 0, PINDIR_OUTPUT, &pInfTreeOut1Pin );
+			hr = m_pGraph->Connect( pInfTreeOut1Pin, pAudioInPin );
+
+			ATLTRACE( _T("Connecting Tee to My filter...\n") );
+
+			CComPtr< IPin > pInfTreeOut2Pin;
+			hr = FindPin( pInfTree, 1, PINDIR_OUTPUT, &pInfTreeOut2Pin );
+			CComPtr< IPin > pMyFilterPin;
+			hr = FindPin( pMyFilter, 0, PINDIR_INPUT, &pMyFilterPin );
+			hr = m_pGraph->Connect( pInfTreeOut2Pin, pMyFilterPin );
+		}
+	}
+#endif // _DEBUG
 
 	m_pWindow->put_WindowStyle( WS_CHILD | WS_VISIBLE |
 		WS_CLIPSIBLINGS | WS_CLIPCHILDREN );

@@ -16,6 +16,9 @@
 #define _ATL_CSTRING_NO_CRT
 #define _ATL_ALL_WARNINGS
 
+#define _ATL_DEBUG_QI
+#define _ATL_DEBUG_INTERFACES
+
 #include "resource.h"
 
 #include <atlbase.h>
@@ -23,5 +26,6 @@
 #include <atlstr.h>
 
 #include <dshow.h>
+#include <mmreg.h>
 
 using namespace ATL;
