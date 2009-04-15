@@ -34,7 +34,7 @@ class CED2K;
 class CDownload;
 
 
-class CLibraryFile : public CComObject, public CShareazaFile
+class CLibraryFile : public CShareazaFile
 {
 // Construction
 public:
@@ -154,17 +154,19 @@ public:
 protected:
 	BEGIN_INTERFACE_PART(LibraryFile, ILibraryFile)
 		DECLARE_DISPATCH()
+		STDMETHOD(get_Path)(BSTR FAR* psPath);
+		STDMETHOD(get_Name)(BSTR FAR* psName);
+		STDMETHOD(get_Size)(ULONGLONG FAR* pnSize);
+		STDMETHOD(get_URN)(BSTR sURN, BSTR FAR* psURN);
+		STDMETHOD(get_Hash)(URN_TYPE nType, ENCODING nBase, BSTR FAR* psURN);
+		STDMETHOD(get_URL)(BSTR FAR* psURL);
 		STDMETHOD(get_Application)(IApplication FAR* FAR* ppApplication);
 		STDMETHOD(get_Library)(ILibrary FAR* FAR* ppLibrary);
 		STDMETHOD(get_Folder)(ILibraryFolder FAR* FAR* ppFolder);
-		STDMETHOD(get_Path)(BSTR FAR* psPath);
-		STDMETHOD(get_Name)(BSTR FAR* psPath);
 		STDMETHOD(get_Shared)(TRISTATE FAR* pnValue);
 		STDMETHOD(put_Shared)(TRISTATE nValue);
 		STDMETHOD(get_EffectiveShared)(VARIANT_BOOL FAR* pbValue);
-		STDMETHOD(get_Size)(LONG FAR* pnSize);
 		STDMETHOD(get_Index)(LONG FAR* pnIndex);
-		STDMETHOD(get_URN)(BSTR sURN, BSTR FAR* psURN);
 		STDMETHOD(get_MetadataAuto)(VARIANT_BOOL FAR* pbValue);
 		STDMETHOD(get_Metadata)(ISXMLElement FAR* FAR* ppXML);
 		STDMETHOD(put_Metadata)(ISXMLElement FAR* pXML);

@@ -1,7 +1,7 @@
 //
 // MatchListView.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -19,9 +19,6 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_MATCHLISTVIEW_H__B1729FB8_4EE1_4CA3_A9E2_28C148D3BACB__INCLUDED_)
-#define AFX_MATCHLISTVIEW_H__B1729FB8_4EE1_4CA3_A9E2_28C148D3BACB__INCLUDED_
-
 #pragma once
 
 class CMatchList;
@@ -31,25 +28,22 @@ class CQueryHit;
 
 class CMatchListView : public CComObject
 {
-// Construction
+	DECLARE_DYNAMIC(CMatchListView)
+
 public:
 	CMatchListView(LPCTSTR pszName, CMatchList* pList);
 	virtual ~CMatchListView();
 
-// Attributes
+	static IGenericView* Attach(LPCTSTR pszName, CMatchList* pList);
+
 protected:
 	CString			m_sName;
 	CMatchList*		m_pList;
-	CList< void* > m_pSelection;
+	CList< void* >	m_pSelection;
 
-// Operations
-public:
 	POSITION	GetIterator() const;
 	INT_PTR		GetCount() const { return m_pSelection.GetCount(); }
 	void		GetNext(POSITION& pos, CMatchFile** ppFile, CQueryHit** ppHit) const;
-	void		GetNext(POSITION& pos, VARIANT* pVar) const;
-public:
-	static IGenericView* Attach(LPCTSTR pszName, CMatchList* pList);
 
 // Automation
 protected:
@@ -72,7 +66,4 @@ protected:
 	END_INTERFACE_PART(EnumVARIANT)
 
 	DECLARE_INTERFACE_MAP()
-
 };
-
-#endif // !defined(AFX_MATCHLISTVIEW_H__B1729FB8_4EE1_4CA3_A9E2_28C148D3BACB__INCLUDED_)

@@ -1,7 +1,7 @@
 //
 // Shareaza.idl
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -483,6 +483,7 @@ library Shareaza
 	// Library Object Model
 	//
 
+	interface IShareazaFile;
 	interface ILibraryFile;
 	interface ILibraryFiles;
 	interface ILibraryFolder;
@@ -543,22 +544,45 @@ library Shareaza
 		[id(21),propget] HRESULT Files( [out,retval] ILibraryFiles** ppFiles );
 	};
 
+	typedef enum tagURN_TYPE
+	{
+		[ helpstring("urn:sha1:") ]			URN_SHA1,
+		[ helpstring("urn:tree:tiger/:") ]	URN_TIGER,
+		[ helpstring("urn:ed2khash:") ]		URN_ED2K,
+		[ helpstring("urn:md5:") ]			URN_MD5,
+		[ helpstring("urn:btih:") ]			URN_BTIH
+	} URN_TYPE;
+
+	typedef enum tagENCODING
+	{
+		[ helpstring("Encodes as GUID string")]			ENCODING_GUID,
+		[ helpstring("Encodes as hexadecimal string")]	ENCODING_BASE16,
+		[ helpstring("Uses Base32 encoding")]			ENCODING_BASE32
+	} ENCODING;
+
+	[ uuid(B43A9B10-3F72-4a96-BD40-C3B643FDF2F3), dual, oleautomation ]
+	interface IShareazaFile : IDispatch
+	{
+		[id(11),propget] HRESULT Path( [out,retval] BSTR* psPath );
+		[id(12),propget] HRESULT Name( [out,retval] BSTR* psName );
+		[id(20),propget] HRESULT Size( [out,retval] ULONGLONG* pnSize );
+		[id(22),propget] HRESULT URN( [in] BSTR sURN, [out,retval] BSTR* psURN );
+		[id(25),propget] HRESULT Hash( [in] URN_TYPE nType, [in] ENCODING nEncoding, [out,retval] BSTR* psURN );
+		[id(26),propget] HRESULT URL( [out,retval] BSTR* psURL );
+	};
+
 	[ uuid(B663F7DE-E1C6-4fe6-92BD-D0549B7601E3), dual, oleautomation ]
-	interface ILibraryFile : IDispatch
+	interface ILibraryFile : IShareazaFile
 	{
 		[id(1),propget] HRESULT Application( [out,retval] IApplication** ppApplication );
 		[id(2),propget] HRESULT Library( [out,retval] ILibrary** ppLibrary );
 
 		[id(10),propget] HRESULT Folder( [out,retval] ILibraryFolder** ppFolder );
-		[id(11),propget] HRESULT Path( [out,retval] BSTR* psPath );
-		[id(12),propget] HRESULT Name( [out,retval] BSTR* psPath );
 		[id(13),propget] HRESULT Shared( [out,retval] TRISTATE* pnValue );
 		[id(13),propput] HRESULT Shared( [in] TRISTATE nValue );
 		[id(14),propget] HRESULT EffectiveShared( [out,retval] VARIANT_BOOL* pbValue );
 
-		[id(20),propget] HRESULT Size( [out,retval] LONG* pnSize );
 		[id(21),propget] HRESULT Index( [out,retval] LONG* pnIndex );
-		[id(22),propget] HRESULT URN( [in] BSTR sURN, [out,retval] BSTR* psURN );
 		[id(23),propget] HRESULT MetadataAuto( [out,retval] VARIANT_BOOL* pbValue );
 		[id(24),propget] HRESULT Metadata( [out,retval] ISXMLElement** ppXML );
 		[id(24),propput] HRESULT Metadata( [in] ISXMLElement* pXML );

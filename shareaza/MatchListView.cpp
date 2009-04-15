@@ -31,6 +31,8 @@ static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
 #endif
 
+IMPLEMENT_DYNAMIC(CMatchListView, CComObject)
+
 BEGIN_INTERFACE_MAP(CMatchListView, CComObject)
 	INTERFACE_PART(CMatchListView, IID_IGenericView, GenericView)
 	INTERFACE_PART(CMatchListView, IID_IEnumVARIANT, EnumVARIANT)
@@ -107,58 +109,6 @@ void CMatchListView::GetNext(POSITION& pos, CMatchFile** ppFile, CQueryHit** ppH
 	}
 }
 
-void CMatchListView::GetNext(POSITION& pos, VARIANT* pVar) const
-{
-	CMatchFile* pFile = NULL;
-	CQueryHit* pHit = NULL;
-
-	GetNext( pos, &pFile, &pHit );
-	if ( pVar == NULL ) return;
-	
-    const Hashes::TigerHash& rTiger = pFile ? pFile->m_oTiger : pHit->m_oTiger;
-    const Hashes::Sha1Hash& rSHA1 = pFile ? pFile->m_oSHA1 : pHit->m_oSHA1;
-    const Hashes::Ed2kHash& rED2K = pFile ? pFile->m_oED2K : pHit->m_oED2K;
-	const Hashes::BtHash& rBTH = pFile ? pFile->m_oBTH : pHit->m_oBTH;
-	const Hashes::Md5Hash& rMD5 = pFile ? pFile->m_oMD5 : pHit->m_oMD5;
-	
-	CString strURN;
-	VariantClear( pVar );
-	
-	if ( rSHA1 && rTiger )
-	{
-		strURN	= _T("urn:bitprint:")
-                + rSHA1.toString() + '.'
-				+ rTiger.toString();
-	}
-	else if ( rSHA1 )
-	{
-		strURN = rSHA1.toUrn();
-	}
-	else if ( rTiger )
-	{
-		strURN = rTiger.toUrn();
-	}
-	else if ( rED2K )
-	{
-		strURN = rED2K.toUrn();
-	}
-	else if ( rBTH )
-	{
-		strURN = rBTH.toUrn();
-	}
-	else if ( rMD5 )
-	{
-		strURN = rMD5.toUrn();
-	}
-	else
-	{
-		return;
-	}
-
-	pVar->vt		= VT_BSTR;
-	pVar->bstrVal	= strURN.AllocSysString();
-}
-
 //////////////////////////////////////////////////////////////////////
 // CMatchListView IGenericView
 
@@ -208,8 +158,23 @@ STDMETHODIMP CMatchListView::XGenericView::get_Item(VARIANT vIndex, VARIANT FAR*
 	{
 		BOOL bThis = ( va.lVal-- == 0 );
 
-		pThis->GetNext( pos, bThis ? pvItem : NULL );
-		if ( bThis ) break;
+		CMatchFile* pFile = NULL;
+		CQueryHit* pHit = NULL;
+		pThis->GetNext( pos, &pFile, &pHit );
+		if ( bThis )
+		{
+			if ( pFile )
+			{
+				pvItem->vt = VT_DISPATCH;
+				pvItem->punkVal = pFile->GetDispatch( TRUE );
+			}
+			else if ( pHit )
+			{
+				pvItem->vt = VT_DISPATCH;
+				pvItem->punkVal = pHit->GetDispatch( TRUE );
+			}
+			break;
+		}
 	}
 
 	return S_OK;
@@ -237,7 +202,20 @@ STDMETHODIMP CMatchListView::XEnumVARIANT::Next(ULONG celt, VARIANT FAR* rgvar, 
 	if ( m_pos == NULL ) return S_FALSE;
 
 	VariantInit( &rgvar[0] );
-	pThis->GetNext( m_pos, rgvar );
+
+	CMatchFile* pFile = NULL;
+	CQueryHit* pHit = NULL;
+	pThis->GetNext( m_pos, &pFile, &pHit );
+	if ( pFile )
+	{
+		rgvar[0].vt = VT_DISPATCH;
+		rgvar[0].punkVal = pFile->GetDispatch( TRUE );
+	}
+	else if ( pHit )
+	{
+		rgvar[0].vt = VT_DISPATCH;
+		rgvar[0].punkVal = pHit->GetDispatch( TRUE );
+	}
 
 	if ( pceltFetched ) (*pceltFetched)++;
 

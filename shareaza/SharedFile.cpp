@@ -55,9 +55,9 @@ static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
 #endif
 
-IMPLEMENT_DYNAMIC(CLibraryFile, CComObject)
+IMPLEMENT_DYNAMIC(CLibraryFile, CShareazaFile)
 
-BEGIN_INTERFACE_MAP(CLibraryFile, CComObject)
+BEGIN_INTERFACE_MAP(CLibraryFile, CShareazaFile)
 	INTERFACE_PART(CLibraryFile, IID_ILibraryFile, LibraryFile)
 END_INTERFACE_MAP()
 
@@ -1097,6 +1097,18 @@ BOOL CSharedSource::IsExpired(FILETIME& tNow)
 
 IMPLEMENT_DISPATCH(CLibraryFile, LibraryFile)
 
+STDMETHODIMP CLibraryFile::XLibraryFile::get_Hash(URN_TYPE nType, ENCODING nEncoding, BSTR FAR* psURN)
+{
+	METHOD_PROLOGUE( CLibraryFile, LibraryFile )
+	return pThis->m_xShareazaFile.get_Hash( nType, nEncoding, psURN );
+}
+
+STDMETHODIMP CLibraryFile::XLibraryFile::get_URL(BSTR FAR* psURL)
+{
+	METHOD_PROLOGUE( CLibraryFile, LibraryFile )
+	return pThis->m_xShareazaFile.get_URL( psURL );
+}
+
 STDMETHODIMP CLibraryFile::XLibraryFile::get_Application(IApplication FAR* FAR* ppApplication)
 {
 	METHOD_PROLOGUE( CLibraryFile, LibraryFile )
@@ -1127,11 +1139,10 @@ STDMETHODIMP CLibraryFile::XLibraryFile::get_Path(BSTR FAR* psPath)
 	return S_OK;
 }
 
-STDMETHODIMP CLibraryFile::XLibraryFile::get_Name(BSTR FAR* psPath)
+STDMETHODIMP CLibraryFile::XLibraryFile::get_Name(BSTR FAR* psName)
 {
 	METHOD_PROLOGUE( CLibraryFile, LibraryFile )
-	pThis->m_sName.SetSysString( psPath );
-	return S_OK;
+	return pThis->m_xShareazaFile.get_Name( psName );
 }
 
 STDMETHODIMP CLibraryFile::XLibraryFile::get_Shared(TRISTATE FAR* pnValue)
@@ -1155,10 +1166,10 @@ STDMETHODIMP CLibraryFile::XLibraryFile::get_EffectiveShared(VARIANT_BOOL FAR* p
 	return S_OK;
 }
 
-STDMETHODIMP CLibraryFile::XLibraryFile::get_Size(LONG FAR* pnSize)
+STDMETHODIMP CLibraryFile::XLibraryFile::get_Size(ULONGLONG FAR* pnSize)
 {
 	METHOD_PROLOGUE( CLibraryFile, LibraryFile )
-	*pnSize = (LONG)pThis->GetSize();
+	*pnSize = pThis->GetSize();
 	return S_OK;
 }
 
@@ -1172,60 +1183,7 @@ STDMETHODIMP CLibraryFile::XLibraryFile::get_Index(LONG FAR* pnIndex)
 STDMETHODIMP CLibraryFile::XLibraryFile::get_URN(BSTR sURN, BSTR FAR* psURN)
 {
 	METHOD_PROLOGUE( CLibraryFile, LibraryFile )
-	CString strURN( sURN );
-
-	if ( strURN.IsEmpty() )
-	{
-		if ( pThis->m_oTiger && pThis->m_oSHA1 )
-			strURN = _T("urn:bitprint");
-		else if ( pThis->m_oTiger )
-			strURN = _T("urn:tree:tiger/");
-		else if ( pThis->m_oSHA1 )
-			strURN = _T("urn:sha1");
-		else
-			return E_FAIL;
-	}
-
-	if ( strURN.CompareNoCase( _T("urn:bitprint") ) == 0 )
-	{
-		if ( !pThis->m_oSHA1 || ! pThis->m_oTiger ) return E_FAIL;
-		strURN	= _T("urn:bitprint:")
-				+ pThis->m_oSHA1.toString() + '.'
-				+ pThis->m_oTiger.toString();
-	}
-	else if ( strURN.CompareNoCase( _T("urn:sha1") ) == 0 )
-	{
-		if ( !pThis->m_oSHA1 ) return E_FAIL;
-		strURN = pThis->m_oSHA1.toUrn();
-	}
-	else if ( strURN.CompareNoCase( _T("urn:tree:tiger/") ) == 0 )
-	{
-		if ( ! pThis->m_oTiger ) return E_FAIL;
-		strURN = pThis->m_oTiger.toUrn();
-	}
-	else if ( strURN.CompareNoCase( _T("urn:md5") ) == 0 )
-	{
-		if ( ! pThis->m_oMD5 ) return E_FAIL;
-		strURN = pThis->m_oMD5.toUrn();
-	}
-	else if ( strURN.CompareNoCase( _T("urn:ed2k") ) == 0 )
-	{
-		if ( ! pThis->m_oED2K ) return E_FAIL;
-		strURN = pThis->m_oED2K.toUrn();
-	}
-	else if ( strURN.CompareNoCase( _T("urn:btih") ) == 0 )
-	{
-		if ( ! pThis->m_oBTH ) return E_FAIL;
-		strURN = pThis->m_oBTH.toUrn();
-	}
-	else
-	{
-		return E_FAIL;
-	}
-
-	strURN.SetSysString( psURN );
-
-	return S_OK;
+	return pThis->m_xShareazaFile.get_URN( sURN, psURN );
 }
 
 STDMETHODIMP CLibraryFile::XLibraryFile::get_MetadataAuto(VARIANT_BOOL FAR* pbValue)
