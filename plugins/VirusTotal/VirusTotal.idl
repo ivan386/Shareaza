@@ -1,0 +1,29 @@
+// VirusTotal.idl : IDL source for VirusTotal
+//
+
+// This file will be processed by the MIDL tool to
+// produce the type library (VirusTotal.tlb) and marshalling code.
+
+import "oaidl.idl";
+import "ocidl.idl";
+import "Shareaza.idl";
+
+[
+	uuid(ABC45D7F-EF52-4E5C-986A-93674FE3BBCC),
+	version(1.0),
+	helpstring("VirusTotal 1.0 Type Library")
+]
+library VirusTotalLib
+{
+	importlib("stdole2.tlb");
+
+	[
+		uuid(76F13243-9F62-4241-AC07-3B359BBE4EC5),
+		helpstring("Plugin Class")
+	]
+	coclass Plugin
+	{
+		[default] interface IGeneralPlugin;
+		interface ICommandPlugin;
+	};
+};

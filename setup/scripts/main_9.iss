@@ -155,6 +155,8 @@ Source: "plugins\MediaPlayer.dll"; DestDir: "{app}"; Flags: overwritereadonly re
 ; Don't register RazaWebHook.dll since it will setup Shareaza as download manager
 Source: "plugins\RazaWebHook.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 
+Source: "plugins\VirusTotal\{#PlatformName}\{#ConfigurationName}\VirusTotal.dll";   DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
+
 
 ;--== Debug Databases ==--
 #if ConfigurationName == "Debug"
