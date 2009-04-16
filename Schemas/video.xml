@@ -1207,4 +1207,14 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <type extension="wmv"/>
                <type extension="xvid"/>
        </typeFilter>
+       <bitziImport testExists="rdf:rdf/rdf:Description/bz:videoWidth">
+               <mapping from="rdf:rdf/rdf:Description/mm:duration" to="minutes" factor="0.000016667"/>
+               <mapping from="rdf:rdf/rdf:Description/bz:videoFPS" to="frameRate"/>
+               <mapping from="rdf:rdf/rdf:Description/bz:videoWidth" to="width"/>
+               <mapping from="rdf:rdf/rdf:Description/bz:videoHeight" to="height"/>
+               <mapping from="rdf:rdf/rdf:Description/bz:videoCodec" to="codec"/>
+               <mapping from="rdf:rdf/rdf:Description/dc:description/dc:title" to="title"/>
+               <mapping from="rdf:rdf/rdf:Description/dc:description/dc:date" to="year"/>
+               <mapping from="rdf:rdf/rdf:Description/dcterms:rightsHolder/" to="copyright"/>
+       </bitziImport>
 </schemaDescriptor>
