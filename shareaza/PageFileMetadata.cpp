@@ -313,7 +313,7 @@ void CFileMetadataPage::OnOK()
 		{
 			if ( CLibraryFile* pFile = pFiles->GetNextFile( pos1 ) )
 			{
-				pFile->SetMetadata( NULL );
+				pFile->ClearMetadata();
 			}
 		}
 

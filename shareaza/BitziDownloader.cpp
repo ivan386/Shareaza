@@ -1,7 +1,7 @@
 //
 // BitziDownloader.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -228,6 +228,9 @@ BOOL CBitziDownloader::BuildRequest()
 
 BOOL CBitziDownloader::ExecuteRequest()
 {
+	theApp.Message( MSG_DEBUG | MSG_FACILITY_OUTGOING,
+		_T("[Bitzi] Sent request: %s"), m_sURL );
+
 	DWORD nTime = GetTickCount();
 
 	int nPos, nPort = INTERNET_DEFAULT_HTTP_PORT;
@@ -253,34 +256,42 @@ BOOL CBitziDownloader::ExecuteRequest()
 	{
 		m_hSession = InternetConnect( m_hInternet, strHost, INTERNET_PORT( nPort ),
 			NULL, NULL, INTERNET_SERVICE_HTTP, 0, 0 );
-		if ( m_hSession == NULL ) return FALSE;
+		if ( m_hSession == NULL )
+			return FALSE;
 	}
 
 	m_hRequest = HttpOpenRequest( m_hSession, _T("GET"), strPath, NULL, NULL, NULL,
-		INTERNET_FLAG_KEEP_CONNECTION|INTERNET_FLAG_NO_COOKIES, 0 );
+		INTERNET_FLAG_KEEP_CONNECTION | INTERNET_FLAG_NO_COOKIES |
+		INTERNET_FLAG_PRAGMA_NOCACHE | INTERNET_FLAG_RELOAD, 0 );
 
 	if ( m_hRequest == NULL )
 	{
-		if ( m_hSession != NULL ) InternetCloseHandle( m_hSession );
+		if ( m_hSession != NULL )
+			InternetCloseHandle( m_hSession );
 
 		m_hSession = InternetConnect( m_hInternet, strHost, INTERNET_PORT( nPort ),
 			NULL, NULL, INTERNET_SERVICE_HTTP , 0, 0 );
 
-		if ( m_hSession == NULL ) return FALSE;
+		if ( m_hSession == NULL )
+			return FALSE;
 
 		m_hRequest = HttpOpenRequest( m_hSession, _T("GET"), strPath, NULL, NULL, NULL,
-			INTERNET_FLAG_KEEP_CONNECTION|INTERNET_FLAG_NO_COOKIES, 0 );
+			INTERNET_FLAG_KEEP_CONNECTION | INTERNET_FLAG_NO_COOKIES |
+			INTERNET_FLAG_PRAGMA_NOCACHE | INTERNET_FLAG_RELOAD, 0 );
 
-		if ( m_hRequest == NULL ) return FALSE;
+		if ( m_hRequest == NULL )
+			return FALSE;
 	}
 
-	if ( ! HttpSendRequest( m_hRequest, NULL, 0, NULL, 0 ) ) return FALSE;
+	if ( ! HttpSendRequest( m_hRequest, NULL, 0, NULL, 0 ) )
+		return FALSE;
 
 	TCHAR szStatusCode[32];
 	DWORD nStatusCode = 0, nStatusLen = 32;
 
 	if ( ! HttpQueryInfo( m_hRequest, HTTP_QUERY_STATUS_CODE, szStatusCode,
-		&nStatusLen, NULL ) ) return FALSE;
+		&nStatusLen, NULL ) )
+		return FALSE;
 
 	if ( _stscanf( szStatusCode, _T("%u"), &nStatusCode ) != 1 ||
 		nStatusCode < 200 || nStatusCode > 299 ) return FALSE;
@@ -310,7 +321,8 @@ BOOL CBitziDownloader::ExecuteRequest()
 
 	free( pResponse );
 
-	if ( m_hRequest != NULL ) InternetCloseHandle( m_hRequest );
+	if ( m_hRequest != NULL )
+		InternetCloseHandle( m_hRequest );
 	m_hRequest = NULL;
 
 	m_nDelay = ( GetTickCount() - nTime ) * 2;
@@ -325,18 +337,24 @@ BOOL CBitziDownloader::DecodeResponse()
 {
 	if ( m_pXML ) delete m_pXML;
 
+	theApp.Message( MSG_DEBUG | MSG_FACILITY_INCOMING,
+		_T("[Bitzi] Got response: %s"), m_sResponse );
+
 	m_pXML = CXMLElement::FromString( m_sResponse, TRUE );
-	if ( m_pXML == NULL ) return FALSE;
+	if ( m_pXML == NULL )
+		return FALSE;
 
 	for ( POSITION pos = SchemaCache.GetIterator() ; pos ; )
 	{
 		CSchema* pSchema = SchemaCache.GetNext( pos );
 
-		if ( pSchema->m_sBitziTest.GetLength() && LookupValue( pSchema->m_sBitziTest ).GetLength() )
+		if ( pSchema->m_sBitziTest.GetLength() &&
+			LookupValue( pSchema->m_sBitziTest ).GetLength() )
 		{
 			CXMLElement* pMetadata = ImportData( pSchema );
 
-			if ( pMetadata == NULL ) return FALSE;
+			if ( pMetadata == NULL )
+				return FALSE;
 
 			return SubmitMetaData( pMetadata );
 		}
@@ -449,14 +467,7 @@ BOOL CBitziDownloader::SubmitMetaData(CXMLElement* pXML)
 		return FALSE;
 	}
 
-	if ( pFile->m_pMetadata != NULL )
-	{
-		CXMLElement* pXMLBody = pXML->GetFirstElement();
-		if ( pXMLBody )
-			pXMLBody->Merge( pFile->m_pMetadata );
-	}
-
-	BOOL bSuccess = pFile->SetMetadata( pXML );
+	BOOL bSuccess = pFile->MergeMetadata( pXML, TRUE );
 
 	delete pXML;
 

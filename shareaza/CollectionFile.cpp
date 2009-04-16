@@ -1,7 +1,7 @@
 //
 // ColletionFile.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -618,37 +618,19 @@ BOOL CCollectionFile::File::ApplyMetadata(CLibraryFile* pShared)
 
 	ASSERT( m_pMetadata->GetFirstElement() != NULL );
 
-	if ( pShared->m_pMetadata != NULL )
+	// Merge metadata
+	if ( CXMLElement* pXML = m_pMetadata->Clone() )
 	{
-		// Merge metadata
-		if ( BOOL bMetadataAuto = pShared->m_bMetadataAuto )
+		BOOL bMetadataAuto = pShared->m_bMetadataAuto;
+		BOOL res = pShared->MergeMetadata( pXML, FALSE );
+		delete pXML;
+		if ( res )
 		{
-			CSchema* pSchema = SchemaCache.Get(
-				m_pMetadata->GetAttributeValue( CXMLAttribute::schemaName ) );
-			if ( pSchema && ( pSchema == pShared->m_pSchema ) )
-			{
-				// Merge with copy then replace metadata
-				auto_ptr< CXMLElement > pXML( pShared->m_pMetadata->Clone() );
-				if ( pXML.get() &&
-					pXML->Merge( m_pMetadata->GetFirstElement() ) &&
-					pShared->SetMetadata( pXML.get() ) )
-				{
-					// Preserve flag
-					pShared->m_bMetadataAuto = bMetadataAuto;
-					return TRUE;
-				}
-			}
-		}
-	}
-	else
-	{
-		// Set new metadata
-		auto_ptr< CXMLElement > pXML( m_pMetadata->Clone() );
-		if ( pXML.get() && pShared->SetMetadata( pXML.get() ) )
-		{
-			pShared->m_bMetadataAuto = TRUE;
+			// Preserve flag
+			pShared->m_bMetadataAuto = bMetadataAuto;
 			return TRUE;
 		}
 	}
+
 	return FALSE;
 }

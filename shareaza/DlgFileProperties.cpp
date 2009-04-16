@@ -277,7 +277,7 @@ void CFilePropertiesDlg::OnOK()
 			}
 			else
 			{
-				pFile->SetMetadata( NULL );
+				pFile->ClearMetadata();
 			}
 
 			Library.Update();

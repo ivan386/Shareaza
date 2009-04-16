@@ -648,26 +648,13 @@ int CLibraryBuilder::SubmitMetadata(DWORD nIndex, LPCTSTR pszSchemaURI, CXMLElem
 	CQuickLock oLibraryLock( Library.m_pSection );
 	if ( CLibraryFile* pFile = Library.LookupFile( nIndex ) )
 	{
-		if ( pFile->m_pMetadata )
-			// Merge new with old metadata
-			pXML->Merge( pFile->m_pMetadata );
-		else
-			pFile->m_bMetadataAuto = TRUE;
-
-		Library.RemoveFile( pFile );
-
-		// Delete old one
-		delete pFile->m_pMetadata;
-
-		// Set new matadata
-		pFile->m_pSchema		= pSchema;
-		pFile->m_pMetadata		= pXML;
-		pFile->ModifyMetadata();
-
-		Library.AddFile( pFile );
-		Library.Update();
-
-		return nAttributeCount;
+		BOOL bMetadataAuto = pFile->m_bMetadataAuto;
+		if ( pFile->MergeMetadata( pXML, TRUE ) )
+		{
+			if ( bMetadataAuto )
+				pFile->m_bMetadataAuto = TRUE;
+			Library.Update();
+		}
 	}
 
 	delete pXML;

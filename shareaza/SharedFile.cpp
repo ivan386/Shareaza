@@ -371,24 +371,48 @@ void CLibraryFile::UpdateMetadata(const CDownload* pDownload)
 	}
 }
 
-BOOL CLibraryFile::SetMetadata(CXMLElement* pXML)
+BOOL CLibraryFile::SetMetadata(CXMLElement*& pXML, BOOL bMerge, BOOL bOverwrite)
 {
 	if ( m_pMetadata == NULL && pXML == NULL )
+		// No need
 		return TRUE;
 
 	CSchema* pSchema = NULL;
 
 	if ( pXML != NULL )
 	{
+		// Try fully specified XML first, for example <videos ...><video ... /></videos>
 		pSchema = SchemaCache.Get( pXML->GetAttributeValue( CXMLAttribute::schemaName ) );
+		if ( pSchema == NULL )
+		{
+			// Then try short version, for example <video ... />
+			pSchema = SchemaCache.Guess( pXML->GetName() );
+			if ( pSchema )
+			{
+				// Recreate full XML
+				if ( CXMLElement* pFullXML = pSchema->Instantiate( TRUE ) )
+				{
+					if ( pFullXML->AddElement( pXML ) )
+						pXML = pFullXML;
+					else
+						delete pFullXML;
+				}
+			}
+		}
+
 		if ( pSchema == NULL || ! pSchema->Validate( pXML, TRUE ) )
+			// Invalid XML
 			return FALSE;
 
-		if ( m_pMetadata != NULL && m_pSchema == pSchema )
+		if ( m_pMetadata && bMerge )
 		{
-			if ( m_pMetadata->Equals( pXML->GetFirstElement() ) )
-				return TRUE;
+			pXML->GetFirstElement()->Merge( m_pMetadata, ! bOverwrite );
 		}
+
+		if ( m_pMetadata && m_pSchema == pSchema &&
+			m_pMetadata->Equals( pXML->GetFirstElement() ) )
+			// No need
+			return TRUE;
 	}
 
 	Library.RemoveFile( this );
@@ -399,11 +423,25 @@ BOOL CLibraryFile::SetMetadata(CXMLElement* pXML)
 	m_pMetadata		= pXML ? pXML->GetFirstElement()->Detach() : NULL;
 	m_bMetadataAuto	= FALSE;
 
+	delete pXML;
+	pXML = NULL;
+
 	ModifyMetadata();
 
 	Library.AddFile( this );
 
 	return TRUE;
+}
+
+BOOL CLibraryFile::MergeMetadata(CXMLElement*& pXML, BOOL bOverwrite)
+{
+	return SetMetadata( pXML, TRUE, bOverwrite );
+}
+
+void CLibraryFile::ClearMetadata()
+{
+	CXMLElement* pXML = NULL;
+	SetMetadata( pXML );
 }
 
 void CLibraryFile::ModifyMetadata()
@@ -1218,7 +1256,7 @@ STDMETHODIMP CLibraryFile::XLibraryFile::put_Metadata(ISXMLElement FAR* pXML)
 	}
 	else
 	{
-		pThis->SetMetadata( NULL );
+		pThis->ClearMetadata();
 		return S_OK;
 	}
 }

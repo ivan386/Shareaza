@@ -1,7 +1,7 @@
 //
 // XML.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -765,7 +765,7 @@ BOOL CXMLElement::Equals(CXMLElement* pXML) const
 //////////////////////////////////////////////////////////////////////
 // CXMLElement Metadata merge
 
-BOOL CXMLElement::Merge(const CXMLElement* pInput)
+BOOL CXMLElement::Merge(const CXMLElement* pInput, BOOL bOverwrite)
 {
 	if ( ! this || ! pInput ) return FALSE;
 	if ( this == pInput ) return TRUE;
@@ -786,7 +786,7 @@ BOOL CXMLElement::Merge(const CXMLElement* pInput)
 			AddElement( pElement->Clone() );
 			bChanged = TRUE;
 		}
-		else if ( pTarget->Merge( pElement ) )
+		else if ( pTarget->Merge( pElement, bOverwrite ) )
 		{
 			bChanged = TRUE;
 		}
@@ -800,6 +800,11 @@ BOOL CXMLElement::Merge(const CXMLElement* pInput)
 		if ( pTarget == NULL )
 		{
 			AddAttribute( pAttribute->Clone() );
+			bChanged = TRUE;
+		}
+		else if ( bOverwrite && ! pTarget->Equals( pAttribute ) )
+		{
+			pTarget->SetValue( pAttribute->GetValue() );
 			bChanged = TRUE;
 		}
 	}

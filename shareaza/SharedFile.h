@@ -106,7 +106,9 @@ public:
 	BOOL			Rename(LPCTSTR pszName);
 	BOOL			Delete(BOOL bDeleteGhost = FALSE);
 	void			UpdateMetadata(const CDownload* pDownload);
-	BOOL			SetMetadata(CXMLElement* pXML);
+	BOOL			SetMetadata(CXMLElement*& pXML, BOOL bMerge = FALSE, BOOL bOverwrite = FALSE);
+	BOOL			MergeMetadata(CXMLElement*& pXML, BOOL bOverwrite);
+	void			ClearMetadata();
 	CString			GetMetadataWords() const;
 	void			ModifyMetadata();		// Mark metadata as modified
 	CTigerTree*		GetTigerTree();

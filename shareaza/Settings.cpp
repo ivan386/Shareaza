@@ -161,7 +161,7 @@ CSettings::CSettings()
 	Add( _T("WebServices"), _T("BitziOkay"), &WebServices.BitziOkay, false, true );
 	Add( _T("WebServices"), _T("BitziWebSubmit"), &WebServices.BitziWebSubmit, _T("http://bitzi.com/lookup/(SHA1).(TTH)?fl=(SIZE)&ff=(FIRST20)&fn=(NAME)&tag.ed2k.ed2khash=(ED2K)&(INFO)&a=(AGENT)&v=Q0.4&ref=shareaza") );
 	Add( _T("WebServices"), _T("BitziWebView"), &WebServices.BitziWebView, _T("http://bitzi.com/lookup/(URN)?v=detail&ref=shareaza") );
-	Add( _T("WebServices"), _T("BitziXML"), &WebServices.BitziXML, _T("http://ticket.bitzi.com/rdf/(SHA1).(TTH)") );
+	Add( _T("WebServices"), _T("BitziXML"), &WebServices.BitziXML, _T("http://bitzi.com/rdf/(SHA1)") );
 	Add( _T("WebServices"), _T("ShareMonkeyCid"), &WebServices.ShareMonkeyCid );
 	Add( _T("WebServices"), _T("ShareMonkeyOkay"), &WebServices.ShareMonkeyOkay, false, true );
 	Add( _T("WebServices"), _T("ShareMonkeySaveThumbnail"), &WebServices.ShareMonkeySaveThumbnail, false, true );
@@ -1052,6 +1052,11 @@ void CSettings::SmartUpgrade()
 				!= ERROR_SUCCESS ) return;
 			RegDeleteValue( hKey, _T("BitziOkay") );
 			RegCloseKey( hKey );
+		}
+
+		if ( General.SmartVersion < 56 )
+		{
+			WebServices.BitziXML = _T("http://bitzi.com/rdf/(SHA1)");
 		}
 	}
 
