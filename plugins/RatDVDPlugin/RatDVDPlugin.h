@@ -25,12 +25,8 @@
 //
 
 #pragma once
-#include "resource.h"       // main symbols
-#include "globals.h"
-#include "RatDVDReader.h"
-#include <string>
 
-using namespace std;
+#include "RatDVDReader_h.h"
 
 // CRatDVDPlugin
 

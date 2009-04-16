@@ -23,7 +23,6 @@
 
 #include "stdafx.h"
 #include "RatDVDPlugin.h"
-#include <atlstr.h>
 
 LPCWSTR	CRatDVDPlugin::uriVideo			= L"http://www.limewire.com/schemas/video.xsd";
 
@@ -348,7 +347,7 @@ STDMETHODIMP CRatDVDPlugin::ProcessRatDVD(HANDLE hFile, ISXMLElement* pXML)
 								CString strTruncated( strValue );
 								CString strSep( strSeparator );
 								strTruncated = strTruncated.SpanExcluding( strSep );
-								strTruncated.Trim( "\"" );
+								strTruncated.Trim( _T("\"") );
                                 strValue = strTruncated;
 							}
 							

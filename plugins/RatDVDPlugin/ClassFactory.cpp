@@ -25,10 +25,9 @@
 //
 
 #pragma once
+
 #include "stdafx.h"
-#include "Globals.h"
 #include "RatDVDPlugin.h"
-#include "shareaza_i.c"
 
 ////////////////////////////////////////////////////////////////////////
 // CRatDVDClassFactory - IClassFactory Implementation
@@ -63,7 +62,6 @@ STDMETHODIMP CRatDVDClassFactory::QueryInterface(REFIID riid, void** ppv)
 //
 STDMETHODIMP_(ULONG) CRatDVDClassFactory::AddRef(void)
 {
-	TRACE1("CRatDVDClassFactory::AddRef - %d\n", m_cRef + 1);
     return ++m_cRef;
 }
 
@@ -72,7 +70,6 @@ STDMETHODIMP_(ULONG) CRatDVDClassFactory::AddRef(void)
 //
 STDMETHODIMP_(ULONG) CRatDVDClassFactory::Release(void)
 {
-	TRACE1("CRatDVDClassFactory::Release - %d\n", m_cRef - 1);
     if ( 0 != --m_cRef ) return m_cRef;
 
 	ODS(_T("CRatDVDClassFactory delete\n"));
@@ -125,7 +122,6 @@ STDMETHODIMP CRatDVDClassFactory::CreateInstance(LPUNKNOWN punk, REFIID riid, vo
 //
 STDMETHODIMP CRatDVDClassFactory::LockServer(BOOL fLock)
 {
-	TRACE1("CRatDVDClassFactory::LockServer - %d\n", fLock);
 	if (fLock) DllAddRef();	else DllRelease();
 	return S_OK;
 }

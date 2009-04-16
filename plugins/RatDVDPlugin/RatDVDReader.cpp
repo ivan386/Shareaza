@@ -25,10 +25,10 @@
 //
 
 #pragma once
+
 #include "stdafx.h"
-#include "Globals.h"
-#include "resource.h"
-#include "RatDVDReader.h"
+#include "RatDVDPlugin.h"
+#include "RatDVDReader_i.c"
 
 ////////////////////////////////////////////////////////////////////////
 // Globals for this module.
@@ -37,12 +37,10 @@ HINSTANCE         v_hModule;             // DLL module handle
 ULONG             v_cLocks;              // Count of server locks
 CRITICAL_SECTION  v_csSynch;             // Critical Section
 HANDLE            v_hPrivateHeap;        // Private Heap for Component
-BOOL              v_fRunningOnNT;        // Flag Set When on Unicode OS
 
 class CRatDVDReaderModule : public CAtlDllModuleT< CRatDVDReaderModule >
 {
 public :
-	CRatDVDReaderModule();
 	DECLARE_LIBID(LIBID_RatDVDReaderLib)
 	DECLARE_REGISTRY_APPID_RESOURCEID(IDR_RATDVDREADER, "{6E8D8F96-2C03-4fbf-8F7C-E92FF5C63C1E}")
 	HRESULT DllGetClassObject(REFCLSID rclsid, REFIID riid, LPVOID* ppv);
@@ -50,11 +48,6 @@ public :
 
 CRatDVDReaderModule _AtlModule;
 
-CRatDVDReaderModule::CRatDVDReaderModule()
-{
-}
-
-// DLL Entry Point
 extern "C" BOOL WINAPI DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID lpReserved)
 {
 	switch ( dwReason )
@@ -64,7 +57,6 @@ extern "C" BOOL WINAPI DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID lpRes
 
 		v_hModule = hInstance; v_cLocks = 0;
 		v_hPrivateHeap = HeapCreate(0, 0x1000, 0);
-		v_fRunningOnNT = ( ( GetVersion() & 0x80000000 ) != 0x80000000 );
 		InitializeCriticalSection( &v_csSynch );
 		DisableThreadLibraryCalls( hInstance );
 		break;
@@ -80,13 +72,11 @@ extern "C" BOOL WINAPI DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID lpRes
     return _AtlModule.DllMain( dwReason, lpReserved ); 
 }
 
-// Used to determine whether the DLL can be unloaded by OLE
 STDAPI DllCanUnloadNow(void)
 {
     return ( _AtlModule.GetLockCount() == 0 ) ? S_OK : S_FALSE;
 }
 
-// DllRegisterServer - Adds entries to the system registry
 STDAPI DllRegisterServer(void)
 {
 	LPWSTR  pwszModule;
@@ -101,7 +91,6 @@ STDAPI DllRegisterServer(void)
 	return hr;
 }
 
-// DllUnregisterServer - Removes entries from the system registry
 STDAPI DllUnregisterServer(void)
 {
 	LPWSTR  pwszModule;
@@ -113,6 +102,7 @@ STDAPI DllUnregisterServer(void)
 	hr = _AtlModule.DllUnregisterServer();
 	return hr;
 }
+
 HRESULT CRatDVDReaderModule::DllGetClassObject(REFCLSID rclsid, REFIID /*riid*/, LPVOID* ppv)
 {
 	ODS(_T("CRatDVDReaderModule::DllGetClassObject\n"));
