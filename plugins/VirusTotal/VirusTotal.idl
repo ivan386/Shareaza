@@ -16,10 +16,12 @@ import "Shareaza.idl";
 library VirusTotalLib
 {
 	importlib("stdole2.tlb");
+	
+	interface IGeneralPlugin;
+	interface ICommandPlugin;
 
 	[
-		uuid(76F13243-9F62-4241-AC07-3B359BBE4EC5),
-		helpstring("Plugin Class")
+		uuid(76F13243-9F62-4241-AC07-3B359BBE4EC5)
 	]
 	coclass Plugin
 	{
