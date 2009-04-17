@@ -27,7 +27,7 @@ void CPlugin::InsertCommand(ISMenu* pWebMenu, int nPos, UINT nID, LPCWSTR szItem
 	pWebMenu->InsertCommand( nPos, nID, CComBSTR( szItem ), NULL );
 }
 
-void CPlugin::Request(LPCWSTR szHash)
+HRESULT CPlugin::Request(LPCWSTR szHash)
 {
 	CComPtr< IWebBrowserApp > pWebBrowserApp;
 	HRESULT hr = pWebBrowserApp.CoCreateInstance( CLSID_InternetExplorer );
@@ -45,8 +45,14 @@ void CPlugin::Request(LPCWSTR szHash)
 		vPost.vt = VT_ARRAY | VT_UI1;
 		vPost.parray = pPost;
 		CComVariant vHeaders( CComBSTR( L"Content-Type: application/x-www-form-urlencoded\r\n") );
-		pWebBrowserApp->Navigate( bstrURL, &vFlags, &vFrame, &vPost, &vHeaders );
+		hr = pWebBrowserApp->Navigate( bstrURL, &vFlags, &vFrame, &vPost, &vHeaders );
+		if ( FAILED( hr ) )
+			ATLTRACE( _T("CPlugin::Request() : Internet Explorer navigate error: 0x%08x\n"), hr );
 	}
+	else
+		ATLTRACE( _T("CPlugin::Request() : Create Internet Explorer instance error: 0x%08x\n"), hr );
+
+	return hr;
 }
 
 // IGeneralPlugin
@@ -194,7 +200,10 @@ STDMETHODIMP CPlugin::OnCommand(
 					CComVariant pItem;
 					hr = pGenericView->get_Item( CComVariant( i ), &pItem );
 					if ( FAILED( hr ) )
+					{
+						ATLTRACE( _T("CPlugin::OnCommand() : Get item error: 0x%08x\n"), hr );
 						break;
+					}
 
 					CComBSTR pSHA1;
 					CComBSTR pMD5;
@@ -211,7 +220,12 @@ STDMETHODIMP CPlugin::OnCommand(
 								pLibraryFile->get_Hash( URN_MD5,  ENCODING_BASE16, &pMD5 );
 								pLibraryFile->get_Hash( URN_SHA1, ENCODING_BASE16, &pSHA1 );
 							}
+							else
+								ATLTRACE( _T("CPlugin::OnCommand() : Find file by index error: 0x%08x\n"), hr );
 						}
+						else
+							ATLTRACE( _T("CPlugin::OnCommand() : Get Library error: 0x%08x\n"), hr );
+
 					}
 					else if ( pItem.vt == VT_DISPATCH )
 					{
@@ -222,6 +236,8 @@ STDMETHODIMP CPlugin::OnCommand(
 							pShareazaFile->get_Hash( URN_SHA1, ENCODING_BASE16, &pSHA1 );
 						}
 					}
+					else
+						ATLTRACE( _T("CPlugin::OnCommand() : Unknown item data.\n") );
 
 					if ( pMD5.Length() )
 					{
@@ -231,6 +247,8 @@ STDMETHODIMP CPlugin::OnCommand(
 					{
 						Request( pSHA1 );
 					}
+					else
+						ATLTRACE( _T("CPlugin::OnCommand() : No compatible hashes found.\n") );
 				}
 				return S_OK;
 			}

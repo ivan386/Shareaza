@@ -51,7 +51,7 @@ protected:
 	static void InsertCommand(ISMenu* pWebMenu, int nPos, UINT nID, LPCWSTR szItem);
 
 	// Run InternetExplorer
-	void Request(LPCWSTR szHash);
+	HRESULT Request(LPCWSTR szHash);
 
 // IGeneralPlugin
 public:
