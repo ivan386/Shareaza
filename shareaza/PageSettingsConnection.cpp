@@ -1,7 +1,7 @@
 //
 // PageSettingsConnection.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -379,21 +379,28 @@ void CConnectionSettingsPage::OnClickedEnableUpnp()
 {
 	if ( !m_bEnableUPnP )
 	{
-		if ( !theApp.m_pUPnPFinder )
-			theApp.m_pUPnPFinder.Attach( new CUPnPFinder );
-
-		// If the UPnP Device Host service is not running ask the user to start it.
-		// It is not wise to have a delay up to 1 minute, especially that we would need
-		// to wait until this and SSDP service are started.
-		// If the upnphost service can not be started Shareaza will lock up.
-		if ( !theApp.m_pUPnPFinder->AreServicesHealthy() )
+		try
 		{
-			CString strMessage;
-			LoadString( strMessage, IDS_UPNP_SERVICES_ERROR );
-			CButton* pBox =  (CButton*)GetDlgItem( IDC_ENABLE_UPNP );
-			pBox->SetCheck( BST_UNCHECKED );
-			AfxMessageBox( strMessage, MB_OK | MB_ICONEXCLAMATION );
+			if ( !theApp.m_pUPnPFinder )
+				theApp.m_pUPnPFinder.Attach( new CUPnPFinder );
+
+			// If the UPnP Device Host service is not running ask the user to
+			// start it. It is not wise to have a delay up to 1 minute,
+			// especially that we would need to wait until this and SSDP
+			// service are started. If the upnphost service can not be started
+			// Shareaza will lock up.
+			if ( !theApp.m_pUPnPFinder->AreServicesHealthy() )
+			{
+				CString strMessage;
+				LoadString( strMessage, IDS_UPNP_SERVICES_ERROR );
+				CButton* pBox =  (CButton*)GetDlgItem( IDC_ENABLE_UPNP );
+				pBox->SetCheck( BST_UNCHECKED );
+				AfxMessageBox( strMessage, MB_OK | MB_ICONEXCLAMATION );
+			}
 		}
+		catch ( CUPnPFinder::UPnPError& ) {}
+		catch ( CException* e ) { e->Delete(); }
+
 	}
 	UpdateData();
 }

@@ -1,7 +1,7 @@
 //
 // UPnPFinder.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -1089,7 +1089,14 @@ HRESULT CDeviceFinderCallback::SearchComplete(LONG /*nFindData*/)
 	bool bRetry = !m_instance.OnSearchComplete();
 	m_instance.StopAsyncFind();
 	if ( bRetry )
-		m_instance.StartDiscovery( true );
+	{
+		try
+		{
+			m_instance.StartDiscovery( true );
+		}
+		catch ( CUPnPFinder::UPnPError& ) {}
+		catch ( CException* e ) { e->Delete(); }
+	}
 	return S_OK;
 }
 
