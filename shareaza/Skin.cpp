@@ -96,6 +96,87 @@ void CSkin::Apply()
 
 	// Disable Menubar 3D Borders
 	m_bBordersEnabled = CoolInterface.m_crSysBorders != CLR_NONE ? TRUE : FALSE ;
+
+	Plugins.OnSkinChanged();
+}
+
+//////////////////////////////////////////////////////////////////////
+// CSkin default skin
+
+void CSkin::CreateDefault()
+{
+	CreateDefaultColors();
+
+	CoolInterface.CreateFonts();
+
+	m_rcNavBarOffset = CRect( 0, 0, 0, 0 );
+
+	// Command Icons
+
+	HICON hIcon = theApp.LoadIcon( IDI_CHECKMARK );
+	if ( hIcon )
+	{
+		if ( Settings.General.LanguageRTL ) hIcon = CreateMirroredIcon( hIcon );
+		CoolInterface.AddIcon( ID_CHECKMARK, hIcon );
+		VERIFY( DestroyIcon( hIcon ) );
+	}
+
+	// Load Definitions
+
+	LoadFromResource( NULL, IDR_XML_DEFINITIONS );
+	LoadFromResource( NULL, IDR_XML_DEFAULT );
+
+	// Copying
+	CoolInterface.CopyIcon( ID_HELP_FAQ, ID_HELP_GUIDE );
+	CoolInterface.CopyIcon( ID_HELP_FAQ, ID_HELP_UPDATE );
+
+	CoolInterface.CopyIcon( ID_HELP_FAQ, ID_HELP_WEB_1 );
+	CoolInterface.CopyIcon( ID_HELP_FAQ, ID_HELP_WEB_2 );
+	CoolInterface.CopyIcon( ID_HELP_FAQ, ID_HELP_WEB_3 );
+	CoolInterface.CopyIcon( ID_HELP_FAQ, ID_HELP_WEB_4 );
+	CoolInterface.CopyIcon( ID_HELP_FAQ, ID_HELP_WEB_5 );
+	CoolInterface.CopyIcon( ID_HELP_FAQ, ID_HELP_WEB_6 );
+
+	Plugins.RegisterCommands();
+	Plugins.InsertCommands();
+}
+
+void CSkin::CreateDefaultColors()
+{
+	CoolInterface.CalculateColours( FALSE );
+
+	// Colour Scheme
+
+	m_crDialog					= CoolInterface.CalculateColour(
+		GetSysColor( COLOR_BTNFACE ), GetSysColor( COLOR_WINDOW ), 200 );
+
+	m_crPanelBack				= RGB( 60, 60, 60 );
+	m_crPanelText				= RGB( 255, 255, 255 );
+	m_crPanelBorder				= RGB( 0, 0, 0 );
+
+	m_crBannerBack				= RGB( 122, 161, 230 );
+	m_crBannerText				= RGB( 250, 250, 255 );
+
+	m_crSchemaRow[0]			= RGB( 245, 245, 255 );
+	m_crSchemaRow[1]			= RGB( 214, 223, 247 );
+
+	// NavBar
+
+	m_crNavBarText				= CLR_NONE;
+	m_crNavBarTextUp			= m_crNavBarText;
+	m_crNavBarTextDown			= m_crNavBarText;
+	m_crNavBarTextHover			= m_crNavBarText;
+	m_crNavBarTextChecked		= m_crNavBarText;
+	m_crNavBarShadow			= CLR_NONE;
+	m_crNavBarShadowUp			= m_crNavBarShadow;
+	m_crNavBarShadowDown		= m_crNavBarShadow;
+	m_crNavBarShadowHover		= m_crNavBarShadow;
+	m_crNavBarShadowChecked		= m_crNavBarShadow;
+	m_crNavBarOutline			= CLR_NONE;
+	m_crNavBarOutlineUp			= m_crNavBarOutline;
+	m_crNavBarOutlineDown		= m_crNavBarOutline;
+	m_crNavBarOutlineHover		= m_crNavBarOutline;
+	m_crNavBarOutlineChecked	= m_crNavBarOutline;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -248,6 +329,8 @@ void CSkin::ApplyRecursive(LPCTSTR pszPath)
 
 BOOL CSkin::LoadFromFile(LPCTSTR pszFile)
 {
+	TRACE( _T("Loading skin file: %s\n"), pszFile );
+
 	CXMLElement* pXML = CXMLElement::FromFile( pszFile );
 	if ( pXML == NULL ) return FALSE;
 
@@ -1932,86 +2015,6 @@ BOOL CSkin::LoadCommandBitmap(CXMLElement* pBase, const CString& strPath)
 	}
 
 	return TRUE;
-}
-
-//////////////////////////////////////////////////////////////////////
-// CSkin default skin
-
-void CSkin::CreateDefault()
-{
-	CreateDefaultColors();
-
-	CoolInterface.CreateFonts();
-
-	m_rcNavBarOffset = CRect( 0, 0, 0, 0 );
-
-	// Command Icons
-
-	HICON hIcon = theApp.LoadIcon( IDI_CHECKMARK );
-	if ( hIcon )
-	{
-		if ( Settings.General.LanguageRTL ) hIcon = CreateMirroredIcon( hIcon );
-		CoolInterface.AddIcon( ID_CHECKMARK, hIcon );
-		VERIFY( DestroyIcon( hIcon ) );
-	}
-
-	// Load Definitions
-
-	LoadFromResource( NULL, IDR_XML_DEFINITIONS );
-	LoadFromResource( NULL, IDR_XML_DEFAULT );
-
-	// Copying
-	CoolInterface.CopyIcon( ID_HELP_FAQ, ID_HELP_GUIDE );
-	CoolInterface.CopyIcon( ID_HELP_FAQ, ID_HELP_UPDATE );
-
-	CoolInterface.CopyIcon( ID_HELP_FAQ, ID_HELP_WEB_1 );
-	CoolInterface.CopyIcon( ID_HELP_FAQ, ID_HELP_WEB_2 );
-	CoolInterface.CopyIcon( ID_HELP_FAQ, ID_HELP_WEB_3 );
-	CoolInterface.CopyIcon( ID_HELP_FAQ, ID_HELP_WEB_4 );
-	CoolInterface.CopyIcon( ID_HELP_FAQ, ID_HELP_WEB_5 );
-	CoolInterface.CopyIcon( ID_HELP_FAQ, ID_HELP_WEB_6 );
-
-	// Plugins
-	Plugins.RegisterCommands();
-	Plugins.OnSkinChanged();
-}
-
-void CSkin::CreateDefaultColors()
-{
-	CoolInterface.CalculateColours( FALSE );
-
-	// Colour Scheme
-
-	m_crDialog					= CoolInterface.CalculateColour(
-		GetSysColor( COLOR_BTNFACE ), GetSysColor( COLOR_WINDOW ), 200 );
-
-	m_crPanelBack				= RGB( 60, 60, 60 );
-	m_crPanelText				= RGB( 255, 255, 255 );
-	m_crPanelBorder				= RGB( 0, 0, 0 );
-
-	m_crBannerBack				= RGB( 122, 161, 230 );
-	m_crBannerText				= RGB( 250, 250, 255 );
-
-	m_crSchemaRow[0]			= RGB( 245, 245, 255 );
-	m_crSchemaRow[1]			= RGB( 214, 223, 247 );
-
-	// NavBar
-
-	m_crNavBarText				= CLR_NONE;
-	m_crNavBarTextUp			= m_crNavBarText;
-	m_crNavBarTextDown			= m_crNavBarText;
-	m_crNavBarTextHover			= m_crNavBarText;
-	m_crNavBarTextChecked		= m_crNavBarText;
-	m_crNavBarShadow			= CLR_NONE;
-	m_crNavBarShadowUp			= m_crNavBarShadow;
-	m_crNavBarShadowDown		= m_crNavBarShadow;
-	m_crNavBarShadowHover		= m_crNavBarShadow;
-	m_crNavBarShadowChecked		= m_crNavBarShadow;
-	m_crNavBarOutline			= CLR_NONE;
-	m_crNavBarOutlineUp			= m_crNavBarOutline;
-	m_crNavBarOutlineDown		= m_crNavBarOutline;
-	m_crNavBarOutlineHover		= m_crNavBarOutline;
-	m_crNavBarOutlineChecked	= m_crNavBarOutline;
 }
 
 //////////////////////////////////////////////////////////////////////

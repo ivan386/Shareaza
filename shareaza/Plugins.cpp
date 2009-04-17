@@ -1,7 +1,7 @@
 //
 // Plugins.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2006.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -206,8 +206,17 @@ void CPlugins::OnSkinChanged()
 	{
 		CPlugin* pPlugin = GetNext( pos );
 
-		if ( pPlugin->m_pCommand ) pPlugin->m_pCommand->InsertCommands();
 		if ( pPlugin->m_pPlugin ) pPlugin->m_pPlugin->OnSkinChanged();
+	}
+}
+
+void CPlugins::InsertCommands()
+{
+	for ( POSITION pos = GetIterator() ; pos ; )
+	{
+		CPlugin* pPlugin = GetNext( pos );
+
+		if ( pPlugin->m_pCommand ) pPlugin->m_pCommand->InsertCommands();
 	}
 }
 
