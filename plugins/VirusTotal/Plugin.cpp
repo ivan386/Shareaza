@@ -3,7 +3,29 @@
 #include "stdafx.h"
 #include "Plugin.h"
 
-// CPlugin
+static const LPCWSTR VIRUSTOTAL_CHECK	= L"&VirusTotal Check";
+static const LPCWSTR VIRUSTOTAL_HOME	= L"http://www.virustotal.com";
+static const LPCWSTR VIRUSTOTAL_URL		= L"http://www.virustotal.com/vt/en/consultamd5";
+
+void CPlugin::InsertCommand(ISMenu* pWebMenu, int nPos, UINT nID, LPCWSTR szItem)
+{
+	LONG nCount;
+	if ( SUCCEEDED( pWebMenu->get_Count( &nCount ) ) )
+	{
+		for ( int i = 0; i < (int)nCount; ++i )
+		{
+			CComPtr< ISMenu > pItem;
+			LONG nItemID;	// note: -1 - submenu, 0 - separator
+			if ( SUCCEEDED( pWebMenu->get_Item( CComVariant( i ), &pItem ) ) && pItem &&
+				 SUCCEEDED( pItem->get_CommandID( &nItemID ) ) && (UINT)nItemID == nID )
+				// Already in place
+				return;
+		}
+	}
+
+	// Insert new
+	pWebMenu->InsertCommand( nPos, nID, CComBSTR( szItem ), NULL );
+}
 
 void CPlugin::Request(LPCWSTR szHash)
 {
@@ -15,10 +37,9 @@ void CPlugin::Request(LPCWSTR szHash)
 		pPost.Create();
 		pPost.Add( 5, (LPBYTE)"hash=" );
 		pPost.Add( lstrlenW( szHash ), (LPBYTE)(LPCSTR)CW2A( szHash ) );
-
-		CComBSTR bstrURL( L"http://www.virustotal.com/vt/en/consultamd5");
+		CComBSTR bstrURL( VIRUSTOTAL_URL );
 		CComVariant vFlags( 0 );
-		CComVariant vFrame( 0 );
+		CComVariant vFrame( CComBSTR( L"" ) );
 		VARIANT vPost;
 		VariantInit( &vPost );
 		vPost.vt = VT_ARRAY | VT_UI1;
@@ -51,12 +72,15 @@ STDMETHODIMP CPlugin::QueryCapabilities(
 
 STDMETHODIMP CPlugin::Configure()
 {
+	ShellExecute( NULL, NULL, VIRUSTOTAL_HOME, NULL, NULL, SW_SHOWDEFAULT );
+
 	return S_OK;
 }
 
 STDMETHODIMP CPlugin::OnSkinChanged()
 {
-	return S_OK;
+	// Recreate lost menu items
+	return InsertCommands();
 }
 
 // ICommandPlugin
@@ -89,8 +113,7 @@ STDMETHODIMP CPlugin::InsertCommands()
 		CComPtr< ISMenu > pWebMenu;
 		if ( SUCCEEDED( pSearchMenu->get_Item( CComVariant( 9 ), &pWebMenu ) ) && pWebMenu )
 		{
-			pWebMenu->InsertCommand( 1, m_nCmdCheck,
-				CComBSTR( L"&VirusTotal Check" ), NULL );
+			InsertCommand( pWebMenu, 1, m_nCmdCheck, VIRUSTOTAL_CHECK );
 		}
 	}
 
@@ -101,9 +124,15 @@ STDMETHODIMP CPlugin::InsertCommands()
 		CComPtr< ISMenu > pWebMenu;
 		if ( SUCCEEDED( pFileMenu->get_Item( CComVariant( 9 ), &pWebMenu ) ) && pWebMenu )
 		{
-			pWebMenu->InsertCommand( 1, m_nCmdCheck,
-				CComBSTR( L"&VirusTotal Check" ), NULL );
+			InsertCommand( pWebMenu, 2, m_nCmdCheck, VIRUSTOTAL_CHECK );
 		}
+	}
+
+	CComPtr< ISMenu > pListMenu;
+	if ( SUCCEEDED( m_pUserInterface->GetMenu( CComBSTR( L"WebServices.List.Menu" ),
+		VARIANT_FALSE, &pListMenu ) ) && pListMenu )
+	{
+		InsertCommand( pListMenu, 1, m_nCmdCheck, VIRUSTOTAL_CHECK );
 	}
 
 	return E_FAIL;
@@ -133,7 +162,7 @@ STDMETHODIMP CPlugin::OnUpdate(
 		{
 			LONG nCount = 0;
 			hr = pGenericView->get_Count( &nCount );
-			if ( SUCCEEDED( hr ) && nCount == 1 )
+			if ( SUCCEEDED( hr ) && nCount )
 			{
 				*pbEnabled = TRI_TRUE;
 			}
@@ -158,7 +187,7 @@ STDMETHODIMP CPlugin::OnCommand(
 		{
 			LONG nCount = 0;
 			hr = pGenericView->get_Count( &nCount );
-			if ( SUCCEEDED( hr ) && nCount == 1 )
+			if ( SUCCEEDED( hr ) && nCount )
 			{
 				for ( LONG i = 0; i < nCount; ++i )
 				{

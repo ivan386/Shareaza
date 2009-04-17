@@ -47,6 +47,9 @@ protected:
 	CComPtr< IUserInterface >	m_pUserInterface;	// Shareaza GUI
 	UINT						m_nCmdCheck;		// "VersionTotal Check" command ID
 
+	// Insert menu item if no item present only
+	static void InsertCommand(ISMenu* pWebMenu, int nPos, UINT nID, LPCWSTR szItem);
+
 	// Run InternetExplorer
 	void Request(LPCWSTR szHash);
 
