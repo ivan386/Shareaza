@@ -621,11 +621,21 @@ BOOL CShareazaApp::Open(LPCTSTR lpszFileName, BOOL bDoIt)
 	else if ( nLength > 4 && ! lstrcmpi( lpszFileName + nLength - 4, _T(".url") ) )
 		return OpenInternetShortcut( lpszFileName, bDoIt );
 	else if ( nLength > 4 && ! lstrcmpi( lpszFileName + nLength - 4, _T(".met") ) )
-		return ! bDoIt || HostCache.Import( lpszFileName );
+		return OpenMET( lpszFileName, bDoIt );
+	else if ( nLength > 4 && ! lstrcmpi( lpszFileName + nLength - 4, _T(".dat") ) )
+		return OpenMET( lpszFileName, bDoIt );
 	else if ( nLength > 4 && ! lstrcmpi( lpszFileName + nLength - 4, _T(".lnk") ) )
 		return OpenShellShortcut( lpszFileName, bDoIt );
 	else
 		return OpenURL( lpszFileName, bDoIt );
+}
+
+BOOL CShareazaApp::OpenMET(LPCTSTR lpszFileName, BOOL bDoIt)
+{
+	if ( ! bDoIt )
+		return TRUE;
+
+	return HostCache.Import( lpszFileName );
 }
 
 BOOL CShareazaApp::OpenShellShortcut(LPCTSTR lpszFileName, BOOL bDoIt)
@@ -645,31 +655,31 @@ BOOL CShareazaApp::OpenInternetShortcut(LPCTSTR lpszFileName, BOOL bDoIt)
 
 BOOL CShareazaApp::OpenTorrent(LPCTSTR lpszFileName, BOOL bDoIt)
 {
-	if ( bDoIt )
-		theApp.Message( MSG_NOTICE, IDS_BT_PREFETCH_FILE, lpszFileName );
-
-	BOOL bResult = FALSE;
+	// Test torrent
 	auto_ptr< CBTInfo > pTorrent( new CBTInfo() );
 	if ( pTorrent.get() )
 	{
 		if ( pTorrent->LoadTorrentFile( lpszFileName ) )
 		{
-			if ( bDoIt && pTorrent->HasEncodingError() )
-				theApp.Message( MSG_NOTICE, IDS_BT_ENCODING );
 			auto_ptr< CShareazaURL > pURL( new CShareazaURL( pTorrent.release() ) );
 			if ( pURL.get() )
 			{
-				bResult = TRUE;
-				if ( bDoIt )
-					return PostMainWndMessage( WM_URL, (WPARAM)pURL.release() );
+				if ( ! bDoIt )
+					return TRUE;
+
+				// Open torrent
+				auto_array< TCHAR > pszPath( new TCHAR[ lstrlen( lpszFileName ) + 1 ] );
+				if ( pszPath.get() )
+				{
+					lstrcpy( pszPath.get(), lpszFileName );
+					if ( PostMainWndMessage( WM_TORRENT, (WPARAM)pszPath.release() ) )
+						return TRUE;
+				}
 			}
 		}
 	}
 
-	if ( bDoIt )
-		theApp.Message( MSG_ERROR, IDS_BT_PREFETCH_ERROR, lpszFileName );
-
-	return bResult;
+	return FALSE;
 }
 
 BOOL CShareazaApp::OpenCollection(LPCTSTR lpszFileName, BOOL bDoIt)

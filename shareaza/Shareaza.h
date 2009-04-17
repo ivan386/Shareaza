@@ -156,6 +156,8 @@ public:
 	virtual CDocument*	OpenDocumentFile(LPCTSTR lpszFileName);
 	// Open file or url (generic function)
 	static BOOL			Open(LPCTSTR lpszFileName, BOOL bDoIt);
+	// Open .met or .dat file
+	static BOOL			OpenMET(LPCTSTR lpszFileName, BOOL bDoIt);
 	// Open .lnk file
 	static BOOL			OpenShellShortcut(LPCTSTR lpszFileName, BOOL bDoIt);
 	// Open .url file
@@ -427,7 +429,7 @@ inline __int64 GetRandomNum<__int64>(const __int64& min, const __int64& max)
 #define WM_TRAY				(WM_APP+104)	// Tray icon notification ( WPARAM: unused, LPARAM: uMouseMessage )
 #define WM_URL				(WM_APP+105)	// Open URL ( WPARAM: CShareazaURL* pURL, LPARAM: unused )
 #define WM_SKINCHANGED		(WM_APP+106)	// Skin change ( WPARAM: unused, LPARAM: unused )
-#define WM_COLLECTION		(WM_APP+107)	// Open collection file ( WPARAM: unused, LPARAM: LPTSTR szFilename )
+#define WM_COLLECTION		(WM_APP+107)	// Open collection file ( WPARAM: LPTSTR szFilename, LPARAM: unused )
 #define WM_OPENSEARCH		(WM_APP+108)	// Open new search ( WPARAM: CQuerySearch* pSearch, LPARAM: unused )
 #define WM_LIBRARYSEARCH	(WM_APP+110)	// Start file library search ( WPARAM: LPTSTR pszSearch, LPARAM: unused )
 #define WM_PLAYFILE			(WM_APP+111)	// Play file by media system ( WPARAM: unused, LPARAM: CString* pFilename )
@@ -437,6 +439,7 @@ inline __int64 GetRandomNum<__int64>(const __int64& min, const __int64& max)
 #define WM_SANITY_CHECK		(WM_APP+115)	// Run allsystem check against banned hosts ( WPARAM: unused, LPARAM: unused )
 #define WM_QUERYHITS		(WM_APP+116)	// Route query hits over windows ( WPARAM: unused, LPARAM: CQueryHit* pHits )
 #define WM_NOWUPLOADING		(WM_APP+117)	// New upload notification ( WPARAM: unused, LPARAM: CString* pFilename )
+#define WM_TORRENT			(WM_APP+118)	// Open torrent file ( WPARAM: LPTSTR szFilename, LPARAM: unused )
 
 #define ID_PLUGIN_FIRST	27000
 #define ID_PLUGIN_LAST	27999

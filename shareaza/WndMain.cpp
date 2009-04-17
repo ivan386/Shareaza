@@ -124,6 +124,7 @@ BEGIN_MESSAGE_MAP(CMainWnd, CMDIFrameWnd)
 	ON_MESSAGE(WM_WINSOCK, OnWinsock)
 	ON_MESSAGE(WM_URL, OnHandleURL)
 	ON_MESSAGE(WM_COLLECTION, OnHandleCollection)
+	ON_MESSAGE(WM_TORRENT, OnHandleTorrent)
 	ON_MESSAGE(WM_VERSIONCHECK, OnVersionCheck)
 	ON_MESSAGE(WM_OPENCHAT, OnOpenChat)
 	ON_MESSAGE(WM_OPENSEARCH, OnOpenSearch)
@@ -1197,6 +1198,18 @@ LRESULT CMainWnd::OnHandleCollection(WPARAM wParam, LPARAM /*lParam*/)
 	{
 		pLibrary->OnCollection( strPath );
 	}
+
+	return 0;
+}
+
+LRESULT CMainWnd::OnHandleTorrent(WPARAM wParam, LPARAM /*lParam*/)
+{
+	LPTSTR pszPath = (LPTSTR)wParam;
+	CString strPath( pszPath );
+	delete [] pszPath;
+
+	CTorrentSeedDlg dlg( strPath );
+	dlg.DoModal();
 
 	return 0;
 }

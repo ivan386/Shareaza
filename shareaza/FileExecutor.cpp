@@ -145,24 +145,13 @@ BOOL CFileExecutor::Execute(LPCTSTR pszFile, BOOL bSkipSecurityCheck, LPCTSTR ps
 	if ( ! ( GetFileAttributes( pszFile ) & FILE_ATTRIBUTE_DIRECTORY ) )
 		strType = CString( PathFindExtension( pszFile ) ).MakeLower();
 
-	// Handle collections
-	if ( strType == _T(".co") ||
-		 strType == _T(".collection") ||
-		 strType == _T(".emulecollection") )
+	// Open known file types
+	if ( theApp.Open( pszFile, FALSE ) )
 	{
-		if ( CLibraryWnd* pWnd = GetLibraryWindow() )
-		{
-			pWnd->OnCollection( pszFile );
-		}
+		theApp.Open( pszFile, TRUE );
+
 		// Skip file
 		return TRUE;
-	}
-
-	// Handle torrents
-	if ( strType == _T(".torrent") )
-	{
-		CTorrentSeedDlg dlg( pszFile );
-		return ( dlg.DoModal() == IDOK );
 	}
 
 	// Prepare partials
