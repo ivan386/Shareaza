@@ -1296,3 +1296,21 @@ STDMETHODIMP CLibraryFile::XLibraryFile::Move(BSTR /*sNewPath*/)
 	METHOD_PROLOGUE( CLibraryFile, LibraryFile )
 	return E_NOTIMPL;
 }
+
+STDMETHODIMP CLibraryFile::XLibraryFile::MergeMetadata(ISXMLElement* pXML, VARIANT_BOOL bOverwrite, VARIANT_BOOL* pbValue)
+{
+	METHOD_PROLOGUE( CLibraryFile, LibraryFile )
+
+	if ( ! pbValue )
+		return E_POINTER;
+
+	if ( CXMLElement* pReal = CXMLCOM::Unwrap( pXML ) )
+	{
+		*pbValue = pThis->MergeMetadata( pReal, bOverwrite ) ?
+			VARIANT_TRUE : VARIANT_FALSE;
+	}
+	else
+		*pbValue = VARIANT_FALSE;
+
+	return S_OK;
+}

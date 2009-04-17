@@ -178,6 +178,7 @@ protected:
 		STDMETHOD(Rename)(BSTR sNewName);
 		STDMETHOD(Copy)(BSTR sNewPath);
 		STDMETHOD(Move)(BSTR sNewPath);
+		STDMETHOD(MergeMetadata)(ISXMLElement* pXML, VARIANT_BOOL bOverwrite, VARIANT_BOOL* pbValue);
 	END_INTERFACE_PART(LibraryFile)
 	
 	DECLARE_INTERFACE_MAP()

@@ -593,6 +593,8 @@ library Shareaza
 		[id(33)] HRESULT Rename( [in] BSTR sNewName );
 		[id(34)] HRESULT Copy( [in] BSTR sNewPath );
 		[id(35)] HRESULT Move( [in] BSTR sNewPath );
+
+		[id(36)] HRESULT MergeMetadata( [in] ISXMLElement* pXML, [in] VARIANT_BOOL bOverwrite, [out,retval] VARIANT_BOOL* pbValue );
 	};
 
 	//
