@@ -29,6 +29,8 @@ void CPlugin::InsertCommand(ISMenu* pWebMenu, int nPos, UINT nID, LPCWSTR szItem
 
 HRESULT CPlugin::Request(LPCWSTR szHash)
 {
+	ATLTRACE( _T("CPlugin::Request( %ls )\n"), szHash );
+
 	CComPtr< IWebBrowserApp > pWebBrowserApp;
 	HRESULT hr = pWebBrowserApp.CoCreateInstance( CLSID_InternetExplorer );
 	if ( SUCCEEDED( hr ) )
@@ -134,6 +136,17 @@ STDMETHODIMP CPlugin::InsertCommands()
 		}
 	}
 
+	CComPtr< ISMenu > pVirtualMenu;
+	if ( SUCCEEDED( m_pUserInterface->GetMenu( CComBSTR( L"CLibraryFileView.Virtual" ),
+		VARIANT_FALSE, &pVirtualMenu ) ) && pVirtualMenu )
+	{
+		CComPtr< ISMenu > pWebMenu;
+		if ( SUCCEEDED( pVirtualMenu->get_Item( CComVariant( 9 ), &pWebMenu ) ) && pWebMenu )
+		{
+			InsertCommand( pWebMenu, 2, m_nCmdCheck, VIRUSTOTAL_CHECK );
+		}
+	}
+
 	CComPtr< ISMenu > pListMenu;
 	if ( SUCCEEDED( m_pUserInterface->GetMenu( CComBSTR( L"WebServices.List.Menu" ),
 		VARIANT_FALSE, &pListMenu ) ) && pListMenu )
@@ -182,8 +195,13 @@ STDMETHODIMP CPlugin::OnUpdate(
 STDMETHODIMP CPlugin::OnCommand( 
 	/* [in] */ UINT nCommandID)
 {
+	ATLTRACE( _T("CPlugin::OnCommand( %d )\n"), nCommandID );
+
 	if ( ! m_pUserInterface )
+	{
+		ATLTRACE( _T("CPlugin::OnCommand : No user interface.\n") );
 		return E_UNEXPECTED;
+	}
 
 	if ( nCommandID == m_nCmdCheck )
 	{
@@ -252,7 +270,11 @@ STDMETHODIMP CPlugin::OnCommand(
 				}
 				return S_OK;
 			}
+			else
+				ATLTRACE( _T("CPlugin::OnCommand() : No files selected: 0x%08x\n"), hr );
 		}
+		else
+			ATLTRACE( _T("CPlugin::OnCommand() : Active view get error: 0x%08x\n"), hr );
 	}
 
 	return S_FALSE;
