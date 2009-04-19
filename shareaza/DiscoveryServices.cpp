@@ -1413,7 +1413,7 @@ BOOL CDiscoveryServices::RunWebCacheGet(BOOL bCaches)
 		{
 			CString sPart = strTmp.SpanExcluding( _T("|") );
 			strTmp = strTmp.Mid( sPart.GetLength() + 1 );
-			oParts.Add( sPart );
+			oParts.Add( sPart.Trim() );
 		}
 
 		if ( ! oParts[ 0 ].CompareNoCase( _T("h") ) )
@@ -1438,7 +1438,7 @@ BOOL CDiscoveryServices::RunWebCacheGet(BOOL bCaches)
 					
 					// Get current leaves field
 					DWORD nCurrentLeaves = 0;
-					if ( oParts.GetCount() >= 5 )
+					if ( oParts.GetCount() >= 5 && ! oParts[ 4 ].IsEmpty() )
 					{
 						int nCurrentLeavesTmp;
 						if ( _stscanf( oParts[ 4 ], _T("%i"), &nCurrentLeavesTmp ) == 1 &&
@@ -1453,14 +1453,14 @@ BOOL CDiscoveryServices::RunWebCacheGet(BOOL bCaches)
 
 					// Get vendor field
 					CVendor* pVendor = NULL;
-					if ( oParts.GetCount() >= 6 )
+					if ( oParts.GetCount() >= 6 && ! oParts[ 5 ].IsEmpty() )
 					{
 						pVendor = VendorCache.Lookup( oParts[ 5 ].Left( 4 ) );
 					}
 
 					// Get uptime field
 					DWORD tUptime = 0;
-					if ( oParts.GetCount() >= 7 )
+					if ( oParts.GetCount() >= 7 && ! oParts[ 6 ].IsEmpty() )
 					{
 						int tUptimeTmp;
 						if ( _stscanf( oParts[ 6 ], _T("%i"), &tUptimeTmp ) == 1 &&
@@ -1475,7 +1475,7 @@ BOOL CDiscoveryServices::RunWebCacheGet(BOOL bCaches)
 
 					// Get leaf limit field
 					DWORD nLeafLimit = 0;
-					if ( oParts.GetCount() >= 8 )
+					if ( oParts.GetCount() >= 8 && ! oParts[ 7 ].IsEmpty() )
 					{
 						int nLeafLimitTmp;
 						if ( _stscanf( oParts[ 7 ], _T("%i"), &nLeafLimitTmp ) == 1 &&
