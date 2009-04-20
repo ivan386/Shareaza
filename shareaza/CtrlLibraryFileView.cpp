@@ -313,13 +313,16 @@ void CLibraryFileView::OnLibraryLaunch()
 
 			LoadString( strFormat, IDS_LIBRARY_VERIFY_FAIL );
 			strMessage.Format( strFormat, (LPCTSTR)strPath );
-			UINT nResponse = AfxMessageBox( strMessage, MB_ICONEXCLAMATION|MB_YESNOCANCEL|MB_DEFBUTTON2 );
-			if ( nResponse == IDCANCEL ) break;
-			if ( nResponse == IDNO ) continue;
+			INT_PTR nResponse( AfxMessageBox( strMessage, MB_ICONEXCLAMATION|MB_YESNOCANCEL|MB_DEFBUTTON2 ) );
+			if ( nResponse == IDCANCEL )
+				break;
+			if ( nResponse == IDNO )
+				continue;
 
 			LoadString( strMessage, IDS_LIBRARY_VERIFY_FIX );
 			nResponse = AfxMessageBox( strMessage, MB_ICONQUESTION|MB_YESNOCANCEL|MB_DEFBUTTON2 );
-			if ( nResponse == IDCANCEL ) break;
+			if ( nResponse == IDCANCEL )
+				break;
 			if ( nResponse == IDYES )
 			{
 				CQuickLock pLock( Library.m_pSection );

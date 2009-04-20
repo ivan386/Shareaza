@@ -967,10 +967,12 @@ void CDownloadsWnd::OnDownloadsLaunch()
 					strMessage.Format( strFormat, (LPCTSTR)strName );
 
 					pLock.Unlock();
-					UINT nResponse = AfxMessageBox( strMessage, MB_ICONEXCLAMATION|MB_YESNOCANCEL|MB_DEFBUTTON2 );
-					if ( nResponse == IDCANCEL ) break;
+					INT_PTR nResponse( AfxMessageBox( strMessage, MB_ICONEXCLAMATION|MB_YESNOCANCEL|MB_DEFBUTTON2 ) );
+					if ( nResponse == IDCANCEL )
+						break;
 					pLock.Lock();
-					if ( nResponse == IDNO ) continue;
+					if ( nResponse == IDNO )
+						continue;
 				}
 
 				int nDot = pDownload->m_sName.ReverseFind( '.' );
@@ -1059,16 +1061,19 @@ void CDownloadsWnd::OnDownloadsLaunchCopy()
 					strPrompt.Format( strFormat, (LPCTSTR)pDownload->m_sSafeName );
 
 					pLock.Unlock();
-					int nResult = AfxMessageBox( strPrompt, MB_ICONQUESTION|MB_YESNOCANCEL|MB_DEFBUTTON2 );
+					INT_PTR nResult( AfxMessageBox( strPrompt, MB_ICONQUESTION|MB_YESNOCANCEL|MB_DEFBUTTON2 ) );
 					pLock.Lock();
 
-					if ( nResult == IDCANCEL ) break;
-					else if ( nResult == IDNO ) continue;
+					if ( nResult == IDCANCEL )
+						break;
+					else if ( nResult == IDNO )
+						continue;
 				}
 
 				if ( Downloads.Check( pDownload ) ) pDownload->Preview( &pLock );
 
-				if ( ++nCount >= 3 ) break;
+				if ( ++nCount >= 3 )
+					break;
 			}
 		}
 	}

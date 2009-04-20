@@ -428,7 +428,7 @@ STDMETHODIMP CLibraryCollectionView::External::XView::Download(BSTR sURN, VARIAN
 			LoadString( strFormat, IDS_LIBRARY_COLLECTION_DOWNLOAD_FILE );
 			strMessage.Format( strFormat, (LPCTSTR)pFile->m_sName );
 
-			UINT nResponse = AfxMessageBox( strMessage, MB_ICONQUESTION|MB_YESNOCANCEL );
+			INT_PTR nResponse( AfxMessageBox( strMessage, MB_ICONQUESTION|MB_YESNOCANCEL ) );
 
 			if ( nResponse == IDYES )
 			{
@@ -456,7 +456,7 @@ STDMETHODIMP CLibraryCollectionView::External::XView::DownloadAll()
 
 	CString strMessage;
 	LoadString( strMessage, IDS_LIBRARY_COLLECTION_DOWNLOAD_ALL );
-	UINT nResponse = AfxMessageBox( strMessage, MB_ICONQUESTION|MB_YESNOCANCEL );
+	INT_PTR nResponse( AfxMessageBox( strMessage, MB_ICONQUESTION|MB_YESNOCANCEL ) );
 
 	if ( nResponse == IDYES )
 		pThis->m_pView->PostMessage( WM_COMMAND, ID_LIBRARY_FOLDER_DOWNLOAD );

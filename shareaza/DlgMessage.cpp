@@ -461,7 +461,7 @@ INT_PTR CMessageDlg::DoModal()
 	return nResult;
 }
 
-int MsgBox(LPCTSTR lpszText, UINT nType, UINT /*nIDHelp*/, DWORD* pnDefault)
+INT_PTR MsgBox(LPCTSTR lpszText, UINT nType, UINT /*nIDHelp*/, DWORD* pnDefault)
 {
 	CMessageDlg dlg;
 	dlg.m_nType = nType;
@@ -470,7 +470,7 @@ int MsgBox(LPCTSTR lpszText, UINT nType, UINT /*nIDHelp*/, DWORD* pnDefault)
 	return dlg.DoModal();
 }
 
-int MsgBox(UINT nIDPrompt, UINT nType, UINT nIDHelp, DWORD* pnDefault)
+INT_PTR MsgBox(UINT nIDPrompt, UINT nType, UINT nIDHelp, DWORD* pnDefault)
 {
 	CString strText;
 	Skin.LoadString( strText, nIDPrompt );

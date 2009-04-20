@@ -573,8 +573,9 @@ BOOL CHomeDownloadsBox::ExecuteDownload(CDownload* pDownload)
 			strMessage.Format( strFormat, (LPCTSTR)strName );
 			
 			pLock.Unlock();
-			UINT nResponse = AfxMessageBox( strMessage, MB_ICONEXCLAMATION|MB_YESNO|MB_DEFBUTTON2 );
-			if ( nResponse != IDYES ) return FALSE;
+			INT_PTR nResponse( AfxMessageBox( strMessage, MB_ICONEXCLAMATION|MB_YESNO|MB_DEFBUTTON2 ) );
+			if ( nResponse != IDYES )
+				return FALSE;
 			pLock.Lock();
 		}
 		
@@ -602,8 +603,9 @@ BOOL CHomeDownloadsBox::ExecuteDownload(CDownload* pDownload)
 			strPrompt.Format( strFormat, (LPCTSTR)pDownload->m_sSafeName );
 			
 			pLock.Unlock();
-			int nResult = AfxMessageBox( strPrompt, MB_ICONQUESTION|MB_YESNO|MB_DEFBUTTON2 );
-			if ( nResult != IDYES ) return FALSE;
+			INT_PTR nResult( AfxMessageBox( strPrompt, MB_ICONQUESTION|MB_YESNO|MB_DEFBUTTON2 ) );
+			if ( nResult != IDYES )
+				return FALSE;
 			pLock.Lock();
 		}
 		
