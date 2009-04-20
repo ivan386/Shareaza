@@ -128,10 +128,19 @@ TRISTATE CFileExecutor::IsSafeExecute(LPCTSTR szExt, LPCTSTR szFile)
 		CString strFormat, strPrompt;
 		Skin.LoadString( strFormat, IDS_LIBRARY_CONFIRM_EXECUTE );
 		strPrompt.Format( strFormat, szFile );
-		if ( AfxMessageBox( strPrompt,
-			MB_ICONQUESTION | MB_YESNOCANCEL | MB_DEFBUTTON2 )  == IDCANCEL )
+		switch ( AfxMessageBox( strPrompt,
+			MB_ICONQUESTION | MB_YESNOCANCEL | MB_DEFBUTTON2 ) )
+		{
+		case IDYES:
+			// Run it
+			return TRI_TRUE;
+		case IDNO:
+			// Skip it
+			return TRI_FALSE;
+		default:
 			// Cancel file operation
 			return TRI_UNKNOWN;
+		}
 	}
 
 	return bSafe ? TRI_TRUE : TRI_FALSE;
