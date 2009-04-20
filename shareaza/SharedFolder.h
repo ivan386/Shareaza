@@ -78,6 +78,7 @@ public:
 	INT_PTR			GetFileCount() const;
 	int				GetFileList(CLibraryList* pList, BOOL bRecursive) const;
 	int				GetSharedCount() const;
+	CString			GetRelativeName() const;
 
 	void			Scan();
 	BOOL			IsShared() const;

@@ -108,6 +108,35 @@ BOOL CLibraryFolders::CheckFolder(CLibraryFolder* pFolder, BOOL bRecursive) cons
 	return FALSE;
 }
 
+CLibraryFolder* CLibraryFolders::GetFolderByName(LPCTSTR pszName) const
+{
+	CString strName( pszName );
+	ToLower( strName );
+
+	CString strNextName;
+	int nPos = strName.Find( _T('\\') );
+	if ( nPos != -1 )
+	{
+		strNextName = strName.Mid( nPos + 1 );
+		strName = strName.Left( nPos );
+	}
+
+	for ( POSITION pos = GetFolderIterator() ; pos; )
+	{
+		CLibraryFolder* pFolder = GetNextFolder( pos );
+
+		if ( pFolder->m_sName.CompareNoCase( strName ) == 0 )
+		{
+			if ( ! strNextName.IsEmpty() )
+				pFolder = pFolder->GetFolderByName( strNextName );
+
+			return pFolder;
+		}
+	}
+
+	return NULL;
+}
+
 //////////////////////////////////////////////////////////////////////
 // CLibraryFolders add a root physical folder
 

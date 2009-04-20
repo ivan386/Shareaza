@@ -112,10 +112,25 @@ CLibraryFolder* CLibraryFolder::GetNextFolder(POSITION& pos) const
 
 CLibraryFolder* CLibraryFolder::GetFolderByName(LPCTSTR pszName) const
 {
-	CLibraryFolder* pOutput = NULL;
 	CString strName( pszName );
 	ToLower( strName );
-	return ( m_pFolders.Lookup( strName, pOutput ) ) ? pOutput : NULL;
+
+	CString strNextName;
+	int nPos = strName.Find( _T('\\') );
+	if ( nPos != -1 )
+	{
+		strNextName = strName.Mid( nPos + 1 );
+		strName = strName.Left( nPos );
+	}
+
+	CLibraryFolder* pOutput = NULL;
+	if ( ! m_pFolders.Lookup( strName, pOutput ) )
+		return NULL;
+
+	if ( strNextName.IsEmpty() )
+		return pOutput;
+	else
+		return pOutput->GetFolderByName( strNextName );
 }
 
 CLibraryFolder* CLibraryFolder::GetFolderByPath(LPCTSTR pszPath) const
@@ -340,6 +355,14 @@ void CLibraryFolder::PathToName()
 		m_sName = m_sName.Mid( nPos + 1 );
 	m_sNameLC = m_sName;
 	ToLower( m_sNameLC );
+}
+
+CString CLibraryFolder::GetRelativeName() const
+{
+	if ( m_pParent )
+		return m_pParent->GetRelativeName() + _T("\\") + m_sName;
+	else
+		return m_sName;
 }
 
 //////////////////////////////////////////////////////////////////////

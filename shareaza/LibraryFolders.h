@@ -48,6 +48,7 @@ public:
 	INT_PTR			GetFolderCount() const { return m_pFolders.GetCount(); }
 	CLibraryFolder*	GetFolder(LPCTSTR pszPath) const;
 	BOOL			CheckFolder(CLibraryFolder* pFolder, BOOL bRecursive = FALSE) const;
+	CLibraryFolder*	GetFolderByName(LPCTSTR pszName) const;
 	CLibraryFolder*	AddFolder(LPCTSTR pszPath);
 	CLibraryFolder*	AddFolder(LPCTSTR pszPath, BOOL bShared);
 	bool			AddSharedFolder(CListCtrl& oList);
