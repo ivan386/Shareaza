@@ -1624,7 +1624,7 @@ BOOL CEDClient::OnAskSharedDirs(CEDPacket* /*pPacket*/)
 
 			if ( CEDPacket* pReply = CEDPacket::New( ED2K_C2C_ASKSHAREDDIRSANSWER ) )
 			{
-				pReply->WriteLongLE( oFolderPath.GetCount() );
+				pReply->WriteLongLE( static_cast< DWORD>( oFolderPath.GetCount() ) );
 
 				for ( POSITION pos = oFolderPath.GetHeadPosition(); pos ; )
 				{
