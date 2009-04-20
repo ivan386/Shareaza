@@ -158,15 +158,14 @@ INT_PTR CSettingsManagerDlg::DoModal(LPCTSTR pszWindow)
 	}
 	else
 	{
-		SetActivePage( GetPage(
-			theApp.GetProfileString( _T("Settings"), _T("LastSettingsPage"), _T("") ) ) );
+		SetActivePage( GetPage( Settings.General.LastSettingsPage ) );
 	}
 
 	INT_PTR nReturn = CSettingsSheet::DoModal();
 
 	if ( m_pFirst )
 	{
-		theApp.WriteProfileString( _T("Settings"), _T("LastSettingsPage"), CString( m_pFirst->GetRuntimeClass()->m_lpszClassName ) );
+		Settings.General.LastSettingsPage = m_pFirst->GetRuntimeClass()->m_lpszClassName;
 	}
 
 	return nReturn;

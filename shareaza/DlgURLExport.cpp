@@ -82,10 +82,7 @@ BOOL CURLExportDlg::OnInitDialog()
 	strMessage.Format( strFormat, m_pFiles.GetCount() );
 	m_wndMessage.SetWindowText( strMessage );
 
-	m_sFormat = theApp.GetProfileString( _T("Library"), _T("URLExportFormat"), _T("") );
-
-	if ( m_sFormat.IsEmpty() )
-		m_sFormat = _T("<a href=\"magnet:?xt=urn:bitprint:[SHA1].[TIGER]&amp;xt=urn:ed2khash:[ED2K]&amp;xt=urn:md5:[MD5]&amp;xl=[ByteSize]&amp;dn=[NameURI]\">[Name]</a><br>");
+	m_sFormat = Settings.Library.URLExportFormat;
 
 	UpdateData( FALSE );
 
@@ -143,7 +140,7 @@ void CURLExportDlg::OnSave()
 
 	if ( m_sFormat.IsEmpty() ) return;
 
-	theApp.WriteProfileString( _T("Library"), _T("URLExportFormat"), m_sFormat );
+	Settings.Library.URLExportFormat = m_sFormat;
 
 	LPCTSTR pszExt = ( m_sFormat.Find( '<' ) >= 0 ) ? _T("htm") : _T("txt");
 	LPCTSTR pszFilter = ( m_sFormat.Find( '<' ) >= 0 ) ?
@@ -192,7 +189,7 @@ void CURLExportDlg::OnCopy()
 
 	if ( m_sFormat.IsEmpty() ) return;
 
-	theApp.WriteProfileString( _T("Library"), _T("URLExportFormat"), m_sFormat );
+	Settings.Library.URLExportFormat = m_sFormat;
 
 	CWaitCursor pCursor;
 	CString strOutput;

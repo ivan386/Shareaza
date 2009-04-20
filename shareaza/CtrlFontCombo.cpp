@@ -289,7 +289,7 @@ void PASCAL DDX_FontCombo(CDataExchange* pDX, int nIDC, CString& strFontName)
 			pCombo->m_sSelectedFont = strFontName;
 		}
 		else
-			strFontName = theApp.m_sDefaultFont;
+			strFontName = Settings.Fonts.DefaultFont;
 	}
 	else //data to control
 	{
@@ -304,13 +304,13 @@ void PASCAL DDX_FontCombo(CDataExchange* pDX, int nIDC, CString& strFontName)
 		}
 		else
 		{
-			nIndex = pCombo->FindString( -1, theApp.m_sDefaultFont );
+			nIndex = pCombo->FindString( -1, Settings.Fonts.DefaultFont );
 			if ( nIndex != CB_ERR )
 			{
 				pCombo->SetCurSel( nIndex );
 				if ( pCombo->m_sSelectedFont.IsEmpty() )
 				{
-					pCombo->m_sSelectedFont = theApp.m_sDefaultFont;
+					pCombo->m_sSelectedFont = Settings.Fonts.DefaultFont;
 				}
 			}
 			else

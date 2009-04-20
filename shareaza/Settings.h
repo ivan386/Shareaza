@@ -72,6 +72,8 @@ public:
 		bool		Running;
 		bool		CoolMenuEnable;				// Use cool skinned menus
 		bool		DialogScan;					// Set Skin engine to "dialog scan" mode. This produces "C:\Dialog.xml" file with dialog templates and disables dialog translation.
+		CString		LastSettingsPage;			// Last selected Settings dialog page
+		DWORD		LastSettingsIndex;			// Top item index of Advanced Settings list
 	} General;
 
 	struct sVersionCheck
@@ -101,6 +103,27 @@ public:
 		bool		TipMedia;
 		bool		LowResMode;
 	} Interface;
+
+	struct sWindows
+	{
+		bool		RunWizard;
+		bool		RunWarnings;
+		bool		RunPromote;
+	} Windows;
+
+	struct sToolbars
+	{
+		bool		ShowRemote;
+		bool		ShowMonitor;
+	} Toolbars;
+
+	struct sFonts
+	{
+		CString		DefaultFont;				// Main font
+		CString		PacketDumpFont;				// Packet Window font
+		CString		SystemLogFont;				// System Window font
+		DWORD		FontSize;					// The basic font size
+	} Fonts;
 
 	struct sLibrary
 	{
@@ -149,6 +172,7 @@ public:
 		bool		ScanPDF;					// Enable .pdf metadata extraction by internals
 		bool		SmartSeriesDetection;		// Organize video files in Library by using predefined patterns
 		CString		LastUsedView;				// Name of last used view
+		CString		URLExportFormat;			// Template for URL export
 	} Library;
 
 	struct sWebServices

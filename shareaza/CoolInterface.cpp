@@ -482,8 +482,8 @@ void CCoolInterface::DrawThumbnail(CDC* pDC, const CRect& rcThumb,
 
 void CCoolInterface::CreateFonts(LPCTSTR pszFace, int nSize)
 {
-	if ( ! pszFace ) pszFace = theApp.m_sDefaultFont;
-	if ( ! nSize ) nSize = theApp.m_nDefaultFontSize;
+	if ( ! pszFace ) pszFace = Settings.Fonts.DefaultFont;
+	if ( ! nSize ) nSize = Settings.Fonts.FontSize;
 
 	if ( m_fntNormal.m_hObject ) m_fntNormal.DeleteObject();
 	if ( m_fntBold.m_hObject ) m_fntBold.DeleteObject();

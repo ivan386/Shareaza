@@ -21,6 +21,7 @@
 
 #include "StdAfx.h"
 #include "Shareaza.h"
+#include "Settings.h"
 #include "CoolInterface.h"
 #include "RichDocument.h"
 #include "RichElement.h"
@@ -162,6 +163,12 @@ void CRichDocument::Clear()
 void CRichDocument::CreateFonts(LPCTSTR pszFaceName, int nSize)
 {
 	CSingleLock pLock( &m_pSection, TRUE );
+
+	if ( pszFaceName == NULL )
+		pszFaceName = Settings.Fonts.DefaultFont;
+
+	if ( nSize == 0 )
+		nSize = Settings.Fonts.FontSize + 1;
 	
 	if ( m_fntNormal.m_hObject ) m_fntNormal.DeleteObject();
 	
@@ -409,8 +416,8 @@ BOOL CRichDocument::LoadXMLStyles(CXMLElement* pParent)
 		CString strName = pXML->GetAttributeValue( _T("name") );
 		ToLower( strName );
 		
-		CString strFontFace = theApp.m_sDefaultFont;
-		int nFontSize = theApp.m_nDefaultFontSize + 1;
+		CString strFontFace = Settings.Fonts.DefaultFont;
+		int nFontSize = Settings.Fonts.FontSize + 1;
 		int nFontWeight = FW_BOLD;
 		
 		if ( CXMLElement* pFont = pXML->GetElementByName( _T("font") ) )

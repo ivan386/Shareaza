@@ -92,10 +92,6 @@ public:
 	QWORD				m_nPhysicalMemory;			// Physical RAM installed
 	int					m_nLogicalProcessors;		// Multi-CPUs, multi-cores or HT modules
 	BOOL				m_bMenuWasVisible;			// For the menus in media player window
-	int					m_nDefaultFontSize;			// The basic font size. (11)
-	CString				m_sDefaultFont;				// Main font. (Tahoma)
-	CString				m_sPacketDumpFont;			// Packet Window. (Lucida Console)
-	CString				m_sSystemLogFont;			// System Window. (Courier New)
 	CAutoPtr< CUPnPFinder > m_pUPnPFinder;
 	TRISTATE			m_bUPnPPortsForwarded;		// UPnP values are assigned when the discovery is complete
 	TRISTATE			m_bUPnPDeviceConnected;		// or when the service notifies

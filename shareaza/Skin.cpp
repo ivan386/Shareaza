@@ -1796,7 +1796,7 @@ BOOL CSkin::LoadFonts(CXMLElement* pBase, const CString& strPath)
 				else if ( strWeight.IsEmpty() )
 					strWeight = _T("400");
 
-				int nFontSize = theApp.m_nDefaultFontSize, nFontWeight = FW_NORMAL;
+				int nFontSize = Settings.Fonts.FontSize, nFontWeight = FW_NORMAL;
 
 				_stscanf( strSize, _T("%i"), &nFontSize );
 				_stscanf( strWeight, _T("%i"), &nFontWeight );

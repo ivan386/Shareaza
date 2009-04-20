@@ -261,7 +261,7 @@ void CIRCFrame::SetFonts()
 
 	m_fntEdit.CreateFont( -13, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE,
 		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
-		DEFAULT_PITCH|FF_DONTCARE, theApp.m_sDefaultFont );
+		DEFAULT_PITCH|FF_DONTCARE, Settings.Fonts.DefaultFont );
 
 	// Find optimal font size values for the starting point
 	// Code adjusted for the majority of fonts for different languages

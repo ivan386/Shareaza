@@ -166,7 +166,6 @@ CShareazaApp::CShareazaApp() :
 ,	m_nPhysicalMemory		( 0ull )
 ,	m_nLogicalProcessors	( -1 )
 ,	m_bMenuWasVisible		( FALSE )
-,	m_nDefaultFontSize		( 0 )
 ,	m_bUPnPPortsForwarded	( TRI_UNKNOWN )
 ,	m_bUPnPDeviceConnected	( TRI_UNKNOWN )
 ,	m_nUPnPExternalAddress	( 0ul )
@@ -878,30 +877,18 @@ void CShareazaApp::InitResources()
 		RegCloseKey( hKey );
 	}
 
-//	HDC screen = GetDC( 0 );
-//	scaleX = GetDeviceCaps( screen, LOGPIXELSX ) / 96.0;
-//	scaleY = GetDeviceCaps( screen, LOGPIXELSY ) / 96.0;
-//	ReleaseDC( 0, screen );
-
-	// Get the fonts from the registry
-	CString strFont = m_bIsVistaOrNewer ? _T( "Segoe UI" ) : _T( "Tahoma" ) ;
-	theApp.m_sDefaultFont		= theApp.GetProfileString( _T("Fonts"), _T("DefaultFont"), strFont );
-	theApp.m_sPacketDumpFont	= theApp.GetProfileString( _T("Fonts"), _T("PacketDumpFont"), _T("Lucida Console") );
-	theApp.m_sSystemLogFont		= theApp.GetProfileString( _T("Fonts"), _T("SystemLogFont"), strFont );
-	theApp.m_nDefaultFontSize	= theApp.GetProfileInt( _T("Fonts"), _T("FontSize"), 11 );
-
 	// Set up the default font
-	m_gdiFont.CreateFontW( -theApp.m_nDefaultFontSize, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE,
+	m_gdiFont.CreateFontW( -(int)Settings.Fonts.FontSize, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE,
 		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
-		DEFAULT_PITCH|FF_DONTCARE, theApp.m_sDefaultFont );
+		DEFAULT_PITCH|FF_DONTCARE, Settings.Fonts.DefaultFont );
 
-	m_gdiFontBold.CreateFontW( -theApp.m_nDefaultFontSize, 0, 0, 0, FW_BOLD, FALSE, FALSE, FALSE,
+	m_gdiFontBold.CreateFontW( -(int)Settings.Fonts.FontSize, 0, 0, 0, FW_BOLD, FALSE, FALSE, FALSE,
 		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
-		DEFAULT_PITCH|FF_DONTCARE, theApp.m_sDefaultFont );
+		DEFAULT_PITCH|FF_DONTCARE, Settings.Fonts.DefaultFont );
 
-	m_gdiFontLine.CreateFontW( -theApp.m_nDefaultFontSize, 0, 0, 0, FW_NORMAL, FALSE, TRUE, FALSE,
+	m_gdiFontLine.CreateFontW( -(int)Settings.Fonts.FontSize, 0, 0, 0, FW_NORMAL, FALSE, TRUE, FALSE,
 		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
-		DEFAULT_PITCH|FF_DONTCARE, theApp.m_sDefaultFont );
+		DEFAULT_PITCH|FF_DONTCARE, Settings.Fonts.DefaultFont );
 
 	srand( GetTickCount() );
 

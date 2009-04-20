@@ -329,9 +329,8 @@ void CMainWnd::SaveState()
 	if ( ! IsIconic() )
 		SaveBarState( _T("Toolbars\\CoolBar") );
 
-	theApp.WriteProfileInt( _T("Toolbars"), _T("CRemoteWnd"),  m_wndRemoteWnd.IsVisible() );
-
-	theApp.WriteProfileInt( _T("Toolbars"), _T("ShowMonitor"), m_wndMonitorBar.IsVisible() );
+	Settings.Toolbars.ShowRemote = ( m_wndRemoteWnd.IsVisible() != FALSE );
+	Settings.Toolbars.ShowMonitor = ( m_wndMonitorBar.IsVisible() != FALSE );
 
 	Settings.SaveWindow( _T("CMainWnd"), this );
 
@@ -484,7 +483,7 @@ int CMainWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	}
 	if ( ! m_wndTabBar.IsVisible() ) ShowControlBar( &m_wndTabBar, TRUE, FALSE );
 
-	if ( theApp.GetProfileInt( _T("Toolbars"), _T("CRemoteWnd"), TRUE ) )
+	if ( Settings.Toolbars.ShowRemote )
 		m_wndRemoteWnd.Create( &m_wndMonitorBar );
 
 	m_pWindows.SetOwner( this );
@@ -492,15 +491,15 @@ int CMainWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	// Boot
 
-	if ( theApp.GetProfileInt( _T("Windows"), _T("RunWizard"), FALSE ) == FALSE )
+	if ( ! Settings.Windows.RunWizard )
 	{
 		PostMessage( WM_COMMAND, ID_TOOLS_WIZARD );
 	}
-	else if ( theApp.GetProfileInt( _T("Windows"), _T("RunWarnings"), FALSE ) == FALSE )
+	else if ( ! Settings.Windows.RunWarnings )
 	{
 		PostMessage( WM_COMMAND, ID_HELP_WARNINGS );
 	}
-	else if ( theApp.GetProfileInt( _T("Windows"), _T("RunPromote"), FALSE ) == FALSE )
+	else if ( ! Settings.Windows.RunPromote )
 	{
 		PostMessage( WM_COMMAND, ID_HELP_PROMOTE );
 	}
@@ -1121,7 +1120,7 @@ LRESULT CMainWnd::OnSkinChanged(WPARAM /*wParam*/, LPARAM /*lParam*/)
 
 	m_wndRemoteWnd.OnSkinChange();
 	m_wndMonitorBar.OnSkinChange();
-	if ( theApp.GetProfileInt( L"Toolbars", L"ShowMonitor", TRUE ) )
+	if ( Settings.Toolbars.ShowMonitor )
 	{
 		// A quick workaround to show a monitor bar when skin or GUI mode is changed
 		if ( !m_wndMonitorBar.IsVisible() && Settings.General.GUIMode != GUI_WINDOWED )
@@ -2365,7 +2364,9 @@ void CMainWnd::OnLibraryFolders()
 void CMainWnd::OnToolsWizard()
 {
 	if ( ! IsWindowEnabled() ) return;
-	theApp.WriteProfileInt( _T("Windows"), _T("RunWizard"), TRUE );
+
+	Settings.Windows.RunWizard = true;
+
 	CWizardSheet::RunWizard( this );
 }
 
@@ -2467,8 +2468,8 @@ void CMainWnd::OnUpdateWindowMonitor(CCmdUI* pCmdUI)
 
 void CMainWnd::OnWindowMonitor()
 {
-	BOOL bVisible = !m_wndMonitorBar.IsVisible();
-	theApp.WriteProfileInt( L"Toolbars", L"ShowMonitor", bVisible );
+	BOOL bVisible = ! m_wndMonitorBar.IsVisible();
+	Settings.Toolbars.ShowMonitor = ( bVisible != FALSE );
 	ShowControlBar( &m_wndMonitorBar, bVisible, TRUE );
 }
 
@@ -2659,7 +2660,7 @@ void CMainWnd::OnHelpWarnings()
 {
 	if ( IsWindowEnabled() && IsWindowVisible() && ! IsIconic() )
 	{
-		theApp.WriteProfileInt( _T("Windows"), _T("RunWarnings"), TRUE );
+		Settings.Windows.RunWarnings = true;
 		CWarningsDlg dlg;
 		dlg.DoModal();
 	}
@@ -2669,7 +2670,7 @@ void CMainWnd::OnHelpPromote()
 {
 	if ( IsWindowEnabled() && IsWindowVisible() && ! IsIconic() )
 	{
-		theApp.WriteProfileInt( _T("Windows"), _T("RunPromote"), TRUE );
+		Settings.Windows.RunPromote = true;
 		CPromoteDlg dlg;
 		dlg.DoModal();
 	}
