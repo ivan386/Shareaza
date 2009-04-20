@@ -1,7 +1,7 @@
 //
 // EDPacket.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -243,10 +243,11 @@ inline void CEDPacket::CEDPacketPool::FreePoolImpl(CPacket* pPacket)
 #define ED2K_C2C_ASKSHAREDFILESANSWER	0x4B
 #define ED2K_C2C_MESSAGE				0x4E
 #define ED2K_C2C_CHANGECLIENTID			0x4D
-#define ED2K_C2C_ASKSHAREDDIRS			0x5D
-#define ED2K_C2C_ASKSHAREDDIRSANSWER	0x5F
-#define ED2K_C2C_VIEWSHAREDDIR			0x5E
-#define ED2K_C2C_VIEWSHAREDDIRANSWER	0x60
+#define ED2K_C2C_ASKSHAREDDIRS			0x5D    // (null)
+#define ED2K_C2C_ASKSHAREDDIRSANSWER	0x5F    // <count 4>(<len 2><Directory len>)[count]
+#define ED2K_C2C_VIEWSHAREDDIR			0x5E    // <len 2><Directory len>
+#define ED2K_C2C_VIEWSHAREDDIRANSWER	0x60	// <len 2><Directory len><count 4>(<HASH 16><ID 4><PORT 2><1 Tag_set>)[count]
+#define ED2K_C2C_ASKSHAREDDIRSDENIED	0x61    // (null)
 
 // eMule Client - Client TCP
 #define	ED2K_C2C_EMULEINFO				0x01
@@ -386,6 +387,9 @@ public:
 #define ED2K_FT_ATTRANSFERED		0x50
 #define ED2K_FT_ATREQUESTED			0x51
 #define ED2K_FT_ATACCEPTED			0x52
+#define	ED2K_FT_ARTIST				0xD0	// <string>
+#define	ED2K_FT_ALBUM				0xD1	// <string>
+#define	ED2K_FT_TITLE				0xD2	// <string>
 #define ED2K_FT_LENGTH				0xD3
 #define ED2K_FT_BITRATE				0xD4
 #define ED2K_FT_CODEC				0xD5

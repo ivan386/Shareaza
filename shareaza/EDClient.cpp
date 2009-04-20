@@ -1,7 +1,7 @@
 //
 // EDClient.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -32,7 +32,9 @@
 #include "HostCache.h"
 
 #include "Library.h"
+#include "LibraryFolders.h"
 #include "SharedFile.h"
+#include "SharedFolder.h"
 #include "Download.h"
 #include "Downloads.h"
 #include "DownloadSource.h"
@@ -45,6 +47,8 @@
 #include "ChatCore.h"
 #include "Security.h"
 #include "UploadQueues.h"
+#include "Schema.h"
+#include "XML.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -632,6 +636,12 @@ BOOL CEDClient::OnPacket(CEDPacket* pPacket)
 		// Misc
 		case ED2K_C2C_MESSAGE:
 			return OnMessage( pPacket );
+
+		// Browse
+		case ED2K_C2C_ASKSHAREDDIRS:
+			return OnAskSharedDirs( pPacket );
+		case ED2K_C2C_VIEWSHAREDDIR:
+			return OnViewSharedDir( pPacket );
 		}
 	}
 	else if ( pPacket->m_nEdProtocol == ED2K_PROTOCOL_EMULE )
@@ -1577,6 +1587,265 @@ BOOL CEDClient::OnMessage(CEDPacket* pPacket)
 		// Chat is disabled- don't open a chat window. Display in system window instead.
 		theApp.Message( MSG_INFO, _T("Message from %s: %s"), (LPCTSTR)m_sAddress, sMessage );
 	}
+	return TRUE;
+}
+
+//////////////////////////////////////////////////////////////////////
+// CEDClient shared dirs request
+
+BOOL CEDClient::OnAskSharedDirs(CEDPacket* /*pPacket*/)
+{
+	if ( Settings.Community.ServeFiles )
+	{
+		CSingleLock oLock( &Library.m_pSection );
+		if ( oLock.Lock( 1000 ) )
+		{
+			CList< CString > oFolderPath;
+			CList< CLibraryFolder* > oFolders;
+			for ( POSITION pos = LibraryFolders.GetFolderIterator() ; pos ; )
+			{
+				oFolders.AddTail( LibraryFolders.GetNextFolder( pos ) );
+			}
+			while ( ! oFolders.IsEmpty() )
+			{
+				CLibraryFolder* pFolder = oFolders.RemoveHead();
+
+				if ( pFolder->IsShared() )
+				{
+					oFolderPath.AddTail( pFolder->GetRelativeName() );
+				}
+
+				for ( POSITION pos = pFolder->GetFolderIterator(); pos ; )
+				{
+					oFolders.AddTail( pFolder->GetNextFolder( pos ) );
+				}
+			}
+			oLock.Unlock();
+
+			if ( CEDPacket* pReply = CEDPacket::New( ED2K_C2C_ASKSHAREDDIRSANSWER ) )
+			{
+				pReply->WriteLongLE( oFolderPath.GetCount() );
+
+				for ( POSITION pos = oFolderPath.GetHeadPosition(); pos ; )
+				{
+					CString sPath = oFolderPath.GetNext( pos );
+					pReply->WriteEDString( sPath, m_bEmUnicode );
+				}
+
+				Send( pReply );
+
+				return TRUE;
+			}
+		}
+	}
+
+	if ( CEDPacket* pReply = CEDPacket::New( ED2K_C2C_ASKSHAREDDIRSDENIED ) )
+	{
+		Send( pReply );
+	}
+
+	return TRUE;
+}
+
+//////////////////////////////////////////////////////////////////////
+// CEDClient dir browse request
+
+BOOL CEDClient::OnViewSharedDir(CEDPacket* pPacket)
+{
+	CString sDir = pPacket->ReadEDString( m_bEmUnicode );
+
+	if ( Settings.Community.ServeFiles )
+	{
+		CSingleLock oLock( &Library.m_pSection );
+		if ( oLock.Lock( 1000 ) )
+		{
+			CLibraryFolder* pFolder = LibraryFolders.GetFolderByName( sDir );
+			if ( pFolder && pFolder->IsShared() )
+			{
+				// Count files
+				DWORD nCount = 0;
+				for ( POSITION pos = pFolder->GetFileIterator(); pos; )
+				{
+					CLibraryFile* pFile = pFolder->GetNextFile( pos );
+
+					if ( ! pFile->IsShared() )
+						continue;
+
+					nCount++;
+				}
+
+				if ( CEDPacket* pReply = CEDPacket::New( ED2K_C2C_VIEWSHAREDDIRANSWER ) )
+				{
+					// Original dir name
+					pReply->WriteEDString( sDir, m_bEmUnicode );
+
+					// Number of files
+					pReply->WriteLongLE( nCount );
+
+					for ( POSITION pos = pFolder->GetFileIterator(); pos && nCount; )
+					{
+						CLibraryFile* pFile = pFolder->GetNextFile( pos );
+						
+						if ( ! pFile->IsShared() )
+							continue;
+
+						--nCount;
+
+						// File hash
+						pReply->Write( pFile->m_oED2K );
+
+						// ID
+						pReply->WriteLongLE( m_nClientID );
+
+						// Port
+						pReply->WriteShortLE( htons( Network.m_pHost.sin_port ) );
+
+						DWORD nTags = 2;
+
+						CString strType, strTitle, strArtist, strAlbum, strCodec;
+						DWORD nBitrate = 0, nLength = 0;
+						if ( pFile->m_pSchema &&
+							 pFile->m_pSchema->m_sDonkeyType.GetLength() )
+						{
+							strType = pFile->m_pSchema->m_sDonkeyType;
+							nTags ++;
+
+							// Title
+							if ( pFile->m_pMetadata->GetAttributeValue( _T("title") ).GetLength() )
+							{
+								strTitle = pFile->m_pMetadata->GetAttributeValue( _T("title") );
+								if ( strTitle.GetLength() )
+									nTags ++;
+							}
+
+							if ( pFile->IsSchemaURI( CSchema::uriAudio ) )
+							{
+								// Artist
+								if ( pFile->m_pMetadata->GetAttributeValue( _T("artist") ).GetLength() )
+								{
+									strArtist = pFile->m_pMetadata->GetAttributeValue( _T("artist") );
+									if ( strArtist.GetLength() )
+										nTags ++;
+								}
+
+								// Album
+								if ( pFile->m_pMetadata->GetAttributeValue( _T("album") ).GetLength() )
+								{
+									strAlbum = pFile->m_pMetadata->GetAttributeValue( _T("album") );
+									if ( strAlbum.GetLength() )
+										nTags ++;
+								}
+
+								// Bitrate
+								if ( pFile->m_pMetadata->GetAttributeValue( _T("bitrate") ).GetLength() )	//And has a bitrate
+								{
+									nBitrate = 0;
+									_stscanf( pFile->m_pMetadata->GetAttributeValue( _T("bitrate") ), _T("%i"), &nBitrate );
+									if ( nBitrate )
+										nTags ++;
+								}
+
+								// Length
+								if ( pFile->m_pMetadata->GetAttributeValue( _T("seconds") ).GetLength() )	//And has seconds
+								{
+									nLength = 0;
+									_stscanf( pFile->m_pMetadata->GetAttributeValue( _T("seconds") ), _T("%i"), &nLength );
+									if ( nLength )
+										nTags ++;
+								}
+							}
+							else if ( pFile->IsSchemaURI( CSchema::uriVideo ) )
+							{
+								// Codec
+								if ( pFile->m_pMetadata->GetAttributeValue( _T("codec") ).GetLength() )
+								{
+									strCodec = pFile->m_pMetadata->GetAttributeValue( _T("codec") );
+									if ( strCodec.GetLength() )
+										nTags ++;
+								}
+
+								// Length
+								if ( pFile->m_pMetadata->GetAttributeValue( _T("minutes") ).GetLength() )
+								{
+									double nMins = 0.0;
+									_stscanf( pFile->m_pMetadata->GetAttributeValue( _T("minutes") ), _T("%lf"), &nMins );
+									nLength = (DWORD)( nMins * (double)60 );	//Convert to seconds
+									if ( nLength )
+										nTags ++;
+								}
+							}
+						}
+
+						BYTE nRating = 0;
+						if ( pFile->m_nRating )
+						{
+							nRating = (BYTE)min( pFile->m_nRating, 5 );
+							nTags ++;
+						}
+
+						if ( pFile->m_nSize > MAX_SIZE_32BIT )
+							nTags ++;
+							
+						// Number of Tags
+						pReply->WriteLongLE( nTags );
+
+						// Filename
+						CEDTag( ED2K_FT_FILENAME, pFile->m_sName ).Write( pReply );
+
+						// File size
+						CEDTag( ED2K_FT_FILESIZE, (DWORD)pFile->m_nSize ).Write( pReply );
+						if ( pFile->m_nSize > MAX_SIZE_32BIT )
+							CEDTag( ED2K_FT_FILESIZEUPPER,
+								(DWORD)(pFile->m_nSize >> 32 ) ).Write( pReply );
+
+						// File type
+						if ( strType.GetLength() )
+							CEDTag( ED2K_FT_FILETYPE, strType ).Write( pReply );
+						
+						// Title
+						if ( strTitle.GetLength() )
+							CEDTag( ED2K_FT_TITLE, strTitle ).Write( pReply );
+						
+						// Artist
+						if ( strArtist.GetLength() )
+							CEDTag( ED2K_FT_ARTIST, strArtist ).Write( pReply );
+
+						// Album
+						if ( strAlbum.GetLength() )
+							CEDTag( ED2K_FT_ALBUM, strAlbum ).Write( pReply );
+					
+						// Bitrate
+						if ( nBitrate )
+							CEDTag( ED2K_FT_BITRATE, nBitrate ).Write( pReply );
+						
+						// Length
+						if ( nLength )
+							CEDTag( ED2K_FT_LENGTH, nLength ).Write( pReply );
+						
+						// Codec
+						if ( strCodec.GetLength() )
+							CEDTag( ED2K_FT_CODEC, strCodec ).Write( pReply );
+						
+						// File rating
+						if ( nRating )
+							CEDTag( ED2K_FT_FILERATING, nRating ).Write( pReply );
+					}
+
+					oLock.Unlock();
+
+					Send( pReply );
+
+					return TRUE;
+				}
+			}
+		}
+	}
+
+	if ( CEDPacket* pReply = CEDPacket::New( ED2K_C2C_ASKSHAREDDIRSDENIED ) )
+	{
+		Send( pReply );
+	}
+
 	return TRUE;
 }
 
