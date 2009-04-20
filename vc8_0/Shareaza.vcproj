@@ -3576,10 +3576,6 @@
 					>
 				</File>
 				<File
-					RelativePath="..\shareaza\augment\com_ptr.hpp"
-					>
-				</File>
-				<File
 					RelativePath="..\shareaza\augment\IUnknownImplementation.hpp"
 					>
 				</File>
@@ -4330,7 +4326,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\shareaza\Res\WizardDot.bmp"
+				RelativePath="..\shareaza\Res\WizardDot.ico"
 				>
 			</File>
 			<File
