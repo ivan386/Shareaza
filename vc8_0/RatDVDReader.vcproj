@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8,00"
+	Version="8.00"
 	Name="RatDVDReader"
 	ProjectGUID="{C5D62C61-870F-4111-BBC3-44E776412519}"
 	RootNamespace="RatDVDReader"
@@ -23,7 +23,7 @@
 			IntermediateDirectory="$(OutDir)$(ProjectName)"
 			ConfigurationType="2"
 			UseOfATL="1"
-			CharacterSet="2"
+			CharacterSet="1"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -40,7 +40,8 @@
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="_DEBUG"
-				HeaderFileName="$(IntDir)\$(InputName).h"
+				AdditionalIncludeDirectories="$(SolutionDir)..\shareaza"
+				HeaderFileName="$(IntDir)\$(InputName)_h.h"
 				DLLDataFileName="$(IntDir)\$(InputName)_c.c"
 				InterfaceIdentifierFileName="$(IntDir)\$(InputName)_i.c"
 				ProxyFileName="$(IntDir)\$(InputName)_p.c"
@@ -112,7 +113,7 @@
 			IntermediateDirectory="$(OutDir)$(ProjectName)"
 			ConfigurationType="2"
 			UseOfATL="1"
-			CharacterSet="2"
+			CharacterSet="1"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -129,8 +130,9 @@
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="_DEBUG"
+				AdditionalIncludeDirectories="$(SolutionDir)..\shareaza"
 				TargetEnvironment="3"
-				HeaderFileName="$(IntDir)\$(InputName).h"
+				HeaderFileName="$(IntDir)\$(InputName)_h.h"
 				DLLDataFileName="$(IntDir)\$(InputName)_c.c"
 				InterfaceIdentifierFileName="$(IntDir)\$(InputName)_i.c"
 				ProxyFileName="$(IntDir)\$(InputName)_p.c"
@@ -201,7 +203,7 @@
 			IntermediateDirectory="$(OutDir)$(ProjectName)"
 			ConfigurationType="2"
 			UseOfATL="2"
-			CharacterSet="2"
+			CharacterSet="1"
 			WholeProgramOptimization="1"
 			>
 			<Tool
@@ -219,7 +221,8 @@
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="NDEBUG"
-				HeaderFileName="$(IntDir)\$(InputName).h"
+				AdditionalIncludeDirectories="$(SolutionDir)..\shareaza"
+				HeaderFileName="$(IntDir)\$(InputName)_h.h"
 				DLLDataFileName="$(IntDir)\$(InputName)_c.c"
 				InterfaceIdentifierFileName="$(IntDir)\$(InputName)_i.c"
 				ProxyFileName="$(IntDir)\$(InputName)_p.c"
@@ -290,7 +293,7 @@
 			IntermediateDirectory="$(OutDir)$(ProjectName)"
 			ConfigurationType="2"
 			UseOfATL="2"
-			CharacterSet="2"
+			CharacterSet="1"
 			WholeProgramOptimization="1"
 			>
 			<Tool
@@ -308,8 +311,9 @@
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="NDEBUG"
+				AdditionalIncludeDirectories="$(SolutionDir)..\shareaza"
 				TargetEnvironment="3"
-				HeaderFileName="$(IntDir)\$(InputName).h"
+				HeaderFileName="$(IntDir)\$(InputName)_h.h"
 				DLLDataFileName="$(IntDir)\$(InputName)_c.c"
 				InterfaceIdentifierFileName="$(IntDir)\$(InputName)_i.c"
 				ProxyFileName="$(IntDir)\$(InputName)_p.c"
@@ -497,6 +501,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\plugins\RatDVDPlugin\Shareaza.h"
+				>
+			</File>
+			<File
 				RelativePath="..\plugins\RatDVDPlugin\stdafx.h"
 				>
 			</File>
@@ -506,6 +514,10 @@
 			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx"
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
 			>
+			<File
+				RelativePath="..\plugins\RatDVDPlugin\ratDVD.ico"
+				>
+			</File>
 			<File
 				RelativePath="..\plugins\RatDVDPlugin\RatDVDPlugin.rgs"
 				>
