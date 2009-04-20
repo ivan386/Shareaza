@@ -1,7 +1,7 @@
 //
 // ChatWindows.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -174,7 +174,7 @@ CPrivateChatFrame* CChatWindows::FindED2KFrame(DWORD nClientID, SOCKADDR_IN* pSe
 
 CPrivateChatFrame* CChatWindows::OpenPrivate(const Hashes::Guid& oGUID, IN_ADDR* pAddress, WORD nPort, BOOL bMustPush, PROTOCOLID nProtocol, IN_ADDR* pServerAddress, WORD nServerPort)
 {
-	SOCKADDR_IN pHost;
+	SOCKADDR_IN pHost = {};
 	
 	pHost.sin_family	= PF_INET;
 	pHost.sin_addr		= *pAddress;
@@ -183,7 +183,7 @@ CPrivateChatFrame* CChatWindows::OpenPrivate(const Hashes::Guid& oGUID, IN_ADDR*
 	if ( pServerAddress == NULL )
 		return OpenPrivate( oGUID, &pHost, bMustPush, nProtocol, NULL );
 
-	SOCKADDR_IN pServer;
+	SOCKADDR_IN pServer = {};
 
 	pServer.sin_family	= PF_INET;
 	pServer.sin_addr	= *pServerAddress;

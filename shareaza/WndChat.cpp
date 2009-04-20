@@ -1,7 +1,7 @@
 //
 // WndChat.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -31,25 +31,23 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 
-IMPLEMENT_DYNAMIC(CChatWnd, CChildWnd)
+IMPLEMENT_DYNAMIC(CChatWnd, CPanelWnd)
 
-BEGIN_MESSAGE_MAP(CChatWnd, CChildWnd)
-	//{{AFX_MSG_MAP(CChatWnd)
+BEGIN_MESSAGE_MAP(CChatWnd, CPanelWnd)
 	ON_WM_CREATE()
 	ON_WM_DESTROY()
 	ON_WM_SIZE()
 	ON_WM_TIMER()
-	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
-
 
 /////////////////////////////////////////////////////////////////////////////
 // CChatWnd construction
 
-CChatWnd::CChatWnd(CChatFrame* pFrame)
+CChatWnd::CChatWnd(CChatFrame* pFrame) :
+	m_pFrame( pFrame )
 {
-	m_pFrame = pFrame;
 	ASSERT_VALID(m_pFrame);
+
 	Create( IDR_CHATFRAME, FALSE );
 }
 
@@ -62,7 +60,7 @@ CChatWnd::~CChatWnd()
 
 int CChatWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
-	if ( CChildWnd::OnCreate( lpCreateStruct ) == -1 ) return -1;
+	if ( CPanelWnd::OnCreate( lpCreateStruct ) == -1 ) return -1;
 
 	ASSERT_VALID( m_pFrame );
 
@@ -89,12 +87,12 @@ void CChatWnd::OnDestroy()
 		delete m_pFrame;
 	}
 
-	CChildWnd::OnDestroy();
+	CPanelWnd::OnDestroy();
 }
 
 void CChatWnd::OnSkinChange()
 {
-	CChildWnd::OnSkinChange();
+	CPanelWnd::OnSkinChange();
 	if ( m_pFrame != NULL ) m_pFrame->OnSkinChange();
 }
 
@@ -105,12 +103,12 @@ BOOL CChatWnd::OnCmdMsg(UINT nID, int nCode, void* pExtra, AFX_CMDHANDLERINFO* p
 		if ( m_pFrame->OnCmdMsg( nID, nCode, pExtra, pHandlerInfo ) ) return TRUE;
 	}
 
-	return CChildWnd::OnCmdMsg( nID, nCode, pExtra, pHandlerInfo );
+	return CPanelWnd::OnCmdMsg( nID, nCode, pExtra, pHandlerInfo );
 }
 
 void CChatWnd::OnSize(UINT nType, int cx, int cy)
 {
-	CChildWnd::OnSize( nType, cx, cy );
+	CPanelWnd::OnSize( nType, cx, cy );
 
 	if ( m_pFrame != NULL )
 	{
@@ -137,5 +135,5 @@ void CChatWnd::OnTimer(UINT_PTR nIDEvent)
 		SetWindowText( str );
 	}
 
-	CChildWnd::OnTimer( nIDEvent );
+	CPanelWnd::OnTimer( nIDEvent );
 }

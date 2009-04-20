@@ -1,7 +1,7 @@
 //
 // WndChat.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -19,54 +19,33 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_WNDCHAT_H__27BC4B5E_C182_404F_B17C_FD0B867A64F2__INCLUDED_)
-#define AFX_WNDCHAT_H__27BC4B5E_C182_404F_B17C_FD0B867A64F2__INCLUDED_
-
 #pragma once
 
-#include "WndChild.h"
+#include "WndPanel.h"
 
 class CChatFrame;
 
 
-class CChatWnd : public CChildWnd
+class CChatWnd : public CPanelWnd
 {
-// Construction
+	DECLARE_DYNAMIC(CChatWnd)
+
 public:
 	CChatWnd(CChatFrame* pFrame);
 	virtual ~CChatWnd();
 
-	DECLARE_DYNAMIC(CChatWnd)
-
-// Attributes
-public:
+protected:
 	CChatFrame*	m_pFrame;
 
-// Operations
-public:
-
-// Overrides
-public:
-	//{{AFX_VIRTUAL(CChatWnd)
-	public:
 	virtual BOOL OnCmdMsg(UINT nID, int nCode, void* pExtra, AFX_CMDHANDLERINFO* pHandlerInfo);
-	//}}AFX_VIRTUAL
-
 	virtual void OnSkinChange();
 
-// Implementation
-protected:
-	//{{AFX_MSG(CChatWnd)
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg void OnDestroy();
 	afx_msg void OnSize(UINT nType, int cx, int cy);
 	afx_msg void OnTimer(UINT_PTR nIDEvent);
-	//}}AFX_MSG
 
 	DECLARE_MESSAGE_MAP()
 
+friend class CChatFrame;
 };
-
-//{{AFX_INSERT_LOCATION}}
-
-#endif // !defined(AFX_WNDCHAT_H__27BC4B5E_C182_404F_B17C_FD0B867A64F2__INCLUDED_)

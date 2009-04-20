@@ -1,7 +1,7 @@
 //
 // Connection.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -52,6 +52,7 @@ CConnection::CConnection() :
 	m_nProtocol( PROTOCOL_ANY )
 {
 	ZeroMemory( &m_pHost, sizeof( m_pHost ) );
+	m_pHost.sin_family = AF_INET;
 	ZeroMemory( &m_mInput, sizeof( m_mInput ) );
 	ZeroMemory( &m_mOutput, sizeof( m_mOutput ) );
 	m_pInputSection.reset( new CCriticalSection() );
@@ -144,7 +145,7 @@ BOOL CConnection::ConnectTo(IN_ADDR* pAddress, WORD nPort)
 	}
 
 	// Fill in more parts of the m_pHost structure
-	m_pHost.sin_family	= PF_INET;							// PF_INET means just normal IPv4, not IPv6 yet
+	m_pHost.sin_family	= AF_INET;							// PF_INET means just normal IPv4, not IPv6 yet
 	m_pHost.sin_port	= htons( nPort );					// Copy the port number into the m_pHost structure
 	m_sAddress			= inet_ntoa( m_pHost.sin_addr );	// Save the IP address as a string of text
 	UpdateCountry();
