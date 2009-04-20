@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8,00"
+	Version="8.00"
 	Name="skin-installer"
 	ProjectGUID="{CAA6FCC8-27B1-42B9-B647-976E7BE79C70}"
 	RootNamespace="skin-installer"

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8,00"
+	Version="8.00"
 	Name="MediaImageServices"
 	ProjectGUID="{2F8E5D93-E638-4307-A348-3273D3E77FEA}"
 	RootNamespace="MediaImageServices"

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8,00"
+	Version="8.00"
 	Name="ImageViewer"
 	ProjectGUID="{663E705A-33D0-459E-9A00-A9D132990FB7}"
 	RootNamespace="ImageViewer"

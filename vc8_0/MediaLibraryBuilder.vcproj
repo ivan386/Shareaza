@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8,00"
+	Version="8.00"
 	Name="MediaLibraryBuilder"
 	ProjectGUID="{3AC74D32-A54C-408C-B526-C8EAA453FB84}"
 	RootNamespace="MediaLibraryBuilder"

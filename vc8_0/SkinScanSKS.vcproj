@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8,00"
+	Version="8.00"
 	Name="SkinScanSKS"
 	ProjectGUID="{4D17C24E-FBE5-4872-9CB5-817089282EC5}"
 	RootNamespace="SkinScanSKS"
@@ -28,7 +28,7 @@
 			<Tool
 				Name="VCCustomBuildTool"
 				Description="Copying zlibwapi dll..."
-				CommandLine="if not exist &quot;$(OutDir)zlibwapi.dll&quot; (&#x0D;&#x0A;	xcopy &quot;$(SolutionDir)$(ConfigurationName)$(PlatformName)\zlibwapi.dll&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;)"
+				CommandLine="if not exist &quot;$(OutDir)zlibwapi.dll&quot; (&#x0D;&#x0A;xcopy &quot;$(SolutionDir)$(ConfigurationName)$(PlatformName)\zlibwapi.dll&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;)&#x0D;&#x0A;"
 				Outputs="$(OutDir)zlibwapi.dll"
 				ExecutionBucket="1"
 			/>
@@ -121,7 +121,7 @@
 			<Tool
 				Name="VCCustomBuildTool"
 				Description="Copying zlibwapi dll..."
-				CommandLine="if not exist &quot;$(OutDir)zlibwapi.dll&quot; (&#x0D;&#x0A;	xcopy &quot;$(SolutionDir)$(ConfigurationName)$(PlatformName)\zlibwapi.dll&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;)"
+				CommandLine="if not exist &quot;$(OutDir)zlibwapi.dll&quot; (&#x0D;&#x0A;xcopy &quot;$(SolutionDir)$(ConfigurationName)$(PlatformName)\zlibwapi.dll&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;)&#x0D;&#x0A;"
 				Outputs="$(OutDir)zlibwapi.dll"
 				ExecutionBucket="1"
 			/>
@@ -215,7 +215,7 @@
 			<Tool
 				Name="VCCustomBuildTool"
 				Description="Copying zlibwapi dll..."
-				CommandLine="if not exist &quot;$(OutDir)zlibwapi.dll&quot; (&#x0D;&#x0A;	xcopy &quot;$(SolutionDir)$(ConfigurationName)$(PlatformName)\zlibwapi.dll&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;)"
+				CommandLine="if not exist &quot;$(OutDir)zlibwapi.dll&quot; (&#x0D;&#x0A;xcopy &quot;$(SolutionDir)$(ConfigurationName)$(PlatformName)\zlibwapi.dll&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;)&#x0D;&#x0A;"
 				Outputs="$(OutDir)zlibwapi.dll"
 				ExecutionBucket="1"
 			/>
@@ -308,7 +308,7 @@
 			<Tool
 				Name="VCCustomBuildTool"
 				Description="Copying zlibwapi dll..."
-				CommandLine="if not exist &quot;$(OutDir)zlibwapi.dll&quot; (&#x0D;&#x0A;	xcopy &quot;$(SolutionDir)$(ConfigurationName)$(PlatformName)\zlibwapi.dll&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;)"
+				CommandLine="if not exist &quot;$(OutDir)zlibwapi.dll&quot; (&#x0D;&#x0A;xcopy &quot;$(SolutionDir)$(ConfigurationName)$(PlatformName)\zlibwapi.dll&quot; &quot;$(OutDir)&quot; /y /q&#x0D;&#x0A;)&#x0D;&#x0A;"
 				Outputs="$(OutDir)zlibwapi.dll"
 				ExecutionBucket="1"
 			/>
@@ -502,10 +502,6 @@
 			</File>
 			<File
 				RelativePath="..\plugins\SkinScanSKS\Shareaza.h"
-				>
-			</File>
-			<File
-				RelativePath="..\plugins\SkinScanSKS\SkinScanSKS.h"
 				>
 			</File>
 			<File
