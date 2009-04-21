@@ -1,7 +1,7 @@
 //
 // HostBrowser.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -19,9 +19,6 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_HOSTBROWSER_H__062DB5F6_EAE7_484D_BA12_28B4BCD99599__INCLUDED_)
-#define AFX_HOSTBROWSER_H__062DB5F6_EAE7_484D_BA12_28B4BCD99599__INCLUDED_
-
 #pragma once
 
 #include "Transfer.h"
@@ -29,6 +26,7 @@
 
 class CG1Packet;
 class CG2Packet;
+class CEDPacket;
 class CGProfile;
 class CBuffer;
 class CVendor;
@@ -37,18 +35,15 @@ class CBrowseHostWnd;
 
 class CHostBrowser : public CTransfer
 {
-// Construction
 public:
-	CHostBrowser(CBrowseHostWnd* pNotify = NULL, IN_ADDR* pAddress = NULL, WORD nPort = 0,
+	CHostBrowser(CBrowseHostWnd* pNotify = NULL, PROTOCOLID nProtocol = PROTOCOL_ANY, IN_ADDR* pAddress = NULL, WORD nPort = 0,
 		BOOL bMustPush = FALSE, const Hashes::Guid& pClientID = Hashes::Guid());
 	virtual ~CHostBrowser();
 
-// Attributes
 public:
 	int				m_nState;
 	CBrowseHostWnd*	m_pNotify;
 	CGProfile*		m_pProfile;
-public:
 	BOOL			m_bNewBrowse;
 	IN_ADDR			m_pAddress;
 	WORD			m_nPort;
@@ -61,7 +56,6 @@ public:
 	int				m_nHits;
 	CVendor*		m_pVendor;
 	BOOL			m_bCanChat;
-public:
 	CString			m_sServer;
 	BOOL			m_bDeflate;
 	DWORD			m_nLength;
@@ -78,6 +72,7 @@ public:
 	void		Stop(BOOL bCompleted = FALSE);
 	BOOL		IsBrowsing() const;
 	float		GetProgress() const;
+
 protected:
 	BOOL		SendPush(BOOL bMessage);
 	void		SendRequest();
@@ -90,7 +85,7 @@ protected:
 	BOOL		OnPacket(CG1Packet* pPacket);
 	BOOL		OnPacket(CG2Packet* pPacket);
 	void		OnProfilePacket(CG2Packet* pPacket);
-protected:
+
 	virtual BOOL	OnConnected();
 	virtual BOOL	OnRead();
 	virtual void	OnDropped();
@@ -99,7 +94,4 @@ protected:
 	virtual BOOL	OnRun();
 public:
 	virtual BOOL	OnPush(const Hashes::Guid& oClientID, CConnection* pConnection);
-
 };
-
-#endif // !defined(AFX_HOSTBROWSER_H__062DB5F6_EAE7_484D_BA12_28B4BCD99599__INCLUDED_)

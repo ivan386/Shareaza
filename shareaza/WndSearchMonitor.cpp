@@ -337,6 +337,6 @@ void CSearchMonitorWnd::OnBrowseLaunch()
 		int nPos = strNode.Find( _T(':') );
 		pHost.sin_addr.s_addr = inet_addr( CT2CA( (LPCTSTR)strNode.Left( nPos ) ) );
 		pHost.sin_port = htons( (WORD)_tstoi( strNode.Mid( nPos + 1 ) ) );
-		new CBrowseHostWnd( &pHost );
+		new CBrowseHostWnd( PROTOCOL_ANY, &pHost );
 	}
 }

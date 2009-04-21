@@ -1,7 +1,7 @@
 //
 // CtrlPrivateChatFrame.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -244,7 +244,8 @@ void CPrivateChatFrame::OnChatBrowse()
 {
 	if ( m_pSession != NULL )
 	{
-		new CBrowseHostWnd( &m_pSession->m_pHost, m_pSession->m_oGUID );
+		new CBrowseHostWnd( m_pSession->m_nProtocol,
+			&m_pSession->m_pHost, m_pSession->m_oGUID );
 	}
 }
 

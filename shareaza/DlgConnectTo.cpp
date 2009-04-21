@@ -110,7 +110,6 @@ BOOL CConnectToDlg::OnInitDialog()
 	}
 
 	m_wndAdvanced.ShowWindow( m_bBrowseHost ? SW_HIDE : SW_SHOW );
-	m_wndProtocol.ShowWindow( m_bBrowseHost ? SW_HIDE : SW_SHOW );
 	m_wndUltrapeer.ShowWindow( m_bBrowseHost ? SW_HIDE : SW_SHOW );
 	m_wndUltrapeer.EnableWindow( FALSE );
 

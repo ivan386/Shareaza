@@ -105,6 +105,7 @@ public:
 	void		Serialize(CArchive& ar, int nVersion);
 	void		Ban(int nBanLength);	// Ban by host IP only
 	void		Resolve();
+	void		ReadEDPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer, DWORD m_nServerFlags = 0) throw(...);
 protected:
 	void		ParseAttributes(const Hashes::Guid& pClientID, CVendor* pVendor, BYTE* nFlags, BOOL bChat, BOOL bBrowseHost);
 	void		ReadG1Packet(CG1Packet* pPacket);
@@ -112,7 +113,6 @@ protected:
 	void		ReadExtension(CG1Packet* pPacket);
 	BOOL		CheckValid() const;
 	bool		ReadG2Packet(CG2Packet* pPacket, DWORD nLength);
-	void		ReadEDPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer, DWORD m_nServerFlags = 0) throw(...);
 	void		ReadEDAddress(CEDPacket* pPacket, SOCKADDR_IN* pServer) throw(...);
 	BOOL		ParseXML(CXMLElement* pXML, DWORD nRealIndex);
 	BOOL		HasBogusMetadata();

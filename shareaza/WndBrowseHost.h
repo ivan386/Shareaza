@@ -1,7 +1,7 @@
 //
 // WndBrowseHost.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2006.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -34,8 +34,8 @@ class CBrowseHostWnd : public CBaseMatchWnd
 {
 // Construction
 public:
-	CBrowseHostWnd(SOCKADDR_IN* pHost, const Hashes::Guid& pClientID = Hashes::Guid());
-	CBrowseHostWnd(IN_ADDR* pAddress = NULL, WORD nPort = 0, BOOL bMustPush = FALSE, const Hashes::Guid& pClientID = Hashes::Guid());
+	CBrowseHostWnd(PROTOCOLID nProtocol, SOCKADDR_IN* pHost, const Hashes::Guid& pClientID = Hashes::Guid());
+	CBrowseHostWnd(PROTOCOLID nProtocol = PROTOCOL_ANY, IN_ADDR* pAddress = NULL, WORD nPort = 0, BOOL bMustPush = FALSE, const Hashes::Guid& pClientID = Hashes::Guid());
 	virtual ~CBrowseHostWnd();
 
 	DECLARE_DYNCREATE(CBrowseHostWnd)

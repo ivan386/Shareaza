@@ -1,7 +1,7 @@
 //
 // HostBrowser.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -26,8 +26,10 @@
 #include "Buffer.h"
 #include "G1Packet.h"
 #include "G2Packet.h"
+#include "EDPacket.h"
 #include "GProfile.h"
 #include "Neighbours.h"
+#include "EDClients.h"
 #include "HostBrowser.h"
 #include "Transfers.h"
 #include "QueryHit.h"
@@ -45,11 +47,11 @@ static char THIS_FILE[]=__FILE__;
 //////////////////////////////////////////////////////////////////////
 // CHostBrowser construction
 
-CHostBrowser::CHostBrowser(CBrowseHostWnd* pNotify, IN_ADDR* pAddress, WORD nPort, BOOL bMustPush, const Hashes::Guid& oClientID) :
+CHostBrowser::CHostBrowser(CBrowseHostWnd* pNotify, PROTOCOLID nProtocol, IN_ADDR* pAddress,
+	WORD nPort, BOOL bMustPush, const Hashes::Guid& oClientID) :
 	m_nState		( hbsNull )
 ,	m_pNotify		( pNotify )
 ,	m_pProfile		( NULL )
-
 ,	m_bNewBrowse	( FALSE )
 ,	m_nPort			( nPort )
 ,	m_oClientID		( oClientID )
@@ -60,7 +62,6 @@ CHostBrowser::CHostBrowser(CBrowseHostWnd* pNotify, IN_ADDR* pAddress, WORD nPor
 ,	m_nHits			( 0 )
 ,	m_pVendor		( NULL )
 ,	m_bCanChat		( FALSE )
-
 ,	m_bDeflate		( FALSE )
 ,	m_nLength		( ~0ul )
 ,	m_nReceived		( 0ul )
@@ -71,6 +72,8 @@ CHostBrowser::CHostBrowser(CBrowseHostWnd* pNotify, IN_ADDR* pAddress, WORD nPor
 		m_pAddress = *pAddress;
 	else
 		m_pAddress.s_addr = INADDR_NONE;
+
+	m_nProtocol = nProtocol;
 }
 
 CHostBrowser::~CHostBrowser()
@@ -87,32 +90,49 @@ BOOL CHostBrowser::Browse()
 {
 	CSingleLock pLock( &Transfers.m_pSection, TRUE );
 
-	if ( IsValid() ) return FALSE;
-
 	m_sAddress = inet_ntoa( m_pAddress );
 
-	if ( m_bMustPush )
+	// ED2K Clients have their connection controlled by ED2KClient.
+	// (One connection used for many things)
+	if ( m_nProtocol == PROTOCOL_ED2K )
 	{
-		if ( SendPush( FALSE ) )
-		{
-			theApp.Message( MSG_NOTICE, IDS_BROWSE_PUSHED_TO, m_sAddress );
-		}
-		else
-		{
-			theApp.Message( MSG_ERROR, IDS_BROWSE_CANT_PUSH_TO, m_sAddress );
-			return FALSE;
-		}
-	}
-	else
-	{
-		if ( ConnectTo( &m_pAddress, m_nPort ) )
-		{
-			theApp.Message( MSG_NOTICE, IDS_BROWSE_CONNECTING_TO, m_sAddress );
-		}
-		else
+		m_pVendor = VendorCache.Lookup( _T("ED2K") );
+		CEDClient* pClient = EDClients.Connect( m_pAddress.s_addr,
+			m_nPort, NULL, 0, m_oClientID );
+		if ( ! pClient || ( ! pClient->m_bConnected && ! pClient->Connect() ) )
 		{
 			theApp.Message( MSG_ERROR, IDS_BROWSE_CANT_CONNECT_TO, m_sAddress );
 			return FALSE;
+		}
+		pClient->AdviseBrowser( this );
+	}
+	else
+	{
+		if ( IsValid() ) return FALSE;
+
+		if ( m_bMustPush )
+		{
+			if ( SendPush( FALSE ) )
+			{
+				theApp.Message( MSG_NOTICE, IDS_BROWSE_PUSHED_TO, m_sAddress );
+			}
+			else
+			{
+				theApp.Message( MSG_ERROR, IDS_BROWSE_CANT_PUSH_TO, m_sAddress );
+				return FALSE;
+			}
+		}
+		else
+		{
+			if ( ConnectTo( &m_pAddress, m_nPort ) )
+			{
+				theApp.Message( MSG_NOTICE, IDS_BROWSE_CONNECTING_TO, m_sAddress );
+			}
+			else
+			{
+				theApp.Message( MSG_ERROR, IDS_BROWSE_CANT_CONNECT_TO, m_sAddress );
+				return FALSE;
+			}
 		}
 	}
 
@@ -132,6 +152,14 @@ void CHostBrowser::Stop(BOOL /*bCompleted*/)
 	if ( IsValid() )
 	{
 		theApp.Message( MSG_INFO, IDS_BROWSE_CLOSED, m_sAddress );
+	}
+	
+	if ( m_nProtocol == PROTOCOL_ED2K )
+	{
+		if ( CEDClient* pClient = EDClients.GetByIP( &m_pHost.sin_addr ) )
+		{
+			pClient->UnAdviseBrowser( this );
+		}
 	}
 
 	CTransfer::Close();
@@ -166,13 +194,21 @@ float CHostBrowser::GetProgress() const
 
 BOOL CHostBrowser::OnConnected()
 {
+	// ED2K connections aren't handled here- they are in ED2KClient
+	if ( m_nProtocol == PROTOCOL_ED2K ) return TRUE;
+
 	CTransfer::OnConnected();
+
 	SendRequest();
+
 	return TRUE;
 }
 
 BOOL CHostBrowser::OnRead()
 {
+	// ED2K connections aren't handled here- they are in ED2KClient
+	if ( m_nProtocol == PROTOCOL_ED2K ) return TRUE;
+
 	if ( ! IsInputExist() || ! IsOutputExist() ) return TRUE;
 
 	CTransfer::OnRead();
@@ -221,6 +257,9 @@ void CHostBrowser::OnDropped()
 
 BOOL CHostBrowser::OnRun()
 {
+	// ED2K connections aren't handled here- they are in ED2KClient
+	if ( m_nProtocol == PROTOCOL_ED2K ) return TRUE;
+
 	CTransfer::OnRun();
 
 	DWORD nNow = GetTickCount();
@@ -260,6 +299,9 @@ BOOL CHostBrowser::OnRun()
 
 BOOL CHostBrowser::SendPush(BOOL bMessage)
 {
+	// ED2K connections aren't handled here- they are in ED2KClient
+	if ( m_nProtocol == PROTOCOL_ED2K ) return FALSE;
+
 	if ( ! m_bCanPush ) return FALSE;
 
 	if ( Network.SendPush( m_oClientID, 0 ) )
@@ -280,6 +322,9 @@ BOOL CHostBrowser::SendPush(BOOL bMessage)
 
 BOOL CHostBrowser::OnPush(const Hashes::Guid& oClientID, CConnection* pConnection)
 {
+	// ED2K connections aren't handled here- they are in ED2KClient
+	if ( m_nProtocol == PROTOCOL_ED2K ) return FALSE;
+
 	if ( m_tPushed == 0 ) return FALSE;
 	if ( IsValid() ) return FALSE;
 
@@ -331,7 +376,7 @@ void CHostBrowser::SendRequest()
 		htons( m_pHost.sin_port ) );
 	Write( strHeader );
 
-	CTransfer::OnWrite();
+	OnWrite();
 
 	m_nState	= hbsRequesting;
 	m_nProtocol	= PROTOCOL_ANY;
@@ -404,6 +449,9 @@ BOOL CHostBrowser::ReadResponseLine()
 
 BOOL CHostBrowser::OnHeaderLine(CString& strHeader, CString& strValue)
 {
+	// ED2K connections aren't handled here- they are in ED2KClient
+	ASSERT ( m_nProtocol != PROTOCOL_ED2K );
+
 	if ( ! CTransfer::OnHeaderLine( strHeader, strValue ) )
 		return FALSE;
 
@@ -438,6 +486,9 @@ BOOL CHostBrowser::OnHeaderLine(CString& strHeader, CString& strValue)
 
 BOOL CHostBrowser::OnHeadersComplete()
 {
+	// ED2K connections aren't handled here- they are in ED2KClient
+	ASSERT ( m_nProtocol != PROTOCOL_ED2K );
+
 	if ( m_nProtocol == PROTOCOL_ANY || m_nLength == 0 )
 	{
 		theApp.Message( MSG_ERROR, IDS_BROWSE_BAD_RESPONSE, m_sAddress );

@@ -570,9 +570,11 @@ void CUploadsWnd::OnBrowseLaunch()
 
 		if ( UploadFiles.Check( pFile ) && pFile->GetActive() != NULL )
 		{
-			SOCKADDR_IN pAddress = pFile->GetActive()->m_pHost;
+			CUploadTransfer* pTransfer = pFile->GetActive();
+			PROTOCOLID nProtocol = pTransfer->m_nProtocol;
+			SOCKADDR_IN pAddress = pTransfer->m_pHost;
 			pLock.Unlock();
-			new CBrowseHostWnd( &pAddress );
+			new CBrowseHostWnd( nProtocol, &pAddress );
 			pLock.Lock();
 		}
 	}

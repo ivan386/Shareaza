@@ -22,6 +22,7 @@
 #pragma once
 
 #include "Transfer.h"
+#include "HostBrowser.h"
 
 class CEDPacket;
 class CDownload;
@@ -82,6 +83,11 @@ public:
 	BOOL		m_bOpenChat;
 	BOOL		m_bCommentSent;
 
+	DWORD		m_nDirsWaiting;
+	CList< CHostBrowser* > m_oHandlers;
+	bool AdviseBrowser(CHostBrowser* pHandler);
+	bool UnAdviseBrowser(CHostBrowser* pHandler);
+
 // Operations
 public:
 	BOOL	ConnectTo(DWORD nClientID, WORD nClientPort, IN_ADDR* pServerAddress, WORD nServerPort, const Hashes::Guid& oGUID);
@@ -137,6 +143,11 @@ protected:
 // Browse us
 	BOOL	OnAskSharedDirs(CEDPacket* pPacket);
 	BOOL	OnViewSharedDir(CEDPacket* pPacket);
+// Browse remote host
+	BOOL	OnAskSharedDirsAnswer(CEDPacket* pPacket);
+	BOOL	OnViewSharedDirAnswer(CEDPacket* pPacket);
+	BOOL	OnAskSharedDirsDenied(CEDPacket* pPacket);
+
 public:
 	BOOL	OnUdpReask(CEDPacket* pPacket);
 	BOOL	OnUdpReaskAck(CEDPacket* pPacket);

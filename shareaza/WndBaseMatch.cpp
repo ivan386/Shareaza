@@ -1,7 +1,7 @@
 //
 // WndBaseMatch.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -600,7 +600,7 @@ void CBaseMatchWnd::OnBrowseLaunch()
 
 	if ( CQueryHit* pHit = m_pMatches->GetSelectedHit() )
 	{
-		new CBrowseHostWnd( &pHit->m_pAddress, pHit->m_nPort,
+		new CBrowseHostWnd( pHit->m_nProtocol, &pHit->m_pAddress, pHit->m_nPort,
 			pHit->m_bPush == TRI_TRUE, pHit->m_oClientID );
 	}
 }

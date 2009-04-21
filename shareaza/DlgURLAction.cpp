@@ -405,7 +405,7 @@ void CURLActionDlg::OnUrlDownload()
 
 			if ( Network.Resolve( pURL->m_sName, pURL->m_nPort, &pAddress ) )
 			{
-				new CBrowseHostWnd( &pAddress );
+				new CBrowseHostWnd( pURL->m_nProtocol, &pAddress );
 			}
 		}
 		else if ( pURL->m_nAction == CShareazaURL::uriDiscovery )
@@ -431,7 +431,7 @@ void CURLActionDlg::OnUrlSearch()
 
 			if ( Network.Resolve( pURL->m_sName, pURL->m_nPort, &pAddress ) )
 			{
-				new CBrowseHostWnd( &pAddress );
+				new CBrowseHostWnd( pURL->m_nProtocol, &pAddress );
 			}
 		}
 		else if ( pURL->m_nAction == CShareazaURL::uriBrowse )

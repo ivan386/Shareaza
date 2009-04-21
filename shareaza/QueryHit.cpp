@@ -702,6 +702,7 @@ CQueryHit* CQueryHit::FromEDPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer, DWO
 				auto_ptr< CQueryHit >pHit( new CQueryHit( PROTOCOL_ED2K, oSearchID ) );
 
 				// Enable chat for ed2k hits
+				pHit->m_bBrowseHost = TRUE;
 				pHit->m_bChat = TRUE;
 				
 				pHit->m_pVendor = VendorCache.Lookup( _T("ED2K") );
@@ -736,6 +737,7 @@ CQueryHit* CQueryHit::FromEDPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer, DWO
 				auto_ptr< CQueryHit >pHit( new CQueryHit( PROTOCOL_ED2K, oSearchID ) );
 				
 				// Enable chat for ed2k hits
+				pHit->m_bBrowseHost = TRUE;
 				pHit->m_bChat = TRUE;
 
 				pHit->m_oED2K = oHash;
@@ -1835,9 +1837,7 @@ void CQueryHit::ReadEDPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer,
 void CQueryHit::ReadEDAddress(CEDPacket* pPacket, SOCKADDR_IN* pServer) throw(...)
 {
 	DWORD nAddress = m_pAddress.S_un.S_addr = pPacket->ReadLongLE();
-	if ( ! CEDPacket::IsLowID( nAddress ) && (
-		Network.IsReserved( (IN_ADDR*)&nAddress, false ) ||
-		Security.IsDenied( (IN_ADDR*)&nAddress ) ) )
+	if ( ! CEDPacket::IsLowID( nAddress ) && Security.IsDenied( (IN_ADDR*)&nAddress ) )
 		AfxThrowUserException();
 
 	m_nPort = pPacket->ReadShortLE();

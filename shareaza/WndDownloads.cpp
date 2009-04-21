@@ -1570,9 +1570,9 @@ void CDownloadsWnd::OnBrowseLaunch()
 			if ( pSource->m_bSelected )
 			{
 				if ( pSource->m_nProtocol == PROTOCOL_HTTP )	// Many HTTP clients support this
-					new CBrowseHostWnd( &pSource->m_pAddress, pSource->m_nPort, pSource->m_bPushOnly, pSource->m_oGUID );
+					new CBrowseHostWnd( pSource->m_nProtocol, &pSource->m_pAddress, pSource->m_nPort, pSource->m_bPushOnly, pSource->m_oGUID );
 				else if ( pSource->m_bClientExtended )			// Over other protocols, you can only contact non-push G2 clients
-					new CBrowseHostWnd( &pSource->m_pAddress, pSource->m_nPort, FALSE, Hashes::Guid() );
+					new CBrowseHostWnd( pSource->m_nProtocol, &pSource->m_pAddress, pSource->m_nPort, FALSE, Hashes::Guid() );
 			}
 		}
 	}

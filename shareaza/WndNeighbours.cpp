@@ -1,7 +1,7 @@
 //
 // WndNeighbours.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -561,12 +561,13 @@ void CNeighboursWnd::OnBrowseLaunch()
 	{
 		if ( pNeighbour->m_nProtocol != PROTOCOL_ED2K )
 		{
+			PROTOCOLID nProtocol = pNeighbour->m_nProtocol;
 			SOCKADDR_IN pAddress = pNeighbour->m_pHost;
 			Hashes::Guid oGUID = pNeighbour->m_oGUID;
 
 			pLock.Unlock();
 
-			new CBrowseHostWnd( &pAddress, oGUID );
+			new CBrowseHostWnd( nProtocol, &pAddress, oGUID );
 		}
 	}
 }

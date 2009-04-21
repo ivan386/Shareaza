@@ -1676,7 +1676,7 @@ void CMainWnd::OnNetworkBrowseTo()
 
 	if ( Network.Resolve( dlg.m_sHost, dlg.m_nPort, &pAddress ) )
 	{
-		new CBrowseHostWnd( &pAddress );
+		new CBrowseHostWnd( PROTOCOLID( dlg.m_nProtocol + 1 ), &pAddress );
 	}
 }
 
