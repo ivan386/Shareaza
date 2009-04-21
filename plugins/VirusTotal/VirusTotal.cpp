@@ -2,6 +2,7 @@
 
 #include "stdafx.h"
 #include "VirusTotal_h.h"
+#include "VirusTotal_i.c"
 
 class CVirusTotalModule : public CAtlDllModuleT< CVirusTotalModule >
 {
@@ -37,7 +38,7 @@ STDAPI DllUnregisterServer(void)
 	return _AtlModule.DllUnregisterServer();
 }
 
-/*STDAPI DllInstall(BOOL bInstall, LPCWSTR pszCmdLine)
+STDAPI DllInstall(BOOL bInstall, LPCWSTR pszCmdLine)
 {
     HRESULT hr = E_FAIL;
     static const wchar_t szUserSwitch[] = _T("user");
@@ -64,4 +65,4 @@ STDAPI DllUnregisterServer(void)
     }
 
     return hr;
-}*/
+}

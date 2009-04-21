@@ -28,6 +28,7 @@
 
 #include "stdafx.h"
 #include "RatDVDPlugin.h"
+#include "RatDVDReader_i.c"
 
 ////////////////////////////////////////////////////////////////////////
 // Globals for this module.
