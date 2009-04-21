@@ -256,15 +256,8 @@ template<> inline uint64 rotateLeft(uint64 value, uint8 shift)
 //! If the argument is 0 the result is unspecified.
 inline uint32 highestBitSet(uint32 value)
 {
-#if _MSC_VER > 1310
 	uint32 index;
 	return _BitScanReverse( &index, value ) ? index : 0;
-#else
-	uint32 result;
-	for ( ; value /= 2; )
-		++result;
-	return result;
-#endif
 }
 
 inline uint32 highestBitSet(uint64 value)
@@ -285,15 +278,8 @@ inline uint32 highestBitSet(uint64 value)
 //! If the argument is 0 the result is unspecified.
 inline uint32 lowestBitSet(uint32 value)
 {
-#if _MSC_VER > 1310
 	uint32 index;
 	return _BitScanForward( &index, value ) ? index : 0;
-#else
-	uint32 result;
-	for ( ; value % 2 == 0; value /= 2 )
-		++result;
-	return result;
-#endif
 }
 
 inline uint32 lowestBitSet(uint64 value)

@@ -101,7 +101,7 @@ void CPanelWnd::OnNcCalcSize(BOOL bCalcValidRects, NCCALCSIZE_PARAMS FAR* lpncsp
 	CChildWnd::OnNcCalcSize( bCalcValidRects, lpncsp );
 }
 
-ONNCHITTESTRESULT CPanelWnd::OnNcHitTest(CPoint point)
+LRESULT CPanelWnd::OnNcHitTest(CPoint point)
 {
 	if ( m_bPanelMode && ! m_pSkin )
 	{

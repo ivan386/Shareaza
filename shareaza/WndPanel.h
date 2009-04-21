@@ -55,7 +55,7 @@ protected:
 	//{{AFX_MSG(CPanelWnd)
 	afx_msg void OnNcPaint();
 	afx_msg void OnNcCalcSize(BOOL bCalcValidRects, NCCALCSIZE_PARAMS FAR* lpncsp);
-	afx_msg ONNCHITTESTRESULT OnNcHitTest(CPoint point);
+	afx_msg LRESULT OnNcHitTest(CPoint point);
 	afx_msg BOOL OnNcActivate(BOOL bActive);
 	afx_msg void OnSize(UINT nType, int cx, int cy);
 	afx_msg void OnNcLButtonDown(UINT nHitTest, CPoint point);

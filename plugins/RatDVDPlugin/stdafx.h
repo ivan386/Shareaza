@@ -27,9 +27,7 @@
 #define STRICT
 #endif
 
-#if _MSC_VER > 1310
-#define _CRT_SECURE_NO_DEPRECATE	// Disable VC8 deprecation warnings
-#endif
+#define _CRT_SECURE_NO_DEPRECATE	// Disable deprecation warnings
 
 // Modify the following defines if you have to target a platform prior to the ones specified below.
 // Refer to MSDN for the latest info on corresponding values for different platforms.

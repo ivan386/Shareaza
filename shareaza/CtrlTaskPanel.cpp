@@ -458,7 +458,7 @@ void CTaskBox::OnNcCalcSize(BOOL /*bCalcValidRects*/, NCCALCSIZE_PARAMS FAR* lpn
 	pSize->rgrc[0].bottom --;
 }
 
-ONNCHITTESTRESULT CTaskBox::OnNcHitTest(CPoint point) 
+LRESULT CTaskBox::OnNcHitTest(CPoint point) 
 {
 	CRect rc;
 	GetWindowRect( &rc );

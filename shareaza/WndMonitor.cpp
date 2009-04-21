@@ -711,7 +711,7 @@ void CRemoteWnd::OnNcCalcSize(BOOL /*bCalcValidRects*/, NCCALCSIZE_PARAMS* /*lpn
 {
 }
 
-ONNCHITTESTRESULT CRemoteWnd::OnNcHitTest(CPoint /*point*/)
+LRESULT CRemoteWnd::OnNcHitTest(CPoint /*point*/)
 {
 	return HTCLIENT;
 }
