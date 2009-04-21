@@ -140,9 +140,12 @@
 #include <MsiDefs.h>
 #include <Powrprof.h>		// The power policy applicator
 
-#if _MSC_VER >= 1500
+// Work-around for Microsoft double declaration
+#define _interlockedbittestandset _ms_set
+#define _interlockedbittestandreset _ms_reset
 #include <intrin.h>
-#endif
+#undef _interlockedbittestandset
+#undef _interlockedbittestandreset
 
 //
 // STL
