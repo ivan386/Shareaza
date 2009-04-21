@@ -203,8 +203,10 @@ CShareazaApp::CShareazaApp() :
 #ifdef _DEBUG
 	BT_InstallSehFilter();
 	BT_SetTerminate();
-	BT_SetFlags( BTF_INTERCEPTSUEF | BTF_SHOWADVANCEDUI | BTF_DESCRIBEERROR | BTF_DETAILEDMODE );
-	//BT_SetSupportEMail( _T("support@pantheraproject.com") );
+	BT_SetAppName( _T( CLIENT_NAME ) );
+	BT_SetFlags( BTF_INTERCEPTSUEF | BTF_SHOWADVANCEDUI | BTF_DESCRIBEERROR |
+		BTF_DETAILEDMODE | BTF_ATTACHREPORT | BTF_EDITMAIL );
+	BT_SetSupportEMail( _T("shareaza-bugtrap@lists.sourceforge.net") );
 	//BT_SetSupportServer( _T("http://www.pantheraproject.com/BugTrapWebServer/RequestHandler.aspx"), 80 );
 	BT_SetSupportURL( _T("http://shareaza.sourceforge.net/?id=support") );
 	BT_AddRegFile( _T("settings.reg"), _T("HKEY_CURRENT_USER\\Software\\Shareaza\\Shareaza") );
