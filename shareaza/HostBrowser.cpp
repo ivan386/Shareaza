@@ -160,6 +160,7 @@ void CHostBrowser::Stop(BOOL /*bCompleted*/)
 		{
 			pClient->UnAdviseBrowser( this );
 		}
+		return;
 	}
 
 	CTransfer::Close();
