@@ -1,7 +1,7 @@
 //
 // EDNeighbour.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -729,7 +729,7 @@ void CEDNeighbour::SendSharedFiles()
 			CEDTag( ED2K_FT_FILESIZE, (DWORD)pDownload->m_nSize ).Write( pPacket, m_nTCPFlags );
 			if ( pDownload->m_nSize > MAX_SIZE_32BIT )
 			{
-				CEDTag( ED2K_FT_FILESIZEUPPER, (DWORD)(pDownload->m_nSize >> 32 ) ).Write( pPacket, m_nTCPFlags );
+				CEDTag( ED2K_FT_FILESIZE_HI, (DWORD)(pDownload->m_nSize >> 32 ) ).Write( pPacket, m_nTCPFlags );
 			}
 
 			//Send the file type to the ed2k server
@@ -872,7 +872,7 @@ void CEDNeighbour::SendSharedFiles()
 					CEDTag( ED2K_FT_FILESIZE, (DWORD)pFile->GetSize() ).Write( pPacket, m_nTCPFlags );
 					if ( pFile->m_nSize > MAX_SIZE_32BIT )
 					{
-						CEDTag( ED2K_FT_FILESIZEUPPER, (DWORD)(pFile->GetSize() >> 32 ) ).Write( pPacket, m_nTCPFlags );
+						CEDTag( ED2K_FT_FILESIZE_HI, (DWORD)(pFile->GetSize() >> 32 ) ).Write( pPacket, m_nTCPFlags );
 					}
 
 					// Send the file type to the ed2k server
@@ -950,7 +950,7 @@ BOOL CEDNeighbour::SendSharedDownload(CDownload* pDownload)
 	// Send the file size to the ed2k server
 	CEDTag( ED2K_FT_FILESIZE, (DWORD)pDownload->m_nSize ).Write( pPacket, m_nTCPFlags );
 	if ( pDownload->m_nSize > MAX_SIZE_32BIT )
-		CEDTag( ED2K_FT_FILESIZEUPPER, (DWORD)(pDownload->m_nSize >> 32 ) ).Write( pPacket, m_nTCPFlags );
+		CEDTag( ED2K_FT_FILESIZE_HI, (DWORD)(pDownload->m_nSize >> 32 ) ).Write( pPacket, m_nTCPFlags );
 
 	// Compress if the server supports it
 	if ( m_nTCPFlags & ED2K_SERVER_TCP_DEFLATE ) pPacket->Deflate();

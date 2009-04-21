@@ -1587,7 +1587,7 @@ void CQueryHit::ReadEDPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer,
 				nSize.HighPart = (DWORD)( ( pTag.m_nValue & 0xFFFFFFFF00000000 ) >> 32 );
 			}
 		}
-		else if ( pTag.m_nKey == ED2K_FT_FILESIZEUPPER )
+		else if ( pTag.m_nKey == ED2K_FT_FILESIZE_HI )
 		{
 			nSize.HighPart = (DWORD)pTag.m_nValue;
 		}
@@ -1603,7 +1603,7 @@ void CQueryHit::ReadEDPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer,
 			else
 				m_nHitSources--;
 		}
-		else if ( pTag.m_nKey == ED2K_FT_COMPLETESOURCES )
+		else if ( pTag.m_nKey == ED2K_FT_COMPLETE_SOURCES )
 		{
 			if ( ! pTag.m_nValue && m_bSize ) //If there are no complete sources
 			{

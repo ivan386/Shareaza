@@ -633,7 +633,7 @@ BOOL CEDClient::OnPacket(CEDPacket* pPacket)
 			if ( m_pDownload != NULL ) m_pDownload->OnSendingPart( pPacket );
 			return TRUE;
 
-		// Misc
+		// Chat
 		case ED2K_C2C_MESSAGE:
 			return OnMessage( pPacket );
 
@@ -869,7 +869,7 @@ BOOL CEDClient::OnHello(CEDPacket* pPacket)
 				m_bEmRequest	= (pTag.m_nValue >> 8 ) & 0x0F;
 				m_bEmComments	= (pTag.m_nValue >> 4 ) & 0x0F;
 				m_bEmPeerCache	= (pTag.m_nValue >> 3 ) & 0x01;
-				m_bEmBrowse		=!( ( pTag.m_nValue >> 2 ) & 0x01 );
+				m_bEmBrowse		= ! ( ( pTag.m_nValue >> 2 ) & 0x01 );
 				m_bEmMultiPacket= (pTag.m_nValue >> 1 ) & 0x01;
 				m_bEmPreview	= (pTag.m_nValue) & 0x01;
 				if ( m_pDownload && m_pDownload->m_pSource && m_pDownload->m_pSource->m_bClientExtended )
@@ -940,7 +940,6 @@ BOOL CEDClient::OnHello(CEDPacket* pPacket)
 		// MLdonkey
 		if ( nValue == 0x4B444C4D ) m_nEmCompatible = 10;
 	}
-
 
 	// Get client name/version
 	DeriveSoftwareVersion();
@@ -1024,7 +1023,7 @@ BOOL CEDClient::OnEmuleInfo(CEDPacket* pPacket)
 		switch ( pTag.m_nKey )
 		{
 		case ED2K_ET_COMPRESSION:
-			 if ( pTag.m_nType == ED2K_TAG_INT ) m_bEmDeflate = (BOOL)pTag.m_nValue;
+			if ( pTag.m_nType == ED2K_TAG_INT ) m_bEmDeflate = (BOOL)pTag.m_nValue;
 			break;
 		case ED2K_ET_UDPPORT:
 			if ( pTag.m_nType == ED2K_TAG_INT ) m_nUDP = (WORD)pTag.m_nValue;
@@ -1049,6 +1048,14 @@ BOOL CEDClient::OnEmuleInfo(CEDPacket* pPacket)
 		case ED2K_CT_MODVERSION:	// Some clients send this here
 			if ( m_nEmCompatible == ED2K_CLIENT_UNKNOWN )
 				m_nEmCompatible = ED2K_CLIENT_MOD;
+			break;
+		case ED2K_ET_L2HAC:
+			// LowID 2 High ID callback request feature
+			//if ( pTag.m_nType == ED2K_TAG_INT ) m_nL2HACTime = (DWORD)pTag.m_nValue;
+			break;
+		case ED2K_ET_MOD_PLUS:
+			// eMule Plus version
+			//if ( pTag.m_nType == ED2K_TAG_INT ) m_nPlusVers = (DWORD)pTag.m_nValue;
 			break;
 		default:
 			CString str;
@@ -1624,7 +1631,7 @@ BOOL CEDClient::OnAskSharedDirs(CEDPacket* /*pPacket*/)
 
 			if ( CEDPacket* pReply = CEDPacket::New( ED2K_C2C_ASKSHAREDDIRSANSWER ) )
 			{
-				pReply->WriteLongLE( static_cast< DWORD>( oFolderPath.GetCount() ) );
+				pReply->WriteLongLE( (DWORD)oFolderPath.GetCount() );
 
 				for ( POSITION pos = oFolderPath.GetHeadPosition(); pos ; )
 				{
@@ -1695,12 +1702,12 @@ BOOL CEDClient::OnViewSharedDir(CEDPacket* pPacket)
 						pReply->Write( pFile->m_oED2K );
 
 						// ID
-						pReply->WriteLongLE( m_nClientID );
+						pReply->WriteLongLE( Network.m_pHost.sin_addr.s_addr );
 
 						// Port
 						pReply->WriteShortLE( htons( Network.m_pHost.sin_port ) );
 
-						DWORD nTags = 2;
+						DWORD nTags = 5;
 
 						CString strType, strTitle, strArtist, strAlbum, strCodec;
 						DWORD nBitrate = 0, nLength = 0;
@@ -1739,7 +1746,6 @@ BOOL CEDClient::OnViewSharedDir(CEDPacket* pPacket)
 								// Bitrate
 								if ( pFile->m_pMetadata->GetAttributeValue( _T("bitrate") ).GetLength() )	//And has a bitrate
 								{
-									nBitrate = 0;
 									_stscanf( pFile->m_pMetadata->GetAttributeValue( _T("bitrate") ), _T("%i"), &nBitrate );
 									if ( nBitrate )
 										nTags ++;
@@ -1795,13 +1801,22 @@ BOOL CEDClient::OnViewSharedDir(CEDPacket* pPacket)
 						// File size
 						CEDTag( ED2K_FT_FILESIZE, (DWORD)pFile->m_nSize ).Write( pReply );
 						if ( pFile->m_nSize > MAX_SIZE_32BIT )
-							CEDTag( ED2K_FT_FILESIZEUPPER,
+							CEDTag( ED2K_FT_FILESIZE_HI,
 								(DWORD)(pFile->m_nSize >> 32 ) ).Write( pReply );
+
+						// Sources
+						CEDTag( ED2K_FT_SOURCES, 1ull ).Write( pReply );
+
+						// Complete sources
+						CEDTag( ED2K_FT_COMPLETE_SOURCES, 1ull ).Write( pReply );
+
+						// Last seen
+						CEDTag( ED2K_FT_LASTSEENCOMPLETE, 0ull ).Write( pReply );
 
 						// File type
 						if ( strType.GetLength() )
 							CEDTag( ED2K_FT_FILETYPE, strType ).Write( pReply );
-						
+
 						// Title
 						if ( strTitle.GetLength() )
 							CEDTag( ED2K_FT_TITLE, strTitle ).Write( pReply );

@@ -356,45 +356,85 @@ public:
 #define ED2K_CT_FLAGS				0x20	// Tell server about compression, new tags, unicode
 #define ED2K_CT_MODVERSION			0x55	// MOD version
 #define	ED2K_CT_UDPPORTS			0xF9	// Ports used for UDP	
-#define	ED2K_CT_FEATUREVERSIONS		0xFA	// Tells extended features (like emule info)
+#define	ED2K_CT_FEATUREVERSIONS		0xFA	// <uint32> Features 1:
+											//  3 AICH Version (0 = not supported)
+											//  1 Unicode
+											//  4 UDP version
+											//  4 Data compression version
+											//  4 Secure Ident
+											//  4 Source Exchange - deprecated
+											//  4 Ext. Requests
+											//  4 Comments
+											//	1 PeerChache supported
+											//	1 No 'View Shared Files' supported
+											//	1 MultiPacket
+											//  1 Preview
 #define	ED2K_CT_SOFTWAREVERSION		0xFB	// Version of the program.
-#define	ED2K_CT_UNKNOWN1			0xFC	// ?
-#define	ED2K_CT_UNKNOWN2			0xFD	// ?
-#define	ED2K_CT_MOREFEATUREVERSIONS	0xFE	// KAD version (Unused)
-#define	ED2K_CT_UNKNOWN3			0xFF	// ?
+#define	ED2K_CT_UNKNOWN1			0xFC
+#define	ED2K_CT_UNKNOWN2			0xFD
+#define	ED2K_CT_MOREFEATUREVERSIONS	0xFE	// <uint32> Features 2:
+											// 21 Reserved
+											//  1 Supports SourceExachnge2 Packets, ignores SX1 Packet Version
+											//  1 Requires CryptLayer
+											//  1 Requests CryptLayer
+											//  1 Supports CryptLayer
+											//  1 Reserved (ModBit)
+											//  1 Ext Multipacket (Hash+Size instead of Hash)
+											//  1 Large Files (includes support for 64bit tags)
+											//  4 Kad Version
+#define	ED2K_CT_UNKNOWN3			0xFF
 
 
 // File tags
-#define ED2K_FT_FILENAME			0x01	// string
-#define ED2K_FT_FILESIZE			0x02	// uint32 (or uint64)
-#define ED2K_FT_FILETYPE			0x03	// string
-#define ED2K_FT_FILEFORMAT			0x04
-#define ED2K_FT_LASTSEENCOMPLETE	0x05
-#define ED2K_FT_TRANSFERED			0x08
-#define ED2K_FT_GAPSTART			0x09
-#define ED2K_FT_GAPEND				0x0A
-#define ED2K_FT_PARTFILENAME		0x12
-#define ED2K_FT_PRIORITY			0x13
-#define ED2K_FT_STATUS				0x14
-#define ED2K_FT_SOURCES				0x15
-#define ED2K_FT_PERMISSIONS			0x16
-#define ED2K_FT_ULPRIORITY			0x17
+#define ED2K_FT_FILENAME			0x01	// <string>
+#define ED2K_FT_FILESIZE			0x02	// <uint32> (or <uint64> when supported)
+#define ED2K_FT_FILETYPE			0x03	// <string>
+#define ED2K_FT_FILEFORMAT			0x04	// <string>
+#define ED2K_FT_LASTSEENCOMPLETE	0x05	// <uint32> (0 - currently available)
+#define ED2K_FT_TRANSFERED			0x08	// <uint32>
+#define ED2K_FT_GAPSTART			0x09	// <uint32>
+#define ED2K_FT_GAPEND				0x0A	// <uint32>
+#define ED2K_FT_DESCRIPTION			0x0B	// <string>
+#define ED2K_FT_PARTFILENAME		0x12	// <string>
+//#define ED2K_FT_PRIORITY			0x13	// <uint32> (Not used anymore)
+#define ED2K_FT_STATUS				0x14	// <uint32>
+#define ED2K_FT_SOURCES				0x15	// <uint32>
+#define ED2K_FT_PERMISSIONS			0x16	// <uint32>
+//#define ED2K_FT_ULPRIORITY		0x17	// <uint32> (Not used anymore)
+#define ED2K_FT_DLPRIORITY			0x18	// (Was ED2K_FT_PRIORITY)
+#define ED2K_FT_ULPRIORITY			0x19	// (Was ED2K_FT_ULPRIORITY)
+#define ED2K_FT_COMPRESSION			0x1A
+#define ED2K_FT_CORRUPTED			0x1B
+#define ED2K_FT_KADLASTPUBLISHKEY	0x20	// <uint32>
+#define ED2K_FT_KADLASTPUBLISHSRC	0x21	// <uint32>
+#define ED2K_FT_FLAGS				0x22	// <uint32>
+#define ED2K_FT_DL_ACTIVE_TIME		0x23	// <uint32>
+#define ED2K_FT_CORRUPTEDPARTS		0x24	// <string>
+#define ED2K_FT_DL_PREVIEW			0x25
+#define ED2K_FT_KADLASTPUBLISHNOTES	0x26	// <uint32>
+#define ED2K_FT_AICH_HASH			0x27
 #define ED2K_FT_FILEHASH			0x28
-#define ED2K_FT_COMPLETESOURCES		0x30
-#define ED2K_FT_COLLECTIONAUTHOR	0x31	// string
-#define ED2K_FT_COLLECTIONAUTHORKEY	0x32	// blob
-#define ED2K_FT_FILESIZEUPPER		0x32
-#define ED2K_FT_ATTRANSFERED		0x50
-#define ED2K_FT_ATREQUESTED			0x51
-#define ED2K_FT_ATACCEPTED			0x52
+#define ED2K_FT_COMPLETE_SOURCES	0x30	// <uint32>
+#define ED2K_FT_COLLECTIONAUTHOR	0x31	// <string>
+#define ED2K_FT_COLLECTIONAUTHORKEY	0x32	// <blob>
+#define ED2K_FT_FILESIZE_HI			0x3A	// <uint32>
+// Statistics
+#define ED2K_FT_ATTRANSFERED		0x50	// <uint32>
+#define ED2K_FT_ATREQUESTED			0x51	// <uint32>
+#define ED2K_FT_ATACCEPTED			0x52	// <uint32>
+#define ED2K_FT_CATEGORY			0x53	// <uint32>
+#define ED2K_FT_ATTRANSFERREDHI		0x54	// <uint32>
+#define ED2K_FT_MAXSOURCES			0x55	// <uint32>
+// Metadata
 #define	ED2K_FT_ARTIST				0xD0	// <string>
 #define	ED2K_FT_ALBUM				0xD1	// <string>
 #define	ED2K_FT_TITLE				0xD2	// <string>
-#define ED2K_FT_LENGTH				0xD3
-#define ED2K_FT_BITRATE				0xD4
-#define ED2K_FT_CODEC				0xD5
-#define ED2K_FT_FILECOMMENT			0xF6	// string
-#define ED2K_FT_FILERATING			0xF7	// byte
+#define ED2K_FT_LENGTH				0xD3	// <uint32>
+#define ED2K_FT_BITRATE				0xD4	// <uint32>
+#define ED2K_FT_CODEC				0xD5	// <string>
+#define ED2K_FT_FILECOMMENT			0xF6	// <string>
+#define ED2K_FT_FILERATING			0xF7	// <uint8>
+
 
 // eMuleinfo tags. Note this is now obsolete, due to ED2K_CT_FEATUREVERSIONS
 #define ED2K_ET_COMPRESSION			0x20
@@ -405,6 +445,11 @@ public:
 #define ED2K_ET_EXTENDEDREQUEST		0x25
 #define ED2K_ET_COMPATIBLECLIENT	0x26	// Client ID.
 #define ED2K_ET_FEATURES			0x27	// Preview and sec ID
+#define ED2K_ET_INCOMPLETEPARTS		0x3D	// ICS
+#define ED2K_ET_L2HAC				0x3E	// L2HAC
+#define ED2K_ET_MOD_FEATURESET		0x54	// [Bloodymad Featureset]
+#define ED2K_ET_MOD_VERSION			0x55	// Mod ver Generic String
+#define ED2K_ET_MOD_PLUS			0x99	// To avoid conflicts with ET_TAROD_VERSION recognized by lugdunum srvers
 
 // Max files (Hash + Size) in a getsources packet
 #define ED2K_MAXFILESINPACKET		0x20

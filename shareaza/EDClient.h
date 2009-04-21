@@ -132,7 +132,9 @@ protected:
 	BOOL	OnSourceAnswer(CEDPacket* pPacket);
 	BOOL	OnRequestPreview(CEDPacket* pPacket);
 	BOOL	OnPreviewAnswer(CEDPacket* pPacket);
+// Chat
 	BOOL	OnMessage(CEDPacket* pPacket);
+// Browse us
 	BOOL	OnAskSharedDirs(CEDPacket* pPacket);
 	BOOL	OnViewSharedDir(CEDPacket* pPacket);
 public:

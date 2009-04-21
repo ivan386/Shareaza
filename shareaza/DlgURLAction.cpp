@@ -358,7 +358,7 @@ void CURLActionDlg::OnUrlDownload()
 					strMessage.Format( strFormat, (LPCTSTR)pFile->m_sName );
 					oLock.Unlock();
 
-					INT_PTR nMBOX( AfxMessageBox( strMessage, MB_ICONINFORMATION|MB_YESNOCANCEL|MB_DEFBUTTON2 ) );
+					INT_PTR nMBOX = AfxMessageBox( strMessage, MB_ICONINFORMATION|MB_YESNOCANCEL|MB_DEFBUTTON2 );
 					if ( nMBOX == IDCANCEL )
 						return;
 					if ( nMBOX == IDNO )
