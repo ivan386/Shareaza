@@ -316,7 +316,8 @@ void CUploadsWnd::Prepare()
 				else if ( pTransfer->m_nProtocol == PROTOCOL_ED2K )
 				{
 					m_bSelChat = TRUE;
-					if ( static_cast< CUploadTransferED2K* >( pTransfer )->m_pClient->m_bEmBrowse )
+					CUploadTransferED2K* pTransferED2K = static_cast< CUploadTransferED2K* >( pTransfer );
+					if ( pTransferED2K->m_pClient && pTransferED2K->m_pClient->m_bEmBrowse )
 						m_bSelBrowse = TRUE;
 				}
 
