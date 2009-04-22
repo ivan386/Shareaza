@@ -56,10 +56,9 @@ protected:
 	BOOL			m_bSelUpload;
 	BOOL			m_bSelActive;
 	BOOL			m_bSelQueued;
-	BOOL			m_bSelHttp;
-	BOOL			m_bSelDonkey;
+	BOOL			m_bSelChat;
+	BOOL			m_bSelBrowse;
 	BOOL			m_bSelSourceAcceptConnections;
-	BOOL			m_bSelSourceExtended;
 
 // Overrides
 public:

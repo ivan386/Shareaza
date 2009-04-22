@@ -79,8 +79,8 @@ protected:
 	BOOL			m_bSelTorrent;
 	BOOL			m_bSelIdleSource;
 	BOOL			m_bSelActiveSource;
-	BOOL			m_bSelHttpSource;
-	BOOL			m_bSelDonkeySource;
+	BOOL			m_bSelChat;
+	BOOL			m_bSelBrowse;
 	BOOL			m_bSelShareConsistent;
 	BOOL			m_bSelMoreSourcesOK;
 	BOOL			m_bSelSourceAcceptConnections;

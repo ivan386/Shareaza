@@ -29,6 +29,8 @@
 #include "UploadFiles.h"
 #include "UploadFile.h"
 #include "UploadTransfer.h"
+#include "UploadTransferED2K.h"
+#include "EDClient.h"
 #include "Library.h"
 #include "FileExecutor.h"
 #include "Security.h"
@@ -41,7 +43,6 @@
 #include "WndBrowseHost.h"
 #include "DlgSettingsManager.h"
 #include "DlgQueueProperties.h"
-#include ".\wnduploads.h"
 
 #include "DlgHelp.h"
 #include "LibraryDictionary.h"
@@ -292,8 +293,8 @@ void CUploadsWnd::Prepare()
 	m_tSel = GetTickCount();
 	m_bSelFile = m_bSelUpload = FALSE;
 	m_bSelActive = m_bSelQueued = FALSE;
-	m_bSelHttp = m_bSelDonkey = FALSE;
-	m_bSelSourceAcceptConnections = m_bSelSourceExtended = FALSE;
+	m_bSelChat = m_bSelBrowse = FALSE;
+	m_bSelSourceAcceptConnections = FALSE;
 
 	for ( POSITION posFile = UploadFiles.GetIterator() ; posFile ; )
 	{
@@ -306,8 +307,18 @@ void CUploadsWnd::Prepare()
 			if ( CUploadTransfer* pTransfer = pFile->GetActive() )
 			{
 				m_bSelUpload = TRUE;
-				if ( pTransfer->m_nProtocol == PROTOCOL_HTTP ) m_bSelHttp = TRUE;
-				if ( pTransfer->m_nProtocol == PROTOCOL_ED2K ) m_bSelDonkey = TRUE;
+				
+				if ( pTransfer->m_bClientExtended )
+				{
+					m_bSelChat = TRUE;
+					m_bSelBrowse = TRUE;
+				}
+				else if ( pTransfer->m_nProtocol == PROTOCOL_ED2K )
+				{
+					m_bSelChat = TRUE;
+					if ( static_cast< CUploadTransferED2K* >( pTransfer )->m_pClient->m_bEmBrowse )
+						m_bSelBrowse = TRUE;
+				}
 
 				if ( pTransfer->m_pQueue != NULL )
 				{
@@ -320,12 +331,6 @@ void CUploadsWnd::Prepare()
 				{
 					m_bSelActive = TRUE;
 				}
-
-				if ( pTransfer->m_bClientExtended )
-					m_bSelSourceExtended = TRUE;
-
-				//m_bSelSourceAcceptConnections = pTransfer->
-
 			}
 		}
 	}
@@ -477,18 +482,8 @@ void CUploadsWnd::OnUploadsLaunch()
 
 void CUploadsWnd::OnUpdateUploadsChat(CCmdUI* pCmdUI)
 {
-	// If chat is disabled, grey out the option
-	if ( ! Settings.Community.ChatEnable )
-	{
-		pCmdUI->Enable( FALSE );
-		return;
-	}
-
-	// Check to see if chat is possible
 	Prepare();
-	pCmdUI->Enable( m_bSelHttp ||									// Enable chat for HTTP clients
-		( m_bSelDonkey && Settings.Community.ChatAllNetworks ) ||	// ED2K clients,
-		( m_bSelSourceExtended ) );									// or for any client supporting G2 chat
+	pCmdUI->Enable( m_bSelChat && Settings.Community.ChatEnable );
 }
 
 void CUploadsWnd::OnUploadsChat()
@@ -550,7 +545,7 @@ void CUploadsWnd::OnSecurityBan()
 void CUploadsWnd::OnUpdateBrowseLaunch(CCmdUI* pCmdUI)
 {
 	Prepare();
-	pCmdUI->Enable( ( m_bSelHttp || m_bSelSourceExtended ) );
+	pCmdUI->Enable( m_bSelBrowse );
 }
 
 void CUploadsWnd::OnBrowseLaunch()

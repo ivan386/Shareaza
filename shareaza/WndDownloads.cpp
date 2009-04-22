@@ -501,7 +501,7 @@ void CDownloadsWnd::Prepare()
 	m_bSelCompletedAndNoPreview = m_bSelStartedAndNotMoving = m_bSelCompleted = FALSE;
 	m_bSelNotMoving = m_bSelBoostable = m_bSelSHA1orTTHorED2KorName = FALSE;
 	m_bSelTorrent = m_bSelIdleSource = m_bSelActiveSource = FALSE;
-	m_bSelHttpSource = m_bSelDonkeySource = m_bSelShareState = FALSE;
+	m_bSelBrowse = m_bSelChat = m_bSelShareState = FALSE;
 	m_bSelShareConsistent = TRUE;
 	m_bSelMoreSourcesOK = FALSE;
 	m_bSelSourceAcceptConnections = m_bSelSourceExtended = m_bSelHasReviews = FALSE;
@@ -578,14 +578,17 @@ void CDownloadsWnd::Prepare()
 			{
 				m_bSelAny = TRUE;
 				m_bSelSource = TRUE;
+				m_bSelSourceExtended = pSource->m_bClientExtended;
 				if ( pSource->m_pTransfer == NULL )
 					m_bSelIdleSource = TRUE;
 				else
 					m_bSelActiveSource = TRUE;
-				if ( pSource->m_nProtocol == PROTOCOL_HTTP ) m_bSelHttpSource = TRUE;
-				if ( pSource->m_nProtocol == PROTOCOL_ED2K ) m_bSelDonkeySource = TRUE;
+				if ( pSource->m_bClientExtended || pSource->m_nProtocol == PROTOCOL_ED2K  )
+				{
+					m_bSelBrowse = TRUE;
+					m_bSelChat = TRUE;
+				}
 				if ( ! pSource->m_bPushOnly ) m_bSelSourceAcceptConnections = TRUE;
-				m_bSelSourceExtended = pSource->m_bClientExtended;
 			}
 
 			// Check if we could get remote previews (only from the connected sources for the efficiency)
@@ -1512,18 +1515,8 @@ void CDownloadsWnd::OnTransfersForget()
 
 void CDownloadsWnd::OnUpdateTransfersChat(CCmdUI* pCmdUI)
 {
-	// If chat is disabled, grey out the option
-	if ( ! Settings.Community.ChatEnable )
-	{
-		pCmdUI->Enable( FALSE );
-		return;
-	}
-
-	// Check to see if chat is possible
 	Prepare();
-	pCmdUI->Enable( m_bSelHttpSource ||									// Enable chat for HTTP clients
-		( m_bSelDonkeySource && Settings.Community.ChatAllNetworks ) || // ED2K clients,
-		( m_bSelSourceExtended && m_bSelSourceAcceptConnections ) );	// or for any client supporting G2 chat
+	pCmdUI->Enable( m_bSelChat && Settings.Community.ChatEnable );
 }
 
 void CDownloadsWnd::OnTransfersChat()
@@ -1554,7 +1547,7 @@ void CDownloadsWnd::OnTransfersChat()
 void CDownloadsWnd::OnUpdateBrowseLaunch(CCmdUI* pCmdUI)
 {
 	Prepare();
-	pCmdUI->Enable( m_bSelHttpSource || ( m_bSelSourceExtended && m_bSelSourceAcceptConnections ) );
+	pCmdUI->Enable( m_bSelBrowse );
 }
 
 void CDownloadsWnd::OnBrowseLaunch()
@@ -1569,7 +1562,7 @@ void CDownloadsWnd::OnBrowseLaunch()
 		{
 			if ( pSource->m_bSelected )
 			{
-				if ( pSource->m_nProtocol == PROTOCOL_HTTP )	// Many HTTP clients support this
+				if ( pSource->m_nProtocol == PROTOCOL_HTTP || pSource->m_nProtocol == PROTOCOL_ED2K )	// Many HTTP clients support this
 					new CBrowseHostWnd( pSource->m_nProtocol, &pSource->m_pAddress, pSource->m_nPort, pSource->m_bPushOnly, pSource->m_oGUID );
 				else if ( pSource->m_bClientExtended )			// Over other protocols, you can only contact non-push G2 clients
 					new CBrowseHostWnd( pSource->m_nProtocol, &pSource->m_pAddress, pSource->m_nPort, FALSE, Hashes::Guid() );

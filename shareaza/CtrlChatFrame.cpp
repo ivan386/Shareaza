@@ -529,9 +529,8 @@ void CChatFrame::OnChatTimestamp()
 
 void CChatFrame::OnUpdateChatConnect(CCmdUI* pCmdUI)
 {
-	BOOL bState = ( ( m_pSession != NULL ) &&
-					( m_pSession->GetConnectedState() == TRI_FALSE )  &&
-					( m_pSession->m_nProtocol != PROTOCOL_ED2K ) );
+	BOOL bState = ( m_pSession != NULL ) &&
+				  ( m_pSession->GetConnectedState() == TRI_FALSE );
 	if ( CCoolBarItem* pItem = CCoolBarItem::FromCmdUI( pCmdUI ) ) pItem->Show( bState );
 	pCmdUI->Enable( bState );
 }
@@ -551,8 +550,7 @@ void CChatFrame::OnChatConnect()
 void CChatFrame::OnUpdateChatDisconnect(CCmdUI* pCmdUI)
 {
 	BOOL bState = ( m_pSession != NULL ) &&
-				  ( m_pSession->GetConnectedState() != TRI_FALSE ) &&
-				  ( m_pSession->m_nProtocol != PROTOCOL_ED2K );
+				  ( m_pSession->GetConnectedState() != TRI_FALSE );
 	if ( CCoolBarItem* pItem = CCoolBarItem::FromCmdUI( pCmdUI ) ) pItem->Show( bState );
 	pCmdUI->Enable( bState );
 }
