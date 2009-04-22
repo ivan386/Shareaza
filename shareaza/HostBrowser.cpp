@@ -97,14 +97,25 @@ BOOL CHostBrowser::Browse()
 	if ( m_nProtocol == PROTOCOL_ED2K )
 	{
 		m_pVendor = VendorCache.Lookup( _T("ED2K") );
-		CEDClient* pClient = EDClients.Connect( m_pAddress.s_addr,
-			m_nPort, NULL, 0, m_oClientID );
-		if ( ! pClient || ( ! pClient->m_bConnected && ! pClient->Connect() ) )
+
+		SOCKADDR_IN* pServer = NULL; // TODO: Add push connections
+		CEDClient* pClient = EDClients.Connect( m_pAddress.s_addr, m_nPort,
+			( pServer ? &pServer->sin_addr : NULL ), ( pServer ? pServer->sin_port : 0 ),
+			m_oClientID );
+
+		if ( pClient && pClient->m_bConnected )
+		{
+			// Send browse request
+			if ( CEDPacket* pPacket = CEDPacket::New( ED2K_C2C_ASKSHAREDDIRS ) )
+			{
+				pClient->Send( pPacket );
+			}
+		}
+		else if ( ! pClient || ! pClient->Connect() )
 		{
 			theApp.Message( MSG_ERROR, IDS_BROWSE_CANT_CONNECT_TO, m_sAddress );
 			return FALSE;
 		}
-		pClient->AdviseBrowser( this );
 	}
 	else
 	{
@@ -145,28 +156,30 @@ BOOL CHostBrowser::Browse()
 	return TRUE;
 }
 
-void CHostBrowser::Stop(BOOL /*bCompleted*/)
+void CHostBrowser::Stop(BOOL bCompleted)
 {
 	CSingleLock pLock( &Transfers.m_pSection, TRUE );
 
-	if ( IsValid() )
+	if ( bCompleted )
+	{
+		if ( m_pProfile && m_pNotify != NULL )
+			m_pNotify->OnProfileReceived();
+
+		theApp.Message( MSG_NOTICE, IDS_BROWSE_FINISHED, m_sAddress, m_nHits );
+	}
+	else if ( IsValid() )
 	{
 		theApp.Message( MSG_INFO, IDS_BROWSE_CLOSED, m_sAddress );
 	}
-	
-	if ( m_nProtocol == PROTOCOL_ED2K )
-	{
-		if ( CEDClient* pClient = EDClients.GetByIP( &m_pHost.sin_addr ) )
-		{
-			pClient->UnAdviseBrowser( this );
-		}
-		return;
-	}
-
-	CTransfer::Close();
 
 	m_nState	= hbsNull;
 	m_tPushed	= 0;
+	
+	// ED2K connections aren't handled here- they are in ED2KClient
+	if ( m_nProtocol != PROTOCOL_ED2K )
+	{
+		CTransfer::Close();
+	}
 
 	if ( m_pBuffer )
 	{
@@ -190,14 +203,35 @@ float CHostBrowser::GetProgress() const
 	return (float)m_nReceived / (float)m_nLength;
 }
 
+void CHostBrowser::OnQueryHits(CQueryHit* pHits)
+{
+	ASSERT( pHits );
+
+	m_bCanPush	= TRUE;
+	m_oClientID	= pHits->m_oClientID;
+
+	for ( CQueryHit* pCount = pHits ; pCount ; pCount = pCount->m_pNext )
+		m_nHits++;
+
+	if ( ! m_bCanChat && pHits->m_bChat )
+	{
+		m_bCanChat = TRUE;
+
+		if ( m_pProfile && m_pNotify )
+			m_pNotify->OnProfileReceived();
+	}
+
+	if ( m_pNotify != NULL )
+		m_pNotify->OnQueryHits( pHits );
+
+	Network.OnQueryHits( pHits );
+}
+
 //////////////////////////////////////////////////////////////////////
 // CHostBrowser event handling
 
 BOOL CHostBrowser::OnConnected()
 {
-	// ED2K connections aren't handled here- they are in ED2KClient
-	if ( m_nProtocol == PROTOCOL_ED2K ) return TRUE;
-
 	CTransfer::OnConnected();
 
 	SendRequest();
@@ -234,23 +268,28 @@ BOOL CHostBrowser::OnRead()
 
 void CHostBrowser::OnDropped()
 {
-	if ( ! IsValid() ) return;
+	if ( m_nProtocol != PROTOCOL_ED2K )
+	{
+		if ( ! IsValid() ) return;
 
-	if ( m_nState == hbsConnecting )
-	{
-		theApp.Message( MSG_ERROR, IDS_BROWSE_CANT_CONNECT_TO, m_sAddress );
-		if ( ! m_tPushed && SendPush( TRUE ) ) return;
-	}
-	else
-	{
-		if ( m_nLength == ~0ul )
+		if ( m_nState == hbsConnecting )
 		{
-			m_nLength = GetInputLength();
-			ReadContent();
-			return;
+			theApp.Message( MSG_ERROR, IDS_BROWSE_CANT_CONNECT_TO, m_sAddress );
+			
+			if ( ! m_tPushed && SendPush( TRUE ) )
+				return;
 		}
+		else
+		{
+			if ( m_nLength == ~0ul )
+			{
+				m_nLength = GetInputLength();
+				ReadContent();
+				return;
+			}
 
-		theApp.Message( MSG_ERROR, IDS_BROWSE_DROPPED, m_sAddress );
+			theApp.Message( MSG_ERROR, IDS_BROWSE_DROPPED, m_sAddress );
+		}
 	}
 
 	Stop();
@@ -258,9 +297,6 @@ void CHostBrowser::OnDropped()
 
 BOOL CHostBrowser::OnRun()
 {
-	// ED2K connections aren't handled here- they are in ED2KClient
-	if ( m_nProtocol == PROTOCOL_ED2K ) return TRUE;
-
 	CTransfer::OnRun();
 
 	DWORD nNow = GetTickCount();
@@ -346,41 +382,45 @@ BOOL CHostBrowser::OnPush(const Hashes::Guid& oClientID, CConnection* pConnectio
 
 void CHostBrowser::SendRequest()
 {
-	if ( ! IsValid() ) return;
+	if ( m_nProtocol != PROTOCOL_ED2K )
+	{
+		if ( ! IsValid() ) return;
 
-	if ( m_bNewBrowse )
-	{
-		Write( _P("GET /gnutella/browse/v1 HTTP/1.1\r\n") );
-	}
-	else
-	{
-		if ( Settings.Downloads.RequestHTTP11 )
-			Write( _P("GET / HTTP/1.1\r\n") );
+		if ( m_bNewBrowse )
+		{
+			Write( _P("GET /gnutella/browse/v1 HTTP/1.1\r\n") );
+		}
 		else
-			Write( _P("GET / HTTP/1.0\r\n") );
-	}
+		{
+			if ( Settings.Downloads.RequestHTTP11 )
+				Write( _P("GET / HTTP/1.1\r\n") );
+			else
+				Write( _P("GET / HTTP/1.0\r\n") );
+		}
 
-	CString strHeader = Settings.SmartAgent();
+		CString strHeader = Settings.SmartAgent();
 
-	if ( strHeader.GetLength() )
-	{
-		Write( _P("User-Agent: ") );
+		if ( strHeader.GetLength() )
+		{
+			Write( _P("User-Agent: ") );
+			Write( strHeader );
+			Write( _P("\r\n") );
+		}
+
+		Write( _P("Accept: text/html, application/x-gnutella-packets, application/x-gnutella2\r\n"
+							 "Accept-Encoding: deflate\r\n"
+							 "Connection: close\r\n") );
+
+		strHeader.Format( _T("Host: %s:%lu\r\n\r\n"), m_sAddress,
+			htons( m_pHost.sin_port ) );
 		Write( strHeader );
-		Write( _P("\r\n") );
+
+		OnWrite();
+
+		m_nProtocol	= PROTOCOL_ANY;
 	}
-
-	Write( _P("Accept: text/html, application/x-gnutella-packets, application/x-gnutella2\r\n"
-						 "Accept-Encoding: deflate\r\n"
-						 "Connection: close\r\n") );
-
-	strHeader.Format( _T("Host: %s:%lu\r\n\r\n"), m_sAddress,
-		htons( m_pHost.sin_port ) );
-	Write( strHeader );
-
-	OnWrite();
 
 	m_nState	= hbsRequesting;
-	m_nProtocol	= PROTOCOL_ANY;
 	m_bDeflate	= FALSE;
 	m_nLength	= ~0ul;
 	m_bConnect	= TRUE;
@@ -395,6 +435,9 @@ void CHostBrowser::SendRequest()
 
 BOOL CHostBrowser::ReadResponseLine()
 {
+	// ED2K connections aren't handled here- they are in ED2KClient
+	ASSERT ( m_nProtocol != PROTOCOL_ED2K );
+
 	CString strLine, strCode, strMessage;
 
 	if ( ! Read( strLine ) ) return TRUE;
@@ -487,8 +530,8 @@ BOOL CHostBrowser::OnHeaderLine(CString& strHeader, CString& strValue)
 
 BOOL CHostBrowser::OnHeadersComplete()
 {
-	// ED2K connections aren't handled here- they are in ED2KClient
-	ASSERT ( m_nProtocol != PROTOCOL_ED2K );
+	if ( m_nState == hbsContent )
+		return TRUE;
 
 	if ( m_nProtocol == PROTOCOL_ANY || m_nLength == 0 )
 	{
@@ -516,6 +559,10 @@ BOOL CHostBrowser::OnHeadersComplete()
 		theApp.Message( MSG_INFO, IDS_BROWSE_DOWNLOADING_FROM,
 			m_sAddress, _T("Gnutella-2") );
 		break;
+	case PROTOCOL_ED2K:
+		theApp.Message( MSG_INFO, IDS_BROWSE_DOWNLOADING_FROM,
+			m_sAddress, _T("eD2K") );
+		break;
 	default:
 		theApp.Message( MSG_ERROR,
 			_T("CHostBrowser::OnHeadersComplete(): Unknown Browse Protocol") );
@@ -529,26 +576,29 @@ BOOL CHostBrowser::OnHeadersComplete()
 
 BOOL CHostBrowser::ReadContent()
 {
-	if ( m_nReceived < m_nLength )
+	if ( m_nProtocol != PROTOCOL_ED2K )
 	{
-		CLockedBuffer pInput( GetInput() );
-
-		DWORD nVolume = min( m_nLength - m_nReceived, pInput->m_nLength );
-		m_nReceived += nVolume;
-
-		if ( m_bDeflate )
+		if ( m_nReceived < m_nLength )
 		{
-			// Try to decompress the stream
-			if( !pInput->InflateStreamTo( *m_pBuffer, m_pInflate ) )
+			CLockedBuffer pInput( GetInput() );
+
+			DWORD nVolume = min( m_nLength - m_nReceived, pInput->m_nLength );
+			m_nReceived += nVolume;
+
+			if ( m_bDeflate )
 			{
-				Stop();			// Clean up
-				return FALSE;	// Report failure
+				// Try to decompress the stream
+				if( !pInput->InflateStreamTo( *m_pBuffer, m_pInflate ) )
+				{
+					Stop();			// Clean up
+					return FALSE;	// Report failure
+				}
 			}
-		}
-		else
-		{
-			ASSERT( m_pBuffer );
-			m_pBuffer->AddBuffer( pInput, nVolume );
+			else
+			{
+				ASSERT( m_pBuffer );
+				m_pBuffer->AddBuffer( pInput, nVolume );
+			}
 		}
 	}
 
@@ -563,6 +613,9 @@ BOOL CHostBrowser::ReadContent()
 	case PROTOCOL_G2:
 		if ( ! StreamPacketsG2() ) return FALSE;
 		break;
+	case PROTOCOL_ED2K:
+		// Skip
+		break;
 	default:
 		theApp.Message( MSG_ERROR,
 			_T("CHostBrowser::ReadContent(): Unknown Browse Protocol") );
@@ -572,10 +625,6 @@ BOOL CHostBrowser::ReadContent()
 
 	Stop( TRUE );
 
-	if ( m_pProfile->IsValid() && m_pNotify != NULL ) m_pNotify->OnProfileReceived();
-
-	theApp.Message( MSG_NOTICE, IDS_BROWSE_FINISHED, m_sAddress, m_nHits );
-
 	return TRUE;
 }
 
@@ -584,6 +633,8 @@ BOOL CHostBrowser::ReadContent()
 
 BOOL CHostBrowser::StreamPacketsG1()
 {
+	ASSERT ( m_nProtocol == PROTOCOL_G1 );
+
 	BOOL bSuccess = TRUE;
 	for ( ; bSuccess ; )
 	{
@@ -624,6 +675,8 @@ BOOL CHostBrowser::StreamPacketsG1()
 
 BOOL CHostBrowser::StreamPacketsG2()
 {
+	ASSERT ( m_nProtocol == PROTOCOL_G2 );
+
 	while ( CG2Packet* pPacket = CG2Packet::ReadBuffer( m_pBuffer ) )
 	{
 		BOOL bSuccess = FALSE;
@@ -665,17 +718,7 @@ BOOL CHostBrowser::OnPacket(CG1Packet* pPacket)
 		return FALSE;
 	}
 
-	m_bCanPush	= TRUE;
-	m_oClientID	= pHits->m_oClientID;
-
-	for ( CQueryHit* pCount = pHits ; pCount ; pCount = pCount->m_pNext ) m_nHits++;
-
-	if ( ! m_bCanChat && pHits->m_bChat ) m_bCanChat = TRUE;
-
-	if ( m_pNotify != NULL )
-		m_pNotify->OnBrowseHits( pHits );
-
-	Network.OnQueryHits( pHits );
+	OnQueryHits( pHits );
 
 	return TRUE;
 }
@@ -692,24 +735,7 @@ BOOL CHostBrowser::OnPacket(CG2Packet* pPacket)
 			return FALSE;
 		}
 
-		m_bCanPush	= TRUE;
-		m_oClientID	= pHits->m_oClientID;
-
-		for ( CQueryHit* pCount = pHits ; pCount ; pCount = pCount->m_pNext )
-		{
-			m_nHits++;
-		}
-
-		if ( ! m_bCanChat && pHits->m_bChat )
-		{
-			m_bCanChat = TRUE;
-			if ( m_pNotify && m_pProfile != NULL ) m_pNotify->OnProfileReceived();
-		}
-
-		if ( m_pNotify != NULL )
-			m_pNotify->OnBrowseHits( pHits );
-
-		Network.OnQueryHits( pHits );
+		OnQueryHits( pHits );
 	}
 	else if ( pPacket->IsType( G2_PACKET_PHYSICAL_FOLDER ) )
 	{
@@ -723,10 +749,8 @@ BOOL CHostBrowser::OnPacket(CG2Packet* pPacket)
 	{
 		OnProfilePacket( pPacket );
 
-		if ( m_pProfile != NULL && m_pNotify != NULL )
-		{
+		if ( m_pProfile && m_pNotify )
 			m_pNotify->OnProfileReceived();
-		}
 	}
 	else if ( pPacket->IsType( G2_PACKET_PROFILE_AVATAR ) )
 	{
@@ -770,6 +794,8 @@ void CHostBrowser::OnProfilePacket(CG2Packet* pPacket)
 
 BOOL CHostBrowser::StreamHTML()
 {
+	ASSERT ( m_nProtocol == PROTOCOL_NULL );
+
 	CString strLine;
 
 	CQueryHit* pHits = NULL;
@@ -837,18 +863,13 @@ BOOL CHostBrowser::StreamHTML()
 			pHit->m_pNext = pHits;
 			pHits = pHit;
 
-			m_nHits ++;
-
 			nPosHTTP = strLine.Find( _T("http://") );
 		}
 	}
 
 	if ( pHits != NULL )
 	{
-		if ( m_pNotify != NULL )
-			m_pNotify->OnBrowseHits( pHits );
-
-		Network.OnQueryHits( pHits );
+		OnQueryHits( pHits );
 	}
 
 	return TRUE;

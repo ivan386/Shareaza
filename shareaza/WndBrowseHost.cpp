@@ -345,9 +345,9 @@ void CBrowseHostWnd::OnProfileReceived()
 	}
 }
 
-void CBrowseHostWnd::OnBrowseHits(const CQueryHit* pHits)
+BOOL CBrowseHostWnd::OnQueryHits(const CQueryHit* pHits)
 {
-	if ( m_bPaused || m_hWnd == NULL ) return;
+	if ( m_bPaused || m_hWnd == NULL ) return FALSE;
 
 	CSingleLock pLock( &m_pMatches->m_pSection );
 
@@ -357,7 +357,10 @@ void CBrowseHostWnd::OnBrowseHits(const CQueryHit* pHits)
 		m_bUpdate = TRUE;
 
 		SetModified();
+		return TRUE;
 	}
+
+	return FALSE;
 }
 
 void CBrowseHostWnd::OnHeadPacket(CG2Packet* pPacket)

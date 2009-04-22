@@ -40,6 +40,8 @@ public:
 
 	DECLARE_DYNCREATE(CBrowseHostWnd)
 
+	inline CHostBrowser* GetBrowser() const { return m_pBrowser; }
+
 // Attributes
 protected:
 	CHostBrowser*		m_pBrowser;
@@ -54,7 +56,7 @@ public:
 	void			Serialize(CArchive& ar);
 	virtual void	OnSkinChange();
 	virtual void	OnProfileReceived();
-	virtual void	OnBrowseHits(const CQueryHit* pHits);
+	virtual BOOL	OnQueryHits(const CQueryHit* pHits);
 	virtual void	OnHeadPacket(CG2Packet* pPacket);
 	virtual void	OnPhysicalTree(CG2Packet* pPacket);
 	virtual void	OnVirtualTree(CG2Packet* pPacket);

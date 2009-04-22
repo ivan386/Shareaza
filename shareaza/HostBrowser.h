@@ -31,6 +31,7 @@ class CGProfile;
 class CBuffer;
 class CVendor;
 class CBrowseHostWnd;
+class CQueryHit;
 
 
 class CHostBrowser : public CTransfer
@@ -42,7 +43,6 @@ public:
 
 public:
 	int				m_nState;
-	CBrowseHostWnd*	m_pNotify;
 	CGProfile*		m_pProfile;
 	BOOL			m_bNewBrowse;
 	IN_ADDR			m_pAddress;
@@ -72,8 +72,16 @@ public:
 	void		Stop(BOOL bCompleted = FALSE);
 	BOOL		IsBrowsing() const;
 	float		GetProgress() const;
+	void		OnQueryHits(CQueryHit* pHits);
+
+	virtual BOOL	OnConnected();
+	virtual void	OnDropped();
+	virtual BOOL	OnHeadersComplete();
+	virtual BOOL	OnPush(const Hashes::Guid& oClientID, CConnection* pConnection);
 
 protected:
+	CBrowseHostWnd*	m_pNotify;
+
 	BOOL		SendPush(BOOL bMessage);
 	void		SendRequest();
 	BOOL		ReadResponseLine();
@@ -86,12 +94,7 @@ protected:
 	BOOL		OnPacket(CG2Packet* pPacket);
 	void		OnProfilePacket(CG2Packet* pPacket);
 
-	virtual BOOL	OnConnected();
 	virtual BOOL	OnRead();
-	virtual void	OnDropped();
 	virtual BOOL	OnHeaderLine(CString& strHeader, CString& strValue);
-	virtual BOOL	OnHeadersComplete();
 	virtual BOOL	OnRun();
-public:
-	virtual BOOL	OnPush(const Hashes::Guid& oClientID, CConnection* pConnection);
 };

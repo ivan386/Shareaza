@@ -51,6 +51,7 @@
 #include "Security.h"
 #include "UploadQueues.h"
 #include "Schema.h"
+#include "WndMain.h"
 #include "XML.h"
 
 #ifdef _DEBUG
@@ -87,7 +88,7 @@ CEDClient::CEDClient()
 	m_bEmRequest	= FALSE;
 	m_bEmComments	= FALSE;
 	m_bEmPeerCache	= FALSE;		// Not supported
-	m_bEmBrowse		= FALSE;		// Not over ed2k
+	m_bEmBrowse		= FALSE;
 	m_bEmMultiPacket= FALSE;		// Not supported
 	m_bEmPreview	= FALSE;
 	m_bEmLargeFile	= FALSE;		// LargeFile support
@@ -119,31 +120,6 @@ CEDClient::~CEDClient()
 	ASSERT( m_pDownload == NULL );
 
 	EDClients.Remove( this );
-}
-
-bool CEDClient::AdviseBrowser(CHostBrowser* pHandler)
-{
-	for ( POSITION pos = m_oHandlers.GetHeadPosition(); pos; )
-	{
-		if ( m_oHandlers.GetNext( pos ) == pHandler )
-			return false;
-	}
-	m_oHandlers.AddTail( pHandler );
-	return true;
-}
-
-bool CEDClient::UnAdviseBrowser(CHostBrowser* pHandler)
-{
-	for ( POSITION pos = m_oHandlers.GetHeadPosition(); pos; )
-	{
-		POSITION posRemove = pos;
-		if ( m_oHandlers.GetNext( pos ) == pHandler )
-		{
-			m_oHandlers.RemoveAt( posRemove );
-			return true;
-		}
-	}
-	return false;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -535,6 +511,7 @@ void CEDClient::NotifyDropped()
 	m_bSeeking = TRUE;
 	if ( m_pDownload != NULL ) m_pDownload->OnDropped();
 	if ( m_pUpload != NULL ) m_pUpload->OnDropped();
+	if ( CHostBrowser* pBrowser = GetBrowser() ) pBrowser->OnDropped();
 	m_bSeeking = FALSE;
 }
 
@@ -597,8 +574,10 @@ BOOL CEDClient::OnLoggedIn()
 
 	if ( m_pUpload != NULL ) m_pUpload->OnConnected();
 
-	if ( ! m_oHandlers.IsEmpty() )
+	if ( CHostBrowser* pBrowser = GetBrowser() )
 	{
+		pBrowser->OnConnected();
+
 		if ( CEDPacket* pPacket = CEDPacket::New( ED2K_C2C_ASKSHAREDDIRS ) )
 		{
 			Send( pPacket );
@@ -606,6 +585,36 @@ BOOL CEDClient::OnLoggedIn()
 	}
 
 	return TRUE;
+}
+
+CHostBrowser* CEDClient::GetBrowser() const
+{
+	CSingleLock pLock( &theApp.m_pSection, FALSE );
+	if ( pLock.Lock( 1000 ) )
+	{
+		if ( CMainWnd* pMainWnd = theApp.SafeMainWnd() )
+		{	
+			for ( POSITION pos = pMainWnd->m_pWindows.GetIterator() ; pos ; )
+			{
+				CChildWnd* pChildWnd = pMainWnd->m_pWindows.GetNext( pos );
+				if ( pChildWnd->IsKindOf( RUNTIME_CLASS( CBrowseHostWnd ) ) )
+				{
+					CBrowseHostWnd* pBrowseHostWnd = static_cast< CBrowseHostWnd* >( pChildWnd );
+					if ( CHostBrowser* pBrowser = pBrowseHostWnd->GetBrowser() )
+					{
+						if ( pBrowser->IsBrowsing() &&
+							( m_oGUID == pBrowser->m_oClientID ||
+							( m_pHost.sin_addr.s_addr == pBrowser->m_pAddress.s_addr &&
+							  m_pHost.sin_port == htons( pBrowser->m_nPort ) ) ) )
+						{
+							return pBrowser;
+						}
+					}
+				}
+			}
+		}
+	}
+	return NULL;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -1912,6 +1921,11 @@ BOOL CEDClient::OnViewSharedDir(CEDPacket* pPacket)
 
 BOOL CEDClient::OnAskSharedDirsAnswer(CEDPacket* pPacket)
 {
+	if ( CHostBrowser* pBrowser = GetBrowser() )
+	{
+		pBrowser->OnHeadersComplete();
+	}
+
 	if ( pPacket->GetRemaining() >= 4 )
 	{
 		// Read number of directories
@@ -1944,6 +1958,11 @@ BOOL CEDClient::OnAskSharedDirsAnswer(CEDPacket* pPacket)
 
 BOOL CEDClient::OnViewSharedDirAnswer(CEDPacket* pPacket)
 {
+	if ( CHostBrowser* pBrowser = GetBrowser() )
+	{
+		pBrowser->m_nState = CHostBrowser::hbsContent;
+	}
+
 	CQueryHit* pHits = NULL;
 
 	if ( pPacket->GetRemaining() >= 2 )
@@ -1962,14 +1981,19 @@ BOOL CEDClient::OnViewSharedDirAnswer(CEDPacket* pPacket)
 					break;
 
 				CQueryHit* pHit = new CQueryHit( PROTOCOL_ED2K );
+				
 				pHit->m_bBrowseHost = TRUE;
 				pHit->m_bChat = TRUE;
 				pHit->m_pVendor = VendorCache.Lookup( _T("ED2K") );
 				if ( ! pHit->m_pVendor ) pHit->m_pVendor = VendorCache.m_pNull;
+				
 				pHit->ReadEDPacket( pPacket, &m_pServer );
+
 				pHit->m_pAddress = m_pHost.sin_addr;
-				pHit->m_nPort = m_pHost.sin_port;
+				pHit->m_nPort = ntohs( m_pHost.sin_port );
+
 				pHit->Resolve();
+
 				pHit->m_pNext = pHits;
 				pHits = pHit;
 			}
@@ -1978,22 +2002,23 @@ BOOL CEDClient::OnViewSharedDirAnswer(CEDPacket* pPacket)
 
 	if ( pHits )
 	{
-		for ( POSITION pos = m_oHandlers.GetHeadPosition(); pos; )
+		if ( CHostBrowser* pBrowser = GetBrowser() )
 		{
-			CHostBrowser* pBrowser = m_oHandlers.GetNext( pos );
-			if ( pBrowser->m_pNotify != NULL )
-				pBrowser->m_pNotify->OnBrowseHits( pHits );
+			pBrowser->OnQueryHits( pHits );
 		}
-
-		Network.OnQueryHits( pHits );
+		else
+		{
+			Network.OnQueryHits( pHits );
+		}
 	}
 
 	ASSERT( m_nDirsWaiting );
 	if ( --m_nDirsWaiting == 0 )
 	{
-		for ( POSITION pos = m_oHandlers.GetHeadPosition(); pos; )
+		// Browse complete
+		if ( CHostBrowser* pBrowser = GetBrowser() )
 		{
-			m_oHandlers.GetNext( pos )->Stop( TRUE );
+			pBrowser->Stop();
 		}
 	}
 
@@ -2002,9 +2027,10 @@ BOOL CEDClient::OnViewSharedDirAnswer(CEDPacket* pPacket)
 
 BOOL CEDClient::OnAskSharedDirsDenied(CEDPacket* /*pPacket*/)
 {
-	for ( POSITION pos = m_oHandlers.GetHeadPosition(); pos; )
+	// Access denied
+	if ( CHostBrowser* pBrowser = GetBrowser() )
 	{
-		m_oHandlers.GetNext( pos )->Stop( TRUE );
+		pBrowser->Stop();
 	}
 
 	return TRUE;

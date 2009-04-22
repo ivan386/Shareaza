@@ -1,7 +1,7 @@
 //
 // ChatWindows.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -19,9 +19,6 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_CHATWINDOWS_H__F756916C_1CDF_460A_B1F2_8EC53E72B6C2__INCLUDED_)
-#define AFX_CHATWINDOWS_H__F756916C_1CDF_460A_B1F2_8EC53E72B6C2__INCLUDED_
-
 #pragma once
 
 class CChatFrame;
@@ -30,35 +27,25 @@ class CPrivateChatFrame;
 
 class CChatWindows
 {
-// Construction
 public:
-	CChatWindows();
-	virtual ~CChatWindows();
+	// Start new or reopen existing chat session
+	CPrivateChatFrame*	OpenPrivate(const Hashes::Guid& oGUID, SOCKADDR_IN* pHost, BOOL bMustPush = FALSE, PROTOCOLID nProtocol = PROTOCOL_NULL, SOCKADDR_IN* pServer = NULL );
+	
+	// Start new or reopen existing chat session (nPort and nServerPort must be in host byte order)
+	CPrivateChatFrame*	OpenPrivate(const Hashes::Guid& oGUID, IN_ADDR* pAddress, WORD nPort = 6346, BOOL bMustPush = FALSE, PROTOCOLID nProtocol = PROTOCOL_NULL, IN_ADDR* pServerAddress = NULL, WORD nServerPort = 0 );
 
-// Attributes
-protected:
-	CList< CChatFrame* > m_pList;
-
-// Operations
-public:
-	POSITION	GetIterator() const;
-	CChatFrame*	GetNext(POSITION& pos) const;
-	INT_PTR		GetCount() const { return m_pList.GetCount(); }
-	void		Close();
-public:
+	void				Add(CChatFrame* pFrame);
+	void				Remove(CChatFrame* pFrame);
 	CPrivateChatFrame*	FindPrivate(const Hashes::Guid& oGUID);
 	CPrivateChatFrame*	FindPrivate(IN_ADDR* pAddress);
 	CPrivateChatFrame*  FindED2KFrame(SOCKADDR_IN* pAddress);
 	CPrivateChatFrame*  FindED2KFrame(DWORD nClientID, SOCKADDR_IN* pServerAddress);
-	CPrivateChatFrame*	OpenPrivate(const Hashes::Guid& oGUID, SOCKADDR_IN* pHost, BOOL bMustPush = FALSE, PROTOCOLID nProtocol = PROTOCOL_NULL, SOCKADDR_IN* pServer = NULL );
-	CPrivateChatFrame*	OpenPrivate(const Hashes::Guid& oGUID, IN_ADDR* pAddress, WORD nPort = 6346, BOOL bMustPush = FALSE, PROTOCOLID nProtocol = PROTOCOL_NULL, IN_ADDR* pServerAddress = NULL, WORD nServerPort = 0 );
-protected:
-	void	Add(CChatFrame* pFrame);
-	void	Remove(CChatFrame* pFrame);
 
-	friend class CChatFrame;
+protected:
+	CList< CChatFrame* > m_pList;
+
+	POSITION			GetIterator() const;
+	CChatFrame*			GetNext(POSITION& pos) const;
 };
 
 extern CChatWindows ChatWindows;
-
-#endif // !defined(AFX_CHATWINDOWS_H__F756916C_1CDF_460A_B1F2_8EC53E72B6C2__INCLUDED_)

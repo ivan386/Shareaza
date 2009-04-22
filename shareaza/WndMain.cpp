@@ -2834,21 +2834,24 @@ LRESULT CMainWnd::OnQueryHits(WPARAM /*wParam*/, LPARAM lParam)
 	}
 
 	// Update search window(s)
+	BOOL bHandled = FALSE;
 	CChildWnd* pMonitorWnd		= NULL;
-	CRuntimeClass* pMonitorType	= RUNTIME_CLASS(CHitMonitorWnd);
 	CChildWnd* pChildWnd		= NULL;
 	while ( ( pChildWnd = m_pWindows.Find( NULL, pChildWnd ) ) != NULL )
 	{
-		if ( pChildWnd->GetRuntimeClass() == pMonitorType )
+		if ( pChildWnd->IsKindOf( RUNTIME_CLASS( CSearchWnd ) ) )
+		{
+			if ( pChildWnd->OnQueryHits( pHits ) )
+				bHandled = TRUE;
+		}
+		else if ( pChildWnd->IsKindOf( RUNTIME_CLASS( CHitMonitorWnd ) ) )
 		{
 			pMonitorWnd = pChildWnd;
 		}
-		else if ( pChildWnd->OnQueryHits( pHits ) )
-			pMonitorWnd = NULL;
 	}
 
 	// Drop rest to hit window
-	if ( pMonitorWnd != NULL )
+	if ( ! bHandled && pMonitorWnd )
 		pMonitorWnd->OnQueryHits( pHits );
 
 	pHits->Delete();

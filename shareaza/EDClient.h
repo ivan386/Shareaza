@@ -65,7 +65,7 @@ public:	//Client capabilities
 	BOOL		m_bEmRequest;
 	BOOL		m_bEmComments;
 	BOOL		m_bEmPeerCache;		// Not supported
-	BOOL		m_bEmBrowse;		// "View shared files" supported
+	BOOL		m_bEmBrowse;		// Browse supported
 	BOOL		m_bEmMultiPacket;	// Not supported
 	BOOL		m_bEmPreview;		// Preview support
 	BOOL		m_bEmLargeFile;		// Large file support
@@ -84,9 +84,6 @@ public:
 	BOOL		m_bCommentSent;
 
 	DWORD		m_nDirsWaiting;
-	CList< CHostBrowser* > m_oHandlers;
-	bool AdviseBrowser(CHostBrowser* pHandler);
-	bool UnAdviseBrowser(CHostBrowser* pHandler);
 
 // Operations
 public:
@@ -115,6 +112,8 @@ protected:
 	void	DetachDownload();
 	void	DetachUpload();
 	void	NotifyDropped();
+	CHostBrowser*	GetBrowser() const;
+
 public:
 	virtual void	AttachTo(CConnection* pConnection);
 	virtual void	Close();
