@@ -104,8 +104,6 @@ public:
 	
 // Operations
 public:
-	CString				ReadEDString(DWORD ServerFlags);
-	void				WriteEDString(LPCTSTR psz, DWORD ServerFlags);
 	CString				ReadEDString(BOOL bUnicode);
 	void				WriteEDString(LPCTSTR psz, BOOL bUnicode);
 	CString				ReadLongEDString(BOOL bUnicode);
@@ -326,8 +324,8 @@ public:
 // Operations
 public:
 	void	Clear();
-	void	Write(CEDPacket* pPacket, DWORD ServerFlags = 0);
-	BOOL	Read(CEDPacket* pPacket, DWORD ServerFlags = 0);
+	void	Write(CEDPacket* pPacket, BOOL bUnicode = FALSE, BOOL bSmallTags = FALSE);
+	BOOL	Read(CEDPacket* pPacket, BOOL bUnicode = FALSE);
 	BOOL	Read(CFile* pFile);
 	
 // Inlines

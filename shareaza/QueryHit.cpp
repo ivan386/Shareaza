@@ -677,7 +677,7 @@ CQueryHit* CQueryHit::FromG2Packet(CG2Packet* pPacket, int* pnHops)
 //////////////////////////////////////////////////////////////////////
 // CQueryHit from ED2K packet
 
-CQueryHit* CQueryHit::FromEDPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer, DWORD m_nServerFlags, const Hashes::Guid& oSearchID )
+CQueryHit* CQueryHit::FromEDPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer, BOOL bUnicode, const Hashes::Guid& oSearchID )
 {
 	CQueryHit* pFirstHit	= NULL;
 	CQueryHit* pLastHit		= NULL;
@@ -707,7 +707,7 @@ CQueryHit* CQueryHit::FromEDPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer, DWO
 				
 				pHit->m_pVendor = VendorCache.Lookup( _T("ED2K") );
 				if ( ! pHit->m_pVendor ) pHit->m_pVendor = VendorCache.m_pNull;
-				pHit->ReadEDPacket( pPacket, pServer, m_nServerFlags );
+				pHit->ReadEDPacket( pPacket, pServer, bUnicode );
 				pHit->Resolve();
 
 				if ( pHit->m_bPush == TRI_TRUE )
@@ -1552,8 +1552,7 @@ bool CQueryHit::ReadG2Packet(CG2Packet* pPacket, DWORD nLength)
 //////////////////////////////////////////////////////////////////////
 // CQueryHit ED2K result entry reader
 
-void CQueryHit::ReadEDPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer,
-							 DWORD m_nServerFlags ) throw(...)
+void CQueryHit::ReadEDPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer, BOOL bUnicode)
 {
 	CString strLength(_T("")), strBitrate(_T("")), strCodec(_T(""));
 	DWORD nLength = 0;
@@ -1572,7 +1571,7 @@ void CQueryHit::ReadEDPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer,
 			AfxThrowUserException();
 
 		CEDTag pTag;
-		if ( ! pTag.Read( pPacket, m_nServerFlags ) ) 
+		if ( ! pTag.Read( pPacket, bUnicode ) ) 
 			AfxThrowUserException();
 
 		if ( pTag.m_nKey == ED2K_FT_FILENAME )
@@ -1834,7 +1833,7 @@ void CQueryHit::ReadEDPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer,
 	}
 }
 
-void CQueryHit::ReadEDAddress(CEDPacket* pPacket, SOCKADDR_IN* pServer) throw(...)
+void CQueryHit::ReadEDAddress(CEDPacket* pPacket, SOCKADDR_IN* pServer)
 {
 	DWORD nAddress = m_pAddress.S_un.S_addr = pPacket->ReadLongLE();
 	if ( ! CEDPacket::IsLowID( nAddress ) && Security.IsDenied( (IN_ADDR*)&nAddress ) )

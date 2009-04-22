@@ -92,7 +92,7 @@ protected:
 public:
 	static CQueryHit*	FromG1Packet(CG1Packet* pPacket, int* pnHops = NULL);
 	static CQueryHit*	FromG2Packet(CG2Packet* pPacket, int* pnHops = NULL);
-	static CQueryHit*	FromEDPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer, DWORD m_nServerFlags, const Hashes::Guid& pSearchID = Hashes::Guid()) throw();
+	static CQueryHit*	FromEDPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer, BOOL bUnicode, const Hashes::Guid& pSearchID = Hashes::Guid()) throw();
 protected:
 	static BOOL			CheckBogus(CQueryHit* pFirstHit);
 	static CXMLElement*	ReadXML(CG1Packet* pPacket, int nSize);
@@ -105,7 +105,7 @@ public:
 	void		Serialize(CArchive& ar, int nVersion);
 	void		Ban(int nBanLength);	// Ban by host IP only
 	void		Resolve();
-	void		ReadEDPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer, DWORD m_nServerFlags = 0) throw(...);
+	void		ReadEDPacket(CEDPacket* pPacket, SOCKADDR_IN* pServer, BOOL bUnicode);
 protected:
 	void		ParseAttributes(const Hashes::Guid& pClientID, CVendor* pVendor, BYTE* nFlags, BOOL bChat, BOOL bBrowseHost);
 	void		ReadG1Packet(CG1Packet* pPacket);
@@ -113,7 +113,7 @@ protected:
 	void		ReadExtension(CG1Packet* pPacket);
 	BOOL		CheckValid() const;
 	bool		ReadG2Packet(CG2Packet* pPacket, DWORD nLength);
-	void		ReadEDAddress(CEDPacket* pPacket, SOCKADDR_IN* pServer) throw(...);
+	void		ReadEDAddress(CEDPacket* pPacket, SOCKADDR_IN* pServer);
 	BOOL		ParseXML(CXMLElement* pXML, DWORD nRealIndex);
 	BOOL		HasBogusMetadata();
 	BOOL		AutoDetectSchema(LPCTSTR pszInfo);

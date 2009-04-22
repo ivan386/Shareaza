@@ -806,7 +806,7 @@ void CEDClient::SendHello(BYTE nType)
 	pPacket->WriteLongLE( 6 );	// Number of Tags
 
 	// 1 - Nickname
-	CEDTag( ED2K_CT_NAME, MyProfile.GetNick().Left( 255 ) ).Write( pPacket, ED2K_SERVER_TCP_UNICODE );
+	CEDTag( ED2K_CT_NAME, MyProfile.GetNick().Left( 255 ) ).Write( pPacket, TRUE );
 
 	// 2 - ED2K version
 	CEDTag( ED2K_CT_VERSION, ED2K_VERSION ).Write( pPacket );
@@ -889,7 +889,7 @@ BOOL CEDClient::OnHello(CEDPacket* pPacket)
 	while ( nCount-- > 0 && pPacket->GetRemaining() > 0 )
 	{
 		CEDTag pTag;
-		if ( ! pTag.Read( pPacket, ED2K_SERVER_TCP_UNICODE ) )
+		if ( ! pTag.Read( pPacket, TRUE ) )
 		{
 			theApp.Message( MSG_ERROR, IDS_ED2K_CLIENT_HANDSHAKE_FAIL, (LPCTSTR)m_sAddress );
 			Close();
@@ -1068,7 +1068,7 @@ BOOL CEDClient::OnEmuleInfo(CEDPacket* pPacket)
 		CEDTag pTag;
 
 		// Read tag
-		if ( ! pTag.Read( pPacket ) )
+		if ( ! pTag.Read( pPacket, TRUE ) )
 		{
 			theApp.Message( MSG_ERROR, IDS_ED2K_CLIENT_HANDSHAKE_FAIL, (LPCTSTR)m_sAddress );
 			Close();
@@ -1851,7 +1851,7 @@ BOOL CEDClient::OnViewSharedDir(CEDPacket* pPacket)
 						pReply->WriteLongLE( nTags );
 
 						// Filename
-						CEDTag( ED2K_FT_FILENAME, pFile->m_sName ).Write( pReply );
+						CEDTag( ED2K_FT_FILENAME, pFile->m_sName ).Write( pReply, m_bEmUnicode );
 
 						// File size
 						CEDTag( ED2K_FT_FILESIZE, (DWORD)pFile->m_nSize ).Write( pReply );
@@ -1986,8 +1986,8 @@ BOOL CEDClient::OnViewSharedDirAnswer(CEDPacket* pPacket)
 				pHit->m_bChat = TRUE;
 				pHit->m_pVendor = VendorCache.Lookup( _T("ED2K") );
 				if ( ! pHit->m_pVendor ) pHit->m_pVendor = VendorCache.m_pNull;
-				
-				pHit->ReadEDPacket( pPacket, &m_pServer );
+
+				pHit->ReadEDPacket( pPacket, &m_pServer, m_bEmUnicode );
 
 				pHit->m_pAddress = m_pHost.sin_addr;
 				pHit->m_nPort = ntohs( m_pHost.sin_port );

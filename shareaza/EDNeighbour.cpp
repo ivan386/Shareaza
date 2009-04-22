@@ -196,21 +196,21 @@ BOOL CEDNeighbour::OnConnected()
 
 	// User name
 	if ( Settings.eDonkey.LearnNewServers )
-		CEDTag( ED2K_CT_NAME, MyProfile.GetNick().Left( 255 ) ).Write( pPacket, 0 );
+		CEDTag( ED2K_CT_NAME, MyProfile.GetNick().Left( 255 ) ).Write( pPacket );
 	else	// nolistsrvs in the nick say to the server that we don't want server list
 		CEDTag( ED2K_CT_NAME, MyProfile.GetNick().Left( 255 - 13 ) + _T(" - nolistsrvs") ).Write( pPacket, 0 );
 	// Version ('ed2k version')
-	CEDTag( ED2K_CT_VERSION, ED2K_VERSION ).Write( pPacket, 0 );
+	CEDTag( ED2K_CT_VERSION, ED2K_VERSION ).Write( pPacket );
 	// Port
 	if ( Settings.eDonkey.SendPortServer )
-		CEDTag( ED2K_CT_PORT, htons( Network.m_pHost.sin_port ) ).Write( pPacket, 0 );
+		CEDTag( ED2K_CT_PORT, htons( Network.m_pHost.sin_port ) ).Write( pPacket );
 	// Software Version ('Client Version').
-	CEDTag( ED2K_CT_SOFTWAREVERSION, nVersion ).Write( pPacket, 0 );
+	CEDTag( ED2K_CT_SOFTWAREVERSION, nVersion ).Write( pPacket );
 	// Flags indicating capability
 	CEDTag( ED2K_CT_SERVER_FLAGS, ED2K_SRVCAP_ZLIB | ED2K_SRVCAP_AUXPORT |
 		ED2K_SRVCAP_NEWTAGS | ED2K_SRVCAP_UNICODE |
 		( Settings.eDonkey.LargeFileSupport ? ED2K_SRVCAP_LARGEFILES : 0 )
-		).Write( pPacket, 0 );
+		).Write( pPacket );
 
 	m_nState = nrsHandshake1;
 	Send( pPacket );
@@ -316,7 +316,7 @@ BOOL CEDNeighbour::OnServerMessage(CEDPacket* pPacket)
 {
 	if ( pPacket->GetRemaining() < 4 ) return TRUE;
 
-	CString	strMessage = pPacket->ReadEDString( m_nTCPFlags );
+	CString	strMessage = pPacket->ReadEDString( m_nTCPFlags & ED2K_SERVER_TCP_UNICODE );
 
 	while ( strMessage.GetLength() > 0 )
 	{
@@ -475,7 +475,7 @@ BOOL CEDNeighbour::OnServerIdent(CEDPacket* pPacket)
 	while ( nTags-- > 0 && pPacket->GetRemaining() > 1 )
 	{
 		CEDTag pTag;
-		if ( ! pTag.Read( pPacket, m_nTCPFlags ) ) break;
+		if ( ! pTag.Read( pPacket, m_nTCPFlags & ED2K_SERVER_TCP_UNICODE ) ) break;
 
 		switch ( pTag.m_nKey )
 		{
@@ -592,7 +592,7 @@ BOOL CEDNeighbour::OnSearchResults(CEDPacket* pPacket)
 	}
 
 	Hashes::Guid oGUID = m_pQueries.RemoveHead();
-	CQueryHit* pHits = CQueryHit::FromEDPacket( pPacket, &m_pHost, m_nTCPFlags, oGUID );
+	CQueryHit* pHits = CQueryHit::FromEDPacket( pPacket, &m_pHost, m_nTCPFlags & ED2K_SERVER_TCP_UNICODE, oGUID );
 
 	if ( pHits == NULL )
 	{
@@ -624,7 +624,7 @@ BOOL CEDNeighbour::OnSearchResults(CEDPacket* pPacket)
 
 BOOL CEDNeighbour::OnFoundSources(CEDPacket* pPacket)
 {
-	CQueryHit* pHits	= CQueryHit::FromEDPacket( pPacket, &m_pHost, m_nTCPFlags );
+	CQueryHit* pHits	= CQueryHit::FromEDPacket( pPacket, &m_pHost, m_nTCPFlags & ED2K_SERVER_TCP_UNICODE );
 
 	if ( pHits == NULL )
 	{
@@ -654,6 +654,11 @@ BOOL CEDNeighbour::OnFoundSources(CEDPacket* pPacket)
 // be sent.
 void CEDNeighbour::SendSharedFiles()
 {
+	BOOL bDeflate = m_nTCPFlags & ED2K_SERVER_TCP_64BITSIZE;
+	BOOL bUnicode = m_nTCPFlags & ED2K_SERVER_TCP_UNICODE;
+	BOOL bSmallTags = m_nTCPFlags & ED2K_SERVER_TCP_SMALLTAGS;
+	BOOL bLargeFile = m_nTCPFlags & ED2K_SERVER_TCP_64BITSIZE;
+
 	// Set the limits for number of files sent to the ed2k server
 	m_nFileLimit = Settings.eDonkey.MaxShareCount;
 
@@ -687,13 +692,13 @@ void CEDNeighbour::SendSharedFiles()
 		//If the file has an ed2k hash, has started, has a known size and a hashset, etc...
 		if ( ( pDownload->m_oED2K ) && ( pDownload->IsStarted() ) && ( pDownload->m_nSize != SIZE_UNKNOWN ) &&
 			 ( pDownload->NeedHashset() == FALSE ) && ( ! pDownload->IsMoving() ) &&
-			 ( ( pDownload->m_nSize < MAX_SIZE_32BIT ) || ( Settings.eDonkey.LargeFileSupport && ( m_nTCPFlags & ED2K_SERVER_TCP_64BITSIZE ) ) ) )
+			 ( ( pDownload->m_nSize < MAX_SIZE_32BIT ) || ( Settings.eDonkey.LargeFileSupport && bLargeFile ) ) )
 		{
 			//Send the file hash to the ed2k server
 			pPacket->Write( pDownload->m_oED2K );
 
 			//If we have a 'new' ed2k server
-			if ( m_nTCPFlags & ED2K_SERVER_TCP_DEFLATE )
+			if ( bDeflate )
 			{
 				//Tell the server this is a partial using special code
 				pPacket->WriteLongLE( 0xFCFCFCFC );
@@ -720,16 +725,16 @@ void CEDNeighbour::SendSharedFiles()
 				pPacket->WriteLongLE( 2 ); //Number of Tags
 
 			//Send the file name to the ed2k server
-			CEDTag( ED2K_FT_FILENAME, pDownload->m_sName ).Write( pPacket, m_nTCPFlags );
+			CEDTag( ED2K_FT_FILENAME, pDownload->m_sName ).Write( pPacket, bUnicode, bSmallTags );
 			//Send the file size to the ed2k server
-			CEDTag( ED2K_FT_FILESIZE, (DWORD)pDownload->m_nSize ).Write( pPacket, m_nTCPFlags );
+			CEDTag( ED2K_FT_FILESIZE, (DWORD)pDownload->m_nSize ).Write( pPacket, bUnicode, bSmallTags );
 			if ( pDownload->m_nSize > MAX_SIZE_32BIT )
 			{
-				CEDTag( ED2K_FT_FILESIZE_HI, (DWORD)(pDownload->m_nSize >> 32 ) ).Write( pPacket, m_nTCPFlags );
+				CEDTag( ED2K_FT_FILESIZE_HI, (DWORD)(pDownload->m_nSize >> 32 ) ).Write( pPacket, bUnicode, bSmallTags );
 			}
 
 			//Send the file type to the ed2k server
-			//CEDTag( ED2K_FT_FILETYPE, strType ).Write( pPacket );
+			//CEDTag( ED2K_FT_FILETYPE, strType ).Write( pPacket, bUnicode, bSmallTags );
 			// We don't know it for certain with incomplete files.
 			// It *might* be okay to assume from the extention, since they are usually correct...
 			// Probably best not to for now, though. Server gets the extention anyway.
@@ -753,7 +758,7 @@ void CEDNeighbour::SendSharedFiles()
 		if ( pFile->IsShared() && pFile->m_oED2K )	//If file is shared and has an ed2k hash
 		{
 			if ( ( ( Settings.eDonkey.MinServerFileSize == 0 ) || ( pFile->GetSize() > Settings.eDonkey.MinServerFileSize * 1024 * 1024 ) ) && // If file is large enough to meet minimum requirement
-				 ( ( pFile->m_nSize < MAX_SIZE_32BIT ) || ( Settings.eDonkey.LargeFileSupport && ( m_nTCPFlags & ED2K_SERVER_TCP_64BITSIZE ) ) ) ) // and isn't too large for the server
+				 ( ( pFile->m_nSize < MAX_SIZE_32BIT ) || ( Settings.eDonkey.LargeFileSupport && bLargeFile ) ) ) // and isn't too large for the server
 			{
 				if ( UploadQueues.CanUpload( PROTOCOL_ED2K, pFile ) ) // Check if a queue exists
 				{
@@ -767,7 +772,7 @@ void CEDNeighbour::SendSharedFiles()
 					pPacket->Write( pFile->m_oED2K );
 
 					//Send client ID stuff
-					if ( m_nTCPFlags & ED2K_SERVER_TCP_DEFLATE ) // If we have a 'new' ed2k server
+					if ( bDeflate ) // If we have a 'new' ed2k server
 					{
 						//Tell the server this is a complete file using the special code
 						pPacket->WriteLongLE( 0xFBFBFBFB );
@@ -801,7 +806,7 @@ void CEDNeighbour::SendSharedFiles()
 						}
 
 						//Does this server support the new tags?
-						if ( m_nTCPFlags & ED2K_SERVER_TCP_SMALLTAGS )
+						if ( bSmallTags )
 						{
 							if ( pFile->IsSchemaURI( CSchema::uriAudio ) )	//If it's an audio file
 							{
@@ -848,7 +853,7 @@ void CEDNeighbour::SendSharedFiles()
 					}
 
 					// Only newer servers support file ratings
-					if ( ( m_nTCPFlags & ED2K_SERVER_TCP_SMALLTAGS ) && ( pFile->m_nRating ) )
+					if ( bSmallTags && ( pFile->m_nRating ) )
 					{
 						nRating = (BYTE)min( pFile->m_nRating, 5 );
 						nTags ++;
@@ -863,24 +868,24 @@ void CEDNeighbour::SendSharedFiles()
 					pPacket->WriteLongLE( nTags );
 
 					// Send the file name to the ed2k server
-					CEDTag( ED2K_FT_FILENAME, pFile->m_sName ).Write( pPacket, m_nTCPFlags );
+					CEDTag( ED2K_FT_FILENAME, pFile->m_sName ).Write( pPacket, bUnicode, bSmallTags );
 					// Send the file size to the ed2k server
-					CEDTag( ED2K_FT_FILESIZE, (DWORD)pFile->GetSize() ).Write( pPacket, m_nTCPFlags );
+					CEDTag( ED2K_FT_FILESIZE, (DWORD)pFile->GetSize() ).Write( pPacket, bUnicode, bSmallTags );
 					if ( pFile->m_nSize > MAX_SIZE_32BIT )
 					{
-						CEDTag( ED2K_FT_FILESIZE_HI, (DWORD)(pFile->GetSize() >> 32 ) ).Write( pPacket, m_nTCPFlags );
+						CEDTag( ED2K_FT_FILESIZE_HI, (DWORD)(pFile->GetSize() >> 32 ) ).Write( pPacket, bUnicode, bSmallTags );
 					}
 
 					// Send the file type to the ed2k server
-					if ( strType.GetLength() ) CEDTag( ED2K_FT_FILETYPE, strType ).Write( pPacket, m_nTCPFlags );
+					if ( strType.GetLength() ) CEDTag( ED2K_FT_FILETYPE, strType ).Write( pPacket, bUnicode, bSmallTags );
 					// Send the bitrate to the ed2k server
-					if ( nBitrate )	CEDTag( ED2K_FT_BITRATE, nBitrate ).Write( pPacket, m_nTCPFlags );
+					if ( nBitrate )	CEDTag( ED2K_FT_BITRATE, nBitrate ).Write( pPacket, bUnicode, bSmallTags );
 					// Send the length to the ed2k server
-					if ( nLength )	CEDTag( ED2K_FT_LENGTH, nLength ).Write( pPacket, m_nTCPFlags );
+					if ( nLength )	CEDTag( ED2K_FT_LENGTH, nLength ).Write( pPacket, bUnicode, bSmallTags );
 					// Send the codec to the ed2k server
-					if ( strCodec.GetLength() ) CEDTag( ED2K_FT_CODEC, strCodec ).Write( pPacket, m_nTCPFlags );
+					if ( strCodec.GetLength() ) CEDTag( ED2K_FT_CODEC, strCodec ).Write( pPacket, bUnicode, bSmallTags );
 					// Send the file rating to the ed2k server
-					if ( nRating ) CEDTag( ED2K_FT_FILERATING, nRating ).Write( pPacket, m_nTCPFlags );
+					if ( nRating ) CEDTag( ED2K_FT_FILERATING, nRating ).Write( pPacket, bUnicode, bSmallTags );
 
 					// Increment count of files sent
 					m_nFilesSent++;
@@ -892,7 +897,7 @@ void CEDNeighbour::SendSharedFiles()
 
 	*(DWORD*)pPacket->m_pBuffer = m_nFilesSent;	// Correct the number of files sent
 
-	if ( m_nTCPFlags & ED2K_SERVER_TCP_DEFLATE ) pPacket->Deflate();	// ZLIB compress if available
+	if ( bDeflate ) pPacket->Deflate();	// ZLIB compress if available
 
 	Send( pPacket );	// Send the packet
 }
@@ -900,13 +905,18 @@ void CEDNeighbour::SendSharedFiles()
 // This function adds a download to the ed2k server file list.
 BOOL CEDNeighbour::SendSharedDownload(CDownload* pDownload)
 {
+	BOOL bDeflate = m_nTCPFlags & ED2K_SERVER_TCP_64BITSIZE;
+	BOOL bUnicode = m_nTCPFlags & ED2K_SERVER_TCP_UNICODE;
+	BOOL bSmallTags = m_nTCPFlags & ED2K_SERVER_TCP_SMALLTAGS;
+	BOOL bLargeFile = m_nTCPFlags & ED2K_SERVER_TCP_64BITSIZE;
+
 	// Don't send this file if we aren't properly connected yet, don't have an ed2k hash/hashset,
 	// or have already sent too many files.
 	if ( m_nState < nrsConnected ) return FALSE;
 	if ( !pDownload->m_oED2K || pDownload->NeedHashset() ) return FALSE;
 	if ( pDownload->m_nSize == SIZE_UNKNOWN ) return FALSE;
 	if ( m_nFilesSent >= m_nFileLimit ) return FALSE;
-	if ( ( pDownload->m_nSize > MAX_SIZE_32BIT ) && ! ( m_nTCPFlags & ED2K_SERVER_TCP_64BITSIZE ) ) return FALSE;
+	if ( ( pDownload->m_nSize > MAX_SIZE_32BIT ) && ! bLargeFile ) return FALSE;
 
 	CEDPacket* pPacket = CEDPacket::New(  ED2K_C2S_OFFERFILES );
 	pPacket->WriteLongLE( 1 );		// Number of files that will be sent
@@ -915,7 +925,7 @@ BOOL CEDNeighbour::SendSharedDownload(CDownload* pDownload)
 	pPacket->Write( pDownload->m_oED2K );
 
 	// If we have a 'new' ed2k server
-	if ( m_nTCPFlags & ED2K_SERVER_TCP_DEFLATE )
+	if ( bDeflate )
 	{
 		// Tell the server this is a partial using special code
 		pPacket->WriteLongLE( 0xFCFCFCFC );
@@ -942,14 +952,14 @@ BOOL CEDNeighbour::SendSharedDownload(CDownload* pDownload)
 		pPacket->WriteLongLE( 2 ); //Number of Tags
 
 	// Send the file name to the ed2k server
-	CEDTag( ED2K_FT_FILENAME, pDownload->m_sName ).Write( pPacket, m_nTCPFlags );
+	CEDTag( ED2K_FT_FILENAME, pDownload->m_sName ).Write( pPacket, bUnicode, bSmallTags );
 	// Send the file size to the ed2k server
-	CEDTag( ED2K_FT_FILESIZE, (DWORD)pDownload->m_nSize ).Write( pPacket, m_nTCPFlags );
+	CEDTag( ED2K_FT_FILESIZE, (DWORD)pDownload->m_nSize ).Write( pPacket, bUnicode, bSmallTags );
 	if ( pDownload->m_nSize > MAX_SIZE_32BIT )
-		CEDTag( ED2K_FT_FILESIZE_HI, (DWORD)(pDownload->m_nSize >> 32 ) ).Write( pPacket, m_nTCPFlags );
+		CEDTag( ED2K_FT_FILESIZE_HI, (DWORD)(pDownload->m_nSize >> 32 ) ).Write( pPacket, bUnicode, bSmallTags );
 
 	// Compress if the server supports it
-	if ( m_nTCPFlags & ED2K_SERVER_TCP_DEFLATE ) pPacket->Deflate();
+	if ( bDeflate ) pPacket->Deflate();
 	Send( pPacket );
 
 	// Increment the number of files sent
