@@ -271,19 +271,36 @@ inline void CEDPacket::CEDPacketPool::FreePoolImpl(CPacket* pPacket)
 #define ED2K_C2C_UDP_FILENOTFOUND		0x92
 #define ED2K_C2C_UDP_QUEUEFULL			0x93
 
-// Server TCP flags
+// Values for ED2K_CT_SERVER_FLAGS (server capabilities)
+#define ED2K_SRVCAP_ZLIB				0x0001
+#define ED2K_SRVCAP_IP_IN_LOGIN			0x0002
+#define ED2K_SRVCAP_AUXPORT				0x0004
+#define ED2K_SRVCAP_NEWTAGS				0x0008
+#define	ED2K_SRVCAP_UNICODE				0x0010
+#define	ED2K_SRVCAP_LARGEFILES			0x0100
+#define ED2K_SRVCAP_SUPPORTCRYPT		0x0200
+#define ED2K_SRVCAP_REQUESTCRYPT		0x0400
+#define ED2K_SRVCAP_REQUIRECRYPT		0x0800
+
+// Server TCP flags for ED2K_S2C_IDCHANGE (server capabilities)
 #define	ED2K_SERVER_TCP_DEFLATE			0x00000001
 #define	ED2K_SERVER_TCP_SMALLTAGS		0x00000008
 #define	ED2K_SERVER_TCP_UNICODE			0x00000010
 #define	ED2K_SERVER_TCP_GETSOURCES2		0x00000020
 #define	ED2K_SERVER_TCP_RELATEDSEARCH	0x00000040
-#define	ED2K_SERVER_TCP_64BITSIZE		0x00000080
-// Server UDP flags
+#define ED2K_SERVER_TCP_TYPETAGINTEGER	0x00000080
+#define ED2K_SERVER_TCP_64BITSIZE		0x00000100
+#define ED2K_SERVER_TCP_TCPOBFUSCATION	0x00000400
+
+// Server UDP flags for ED2K_S2CG_SERVERSTATUS (server capabilities)
 #define	ED2K_SERVER_UDP_GETSOURCES		0x00000001
 #define	ED2K_SERVER_UDP_GETFILES		0x00000002
+#define	ED2K_SERVER_UDP_NEWTAGS			0x00000008
 #define	ED2K_SERVER_UDP_UNICODE			0x00000010
 #define	ED2K_SERVER_UDP_GETSOURCES2		0x00000020
-#define	ED2K_SERVER_UDP_64BITSIZE		0x00000080
+#define	ED2K_SERVER_UDP_64BITSIZE		0x00000100
+#define ED2K_SERVER_UDP_UDPOBFUSCATION	0x00000200
+#define ED2K_SERVER_UDP_TCPOBFUSCATION	0x00000400
 
 
 class CEDTag : boost::noncopyable
@@ -353,7 +370,7 @@ public:
 #define ED2K_CT_NAME				0x01
 #define	ED2K_CT_PORT				0x0F
 #define ED2K_CT_VERSION				0x11
-#define ED2K_CT_FLAGS				0x20	// Tell server about compression, new tags, unicode
+#define ED2K_CT_SERVER_FLAGS		0x20	// Tell server about compression, new tags, unicode
 #define ED2K_CT_MODVERSION			0x55	// MOD version
 #define	ED2K_CT_UDPPORTS			0xF9	// Ports used for UDP	
 #define	ED2K_CT_FEATUREVERSIONS		0xFA	// <uint32> Features 1:
@@ -366,7 +383,7 @@ public:
 											//  4 Ext. Requests
 											//  4 Comments
 											//	1 PeerChache supported
-											//	1 No 'View Shared Files' supported
+											//	1 Browse disabled
 											//	1 MultiPacket
 											//  1 Preview
 #define	ED2K_CT_SOFTWAREVERSION		0xFB	// Version of the program.
@@ -460,6 +477,8 @@ public:
 #define ED2K_COMMENT_MAX			250
 // Max file size in 32 bits
 #define MAX_SIZE_32BIT				0xFFFFFFFF
+// Name of incomplete virtual folder
+#define OP_INCOMPLETE_SHARED_FILES	"!Incomplete Files"
 
 // Client ID
 #define ED2K_COMPATIBLECLIENT_ID	ED2K_CLIENT_ID

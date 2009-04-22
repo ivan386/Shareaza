@@ -54,6 +54,7 @@ public:
 	void			Clear();
 	bool			PushTo(DWORD nClientID, WORD nClientPort);
 	CEDClient*		GetByIP(IN_ADDR* pAddress) const;
+	// Connect to new or known eD2K-client (nClientPort and nServerPort must be in host byte order)
 	CEDClient*		Connect(DWORD nClientID, WORD nClientPort, IN_ADDR* pServerAddress, WORD nServerPort, const Hashes::Guid& oGUID);
 	BOOL			Merge(CEDClient* pClient);
 	void			OnRun();

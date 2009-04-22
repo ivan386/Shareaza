@@ -1,7 +1,7 @@
 //
 // EDClients.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -580,9 +580,19 @@ void CEDClients::OnServerStatus(SOCKADDR_IN* /*pHost*/, CEDPacket* pPacket)
 	if ( nUDPFlags & ED2K_SERVER_UDP_GETSOURCES2 )
 		pServer->m_nTCPFlags |= ED2K_SERVER_TCP_GETSOURCES2;
 
-	//CString strT;
-	//strT.Format( _T("Users:%d Files:%d Max Users:%d File limit:%d UDP flags:%08X"), nUsers, nFiles, nMaxUsers, nFileLimit, nUDPFlags );
-	//theApp.Message( MSG_INFO, strT );
+	CString strServerFlags;
+	strServerFlags.Format(
+		_T( "Server Flags 0x%08x -> GetSources1: %s, GetFiles: %s, Short Tags: %s, Unicode: %s, GetSources2: %s, 64 bit size: %s, UDP obfscation: %s, TCP obfscation: %s" ),
+		nUDPFlags,
+		( ( nUDPFlags & ED2K_SERVER_UDP_GETSOURCES ) ? _T("Yes") : _T("No") ),
+		( ( nUDPFlags & ED2K_SERVER_UDP_GETFILES ) ? _T("Yes") : _T("No") ),
+		( ( nUDPFlags & ED2K_SERVER_UDP_NEWTAGS ) ? _T("Yes") : _T("No") ),
+		( ( nUDPFlags & ED2K_SERVER_UDP_UNICODE ) ? _T("Yes") : _T("No") ),
+		( ( nUDPFlags & ED2K_SERVER_UDP_GETSOURCES2 ) ? _T("Yes") : _T("No") ),
+		( ( nUDPFlags & ED2K_SERVER_UDP_64BITSIZE ) ? _T("Yes") : _T("No") ),
+		( ( nUDPFlags & ED2K_SERVER_UDP_UDPOBFUSCATION ) ? _T("Yes") : _T("No") ),
+		( ( nUDPFlags & ED2K_SERVER_UDP_TCPOBFUSCATION ) ? _T("Yes") : _T("No") ) );
+	theApp.Message( MSG_DEBUG, strServerFlags );
 }
 
 // Send a server status request

@@ -207,17 +207,10 @@ BOOL CEDNeighbour::OnConnected()
 	// Software Version ('Client Version').
 	CEDTag( ED2K_CT_SOFTWAREVERSION, nVersion ).Write( pPacket, 0 );
 	// Flags indicating capability
-	if ( Settings.eDonkey.LargeFileSupport )
-		CEDTag( ED2K_CT_FLAGS, ED2K_SERVER_TCP_DEFLATE |
-				ED2K_SERVER_TCP_SMALLTAGS |
-				ED2K_SERVER_TCP_UNICODE |
-				ED2K_SERVER_TCP_64BITSIZE
-				).Write( pPacket, 0 );
-	else
-		CEDTag( ED2K_CT_FLAGS, ED2K_SERVER_TCP_DEFLATE |
-				ED2K_SERVER_TCP_SMALLTAGS |
-				ED2K_SERVER_TCP_UNICODE
-				).Write( pPacket, 0 );
+	CEDTag( ED2K_CT_SERVER_FLAGS, ED2K_SRVCAP_ZLIB | ED2K_SRVCAP_AUXPORT |
+		ED2K_SRVCAP_NEWTAGS | ED2K_SRVCAP_UNICODE |
+		( Settings.eDonkey.LargeFileSupport ? ED2K_SRVCAP_LARGEFILES : 0 )
+		).Write( pPacket, 0 );
 
 	m_nState = nrsHandshake1;
 	Send( pPacket );
@@ -406,13 +399,16 @@ BOOL CEDNeighbour::OnIdChange(CEDPacket* pPacket)
 
 	CString strServerFlags;
 	strServerFlags.Format(
-		_T( "Server Flags -> Zlib: %d, Short Tags: %d, Unicode: %d, GetSources2: %d, Related Search: %d, 64 bit size: %d" ),
-		m_nTCPFlags & ED2K_SERVER_TCP_DEFLATE,
-		m_nTCPFlags & ED2K_SERVER_TCP_SMALLTAGS,
-		m_nTCPFlags & ED2K_SERVER_TCP_UNICODE,
-		m_nTCPFlags & ED2K_SERVER_TCP_GETSOURCES2,
-		m_nTCPFlags & ED2K_SERVER_TCP_RELATEDSEARCH,
-		m_nTCPFlags & ED2K_SERVER_TCP_64BITSIZE );
+		_T( "Server Flags 0x%08x -> Zlib: %s, Short Tags: %s, Unicode: %s, GetSources2: %s, Related Search: %s, Int type tags: %s, 64 bit size: %s, TCP obfscation: %s" ),
+		m_nTCPFlags,
+		( ( m_nTCPFlags & ED2K_SERVER_TCP_DEFLATE ) ? _T("Yes") : _T("No") ),
+		( ( m_nTCPFlags & ED2K_SERVER_TCP_SMALLTAGS ) ? _T("Yes") : _T("No") ),
+		( ( m_nTCPFlags & ED2K_SERVER_TCP_UNICODE ) ? _T("Yes") : _T("No") ),
+		( ( m_nTCPFlags & ED2K_SERVER_TCP_GETSOURCES2 ) ? _T("Yes") : _T("No") ),
+		( ( m_nTCPFlags & ED2K_SERVER_TCP_RELATEDSEARCH ) ? _T("Yes") : _T("No") ),
+		( ( m_nTCPFlags & ED2K_SERVER_TCP_TYPETAGINTEGER ) ? _T("Yes") : _T("No") ),
+		( ( m_nTCPFlags & ED2K_SERVER_TCP_64BITSIZE ) ? _T("Yes") : _T("No") ),
+		( ( m_nTCPFlags & ED2K_SERVER_TCP_TCPOBFUSCATION ) ? _T("Yes") : _T("No") ) );
 	theApp.Message( MSG_DEBUG, strServerFlags );
 
 	return TRUE;
