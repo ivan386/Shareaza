@@ -29,12 +29,10 @@ class CDownload;
 
 class CEDNeighbour : public CNeighbour
 {
-// Construction
 public:
 	CEDNeighbour();
 	virtual ~CEDNeighbour();
 
-// Attributes
 public:
 	DWORD		m_nClientID;
 	DWORD		m_nUserCount;
@@ -46,8 +44,8 @@ public:
 	CList< Hashes::Guid > m_pQueries;
 	DWORD		m_nFilesSent;
 
-// Operations
-public:
+	DWORD	GetID() const;
+
 	virtual BOOL	ConnectTo(IN_ADDR* pAddress, WORD nPort, BOOL bAutomatic);
 	virtual BOOL	Send(CPacket* pPacket, BOOL bRelease = TRUE, BOOL bBuffered = FALSE);
 	virtual BOOL	SendQuery(CQuerySearch* pSearch, CPacket* pPacket, BOOL bLocal);
@@ -71,4 +69,6 @@ protected:
 	BOOL	OnFoundSources(CEDPacket* pPacket);
 	void	SendSharedFiles();
 
+	// Is file has good size for current ed2k-server?
+	bool	IsGoodSize(QWORD nFileSize) const;
 };

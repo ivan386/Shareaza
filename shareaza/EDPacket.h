@@ -88,6 +88,9 @@ typedef struct
 #define ED2K_FILE_VERSION2_LARGEFILES	0x02	// First 4 bytes of .emulecollection-file with "Large File" support
 
 class CBuffer;
+class CShareazaFile;
+class CEDClient;
+class CEDNeighbour;
 
 
 class CEDPacket : public CPacket  
@@ -108,21 +111,22 @@ public:
 	void				WriteEDString(LPCTSTR psz, BOOL bUnicode);
 	CString				ReadLongEDString(BOOL bUnicode);
 	void				WriteLongEDString(LPCTSTR psz, BOOL bUnicode);
+	void				WriteFile(const CShareazaFile* pFile, QWORD nSize,
+		const CEDClient* pClient, const CEDNeighbour* pServer = NULL,
+		bool bPartial = false);
 	BOOL				Deflate();
+
 	// Unzip packet if any.
 	//	Returns: FALSE - ok; TRUE - unzip error and packed was released
 	BOOL				InflateOrRelease();
-public:
+
 	virtual	void		ToBuffer(CBuffer* pBuffer) const;
 	virtual	void		ToBufferUDP(CBuffer* pBuffer) const;
 	static	CEDPacket*	ReadBuffer(CBuffer* pBuffer);
-public:
-	virtual CString GetType() const;
-	virtual void	Debug(LPCTSTR pszReason) const;
+	virtual CString		GetType() const;
+	virtual void		Debug(LPCTSTR pszReason) const;
 
-// Utility
-public:
-	inline static BOOL IsLowID(DWORD nID) { return nID > 0 && nID < 16777216; }
+	inline static bool IsLowID(DWORD nID) { return nID > 0 && nID < 16777216; }
 
 // Packet Types
 protected:
@@ -221,7 +225,7 @@ inline void CEDPacket::CEDPacketPool::FreePoolImpl(CPacket* pPacket)
 #define ED2K_S2CG_CALLBACKFAIL			0x9E
 
 // Client - Client, TCP
-#define ED2K_C2C_HELLO					0x01
+#define ED2K_C2C_HELLO					0x01	// 0x10<HASH 16><ID 4><PORT 2><1 Tag_set>
 #define ED2K_C2C_HELLOANSWER			0x4C
 #define ED2K_C2C_FILEREQUEST			0x58
 #define ED2K_C2C_FILEREQANSWER			0x59
@@ -240,7 +244,7 @@ inline void CEDPacket::CEDPacketPool::FreePoolImpl(CPacket* pPacket)
 #define ED2K_C2C_ASKSHAREDFILES			0x4A
 #define ED2K_C2C_ASKSHAREDFILESANSWER	0x4B
 #define ED2K_C2C_MESSAGE				0x4E
-#define ED2K_C2C_CHANGECLIENTID			0x4D
+#define ED2K_C2C_CHANGECLIENTID			0x4D	// <New client ID 4><New server IP 4>
 #define ED2K_C2C_ASKSHAREDDIRS			0x5D    // (null)
 #define ED2K_C2C_ASKSHAREDDIRSANSWER	0x5F    // <count 4>(<len 2><Directory len>)[count]
 #define ED2K_C2C_VIEWSHAREDDIR			0x5E    // <len 2><Directory len>
@@ -370,7 +374,7 @@ public:
 #define ED2K_CT_VERSION				0x11
 #define ED2K_CT_SERVER_FLAGS		0x20	// Tell server about compression, new tags, unicode
 #define ED2K_CT_MODVERSION			0x55	// MOD version
-#define	ED2K_CT_UDPPORTS			0xF9	// Ports used for UDP	
+#define	ED2K_CT_UDPPORTS			0xF9	// Ports used for UDP (hi word - KAD port, low word - UDP port)	
 #define	ED2K_CT_FEATUREVERSIONS		0xFA	// <uint32> Features 1:
 											//  3 AICH Version (0 = not supported)
 											//  1 Unicode
@@ -388,7 +392,9 @@ public:
 #define	ED2K_CT_UNKNOWN1			0xFC
 #define	ED2K_CT_UNKNOWN2			0xFD
 #define	ED2K_CT_MOREFEATUREVERSIONS	0xFE	// <uint32> Features 2:
-											// 21 Reserved
+											// 19 Reserved
+											//  1 Direct UDP Callback. Direct callback is only possible if connected to kad, tcp firewalled and verified UDP open (for example on a full cone NAT)
+											//  1 Supports Captcha
 											//  1 Supports SourceExachnge2 Packets, ignores SX1 Packet Version
 											//  1 Requires CryptLayer
 											//  1 Requests CryptLayer

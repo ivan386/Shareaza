@@ -32,7 +32,7 @@ static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
 #endif
 
-#define SMART_VERSION	57
+#define SMART_VERSION	58
 
 CSettings Settings;
 
@@ -404,7 +404,7 @@ void CSettings::Load()
 	Add( _T("eDonkey"), _T("ForceHighID"), &eDonkey.ForceHighID, true );
 	Add( _T("eDonkey"), _T("FrameSize"), &eDonkey.FrameSize, 10240, 1024, 1, 500, _T(" KB") );
 	Add( _T("eDonkey"), _T("GetSourcesThrottle"), &eDonkey.GetSourcesThrottle, 8*60*60*1000, 60*60*1000, 1, 24, _T(" h") );
-	Add( _T("eDonkey"), _T("LargeFileSupport"), &eDonkey.LargeFileSupport, false );
+	Add( _T("eDonkey"), _T("LargeFileSupport"), &eDonkey.LargeFileSupport, true );
 	Add( _T("eDonkey"), _T("LearnNewServers"), &eDonkey.LearnNewServers, false );
 	Add( _T("eDonkey"), _T("LearnNewServersClient"), &eDonkey.LearnNewServersClient, false );
 	Add( _T("eDonkey"), _T("MagnetSearch"), &eDonkey.MagnetSearch, true );
@@ -1073,6 +1073,11 @@ void CSettings::SmartUpgrade()
 			// Delete old values
 			SHDeleteValue( HKEY_CURRENT_USER,
 				_T("SOFTWARE\\Shareaza\\Shareaza\\Toolbars"), _T("CRemoteWnd") );
+		}
+
+		if ( General.SmartVersion < 58 )
+		{
+			eDonkey.LargeFileSupport = true;
 		}
 	}
 

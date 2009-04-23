@@ -122,6 +122,12 @@ CEDClient::~CEDClient()
 	EDClients.Remove( this );
 }
 
+DWORD CEDClient::GetID() const
+{
+	return CEDPacket::IsLowID( m_nClientID ) ? m_nClientID :
+		( Network.IsConnected() ? Network.m_pHost.sin_addr.s_addr : 0 );
+}
+
 //////////////////////////////////////////////////////////////////////
 // CEDClient outbound connection
 
@@ -791,19 +797,26 @@ void CEDClient::SendHello(BYTE nType)
 {
 	CEDPacket* pPacket = CEDPacket::New( nType );
 
-	if ( nType == ED2K_C2C_HELLO ) pPacket->WriteByte( 0x10 );
+	if ( nType == ED2K_C2C_HELLO )
+		// Size of user hash (legacy)
+		pPacket->WriteByte( 0x10 );
 
 	CEDNeighbour* pServer = Neighbours.GetDonkeyServer();
 
+	// Write user GUID
 	Hashes::Guid oGUID = MyProfile.oGUID;
 	oGUID[5] = 14;
 	oGUID[14] = 111;
 	pPacket->Write( oGUID );
 
+	// Write client ID
 	pPacket->WriteLongLE( pServer ? pServer->m_nClientID : Network.m_pHost.sin_addr.S_un.S_addr );
+	
+	// Write port number
 	pPacket->WriteShortLE( htons( Network.m_pHost.sin_port ) );
 
-	pPacket->WriteLongLE( 6 );	// Number of Tags
+	// Number of Tags
+	pPacket->WriteLongLE( 6 );
 
 	// 1 - Nickname
 	CEDTag( ED2K_CT_NAME, MyProfile.GetNick().Left( 255 ) ).Write( pPacket, TRUE );
@@ -811,49 +824,41 @@ void CEDClient::SendHello(BYTE nType)
 	// 2 - ED2K version
 	CEDTag( ED2K_CT_VERSION, ED2K_VERSION ).Write( pPacket );
 
-	// 3 - Software Version.
+	// 3 - UDP Port
+	CEDTag( ED2K_CT_UDPPORTS, htons( Network.m_pHost.sin_port ) ).Write( pPacket );
+
+	// 4 - Feature Versions 1
+	BYTE nExtendedRequests = (BYTE)min ( Settings.eDonkey.ExtendedRequest, (DWORD)ED2K_VERSION_EXTENDEDREQUEST );
+	DWORD nOpt1 =  ( ( ED2K_VERSION_AICH << 29) |					// AICH
+					 ( TRUE << 28) |								// Unicode
+					 ( ED2K_VERSION_UDP << 24) |					// UDP version
+					 ( ED2K_VERSION_COMPRESSION << 20) |			// Compression
+					 ( ED2K_VERSION_SECUREID << 16) |				// Secure ID
+					 ( ED2K_VERSION_SOURCEEXCHANGE << 12) |			// Source exchange
+					 ( nExtendedRequests << 8) |					// Extended requests
+					 ( ED2K_VERSION_COMMENTS << 4) |				// Comments
+					 ( FALSE << 3) |								// Peer Cache
+					 ( FALSE << 2) |								// Browse
+					 ( FALSE << 1) |								// Multipacket
+					 ( Settings.Uploads.SharePreviews ? 1 : 0 ) );	// Preview
+	CEDTag( ED2K_CT_FEATUREVERSIONS, nOpt1 ).Write( pPacket );
+
+	// 5 - Feature Versions 2
+	DWORD nOpt2 =  ( ( FALSE << 5 ) |								// Ext Multipacket
+				     ( Settings.eDonkey.LargeFileSupport << 4 ) );	// LargeFile support
+	CEDTag( ED2K_CT_MOREFEATUREVERSIONS, nOpt2 ).Write( pPacket );
+
+	// 6 - Software Version
 	//		Note we're likely to corrupt the beta number, since there's only 3 bits available,
 	//		but it's the least important anyway.
 	//		Note: Including this stops the remote client sending the eMuleInfo packet.
-	DWORD nVersion =  ( ( ( ED2K_COMPATIBLECLIENT_ID & 0xFF ) << 24 ) |
-							( ( theApp.m_nVersion[0] & 0x7F ) << 17 ) |
-							( ( theApp.m_nVersion[1] & 0x7F ) << 10 ) |
-							( ( theApp.m_nVersion[2] & 0x07 ) << 7  ) |
-							( ( theApp.m_nVersion[3] & 0x7F )       ) );
-
+	DWORD nVersion = ( ( ( ED2K_COMPATIBLECLIENT_ID & 0xFF ) << 24 ) |
+					   ( ( theApp.m_nVersion[0] & 0x7F ) << 17 ) |
+					   ( ( theApp.m_nVersion[1] & 0x7F ) << 10 ) |
+					   ( ( theApp.m_nVersion[2] & 0x07 ) << 7  ) |
+					   ( ( theApp.m_nVersion[3] & 0x7F )       ) );
 	CEDTag( ED2K_CT_SOFTWAREVERSION, nVersion ).Write( pPacket );
 
-	// 4 - Feature Versions.
-	BYTE nExtendedRequests = (BYTE)min ( Settings.eDonkey.ExtendedRequest, (DWORD)ED2K_VERSION_EXTENDEDREQUEST );
-	nVersion = ( ( ED2K_VERSION_AICH << 29) |			// AICH
-				 ( TRUE << 28) |						// Unicode
-				 ( ED2K_VERSION_UDP << 24) |			// UDP version
-				 ( ED2K_VERSION_COMPRESSION << 20) |	// Compression
-				 ( ED2K_VERSION_SECUREID << 16) |		// Secure ID
-				 ( ED2K_VERSION_SOURCEEXCHANGE << 12) |	// Source exchange
-				 ( nExtendedRequests << 8) |			// Extended requests
-				 ( ED2K_VERSION_COMMENTS << 4) |		// Comments
-				 ( FALSE << 3) |						// Peer Cache
-				 ( FALSE << 2) |						// Browse
-				 ( FALSE << 1) |						// Multipacket
-				 ( Settings.Uploads.SharePreviews ? 1 : 0 ) );	// Preview
-
-	CEDTag( ED2K_CT_FEATUREVERSIONS, nVersion ).Write( pPacket );
-
-	// 5- ED2K_CT_MOREFEATUREVERSIONS - basically for Kad and Large File support
-	nVersion = ( ( FALSE << 5 ) |								// Ext Multipacket
-				 ( Settings.eDonkey.LargeFileSupport << 4 ) );	// LargeFile support
-	CEDTag( ED2K_CT_MOREFEATUREVERSIONS, nVersion ).Write( pPacket );
-
-	// 6 - UDP Port
-	CEDTag( ED2K_CT_UDPPORTS, htons( Network.m_pHost.sin_port ) ).Write( pPacket );
-
-
-//Note: This isn't needed
-/*
-	// 7 - Port
-	CEDTag( ED2K_CT_PORT, htons( Network.m_pHost.sin_port )  ).Write( pPacket );
-*/
 	if ( pServer != NULL )
 	{
 		pPacket->WriteLongLE( pServer->m_pHost.sin_addr.S_un.S_addr );
@@ -1747,158 +1752,13 @@ BOOL CEDClient::OnViewSharedDir(CEDPacket* pPacket)
 					for ( POSITION pos = pFolder->GetFileIterator(); pos && nCount; )
 					{
 						CLibraryFile* pFile = pFolder->GetNextFile( pos );
-						
+
 						if ( ! pFile->IsShared() )
 							continue;
 
 						--nCount;
 
-						// File hash
-						pReply->Write( pFile->m_oED2K );
-
-						// ID
-						pReply->WriteLongLE( Network.m_pHost.sin_addr.s_addr );
-
-						// Port
-						pReply->WriteShortLE( htons( Network.m_pHost.sin_port ) );
-
-						DWORD nTags = 5;
-
-						CString strType, strTitle, strArtist, strAlbum, strCodec;
-						DWORD nBitrate = 0, nLength = 0;
-						if ( pFile->m_pSchema &&
-							 pFile->m_pSchema->m_sDonkeyType.GetLength() )
-						{
-							strType = pFile->m_pSchema->m_sDonkeyType;
-							nTags ++;
-
-							// Title
-							if ( pFile->m_pMetadata->GetAttributeValue( _T("title") ).GetLength() )
-							{
-								strTitle = pFile->m_pMetadata->GetAttributeValue( _T("title") );
-								if ( strTitle.GetLength() )
-									nTags ++;
-							}
-
-							if ( pFile->IsSchemaURI( CSchema::uriAudio ) )
-							{
-								// Artist
-								if ( pFile->m_pMetadata->GetAttributeValue( _T("artist") ).GetLength() )
-								{
-									strArtist = pFile->m_pMetadata->GetAttributeValue( _T("artist") );
-									if ( strArtist.GetLength() )
-										nTags ++;
-								}
-
-								// Album
-								if ( pFile->m_pMetadata->GetAttributeValue( _T("album") ).GetLength() )
-								{
-									strAlbum = pFile->m_pMetadata->GetAttributeValue( _T("album") );
-									if ( strAlbum.GetLength() )
-										nTags ++;
-								}
-
-								// Bitrate
-								if ( pFile->m_pMetadata->GetAttributeValue( _T("bitrate") ).GetLength() )	//And has a bitrate
-								{
-									_stscanf( pFile->m_pMetadata->GetAttributeValue( _T("bitrate") ), _T("%i"), &nBitrate );
-									if ( nBitrate )
-										nTags ++;
-								}
-
-								// Length
-								if ( pFile->m_pMetadata->GetAttributeValue( _T("seconds") ).GetLength() )	//And has seconds
-								{
-									nLength = 0;
-									_stscanf( pFile->m_pMetadata->GetAttributeValue( _T("seconds") ), _T("%i"), &nLength );
-									if ( nLength )
-										nTags ++;
-								}
-							}
-							else if ( pFile->IsSchemaURI( CSchema::uriVideo ) )
-							{
-								// Codec
-								if ( pFile->m_pMetadata->GetAttributeValue( _T("codec") ).GetLength() )
-								{
-									strCodec = pFile->m_pMetadata->GetAttributeValue( _T("codec") );
-									if ( strCodec.GetLength() )
-										nTags ++;
-								}
-
-								// Length
-								if ( pFile->m_pMetadata->GetAttributeValue( _T("minutes") ).GetLength() )
-								{
-									double nMins = 0.0;
-									_stscanf( pFile->m_pMetadata->GetAttributeValue( _T("minutes") ), _T("%lf"), &nMins );
-									nLength = (DWORD)( nMins * (double)60 );	//Convert to seconds
-									if ( nLength )
-										nTags ++;
-								}
-							}
-						}
-
-						BYTE nRating = 0;
-						if ( pFile->m_nRating )
-						{
-							nRating = (BYTE)min( pFile->m_nRating, 5 );
-							nTags ++;
-						}
-
-						if ( pFile->m_nSize > MAX_SIZE_32BIT )
-							nTags ++;
-							
-						// Number of Tags
-						pReply->WriteLongLE( nTags );
-
-						// Filename
-						CEDTag( ED2K_FT_FILENAME, pFile->m_sName ).Write( pReply, m_bEmUnicode );
-
-						// File size
-						CEDTag( ED2K_FT_FILESIZE, (DWORD)pFile->m_nSize ).Write( pReply );
-						if ( pFile->m_nSize > MAX_SIZE_32BIT )
-							CEDTag( ED2K_FT_FILESIZE_HI,
-								(DWORD)(pFile->m_nSize >> 32 ) ).Write( pReply );
-
-						// Sources
-						CEDTag( ED2K_FT_SOURCES, 1ull ).Write( pReply );
-
-						// Complete sources
-						CEDTag( ED2K_FT_COMPLETE_SOURCES, 1ull ).Write( pReply );
-
-						// Last seen
-						CEDTag( ED2K_FT_LASTSEENCOMPLETE, 0ull ).Write( pReply );
-
-						// File type
-						if ( strType.GetLength() )
-							CEDTag( ED2K_FT_FILETYPE, strType ).Write( pReply );
-
-						// Title
-						if ( strTitle.GetLength() )
-							CEDTag( ED2K_FT_TITLE, strTitle ).Write( pReply );
-						
-						// Artist
-						if ( strArtist.GetLength() )
-							CEDTag( ED2K_FT_ARTIST, strArtist ).Write( pReply );
-
-						// Album
-						if ( strAlbum.GetLength() )
-							CEDTag( ED2K_FT_ALBUM, strAlbum ).Write( pReply );
-					
-						// Bitrate
-						if ( nBitrate )
-							CEDTag( ED2K_FT_BITRATE, nBitrate ).Write( pReply );
-						
-						// Length
-						if ( nLength )
-							CEDTag( ED2K_FT_LENGTH, nLength ).Write( pReply );
-						
-						// Codec
-						if ( strCodec.GetLength() )
-							CEDTag( ED2K_FT_CODEC, strCodec ).Write( pReply );
-						
-						// File rating
-						if ( nRating )
-							CEDTag( ED2K_FT_FILERATING, nRating ).Write( pReply );
+						pReply->WriteFile( pFile, pFile->GetSize(), this );
 					}
 
 					oLock.Unlock();

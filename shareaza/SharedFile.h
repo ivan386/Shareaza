@@ -137,6 +137,11 @@ public:
 		CString str( m_sName );
 		return ToLower( str );
 	}
+
+	inline QWORD GetBase() const
+	{
+		return ( m_nVirtualSize ) ? m_nVirtualBase : 0;
+	}
 	
 	inline QWORD GetSize() const
 	{

@@ -154,4 +154,6 @@ public:
 	BOOL	OnUdpFileNotFound(CEDPacket* pPacket);
 
 	inline BOOL IsOnline() const { return m_bConnected && m_bLogin; }
+
+	DWORD GetID() const;
 };
