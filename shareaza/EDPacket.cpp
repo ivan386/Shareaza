@@ -1,7 +1,7 @@
 //
 // EDPacket.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -835,7 +835,7 @@ ED2K_PACKET_DESC CEDPacket::m_pszTypes[] =
 	{ ED2K_C2S_OFFERFILES,			_T("ShareFiles") },
 	{ ED2K_C2S_SEARCHREQUEST,		_T("Search") },
 	{ ED2K_C2S_SEARCHUSER,			_T("Browse") },
-	{ ED2K_C2S_GETSOURCES,			_T("FindSource") },
+	{ ED2K_C2S_GETSOURCES,			_T("Find Source 1") },
 	{ ED2K_C2S_CALLBACKREQUEST,		_T("Push1") },
 	{ ED2K_C2S_MORERESULTS,			_T("Continue") },
 	{ ED2K_S2C_REJECTED,			_T("Rejected") },
@@ -850,14 +850,17 @@ ED2K_PACKET_DESC CEDPacket::m_pszTypes[] =
 
 	{ ED2K_C2SG_SERVERSTATUSREQUEST,_T("GetStatus") },
 	{ ED2K_S2CG_SERVERSTATUS,		_T("Status") },
-	{ ED2K_C2SG_SEARCHREQUEST,		_T("Search") },
+	{ ED2K_C2SG_SEARCHREQUEST,		_T("Search 1") },
+	{ ED2K_C2SG_SEARCHREQUEST2,		_T("Search 2") },
+	{ ED2K_C2SG_SEARCHREQUEST3,		_T("Search 3") },
 	{ ED2K_S2CG_SEARCHRESULT,		_T("Result") },
-	{ ED2K_C2SG_GETSOURCES,			_T("FindSource") },
+	{ ED2K_C2SG_GETSOURCES,			_T("Find Source 1") },
+	{ ED2K_C2SG_GETSOURCES2,		_T("Find Source 2") },
 	{ ED2K_S2CG_FOUNDSOURCES,		_T("Sources") },
 	{ ED2K_C2SG_CALLBACKREQUEST,	_T("Push1") },
 
-	{ ED2K_C2C_HELLO,				_T("Handshake1") },
-	{ ED2K_C2C_HELLOANSWER,			_T("Handshake2") },
+	{ ED2K_C2C_HELLO,				_T("Handshake 1") },
+	{ ED2K_C2C_HELLOANSWER,			_T("Handshake 2") },
 	{ ED2K_C2C_FILEREQUEST,			_T("FileRequest") },
 	{ ED2K_C2C_FILEREQANSWER,		_T("FileName") },
 	{ ED2K_C2C_FILENOTFOUND,		_T("FileNotFound") },
@@ -875,7 +878,7 @@ ED2K_PACKET_DESC CEDPacket::m_pszTypes[] =
 	{ ED2K_C2C_ASKSHAREDFILES,		_T("Browse") },
 	{ ED2K_C2C_ASKSHAREDFILESANSWER,_T("BrowseResp") },
 	{ ED2K_C2C_MESSAGE,				_T("Message") },
-	{ ED2K_C2C_REQUESTPREVIEW,		_T("RequestPreview") },
+	{ ED2K_C2C_REQUESTPREVIEW,		_T("Request Preview") },
 	{ ED2K_C2C_PREVIEWANWSER,		_T("Preview") },
 	{ ED2K_C2C_COMPRESSEDPART,		_T("CompFragment") },
 	{ ED2K_C2C_COMPRESSEDPART_I64,	_T("CompFragment64") },
