@@ -159,7 +159,7 @@ HRESULT STDMETHODCALLTYPE CImageViewerPlugin::OnExecute(BSTR sFilePath)
 		TCHAR szValue[128];
 		CRegKey pReg;
 
-		if ( pReg.Open( HKEY_LOCAL_MACHINE,
+		if ( pReg.Open( HKEY_CURRENT_USER,
 			_T("SOFTWARE\\Shareaza\\Shareaza\\Plugins\\ImageService") ) != ERROR_SUCCESS )
 			return S_FALSE;
 

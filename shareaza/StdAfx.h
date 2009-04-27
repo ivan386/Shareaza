@@ -77,11 +77,10 @@
 //	To show features that need guards for Windows 2000 compatibility use:
 //	#define NTDDI_VERSION	NTDDI_WIN2K
 //	#define _WIN32_WINNT	0x0500
-#define NTDDI_VERSION	NTDDI_WINXP	// Minimum build target
-#define _WIN32_WINNT	0x0501		// Windows XP, 2003, Vista, 2008
-#include <sdkddkver.h>				// Setup versioning for windows SDK/DDK
+#define NTDDI_VERSION	NTDDI_LONGHORN	// Minimum build target
+#include <sdkddkver.h>					// Setup versioning for windows SDK/DDK
 
-// Add defines missed/messed up when microsoft converted to NTDDI macros
+// Add defines missed/messed up when Microsoft converted to NTDDI macros
 #define WINXP			0x05010000		// rpcdce.h, rpcdcep.h
 #define NTDDI_XP		0x05010000		// ipexport.h, iphlpapi.h
 #define NTDDI_WXP		0x05010000		// rpcasync.h

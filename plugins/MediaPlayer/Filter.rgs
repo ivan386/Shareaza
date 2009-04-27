@@ -1,10 +1,10 @@
 HKCR
 {
-	Shareaza.MediaFilter.1 = s 'Shareaza Media Filter Class'
+	ForceRemove Shareaza.MediaFilter.1 = s 'Shareaza Media Filter Class'
 	{
 		CLSID = s '{43F28544-45F6-487B-915D-31230E851418}'
 	}
-	Shareaza.MediaFilter = s 'Shareaza Media Filter Class'
+	ForceRemove Shareaza.MediaFilter = s 'Shareaza Media Filter Class'
 	{
 		CLSID = s '{43F28544-45F6-487B-915D-31230E851418}'
 		CurVer = s 'Shareaza.MediaFilter.1'

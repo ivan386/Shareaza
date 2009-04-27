@@ -1,10 +1,10 @@
 HKCR
 {
-	SWFPlugin.SWFReader.1 = s 'SWF Image Services'
+	ForceRemove SWFPlugin.SWFReader.1 = s 'SWF Image Services'
 	{
 		CLSID = s '{FC4D8F69-0B18-49BB-8AB7-87EB77AA1A9D}'
 	}
-	SWFPlugin.SWFReader = s 'SWF Image Services'
+	ForceRemove SWFPlugin.SWFReader = s 'SWF Image Services'
 	{
 		CLSID = s '{FC4D8F69-0B18-49BB-8AB7-87EB77AA1A9D}'
 		CurVer = s 'SWFPlugin.SWFReader.1'
@@ -24,7 +24,7 @@ HKCR
 		}
 	}
 }
-HKLM
+HKCU
 {
 	NoRemove Software
 	{

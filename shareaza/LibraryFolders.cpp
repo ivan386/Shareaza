@@ -369,7 +369,11 @@ bool CLibraryFolders::IsShareable(const CString& strPath) const
 	ToLower( strPathLC );
 
 	//Get system paths (to compare)
-	CString strWindowsLC( GetWindowsFolder() ), strProgramsLC( GetProgramFilesFolder() );
+	CString strWindowsLC( theApp.GetWindowsFolder() );
+	ToLower( strWindowsLC );
+
+	CString strProgramsLC( theApp.GetProgramFilesFolder() );
+	ToLower( strProgramsLC );
 
 	//Get various shareaza paths (to compare)
 	CString strIncompletePathLC = Settings.Downloads.IncompletePath;

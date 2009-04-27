@@ -1,10 +1,10 @@
 HKCR
 {
-	Shareaza.MediaPlayer.1 = s 'Shareaza Media Services Plugin'
+	ForceRemove Shareaza.MediaPlayer.1 = s 'Shareaza Media Services Plugin'
 	{
 		CLSID = s '{3DC28AA6-A597-4E03-96DF-ADA19155B0BE}'
 	}
-	Shareaza.MediaPlayer = s 'Shareaza Media Services Plugin'
+	ForceRemove Shareaza.MediaPlayer = s 'Shareaza Media Services Plugin'
 	{
 		CLSID = s '{3DC28AA6-A597-4E03-96DF-ADA19155B0BE}'
 		CurVer = s 'Shareaza.MediaPlayer.1'
@@ -20,11 +20,12 @@ HKCR
 			{
 				val ThreadingModel = s 'Both'
 			}
+			val AppID = s '%APPID%'
 			'TypeLib' = s '{4E7B260F-E3A4-42DD-89D8-E0372158626E}'
 		}
 	}
 }
-HKLM
+HKCU
 {
 	NoRemove Software
 	{

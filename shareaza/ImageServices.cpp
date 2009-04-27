@@ -374,7 +374,7 @@ BOOL CImageServices::IsFileViewable(LPCTSTR pszPath)
 	strType.MakeLower();
 
 	CLSID oCLSID;
-	return Plugins.LookupCLSID( L"ImageService", strType, oCLSID, FALSE );
+	return Plugins.LookupCLSID( L"ImageService", strType, oCLSID );
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -388,7 +388,7 @@ bool CImageServices::GetService(LPCTSTR szFilename, IImageServicePlugin** ppIIma
 
 	// Get plugin CLSID
 	CLSID oCLSID;
-	if ( ! Plugins.LookupCLSID( L"ImageService", strType, oCLSID, FALSE ) )
+	if ( ! Plugins.LookupCLSID( L"ImageService", strType, oCLSID ) )
 		// Unknown or disabled extension
 		return false;
 

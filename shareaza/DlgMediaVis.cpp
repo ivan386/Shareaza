@@ -116,7 +116,7 @@ void CMediaVisDlg::Enumerate()
 	CWaitCursor pCursor;
 	HKEY hKey;
 
-	if ( RegOpenKeyEx( HKEY_LOCAL_MACHINE,
+	if ( RegOpenKeyEx( HKEY_CURRENT_USER,
 		_T("Software\\Shareaza\\Shareaza\\Plugins\\AudioVis"),
 		NULL, KEY_READ, &hKey ) != ERROR_SUCCESS ) return;
 
@@ -133,7 +133,7 @@ void CMediaVisDlg::Enumerate()
 
 		CLSID pCLSID;
 		if ( ! Hashes::fromGuid( szCLSID, &pCLSID ) ) continue;
-		if ( ! Plugins.LookupEnable( pCLSID, TRUE ) ) continue;
+		if ( ! Plugins.LookupEnable( pCLSID ) ) continue;
 
 		if ( _tcsistr( szName, _T("wrap") ) )
 		{
@@ -248,7 +248,7 @@ void CMediaVisDlg::OnSetup()
 
 	CLSID pCLSID;
 	if ( ! Hashes::fromGuid( strCLSID, &pCLSID ) ) return;
-	if ( ! Plugins.LookupEnable( pCLSID, TRUE ) ) return;
+	if ( ! Plugins.LookupEnable( pCLSID ) ) return;
 
 	IAudioVisPlugin* pPlugin = NULL;
 

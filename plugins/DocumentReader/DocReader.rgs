@@ -1,10 +1,10 @@
 HKCR
 {
-	Shareaza.DocReader.1 = s 'Document Metadata Reader and Thumbnailer'
+	ForceRemove Shareaza.DocReader.1 = s 'Document Metadata Reader and Thumbnailer'
 	{
 		CLSID = s '{E9F51B1E-DB0F-4EEE-9B36-46151994C715}'
 	}
-	Shareaza.DocReader = s 'Document Metadata Reader and Thumbnailer'
+	ForceRemove Shareaza.DocReader = s 'Document Metadata Reader and Thumbnailer'
 	{
 		CLSID = s '{E9F51B1E-DB0F-4EEE-9B36-46151994C715}'
 		CurVer = s 'Shareaza.DocReader.1'
@@ -24,17 +24,17 @@ HKCR
 		}
 	}
 }
-HKLM
+HKCU
 {
 	NoRemove Software
 	{
-		Shareaza
+		NoRemove Shareaza
 		{
-			Shareaza
+			NoRemove Shareaza
 			{
-				Plugins
+				NoRemove Plugins
 				{
-					ImageService
+					NoRemove ImageService
 					{
 						ForceRemove val '.doc' = s '{E9F51B1E-DB0F-4EEE-9B36-46151994C715}'
 						ForceRemove val '.dot' = s '{E9F51B1E-DB0F-4EEE-9B36-46151994C715}'

@@ -50,20 +50,6 @@ int GetInstallDirectory() {
         return 0;
         }
     RegCloseKey( hKey );
-    if (lRet != ERROR_SUCCESS) { 
-        lRet = RegOpenKeyEx( HKEY_LOCAL_MACHINE,
-               L"SOFTWARE\\Shareaza",
-               0, KEY_QUERY_VALUE, &hKey );
-        if( lRet != ERROR_SUCCESS ) {
-            return 0;
-            }
-        lRet = RegQueryValueEx( hKey, NULL, NULL, NULL,
-               (LPBYTE) prefix, &dwBufLen);
-        if( (lRet != ERROR_SUCCESS) || (dwBufLen > MAX_PATH) ) {
-            return 0;
-            }
-        RegCloseKey( hKey ); 
-    }
     wcscat(prefix, L"\\Skins\\");
     return 1;
 }

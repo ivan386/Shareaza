@@ -49,24 +49,71 @@ CPlugins::~CPlugins()
 	Clear();
 }
 
+void CPlugins::Register()
+{
+	CList< HINSTANCE > oModules; // Cache
+
+	CFileFind finder;
+	BOOL bWorking = finder.FindFile( Settings.General.Path + _T("\\*.dll") );
+	while ( bWorking )
+	{
+		bWorking = finder.FindNextFile();
+		CString sDllPath = finder.GetFilePath().MakeLower();
+
+		if ( sDllPath.Find( _T("razawebhook.dll") ) != -1 )
+			// Skip RazaWebHook.dll
+			continue;
+
+		if ( HINSTANCE hDll = LoadLibrary( sDllPath ) )
+		{
+			HRESULT hr = S_FALSE;
+
+			HRESULT (WINAPI *pfnDllInstall)(BOOL bInstall, LPCWSTR pszCmdLine);
+			(FARPROC&)pfnDllInstall = GetProcAddress( hDll, "DllInstall" );
+			if ( pfnDllInstall )
+			{
+				hr = pfnDllInstall( TRUE, L"user" );
+			}
+			else
+			{
+				HRESULT (WINAPI *pfnDllRegisterServer)(void);
+				(FARPROC&)pfnDllRegisterServer = GetProcAddress( hDll, "DllRegisterServer" );
+				if ( pfnDllRegisterServer )
+				{
+					hr = pfnDllRegisterServer();
+				}
+			}
+
+			if ( hr == S_OK )
+				theApp.Message( MSG_NOTICE, _T("Registered plugin: %s"), sDllPath );
+			else if ( FAILED( hr ) )
+				theApp.Message( MSG_ERROR, _T("Failed to register plugin: %s : 0x%08x"), sDllPath, hr );
+
+			oModules.AddTail( hDll );
+		}
+	}
+
+	for ( POSITION pos = oModules.GetHeadPosition(); pos; )
+		FreeLibrary( oModules.GetNext( pos ) );
+}
+
 //////////////////////////////////////////////////////////////////////
 // CPlugins enumerate
 
 void CPlugins::Enumerate()
 {
-	HKEY hKey;
+	HUSKEY hKey;
 
-	if ( RegOpenKeyEx( HKEY_LOCAL_MACHINE,
-		_T("Software\\Shareaza\\Shareaza\\Plugins\\General"),
-		NULL, KEY_READ, &hKey ) != ERROR_SUCCESS ) return;
+	if ( SHRegOpenUSKey( _T("Software\\Shareaza\\Shareaza\\Plugins\\General"),
+		KEY_READ, NULL, &hKey, FALSE ) != ERROR_SUCCESS ) return;
 
 	for ( DWORD nKey = 0 ; ; nKey++ )
 	{
 		TCHAR szName[128], szCLSID[64];
 		DWORD dwType, dwName = 128, dwCLSID = 64 * sizeof(TCHAR);
 
-		if ( RegEnumValue( hKey, nKey, szName, &dwName, NULL, &dwType, (LPBYTE)szCLSID, &dwCLSID )
-			 != ERROR_SUCCESS ) break;
+		if ( SHRegEnumUSValue( hKey, nKey, szName, &dwName, &dwType,
+			(LPBYTE)szCLSID, &dwCLSID, SHREGENUM_DEFAULT ) != ERROR_SUCCESS ) break;
 
 		if ( dwType != REG_SZ ) continue;
 		szCLSID[ 38 ] = 0;
@@ -91,7 +138,7 @@ void CPlugins::Enumerate()
 		pPlugin->StartIfEnabled();
 	}
 
-	RegCloseKey( hKey );
+	SHRegCloseUSKey( hKey );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -110,37 +157,16 @@ void CPlugins::Clear()
 //////////////////////////////////////////////////////////////////////
 // CPlugins CLSID helpers
 
-BOOL CPlugins::LookupCLSID(LPCTSTR pszGroup, LPCTSTR pszKey, CLSID& pCLSID, BOOL bEnableDefault) const
+BOOL CPlugins::LookupCLSID(LPCTSTR pszGroup, LPCTSTR pszKey, CLSID& pCLSID) const
 {
-	DWORD dwType, dwCLSID;
-	TCHAR szCLSID[64];
-	CString strKey;
-	HKEY hKey;
-
-	strKey.Format( _T("Software\\Shareaza\\Shareaza\\Plugins\\%s"), pszGroup );
-
-	if ( RegOpenKeyEx( HKEY_LOCAL_MACHINE, strKey,
-		NULL, KEY_READ, &hKey ) == ERROR_SUCCESS )
-	{
-		dwType = REG_SZ;
-		dwCLSID = 64 * sizeof(TCHAR);
-		if ( ERROR_SUCCESS != RegQueryValueEx( hKey, pszKey, NULL, &dwType,
-			(LPBYTE)szCLSID, &dwCLSID ) ) dwType = 0;
-		RegCloseKey( hKey );
-
-		if ( dwType == REG_SZ )
-		{
-			szCLSID[ 38 ] = 0;
-
-			return	Hashes::fromGuid( szCLSID, &pCLSID ) &&
-					LookupEnable( pCLSID, bEnableDefault, pszKey );
-		}
-	}
-
-	return FALSE;
+	CString strCLSID = theApp.GetProfileString(
+		CString( _T("Plugins\\") ) + pszGroup, pszKey, _T("") );
+	return ! strCLSID.IsEmpty() &&
+		Hashes::fromGuid( strCLSID, &pCLSID ) &&
+		LookupEnable( pCLSID, pszKey );
 }
 
-BOOL CPlugins::LookupEnable(REFCLSID pCLSID, BOOL bDefault, LPCTSTR pszExt) const
+BOOL CPlugins::LookupEnable(REFCLSID pCLSID, LPCTSTR pszExt) const
 {
 	HKEY hPlugins = NULL;
 
@@ -155,7 +181,7 @@ BOOL CPlugins::LookupEnable(REFCLSID pCLSID, BOOL bDefault, LPCTSTR pszExt) cons
 			// Upgrade here; Smart upgrade doesn't work
 			if ( nType == REG_DWORD )
 			{
-				BOOL bEnabled = theApp.GetProfileInt( _T("Plugins"), strCLSID, bDefault );
+				BOOL bEnabled = theApp.GetProfileInt( _T("Plugins"), strCLSID, TRUE );
 				RegCloseKey( hPlugins );
 				theApp.WriteProfileString( _T("Plugins"), strCLSID, bEnabled ? _T("") : _T("-") );
 				return bEnabled;
@@ -453,7 +479,7 @@ void CPlugin::Stop()
 
 BOOL CPlugin::StartIfEnabled()
 {
-	if ( Plugins.LookupEnable( m_pCLSID, TRUE ) )
+	if ( Plugins.LookupEnable( m_pCLSID ) )
 		return Start();
 	else
 		return FALSE;

@@ -334,7 +334,7 @@ void CPluginsSettingsPage::EnumerateMiscPlugins()
 {
 	HKEY hPlugins = NULL;
 
-	if ( ERROR_SUCCESS != RegOpenKeyEx( HKEY_LOCAL_MACHINE,
+	if ( ERROR_SUCCESS != RegOpenKeyEx( HKEY_CURRENT_USER,
 		_T("Software\\Shareaza\\Shareaza\\Plugins"), 0, KEY_READ, &hPlugins ) )
 		return;
 
@@ -456,7 +456,7 @@ void CPluginsSettingsPage::AddMiscPlugin(LPCTSTR /*pszType*/, LPCTSTR pszCLSID, 
 			if ( Hashes::fromGuid( pszCLSID, &pCLSID ) )
 			{
 				TRISTATE bEnabled = TRI_UNKNOWN;
-				bEnabled = Plugins.LookupEnable( pCLSID, TRUE ) ? TRI_TRUE : TRI_FALSE;
+				bEnabled = Plugins.LookupEnable( pCLSID ) ? TRI_TRUE : TRI_FALSE;
 				InsertPlugin( pszCLSID, szValue, 1, bEnabled, NULL, pszExtension );
 			}
 		}

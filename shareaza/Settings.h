@@ -45,7 +45,6 @@ public:
 	{
 		CString		Path;						// Installation path for Shareaza
 		CString		UserPath;					// Path for user data. (May be the same as above for single user installs)
-		bool		MultiUser;					// Multiuser installation
 		DWORD		LogLevel;					// Log severity (0 - MSG_ERROR .. 4 - MSG_DEBUG)
 		bool		SearchLog;					// Display search facility log information
 		bool		DebugLog;					// Create a log file

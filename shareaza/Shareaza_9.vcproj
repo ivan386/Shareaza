@@ -4273,7 +4273,6 @@
 			>
 			<File
 				RelativePath="Res\About.htm"
-				DeploymentContent="true"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
@@ -4318,7 +4317,6 @@
 			</File>
 			<File
 				RelativePath="Res\BadRange.htm"
-				DeploymentContent="true"
 				>
 			</File>
 			<File
@@ -4339,7 +4337,6 @@
 			</File>
 			<File
 				RelativePath="Res\Browser.htm"
-				DeploymentContent="true"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
@@ -4384,7 +4381,6 @@
 			</File>
 			<File
 				RelativePath="Res\Busy.htm"
-				DeploymentContent="true"
 				>
 			</File>
 			<File
@@ -4565,7 +4561,6 @@
 			</File>
 			<File
 				RelativePath="Res\Disabled.htm"
-				DeploymentContent="true"
 				>
 			</File>
 			<File
@@ -4602,7 +4597,6 @@
 			</File>
 			<File
 				RelativePath="Res\FileNotFound.htm"
-				DeploymentContent="true"
 				>
 			</File>
 			<File
@@ -4635,7 +4629,6 @@
 			</File>
 			<File
 				RelativePath="Res\HashMismatch.htm"
-				DeploymentContent="true"
 				>
 			</File>
 			<File

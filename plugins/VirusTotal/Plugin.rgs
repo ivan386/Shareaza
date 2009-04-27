@@ -19,26 +19,8 @@ HKCR
 			{
 				val ThreadingModel = s 'Both'
 			}
+			val AppID = s '%APPID%'
 			'TypeLib' = s '{ABC45D7F-EF52-4E5C-986A-93674FE3BBCC}'
-		}
-	}
-}
-HKLM
-{
-	NoRemove Software
-	{
-		NoRemove Shareaza
-		{
-			NoRemove Shareaza
-			{
-				NoRemove Plugins
-				{
-					NoRemove General
-					{
-						val 'VirusTotal Plugin' = s '{76F13243-9F62-4241-AC07-3B359BBE4EC5}'
-					}
-				}
-			}
 		}
 	}
 }
@@ -52,7 +34,11 @@ HKCU
 			{
 				NoRemove Plugins
 				{
-					val '{76F13243-9F62-4241-AC07-3B359BBE4EC5}' = d 1
+					NoRemove General
+					{
+						ForceRemove val 'VirusTotal Plugin' = s '{76F13243-9F62-4241-AC07-3B359BBE4EC5}'
+					}
+					ForceRemove val '{76F13243-9F62-4241-AC07-3B359BBE4EC5}' = s ''
 				}
 			}
 		}

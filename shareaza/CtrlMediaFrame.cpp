@@ -1541,7 +1541,7 @@ BOOL CMediaFrame::PrepareVis()
 	CLSID pCLSID;
 
 	if ( Hashes::fromGuid( Settings.MediaPlayer.VisCLSID, &pCLSID ) &&
-		 Plugins.LookupEnable( pCLSID, TRUE ) )
+		 Plugins.LookupEnable( pCLSID ) )
 	{
 		HRESULT hr = CoCreateInstance( pCLSID, NULL, CLSCTX_ALL, IID_IAudioVisPlugin,
 			(void**)&pPlugin );

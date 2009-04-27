@@ -1,10 +1,10 @@
 HKCR
 {
-	SWFPlugin.SWFBuilder.1 = s 'SWF Library Builder'
+	ForceRemove SWFPlugin.SWFBuilder.1 = s 'SWF Library Builder'
 	{
 		CLSID = s '{B978F591-5137-4612-873A-DC2081BAD6CD}'
 	}
-	SWFPlugin.SWFBuilder = s 'SWF Library Builder'
+	ForceRemove SWFPlugin.SWFBuilder = s 'SWF Library Builder'
 	{
 		CLSID = s '{B978F591-5137-4612-873A-DC2081BAD6CD}'
 		CurVer = s 'SWFPlugin.SWFBuilder.1'
@@ -24,7 +24,7 @@ HKCR
 		}
 	}
 }
-HKLM
+HKCU
 {
 	NoRemove Software
 	{

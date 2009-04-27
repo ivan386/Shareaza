@@ -143,7 +143,7 @@ STDAPI DllRegisterServer(void)
 		if ( ext == _T("vst") ) continue;
 		ext.Insert (0, _T('.'));
 		ATLTRACE (_T("Add %s\n"), ext);
-		SHSetValue (HKEY_LOCAL_MACHINE, REG_IMAGESERVICE_KEY, ext, REG_SZ,
+		SHSetValue (HKEY_CURRENT_USER, REG_IMAGESERVICE_KEY, ext, REG_SZ,
 			_T("{FF5FCD00-2C20-49D8-84F6-888D2E2C95DA}"),
 			38 * sizeof (TCHAR));
 	}
@@ -163,7 +163,7 @@ STDAPI DllUnregisterServer(void)
 		if ( ext == _T("vst") ) continue;
 		ext.Insert (0, _T('.'));
 		ATLTRACE (_T("Remove %s\n"), ext);
-		SHDeleteValue (HKEY_LOCAL_MACHINE, REG_IMAGESERVICE_KEY, ext);
+		SHDeleteValue (HKEY_CURRENT_USER, REG_IMAGESERVICE_KEY, ext);
 	}
 
 	return hr;

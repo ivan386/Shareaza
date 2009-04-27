@@ -826,13 +826,25 @@ bool CHostCache::CheckMinimumED2KServers()
 		LoadDefaultED2KServers();
 
 		// Get the server list from eMule (mods) if possible
-		CString strPrograms( GetProgramFilesFolder() );
-		Import( strPrograms + _T("\\eMule\\config\\server.met"), TRUE );
-		Import( strPrograms + _T("\\Neo Mule\\config\\server.met"), TRUE );
-		Import( strPrograms + _T("\\hebMule\\config\\server.met"), TRUE );
+		const LPCTSTR sServerMetPathes[ 8 ] = {
+			{ _T("\\eMule\\config\\server.met") },
+			{ _T("\\eMule\\server.met") },
+			{ _T("\\Neo Mule\\config\\server.met") },
+			{ _T("\\Neo Mule\\server.met") },
+			{ _T("\\hebMule\\config\\server.met") },
+			{ _T("\\hebMule\\server.met") },
+			{ _T("\\aMule\\config\\server.met") },
+			{ _T("\\aMule\\server.met") }
+		};
 
-		CString strAppData( GetAppDataFolder() );
-		Import( strAppData + _T("\\aMule\\server.met"), TRUE );
+		CString sRootPathes[ 3 ];
+		sRootPathes[ 0 ] = theApp.GetProgramFilesFolder();
+		sRootPathes[ 1 ] = theApp.GetLocalAppDataFolder();
+		sRootPathes[ 2 ] = theApp.GetAppDataFolder();
+
+		for ( int i = 0; i < _countof( sRootPathes ); i++ )
+			for ( int j = 0; j < _countof( sServerMetPathes ); j++ )
+				Import( sRootPathes[ i ] + sServerMetPathes[ j ], TRUE );
 
 		// Get server list from Web
 		if ( ! EnoughED2KServers() )

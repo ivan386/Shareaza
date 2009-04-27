@@ -243,7 +243,7 @@ void CDownloadTask::RunCopySimple()
 	if ( m_sPath.CompareNoCase( Settings.Downloads.CompletePath ) != 0 )
 		oPathList.AddTail( Settings.Downloads.CompletePath );
 
-	CString sDefaultCompletePath = GetDocumentsFolder() + _T("\\Shareaza Downloads");
+	CString sDefaultCompletePath = theApp.GetDownloadsFolder();
 	if ( m_sPath.CompareNoCase( sDefaultCompletePath ) != 0 )
 		oPathList.AddTail( sDefaultCompletePath );
 

@@ -1,7 +1,7 @@
 //
 // ShareazaURL.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -95,7 +95,7 @@ public:
 	static BOOL	RegisterShellType(LPCTSTR pszRoot, LPCTSTR pszProtocol, 
 		LPCTSTR pszName, LPCTSTR pszType, LPCTSTR pszApplication, LPCTSTR pszTopic, UINT nIDIcon, BOOL bOverwrite = TRUE);
 	static BOOL	RegisterMagnetHandler(LPCTSTR pszID, LPCTSTR pszName, LPCTSTR pszDescription, LPCTSTR pszApplication, UINT nIDIcon);
-	static BOOL	IsRegistered(LPCTSTR pszProtocol, HKEY hMainKey);
+	static BOOL	IsRegistered(LPCTSTR pszProtocol);
 	static BOOL	UnregisterShellType(LPCTSTR pszRoot, LPCTSTR pszProtocol);
 	static void DeleteKey(HKEY hParent, LPCTSTR pszKey);
 };

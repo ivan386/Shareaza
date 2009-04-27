@@ -102,7 +102,7 @@ BOOL CWizardSharePage::OnInitDialog()
 				pFolder->m_sPath, 0, 0, SHI_FOLDER_OPEN, 0 );
 		}
 
-		CString strPrograms( GetProgramFilesFolder() ), strFolder;
+		CString strPrograms( theApp.GetProgramFilesFolder() ), strFolder;
 
 		CreateDirectory( Settings.Downloads.CompletePath );
 		AddPhysicalFolder( Settings.Downloads.CompletePath );

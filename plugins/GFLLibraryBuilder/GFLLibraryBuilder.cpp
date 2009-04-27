@@ -143,7 +143,7 @@ STDAPI DllRegisterServer(void)
 		if ( ext == _T("pdf") || ext == _T("ps") || ext == _T("eps") || ext == _T("vst") ) continue;
 		ext.Insert (0, _T('.'));
 		ATLTRACE (_T("Add %s\n"), ext);
-		SHSetValue (HKEY_LOCAL_MACHINE, REG_LIBRARYBUILDER_KEY, ext, REG_SZ,
+		SHSetValue (HKEY_CURRENT_USER, REG_LIBRARYBUILDER_KEY, ext, REG_SZ,
 			_T("{6C9E61BE-E58F-4AE1-A304-6FF1D183804C}"),
 			38 * sizeof (TCHAR));
 	}
@@ -163,7 +163,7 @@ STDAPI DllUnregisterServer(void)
 		if ( ext == _T("pdf") || ext == _T("ps") || ext == _T("eps") || ext == _T("vst") ) continue;
 		ext.Insert (0, _T('.'));
 		ATLTRACE (_T("Remove %s\n"), ext);
-		SHDeleteValue (HKEY_LOCAL_MACHINE, REG_LIBRARYBUILDER_KEY, ext);
+		SHDeleteValue (HKEY_CURRENT_USER, REG_LIBRARYBUILDER_KEY, ext);
 	}
 
 	return hr;

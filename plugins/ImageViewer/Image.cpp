@@ -457,7 +457,7 @@ IImageServicePlugin* CImage::LoadService(LPCTSTR pszFile)
 
 	CRegKey pKey;
 		
-	if ( pKey.Open( HKEY_LOCAL_MACHINE,
+	if ( pKey.Open( HKEY_CURRENT_USER,
 		_T("SOFTWARE\\Shareaza\\Shareaza\\Plugins\\ImageService") ) != ERROR_SUCCESS )
 		return NULL;
 	

@@ -80,7 +80,6 @@ void CSettings::Load()
 	Add( _T(""), _T("ItWasLimited"), &General.ItWasLimited, false, true );
 	Add( _T(""), _T("MaxDebugLogSize"), &General.MaxDebugLogSize, 10*1024*1024, 1024*1024, 0, 100, _T(" MB") );
 	Add( _T(""), _T("MinTransfersRest"), &General.MinTransfersRest, 15, 1, 1, 100, _T(" ms") );
-	Add( _T(""), _T("MultiUser"), &General.MultiUser, false, true );
 	Add( _T(""), _T("Path"), &General.Path );
 	Add( _T(""), _T("LogLevel"), &General.LogLevel, MSG_INFO, 1, MSG_ERROR, MSG_DEBUG, _T(" level") );
 	Add( _T(""), _T("SearchLog"), &General.SearchLog, true );
@@ -450,7 +449,7 @@ void CSettings::Load()
 	Add( _T("BitTorrent"), _T("RequestSize"), &BitTorrent.RequestSize, 16*1024, 1024, 8, 128, _T(" KB") );
 	Add( _T("BitTorrent"), _T("SourceExchangePeriod"), &BitTorrent.SourceExchangePeriod, 10, 1, 1, 60*5, _T(" m") );
 	Add( _T("BitTorrent"), _T("TorrentCodePage"), &BitTorrent.TorrentCodePage, 0, 1, 0, 9999999 );
-	Add( _T("BitTorrent"), _T("TorrentCreatorPath"), &BitTorrent.TorrentCreatorPath );
+	Add( _T("BitTorrent"), _T("TorrentCreatorPath"), &BitTorrent.TorrentCreatorPath, _T("TorrentWizard.exe") );
 	Add( _T("BitTorrent"), _T("TorrentExtraKeys"), &BitTorrent.TorrentExtraKeys, true );
 	Add( _T("BitTorrent"), _T("TrackerKey"), &BitTorrent.TrackerKey, true );
 	Add( _T("BitTorrent"), _T("UploadCount"), &BitTorrent.UploadCount, 4, 1, 2, 16 );
@@ -600,24 +599,12 @@ void CSettings::Load()
 			General.Path = General.Path.Left( General.Path.ReverseFind( '\\' ) );
 	}
 
-	if ( ! General.MultiUser )
-	{
-		if ( General.UserPath.IsEmpty() )
-			General.UserPath = General.Path;
-		if ( Downloads.IncompletePath.IsEmpty() )
-			Downloads.IncompletePath = General.Path + _T("\\Incomplete");
-		if ( Downloads.CompletePath.IsEmpty() )
-			Downloads.CompletePath = General.Path + _T("\\Downloads");
-	}
-	else
-	{
-		if ( General.UserPath.IsEmpty() )
-			General.UserPath = GetAppDataFolder() + _T("\\Shareaza");
-		if ( Downloads.IncompletePath.IsEmpty() )
-			Downloads.IncompletePath = GetLocalAppDataFolder() + _T("\\Shareaza\\Incomplete");
-		if ( Downloads.CompletePath.IsEmpty() )
-			Downloads.CompletePath = GetDocumentsFolder() + _T("\\Shareaza Downloads");
-	}
+	if ( General.UserPath.IsEmpty() )
+		General.UserPath = theApp.GetAppDataFolder() + _T("\\Shareaza");
+	if ( Downloads.IncompletePath.IsEmpty() )
+		Downloads.IncompletePath = theApp.GetLocalAppDataFolder() + _T("\\Shareaza\\Incomplete");
+	if ( Downloads.CompletePath.IsEmpty() )
+		Downloads.CompletePath = theApp.GetDownloadsFolder();
 
 	if ( Downloads.TorrentPath.IsEmpty() )
 		Downloads.TorrentPath = General.UserPath + _T("\\Torrents");

@@ -36,10 +36,13 @@ public:
 	UINT				m_nCommandID;
 
 public:
+	// Register all plugins in Shareaza installation folder
+	void		Register();
+
 	void		Enumerate();
 	void		Clear();
-	BOOL		LookupCLSID(LPCTSTR pszGroup, LPCTSTR pszKey, CLSID& pCLSID, BOOL bEnableDefault = TRUE) const;
-	BOOL		LookupEnable(REFCLSID pCLSID, BOOL bDefault, LPCTSTR pszExt = NULL) const;
+	BOOL		LookupCLSID(LPCTSTR pszGroup, LPCTSTR pszKey, CLSID& pCLSID) const;
+	BOOL		LookupEnable(REFCLSID pCLSID, LPCTSTR pszExt = NULL) const;
 	CPlugin*	Find(REFCLSID pCLSID) const;
 	void		OnSkinChanged();
 	void		InsertCommands();
