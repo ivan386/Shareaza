@@ -303,7 +303,7 @@ void CNetwork::AcquireLocalAddress(LPCTSTR pszHeader)
 	pAddress.S_un.S_un_b.s_b3 = (BYTE)nIPb3;
 	pAddress.S_un.S_un_b.s_b4 = (BYTE)nIPb4;
 
-	if ( IsFirewalledAddress( &pAddress, FALSE, TRUE ) ) return;
+	if ( IsFirewalledAddress( &pAddress ) ) return;
 
 	// Add new address to address list
 	if ( ! m_pHostAddresses.Find( pAddress.s_addr ) )
@@ -398,19 +398,18 @@ BOOL CNetwork::AsyncResolve(LPCTSTR pszAddress, WORD nPort, PROTOCOLID nProtocol
 //////////////////////////////////////////////////////////////////////
 // CNetwork firewalled address checking
 
-BOOL CNetwork::IsFirewalledAddress(LPVOID pAddress, BOOL bIncludeSelf, BOOL bForceCheck)
+BOOL CNetwork::IsFirewalledAddress(LPVOID pAddress, BOOL bIncludeSelf)
 {
 	if ( ! pAddress ) return TRUE;
 	if ( bIncludeSelf && IsSelfIP( *(IN_ADDR*)pAddress ) ) return TRUE;
 	if ( ! *(DWORD*)pAddress ) return TRUE;							// 0.0.0.0
 #ifdef LAN_MODE
-	UNUSED_ALWAYS( bForceCheck );
 	if ( ( *(DWORD*)pAddress & 0xFFFF ) == 0xA8C0 ) return FALSE;	// 192.168.0.0/16
 	if ( ( *(DWORD*)pAddress & 0xF0FF ) == 0x10AC ) return FALSE;	// 172.16.0.0/12
 	if ( ( *(DWORD*)pAddress & 0xFF ) == 0x0A ) return FALSE;		// 10.0.0.0/8
 	return TRUE;
 #else // LAN_MODE
-	if ( ! bForceCheck && ! Settings.Connection.IgnoreLocalIP ) return FALSE;
+	if ( ! Settings.Connection.IgnoreLocalIP ) return FALSE;
 	if ( ( *(DWORD*)pAddress & 0xFFFF ) == 0xA8C0 ) return TRUE;	// 192.168.0.0/16
 	if ( ( *(DWORD*)pAddress & 0xF0FF ) == 0x10AC ) return TRUE;	// 172.16.0.0/12
 	if ( ( *(DWORD*)pAddress & 0xFF ) == 0x0A ) return TRUE;		// 10.0.0.0/8

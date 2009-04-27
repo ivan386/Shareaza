@@ -340,10 +340,6 @@ BOOL CDownloadWithSources::AddSourceBT(const Hashes::BtGuid& oGUID, IN_ADDR* pAd
 	// Unreachable (Push) BT sources should never be added.
 	if ( Network.IsFirewalledAddress( pAddress, Settings.Connection.IgnoreOwnIP ) )
 		return FALSE;
-	
-	// Check for own IP, in case IgnoreLocalIP is not set
-	if ( ( Settings.Connection.IgnoreOwnIP ) && Network.IsSelfIP( *pAddress ) ) 
-		return FALSE;
 
 	return AddSourceInternal( new CDownloadSource( (CDownload*)this, oGUID, pAddress, nPort ) );
 }
@@ -371,8 +367,7 @@ BOOL CDownloadWithSources::AddSourceURL(LPCTSTR pszURL, BOOL bURN, FILETIME* pLa
 	
 	if ( bURN )
 	{
-		if ( Network.IsSelfIP( pURL.m_pAddress ) ||
-			 Network.IsFirewalledAddress( &pURL.m_pAddress, TRUE ) || 
+		if ( Network.IsFirewalledAddress( &pURL.m_pAddress, TRUE ) || 
 			 Network.IsReserved( &pURL.m_pAddress ) ) return FALSE;
 	}
 
