@@ -1,7 +1,7 @@
 //
 // WndPanel.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -66,6 +66,15 @@ CPanelWnd::CPanelWnd(BOOL bTabMode, BOOL bGroupMode)
 	}
 
 	m_bPanelClose = ( m_bPanelMode && ! m_bTabMode );
+}
+
+void CPanelWnd::OnSkinChange()
+{
+	// Disable theme in tab mode
+	CoolInterface.EnableTheme( this, ( Skin.GetWindowSkin( this ) == NULL ) &&
+		( Settings.General.GUIMode == GUI_WINDOWED ) );
+
+	CChildWnd::OnSkinChange();
 }
 
 /////////////////////////////////////////////////////////////////////////////
