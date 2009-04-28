@@ -51,7 +51,7 @@ public:
 	// Attributes: Contact Times
 	DWORD		m_tAdded;			// Time when host was constructed (in ticks)
 	DWORD		m_tRetryAfter;		// G2 retry time according G2_PACKET_RETRY_AFTER packet (in seconds)
-	DWORD		m_tConnect;			// TCP connect time (in seconds)
+	DWORD		m_tConnect;			// TCP last connect time (in seconds)
 	DWORD		m_tQuery;			// G2 / ED2K query time (in seconds)
 	DWORD		m_tAck;				// Time when we sent something requires acknowledgment (0 - not required)
 	DWORD		m_tStats;			// ED2K stats UDP request

@@ -125,7 +125,8 @@ void CHostCache::Serialize(CArchive& ar)
 	// 14 - Added m_sCountry
 	// 15 - Added m_bDHT and m_oBtGUID (Ryo-oh-ki)
 	// 16 - Added m_nUDPPort, m_oGUID and m_nKADVersion (Ryo-oh-ki)
-	int nVersion = 16;
+	// 17 - Added m_tConnect (Ryo-oh-ki)
+	int nVersion = 17;
 
 	if ( ar.IsStoring() )
 	{
@@ -1038,6 +1039,8 @@ void CHostCacheHost::Serialize(CArchive& ar, int nVersion)
 		ar << m_nUDPPort;
 		ar.Write( &m_oGUID[0], m_oGUID.byteCount );
 		ar << m_nKADVersion;
+
+		ar << m_tConnect;
 	}
 	else
 	{
@@ -1128,6 +1131,11 @@ void CHostCacheHost::Serialize(CArchive& ar, int nVersion)
 			ReadArchive( ar, &m_oGUID[0], m_oGUID.byteCount );
 			m_oGUID.validate();
 			ar >> m_nKADVersion;
+		}
+
+		if ( nVersion >= 17 )
+		{
+			ar >> m_tConnect;
 		}
 	}
 }
