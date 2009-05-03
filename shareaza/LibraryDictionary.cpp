@@ -1,7 +1,7 @@
 //
 // LibraryDictionary.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -51,7 +51,7 @@ CLibraryDictionary::CLibraryDictionary() : m_pWords( 64 )
 {
 	m_pTable = NULL;
 	m_bTable = FALSE;
-	
+
 	m_nSearchCookie = 1;
 }
 
@@ -67,7 +67,7 @@ CLibraryDictionary::~CLibraryDictionary()
 void CLibraryDictionary::Add(CLibraryFile* pFile)
 {
 	ProcessFile( pFile, TRUE );
-	
+
 	if ( ( pFile->m_oSHA1 || pFile->m_oTiger || pFile->m_oED2K || pFile->m_oBTH || pFile->m_oMD5 ) &&
 		! BuildHashTable() )
 	{
@@ -97,10 +97,10 @@ void CLibraryDictionary::Add(CLibraryFile* pFile)
 void CLibraryDictionary::Remove(CLibraryFile* pFile)
 {
 	ProcessFile( pFile, FALSE );
-	
+
 	// TODO: Always invalidate the table when removing a hashed
 	// file... is this wise???  It will happen all the time.
-	
+
 	if ( pFile->m_oSHA1 || pFile->m_oTiger || pFile->m_oED2K || pFile->m_oBTH || pFile->m_oMD5 ) m_bTable = FALSE;
 }
 
@@ -111,7 +111,7 @@ void CLibraryDictionary::ProcessFile(CLibraryFile* pFile, BOOL bAdd)
 {
 	ASSERT(pFile != NULL);
 	ProcessPhrase( pFile, pFile->GetSearchName(), bAdd, FALSE );
-	
+
 	if ( pFile->m_pMetadata && pFile->m_pSchema )
 	{
 		ProcessWord( pFile, pFile->m_pSchema->GetURI(), bAdd );
@@ -132,7 +132,7 @@ int CLibraryDictionary::ProcessPhrase(CLibraryFile* pFile, const CString& strPhr
 	CString strWord;
 	int nCount = 0;
 	ScriptType boundary[ 2 ] = { sNone, sNone };
-    int nPos = 0;
+	int nPos = 0;
 	int nPrevWord = 0, nNextWord = 0;
 
 	for ( ; *pszPtr ; nPos++, pszPtr++ )
@@ -249,7 +249,7 @@ int CLibraryDictionary::MakeKeywords(CLibraryFile* pFile, const CString& strWord
 		if ( nLength >= 5 )
 		{
 			// take of first 1 & last 2 chars
-			strKeyword = strWord.Left( nLength - 2 );   
+			strKeyword = strWord.Left( nLength - 2 );
 			strKeyword = strKeyword.Right( nLength - 3 );
 			ProcessWord( pFile, strKeyword, bAdd );
 			nCount++;
@@ -262,7 +262,7 @@ int CLibraryDictionary::MakeKeywords(CLibraryFile* pFile, const CString& strWord
 		if ( nLength >= 6 )
 		{
 			// take of first 2 & last 2 chars
-			strKeyword = strWord.Left( nLength - 2 );   
+			strKeyword = strWord.Left( nLength - 2 );
 			strKeyword = strKeyword.Right( nLength - 4 );
 			ProcessWord( pFile, strKeyword, bAdd );
 			nCount++;
@@ -384,20 +384,20 @@ BOOL CLibraryDictionary::BuildHashTable()
 		m_pTable = new CQueryHashTable();
 		m_pTable->Create();
 	}
-	
+
 	if ( m_bTable ) return FALSE;
-	
+
 	m_pTable->Clear();
-	
+
 	//Add words to hash table
 	for ( POSITION pos = m_pWords.GetStartPosition() ; pos ; )
 	{
 		CLibraryWord* pWord;
 		CString strWord;
-		
+
 		m_pWords.GetNextAssoc( pos, strWord, pWord );
 
-		CLibraryFile* pFileTemp = *(pWord->m_pList); 
+		CLibraryFile* pFileTemp = *(pWord->m_pList);
 
 		if (  pFileTemp->IsShared() )	// Check if the file is shared
 		{
@@ -417,17 +417,16 @@ BOOL CLibraryDictionary::BuildHashTable()
 				theApp.Message( MSG_INFO, str );
 */
 			}
-			CRazaThread::YieldProc();
 		}
 	}
-	
+
 	//Add sha1/ed2k hashes to hash table
 	for ( POSITION pos = LibraryMaps.GetFileIterator() ; pos ; )
 	{
 		CLibraryFile* pFile = LibraryMaps.GetNextFile( pos );
-		
+
 		if (pFile->IsShared())	// Check if the file is shared
-		{		
+		{
 			if ( ( pFile->IsGhost() ) || ( UploadQueues.CanUpload( PROTOCOL_HTTP, pFile, FALSE ) ) ) // Check if a queue exists
 			{
 				//Add the hashes to the table
@@ -460,11 +459,10 @@ BOOL CLibraryDictionary::BuildHashTable()
 */
 			}
 		}
-		CRazaThread::YieldProc();
 	}
-	
+
 	m_bTable = TRUE;
-	
+
 	return TRUE;
 }
 
@@ -481,9 +479,9 @@ void CLibraryDictionary::RebuildHashTable()	//Force table to re-build. (If queue
 CQueryHashTable* CLibraryDictionary::GetHashTable()
 {
 	CQuickLock oLock( Library.m_pSection );
-	
+
 	BuildHashTable();
-	
+
 	return m_pTable;
 }
 
@@ -496,13 +494,13 @@ void CLibraryDictionary::Clear()
 	{
 		CLibraryWord* pWord;
 		CString strWord;
-		
+
 		m_pWords.GetNextAssoc( pos, strWord, pWord );
 		delete pWord;
 	}
-	
+
 	m_pWords.RemoveAll();
-	
+
 	if ( m_pTable != NULL )
 	{
 		m_pTable->Clear();
@@ -517,7 +515,7 @@ CList< CLibraryFile* >* CLibraryDictionary::Search(CQuerySearch* pSearch, int nM
 {
 	BuildHashTable();
 
-	// Only check the hash when a search comes from other client. 
+	// Only check the hash when a search comes from other client.
 	if ( ! bLocal && ! m_pTable->Check( pSearch ) ) return NULL;
 
 	DWORD nCookie = m_nSearchCookie++;
@@ -536,17 +534,17 @@ CList< CLibraryFile* >* CLibraryDictionary::Search(CQuerySearch* pSearch, int nM
 		{
 			CLibraryFile** pFiles	= pWord->m_pList;
 			CLibraryFile* pLastFile	= NULL;
-			
+
 			for ( DWORD nFileCount = pWord->m_nCount ; nFileCount ; nFileCount--, pFiles++ )
 			{
 				CLibraryFile* pFile = *pFiles;
-				
+
 				if ( pFile == pLastFile ) continue;
 				pLastFile = pFile;
-				
+
 				if ( ! bLocal && ! pFile->IsShared() ) continue;
 				if ( bAvailableOnly && ! pFile->IsAvailable() ) continue;
-			
+
 				if ( pFile->m_nSearchCookie == nCookie )
 				{
 					pFile->m_nSearchWords ++;
@@ -703,13 +701,13 @@ CLibraryWord::~CLibraryWord()
 void CLibraryWord::Add(CLibraryFile* pFile)
 {
 	CLibraryFile** pList = new CLibraryFile*[ m_nCount + 1 ];
-	
+
 	if ( m_pList )
 	{
 		CopyMemory( pList, m_pList, m_nCount * sizeof(CLibraryFile*) );
 		delete [] m_pList;
 	}
-	
+
 	m_pList = pList;
 	m_pList[ m_nCount++ ] = pFile;
 }
@@ -717,7 +715,7 @@ void CLibraryWord::Add(CLibraryFile* pFile)
 BOOL CLibraryWord::Remove(CLibraryFile* pFile)
 {
 	CLibraryFile** pSearch = m_pList;
-	
+
 	for ( DWORD nSearch = m_nCount ; nSearch ; nSearch--, pSearch++ )
 	{
 		if ( *pSearch == pFile )
@@ -729,6 +727,6 @@ BOOL CLibraryWord::Remove(CLibraryFile* pFile)
 			break;
 		}
 	}
-	
+
 	return ( m_nCount > 0 );
 }

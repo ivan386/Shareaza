@@ -47,7 +47,6 @@ public:
 	static void Add(CRazaThread* pThread, LPCSTR pszName);
 	static void Remove(HANDLE hThread);
 	static void Terminate(HANDLE hThread);
-	static void YieldProc();
 
 protected:
 	typedef struct

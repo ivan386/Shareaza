@@ -851,7 +851,6 @@ void CLibraryFile::Serialize(CArchive& ar, int nVersion)
 			m_oED2K.clear();
 		}
 
-		CRazaThread::YieldProc();
 		Library.AddFile( this );
 	}
 }

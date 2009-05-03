@@ -179,8 +179,6 @@ BOOL CBrowseTreeCtrl::CollapseRecursive(CBrowseTreeItem* pItem)
 		bChanged |= CollapseRecursive( *pChild );
 	}
 
-	CRazaThread::YieldProc();
-
 	return bChanged;
 }
 
@@ -963,7 +961,7 @@ CBrowseTreeItem* CBrowseTreeItem::Add(LPCTSTR pszName)
 
 	if ( m_nCount == 0 ) return m_pList[ m_nCount++ ] = new CBrowseTreeItem( this );
 
-    int nFirst = 0;
+	int nFirst = 0;
 	for ( int nLast = m_nCount - 1 ; nLast >= nFirst ; )
 	{
 		int nMiddle = ( nFirst + nLast ) >> 1;
@@ -1002,7 +1000,7 @@ CBrowseTreeItem* CBrowseTreeItem::Add(CBrowseTreeItem* pNewItem)
 
 	if ( m_nCount == 0 ) return m_pList[ m_nCount++ ] = pNewItem;
 
-    int nFirst = 0;
+	int nFirst = 0;
 	for ( int nLast = m_nCount - 1 ; nLast >= nFirst ; )
 	{
 		int nMiddle = ( nFirst + nLast ) >> 1;

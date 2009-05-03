@@ -256,7 +256,6 @@ void CAlbumFolder::AddFile(CLibraryFile* pFile)
 			m_oCollSHA1.clear();
 		}
 	}
-	CRazaThread::YieldProc();
 
 	m_nUpdateCookie++;
 	Library.m_nUpdateCookie++;
@@ -504,7 +503,7 @@ BOOL CAlbumFolder::MountCollection(const Hashes::Sha1Hash& oSHA1, CCollectionFil
 	// If folder doesn't contain any schema defined then don't go deeper
 	if ( m_pSchema == NULL ) return FALSE;
 
-	// Must we mount the collection here? 
+	// Must we mount the collection here?
 	// The parent may be absent thus we will try to mount it somewhere.
 	// Otherwise, if the validation succeeds we will mount it at the exact parent.
 	// If parent can not hold object like this we will mount at the collection root only.
@@ -523,7 +522,7 @@ BOOL CAlbumFolder::MountCollection(const Hashes::Sha1Hash& oSHA1, CCollectionFil
 	// If the folder schema allows to hold objects having URIs of the collection
 		 m_pSchema->GetContained( pCollection->GetThisURI() ) != NULL ||
 	// or when the folder URI is the root collection folder
-		 CheckURI( m_sSchemaURI, CSchema::uriCollectionsFolder ) ) 
+		 CheckURI( m_sSchemaURI, CSchema::uriCollectionsFolder ) )
 	{
 		CAlbumFolder* pFolder = NULL;
 
@@ -536,7 +535,7 @@ BOOL CAlbumFolder::MountCollection(const Hashes::Sha1Hash& oSHA1, CCollectionFil
 				CAlbumFolder* pSubFolder = GetNextFolder( pos );
 				// Mount it deeper if we can
 				bResult |= pSubFolder->MountCollection( oSHA1, pCollection, bForce );
-				
+
 				// Check if the same collection exists
 				if ( validAndEqual( pSubFolder->m_oCollSHA1, oSHA1 ) )
 				{
@@ -627,7 +626,7 @@ CCollectionFile* CAlbumFolder::GetCollection()
 		}
 	}
 
-    m_oCollSHA1.clear();
+	m_oCollSHA1.clear();
 	m_nUpdateCookie++;
 	Library.m_nUpdateCookie++;
 
@@ -675,7 +674,7 @@ BOOL CAlbumFolder::OrganiseFile(CLibraryFile* pFile)
 		}
 	}
 
-	if ( pFile->m_pMetadata == NULL && m_pParent != NULL ) 
+	if ( pFile->m_pMetadata == NULL && m_pParent != NULL )
 		return FALSE;
 
 	if ( CheckURI( m_sSchemaURI, CSchema::uriMusicRoot ) )
@@ -846,12 +845,12 @@ BOOL CAlbumFolder::OrganiseFile(CLibraryFile* pFile)
 
 		CString strSeries = pFile->m_pMetadata->GetAttributeValue( _T("series") );
 		CXMLNode::UniformString( strSeries );
-		if ( strSeries.IsEmpty() ) 
+		if ( strSeries.IsEmpty() )
 		{
 			using namespace regex;
 			try
 			{
-				const rpattern firstPattern( L"(.*)(\\bse?a?s?o?n?)\\s*([0-9]+)\\s*(ep?i?s?o?d?e?)\\s*([0-9]+)[^0-9]+", 
+				const rpattern firstPattern( L"(.*)(\\bse?a?s?o?n?)\\s*([0-9]+)\\s*(ep?i?s?o?d?e?)\\s*([0-9]+)[^0-9]+",
 											 NOCASE, MODE_SAFE );
 				const rpattern secondPattern( L"(.*[^0-9]+\\b)([0-9]+)\\s*[xX]\\s*([0-9]+)[^0-9]+", NOFLAGS, MODE_SAFE );
 
@@ -863,18 +862,18 @@ BOOL CAlbumFolder::OrganiseFile(CLibraryFile* pFile)
 
 				size_t nCount = firstPattern.split( sFileName, splitResults, 0 );
 				std::vector<std::wstring> results = splitResults.strings();
-				if ( nCount >= 6 && 
-					 _tcsicmp( _tcsistr( L"season", results[2].c_str() ), L"season" ) == 0 && 
+				if ( nCount >= 6 &&
+					 _tcsicmp( _tcsistr( L"season", results[2].c_str() ), L"season" ) == 0 &&
 					 _tcsicmp( _tcsistr( L"episode", results[4].c_str() ), L"episode" ) == 0 )
 				{
-					std::vector<std::wstring>::iterator it = 
+					std::vector<std::wstring>::iterator it =
 						std::find( results.begin(), results.end(), results[2] );
 					results.erase( it );
 					it = std::find( results.begin(), results.end(), results[3] );
 					results.erase( it );
 					nCount -= 2;
 				}
-				else 
+				else
 					nCount = 0;
 
 				if ( nCount < 4 && Settings.Library.SmartSeriesDetection )
@@ -1077,7 +1076,7 @@ void CAlbumFolder::Serialize(CArchive& ar, int nVersion)
 
 		ar.WriteCount( m_pXML != NULL ? 1 : 0 );
 		if ( m_pXML ) m_pXML->Serialize( ar );
-        SerializeOut( ar, m_oCollSHA1 );
+		SerializeOut( ar, m_oCollSHA1 );
 
 		SerializeOut( ar, m_oGUID );
 
@@ -1126,12 +1125,12 @@ void CAlbumFolder::Serialize(CArchive& ar, int nVersion)
 
 		if ( nVersion >= 19 )
 		{
-            SerializeIn( ar, m_oCollSHA1, nVersion );
-            pCollection = LibraryMaps.LookupFileBySHA1( m_oCollSHA1, FALSE, TRUE );
+			SerializeIn( ar, m_oCollSHA1, nVersion );
+			pCollection = LibraryMaps.LookupFileBySHA1( m_oCollSHA1, FALSE, TRUE );
 			// Needs better validation. Some collections are bount to URIs which assign the whole
 			// library as one big collection.
-			if ( pCollection == NULL || 
-				 m_pSchema && ( m_pSchema->CheckURI( CSchema::uriAllFiles ) || 
+			if ( pCollection == NULL ||
+				 m_pSchema && ( m_pSchema->CheckURI( CSchema::uriAllFiles ) ||
 								m_pSchema->CheckURI( CSchema::uriGhostFolder ) ||
 								m_pSchema->CheckURI( CSchema::uriApplicationRoot ) ||
 								m_pSchema->CheckURI( CSchema::uriImageRoot ) ||
@@ -1174,7 +1173,7 @@ void CAlbumFolder::Serialize(CArchive& ar, int nVersion)
 			if ( CLibraryFile* pFile = Library.LookupFile( nIndex ) )
 			{
 				m_pFiles.AddTail( pFile );
-				if ( pCollection != NULL ) 
+				if ( pCollection != NULL )
 					pFile->m_nCollIndex = pCollection->m_nIndex;
 			}
 		}

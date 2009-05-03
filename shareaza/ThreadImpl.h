@@ -88,6 +88,7 @@ public:
 
 	inline void Doze(DWORD dwTimeout = INFINITE) throw()
 	{
+		SwitchToThread();
 		do
 		{
 			SafeMessageLoop();

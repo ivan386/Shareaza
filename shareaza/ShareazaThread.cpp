@@ -146,14 +146,6 @@ void CRazaThread::Terminate(HANDLE hThread)
 	}
 }
 
-void CRazaThread::YieldProc()
-{
-	if ( theApp.m_nLogicalProcessors > 1 )
-		SwitchToThread();
-	else
-		Sleep( 0 );
-}
-
 void SetThreadName(DWORD dwThreadID, LPCSTR szThreadName)
 {
 #ifdef _DEBUG

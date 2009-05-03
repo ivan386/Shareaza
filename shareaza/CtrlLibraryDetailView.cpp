@@ -111,7 +111,7 @@ CLibraryDetailView::CLibraryDetailView(UINT nCommandID)
 /////////////////////////////////////////////////////////////////////////////
 // CLibraryDetailView create and destroy
 
-BOOL CLibraryDetailView::Create(CWnd* pParentWnd) 
+BOOL CLibraryDetailView::Create(CWnd* pParentWnd)
 {
 	CRect rect( 0, 0, 0, 0 );
 	SelClear( FALSE );
@@ -122,19 +122,19 @@ BOOL CLibraryDetailView::Create(CWnd* pParentWnd)
 		LVS_OWNERDATA, rect, pParentWnd, IDC_LIBRARY_VIEW );
 }
 
-int CLibraryDetailView::OnCreate(LPCREATESTRUCT lpCreateStruct) 
+int CLibraryDetailView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if ( CLibraryFileView::OnCreate( lpCreateStruct ) == -1 ) return -1;
-	
+
 	SendMessage( LVM_SETEXTENDEDLISTVIEWSTYLE,
 		LVS_EX_DOUBLEBUFFER|LVS_EX_FULLROWSELECT|LVS_EX_HEADERDRAGDROP,
 		LVS_EX_DOUBLEBUFFER|LVS_EX_FULLROWSELECT|LVS_EX_HEADERDRAGDROP );
-	
+
 	GET_LIST();
-	
+
 	pList->InsertColumn( 0, _T("File"), LVCFMT_LEFT, 200, -1 );
 	pList->SetCallbackMask( LVIS_SELECTED );
-	
+
 	if ( m_nStyle == LVS_REPORT )
 	{
 		pList->InsertColumn( 1, _T("Extension"), LVCFMT_CENTER, 40, 0 );
@@ -156,15 +156,15 @@ int CLibraryDetailView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	{
 		pList->SetImageList( ShellIcons.GetObject( 32 ), LVSIL_NORMAL );
 	}
-	
+
 	pList->SetCallbackMask( LVIS_SELECTED | LVIS_FOCUSED );
-	
+
 	m_pList	= NULL;
 	m_nList	= m_nBuffer = 0;
-	
+
 	CString strSchemaURI = Settings.Library.FilterURI.GetLength() ?
 		Settings.Library.FilterURI : Settings.Library.SchemaURI;
-	
+
 	if ( CSchema* pSchema = SchemaCache.Get( strSchemaURI ) )
 	{
 		CList< CSchemaMember* > pColumns;
@@ -175,13 +175,13 @@ int CLibraryDetailView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	{
 		SetViewSchema( NULL, NULL, FALSE, FALSE );
 	}
-	
+
 	m_bCreateDragImage	= FALSE;
 
 	return 0;
 }
 
-void CLibraryDetailView::OnDestroy() 
+void CLibraryDetailView::OnDestroy()
 {
 	if ( m_pList )
 	{
@@ -192,10 +192,10 @@ void CLibraryDetailView::OnDestroy()
 
 		delete [] m_pList;
 	}
-	
+
 	m_pList = NULL;
 	m_nList = m_nBuffer = 0;
-	
+
 	if ( m_nStyle == LVS_REPORT )
 	{
 		if ( m_pSchema != NULL )
@@ -217,9 +217,9 @@ void CLibraryDetailView::OnDestroy()
 void CLibraryDetailView::SetViewSchema(CSchema* pSchema, CList< CSchemaMember* >* pColumns, BOOL bSave, BOOL bUpdate)
 {
 	GET_LIST();
-	
+
 	pList->DeleteAllItems();
-	
+
 	if ( m_nStyle != LVS_REPORT )
 	{
 		if ( bUpdate ) PostUpdate();
@@ -237,13 +237,13 @@ void CLibraryDetailView::SetViewSchema(CSchema* pSchema, CList< CSchemaMember* >
 			Settings.SaveList( _T("CLibraryDetailView"), pList );
 		}
 	}
-	
+
 	m_pColumns.RemoveAll();
 	if ( ( m_pSchema = pSchema ) != NULL ) m_pColumns.AddTail( pColumns );
-	
+
 	int nColumn = DETAIL_COLUMNS;
 	while ( pList->DeleteColumn( nColumn ) );
-	
+
 	for ( POSITION pos = m_pColumns.GetHeadPosition() ; pos ; nColumn++ )
 	{
 		CSchemaMember* pMember = m_pColumns.GetNext( pos );
@@ -264,11 +264,11 @@ void CLibraryDetailView::SetViewSchema(CSchema* pSchema, CList< CSchemaMember* >
 void CLibraryDetailView::Update()
 {
 //	GET_LIST();
-	
+
 	CSchema* pSchema	= SchemaCache.Get( Settings.Library.FilterURI );
 	DWORD nCookie		= GetFolderCookie();
 	BOOL bGhostFolder	= FALSE;
-	
+
 	if ( Settings.Library.ShowVirtual ) pSchema = NULL;
 
 	CLibraryTreeItem* pTree = GetFolderSelection();
@@ -282,7 +282,7 @@ void CLibraryDetailView::Update()
 		if ( m_nStyle == LVS_REPORT )
 		{
 			CString strURI = pTree->m_pVirtual->m_pSchema->GetContainedURI( CSchema::stFile );
-			
+
 			if ( strURI.GetLength() && ( m_pSchema == NULL || ! m_pSchema->CheckURI( strURI ) ) )
 			{
 				if ( CSchema* pSchema = SchemaCache.Get( strURI ) )
@@ -300,7 +300,7 @@ void CLibraryDetailView::Update()
 	for ( DWORD nCount = m_nList ; nCount ; nCount--, pItem-- )
 	{
 		CLibraryFile* pFile = Library.LookupFile( pItem->nIndex );
-		
+
 		if ( pFile && pFile->m_nSelectCookie == nCookie && ( pFile->IsAvailable() || bGhostFolder ) &&
 			 ( ! pSchema || pSchema->Equals( pFile->m_pSchema ) ||
 			 ( ! pFile->m_pMetadata && pSchema->FilterType( pFile->m_sName ) ) ) )
@@ -315,7 +315,6 @@ void CLibraryDetailView::Update()
 			pItem[ m_nList - nCount ].pText = pSaved;
 			m_nList--;
 		}
-		CRazaThread::YieldProc();
 	}
 
 	for ( POSITION pos = LibraryMaps.GetFileIterator() ; pos ; )
@@ -323,7 +322,7 @@ void CLibraryDetailView::Update()
 		CLibraryFile* pFile = LibraryMaps.GetNextFile( pos );
 
 		if ( pFile->m_nSelectCookie == nCookie &&
- 			 pFile->m_nListCookie != nCookie &&
+			 pFile->m_nListCookie != nCookie &&
 			 ( pFile->IsAvailable() || bGhostFolder ) &&
 			 ( ! pSchema || pSchema->Equals( pFile->m_pSchema ) ||
 			 ( ! pFile->m_pMetadata && pSchema->FilterType( pFile->m_sName ) ) ) )
@@ -337,16 +336,15 @@ void CLibraryDetailView::Update()
 				ZeroMemory( pList + m_nList, ( m_nBuffer - m_nList ) * sizeof(LDVITEM) );
 				m_pList = pList;
 			}
-			
+
 			m_pList[ m_nList ].nIndex		= pFile->m_nIndex;
 			m_pList[ m_nList ].nState		&= ~LDVI_SELECTED;
 			m_nList++;
-			
+
 			pFile->m_nListCookie = nCookie;
 		}
-		CRazaThread::YieldProc();
 	}
-	
+
 	m_nListCookie++;
 
 	SortItems();
@@ -355,30 +353,30 @@ void CLibraryDetailView::Update()
 BOOL CLibraryDetailView::Select(DWORD nObject)
 {
 	GET_LIST();
-	
+
 	for ( int nDeselect = -1 ; ; )
 	{
 		nDeselect = pList->GetNextItem( nDeselect, LVNI_SELECTED );
 		if ( nDeselect < 0 ) break;
 		pList->SetItemState( nDeselect, 0, LVIS_SELECTED );
 	}
-	
+
 	LDVITEM* pItem = m_pList;
-	
+
 	for ( DWORD nCount = 0 ; nCount < m_nList ; nCount++, pItem++ )
 	{
 		if ( pItem->nIndex == nObject )
 		{
 			LV_ITEM pItem;
-			
+
 			pItem.mask = LVIF_STATE; pItem.state = 0xFFFFFFFF; pItem.stateMask = LVIS_SELECTED|LVIS_FOCUSED;
 			SendMessage( LVM_SETITEMSTATE, nCount, (LPARAM)&pItem );
 			PostMessage( LVM_ENSUREVISIBLE, nCount, FALSE );
-			
+
 			return TRUE;
 		}
 	}
-	
+
 	return FALSE;
 }
 
@@ -386,20 +384,20 @@ void CLibraryDetailView::CacheItem(int nItem)
 {
 	CLibraryFile* pFile = Library.LookupFile( m_pList[ nItem ].nIndex );
 	if ( ! pFile ) return;
-	
+
 	LDVITEM* pItem = &m_pList[ nItem ];
 	pItem->nCookie = m_nListCookie;
-	
+
 	if ( pItem->pText == NULL ) pItem->pText = new CArray< CString >;
-	
+
 	CArray< CString >* pText = pItem->pText;
 	pText->SetSize( m_nStyle == LVS_REPORT ? DETAIL_COLUMNS + m_pColumns.GetCount() : 1 );
-	
+
 	CString strName( pFile->m_sName );
 	int nDot = strName.ReverseFind( '.' );
 	if ( nDot >= 0 ) strName.SetAt( nDot, 0 );
 	pText->SetAt( 0, strName );
-	
+
 	if ( m_nStyle == LVS_ICON )
 	{
 		pItem->nIcon = ShellIcons.Get( pFile->m_sName, 32 );
@@ -411,51 +409,51 @@ void CLibraryDetailView::CacheItem(int nItem)
 		else
 			pItem->nIcon = pFile->m_nIcon16 = ShellIcons.Get( pFile->m_sName, 16 );
 	}
-	
+
 	pItem->nState &= LDVI_SELECTED;
 	if ( ! pFile->IsShared() ) pItem->nState |= LDVI_PRIVATE;
 	if ( ! pFile->m_oSHA1 && pFile->IsAvailable() ) pItem->nState |= LDVI_UNSCANNED;
 	if ( pFile->m_bVerify == TRI_FALSE ) pItem->nState |= LDVI_UNSAFE;
-	
+
 	if ( m_nStyle != LVS_REPORT ) return;
-	
+
 	if ( LPCTSTR pszType = _tcsrchr( pFile->m_sName, '.' ) )
 		pText->SetAt( 1, pszType + 1 );
 	else
 		pText->SetAt( 1, _T("") );
-	
+
 	pText->SetAt( 2, Settings.SmartVolume( pFile->GetSize() ) );
 	if ( pFile->m_pFolder != NULL ) pText->SetAt( 3, pFile->m_pFolder->m_sPath );
-	
+
 	CString str;
 	str.Format( _T("%lu (%lu)"), pFile->m_nHitsToday, pFile->m_nHitsTotal );
 	pText->SetAt( 4, str );
 	str.Format( _T("%lu (%lu)"), pFile->m_nUploadsToday, pFile->m_nUploadsTotal );
 	pText->SetAt( 5, str );
-	
+
 	TCHAR szModified[ 64 ];
 	SYSTEMTIME pTime;
-	
+
 	FileTimeToSystemTime( &pFile->m_pTime, &pTime );
 	SystemTimeToTzSpecificLocalTime( NULL, &pTime, &pTime );
-	
+
 	GetDateFormat( LOCALE_USER_DEFAULT, 0, &pTime, _T("yyyy-MM-dd"), szModified, 64 );
 	_tcscat( szModified, _T(" ") );
 	GetTimeFormat( LOCALE_USER_DEFAULT, 0, &pTime, _T("hh:mm tt"), szModified + _tcslen( szModified ), static_cast< int >( 64 - _tcslen( szModified ) ) );
-	
+
 	pText->SetAt( 6, szModified );
-	
+
 	if ( m_pSchema == NULL ) return;
-	
+
 	int nColumn = DETAIL_COLUMNS;
-	
+
 	BOOL bSource =	pFile->m_pMetadata && m_pSchema->Equals( pFile->m_pSchema ) &&
 					m_pSchema->m_sSingular.CompareNoCase( pFile->m_pMetadata->GetName() ) == 0;
-	
+
 	for ( POSITION pos = m_pColumns.GetHeadPosition() ; pos ; nColumn++ )
 	{
 		CSchemaMember* pMember = m_pColumns.GetNext( pos );
-		
+
 		if ( pMember->m_sName.CompareNoCase( _T("SHA1") ) == 0 )
 		{
 			if ( pFile->m_oSHA1 )
@@ -479,7 +477,7 @@ void CLibraryDetailView::OnCacheHint(NMHDR* pNotify, LRESULT* /*pResult*/)
 {
 	CSingleLock oLock( &Library.m_pSection );
 	if ( !oLock.Lock( 100 ) ) return;
-	
+
 	for ( int nItem = ((NMLVCACHEHINT*) pNotify)->iFrom ; nItem <= ((NMLVCACHEHINT*) pNotify)->iTo ; nItem++ )
 	{
 		CacheItem( nItem );
@@ -489,13 +487,13 @@ void CLibraryDetailView::OnCacheHint(NMHDR* pNotify, LRESULT* /*pResult*/)
 void CLibraryDetailView::OnGetDispInfoW(NMHDR* pNotify, LRESULT* pResult)
 {
 	*pResult = 0;
-	
+
 	LDVITEM* pItem = &m_pList[ ((NMLVDISPINFO*) pNotify)->item.iItem ];
-	
+
 	if ( ((NMLVDISPINFO*) pNotify)->item.mask & LVIF_STATE )
 	{
 		((NMLVDISPINFO*) pNotify)->item.state &= (~LVIS_SELECTED & ~LVIS_FOCUSED);
-		if ( pItem->nState & LDVI_SELECTED ) 
+		if ( pItem->nState & LDVI_SELECTED )
 			((NMLVDISPINFO*) pNotify)->item.state |= (LVIS_SELECTED | LVIS_FOCUSED);
 	}
 
@@ -508,7 +506,7 @@ void CLibraryDetailView::OnGetDispInfoW(NMHDR* pNotify, LRESULT* pResult)
 		}
 		if ( pItem->nCookie != m_nListCookie ) return;
 	}
-	
+
 	if ( ((NMLVDISPINFO*) pNotify)->item.mask & LVIF_TEXT )
 	{
 		if ( ((NMLVDISPINFO*) pNotify)->item.iSubItem < pItem->pText->GetSize() )
@@ -518,7 +516,7 @@ void CLibraryDetailView::OnGetDispInfoW(NMHDR* pNotify, LRESULT* pResult)
 				((NMLVDISPINFO*) pNotify)->item.cchTextMax );
 		}
 	}
-	
+
 	if ( ((NMLVDISPINFO*) pNotify)->item.mask & LVIF_IMAGE )
 	{
 		((NMLVDISPINFO*) pNotify)->item.iImage = pItem->nIcon;
@@ -528,15 +526,15 @@ void CLibraryDetailView::OnGetDispInfoW(NMHDR* pNotify, LRESULT* pResult)
 void CLibraryDetailView::OnGetDispInfoA(NMHDR* pNotify, LRESULT* pResult)
 {
 	*pResult = 0;
-	
+
 	LDVITEM* pItem = &m_pList[ ((NMLVDISPINFO*) pNotify)->item.iItem ];
-	
+
 	if ( ((NMLVDISPINFO*) pNotify)->item.mask & LVIF_STATE )
 	{
 		((NMLVDISPINFO*) pNotify)->item.state &= (~LVIS_SELECTED & ~LVIS_FOCUSED);
 		if ( pItem->nState & LDVI_SELECTED ) ((NMLVDISPINFO*) pNotify)->item.state |= (LVIS_SELECTED | LVIS_FOCUSED);
 	}
-	
+
 	if ( pItem->nCookie != m_nListCookie )
 	{
 		{
@@ -546,7 +544,7 @@ void CLibraryDetailView::OnGetDispInfoA(NMHDR* pNotify, LRESULT* pResult)
 		}
 		if ( pItem->nCookie != m_nListCookie ) return;
 	}
-	
+
 	if ( ((NMLVDISPINFO*) pNotify)->item.mask & LVIF_TEXT )
 	{
 		if ( ((NMLVDISPINFO*) pNotify)->item.iSubItem < pItem->pText->GetSize() )
@@ -557,7 +555,7 @@ void CLibraryDetailView::OnGetDispInfoA(NMHDR* pNotify, LRESULT* pResult)
 				((NMLVDISPINFO*) pNotify)->item.cchTextMax, NULL, NULL );
 		}
 	}
-	
+
 	if ( ((NMLVDISPINFO*) pNotify)->item.mask & LVIF_IMAGE )
 	{
 		((NMLVDISPINFO*) pNotify)->item.iImage = pItem->nIcon;
@@ -572,11 +570,11 @@ CLibraryDetailView* CLibraryDetailView::m_pThis = NULL;
 void CLibraryDetailView::SortItems(int nColumn)
 {
 	GET_LIST();
-	
+
 	CLiveList::Sort( pList, nColumn );
 	nColumn = ( m_nStyle == LVS_REPORT ) ? (int)GetWindowLongPtr( GetSafeHwnd(), GWLP_USERDATA ) : -1;
 
-	if ( nColumn != 0 ) 
+	if ( nColumn != 0 )
 	{
 		m_nSortColumn	= abs( nColumn ) - 1;
 		m_bSortFlip		= nColumn < 0;
@@ -675,7 +673,7 @@ int CLibraryDetailView::ListCompare(LPCVOID pA, LPCVOID pB)
 				}
 			}
 		}
-	
+
 		if ( nTest != 0 )
 			break;
 
@@ -706,7 +704,7 @@ void CLibraryDetailView::CacheSelection()
 {
 	GET_LIST();
 	SelClear( FALSE );
-	
+
 	for ( int nItem = -1 ; ( nItem = pList->GetNextItem( nItem, LVNI_SELECTED ) ) >= 0 ; )
 	{
 		SelAdd( (DWORD)pList->GetItemData( nItem ), FALSE );
@@ -790,7 +788,7 @@ void CLibraryDetailView::OnBeginLabelEdit(NMHDR* /*pNotify*/, LRESULT* pResult)
 void CLibraryDetailView::OnEndLabelEditW(NMHDR* pNotify, LRESULT* pResult)
 {
 	*pResult = 0;
-	
+
 	if ( ((LV_DISPINFO*) pNotify)->item.pszText && *(((LV_DISPINFO*) pNotify)->item.pszText) )
 	{
 		CSingleLock oLock( &Library.m_pSection, TRUE );
@@ -803,7 +801,7 @@ void CLibraryDetailView::OnEndLabelEditW(NMHDR* pNotify, LRESULT* pResult)
 			*pResult = pFile->Rename( strName );
 			Library.Update();
 			oLock.Unlock();
-			
+
 			if ( *pResult == FALSE )
 			{
 				CString strFormat, strMessage, strError = GetErrorString();
@@ -814,14 +812,14 @@ void CLibraryDetailView::OnEndLabelEditW(NMHDR* pNotify, LRESULT* pResult)
 			}
 		}
 	}
-	
+
 	m_bEditing = FALSE;
 }
 
 void CLibraryDetailView::OnEndLabelEditA(NMHDR* pNotify, LRESULT* pResult)
 {
 	*pResult = 0;
-	
+
 	if ( ((LV_DISPINFO*) pNotify)->item.pszText && *(((LV_DISPINFO*) pNotify)->item.pszText) )
 	{
 		CSingleLock oLock( &Library.m_pSection, TRUE );
@@ -834,7 +832,7 @@ void CLibraryDetailView::OnEndLabelEditA(NMHDR* pNotify, LRESULT* pResult)
 			*pResult = pFile->Rename( strName );
 			Library.Update();
 			oLock.Unlock();
-			
+
 			if ( *pResult == FALSE )
 			{
 				CString strFormat, strMessage, strError = GetErrorString();
@@ -845,14 +843,14 @@ void CLibraryDetailView::OnEndLabelEditA(NMHDR* pNotify, LRESULT* pResult)
 			}
 		}
 	}
-	
+
 	m_bEditing = FALSE;
 }
 
 void CLibraryDetailView::OnFindItemW(NMHDR* pNotify, LRESULT* pResult)
 {
 	CW2T pszFind( (LPCWSTR)((NMLVFINDITEM*) pNotify)->lvfi.psz );
-	
+
 	GET_LIST();
 	CQuickLock oLock( Library.m_pSection );
 
@@ -881,7 +879,7 @@ void CLibraryDetailView::OnFindItemW(NMHDR* pNotify, LRESULT* pResult)
 void CLibraryDetailView::OnFindItemA(NMHDR* pNotify, LRESULT* pResult)
 {
 	CA2T pszFind( (LPCSTR)((NMLVFINDITEM*) pNotify)->lvfi.psz );
-	
+
 	GET_LIST();
 	CQuickLock oLock( Library.m_pSection );
 
@@ -949,7 +947,7 @@ void CLibraryDetailView::OnDblClk(NMHDR* /*pNotify*/, LRESULT* pResult)
 /////////////////////////////////////////////////////////////////////////////
 // CLibraryDetailView column context menu
 
-void CLibraryDetailView::OnContextMenu(CWnd* pWnd, CPoint point) 
+void CLibraryDetailView::OnContextMenu(CWnd* pWnd, CPoint point)
 {
 	CRect rcHeader;
 
@@ -965,7 +963,7 @@ void CLibraryDetailView::OnContextMenu(CWnd* pWnd, CPoint point)
 	}
 
 	CMenu* pMenu = CSchemaColumnsDlg::BuildColumnMenu( m_pSchema, &m_pColumns );
-	
+
 	pMenu->AppendMenu( MF_SEPARATOR, ID_SEPARATOR, (LPCTSTR)NULL );
 	CString strSchemas;
 	LoadString( strSchemas, IDS_SCHEMAS );
@@ -974,7 +972,7 @@ void CLibraryDetailView::OnContextMenu(CWnd* pWnd, CPoint point)
 	m_pCoolMenu = new CCoolMenu();
 	m_pCoolMenu->AddMenu( pMenu, TRUE );
 	m_pCoolMenu->SetWatermark( Skin.GetWatermark( _T("CCoolMenu") ) );
-	
+
 	UINT nCmd = pMenu->TrackPopupMenu( TPM_LEFTALIGN|TPM_LEFTBUTTON|TPM_RIGHTBUTTON|
 		TPM_RETURNCMD, point.x, point.y, this );
 
@@ -1032,7 +1030,7 @@ HBITMAP CLibraryDetailView::CreateDragImage(const CPoint& ptMouse, CPoint& ptOff
 /////////////////////////////////////////////////////////////////////////////
 // CLibraryDetailView command handlers
 
-void CLibraryDetailView::OnUpdateLibraryRename(CCmdUI* pCmdUI) 
+void CLibraryDetailView::OnUpdateLibraryRename(CCmdUI* pCmdUI)
 {
 	if ( m_bGhostFolder )
 		pCmdUI->Enable( FALSE );
@@ -1040,18 +1038,18 @@ void CLibraryDetailView::OnUpdateLibraryRename(CCmdUI* pCmdUI)
 		pCmdUI->Enable( GetSelectedCount() == 1 );
 }
 
-void CLibraryDetailView::OnLibraryRename() 
+void CLibraryDetailView::OnLibraryRename()
 {
 	int nItem = ListView_GetNextItem( GetSafeHwnd(), -1, LVNI_SELECTED );
 	if ( nItem >= 0 ) ListView_EditLabel( GetSafeHwnd(), nItem );
 }
 
-void CLibraryDetailView::OnUpdateLibraryColumns(CCmdUI* pCmdUI) 
+void CLibraryDetailView::OnUpdateLibraryColumns(CCmdUI* pCmdUI)
 {
 	pCmdUI->Enable( m_nStyle == LVS_REPORT );
 }
 
-void CLibraryDetailView::OnLibraryColumns() 
+void CLibraryDetailView::OnLibraryColumns()
 {
 	CSchemaColumnsDlg dlg;
 
@@ -1059,7 +1057,7 @@ void CLibraryDetailView::OnLibraryColumns()
 	dlg.m_pColumns.AddTail( &m_pColumns );
 
 	if ( dlg.DoModal() != IDOK ) return;
-	
+
 	if ( Settings.Library.FilterURI.IsEmpty() )
 	{
 		Settings.Library.SchemaURI.Empty();
