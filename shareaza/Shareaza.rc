@@ -171,7 +171,7 @@ BEGIN
             VALUE "FileDescription", "Shareaza Ultimate File Sharing"
             VALUE "FileVersion", "2, 4, 0, 2"
             VALUE "InternalName", "Shareaza"
-            VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2002-2008. All rights reserved."
+            VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2002-2009. All rights reserved."
             VALUE "OriginalFilename", "Shareaza.exe"
             VALUE "ProductName", "Shareaza"
             VALUE "ProductVersion", "2, 4, 0, 2"
