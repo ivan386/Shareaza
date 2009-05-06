@@ -73,12 +73,13 @@
 
 #endif
 
-// Target features available from Windows XP onwards.
-//	To show features that need guards for Windows 2000 compatibility use:
+// Target features available from Windows Vista onwards.
+//	To show features that need guards for Windows 2000/XP compatibility use:
 //	#define NTDDI_VERSION	NTDDI_WIN2K
 //	#define _WIN32_WINNT	0x0500
-#define NTDDI_VERSION	NTDDI_LONGHORN	// Minimum build target
-#include <sdkddkver.h>					// Setup versioning for windows SDK/DDK
+#define NTDDI_VERSION	NTDDI_VISTA	// Minimum build target
+#define _WIN32_WINNT	0x0600		// Vista, 2008
+#include <sdkddkver.h>				// Setup versioning for windows SDK/DDK
 
 // Add defines missed/messed up when Microsoft converted to NTDDI macros
 #define WINXP			0x05010000		// rpcdce.h, rpcdcep.h
@@ -142,7 +143,11 @@
 // Work-around for Microsoft double declaration
 #define _interlockedbittestandset _ms_set
 #define _interlockedbittestandreset _ms_reset
+#define _interlockedbittestandset64 _ms_set64
+#define _interlockedbittestandreset64 _ms_reset64
 #include <intrin.h>
+#undef _interlockedbittestandset
+#undef _interlockedbittestandreset
 #undef _interlockedbittestandset
 #undef _interlockedbittestandreset
 
