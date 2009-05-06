@@ -1,7 +1,7 @@
 //
 // QueryHashMaster.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -101,7 +101,7 @@ void CQueryHashMaster::Remove(CQueryHashTable* pTable)
 {
 	ASSERT( pTable != NULL );
 	if ( pTable->m_pGroup == NULL ) return;
-	
+
 	CQueryHashGroup* pGroup = pTable->m_pGroup;
 	pGroup->Remove( pTable );
 
@@ -132,15 +132,12 @@ void CQueryHashMaster::Build()
 		if ( tNow - m_nCookie < 20000 ) return;
 	}
 
-	{
-		CSingleLock oLock( &Library.m_pSection );
-		if ( !oLock.Lock( 500 ) ) return;
-		CQueryHashTable* pLocalTable = LibraryDictionary.GetHashTable();
-		if ( pLocalTable == NULL ) return;
+	CSingleLock oLock( &Library.m_pSection );
+	if ( !oLock.Lock( 500 ) )
+		return;
 
-		Clear();
-		Merge( pLocalTable );
-	}
+	Clear();
+	Merge( LibraryDictionary.GetHashTable() );
 
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
@@ -153,7 +150,7 @@ void CQueryHashMaster::Build()
 		for ( POSITION pos = Downloads.GetIterator() ; pos ; )
 		{
 			CDownload* pDownload = Downloads.GetNext( pos );
-			
+
 			if ( pDownload->m_oSHA1 )
 			{
 				AddExactString( pDownload->m_oSHA1.toUrn() );
@@ -166,7 +163,7 @@ void CQueryHashMaster::Build()
 
 			if ( pDownload->m_oED2K )
 			{
-                AddExactString( pDownload->m_oED2K.toUrn() );
+				AddExactString( pDownload->m_oED2K.toUrn() );
 			}
 
 			if ( pDownload->m_oMD5 )

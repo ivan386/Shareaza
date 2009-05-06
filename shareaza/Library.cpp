@@ -95,7 +95,7 @@ void CLibrary::AddFile(CLibraryFile* pFile)
 
 	if ( pFile->m_oSHA1 )
 	{
-		LibraryDictionary.Add( pFile );
+		LibraryDictionary.AddFile( *pFile );
 	}
 
 	if ( pFile->IsAvailable() )
@@ -130,7 +130,7 @@ void CLibrary::RemoveFile(CLibraryFile* pFile)
 	if ( pFile->m_nIndex )
 	{
 		LibraryBuilder.Remove( pFile );
-		LibraryDictionary.Remove( pFile );
+		LibraryDictionary.RemoveFile( *pFile );
 	}
 }
 
@@ -219,17 +219,17 @@ void CLibrary::CheckDuplicates(LPCTSTR pszMD5Hash)
 //////////////////////////////////////////////////////////////////////
 // CLibrary search
 
-CList< CLibraryFile* >* CLibrary::Search(CQuerySearch* pSearch, int nMaximum, BOOL bLocal, BOOL bAvailableOnly)
+CList< const CLibraryFile* >* CLibrary::Search(CQuerySearch* pSearch, int nMaximum, bool bLocal, bool bAvailableOnly)
 {
 	CSingleLock oLock( &m_pSection );
 
 	if ( !oLock.Lock( 50 ) ) return NULL;
 
-	CList< CLibraryFile* >* pHits = LibraryMaps.Search( pSearch, nMaximum, bLocal, bAvailableOnly );
+	CList< const CLibraryFile* >* pHits = LibraryMaps.Search( pSearch, nMaximum, bLocal, bAvailableOnly );
 
 	if ( pHits == NULL && pSearch != NULL )
 	{
-		pHits = LibraryDictionary.Search( pSearch, nMaximum, bLocal, bAvailableOnly );
+		pHits = LibraryDictionary.Search( *pSearch, nMaximum, bLocal, bAvailableOnly );
 	}
 
 	return pHits;

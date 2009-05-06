@@ -41,6 +41,17 @@ static char THIS_FILE[]=__FILE__;
 CChatWindows ChatWindows;
 
 //////////////////////////////////////////////////////////////////////
+// CChatWindows construction
+
+CChatWindows::CChatWindows()
+{
+}
+
+CChatWindows::~CChatWindows()
+{
+}
+
+//////////////////////////////////////////////////////////////////////
 // CChatWindows list access
 
 POSITION CChatWindows::GetIterator() const
@@ -61,14 +72,14 @@ CPrivateChatFrame* CChatWindows::FindPrivate(const Hashes::Guid& oGUID)
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
 		CPrivateChatFrame* pFrame = static_cast<CPrivateChatFrame*>( GetNext( pos ) );
-		
+
 		if ( pFrame->IsKindOf( RUNTIME_CLASS(CPrivateChatFrame) ) )
 		{
 			if ( pFrame->m_pSession != NULL &&
 				validAndEqual( pFrame->m_pSession->m_oGUID, oGUID ) ) return pFrame;
 		}
 	}
-	
+
 	return NULL;
 }
 
@@ -77,7 +88,7 @@ CPrivateChatFrame* CChatWindows::FindPrivate(IN_ADDR* pAddress)
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
 		CPrivateChatFrame* pFrame = static_cast<CPrivateChatFrame*>( GetNext( pos ) );
-		
+
 		if ( pFrame->IsKindOf( RUNTIME_CLASS(CPrivateChatFrame) ) )
 		{
 			if ( pFrame->m_pSession != NULL )
@@ -85,13 +96,13 @@ CPrivateChatFrame* CChatWindows::FindPrivate(IN_ADDR* pAddress)
 				if ( pFrame->m_pSession->m_pHost.sin_addr.S_un.S_addr == pAddress->S_un.S_addr )
 					return pFrame;	// Regular chat window that matches
 				else if ( ( pFrame->m_pSession->m_bMustPush ) &&
-					( pFrame->m_pSession->m_nProtocol == PROTOCOL_ED2K ) && 
+					( pFrame->m_pSession->m_nProtocol == PROTOCOL_ED2K ) &&
 					( pFrame->m_pSession->m_nClientID == pAddress->S_un.S_addr ) )
 					return pFrame;	// ED2K Low ID chat window that matches
 			}
 		}
 	}
-	
+
 	return NULL;
 }
 
@@ -105,7 +116,7 @@ CPrivateChatFrame* CChatWindows::FindED2KFrame(SOCKADDR_IN* pAddress)
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
 		CPrivateChatFrame* pFrame = static_cast<CPrivateChatFrame*>( GetNext( pos ) );
-		
+
 		if ( pFrame->IsKindOf( RUNTIME_CLASS(CPrivateChatFrame) ) )
 		{
 			if ( ( strHighID == pFrame->m_sNick ) && ( pFrame->m_pSession == NULL ) )
@@ -121,7 +132,7 @@ CPrivateChatFrame* CChatWindows::FindED2KFrame(SOCKADDR_IN* pAddress)
 CPrivateChatFrame* CChatWindows::FindED2KFrame(DWORD nClientID, SOCKADDR_IN* pServerAddress)
 {
 	// For Low ID clients
-	
+
 	if ( ( nClientID > 0 ) && ( nClientID < 16777216 ) )  // ED2K Low ID
 	{
 		CString strLowID;
@@ -133,13 +144,13 @@ CPrivateChatFrame* CChatWindows::FindED2KFrame(DWORD nClientID, SOCKADDR_IN* pSe
 		for ( POSITION pos = GetIterator() ; pos ; )
 		{
 			CPrivateChatFrame* pFrame = static_cast<CPrivateChatFrame*>( GetNext( pos ) );
-			
+
 			if ( pFrame->IsKindOf( RUNTIME_CLASS(CPrivateChatFrame) ) )
 			{
 				if ( ( strLowID == pFrame->m_sNick ) && ( pFrame->m_pSession == NULL ) )
 				{
 					return pFrame;
-				}	
+				}
 			}
 		}
 	}
@@ -150,7 +161,7 @@ CPrivateChatFrame* CChatWindows::FindED2KFrame(DWORD nClientID, SOCKADDR_IN* pSe
 CPrivateChatFrame* CChatWindows::OpenPrivate(const Hashes::Guid& oGUID, IN_ADDR* pAddress, WORD nPort, BOOL bMustPush, PROTOCOLID nProtocol, IN_ADDR* pServerAddress, WORD nServerPort)
 {
 	SOCKADDR_IN pHost = {};
-	
+
 	pHost.sin_family	= PF_INET;
 	pHost.sin_addr		= *pAddress;
 	pHost.sin_port		= htons( nPort );
@@ -163,7 +174,7 @@ CPrivateChatFrame* CChatWindows::OpenPrivate(const Hashes::Guid& oGUID, IN_ADDR*
 	pServer.sin_family	= PF_INET;
 	pServer.sin_addr	= *pServerAddress;
 	pServer.sin_port	= htons( nServerPort );
-	
+
 	return OpenPrivate( oGUID, &pHost, bMustPush, nProtocol, &pServer );
 }
 
@@ -189,10 +200,10 @@ CPrivateChatFrame* CChatWindows::OpenPrivate(const Hashes::Guid& oGUID, SOCKADDR
 	{
 		CEDClient* pClient;
 
-		// First, check if it's a low ID user on another server. 
-		if ( bMustPush && pServer ) 
+		// First, check if it's a low ID user on another server.
+		if ( bMustPush && pServer )
 		{
-			// It's a firewalled user (Low ID). If they are using another server, we 
+			// It's a firewalled user (Low ID). If they are using another server, we
 			// can't (shouldn't) contact them. (It places a heavy load on the ed2k servers)
 			CSingleLock pLock1( &Network.m_pSection );
 			if ( ! pLock1.Lock( 250 ) ) return NULL;
@@ -201,7 +212,7 @@ CPrivateChatFrame* CChatWindows::OpenPrivate(const Hashes::Guid& oGUID, SOCKADDR
 		}
 
 		// ED2K chat is handled by the EDClient section. (Transfers)
-		// We need to find (or create) an EDClient to handle this chat session, since everything 
+		// We need to find (or create) an EDClient to handle this chat session, since everything
 		// on ed2k shares a TCP link.
 
 		// First, lock the section to prevent a problem with other threads
@@ -229,7 +240,7 @@ CPrivateChatFrame* CChatWindows::OpenPrivate(const Hashes::Guid& oGUID, SOCKADDR
 			if ( bMustPush ) pFrame = FindED2KFrame( pHost->sin_addr.S_un.S_addr, pServer );
 			else pFrame = FindED2KFrame( pHost );
 		}
-		if ( pFrame != NULL ) 
+		if ( pFrame != NULL )
 		{
 			// Open window if we found one
 			CWnd* pParent = pFrame->GetParent();
@@ -239,7 +250,7 @@ CPrivateChatFrame* CChatWindows::OpenPrivate(const Hashes::Guid& oGUID, SOCKADDR
 			// And exit
 			return pFrame;
 		}
-		// Open an empty (blank) chat frame. This is totally unnecessary- The EDClient will open 
+		// Open an empty (blank) chat frame. This is totally unnecessary- The EDClient will open
 		// one as required, but it looks better to open one here.
 		pFrame = new CPrivateChatFrame();
 		// Set name (Also used to match incoming connection)
@@ -271,15 +282,15 @@ CPrivateChatFrame* CChatWindows::OpenPrivate(const Hashes::Guid& oGUID, SOCKADDR
 
 	if ( oGUID ) pFrame = FindPrivate( oGUID );
 	if ( pFrame == NULL ) pFrame = FindPrivate( &pHost->sin_addr );
-	
+
 	if ( pFrame == NULL )
 	{
 		pFrame = new CPrivateChatFrame();
-		pFrame->Initiate( oGUID, pHost, bMustPush );	
+		pFrame->Initiate( oGUID, pHost, bMustPush );
 	}
 
 	pFrame->PostMessage( WM_COMMAND, ID_CHAT_CONNECT );
-	
+
 	CWnd* pParent = pFrame->GetParent();
 	if ( pParent->IsIconic() ) pParent->ShowWindow( SW_SHOWNORMAL );
 	pParent->BringWindowToTop();
@@ -300,4 +311,3 @@ void CChatWindows::Remove(CChatFrame* pFrame)
 {
 	if ( POSITION pos = m_pList.Find( pFrame ) ) m_pList.RemoveAt( pos );
 }
-

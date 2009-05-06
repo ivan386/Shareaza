@@ -66,38 +66,38 @@ END_INTERFACE_MAP()
 // CLibraryFile construction
 
 CLibraryFile::CLibraryFile(CLibraryFolder* pFolder, LPCTSTR pszName) :
-	m_pNextSHA1( NULL ),
-	m_pNextTiger( NULL ),
-	m_pNextED2K( NULL ),
-	m_pNextBTH( NULL ),
-	m_pNextMD5( NULL ),
-	m_nScanCookie( 0 ),
-	m_nUpdateCookie( 0 ),
-	m_nSelectCookie( 0 ),
-	m_nListCookie( 0 ),
-	m_pFolder( pFolder ),
-	m_nIndex( 0 ),
-	m_bShared( TRI_UNKNOWN ),
-	m_nVirtualBase( 0 ),
-	m_nVirtualSize( 0 ),
-	m_bVerify( TRI_UNKNOWN ),
-	m_pSchema( NULL ),
-	m_pMetadata( NULL ),
-	m_bMetadataAuto( FALSE ),
-	m_bMetadataModified( FALSE ),
-	m_nRating( 0 ),
-	m_nHitsToday( 0 ),
-	m_nHitsTotal( 0 ),
-	m_nUploadsToday( 0 ),
-	m_nUploadsTotal( 0 ),
-	m_bCachedPreview( FALSE ),
-	m_bBogus( FALSE ),
-	m_nSearchCookie( 0 ),
-	m_nSearchWords( 0 ),
-	m_pNextHit( NULL ),
-	m_nCollIndex( 0 ),
-	m_nIcon16( -1 ),
-	m_bNewFile( FALSE )
+	m_pNextSHA1			( NULL )
+,	m_pNextTiger		( NULL )
+,	m_pNextED2K			( NULL )
+,	m_pNextBTH			( NULL )
+,	m_pNextMD5			( NULL )
+,	m_nScanCookie		( 0ul )
+,	m_nUpdateCookie		( 0ul )
+,	m_nSelectCookie		( 0ul )
+,	m_nListCookie		( 0ul )
+,	m_pFolder			( pFolder )
+,	m_nIndex			( 0ul )
+,	m_bShared			( TRI_UNKNOWN )
+,	m_nVirtualBase		( 0ull )
+,	m_nVirtualSize		( 0ull )
+,	m_bVerify			( TRI_UNKNOWN )
+,	m_pSchema			( NULL )
+,	m_pMetadata			( NULL )
+,	m_bMetadataAuto		( FALSE )
+,	m_bMetadataModified	( FALSE )
+,	m_nRating			( 0 )
+,	m_nUploadsToday		( 0ul )
+,	m_nUploadsTotal		( 0ul )
+,	m_bCachedPreview	( FALSE )
+,	m_bBogus			( FALSE )
+,	m_nHitsToday		( 0ul )
+,	m_nHitsTotal		( 0ul )
+,	m_nSearchCookie		( 0ul )
+,	m_nSearchWords		( 0ul )
+,	m_pNextHit			( NULL )
+,	m_nCollIndex		( 0ul )
+,	m_nIcon16			( -1 )
+,	m_bNewFile			( FALSE )
 {
 	ZeroMemory( &m_pTime, sizeof(m_pTime) );
 	ZeroMemory( &m_pMetadataTime, sizeof(m_pMetadataTime) );

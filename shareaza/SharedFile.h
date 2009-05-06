@@ -40,9 +40,9 @@ class CLibraryFile : public CShareazaFile
 public:
 	CLibraryFile(CLibraryFolder* pFolder, LPCTSTR pszName = NULL);
 	virtual ~CLibraryFile();
-	
+
 	DECLARE_DYNAMIC(CLibraryFile)
-	
+
 // Attributes
 public:
 	CLibraryFile*	m_pNextSHA1;
@@ -73,21 +73,23 @@ public:
 	CString			m_sComments;
 	CString			m_sShareTags;
 public:
-	DWORD			m_nHitsToday;
-	DWORD			m_nHitsTotal;
 	DWORD			m_nUploadsToday;
 	DWORD			m_nUploadsTotal;
 	BOOL			m_bCachedPreview;
 	BOOL			m_bBogus;
 	CList< CSharedSource* > m_pSources;
-public:
-	DWORD			m_nSearchCookie;
-	DWORD			m_nSearchWords;
-	CLibraryFile*	m_pNextHit;
-	DWORD			m_nCollIndex;
+
+	// Search helper variables
+	mutable DWORD				m_nHitsToday;
+	mutable DWORD				m_nHitsTotal;
+	mutable DWORD				m_nSearchCookie;
+	mutable DWORD				m_nSearchWords;
+	mutable const CLibraryFile*	m_pNextHit;
+	DWORD						m_nCollIndex;
+
 	int				m_nIcon16;
 	BOOL			m_bNewFile;
-	
+
 // Operations
 public:
 	CString			GetPath() const;
@@ -122,14 +124,14 @@ protected:
 	BOOL			ThreadScan(CSingleLock& pLock, DWORD nScanCookie, QWORD nSize, FILETIME* pTime/*, LPCTSTR pszMetaData*/);
 	void			OnDelete(BOOL bDeleteGhost = FALSE, TRISTATE bCreateGhost = TRI_UNKNOWN);
 	void			Ghost();
-    BOOL			OnVerifyDownload(
+	BOOL			OnVerifyDownload(
 						const Hashes::Sha1ManagedHash& oSHA1,
 						const Hashes::TigerManagedHash& oTiger,
 						const Hashes::Ed2kManagedHash& oED2K,
 						const Hashes::BtManagedHash& oBTH,
 						const Hashes::Md5ManagedHash& oMD5,
 						LPCTSTR pszSources);
-	
+
 // Inlines
 public:
 	inline CString GetNameLC() const
@@ -142,13 +144,13 @@ public:
 	{
 		return ( m_nVirtualSize ) ? m_nVirtualBase : 0;
 	}
-	
+
 	inline QWORD GetSize() const
 	{
 		return ( m_nVirtualSize ) ? m_nVirtualSize :
 			( ( m_nSize == SIZE_UNKNOWN ) ? 0 : m_nSize );
 	}
-	
+
 // Friends
 public:
 	friend class CLibrary;
@@ -156,7 +158,7 @@ public:
 	friend class CLibraryMaps;
 	friend class CLibraryRecent;
 	friend class CDeleteFileDlg;
-	
+
 // Automation
 protected:
 	BEGIN_INTERFACE_PART(LibraryFile, ILibraryFile)
@@ -185,9 +187,9 @@ protected:
 		STDMETHOD(Move)(BSTR sNewPath);
 		STDMETHOD(MergeMetadata)(ISXMLElement* pXML, VARIANT_BOOL bOverwrite, VARIANT_BOOL* pbValue);
 	END_INTERFACE_PART(LibraryFile)
-	
+
 	DECLARE_INTERFACE_MAP()
-	
+
 };
 
 

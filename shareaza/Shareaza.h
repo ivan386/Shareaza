@@ -281,93 +281,12 @@ struct CompareNums
 	}
 };
 
-inline bool IsCharacter(TCHAR nChar)
-{
-	WORD nCharType = 0;
-
-	if ( GetStringTypeExW( LOCALE_NEUTRAL, CT_CTYPE3, &nChar, 1, &nCharType ) )
-		return ( ( nCharType & C3_ALPHA ) == C3_ALPHA ||
-				 ( ( nCharType & C3_KATAKANA ) == C3_KATAKANA ||
-				   ( nCharType & C3_HIRAGANA ) == C3_HIRAGANA ) &&
-				   !( ( nCharType & C3_SYMBOL ) == C3_SYMBOL )  ||
-				 ( nCharType & C3_IDEOGRAPH ) == C3_IDEOGRAPH ||
-				 _istdigit( nChar ) );
-
-	return false;
-}
-
-inline bool IsHiragana(TCHAR nChar)
-{
-	WORD nCharType = 0;
-
-	if ( GetStringTypeExW( LOCALE_NEUTRAL, CT_CTYPE3, &nChar, 1, &nCharType ) )
-		return ( ( nCharType & C3_HIRAGANA ) == C3_HIRAGANA );
-	return false;
-}
-
-inline bool IsKatakana(TCHAR nChar)
-{
-	WORD nCharType = 0;
-
-	if ( GetStringTypeExW( LOCALE_NEUTRAL, CT_CTYPE3, &nChar, 1, &nCharType ) )
-		return ( ( nCharType & C3_KATAKANA ) == C3_KATAKANA );
-	return false;
-}
-
-inline bool IsKanji(TCHAR nChar)
-{
-	WORD nCharType = 0;
-
-	if ( GetStringTypeExW( LOCALE_NEUTRAL, CT_CTYPE3, &nChar, 1, &nCharType ) )
-		return ( ( nCharType & C3_IDEOGRAPH ) == C3_IDEOGRAPH );
-	return false;
-}
-
-inline bool IsWord(LPCTSTR pszString, size_t nStart, size_t nLength)
-{
-	for ( pszString += nStart ; *pszString && nLength ; pszString++, nLength-- )
-	{
-		if ( _istdigit( *pszString ) ) return false;
-	}
-	return true;
-}
-
-inline bool IsHasDigit(LPCTSTR pszString, size_t nStart, size_t nLength)
-{
-	for ( pszString += nStart ; *pszString && nLength ; pszString++, nLength-- )
-	{
-		if ( _istdigit( *pszString ) ) return true;
-	}
-	return false;
-}
-
-inline bool IsNumeric(LPCTSTR pszString, size_t nStart, size_t nLength)
-{
-	bool bDigit = true;
-	for ( pszString += nStart ; *pszString && nLength ; pszString++, nLength-- )
-	{
-		if ( !_istdigit( *pszString ) ) bDigit = false;
-	}
-	return bDigit;
-}
-
-inline void IsType(LPCTSTR pszString, size_t nStart, size_t nLength, bool& bWord, bool& bDigit, bool& bMix)
-{
-	bWord = false;
-	bDigit = false;
-	for ( pszString += nStart ; *pszString && nLength ; pszString++, nLength-- )
-	{
-		if ( _istdigit( *pszString ) ) bDigit = true;
-		else if ( IsCharacter( *pszString ) ) bWord = true;
-	}
-
-	bMix = bWord && bDigit;
-	if ( bMix )
-	{
-		bWord = false;
-		bDigit = false;
-	}
-}
+const bool IsCharacter(WCHAR nChar);
+const bool IsHiragana(WCHAR nChar);
+const bool IsKatakana(WCHAR nChar);
+const bool IsKanji(WCHAR nChar);
+const bool IsWord(LPCTSTR pszString, size_t nStart, size_t nLength);
+void IsType(LPCTSTR pszString, size_t nStart, size_t nLength, bool& bWord, bool& bDigit, bool& bMix);
 
 // Use with whole numbers only
 template <typename T>

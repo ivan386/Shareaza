@@ -1,7 +1,7 @@
 //
 // DlgURLAction.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -358,7 +358,7 @@ void CURLActionDlg::OnUrlDownload()
 					strMessage.Format( strFormat, (LPCTSTR)pFile->m_sName );
 					oLock.Unlock();
 
-					INT_PTR nMBOX = AfxMessageBox( strMessage, MB_ICONINFORMATION|MB_YESNOCANCEL|MB_DEFBUTTON2 );
+					INT_PTR nMBOX( AfxMessageBox( strMessage, MB_ICONINFORMATION|MB_YESNOCANCEL|MB_DEFBUTTON2 ) );
 					if ( nMBOX == IDCANCEL )
 						return;
 					if ( nMBOX == IDNO )

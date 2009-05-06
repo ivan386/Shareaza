@@ -229,7 +229,7 @@ void CUploadsWnd::OnContextMenu(CWnd* /*pWnd*/, CPoint point)
 			return;
 		}
 	}
-	
+
 	if ( ( pQueue == NULL ) || ( Settings.General.GUIMode == GUI_BASIC ) ||		//If we're not pointing at a queue, or in basic mode
 		( pQueue == UploadQueues.m_pHistoryQueue ) || ( pQueue == UploadQueues.m_pTorrentQueue ) )	//Or pointing at a pre-defined queue
 		Skin.TrackPopupMenu( _T("CUploadsWnd.Nothing"), point, ID_UPLOADS_HELP );
@@ -307,7 +307,7 @@ void CUploadsWnd::Prepare()
 			if ( CUploadTransfer* pTransfer = pFile->GetActive() )
 			{
 				m_bSelUpload = TRUE;
-				
+
 				if ( pTransfer->m_bClientExtended )
 				{
 					m_bSelChat = TRUE;
@@ -371,7 +371,7 @@ void CUploadsWnd::OnUploadsDisconnect()
 				LoadString( strFormat, IDS_UPLOAD_CANCEL_ED2K );
 				strMessage.Format( strFormat, (LPCTSTR)pUpload->m_sFileName );
 				pLock.Unlock();
-				INT_PTR nResp = AfxMessageBox( strMessage, MB_ICONQUESTION|MB_YESNOCANCEL|MB_DEFBUTTON2 );
+				INT_PTR nResp( AfxMessageBox( strMessage, MB_ICONQUESTION|MB_YESNOCANCEL|MB_DEFBUTTON2 ) );
 				pLock.Lock();
 				if ( nResp == IDCANCEL )
 					break;
@@ -436,7 +436,7 @@ void CUploadsWnd::OnUploadsClear()
 				LoadString( strFormat, IDS_UPLOAD_CANCEL_ED2K );
 				strMessage.Format( strFormat, (LPCTSTR)pUpload->m_sFileName );
 				pLock.Unlock();
-				INT_PTR nResp = AfxMessageBox( strMessage, MB_ICONQUESTION|MB_YESNOCANCEL|MB_DEFBUTTON2 );
+				INT_PTR nResp( AfxMessageBox( strMessage, MB_ICONQUESTION|MB_YESNOCANCEL|MB_DEFBUTTON2 ) );
 				pLock.Lock();
 				if ( nResp == IDCANCEL )
 					break;

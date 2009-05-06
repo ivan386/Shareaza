@@ -1,7 +1,7 @@
 //
 // LibraryMaps.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -75,7 +75,7 @@ protected:
 	void			OnFileAdd(CLibraryFile* pFile);
 	void			OnFileRemove(CLibraryFile* pFile);
 	void			CullDeletedFiles(CLibraryFile* pMatch);
-	CList< CLibraryFile* >* Search(CQuerySearch* pSearch, int nMaximum, BOOL bLocal, BOOL bAvailableOnly);
+	CList< const CLibraryFile* >* Search(CQuerySearch* pSearch, int nMaximum, BOOL bLocal, BOOL bAvailableOnly);
 	BOOL			CheckFileAttributes(CLibraryFile* pFile, bool bMinSize, bool bMaxSize, QWORD nMinSize, QWORD nMaxSize, BOOL bSharedOnly, BOOL bAvailableOnly) const;
 	void			Serialize1(CArchive& ar, int nVersion);
 	void			Serialize2(CArchive& ar, int nVersion);

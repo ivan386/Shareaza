@@ -26,20 +26,28 @@
 
 class CPanelWnd : public CChildWnd
 {
+// Construction
 public:
 	CPanelWnd(BOOL bTabMode = FALSE, BOOL bGroupMode = FALSE);
 
 	DECLARE_DYNCREATE(CPanelWnd)
 
+// Attributes
 protected:
 	CRect	m_rcClose;
 	BOOL	m_bPanelClose;
 
+// Operations
+protected:
 	void	PaintCaption(CDC& dc);
 	void	PanelSizeLoop();
 
+// Overrides
+protected:
 	virtual void	OnSkinChange();
 
+// Implementation
+protected:
 	afx_msg void OnNcPaint();
 	afx_msg void OnNcCalcSize(BOOL bCalcValidRects, NCCALCSIZE_PARAMS FAR* lpncsp);
 	afx_msg LRESULT OnNcHitTest(CPoint point);

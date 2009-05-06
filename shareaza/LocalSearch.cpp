@@ -152,12 +152,12 @@ INT_PTR CLocalSearch::ExecuteSharedFiles(INT_PTR nMaximum)
 		return 0;
 	}
 
-	CList< CLibraryFile* >* pFiles = Library.Search( m_pSearch, static_cast< int >( nMaximum ), FALSE,
+	CList< const CLibraryFile* >* pFiles = Library.Search( m_pSearch, static_cast< int >( nMaximum ), FALSE,
 		// Ghost files only for G2
 		m_nProtocol != PROTOCOL_G2 );
 
-	CList< CLibraryFile* >* pFilesCopy = pFiles;
-	CList< CLibraryFile* > pExcludedFiles;
+	CList< const CLibraryFile* >* pFilesCopy = pFiles;
+	CList< const CLibraryFile* > pExcludedFiles;
 
 	if ( pFiles == NULL )
 		return 0;
@@ -186,7 +186,7 @@ INT_PTR CLocalSearch::ExecuteSharedFiles(INT_PTR nMaximum)
 		if ( nHitsTested - nHitsBad < nInThisPacket )
 			nInThisPacket = nHitsTested - nHitsBad;
 
-		nHits -= nHitsBad;		
+		nHits -= nHitsBad;
 		if ( nInThisPacket == 0 )
 		{
 			while ( nHitsTested-- )
@@ -250,7 +250,7 @@ bool CLocalSearch::IsValidForHit(CLibraryFile const * const pFile) const
 {
 	if ( m_nProtocol == PROTOCOL_G1 )
 	{
-		if ( ! Settings.Gnutella1.EnableToday ) 
+		if ( ! Settings.Gnutella1.EnableToday )
 		{
 			theApp.Message( MSG_ERROR | MSG_FACILITY_SEARCH, _T("CLocalSearch::AddHit() dropping G1 hit - G1 network not enabled") );
 			return false;
@@ -276,7 +276,7 @@ void CLocalSearch::AddHitG1(CLibraryFile const * const pFile, int nIndex)
 	{
 		m_pPacket->WriteString( pFile->m_sName );
 	}
-	
+
 	if ( pFile->m_oSHA1 )
 	{
 		CString strHash = pFile->m_oSHA1.toUrn();
@@ -332,7 +332,7 @@ bool CLocalSearch::IsValidForHitG1(CLibraryFile const * const pFile) const
 
 	// Check that a queue that can upload this file exists, and isn't insanely long.
 	// NOTE: Very CPU intensive operation!!!
-	if ( UploadQueues.QueueRank( PROTOCOL_HTTP, pFile ) > Settings.Gnutella1.HitQueueLimit ) 
+	if ( UploadQueues.QueueRank( PROTOCOL_HTTP, pFile ) > Settings.Gnutella1.HitQueueLimit )
 		return false;
 
 	// Normally this isn't a problem- the default queue length is 8 to 10, so this check (50) will
@@ -350,7 +350,7 @@ void CLocalSearch::AddHitG2(CLibraryFile const * const pFile, int /*nIndex*/)
 	CG2Packet* pPacket = static_cast< CG2Packet* >( m_pPacket );
 	DWORD nGroup = 0;
 	bool bCalculate = false;
-	do 
+	do
 	{
 		bCalculate = ! bCalculate;
 
@@ -594,10 +594,10 @@ int CLocalSearch::ExecutePartialFiles(INT_PTR nMaximum)
 {
 	ASSERT( m_nProtocol == PROTOCOL_G2 );
 	ASSERT( m_pSearch != NULL );
-	
+
 	if ( !m_pSearch->m_oTiger && !m_pSearch->m_oSHA1 &&
 		 !m_pSearch->m_oED2K && !m_pSearch->m_oBTH && !m_pSearch->m_oMD5 ) return 0;
-	
+
 	CSingleLock pLock( &Transfers.m_pSection );
 	if ( ! pLock.Lock( 50 ) ) return 0;
 
@@ -609,7 +609,7 @@ int CLocalSearch::ExecutePartialFiles(INT_PTR nMaximum)
 	{
 		CDownload* pDownload = Downloads.GetNext( pos );
 		if ( pDownload->IsShared() &&
-			( pDownload->IsTorrent() || pDownload->IsStarted() ) &&	
+			( pDownload->IsTorrent() || pDownload->IsStarted() ) &&
 			(	validAndEqual( m_pSearch->m_oTiger, pDownload->m_oTiger )
 			||	validAndEqual( m_pSearch->m_oSHA1, pDownload->m_oSHA1 )
 			||	validAndEqual( m_pSearch->m_oED2K, pDownload->m_oED2K )
@@ -641,7 +641,7 @@ void CLocalSearch::AddHit(CDownload const * const pDownload, int /*nIndex*/)
 	CG2Packet* pPacket = static_cast< CG2Packet* >( m_pPacket );
 	DWORD nGroup = 0;
 	bool bCalculate = false;
-	do 
+	do
 	{
 		bCalculate = ! bCalculate;
 
@@ -829,7 +829,7 @@ void CLocalSearch::CreatePacketG2()
 
 	pPacket->WritePacket( G2_PACKET_NODE_GUID, 16 );
 	pPacket->Write( Hashes::Guid( MyProfile.oGUID ) );
-	
+
 	//if ( Network.IsListening() )
 	{
 		pPacket->WritePacket( G2_PACKET_NODE_ADDRESS, 6 );

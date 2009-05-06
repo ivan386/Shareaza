@@ -484,9 +484,10 @@ BOOL CSkin::LoadString(CString& str, UINT nStringID) const
 		( IS_INTRESOURCE( nStringID ) && str.LoadString( nStringID ) ) )
 		return TRUE;
 
-	if ( IsWindow( (HWND)(INT_PTR)nStringID ) )
+	HWND hWnd( reinterpret_cast< HWND >( UIntToPtr( nStringID ) ) );
+	if ( IsWindow( hWnd ) )
 	{
-		CWnd::FromHandle( (HWND)(INT_PTR)nStringID )->GetWindowText( str );
+		CWnd::FromHandle( hWnd )->GetWindowText( str );
 		return TRUE;
 	}
 
@@ -663,7 +664,7 @@ BOOL CSkin::LoadMenu(CXMLElement* pXML)
 
 	if ( ! CreateMenu( pXML, pMenu->GetSafeHmenu() ) )
 		return FALSE;
-		
+
 	m_pMenus.SetAt( strName, pMenu.release() );
 
 	return TRUE;
@@ -1167,7 +1168,7 @@ BOOL CSkin::Apply(LPCTSTR pszName, CDialog* pDialog, UINT nIconID, CToolTipCtrl*
 		}
 
 		GetClassName( pWnd->GetSafeHwnd(), szClass, 3 );
-		
+
 		// Skip added banner
 		if ( _tcsnicmp( szClass, _T("St"), 3 ) == 0 &&
 			IDC_BANNER == pWnd->GetDlgCtrlID() &&
@@ -2287,7 +2288,7 @@ HBITMAP CSkin::LoadBitmap(const CString& strName)
 		if ( _stscanf( (LPCTSTR)strName + nPos + 1, _T("%lu"), &nID ) != 1 )
 			return NULL;
 
-		nPos = strName.ReverseFind( '.' );		
+		nPos = strName.ReverseFind( '.' );
 		return CImageFile::LoadBitmapFromResource( nID,
 			( nPos < 0 ? RT_BITMAP : ( (LPCTSTR)strName + nPos + 1 ) ), hInstance );
 	}

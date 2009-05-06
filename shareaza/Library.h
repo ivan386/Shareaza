@@ -81,7 +81,7 @@ protected:
 
 // General Operations
 public:
-	CList< CLibraryFile* >*	Search(CQuerySearch* pSearch, int nMaximum = 0, BOOL bLocal = FALSE, BOOL bAvailableOnly = FALSE);
+	CList< const CLibraryFile* >*	Search(CQuerySearch* pSearch, int nMaximum = 0, bool bLocal = false, bool bAvailableOnly = false);
 	void			Clear();
 	BOOL			Load();
 	BOOL			Save();

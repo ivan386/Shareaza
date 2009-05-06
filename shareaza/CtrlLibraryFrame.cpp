@@ -159,7 +159,7 @@ int CLibraryFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_wndSearch.SetFont( &theApp.m_gdiFont );
 	m_wndSearch.SetRegistryKey( _T("Search"), _T("Search.%.2i") );
 
-	if ( ! m_wndSaveOption.Create( NULL, WS_CHILD|WS_CLIPSIBLINGS|WS_TABSTOP|BS_AUTOCHECKBOX, rcTypes, &m_wndBottomDynamic, 
+	if ( ! m_wndSaveOption.Create( NULL, WS_CHILD|WS_CLIPSIBLINGS|WS_TABSTOP|BS_AUTOCHECKBOX, rcTypes, &m_wndBottomDynamic,
 		ID_SHAREMONKEY_SAVE_OPTION ) ) return -1;
 	m_wndSaveOption.EnableWindow( FALSE );
 	m_wndSaveOption.SetCheck( Settings.WebServices.ShareMonkeySaveThumbnail );
@@ -641,19 +641,19 @@ void CLibraryFrame::SetView(CLibraryView* pView, BOOL bUpdate, BOOL bUser)
 	CLibraryView* pOld = m_pView;
 	m_pView = pView;
 
-	if ( m_pView ) 
+	if ( m_pView )
 		m_pView->Create( this );
 	OnSize( 1982, 0, 0 );
 
-	if ( m_pView && ! bUpdate ) 
+	if ( m_pView && ! bUpdate )
 		m_pView->Update();
 
 	if ( pOld ) pOld->ShowWindow( SW_HIDE );
-	if ( m_pView ) 
+	if ( m_pView )
 		m_pView->ShowWindow( SW_SHOW );
 	if ( pOld ) pOld->DestroyWindow();
 
-	if ( m_pView && bUpdate ) 
+	if ( m_pView && bUpdate )
 		Update( TRUE );
 
 	m_wndViewTop.Update( m_pView );
@@ -665,7 +665,7 @@ void CLibraryFrame::SetView(CLibraryView* pView, BOOL bUpdate, BOOL bUser)
 		Skin.CreateToolBar( strBar, &m_wndViewBottom );
 		m_wndViewTip.SetOwner( m_pView );
 
-		if ( bViewSel ) 
+		if ( bViewSel )
 			m_pView->SetFocus();
 	}
 
@@ -687,15 +687,15 @@ void CLibraryFrame::SetPanel(CPanelCtrl* pPanel)
 	CPanelCtrl* pOld = m_pPanel;
 	m_pPanel = pPanel;
 
-	if ( m_pPanel ) 
+	if ( m_pPanel )
 		m_pPanel->Create( this );
 	OnSize( 1982, 0, 0 );
 
-	if ( m_pPanel ) 
+	if ( m_pPanel )
 		m_pPanel->Update();
 
 	if ( pOld ) pOld->ShowWindow( SW_HIDE );
-	if ( m_pPanel ) 
+	if ( m_pPanel )
 		m_pPanel->ShowWindow( SW_SHOW );
 	if ( pOld ) pOld->DestroyWindow();
 }
@@ -786,7 +786,7 @@ BOOL CLibraryFrame::Update(BOOL bForce, BOOL bBestView)
 	if ( nHeaderSize != m_nHeaderSize )
 	{
 		m_nHeaderSize = nHeaderSize;
-		if ( m_nHeaderSize == 0 ) 
+		if ( m_nHeaderSize == 0 )
 			m_wndHeader.ShowWindow( SW_HIDE );
 		OnSize( 1982, 0, 0 );
 	}
@@ -824,7 +824,7 @@ void CLibraryFrame::UpdatePanel(BOOL bForce)
 	m_bViewSelection = FALSE;
 
 	m_pViewSelection			= m_pView ? &m_pView->m_pSelection : &m_pViewEmpty;
-	
+
 	CLibraryTreeItem* pFolders = m_wndTree.GetFirstSelected();
 	BOOL bMetaPanelAvailable = pFolders &&
 		( pFolders->m_pSelNext == NULL ) &&
@@ -897,7 +897,7 @@ BOOL CLibraryFrame::Select(DWORD nObject)
 
 void CLibraryFrame::OnTreeSelection(NMHDR* /*pNotify*/, LRESULT* pResult)
 {
-	if ( ! m_bUpdating ) 
+	if ( ! m_bUpdating )
 		Update( TRUE, TRUE );
 	*pResult = 0;
 }
@@ -911,7 +911,7 @@ void CLibraryFrame::OnViewSelection()
 
 void CLibraryFrame::OnTimer(UINT_PTR /*nIDEvent*/)
 {
-	if ( m_bViewSelection ) 
+	if ( m_bViewSelection )
 		UpdatePanel( FALSE );
 }
 
@@ -979,7 +979,7 @@ void CLibraryFrame::OnLibraryPanel()
 	{
 		m_bPanelShow = FALSE;
 		SetDynamicBar( NULL );
-		if ( m_pView ) 
+		if ( m_pView )
 		{
 			m_pView->SendMessage( WM_METADATA );
 		}
@@ -1036,7 +1036,7 @@ void CLibraryFrame::OnToolbarEscape()
 	if ( GetFocus() == &m_wndSearch )
 	{
 		m_wndSearch.SetWindowText( _T("") );
-		if ( m_pView != NULL ) 
+		if ( m_pView != NULL )
 			m_pView->SetFocus();
 	}
 }
@@ -1061,7 +1061,7 @@ BOOL CLibraryFrame::SetDynamicBar(LPCTSTR pszName)
 		m_bDynamicBarHidden = FALSE;
 	}
 	else
-	{	
+	{
 		if ( !m_bDynamicBarHidden )
 		{
 			m_wndBottomDynamic.ShowWindow( SW_HIDE );
@@ -1106,7 +1106,7 @@ void CLibraryFrame::RunLocalSearch(auto_ptr< CQuerySearch > pSearch)
 		// We will clear it, not others as user may want to keep several folders
 		CString strFolderName;
 		int nColon = pFolder->m_pSchema->m_sTitle.Find( ':' );
-		if ( nColon >= 0 ) 
+		if ( nColon >= 0 )
 			strFolderName = pFolder->m_pSchema->m_sTitle.Mid( nColon + 1 );
 		if ( !strFolderName.IsEmpty() )
 		{
@@ -1118,7 +1118,7 @@ void CLibraryFrame::RunLocalSearch(auto_ptr< CQuerySearch > pSearch)
 			pFolder = pRoot->AddFolder( CSchema::uriSearchFolder, _T("Search Results") );
 			if ( pFolder->m_pSchema != NULL )
 			{
-				if ( !strFolderName.IsEmpty() ) 
+				if ( !strFolderName.IsEmpty() )
 					pFolder->m_sName = strFolderName;
 			}
 		}
@@ -1149,13 +1149,13 @@ void CLibraryFrame::RunLocalSearch(auto_ptr< CQuerySearch > pSearch)
 	{
 		CQuickLock oLock( Library.m_pSection );
 
-		CList< CLibraryFile* >* pFiles = Library.Search( pSearch.get(), 0, TRUE );
+		CList< const CLibraryFile* >* pFiles( Library.Search( pSearch.get(), 0, TRUE ) );
 
 		if ( pFiles != NULL )
 		{
 			for ( POSITION pos = pFiles->GetHeadPosition() ; pos ; )
 			{
-				CLibraryFile* pFile = (CLibraryFile*)pFiles->GetNext( pos );
+				const CLibraryFile* pFile( pFiles->GetNext( pos ) );
 
 				if ( Settings.Search.SchemaTypes && pSearch->m_pSchema != NULL )
 				{
@@ -1163,7 +1163,8 @@ void CLibraryFrame::RunLocalSearch(auto_ptr< CQuerySearch > pSearch)
 						pFile = NULL;
 				}
 
-				if ( pFile != NULL && pFile->IsAvailable() ) pFolder->AddFile( pFile );
+				if ( pFile != NULL && pFile->IsAvailable() )
+					pFolder->AddFile( const_cast< CLibraryFile* >( pFile ) );
 			}
 
 			delete pFiles;
