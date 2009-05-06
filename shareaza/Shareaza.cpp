@@ -207,7 +207,6 @@ CShareazaApp::CShareazaApp() :
 #ifdef _DEBUG
 	BT_InstallSehFilter();
 	BT_SetTerminate();
-	BT_SetAppName( _T( CLIENT_NAME ) );
 	BT_SetFlags( BTF_INTERCEPTSUEF | BTF_SHOWADVANCEDUI | BTF_DESCRIBEERROR |
 		BTF_DETAILEDMODE | BTF_ATTACHREPORT | BTF_EDITMAIL );
 	BT_SetSupportEMail( _T("shareaza-bugtrap@lists.sourceforge.net") );
