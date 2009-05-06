@@ -1,12 +1,9 @@
 //
 // ClassFactory.cpp
 //
-//	Date:			"$Date: $"
-//	Revision:		"$Revision: 1.0 $"
-//  Last change by:	"$Author: rolandas $"
 //	Created by:		Rolandas Rudomanskis
 //
-// Copyright (c) Shareaza Development Team, 2002-2006.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -33,7 +30,7 @@
 // CRatDVDClassFactory - IClassFactory Implementation
 //
 //  This is a fairly simple CF. We don't provide support for licensing
-//  in this sample, nor aggregation. We just create and return a new 
+//  in this sample, nor aggregation. We just create and return a new
 //  CRatDVDPlugin object.
 //
 
@@ -46,7 +43,7 @@ STDMETHODIMP CRatDVDClassFactory::QueryInterface(REFIID riid, void** ppv)
 	ODS(_T("CRatDVDClassFactory::QueryInterface\n"));
 
 	CHECK_NULL_RETURN(ppv, E_POINTER);
-	
+
 	if ( CLSID_RatDVDReader == riid )
 	{
 		*ppv = this;
@@ -62,7 +59,7 @@ STDMETHODIMP CRatDVDClassFactory::QueryInterface(REFIID riid, void** ppv)
 //
 STDMETHODIMP_(ULONG) CRatDVDClassFactory::AddRef(void)
 {
-    return ++m_cRef;
+	return ++m_cRef;
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -70,12 +67,12 @@ STDMETHODIMP_(ULONG) CRatDVDClassFactory::AddRef(void)
 //
 STDMETHODIMP_(ULONG) CRatDVDClassFactory::Release(void)
 {
-    if ( 0 != --m_cRef ) return m_cRef;
+	if ( 0 != --m_cRef ) return m_cRef;
 
 	ODS(_T("CRatDVDClassFactory delete\n"));
 
-    LockServer(FALSE);
-    return 0;
+	LockServer(FALSE);
+	return 0;
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -125,4 +122,3 @@ STDMETHODIMP CRatDVDClassFactory::LockServer(BOOL fLock)
 	if (fLock) DllAddRef();	else DllRelease();
 	return S_OK;
 }
-

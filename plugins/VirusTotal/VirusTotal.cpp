@@ -2,7 +2,6 @@
 
 #include "stdafx.h"
 #include "VirusTotal_h.h"
-#include "VirusTotal_i.c"
 
 class CVirusTotalModule : public CAtlDllModuleT< CVirusTotalModule >
 {
@@ -15,22 +14,22 @@ CVirusTotalModule _AtlModule;
 
 extern "C" BOOL WINAPI DllMain(HINSTANCE, DWORD dwReason, LPVOID lpReserved)
 {
-	return _AtlModule.DllMain( dwReason, lpReserved ); 
+	return _AtlModule.DllMain( dwReason, lpReserved );
 }
 
 STDAPI DllCanUnloadNow(void)
 {
-    return _AtlModule.DllCanUnloadNow();
+	return _AtlModule.DllCanUnloadNow();
 }
 
 STDAPI DllGetClassObject(REFCLSID rclsid, REFIID riid, LPVOID* ppv)
 {
-    return _AtlModule.DllGetClassObject(rclsid, riid, ppv);
+	return _AtlModule.DllGetClassObject(rclsid, riid, ppv);
 }
 
 STDAPI DllRegisterServer(void)
 {
-    return _AtlModule.DllRegisterServer();
+	return _AtlModule.DllRegisterServer();
 }
 
 STDAPI DllUnregisterServer(void)
@@ -40,29 +39,31 @@ STDAPI DllUnregisterServer(void)
 
 STDAPI DllInstall(BOOL bInstall, LPCWSTR pszCmdLine)
 {
-    HRESULT hr = E_FAIL;
-    static const wchar_t szUserSwitch[] = _T("user");
+	HRESULT hr = E_FAIL;
+	static const wchar_t szUserSwitch[] = _T("user");
 
-    if (pszCmdLine != NULL)
-    {
-    	if (_wcsnicmp(pszCmdLine, szUserSwitch, _countof(szUserSwitch)) == 0)
-    	{
-    		AtlSetPerUserRegistration(true);
-    	}
-    }
+	if (pszCmdLine != NULL)
+	{
+		if (_wcsnicmp(pszCmdLine, szUserSwitch, _countof(szUserSwitch)) == 0)
+		{
+#if _MFC_VER > 0x0800
+			AtlSetPerUserRegistration(true);
+#endif
+		}
+	}
 
-    if (bInstall)
-    {	
-    	hr = DllRegisterServer();
-    	if (FAILED(hr))
-    	{	
-    		DllUnregisterServer();
-    	}
-    }
-    else
-    {
-    	hr = DllUnregisterServer();
-    }
+	if (bInstall)
+	{
+		hr = DllRegisterServer();
+		if (FAILED(hr))
+		{
+			DllUnregisterServer();
+		}
+	}
+	else
+	{
+		hr = DllUnregisterServer();
+	}
 
-    return hr;
+	return hr;
 }

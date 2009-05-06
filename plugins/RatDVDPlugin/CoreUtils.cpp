@@ -1,12 +1,9 @@
 //
 // CoreUtils.cpp
 //
-//	Date:			"$Date: $"
-//	Revision:		"$Revision: 1.0 $"
-//  Last change by:	"$Author: rolandas $"
 //	Created by:		Rolandas Rudomanskis
 //
-// Copyright (c) Shareaza Development Team, 2002-2006.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -31,14 +28,14 @@
 //
 STDAPI_(LPVOID) MemAlloc(DWORD cbSize)
 {
-    CHECK_NULL_RETURN(v_hPrivateHeap, NULL);
-    return HeapAlloc(v_hPrivateHeap, 0, cbSize);
+	CHECK_NULL_RETURN(v_hPrivateHeap, NULL);
+	return HeapAlloc(v_hPrivateHeap, 0, cbSize);
 }
 
 STDAPI_(void) MemFree(LPVOID ptr)
 {
-    if ((v_hPrivateHeap) && (ptr))
-        HeapFree(v_hPrivateHeap, 0, ptr);
+	if ((v_hPrivateHeap) && (ptr))
+		HeapFree(v_hPrivateHeap, 0, ptr);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -99,20 +96,20 @@ STDAPI ConvertToMBCSEx(LPCWSTR pwszUnicodeString, DWORD cbUniLen, LPSTR pszMbcsS
 //
 STDAPI_(LPWSTR) ConvertToCoTaskMemStr(BSTR bstrString)
 {
-    LPWSTR pwsz;
-    ULONG cbLen;
+	LPWSTR pwsz;
+	ULONG cbLen;
 
 	CHECK_NULL_RETURN(bstrString, NULL);
 
-    cbLen = SysStringLen(bstrString);
-    pwsz = (LPWSTR)CoTaskMemAlloc((cbLen * 2) + sizeof(WCHAR));
-    if (pwsz)
-    {
-        memcpy(pwsz, bstrString, (cbLen * 2));
-        pwsz[cbLen] = L'\0'; // Make sure it is NULL terminated.
-    }
+	cbLen = SysStringLen(bstrString);
+	pwsz = (LPWSTR)CoTaskMemAlloc((cbLen * 2) + sizeof(WCHAR));
+	if (pwsz)
+	{
+		memcpy(pwsz, bstrString, (cbLen * 2));
+		pwsz[cbLen] = L'\0'; // Make sure it is NULL terminated.
+	}
 
-    return pwsz;
+	return pwsz;
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -145,16 +142,16 @@ STDAPI_(LPSTR) ConvertToMBCS(LPCWSTR pwszUnicodeString, WORD wCodePage)
 //
 STDAPI_(BOOL) FFindQualifiedFileName(LPCWSTR pwszFile, LPWSTR pwszPath, ULONG *pcPathIdx)
 {
-    DWORD dwRet = 0;
+	DWORD dwRet = 0;
 
 	LPWSTR lpwszFilePart = NULL;
 	SEH_TRY
 	dwRet = SearchPathW( NULL, pwszFile, NULL, MAX_PATH, pwszPath, &lpwszFilePart );
 	SEH_EXCEPT_NULL
-    if ( ( 0 == dwRet || dwRet > MAX_PATH ) ) return FALSE;
-    if ( pcPathIdx ) *pcPathIdx = (ULONG)( ( (ULONG_PTR)lpwszFilePart - (ULONG_PTR)pwszPath ) / 2 );
+	if ( ( 0 == dwRet || dwRet > MAX_PATH ) ) return FALSE;
+	if ( pcPathIdx ) *pcPathIdx = (ULONG)( ( (ULONG_PTR)lpwszFilePart - (ULONG_PTR)pwszPath ) / 2 );
 
-    return TRUE;
+	return TRUE;
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -162,20 +159,19 @@ STDAPI_(BOOL) FFindQualifiedFileName(LPCWSTR pwszFile, LPWSTR pwszPath, ULONG *p
 //
 STDAPI_(BOOL) FGetModuleFileName(HMODULE hModule, WCHAR** wzFileName)
 {
-    CHECK_NULL_RETURN(wzFileName, FALSE);
-    *wzFileName = NULL;
+	CHECK_NULL_RETURN(wzFileName, FALSE);
+	*wzFileName = NULL;
 
-    LPWSTR pwsz = (LPWSTR)MemAlloc( MAX_PATH * 2 );
-    CHECK_NULL_RETURN(pwsz, FALSE);
+	LPWSTR pwsz = (LPWSTR)MemAlloc( MAX_PATH * 2 );
+	CHECK_NULL_RETURN(pwsz, FALSE);
 
 	DWORD dw = GetModuleFileNameW( hModule, pwsz, MAX_PATH );
-    if (dw == 0)
-    {
-        MemFree(pwsz);
-        return FALSE;
-    }
+	if (dw == 0)
+	{
+		MemFree(pwsz);
+		return FALSE;
+	}
 
-    *wzFileName = pwsz;
-    return TRUE;
+	*wzFileName = pwsz;
+	return TRUE;
 }
-

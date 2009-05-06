@@ -1,12 +1,9 @@
 //
-// CRatDVDPlugin.h
+// RatDVDPlugin.h
 //
-//	Date:			"$Date: $"
-//	Revision:		"$Revision: 1.0 $"
-//  Last change by:	"$Author: rolandas $"
 //	Created by:		Rolandas Rudomanskis
 //
-// Copyright (c) Shareaza Development Team, 2002-2006.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -30,7 +27,7 @@
 
 // CRatDVDPlugin
 
-class ATL_NO_VTABLE CRatDVDPlugin : 
+class ATL_NO_VTABLE CRatDVDPlugin :
 	public CComObjectRootEx<CComMultiThreadModel>,
 	public CComCoClass<CRatDVDPlugin, &CLSID_RatDVDReader>,
 	public IImageServicePlugin,
@@ -57,7 +54,7 @@ public:
 		return S_OK;
 	}
 
-	void FinalRelease() 
+	void FinalRelease()
 	{
 	}
 
@@ -71,10 +68,10 @@ public:
 	// IImageServicePlugin Methods
 public:
 	STDMETHOD(LoadFromFile)(BSTR sFile, IMAGESERVICEDATA* pParams, SAFEARRAY** ppImage);
-	STDMETHOD(LoadFromMemory)(BSTR sType, SAFEARRAY* pMemory, 
+	STDMETHOD(LoadFromMemory)(BSTR sType, SAFEARRAY* pMemory,
 		IMAGESERVICEDATA* pParams, SAFEARRAY** ppImage);
 	STDMETHOD(SaveToFile)(BSTR sFile, IMAGESERVICEDATA* pParams, SAFEARRAY* pImage);
-	STDMETHOD(SaveToMemory)(BSTR sType, SAFEARRAY** ppMemory, 
+	STDMETHOD(SaveToMemory)(BSTR sType, SAFEARRAY** ppMemory,
 		IMAGESERVICEDATA* pParams, SAFEARRAY* pImage);
 
 private:

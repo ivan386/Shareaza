@@ -1,12 +1,9 @@
 //
-// DocumentReader.cpp
+// RatDVDReader.cpp
 //
-//	Date:			"$Date: $"
-//	Revision:		"$Revision: 1.0 $"
-//  Last change by:	"$Author: rolandas $"
 //	Created by:		Rolandas Rudomanskis
 //
-// Copyright (c) Shareaza Development Team, 2002-2006.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -28,7 +25,6 @@
 
 #include "stdafx.h"
 #include "RatDVDPlugin.h"
-#include "RatDVDReader_i.c"
 
 ////////////////////////////////////////////////////////////////////////
 // Globals for this module.
@@ -65,16 +61,16 @@ extern "C" BOOL WINAPI DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID lpRes
 		ODS(_T("DllMain - Detach\n"));
 
 		if ( v_hPrivateHeap ) HeapDestroy( v_hPrivateHeap );
-        DeleteCriticalSection( &v_csSynch );
+		DeleteCriticalSection( &v_csSynch );
 		break;
 	}
 
-    return _AtlModule.DllMain( dwReason, lpReserved ); 
+	return _AtlModule.DllMain( dwReason, lpReserved );
 }
 
 STDAPI DllCanUnloadNow(void)
 {
-    return ( _AtlModule.GetLockCount() == 0 ) ? S_OK : S_FALSE;
+	return ( _AtlModule.GetLockCount() == 0 ) ? S_OK : S_FALSE;
 }
 
 STDAPI DllRegisterServer(void)
@@ -85,8 +81,8 @@ STDAPI DllRegisterServer(void)
 	if (!FGetModuleFileName( v_hModule, &pwszModule) )
 		return E_UNEXPECTED;
 
-    // registers object, typelib and all interfaces in typelib
-    HRESULT hr = _AtlModule.DllRegisterServer();
+	// registers object, typelib and all interfaces in typelib
+	HRESULT hr = _AtlModule.DllRegisterServer();
 
 	return hr;
 }
@@ -124,9 +120,9 @@ HRESULT CRatDVDReaderModule::DllGetClassObject(REFCLSID rclsid, REFIID /*riid*/,
 
  // Get requested interface.
 	if ( SUCCEEDED(hr = pcf->QueryInterface(rclsid, ppv)) )
-        { pcf->LockServer(TRUE); }
-    else
-        { *ppv = NULL; delete pcf; }
+		{ pcf->LockServer(TRUE); }
+	else
+		{ *ppv = NULL; delete pcf; }
 
 	return hr;
 }

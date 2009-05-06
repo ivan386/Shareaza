@@ -1,9 +1,6 @@
 //
 // stdafx.cpp
 //
-//	Date:			"$Date: $"
-//	Revision:		"$Revision: 1.0 $"
-//  Last change by:	"$Author: rolandas $"
 //	Created by:		Rolandas Rudomanskis
 //
 // Copyright (c) Shareaza Development Team, 2002-2006.

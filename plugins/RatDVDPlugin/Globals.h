@@ -1,12 +1,9 @@
 //
 // Globals.h
 //
-//	Date:			"$Date: $"
-//	Revision:		"$Revision: 1.0 $"
-//  Last change by:	"$Author: rolandas $"
 //	Created by:		Rolandas Rudomanskis
 //
-// Copyright (c) Shareaza Development Team, 2002-2006.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -58,20 +55,20 @@ extern HANDLE              v_hPrivateHeap;
 class CRatDVDClassFactory : public IClassFactory
 {
 public:
-    CRatDVDClassFactory(): m_cRef(0){}
-    ~CRatDVDClassFactory(void){}
+	CRatDVDClassFactory(): m_cRef(0){}
+	~CRatDVDClassFactory(void){}
 
  // IUnknown Implementation
-    STDMETHODIMP         QueryInterface(REFIID riid, void ** ppv);
-    STDMETHODIMP_(ULONG) AddRef(void);
-    STDMETHODIMP_(ULONG) Release(void);
+	STDMETHODIMP         QueryInterface(REFIID riid, void ** ppv);
+	STDMETHODIMP_(ULONG) AddRef(void);
+	STDMETHODIMP_(ULONG) Release(void);
 
  // IClassFactory Implementation
-    STDMETHODIMP  CreateInstance(LPUNKNOWN punk, REFIID riid, void** ppv);
-    STDMETHODIMP  LockServer(BOOL fLock);
+	STDMETHODIMP  CreateInstance(LPUNKNOWN punk, REFIID riid, void** ppv);
+	STDMETHODIMP  LockServer(BOOL fLock);
 
 private:
-    ULONG          m_cRef;          // Reference count
+	ULONG          m_cRef;          // Reference count
 };
 
 ////////////////////////////////////////////////////////////////////////

@@ -1,9 +1,9 @@
 //
-// DocReader.cpp
+// RatDVDReader.cpp
 //
 //	Created by:		Rolandas Rudomanskis
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -86,7 +86,7 @@ STDMETHODIMP CRatDVDPlugin::ProcessRatDVD(HANDLE hFile, ISXMLElement* pXML)
 		if ( SetFilePointer( hFile, -2, NULL, FILE_CURRENT ) == 0 ) break;
 		ReadFile( hFile, &szByte, 1, &nRead, NULL );
 		nTotalRead++;
-        if ( strncmp( &szByte, "K", 1 ) == 0 )
+		if ( strncmp( &szByte, "K", 1 ) == 0 )
 		{
 			if ( SetFilePointer( hFile, -2, NULL, FILE_CURRENT ) == 0 ) break;
 			ReadFile( hFile, &szByte, 1, &nRead, NULL );
@@ -185,7 +185,7 @@ STDMETHODIMP CRatDVDPlugin::ProcessRatDVD(HANDLE hFile, ISXMLElement* pXML)
 		nTotalRead++;
 	}
 	while ( nTotalRead <= MAX_LENGTH_ALLOWED );
-	
+
 	if ( nContentLength > MAX_LENGTH_ALLOWED * 4 ) return S_FALSE;
 
 	// Read content.xml
@@ -199,7 +199,7 @@ STDMETHODIMP CRatDVDPlugin::ProcessRatDVD(HANDLE hFile, ISXMLElement* pXML)
 	{
 		return S_FALSE;
 	}
-	
+
 	CComQIPtr< ISXMLElements > pElements;
 	// Get the Elements collection from the XML document
 	if ( FAILED( pInputXML->get_Elements( &pElements ) ) || pElements == NULL )
@@ -207,7 +207,7 @@ STDMETHODIMP CRatDVDPlugin::ProcessRatDVD(HANDLE hFile, ISXMLElement* pXML)
 		pInputXML->Delete();
 		return S_FALSE;
 	}
-	
+
 	// Get a pointer to elements node and create a root element
 	CComQIPtr< ISXMLElement > pPlural;
 	CComQIPtr< ISXMLElements > pTempElements;
@@ -348,14 +348,14 @@ STDMETHODIMP CRatDVDPlugin::ProcessRatDVD(HANDLE hFile, ISXMLElement* pXML)
 								CString strSep( strSeparator );
 								strTruncated = strTruncated.SpanExcluding( strSep );
 								strTruncated.Trim( _T("\"") );
-                                strValue = strTruncated;
+								strValue = strTruncated;
 							}
-							
-							if ( !strActors.Length() ) 
+
+							if ( !strActors.Length() )
 							{
 								strActors.AssignBSTR( strValue );
 							}
-							else 
+							else
 							{
 								strActors.Append( L";" );
 								strActors.AppendBSTR( strValue );
@@ -380,7 +380,7 @@ STDMETHODIMP CRatDVDPlugin::ProcessRatDVD(HANDLE hFile, ISXMLElement* pXML)
 
 CComBSTR CRatDVDPlugin::ReadXML(HANDLE hFile, DWORD nBytes)
 {
-    CHAR* pBuffer = new CHAR[ nBytes ];
+	CHAR* pBuffer = new CHAR[ nBytes ];
 	DWORD nRead = 0;
 	ReadFile( hFile, pBuffer, nBytes, &nRead, NULL );
 
@@ -395,10 +395,10 @@ CComBSTR CRatDVDPlugin::ReadXML(HANDLE hFile, DWORD nBytes)
 
 	ConvertToUnicodeEx( pBuffer, nBytes, pszUnicode, nBytes, CP_UTF8 );
 	CComBSTR sUnicode( pszUnicode );
-	
+
 	delete [] pszUnicode;
 
-	return sUnicode; 
+	return sUnicode;
 }
 
 // IImageServicePlugin Methods
@@ -409,7 +409,7 @@ STDMETHODIMP CRatDVDPlugin::LoadFromFile(BSTR sFile, IMAGESERVICEDATA* pParams, 
 
 	EnterCritical();
 	DllAddRef();
-	
+
 	HRESULT hr = E_FAIL;
 
 	LPCWSTR pszExt = _wcslwr( wcsrchr( sFile, '.') );
@@ -441,7 +441,7 @@ STDMETHODIMP CRatDVDPlugin::GetRatDVDThumbnail(BSTR bsFile, IMAGESERVICEDATA* pP
 	HRESULT hr = E_FAIL;
 
 	if ( ! FFindQualifiedFileName( bsFile, pszName, &ulIdx ) )
-        return STG_E_INVALIDNAME;
+		return STG_E_INVALIDNAME;
 
 	CString strFile( pszName );
 	HANDLE hFile = CreateFile( strFile, GENERIC_READ,
@@ -464,7 +464,7 @@ STDMETHODIMP CRatDVDPlugin::GetRatDVDThumbnail(BSTR bsFile, IMAGESERVICEDATA* pP
 		if ( SetFilePointer( hFile, -2, NULL, FILE_CURRENT ) == 0 ) break;
 		ReadFile( hFile, &szByte, 1, &nRead, NULL );
 		nTotalRead++;
-        if ( strncmp( &szByte, "K", 1 ) == 0 )
+		if ( strncmp( &szByte, "K", 1 ) == 0 )
 		{
 			if ( SetFilePointer( hFile, -2, NULL, FILE_CURRENT ) == 0 ) break;
 			ReadFile( hFile, &szByte, 1, &nRead, NULL );
@@ -561,7 +561,7 @@ STDMETHODIMP CRatDVDPlugin::GetRatDVDThumbnail(BSTR bsFile, IMAGESERVICEDATA* pP
 		nTotalRead++;
 	}
 	while ( nTotalRead <= MAX_LENGTH_ALLOWED );
-	
+
 	if ( nContentLength > MAX_LENGTH_ALLOWED * 1024 ) return S_FALSE;
 
 	nRead = 0;
@@ -582,16 +582,16 @@ STDMETHODIMP CRatDVDPlugin::GetRatDVDThumbnail(BSTR bsFile, IMAGESERVICEDATA* pP
 
 	ULONG nArray = static_cast<ULONG>(nContentLength);
 
-	// Create 1-dimensional safearray 
+	// Create 1-dimensional safearray
 
 	SAFEARRAY* psa = SafeArrayCreateVector( VT_UI1, 0, nArray );
 
 	BYTE* pData = NULL;
-    hr = SafeArrayAccessData( psa, (VOID**)&pData );
+	hr = SafeArrayAccessData( psa, (VOID**)&pData );
 	// copy data from the buffer
 	CopyMemory( pData, pBuffer, nContentLength );
 	delete [] pBuffer;
-    SafeArrayUnaccessData( psa );
+	SafeArrayUnaccessData( psa );
 
 	if ( FAILED(hr) ) return E_FAIL;
 
@@ -630,4 +630,3 @@ STDMETHODIMP CRatDVDPlugin::SaveToMemory(BSTR /*sType*/, SAFEARRAY** /*ppMemory*
 
 	return E_NOTIMPL;
 }
-
