@@ -161,27 +161,34 @@ CG1Packet* CQuerySearch::ToG1Packet(DWORD nTTL)
 		nFlags |= G1_QF_XML;
 	pPacket->WriteShortLE( nFlags );
 
+	CString strQuery, strFullQuery;
 	if ( ! m_sPosKeywords.IsEmpty() )
 	{
-		if ( Settings.Gnutella1.QuerySearchUTF8 ) //Support UTF-8 Query
-		{
-			pPacket->WriteStringUTF8( m_sPosKeywords );
-		}
-		else
-		{
-			pPacket->WriteString( m_sPosKeywords );
-		}
+		strQuery = m_sPosKeywords;
 	}
 	else if ( m_pSchema != NULL && m_pXML != NULL )
 	{
-		CString strWords = m_pSchema->GetIndexedWords( m_pXML->GetFirstElement() );
-		MakeKeywords( strWords, false );
-		pPacket->WriteString( strWords );
+		strQuery = m_pSchema->GetIndexedWords( m_pXML->GetFirstElement() );
+		MakeKeywords( strQuery, false );
+	}
+	if ( strQuery.GetLength() > OLD_LW_MAX_QUERY_FIELD_LEN )
+	{
+		strFullQuery = strQuery;
+
+		strQuery = strQuery.Left( OLD_LW_MAX_QUERY_FIELD_LEN );
+		int nPos = strQuery.ReverseFind( _T(' ') );
+		if ( nPos > 0 )
+			strQuery = strQuery.Left( nPos );
+	}
+	if ( ! strQuery.IsEmpty() )
+	{
+		if ( Settings.Gnutella1.QuerySearchUTF8 )
+			pPacket->WriteStringUTF8( strQuery );
+		else
+			pPacket->WriteString( strQuery );
 	}
 	else
-	{
-		pPacket->WriteByte( 0 );
-	}
+		pPacket->WriteString( _T( DEFAULT_URN_QUERY ) );
 
 	bool bSep = false;
 
@@ -227,50 +234,80 @@ CG1Packet* CQuerySearch::ToG1Packet(DWORD nTTL)
 
 	// GGEP extension (last)
 
-	// use this for instead of Real URN to be added as HUGE.
-	// since it really looks like LimeWire ignore Query packet with URNs specified.
-	if ( IsHashed() )
+	if ( Settings.Gnutella1.EnableGGEP )
 	{
-		if ( bSep )
-			pPacket->WriteByte( G1_PACKET_HIT_SEP );
-
 		CGGEPBlock pBlock;
-		CGGEPItem* pItem;
-		if ( m_oSHA1.isValid() )
+
+		// TODO: GGEP_HEADER_QUERY_KEY_SUPPORT + query key
+
+		// TODO: GGEP_HEADER_FEATURE_QUERY
+
+		// TODO: GGEP_HEADER_NO_PROXY
+
+		// TODO: GGEP_HEADER_META
+
+		if ( CG1Packet::IsOOBEnabled() )
 		{
-			if (  m_oTiger.isValid() )
-			{
-				CGGEPItem* pItem = pBlock.Add( GGEP_HEADER_HASH );
-				pItem->WriteByte( GGEP_H_BITPRINT );
-				pItem->Write( &m_oSHA1[ 0 ], 20 );
-				pItem->Write( &m_oTiger[ 0 ], 24 );
-			}
-			else
-			{
-				CGGEPItem* pItem = pBlock.Add( GGEP_HEADER_HASH );
-				pItem->WriteByte( GGEP_H_SHA1 );
-				pItem->Write( &m_oSHA1[ 0 ], 20 );
-			}
-		}
-		else if ( m_oMD5.isValid() )
-		{
-			CGGEPItem* pItem = pBlock.Add( GGEP_HEADER_HASH );
-			pItem->WriteByte( GGEP_H_MD5 );
-			pItem->Write( &m_oMD5[ 0 ], 16 );
-		}
-		else if ( m_oED2K.isValid() )
-		{
-			pItem = pBlock.Add( GGEP_HEADER_URN );
-			pItem->WriteUTF8( CString( _T("ed2k:") ) + m_oED2K.toString() );
-		}
-		else if ( m_oBTH.isValid() )
-		{
-			pItem = pBlock.Add( GGEP_HEADER_URN );
-			pItem->WriteUTF8( CString( _T("btih:") ) + m_oBTH.toString() );
+			pBlock.Add( GGEP_HEADER_SECURE_OOB );
 		}
 
-		pBlock.Write( pPacket );
+		if ( m_bWantPFS )
+		{
+			pBlock.Add( GGEP_HEADER_PARTIAL_RESULT_PREFIX );
+		}
+
+		if ( ! strFullQuery.IsEmpty() )
+		{
+			CGGEPItem* pItem = pBlock.Add( GGEP_HEADER_EXTENDED_QUERY );
+			pItem->WriteUTF8( strFullQuery );
+		}
+
+		if ( IsHashed() )
+		{
+			if ( m_oSHA1.isValid() )
+			{
+				if (  m_oTiger.isValid() )
+				{
+					CGGEPItem* pItem = pBlock.Add( GGEP_HEADER_HASH );
+					pItem->WriteByte( GGEP_H_BITPRINT );
+					pItem->Write( &m_oSHA1[ 0 ], 20 );
+					pItem->Write( &m_oTiger[ 0 ], 24 );
+				}
+				else
+				{
+					CGGEPItem* pItem = pBlock.Add( GGEP_HEADER_HASH );
+					pItem->WriteByte( GGEP_H_SHA1 );
+					pItem->Write( &m_oSHA1[ 0 ], 20 );
+				}
+			}
+			else if ( m_oMD5.isValid() )
+			{
+				CGGEPItem* pItem = pBlock.Add( GGEP_HEADER_HASH );
+				pItem->WriteByte( GGEP_H_MD5 );
+				pItem->Write( &m_oMD5[ 0 ], 16 );
+			}
+			else if ( m_oED2K.isValid() )
+			{
+				CGGEPItem* pItem = pBlock.Add( GGEP_HEADER_URN );
+				pItem->WriteUTF8( CString( _T("ed2k:") ) + m_oED2K.toString() );
+			}
+			else if ( m_oBTH.isValid() )
+			{
+				CGGEPItem* pItem = pBlock.Add( GGEP_HEADER_URN );
+				pItem->WriteUTF8( CString( _T("btih:") ) + m_oBTH.toString() );
+			}
+		}
+
+		if ( ! pBlock.IsEmpty() )
+		{
+			if ( bSep )
+				pPacket->WriteByte( G1_PACKET_HIT_SEP );
+
+			pBlock.Write( pPacket );
+		}
 	}
+
+	pPacket->WriteByte( 0 );	// Like LimeWire does
 
 	return pPacket;
 }
