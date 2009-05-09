@@ -1149,13 +1149,13 @@ void CLibraryFrame::RunLocalSearch(auto_ptr< CQuerySearch > pSearch)
 	{
 		CQuickLock oLock( Library.m_pSection );
 
-		CList< const CLibraryFile* >* pFiles( Library.Search( pSearch.get(), 0, TRUE ) );
+		CList< const CLibraryFile* >* pFiles = Library.Search( pSearch.get(), 0, TRUE );
 
 		if ( pFiles != NULL )
 		{
 			for ( POSITION pos = pFiles->GetHeadPosition() ; pos ; )
 			{
-				const CLibraryFile* pFile( pFiles->GetNext( pos ) );
+				const CLibraryFile* pFile = pFiles->GetNext( pos );
 
 				if ( Settings.Search.SchemaTypes && pSearch->m_pSchema != NULL )
 				{

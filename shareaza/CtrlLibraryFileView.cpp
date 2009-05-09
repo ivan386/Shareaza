@@ -313,7 +313,7 @@ void CLibraryFileView::OnLibraryLaunch()
 
 			LoadString( strFormat, IDS_LIBRARY_VERIFY_FAIL );
 			strMessage.Format( strFormat, (LPCTSTR)strPath );
-			INT_PTR nResponse( AfxMessageBox( strMessage, MB_ICONEXCLAMATION|MB_YESNOCANCEL|MB_DEFBUTTON2 ) );
+			INT_PTR nResponse = AfxMessageBox( strMessage, MB_ICONEXCLAMATION|MB_YESNOCANCEL|MB_DEFBUTTON2 );
 			if ( nResponse == IDCANCEL )
 				break;
 			if ( nResponse == IDNO )

@@ -41,17 +41,6 @@ static char THIS_FILE[]=__FILE__;
 CChatWindows ChatWindows;
 
 //////////////////////////////////////////////////////////////////////
-// CChatWindows construction
-
-CChatWindows::CChatWindows()
-{
-}
-
-CChatWindows::~CChatWindows()
-{
-}
-
-//////////////////////////////////////////////////////////////////////
 // CChatWindows list access
 
 POSITION CChatWindows::GetIterator() const

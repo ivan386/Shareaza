@@ -754,7 +754,7 @@ void CLibraryMaps::CullDeletedFiles(CLibraryFile* pMatch)
 
 CList< const CLibraryFile* >* CLibraryMaps::Search(CQuerySearch* pSearch, int nMaximum, BOOL bLocal, BOOL bAvailableOnly)
 {
-	CList< const CLibraryFile* >* pHits( NULL );
+	CList< const CLibraryFile* >* pHits = NULL;
 	if ( pSearch == NULL )
 	{
 		for ( POSITION pos = GetFileIterator() ; pos ; )

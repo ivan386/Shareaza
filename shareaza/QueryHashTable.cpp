@@ -1,7 +1,7 @@
 //
 // QueryHashTable.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2009.
+// Copyright (c) Shareaza Development Team, 2002-2007.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -107,13 +107,13 @@ void CQueryHashTable::Clear()
 //////////////////////////////////////////////////////////////////////
 // CQueryHashTable merge tables
 
-const bool CQueryHashTable::Merge(const CQueryHashTable& oSource)
+BOOL CQueryHashTable::Merge(const CQueryHashTable* pSource)
 {
-	if ( m_pHash == NULL || oSource.m_pHash == NULL ) return FALSE;
+	if ( m_pHash == NULL || pSource->m_pHash == NULL ) return FALSE;
 
-	if ( m_nHash == oSource.m_nHash )
+	if ( m_nHash == pSource->m_nHash )
 	{
-		LPBYTE pSourcePtr	= oSource.m_pHash;
+		LPBYTE pSourcePtr	= pSource->m_pHash;
 		LPBYTE pDestPtr		= m_pHash;
 
 		for ( DWORD nPosition = m_nHash >> 3 ; nPosition ; nPosition-- )
@@ -141,25 +141,25 @@ const bool CQueryHashTable::Merge(const CQueryHashTable& oSource)
 		int nDestScale		= 1;
 		int nSourceScale	= 1;
 
-		if ( m_nHash > oSource.m_nHash )
+		if ( m_nHash > pSource->m_nHash )
 		{
-			DWORD nIterate = oSource.m_nHash;
+            DWORD nIterate = pSource->m_nHash;
 			for ( ; nIterate < m_nHash ; nIterate *= 2 ) nDestScale++;
 			if ( nIterate != m_nHash ) return FALSE;
 		}
-		else if ( m_nHash < oSource.m_nHash )
+		else if ( m_nHash < pSource->m_nHash )
 		{
-			DWORD nIterate = m_nHash;
-			for ( ; nIterate < oSource.m_nHash ; nIterate *= 2 ) nSourceScale++;
-			if ( nIterate != oSource.m_nHash ) return FALSE;
+            DWORD nIterate = m_nHash;
+			for ( ; nIterate < pSource->m_nHash ; nIterate *= 2 ) nSourceScale++;
+			if ( nIterate != pSource->m_nHash ) return FALSE;
 		}
 
-		LPBYTE pSourcePtr	= oSource.m_pHash;
+		LPBYTE pSourcePtr	= pSource->m_pHash;
 		LPBYTE pDestPtr		= m_pHash;
 		BYTE nSourceMask	= 0x01;
 		BYTE nDestMask		= 0x01;
 
-		for ( DWORD nDest = 0, nSource = 0 ; nDest < m_nHash && nSource < oSource.m_nHash ; )
+		for ( DWORD nDest = 0, nSource = 0 ; nDest < m_nHash && nSource < pSource->m_nHash ; )
 		{
 			BOOL bValue = TRUE;
 
@@ -204,10 +204,9 @@ const bool CQueryHashTable::Merge(const CQueryHashTable& oSource)
 	return TRUE;
 }
 
-const bool CQueryHashTable::Merge(const CQueryHashGroup* pSource)
+BOOL CQueryHashTable::Merge(const CQueryHashGroup* pSource)
 {
-	if ( m_pHash == NULL || pSource->m_pHash == NULL )
-		return false;
+	if ( m_pHash == NULL || pSource->m_pHash == NULL ) return FALSE;
 
 	if ( m_nHash == pSource->m_nHash )
 	{
@@ -239,17 +238,15 @@ const bool CQueryHashTable::Merge(const CQueryHashGroup* pSource)
 
 		if ( m_nHash > pSource->m_nHash )
 		{
-			DWORD nIterate = pSource->m_nHash;
+            DWORD nIterate = pSource->m_nHash;
 			for ( ; nIterate < m_nHash ; nIterate *= 2 ) nDestScale++;
-			if ( nIterate != m_nHash )
-				return false;
+			if ( nIterate != m_nHash ) return FALSE;
 		}
 		else if ( m_nHash < pSource->m_nHash )
 		{
-			DWORD nIterate = m_nHash;
+            DWORD nIterate = m_nHash;
 			for ( ; nIterate < pSource->m_nHash ; nIterate *= 2 ) nSourceScale++;
-			if ( nIterate != pSource->m_nHash )
-				return false;
+			if ( nIterate != pSource->m_nHash ) return FALSE;
 		}
 
 		LPBYTE pSourcePtr	= pSource->m_pHash;
@@ -288,13 +285,13 @@ const bool CQueryHashTable::Merge(const CQueryHashGroup* pSource)
 
 	m_nCookie = GetTickCount();
 
-	return true;
+	return TRUE;
 }
 
 //////////////////////////////////////////////////////////////////////
 // CQueryHashTable packet patch dispatch
 
-const bool CQueryHashTable::PatchTo(CQueryHashTable* pTarget, CNeighbour* pNeighbour)
+BOOL CQueryHashTable::PatchTo(CQueryHashTable* pTarget, CNeighbour* pNeighbour)
 {
 	if ( pTarget->m_pHash == NULL ) return FALSE;
 	if ( m_nCookie == pTarget->m_nCookie ) return FALSE;
@@ -439,26 +436,26 @@ const bool CQueryHashTable::PatchTo(CQueryHashTable* pTarget, CNeighbour* pNeigh
 			0xffff1f11,0xffff1ff1,0xffff1f1f,0xffff1fff,0xffffff11,0xfffffff1,0xffffff1f,0xffffffff
 		};
 		DWORD* const pDwordBuffer = reinterpret_cast< DWORD* >( pBuffer );
-		const DWORD nEnd = ( m_nHash + 7 ) / 8;
+        const DWORD nEnd = ( m_nHash + 7 ) / 8;
 		for ( DWORD nPosition = 0 ; nPosition < nEnd ; ++nPosition )
 		{
-			if ( ( pDwordBuffer[ nPosition ] = changeFlag[ pHashS[ nPosition ] ]
-				& changed[ pHashT[ nPosition ] ^ pHashS[ nPosition ] ] ) != 0 ) bChanged = TRUE;
+            if ( ( pDwordBuffer[ nPosition ] = changeFlag[ pHashS[ nPosition ] ]
+                & changed[ pHashT[ nPosition ] ^ pHashS[ nPosition ] ] ) != 0 ) bChanged = TRUE;
 		}
-		if ( bChanged ) std::memcpy( pHashS, pHashT, nEnd );
+        if ( bChanged ) std::memcpy( pHashS, pHashT, nEnd );
 	}
 	else
 	{
-		const DWORD nEnd = ( m_nHash + 31 ) / 32;
-		DWORD* const pDwordBuffer = reinterpret_cast< DWORD* >( pBuffer );
-		const DWORD* const pDwordHashS = reinterpret_cast< DWORD* >( pHashS );
-		const DWORD* const pDwordHashT = reinterpret_cast< DWORD* >( pHashT );
-		for ( DWORD nPosition = 0; nPosition < nEnd; ++nPosition )
-		{
-			if ( ( pDwordBuffer[ nPosition ]
-				= pDwordHashS[ nPosition ] ^ pDwordHashT[ nPosition ] ) != 0 ) bChanged = TRUE;
-		}
-		if ( bChanged ) std::memcpy( pHashS, pHashT, ( m_nHash + 31 ) / 8 );
+        const DWORD nEnd = ( m_nHash + 31 ) / 32;
+        DWORD* const pDwordBuffer = reinterpret_cast< DWORD* >( pBuffer );
+        const DWORD* const pDwordHashS = reinterpret_cast< DWORD* >( pHashS );
+        const DWORD* const pDwordHashT = reinterpret_cast< DWORD* >( pHashT );
+        for ( DWORD nPosition = 0; nPosition < nEnd; ++nPosition )
+        {
+            if ( ( pDwordBuffer[ nPosition ]
+                = pDwordHashS[ nPosition ] ^ pDwordHashT[ nPosition ] ) != 0 ) bChanged = TRUE;
+        }
+        if ( bChanged ) std::memcpy( pHashS, pHashT, ( m_nHash + 31 ) / 8 );
 	}
 
 	if ( bChanged == FALSE && m_bLive )
@@ -511,7 +508,7 @@ const bool CQueryHashTable::PatchTo(CQueryHashTable* pTarget, CNeighbour* pNeigh
 	return TRUE;
 }
 
-const bool CQueryHashTable::PatchToOldShareaza(CQueryHashTable* pTarget, CNeighbour* pNeighbour)
+BOOL CQueryHashTable::PatchToOldShareaza(CQueryHashTable* pTarget, CNeighbour* pNeighbour)
 {
 	DWORD nPacketSize = 4096;
 
@@ -532,7 +529,7 @@ const bool CQueryHashTable::PatchToOldShareaza(CQueryHashTable* pTarget, CNeighb
 
 		BYTE nMask = 1;
 
-		DWORD nCount = 0;
+        DWORD nCount = 0;
 		for ( ; nCount < nPacketSize ; nCount++, nPosition++ )
 		{
 			BYTE nPatch = ( *pHashT & nMask ) != ( *pHashS & nMask ) ? 7 : 0;
@@ -569,7 +566,7 @@ const bool CQueryHashTable::PatchToOldShareaza(CQueryHashTable* pTarget, CNeighb
 //////////////////////////////////////////////////////////////////////
 // CQueryHashTable packet handler
 
-const bool CQueryHashTable::OnPacket(CPacket* pPacket)
+BOOL CQueryHashTable::OnPacket(CPacket* pPacket)
 {
 	if ( pPacket->m_nLength < 1 ) return FALSE;
 
@@ -603,7 +600,7 @@ const bool CQueryHashTable::OnPacket(CPacket* pPacket)
 //////////////////////////////////////////////////////////////////////
 // CQueryHashTable reset handler
 
-const bool CQueryHashTable::OnReset(CPacket* pPacket)
+BOOL CQueryHashTable::OnReset(CPacket* pPacket)
 {
 	if ( pPacket->m_nLength != 6 ) return FALSE;
 
@@ -653,7 +650,7 @@ const bool CQueryHashTable::OnReset(CPacket* pPacket)
 //////////////////////////////////////////////////////////////////////
 // CQueryHashTable patch handler
 
-const bool CQueryHashTable::OnPatch(CPacket* pPacket)
+BOOL CQueryHashTable::OnPatch(CPacket* pPacket)
 {
 	if ( pPacket->m_nLength < 5 ) return FALSE;
 	if ( m_pHash == NULL ) return FALSE;
@@ -822,21 +819,50 @@ const bool CQueryHashTable::OnPatch(CPacket* pPacket)
 }
 
 //////////////////////////////////////////////////////////////////////
-// CQueryHashTable add strings and words
+// CQueryHashTable add phrases and words
+/*
+int CQueryHashTable::AddPhrase(LPCTSTR pszPhrase)
+{
+	if ( m_pHash == NULL ) return 0;
 
-const int CQueryHashTable::AddString(const CString& strString)
+	LPCTSTR pszPtr = pszPhrase;
+	int nCount = 0;
+
+    int nStart = 0, nPos = 0;
+	for ( ; *pszPtr ; nPos++, pszPtr++ )
+	{
+		if ( ! IsCharacter( *pszPtr ) )
+		{
+			if ( nStart < nPos )
+			{
+				nCount += Add( pszPhrase, nStart, nPos - nStart );
+			}
+
+			nStart = nPos + 1;
+		}
+	}
+
+	if ( nStart < nPos )
+	{
+		nCount += Add( pszPhrase, nStart, nPos - nStart );
+	}
+
+	return nCount;
+}*/
+
+int CQueryHashTable::AddString(const CString& strString)
 {
 	if ( m_pHash == NULL ) return 0;
 	return Add( strString, 0, strString.GetLength() );
 }
 
-const int CQueryHashTable::AddExactString(const CString& strString)
+int CQueryHashTable::AddExactString(const CString& strString)
 {
 	if ( m_pHash == NULL ) return 0;
 	return AddExact( strString, 0, strString.GetLength() );
 }
 
-const int CQueryHashTable::Add(LPCTSTR pszString, size_t nStart, size_t nLength)
+int CQueryHashTable::Add(LPCTSTR pszString, size_t nStart, size_t nLength)
 {
 	bool bWord = IsWord( pszString, nStart, nLength );
 	if ( ! nLength || !bWord && nLength < 4 )
@@ -885,7 +911,7 @@ const int CQueryHashTable::Add(LPCTSTR pszString, size_t nStart, size_t nLength)
 	return 1;
 }
 
-const int CQueryHashTable::AddExact(LPCTSTR pszString, size_t nStart, size_t nLength)
+int CQueryHashTable::AddExact(LPCTSTR pszString, size_t nStart, size_t nLength)
 {
 	if ( ! nLength )
 		return 0;
@@ -904,7 +930,57 @@ const int CQueryHashTable::AddExact(LPCTSTR pszString, size_t nStart, size_t nLe
 	return 1;
 }
 
-const bool CQueryHashTable::CheckString(const CString& strString) const
+//////////////////////////////////////////////////////////////////////
+// CQueryHashTable check phrases and words
+/*
+BOOL CQueryHashTable::CheckPhrase(LPCTSTR pszPhrase) const
+{
+	if ( ! m_bLive || m_pHash == NULL || ! *pszPhrase ) return TRUE;
+
+	int nWordCount	= 0;
+	int nWordHits	= 0;
+
+	LPCTSTR pszPtr	= pszPhrase;
+	BOOL bNegate	= FALSE;
+	BOOL bSpace		= TRUE;
+
+    int nStart = 0, nPos = 0;
+	for ( ; *pszPtr ; nPos++, pszPtr++ )
+	{
+		if ( IsCharacter( *pszPtr ) )
+		{
+			bSpace = FALSE;
+		}
+		else
+		{
+			if ( nStart < nPos && ! bNegate && IsWord( pszPhrase, nStart, nPos - nStart ) )
+			{
+				nWordCount++;
+				DWORD nHash	= HashWord( pszPhrase, nStart, nPos - nStart, m_nBits );
+				BYTE* pHash	= m_pHash + ( nHash >> 3 );
+				BYTE nMask	= BYTE( 1 << ( nHash & 7 ) );
+				if ( ! ( *pHash & nMask ) ) nWordHits++;
+			}
+
+			nStart	= nPos + 1;
+			bNegate = bSpace && ( *pszPtr == '-' );
+			bSpace	= ( *pszPtr == ' ' );
+		}
+	}
+
+	if ( nStart < nPos && ! bNegate && IsWord( pszPhrase, nStart, nPos - nStart ) )
+	{
+		nWordCount++;
+		DWORD nHash	= HashWord( pszPhrase, nStart, nPos - nStart, m_nBits );
+		BYTE* pHash	= m_pHash + ( nHash >> 3 );
+		BYTE nMask	= BYTE( 1 << ( nHash & 7 ) );
+		if ( ! ( *pHash & nMask ) ) nWordHits++;
+	}
+
+	return ( nWordCount >= 3 ) ? ( nWordHits * 3 / nWordCount >= 2 ) : ( nWordHits == nWordCount );
+}*/
+
+BOOL CQueryHashTable::CheckString(const CString& strString) const
 {
 	if ( ! m_bLive || m_pHash == NULL || strString.IsEmpty() ) return TRUE;
 
@@ -915,7 +991,7 @@ const bool CQueryHashTable::CheckString(const CString& strString) const
 	return ! ( *pHash & nMask );
 }
 
-const bool CQueryHashTable::CheckHash(const DWORD nHash) const
+BOOL CQueryHashTable::CheckHash(const DWORD nHash) const
 {
 	if ( ! m_bLive || m_pHash == NULL ) return TRUE;
 
@@ -930,15 +1006,15 @@ const bool CQueryHashTable::CheckHash(const DWORD nHash) const
 //////////////////////////////////////////////////////////////////////
 // CQueryHashTable check query object
 
-const bool CQueryHashTable::Check(const CQuerySearch& oSearch) const
+BOOL CQueryHashTable::Check(const CQuerySearch* pSearch) const
 {
 	if ( ! m_bLive || m_pHash == NULL ) return TRUE;
-
-	if ( !oSearch.m_oURNs.empty() )
+	
+	if ( !pSearch->m_oURNs.empty() )
 	{
-		CQuerySearch::const_hash_iterator iUrnEnd( oSearch.urnEnd() );
-		for ( CQuerySearch::const_hash_iterator iUrn( oSearch.urnBegin() )
-			; iUrn != iUrnEnd ; ++iUrn )
+		CQuerySearch::const_hash_iterator iUrn = pSearch->urnBegin();
+		CQuerySearch::const_hash_iterator iUrnEnd = pSearch->urnEnd();
+		for ( ; iUrn != iUrnEnd ; iUrn++ )
 		{
 			if ( CheckHash(*iUrn) ) return TRUE;
 		}
@@ -948,11 +1024,11 @@ const bool CQueryHashTable::Check(const CQuerySearch& oSearch) const
 	DWORD nWordHits		= 0;
 	DWORD nWords		= 0;
 
-	if ( !oSearch.m_oKeywordHashList.empty() )
+	if ( !pSearch->m_oKeywordHashList.empty() )
 	{
-		CQuerySearch::const_hash_iterator iKeywordEnd( oSearch.keywordEnd() );
-		for ( CQuerySearch::const_hash_iterator iKeyword( oSearch.keywordBegin() )
-			; iKeyword != iKeywordEnd ; ++iKeyword )
+		CQuerySearch::const_hash_iterator iKeyword = pSearch->keywordBegin();
+		CQuerySearch::const_hash_iterator iKeywordEnd = pSearch->keywordEnd();
+		for ( ; iKeyword != iKeywordEnd ; iKeyword++ )
 		{
 			nWords++;
 			if ( CheckHash(*iKeyword) ) nWordHits++;
@@ -968,7 +1044,7 @@ const bool CQueryHashTable::Check(const CQuerySearch& oSearch) const
 //////////////////////////////////////////////////////////////////////
 // CQueryHashTable hash functions
 
-const DWORD CQueryHashTable::HashWord(LPCTSTR pszString, size_t nStart, size_t nLength, DWORD nBits)
+DWORD CQueryHashTable::HashWord(LPCTSTR pszString, size_t nStart, size_t nLength, DWORD nBits)
 {
 	DWORD nNumber	= 0;
 	int nByte		= 0;
@@ -987,7 +1063,7 @@ const DWORD CQueryHashTable::HashWord(LPCTSTR pszString, size_t nStart, size_t n
 	return HashNumber( nNumber, nBits );
 }
 
-const DWORD CQueryHashTable::HashNumber(DWORD nNumber, int nBits)
+DWORD CQueryHashTable::HashNumber(DWORD nNumber, int nBits)
 {
 	unsigned __int64 nProduct	= (unsigned __int64)nNumber * (unsigned __int64)0x4F1BBCDC;
 	unsigned __int64 nHash		= nProduct << 32;
@@ -998,7 +1074,7 @@ const DWORD CQueryHashTable::HashNumber(DWORD nNumber, int nBits)
 //////////////////////////////////////////////////////////////////////
 // CQueryHashTable calculate percent full
 
-const int CQueryHashTable::GetPercent() const
+int CQueryHashTable::GetPercent() const
 {
 	if ( ! m_pHash || ! m_nHash ) return 0;
 	return m_nCount * 100 / m_nHash;
@@ -1008,7 +1084,7 @@ void CQueryHashTable::Draw(HDC hDC, const RECT* pRC)
 {
 	if ( ! m_pHash ) return;
 	SetStretchBltMode( hDC, HALFTONE );
-	BITMAP bm = { 0, 1024, 1024, 128, 1, 1, m_pHash };
+	BITMAP bm = { 0, 1024, 1024, 128, 1, 1, m_pHash }; 
 	HBITMAP hBmp = CreateBitmapIndirect( &bm );
 	HDC hMemDC = CreateCompatibleDC( hDC );
 	HBITMAP hOldBmp = (HBITMAP)SelectObject( hMemDC, hBmp );

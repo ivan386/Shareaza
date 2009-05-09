@@ -49,9 +49,9 @@ private:
 public:
 	void					AddFile(const CLibraryFile& oFile);
 	void					RemoveFile(const CLibraryFile& oFile);
-	const bool				BuildHashTable();					// Build hash table if needed
+	bool					BuildHashTable();					// Build hash table if needed
 	void					RebuildHashTable();					// Force hash table to re-build
-	const CQueryHashTable&	GetHashTable();
+	CQueryHashTable*		GetHashTable();
 	void					Clear();
 	FilePtrList*			Search(const CQuerySearch& oSearch, int nMaximum = 0, bool bLocal = false, bool bAvailableOnly = true);
 	void					Serialize(CArchive& ar, int nVersion);
@@ -60,7 +60,6 @@ private:
 	void					ProcessPhrase(const CLibraryFile& oFile, const CString& strPhrase, bool bAdd, bool bCanUpload);
 	void					MakeKeywords(const CLibraryFile& oFile, const CString& strWord, WORD nWordType, bool bAdd, bool bCanUpload);
 	void					ProcessWord(const CLibraryFile& oFile, const CString& strWord, bool bAdd, bool bCanUpload);
-	const bool				CanUpload(const CLibraryFile& oFile) const;
 	void					AddHashes(const CLibraryFile& oFile);
 };
 

@@ -260,7 +260,7 @@ BOOL CNeighbour::SendQuery(CQuerySearch* pSearch, CPacket* pPacket, BOOL bLocal)
 	if ( m_pQueryTableRemote != NULL && m_pQueryTableRemote->m_bLive )
 	{
 		// If QHT disables search, leave now
-		if ( ! m_pQueryTableRemote->Check( *pSearch ) )
+		if ( ! m_pQueryTableRemote->Check( pSearch ) )
 			return FALSE;
 
 	} // If QHT doesn't exist and this connection is to a leaf below us, leave now

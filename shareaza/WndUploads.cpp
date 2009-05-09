@@ -371,7 +371,7 @@ void CUploadsWnd::OnUploadsDisconnect()
 				LoadString( strFormat, IDS_UPLOAD_CANCEL_ED2K );
 				strMessage.Format( strFormat, (LPCTSTR)pUpload->m_sFileName );
 				pLock.Unlock();
-				INT_PTR nResp( AfxMessageBox( strMessage, MB_ICONQUESTION|MB_YESNOCANCEL|MB_DEFBUTTON2 ) );
+				INT_PTR nResp = AfxMessageBox( strMessage, MB_ICONQUESTION|MB_YESNOCANCEL|MB_DEFBUTTON2 );
 				pLock.Lock();
 				if ( nResp == IDCANCEL )
 					break;
@@ -436,7 +436,7 @@ void CUploadsWnd::OnUploadsClear()
 				LoadString( strFormat, IDS_UPLOAD_CANCEL_ED2K );
 				strMessage.Format( strFormat, (LPCTSTR)pUpload->m_sFileName );
 				pLock.Unlock();
-				INT_PTR nResp( AfxMessageBox( strMessage, MB_ICONQUESTION|MB_YESNOCANCEL|MB_DEFBUTTON2 ) );
+				INT_PTR nResp = AfxMessageBox( strMessage, MB_ICONQUESTION|MB_YESNOCANCEL|MB_DEFBUTTON2 );
 				pLock.Lock();
 				if ( nResp == IDCANCEL )
 					break;

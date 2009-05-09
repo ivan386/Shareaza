@@ -37,15 +37,10 @@ class CQueryHit;
 class CHostBrowser : public CTransfer
 {
 public:
-	enum { hbsNull, hbsConnecting, hbsRequesting, hbsHeaders, hbsContent };
-
-// Construction
-public:
 	CHostBrowser(CBrowseHostWnd* pNotify = NULL, PROTOCOLID nProtocol = PROTOCOL_ANY, IN_ADDR* pAddress = NULL, WORD nPort = 0,
 		BOOL bMustPush = FALSE, const Hashes::Guid& pClientID = Hashes::Guid());
 	virtual ~CHostBrowser();
 
-// Attributes
 public:
 	int				m_nState;
 	CGProfile*		m_pProfile;
@@ -67,8 +62,8 @@ public:
 	DWORD			m_nReceived;
 	CBuffer*		m_pBuffer;
 	z_streamp		m_pInflate;
-private:
-	CBrowseHostWnd*	m_pNotify;
+
+	enum { hbsNull, hbsConnecting, hbsRequesting, hbsHeaders, hbsContent };
 
 // Operations
 public:
@@ -78,7 +73,15 @@ public:
 	BOOL		IsBrowsing() const;
 	float		GetProgress() const;
 	void		OnQueryHits(CQueryHit* pHits);
-private:
+
+	virtual BOOL	OnConnected();
+	virtual void	OnDropped();
+	virtual BOOL	OnHeadersComplete();
+	virtual BOOL	OnPush(const Hashes::Guid& oClientID, CConnection* pConnection);
+
+protected:
+	CBrowseHostWnd*	m_pNotify;
+
 	BOOL		SendPush(BOOL bMessage);
 	void		SendRequest();
 	BOOL		ReadResponseLine();
@@ -91,13 +94,6 @@ private:
 	BOOL		OnPacket(CG2Packet* pPacket);
 	void		OnProfilePacket(CG2Packet* pPacket);
 
-// Overrides
-public:
-	virtual BOOL	OnConnected();
-	virtual void	OnDropped();
-	virtual BOOL	OnHeadersComplete();
-	virtual BOOL	OnPush(const Hashes::Guid& oClientID, CConnection* pConnection);
-protected:
 	virtual BOOL	OnRead();
 	virtual BOOL	OnHeaderLine(CString& strHeader, CString& strValue);
 	virtual BOOL	OnRun();
