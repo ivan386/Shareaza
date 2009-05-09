@@ -106,8 +106,7 @@ public:
 	BOOL	SendCommentsPacket(int nRating, LPCTSTR pszComments);
 	void	SendPreviewRequest(CDownload* pDownload);
 protected:
-	void	DeriveSoftwareVersion();		// ID clients using the newer 'SoftwareVersion' tag
-	void	DeriveVersion();				// ID clients using the older method(s)
+	void	DetermineUserAgent();
 	BOOL	OnLoggedIn();
 	void	DetachDownload();
 	void	DetachUpload();

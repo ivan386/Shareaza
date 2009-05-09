@@ -314,7 +314,7 @@ BOOL CUploadTransferHTTP::OnHeadersComplete()
 {
 	if ( Uploads.EnforcePerHostLimit( this, TRUE ) ) return FALSE;
 	
-	if ( VendorCache.IsExtended( m_sUserAgent ) )
+	if ( m_bClientExtended )
 	{
 		// Assume certain capabilitites for various Shareaza versions
 		m_nGnutella |= 3;

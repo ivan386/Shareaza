@@ -1,7 +1,7 @@
 //
 // UploadTransfer.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -46,7 +46,6 @@ public:
 	DWORD			m_nBandwidth;	// Bandwidth
 	CString			m_sNick;		// User Nick
 	DWORD			m_nUserRating;	// Has the downloader uploaded anything?
-	BOOL			m_bClientExtended;// Does the user support extended (G2) functions? (In practice, this means can we use G2 chat, browse, etc...)
 
 	CString			m_sFileName;	// Name of requested file
 	CString			m_sFilePath;	// Path of requested file

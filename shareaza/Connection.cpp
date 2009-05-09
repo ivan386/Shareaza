@@ -30,6 +30,7 @@
 #include "Security.h"
 #include "Buffer.h"
 #include "Statistics.h"
+#include "VendorCache.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -41,15 +42,16 @@ static char THIS_FILE[]=__FILE__;
 // CConnection construction
 
 // Make a new CConnection object
-CConnection::CConnection() :
-	m_bInitiated( FALSE ),
-	m_bConnected( FALSE ),
-	m_tConnected( 0 ),
-	m_hSocket( INVALID_SOCKET ),
-	m_pInput( NULL ),
-	m_pOutput( NULL ),
-	m_nQueuedRun( 0 ),				// DoRun sets it to 0, QueueRun sets it to 2 (do)
-	m_nProtocol( PROTOCOL_ANY )
+CConnection::CConnection()
+	: m_bInitiated( FALSE )
+	, m_bConnected( FALSE )
+	, m_tConnected( 0 )
+	, m_hSocket( INVALID_SOCKET )
+	, m_pInput( NULL )
+	, m_pOutput( NULL )
+	, m_bClientExtended( FALSE )
+	, m_nQueuedRun( 0 )				// DoRun sets it to 0, QueueRun sets it to 2 (do)
+	, m_nProtocol( PROTOCOL_ANY )
 {
 	ZeroMemory( &m_pHost, sizeof( m_pHost ) );
 	m_pHost.sin_family = AF_INET;
@@ -74,6 +76,7 @@ CConnection::CConnection(CConnection& other)
 	, m_pOutputSection( other.m_pOutputSection )	// transfered
 	, m_pOutput(      other.m_pOutput )				// transfered
 	, m_sUserAgent(   other.m_sUserAgent )
+	, m_bClientExtended( other.m_bClientExtended )
 	, m_nQueuedRun(   0 )
 {
 	ZeroMemory( &m_mInput, sizeof( m_mInput ) );
@@ -292,6 +295,7 @@ void CConnection::AttachTo(CConnection* pConnection)
 	m_pOutputSection= pConnection->m_pOutputSection;
 	m_pOutput		= pConnection->m_pOutput;
 	m_sUserAgent	= pConnection->m_sUserAgent;
+	m_bClientExtended = pConnection->m_bClientExtended;
 
 	// Record the current time in the input and output TCP bandwidth meters
 	m_mInput.tLast = m_mOutput.tLast = GetTickCount();
@@ -621,7 +625,8 @@ BOOL CConnection::OnHeaderLine(CString& strHeader, CString& strValue)
 	{
 		// Copy the value into the user agent member string
 		m_sUserAgent = strValue; // This tells what software the remote computer is running
-	
+		m_bClientExtended = VendorCache.IsExtended( m_sUserAgent );
+
 	} // It's the remote IP header
 	else if ( strHeader.CompareNoCase( _T("Remote-IP") ) == 0 )
 	{

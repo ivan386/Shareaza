@@ -1,7 +1,7 @@
 //
 // UploadTransferBT.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -46,22 +46,25 @@ static char THIS_FILE[]=__FILE__;
 //////////////////////////////////////////////////////////////////////
 // CUploadTransferBT construction
 
-CUploadTransferBT::CUploadTransferBT(CBTClient* pClient, CDownload* pDownload) : CUploadTransfer( PROTOCOL_BT )
+CUploadTransferBT::CUploadTransferBT(CBTClient* pClient, CDownload* pDownload)
+	: CUploadTransfer( PROTOCOL_BT )
+	, m_pClient			( pClient )
+	, m_pDownload		( pDownload )
+	, m_bInterested		( FALSE )
+	, m_bChoked			( TRUE )
+	, m_nRandomUnchoke	( 0 )
+	, m_tRandomUnchoke	( 0 )
 {
 	ASSERT( pClient != NULL );
 	ASSERT( pDownload != NULL );
-	
-	m_pDownload			= pDownload;
-	m_pClient			= pClient;
+
 	m_pHost				= pClient->m_pHost;
 	m_sAddress			= pClient->m_sAddress;
 	UpdateCountry();
-	m_sUserAgent		= _T("BitTorrent");
-	
+
+	m_sUserAgent		= pClient->m_sUserAgent;
+	m_bClientExtended	= pClient->m_bClientExtended;
 	m_nState			= upsReady;
-	m_bInterested		= FALSE;
-	m_bChoked			= TRUE;
-	m_nRandomUnchoke	= 0;
 	
 	RequestPartial( m_pDownload );
 	m_pDownload->AddUpload( this );

@@ -1,7 +1,7 @@
 //
 // Neighbour.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -89,7 +89,6 @@ public:
 // Attributes: Capabilities
 public:
 	BOOL    m_bAutomatic;
-	bool    m_bShareaza;       // True if the remote computer is running Shareaza also
 	NrsNode m_nNodeType;       // This connection is to a hub above us, ntHub, a leaf below us, ntLeaf, or a hub just like us, ntNode
 	BOOL    m_bQueryRouting;
 	BOOL    m_bPongCaching;

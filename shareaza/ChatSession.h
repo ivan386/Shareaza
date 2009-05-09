@@ -1,7 +1,7 @@
 //
 // ChatSession.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -49,7 +49,6 @@ public:
 	BOOL			m_bOld;
 	BOOL			m_bMustPush;
 	DWORD			m_tPushed;
-	CString			m_sUserAgent;
 	CString			m_sUserNick;
 	CGProfile*		m_pProfile;
 	BOOL			m_bUnicode;		// ED2K Client in UTF-8 format

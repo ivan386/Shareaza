@@ -1,7 +1,7 @@
 //
 // UploadTransfer.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -50,7 +50,6 @@ CUploadTransfer::CUploadTransfer(PROTOCOLID nProtocol) :
 	m_pBaseFile( NULL ),
 	m_nBandwidth( Settings.Bandwidth.Request ),
 	m_nUserRating( urNew ),
-	m_bClientExtended( FALSE ),
 	m_nFileBase( 0 ),
 	m_nFileSize( 0 ),
 	m_bFilePartial( FALSE ),

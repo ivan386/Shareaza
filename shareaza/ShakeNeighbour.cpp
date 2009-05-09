@@ -1,7 +1,7 @@
 //
 // ShakeNeighbour.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -606,7 +606,7 @@ void CShakeNeighbour::SendHostHeaders(LPCSTR pszMessage, size_t nLength)
 	{
 		// Send nothing
 	}
-	else if ( ( m_bG2Accept || m_bG2Send || m_bShareaza ) && m_nProtocol != PROTOCOL_G1 )
+	else if ( ( m_bG2Accept || m_bG2Send || m_bClientExtended ) && m_nProtocol != PROTOCOL_G1 )
 	{
 		// The remote computer accepts Gnutella2 packets, sends them, or is Shareaza too
 
@@ -655,9 +655,9 @@ void CShakeNeighbour::SendHostHeaders(LPCSTR pszMessage, size_t nLength)
 			// This host is still recent enough to tell another computer about
 			if ( pHost->CanQuote( nTime ) )
 			{
-				if ( strHosts.GetLength() ) strHosts += _T(",");	// Separate each computer's info with a comma
-				strHosts += pHost->ToString( m_bShareaza );			// Add this computer's info to the string
-				nCount--;											// Decrement counter
+				if ( strHosts.GetLength() ) strHosts += _T(",");
+				strHosts += pHost->ToString( m_bClientExtended != FALSE );
+				nCount--;
 			}
 		}
 
@@ -774,7 +774,7 @@ BOOL CShakeNeighbour::OnHeaderLine(CString& strHeader, CString& strValue)
 		m_sUserAgent = strValue;
 
 		// Record that the remote computer is running Shareaza
-		m_bShareaza = VendorCache.IsExtended( m_sUserAgent );
+		m_bClientExtended = VendorCache.IsExtended( m_sUserAgent );
 
 		// If the remote computer is running a client that is breaking GPL, causing problems, etc.
 		// We don't actually ban these clients, but we don't accept them as a leaf. Can still upload, though.
@@ -1304,7 +1304,7 @@ BOOL CShakeNeighbour::OnHeadersCompleteG2()
 				DelayClose( IDS_HANDSHAKE_SURPLUS );
 				return FALSE; 
 			}
-			else if ( ! m_bShareaza )
+			else if ( ! m_bClientExtended )
 			{
 				// Check to see if we have enough free leaf slots.
 				if ( Neighbours.GetCount(PROTOCOL_G2, nrsConnected, ntLeaf ) > ( Settings.Gnutella2.NumLeafs - 5 ) )

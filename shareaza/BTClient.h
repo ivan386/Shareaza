@@ -1,7 +1,7 @@
 //
 // BTClient.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -39,7 +39,6 @@ public:
 // Attributes
 public:
     Hashes::BtGuid          m_oGUID;
-	BOOL					m_bExtended;		// Send extended details (User name, exact version, etc. For G2 capable clients)
 	BOOL					m_bExchange;		// Exchange sources/other info (with extended client)
 	CUploadTransferBT*		m_pUpload;
 	CDownload*				m_pDownload;

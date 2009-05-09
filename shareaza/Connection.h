@@ -1,7 +1,7 @@
 //
 // Connection.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -49,6 +49,7 @@ public:
 	DWORD		m_tConnected;	// The tick count when the socket connection was made
 	SOCKET		m_hSocket;		// The actual Windows socket for the Internet connection to the remote computer
 	CString		m_sUserAgent;	// The name of the program the remote computer is running
+	BOOL		m_bClientExtended;// Does the remote computer support extended functions i.e. running under Shareaza or compatible mod? In practice, this means can we use chat, browse, etc...
 	CString		m_sLastHeader;	// The handshake header that ReadHeaders most recently read
 	int			m_nQueuedRun;	// The queued run state of 0, 1, or 2 (do)
 	PROTOCOLID	m_nProtocol;	// Detected protocol

@@ -49,23 +49,25 @@ static char THIS_FILE[]=__FILE__;
 //////////////////////////////////////////////////////////////////////
 // CUploadTransferED2K construction
 
-CUploadTransferED2K::CUploadTransferED2K(CEDClient* pClient) : CUploadTransfer( PROTOCOL_ED2K )
+CUploadTransferED2K::CUploadTransferED2K(CEDClient* pClient)
+	: CUploadTransfer( PROTOCOL_ED2K )
+	, m_pClient			( pClient )
+	, m_tRequest		( GetTickCount() )
+	, m_nRanking		( 0 )
+	, m_tRankingSent	( 0 )
+	, m_tRankingCheck	( 0 )
+	, m_tLastRun		( 0 )
 {
 	ASSERT( pClient != NULL );
 
-	m_pClient		= pClient;
-	m_nState		= upsReady;
-	m_tRequest		= GetTickCount();
-
-	m_sUserAgent	= m_pClient->m_sUserAgent;
-	m_pHost			= m_pClient->m_pHost;
-	m_sAddress		= inet_ntoa( m_pHost.sin_addr );
+	m_pHost				= pClient->m_pHost;
+	m_sAddress			= pClient->m_sAddress;
 	UpdateCountry();
-	m_sNick			= m_pClient->m_sNick;
 
-	m_tRankingSent	= 0;
-	m_tRankingCheck	= 0;
-	m_tLastRun		= 0;
+	m_sUserAgent		= pClient->m_sUserAgent;
+	m_bClientExtended	= pClient->m_bClientExtended;
+	m_sNick				= pClient->m_sNick;
+	m_nState			= upsReady;
 
 	m_pClient->m_mOutput.pLimit = &m_nBandwidth;
 }

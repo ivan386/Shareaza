@@ -37,6 +37,8 @@
 #include "ShareazaURL.h"
 #include "GProfile.h"
 #include "Datagrams.h"
+#include "Transfers.h"
+#include "VendorCache.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -48,19 +50,15 @@ static char THIS_FILE[]=__FILE__;
 //////////////////////////////////////////////////////////////////////
 // CBTClient construction
 
-CBTClient::CBTClient() :
-	m_bExtended			( FALSE )
-,	m_bExchange			( FALSE )
-
-,	m_pUpload			( NULL )
-,	m_pDownload			( NULL )
-,	m_pDownloadTransfer	( NULL )
-
-,	m_bShake			( FALSE )
-,	m_bOnline			( FALSE )
-,	m_bClosing			( FALSE )
-
-,	m_tLastKeepAlive	( GetTickCount() )
+CBTClient::CBTClient()
+	:	m_bExchange			( FALSE )
+	,	m_pUpload			( NULL )
+	,	m_pDownload			( NULL )
+	,	m_pDownloadTransfer	( NULL )
+	,	m_bShake			( FALSE )
+	,	m_bOnline			( FALSE )
+	,	m_bClosing			( FALSE )
+	,	m_tLastKeepAlive	( GetTickCount() )
 {
 	m_sUserAgent = _T("BitTorrent");
 	m_mInput.pLimit = m_mOutput.pLimit = &Settings.Bandwidth.Request;
@@ -453,8 +451,6 @@ BOOL CBTClient::OnHandshake2()
 	Read( m_oGUID );
 	m_oGUID.validate();
 
-	m_bExtended = isExtendedBtGuid( m_oGUID );
-
 	ASSERT( m_pDownload != NULL );
 
 	if ( m_pDownloadTransfer != NULL )	// Transfer exist, so must be initiated from this side
@@ -510,7 +506,6 @@ BOOL CBTClient::OnHandshake2()
 	m_bOnline = TRUE;
 
 	DetermineUserAgent();
-	if ( m_bExtended ) m_sUserAgent = _T("Shareaza");
 
 	return OnOnline();
 }
@@ -621,6 +616,9 @@ void CBTClient::DetermineUserAgent()
 {
 	int nNickStart = 0, nNickEnd = 13;
 	CString strVer, strNick;
+
+	m_sUserAgent.Empty();
+	m_bClientExtended = isExtendedBtGuid( m_oGUID );
 
 	if ( m_oGUID[ 0 ] == '-' && m_oGUID[ 7 ] == '-' )
 	{
@@ -752,9 +750,16 @@ void CBTClient::DetermineUserAgent()
 	{	// BitSpirit	(Spoofed Client ID)	// GUID 0 - 7: 0	GUID 8 - 15: !0	GUID 16 -19: UDP0	// ToDO: Check that other clients don't use this method
 		m_sUserAgent.Format( _T("BitSpirit") );
 	}
-	else
+
+	if ( ! m_bClientExtended )
+	{
+		m_bClientExtended = VendorCache.IsExtended( m_sUserAgent );
+	}
+
+	if ( m_sUserAgent.IsEmpty() )
 	{	// Unknown peer ID string
-		m_sUserAgent = _T("BitTorrent");
+		m_sUserAgent = m_bClientExtended ? _T("Shareaza") : _T("BitTorrent");
+		theApp.Message( MSG_DEBUG, _T("[BT] Unknown client: %.20hs"), (LPCSTR)&m_oGUID[0] );
 	}
 
 	if ( nNickStart > 0 )
@@ -768,11 +773,12 @@ void CBTClient::DetermineUserAgent()
 	if ( m_pDownloadTransfer != NULL )
 	{
 		m_pDownloadTransfer->m_sUserAgent = m_sUserAgent;
+		m_pDownloadTransfer->m_bClientExtended = m_bClientExtended;
 		if ( m_pDownloadTransfer->m_pSource != NULL )
 		{
 			m_pDownloadTransfer->m_pSource->m_sServer = m_sUserAgent;
 			if ( strNick.GetLength() ) m_pDownloadTransfer->m_pSource->m_sNick = strNick;
-			m_pDownloadTransfer->m_pSource->m_bClientExtended = ( m_bExtended && ! m_pDownloadTransfer->m_pSource->m_bPushOnly);
+			m_pDownloadTransfer->m_pSource->m_bClientExtended = ( m_bClientExtended && ! m_pDownloadTransfer->m_pSource->m_bPushOnly);
 		}
 	}
 
@@ -780,7 +786,7 @@ void CBTClient::DetermineUserAgent()
 	{
 		m_pUpload->m_sUserAgent = m_sUserAgent;
 		if ( strNick.GetLength() ) m_pUpload->m_sNick = strNick;
-		m_pUpload->m_bClientExtended = m_bExtended;
+		m_pUpload->m_bClientExtended = m_bClientExtended;
 	}
 }
 
@@ -805,7 +811,7 @@ BOOL CBTClient::OnOnline()
 		return FALSE;
 	}
 
-	if ( m_bExtended ) SendBeHandshake();
+	if ( m_bClientExtended ) SendBeHandshake();
 
 	if ( CBTPacket* pBitfield = m_pDownload->CreateBitfieldPacket() )
 		Send( pBitfield );
@@ -861,13 +867,16 @@ BOOL CBTClient::OnPacket(CBTPacket* pPacket)
 	case BT_PACKET_DHT_PORT:
 		return OnDHTPort( pPacket );
 	case BT_PACKET_HANDSHAKE:
-		if ( ! m_bExtended ) break;
+		if ( ! m_bClientExtended )
+			break;
 		return OnBeHandshake( pPacket );
 	case BT_PACKET_SOURCE_REQUEST:
-		if ( ! m_bExchange ) break;
+		if ( ! m_bExchange )
+			break;
 		return OnSourceRequest( pPacket );
 	case BT_PACKET_SOURCE_RESPONSE:
-		if ( ! m_bExchange ) break;
+		if ( ! m_bExchange )
+			break;
 		return m_pDownloadTransfer == NULL || m_pDownloadTransfer->OnSourceResponse( pPacket );
 	}
 	

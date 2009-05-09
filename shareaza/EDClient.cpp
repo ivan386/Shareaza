@@ -1002,7 +1002,7 @@ BOOL CEDClient::OnHello(CEDPacket* pPacket)
 	}
 
 	// Get client name/version
-	DeriveSoftwareVersion();
+	DetermineUserAgent();
 
 	// If this was a hello
 	if ( pPacket->m_nType == ED2K_C2C_HELLO )
@@ -1131,7 +1131,7 @@ BOOL CEDClient::OnEmuleInfo(CEDPacket* pPacket)
 	if ( pPacket->m_nType == ED2K_C2C_EMULEINFO ) SendEmuleInfo( ED2K_C2C_EMULEINFOANSWER );
 
 	// Get client name/version
-	DeriveVersion();
+	DetermineUserAgent();
 
 	return TRUE;
 }
@@ -1148,7 +1148,7 @@ void CEDClient::SendPreviewRequest(CDownload* pDownload)
 // CEDClient client version
 
 //Newer clients send the 24 bit "software version" + client ID
-void CEDClient::DeriveSoftwareVersion()
+void CEDClient::DetermineUserAgent()
 {
 	//Newer clients send the 24 bit software version + client ID
 	if ( m_nSoftwareVersion )
@@ -1200,10 +1200,6 @@ void CEDClient::DeriveSoftwareVersion()
 				m_sUserAgent.Format( _T("Shareaza %i.%i.%i.%i"),
 					( ( m_nSoftwareVersion >> 17 ) &0x7F ), ( ( m_nSoftwareVersion >> 10 ) &0x7F ),
 					( ( m_nSoftwareVersion >>  7 ) &0x07 ), ( ( m_nSoftwareVersion ) &0x7F ) );
-
-				//Client allows G2 browse, etc
-				if ( m_pUpload ) m_pUpload->m_bClientExtended = TRUE;
-				if ( m_pDownload && m_pDownload->m_pSource ) m_pDownload->m_pSource->m_bClientExtended = TRUE;
 				break;
 			case 5:
 				m_sUserAgent.Format( _T("ePlus %i.%i%c"),
@@ -1237,20 +1233,12 @@ void CEDClient::DeriveSoftwareVersion()
 				m_sUserAgent.Format( _T("Shareaza %i.%i.%i.%i"),
 					( ( m_nSoftwareVersion >> 17 ) &0x7F ), ( ( m_nSoftwareVersion >> 10 ) &0x7F ),
 					( ( m_nSoftwareVersion >>  7 ) &0x07 ), ( ( m_nSoftwareVersion ) &0x7F ) );
-
-				//Client allows G2 browse, etc
-				if ( m_pUpload ) m_pUpload->m_bClientExtended = TRUE;
-				if ( m_pDownload && m_pDownload->m_pSource ) m_pDownload->m_pSource->m_bClientExtended = TRUE;
 				break;
 			case 203:		// ShareazaPlus with RazaCB core
 				//Note- 2nd last number (Beta build #) may be truncated, since it's only 3 bits.
 				m_sUserAgent.Format( _T("ShareazaPlus %i.%i.%i.%i"),
 					( ( m_nSoftwareVersion >> 17 ) &0x7F ), ( ( m_nSoftwareVersion >> 10 ) &0x7F ),
 					( ( m_nSoftwareVersion >>  7 ) &0x07 ), ( ( m_nSoftwareVersion ) &0x7F ) );
-
-				//Client allows G2 browse, etc
-				if ( m_pUpload ) m_pUpload->m_bClientExtended = TRUE;
-				if ( m_pDownload && m_pDownload->m_pSource ) m_pDownload->m_pSource->m_bClientExtended = TRUE;
 				break;
 			default:	// (Sent a compatible client ID, but we don't recognise it)
 				m_sUserAgent.Format( _T("eMule/c (%i) %i.%i%c"), m_nEmCompatible,
@@ -1261,117 +1249,105 @@ void CEDClient::DeriveSoftwareVersion()
 	}
 	else
 	{
-		DeriveVersion();
-	}
-}
+		//This is the older style of IDing a client
+		if ( m_oGUID[5] == 13 && m_oGUID[14] == 110 )
+			m_bEmule = TRUE;
+		else if ( m_oGUID[5] == 14 && m_oGUID[14] == 111 )
+			m_bEmule = TRUE;
 
-//This is the older style of IDing a client
-void CEDClient::DeriveVersion()
-{
-	if ( m_nSoftwareVersion ) return;
+		if ( m_nEmVersion <= 0 )
+			m_nEmVersion = m_nVersion;
 
-	if ( m_oGUID[5] == 13 && m_oGUID[14] == 110 )
-		m_bEmule = TRUE;
-	else if ( m_oGUID[5] == 14 && m_oGUID[14] == 111 )
-		m_bEmule = TRUE;
-
-	if( m_nEmVersion <= 0 ) m_nEmVersion = m_nVersion;
-
-	if ( m_bEmule )
-	{
-		switch ( m_nEmCompatible )
+		if ( m_bEmule )
 		{
-			case 0:
-				m_sUserAgent.Format( _T("eMule v0.%i%i"), m_nEmVersion >> 4, m_nEmVersion & 15 );
-				break;
-			case 1:
-				m_sUserAgent.Format( _T("cDonkey v%i.%i"), m_nEmVersion >> 4, m_nEmVersion & 15 );
-				break;
-			case 2:
-				m_sUserAgent.Format( _T("xMule v0.%i%i"), m_nEmVersion >> 4, m_nEmVersion & 15 );
-				break;
-			case 3:
-				m_sUserAgent.Format( _T("aMule v0.%i%i"), m_nEmVersion >> 4, m_nEmVersion & 15 );
-				break;
-			case 4:		// Shareaza alpha/beta/mod/fork versions
-				if ( m_bEmAICH )
-				{
-					if ( m_sUserAgent.IsEmpty() )
-						m_sUserAgent.Format( _T("eMule mod (4) v%i"), m_nEmVersion );
+			switch ( m_nEmCompatible )
+			{
+				case 0:
+					m_sUserAgent.Format( _T("eMule v0.%i%i"), m_nEmVersion >> 4, m_nEmVersion & 15 );
 					break;
-				}
-
-				m_sUserAgent.Format( _T("Shareaza") );
-				//Client allows G2 browse, etc
-				if ( m_pUpload ) m_pUpload->m_bClientExtended = TRUE;
-				if ( m_pDownload && m_pDownload->m_pSource ) m_pDownload->m_pSource->m_bClientExtended = TRUE;
-				break;
-			case 10:
-				m_sUserAgent.Format( _T("MLdonkey v0.%i%i"), m_nEmVersion >> 4, m_nEmVersion & 15 );
-				break;
-			case 20:
-				m_sUserAgent.Format( _T("Lphant v0.%i%i"), m_nEmVersion >> 4, m_nEmVersion & 15 );
-				break;
-			case 40:		// Shareaza
-				if ( m_bEmAICH )
-				{
-					if ( m_sUserAgent.IsEmpty() )
-						m_sUserAgent.Format( _T("eMule mod (40) v%i"), m_nEmVersion );
+				case 1:
+					m_sUserAgent.Format( _T("cDonkey v%i.%i"), m_nEmVersion >> 4, m_nEmVersion & 15 );
 					break;
-				}
+				case 2:
+					m_sUserAgent.Format( _T("xMule v0.%i%i"), m_nEmVersion >> 4, m_nEmVersion & 15 );
+					break;
+				case 3:
+					m_sUserAgent.Format( _T("aMule v0.%i%i"), m_nEmVersion >> 4, m_nEmVersion & 15 );
+					break;
+				case 4:		// Shareaza alpha/beta/mod/fork versions
+					if ( m_bEmAICH )
+					{
+						if ( m_sUserAgent.IsEmpty() )
+							m_sUserAgent.Format( _T("eMule mod (4) v%i"), m_nEmVersion );
+						break;
+					}
+					m_sUserAgent = _T("Shareaza");
+					break;
+				case 10:
+					m_sUserAgent.Format( _T("MLdonkey v0.%i%i"), m_nEmVersion >> 4, m_nEmVersion & 15 );
+					break;
+				case 20:
+					m_sUserAgent.Format( _T("Lphant v0.%i%i"), m_nEmVersion >> 4, m_nEmVersion & 15 );
+					break;
+				case 40:		// Shareaza
+					if ( m_bEmAICH )
+					{
+						if ( m_sUserAgent.IsEmpty() )
+							m_sUserAgent.Format( _T("eMule mod (40) v%i"), m_nEmVersion );
+						break;
+					}
+					m_sUserAgent = _T("Shareaza");
+					break;
+				case 203:		// ShareazaPlus with RazaCB core
+					m_sUserAgent.Format( _T("ShareazaPlus") );
+					break;
+				case ED2K_CLIENT_MOD:		// (Did not send a compatible client ID, but did send a MOD tag)
+					m_sUserAgent.Format( _T("eMule mod v%i"), m_nEmVersion );
+					break;
+				case ED2K_CLIENT_UNKNOWN:	// (Did not send a compatible client ID)
+					if ( _tcsistr( m_sNick, _T("www.pruna.com") ) )	// ToDO: We need a better way to recognize pruna
+						m_sUserAgent.Format( _T("Pruna v%i"), m_nEmVersion );
+					else
+						m_sUserAgent.Format( _T("Unidentified v%i"), m_nEmVersion );
+					break;
+				default:					// (Sent a compatible client ID, but we don't recognise it)
+					m_sUserAgent.Format( _T("eMule/c (%i) v0.%i%i"), m_nEmCompatible, m_nEmVersion >> 4, m_nEmVersion & 15 );
+					break;
+			}
+		}
+		else if ( m_oGUID[5] == 'M' && m_oGUID[14] == 'L' )
+		{
+			m_sUserAgent.Format( _T("MLdonkey v%i"), m_nVersion );
+		}
+		else
+		{
+			m_sUserAgent = _T("eDonkeyHybrid ");
 
-				m_sUserAgent.Format( _T("Shareaza") );
-				//Client allows G2 browse, etc
-				if ( m_pUpload ) m_pUpload->m_bClientExtended = TRUE;
-				if ( m_pDownload && m_pDownload->m_pSource ) m_pDownload->m_pSource->m_bClientExtended = TRUE;
-				break;
-			case 203:		// ShareazaPlus with RazaCB core
-				m_sUserAgent.Format( _T("ShareazaPlus") );
-				//Client allows G2 browse, etc
-				if ( m_pUpload ) m_pUpload->m_bClientExtended = TRUE;
-				if ( m_pDownload && m_pDownload->m_pSource ) m_pDownload->m_pSource->m_bClientExtended = TRUE;
-				break;
-			case ED2K_CLIENT_MOD:		// (Did not send a compatible client ID, but did send a MOD tag)
-				m_sUserAgent.Format( _T("eMule mod v%i"), m_nEmVersion );
-				break;
-			case ED2K_CLIENT_UNKNOWN:	// (Did not send a compatible client ID)
-				if ( _tcsistr( m_sNick, _T("www.pruna.com") ) )	// ToDO: We need a better way to recognize pruna
-					m_sUserAgent.Format( _T("Pruna v%i"), m_nEmVersion );
-				else
-					m_sUserAgent.Format( _T("Unidentified v%i"), m_nEmVersion );
-				break;
-			default:					// (Sent a compatible client ID, but we don't recognise it)
-				m_sUserAgent.Format( _T("eMule/c (%i) v0.%i%i"), m_nEmCompatible, m_nEmVersion >> 4, m_nEmVersion & 15 );
-				break;
+			if ( m_nVersion >= 20000 )		// Unknown
+				m_sUserAgent.AppendFormat( _T("%i"), m_nVersion );
+			else if ( m_nVersion >= 10100 )	// eDonkey from versions 1.1.0 to latest version
+			{
+				CString strVersion;
+				strVersion.Format( _T("%i"), m_nVersion );
+				m_sUserAgent.AppendFormat( _T("v%c.%c.%c"), strVersion[0], strVersion[2], strVersion[4] );
+			}
+			else if ( m_nVersion >= 1100 )	// Unknown
+				m_sUserAgent.AppendFormat( _T("%i"), m_nVersion );
+			else if ( m_nVersion >= 1025 )	// eDonkey 0.xx
+				m_sUserAgent.AppendFormat( _T("v0.%i"), m_nVersion - 1000 );
+			else if ( m_nVersion >= 1000 )	// eDonkey 1.0.x
+				m_sUserAgent.AppendFormat( _T("v1.0.%i"), m_nVersion - 1000 );
+			else if ( m_nVersion > 0 )		// Probably the first edonkey versions
+				m_sUserAgent.Format( _T("eDonkey v%i" ), m_nVersion );
+			else							// It shouldn't happen
+				m_sUserAgent = _T("Unidentified eDonkey");
 		}
 	}
-	else if ( m_oGUID[5] == 'M' && m_oGUID[14] == 'L' )
-	{
-		m_sUserAgent.Format( _T("MLdonkey v%i"), m_nVersion );
-	}
-	else
-	{
-		m_sUserAgent.Format( _T("eDonkeyHybrid ") );
 
-		if ( m_nVersion >= 20000 )		// Unknown
-			m_sUserAgent.AppendFormat( _T("%i"), m_nVersion );
-		else if ( m_nVersion >= 10100 )	// eDonkey from versions 1.1.0 to latest version
-		{
-			CString strVersion;
-			strVersion.Format( _T("%i"), m_nVersion );
-			m_sUserAgent.AppendFormat( _T("v%c.%c.%c"), strVersion[0], strVersion[2], strVersion[4] );
-		}
-		else if ( m_nVersion >= 1100 )	// Unknown
-			m_sUserAgent.AppendFormat( _T("%i"), m_nVersion );
-		else if ( m_nVersion >= 1025 )	// eDonkey 0.xx
-			m_sUserAgent.AppendFormat( _T("v0.%i"), m_nVersion - 1000 );
-		else if ( m_nVersion >= 1000 )	// eDonkey 1.0.x
-			m_sUserAgent.AppendFormat( _T("v1.0.%i"), m_nVersion - 1000 );
-		else if ( m_nVersion > 0 )		// Probably the first edonkey versions
-			m_sUserAgent.Format( _T("eDonkey v%i" ), m_nVersion );
-		else							// It shouldn't happen
-			m_sUserAgent.Format( _T("Unidentified eDonkey") );
-	}
+	//Client allows G2 browse, etc
+	m_bClientExtended = VendorCache.IsExtended( m_sUserAgent );
+	if ( m_pUpload ) m_pUpload->m_bClientExtended = m_bClientExtended;
+	if ( m_pDownload && m_pDownload->m_pSource ) m_pDownload->m_pSource->m_bClientExtended = m_bClientExtended;
 }
 
 //////////////////////////////////////////////////////////////////////

@@ -68,7 +68,6 @@ CNeighbour::CNeighbour(PROTOCOLID nProtocol) :
 	m_pProfile( NULL ),			// No profile on the person running the remote computer yet
 	// Set handshake values to defaults
 	m_bAutomatic( FALSE ),		// Automatic setting used to maintain the connection
-	m_bShareaza( false ),		// Expect the remote computer to not be running Shareaza
 	m_nNodeType( ntNode ),		// Start out assuming that we and the remote computer are both hubs
 	m_bQueryRouting( FALSE ),	// Don't start query routing or pong caching yet
 	m_bPongCaching( FALSE ),	//
@@ -121,7 +120,6 @@ CNeighbour::CNeighbour(PROTOCOLID nProtocol, CNeighbour* pBase)
 	, m_pProfile( NULL )
 	, m_oMoreResultsGUID()
 	, m_bAutomatic(        pBase->m_bAutomatic )
-	, m_bShareaza(         pBase->m_bShareaza )
 	, m_nNodeType(         pBase->m_nNodeType )
 	, m_bQueryRouting(     pBase->m_bQueryRouting )
 	, m_bPongCaching(      pBase->m_bPongCaching )

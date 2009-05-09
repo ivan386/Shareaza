@@ -749,7 +749,7 @@ BOOL CG1Neighbour::OnPong(CG1Packet* pPacket)
 
 			// Add the IP address and port number to the Gnutella host cache of computers we can try to connect to
 			HostCache.Gnutella1.Add( (IN_ADDR*)&nAddress, nPort, 0,
-				( ( m_bShareaza && strVendorCode.IsEmpty() ) ? SHAREAZA_VENDOR_T :
+				( ( m_bClientExtended && strVendorCode.IsEmpty() ) ? SHAREAZA_VENDOR_T :
 					(LPCTSTR)strVendorCode ), nUptime );
 
 			if ( bGDNA )
@@ -1052,7 +1052,7 @@ BOOL CG1Neighbour::OnVendor(CG1Packet* pPacket)
 void CG1Neighbour::SendClusterAdvisor()
 {
 	// Only do this if the remote computer is running Shareaza and the settings here allow custom vendor message packets
-	if ( !m_bShareaza || !Settings.Gnutella1.VendorMsg )
+	if ( !m_bClientExtended || !Settings.Gnutella1.VendorMsg )
 		return;
 
 	// Setup local variables
