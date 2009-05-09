@@ -686,6 +686,7 @@ BOOL CDownloadTransferHTTP::OnHeaderLine(CString& strHeader, CString& strValue)
 	if ( strHeader.CompareNoCase( _T("Server") ) == 0 )
 	{
 		m_sUserAgent = strValue;
+		m_bClientExtended = VendorCache.IsExtended( m_sUserAgent );
 		
 		if ( IsAgentBlocked() )
 		{
