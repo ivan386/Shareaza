@@ -772,7 +772,7 @@ BOOL CDownload::Launch(int nIndex, CSingleLock* pLock, BOOL bForceOriginal)
 
 			if ( pLock ) pLock->Unlock();
 
-			UINT nResponse = AfxMessageBox( strMessage,
+			INT_PTR nResponse = AfxMessageBox( strMessage,
 				MB_ICONEXCLAMATION | MB_YESNOCANCEL | MB_DEFBUTTON2 );
 
 			if ( pLock ) pLock->Lock();
