@@ -51,12 +51,13 @@ static char THIS_FILE[]=__FILE__;
 // CDownloadWithFile construction
 
 CDownloadWithFile::CDownloadWithFile() :
-	m_pFile		( new CFragmentedFile() )
+	m_pFile		( new CFragmentedFile )
 ,	m_bVerify	( TRI_UNKNOWN )
 ,	m_tReceived	( GetTickCount() )
 ,	m_nFileError( ERROR_SUCCESS )
 ,	m_bMoving	( FALSE )
 {
+	m_pFile->SetDownload( static_cast< CDownload*>( this ) );
 }
 
 CDownloadWithFile::~CDownloadWithFile()
@@ -749,11 +750,6 @@ void CDownloadWithFile::Serialize(CArchive& ar, int nVersion)
 		if ( nVersion < 25 || ar.ReadCount() )
 		{
 			SerializeFile( ar, nVersion );
-
-			// Change filename and file path
-			if ( nVersion < 41 )
-			{
-			}
 		}
 		else
 		{

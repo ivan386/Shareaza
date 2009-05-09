@@ -29,6 +29,7 @@
 #include "SharedFile.h"
 #include "Uploads.h"
 #include "DlgSelect.h"
+#include "Download.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -82,7 +83,13 @@ CFragmentedFile::CFragmentedFile() :
 ,	m_oFList		( 0 )
 ,	m_nFileError	( ERROR_SUCCESS )
 ,	m_dwRef			( 1 )
+,	m_pDownload		( NULL )
 {
+}
+
+void CFragmentedFile::SetDownload(const CDownload* pDownload)
+{
+	m_pDownload = pDownload;
 }
 
 CFragmentedFile::~CFragmentedFile()
@@ -177,25 +184,47 @@ BOOL CFragmentedFile::Open(LPCTSTR pszFile, QWORD nOffset, QWORD nLength,
 			return ! bWrite || (*i).m_pFile->EnsureWrite();
 	}
 
+	CTransferFile* pFile = NULL;
 	QWORD nRealLength = SIZE_UNKNOWN;
-	CTransferFile* pFile = TransferFiles.Open( pszFile, bWrite );
-	if ( pFile )
+	for ( int method = 0; method < 2; ++method )
 	{
-		nRealLength = pFile->GetSize();
-		if ( pFile->IsExists() && nLength == SIZE_UNKNOWN )
+		pFile = TransferFiles.Open( (*i).m_sPath, bWrite );
+		if ( pFile )
 		{
-			nLength = nRealLength;
+			m_nFileError = ERROR_SUCCESS;
+			nRealLength = pFile->GetSize();
+			if ( pFile->IsExists() && nLength == SIZE_UNKNOWN )
+			{
+				nLength = nRealLength;
+			}
+			else if ( ! bWrite && nRealLength != nLength )
+			{
+				// Wrong file
+				pFile->Release();
+				pFile = NULL;
+				m_nFileError = ERROR_FILE_INVALID;
+			}
+			break;
 		}
-		else if ( ! bWrite && nRealLength != nLength )
+
+		m_nFileError = ::GetLastError();			
+		if ( ! bWrite )
+			// Do nothing for read only files
+			break;
+
+		CString sPath( pszFile );
+		switch( method )
 		{
-			// Wrong file
-			pFile->Release();
-			pFile = NULL;
-			m_nFileError = ERROR_FILE_INVALID;
+		case 0:
+			// Try to open file for write from current incomplete folder
+			// (in case of changed folder)
+			(*i).m_sPath = Settings.Downloads.IncompletePath +
+				sPath.Mid( sPath.ReverseFind( _T('\\') ) );
+			break;
+
+		// TODO: Other methods
 		}
 	}
-	else
-		m_nFileError = ::GetLastError();
 
 	(*i).m_nSize = nLength;
 	(*i).m_pFile = pFile;
@@ -690,7 +719,7 @@ void CFragmentedFile::Serialize(CArchive& ar, int nVersion)
 				ar >> nLength;
 				BOOL bWrite = FALSE;
 				ar >> bWrite;
-				CString sName;
+				CString sName( m_pDownload ? m_pDownload->m_sName : CString() );
 				int nPriority = prNormal;
 				if ( nVersion >= 41 )
 				{
@@ -704,12 +733,7 @@ void CFragmentedFile::Serialize(CArchive& ar, int nVersion)
 					nPriority < prNotWanted || nPriority > prHigh )
 					AfxThrowArchiveException( CArchiveException::genericException );
 
-				if ( ! Open( sPath, nOffset, nLength, bWrite, sName, nPriority ) &&
-					// Try to open file for write from current incomplete folder
-					// (in case of changed folder)
-					( ! bWrite || ! Open( Settings.Downloads.IncompletePath +
-							sPath.Mid( sPath.ReverseFind( _T('\\') ) ), nOffset,
-							nLength, bWrite, sName, nPriority ) ) )
+				if ( ! Open( sPath, nOffset, nLength, bWrite, sName, nPriority ) )
 				{
 					theApp.Message( MSG_ERROR, IDS_DOWNLOAD_FILE_OPEN_ERROR, sPath );
 					AfxThrowFileException( CFileException::fileNotFound );

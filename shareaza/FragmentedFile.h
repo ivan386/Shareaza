@@ -27,6 +27,7 @@
 
 class CShareazaFile;
 class CBTInfo;
+class CDownload;
 
 
 class CFragmentedFile : public CObject
@@ -145,6 +146,7 @@ protected:
 	Fragments::List				m_oFList;
 	DWORD						m_nFileError;
 	volatile LONG				m_dwRef;
+	const CDownload*			m_pDownload;	// Reference download object (optional)
 
 	BOOL	VirtualRead(QWORD nOffset, char* pBuffer, QWORD nBuffer, QWORD* pnRead);
 	BOOL	VirtualWrite(QWORD nOffset, const char* pBuffer, QWORD nBuffer, QWORD* pnWritten);
@@ -153,6 +155,7 @@ protected:
 	QWORD GetCompleted(QWORD nOffset, QWORD nLength) const;
 
 public:
+	void	SetDownload(const CDownload* pDownload);
 	// Open file from disk
 	BOOL	Open(LPCTSTR pszFile, QWORD nOffset = 0, QWORD nLength = SIZE_UNKNOWN,
 		BOOL bWrite = FALSE, LPCTSTR pszName = NULL, int nPriority = prNormal );
