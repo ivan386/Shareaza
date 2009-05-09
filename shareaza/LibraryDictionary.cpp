@@ -349,6 +349,9 @@ void CLibraryDictionary::AddHashes(const CLibraryFile& oFile)
 	if ( oFile.m_oSHA1 )
 		m_pTable->AddExactString( oFile.m_oSHA1.toUrn() );
 
+	if ( oFile.m_oTiger )
+		m_pTable->AddExactString( oFile.m_oTiger.toUrn() );
+
 	if ( oFile.m_oED2K )
 		m_pTable->AddExactString( oFile.m_oED2K.toUrn() );
 
