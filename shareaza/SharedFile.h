@@ -85,7 +85,7 @@ public:
 	mutable DWORD				m_nSearchCookie;
 	mutable DWORD				m_nSearchWords;
 	mutable const CLibraryFile*	m_pNextHit;
-	DWORD						m_nCollIndex;
+	mutable DWORD				m_nCollIndex;
 
 	int				m_nIcon16;
 	BOOL			m_bNewFile;
