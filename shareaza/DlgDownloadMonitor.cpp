@@ -530,28 +530,9 @@ void CDownloadMonitorDlg::OnDownloadLaunch()
 	CSingleLock pLock( &Transfers.m_pSection );
 	if ( ! pLock.Lock( 250 ) || ! Downloads.Check( m_pDownload ) ) return;
 	
-	CString strName = m_pDownload->m_sSafeName;
-	BOOL bCompleted = m_pDownload->IsMoving();
+	m_pDownload->Launch( -1, &pLock, FALSE );
 	
-	CString strType;
-	CLSID pCLSID;
-	
-	int nExtPos = strName.ReverseFind( '.' );
-	if ( nExtPos != -1 ) strType = strName.Mid( nExtPos );
-	ToLower( strType );
-	
-	if ( bCompleted || ! Plugins.LookupCLSID( _T("DownloadPreview"), strType, pCLSID ) )
-	{
-		pLock.Unlock();
-		CFileExecutor::Execute( strName, FALSE );
-	}
-	else
-	{
-		m_pDownload->Preview( &pLock );
-		pLock.Unlock();
-	}
-	
-	if ( bCompleted ) PostMessage( WM_CLOSE );
+	if ( m_pDownload->IsCompleted() ) PostMessage( WM_CLOSE );
 }
 
 void CDownloadMonitorDlg::OnDownloadLibrary() 

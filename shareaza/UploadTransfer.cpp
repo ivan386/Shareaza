@@ -51,7 +51,6 @@ CUploadTransfer::CUploadTransfer(PROTOCOLID nProtocol) :
 	m_nBandwidth( Settings.Bandwidth.Request ),
 	m_nUserRating( urNew ),
 	m_nFileBase( 0 ),
-	m_nFileSize( 0 ),
 	m_bFilePartial( FALSE ),
 	m_bLive( TRUE ),
 	m_nRequests( 0 ),
@@ -88,10 +87,10 @@ void CUploadTransfer::Remove(BOOL bMessage)
 {
 	ASSERT( this != NULL );
 
-	if ( bMessage && m_sFileName.GetLength() > 0 )
+	if ( bMessage && m_sName.GetLength() > 0 )
 	{
 		theApp.Message( MSG_NOTICE, IDS_UPLOAD_REMOVE,
-			(LPCTSTR)m_sFileName, (LPCTSTR)m_sAddress );
+			(LPCTSTR)m_sName, (LPCTSTR)m_sAddress );
 	}
 
 	m_nUploaded = 1;
@@ -131,33 +130,37 @@ BOOL CUploadTransfer::Promote()
 
 BOOL CUploadTransfer::OnRename(LPCTSTR pszSource, LPCTSTR pszTarget)
 {
-	if ( m_nState != upsUploading || _tcsicmp( m_sFilePath, pszSource ) )
+	if ( ! m_pFile.get() || ! m_pFile->FindByPath( pszSource ) )
+		// Unknown name
 		return FALSE;
 
 	if ( pszTarget == NULL )
 	{
-		theApp.Message( MSG_ERROR, IDS_UPLOAD_DELETED, (LPCTSTR)m_sFileName, (LPCTSTR)m_sAddress );
 		// Dequeue, close transfer and release a file
+		theApp.Message( MSG_ERROR, IDS_UPLOAD_DELETED, (LPCTSTR)m_sName, (LPCTSTR)m_sAddress );
 		Close();
 		return TRUE;
 	}
-
-	// Just release a file
-	if ( pszTarget == (LPCTSTR)1 )
+	else if ( pszTarget == (LPCTSTR)1 )
 	{
+		// Just release a file
 		CloseFile();
+		return TRUE;
 	}
-	else if ( ! IsFileOpen() )
+	else
 	{
-		m_sFilePath = pszTarget;
-		if ( ! OpenFile( m_sFilePath, FALSE, FALSE ) )
+		// Reopen file
+		m_sPath = pszTarget;
+		if ( OpenFile() )
 		{
-			theApp.Message( MSG_ERROR, IDS_UPLOAD_DELETED, (LPCTSTR)m_sFileName, (LPCTSTR)m_sAddress );
-			Close();
+			// Successfully reopened
+			return TRUE;
 		}
-	}
 
-	return TRUE;
+		theApp.Message( MSG_ERROR, IDS_UPLOAD_DELETED, (LPCTSTR)m_sName, (LPCTSTR)m_sAddress );
+		Close();
+		return FALSE;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -395,12 +398,12 @@ BOOL CUploadTransfer::HashesFromURN(LPCTSTR pszURN)
 
 void CUploadTransfer::ClearRequest()
 {
-	m_sFileName.Empty();
-	m_sFilePath.Empty();
+	m_sName.Empty();
+	m_sPath.Empty();
 	m_sFileTags.Empty();
 
 	m_nFileBase		= 0;
-	m_nFileSize		= 0;
+	m_nSize			= 0;
 	m_bFilePartial	= FALSE;
 
 	m_nOffset		= 0;
@@ -422,10 +425,10 @@ BOOL CUploadTransfer::RequestComplete(CLibraryFile* pFile)
 	if ( validAndUnequal( m_oBTH, pFile->m_oBTH ) ) return FALSE;
 	if ( validAndUnequal( m_oMD5, pFile->m_oMD5 ) ) return FALSE;
 
-	m_sFileName	= pFile->m_sName;
-	m_sFilePath	= pFile->GetPath();
-	m_nFileBase	= pFile->m_nVirtualSize > 0 ? pFile->m_nVirtualBase : 0;
-	m_nFileSize	= pFile->m_nVirtualSize > 0 ? pFile->m_nVirtualSize : pFile->m_nSize;
+	m_sName	= pFile->m_sName;
+	m_sPath	= pFile->GetPath();
+	m_nFileBase	= pFile->GetBase();
+	m_nSize	= pFile->GetSize();
 	m_sFileTags	= pFile->m_sShareTags;
 	m_bFilePartial = FALSE;
 
@@ -448,10 +451,11 @@ BOOL CUploadTransfer::RequestPartial(CDownload* pFile)
 	if ( validAndUnequal( m_oBTH, pFile->m_oBTH ) ) return FALSE;
 	if ( validAndUnequal( m_oMD5, pFile->m_oMD5 ) ) return FALSE;
 
-	m_sFileName	= pFile->m_sName;
-	m_sFilePath	= pFile->m_sPath;
+	m_sName	= pFile->m_sName;
+	if ( ! pFile->IsTorrent() )
+		m_sPath	= pFile->GetPath( 0 );
 	m_nFileBase	= 0;
-	m_nFileSize	= pFile->m_nSize;
+	m_nSize	= pFile->m_nSize;
 	m_bFilePartial = TRUE;
 	m_sFileTags.Empty();
 
@@ -516,50 +520,28 @@ void CUploadTransfer::StartSending(int nState)
 
 void CUploadTransfer::AllocateBaseFile()
 {
-	m_pBaseFile =	UploadFiles.GetFile( this, m_oSHA1,
-					m_sFileName, m_sFilePath, m_nFileSize );
+	m_pBaseFile = UploadFiles.GetFile( this, m_oSHA1, m_sName, m_sPath, m_nSize );
 }
 
 BOOL CUploadTransfer::IsFileOpen() const
 {
-	return ( m_pFile != NULL );
+	return ( m_pFile.get() != NULL );
 }
 
-BOOL CUploadTransfer::OpenFile(LPCTSTR pszFile, BOOL bWrite, BOOL bCreate)
+BOOL CUploadTransfer::OpenFile()
 {
-	if ( IsFileOpen() )
+	auto_ptr< CFragmentedFile > pFile( new CFragmentedFile );
+	if ( pFile.get() && pFile->Open( m_sPath ) )
+	{
+		AttachFile( pFile );
 		return TRUE;
-
-	m_pFile = new CFragmentedFile;
-	if ( m_pFile && m_pFile->Open( pszFile, 0, SIZE_UNKNOWN, bWrite, bCreate) )
-		return TRUE;
-
-	CloseFile();
-
-	return FALSE;
-}
-
-BOOL CUploadTransfer::OpenFile(const CBTInfo& pInfo, BOOL bWrite, BOOL bCreate)
-{
-	if ( IsFileOpen() )
-		return TRUE;
-
-	m_pFile = new CFragmentedFile;
-	if ( m_pFile && m_pFile->Open( pInfo, bWrite, bCreate) )
-		return TRUE;
-
-	CloseFile();
-
+	}
 	return FALSE;
 }
 
 void CUploadTransfer::CloseFile()
 {
-	if ( m_pFile )
-	{
-		m_pFile->Release();
-		m_pFile = NULL;
-	}
+	m_pFile.reset();
 }
 
 BOOL CUploadTransfer::WriteFile(QWORD nOffset, LPCVOID pData, QWORD nLength, QWORD* pnWritten)
@@ -578,12 +560,7 @@ BOOL CUploadTransfer::ReadFile(QWORD nOffset, LPVOID pData, QWORD nLength, QWORD
 	return m_pFile->Read( nOffset, pData, nLength, pnRead );
 }
 
-void CUploadTransfer::AttachFile(CFragmentedFile* pFile)
+void CUploadTransfer::AttachFile(auto_ptr< CFragmentedFile >& pFile)
 {
-	if ( pFile )
-		pFile->AddRef();
-
-	CloseFile();
-
 	m_pFile = pFile;
 }

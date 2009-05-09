@@ -1,7 +1,7 @@
 //
 // Download.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -21,7 +21,7 @@
 
 #pragma once
 
-#define DOWNLOAD_SER_VERSION	40
+#define DOWNLOAD_SER_VERSION	41
 // History:
 // 33 - added m_sSearchKeyword to CDownloadBase (CyberBob)
 // 34 - added m_bSeeding and m_sServingFileName to CDownloadWithTorrent (Rolandas)
@@ -31,8 +31,10 @@
 // 38 - added m_sCountryName to CDownloadSource (dcat)
 // 39 - added m_bClientExtended to CDownloadSource (Ryo-oh-ki)
 // 40 - added virtual fragmented file (Ryo-oh-ki)
+// 41 - added m_sName to CFragmentedFile (Ryo-oh-ki)
 
 #include "DownloadWithExtras.h"
+#include "Settings.h"
 
 class CDownload : public CDownloadWithExtras
 {
@@ -46,7 +48,6 @@ public:
 	DWORD		m_nSerID;
 	BOOL		m_bExpanded;
 	BOOL		m_bSelected;
-	TRISTATE	m_bVerify;
 	DWORD		m_tCompleted;
 	int			m_nRunCookie;
 	int			m_nSaveCookie;
@@ -71,40 +72,70 @@ public:
 	void        	Share(BOOL bShared);
 	BOOL        	Rename(LPCTSTR pszName);
 	void        	SetStartTimer();
-	BOOL        	IsStarted() const;		//Has the download actually downloaded anything?
-	virtual BOOL	IsPaused( BOOL bRealState = FALSE ) const;
-	virtual BOOL	IsDownloading() const;	//Is the download receiving data?
-	virtual BOOL	IsMoving() const;
-	virtual BOOL	IsCompleted() const;
-	BOOL        	IsBoosted() const;
-	BOOL        	IsShared() const;
-	virtual BOOL	IsTrying() const;		//Is the download currently trying to download?
+	BOOL			Launch(int nIndex, CSingleLock* pLock, BOOL bForceOriginal);
+	BOOL			Enqueue(int nIndex, CSingleLock* pLock);
+
+	inline DWORD GetStartTimer() const
+	{
+		return( m_tBegan );
+	}
+
+	// Has the download actually downloaded anything?
+	inline BOOL IsStarted() const
+	{
+		return ( GetVolumeComplete() > 0 );
+	}
+
+	inline BOOL IsPaused( BOOL bRealState = FALSE ) const
+	{
+		return ( bRealState ? m_bPaused : m_bTempPaused );
+	}
+
+	// Is the download receiving data?
+	inline BOOL IsDownloading() const
+	{
+		return m_bDownloading;
+	}
+
+	inline BOOL IsCompleted() const
+	{
+		return m_bComplete;
+	}
+
+	inline BOOL IsBoosted() const
+	{
+		return m_bBoosted;
+	}
+
+	inline BOOL IsShared() const
+	{
+		return ! IsPaused(TRUE) ? m_bShared ||
+			( Settings.BitTorrent.EnableToday && IsTorrent() && ( IsSeeding() || IsStarted() ) ) ||
+			( Settings.eDonkey.EnableToday && m_oED2K ) : m_bShared;
+	}
+
+	// Is the download currently trying to download?
+	inline BOOL IsTrying() const
+	{
+		return ( m_tBegan != 0 );
+	}
+
 	BOOL			Load(LPCTSTR pszPath);
 	BOOL			Save(BOOL bFlush = FALSE);
 	virtual void	Serialize(CArchive& ar, int nVersion);
 	void			OnRun();
-	BOOL			OnVerify(LPCTSTR pszPath, BOOL bVerified);
-	inline void		ForceComplete()
-	{
-		m_bPaused = FALSE;
-		m_bTempPaused = FALSE;
-		m_bVerify = TRI_FALSE;
-		MakeComplete();
-		StopTrying();
-		Share( FALSE );
-		OnDownloaded();
-	}
+	void			ForceComplete();
+
 private:
 	void        	StopTrying();
-	DWORD       	GetStartTimer() const;
 	void			OnTaskComplete(CDownloadTask* pTask);
 	void			OnDownloaded();
 	void			OnMoved(CDownloadTask* pTask);
 	void			SerializeOld(CArchive& ar, int nVersion);
 
-	friend class CDownloadTask; // m_pTask && OnTaskComplete
-	friend class CDownloadTransfer; // GetVerifyLength
-	friend class CDownloadWithTorrent; // m_bComplete
-	friend class CDownloadsWnd; // m_pTask
-	friend class CDownloads;	// m_bComplete for Load()
+	friend class CDownloadTask;			// m_pTask && OnTaskComplete
+	friend class CDownloadTransfer;		// GetVerifyLength
+	friend class CDownloadWithTorrent;	// m_bComplete
+	friend class CDownloadsWnd;			// m_pTask
+	friend class CDownloads;			// m_bComplete for Load()
 };

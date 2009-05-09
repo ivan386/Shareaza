@@ -1,7 +1,7 @@
 //
 // DownloadBase.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -67,72 +67,6 @@ BOOL CDownloadBase::SetNewTask(CDownloadTask* pTask)
 void CDownloadBase::SetModified()
 {
 	m_nCookie ++;
-}
-
-//////////////////////////////////////////////////////////////////////
-// CDownloadBase disk file name (the <hash>.partial file in the incomplete directory)
-
-void CDownloadBase::GenerateDiskName(bool bTorrent)
-{
-	// Seeding torrents already have a disk name, we need only safe name
-	if ( bTorrent )
-	{
-		m_sSafeName += _T("btih_");
-		m_sSafeName += m_oBTH.toString();
-		return;
-	}
-
-	// Exit if we've already named the temp file
-	if ( m_sPath.GetLength() > 0 ) return;
-
-	// Get a meaningful (but safe) name. Used for previews, etc. Make sure we get extension if name is long.
-	m_sSafeName = CDownloadTask::SafeFilename( m_sName.Right( 64 ) );
-
-	// Start disk file name with hash
-	if ( m_oSHA1 ) 
-	{
-		m_sPath += _T("sha1_");
-		m_sPath += m_oSHA1.toString();
-	}
-	else if ( m_oTiger ) 
-	{
-		m_sPath += _T("ttr_");
-		m_sPath += m_oTiger.toString();
-	}
-	else if ( m_oED2K )
-	{
-		m_sPath += _T("ed2k_");
-		m_sPath += m_oED2K.toString();
-	}
-	else if ( m_oBTH ) 
-	{
-		m_sPath += _T("btih_");
-		m_sPath += m_oBTH.toString();
-	}
-	else if ( m_oMD5 )
-	{
-		m_sPath += _T("md5_");
-		m_sPath += m_oMD5.toString();
-	}
-	else if ( m_sName.GetLength() > 0 )
-	{
-		m_sPath += _T("name_");
-		m_sPath += CDownloadTask::SafeFilename( m_sName.Left( 32 ) );
-	}
-	else
-	{
-		m_sPath.Format( _T("rand_%2i%2i%2i%2i"), GetRandomNum( 0, 99 ), GetRandomNum( 0, 99 ), 
-			GetRandomNum( 0, 99 ), GetRandomNum( 0, 99 ) );
-	}
-
-	// Add a .partial extension
-	m_sPath += _T(".partial");
-	// Create download directory if it doesn't exist
-	CreateDirectory( Settings.Downloads.IncompletePath );
-	// Add the path
-	m_sPath = Settings.Downloads.IncompletePath + _T("\\") + m_sPath;
-
-	ASSERT( m_sPath.GetLength() < MAX_PATH - 1 );
 }
 
 //////////////////////////////////////////////////////////////////////

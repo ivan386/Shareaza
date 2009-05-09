@@ -1,7 +1,7 @@
 //
 // TransferFile.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -50,7 +50,7 @@ CTransferFiles::~CTransferFiles()
 //////////////////////////////////////////////////////////////////////
 // CTransferFiles open a file
 
-CTransferFile* CTransferFiles::Open(LPCTSTR pszFile, BOOL bWrite, BOOL bCreate)
+CTransferFile* CTransferFiles::Open(LPCTSTR pszFile, BOOL bWrite)
 {
 	CSingleLock pLock( &m_pSection, TRUE );
 
@@ -65,7 +65,7 @@ CTransferFile* CTransferFiles::Open(LPCTSTR pszFile, BOOL bWrite, BOOL bCreate)
 	else
 	{
 		pFile = new CTransferFile( pszFile );
-		if ( ! pFile->Open( bWrite, bCreate ) )
+		if ( ! pFile->Open( bWrite ) )
 		{
 			DWORD dwError = GetLastError();
 			pFile->Release();
@@ -208,25 +208,16 @@ HANDLE CTransferFile::GetHandle(BOOL bWrite)
 //////////////////////////////////////////////////////////////////////
 // CTransferFile open
 
-BOOL CTransferFile::Open(BOOL bWrite, BOOL bCreate)
+BOOL CTransferFile::Open(BOOL bWrite)
 {
 	if ( m_hFile != INVALID_HANDLE_VALUE ) return FALSE;
 
-	// Don't touch moving files
-	{
-		CQuickLock pLock( Transfers.m_pSection );
-		if ( CDownload* pDownload = Downloads.FindByPath( m_sPath ) )
-			if ( pDownload->IsMoving() && pDownload->IsTasking() )
-				return FALSE;
-	}
-
-	ASSERT( ! bCreate || bWrite );
-
-	m_bExists = ! bCreate && ( GetFileAttributes( m_sPath ) != INVALID_FILE_ATTRIBUTES );
-	m_hFile = CreateFile( m_sPath, GENERIC_READ | ( bWrite ? GENERIC_WRITE : 0 ),
+	m_bExists = ( GetFileAttributes( CString( _T("\\\\?\\") ) + m_sPath ) != INVALID_FILE_ATTRIBUTES );
+	m_hFile = CreateFile( CString( _T("\\\\?\\") ) + m_sPath,
+		GENERIC_READ | ( bWrite ? GENERIC_WRITE : 0 ),
 		FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE,
-		NULL, ( bCreate ? OPEN_ALWAYS : OPEN_EXISTING ), FILE_ATTRIBUTE_NORMAL, NULL );
-	VERIFY_FILE_ACCESS( m_hFile, m_sPath )
+		NULL, ( bWrite ? OPEN_ALWAYS : OPEN_EXISTING ), FILE_ATTRIBUTE_NORMAL, NULL );
+
 	if ( m_hFile != INVALID_HANDLE_VALUE )
 	{
 		m_bWrite = bWrite;
@@ -256,9 +247,12 @@ BOOL CTransferFile::EnsureWrite()
 	CloseHandle( m_hFile );
 	m_hFile = INVALID_HANDLE_VALUE;
 
-	if ( Open( TRUE, FALSE ) ) return TRUE;
+	if ( Open( TRUE ) )
+		return TRUE;
 
-	Open( FALSE, FALSE );
+	DWORD dwError = GetLastError();
+	Open( FALSE );
+	SetLastError( dwError );
 
 	return FALSE;
 }
@@ -273,7 +267,7 @@ BOOL CTransferFile::CloseWrite()
 	CloseHandle( m_hFile );
 	m_hFile = INVALID_HANDLE_VALUE;
 
-	return Open( FALSE, FALSE );
+	return Open( FALSE );
 }
 
 //////////////////////////////////////////////////////////////////////

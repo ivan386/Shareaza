@@ -1560,7 +1560,7 @@ CString CDownloadsCtrl::GetDownloadStatus(CDownload *pDownload)
 			LoadString( strText, IDS_STATUS_COMPLETED );
 	else if ( pDownload->IsPaused() )
 	{
-		if ( pDownload->m_bDiskFull )
+		if ( pDownload->GetFileError() != ERROR_SUCCESS )
 			if ( pDownload->IsMoving() )
 				LoadString( strText, IDS_STATUS_CANTMOVE );
 			else

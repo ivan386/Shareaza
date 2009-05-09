@@ -23,7 +23,7 @@
 
 #include "DlgSkinDialog.h"
 
-class CDownload;
+class CDownloadWithExtras;
 
 
 class CFilePreviewDlg :
@@ -33,7 +33,7 @@ class CFilePreviewDlg :
 	DECLARE_DYNAMIC(CFilePreviewDlg)
 
 public:
-	CFilePreviewDlg(CDownload* pDownload, CWnd* pParent = NULL);
+	CFilePreviewDlg(CDownloadWithExtras* pDownload, DWORD nIndex, CWnd* pParent = NULL);
 	virtual ~CFilePreviewDlg();
 
 	enum { IDD = IDD_FILE_PREVIEW };
@@ -43,7 +43,7 @@ public:
 	static void	CloseAll();
 
 	CCriticalSection		m_pSection;
-	CDownload*		m_pDownload;
+	CDownloadWithExtras*	m_pDownload;
 	CString			m_sDisplayName;
 	CString			m_sSourceName;
 	CString			m_sTargetName;
@@ -65,7 +65,6 @@ protected:
 	IDownloadPreviewPlugin*				m_pPlugin;
 	static CList< CFilePreviewDlg* >	m_pWindows;
 
-	void		SetDownload(CDownload* pDownload);
 	void		OnRun();
 	BOOL		RunPlugin(HANDLE hFile);
 	BOOL		LoadPlugin(LPCTSTR pszType);

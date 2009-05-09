@@ -413,9 +413,9 @@ BOOL CUploadTransferHTTP::OnHeadersComplete()
 	}
 	else if ( IsAgentBlocked() )
 	{
-		if ( m_sFileName.IsEmpty() ) m_sFileName = _T("file");
+		if ( m_sName.IsEmpty() ) m_sName = _T("file");
 		SendResponse( IDR_HTML_BROWSER );
-		theApp.Message( MSG_ERROR, IDS_UPLOAD_BROWSER, (LPCTSTR)m_sAddress, (LPCTSTR)m_sFileName );
+		theApp.Message( MSG_ERROR, IDS_UPLOAD_BROWSER, (LPCTSTR)m_sAddress, (LPCTSTR)m_sName );
 		Security.Ban( &m_pHost.sin_addr, ban5Mins, FALSE ); // Anti-hammer protection if client doesn't understand 403 (Don't bother re-sending HTML every 5 seconds)
 		if ( m_sUserAgent.Find( _T("Mozilla") ) >= 0 ) return TRUE;
 		Remove( FALSE );
@@ -475,7 +475,7 @@ BOOL CUploadTransferHTTP::OnHeadersComplete()
 				{
 					if ( pShared->m_pMetadata != NULL )
 					{
-						m_sFileName	= pShared->m_sName;
+						m_sName	= pShared->m_sName;
 						if ( CXMLElement* pMetadata	= pShared->m_pSchema->Instantiate( TRUE ) )
 						{
 							pMetadata->AddElement( pShared->m_pMetadata->Clone() );
@@ -496,7 +496,7 @@ BOOL CUploadTransferHTTP::OnHeadersComplete()
 		{
 			if ( pDownload->GetMetadata() )
 			{
-				m_sFileName	= pDownload->m_sName;
+				m_sName	= pDownload->m_sName;
 				if ( CXMLElement* pMetadata	= pDownload->GetMetadata()->Clone() )
 					return RequestMetadata( pMetadata );
 			}
@@ -513,7 +513,7 @@ BOOL CUploadTransferHTTP::OnHeadersComplete()
 				if ( CLibraryFile* pShared = LibraryMaps.LookupFileByURN( pszURN, TRUE, TRUE ) )
 				{
 					CTigerTree* pTigerTree = pShared->GetTigerTree();
-					m_sFileName = pShared->m_sName;
+					m_sName = pShared->m_sName;
 					return RequestTigerTreeRaw( pTigerTree, TRUE );
 				}
 			}
@@ -529,7 +529,7 @@ BOOL CUploadTransferHTTP::OnHeadersComplete()
 		{
 			if ( pDownload->GetTigerTree() != NULL )
 			{
-				m_sFileName = pDownload->m_sName;
+				m_sName = pDownload->m_sName;
 				return RequestTigerTreeRaw( pDownload->GetTigerTree(), FALSE );
 			}
 		}
@@ -554,8 +554,8 @@ BOOL CUploadTransferHTTP::OnHeadersComplete()
 				{
 					CTigerTree* pTigerTree	= pShared->GetTigerTree();
 					CED2K* pHashset			= bHashset ? pShared->GetED2K() : NULL;
-					m_sFileName = pShared->m_sName;
-					m_nFileSize = pShared->GetSize();
+					m_sName = pShared->m_sName;
+					m_nSize = pShared->GetSize();
 					return RequestTigerTreeDIME( pTigerTree, nDepth, pHashset, TRUE );
 				}
 			}
@@ -571,8 +571,8 @@ BOOL CUploadTransferHTTP::OnHeadersComplete()
 		{
 			if ( pDownload->GetTigerTree() != NULL )
 			{
-				m_sFileName = pDownload->m_sName;
-				m_nFileSize = pDownload->m_nSize;
+				m_sName = pDownload->m_sName;
+				m_nSize = pDownload->m_nSize;
 				return RequestTigerTreeDIME( pDownload->GetTigerTree(), nDepth,
 					bHashset ? pDownload->GetHashset() : NULL, FALSE );
 			}
@@ -667,16 +667,16 @@ BOOL CUploadTransferHTTP::OnHeadersComplete()
 		}
 	}
 
-	if ( m_sFileName.IsEmpty() )
+	if ( m_sName.IsEmpty() )
 	{
 		if ( m_oSHA1 )
-			m_sFileName = m_oSHA1.toUrn();
+			m_sName = m_oSHA1.toUrn();
 		else
-			m_sFileName = m_sRequest;
+			m_sName = m_sRequest;
 	}
 
 	SendResponse( IDR_HTML_FILENOTFOUND );
-	theApp.Message( MSG_ERROR, IDS_UPLOAD_FILENOTFOUND, (LPCTSTR)m_sAddress, (LPCTSTR)m_sFileName );
+	theApp.Message( MSG_ERROR, IDS_UPLOAD_FILENOTFOUND, (LPCTSTR)m_sAddress, (LPCTSTR)m_sName );
 
 	return TRUE;
 }
@@ -701,7 +701,7 @@ BOOL CUploadTransferHTTP::RequestSharedFile(CLibraryFile* pFile, CSingleLock& oL
 	{
 		oLibraryLock.Unlock();
 		SendResponse( IDR_HTML_HASHMISMATCH );
-		theApp.Message( MSG_ERROR, IDS_UPLOAD_HASH_MISMATCH, (LPCTSTR)m_sAddress, (LPCTSTR)m_sFileName );
+		theApp.Message( MSG_ERROR, IDS_UPLOAD_HASH_MISMATCH, (LPCTSTR)m_sAddress, (LPCTSTR)m_sName );
 		return TRUE;
 	}
 
@@ -709,18 +709,18 @@ BOOL CUploadTransferHTTP::RequestSharedFile(CLibraryFile* pFile, CSingleLock& oL
 	{
 		oLibraryLock.Unlock();
 		SendResponse( IDR_HTML_DISABLED );
-		theApp.Message( MSG_ERROR, IDS_UPLOAD_DISABLED, (LPCTSTR)m_sAddress, (LPCTSTR)m_sFileName );
+		theApp.Message( MSG_ERROR, IDS_UPLOAD_DISABLED, (LPCTSTR)m_sAddress, (LPCTSTR)m_sName );
 		return TRUE;
 	}
 
 	if ( ! UploadQueues.CanUpload( PROTOCOL_HTTP, pFile ) )
 	{
 		// File is not uploadable. (No queue, is a ghost, etc)
-		if ( m_sFileName.IsEmpty() ) m_sFileName = m_oSHA1.toUrn();
+		if ( m_sName.IsEmpty() ) m_sName = m_oSHA1.toUrn();
 
 		oLibraryLock.Unlock();
 		SendResponse( IDR_HTML_FILENOTFOUND );
-		theApp.Message( MSG_ERROR, IDS_UPLOAD_FILENOTFOUND, (LPCTSTR)m_sAddress, (LPCTSTR)m_sFileName );
+		theApp.Message( MSG_ERROR, IDS_UPLOAD_FILENOTFOUND, (LPCTSTR)m_sAddress, (LPCTSTR)m_sName );
 		return TRUE;
 	}
 	
@@ -729,13 +729,13 @@ BOOL CUploadTransferHTTP::RequestSharedFile(CLibraryFile* pFile, CSingleLock& oL
 	
 	if ( ! IsHashed() ) m_sLocations.Empty();
 	
-	if ( m_nLength == SIZE_UNKNOWN ) m_nLength = m_nFileSize - m_nOffset;
+	if ( m_nLength == SIZE_UNKNOWN ) m_nLength = m_nSize - m_nOffset;
 	
-	if ( m_nOffset >= m_nFileSize || m_nOffset + m_nLength > m_nFileSize )
+	if ( m_nOffset >= m_nSize || m_nOffset + m_nLength > m_nSize )
 	{
 		oLibraryLock.Unlock();
 		SendResponse( IDR_HTML_BADRANGE );
-		theApp.Message( MSG_ERROR, IDS_UPLOAD_BAD_RANGE, (LPCTSTR)m_sAddress, (LPCTSTR)m_sFileName );
+		theApp.Message( MSG_ERROR, IDS_UPLOAD_BAD_RANGE, (LPCTSTR)m_sAddress, (LPCTSTR)m_sName );
 		return TRUE;
 	}
 
@@ -762,7 +762,7 @@ BOOL CUploadTransferHTTP::RequestPartialFile(CDownload* pDownload)
 	if ( ! RequestPartial( pDownload ) )
 	{
 		SendResponse( IDR_HTML_HASHMISMATCH );
-		theApp.Message( MSG_ERROR, IDS_UPLOAD_HASH_MISMATCH, (LPCTSTR)m_sAddress, (LPCTSTR)m_sFileName );
+		theApp.Message( MSG_ERROR, IDS_UPLOAD_HASH_MISMATCH, (LPCTSTR)m_sAddress, (LPCTSTR)m_sName );
 		return TRUE;
 	}
 	
@@ -785,7 +785,7 @@ BOOL CUploadTransferHTTP::RequestPartialFile(CDownload* pDownload)
 		pDownload->GetRandomRange( m_nOffset, m_nLength );
 	}
 	
-	if ( m_nLength == SIZE_UNKNOWN ) m_nLength = m_nFileSize - m_nOffset;
+	if ( m_nLength == SIZE_UNKNOWN ) m_nLength = m_nSize - m_nOffset;
 	
 	if ( pDownload->ClipUploadRange( m_nOffset, m_nLength ) )
 	{
@@ -802,7 +802,7 @@ BOOL CUploadTransferHTTP::RequestPartialFile(CDownload* pDownload)
 		else
 		{
 			SendResponse( IDR_HTML_FILENOTFOUND );
-			theApp.Message( MSG_ERROR, IDS_UPLOAD_FILENOTFOUND, (LPCTSTR)m_sAddress, (LPCTSTR)m_sFileName );
+			theApp.Message( MSG_ERROR, IDS_UPLOAD_FILENOTFOUND, (LPCTSTR)m_sAddress, (LPCTSTR)m_sName );
 			return TRUE;
 		}
 	}
@@ -823,7 +823,7 @@ BOOL CUploadTransferHTTP::RequestPartialFile(CDownload* pDownload)
 	
 	StartSending( upsResponse );
 	
-	theApp.Message( MSG_INFO, IDS_UPLOAD_BAD_RANGE, (LPCTSTR)m_sAddress, (LPCTSTR)m_sFileName );
+	theApp.Message( MSG_INFO, IDS_UPLOAD_BAD_RANGE, (LPCTSTR)m_sAddress, (LPCTSTR)m_sName );
 	
 	return TRUE;
 }
@@ -858,7 +858,7 @@ BOOL CUploadTransferHTTP::QueueRequest()
 			ASSERT( m_pQueue != NULL );
 
 			// If the queue can't accept this file
-			if ( ! m_pQueue->CanAccept( m_nProtocol, m_sFileName, m_nFileSize, 
+			if ( ! m_pQueue->CanAccept( m_nProtocol, m_sName, m_nSize, 
 				( m_bFilePartial ? CUploadQueue::ulqPartial: CUploadQueue::ulqLibrary ), m_sFileTags ) )
 			{	// This is probably a partial that has completed
 				theApp.Message( MSG_DEBUG, _T("File queue error- Partial may have recently completed") );
@@ -881,7 +881,7 @@ BOOL CUploadTransferHTTP::QueueRequest()
 		else if ( UploadQueues.Enqueue( this ) )
 		{
 			ASSERT( m_pQueue != NULL );
-			ASSERT( m_pQueue->CanAccept( m_nProtocol, m_sFileName, m_nFileSize, 
+			ASSERT( m_pQueue->CanAccept( m_nProtocol, m_sName, m_nSize, 
 				( m_bFilePartial ? CUploadQueue::ulqPartial : CUploadQueue::ulqLibrary ), m_sFileTags ) );
 			
 			nPosition = UploadQueues.GetPosition( this, TRUE );
@@ -945,7 +945,7 @@ BOOL CUploadTransferHTTP::QueueRequest()
 				Settings.Uploads.QueuePollMax / nTimeScale,
 				(LPCTSTR)strName );
 			
-			theApp.Message( MSG_INFO, IDS_UPLOAD_QUEUED, (LPCTSTR)m_sFileName,
+			theApp.Message( MSG_INFO, IDS_UPLOAD_QUEUED, (LPCTSTR)m_sName,
 				(LPCTSTR)m_sAddress, nPosition, m_pQueue->GetQueuedCount(),
 				(LPCTSTR)strName );
 
@@ -963,7 +963,7 @@ BOOL CUploadTransferHTTP::QueueRequest()
 	{
 		theApp.Message( MSG_ERROR, ( nError ? nError : ( m_bQueueMe ?
 			IDS_UPLOAD_BUSY_QUEUE : IDS_UPLOAD_BUSY_OLD ) ),
-			(LPCTSTR)m_sFileName, (LPCTSTR)m_sAddress, (LPCTSTR)m_sUserAgent );
+			(LPCTSTR)m_sName, (LPCTSTR)m_sAddress, (LPCTSTR)m_sUserAgent );
 		SendResponse( IDR_HTML_BUSY, TRUE );
 	}
 
@@ -1109,13 +1109,11 @@ void CUploadTransferHTTP::SendFileHeaders()
 
 BOOL CUploadTransferHTTP::OpenFileSendHeaders()
 {
-	ASSERT( ! IsFileOpen() );
-
-	if ( ! OpenFile( m_sFilePath, FALSE, FALSE ) )
+	if ( ! IsFileOpen() && ! OpenFile() )
 	{
 		// If there's an error reading the file from disk
 		SendResponse( IDR_HTML_FILENOTFOUND );
-		theApp.Message( MSG_ERROR, IDS_UPLOAD_CANTOPEN, (LPCTSTR)m_sFileName, (LPCTSTR)m_sAddress );
+		theApp.Message( MSG_ERROR, IDS_UPLOAD_CANTOPEN, (LPCTSTR)m_sName, (LPCTSTR)m_sAddress );
 		return TRUE;
 	}
 	
@@ -1130,7 +1128,7 @@ BOOL CUploadTransferHTTP::OpenFileSendHeaders()
 	
 	pLock.Unlock();
 	
-	if ( m_nLength != m_nFileSize )
+	if ( m_nLength != m_nSize )
 		Write( _P("HTTP/1.1 206 OK\r\n") );
 	else
 		Write( _P("HTTP/1.1 200 OK\r\n") );
@@ -1139,8 +1137,8 @@ BOOL CUploadTransferHTTP::OpenFileSendHeaders()
 	
 	CString strExt, strResponse;
 	
-	int nType = m_sFileName.ReverseFind( '.' );
-	if ( nType > 0 ) strExt = m_sFileName.Mid( nType );
+	int nType = m_sName.ReverseFind( '.' );
+	if ( nType > 0 ) strExt = m_sName.Mid( nType );
 	ShellIcons.Lookup( strExt, NULL, NULL, NULL, &strResponse );
 	
 	if ( strResponse.IsEmpty() )
@@ -1156,9 +1154,9 @@ BOOL CUploadTransferHTTP::OpenFileSendHeaders()
 	strResponse.Format( _T("Content-Length: %I64i\r\n"), m_nLength );
 	Write( strResponse );
 	
-	if ( m_nLength != m_nFileSize )
+	if ( m_nLength != m_nSize )
 	{
-		strResponse.Format( _T("Content-Range: bytes=%I64i-%I64i/%I64i\r\n"), m_nOffset, m_nOffset + m_nLength - 1, m_nFileSize );
+		strResponse.Format( _T("Content-Range: bytes=%I64i-%I64i/%I64i\r\n"), m_nOffset, m_nOffset + m_nLength - 1, m_nSize );
 		Write( strResponse );
 	}
 	
@@ -1173,9 +1171,7 @@ BOOL CUploadTransferHTTP::OpenFileSendHeaders()
 	
 	if ( m_bHead )
 	{
-		CloseFile();
-
-		theApp.Message( MSG_INFO, IDS_UPLOAD_HEADERS, (LPCTSTR)m_sFileName,
+		theApp.Message( MSG_INFO, IDS_UPLOAD_HEADERS, (LPCTSTR)m_sName,
 			(LPCTSTR)m_sAddress, (LPCTSTR)m_sUserAgent );
 		
 		StartSending( upsResponse );
@@ -1185,14 +1181,14 @@ BOOL CUploadTransferHTTP::OpenFileSendHeaders()
 		if ( m_pBaseFile->m_nRequests++ == 0 )
 		{
 			theApp.Message( MSG_NOTICE, IDS_UPLOAD_FILE,
-				(LPCTSTR)m_sFileName, (LPCTSTR)m_sAddress );
+				(LPCTSTR)m_sName, (LPCTSTR)m_sAddress );
 			
-			PostMainWndMessage( WM_NOWUPLOADING, 0, (LPARAM)new CString( m_sFilePath ) );
+			PostMainWndMessage( WM_NOWUPLOADING, 0, (LPARAM)new CString( m_sPath ) );
 		}
 		
 		theApp.Message( MSG_INFO,
 			m_sRanges.GetLength() ? IDS_UPLOAD_PARTIAL_CONTENT : IDS_UPLOAD_CONTENT,
-			m_nOffset, m_nOffset + m_nLength - 1, (LPCTSTR)m_sFileName,
+			m_nOffset, m_nOffset + m_nLength - 1, (LPCTSTR)m_sName,
 			(LPCTSTR)m_sAddress, (LPCTSTR)m_sUserAgent );
 		
 		StartSending( upsUploading );
@@ -1268,15 +1264,13 @@ void CUploadTransferHTTP::OnCompleted()
 {
 	Uploads.SetStable( GetAverageSpeed() );
 	
-	CloseFile();
-
 	m_nState	= upsRequest;
 	m_tRequest	= GetTickCount();
 	
 	m_pBaseFile->AddFragment( m_nOffset, m_nLength );
 	// m_pBaseFile = NULL;
 	
-	theApp.Message( MSG_INFO, IDS_UPLOAD_FINISHED, (LPCTSTR)m_sFileName, (LPCTSTR)m_sAddress );
+	theApp.Message( MSG_INFO, IDS_UPLOAD_FINISHED, (LPCTSTR)m_sName, (LPCTSTR)m_sAddress );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -1383,7 +1377,7 @@ BOOL CUploadTransferHTTP::RequestMetadata(CXMLElement* pMetadata)
 	StartSending( upsMetadata );
 	
 	theApp.Message( MSG_INFO, IDS_UPLOAD_METADATA_SEND,
-		(LPCTSTR)m_sFileName, (LPCTSTR)m_sAddress );
+		(LPCTSTR)m_sName, (LPCTSTR)m_sAddress );
 	
 	return TRUE;
 }
@@ -1402,7 +1396,7 @@ BOOL CUploadTransferHTTP::RequestTigerTreeRaw(CTigerTree* pTigerTree, BOOL bDele
 		m_sLocations.Empty();
 		
 		SendResponse( IDR_HTML_FILENOTFOUND, TRUE );
-		theApp.Message( MSG_ERROR, IDS_UPLOAD_FILENOTFOUND, (LPCTSTR)m_sAddress, (LPCTSTR)m_sFileName );
+		theApp.Message( MSG_ERROR, IDS_UPLOAD_FILENOTFOUND, (LPCTSTR)m_sAddress, (LPCTSTR)m_sName );
 		
 		return TRUE;
 	}
@@ -1449,7 +1443,7 @@ BOOL CUploadTransferHTTP::RequestTigerTreeRaw(CTigerTree* pTigerTree, BOOL bDele
 		StartSending( upsTigerTree );
 		
 		theApp.Message( MSG_INFO, IDS_UPLOAD_TIGER_SEND,
-			(LPCTSTR)m_sFileName, (LPCTSTR)m_sAddress );
+			(LPCTSTR)m_sName, (LPCTSTR)m_sAddress );
 	}
 	else
 	{
@@ -1458,7 +1452,7 @@ BOOL CUploadTransferHTTP::RequestTigerTreeRaw(CTigerTree* pTigerTree, BOOL bDele
 		m_sLocations.Empty();
 		
 		SendResponse( IDR_HTML_BADRANGE, TRUE );
-		theApp.Message( MSG_ERROR, IDS_UPLOAD_BAD_RANGE, (LPCTSTR)m_sAddress, (LPCTSTR)m_sFileName );
+		theApp.Message( MSG_ERROR, IDS_UPLOAD_BAD_RANGE, (LPCTSTR)m_sAddress, (LPCTSTR)m_sName );
 	}
 	
 	GlobalFree( pSerialTree );
@@ -1483,7 +1477,7 @@ BOOL CUploadTransferHTTP::RequestTigerTreeDIME(CTigerTree* pTigerTree, int nDept
 		m_sLocations.Empty();
 		
 		SendResponse( IDR_HTML_FILENOTFOUND, TRUE );
-		theApp.Message( MSG_ERROR, IDS_UPLOAD_FILENOTFOUND, (LPCTSTR)m_sAddress, (LPCTSTR)m_sFileName );
+		theApp.Message( MSG_ERROR, IDS_UPLOAD_FILENOTFOUND, (LPCTSTR)m_sAddress, (LPCTSTR)m_sName );
 		
 		if ( pHashset != NULL && bDelete ) delete pHashset;
 		
@@ -1510,7 +1504,7 @@ BOOL CUploadTransferHTTP::RequestTigerTreeDIME(CTigerTree* pTigerTree, int nDept
 					_T("\t<digest algorithm=\"http://open-content.net/spec/digest/tiger\" outputsize=\"24\"/>\r\n")
 					_T("\t<serializedtree depth=\"%i\" type=\"http://open-content.net/spec/thex/breadthfirst\" uri=\"%s\"/>\r\n")
 					_T("</hashtree>"),
-					m_nFileSize, nDepth, (LPCTSTR)strUUID );
+					m_nSize, nDepth, (LPCTSTR)strUUID );
 	
 	CStringA strXMLUTF8 = UTF8Encode( strXML );
 
@@ -1578,7 +1572,7 @@ BOOL CUploadTransferHTTP::RequestTigerTreeDIME(CTigerTree* pTigerTree, int nDept
 		StartSending( upsTigerTree );
 		
 		theApp.Message( MSG_INFO, IDS_UPLOAD_TIGER_SEND,
-			(LPCTSTR)m_sFileName, (LPCTSTR)m_sAddress );
+			(LPCTSTR)m_sName, (LPCTSTR)m_sAddress );
 	}
 	else
 	{
@@ -1587,7 +1581,7 @@ BOOL CUploadTransferHTTP::RequestTigerTreeDIME(CTigerTree* pTigerTree, int nDept
 		m_sLocations.Empty();
 		
 		SendResponse( IDR_HTML_BADRANGE, TRUE );
-		theApp.Message( MSG_ERROR, IDS_UPLOAD_BAD_RANGE, (LPCTSTR)m_sAddress, (LPCTSTR)m_sFileName );
+		theApp.Message( MSG_ERROR, IDS_UPLOAD_BAD_RANGE, (LPCTSTR)m_sAddress, (LPCTSTR)m_sName );
 	}
 	
 	return TRUE;
@@ -1600,8 +1594,8 @@ BOOL CUploadTransferHTTP::RequestPreview(CLibraryFile* pFile, CSingleLock& oLibr
 {
 	ASSERT( pFile != NULL );
 	
-	m_sFileName		= pFile->m_sName;
-	m_sFilePath		= pFile->GetPath();
+	m_sName		= pFile->m_sName;
+	m_sPath		= pFile->GetPath();
 	m_oSHA1			= pFile->m_oSHA1;
 	m_oTiger		= pFile->m_oTiger;
 	m_oED2K			= pFile->m_oED2K;
@@ -1614,19 +1608,19 @@ BOOL CUploadTransferHTTP::RequestPreview(CLibraryFile* pFile, CSingleLock& oLibr
 	
 	if ( nExisting >= Settings.Uploads.PreviewTransfers )
 	{
-		theApp.Message( MSG_ERROR, IDS_UPLOAD_PREVIEW_BUSY, (LPCTSTR)m_sFileName, (LPCTSTR)m_sAddress );
+		theApp.Message( MSG_ERROR, IDS_UPLOAD_PREVIEW_BUSY, (LPCTSTR)m_sName, (LPCTSTR)m_sAddress );
 		SendResponse( IDR_HTML_BUSY );
 		return TRUE;
 	}
 	
 	CImageFile pImage;
-	if ( CThumbCache::Cache( m_sFilePath, &pImage, Settings.Uploads.DynamicPreviews ) )
+	if ( CThumbCache::Cache( m_sPath, &pImage, Settings.Uploads.DynamicPreviews ) )
 	{
-		theApp.Message( MSG_INFO, IDS_UPLOAD_PREVIEW_DYNAMIC, (LPCTSTR)m_sFileName, (LPCTSTR)m_sAddress );
+		theApp.Message( MSG_INFO, IDS_UPLOAD_PREVIEW_DYNAMIC, (LPCTSTR)m_sName, (LPCTSTR)m_sAddress );
 	}
 	else
 	{
-		theApp.Message( MSG_ERROR, IDS_UPLOAD_PREVIEW_EMPTY, (LPCTSTR)m_sAddress, (LPCTSTR)m_sFileName );
+		theApp.Message( MSG_ERROR, IDS_UPLOAD_PREVIEW_EMPTY, (LPCTSTR)m_sAddress, (LPCTSTR)m_sName );
 		SendResponse( IDR_HTML_FILENOTFOUND );
 		return TRUE;
 	}
@@ -1644,7 +1638,7 @@ BOOL CUploadTransferHTTP::RequestPreview(CLibraryFile* pFile, CSingleLock& oLibr
 	
 	if ( ! pImage.SaveToMemory( _T(".jpg"), nQuality, &pBuffer, &nLength ) )
 	{
-		theApp.Message( MSG_ERROR, IDS_UPLOAD_PREVIEW_EMPTY, (LPCTSTR)m_sAddress, (LPCTSTR)m_sFileName );
+		theApp.Message( MSG_ERROR, IDS_UPLOAD_PREVIEW_EMPTY, (LPCTSTR)m_sAddress, (LPCTSTR)m_sName );
 		SendResponse( IDR_HTML_FILENOTFOUND );
 		return TRUE;
 	}
@@ -1688,7 +1682,7 @@ BOOL CUploadTransferHTTP::RequestPreview(CLibraryFile* pFile, CSingleLock& oLibr
 	
 	StartSending( upsPreview );
 	
-	theApp.Message( MSG_NOTICE, IDS_UPLOAD_PREVIEW_SEND, (LPCTSTR)m_sFileName,
+	theApp.Message( MSG_NOTICE, IDS_UPLOAD_PREVIEW_SEND, (LPCTSTR)m_sName,
 		(LPCTSTR)m_sAddress );
 	
 	return TRUE;
@@ -1810,7 +1804,7 @@ void CUploadTransferHTTP::SendResponse(UINT nResourceID, BOOL bFileHeaders)
 		strReplace.TrimRight();
 		
 		if ( strReplace.CompareNoCase( _T("Name") ) == 0 )
-			strReplace = m_sFileName;
+			strReplace = m_sName;
 		else if ( strReplace.CompareNoCase( _T("SHA1") ) == 0 )
             strReplace = m_oSHA1.toString();
 		else if ( strReplace.CompareNoCase( _T("URN") ) == 0 )

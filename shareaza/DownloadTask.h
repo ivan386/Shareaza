@@ -1,7 +1,7 @@
 //
 // DownloadTask.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -21,7 +21,6 @@
 
 #pragma once
 
-#include "BTInfo.h"
 #include "HttpRequest.h"
 #include "ShareazaThread.h"
 
@@ -35,9 +34,8 @@ class CDownloadTask : public CRazaThread
 public:
 	enum dtask
 	{
-		dtaskAllocate,
-		dtaskCopySimple,
-		dtaskCopyTorrent, 
+//		dtaskAllocate,
+		dtaskCopy,
 		dtaskPreviewRequest,
 		dtaskCheckHash,
 		dtaskMergeFile
@@ -53,16 +51,14 @@ public:
 
 	dtask		m_nTask;
 	BOOL		m_bSuccess;
-	CString		m_sName;
 	CString		m_sFilename;
-	CString		m_sPath;
+	CString		m_sDestination;
 	CHttpRequest m_pRequest;
 	DWORD		m_dwFileError;
 
 private:
 	CDownload*	m_pDownload;
 	QWORD		m_nSize;
-	CBTInfo		m_pTorrent;
 	CString		m_sMergeFilename;
 
 	void	Construct(CDownload* pDownload);
@@ -71,9 +67,11 @@ private:
 	CEvent*		m_pEvent;
 
 	void	RunAllocate();
-	void	RunCopySimple();
+	void	RunCopy();
 	void	RunCopyTorrent();
+	void	RunPreviewRequest();
 	void	RunMerge();
+
 	BOOL	CopyFile(HANDLE hSource, LPCTSTR pszTarget, QWORD nLength);
 	void	CreatePathForFile(const CString& strBase, const CString& strPath);
 	BOOL	MakeBatchTorrent();

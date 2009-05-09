@@ -1,7 +1,7 @@
 //
 // Remote.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -1005,7 +1005,7 @@ void CRemote::PageDownloads()
 		else if ( pDownload->IsPaused() )
 		{
 			Add( _T("download_is_paused"), _T("true") );
-			if ( pDownload->m_bDiskFull )
+			if ( pDownload->GetFileError() != ERROR_SUCCESS )
 			{
 				LoadString( strStatus1, IDS_STATUS_CANTMOVE );
 				LoadString( strStatus2, IDS_STATUS_FILEERROR );

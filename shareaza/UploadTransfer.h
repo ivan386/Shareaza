@@ -47,10 +47,7 @@ public:
 	CString			m_sNick;		// User Nick
 	DWORD			m_nUserRating;	// Has the downloader uploaded anything?
 
-	CString			m_sFileName;	// Name of requested file
-	CString			m_sFilePath;	// Path of requested file
 	QWORD			m_nFileBase;	// Base offset in requested file
-	QWORD			m_nFileSize;	// Size of requested file
 	BOOL			m_bFilePartial;	// Partial file flag
 	CString			m_sFileTags;	// File sharing tags
 
@@ -72,7 +69,7 @@ protected:
 	DWORD			m_tRatingTime;	// When rating was last calculated
 
 private:
-	CFragmentedFile* m_pFile;		// Disk file
+	auto_ptr< CFragmentedFile > m_pFile;	// Disk file
 
 public:
 	virtual void	Remove(BOOL bMessage = TRUE);
@@ -103,13 +100,12 @@ protected:
 	void		StartSending(int nState);
 	void		AllocateBaseFile();
 
-	BOOL		IsFileOpen() const;
-	BOOL		OpenFile(LPCTSTR pszFile, BOOL bWrite, BOOL bCreate);
-	BOOL		OpenFile(const CBTInfo& pInfo, BOOL bWrite, BOOL bCreate);
-	void		CloseFile();
-	BOOL		WriteFile(QWORD nOffset, LPCVOID pData, QWORD nLength, QWORD* pnWritten = NULL);
-	BOOL		ReadFile(QWORD nOffset, LPVOID pData, QWORD nLength, QWORD* pnRead = NULL);
-	void		AttachFile(CFragmentedFile* pFile);
+	virtual BOOL	IsFileOpen() const;
+	virtual BOOL	OpenFile();
+	virtual void	CloseFile();
+	virtual BOOL	WriteFile(QWORD nOffset, LPCVOID pData, QWORD nLength, QWORD* pnWritten = NULL);
+	virtual BOOL	ReadFile(QWORD nOffset, LPVOID pData, QWORD nLength, QWORD* pnRead = NULL);
+	void	AttachFile(auto_ptr< CFragmentedFile >& pFile);
 };
 
 enum UserRating

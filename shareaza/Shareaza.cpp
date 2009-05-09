@@ -1060,17 +1060,15 @@ void CShareazaApp::LogMessage(const CString& strLog)
 			pFile.Close();
 
 			// Rotate the logs
-			if ( DeleteFileEx( Settings.General.UserPath + _T("\\Data\\Shareaza.old.log"), FALSE, FALSE, FALSE ) )
-			{
-				MoveFile( Settings.General.UserPath + _T("\\Data\\Shareaza.log"),
-					Settings.General.UserPath + _T("\\Data\\Shareaza.old.log") );
-				// Start a new log
-				if ( ! pFile.Open( Settings.General.UserPath + _T("\\Data\\Shareaza.log"),
-					CFile::modeWrite|CFile::modeCreate ) ) return;
-				// Unicode marker
-				WORD nByteOrder = 0xFEFF;
-				pFile.Write( &nByteOrder, 2 );
-			}
+			MoveFileEx( CString( _T("\\\\?\\") ) + Settings.General.UserPath + _T("\\Data\\Shareaza.log"),
+				CString( _T("\\\\?\\") ) + Settings.General.UserPath + _T("\\Data\\Shareaza.old.log"),
+				MOVEFILE_REPLACE_EXISTING | MOVEFILE_WRITE_THROUGH );
+			// Start a new log
+			if ( ! pFile.Open( Settings.General.UserPath + _T("\\Data\\Shareaza.log"),
+				CFile::modeWrite|CFile::modeCreate ) ) return;
+			// Unicode marker
+			WORD nByteOrder = 0xFEFF;
+			pFile.Write( &nByteOrder, 2 );
 		}
 	}
 	else

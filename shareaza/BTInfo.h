@@ -1,7 +1,7 @@
 //
 // BTInfo.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -59,27 +59,11 @@ public:
 	class CBTFile : public CShareazaFile
 	{
 	public:
-		// Returns file download progress ( < 0 - unknown or 0..100% )
-		float GetProgress() const;
-
-		// Returns file download priority
-		inline int GetPriority() const
-		{
-			return m_nFilePriority;
-		}
-
-		// Set file download priority
-		inline void	SetPriority(int nFilePriority)
-		{
-			m_nFilePriority = nFilePriority; 
-		}
-
 		// Find file on disk
 		CString	FindFile();
 
 	private:
 		const CBTInfo*	m_pInfo;			// Parent torrent handler
-		int				m_nFilePriority;	// Download priority (NotWanted, Low, Normal or High)
 		QWORD			m_nOffset;			// File offset inside torrent (cached)
 
 		CBTFile(const CBTInfo* pInfo, const CBTFile* pFile = NULL);
@@ -87,7 +71,6 @@ public:
 
 		friend class CBTInfo;
 	};
-	enum { prNotWanted, prLow, prNormal, prHigh };
 
 // Subclass
 public:

@@ -1,7 +1,7 @@
 //
 // UploadTransferED2K.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -18,9 +18,6 @@
 // along with Shareaza; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
-
-#if !defined(AFX_UPLOADTRANSFERED2K_H__04FAF448_0A7F_4566_97D2_38845BF71F20__INCLUDED_)
-#define AFX_UPLOADTRANSFERED2K_H__04FAF448_0A7F_4566_97D2_38845BF71F20__INCLUDED_
 
 #pragma once
 
@@ -69,7 +66,6 @@ protected:
 	BOOL	CheckRanking();		// Check the client's Q rank. Start upload or send notification if required.
 	void	AddRequest(QWORD nOffset, QWORD nLength);
 	BOOL	ServeRequests();
-	BOOL	OpenFile();
 	BOOL	StartNextRequest();
 	BOOL	DispatchNextChunk();
 	BOOL	CheckFinishedRequest();
@@ -77,5 +73,3 @@ protected:
 public:		// 64bit Large file support
 	BOOL	OnRequestParts64(CEDPacket* pPacket);
 };
-
-#endif // !defined(AFX_UPLOADTRANSFERED2K_H__04FAF448_0A7F_4566_97D2_38845BF71F20__INCLUDED_)

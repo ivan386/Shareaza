@@ -1,7 +1,7 @@
 //
 // DownloadTransferED2K.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -785,7 +785,7 @@ BOOL CDownloadTransferED2K::SendFragmentRequests()
 
 	if ( m_oRequested.size() >= (int)Settings.eDonkey.RequestPipe ) return TRUE;
 	
-	Fragments::List oPossible( m_pDownload->GetEmptyFragmentList() );
+	Fragments::List oPossible( m_pDownload->GetWantedFragmentList() );
 	
 	if ( !m_pClient->m_bEmLargeFile && ( m_pDownload->m_nSize & 0xffffffff00000000 ) )
 	{

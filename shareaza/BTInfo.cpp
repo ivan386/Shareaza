@@ -1,7 +1,7 @@
 //
 // BTInfo.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2000.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -96,7 +96,6 @@ CBTInfo::~CBTInfo()
 
 CBTInfo::CBTFile::CBTFile(const CBTInfo* pInfo, const CBTFile* pBTFile) :
 	m_pInfo				( pInfo )
-,	m_nFilePriority		( pBTFile ? pBTFile->m_nFilePriority : CBTInfo::prNormal )
 ,	m_nOffset			( pBTFile ? pBTFile->m_nOffset : 0 )
 {
 	if ( pBTFile )
@@ -157,7 +156,7 @@ CString	CBTInfo::CBTFile::FindFile()
 						if ( ! pShared ||
 							 GetFileSize( CString( _T("\\\\?\\") ) + strFile ) != m_nSize )
 						{
-							return CString();
+							return m_sPath;
 						}
 					}
 				}
@@ -430,7 +429,6 @@ void CBTInfo::CBTFile::Serialize(CArchive& ar, int nVersion)
         SerializeOut( ar, m_oSHA1 );
 		SerializeOut( ar, m_oED2K );
 		SerializeOut( ar, m_oTiger );
-		ar << m_nFilePriority;
 		SerializeOut( ar, m_oMD5 );
 	}
 	else
@@ -453,7 +451,6 @@ void CBTInfo::CBTFile::Serialize(CArchive& ar, int nVersion)
 		{
 			SerializeIn( ar, m_oED2K, nVersion );
 			SerializeIn( ar, m_oTiger, nVersion );
-            ar >> m_nFilePriority;
 		}
 
 		if ( nVersion >= 6 )
@@ -461,25 +458,6 @@ void CBTInfo::CBTFile::Serialize(CArchive& ar, int nVersion)
 			SerializeIn( ar, m_oMD5, nVersion );
 		}
 	}
-}
-
-float CBTInfo::CBTFile::GetProgress() const
-{
-	CSingleLock pLock( &Transfers.m_pSection, TRUE );
-
-	if ( CDownload* pDownload = Downloads.FindByBTH( m_pInfo->m_oBTH ) )
-	{
-		if ( pDownload->m_pFile )
-		{
-			if ( m_nSize == 0 )
-				return 100.f;
-			else
-				return ( (float)pDownload->m_pFile->GetCompleted( m_nOffset, m_nSize ) *
-					100.f ) / (float)m_nSize;
-		}
-	}
-
-	return -1.f;
 }
 
 //////////////////////////////////////////////////////////////////////

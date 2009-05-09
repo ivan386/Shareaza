@@ -191,7 +191,10 @@ void CDownloadWithTorrent::Serialize(CArchive& ar, int nVersion)
 			ar << m_nTorrentSuccess;
 			ar.Write( m_pTorrentBlock, sizeof(BYTE) * m_nTorrentBlock );
 			ar << BOOL( m_bSeeding && Settings.BitTorrent.AutoSeed );
-			ar << m_sServingFileName;
+			
+			// Not used anymore
+			CString sServingFileName;
+			ar << sServingFileName;
 		}
 		else
 		{
@@ -204,7 +207,10 @@ void CDownloadWithTorrent::Serialize(CArchive& ar, int nVersion)
 			if ( nVersion >= 34 )
 			{
 				ar >> m_bSeeding;
-				ar >> m_sServingFileName;
+
+				// Not used anymore
+				CString sServingFileName;
+				ar >> sServingFileName;
 			}
 			GenerateTorrentDownloadID();
 		}
@@ -280,7 +286,7 @@ bool CDownloadWithTorrent::RunTorrent(DWORD tNow)
 		return true;
 
 	// Return if disk is full
-	if ( m_bDiskFull )
+	if ( GetFileError() != ERROR_SUCCESS )
 		return false;
 
 	// Choke torrents every 10 seconds
@@ -288,24 +294,8 @@ bool CDownloadWithTorrent::RunTorrent(DWORD tNow)
 		ChokeTorrent( tNow );
 
 	// Check if the torrent file exists and has been opened
-	if ( m_pFile && m_pFile->IsOpen() == FALSE )
-	{
-		// Check if file has been created on the HDD
-		bool bAllocated = ( !m_sPath.IsEmpty()
-			&& GetFileAttributes( m_sPath ) != INVALID_FILE_ATTRIBUTES );
-
-		// Try to create and/or open the file
-		if ( !PrepareFile() )
-			return false;
-
-		// If file needed to be created, allocate disk space for it
-		if ( !bAllocated )
-		{
-			ASSERT( m_pTask == NULL );
-			m_pTask = new CDownloadTask( static_cast< CDownload* >( this ),
-				CDownloadTask::dtaskAllocate );
-		}
-	}
+	if ( ! OpenFile() )
+		return false;
 
 	// Return if this download is waiting for a download task to finish
 	if ( m_pTask )
@@ -825,7 +815,7 @@ void CDownloadWithTorrent::ChokeTorrent(DWORD tNow)
 
 BOOL CDownloadWithTorrent::FindMoreSources()
 {
-	if ( m_pFile != NULL && m_bTorrentRequested )
+	if ( IsFileOpen() && m_bTorrentRequested )
 	{
 		ASSERT( IsTorrent() );
 		
@@ -849,20 +839,9 @@ BOOL CDownloadWithTorrent::SeedTorrent(CString& sErrorMessage)
 	if ( IsMoving() || IsCompleted() )
 		return FALSE;
 
-	ASSERT( m_pFile != NULL );
-	if ( m_pFile == NULL )
+	ASSERT( IsFileOpen() == FALSE );
+	if ( IsFileOpen() )
 		return FALSE;
-
-	ASSERT( m_pFile->IsOpen() == FALSE );
-	if ( m_pFile->IsOpen() )
-		return FALSE;
-
-	ASSERT( m_sPath.IsEmpty() );
-	if ( m_sPath.GetLength() > 0 )
-	{
-		DeleteFileEx( m_sPath, TRUE, FALSE, TRUE );
-		DeleteFileEx( m_sPath + _T(".sd"), FALSE, TRUE, TRUE );
-	}
 
 	GenerateTorrentDownloadID();
 
@@ -870,24 +849,24 @@ BOOL CDownloadWithTorrent::SeedTorrent(CString& sErrorMessage)
 	m_bSeeding	= TRUE;
 	pDownload->m_bComplete	= TRUE;
 	pDownload->m_tCompleted	= GetTickCount();
-	pDownload->m_bVerify	= TRI_TRUE;
+	pDownload->SetVerifyStatus( TRI_TRUE );
 
 	memset( m_pTorrentBlock, TRI_TRUE, m_nTorrentBlock );
 	m_nTorrentSuccess = m_nTorrentBlock;
 
 	ASSERT( m_pTorrent.GetCount() );
 
-	if ( ! m_pFile->Open( m_pTorrent, FALSE, FALSE ) )
-	{
+	auto_ptr< CFragmentedFile > pFragmentedFile( new CFragmentedFile );
+	if ( ! pFragmentedFile.get() ||
+		 ! pFragmentedFile->Open( m_pTorrent, FALSE, sErrorMessage ) )
 		return FALSE;
-	}
+
+	AttachFile( pFragmentedFile );
 
 	CBTInfo::CBTFile* pFile = m_pTorrent.m_pFiles.GetHead();
 	CString sPath = pFile->FindFile();
 	if ( m_pTorrent.GetCount() == 1 )
 	{
-		m_sPath = sPath;
-
 		// Refill missed hashes for single-file torrent
 		if ( ! m_pTorrent.m_oSHA1 && pFile->m_oSHA1 )
 			m_pTorrent.m_oSHA1 = pFile->m_oSHA1;
@@ -898,12 +877,7 @@ BOOL CDownloadWithTorrent::SeedTorrent(CString& sErrorMessage)
 		if ( ! m_pTorrent.m_oMD5 && pFile->m_oMD5 )
 			m_pTorrent.m_oMD5 = pFile->m_oMD5;
 	}
-	else if ( m_sPath.IsEmpty() )
-	{
-		// Folder
-		m_sPath = sPath.Left( sPath.ReverseFind( _T('\\') ) + 1 );
-	}
-		
+
 	// Refill missed hashes
 	if ( ! m_oSHA1 && m_pTorrent.m_oSHA1 )
 		m_oSHA1 = m_pTorrent.m_oSHA1;

@@ -63,14 +63,15 @@ CDownloadWithExtras::~CDownloadWithExtras()
 //////////////////////////////////////////////////////////////////////
 // CDownloadWithExtras preview function
 
-BOOL CDownloadWithExtras::Preview(CSingleLock* pLock)
+BOOL CDownloadWithExtras::PreviewFile(DWORD nIndex, CSingleLock* pLock)
 {
 	DeletePreviews();
 	
-	if ( ! CanPreview() ) return FALSE;
+	if ( ! CanPreview( nIndex ) )
+		return FALSE;
 	
 	ASSERT( m_pPreviewWnd == NULL );
-	m_pPreviewWnd = new CFilePreviewDlg( (CDownload*)this );
+	m_pPreviewWnd = new CFilePreviewDlg( this, nIndex );
 	
 	if ( pLock ) pLock->Unlock();
 	
@@ -85,25 +86,12 @@ BOOL CDownloadWithExtras::Preview(CSingleLock* pLock)
 
 BOOL CDownloadWithExtras::IsPreviewVisible() const
 {
-	return m_pPreviewWnd != NULL;
+	return ( m_pPreviewWnd != NULL );
 }
 
-BOOL CDownloadWithExtras::CanPreview()
+BOOL CDownloadWithExtras::CanPreview(DWORD nIndex)
 {
-	if ( m_pPreviewWnd != NULL ) return FALSE;
-	
-	LPCTSTR pszType = _tcsrchr( m_sSafeName, '.' );
-	if ( pszType == NULL )
-	{
-		pszType = _tcsrchr( m_sName, '.' );
-		if ( pszType == NULL ) return FALSE;
-	}
-	
-	CString strType( pszType );
-	ToLower( strType );
-	
-	CLSID pCLSID;
-	return Plugins.LookupCLSID( _T("DownloadPreview"), strType, pCLSID );
+	return ( m_pPreviewWnd == NULL ) && ! IsMoving() && GetCompleted( nIndex );
 }
 
 //////////////////////////////////////////////////////////////////////

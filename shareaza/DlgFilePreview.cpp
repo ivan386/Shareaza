@@ -24,7 +24,7 @@
 #include "Settings.h"
 #include "Transfers.h"
 #include "Downloads.h"
-#include "Download.h"
+#include "DownloadWithExtras.h"
 #include "FragmentedFile.h"
 #include "TransferFile.h"
 #include "DlgFilePreview.h"
@@ -57,16 +57,73 @@ CList< CFilePreviewDlg* > CFilePreviewDlg::m_pWindows;
 /////////////////////////////////////////////////////////////////////////////
 // CFilePreviewDlg dialog
 
-CFilePreviewDlg::CFilePreviewDlg(CDownload* pDownload, CWnd* pParent) : CSkinDialog( CFilePreviewDlg::IDD, pParent )
+CFilePreviewDlg::CFilePreviewDlg(CDownloadWithExtras* pDownload, DWORD nIndex, CWnd* pParent) :
+	CSkinDialog( CFilePreviewDlg::IDD, pParent )
+	, m_pDownload	( pDownload )
+	, m_sSourceName	( pDownload->GetPath( nIndex ) )
+	, m_sDisplayName( pDownload->GetName( nIndex ) )
+	, m_pPlugin		( NULL )
+	, m_nRange		( 0 )
+	, m_nPosition	( 0 )
+	, m_nScaled		( 0 )
+	, m_nOldScaled	( 0 )
+	, m_bCancel		( FALSE )
 {
-	//{{AFX_DATA_INIT(CFilePreviewDlg)
-	//}}AFX_DATA_INIT
+	int nPos = m_sSourceName.ReverseFind( '\\' );
+	if ( nPos >= 0 )
+	{
+		CString strFileName = m_sDisplayName;
+		strFileName.Replace( _T('\\'), _T('_') );
 
-	m_pDownload	= NULL;
-	m_pPlugin	= NULL;
-	m_pPlugin	= NULL;
+		for ( int nCount = 0 ; nCount < 20 ; nCount++ )
+		{
+			if ( nCount > 0 )
+			{
+				m_sTargetName.Format( _T("%sPreview (%i) of %s"),
+					(LPCTSTR)m_sSourceName.Left( nPos + 1 ), nCount,
+					(LPCTSTR)strFileName );
+			}
+			else
+			{
+				m_sTargetName.Format( _T("%sPreview of %s"),
+					(LPCTSTR)m_sSourceName.Left( nPos + 1 ),
+					(LPCTSTR)strFileName );
+			}
 
-	SetDownload( pDownload );
+			if ( GetFileAttributes( m_sTargetName ) == 0xFFFFFFFF )
+				break;
+
+			m_sTargetName.Empty();
+		}
+	}
+
+	QWORD nOffset = m_pDownload->GetOffset( nIndex );
+	QWORD nLength = m_pDownload->GetLength( nIndex );
+	if ( ! m_pDownload->GetEmptyFragmentList().empty() )
+	{
+		Fragments::List oRanges = inverse( m_pDownload->GetEmptyFragmentList() );
+
+		for ( Fragments::List::const_iterator pFragment = oRanges.begin();
+			pFragment != oRanges.end(); ++pFragment )
+		{
+			if ( pFragment->begin() + pFragment->size() >= nOffset &&
+				 nOffset + nLength >= pFragment->begin() )
+			{				
+				QWORD nPartOffset =
+					max( pFragment->begin(), nOffset );
+				QWORD nPartLength =
+					min( pFragment->begin() + pFragment->size(), nOffset + nLength ) -
+					nPartOffset;
+				m_pRanges.Add( nPartOffset - nOffset );
+				m_pRanges.Add( nPartLength );
+			}
+		}
+
+		if ( ( GetAsyncKeyState( VK_CONTROL ) & 0x8000 ) == 0x8000 )
+		{
+			while ( m_pRanges.GetSize() > 2 ) m_pRanges.RemoveAt( 2 );
+		}
+	}
 }
 
 CFilePreviewDlg::~CFilePreviewDlg()
@@ -88,63 +145,6 @@ void CFilePreviewDlg::DoDataExchange(CDataExchange* pDX)
 
 /////////////////////////////////////////////////////////////////////////////
 // CFilePreviewDlg operations
-
-void CFilePreviewDlg::SetDownload(CDownload* pDownload)
-{
-	ASSERT( m_pDownload == NULL );
-	m_pDownload = pDownload;
-	ASSERT( m_pDownload != NULL );
-
-	m_sSourceName = pDownload->m_sPath;
-	m_sDisplayName = pDownload->m_sName;
-	CString strFileName = pDownload->m_sSafeName;
-
-	int nPos = m_sSourceName.ReverseFind( '\\' );
-
-	if ( nPos >= 0 )
-	{
-		for ( int nCount = 0 ; nCount < 20 ; nCount++ )
-		{
-			if ( nCount > 0 )
-			{
-				m_sTargetName.Format( _T("%sPreview (%i) of %s"),
-					(LPCTSTR)m_sSourceName.Left( nPos + 1 ), nCount,
-					(LPCTSTR)strFileName );
-			}
-			else
-			{
-				m_sTargetName.Format( _T("%sPreview of %s"),
-					(LPCTSTR)m_sSourceName.Left( nPos + 1 ),
-					(LPCTSTR)strFileName );
-			}
-
-			if ( GetFileAttributes( m_sTargetName ) == 0xFFFFFFFF ) break;
-		}
-	}
-
-	// if user changes extension or extension is lost
-	LPCTSTR pszExt1 = _tcsrchr( strFileName, '.' );
-	LPCTSTR pszExt2 = _tcsrchr( m_sDisplayName, '.' );
-	if ( ! pszExt1 && pszExt2 || pszExt1 && pszExt2 && _tcsicmp( pszExt1, pszExt2 ) != 0 )
-		m_sTargetName += pszExt2;
-
-	if ( !m_pDownload->GetEmptyFragmentList().empty() )
-	{
-		Fragments::List oRanges = inverse( m_pDownload->GetEmptyFragmentList() );
-
-		for ( Fragments::List::const_iterator pFragment = oRanges.begin();
-			pFragment != oRanges.end(); ++pFragment )
-		{
-			m_pRanges.Add( DWORD( pFragment->begin() ) );
-			m_pRanges.Add( DWORD( pFragment->size() ) );
-		}
-
-		if ( ( GetAsyncKeyState( VK_CONTROL ) & 0x8000 ) == 0x8000 )
-		{
-			while ( m_pRanges.GetSize() > 2 ) m_pRanges.RemoveAt( 2 );
-		}
-	}
-}
 
 BOOL CFilePreviewDlg::Create()
 {
@@ -289,7 +289,8 @@ void CFilePreviewDlg::OnDestroy()
 	{
 		if ( Transfers.m_pSection.Lock( 1000 ) )
 		{
-			if ( Downloads.Check( m_pDownload ) ) m_pDownload->m_pPreviewWnd = NULL;
+			if ( Downloads.Check( (CDownload*)m_pDownload ) )
+				m_pDownload->m_pPreviewWnd = NULL;
 			Transfers.m_pSection.Unlock();
 		}
 		m_pDownload = NULL;
@@ -446,7 +447,7 @@ BOOL CFilePreviewDlg::QueueDeleteFile(LPCTSTR pszFile)
 
 	if ( pLock.Lock( 500 ) )
 	{
-		if ( Downloads.Check( m_pDownload ) )
+		if ( Downloads.Check( (CDownload*)m_pDownload ) )
 		{
 			m_pDownload->AddPreviewName( pszFile );
 			return TRUE;

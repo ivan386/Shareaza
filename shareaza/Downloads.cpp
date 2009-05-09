@@ -1165,11 +1165,12 @@ void CDownloads::Load()
 			{
 				if ( pDownload->m_bSeeding )
 				{
-					if ( !Settings.BitTorrent.AutoSeed ||
-						 GetFileAttributes( pDownload->m_sServingFileName ) == INVALID_FILE_ATTRIBUTES )
+					if ( ! Settings.BitTorrent.AutoSeed )
 					{
 						theApp.Message( MSG_NOTICE, IDS_DOWNLOAD_REMOVE, pDownload->m_sName );
 						DeleteFileEx( strPath, FALSE, TRUE, TRUE );
+						DeleteFileEx( strPath + _T(".sav"), FALSE, FALSE, TRUE );
+						DeleteFileEx( strPath + _T(".png"), FALSE, FALSE, TRUE );
 						continue;
 					}
 					pDownload->m_bComplete = TRUE;
@@ -1182,6 +1183,8 @@ void CDownloads::Load()
 				theApp.Message( MSG_ERROR, IDS_DOWNLOAD_REMOVE,
 					( pDownload->m_sName.IsEmpty() ? strPath : pDownload->m_sName ) );
 				DeleteFileEx( strPath, FALSE, TRUE, TRUE );
+				DeleteFileEx( strPath + _T(".sav"), FALSE, FALSE, TRUE );
+				DeleteFileEx( strPath + _T(".png"), FALSE, FALSE, TRUE );
 			}
 		}
 		while ( FindNextFile( hSearch, &pFind ) );

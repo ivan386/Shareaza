@@ -1,7 +1,7 @@
 //
 // DownloadWithExtras.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -18,9 +18,6 @@
 // along with Shareaza; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
-
-#if !defined(AFX_DOWNLOADWITHEXTRAS_H__EDD3177D_5313_4C8C_900A_4D5B3DE93BB9__INCLUDED_)
-#define AFX_DOWNLOADWITHEXTRAS_H__EDD3177D_5313_4C8C_900A_4D5B3DE93BB9__INCLUDED_
 
 #pragma once
 
@@ -82,9 +79,9 @@ public:
 
 // Operations
 public:
-	BOOL		Preview(CSingleLock* pLock = NULL);
+	BOOL		PreviewFile(DWORD nIndex, CSingleLock* pLock);
 	BOOL		IsPreviewVisible() const;
-	BOOL		CanPreview();
+	BOOL		CanPreview(DWORD nIndex);
 	void		ShowMonitor(CSingleLock* pLock = NULL);
 	void		AddPreviewName(LPCTSTR pszFile);
 	void		DeletePreviews();
@@ -111,5 +108,3 @@ public:
 	friend class CFilePreviewDlg;
 
 };
-
-#endif // !defined(AFX_DOWNLOADWITHEXTRAS_H__EDD3177D_5313_4C8C_900A_4D5B3DE93BB9__INCLUDED_)
