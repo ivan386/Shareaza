@@ -552,7 +552,7 @@ FilePtrList* CLibraryDictionary::Search(
 				else
 				{
 					// Collection removed without deleting indexes
-					ASSERT( false );
+					pHit->m_nCollIndex = 0ul;
 				}
 			}
 
