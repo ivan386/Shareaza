@@ -272,6 +272,9 @@ BOOL CDownloadWithTorrent::SetTorrent(const CBTInfo& oTorrent)
 
 bool CDownloadWithTorrent::RunTorrent(DWORD tNow)
 {
+	if ( ! Settings.BitTorrent.EnableToday )
+		return true;
+
 	// Return if this isn't a torrent
 	if ( !IsTorrent() )
 		return true;
@@ -434,7 +437,7 @@ BOOL CDownloadWithTorrent::GenerateTorrentDownloadID()
 
 void CDownloadWithTorrent::SendStarted(DWORD nNumWant)
 {
-	if ( ! Network.IsConnected() )
+	if ( ! Network.IsConnected() || ! Settings.BitTorrent.EnableToday )
 		return;
 
 	// Return if there is no tracker
@@ -458,7 +461,7 @@ void CDownloadWithTorrent::SendStarted(DWORD nNumWant)
 
 void CDownloadWithTorrent::SendUpdate(DWORD nNumWant)
 {
-	if ( ! Network.IsConnected() )
+	if ( ! Network.IsConnected() || ! Settings.BitTorrent.EnableToday )
 		return;
 
 	// Return if there is no tracker
@@ -480,7 +483,7 @@ void CDownloadWithTorrent::SendUpdate(DWORD nNumWant)
 
 void CDownloadWithTorrent::SendCompleted()
 {
-	if ( ! Network.IsConnected() )
+	if ( ! Network.IsConnected() || ! Settings.BitTorrent.EnableToday )
 		return;
 
 	// Return if there is no tracker
@@ -498,7 +501,7 @@ void CDownloadWithTorrent::SendCompleted()
 
 void CDownloadWithTorrent::SendStopped()
 {
-	if ( ! Network.IsConnected() )
+	if ( ! Network.IsConnected() || ! Settings.BitTorrent.EnableToday )
 		return;
 
 	// Return if there is no tracker

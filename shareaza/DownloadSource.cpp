@@ -496,7 +496,7 @@ BOOL CDownloadSource::CanInitiate(BOOL bNetwork, BOOL bEstablished)
 			if ( ! bNetwork ) return FALSE;
 			break;
 		case PROTOCOL_BT:
-			if ( ! bNetwork ) return FALSE;
+			if ( ! Settings.BitTorrent.EnableToday || ! bNetwork ) return FALSE;
 			break;
 		case PROTOCOL_NULL:
 		case PROTOCOL_ANY:

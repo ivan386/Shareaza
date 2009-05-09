@@ -1367,6 +1367,9 @@ BOOL CHostCacheHost::CanQuery(DWORD tNow) const
 	}
 	else if ( m_nProtocol == PROTOCOL_BT )
 	{
+		// Must support BT
+		if ( !Network.IsConnected() || !Settings.BitTorrent.EnableToday ) return FALSE;
+
 		// Must not be waiting for an ack
 		if ( 0 != m_tAck ) return FALSE;
 

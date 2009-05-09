@@ -436,6 +436,7 @@ void CSettings::Load()
 	Add( _T("BitTorrent"), _T("ClearRatio"), &BitTorrent.ClearRatio, 120, 1, 100, 999, _T(" %") );
 	Add( _T("BitTorrent"), _T("DefaultTracker"), &BitTorrent.DefaultTracker );
 	Add( _T("BitTorrent"), _T("DefaultTrackerPeriod"), &BitTorrent.DefaultTrackerPeriod, 5*60000, 60000, 5, 120, _T(" m") );
+	Add( _T("BitTorrent"), _T("EnableAlways"), &BitTorrent.EnableAlways, true );
 	Add( _T("BitTorrent"), _T("DhtPruneTime"), &BitTorrent.DhtPruneTime, 30*60, 60, 10, 7*24*60*60, _T(" m") );
 	Add( _T("BitTorrent"), _T("DownloadConnections"), &BitTorrent.DownloadConnections, 40, 1, 1, 800 );
 	Add( _T("BitTorrent"), _T("DownloadTorrents"), &BitTorrent.DownloadTorrents, 3, 1, 1, 10 );
@@ -623,6 +624,7 @@ void CSettings::Load()
 	Gnutella1.EnableToday		= Gnutella1.EnableAlways;
 	Gnutella2.EnableToday		= Gnutella2.EnableAlways;
 	eDonkey.EnableToday			= eDonkey.EnableAlways;
+	BitTorrent.EnableToday		= BitTorrent.EnableAlways;
 
 	// Make sure some needed paths exist
 	CreateDirectory( General.Path + _T("\\Data") );
@@ -681,6 +683,7 @@ void CSettings::Load()
 	Gnutella2.EnableToday = Gnutella2.EnableAlways = true;
 	eDonkey.EnableToday = eDonkey.EnableAlways = false;
 	Gnutella1.EnableToday = Gnutella1.EnableAlways = false;
+	BitTorrent.EnableToday = BitTorrent.EnableAlways = false;
 #endif // LAN_MODE
 
 	if ( Live.FirstRun )
