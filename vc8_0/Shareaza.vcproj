@@ -1566,6 +1566,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\shareaza\DlgSelect.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\shareaza\DlgSettingsManager.cpp"
 					>
 				</File>
@@ -3225,6 +3229,10 @@
 				</File>
 				<File
 					RelativePath="..\shareaza\DlgSecureRule.h"
+					>
+				</File>
+				<File
+					RelativePath="..\shareaza\DlgSelect.h"
 					>
 				</File>
 				<File
