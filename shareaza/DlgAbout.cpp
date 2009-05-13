@@ -23,6 +23,7 @@
 #include "Shareaza.h"
 #include "DlgAbout.h"
 #include "CoolInterface.h"
+#include "revision.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -68,17 +69,21 @@ BOOL CAboutDlg::OnInitDialog()
 	CString strCaption;
 
 	GetWindowText( strCaption );
-	strCaption += _T(" v");
+	strCaption += _T(" ");
 	strCaption += theApp.m_sVersion;
 	SetWindowText( strCaption );
 
 	m_wndTitle.GetWindowText( strCaption );
 	strCaption += theApp.m_sVersion;
-#ifndef _WIN64
-	strCaption += _T(" (") + theApp.m_sBuildDate + _T(")");
+#ifdef _WIN64
+	strCaption += _T(" 64-bit");
 #else
-	strCaption += L" x64 Edition (" + theApp.m_sBuildDate + _T(")");
+	strCaption += _T(" 32-bit");
 #endif
+#ifdef LAN_MODE
+	strCaption += _T(" LAN mode");
+#endif
+	strCaption += _T(" (rev.") _T(__REVISION__) _T(" ") + theApp.m_sBuildDate + _T(")");
 	m_wndTitle.SetWindowText( strCaption );
 
 	DWORD dwSize = GetFileVersionInfoSize( theApp.m_strBinaryPath, &dwSize );

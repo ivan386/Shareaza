@@ -63,6 +63,7 @@
 #include "VersionChecker.h"
 #include "WndMain.h"
 #include "WndSystem.h"
+#include "revision.h"		// to update build time
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
