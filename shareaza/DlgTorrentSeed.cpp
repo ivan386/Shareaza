@@ -1,7 +1,7 @@
 //
 // DlgTorrentSeed.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -33,6 +33,7 @@
 #include "DlgTorrentSeed.h"
 #include "WndMain.h"
 #include "WndDownloads.h"
+#include "DlgExistingFile.h"
 #include "DlgHelp.h"
 #include "DownloadTask.h"
 #include "FragmentedFile.h"
@@ -111,29 +112,19 @@ void CTorrentSeedDlg::OnDownload()
 		}
 
 		CShareazaURL oURL( pTorrent );
-		CLibraryFile* pFile = NULL;
 
 		CSingleLock oLibraryLock( &Library.m_pSection, TRUE );
-		if ( ( pFile = LibraryMaps.LookupFileBySHA1( oURL.m_oSHA1 ) ) != NULL
-			|| ( pFile = LibraryMaps.LookupFileByED2K( oURL.m_oED2K ) ) != NULL
-			|| ( pFile = LibraryMaps.LookupFileByBTH( oURL.m_oBTH ) ) != NULL
-			|| ( pFile = LibraryMaps.LookupFileByMD5( oURL.m_oMD5 ) ) != NULL )
+		
+		CExistingFileDlg::Action action = CExistingFileDlg::CheckExisting( &oURL );
+		if ( action == CExistingFileDlg::Cancel )
+			return;
+		else if ( action != CExistingFileDlg::Download )
 		{
-			CString strFormat, strMessage;
-			LoadString( strFormat, IDS_URL_ALREADY_HAVE );
-			strMessage.Format( strFormat, (LPCTSTR)pFile->m_sName );
-			oLibraryLock.Unlock();
+			EndDialog( IDOK );
+			return;
+		}
 
-			if ( AfxMessageBox( strMessage, MB_ICONINFORMATION|MB_YESNOCANCEL|MB_DEFBUTTON2 ) == IDNO )
-			{
-				EndDialog( IDOK );
-				return;
-			}
-		}
-		else
-		{
-			oLibraryLock.Unlock();
-		}
+		oLibraryLock.Unlock();
 
 		CDownload* pDownload = Downloads.Add( oURL );
 
@@ -143,9 +134,10 @@ void CTorrentSeedDlg::OnDownload()
 			return;
 		}
 
-		if ( ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 ) == 0 )
+		if ( ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 ) == 0 &&
+			! Network.IsWellConnected() )
 		{
-			if ( ! Network.IsWellConnected() ) Network.Connect( TRUE );
+			Network.Connect( TRUE );
 		}
 
 		CMainWnd* pMainWnd = (CMainWnd*)AfxGetMainWnd();

@@ -2911,7 +2911,6 @@
 	<string id="16768" value="Přijato URL &quot;%s&quot;"/>
 	<string id="16769" value="Nelze analyzovat URL: Shareaza nerozumí tomuto URL."/>
 	<string id="16770" value="Nelze zobrazit URL protože Shareaza je přetížená."/>
-	<string id="16771" value="Soubor &quot;%s&quot; již máte ve vaší knihovně. Chcete ho znovu stahovat?"/>
 	<string id="16772" value="Adresa:"/>
 	<string id="16773" value="Port:"/>
 	<string id="16774" value="&amp;Připojit"/>

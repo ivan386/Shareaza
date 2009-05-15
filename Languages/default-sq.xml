@@ -2913,7 +2913,6 @@
 	<string id="16768" value="Received URL &quot;%s&quot;"/>
 	<string id="16769" value="Unable to parse URL: Shareaza does not understand this URL."/>
 	<string id="16770" value="Unable to display URL action dialog because Shareaza is busy."/>
-	<string id="16771" value="You already have the file &quot;%s&quot; in your library.  Do you want to download it anyway?"/>
 	<string id="16772" value="Hosti:"/>
 	<string id="16773" value="Porti:"/>
 	<string id="16774" value="&amp;Lidhu"/>

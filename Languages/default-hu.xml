@@ -2982,7 +2982,6 @@
 	<string id="16768" value="URL fogadva: &quot;%s&quot;"/>
 	<string id="16769" value="A Shareaza nem ismeri ezt a fajta URL-t."/>
 	<string id="16770" value="Az URL ablakot nem lehet megnyitni, mert a Shareaza elfoglalt."/>
-	<string id="16771" value="A fájl már a könyvtárban van: &quot;%s&quot;. Mégis le akarja tölteni?"/>
 	<string id="16772" value="Kiszolgáló:"/>
 	<string id="16773" value="Port:"/>
 	<string id="16774" value="Kapcsolódás"/>

@@ -1,7 +1,7 @@
 //
 // DlgExistingFile.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -26,6 +26,8 @@
 #include "Library.h"
 #include "SharedFile.h"
 #include "DlgExistingFile.h"
+#include "WndMain.h"
+#include "WndLibrary.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -36,28 +38,63 @@ static char THIS_FILE[] = __FILE__;
 IMPLEMENT_DYNAMIC(CExistingFileDlg, CSkinDialog)
 
 BEGIN_MESSAGE_MAP(CExistingFileDlg, CSkinDialog)
-	//{{AFX_MSG_MAP(CExistingFileDlg)
 	ON_WM_CTLCOLOR()
 	ON_BN_CLICKED(IDC_ACTION_0, OnAction0)
 	ON_BN_CLICKED(IDC_ACTION_1, OnAction1)
 	ON_BN_CLICKED(IDC_ACTION_2, OnAction2)
-	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
+
+CExistingFileDlg::Action CExistingFileDlg::CheckExisting(const CShareazaFile* pFile)
+{
+	CSingleLock pLock( &Library.m_pSection );
+	if ( ! pLock.Lock( 1000 ) )
+		return Download;
+
+	CLibraryFile* pLibFile = LibraryMaps.LookupFileByHash( pFile->m_oSHA1, pFile->m_oTiger,
+		pFile->m_oED2K, pFile->m_oBTH, pFile->m_oMD5, pFile->m_nSize, pFile->m_nSize );
+
+	if ( pLibFile == NULL )
+		return Download;
+
+	DWORD nIndex = pLibFile->m_nIndex;
+
+	CExistingFileDlg dlg( pLibFile );
+
+	pLock.Unlock();
+
+	dlg.DoModal();
+
+	if ( dlg.m_nAction == 0 )
+	{
+		if ( CMainWnd* pMainWnd = theApp.SafeMainWnd() )
+		{	
+			if ( CLibraryWnd* pLibrary = (CLibraryWnd*)(
+				pMainWnd->m_pWindows.Open( RUNTIME_CLASS(CLibraryWnd) ) ) )
+			{
+				pLock.Lock();
+				if ( CLibraryFile* pLibFile = Library.LookupFile( nIndex ) )
+				{
+					pLibrary->Display( pLibFile );
+				}
+				pLock.Unlock();
+			}
+		}
+	}
+
+	return dlg.GetResult();
+}
 
 /////////////////////////////////////////////////////////////////////////////
 // CExistingFileDlg dialog
 
-CExistingFileDlg::CExistingFileDlg(CLibraryFile* pFile, CWnd* pParent, bool bDuplicateSearch) : CSkinDialog( CExistingFileDlg::IDD, pParent )
+CExistingFileDlg::CExistingFileDlg(CLibraryFile* pFile, CWnd* pParent,
+	 bool bDuplicateSearch)
+:	CSkinDialog( CExistingFileDlg::IDD, pParent )
+,	m_nAction( 0 )
 {
-	//{{AFX_DATA_INIT(CExistingFileDlg)
-	m_sName = _T("");
-	m_sURN = _T("");
-	m_nAction = 0;
-	//}}AFX_DATA_INIT
-
 	m_sName = pFile->m_sName;
-	
+
 	if ( !bDuplicateSearch )
 	{
 		if ( pFile->m_oSHA1 && pFile->m_oTiger )
@@ -84,16 +121,23 @@ CExistingFileDlg::CExistingFileDlg(CLibraryFile* pFile, CWnd* pParent, bool bDup
 	}
 }
 
+INT_PTR CExistingFileDlg::DoModal()
+{
+	INT_PTR ret = CSkinDialog::DoModal();
+	if ( ret != IDOK )
+		m_nAction = 3;
+	return ret;
+}
+
 void CExistingFileDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CSkinDialog::DoDataExchange(pDX);
-	//{{AFX_DATA_MAP(CExistingFileDlg)
+
 	DDX_Control(pDX, IDOK, m_wndOK);
 	DDX_Control(pDX, IDC_FILE_NAME, m_wndName);
 	DDX_Text(pDX, IDC_FILE_NAME, m_sName);
 	DDX_Text(pDX, IDC_FILE_URN, m_sURN);
 	DDX_Radio(pDX, IDC_ACTION_0, m_nAction);
-	//}}AFX_DATA_MAP
 	DDX_Control(pDX, IDC_FILE_COMMENTS, m_wndComments);
 	DDX_Control(pDX, IDC_MESSAGE_AVAILABLE, m_wndMessageAvailable);
 	DDX_Control(pDX, IDC_MESSAGE_DELETED, m_wndMessageDeleted);

@@ -1,7 +1,7 @@
 //
 // DlgDownload.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -110,32 +110,21 @@ void CDownloadDlg::OnChangeURL()
 
 void CDownloadDlg::OnTorrentFile()
 {
+	UpdateData();
+
 	CFileDialog dlg( TRUE, _T("torrent"), ( Settings.Downloads.TorrentPath + "\\." ) , OFN_HIDEREADONLY,
 		_T("Torrent Files|*.torrent|All Files|*.*||"), this );
 
 	if ( dlg.DoModal() != IDOK ) return;
 
-	CBTInfo* pTorrent = new CBTInfo();
+	theApp.OpenTorrent( dlg.GetPathName(), TRUE );
 
-	if ( pTorrent->LoadTorrentFile( dlg.GetPathName() ) )
-	{
-		CShareazaURL* pURL = new CShareazaURL( pTorrent );
-
-		if ( PostMainWndMessage( WM_URL, (WPARAM)pURL ) )
-		{
-			EndDialog( IDCANCEL );
-			return;
-		}
-
-		delete pURL;
-	}
-	else
-		delete pTorrent;
+	EndDialog( IDCANCEL );
 }
 
 void CDownloadDlg::OnOK()
 {
-	UpdateData( TRUE );
+	UpdateData();
 
 	CShareazaURL pURL;
 	if ( pURL.Parse( m_sURL, m_pURLs ) ) CSkinDialog::OnOK();

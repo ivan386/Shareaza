@@ -3004,7 +3004,6 @@
 	<string id="16768" value="URL &quot;%s&quot; empfangen"/>
 	<string id="16769" value="Auswertung der URL nicht möglich: Shareaza versteht die URL nicht."/>
 	<string id="16770" value="Der URL-Aktionsdialog kann nicht angezeigt werden, weil Shareaza beschäftigt ist."/>
-	<string id="16771" value="Die Datei &quot;%s&quot; befindet sich bereits in ihrer Bibliothek. Möchten Sie sie dennoch herunterladen?"/>
 	<string id="16772" value="Host:"/>
 	<string id="16773" value="Port:"/>
 	<string id="16774" value="&amp;Verbinden"/>

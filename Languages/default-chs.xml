@@ -2935,7 +2935,6 @@
 	<string id="16768" value="已接收链接 &quot;%s&quot;"/>
 	<string id="16769" value="未能粘贴链接: Shareaza 不能识别此链接。"/>
 	<string id="16770" value="未能显示链接操作对话框因为 Shareaza 正忙。"/>
-	<string id="16771" value="您的收藏中已经存在文件 &quot;%s&quot;。您还希望下载吗？"/>
 	<string id="16772" value="主机:"/>
 	<string id="16773" value="端口:"/>
 	<string id="16774" value="连接(_C)"/>

@@ -2910,7 +2910,6 @@
 	<string id="16768" value="URL &quot;%s&quot; を受信しました"/>
 	<string id="16769" value="URLの解析に失敗しました: ShareazaはこのURLを理解できません"/>
 	<string id="16770" value="Shareazaがビジーの為、URLアクションダイアログを表示できませんでした"/>
-	<string id="16771" value="既にライブラリ内に &quot;%s&quot; を所有しています。それでもこれをダウンロードしますか?"/>
 	<string id="16772" value="ホスト:"/>
 	<string id="16773" value="ポート:"/>
 	<string id="16774" value="接続(&amp;C)"/>

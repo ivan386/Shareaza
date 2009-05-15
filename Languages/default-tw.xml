@@ -2887,7 +2887,6 @@
 	<string id="16768" value="接收到 URL &quot;%s&quot;"/>
 	<string id="16769" value="無法解析 URL: Shareaza 不了解這個 URL."/>
 	<string id="16770" value="無法顯示 URL 動作對話框, 因為 Shareaza 忙祿中."/>
-	<string id="16771" value="您已經有檔案 &quot;%s&quot; 在收藏裡了. 您仍舊要下載它嗎?"/>
 	<string id="16772" value="主機:"/>
 	<string id="16773" value="連接埠:"/>
 	<string id="16774" value="&amp;連線"/>

@@ -33,6 +33,7 @@
 #include "DiscoveryServices.h"
 #include "Skin.h"
 #include "DlgURLAction.h"
+#include "DlgExistingFile.h"
 #include "WndMain.h"
 #include "WndSearch.h"
 #include "WndDownloads.h"
@@ -44,30 +45,24 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 
+IMPLEMENT_DYNAMIC(CURLActionDlg, CSkinDialog)
+
 BEGIN_MESSAGE_MAP(CURLActionDlg, CSkinDialog)
-	//{{AFX_MSG_MAP(CURLActionDlg)
 	ON_BN_CLICKED(IDC_URL_DOWNLOAD, OnUrlDownload)
 	ON_BN_CLICKED(IDC_URL_SEARCH, OnUrlSearch)
-	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 
 /////////////////////////////////////////////////////////////////////////////
 // CURLActionDlg construction
 
-CURLActionDlg::CURLActionDlg(CWnd* pParent, CShareazaURL* pURL, BOOL bMultiple) : CSkinDialog(CURLActionDlg::IDD, pParent)
+CURLActionDlg::CURLActionDlg(CWnd* pParent, CShareazaURL* pURL, BOOL bMultiple)
+:	CSkinDialog(CURLActionDlg::IDD, pParent)
+,	m_bNewWindow	( FALSE )
+,	m_bAlwaysOpen	( FALSE )
+,	m_bMultiple		( bMultiple )
 {
-	//{{AFX_DATA_INIT(CURLActionDlg)
-	m_sNameTitle = _T("");
-	m_sNameValue = _T("");
-	m_sHashTitle = _T("");
-	m_sHashValue = _T("");
-	m_bNewWindow = FALSE;
-	m_bAlwaysOpen = FALSE;
-	//}}AFX_DATA_INIT
-
 	m_pURLs.AddTail( pURL );
-	m_bMultiple = bMultiple;
 }
 
 CURLActionDlg::~CURLActionDlg()
@@ -344,39 +339,21 @@ void CURLActionDlg::OnUrlDownload()
 		if ( pURL->m_nAction == CShareazaURL::uriDownload ||
 			 pURL->m_nAction == CShareazaURL::uriSource )
 		{
-			CLibraryFile* pFile;
-
-			{
-				CSingleLock oLock( &Library.m_pSection, TRUE );
-				if ( ( pFile = LibraryMaps.LookupFileBySHA1( pURL->m_oSHA1 ) ) != NULL
-					|| ( pFile = LibraryMaps.LookupFileByED2K( pURL->m_oED2K ) ) != NULL
-					|| ( pFile = LibraryMaps.LookupFileByBTH( pURL->m_oBTH ) ) != NULL
-					|| ( pFile = LibraryMaps.LookupFileByMD5( pURL->m_oMD5 ) ) != NULL )
-				{
-					CString strFormat, strMessage;
-					::Skin.LoadString( strFormat, IDS_URL_ALREADY_HAVE );
-					strMessage.Format( strFormat, (LPCTSTR)pFile->m_sName );
-					oLock.Unlock();
-
-					INT_PTR nMBOX = AfxMessageBox( strMessage, MB_ICONINFORMATION|MB_YESNOCANCEL|MB_DEFBUTTON2 );
-					if ( nMBOX == IDCANCEL )
-						return;
-					if ( nMBOX == IDNO )
-						continue;
-				}
-			}
+			CExistingFileDlg::Action action = CExistingFileDlg::CheckExisting( pURL );
+			if ( action == CExistingFileDlg::Cancel )
+				return;
+			else if ( action != CExistingFileDlg::Download )
+				continue;
 
 			CDownload* pDownload = Downloads.Add( *pURL );
 
 			if ( pDownload == NULL )
 				continue;
 
-			if ( ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 ) == 0 )
+			if ( ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 ) == 0 &&
+				! Network.IsWellConnected() )
 			{
-//				if ( pURL->m_bED2K && HostCache.eDonkey.GetNewest() != NULL )
-//					Settings.eDonkey.EnableToday = TRUE;
-
-				if ( ! Network.IsWellConnected() ) Network.Connect( TRUE );
+				Network.Connect( TRUE );
 			}
 
 			if ( m_bMultiple == FALSE )

@@ -273,13 +273,15 @@ void CBaseMatchWnd::OnSearchDownload()
 
 		pSingleLock.Unlock();
 
-		switch ( CheckExisting( pFile->m_oSHA1, pFile->m_oTiger, pFile->m_oED2K, pFile->m_oBTH, pFile->m_oMD5, pFile->m_nSize ) )
+		switch ( CExistingFileDlg::CheckExisting( pFile ) )
 		{
-		case 1:
+		case CExistingFileDlg::Download:
 			pFiles.AddTail( pFile );
 			break;
-		case 3:
+		case CExistingFileDlg::Cancel:
 			return;
+		default:
+			;
 		}
 
 		pSingleLock.Lock();
@@ -291,13 +293,15 @@ void CBaseMatchWnd::OnSearchDownload()
 
 		pSingleLock.Unlock();
 
-		switch ( CheckExisting( pHit->m_oSHA1, pHit->m_oTiger, pHit->m_oED2K, pHit->m_oBTH, pHit->m_oMD5, pHit->m_nSize ) )
+		switch ( CExistingFileDlg::CheckExisting( pHit ) )
 		{
-		case 1:
+		case CExistingFileDlg::Download:
 			pHits.AddTail( pHit );
 			break;
-		case 3:
+		case CExistingFileDlg::Cancel:
 			return;
+		default:
+			;
 		}
 
 		pSingleLock.Lock();
@@ -359,13 +363,15 @@ void CBaseMatchWnd::OnSearchDownloadNow()
 
 		pSingleLock.Unlock();
 
-		switch ( CheckExisting( pFile->m_oSHA1, pFile->m_oTiger, pFile->m_oED2K, pFile->m_oBTH, pFile->m_oMD5, pFile->m_nSize ) )
+		switch ( CExistingFileDlg::CheckExisting( pFile ) )
 		{
-		case 1:
+		case CExistingFileDlg::Download:
 			pFiles.AddTail( pFile );
 			break;
-		case 3:
+		case CExistingFileDlg::Cancel:
 			return;
+		default:
+			;
 		}
 
 		pSingleLock.Lock();
@@ -377,13 +383,15 @@ void CBaseMatchWnd::OnSearchDownloadNow()
 
 		pSingleLock.Unlock();
 
-		switch ( CheckExisting( pHit->m_oSHA1, pHit->m_oTiger, pHit->m_oED2K, pHit->m_oBTH, pHit->m_oMD5, pHit->m_nSize ) )
+		switch ( CExistingFileDlg::CheckExisting( pHit ) )
 		{
-		case 1:
+		case CExistingFileDlg::Download:
 			pHits.AddTail( pHit );
 			break;
-		case 3:
+		case CExistingFileDlg::Cancel:
 			return;
+		default:
+			;
 		}
 
 		pSingleLock.Lock();
@@ -430,39 +438,6 @@ void CBaseMatchWnd::OnSearchDownloadNow()
 	{
 		GetManager()->Open( RUNTIME_CLASS(CDownloadsWnd) );
 	}
-}
-
-int CBaseMatchWnd::CheckExisting(const Hashes::Sha1Hash& oSHA1, const Hashes::TigerHash& oTiger, const Hashes::Ed2kHash& oED2K,
-								 const Hashes::BtHash& oBTH, const Hashes::Md5Hash& oMD5, const QWORD nSize)
-{
-	CSingleLock pLock( &Library.m_pSection );
-	if ( ! pLock.Lock( 500 ) ) return 1;
-
-	CLibraryFile* pFile = LibraryMaps.LookupFileByHash( oSHA1, oTiger, oED2K, oBTH, oMD5, nSize, nSize );
-
-	if ( pFile == NULL ) return 1;
-
-	DWORD nIndex = pFile->m_nIndex;
-
-	CExistingFileDlg dlg( pFile );
-
-	pLock.Unlock();
-
-	if ( dlg.DoModal() != IDOK ) dlg.m_nAction = 3;
-
-	if ( dlg.m_nAction == 0 )
-	{
-		if ( CLibraryWnd* pLibrary = (CLibraryWnd*)GetManager()->Open( RUNTIME_CLASS(CLibraryWnd) ) )
-		{
-			CQuickLock oLock( Library.m_pSection );
-			if ( ( pFile = Library.LookupFile( nIndex ) ) != NULL )
-			{
-				pLibrary->Display( pFile );
-			}
-		}
-	}
-
-	return dlg.m_nAction;
 }
 
 void CBaseMatchWnd::OnUpdateSearchCopy(CCmdUI* pCmdUI)

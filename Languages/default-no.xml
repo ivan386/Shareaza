@@ -2835,7 +2835,6 @@
 	<string id="16768" value="Mottar URL &quot;%s&quot;"/>
 	<string id="16769" value="Kan ikke motta URL: Shareaza gjenkjenner ikke denne URL."/>
 	<string id="16770" value="Kan ikke vise URL-dialogen fordi Shareaza er opptatt."/>
-	<string id="16771" value="Du har allerede filen &quot;%s&quot; i mine filer. Vil du laste den ned likevel?"/>
 	<string id="16772" value="Vert:"/>
 	<string id="16773" value="Port:"/>
 	<string id="16774" value="_Koble til"/>

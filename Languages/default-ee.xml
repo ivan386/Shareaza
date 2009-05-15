@@ -2935,7 +2935,6 @@
 	<string id="16768" value="Vastuvõetud URL &quot;%s&quot;"/>
 	<string id="16769" value="Ei suuda tuvastada URL: Shareaza ei suuda seda URL-i lugeda."/>
 	<string id="16770" value="Ei suuda kuvada URL tegevuste dialoogi, kuna Shareaza on hõivatud."/>
-	<string id="16771" value="Sul juba on see fail &quot;%s&quot; raamatukogus. Kas tahad seda ikkagi tõmmata?"/>
 	<string id="16772" value="Võõrustaja:"/>
 	<string id="16773" value="Port:"/>
 	<string id="16774" value="&amp;Ühenda"/>

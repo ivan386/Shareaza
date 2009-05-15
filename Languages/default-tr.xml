@@ -3000,7 +3000,6 @@
 	<string id="16768" value="&quot;%s&quot; URL alındı"/>
 	<string id="16769" value="URL ayrıştırılamaz : Shareaza bu URL'yi anlamıyor."/>
 	<string id="16770" value="URL faaliyet diyalogu gösterilemez çünkü Shareaza meşgul."/>
-	<string id="16771" value="Kütüphanenizde zaten &quot;%s&quot; dosyası bulunmaktadır. Bu dosyayı yine de indirmek istiyor musunuz?"/>
 	<string id="16772" value="Host:"/>
 	<string id="16773" value="Port:"/>
 	<string id="16774" value="&amp;Bağlan"/>

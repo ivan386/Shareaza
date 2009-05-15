@@ -1227,7 +1227,6 @@
 #define IDS_URL_RECEIVED                16768
 #define IDS_URL_PARSE_ERROR             16769
 #define IDS_URL_BUSY                    16770
-#define IDS_URL_ALREADY_HAVE            16771
 #define IDS_URL_HOST                    16772
 #define IDS_URL_PORT                    16773
 #define IDS_URL_CONNECT                 16774

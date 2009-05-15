@@ -3021,7 +3021,6 @@
 	<string id="16768" value="Adresse reçue &#171;&#160;%s&#160;&#187;"/>
 	<string id="16769" value="Impossible d'analyser cette URL&#160;: Shareaza ne reconnaît pas cette URL."/>
 	<string id="16770" value="Impossible d'afficher le dialogue d'action de l'URL, Shareaza est occupé."/>
-	<string id="16771" value="Le fichier &#171;&#160;%s&#160;&#187; est déjà présent dans votre bibliothèque. Voulez-vous le télécharger tout de même&#160;?"/>
 	<string id="16772" value="Hôte&#160;:"/>
 	<string id="16773" value="Port&#160;:"/>
 	<string id="16774" value="Se &amp;connecte"/>

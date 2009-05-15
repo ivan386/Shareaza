@@ -82,6 +82,7 @@
 #include "DlgURLAction.h"
 #include "DlgUpgrade.h"
 #include "DlgDownloadMonitor.h"
+#include "DlgExistingFile.h"
 #include "DlgFilePreview.h"
 #include "DlgLanguage.h"
 #include "DlgProfileManager.h"
@@ -2238,27 +2239,46 @@ void CMainWnd::OnUpdateToolsDownload(CCmdUI* pCmdUI)
 
 void CMainWnd::OnToolsDownload()
 {
-	CDownloadDlg dlg;
-	if ( dlg.DoModal() != IDOK ) return;
-
-	for ( POSITION pos = dlg.m_pURLs.GetHeadPosition(); pos; )
+	for ( BOOL bBreak = FALSE; ! bBreak; )
 	{
-		CShareazaURL pURL( dlg.m_pURLs.GetNext( pos ) );
+		bBreak = TRUE;
 
-		if ( pURL.m_nAction == CShareazaURL::uriDownload )
+		CDownloadDlg dlg;
+		if ( dlg.DoModal() != IDOK )
+			return;
+
+		for ( POSITION pos = dlg.m_pURLs.GetHeadPosition(); pos; )
 		{
-			Downloads.Add( pURL );
-			if ( ! Network.IsWellConnected() ) Network.Connect( TRUE );
-			m_pWindows.Open( RUNTIME_CLASS(CDownloadsWnd) );
-		}
-		else if ( pURL.m_nAction == CShareazaURL::uriSource )
-		{
-			Downloads.Add( pURL );
-			m_pWindows.Open( RUNTIME_CLASS(CDownloadsWnd) );
-		}
-		else
-		{
-			PostMessage( WM_URL, (WPARAM)new CShareazaURL( pURL ) );
+			CShareazaURL pURL( dlg.m_pURLs.GetNext( pos ) );
+
+			CExistingFileDlg::Action action = CExistingFileDlg::CheckExisting( &pURL );
+			if ( action == CExistingFileDlg::Cancel )
+			{
+				// Reopen download dialog
+				bBreak = FALSE;
+				break;
+			}
+			else if ( action != CExistingFileDlg::Download )
+				// Skip this file
+				continue;
+
+			if ( pURL.m_nAction == CShareazaURL::uriDownload ||
+				 pURL.m_nAction == CShareazaURL::uriSource )
+			{
+				if ( CDownload* pDownload = Downloads.Add( pURL ) )
+				{
+					if ( ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 ) == 0 &&
+						! Network.IsWellConnected() )
+					{
+						Network.Connect( TRUE );
+					}
+					m_pWindows.Open( RUNTIME_CLASS(CDownloadsWnd) );
+				}
+			}
+			else
+			{
+				PostMessage( WM_URL, (WPARAM)new CShareazaURL( pURL ) );
+			}
 		}
 	}
 }
@@ -2855,6 +2875,17 @@ LRESULT CMainWnd::OnQueryHits(WPARAM /*wParam*/, LPARAM lParam)
 		pMonitorWnd->OnQueryHits( pHits );
 
 	pHits->Delete();
+
+	// Overload protection
+	if ( GetTickCount() - GetMessageTime() > 2000 )
+	{
+		MSG msg = {};
+		while( PeekMessage( &msg, NULL, WM_QUERYHITS, WM_QUERYHITS, PM_REMOVE ) )
+		{
+			CQueryHit* pHits = (CQueryHit*)msg.lParam;
+			pHits->Delete();
+		}
+	}
 
 	return 0;
 }

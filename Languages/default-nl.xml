@@ -2959,7 +2959,6 @@
 	<string id="16768" value="Ontvangen URL &quot;%s&quot;"/>
 	<string id="16769" value="Niet mogelijk om URL te ontleden omdat Shareaza deze URL niet begrijpt."/>
 	<string id="16770" value="Niet mogelijk het URL actiescherm weer te geven omdat Shareaza het druk heeft."/>
-	<string id="16771" value="Je hebt het bestand &quot;%s&quot; al in je bibliotheek. Wil je het toch downloaden?"/>
 	<string id="16772" value="Gastheer:"/>
 	<string id="16773" value="Poort:"/>
 	<string id="16774" value="&amp;Verbinden"/>

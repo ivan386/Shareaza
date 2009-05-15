@@ -2922,7 +2922,6 @@ Puede comenzar a transferir en cualquier momento.</text>
 	<string id="16768" value="URL &quot;%s&quot; recibida"/>
 	<string id="16769" value="Shareaza no entendió el URL."/>
 	<string id="16770" value="La ventana de URL no pudo ser mostrada, Shareaza está ocupado."/>
-	<string id="16771" value="El archivo &quot;%s&quot; ya está en Mi Colección.  ¿Quieres descagarlo de todos modos?"/>
 	<string id="16772" value="Host:"/>
 	<string id="16773" value="Puerto:"/>
 	<string id="16774" value="&amp;Conectar"/>

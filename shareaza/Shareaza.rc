@@ -3902,7 +3902,6 @@ BEGIN
     IDS_URL_RECEIVED        "Received URL ""%s"""
     IDS_URL_PARSE_ERROR     "Unable to parse URL: Shareaza does not understand this URL."
     IDS_URL_BUSY            "Unable to display URL action dialog because Shareaza is busy."
-    IDS_URL_ALREADY_HAVE    "You already have the file ""%s"" in your library.  Do you want to download it anyway?"
     IDS_URL_HOST            "Host:"
     IDS_URL_PORT            "Port:"
     IDS_URL_CONNECT         "&Connect"

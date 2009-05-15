@@ -2979,7 +2979,6 @@ pasta dos arquivos baixados a sua biblioteca agora?"/>
 		<string id="16768" value="Recebida URL &quot;%s&quot;"/>
 		<string id="16769" value="Impossível analisar URL: Shareaza não entende esta URL."/>
 		<string id="16770" value="Incapaz de exibir diálogo de ação da URL porque o Shareaza está ocupado."/>
-		<string id="16771" value="Você já tem o arquivo &quot;%s&quot; na sua biblioteca. Você quer baixá-lo de qualquer maneira?"/>
 		<string id="16772" value="Host:"/>
 		<string id="16773" value="Porta:"/>
 		<string id="16774" value="&amp;Conectar"/>

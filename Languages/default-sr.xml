@@ -2879,7 +2879,6 @@
 	<string id="16768" value="Primljen URL &quot;%s&quot;"/>
 	<string id="16769" value="Unable to parse URL: Shareaza does not understand this URL."/>
 	<string id="16770" value="Unable to display URL action dialog because Shareaza is busy."/>
-	<string id="16771" value="Datoteku &quot;%s&quot; već imate u svojoj kolekciji.Jeste li sigurni da ju želite ponovno skinuti?"/>
 	<string id="16772" value="Host:"/>
 	<string id="16773" value="Port:"/>
 	<string id="16774" value="&amp;Spoji"/>

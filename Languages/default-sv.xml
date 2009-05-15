@@ -2965,7 +2965,6 @@ Du kan undersöka varje källa för att se hur högt upp i kön du befinner dig.
 	<string id="16768" value="Mottog URL &quot;%s&quot;"/>
 	<string id="16769" value="Kan inte tolka URL: Shareaza förstår inte denna URL." />
 	<string id="16770" value="Kan inte visa URL-åtgärdsdialogrutan eftersom Shareaza är upptagen." />
-	<string id="16771" value="Du har redan filen &quot;%s&quot; i ditt bibliotek. Vill du ladda ned den ändå?" />
 	<string id="16772" value="Värd:" />
 	<string id="16773" value="Port:"/>
 	<string id="16774" value="&amp;Anslut" />

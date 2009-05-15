@@ -3029,7 +3029,6 @@
 	<string id="16768" value="Ληφθέντες URL &quot;%s&quot;"/>
 	<string id="16769" value="Αδυναμία ανάλυσης URL: Μη κατανοητό URL."/>
 	<string id="16770" value="Αδυναμία εμφάνισης URL action dialog, λόγω φόρτου."/>
-	<string id="16771" value="Έχετε ήδη το αρχείο &quot;%s&quot; στη Βιβλιοθήκη. Επιμένετε να το ξαναλάβετε;"/>
 	<string id="16772" value="Host:"/>
 	<string id="16773" value="Θύρα:"/>
 	<string id="16774" value="&amp;Σύνδεση"/>
