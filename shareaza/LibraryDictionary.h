@@ -49,9 +49,9 @@ private:
 public:
 	void					AddFile(const CLibraryFile& oFile);
 	void					RemoveFile(const CLibraryFile& oFile);
-	bool					BuildHashTable();					// Build hash table if needed
+	void					BuildHashTable();					// Build hash table if needed
 	void					RebuildHashTable();					// Force hash table to re-build
-	CQueryHashTable*		GetHashTable();
+	const CQueryHashTable*	GetHashTable();
 	void					Clear();
 	FilePtrList*			Search(const CQuerySearch& oSearch, int nMaximum = 0, bool bLocal = false, bool bAvailableOnly = true);
 	void					Serialize(CArchive& ar, int nVersion);

@@ -170,13 +170,13 @@ CString CLibraryFile::GetSearchName() const
 //////////////////////////////////////////////////////////////////////
 // CLibraryFile shared check
 
-BOOL CLibraryFile::IsShared() const
+bool CLibraryFile::IsShared() const
 {
 	if ( m_pFolder && m_pFolder->IsOffline() )
-		return FALSE;
+		return false;
 
-	if ( m_pSchema != NULL && m_pSchema->CheckURI( CSchema::uriBitTorrent ) &&
-		 m_pMetadata != NULL )
+	if ( m_pSchema && m_pSchema->CheckURI( CSchema::uriBitTorrent )
+		&& m_pMetadata )
 	{
 		CString str = m_pMetadata->GetAttributeValue( L"privateflag", L"true" );
 		return str != L"true" && m_bShared != TRI_FALSE &&
@@ -185,14 +185,17 @@ BOOL CLibraryFile::IsShared() const
 
 	if ( m_bShared )
 	{
-		if ( m_bShared == TRI_TRUE ) return TRUE;
-		if ( m_bShared == TRI_FALSE ) return FALSE;
+		if ( m_bShared == TRI_TRUE )
+			return true;
+
+		if ( m_bShared == TRI_FALSE )
+			return false;
 	}
 
 	if ( m_pFolder && ! m_pFolder->IsShared() )
-		return FALSE;
+		return false;
 
-	return TRUE;
+	return true;
 }
 
 //////////////////////////////////////////////////////////////////////

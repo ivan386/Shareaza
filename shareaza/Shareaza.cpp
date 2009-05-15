@@ -2563,7 +2563,7 @@ void SafeMessageLoop()
 	InterlockedDecrement( &theApp.m_bBusy );
 }
 
-const bool IsCharacter(const WCHAR nChar)
+bool IsCharacter(const WCHAR nChar)
 {
 	WORD nCharType( 0u );
 
@@ -2575,7 +2575,7 @@ const bool IsCharacter(const WCHAR nChar)
 	return false;
 }
 
-const bool IsHiragana(const WCHAR nChar)
+bool IsHiragana(const WCHAR nChar)
 {
 	WORD nCharType( 0u );
 
@@ -2585,7 +2585,7 @@ const bool IsHiragana(const WCHAR nChar)
 	return false;
 }
 
-const bool IsKatakana(const WCHAR nChar)
+bool IsKatakana(const WCHAR nChar)
 {
 	WORD nCharType( 0u );
 
@@ -2595,7 +2595,7 @@ const bool IsKatakana(const WCHAR nChar)
 	return false;
 }
 
-const bool IsKanji(const WCHAR nChar)
+bool IsKanji(const WCHAR nChar)
 {
 	WORD nCharType( 0u );
 
@@ -2605,11 +2605,12 @@ const bool IsKanji(const WCHAR nChar)
 	return false;
 }
 
-const bool IsWord(LPCTSTR pszString, size_t nStart, size_t nLength)
+bool IsWord(LPCTSTR pszString, size_t nStart, size_t nLength)
 {
-	for ( pszString += nStart ; *pszString && nLength ; pszString++, nLength-- )
+	for ( pszString += nStart ; *pszString && nLength ; ++pszString, --nLength )
 	{
-		if ( _istdigit( *pszString ) ) return false;
+		if ( _istdigit( *pszString ) )
+			return false;
 	}
 	return true;
 }
@@ -2618,10 +2619,12 @@ void IsType(LPCTSTR pszString, size_t nStart, size_t nLength, bool& bWord, bool&
 {
 	bWord = false;
 	bDigit = false;
-	for ( pszString += nStart ; *pszString && nLength ; pszString++, nLength-- )
+	for ( pszString += nStart ; *pszString && nLength ; ++pszString, --nLength )
 	{
-		if ( _istdigit( *pszString ) ) bDigit = true;
-		else if ( IsCharacter( *pszString ) ) bWord = true;
+		if ( _istdigit( *pszString ) )
+			bDigit = true;
+		else if ( IsCharacter( *pszString ) )
+			bWord = true;
 	}
 
 	bMix = bWord && bDigit;

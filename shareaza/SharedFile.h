@@ -94,7 +94,7 @@ public:
 public:
 	CString			GetPath() const;
 	CString			GetSearchName() const;
-	BOOL			IsShared() const;
+	bool			IsShared() const;
 	inline BOOL		IsGhost() const { return m_pFolder == NULL; }
 	inline BOOL		IsAvailable() const { return m_pFolder != NULL; }
 	BOOL			IsSchemaURI(LPCTSTR pszURI) const;

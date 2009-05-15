@@ -281,11 +281,11 @@ struct CompareNums
 	}
 };
 
-const bool IsCharacter(WCHAR nChar);
-const bool IsHiragana(WCHAR nChar);
-const bool IsKatakana(WCHAR nChar);
-const bool IsKanji(WCHAR nChar);
-const bool IsWord(LPCTSTR pszString, size_t nStart, size_t nLength);
+bool IsCharacter(WCHAR nChar);
+bool IsHiragana(WCHAR nChar);
+bool IsKatakana(WCHAR nChar);
+bool IsKanji(WCHAR nChar);
+bool IsWord(LPCTSTR pszString, size_t nStart, size_t nLength);
 void IsType(LPCTSTR pszString, size_t nStart, size_t nLength, bool& bWord, bool& bDigit, bool& bMix);
 
 // Use with whole numbers only

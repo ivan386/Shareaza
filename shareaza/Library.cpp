@@ -366,7 +366,6 @@ BOOL CLibrary::Load()
 
 	LibraryFolders.CreateAlbumTree();
 	LibraryHashDB.Create();
-	LibraryDictionary.BuildHashTable();
 	LibraryBuilder.BoostPriority( Settings.Library.HighPriorityHash );
 
 	Update();
@@ -505,11 +504,6 @@ BOOL CLibrary::ThreadScan()
 	{
 		if ( Save() )
 			m_nUpdateSaved = GetTickCount();
-
-		if ( bChanged )
-		{
-			LibraryDictionary.BuildHashTable();
-		}
 	}
 
 	return bChanged;
