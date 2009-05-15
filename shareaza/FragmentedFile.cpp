@@ -182,16 +182,16 @@ BOOL CFragmentedFile::Open(LPCTSTR pszFile, QWORD nOffset, QWORD nLength,
 	else
 	{
 		// Use existing
-		if ( pItr->m_pFile )
+		if ( (*pItr).m_pFile )
 			// Already opened
-			return ! bWrite || pItr->m_pFile->EnsureWrite();
+			return ! bWrite || (*pItr).m_pFile->EnsureWrite();
 	}
 
 	CTransferFile* pFile = NULL;
 	QWORD nRealLength = SIZE_UNKNOWN;
 	for ( int nMethod = 0 ; nMethod < 2 ; ++nMethod )
 	{
-		pFile = TransferFiles.Open( pItr->m_sPath, bWrite );
+		pFile = TransferFiles.Open( (*pItr).m_sPath, bWrite );
 		if ( pFile )
 		{
 			m_nFileError = ERROR_SUCCESS;
@@ -221,7 +221,7 @@ BOOL CFragmentedFile::Open(LPCTSTR pszFile, QWORD nOffset, QWORD nLength,
 		case 0:
 			// Try to open file for write from current incomplete folder
 			// (in case of changed folder)
-			pItr->m_sPath = Settings.Downloads.IncompletePath +
+			(*pItr).m_sPath = Settings.Downloads.IncompletePath +
 				strPath.Mid( strPath.ReverseFind( _T('\\') ) );
 			break;
 
@@ -229,9 +229,9 @@ BOOL CFragmentedFile::Open(LPCTSTR pszFile, QWORD nOffset, QWORD nLength,
 		}
 	}
 
-	pItr->m_nSize = nLength;
-	pItr->m_pFile = pFile;
-	pItr->m_nPriority = nPriority;
+	(*pItr).m_nSize = nLength;
+	(*pItr).m_pFile = pFile;
+	(*pItr).m_nPriority = nPriority;
 
 	std::sort( m_oFile.begin(), m_oFile.end(), Less() );
 
@@ -313,7 +313,7 @@ BOOL CFragmentedFile::Open(const CBTInfo& oInfo, const BOOL bWrite,
 		if ( bReopen )
 		{
 			// Reopen file
-			strSource = pItr->m_sPath;
+			strSource = (*pItr).m_sPath;
 			++pItr;
 		}
 		else if ( bWrite )
@@ -540,8 +540,8 @@ void CFragmentedFile::Delete()
 	for( ; pItr != pEnd; ++pItr )
 	{
 		// Delete subfile
-		BOOL bToRecycleBin = !pItr->m_bWrite;
-		DeleteFileEx( pItr->m_sPath, TRUE, bToRecycleBin, TRUE );
+		BOOL bToRecycleBin = !(*pItr).m_bWrite;
+		DeleteFileEx( (*pItr).m_sPath, TRUE, bToRecycleBin, TRUE );
 	}
 }
 
