@@ -35,6 +35,8 @@
 			/>
 			<Tool
 				Name="VCPreBuildEventTool"
+				Description="Update SVN revision infomation..."
+				CommandLine="cd $(SolutionDir)..\shareaza&#x0D;&#x0A;cscript.exe -E:jscript -nologo &quot;revision.js&quot;&#x0D;&#x0A;xcopy &quot;$(SolutionDir)..\shareaza\revision.h&quot; &quot;$(IntDir)&quot; /y /q&#x0D;&#x0A;"
 			/>
 			<Tool
 				Name="VCXMLDataGeneratorTool"
@@ -131,6 +133,8 @@
 			/>
 			<Tool
 				Name="VCPreBuildEventTool"
+				Description="Update SVN revision infomation..."
+				CommandLine="cd $(SolutionDir)..\shareaza&#x0D;&#x0A;cscript.exe -E:jscript -nologo &quot;revision.js&quot;&#x0D;&#x0A;xcopy &quot;$(SolutionDir)..\shareaza\revision.h&quot; &quot;$(IntDir)&quot; /y /q&#x0D;&#x0A;"
 			/>
 			<Tool
 				Name="VCXMLDataGeneratorTool"
@@ -229,6 +233,8 @@
 			/>
 			<Tool
 				Name="VCPreBuildEventTool"
+				Description="Update SVN revision infomation..."
+				CommandLine="cd $(SolutionDir)..\shareaza&#x0D;&#x0A;cscript.exe -E:jscript -nologo &quot;revision.js&quot;&#x0D;&#x0A;xcopy &quot;$(SolutionDir)..\shareaza\revision.h&quot; &quot;$(IntDir)&quot; /y /q&#x0D;&#x0A;"
 			/>
 			<Tool
 				Name="VCXMLDataGeneratorTool"
@@ -326,6 +332,8 @@
 			/>
 			<Tool
 				Name="VCPreBuildEventTool"
+				Description="Update SVN revision infomation..."
+				CommandLine="cd $(SolutionDir)..\shareaza&#x0D;&#x0A;cscript.exe -E:jscript -nologo &quot;revision.js&quot;&#x0D;&#x0A;xcopy &quot;$(SolutionDir)..\shareaza\revision.h&quot; &quot;$(IntDir)&quot; /y /q&#x0D;&#x0A;"
 			/>
 			<Tool
 				Name="VCXMLDataGeneratorTool"
@@ -1547,6 +1555,10 @@
 				</File>
 				<File
 					RelativePath="..\shareaza\DlgProfileManager.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\shareaza\DlgProgressBar.cpp"
 					>
 				</File>
 				<File
@@ -3216,6 +3228,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\shareaza\DlgProgressBar.h"
+					>
+				</File>
+				<File
 					RelativePath="..\shareaza\DlgPromote.h"
 					>
 				</File>
@@ -4366,6 +4382,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\shareaza\revision.h"
+				>
+			</File>
+			<File
 				RelativePath="..\shareaza\Res\SchemaMappings.xml.gz"
 				>
 			</File>
@@ -4580,5 +4600,9 @@
 		</Filter>
 	</Files>
 	<Globals>
+		<Global
+			Name="RESOURCE_FILE"
+			Value="..\shareaza\Shareaza.rc"
+		/>
 	</Globals>
 </VisualStudioProject>

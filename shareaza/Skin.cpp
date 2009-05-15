@@ -484,9 +484,10 @@ BOOL CSkin::LoadString(CString& str, UINT nStringID) const
 		( IS_INTRESOURCE( nStringID ) && str.LoadString( nStringID ) ) )
 		return TRUE;
 
-	if ( IsWindow( (HWND)(INT_PTR)nStringID ) )
+	HWND hWnd = (HWND)UIntToPtr( nStringID );
+	if ( IsWindow( hWnd ) )
 	{
-		CWnd::FromHandle( (HWND)(INT_PTR)nStringID )->GetWindowText( str );
+		CWnd::FromHandle( hWnd )->GetWindowText( str );
 		return TRUE;
 	}
 

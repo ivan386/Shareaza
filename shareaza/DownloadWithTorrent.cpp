@@ -62,20 +62,20 @@ CDownloadWithTorrent::CDownloadWithTorrent() :
 ,	m_nTorrentDownloaded	( 0 )
 ,	m_bTorrentEndgame		( FALSE )
 ,	m_bTorrentTrackerError	( FALSE )
-	
+
 ,	m_pTorrentBlock			( NULL )
 ,	m_nTorrentBlock			( 0 )
 ,	m_nTorrentSize			( 0 )
 ,	m_nTorrentSuccess		( 0 )
 ,	m_bSeeding				( FALSE )
-	
+
 ,	m_tTorrentChoke			( 0 )
 ,	m_tTorrentSources		( 0 )
 {
 	// Generate random Key value
 	m_sKey = _T("");
 
-	for ( int nChar = 1 ; nChar < 6 ; nChar++ ) 
+	for ( int nChar = 1 ; nChar < 6 ; nChar++ )
 	{
 		m_sKey += GenerateCharacter();
 	}
@@ -153,15 +153,47 @@ TCHAR CDownloadWithTorrent::GenerateCharacter() const
 void CDownloadWithTorrent::Serialize(CArchive& ar, int nVersion)
 {
 	CDownloadWithFile::Serialize( ar, nVersion );
-	
-	if ( nVersion < 22 ) return;
-	
+
+	if ( nVersion < 22 )
+		return;
+
 	m_pTorrent.Serialize( ar );
-	
-	if ( ar.IsLoading() && IsTorrent() )
+
+	if ( nVersion < 23 )
+		return;
+
+	if ( !IsTorrent() )
+		return;
+
+	if ( ar.IsStoring() )
 	{
+		ar << m_nTorrentSuccess;
+		ar.Write( m_pTorrentBlock, sizeof(BYTE) * m_nTorrentBlock );
+		ar << BOOL( m_bSeeding && Settings.BitTorrent.AutoSeed );
+	}
+	else
+	{
+		m_nTorrentSize	= m_pTorrent.m_nBlockSize;
+		m_nTorrentBlock	= m_pTorrent.m_nBlockCount;
+
+		ar >> m_nTorrentSuccess;
+		m_pTorrentBlock = new BYTE[ m_nTorrentBlock ];
+		ReadArchive( ar, m_pTorrentBlock, sizeof(BYTE) * m_nTorrentBlock );
+		if ( nVersion >= 34 )
+		{
+			ar >> m_bSeeding;
+
+			if ( nVersion < 41 )
+			{
+				CString strServingFileName;
+				ar >> strServingFileName;
+				GetFile()->Delete();
+			}
+		}
+		GenerateTorrentDownloadID();
+
 		m_oBTH = m_pTorrent.m_oBTH;
-        m_bBTHTrusted = true;
+		m_bBTHTrusted = true;
 		if ( ! m_oTiger && m_pTorrent.m_oTiger )
 		{
 			m_oTiger = m_pTorrent.m_oTiger;
@@ -183,38 +215,6 @@ void CDownloadWithTorrent::Serialize(CArchive& ar, int nVersion)
 			m_bMD5Trusted = true;
 		}
 	}
-
-	if ( nVersion >= 23 && IsTorrent() )
-	{
-		if ( ar.IsStoring() )
-		{
-			ar << m_nTorrentSuccess;
-			ar.Write( m_pTorrentBlock, sizeof(BYTE) * m_nTorrentBlock );
-			ar << BOOL( m_bSeeding && Settings.BitTorrent.AutoSeed );
-			
-			// Not used anymore
-			CString sServingFileName;
-			ar << sServingFileName;
-		}
-		else
-		{
-			m_nTorrentSize	= m_pTorrent.m_nBlockSize;
-			m_nTorrentBlock	= m_pTorrent.m_nBlockCount;
-			
-			ar >> m_nTorrentSuccess;
-			m_pTorrentBlock = new BYTE[ m_nTorrentBlock ];
-			ReadArchive( ar, m_pTorrentBlock, sizeof(BYTE) * m_nTorrentBlock );
-			if ( nVersion >= 34 )
-			{
-				ar >> m_bSeeding;
-
-				// Not used anymore
-				CString sServingFileName;
-				ar >> sServingFileName;
-			}
-			GenerateTorrentDownloadID();
-		}
-	}
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -224,9 +224,9 @@ BOOL CDownloadWithTorrent::SetTorrent(const CBTInfo& oTorrent)
 {
 	if ( IsTorrent() ) return FALSE;
 	if ( ! oTorrent.IsAvailable() ) return FALSE;
-	
+
 	m_pTorrent.Copy( oTorrent );
-	
+
 	m_oBTH = m_pTorrent.m_oBTH;
 	m_bBTHTrusted = true;
 	if ( ! m_oTiger && m_pTorrent.m_oTiger )
@@ -249,14 +249,14 @@ BOOL CDownloadWithTorrent::SetTorrent(const CBTInfo& oTorrent)
 		m_oMD5 = m_pTorrent.m_oMD5;
 		m_bMD5Trusted = true;
 	}
-	
+
 	m_nTorrentSize	= m_pTorrent.m_nBlockSize;
 	m_nTorrentBlock	= m_pTorrent.m_nBlockCount;
 	m_pTorrentBlock	= new BYTE[ m_nTorrentBlock ];
-	
+
 	ZeroMemory( m_pTorrentBlock, sizeof(BYTE) * m_nTorrentBlock );
 	SetModified();
-	
+
 	if ( CreateDirectory( Settings.Downloads.TorrentPath ) )
 	{
 		LibraryFolders.AddFolder( Settings.Downloads.TorrentPath, FALSE );
@@ -269,7 +269,7 @@ BOOL CDownloadWithTorrent::SetTorrent(const CBTInfo& oTorrent)
 		Settings.BitTorrent.AdvancedInterfaceSet	= TRUE;
 		Settings.BitTorrent.AdvancedInterface		= TRUE;
 	}
-	
+
 	return TRUE;
 }
 
@@ -553,7 +553,7 @@ void CDownloadWithTorrent::OnTrackerEvent(bool bSuccess, LPCTSTR pszReason, LPCT
 
 			// Set retry time
 			m_tTorrentTracker = m_pTorrent.GetTrackerNextTry();
-			
+
 			// Load the error message string
 			CString strFormat, strErrorMessage;
 			LoadString( strFormat, IDS_BT_TRACKER_MULTI );
@@ -582,33 +582,33 @@ DWORD CDownloadWithTorrent::GetRetryTime() const
 CDownloadTransferBT* CDownloadWithTorrent::CreateTorrentTransfer(CBTClient* pClient)
 {
 	if ( IsMoving() || IsPaused() ) return NULL;
-	
+
 	CDownloadSource* pSource = NULL;
-	
+
 	Hashes::Guid tmp = transformGuid( pClient->m_oGUID );
 	for ( pSource = GetFirstSource() ; pSource ; pSource = pSource->m_pNext )
 	{
 		if ( pSource->m_nProtocol == PROTOCOL_BT &&
 			validAndEqual( pSource->m_oGUID, tmp ) ) break;
 	}
-	
+
 	if ( pSource == NULL )
 	{
 		pSource = new CDownloadSource( (CDownload*)this, pClient->m_oGUID,
 			&pClient->m_pHost.sin_addr, htons( pClient->m_pHost.sin_port ) );
 		pSource->m_bPushOnly = !(pClient->m_bInitiated);
-		
+
 		if ( ! AddSourceInternal( pSource ) ) return NULL;
 	}
-		
-	if ( pSource->m_pTransfer != NULL ) 
+
+	if ( pSource->m_pTransfer != NULL )
 	{
 		// A download transfer already exists
 		return NULL;
 	}
-	
+
 	pSource->m_pTransfer = new CDownloadTransferBT( pSource, pClient );
-	
+
 	return (CDownloadTransferBT*)pSource->m_pTransfer;
 }
 
@@ -629,14 +629,14 @@ void CDownloadWithTorrent::OnFinishedTorrentBlock(DWORD nBlock)
 CBTPacket* CDownloadWithTorrent::CreateBitfieldPacket()
 {
 	ASSERT( IsTorrent() );
-	
+
 	CBTPacket* pPacket = CBTPacket::New( BT_PACKET_BITFIELD );
 	int nCount = 0;
-	
+
 	for ( QWORD nBlock = 0 ; nBlock < m_nTorrentBlock ; )
 	{
 		BYTE nByte = 0;
-		
+
 		for ( int nBit = 7 ; nBit >= 0 && nBlock < m_nTorrentBlock ; nBit--, nBlock++ )
 		{
 			if ( m_pTorrentBlock[ nBlock ] == TRI_TRUE )
@@ -645,13 +645,13 @@ CBTPacket* CDownloadWithTorrent::CreateBitfieldPacket()
 				nCount++;
 			}
 		}
-		
+
 		pPacket->WriteByte( nByte );
 	}
-	
+
 	if ( nCount > 0 ) return pPacket;
 	pPacket->Release();
-	
+
 	return NULL;
 }
 
@@ -687,7 +687,7 @@ void CDownloadWithTorrent::ChokeTorrent(DWORD tNow)
 	BOOL bChooseRandom = TRUE;
 	int nTotalRandom = 0;
 	CList< void* > pSelected;
-	
+
 	if ( ! tNow ) tNow = GetTickCount();
 	if ( tNow > m_tTorrentChoke && tNow - m_tTorrentChoke < 2000 ) return;
 	m_tTorrentChoke = tNow;
@@ -706,12 +706,12 @@ void CDownloadWithTorrent::ChokeTorrent(DWORD tNow)
 		}
 	}
 
-	
+
 	for ( POSITION pos = m_pTorrentUploads.GetHeadPosition() ; pos ; )
 	{
 		CUploadTransferBT* pTransfer = m_pTorrentUploads.GetNext( pos );
 		if ( pTransfer->m_nProtocol != PROTOCOL_BT ) continue;
-		
+
 		if ( pTransfer->m_nRandomUnchoke == 2 )
 		{
 			if ( tNow - pTransfer->m_tRandomUnchoke >= Settings.BitTorrent.RandomPeriod )
@@ -723,23 +723,23 @@ void CDownloadWithTorrent::ChokeTorrent(DWORD tNow)
 				bChooseRandom = FALSE;
 			}
 		}
-		
+
 		if ( pTransfer->m_bInterested )
 			nTotalRandom += ( pTransfer->m_nRandomUnchoke == 0 ) ? 3 : 1;
 	}
-	
+
 	if ( bChooseRandom && nTotalRandom > 0 )
 	{
 		nTotalRandom = GetRandomNum( 0, nTotalRandom - 1 );
-		
+
 		for ( POSITION pos = m_pTorrentUploads.GetHeadPosition() ; pos ; )
 		{
 			CUploadTransferBT* pTransfer = m_pTorrentUploads.GetNext( pos );
 			if ( pTransfer->m_nProtocol != PROTOCOL_BT ) continue;
 			if ( pTransfer->m_bInterested == FALSE ) continue;
-			
+
 			int nWeight = ( pTransfer->m_nRandomUnchoke == 0 ) ? 3 : 1;
-			
+
 			if ( nTotalRandom < nWeight )
 			{
 				pTransfer->m_nRandomUnchoke = 2;
@@ -753,16 +753,16 @@ void CDownloadWithTorrent::ChokeTorrent(DWORD tNow)
 			}
 		}
 	}
-	
+
 	while ( (DWORD)pSelected.GetCount() < Settings.BitTorrent.UploadCount )
 	{
 		CUploadTransferBT* pBest = NULL;
 		DWORD nBest = 0;
-		
+
 		for ( POSITION pos = m_pTorrentUploads.GetHeadPosition() ; pos ; )
 		{
 			CUploadTransferBT* pTransfer = m_pTorrentUploads.GetNext( pos );
-			
+
 			if (	pTransfer->m_nProtocol == PROTOCOL_BT &&
 					pTransfer->m_bInterested &&
 					pSelected.Find( pTransfer->m_pClient ) == NULL &&
@@ -772,16 +772,16 @@ void CDownloadWithTorrent::ChokeTorrent(DWORD tNow)
 				nBest = pTransfer->GetAverageSpeed();
 			}
 		}
-		
+
 		if ( pBest == NULL ) break;
 		pSelected.AddTail( pBest->m_pClient );
 	}
-	
+
 	while ( (DWORD)pSelected.GetCount() < Settings.BitTorrent.UploadCount )
 	{
 		CDownloadTransferBT* pBest = NULL;
 		DWORD nBest = 0;
-		
+
 		for ( CDownloadTransferBT* pTransfer = (CDownloadTransferBT*)GetFirstTransfer()
 				; pTransfer ; pTransfer = (CDownloadTransferBT*)pTransfer->m_pDlNext )
 		{
@@ -795,16 +795,16 @@ void CDownloadWithTorrent::ChokeTorrent(DWORD tNow)
 				nBest = pTransfer->GetAverageSpeed();
 			}
 		}
-		
+
 		if ( pBest == NULL ) break;
 		pSelected.AddTail( pBest->m_pClient );
 	}
-	
+
 	for ( POSITION pos = m_pTorrentUploads.GetHeadPosition() ; pos ; )
 	{
 		CUploadTransferBT* pTransfer = m_pTorrentUploads.GetNext( pos );
 		if ( pTransfer->m_nProtocol != PROTOCOL_BT ) continue;
-		
+
 		pTransfer->SetChoke(	pTransfer->m_bInterested == TRUE &&
 								pSelected.Find( pTransfer->m_pClient ) == NULL );
 	}
@@ -818,14 +818,14 @@ BOOL CDownloadWithTorrent::FindMoreSources()
 	if ( IsFileOpen() && m_bTorrentRequested )
 	{
 		ASSERT( IsTorrent() );
-		
+
 		if ( GetTickCount() - m_tTorrentSources > 15000 )
 		{
 			SendUpdate( min( Settings.BitTorrent.DownloadConnections * 4ul, 100ul ) );
 			return TRUE;
 		}
 	}
-	
+
 	return FALSE;
 }
 
@@ -891,7 +891,7 @@ BOOL CDownloadWithTorrent::SeedTorrent(CString& sErrorMessage)
 	pDownload->MakeComplete();
 	pDownload->ResetVerification();
 
-	SendStarted( Settings.BitTorrent.UploadCount * 4ul );	
+	SendStarted( Settings.BitTorrent.UploadCount * 4ul );
 
 	return TRUE;
 }
@@ -901,7 +901,7 @@ BOOL CDownloadWithTorrent::SeedTorrent(CString& sErrorMessage)
 
 void CDownloadWithTorrent::CloseTorrent()
 {
-	if ( m_bTorrentRequested ) 
+	if ( m_bTorrentRequested )
 		SendStopped();
 
 	CloseTorrentUploads();
@@ -923,13 +923,13 @@ float CDownloadWithTorrent::GetRatio() const
 BOOL CDownloadWithTorrent::CheckTorrentRatio() const
 {
 	if ( ! IsTorrent() ) return TRUE;									// Not a torrent
-	
+
 	if ( m_pTorrent.m_nStartDownloads == CBTInfo::dtAlways ) return TRUE;// Torrent is set to download as needed
 
 	if ( m_pTorrent.m_nStartDownloads == CBTInfo::dtWhenRatio )			// Torrent is set to download only when ratio is okay
 	{
 		if ( m_nTorrentUploaded > m_nTorrentDownloaded ) return TRUE;	// Ratio OK
-		if ( GetVolumeComplete() < 5 * 1024 * 1024 ) return TRUE;		// Always get at least 5 MB so you have something to upload	
+		if ( GetVolumeComplete() < 5 * 1024 * 1024 ) return TRUE;		// Always get at least 5 MB so you have something to upload
 	}
 
 	return FALSE;

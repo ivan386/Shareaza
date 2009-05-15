@@ -29,8 +29,6 @@ class CDownload;
 
 class CDownloadTask : public CRazaThread
 {
-	DECLARE_DYNAMIC(CDownloadTask)
-
 public:
 	enum dtask
 	{
@@ -41,48 +39,55 @@ public:
 		dtaskMergeFile
 	};
 
+// Construction
+public:
 	CDownloadTask(CDownload* pDownload, dtask nTask, LPCTSTR szParam1 = NULL);
 	virtual ~CDownloadTask();
 
-	void			Abort();
-	BOOL			WasAborted();
-	static CString	SafeFilename(LPCTSTR pszName);
-	CBuffer*		IsPreviewAnswerValid();
+	DECLARE_DYNAMIC(CDownloadTask)
 
-	dtask		m_nTask;
-	BOOL		m_bSuccess;
-	CString		m_sFilename;
-	CString		m_sDestination;
-	CHttpRequest m_pRequest;
-	DWORD		m_dwFileError;
-
+// Attributes
+public:
+	dtask			m_nTask;
+	bool			m_bSuccess;
+	CHttpRequest	m_pRequest;
 private:
-	CDownload*	m_pDownload;
-	QWORD		m_nSize;
-	CString		m_sMergeFilename;
+	CString			m_sFilename;
+	CString			m_sDestination;
+	DWORD			m_nFileError;
+	CDownload*		m_pDownload;
+	QWORD			m_nSize;
+	CString			m_sMergeFilename;
+	POSITION		m_posTorrentFile;	// Torrent file list current position
+	CEvent*			m_pEvent;
 
-	void	Construct(CDownload* pDownload);
-
-	POSITION	m_posTorrentFile;	// Torrent file list current position
-	CEvent*		m_pEvent;
-
-	void	RunAllocate();
-	void	RunCopy();
-	void	RunCopyTorrent();
-	void	RunPreviewRequest();
-	void	RunMerge();
-
-	BOOL	CopyFile(HANDLE hSource, LPCTSTR pszTarget, QWORD nLength);
-	void	CreatePathForFile(const CString& strBase, const CString& strPath);
-	BOOL	MakeBatchTorrent();
-	BOOL	CopyFileToBatch(HANDLE hSource, QWORD nOffset, QWORD nLength, LPCTSTR pszPath);
-
+// Statics
+public:
+	static CString	SafeFilename(LPCTSTR pszName);
 	static DWORD CALLBACK CopyProgressRoutine(LARGE_INTEGER TotalFileSize,
 		LARGE_INTEGER TotalBytesTransferred, LARGE_INTEGER StreamSize,
 		LARGE_INTEGER StreamBytesTransferred, DWORD dwStreamNumber,
 		DWORD dwCallbackReason, HANDLE hSourceFile, HANDLE hDestinationFile,
 		LPVOID lpData);
 
+// Operations
+public:
+	void		Abort();
+	BOOL		WasAborted();
+	CBuffer*	IsPreviewAnswerValid();
+private:
+	void		Construct(CDownload* pDownload);
+//	void		RunAllocate();
+	void		RunCopy();
+	void		RunPreviewRequest();
+	void		RunMerge();
+	BOOL		CopyFile(HANDLE hSource, LPCTSTR pszTarget, QWORD nLength);
+	void		CreatePathForFile(const CString& strBase, const CString& strPath);
+	BOOL		MakeBatchTorrent();
+	BOOL		CopyFileToBatch(HANDLE hSource, QWORD nOffset, QWORD nLength, LPCTSTR pszPath);
+
+// Overrides
+protected:
 	virtual int Run();
 
 	DECLARE_MESSAGE_MAP()

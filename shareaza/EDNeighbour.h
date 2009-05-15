@@ -29,10 +29,12 @@ class CDownload;
 
 class CEDNeighbour : public CNeighbour
 {
+// Construction
 public:
 	CEDNeighbour();
 	virtual ~CEDNeighbour();
 
+// Attributes
 public:
 	DWORD		m_nClientID;
 	DWORD		m_nUserCount;
@@ -44,19 +46,11 @@ public:
 	CList< Hashes::Guid > m_pQueries;
 	DWORD		m_nFilesSent;
 
-	DWORD	GetID() const;
-
-	virtual BOOL	ConnectTo(IN_ADDR* pAddress, WORD nPort, BOOL bAutomatic);
-	virtual BOOL	Send(CPacket* pPacket, BOOL bRelease = TRUE, BOOL bBuffered = FALSE);
-	virtual BOOL	SendQuery(CQuerySearch* pSearch, CPacket* pPacket, BOOL bLocal);
-protected:
-	virtual BOOL	OnRun();
-	virtual BOOL	OnConnected();
-	virtual void	OnDropped();
-	virtual BOOL	OnRead();
+// Operations
 public:
 	BOOL	SendSharedDownload(CDownload* pDownload);
-protected:
+	DWORD	GetID() const;
+private:
 	BOOL	OnPacket(CEDPacket* pPacket);
 	BOOL	OnRejected(CEDPacket* pPacket);
 	BOOL	OnServerMessage(CEDPacket* pPacket);
@@ -68,7 +62,16 @@ protected:
 	BOOL	OnSearchResults(CEDPacket* pPacket);
 	BOOL	OnFoundSources(CEDPacket* pPacket);
 	void	SendSharedFiles();
+	bool	IsGoodSize(QWORD nFileSize) const;			// Is file has good size for current ed2k-server?
 
-	// Is file has good size for current ed2k-server?
-	bool	IsGoodSize(QWORD nFileSize) const;
+// Overrides
+public:
+	virtual BOOL	ConnectTo(IN_ADDR* pAddress, WORD nPort, BOOL bAutomatic);
+	virtual BOOL	Send(CPacket* pPacket, BOOL bRelease = TRUE, BOOL bBuffered = FALSE);
+protected:
+	virtual BOOL	SendQuery(CQuerySearch* pSearch, CPacket* pPacket, BOOL bLocal);
+	virtual BOOL	OnRun();
+	virtual BOOL	OnConnected();
+	virtual void	OnDropped();
+	virtual BOOL	OnRead();
 };

@@ -3240,6 +3240,8 @@
 	<string id="17511" value="BitTorrent coupling with %s not accepted, maximum connections reached."/>
 	<string id="17512" value="Private torrent"/>
 	<string id="17513" value="Encoding error"/>
+	<string id="17514" value="Updating Bittorrent Downloads..."/>
+	<string id="17515" value="Converting Torrent:"/>
 	<string id="18496" value="You have made changes to the name field. Are you sure you want to rename this download?"/>
 	<string id="18497" value="You have typed a SHA1 value, however it is invalid. Please check it and try again."/>
 	<string id="18498" value="You have typed a root tiger-tree value, however it is invalid. Please check it and try again."/>

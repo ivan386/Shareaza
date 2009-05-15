@@ -1433,10 +1433,10 @@ BEGIN
     RTEXT           "Configure Gnutella1",IDC_G1_SETUP,165,193,100,10
 END
 
-IDD_SETTINGS_PROTOCOLS DIALOG  0, 0, 282, 220
+IDD_SETTINGS_PROTOCOLS DIALOGEX 0, 0, 282, 220
 STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Protocols"
-FONT 8, "Tahoma"
+FONT 8, "Tahoma", 0, 0, 0x0
 BEGIN
     GROUPBOX        "Shareaza Common Architecture Protocol Explorer:",IDC_STATIC,5,5,270,210,WS_GROUP
     CONTROL         "Tree1",IDC_PROTOCOLS,"SysTreeView32",TVS_HASBUTTONS | TVS_HASLINES | TVS_LINESATROOT | TVS_DISABLEDRAGDROP | TVS_SHOWSELALWAYS | WS_BORDER | WS_TABSTOP,15,20,250,185
@@ -1922,6 +1922,20 @@ BEGIN
     LTEXT           "",IDC_INFO_TEXT,38,7,255,58
     ICON            IDR_MAINFRAME,IDC_INFO_ICON,7,7,20,20
     CONTROL         "",IDC_INFO_SPLIT,"Static",SS_ETCHEDFRAME,0,87,299,1
+END
+
+IDD_PROGRESSBAR DIALOGEX 0, 0, 250, 97
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION
+CAPTION "Progress Bar Title"
+FONT 8, "Tahoma", 0, 0, 0x0
+BEGIN
+    LTEXT           "Action:",IDC_LABEL_ACTION,8,6,234,8,SS_CENTERIMAGE
+    LTEXT           "Event",IDC_LABEL_EVENT,8,20,234,8,SS_CENTERIMAGE | SS_PATHELLIPSIS
+    CONTROL         "Event Progress",IDC_PROGRESS_EVENT,"msctls_progress32",WS_BORDER,8,34,234,10
+    LTEXT           "Sub Action:",IDC_LABEL_SUB_ACTION,8,50,234,8,SS_CENTERIMAGE
+    LTEXT           "Sub Event",IDC_SUB_EVENT,8,64,234,8,SS_CENTERIMAGE | SS_PATHELLIPSIS
+    CONTROL         "Sub Event Progress",IDC_PROGRESS_SUB_EVENT,
+                    "msctls_progress32",WS_BORDER,8,78,234,10
 END
 
 
@@ -2668,6 +2682,25 @@ BEGIN
         RIGHTMARGIN, 293
         TOPMARGIN, 7
         BOTTOMMARGIN, 105
+    END
+
+    IDD_PROGRESSBAR, DIALOG
+    BEGIN
+        LEFTMARGIN, 8
+        RIGHTMARGIN, 242
+        BOTTOMMARGIN, 89
+        HORZGUIDE, 6
+        HORZGUIDE, 14
+        HORZGUIDE, 20
+        HORZGUIDE, 28
+        HORZGUIDE, 34
+        HORZGUIDE, 44
+        HORZGUIDE, 50
+        HORZGUIDE, 58
+        HORZGUIDE, 64
+        HORZGUIDE, 72
+        HORZGUIDE, 78
+        HORZGUIDE, 88
     END
 END
 #endif    // APSTUDIO_INVOKED
@@ -4175,6 +4208,8 @@ BEGIN
                             "BitTorrent coupling with %s not accepted, maximum connections reached."
     IDS_BT_PRIVATE          "Private torrent"
     IDS_BT_ENCODING         "Encoding error"
+    IDS_BT_UPDATE_TITLE     "Updating Bittorrent Downloads..."
+    IDS_BT_UPDATE_CONVERTING "Converting Torrent:"
 END
 
 STRINGTABLE 

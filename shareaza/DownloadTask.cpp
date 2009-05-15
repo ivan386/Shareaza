@@ -55,16 +55,16 @@ const DWORD BUFFER_SIZE = 2 * 1024 * 1024u;
 /////////////////////////////////////////////////////////////////////////////
 // CDownloadTask construction
 
-CDownloadTask::CDownloadTask(CDownload* pDownload, dtask nTask, LPCTSTR szParam1 /*=NULL*/)
-: m_nTask		( nTask )
-, m_pDownload	( pDownload )
-, m_bSuccess	( FALSE )
-, m_nSize		( pDownload->m_nSize )
-, m_sFilename	( pDownload->m_sPath )
-, m_sDestination( DownloadGroups.GetCompletedPath( pDownload ).TrimRight( _T("\\") ) )
-, m_pEvent		( NULL )
-, m_posTorrentFile( NULL )
-, m_dwFileError	( 0 )
+CDownloadTask::CDownloadTask(CDownload* pDownload, dtask nTask, LPCTSTR szParam1 /*=NULL*/) :
+	m_nTask				( nTask )
+,	m_bSuccess			( false )
+,	m_sFilename			( pDownload->m_sPath )
+,	m_sDestination		( DownloadGroups.GetCompletedPath( pDownload ).TrimRight( _T("\\") ) )
+,	m_nFileError		( NO_ERROR )
+,	m_pDownload			( pDownload )
+,	m_nSize				( pDownload->m_nSize )
+,	m_posTorrentFile	( NULL )
+,	m_pEvent			( NULL )
 {
 	ASSERT( pDownload->m_pTask == NULL );
 	pDownload->m_pTask = this;
@@ -130,18 +130,7 @@ int CDownloadTask::Run()
 	{
 	case dtaskCopy:
 		ASSERT( Downloads.Check( m_pDownload ) );
-		if (  m_pDownload->IsTorrent() &&
-			! m_pDownload->IsSingleFileTorrent() &&
-			( m_pDownload->GetFileCount() == 1 ) )
-		{
-			// Mutltifile torrent in single .partial-file
-			RunCopyTorrent();
-		}
-		else
-		{
-			// Normal copy
-			RunCopy();
-		}
+		RunCopy();
 		break;
 
 	case dtaskPreviewRequest:
@@ -208,8 +197,8 @@ int CDownloadTask::Run()
 
 void CDownloadTask::RunCopy()
 {
-	m_dwFileError = m_pDownload->MoveFile( m_sDestination, CopyProgressRoutine, this );
-	m_bSuccess = ( m_dwFileError == ERROR_SUCCESS );
+	m_nFileError = m_pDownload->MoveFile( m_sDestination, CopyProgressRoutine, this );
+	m_bSuccess = ( m_nFileError == ERROR_SUCCESS );
 }
 
 DWORD CALLBACK CDownloadTask::CopyProgressRoutine(LARGE_INTEGER /*TotalFileSize*/,
@@ -233,80 +222,6 @@ void CDownloadTask::RunPreviewRequest()
 	m_pRequest.Execute( FALSE ); // without threading
 }
 
-/////////////////////////////////////////////////////////////////////////////
-// CDownloadTask torrent copy
-
-void CDownloadTask::RunCopyTorrent()
-{
-	ASSERT( Downloads.Check( m_pDownload ) );
-	ASSERT( m_pDownload->m_pTorrent.IsAvailable() );
-	ASSERT( m_pDownload->m_pTorrent.GetCount() > 1 );
-
-	// Check for space before copying torrent
-	if ( ! Downloads.IsSpaceAvailable( m_pDownload->m_pTorrent.m_nTotalSize, Downloads.dlPathComplete ) )
-	{
-		m_dwFileError = ERROR_HANDLE_DISK_FULL;
-		return;
-	}
-
-	HANDLE hSource = CreateFile( m_sFilename, GENERIC_READ,
-		FILE_SHARE_READ | FILE_SHARE_DELETE, NULL, OPEN_EXISTING,
-		FILE_ATTRIBUTE_NORMAL|FILE_FLAG_SEQUENTIAL_SCAN, NULL );
-	m_dwFileError = GetLastError();
-	VERIFY_FILE_ACCESS( hSource, m_sFilename )
-	if ( hSource == INVALID_HANDLE_VALUE ) return;
-
-	QWORD nOffset = 0;
-
-	for ( ; m_posTorrentFile ; )
-	{
-		ASSERT( Downloads.Check( m_pDownload ) );
-		CBTInfo::CBTFile* pFile = m_pDownload->m_pTorrent.m_pFiles.GetNext( m_posTorrentFile );
-
-		DWORD nOffsetLow	= (DWORD)( nOffset & 0x00000000FFFFFFFF );
-		DWORD nOffsetHigh	= (DWORD)( ( nOffset & 0xFFFFFFFF00000000 ) >> 32 );
-		SetFilePointer( hSource, nOffsetLow, (PLONG)&nOffsetHigh, FILE_BEGIN );
-		nOffset += pFile->m_nSize;
-
-		CString strPath;
-		strPath.Format( _T("%s\\%s"), (LPCTSTR)m_sDestination, (LPCTSTR)pFile->m_sPath );
-		CreatePathForFile( m_sDestination, pFile->m_sPath );
-
-		// Do nothing if it was an empty folder
-		if ( pFile->m_sPath.Right( 1 ) == L"\\" ) continue;
-
-		theApp.Message( MSG_DEBUG, _T("Extracting %s..."), (LPCTSTR)strPath );
-
-		if ( ! CopyFile( hSource, strPath, pFile->m_nSize ) )
-		{
-			// try to copy in place
-			strPath.Format( _T("%s\\%s"), LPCTSTR( m_sFilename.Left(
-				m_sFilename.ReverseFind( '\\' ) ) ), LPCTSTR( pFile->m_sPath ) );
-			theApp.Message( MSG_DEBUG, _T("Extraction failed, trying %s..."),
-				LPCTSTR( strPath ) );
-			CreatePathForFile( m_sFilename.Left( m_sFilename.ReverseFind( '\\' ) ),
-				pFile->m_sPath );
-
-			if ( ! CopyFile( hSource, strPath, pFile->m_nSize ) )
-			{
-				CloseHandle( hSource );
-				return;
-			}
-		}
-
-		MarkFileAsDownload( strPath );
-
-		if ( m_pEvent != NULL )
-		{
-			CloseHandle( hSource );
-			return;
-		}
-	}
-
-	CloseHandle( hSource );
-	m_bSuccess = TRUE;
-}
-
 void CDownloadTask::RunMerge()
 {
 	HANDLE hSource = CreateFile( m_sMergeFilename, GENERIC_READ,
@@ -317,7 +232,7 @@ void CDownloadTask::RunMerge()
 	{
 		// File open error
 		theApp.Message( MSG_ERROR, IDS_DOWNLOAD_FILE_OPEN_ERROR, m_sMergeFilename );
-		m_bSuccess = TRUE;
+		m_bSuccess = true;
 		return;
 	}
 
@@ -330,7 +245,7 @@ void CDownloadTask::RunMerge()
 		// Download almost completed
 		pLock.Unlock();
 		CloseHandle( hSource );
-		m_bSuccess = TRUE;
+		m_bSuccess = true;
 		return;
 	}
 
@@ -344,7 +259,7 @@ void CDownloadTask::RunMerge()
 		LoadString( strMessage, IDS_DOWNLOAD_EDIT_COMPLETE_NOHASH );
 		AfxMessageBox( strMessage, MB_ICONEXCLAMATION );
 		CloseHandle( hSource );
-		m_bSuccess = TRUE;
+		m_bSuccess = true;
 		return;
 	}
 
@@ -354,7 +269,7 @@ void CDownloadTask::RunMerge()
 		// No available fragments
 		pLock.Unlock();
 		CloseHandle( hSource );
-		m_bSuccess = TRUE;
+		m_bSuccess = true;
 		return;
 	}
 
@@ -436,7 +351,7 @@ void CDownloadTask::RunMerge()
 	}
 
 	CloseHandle( hSource );
-	m_bSuccess = TRUE;
+	m_bSuccess = true;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -446,7 +361,7 @@ BOOL CDownloadTask::CopyFile(HANDLE hSource, LPCTSTR pszTarget, QWORD nLength)
 {
 	HANDLE hTarget = CreateFile( pszTarget, GENERIC_WRITE,
 		0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL|FILE_FLAG_SEQUENTIAL_SCAN, NULL );
-	m_dwFileError = GetLastError();
+	m_nFileError = GetLastError();
 	VERIFY_FILE_ACCESS( hTarget, pszTarget )
 	if ( hTarget == INVALID_HANDLE_VALUE ) return FALSE;
 
@@ -463,7 +378,7 @@ BOOL CDownloadTask::CopyFile(HANDLE hSource, LPCTSTR pszTarget, QWORD nLength)
 			|| !WriteFile( hTarget, pBuffer, nBuffer, &nSuccess, NULL )
 			|| nSuccess != nBuffer )
 		{
-			m_dwFileError = GetLastError();
+			m_nFileError = GetLastError();
 			break;
 		}
 
@@ -597,4 +512,3 @@ CBuffer* CDownloadTask::IsPreviewAnswerValid()
 	CBuffer* pBuffer = m_pRequest.GetResponseBuffer();
 	return pBuffer;
 }
-

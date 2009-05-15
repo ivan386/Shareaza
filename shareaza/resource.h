@@ -223,6 +223,7 @@
 #define IDC_CONNECT_HOST                1000
 #define IDD_MESSAGE                     1000
 #define IDC_CONNECT_PORT                1001
+#define IDD_PROGRESSBAR                 1001
 #define IDC_SCHEMAS                     1002
 #define IDC_SEARCH                      1003
 #define IDC_FILTER                      1004
@@ -796,6 +797,12 @@
 #define IDC_INFO_BUTTON3                1575
 #define IDC_INFO_SPLIT                  1576
 #define IDC_INFO_REMEMBER               1577
+#define IDC_LABEL_ACTION                1580
+#define IDC_LABEL_EVENT                 1581
+#define IDC_PROGRESS_EVENT              1582
+#define IDC_LABEL_SUB_ACTION            1583
+#define IDC_SUB_EVENT                   1584
+#define IDC_PROGRESS_SUB_EVENT          1585
 #define IDS_FILTER_DELETE_CONFIRM       7000
 #define IDS_SCHEMAS                     7001
 #define IDS_MULTIPLE_VALUES             7002
@@ -1413,6 +1420,8 @@
 #define IDS_BT_CLIENT_MAX_CONNECTIONS   17511
 #define IDS_BT_PRIVATE                  17512
 #define IDS_BT_ENCODING                 17513
+#define IDS_BT_UPDATE_TITLE             17514
+#define IDS_BT_UPDATE_CONVERTING        17515
 #define IDS_DOWNLOAD_EDIT_RENAME        18496
 #define IDS_DOWNLOAD_EDIT_BAD_SHA1      18497
 #define IDS_DOWNLOAD_EDIT_BAD_TIGER     18498
@@ -1907,7 +1916,7 @@
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        325
 #define _APS_NEXT_COMMAND_VALUE         33322
-#define _APS_NEXT_CONTROL_VALUE         1578
+#define _APS_NEXT_CONTROL_VALUE         1590
 #define _APS_NEXT_SYMED_VALUE           104
 #endif
 #endif
