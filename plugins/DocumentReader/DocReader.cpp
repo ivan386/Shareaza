@@ -3,7 +3,7 @@
 //
 //	Created by:		Rolandas Rudomanskis
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -177,12 +177,14 @@ STDMETHODIMP CDocReader::ProcessMSDocument(BSTR bsFile, ISXMLElement* pXML, LPCW
 	if ( SUCCEEDED(hr) )
 		pAttributes->Add( L"keywords", bsValue );
 
+	wchar_t buffer[40];
 	if ( pszSchema == CDocReader::uriPresentation )
 	{
 		hr = m_pDocProps->m_pSummProps->get_SlideCount( &nCount );
 		if ( SUCCEEDED(hr) )
 		{
-			_ltow( nCount, bsValue, 10 );
+			_ltow( nCount, buffer, 10 );
+			bsValue = CComBSTR(buffer);
 			pAttributes->Add( L"slides", bsValue );
 		}
 	}
@@ -197,7 +199,8 @@ STDMETHODIMP CDocReader::ProcessMSDocument(BSTR bsFile, ISXMLElement* pXML, LPCW
 
 		if ( SUCCEEDED(hr) && nCount > 1 )
 		{
-			_ltow( nCount, bsValue, 10 );
+			_ltow( nCount, buffer, 10 );
+			bsValue = CComBSTR(buffer);
 			pAttributes->Add( L"pages", bsValue );
 		}
 	}
