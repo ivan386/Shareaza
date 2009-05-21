@@ -108,13 +108,14 @@ void CLibraryDictionary::ProcessPhrase(
 	CString strWord;
 	WORD boundary[ 2 ] = { C3_NOTAPPLICABLE, C3_NOTAPPLICABLE };
 	WORD nKanaType[ 2 ] = { C3_NOTAPPLICABLE, C3_NOTAPPLICABLE };
-	int nPos = 0, nPrevWord = 0, nNextWord = 0;
+	int nPos = 0, nNextWord = 0;
 
 	for ( ; nPos < strPhrase.GetLength() ; ++nPos )
 	{
 		// boundary[ 0 ] -- previous character;
 		// boundary[ 1 ] -- current character;
 		boundary[ 0 ] = boundary[ 1 ];
+		nKanaType[ 0 ] = nKanaType[ 1 ];
 		const WCHAR nChar = strPhrase[ nPos ];
 		GetStringTypeW( CT_CTYPE3, &nChar, 1, &boundary[ 1 ] );
 
@@ -133,7 +134,8 @@ void CLibraryDictionary::ProcessPhrase(
 			|| iswdigit( nChar )
 			|| ( nKanaType[ 1 ] && ( boundary[ 1 ] & C3_DIACRITIC ) );
 
-		if ( !bCharacter || ( nPos && boundary[ 0 ] != boundary[ 1 ] ) )
+		if ( !bCharacter
+			|| ( nKanaType[ 0 ] && boundary[ 0 ] != boundary[ 1 ] ) )
 		{
 			// Join two phrases if the previous was a single character word.
 			// Joining single characters breaks GDF compatibility completely,
@@ -144,13 +146,12 @@ void CLibraryDictionary::ProcessPhrase(
 				strWord = strPhrase.Mid( nNextWord, nPos - nNextWord );
 				MakeKeywords( oFile, strWord, boundary[ 0 ], bAdd, bCanUpload );
 			}
-			nPrevWord = nNextWord;
 			nNextWord = nPos;
 			nNextWord += ( bCharacter ? 0 : 1 );
 		}
 	}
 
-	strWord = strPhrase.Mid( nPrevWord, nPos - nPrevWord );
+	strWord = strPhrase.Right( nPos - nNextWord );
 	MakeKeywords( oFile, strWord, boundary[ 0 ], bAdd, bCanUpload );
 }
 
