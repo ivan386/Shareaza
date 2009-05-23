@@ -4,7 +4,7 @@
 // but are changed infrequently
 //
 // Copyright (c) Nikolay Raspopov, 2005.
-// This file is part of SHAREAZA (www.shareaza.com)
+// This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
 // and/or modify it under the terms of the GNU General Public License
@@ -43,8 +43,15 @@
 #include <atlcom.h>
 #include <atlstr.h>
 #include <dshow.h>
-#include <qedit.h>
 #include <amvideo.h>
+
+//qedit.h workaround for missing dxtrans.h  
+#pragma include_alias( "dxtrans.h", "qedit.h" )
+#define __IDxtCompositor_INTERFACE_DEFINED__
+#define __IDxtAlphaSetter_INTERFACE_DEFINED__
+#define __IDxtJpeg_INTERFACE_DEFINED__
+#define __IDxtKey_INTERFACE_DEFINED__
+#include <qedit.h>
 
 using namespace ATL;
 
