@@ -387,11 +387,9 @@ void CDownload::OnRun()
 	if ( tNow - m_tSaved >=
 		( GetCount() > 20 ? 5 * Settings.Downloads.SaveInterval : Settings.Downloads.SaveInterval ) )
 	{
-		if ( FlushFile() )
-			m_tSaved = tNow;
-
 		if ( m_nCookie != m_nSaveCookie )
 		{
+			FlushFile();
 			if ( Save() )
 				m_tSaved = tNow;
 		}
