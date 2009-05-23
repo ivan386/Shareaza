@@ -26,12 +26,14 @@ var fso = WScript.CreateObject( "Scripting.FileSystemObject" );
 var fpath = fso.GetAbsolutePathName( "." )
 var fname = fso.GetAbsolutePathName( "revision.h" );
 
-var revision, date;
+var revision, date, changed;
 try
 {
 	var rev = new ActiveXObject( "SubWCRev.object" );
 	rev.GetWCInfo( fpath, 0, 0 );
 	revision = rev.Revision;
+	changed = rev.HasModifications;
+	revision += changed ? "M" : "";
 	date = rev.Date;
 	WScript.Echo( "Current revision \"" + revision + "\" at \"" + date + "\"");
 }
