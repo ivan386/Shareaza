@@ -1,7 +1,7 @@
 //
 // DownloadWithTransfers.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -91,7 +91,7 @@ DWORD CDownloadWithTransfers::GetTransferCount() const
 	return nCount;
 }
 
-// This inline is used to clean up the function below and make it more readable. It's the first 
+// This inline is used to clean up the function below and make it more readable. It's the first
 // condition in any IF statement that checks if the current transfer should be counted
 bool CDownloadWithTransfers::ValidTransfer(IN_ADDR* const pAddress, CDownloadTransfer* const pTransfer) const
 {
@@ -102,64 +102,64 @@ bool CDownloadWithTransfers::ValidTransfer(IN_ADDR* const pAddress, CDownloadTra
 
 DWORD CDownloadWithTransfers::GetTransferCount(int nState, IN_ADDR* const pAddress) const
 {
-    int nCount = 0;
+	int nCount = 0;
 
-    switch ( nState )
-    {
-    case dtsCountAll:
-        for ( CDownloadTransfer* pTransfer = m_pTransferFirst; pTransfer; pTransfer = pTransfer->m_pDlNext )
-        {
-		    if ( ValidTransfer( pAddress, pTransfer ) )
-            {
-                ++nCount;
-            }
-        }
-        return nCount;
-    case dtsCountNotQueued:
-	    for ( CDownloadTransfer* pTransfer = m_pTransferFirst ; pTransfer ; pTransfer = pTransfer->m_pDlNext )
-	    {	
-		    if ( ValidTransfer( pAddress, pTransfer ) && ( ( pTransfer->m_nState != dtsQueued ) && 
-				( ! ( pTransfer->m_nState == dtsTorrent && static_cast< CDownloadTransferBT* >(pTransfer)->m_bChoked ) ) ) )
-                 
-            {
-                ++nCount;
-            }
-        }
-        return nCount;
-    case dtsCountNotConnecting:
-	    for ( CDownloadTransfer* pTransfer = m_pTransferFirst ; pTransfer ; pTransfer = pTransfer->m_pDlNext )
-	    {	
-		    if ( ( ! pAddress || pAddress->S_un.S_addr == pTransfer->m_pHost.sin_addr.S_un.S_addr ) && 
-				 ( pTransfer->m_nState > dtsConnecting ) )
-            {
-                ++nCount;
-            }
-        }
-        return nCount;
-    case dtsCountTorrentAndActive:
-	    for ( CDownloadTransfer* pTransfer = m_pTransferFirst ; pTransfer ; pTransfer = pTransfer->m_pDlNext )
-	    {	
-		    if ( ValidTransfer( pAddress, pTransfer ) )
-		    {
-                switch( pTransfer->m_nState )
-                {
-                case dtsTorrent:
-                case dtsRequesting:
-                case dtsDownloading:
-                    ++nCount;
-                }
-            }
-        }
-        return nCount;
-    default:
-	    for ( CDownloadTransfer* pTransfer = m_pTransferFirst ; pTransfer ; pTransfer = pTransfer->m_pDlNext )
-	    {	
-		    if ( pTransfer->m_nState == nState )
-            {
-                ++nCount;
+	switch ( nState )
+	{
+	case dtsCountAll:
+		for ( CDownloadTransfer* pTransfer = m_pTransferFirst; pTransfer; pTransfer = pTransfer->m_pDlNext )
+		{
+			if ( ValidTransfer( pAddress, pTransfer ) )
+			{
+				++nCount;
 			}
 		}
-    	return nCount;
+		return nCount;
+	case dtsCountNotQueued:
+		for ( CDownloadTransfer* pTransfer = m_pTransferFirst ; pTransfer ; pTransfer = pTransfer->m_pDlNext )
+		{
+			if ( ValidTransfer( pAddress, pTransfer ) && ( ( pTransfer->m_nState != dtsQueued ) &&
+				( ! ( pTransfer->m_nState == dtsTorrent && static_cast< CDownloadTransferBT* >(pTransfer)->m_bChoked ) ) ) )
+
+			{
+				++nCount;
+			}
+		}
+		return nCount;
+	case dtsCountNotConnecting:
+		for ( CDownloadTransfer* pTransfer = m_pTransferFirst ; pTransfer ; pTransfer = pTransfer->m_pDlNext )
+		{
+			if ( ( ! pAddress || pAddress->S_un.S_addr == pTransfer->m_pHost.sin_addr.S_un.S_addr ) &&
+				 ( pTransfer->m_nState > dtsConnecting ) )
+			{
+				++nCount;
+			}
+		}
+		return nCount;
+	case dtsCountTorrentAndActive:
+		for ( CDownloadTransfer* pTransfer = m_pTransferFirst ; pTransfer ; pTransfer = pTransfer->m_pDlNext )
+		{
+			if ( ValidTransfer( pAddress, pTransfer ) )
+			{
+				switch( pTransfer->m_nState )
+				{
+				case dtsTorrent:
+				case dtsRequesting:
+				case dtsDownloading:
+					++nCount;
+				}
+			}
+		}
+		return nCount;
+	default:
+		for ( CDownloadTransfer* pTransfer = m_pTransferFirst ; pTransfer ; pTransfer = pTransfer->m_pDlNext )
+		{
+			if ( pTransfer->m_nState == nState )
+			{
+				++nCount;
+			}
+		}
+		return nCount;
 	}
 }
 
@@ -171,7 +171,7 @@ QWORD CDownloadWithTransfers::GetAmountDownloadedFrom(IN_ADDR* const pAddress) c
 	QWORD nTotal = 0;
 
 	for ( CDownloadTransfer* pTransfer = m_pTransferFirst ; pTransfer ; pTransfer = pTransfer->m_pDlNext )
-	{	
+	{
 		if ( pAddress->S_un.S_addr == pTransfer->m_pHost.sin_addr.S_un.S_addr )
 			nTotal += pTransfer->m_nDownloaded;
 	}
@@ -186,13 +186,13 @@ QWORD CDownloadWithTransfers::GetAmountDownloadedFrom(IN_ADDR* const pAddress) c
 BOOL CDownloadWithTransfers::CanStartTransfers(DWORD tNow)
 {
 	if ( tNow == 0 ) tNow = GetTickCount();
-	
+
 	if ( tNow - m_tTransferStart < 100 ) return FALSE;
 	m_tTransferStart = tNow;
 
 	// Make sure the network is ready
 	if ( ! Network.ReadyToTransfer( tNow ) ) return FALSE;
-	
+
 	// Limit the connection rate
 	if ( Settings.Downloads.ConnectThrottle != 0 )
 	{
@@ -216,12 +216,12 @@ BOOL CDownloadWithTransfers::StartTransfersIfNeeded(DWORD tNow)
 
 	// Check connection throttles, max open connections, etc
 	if ( ! CanStartTransfers( tNow ) ) return FALSE;
-	
+
 	//BitTorrent limiting
 	if ( static_cast< CDownloadWithTorrent* >( this )->IsTorrent() )
 	{
 		// Max connections
-		if ( ( GetTransferCount( dtsCountTorrentAndActive ) ) > Settings.BitTorrent.DownloadConnections ) return FALSE;	
+		if ( ( GetTransferCount( dtsCountTorrentAndActive ) ) > Settings.BitTorrent.DownloadConnections ) return FALSE;
 	}
 
 	DWORD nTransfers = GetTransferCount( dtsDownloading );
@@ -231,25 +231,25 @@ BOOL CDownloadWithTransfers::StartTransfersIfNeeded(DWORD tNow)
 		 nTransfers == GetTransferCount( dtsCountAll ) ) )
 	{
 		// If we can start new downloads, or this download is already running
-		if ( Downloads.m_bAllowMoreDownloads || m_pTransferFirst != NULL )
+		if ( Downloads.AllowMoreDownloads() || m_pTransferFirst != NULL )
 		{
 			// If we can start new transfers
-			if ( Downloads.m_bAllowMoreTransfers )
+			if ( Downloads.AllowMoreTransfers() )
 			{
 				// If download bandwidth isn't at max
-				if ( ( ( tNow - Downloads.m_tBandwidthAtMax ) > 5000 ) ) 
+				if ( ( ( tNow - Downloads.m_tBandwidthAtMax ) > 5000 ) )
 				{
 					// Start a new download
 					if ( StartNewTransfer( tNow ) )
 					{
-						Downloads.UpdateAllows( TRUE );
+						Downloads.UpdateAllows();
 						return TRUE;
 					}
 				}
 			}
 		}
 	}
-	
+
 	return FALSE;
 }
 
@@ -259,7 +259,7 @@ BOOL CDownloadWithTransfers::StartTransfersIfNeeded(DWORD tNow)
 BOOL CDownloadWithTransfers::StartNewTransfer(DWORD tNow)
 {
 	if ( tNow == 0 ) tNow = GetTickCount();
-	
+
 	BOOL bConnected = Network.IsConnected();
 	CDownloadSource* pConnectHead = NULL;
 
@@ -270,7 +270,7 @@ BOOL CDownloadWithTransfers::StartNewTransfer(DWORD tNow)
 		for ( CDownloadSource* pSource = GetFirstSource() ; pSource ; )
 		{
 			CDownloadSource* pNext = pSource->m_pNext;
-			
+
 			if ( ( pSource->m_pTransfer == NULL ) &&		// does not have a transfer
 				 ( pSource->m_bPushOnly == FALSE ) &&		// Not push
 				 ( pSource->m_nProtocol == PROTOCOL_BT ) &&	// Is a BT source
@@ -281,20 +281,20 @@ BOOL CDownloadWithTransfers::StartNewTransfer(DWORD tNow)
 					CDownloadTransfer* pTransfer = pSource->CreateTransfer();
 					return pTransfer != NULL && pTransfer->Initiate();
 				}
-			}	
+			}
 			pSource = pNext;
 		}
 	}
-	
+
 	for ( CDownloadSource* pSource = GetFirstSource() ; pSource ; )
 	{
 		CDownloadSource* pNext = pSource->m_pNext;
-		
+
 		if ( pSource->m_pTransfer != NULL )
 		{
 			// Already has a transfer
 		}
-		else if ( ( pSource->m_nProtocol == PROTOCOL_ED2K ) && ( ( tNow - Downloads.m_tBandwidthAtMaxED2K ) < 5000 ) ) 
+		else if ( ( pSource->m_nProtocol == PROTOCOL_ED2K ) && ( ( tNow - Downloads.m_tBandwidthAtMaxED2K ) < 5000 ) )
 		{
 			// ED2K use (Ratio) is maxed out, no point in starting new transfers
 		}
@@ -330,7 +330,7 @@ BOOL CDownloadWithTransfers::StartNewTransfer(DWORD tNow)
 		}
 		pSource = pNext;
 	}
-	
+
 	if ( pConnectHead != NULL )
 	{
 		if ( pConnectHead->m_bPushOnly && ! ( pConnectHead->m_nProtocol == PROTOCOL_ED2K ) )
@@ -368,18 +368,18 @@ BOOL CDownloadWithTransfers::StartNewTransfer(DWORD tNow)
 
 void CDownloadWithTransfers::CloseTransfers()
 {
-	BOOL bBackup = Downloads.m_bClosing;
-	Downloads.m_bClosing = TRUE;
-	
+	bool bBackup = Downloads.m_bClosing;
+	Downloads.m_bClosing = true;
+
 	for ( CDownloadTransfer* pTransfer = m_pTransferFirst ; pTransfer ; )
 	{
 		CDownloadTransfer* pNext = pTransfer->m_pDlNext;
 		pTransfer->Close( TRI_TRUE );
 		pTransfer = pNext;
 	}
-	
+
 	ASSERT( m_nTransferCount == 0 );
-	
+
 	Downloads.m_bClosing = bBackup;
 }
 
@@ -389,12 +389,12 @@ void CDownloadWithTransfers::CloseTransfers()
 DWORD CDownloadWithTransfers::GetAverageSpeed() const
 {
 	DWORD nSpeed = 0;
-	
+
 	for ( CDownloadTransfer* pTransfer = m_pTransferFirst ; pTransfer ; pTransfer = pTransfer->m_pDlNext )
 	{
 		if ( pTransfer->m_nState == dtsDownloading ) nSpeed += pTransfer->GetAverageSpeed();
 	}
-	
+
 	return nSpeed;
 }
 
@@ -404,13 +404,13 @@ DWORD CDownloadWithTransfers::GetAverageSpeed() const
 DWORD CDownloadWithTransfers::GetMeasuredSpeed() const
 {
 	DWORD nSpeed = 0;
-	
+
 	for ( CDownloadTransfer* pTransfer = m_pTransferFirst ; pTransfer ; pTransfer = pTransfer->m_pDlNext )
 	{
 		if ( pTransfer->m_nState == dtsDownloading )
 			nSpeed += pTransfer->GetMeasuredSpeed();
 	}
-	
+
 	return nSpeed;
 }
 
@@ -421,24 +421,24 @@ BOOL CDownloadWithTransfers::OnAcceptPush(const Hashes::Guid& oClientID, CConnec
 {
 	CDownload* pDownload = (CDownload*)this;
 	if ( pDownload->IsMoving() || pDownload->IsPaused() ) return FALSE;
-	
+
 	CDownloadSource* pSource = NULL;
-	
+
 	for ( pSource = GetFirstSource() ; pSource ; pSource = pSource->m_pNext )
 	{
 		if ( pSource->m_nProtocol == PROTOCOL_HTTP && pSource->CheckPush( oClientID ) ) break;
 	}
-	
+
 	if ( pSource == NULL ) return FALSE;
-	
+
 	if ( pSource->m_pTransfer != NULL )
 	{
 		if ( pSource->m_pTransfer->m_nState > dtsConnecting ) return FALSE;
 		pSource->m_pTransfer->Close( TRI_TRUE );
 	}
-	
+
 	if ( ! pConnection->IsValid() ) return FALSE;
-	
+
 	CDownloadTransferHTTP* pTransfer = (CDownloadTransferHTTP*)pSource->CreateTransfer();
 	ASSERT( pTransfer->m_nProtocol == PROTOCOL_HTTP );
 	return pTransfer->AcceptPush( pConnection );
@@ -451,23 +451,23 @@ BOOL CDownloadWithTransfers::OnDonkeyCallback(CEDClient* pClient, CDownloadSourc
 {
 	CDownload* pDownload = (CDownload*)this;
 	if ( pDownload->IsMoving() || pDownload->IsPaused() ) return FALSE;
-	
+
 	CDownloadSource* pSource = NULL;
 //	DWORD tNow = GetTickCount();
-	
+
 	for ( pSource = GetFirstSource() ; pSource ; pSource = pSource->m_pNext )
 	{
 		if ( pExcept != pSource && pSource->CheckDonkey( pClient ) ) break;
 	}
-	
+
 	if ( pSource == NULL ) return FALSE;
-	
+
 	if ( pSource->m_pTransfer != NULL )
 	{
 		if ( pSource->m_pTransfer->m_nState > dtsConnecting ) return FALSE;
 		pSource->m_pTransfer->Close( TRI_TRUE );
 	}
-	
+
 	CDownloadTransferED2K* pTransfer = (CDownloadTransferED2K*)pSource->CreateTransfer();
 	ASSERT( pTransfer->m_nProtocol == PROTOCOL_ED2K );
 	return pTransfer->Initiate();
@@ -481,7 +481,7 @@ void CDownloadWithTransfers::AddTransfer(CDownloadTransfer* pTransfer)
 	m_nTransferCount ++;
 	pTransfer->m_pDlPrev = m_pTransferLast;
 	pTransfer->m_pDlNext = NULL;
-	
+
 	if ( m_pTransferLast != NULL )
 	{
 		m_pTransferLast->m_pDlNext = pTransfer;
@@ -497,16 +497,16 @@ void CDownloadWithTransfers::RemoveTransfer(CDownloadTransfer* pTransfer)
 {
 	ASSERT( m_nTransferCount > 0 );
 	m_nTransferCount --;
-	
+
 	if ( pTransfer->m_pDlPrev != NULL )
 		pTransfer->m_pDlPrev->m_pDlNext = pTransfer->m_pDlNext;
 	else
 		m_pTransferFirst = pTransfer->m_pDlNext;
-	
+
 	if ( pTransfer->m_pDlNext != NULL )
 		pTransfer->m_pDlNext->m_pDlPrev = pTransfer->m_pDlPrev;
 	else
 		m_pTransferLast = pTransfer->m_pDlPrev;
-	
+
 	delete pTransfer;
 }

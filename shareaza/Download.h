@@ -65,13 +65,13 @@ private:
 								// You should count the transfers if you need a 100% current answer.
 // Operations
 public:
-	void        	Pause(BOOL bRealPause = TRUE);
-	void        	Resume();
-	void        	Remove(bool bDelete = false);
-	void        	Boost();
-	void        	Share(BOOL bShared);
-	BOOL        	Rename(LPCTSTR pszName);
-	void        	SetStartTimer();
+	void			Pause(BOOL bRealPause = TRUE);
+	void			Resume();
+	void			Remove(bool bDelete = false);
+	void			Boost();
+	void			Share(BOOL bShared);
+	BOOL			Rename(LPCTSTR pszName);
+	void			SetStartTimer();
 	BOOL			Launch(int nIndex, CSingleLock* pLock, BOOL bForceOriginal);
 	BOOL			Enqueue(int nIndex, CSingleLock* pLock);
 
@@ -127,7 +127,7 @@ public:
 	void			ForceComplete();
 
 private:
-	void        	StopTrying();
+	void			StopTrying();
 	void			OnTaskComplete(CDownloadTask* pTask);
 	void			OnDownloaded();
 	void			OnMoved(CDownloadTask* pTask);

@@ -49,9 +49,9 @@ public:
 	QWORD		m_nTorrentDownloaded;
 	BOOL		m_bTorrentTrackerError;
 	CString		m_sTorrentTrackerError;
-    Hashes::BtGuid m_pPeerID;
+	Hashes::BtGuid m_pPeerID;
 	CString		m_sKey;
-    BOOL		m_bTorrentEndgame;
+	BOOL		m_bTorrentEndgame;
 protected:
 	BOOL		m_bSeeding;
 	DWORD		m_nTorrentBlock;
@@ -70,9 +70,9 @@ public:
 	void			AddUpload(CUploadTransferBT* pUpload);
 	void			RemoveUpload(CUploadTransferBT* pUpload);
 	BOOL			SeedTorrent(CString& sErrorMessage);
-	inline BOOL		IsSeeding() const { return m_bSeeding; }
-	inline BOOL		IsTorrent() const { return m_pTorrent.IsAvailable(); }
-	inline BOOL		IsSingleFileTorrent() const { return IsTorrent() && ( m_pTorrent.GetCount() == 1 ); }
+	bool			IsSeeding() const;
+	bool			IsTorrent() const;
+	bool			IsSingleFileTorrent() const;
 	float			GetRatio() const;
 	BOOL			UploadExists(in_addr* pIP) const;
 	BOOL			UploadExists(const Hashes::BtGuid& oGUID) const;
@@ -102,6 +102,5 @@ private:
 	// Remove tracker request
 	void			Remove(CBTTrackerRequest* pRequest);
 
-	friend class CDownloads;		// m_bSeeding for Load()
 	friend class CBTTrackerRequest;	// Add(),Remove()
 };

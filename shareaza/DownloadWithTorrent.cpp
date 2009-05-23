@@ -117,6 +117,21 @@ CDownloadWithTorrent::~CDownloadWithTorrent()
 	m_pTorrentBlock = NULL;
 }
 
+bool CDownloadWithTorrent::IsSeeding() const
+{
+	return m_bSeeding != 0;
+}
+
+bool CDownloadWithTorrent::IsTorrent() const
+{
+	return m_pTorrent.IsAvailable();
+}
+
+bool CDownloadWithTorrent::IsSingleFileTorrent() const
+{
+	return IsTorrent() && ( m_pTorrent.GetCount() == 1 );
+}
+
 void CDownloadWithTorrent::Add(CBTTrackerRequest* pRequest)
 {
 	CQuickLock oLock( m_pRequestsSection );

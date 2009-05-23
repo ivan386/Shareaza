@@ -53,25 +53,66 @@ CDownloads Downloads;
 // CDownloads construction
 
 CDownloads::CDownloads() :
-	m_tBandwidthLastCalc	( 0 ),
-	m_tBandwidthAtMax		( 0 ),
-	m_tBandwidthAtMaxED2K	( 0 ),
-//	m_nLimitNew				( 0 ),
-	m_nLimitGeneric			( 0 ),
-	m_nLimitDonkey			( 0 ),
-	m_nTransfers			( 0 ),
-	m_nBandwidth			( 0 ),
-	m_nValidation			( 0 ),
-	m_bAllowMoreDownloads	( TRUE ),
-	m_bAllowMoreTransfers	( TRUE ),
-	m_bClosing				( FALSE ),
-	m_tLastConnect			( 0 ),
-	m_nRunCookie			( 0 )
+	m_tBandwidthAtMax		( 0ul )
+,	m_tBandwidthAtMaxED2K	( 0ul )
+,	m_nTransfers			( 0ul )
+,	m_nBandwidth			( 0ul )
+,	m_tLastConnect			( 0ul )
+,	m_bClosing				( false )
+,	m_nRunCookie			( 0 )
+,	m_tBandwidthLastCalc	( 0ul )
+,	m_nLimitGeneric			( 0ul )
+,	m_nLimitDonkey			( 0ul )
+,	m_nTryingCount			( 0ul )
+,	m_nBTTryingCount		( 0ul )
+,	m_bAllowMoreDownloads	( true )
+,	m_bAllowMoreTransfers	( true )
 {
 }
 
 CDownloads::~CDownloads()
 {
+}
+
+POSITION CDownloads::GetIterator() const
+{
+	return m_pList.GetHeadPosition();
+}
+
+POSITION CDownloads::GetReverseIterator() const
+{
+	return m_pList.GetTailPosition();
+}
+
+CDownload* CDownloads::GetNext(POSITION& pos) const
+{
+	return m_pList.GetNext( pos );
+}
+
+CDownload* CDownloads::GetPrevious(POSITION& pos) const
+{
+	return m_pList.GetPrev( pos );
+}
+
+BOOL CDownloads::Check(CDownload* pDownload) const
+{
+	return m_pList.Find( pDownload ) != NULL;
+}
+
+void CDownloads::StartTrying(bool bIsTorrent)
+{
+	if ( bIsTorrent )
+		++m_nBTTryingCount;
+
+	++m_nTryingCount;
+}
+
+void CDownloads::StopTrying(bool bIsTorrent)
+{
+	if ( bIsTorrent )
+		--m_nBTTryingCount;
+
+	--m_nTryingCount;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -133,7 +174,7 @@ CDownload* CDownloads::Add(CQueryHit* pHit, BOOL bAddToHead)
 	DownloadGroups.Link( pDownload );
 	Transfers.StartThread();
 
-	if ( ( GetTryingCount() < Settings.Downloads.MaxFiles ) || ( bAddToHead ) )
+	if ( bAddToHead || GetTryingCount() < Settings.Downloads.MaxFiles )
 	{
 		pDownload->SetStartTimer();
 	}
@@ -189,7 +230,7 @@ CDownload* CDownloads::Add(CMatchFile* pFile, BOOL bAddToHead)
 	DownloadGroups.Link( pDownload );
 	Transfers.StartThread();
 
-	if ( ( GetTryingCount() < Settings.Downloads.MaxFiles ) || ( bAddToHead ) )
+	if ( bAddToHead || GetTryingCount() < Settings.Downloads.MaxFiles )
 	{
 		pDownload->SetStartTimer();
 
@@ -311,8 +352,8 @@ CDownload* CDownloads::Add(const CShareazaURL& oURL)
 		theApp.Message( MSG_NOTICE, IDS_DOWNLOAD_ADDED,
 			(LPCTSTR)pDownload->GetDisplayName(), pDownload->GetEffectiveSourceCount() );
 
-		if ( (  pDownload->IsTorrent() && ( GetTryingCount(TRUE)  < Settings.BitTorrent.DownloadTorrents ) ) ||
-			( !pDownload->IsTorrent() && ( GetTryingCount(FALSE) < Settings.Downloads.MaxFiles ) ) )
+		if ( ( pDownload->IsTorrent() && GetTryingCount( true ) < Settings.BitTorrent.DownloadTorrents )
+			|| ( !pDownload->IsTorrent() && GetTryingCount() < Settings.Downloads.MaxFiles ) )
 		{
 			pDownload->SetStartTimer();
 			if ( pDownload->GetEffectiveSourceCount() <= 1 )
@@ -361,10 +402,10 @@ void CDownloads::ClearPaused()
 	}
 }
 
-void CDownloads::Clear(BOOL bShutdown)
+void CDownloads::Clear(bool bShutdown)
 {
 	CSingleLock pLock( &Transfers.m_pSection, TRUE );
-	m_bClosing = TRUE;
+	m_bClosing = true;
 
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
@@ -379,14 +420,14 @@ void CDownloads::CloseTransfers()
 {
 	CSingleLock pLock( &Transfers.m_pSection, TRUE );
 
-	m_bClosing = TRUE;
+	m_bClosing = true;
 
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
 		GetNext( pos )->CloseTransfers();
 	}
 
-	m_bClosing = FALSE;
+	m_bClosing = false;
 	m_nTransfers = 0;
 	m_nBandwidth = 0;
 }
@@ -455,22 +496,12 @@ DWORD CDownloads::GetTransferCount() const
 	return nCount;
 }
 
-DWORD CDownloads::GetTryingCount(BOOL bTorrentsOnly) const
+DWORD CDownloads::GetTryingCount(bool bTorrentsOnly) const
 {
-	DWORD nCount = 0;
-
-	for ( POSITION pos = GetIterator() ; pos ; )
-	{
-		CDownload* pDownload = GetNext( pos );
-
-		if ( !bTorrentsOnly || pDownload->IsTorrent() )
-		{
-			if ( !pDownload->IsCompleted() && pDownload->IsTrying() && !pDownload->IsPaused() )
-				nCount++;
-		}
-	}
-
-	return nCount;
+	if ( bTorrentsOnly )
+		return m_nBTTryingCount;
+	else
+		return m_nTryingCount;
 }
 
 DWORD CDownloads::GetConnectingTransferCount() const
@@ -788,43 +819,23 @@ DWORD CDownloads::GetBandwidth() const
 //////////////////////////////////////////////////////////////////////
 // CDownloads limiting tests
 
-void CDownloads::UpdateAllows(BOOL bNew)
+void CDownloads::UpdateAllows()
 {
-	DWORD nDownloads	= 0;
-	DWORD nTransfers	= 0;
-
-	if ( bNew ) m_tLastConnect = GetTickCount();
-
-	for ( POSITION pos = GetIterator() ; pos ; )
-	{
-		CDownload* pDownload = GetNext( pos );
-		int nTemp = pDownload->GetTransferCount();
-
-		if ( nTemp )
-		{
-			nDownloads ++;
-			nTransfers += nTemp;
-		}
-	}
-
-	m_bAllowMoreDownloads = nDownloads < Settings.Downloads.MaxFiles;
-	m_bAllowMoreTransfers = nTransfers < Settings.Downloads.MaxTransfers;
+	m_bAllowMoreDownloads = false;
+	m_bAllowMoreTransfers = false;
 }
 
-BOOL CDownloads::AllowMoreDownloads() const
+bool CDownloads::AllowMoreDownloads() const
 {
-	DWORD nCount = 0;
-
-	for ( POSITION pos = GetIterator() ; pos ; )
-	{
-		if ( GetNext( pos )->HasActiveTransfers() )
-			nCount++;
-	}
-
-	return nCount < Settings.Downloads.MaxFiles;
+	return m_bAllowMoreDownloads;
 }
 
-BOOL CDownloads::AllowMoreTransfers(IN_ADDR* pAddress) const
+bool CDownloads::AllowMoreTransfers() const
+{
+	return m_bAllowMoreTransfers;
+}
+
+bool CDownloads::AllowMoreTransfers(IN_ADDR* pAddress) const
 {
 	DWORD nCount = 0, nLimit = 0;
 
@@ -894,7 +905,6 @@ void CDownloads::OnRun()
 	if ( ( ( tNow - m_tBandwidthLastCalc ) < 250 ) && ( tNow > m_tBandwidthLastCalc ) )
 	{
 		// Just run the downloads, don't bother re-calulating bandwidth
-		m_nValidation = 0;
 		++m_nRunCookie;
 
 		for ( POSITION pos = GetIterator(); pos; )
@@ -925,7 +935,6 @@ void CDownloads::OnRun()
 
 		{	// Lock transfers section
 			CList<CDownloadTransfer*> pTransfersToLimit;
-			m_nValidation = 0;
 			++m_nRunCookie;
 
 			// Run all the downloads, select the transfers that need bandwidth limiting
@@ -1050,8 +1059,8 @@ void CDownloads::OnRun()
 		m_nTransfers = nActiveTransfers;
 		m_nBandwidth = nTotalBandwidth;
 
-		m_bAllowMoreDownloads = nActiveDownloads < (DWORD)Settings.Downloads.MaxFiles;
-		m_bAllowMoreTransfers = nTotalTransfers < (DWORD)Settings.Downloads.MaxTransfers;
+		m_bAllowMoreDownloads = nActiveDownloads < Settings.Downloads.MaxFiles;
+		m_bAllowMoreTransfers = nTotalTransfers < Settings.Downloads.MaxTransfers;
 
 		// Set "bandwidth use is near maximum" timers
 		// beware that the MAX setting uses a limit of 0 internally,
@@ -1163,7 +1172,7 @@ void CDownloads::Load()
 			auto_ptr< CDownload > pDownload( new CDownload() );
 			if ( pDownload->Load( strPath ) )
 			{
-				if ( pDownload->m_bSeeding )
+				if ( pDownload->IsSeeding() )
 				{
 					if ( ! Settings.BitTorrent.AutoSeed )
 					{

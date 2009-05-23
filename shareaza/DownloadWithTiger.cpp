@@ -416,7 +416,6 @@ void CDownloadWithTiger::RunValidation()
 
 	if ( m_nVerifyHash > HASH_NULL && m_nVerifyBlock < 0xFFFFFFFF )
 	{
-		Downloads.m_nValidation ++;
 		ContinueValidation();
 	}
 	else
@@ -425,7 +424,6 @@ void CDownloadWithTiger::RunValidation()
 			 FindNewValidationBlock( HASH_TIGERTREE ) ||
 			 FindNewValidationBlock( HASH_ED2K ) )
 		{
-			Downloads.m_nValidation ++;
 			ContinueValidation();
 		}
 	}

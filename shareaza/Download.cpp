@@ -83,9 +83,14 @@ CDownload::~CDownload()
 
 void CDownload::Pause(BOOL bRealPause)
 {
-	if ( m_bComplete || m_bPaused ) return;
+	if ( m_bComplete || m_bPaused )
+		return;
 
-	theApp.Message( MSG_NOTICE, IDS_DOWNLOAD_PAUSED, (LPCTSTR)GetDisplayName() );
+	theApp.Message( MSG_NOTICE, IDS_DOWNLOAD_PAUSED, GetDisplayName() );
+
+	if ( IsTrying() )
+		Downloads.StopTrying( IsTorrent() );
+
 	if ( !bRealPause )
 	{
 		StopTrying();
@@ -135,12 +140,12 @@ void CDownload::Resume()
 
 	if ( IsTorrent() )
 	{
-		if ( Downloads.GetTryingCount( TRUE ) < Settings.BitTorrent.DownloadTorrents )
+		if ( Downloads.GetTryingCount( true ) < Settings.BitTorrent.DownloadTorrents )
 			SetStartTimer();
 	}
 	else
 	{
-		if ( Downloads.GetTryingCount( FALSE ) < ( Settings.Downloads.MaxFiles + Settings.Downloads.MaxFileSearches ) )
+		if ( Downloads.GetTryingCount() < ( Settings.Downloads.MaxFiles + Settings.Downloads.MaxFileSearches ) )
 			SetStartTimer();
 	}
 
@@ -229,14 +234,16 @@ BOOL CDownload::Rename(LPCTSTR pszName)
 
 void CDownload::StopTrying()
 {
-	if ( m_bComplete ) return;
-	m_tBegan = 0;
+	if ( m_bComplete )
+		return;
 
+	m_tBegan = 0;
 	m_bDownloading	= FALSE;
 
 	// if m_bTorrentRequested = TRUE, raza sends Stop
 	// CloseTorrent() additionally closes uploads
-	if ( IsTorrent() ) CloseTorrent();
+	if ( IsTorrent() )
+		CloseTorrent();
 
 	CloseTransfers();
 	CloseFile();
@@ -249,6 +256,7 @@ void CDownload::StopTrying()
 
 void CDownload::SetStartTimer()
 {
+	Downloads.StartTrying( IsTorrent() );
 	m_tBegan = GetTickCount();
 	SetModified();
 }
@@ -286,7 +294,7 @@ void CDownload::OnRun()
 
 					if ( IsTorrent() )	//If it's a torrent
 					{
-						if ( Downloads.GetTryingCount( TRUE ) >= Settings.BitTorrent.DownloadTorrents )
+						if ( Downloads.GetTryingCount( true ) >= Settings.BitTorrent.DownloadTorrents )
 						{	//If there are other torrents that could start
 							StopTrying();		//Give up for now, try again later
 							return;
@@ -294,7 +302,7 @@ void CDownload::OnRun()
 					}
 					else			//It's a regular download
 					{
-						if ( Downloads.GetTryingCount( FALSE ) >= ( Settings.Downloads.MaxFiles + Settings.Downloads.MaxFileSearches ) )
+						if ( Downloads.GetTryingCount() >= ( Settings.Downloads.MaxFiles + Settings.Downloads.MaxFileSearches ) )
 						{	//If there are other downloads that could try
 							StopTrying();		//Give up for now, try again later
 							return;
@@ -365,13 +373,13 @@ void CDownload::OnRun()
 			{
 				if ( IsTorrent() )
 				{	//Torrents only try when 'ready to go'. (Reduce tracker load)
-					if ( Downloads.GetTryingCount( TRUE ) < Settings.BitTorrent.DownloadTorrents )
+					if ( Downloads.GetTryingCount( true ) < Settings.BitTorrent.DownloadTorrents )
 						SetStartTimer();
 				}
 				else
 				{	//We have extra regular downloads 'trying' so when a new slot is ready, a download
 					//has sources and is ready to go.
-					if ( Downloads.GetTryingCount( FALSE ) < ( Settings.Downloads.MaxFiles + Settings.Downloads.MaxFileSearches ) )
+					if ( Downloads.GetTryingCount() < ( Settings.Downloads.MaxFiles + Settings.Downloads.MaxFileSearches ) )
 						SetStartTimer();
 				}
 			}
@@ -485,6 +493,7 @@ void CDownload::OnMoved(CDownloadTask* pTask)
 		StopTrying();
 
 	// Download finalized, tracker notified, set flags that we completed
+	Downloads.StopTrying( IsTorrent() );
 	m_bComplete		= TRUE;
 	m_tCompleted	= GetTickCount();
 
