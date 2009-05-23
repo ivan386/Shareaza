@@ -53,11 +53,15 @@
 #define _ATL_ALL_WARNINGS
 #define _HAS_EXCEPTIONS 0
 
+#pragma warning( push, 0 )
+
 #include "resource.h"
 #include <atlbase.h>
 #include <atlcom.h>
 #include <atlstr.h>
 #include <string>
+
+#pragma warning( pop )
 
 using namespace ATL;
 
