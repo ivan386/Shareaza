@@ -75,6 +75,7 @@ public:
 	bool		Succeeded() const;
 	void		Abort();
 	bool		WasAborted() const;
+	DWORD		GetFileError() const;
 	CBuffer*	IsPreviewAnswerValid();
 private:
 	void		Construct(CDownload* pDownload);

@@ -69,6 +69,96 @@ BOOL CDownloadWithFile::IsFileOpen() const
 	return m_pFile.get() && m_pFile->IsOpen();
 }
 
+
+// Get list of empty fragments
+Fragments::List CDownloadWithFile::GetEmptyFragmentList() const
+{
+	return m_pFile.get() ? m_pFile->GetEmptyFragmentList() : Fragments::List( 0 );
+}
+
+// Get list of empty fragments we really want to download
+Fragments::List CDownloadWithFile::GetWantedFragmentList() const
+{
+	return m_pFile.get() ? m_pFile->GetWantedFragmentList() : Fragments::List( 0 );
+}
+
+CFragmentedFile* CDownloadWithFile::GetFile()
+{
+	m_pFile->AddRef();
+	return m_pFile.get();
+}
+
+BOOL CDownloadWithFile::FindByPath(const CString& sPath) const
+{
+	return m_pFile.get() && m_pFile->FindByPath( sPath );
+}
+
+// Get amount of subfiles
+DWORD CDownloadWithFile::GetFileCount() const
+{
+	return m_pFile.get() ? m_pFile->GetCount() : 0;
+}
+
+// Get subfile offset
+QWORD CDownloadWithFile::GetOffset(DWORD nIndex) const
+{
+	return m_pFile.get() ? m_pFile->GetOffset( nIndex ) : 0;
+}
+
+// Get subfile length
+QWORD CDownloadWithFile::GetLength(DWORD nIndex) const
+{
+	return m_pFile.get() ? m_pFile->GetLength( nIndex ) : SIZE_UNKNOWN;
+}
+
+// Get path of subfile
+CString CDownloadWithFile::GetPath(DWORD nIndex) const
+{
+	return m_pFile.get() ? m_pFile->GetPath( nIndex ) : CString();
+}
+
+// Get original name of subfile
+CString CDownloadWithFile::GetName(DWORD nIndex) const
+{
+	return m_pFile.get() ? m_pFile->GetName( nIndex ) : CString();
+}
+
+// Get completed size of subfile (in bytes)
+QWORD CDownloadWithFile::GetCompleted(DWORD nIndex) const
+{
+	return m_pFile.get() ? m_pFile->GetCompleted( nIndex ) : 0;
+}
+
+// Select subfile (with user interaction)
+int CDownloadWithFile::SelectFile(CSingleLock* pLock) const
+{
+	return m_pFile.get() ? m_pFile->SelectFile( pLock ) : -1;
+}
+
+// Is file under move operation?
+BOOL CDownloadWithFile::IsMoving() const
+{
+	return m_bMoving;
+}
+
+// Get last file/disk operation error
+DWORD CDownloadWithFile::GetFileError() const
+{
+	return m_nFileError;
+}
+
+// Set file/disk error status
+void CDownloadWithFile::SetFileError(DWORD nFileError)
+{
+	m_nFileError = nFileError;
+}
+
+// Clear file/disk error status
+void CDownloadWithFile::ClearFileError()
+{
+	m_nFileError = ERROR_SUCCESS;
+}
+
 //////////////////////////////////////////////////////////////////////
 // CDownloadWithFile open the file
 
@@ -128,8 +218,6 @@ BOOL CDownloadWithFile::OpenFile()
 
 void CDownloadWithFile::CloseFile()
 {
-	ASSERT( ! m_bMoving );
-
 	if ( m_pFile.get() )
 		m_pFile->Close();
 }
@@ -166,6 +254,7 @@ void CDownloadWithFile::DeleteFile()
 	SetModified();
 }
 
+// Move file(s) to destination. Returns 0 on success or file error number.
 DWORD CDownloadWithFile::MoveFile(LPCTSTR pszDestination, LPPROGRESS_ROUTINE lpProgressRoutine, LPVOID lpData)
 {
 	ASSERT( m_bMoving );
@@ -711,7 +800,7 @@ void CDownloadWithFile::Serialize(CArchive& ar, int nVersion)
 	if ( ar.IsStoring() )
 	{
 		ar.WriteCount( m_pFile.get() != NULL );
-		
+
 		// Restore original filename added in nVersion == 41
 		{
 			DWORD nIndex = 0;

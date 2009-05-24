@@ -109,6 +109,11 @@ bool CDownloadTask::Succeeded() const
 	return m_bSuccess;
 }
 
+DWORD CDownloadTask::GetFileError() const
+{
+	return m_nFileError;
+}
+
 /////////////////////////////////////////////////////////////////////////////
 // CDownloadTask aborting
 

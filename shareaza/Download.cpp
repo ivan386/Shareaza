@@ -465,10 +465,13 @@ void CDownload::OnTaskComplete(CDownloadTask* pTask)
 
 void CDownload::OnMoved(CDownloadTask* pTask)
 {
-	m_bMoving = FALSE;
-
 	if ( !pTask->Succeeded() )
+	{
+		SetFileError( pTask->GetFileError() );
 		return;
+	}
+
+	m_bMoving = FALSE;
 
 	// We just completed torrent
 	if ( m_nTorrentBlock > 0 && m_nTorrentSuccess >= m_nTorrentBlock )
