@@ -49,9 +49,9 @@ public:
 // Attributes
 public:
 	dtask			m_nTask;
-	bool			m_bSuccess;
 	CHttpRequest	m_pRequest;
 private:
+	bool			m_bSuccess;
 	CString			m_sFilename;
 	CString			m_sDestination;
 	DWORD			m_nFileError;
@@ -72,8 +72,9 @@ public:
 
 // Operations
 public:
+	bool		Succeeded() const;
 	void		Abort();
-	BOOL		WasAborted();
+	bool		WasAborted() const;
 	CBuffer*	IsPreviewAnswerValid();
 private:
 	void		Construct(CDownload* pDownload);

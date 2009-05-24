@@ -467,7 +467,7 @@ void CDownload::OnMoved(CDownloadTask* pTask)
 {
 	m_bMoving = FALSE;
 
-	if ( ! pTask->m_bSuccess )
+	if ( !pTask->Succeeded() )
 		return;
 
 	// We just completed torrent

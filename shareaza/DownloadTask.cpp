@@ -104,6 +104,11 @@ CDownloadTask::~CDownloadTask()
 	if ( pEvent != NULL ) pEvent->SetEvent();
 }
 
+bool CDownloadTask::Succeeded() const
+{
+	return m_bSuccess;
+}
+
 /////////////////////////////////////////////////////////////////////////////
 // CDownloadTask aborting
 
@@ -116,7 +121,7 @@ void CDownloadTask::Abort()
 	delete pEvent;
 }
 
-BOOL CDownloadTask::WasAborted()
+bool CDownloadTask::WasAborted() const
 {
 	return m_pEvent != NULL;
 }
