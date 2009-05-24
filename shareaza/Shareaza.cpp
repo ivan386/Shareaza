@@ -231,6 +231,13 @@ BOOL CShareazaApp::InitInstance()
 
 	SetRegistryKey( _T("Shareaza") );
 	GetVersionNumber();
+#ifdef _DEBUG
+	CString strVersion;
+	BT_SetAppName( _T(CLIENT_NAME) );
+	strVersion.Format( _T("%s (rev. %s %s)"), m_sVersion, _T(__REVISION__),
+		m_sBuildDate );
+	BT_SetAppVersion( strVersion );
+#endif
 	Settings.Load();			// Loads settings. Depends on GetVersionNumber()
 	InitResources();			// Loads theApp settings. Depends on Settings::Load()
 	CoolInterface.Load();		// Loads colors and fonts. Depends on InitResources()
