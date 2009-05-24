@@ -465,7 +465,7 @@ void CDownload::OnTaskComplete(CDownloadTask* pTask)
 
 void CDownload::OnMoved(CDownloadTask* pTask)
 {
-	if ( !pTask->Succeeded() )
+	if ( !pTask->IsSucceeded() )
 	{
 		SetFileError( pTask->GetFileError() );
 		return;
