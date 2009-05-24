@@ -88,9 +88,6 @@ void CDownload::Pause(BOOL bRealPause)
 
 	theApp.Message( MSG_NOTICE, IDS_DOWNLOAD_PAUSED, GetDisplayName() );
 
-	if ( IsTrying() )
-		Downloads.StopTrying( IsTorrent() );
-
 	if ( !bRealPause )
 	{
 		StopTrying();
@@ -236,6 +233,9 @@ void CDownload::StopTrying()
 {
 	if ( m_bComplete )
 		return;
+
+	if ( IsTrying() )
+		Downloads.StopTrying( IsTorrent() );
 
 	m_tBegan = 0;
 	m_bDownloading	= FALSE;
@@ -475,6 +475,8 @@ void CDownload::OnMoved(CDownloadTask* pTask)
 	{
 		CloseTorrentUploads();
 		SendCompleted();
+		if ( IsTrying() )
+			Downloads.StopTrying( IsTorrent() );
 		m_bSeeding = TRUE;
 		m_tBegan = 0;
 		m_bDownloading	= FALSE;
