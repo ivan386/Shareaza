@@ -72,7 +72,7 @@ public:
 
 // Operations
 public:
-	bool		IsSucceeded() const;
+	bool		HasSucceeded() const;
 	void		Abort();
 	bool		WasAborted() const;
 	DWORD		GetFileError() const;

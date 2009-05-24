@@ -104,7 +104,7 @@ CDownloadTask::~CDownloadTask()
 	if ( pEvent != NULL ) pEvent->SetEvent();
 }
 
-bool CDownloadTask::IsSucceeded() const
+bool CDownloadTask::HasSucceeded() const
 {
 	return m_bSuccess;
 }
