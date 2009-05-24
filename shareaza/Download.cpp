@@ -495,7 +495,6 @@ void CDownload::OnMoved(CDownloadTask* pTask)
 		StopTrying();
 
 	// Download finalized, tracker notified, set flags that we completed
-	Downloads.StopTrying( IsTorrent() );
 	m_bComplete		= TRUE;
 	m_tCompleted	= GetTickCount();
 
