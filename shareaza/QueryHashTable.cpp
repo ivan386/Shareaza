@@ -78,7 +78,7 @@ void CQueryHashTable::Create()
 	delete [] m_pHash;
 
 	m_bLive		= true;
-	m_nCookie	= GetTickCount();
+	m_nCookie	= GetTickCount() + 1;
 	m_nBits		= Settings.Library.QueryRouteSize;
 	m_nHash		= 1u << m_nBits;
 	m_pHash		= new BYTE[ ( m_nHash + 31 ) / 8 ];
@@ -102,7 +102,7 @@ void CQueryHashTable::Clear()
 	if ( bGrouped )
 		QueryHashMaster.Remove( this );
 
-	m_nCookie	= GetTickCount();
+	m_nCookie	= GetTickCount() + 1;
 	m_nCount	= 0;
 
 	FillMemory( m_pHash, ( m_nHash + 31 ) / 8, 0xFF );
@@ -214,7 +214,7 @@ bool CQueryHashTable::Merge(const CQueryHashTable* pSource)
 		}
 	}
 
-	m_nCookie = GetTickCount();
+	m_nCookie = GetTickCount() + 1;
 
 	return true;
 }
@@ -932,6 +932,7 @@ int CQueryHashTable::Add(LPCTSTR pszString, size_t nStart, size_t nLength)
 
 	m_nCookie = GetTickCount();
 
+	TRACE( _T("[QHT] \"%hs\"\n"), (LPCSTR)CT2A( CString( pszString + nStart, nLength ) ) );
 	DWORD nHash	= HashWord( pszString, nStart, nLength, m_nBits );
 	BYTE* pHash	= m_pHash + ( nHash >> 3 );
 	BYTE nMask	= BYTE( 1 << ( nHash & 7 ) );
@@ -944,6 +945,7 @@ int CQueryHashTable::Add(LPCTSTR pszString, size_t nStart, size_t nLength)
 
 	if ( nLength >= 5 )
 	{
+		TRACE( _T("[QHT] \"%hs\"\n"), (LPCSTR)CT2A( CString( pszString + nStart, nLength - 1 ) ) );
 		nHash	= HashWord( pszString, nStart, nLength - 1, m_nBits );
 		pHash	= m_pHash + ( nHash >> 3 );
 		nMask	= BYTE( 1 << ( nHash & 7 ) );
@@ -954,6 +956,7 @@ int CQueryHashTable::Add(LPCTSTR pszString, size_t nStart, size_t nLength)
 			*pHash &= ~nMask;
 		}
 
+		TRACE( _T("[QHT] \"%hs\"\n"), (LPCSTR)CT2A( CString( pszString + nStart, nLength - 2 ) ) );
 		nHash	= HashWord( pszString, nStart, nLength - 2, m_nBits );
 		pHash	= m_pHash + ( nHash >> 3 );
 		nMask	= BYTE( 1 << ( nHash & 7 ) );
@@ -976,6 +979,8 @@ int CQueryHashTable::AddExact(LPCTSTR pszString, size_t nStart, size_t nLength)
 		return 0;
 
 	m_nCookie = GetTickCount();
+	
+	TRACE( _T("[QHT] \"%hs\"\n"), (LPCSTR)CT2A( CString( pszString + nStart, nLength ) ) );
 	DWORD nHash	= HashWord( pszString, nStart, nLength, m_nBits );
 	BYTE* pHash	= m_pHash + ( nHash >> 3 );
 	BYTE nMask	= BYTE( 1 << ( nHash & 7 ) );
