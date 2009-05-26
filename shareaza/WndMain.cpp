@@ -273,7 +273,6 @@ BEGIN_MESSAGE_MAP(CMainWnd, CMDIFrameWnd)
 	ON_UPDATE_COMMAND_UI_RANGE(ID_SHELL_MENU_MIN, ID_SHELL_MENU_MAX, OnUpdateShell)
 	ON_WM_MENUCHAR()
 	ON_MESSAGE(WM_SANITY_CHECK, &CMainWnd::OnSanityCheck)
-	ON_MESSAGE(WM_QUERYHITS, &CMainWnd::OnQueryHits)
 	ON_MESSAGE(WM_NOWUPLOADING, &CMainWnd::OnNowUploading)
 END_MESSAGE_MAP()
 
@@ -2825,69 +2824,6 @@ LRESULT CMainWnd::OnSanityCheck(WPARAM /*wParam*/, LPARAM /*lParam*/)
 	}
 
 	return 0L;
-}
-
-LRESULT CMainWnd::OnQueryHits(WPARAM /*wParam*/, LPARAM lParam)
-{
-	CQueryHit* pHits = (CQueryHit*)lParam;
-
-	// Update downloads
-	Downloads.OnQueryHits( pHits );
-
-	// Update library files alternate sources
-	CSingleLock oLock( &Library.m_pSection );
-	if ( oLock.Lock( 250 ) )
-	{
-		for ( const CQueryHit* pHit = pHits ; pHit; pHit = pHit->m_pNext )
-		{
-			if ( ! pHit->m_sURL.IsEmpty() )
-			{
-				if ( CLibraryFile* pFile = LibraryMaps.LookupFileByHash( pHit->m_oSHA1,
-					pHit->m_oTiger, pHit->m_oED2K, pHit->m_oBTH, pHit->m_oMD5,
-					pHit->m_nSize, pHit->m_nSize ) )
-				{
-					pFile->AddAlternateSources( pHit->m_sURL );
-				}
-			}
-		}
-		oLock.Unlock();
-	}
-
-	// Update search window(s)
-	BOOL bHandled = FALSE;
-	CChildWnd* pMonitorWnd		= NULL;
-	CChildWnd* pChildWnd		= NULL;
-	while ( ( pChildWnd = m_pWindows.Find( NULL, pChildWnd ) ) != NULL )
-	{
-		if ( pChildWnd->IsKindOf( RUNTIME_CLASS( CSearchWnd ) ) )
-		{
-			if ( pChildWnd->OnQueryHits( pHits ) )
-				bHandled = TRUE;
-		}
-		else if ( pChildWnd->IsKindOf( RUNTIME_CLASS( CHitMonitorWnd ) ) )
-		{
-			pMonitorWnd = pChildWnd;
-		}
-	}
-
-	// Drop rest to hit window
-	if ( ! bHandled && pMonitorWnd )
-		pMonitorWnd->OnQueryHits( pHits );
-
-	pHits->Delete();
-
-	// Overload protection
-	if ( GetTickCount() - GetMessageTime() > 2000 )
-	{
-		MSG msg = {};
-		while( PeekMessage( &msg, NULL, WM_QUERYHITS, WM_QUERYHITS, PM_REMOVE ) )
-		{
-			CQueryHit* pHits = (CQueryHit*)msg.lParam;
-			pHits->Delete();
-		}
-	}
-
-	return 0;
 }
 
 LRESULT CMainWnd::OnNowUploading(WPARAM /*wParam*/, LPARAM lParam)

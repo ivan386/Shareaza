@@ -75,9 +75,21 @@ protected:
 	};
 	CMap< HANDLE, HANDLE, ResolveStruct*, ResolveStruct* > m_pLookups;
 
+	class CDelayedHit
+	{
+	public:
+		CDelayedHit(CQueryHit* pHits = NULL, DWORD nStage = 0) : m_pHits( pHits ), m_nStage( nStage ) {}
+		CDelayedHit(const CDelayedHit& oQHS) : m_pHits( oQHS.m_pHits ), m_nStage( oQHS.m_nStage ) {}
+		CQueryHit*	m_pHits;
+		DWORD		m_nStage;
+	};
+	CList< CDelayedHit > m_pDelayedHits;
+
 	BOOL		PreRun();
 	void		OnRun();
 	void		PostRun();
+	// Handle and destroy query hits
+	void		RunQueryHits();
 
 // Operations
 public:
@@ -109,7 +121,8 @@ public:
 	BOOL		RouteHits(CQueryHit* pHits, CPacket* pPacket);
 	void		OnWinsock(WPARAM wParam, LPARAM lParam);
 	void		OnQuerySearch(CQuerySearch* pSearch);
-	void		OnQueryHits(CQueryHit* pHits);	// Handle and destroy query hits
+	// Add query hit to queue
+	void		OnQueryHits(CQueryHit* pHits);
 public:
 	void		UDPHostCache(IN_ADDR* pAddress, WORD nPort);
 	void		UDPKnownHubCache(IN_ADDR* pAddress, WORD nPort);

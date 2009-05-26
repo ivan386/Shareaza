@@ -260,7 +260,6 @@ protected:
 	afx_msg void OnUpdateShell(CCmdUI* pCmdUI);
 	afx_msg LRESULT OnMenuChar(UINT nChar, UINT nFlags, CMenu* pMenu);
 	afx_msg LRESULT OnSanityCheck(WPARAM wParam, LPARAM lParam);
-	afx_msg LRESULT OnQueryHits(WPARAM wParam, LPARAM lParam);
 	afx_msg LRESULT OnNowUploading(WPARAM wParam, LPARAM lParam);
 
 	DECLARE_MESSAGE_MAP()

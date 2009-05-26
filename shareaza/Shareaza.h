@@ -356,7 +356,6 @@ inline __int64 GetRandomNum<__int64>(const __int64& min, const __int64& max)
 #define WM_SETALPHA			(WM_APP+113)	// Increase/decrease main window transparency ( WPARAM: 0 - to decrease or 1 - to increase, LPARAM: unused )
 #define WM_METADATA			(WM_APP+114)	// Set/clear library meatapanel data and status message ( WPARAM: CMetaPanel* pPanelData, LPARAM: LPCTSTR pszMessage )
 #define WM_SANITY_CHECK		(WM_APP+115)	// Run allsystem check against banned hosts ( WPARAM: unused, LPARAM: unused )
-#define WM_QUERYHITS		(WM_APP+116)	// Route query hits over windows ( WPARAM: unused, LPARAM: CQueryHit* pHits )
 #define WM_NOWUPLOADING		(WM_APP+117)	// New upload notification ( WPARAM: unused, LPARAM: CString* pFilename )
 #define WM_TORRENT			(WM_APP+118)	// Open torrent file ( WPARAM: LPTSTR szFilename, LPARAM: unused )
 

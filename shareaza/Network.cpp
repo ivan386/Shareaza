@@ -23,6 +23,8 @@
 #include "Shareaza.h"
 #include "Settings.h"
 #include "Network.h"
+#include "Library.h"
+#include "SharedFile.h"
 #include "Security.h"
 #include "Handshakes.h"
 #include "Neighbours.h"
@@ -53,6 +55,7 @@
 #include "WndMain.h"
 #include "WndChild.h"
 #include "WndSearchMonitor.h"
+#include "WndSearch.h"
 #include "WndHitMonitor.h"
 
 #ifdef _DEBUG
@@ -604,6 +607,8 @@ void CNetwork::OnRun()
 			}
 
 			Neighbours.OnRun();
+
+			RunQueryHits();
 		}
 	}
 
@@ -631,6 +636,11 @@ void CNetwork::PostRun()
 		delete pBuffer;
 	}
 	m_pLookups.RemoveAll();
+
+	while ( ! m_pDelayedHits.IsEmpty() )
+	{
+		m_pDelayedHits.RemoveHead().m_pHits->Delete();
+	}
 
 	m_pHostAddresses.RemoveAll();
 
@@ -955,9 +965,9 @@ BOOL CNetwork::RouteHits(CQueryHit* pHits, CPacket* pPacket)
 
 void CNetwork::OnQuerySearch(CQuerySearch* pSearch)
 {
+	// Send searches to monitor window
 	CSingleLock pLock( &theApp.m_pSection );
-
-	if ( pLock.Lock( 10 ) )
+	if ( pLock.Lock( 250 ) )
 	{
 		if ( CMainWnd* pMainWnd = theApp.SafeMainWnd() )
 		{
@@ -977,16 +987,91 @@ void CNetwork::OnQuerySearch(CQuerySearch* pSearch)
 
 void CNetwork::OnQueryHits(CQueryHit* pHits)
 {
-	CSingleLock pLock( &theApp.m_pSection );
-	if ( pLock.Lock( 250 ) )
+	CSingleLock oLock( &m_pSection, TRUE );
+
+	// TODO: Add overload protection code
+
+	m_pDelayedHits.AddTail( CDelayedHit( pHits, 0 ) );
+}
+
+void CNetwork::RunQueryHits()
+{
+	// Quick check to avoid locking
+	if ( m_pDelayedHits.IsEmpty() )
+		return;
+
+	// Spend here no more than 250 ms at once
+	DWORD nBegin = GetTickCount();
+	CSingleLock oLock( &m_pSection, TRUE );
+	while ( ! m_pDelayedHits.IsEmpty() && GetTickCount() - nBegin < 250 )
 	{
-		if ( PostMainWndMessage( WM_QUERYHITS, 0, (LPARAM)pHits ) )
-			return;
+		CDelayedHit oQHT = m_pDelayedHits.RemoveHead();
+		oLock.Unlock();
 
-		pLock.Unlock();
+		switch( oQHT.m_nStage )
+		{
+		case 0:
+			// Update downloads
+			if ( Downloads.OnQueryHits( oQHT.m_pHits ) )
+			{
+				oQHT.m_nStage++;
+			}
+			break;
+
+		case 1:
+			// Update library files alternate sources
+			if ( Library.OnQueryHits( oQHT.m_pHits ) )
+			{
+				oQHT.m_nStage++;
+			}
+			break;
+
+		case 2:
+			// Send hits to search windows
+			CSingleLock oAppLock( &theApp.m_pSection );
+			if ( oAppLock.Lock( 250 ) )
+			{
+				if ( CMainWnd* pMainWnd = theApp.SafeMainWnd() )
+				{
+					// Update search window(s)
+					BOOL bHandled = FALSE;
+					CChildWnd* pMonitorWnd		= NULL;
+					CChildWnd* pChildWnd		= NULL;
+					while ( ( pChildWnd = pMainWnd->m_pWindows.Find( NULL, pChildWnd ) ) != NULL )
+					{
+						if ( pChildWnd->IsKindOf( RUNTIME_CLASS( CSearchWnd ) ) )
+						{
+							if ( pChildWnd->OnQueryHits( oQHT.m_pHits ) )
+								bHandled = TRUE;
+						}
+						else if ( pChildWnd->IsKindOf( RUNTIME_CLASS( CHitMonitorWnd ) ) )
+						{
+							pMonitorWnd = pChildWnd;
+						}
+					}
+
+					// Drop rest to hit window
+					if ( ! bHandled && pMonitorWnd )
+						pMonitorWnd->OnQueryHits( oQHT.m_pHits );
+				}
+				oAppLock.Unlock();
+
+				oQHT.m_nStage++;
+			}
+		}
+
+		if ( oQHT.m_nStage == 3 )
+		{
+			// Clean-up
+			oQHT.m_pHits->Delete();
+		}
+		else
+		{
+			// Go to next stage
+			oLock.Lock();
+			m_pDelayedHits.AddTail( oQHT );
+		}
 	}
-
-	pHits->Delete();
 }
 
 void CNetwork::UDPHostCache(IN_ADDR* pAddress, WORD nPort)

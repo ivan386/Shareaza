@@ -35,6 +35,7 @@
 #include "DlgExistingFile.h"
 #include "WndMain.h"
 
+#include "QueryHit.h"
 #include "QuerySearch.h"
 #include "Application.h"
 
@@ -219,6 +220,28 @@ void CLibrary::CheckDuplicates(LPCTSTR pszMD5Hash)
 			Settings.Live.MaliciousWarning = FALSE;
 		}
 	}
+}
+
+bool CLibrary::OnQueryHits(const CQueryHit* pHits)
+{
+	CSingleLock oLock( &m_pSection );
+	if ( ! oLock.Lock( 250 ) )
+		return false;
+
+	for ( const CQueryHit* pHit = pHits ; pHit; pHit = pHit->m_pNext )
+	{
+		if ( ! pHit->m_sURL.IsEmpty() )
+		{
+			if ( CLibraryFile* pFile = LibraryMaps.LookupFileByHash( pHit->m_oSHA1,
+				pHit->m_oTiger, pHit->m_oED2K, pHit->m_oBTH, pHit->m_oMD5,
+				pHit->m_nSize, pHit->m_nSize ) )
+			{
+				pFile->AddAlternateSources( pHit->m_sURL );
+			}
+		}
+	}
+	
+	return true;
 }
 
 //////////////////////////////////////////////////////////////////////

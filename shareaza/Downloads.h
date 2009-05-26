@@ -99,7 +99,7 @@ public:
 	void		Save(BOOL bForce = TRUE);
 	void		OnRun();
 	BOOL		OnPush(const Hashes::Guid& oGUID, CConnection* pConnection);
-	void		OnQueryHits(const CQueryHit* pHits);
+	bool		OnQueryHits(const CQueryHit* pHits);
 	void		OnVerify(LPCTSTR pszPath, BOOL bVerified);
 	void		SetPerHostLimit(IN_ADDR* pAddress, DWORD nLimit);
 	BOOL		IsSpaceAvailable(QWORD nVolume, int nPath = dlPathNull);
