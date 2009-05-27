@@ -93,6 +93,8 @@ BOOL CEDPartImporter::IsRunning()
 
 int CEDPartImporter::Run()
 {
+	BOOL bCOM = SUCCEEDED( OleInitialize( NULL ) );
+
 	Message( IDS_ED2K_EPI_START );
 	m_nCount = 0;
 
@@ -106,6 +108,9 @@ int CEDPartImporter::Run()
 	Message( IDS_ED2K_EPI_FINISHED, m_nCount );
 
 	if ( m_nCount ) Downloads.Save();
+
+	if ( bCOM )
+		OleUninitialize();
 
 	return 0;
 }
