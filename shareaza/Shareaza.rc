@@ -468,7 +468,7 @@ BEGIN
     LTEXT           "Shareaza File Sharing Client ",IDC_TITLE,20,45,262,10,SS_CENTERIMAGE
     LTEXT           "Copyright © Shareaza Development Team, 2002-",IDC_COPYRIGHT,20,60,262,12
     LTEXT           "Shareaza is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.",IDC_STATIC,20,75,262,24
-    LTEXT           "Logo by Kid at designhazard.com",IDC_STATIC,20,105,262,12
+    LTEXT           "Logo by Kid at pakkeimak.com",IDC_STATIC,20,105,262,12
     LTEXT           "http://shareaza.sourceforge.net/",IDC_WEB,20,142,125,10
     DEFPUSHBUTTON   "OK",IDOK,235,141,50,14
     LTEXT           "This product includes GeoLite data created by MaxMind, available from http://maxmind.com/",IDC_STATIC,20,120,262,18
