@@ -1499,44 +1499,59 @@ void CDownloadsWnd::OnUpdateDownloadsFileDelete(CCmdUI* pCmdUI)
 
 void CDownloadsWnd::OnDownloadsFileDelete()
 {
-	CSingleLock pLock( &Transfers.m_pSection, TRUE );
-	CList<CDownload*> pList;
+	// Create common library file list of all selected and completed downloads
+	CSingleLock pTransfersLock( &Transfers.m_pSection, TRUE );
+	CSingleLock pLibraryLock( &Library.m_pSection, TRUE );
+	CLibraryList pList;
 
 	for ( POSITION pos = Downloads.GetIterator() ; pos ; )
 	{
 		CDownload* pDownload = Downloads.GetNext( pos );
-		if ( pDownload->m_bSelected ) pList.AddTail( pDownload );
+		if ( pDownload->m_bSelected && pDownload->IsCompleted() )
+		{
+			for ( DWORD i = 0; i < pDownload->GetFileCount(); ++i )
+			{
+				CString strPath	= pDownload->GetPath( i );
+				if ( CLibraryFile* pFile = LibraryMaps.LookupFileByPath( strPath ) )
+				{
+					pList.AddTail( pFile );
+				}
+			}
+		}
 	}
-	pLock.Unlock();
 
 	while ( ! pList.IsEmpty() )
 	{
-		pLock.Lock();
-		CDownload* pDownload = pList.RemoveHead();
-
-		if ( Downloads.Check( pDownload ) && pDownload->IsCompleted() )
+		CLibraryFile* pFile = Library.LookupFile( pList.GetHead() );
+		if ( pFile == NULL )
 		{
-			CDeleteFileDlg dlg;
-			dlg.m_sName		= pDownload->m_sName;
-			pLock.Unlock();
-			if ( dlg.DoModal() != IDOK )
-				break;
-			pLock.Lock();
-			if ( Downloads.Check( pDownload ) )
+			pList.RemoveHead();
+			continue;
+		}
+
+		CDeleteFileDlg dlg( this );
+		dlg.m_sName	= pFile->m_sName;
+		dlg.m_sComments = pFile->m_sComments;
+		dlg.m_nRateValue = pFile->m_nRating;
+		dlg.m_bAll = pList.GetCount() > 1;
+
+		pLibraryLock.Unlock();
+		pTransfersLock.Unlock();
+
+		if ( dlg.DoModal() != IDOK ) break;
+
+		pTransfersLock.Lock();
+		pLibraryLock.Lock();
+
+		for ( INT_PTR nProcess = dlg.m_bAll ? pList.GetCount() : 1 ; nProcess > 0 && pList.GetCount() > 0 ; nProcess-- )
+		{
+			if ( ( pFile = Library.LookupFile( pList.RemoveHead(), FALSE, TRUE ) ) != NULL )
 			{
-				for ( DWORD i = 0; i < pDownload->GetFileCount(); ++i )
-				{
-					CString strPath	= pDownload->GetPath( i );
-					CQuickLock oLibraryLock( Library.m_pSection );
-					if ( CLibraryFile* pFile = LibraryMaps.LookupFileByPath( strPath ) )
-					{
-						dlg.Apply( pFile );
-					}
-				}
-				pDownload->Remove( TRUE );
+				dlg.Apply( pFile );
+
+				pFile->Delete();	// this also deletes owner download
 			}
 		}
-		pLock.Unlock();
 	}
 
 	Update();
@@ -1550,31 +1565,29 @@ void CDownloadsWnd::OnUpdateDownloadsRate(CCmdUI* pCmdUI)
 
 void CDownloadsWnd::OnDownloadsRate()
 {
-	CSingleLock pLock( &Transfers.m_pSection, TRUE );
 	CFilePropertiesSheet dlg;
-	CList< CString > pList;
 
+	CSingleLock pLock( &Transfers.m_pSection, TRUE );
 	for ( POSITION pos = Downloads.GetIterator() ; pos ; )
 	{
 		CDownload* pDownload = Downloads.GetNext( pos );
 		if ( pDownload->m_bSelected && pDownload->IsCompleted() )
-			pList.AddTail( pDownload->m_sPath );
-	}
-
-	pLock.Unlock();
-
-	while ( ! pList.IsEmpty() )
-	{
-		CString strPath = pList.RemoveHead();
-
-		CQuickLock oLock( Library.m_pSection );
-		if ( CLibraryFile* pFile = LibraryMaps.LookupFileByPath( strPath ) )
 		{
-			dlg.Add( pFile );
+			for ( DWORD i = 0; i < pDownload->GetFileCount(); ++i )
+			{
+				CString strPath	= pDownload->GetPath( i );
+				CQuickLock oLibraryLock( Library.m_pSection );
+				if ( CLibraryFile* pFile = LibraryMaps.LookupFileByPath( strPath ) )
+				{
+					dlg.Add( pFile );
+				}
+			}
 		}
 	}
+	pLock.Unlock();
 
 	dlg.DoModal( 2 );
+
 	Update();
 }
 
