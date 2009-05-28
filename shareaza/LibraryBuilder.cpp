@@ -599,15 +599,16 @@ bool CLibraryBuilder::HashFile(LPCTSTR szPath, HANDLE hFile)
 	LibraryMaps.CullDeletedFiles( pFile );
 	LibraryHistory.Add( szPath, pFile->m_oSHA1, pFile->m_oTiger,
 		pFile->m_oED2K, pFile->m_oBTH, pFile->m_oMD5 );
-	Library.AddFile( pFile );
 
 	// child pornography check
 	if ( Settings.Search.AdultFilter &&
 		( AdultFilter.IsChildPornography( pFile->GetSearchName() ) ||
-		  AdultFilter.IsChildPornography( pFile->GetMetadataWords() ) ) )
+		AdultFilter.IsChildPornography( pFile->GetMetadataWords() ) ) )
 	{
 		pFile->m_bVerify = pFile->m_bShared = TRI_FALSE;
 	}
+
+	Library.AddFile( pFile );
 
 	oLibraryLock.Unlock();
 
