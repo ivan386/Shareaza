@@ -138,11 +138,11 @@ void CQueryHashMaster::Build()
 
 	Clear();
 
-	const CQueryHashTable* pLocalTable = LibraryDictionary.GetHashTable();
-	if ( ! pLocalTable )
+	const CQueryHashTable* pLocalTable( LibraryDictionary.GetHashTable() );
+	if ( !pLocalTable )
 		return;
 
-	Merge( pLocalTable );
+	Merge( LibraryDictionary.GetHashTable() );
 
 	oLibraryLock.Unlock();
 
