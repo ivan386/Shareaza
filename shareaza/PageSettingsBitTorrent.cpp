@@ -1,7 +1,7 @@
 //
 // PageSettingsBitTorrent.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -116,6 +116,8 @@ BOOL CBitTorrentSettingsPage::OnInitDialog()
 	m_wndLinksSpin.SetRange( 0, 200 );
 	m_wndDownloadsSpin.SetRange( 0, (WORD)nMaxTorrents );
 	UpdateData( FALSE );
+
+	m_wndTorrentFolder.SubclassDlgItem( IDC_TORRENTS_FOLDER, this );
 
 	return TRUE;
 }

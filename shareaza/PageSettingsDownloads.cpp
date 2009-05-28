@@ -37,10 +37,8 @@ static char THIS_FILE[] = __FILE__;
 IMPLEMENT_DYNCREATE(CDownloadsSettingsPage, CSettingsPage)
 
 BEGIN_MESSAGE_MAP(CDownloadsSettingsPage, CSettingsPage)
-	//{{AFX_MSG_MAP(CDownloadsSettingsPage)
 	ON_BN_CLICKED(IDC_DOWNLOADS_BROWSE, OnDownloadsBrowse)
 	ON_BN_CLICKED(IDC_INCOMPLETE_BROWSE, OnIncompleteBrowse)
-	//}}AFX_MSG_MAP
 	ON_WM_SHOWWINDOW()
 END_MESSAGE_MAP()
 
@@ -48,13 +46,12 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CDownloadsSettingsPage property page
 
-CDownloadsSettingsPage::CDownloadsSettingsPage() : CSettingsPage(CDownloadsSettingsPage::IDD)
-	//{{AFX_DATA_INIT(CDownloadsSettingsPage)
+CDownloadsSettingsPage::CDownloadsSettingsPage()
+:	CSettingsPage(CDownloadsSettingsPage::IDD)
 ,	m_nMaxDownFiles		( 0 )
 ,	m_nMaxFileTransfers	( 0 )
 ,	m_nMaxDownTransfers	( 0 )
 ,	m_bRequireConnect	( FALSE )
-	//}}AFX_DATA_INIT
 {
 }
 
@@ -65,7 +62,7 @@ CDownloadsSettingsPage::~CDownloadsSettingsPage()
 void CDownloadsSettingsPage::DoDataExchange(CDataExchange* pDX)
 {
 	CSettingsPage::DoDataExchange(pDX);
-	//{{AFX_DATA_MAP(CDownloadsSettingsPage)
+
 	DDX_Control(pDX, IDC_MAX_TRANSFERS_SPIN, m_wndMaxDownTransfers);
 	DDX_Control(pDX, IDC_MAX_TPF_SPIN, m_wndMaxFileTransfers);
 	DDX_Control(pDX, IDC_MAX_FILES_SPIN, m_wndMaxDownFiles);
@@ -81,8 +78,6 @@ void CDownloadsSettingsPage::DoDataExchange(CDataExchange* pDX)
 	DDX_CBString(pDX, IDC_DOWNLOADS_BANDWIDTH_LIMIT, m_sBandwidthLimit);
 	DDX_CBString(pDX, IDC_DOWNLOADS_QUEUE_LIMIT, m_sQueueLimit);
 	DDX_Check(pDX, IDC_REQUIRE_CONNECT, m_bRequireConnect);
-	//}}AFX_DATA_MAP
-
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -99,7 +94,9 @@ BOOL CDownloadsSettingsPage::OnInitDialog()
 	m_nMaxFileTransfers		= Settings.Downloads.MaxFileTransfers;
 	m_bRequireConnect		= Settings.Connection.RequireForTransfers;
 
-	CalculateMaxValues();
+	Settings.SetRange( &Settings.Downloads.MaxFiles, m_wndMaxDownFiles );
+	Settings.SetRange( &Settings.Downloads.MaxTransfers, m_wndMaxDownTransfers );
+	Settings.SetRange( &Settings.Downloads.MaxFileTransfers, m_wndMaxFileTransfers );
 
 	m_wndDownloadsPath.SetIcon( IDI_BROWSE );
 	m_wndIncompletePath.SetIcon( IDI_BROWSE );
@@ -118,6 +115,9 @@ BOOL CDownloadsSettingsPage::OnInitDialog()
 		m_sBandwidthLimit	= _T("MAX");
 
 	UpdateData( FALSE );
+
+	m_wndDownloadsFolder.SubclassDlgItem( IDC_DOWNLOADS_FOLDER, this );
+	m_wndIncompleteFolder.SubclassDlgItem( IDC_INCOMPLETE_FOLDER, this );
 
 	return TRUE;
 }
@@ -208,28 +208,6 @@ BOOL CDownloadsSettingsPage::OnKillActive()
 	return CSettingsPage::OnKillActive();
 }
 
-void CDownloadsSettingsPage::CalculateMaxValues()
-{
-	// Apply limits to display
-	// Guesstimate a good value based on available bandwidth
-	m_nMaxDownFiles = min ( m_nMaxDownFiles, 100 );
-	if ( Settings.GetOutgoingBandwidth() < 16 )
-		m_nMaxDownTransfers = min ( m_nMaxDownTransfers, 200 );
-	else if ( Settings.GetOutgoingBandwidth() <= 32 )
-		m_nMaxDownTransfers = min ( m_nMaxDownTransfers, 250 );
-	else if ( Settings.GetOutgoingBandwidth() <= 64 )
-		m_nMaxDownTransfers = min ( m_nMaxDownTransfers, 400 );
-	else if ( Settings.GetOutgoingBandwidth() <= 128 )
-		m_nMaxDownTransfers = min ( m_nMaxDownTransfers, 600 );
-	else
-		m_nMaxDownTransfers = min ( m_nMaxDownTransfers, 800 );
-	m_nMaxFileTransfers = min ( m_nMaxFileTransfers, 100 );
-
-	m_wndMaxDownFiles.SetRange( 1, (short)m_nMaxDownFiles );
-	m_wndMaxDownTransfers.SetRange( 1, (short)m_nMaxDownTransfers );
-	m_wndMaxFileTransfers.SetRange( 1, (short)m_nMaxFileTransfers );
-}
-
 void CDownloadsSettingsPage::OnOK()
 {
 	DWORD nQueueLimit = 0;
@@ -276,17 +254,6 @@ void CDownloadsSettingsPage::OnOK()
 		}
 	}
 
-	// Redraw the text in the queue limit box (in case the limit changed)
-	if ( nQueueLimit > 0 )
-		m_sQueueLimit.Format( _T("%d"), nQueueLimit );
-	else
-		m_sQueueLimit = _T("MAX");
-
-	CalculateMaxValues();
-
-	// Display any data changes
-	UpdateData( FALSE );
-
 	// Put new values in the settings.
 	Settings.Downloads.CompletePath			= m_sDownloadsPath;
 	Settings.Downloads.IncompletePath		= m_sIncompletePath;
@@ -296,6 +263,24 @@ void CDownloadsSettingsPage::OnOK()
 	Settings.Downloads.QueueLimit			= nQueueLimit;
 	Settings.Bandwidth.Downloads			= static_cast< DWORD >( Settings.ParseVolume( m_sBandwidthLimit ) );
 	Settings.Connection.RequireForTransfers	= m_bRequireConnect != FALSE;
+
+	// Normalize data
+	Settings.Normalize( &Settings.Downloads.MaxFiles );
+	m_nMaxDownFiles		= Settings.Downloads.MaxFiles;
+	Settings.Normalize( &Settings.Downloads.MaxTransfers );
+	m_nMaxDownTransfers	= Settings.Downloads.MaxTransfers;
+	Settings.Normalize( &Settings.Downloads.MaxFileTransfers );
+	m_nMaxFileTransfers	= Settings.Downloads.MaxFileTransfers;
+	Settings.Normalize( &Settings.Downloads.QueueLimit );
+
+	// Redraw the text in the queue limit box (in case the limit changed)
+	if ( Settings.Downloads.QueueLimit > 0 )
+		m_sQueueLimit.Format( _T("%d"), Settings.Downloads.QueueLimit );
+	else
+		m_sQueueLimit = _T("MAX");
+
+	// Display any data changes
+	UpdateData( FALSE );
 
 	CreateDirectory( m_sDownloadsPath );
 	CreateDirectory( m_sIncompletePath );

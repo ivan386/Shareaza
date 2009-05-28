@@ -1,7 +1,7 @@
 //
 // PageSettingsLibrary.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -19,9 +19,6 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(PAGESETTINGSLIBRARY_H)
-#define PAGESETTINGSLIBRARY_H
-
 #pragma once
 
 #include "WndSettingsPage.h"
@@ -30,46 +27,40 @@
 
 class CLibrarySettingsPage : public CSettingsPage
 {
-// Construction
+	DECLARE_DYNCREATE(CLibrarySettingsPage)
+
 public:
 	CLibrarySettingsPage();
 	virtual ~CLibrarySettingsPage();
 
-	DECLARE_DYNCREATE(CLibrarySettingsPage)
-
-// Dialog Data
-public:
 	enum { IDD = IDD_SETTINGS_LIBRARY };
-	CSpinButtonCtrl	m_wndRecentTotal;
-	CSpinButtonCtrl	m_wndRecentDays;
-	CButton	m_wndSafeRemove;
-	CButton	m_wndSafeAdd;
-	CComboBox	m_wndSafeList;
-	CButton	m_wndPrivateRemove;
-	CButton	m_wndPrivateAdd;
-	CComboBox	m_wndPrivateList;
-	BOOL	m_bWatchFolders;
-	DWORD	m_nRecentDays;
-	int		m_nRecentTotal;
-	BOOL	m_bStoreViews;
-	BOOL	m_bHighPriorityHash;
-	BOOL	m_bBrowseFiles;
-	BOOL	m_bMakeGhosts;
-	BOOL	m_bSmartSeries;
-	CIconButtonCtrl	m_wndCollectionPath;
-	CString	m_sCollectionPath;
 
-// Overrides
-public:
 	virtual void OnOK();
 
 protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
+	CSpinButtonCtrl	m_wndRecentTotal;
+	CSpinButtonCtrl	m_wndRecentDays;
+	CButton			m_wndSafeRemove;
+	CButton			m_wndSafeAdd;
+	CComboBox		m_wndSafeList;
+	CButton			m_wndPrivateRemove;
+	CButton			m_wndPrivateAdd;
+	CComboBox		m_wndPrivateList;
+	BOOL			m_bWatchFolders;
+	DWORD			m_nRecentDays;
+	int				m_nRecentTotal;
+	BOOL			m_bStoreViews;
+	BOOL			m_bHighPriorityHash;
+	BOOL			m_bBrowseFiles;
+	BOOL			m_bMakeGhosts;
+	BOOL			m_bSmartSeries;
+	CIconButtonCtrl	m_wndCollectionPath;
+	CString			m_sCollectionPath;
+	CEditPath		m_wndCollectionFolder;
 
-// Implementation
-protected:
-	// Generated message map functions
+	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	virtual BOOL OnInitDialog();
+
 	afx_msg void OnSelChangeSafeTypes();
 	afx_msg void OnEditChangeSafeTypes();
 	afx_msg void OnSafeAdd();
@@ -83,5 +74,3 @@ protected:
 
 	DECLARE_MESSAGE_MAP()
 };
-
-#endif // !defined(PAGESETTINGSLIBRARY_H)

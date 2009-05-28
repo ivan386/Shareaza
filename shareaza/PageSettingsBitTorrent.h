@@ -1,7 +1,7 @@
 //
 // PageSettingsBitTorrent.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -19,9 +19,6 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_PAGESETTINGSBITTORRENT_H__7A9C2316_0CF6_4251_9BD2_C56B9DA5AD89__INCLUDED_)
-#define AFX_PAGESETTINGSBITTORRENT_H__7A9C2316_0CF6_4251_9BD2_C56B9DA5AD89__INCLUDED_
-
 #pragma once
 
 #include "WndSettingsPage.h"
@@ -30,59 +27,42 @@
 
 class CBitTorrentSettingsPage : public CSettingsPage
 {
-// Construction
+	DECLARE_DYNCREATE(CBitTorrentSettingsPage)
+
 public:
 	CBitTorrentSettingsPage();
 	virtual ~CBitTorrentSettingsPage();
 
-	DECLARE_DYNCREATE(CBitTorrentSettingsPage)
-
-// Dialog Data
-public:
-	//{{AFX_DATA(CBitTorrentSettingsPage)
 	enum { IDD = IDD_SETTINGS_BITTORRENT };
-	BOOL	m_bTorrentInterface;
-	BOOL	m_bEndGame;
-	CSpinButtonCtrl	m_wndLinksSpin;
-	int		m_nLinks;
-	CSpinButtonCtrl	m_wndDownloadsSpin;
-	int		m_nDownloads;
-	BOOL	m_bAutoClear;
-	CEdit	m_wndClearPercentage;
-	CSpinButtonCtrl	m_wndClearPercentageSpin;
-	int		m_nClearPercentage;
-	BOOL	m_bPrefBTSources;
-	CIconButtonCtrl	m_wndTorrentPath;
-	CString	m_sTorrentPath;
-	CString	m_sTracker;
-	CIconButtonCtrl	m_wndMakerPath;
-	CString	m_sMakerPath;
-	//}}AFX_DATA
 
-// Overrides
-public:
-	//{{AFX_VIRTUAL(CBitTorrentSettingsPage)
-	public:
 	virtual void OnOK();
 	virtual BOOL OnSetActive();
-	protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
 
-// Implementation
 protected:
-	// Generated message map functions
-	//{{AFX_MSG(CLibrarySettingsPage)
+	BOOL			m_bTorrentInterface;
+	BOOL			m_bEndGame;
+	CSpinButtonCtrl	m_wndLinksSpin;
+	int				m_nLinks;
+	CSpinButtonCtrl	m_wndDownloadsSpin;
+	int				m_nDownloads;
+	BOOL			m_bAutoClear;
+	CEdit			m_wndClearPercentage;
+	CSpinButtonCtrl	m_wndClearPercentageSpin;
+	int				m_nClearPercentage;
+	BOOL			m_bPrefBTSources;
+	CIconButtonCtrl	m_wndTorrentPath;
+	CString			m_sTorrentPath;
+	CString			m_sTracker;
+	CIconButtonCtrl	m_wndMakerPath;
+	CString			m_sMakerPath;
+	CEditPath		m_wndTorrentFolder;
+
+	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	virtual BOOL OnInitDialog();
+
 	afx_msg void OnTorrentsAutoClear();
 	afx_msg void OnTorrentsBrowse();
 	afx_msg void OnMakerBrowse();
-	//}}AFX_MSG
 
 	DECLARE_MESSAGE_MAP()
-
 };
-
-//{{AFX_INSERT_LOCATION}}
-
-#endif // !defined(AFX_PAGESETTINGSBITTORRENT_H__7A9C2316_0CF6_4251_9BD2_C56B9DA5AD89__INCLUDED_)

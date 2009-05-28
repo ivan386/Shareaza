@@ -138,6 +138,8 @@ BOOL CLibrarySettingsPage::OnInitDialog()
 	m_wndPrivateAdd.EnableWindow( m_wndPrivateList.GetWindowTextLength() > 0 );
 	m_wndPrivateRemove.EnableWindow( m_wndPrivateList.GetCurSel() >= 0 );
 
+	m_wndCollectionFolder.SubclassDlgItem( IDC_COLLECTIONS_FOLDER, this );
+
 	return TRUE;
 }
 

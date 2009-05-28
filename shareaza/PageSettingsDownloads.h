@@ -1,7 +1,7 @@
 //
 // PageSettingsDownloads.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -19,29 +19,26 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_PAGESETTINGSDOWNLOADS_H__07DD1C53_0E05_459B_812F_CE9FCA0BA808__INCLUDED_)
-#define AFX_PAGESETTINGSDOWNLOADS_H__07DD1C53_0E05_459B_812F_CE9FCA0BA808__INCLUDED_
-
 #pragma once
 
 #include "WndSettingsPage.h"
 #include "CtrlIconButton.h"
-#include "afxcmn.h"
 
 
 class CDownloadsSettingsPage : public CSettingsPage
 {
-// Construction
+	DECLARE_DYNCREATE(CDownloadsSettingsPage)
+
 public:
 	CDownloadsSettingsPage();
 	virtual ~CDownloadsSettingsPage();
 
-	DECLARE_DYNCREATE(CDownloadsSettingsPage)
-
-// Dialog Data
-public:
-	//{{AFX_DATA(CDownloadsSettingsPage)
 	enum { IDD = IDD_SETTINGS_DOWNLOADS };
+
+	virtual void OnOK();
+	virtual BOOL OnKillActive();
+
+protected:
 	CSpinButtonCtrl	m_wndMaxDownTransfers;
 	CSpinButtonCtrl	m_wndMaxFileTransfers;
 	CSpinButtonCtrl	m_wndMaxDownFiles;
@@ -57,34 +54,18 @@ public:
 	CString			m_sBandwidthLimit;
 	CString			m_sQueueLimit;
 	BOOL			m_bRequireConnect;
-	//}}AFX_DATA
+	BOOL			m_bDownloadsChanged;
+	CEditPath		m_wndDownloadsFolder;
+	CEditPath		m_wndIncompleteFolder;
 
-	BOOL	m_bDownloadsChanged;
-
-// Overrides
-public:
-	//{{AFX_VIRTUAL(CDownloadsSettingsPage)
-	public:
-	virtual void OnOK();
-	virtual BOOL OnKillActive();
-	protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
-
-// Implementation
-protected:
-	bool	IsLimited(CString& strText) const;
-	void	CalculateMaxValues();
-
-	//{{AFX_MSG(CDownloadsSettingsPage)
 	virtual BOOL OnInitDialog();
+
+	bool	IsLimited(CString& strText) const;
+
 	afx_msg void OnDownloadsBrowse();
 	afx_msg void OnIncompleteBrowse();
-	//}}AFX_MSG
 	afx_msg void OnShowWindow(BOOL bShow, UINT nStatus);
+
 	DECLARE_MESSAGE_MAP()
 };
-
-//{{AFX_INSERT_LOCATION}}
-
-#endif // !defined(AFX_PAGESETTINGSDOWNLOADS_H__07DD1C53_0E05_459B_812F_CE9FCA0BA808__INCLUDED_)

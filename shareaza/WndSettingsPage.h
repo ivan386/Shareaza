@@ -1,7 +1,7 @@
 //
 // WndSettingsPage.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -19,9 +19,6 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_WNDSETTINGSPAGE_H__E0931D5D_AEFE_437E_9C5B_F1E0147EFD70__INCLUDED_)
-#define AFX_WNDSETTINGSPAGE_H__E0931D5D_AEFE_437E_9C5B_F1E0147EFD70__INCLUDED_
-
 #pragma once
 
 class CSettingsSheet;
@@ -29,25 +26,18 @@ class CSettingsSheet;
 
 class CSettingsPage : public CDialog
 {
-// Construction
+	DECLARE_DYNAMIC(CSettingsPage)
+
 public:
 	CSettingsPage(UINT nIDTemplate, LPCTSTR pszCaption = NULL);
 	virtual ~CSettingsPage();
 
-	DECLARE_DYNAMIC(CSettingsPage)
+	CString			m_sCaption;
+	BOOL			m_bGroup;
 
-// Attributes
-public:
-	CString	m_sCaption;
-	BOOL	m_bGroup;
-	CToolTipCtrl m_wndToolTip;
-
-// Operations
-public:
-	BOOL	Create(CRect& rcPage, CWnd* pSheetWnd);
-	BOOL	LoadDefaultCaption();
-
-	CSettingsPage* GetPage(CRuntimeClass* pClass) const;
+	BOOL			Create(CRect& rcPage, CWnd* pSheetWnd);
+	BOOL			LoadDefaultCaption();
+	CSettingsPage*	GetPage(CRuntimeClass* pClass) const;
 
 	inline CSettingsSheet* GetSheet() const
 	{
@@ -69,26 +59,29 @@ public:
 	virtual BOOL OnSetActive();
 	virtual BOOL OnKillActive();
 
-// Standard Dialog Functionality
-public:
-	//{{AFX_DATA(CSettingsPage)
-	//}}AFX_DATA
-	//{{AFX_VIRTUAL(CSettingsPage)
-	protected:
-	virtual void DoDataExchange(CDataExchange* pDX);
-	//}}AFX_VIRTUAL
 protected:
-	//{{AFX_MSG(CSettingsPage)
+	CToolTipCtrl	m_wndToolTip;
+
+	virtual void DoDataExchange(CDataExchange* pDX);
 	virtual BOOL OnInitDialog();
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
 
-public:
 	afx_msg BOOL OnEraseBkgnd(CDC* pDC);
 	afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
+
+	DECLARE_MESSAGE_MAP()
 };
 
-//{{AFX_INSERT_LOCATION}}
+// CEditPath
+// Same functionality as CEdit has but with ability to run specified
+// file or folder on mouse double click.
 
-#endif // !defined(AFX_WNDSETTINGSPAGE_H__E0931D5D_AEFE_437E_9C5B_F1E0147EFD70__INCLUDED_)
+class CEditPath : public CEdit
+{
+	DECLARE_DYNCREATE(CEditPath)
+
+protected:
+	afx_msg void OnLButtonDblClk(UINT nFlags, CPoint point);
+
+	DECLARE_MESSAGE_MAP()
+};
