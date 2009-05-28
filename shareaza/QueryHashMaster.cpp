@@ -136,13 +136,12 @@ void CQueryHashMaster::Build()
 	if ( !oLibraryLock.Lock( 500 ) )
 		return;
 
-	Clear();
-
-	const CQueryHashTable* pLocalTable( LibraryDictionary.GetHashTable() );
+	const CQueryHashTable* pLocalTable = LibraryDictionary.GetHashTable();
 	if ( !pLocalTable )
 		return;
 
-	Merge( LibraryDictionary.GetHashTable() );
+	Clear();
+	Merge( pLocalTable );
 
 	oLibraryLock.Unlock();
 
