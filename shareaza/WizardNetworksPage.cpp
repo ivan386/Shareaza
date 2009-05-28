@@ -81,6 +81,12 @@ BOOL CWizardNetworksPage::OnInitDialog()
 	m_bG1Enable = Settings.Gnutella1.EnableAlways;
 	m_bEDEnable = Settings.eDonkey.EnableAlways;
 
+#ifdef LAN_MODE
+	GetDlgItem( IDC_G2_ENABLE )->EnableWindow( FALSE );
+	GetDlgItem( IDC_G1_ENABLE )->EnableWindow( FALSE );
+	GetDlgItem( IDC_ED2K_ENABLE )->EnableWindow( FALSE );
+#endif // LAN_MODE
+
 	UpdateData( FALSE );
 
 	return TRUE;
