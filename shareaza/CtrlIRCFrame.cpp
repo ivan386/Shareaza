@@ -587,10 +587,10 @@ void CIRCFrame::OnIrcConnect()
 		{
 			CString strRandomNumber;
 			m_sNickname = "razaIrc";
-			srand( (unsigned)time( NULL ) );
+
 			for ( int nDigit = 0 ; nDigit < 7 ; nDigit++ )
 			{
-				strRandomNumber.Format( L"%d", rand() );
+				strRandomNumber.Format( L"%d", GetRandomNum( 0, 32768 ) );
 				m_sNickname += strRandomNumber.GetAt( 0 );
 			}
 		}

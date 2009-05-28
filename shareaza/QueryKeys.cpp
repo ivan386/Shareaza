@@ -1,7 +1,7 @@
 //
 // QueryKeys.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -34,6 +34,14 @@ static char THIS_FILE[]=__FILE__;
 // CQueryKeys construction
 
 CQueryKeys::CQueryKeys()
+:	m_nBits		( 0 )
+,	m_pTable	( NULL )
+,	m_nTable	( 0 )
+,	m_pMap		( NULL )
+{
+}
+
+void CQueryKeys::Alloc()
 {
 	m_nBits		= 12;
 	m_nTable	= 1u << m_nBits;
@@ -44,18 +52,18 @@ CQueryKeys::CQueryKeys()
 
 	for ( DWORD nCount = m_nBits ; nCount ; nCount-- )
 	{
-		*pMap++ = 1 << ( rand() % 32 );
-		*pMap++ = 1 << ( rand() % 32 );
+		*pMap++ = 1 << GetRandomNum( 0, 31 );
+		*pMap++ = 1 << GetRandomNum( 0, 31 );
 	}
 
 	BYTE* pFill = (BYTE*)m_pTable;
 
 	for ( DWORD nCount = m_nTable ; nCount ; nCount-- )
 	{
-		*pFill++ = (BYTE)( rand() & 0xFF );
-		*pFill++ = (BYTE)( rand() & 0xFF );
-		*pFill++ = (BYTE)( rand() & 0xFF );
-		*pFill++ = (BYTE)( rand() & 0xFF );
+		*pFill++ = (BYTE)GetRandomNum( 0, 255 );
+		*pFill++ = (BYTE)GetRandomNum( 0, 255 );
+		*pFill++ = (BYTE)GetRandomNum( 0, 255 );
+		*pFill++ = (BYTE)GetRandomNum( 0, 255 );
 	}
 
 	// TODO: Add check for invalid (for Shareaza) zero keys
@@ -72,7 +80,10 @@ CQueryKeys::~CQueryKeys()
 
 DWORD CQueryKeys::Create(DWORD nAddress)
 {
-	DWORD* pMap = m_pMap;
+	if ( ! m_pTable )
+		Alloc();
+
+	const DWORD* pMap = m_pMap;
 	DWORD nHash = 0;
 
 	for ( DWORD nCount = m_nBits, nBit = 1 ; nCount ; nCount--, nBit <<= 1 )
@@ -90,16 +101,5 @@ DWORD CQueryKeys::Create(DWORD nAddress)
 
 BOOL CQueryKeys::Check(DWORD nAddress, DWORD nKey)
 {
-	DWORD* pMap = m_pMap;
-	DWORD nHash = 0;
-
-	for ( DWORD nCount = m_nBits, nBit = 1 ; nCount ; nCount--, nBit <<= 1 )
-	{
-		BOOL bOne = ( nAddress & (*pMap++) ) != 0;
-		BOOL bTwo = ( nAddress & (*pMap++) ) != 0;
-		if ( bOne ^ bTwo ) nHash |= nBit;
-	}
-
-	return nKey == m_pTable[ nHash & ( m_nTable - 1 ) ];
+	return nKey == Create( nAddress );
 }
-

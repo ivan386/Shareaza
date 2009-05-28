@@ -1,7 +1,7 @@
 //
 // QueryKeys.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -18,9 +18,6 @@
 // along with Shareaza; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
-
-#if !defined(AFX_QUERYKEYS_H__EF6821C2_2183_44C2_9684_66160F8A81DA__INCLUDED_)
-#define AFX_QUERYKEYS_H__EF6821C2_2183_44C2_9684_66160F8A81DA__INCLUDED_
 
 #pragma once
 
@@ -39,11 +36,10 @@ protected:
 	DWORD	m_nTable;
 	DWORD*	m_pMap;
 
+	void	Alloc();
+
 // Operations
 public:
 	DWORD	Create(DWORD nAddress);
 	BOOL	Check(DWORD nAddress, DWORD nKey);
-
 };
-
-#endif // !defined(AFX_QUERYKEYS_H__EF6821C2_2183_44C2_9684_66160F8A81DA__INCLUDED_)
