@@ -163,6 +163,9 @@ void CDownload::Remove(bool bDelete)
 		ASSERT( m_pTask == NULL );
 	}
 
+	if ( IsTrying() )
+		Downloads.StopTrying( IsTorrent() );
+
 	if ( bDelete || ! IsCompleted() )
 	{
 		theApp.Message( MSG_NOTICE, IDS_DOWNLOAD_REMOVE, (LPCTSTR)GetDisplayName() );
