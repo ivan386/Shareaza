@@ -36,12 +36,15 @@ class CDownload;
 
 class CLibraryFile : public CShareazaFile
 {
-	DECLARE_DYNAMIC(CLibraryFile)
-
+// Construction
 public:
 	CLibraryFile(CLibraryFolder* pFolder, LPCTSTR pszName = NULL);
 	virtual ~CLibraryFile();
 
+	DECLARE_DYNAMIC(CLibraryFile)
+
+// Attributes
+public:
 	CLibraryFile*	m_pNextSHA1;
 	CLibraryFile*	m_pNextTiger;
 	CLibraryFile*	m_pNextED2K;
@@ -51,12 +54,16 @@ public:
 	DWORD			m_nUpdateCookie;
 	DWORD			m_nSelectCookie;
 	DWORD			m_nListCookie;
-	CLibraryFolder*	m_pFolder;				// NULL for Ghost files
+public:
+	CLibraryFolder*	m_pFolder;	// NULL for Ghost files
 	DWORD			m_nIndex;
 	FILETIME		m_pTime;
+	TRISTATE		m_bShared;
 	QWORD			m_nVirtualBase;
 	QWORD			m_nVirtualSize;
+public:
 	TRISTATE		m_bVerify;
+public:
 	CSchema*		m_pSchema;
 	CXMLElement*	m_pMetadata;
 	BOOL			m_bMetadataAuto;		// Metadata is auto-generated
@@ -65,11 +72,13 @@ public:
 	int				m_nRating;
 	CString			m_sComments;
 	CString			m_sShareTags;
+public:
 	DWORD			m_nUploadsToday;
 	DWORD			m_nUploadsTotal;
 	BOOL			m_bCachedPreview;
 	BOOL			m_bBogus;
-	CList< CSharedSource* >		m_pSources;
+	CList< CSharedSource* > m_pSources;
+
 	// Search helper variables
 	mutable DWORD				m_nHitsToday;
 	mutable DWORD				m_nHitsTotal;
@@ -77,14 +86,15 @@ public:
 	mutable DWORD				m_nSearchWords;
 	mutable const CLibraryFile*	m_pNextHit;
 	mutable DWORD				m_nCollIndex;
+
 	int				m_nIcon16;
 	BOOL			m_bNewFile;
 
+// Operations
+public:
 	CString			GetPath() const;
 	CString			GetSearchName() const;
-	bool			IsShared(bool bIgnoreOverride = false) const;
-	void			SetShared(bool bShared, bool bOverride = false);
-	inline BOOL		IsSharedOverride() const { return m_bShared != TRI_UNKNOWN; }
+	bool			IsShared() const;
 	inline BOOL		IsGhost() const { return m_pFolder == NULL; }
 	inline BOOL		IsAvailable() const { return m_pFolder != NULL; }
 	BOOL			IsSchemaURI(LPCTSTR pszURI) const;
@@ -93,6 +103,7 @@ public:
 	BOOL			IsHashed() const;
 	BOOL			IsNewFile() const;
 	BOOL			IsReadable() const;
+public:
 	BOOL			Rebuild();
 	BOOL			Rename(LPCTSTR pszName);
 	BOOL			Delete(BOOL bDeleteGhost = FALSE);
@@ -104,10 +115,25 @@ public:
 	void			ModifyMetadata();		// Mark metadata as modified
 	CTigerTree*		GetTigerTree();
 	CED2K*			GetED2K();
+public:
 	CSharedSource*	AddAlternateSource(LPCTSTR pszURL, FILETIME* tSeen = NULL);
 	CSharedSource*	AddAlternateSources(LPCTSTR pszURL);
 	CString			GetAlternateSources(CList< CString >* pState, int nMaximum, PROTOCOLID nProtocol);
+protected:
+	void			Serialize(CArchive& ar, int nVersion);
+	BOOL			ThreadScan(CSingleLock& pLock, DWORD nScanCookie, QWORD nSize, FILETIME* pTime/*, LPCTSTR pszMetaData*/);
+	void			OnDelete(BOOL bDeleteGhost = FALSE, TRISTATE bCreateGhost = TRI_UNKNOWN);
+	void			Ghost();
+	BOOL			OnVerifyDownload(
+						const Hashes::Sha1ManagedHash& oSHA1,
+						const Hashes::TigerManagedHash& oTiger,
+						const Hashes::Ed2kManagedHash& oED2K,
+						const Hashes::BtManagedHash& oBTH,
+						const Hashes::Md5ManagedHash& oMD5,
+						LPCTSTR pszSources);
 
+// Inlines
+public:
 	inline CString GetNameLC() const
 	{
 		CString str( m_sName );
@@ -125,21 +151,16 @@ public:
 			( ( m_nSize == SIZE_UNKNOWN ) ? 0 : m_nSize );
 	}
 
+// Friends
+public:
+	friend class CLibrary;
+	friend class CLibraryFolder;
+	friend class CLibraryMaps;
+	friend class CLibraryRecent;
+	friend class CDeleteFileDlg;
+
+// Automation
 protected:
-	TRISTATE		m_bShared;
-
-	void			Serialize(CArchive& ar, int nVersion);
-	BOOL			ThreadScan(CSingleLock& pLock, DWORD nScanCookie, QWORD nSize, FILETIME* pTime/*, LPCTSTR pszMetaData*/);
-	void			OnDelete(BOOL bDeleteGhost = FALSE, TRISTATE bCreateGhost = TRI_UNKNOWN);
-	void			Ghost();
-	BOOL			OnVerifyDownload(
-						const Hashes::Sha1ManagedHash& oSHA1,
-						const Hashes::TigerManagedHash& oTiger,
-						const Hashes::Ed2kManagedHash& oED2K,
-						const Hashes::BtManagedHash& oBTH,
-						const Hashes::Md5ManagedHash& oMD5,
-						LPCTSTR pszSources);
-
 	BEGIN_INTERFACE_PART(LibraryFile, ILibraryFile)
 		DECLARE_DISPATCH()
 		STDMETHOD(get_Path)(BSTR FAR* psPath);
@@ -169,11 +190,6 @@ protected:
 
 	DECLARE_INTERFACE_MAP()
 
-	friend class CLibrary;
-	friend class CLibraryFolder;
-	friend class CLibraryMaps;
-	friend class CLibraryRecent;
-	friend class CDeleteFileDlg;
 };
 
 

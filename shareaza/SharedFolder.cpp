@@ -25,7 +25,6 @@
 #include "SharedFolder.h"
 #include "SharedFile.h"
 #include "Library.h"
-#include "LibraryDictionary.h"
 #include "Application.h"
 #include "Skin.h"
 
@@ -621,13 +620,7 @@ void CLibraryFolder::GetShared(BOOL& bShared) const
 
 void CLibraryFolder::SetShared(TRISTATE bShared)
 {
-	if ( m_bShared != bShared )
-	{
-		m_bShared = bShared;
-		m_nUpdateCookie++;
-
-		LibraryDictionary.Invalidate();
-	}
+	m_bShared = bShared;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -649,9 +642,6 @@ BOOL CLibraryFolder::SetOffline()
 		{
 			GetNextFolder( pos )->SetOffline();
 		}
-
-		LibraryDictionary.Invalidate();
-
 		return TRUE;
 	}
 	return FALSE;
@@ -668,8 +658,6 @@ BOOL CLibraryFolder::SetOnline()
 		{
 			GetNextFolder( pos )->SetOnline();
 		}
-
-		LibraryDictionary.Invalidate();
 
 		return TRUE;
 	}

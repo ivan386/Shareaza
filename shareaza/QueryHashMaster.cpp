@@ -137,7 +137,7 @@ void CQueryHashMaster::Build()
 		return;
 
 	const CQueryHashTable* pLocalTable = LibraryDictionary.GetHashTable();
-	if ( ! pLocalTable )
+	if ( !pLocalTable )
 		return;
 
 	Clear();

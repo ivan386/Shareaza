@@ -606,8 +606,7 @@ bool CLibraryBuilder::HashFile(LPCTSTR szPath, HANDLE hFile)
 		( AdultFilter.IsChildPornography( pFile->GetSearchName() ) ||
 		  AdultFilter.IsChildPornography( pFile->GetMetadataWords() ) ) )
 	{
-		pFile->m_bVerify = TRI_FALSE;
-		pFile->SetShared( false );
+		pFile->m_bVerify = pFile->m_bShared = TRI_FALSE;
 	}
 
 	oLibraryLock.Unlock();
