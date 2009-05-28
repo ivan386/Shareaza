@@ -823,27 +823,7 @@ void CLibraryFileView::OnLibraryShared()
 	{
 		if ( CLibraryFile* pFile = Library.LookupFile( m_pSelection.GetNext( m_posSel ) ) )
 		{
-			// Don't share not verified files
-			if ( pFile->m_bVerify != TRI_FALSE )
-			{
-				bool bPrivate = false;
-				if ( pFile->m_pSchema != NULL &&
-					pFile->m_pSchema->CheckURI( CSchema::uriBitTorrent ) &&
-					pFile->m_pMetadata != NULL )
-				{
-					CString str = pFile->m_pMetadata->GetAttributeValue( L"privateflag", L"true" );
-					bPrivate = str == L"true";
-				}
-				bool bFolderShared = pFile->m_pFolder ? pFile->m_pFolder->IsShared() != TRI_UNKNOWN : true;
-				if ( bPrivate )
-					pFile->m_bShared = TRI_FALSE;
-				else if ( pFile->IsShared() )
-					pFile->m_bShared = bFolderShared ? TRI_FALSE : TRI_UNKNOWN;
-				else
-					pFile->m_bShared = bFolderShared ? TRI_UNKNOWN : TRI_TRUE;
-
-				pFile->m_nUpdateCookie++;
-			}
+			pFile->SetShared( ! pFile->IsShared() );
 		}
 	}
 

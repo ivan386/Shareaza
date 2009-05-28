@@ -26,6 +26,7 @@
 #include "SharedFolder.h"
 #include "Library.h"
 #include "LibraryBuilder.h"
+#include "LibraryDictionary.h"
 #include "LibraryFolders.h"
 #include "LibraryHistory.h"
 #include "HashDatabase.h"
@@ -170,32 +171,61 @@ CString CLibraryFile::GetSearchName() const
 //////////////////////////////////////////////////////////////////////
 // CLibraryFile shared check
 
-bool CLibraryFile::IsShared() const
+bool CLibraryFile::IsShared(bool bIgnoreOverride) const
 {
+	// Don't share offline files
 	if ( m_pFolder && m_pFolder->IsOffline() )
 		return false;
 
-	if ( m_pSchema && m_pSchema->CheckURI( CSchema::uriBitTorrent )
-		&& m_pMetadata )
-	{
-		CString str = m_pMetadata->GetAttributeValue( L"privateflag", L"true" );
-		return str != L"true" && m_bShared != TRI_FALSE &&
-			m_pFolder && m_pFolder->IsShared();
-	}
-
-	if ( m_bShared )
-	{
-		if ( m_bShared == TRI_TRUE )
-			return true;
-
-		if ( m_bShared == TRI_FALSE )
-			return false;
-	}
-
-	if ( m_pFolder && ! m_pFolder->IsShared() )
+	// Don't share private torrents
+	if ( m_pSchema != NULL &&
+		m_pSchema->CheckURI( CSchema::uriBitTorrent ) &&
+		m_pMetadata != NULL &&
+		m_pMetadata->GetAttributeValue( L"privateflag", L"true" ).CompareNoCase( L"true" ) == 0 )
 		return false;
 
-	return true;
+	// Use override shared flag of file
+	if ( m_bShared != TRI_UNKNOWN && ! bIgnoreOverride )
+		return ( m_bShared == TRI_TRUE );
+
+	// Ghost files by default shared
+	if ( ! m_pFolder )
+		return true;
+
+	// Use folder shared flag
+	return ( m_pFolder->IsShared() != FALSE );
+}
+
+void CLibraryFile::SetShared(bool bShared, bool bOverride)
+{
+	TRISTATE bNewShare = bOverride ? ( bShared ? TRI_TRUE : TRI_FALSE ) : TRI_UNKNOWN;
+
+	// Don't share not verified files
+	if ( m_bVerify == TRI_FALSE )
+		bNewShare = TRI_FALSE;
+
+	// Don't share private torrents
+	if ( m_pSchema != NULL &&
+		m_pSchema->CheckURI( CSchema::uriBitTorrent ) &&
+		m_pMetadata != NULL &&
+		m_pMetadata->GetAttributeValue( L"privateflag", L"true" ).CompareNoCase( L"true" ) == 0 )
+		bNewShare = TRI_FALSE;
+
+	bool bFolderShared = ! m_pFolder || m_pFolder->IsShared();
+
+	if ( bNewShare == TRI_UNKNOWN )
+		// Use folder default shared flag
+		bNewShare = bShared ?
+			( bFolderShared ? TRI_UNKNOWN : TRI_TRUE ) :
+			( bFolderShared ? TRI_FALSE : TRI_UNKNOWN );
+
+	if ( m_bShared != bNewShare )
+	{
+		m_bShared = bNewShare;
+		m_nUpdateCookie++;
+
+		LibraryDictionary.Invalidate();
+	}
 }
 
 //////////////////////////////////////////////////////////////////////
