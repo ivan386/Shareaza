@@ -24,6 +24,7 @@
 
 #include "LibraryDictionary.h"
 #include "SharedFile.h"
+#include "QueryHashMaster.h"
 #include "QueryHashTable.h"
 #include "QuerySearch.h"
 
@@ -74,37 +75,33 @@ void CLibraryDictionary::AddFile(const CLibraryFile& oFile)
 
 void CLibraryDictionary::RemoveFile(const CLibraryFile& oFile)
 {
-	const bool bCanUpload = oFile.IsShared();
-
-	ProcessFile( oFile, false, bCanUpload );
+	ProcessFile( oFile, false, oFile.IsShared() );
 
 	// Always invalidate the table when removing a hashed file
 	if ( oFile.IsHashed() )
-		m_bValid = false;
+		Invalidate();
 }
 
 //////////////////////////////////////////////////////////////////////
 // CLibraryDictionary process file
 
 void CLibraryDictionary::ProcessFile(
-	const CLibraryFile& oFile, const bool bAdd, const bool bCanUpload)
+	const CLibraryFile& oFile, bool bAdd, bool bCanUpload)
 {
 	ProcessPhrase( oFile, oFile.GetSearchName(), bAdd, bCanUpload );
-
-	if ( oFile.m_pMetadata && oFile.m_pSchema )
-	{
-		ProcessWord( oFile, oFile.m_pSchema->GetURI(), bAdd, bCanUpload );
-		ProcessPhrase( oFile, oFile.GetMetadataWords(), bAdd, bCanUpload );
-	}
+	ProcessPhrase( oFile, oFile.GetMetadataWords(), bAdd, bCanUpload );
 }
 
 //////////////////////////////////////////////////////////////////////
 // CLibraryDictionary phrase parser
 
 void CLibraryDictionary::ProcessPhrase(
-	const CLibraryFile& oFile, const CString& strPhrase, const bool bAdd,
-	const bool bCanUpload)
+	const CLibraryFile& oFile, const CString& strPhrase, bool bAdd,
+	bool bCanUpload)
 {
+	if ( strPhrase.IsEmpty() )
+		return;
+
 	CString strWord;
 	WORD boundary[ 2 ] = { C3_NOTAPPLICABLE, C3_NOTAPPLICABLE };
 	WORD nKanaType[ 2 ] = { C3_NOTAPPLICABLE, C3_NOTAPPLICABLE };
@@ -159,8 +156,8 @@ void CLibraryDictionary::ProcessPhrase(
 // CLibraryDictionary keyword maker
 
 void CLibraryDictionary::MakeKeywords(
-	const CLibraryFile& oFile, const CString& strWord, const WORD nWordType,
-	const bool bAdd, const bool bCanUpload)
+	const CLibraryFile& oFile, const CString& strWord, WORD nWordType,
+	bool bAdd, bool bCanUpload)
 {
 	const int nLength = strWord.GetLength();
 
@@ -260,12 +257,12 @@ void CLibraryDictionary::MakeKeywords(
 		if ( nLength < 4 )
 			return;
 
-		ProcessWord( oFile, strWord.Left( nLength - 1 ), bAdd, bCanUpload );
+		ProcessWord( oFile, strWord.Left( nLength - 1 ), bAdd, bCanUpload, true );
 
 		if ( nLength < 5 )
 			return;
 
-		ProcessWord( oFile, strWord.Left( nLength - 2 ), bAdd, bCanUpload );
+		ProcessWord( oFile, strWord.Left( nLength - 2 ), bAdd, bCanUpload, true );
 	}
 }
 
@@ -273,47 +270,47 @@ void CLibraryDictionary::MakeKeywords(
 // CLibraryDictionary word add and remove
 
 void CLibraryDictionary::ProcessWord(
-	const CLibraryFile& oFile, const CString& strWord, const bool bAdd,
-	const bool bCanUpload)
+	const CLibraryFile& oFile, const CString& strWord, bool bAdd,
+	bool bCanUpload, bool bPartial)
 {
-	FilePtrList* pFilePtrList = NULL;
-
-	if ( m_oWordMap.Lookup( strWord, pFilePtrList ) )
+	CWord oWord;
+	if ( m_oWordMap.Lookup( strWord, oWord ) )
 	{
 		if ( bAdd )
 		{
-			if ( pFilePtrList->GetTail() != &oFile )
+			if ( oWord.m_pList->GetTail() != &oFile )
 			{
-				pFilePtrList->AddTail( &oFile );
-				if ( bCanUpload && m_bValid && !m_pTable->CheckString( strWord ) )
+				oWord.m_pList->AddTail( &oFile );
+				if ( bCanUpload && m_bValid && ! bPartial && ! m_pTable->CheckString( strWord ) )
 					m_pTable->AddString( strWord );
 			}
 		}
 		else
 		{
-			POSITION pos = pFilePtrList->Find( &oFile );
+			POSITION pos = oWord.m_pList->Find( &oFile );
 			if ( pos )
 			{
-				pFilePtrList->RemoveAt( pos );
+				oWord.m_pList->RemoveAt( pos );
 
-				if ( pFilePtrList->IsEmpty() )
+				if ( oWord.m_pList->IsEmpty() )
 				{
 					m_oWordMap.RemoveKey( strWord );
-					delete pFilePtrList;
+					delete oWord.m_pList;
 
 					if ( bCanUpload )
-						m_bValid = false;
+						Invalidate();
 				}
 			}
 		}
 	}
 	else if ( bAdd )
 	{
-		pFilePtrList = new FilePtrList;
-		pFilePtrList->AddTail( &oFile );
-		m_oWordMap.SetAt( strWord, pFilePtrList );
+		oWord.m_pList = new CFilePtrList;
+		oWord.m_bPartial = bPartial;
+		oWord.m_pList->AddTail( &oFile );
+		m_oWordMap.SetAt( strWord, oWord );
 
-		if ( bCanUpload && m_bValid )
+		if ( bCanUpload && m_bValid && ! bPartial )
 			m_pTable->AddString( strWord );
 	}
 }
@@ -363,15 +360,15 @@ void CLibraryDictionary::BuildHashTable()
 	for ( POSITION pos = m_oWordMap.GetStartPosition() ; pos ; )
 	{
 		CString strWord;
-		FilePtrList* pFilePtrList = NULL;
-		m_oWordMap.GetNextAssoc( pos, strWord, pFilePtrList );
+		CWord oWord;
+		m_oWordMap.GetNextAssoc( pos, strWord, oWord );
 
-		for ( POSITION pos = pFilePtrList->GetHeadPosition() ; pos ; )
+		for ( POSITION pos = oWord.m_pList->GetHeadPosition() ; pos ; )
 		{
-			const CLibraryFile& oFile = *pFilePtrList->GetNext( pos );
+			const CLibraryFile& oFile = *oWord.m_pList->GetNext( pos );
 
 			// Check if the file can be uploaded
-			if ( oFile.IsShared() )
+			if ( oFile.IsShared() && ! oWord.m_bPartial )
 			{
 				// Add the keyword to the table
 				m_pTable->AddString( strWord );
@@ -398,12 +395,12 @@ void CLibraryDictionary::BuildHashTable()
 //
 // Force hash table to re-build.
 
-void CLibraryDictionary::RebuildHashTable()
+void CLibraryDictionary::Invalidate()
 {
 	m_bValid = false;
-	BuildHashTable();
-}
 
+	QueryHashMaster.Invalidate();
+}
 
 //////////////////////////////////////////////////////////////////////
 // CLibraryDictionary retrieve hash table
@@ -423,12 +420,10 @@ void CLibraryDictionary::Clear()
 	for ( POSITION pos = m_oWordMap.GetStartPosition() ; pos ; )
 	{
 		CString strWord;
-		FilePtrList* pFilePtrList = NULL;
-
-		m_oWordMap.GetNextAssoc( pos, strWord, pFilePtrList );
-		delete pFilePtrList;
+		CWord oWord;
+		m_oWordMap.GetNextAssoc( pos, strWord, oWord );
+		delete oWord.m_pList;
 	}
-
 	m_oWordMap.RemoveAll();
 
 	if ( m_pTable )
@@ -441,7 +436,7 @@ void CLibraryDictionary::Clear()
 //////////////////////////////////////////////////////////////////////
 // CLibraryDictionary search
 
-FilePtrList* CLibraryDictionary::Search(
+CFilePtrList* CLibraryDictionary::Search(
 	const CQuerySearch& oSearch, const int nMaximum, const bool bLocal,
 	const bool bAvailableOnly)
 {
@@ -467,13 +462,12 @@ FilePtrList* CLibraryDictionary::Search(
 			continue;
 
 		CString strWord( pWordEntry->first, static_cast< int >( pWordEntry->second ) );
-		FilePtrList* pFilePtrList = NULL;
-
-		if ( m_oWordMap.Lookup( strWord, pFilePtrList ) )
+		CWord oWord;
+		if ( m_oWordMap.Lookup( strWord, oWord ) )
 		{
-			for ( POSITION pos = pFilePtrList->GetHeadPosition() ; pos ; )
+			for ( POSITION pos = oWord.m_pList->GetHeadPosition() ; pos ; )
 			{
-				const CLibraryFile* pFile = pFilePtrList->GetNext( pos );
+				const CLibraryFile* pFile = oWord.m_pList->GetNext( pos );
 
 				if ( bAvailableOnly && pFile->IsGhost() )
 					continue;
@@ -499,7 +493,7 @@ FilePtrList* CLibraryDictionary::Search(
 	size_t nLowerBound = ( oSearch.tableSize() >= 3 )
 		? ( oSearch.tableSize() * 2 / 3 ) : oSearch.tableSize();
 
-	FilePtrList* pHits = NULL;
+	CFilePtrList* pHits = NULL;
 	for ( ; pHit ; pHit = pHit->m_pNextHit )
 	{
 		ASSERT( pHit->m_nSearchCookie == m_nSearchCookie );
@@ -513,7 +507,7 @@ FilePtrList* CLibraryDictionary::Search(
 			pHit->m_oBTH, pHit->m_oMD5 ) )
 		{
 			if ( !pHits )
-				pHits = new FilePtrList;
+				pHits = new CFilePtrList;
 
 			pHits->AddTail( pHit );
 
