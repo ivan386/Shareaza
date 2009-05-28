@@ -2150,6 +2150,7 @@ void CDownloadsCtrl::OnBeginDrag(CPoint ptAction)
 
 CImageList* CDownloadsCtrl::CreateDragImage(CList< CDownload* >* pSel, const CPoint& ptMouse)
 {
+	CSingleLock pLock( &Transfers.m_pSection, TRUE );
 	CRect rcClient, rcOne, rcAll( 32000, 32000, -32000, -32000 );
 	
 	GetClientRect( &rcClient );
@@ -2230,6 +2231,8 @@ CImageList* CDownloadsCtrl::CreateDragImage(CList< CDownload* >* pSel, const CPo
 	pAll->Add( &bmDrag, DRAG_COLOR_KEY ); 
 	
 	bmDrag.DeleteObject();
+
+	pLock.Unlock();
 	
 	pAll->BeginDrag( 0, ptMouse - rcAll.TopLeft() );
 	
