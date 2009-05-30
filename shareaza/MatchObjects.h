@@ -1,7 +1,7 @@
 //
 // MatchObjects.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -74,13 +74,13 @@ public:
 	CSchema*		m_pSchema;
 	BOOL			m_bNew;
 	CResultFilters*	m_pResultFilters;
-	CMatchFile**	m_pFiles;
-	DWORD			m_nFiles;
-	DWORD			m_nItems;
-	DWORD			m_nFilteredFiles;
-	DWORD			m_nFilteredHits;
-	DWORD			m_nGnutellaHits;
-	DWORD			m_nED2KHits;
+	CMatchFile**	m_pFiles;				// File list
+	DWORD			m_nFiles;				// File list size
+	DWORD			m_nItems;				// Total number of visible items (filtered files + expanded hits)
+	DWORD			m_nFilteredFiles;		// Total number of filtered files
+	DWORD			m_nFilteredHits;		// Total number of filtered files hits
+	DWORD			m_nGnutellaHits;		// Total number of filtered files hits got by G1/G2
+	DWORD			m_nED2KHits;			// Total number of filtered files hits got by ED2K
 	BOOL			m_bUpdated;
 	DWORD			m_nUpdateMin;
 	DWORD			m_nUpdateMax;
@@ -111,6 +111,7 @@ protected:
 	};
 	
 public:
+	void		UpdateStats();
 	void		AddHits(const CQueryHit* pHits, CQuerySearch* pFilter = NULL);
 	DWORD		FileToItem(CMatchFile* pFile);
 	void		Clear();
@@ -207,18 +208,15 @@ public:
 	
 	inline DWORD GetItemCount()
 	{
-		if ( ( m_pList->m_bFilterDRM && m_bDRM ) ||
-			( m_pList->m_bFilterSuspicious && m_bSuspicious ) ||
-			( m_nSources < m_pList->m_nFilterSources ) ||
-			( m_pBest == NULL ) ||
-			( m_pList->m_bFilterLocal && GetLibraryStatus() == TRI_FALSE ) ) return 0;
-
-		if ( m_nFiltered == 1 || ! m_bExpanded )
+		DWORD nFiltered = GetFilteredCount();
+		if ( nFiltered == 0 )
+			return 0;
+		else if ( nFiltered == 1 || ! m_bExpanded )
 			return 1;
 		else
-			return m_nFiltered + 1;
+			return nFiltered + 1;
 	}
-	
+
 //	int			GetRating() const;
 	DWORD		Filter();
 	void		Added(CQueryHit* pHit);

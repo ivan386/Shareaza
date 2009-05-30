@@ -1,7 +1,7 @@
 //
 // MatchObjects.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -105,6 +105,7 @@ CMatchList::CMatchList(CBaseMatchWnd* pParent) : m_pParent( pParent )
 
 	m_pFiles			= NULL;
 	m_nFiles			= 0;
+
 	m_nItems			= 0;
 	m_nFilteredFiles	= 0;
 	m_nFilteredHits		= 0;
@@ -153,6 +154,43 @@ CMatchList::~CMatchList()
 	delete [] m_pFiles;
 
 	delete m_pResultFilters;
+}
+
+//////////////////////////////////////////////////////////////////////
+// CMatchList update stats
+
+void CMatchList::UpdateStats()
+{
+	m_nItems = 0;
+	m_nFilteredFiles = 0;
+	m_nFilteredHits = 0;
+	m_nGnutellaHits = 0;
+	m_nED2KHits = 0;
+
+	for ( DWORD i = 0 ; i < m_nFiles ; ++i )
+	{
+		if ( DWORD nItemCount = m_pFiles[ i ]->GetItemCount() )
+		{
+			m_nItems += nItemCount;
+			m_nFilteredFiles ++;
+			m_nFilteredHits += m_pFiles[ i ]->m_nFiltered;
+			for ( CQueryHit* pHit = m_pFiles[ i ]->GetHits(); pHit; pHit = pHit->m_pNext )
+			{
+				switch ( pHit->m_nProtocol )
+				{
+				case PROTOCOL_G1:
+				case PROTOCOL_G2:
+					m_nGnutellaHits ++;
+					break;
+				case PROTOCOL_ED2K:
+					m_nED2KHits ++;
+					break;
+				default:
+					;
+				}
+			}
+		}
+	}
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -269,8 +307,7 @@ void CMatchList::AddHits(const CQueryHit* pHits, CQuerySearch* pFilter)
 			pFile = FindFileAndAddHit( pHit, fSize, &Stats );
 		}
 
-		bool bExistingFile = ( pFile != NULL );
-		if ( bExistingFile )
+		if ( pFile )
 		{
 			// New hit for the existing file
 			pMap = m_pFiles;
@@ -326,26 +363,6 @@ void CMatchList::AddHits(const CQueryHit* pHits, CQuerySearch* pFilter)
 				UpdateRange( m_nFiles );
 				m_pFiles[ m_nFiles++ ] = pFile;
 			}
-
-			if ( DWORD nItemCount = pFile->GetItemCount() )
-			{
-				m_nItems += nItemCount;
-				m_nFilteredFiles ++;
-				m_nFilteredHits += pFile->m_nFiltered;
-				switch ( pHit->m_nProtocol )
-				{
-				case PROTOCOL_G1:
-				case PROTOCOL_G2:
-					m_nGnutellaHits += pFile->m_nFiltered;
-					break;
-				case PROTOCOL_ED2K:
-					m_nED2KHits += pFile->m_nFiltered;
-					break;
-				default:
-					ASSERT(FALSE);
-					break;
-				}
-			}
 		}
 
 		if ( ! Stats.bHadSHA1 && pFile->m_oSHA1 )
@@ -379,6 +396,8 @@ void CMatchList::AddHits(const CQueryHit* pHits, CQuerySearch* pFilter)
 			*pMap = pFile;
 		}
 	}
+
+	UpdateStats();
 }
 
 CMatchFile* CMatchList::FindFileAndAddHit(CQueryHit* pHit, const findType nFindFlag, FILESTATS* Stats)
@@ -441,9 +460,6 @@ CMatchFile* CMatchList::FindFileAndAddHit(CQueryHit* pHit, const findType nFindF
 			bool bHadBTH = pSeek->m_oBTH;
 			bool bHadMD5 = pSeek->m_oMD5;
 
-			if (pSeek->m_bExpanded)
-				m_nItems -= pSeek->GetItemCount();
-
 			if ( pSeek->Add( pHit, ( nFindFlag != fSize ) ) )
 			{
 				Stats->bHadSHA1	 |= bHadSHA1;
@@ -451,16 +467,11 @@ CMatchFile* CMatchList::FindFileAndAddHit(CQueryHit* pHit, const findType nFindF
 				Stats->bHadED2K	 |= bHadED2K;
 				Stats->bHadBTH	 |= bHadBTH;
 				Stats->bHadMD5	 |= bHadMD5;
-				if (pSeek->m_bExpanded)
-					m_nItems += pSeek->GetItemCount();
 
 				return pSeek;
 			}
 			//else
 				// TODO: Equal hashes for different files or bad hit
-
-			if (pSeek->m_bExpanded)
-				m_nItems += pSeek->GetItemCount();
 		}
 
 		if ( nFindFlag == fSize )
@@ -569,12 +580,8 @@ void CMatchList::Clear()
 	}
 
 	m_nFiles			= 0;
-	m_nItems			= 0;
-	m_nFilteredFiles	= 0;
-	m_nFilteredHits		= 0;
-	m_nGnutellaHits		= 0;
-	m_nED2KHits			= 0;
 
+	UpdateStats();
 	UpdateRange();
 }
 
@@ -861,25 +868,16 @@ void CMatchList::Filter()
 		}
 	}
 
-	CMatchFile** pLoop = m_pFiles;
-
-	m_nItems			= 0;
-	m_nFilteredFiles	= 0;
-	m_nFilteredHits		= 0;
-
-	for ( DWORD nCount = m_nFiles, nItems = 0 ; nCount ; nCount--, pLoop++ )
+	for ( DWORD i = 0 ; i < m_nFiles ; ++i )
 	{
-		if ( ( nItems = (*pLoop)->Filter() ) != 0 )
+		if ( ! m_pFiles[ i ]->Filter() )
 		{
-			m_nItems += nItems;
-			m_nFilteredFiles ++;
-			m_nFilteredHits += (*pLoop)->m_nFiltered;
-		}
-		else
-		{
-			if ( (*pLoop)->m_bSelected ) Select( *pLoop, NULL, FALSE );
+			if ( m_pFiles[ i ]->m_bSelected )
+				Select( m_pFiles[ i ], NULL, FALSE );
 		}
 	}
+
+	UpdateStats();
 
 	SetSortColumn( m_nSortColumn, m_bSortDir < 0 );
 	UpdateRange();
@@ -1249,27 +1247,6 @@ void CMatchList::Serialize(CArchive& ar)
 			CMatchFile* pFile = new CMatchFile( this );
 			m_pFiles[ nFile ] = pFile;
 			pFile->Serialize( ar, nVersion );
-
-			for ( CQueryHit* pHit = pFile->GetHits(); pHit; pHit = pHit->m_pNext )
-			{
-				switch ( pHit->m_nProtocol )
-				{
-				case PROTOCOL_G1:
-				case PROTOCOL_G2:
-					m_nGnutellaHits++;
-					break;
-				case PROTOCOL_ED2K:
-					m_nED2KHits++;
-					break;
-				case PROTOCOL_BT:
-				case PROTOCOL_FTP:
-				case PROTOCOL_HTTP:
-				case PROTOCOL_NULL:
-				case PROTOCOL_ANY:
-				default:
-					;
-				}
-			}
 
 			CMatchFile** pMap = m_pSizeMap + (DWORD)( pFile->m_nSize & 0xFF );
 			pFile->m_pNextSize = *pMap;
@@ -1752,19 +1729,7 @@ DWORD CMatchFile::Filter()
 		}
 	}
 
-	if ( m_pBest == NULL ) return 0;	// If we filtered all hits, don't try to display
-	if ( m_pList->m_bFilterLocal && GetLibraryStatus() == TRI_FALSE ) return 0;
-	if ( m_pList->m_bFilterDRM && m_bDRM ) return 0;
-	if ( m_pList->m_bFilterSuspicious && m_bSuspicious ) return 0;
-
-	if ( m_nSources < m_pList->m_nFilterSources )
-		return 0;
-	// if ( m_nFiltered < m_pList->m_nFilterSources ) return 0;
-
-	if ( m_nFiltered == 1 || ! m_bExpanded )
-		return 1;
-	else
-		return m_nFiltered + 1;
+	return GetItemCount();
 }
 
 //////////////////////////////////////////////////////////////////////
