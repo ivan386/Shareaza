@@ -1,7 +1,7 @@
 //
 // GProfile.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -32,6 +32,8 @@ static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
 #endif
 
+#define WORDLIM(x)  (WORD)( ( (x) < 0 ) ? 0 : ( ( (x) > 65535 ) ? 65535 : (x) ) )
+
 LPCTSTR CGProfile::xmlns = _T("http://www.shareaza.com/schemas/GProfile.xsd");
 
 BEGIN_INTERFACE_MAP(CGProfile, CComObject)
@@ -44,14 +46,15 @@ CGProfile	MyProfile;
 // CGProfile construction
 
 CGProfile::CGProfile() :
-	m_pXML( NULL )
+	m_pXML( new CXMLElement( NULL, _T("gProfile") ) )
 {
-	Create();
+	ASSERT( m_pXML );
+	VERIFY( m_pXML->AddAttribute( _T("xmlns"), xmlns ) );
 }
 
 CGProfile::~CGProfile()
 {
-	Clear();
+	delete m_pXML;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -59,26 +62,15 @@ CGProfile::~CGProfile()
 
 BOOL CGProfile::IsValid() const
 {
-	if ( this == NULL ) return FALSE;
-	if ( m_pXML == NULL ) return FALSE;
-
 	// The whole identity and location tags are deleted if no attributes are present
-	CXMLElement* pIdentity = m_pXML->GetElementByName( _T("identity") );
-	CXMLElement* pLocation = m_pXML->GetElementByName( _T("location") );
-	return pIdentity != NULL || pLocation != NULL;
+	return ( this && m_pXML && (
+		m_pXML->GetElementByName( _T("identity") ) ||
+		m_pXML->GetElementByName( _T("location") ) ) );
 }
 
 CXMLElement* CGProfile::GetXML(LPCTSTR pszElement, BOOL bCreate)
 {
-	if ( m_pXML == NULL )
-	{
-		if ( ! bCreate ) return NULL;
-		Create();
-	}
-
-	if ( pszElement == NULL ) return m_pXML;
-
-	return m_pXML->GetElementByName( pszElement, bCreate );
+	return pszElement ? m_pXML->GetElementByName( pszElement, bCreate ) : m_pXML;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -86,90 +78,75 @@ CXMLElement* CGProfile::GetXML(LPCTSTR pszElement, BOOL bCreate)
 
 void CGProfile::Create()
 {
-	Clear();
-
+	// Generate new Gnutella GUID
 	Hashes::Guid tmp;
-	Hashes::BtGuid tmp_bt;
-
 	VERIFY( SUCCEEDED( CoCreateGuid( reinterpret_cast< GUID* > ( &tmp[0] ) ) ) );
-
-	// Convert Gnutella GUID (128 bits) to BitTorrent GUID (160 bits)
-	CopyMemory( &tmp_bt[0], &tmp[0], tmp.byteCount );
-	for ( int nByte = tmp.byteCount ; nByte < tmp_bt.byteCount ; nByte++ )
-		tmp_bt[ nByte ] = uchar( rand() & 0xff );
-
+	
 	VERIFY( tmp.validate() );
-	VERIFY( tmp_bt.validate() );
-
 	oGUID = tmp;
-	oGUIDBT = tmp_bt;
 
-	m_pXML = new CXMLElement( NULL, _T("gProfile") );
-	ASSERT( m_pXML );
-	VERIFY( m_pXML->AddAttribute( _T("xmlns"), xmlns ) );
-
-	CXMLElement* pGnutella = m_pXML->AddElement( _T("gnutella") );
+	CXMLElement* pGnutella = m_pXML->GetElementByName( _T("gnutella"), TRUE );
 	ASSERT( pGnutella );
 	VERIFY( pGnutella->AddAttribute( _T("guid"), tmp.toString() ) ) ;
 
-	CXMLElement* pBitTorrent = m_pXML->AddElement( _T("bittorrent") );
-	ASSERT( pBitTorrent );
-	VERIFY( pBitTorrent->AddAttribute( _T("guid"), tmp_bt.toString() ) );
+	CreateBT();
 }
 
-void CGProfile::Clear()
+void CGProfile::CreateBT()
 {
-	if ( m_pXML ) delete m_pXML;
-	m_pXML = NULL;
+	// Convert Gnutella GUID (128 bits) to BitTorrent GUID (160 bits)
+	Hashes::BtGuid tmp_bt;
+	CopyMemory( &tmp_bt[0], &((Hashes::Guid)oGUID)[0], ((Hashes::Guid)oGUID).byteCount );
+	for ( int nByte = ((Hashes::Guid)oGUID).byteCount ; nByte < tmp_bt.byteCount ; nByte++ )
+		tmp_bt[ nByte ] = GetRandomNum( 0ui8, _UI8_MAX );
+	
+	VERIFY( tmp_bt.validate() );
+	oGUIDBT = tmp_bt;
+
+	CXMLElement* pBitTorrent = m_pXML->GetElementByName( _T("bittorrent"), TRUE );
+	ASSERT( pBitTorrent );
+	VERIFY( pBitTorrent->AddAttribute( _T("guid"), tmp_bt.toString() ) );
 }
 
 //////////////////////////////////////////////////////////////////////
 // CGProfile loading and saving
 
-BOOL CGProfile::Load(LPCTSTR pszFile)
+BOOL CGProfile::Load()
 {
-	CString strFile;
-
-	if ( pszFile != NULL )
-		strFile = pszFile;
-	else
-		strFile = Settings.General.UserPath + _T("\\Data\\Profile.xml");
-
-	CXMLElement* pXML = CXMLElement::FromFile( strFile, TRUE );
-
+	const CXMLElement* pXML = CXMLElement::FromFile(
+		Settings.General.UserPath + _T("\\Data\\Profile.xml"), TRUE );
 	if ( pXML == NULL )
 	{
-		if ( pszFile == NULL ) Create();
+		Create();
+
 		return FALSE;
 	}
 
-	if ( FromXML( pXML ) ) return TRUE;
-	delete pXML;
+	if ( ! FromXML( pXML ) )
+	{
+		delete pXML;
+		return FALSE;
+	}
+		
+	if ( ! (Hashes::BtGuid)oGUIDBT )
+	{
+		// Upgrade
+		CreateBT();
+		Save();
+	}
 
-	return FALSE;
+	return TRUE;
 }
 
-BOOL CGProfile::Save(LPCTSTR pszFile)
+BOOL CGProfile::Save()
 {
-	CString strXML;
 	CFile pFile;
+	if ( ! pFile.Open( Settings.General.UserPath + _T("\\Data\\Profile.xml"),
+		CFile::modeWrite | CFile::modeCreate ) )
+		return FALSE;
 
-	if ( pszFile != NULL )
-		strXML = pszFile;
-	else
-		strXML = Settings.General.UserPath + _T("\\Data\\Profile.xml");
-
-	if ( ! pFile.Open( strXML, CFile::modeWrite|CFile::modeCreate ) ) return FALSE;
-
-	if ( m_pXML != NULL )
-		strXML = m_pXML->ToString( TRUE, TRUE );
-	else
-		strXML.Empty();
-
-	CStringA strUTF8 = UTF8Encode( strXML );
+	CStringA strUTF8 = UTF8Encode( m_pXML->ToString( TRUE, TRUE ) );
 	pFile.Write( (LPCSTR)strUTF8, strUTF8.GetLength() );
-
-	pFile.Close();
 
 	return TRUE;
 }
@@ -177,46 +154,36 @@ BOOL CGProfile::Save(LPCTSTR pszFile)
 //////////////////////////////////////////////////////////////////////
 // CGProfile XML assignment
 
-BOOL CGProfile::FromXML(CXMLElement* pXML)
+BOOL CGProfile::FromXML(const CXMLElement* pXML)
 {
-	Clear();
+	// Checking XML for validness
+	if ( pXML == NULL ||
+		 pXML->GetAttributeValue( _T("xmlns") ).CompareNoCase( xmlns ) ||
+		 pXML->IsNamed( _T("gProfile") ) == FALSE )
+		 return FALSE;
 
-	if ( pXML == NULL ) return FALSE;
-	if ( pXML->GetAttributeValue( _T("xmlns") ).CompareNoCase( xmlns ) ) return FALSE;
-	if ( pXML->IsNamed( _T("gProfile") ) == FALSE ) return FALSE;
-
-	// Loading Gnutella GUID
-	CXMLElement* pGnutella = pXML->GetElementByName( _T("gnutella") );
-	if ( pGnutella == NULL ) return FALSE;
-
-	CString strGUID = pGnutella->GetAttributeValue( _T("guid") );
+	// Loading Gnutella GUID (required)
+	const CXMLElement* pGnutella = pXML->GetElementByName( _T("gnutella") );
+	if ( pGnutella == NULL )
+		return FALSE;
 
 	Hashes::Guid tmp;
-	if ( ! tmp.fromString( strGUID ) ) return FALSE;
+	if ( ! tmp.fromString( pGnutella->GetAttributeValue( _T("guid") ) ) )
+		return FALSE;
+
 	oGUID = tmp;
 
-	// Loading BitTorrent GUID
-	Hashes::BtGuid tmp_bt;
-	CXMLElement* pBitTorrent = pXML->GetElementByName( _T("bittorrent") );
-	if ( pBitTorrent )
+	// Loading BitTorrent GUID (optional)
+	if ( const CXMLElement* pBitTorrent = pXML->GetElementByName( _T("bittorrent") ) )
 	{
-		CString strGUID = pBitTorrent->GetAttributeValue( _T("guid") );
-		if ( ! tmp_bt.fromString( strGUID )) return FALSE;
+		Hashes::BtGuid tmp_bt;
+		if ( tmp_bt.fromString( pBitTorrent->GetAttributeValue( _T("guid") ) ) )
+			oGUIDBT = tmp_bt;
 	}
-	else
-	{
-		// Convert Gnutella GUID (128 bits) to BitTorrent GUID (160 bits)
-		CopyMemory( &tmp_bt[0], &tmp[0], tmp.byteCount );
-		for ( int nByte = tmp.byteCount ; nByte < tmp_bt.byteCount ; nByte++ )
-			tmp_bt[ nByte ] = uchar( rand() & 0xff );
-		VERIFY( tmp_bt.validate() );
 
-		pBitTorrent = pXML->AddElement( _T("bittorrent") );
-		pBitTorrent->AddAttribute( _T("guid"), tmp_bt.toString() );
-	}
-	oGUIDBT = tmp_bt;
-
-	m_pXML = pXML;
+	// Replace XML
+	delete m_pXML;
+	m_pXML = const_cast< CXMLElement* >( pXML );
 
 	return TRUE;
 }
@@ -226,126 +193,116 @@ BOOL CGProfile::FromXML(CXMLElement* pXML)
 
 CString CGProfile::GetNick() const
 {
-	CString str;
-	if ( m_pXML == NULL ) return str;
-	CXMLElement* pIdentity = m_pXML->GetElementByName( _T("identity") );
-	if ( pIdentity == NULL ) return str;
-	CXMLElement* pHandle = pIdentity->GetElementByName( _T("handle") );
-	if ( pHandle == NULL ) return str;
-	str = pHandle->GetAttributeValue( _T("primary") );
-	return str;
+	if ( const CXMLElement* pIdentity = m_pXML->GetElementByName( _T("identity") ) )
+	{
+		if ( const CXMLElement* pHandle = pIdentity->GetElementByName( _T("handle") ) )
+		{
+			return pHandle->GetAttributeValue( _T("primary") );
+		}
+	}
+	return CString();
 }
 
 CString CGProfile::GetLocation() const
 {
-	CString str;
-	if ( m_pXML == NULL ) return str;
-	CXMLElement* pLocation = m_pXML->GetElementByName( _T("location") );
-	if ( pLocation == NULL ) return str;
-	CXMLElement* pPolitical = pLocation->GetElementByName( _T("political") );
-	if ( pPolitical == NULL ) return str;
-
-	CString strCity = pPolitical->GetAttributeValue( _T("city") );
-	CString strState = pPolitical->GetAttributeValue( _T("state") );
-	CString strCountry = pPolitical->GetAttributeValue( _T("country") );
-
-	str = strCity;
-	if ( strState.GetLength() )
+	if ( const CXMLElement* pLocation = m_pXML->GetElementByName( _T("location") ) )
 	{
-		if ( str.GetLength() ) str += _T(", ");
-		str += strState;
-	}
-	if ( strCountry.GetLength() )
-	{
-		if ( str.GetLength() ) str += _T(", ");
-		str += strCountry;
-	}
+		if ( const CXMLElement* pPolitical = pLocation->GetElementByName( _T("political") ) )
+		{
+			CString strCity = pPolitical->GetAttributeValue( _T("city") );
+			CString strState = pPolitical->GetAttributeValue( _T("state") );
+			CString strCountry = pPolitical->GetAttributeValue( _T("country") );
 
-	return str;
+			CString str = strCity;
+			if ( strState.GetLength() )
+			{
+				if ( str.GetLength() ) str += _T(", ");
+				str += strState;
+			}
+			if ( strCountry.GetLength() )
+			{
+				if ( str.GetLength() ) str += _T(", ");
+				str += strCountry;
+			}
+
+			return str;
+		}
+	}
+	return CString();
 }
 
 CString CGProfile::GetContact(LPCTSTR pszType) const
 {
-	CString str;
-
-	if ( m_pXML == NULL ) return str;
-	CXMLElement* pContacts = m_pXML->GetElementByName( _T("contacts") );
-	if ( pContacts == NULL ) return str;
-
-	for ( POSITION pos = pContacts->GetElementIterator() ; pos ; )
+	if ( const CXMLElement* pContacts = m_pXML->GetElementByName( _T("contacts") ) )
 	{
-		CXMLElement* pGroup = pContacts->GetNextElement( pos );
-
-		if ( pGroup->IsNamed( _T("group") ) &&
-			 pGroup->GetAttributeValue( _T("class") ).CompareNoCase( pszType ) == 0 )
+		for ( POSITION pos = pContacts->GetElementIterator() ; pos ; )
 		{
-			if ( CXMLElement* pAddress = pGroup->GetElementByName( _T("address") ) )
+			const CXMLElement* pGroup = pContacts->GetNextElement( pos );
+
+			if ( pGroup->IsNamed( _T("group") ) &&
+				 pGroup->GetAttributeValue( _T("class") ).CompareNoCase( pszType ) == 0 )
 			{
-				str = pAddress->GetAttributeValue( _T("content") );
-				break;
+				if ( const CXMLElement* pAddress = pGroup->GetElementByName( _T("address") ) )
+				{
+					return pAddress->GetAttributeValue( _T("content") );
+				}
 			}
 		}
 	}
-
-	return str;
+	return CString();
 }
 
 DWORD CGProfile::GetPackedGPS() const
 {
-	if ( m_pXML == NULL ) return 0;
-	CXMLElement* pLocation = m_pXML->GetElementByName( _T("location") );
-	if ( pLocation == NULL ) return 0;
-	CXMLElement* pCoordinates = pLocation->GetElementByName( _T("coordinates") );
-	if ( pCoordinates == NULL ) return 0;
-
-	float nLatitude = 0, nLongitude = 0;
-	_stscanf( pCoordinates->GetAttributeValue( _T("latitude") ), _T("%f"), &nLatitude );
-	_stscanf( pCoordinates->GetAttributeValue( _T("longitude") ), _T("%f"), &nLongitude );
-	if ( nLatitude == 0 || nLongitude == 0 ) return 0;
-
-#define WORDLIM(x)  (WORD)( (x) < 0 ? 0 : ( (x) > 65535 ? 65535 : (x) ) )
-	WORD nLat = WORDLIM( ( nLatitude + 90.0f )   * 65535.0f / 180.0f );
-	WORD nLon = WORDLIM( ( nLongitude + 180.0f ) * 65535.0f / 360.0f );
-#undef WORDLIM
-
-	return (DWORD)nLon + ( (DWORD)nLat << 16 );
+	if ( const CXMLElement* pLocation = m_pXML->GetElementByName( _T("location") ) )
+	{
+		if ( const CXMLElement* pCoordinates = pLocation->GetElementByName( _T("coordinates") ) )
+		{
+			float nLatitude = 0, nLongitude = 0;
+			if ( _stscanf( pCoordinates->GetAttributeValue( _T("latitude") ) , _T("%f"), &nLatitude  ) == 1 &&
+				 _stscanf( pCoordinates->GetAttributeValue( _T("longitude") ), _T("%f"), &nLongitude ) == 1 )
+			{
+				return ( (DWORD)WORDLIM( ( nLatitude  + 90.0f )  * 65535.0f / 180.0f ) << 16 ) +
+						 (DWORD)WORDLIM( ( nLongitude + 180.0f ) * 65535.0f / 360.0f );
+			}
+		}
+	}
+	return 0;
 }
 
 //////////////////////////////////////////////////////////////////////
 // CGProfile create avatar packet
 
-CG2Packet* CGProfile::CreateAvatar()
+CG2Packet* CGProfile::CreateAvatar() const
 {
-	if ( m_pXML == NULL ) return NULL;
+	const CXMLElement* pAvatar = m_pXML->GetElementByName( _T("avatar") );
+	if ( pAvatar == NULL )
+		return NULL;
 
-	CXMLElement* pAvatar = m_pXML->GetElementByName( _T("avatar") );
-	if ( pAvatar == NULL ) return NULL;
 	CString strPath = pAvatar->GetAttributeValue( _T("path") );
-	if ( strPath.IsEmpty() ) return NULL;
+	if ( strPath.IsEmpty() )
+		return NULL;
 
 	CFile pFile;
-	if ( ! pFile.Open( strPath, CFile::modeRead ) ) return NULL;
+	if ( ! pFile.Open( strPath, CFile::modeRead ) )
+		return NULL;
 
 	int nPos = strPath.ReverseFind( '\\' );
-	if ( nPos >= 0 ) strPath = strPath.Mid( nPos + 1 );
+	if ( nPos >= 0 )
+		strPath = strPath.Mid( nPos + 1 );
 
 	CG2Packet* pPacket = CG2Packet::New( G2_PACKET_PROFILE_AVATAR );
+	if ( ! pPacket )
+		return NULL;
 
 	pPacket->WritePacket( G2_PACKET_NAME, pPacket->GetStringLen( strPath ) );
 	pPacket->WriteString( strPath, FALSE );
 
 	pPacket->WritePacket( G2_PACKET_BODY, (DWORD)pFile.GetLength() );
-	LPBYTE pBody = pPacket->WriteGetPointer( (DWORD)pFile.GetLength() );
-
-	if ( pBody == NULL )
-	{
-		theApp.Message( MSG_ERROR, _T("Memory allocation error in CGProfile::CreateAvatar()") );
-	}
-	else
+	if ( LPBYTE pBody = pPacket->WriteGetPointer( (DWORD)pFile.GetLength() ) )
 	{
 		pFile.Read( pBody, (DWORD)pFile.GetLength() );
 	}
-	pFile.Close();
 
 	return pPacket;
 }
@@ -359,13 +316,12 @@ void CGProfile::Serialize(CArchive& ar)
 
 	if ( ar.IsStoring() )
 	{
-		bXMLPresent = ( m_pXML != NULL );
+		bXMLPresent = ( m_pXML->GetElementCount() != 0 );
 		ar << bXMLPresent;
 	}
 	else
 	{
 		ar >> bXMLPresent;
-		Create();
 	}
 	if ( m_pXML && bXMLPresent )
 		m_pXML->Serialize( ar );
