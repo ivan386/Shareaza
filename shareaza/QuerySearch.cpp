@@ -376,13 +376,13 @@ CG2Packet* CQuerySearch::ToG2Packet(SOCKADDR_IN* pUDP, DWORD nKey)
 
 	if ( ! IsHashed() && ! m_sG2Keywords.IsEmpty() )
 	{
-		short bValue = (short)( 2 * rand() / ( RAND_MAX + 1.0 ) );
-		if ( bValue )
+		// Randomly select keywords or exact search string
+		if ( m_sSearch.IsEmpty() || GetRandomNum( FALSE, TRUE ) )
 		{
 			pPacket->WritePacket( G2_PACKET_DESCRIPTIVE_NAME, pPacket->GetStringLen( m_sG2Keywords ) );
 			pPacket->WriteString( m_sG2Keywords, FALSE );
 		}
-		else if ( !m_sSearch.IsEmpty() )
+		else
 		{
 			pPacket->WritePacket( G2_PACKET_DESCRIPTIVE_NAME, pPacket->GetStringLen( m_sSearch ) );
 			pPacket->WriteString( m_sSearch, FALSE );

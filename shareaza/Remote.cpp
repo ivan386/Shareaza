@@ -511,10 +511,10 @@ void CRemote::PageLogin()
 		 Settings.Remote.Username.GetLength() > 0 &&
 		 Settings.Remote.Password.GetLength() > 0 )
 	{
-		int nCookie = rand();
+		__int32 nCookie = GetRandomNum( 0i32, _I32_MAX );
 		m_pCookies.AddTail( nCookie );
 		m_sHeader.Format( _T("Set-Cookie: ShareazaRemote=%i; path=/remote\r\n"), nCookie );
-		m_sRedirect.Format( _T("/remote/home?%i"), rand() );
+		m_sRedirect.Format( _T("/remote/home?%i"), GetRandomNum( 0i32, _I32_MAX ) );
 	}
 	else
 	{
@@ -685,7 +685,7 @@ void CRemote::PageSearch()
 	Prepare();
 	str.Format( _T("%Ii"), nSearchID );
 	Add( _T("search_id"), str );
-	str.Format( _T("%i"), rand() );
+	str.Format( _T("%i"), GetRandomNum( 0i32, _I32_MAX ) );
 	Add( _T("random"), str );
 	if ( ! pSearchWnd->m_bPaused ) Add( _T("searching"), _T("true") );
 	Add( _T("search_filter"), pSearchWnd->m_pMatches->m_sFilter );
@@ -864,7 +864,7 @@ void CRemote::PageDownloads()
 	CString str;
 	
 	Prepare();
-	str.Format( _T("%i"), rand() );
+	str.Format( _T("%i"), GetRandomNum( 0i32, _I32_MAX ) );
 	Add( _T("random"), str );
 	Output( _T("downloadsHeader") );
 	
@@ -1169,7 +1169,7 @@ void CRemote::PageUploads()
 	CString str;
 	
 	Prepare();
-	str.Format( _T("%i"), rand() );
+	str.Format( _T("%i"), GetRandomNum( 0i32, _I32_MAX ) );
 	Add( _T("random"), str );
 	Output( _T("uploadsHeader") );
 	
@@ -1302,7 +1302,7 @@ void CRemote::PageNetwork()
 	CString str;
 	
 	Prepare();
-	str.Format( _T("%i"), rand() );
+	str.Format( _T("%i"), GetRandomNum( 0i32, _I32_MAX ) );
 	Add( _T("random"), str );
 	Output( _T("networkHeader") );
 	

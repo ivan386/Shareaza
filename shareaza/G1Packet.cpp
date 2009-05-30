@@ -327,7 +327,7 @@ int CG1Packet::GGEPWriteRandomCache(CGGEPItem* pItem)
 	pList.reserve( Settings.Gnutella1.MaxHostsInPongs );
 	for ( WORD nNo = 0 ; nNo < Settings.Gnutella1.MaxHostsInPongs ; nNo++ )
 	{
-		pList.push_back( (WORD)GetRandomNum( 0, 50 ) );
+		pList.push_back( GetRandomNum( 0ui16, 50ui16 ) );
 	}
 	std::sort( pList.begin(), pList.end(), CompareNums() );
 

@@ -504,7 +504,7 @@ BOOL CNetwork::IsReserved(IN_ADDR* pAddress, bool bCheckLocal)
 
 WORD CNetwork::RandomPort() const
 {
-	return WORD( GetRandomNum( 10000, 60000 ) );
+	return GetRandomNum( 10000ui16, 60000ui16 );
 }
 
 //////////////////////////////////////////////////////////////////////

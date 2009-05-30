@@ -60,10 +60,10 @@ void CQueryKeys::Alloc()
 
 	for ( DWORD nCount = m_nTable ; nCount ; nCount-- )
 	{
-		*pFill++ = (BYTE)GetRandomNum( 0, 255 );
-		*pFill++ = (BYTE)GetRandomNum( 0, 255 );
-		*pFill++ = (BYTE)GetRandomNum( 0, 255 );
-		*pFill++ = (BYTE)GetRandomNum( 0, 255 );
+		*pFill++ = GetRandomNum( 0ui8, _UI8_MAX );
+		*pFill++ = GetRandomNum( 0ui8, _UI8_MAX );
+		*pFill++ = GetRandomNum( 0ui8, _UI8_MAX );
+		*pFill++ = GetRandomNum( 0ui8, _UI8_MAX );
 	}
 
 	// TODO: Add check for invalid (for Shareaza) zero keys

@@ -694,9 +694,7 @@ DWORD CDownloads::GetFreeSID()
 {
 	for ( ;; )
 	{
-		DWORD nSerID	= ( rand() & 0xFF ) + ( ( rand() & 0xFF ) << 8 )
-						+ ( ( rand() & 0xFF ) << 16 ) + ( ( rand() & 0xFF ) << 24 );
-
+		DWORD nSerID = GetRandomNum( 0ui32, _UI32_MAX );
 		for ( POSITION pos = GetIterator() ; pos ; )
 		{
 			CDownload* pDownload = GetNext( pos );

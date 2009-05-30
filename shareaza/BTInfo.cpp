@@ -808,7 +808,8 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 	m_sName = pInfo->GetStringFromSubNode( "name", m_nEncoding, m_bEncodingError );
 
 	// If we still don't have a name, generate one
-	if ( m_sName.IsEmpty() ) m_sName.Format( _T("Unnamed_Torrent_%i"), GetRandomNum( (int)0, INT_MAX ) );
+	if ( m_sName.IsEmpty() )
+		m_sName.Format( _T("Unnamed_Torrent_%i"), GetRandomNum( 0i32, _I32_MAX ) );
 
 	// Get the piece stuff
 	CBENode* pPL = pInfo->GetNode( "piece length" );
@@ -1251,7 +1252,7 @@ void CBTInfo::SetTrackerNext(DWORD tTime)
 	}
 
 	// Get current time
-	if ( !tTime )
+	if ( ! tTime )
 		tTime = GetTickCount();
 
 	// Set current mode to searching

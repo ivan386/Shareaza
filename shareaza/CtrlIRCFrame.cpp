@@ -1,7 +1,7 @@
 //
 // CtrlIRCFrame.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (www.shareaza.com)
 //
 // Shareaza is free software; you can redistribute it
@@ -585,14 +585,7 @@ void CIRCFrame::OnIrcConnect()
 		CString strNick = MyProfile.GetNick();
 		if ( strNick.IsEmpty() )
 		{
-			CString strRandomNumber;
-			m_sNickname = "razaIrc";
-
-			for ( int nDigit = 0 ; nDigit < 7 ; nDigit++ )
-			{
-				strRandomNumber.Format( L"%d", GetRandomNum( 0, 32768 ) );
-				m_sNickname += strRandomNumber.GetAt( 0 );
-			}
+			m_sNickname.Format( L"razaIrc%09u", GetRandomNum( 0ui32, _UI32_MAX ) );
 		}
 		else
 		{

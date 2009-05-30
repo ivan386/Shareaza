@@ -431,7 +431,7 @@ BOOL CDownloadWithTorrent::GenerateTorrentDownloadID()
 	// Random characters for the rest of the Client ID
 	for ( int nByte = 8 ; nByte < 20 ; nByte++ )
 	{
-		m_pPeerID[ nByte ] = static_cast< BYTE >( rand() & 0xFF );
+		m_pPeerID[ nByte ] = GetRandomNum( 0ui8, _UI8_MAX );
 	}
 	m_pPeerID.validate();
 	return TRUE;

@@ -380,8 +380,6 @@ BOOL CShareazaApp::InitInstance()
 		WSACleanup();
 	}
 
-	CryptAcquireContext( &m_hCryptProv, NULL, NULL, PROV_RSA_FULL, CRYPT_VERIFYCONTEXT );
-
 	if ( m_ocmdInfo.m_nGUIMode != -1 )
 		Settings.General.GUIMode = m_ocmdInfo.m_nGUIMode;
 
@@ -577,8 +575,8 @@ int CShareazaApp::ExitInstance()
 	UnhookWindowsHookEx( m_hHookKbd );
 	UnhookWindowsHookEx( m_hHookMouse );
 
-	if ( theApp.m_hCryptProv != 0 )
-		CryptReleaseContext( theApp.m_hCryptProv, 0 );
+	if ( m_hCryptProv )
+		CryptReleaseContext( m_hCryptProv, 0 );
 
 	if ( m_pMutex != NULL )
 		CloseHandle( m_pMutex );
@@ -914,6 +912,8 @@ void CShareazaApp::InitResources()
 	m_gdiFontLine.CreateFontW( -(int)Settings.Fonts.FontSize, 0, 0, 0, FW_NORMAL, FALSE, TRUE, FALSE,
 		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
 		DEFAULT_PITCH|FF_DONTCARE, Settings.Fonts.DefaultFont );
+
+	CryptAcquireContext( &m_hCryptProv, NULL, NULL, PROV_RSA_FULL, CRYPT_VERIFYCONTEXT );
 
 	srand( GetTickCount() );
 
