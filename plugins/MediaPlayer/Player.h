@@ -3,7 +3,6 @@
 #pragma once
 
 #include "MediaPlayer_h.h"
-#include "Filter.h"
 
 
 // CPlayer
