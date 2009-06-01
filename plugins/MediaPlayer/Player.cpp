@@ -3,11 +3,17 @@
 #include "stdafx.h"
 #include "Player.h"
 
+#define SAFE_RELEASE(comPtr)  \
+              if ((comPtr))  \
+                { (comPtr).Release(); }
+
 // CPlayer
 
 CPlayer::CPlayer() :
 	m_hwndOwner( NULL ),
-	m_rcWindow()
+	m_rcWindow(),
+	m_nZoom(smaDefault),
+	m_dAspect(0.0)
 {
 }
 
@@ -36,14 +42,39 @@ STDMETHODIMP CPlayer::Create(
 	if ( SUCCEEDED( hr ) )
 	{
 		m_pControl = m_pGraph;
+		if (!m_pControl)
+			hr = E_NOINTERFACE;
+	}
+
+	if ( SUCCEEDED( hr ) )
+	{
 		m_pEvent = m_pGraph;
+		if (!m_pEvent)
+			hr = E_NOINTERFACE;
+	}
+
+	if ( SUCCEEDED( hr ) )
+	{
+		m_pVideo = m_pGraph;
+		if (!m_pVideo)
+			hr = E_NOINTERFACE;
+	}
+
+	if ( SUCCEEDED( hr ) )
+	{
 		m_pWindow = m_pGraph;
-		if ( ! m_pControl || ! m_pEvent || ! m_pWindow )
+		if (!m_pWindow)
 			hr = E_NOINTERFACE;
 	}
 
 	if ( FAILED( hr ) )
-		Destroy();
+	{
+		SAFE_RELEASE(m_pControl);
+		SAFE_RELEASE(m_pEvent);
+		SAFE_RELEASE(m_pVideo);
+		SAFE_RELEASE(m_pWindow);
+		SAFE_RELEASE(m_pGraph);
+	}
 
 	return hr;
 }
@@ -58,6 +89,7 @@ STDMETHODIMP CPlayer::Destroy(void)
 	m_pWindow->put_Owner( NULL );
 
 	m_pWindow.Release();
+	m_pVideo.Release();
 	m_pEvent.Release();
 	m_pControl.Release();
 	m_pGraph.Release();
@@ -76,8 +108,13 @@ STDMETHODIMP CPlayer::Reposition(
 	if ( ! m_pGraph )
 		return E_INVALIDARG;
 
-	return m_pWindow->SetWindowPosition( m_rcWindow.left, m_rcWindow.top,
+	HRESULT hr = m_pWindow->SetWindowPosition( m_rcWindow.left, m_rcWindow.top,
 		m_rcWindow.right - m_rcWindow.left, m_rcWindow.bottom - m_rcWindow.top );
+
+	if ( FAILED( hr ) )
+		return hr;
+
+	return AdjustVideoPosAndZoom();
 }
 
 STDMETHODIMP CPlayer::SetLogoBitmap(
@@ -108,7 +145,7 @@ STDMETHODIMP CPlayer::GetVolume(
 	if ( FAILED( hr ) )
 		return hr;
 
-	// -10,000 ... 0 -> 0.0 ... 1.0 Conversion
+	// -6,000 ... 0 -> 0.0 ... 1.0 Conversion
 	if ( lVolume < -6000. )
 		*pnVolume = 0;
 	else 
@@ -139,12 +176,12 @@ STDMETHODIMP CPlayer::GetZoom(
 	if ( ! pnZoom )
 		return E_POINTER;
 
-	*pnZoom = smaDefault;
-
 	if ( ! m_pGraph )
 		return E_INVALIDARG;
 
-	return E_NOTIMPL;
+	*pnZoom = m_nZoom;
+
+	return S_OK;
 }
 
 STDMETHODIMP CPlayer::SetZoom(
@@ -153,30 +190,34 @@ STDMETHODIMP CPlayer::SetZoom(
 	if ( ! m_pGraph )
 		return E_INVALIDARG;
 
-	return E_NOTIMPL;
+	m_nZoom = nZoom;
+
+	return AdjustVideoPosAndZoom();
 }
 
 STDMETHODIMP CPlayer::GetAspect(
-	/* [out] */ DOUBLE *pnAspect)
+	/* [out] */ DOUBLE *pdAspect)
 {
-	if ( ! pnAspect )
+	if ( ! pdAspect )
 		return E_POINTER;
 
-	*pnAspect = 1.0;
+	*pdAspect = m_dAspect;
 
 	if ( ! m_pGraph )
 		return E_INVALIDARG;
 
-	return E_NOTIMPL;
+	return S_OK;
 }
 
 STDMETHODIMP CPlayer::SetAspect(
-	/* [in] */ DOUBLE nAspect)
+	/* [in] */ DOUBLE dAspect)
 {
 	if ( ! m_pGraph )
 		return E_INVALIDARG;
 
-	return E_NOTIMPL;
+	m_dAspect = dAspect;
+
+	return AdjustVideoPosAndZoom();
 }
 
 HRESULT FindPin(IBaseFilter* pFilter, int count, PIN_DIRECTION dir, IPin** ppPin)
@@ -255,7 +296,13 @@ STDMETHODIMP CPlayer::Play(void)
 	m_pWindow->SetWindowPosition( m_rcWindow.left, m_rcWindow.top,
 		m_rcWindow.right - m_rcWindow.left, m_rcWindow.bottom - m_rcWindow.top );
 
-	HRESULT hr =  m_pControl->Run();
+	// Handle pending zoom and aspect changes
+	HRESULT hr = AdjustVideoPosAndZoom();
+
+	if ( FAILED( hr ) )
+		return hr;
+
+	hr = m_pControl->Run();
 	if ( FAILED( hr ) )
 		return hr;
 
@@ -425,4 +472,72 @@ STDMETHODIMP CPlayer::SetPluginSize(
 	/* [in] */ LONG nSize)
 {
 	return E_NOTIMPL;
+}
+
+// Adjusts video position and zoom according to aspect ratio, zoom level and zoom type
+HRESULT CPlayer::AdjustVideoPosAndZoom(void)
+{
+	long VideoWidth, VideoHeight;
+	long WindowWidth, WindowHeight;
+	CRect tr;
+
+	HRESULT hr = m_pVideo->GetVideoSize(&VideoWidth, &VideoHeight);
+	if ( FAILED( hr ) )
+		return hr;
+
+	WindowWidth = this->m_rcWindow.right - this->m_rcWindow.left;
+	WindowHeight = this->m_rcWindow.bottom - this->m_rcWindow.top;
+
+	if (m_dAspect > 0)
+	{
+		// Stretch video to match aspect ratio
+		if ((double)VideoWidth / VideoHeight > m_dAspect) {
+			VideoHeight = (long)(VideoWidth / m_dAspect);
+		} else {
+			VideoWidth = (long)(VideoHeight * m_dAspect);
+		}
+	}
+
+	if (m_nZoom > 1)
+	{
+		VideoWidth *= m_nZoom;
+		VideoHeight *= m_nZoom;
+	}
+	else if (m_nZoom == smzFill)
+	{
+		double VideoAspect = m_dAspect > 0 ? m_dAspect : (double)VideoWidth / VideoHeight;
+		double WindowAspect = (double)WindowWidth / WindowHeight;
+
+		if (WindowAspect > VideoAspect)
+		{
+			VideoHeight = WindowHeight;
+			VideoWidth = (long)(VideoHeight * VideoAspect);
+		}
+		else
+		{
+			VideoWidth = WindowWidth;
+			VideoHeight = (long)(VideoWidth / VideoAspect);
+		}
+	}
+
+	if (m_nZoom == smzDistort)
+	{
+		tr.left = 0;
+		tr.top = 0;
+		tr.right = WindowWidth;
+		tr.bottom = WindowHeight;
+	}
+	else
+	{
+		tr.left = this->m_rcWindow.left + (WindowWidth >> 1) - (VideoWidth >> 1);
+		tr.top = this->m_rcWindow.top + (WindowHeight >> 1) - (VideoHeight >> 1);
+		tr.bottom = tr.top + VideoHeight;
+		tr.right = tr.left + VideoWidth;
+	}
+
+	hr = m_pVideo->SetDestinationPosition(tr.left, tr.top, tr.Width(), tr.Height());
+	if ( FAILED( hr ) )
+		return hr;
+
+	return S_OK;
 }

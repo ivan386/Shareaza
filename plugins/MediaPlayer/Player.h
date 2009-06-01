@@ -32,7 +32,12 @@ protected:
 	CComPtr< IGraphBuilder >	m_pGraph;
 	CComQIPtr< IMediaControl >	m_pControl;
 	CComQIPtr< IMediaEvent >	m_pEvent;
+	CComQIPtr< IBasicVideo >	m_pVideo;
 	CComQIPtr< IVideoWindow >	m_pWindow;
+	MediaZoom			m_nZoom;
+	DOUBLE				m_dAspect;
+private:
+	HRESULT AdjustVideoPosAndZoom(void);
 
 // IMediaPlayer
 public:
@@ -52,9 +57,9 @@ public:
 	STDMETHOD(SetZoom)(
 		/* [in] */ MediaZoom nZoom);
 	STDMETHOD(GetAspect)(
-		/* [out] */ DOUBLE *pnAspect);
+		/* [out] */ DOUBLE *pdAspect);
 	STDMETHOD(SetAspect)(
-		/* [in] */ DOUBLE nAspect) ;
+		/* [in] */ DOUBLE dAspect) ;
 	STDMETHOD(Open)(
 		/* [in] */ BSTR sFilename);
 	STDMETHOD(Close)(void);
