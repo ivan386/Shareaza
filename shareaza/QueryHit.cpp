@@ -331,7 +331,7 @@ CQueryHit* CQueryHit::FromG2Packet(CG2Packet* pPacket, int* pnHops)
 
 	try
 	{
-		CQueryHit* pLastHit;
+		CQueryHit* pLastHit = NULL;
 		BOOL bCompound;
 		G2_PACKET nType;
 		DWORD nLength;
