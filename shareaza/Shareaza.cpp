@@ -194,6 +194,7 @@ CShareazaApp::CShareazaApp() :
 
 ,	m_hGeoIP				( NULL )
 ,	m_pGeoIP				( NULL )
+,	m_pfnGeoIP_delete		( NULL )
 ,	m_pfnGeoIP_country_code_by_ipnum( NULL )
 ,	m_pfnGeoIP_country_name_by_ipnum( NULL )
 
@@ -565,7 +566,11 @@ int CShareazaApp::ExitInstance()
 		FreeLibrary( m_hShlWapi );
 
 	if ( m_hGeoIP != NULL )
+	{
+		if ( m_pGeoIP && m_pfnGeoIP_delete )
+			m_pfnGeoIP_delete( m_pGeoIP );
 		FreeLibrary( m_hGeoIP );
+	}
 
 	if ( m_hLibGFL != NULL )
 		FreeLibrary( m_hLibGFL );
@@ -873,6 +878,7 @@ void CShareazaApp::InitResources()
 	if ( ( m_hGeoIP = CustomLoadLibrary( _T("geoip.dll") ) ) != NULL )
 	{
 		GeoIP_newFunc pfnGeoIP_new = (GeoIP_newFunc)GetProcAddress( m_hGeoIP, "GeoIP_new" );
+		m_pfnGeoIP_delete = (GeoIP_deleteFunc)GetProcAddress( m_hGeoIP, "GeoIP_delete" );
 		m_pfnGeoIP_country_code_by_ipnum = (GeoIP_country_code_by_ipnumFunc)GetProcAddress( m_hGeoIP, "GeoIP_country_code_by_ipnum" );
 		m_pfnGeoIP_country_name_by_ipnum = (GeoIP_country_name_by_ipnumFunc)GetProcAddress( m_hGeoIP, "GeoIP_country_name_by_ipnum" );
 		if ( pfnGeoIP_new )
