@@ -12,8 +12,9 @@
 CPlayer::CPlayer() :
 	m_hwndOwner( NULL ),
 	m_rcWindow(),
-	m_nZoom(smaDefault),
-	m_dAspect(0.0)
+	m_nZoom( smaDefault ),
+	m_dAspect( 0.0 ),
+	m_bAudioOnly( FALSE )
 {
 }
 
@@ -103,10 +104,13 @@ STDMETHODIMP CPlayer::Reposition(
 	if ( ! prcWnd )
 		return E_POINTER;
 
-	m_rcWindow = *prcWnd;
-
 	if ( ! m_pGraph )
 		return E_INVALIDARG;
+
+	if ( m_bAudioOnly )
+		return S_OK;
+
+	m_rcWindow = *prcWnd;
 
 	HRESULT hr = m_pWindow->SetWindowPosition( m_rcWindow.left, m_rcWindow.top,
 		m_rcWindow.right - m_rcWindow.left, m_rcWindow.bottom - m_rcWindow.top );
@@ -166,7 +170,7 @@ STDMETHODIMP CPlayer::SetVolume(
 	if ( ! pAudio )
 		return E_NOINTERFACE;
 
-	// 0.0 ... 1.0 -> -10,000 ... 0 Conversion
+	// 0.0 ... 1.0 -> -6,000 ... 0 Conversion
 	return pAudio->put_Volume( (long)( ( nVolume * 6000. ) - 6000. ) );
 }
 
@@ -192,6 +196,9 @@ STDMETHODIMP CPlayer::SetZoom(
 
 	m_nZoom = nZoom;
 
+	if ( m_bAudioOnly )
+		return S_OK;
+
 	return AdjustVideoPosAndZoom();
 }
 
@@ -216,6 +223,9 @@ STDMETHODIMP CPlayer::SetAspect(
 		return E_INVALIDARG;
 
 	m_dAspect = dAspect;
+
+	if ( m_bAudioOnly )
+		return S_OK;
 
 	return AdjustVideoPosAndZoom();
 }
@@ -259,7 +269,8 @@ HRESULT FindPin(IBaseFilter* pFilter, int count, PIN_DIRECTION dir, IPin** ppPin
 STDMETHODIMP CPlayer::Open(
 	/* [in] */ BSTR sFilename)
 {
-	HRESULT hr;
+    	HRESULT hr;
+        long lVisible;
 
 	if ( ! sFilename )
 		return E_POINTER;
@@ -271,9 +282,25 @@ STDMETHODIMP CPlayer::Open(
 	if ( FAILED( hr ) )
 		return hr;
 
-	m_pWindow->put_WindowStyle( WS_CHILD | WS_VISIBLE |
-		WS_CLIPSIBLINGS | WS_CLIPCHILDREN );
-	m_pWindow->put_Owner( (OAHWND)m_hwndOwner );
+	if ( ! m_pVideo || ! m_pWindow )
+	{
+		m_bAudioOnly = TRUE;
+	}
+	else
+	{
+		hr = m_pWindow->get_Visible(&lVisible);
+		if ( hr == E_NOINTERFACE )
+		{
+			m_bAudioOnly = TRUE;
+		}
+		else
+		{
+			m_bAudioOnly = FALSE;
+			hr = m_pWindow->put_WindowStyle( WS_CHILD | WS_VISIBLE |
+				WS_CLIPSIBLINGS | WS_CLIPCHILDREN );
+			m_pWindow->put_Owner( (OAHWND)m_hwndOwner );
+		}
+	}
 
 	return Play();
 }
@@ -293,20 +320,26 @@ STDMETHODIMP CPlayer::Play(void)
 	if ( ! m_pGraph )
 		return E_INVALIDARG;
 
-	m_pWindow->SetWindowPosition( m_rcWindow.left, m_rcWindow.top,
-		m_rcWindow.right - m_rcWindow.left, m_rcWindow.bottom - m_rcWindow.top );
+	if ( m_bAudioOnly )
+	{
+		HRESULT hr = m_pControl->Run();
+		if ( FAILED( hr ) )
+			return hr;
 
-	// Handle pending zoom and aspect changes
-	HRESULT hr = AdjustVideoPosAndZoom();
+		return S_OK;
+	}
+	else
+	{
+		m_pWindow->SetWindowPosition( m_rcWindow.left, m_rcWindow.top,
+			m_rcWindow.right - m_rcWindow.left, m_rcWindow.bottom - m_rcWindow.top );
 
-	if ( FAILED( hr ) )
-		return hr;
+		HRESULT hr = m_pControl->Run();
+		if ( FAILED( hr ) )
+			return hr;
 
-	hr = m_pControl->Run();
-	if ( FAILED( hr ) )
-		return hr;
-
-	return S_OK;
+		// Handle pending zoom and aspect changes
+		return AdjustVideoPosAndZoom();
+	}
 }
 
 STDMETHODIMP CPlayer::Pause(void)
@@ -322,7 +355,8 @@ STDMETHODIMP CPlayer::Stop(void)
 	if ( ! m_pGraph )
 		return E_INVALIDARG;
 
-	m_pWindow->put_Visible( OAFALSE );
+	if ( ! m_bAudioOnly )
+		m_pWindow->put_Visible( OAFALSE );
 
 	return m_pControl->Stop();
 }

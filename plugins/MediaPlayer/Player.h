@@ -27,8 +27,11 @@ DECLARE_PROTECT_FINAL_CONSTRUCT()
 	void FinalRelease();
 
 protected:
-	HWND						m_hwndOwner;
-	RECT						m_rcWindow;
+	HRESULT AdjustVideoPosAndZoom(void);
+
+	BOOLEAN				m_bAudioOnly;
+	HWND				m_hwndOwner;
+	RECT				m_rcWindow;
 	CComPtr< IGraphBuilder >	m_pGraph;
 	CComQIPtr< IMediaControl >	m_pControl;
 	CComQIPtr< IMediaEvent >	m_pEvent;
@@ -36,8 +39,6 @@ protected:
 	CComQIPtr< IVideoWindow >	m_pWindow;
 	MediaZoom			m_nZoom;
 	DOUBLE				m_dAspect;
-private:
-	HRESULT AdjustVideoPosAndZoom(void);
 
 // IMediaPlayer
 public:
