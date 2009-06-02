@@ -105,17 +105,62 @@ CLocalSearch::~CLocalSearch()
 	GetXMLString();
 }
 
+template<>
+bool CLocalSearch::IsValidForHit< CDownload >(const CDownload* pDownload) const
+{
+	return
+		// If download shareable and ...
+		pDownload->IsShared() &&
+		// download active and ...
+		( pDownload->IsTorrent() || pDownload->IsStarted() ) &&
+		// download matches
+		m_pSearch->Match( pDownload->GetSearchName(), pDownload->m_nSize, NULL,
+			NULL, pDownload->m_oSHA1, pDownload->m_oTiger, pDownload->m_oED2K,
+			pDownload->m_oBTH, pDownload->m_oMD5 );
+}
+
+template<>
+bool CLocalSearch::IsValidForHit< CLibraryFile >(const CLibraryFile* pFile) const
+{
+	switch ( m_nProtocol )
+	{
+	case PROTOCOL_G1:
+		return IsValidForHitG1( pFile );
+
+	case PROTOCOL_G2:
+		return IsValidForHitG2( pFile );
+
+	default:
+		return false;
+	}
+}
+
+bool CLocalSearch::IsValidForHitG1(CLibraryFile const * const pFile) const
+{
+	return Settings.Gnutella1.EnableToday &&
+		// Check that the file is actually available. (We must not return ghost hits to G1!)
+		pFile->IsAvailable() &&		
+		// Check that a queue that can upload this file exists, and isn't insanely long.
+		// NOTE: Very CPU intensive operation!!!
+		( UploadQueues.QueueRank( PROTOCOL_HTTP, pFile ) <= Settings.Gnutella1.HitQueueLimit );
+		// Normally this isn't a problem- the default queue length is 8 to 10, so this check (50) will
+		// never be activated. However, sometimes users configure bad settings, such as a 2000 user HTTP
+		// queue. Although the remote client could/should handle this by itself, we really should give
+		// Gnutella some protection against 'extreme' settings (if only to reduce un-necessary traffic.)
+}
+
+bool CLocalSearch::IsValidForHitG2(CLibraryFile const * const pFile) const
+{
+	return Settings.Gnutella2.EnableToday &&
+		// Browse request, or comments request, or real file
+		( ! m_pSearch || m_pSearch->m_bWantCOM || pFile->IsAvailable() );
+}
+
 //////////////////////////////////////////////////////////////////////
 // CLocalSearch execute
 
 INT_PTR CLocalSearch::Execute(INT_PTR nMaximum)
 {
-	if ( m_pBuffer == NULL )
-	{
-		if ( UploadQueues.GetQueueRemaining() == 0 )
-			return 0;
-	}
-
 	if ( nMaximum < 0 )
 		nMaximum = Settings.Gnutella.MaxHits;
 
@@ -128,17 +173,58 @@ INT_PTR CLocalSearch::Execute(INT_PTR nMaximum)
 		Network.CreateID( m_oGUID );
 	}
 
-	INT_PTR nCount = ExecuteSharedFiles( nMaximum );
+	INT_PTR nHits = ExecutePartialFiles( nMaximum );
 
-	if ( m_pSearch != NULL && m_pSearch->m_bWantPFS && m_nProtocol == PROTOCOL_G2 )
+	if ( ! nMaximum || nHits < nMaximum )
 	{
-		if ( nMaximum == 0 || nCount < nMaximum )
+		nHits += ExecuteSharedFiles( nMaximum ? nMaximum - nHits : 0 );
+	}
+
+	ASSERT( ! nMaximum || nHits <= nMaximum );
+
+	return nHits;
+}
+
+//////////////////////////////////////////////////////////////////////
+// CLocalSearch execute partial files
+
+INT_PTR CLocalSearch::ExecutePartialFiles(INT_PTR nMaximum)
+{
+	CSingleLock pLock( &Transfers.m_pSection );
+	if ( ! pLock.Lock( 250 ) )
+		return 0;
+
+	if ( ! m_pSearch || ! m_pSearch->m_bWantPFS || m_nProtocol != PROTOCOL_G2 )
+		// Browse request, or no partials requested, or non Gnutella 2 request
+		return 0;
+
+	INT_PTR nHits = 0;
+	CList< const CDownload* > oFilesInPacket;
+
+	for ( POSITION pos = Downloads.GetIterator() ;
+		pos && ( ! nMaximum || ( nHits + oFilesInPacket.GetCount() < nMaximum ) ); )
+	{
+		const CDownload* pDownload = Downloads.GetNext( pos );
+
+		if ( IsValidForHit( pDownload ) )
 		{
-			nCount += ExecutePartialFiles( nMaximum ? nMaximum - nCount : 0 );
+			oFilesInPacket.AddTail( pDownload );
+
+			if ( Settings.Gnutella.HitsPerPacket &&
+				(DWORD)oFilesInPacket.GetCount() >= Settings.Gnutella.HitsPerPacket )
+			{
+				// Packet full, send it
+				nHits += SendHits( oFilesInPacket );
+
+				oFilesInPacket.RemoveAll();
+			}
 		}
 	}
 
-	return nCount;
+	// Send rest of files
+	nHits += SendHits( oFilesInPacket );
+
+	return nHits;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -148,121 +234,92 @@ INT_PTR CLocalSearch::ExecuteSharedFiles(INT_PTR nMaximum)
 {
 	CSingleLock oLock( &Library.m_pSection );
 	if ( ! oLock.Lock( 1000 ) )
-	{
 		return 0;
-	}
 
-	CList< const CLibraryFile* >* pFiles = Library.Search( m_pSearch, static_cast< int >( nMaximum ), FALSE,
+	CList< const CLibraryFile* >* pFiles = Library.Search(
+		m_pSearch, static_cast< int >( nMaximum ), FALSE,
 		// Ghost files only for G2
 		m_nProtocol != PROTOCOL_G2 );
 
-	CList< const CLibraryFile* >* pFilesCopy = pFiles;
-	CList< const CLibraryFile* > pExcludedFiles;
-
 	if ( pFiles == NULL )
+		// No files found
 		return 0;
 
-	INT_PTR nHits = pFiles->GetCount();
+	INT_PTR nHits = 0;
+	CList< const CLibraryFile* > oFilesInPacket;
 
-	while ( pFiles->GetCount() )
+	for ( POSITION pos = pFiles->GetHeadPosition() ;
+		pos && ( ! nMaximum || ( nHits + oFilesInPacket.GetCount() < nMaximum ) ); )
 	{
-		int nInThisPacket = (int)min( pFiles->GetCount(), (int)Settings.Gnutella.HitsPerPacket );
+		const CLibraryFile* pFile = pFiles->GetNext( pos );
 
-		int nHitsTested = 0;
-		int nHitsBad = 0;
-		for ( POSITION pos = pFilesCopy->GetHeadPosition() ; pos ; )
+		// Select valid files
+		if ( IsValidForHit( pFile ) )
 		{
-			CLibraryFile* pFile = (CLibraryFile*)pFilesCopy->GetNext( pos );
-			if ( !IsValidForHit( pFile ) )
+			oFilesInPacket.AddTail( pFile );
+
+			if ( Settings.Gnutella.HitsPerPacket &&
+				(DWORD)oFilesInPacket.GetCount() >= Settings.Gnutella.HitsPerPacket )
 			{
-				pExcludedFiles.AddTail( pFile );
-				nHitsBad++;
-			}
-			nHitsTested++;
-			if ( nHitsTested - nHitsBad == nInThisPacket )
-				break;
-		}
+				// Packet full, send it
+				nHits += SendHits( oFilesInPacket );
 
-		if ( nHitsTested - nHitsBad < nInThisPacket )
-			nInThisPacket = nHitsTested - nHitsBad;
-
-		nHits -= nHitsBad;
-		if ( nInThisPacket == 0 )
-		{
-			while ( nHitsTested-- )
-				pFiles->RemoveHead();
-			pExcludedFiles.RemoveAll();
-			pFilesCopy = pFiles;
-			continue;
-		}
-
-		CreatePacket( nInThisPacket );
-
-		int nHitIndex = 0;
-		POSITION posExcluded = pExcludedFiles.GetHeadPosition();
-		for ( int nHit = 0; nHit < nInThisPacket ; nHit++ )
-		{
-			CLibraryFile* pFile = (CLibraryFile*)pFiles->RemoveHead();
-			if ( posExcluded && pFile == pExcludedFiles.GetAt( posExcluded ) )
-			{
-				pExcludedFiles.RemoveAt( posExcluded );
-				posExcluded = pExcludedFiles.GetHeadPosition();
-			}
-			else
-			{
-				AddHit( pFile, nHitIndex++ );
+				oFilesInPacket.RemoveAll();
 			}
 		}
-
-		WriteTrailer();
-
-		if ( nHitIndex > 0 )
-			DispatchPacket();
-		else
-			DestroyPacket();
-		pFilesCopy = pFiles;
-		pExcludedFiles.RemoveAll();
 	}
+
+	// Send rest of files
+	nHits += SendHits( oFilesInPacket );
 
 	delete pFiles;
 
 	return nHits;
 }
 
+template< typename T >
+INT_PTR CLocalSearch::SendHits(const CList< const T * >& oFiles)
+{
+	INT_PTR nHits = oFiles.GetCount();
+	if ( nHits )
+	{
+		CreatePacket( (int)nHits );
+
+		int nHitIndex = 0;
+		for ( POSITION pos = oFiles.GetHeadPosition(); pos; )
+		{
+			AddHit( oFiles.GetNext( pos ), nHitIndex++ );
+		}
+
+		WriteTrailer();
+
+		DispatchPacket();
+	}
+	return nHits;
+}
+
 //////////////////////////////////////////////////////////////////////
 // CLocalSearch add file hit
 
-void CLocalSearch::AddHit(CLibraryFile const * const pFile, int nIndex)
+template<>
+void CLocalSearch::AddHit< CLibraryFile >(const CLibraryFile* pFile, int nIndex)
 {
 	ASSERT( m_pPacket != NULL );
 
-	if ( m_nProtocol == PROTOCOL_G1 )
+	switch ( m_nProtocol )
 	{
+	case PROTOCOL_G1:
 		AddHitG1( pFile, nIndex );
-	}
-	else
-	{
+		break;
+
+	case PROTOCOL_G2:
 		AddHitG2( pFile, nIndex );
+		break;
+
+	default:
+		;
 	}
 }
-
-bool CLocalSearch::IsValidForHit(CLibraryFile const * const pFile) const
-{
-	if ( m_nProtocol == PROTOCOL_G1 )
-	{
-		if ( ! Settings.Gnutella1.EnableToday )
-		{
-			theApp.Message( MSG_ERROR | MSG_FACILITY_SEARCH, _T("CLocalSearch::AddHit() dropping G1 hit - G1 network not enabled") );
-			return false;
-		}
-		return IsValidForHitG1( pFile );
-	}
-	else
-	{
-		return IsValidForHitG2( pFile );
-	}
-}
-
 
 void CLocalSearch::AddHitG1(CLibraryFile const * const pFile, int nIndex)
 {
@@ -322,25 +379,6 @@ void CLocalSearch::AddHitG1(CLibraryFile const * const pFile, int nIndex)
 	{
 		AddMetadata( pFile->m_pSchema, pFile->m_pMetadata, nIndex );
 	}
-}
-
-bool CLocalSearch::IsValidForHitG1(CLibraryFile const * const pFile) const
-{
-	// Check that the file is actually available. (We must not return ghost hits to G1!)
-	if ( ! pFile->IsAvailable() )
-		return false;
-
-	// Check that a queue that can upload this file exists, and isn't insanely long.
-	// NOTE: Very CPU intensive operation!!!
-	if ( UploadQueues.QueueRank( PROTOCOL_HTTP, pFile ) > Settings.Gnutella1.HitQueueLimit )
-		return false;
-
-	// Normally this isn't a problem- the default queue length is 8 to 10, so this check (50) will
-	// never be activated. However, sometimes users configure bad settings, such as a 2000 user HTTP
-	// queue. Although the remote client could/should handle this by itself, we really should give
-	// Gnutella some protection against 'extreme' settings (if only to reduce un-necessary traffic.)
-
-	return true;
 }
 
 void CLocalSearch::AddHitG2(CLibraryFile const * const pFile, int /*nIndex*/)
@@ -579,62 +617,11 @@ void CLocalSearch::AddHitG2(CLibraryFile const * const pFile, int /*nIndex*/)
 	while( bCalculate );
 }
 
-bool CLocalSearch::IsValidForHitG2(CLibraryFile const * const pFile) const
-{
-	if ( m_pSearch != NULL && !m_pSearch->m_bWantCOM && !pFile->IsAvailable() )
-		return false;
-
-	return true;
-}
-
-//////////////////////////////////////////////////////////////////////
-// CLocalSearch execute partial files
-
-int CLocalSearch::ExecutePartialFiles(INT_PTR nMaximum)
-{
-	ASSERT( m_nProtocol == PROTOCOL_G2 );
-	ASSERT( m_pSearch != NULL );
-
-	if ( !m_pSearch->m_oTiger && !m_pSearch->m_oSHA1 &&
-		 !m_pSearch->m_oED2K && !m_pSearch->m_oBTH && !m_pSearch->m_oMD5 ) return 0;
-
-	CSingleLock pLock( &Transfers.m_pSection );
-	if ( ! pLock.Lock( 50 ) ) return 0;
-
-	int nCount = 0;
-	m_pPacket = NULL;
-
-	for ( POSITION pos = Downloads.GetIterator() ;
-		pos && ( ! nMaximum || ( nCount < nMaximum ) ); )
-	{
-		CDownload* pDownload = Downloads.GetNext( pos );
-		if ( pDownload->IsShared() &&
-			( pDownload->IsTorrent() || pDownload->IsStarted() ) &&
-			(	validAndEqual( m_pSearch->m_oTiger, pDownload->m_oTiger )
-			||	validAndEqual( m_pSearch->m_oSHA1, pDownload->m_oSHA1 )
-			||	validAndEqual( m_pSearch->m_oED2K, pDownload->m_oED2K )
-			||	validAndEqual( m_pSearch->m_oMD5, pDownload->m_oMD5 )
-			||	validAndEqual( m_pSearch->m_oBTH, pDownload->m_oBTH ) ) )
-		{
-			if ( m_pPacket == NULL )
-				CreatePacketG2();
-			AddHit( pDownload, nCount++ );
-		}
-	}
-
-	if ( m_pPacket != NULL )
-	{
-		WriteTrailer();
-		DispatchPacket();
-	}
-
-	return nCount;
-}
-
 //////////////////////////////////////////////////////////////////////
 // CLocalSearch add download hit
 
-void CLocalSearch::AddHit(CDownload const * const pDownload, int /*nIndex*/)
+template<>
+void CLocalSearch::AddHit< CDownload >(const CDownload* pDownload, int /*nIndex*/)
 {
 	// Pass 1: Calculate child group size
 	// Pass 2: Write the child packet
@@ -941,10 +928,7 @@ CString CLocalSearch::GetXMLString(BOOL bNewlines)
 
 		m_pSchemas.GetNextAssoc( pos1, pSchema, pGroup );
 
-		strXML += _T("<?xml version=\"1.0\"?>");
-		if ( bNewlines )
-			strXML += _T("\r\n");
-		pGroup->ToString( strXML, bNewlines );
+		strXML += pGroup->ToString( TRUE, bNewlines );
 
 		for ( POSITION pos2 = pGroup->GetElementIterator() ; pos2 ; )
 		{
@@ -1120,8 +1104,7 @@ void CLocalSearch::DispatchPacket()
 		m_pPacket->ToBuffer( m_pBuffer );
 	}
 
-	m_pPacket->Release();
-	m_pPacket = NULL;
+	DestroyPacket();
 }
 
 void CLocalSearch::DestroyPacket()
