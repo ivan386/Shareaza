@@ -149,7 +149,6 @@ void CSettings::Load()
 	Add( _T("Library"), _T("MarkFileAsDownload"), &Library.MarkFileAsDownload, true );
 	Add( _T("Library"), _T("MaxMaliciousFileSize"), &Library.MaxMaliciousFileSize, 1024, 1, 1024, 1024*5, _T(" B") );
 	Add( _T("Library"), _T("PanelSize"), &Library.PanelSize, 120, 1, 0, 1024, _T(" px") );
-	Add( _T("Library"), _T("PartialMatch"), &Library.PartialMatch, true );
 	Add( _T("Library"), _T("PreferAPETags"), &Library.PreferAPETags, true );
 	Add( _T("Library"), _T("PrivateTypes"), &Library.PrivateTypes, _T("|vbs|js|jc!|fb!|bc!|!ut|dbx|part|partial|pst|reget|getright|pif|lnk|sd|url|wab|m4p|infodb|racestats|chk|tmp|temp|ini|inf|log|old|manifest|met|bak|$$$|---|~~~|###|__incomplete___|") );
 	Add( _T("Library"), _T("QueryRouteSize"), &Library.QueryRouteSize, 20, 1, 8, 24 );

@@ -70,7 +70,7 @@ void CLibraryDictionary::AddFile(const CLibraryFile& oFile)
 	ProcessFile( oFile, true, bCanUpload );
 
 	if ( bCanUpload && m_bValid )
-		AddHashes( oFile );
+		m_pTable->AddHashes( oFile );
 }
 
 void CLibraryDictionary::RemoveFile(const CLibraryFile& oFile)
@@ -102,167 +102,11 @@ void CLibraryDictionary::ProcessPhrase(
 	if ( strPhrase.IsEmpty() )
 		return;
 
-	CString strWord;
-	WORD boundary[ 2 ] = { C3_NOTAPPLICABLE, C3_NOTAPPLICABLE };
-	WORD nKanaType[ 2 ] = { C3_NOTAPPLICABLE, C3_NOTAPPLICABLE };
-	int nPos = 0, nNextWord = 0;
-
-	for ( ; nPos < strPhrase.GetLength() ; ++nPos )
+	CStringList oKeywords;
+	CQueryHashTable::MakeKeywords( strPhrase, oKeywords );
+	for ( POSITION pos = oKeywords.GetHeadPosition(); pos; )
 	{
-		// boundary[ 0 ] -- previous character;
-		// boundary[ 1 ] -- current character;
-		boundary[ 0 ] = boundary[ 1 ];
-		nKanaType[ 0 ] = nKanaType[ 1 ];
-		const WCHAR nChar = strPhrase[ nPos ];
-		GetStringTypeW( CT_CTYPE3, &nChar, 1, &boundary[ 1 ] );
-
-		nKanaType[ 1 ] = boundary[ 1 ] & ( C3_KATAKANA | C3_HIRAGANA );
-		if ( nKanaType[ 1 ] == ( C3_KATAKANA | C3_HIRAGANA )
-			&& nKanaType[ 0 ] )
-		{
-			boundary[ 1 ] = boundary[ 0 ];
-			nKanaType[ 1 ] = nKanaType[ 0 ];
-		}
-
-		// Letter is a character if it is alpha-numeric
-		// Work-around for WinXP: Katakana/Hiragana diacritic characters in
-		// the NLS table aren't marked as being alpha (Win2000 & >Vista are OK)
-		const bool bCharacter = ( boundary[ 1 ] & C3_ALPHA )
-			|| iswdigit( nChar )
-			|| ( nKanaType[ 1 ] && ( boundary[ 1 ] & C3_DIACRITIC ) );
-
-		if ( !bCharacter
-			|| ( nKanaType[ 0 ] && boundary[ 0 ] != boundary[ 1 ] ) )
-		{
-			// Join two phrases if the previous was a single character word.
-			// Joining single characters breaks GDF compatibility completely,
-			// but Shareaza 2.2 and above are not really following GDF about
-			// word length limit for ASIAN chars, so merging needs to be done.
-			if ( nPos > nNextWord )
-			{
-				strWord = strPhrase.Mid( nNextWord, nPos - nNextWord );
-				MakeKeywords( oFile, strWord, boundary[ 0 ], bAdd, bCanUpload );
-			}
-			nNextWord = nPos;
-			nNextWord += ( bCharacter ? 0 : 1 );
-		}
-	}
-
-	strWord = strPhrase.Right( nPos - nNextWord );
-	MakeKeywords( oFile, strWord, boundary[ 0 ], bAdd, bCanUpload );
-}
-
-//////////////////////////////////////////////////////////////////////
-// CLibraryDictionary keyword maker
-
-void CLibraryDictionary::MakeKeywords(
-	const CLibraryFile& oFile, const CString& strWord, WORD nWordType,
-	bool bAdd, bool bCanUpload)
-{
-	const int nLength = strWord.GetLength();
-
-	if ( !nLength )
-		return;
-
-	ProcessWord( oFile, strWord, bAdd, bCanUpload );
-
-	if ( nWordType & C3_HIRAGANA )
-	{
-		// Continuous Hiragana string can be structured with a few prefix or
-		// postfix or both. Assume Prefix/Postfix length is MAX 2 chars.
-		// Note: according to GDF, minimum char length for Hiragana is 2 char
-		if ( nLength < 3 )
-			return;
-
-		// take off last 1 char
-		ProcessWord( oFile, strWord.Left( nLength - 1 ), bAdd, bCanUpload );
-
-		// take off first 1 char
-		ProcessWord( oFile, strWord.Right( nLength - 1 ), bAdd, bCanUpload );
-
-		if ( nLength < 4 )
-			return;
-
-		// take off last 2 chars
-		ProcessWord( oFile, strWord.Left( nLength - 2 ), bAdd, bCanUpload );
-
-		// take off first 2 chars
-		ProcessWord( oFile, strWord.Right( nLength - 2 ), bAdd, bCanUpload );
-
-		// take off first 1 & last 1 chars
-		ProcessWord( oFile, strWord.Mid( 1, nLength - 2 ), bAdd, bCanUpload );
-
-		if ( nLength < 5 )
-			return;
-
-		// take off first 1 & last 2 chars
-		ProcessWord( oFile, strWord.Mid( 1, nLength - 3 ), bAdd, bCanUpload );
-
-		// take off first 2 & last 1 chars
-		ProcessWord( oFile, strWord.Mid( 2, nLength - 3 ), bAdd, bCanUpload );
-
-		if ( nLength < 6 )
-			return;
-
-		// take off first 2 & last 2 chars
-		ProcessWord( oFile, strWord.Mid( 2, nLength - 4 ), bAdd, bCanUpload );
-
-		return;
-	}
-
-	if ( nWordType & C3_KATAKANA )
-	{
-		// Continuous Katakana string does not have Prefix or postfix
-		// but can contain a few words in one continuous string
-		// Assume MAX number of Words contained in one continuous Katakana
-		// string as Two words
-		// Note: according to GDF, minimum char length for Katakana is 2 char
-		// moreover, it is not known how long the prefix/postfix
-		// not even the length of chars in one word.
-		if ( nLength < 3 )
-			return;
-
-		for ( int nLen = 2 ; nLen < nLength ; ++nLen )
-		{
-			ProcessWord( oFile, strWord.Left( nLen ), bAdd, bCanUpload );
-			ProcessWord( oFile, strWord.Right( nLen ), bAdd, bCanUpload );
-		}
-
-		return;
-	}
-
-	if ( nWordType & C3_IDEOGRAPH )
-	{
-		// Continuous Kanji string may have Prefix or postfix
-		// but can contain a few words in one continuous string
-		// Assume MAX number of Words contained in one continuous Kanji string
-		// as Two words
-		// Note: according to GDF, minimum char length for Kanji is 1 char
-		// moreover, it is not known how long the prefix/postfix
-		// not even the length of chars in one word.
-		if ( nLength < 2 )
-			return;
-
-		for ( int nLen = 1 ; nLen < nLength ; ++nLen )
-		{
-			ProcessWord( oFile, strWord.Left( nLen ), bAdd, bCanUpload );
-			ProcessWord( oFile, strWord.Right( nLen ), bAdd, bCanUpload );
-		}
-
-		return;
-	}
-
-	if ( Settings.Library.PartialMatch )
-	{
-		if ( nLength < 4 )
-			return;
-
-		ProcessWord( oFile, strWord.Left( nLength - 1 ), bAdd, bCanUpload, true );
-
-		if ( nLength < 5 )
-			return;
-
-		ProcessWord( oFile, strWord.Left( nLength - 2 ), bAdd, bCanUpload, true );
+		ProcessWord( oFile, oKeywords.GetNext( pos ), bAdd, bCanUpload );
 	}
 }
 
@@ -271,7 +115,7 @@ void CLibraryDictionary::MakeKeywords(
 
 void CLibraryDictionary::ProcessWord(
 	const CLibraryFile& oFile, const CString& strWord, bool bAdd,
-	bool bCanUpload, bool bPartial)
+	bool bCanUpload)
 {
 	CWord oWord;
 	if ( m_oWordMap.Lookup( strWord, oWord ) )
@@ -281,8 +125,8 @@ void CLibraryDictionary::ProcessWord(
 			if ( oWord.m_pList->GetTail() != &oFile )
 			{
 				oWord.m_pList->AddTail( &oFile );
-				if ( bCanUpload && m_bValid && ! bPartial && ! m_pTable->CheckString( strWord ) )
-					m_pTable->AddString( strWord );
+				if ( bCanUpload && m_bValid && ! m_pTable->CheckString( strWord ) )
+					m_pTable->AddExactString( strWord );
 			}
 		}
 		else
@@ -306,35 +150,12 @@ void CLibraryDictionary::ProcessWord(
 	else if ( bAdd )
 	{
 		oWord.m_pList = new CFilePtrList;
-		oWord.m_bPartial = bPartial;
 		oWord.m_pList->AddTail( &oFile );
 		m_oWordMap.SetAt( strWord, oWord );
 
-		if ( bCanUpload && m_bValid && ! bPartial )
-			m_pTable->AddString( strWord );
+		if ( bCanUpload && m_bValid )
+			m_pTable->AddExactString( strWord );
 	}
-}
-
-//////////////////////////////////////////////////////////////////////
-// CLibraryDictionary add hashes to query table
-
-void CLibraryDictionary::AddHashes(const CLibraryFile& oFile)
-{
-	//Add the hashes to the table
-	if ( oFile.m_oSHA1 )
-		m_pTable->AddExactString( oFile.m_oSHA1.toUrn() );
-
-	if ( oFile.m_oTiger )
-		m_pTable->AddExactString( oFile.m_oTiger.toUrn() );
-
-	if ( oFile.m_oED2K )
-		m_pTable->AddExactString( oFile.m_oED2K.toUrn() );
-
-	if ( oFile.m_oBTH )
-		m_pTable->AddExactString( oFile.m_oBTH.toUrn() );
-
-	if ( oFile.m_oMD5 )
-		m_pTable->AddExactString( oFile.m_oMD5.toUrn() );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -368,10 +189,10 @@ void CLibraryDictionary::BuildHashTable()
 			const CLibraryFile& oFile = *oWord.m_pList->GetNext( pos );
 
 			// Check if the file can be uploaded
-			if ( oFile.IsShared() && ! oWord.m_bPartial )
+			if ( oFile.IsShared() )
 			{
 				// Add the keyword to the table
-				m_pTable->AddString( strWord );
+				m_pTable->AddExactString( strWord );
 				break;
 			}
 		}
@@ -384,7 +205,7 @@ void CLibraryDictionary::BuildHashTable()
 
 		// Check if the file can be uploaded
 		if ( oFile.IsShared() )
-			AddHashes( oFile );
+			m_pTable->AddHashes( oFile );
 	}
 
 	m_bValid = true;

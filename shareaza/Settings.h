@@ -128,7 +128,6 @@ public:
 	{
 		bool		WatchFolders;
 		DWORD		WatchFoldersTimeout;
-		bool		PartialMatch;
 		bool		VirtualFiles;
 		bool		SourceMesh;
 		DWORD		SourceExpire;

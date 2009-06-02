@@ -61,9 +61,7 @@ private:
 
 	void					ProcessFile(const CLibraryFile& oFile, bool bAdd, bool bCanUpload);
 	void					ProcessPhrase(const CLibraryFile& oFile, const CString& strPhrase, bool bAdd, bool bCanUpload);
-	void					MakeKeywords(const CLibraryFile& oFile, const CString& strWord, WORD nWordType, bool bAdd, bool bCanUpload);
-	void					ProcessWord(const CLibraryFile& oFile, const CString& strWord, bool bAdd, bool bCanUpload, bool bPartial = false);
-	void					AddHashes(const CLibraryFile& oFile);
+	void					ProcessWord(const CLibraryFile& oFile, const CString& strWord, bool bAdd, bool bCanUpload);
 };
 
 extern CLibraryDictionary LibraryDictionary;
