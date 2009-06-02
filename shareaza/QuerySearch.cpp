@@ -1269,27 +1269,20 @@ BOOL CQuerySearch::CheckValid(bool bExpression)
 
 BOOL CQuerySearch::Match(LPCTSTR pszFilename, QWORD nSize, LPCTSTR pszSchemaURI, CXMLElement* pXML, const Hashes::Sha1Hash& oSHA1, const Hashes::TigerHash& oTiger, const Hashes::Ed2kHash& oED2K, const Hashes::BtHash& oBTH, const Hashes::Md5Hash& oMD5) const
 {
-	if ( nSize == SIZE_UNKNOWN || nSize < m_nMinSize || nSize > m_nMaxSize ) return FALSE;
+	if ( nSize == SIZE_UNKNOWN || nSize < m_nMinSize || nSize > m_nMaxSize )
+		return FALSE;
 
-	if ( m_oSHA1 )
+	if (  (	validAndEqual  ( oSHA1,	m_oSHA1	 ) ||
+			validAndEqual  ( oTiger,m_oTiger ) ||
+			validAndEqual  ( oED2K,	m_oED2K	 ) ||
+			validAndEqual  ( oMD5,	m_oMD5	 ) ||
+			validAndEqual  ( oBTH,	m_oBTH	 ) ) &&
+		! (	validAndUnequal( oSHA1,	m_oSHA1	 ) ||
+			validAndUnequal( oTiger,m_oTiger ) ||
+			validAndUnequal( oED2K,	m_oED2K	 ) ||
+			validAndUnequal( oMD5,	m_oMD5	 ) ) ) // without BTH
 	{
-		return validAndEqual( m_oSHA1, oSHA1 );
-	}
-	else if ( m_oTiger )
-	{
-		return validAndEqual( oTiger, m_oTiger );
-	}
-	else if ( m_oED2K )
-	{
-		return validAndEqual( oED2K, m_oED2K );
-	}
-	else if ( m_oBTH )
-	{
-		return validAndEqual( oBTH, m_oBTH );
-	}
-	else if ( m_oMD5 )
-	{
-		return validAndEqual( oMD5, m_oMD5 );
+		return TRUE;
 	}
 
 	if ( pszSchemaURI && *pszSchemaURI && pXML )
@@ -1304,7 +1297,7 @@ BOOL CQuerySearch::Match(LPCTSTR pszFilename, QWORD nSize, LPCTSTR pszSchemaURI,
 			if ( MatchMetadataShallow( pszSchemaURI, pXML, &bReject ) )
 			{
 				// If searching in Local library return true
-				if ( !m_oSHA1 && !m_oTiger && !m_oED2K && !m_oBTH && !m_oMD5 && !m_oSimilarED2K )
+				if ( ! IsHashed() && ! m_oSimilarED2K )
 					return TRUE;
 
 				// Otherwise, only return WordMatch when negative terms are used
@@ -1331,8 +1324,12 @@ BOOL CQuerySearch::Match(LPCTSTR pszFilename, QWORD nSize, LPCTSTR pszSchemaURI,
 				return FALSE;
 		}
 	}
+
 	// If it's a search for similar files, the text doesn't have to match
-	return m_oSimilarED2K || m_sKeywords.GetLength() && WordMatch( pszFilename, m_sKeywords );
+	if ( m_oSimilarED2K )
+		return TRUE;
+
+	return m_sKeywords.GetLength() && WordMatch( pszFilename, m_sKeywords );
 }
 
 TRISTATE CQuerySearch::MatchMetadata(LPCTSTR pszSchemaURI, CXMLElement* pXML) const
