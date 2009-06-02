@@ -71,9 +71,17 @@ public:
 	}
 	
 	// Printable file size
-	inline QWORD GetSize() const
+	inline QWORD GetSize() const throw()
 	{
 		return ( ( m_nSize == SIZE_UNKNOWN ) ? 0 : m_nSize );
+	}
+
+	// Get file name suitable for searching
+	virtual CString GetSearchName() const
+	{
+		CString sName = m_sName;
+		ToLower( sName );
+		return sName;
 	}
 
 // Automation

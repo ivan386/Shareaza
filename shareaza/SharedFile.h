@@ -81,7 +81,7 @@ public:
 	BOOL			m_bNewFile;
 
 	CString			GetPath() const;
-	CString			GetSearchName() const;
+	virtual CString	GetSearchName() const;
 	bool			IsShared(bool bIgnoreOverride = false) const;
 	void			SetShared(bool bShared, bool bOverride = false);
 	inline BOOL		IsSharedOverride() const { return m_bShared != TRI_UNKNOWN; }
