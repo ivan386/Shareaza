@@ -1134,6 +1134,7 @@ int CQueryHashTable::Add(LPCTSTR pszString, size_t nStart, size_t nLength)
 
 	m_nCookie = GetTickCount();
 
+	TRACE( _T("[QHT] \"%hs\"\n"), (LPCSTR)CT2A( CString( pszString + nStart, nLength ) ) );
 	DWORD nHash	= HashWord( pszString, nStart, nLength, m_nBits );
 	BYTE* pHash	= m_pHash + ( nHash >> 3 );
 	BYTE nMask	= BYTE( 1 << ( nHash & 7 ) );
@@ -1146,6 +1147,7 @@ int CQueryHashTable::Add(LPCTSTR pszString, size_t nStart, size_t nLength)
 
 	if ( nLength >= 5 )
 	{
+		TRACE( _T("[QHT] \"%hs\"\n"), (LPCSTR)CT2A( CString( pszString + nStart, nLength - 1 ) ) );
 		nHash	= HashWord( pszString, nStart, nLength - 1, m_nBits );
 		pHash	= m_pHash + ( nHash >> 3 );
 		nMask	= BYTE( 1 << ( nHash & 7 ) );
@@ -1156,6 +1158,7 @@ int CQueryHashTable::Add(LPCTSTR pszString, size_t nStart, size_t nLength)
 			*pHash &= ~nMask;
 		}
 
+		TRACE( _T("[QHT] \"%hs\"\n"), (LPCSTR)CT2A( CString( pszString + nStart, nLength - 2 ) ) );
 		nHash	= HashWord( pszString, nStart, nLength - 2, m_nBits );
 		pHash	= m_pHash + ( nHash >> 3 );
 		nMask	= BYTE( 1 << ( nHash & 7 ) );
@@ -1179,6 +1182,7 @@ int CQueryHashTable::AddExact(LPCTSTR pszString, size_t nStart, size_t nLength)
 
 	m_nCookie = GetTickCount();
 	
+	TRACE( _T("[QHT] \"%hs\"\n"), (LPCSTR)CT2A( CString( pszString + nStart, nLength ) ) );
 	DWORD nHash	= HashWord( pszString, nStart, nLength, m_nBits );
 	BYTE* pHash	= m_pHash + ( nHash >> 3 );
 	BYTE nMask	= BYTE( 1 << ( nHash & 7 ) );
