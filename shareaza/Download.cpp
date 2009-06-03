@@ -398,20 +398,26 @@ void CDownload::OnRun()
 					}
 					SetModified();
 				}
-
-				RunValidation();
-
-				if ( IsComplete() && IsFileOpen() )
+				else if ( ! IsMoving() )
 				{
-					if ( ValidationCanFinish() )
-						OnDownloaded();
+					RunValidation();
+
+					if ( IsComplete() && IsFileOpen() )
+					{
+						if ( ValidationCanFinish() )
+							OnDownloaded();
+					}
+					else if ( CheckTorrentRatio() )
+					{
+						if ( Network.IsConnected() )
+							StartTransfersIfNeeded( tNow );
+						else
+							m_tBegan = 0;
+					}
 				}
-				else if ( CheckTorrentRatio() )
+				else if ( ! IsFileOpen() && ! m_bComplete && ! IsTasking() )
 				{
-					if ( Network.IsConnected() )
-						StartTransfersIfNeeded( tNow );
-					else
-						m_tBegan = 0;
+					OnDownloaded();
 				}
 			} // if ( RunTorrent( tNow ) )
 
