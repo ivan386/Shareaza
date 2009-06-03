@@ -37,7 +37,7 @@ static char THIS_FILE[]=__FILE__;
 // CDownloadBase construction
 
 CDownloadBase::CDownloadBase() :
-	m_bSHA1Trusted		( false )
+m_bSHA1Trusted		( false )
 ,	m_bTigerTrusted		( false )
 ,	m_bED2KTrusted		( false )
 ,	m_bBTHTrusted		( false )
@@ -52,13 +52,48 @@ CDownloadBase::~CDownloadBase()
 }
 
 //////////////////////////////////////////////////////////////////////
+// CDownloadBase check if a task is already running
 
-BOOL CDownloadBase::SetNewTask(CDownloadTask* pTask)
+bool CDownloadBase::IsTasking() const
 {
-	if ( IsTasking() || pTask == NULL ) return FALSE;
+	return m_pTask != NULL;
+}
 
+//////////////////////////////////////////////////////////////////////
+// CDownloadBase set a new running task
+
+void CDownloadBase::SetTask(CDownloadTask* pTask)
+{
 	m_pTask = pTask;
-	return TRUE;
+}
+
+//////////////////////////////////////////////////////////////////////
+// CDownloadBase return currently running task
+
+DWORD CDownloadBase::GetTaskType() const
+{
+	return m_pTask->GetTaskType();
+}
+
+//////////////////////////////////////////////////////////////////////
+// CDownloadBase check if a task is the same as the currently running one
+
+bool CDownloadBase::CheckTask(CDownloadTask* pTask) const
+{
+	return m_pTask == pTask;
+}
+
+//////////////////////////////////////////////////////////////////////
+// CDownloadBase cancel currently running task
+
+void CDownloadBase::AbortTask()
+{
+	if ( !IsTasking() )
+		return;
+
+	m_pTask->Abort();
+
+	m_pTask = NULL;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -66,7 +101,7 @@ BOOL CDownloadBase::SetNewTask(CDownloadTask* pTask)
 
 void CDownloadBase::SetModified()
 {
-	m_nCookie ++;
+	++m_nCookie;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -79,13 +114,13 @@ void CDownloadBase::Serialize(CArchive& ar, int nVersion)
 		ar << m_sName;
 		ar << m_sSearchKeyword;
 		ar << m_nSize;
-        SerializeOut( ar, m_oSHA1 );
+		SerializeOut( ar, m_oSHA1 );
 		ar << (uint32)m_bSHA1Trusted;
-        SerializeOut( ar, m_oTiger );
+		SerializeOut( ar, m_oTiger );
 		ar << (uint32)m_bTigerTrusted;
-        SerializeOut( ar, m_oMD5 );
+		SerializeOut( ar, m_oMD5 );
 		ar << (uint32)m_bMD5Trusted;
-        SerializeOut( ar, m_oED2K );
+		SerializeOut( ar, m_oED2K );
 		ar << (uint32)m_bED2KTrusted;
 		SerializeOut( ar, m_oBTH );
 		ar << (uint32)m_bBTHTrusted;
@@ -109,19 +144,19 @@ void CDownloadBase::Serialize(CArchive& ar, int nVersion)
 			m_nSize = nSize;
 		}
 		uint32 b;
-        SerializeIn( ar, m_oSHA1, nVersion );
+		SerializeIn( ar, m_oSHA1, nVersion );
 		ar >> b;
 		m_bSHA1Trusted = b != 0;
-        SerializeIn( ar, m_oTiger, nVersion );
+		SerializeIn( ar, m_oTiger, nVersion );
 		ar >> b;
 		m_bTigerTrusted = b != 0;
-        if ( nVersion >= 22 )
+		if ( nVersion >= 22 )
 		{
 			SerializeIn( ar, m_oMD5, nVersion );
 			ar >> b;
 			m_bMD5Trusted = b != 0;
 		}
-        if ( nVersion >= 13 )
+		if ( nVersion >= 13 )
 		{
 			SerializeIn( ar, m_oED2K, nVersion );
 			ar >> b;

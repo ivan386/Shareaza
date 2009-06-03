@@ -600,7 +600,7 @@ BOOL CQuerySearch::WriteHashesToEDPacket(CEDPacket* pPacket, BOOL bUDP)
 		if ( pDownload->m_oED2K &&					// Must have an ed2k hash
 			 pDownload->IsTrying() &&				// Must be active
 			 pDownload->m_nSize < 0xFFFFFFFF &&		// Must have a valid size
-			 pDownload->IsCompleted() == FALSE &&	// Must not be complete
+			 pDownload->IsCompleted() == false &&	// Must not be complete
 			 pDownload->NeedHashset() == FALSE &&	// Must have hashset
 			 validAndUnequal( pDownload->m_oED2K, m_oED2K ) )// Must not be already added to packet
 		{

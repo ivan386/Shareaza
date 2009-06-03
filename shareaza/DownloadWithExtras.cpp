@@ -66,21 +66,21 @@ CDownloadWithExtras::~CDownloadWithExtras()
 BOOL CDownloadWithExtras::PreviewFile(DWORD nIndex, CSingleLock* pLock)
 {
 	DeletePreviews();
-	
+
 	if ( ! CanPreview( nIndex ) )
 		return FALSE;
-	
+
 	ASSERT( m_pPreviewWnd == NULL );
 	m_pPreviewWnd = new CFilePreviewDlg( this, nIndex );
-	
+
 	if ( pLock ) pLock->Unlock();
-	
+
 	m_pPreviewWnd->Create();
 	m_pPreviewWnd->ShowWindow( SW_SHOWNORMAL );
 	m_pPreviewWnd->BringWindowToTop();
-	
+
 	if ( pLock ) pLock->Lock();
-	
+
 	return TRUE;
 }
 
@@ -110,11 +110,11 @@ void CDownloadWithExtras::DeletePreviews()
 	{
 		POSITION posRemove = pos;
 		CString strPath = m_pPreviews.GetNext( pos );
-		
+
 		if ( DeleteFileEx( strPath, FALSE, FALSE, TRUE ) )
 			m_pPreviews.RemoveAt( posRemove );
 	}
-	
+
 	SetModified();
 }
 
@@ -124,21 +124,21 @@ void CDownloadWithExtras::DeletePreviews()
 BOOL CDownloadWithExtras::AddReview(IN_ADDR* pIP, int nClientID, int nRating, LPCTSTR pszUserName, LPCTSTR pszComment)
 {
 	// If we have too may reviews, then exit
-	if ( m_nReviewCount > Settings.Downloads.MaxReviews ) 
+	if ( m_nReviewCount > Settings.Downloads.MaxReviews )
 	{
 		theApp.Message( MSG_DEBUG, _T("Maximum number of reviews reached") );
 		return FALSE;
 	}
 
 	// If we already have a review from this IP, then exit
-	if ( FindReview( pIP ) ) 
+	if ( FindReview( pIP ) )
 	{
 		theApp.Message( MSG_DEBUG, _T("Ignoring multiple reviews from %s"), inet_ntoa( *pIP ) );
 		return FALSE;
 	}
 
 	// If we already have a review from this user name with the same data, then exit
-	if ( FindReview( nRating, pszUserName, pszComment ) ) 
+	if ( FindReview( nRating, pszUserName, pszComment ) )
 	{
 		theApp.Message( MSG_DEBUG, _T("Ignoring duplicate review from %s"), inet_ntoa( *pIP ) );
 		return FALSE;
@@ -150,7 +150,7 @@ BOOL CDownloadWithExtras::AddReview(IN_ADDR* pIP, int nClientID, int nRating, LP
 
 	pReview->m_pPrev = m_pReviewLast;
 	pReview->m_pNext = NULL;
-		
+
 	if ( m_pReviewLast != NULL )
 	{
 		m_pReviewLast->m_pNext = pReview;
@@ -168,7 +168,7 @@ BOOL CDownloadWithExtras::AddReview(IN_ADDR* pIP, int nClientID, int nRating, LP
 BOOL CDownloadWithExtras::AddReview(CDownloadReview* pReview)
 {
 	// If we have too may reviews, then exit
-	if ( m_nReviewCount > Settings.Downloads.MaxReviews ) 
+	if ( m_nReviewCount > Settings.Downloads.MaxReviews )
 	{
 		theApp.Message( MSG_DEBUG, _T("Maximum number of reviews reached") );
 		delete pReview;
@@ -180,7 +180,7 @@ BOOL CDownloadWithExtras::AddReview(CDownloadReview* pReview)
 
 	pReview->m_pPrev = m_pReviewLast;
 	pReview->m_pNext = NULL;
-		
+
 	if ( m_pReviewLast != NULL )
 	{
 		m_pReviewLast->m_pNext = pReview;
@@ -297,8 +297,8 @@ CDownloadReview* CDownloadWithExtras::FindReview(int nRating, LPCTSTR pszName, L
 
 	while ( pReview )
 	{
-		if ( ( pReview->m_nFileRating == nRating ) && 
-			 ( _tcscmp( pReview->m_sUserName, pszName ) == 0 ) && 
+		if ( ( pReview->m_nFileRating == nRating ) &&
+			 ( _tcscmp( pReview->m_sUserName, pszName ) == 0 ) &&
 			 ( _tcscmp( pReview->m_sFileComments, pszComment ) == 0 ) )
 			return pReview;
 		pReview = pReview->m_pNext;
@@ -342,15 +342,15 @@ void CDownloadWithExtras::ShowMonitor(CSingleLock* pLock)
 		if ( !pLock->Unlock() )
 			return;
 	}
-	
+
 	if ( m_pMonitorWnd == NULL )
 	{
 		m_pMonitorWnd = new CDownloadMonitorDlg( (CDownload*)this );
 	}
-	
+
 	m_pMonitorWnd->ShowWindow( SW_SHOWNORMAL );
 	m_pMonitorWnd->BringWindowToTop();
-	
+
 	if ( bLocked ) pLock->Lock();
 }
 
@@ -365,11 +365,11 @@ BOOL CDownloadWithExtras::IsMonitorVisible() const
 void CDownloadWithExtras::Serialize(CArchive& ar, int nVersion)
 {
 	CDownloadWithSearch::Serialize( ar, nVersion );
-	
+
 	if ( ar.IsStoring() )
 	{
 		ar.WriteCount( m_pPreviews.GetCount() );
-		
+
 		for ( POSITION pos = m_pPreviews.GetHeadPosition() ; pos ; )
 		{
 			ar << m_pPreviews.GetNext( pos );
@@ -427,7 +427,7 @@ void CDownloadWithExtras::OnPreviewRequestComplete(CDownloadTask* pTask)
 	DWORD nBuffer = pBuffer->m_nLength;
 	auto_array< BYTE > pBytes( new BYTE[ nBuffer ] );
 	CopyMemory( pBytes.get(), pBuffer->m_pBuffer, nBuffer );
-	CString strURN = pTask->m_pRequest.GetHeader( L"X-Previewed-URN" );
+	CString strURN = pTask->GetRequest()->GetHeader( L"X-Previewed-URN" );
 
 	if ( ! pImage.LoadFromMemory( L".jpg", pBytes.get(), nBuffer, FALSE, TRUE ) )
 	{
@@ -495,7 +495,7 @@ CDownloadReview::CDownloadReview(in_addr *pIP, int nUserPicture, int nRating, LP
 
 CDownloadReview::~CDownloadReview()
 {
-	// If a preview pic or any other dynamically added item is ever added to the review, remember 
+	// If a preview pic or any other dynamically added item is ever added to the review, remember
 	// to delete it here.
 
 }

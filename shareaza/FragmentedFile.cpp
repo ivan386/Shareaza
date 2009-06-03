@@ -581,8 +581,8 @@ DWORD CFragmentedFile::Move(DWORD nIndex, LPCTSTR pszDestination, LPPROGRESS_ROU
 			(LPCTSTR)sPath, (LPCTSTR)strTargetDir );
 
 	// Close chained uploads
-	while( ! Uploads.OnRename( sPath ) )
-		Sleep( 250ul );
+	while( !Uploads.OnRename( sPath ) )
+		SwitchToThread();
 
 	// Create directory for file recursively
 	BOOL bSuccess = CreateDirectory( strTargetDir );
@@ -610,8 +610,8 @@ DWORD CFragmentedFile::Move(DWORD nIndex, LPCTSTR pszDestination, LPPROGRESS_ROU
 
 	if ( ! bSkip )
 		// ReEnable uploads
-		while( ! Uploads.OnRename( sPath, bSuccess ? strTarget : sPath ) )
-			Sleep( 250ul );
+		while( !Uploads.OnRename( sPath, bSuccess ? strTarget : sPath ) )
+			SwitchToThread();
 
 	return ( bSuccess ? ERROR_SUCCESS : dwError );
 }

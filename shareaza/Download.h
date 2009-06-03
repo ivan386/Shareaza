@@ -57,83 +57,46 @@ private:
 	BOOL		m_bPaused;
 	BOOL		m_bBoosted;
 	BOOL		m_bShared;
-	BOOL		m_bComplete;
+	bool		m_bComplete;
 	DWORD		m_tSaved;
 	DWORD		m_tBegan;		// The time when this download began trying to download (Started
 								// searching, etc). 0 means has not tried this session.
-	BOOL		m_bDownloading;	// This is used to store if a download is downloading. (Performance tweak)
+	bool		m_bDownloading;	// This is used to store if a download is downloading. (Performance tweak)
 								// You should count the transfers if you need a 100% current answer.
 // Operations
 public:
-	void			Pause(BOOL bRealPause = TRUE);
-	void			Resume();
-	void			Remove(bool bDelete = false);
-	void			Boost();
-	void			Share(BOOL bShared);
-	BOOL			Rename(LPCTSTR pszName);
-	void			SetStartTimer();
-	BOOL			Launch(int nIndex, CSingleLock* pLock, BOOL bForceOriginal);
-	BOOL			Enqueue(int nIndex, CSingleLock* pLock);
-
-	inline DWORD GetStartTimer() const
-	{
-		return( m_tBegan );
-	}
-
-	// Has the download actually downloaded anything?
-	inline BOOL IsStarted() const
-	{
-		return ( GetVolumeComplete() > 0 );
-	}
-
-	inline BOOL IsPaused( BOOL bRealState = FALSE ) const
-	{
-		return ( bRealState ? m_bPaused : m_bTempPaused );
-	}
-
-	// Is the download receiving data?
-	inline BOOL IsDownloading() const
-	{
-		return m_bDownloading;
-	}
-
-	inline BOOL IsCompleted() const
-	{
-		return m_bComplete;
-	}
-
-	inline BOOL IsBoosted() const
-	{
-		return m_bBoosted;
-	}
-
-	inline BOOL IsShared() const
-	{
-		return ! IsPaused(TRUE) ? m_bShared ||
-			( Settings.BitTorrent.EnableToday && IsTorrent() && ( IsSeeding() || IsStarted() ) ) ||
-			( Settings.eDonkey.EnableToday && m_oED2K ) : m_bShared;
-	}
-
-	// Is the download currently trying to download?
-	inline BOOL IsTrying() const
-	{
-		return ( m_tBegan != 0 );
-	}
-
-	BOOL			Load(LPCTSTR pszPath);
-	BOOL			Save(BOOL bFlush = FALSE);
-	virtual void	Serialize(CArchive& ar, int nVersion);
-	void			OnRun();
-	void			ForceComplete();
-
+	void		Pause(BOOL bRealPause = TRUE);
+	void		Resume();
+	void		Remove(bool bDelete = false);
+	void		Boost();
+	void		Share(BOOL bShared);
+	bool		Rename(const CString strName);
+	void		SetStartTimer();
+	bool		IsStarted() const;		// Has the download actually downloaded anything?
+	bool		IsDownloading() const;	// Is the download receiving data?
+	bool		IsBoosted() const;
+	bool		IsShared() const;
+	BOOL		Load(LPCTSTR pszPath);
+	BOOL		Save(BOOL bFlush = FALSE);
+	void		OnRun();
+	void		ForceComplete();
+	BOOL		Launch(int nIndex, CSingleLock* pLock, BOOL bForceOriginal);
+	BOOL		Enqueue(int nIndex, CSingleLock* pLock);
+	void		OnTaskComplete(CDownloadTask* pTask);
 private:
-	void			StopTrying();
-	void			OnTaskComplete(CDownloadTask* pTask);
-	void			OnDownloaded();
-	void			OnMoved(CDownloadTask* pTask);
-	void			SerializeOld(CArchive& ar, int nVersion);
+	void		StopTrying();
+	DWORD		GetStartTimer() const;
+	void		OnDownloaded();
+	void		OnMoved();
+	void		SerializeOld(CArchive& ar, int nVersion);
 
-	friend class CDownloadTask;			// m_pTask && OnTaskComplete
+// Overrides
+public:
+	virtual bool	IsPaused(bool bRealState = false) const;
+	virtual bool	IsCompleted() const;
+	virtual bool	IsTrying() const;		//Is the download currently trying to download?
+	virtual void	Serialize(CArchive& ar, int nVersion);
+
 	friend class CDownloadTransfer;		// GetVerifyLength
 	friend class CDownloadWithTorrent;	// m_bComplete
 	friend class CDownloadsWnd;			// m_pTask

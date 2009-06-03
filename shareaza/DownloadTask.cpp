@@ -45,8 +45,6 @@ static char THIS_FILE[] = __FILE__;
 IMPLEMENT_DYNAMIC(CDownloadTask, CRazaThread)
 
 BEGIN_MESSAGE_MAP(CDownloadTask, CRazaThread)
-	//{{AFX_MSG_MAP(CDownloadTask)
-	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 const DWORD BUFFER_SIZE = 2 * 1024 * 1024u;
@@ -55,9 +53,9 @@ const DWORD BUFFER_SIZE = 2 * 1024 * 1024u;
 /////////////////////////////////////////////////////////////////////////////
 // CDownloadTask construction
 
-CDownloadTask::CDownloadTask(CDownload* pDownload, dtask nTask,
-							 LPCTSTR szParam1 /*=NULL*/)
-:	m_nTask				( nTask )
+CDownloadTask::CDownloadTask(CDownload* pDownload, dtask nTask, LPCTSTR szParam1 /*=NULL*/) :
+	m_nTask				( nTask )
+,	m_pRequest			( NULL )
 ,	m_bSuccess			( false )
 ,	m_sFilename			( pDownload->m_sPath )
 ,	m_sDestination		( DownloadGroups.GetCompletedPath( pDownload ).TrimRight( _T("\\") ) )
@@ -67,14 +65,15 @@ CDownloadTask::CDownloadTask(CDownload* pDownload, dtask nTask,
 ,	m_posTorrentFile	( NULL )
 ,	m_pEvent			( NULL )
 {
-	ASSERT( pDownload->m_pTask == NULL );
-	pDownload->m_pTask = this;
+	ASSERT( !pDownload->IsTasking() );
+	pDownload->SetTask( this );
 
 	if ( m_nTask == dtaskPreviewRequest )
 	{
-		m_pRequest.SetURL( szParam1 );
-		m_pRequest.AddHeader( _T("Accept"), _T("image/jpeg") );
-		m_pRequest.LimitContentLength( Settings.Search.MaxPreviewLength );
+		m_pRequest = new CHttpRequest();
+		m_pRequest->SetURL( szParam1 );
+		m_pRequest->AddHeader( _T("Accept"), _T("image/jpeg") );
+		m_pRequest->LimitContentLength( Settings.Search.MaxPreviewLength );
 	}
 	else if ( m_nTask == dtaskMergeFile )
 	{
@@ -97,15 +96,14 @@ CDownloadTask::~CDownloadTask()
 	Transfers.m_pSection.Lock();
 
 	if ( Downloads.Check( m_pDownload ) )
-	{
 		m_pDownload->OnTaskComplete( this );
-		ASSERT( m_pDownload->m_pTask != this );
-	}
 
 	CEvent* pEvent = m_pEvent;
 	Transfers.m_pSection.Unlock();
-	if ( pEvent != NULL )
+	if ( pEvent )
 		pEvent->SetEvent();
+
+	delete m_pRequest;
 
 	if ( bCOM )
 		OleUninitialize();
@@ -119,6 +117,16 @@ bool CDownloadTask::HasSucceeded() const
 DWORD CDownloadTask::GetFileError() const
 {
 	return m_nFileError;
+}
+
+DWORD CDownloadTask::GetTaskType() const
+{
+	return m_nTask;
+}
+
+const CHttpRequest* CDownloadTask::GetRequest() const
+{
+	return m_pRequest;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -241,7 +249,7 @@ DWORD CALLBACK CDownloadTask::CopyProgressRoutine(LARGE_INTEGER /*TotalFileSize*
 
 void CDownloadTask::RunPreviewRequest()
 {
-	m_pRequest.Execute( FALSE ); // without threading
+	m_pRequest->Execute( FALSE ); // without threading
 }
 
 void CDownloadTask::RunMerge()
@@ -484,19 +492,19 @@ void CDownloadTask::CreatePathForFile(const CString& strBase, const CString& str
 
 CBuffer* CDownloadTask::IsPreviewAnswerValid()
 {
-	if ( m_nTask != dtaskPreviewRequest || !m_pRequest.IsFinished() )
+	if ( m_nTask != dtaskPreviewRequest || !m_pRequest->IsFinished() )
 		return NULL;
 
-	m_pRequest.GetStatusCode();
+	m_pRequest->GetStatusCode();
 
-	if ( m_pRequest.GetStatusSuccess() == FALSE )
+	if ( m_pRequest->GetStatusSuccess() == FALSE )
 	{
 		theApp.Message( MSG_DEBUG, L"Preview failed: HTTP status code %i",
-			m_pRequest.GetStatusCode() );
+			m_pRequest->GetStatusCode() );
 		return NULL;
 	}
 
-	CString strURN = m_pRequest.GetHeader( L"X-Previewed-URN" );
+	CString strURN = m_pRequest->GetHeader( L"X-Previewed-URN" );
 
 	if ( strURN.GetLength() )
 	{
@@ -523,7 +531,7 @@ CBuffer* CDownloadTask::IsPreviewAnswerValid()
 		}
 	}
 
-	CString strMIME = m_pRequest.GetHeader( L"Content-Type" );
+	CString strMIME = m_pRequest->GetHeader( L"Content-Type" );
 
 	if ( strMIME.CompareNoCase( L"image/jpeg" ) != 0 )
 	{
@@ -531,6 +539,6 @@ CBuffer* CDownloadTask::IsPreviewAnswerValid()
 		return NULL;
 	}
 
-	CBuffer* pBuffer = m_pRequest.GetResponseBuffer();
+	CBuffer* pBuffer = m_pRequest->GetResponseBuffer();
 	return pBuffer;
 }

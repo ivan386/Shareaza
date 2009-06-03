@@ -1,7 +1,7 @@
 //
 // DownloadWithTiger.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -18,9 +18,6 @@
 // along with Shareaza; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
-
-#if !defined(AFX_DOWNLOADWITHTIGER_H__8F105434_164D_4F58_BAA4_8DB2B29CA259__INCLUDED_)
-#define AFX_DOWNLOADWITHTIGER_H__8F105434_164D_4F58_BAA4_8DB2B29CA259__INCLUDED_
 
 #pragma once
 
@@ -41,12 +38,12 @@ private:
 	DWORD		m_nTigerBlock;
 	DWORD		m_nTigerSize;
 	DWORD		m_nTigerSuccess;
-private:
+
 	CED2K		m_pHashset;
 	BYTE*		m_pHashsetBlock;
 	DWORD		m_nHashsetBlock;
 	DWORD		m_nHashsetSuccess;
-private:
+
 	DWORD		m_nVerifyCookie;
 	int			m_nVerifyHash;
 	DWORD		m_nVerifyBlock;
@@ -66,23 +63,25 @@ public:
 	BOOL		NeedHashset() const;
 	BOOL		SetHashset(BYTE* pSource, DWORD nSource);
 	CED2K*		GetHashset();
-	virtual CString	GetAvailableRanges() const;
 	void		ResetVerification();
 	void		ClearVerification();
+	void		RunValidation();
 protected:
 	QWORD		GetVerifyLength(int nHash = HASH_NULL) const;
 	BOOL		ValidationCanFinish() const;
-	void		RunValidation();
-	virtual void	Serialize(CArchive& ar, int nVersion);
 private:
 	DWORD		GetValidationCookie() const;
 	BOOL		FindNewValidationBlock(int nHash);
 	void		ContinueValidation();
 	void		FinishValidation();
 	void		SubtractHelper(Fragments::List& ppCorrupted, BYTE* pBlock, QWORD nBlock, QWORD nSize);
-	
+
+// Overrides
+public:
+	virtual CString	GetAvailableRanges() const;
+protected:
+	virtual void	Serialize(CArchive& ar, int nVersion);
+
 	friend class CEDClient; // AddSourceED2K && m_nHashsetBlock && m_pHashsetBlock
 	friend class CDownloadTipCtrl;
 };
-
-#endif // !defined(AFX_DOWNLOADWITHTIGER_H__8F105434_164D_4F58_BAA4_8DB2B29CA259__INCLUDED_)

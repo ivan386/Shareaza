@@ -51,11 +51,11 @@ static char THIS_FILE[]=__FILE__;
 // CDownloadWithFile construction
 
 CDownloadWithFile::CDownloadWithFile() :
-	m_pFile		( new CFragmentedFile )
-,	m_bVerify	( TRI_UNKNOWN )
-,	m_tReceived	( GetTickCount() )
-,	m_nFileError( ERROR_SUCCESS )
-,	m_bMoving	( FALSE )
+	m_bVerify		( TRI_UNKNOWN )
+,	m_tReceived		( GetTickCount() )
+,	m_bMoving		( false )
+,	m_pFile			( new CFragmentedFile )
+,	m_nFileError	( ERROR_SUCCESS )
 {
 	m_pFile->SetDownload( static_cast< CDownload*>( this ) );
 }
@@ -135,8 +135,13 @@ int CDownloadWithFile::SelectFile(CSingleLock* pLock) const
 	return m_pFile.get() ? m_pFile->SelectFile( pLock ) : -1;
 }
 
+void CDownloadWithFile::SetMoving(bool bMoving)
+{
+	m_bMoving = bMoving;
+}
+
 // Is file under move operation?
-BOOL CDownloadWithFile::IsMoving() const
+bool CDownloadWithFile::IsMoving() const
 {
 	return m_bMoving;
 }
@@ -265,20 +270,21 @@ DWORD CDownloadWithFile::MoveFile(LPCTSTR pszDestination, LPPROGRESS_ROUTINE lpP
 	for( DWORD nIndex = 0; nIndex < m_pFile->GetCount(); ++nIndex )
 	{
 		DWORD dwError = m_pFile->Move( nIndex, pszDestination, lpProgressRoutine, lpData );
-		CString sPath = m_pFile->GetPath( nIndex );
 
 		if ( dwError != ERROR_SUCCESS )
 		{
 			CString strMessage;
 			strMessage.Format( IDS_DOWNLOAD_CANT_MOVE,
-				(LPCTSTR)GetDisplayName(), (LPCTSTR)sPath );
+				GetDisplayName(), pszDestination );
 			theApp.Message( MSG_ERROR, _T("%s %s"),
-				strMessage, (LPCTSTR)GetErrorString( dwError ) );
+				strMessage, GetErrorString( dwError ) );
 			return dwError;
 		}
 
 		// Save download every move
 		static_cast< CDownload* >( this )->Save();
+
+		CString sPath = m_pFile->GetPath( nIndex );
 
 		MarkFileAsDownload( sPath );
 

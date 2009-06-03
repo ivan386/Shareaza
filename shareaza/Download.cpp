@@ -53,28 +53,25 @@ CDownload::CDownload() :
 	m_nSerID		( Downloads.GetFreeSID() )
 ,	m_bExpanded		( Settings.Downloads.AutoExpand )
 ,	m_bSelected		( FALSE )
+,	m_tCompleted	( 0 )
 ,	m_nRunCookie	( 0 )
 ,	m_nSaveCookie	( 0 )
 ,	m_nGroupCookie	( 0 )
 
+,	m_bTempPaused	( FALSE )
 ,	m_bPaused		( FALSE )
 ,	m_bBoosted		( FALSE )
 ,	m_bShared		( Settings.Uploads.SharePartials )
-,	m_bComplete		( FALSE )
-,	m_tCompleted	( 0 )
+,	m_bComplete		( false )
 ,	m_tSaved		( 0 )
 ,	m_tBegan		( 0 )
-,	m_bDownloading	( FALSE )
-,	m_bTempPaused	( FALSE )
+,	m_bDownloading	( false )
 {
 }
 
 CDownload::~CDownload()
 {
-	if ( m_pTask != NULL )
-		m_pTask->Abort();
-	ASSERT( m_pTask == NULL );
-
+	AbortTask();
 	DownloadGroups.Unlink( this );
 }
 
@@ -156,12 +153,7 @@ void CDownload::Remove(bool bDelete)
 {
 	CloseTorrent();
 	CloseTransfers();
-
-	if ( m_pTask != NULL )
-	{
-		m_pTask->Abort();
-		ASSERT( m_pTask == NULL );
-	}
+	AbortTask();
 
 	if ( IsTrying() )
 		Downloads.StopTrying( IsTorrent() );
@@ -217,13 +209,14 @@ void CDownload::Share(BOOL bShared)
 //////////////////////////////////////////////////////////////////////
 // CDownload control : rename
 
-BOOL CDownload::Rename(LPCTSTR pszName)
+bool CDownload::Rename(const CString strName)
 {
 	// Don't bother if renaming to same name.
-	if ( m_sName == pszName ) return FALSE;
+	if ( m_sName == strName )
+		return false;
 
 	// Set new name
-	m_sName = pszName;
+	m_sName = strName;
 
 	SetModified();
 	return TRUE;
@@ -241,7 +234,7 @@ void CDownload::StopTrying()
 		Downloads.StopTrying( IsTorrent() );
 
 	m_tBegan = 0;
-	m_bDownloading	= FALSE;
+	m_bDownloading	= false;
 
 	// if m_bTorrentRequested = TRUE, raza sends Stop
 	// CloseTorrent() additionally closes uploads
@@ -265,12 +258,78 @@ void CDownload::SetStartTimer()
 }
 
 //////////////////////////////////////////////////////////////////////
+// CDownload control : GetStartTimer
+
+DWORD CDownload::GetStartTimer() const
+{
+	return m_tBegan ;
+}
+
+//////////////////////////////////////////////////////////////////////
+// CDownload state checks
+
+bool CDownload::IsStarted() const
+{
+	return GetVolumeComplete() > 0;
+}
+
+bool CDownload::IsPaused(bool bRealState /*= false*/) const
+{
+	if ( bRealState )
+		return m_bPaused != 0;
+	else
+		return m_bTempPaused != 0;
+}
+
+// Is the download receiving data?
+bool CDownload::IsDownloading() const
+{
+	return m_bDownloading;
+}
+
+bool CDownload::IsCompleted() const
+{
+	return m_bComplete;
+}
+
+bool CDownload::IsBoosted() const
+{
+	return m_bBoosted != 0;
+}
+
+// Is the download currently trying to download?
+bool CDownload::IsTrying() const
+{
+	return  m_tBegan != 0 ;
+}
+
+bool CDownload::IsShared() const
+{
+	if ( m_bShared )
+		return true;
+
+	if ( Settings.eDonkey.EnableToday && m_oED2K )
+		return true;
+
+	if ( Settings.BitTorrent.EnableToday && IsTorrent()
+		&& ( IsSeeding() || IsStarted() ) )
+	{
+		return true;
+	}
+
+	return false;
+}
+
+//////////////////////////////////////////////////////////////////////
 // CDownload run handler
 
 void CDownload::OnRun()
 {
+	// Set the currently downloading state
+	// (Used to optimize display in Ctrl/Wnd functions)
+	m_bDownloading = false;
+
 	DWORD tNow = GetTickCount();
-	BOOL bDownloading = FALSE;
 
 	if ( ! m_bTempPaused )
 	{
@@ -281,7 +340,8 @@ void CDownload::OnRun()
 		}
 		else if ( IsMoving() )
 		{
-			// Move process
+			if ( !m_bComplete && !IsTasking() )
+				OnDownloaded();
 		}
 		else if ( IsTrying() || IsSeeding() )
 		{	//This download is trying to download
@@ -338,32 +398,26 @@ void CDownload::OnRun()
 					}
 					SetModified();
 				}
-				else if ( ! IsMoving() )
-				{
-					RunValidation();
 
-					if ( IsComplete() && IsFileOpen() )
-					{
-						if ( ValidationCanFinish() )
-							OnDownloaded();
-					}
-					else if ( CheckTorrentRatio() )
-					{
-						if ( Network.IsConnected() )
-							StartTransfersIfNeeded( tNow );
-						else
-							m_tBegan = 0;
-					}
-				}
-				else if ( ! IsFileOpen() && ! m_bComplete && m_pTask == NULL )
+				RunValidation();
+
+				if ( IsComplete() && IsFileOpen() )
 				{
-					OnDownloaded();
+					if ( ValidationCanFinish() )
+						OnDownloaded();
+				}
+				else if ( CheckTorrentRatio() )
+				{
+					if ( Network.IsConnected() )
+						StartTransfersIfNeeded( tNow );
+					else
+						m_tBegan = 0;
 				}
 			} // if ( RunTorrent( tNow ) )
 
-			// Calculate the currently downloading state
+			// Calculate the current downloading state
 			if( HasActiveTransfers() )
-				bDownloading = TRUE;
+				m_bDownloading = true;
 		}
 		else if ( ! m_bComplete && m_bVerify != TRI_TRUE )
 		{
@@ -391,9 +445,6 @@ void CDownload::OnRun()
 		}
 	}
 
-	// Set the currently downloading state (Used to optimize display in Ctrl/Wnd functions)
-	m_bDownloading = bDownloading;
-
 	// Don't save Downloads with many sources too often, since it's slow
 	if ( tNow - m_tSaved >=
 		( GetCount() > 20 ? 5 * Settings.Downloads.SaveInterval : Settings.Downloads.SaveInterval ) )
@@ -412,27 +463,26 @@ void CDownload::OnRun()
 
 void CDownload::OnDownloaded()
 {
-	ASSERT( m_bComplete == FALSE );
+	ASSERT( m_bComplete == false );
 
-	theApp.Message( MSG_NOTICE, IDS_DOWNLOAD_COMPLETED, (LPCTSTR)GetDisplayName() );
+	theApp.Message( MSG_NOTICE, IDS_DOWNLOAD_COMPLETED, GetDisplayName() );
 	m_tCompleted = GetTickCount();
-	m_bDownloading = FALSE;
+	m_bDownloading = false;
 
 	CloseTransfers();
 
 	// AppendMetadata();
 
-	if ( m_pTask && ( m_pTask->m_nTask == CDownloadTask::dtaskPreviewRequest ||
-		m_pTask->m_nTask == CDownloadTask::dtaskMergeFile ) )
+	if ( IsTasking() && ( GetTaskType() == CDownloadTask::dtaskMergeFile ||
+		GetTaskType() == CDownloadTask::dtaskPreviewRequest ) )
 	{
-		m_pTask->Abort();
+		AbortTask();
 	}
 
-	ASSERT( m_bMoving == FALSE );
-	m_bMoving = TRUE;
+	SetMoving( true );
 
-	ASSERT( m_pTask == NULL );
-	m_pTask = new CDownloadTask( this, CDownloadTask::dtaskCopy );
+	ASSERT( !IsTasking() );
+	SetTask( new CDownloadTask( this, CDownloadTask::dtaskCopy ) );
 
 	SetModified();
 }
@@ -442,40 +492,31 @@ void CDownload::OnDownloaded()
 
 void CDownload::OnTaskComplete(CDownloadTask* pTask)
 {
-	ASSERT( m_pTask == pTask );
-	m_pTask = NULL;
+	ASSERT( CheckTask( pTask ) );
+	SetTask( NULL );
 
+	// Check if task was aborted
 	if ( pTask->WasAborted() )
-	{
-		// Aborted
-	}
-	else if ( pTask->m_nTask == CDownloadTask::dtaskPreviewRequest )
+		return;
+
+	if ( pTask->GetTaskType() == CDownloadTask::dtaskPreviewRequest )
 	{
 		OnPreviewRequestComplete( pTask );
 	}
-	else if ( pTask->m_nTask == CDownloadTask::dtaskMergeFile )
+	else if ( pTask->GetTaskType() == CDownloadTask::dtaskCopy )
 	{
-		// Merge Complete.
-	}
-	else
-	{
-		OnMoved( pTask );
+		if ( !pTask->HasSucceeded() )
+			SetFileError( pTask->GetFileError() );
+		else
+			OnMoved();
 	}
 }
 
 //////////////////////////////////////////////////////////////////////
 // CDownload moved handler
 
-void CDownload::OnMoved(CDownloadTask* pTask)
+void CDownload::OnMoved()
 {
-	if ( !pTask->HasSucceeded() )
-	{
-		SetFileError( pTask->GetFileError() );
-		return;
-	}
-
-	m_bMoving = FALSE;
-
 	// We just completed torrent
 	if ( m_nTorrentBlock > 0 && m_nTorrentSuccess >= m_nTorrentBlock )
 	{
@@ -485,7 +526,7 @@ void CDownload::OnMoved(CDownloadTask* pTask)
 			Downloads.StopTrying( IsTorrent() );
 		m_bSeeding = TRUE;
 		m_tBegan = 0;
-		m_bDownloading	= FALSE;
+		m_bDownloading	= false;
 		m_bTorrentStarted = TRUE;
 		m_bTorrentRequested = TRUE;
 		CloseTransfers();
@@ -500,10 +541,6 @@ void CDownload::OnMoved(CDownloadTask* pTask)
 	else
 		StopTrying();
 
-	// Download finalized, tracker notified, set flags that we completed
-	m_bComplete		= TRUE;
-	m_tCompleted	= GetTickCount();
-
 	ClearSources();
 
 	ASSERT( ! m_sPath.IsEmpty() );
@@ -511,6 +548,11 @@ void CDownload::OnMoved(CDownloadTask* pTask)
 	DeleteFileEx( m_sPath + _T(".sav"), FALSE, FALSE, TRUE );
 	DeleteFileEx( m_sPath, FALSE, FALSE, TRUE );
 	m_sPath.Empty();
+
+	// Download finalized, tracker notified, set flags that we completed
+	m_bComplete		= true;
+	m_tCompleted	= GetTickCount();
+	SetMoving( false );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -545,7 +587,7 @@ BOOL CDownload::Load(LPCTSTR pszName)
 		}
 		END_CATCH_ALL
 
-		pFile.Close();
+			pFile.Close();
 	}
 
 	if ( ! bSuccess && pFile.Open( m_sPath + _T(".sav"), CFile::modeRead ) )
@@ -570,7 +612,7 @@ BOOL CDownload::Load(LPCTSTR pszName)
 		}
 		END_CATCH_ALL
 
-		pFile.Close();
+			pFile.Close();
 
 		if ( bSuccess )
 			Save();

@@ -80,7 +80,7 @@ public:
 	DWORD		GetTryingCount(bool bTorrentsOnly = false) const;
 	DWORD		GetConnectingTransferCount() const;
 	BOOL		Check(CDownloadSource* pSource) const;
-	BOOL		CheckActive(CDownload* pDownload, int nScope) const;
+	bool		CheckActive(CDownload* pDownload, int nScope) const;
 	BOOL		Move(CDownload* pDownload, int nDelta);
 	BOOL		Reorder(CDownload* pDownload, CDownload* pBefore);
 	QWORD		GetAmountDownloadedFrom(IN_ADDR* pAddress);

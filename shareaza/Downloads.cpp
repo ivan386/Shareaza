@@ -537,18 +537,21 @@ BOOL CDownloads::Check(CDownloadSource* pSource) const
 	return FALSE;
 }
 
-BOOL CDownloads::CheckActive(CDownload* pDownload, int nScope) const
+bool CDownloads::CheckActive(CDownload* pDownload, int nScope) const
 {
 	for ( POSITION pos = GetReverseIterator() ; pos && nScope > 0 ; )
 	{
 		CDownload* pTest = GetPrevious( pos );
-		BOOL bActive = pTest->IsPaused() == FALSE && pTest->IsCompleted() == FALSE;
+		bool bActive = !pTest->IsPaused() && !pTest->IsCompleted();
 
-		if ( pDownload == pTest ) return bActive;
-		if ( bActive ) nScope--;
+		if ( pDownload == pTest )
+			return bActive;
+
+		if ( bActive )
+			--nScope;
 	}
 
-	return FALSE;
+	return false;
 }
 
 CDownload* CDownloads::FindByPath(const CString& sPath) const
@@ -1088,7 +1091,7 @@ bool CDownloads::OnQueryHits(const CQueryHit* pHits)
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
 		CDownload* pDownload = GetNext( pos );
-		if ( pDownload->IsMoving() == FALSE )
+		if ( !pDownload->IsMoving() )
 			pDownload->OnQueryHits( pHits );
 	}
 
@@ -1186,7 +1189,7 @@ void CDownloads::Load()
 						DeleteFileEx( strPath + _T(".png"), FALSE, FALSE, TRUE );
 						continue;
 					}
-					pDownload->m_bComplete = TRUE;
+					pDownload->m_bComplete = true;
 					pDownload->m_bVerify = TRI_TRUE;
 				}
 				m_pList.AddTail( pDownload.release() );

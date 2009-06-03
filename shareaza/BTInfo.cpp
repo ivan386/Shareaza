@@ -1252,7 +1252,7 @@ void CBTInfo::SetTrackerNext(DWORD tTime)
 	}
 
 	// Get current time
-	if ( ! tTime )
+	if ( !tTime )
 		tTime = GetTickCount();
 
 	// Set current mode to searching

@@ -313,7 +313,7 @@ bool CDownloadWithTorrent::RunTorrent(DWORD tNow)
 		return false;
 
 	// Return if this download is waiting for a download task to finish
-	if ( m_pTask )
+	if ( IsTasking() )
 		return false;
 
 	// Generate a peerid if there isn't one
@@ -862,7 +862,7 @@ BOOL CDownloadWithTorrent::SeedTorrent(CString& sErrorMessage)
 
 	CDownload* pDownload	= static_cast< CDownload* >( this );
 	m_bSeeding	= TRUE;
-	pDownload->m_bComplete	= TRUE;
+	pDownload->m_bComplete	= true;
 	pDownload->m_tCompleted	= GetTickCount();
 	pDownload->SetVerifyStatus( TRI_TRUE );
 

@@ -35,8 +35,8 @@ protected:
 public:
 	TRISTATE		m_bVerify;			// Verify status (TRI_TRUE - verified, TRI_FALSE - failed, TRI_UNKNOWN - not yet)
 	DWORD			m_tReceived;
-	BOOL			m_bMoving;			// Is complete file moving?
 private:
+	bool			m_bMoving;			// Is complete file moving?
 	auto_ptr< CFragmentedFile >	m_pFile;// File(s)
 	DWORD			m_nFileError;		// Last file/disk error
 
@@ -75,18 +75,19 @@ public:
 	DWORD				GetFileError() const;
 	void				SetFileError(DWORD nFileError);
 	void				ClearFileError();
+	DWORD				MoveFile(LPCTSTR pszDestination, LPPROGRESS_ROUTINE lpProgressRoutine = NULL, LPVOID lpData = NULL);
 protected:
 	BOOL				OpenFile();
 	void				CloseFile();
 	void				AttachFile(auto_ptr< CFragmentedFile >& pFile);
 	void				DeleteFile();
-	DWORD				MoveFile(LPCTSTR pszDestination, LPPROGRESS_ROUTINE lpProgressRoutine = NULL, LPVOID lpData = NULL);
 	BOOL				FlushFile();
 	BOOL				ReadFile(QWORD nOffset, LPVOID pData, QWORD nLength, QWORD* pnRead = NULL);
 	BOOL				WriteFile(QWORD nOffset, LPCVOID pData, QWORD nLength, QWORD* pnWritten = NULL);
 	void				SerializeFile(CArchive& ar, int nVersion);
 	void				SetVerifyStatus(TRISTATE bVerify);
 	BOOL				OnVerify(LPCTSTR pszPath, BOOL bVerified);
+	void				SetMoving(bool bMoving);
 private:
 	Fragments::List		GetPossibleFragments(const Fragments::List& oAvailable, Fragments::Fragment& oLargest);
 
@@ -96,7 +97,7 @@ private:
 
 // Overrides
 public:
-	virtual BOOL	IsMoving() const;
+	virtual bool	IsMoving() const;
 protected:
 	virtual CString	GetAvailableRanges() const;
 	virtual void	Serialize(CArchive& ar, int nVersion);

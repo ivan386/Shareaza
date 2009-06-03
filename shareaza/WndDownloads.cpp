@@ -561,7 +561,7 @@ void CDownloadsWnd::Prepare()
 				m_bSelShareState = pDownload->IsShared();
 				bFirstShare = FALSE;
 			}
-			else if ( m_bSelShareState != pDownload->IsShared() )
+			else if ( ( m_bSelShareState != 0 ) != pDownload->IsShared() )
 			{
 				m_bSelShareState = FALSE;
 				m_bSelShareConsistent = FALSE;
@@ -715,10 +715,11 @@ void CDownloadsWnd::OnDownloadsClear()
 			{
 				CDeleteFileDlg dlg;
 				dlg.m_sName = pDownload->m_sName;
-				BOOL bShared = pDownload->IsShared();
+				bool bShared = pDownload->IsShared();
 
 				pLock.Unlock();
-				if ( dlg.DoModal() != IDOK ) break;
+				if ( dlg.DoModal() != IDOK )
+					break;
 				pLock.Lock();
 
 				if ( Downloads.Check( pDownload ) )
@@ -769,16 +770,19 @@ void CDownloadsWnd::OnDownloadsClearIncomplete()
 				{
 					CDeleteFileDlg dlg;
 					dlg.m_sName = pDownload->m_sName;
-					BOOL bShared = pDownload->IsShared();
+					bool bShared = pDownload->IsShared();
 
 					pLock.Unlock();
-					if ( dlg.DoModal() != IDOK ) break;
+					if ( dlg.DoModal() != IDOK )
+						break;
 					pLock.Lock();
 
-					if ( Downloads.Check( pDownload ) ) dlg.Create( pDownload, bShared );
+					if ( Downloads.Check( pDownload ) )
+						dlg.Create( pDownload, bShared );
 				}
 
-				if ( Downloads.Check( pDownload ) ) pDownload->Remove();
+				if ( Downloads.Check( pDownload ) )
+					pDownload->Remove();
 			}
 		}
 	}
@@ -871,7 +875,8 @@ void CDownloadsWnd::OnDownloadsRemotePreview()
 	{
 		CDownload* pDownload = Downloads.GetNext( pos );
 
-		if ( !pDownload->m_bSelected ) continue;
+		if ( !pDownload->m_bSelected )
+			continue;
 
 		// Check if the saved preview file is available first
 		if ( pDownload->m_bGotPreview )
@@ -882,7 +887,8 @@ void CDownloadsWnd::OnDownloadsRemotePreview()
 		}
 
 		// Don't do anything if we are already working on the file
-		if ( pDownload->IsTasking() ) break;
+		if ( pDownload->IsTasking() )
+			break;
 
 		// Find first client which supports previews
 		for ( CDownloadSource* pSource = pDownload->GetFirstSource() ; pSource ; pSource = pSource->m_pNext )
@@ -911,8 +917,9 @@ void CDownloadsWnd::OnDownloadsRemotePreview()
 							(LPCTSTR)CString( inet_ntoa( pSource->m_pAddress ) ), pSource->m_nPort,
 							(LPCTSTR)pDownload->m_oSHA1.toUrn() );
 					}
-					pDownload->m_pTask = new CDownloadTask( pDownload,
-						CDownloadTask::dtaskPreviewRequest, pSource->m_sPreview );
+					pDownload->SetTask( new CDownloadTask( pDownload,
+						CDownloadTask::dtaskPreviewRequest,
+						pSource->m_sPreview ) );
 					pDownload->m_bWaitingPreview = TRUE;
 					pSource->m_bPreviewRequestSent = TRUE;
 					break;
@@ -1290,7 +1297,7 @@ void CDownloadsWnd::OnDownloadsEdit()
 	{
 		CDownload* pDownload = Downloads.GetNext( pos );
 
-		if ( pDownload->m_bSelected && ! pDownload->IsMoving() && 
+		if ( pDownload->m_bSelected && ! pDownload->IsMoving() &&
 			( ! pDownload->IsComplete() || pDownload->IsSeeding() ) )
 		{
 			CDownloadSheet dlg( pDownload );

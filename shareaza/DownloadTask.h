@@ -21,11 +21,10 @@
 
 #pragma once
 
-#include "HttpRequest.h"
 #include "ShareazaThread.h"
 
-
 class CDownload;
+class CHttpRequest;
 
 class CDownloadTask : public CRazaThread
 {
@@ -47,10 +46,9 @@ public:
 	DECLARE_DYNAMIC(CDownloadTask)
 
 // Attributes
-public:
-	dtask			m_nTask;
-	CHttpRequest	m_pRequest;
 private:
+	dtask			m_nTask;
+	CHttpRequest*	m_pRequest;
 	bool			m_bSuccess;
 	CString			m_sFilename;
 	CString			m_sDestination;
@@ -64,7 +62,7 @@ private:
 // Statics
 public:
 	static CString	SafeFilename(LPCTSTR pszName);
-	static DWORD CALLBACK CopyProgressRoutine(LARGE_INTEGER TotalFileSize,
+	static DWORD	CALLBACK CopyProgressRoutine(LARGE_INTEGER TotalFileSize,
 		LARGE_INTEGER TotalBytesTransferred, LARGE_INTEGER StreamSize,
 		LARGE_INTEGER StreamBytesTransferred, DWORD dwStreamNumber,
 		DWORD dwCallbackReason, HANDLE hSourceFile, HANDLE hDestinationFile,
@@ -72,25 +70,27 @@ public:
 
 // Operations
 public:
-	bool		HasSucceeded() const;
-	void		Abort();
-	bool		WasAborted() const;
-	DWORD		GetFileError() const;
-	CBuffer*	IsPreviewAnswerValid();
+	bool				HasSucceeded() const;
+	void				Abort();
+	bool				WasAborted() const;
+	DWORD				GetFileError() const;
+	DWORD				GetTaskType() const;
+	const CHttpRequest*	GetRequest() const;
+	CBuffer*			IsPreviewAnswerValid();
 private:
-	void		Construct(CDownload* pDownload);
-//	void		RunAllocate();
-	void		RunCopy();
-	void		RunPreviewRequest();
-	void		RunMerge();
-	BOOL		CopyFile(HANDLE hSource, LPCTSTR pszTarget, QWORD nLength);
-	void		CreatePathForFile(const CString& strBase, const CString& strPath);
-	BOOL		MakeBatchTorrent();
-	BOOL		CopyFileToBatch(HANDLE hSource, QWORD nOffset, QWORD nLength, LPCTSTR pszPath);
+	void				Construct(CDownload* pDownload);
+//	void				RunAllocate();
+	void				RunCopy();
+	void				RunPreviewRequest();
+	void				RunMerge();
+	BOOL				CopyFile(HANDLE hSource, LPCTSTR pszTarget, QWORD nLength);
+	void				CreatePathForFile(const CString& strBase, const CString& strPath);
+	BOOL				MakeBatchTorrent();
+	BOOL				CopyFileToBatch(HANDLE hSource, QWORD nOffset, QWORD nLength, LPCTSTR pszPath);
 
 // Overrides
 protected:
-	virtual int Run();
+	virtual int	Run();
 
 	DECLARE_MESSAGE_MAP()
 };

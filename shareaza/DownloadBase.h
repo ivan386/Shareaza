@@ -28,29 +28,37 @@ class CDownloadTask;
 
 class CDownloadBase : public CShareazaFile
 {
+// Construction
 protected:
 	CDownloadBase();
 	virtual ~CDownloadBase();
 
+// Attributes
 public:
-	bool			m_bSHA1Trusted;
+	bool			m_bSHA1Trusted;		// True if SHA1 hash is trusted
 	bool			m_bTigerTrusted;
 	bool			m_bED2KTrusted;
 	bool			m_bBTHTrusted;
 	bool			m_bMD5Trusted;
 	int				m_nCookie;
 	CString			m_sSearchKeyword;	// Search keyword to override G1 keyword search.
-
-	BOOL			IsTasking() const { return m_pTask != NULL; }
-	BOOL			SetNewTask(CDownloadTask* pTask);
-	void			SetModified();
-
-protected:
+private:
 	CDownloadTask*	m_pTask;
 
-	virtual BOOL	IsCompleted() const = 0;
-	virtual BOOL	IsMoving() const = 0;
-	virtual BOOL	IsPaused(BOOL bRealState = FALSE) const = 0;
-	virtual BOOL	IsTrying() const = 0;
+// Operations
+public:
+	bool		IsTasking() const;						// Check if a task is already running
+	void		SetTask(CDownloadTask* pTask);
+	DWORD		GetTaskType() const;
+	bool		CheckTask(CDownloadTask* pTask) const;
+	void		AbortTask();
+	void		SetModified();
+
+// Overrides
+protected:
+	virtual bool	IsCompleted() const = 0;
+	virtual bool	IsMoving() const = 0;
+	virtual bool	IsPaused(bool bRealState = false) const = 0;
+	virtual bool	IsTrying() const = 0;
 	virtual void	Serialize(CArchive& ar, int nVersion);
 };
