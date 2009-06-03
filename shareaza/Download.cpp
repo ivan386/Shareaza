@@ -209,7 +209,7 @@ void CDownload::Share(BOOL bShared)
 //////////////////////////////////////////////////////////////////////
 // CDownload control : rename
 
-bool CDownload::Rename(const CString strName)
+bool CDownload::Rename(const CString& strName)
 {
 	// Don't bother if renaming to same name.
 	if ( m_sName == strName )
@@ -587,7 +587,7 @@ BOOL CDownload::Load(LPCTSTR pszName)
 		}
 		END_CATCH_ALL
 
-			pFile.Close();
+		pFile.Close();
 	}
 
 	if ( ! bSuccess && pFile.Open( m_sPath + _T(".sav"), CFile::modeRead ) )
@@ -612,7 +612,7 @@ BOOL CDownload::Load(LPCTSTR pszName)
 		}
 		END_CATCH_ALL
 
-			pFile.Close();
+		pFile.Close();
 
 		if ( bSuccess )
 			Save();

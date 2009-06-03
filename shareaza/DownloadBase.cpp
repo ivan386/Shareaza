@@ -37,7 +37,7 @@ static char THIS_FILE[]=__FILE__;
 // CDownloadBase construction
 
 CDownloadBase::CDownloadBase() :
-m_bSHA1Trusted		( false )
+	m_bSHA1Trusted		( false )
 ,	m_bTigerTrusted		( false )
 ,	m_bED2KTrusted		( false )
 ,	m_bBTHTrusted		( false )
