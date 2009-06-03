@@ -86,7 +86,7 @@ void CLibraryDictionary::RemoveFile(const CLibraryFile& oFile)
 // CLibraryDictionary process file
 
 void CLibraryDictionary::ProcessFile(
-	const CLibraryFile& oFile, bool bAdd, bool bCanUpload)
+	const CLibraryFile& oFile, const bool bAdd, const bool bCanUpload)
 {
 	ProcessPhrase( oFile, oFile.GetSearchName(), bAdd, bCanUpload );
 	ProcessPhrase( oFile, oFile.GetMetadataWords(), bAdd, bCanUpload );
@@ -96,8 +96,8 @@ void CLibraryDictionary::ProcessFile(
 // CLibraryDictionary phrase parser
 
 void CLibraryDictionary::ProcessPhrase(
-	const CLibraryFile& oFile, const CString& strPhrase, bool bAdd,
-	bool bCanUpload)
+	const CLibraryFile& oFile, const CString& strPhrase, const bool bAdd,
+	const bool bCanUpload)
 {
 	if ( strPhrase.IsEmpty() )
 		return;
@@ -114,32 +114,33 @@ void CLibraryDictionary::ProcessPhrase(
 // CLibraryDictionary word add and remove
 
 void CLibraryDictionary::ProcessWord(
-	const CLibraryFile& oFile, const CString& strWord, bool bAdd,
-	bool bCanUpload)
+	const CLibraryFile& oFile, const CString& strWord, const bool bAdd,
+	const bool bCanUpload)
 {
-	CWord oWord;
-	if ( m_oWordMap.Lookup( strWord, oWord ) )
+	CFilePtrList* pFilePtrList = NULL;
+
+	if ( m_oWordMap.Lookup( strWord, pFilePtrList ) )
 	{
 		if ( bAdd )
 		{
-			if ( oWord.m_pList->GetTail() != &oFile )
+			if ( pFilePtrList->GetTail() != &oFile )
 			{
-				oWord.m_pList->AddTail( &oFile );
-				if ( bCanUpload && m_bValid && ! m_pTable->CheckString( strWord ) )
+				pFilePtrList->AddTail( &oFile );
+				if ( bCanUpload && m_bValid && !m_pTable->CheckString( strWord ) )
 					m_pTable->AddExactString( strWord );
 			}
 		}
 		else
 		{
-			POSITION pos = oWord.m_pList->Find( &oFile );
+			POSITION pos = pFilePtrList->Find( &oFile );
 			if ( pos )
 			{
-				oWord.m_pList->RemoveAt( pos );
+				pFilePtrList->RemoveAt( pos );
 
-				if ( oWord.m_pList->IsEmpty() )
+				if ( pFilePtrList->IsEmpty() )
 				{
 					m_oWordMap.RemoveKey( strWord );
-					delete oWord.m_pList;
+					delete pFilePtrList;
 
 					if ( bCanUpload )
 						Invalidate();
@@ -149,9 +150,9 @@ void CLibraryDictionary::ProcessWord(
 	}
 	else if ( bAdd )
 	{
-		oWord.m_pList = new CFilePtrList;
-		oWord.m_pList->AddTail( &oFile );
-		m_oWordMap.SetAt( strWord, oWord );
+		pFilePtrList = new CFilePtrList;
+		pFilePtrList->AddTail( &oFile );
+		m_oWordMap.SetAt( strWord, pFilePtrList );
 
 		if ( bCanUpload && m_bValid )
 			m_pTable->AddExactString( strWord );
@@ -181,12 +182,12 @@ void CLibraryDictionary::BuildHashTable()
 	for ( POSITION pos = m_oWordMap.GetStartPosition() ; pos ; )
 	{
 		CString strWord;
-		CWord oWord;
-		m_oWordMap.GetNextAssoc( pos, strWord, oWord );
+		CFilePtrList* pFilePtrList = NULL;
+		m_oWordMap.GetNextAssoc( pos, strWord, pFilePtrList );
 
-		for ( POSITION pos = oWord.m_pList->GetHeadPosition() ; pos ; )
+		for ( POSITION pos = pFilePtrList->GetHeadPosition() ; pos ; )
 		{
-			const CLibraryFile& oFile = *oWord.m_pList->GetNext( pos );
+			const CLibraryFile& oFile = *pFilePtrList->GetNext( pos );
 
 			// Check if the file can be uploaded
 			if ( oFile.IsShared() )
@@ -241,10 +242,12 @@ void CLibraryDictionary::Clear()
 	for ( POSITION pos = m_oWordMap.GetStartPosition() ; pos ; )
 	{
 		CString strWord;
-		CWord oWord;
-		m_oWordMap.GetNextAssoc( pos, strWord, oWord );
-		delete oWord.m_pList;
+		CFilePtrList* pFilePtrList = NULL;
+
+		m_oWordMap.GetNextAssoc( pos, strWord, pFilePtrList );
+		delete pFilePtrList;
 	}
+
 	m_oWordMap.RemoveAll();
 
 	if ( m_pTable )
@@ -283,12 +286,13 @@ CFilePtrList* CLibraryDictionary::Search(
 			continue;
 
 		CString strWord( pWordEntry->first, static_cast< int >( pWordEntry->second ) );
-		CWord oWord;
-		if ( m_oWordMap.Lookup( strWord, oWord ) )
+		CFilePtrList* pFilePtrList = NULL;
+
+		if ( m_oWordMap.Lookup( strWord, pFilePtrList ) )
 		{
-			for ( POSITION pos = oWord.m_pList->GetHeadPosition() ; pos ; )
+			for ( POSITION pos = pFilePtrList->GetHeadPosition() ; pos ; )
 			{
-				const CLibraryFile* pFile = oWord.m_pList->GetNext( pos );
+				const CLibraryFile* pFile = pFilePtrList->GetNext( pos );
 
 				if ( bAvailableOnly && pFile->IsGhost() )
 					continue;

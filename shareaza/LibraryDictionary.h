@@ -28,37 +28,34 @@ class CQuerySearch;
 typedef CList< const CLibraryFile* > CFilePtrList;
 
 
-class CLibraryDictionary
+class CLibraryDictionary : private ::boost::noncopyable
 {
+public:
+	typedef CMap< CString, const CString&, CFilePtrList*, CFilePtrList* > CWordMap;
+
+// Construction
 public:
 	CLibraryDictionary();
 	virtual ~CLibraryDictionary();
 
-	void					AddFile(const CLibraryFile& oFile);
-	void					RemoveFile(const CLibraryFile& oFile);
-	void					BuildHashTable();					// Build hash table if needed
-	void					Invalidate();						// Force dictionary and hash table to re-build
-	const CQueryHashTable*	GetHashTable();
-	void					Clear();
-	CFilePtrList*			Search(const CQuerySearch& oSearch, int nMaximum = 0, bool bLocal = false, bool bAvailableOnly = true);
-	void					Serialize(CArchive& ar, int nVersion);
-
+// Attributes
 private:
-	class CWord
-	{
-	public:
-		CWord(CFilePtrList* pList = NULL, bool bPartial = false) : m_pList( pList ), m_bPartial( bPartial ) {}
-		CWord(const CWord& oWord) : m_pList( oWord.m_pList ), m_bPartial( oWord.m_bPartial ) {}
-		CFilePtrList*	m_pList;
-		bool			m_bPartial;
-	};
-	typedef CMap< CString, const CString&, CWord, CWord& > CWordMap;
-
-	CWordMap			m_oWordMap;
+	CWordMap			m_oWordMap;							// Map of keywords to files
 	CQueryHashTable*	m_pTable;
 	bool				m_bValid;							// Table is up to date
 	DWORD				m_nSearchCookie;
 
+// Operations
+public:
+	void					AddFile(const CLibraryFile& oFile);	// Make keywords from a file and add them to the dictionary
+	void					RemoveFile(const CLibraryFile& oFile);
+	void					BuildHashTable();					// Build hash table if needed
+	void					Invalidate();						// Make dictionary and hash table rebuild when needed
+	const CQueryHashTable*	GetHashTable();
+	void					Clear();
+	CFilePtrList*			Search(const CQuerySearch& oSearch, int nMaximum = 0, bool bLocal = false, bool bAvailableOnly = true);
+	void					Serialize(CArchive& ar, int nVersion);
+private:
 	void					ProcessFile(const CLibraryFile& oFile, bool bAdd, bool bCanUpload);
 	void					ProcessPhrase(const CLibraryFile& oFile, const CString& strPhrase, bool bAdd, bool bCanUpload);
 	void					ProcessWord(const CLibraryFile& oFile, const CString& strWord, bool bAdd, bool bCanUpload);
