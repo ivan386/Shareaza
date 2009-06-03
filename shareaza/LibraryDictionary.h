@@ -47,10 +47,10 @@ private:
 	class CWord
 	{
 	public:
-		CWord(CFilePtrList* pList = NULL, bool bPartial = false) : m_pList( pList ), m_bPartial( bPartial ) {}
-		CWord(const CWord& oWord) : m_pList( oWord.m_pList ), m_bPartial( oWord.m_bPartial ) {}
+		CWord(CFilePtrList* pList = NULL) : m_pList( pList ), m_nCount( 1 ) {}
+		CWord(const CWord& oWord) : m_pList( oWord.m_pList ), m_nCount( oWord.m_nCount ) {}
 		CFilePtrList*	m_pList;
-		bool			m_bPartial;
+		DWORD			m_nCount;
 	};
 	typedef CMap< CString, const CString&, CWord, CWord& > CWordMap;
 

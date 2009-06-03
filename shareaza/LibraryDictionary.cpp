@@ -56,7 +56,7 @@ CLibraryDictionary::CLibraryDictionary() :
 
 CLibraryDictionary::~CLibraryDictionary()
 {
-	Clear();
+	ASSERT( m_oWordMap.IsEmpty() );
 	delete m_pTable;
 }
 
@@ -65,6 +65,8 @@ CLibraryDictionary::~CLibraryDictionary()
 
 void CLibraryDictionary::AddFile(const CLibraryFile& oFile)
 {
+	ASSUME_LOCK( Library.m_pSection );
+
 	const bool bCanUpload = oFile.IsShared();
 
 	ProcessFile( oFile, true, bCanUpload );
@@ -75,6 +77,8 @@ void CLibraryDictionary::AddFile(const CLibraryFile& oFile)
 
 void CLibraryDictionary::RemoveFile(const CLibraryFile& oFile)
 {
+	ASSUME_LOCK( Library.m_pSection );
+
 	ProcessFile( oFile, false, oFile.IsShared() );
 
 	// Always invalidate the table when removing a hashed file
@@ -117,29 +121,30 @@ void CLibraryDictionary::ProcessWord(
 	const CLibraryFile& oFile, const CString& strWord, bool bAdd,
 	bool bCanUpload)
 {
-	CWord oWord;
-	if ( m_oWordMap.Lookup( strWord, oWord ) )
+	if ( CWordMap::CPair* pPair = m_oWordMap.PLookup( strWord ) )
 	{
+		CFilePtrList* pList = pPair->value.m_pList;
 		if ( bAdd )
 		{
-			if ( oWord.m_pList->GetTail() != &oFile )
+			pPair->value.m_nCount ++;
+			if ( pList->GetTail() != &oFile )
 			{
-				oWord.m_pList->AddTail( &oFile );
-				if ( bCanUpload && m_bValid && ! m_pTable->CheckString( strWord ) )
+				pList->AddTail( &oFile );
+				if ( bCanUpload && m_bValid )
 					m_pTable->AddExactString( strWord );
 			}
 		}
 		else
 		{
-			POSITION pos = oWord.m_pList->Find( &oFile );
+			POSITION pos = pList->Find( &oFile );
 			if ( pos )
 			{
-				oWord.m_pList->RemoveAt( pos );
+				pList->RemoveAt( pos );
 
-				if ( oWord.m_pList->IsEmpty() )
+				if ( pList->IsEmpty() )
 				{
 					m_oWordMap.RemoveKey( strWord );
-					delete oWord.m_pList;
+					delete pList;
 
 					if ( bCanUpload )
 						Invalidate();
@@ -149,12 +154,15 @@ void CLibraryDictionary::ProcessWord(
 	}
 	else if ( bAdd )
 	{
-		oWord.m_pList = new CFilePtrList;
-		oWord.m_pList->AddTail( &oFile );
-		m_oWordMap.SetAt( strWord, oWord );
+		CWord oWord( new CFilePtrList );
+		if ( oWord.m_pList )
+		{
+			oWord.m_pList->AddTail( &oFile );
+			m_oWordMap.SetAt( strWord, oWord );
 
-		if ( bCanUpload && m_bValid )
-			m_pTable->AddExactString( strWord );
+			if ( bCanUpload && m_bValid )
+				m_pTable->AddExactString( strWord );
+		}
 	}
 }
 
@@ -163,6 +171,8 @@ void CLibraryDictionary::ProcessWord(
 
 void CLibraryDictionary::BuildHashTable()
 {
+	ASSUME_LOCK( Library.m_pSection );
+
 	if ( m_bValid )
 		return;
 
@@ -178,12 +188,15 @@ void CLibraryDictionary::BuildHashTable()
 	m_pTable->Clear();
 
 	// Add words to hash table
+	//TRACE( _T("[LD] Dictionary size: %d words\n"), m_oWordMap.GetCount() );
+	//TRACE( _T("[LD] Hash table size: %d\n"), m_oWordMap.GetHashTableSize() );
 	for ( POSITION pos = m_oWordMap.GetStartPosition() ; pos ; )
 	{
 		CString strWord;
 		CWord oWord;
 		m_oWordMap.GetNextAssoc( pos, strWord, oWord );
 
+		//TRACE( _T("[LD] Word \"%hs\" found %d time(s) in %d file(s)\n"), (LPCSTR)CT2A( strWord ), oWord.m_nCount, oWord.m_pList->GetCount() );
 		for ( POSITION pos = oWord.m_pList->GetHeadPosition() ; pos ; )
 		{
 			const CLibraryFile& oFile = *oWord.m_pList->GetNext( pos );
@@ -228,6 +241,8 @@ void CLibraryDictionary::Invalidate()
 
 const CQueryHashTable* CLibraryDictionary::GetHashTable()
 {
+	ASSUME_LOCK( Library.m_pSection );
+
 	BuildHashTable();
 
 	return m_pTable;
@@ -238,6 +253,8 @@ const CQueryHashTable* CLibraryDictionary::GetHashTable()
 
 void CLibraryDictionary::Clear()
 {
+	ASSUME_LOCK( Library.m_pSection );
+
 	for ( POSITION pos = m_oWordMap.GetStartPosition() ; pos ; )
 	{
 		CString strWord;
@@ -261,6 +278,8 @@ CFilePtrList* CLibraryDictionary::Search(
 	const CQuerySearch& oSearch, const int nMaximum, const bool bLocal,
 	const bool bAvailableOnly)
 {
+	ASSUME_LOCK( Library.m_pSection );
+
 	if ( !m_bValid )
 	{
 		BuildHashTable();
@@ -368,6 +387,8 @@ CFilePtrList* CLibraryDictionary::Search(
 
 void CLibraryDictionary::Serialize(CArchive& ar, const int nVersion)
 {
+	ASSUME_LOCK( Library.m_pSection );
+
 	if ( ar.IsStoring() )
 	{
 		ar << (UINT)m_oWordMap.GetCount();
