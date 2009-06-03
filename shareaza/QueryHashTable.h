@@ -68,13 +68,13 @@ public:
 	bool	PatchTo(const CQueryHashTable* pTarget, CNeighbour* pNeighbour);
 	bool	OnPacket(CPacket* pPacket);
 	// Add file hashes and file name splitted on keywords
-	int		AddFile(const CShareazaFile& oFile);
+	void	AddFile(const CShareazaFile& oFile);
 	// Add file hashes
-	int		AddHashes(const CShareazaFile& oFile);
+	void	AddHashes(const CShareazaFile& oFile);
 	// Add string with steaming
-	int		AddString(const CString& strString);
+	void	AddString(const CString& strString);
 	// Add string exactly
-	int		AddExactString(const CString& strString);
+	void	AddExactString(const CString& strString);
 	bool	CheckString(const CString& strString) const;
 	bool	Check(const CQuerySearch& oSearch) const;
 	bool	CheckHash(const DWORD nHash) const;
@@ -83,7 +83,7 @@ public:
 protected:
 	bool	OnReset(CPacket* pPacket);
 	bool	OnPatch(CPacket* pPacket);
-	int		Add(LPCTSTR pszString, size_t nStart, size_t nLength);
-	int		AddExact(LPCTSTR pszString, size_t nStart, size_t nLength);
+	void	Add(LPCTSTR pszString, size_t nStart, size_t nLength);
+	void	AddExact(LPCTSTR pszString, size_t nStart, size_t nLength);
 	bool	PatchToOldShareaza(const CQueryHashTable* pTarget, CNeighbour* pNeighbour);
 };

@@ -1048,152 +1048,138 @@ void CQueryHashTable::MakeKeywords(const CString& strWord, WORD nWordType, CStri
 		return;
 	}
 
-	if ( nLength >= 5 )
+	if ( nLength >= 5 && IsWord( strWord, 0, nLength ) )
 	{
 		oKeywords.AddTail( strWord.Left( nLength - 1 ) );
 		oKeywords.AddTail( strWord.Left( nLength - 2 ) );
 	}
 }
 
-int CQueryHashTable::AddFile(const CShareazaFile& oFile)
+void CQueryHashTable::AddFile(const CShareazaFile& oFile)
 {
 	if ( ! m_pHash )
-		return 0;
+		return;
 
-	int added = AddHashes( oFile );
+	AddHashes( oFile );
 
 	CStringList oKeywords;
 	MakeKeywords( oFile.GetSearchName(), oKeywords );
 	for ( POSITION pos = oKeywords.GetHeadPosition(); pos; )
 	{
-		added += AddExactString( oKeywords.GetNext( pos ) );
+		AddExactString( oKeywords.GetNext( pos ) );
 	}
-
-	return added;
 }
 
-int CQueryHashTable::AddHashes(const CShareazaFile& oFile)
+void CQueryHashTable::AddHashes(const CShareazaFile& oFile)
 {
 	if ( ! m_pHash )
-		return 0;
-
-	int added = 0;
+		return;
 
 	if ( oFile.m_oSHA1 )
 	{
-		added += AddExactString( oFile.m_oSHA1.toUrn() );
+		AddExactString( oFile.m_oSHA1.toUrn() );
 	}
 
 	if ( oFile.m_oTiger )
 	{
-		added += AddExactString( oFile.m_oTiger.toUrn() );
+		AddExactString( oFile.m_oTiger.toUrn() );
 	}
 
 	if ( oFile.m_oED2K )
 	{
-		added += AddExactString( oFile.m_oED2K.toUrn() );
+		AddExactString( oFile.m_oED2K.toUrn() );
 	}
 
 	if ( oFile.m_oMD5 )
 	{
-		added += AddExactString( oFile.m_oMD5.toUrn() );
+		AddExactString( oFile.m_oMD5.toUrn() );
 	}
 
 	if ( oFile.m_oBTH )
 	{
-		added += AddExactString( oFile.m_oBTH.toUrn() );
+		AddExactString( oFile.m_oBTH.toUrn() );
 	}
-
-	return added;
 }
 
-int CQueryHashTable::AddString(const CString& strString)
+void CQueryHashTable::AddString(const CString& strString)
 {
 	if ( ! m_pHash )
-		return 0;
+		return;
 
-	return Add( strString, 0, strString.GetLength() );
+	Add( strString, 0, strString.GetLength() );
 }
 
-int CQueryHashTable::AddExactString(const CString& strString)
+void CQueryHashTable::AddExactString(const CString& strString)
 {
 	if ( ! m_pHash )
-		return 0;
+		return;
 
-	return AddExact( strString, 0, strString.GetLength() );
+	AddExact( strString, 0, strString.GetLength() );
 }
 
-int CQueryHashTable::Add(LPCTSTR pszString, size_t nStart, size_t nLength)
+void CQueryHashTable::Add(LPCTSTR pszString, size_t nStart, size_t nLength)
 {
 	const bool bWord = IsWord( pszString, nStart, nLength );
-	if ( ! nLength || !bWord && nLength < 4 )
-		return 0;
+	if ( ! nLength || ! bWord && nLength < 4 )
+		return;
 
-	if ( !bWord )
-		return AddExact( pszString, nStart, nLength );
+	DWORD tNow = GetTickCount();
 
-	m_nCookie = GetTickCount();
-
-	TRACE( _T("[QHT] \"%hs\"\n"), (LPCSTR)CT2A( CString( pszString + nStart, nLength ) ) );
+	//TRACE( _T("[QHT] \"%hs\"\n"), (LPCSTR)CT2A( CString( pszString + nStart, nLength ) ) );
 	DWORD nHash	= HashWord( pszString, nStart, nLength, m_nBits );
 	BYTE* pHash	= m_pHash + ( nHash >> 3 );
 	BYTE nMask	= BYTE( 1 << ( nHash & 7 ) );
-
 	if ( *pHash & nMask )
 	{
+		m_nCookie = tNow;
 		++m_nCount;
 		*pHash &= ~nMask;
 	}
+
+	if ( ! bWord )
+		return;
 
 	if ( nLength >= 5 )
 	{
-		TRACE( _T("[QHT] \"%hs\"\n"), (LPCSTR)CT2A( CString( pszString + nStart, nLength - 1 ) ) );
+		//TRACE( _T("[QHT] \"%hs\"\n"), (LPCSTR)CT2A( CString( pszString + nStart, nLength - 1 ) ) );
 		nHash	= HashWord( pszString, nStart, nLength - 1, m_nBits );
 		pHash	= m_pHash + ( nHash >> 3 );
 		nMask	= BYTE( 1 << ( nHash & 7 ) );
-
 		if ( *pHash & nMask )
 		{
+			m_nCookie = tNow;
 			++m_nCount;
 			*pHash &= ~nMask;
 		}
 
-		TRACE( _T("[QHT] \"%hs\"\n"), (LPCSTR)CT2A( CString( pszString + nStart, nLength - 2 ) ) );
+		//TRACE( _T("[QHT] \"%hs\"\n"), (LPCSTR)CT2A( CString( pszString + nStart, nLength - 2 ) ) );
 		nHash	= HashWord( pszString, nStart, nLength - 2, m_nBits );
 		pHash	= m_pHash + ( nHash >> 3 );
 		nMask	= BYTE( 1 << ( nHash & 7 ) );
-
 		if ( *pHash & nMask )
 		{
+			m_nCookie = tNow;
 			++m_nCount;
 			*pHash &= ~nMask;
 		}
-
-		return 3;
 	}
-
-	return 1;
 }
 
-int CQueryHashTable::AddExact(LPCTSTR pszString, size_t nStart, size_t nLength)
+void CQueryHashTable::AddExact(LPCTSTR pszString, size_t nStart, size_t nLength)
 {
 	if ( ! nLength )
-		return 0;
-
-	m_nCookie = GetTickCount();
+		return;
 	
-	TRACE( _T("[QHT] \"%hs\"\n"), (LPCSTR)CT2A( CString( pszString + nStart, nLength ) ) );
+	//TRACE( _T("[QHT] \"%hs\"\n"), (LPCSTR)CT2A( CString( pszString + nStart, nLength ) ) );
 	DWORD nHash	= HashWord( pszString, nStart, nLength, m_nBits );
 	BYTE* pHash	= m_pHash + ( nHash >> 3 );
 	BYTE nMask	= BYTE( 1 << ( nHash & 7 ) );
-
 	if ( *pHash & nMask )
 	{
+		m_nCookie = GetTickCount();
 		++m_nCount;
 		*pHash &= ~nMask;
 	}
-
-	return 1;
 }
 
 bool CQueryHashTable::CheckString(const CString& strString) const
