@@ -1,7 +1,7 @@
 //
 // DownloadSource.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -39,6 +39,7 @@
 #include "EDClient.h"
 #include "EDPacket.h"
 #include "ShareazaURL.h"
+#include "Transfers.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -524,6 +525,8 @@ BOOL CDownloadSource::CanInitiate(BOOL bNetwork, BOOL bEstablished)
 
 void CDownloadSource::Remove(BOOL bCloseTransfer, BOOL bBan)
 {
+	ASSUME_LOCK( Transfers.m_pSection );
+
 	if ( m_pTransfer != NULL )
 	{
 		if ( bCloseTransfer )
@@ -546,6 +549,8 @@ void CDownloadSource::Remove(BOOL bCloseTransfer, BOOL bBan)
 
 void CDownloadSource::OnFailure(BOOL bNondestructive, DWORD nRetryAfter)
 {
+	ASSUME_LOCK( Transfers.m_pSection );
+
 	if ( m_pTransfer != NULL )
 	{
 		m_pTransfer->SetState(dtsNull);
@@ -575,6 +580,8 @@ void CDownloadSource::OnFailure(BOOL bNondestructive, DWORD nRetryAfter)
 
 void CDownloadSource::RemoveIf(BOOL bCloseTransfer, BOOL bBan)
 {
+	ASSUME_LOCK( Transfers.m_pSection );
+
 	if ( m_pTransfer != NULL )
 	{
 		if ( bCloseTransfer )
@@ -643,6 +650,8 @@ void CDownloadSource::OnResume()
 
 void CDownloadSource::OnResumeClosed()
 {
+	ASSUME_LOCK( Transfers.m_pSection );
+
 	if ( m_pTransfer != NULL )
 	{
 		m_pTransfer->SetState(dtsNull);

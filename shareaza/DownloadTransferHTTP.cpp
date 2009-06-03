@@ -85,6 +85,8 @@ CDownloadTransferHTTP::~CDownloadTransferHTTP()
 
 BOOL CDownloadTransferHTTP::Initiate()
 {
+	ASSUME_LOCK( Transfers.m_pSection );
+
 	theApp.Message( MSG_INFO, IDS_DOWNLOAD_CONNECTING,
 		(LPCTSTR)CString( inet_ntoa( m_pSource->m_pAddress ) ), m_pSource->m_nPort,
 		(LPCTSTR)m_pDownload->GetDisplayName() );
@@ -132,6 +134,8 @@ BOOL CDownloadTransferHTTP::AcceptPush(CConnection* pConnection)
 
 void CDownloadTransferHTTP::Close( TRISTATE bKeepSource, DWORD nRetryAfter )
 {
+	ASSUME_LOCK( Transfers.m_pSection );
+
 	if ( m_pSource != NULL && m_nState == dtsDownloading && m_nPosition )
 	{
 		if ( m_bRecvBackwards )
@@ -157,6 +161,8 @@ void CDownloadTransferHTTP::Boost()
 
 DWORD CDownloadTransferHTTP::GetAverageSpeed()
 {
+	ASSUME_LOCK( Transfers.m_pSection );
+
 	if ( m_nState == dtsDownloading )
 	{
 		DWORD nTime = GetTickCount() - m_tContent;
@@ -184,6 +190,8 @@ BOOL CDownloadTransferHTTP::OnConnected()
 
 BOOL CDownloadTransferHTTP::StartNextFragment()
 {
+	ASSUME_LOCK( Transfers.m_pSection );
+
 	ASSERT( this != NULL );
 	if ( this == NULL ) return FALSE;
 
@@ -278,6 +286,8 @@ BOOL CDownloadTransferHTTP::SubtractRequested(Fragments::List& ppFragments)
 
 BOOL CDownloadTransferHTTP::SendRequest()
 {
+	ASSUME_LOCK( Transfers.m_pSection );
+
 	CString strLine;
 	
 	CShareazaURL pURL;
@@ -496,6 +506,8 @@ BOOL CDownloadTransferHTTP::SendRequest()
 
 BOOL CDownloadTransferHTTP::OnRun()
 {
+	ASSUME_LOCK( Transfers.m_pSection );
+
 	CDownloadTransfer::OnRun();
 	
 	DWORD tNow = GetTickCount();
@@ -594,6 +606,8 @@ BOOL CDownloadTransferHTTP::OnRead()
 
 BOOL CDownloadTransferHTTP::ReadResponseLine()
 {
+	ASSUME_LOCK( Transfers.m_pSection );
+
 	CString strLine, strCode, strMessage;
 
 	if ( ! Read( strLine ) ) return TRUE;
@@ -680,6 +694,8 @@ BOOL CDownloadTransferHTTP::ReadResponseLine()
 
 BOOL CDownloadTransferHTTP::OnHeaderLine(CString& strHeader, CString& strValue)
 {
+	ASSUME_LOCK( Transfers.m_pSection );
+
 	if ( ! CDownloadTransfer::OnHeaderLine( strHeader, strValue ) )
 		return FALSE;
 
@@ -1084,6 +1100,8 @@ BOOL CDownloadTransferHTTP::OnHeadersComplete()
 	// TRI_UNKNOWN - keeps the source and will be dropped after several retries, will be
 	//            - added to m_pFailedSources when removed
 
+	ASSUME_LOCK( Transfers.m_pSection );
+
 	if ( m_bBadResponse )
 	{
 		Close( TRI_FALSE );
@@ -1285,6 +1303,8 @@ BOOL CDownloadTransferHTTP::OnHeadersComplete()
 
 BOOL CDownloadTransferHTTP::ReadContent()
 {
+	ASSUME_LOCK( Transfers.m_pSection );
+
 	CLockedBuffer pInput( GetInput() );
 
 	while ( pInput->m_nLength > 0 )
@@ -1631,6 +1651,8 @@ BOOL CDownloadTransferHTTP::ReadFlush()
 
 void CDownloadTransferHTTP::OnDropped()
 {
+	ASSUME_LOCK( Transfers.m_pSection );
+
 	if ( m_nState == dtsConnecting )
 	{
 		theApp.Message( MSG_ERROR, IDS_DOWNLOAD_CONNECT_ERROR, (LPCTSTR)m_sAddress );

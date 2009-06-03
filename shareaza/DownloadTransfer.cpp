@@ -1,7 +1,7 @@
 //
 // DownloadTransfer.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -31,6 +31,7 @@
 #include "Buffer.h"
 #include "XML.h"
 #include "DownloadTransferBT.h"
+#include "Transfers.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -44,6 +45,8 @@ static char THIS_FILE[]=__FILE__;
 
 CDownloadTransfer::CDownloadTransfer(CDownloadSource* pSource, PROTOCOLID nProtocol)
 {
+	ASSUME_LOCK( Transfers.m_pSection );
+
 	m_nProtocol		= nProtocol;
 	m_pDownload		= pSource->m_pDownload;
 	m_pDlPrev		= NULL;
@@ -83,6 +86,8 @@ CDownloadTransfer::~CDownloadTransfer()
 
 void CDownloadTransfer::Close(TRISTATE bKeepSource, DWORD nRetryAfter)
 {
+	ASSUME_LOCK( Transfers.m_pSection );
+
 	SetState( dtsNull );
 
 	CTransfer::Close();
@@ -126,6 +131,8 @@ void CDownloadTransfer::Boost()
 
 DWORD CDownloadTransfer::GetAverageSpeed()
 {
+	ASSUME_LOCK( Transfers.m_pSection );
+
 	return m_AverageSpeed( m_pSource->m_nSpeed = GetMeasuredSpeed() );
 }
 
@@ -216,6 +223,8 @@ BOOL CDownloadTransfer::OnRun()
 
 void CDownloadTransfer::SetState(int nState)
 {
+	ASSUME_LOCK( Transfers.m_pSection );
+
 	if ( m_pDownload != NULL )
 	{
 		if ( Settings.Downloads.SortSources )
@@ -281,6 +290,8 @@ void CDownloadTransfer::SetState(int nState)
 
 void CDownloadTransfer::ChunkifyRequest(QWORD* pnOffset, QWORD* pnLength, QWORD nChunk, BOOL bVerifyLock)
 {
+	ASSUME_LOCK( Transfers.m_pSection );
+
 	ASSERT( pnOffset != NULL && pnLength != NULL );
 
 	if ( m_pSource->m_bCloseConn ) return;

@@ -49,7 +49,7 @@ public:
 
 // Attributes
 public:
-	CMutex			m_pSection;
+	CMutexEx		m_pSection;
 	volatile DWORD	m_nUpdateCookie;		// Last library change time (ticks)
 	volatile DWORD	m_nForcedUpdateCookie;	// Last time when library scan was forced (ticks)
 	volatile DWORD	m_nScanCount;			// Library scan counter

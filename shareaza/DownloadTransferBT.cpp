@@ -33,6 +33,7 @@
 #include "Network.h"
 #include "Buffer.h"
 #include "BENode.h"
+#include "Transfers.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -76,6 +77,7 @@ CDownloadTransferBT::~CDownloadTransferBT()
 
 BOOL CDownloadTransferBT::Initiate()
 {
+	ASSUME_LOCK( Transfers.m_pSection );
 	ASSERT( m_pClient == NULL );
 	ASSERT( m_nState == dtsNull );
 
@@ -195,6 +197,7 @@ BOOL CDownloadTransferBT::OnRun()
 
 BOOL CDownloadTransferBT::OnConnected()
 {
+	ASSUME_LOCK( Transfers.m_pSection );
 	ASSERT( m_pClient != NULL );
 	ASSERT( m_pSource != NULL );
 
@@ -232,6 +235,8 @@ BOOL CDownloadTransferBT::OnConnected()
 
 BOOL CDownloadTransferBT::OnBitfield(CBTPacket* pPacket)
 {
+	ASSUME_LOCK( Transfers.m_pSection );
+
 	QWORD nBlockSize	= m_pDownload->m_pTorrent.m_nBlockSize;
 	DWORD nBlockCount	= m_pDownload->m_pTorrent.m_nBlockCount;
 	
@@ -279,6 +284,8 @@ void CDownloadTransferBT::SendFinishedBlock(DWORD nBlock)
 
 BOOL CDownloadTransferBT::OnHave(CBTPacket* pPacket)
 {
+	ASSUME_LOCK( Transfers.m_pSection );
+
 	if ( pPacket->GetRemaining() != sizeof(int) ) return TRUE;
 	QWORD nBlockSize	= m_pDownload->m_pTorrent.m_nBlockSize;
 	DWORD nBlockCount	= m_pDownload->m_pTorrent.m_nBlockCount;
@@ -524,6 +531,8 @@ BOOL CDownloadTransferBT::UnrequestRange(QWORD nOffset, QWORD nLength)
 
 BOOL CDownloadTransferBT::OnPiece(CBTPacket* pPacket)
 {
+	ASSUME_LOCK( Transfers.m_pSection );
+
 	ASSERT( m_pClient != NULL );
 	if ( pPacket->GetRemaining() < 8 ) return TRUE;
 	if ( m_nState != dtsRequesting && m_nState != dtsDownloading ) return TRUE;

@@ -85,6 +85,8 @@ CBTClient::~CBTClient()
 
 BOOL CBTClient::Connect(CDownloadTransferBT* pDownloadTransfer)
 {
+	ASSUME_LOCK( Transfers.m_pSection );
+
 	if ( m_bClosing ) return FALSE;
 	ASSERT( ! IsValid() );
 	ASSERT( m_pDownload == NULL );
@@ -445,6 +447,8 @@ BOOL CBTClient::OnHandshake1()
 
 BOOL CBTClient::OnHandshake2()
 {
+	ASSUME_LOCK( Transfers.m_pSection );
+
 	if ( m_bClosing ) return FALSE;
 
 	// Second part of the handshake - Peer ID
@@ -614,6 +618,8 @@ CString CBTClient::GetAzureusStyleUserAgent(LPBYTE pVendor, size_t nVendor)
 
 void CBTClient::DetermineUserAgent()
 {
+	ASSUME_LOCK( Transfers.m_pSection );
+
 	int nNickStart = 0, nNickEnd = 13;
 	CString strVer, strNick;
 
@@ -912,6 +918,8 @@ void CBTClient::SendBeHandshake()
 
 BOOL CBTClient::OnBeHandshake(CBTPacket* pPacket)
 {	
+	ASSUME_LOCK( Transfers.m_pSection );
+
 	if ( m_bClosing ) return TRUE;
 	// On extended handshake (for G2 capable clients)
 	if ( pPacket->GetRemaining() > 1024 ) return TRUE;

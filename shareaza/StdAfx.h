@@ -446,6 +446,65 @@ private:
 	CGuarded* operator&() const; // too unsafe
 };
 
+#ifdef _DEBUG
+
+	// Assume we already entered to this lock
+	#define ASSUME_LOCK(lock) \
+	if ( (lock).m_nEnterCount < 1 || (lock).m_nThreadId != (LONG)GetCurrentThreadId() ) { \
+		static char BUF[1024] = {}; \
+		lstrcpyA(BUF,THIS_FILE); \
+		lstrcatA(BUF,"\n\nThis code must be protected by " #lock "!"); \
+		if ( ::AfxAssertFailedLine(BUF, __LINE__) ) AfxDebugBreak(); }
+
+	// Assume we already entered to this lock only once
+	#define ASSUME_SINGLE_LOCK(lock) \
+	if ( (lock).m_nEnterCount != 1 || (lock).m_nThreadId != (LONG)GetCurrentThreadId() ) { \
+		static char BUF[1024] = {}; \
+		lstrcpyA(BUF,THIS_FILE); \
+		lstrcatA(BUF,"\n\nThis code must be protected by " #lock "!"); \
+		if ( ::AfxAssertFailedLine(BUF, __LINE__) ) AfxDebugBreak(); }
+
+	class CMutexEx : public CMutex
+	{
+	public:
+		CMutexEx(BOOL bInitiallyOwn = FALSE, LPCTSTR lpszName = NULL, LPSECURITY_ATTRIBUTES lpsaAttribute = NULL)
+			: CMutex( bInitiallyOwn, lpszName, lpsaAttribute )
+			, m_nThreadId( 0 )
+			, m_nEnterCount( 0 )
+		{
+		}
+
+		virtual BOOL Lock(DWORD dwTimeout = INFINITE)
+		{
+			if ( CMutex::Lock( dwTimeout ) )
+			{
+				InterlockedIncrement( &m_nEnterCount );
+				InterlockedCompareExchange( &m_nThreadId, (LONG)GetCurrentThreadId(), 0 );
+				return TRUE;
+			}
+			else
+				return FALSE;
+		}
+
+		virtual BOOL Unlock()
+		{
+			if ( m_nThreadId && InterlockedDecrement( &m_nEnterCount ) == 0 )
+				InterlockedExchange( &m_nThreadId, 0 );
+			return CMutex::Unlock();
+		}
+
+		volatile LONG m_nThreadId;		// Owner thread
+		volatile LONG m_nEnterCount;	// Re-enter counter
+	};
+
+#else	// _DEBUG
+
+	#define ASSUME_LOCK(lock) ((void)0)
+	#define ASSUME_SINGLE_LOCK(lock) ((void)0)
+	typedef CMutex CMutexEx;
+
+#endif	// _DEBUG
+
 class CLowerCaseTable
 {
 public:

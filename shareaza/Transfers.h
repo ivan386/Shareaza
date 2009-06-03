@@ -1,7 +1,7 @@
 //
 // Transfers.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -34,7 +34,7 @@ public:
 	CTransfers();
 	virtual ~CTransfers();
 
-	mutable CMutex		m_pSection;
+	mutable CMutexEx	m_pSection;
 
 	BOOL		IsConnectedTo(const IN_ADDR* pAddress) const;
 	BOOL		StartThread();

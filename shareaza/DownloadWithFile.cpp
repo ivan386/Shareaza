@@ -457,6 +457,8 @@ inline DWORD CalcChunkSize(QWORD nSize)
 
 BOOL CDownloadWithFile::GetFragment(CDownloadTransfer* pTransfer)
 {
+	ASSUME_LOCK( Transfers.m_pSection );
+
 	if ( !PrepareFile() )
 		return NULL;
 
