@@ -379,7 +379,7 @@ void CDownload::OnRun()
 			{
 				RunSearch( tNow );
 
-				if ( m_bSeeding )
+				if ( IsSeeding() )
 				{
 					// Mark as collapsed to get correct heights when dragging files
 					if ( !Settings.General.DebugBTSources && m_bExpanded )
@@ -398,7 +398,7 @@ void CDownload::OnRun()
 					}
 					SetModified();
 				}
-				else if ( ! IsMoving() )
+				else
 				{
 					RunValidation();
 
@@ -414,10 +414,6 @@ void CDownload::OnRun()
 						else
 							m_tBegan = 0;
 					}
-				}
-				else if ( ! IsFileOpen() && ! m_bComplete && ! IsTasking() )
-				{
-					OnDownloaded();
 				}
 			} // if ( RunTorrent( tNow ) )
 
