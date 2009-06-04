@@ -60,12 +60,9 @@ END_MESSAGE_MAP()
 // CLibraryMetaPanel construction
 
 CLibraryMetaPanel::CLibraryMetaPanel()
-: m_bNewFile( TRUE )
-, m_pMetadata( new CMetaPanel() )
-, m_pServiceData( NULL )
-, m_bExternalData( FALSE )
-, m_bDownloadingImage( FALSE )
-, m_bForceUpdate( FALSE )
+:	m_pMetadata( new CMetaPanel() )
+,	m_pServiceData( NULL )
+,	m_bForceUpdate( FALSE )
 {
 	m_rcFolder.SetRectEmpty();
 }
@@ -102,9 +99,7 @@ void CLibraryMetaPanel::Update()
 	{
 		m_nIndex	= pFirst->m_nIndex;
 		m_sName		= pFirst->m_sName;
-		CString strNewFile( pFirst->GetPath() );
-		m_bNewFile = ( m_sPath != strNewFile || pFirst->IsGhost() );
-		if ( m_bNewFile ) m_sPath = strNewFile;
+		m_sPath		= pFirst->GetPath();
 		if ( pFirst->m_pFolder != NULL )
 			m_sFolder = pFirst->m_pFolder->m_sPath;
 		else
@@ -118,7 +113,6 @@ void CLibraryMetaPanel::Update()
 	else if ( m_nSelected > 1 )
 	{
 		CString strFormat;
-		m_bNewFile = TRUE;
 		LoadString( strFormat, IDS_LIBPANEL_MULTIPLE_FILES );
 		m_sName.Format( strFormat, m_nSelected );
 		QWORD nSize = 0;
@@ -161,9 +155,8 @@ void CLibraryMetaPanel::Update()
 		if ( m_pSchema ) break;
 	}
 
-	if ( m_bExternalData )
+	if ( m_pServiceData )
 	{
-		ASSERT( m_pServiceData );
 		m_pMetadata->Setup( m_pServiceData );
 	}
 	else
@@ -211,21 +204,22 @@ void CLibraryMetaPanel::Update()
 
 	SetScrollInfo( SB_VERT, &pInfo, TRUE );
 
-	if ( m_bmThumb.m_hObject != NULL )
+	if ( m_bForceUpdate || ( m_sThumbnailURL.IsEmpty() ? ( m_sThumb != m_sPath ) :
+		( m_sThumb != m_sThumbnailURL ) ) )
 	{
-		if ( m_sThumb != m_sPath || m_bForceUpdate )
+		m_bForceUpdate = FALSE;
+
+		if ( m_bmThumb.m_hObject )
 			m_bmThumb.DeleteObject();
+
+		if ( ! IsThreadAlive() )
+		{
+			BeginThread( "CtrlLibraryMetaPanel" );
+		}
 	}
 
 	pLock2.Unlock();
 	pLock1.Unlock();
-
-	if ( m_sPath.GetLength() && m_bmThumb.m_hObject == NULL )
-	{
-		BeginThread( "CtrlLibraryMetaPanel" );
-
-		Wakeup();
-	}
 
 	Invalidate();
 }
@@ -281,7 +275,8 @@ void CLibraryMetaPanel::OnPaint()
 	int nThumbSize = min( max( rcClient.Height() - 16, 64 ), (int)Settings.Library.ThumbSize );
 	CRect rcWork( rcClient.left + 8, rcClient.top + 8,
 		rcClient.left + 8 + nThumbSize, rcClient.top + 8 + nThumbSize );
-	CoolInterface.DrawThumbnail( &dc, rcWork, IsThreadAlive(), FALSE, m_bmThumb, m_nIcon48, m_nIcon32 );
+	CoolInterface.DrawThumbnail( &dc, rcWork, TRUE, FALSE, m_bmThumb, m_nIcon48, m_nIcon32,
+		IsThreadAlive() ? LoadString( IDS_SEARCH_DETAILS_PREVIEWING ) : CString() );
 	rcWork.SetRect( rcWork.right + 8, rcWork.top, rcClient.right - 8, rcClient.bottom );
 
 	dc.SetViewportOrg( 0, -GetScrollPos( SB_VERT ) );
@@ -398,37 +393,19 @@ BOOL CLibraryMetaPanel::SetServicePanel(CMetaPanel* pPanel)
 {
 	m_pSection.Lock();
 
+	m_sThumbnailURL = pPanel ? pPanel->m_sThumbnailURL : CString();
 	m_pServiceData = pPanel;
-	if ( pPanel == NULL )
-	{
-		// If it's NULL, first assign the flag and do updates
-		// Otherwise, first update and then assign the flag
-		m_bExternalData = FALSE;
-		m_bForceUpdate = !m_bDownloadingImage;
-	}
-	else
-	{
-		m_bForceUpdate = !m_bDownloadingImage && pPanel->m_sThumbnailURL.GetLength() > 0;
-	}
 
 	m_pSection.Unlock();
 
 	Update();
-
-	m_pSection.Lock();
-	m_bExternalData = pPanel != NULL;
-
-	if ( m_bExternalData )
-		m_sThumb = pPanel->m_sThumbnailURL;
-
-	m_pSection.Unlock();
 
 	return TRUE;
 }
 
 CMetaPanel* CLibraryMetaPanel::GetServicePanel()
 {
-	if ( m_pServiceData != NULL && m_bExternalData )
+	if ( m_pServiceData )
 		return m_pServiceData;
 	else
 		return m_pMetadata;
@@ -520,48 +497,49 @@ void CLibraryMetaPanel::OnLButtonDown(UINT /*nFlags*/, CPoint /*point*/)
 
 void CLibraryMetaPanel::OnRun()
 {
-	while ( IsThreadEnabled() )
-	{
-		m_pSection.Lock();
-		if ( ! m_bNewFile && ! m_bForceUpdate || m_bDownloadingImage )
-		{
-			Exit();
-			m_pSection.Unlock();
-			return;
-		}
+	m_pSection.Lock();
 
+	while ( IsThreadEnabled() )
+	{	
 		CString strPath = m_sPath;
-		CString strThumbRes = m_sThumb;
-		m_bForceUpdate = FALSE;
+		CString strURL = m_sThumbnailURL;
+
+		if ( strPath.IsEmpty() && strURL.IsEmpty() )
+			break;
+
+		m_pSection.Unlock();
 
 		CImageFile pFile;
-		BOOL bSuccess = FALSE;
-
-		if ( m_bExternalData )
+		BOOL bSuccess;
+		if ( strURL.IsEmpty() )
 		{
-			m_bDownloadingImage = TRUE;
-			m_pSection.Unlock();
-			bSuccess = pFile.LoadFromURL( strThumbRes ) && pFile.EnsureRGB();
+			bSuccess = CThumbCache::Cache( strPath, &pFile );
 		}
 		else
-			m_pSection.Unlock();
-
-		if ( ! bSuccess )
-			bSuccess = CThumbCache::Cache( strPath, &pFile );
+		{
+			bSuccess = pFile.LoadFromURL( strURL ) && pFile.EnsureRGB();
+		}
 
 		m_pSection.Lock();
-		if ( bSuccess )
+
+		// If nothing changes
+		if ( ( m_sPath == strPath ) && ( m_sThumbnailURL == strURL ) )
 		{
-			if ( m_sPath == strPath )
+			m_sThumb = strURL.IsEmpty() ? strPath : strURL;
+
+			if ( bSuccess )
 			{
 				if ( m_bmThumb.m_hObject )
 					m_bmThumb.DeleteObject();
-				m_sThumb = m_sPath;
+
 				m_bmThumb.Attach( pFile.CreateBitmap() );
-				Invalidate();
 			}
+
+			Invalidate();
+
+			break;
 		}
-		m_bDownloadingImage = FALSE;
-		m_pSection.Unlock();
 	}
+
+	m_pSection.Unlock();
 }
