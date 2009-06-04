@@ -100,7 +100,6 @@ BOOL CDownloadWithExtras::CanPreview(DWORD nIndex)
 void CDownloadWithExtras::AddPreviewName(LPCTSTR pszFile)
 {
 	m_pPreviews.AddTail( pszFile );
-	theApp.WriteProfileString( _T("Delete"), pszFile, _T("") );
 	SetModified();
 }
 
