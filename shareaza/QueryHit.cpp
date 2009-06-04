@@ -109,27 +109,26 @@ CQueryHit* CQueryHit::FromG1Packet(CG1Packet* pPacket, int* pnHops)
 	CQueryHit* pLastHit		= NULL;
 	CXMLElement* pXML		= NULL;
 	Hashes::Guid oQueryID;
-	
-	if ( pPacket->m_nProtocol == PROTOCOL_G2 )
-	{
-		GNUTELLAPACKET pG1;
-		if ( ! static_cast< CG2Packet* >( static_cast< CPacket* >( pPacket ) )->
-			SeekToWrapped() ) return NULL;
-		pPacket->Read( &pG1, sizeof(pG1) );
-		
-		oQueryID = pG1.m_oGUID;
-		if ( pnHops ) *pnHops = pG1.m_nHops + 1;
-	}
-	else
-	{
-		oQueryID = pPacket->m_oGUID;
-		if ( pnHops ) *pnHops = pPacket->m_nHops + 1;
-	}
-	
-	oQueryID.validate();
-
 	try
 	{
+		if ( pPacket->m_nProtocol == PROTOCOL_G2 )
+		{
+			GNUTELLAPACKET pG1;
+			if ( ! static_cast< CG2Packet* >( static_cast< CPacket* >( pPacket ) )->
+				SeekToWrapped() ) return NULL;
+			pPacket->Read( &pG1, sizeof(pG1) );
+			
+			oQueryID = pG1.m_oGUID;
+			if ( pnHops ) *pnHops = pG1.m_nHops + 1;
+		}
+		else
+		{
+			oQueryID = pPacket->m_oGUID;
+			if ( pnHops ) *pnHops = pPacket->m_nHops + 1;
+		}
+		
+		oQueryID.validate();
+
 		BYTE nCount = pPacket->ReadByte();
 		if ( ! nCount )
 		{

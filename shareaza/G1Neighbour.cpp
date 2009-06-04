@@ -271,7 +271,7 @@ BOOL CG1Neighbour::ProcessPackets()
 			pPacket->m_nLength; // The length written in the packet
 
 		// If the length written in the packet is negative or too big
-		if ( pPacket->m_nLength < 0 || nLength >= Settings.Gnutella1.MaximumPacket )
+		if ( pPacket->m_nLength < 0 || nLength >= Settings.Gnutella.MaximumPacket )
 		{
 			// Close our connection to this remote computer
 			Close( IDS_PROTOCOL_TOO_LARGE );
@@ -749,7 +749,7 @@ BOOL CG1Neighbour::OnPong(CG1Packet* pPacket)
 
 			// Add the IP address and port number to the Gnutella host cache of computers we can try to connect to
 			HostCache.Gnutella1.Add( (IN_ADDR*)&nAddress, nPort, 0,
-				( ( m_bClientExtended && strVendorCode.IsEmpty() ) ? SHAREAZA_VENDOR_T :
+				( ( m_bClientExtended && strVendorCode.IsEmpty() ) ? _T( VENDOR_CODE ) :
 					(LPCTSTR)strVendorCode ), nUptime );
 
 			if ( bGDNA )
@@ -1131,7 +1131,7 @@ BOOL CG1Neighbour::OnClusterAdvisor(CG1Packet* pPacket)
 		// Read the IP address and port number from the packet, and add them to the Gnutella host cache
 		DWORD nAddress = pPacket->ReadLongLE();
 		WORD nPort     = pPacket->ReadShortLE();
-		HostCache.Gnutella1.Add( (IN_ADDR*)&nAddress, nPort, 0, SHAREAZA_VENDOR_T );
+		HostCache.Gnutella1.Add( (IN_ADDR*)&nAddress, nPort, 0, _T( VENDOR_CODE ) );
 	}
 
 	// Record that now was when we last received a cluster advisor packet from the remote computer

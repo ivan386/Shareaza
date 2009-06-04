@@ -340,7 +340,7 @@ BOOL CG2Neighbour::ProcessPackets()
 				*pLenOut++ = *pLenIn++;
 		}
 
-		if ( nLength >= Settings.Gnutella1.MaximumPacket )
+		if ( nLength >= Settings.Gnutella.MaximumPacket )
 		{
 			Close( IDS_PROTOCOL_TOO_LARGE );
 			return FALSE;
@@ -640,7 +640,7 @@ CG2Packet* CG2Neighbour::CreateLNIPacket(CG2Neighbour* pOwner)
 	pPacket->Write( Hashes::Guid( MyProfile.oGUID ) );
 
 	pPacket->WritePacket( G2_PACKET_VENDOR, 4 );
-	pPacket->WriteString( SHAREAZA_VENDOR_A, FALSE );
+	pPacket->WriteString( VENDOR_CODE, FALSE );
 
 	pPacket->WritePacket( G2_PACKET_LIBRARY_STATUS, 8 );
 	pPacket->WriteLongBE( (DWORD)nMyFiles );
@@ -762,7 +762,7 @@ CG2Packet* CG2Neighbour::CreateKHLPacket(CG2Neighbour* pOwner, BOOL nIncludeSelf
 		// For DIS reply
 		pPacket->WritePacket( G2_PACKET_CACHED_HUB, 18, TRUE );			// 4
 		pPacket->WritePacket( G2_PACKET_VENDOR, 4 );					// 3
-		pPacket->WriteString( SHAREAZA_VENDOR_A );						// 5
+		pPacket->WriteString( VENDOR_CODE );							// 5
 		pPacket->WriteLongLE( Network.m_pHost.sin_addr.S_un.S_addr );	// 4
 		pPacket->WriteShortBE( htons( Network.m_pHost.sin_port ) );		// 2
 		pPacket->WriteLongBE( tNow );									// 4
@@ -1043,7 +1043,7 @@ void CG2Neighbour::SendHAW()
 	pPacket->WriteShortBE( nLeafs );
 
 	pPacket->WritePacket( G2_PACKET_VENDOR, 4 );
-	pPacket->WriteString( SHAREAZA_VENDOR_A );	// 5 bytes
+	pPacket->WriteString( VENDOR_CODE );	// 5 bytes
 
 	pPacket->WriteByte( 100 );	// TTL
 	pPacket->WriteByte( 0 );	// Hops

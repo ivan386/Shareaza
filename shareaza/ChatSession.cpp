@@ -840,7 +840,7 @@ BOOL CChatSession::ReadPackets()
 			for ( BYTE nLenCnt = nLenLen ; nLenCnt-- ; ) *pLenOut++ = *pLenIn++;
 		}
 
-		if ( nLength >= Settings.Gnutella1.MaximumPacket )
+		if ( nLength >= Settings.Gnutella.MaximumPacket )
 		{
 			Close();
 			return FALSE;

@@ -643,7 +643,7 @@ BOOL CHostBrowser::StreamPacketsG1()
 
 		DWORD nLength = sizeof(*pPacket) + pPacket->m_nLength;
 
-		if ( pPacket->m_nLength < 0 || nLength >= (DWORD)Settings.Gnutella1.MaximumPacket * 8 )
+		if ( pPacket->m_nLength < 0 || nLength >= (DWORD)Settings.Gnutella.MaximumPacket * 8 )
 		{
 			theApp.Message( MSG_ERROR, IDS_BROWSE_PACKET_ERROR, m_sAddress );
 			Stop();

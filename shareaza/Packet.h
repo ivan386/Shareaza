@@ -22,15 +22,10 @@
 // CPacket represents a packet on a peer-to-peer network, and CPacketPool keeps lists of them
 // http://www.shareazasecurity.be/wiki/index.php?title=Developers.Code.CPacket
 
-// Only include the lines beneath this one once
 #pragma once
 
 // When the allocated block of memory needs to be bigger, make it 128 bytes bigger
 const DWORD PACKET_GROW = 128u;
-
-// Shareaza's vendor code is "RAZA", here is that text in ASCII and wide characters
-#define SHAREAZA_VENDOR_A VENDOR_CODE
-#define SHAREAZA_VENDOR_T _T( VENDOR_CODE )
 
 // Tell the compiler these classes exist, and it will find out more about them soon
 class CBuffer;

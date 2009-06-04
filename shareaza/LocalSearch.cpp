@@ -62,6 +62,9 @@ static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
 #endif
 
+// Limit query answer packet size since Gnutella 1/2 drops packets
+// large than Settings.Gnutella.MaximumPacket
+#define MAX_QUERY_PACKET_SIZE 16384 // (bytes)
 
 //////////////////////////////////////////////////////////////////////
 // CLocalSearch construction
@@ -210,8 +213,9 @@ INT_PTR CLocalSearch::ExecutePartialFiles(INT_PTR nMaximum)
 		{
 			oFilesInPacket.AddTail( pDownload );
 
-			if ( Settings.Gnutella.HitsPerPacket &&
-				(DWORD)oFilesInPacket.GetCount() >= Settings.Gnutella.HitsPerPacket )
+			if ( ( Settings.Gnutella.HitsPerPacket &&
+				(DWORD)oFilesInPacket.GetCount() >= Settings.Gnutella.HitsPerPacket ) ||
+				( m_pPacket && m_pPacket->m_nLength >= MAX_QUERY_PACKET_SIZE ) )
 			{
 				// Packet full, send it
 				nHits += SendHits( oFilesInPacket );
@@ -258,8 +262,9 @@ INT_PTR CLocalSearch::ExecuteSharedFiles(INT_PTR nMaximum)
 		{
 			oFilesInPacket.AddTail( pFile );
 
-			if ( Settings.Gnutella.HitsPerPacket &&
-				(DWORD)oFilesInPacket.GetCount() >= Settings.Gnutella.HitsPerPacket )
+			if ( ( Settings.Gnutella.HitsPerPacket &&
+				(DWORD)oFilesInPacket.GetCount() >= Settings.Gnutella.HitsPerPacket ) ||
+				( m_pPacket && m_pPacket->m_nLength >= MAX_QUERY_PACKET_SIZE ) )
 			{
 				// Packet full, send it
 				nHits += SendHits( oFilesInPacket );
@@ -825,7 +830,7 @@ void CLocalSearch::CreatePacketG2()
 	}
 
 	pPacket->WritePacket( G2_PACKET_VENDOR, 4 );
-	pPacket->WriteString( SHAREAZA_VENDOR_A, FALSE );
+	pPacket->WriteString( VENDOR_CODE, FALSE );
 
 	if ( Network.IsFirewalled() )
 	{
@@ -962,7 +967,7 @@ void CLocalSearch::WriteTrailerG1()
 {
 	CG1Packet* pPacket = static_cast< CG1Packet* >( m_pPacket );
 
-	pPacket->WriteString( SHAREAZA_VENDOR_T, FALSE );
+	pPacket->WriteString( _T( VENDOR_CODE ), FALSE );
 
 	BYTE nFlags[2] = { 0, 0 };
 
