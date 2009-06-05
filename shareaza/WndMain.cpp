@@ -2768,7 +2768,7 @@ void CMainWnd::OnNcLButtonDown(UINT nHitTest, CPoint point)
 	CMDIFrameWnd::OnNcLButtonDown( nHitTest, point );
 
 	// Windows Vista skinning workaround (system caption buttons over skin drawing)
-	if ( m_pSkin ) m_pSkin->OnNcPaint( this );
+	if ( m_pSkin && ::IsWindow( m_hWnd ) ) m_pSkin->OnNcPaint( this );
 }
 
 void CMainWnd::OnNcLButtonUp(UINT nHitTest, CPoint point)
