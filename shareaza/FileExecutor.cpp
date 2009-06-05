@@ -44,6 +44,58 @@ static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
 #endif
 
+// Some known media players
+static const struct
+{
+	LPCTSTR szPlayer;
+	LPCTSTR	szEnqueue;
+}
+KnownPlayers[] =
+{
+	// MediaPlayer Classic
+	{ _T("mplayerc.exe"),	_T("\"%s\" /add") },
+	// Windows Media Player
+	{ _T("wmplayer.exe"),	_T("/SHELLHLP_V9 Enqueue \"%s\"") },
+	// VideoLAN
+	{ _T("vlc.exe"),		_T("--one-instance --playlist-enqueue \"%s\"") },
+	// WinAmp
+	{ _T("winamp.exe"),		_T("/ADD \"%s\"") },
+	// Light Alloy
+	{ _T("la.exe"),			_T("/ADD \"%s\"") },
+	// BSPlayer
+	{ _T("bsplayer.exe"),	_T("\"%s\" -ADD") },
+	// Zoom Player
+	{ _T("zplayer.exe"),	_T("\"/Queue:%s\"") },
+	// (end)
+	{ NULL, NULL }
+};
+
+int PathGetArgsIndex(const CString& str)
+{
+	if ( str.GetAt( 0 ) == _T('\"') )
+	{
+		// "command"args
+		int quote = str.Find( _T('\"'), 1 );
+		if ( quote == -1 )
+			// No closing quote
+			return -1;
+		else
+			return quote + 1;
+	}
+	// command args
+	int i = -1;
+	for ( ;; )
+	{
+		int slash = str.Find( _T('\\'), i + 1 );
+		if ( slash == -1 ||
+			GetFileAttributes( str.Mid( 0, slash + 1 ) ) == INVALID_FILE_ATTRIBUTES )
+		{
+			return str.Find( _T(' '), i + 1 );
+		}
+		i = slash;
+	}
+}
+
 CMediaWnd* CFileExecutor::GetMediaWindow(BOOL bFocus)
 {
 	CMainWnd* pMainWnd = theApp.SafeMainWnd();
@@ -276,6 +328,15 @@ BOOL CFileExecutor::Enqueue(LPCTSTR pszFile, BOOL /*bSkipSecurityCheck*/, LPCTST
 		}
 	}
 
+	// Delay between first and second in row runs
+	static DWORD nRunCount = 0;
+	static DWORD nLastRun = 0;
+	if ( GetTickCount() - nLastRun > 2000 )
+		nRunCount = 0;
+	if ( ++nRunCount == 2 )
+		Sleep( 2000 );
+	nLastRun = GetTickCount();
+
 	// Prepare short path
 	CString strFile = pszFile;
 	if ( Settings.MediaPlayer.ShortPaths )
@@ -289,75 +350,97 @@ BOOL CFileExecutor::Enqueue(LPCTSTR pszFile, BOOL /*bSkipSecurityCheck*/, LPCTST
 	if ( ! bShiftKey && ( bVideo || bAudio ) &&
 		 ! Settings.MediaPlayer.ServicePath.IsEmpty() )
 	{
-		CString strServiceLC = Settings.MediaPlayer.ServicePath;
-		strServiceLC.MakeLower();
-
-		// Sometimes ShellExecute doesn't work, so we find the verb stuff manually
-		CString strCommand;
+		// Try Shell "enqueue" verb
+		CString strCommand, strParam;
 		DWORD nBufferSize = MAX_PATH;
 		HRESULT hr = AssocQueryString( ASSOCF_OPEN_BYEXENAME, ASSOCSTR_COMMAND,
-			Settings.MediaPlayer.ServicePath, _T("Enqueue"),
+			Settings.MediaPlayer.ServicePath, _T("enqueue"),
 			strCommand.GetBuffer( MAX_PATH ), &nBufferSize );
 		strCommand.ReleaseBuffer();
-
-		if ( SUCCEEDED( hr ) )
+		int nPos = PathGetArgsIndex( strCommand );
+		if ( nPos != -1 )
 		{
-			int nFind = strCommand.Find( _T("%1") );
+			strParam = strCommand.Mid( nPos ).Trim();
+			strCommand = strCommand.Left( nPos );
+		}
+		strCommand = strCommand.Trim( _T("\" ") );
+		if ( hr == S_OK )
+		{
+			int nFind = strParam.Find( _T("%1") );
 			if ( nFind != -1 )
 			{
-				// Replace "%1" by strFile
-				strCommand = ( strCommand.Left( nFind ) + strFile +
-					strCommand.Mid( nFind + 2 ) ).MakeLower();
-
-				// Cut service filename from start of string
-				nFind = strCommand.Find( strServiceLC );
-				strCommand = strCommand.Mid( strServiceLC.GetLength() + nFind );
-				if ( strCommand.GetAt( 0 ) == _T('\"') )
-					strCommand = strCommand.Mid( 1 ).Trim();
-
-				if ( ShellExecute( AfxGetMainWnd()->GetSafeHwnd(), NULL,
-					Settings.MediaPlayer.ServicePath, strCommand, NULL,
-					SW_SHOWNORMAL ) > (HINSTANCE)SE_ERR_DLLNOTFOUND )
-				{
+				strParam.Replace( _T("%1"), strFile );
+				HINSTANCE hResult = ShellExecute( AfxGetMainWnd()->GetSafeHwnd(), NULL,
+					strCommand, strParam, NULL, SW_SHOWNORMAL );
+				if ( hResult > (HINSTANCE)32 )
 					return TRUE;
-				}
 			}
 		}
 
-		// Second chance for some known players
-		CString strExecutable = strServiceLC;
-		int nBackSlash = strServiceLC.ReverseFind( '\\' );
-		if ( nBackSlash != -1 )
-			strExecutable = strServiceLC.Mid( nBackSlash + 1 );
-
-		CString strParam;
-		if ( strExecutable == _T("mplayerc.exe") )
+		// Try to create "enqueue" verb from default verb for known players
+		CString strExecutable = PathFindFileName( Settings.MediaPlayer.ServicePath );
+		for ( int i = 0; KnownPlayers[ i ].szPlayer; ++i )
 		{
-			strParam.Format( _T("\"%s\" /add"), strFile );
+			if ( strExecutable.CompareNoCase( KnownPlayers[ i ].szPlayer ) == 0 )
+			{
+				strParam.Format( KnownPlayers[ i ].szEnqueue, strFile );
+				break;
+			}
 		}
-		else if ( strExecutable == _T("wmplayer.exe") )
+		if ( ! strParam.IsEmpty() )
 		{
-			strParam.Format( _T("/SHELLHLP_V9 Enqueue \"%s\""), strFile );
-		}
-		else if ( strExecutable == _T("vlc.exe") )
-		{
-			strParam.Format( _T("--one-instance --playlist-enqueue \"%s\""), strFile );
-		}
-		if ( strParam.GetLength() )
-		{
-			if ( ShellExecute( AfxGetMainWnd()->GetSafeHwnd(), NULL,
-				Settings.MediaPlayer.ServicePath, strParam, NULL,
-				SW_SHOWNORMAL ) > (HINSTANCE)SE_ERR_DLLNOTFOUND )
+			HINSTANCE hResult = ShellExecute( AfxGetMainWnd()->GetSafeHwnd(), NULL,
+				Settings.MediaPlayer.ServicePath, strParam, NULL, SW_SHOWNORMAL );
+			if ( hResult > (HINSTANCE)32 )
 				return TRUE;
 		}
 	}
 
-	// TODO: Doesn't work with partial files
-
-	ShellExecute( AfxGetMainWnd()->GetSafeHwnd(), _T("Enqueue"),
+	// Try Shell "enqueue" verb
+	HINSTANCE hResult = ShellExecute( AfxGetMainWnd()->GetSafeHwnd(), _T("enqueue"),
 		strFile, NULL, NULL, SW_SHOWNORMAL );
+	if ( hResult > (HINSTANCE)32 )
+		return TRUE;
 
-	return TRUE;
+	// Try to create "enqueue" verb from default verb for known players
+	CString strCommand, strParam;
+	DWORD nBufferSize = MAX_PATH;
+	HRESULT hr = AssocQueryString( 0, ASSOCSTR_COMMAND, strType, NULL,
+		strCommand.GetBuffer( MAX_PATH ), &nBufferSize );
+	strCommand.ReleaseBuffer();
+	int nPos = PathGetArgsIndex( strCommand );
+	if ( nPos != -1 )
+	{
+		strCommand = strCommand.Left( nPos );
+	}
+	strCommand = strCommand.Trim( _T("\" ") );
+	if ( hr == S_OK )
+	{
+		CString strParam, strExecutable = PathFindFileName( strCommand );
+		for ( int i = 0; KnownPlayers[ i ].szPlayer; ++i )
+		{
+			if ( strExecutable.CompareNoCase( KnownPlayers[ i ].szPlayer ) == 0 )
+			{
+				strParam.Format( KnownPlayers[ i ].szEnqueue, strFile );
+				break;
+			}
+		}
+		if ( ! strParam.IsEmpty() )
+		{
+			HINSTANCE hResult = ShellExecute( AfxGetMainWnd()->GetSafeHwnd(), NULL,
+				strCommand, strParam, NULL, SW_SHOWNORMAL );
+			if ( hResult > (HINSTANCE)32 )
+				return TRUE;
+		}
+	}
+
+	// Try default verb
+	hResult = ShellExecute( AfxGetMainWnd()->GetSafeHwnd(), NULL,
+		strFile, NULL, NULL, SW_SHOWNORMAL );
+	if ( hResult > (HINSTANCE)32 )
+		return TRUE;
+
+	return FALSE;
 }
 
 //////////////////////////////////////////////////////////////////////

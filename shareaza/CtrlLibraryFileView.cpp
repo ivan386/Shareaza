@@ -342,30 +342,9 @@ void CLibraryFileView::OnLibraryLaunch()
 void CLibraryFileView::OnUpdateLibraryEnqueue(CCmdUI* pCmdUI)
 {
 	if ( m_bGhostFolder )
-	{
 		pCmdUI->Enable( FALSE );
-		return;
-	}
-	CSingleLock pLock( &Library.m_pSection );
-
-	if ( GetSelectedCount() > 0 && pLock.Lock( 100 ) )
-	{
-		StartSelectedFileLoop();
-
-		for ( CLibraryFile* pFile = GetNextSelectedFile(); pFile; pFile = GetNextSelectedFile() )
-		{
-			if ( LPCTSTR pszType = _tcsrchr( pFile->m_sName, '.' ) )
-			{
-				if ( IsIn( Settings.MediaPlayer.FileTypes, pszType + 1 ) )
-				{
-					pCmdUI->Enable( TRUE );
-					return;
-				}
-			}
-		}
-	}
-
-	pCmdUI->Enable( FALSE );
+	else
+		pCmdUI->Enable( GetSelectedCount() > 0 );
 }
 
 void CLibraryFileView::OnLibraryEnqueue()
