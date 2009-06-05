@@ -155,7 +155,7 @@ void CDownload::Remove(bool bDelete)
 	CloseTransfers();
 	AbortTask();
 
-	if ( IsTrying() )
+	if ( IsTrying() && !IsSeeding() )
 		Downloads.StopTrying( IsTorrent() );
 
 	if ( bDelete || ! IsCompleted() )
@@ -234,7 +234,7 @@ void CDownload::StopTrying()
 		Downloads.StopTrying( IsTorrent() );
 
 	m_tBegan = 0;
-	m_bDownloading	= false;
+	m_bDownloading = false;
 
 	// if m_bTorrentRequested = TRUE, raza sends Stop
 	// CloseTorrent() additionally closes uploads
