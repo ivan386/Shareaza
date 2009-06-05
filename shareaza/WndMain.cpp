@@ -2767,11 +2767,8 @@ void CMainWnd::OnNcLButtonDown(UINT nHitTest, CPoint point)
 	if ( m_pSkin && m_pSkin->OnNcLButtonDown( this, nHitTest, point ) ) return;
 	CMDIFrameWnd::OnNcLButtonDown( nHitTest, point );
 
-	// TODO: Do it right. We should fall back to CMDIFrameWnd::OnNCLButtonDown
-	//       only for hit test codes, which we are not interested in.
-	//       If some hit test-codes corrupt our skin we should handle them in skins OnNcLButtonDown, not here!
 	// Windows Vista skinning workaround (system caption buttons over skin drawing)
-	// if ( m_pSkin ) m_pSkin->OnNcPaint( this );
+	if ( m_pSkin ) m_pSkin->OnNcPaint( this );
 }
 
 void CMainWnd::OnNcLButtonUp(UINT nHitTest, CPoint point)
