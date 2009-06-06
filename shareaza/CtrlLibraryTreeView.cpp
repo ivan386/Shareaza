@@ -985,6 +985,8 @@ void CLibraryTreeView::StartDragging(CPoint& ptMouse)
 {
 	if ( ! m_pSelFirst )
 		return;
+	
+	CQuickLock oLock( Library.m_pSection );
 
 	CPoint ptMiddle( 0, 0 );
 	HBITMAP pImage = CreateDragImage( ptMouse, ptMiddle );

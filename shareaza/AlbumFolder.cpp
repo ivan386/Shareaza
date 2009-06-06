@@ -22,6 +22,7 @@
 #include "StdAfx.h"
 #include "Shareaza.h"
 #include "Library.h"
+#include "LibraryFolders.h"
 #include "SharedFile.h"
 #include "AlbumFolder.h"
 #include "CollectionFile.h"
@@ -219,6 +220,8 @@ CAlbumFolder* CAlbumFolder::FindFolder(const Hashes::Guid& oGUID)
 
 bool CAlbumFolder::OnFolderDelete(CAlbumFolder* pFolder)
 {
+	ASSUME_LOCK( Library.m_pSection );
+
 	// Find by pointer (direct)
 	POSITION pos = m_pFolders.Find( pFolder );
 	if ( pos == NULL )
@@ -226,6 +229,11 @@ bool CAlbumFolder::OnFolderDelete(CAlbumFolder* pFolder)
 		return false;
 	}
 	m_pFolders.RemoveAt( pos );
+
+	ASSERT( pFolder->m_pParent == this );
+	ASSERT( ! LibraryFolders.CheckAlbum( pFolder ) ) ;
+
+	pFolder->m_pParent = NULL;
 
 	Library.m_nUpdateCookie++;
 	m_nUpdateCookie++;
@@ -238,6 +246,8 @@ bool CAlbumFolder::OnFolderDelete(CAlbumFolder* pFolder)
 
 void CAlbumFolder::AddFile(CLibraryFile* pFile)
 {
+	ASSUME_LOCK( Library.m_pSection );
+
 	if ( pFile == NULL ) return;
 
 	POSITION pos = m_pFiles.Find( pFile );
@@ -263,16 +273,22 @@ void CAlbumFolder::AddFile(CLibraryFile* pFile)
 
 POSITION CAlbumFolder::GetFileIterator() const
 {
+	ASSUME_LOCK( Library.m_pSection );
+
 	return m_pFiles.GetHeadPosition();
 }
 
 CLibraryFile* CAlbumFolder::GetNextFile(POSITION& pos) const
 {
+	ASSUME_LOCK( Library.m_pSection );
+
 	return m_pFiles.GetNext( pos );
 }
 
 int CAlbumFolder::GetSharedCount() const
 {
+	ASSUME_LOCK( Library.m_pSection );
+
 	int nCount = 0;
 
 	for ( POSITION pos = GetFileIterator() ; pos ; )
@@ -291,6 +307,8 @@ int CAlbumFolder::GetSharedCount() const
 
 void CAlbumFolder::RemoveFile(CLibraryFile* pFile)
 {
+	ASSUME_LOCK( Library.m_pSection );
+
 	if ( POSITION pos = m_pFiles.Find( pFile ) )
 	{
 		m_pFiles.RemoveAt( pos );
@@ -352,6 +370,8 @@ CAlbumFolder* CAlbumFolder::FindFile(CLibraryFile* pFile)
 
 int CAlbumFolder::GetFileList(CLibraryList* pList, BOOL bRecursive) const
 {
+	ASSUME_LOCK( Library.m_pSection );
+
 	int nCount = 0;
 
 	for ( POSITION pos = GetFileIterator() ; pos ; )

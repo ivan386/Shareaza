@@ -286,6 +286,8 @@ void CLibraryView::OnDestroy()
 
 void CLibraryView::StartDragging(const CPoint& ptMouse)
 {
+	CQuickLock oLock( Library.m_pSection );
+
 	CPoint ptMiddle( 0, 0 );
 	HBITMAP pImage = CreateDragImage( ptMouse, ptMiddle );
 	if ( ! pImage )
