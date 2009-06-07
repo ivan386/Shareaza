@@ -263,10 +263,11 @@ CBTInfo& CBTInfo::Copy(const CBTInfo& oSource)
 //////////////////////////////////////////////////////////////////////
 // CBTInfo serialize
 
-#define BTINFO_SER_VERSION 8
+#define BTINFO_SER_VERSION 9
 // History:
 // 7 - redesigned tracker list (ryo-oh-ki)
 // 8 - removed m_nFilePriority (ryo-oh-ki)
+// 9 - added m_sName (ryo-oh-ki)
 
 void CBTInfo::Serialize(CArchive& ar)
 {
@@ -359,11 +360,17 @@ void CBTInfo::Serialize(CArchive& ar)
 		QWORD nOffset = 0;
 		for ( int nFile = 0 ; nFile < nFiles ; nFile++ )
 		{
-			CBTFile* pBTFile = new CBTFile( this );
-			m_pFiles.AddTail( pBTFile );
+			CAutoPtr< CBTFile >pBTFile( new CBTFile( this ) );
+			if ( ! pBTFile )
+				// Out Of Memory
+				AfxThrowUserException();
+
 			pBTFile->Serialize( ar, nVersion );
+
 			pBTFile->m_nOffset = nOffset;
 			nOffset += pBTFile->m_nSize;
+
+			m_pFiles.AddTail( pBTFile.Detach() );
 		}
 
 		if ( nVersion < 7 )
@@ -505,6 +512,7 @@ void CBTInfo::CBTFile::Serialize(CArchive& ar, int nVersion)
 	{
 		ar << m_nSize;
 		ar << m_sPath;
+		ar << m_sName;
 		SerializeOut( ar, m_oSHA1 );
 		SerializeOut( ar, m_oED2K );
 		SerializeOut( ar, m_oTiger );
@@ -524,6 +532,13 @@ void CBTInfo::CBTFile::Serialize(CArchive& ar, int nVersion)
 		}
 
 		ar >> m_sPath;
+
+		if ( nVersion >= 9 )
+			ar >> m_sName;
+		else
+			// Upgrade
+			m_sName = PathFindFileName( m_sPath );
+
 		SerializeIn( ar, m_oSHA1, nVersion );
 
 		if ( nVersion >= 4 )
@@ -883,17 +898,19 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 		m_nTotalSize = pLength->GetInt();
 		if ( ! m_nTotalSize ) return FALSE;
 
-		{
-			CBTFile* pBTFile = new CBTFile( this );
-			m_pFiles.AddTail( pBTFile );
-			pBTFile->m_sName = m_sName;
-			pBTFile->m_sPath = m_sName;
-			pBTFile->m_nSize = m_nTotalSize;
-			pBTFile->m_oSHA1 = m_oSHA1;
-			pBTFile->m_oTiger = m_oTiger;
-			pBTFile->m_oED2K = m_oED2K;
-			pBTFile->m_oMD5 = m_oMD5;
-		}
+		CAutoPtr< CBTFile >pBTFile( new CBTFile( this ) );
+		if ( ! pBTFile )
+			// Out of memory
+			return FALSE;
+
+		pBTFile->m_sPath = m_sName;
+		pBTFile->m_sName = PathFindFileName( m_sName );
+		pBTFile->m_nSize = m_nTotalSize;
+		pBTFile->m_oSHA1 = m_oSHA1;
+		pBTFile->m_oTiger = m_oTiger;
+		pBTFile->m_oED2K = m_oED2K;
+		pBTFile->m_oMD5 = m_oMD5;
+		m_pFiles.AddTail( pBTFile.Detach() );
 
 		// Add sources from torrents - DWK
 		CBENode* pSources = pRoot->GetNode( "sources" );
@@ -921,8 +938,10 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 		QWORD nOffset = 0;
 		for ( int nFile = 0 ; nFile < nFiles ; nFile++ )
 		{
-			CBTFile* pBTFile = new CBTFile( this );
-			m_pFiles.AddTail( pBTFile );
+			CAutoPtr< CBTFile > pBTFile( new CBTFile( this ) );
+			if ( ! pBTFile )
+				// Out of Memory
+				return FALSE;
 
 			CBENode* pFile = pFiles->GetNode( nFile );
 			if ( ! pFile || ! pFile->IsType( CBENode::beDict ) ) return FALSE;
@@ -1065,6 +1084,8 @@ BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
 
 			m_nTotalSize += pBTFile->m_nSize;
 			nOffset += pBTFile->m_nSize;
+
+			m_pFiles.AddTail( pBTFile.Detach() );
 		}
 
 		if ( nFiles == 1 )
@@ -1135,8 +1156,7 @@ BOOL CBTInfo::CheckFiles()
 	for ( POSITION pos = m_pFiles.GetHeadPosition(); pos ; )
 	{
 		CBTFile* pBTFile = m_pFiles.GetNext( pos );
-		pBTFile->m_sPath.TrimLeft();
-		pBTFile->m_sPath.TrimRight();
+		pBTFile->m_sPath.Trim();
 
 		LPCTSTR pszPath = pBTFile->m_sPath;
 
