@@ -21,6 +21,8 @@
 
 #pragma once
 
+#include <stdlib.h>
+#include <intrin.h>
 #include <boost/cstdint.hpp>
 
 //! \brief plattfrom independent signed 8 bit integer type.
@@ -262,7 +264,7 @@ inline uint32 highestBitSet(uint32 value)
 
 inline uint32 highestBitSet(uint64 value)
 {
-#if defined _WIN64 && _MFC_VER >= 0x0800
+#if defined _WIN64
 	uint32 index;
 	return _BitScanReverse64( &index, value ) ? index : 0;
 #else

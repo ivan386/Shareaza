@@ -1,7 +1,7 @@
 //
 // HashLib.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -25,6 +25,9 @@
 #define HASHLIB_API __declspec(dllimport)
 #endif
 
+#pragma warning( push )
+#pragma warning( disable: 4985 ) // 'ceil': attributes not present on previous declaration.
+
 #include "Utility.hpp"
 
 #include "SHA.h"
@@ -32,3 +35,5 @@
 #include "MD5.h"
 #include "TigerTree.h"
 #include "ED2K.h"
+
+#pragma warning( pop )
