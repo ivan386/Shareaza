@@ -55,7 +55,7 @@ public:
 	bool	Update();
 	void	Paint(CDC* pDC, const CRect& rcBlock, CDC* pMemDC);
 private:
-	void	DrawText(CDC* pDC, const CRect* prcClip, int nX, int nY, LPCTSTR pszText, CRect* prcUnion = NULL);
+	void	DrawText(CDC* pDC, const CRect* prcClip, int nX, int nY, const CString& strText, CRect* prcUnion = NULL);
 
 };
 

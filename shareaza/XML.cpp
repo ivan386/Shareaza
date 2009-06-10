@@ -219,13 +219,13 @@ CString CXMLNode::StringToValue(LPCTSTR& pszXML, int nLength)
 	} \
 	{ for ( LPCTSTR pszIn = (y) ; *pszIn ; nOut--, nLen++ ) *pszOut++ = *pszIn++; }
 
-void CXMLNode::ValueToString(LPCTSTR pszValue, CString& strXML)
+void CXMLNode::ValueToString(const CString& strValue, CString& strXML)
 {
 	int nLen = strXML.GetLength();
-	int nOut = (int)_tcslen( pszValue );
+	int nOut = strValue.GetLength();
 	LPTSTR pszOut = strXML.GetBuffer( nLen + nOut ) + nLen;
-
-	for ( ; *pszValue ; pszValue++ )
+	LPCTSTR pszValue = strValue;
+	for ( int i = nOut ; i != 0 ; --i, ++pszValue )
 	{
 		int nChar = (int)(unsigned short)*pszValue;
 
@@ -547,10 +547,6 @@ BOOL CXMLElement::ParseString(LPCTSTR& strXML)
 	if ( !ParseIdentifier( strXML, m_sName ) )
 		return FALSE;
 
-#ifdef _DEBUG
-	LPCTSTR pszEnd = strXML + _tcslen( strXML );
-#endif
-
 	while ( ! ParseMatch( strXML, _T(">") ) )
 	{
 		if ( ParseMatch( strXML, _T("/") ) )
@@ -560,8 +556,6 @@ BOOL CXMLElement::ParseString(LPCTSTR& strXML)
 
 		if ( !*strXML )
 			return FALSE;
-
-		ASSERT( strXML < pszEnd );
 
 		CXMLAttribute* pAttribute = new CXMLAttribute( this );
 
@@ -593,8 +587,6 @@ BOOL CXMLElement::ParseString(LPCTSTR& strXML)
 	{
 		if ( !*strXML )
 			return FALSE;
-
-		ASSERT( strXML < pszEnd );
 
 		LPCTSTR pszElement = _tcschr( strXML, '<' );
 		if ( !pszElement || *pszElement != '<' )

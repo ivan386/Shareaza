@@ -88,8 +88,8 @@ protected:
 	void		LoadFromHit();
 	BOOL		LoadTypeInfo();
 	CSize		ComputeSize();
-	void		ExpandSize(CDC& dc, CSize& sz, LPCTSTR pszText, int nBase = 0);
-	void		DrawText(CDC& dc, CPoint& pt, LPCTSTR pszText);
+	void		ExpandSize(CDC& dc, CSize& sz, const CString& strText, int nBase = 0);
+	void		DrawText(CDC& dc, CPoint& pt, const CString& strText);
 
 // Overrides
 public:

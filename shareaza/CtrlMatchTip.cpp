@@ -661,9 +661,9 @@ CSize CMatchTipCtrl::ComputeSize()
 	return sz;
 }
 
-void CMatchTipCtrl::ExpandSize(CDC& dc, CSize& sz, LPCTSTR pszText, int nBase)
+void CMatchTipCtrl::ExpandSize(CDC& dc, CSize& sz, const CString& strText, int nBase)
 {
-	CSize szText = dc.GetTextExtent( pszText, static_cast< int >( _tcslen( pszText ) ) );
+	CSize szText = dc.GetTextExtent( strText );
 	szText.cx += nBase;
 	sz.cx = max( sz.cx, szText.cx );
 }
@@ -764,7 +764,7 @@ void CMatchTipCtrl::OnPaint()
 	LoadString( str, IDS_TIP_SIZE );
 	str.Append( _T(": ") );
 	DrawText( dc, pt, str );
-	CSize sz = dc.GetTextExtent( str, str.GetLength() );
+	CSize sz = dc.GetTextExtent( str );
 	pt.x += sz.cx;
 	DrawText( dc, pt, m_sSize );
 	pt.x -= sz.cx;
@@ -772,7 +772,7 @@ void CMatchTipCtrl::OnPaint()
 	LoadString( str, IDS_TIP_TYPE );
 	str.Append( _T(": ") );
 	DrawText( dc, pt, str );
-	sz = dc.GetTextExtent( str, str.GetLength() );
+	sz = dc.GetTextExtent( str );
 	pt.x += sz.cx;
 	DrawText( dc, pt, m_sType );
 	pt.x -= sz.cx;
@@ -935,15 +935,15 @@ void CMatchTipCtrl::OnPaint()
 	dc.FillSolidRect( &rc, m_crBack );
 }
 
-void CMatchTipCtrl::DrawText(CDC& dc, CPoint& pt, LPCTSTR pszText)
+void CMatchTipCtrl::DrawText(CDC& dc, CPoint& pt, const CString& strText)
 {
 	DWORD dwFlags = ( Settings.General.LanguageRTL ? ETO_RTLREADING : 0 );
 	short nExtraPoint = ( Settings.General.LanguageRTL ? 1 : 0 );
-	CSize sz = dc.GetTextExtent( pszText, static_cast< int >( _tcslen( pszText ) ) );
+	CSize sz = dc.GetTextExtent( strText );
 	CRect rc( pt.x, pt.y, pt.x + sz.cx + nExtraPoint, pt.y + sz.cy );
 
 	dc.SetBkColor( m_crBack );
-	dc.ExtTextOut( pt.x, pt.y, ETO_CLIPPED|ETO_OPAQUE|dwFlags, &rc, pszText, static_cast< UINT >( _tcslen( pszText ) ), NULL );
+	dc.ExtTextOut( pt.x, pt.y, ETO_CLIPPED|ETO_OPAQUE|dwFlags, &rc, strText, NULL );
 	dc.ExcludeClipRect( &rc );
 }
 

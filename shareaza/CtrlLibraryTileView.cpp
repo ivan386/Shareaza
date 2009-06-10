@@ -993,14 +993,14 @@ void CLibraryTileItem::Paint(CDC* pDC, const CRect& rcBlock, CDC* /*pMemDC*/)
 	pDC->SelectClipRgn( NULL );
 }
 
-void CLibraryTileItem::DrawText(CDC* pDC, const CRect* prcClip, int nX, int nY, LPCTSTR pszText, CRect* prcUnion)
+void CLibraryTileItem::DrawText(CDC* pDC, const CRect* prcClip, int nX, int nY, const CString& strText, CRect* prcUnion)
 {
-	CSize sz = pDC->GetTextExtent( pszText, static_cast< int >( _tcslen( pszText ) ) );
+	CSize sz = pDC->GetTextExtent( strText );
 	CRect rc( nX - 2, nY - 1, nX + sz.cx + 2, nY + sz.cy + 1 );
 
 	rc.IntersectRect( &rc, prcClip );
 
-	pDC->ExtTextOut( nX, nY, ETO_CLIPPED|ETO_OPAQUE, &rc, pszText, static_cast< UINT >( _tcslen( pszText ) ), NULL );
+	pDC->ExtTextOut( nX, nY, ETO_CLIPPED|ETO_OPAQUE, &rc, strText, NULL );
 	pDC->ExcludeClipRect( rc.left, rc.top, rc.right, rc.bottom );
 
 	if ( prcUnion != NULL ) prcUnion->UnionRect( prcUnion, &rc );
