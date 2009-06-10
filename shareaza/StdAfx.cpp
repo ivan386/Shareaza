@@ -60,36 +60,35 @@ CLowerCaseTable::CLowerCaseTable()
 	cTable[ 65439 ] = TCHAR( 12444 );
 }
 
-const CString& CLowerCaseTable::operator()(CString& strSource) const
+CString& CLowerCaseTable::operator()(CString& strSource) const
 {
-	const int nLength = strSource.GetLength();
-	const LPTSTR str = strSource.GetBuffer() + nLength;
-
-	bool bSigma = false;
-	for ( int i = -nLength; i; ++i )
+	// Lowercase greek final sigmas first (word endings)
+	if ( strSource.ReverseFind( 0x3a3 ) != -1 )
 	{
-		if ( str[ i ] == 0x3a3 )
-		{
-			bSigma = true;
-			break;
-		}
-	}
-
-	if ( bSigma )
-	{
-		// Lowercase greek final sigmas first (word endings)
+		// TODO: Optimize this
 		const regex::rpattern regExpPattern( _T("(\\w+)\x3a3(\\W|$)"), _T("$1\x3c2$2"),
-		regex::GLOBAL|regex::MULTILINE|regex::NOBACKREFS, regex::MODE_SAFE );
+			regex::GLOBAL|regex::MULTILINE|regex::NOBACKREFS, regex::MODE_SAFE );
 		regex::subst_results results;
-		std::wstring strTemp( strSource, nLength );
+		std::wstring strTemp( strSource, strSource.GetLength() );
 		regExpPattern.substitute( strTemp, results );
-		strSource.SetString( strTemp.c_str(), nLength );
+		strSource.SetString( strTemp.c_str(), strTemp.length() );
 	}
 
 	// Lowercase now everything. Not final sigmas are taken from the table
-	for ( int i = -nLength; i; ++i )
-		str[ i ] = ( *this )( str[ i ] );
-
+	const int nLength = strSource.GetLength();
+	LPTSTR str = strSource.GetBuffer();
+	for ( register int i = 0; i < nLength; ++i, ++str )
+	{
+		register TCHAR cLookup = *str;
+		if ( cLookup >= 0 && cLookup <= 127 )
+		{
+			// A..Z -> a..z
+			if ( cLookup >= _T('A') && cLookup <= _T('Z') )
+				*str = cLookup + 32;
+		}
+		else
+			*str = cTable[ cLookup ];
+	}
 	strSource.ReleaseBuffer( nLength );
 
 	return strSource;

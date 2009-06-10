@@ -509,9 +509,8 @@ class CLowerCaseTable
 {
 public:
 	explicit CLowerCaseTable();
-	inline const TCHAR& operator()(const TCHAR cLookup) const { return cTable[ cLookup ]; }
-	const CString& operator()(CString& strSource) const;
-	inline const TCHAR& operator[](const TCHAR cLookup) const { return ( *this )( cLookup ); }
+	inline TCHAR operator()(TCHAR cLookup) const { return cTable[ cLookup ]; }
+	CString& operator()(CString& strSource) const;
 private:
 	TCHAR cTable[ 65537 ];
 };
