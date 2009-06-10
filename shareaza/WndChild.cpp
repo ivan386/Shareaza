@@ -65,16 +65,16 @@ CChildWnd* CChildWnd::m_pCmdMsg = NULL;
 // CChildWnd construction
 
 CChildWnd::CChildWnd()
+:	m_nResID		( 0 )
+,	m_bTabMode		( FALSE )
+,	m_bGroupMode	( FALSE )
+,	m_pGroupParent	( NULL )
+,	m_nGroupSize	( 0.5f )
+,	m_bPanelMode	( FALSE )
+,	m_bAlert		( FALSE )
+,	m_pSkin			( NULL )
+,	m_pMainWndCache ( NULL )
 {
-	m_nResID		= 0;
-	m_bTabMode		= FALSE;
-	m_bGroupMode	= FALSE;
-	m_pGroupParent	= NULL;
-	m_nGroupSize	= 0.5f;
-	m_bPanelMode	= FALSE;
-	m_bAlert		= FALSE;
-	m_pSkin			= NULL;
-	m_pCmdMsg		= NULL;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -94,7 +94,9 @@ BOOL CChildWnd::Create(UINT nID, BOOL bVisible)
 
 CMainWnd* CChildWnd::GetMainWnd()
 {
-	return (CMainWnd*)GetMDIFrame();
+	if ( ! m_pMainWndCache )
+		m_pMainWndCache = (CMainWnd*)GetMDIFrame();
+	return m_pMainWndCache;
 }
 
 CWindowManager* CChildWnd::GetManager()

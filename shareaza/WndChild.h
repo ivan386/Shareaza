@@ -54,7 +54,9 @@ public:
 	BOOL			m_bPanelMode;
 	BOOL			m_bAlert;
 	CSkinWindow*	m_pSkin;
+
 private:
+	CMainWnd*		m_pMainWndCache;
 	static CChildWnd*	m_pCmdMsg;
 
 // Operations
