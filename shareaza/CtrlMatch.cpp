@@ -1001,10 +1001,18 @@ void CMatchCtrl::DrawItem(CDC& dc, CRect& rcRow, CMatchFile* pFile, CQueryHit* p
 			break;
 
 		case MATCH_COL_TIME:
-			lstrcpyn( szBuffer, pFile->m_pTime.Format( _T("%B %d, %H:%M:%S") ),
-				sizeof( szBuffer ) / sizeof( TCHAR ) );
-			szBuffer[ sizeof( szBuffer ) / sizeof( TCHAR ) - 1 ] = 0;
-			pszText = szBuffer;
+			{
+				SYSTEMTIME st;
+				if ( pFile->m_pTime.GetAsSystemTime( st ) )
+				{
+					int nChars = GetDateFormat( LOCALE_USER_DEFAULT, DATE_SHORTDATE,
+						&st, NULL, szBuffer, _countof( szBuffer ) );
+					szBuffer[ nChars - 1 ] = _T(' ');
+					GetTimeFormat( LOCALE_USER_DEFAULT, 0,
+						&st, NULL, szBuffer + nChars, _countof( szBuffer ) );
+					pszText = szBuffer;
+				}
+			}
 			break;
 
 		case MATCH_COL_COUNTRY:
