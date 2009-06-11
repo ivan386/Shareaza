@@ -1,7 +1,7 @@
 //
 // CoolMenu.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -26,8 +26,10 @@
 struct __declspec(uuid("000214f4-0000-0000-c000-000000000046")) IContextMenu2;
 struct __declspec(uuid("bcfce0a0-ec17-11d0-8d10-00a0c90f2719")) IContextMenu3;
 
-#define ID_SHELL_MENU_MIN 40000
-#define ID_SHELL_MENU_MAX 41000
+#define ID_SCHEMA_MENU_MIN	35000
+#define ID_SCHEMA_MENU_MAX	35100
+#define ID_SHELL_MENU_MIN	40000
+#define ID_SHELL_MENU_MAX	41000
 
 class CCoolMenu
 {
