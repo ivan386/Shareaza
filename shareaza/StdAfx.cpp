@@ -71,7 +71,7 @@ CString& CLowerCaseTable::operator()(CString& strSource) const
 		regex::subst_results results;
 		std::wstring strTemp( strSource, strSource.GetLength() );
 		regExpPattern.substitute( strTemp, results );
-		strSource.SetString( strTemp.c_str(), strTemp.length() );
+		strSource.SetString( strTemp.c_str(), (int)strTemp.length() );
 	}
 
 	// Lowercase now everything. Not final sigmas are taken from the table

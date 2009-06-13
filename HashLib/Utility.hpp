@@ -22,25 +22,35 @@
 #pragma once
 
 #include <stdlib.h>
-#include <intrin.h>
 #include <boost/cstdint.hpp>
 
-//! \brief plattfrom independent signed 8 bit integer type.
+// Work-around for Microsoft double declaration
+#define _interlockedbittestandset _ms_set
+#define _interlockedbittestandreset _ms_reset
+#define _interlockedbittestandset64 _ms_set64
+#define _interlockedbittestandreset64 _ms_reset64
+#include <intrin.h>
+#undef _interlockedbittestandset
+#undef _interlockedbittestandreset
+#undef _interlockedbittestandset
+#undef _interlockedbittestandreset
+
+//! \brief platform independent signed 8 bit integer type.
 typedef boost::int8_t int8;
-//! \brief plattfrom independent signed 16 bit integer type.
+//! \brief platform independent signed 16 bit integer type.
 typedef boost::int16_t int16;
-//! \brief plattfrom independent signed 32 bit integer type.
+//! \brief platform independent signed 32 bit integer type.
 typedef boost::int32_t int32;
-//! \brief plattfrom independent signed 64 bit integer type.
+//! \brief platform independent signed 64 bit integer type.
 typedef boost::int64_t int64;
 
-//! \brief plattfrom independent unsigned 8 bit integer type.
+//! \brief platform independent unsigned 8 bit integer type.
 typedef boost::uint8_t uint8;
-//! \brief plattfrom independent unsigned 16 bit integer type.
+//! \brief platform independent unsigned 16 bit integer type.
 typedef boost::uint16_t uint16;
-//! \brief plattfrom independent unsigned 32 bit integer type.
+//! \brief platform independent unsigned 32 bit integer type.
 typedef boost::uint32_t uint32;
-//! \brief plattfrom independent unsigned 64 bit integer type.
+//! \brief platform independent unsigned 64 bit integer type.
 typedef boost::uint64_t uint64;
 
 //! \brief alias for unsigned char.
@@ -63,7 +73,7 @@ enum Endianess
 	bigEndian
 };
 
-//! \brief This namespace is used to hold machine dependent definitons for
+//! \brief This namespace is used to hold machine dependent definitions for
 //!        the target machine.
 namespace Machine
 {
@@ -95,7 +105,7 @@ namespace Machine
 
 //! \brief generic function to swap the byte ordering of a given type
 //!
-//! The byte ordering can be swapped meaningfuly only for unsigned integer types
+//! The byte ordering can be swapped meaningfully only for unsigned integer types
 //! therefore specializations are provided only for those types. We use
 //! template specialization in order to avoid automatic argument conversion.
 template<typename T>
@@ -154,7 +164,7 @@ template<typename T > struct TransformTo< T, Machine::endianess >
 //!        form with a specified byte ordering.
 //!
 //! This function objects behaves the same as TransformTo does but its purpose
-//! is different. Having both functios allows to make that purpose explicit in
+//! is different. Having both functions allows to make that purpose explicit in
 //! code.
 template<typename T, Endianess endianPolicy> struct TransformFrom
 {
@@ -220,7 +230,7 @@ template<typename T, T v> struct StaticTransformTo< T, v, Machine::endianess >
 //! \brief for_each with predicate.
 //!
 //! A generalization of the for_each algorithm that takes a predicate that
-//! must be fullfilled in order to apply the given function. This function
+//! must be fulfilled in order to apply the given function. This function
 //! may mutate the input sequence, provided no iterators become invalid.
 template<class InputIterator, class Predicate, class Function >
 inline void for_each_if(InputIterator first, InputIterator last,
