@@ -328,6 +328,7 @@ void CXMLNode::UniformString(CString& str)
 			{
 				LPTSTR pszTemp = _tcsninc( str, nPos );
 				pszTemp[ 0 ] = ' ';
+				bSpace = TRUE;
 			}
 		}
 		else
