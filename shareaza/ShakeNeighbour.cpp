@@ -684,7 +684,7 @@ BOOL CShakeNeighbour::ReadResponse()
 	// Read one header line from the handshake the remote computer has sent us
 	CString strLine; // The line
 	if ( ! Read( strLine ) ) return TRUE; // The line is still arriving, return true to try this method again
-	if ( strLine.GetLength() > 256 * 1024 ) strLine = _T("#LINE_TOO_LONG#"); // Make sure the line isn't too long
+	if ( strLine.GetLength() > HTTP_HEADER_MAX_LINE ) strLine = _T("#LINE_TOO_LONG#"); // Make sure the line isn't too long
 
 	theApp.Message( MSG_DEBUG | MSG_FACILITY_INCOMING, _T("%s >> HANDSHAKE: %s"), (LPCTSTR)m_sAddress, (LPCTSTR)strLine ); // Report handshake lines
 

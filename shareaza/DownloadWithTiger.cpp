@@ -729,6 +729,10 @@ CString CDownloadWithTiger::GetAvailableRanges() const
 
 			strRange.Format( _T("%I64i-%I64i"), nOffset, nOffset + nLength - 1 );
 			strRanges += strRange;
+
+			if ( strRanges.GetLength() > HTTP_HEADER_MAX_LINE - 256 )
+				// Prevent too long line
+				break;
 		}
 
 		nOffset += nLength;
