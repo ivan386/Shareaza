@@ -70,8 +70,6 @@ END
 // remains consistent on all systems.
 IDR_MAINFRAME           ICON                    "Res\\Shareaza.ico"
 IDR_SYSTEMFRAME         ICON                    "Res\\System.ico"
-IDI_HOST_OUTGOING       ICON                    "Res\\HostOut.ico"
-IDI_HOST_INCOMING       ICON                    "Res\\HostIn.ico"
 IDR_NEIGHBOURSFRAME     ICON                    "Res\\Neighbours.ico"
 IDR_PACKETFRAME         ICON                    "Res\\Packets.ico"
 IDR_HOSTCACHEFRAME      ICON                    "Res\\HostCache.ico"
