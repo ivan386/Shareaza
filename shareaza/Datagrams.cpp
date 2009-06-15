@@ -605,16 +605,16 @@ BOOL CDatagrams::TryRead()
 	if ( ! IsValid() )
 		return FALSE;
 
-	std::vector< BYTE > pBuffer( 65536 );	// Maximal UDP size 64KB
 	SOCKADDR_IN pFrom = {};
 	int nFromLen = sizeof( pFrom );
-	int nLength	= recvfrom( m_hSocket, (char*)&pBuffer[ 0 ], (int)pBuffer.size(), 0,
+	int nLength	= recvfrom( m_hSocket, (char*)m_pReadBuffer, sizeof( m_pReadBuffer ), 0,
 		(SOCKADDR*)&pFrom, &nFromLen );
 
 	if ( nLength < 1 )
 		return FALSE;
 
-	pBuffer.resize( nLength );
+	// Clear rest of buffer for security reasons
+	ZeroMemory( m_pReadBuffer + nLength, sizeof( m_pReadBuffer ) - nLength );
 
 	if ( m_mInput.pHistory )
 	{
@@ -638,7 +638,7 @@ BOOL CDatagrams::TryRead()
 	if ( ! Security.IsDenied( &pFrom.sin_addr ) &&
 		 ! Network.IsFirewalledAddress( &pFrom.sin_addr, TRUE ) )
 	{
-		OnDatagram( &pFrom, &pBuffer [ 0 ], nLength );
+		OnDatagram( &pFrom, m_pReadBuffer, nLength );
 	}
 
 	return TRUE;

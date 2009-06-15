@@ -74,10 +74,10 @@ protected:
 	BOOL		m_bStable;
 	DWORD		m_tLastWrite;
 protected:
-	CBuffer*	m_pBufferBuffer;
-	DWORD		m_nBufferBuffer;
-	CBuffer*	m_pBufferFree;
-	DWORD		m_nBufferFree;
+	CBuffer*	m_pBufferBuffer;	// Output buffers
+	DWORD		m_nBufferBuffer;	// Number of output buffers (Settings.Gnutella2.UdpBuffers)
+	CBuffer*	m_pBufferFree;		// List of free output buffers
+	DWORD		m_nBufferFree;		// Number of items in list of free output buffers
 protected:
 	CDatagramIn*	m_pInputBuffer;
 	DWORD			m_nInputBuffer;
@@ -101,6 +101,10 @@ public:
 	DWORD				m_nOutBandwidth;
 	DWORD				m_nOutFrags;
 	DWORD				m_nOutPackets;
+private:
+	// Buffer for current incoming UDP packet. It's global since CDatagrams
+	// process one packet at once only. Maximal UDP size 64KB.
+	BYTE		m_pReadBuffer[ 65536 ];
 
 // Operations
 public:
