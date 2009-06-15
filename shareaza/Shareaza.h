@@ -290,6 +290,18 @@ bool IsKanji(WCHAR nChar);
 bool IsWord(LPCTSTR pszString, size_t nStart, size_t nLength);
 void IsType(LPCTSTR pszString, size_t nStart, size_t nLength, bool& bWord, bool& bDigit, bool& bMix);
 
+class CLowerCaseTable
+{
+public:
+	explicit CLowerCaseTable();
+	TCHAR operator()(TCHAR cLookup) const;
+	CString& operator()(CString& strSource) const;
+private:
+	TCHAR cTable[ 65536 ];
+};
+
+extern const CLowerCaseTable ToLower;
+
 // Use with whole numbers only
 template <typename T>
 inline T GetRandomNum(const T& min, const T& max)

@@ -505,18 +505,6 @@ private:
 
 #endif	// _DEBUG
 
-class CLowerCaseTable
-{
-public:
-	explicit CLowerCaseTable();
-	inline TCHAR operator()(TCHAR cLookup) const { return cTable[ cLookup ]; }
-	CString& operator()(CString& strSource) const;
-private:
-	TCHAR cTable[ 65537 ];
-};
-
-extern const CLowerCaseTable ToLower;
-
 #ifdef _DEBUG
 	#define VERIFY_FILE_ACCESS(h,f) \
 	{ \

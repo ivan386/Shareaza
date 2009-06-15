@@ -212,7 +212,6 @@ CShareazaApp::CShareazaApp() :
 	BT_SetFlags( BTF_INTERCEPTSUEF | BTF_SHOWADVANCEDUI | BTF_DESCRIBEERROR |
 		BTF_DETAILEDMODE | BTF_ATTACHREPORT | BTF_EDITMAIL );
 	BT_SetSupportEMail( _T("shareaza-bugtrap@lists.sourceforge.net") );
-	//BT_SetSupportServer( _T("http://www.pantheraproject.com/BugTrapWebServer/RequestHandler.aspx"), 80 );
 	BT_SetSupportURL( _T("http://shareaza.sourceforge.net/?id=support") );
 	BT_AddRegFile( _T("settings.reg"), _T("HKEY_CURRENT_USER\\Software\\Shareaza\\Shareaza") );
 #endif
@@ -2578,7 +2577,7 @@ void SafeMessageLoop()
 
 bool IsCharacter(const WCHAR nChar)
 {
-	WORD nCharType( 0u );
+	WORD nCharType = 0;
 
 	if ( GetStringTypeW( CT_CTYPE3, &nChar, 1, &nCharType ) )
 		return ( nCharType & C3_ALPHA
@@ -2590,7 +2589,7 @@ bool IsCharacter(const WCHAR nChar)
 
 bool IsHiragana(const WCHAR nChar)
 {
-	WORD nCharType( 0u );
+	WORD nCharType = 0;
 
 	if ( GetStringTypeW( CT_CTYPE3, &nChar, 1, &nCharType ) )
 		return ( nCharType & C3_HIRAGANA ) != 0;
@@ -2600,7 +2599,7 @@ bool IsHiragana(const WCHAR nChar)
 
 bool IsKatakana(const WCHAR nChar)
 {
-	WORD nCharType( 0u );
+	WORD nCharType = 0;
 
 	if ( GetStringTypeW( CT_CTYPE3, &nChar, 1, &nCharType ) )
 		return ( nCharType & C3_KATAKANA ) != 0;
@@ -2610,7 +2609,7 @@ bool IsKatakana(const WCHAR nChar)
 
 bool IsKanji(const WCHAR nChar)
 {
-	WORD nCharType( 0u );
+	WORD nCharType = 0;
 
 	if ( GetStringTypeW( CT_CTYPE3, &nChar, 1, &nCharType ) )
 		return ( nCharType & C3_IDEOGRAPH ) != 0;
@@ -2646,4 +2645,81 @@ void IsType(LPCTSTR pszString, size_t nStart, size_t nLength, bool& bWord, bool&
 		bWord = false;
 		bDigit = false;
 	}
+}
+
+const CLowerCaseTable ToLower;
+
+CLowerCaseTable::CLowerCaseTable()
+{
+	for ( size_t i = 0; i < 65536; ++i ) cTable[ i ] = TCHAR( i );
+	CharLowerBuff( cTable, 65536 );
+
+	// Greek Capital Sigma and Greek Small Final Sigma to Greek Small Sigma
+	cTable[ 931 ] = 963;
+	cTable[ 962 ] = 963;
+
+	// Turkish Capital I with dot to "i"
+	cTable[ 304 ] = 105;
+
+	// Convert fullwidth latin characters to halfwidth
+	for ( size_t i = 65281 ; i < 65313 ; ++i ) cTable[ i ] = TCHAR( i - 65248 );
+	for ( size_t i = 65313 ; i < 65339 ; ++i ) cTable[ i ] = TCHAR( i - 65216 );
+	for ( size_t i = 65339 ; i < 65375 ; ++i ) cTable[ i ] = TCHAR( i - 65248 );
+
+	// Convert circled katakana to ordinary katakana
+	for ( size_t i = 13008 ; i < 13028 ; ++i ) cTable[ i ] = TCHAR( 2 * i - 13566 );
+	for ( size_t i = 13028 ; i < 13033 ; ++i ) cTable[ i ] = TCHAR( i - 538 );
+	for ( size_t i = 13033 ; i < 13038 ; ++i ) cTable[ i ] = TCHAR( 3 * i - 26604 );
+	for ( size_t i = 13038 ; i < 13043 ; ++i ) cTable[ i ] = TCHAR( i - 528 );
+	for ( size_t i = 13043 ; i < 13046 ; ++i ) cTable[ i ] = TCHAR( 2 * i - 13571 );
+	for ( size_t i = 13046 ; i < 13051 ; ++i ) cTable[ i ] = TCHAR( i - 525 );
+	cTable[ 13051 ] = TCHAR( 12527 );
+	for ( size_t i = 13052 ; i < 13055 ; ++i ) cTable[ i ] = TCHAR( i - 524 );
+
+	// Map Katakana middle dot to space, since no API identifies it as a punctuation
+	cTable[ 12539 ] = cTable[ 65381 ] = L' ';
+
+	// Map CJK Fullwidth space to halfwidth space
+	cTable[ 12288 ] = L' ';
+
+	// Convert japanese halfwidth sound marks to fullwidth
+	// all forms should be mapped; we need NFKD here
+	cTable[ 65392 ] = TCHAR( 12540 );
+	cTable[ 65438 ] = TCHAR( 12443 );
+	cTable[ 65439 ] = TCHAR( 12444 );
+}
+
+TCHAR CLowerCaseTable::operator()(TCHAR cLookup) const
+{
+	if ( cLookup >= 0 && cLookup <= 127 )
+	{
+		// A..Z -> a..z
+		if ( cLookup >= _T('A') && cLookup <= _T('Z') )
+			return cLookup + 32;
+		else
+			return cLookup;
+	}
+	else
+		return cTable[ cLookup ];
+}
+
+CString& CLowerCaseTable::operator()(CString& strSource) const
+{
+	const int nLength = strSource.GetLength();
+	LPTSTR str = strSource.GetBuffer();
+	for ( register int i = 0; i < nLength; ++i, ++str )
+	{
+		register TCHAR cLookup = *str;
+		if ( cLookup >= 0 && cLookup <= 127 )
+		{
+			// A..Z -> a..z
+			if ( cLookup >= _T('A') && cLookup <= _T('Z') )
+				*str = cLookup + 32;
+		}
+		else
+			*str = cTable[ cLookup ];
+	}
+	strSource.ReleaseBuffer( nLength );
+
+	return strSource;
 }
