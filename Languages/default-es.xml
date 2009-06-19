@@ -14,11 +14,11 @@
 <!-- Manifest -->
 <manifest	name="Español"
 		author="ramdomcrazy"
-		updatedBy="ramdomcrazy"
+		updatedBy="Biasoli"
 		description="Shareaza Default International Spanish Skin File"
 		link="http://shareaza.sourceforge.net/"
 		email="ramdomcrazy(at)users.sourceforge.net"
-		version="2.3.0.0"
+		version="2.4.0.0"
 		type="Language"
 		language="es"
 		prompt="Seleccione aquí para usar Shareaza en Español Internacional"
@@ -76,8 +76,8 @@
 	</toolbar>
 	<!-- SEARCH WINDOW -->
 	<toolbar name="CSearchWnd.Panel.Basic">
-		<button id="ID_SEARCH_DOWNLOAD" text="Descargar Archivo"/>
-		<button id="ID_BROWSE_LAUNCH" text="Explorar Usuario"/>
+		<button id="ID_SEARCH_DOWNLOAD" text="Descargar archivo"/>
+		<button id="ID_BROWSE_LAUNCH" text="Explorar usuario"/>
 		<separator/>
 		<button id="ID_SEARCH_PANEL" text="Barra de búsqueda"/>
 		<button id="ID_SEARCH_DETAILS" text="Detalles"/>
@@ -98,14 +98,14 @@
 		<button id="ID_SEARCH_FILTER_RAW" text="Más..."/>
 	</toolbar>
 	<toolbar name="CSearchWnd.Full">
-		<button id="ID_SEARCH_SEARCH" text="Buscar de Nuevo..."/>
+		<button id="ID_SEARCH_SEARCH" text="Buscar de nuevo..."/>
 		<button id="ID_SEARCH_STOP" text="Detener"/>
 		<separator/>
 		<button id="ID_SEARCH_DOWNLOAD" text="Descargar"/>
-		<button id="ID_BROWSE_LAUNCH" text="Explorar Usuario"/>
+		<button id="ID_BROWSE_LAUNCH" text="Explorar usuario"/>
 		<separator/>
-		<button id="ID_SEARCH_PANEL" text="Mostrar Búsqueda"/>
-		<button id="ID_SEARCH_DETAILS" text="Mostrar Búsqueda"/>
+		<button id="ID_SEARCH_PANEL" text="Mostrar búsqueda"/>
+		<button id="ID_SEARCH_DETAILS" text="Mostrar búsqueda"/>
 		<rightAlign/>
 		<label text="Filter:" tip="Filtrar resultados con:"/>
 		<control id="IDC_FILTER_BOX" width="150"/>
@@ -114,15 +114,15 @@
 	<!-- BROWSE HOST WINDOW -->
 	<toolbar name="CBrowseHeaderCtrl">
 		<button id="ID_BROWSE_PROFILE" text="Perfil"/>
-		<button id="ID_BROWSE_FILES" text="Archivos Compartidos"/>
+		<button id="ID_BROWSE_FILES" text="Archivos compartidos"/>
 	</toolbar>
 	<toolbar name="CBrowseTree.Top">
 		<button id="ID_LIBRARY_TREE_PHYSICAL" text="Carpetas"/>
 		<button id="ID_LIBRARY_TREE_VIRTUAL" text="Organizador"/>
 	</toolbar>
 	<toolbar name="CBrowseHostWnd.Basic">
-		<button id="ID_SEARCH_DOWNLOAD" text="Descargar Archivo"/>
-		<button id="ID_SEARCH_CHAT" text="Chatear con Usuario"/>
+		<button id="ID_SEARCH_DOWNLOAD" text="Descargar archivo"/>
+		<button id="ID_SEARCH_CHAT" text="Chatear con usuario"/>
 		<separator/>
 		<button id="ID_SEARCH_DETAILS" text="Detalles"/>
 		<rightAlign/>
@@ -131,8 +131,8 @@
 		<button id="ID_SEARCH_FILTER_RAW" text="Más..."/>
 	</toolbar>
 	<toolbar name="CBrowseHostWnd">
-		<button id="ID_SEARCH_DOWNLOAD" text="Descargar Archivo"/>
-		<button id="ID_SEARCH_CHAT" text="Chatear con Usuario"/>
+		<button id="ID_SEARCH_DOWNLOAD" text="Descargar archivo"/>
+		<button id="ID_SEARCH_CHAT" text="Chatear con usuario"/>
 		<separator/>
 		<button id="ID_BROWSE_STOP" text="Detener"/>
 		<button id="ID_BROWSE_REFRESH" text="Actualizar"/>
@@ -145,56 +145,56 @@
 	</toolbar>
 	<!-- DOWNLOADS WINDOW -->
 	<toolbar name="CDownloadsWnd.Basic">
-		<button id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="Abrir o Reproducir"/>
-		<button id="ID_DOWNLOADS_LAUNCH" text="Vista Previa"/>
-		<button id="ID_DOWNLOADS_FILE_DELETE" text="Borrar Archivo"/>
+		<button id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="Abrir o reproducir"/>
+		<button id="ID_DOWNLOADS_LAUNCH" text="Vista previa"/>
+		<button id="ID_DOWNLOADS_FILE_DELETE" text="Borrar archivo"/>
 		<separator/>
-		<button id="ID_DOWNLOADS_RESUME" text="Resumir Descarga"/>
-		<button id="ID_DOWNLOADS_PAUSE" text="Pausar Descarga"/>
-		<button id="ID_DOWNLOADS_CLEAR_INCOMPLETE" text="Cancelar Descarga"/>
-		<button id="ID_DOWNLOADS_CLEAR_COMPLETE" text="Limpiar Descarga"/>
+		<button id="ID_DOWNLOADS_RESUME" text="Resumir descarga"/>
+		<button id="ID_DOWNLOADS_PAUSE" text="Pausar descarga"/>
+		<button id="ID_DOWNLOADS_CLEAR_INCOMPLETE" text="Cancelar descarga"/>
+		<button id="ID_DOWNLOADS_CLEAR_COMPLETE" text="Limpiar descarga"/>
 		<separator/>
-		<button id="ID_DOWNLOADS_MONITOR" text="Mostrar Monitor"/>
+		<button id="ID_DOWNLOADS_MONITOR" text="Mostrar monitor"/>
 		<rightAlign/>
-		<button id="ID_TOOLS_DOWNLOAD" text="Descargar Archivo"/>
-		<button id="ID_DOWNLOADS_CLEAR_COMPLETED" text="Limpiar Completados"/>
+		<button id="ID_TOOLS_DOWNLOAD" text="Descargar archivo"/>
+		<button id="ID_DOWNLOADS_CLEAR_COMPLETED" text="Limpiar completados"/>
 	</toolbar>
 	<toolbar name="CDownloadsWnd">
 		<button id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="Abrir"/>
-		<button id="ID_DOWNLOADS_FILE_DELETE" text="Borrar Archivo"/>
-		<button id="ID_DOWNLOADS_LAUNCH" text="Vista Previa"/>
+		<button id="ID_DOWNLOADS_FILE_DELETE" text="Borrar archivo"/>
+		<button id="ID_DOWNLOADS_LAUNCH" text="Vista previa"/>
 		<separator/>
-		<button id="ID_DOWNLOADS_RESUME" text="Resumir Descarga"/>
-		<button id="ID_DOWNLOADS_PAUSE" text="Pausar Descarga"/>
-		<button id="ID_DOWNLOADS_CLEAR_INCOMPLETE" text="Cancelar Descarga"/>
-		<button id="ID_DOWNLOADS_CLEAR_COMPLETE" text="Limpiar Descarga"/>
+		<button id="ID_DOWNLOADS_RESUME" text="Resumir descarga"/>
+		<button id="ID_DOWNLOADS_PAUSE" text="Pausar descarga"/>
+		<button id="ID_DOWNLOADS_CLEAR_INCOMPLETE" text="Cancelar descarga"/>
+		<button id="ID_DOWNLOADS_CLEAR_COMPLETE" text="Limpiar descarga"/>
 		<separator/>
-		<button id="ID_DOWNLOADS_MONITOR" text="Mostrar Monitor"/>
+		<button id="ID_DOWNLOADS_MONITOR" text="Mostrar monitor"/>
 		<button id="ID_DOWNLOADS_EDIT" text="Información"/>
 		<rightAlign/>
-		<button id="ID_TOOLS_DOWNLOAD" text="Descargar Archivo"/>
-		<button id="ID_DOWNLOADS_CLEAR_COMPLETED" text="Limpiar Completados"/>
+		<button id="ID_TOOLS_DOWNLOAD" text="Descargar archivo"/>
+		<button id="ID_DOWNLOADS_CLEAR_COMPLETED" text="Limpiar completados"/>
 		<separator/>
 		<button id="ID_DOWNLOADS_FILTER_MENU" text="Filtro"/>
 	</toolbar>
 	<!-- UPLOADS WINDOW -->
 	<toolbar name="CUploadsWnd.Basic">
-		<button id="ID_BROWSE_LAUNCH" text="Explorar Usuario"/>
-		<button id="ID_UPLOADS_CHAT" text="Chatear con Usuario"/>
+		<button id="ID_BROWSE_LAUNCH" text="Explorar usuario"/>
+		<button id="ID_UPLOADS_CHAT" text="Chatear con usuario"/>
 		<rightAlign/>
-		<button id="ID_UPLOADS_CLEAR_COMPLETED" text="Limpiar Completados"/>
+		<button id="ID_UPLOADS_CLEAR_COMPLETED" text="Limpiar completados"/>
 	</toolbar>
 	<toolbar name="CUploadsWnd">
-		<button id="ID_UPLOADS_LAUNCH" text="Abrir o Reproducir"/>
+		<button id="ID_UPLOADS_LAUNCH" text="Abrir o reproducir"/>
 		<separator/>
-		<button id="ID_UPLOADS_START" text="Empezar Ahora"/>
-		<button id="ID_UPLOADS_CLEAR" text="Limpiar Subida"/>
+		<button id="ID_UPLOADS_START" text="Empezar ahora"/>
+		<button id="ID_UPLOADS_CLEAR" text="Limpiar subida"/>
 		<separator/>
-		<button id="ID_BROWSE_LAUNCH" text="Explorar Usuario"/>
-		<button id="ID_UPLOADS_CHAT" text="Chatear con Usuario"/>
-		<button id="ID_SECURITY_BAN" text="Bloquear Usuario"/>
+		<button id="ID_BROWSE_LAUNCH" text="Explorar usuario"/>
+		<button id="ID_UPLOADS_CHAT" text="Chatear con usuario"/>
+		<button id="ID_SECURITY_BAN" text="Bloquear usuario"/>
 		<rightAlign/>
-		<button id="ID_UPLOADS_CLEAR_COMPLETED" text="Limpiar Completados"/>
+		<button id="ID_UPLOADS_CLEAR_COMPLETED" text="Limpiar completados"/>
 		<separator/>
 		<button id="ID_UPLOADS_FILTER_MENU" text="Filtro"/>
 	</toolbar>
@@ -204,7 +204,7 @@
 		<button id="ID_LIBRARY_TREE_VIRTUAL" text="Organizador"/>
 	</toolbar>
 	<toolbar name="CLibraryTree.Virtual">
-		<button id="ID_LIBRARY_FOLDERS" text="Compartir Archivos..."/>
+		<button id="ID_LIBRARY_FOLDERS" text="Compartir archivos..."/>
 	</toolbar>
 	<toolbar name="CLibraryHeaderBar.Physical">
 		<button id="ID_LIBRARY_VIEW" text="Vista"/>
@@ -218,30 +218,30 @@
 	</toolbar>
 	<!-- LIBRARY VIEWS -->
 	<toolbar name="CLibraryHomeView.Physical">
-		<button id="ID_LIBRARY_FOLDERS" text="Compartir Archivos..."/>
+		<button id="ID_LIBRARY_FOLDERS" text="Compartir archivos..."/>
 		<rightAlign/>
 		<separator/>
 		<control id="IDC_SEARCH_BOX" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Buscar"/>
 	</toolbar>
 	<toolbar name="CLibraryHomeView.Virtual">
-		<button id="ID_LIBRARY_FOLDER_NEW" text="Crear Album..."/>
-		<button id="ID_LIBRARY_ALBUM_DELETE" text="Borrar Album"/>
+		<button id="ID_LIBRARY_FOLDER_NEW" text="Crear álbum..."/>
+		<button id="ID_LIBRARY_ALBUM_DELETE" text="Borrar álbum"/>
 		<rightAlign/>
 		<separator/>
 		<control id="IDC_SEARCH_BOX" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Buscar"/>
 	</toolbar>
 	<toolbar name="CLibraryTileView.Virtual">
-		<button id="ID_LIBRARY_FOLDER_NEW" text="Crear Album..."/>
-		<button id="ID_LIBRARY_ALBUM_DELETE" text="Borrar Album"/>
+		<button id="ID_LIBRARY_FOLDER_NEW" text="Crear álbum..."/>
+		<button id="ID_LIBRARY_ALBUM_DELETE" text="Borrar álbum"/>
 		<rightAlign/>
 		<separator/>
 		<control id="IDC_SEARCH_BOX" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Buscar"/>
 	</toolbar>
 	<toolbar name="CLibraryFileView.Physical.Basic">
-		<button id="ID_LIBRARY_LAUNCH" text="Abrir o Reproducir"/>
+		<button id="ID_LIBRARY_LAUNCH" text="Abrir o reproducir"/>
 		<button id="ID_LIBRARY_ENQUEUE" text="Agregar a la lista de reproducción"/>
 		<rightAlign/>
 		<separator/>
@@ -252,7 +252,7 @@
 		<button id="ID_LIBRARY_LAUNCH" text="Reproducir"/>
 		<button id="ID_LIBRARY_ENQUEUE" text="Agregar al reproductor"/>
 		<separator/>
-		<button id="ID_LIBRARY_PROPERTIES" text="Información del Archivo"/>
+		<button id="ID_LIBRARY_PROPERTIES" text="Información del archivo"/>
 		<separator/>
 		<button id="ID_LIBRARY_MOVE" text="Mover"/>
 		<button id="ID_LIBRARY_COPY" text="Copiar"/>
@@ -263,9 +263,9 @@
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Buscar"/>
 	</toolbar>
 	<toolbar name="CLibraryFileView.Virtual.Basic">
-		<button id="ID_LIBRARY_LAUNCH" text="Abrir o Reproducir"/>
+		<button id="ID_LIBRARY_LAUNCH" text="Abrir o reproducir"/>
 		<button id="ID_LIBRARY_ENQUEUE" text="Agregar a la lista de reproducción"/>
-		<button id="ID_LIBRARY_FOLDER_ENQUEUE" text="Reproducir Album"/>
+		<button id="ID_LIBRARY_FOLDER_ENQUEUE" text="Reproducir álbum"/>
 		<rightAlign/>
 		<separator/>
 		<control id="IDC_SEARCH_BOX" width="120"/>
@@ -274,18 +274,18 @@
 	<toolbar name="CLibraryFileView.Virtual">
 		<button id="ID_LIBRARY_LAUNCH" text="Reproducir"/>
 		<button id="ID_LIBRARY_ENQUEUE" text="Agregar al reproductor"/>
-		<button id="ID_LIBRARY_FOLDER_ENQUEUE" text="Reproducir Todas"/>
+		<button id="ID_LIBRARY_FOLDER_ENQUEUE" text="Reproducir todas"/>
 		<separator/>
-		<button id="ID_LIBRARY_PROPERTIES" text="Información del Archivo"/>
+		<button id="ID_LIBRARY_PROPERTIES" text="Información del archivo"/>
 		<rightAlign/>
 		<separator/>
 		<control id="IDC_SEARCH_BOX" width="120"/>
 		<button id="ID_LIBRARY_SEARCH_QUICK" text="Buscar"/>
 	</toolbar>
 	<toolbar name="CLibraryCollectionView.Virtual">
-		<button id="ID_LIBRARY_FOLDER_ENQUEUE" text="Reproducir Album"/>
+		<button id="ID_LIBRARY_FOLDER_ENQUEUE" text="Reproducir álbum"/>
 		<separator/>
-		<button id="ID_LIBRARY_FOLDER_DOWNLOAD" text="Descargar Todos Los Archivos"/>
+		<button id="ID_LIBRARY_FOLDER_DOWNLOAD" text="Descargar todos los archivos"/>
 		<rightAlign/>
 		<separator/>
 		<control id="IDC_SEARCH_BOX" width="120"/>
@@ -302,7 +302,7 @@
 		<label text="Volumen:" tip="Ajustar el volumen"/>
 		<control id="IDC_MEDIA_VOLUME" width="50" height="22"/>
 		<separator/>
-		<button id="ID_MEDIA_OPEN" text="Abrir Archivo"/>
+		<button id="ID_MEDIA_OPEN" text="Abrir archivo"/>
 		<rightAlign/>
 		<button id="ID_MEDIA_PREVIOUS" text="Anterior"/>
 		<button id="ID_MEDIA_NEXT" text="Siguiente"/>
@@ -316,7 +316,7 @@
 		<separator/>
 		<label text="Posición:" tip="Ir a una posición en el archivo"/>
 		<control id="IDC_MEDIA_POSITION" width="190" height="22"/>
-		<label text="Velocidad:" tip="Ajustar la velocidad de reproducción (Pitch)"/>
+		<label text="Velocidad:" tip="Ajustar la velocidad de reproducción (pitch)"/>
 		<control id="IDC_MEDIA_SPEED" width="40" height="22"/>
 		<label text="Volumen:" tip="Ajustar el volumen"/>
 		<control id="IDC_MEDIA_VOLUME" width="50" height="22"/>
@@ -341,8 +341,8 @@
 	</toolbar>
 	<!-- NEIGHBOURS WINDOW -->
 	<toolbar name="CNeighboursWnd.Basic">
-		<button id="ID_BROWSE_LAUNCH" text="Explorar Usuario"/>
-		<button id="ID_NEIGHBOURS_CHAT" text="Chatear con Usuario"/>
+		<button id="ID_BROWSE_LAUNCH" text="Explorar usuario"/>
+		<button id="ID_NEIGHBOURS_CHAT" text="Chatear con usuario"/>
 		<rightAlign/>
 		<button id="ID_NETWORK_G2" text="Gnutella2"/>
 		<button id="ID_NETWORK_G1" text="Gnutella1"/>
@@ -351,7 +351,7 @@
 		<button id="ID_NEIGHBOURS_SETTINGS" text="Configurar..."/>
 	</toolbar>
 	<toolbar name="CNeighboursWnd">
-		<button id="ID_NETWORK_CONNECT_TO" text="Conectar A..."/>
+		<button id="ID_NETWORK_CONNECT_TO" text="Conectar a..."/>
 		<button id="ID_NEIGHBOURS_DISCONNECT" text="Desconectar"/>
 		<separator/>
 		<button id="ID_BROWSE_LAUNCH" text="Explorar"/>
@@ -378,12 +378,12 @@
 	</toolbar>
 	<!-- HOST CACHE WINDOW -->
 	<toolbar name="CHostCacheWnd.Basic">
-		<button id="ID_HOSTCACHE_CONNECT" text="Conectar A"/>
+		<button id="ID_HOSTCACHE_CONNECT" text="Conectar a"/>
 		<button id="ID_HOSTCACHE_DISCONNECT" text="Desconectar"/>
 		<button id="ID_HOSTCACHE_REMOVE" text="Eliminar"/>
 	</toolbar>
 	<toolbar name="CHostCacheWnd">
-		<button id="ID_HOSTCACHE_CONNECT" text="Conectar A"/>
+		<button id="ID_HOSTCACHE_CONNECT" text="Conectar a"/>
 		<button id="ID_HOSTCACHE_DISCONNECT" text="Desconectar"/>
 		<button id="ID_HOSTCACHE_REMOVE" text="Eliminar"/>
 		<rightAlign/>
@@ -400,9 +400,9 @@
 		<button id="ID_CHAT_COLOUR" text="C"/>
 		<button id="ID_CHAT_EMOTICONS"/>
 		<separator/>
-		<button id="ID_CHAT_BROWSE" text="Explorar Usuario"/>
+		<button id="ID_CHAT_BROWSE" text="Explorar usuario"/>
 		<!-- <button id="ID_CHAT_SEND_FILE" text="Enviar Archivo"/> -->
-		<button id="ID_CHAT_PRIORITY" text="Dar Prioridad"/>
+		<button id="ID_CHAT_PRIORITY" text="Dar prioridad"/>
 		<separator/>
 		<button id="ID_CHAT_CONNECT" text="Conectar" visible="false"/>
 		<button id="ID_CHAT_DISCONNECT" text="Desconectar"/>
@@ -444,7 +444,7 @@
 				<item id="ID_NETWORK_ED2K" text="Conectar a _eDonkey"/>
 			</menu>
 			<separator/>
-			<item id="ID_NETWORK_AUTO_CLOSE" text="_Salir Después de Transferencias"/>
+			<item id="ID_NETWORK_AUTO_CLOSE" text="_Salir después de transferencias"/>
 			<item id="ID_NETWORK_EXIT" text="_Salir"/>
 		</menu>
 		<menu text="_Ver">
@@ -453,7 +453,7 @@
 			<item id="ID_TAB_MEDIA" text="_Reproductor"/>
 			<item id="ID_TAB_SEARCH" text="_Búsqueda"/>
 			<item id="ID_TAB_TRANSFERS" text="_Descargas"/>
-			<item id="ID_WINDOW_REMOTE" text="_Mostrar Control Remoto"/>
+			<item id="ID_WINDOW_REMOTE" text="_Mostrar control remoto"/>
 			<item id="ID_TAB_IRC" text="_Chat"/>
 			<separator/>
 			<menu text="_Avanzado">
@@ -461,34 +461,34 @@
 				<item id="ID_VIEW_UPLOADS" text="_Subidas" shortcut="F8"/>
 			<separator/>
 				<item id="ID_VIEW_SECURITY" text="Se_guridad"/>
-				<item id="ID_VIEW_HOSTS" text="C_ache de Host"/>
+				<item id="ID_VIEW_HOSTS" text="C_ache de host"/>
 				<item id="ID_VIEW_DISCOVERY" text="Descu_brimiento"/>
 			</menu>
 			<separator/>
-			<item id="ID_VIEW_BASIC" text="_Modo Sencillo"/>
-			<item id="ID_VIEW_TABBED" text="_Modo Avanzado"/>
+			<item id="ID_VIEW_BASIC" text="_Modo simple"/>
+			<item id="ID_VIEW_TABBED" text="_Modo avanzado"/>
 		</menu>
 		<menu text="_Herramientas">
-			<item id="ID_LIBRARY_FOLDERS" text="_Compartir Archivos..."/>
-			<item id="ID_TOOLS_DOWNLOAD" text="_Descargar Archivo"/>
+			<item id="ID_LIBRARY_FOLDERS" text="_Compartir archivos..."/>
+			<item id="ID_TOOLS_DOWNLOAD" text="_Descargar archivo"/>
 			<separator/>
-			<item id="ID_TOOLS_SKIN" text="Cambiar el _Skin..."/>
-			<item id="ID_TOOLS_LANGUAGE" text="Cambiar el _Idioma..."/>
+			<item id="ID_TOOLS_SKIN" text="Cambiar el _skin..."/>
+			<item id="ID_TOOLS_LANGUAGE" text="Cambiar el _idioma..."/>
 			<separator/>
-			<item id="ID_TOOLS_PROFILE" text="_Editar Mi Perfil..."/>
-			<item id="ID_TOOLS_WIZARD" text="_Configuración Rápida..."/>
+			<item id="ID_TOOLS_PROFILE" text="_Editar mi perfil..."/>
+			<item id="ID_TOOLS_WIZARD" text="_Configuración rápida..."/>
 			<separator/>
 			<item id="ID_TOOLS_SETTINGS" text="_Configuración de Shareaza..."/>
 		</menu>
 		<menu text="_Ayuda">
-			<item id="ID_HELP_FAQ" text="Guía de Usuarios Shareaza"/>
-						<item id="ID_HELP_TEST" text="_Test de Conexión"/>
+			<item id="ID_HELP_FAQ" text="Guía de usuarios shareaza"/>
+						<item id="ID_HELP_TEST" text="_Test de conexión"/>
 			<separator/>
 			<menu text="_Guías">
-				<item id="ID_HELP_GUIDE" text="_Guía de Usuarios Shareaza "/>
-				<item id="ID_HELP_ROUTER" text="_Ayuda de Router"/>
-				<item id="ID_HELP_SECURITY" text="_Ayuda de Seguridad"/>
-				<item id="ID_HELP_CODEC" text="_Ayuda con Codec"/>
+				<item id="ID_HELP_GUIDE" text="_Guía de usuarios Shareaza "/>
+				<item id="ID_HELP_ROUTER" text="_Ayuda de router"/>
+				<item id="ID_HELP_SECURITY" text="_Ayuda de seguridad"/>
+				<item id="ID_HELP_CODEC" text="_Ayuda con códec"/>
 			</menu>
 			<separator/>
 			<menu text="_Sitios">
@@ -518,22 +518,22 @@
 				<item id="ID_NETWORK_ED2K" text="Conectar a _eDonkey"/>
 			</menu>
 			<separator/>
-			<item id="ID_NETWORK_CONNECT_TO" text="Conectar _A..." shortcut="Ctrl+T"/>
-			<item id="ID_NETWORK_BROWSE_TO" text="_Explorar Usuario..."/>
+			<item id="ID_NETWORK_CONNECT_TO" text="Conectar _a..." shortcut="Ctrl+T"/>
+			<item id="ID_NETWORK_BROWSE_TO" text="_Explorar usuario..."/>
 			<separator/>
-			<item id="ID_NETWORK_AUTO_CLOSE" text="_Salir Después de Transferencias"/>
+			<item id="ID_NETWORK_AUTO_CLOSE" text="_Salir después de transferencias"/>
 			<item id="ID_NETWORK_EXIT" text="_Salir"/>
 		</menu>
 		<menu text="_Ver">
 			<item id="ID_TAB_HOME" text="_Inicio"/>
-			<item id="ID_TAB_LIBRARY" text="_Mi Colección"/>
+			<item id="ID_TAB_LIBRARY" text="_Mi colección"/>
 			<item id="ID_TAB_MEDIA" text="_Media Player"/>
 			<item id="ID_TAB_SEARCH" text="_Búsqueda"/>
 			<item id="ID_TAB_TRANSFERS" text="_Transferencias"/>
 			<item id="ID_TAB_NETWORK" text="_Red"/>
 			<separator/>
 			<item id="ID_VIEW_SECURITY" text="_Seguridad"/>
-			<item id="ID_VIEW_HOSTS" text="_Caché de Hosts"/>
+			<item id="ID_VIEW_HOSTS" text="_Caché de hosts"/>
 			<separator/>
 			<menu text="A_dvanced">
 				<item id="ID_VIEW_SYSTEM" text="_Sistema" shortcut="F11"/>
@@ -549,52 +549,52 @@
 				<item id="ID_VIEW_TRAFFIC" text="_Gráfica" shortcut="F10"/>
 				<separator/>
 				<item id="ID_VIEW_PACKETS" text="_Monitor de paquetes" shortcut="Ctrl+F1"/>
-				<item id="ID_VIEW_SEARCH_MONITOR" text="_Monitor de Búsqueda" shortcut="Ctrl+F2"/>
+				<item id="ID_VIEW_SEARCH_MONITOR" text="_Monitor de búsqueda" shortcut="Ctrl+F2"/>
 				<item id="ID_VIEW_RESULTS_MONITOR" text="_Monitor de resultados" shortcut="Ctrl+F3"/>
 			</menu>
 			<separator/>
-			<item id="ID_VIEW_BASIC" text="_Modo Normal"/>
-			<item id="ID_VIEW_TABBED" text="_Modo Avanzado"/>
-			<item id="ID_VIEW_WINDOWED" text="_Modo Ventanas"/>
+			<item id="ID_VIEW_BASIC" text="_Modo normal"/>
+			<item id="ID_VIEW_TABBED" text="_Modo avanzado"/>
+			<item id="ID_VIEW_WINDOWED" text="_Modo ventanas"/>
 		</menu>
 		<menu text="_Herramientas">
-			<item id="ID_LIBRARY_FOLDERS" text="Compartir _Archivos..."/>
-			<item id="ID_TOOLS_DOWNLOAD" text="_Descargar Archivo/Torrent..."/>
+			<item id="ID_LIBRARY_FOLDERS" text="Compartir _archivos..."/>
+			<item id="ID_TOOLS_DOWNLOAD" text="_Descargar archivo/torrent..."/>
 			<item id="IDC_IMPORT_DOWNLOADS" text="_Importar descargas parciales de eMule..."/>
 			<item id="ID_OPEN_DOWNLOADS_FOLDER" text="_Abrir mi carpeta de descargas completadas"/>
 			<separator/>
-			<item id="ID_TOOLS_SKIN" text="Seleccionar _Skin..."/>
-			<item id="ID_TOOLS_LANGUAGE" text="Seleccionar un _Idioma..."/>
+			<item id="ID_TOOLS_SKIN" text="Seleccionar _skin..."/>
+			<item id="ID_TOOLS_LANGUAGE" text="Seleccionar un _idioma..."/>
 			<separator/>
-			<item id="ID_TOOLS_PROFILE" text="Editar Mi _Perfil..."/>
-			<item id="ID_TOOLS_WIZARD" text="Configuración _Rápida..."/>
+			<item id="ID_TOOLS_PROFILE" text="Editar mi _perfil..."/>
+			<item id="ID_TOOLS_WIZARD" text="Configuración _rápida..."/>
 			<separator/>
-			<item id="ID_TOOLS_SETTINGS" text="_Configuración Shareaza..."/>
+			<item id="ID_TOOLS_SETTINGS" text="_Configuración de Shareaza..."/>
 		</menu>
 		<menu text="_Ventana">
-			<item id="ID_WINDOW_NAVBAR" text="Mostrar _Barra de Navegación"/>
-			<item id="ID_WINDOW_TOOLBAR" text="Mostrar _Barra de Herramientas"/>
+			<item id="ID_WINDOW_NAVBAR" text="Mostrar _barra de navegación"/>
+			<item id="ID_WINDOW_TOOLBAR" text="Mostrar _barra de herramientas"/>
 			<separator/>
-			<item id="ID_WINDOW_TABBAR" text="Mostrar _Barra de Lengüetas"/>
-			<item id="ID_WINDOW_MONITOR" text="Mostrar _Monitor"/>
-			<item id="ID_WINDOW_REMOTE" text="Mostrar Control Remoto"/>
+			<item id="ID_WINDOW_TABBAR" text="Mostrar _barra de pestañas"/>
+			<item id="ID_WINDOW_MONITOR" text="Mostrar _monitor"/>
+			<item id="ID_WINDOW_REMOTE" text="Mostrar control remoto"/>
 		</menu>
 		<menu text="_Ayuda">
-			<item id="ID_HELP_FAQ" text="Guía de Usuarios Shareaza"/>
-			<item id="ID_HELP_TEST" text="_Test de Conexión"/>
+			<item id="ID_HELP_FAQ" text="Guía de usuarios Shareaza"/>
+			<item id="ID_HELP_TEST" text="_Test de conexión"/>
 			<separator/>
 			<menu text="_Guías">
-				<item id="ID_HELP_GUIDE" text="_Guía de Usuarios Shareaza "/>
-				<item id="ID_HELP_ROUTER" text="_Ayuda de Router"/>
-				<item id="ID_HELP_SECURITY" text="_Ayuda de Seguridad"/>
-				<item id="ID_HELP_CODEC" text="_Ayuda con Codecs"/>
+				<item id="ID_HELP_GUIDE" text="_Guía de usuarios Shareaza "/>
+				<item id="ID_HELP_ROUTER" text="_Ayuda de router"/>
+				<item id="ID_HELP_SECURITY" text="_Ayuda de seguridad"/>
+				<item id="ID_HELP_CODEC" text="_Ayuda con códecs"/>
 			</menu>
 			<separator/>
 			<menu text="_Sitios">
 				<item id="ID_HELP_HOMEPAGE" text="_Shareaza site"/>
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Foros de _Shareaza"/>
-				<item id="ID_HELP_WEB_6" text="Shareaza S_kin Site"/>
+				<item id="ID_HELP_WEB_6" text="Shareaza s_kin site"/>
 				<item id="ID_HELP_FAKESHAREAZA" text="FakeShareaza_.com"/> <!-- 
 				<item id="ID_HELP_UPDATE" text="Últimas Noticias"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
@@ -608,13 +608,13 @@
 	</menu>
 	<menu name="CMainWnd.Windowed" type="bar">
 		<menu text="_Red">
-			<item id="ID_NETWORK_SEARCH" text="Nueva Bú_squeda..." shortcut="Ctrl+S"/>
+			<item id="ID_NETWORK_SEARCH" text="Nueva bú_squeda..." shortcut="Ctrl+S"/>
 			<separator/>
 			<item id="ID_NETWORK_CONNECT" text="_Conectar" shortcut="Ctrl+G"/>
 			<item id="ID_NETWORK_DISCONNECT" text="_Desconectar"/>
 			<separator/>
-			<item id="ID_NETWORK_CONNECT_TO" text="Conectar _A..." shortcut="Ctrl+T"/>
-			<item id="ID_NETWORK_BROWSE_TO" text="E_xplorar Usuario..."/>
+			<item id="ID_NETWORK_CONNECT_TO" text="Conectar _a..." shortcut="Ctrl+T"/>
+			<item id="ID_NETWORK_BROWSE_TO" text="E_xplorar usuario..."/>
 			<separator/>
 			<menu text="Conectar _A">
 				<item id="ID_NETWORK_G2" text="Conectar a _Gnutella2"/>
@@ -622,7 +622,7 @@
 				<item id="ID_NETWORK_ED2K" text="Conectar a _eDonkey"/>
 			</menu>
 			<separator/>
-			<item id="ID_NETWORK_AUTO_CLOSE" text="_Salir Después de Transferencias"/>
+			<item id="ID_NETWORK_AUTO_CLOSE" text="_Salir después de transferencias"/>
 			<item id="ID_NETWORK_EXIT" text="S_alir"/>
 		</menu>
 		<menu text="_Ver">
@@ -630,57 +630,57 @@
 			<item id="ID_VIEW_NEIGHBOURS" text="_Red" shortcut="Ctrl+F11"/>
 			<item id="ID_VIEW_DOWNLOADS" text="_Descargas" shortcut="F3"/>
 			<item id="ID_VIEW_UPLOADS" text="_Subidas" shortcut="F4"/>
-			<item id="ID_VIEW_LIBRARY" text="_Mi Colección" shortcut="F5"/>
+			<item id="ID_VIEW_LIBRARY" text="_Mi colección" shortcut="F5"/>
 			<item id="ID_VIEW_MEDIA" text="_Media" shortcut="F6"/>
 			<separator/>
 			<item id="ID_VIEW_SECURITY" text="_Seguridad" shortcut="F7"/>
-			<item id="ID_VIEW_HOSTS" text="C_ache de Hosts" shortcut="F8"/>
+			<item id="ID_VIEW_HOSTS" text="C_ache de hosts" shortcut="F8"/>
 			<item id="ID_VIEW_DISCOVERY" text="_Descubrimiento" shortcut="F9"/>
 			<item id="ID_VIEW_TRAFFIC" text="_Gráfico" shortcut="F10"/>
 			<separator/>
 			<item id="ID_VIEW_PACKETS" text="_Monitor de paquetes" shortcut="Ctrl+F1"/>
-			<item id="ID_VIEW_SEARCH_MONITOR" text="_Monitor de Búsqueda" shortcut="Ctrl+F2"/>
-			<item id="ID_VIEW_RESULTS_MONITOR" text="_Monitor de Resultados" shortcut="Ctrl+F3"/>
+			<item id="ID_VIEW_SEARCH_MONITOR" text="_Monitor de búsqueda" shortcut="Ctrl+F2"/>
+			<item id="ID_VIEW_RESULTS_MONITOR" text="_Monitor de resultados" shortcut="Ctrl+F3"/>
 			<separator/>
-			<item id="ID_VIEW_BASIC" text="Modo Normal"/>
-			<item id="ID_VIEW_TABBED" text="Modo Avanzado"/>
-			<item id="ID_VIEW_WINDOWED" text="Modo Ventanas"/>
+			<item id="ID_VIEW_BASIC" text="Modo normal"/>
+			<item id="ID_VIEW_TABBED" text="Modo avanzado"/>
+			<item id="ID_VIEW_WINDOWED" text="Modo ventanas"/>
 		</menu>
 		<menu text="_Herramientas">
-			<item id="ID_LIBRARY_FOLDERS" text="Compartir _Archivos..."/>
-			<item id="ID_TOOLS_DOWNLOAD" text="_Descargar Archivo/Torrent..."/>
+			<item id="ID_LIBRARY_FOLDERS" text="Compartir _archivos..."/>
+			<item id="ID_TOOLS_DOWNLOAD" text="_Descargar archivo/torrent..."/>
 			<item id="IDC_IMPORT_DOWNLOADS" text="_Importar descargas parciales de eMule..."/>
-			<item id="ID_OPEN_DOWNLOADS_FOLDER" text="_Abrir mi carpeta de Descargas completadas"/>			
+			<item id="ID_OPEN_DOWNLOADS_FOLDER" text="_Abrir mi carpeta de descargas completadas"/>			
 			<separator/>
-			<item id="ID_TOOLS_SKIN" text="Seleccionar _Skin..."/>
-			<item id="ID_TOOLS_LANGUAGE" text="Seleccionar un _Idioma..."/>
+			<item id="ID_TOOLS_SKIN" text="Seleccionar _skin..."/>
+			<item id="ID_TOOLS_LANGUAGE" text="Seleccionar un _idioma..."/>
 			<separator/>
-			<item id="ID_TOOLS_PROFILE" text="Editar Mi _Perfil..."/>
+			<item id="ID_TOOLS_PROFILE" text="Editar mi _perfil..."/>
 			<separator/>
-			<item id="ID_TOOLS_WIZARD" text="Configuración _Rápida..."/>
-			<item id="ID_TOOLS_SETTINGS" text="_Configuración Shareaza..."/>
+			<item id="ID_TOOLS_WIZARD" text="Configuración _rápida..."/>
+			<item id="ID_TOOLS_SETTINGS" text="_Configuración de Shareaza..."/>
 		</menu>
 		<menu text="_Window">
 			<item id="ID_WINDOW_CASCADE" text="_Full Screen"/>
 			<item id="ID_WINDOW_TILE_HORZ" text="Tile _Horizontal"/>
 			<item id="ID_WINDOW_TILE_VERT" text="Tile _Vertical"/>
 			<separator/>
-			<item id="ID_WINDOW_NAVBAR" text="Mostrar _Barra de Navegación"/>
-			<item id="ID_WINDOW_TOOLBAR" text="Mostrar _Barra de Herramientas"/>
+			<item id="ID_WINDOW_NAVBAR" text="Mostrar _barra de navegación"/>
+			<item id="ID_WINDOW_TOOLBAR" text="Mostrar _barra de herramientas"/>
 			<separator/>
-			<item id="ID_WINDOW_TABBAR" text="Mostrar _Barra de Lengüetas "/>
+			<item id="ID_WINDOW_TABBAR" text="Mostrar _barra de pestañas "/>
 			<item id="ID_WINDOW_MONITOR" text="Show _Monitor"/>
-			<item id="ID_WINDOW_REMOTE" text="Mostrar Control Remoto"/>
+			<item id="ID_WINDOW_REMOTE" text="Mostrar control remoto"/>
 		</menu>
 		<menu text="_Ayuda">
-			<item id="ID_HELP_FAQ" text="Guía de Usuarios Shareaza"/>
-			<item id="ID_HELP_TEST" text="_Test de Conexión"/>
+			<item id="ID_HELP_FAQ" text="Guía de usuarios Shareaza"/>
+			<item id="ID_HELP_TEST" text="_Test de conexión"/>
 			<separator/>
 			<menu text="_Guías">
-			<item id="ID_HELP_GUIDE" text="_Guía de Usuarios Shareaza "/>
-			<item id="ID_HELP_ROUTER" text="_Ayuda de Router"/>
-			<item id="ID_HELP_SECURITY" text="_Ayuda de Seguridad"/>
-			<item id="ID_HELP_CODEC" text="_Ayuda con Codecs"/>
+			<item id="ID_HELP_GUIDE" text="_Guía de usuarios Shareaza "/>
+			<item id="ID_HELP_ROUTER" text="_Ayuda de router"/>
+			<item id="ID_HELP_SECURITY" text="_Ayuda de seguridad"/>
+			<item id="ID_HELP_CODEC" text="_Ayuda con códecs"/>
 			</menu>
 			<separator/>
 			<menu text="_Sitios">
@@ -702,7 +702,7 @@
 	<!-- VIEW POPUP -->
 	<menu name="CMainWnd.View.Basic">
 		<item id="ID_TAB_HOME" text="_Inicio"/>
-		<item id="ID_TAB_LIBRARY" text="_Mi Colección"/>
+		<item id="ID_TAB_LIBRARY" text="_Mi colección"/>
 		<item id="ID_TAB_MEDIA" text="_Media"/>
 		<item id="ID_TAB_SEARCH" text="_Busqueda"/>
 		<item id="ID_TAB_TRANSFERS" text="_Descargas"/>
@@ -716,7 +716,7 @@
 	</menu>
 	<menu name="CMainWnd.View.Tabbed">
 		<item id="ID_TAB_HOME" text="_Inicio"/>
-		<item id="ID_TAB_LIBRARY" text="_Mi Colección"/>
+		<item id="ID_TAB_LIBRARY" text="_Mi colección"/>
 		<item id="ID_TAB_MEDIA" text="_Reproductor"/>
 		<item id="ID_TAB_SEARCH" text="_Buscar"/>
 		<item id="ID_TAB_TRANSFERS" text="_Transferencias"/>
@@ -727,35 +727,35 @@
 		<item id="ID_VIEW_DISCOVERY" text="Desc_ubrimiento" shortcut="F9"/>
 		<item id="ID_VIEW_TRAFFIC" text="_Gráfico" shortcut="F10"/>
 		<separator/>
-		<item id="ID_VIEW_PACKETS" text="Monitor de Paquetes" shortcut="Ctrl+F1"/>
-		<item id="ID_VIEW_SEARCH_MONITOR" text="_Monitor de Búsqueda" shortcut="Ctrl+F2"/>
-		<item id="ID_VIEW_RESULTS_MONITOR" text="Monitor de Resultados" shortcut="Ctrl+F3"/>
+		<item id="ID_VIEW_PACKETS" text="Monitor de paquetes" shortcut="Ctrl+F1"/>
+		<item id="ID_VIEW_SEARCH_MONITOR" text="_Monitor de búsqueda" shortcut="Ctrl+F2"/>
+		<item id="ID_VIEW_RESULTS_MONITOR" text="Monitor de resultados" shortcut="Ctrl+F3"/>
 	</menu>
 	<menu name="CMainWnd.View.Windowed">
-		<item id="ID_NETWORK_SEARCH" text="Nueva _Búsqueda..."/>
+		<item id="ID_NETWORK_SEARCH" text="Nueva _búsqueda..."/>
 		<separator/>
 		<item id="ID_VIEW_SYSTEM" text="S_istema"/>
 		<item id="ID_VIEW_NEIGHBOURS" text="R_ed"/>
 		<item id="ID_VIEW_DOWNLOADS" text="_Descargas"/>
 		<item id="ID_VIEW_UPLOADS" text="_Subidas"/>
-		<item id="ID_VIEW_LIBRARY" text="_Mi Colección"/>
-		<item id="ID_VIEW_MEDIA" text="_Reproductor de Media"/>
+		<item id="ID_VIEW_LIBRARY" text="_Mi colección"/>
+		<item id="ID_VIEW_MEDIA" text="_Reproductor de media"/>
 		<separator/>
 		<item id="ID_VIEW_SECURITY" text="Se_guridad" shortcut="F7"/>
 		<item id="ID_VIEW_HOSTS" text="Cache de I_Ps" shortcut="F8"/>
 		<item id="ID_VIEW_DISCOVERY" text="Desc_ubrimiento" shortcut="F9"/>
 		<item id="ID_VIEW_TRAFFIC" text="_Gráfico" shortcut="F10"/>
 		<separator/>
-		<item id="ID_VIEW_PACKETS" text="Monitor de Paquetes" shortcut="Ctrl+F1"/>
-		<item id="ID_VIEW_SEARCH_MONITOR" text="_Monitor de Búsqueda" shortcut="Ctrl+F2"/>
-		<item id="ID_VIEW_RESULTS_MONITOR" text="Monitor de Resultados" shortcut="Ctrl+F3"/>
+		<item id="ID_VIEW_PACKETS" text="Monitor de paquetes" shortcut="Ctrl+F1"/>
+		<item id="ID_VIEW_SEARCH_MONITOR" text="_Monitor de búsqueda" shortcut="Ctrl+F2"/>
+		<item id="ID_VIEW_RESULTS_MONITOR" text="Monitor de resultados" shortcut="Ctrl+F3"/>
 	</menu>
 	<!-- TRAY MENU -->
 	<menu name="CMainWnd.Tray">
 		<item id="ID_TRAY_OPEN" text="_Abrir Shareaza"/>
 		<separator/>
-		<item id="ID_NETWORK_SEARCH" text="Nueva _Búsqueda..."/>
-		<item id="ID_TOOLS_DOWNLOAD" text="_Descargar Archivo"/>
+		<item id="ID_NETWORK_SEARCH" text="Nueva _búsqueda..."/>
+		<item id="ID_TOOLS_DOWNLOAD" text="_Descargar archivo"/>
 		<separator/>
 		<item id="ID_MEDIA_PLAY" text="_Reproducir"/>
 		<item id="ID_MEDIA_PAUSE" text="Pa_usa"/>
@@ -764,30 +764,30 @@
 		<item id="ID_MEDIA_PREVIOUS" text="A_nterior"/>
 		<item id="ID_MEDIA_NEXT" text="_Siguiente"/>
 		<separator/>
-		<item id="ID_NETWORK_AUTO_CLOSE" text="Salir _Después de Transferencias"/>
+		<item id="ID_NETWORK_AUTO_CLOSE" text="Salir _después de transferencias"/>
 		<item id="ID_NETWORK_EXIT" text="S_alir"/>
 	</menu>
 	<!--  REMOTE MENU -->
 	<menu name="CRemoteWnd">
 		<item id="ID_TRAY_OPEN" text="_Abrir Shareaza"/>
 		<separator/>
-		<item id="ID_NETWORK_SEARCH" text="Nu_eva Búsqueda..."/>
-		<item id="ID_TOOLS_DOWNLOAD" text="_Descargar Archivo"/>
+		<item id="ID_NETWORK_SEARCH" text="Nu_eva búsqueda..."/>
+		<item id="ID_TOOLS_DOWNLOAD" text="_Descargar archivo"/>
 		<separator/>
-		<item id="ID_MEDIA_PLAY" text="_Reproducir Media"/>
+		<item id="ID_MEDIA_PLAY" text="_Reproducir media"/>
 		<item id="ID_MEDIA_PAUSE" text="Pa_usa"/>
 		<item id="ID_MEDIA_STOP" text="_Detener"/>
 		<separator/>
-		<item id="ID_MEDIA_PREVIOUS" text="P_ista Anterior"/>
-		<item id="ID_MEDIA_NEXT" text="_Pista Siguiente"/>
+		<item id="ID_MEDIA_PREVIOUS" text="P_ista anterior"/>
+		<item id="ID_MEDIA_NEXT" text="_Pista siguiente"/>
 		<separator/>
-		<item id="ID_NETWORK_AUTO_CLOSE" text="_Salir Después de Transferencias"/>
+		<item id="ID_NETWORK_AUTO_CLOSE" text="_Salir después de transferencias"/>
 		<item id="ID_NETWORK_EXIT" text="S_alir"/>
 	</menu>
 	<!-- HOME MENU -->
 	<menu name="CHomeWnd.Basic">
 		<item id="ID_TAB_HOME" text="_Inicio"/>
-		<item id="ID_TAB_LIBRARY" text="Mi Colección"/>
+		<item id="ID_TAB_LIBRARY" text="Mi colección"/>
 		<item id="ID_TAB_MEDIA" text="_Reproductor"/>
 		<item id="ID_TAB_SEARCH" text="B_uscar"/>
 		<item id="ID_TAB_TRANSFERS" text="_Descargas"/>
@@ -796,32 +796,32 @@
 			<item id="ID_VIEW_NEIGHBOURS" text="_Red"/>
 			<item id="ID_VIEW_UPLOADS" text="_Subidas"/>
 			<item id="ID_VIEW_SECURITY" text="_Seguridad"/>
-			<item id="ID_VIEW_HOSTS" text="_Caché de Hosts"/>
+			<item id="ID_VIEW_HOSTS" text="_Caché de hosts"/>
 		</menu>
 	</menu>
 	<menu name="CHomeWnd.Tabbed">
 		<item id="ID_TAB_HOME" text="_Inicio"/>
-		<item id="ID_TAB_LIBRARY" text="_Mi Colección"/>
+		<item id="ID_TAB_LIBRARY" text="_Mi colección"/>
 		<item id="ID_TAB_MEDIA" text="_Media"/>
 		<item id="ID_TAB_SEARCH" text="_Busqueda"/>
 		<item id="ID_TAB_TRANSFERS" text="_Transferencias"/>
 		<item id="ID_TAB_NETWORK" text="_Red"/>
 		<separator/>
 		<item id="ID_VIEW_SECURITY" text="Se_guridad"/>
-		<item id="ID_VIEW_HOSTS" text="_Caché de Hosts"/>
+		<item id="ID_VIEW_HOSTS" text="_Caché de hosts"/>
 		<item id="ID_VIEW_DISCOVERY" text="_Descubrimiento"/>
 		<item id="ID_VIEW_TRAFFIC" text="_Gráfico"/>
 		<separator/>
 		<item id="ID_VIEW_PACKETS" text="_Monitor de paquetes"/>
-		<item id="ID_VIEW_SEARCH_MONITOR" text="_Monitor de Búsqueda"/>
-		<item id="ID_VIEW_RESULTS_MONITOR" text="_Monitor de Resultados"/>
+		<item id="ID_VIEW_SEARCH_MONITOR" text="_Monitor de búsqueda"/>
+		<item id="ID_VIEW_RESULTS_MONITOR" text="_Monitor de resultados"/>
 	</menu>
 	<!-- HOST CACHE WINDOW -->
 	<menu name="CHostCacheWnd">
-		<item id="ID_HOSTCACHE_CONNECT" text="_Conectar Ahora"/>
+		<item id="ID_HOSTCACHE_CONNECT" text="_Conectar ahora"/>
 		<item id="ID_HOSTCACHE_DISCONNECT" text="_Desconectar"/>
 		<item id="ID_NEIGHBOURS_COPY" text="Copiar _URI"/>
-		<item id="ID_HOSTCACHE_PRIORITY" text="_Servidor con Prioridad"/>
+		<item id="ID_HOSTCACHE_PRIORITY" text="_Servidor con prioridad"/>
 		<separator/>
 		<item id="ID_HOSTCACHE_REMOVE" text="_Eliminar IP"/>
 		<separator/>
@@ -832,22 +832,22 @@
 			<item id="ID_HOSTCACHE_ED2K_CACHE" text="_Servidores eDonkey"/>
 		</menu>
 		<separator/>
-		<item id="ID_HOSTCACHE_IMPORT" text="_Importar Archivo MET..."/>
-		<item id="ID_HOSTCACHE_ED2K_DOWNLOAD" text="_Descargar Archivo MET..."/>
+		<item id="ID_HOSTCACHE_IMPORT" text="_Importar archivo MET..."/>
+		<item id="ID_HOSTCACHE_ED2K_DOWNLOAD" text="_Descargar archivo MET..."/>
 	</menu>
 	<!-- SEARCH WINDOW -->
 	<menu name="CSearchWnd.Basic">
 		<item id="ID_SEARCH_DOWNLOAD" text="_Descargar"/>
 		<separator/>
-		<item id="ID_BROWSE_LAUNCH" text="_Explorar Usuario"/>
-		<item id="ID_SEARCH_CHAT" text="_Chatear con Usuario"/>
+		<item id="ID_BROWSE_LAUNCH" text="_Explorar usuario"/>
+		<item id="ID_SEARCH_CHAT" text="_Chatear con usuario"/>
 		<separator/>
 		<menu text="_Search For">
-			<item id="ID_SEARCH_FOR_SIMILAR" text="Archivos Similares"/>
+			<item id="ID_SEARCH_FOR_SIMILAR" text="Archivos similares"/>
 			<separator/>
-			<item id="ID_SEARCH_FOR_ARTIST" text="Música de este Artista"/>
-			<item id="ID_SEARCH_FOR_ALBUM" text="Música de este Album"/>
-			<item id="ID_SEARCH_FOR_SERIES" text="Episodios de esta Serie"/>
+			<item id="ID_SEARCH_FOR_ARTIST" text="Música de este artista"/>
+			<item id="ID_SEARCH_FOR_ALBUM" text="Música de este álbum"/>
+			<item id="ID_SEARCH_FOR_SERIES" text="Episodios de esta serie"/>
 		</menu>
 		<menu text="_Web Services">
 			<item id="ID_LIBRARY_BITZI_WEB" text="Ver _Bitzi Ticket"/>
@@ -856,44 +856,44 @@
 	</menu>
 	<menu name="CSearchWnd">
 		<item id="ID_SEARCH_DOWNLOAD" text="_Descargar"/>
-		<item id="ID_SEARCH_DOWNLOADNOW" text="Descargar Ahora"/>
+		<item id="ID_SEARCH_DOWNLOADNOW" text="Descargar ahora"/>
 		<item id="ID_SEARCH_COPY" text="Copiar _URI"/>
 		<separator/>
-		<item id="ID_BROWSE_LAUNCH" text="_Explorar Usuario"/>
-		<item id="ID_SEARCH_CHAT" text="_Chatear con Usuario"/>
+		<item id="ID_BROWSE_LAUNCH" text="_Explorar usuario"/>
+		<item id="ID_SEARCH_CHAT" text="_Chatear con usuario"/>
 		<item id="ID_SECURITY_BAN" text="_Bloquear IP"/>
 		<separator/>
 		<menu text="_Buscar">
-			<item id="ID_SEARCH_FOR_THIS" text="Este Archivo"/>
-			<item id="ID_SEARCH_FOR_SIMILAR" text="Archivos Similares"/>
+			<item id="ID_SEARCH_FOR_THIS" text="Este archivo"/>
+			<item id="ID_SEARCH_FOR_SIMILAR" text="Archivos similares"/>
 			<separator/>
-			<item id="ID_SEARCH_FOR_ARTIST" text="Música de este Artista"/>
-			<item id="ID_SEARCH_FOR_ALBUM" text="Música de este Album"/>
-			<item id="ID_SEARCH_FOR_SERIES" text="Episodios de esta Serie"/>
+			<item id="ID_SEARCH_FOR_ARTIST" text="Música de este artista"/>
+			<item id="ID_SEARCH_FOR_ALBUM" text="Música de este álbum"/>
+			<item id="ID_SEARCH_FOR_SERIES" text="Episodios de esta serie"/>
 		</menu>
 		<menu text="_Servicios Web">
-			<item id="ID_LIBRARY_BITZI_WEB" text="Ver Informe de _Bitzi"/>
+			<item id="ID_LIBRARY_BITZI_WEB" text="Ver informe de _Bitzi"/>
 		</menu>
 		<separator/>
-		<item id="ID_SEARCH_FILTER" text="_Filtrar Resultados..."/>
-		<item id="ID_SEARCH_FILTER_REMOVE" text="_Eliminar Filtro"/>
-		<item id="ID_SEARCH_CLEAR" text="L_impiar Resultados"/>
+		<item id="ID_SEARCH_FILTER" text="_Filtrar resultados..."/>
+		<item id="ID_SEARCH_FILTER_REMOVE" text="_Eliminar filtro"/>
+		<item id="ID_SEARCH_CLEAR" text="L_impiar resultados"/>
 		<separator/>
-		<item id="ID_SEARCH_COLUMNS" text="Editar C_olumnas..."/>
+		<item id="ID_SEARCH_COLUMNS" text="Editar c_olumnas..."/>
 	</menu>
 	<!-- BROWSE HOST WINDOW -->
 	<menu name="CBrowseHostWnd.Basic">
 		<item id="ID_SEARCH_DOWNLOAD" text="_Descargar"/>
-		<item id="ID_SEARCH_DOWNLOADNOW" text="Descargar _Ahora"/>
+		<item id="ID_SEARCH_DOWNLOADNOW" text="Descargar _ahora"/>
 		<separator/>
-		<item id="ID_SEARCH_CHAT" text="_Chatear con Usuario"/>
+		<item id="ID_SEARCH_CHAT" text="_Chatear con usuario"/>
 		<separator/>
 		<menu text="_Search For">
-			<item id="ID_SEARCH_FOR_SIMILAR" text="Archivos Similares"/>
+			<item id="ID_SEARCH_FOR_SIMILAR" text="Archivos similares"/>
 			<separator/>
-			<item id="ID_SEARCH_FOR_ARTIST" text="Música de este Artista"/>
-			<item id="ID_SEARCH_FOR_ALBUM" text="Música de este Album"/>
-			<item id="ID_SEARCH_FOR_SERIES" text="Episodios de esta Serie"/>
+			<item id="ID_SEARCH_FOR_ARTIST" text="Música de este artista"/>
+			<item id="ID_SEARCH_FOR_ALBUM" text="Música de este álbum"/>
+			<item id="ID_SEARCH_FOR_SERIES" text="Episodios de esta serie"/>
 		</menu>
 		<menu text="_Web File Info">
 			<item id="ID_LIBRARY_BITZI_WEB" text="Ver _Bitzi Ticket"/>
@@ -902,79 +902,79 @@
 	</menu>
 	<menu name="CBrowseHostWnd">
 		<item id="ID_SEARCH_DOWNLOAD" text="_Descargar"/>
-		<item id="ID_SEARCH_DOWNLOADNOW" text="Descargar _Ahora"/>
+		<item id="ID_SEARCH_DOWNLOADNOW" text="Descargar _ahora"/>
 		<item id="ID_SEARCH_COPY" text="Copiar _URI (enlace)"/>
 		<separator/>
-		<item id="ID_SEARCH_CHAT" text="_Chatear con Usuario"/>
+		<item id="ID_SEARCH_CHAT" text="_Chatear con usuario"/>
 		<separator/>
 		<menu text="_Buscar">
-			<item id="ID_SEARCH_FOR_THIS" text="Este Archivo"/>
-			<item id="ID_SEARCH_FOR_SIMILAR" text="Archivos Similares"/>
+			<item id="ID_SEARCH_FOR_THIS" text="Este archivo"/>
+			<item id="ID_SEARCH_FOR_SIMILAR" text="Archivos similares"/>
 			<separator/>
-			<item id="ID_SEARCH_FOR_ARTIST" text="Música de este Artista"/>
-			<item id="ID_SEARCH_FOR_ALBUM" text="Música de este Album"/>
-			<item id="ID_SEARCH_FOR_SERIES" text="Episodios de esta Serie"/>
+			<item id="ID_SEARCH_FOR_ARTIST" text="Música de este artista"/>
+			<item id="ID_SEARCH_FOR_ALBUM" text="Música de este álbum"/>
+			<item id="ID_SEARCH_FOR_SERIES" text="Episodios de esta serie"/>
 		</menu>
 		<menu text="_Servicios Web">
 			<item id="ID_LIBRARY_BITZI_WEB" text="Ver _Bitzi Ticket"/>
 		</menu>
 		<separator/>
-		<item id="ID_SEARCH_FILTER" text="_Filtrar Resultados..."/>
-		<item id="ID_SEARCH_FILTER_REMOVE" text="R_emover Filtro"/>
+		<item id="ID_SEARCH_FILTER" text="_Filtrar resultados..."/>
+		<item id="ID_SEARCH_FILTER_REMOVE" text="R_emover filtro"/>
 		<separator/>
-		<item id="ID_SEARCH_COLUMNS" text="Editar C_olumnas..."/>
+		<item id="ID_SEARCH_COLUMNS" text="Editar c_olumnas..."/>
 	</menu>
 	<!-- HIT MONITOR WINDOW -->
 	<menu name="CHitMonitorWnd">
 		<item id="ID_SEARCH_DOWNLOAD" text="_Descargar"/>
 		<item id="ID_SEARCH_COPY" text="Copiar _URI (enlace)"/>
 		<separator/>
-		<item id="ID_BROWSE_LAUNCH" text="_Explorar Usuario"/>
-		<item id="ID_SEARCH_CHAT" text="_Chatear con Usuario"/>
+		<item id="ID_BROWSE_LAUNCH" text="_Explorar usuario"/>
+		<item id="ID_SEARCH_CHAT" text="_Chatear con usuario"/>
 		<separator/>
 		<menu text="_Buscar">
-			<item id="ID_SEARCH_FOR_THIS" text="Este Archivo"/>
-			<item id="ID_SEARCH_FOR_SIMILAR" text="Archivos Similares"/>
+			<item id="ID_SEARCH_FOR_THIS" text="Este archivo"/>
+			<item id="ID_SEARCH_FOR_SIMILAR" text="Archivos similares"/>
 			<separator/>
-			<item id="ID_SEARCH_FOR_ARTIST" text="Música de este Artista"/>
-			<item id="ID_SEARCH_FOR_ALBUM" text="Música de este Album"/>
-			<item id="ID_SEARCH_FOR_SERIES" text="Episodios de esta Serie"/>
+			<item id="ID_SEARCH_FOR_ARTIST" text="Música de este artista"/>
+			<item id="ID_SEARCH_FOR_ALBUM" text="Música de este álbum"/>
+			<item id="ID_SEARCH_FOR_SERIES" text="Episodios de esta serie"/>
 		</menu>
 		<menu text="_Sevicios Web">
-			<item id="ID_LIBRARY_BITZI_WEB" text="Ver Informe de _Bitzi"/>
+			<item id="ID_LIBRARY_BITZI_WEB" text="Ver informe de _Bitzi"/>
 		</menu>
 		<separator/>
-		<item id="ID_SEARCH_FILTER" text="_Fitro de Resultados..."/>
-		<item id="ID_SEARCH_FILTER_REMOVE" text="_Quitar Filtro"/>
+		<item id="ID_SEARCH_FILTER" text="_Fitro de resultados..."/>
+		<item id="ID_SEARCH_FILTER_REMOVE" text="_Quitar filtro"/>
 		<separator/>
-		<item id="ID_HITMONITOR_PAUSE" text="_Pausar Visualización"/>
-		<item id="ID_HITMONITOR_CLEAR" text="L_impiar Visualización"/>
+		<item id="ID_HITMONITOR_PAUSE" text="_Pausar visualización"/>
+		<item id="ID_HITMONITOR_CLEAR" text="L_impiar visualización"/>
 		<separator/>
-		<item id="ID_SEARCH_COLUMNS" text="Editar C_olumnas..."/>
+		<item id="ID_SEARCH_COLUMNS" text="Editar c_olumnas..."/>
 	</menu>
 	<!-- DOWNLOADS WINDOW -->
 	<menu name="CDownloadsWnd.Download.Basic">
-		<item id="ID_DOWNLOADS_LAUNCH" text="_Vista Previa"/>
-		<item id="ID_DOWNLOADS_REMOTE_PREVIEW" text="_Vista Previa Rápida"/>
-		<item id="ID_DOWNLOADS_VIEW_REVIEWS" text="_Ver Reviews"/>
+		<item id="ID_DOWNLOADS_LAUNCH" text="_Vista previa"/>
+		<item id="ID_DOWNLOADS_REMOTE_PREVIEW" text="_Vista previa rápida"/>
+		<item id="ID_DOWNLOADS_VIEW_REVIEWS" text="_Ver calificaciones (reviews)"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_RESUME" text="_Reanudar"/>
 		<item id="ID_DOWNLOADS_PAUSE" text="P_ausar"/>
 		<item id="ID_DOWNLOADS_CLEAR_INCOMPLETE" text="_Cancelar"/>
 		<separator/>
-		<item id="ID_DOWNLOADS_SOURCES" text="_Buscar Más Fuentes"/>
+		<item id="ID_DOWNLOADS_SOURCES" text="_Buscar más fuentes"/>
 		<!-- <separator/>
-		<item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="L_impiar Completo"/>
-		<item id="ID_DOWNLOADS_AUTO_CLEAR" text="A_uto Limpiar"/> -->
+		<item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="L_impiar completo"/>
+		<item id="ID_DOWNLOADS_AUTO_CLEAR" text="A_uto limpiar"/> -->
 		<separator/>
 		<item id="ID_DOWNLOADS_HELP" text="_Ayuda..."/>
 	</menu>
 	<menu name="CDownloadsWnd.Download">
-		<item id="ID_DOWNLOADS_LAUNCH" text="_Vista Previa"/>
-		<item id="ID_DOWNLOADS_REMOTE_PREVIEW" text="_Vista Previa Rápida"/>
+		<item id="ID_DOWNLOADS_LAUNCH" text="_Vista previa"/>
+		<item id="ID_DOWNLOADS_REMOTE_PREVIEW" text="_Vista previa rápida"/>
 		<!-- <item id="ID_DOWNLOADS_LAUNCH_COPY" text="Vi_sta Previa a Copia"/> -->
 		<item id="ID_DOWNLOADS_ENQUEUE" text="Agregar a la lista de reproducción"/>
-		<item id="ID_DOWNLOADS_VIEW_REVIEWS" text="_Ver Evaluaciones (Reviews)"/>
+		<item id="ID_DOWNLOADS_VIEW_REVIEWS" text="_Ver calificaciones (reviews)"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_RESUME" text="_Reanudar"/>
 		<item id="ID_DOWNLOADS_PAUSE" text="P_ausar"/>
@@ -983,121 +983,121 @@
 		<item id="ID_DOWNLOADS_SOURCES" text="_Buscar más fuentes"/>
 		<separator/>
 		<menu text="_Avanzado">
-			<item id="ID_DOWNLOADS_SHARE" text="_Compartir Archivo"/>
+			<item id="ID_DOWNLOADS_SHARE" text="_Compartir archivo"/>
 			<separator/>
 			<item id="ID_DOWNLOADS_COPY" text="_Copiar URI"/>
-			<item id="ID_DOWNLOADS_URL" text="_Agregar Fuente..."/>
+			<item id="ID_DOWNLOADS_URL" text="_Agregar fuente..."/>
 			<separator/>
-			<item id="ID_DOWNLOADS_MONITOR" text="Ventana de _Monitor"/>
+			<item id="ID_DOWNLOADS_MONITOR" text="Ventana de _monitor"/>
 			<separator/>
-			<item id="ID_DOWNLOADS_MOVE_UP" text="Mover _Arriba"/>
-			<item id="ID_DOWNLOADS_MOVE_DOWN" text="Mover _Abajo"/>
-			<item id="ID_DOWNLOADS_BOOST" text="_Ignorar Límite de Banda Ancha"/>
+			<item id="ID_DOWNLOADS_MOVE_UP" text="Mover _arriba"/>
+			<item id="ID_DOWNLOADS_MOVE_DOWN" text="Mover _abajo"/>
+			<item id="ID_DOWNLOADS_BOOST" text="_Ignorar límite de banda ancha"/>
 		</menu>
 		<item id="ID_DOWNLOADS_HELP" text="_Ayuda..."/>
 		<separator/>
-		<item id="ID_DOWNLOADS_EDIT" text="Edición Avanzada"/>
+		<item id="ID_DOWNLOADS_EDIT" text="Edición avanzada"/>
 	</menu>
 	<menu name="CDownloadsWnd.Source">
 		<item id="ID_TRANSFERS_CONNECT" text="_Acceder"/>
 		<separator/>
-		<item id="ID_BROWSE_LAUNCH" text="_Explorar Usuario"/>
-		<item id="ID_TRANSFERS_CHAT" text="_Chat con Usuario"/>
+		<item id="ID_BROWSE_LAUNCH" text="_Explorar usuario"/>
+		<item id="ID_TRANSFERS_CHAT" text="_Chat con usuario"/>
 		<item id="ID_DOWNLOADS_COPY" text="Copiar _URI"/>
 		<separator/>
 		<item id="ID_TRANSFERS_DISCONNECT" text="_Desconectar"/>
 		<item id="ID_TRANSFERS_FORGET" text="_Olvidar"/>
 	</menu>
 	<menu name="CDownloadsWnd.Completed.Basic">
-		<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Abrir o Reproducir"/>
+		<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Abrir o reproducir"/>
 		<item id="ID_DOWNLOADS_ENQUEUE" text="_Agregar a lista de reproducción"/>
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="_Limpiar"/>
 		<separator/>
-		<item id="ID_DOWNLOADS_FILE_DELETE" text="_Eliminar Archivo"/>
+		<item id="ID_DOWNLOADS_FILE_DELETE" text="_Eliminar archivo"/>
 	</menu>
 	<menu name="CDownloadsWnd.Completed">
 		<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Reproducir"/>
-		<item id="ID_DOWNLOADS_ENQUEUE" text="Agregar al Reproductor"/>
+		<item id="ID_DOWNLOADS_ENQUEUE" text="Agregar al reproductor"/>
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="_Limpiar"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_COPY" text="Copiar _URI"/>
 		<item id="ID_DOWNLOADS_EDIT" text="Información"/>
 		<separator/>
-		<item id="ID_DOWNLOADS_FILE_DELETE" text="_Eliminar Archivo"/>
-		<item id="ID_DOWNLOADS_RATE" text="_Darle rating a archivo..."/>
+		<item id="ID_DOWNLOADS_FILE_DELETE" text="_Eliminar archivo"/>
+		<item id="ID_DOWNLOADS_RATE" text="_Calificar el archivo..."/>
 	</menu>
 	<menu name="CDownloadsWnd.Seeding">
 		<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Abrir"/>
-		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="_Detener Compartir"/>
+		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="_Detener compartir"/>
 		<item id="ID_DOWNLOADS_HELP" text="_Ayuda..."/>
 		<separator/>
-		<item id="ID_DOWNLOADS_EDIT" text="_Información de Torrent"/>
+		<item id="ID_DOWNLOADS_EDIT" text="_Información de torrent"/>
 	</menu>
 	<menu name="CDownloadsWnd.Nothing">
 		<item id="ID_DOWNLOADS_HELP" text="_Ayuda..."/>
-		<item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="Limpiar Completados"/>
-		<item id="ID_DOWNLOADS_AUTO_CLEAR" text="Aut_o Limpiar"/>
+		<item id="ID_DOWNLOADS_CLEAR_COMPLETED" text="Limpiar completados"/>
+		<item id="ID_DOWNLOADS_AUTO_CLEAR" text="Aut_o limpiar"/>
 	</menu>
 	<menu name="CDownloadTabBar">
 		<item id="ID_DOWNLOAD_GROUP_RESUME" text="_Iniciar todas"/>
 		<item id="ID_DOWNLOAD_GROUP_PAUSE" text="_Pausar todas"/>
-		<item id="ID_DOWNLOAD_GROUP_CLEAR" text="_Cancelar/Eliminar todas"/>
+		<item id="ID_DOWNLOAD_GROUP_CLEAR" text="_Cancelar/eliminar todas"/>
 		<separator/>
-		<item id="ID_DOWNLOAD_GROUP_NEW" text="Crear _Grupo..."/>
-		<item id="ID_DOWNLOAD_GROUP_REMOVE" text="_Eliminar Grupo"/>
+		<item id="ID_DOWNLOAD_GROUP_NEW" text="Crear _grupo..."/>
+		<item id="ID_DOWNLOAD_GROUP_REMOVE" text="_Eliminar grupo"/>
 		<separator/>
-		<item id="ID_DOWNLOAD_GROUP_SHOW" text="_Mostrar Grupos"/>
+		<item id="ID_DOWNLOAD_GROUP_SHOW" text="_Mostrar grupos"/>
 		<separator/>
 		<item id="ID_DOWNLOAD_GROUP_PROPERTIES" text="Pr_opiedades"/>
 	</menu>
 	<menu name="CDownloadsWnd.Filter">
-		<item id="ID_DOWNLOADS_FILTER_ALL" text="Mostrar _Todos"/>
+		<item id="ID_DOWNLOADS_FILTER_ALL" text="Mostrar _todos"/>
 		<separator/>
-		<item id="ID_DOWNLOADS_FILTER_ACTIVE" text="Mostrar A_ctivos"/>
-		<item id="ID_DOWNLOADS_FILTER_QUEUED" text="Mostrar P_endiente"/>
-		<item id="ID_DOWNLOADS_FILTER_SOURCES" text="Mostrar _sin Fuentes"/>
-		<item id="ID_DOWNLOADS_FILTER_PAUSED" text="Mostrar en _Pausa"/>
+		<item id="ID_DOWNLOADS_FILTER_ACTIVE" text="Mostrar a_ctivos"/>
+		<item id="ID_DOWNLOADS_FILTER_QUEUED" text="Mostrar p_endiente"/>
+		<item id="ID_DOWNLOADS_FILTER_SOURCES" text="Mostrar _sin fuentes"/>
+		<item id="ID_DOWNLOADS_FILTER_PAUSED" text="Mostrar en _pausa"/>
 		<separator/>
-		<item id="ID_DOWNLOADS_SHOW_SOURCES" text="Mostrar Todas las _Fuentes"/>
-		<item id="ID_DOWNLOAD_GROUP_SHOW" text="Mostrar _Grupos"/>
+		<item id="ID_DOWNLOADS_SHOW_SOURCES" text="Mostrar todas las _fuentes"/>
+		<item id="ID_DOWNLOAD_GROUP_SHOW" text="Mostrar _grupos"/>
 	</menu>
 	<!-- UPLOADS WINDOW -->
 	<menu name="CUploadsWnd.Upload.Basic">
-		<item id="ID_BROWSE_LAUNCH" text="_Explorar Usuario"/>
-		<item id="ID_UPLOADS_CHAT" text="_Chatear con Usuario"/>
+		<item id="ID_BROWSE_LAUNCH" text="_Explorar usuario"/>
+		<item id="ID_UPLOADS_CHAT" text="_Chatear con usuario"/>
 	</menu>
 	<menu name="CUploadsWnd.Upload">
-		<item id="ID_UPLOADS_START" text="_Empezar Ahora"/>
+		<item id="ID_UPLOADS_START" text="_Empezar ahora"/>
 		<item id="ID_UPLOADS_CLEAR" text="_Limpiar"/>
 		<separator/>
-		<item id="ID_BROWSE_LAUNCH" text="_Explorar Usuario"/>
-		<item id="ID_UPLOADS_CHAT" text="_Platicar con Usuario"/>
+		<item id="ID_BROWSE_LAUNCH" text="_Explorar usuario"/>
+		<item id="ID_UPLOADS_CHAT" text="_Platicar con usuario"/>
 		<item id="ID_SECURITY_BAN" text="_Bloquear IP"/>
 		</menu>
 	<menu name="CUploadsWnd.Queue">
-		<item id="ID_UPLOADS_EDIT_QUEUE" text="_Queue Settings"/>
+		<item id="ID_UPLOADS_EDIT_QUEUE" text="_Opciones de cola"/>
 		<item id="ID_UPLOADS_CLEAR_COMPLETED" text="Limpiar Completados"/>
 		<item id="ID_UPLOADS_AUTO_CLEAR" text="A_uto Limpiar"/>
 	</menu>
 	<menu name="CUploadsWnd.Nothing">
 		<item id="ID_UPLOADS_HELP" text="_Ayuda..."/>
-		<item id="ID_UPLOADS_CLEAR_COMPLETED" text="Limpiar Completados"/>
-		<item id="ID_UPLOADS_AUTO_CLEAR" text="Aut_o Limpiar"/>
+		<item id="ID_UPLOADS_CLEAR_COMPLETED" text="Limpiar completados"/>
+		<item id="ID_UPLOADS_AUTO_CLEAR" text="Aut_o limpiar"/>
 	</menu>
 	<menu name="CUploadsWnd.Filter">
-		<item id="ID_UPLOADS_FILTER_ALL" text="Mostrar _Todos"/>
+		<item id="ID_UPLOADS_FILTER_ALL" text="Mostrar _todos"/>
 		<separator/>
-		<item id="ID_UPLOADS_FILTER_ACTIVE" text="Mostrar Activo"/>
-		<item id="ID_UPLOADS_FILTER_QUEUED" text="Mostrar Cola"/>
+		<item id="ID_UPLOADS_FILTER_ACTIVE" text="Mostrar activo"/>
+		<item id="ID_UPLOADS_FILTER_QUEUED" text="Mostrar cola"/>
 		<item id="ID_UPLOADS_FILTER_TORRENT" text="Mostrar BitTorrent"/>
-		<item id="ID_UPLOADS_FILTER_HISTORY" text="Mostrar Historía"/>
+		<item id="ID_UPLOADS_FILTER_HISTORY" text="Mostrar historía"/>
 	</menu>
 	<!-- LIBRARY FRAME -->
 	<menu name="CLibraryTree.Physical.Basic">
 		<item id="ID_LIBRARY_SHARED_FOLDER" text="_Compartido"/>
 		<item id="ID_LIBRARY_REMOVE" text="_Eliminar"/>
 		<separator/>
-		<item id="ID_LIBRARY_FOLDERS" text="Compartir Archivos..."/>
+		<item id="ID_LIBRARY_FOLDERS" text="Compartir archivos..."/>
 	</menu>
 	<menu name="CLibraryTree.Physical">
 		<item id="ID_LIBRARY_EXPLORE" text="_Explorar"/>
@@ -1107,28 +1107,28 @@
 		<separator/>
 		<item id="ID_LIBRARY_SCAN" text="Es_canear"/>
 		<item id="ID_LIBRARY_REBUILD" text="Re_hacer"/>
-		<item id="ID_LIBRARY_FOLDERS" text="Compartir Archivos..."/>
+		<item id="ID_LIBRARY_FOLDERS" text="Compartir archivos..."/>
 		<separator/>
-		<item id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" text="Propiedades de _Archivo"/>
+		<item id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" text="Propiedades de _archivo"/>
 	</menu>
 	<menu name="CLibraryTree.Virtual.Basic">
-		<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="_Reproducir Album"/>
+		<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="_Reproducir álbum"/>
 		<item id="ID_LIBRARY_FOLDER_DELETE" text="_Eliminar"/>
 		<separator/>
-		<item id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" text="_Propiedades del Archivo"/>
-		<item id="ID_LIBRARY_FOLDER_PROPERTIES" text="_Propiedades de Album"/>
+		<item id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" text="_Propiedades del archivo"/>
+		<item id="ID_LIBRARY_FOLDER_PROPERTIES" text="_Propiedades de álbum"/>
 	</menu>
 	<menu name="CLibraryTree.Virtual">
-		<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="_Reproducir Album"/>
+		<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="_Reproducir álbum"/>
 		<item id="ID_LIBRARY_FOLDER_DELETE" text="_Eliminar"/>
 		<separator/>
 		<item id="ID_LIBRARY_REBUILD" text="_Rehacer"/>
-		<item id="ID_LIBRARY_EXPORT_COLLECTION" text="_Exportar Colección..."/>
+		<item id="ID_LIBRARY_EXPORT_COLLECTION" text="_Exportar colección..."/>
 		<separator/>
-		<item id="ID_LIBRARY_FOLDER_NEW" text="_Nueva Carpeta..."/>
+		<item id="ID_LIBRARY_FOLDER_NEW" text="_Nueva carpeta..."/>
 		<separator/>
-		<item id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" text="_Propiedades del Archivo"/>
-		<item id="ID_LIBRARY_FOLDER_PROPERTIES" text="_Propiedades de Album "/>
+		<item id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" text="_Propiedades del archivo"/>
+		<item id="ID_LIBRARY_FOLDER_PROPERTIES" text="_Propiedades de álbum "/>
 	</menu>
 	<!-- LIBRARY VIEWS -->
 	<menu name="CLibraryTileView">
@@ -1139,37 +1139,37 @@
 	</menu>
 	<menu name="CLibraryFileView.Physical.Basic">
 		<item id="ID_LIBRARY_LAUNCH" text="_Reproducr"/>
-		<item id="ID_LIBRARY_ENQUEUE" text="_Agregar al Reproductor"/>
+		<item id="ID_LIBRARY_ENQUEUE" text="_Agregar al reproductor"/>
 		<separator/>
 		<item id="ID_LIBRARY_SHARED_FILE" text="_Compartido"/>
 		<separator/>
 		<item id="ID_LIBRARY_DELETE" text="_Eliminar"/>
 		<separator/>
 		<menu text="S_earch For">
-			<item id="ID_SEARCH_FOR_THIS" text="Este Arhivo"/>
-			<item id="ID_SEARCH_FOR_SIMILAR" text="Archivos Similares"/>
+			<item id="ID_SEARCH_FOR_THIS" text="Este archivo"/>
+			<item id="ID_SEARCH_FOR_SIMILAR" text="Archivos similares"/>
 			<separator/>
-			<item id="ID_SEARCH_FOR_ARTIST" text="Música por el mismo artista"/>
-			<item id="ID_SEARCH_FOR_ALBUM" text="Música del mismo Album"/>
-			<item id="ID_SEARCH_FOR_SERIES" text="Episodios de las mismás series"/>
+			<item id="ID_SEARCH_FOR_ARTIST" text="Música del mismo artista"/>
+			<item id="ID_SEARCH_FOR_ALBUM" text="Música del mismo álbum"/>
+			<item id="ID_SEARCH_FOR_SERIES" text="Episodios de la misma serie"/>
 		</menu>
 		<menu text="_Web Services">
 			<item id="ID_LIBRARY_BITZI_WEB" text="Ver _Bitzi Ticket"/>
-			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Descargar Metadata"/>
+			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Descargar metadata"/>
 			<separator/>
 			<item id="ID_LIBRARY_URL" text=""/>
 		</menu>
 		<menu text="O_rganizar">
-			<item id="ID_LIBRARY_RENAME" text="_Renombrar Archivo"/>
-			<item id="ID_LIBRARY_MOVE" text="_Mover Archivo..."/>
-			<item id="ID_LIBRARY_COPY" text="_Copiar Archivo..."/>
+			<item id="ID_LIBRARY_RENAME" text="_Renombrar archivo"/>
+			<item id="ID_LIBRARY_MOVE" text="_Mover archivo..."/>
+			<item id="ID_LIBRARY_COPY" text="_Copiar archivo..."/>
 		</menu>
-		<item id="ID_LIBRARY_REBUILD_ANSI" text="_Ubicar Metadata"/>
+		<item id="ID_LIBRARY_REBUILD_ANSI" text="_Ubicar metadata"/>
 		<separator/>
 		<item id="ID_LIBRARY_PROPERTIES" text="_Propiedades"/>
 	</menu>
 	<menu name="CLibraryFileView.Physical">
-		<item id="ID_LIBRARY_LAUNCH" text="_Abrir o Reproducir"/>
+		<item id="ID_LIBRARY_LAUNCH" text="_Abrir o reproducir"/>
 		<item id="ID_LIBRARY_ENQUEUE" text="Agregar a la lista de reproducción"/>
 		<separator/>
 		<item id="ID_LIBRARY_SHARED_FILE" text="_Compartido"/>
@@ -1178,28 +1178,28 @@
 		<item id="ID_LIBRARY_DELETE" text="_Eliminar"/>
 		<separator/>
 		<menu text="S_earch For">
-			<item id="ID_SEARCH_FOR_THIS" text="Este Archivo"/>
-			<item id="ID_SEARCH_FOR_SIMILAR" text="Archivos Similares"/>
+			<item id="ID_SEARCH_FOR_THIS" text="Este archivo"/>
+			<item id="ID_SEARCH_FOR_SIMILAR" text="Archivos similares"/>
 			<separator/>
-			<item id="ID_SEARCH_FOR_ARTIST" text="Música por el mismo artista"/>
-			<item id="ID_SEARCH_FOR_ALBUM" text="Música del mismo Album"/>
-			<item id="ID_SEARCH_FOR_SERIES" text="Episodios de las mismás series"/>
+			<item id="ID_SEARCH_FOR_ARTIST" text="Música del mismo artista"/>
+			<item id="ID_SEARCH_FOR_ALBUM" text="Música del mismo álbum"/>
+			<item id="ID_SEARCH_FOR_SERIES" text="Episodios de la misma serie"/>
 		</menu>
 		<menu text="_Web Services">
 			<item id="ID_LIBRARY_BITZI_WEB" text="Ver _Bitzi Ticket"/>
-			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Adquirir Metadata"/>
+			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Adquirir metadata"/>
 			<separator/>
-<item id="ID_LIBRARY_CREATETORRENT" text="Crear Archivo .torrent"/>
+<item id="ID_LIBRARY_CREATETORRENT" text="Crear archivo .torrent"/>
 		</menu>
 		<menu text="O_rganizar">
-			<item id="ID_LIBRARY_RENAME" text="_Renombrar Archivo"/>
-			<item id="ID_LIBRARY_MOVE" text="_Mover Archivos..."/>
-			<item id="ID_LIBRARY_COPY" text="_Copiar Archivos..."/>
+			<item id="ID_LIBRARY_RENAME" text="_Renombrar archivo"/>
+			<item id="ID_LIBRARY_MOVE" text="_Mover archivos..."/>
+			<item id="ID_LIBRARY_COPY" text="_Copiar archivos..."/>
 		</menu>
-		<item id="ID_LIBRARY_REBUILD_ANSI" text="_Ubicar Metadata"/>
-		<item id="ID_LIBRARY_REFRESH_METADATA" text="_Refresh Metadata"/>
+		<item id="ID_LIBRARY_REBUILD_ANSI" text="_Ubicar metadata"/>
+		<item id="ID_LIBRARY_REFRESH_METADATA" text="_Refresh metadata"/>
 		<separator/>
-		<item id="ID_LIBRARY_COLUMNS" text="Seleccionar _Columnas..."/>
+		<item id="ID_LIBRARY_COLUMNS" text="Seleccionar _columnas..."/>
 		<separator/>
 		<item id="ID_SHELL_MENU" text="S_hell menu"/>
 		<separator/>
@@ -1207,40 +1207,40 @@
 	</menu>
 	<menu name="CLibraryFileView.Virtual.Basic">
 		<item id="ID_LIBRARY_LAUNCH" text="_Reproducir"/>
-		<item id="ID_LIBRARY_ENQUEUE" text="Agregar al Reproductor"/>
-		<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Reproducir Album"/>
+		<item id="ID_LIBRARY_ENQUEUE" text="Agregar al reproductor"/>
+		<item id="ID_LIBRARY_FOLDER_ENQUEUE" text="Reproducir álbum"/>
 		<separator/>
 		<item id="ID_LIBRARY_SHARED_FILE" text="_Compartido"/>
 		<separator/>
 		<item id="ID_LIBRARY_DELETE" text="_Eliminar"/>
 		<separator/>
 		<menu text="S_earch For">
-			<item id="ID_SEARCH_FOR_THIS" text="Este Archivo"/>
-			<item id="ID_SEARCH_FOR_SIMILAR" text="Archivos Similares"/>
+			<item id="ID_SEARCH_FOR_THIS" text="Este archivo"/>
+			<item id="ID_SEARCH_FOR_SIMILAR" text="Archivos similares"/>
 			<separator/>
-			<item id="ID_SEARCH_FOR_ARTIST" text="Música por el mismo artista"/>
-			<item id="ID_SEARCH_FOR_ALBUM" text="Música del mismo Album"/>
-			<item id="ID_SEARCH_FOR_SERIES" text="Episodios de las mismás series"/>
+			<item id="ID_SEARCH_FOR_ARTIST" text="Música del mismo artista"/>
+			<item id="ID_SEARCH_FOR_ALBUM" text="Música del mismo álbum"/>
+			<item id="ID_SEARCH_FOR_SERIES" text="Episodios de la misma serie"/>
 		</menu>
 		<menu text="_Web Services">
 			<item id="ID_LIBRARY_BITZI_WEB" text="Ver _Bitzi Ticket"/>
-			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Adquirir Metadata"/>
+			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Adquirir metadata"/>
 			<separator/>
 			<item id="ID_LIBRARY_URL" text=""/>
 		</menu>
 		<menu text="O_rganizar">
-			<item id="ID_LIBRARY_RENAME" text="_Renombrar Archivo"/>
-			<item id="ID_LIBRARY_UNLINK" text="Eliminar _Archivos"/>
+			<item id="ID_LIBRARY_RENAME" text="_Renombrar archivo"/>
+			<item id="ID_LIBRARY_UNLINK" text="Eliminar _archivos"/>
 			<separator/>
-			<item id="ID_LIBRARY_MOVE" text="_Mover Archivos..."/>
-			<item id="ID_LIBRARY_COPY" text="_Copiar Archivos..."/>
+			<item id="ID_LIBRARY_MOVE" text="_Mover archivos..."/>
+			<item id="ID_LIBRARY_COPY" text="_Copiar archivos..."/>
 		</menu>
-		<item id="ID_LIBRARY_REBUILD_ANSI" text="_Ubicar Metadata"/>
+		<item id="ID_LIBRARY_REBUILD_ANSI" text="_Ubicar metadata"/>
 		<separator/>
 		<item id="ID_LIBRARY_PROPERTIES" text="_Propiedades"/>
 	</menu>
 	<menu name="CLibraryFileView.Virtual">
-		<item id="ID_LIBRARY_LAUNCH" text="_Abrir O Reproducir"/>
+		<item id="ID_LIBRARY_LAUNCH" text="_Abrir o reproducir"/>
 		<item id="ID_LIBRARY_ENQUEUE" text="Agregar a la lista de reproducción"/>
 		<separator/>
 		<item id="ID_LIBRARY_SHARED_FILE" text="_Compartir"/>
@@ -1249,29 +1249,29 @@
 		<item id="ID_LIBRARY_DELETE" text="_Eliminar"/>
 		<separator/>
 		<menu text="B_uscar">
-			<item id="ID_SEARCH_FOR_THIS" text="Este Archivo"/>
-			<item id="ID_SEARCH_FOR_SIMILAR" text="Archivos Similares"/>
+			<item id="ID_SEARCH_FOR_THIS" text="Este archivo"/>
+			<item id="ID_SEARCH_FOR_SIMILAR" text="Archivos similares"/>
 			<separator/>
-			<item id="ID_SEARCH_FOR_ARTIST" text="Música por el mismo artista"/>
-			<item id="ID_SEARCH_FOR_ALBUM" text="Música del mismo Album"/>
-			<item id="ID_SEARCH_FOR_SERIES" text="Episodios de las mismás series"/>
+			<item id="ID_SEARCH_FOR_ARTIST" text="Música del mismo artista"/>
+			<item id="ID_SEARCH_FOR_ALBUM" text="Música del mismo álbum"/>
+			<item id="ID_SEARCH_FOR_SERIES" text="Episodios de la misma serie"/>
 		</menu>
 		<menu text="_Web">
 			<item id="ID_LIBRARY_BITZI_WEB" text="Ver Informe de _Bitzi"/>
-			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Adquirir Metadata"/>
+			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Adquirir metadata"/>
 			<separator/>
-			<item id="ID_LIBRARY_CREATETORRENT" text="Crear Archivo ._torrent"/>
+			<item id="ID_LIBRARY_CREATETORRENT" text="Crear archivo ._torrent"/>
 		</menu>
 		<menu text="O_rganizar">
-			<item id="ID_LIBRARY_UNLINK" text="Eliminar _Archivos"/>
+			<item id="ID_LIBRARY_UNLINK" text="Eliminar _archivos"/>
 			<separator/>
-			<item id="ID_LIBRARY_RENAME" text="_Renombrar Archivos"/>
-			<item id="ID_LIBRARY_MOVE" text="_Mover Archivos..."/>
-			<item id="ID_LIBRARY_COPY" text="_Copiar Archivos..."/>
+			<item id="ID_LIBRARY_RENAME" text="_Renombrar archivos"/>
+			<item id="ID_LIBRARY_MOVE" text="_Mover archivos..."/>
+			<item id="ID_LIBRARY_COPY" text="_Copiar archivos..."/>
 		</menu>
-		<item id="ID_LIBRARY_REBUILD_ANSI" text="_Ubicar Metadata"/>
+		<item id="ID_LIBRARY_REBUILD_ANSI" text="_Ubicar metadata"/>
 		<separator/>
-		<item id="ID_LIBRARY_COLUMNS" text="Seleccionar _Columnas..."/>
+		<item id="ID_LIBRARY_COLUMNS" text="Seleccionar _columnas..."/>
 		<separator/>
 		<item id="ID_LIBRARY_PROPERTIES" text="_Propiedades"/>
 	</menu>
@@ -1281,36 +1281,36 @@
 		<item id="ID_MEDIA_PAUSE" text="Pa_usa"/>
 		<item id="ID_MEDIA_STOP" text="_Detener"/>
 		<separator/>
-		<item id="ID_MEDIA_OPEN" text="_Abrir Archivo..."/>
+		<item id="ID_MEDIA_OPEN" text="_Abrir archivo..."/>
 		<separator/>
-		<menu text="Lista de Reproducción">
+		<menu text="Lista de reproducción">
 			<item id="ID_MEDIA_PREVIOUS" text="Anter_ior"/>
 			<item id="ID_MEDIA_NEXT" text="Siguien_te"/>
-			<item id="ID_MEDIA_RANDOM" text="Reproducir al A_zar"/>
+			<item id="ID_MEDIA_RANDOM" text="Reproducir al a_zar"/>
 			<item id="ID_MEDIA_REPEAT" text="R_epetir"/>
 			<separator/>
-			<item id="ID_MEDIA_PLAYLIST" text="Mostrar _Lista"/>
+			<item id="ID_MEDIA_PLAYLIST" text="Mostrar _lista"/>
 		</menu>
 		<menu text="Tamaño del Video">
-			<item id="ID_MEDIA_SIZE_ONE" text="Tamaño _Original"/>
-			<item id="ID_MEDIA_SIZE_TWO" text="Tamaño _Doble"/>
-			<item id="ID_MEDIA_SIZE_THREE" text="Tamaño _Triple"/>
-			<item id="ID_MEDIA_SIZE_FILL" text="Tamaño _Grande"/>
-			<item id="ID_MEDIA_SIZE_DISTORT" text="_Llenar Ventana"/>
+			<item id="ID_MEDIA_SIZE_ONE" text="Tamaño _original"/>
+			<item id="ID_MEDIA_SIZE_TWO" text="Tamaño _doble"/>
+			<item id="ID_MEDIA_SIZE_THREE" text="Tamaño _triple"/>
+			<item id="ID_MEDIA_SIZE_FILL" text="Tamaño _grande"/>
+			<item id="ID_MEDIA_SIZE_DISTORT" text="_Llenar ventana"/>
 			<separator/>
-			<item id="ID_MEDIA_ASPECT_DEFAULT" text="_Aspecto Original"/>
+			<item id="ID_MEDIA_ASPECT_DEFAULT" text="_Aspecto original"/>
 			<item id="ID_MEDIA_ASPECT_4_3" text="_4:3 (TV)"/>
-			<item id="ID_MEDIA_ASPECT_16_9" text="_16:9 (Film)"/>
+			<item id="ID_MEDIA_ASPECT_16_9" text="_16:9 (película)"/>
 			<separator/>
-			<item id="ID_MEDIA_FULLSCREEN" text="_Pantalla Completa"/>
+			<item id="ID_MEDIA_FULLSCREEN" text="_Pantalla completa"/>
 		</menu>
 		<menu text="Configuración">
-			<item id="ID_MEDIA_VIS" text="Seleccionar _Visualización..."/>
+			<item id="ID_MEDIA_VIS" text="Seleccionar _visualización..."/>
 			<separator/>
 			<item id="ID_MEDIA_PLAYLIST" text="Mostrar _lista de reproducción"/>
-			<item id="ID_MEDIA_STATUS" text="Mostrar _Estado de archivo multimedia"/>
+			<item id="ID_MEDIA_STATUS" text="Mostrar _estado de archivo multimedia"/>
 			<separator/>
-			<item id="ID_MEDIA_SETTINGS" text="_Configuración Media..."/>
+			<item id="ID_MEDIA_SETTINGS" text="_Configuración media..."/>
 		</menu>
 	</menu>
 	<menu name="CMediaFrame">
@@ -1318,91 +1318,91 @@
 		<item id="ID_MEDIA_PAUSE" text="Pa_usa"/>
 		<item id="ID_MEDIA_STOP" text="_Parar"/>
 		<separator/>
-		<item id="ID_MEDIA_OPEN" text="_Abrir Archivo..."/>
-		<item id="ID_MEDIA_CLOSE" text="_Cerrar Archivo"/>
+		<item id="ID_MEDIA_OPEN" text="_Abrir archivo..."/>
+		<item id="ID_MEDIA_CLOSE" text="_Cerrar archivo"/>
 		<separator/>
 		<menu text="Lista de Reproducción">
 			<item id="ID_MEDIA_PREVIOUS" text="Anter_ior"/>
 			<item id="ID_MEDIA_NEXT" text="Siguien_te"/>
-			<item id="ID_MEDIA_RANDOM" text="Reproducir al A_zar"/>
+			<item id="ID_MEDIA_RANDOM" text="Reproducir al a_zar"/>
 			<item id="ID_MEDIA_REPEAT" text="R_epetir"/>
 			<separator/>
-			<item id="ID_MEDIA_PLAYLIST" text="Mostrar _Lista"/>
+			<item id="ID_MEDIA_PLAYLIST" text="Mostrar _lista"/>
 		</menu>
 		<menu text="Tamaño del Video">
-			<item id="ID_MEDIA_SIZE_ONE" text="Tamaño _Original"/>
-			<item id="ID_MEDIA_SIZE_TWO" text="Tamaño _Doble"/>
-			<item id="ID_MEDIA_SIZE_THREE" text="Tamaño _Triple"/>
-			<item id="ID_MEDIA_SIZE_FILL" text="Tamaño _Grande"/>
-			<item id="ID_MEDIA_SIZE_DISTORT" text="_Llenar Ventana"/>
+			<item id="ID_MEDIA_SIZE_ONE" text="Tamaño _original"/>
+			<item id="ID_MEDIA_SIZE_TWO" text="Tamaño _doble"/>
+			<item id="ID_MEDIA_SIZE_THREE" text="Tamaño _triple"/>
+			<item id="ID_MEDIA_SIZE_FILL" text="Tamaño _grande"/>
+			<item id="ID_MEDIA_SIZE_DISTORT" text="_Llenar ventana"/>
 			<separator/>
-			<item id="ID_MEDIA_ASPECT_DEFAULT" text="_Aspecto Original"/>
+			<item id="ID_MEDIA_ASPECT_DEFAULT" text="_Aspecto original"/>
 			<item id="ID_MEDIA_ASPECT_4_3" text="_4:3 (TV)"/>
-			<item id="ID_MEDIA_ASPECT_16_9" text="_16:9 (Film)"/>
+			<item id="ID_MEDIA_ASPECT_16_9" text="_16:9 (película)"/>
 			<separator/>
-			<item id="ID_MEDIA_FULLSCREEN" text="_Pantalla Completa"/>
+			<item id="ID_MEDIA_FULLSCREEN" text="_Pantalla completa"/>
 		</menu>
 		<menu text="Configuración">
-			<item id="ID_MEDIA_VIS" text="Seleccionar _Visualización..."/>
+			<item id="ID_MEDIA_VIS" text="Seleccionar _visualización..."/>
 			<separator/>
 			<item id="ID_MEDIA_PLAYLIST" text="Mostrar _lista de reproducción"/>
-			<item id="ID_MEDIA_STATUS" text="Mostrar _Estado de archivo multimedia"/>
+			<item id="ID_MEDIA_STATUS" text="Mostrar _estado de archivo multimedia"/>
 			<separator/>
-			<item id="ID_MEDIA_SETTINGS" text="_Configuración Media..."/>
+			<item id="ID_MEDIA_SETTINGS" text="_Configuración media..."/>
 		</menu>
 	</menu>
 	<menu name="CMediaFrame.Zoom">
-		<item id="ID_MEDIA_SIZE_ONE" text="Tamaño _Original"/>
-		<item id="ID_MEDIA_SIZE_TWO" text="Tamaño _Doble"/>
-		<item id="ID_MEDIA_SIZE_THREE" text="Tamaño _Triple"/>
-		<item id="ID_MEDIA_SIZE_FILL" text="Tamaño _Grande"/>
-		<item id="ID_MEDIA_SIZE_DISTORT" text="_Llenar Ventana"/>
+		<item id="ID_MEDIA_SIZE_ONE" text="Tamaño _original"/>
+		<item id="ID_MEDIA_SIZE_TWO" text="Tamaño _doble"/>
+		<item id="ID_MEDIA_SIZE_THREE" text="Tamaño _triple"/>
+		<item id="ID_MEDIA_SIZE_FILL" text="Tamaño _grande"/>
+		<item id="ID_MEDIA_SIZE_DISTORT" text="_Llenar ventana"/>
 		<separator/>
-		<item id="ID_MEDIA_ASPECT_DEFAULT" text="Default _Aspect"/>
+		<item id="ID_MEDIA_ASPECT_DEFAULT" text="Aspecto _predeterminado"/>
 		<item id="ID_MEDIA_ASPECT_4_3" text="_4:3 Ratio (TV)"/>
-		<item id="ID_MEDIA_ASPECT_16_9" text="_16:9 (Film)"/>
+		<item id="ID_MEDIA_ASPECT_16_9" text="_16:9 (película)"/>
 	</menu>
 	<menu name="CMediaList">
 		<item id="ID_MEDIA_SELECT" text="_Reproducir"/>
-		<item id="ID_MEDIA_RATE" text="_Ratio de archivo..."/>
+		<item id="ID_MEDIA_RATE" text="_Puntaje de archivo..."/>
 		<item id="ID_MEDIA_PROPERTIES" text="_Propiedades..."/>
 		<separator/>
-		<item id="ID_MEDIA_ADD" text="_Agregar Archivo..."/>
-		<item id="ID_MEDIA_ADD_FOLDER" text="Agregar _Carpeta..."/>
+		<item id="ID_MEDIA_ADD" text="_Agregar archivo..."/>
+		<item id="ID_MEDIA_ADD_FOLDER" text="Agregar _carpeta..."/>
 		<item id="ID_MEDIA_REMOVE" text="_Quitar"/>
 		<separator/>
-		<item id="ID_MEDIA_RANDOM" text="Modo al Azar"/>
-		<item id="ID_MEDIA_REPEAT" text="Modo que se repite"/>
+		<item id="ID_MEDIA_RANDOM" text="Modo al azar"/>
+		<item id="ID_MEDIA_REPEAT" text="Modo de repetición"/>
 		<separator/>
 		<item id="ID_MEDIA_OPEN" text="_Abrir lista de reproducción..."/>
 		<item id="ID_MEDIA_SAVE" text="_Guardar lista de reproducción..."/>
-		<item id="ID_MEDIA_EXPORT_COLLECTION" text="E_xportar Coleccin..."/>
+		<item id="ID_MEDIA_EXPORT_COLLECTION" text="E_xportar coleccin..."/>
 		<item id="ID_MEDIA_CLEAR" text="_Limpiar lista de reproducción"/>
 		<separator/>
-		<item id="ID_MEDIA_PLAYLIST" text="Mostrar _Lista"/>
+		<item id="ID_MEDIA_PLAYLIST" text="Mostrar _lista"/>
 	</menu>
 	<!-- SYSTEM WINDOW -->
 	<menu name="CSystemWnd">
-		<item id="ID_SYSTEM_VERBOSE" text="_Mostrar Detalles"/>
+		<item id="ID_SYSTEM_VERBOSE" text="_Mostrar detalles"/>
 		<item id="ID_SYSTEM_TIMESTAMP" text="Estampar _hora"/>
 		<separator/>
 		<item id="ID_SYSTEM_COPY" text="_Copiar" shortcut="Ctrl+C"/>
 		<separator/>
-		<item id="ID_SYSTEM_CLEAR" text="Limpiar _Buffer"/>
+		<item id="ID_SYSTEM_CLEAR" text="Limpiar _búfer"/>
 	</menu>
 	<!-- NEIGHBOURS WINDOW -->
 	<menu name="CNeighboursWnd.Basic">
-		<item id="ID_BROWSE_LAUNCH" text="_Explorar Usuario"/>
-		<item id="ID_NEIGHBOURS_CHAT" text="_Platicar con Usuario"/>
+		<item id="ID_BROWSE_LAUNCH" text="_Explorar usuario"/>
+		<item id="ID_NEIGHBOURS_CHAT" text="_Platicar con usuario"/>
 		<separator/>
 		<item id="ID_NEIGHBOURS_DISCONNECT" text="_Desconectar"/>
 		<separator/>
 		<item id="ID_NEIGHBOURS_COPY" text="Copiar _URI"/>
 	</menu>
 	<menu name="CNeighboursWnd">
-		<item id="ID_BROWSE_LAUNCH" text="_Explorar Usuario"/>
-		<item id="ID_NEIGHBOURS_CHAT" text="_Chatear con Usuario"/>
-		<item id="ID_SECURITY_BAN" text="B_loquear Usuario"/>
+		<item id="ID_BROWSE_LAUNCH" text="_Explorar usuario"/>
+		<item id="ID_NEIGHBOURS_CHAT" text="_Chatear con usuario"/>
+		<item id="ID_SECURITY_BAN" text="B_loquear usuario"/>
 		<separator/>
 		<item id="ID_NEIGHBOURS_DISCONNECT" text="_Desconectar"/>
 		<separator/>
@@ -1417,23 +1417,23 @@
 			<item id="ID_NETWORK_ED2K" text="_eDonkey"/>
 		</menu>
 		<menu text="_Monitor">
-			<item id="ID_NEIGHBOURS_VIEW_ALL" text="Ver _Todo el Tráfico"/>
-			<item id="ID_NEIGHBOURS_VIEW_INCOMING" text="Solo Tráfico _Entrante"/>
-			<item id="ID_NEIGHBOURS_VIEW_OUTGOING" text="Solo Tráfico _Saliente"/>
+			<item id="ID_NEIGHBOURS_VIEW_ALL" text="Ver _todo el tráfico"/>
+			<item id="ID_NEIGHBOURS_VIEW_INCOMING" text="Solo tráfico _entrante"/>
+			<item id="ID_NEIGHBOURS_VIEW_OUTGOING" text="Solo tráfico _saliente"/>
 		</menu>
 	</menu>
 	<!-- SEARCH MONITOR WINDOW -->
 	<menu name="CSearchMonitorWnd">
-		<item id="ID_HITMONITOR_SEARCH" text="_Buscar Esto"/>
+		<item id="ID_HITMONITOR_SEARCH" text="_Buscar esto"/>
 		<separator/>
 		<item id="ID_SEARCHMONITOR_PAUSE" text="_Pausa"/>
 		<item id="ID_SEARCHMONITOR_CLEAR" text="_Eliminar"/>
 	</menu>
 	<!-- GRAPH/TRAFFIC WINDOW -->
 	<menu name="CTrafficWnd">
-		<item id="ID_TRAFFIC_SETUP" text="_Seleccionar Gráficos..."/>
+		<item id="ID_TRAFFIC_SETUP" text="_Seleccionar gráficos..."/>
 		<separator/>
-		<item id="ID_TRAFFIC_GRID" text="_Lineas de Guía"/>
+		<item id="ID_TRAFFIC_GRID" text="_Lineas de guía"/>
 		<item id="ID_TRAFFIC_AXIS" text="_Ejes"/>
 		<item id="ID_TRAFFIC_LEGEND" text="Le_yenda"/>
 		<separator/>
@@ -1443,20 +1443,20 @@
 	</menu>
 	<!-- SECURITY WINDOW -->
 	<menu name="CSecurityWnd">
-		<item id="ID_SECURITY_ADD" text="_Agregar Regla..."/>
+		<item id="ID_SECURITY_ADD" text="_Agregar regla..."/>
 		<separator/>
 		<item id="ID_SECURITY_REMOVE" text="_Eliminar"/>
 		<item id="ID_SECURITY_RESET" text="Reinic_iar"/>
 		<separator/>
-		<item id="ID_SECURITY_MOVE_UP" text="Mover _Arriba"/>
-		<item id="ID_SECURITY_MOVE_DOWN" text="Mover _Abajo"/>
+		<item id="ID_SECURITY_MOVE_UP" text="Mover _arriba"/>
+		<item id="ID_SECURITY_MOVE_DOWN" text="Mover _abajo"/>
 		<separator/>
 		<item id="ID_SECURITY_IMPORT" text="_Importar..."/>
 		<item id="ID_SECURITY_EXPORT" text="E_xportar..."/>
 		<separator/>
 		<menu text="Default P_olicy">
 			<item id="ID_SECURITY_POLICY_ACCEPT" text="_Aceptar"/>
-			<item id="ID_SECURITY_POLICY_DENY" text="_Negar"/>
+			<item id="ID_SECURITY_POLICY_DENY" text="_Denegar"/>
 		</menu>
 		<separator/>
 		<item id="ID_SECURITY_EDIT" text="_Propiedades"/>
@@ -1469,11 +1469,11 @@
 		<separator/>
 		<item id="ID_DISCOVERY_BROWSE" text="E_stadísticas"/>
 		<separator/>
-		<item id="ID_DISCOVERY_GNUTELLA" text="Mostrar _Bootstraps"/>
+		<item id="ID_DISCOVERY_GNUTELLA" text="Mostrar _bootstraps"/>
 		<item id="ID_DISCOVERY_WEBCACHE" text="Mostrar _GWebCaches"/>
 		<item id="ID_DISCOVERY_SERVERMET" text="Mostrar Ser_ver.met"/>
 		<separator/>
-		<item id="ID_DISCOVERY_ADD" text="_Agregar Servicio..."/>
+		<item id="ID_DISCOVERY_ADD" text="_Agregar servicio..."/>
 		<separator/>
 		<item id="ID_DISCOVERY_EDIT" text="_Propiedades"/>
 	</menu>
@@ -1483,7 +1483,7 @@
 		<item id="ID_CHAT_DISCONNECT" text="_Desconectar"/>
 		<separator/>
 		<item id="ID_CHAT_BROWSE" text="_Explorar"/>
-		<!-- <item id="ID_CHAT_SEND_FILE" text="E_nviar Archivo..."/> -->
+		<!-- <item id="ID_CHAT_SEND_FILE" text="E_nviar archivo..."/> -->
 		<item id="ID_CHAT_PRIORITY" text="_Prioridad"/>
 		<separator/>
 		<menu text="_Formato">
@@ -1491,16 +1491,16 @@
 			<item id="ID_CHAT_ITALIC" text="C_ursiva"/>
 			<item id="ID_CHAT_UNDERLINE" text="_Subrayado"/>
 			<item id="ID_CHAT_COLOUR" text="_Color"/>
-			<item id="ID_CHAT_EMOTICONS" text="_Carita"/>
+			<item id="ID_CHAT_EMOTICONS" text="_Emoticón"/>
 		</menu>
 		<separator/>
-		<item id="ID_CHAT_TIMESTAMP" text="Marca del _Tiempo"/>
+		<item id="ID_CHAT_TIMESTAMP" text="Marca del _tiempo"/>
 		<item id="ID_CHAT_CLEAR" text="Eliminar"/>
 	</menu>
 	<!-- PLUGIN MENUS -->
 	<menu name="ImageViewer_Context">
-		<item id="ImageViewer_BestFit" text="_Mejor Ajuste"/>
-		<item id="ImageViewer_ActualSize" text="_Tamaño Actual"/>
+		<item id="ImageViewer_BestFit" text="_Mejor ajuste"/>
+		<item id="ImageViewer_ActualSize" text="_Tamaño actual"/>
 		<separator/>
 		<item id="ImageViewer_Refresh" text="_Refrescar"/>
 		<separator/>
@@ -1527,26 +1527,26 @@
 			<newline gap="8" indent="42"/>
 			<text>Bienvenido a Shareaza!</text>
 			<newline gap="8" indent="42"/>
-			<text>No has seleccionado ninguna Red Peer to Peer. &#160;</text>
-			<link target="raza:command:ID_NETWORK_CONNECT">¡Haz Click Aquí Para Empezar!</link>
+			<text>No has seleccionado ninguna red Peer to Peer. &#160;</text>
+			<link target="raza:command:ID_NETWORK_CONNECT">¡Haz click aquí para empezar!</link>
 			<newline gap="18" indent="0"/>
 		</group>
 		<group id="2">
 			<icon res="136" width="32" height="32" target="raza:command:ID_TOOLS_DOWNLOAD"/><gap size="8"/>
 			<heading align="middle">I N I C I A R &#160; D E S C A R G A</heading>
 			<newline gap="8" indent="42"/>
-			<link target="raza:command:ID_TOOLS_DOWNLOAD" format="bu">Pincha aquí para empezar</link>
+			<link target="raza:command:ID_TOOLS_DOWNLOAD" format="bu">Pulsa aquí para empezar</link>
 			<text align="middle">&#160; descargando un nuevo archivo o torrent.</text>
 			<newline gap="24" indent="0"/>
 			<icon res="134" width="32" height="32" target="raza:command:ID_TAB_SEARCH"/><gap size="8"/>
-			<heading align="middle">B U S C A R &#160; U N &#160; F I C H E R O</heading>
+			<heading align="middle">B U S C A R &#160; U N &#160; A R C H I V O</heading>
 			<newline gap="8" indent="42"/>
 			<anchor id="SearchBox" width="256" height="80"/>
 			<newline gap="12" indent="0"/>
 		</group>
 		<group id="3">
 			<icon res="128" width="32" height="32"/><gap size="8"/>
-			<heading align="middle">N O T I C I A &#160; D E &#160; A C T U A L I Z A C I O N</heading>
+			<heading align="middle">N O T I C I A &#160; D E &#160; A C T U A L I Z A C I Ó N</heading>
 			<newline gap="8" indent="42"/>
 			<text id="Upgrade"/>
 			<newline gap="6"/>
@@ -1555,35 +1555,35 @@
 		</group>
 		<group id="4">
 			<icon res="252" width="32" height="32"/><gap size="8"/>
-			<heading align="middle">N O T I C I A &#160; - &#160; T U &#160; E S T A S &#160; F I R E W A L L E D </heading>
+			<heading align="middle">N O T I C I A &#160; - &#160; T Ú &#160; E S T Á S &#160; B A J O &#160; U N &#160; F I R E W A L L</heading>
 			<newline gap="8" indent="42"/>
 			<text colour="FF0000">Shareaza ha detectado que estas detrás de un NAT, router o un firewall,
 			y no puedes recibir conexiones entrantes de Internet. &#160;</text>
-			<text colour="FF0000" format="b">Esto va a causar un bajo desempeño en las descargas.</text>
+			<text colour="FF0000" format="b">Esto causará un bajo desempeño en las descargas.</text>
 			<newline gap="6"/>
-			<link target="raza:command:ID_HELP_ROUTER">Haz click aquí para aprender como configurar tu Firewall y/o Router</link>
+			<link target="raza:command:ID_HELP_ROUTER">Haz click aquí para aprender como configurar tu firewall y/o router</link>
 			<newline gap="18" indent="0"/>
 		</group>
 		<group id="6">
 			<icon res="252" width="32" height="32"/><gap size="8"/>
-			<heading align="middle">C U I D A D O &#160; - &#160; T U &#160; P U E R T O &#160; T C P &#160; E S T A &#160; F I R E W A L L E D</heading>
+			<heading align="middle">C U I D A D O &#160; - &#160; T U &#160; P U E R T O &#160; T C P &#160; E S T Á &#160; B A J O &#160; U N &#160; F I R E W A L L</heading>
 			<newline gap="8" indent="42"/>
 			<text colour="FF0000">Shareaza ha detectado que estas detrás de un NAT, router o un firewall,
 			y no puedes recibir conexiones TCP desde Internet. &#160;</text>
 			<text colour="FF0000" format="b">Esto puede causar un bajo desempeño en las descargas.</text>
 			<newline gap="6"/>
-			<link target="raza:command:ID_HELP_ROUTER">Haz click aquí para aprender como configurar tu Firewall y/o router</link>
+			<link target="raza:command:ID_HELP_ROUTER">Haz click aquí para aprender como configurar tu firewall y/o router</link>
 			<newline gap="18" indent="0"/>
 		</group>
 		<group id="7">
 			<icon res="252" width="32" height="32"/><gap size="8"/>
-			<heading align="middle">C U I D A D O &#160; - &#160; T U &#160; P U E R T O &#160; U D P &#160; E S T A &#160; F I R E W A L L E D</heading>
+			<heading align="middle">C U I D A D O &#160; - &#160; T U &#160; P U E R T O &#160; U D P &#160; E S T Á &#160; B A J O &#160; U N &#160; F I R E W A L L</heading>
 			<newline gap="8" indent="42"/>
 			<text colour="FF0000">Shareaza ha detectado que estas detrás de un NAT router o un firewall,
 			y no puedes recibir conexiones UDP desde Internet. &#160;</text>
 			<text colour="FF0000" format="b">Esto puede causar un bajo desempeño en las descargas.</text>
 			<newline gap="6"/>
-			<link target="raza:command:ID_HELP_ROUTER">Haz click aquí para aprender como configurar tu Firewall y/o router</link>
+			<link target="raza:command:ID_HELP_ROUTER">Haz click aquí para aprender como configurar tu firewall y/o router</link>
 			<newline gap="18" indent="0"/>
 		</group>
 		<icon res="236" width="32" height="32"/><gap size="8"/>
@@ -1596,19 +1596,19 @@
 		<newline gap="8"/>
 		<icon res="236" width="32" height="32" target="raza:command:ID_TOOLS_WIZARD"/>
 		<gap size="8"/>
-		<link target="raza:command:ID_TOOLS_WIZARD" format="bu" align="middle">Asistente de Configuración</link>
-		<text align="middle">&#160;- Editar Configuración de Shareaza</text>
+		<link target="raza:command:ID_TOOLS_WIZARD" format="bu" align="middle">Asistente de configuración</link>
+		<text align="middle">&#160;- Configurar de Shareaza</text>
 		<newline gap="8"/>
 		<icon res="147" width="32" height="32" target="raza:command:ID_HELP_FAQ"/>
 		<gap size="8"/>
-		<link target="raza:command:ID_HELP_FAQ" format="bu" align="middle">Ayuda Rápida</link>
+		<link target="raza:command:ID_HELP_FAQ" format="bu" align="middle">Ayuda rápida</link>
 		<text align="middle">&#160;- Consigue ayuda sobre aspectos básicos de Shareaza</text>
 		<newline gap="18" indent="0"/>
 		<group id="5">
 			<icon res="128" width="32" height="32"/><gap size="8"/>
-			<heading align="middle">A C C E S O &#160; R E M O T O &#160; E S T A &#160; H A B I L I T A D O</heading>
+			<heading align="middle">A C C E S O &#160; R E M O T O &#160; E S T Á &#160; H A B I L I T A D O</heading>
 			<newline gap="8" indent="42"/>
-			<text>El Acceso Remoto de Shareaza esta habilitado. El Control de Shareaza esta usando tu navegador web:</text>
+			<text>El acceso remoto de Shareaza está habilitado. El control de Shareaza está usando tu navegador web:</text>
 			<newline gap="6"/>
 			<link id="RemoteAccessURL1"/>
 			<text>&#160;- or -&#160;</text>
@@ -1624,12 +1624,12 @@
 		</styles>
 		<para align="center">
 			<group id="1">
-				<text>No estas descargando ningún archivo todavía.</text>
+				<text>No estás descargando ningún archivo todavía.</text>
 				<newline gap="4"/>
 			</group>
-			<link id="DownloadsNone" format="bu" target="raza:command:ID_VIEW_DOWNLOADS">Ir a Descargas</link>
-			<link id="DownloadsOne" format="bu" target="raza:command:ID_VIEW_DOWNLOADS">Ir a Descargar (1)</link>
-			<link id="DownloadsMany" format="bu" target="raza:command:ID_VIEW_DOWNLOADS">Ir a Descargas (%i)</link>
+			<link id="DownloadsNone" format="bu" target="raza:command:ID_VIEW_DOWNLOADS">Ir a descargas</link>
+			<link id="DownloadsOne" format="bu" target="raza:command:ID_VIEW_DOWNLOADS">Ir a descargar (1)</link>
+			<link id="DownloadsMany" format="bu" target="raza:command:ID_VIEW_DOWNLOADS">Ir a descargas (%i)</link>
 		</para>
 	</document>
 	<document name="CHomeLibraryBox" title="Mi Colección" leftMargin="6" topMargin="6">
@@ -1644,15 +1644,15 @@
 				<newline gap="8"/>
 			</group>
 			<text id="LibraryFiles" format="b">%lu </text>
-			<text>files, </text>
+			<text>archivos, </text>
 			<text id="LibraryVolume" format="b">%s</text>
 			<newline gap="4"/>
-			<link format="bu" target="raza:command:ID_VIEW_LIBRARY">Ir a Mi Colección</link>
+			<link format="bu" target="raza:command:ID_VIEW_LIBRARY">Ir a mi colección</link>
 			<newline gap="4"/>
-			<link format="bu" target="raza:shell:downloads">Abre mi Carpeta de Descargas</link>
+			<link format="bu" target="raza:shell:downloads">Abre mi carpeta de descargas</link>
 			<group id="1">
 				<newline gap="8"/>
-				<text>Shareaza esta escaneando y procesando </text>
+				<text>Shareaza está escaneando y procesando </text>
 				<text id="LibraryHashRemaining" format="b">%lu </text>
 				<text>archivos.</text>
 				<newline gap="8"/>
@@ -1673,7 +1673,7 @@
 		</styles>
 		<group id="1">
 			<para align="center">
-				<text format="b">No Conectado</text>
+				<text format="b">No conectado</text>
 				<newline gap="4"/>
 				<link target="raza:command:ID_NETWORK_CONNECT">Haz click aquí para conectarte</link>
 			</para>
@@ -1732,7 +1732,7 @@
 			</style>
 		</styles>
 		<para align="center">
-			<text id="TorrentsNone" format="b">No compartiendo torrents</text>
+			<text id="TorrentsNone" format="b">0 torrents compartidos</text>
 			<text id="TorrentsOne" format="b">1 torrent compartido</text>
 			<text id="TorrentsMany" format="b">%i torrents compartidos</text>
 			<newline gap="4"/>
@@ -1757,24 +1757,24 @@
 		<newline gap="16"/>
 		<text>
 			Esta pantalla permite configurar una gran cantidad de parámetros del funcionamiento
-			de Shareaza.  La configuración
+			de Shareaza. La configuración
 		</text>
-		<text format="b">General </text>
+		<text format="b">general </text>
 		<text>
-			esta relacionada con la experiencia del usuario.
+			está relacionada con la experiencia del usuario.
 		</text>
 		<newline gap="16" indent="16"/>
 		<link target="raza:page:CGeneralSettingsPage" format="b">General:</link>
 		<gap size="4"/>
 		<text>Configuración general como mensajes emergentes (tooltips), acción del botón minimizar, formatos, etc.</text>
 		<newline gap="10"/>
-		<link target="raza:page:CLibrarySettingsPage" format="b">Mi Colección:</link>
+		<link target="raza:page:CLibrarySettingsPage" format="b">Mi colección:</link>
 		<gap size="4"/>
-		<text>Presentación y manejo de la Colección, y apertura de archivos.</text>
+		<text>Presentación y manejo de la colección, y apertura de archivos.</text>
 		<newline gap="10"/>
 		<link target="raza:page:CMediaSettingsPage" format="b">Reproductor:</link>
 		<gap size="4"/>
-		<text>Cuando y como usar el Centro de Media de Shareaza.</text>
+		<text>Cuando y como usar el centro de media de Shareaza.</text>
 		<newline gap="10"/>
 		<link target="raza:page:CCommunitySettingsPage" format="b">Comunidad:</link>
 		<gap size="4"/>
@@ -1786,7 +1786,7 @@
 		<newline gap="10"/>
 		<link target="raza:page:CWebSettingsPage" format="b">Web:</link>
 		<gap size="4"/>
-		<text>Integrar Shareaza con el navegador de la web, para aceptar enlaces peer-to-peer, y manejador de descargas.</text>
+		<text>Integrar Shareaza con el navegador web, para aceptar enlaces peer-to-peer, y manejar descargas.</text>
 	</document>
 	<document name="CInternetSettingsGroup" title="Internet" leftMargin="8" topMargin="8">
 		<styles>
@@ -1823,7 +1823,7 @@
 		<newline gap="10"/>
 		<link target="raza:page:CSchedulerSettingsPage" format="b">Scheduler:</link>
 		<gap size="4"/>
-		<text>Limit download connections based on a periodic schedule.</text>
+		<text>Limitar las conexiones de descarga en base a un programa periódico.</text>
 	</document>
 	<!-- Browse User Profile -->
 	<document name="CBrowseHostProfile.1">
@@ -1915,7 +1915,7 @@
 		</group>
 		<group id="3">
 			<newline gap="16" indent="0"/>
-			<text format="b">Páginas web favoritas</text>
+			<text format="b">Sitios web favoritos</text>
 			<newline gap="4" indent="8" id="Bookmarks"/>
 		</group>
 		<newline gap="16" indent="0"/>
@@ -1925,7 +1925,7 @@
 		<text format="b">Por favor seleccione una transferencia</text>
 		<newline gap="8"/>
 		<text>Aquí es donde puedes ver los archivos que estan siendo descargados. Puedes ver
-		fuentes individuales expandiendo cada archivo con un pequeño + a la izquierda.</text>
+		las fuentes individuales expandiendo cada archivo con el pequeño + a la izquierda.</text>
 		<newline gap="8"/>
 		<text>También puedes conseguir información de ayuda con una descarga especifica.
 		Simplemente selecciona una descarga y escoge este comando otra vez.</text>
@@ -1934,19 +1934,19 @@
 		<text format="b">Transferencia completada</text>
 		<newline gap="8"/>
 		<text>Shareaza ha terminado de descargar el archivo, y lo ha verificado y es
-		100% correcto.  También ha movido esta descarga a la carpeta de descargas.</text>
+		100% correcto. También ha movido esta descarga a la carpeta de descargas.</text>
 	</document>
 	<document name="DownloadHelp.Moving">
 		<text format="b">Moviendo el archivo transferido</text>
 		<newline gap="8"/>
 		<text>Shareaza ha terminado de descargar y verificar este archivo.
-		Actualmente esta siendo transferido a la carpeta de archivos compartidos (</text>
+		Actualmente está siendo transferido a la carpeta de archivos compartidos (</text>
 	</document>
 	<document name="DownloadHelp.Paused">
 		<text format="b">En Pausa</text>
 		<newline gap="8"/>
-		<text>La transferencia de este archivo está actualmente detenida, por que fué
-		puesta en pausa. Puede hacer click en </text><text format="b">Reanudar Descarga </text><text>comando.</text>
+		<text>La transferencia de este archivo está actualmente detenida, porque fué
+		puesta en pausa. Puedes hacer click en </text><text format="b">Reanudar descarga </text><text>comando.</text>
 	</document>
 	<document name="DownloadHelp.DiskFull">
 		<text format="b">El disco está lleno</text>
@@ -1960,57 +1960,57 @@
 	<document name="DownloadHelp.Verifying">
 		<text format="b">Verificando el archivo</text>
 		<newline gap="8"/>
-		<text>Shareaza ha terminado de descargar el archivo, ahora esta verificando para
-		asegurarse que el archivo descargado sea idéntico al original.  Si alguna parte fué
+		<text>Shareaza ha terminado de descargar el archivo, ahora está verificando para
+		asegurarse que el archivo descargado sea idéntico al original. Si alguna parte fué
 		transferida incorrectamente, Shareaza se encargará de repararla de forma automática.</text>
 	</document>
 	<document name="DownloadHelp.Downloading">
-		<text format="b">Transferencia Activa!</text>
+		<text format="b">¡Transferencia activa!</text>
 		<newline gap="8"/>
-		<text>Esta descarga esta en progreso.  Si esta bajando demásiado lento,
+		<text>Esta descarga está en progreso. Si estás bajando muy lento,
 		puedes tratar de buscar en la red más fuentes usando el comando </text>
-		<text format="b">Buscar Más Fuentes. </text><text>  Si la velocidad no incrementa y no mejora puede ser que los usuarios
-		de los que estas descargando el archivo tienen una velocidad de subida muy baja. La velocidad de descarga mejora con el tiempo.</text>
+		<text format="b">Buscar más fuentes. </text><text> Si la velocidad no incrementa y no mejora puede ser que los usuarios
+		de los que estas descargando el archivo tengan una velocidad de subida muy baja. La velocidad de descarga mejora con el tiempo.</text>
 	</document>
 
 	<document name="DownloadHelp.Pending">
 		<text format="b">Transferencia pendiente</text>
 		<newline gap="8"/>
-		<text>Esta transferencia esta actualmente en espera, esperando a que finalicen
+		<text>Esta transferencia está actualmente en espera, esperando a que finalicen
 		aquellas que estén arriba de esta.
 		El número de transferencias activas en cualquier momento es limitado por la opción
 		que se encuentra en la parte de descargas de la configuración, esto es para asegurar
-		el buen uso del ancho de banda.  Esto se puede cambiar en Herramientas, Configurar Shareaza. Probablemente estás esperando en las colas de otros usuarios, y la descarga
-Puede comenzar a transferir en cualquier momento.</text>
+		el buen uso del ancho de banda. Esto se puede cambiar en Herramientas, Configuración de Shareaza. Probablemente estés esperando en las colas de otros usuarios, y la descarga
+puede comenzar a transferir en cualquier momento.</text>
 	</document>
 	<document name="DownloadHelp.Queued">
-		<text format="b">Esta descarga esta en cola</text>
+		<text format="b">Esta descarga está en cola</text>
 		<newline gap="8"/>
-		<text>Esta descarga esta esperando a que una de tus descargas se complete.
+		<text>Esta descarga está esperando a que una de tus descargas se complete.
 		Tu configuración limita el número de descargas que pueden estar activas
 		al mismo tiempo, para asegurarse de que cada descarga tenga una cantidad buena de ancho de 
 		banda. Puedes cambiar esta configuración en Herramientas, Configuración de Shareaza.</text>
 	</document>
 
 	<document name="DownloadHelp.Searching">
-		<text format="b">Buscando Más fuentes</text>
+		<text format="b">Buscando más fuentes</text>
 		<newline gap="8"/>
-		<text>No hay fuentes conocidas para descargar este archivo, Shareaza esta buscando
-		más fuentes en las redes conectadas.  Cuando se consigan nuevas fuentes, la
-		transferencia empezará automáticamente.  Shareaza busca fuentes automaticamente,
+		<text>No hay fuentes conocidas para descargar este archivo. Shareaza está buscando
+		más fuentes en las redes conectadas. Cuando se consigan nuevas fuentes, la
+		transferencia empezará automáticamente. Shareaza busca fuentes automáticamente,
 		sin embargo, puedes hacer más rápido el proceso usando: </text>
-		<text format="b">Buscar Más Fuentes </text><text>comando.</text>
+		<text format="b">Buscar más fuentes </text><text>comando.</text>
 		<newline gap="8"/>
 		<text>Desafortunadamente hay casos en que la persona que tiene el archivo que a
-		usted le interesa, no esta conectada.  Lo único que se puede hacer es
+		usted le interesa, no está conectada. Lo único que se puede hacer es
 		esperar, o cancelar la transferencia, y descargar un archivo similar que esté
-		más disponible.</text>
+		disponible.</text>
 	</document>
 	<document name="DownloadHelp.Creating">
 		<text format="b">Creando el archivo</text>
 		<newline gap="8"/>
 		<text>Este es un archivo grande, Shareaza tiene que abrir espacio en el disco duro
-		para que este quepa.</text>
+		para que quepa.</text>
 	</document>
 	<document name="DownloadHelp.Tracker">
 		<text format="b">Tracker de BitTorrent fuera de servicio</text>
@@ -2021,21 +2021,21 @@ Puede comenzar a transferir en cualquier momento.</text>
 	</document>
 	<!-- Upload help documents -->
 	<document name="UploadHelp">
-		<text format="b">Area de subidas</text>
+		<text format="b">Área de subidas</text>
 		<newline gap="8"/>
-		<text>Aqui es donde las colas y las subidas son mostradas. Puedes expandir cada cola
+		<text>Aquí es donde las colas y las subidas son mostradas. Puedes expandir cada cola
 		con el pequeño + en la izquierda, y el filtro que es mostrado con el botón de la
 		derecha en la ventana de herramientas.</text>
 	</document>
 	<!-- General help documents -->
 	<document name="GeneralHelp.DiskSpace">
-		<text format="b">El Espacio de Disco es Bajo</text>
+		<text format="b">El espacio de disco es bajo</text>
 		<newline gap="8"/>
-		<text>La cantidad de espacio disponible en uno o varios Discos usados por Shareaza es bajo.</text>
+		<text>La cantidad de espacio disponible en uno o varios discos usados por Shareaza es bajo.</text>
 		<newline gap="8"/>
-		<text>Tu siempre deberías tener una cantidad considerable de espacio libre en el Disco Duro.
+		<text>Tú siempre deberías tener una cantidad considerable de espacio libre en el disco duro.
 		Los programas se pueden hacer inestables cuando las unidades estan llenas, y los archivos temporales podrían
-		perderse. Tu deberías ejecutar un "Disk Clean-Up", eliminando archivos que ya no uses, o desistalar software que ya no necesitas.</text>
+		perderse. Deberías limpiar el disco de información innecesaria, eliminando archivos que ya no uses, o desistalar software que ya no necesites.</text>
 	</document>
 	<document name="GeneralHelp.DiskWriteFail">
 		<text format="b">Un directorio requerido no es escribible</text>
@@ -2043,18 +2043,18 @@ Puede comenzar a transferir en cualquier momento.</text>
 		<text>Un disco o directorio que Shareaza necesita no puede ser escrito.</text>
 		<newline gap="8"/>
 		<text>Un disco de red puede estar desconectado, o no tienes permiso de escritura
-		a un directorio seleccionado. Por favor revisa los directorios y los permisos, o cambiar la
-		ubicación de archivos temporales.</text>
+		para un directorio seleccionado. Por favor revisa los directorios y los permisos, o cambia la
+		ubicación de los archivos temporales.</text>
 	</document>
 	<document name="GeneralHelp.ConnectionFail">
 		<text format="b">La conexión a Internet ha sido perdida</text>
 		<newline gap="8"/>
 		<text>Windows reporta que no hay ninguna conexión de internet disponible.</text>
 		<newline gap="8"/>
-		<text>Es muy posible que un modem o un router se ha caído, significando que internet no pueda
+		<text>Es muy posible que un modem o un router se haya caído, significando que Internet no puede
 		ser accedido. Puedes necesitar reconectarte manualmente o reiniciar tu conexión.</text>
 		<newline gap="8"/>
-		<text>Shareaza ha cesado los intentos de conexión para no perder los hosts que estan en el cache.</text>
+		<text>Shareaza ha cesado los intentos de conexión para no perder los hosts que están en el cache.</text>
 	</document>
 	<document name="GeneralHelp.AdultFilter">
 		<text format="b">Habilitado filtro de contenido sólo apto para adultos</text>
@@ -2922,6 +2922,7 @@ Puede comenzar a transferir en cualquier momento.</text>
 	<string id="16768" value="URL &quot;%s&quot; recibida"/>
 	<string id="16769" value="Shareaza no entendió el URL."/>
 	<string id="16770" value="La ventana de URL no pudo ser mostrada, Shareaza está ocupado."/>
+	<string id="16771" value="El archivo &quot;%s&quot; ya está en Mi Colección.  ¿Quieres descagarlo de todos modos?"/>
 	<string id="16772" value="Host:"/>
 	<string id="16773" value="Puerto:"/>
 	<string id="16774" value="&amp;Conectar"/>
@@ -3129,6 +3130,7 @@ Puede comenzar a transferir en cualquier momento.</text>
 	<string id="20001" value="Cerrar"/>
 	<string id="20002" value="de"/> <!-- e.g. 1 of 10 -->
 	<string id="20003" value="Cambiando la dirección de interface requiere reiniciar. \nVas a necesitar reiniciar Shareaza manualmente. Salir ahora?"/>
+	<string id="20004" value="Lenguajes de Derecha-Izquierda no se soportan en tu SO."/>
 	<string id="20005" value="No"/>
 	<string id="20006" value="Sì"/>
 	<string id="20007" value="Auto"/>
@@ -3136,8 +3138,7 @@ Puede comenzar a transferir en cualquier momento.</text>
 	<string id="20009" value="Custom (Cliente)"/>
 	<string id="20010" value="&amp;Atrás"/>
 	<string id="20011" value="&amp;Siguiente"/>
-	<string id="20012" value="Finalizar"/>
-	<string id="20013" value="Todo"/>
+	<string id="20012" value="Finalizar"/>	
 	<string id="20100" value="Conectando"/>
 	<string id="20101" value="Pidiendo"/>
 	<string id="20102" value="Respuesta"/>
@@ -3199,8 +3200,6 @@ Puede comenzar a transferir en cualquier momento.</text>
 	<string id="20234" value="Album"/>
 	<string id="20235" value="Artista"/>
 	<string id="20236" value="Ratio"/>
-	<string id="20237" value="Aceptar"/>
-	<string id="20238" value="Cancelar"/>
 </strings>
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
 <dialogs>
@@ -4256,22 +4255,19 @@ Puede comenzar a transferir en cualquier momento.</text>
 		<control caption="Tracker Mode:"/>
 		<control caption="Deshabilitado|Custom|Single Tracker|Multi-tracker|Multi-tracker (locked)"/>
 	</dialog>
-	<dialog name="CDownloadGroupDlg" cookie="BuBuEdCoBuCoBuBuEdBuBuBuBuBuBu" caption="Propiedades del Grupo de Descarga">
-		<control caption="OK"/>
-		<control caption="Cancelar"/>
+	<dialog name="CDownloadGroupDlg" cookie="BuEdSyBuCoBuBuBuBuBuEdBu" caption="Propiedades del Grupo de Descarga">
+		<control caption="_Nombre:"/>
 		<control/>
 		<control/>
-		<control caption="_BitTorrent"/>
+		<control caption="_Filtros:"/>
 		<control/>
 		<control caption="_Agregar"/>
 		<control caption="_Eliminar"/>
-		<control/>
-		<control/>
-		<control/>
-		<control caption="_Nombre:"/>
-		<control caption="_Filtros:"/>
+		<control caption="OK"/>
+		<control caption="Cancelar"/>
 		<control caption="Carpeta de_Archivos Completados:"/>
-		<control caption="_Tipo de archivo:"/>
+		<control/>
+		<control/>
 	</dialog>
 	<dialog name="CMediaVisDlg" cookie="StBuSyCoBuBuBu" caption="Selecciona Visualización">
 		<control/>

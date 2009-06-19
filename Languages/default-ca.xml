@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 
 <!-- Shareaza Default Catalan Skin File -->
-<!-- Translation based on default-en.xml SVN rev.6090 -->
+<!-- Translation based on default-en.xml SVN rev.7800 -->
 
 <!-- This skin basically represents the current Shareaza defaults. You can use this file as -->
 <!-- a basis for creating new skins, however in a new skin be sure to ONLY include the sections -->
@@ -14,11 +14,11 @@
 <!-- Manifest -->
 <manifest	name="Català"
 		author="Daniel Olivares Giménez (iniciat per CATMidia.cat)"
-		updatedBy="Equip de traduccions de FeshoCAT (TraduCAT, http://tradu.feshocat.cat)"
+		updatedBy="Equip de traduccions de FeshoCAT (TraduCAT, http://tradu.feshocat.cat), omega09"
 		description="Shareaza Default Catalan Skin File"
 		link="http://tradu.feshocat.cat/"
 		email="tradu(at)feshocat.cat"
-		version="2.3.0.0"
+		version="2.4.0.2"
 		type="Language"
 		language="ca"
 		prompt="Selecciona ací per fer servir Shareaza en català!"
@@ -45,6 +45,7 @@
 		<button id="ID_TAB_SEARCH" text="Cerca"/>
 		<button id="ID_TAB_TRANSFERS" text="Transferències"/>
 		<button id="ID_TAB_NETWORK" text="Xarxa"/>
+		<button id="ID_TAB_IRC" text="Chat"/>
 	</toolbar>
 	<toolbar name="CMainWnd.Windowed">
 		<button id="ID_NETWORK_CONNECT" text="Connecta"/>
@@ -57,6 +58,7 @@
 		<button id="ID_VIEW_UPLOADS"/>
 		<button id="ID_VIEW_LIBRARY"/>
 		<button id="ID_VIEW_MEDIA"/>
+		<button id="ID_TAB_IRC"/>
 		<button id="ID_VIEW_SECURITY"/>
 		<button id="ID_VIEW_HOSTS"/>
 		<button id="ID_VIEW_DISCOVERY"/>
@@ -146,7 +148,7 @@
 	<!-- DOWNLOADS WINDOW -->
 	<toolbar name="CDownloadsWnd.Basic">
 		<button id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="Obre o reprodueix"/>
-		<button id="ID_DOWNLOADS_LAUNCH" text="Vista prèvia"/>
+		<button id="ID_DOWNLOADS_LAUNCH_COPY" text="Vista prèvia"/>
 		<button id="ID_DOWNLOADS_FILE_DELETE" text="Esborra l'arxiu"/>
 		<separator/>
 		<button id="ID_DOWNLOADS_RESUME" text="Continua la descàrrega"/>
@@ -162,7 +164,7 @@
 	<toolbar name="CDownloadsWnd">
 		<button id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="Obre o reprodueix"/>
 		<button id="ID_DOWNLOADS_FILE_DELETE" text="Esborra l&apos;arxiu"/>
-		<button id="ID_DOWNLOADS_LAUNCH" text="Vista prèvia"/>
+		<button id="ID_DOWNLOADS_LAUNCH_COPY" text="Vista prèvia"/>
 		<separator/>
 		<button id="ID_DOWNLOADS_RESUME" text="Continua la descàrrega"/>
 		<button id="ID_DOWNLOADS_PAUSE" text="Atura la descàrrega"/>
@@ -243,6 +245,8 @@
 	<toolbar name="CLibraryFileView.Physical.Basic">
 		<button id="ID_LIBRARY_LAUNCH" text="Obre o reprodueix"/>
 		<button id="ID_LIBRARY_ENQUEUE" text="Afegeix a la llista de reproducció"/>
+		<separator/>
+		<button id="ID_WEBSERVICES_LIST" text="Web Services"/>
 		<rightAlign/>
 		<separator/>
 		<control id="IDC_SEARCH_BOX" width="120"/>
@@ -253,6 +257,8 @@
 		<button id="ID_LIBRARY_ENQUEUE" text="Afegeix al reproductor"/>
 		<separator/>
 		<button id="ID_LIBRARY_PROPERTIES" text="Propietats"/>
+		<separator/>
+		<button id="ID_WEBSERVICES_LIST" text="Web Services"/>
 		<separator/>
 		<button id="ID_LIBRARY_MOVE" text="Mou"/>
 		<button id="ID_LIBRARY_COPY" text="Copia"/>
@@ -266,6 +272,8 @@
 		<button id="ID_LIBRARY_LAUNCH" text="Obre o reprodueix"/>
 		<button id="ID_LIBRARY_ENQUEUE" text="Afegeix a la llista de reproducció"/>
 		<button id="ID_LIBRARY_FOLDER_ENQUEUE" text="Reprodueix àlbum"/>
+		<separator/>
+		<button id="ID_WEBSERVICES_LIST" text="Web Services"/>
 		<rightAlign/>
 		<separator/>
 		<control id="IDC_SEARCH_BOX" width="120"/>
@@ -277,6 +285,8 @@
 		<button id="ID_LIBRARY_FOLDER_ENQUEUE" text="Reprodueix l'àlbum"/>
 		<separator/>
 		<button id="ID_LIBRARY_PROPERTIES" text="Propietats"/>
+		<separator/>
+		<button id="ID_WEBSERVICES_LIST" text="Web Services"/>
 		<rightAlign/>
 		<separator/>
 		<control id="IDC_SEARCH_BOX" width="120"/>
@@ -339,6 +349,13 @@
 		<button id="ID_MEDIA_CLEAR" text="Neteja"/>
 		<button id="ID_MEDIA_SAVE" text="Enregistra"/>
 	</toolbar>
+	<!-- IRC WINDOW -->
+	<toolbar name="CIRCFrame">
+		<button id="ID_IRC_CONNECT" text="Connect" tip="Connect to IRC"/>
+		<button id="ID_IRC_DISCONNECT" text="Disconnect" tip="Disconnect from IRC"/>
+		<rightAlign/>
+		<button id="ID_IRC_SETTINGS" text="Settings" tip="Configure IRC Settings"/>
+	</toolbar>
 	<!-- NEIGHBOURS WINDOW -->
 	<toolbar name="CNeighboursWnd.Basic">
 		<button id="ID_BROWSE_LAUNCH" text="Explora usuari"/>
@@ -352,7 +369,7 @@
 	</toolbar>
 	<toolbar name="CNeighboursWnd">
 		<button id="ID_NETWORK_CONNECT_TO" text="Connectar A..."/>
-		<button id="ID_NEIGHBOURS_DISCNNECT" text="Desconnectar"/>
+		<button id="ID_NEIGHBOURS_DISCONNECT" text="Desconnectar"/>
 		<separator/>
 		<button id="ID_BROWSE_LAUNCH" text="Explora l'usuari"/>
 		<button id="ID_NEIGHBOURS_CHAT" text="Parla amb l'usuari"/>
@@ -363,6 +380,19 @@
 		<button id="ID_NETWORK_ED2K" text="eDonkey"/>
 		<separator/>
 		<button id="ID_NEIGHBOURS_SETTINGS" text="Configuració..."/>
+	</toolbar>
+	<toolbar name="CSecurityWnd">
+		<button id="ID_SECURITY_EDIT" text="Edit Rule"/>
+		<separator/>
+		<button id="ID_SECURITY_ADD" text="Add Rule"/>
+		<button id="ID_SECURITY_REMOVE" text="Remove Rule"/>
+		<separator/>
+		<button id="ID_SECURITY_MOVE_UP" text="Move Up"/>
+		<button id="ID_SECURITY_MOVE_DOWN" text="Move Down"/>
+		<rightAlign/>
+		<button id="ID_SECURITY_RESET" text="Reset List"/>
+		<button id="ID_SECURITY_IMPORT" text="Import List"/>
+		<button id="ID_SECURITY_EXPORT" text="Export List"/>
 	</toolbar>
 	<!-- HIT MONITOR WINDOW -->
 	<toolbar name="CHitMonitorWnd">
@@ -391,6 +421,8 @@
 		<button id="ID_HOSTCACHE_G2_CACHE" text="Caxè de G2"/>
 		<button id="ID_HOSTCACHE_G1_CACHE" text="Caxè de G1"/>
 		<button id="ID_HOSTCACHE_ED2K_CACHE" text="Caxè eDonkey"/>
+		<button id="ID_HOSTCACHE_BT_CACHE" text="BitTorrent Cache"/>
+		<button id="ID_HOSTCACHE_KAD_CACHE" text="Kademlia Cache"/>
 	</toolbar>
 	<!-- PRIVATE CHAT FRAME -->
 	<toolbar name="CPrivateChatFrame">
@@ -408,14 +440,41 @@
 		<button id="ID_CHAT_DISCONNECT" text="Desconnecta"/>
 	</toolbar>
 	<!-- WEBSERVICES -->
-	<!-- IMAGE VIEWER WINDOW -->
+	<toolbar name="WebServices.ShareMonkey">
+		<button id="ID_SHAREMONKEY_DOWNLOAD" text="Get Data"/>
+		<separator/>
+		<button id="ID_SHAREMONKEY_PREVIOUS" text="Previous"/>
+		<button id="ID_SHAREMONKEY_NEXT" text="Next"/>
+		<separator/>
+		<button id="ID_SHAREMONKEY_PRICES" text="Get Prices"/>
+		<button id="ID_SHAREMONKEY_COMPARE" text="Compare"/>
+		<button id="ID_SHAREMONKEY_BUY" text="Buy It"/>
+	</toolbar>
+	<toolbar name="WebServices.ShareMonkey.WithSave">
+		<button id="ID_SHAREMONKEY_DOWNLOAD" text="Get Data"/>
+		<button id="ID_SHAREMONKEY_SAVE" text="Save"/>
+		<control id="ID_SHAREMONKEY_SAVE_OPTION" text="Save Preview" width="100" checked="true"/>
+		<separator/>
+		<button id="ID_SHAREMONKEY_PREVIOUS" text="Previous"/>
+		<button id="ID_SHAREMONKEY_NEXT" text="Next"/>
+		<separator/>
+		<button id="ID_SHAREMONKEY_PRICES" text="Get Prices"/>
+		<button id="ID_SHAREMONKEY_COMPARE" text="Compare"/>
+		<button id="ID_SHAREMONKEY_BUY" text="Buy It"/>
+	</toolbar>
+	<toolbar name="WebServices.MusicBrainz">
+		<button id="ID_MUSICBRAINZ_MATCHES" text="View Album Matches"/>
+		<button id="ID_MUSICBRAINZ_ALBUMS" text="View All Albums"/>
+		<separator/>
+	</toolbar>
+	<!-- IMAGE VIEWER WINDOW - DELETE? -->
 	<toolbar name="ImageViewer_Toolbar">
-		<button id="ImageViewer_BestFit" text="Millor ajust"/>
-		<button id="ImageViewer_ActualSize" text="Mida actual"/>
+		<button id="ImageViewer_ActualSize" text="Actual Size"/>
+		<button id="ImageViewer_BestFit" text="Best Fit"/>
 		<separator/>
-		<button id="ImageViewer_Refresh" text="Actualitza"/>
+		<button id="ImageViewer_Refresh" text="Refresh"/>
 		<separator/>
-		<button id="ImageViewer_Close" text="Tanca"/>
+		<button id="ImageViewer_Close" text="Close"/>
 	</toolbar>
 </toolbars>
 <!-- Menu Definitions -->
@@ -454,6 +513,7 @@
 			<item id="ID_TAB_SEARCH" text="_Cerca"/>
 			<item id="ID_TAB_TRANSFERS" text="_Descàrregues"/>
 			<item id="ID_WINDOW_REMOTE" text="_Remot"/>
+			<item id="ID_TAB_IRC" text="_Chat"/>
 			<separator/>
 			<menu text="_Avançat">
 				<item id="ID_VIEW_NEIGHBOURS" text="_Xarxa" shortcut="F7"/>
@@ -461,7 +521,7 @@
 				<separator/>
 				<item id="ID_VIEW_SECURITY" text="Se_guretat"/>
 				<item id="ID_VIEW_HOSTS" text="C_axè dels servidors"/>
-				<item id="ID_VIEW_DISCVERY" text="Desco_briment"/>
+				<item id="ID_VIEW_DISCOVERY" text="Desco_briment"/>
 			</menu>
 			<separator/>
 			<item id="ID_VIEW_BASIC" text="_Mode normal"/>
@@ -495,11 +555,14 @@
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Fòrums de _Shareaza"/>
 				<item id="ID_HELP_WEB_6" text="Shareaza S_kin Site"/>
-				<item id="ID_HELP_FAKESHAREAZA" text="FakeShareaza_.com"/> <!-- 
+				<item id="ID_HELP_FAKESHAREAZA" text="FakeShareaza_.com"/> <!--
 				<item id="ID_HELP_UPDATE" text="Darreres notícies"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
 				<item id="ID_HELP_WEB_2" text="P2PForums.com"/> -->
 			</menu>
+			<separator/>
+			<item id="ID_HELP_VERSION_CHECK" text="Check for new _version"/>
+			<item id="ID_HELP_DONATE" text="_Donate to the Shareaza Project"/>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="_Quant a Shareaza..."/>
 		</menu>
@@ -507,7 +570,7 @@
 	<menu name="CMainWnd.Tabbed" type="bar">
 		<menu text="_Xarxa">
 			<item id="ID_NETWORK_CONNECT" text="_Connecta" shortcut="Ctrl+G"/>
-			<item id="ID_NETWORK_DISCNNECT" text="_Desconnecta"/>
+			<item id="ID_NETWORK_DISCONNECT" text="_Desconnecta"/>
 			<separator/>
 			<menu text="Escollir _Xarxes">
 				<item id="ID_NETWORK_G2" text="Connecta a _Gnutella2"/>
@@ -528,6 +591,7 @@
 			<item id="ID_TAB_SEARCH" text="_Cerca"/>
 			<item id="ID_TAB_TRANSFERS" text="_Transferències"/>
 			<item id="ID_TAB_NETWORK" text="_Xarxa"/>
+			<item id="ID_TAB_IRC" text="_Chat"/>
 			<separator/>
 			<item id="ID_VIEW_SECURITY" text="_Seguretat"/>
 			<item id="ID_VIEW_HOSTS" text="_Caxè de servidors"/>
@@ -542,7 +606,7 @@
 				<separator/>
 				<item id="ID_VIEW_SECURITY" text="_Seguretat" shortcut="F7"/>
 				<item id="ID_VIEW_HOSTS" text="_Caxè de servidors" shortcut="F8"/>
-				<item id="ID_VIEW_DISCVERY" text="_Descobriments" shortcut="F9"/>
+				<item id="ID_VIEW_DISCOVERY" text="_Descobriments" shortcut="F9"/>
 				<item id="ID_VIEW_TRAFFIC" text="_Gràfica" shortcut="F10"/>
 				<separator/>
 				<item id="ID_VIEW_PACKETS" text="_Monitor de paquets" shortcut="Ctrl+F1"/>
@@ -592,11 +656,14 @@
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Fòrums de _Shareaza"/>
 				<item id="ID_HELP_WEB_6" text="Shareaza S_kin Site"/>
-				<item id="ID_HELP_FAKESHAREAZA" text="FakeShareaza_.com"/> <!-- 
+				<item id="ID_HELP_FAKESHAREAZA" text="FakeShareaza_.com"/> <!--
 				<item id="ID_HELP_UPDATE" text="Darreres Notícies"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
 				<item id="ID_HELP_WEB_2" text="P2PForums.com"/> -->
 			</menu>
+			<separator/>
+			<item id="ID_HELP_VERSION_CHECK" text="Check for new _version"/>
+			<item id="ID_HELP_DONATE" text="_Donate to the Shareaza Project"/>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="_Quant a Shareaza..."/>
 		</menu>
@@ -606,7 +673,7 @@
 			<item id="ID_NETWORK_SEARCH" text="Nova _cerca..." shortcut="Ctrl+S"/>
 			<separator/>
 			<item id="ID_NETWORK_CONNECT" text="_Connecta" shortcut="Ctrl+G"/>
-			<item id="ID_NETWORK_DISCNNECT" text="_Desconnecta"/>
+			<item id="ID_NETWORK_DISCONNECT" text="_Desconnecta"/>
 			<separator/>
 			<item id="ID_NETWORK_CONNECT_TO" text="Connecta _a..." shortcut="Ctrl+T"/>
 			<item id="ID_NETWORK_BROWSE_TO" text="E_xplora host..."/>
@@ -627,10 +694,11 @@
 			<item id="ID_VIEW_UPLOADS" text="_Pujades" shortcut="F4"/>
 			<item id="ID_VIEW_LIBRARY" text="_La meva col·lecció" shortcut="F5"/>
 			<item id="ID_VIEW_MEDIA" text="_Multimèdia" shortcut="F6"/>
+			<item id="ID_TAB_IRC" text="IRC _Chat" shortcut="F12"/>
 			<separator/>
 			<item id="ID_VIEW_SECURITY" text="_Seguretat" shortcut="F7"/>
 			<item id="ID_VIEW_HOSTS" text="C_axè dels servidors" shortcut="F8"/>
-			<item id="ID_VIEW_DISCVERY" text="_Serveis de descobriment" shortcut="F9"/>
+			<item id="ID_VIEW_DISCOVERY" text="_Serveis de descobriment" shortcut="F9"/>
 			<item id="ID_VIEW_TRAFFIC" text="_Gràfiques" shortcut="F10"/>
 			<separator/>
 			<item id="ID_VIEW_PACKETS" text="_Monitor de paquets" shortcut="Ctrl+F1"/>
@@ -683,13 +751,14 @@
 				<separator/>
 				<item id="ID_HELP_FORUMS" text="Fòrums del _Shareaza"/>
 				<item id="ID_HELP_WEB_6" text="Shareaza S_kin Site"/>
-				<item id="ID_HELP_FAKESHAREAZA" text="FakeShareaza_.com"/> <!-- 
+				<item id="ID_HELP_FAKESHAREAZA" text="FakeShareaza_.com"/> <!--
 				<item id="ID_HELP_UPDATE" text="Darreres notícies"/>
 				<item id="ID_HELP_WEB_1" text="Zeropaid.com"/>
 				<item id="ID_HELP_WEB_2" text="P2PForums.com"/> -->
 			</menu>
 			<separator/>
 			<item id="ID_HELP_VERSION_CHECK" text="Darreres notícies"/>
+			<item id="ID_HELP_DONATE" text="_Donate to the Shareaza Project"/>
 			<separator/>
 			<item id="ID_HELP_ABOUT" text="_Quant a Shareaza..."/>
 		</menu>
@@ -716,6 +785,7 @@
 		<item id="ID_TAB_SEARCH" text="_Cerca"/>
 		<item id="ID_TAB_TRANSFERS" text="_Transferències"/>
 		<item id="ID_TAB_NETWORK" text="_Xarxa"/>
+		<item id="ID_TAB_IRC" text="_Chat"/>
 		<separator/>
 		<item id="ID_VIEW_SECURITY" text="_Seguretat"/>
 		<item id="ID_VIEW_HOSTS" text="Caxè de servidors"/>
@@ -801,6 +871,7 @@
 		<item id="ID_TAB_SEARCH" text="_Cerca"/>
 		<item id="ID_TAB_TRANSFERS" text="_Transferències"/>
 		<item id="ID_TAB_NETWORK" text="_Xarxa"/>
+		<item id="ID_TAB_IRC" text="_Chat"/>
 		<separator/>
 		<item id="ID_VIEW_SECURITY" text="Se_guretat"/>
 		<item id="ID_VIEW_HOSTS" text="_Caxè de servidors"/>
@@ -814,7 +885,7 @@
 	<!-- HOST CACHE WINDOW -->
 	<menu name="CHostCacheWnd">
 		<item id="ID_HOSTCACHE_CONNECT" text="_Connecta ara"/>
-		<item id="ID_HOSTCACHE_DISCNNECT" text="_Desconnecta"/>
+		<item id="ID_HOSTCACHE_DISCONNECT" text="_Desconnecta"/>
 		<item id="ID_NEIGHBOURS_COPY" text="Copia _URI"/>
 		<item id="ID_HOSTCACHE_PRIORITY" text="_Servidor amb prioritat"/>
 		<separator/>
@@ -825,6 +896,8 @@
 			<item id="ID_HOSTCACHE_G2_CACHE" text="Caxé de Gnutella_2"/>
 			<item id="ID_HOSTCACHE_G1_CACHE" text="Caxé de Gnutella_1"/>
 			<item id="ID_HOSTCACHE_ED2K_CACHE" text="_Servidors eDonkey"/>
+			<item id="ID_HOSTCACHE_BT_CACHE" text="_BitTorrent Cache"/>
+			<item id="ID_HOSTCACHE_KAD_CACHE" text="_Kademlia Cache"/>
 		</menu>
 		<separator/>
 		<item id="ID_HOSTCACHE_IMPORT" text="_Importa arxiu MET..."/>
@@ -887,7 +960,7 @@
 			<item id="ID_SEARCH_FOR_SIMILAR" text="Arxius semblants"/>
 			<separator/>
 			<item id="ID_SEARCH_FOR_ARTIST" text="Música d'aquest artista"/>
-			<item id="ID_SEARCH_FOR_ÀLBUM" text="Música d'aquest àlbum"/>
+			<item id="ID_SEARCH_FOR_ALBUM" text="Música d'aquest àlbum"/>
 			<item id="ID_SEARCH_FOR_SERIES" text="Episodis d'aquesta sèrie"/>
 		</menu>
 		<menu text="Info d'arxiu via _Web">
@@ -907,7 +980,7 @@
 			<item id="ID_SEARCH_FOR_SIMILAR" text="_Arxius semblants"/>
 			<separator/>
 			<item id="ID_SEARCH_FOR_ARTIST" text="Música d'aquest artista"/>
-			<item id="ID_SEARCH_FOR_ÀLBUM" text="Música d'aquest àlbum"/>
+			<item id="ID_SEARCH_FOR_ALBUM" text="Música d'aquest àlbum"/>
 			<item id="ID_SEARCH_FOR_SERIES" text="Episodis d'aquesta sèrie"/>
 		</menu>
 		<menu text="Serveis _web">
@@ -949,7 +1022,7 @@
 	</menu>
 	<!-- DOWNLOADS WINDOW -->
 	<menu name="CDownloadsWnd.Download.Basic">
-		<item id="ID_DOWNLOADS_LAUNCH" text="_Vista prèvia"/>
+		<item id="ID_DOWNLOADS_LAUNCH_COPY" text="_Vista prèvia"/>
 		<item id="ID_DOWNLOADS_REMOTE_PREVIEW" text="Vista prèvia remota"/>
 		<item id="ID_DOWNLOADS_VIEW_REVIEWS" text="_Mostra ressenyes"/>
 		<separator/>
@@ -965,9 +1038,9 @@
 		<item id="ID_DOWNLOADS_HELP" text="_Ajuda..."/>
 	</menu>
 	<menu name="CDownloadsWnd.Download">
-		<item id="ID_DOWNLOADS_LAUNCH" text="_Vista prèvia"/>
+		<item id="ID_DOWNLOADS_LAUNCH_COPY" text="_Vista prèvia"/>
+		<item id="ID_DOWNLOADS_LAUNCH" text="Prev_iew Partial File"/>
 		<item id="ID_DOWNLOADS_REMOTE_PREVIEW" text="R_emote Preview"/>
-		<!-- <item id="ID_DOWNLOADS_LAUNCH_COPY" text="Vi_sta Prèvia de còpia"/> -->
 		<item id="ID_DOWNLOADS_ENQUEUE" text="Afegeix a  la llista de reproducció"/>
 		<item id="ID_DOWNLOADS_VIEW_REVIEWS" text="_Mostra ressenyes"/>
 		<separator/>
@@ -1016,7 +1089,6 @@
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="_Neteja"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_COPY" text="Copia _URI"/>
-		<item id="ID_DOWNLOADS_EDIT" text="Informació"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_FILE_DELETE" text="_Esborra Arxiu"/>
 		<item id="ID_DOWNLOADS_RATE" text="_Valora arxiu..."/>
@@ -1160,6 +1232,7 @@
 			<item id="ID_LIBRARY_COPY" text="_Copia arxiu..."/>
 		</menu>
 		<item id="ID_LIBRARY_REBUILD_ANSI" text="_Localitza la metainformació"/>
+		<item id="ID_LIBRARY_REFRESH_METADATA" text="_Refresh Metadata"/>
 		<separator/>
 		<item id="ID_LIBRARY_PROPERTIES" text="_Propietats"/>
 	</menu>
@@ -1231,6 +1304,7 @@
 			<item id="ID_LIBRARY_COPY" text="_Copia arxius..."/>
 		</menu>
 		<item id="ID_LIBRARY_REBUILD_ANSI" text="_Localitza la metainformació"/>
+		<item id="ID_LIBRARY_REFRESH_METADATA" text="_Refresh Metadata"/>
 		<separator/>
 		<item id="ID_LIBRARY_PROPERTIES" text="_Propietats"/>
 	</menu>
@@ -1265,6 +1339,7 @@
 			<item id="ID_LIBRARY_COPY" text="_Copia arxius..."/>
 		</menu>
 		<item id="ID_LIBRARY_REBUILD_ANSI" text="_Localitza la metainformació"/>
+		<item id="ID_LIBRARY_REFRESH_METADATA" text="_Refresh Metadata"/>
 		<separator/>
 		<item id="ID_LIBRARY_COLUMNS" text="Tria _columnes..."/>
 		<separator/>
@@ -1347,15 +1422,15 @@
 		</menu>
 	</menu>
 	<menu name="CMediaFrame.Zoom">
-			<item id="ID_MEDIA_SIZE_ONE" text="Mida _original"/>
-			<item id="ID_MEDIA_SIZE_TWO" text="Mida _doble"/>
-			<item id="ID_MEDIA_SIZE_THREE" text="Mida _triple"/>
-			<item id="ID_MEDIA_SIZE_FILL" text="Mida _gran"/>
-			<item id="ID_MEDIA_SIZE_DISTORT" text="_Omple finestra"/>
-			<separator/>
-			<item id="ID_MEDIA_ASPECT_DEFAULT" text="_Aspecte original"/>
-			<item id="ID_MEDIA_ASPECT_4_3" text="_4:3 (TV)"/>
-			<item id="ID_MEDIA_ASPECT_16_9" text="_16:9 (Cinema)"/>
+		<item id="ID_MEDIA_SIZE_ONE" text="Mida _original"/>
+		<item id="ID_MEDIA_SIZE_TWO" text="Mida _doble"/>
+		<item id="ID_MEDIA_SIZE_THREE" text="Mida _triple"/>
+		<item id="ID_MEDIA_SIZE_FILL" text="Mida _gran"/>
+		<item id="ID_MEDIA_SIZE_DISTORT" text="_Omple finestra"/>
+		<separator/>
+		<item id="ID_MEDIA_ASPECT_DEFAULT" text="_Aspecte original"/>
+		<item id="ID_MEDIA_ASPECT_4_3" text="_4:3 (TV)"/>
+		<item id="ID_MEDIA_ASPECT_16_9" text="_16:9 (Cinema)"/>
 	</menu>
 	<menu name="CMediaList">
 		<item id="ID_MEDIA_SELECT" text="_Reprodueix"/>
@@ -1378,12 +1453,18 @@
 	</menu>
 	<!-- SYSTEM WINDOW -->
 	<menu name="CSystemWnd">
-		<item id="ID_SYSTEM_VERBOSE" text="_Verbose Mode"/>
+		<menu id="ID_SYSTEM_VERBOSE" text="_Verbose Mode">
+			<item id="ID_SYSTEM_VERBOSE_ERROR" text="_Error"/>
+			<item id="ID_SYSTEM_VERBOSE_WARNING" text="_Warning"/>
+			<item id="ID_SYSTEM_VERBOSE_NOTICE" text="_Notice"/>
+			<item id="ID_SYSTEM_VERBOSE_INFO" text="_Info"/>
+			<item id="ID_SYSTEM_VERBOSE_DEBUG" text="_Debug"/>
+		</menu>
 		<item id="ID_SYSTEM_TIMESTAMP" text="Timestam_p"/>
 		<separator/>
-		<item id="ID_SYSTEM_COPY" text="_Copia" shortcut="Ctrl+C"/>
+		<item id="ID_SYSTEM_COPY" text="_Copy" shortcut="Ctrl+C"/>
 		<separator/>
-		<item id="ID_SYSTEM_CLEAR" text="Neteja el _buffer"/>
+		<item id="ID_SYSTEM_CLEAR" text="Clear _Buffer"/>
 	</menu>
 	<!-- NEIGHBOURS WINDOW -->
 	<menu name="CNeighboursWnd.Basic">
@@ -1421,6 +1502,9 @@
 	<menu name="CSearchMonitorWnd">
 		<item id="ID_HITMONITOR_SEARCH" text="_Cerca això"/>
 		<separator/>
+		<item id="ID_BROWSE_LAUNCH" text="_Browse User"/>
+		<item id="ID_SECURITY_BAN" text="B_an User"/>
+		<separator/>
 		<item id="ID_SEARCHMONITOR_PAUSE" text="_Pausa la visualització"/>
 		<item id="ID_SEARCHMONITOR_CLEAR" text="_Esborra el búfer"/>
 	</menu>
@@ -1451,7 +1535,7 @@
 		<separator/>
 		<menu text="P_olítica per defecte">
 			<item id="ID_SECURITY_POLICY_ACCEPT" text="_Permet"/>
-			<item id="ID_SECURITY_POLICY_DEny" text="_Denega"/>
+			<item id="ID_SECURITY_POLICY_DENY" text="_Denega"/>
 		</menu>
 		<separator/>
 		<item id="ID_SECURITY_EDIT" text="_Propietats"/>
@@ -1501,6 +1585,39 @@
 		<separator/>
 		<item id="ImageViewer_Close" text="_Tanca"/>
 	</menu>
+	<!-- IRC WINDOW -->
+	<menu name="CIRCTabRClick">
+		<item id="ID_IRC_CLOSETAB" text="_Close"/>
+	</menu>
+	<menu name="CIRCUserList">
+		<item id="ID_IRC_WHOIS" text="_Whois"/>
+		<item id="ID_IRC_QUERY" text="_Query"/>
+		<separator/>
+		<menu text="Actions">
+			<item id="ID_IRC_TIME" text="_Time"/>
+			<item id="ID_IRC_VERSION" text="_Version"/>
+		</menu>
+		<separator/>
+		<menu text="Control">
+			<item id="ID_IRC_IGNORE" text="_Ignore"/>
+			<item id="ID_IRC_UNIGNORE" text="_Unignore"/>
+			<item id="ID_IRC_OP" text="_Op"/>
+			<item id="ID_IRC_DEOP" text="_Deop"/>
+			<item id="ID_IRC_VOICE" text="_Voice"/>
+			<item id="ID_IRC_DEVOICE" text="D_evoice"/>
+			<item id="ID_IRC_KICK" text="_Kick"/>
+			<item id="ID_IRC_KICKWHY" text="Kick (why?)"/>
+			<item id="ID_IRC_BAN" text="_Ban"/>
+			<item id="ID_IRC_UNBAN" text="_Unban"/>
+			<item id="ID_IRC_BANKICK" text="Kick+Ban"/>
+			<item id="ID_IRC_BANKICKWHY" text="Kick+Ban (why?)"/>
+		</menu>
+	</menu>
+	<menu name="WebServices.List.Menu">
+		<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Bitzi"/>
+		<item id="ID_WEBSERVICES_MUSICBRAINZ" text="_MusicBrainz"/>
+		<item id="ID_WEBSERVICES_SHAREMONKEY" text="_ShareMonkey"/>
+	</menu>
 </menus>
 <!-- Documents -->
 <documents>
@@ -1517,7 +1634,7 @@
 		<anchor id="Header" width="32" height="172"/>
 		<newline gap="0"/>
 		<group id="1">
-			<icon res="130" width="32" height="32"/><gap size="8"/>
+			<icon res="130" width="32" height="32" target="raza:command:ID_NETWORK_CONNECT"/><gap size="8"/>
 			<heading align="middle">C O N N E C T A ' T</heading>
 			<newline gap="8" indent="42"/>
 			<text>Benvingut/da a Shareaza!</text>
@@ -1657,7 +1774,7 @@
 			<text id="LibraryFiles" format="b">%lu </text>
 			<text>arxius, </text>
 			<text id="LibraryVolume" format="b">%s</text>
-			<newline gap="0"/>
+			<newline gap="4"/>
 			<link format="bu" target="raza:command:ID_VIEW_LIBRARY">Ves a la meva col·lecció </link>
 			<newline gap="4"/>
 			<link format="bu" target="raza:shell:downloads">Obre la meva carpeta de descàrregues</link>
@@ -1711,8 +1828,9 @@
 		<newline group="30" gap="2"/>
 		<group id="2">
 			<para align="center">
-				<newline gap="6"/>
+				<newline gap="4"/>
 				<text>Has estat connectat durant </text>
+				<newline gap="0"/>
 				<text id="ConnectedHours" format="b">%i </text>
 				<text>hores i </text>
 				<text id="ConnectedMinutes" format="b">%i </text>
@@ -1750,10 +1868,10 @@
 			<link id="ReseedTorrent" format="bu" target="raza:command:ID_TOOLS_RESEEDTORRENT">Torna a compartir %s</link>
 			<newline gap="4"/>
 			<group id="1">
-				<link id="SeedTorrent" format="bu" target="raza:command:ID_TOOLS_SEEDTORRENT">Comparteix altre torrent</link>
+			<link id="SeedTorrent" format="bu" target="raza:command:ID_TOOLS_SEEDTORRENT">Comparteix altre torrent</link>
 			</group>
 			<group id="2">
-				<link id="SeedTorrent" format="bu" target="raza:command:ID_TOOLS_SEEDTORRENT">Comparteix un torrent</link>
+			<link id="SeedTorrent" format="bu" target="raza:command:ID_TOOLS_SEEDTORRENT">Comparteix un torrent</link>
 			</group>
 		</para>
 	</document>
@@ -1803,7 +1921,7 @@
 		</styles>
 		<text format="b">Configuració de Shareaza</text>
 		<newline gap="16"/>
-		<text>Aquesta pantalla permet configurar una gran quantitat de paràmetres del funcionament de Shareaza.  
+		<text>Aquesta pantalla permet configurar una gran quantitat de paràmetres del funcionament de Shareaza.
 		La configuració de </text>
 		<text format="b">Internet </text>
 		<text>permet configurar la interacció de Shareaza amb les xarxes peer-to-peer.</text>
@@ -1820,7 +1938,7 @@
 		<gap size="4"/>
 		<text>Capacitat de pujar, encuar, blocar, temps d'expiracions i peticions especials.</text>
 		<newline gap="10"/>
-		<link target="raza:page:CNetworksSettingsPage" format="b">Remot:</link>
+		<link target="raza:page:CRemoteSettingsPage" format="b">Remot:</link>
 		<gap size="4"/>
 		<text>Configura Shareaza per a ser controlat remotament des d'un navegador d'internet.</text>
 		<newline gap="10"/>
@@ -1930,8 +2048,17 @@
 		<text>Aquí és on pots veure els arxius que s'estan descarregant. Pots veure
 		fonts individuals expandint cada arxiu amb el petit + a l'esquerra.</text>
 		<newline gap="8"/>
+		<text>Drag'n'Drop downloads higher in the list for priority, or onto Download Group
+		tabs for better organisation (in Power Mode).</text>
+		<newline gap="16"/>
 		<text>També pots aconseguir informació d'ajuda amb una descàrrega especifica.
 		Simplement selecciona una descàrrega i escull aquesta comanda altra vegada.</text>
+	</document>
+	<document name="DownloadHelp.Seeding">
+		<text format="b">This Torrent is Seeding</text>
+		<newline gap="8"/>
+		<text>Shareaza has verified this complete download, and is actively sharing it
+		with other downloaders through BitTorrent. Please share at least 100%.</text>
 	</document>
 	<document name="DownloadHelp.Completed">
 		<text format="b">Transferència completada</text>
@@ -1978,10 +2105,9 @@
 		<newline gap="8"/>
 		<text>Aquesta transferència està esperant a que algú comence a carregar-la.
 		Shareaza està llest per a descarregar l'arxiu, però ningú l'està compartint
-		en aquest moment. Estàs probablement esperant en cua de descàrrega. Pots examinar les fonts individuals per a 
+		en aquest moment. Estàs probablement esperant en cua de descàrrega. Pots examinar les fonts individuals per a
 		veure en quin lloc de la cua hi estàs esperant.
 		</text>
-
 	</document>
 	<document name="DownloadHelp.Queued">
 		<text format="b">Aquesta descàrrega està en cua</text>
@@ -2071,6 +2197,9 @@
 		<text>Quasi tots els programes de creació del torrent han de deixar-te reparar aquest torrent i
 		assegurar que funcionarà en més aplicacions torrent. <link target="http://shareaza.sourceforge.net/help/?torrentencoding">Fes clic aquí per a obtenir ajuda addicional</link>
 		</text>
+		<newline gap="8"/>
+		<link target="http://shareaza.sourceforge.net/help/?torrentencoding">Click here for additional help</link>
+		<text>, or to download software to repair the torrent.</text>
 	</document>
 	<document name="GeneralHelp.DonkeyServerList">
 		<text format="b">La teva llista de servidors eDonkey està buida</text>
@@ -2085,8 +2214,9 @@
 		<text format="b">Limitar les pujades pot derivar en una baixa velocitat de descàrrega</text>
 		<newline gap="8"/>
 		<text>Algunes xarxes a què Shareaza es connecta recolcen igualtats, limitant pujades
-		a clients que no comparteixen, o simplement preferència a pujar a clients que comparteixen.
-		</text><text>Afortunadament, les connexions DSL són com una carretera de 2 vies. Has de configurar un
+		a clients que no comparteixen, o simplement preferència a pujar a clients que comparteixen.</text>
+		<newline/>
+		<text>Afortunadament, les connexions DSL són com una carretera de 2 vies. Has de configurar un
 		ample de banda per a la pujada i altre per a la baixada. Si el teu client està pròpiament configurat,
 		has de poder pujar a una bona velocitat i al mateix temps estar descarregant al màxim.</text>
 		<newline gap="8"/>
@@ -2129,7 +2259,6 @@
 		una cerca pobra, i també fer servir massa banda ampla utilitzada en la cerca.</text>
 		<newline gap="8"/>
 		<text>Pots trobar més ajuda a la web de Shareaza</text>
-
 	</document>
 	<document name="SearchHelp.AdultSearch">
 		<text format="b">Aquesta cerca no pot començar</text>
@@ -2234,7 +2363,6 @@
 	<tip id="ID_DOWNLOADS_SHARE" message="Comparteix aquest arxiu parcial amb altres usuaris."/>
 	<tip id="ID_DOWNLOADS_SHOW_SOURCES" message="Mostra totes les fonts."/>
 	<tip id="ID_DOWNLOADS_SOURCES" message="Cerca més fonts per a aquest(s) arxiu(s)."/>
-	<tip id="ID_DOWNLOADS_TORRENT_INFO" message="Mostra informació de la descàrrega BitTorrent seleccionada..."/>
 	<tip id="ID_DOWNLOADS_URL" message="Afegeix font (URI) a la descàrrega seleccionada..."/>
 	<tip id="ID_DOWNLOADS_VIEW_REVIEWS" message="Mostra ressenyes per a la descàrrega seleccionada"/>
 	<tip id="ID_HELP_ABOUT" message="Informació sobre el programa Shareaza..."/>
@@ -2253,6 +2381,8 @@
 	<tip id="ID_HELP_WEB_4" message="Visita aquest lloc web"/>
 	<tip id="ID_HELP_WEB_5" message="Visita aquest lloc web"/>
 	<tip id="ID_HELP_WEB_6" message="Visita aquest lloc web"/>
+	<tip id="ID_HELP_DONATE" message="If you want, you can donate to our legal fund and show your appreciation."/>
+	<tip id="ID_HELP_FAKESHAREAZA" message="Translate FakeShareaza.com to learn more about recent events."/>
 	<tip id="ID_HITMONITOR_CLEAR" message="Esborra l'historial del monitor de hits."/>
 	<tip id="ID_HITMONITOR_PAUSE" message="Posa en pausa el monitor de hits."/>
 	<tip id="ID_HITMONITOR_SEARCH" message="Cerca a la xarxa el resultat seleccionat."/>
@@ -2329,8 +2459,8 @@
 	<tip id="ID_MEDIA_MUTE" message="Posa el so del reproductor en silenci."/>
 	<tip id="ID_MEDIA_NEXT" message="Va al siguiente arxiu de la llista de reproducció." tip="Següent arxiu"/>
 	<tip id="ID_MEDIA_OPEN" message="Obre i reprodueix un arxiu multimèdia o llista de reproducció..."/>
-	<tip id="ID_MEDIA_PAUSE" message="Posa en pausa la reproducció."/>
-	<tip id="ID_MEDIA_PLAY" message="Inicia la reproducció del fitxer actual." tip="Reprodueix" />
+	<tip id="ID_MEDIA_PAUSE" message="Posa en pausa la reproducció." tip="Pause"/>
+	<tip id="ID_MEDIA_PLAY" message="Inicia la reproducció del fitxer actual." tip="Reprodueix"/>
 	<tip id="ID_MEDIA_PLAYLIST" message="Mostra la llista de reproducció."/>
 	<tip id="ID_MEDIA_PREVIOUS" message="Va a l'arxiu anterior de la llista de reproducció." tip="Anterior arxiu"/>
 	<tip id="ID_MEDIA_PROPERTIES" message="Mostra i edita les propietats dels fitxers seleccionats."/>
@@ -2396,15 +2526,15 @@
 	<tip id="ID_SECURITY_MOVE_DOWN" message="Mou aquesta regla cap avall en la llista de precedència."/>
 	<tip id="ID_SECURITY_MOVE_UP" message="Mou aquesta regla cap a dalt en la llista de precedència."/>
 	<tip id="ID_SECURITY_POLICY_ACCEPT" message="Canvia la política de seguretat per defecte a acceptar totes les connexions."/>
-	<tip id="ID_SECURITY_POLICY_DEny" message="Canvia la política de seguretat per defecte a denegar totes les connexions."/>
+	<tip id="ID_SECURITY_POLICY_DENY" message="Canvia la política de seguretat per defecte a denegar totes les connexions."/>
 	<tip id="ID_SECURITY_REMOVE" message="Esborra aquesta norma de seguretat."/>
 	<tip id="ID_SECURITY_RESET" message="Reinicia els compadors de les regles de seguretat seleccionades."/>
 	<tip id="ID_SYSTEM_CLEAR" message="Esborra la història d'estat."/>
 	<tip id="ID_SYSTEM_TIMESTAMP" message="Enregistra el temps a cada línia."/>
 	<tip id="ID_SYSTEM_VERBOSE" message="Mostra informació detallada de l'activitat del sistema."/>
 	<tip id="ID_TAB_CONNECT" message="Connecta o desconnecta de la xarxa."/>
-	<tip id="ID_TAB_HELP" message="Ajuda sobre l'ús de Shareaza."/>
 	<tip id="ID_TAB_HOME" message="Pàgina inicial de la web de Shareaza"/>
+	<tip id="ID_TAB_IRC" message="Show the IRC Chat window."/>
 	<tip id="ID_TAB_LIBRARY" message="Mostra i administra la col·lecció local."/>
 	<tip id="ID_TAB_MEDIA" message="Reprodueix arxius de multimèdia de la col·lecció."/>
 	<tip id="ID_TAB_NETWORK" message="Mostra les connexions a les xarxes."/>
@@ -2446,7 +2576,6 @@
 	<tip id="ID_VIEW_BASIC" message="Usa Shareaza en el mode normal."/>
 	<tip id="ID_VIEW_DISCOVERY" message="Mostra o oculta la finestra dels serveis de descobriment."/>
 	<tip id="ID_VIEW_DOWNLOADS" message="Mostra o oculta la finestra de descàrregues."/>
-	<tip id="ID_VIEW_HELP" message="Mostra o oculta la finestra d'ajuda."/>
 	<tip id="ID_VIEW_HOSTS" message="Mostra o oculta el registre de servidors."/>
 	<tip id="ID_VIEW_LIBRARY" message="Mostra o oculta la finestra de la col·lecció."/>
 	<tip id="ID_VIEW_MEDIA" message="Mostra o oculta la finestra del reproductor."/>
@@ -2468,6 +2597,8 @@
 	<tip id="ID_WINDOW_TILE_HORZ" message="Organitza les finestres de forma horitzontal."/>
 	<tip id="ID_WINDOW_TILE_VERT" message="Organitza les finestres de forma vertical."/>
 	<tip id="ID_WINDOW_TOOLBAR" message="Mostra o oculta la barra d'eines."/>
+	<tip id="ID_WEBSERVICES_LIST" message="Choose the web service to get more information about the selected file."/>
+	<tip id="ID_WEBSERVICES_SHAREMONKEY" message="Search for the file infomation using ShareMonkey service."/>
 	<!-- PLUGIN TIPS -->
 	<tip id="ImageViewer_BestFit" message="Canvia la mida de la imatge per a ocupar tota la finestra."/>
 	<tip id="ImageViewer_ActualSize" message="Mostra la imatge amb sa mida original."/>
@@ -2477,6 +2608,7 @@
 <!-- Tips displayed when mouse is moved over controls in the dialogs -->
 <controlTips>
 	<tip id="IDC_THROTTLE_MODE" message="Al mode de valor màxim l'ample de banda no excedirà el valor especificat. Al mode de mitjana fluctuarà en els dos sentits."/>
+	<tip id="IDC_REGEXP" message="Enter regular expressions in perl syntax.{n}The search keywords can be specified in a form of &lt;n&gt;, where n is number between 1 and 9. If you want to put all keywords each after other, use &lt;_&gt; markup."/>
 	<tip id="IDC_SHARE_PARTIALS" message="Aquesta configuració no té efecte sobre descàrregues anteriorment iniciades i serà ignorada si l'arxiu té el hash eDonkey i la xarxa eDonkey està habilitada o és una descàrrega BitTorrent.{n}No obstant, aquesta configuració no és ignorada si la descàrrega està pausada.{n}{n}ATENCIÓ: Usa aquesta opció únicament en cas de necessitat ja que si abuses d'ella pots ser bloquejat."/>
 </controlTips>
 <!-- Localised Strings -->
@@ -2501,6 +2633,7 @@
 	<string id="WINDOW_MEDIA" value="Reproductor de multimèdia"/>
 	<string id="WINDOW_SEARCHPAD" value="Cerca"/>
 	<string id="WINDOW_HELP" value="Ajuda de Shareaza"/>
+	<string id="WINDOW_IRC" value="Shareaza Chat"/>
 	<string id="7000" value="Estàs segur que vols treure aquest filtre?"/>
 	<string id="7001" value="&amp;Esquemes"/>
 	<string id="7002" value="Valors múltiples"/>
@@ -2672,6 +2805,7 @@
 	<string id="16077" value="L'adreça %s ja està bloqueada en les teves normes de seguretat."/>
 	<string id="16078" value="Afegeix una norma de seguretat %s."/>
 	<string id="16079" value="Estàs segur que vols desconnectar-te?"/>
+	<string id="16080" value="You are running the Scheduler in 'G2 only' mode. Would you like to turn this mode off, so that all active networks remain connected?"/>
 	<string id="16081" value="Enviant petició per a &quot;%s&quot; a %s."/>
 	<string id="16083" value="Forçant el teu PC en mode hub pots obtenir conseqüències en el rendiment i a la Xarxa P2P. És millor deixar a Shareaza escollir entre els modes hub o leaf.\n\nEl mode Hub no dóna millors resultats de cerques ni cap altre avantatge per a tu.\n\nEstàs segur que vols fer això?"/>
 	<string id="16084" value="Deshabilitant el suport per al protocol Gnutella-1 limitarà els teus resultats de cerca, i si estàs actuant com a hub podrà afectar als resultats d'altres persones. Estàs segur que vols fer això?"/>
@@ -2875,6 +3009,7 @@
 	<string id="16410" value="Una subcarpeta de la carpeta seleccionada &quot;%s&quot; ja és actualment part de la col·lecció.\nAfegir aquesta carpeta causarà una reverificació dels arxius.\n\nDe segur que dessitja continuar?"/>
 	<string id="16411" value="No es pogué moure el fitxer %s. L'arxiu potser està sent utilitzat per altra aplicació.\n\nDessitja provar a copiar l'arxiu?"/>
 	<string id="16412" value="Arxiu fantasma"/>
+	<string id="16413" value="New Group"/>
 	<string id="16448" value="Conectant a %s, negociant..."/>
 	<string id="16449" value="Xatejant amb %s (%s)."/>
 	<string id="16450" value="La connexió amb %s ha estat tancada."/>
@@ -2910,9 +3045,11 @@
 	<string id="16535" value="Ample de banda total de transmissió UDP"/>
 	<string id="16536" value="Ràtio de pings rebuts/enviats de Gnutella"/>
 	<string id="16537" value="Ràtio de pongs rebuts/enviats de Gnutella"/>
+	<string id="16538" value="Connection Errors (%)"/>
 	<string id="16768" value="Errors de connexió (%)"/>
 	<string id="16769" value="Shareaza no ha entés l'URL &quot;%s&quot;."/>
 	<string id="16770" value="L'adreça URL no s'ha pogut processar, Shareaza no la pot interpretar."/>
+	<string id="16771" value="L'arxiu &quot;%s&quot; ja està en La meva Col·lecció.  ¿Vols descarregar-lo de totes formes?"/>
 	<string id="16772" value="Servidor:"/>
 	<string id="16773" value="Port:"/>
 	<string id="16774" value="&amp;Connectar"/>
@@ -2928,7 +3065,6 @@
 	<string id="16784" value="&amp;Tancar"/>
 	<string id="16785" value="(No Visualització)"/>
 	<string id="16800" value="encara no ha especificat la velocitat de Connexió.  Abans de continuar, per favor escull o escriu la velocitat de la teva Connexió."/>
-	<string id="16801" value="Si us Plau selecciona el tipus de Connexió abans de continuar."/>
 	<string id="16802" value="No has especificat cap carpeta per a compartir. Recorda que la qualitat de la Xarxa està basada a la quantitat d'arxius que els demés comparteixen, per tant si comparteixes les teves carpetes, la Xarxa tindrà més contingut.  ¿Estàs segur(a) de no compartir les teves carpetes?"/>
 	<string id="16803" value="Aquesta carpeta ja està compartida com part de:\n\n%s"/>
 	<string id="16804" value="No s'ha especificat un pseudònim en el teu perfil.\n\nÉs bona idea especificar-ne un, per a que els demés usuaris sàpiguen de forma agradable a qui estan connectats.\n\n¿Estàs segur(a) de continuar sense pseudònim?"/>
@@ -2979,6 +3115,13 @@
 	<string id="16997" value="No hi ha cap arxiu reproduïnt-se.  Fes doble clic a un arxiu de media en la teva biblioteca per a reproduir-lo."/>
 	<string id="16998" value="S &#160; &#160; H &#160; &#160; A &#160; &#160; R &#160; &#160; E &#160; &#160; A &#160; &#160; Z &#160; &#160; A &#160; &#160; &#160; &#160; &#160; M &#160; &#160; E &#160; &#160; D &#160; &#160; I &#160; &#160; A &#160; &#160; &#160; &#160; &#160; S &#160; &#160; Y &#160; &#160; S &#160; &#160; T &#160; &#160; E &#160; &#160; M"/><!-- on one line -->
 	<string id="16999" value="L L I S T A"/>
+	<string id="17017" value="Send:"/>
+	<string id="17018" value="Welcome to Shareaza Chat!"/>
+	<string id="17019" value="Please respect others while using this service"/>
+	<string id="17020" value="Add"/>
+	<string id="17021" value="Remove"/>
+	<string id="17022" value="Users"/>
+	<string id="17023" value="Channels"/>
 	<string id="17024" value="Iniciant Connexió a %s..."/>
 	<string id="17025" value="ha estat imposible connectar amb %s."/>
 	<string id="17026" value="Demanant un push de %s..."/>
@@ -3193,8 +3336,15 @@
 	<string id="20236" value="Valoració"/>
 	<string id="20237" value="Accepta"/>
 	<string id="20238" value="Cancel·la"/>
+	<string id="20239" value="Abort"/>
+	<string id="20240" value="Retry"/>
+	<string id="20241" value="Ignore"/>
+	<string id="20242" value="Try Again"/>
+	<string id="20243" value="Continue"/>
+	<string id="20244" value="&amp;Remember my selection next time"/>
 </strings>
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
+<!-- Don't edit dialogs manualy! Use DialogScan feature instead -->
 <dialogs>
 	<dialog name="CGeneralSettingsGroup" cookie="" caption="General">
 	</dialog>
@@ -3288,6 +3438,42 @@
 		<control caption="Filtra els missatges de xat per a spam"/>
 		<control caption="Censura coses obscenes al xat"/>
 	</dialog>
+	<dialog name="CIRCSettingsPage" cookie="BuBuBuEdStBuStCoBuBuStBuStBuStBuStBuStBuStBuStEdStEdStEdStEdStEdStEd" caption="Chat">
+		<control caption="Client _Options:"/>
+		<control caption="Show chat integration"/>
+		<control caption="Flood protection:"/>
+		<control/>
+		<control caption="lines per second"/>
+		<control caption="Show timestamp"/>
+		<control caption="Screen Font:"/>
+		<control/>
+		<control caption="_Colors:"/>
+		<control/>
+		<control caption="Server messages"/>
+		<control/>
+		<control caption="Topics"/>
+		<control/>
+		<control caption="Channel Actions"/>
+		<control/>
+		<control caption="Notices"/>
+		<control/>
+		<control caption="Chat background"/>
+		<control/>
+		<control caption="Text"/>
+		<control caption="Connection _Settings:"/>
+		<control caption="Nickname:"/>
+		<control/>
+		<control caption="User name:"/>
+		<control/>
+		<control caption="Alternate Nickname:"/>
+		<control/>
+		<control caption="Real name:"/>
+		<control/>
+		<control caption="Server:"/>
+		<control/>
+		<control caption="Port:"/>
+		<control/>
+	</dialog>
 	<dialog name="CWebSettingsPage" cookie="BuStBuBuBuBuBuBuBuCoBuBuSt" caption="Web">
 		<control caption="Controla enllaços avançats:"/>
 		<control caption="Usa Shareaza per a obrir aquests enllaços:"/>
@@ -3303,7 +3489,8 @@
 		<control caption="_Treu"/>
 		<control caption="El controlador de descàrregues sols funcionarà amb els següents tipus d'arxius.  Els demés seran controlats pel teu navegador.  Shareaza ha d'estar executant-se per a que el controlador de descàrregues funcioni correctament."/>
 	</dialog>
-	<dialog name="CInternetSettingsGroup" caption="Internet"/>
+	<dialog name="CInternetSettingsGroup" cookie="" caption="Internet">
+	</dialog>
 	<dialog name="CConnectionSettingsPage" cookie="BuStCoStCoStEdBuBuBuStCoStCoBuStCoBuBuBuStEdmsStEdms" caption="Connexió">
 		<control caption="_Adreça d'entrada:"/>
 		<control caption="Adreça:"/>
@@ -3386,7 +3573,7 @@
 		<control caption="L'accès remot de Shareaza et permet deixar Shareaza executant-se al teu PC, i controlar-lo usant un navegador. Necessitaràs acceptar connexions entrants per a usar aquesta característica (ex: Configurar el teu router, etc)."/>
 		<control caption="_Habilita:"/>
 		<control caption="Habilita l'accès remot de Shareaza:"/>
-		<control/>
+		<control caption="URL"/>
 		<control caption="_Credencials:"/>
 		<control caption="Tria un usuari:"/>
 		<control/>
@@ -3430,7 +3617,7 @@
 		<control caption="Connecta a Gnutella1"/>
 		<control caption="Configura Gnutella"/>
 	</dialog>
-	<dialog name="CGnutellaSettingsPage" cookie="BuBuBuStCoBuStEdmsStEdmsStEdmsBuBuBuStCoBuStEdmsStEdmsStEdmsBuBuBuBu" caption="Gnutella">
+	<dialog name="CGnutellaSettingsPage" cookie="BuBuCoBuBuCoEdmsEdmsEdmsEdmsEdmsEdmsBuBuBuBuStBuStStStBuStBuStStStBu" caption="Gnutella">
 		<control caption="Xarxa Gnutella2:"/>
 		<control caption="Connecta sempre a Gnutella2"/>
 		<control caption="Connecta a Gnutella 2 en aquesta sessió"/>
@@ -3499,7 +3686,7 @@
 		<control caption=" Neteja els torrents descarregats&#160;&#160;quan la ràtio de compartició sigui 1"/>
 		<control/>
 		<control/>
-		<control/>
+		<control caption="%"/>
 		<control caption="&#160;Prefereix fonts torrent"/>
 		<control caption="_EndGame:"/>
 		<control caption="Habilita el mode EndGame al completar torrents"/>
@@ -3646,7 +3833,7 @@
 		<control/>
 		<control/>
 	</dialog>
-	<dialog name="CWizardInterfacePage" cookie="StBuBuBuStStBuBuBu" caption="Benvingut/uda(a) a Shareaza (4/6)">
+	<dialog name="CWizardInterfacePage" cookie="StBuBuBuStStBuBu" caption="Benvingut/uda(a) a Shareaza (4/6)">
 		<control caption="Shareaza soporta una interfícies flexible, així que pots escollir la que millor et vagi. Pots canviar aquestes opcions en qualsevol moment"/>
 		<control caption="Si us plau, selecciona alguna d'aquestes interfícies:"/>
 		<control caption="Mode normal"/>
@@ -4038,7 +4225,7 @@
 		<control caption="Inserir camp:"/>
 		<control caption="Tiger Root|SHA1|MD5|ED2K (CMD4)|Nom d'arxiu|Arxiu (URI)|Nom d'arxiu base|Extensió|Mida d'arxiu|Mida d'arxiu (bytes)|Ruta de la carpeta|Adreça local|Port local"/>
 		<control caption="Predefinits:"/>
-		<control/>
+		<control caption="Magnet|eDonkey|Magnet HTML|eDonkey HTML"/>
 		<control caption="Copia"/>
 		<control caption="Desa..."/>
 		<control/>
@@ -4154,46 +4341,55 @@
 		<control/>
 		<control caption="Informació de la plantilla:"/>
 		<control caption="Nom:"/>
-		<control/>
+		<control caption="..."/>
 		<control caption="Autor:"/>
-		<control/>
+		<control caption="..."/>
 		<control caption="Descripció:"/>
 		<control/>
 		<control caption="Esborra|_Torna"/>
 		<control caption="_Següent|Exporta"/>
 		<control caption="_Cancel·la"/>
 	</dialog>
-	<dialog name="CDownloadEditPage" cookie="StBuStEdEdStEdBuStStEdBuStEdBuStEdBuBuStStStStStBuStEdStEdBu" caption="Edició de la descàrrega (avançat)">
+	<dialog name="CDownloadEditPage" cookie="EdEdEdEdBuEdBuEdBuEdBuEdBuStBuStStBuStStStStStSt" caption="Edició de la descàrrega (avançat)">
+		<control/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
+		<control/>
 		<control caption="ADVERTÈNCIA: Amb aquesta finestra es poden configurar opcions avançades de la descàrrega per a usuaris avançats, que, si són utilitzades incorrectament, podrien danyar o perdre la descàrrega."/>
 		<control caption="_Nom de l'arxiu i mida:"/>
 		<control caption="Nom:"/>
-		<control/>
-		<control/>
 		<control caption="Mida (Bytes):"/>
-		<control/>
 		<control caption="_URNs:"/>
 		<control caption="De confiança"/>
 		<control caption="SHA1:"/>
-		<control/>
-		<control/>
 		<control caption="Tiger-Root:"/>
-		<control/>
-		<control/>
 		<control caption="ED2K:"/>
-		<control/>
-		<control/>
-		<control caption="_Accions:"/>
+		<control caption="MD5:"/>
+		<control caption="BitTorrent:"/>
+	</dialog>
+	<dialog name="CDownloadActionsPage" cookie="StStStStStEdEdBuBuBuStStSt" caption="Actions">
 		<control caption="Oblida l'estat de verificació actual i torna a verificar"/>
 		<control caption="Asumeix completats i reverifica (per a recuperar descàrregues)"/>
 		<control caption="Oblida totes les fonts conegudes"/>
 		<control caption="Combina amb un arxiu local i verifica"/>
 		<control caption="Cancel·la download but save incomplete file"/>
-		<control caption="_Esborra dades:"/>
-		<control caption="Rang de bytes:"/>
 		<control/>
-		<control caption="a"/>
 		<control/>
 		<control caption="Esborra"/>
+		<control caption="_Accions:"/>
+		<control caption="_Esborra dades:"/>
+		<control caption="Rang de bytes:"/>
+		<control caption="a"/>
+		<control caption="WARNING: This dialog provides advanced download editing features for power users which if used incorrectly can and probably will cause corruption."/>
 	</dialog>
 	<dialog name="CTorrentSeedDlg" cookie="StStBuBuBuStms" caption="Obre un arxiu Torrent">
 		<control/>
@@ -4204,47 +4400,39 @@
 		<control caption="Per a compartir arxius completats usant BitTorrent han d'estar suministrats. Quant aquest procès estigui complet el Torrent apareixerà com una nova descàrrega a la llista."/>
 		<control/>
 	</dialog>
-	<dialog name="CTorrentGeneralPage" cookie="BuStEdStEdStEdStEdBuStCoEdStStEd" caption="Informació avançada del torrent">
-		<control caption="Informació del _Torrent:"/>
-		<control caption="Nom:"/>
+	<dialog name="CTorrentGeneralPage" cookie="EdEdEdEdEdCoEdBuStStStStBuStStSt" caption="Informació avançada del torrent">
 		<control/>
-		<control caption="Creat:"/>
 		<control/>
-		<control caption="Per:"/>
 		<control/>
-		<control caption="Comentaris:"/>
 		<control/>
-		<control caption="Transferències:"/>
-		<control caption="Comença noves transferències de descàrrega:"/>
+		<control/>
 		<control caption="&#160;Quan es necessite| Quan el ràtio supera el 100%| Únicament quan siga demanat| Mai"/>
 		<control/>
+		<control caption="Informació del _Torrent:"/>
+		<control caption="Nom:"/>
+		<control caption="Creat:"/>
+		<control caption="Per:"/>
+		<control caption="Comentaris:"/>
+		<control caption="Transferències:"/>
+		<control caption="Comença noves transferències de descàrrega:"/>
 		<control caption="Volumen pujat total:"/>
 		<control caption="Notes:"/>
+	</dialog>
+	<dialog name="CTorrentFilesPage" cookie="Sy" caption="Arxius">
 		<control/>
 	</dialog>
-	<dialog name="CTorrentFilesPage" cookie="BuStEdBuSy" caption="Arxius">
-		<control caption="_Informació del Torrent:"/>
-		<control caption="Nom:"/>
+	<dialog name="CTorrentTrackersPage" cookie="EdEdEdCoBuSyStBuStStSt" caption="Trackers">
 		<control/>
-		<control caption="_Arxius:"/>
 		<control/>
-	</dialog>
-	<dialog name="CTorrentTrackersPage" cookie="BuStEdStEdBuStEdStEdBuBuSyStCo" caption="Trackers">
-		<control caption="_Informació del Torrent:"/>
-		<control caption="Nom:"/>
+		<control/>
+		<control caption="Deshabilitat|Tracker únic|Multi-tracker|Multi-tracker (blocat)"/>
+		<control caption="_Refresh"/>
 		<control/>
 		<control caption="Rastrejador:"/>
-		<control/>
 		<control caption="_Rastrejador actual (tracker):"/>
 		<control caption="Completats (Seeders):"/>
-		<control/>
 		<control caption="Incomplets (Peers):"/>
-		<control/>
-		<control caption="_Actualitza"/>
-		<control caption="_Rastrejadors:"/>
-		<control/>
 		<control caption="Mode del rastrejador:"/>
-		<control caption="Deshabilitat|Personalitzat|Tracker únic|Multi-tracker|Multi-tracker (blocat)"/>
 	</dialog>
 	<dialog name="CDownloadGroupDlg" cookie="BuBuEdCoBuCoBuBuEdBuBuBuBuBuBu" caption="Propietats del grup de descàrrega">
 		<control caption="Sí"/>
