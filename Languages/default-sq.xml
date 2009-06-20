@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 
 <!-- Shareaza Default Albanian Skin File -->
 <!-- Translation based on default-en.xml SVN rev.7800 -->
@@ -1454,7 +1454,7 @@
 	</menu>
 	<!-- SYSTEM WINDOW -->
 	<menu name="CSystemWnd">
-		<menu id="ID_SYSTEM_VERBOSE" text="Mjaft të _Dhëna"/>
+		<menu id="ID_SYSTEM_VERBOSE" text="Mjaft të _Dhëna">
 			<item id="ID_SYSTEM_VERBOSE_ERROR" text="_Gabim"/>
 			<item id="ID_SYSTEM_VERBOSE_WARNING" text="_Kujdes"/>
 			<item id="ID_SYSTEM_VERBOSE_NOTICE" text="_Lajmërim"/>
