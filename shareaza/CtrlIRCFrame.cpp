@@ -1794,9 +1794,7 @@ void CIRCFrame::ActivateMessageByID(CString strMessage, CIRCNewMessage* oNewMess
 		}
 		case ID_MESSAGE_SERVER_DISCONNECT:
 		{		
-			oNewMessage->m_pMessages.Add( GetStringAfterParsedItem( 0 ) );
-			oNewMessage->m_sTargetName	= m_sStatus;
-			oNewMessage->nColorID		= ID_COLOR_SERVERMSG;
+			OnStatusMessage( GetStringAfterParsedItem( FindParsedItem( ":", 2 ) ), ID_COLOR_SERVERMSG );
 			OnIrcDisconnect();
 			return;
 		}

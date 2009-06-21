@@ -257,7 +257,7 @@ int CIRCChannelsBox::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		rc, this, IDC_IRC_CHANNELS );
 	m_wndChanList.ModifyStyleEx( 0, WS_EX_CLIENTEDGE );
 	m_wndChanList.InsertColumn( 0, _T("Channels"), LVCFMT_LEFT, 1 );
-	m_wndChanList.InsertColumn( 1, _T("UserCount"), LVCFMT_RIGHT, 1 );
+	m_wndChanList.InsertColumn( 1, _T("UserCount"), LVCFMT_RIGHT, -1 );
 
 	m_wndAddChannel.Create( rc, this, IDC_IRC_ADDCHANNEL, WS_TABSTOP | BS_DEFPUSHBUTTON );
 	m_wndAddChannel.SetHandCursor( TRUE );
@@ -301,7 +301,7 @@ void CIRCChannelsBox::OnSize(UINT nType, int cx, int cy)
 	EndDeferWindowPos( hDWP );
 
 	int nScrollbarWidth = 17;
-	int nUserCountWidth = 30;
+	int nUserCountWidth = 40;
 	int nChanCountWidth = cx - 2 - nUserCountWidth - nScrollbarWidth;
 	m_wndChanList.SetColumnWidth( 0, nChanCountWidth );
 	m_wndChanList.SetColumnWidth( 1, nUserCountWidth );
