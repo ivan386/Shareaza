@@ -1427,9 +1427,11 @@ void CIRCFrame::ActivateMessageByID(CString strMessage, CIRCNewMessage* oNewMess
 		case ID_MESSAGE_SERVER_PING:
 		{
 			SendString(	_T("PONG ") + GetStringAfterParsedItem( 1 ) );
+#ifdef _DEBUG
 			oNewMessage->m_pMessages.Add ( _T("Ping? Pong!" ) );
 			oNewMessage->m_sTargetName	= m_sStatus;
 			oNewMessage->nColorID		= ID_COLOR_SERVERMSG;
+#endif
 			return;
 		}
 		case ID_MESSAGE_USER_MESSAGE:
