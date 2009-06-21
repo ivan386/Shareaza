@@ -2461,11 +2461,11 @@ void CIRCFrame::UserListDblClick()
 	TabClick();
 }
 
+static const wchar_t IrcModeChars[] = { '@', '%', '+', '~', '&' };
+
 CString CIRCFrame::RemoveModeOfNick(CString strNick) const
 {
-	if ( strNick.Mid( 0, 1 ) == "@" || strNick.Mid( 0, 1 ) == "%" || strNick.Mid( 0, 1 ) == "+" )
-		strNick = strNick.Mid( 1 );
-	return strNick;
+	return strNick.TrimLeft( IrcModeChars );
 }
 
 int CIRCFrame::IsUserInList(CString strUser)
