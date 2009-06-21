@@ -1602,7 +1602,7 @@ void CIRCFrame::ActivateMessageByID(CString strMessage, CIRCNewMessage* oNewMess
 		    m_wndTab.GetItem( nTab, &item );
 
 			strChannelName = pszBuffer;
-			oNewMessage->m_pMessages.Add( "-" + m_pWords.GetAt( 0 ) + "- " + GetStringAfterParsedItem ( 8 ) );
+			oNewMessage->m_pMessages.Add( "-" + m_pWords.GetAt( 0 ) + "- " + GetStringAfterParsedItem ( 7 ) );
 			oNewMessage->m_sTargetName	= strChannelName;
 			oNewMessage->nColorID		= ID_COLOR_NOTICE;
 			return;
@@ -1730,12 +1730,15 @@ void CIRCFrame::ActivateMessageByID(CString strMessage, CIRCNewMessage* oNewMess
 		}
 		case ID_MESSAGE_CHANNEL_QUIT:
 		{
-			CString strNick( m_pWords.GetAt( 0 ) ), strChannelName;
+			CString strNick( m_pWords.GetAt( 0 ) ), strTabName;
 			CString strUserMsg = GetStringAfterParsedItem ( 6 ) ;
 			int nTab = m_wndTab.GetCurSel();
 			int nListUser = FindInList( strNick );
-			if ( nTab == m_wndTab.GetCurSel() && nListUser != -1 )
-					m_wndPanel.m_boxUsers.m_wndUserList.DeleteString( nListUser );
+			if ( nListUser != -1 )
+			{
+				m_wndPanel.m_boxUsers.m_wndUserList.DeleteString( nListUser );
+				SortUserList();
+			}
 
 			TCHAR pszBuffer[ 20 ];
 			TCITEM item;
@@ -1743,23 +1746,41 @@ void CIRCFrame::ActivateMessageByID(CString strMessage, CIRCNewMessage* oNewMess
 			item.pszText = pszBuffer;
 			item.cchTextMax = sizeof(pszBuffer) / sizeof(TCHAR);
 		    m_wndTab.GetItem( nTab, &item );
-			strChannelName = pszBuffer;
+			strTabName = pszBuffer;
 
-			SortUserList();
-			FillCountChanList( "-1", strChannelName );
+			FillCountChanList( "-1", strTabName );
 			oNewMessage->m_pMessages.Add( "* " + strNick + " has Quit: ( " + strUserMsg + " ) " );
-			oNewMessage->m_sTargetName	= strChannelName;
+
+			// If we set the m_sTargetName the message will be shown in that tab
+			// Plus all channel windows
+			oNewMessage->m_sTargetName	= strTabName;
 			oNewMessage->nColorID		= ID_COLOR_SERVERMSG;
+
+			// Was that PM window?
+			bool bOurBuddy = strNick == strTabName;
+
 			for ( nTab = 1 ; nTab < m_nBufferCount ; nTab++ )
 			{
 				nListUser = FindInList( strNick, 2, nTab );
-				if ( nListUser != -1 )
+				m_wndTab.GetItem( nTab, &item );
+				if ( nListUser != -1 || strNick == pszBuffer )
 				{
-					m_pIrcUsersBuffer[ nTab ].RemoveAt( nListUser );
-					if ( m_wndTab.GetCurSel() != nTab ) 
-						m_pIrcBuffer[ nTab ].Add( char(ID_COLOR_SERVERMSG) + oNewMessage->m_pMessages.GetAt( 0 ) );
+					if ( nListUser != -1 )
+						m_pIrcUsersBuffer[ nTab ].RemoveAt( nListUser );
+					else 
+					{
+						bOurBuddy = true;
+						oNewMessage->m_sTargetName = strNick;
+						continue;
+					}
+					// Add quit message to the channel window where the user was active
+					m_pIrcBuffer[ nTab ].Add( char(ID_COLOR_SERVERMSG) + oNewMessage->m_pMessages.GetAt( 0 ) );
 				}
 			}
+
+			// Don't add server message to PM window if that was the other user
+			if ( ! bOurBuddy )
+				oNewMessage->m_sTargetName.Empty();
 			return;
 		}
 		case ID_MESSAGE_CLIENT_JOIN:
