@@ -30,6 +30,7 @@ public:
 		 m_bRemoveComments( false ),
 		 m_pXMLTranslator ( NULL )
 	{
+		m_Index.InitHashTable( 1021 );
 	}
 
 	void SetTranslator(const CXMLLoader* pTranslator)
@@ -39,6 +40,8 @@ public:
 
 	bool LoadPO(LPCWSTR szFilename)
 	{
+		_tprintf( _T("Loading PO file: '%s'\n"), szFilename );
+
 		m_Items.RemoveAll();
 
 		CAtlFile oFile;
@@ -61,16 +64,23 @@ public:
 					}
 					mode = mode_start;
 
+					int nLine = 0;
 					int curPos = 0;
-					CStringA sLine= sFile.Tokenize( "\n", curPos );
+					CStringA sLine = sFile.Tokenize( "\n", curPos );
 					while ( ! sLine.IsEmpty() )
 					{
+						CStringA sOriginalLine = sLine;
 						sLine.Trim();
+						nLine++;
 
 						switch ( sLine[ 0 ] )
 						{
 						case '#':
-							ATLASSERT( mode == mode_start || mode == mode_msgstr );
+							if ( mode != mode_start && mode != mode_msgstr )
+							{
+								_tprintf( _T("Error in line #%d: %s\n"), nLine, sOriginalLine );
+								return false;
+							}
 							if ( sLine[ 1 ] == ':' )
 							{
 								// Ref
@@ -105,7 +115,11 @@ public:
 						case 'm':
 							if ( sLine.Mid( 0, 7 ) == "msgid \"" )
 							{
-								ATLASSERT( mode == mode_start || mode == mode_ref );
+								if( mode != mode_start && mode != mode_ref )
+								{
+									_tprintf( _T("Error in line #%d: %s\n"), nLine, sOriginalLine );
+									return false;
+								}
 								
 								// Save previous string
 								item.sRef = UTF8Decode( sString.Trim() );
@@ -116,7 +130,11 @@ public:
 							}
 							else if ( sLine.Mid( 0, 8 ) == "msgstr \"" )
 							{
-								ATLASSERT( mode == mode_msgid );
+								if ( mode != mode_msgid )
+								{
+									_tprintf( _T("Error in line #%d: %s\n"), nLine, sOriginalLine );
+									return false;
+								}
 								
 								// Save previous string
 								item.sID = UTF8Decode( UnMakeSafe( sString ) );
@@ -126,39 +144,64 @@ public:
 								mode = mode_msgstr;
 							}
 							else
+							{
 								// Unknown string
-								break;
+								_tprintf( _T("Error in line #%d: %s\n"), nLine, sOriginalLine );
+								return false;
+							}
 
 						case '\"':
-							ATLASSERT( mode == mode_msgid || mode == mode_msgstr );
+							if( mode != mode_msgid && mode != mode_msgstr )
+							{
+								_tprintf( _T("Error in line #%d: %s\n"), nLine, sOriginalLine );
+								return false;
+							}
 							if ( sLine[ sLine.GetLength() - 1 ] == '\"' )
 							{
 								// String continue
 								sString += sLine.Mid( 1, sLine.GetLength() - 2 );
 							}
-							// else Unknown string
+							else
+							{
+								// Unknown string
+								_tprintf( _T("Error in line #%d: %s\n"), nLine, sOriginalLine );
+								return false;
+							}
 							break;
 
 						default:
-							; // Unknown string
+							// Unknown string
+							_tprintf( _T("Error in line #%d: %s\n"), nLine, sOriginalLine );
+							return false;
 						}
-
 						sLine = sFile.Tokenize( "\n", curPos );
-					};
+					} // while
+
+					if ( ! m_Items.IsEmpty() )
+					{
+						ReIndex();
+
+						return true;
+					}
+
+					_tprintf( _T("Error: PO file is empty\n") );
 				}
+				else
+					_tprintf( _T("Error: Can't read PO file: %ls\n"), szFilename );
 			}
-			oFile.Close();
+			else
+				_tprintf( _T("Error: Can't read PO file: %ls\n"), szFilename );
 		}
 		else
 			_tprintf( _T("Error: Can't open PO file: %ls\n"), szFilename );
 
-		ReIndex();
-
-		return ! m_Items.IsEmpty();
+		return false;
 	}
 
 	bool LoadXML(LPCWSTR szFilename)
 	{
+		_tprintf( _T("Loading XML file: '%s'\n"), szFilename );
+
 		ATLASSERT( ! m_pXMLDoc );
 		HRESULT hr = m_pXMLDoc.CoCreateInstance( CLSID_DOMDocument );
 		if ( SUCCEEDED( hr ) )
@@ -244,7 +287,7 @@ public:
 			CString sTokenLC = sRefLC.Tokenize( _T(" "), curPos );
 			while ( ! sTokenLC.IsEmpty() )
 			{
-				const CItem* translated = NULL;
+				CItem* translated = NULL;
 				if ( oTranslator.m_Index.Lookup( sTokenLC, translated ) )
 				{
 					item.sTranslated = translated->sID;
@@ -258,18 +301,21 @@ public:
 	// Save translator object data as .xml-file
 	bool SaveXML(LPCTSTR szFilename) const
 	{
-		ATLASSERT( m_pXMLDoc );
+		_tprintf( _T("Saving XML file: '%s'\n"), szFilename );
 
-		const BYTE Marker[3] = { 0xef, 0xbb, 0xbf };
+		ATLASSERT( m_pXMLDoc );
 
 		CComBSTR pXML;
 		m_pXMLDoc->get_xml( &pXML );
 
-		CStringA sOutput = UTF8Encode( pXML );
+		CString sXML( pXML );
+		sXML.Replace( _T("\x00a0"), _T("&#160;") ); // Non-break space
 
 		CAtlFile oFile;
 		if ( SUCCEEDED( oFile.Create( szFilename, GENERIC_WRITE, 0, CREATE_ALWAYS ) ) )
 		{
+			const BYTE Marker[3] = { 0xef, 0xbb, 0xbf };
+			CStringA sOutput = UTF8Encode( sXML );
 			return SUCCEEDED( oFile.Write( Marker, 3 ) ) &&
 				SUCCEEDED( oFile.Write( (LPCSTR)sOutput, sOutput.GetLength() - 1 ) );
 		}
@@ -282,7 +328,7 @@ public:
 	// Extract translator object data as .po-file
 	bool SavePO(LPCTSTR szFilename) const
 	{
-		CTime t = CTime::GetCurrentTime();
+		_tprintf( _T("Saving PO file: '%s'\n"), szFilename );
 
 		CStringA sOutput;
 		sOutput.Format(
@@ -301,21 +347,31 @@ public:
 			"\"X-Poedit-Language: English\\n\"\n"
 			"\"X-Poedit-Country: UNITED STATES\\n\"\n"
 			"\"X-Poedit-SourceCharset: utf-8\\n\"\n",
-			m_Items.GetCount(),
-			(LPCSTR)CT2A( t.FormatGmt( _T("%Y-%m-%d %H:%M+0000") ) ) );
+			m_Items.GetCount(), (LPCSTR)CT2A(
+			CTime::GetCurrentTime().FormatGmt( _T("%Y-%m-%d %H:%M+0000") ) ) );
 
 		for( POSITION pos = m_Items.GetHeadPosition(); pos; )
 		{
 			const CItem& item = m_Items.GetNext( pos );
 
-			CStringA sLine;
-			CStringA sUTF8ID( UTF8Encode( item.sID ) );
-			CStringA sUTF8Translated( UTF8Encode( item.sTranslated ) );
-			sLine.Format( "\n#: %s\nmsgid \"%s\"\nmsgstr \"%s\"\n",
-				(LPCSTR)UTF8Encode( item.sRef ),
-				(LPCSTR)MakeSafe( sUTF8ID ),
-				(LPCSTR)MakeSafe( sUTF8Translated ) );
-			sOutput += sLine;
+			if ( item.sID == "" )
+				continue;
+
+			CString sSafeID( item.sID );
+			MakeSafe( sSafeID );
+			CString sSafeTranslated( item.sTranslated );
+			MakeSafe( sSafeTranslated );
+
+			CStringA sSafeUtf8ID( UTF8Encode( sSafeID ) );
+			CStringA sSafeUtf8Translated( UTF8Encode( sSafeTranslated ) );
+
+			sOutput += "\n#: ";
+			sOutput += item.sRef;
+			sOutput += "\nmsgid \"";
+			sOutput += sSafeUtf8ID;
+			sOutput += "\"\nmsgstr \"";
+			sOutput += sSafeUtf8Translated;
+			sOutput += "\"\n";
 		}
 
 		CAtlFile oFile;
@@ -333,11 +389,12 @@ protected:
 	class CItem
 	{
 	public:
-		CItem()
+		CItem() :
+			bKeepUnderscores( false )
 		{
 		}
-		CItem(const CString& r, const CString& t) :
-			sRef( r ), sID( t )
+		CItem(const CString& r, const CString& t, bool k) :
+			sRef( r ), sID( t ), bKeepUnderscores( k )
 		{
 		}
 		void Clear()
@@ -349,10 +406,11 @@ protected:
 		CString sRef;
 		CString sID;
 		CString sTranslated;
+		bool	bKeepUnderscores;
 	} ;
 
 	typedef CAtlList< CItem > CItemList;
-	typedef CAtlMap< CString, const CItem* > CItemMap;
+	typedef CAtlMap< CString, CItem* > CItemMap;
 
 	CComPtr< IXMLDOMDocument > m_pXMLDoc;	// XML data
 	bool				m_bRemoveComments;	// Remove comments from XML data
@@ -367,7 +425,7 @@ protected:
 		if ( nUTF8 > 0 )
 		{
 			WideCharToMultiByte( CP_UTF8, 0, szInput, nInput, sUTF8.GetBuffer( nUTF8 ), nUTF8, NULL, NULL );
-			sUTF8.ReleaseBuffer( nUTF8 );
+			sUTF8.ReleaseBuffer( nUTF8 - ( ( nInput == -1 ) ? 1 : 0 ) );
 		}
 		return sUTF8;
 	}
@@ -379,32 +437,32 @@ protected:
 		if ( nWide > 0 )
 		{
 			MultiByteToWideChar( CP_UTF8, 0, szInput, nInput, sWide.GetBuffer( nWide ), nWide );
-			sWide.ReleaseBuffer( nWide );
+			sWide.ReleaseBuffer( nWide - ( ( nInput == -1 ) ? 1 : 0 ) );
 		}
 		return sWide;
 	}
 
-	static CStringA& MakeSafe(CStringA& str)
+	static CString& MakeSafe(CString& str)
 	{
-		CStringA tmp;
-		LPSTR dst = tmp.GetBuffer( str.GetLength() * 2 + 1 );
-		for ( LPCSTR src = str; *src; src++ )
+		CString tmp;
+		LPTSTR dst = tmp.GetBuffer( str.GetLength() * 2 + 1 );
+		for ( LPCTSTR src = str; *src; src++ )
 		{
-			switch ( *src )
+			if ( *src >= _T(' ') )
 			{
-				case '\r':
-				case '\n':
-					break;
-				case '\\':
-					*dst++ = '\\';
-					*dst++ = '\\';
-					break;
-				case '\"':
-					*dst++ = '\\';
-					*dst++ = '\"';
-					break;
-				default:
-					*dst++ = *src;
+				switch ( *src )
+				{
+					case _T('\\'):
+						*dst++ = _T('\\');
+						*dst++ = _T('\\');
+						break;
+					case _T('\"'):
+						*dst++ = _T('\\');
+						*dst++ = _T('\"');
+						break;
+					default:
+						*dst++ = *src;
+				}
 			}
 		}
 		*dst = 0;
@@ -420,7 +478,7 @@ protected:
 		return str;
 	}
 
-	void Add(const CString& sRef, const CString& sID)
+	bool Add(const CString& sRef, CString sID, bool bKeepUnderscores = false)
 	{
 		// #:  file_name:line_number
 		// msgid ""
@@ -429,44 +487,86 @@ protected:
 		CString sRefLC( sRef );
 		sRefLC.MakeLower();
 
-		ATLASSERT( sRef.Find( _T(" \t\r\n#:") ) == -1 );
-		ATLASSERT( const_cast< CItemMap::CPair* >( m_Index.Lookup( sRefLC ) ) == NULL );
+		if( sRef.Find( _T(" \t\r\n#:") ) != -1 )
+		{
+			_tprintf( _T("Found invalid PO reference: %s\n"), sRef );
+			return false;
+		}
+
+		const CItemMap::CPair* pair = m_Index.Lookup( sRefLC );
+		if ( pair )
+		{
+			// Skip duplicate
+			return true;
+		}
 
 		for( POSITION pos = m_Items.GetHeadPosition(); pos; )
 		{
 			CItem& item = m_Items.GetNext( pos );
-			if ( item.sID == sID )
+			if ( ( bKeepUnderscores && item.bKeepUnderscores ) ?
+				IsEqual( item.sID, sID ) : ( item.sID == sID ) )
 			{
 				// Already defined string
 				item.sRef = item.sRef + _T(" ") + sRef;
 				m_Index.SetAt( sRefLC, &item );
-				return;
+				return true;
 			}
 		}
 
+		if ( ! bKeepUnderscores )
+			sID.Remove( _T('_') );
+
 		// New string
-		POSITION pos = m_Items.AddTail( CItem( sRef, sID ) );
+		POSITION pos = m_Items.AddTail( CItem( sRef, sID, bKeepUnderscores ) );
 		CItem& item = m_Items.GetAt( pos );
 		m_Index.SetAt( sRefLC, &item );
+		return true;
 	}
 
-	bool LoadManifest(IXMLDOMElement* pXMLElement)
+	static bool IsEqual(const CString& _left, const CString& _right)
 	{
-		CComVariant vName;
+		LPCTSTR l = _left;
+		LPCTSTR r = _right;
+		for ( ; *l || *r; ++l, ++r )
+		{
+			if ( *l == _T('_') )
+			{
+				--r;
+				continue;
+			}
+			if ( *r == _T('_') )
+			{
+				--l;
+				continue;
+			}
+			if ( *l != *r )
+				return false;
+		}
+		return ! *l && ! *r;
+	}
+
+	bool LoadManifest(IXMLDOMElement* /*pXMLElement*/)
+	{
+		/*CComVariant vName;
 		pXMLElement->getAttribute( CComBSTR( _T("name") ), &vName );
 		CComVariant vAuthor;
-		pXMLElement->getAttribute( CComBSTR( _T("author") ), &vAuthor );
-
+		pXMLElement->getAttribute( CComBSTR( _T("author") ), &vAuthor );*/
 		return true;
 	}
 
 	bool Load(LPCWSTR szParentName, LPCWSTR szRefName, LPCWSTR szTextName,
-		IXMLDOMElement* pXMLElement)
+		IXMLDOMElement* pXMLElement, bool bKeepUnderscores = false)
 	{
 		CComVariant vRef;
 		if ( szRefName )
+		{
 			if ( S_OK != pXMLElement->getAttribute( CComBSTR( szRefName ), &vRef ) )
+			{
+				_tprintf( _T("Missed required XML attribute \"%s\" at \"%s;?\"\n"),
+					szRefName, szParentName );
 				return false;
+			}
+		}
 
 		CComVariant vText;
 		if ( S_OK != pXMLElement->getAttribute( CComBSTR( szTextName ), &vText ) )
@@ -483,20 +583,25 @@ protected:
 			CString sRefLC( sRef );
 			sRefLC.MakeLower();
 
-			const CItem* translated = NULL;
+			CItem* translated = NULL;
 			if ( m_pXMLTranslator->m_Index.Lookup( sRefLC, translated ) )
 			{
-				ATLVERIFY( S_OK == pXMLElement->setAttribute(
-					CComBSTR( szTextName ), CComVariant( translated->sTranslated ) ) );
+				if ( translated->sTranslated == _T("") )
+					pXMLElement->setAttribute(
+						CComBSTR( szTextName ), CComVariant( translated->sID ) );
+				else
+					pXMLElement->setAttribute(
+						CComBSTR( szTextName ), CComVariant( translated->sTranslated ) );
 			}
 			else
-				_tprintf( _T("Missed translation at %s : %s=\"%s\"\n"),
-					sRef, szTextName, (LPCWSTR)vText.bstrVal );
+				_tprintf( _T("Missed translation for %s=\"%s\" %s=\"%s\"\n"),
+					( szRefName ? szRefName : _T("") ), sRef, szTextName,
+					(LPCWSTR)vText.bstrVal );
+
+			return true;
 		}
 		else
-			Add( sRef, sText );
-
-		return true;
+			return Add( sRef, sText, bKeepUnderscores );
 	}
 
 	bool LoadToolbar(IXMLDOMElement* pXMLRoot)
@@ -532,17 +637,17 @@ protected:
 			}
 			else if ( name == _T("button") )
 			{
-				tmp.Format( _T("%s;button-text"), (LPCWSTR)vName.bstrVal );
-				if ( ! Load( tmp, _T("id"), _T("text"), pXMLElement ) )
+				if ( ! Load( CString( vName.bstrVal ) + _T(";button-text"),
+					_T("id"), _T("text"), pXMLElement ) )
 					return false;
-				tmp.Format( _T("%s;button-tip"), (LPCWSTR)vName.bstrVal );
-				if ( ! Load( tmp, _T("id"), _T("tip"), pXMLElement ) )
+				if ( ! Load( CString( vName.bstrVal ) + _T(";button-tip"),
+					_T("id"), _T("tip"), pXMLElement ) )
 					return false;
 			}
 			else if ( name == _T("control") )
 			{
-				tmp.Format( _T("%s;control"), (LPCWSTR)vName.bstrVal );
-				if ( ! Load( tmp, _T("id"), _T("text"), pXMLElement ) )
+				if ( ! Load( CString( vName.bstrVal ) + _T(";control"),
+					_T("id"), _T("text"), pXMLElement ) )
 					return false;
 			}
 			else if ( name == _T("separator") )
@@ -613,6 +718,70 @@ protected:
 		return true;
 	}
 
+	bool LoadMenu(IXMLDOMElement* pXMLRoot, LPCTSTR szParentName)
+	{
+		CComVariant vName;
+		pXMLRoot->getAttribute( CComBSTR( _T("name") ), &vName );
+		if ( vName.vt == VT_NULL )
+			vName = szParentName;
+
+		CString tmp;
+		int i = 0;
+
+		XML_FOR_EACH_BEGIN( pXMLRoot, pXMLNode );
+
+		// <menu text=""></menu>
+		// <item id="" text=""/>
+		// <separator/>
+
+		CComQIPtr< IXMLDOMElement > pXMLElement( pXMLNode );
+
+		CComBSTR name;
+		if ( pXMLNode->get_nodeName( &name ) == S_OK )
+		{
+			name.ToLower();
+			if ( name == _T("#comment") )
+			{
+				// Comments
+				if ( m_bRemoveComments )
+				{
+					CComPtr< IXMLDOMNode > pChild;
+					pXMLRoot->removeChild( pXMLNode, &pChild );
+				}
+				continue;
+			}
+			else if ( name == _T("menu") )
+			{
+				// Sub-menu
+				tmp.Format( _T("%s;%d"), (LPCWSTR)vName.bstrVal, ++i );
+				if ( ! Load( tmp, NULL, _T("text"), pXMLElement, true ) )
+					return false;
+				if ( ! LoadMenu( pXMLElement, tmp ) )
+					return false;
+			}
+			else if ( name == _T("item") )
+			{
+				// Menu item
+				if ( ! Load( _T("menu"), _T("id"), _T("text"), pXMLElement, true  ) )
+					return false;
+			}
+			else if ( name == _T("separator") )
+			{
+				// Menu separator
+				continue;
+			}
+			else
+			{
+				_tprintf( _T("Error: Unexpected tag inside <menu>: %ls\n"), (LPCWSTR)name );
+				return false;
+			}
+		}
+
+		XML_FOR_EACH_END()
+
+		return true;
+	}
+
 	bool LoadMenus(IXMLDOMElement* pXMLRoot)
 	{
 		XML_FOR_EACH_BEGIN( pXMLRoot, pXMLNode );
@@ -620,6 +789,31 @@ protected:
 		// <menu name=""></menu>
 
 		CComQIPtr< IXMLDOMElement > pXMLElement( pXMLNode );
+
+		CComBSTR name;
+		if ( pXMLNode->get_nodeName( &name ) == S_OK )
+		{
+			name.ToLower();
+			if ( name == _T("#comment") )
+			{
+				if ( m_bRemoveComments )
+				{
+					CComPtr< IXMLDOMNode > pChild;
+					pXMLRoot->removeChild( pXMLNode, &pChild );
+				}
+				continue;
+			}
+			else if ( name == _T("menu") )
+			{
+				if ( ! LoadMenu( pXMLElement, _T("") ) )
+					return false;
+			}
+			else
+			{
+				_tprintf( _T("Error: Unexpected tag inside <menus>: %ls\n"), (LPCWSTR)name );
+				return false;
+			}
+		}
 
 		XML_FOR_EACH_END()
 
@@ -843,8 +1037,6 @@ int _tmain(int argc, _TCHAR* argv[])
 				{
 					ret = 0;
 				}
-				else
-					_tprintf( _T("Error: Can't load .xml-file: %s\n"), argv[ 2 ] );
 			}
 			else if ( bXMLMode )
 			{
@@ -854,8 +1046,6 @@ int _tmain(int argc, _TCHAR* argv[])
 					oTemplate.SetTranslator( &oTranslated );
 					ret = 0;
 				}
-				else
-					_tprintf( _T("Error: Can't load .po-file: %s\n"), argv[ 2 ] );
 			}
 			else
 				ret = 0;
@@ -884,8 +1074,6 @@ int _tmain(int argc, _TCHAR* argv[])
 						ret = oTemplate.SavePO( szOutput ) ? 0 : 2;
 					}
 				}
-				else
-					_tprintf( _T("Error: Can't load .xml-file: %s\n"), szTemplate );
 			}
 		}
 		CoUninitialize();
