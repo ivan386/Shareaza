@@ -1,2 +1,2 @@
-Debug\SkinTranslate.exe ..\..\default-en.xml default.pot
+Debug\SkinTranslate.exe ..\..\default-en.xml default-en.pot
 @pause
