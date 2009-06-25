@@ -88,10 +88,11 @@ protected:
 	void ReIndex();
 
 	CItem& Add(const CItem& item);
-	bool Add(const CString& sRef, CString sID, bool bKeepUnderscores = false);
-	bool LoadManifest(IXMLDOMElement* pXMLElement);
+
 	bool Load(LPCWSTR szParentName, LPCWSTR szRefName, LPCWSTR szTextName,
-		IXMLDOMElement* pXMLElement, bool bKeepUnderscores = false);
+		IXMLDOMElement* pXMLElement, bool bKeepUnderscores = false, bool bSubstitute = false);
+
+	bool LoadManifest(IXMLDOMElement* pXMLElement);
 	bool LoadToolbar(IXMLDOMElement* pXMLRoot);
 	bool LoadToolbars(IXMLDOMElement* pXMLRoot);
 	bool LoadMenu(IXMLDOMElement* pXMLRoot, LPCTSTR szParentName, int& i);
