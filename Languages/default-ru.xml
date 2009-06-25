@@ -80,7 +80,7 @@
 	<!-- SEARCH WINDOW -->
 	<toolbar name="CSearchWnd.Panel.Basic">
 		<button id="ID_SEARCH_DOWNLOAD" text="Загрузить"/>
-		<button id="ID_BROWSE_LAUNCH" text="Данные пользователя"/>
+		<button id="ID_BROWSE_LAUNCH" text="Просмотр хоста"/>
 		<separator/>
 		<button id="ID_SEARCH_PANEL" text="Панель поиска"/>
 		<button id="ID_SEARCH_DETAILS" text="Подробности"/>
@@ -91,7 +91,7 @@
 	</toolbar>
 	<toolbar name="CSearchWnd.Panel">
 		<button id="ID_SEARCH_DOWNLOAD" text="Загрузить"/>
-		<button id="ID_BROWSE_LAUNCH" text="Данные пользователя"/>
+		<button id="ID_BROWSE_LAUNCH" text="Просмотр хоста"/>
 		<separator/>
 		<button id="ID_SEARCH_PANEL" text="Панель поиска"/>
 		<button id="ID_SEARCH_DETAILS" text="Подробности"/>
@@ -105,7 +105,7 @@
 		<button id="ID_SEARCH_STOP" text="Остановка поиска"/>
 		<separator/>
 		<button id="ID_SEARCH_DOWNLOAD" text="Загрузить"/>
-		<button id="ID_BROWSE_LAUNCH" text="Данные пользователя"/>
+		<button id="ID_BROWSE_LAUNCH" text="Просмотр хоста"/>
 		<separator/>
 		<button id="ID_SEARCH_PANEL" text="Панель поиска"/>
 		<button id="ID_SEARCH_DETAILS" text="Подробности"/>
@@ -154,7 +154,7 @@
 		<separator/>
 		<button id="ID_DOWNLOADS_RESUME" text="Продолжить"/>
 		<button id="ID_DOWNLOADS_PAUSE" text="Приостановить"/>
-		<button id="ID_DOWNLOADS_CLEAR_INCOMPLETE" text="Отменить"/>
+		<button id="ID_DOWNLOADS_CLEAR_INCOMPLETE" text="Отменить загрузку"/>
 		<button id="ID_DOWNLOADS_CLEAR_COMPLETE" text="Убрать"/>
 		<separator/>
 		<button id="ID_DOWNLOADS_MONITOR" text="Монитор"/>
@@ -169,7 +169,7 @@
 		<separator/>
 		<button id="ID_DOWNLOADS_RESUME" text="Продолжить"/>
 		<button id="ID_DOWNLOADS_PAUSE" text="Приостановить"/>
-		<button id="ID_DOWNLOADS_CLEAR_INCOMPLETE" text="Отменить"/>
+		<button id="ID_DOWNLOADS_CLEAR_INCOMPLETE" text="Отменить загрузку"/>
 		<button id="ID_DOWNLOADS_CLEAR_COMPLETE" text="Убрать"/>
 		<separator/>
 		<button id="ID_DOWNLOADS_MONITOR" text="Монитор"/>
@@ -809,9 +809,9 @@
 		<item id="ID_NETWORK_SEARCH" text="Новый _поиск..."/>
 		<item id="ID_TOOLS_DOWNLOAD" text="_Загрузить файл..."/>
 		<separator/>
-		<item id="ID_MEDIA_PLAY" text="_Воспроизводить"/>
-		<item id="ID_MEDIA_PAUSE" text="Приоста_новить"/>
-		<item id="ID_MEDIA_STOP" text="Ос_тановить"/>
+		<item id="ID_MEDIA_PLAY" text="_Играть"/>
+		<item id="ID_MEDIA_PAUSE" text="_Пауза"/>
+		<item id="ID_MEDIA_STOP" text="_Стоп"/>
 		<separator/>
 		<item id="ID_MEDIA_PREVIOUS" text="Пре_дыдущий трэк"/>
 		<item id="ID_MEDIA_NEXT" text="_Следующий трэк"/>
@@ -826,9 +826,9 @@
 		<item id="ID_NETWORK_SEARCH" text="Новый _поиск..."/>
 		<item id="ID_TOOLS_DOWNLOAD" text="_Загрузить файл..."/>
 		<separator/>
-		<item id="ID_MEDIA_PLAY" text="_Воспроизводить"/>
-		<item id="ID_MEDIA_PAUSE" text="Приоста_новить"/>
-		<item id="ID_MEDIA_STOP" text="Ос_тановить"/>
+		<item id="ID_MEDIA_PLAY" text="_Играть"/>
+		<item id="ID_MEDIA_PAUSE" text="_Пауза"/>
+		<item id="ID_MEDIA_STOP" text="_Стоп"/>
 		<separator/>
 		<item id="ID_MEDIA_PREVIOUS" text="Пре_дыдущий трэк"/>
 		<item id="ID_MEDIA_NEXT" text="_Следующий трэк"/>
@@ -968,7 +968,7 @@
 			<separator/>
 			<item id="ID_SEARCH_FOR_ARTIST" text="Музыку этого же исполнителя"/>
 			<item id="ID_SEARCH_FOR_ALBUM" text="Музыку из этого же альбома"/>
-			<item id="ID_SEARCH_FOR_SERIES" text="Серии этого же сериала"/>
+			<item id="ID_SEARCH_FOR_SERIES" text="Серии из этого же сериала"/>
 		</menu>
 		<menu text="_Сервис">
 			<item id="ID_LIBRARY_BITZI_WEB" text="Посмотреть _Bitzi этикетку"/>
@@ -993,7 +993,7 @@
 			<separator/>
 			<item id="ID_SEARCH_FOR_ARTIST" text="Музыку этого же исполнителя"/>
 			<item id="ID_SEARCH_FOR_ALBUM" text="Музыку из этого же альбома"/>
-			<item id="ID_SEARCH_FOR_SERIES" text="Серии этого же сериала"/>
+			<item id="ID_SEARCH_FOR_SERIES" text="Серии из этого же сериала"/>
 		</menu>
 		<menu text="_Сервис">
 			<item id="ID_LIBRARY_BITZI_WEB" text="Посмотреть _Bitzi этикетку"/>
@@ -1015,7 +1015,7 @@
 		<separator/>
 		<item id="ID_DOWNLOADS_RESUME" text="_Продолжить"/>
 		<item id="ID_DOWNLOADS_PAUSE" text="П_риостановить"/>
-		<item id="ID_DOWNLOADS_CLEAR_INCOMPLETE" text="_Отменить"/>
+		<item id="ID_DOWNLOADS_CLEAR_INCOMPLETE" text="_Отменить загрузку"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_SOURCES" text="_Найти больше источников"/>
 		<!-- <separator/>
@@ -1033,7 +1033,7 @@
 		<separator/>
 		<item id="ID_DOWNLOADS_RESUME" text="_Продолжить"/>
 		<item id="ID_DOWNLOADS_PAUSE" text="П_риостановить"/>
-		<item id="ID_DOWNLOADS_CLEAR_INCOMPLETE" text="_Отменить"/>
+		<item id="ID_DOWNLOADS_CLEAR_INCOMPLETE" text="_Отменить загрузку"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_SOURCES" text="_Найти больше источников"/>
 		<separator/>
@@ -1211,7 +1211,7 @@
 			<item id="ID_LIBRARY_BITZI_WEB" text="Посмотреть _Bitzi этикетку"/>
 			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Загрузить метаданные"/>
 			<separator/>
-			<item id="ID_LIBRARY_URL" text="Копировать _ссылку"/>
+			<item id="ID_LIBRARY_URL" text=""/>
 		</menu>
 		<menu text="О_перации">
 			<item id="ID_LIBRARY_RENAME" text="_Переименовать файл"/>
@@ -1229,7 +1229,7 @@
 		<separator/>
 		<item id="ID_LIBRARY_SHARED_FILE" text="_Общий доступ"/>
 		<separator/>
-		<item id="ID_LIBRARY_URL" text="Копировать сс_ылку"/>
+		<item id="ID_LIBRARY_URL" text=""/>
 		<item id="ID_LIBRARY_DELETE" text="_Удалить"/>
 		<separator/>
 		<menu text="_Искать">
@@ -1612,7 +1612,7 @@
 		<anchor id="Header" width="32" height="172"/>
 		<newline gap="0"/>
 		<group id="1">
-			<icon res="130" width="32" height="32"/><gap size="8"/>
+			<icon res="130" width="32" height="32" target="raza:command:ID_NETWORK_CONNECT"/><gap size="8"/>
 			<heading align="middle">У С Т А Н О В И Т Е  &#160; С О Е Д И Н Е Н И Е</heading>
 			<newline gap="8" indent="42"/>
 			<text>Добро пожаловать в Shareaza!</text>
@@ -1765,7 +1765,7 @@
 			<para align="center">
 				<text format="b">Нет подключения</text>
 				<newline gap="4"/>
-				<link target="raza:command:ID_NETWORK_CONNECT" format="bu">Подключиться!</link>
+				<link target="raza:command:ID_NETWORK_CONNECT">Подключиться!</link>
 			</para>
 		</group>
 		<icon group="20" command="ID_NETWORK_G2"/><gap group="20" size="4"/>
@@ -1790,7 +1790,7 @@
 		<newline group="30" gap="2"/>
 		<group id="2">
 			<para align="center">
-				<newline gap="6"/>
+				<newline gap="4"/>
 				<text>Вы подключены </text>
 				<newline gap="0"/>
 				<text id="ConnectedHours" format="b">%i </text>
@@ -1984,7 +1984,7 @@
 	</document>
 	<document name="CBrowseHostProfile.2">
 		<newline gap="40" indent="0"/>
-		<text format="b">Общий доступ</text>
+		<text format="b">Файлы</text>
 		<newline gap="4" indent="8"/>
 		<icon res="137" target="raza:command:ID_BROWSE_FILES"/><gap size="5"/>
 		<link target="raza:command:ID_BROWSE_FILES" align="middle">Файлы</link>
@@ -2029,7 +2029,7 @@
 		<text format="b">Эта загрузка в паузе</text>
 		<newline gap="8"/>
 		<text>Вы приостановили загрузку.  Если вы хотите продолжить загрузку, Вы можете
-		щелкнуть комманду </text><text format="b">Продолжить.</text>
+		щелкнуть кнопку '</text><text format="b">Продолжить</text><text>'.</text>
 	</document>
 	<document name="DownloadHelp.DiskFull">
 		<text format="b">Диск полон</text>
@@ -2080,8 +2080,8 @@
 		<text>У этой загрузки нет известных источников, так что Shareaza ищет
 		новые источники во всех подключенных P2P сетях.  Один источник найдеся - и загрузка
 		начнется автоматически.  Shareaza ищет источники автоматически,
-		однако Вы можете ускорить процесс, используя команду</text>
-		<text format="b"> Найти больше источников</text>
+		однако Вы можете ускорить процесс, используя команду '</text>
+		<text format="b">Найти больше источников</text><text>'.</text>
 		<newline gap="8"/>
 		<text>К сожалению во многих случаях может не быть пользовтелей, подключенных сейчас и
 		имеющих файл, котоый Вы ищите.  Можно ждать что кто то подключится, или  можно попытаться
@@ -2198,8 +2198,7 @@
 		<text>Ваш запрос плохо сформатирован, и он может работать неправильно. Для того, чтобы смогли начать поиск,
 		 Вы должны использовать минимальное число правильных букв/знаков.</text>
 		<newline gap="8"/>
-		<text>Если в Вашем запросе имеются тип файла или цифры, Вы толжны указать дополнительные условия тоже.
-		</text>
+		<text>Если в Вашем запросе имеются тип файла или цифры, Вы толжны указать дополнительные условия тоже.</text>
 	</document>
 	<document name="SearchHelp.BadSearch3">
 		<text format="b">Перефразируйте Ваш запрос</text>
@@ -2371,7 +2370,7 @@
 	<tip id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" message="Просмотр и правка свойств всех файлов, находящихся в помеченной папке(ах)..."/>
 	<tip id="ID_LIBRARY_FOLDER_METADATA" message="Применить общие мета данные папки альбома ко всем в ней содержащихся файлам."/>
 	<tip id="ID_LIBRARY_FOLDER_NEW" message="Создать здесь новую папку альбома..."/>
-	<tip id="ID_LIBRARY_FOLDER_PROPERTIES" message="Вид и правка свойств помеченной папки альбома..."/>
+	<tip id="ID_LIBRARY_FOLDER_PROPERTIES" message="Просмотр и правка свойств помеченной папки альбома..."/>
 	<tip id="ID_LIBRARY_FOLDERS" message="Управление физическими папками Вашего хранилища..."/>
 	<tip id="ID_LIBRARY_HASH_PRIORITY" message="Ускорить процесс сканирования хеширования файлов."/>
 	<tip id="ID_LIBRARY_LAUNCH" message="Открыть или проигрывать помеченный файл(ы)."/>
@@ -2457,8 +2456,8 @@
 	<tip id="ID_NETWORK_SEARCH" message="Начать новый поиск в сети..."/>
 	<tip id="ID_SEARCH_CHAT" message="Открыть чат сессию с помеченным пользователем."/>
 	<tip id="ID_SEARCH_CLEAR" message="Очистить результаты поиска."/>
-	<tip id="ID_SEARCH_COLUMNS" message="Выбрать колонки мета данных для отображения..."/>
-	<tip id="ID_SEARCH_COPY" message="Копировать ссылку выдленного файла."/>
+	<tip id="ID_SEARCH_COLUMNS" message="Выбрать колонки мета данных для показа..."/>
+	<tip id="ID_SEARCH_COPY" message="Копировать ссылку помеченного файла."/>
 	<tip id="ID_SEARCH_DETAILS" message="Показать подробную информацию о помеченном файле."/>
 	<tip id="ID_SEARCH_DOWNLOAD" message="Загрузить помеченный файл(ы)."/>
 	<tip id="ID_SEARCH_DOWNLOADNOW" message="Загрузить помеченный файл(ы) с приоритетом."/>
@@ -2650,8 +2649,8 @@
 	<string id="8137" value="Без колонок схемы"/>
 	<string id="8141" value="Показывать панель поиска"/>
 	<string id="8142" value="Скрыть панель поиска"/>
-	<string id="8143" value="Поиск ..."/>
-	<string id="8144" value="Поиск"/>
+	<string id="8143" value="Поиск"/>
+	<string id="8144" value="Искать"/>
 	<string id="8145" value="Далее"/>
 	<string id="8146" value="Стоп"/>
 	<string id="8147" value="Любой тип файла"/>
@@ -2663,7 +2662,7 @@
 	<string id="8153" value="Пока ничего не ищем"/>
 	<string id="8154" value="Файлов не найдено"/>
 	<string id="8155" value="%lu файлов, %lu запросов|%lu файлов, %lu запросов|%lu файлов, %lu запросов"/>
-	<string id="8156" value="Поиск"/>
+	<string id="8156" value="Искать"/>
 	<string id="8157" value="Результаты"/>
 	<string id="8158" value="Очистить"/>
 	<string id="8159" value="Подробнее"/>
@@ -2711,7 +2710,7 @@
 	<string id="8294" value="Недавние дополнения"/>
 	<string id="8295" value="Оценить файл"/>
 	<string id="8304" value="Н/Д"/>
-	<string id="8306" value="Путь"/>
+	<string id="8306" value="Место"/>
 	<string id="8307" value="Тип"/>
 	<string id="8308" value="Размер"/>
 	<string id="8309" value="Частичный источник (%.2f%% доступно)"/>
@@ -3257,16 +3256,16 @@
 	<string id="20125" value="Проверено"/>
 	<string id="20126" value="Без проверки"/>
 	<string id="20127" value="источник"/>
-	<string id="20128" value="источник"/><!-- numbers 21, 31, ... -->
-	<string id="20129" value="источников"/><!-- tens -->
-	<string id="20130" value="источников"/><!-- from 11 to 19 -->
-	<string id="20131" value="источника"/><!-- from 2 to 4 -->
-	<string id="20132" value="источников"/><!-- from 5 to 9 -->
+	<string id="20128" value="источник"/>
+	<string id="20129" value="источников"/>
+	<string id="20130" value="источников"/>
+	<string id="20131" value="источника"/>
+	<string id="20132" value="источников"/>
 	<string id="20133" value="Бесполезен"/>
 	<string id="20134" value="Заморожен"/>
 	<string id="20135" value="Следующий"/>
 	<string id="20136" value="Оч."/>
-	<string id="20137" value="источников"/><!-- 3/10 sources, for e.g. -->
+	<string id="20137" value="источников"/>
 	<string id="20200" value="Воскресенье"/>
 	<string id="20201" value="Понедельник"/>
 	<string id="20202" value="Вторник"/>
@@ -3283,7 +3282,7 @@
 	<string id="20216" value="Отменный"/>
 	<string id="20217" value="Выберите папку с частичными загрузками eMule:"/>
 	<!-- Column headers in Library Album View -->
-	<string id="20230" value="№"/><!-- Track number -->
+	<string id="20230" value="№"/>
 	<string id="20231" value="Название"/>
 	<string id="20232" value="Время"/>
 	<string id="20233" value="Битрат"/>
@@ -3300,6 +3299,7 @@
 	<string id="20244" value="&amp;Запомнить мой выбор на будущее"/>
 </strings>
 <!-- Localised Dialog Text, the "cookie" verifies that the dialog matches the skin -->
+<!-- Don't edit dialogs manualy! Use DialogScan feature instead -->
 <dialogs>
 	<dialog name="CGeneralSettingsGroup" cookie="" caption="Главное">
 	</dialog>
@@ -3386,7 +3386,7 @@
 	<dialog name="CCommunitySettingsPage" cookie="BuStBuBuBuBuBuBu" caption="Сообщество">
 		<control caption="Мой _профиль:"/>
 		<control caption="Используйте профиль пользователя Gnutella для обмена информацией о себе, своих интересах, ссылках на файлы и сайты, с другими."/>
-		<control caption="_Редактировать профиль"/>
+		<control caption="_Профиль"/>
 		<control caption="_Чат:"/>
 		<control caption="Разрешить P2P чат с совместимыми клиентами"/>
 		<control caption="Разрешить чат во всех сетях"/>
@@ -3519,7 +3519,7 @@
 		<control caption="О_череди:"/>
 		<control/>
 		<control caption="_Новое..."/>
-		<control caption="_Правка..."/>
+		<control caption="_Править..."/>
 		<control caption="_Удалить"/>
 		<control caption="(изменения применяются сразу)"/>
 	</dialog>
@@ -3824,7 +3824,7 @@
 		<control caption="Запускать Shareaza при каждом запуске Windows"/>
 		<control caption="Наслаждайтесь использованием Shareaza!"/>
 	</dialog>
-	<dialog name="CProfileManagerDlg" cookie="SyBuBuBu#3" caption="Правка своего профиля">
+	<dialog name="CProfileManagerDlg" cookie="SyBuBuBu#3" caption="Профиль">
 		<control/>
 		<control caption="OK"/>
 		<control caption="Отмена"/>
@@ -3832,7 +3832,7 @@
 		<control/>
 	</dialog>
 	<dialog name="CIdentityProfilePage" cookie="BuStEdStEdEdBuCoStCoStBu" caption="Личность">
-		<control caption="_Имя:"/>
+		<control caption="_Имена:"/>
 		<control caption="Виртуальное:"/>
 		<control/>
 		<control caption="Настоящее:"/>
@@ -4006,7 +4006,7 @@
 		<control caption="Закрыть окно по завершению загрузки"/>
 		<control caption="Открыть файл"/>
 		<control caption="Просмотр хранилища"/>
-		<control caption="Удалить загрузку"/>
+		<control caption="Отменить загрузку"/>
 		<control caption="Скрыть"/>
 	</dialog>
 	<dialog name="CFileGeneralPage" cookie="StEdEdEdEdStStEdStEdStEdStEdEdEd" caption="Основное">
