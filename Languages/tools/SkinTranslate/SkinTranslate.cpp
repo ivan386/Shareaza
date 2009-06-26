@@ -39,7 +39,7 @@ CXMLLoader::CItem& CXMLLoader::Add(const CItem& item)
 
 bool CXMLLoader::LoadPO(LPCWSTR szFilename)
 {
-	_tprintf( _T("Loading PO file: '%s'\n"), szFilename );
+	_tprintf( _T("Loading PO file: %s\n"), szFilename );
 
 	m_Items.RemoveAll();
 
@@ -76,7 +76,7 @@ bool CXMLLoader::LoadPO(LPCWSTR szFilename)
 					case '#':
 						if ( mode != mode_ref && mode != mode_start && mode != mode_msgstr )
 						{
-							_tprintf( _T("Error in line #%d: %s\n"), nLine, sOriginalLine );
+							_tprintf( _T("ERROR: Invalid .po-file line #%d: %hs\n"), nLine, sOriginalLine );
 							return false;
 						}
 						if ( sLine[ 1 ] == ':' )
@@ -117,7 +117,7 @@ bool CXMLLoader::LoadPO(LPCWSTR szFilename)
 						{
 							if( mode != mode_start && mode != mode_ref )
 							{
-								_tprintf( _T("Error in line #%d: %s\n"), nLine, sOriginalLine );
+								_tprintf( _T("ERROR: Invalid .po-file line #%d: %hs\n"), nLine, sOriginalLine );
 								return false;
 							}
 							
@@ -133,7 +133,7 @@ bool CXMLLoader::LoadPO(LPCWSTR szFilename)
 						{
 							if ( mode != mode_msgid )
 							{
-								_tprintf( _T("Error in line #%d: %s\n"), nLine, sOriginalLine );
+								_tprintf( _T("ERROR: Invalid .po-file line #%d: %hs\n"), nLine, sOriginalLine );
 								return false;
 							}
 							
@@ -149,14 +149,14 @@ bool CXMLLoader::LoadPO(LPCWSTR szFilename)
 						else
 						{
 							// Unknown string
-							_tprintf( _T("Error in line #%d: %s\n"), nLine, sOriginalLine );
+							_tprintf( _T("ERROR: Invalid .po-file line #%d: %hs\n"), nLine, sOriginalLine );
 							return false;
 						}
 
 					case '\"':
 						if( mode != mode_msgid && mode != mode_msgstr )
 						{
-							_tprintf( _T("Error in line #%d: %s\n"), nLine, sOriginalLine );
+							_tprintf( _T("ERROR: Invalid .po-file line #%d: %hs\n"), nLine, sOriginalLine );
 							return false;
 						}
 						if ( sLine[ sLine.GetLength() - 1 ] == '\"' )
@@ -167,14 +167,14 @@ bool CXMLLoader::LoadPO(LPCWSTR szFilename)
 						else
 						{
 							// Unknown string
-							_tprintf( _T("Error in line #%d: %s\n"), nLine, sOriginalLine );
+							_tprintf( _T("ERROR: Invalid .po-file line #%d: %hs\n"), nLine, sOriginalLine );
 							return false;
 						}
 						break;
 
 					default:
 						// Unknown string
-						_tprintf( _T("Error in line #%d: %s\n"), nLine, sOriginalLine );
+						_tprintf( _T("ERROR: Invalid .po-file line #%d: %hs\n"), nLine, sOriginalLine );
 						return false;
 					}
 
@@ -186,7 +186,7 @@ bool CXMLLoader::LoadPO(LPCWSTR szFilename)
 				if ( mode != mode_msgstr )
 				{
 					// Unknown string
-					_tprintf( _T("Error in line #%d: %s\n"), nLine, sOriginalLine );
+					_tprintf( _T("ERROR: Invalid .po-file line #%d: %hs\n"), nLine, sOriginalLine );
 					return false;
 				}
 
@@ -201,16 +201,16 @@ bool CXMLLoader::LoadPO(LPCWSTR szFilename)
 				if ( ! m_Items.IsEmpty() )
 					return true;
 
-				_tprintf( _T("Error: PO file is empty\n") );
+				_tprintf( _T("ERROR: PO file is empty: %s\n"), szFilename );
 			}
 			else
-				_tprintf( _T("Error: Can't read PO file: %ls\n"), szFilename );
+				_tprintf( _T("ERROR: Can't read PO file: %s\n"), szFilename );
 		}
 		else
-			_tprintf( _T("Error: Can't read PO file: %ls\n"), szFilename );
+			_tprintf( _T("ERROR: Can't read PO file: %s\n"), szFilename );
 	}
 	else
-		_tprintf( _T("Error: Can't open PO file: %ls\n"), szFilename );
+		_tprintf( _T("ERROR: Can't open PO file: %s\n"), szFilename );
 
 	return false;
 }
@@ -219,7 +219,8 @@ bool CXMLLoader::LoadXML(LPCWSTR szFilename, const CXMLLoader* pTranslator)
 {
 	m_pXMLTranslator = pTranslator;
 
-	_tprintf( _T("Loading XML file: '%s'\n"), szFilename );
+	_tprintf( _T("Loading %sXML file: %s\n"),
+		( pTranslator ? _T("and translating ") : _T("") ), szFilename );
 
 	ATLASSERT( ! m_pXMLDoc );
 	HRESULT hr = m_pXMLDoc.CoCreateInstance( CLSID_DOMDocument );
@@ -250,22 +251,39 @@ bool CXMLLoader::LoadXML(LPCWSTR szFilename, const CXMLLoader* pTranslator)
 							}
 						}
 						else
-							_tprintf( _T("Error: Can't find <skin> tag\n") );
+							_tprintf( _T("ERROR: Can't find <skin> tag\n") );
 					}
 					else
-						_tprintf( _T("Error: Can't find valid root element\n") );
+						_tprintf( _T("ERROR: Can't find valid root element\n") );
 				}
 				else
-					_tprintf( _T("Error: Can't find XML tags\n") );
+					_tprintf( _T("ERROR: Can't find XML tags\n") );
 			}
 			else
-				_tprintf( _T("Error: Can't open XML file: %ls\n"), szFilename );
+			{
+				_tprintf( _T("ERROR: Can't read XML file: %s\n"), szFilename );
+				CComPtr< IXMLDOMParseError > pError;
+				if ( SUCCEEDED ( m_pXMLDoc->get_parseError( &pError ) ) )
+				{
+					long nCode = 0;
+					pError->get_errorCode( &nCode );
+					CComBSTR bstrReason;
+					pError->get_reason( &bstrReason );
+					CComBSTR bstrText;
+					pError->get_srcText( &bstrText );
+					long nLineNumber = 0;
+					pError->get_line( &nLineNumber );
+					_tprintf( _T("XML error 0x%08x: %hsat line #%d: %hs\n"),
+						(DWORD)nCode, (LPCSTR)CW2A( (LPCWSTR)bstrReason, CP_OEMCP ),
+						nLineNumber, (LPCSTR)CW2A( (LPCWSTR)bstrText, CP_OEMCP ) );
+				}
+			}
 		}
 		else
-			_tprintf( _T("Error: Can't put XML object in sync mode\n") );
+			_tprintf( _T("ERROR: Can't put XML object in sync mode\n") );
 	}
 	else
-		_tprintf( _T("Error: Can't create MS XML object\n") );
+		_tprintf( _T("ERROR: Can't create MS XML object\n") );
 
 	m_pXMLTranslator = NULL;
 
@@ -302,34 +320,24 @@ void CXMLLoader::Translate(const CXMLLoader& oTranslator)
 		};
 
 		if ( item.sTranslated.IsEmpty() )
-			_tprintf( _T("Untranslated message \"%s\": \"%s\"\n"), item.sRef, item.sID );
+			_tprintf( _T("WARNING: Untranslated message \"%hs\": \"%hs\"\n"),
+				(LPCSTR)CT2A( item.sRef, CP_OEMCP ), (LPCSTR)CT2A( item.sID, CP_OEMCP ) );
 	}
 }
 
 bool CXMLLoader::SaveXML(LPCTSTR szFilename) const
 {
-	_tprintf( _T("Saving XML file: '%s'\n"), szFilename );
+	_tprintf( _T("Saving XML file: %s\n"), szFilename );
 
 	ATLASSERT( m_pXMLDoc );
 
-	CComBSTR pXML;
-	m_pXMLDoc->get_xml( &pXML );
-
-	CString sXML( pXML );
-	sXML.Replace( _T("\x00a0"), _T("&#160;") ); // Non-break space
-
-	CAtlFile oFile;
-	if ( SUCCEEDED( oFile.Create( szFilename, GENERIC_WRITE, 0, CREATE_ALWAYS ) ) )
-	{
-		const BYTE Marker[3] = { 0xef, 0xbb, 0xbf };
-		CStringA sOutput = UTF8Encode( sXML );
-		return SUCCEEDED( oFile.Write( Marker, 3 ) ) &&
-			SUCCEEDED( oFile.Write( (LPCSTR)sOutput, sOutput.GetLength() - 1 ) );
-	}
+	if ( SUCCEEDED( m_pXMLDoc->save( CComVariant( szFilename ) ) ) )
+		return true;
 	else
-		_tprintf( _T("Error: Can't save .xml-file: %s\n"), szFilename );
-
-	return false;
+	{
+		_tprintf( _T("ERROR: Can't save .xml-file: %s\n"), szFilename );
+		return false;
+	}
 }
 
 bool CXMLLoader::SavePO(LPCTSTR szFilename) const
@@ -337,7 +345,7 @@ bool CXMLLoader::SavePO(LPCTSTR szFilename) const
 	CString	sLanguage;		// PO language (full)
 	CString	sAuthor;		// PO author
 
-	_tprintf( _T("Saving PO file: '%s'\n"), szFilename );
+	_tprintf( _T("Saving PO file: %s\n"), szFilename );
 
 	CItem* item;
 	if ( m_RefIndex.Lookup(  _T("manifest-name"), item ) )
@@ -399,6 +407,7 @@ bool CXMLLoader::SavePO(LPCTSTR szFilename) const
 
 #ifdef _DEBUG
 			// Test it
+			_tprintf( _T("Testing...\n") );
 			CXMLLoader oTest;
 			ATLASSERT( oTest.LoadPO( szFilename ) );
 			POSITION pos1 = m_Items.GetHeadPosition();
@@ -430,10 +439,10 @@ bool CXMLLoader::SavePO(LPCTSTR szFilename) const
 			return true;
 		}
 		else
-			_tprintf( _T("Error: Can't save file: %s\n"), szFilename );
+			_tprintf( _T("ERROR: Can't save file: %s\n"), szFilename );
 	}
 	else
-		_tprintf( _T("Error: Can't create file: %s\n"), szFilename );
+		_tprintf( _T("ERROR: Can't create file: %s\n"), szFilename );
 
 	return false;
 }
@@ -606,7 +615,7 @@ bool CXMLLoader::Load(LPCWSTR szParentName, LPCWSTR szRefName, LPCWSTR szTextNam
 		if ( S_OK != pXMLElement->getAttribute( CComBSTR( szRefName ), &vRef ) ||
 			vRef.vt != VT_BSTR )
 		{
-			_tprintf( _T("Missed required XML attribute \"%s\" at \"%s\"\n"),
+			_tprintf( _T("ERROR: Missed required XML attribute \"%s\" at \"%s\"\n"),
 				szRefName, szParentName );
 			return false;
 		}
@@ -632,10 +641,11 @@ bool CXMLLoader::Load(LPCWSTR szParentName, LPCWSTR szRefName, LPCWSTR szTextNam
 		{
 			if ( translated->sTranslated == _T("") )
 			{
-				_tprintf( _T("Untranslated message \"%s\"=\"%s\" \"%s\"=\"%s\"\n"),
-					( szRefName ? szRefName : _T("?") ), sRefFull,
-					( szTextName ? szTextName : _T("inner_text") ),
-					translated->sID );
+				_tprintf( _T("WARNING: Untranslated message \"%hs\"=\"%hs\" \"%hs\"=\"%hs\"\n"),
+					(LPCSTR)CT2A( ( szRefName ? szRefName : _T("?") ), CP_OEMCP ),
+					(LPCSTR)CT2A( sRefFull, CP_OEMCP ),
+					(LPCSTR)CT2A( ( szTextName ? szTextName : _T("inner_text") ), CP_OEMCP ),
+					(LPCSTR)CT2A( translated->sID, CP_OEMCP ) );
 				if ( szTextName )
 				{
 					pXMLElement->setAttribute(
@@ -660,8 +670,9 @@ bool CXMLLoader::Load(LPCWSTR szParentName, LPCWSTR szRefName, LPCWSTR szTextNam
 			}
 		}
 		else
-			_tprintf( _T("Missed message \"%s\"=\"%s\"\n"),
-				( szRefName ? szRefName : _T("?") ), sRefFull );
+			_tprintf( _T("WARNING: Missed message \"%hs\"=\"%hs\"\n"),
+				(LPCSTR)CT2A( ( szRefName ? szRefName : _T("?") ), CP_OEMCP ),
+				(LPCSTR)CT2A( sRefFull, CP_OEMCP ) );
 
 		return true;
 	}
@@ -681,7 +692,8 @@ bool CXMLLoader::Load(LPCWSTR szParentName, LPCWSTR szRefName, LPCWSTR szTextNam
 
 		if( sRefFull.Find( _T(" \t\r\n") ) != -1 )
 		{
-			_tprintf( _T("Found invalid PO reference: \"%s\"\n"), sRefFull );
+			_tprintf( _T("ERROR: Found invalid PO reference: \"%hs\"\n"),
+				(LPCSTR)CT2A( sRefFull, CP_OEMCP ) );
 			return false;
 		}
 
@@ -830,7 +842,8 @@ bool CXMLLoader::LoadToolbar(IXMLDOMElement* pXMLRoot)
 		}
 		else
 		{
-			_tprintf( _T("Error: Unexpected tag inside <toolbar>: %ls\n"), (LPCWSTR)name );
+			_tprintf( _T("ERROR: Unexpected tag inside <toolbar name=\"%s\">: %s\n"),
+				(LPCWSTR)vName.bstrVal, (LPCWSTR)name );
 			return false;
 		}
 	}
@@ -868,7 +881,8 @@ bool CXMLLoader::LoadToolbars(IXMLDOMElement* pXMLRoot)
 		}
 		else
 		{
-			_tprintf( _T("Error: Unexpected tag inside <toolbars>: %ls\n"), (LPCWSTR)name );
+			_tprintf( _T("ERROR: Unexpected tag inside <toolbars>: %s\n"),
+				(LPCWSTR)name );
 			return false;
 		}
 	}
@@ -932,7 +946,8 @@ bool CXMLLoader::LoadMenu(IXMLDOMElement* pXMLRoot, LPCTSTR szParentName, int& i
 		}
 		else
 		{
-			_tprintf( _T("Error: Unexpected tag inside <menu>: %ls\n"), (LPCWSTR)name );
+			_tprintf( _T("ERROR: Unexpected tag inside <menu name=\"%s\">: %s\n"),
+				(LPCWSTR)vName.bstrVal, (LPCWSTR)name );
 			return false;
 		}
 	}
@@ -972,7 +987,8 @@ bool CXMLLoader::LoadMenus(IXMLDOMElement* pXMLRoot)
 		}
 		else
 		{
-			_tprintf( _T("Error: Unexpected tag inside <menus>: %ls\n"), (LPCWSTR)name );
+			_tprintf( _T("ERROR: Unexpected tag inside <menus>: %s\n"),
+				(LPCWSTR)name );
 			return false;
 		}
 	}
@@ -1055,7 +1071,8 @@ bool CXMLLoader::LoadDocument(IXMLDOMElement* pXMLRoot, LPCTSTR szParentName, in
 		}
 		else
 		{
-			_tprintf( _T("Error: Unexpected tag inside <document>: %ls\n"), (LPCWSTR)name );
+			_tprintf( _T("ERROR: Unexpected tag inside <document name=\"%s\">: %s.\n"),
+				(LPCWSTR)vName.bstrVal, (LPCWSTR)name );
 			return false;
 		}
 	}
@@ -1097,7 +1114,8 @@ bool CXMLLoader::LoadDocuments(IXMLDOMElement* pXMLRoot)
 		}
 		else
 		{
-			_tprintf( _T("Error: Unexpected tag inside <documents>: %ls\n"), (LPCWSTR)name );
+			_tprintf( _T("ERROR: Unexpected tag inside <documents>: %s\n"),
+				(LPCWSTR)name );
 			return false;
 		}
 	}
@@ -1137,7 +1155,8 @@ bool CXMLLoader::LoadCommandTips(IXMLDOMElement* pXMLRoot)
 		}
 		else
 		{
-			_tprintf( _T("Error: Unexpected tag inside <strings>: %ls\n"), (LPCWSTR)name );
+			_tprintf( _T("ERROR: Unexpected tag inside <strings>: %s\n"),
+				(LPCWSTR)name );
 			return false;
 		}
 	}
@@ -1175,7 +1194,8 @@ bool CXMLLoader::LoadControlTips(IXMLDOMElement* pXMLRoot)
 		}
 		else
 		{
-			_tprintf( _T("Error: Unexpected tag inside <strings>: %ls\n"), (LPCWSTR)name );
+			_tprintf( _T("ERROR: Unexpected tag inside <strings>: %s\n"),
+				(LPCWSTR)name );
 			return false;
 		}
 	}
@@ -1213,7 +1233,8 @@ bool CXMLLoader::LoadStrings(IXMLDOMElement* pXMLRoot)
 		}
 		else
 		{
-			_tprintf( _T("Error: Unexpected tag inside <strings>: %ls\n"), (LPCWSTR)name );
+			_tprintf( _T("ERROR: Unexpected tag inside <strings>: %s\n"),
+				(LPCWSTR)name );
 			return false;
 		}
 	}
@@ -1258,7 +1279,8 @@ bool CXMLLoader::LoadDialog(IXMLDOMElement* pXMLRoot)
 		}
 		else
 		{
-			_tprintf( _T("Error: Unexpected tag inside <dialog>: %ls\n"), (LPCWSTR)name );
+			_tprintf( _T("ERROR: Unexpected tag inside <dialog name=\"%s\">: %s\n"),
+				(LPCWSTR)vName.bstrVal, (LPCWSTR)name );
 			return false;
 		}
 	}
@@ -1299,7 +1321,8 @@ bool CXMLLoader::LoadDialogs(IXMLDOMElement* pXMLRoot)
 		}
 		else
 		{
-			_tprintf( _T("Error: Unexpected tag inside <dialogs>: %ls\n"), (LPCWSTR)name );
+			_tprintf( _T("ERROR: Unexpected tag inside <dialogs>: %s\n"),
+				(LPCWSTR)name );
 			return false;
 		}
 	}
@@ -1337,7 +1360,8 @@ bool CXMLLoader::LoadListColumn(IXMLDOMElement* pXMLRoot)
 		}
 		else
 		{
-			_tprintf( _T("Error: Unexpected tag inside <list>: %ls\n"), (LPCWSTR)name );
+			_tprintf( _T("ERROR: Unexpected tag inside <list>: %s\n"),
+				(LPCWSTR)name );
 			return false;
 		}
 	}
@@ -1375,7 +1399,47 @@ bool CXMLLoader::LoadListColumns(IXMLDOMElement* pXMLRoot)
 		}
 		else
 		{
-			_tprintf( _T("Error: Unexpected tag inside <listcolumns>: %ls\n"), (LPCWSTR)name );
+			_tprintf( _T("ERROR: Unexpected tag inside <listcolumns>: %s\n"),
+				(LPCWSTR)name );
+			return false;
+		}
+	}
+
+	XML_FOR_EACH_END()
+
+	return true;
+}
+
+bool CXMLLoader::LoadFonts(IXMLDOMElement* pXMLRoot)
+{
+	XML_FOR_EACH_BEGIN( pXMLRoot, pXMLNode );
+
+	// <font name="" face=""/>
+
+	CComQIPtr< IXMLDOMElement > pXMLElement( pXMLNode );
+
+	CComBSTR name;
+	if ( pXMLNode->get_nodeName( &name ) == S_OK )
+	{
+		name.ToLower();
+		if ( name == _T("#comment") )
+		{
+			if ( m_bRemoveComments )
+			{
+				CComPtr< IXMLDOMNode > pChild;
+				pXMLRoot->removeChild( pXMLNode, &pChild );
+			}
+			continue;
+		}
+		else if ( name == _T("font") )
+		{
+			if ( ! Load( _T("font"), _T("name"), _T("face"), pXMLElement ) )
+				return false;
+		}
+		else
+		{
+			_tprintf( _T("ERROR: Unexpected tag inside <fonts>: %s\n"),
+				(LPCWSTR)name );
 			return false;
 		}
 	}
@@ -1402,11 +1466,6 @@ bool CXMLLoader::LoadSkin(IXMLDOMElement* pXMLRoot)
 				CComPtr< IXMLDOMNode > pChild;
 				pXMLRoot->removeChild( pXMLNode, &pChild );
 			}
-			continue;
-		}
-		else if ( name == _T("fonts") )
-		{
-			// Skip fonts
 			continue;
 		}
 		else if ( name == _T("manifest") )
@@ -1454,9 +1513,15 @@ bool CXMLLoader::LoadSkin(IXMLDOMElement* pXMLRoot)
 			if ( ! LoadListColumns( pXMLElement ) )
 				return false;
 		}
+		else if ( name == _T("fonts") )
+		{
+			if ( ! LoadFonts( pXMLElement ) )
+				return false;
+		}
 		else
 		{
-			_tprintf( _T("Error: Unexpected tag inside <skin>: %ls\n"), (LPCWSTR)name );
+			_tprintf( _T("ERROR: Unexpected tag inside <skin>: %s\n"),
+				(LPCWSTR)name );
 			return false;
 		}
 	}
@@ -1533,7 +1598,7 @@ int _tmain(int argc, _TCHAR* argv[])
 		CoUninitialize();
 	}
 	else
-		_tprintf( _T("Error: Can't initialize COM\n") );
+		_tprintf( _T("ERROR: Can't initialize COM\n") );
 
 	return ( bResult ? 0 : 1 );
 }

@@ -106,5 +106,6 @@ protected:
 	bool LoadDialogs(IXMLDOMElement* pXMLRoot);
 	bool LoadListColumn(IXMLDOMElement* pXMLRoot);
 	bool LoadListColumns(IXMLDOMElement* pXMLRoot);
+	bool LoadFonts(IXMLDOMElement* pXMLRoot);
 	bool LoadSkin(IXMLDOMElement* pXMLRoot);
 };
