@@ -988,9 +988,9 @@
 		<item id="ID_DOWNLOADS_REMOTE_PREVIEW" text="R_emote Preview"/>
 		<item id="ID_DOWNLOADS_VIEW_REVIEWS" text="_View Reviews"/>
 		<separator/>
-		<item id="ID_DOWNLOADS_RESUME" text="_Resume"/>
-		<item id="ID_DOWNLOADS_PAUSE" text="P_ause"/>
-		<item id="ID_DOWNLOADS_CLEAR_INCOMPLETE" text="_Cancel"/>
+		<item id="ID_DOWNLOADS_RESUME" text="_Resume Download"/>
+		<item id="ID_DOWNLOADS_PAUSE" text="P_ause Download"/>
+		<item id="ID_DOWNLOADS_CLEAR_INCOMPLETE" text="_Cancel Download"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_SOURCES" text="_Find More Sources"/>
 		<!-- <separator/>
@@ -1006,9 +1006,9 @@
 		<item id="ID_DOWNLOADS_ENQUEUE" text="Add to Pla_ylist"/>
 		<item id="ID_DOWNLOADS_VIEW_REVIEWS" text="_View Reviews"/>
 		<separator/>
-		<item id="ID_DOWNLOADS_RESUME" text="_Resume"/>
-		<item id="ID_DOWNLOADS_PAUSE" text="P_ause"/>
-		<item id="ID_DOWNLOADS_CLEAR_INCOMPLETE" text="_Cancel"/>
+		<item id="ID_DOWNLOADS_RESUME" text="_Resume Download"/>
+		<item id="ID_DOWNLOADS_PAUSE" text="P_ause Download"/>
+		<item id="ID_DOWNLOADS_CLEAR_INCOMPLETE" text="_Cancel Download"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_SOURCES" text="_Find More Sources"/>
 		<separator/>
@@ -1464,10 +1464,10 @@
 	<menu name="CSearchMonitorWnd">
 		<item id="ID_HITMONITOR_SEARCH" text="_Search for This"/>
 		<separator/>
-    <item id="ID_BROWSE_LAUNCH" text="_Browse User"/>
-    <item id="ID_SECURITY_BAN" text="B_an User"/>
-    <separator/>
-    <item id="ID_SEARCHMONITOR_PAUSE" text="_Pause Display"/>
+		<item id="ID_BROWSE_LAUNCH" text="_Browse User"/>
+		<item id="ID_SECURITY_BAN" text="B_an User"/>
+		<separator/>
+		<item id="ID_SEARCHMONITOR_PAUSE" text="_Pause Display"/>
 		<item id="ID_SEARCHMONITOR_CLEAR" text="_Clear Buffer"/>
 	</menu>
 	<!-- GRAPH/TRAFFIC WINDOW -->
@@ -2046,8 +2046,8 @@
 		<text format="b">This Download is Active!</text>
 		<newline gap="8"/>
 		<text>This download is currently in progress. If it is downloading too slowly,
-		you could try searching the network for more sources with the '</text>
-		<text format="b">Find More Sources</text><text>' command. If the speed does not 
+		you could try searching the network for more sources with the '</text><text
+    format="b">Find More Sources</text><text>' command. If the speed does not 
 		improve it may be due to limited upload speeds of the users you are downloading 
 		from. Download speed usually increases over time.</text>
 	</document>
@@ -2242,8 +2242,8 @@
 		<newline gap="8"/>
 		<text>Folders such as the Windows directory, Program Files, and similar folders
 		do not usually contain files suitable for sharing. Any files of interest would be in
-		sub-folders located</text><text format="i"> inside</text>
-		<text> these folders. Please share those instead.</text>
+		sub-folders located</text><text format="i"> inside</text><text> these folders.
+		Please share those instead.</text>
 		<newline gap="8"/>
 		<text>The Shareaza 'incomplete' folder should also not be shared through the
 		library, since attempting to hash downloads in progress may impact on performance.</text>
