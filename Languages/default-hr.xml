@@ -595,7 +595,7 @@
 	</menu>
 	<menu name="CMainWnd.Windowed" type="bar">
 		<menu text="Mreža">
-			<item id="ID_NETWORK_SEARCH" text="Nova Po_traga..."/> shortcut="Ctrl+T"/>
+			<item id="ID_NETWORK_SEARCH" text="Nova Po_traga..." shortcut="Ctrl+T"/>
 			<separator/>
 			<item id="ID_NETWORK_CONNECT" text="_Spoji" shortcut="Ctrl+S"/>
 			<item id="ID_NETWORK_DISCONNECT" text="_Isključi"/>

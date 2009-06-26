@@ -1011,7 +1011,6 @@
 		<separator/>
 		<item id="ID_DOWNLOADS_FILE_DELETE" text="_Eliminar Archivo"/>
 		<item id="ID_DOWNLOADS_RATE" text="_Darle rating a archivo..."/>
-		<tip id="ID_DOWNLOADS_REMOTE_PREVIEW" message="Descargar imagén de vista previa para la descarga actual."/>
 	</menu>
 	<menu name="CDownloadsWnd.Seeding">
 		<item id="ID_DOWNLOADS_LAUNCH_COMPLETE" text="_Abrir"/>

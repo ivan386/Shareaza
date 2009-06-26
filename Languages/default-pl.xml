@@ -1073,7 +1073,7 @@
 		<item id="ID_DOWNLOADS_CLEAR_COMPLETE" text="Wyczyść"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_COPY" text="Kopiuj URI"/>
-		<item id="ID_DOWNLOADS_EDIT" text="Info"/>	???-there is no this line in English
+		<item id="ID_DOWNLOADS_EDIT" text="Info"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_FILE_DELETE" text="Usuń plik"/>
 		<item id="ID_DOWNLOADS_RATE" text="Oceń plik"/>
@@ -2254,8 +2254,8 @@
 		<newline gap="8"/>
 		<text>Foldery takie jak folder Windows, Program Files i im podobne foldery
 		 nie zawierają zwykle plików nadajacych się do udostępniania. Jakieś pliki warte zainteresowania
-		 byłyby w podfolderach, które się znajdują</text><text format="i"> wewnątrz</text> tych folderów
-		<text>. Udostępniaj tamte zamiast tych.</text>
+		 byłyby w podfolderach, które się znajdują</text><text format="i"> wewnątrz</text><text> tych folderów
+		. Udostępniaj tamte zamiast tych.</text>
 		<newline gap="8"/>
 		<text>Folder plików tymczasowych Shareazy ('Incomplete') też nie powinien być udostępniany poprzez bibliotekę (zasoby),
 		ponieważ próby hashowania plików jeszcze w trakcie ich pobierania może uderzyć w wydajności całego komputera.</text>

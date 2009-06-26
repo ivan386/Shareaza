@@ -11,12 +11,6 @@
 <!-- Body element, don't touch -->
 <skin xmlns="http://www.shareaza.com/schemas/Skin.xsd" version="1.0">
 
-<fonts>
-	<font name="System.Plain" face="MS UI Gothic" size="12" weight="plain" />
-	<font name="System.Bold" face="MS UI Gothic" size="12" weight="bold" />
-	<font name="Panel.Caption" face="MS UI Gothic" size="12" weight="plain" />
-</fonts>
-
 <!-- Manifest -->
 <manifest	name="日本語"
 		author="ワン公(DukeDog) and CyberBob"
@@ -1969,8 +1963,8 @@
 		<text format="b">このダウンロードはアクティブです!</text>
 		<newline gap="8"/>
 		<text>このダウンロードは現在進行中です。
-		もしそのダウンロードが遅すぎる場合は</text>
-		'<text format="b">追加ソースを検索</text><text>'コマンドでネットワーク内に更に多くの
+		もしそのダウンロードが遅すぎる場合は'</text>
+		<text format="b">追加ソースを検索</text><text>'コマンドでネットワーク内に更に多くの
 		ソースがないか検索してみて下さい。それでも速度が改善されない場合はダウンロード
 		しているユーザがアップロード速度を絞っているのかも知れません。</text>
 	</document>
@@ -4511,4 +4505,10 @@
 		<column from="Order" to="順番"/>
 	</list>
 </listColumns>
+<fonts>
+	<font name="System.Plain" face="MS UI Gothic" size="12" weight="plain" />
+	<font name="System.Bold" face="MS UI Gothic" size="12" weight="bold" />
+	<font name="Panel.Caption" face="MS UI Gothic" size="14" weight="bold" />
+	<font name="Navbar.Caption" face="MS UI Gothic" size="14" weight="bold" />
+</fonts>
 </skin>

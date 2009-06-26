@@ -1447,7 +1447,7 @@
 			<item id="ID_SYSTEM_VERBOSE_WARNING" text="_Avertissement"/>
 			<item id="ID_SYSTEM_VERBOSE_NOTICE" text="_Note"/>
 			<item id="ID_SYSTEM_VERBOSE_INFO" text="_Info"/>
-			<item id="ID_SYSTEM_VERBOSE_DEBUG" text="_Debug"/>*
+			<item id="ID_SYSTEM_VERBOSE_DEBUG" text="_Debug"/>
 		</menu>
 		<item id="ID_SYSTEM_TIMESTAMP" text="_Horodateur"/>
 		<separator/>

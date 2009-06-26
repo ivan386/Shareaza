@@ -2084,9 +2084,8 @@
 		<document name="DownloadHelp.Searching">
 			<text format="b">Este Download está Procurando</text>
 			<newline gap="8"/>
-			<text>Não há fontes conhecidas para este download, então o Shareaza está procurando		todas as redes P2P conectadas por novas fontes. Uma vez que as fontes são achadas, o		download iniciará automaticamente. O Shareaza procura por fontes automaticamente,		Contudo você pode acelerar este processo usando o comando</text>
+			<text>Não há fontes conhecidas para este download, então o Shareaza está procurando		todas as redes P2P conectadas por novas fontes. Uma vez que as fontes são achadas, o		download iniciará automaticamente. O Shareaza procura por fontes automaticamente,		Contudo você pode acelerar este processo usando o comando.</text>
 			<text format="b">Achar Mais Fontes</text>
-			.
 			<newline gap="8"/>
 			<text>Infelizmente em muitos casos pode não haver usuários online que tenham o		arquivo que você está procurando. O único curso de ação aqui é esperar		alguém vir online, ou cancelá-lo e tentar achar um arquivo similar o qual está		mais amplamente disponível.</text>
 		</document>

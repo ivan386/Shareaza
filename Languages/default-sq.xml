@@ -1563,7 +1563,7 @@
 		<item id="ID_CHAT_DISCONNECT" text="_Shkëputu"/>
 		<separator/>
 		<item id="ID_CHAT_BROWSE" text="_Shfleto Përdoruesin"/>
-		<!-- <item id="ID_CHAT_SEND_FILE" text="_Dërgo Skedë..."/>
+		<!-- <item id="ID_CHAT_SEND_FILE" text="_Dërgo Skedë..."/> -->
 		<item id="ID_CHAT_PRIORITY" text="Parësi e _Dhënies"/>
 		<separator/>
 		<menu text="_Formati">
@@ -3958,7 +3958,7 @@
 		<control/>
 		<control caption="Gjenero të Ri"/>
 	</dialog>
-	<dialog name="CLanguageDlg" cookie="" caption="Zgjidheni Gjuhën"/>
+	<dialog name="CLanguageDlg" cookie="" caption="Zgjidheni Gjuhën">
 	</dialog>
 	<dialog name="CConnectToDlg" cookie="BuCoEdBuCoBuBuBu" caption="Lidhuni Te|Shfletoni Hostin">
 		<control caption="Nis një lidhje të re te hosti/serveri:|Shfleto këtë host:"/>

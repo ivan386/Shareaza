@@ -1,30 +1,18 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-
-<!-- Shareaza Default English Skin File -->
-<!-- Translation based on default-en.xml SVN rev.7800 -->
-
-<!-- This skin basically represents the current Shareaza defaults. You can use this file as -->
-<!-- a basis for creating new skins, however in a new skin be sure to ONLY include the sections -->
-<!-- which you changed! Including sections you did not edit will reduce performance and limit -->
-<!-- compatibility with future versions and other skins. -->
-
-<!-- Body element, don't touch -->
 <skin xmlns="http://www.shareaza.com/schemas/Skin.xsd" version="1.0">
-
 <!-- Manifest -->
-<manifest	name="English (Default)"
-		author="Michael Stokes"
-		updatedBy="Rolandas Rudomanskis, ryo-oh-ki, ceceboy, ale5000, SkinVista"
-		description="Shareaza Default English Skin File"
+<manifest	name="English"
+		author="(translation author)"
+		updatedBy="(translation updaters)"
+		description="Shareaza English Skin File"
 		link="http://shareaza.sourceforge.net/"
-		email="Contact(at)ShareazaProject.com"
+		email="(author e-mail)"
 		version="2.4.0.2"
 		type="Language"
 		language="en"
 		prompt="Click here to select English as your natural language."
 		dir="ltr"
 />
-
 <!-- Toolbar Definitions -->
 <toolbars>
 	<!-- MAIN WINDOW -->
@@ -1027,9 +1015,9 @@
 		<item id="ID_DOWNLOADS_REMOTE_PREVIEW" text="R_emote Preview"/>
 		<item id="ID_DOWNLOADS_VIEW_REVIEWS" text="_View Reviews"/>
 		<separator/>
-		<item id="ID_DOWNLOADS_RESUME" text="_Resume"/>
-		<item id="ID_DOWNLOADS_PAUSE" text="P_ause"/>
-		<item id="ID_DOWNLOADS_CLEAR_INCOMPLETE" text="_Cancel"/>
+		<item id="ID_DOWNLOADS_RESUME" text="_Resume Download"/>
+		<item id="ID_DOWNLOADS_PAUSE" text="P_ause Download"/>
+		<item id="ID_DOWNLOADS_CLEAR_INCOMPLETE" text="_Cancel Download"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_SOURCES" text="_Find More Sources"/>
 		<!-- <separator/>
@@ -1045,9 +1033,9 @@
 		<item id="ID_DOWNLOADS_ENQUEUE" text="Add to Pla_ylist"/>
 		<item id="ID_DOWNLOADS_VIEW_REVIEWS" text="_View Reviews"/>
 		<separator/>
-		<item id="ID_DOWNLOADS_RESUME" text="_Resume"/>
-		<item id="ID_DOWNLOADS_PAUSE" text="P_ause"/>
-		<item id="ID_DOWNLOADS_CLEAR_INCOMPLETE" text="_Cancel"/>
+		<item id="ID_DOWNLOADS_RESUME" text="_Resume Download"/>
+		<item id="ID_DOWNLOADS_PAUSE" text="P_ause Download"/>
+		<item id="ID_DOWNLOADS_CLEAR_INCOMPLETE" text="_Cancel Download"/>
 		<separator/>
 		<item id="ID_DOWNLOADS_SOURCES" text="_Find More Sources"/>
 		<separator/>
@@ -2088,8 +2076,8 @@
 		<text format="b">This Download is Active!</text>
 		<newline gap="8"/>
 		<text>This download is currently in progress. If it is downloading too slowly,
-		you could try searching the network for more sources with the '</text>
-		<text format="b">Find More Sources</text><text>' command. If the speed does not 
+		you could try searching the network for more sources with the '</text><text
+    format="b">Find More Sources</text><text>' command. If the speed does not 
 		improve it may be due to limited upload speeds of the users you are downloading 
 		from. Download speed usually increases over time.</text>
 	</document>
@@ -2284,8 +2272,8 @@
 		<newline gap="8"/>
 		<text>Folders such as the Windows directory, Program Files, and similar folders
 		do not usually contain files suitable for sharing. Any files of interest would be in
-		sub-folders located</text><text format="i"> inside</text>
-		<text> these folders. Please share those instead.</text>
+		sub-folders located</text><text format="i"> inside</text><text> these folders.
+		Please share those instead.</text>
 		<newline gap="8"/>
 		<text>The Shareaza 'incomplete' folder should also not be shared through the
 		library, since attempting to hash downloads in progress may impact on performance.</text>
@@ -3262,7 +3250,7 @@
 	<string id="19002" value="Unable to accept connections, URL unavailable."/>
 	<string id="20000" value="No URN available"/>
 	<string id="20001" value="Close"/>
-	<string id="20002" value="of"/><!-- e.g. 1 of 10 -->
+	<string id="20002" value="of (e.g. 1 of 10)"/>
 	<string id="20003" value="Changing interface direction requires restart. \nYou will need to start Shareaza manually. Exit now?"/>
 	<string id="20005" value="No"/>
 	<string id="20006" value="Yes"/>
@@ -3301,16 +3289,16 @@
 	<string id="20125" value="Verified"/>
 	<string id="20126" value="Unverified"/>
 	<string id="20127" value="source"/>
-	<string id="20128" value="sources"/><!-- numbers 21, 31, ... -->
-	<string id="20129" value="sources"/><!-- tens -->
-	<string id="20130" value="sources"/><!-- from 11 to 19 -->
-	<string id="20131" value="sources"/><!-- from 2 to 4 -->
-	<string id="20132" value="sources"/><!-- from 5 to 9 -->
+	<string id="20128" value="sources (numbers 21, 31, ...)"/>
+	<string id="20129" value="sources (tens)"/>
+	<string id="20130" value="sources (from 11 to 19)"/>
+	<string id="20131" value="sources (from 2 to 4)"/>
+	<string id="20132" value="sources (from 5 to 9)"/>
 	<string id="20133" value="Uninterested"/>
 	<string id="20134" value="Choked"/>
 	<string id="20135" value="Next"/>
 	<string id="20136" value="Q"/>
-	<string id="20137" value="sources"/><!-- 3/10 sources, for e.g. -->
+	<string id="20137" value="sources (3/10 sources, for e.g.)"/>
 	<string id="20200" value="Sunday"/>
 	<string id="20201" value="Monday"/>
 	<string id="20202" value="Tuesday"/>
@@ -3327,7 +3315,7 @@
 	<string id="20216" value="Excellent"/>
 	<string id="20217" value="Select the eDonkey/eMule temp folder:"/>
 	<!-- Column headers in Library Album View -->
-	<string id="20230" value="#"/><!-- Track number -->
+	<string id="20230" value="# (Track number)"/>
 	<string id="20231" value="Title"/>
 	<string id="20232" value="Length"/>
 	<string id="20233" value="Bitrate"/>
@@ -3818,7 +3806,7 @@
 		<control caption="..."/>
 		<control caption="Files:"/>
 		<control caption="0"/>
-		<control caption="Volume:"/>
+		<control caption="Size:"/>
 		<control caption="0"/>
 		<control caption="Close"/>
 	</dialog>
@@ -3877,7 +3865,7 @@
 		<control/>
 	</dialog>
 	<dialog name="CIdentityProfilePage" cookie="BuStEdStEdEdBuCoStCoStBu" caption="Identity">
-		<control caption="_Name:"/>
+		<control caption="_Names:"/>
 		<control caption="Screen Name:"/>
 		<control/>
 		<control caption="Real Name:"/>
@@ -4629,4 +4617,10 @@
 		<column from="Order" to=""/>
 	</list>
 </listColumns>
+	<fonts>
+		<font name="System.Plain" face="MS Sans Serif" size="11" weight="plain" />
+		<font name="System.Bold" face="MS Sans Serif" size="11" weight="bold" />
+		<font name="Panel.Caption" face="MS Sans Serif" size="12" weight="bold" />
+		<font name="Navbar.Caption" face="MS Sans Serif" size="12" weight="bold" />
+	</fonts>
 </skin>
