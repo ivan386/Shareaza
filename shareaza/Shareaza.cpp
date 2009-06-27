@@ -805,17 +805,16 @@ void CShareazaApp::GetVersionNumber()
 	//	Major version == 5
 	//		Win2000 = 0, WinXP = 1, WinXP64 = 2, Server2003 = 2
 	//	Major version == 6
-	//		Vista = 0, Server2008 = 0
+	//		Vista = 0, Server2008 = 0, Windows7 = 1
 	m_nWindowsVersionMinor = pVersion.dwMinorVersion;
 
 	// Most supported windows versions have network limiting
 	m_bLimitedConnections = true;
+	TCHAR* sp = _tcsstr( pVersion.szCSDVersion, _T("Service Pack") );
 
 	// Set some variables for different Windows OSes
 	if ( m_nWindowsVersion == 5 )
 	{
-		TCHAR* sp = _tcsstr( pVersion.szCSDVersion, _T("Service Pack") );
-
 		// Windows 2000
 		if ( m_nWindowsVersionMinor == 0 )
 			m_bIsWin2000 = true;
@@ -823,7 +822,8 @@ void CShareazaApp::GetVersionNumber()
 		// Windows XP
 		else if ( m_nWindowsVersionMinor == 1 )
 		{
-			// No network limiting for Vanilla XP or SP1
+			// 10 Half-open concurrent TCP connections limit was introduced in SP2
+			// Windows Server will never compare this value though.
 			if ( !sp || sp[ 13 ] == '1' )
 				m_bLimitedConnections = false;
 		}
@@ -831,13 +831,54 @@ void CShareazaApp::GetVersionNumber()
 		// Windows 2003 or Windows XP64
 		else if ( m_nWindowsVersionMinor == 2 )
 		{
-			// No network limiting for Vanilla Win2003/XP64
 			if ( !sp )
 				m_bLimitedConnections = false;
 		}
 	}
-	else if ( m_nWindowsVersion >= 6 )
+	else if ( m_nWindowsVersion >= 6 ) 
+	{
+		// Used for GUI improvement
 		m_bIsVistaOrNewer = true;
+		bool bCanBeRegistryPatched = true;
+
+		if ( m_nWindowsVersionMinor == 0 )
+		{
+			if ( !sp && sp[ 13 ] == '1' )
+			{
+				// Has TCP connections limit
+				bCanBeRegistryPatched = false;
+			} 
+			else
+			{
+				m_bLimitedConnections = false;
+			}
+		}
+
+		// Server versions can be limited too
+		if ( bCanBeRegistryPatched ) 
+		{
+			HKEY hKey;
+			if ( RegOpenKeyEx( HKEY_LOCAL_MACHINE, 
+							   L"SYSTEM\\CurrentControlSet\\Services\\Tcpip\\Parameters", 
+							   0, KEY_QUERY_VALUE, &hKey ) == ERROR_SUCCESS )
+			{
+				DWORD nSize = sizeof( DWORD ), nResult = 0, nType = REG_NONE;
+				if ( ( RegQueryValueEx( hKey, L"EnableConnectionRateLimiting", 
+									    NULL, &nType, (LPBYTE)&nResult, &nSize ) == ERROR_SUCCESS ) &&
+					 nType == REG_DWORD && nResult == 1 )
+					m_bLimitedConnections = true;
+				RegCloseKey( hKey );
+				if ( nResult == 1 )
+					return; // Don't check if that was a server
+			}
+		}
+	}
+
+	// Windows Small Business Server allows 74 simultaneous
+	// connections and any full Server version allows unlimited connections
+	if ( pVersion.wProductType == VER_NT_SERVER && 
+		( pVersion.wSuiteMask & VER_SUITE_SMALLBUSINESS ) == 0 )
+		m_bLimitedConnections = false;
 }
 
 /////////////////////////////////////////////////////////////////////////////
