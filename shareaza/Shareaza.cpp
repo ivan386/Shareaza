@@ -843,7 +843,7 @@ void CShareazaApp::GetVersionNumber()
 
 		if ( m_nWindowsVersionMinor == 0 )
 		{
-			if ( !sp && sp[ 13 ] == '1' )
+			if ( !sp || sp[ 13 ] == '1' )
 			{
 				// Has TCP connections limit
 				bCanBeRegistryPatched = false;
