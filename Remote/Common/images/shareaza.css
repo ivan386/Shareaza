@@ -3,9 +3,9 @@
 			.progcontainer {width:100%; height:14px;text-align: left; white-space: nowrap;}
 			.progbar {float: left; background: #9999FF; white-space: nowrap; height: 100%;margin-bottom: -1.3em;}
 			.progprocent{float: right; width: 100%; text-align: center; height: 0px;position: relative; top: 0em; z-index: 1; font-weight: 700;}
-			table	{padding: 0px; margin: 0px;border-collapse: collapse;}
-			td.filename	{white-space: normal;overflow: hidden; max-width: 450px;}
-			td.filename div	{white-space: nowrap; overflow: hidden; width: auto;}
+			table	{padding: 0px; margin: 0px;border-collapse: collapse; width: 90%;}
+			td.filename	{white-space: normal; overflow: hidden; width: 50%;}
+			td.filename  div	{overflow: hidden; height: 13px; width: 100%;}
 			td	{white-space: nowrap; background: #fff; border: 1px #bbb solid; padding: 2px;}
 			th { padding: 2px; border: solid 1px gray; background: #E0E0E0; white-space: nowrap; text-align: center; font-size: 11px;}		
 			.noline	{ text-decoration: none;}
