@@ -2521,7 +2521,7 @@
           <part name="_ID_TAB_TRANSFERS.Checked" rect="390,28,132,29"/>
           <part name="_ID_TAB_TRANSFERS.Hover"	rect="390,28,132,29"/>
           <part name="_ID_TAB_TRANSFERS.Down"	rect="390,0,132,29"/>
-          <part name="_ID_TAB_IRC.Up"		rect="578,70,29"/>
+          <part name="_ID_TAB_IRC.Up"		rect="578,0,70,29"/>
           <part name="_ID_TAB_IRC.Checked"	rect="578,28,70,29"/>
           <part name="_ID_TAB_IRC.Hover" 	rect="578,28,70,29"/>
           <part name="_ID_TAB_IRC.Down" 	rect="578,0,70,29"/>
