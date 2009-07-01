@@ -15,7 +15,10 @@
 			.poetry { text-align: center; clear: both; }
 			.left { text-align: left; }
 			.tabs { margin: 0px -2px 0px -2px; padding: 0;list-style-type: none;text-align: center;}
-			.tabs li { display: inline; padding: 2px 8px 0px 8px; margin: 0px 2px 3px 2px;}
+			.tabs li { display: inline; padding: 2px 8px 0px 8px; margin: 0px 2px 3px 2px; border: 1px solid #000;}		/* border element added as workaround for chrome */
+			.tabs li.active{ background: #fff; border-bottom-color: #fff;}		/* does not cascade if loaded from external stylesheet */
+			td { border: 1px solid #bbb;}
+			th {border: solid 1px gray; background: #E0E0E0;}
 			.inactive { background: #ccc; border: 1px solid #666;}
 			#logout {position:absolute;right:2em;top:0;margin:0;padding:0;font-size:8pt;}
 			#logout a { display:block; padding: 0 1em 0.2em 1em; color: #00f;background:#ccc;border-bottom:1px solid #000;border-left:1px solid #000;border-right:1px solid #000;text-decoration:none;}
