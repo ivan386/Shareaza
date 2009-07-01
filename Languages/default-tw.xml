@@ -24,14 +24,6 @@
 		prompt="設定繁體中文為預設語言"
 />
 
-<!--Font Section for Traditional Chinese-->
-<fonts>
-
-        <font name="System.Plain" face="新細明體"/>
-        <font name="System.Bold"    face="新細明體" weight="bold"/>
-        <font name="Panel.Caption"  face="新細明體" weight="bold"/>
-</fonts>
-
 <!-- Toolbar Definitions -->
 <toolbars>
 	<!-- MAIN WINDOW -->

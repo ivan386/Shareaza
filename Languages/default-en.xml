@@ -4619,10 +4619,4 @@
 		<column from="Order" to=""/>
 	</list>
 </listColumns>
-	<fonts>
-		<font name="System.Plain" face="MS Sans Serif" size="11" weight="plain" />
-		<font name="System.Bold" face="MS Sans Serif" size="11" weight="bold" />
-		<font name="Panel.Caption" face="MS Sans Serif" size="12" weight="bold" />
-		<font name="Navbar.Caption" face="MS Sans Serif" size="12" weight="bold" />
-	</fonts>
 </skin>

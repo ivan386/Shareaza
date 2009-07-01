@@ -113,6 +113,7 @@ public:
 	HANDLE		(WINAPI *m_pfnOpenThemeData)(HWND, LPCWSTR);
 	HRESULT		(WINAPI *m_pfnCloseThemeData)(HANDLE);
 	HRESULT		(WINAPI *m_pfnDrawThemeBackground)(HANDLE, HDC, int, int, const RECT*, const RECT*);
+	HRESULT		(WINAPI *m_pfnGetThemeSysFont)(HTHEME, int, __out LOGFONTW* );
 
 	// Shell functions
 	HINSTANCE			m_hShlWapi;

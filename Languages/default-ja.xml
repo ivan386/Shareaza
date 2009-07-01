@@ -4505,10 +4505,4 @@
 		<column from="Order" to="順番"/>
 	</list>
 </listColumns>
-<fonts>
-	<font name="System.Plain" face="MS UI Gothic" size="12" weight="plain" />
-	<font name="System.Bold" face="MS UI Gothic" size="12" weight="bold" />
-	<font name="Panel.Caption" face="MS UI Gothic" size="14" weight="bold" />
-	<font name="Navbar.Caption" face="MS UI Gothic" size="14" weight="bold" />
-</fonts>
 </skin>

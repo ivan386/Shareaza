@@ -900,6 +900,7 @@ void CShareazaApp::InitResources()
 		(FARPROC&)m_pfnOpenThemeData = GetProcAddress( m_hTheme, "OpenThemeData" );
 		(FARPROC&)m_pfnCloseThemeData = GetProcAddress( m_hTheme, "CloseThemeData" );
 		(FARPROC&)m_pfnDrawThemeBackground = GetProcAddress( m_hTheme, "DrawThemeBackground" );
+		(FARPROC&)m_pfnGetThemeSysFont = GetProcAddress( m_hTheme, "GetThemeSysFont" );
 	}
 
 	// Get pointers to some functions that require Internet Explorer 6.01 or greater
@@ -946,16 +947,45 @@ void CShareazaApp::InitResources()
 		RegCloseKey( hKey );
 	}
 
-	// Set up the default font
-	m_gdiFont.CreateFontW( -(int)Settings.Fonts.FontSize, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE,
+	// Set up the default fonts
+	if ( Settings.Fonts.DefaultFont.IsEmpty() )
+	{
+		// Get font from current theme
+		if ( m_pfnGetThemeSysFont )
+		{
+			LOGFONT pFont = {};
+			if ( m_pfnGetThemeSysFont( NULL, TMT_MENUFONT, &pFont ) == S_OK )
+			{
+				Settings.Fonts.DefaultFont = pFont.lfFaceName;
+			}
+		}
+	}
+	if ( Settings.Fonts.DefaultFont.IsEmpty() )
+	{
+		// Get font by legacy method
+		NONCLIENTMETRICS pMetrics = { sizeof( NONCLIENTMETRICS ) };
+		SystemParametersInfo( SPI_GETNONCLIENTMETRICS, sizeof( NONCLIENTMETRICS ),
+			&pMetrics, 0 );
+		Settings.Fonts.DefaultFont = pMetrics.lfMenuFont.lfFaceName;
+	}
+	if ( Settings.Fonts.SystemLogFont.IsEmpty() )
+	{
+		Settings.Fonts.SystemLogFont = Settings.Fonts.DefaultFont;
+	}
+	if ( Settings.Fonts.PacketDumpFont.IsEmpty() )
+	{
+		Settings.Fonts.PacketDumpFont = _T("Lucida Console");
+	}
+
+	m_gdiFont.CreateFont( -(int)Settings.Fonts.FontSize, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE,
 		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
 		DEFAULT_PITCH|FF_DONTCARE, Settings.Fonts.DefaultFont );
 
-	m_gdiFontBold.CreateFontW( -(int)Settings.Fonts.FontSize, 0, 0, 0, FW_BOLD, FALSE, FALSE, FALSE,
+	m_gdiFontBold.CreateFont( -(int)Settings.Fonts.FontSize, 0, 0, 0, FW_BOLD, FALSE, FALSE, FALSE,
 		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
 		DEFAULT_PITCH|FF_DONTCARE, Settings.Fonts.DefaultFont );
 
-	m_gdiFontLine.CreateFontW( -(int)Settings.Fonts.FontSize, 0, 0, 0, FW_NORMAL, FALSE, TRUE, FALSE,
+	m_gdiFontLine.CreateFont( -(int)Settings.Fonts.FontSize, 0, 0, 0, FW_NORMAL, FALSE, TRUE, FALSE,
 		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
 		DEFAULT_PITCH|FF_DONTCARE, Settings.Fonts.DefaultFont );
 

@@ -32,7 +32,7 @@ static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
 #endif
 
-#define SMART_VERSION	58
+#define SMART_VERSION	59
 
 CSettings Settings;
 
@@ -133,10 +133,10 @@ void CSettings::Load()
 	Add( _T("Toolbars"), _T("ShowRemote"), &Toolbars.ShowRemote, true );
 	Add( _T("Toolbars"), _T("ShowMonitor"), &Toolbars.ShowMonitor, true );
 
-	Add( _T("Fonts"), _T("DefaultFont"), &Fonts.DefaultFont, theApp.m_bIsVistaOrNewer ? _T( "Segoe UI" ) : _T( "Tahoma" ) );
-	Add( _T("Fonts"), _T("PacketDumpFont"), &Fonts.PacketDumpFont, _T("Lucida Console") );
-	Add( _T("Fonts"), _T("SystemLogFont"), &Fonts.SystemLogFont, theApp.m_bIsVistaOrNewer ? _T( "Segoe UI" ) : _T( "Tahoma" ) );
-	Add( _T("Fonts"), _T("FontSize"), &Fonts.FontSize, 11 );
+	Add( _T("Fonts"), _T("DefaultFont"), &Fonts.DefaultFont );
+	Add( _T("Fonts"), _T("PacketDumpFont"), &Fonts.PacketDumpFont );
+	Add( _T("Fonts"), _T("SystemLogFont"), &Fonts.SystemLogFont );
+	Add( _T("Fonts"), _T("FontSize"), &Fonts.FontSize, 11, 1, 8, 48, _T(" px") );
 
 	Add( _T("Library"), _T("CreateGhosts"), &Library.CreateGhosts, true );
 	Add( _T("Library"), _T("FilterURI"), &Library.FilterURI );
@@ -748,15 +748,6 @@ void CSettings::SetDefault(LPVOID pSetting)
 void CSettings::SmartUpgrade()
 {	//This function resets certain values when upgrading, depending on version.
 
-/*	// Set next update check
-	if ( General.SmartVersion < SMART_VERSION )
-	{
-		// Don't check for a week if we've just upgraded
-		CTimeSpan tPeriod( 7, 0, 0, 0 );
-		CTime tNextCheck = CTime::GetCurrentTime() + tPeriod;
-		VersionCheck.NextCheck = (DWORD)tNextCheck.GetTime();
-	}
-*/
 	// Add OGG handling if needed
 	if ( ( General.SmartVersion < SMART_VERSION || Live.FirstRun ) &&
 		! IsIn( MediaPlayer.FileTypes, _T("ogg") ) )
@@ -1094,6 +1085,13 @@ void CSettings::SmartUpgrade()
 		if ( General.SmartVersion < 58 )
 		{
 			eDonkey.LargeFileSupport = true;
+		}
+
+		if ( General.SmartVersion < 58 )
+		{
+			Fonts.DefaultFont.Empty();
+			Fonts.SystemLogFont.Empty();
+			Fonts.FontSize = 11;
 		}
 	}
 

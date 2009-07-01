@@ -24,12 +24,6 @@
 		prompt="单击这里显示简体中文"
 />
 
-<fonts>
-	<font name="System.Plain" face="Tahoma" size="11" />
-	<font name="System.Bold" face="Tahoma" size="11" weight="bold" />
-	<font name="Panel.Caption" face="Tahoma" size="11" />
-</fonts>
-
 <!-- Toolbar Definitions -->
 <toolbars>
 	<!-- MAIN WINDOW -->
