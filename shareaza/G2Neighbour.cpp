@@ -260,7 +260,7 @@ BOOL CG2Neighbour::Send(CPacket* pPacket, BOOL bRelease, BOOL bBuffered)
 
 		QueueRun();
 
-		pPacket->SmartDump( &m_pHost, FALSE, TRUE, m_nUnique );
+		pPacket->SmartDump( &m_pHost, FALSE, TRUE, (DWORD_PTR)this );
 
 		bSuccess = TRUE;
 	}
@@ -383,7 +383,7 @@ BOOL CG2Neighbour::OnPacket(CG2Packet* pPacket)
 	m_tLastPacket = GetTickCount();
 	Statistics.Current.Gnutella2.Incoming++;
 
-	pPacket->SmartDump( &m_pHost, FALSE, FALSE, m_nUnique );
+	pPacket->SmartDump( &m_pHost, FALSE, FALSE, (DWORD_PTR)this );
 
 	if ( Network.RoutePacket( pPacket ) )
 		return TRUE;

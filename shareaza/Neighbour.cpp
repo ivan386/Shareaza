@@ -61,7 +61,6 @@ static char THIS_FILE[]=__FILE__;
 // Takes a protocol ID, like PROTOCOL_G1
 CNeighbour::CNeighbour(PROTOCOLID nProtocol) :
 	m_nRunCookie( 0 ),
-	m_nUnique( 0 ),
 	// Set null and default values for connection state, software vendor, guid, and user profile
 	m_nState( nrsNull ),		// No state now, soon we'll connect and do the handshake
 	m_pVendor( NULL ),			// We don't know what brand software the remote computer is running yet
@@ -113,7 +112,6 @@ CNeighbour::CNeighbour(PROTOCOLID nProtocol) :
 CNeighbour::CNeighbour(PROTOCOLID nProtocol, CNeighbour* pBase)
 	: CConnection( *pBase )
 	, m_nRunCookie( 0 )
-	, m_nUnique(           pBase->m_nUnique )
 	, m_nState( nrsConnected )
 	, m_pVendor(           pBase->m_pVendor )
 	, m_oGUID(             pBase->m_oGUID )
@@ -158,8 +156,8 @@ CNeighbour::CNeighbour(PROTOCOLID nProtocol, CNeighbour* pBase)
 	m_tConnected = m_tLastPacket;
 	pBase->m_pZInput  = NULL;
 	pBase->m_pZOutput = NULL;
-	// Call CNeighboursBase::Add to keep track of this newly created CNeighbours object
-	Neighbours.Add( this, FALSE );
+
+	Neighbours.Add( this );
 }
 
 // Delete this CNeighbour object

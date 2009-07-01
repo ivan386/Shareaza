@@ -176,7 +176,7 @@ void CPacketWnd::OnSkinChange()
 /////////////////////////////////////////////////////////////////////////////
 // CPacketWnd operations
 
-void CPacketWnd::SmartDump(const CPacket* pPacket, const SOCKADDR_IN* pAddress, BOOL bUDP, BOOL bOutgoing, DWORD nNeighbourUnique)
+void CPacketWnd::SmartDump(const CPacket* pPacket, const SOCKADDR_IN* pAddress, BOOL bUDP, BOOL bOutgoing, DWORD_PTR nNeighbourUnique)
 {
 	ASSERT( pPacket );
 	ASSERT( pAddress );
@@ -369,7 +369,7 @@ void CPacketWnd::OnContextMenu(CWnd* /*pWnd*/, CPoint point)
 		{
 			CNeighbour* pNeighbour = Neighbours.GetNext( pos );
 			if ( pNeighbour->m_nState < nrsConnected ) continue;
-			AddNeighbour( pHosts, nGroup, nID, pNeighbour->m_nUnique, pNeighbour->m_sAddress );
+			AddNeighbour( pHosts, nGroup, nID, (DWORD_PTR)pNeighbour, pNeighbour->m_sAddress );
 		}
 
 		if ( ( nID % 1000 ) == 2 )
@@ -426,7 +426,7 @@ void CPacketWnd::OnContextMenu(CWnd* /*pWnd*/, CPoint point)
 	delete m_pCoolMenu;
 	m_pCoolMenu = NULL;
 
-	DWORD* pModify = NULL;
+	DWORD_PTR* pModify = NULL;
 
 	if ( nCmd == 1 )
 	{
@@ -522,7 +522,7 @@ void CPacketWnd::OnContextMenu(CWnd* /*pWnd*/, CPoint point)
 			CNeighbour* pNeighbour = Neighbours.GetNext( pos );
 			if ( ! nCmd )
 			{
-				*pModify = pNeighbour->m_nUnique;
+				*pModify = (DWORD_PTR)pNeighbour;
 				break;
 			}
 		}
@@ -531,7 +531,7 @@ void CPacketWnd::OnContextMenu(CWnd* /*pWnd*/, CPoint point)
 	Invalidate();
 }
 
-void CPacketWnd::AddNeighbour(CMenu* pMenus, int nGroup, UINT nID, DWORD nTarget, LPCTSTR pszText)
+void CPacketWnd::AddNeighbour(CMenu* pMenus, int nGroup, UINT nID, DWORD_PTR nTarget, LPCTSTR pszText)
 {
 	UINT nChecked = ( ( nGroup == 1 && m_nOutputFilter == nTarget ) ||
 		 ( nGroup == 0 && m_nInputFilter == nTarget ) )

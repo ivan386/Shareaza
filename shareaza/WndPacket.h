@@ -44,12 +44,12 @@ public:
 	CPacketWnd(CChildWnd* pOwner = NULL);
 	virtual ~CPacketWnd();
 
-	void SmartDump(const CPacket* pPacket, const SOCKADDR_IN* pAddress, BOOL bUDP, BOOL bOutgoing, DWORD nNeighbourUnique = 0);
+	void SmartDump(const CPacket* pPacket, const SOCKADDR_IN* pAddress, BOOL bUDP, BOOL bOutgoing, DWORD_PTR nNeighbourUnique = 0);
 	virtual void OnSkinChange();
 
 	CChildWnd*			m_pOwner;
-	DWORD				m_nInputFilter;
-	DWORD				m_nOutputFilter;
+	DWORD_PTR			m_nInputFilter;
+	DWORD_PTR			m_nOutputFilter;
 	BOOL				m_bPaused;
 
 protected:
@@ -64,7 +64,7 @@ protected:
 	CCriticalSection	m_pSection;
 	static G2_PACKET	m_nG2[nTypeG2Size];
 
-	void AddNeighbour(CMenu* pMenus, int nGroup, UINT nID, DWORD nTarget, LPCTSTR pszText);
+	void AddNeighbour(CMenu* pMenus, int nGroup, UINT nID, DWORD_PTR nTarget, LPCTSTR pszText);
 
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg void OnSize(UINT nType, int cx, int cy);

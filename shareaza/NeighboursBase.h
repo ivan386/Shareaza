@@ -55,7 +55,7 @@ public:
 	virtual void OnRun();   // Calls DoRun on each neighbour in the list, making them send and receive data
 
 	// Add and remove neighbour objects from the list
-	virtual void Add(CNeighbour* pNeighbour, BOOL bAssignUnique = TRUE);
+	virtual void Add(CNeighbour* pNeighbour);
 	virtual void Remove(CNeighbour* pNeighbour);
 
 	inline DWORD GetStableCount() const
@@ -64,8 +64,7 @@ public:
 	}
 
 private:
-	CMap< DWORD_PTR, DWORD_PTR, CNeighbour*, CNeighbour* > m_pUniques;	// The list of remote computers we are connected to
-	DWORD	m_nUnique;		// The unique key number we'll try to assign a neighbour object for the map next, like 2, 3, 4, and so on
+	CList< CNeighbour* > m_pNeighbours;	// The list of remote computers we are connected to
 	DWORD	m_nRunCookie;	// OnRun uses this to run each neighbour once even if GetNext returns the same one more than once in the loop
 	DWORD	m_nStableCount;	// The number of connections we have older than 1.5 seconds and finished with the handshake
 	DWORD	m_nLeafCount;	// The number of connections we have that are down to leaf nodes below us

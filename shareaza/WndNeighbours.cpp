@@ -198,7 +198,7 @@ void CNeighboursWnd::Update()
 	{
 		CString str;
 		CNeighbour* pNeighbour = Neighbours.GetNext( pos );
-		CLiveItem* pItem = pLiveList.Add( pNeighbour->m_nUnique );
+		CLiveItem* pItem = pLiveList.Add( pNeighbour );
 
 		pItem->Set( 0, pNeighbour->m_sAddress );
 		pItem->Format( 1, _T("%hu"), htons( pNeighbour->m_pHost.sin_port ) );
@@ -352,7 +352,7 @@ void CNeighboursWnd::Update()
 		pItem->Set( 11, pNeighbour->m_sCountry );
 		int nFlag = Flags.GetFlagIndex( pNeighbour->m_sCountry );
 		if ( nFlag >= 0 )
-			pItem->SetImage( &m_wndList, (int)pNeighbour->m_nUnique, 11, m_nProtocolRev + nFlag + 1 );
+			pItem->SetImage( &m_wndList, (int)pNeighbour, 11, m_nProtocolRev + nFlag + 1 );
 	}
 
 	pLiveList.Apply( &m_wndList, TRUE );
@@ -625,8 +625,8 @@ void CNeighboursWnd::OpenPacketWnd(BOOL bIncoming, BOOL bOutgoing)
 	{
 		if ( CNeighbour* pNeighbour = GetItem( nItem ) )
 		{
-			pWnd->m_nInputFilter	= bIncoming ? pNeighbour->m_nUnique : 1;
-			pWnd->m_nOutputFilter	= bOutgoing ? pNeighbour->m_nUnique : 1;
+			pWnd->m_nInputFilter	= bIncoming ? (DWORD_PTR)pNeighbour : 1;
+			pWnd->m_nOutputFilter	= bOutgoing ? (DWORD_PTR)pNeighbour : 1;
 		}
 	}
 

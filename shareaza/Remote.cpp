@@ -1347,7 +1347,7 @@ void CRemote::PageNetworkNetwork(int nID, bool* pbConnect, LPCTSTR pszName)
 		if ( pNeighbour->m_nProtocol != nID ) continue;
 		pNeighbour->Measure();
 		
-		str.Format( _T("%i"), pNeighbour->m_nUnique );
+		str.Format( _T("%i"), (DWORD_PTR)pNeighbour );
 		Add( _T("row_id"), str );
 		Add( _T("row_address"), pNeighbour->m_sAddress );
 		Add( _T("row_agent"), pNeighbour->m_sUserAgent );

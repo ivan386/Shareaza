@@ -51,7 +51,7 @@ public:
 	CRouteCache*	QueryRoute;
 	CQueryKeys*		QueryKeys;
 
-	CMutex			m_pSection;
+	CMutexEx		m_pSection;
 	SOCKADDR_IN		m_pHost;				// Structure (Windows Sockets) which holds address of the local machine
 	BOOL			m_bAutoConnect;
 	DWORD			m_tStartedConnecting;	// The time Shareaza started trying to connect

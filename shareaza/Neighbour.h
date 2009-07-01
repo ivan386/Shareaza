@@ -22,14 +22,11 @@
 // CNeighbour is in the middle of the CConnection inheritance tree, adding compression and a bunch of member variables
 // http://shareazasecurity.be/wiki/index.php?title=Developers.Code.CNeighbour
 
-// Only include the lines beneath this one once
 #pragma once
 
-// Copy in the contents of these files here before compiling
 #include "Connection.h"
 #include "zlib.h"
 
-// Tell the compiler these classes exist, and it will find out more about them soon
 class CBuffer;
 class CPacket;
 class CVendor;
@@ -77,14 +74,12 @@ public:
 
 // Attributes: State
 public:
-	// Used by the list of neighbour objects in CNeighbours
-	DWORD      m_nRunCookie; // The number of times this neighbour has been run, CNeighboursBase::OnRun uses this to run each neighbour in the list once
-	DWORD      m_nUnique;    // A number, like 2, 3, 4 and so on, which is the unique key for this CNeighbour object in CNeighbour's m_pUniques map
-	NrsState      m_nState;           // Neighbour state, like connecting, handshake 1, 2, or 3, or rejected
-	CVendor*      m_pVendor;
-	Hashes::Guid  m_oGUID;
-	CGProfile*    m_pProfile;
-	Hashes::Guid  m_oMoreResultsGUID; // GUID of the last search, used to get more results (do)
+	DWORD			m_nRunCookie;		// The number of times this neighbour has been run, CNeighboursBase::OnRun uses this to run each neighbour in the list once
+	NrsState		m_nState;			// Neighbour state, like connecting, handshake 1, 2, or 3, or rejected
+	CVendor*		m_pVendor;
+	Hashes::Guid	m_oGUID;
+	CGProfile*		m_pProfile;
+	Hashes::Guid	m_oMoreResultsGUID;	// GUID of the last search, used to get more results (do)
 
 // Attributes: Capabilities
 public:

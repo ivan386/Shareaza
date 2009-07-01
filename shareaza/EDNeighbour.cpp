@@ -123,7 +123,7 @@ BOOL CEDNeighbour::Send(CPacket* pPacket, BOOL bRelease, BOOL /*bBuffered*/)
 
 		QueueRun();
 
-		pPacket->SmartDump( &m_pHost, FALSE, TRUE, m_nUnique );
+		pPacket->SmartDump( &m_pHost, FALSE, TRUE, (DWORD_PTR)this );
 
 		bSuccess = TRUE;
 	}
@@ -275,7 +275,7 @@ BOOL CEDNeighbour::OnRead()
 
 BOOL CEDNeighbour::OnPacket(CEDPacket* pPacket)
 {
-	pPacket->SmartDump( &m_pHost, FALSE, FALSE, m_nUnique );
+	pPacket->SmartDump( &m_pHost, FALSE, FALSE, (DWORD_PTR)this );
 
 	m_nInputCount++;
 	Statistics.Current.eDonkey.Incoming++;
