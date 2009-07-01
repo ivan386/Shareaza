@@ -826,7 +826,7 @@ void CMainWnd::OnTimer(UINT_PTR nIDEvent)
 		m_pTray.uFlags				= NIF_ICON | NIF_MESSAGE | NIF_TIP;
 		m_pTray.uCallbackMessage	= WM_TRAY;
 
-		_tcscpy( m_pTray.szTip, Settings.SmartAgent() );
+		_tcsncpy( m_pTray.szTip, Settings.SmartAgent(), _countof( m_pTray.szTip ) );
 		m_bTrayIcon = Shell_NotifyIcon( NIM_ADD, &m_pTray );
 	}
 	else if ( m_bTrayIcon && ! bNeedTrayIcon )
