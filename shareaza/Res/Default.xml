@@ -1584,10 +1584,10 @@
 	<document name="CHomeViewCtrl" leftMargin="16" topMargin="0">
 		<styles>
 			<style name="default">
-				<font face="Verdana" size="12"/>
+				<font size="14"/>
 			</style>
 			<style name="heading">
-				<font face="Trebuchet MS" size="16" weight="800"/>
+				<font size="16" weight="800"/>
 			</style>
 		</styles>
 		<anchor id="Header" width="32" height="172"/>
@@ -1695,7 +1695,7 @@
 	<document name="CHomeDownloadsBox" title="My Downloads" leftMargin="6" topMargin="6">
 		<styles>
 			<style name="default">
-				<font face="Verdana" size="9"/>
+				<font size="10"/>
 			</style>
 		</styles>
 		<para align="center">
@@ -1711,7 +1711,7 @@
 	<document name="CHomeLibraryBox" title="My Library" leftMargin="6" topMargin="6">
 		<styles>
 			<style name="default">
-				<font face="Verdana" size="9"/>
+				<font size="10"/>
 			</style>
 		</styles>
 		<para align="center">
@@ -1744,7 +1744,7 @@
 	<document name="CHomeConnectionBox" title="Connection" leftMargin="6" topMargin="6">
 		<styles>
 			<style name="default">
-				<font face="Verdana" size="9"/>
+				<font size="10"/>
 			</style>
 		</styles>
 		<group id="1">
@@ -1789,7 +1789,7 @@
 	<document name="CHomeUploadsBox" title="Uploads" leftMargin="6" topMargin="6">
 		<styles>
 			<style name="default">
-				<font face="Verdana" size="9"/>
+				<font size="10"/>
 			</style>
 		</styles>
 		<para align="center">
@@ -1805,7 +1805,7 @@
 	<document name="CHomeTorrentsBox" title="Torrents" leftMargin="6" topMargin="6">
 		<styles>
 			<style name="default">
-				<font face="Verdana" size="9"/>
+				<font size="10"/>
 			</style>
 		</styles>
 		<para align="center">
@@ -2406,7 +2406,7 @@
 			<part name="_ID_MEDIA_RANDOM.Checked"		rect="350,15,38,7"/>
 			<part name="_ID_MEDIA_REPEAT.Checked"		rect="318,15,33,7"/>
 		</parts>
-		<caption fontFace="Arial" fontSize="11" fontWeight="Normal" colour="000000"/>
+		<caption fontSize="11" fontWeight="Normal" colour="000000"/>
 		<region> 
 			<shape type="rectangle" rect="0,0,271,119"/>
 			<shape type="rectangle" combine="diff"		rect="0,0,249,3"/>

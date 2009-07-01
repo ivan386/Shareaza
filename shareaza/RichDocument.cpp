@@ -164,7 +164,7 @@ void CRichDocument::CreateFonts(LPCTSTR pszFaceName, int nSize)
 {
 	CSingleLock pLock( &m_pSection, TRUE );
 
-	if ( pszFaceName == NULL )
+	if ( ! pszFaceName || ! *pszFaceName )
 		pszFaceName = Settings.Fonts.DefaultFont;
 
 	if ( nSize == 0 )

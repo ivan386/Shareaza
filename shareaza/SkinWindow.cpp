@@ -41,7 +41,8 @@ static char THIS_FILE[]=__FILE__;
 //////////////////////////////////////////////////////////////////////
 // CSkinWindow construction
 
-CSkinWindow::CSkinWindow()
+CSkinWindow::CSkinWindow() :
+	m_rcCaption( 0, 0, 0, 0 )
 {
 	m_bPart		= new BOOL[ SKINPART_COUNT ];
 	m_rcPart	= new CRect[ SKINPART_COUNT ];
@@ -269,41 +270,39 @@ BOOL CSkinWindow::Parse(CXMLElement* pBase, const CString& strPath)
 			m_bCaption = ParseRect( pGroup, &m_rcCaption );
 
 			CString strFont = pGroup->GetAttributeValue( _T("fontFace") );
+			CString strSize = pGroup->GetAttributeValue( _T("fontSize") );
+			CString strBold = pGroup->GetAttributeValue( _T("fontWeight") );
 
-			if ( strFont.GetLength() )
+			if ( strBold.CompareNoCase( _T("bold") ) == 0 )
+				strBold = _T("700");
+			else if ( strBold.CompareNoCase( _T("normal") ) == 0 )
+				strBold = _T("400");
+
+			int nFontSize = 13, nFontWeight = FW_BOLD;
+			_stscanf( strSize, _T("%i"), &nFontSize );
+			_stscanf( strBold, _T("%i"), &nFontWeight );
+
+			LOGFONT lf = {};
+			lf.lfHeight			= nFontSize;
+			lf.lfWeight			= nFontWeight;
+			lf.lfCharSet		= DEFAULT_CHARSET;
+			lf.lfQuality		= DEFAULT_QUALITY;
+			lf.lfOutPrecision	= OUT_DEFAULT_PRECIS;
+			lf.lfClipPrecision	= CLIP_DEFAULT_PRECIS;
+			lf.lfPitchAndFamily	= DEFAULT_PITCH|FF_DONTCARE;
+			_tcsncpy( lf.lfFaceName, ( strFont.IsEmpty() ?
+				Settings.Fonts.DefaultFont : strFont ), LF_FACESIZE );
+
+			if ( _tcsistr( strSize, _T("pt") ) != NULL )
 			{
-				CString strSize = pGroup->GetAttributeValue( _T("fontSize") );
-				CString strBold = pGroup->GetAttributeValue( _T("fontWeight") );
-
-				if ( strBold.CompareNoCase( _T("bold") ) == 0 )
-					strBold = _T("700");
-				else if ( strBold.CompareNoCase( _T("normal") ) == 0 )
-					strBold = _T("400");
-
-				int nFontSize = 13, nFontWeight = FW_BOLD;
-				_stscanf( strSize, _T("%i"), &nFontSize );
-				_stscanf( strBold, _T("%i"), &nFontWeight );
-
-				LOGFONT lf = {};
-				lf.lfHeight			= nFontSize;
-				lf.lfWeight			= nFontWeight;
-				lf.lfCharSet		= DEFAULT_CHARSET;
-				lf.lfQuality		= DEFAULT_QUALITY;
-				lf.lfOutPrecision	= OUT_DEFAULT_PRECIS;
-				lf.lfClipPrecision	= CLIP_DEFAULT_PRECIS;
-				lf.lfPitchAndFamily	= DEFAULT_PITCH|FF_DONTCARE;
-				_tcscpy( lf.lfFaceName, strFont );
-
-				if ( _tcsistr( strSize, _T("pt") ) != NULL )
-				{
-					m_fnCaption.CreatePointFontIndirect( &lf );
-				}
-				else
-				{
-					lf.lfHeight = -lf.lfHeight;
-					m_fnCaption.CreateFontIndirect( &lf );
-				}
+				m_fnCaption.CreatePointFontIndirect( &lf );
 			}
+			else
+			{
+				lf.lfHeight = -lf.lfHeight;
+				m_fnCaption.CreateFontIndirect( &lf );
+			}
+
 
 			str = pGroup->GetAttributeValue( _T("color") );
 			ParseColour( str, m_crCaptionText );
@@ -335,9 +334,9 @@ BOOL CSkinWindow::Parse(CXMLElement* pBase, const CString& strPath)
 
 			if ( m_bCaption && m_fnCaption.m_hObject == NULL )
 			{
-				NONCLIENTMETRICS pMetrics;
-				pMetrics.cbSize = sizeof(pMetrics);
-				SystemParametersInfo( SPI_GETNONCLIENTMETRICS, pMetrics.cbSize, &pMetrics, 0 );
+				NONCLIENTMETRICS pMetrics = { sizeof( NONCLIENTMETRICS ) };
+				SystemParametersInfo( SPI_GETNONCLIENTMETRICS, sizeof( NONCLIENTMETRICS ),
+					&pMetrics, 0 );
 				m_fnCaption.CreateFontIndirect( &pMetrics.lfCaptionFont );
 			}
 		}
@@ -441,10 +440,16 @@ BOOL CSkinWindow::ParseRect(CXMLElement* pXML, CRect* pRect)
 
 	if ( strValue.GetLength() )
 	{
-		_stscanf( strValue, _T("%i,%i,%i,%i"), &pRect->left, &pRect->top,
-			&pRect->right, &pRect->bottom );
-		pRect->right += pRect->left;
-		pRect->bottom += pRect->top;
+		int x, y, cx, cy;
+		if ( _stscanf( strValue, _T("%i,%i,%i,%i"), &x, &y, &cx, &cy ) != 4 )
+		{
+			theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Invalid [rect] attribute"), pXML->ToString() );
+			return FALSE;
+		}
+		pRect->left = x;
+		pRect->top = y;
+		pRect->right = x + cx;
+		pRect->bottom = y + cy;
 		return TRUE;
 	}
 
@@ -452,7 +457,14 @@ BOOL CSkinWindow::ParseRect(CXMLElement* pXML, CRect* pRect)
 
 	if ( strValue.GetLength() )
 	{
-		_stscanf( strValue, _T("%i,%i"), &pRect->left, &pRect->top );
+		int x, y;
+		if ( _stscanf( strValue, _T("%i,%i"), &x, &y ) != 2 )
+		{
+			theApp.Message( MSG_ERROR, IDS_SKIN_ERROR, _T("Invalid [point] attribute"), pXML->ToString() );
+			return FALSE;
+		}
+		pRect->left = x;
+		pRect->top = y;
 		pRect->right = pRect->bottom = 0;
 		return TRUE;
 	}
@@ -1200,9 +1212,9 @@ void CSkinWindow::Paint(CWnd* pWnd, TRISTATE bActive)
 		CPoint ptCap;
 
 		rcItem.left		= m_rcCaption.left + ( m_rcCaption.left >= 0 ? rc.left : rc.right );
-		if ( m_rcPart[ SKINPART_TOP_RIGHT ] )
-			rcItem.right = rc.right - m_rcPart[ SKINPART_TOP_RIGHT ].Width();
-		else
+		//if ( m_rcPart[ SKINPART_TOP_RIGHT ] )
+		//	rcItem.right = rc.right - m_rcPart[ SKINPART_TOP_RIGHT ].Width();
+		//else
 			rcItem.right = m_rcCaption.Width() + ( m_rcCaption.Width() >= 0 ? rc.left : rc.right );
 		rcItem.top		= rc.top + m_rcCaption.top;
 		rcItem.bottom	= rc.top + m_rcCaption.bottom;
