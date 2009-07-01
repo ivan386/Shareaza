@@ -1,7 +1,7 @@
 //
 // NeighboursWithED2K.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -61,6 +61,8 @@ CNeighboursWithED2K::~CNeighboursWithED2K()
 // Returns a pointer to the first one found, or null if none found in the list
 CEDNeighbour* CNeighboursWithED2K::GetDonkeyServer() const // Here, const means this method doesn't change the value of any member variables
 {
+	CSingleLock pLock( &Network.m_pSection, TRUE );
+
 	// Loop through the list of neighbours
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
@@ -90,6 +92,8 @@ CEDNeighbour* CNeighboursWithED2K::GetDonkeyServer() const // Here, const means 
 // Calls Close() on all the eDonkey2000 computers in the list of neighbours we're connected to
 void CNeighboursWithED2K::CloseDonkeys()
 {
+	CSingleLock pLock( &Network.m_pSection, TRUE );
+
 	// Loop through the list of neighbours
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
@@ -108,6 +112,8 @@ void CNeighboursWithED2K::CloseDonkeys()
 // Tells all the eDonkey2000 computers we're connected to about it
 void CNeighboursWithED2K::SendDonkeyDownload(CDownload* pDownload)
 {
+	CSingleLock pLock( &Network.m_pSection, TRUE );
+
 	// Loop through the list of neighbours
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
@@ -131,6 +137,8 @@ void CNeighboursWithED2K::SendDonkeyDownload(CDownload* pDownload)
 // Returns true if we sent the packet, false if we couldn't find the computer
 BOOL CNeighboursWithED2K::PushDonkey(DWORD nClientID, IN_ADDR* pServerAddress, WORD) // Was named nServerPort (do)
 {
+	CSingleLock pLock( &Network.m_pSection, TRUE );
+
 	// If we don't have a socket listening for incoming connections, leave now
 	if ( ! Network.IsListening() ) return FALSE;
 

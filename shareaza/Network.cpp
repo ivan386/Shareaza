@@ -617,6 +617,8 @@ void CNetwork::OnRun()
 
 void CNetwork::PostRun()
 {
+	CSingleLock pLock( &m_pSection, TRUE );
+
 	Neighbours.Close();
 	Handshakes.Disconnect();
 
