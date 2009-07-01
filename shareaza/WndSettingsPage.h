@@ -32,6 +32,7 @@ public:
 	CSettingsPage(UINT nIDTemplate, LPCTSTR pszCaption = NULL);
 	virtual ~CSettingsPage();
 
+	CToolTipCtrl	m_wndToolTip;
 	CString			m_sCaption;
 	BOOL			m_bGroup;
 
@@ -60,8 +61,6 @@ public:
 	virtual BOOL OnKillActive();
 
 protected:
-	CToolTipCtrl	m_wndToolTip;
-
 	virtual void DoDataExchange(CDataExchange* pDX);
 	virtual BOOL OnInitDialog();
 	virtual BOOL PreTranslateMessage(MSG* pMsg);

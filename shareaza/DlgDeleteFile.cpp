@@ -246,7 +246,7 @@ void CDeleteFileDlg::OnDrawItem(int /*nIDCtl*/, LPDRAWITEMSTRUCT lpDrawItemStruc
 
 	int nRating = lpDrawItemStruct->itemID;
 
-	CFont* pOldFont = (CFont*)dc.SelectObject( nRating > 0 ? &theApp.m_gdiFontBold : &theApp.m_gdiFont );
+	CFont* pOldFont = (CFont*)dc.SelectObject( nRating > 0 ? &CoolInterface.m_fntBold : &CoolInterface.m_fntNormal );
 
 	// Prefill the background
 	BOOL bDisabled = ( lpDrawItemStruct->itemState & ODS_DISABLED );

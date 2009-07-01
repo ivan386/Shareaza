@@ -156,14 +156,14 @@ int CLibraryFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_wndBottomDynamic.SetOwner( GetOwner() );
 
 	if ( ! m_wndSearch.Create( WS_CHILD|WS_CLIPSIBLINGS|WS_TABSTOP|ES_AUTOHSCROLL, rcTypes, &m_wndViewBottom, IDC_SEARCH_BOX ) ) return -1;
-	m_wndSearch.SetFont( &theApp.m_gdiFont );
+	m_wndSearch.SetFont( &CoolInterface.m_fntNormal );
 	m_wndSearch.SetRegistryKey( _T("Search"), _T("Search.%.2i") );
 
 	if ( ! m_wndSaveOption.Create( NULL, WS_CHILD|WS_CLIPSIBLINGS|WS_TABSTOP|BS_AUTOCHECKBOX, rcTypes, &m_wndBottomDynamic,
 		ID_SHAREMONKEY_SAVE_OPTION ) ) return -1;
 	m_wndSaveOption.EnableWindow( FALSE );
 	m_wndSaveOption.SetCheck( Settings.WebServices.ShareMonkeySaveThumbnail );
-	m_wndSaveOption.SetFont( &theApp.m_gdiFont );
+	m_wndSaveOption.SetFont( &CoolInterface.m_fntNormal);
 
 	m_wndTree.Create( this );
 	m_wndHeader.Create( this );
@@ -216,6 +216,9 @@ void CLibraryFrame::OnSkinChange()
 	SetView( NULL, TRUE, FALSE );
 	SetView( pView, TRUE, FALSE );
 	SetPanel( pPanel );
+
+	if ( m_pView )
+		m_pView->OnSkinChange();
 }
 
 /////////////////////////////////////////////////////////////////////////////

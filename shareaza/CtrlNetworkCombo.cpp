@@ -150,7 +150,7 @@ void CNetworkCombo::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 		SetLayout( dc.m_hDC, LAYOUT_RTL );
 
 	CFont* pOldFont = (CFont*)dc.SelectObject( lpDrawItemStruct->itemData == 0 ?
-		&theApp.m_gdiFontBold : &theApp.m_gdiFont );
+		&CoolInterface.m_fntBold : &CoolInterface.m_fntNormal );
 
 	dc.SetTextColor( ( lpDrawItemStruct->itemState & ODS_SELECTED )
 		? CoolInterface.m_crHiText : CoolInterface.m_crText );

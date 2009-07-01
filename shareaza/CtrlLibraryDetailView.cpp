@@ -122,6 +122,19 @@ BOOL CLibraryDetailView::Create(CWnd* pParentWnd)
 		LVS_OWNERDATA, rect, pParentWnd, IDC_LIBRARY_VIEW );
 }
 
+void CLibraryDetailView::OnSkinChange()
+{
+	GET_LIST();
+
+	ASSERT_VALID( pList );
+	pList->SetFont( &CoolInterface.m_fntNormal );
+	if ( pList->GetHeaderCtrl() )
+	{
+		ASSERT_VALID( pList->GetHeaderCtrl() );
+		pList->GetHeaderCtrl()->SetFont( &CoolInterface.m_fntNormal );
+	}
+}
+
 int CLibraryDetailView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if ( CLibraryFileView::OnCreate( lpCreateStruct ) == -1 ) return -1;

@@ -106,10 +106,8 @@ protected:
 
 // Overrides
 public:
-	//{{AFX_VIRTUAL(CMatchCtrl)
-	public:
 	virtual BOOL Create(CMatchList* pMatches, CWnd* pParentWnd);
-	//}}AFX_VIRTUAL
+	virtual void OnSkinChange();
 
 // Implementation
 public:

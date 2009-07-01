@@ -58,6 +58,7 @@ public:
 	virtual CLibraryListItem	GetFolder() const;
 	virtual void				StartDragging(const CPoint& ptMouse);
 	virtual HBITMAP				CreateDragImage(const CPoint& ptMouse, CPoint& ptMiddle);
+	virtual void				OnSkinChange() {}
 
 protected:
 	void				PostUpdate();

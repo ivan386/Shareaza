@@ -450,7 +450,7 @@ void CCoolInterface::DrawThumbnail(CDC* pDC, const CRect& rcThumb,
 			CRect rcLabel( rcFrame.left + 2, rcFrame.top + ( rcFrame.Height() + 48 + 4 ) / 2,
 				rcFrame.right - 2, rcFrame.bottom - 2 );
 
-			CFont* pOldFont = pDC->SelectObject( bWaiting ? &theApp.m_gdiFontBold : &theApp.m_gdiFontLine );
+			CFont* pOldFont = pDC->SelectObject( bWaiting ? &m_fntBold : &m_fntUnder );
 			pDC->SetBkColor( bWaiting ? m_crWindow : m_crBackNormal );
 			pDC->SetTextColor( bWaiting ? m_crTextAlert : m_crTextLink );
 			pDC->FillSolidRect( &rcLabel, ( bWaiting ? m_crWindow : m_crBackNormal ) );

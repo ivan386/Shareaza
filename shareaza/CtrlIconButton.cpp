@@ -301,7 +301,7 @@ void CIconButtonCtrl::OnPaint()
 	{
 		rc.left += 21;
 
-		CFont* pOldFont = (CFont*)dc.SelectObject( &theApp.m_gdiFont );
+		CFont* pOldFont = (CFont*)dc.SelectObject( &CoolInterface.m_fntNormal );
 
 		dc.SetBkColor( crBack );
 		dc.SetTextColor( IsWindowEnabled() ? CoolInterface.m_crCmdText : CoolInterface.m_crDisabled );

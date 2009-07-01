@@ -274,6 +274,8 @@ int CLibraryView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	ENABLE_DROP()
 
+	OnSkinChange();
+
 	return 0;
 }
 

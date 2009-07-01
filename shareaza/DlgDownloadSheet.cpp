@@ -21,6 +21,7 @@
 
 #include "StdAfx.h"
 #include "Shareaza.h"
+#include "CoolInterface.h"
 #include "DlgDownloadSheet.h"
 
 #include "PageDownloadEdit.h"
@@ -95,7 +96,7 @@ BOOL CDownloadSheet::OnInitDialog()
 {
 	BOOL bResult = CPropertySheetAdv::OnInitDialog();
 
-	SetFont( &theApp.m_gdiFont );
+	SetFont( &CoolInterface.m_fntNormal );
 	SetIcon( theApp.LoadIcon( IDI_PROPERTIES ), TRUE );
 
 	CString strCaption;

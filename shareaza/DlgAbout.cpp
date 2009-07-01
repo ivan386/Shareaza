@@ -81,7 +81,7 @@ BOOL CAboutDlg::OnInitDialog()
 	strCaption += _T(" 32-bit");
 #endif
 #ifdef LAN_MODE
-	strCaption += _T(" LAN mode");
+	strCaption += _T(" LAN");
 #endif
 	strCaption += _T(" (rev.") _T(__REVISION__) _T(" ") + theApp.m_sBuildDate + _T(")");
 	m_wndTitle.SetWindowText( strCaption );
@@ -111,12 +111,12 @@ HBRUSH CAboutDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 
 	if ( pWnd == &m_wndTitle )
 	{
-		pDC->SelectObject( &theApp.m_gdiFontBold );
+		pDC->SelectObject( &CoolInterface.m_fntBold );
 	}
 	else if ( pWnd == &m_wndWeb )
 	{
 		pDC->SetTextColor( CoolInterface.m_crTextLink );
-		pDC->SelectObject( &theApp.m_gdiFontLine );
+		pDC->SelectObject( &CoolInterface.m_fntUnder );
 	}
 
 	return hbr;

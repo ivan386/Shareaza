@@ -77,7 +77,8 @@ public:
 
 // Implementation
 protected:
-	//{{AFX_MSG(CBaseMatchWnd)
+	virtual void	OnSkinChange();
+
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg void OnDestroy();
 	afx_msg void OnSize(UINT nType, int cx, int cy);

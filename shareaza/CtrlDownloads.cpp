@@ -142,8 +142,6 @@ int CDownloadsCtrl::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	else
         m_wndHeader.Create( WS_CHILD|HDS_DRAGDROP|HDS_HOTTRACK|HDS_FULLDRAG, rect, this, AFX_IDW_PANE_FIRST );
 	
-	m_wndHeader.SetFont( &theApp.m_gdiFont );
-	
 	m_wndTip.Create( this, &Settings.Interface.TipDownloads );
 	
 	InsertColumn( DOWNLOAD_COLUMN_TITLE, _T("Downloaded File"), LVCFMT_LEFT, 210 );
@@ -851,7 +849,7 @@ void CDownloadsCtrl::OnPaint()
 	int nScroll = GetScrollPos( SB_VERT );
 	int nIndex = 0;
 
-	CFont* pfOld	= (CFont*)dc.SelectObject( &theApp.m_gdiFont );
+	CFont* pfOld	= (CFont*)dc.SelectObject( &CoolInterface.m_fntNormal );
 	BOOL bFocus		= ( GetFocus() == this );
 
 	for ( POSITION posDownload = Downloads.GetIterator() ; posDownload && rcItem.top < rcClient.bottom ; )
@@ -922,7 +920,8 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
 	COLORREF crBorder		= pDownload->m_bSelected ? CoolInterface.m_crFragmentBorderSelected : CoolInterface.m_crFragmentBorder;
 	COLORREF crBorderSimple	= pDownload->m_bSelected ? CoolInterface.m_crFragmentBorderSimpleBarSelected : CoolInterface.m_crFragmentBorderSimpleBar;
 
-	if ( IsExpandable( pDownload ) ) dc.SelectObject( &theApp.m_gdiFontBold ) ;
+	if ( IsExpandable( pDownload ) )
+		dc.SelectObject( &CoolInterface.m_fntBold ) ;
 
 	if ( bDrop )
 	{
@@ -1201,7 +1200,7 @@ void CDownloadsCtrl::PaintDownload(CDC& dc, const CRect& rcRow, CDownload* pDown
 		dc.Draw3dRect( &rcFocus, CoolInterface.m_crHiBorder, CoolInterface.m_crHiBorder );
 	}
 
-	dc.SelectObject( &theApp.m_gdiFont ) ;
+	dc.SelectObject( &CoolInterface.m_fntNormal ) ;
 }
 
 void CDownloadsCtrl::PaintSource(CDC& dc, const CRect& rcRow, CDownload* pDownload, CDownloadSource* pSource, BOOL bFocus)
@@ -1424,6 +1423,8 @@ void CDownloadsCtrl::PaintSource(CDC& dc, const CRect& rcRow, CDownload* pDownlo
 
 void CDownloadsCtrl::OnSkinChange()
 {
+	m_wndHeader.SetFont( &CoolInterface.m_fntNormal );
+
 	/* int nRevStart = m_pProtocols.GetImageCount() - 1; */
 	for ( int nImage = 1 ; nImage < 7 ; nImage++ )
 	{

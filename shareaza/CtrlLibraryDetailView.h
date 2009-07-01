@@ -40,6 +40,7 @@ protected:
 	virtual void			CacheSelection();
 	virtual DWORD_PTR		HitTestIndex(const CPoint& point) const;
 	virtual HBITMAP			CreateDragImage(const CPoint& ptMouse, CPoint& ptOffset);
+	virtual void			OnSkinChange();
 	void	SetViewSchema(CSchema* pSchema, CList< CSchemaMember* >* pColumns, BOOL bSave, BOOL bUpdate);
 	void	CacheItem(int nItem);
 	void	SortItems(int nColumn = -1);

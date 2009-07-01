@@ -1159,6 +1159,8 @@ BOOL CSkin::Apply(LPCTSTR pszName, CDialog* pDialog, UINT nIconID, CToolTipCtrl*
 
 	for ( CWnd* pWnd = pDialog->GetWindow( GW_CHILD ) ; pWnd ; pWnd = pWnd->GetNextWindow() )
 	{
+		pWnd->SetFont( &CoolInterface.m_fntNormal );
+
 		TCHAR szClass[3] = { 0, 0, 0 };
 		LoadControlTip( strTip, pWnd->GetDlgCtrlID() );
 

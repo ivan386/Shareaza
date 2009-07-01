@@ -93,6 +93,10 @@ void CSettingsManagerDlg::OnSkinChange(BOOL bSet)
 	if ( bSet )
 	{
 		m_pThis->SkinMe( _T("CSettingSheet"), IDR_MAINFRAME );
+		if ( CSettingsPage* pPage = m_pThis->GetActivePage() )
+		{
+			Skin.Apply( NULL, pPage, 0, &pPage->m_wndToolTip );
+		}
 		m_pThis->Invalidate();
 	}
 	else

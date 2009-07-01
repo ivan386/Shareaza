@@ -569,7 +569,7 @@ void CTaskBox::PaintBorders()
 	
 	GetWindowText( strCaption );
 	
-	CFont* pOldFont	= (CFont*)pBuffer->SelectObject( &theApp.m_gdiFontBold );
+	CFont* pOldFont	= (CFont*)pBuffer->SelectObject( &CoolInterface.m_fntBold );
 	CSize sz		= pBuffer->GetTextExtent( strCaption );
 	
 	pBuffer->SetBkMode( TRANSPARENT );

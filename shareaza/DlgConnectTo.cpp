@@ -220,7 +220,7 @@ void CConnectToDlg::OnDrawItem(int /*nIDCtl*/, LPDRAWITEMSTRUCT lpDrawItemStruct
 	if ( Settings.General.LanguageRTL )
 		SetLayout( dc.m_hDC, LAYOUT_RTL );
 
-	CFont* pOldFont = (CFont*)dc.SelectObject( &theApp.m_gdiFont );
+	CFont* pOldFont = (CFont*)dc.SelectObject( &CoolInterface.m_fntNormal );
 	dc.SetTextColor( GetSysColor( ( lpDrawItemStruct->itemState & ODS_SELECTED )
 		? COLOR_HIGHLIGHTTEXT : COLOR_MENUTEXT ) );
 

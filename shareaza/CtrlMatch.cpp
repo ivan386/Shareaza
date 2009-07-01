@@ -104,6 +104,15 @@ CMatchCtrl::~CMatchCtrl()
 {
 }
 
+void CMatchCtrl::OnSkinChange()
+{
+	ASSERT_VALID( this );
+	SetFont( &CoolInterface.m_fntNormal );
+
+	ASSERT_VALID( &m_wndHeader );
+	m_wndHeader.SetFont( &CoolInterface.m_fntNormal );
+}
+
 /////////////////////////////////////////////////////////////////////////////
 // CMatchCtrl system
 
@@ -118,12 +127,11 @@ BOOL CMatchCtrl::Create(CMatchList* pMatches, CWnd* pParentWnd)
 int CMatchCtrl::OnCreate(LPCREATESTRUCT lpCreateStruct) 
 {
 	if ( CWnd::OnCreate( lpCreateStruct ) == -1 ) return -1;
-	
+
 	CRect rc;
 	
 	if ( ! m_wndHeader.Create( WS_CHILD|WS_VISIBLE|HDS_BUTTONS|HDS_DRAGDROP|HDS_HOTTRACK|HDS_FULLDRAG,
 		rc, this, IDC_MATCH_HEADER ) ) return -1;
-	m_wndHeader.SetFont( &theApp.m_gdiFont );
 	
 	if ( ! m_wndTip.Create( this ) ) return -1;
 	
@@ -150,6 +158,8 @@ int CMatchCtrl::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	LoadColumnState();
 	
 	UpdateScroll();
+	
+	OnSkinChange();
 	
 	return 0;
 }
@@ -762,7 +772,7 @@ void CMatchCtrl::DrawItem(CDC& dc, CRect& rcRow, CMatchFile* pFile, CQueryHit* p
 	dc.SetBkColor( crBack );
 	
 	dc.SelectObject( Settings.Search.HighlightNew && ( pHit ? pHit->m_bNew : pFile->m_bNew )
-		? &theApp.m_gdiFontBold : &theApp.m_gdiFont );
+		? &CoolInterface.m_fntBold : &CoolInterface.m_fntNormal );
 	
 	for ( int nColumn = 0 ; nColumn < nColumns ; nColumn++ )
 	{
@@ -1245,7 +1255,7 @@ void CMatchCtrl::DrawEmptyMessage(CDC& dc, CRect& rcClient)
 	dc.SetBkMode( TRANSPARENT );
 	dc.SetBkColor( CoolInterface.m_crWindow );
 	dc.SetTextColor( CoolInterface.m_crText );
-	dc.SelectObject( &theApp.m_gdiFont );
+	dc.SelectObject( &CoolInterface.m_fntNormal );
 	
 	szText		= dc.GetTextExtent( m_sMessage );
 	ptText.x	= ( rcText.left + rcText.right ) / 2 - szText.cx / 2;
@@ -1261,7 +1271,7 @@ void CMatchCtrl::DrawEmptyMessage(CDC& dc, CRect& rcClient)
 
 		rcText.OffsetRect( 0, rcText.Height() );
 
-		dc.SelectObject( &theApp.m_gdiFontLine );
+		dc.SelectObject( &CoolInterface.m_fntUnder );
 		dc.SetTextColor( CoolInterface.m_crTextLink );
 
 		szText		= dc.GetTextExtent( strText );

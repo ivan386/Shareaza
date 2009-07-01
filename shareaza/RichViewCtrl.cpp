@@ -135,7 +135,7 @@ int CRichViewCtrl::FullHeightMove(int nX, int nY, int nWidth, BOOL bShow)
 	CRect rc( 0, 0, nWidth, -1 );
 
 	CClientDC dc( this );
-	CFont* pOldFont = (CFont*)dc.SelectObject( &theApp.m_gdiFont );
+	CFont* pOldFont = (CFont*)dc.SelectObject( &CoolInterface.m_fntNormal );
 	Layout( &dc, &rc );
 	dc.SelectObject( pOldFont );
 
@@ -212,7 +212,7 @@ void CRichViewCtrl::OnPaint()
 
 	CSingleLock pLock( &m_pDocument->m_pSection, TRUE );
 
-	CFont* pOldFont = (CFont*)dc.SelectObject( &theApp.m_gdiFont );
+	CFont* pOldFont = (CFont*)dc.SelectObject( &CoolInterface.m_fntNormal );
 
 	if ( m_pDocument->m_nCookie != m_nCookie || m_pBrush.m_hObject == NULL )
 	{
