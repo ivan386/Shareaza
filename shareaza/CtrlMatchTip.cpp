@@ -1,7 +1,7 @@
 //
 // CtrlMatchTip.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -214,9 +214,6 @@ void CMatchTipCtrl::ShowInternal()
 	{
 		return;
 	}
-
-	if ( m_sName.GetLength() > 128 )
-		m_sName = m_sName.Left( 128 );
 
 	m_bVisible = TRUE;
 
@@ -658,6 +655,8 @@ CSize CMatchTipCtrl::ComputeSize()
 	sz.cx += TIP_MARGIN * 2;
 	sz.cy += TIP_MARGIN * 2;
 
+	sz.cx = min( max( sz.cx, 400 ), GetSystemMetrics( SM_CXSCREEN ) / 2 );
+
 	return sz;
 }
 
@@ -937,13 +936,19 @@ void CMatchTipCtrl::OnPaint()
 
 void CMatchTipCtrl::DrawText(CDC& dc, CPoint& pt, const CString& strText)
 {
-	DWORD dwFlags = ( Settings.General.LanguageRTL ? ETO_RTLREADING : 0 );
+	DWORD dwFlags = ( Settings.General.LanguageRTL ? ETO_RTLREADING : 0 ) |
+		DT_SINGLELINE | DT_NOPREFIX | DT_END_ELLIPSIS;
 	short nExtraPoint = ( Settings.General.LanguageRTL ? 1 : 0 );
+	CRect rcClient;
+	GetClientRect( &rcClient );
 	CSize sz = dc.GetTextExtent( strText );
-	CRect rc( pt.x, pt.y, pt.x + sz.cx + nExtraPoint, pt.y + sz.cy );
+	CRect rc( pt.x, pt.y,
+		min( pt.x + sz.cx + nExtraPoint, rcClient.Width() - TIP_MARGIN ),
+		min( pt.y + sz.cy, rcClient.Height() - TIP_MARGIN ) );
 
-	dc.SetBkColor( m_crBack );
-	dc.ExtTextOut( pt.x, pt.y, ETO_CLIPPED|ETO_OPAQUE|dwFlags, &rc, strText, NULL );
+	dc.SetBkMode( TRANSPARENT );
+	dc.FillSolidRect( &rc, m_crBack );
+	dc.DrawText( strText, &rc, dwFlags );
 	dc.ExcludeClipRect( &rc );
 }
 
