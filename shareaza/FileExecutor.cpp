@@ -179,7 +179,9 @@ TRISTATE CFileExecutor::IsSafeExecute(LPCTSTR szExt, LPCTSTR szFile)
 	{
 		CString strFormat, strPrompt;
 		Skin.LoadString( strFormat, IDS_LIBRARY_CONFIRM_EXECUTE );
-		strPrompt.Format( strFormat, szFile );
+		TCHAR szPrettyPath[ 60 ];
+		PathCompactPathEx( szPrettyPath, szFile, _countof( szPrettyPath ) - 1, 0 );
+		strPrompt.Format( strFormat, szPrettyPath );
 		switch ( AfxMessageBox( strPrompt,
 			MB_ICONQUESTION | MB_YESNOCANCEL | MB_DEFBUTTON2 ) )
 		{
@@ -253,22 +255,22 @@ BOOL CFileExecutor::Execute(LPCTSTR pszFile, BOOL bSkipSecurityCheck, LPCTSTR ps
 		}
 	}
 
-	// Prepare file path for execution
-	CString strFile = CString( _T('\"') ) + pszFile + CString( _T('\"') );
-	if ( Settings.MediaPlayer.ShortPaths )
-	{
-		TCHAR pszShortPath[ MAX_PATH ];
-		if ( GetShortPathName( pszFile, pszShortPath, MAX_PATH ) )
-			strFile = pszShortPath;
-	}
-
 	// Handle video and audio files by external player
 	if ( ! bShiftKey && ( bVideo || bAudio ) &&
 		! Settings.MediaPlayer.ServicePath.IsEmpty() )
 	{
-		if ( ShellExecute( AfxGetMainWnd()->GetSafeHwnd(), _T("open"),
-			Settings.MediaPlayer.ServicePath, strFile, NULL,
-			SW_SHOWNORMAL ) > (HINSTANCE)SE_ERR_DLLNOTFOUND )
+		// Prepare file path for execution
+		TCHAR pszShortPath[ MAX_PATH ];
+		if ( Settings.MediaPlayer.ShortPaths )
+		{
+			if ( GetShortPathName( pszFile, pszShortPath, MAX_PATH ) )
+				pszFile = pszShortPath;
+		}
+
+		HINSTANCE hResult = ShellExecute( AfxGetMainWnd()->GetSafeHwnd(), _T("open"),
+			Settings.MediaPlayer.ServicePath,
+			CString( _T('\"') ) + pszFile + CString( _T('\"') ), NULL, SW_SHOWNORMAL );
+		if ( hResult > (HINSTANCE)32 )
 			return TRUE;
 	}
 
@@ -281,10 +283,12 @@ BOOL CFileExecutor::Execute(LPCTSTR pszFile, BOOL bSkipSecurityCheck, LPCTSTR ps
 
 	// TODO: Doesn't work with partial files
 
-	ShellExecute( AfxGetMainWnd()->GetSafeHwnd(),
-		NULL, strFile, NULL, NULL, SW_SHOWNORMAL );
+	HINSTANCE hResult = ShellExecute( AfxGetMainWnd()->GetSafeHwnd(), NULL,
+		pszFile, NULL, NULL, SW_SHOWNORMAL );
+	if ( hResult > (HINSTANCE)32 )
+		return TRUE;
 
-	return TRUE;
+	return FALSE;
 }
 
 //////////////////////////////////////////////////////////////////////
