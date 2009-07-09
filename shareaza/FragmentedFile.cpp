@@ -563,6 +563,9 @@ DWORD CFragmentedFile::Move(DWORD nIndex, LPCTSTR pszDestination, LPPROGRESS_ROU
 
 		// Close our handle
 		m_oFile[ nIndex ].Release();
+
+		// Make read-only
+		m_oFile[ nIndex ].m_bWrite = FALSE;
 	}
 
 	ASSERT( ! sName.IsEmpty() );
