@@ -69,7 +69,7 @@ void CCrawlSession::Clear()
 
 void CCrawlSession::Bootstrap()
 {
-	CSingleLock pLock( &Network.m_pSection, TRUE );
+	CQuickLock oLock( Network.m_pSection );
 
 	for ( POSITION pos = Neighbours.GetIterator() ; pos ; )
 	{
