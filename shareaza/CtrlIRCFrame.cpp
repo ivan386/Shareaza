@@ -247,7 +247,7 @@ void CIRCFrame::FillChanList()
 	m_pChanList.AddChannel( _T("Polish"), _T("#Shareaza-Polish") );
  	m_pChanList.AddChannel( _T("Portuguese"), _T("#Shareaza-Portuguese") );
 	m_pChanList.AddChannel( _T("Russian"), _T("#Shareaza-Russian") );
- 	m_pChanList.AddChannel( _T("Spain"), _T("#Shareaza-Spain") );
+ 	m_pChanList.AddChannel( _T("Spain"), _T("#Shareaza-Spanish") );
  	m_pChanList.AddChannel( _T("Swedish"), _T("#Shareaza-Swedish") );
 }
  
