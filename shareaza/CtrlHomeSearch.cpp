@@ -88,8 +88,6 @@ int CHomeSearchCtrl::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	if ( ! m_wndText.Create( WS_CHILD|WS_VISIBLE|WS_TABSTOP|WS_GROUP|WS_VSCROLL|CBS_AUTOHSCROLL|CBS_DROPDOWN,
 		rc, this, IDC_SEARCH_TEXT ) ) return -1;
 
-	m_wndText.SetFont( &CoolInterface.m_fntNormal );
-
 	if ( ! m_wndSchema.Create( WS_CHILD|WS_VISIBLE|WS_TABSTOP, rc, this, IDC_SCHEMAS ) )
 		return -1;
 
@@ -125,6 +123,8 @@ void CHomeSearchCtrl::OnSkinChange(COLORREF crWindow)
 	LoadString( m_wndSchema.m_sNoSchemaText, IDS_SEARCH_PANEL_AFT );
 
 	FillHistory();
+
+	m_wndText.SetFont( &CoolInterface.m_fntNormal );
 }
 
 void CHomeSearchCtrl::FillHistory()
