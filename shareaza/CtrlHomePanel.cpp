@@ -1179,9 +1179,11 @@ void CHomeConnectionBox::Update()
 	m_pDocument->ShowGroup( 1, ! bConnected );
 	m_pDocument->ShowGroup( 2, bConnected );
 	
-	bool* pEnable[4] =
+	const bool* pEnable[4] =
 	{
-		NULL, &Settings.Gnutella1.EnableToday, &Settings.Gnutella2.EnableToday,
+		NULL,
+		&Settings.Gnutella1.EnableToday,
+		&Settings.Gnutella2.EnableToday,
 		&Settings.eDonkey.EnableToday
 	};
 	

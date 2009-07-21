@@ -1767,6 +1767,8 @@
 		<text group="11" align="middle">Disconnected</text>
 		<text group="12" align="middle">Connecting...</text>
 		<text group="13" align="middle">Connected</text>
+		<text group="14" align="middle" id="G1Hubs">%i ultrapeers</text>
+		<text group="15" align="middle" id="G1Leaves">%i leaves</text>
 		<newline group="10" gap="2"/>
 		<icon group="30" command="ID_NETWORK_ED2K"/><gap group="30" size="4"/>
 		<text group="30" align="middle" format="b">eDonkey: </text>
