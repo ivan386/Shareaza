@@ -346,7 +346,6 @@ void CSettings::Load()
 	Add( _T("Gnutella1"), _T("QueryHitUTF8"), &Gnutella1.QueryHitUTF8, true );
 	Add( _T("Gnutella1"), _T("QuerySearchUTF8"), &Gnutella1.QuerySearchUTF8, true );
 	Add( _T("Gnutella1"), _T("QueryThrottle"), &Gnutella1.QueryThrottle, 30, 1, 10, 10*60, _T(" s") );
-	Add( _T("Gnutella1"), _T("QueueLimter"), &Gnutella1.HitQueueLimit, 50 );
 	Add( _T("Gnutella1"), _T("RequeryDelay"), &Gnutella1.RequeryDelay, 30, 1, 5, 60, _T(" s") );
 	Add( _T("Gnutella1"), _T("SearchTTL"), &Gnutella1.SearchTTL, 3, 1, 1, 3 );
 	Add( _T("Gnutella1"), _T("StrictPackets"), &Gnutella1.StrictPackets, false );

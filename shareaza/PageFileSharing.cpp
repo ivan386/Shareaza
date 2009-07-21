@@ -80,8 +80,9 @@ BOOL CFileSharingPage::OnInitDialog()
 
 	m_wndTags.AddString( _T("") );
 
-	if ( UploadQueues.m_pSection.Lock() )
 	{
+		CQuickLock oLock( UploadQueues.m_pSection );
+
 		CList< CString > pAdded;
 
 		for ( POSITION pos = UploadQueues.GetIterator() ; pos ; )
@@ -97,8 +98,6 @@ BOOL CFileSharingPage::OnInitDialog()
 				}
 			}
 		}
-
-		UploadQueues.m_pSection.Unlock();
 
 		if ( pAdded.IsEmpty() )
 		{

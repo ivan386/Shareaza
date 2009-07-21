@@ -1,7 +1,7 @@
 //
 // UploadQueues.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -23,42 +23,33 @@
 
 class CUploadQueue;
 class CUploadTransfer;
-
 class CLibraryFile;
 class CDownload;
 
 
 class CUploadQueues
 {
-// Construction
 public:
 	CUploadQueues();
 	virtual ~CUploadQueues();
 
-// Attributes
 public:
-	CMutex				m_pSection;
+	mutable CMutexEx	m_pSection;
 	CUploadQueue*		m_pTorrentQueue;
 	CUploadQueue*		m_pHistoryQueue;
-protected:
-	CList< CUploadQueue* > m_pList;
 
-	BOOL				m_bDonkeyLimited;
-
-// Operations
-public:
 	BOOL	Enqueue(CUploadTransfer* pUpload, BOOL bForce = FALSE);
 	BOOL	Dequeue(CUploadTransfer* pUpload);
 	int		GetPosition(CUploadTransfer* pUpload, BOOL bStart);
 	BOOL	StealPosition(CUploadTransfer* pTarget, CUploadTransfer* pSource);
-public:
+
 	CUploadQueue*	Create(LPCTSTR pszName = NULL, BOOL bTop = FALSE);
 	void			Delete(CUploadQueue* pQueue);
 	BOOL			Reorder(CUploadQueue* pQueue, CUploadQueue* pBefore);
 	CUploadQueue*	SelectQueue(PROTOCOLID nProtocol, CLibraryFile const * const pFile);
 	CUploadQueue*	SelectQueue(PROTOCOLID nProtocol, CDownload const * const pFile);
 	CUploadQueue*	SelectQueue(PROTOCOLID nProtocol, LPCTSTR pszName, QWORD nSize, DWORD nFileState, LPCTSTR pszShareTags = NULL);
-public:
+
 	int		GetTotalBandwidthPoints( BOOL ActiveOnly = FALSE );
 	int		GetQueueCapacity();
 	INT_PTR	GetQueuedCount();
@@ -68,36 +59,35 @@ public:
 	DWORD	GetMinimumDonkeyBandwidth();
 	DWORD	GetCurrentDonkeyBandwidth();
 	BOOL	CanUpload(PROTOCOLID nProtocol, CLibraryFile const * const pFile, BOOL bCanQueue = FALSE );	// Can this file be uploaded with the current queue setup?
-	DWORD	QueueRank(PROTOCOLID nProtocol, CLibraryFile const * const pFile );	// What queue position would this file be in?
 
-public:
 	void	Clear();
 	BOOL	Load();
 	BOOL	Save();
 	void	CreateDefault();
 	void	Validate();
-protected:
-	void	Serialize(CArchive& ar);
 
 // Inline Access
-public:
 	inline POSITION GetIterator() const
 	{
+		ASSUME_LOCK( m_pSection );
 		return m_pList.GetHeadPosition();
 	}
 
 	inline CUploadQueue* GetNext(POSITION& pos) const
 	{
+		ASSUME_LOCK( m_pSection );
 		return m_pList.GetNext( pos );
 	}
 
 	inline INT_PTR GetCount() const
 	{
+		CQuickLock oLock( m_pSection );
 		return m_pList.GetCount();
 	}
 
 	inline BOOL Check(CUploadQueue* pQueue) const
 	{
+		CQuickLock oLock( m_pSection );
 		if ( pQueue == NULL ) return FALSE;
 		return m_pList.Find( pQueue ) != NULL;
 	}
@@ -107,6 +97,11 @@ public:
 		return ( m_bDonkeyLimited ); 
 	}
 
+protected:
+	CList< CUploadQueue* >	m_pList;
+	BOOL					m_bDonkeyLimited;
+
+	void	Serialize(CArchive& ar);
 };
 
 extern CUploadQueues UploadQueues;

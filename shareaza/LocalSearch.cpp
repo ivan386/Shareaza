@@ -141,15 +141,8 @@ bool CLocalSearch::IsValidForHit< CLibraryFile >(const CLibraryFile* pFile) cons
 bool CLocalSearch::IsValidForHitG1(CLibraryFile const * const pFile) const
 {
 	return Settings.Gnutella1.EnableToday &&
-		// Check that the file is actually available. (We must not return ghost hits to G1!)
-		pFile->IsAvailable() &&		
-		// Check that a queue that can upload this file exists, and isn't insanely long.
-		// NOTE: Very CPU intensive operation!!!
-		( UploadQueues.QueueRank( PROTOCOL_HTTP, pFile ) <= Settings.Gnutella1.HitQueueLimit );
-		// Normally this isn't a problem- the default queue length is 8 to 10, so this check (50) will
-		// never be activated. However, sometimes users configure bad settings, such as a 2000 user HTTP
-		// queue. Although the remote client could/should handle this by itself, we really should give
-		// Gnutella some protection against 'extreme' settings (if only to reduce un-necessary traffic.)
+		// Browse request, or real file
+		( ! m_pSearch || pFile->IsAvailable() );
 }
 
 bool CLocalSearch::IsValidForHitG2(CLibraryFile const * const pFile) const

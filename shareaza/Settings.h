@@ -367,7 +367,6 @@ public:
 		DWORD		PingRate;
 		DWORD		PongCache;
 		DWORD		PongCount;
-		DWORD		HitQueueLimit;				// Protect G1 clients from badly configured queues
 		bool		QueryHitUTF8;				// Use UTF-8 encoding to read Gnutella1 QueryHit packets
 		bool		QuerySearchUTF8;			// Use UTF-8 encoding to create Gnutella1 Query packets
 		DWORD		MaxHostsInPongs;			// The number of hosts included in the response of pings having SCP GGEP block

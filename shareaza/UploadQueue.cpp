@@ -1,7 +1,7 @@
 //
 // UploadQueue.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -361,6 +361,7 @@ DWORD CUploadQueue::GetBandwidthLimit(INT_PTR nTransfers) const
 	
 	INT_PTR nTotalPoints = nLocalPoints;
 	
+	CQuickLock oLock( UploadQueues.m_pSection );
 	for ( POSITION pos = UploadQueues.GetIterator() ; pos ; )
 	{
 		CUploadQueue* pOther = UploadQueues.GetNext( pos );

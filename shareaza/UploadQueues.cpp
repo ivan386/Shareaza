@@ -25,9 +25,9 @@
 #include "UploadQueues.h"
 #include "UploadQueue.h"
 #include "UploadTransfer.h"
-#include "Transfers.h"
 #include "SharedFile.h"
 #include "Download.h"
+#include "Network.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -42,11 +42,11 @@ CUploadQueues UploadQueues;
 // CUploadQueues construction
 
 CUploadQueues::CUploadQueues()
+	: m_pTorrentQueue	( new CUploadQueue() )
+	, m_pHistoryQueue	( new CUploadQueue() )
+	, m_bDonkeyLimited	( FALSE )
 {
-	m_pTorrentQueue = new CUploadQueue();
-	m_pHistoryQueue = new CUploadQueue();
 	m_pHistoryQueue->m_bExpanded = FALSE;
-	m_bDonkeyLimited = FALSE;
 }
 
 CUploadQueues::~CUploadQueues()
@@ -61,7 +61,7 @@ CUploadQueues::~CUploadQueues()
 
 BOOL CUploadQueues::Enqueue(CUploadTransfer* pUpload, BOOL bForce)
 {
-	CSingleLock pLock( &m_pSection, TRUE );
+	CQuickLock oLock( m_pSection );
 
 	ASSERT( pUpload != NULL );
 
@@ -90,7 +90,7 @@ BOOL CUploadQueues::Enqueue(CUploadTransfer* pUpload, BOOL bForce)
 
 BOOL CUploadQueues::Dequeue(CUploadTransfer* pUpload)
 {
-	CSingleLock pLock( &m_pSection, TRUE );
+	CQuickLock oLock( m_pSection );
 
 	ASSERT( pUpload != NULL );
 
@@ -110,7 +110,8 @@ BOOL CUploadQueues::Dequeue(CUploadTransfer* pUpload)
 
 int CUploadQueues::GetPosition(CUploadTransfer* pUpload, BOOL bStart)
 {
-	CSingleLock pLock( &m_pSection, TRUE );
+	CQuickLock oLock1( Network.m_pSection );
+	CQuickLock oLock2( m_pSection );
 
 	ASSERT( pUpload != NULL );
 
@@ -130,7 +131,7 @@ int CUploadQueues::GetPosition(CUploadTransfer* pUpload, BOOL bStart)
 
 BOOL CUploadQueues::StealPosition(CUploadTransfer* pTarget, CUploadTransfer* pSource)
 {
-	CSingleLock pLock( &m_pSection, TRUE );
+	CQuickLock oLock( m_pSection );
 
 	ASSERT( pTarget != NULL );
 	ASSERT( pSource != NULL );
@@ -147,7 +148,7 @@ BOOL CUploadQueues::StealPosition(CUploadTransfer* pTarget, CUploadTransfer* pSo
 
 CUploadQueue* CUploadQueues::Create(LPCTSTR pszName, BOOL bTop)
 {
-	CSingleLock pLock( &m_pSection, TRUE );
+	CQuickLock oLock( m_pSection );
 
 	CUploadQueue* pQueue = new CUploadQueue();
 	if ( pszName != NULL ) pQueue->m_sName = pszName;
@@ -163,15 +164,20 @@ CUploadQueue* CUploadQueues::Create(LPCTSTR pszName, BOOL bTop)
 
 void CUploadQueues::Delete(CUploadQueue* pQueue)
 {
-	CSingleLock pLock( &m_pSection, TRUE );
-	if ( ! Check( pQueue ) ) return;
-	if ( POSITION pos = m_pList.Find( pQueue ) ) m_pList.RemoveAt( pos );
+	CQuickLock oLock( m_pSection );
+
+	if ( ! Check( pQueue ) )
+		return;
+
+	if ( POSITION pos = m_pList.Find( pQueue ) )
+		m_pList.RemoveAt( pos );
+
 	delete pQueue;
 }
 
 BOOL CUploadQueues::Reorder(CUploadQueue* pQueue, CUploadQueue* pBefore)
 {
-	CSingleLock pLock( &m_pSection, TRUE );
+	CQuickLock oLock( m_pSection );
 
 	POSITION pos1 = m_pList.Find( pQueue );
 	if ( pos1 == NULL ) return FALSE;
@@ -207,7 +213,7 @@ CUploadQueue* CUploadQueues::SelectQueue(PROTOCOLID nProtocol, CDownload const *
 
 CUploadQueue* CUploadQueues::SelectQueue(PROTOCOLID nProtocol, LPCTSTR pszName, QWORD nSize, DWORD nFileState, LPCTSTR pszShareTags)
 {
-	CSingleLock pLock( &m_pSection, TRUE );
+	CQuickLock oLock( m_pSection );
 	int nIndex = 0;
 
 	for ( POSITION pos = GetIterator() ; pos ; nIndex++ )
@@ -225,7 +231,7 @@ CUploadQueue* CUploadQueues::SelectQueue(PROTOCOLID nProtocol, LPCTSTR pszName, 
 
 int CUploadQueues::GetTotalBandwidthPoints( BOOL ActiveOnly )
 {
-	CSingleLock pLock( &m_pSection, TRUE );
+	CQuickLock oLock( m_pSection );
 	int nCount = 0;
 	CUploadQueue *pQptr;
 
@@ -253,7 +259,7 @@ int CUploadQueues::GetTotalBandwidthPoints( BOOL ActiveOnly )
 
 int CUploadQueues::GetQueueCapacity()
 {
-	CSingleLock pLock( &m_pSection, TRUE );
+	CQuickLock oLock( m_pSection );
 	int nCount = 0;
 
 	for ( POSITION pos = GetIterator() ; pos ; )
@@ -266,7 +272,7 @@ int CUploadQueues::GetQueueCapacity()
 
 INT_PTR CUploadQueues::GetQueuedCount()
 {
-	CSingleLock pLock( &m_pSection, TRUE );
+	CQuickLock oLock( m_pSection );
 	INT_PTR nCount = 0;
 
 	for ( POSITION pos = GetIterator() ; pos ; )
@@ -279,7 +285,7 @@ INT_PTR CUploadQueues::GetQueuedCount()
 
 INT_PTR CUploadQueues::GetQueueRemaining()
 {
-	CSingleLock pLock( &m_pSection, TRUE );
+	CQuickLock oLock( m_pSection );
 	INT_PTR nCount = 0;
 
 	for ( POSITION pos = GetIterator() ; pos ; )
@@ -292,7 +298,7 @@ INT_PTR CUploadQueues::GetQueueRemaining()
 
 INT_PTR CUploadQueues::GetTransferCount()
 {
-	CSingleLock pLock( &m_pSection, TRUE );
+	CQuickLock oLock( m_pSection );
 	INT_PTR nCount = 0;
 
 	for ( POSITION pos = GetIterator() ; pos ; )
@@ -305,7 +311,7 @@ INT_PTR CUploadQueues::GetTransferCount()
 
 BOOL CUploadQueues::IsTransferAvailable()
 {
-	CSingleLock pLock( &m_pSection, TRUE );
+	CQuickLock oLock( m_pSection );
 
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
@@ -317,7 +323,7 @@ BOOL CUploadQueues::IsTransferAvailable()
 
 DWORD CUploadQueues::GetMinimumDonkeyBandwidth()
 {
-	CSingleLock pLock( &m_pSection, TRUE );
+	CQuickLock oLock( m_pSection );
 
 	// Check ED2K ratio limiter
 	DWORD nTotal = Settings.Connection.OutSpeed * 128;
@@ -348,9 +354,9 @@ DWORD CUploadQueues::GetMinimumDonkeyBandwidth()
 
 DWORD CUploadQueues::GetCurrentDonkeyBandwidth()
 {
-	CSingleLock pLock( &m_pSection, TRUE );
-	DWORD nBandwidth = 0;
+	CQuickLock oLock( m_pSection );
 
+	DWORD nBandwidth = 0;
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
 		CUploadQueue* pQueue = GetNext( pos );
@@ -375,7 +381,7 @@ BOOL CUploadQueues::CanUpload(PROTOCOLID nProtocol, CLibraryFile const * const p
 	if ( ( nProtocol == PROTOCOL_G1 ) || ( nProtocol == PROTOCOL_G2 ) )
 		nProtocol = PROTOCOL_HTTP;
 
-	CSingleLock pLock( &m_pSection, TRUE );
+	CQuickLock oLock( m_pSection );
 
 	//Check each queue
 	for ( POSITION pos = GetIterator() ; pos ; )
@@ -394,45 +400,12 @@ BOOL CUploadQueues::CanUpload(PROTOCOLID nProtocol, CLibraryFile const * const p
 	return FALSE;	//This file is not uploadable with the current queue setup
 }
 
-DWORD CUploadQueues::QueueRank(PROTOCOLID nProtocol, CLibraryFile const * const pFile )
-{ 	// if the specified file was requested now, what queue position would it be in?
-	// 0x7FFF (max int) indicates the file cannot be downloaded
-
-
-	// Don't bother with 0 byte files
-	if ( pFile->m_nSize == 0 ) return 0x7FFF;
-
-	// Detect Ghosts
-	if ( pFile->IsGhost() ) return 0x7FFF;
-
-	// G1 and G2 both use HTTP transfers, Sharaza doesn't consider them different.
-	if ( ( nProtocol == PROTOCOL_G1 ) || ( nProtocol == PROTOCOL_G2 ) )
-		nProtocol = PROTOCOL_HTTP;
-
-	CSingleLock pLock( &m_pSection, TRUE );
-
-	//Check each queue
-	for ( POSITION pos = GetIterator() ; pos ; )
-	{
-		CUploadQueue* pQueue = GetNext( pos );
-
-		if ( pQueue->CanAccept(	nProtocol, pFile->m_sName, pFile->m_nSize, CUploadQueue::ulqLibrary, pFile->m_sShareTags ) )
-		{	// If this queue will accept this file
-
-			if ( pQueue->GetQueueRemaining() > 0 )
-				return pQueue->GetQueuedCount();
-		}
-	}
-
-	return 0x7FFF;	//This file is not uploadable with the current queue setup
-}
-
 //////////////////////////////////////////////////////////////////////
 // CUploadQueues clear
 
 void CUploadQueues::Clear()
 {
-	CSingleLock pLock( &m_pSection, TRUE );
+	CQuickLock oLock( m_pSection );
 
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
@@ -447,7 +420,7 @@ void CUploadQueues::Clear()
 
 BOOL CUploadQueues::Load()
 {
-	CSingleLock pLock( &m_pSection, TRUE );
+	CQuickLock oLock( m_pSection );
 	CFile pFile;
 
 	LoadString( m_pTorrentQueue->m_sName, IDS_UPLOAD_QUEUE_TORRENT );
@@ -484,7 +457,7 @@ BOOL CUploadQueues::Load()
 
 BOOL CUploadQueues::Save()
 {
-	CSingleLock pLock( &m_pSection, TRUE );
+	CQuickLock oLock( m_pSection );
 	CFile pFile;
 
 	CString strFile = Settings.General.UserPath + _T("\\Data\\UploadQueues.dat");
@@ -503,6 +476,8 @@ BOOL CUploadQueues::Save()
 
 void CUploadQueues::Serialize(CArchive& ar)
 {
+	ASSUME_LOCK( m_pSection );
+
 	int nVersion = 6;
 
 	if ( ar.IsStoring() )
@@ -535,7 +510,7 @@ void CUploadQueues::Serialize(CArchive& ar)
 
 void CUploadQueues::CreateDefault()
 {
-	CSingleLock pLock( &m_pSection, TRUE );
+	CQuickLock oLock( m_pSection );
 
 	CUploadQueue* pQueue = NULL;
 
@@ -871,6 +846,8 @@ void CUploadQueues::CreateDefault()
 
 void CUploadQueues::Validate()
 {
+	CQuickLock oLock( m_pSection );
+
 	CString strQueueName;
 	if ( SelectQueue( PROTOCOL_ED2K, _T("Filename"), 0x00A00000, CUploadQueue::ulqPartial ) == NULL ||
 		 SelectQueue( PROTOCOL_ED2K, _T("Filename"), 0x03200000, CUploadQueue::ulqPartial ) == NULL ||
@@ -1001,6 +978,4 @@ void CUploadQueues::Validate()
 		else
 			theApp.Message( MSG_DEBUG, _T("eDonkey upload ratio is OK.")  );
 	}
-
 }
-
