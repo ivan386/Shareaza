@@ -22,7 +22,6 @@
 // CPacket represents a packet on a peer-to-peer network, and CPacketPool keeps lists of them
 // http://shareazasecurity.be/wiki/index.php?title=Developers.Code.CPacket
 
-// Copy in the contents of these files here before compiling
 #include "StdAfx.h"
 #include "Shareaza.h"
 #include "Settings.h"
@@ -33,7 +32,6 @@
 #include "WndMain.h"
 #include "WndPacket.h"
 
-// If we are compiling in debug mode, replace the text "THIS_FILE" in the code with the name of this file
 #ifdef _DEBUG
 #undef THIS_FILE
 static char THIS_FILE[]=__FILE__;
@@ -46,22 +44,19 @@ static char THIS_FILE[]=__FILE__;
 // Takes a protocol id, like PROTOCOL_G1 for Gnutella
 // Makes a new CPacket object to represent a packet
 CPacket::CPacket(PROTOCOLID nProtocol)
-{
 	// Save the given protocol id in the object
-	m_nProtocol  = nProtocol;
-
+	: m_nProtocol  ( nProtocol )
 	// This packet isn't in a list yet, and isn't being used at all yet
-	m_pNext      = NULL; // No packet next in a list
-	m_nReference = 0;    // No one needs this packet yet, the reference count starts at 0
-
+	, m_pNext      ( NULL ) // No packet next in a list
+	, m_nReference ( 0 )    // No one needs this packet yet, the reference count starts at 0
 	// Start out memory pointers and lengths at null and 0
-	m_pBuffer    = NULL; // This is just a pointer to allocated bytes, not a CBuffer object that would take care of itself
-	m_nBuffer    = 0;
-	m_nLength    = 0;
-	m_nPosition  = 0;
-
+	, m_pBuffer    ( NULL ) // This is just a pointer to allocated bytes, not a CBuffer object that would take care of itself
+	, m_nBuffer    ( 0 )
+	, m_nLength    ( 0 )
+	, m_nPosition  ( 0 )
 	// Assume the bytes of the packet are in big endian order
-	m_bBigEndian = TRUE;
+	, m_bBigEndian ( TRUE )
+{
 }
 
 // Delete this CPacket object
@@ -71,7 +66,7 @@ CPacket::~CPacket()
 	ASSERT( m_nReference == 0 ); // If it's not, then this packet is being deleted when something still needs it
 
 	// If the packet points to some memory, delete it
-	if ( m_pBuffer ) delete [] m_pBuffer;
+	delete [] m_pBuffer;
 }
 
 //////////////////////////////////////////////////////////////////////

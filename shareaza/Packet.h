@@ -41,6 +41,8 @@ protected:
 	CPacket(PROTOCOLID nProtocol); // Make a new CPacket object for the given protocol id, like Gnutella or eDonkey2000
 	virtual ~CPacket();            // The destructor is virtual, meaning classes that inherit from CPacket may replace it with their own destructor
 
+	volatile LONG m_nReference;		// The number of other objects that need this packet and point to it, 0 if everyone is done with it
+
 public:
 
 	// The network this packet is on, like Gnutella or eDonkey2000
@@ -48,7 +50,6 @@ public:
 
 	// List pointer and reference count
 	CPacket* m_pNext;      // Unused packets in the packet pool are linked together from m_pFree, through each packet's m_pNext pointer
-	DWORD    m_nReference; // The number of other objects that need this packet and point to it, 0 if everyone is done with it
 
 public:
 
@@ -421,16 +422,15 @@ public:
 	// Have this packet object remember that one more thing is referencing it
 	inline void AddRef()
 	{
-		// Increment the reference count stored in the object
-		m_nReference++;
+		InterlockedIncrement( &m_nReference );
 	}
 
 	// Tell this packet object that one less thing needs it
 	inline void Release()
 	{
 		ASSERT( m_nReference > 0 && this );
-		// Decrement the reference count, and if that makes it go to 0, delete the object
-		if ( this != NULL && ! --m_nReference ) Delete();
+		if ( this != NULL && ! InterlockedDecrement( &m_nReference ) )
+			Delete();
 	}
 
 	// Decrement the reference count of this packet, the packet it points to, and so on down the linked list from here
