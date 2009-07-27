@@ -1,3 +1,3 @@
 cd ..\..\
-for %%i in ( *.xml ) do tools\SkinTranslate\Release\SkinTranslate.exe .\default-en.xml .\%%i.po .\xml\%%i
+for %%i in ( *.xml ) do tools\SkinTranslate\Win32\Release\SkinTranslate.exe .\default-en.xml .\%%i.po .\xml\%%i
 @pause
