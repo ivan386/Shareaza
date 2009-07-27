@@ -110,20 +110,25 @@ BOOL CUploadQueues::Dequeue(CUploadTransfer* pUpload)
 
 int CUploadQueues::GetPosition(CUploadTransfer* pUpload, BOOL bStart)
 {
-	CQuickLock oLock1( Network.m_pSection );
-	CQuickLock oLock2( m_pSection );
-
 	ASSERT( pUpload != NULL );
 
-	if ( Check( pUpload->m_pQueue ) )
+	CSingleLock oLock1( &Network.m_pSection );
+	if ( oLock1.Lock( 1000 ) )
 	{
-		return pUpload->m_pQueue->GetPosition( pUpload, bStart );
+		CQuickLock oLock2( m_pSection );
+
+		if ( Check( pUpload->m_pQueue ) )
+		{
+			return pUpload->m_pQueue->GetPosition( pUpload, bStart );
+		}
+		else
+		{
+			pUpload->m_pQueue = NULL;
+		}
 	}
-	else
-	{
-		pUpload->m_pQueue = NULL;
-		return -1;
-	}
+
+	// Upload has no valid queue, or network core overloaded, or shutdown
+	return -1;
 }
 
 //////////////////////////////////////////////////////////////////////

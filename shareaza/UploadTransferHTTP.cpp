@@ -866,7 +866,6 @@ BOOL CUploadTransferHTTP::QueueRequest()
 				// Might as well allow the upload... so don't do anything.
 				//ASSERT( FALSE );
 			}
-
 			
 			if ( nPosition == 0 )
 			{
@@ -885,14 +884,12 @@ BOOL CUploadTransferHTTP::QueueRequest()
 				( m_bFilePartial ? CUploadQueue::ulqPartial : CUploadQueue::ulqLibrary ), m_sFileTags ) );
 			
 			nPosition = UploadQueues.GetPosition( this, TRUE );
-			ASSERT( nPosition >= 0 );
-			
 			if ( nPosition == 0 )
 			{
 				// Queued, and ready to send
 				return OpenFileSendHeaders();
 			}
-			else if ( m_bQueueMe )
+			else if ( nPosition > 0 && m_bQueueMe )
 			{
 				// Queued, but must wait
 			}
