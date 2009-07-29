@@ -80,7 +80,9 @@ BOOL CTorrentFilesPage::OnInitDialog()
 	CDownload* pDownload = ((CDownloadSheet*)GetParent())->m_pDownload;
 	if ( ! Downloads.Check( pDownload ) || ! pDownload->IsTorrent() )
 		return FALSE;
-	
+
+	bool bCompleted = pDownload->IsCompleted();
+
 	auto_ptr< CCoolTipCtrl > pTip( new CLibraryTipCtrl );
 	pTip->Create( this, &Settings.Interface.TipDownloads );
 	m_wndFiles.EnableTips( pTip );
@@ -89,18 +91,23 @@ BOOL CTorrentFilesPage::OnInitDialog()
 	m_wndFiles.GetClientRect( &rc );
 	rc.right -= GetSystemMetrics( SM_CXVSCROLL );
 	m_wndFiles.SetImageList( ShellIcons.GetObject( 16 ), LVSIL_SMALL );
-	m_wndFiles.InsertColumn( 0, _T("Filename"), LVCFMT_LEFT, rc.right - 70 - 60 - 60, -1 );
+	m_wndFiles.InsertColumn( 0, _T("Filename"), LVCFMT_LEFT, rc.right - 70 - 60
+		- ( bCompleted ? 0 : 60 ), -1 );
 	m_wndFiles.InsertColumn( 1, _T("Size"), LVCFMT_RIGHT, 70, 0 );
 	m_wndFiles.InsertColumn( 2, _T("Status"), LVCFMT_RIGHT, 60, 0 );
-	m_wndFiles.InsertColumn( 3, _T("Priority"), LVCFMT_RIGHT, 60, 0 );
+	if ( ! bCompleted )
+		m_wndFiles.InsertColumn( 3, _T("Priority"), LVCFMT_RIGHT, 60, 0 );
 	Skin.Translate( _T("CTorrentFileList"), m_wndFiles.GetHeaderCtrl() );
 
-	BEGIN_COLUMN_MAP()
-		COLUMN_MAP( CFragmentedFile::prNotWanted,	LoadString( IDS_PRIORITY_OFF ) )
-		COLUMN_MAP( CFragmentedFile::prLow,			LoadString( IDS_PRIORITY_LOW ) )
-		COLUMN_MAP( CFragmentedFile::prNormal,		LoadString( IDS_PRIORITY_NORMAL ) )
-		COLUMN_MAP( CFragmentedFile::prHigh,		LoadString( IDS_PRIORITY_HIGH ) )
-	END_COLUMN_MAP( m_wndFiles, 3 )
+	if ( ! bCompleted )
+	{
+		BEGIN_COLUMN_MAP()
+			COLUMN_MAP( CFragmentedFile::prNotWanted,	LoadString( IDS_PRIORITY_OFF ) )
+			COLUMN_MAP( CFragmentedFile::prLow,			LoadString( IDS_PRIORITY_LOW ) )
+			COLUMN_MAP( CFragmentedFile::prNormal,		LoadString( IDS_PRIORITY_NORMAL ) )
+			COLUMN_MAP( CFragmentedFile::prHigh,		LoadString( IDS_PRIORITY_HIGH ) )
+		END_COLUMN_MAP( m_wndFiles, 3 )
+	}
 
 	if ( CComPtr< CFragmentedFile > pFragFile = pDownload->GetFile() )
 	{
@@ -115,8 +122,8 @@ BOOL CTorrentFilesPage::OnInitDialog()
 			pItem.iItem		= m_wndFiles.InsertItem( &pItem );
 			m_wndFiles.SetItemText( pItem.iItem, 1,
 				Settings.SmartVolume( pFragFile->GetLength( i ) ) );
-			m_wndFiles.SetColumnData( pItem.iItem, 3,
-				pFragFile->GetPriority( i ) );
+			if ( ! bCompleted )
+				m_wndFiles.SetColumnData( pItem.iItem, 3, pFragFile->GetPriority( i ) );
 		}
 	}
 
@@ -137,11 +144,14 @@ BOOL CTorrentFilesPage::OnApply()
 	if ( ! Downloads.Check( pDownload ) || ! pDownload->IsTorrent() )
 		return FALSE;
 
-	if ( CComPtr< CFragmentedFile > pFragFile = pDownload->GetFile() )
+	if ( ! pDownload->IsCompleted() )
 	{
-		for ( DWORD i = 0; i < pFragFile->GetCount(); ++i )
+		if ( CComPtr< CFragmentedFile > pFragFile = pDownload->GetFile() )
 		{
-			pFragFile->SetPriority( i, m_wndFiles.GetColumnData( i, 3 ) );
+			for ( DWORD i = 0; i < pFragFile->GetCount(); ++i )
+			{
+				pFragFile->SetPriority( i, m_wndFiles.GetColumnData( i, 3 ) );
+			}
 		}
 	}
 
