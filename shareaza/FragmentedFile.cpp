@@ -164,7 +164,7 @@ BOOL CFragmentedFile::Open(LPCTSTR pszFile, QWORD nOffset, QWORD nLength,
 	m_nFileError = ERROR_SUCCESS;
 
 	CVirtualFile::iterator pItr = std::find( m_oFile.begin(), m_oFile.end(), pszFile );
-	BOOL bNew = ( pItr == m_oFile.end() );
+	bool bNew = ( pItr == m_oFile.end() );
 	if ( bNew )
 	{
 		// Use new
@@ -172,6 +172,7 @@ BOOL CFragmentedFile::Open(LPCTSTR pszFile, QWORD nOffset, QWORD nLength,
 		part.m_sPath = pszFile;
 		part.m_nOffset = nOffset;
 		part.m_bWrite = bWrite;
+		part.m_nPriority = nPriority;
 
 		if ( pszName )
 			part.m_sName = pszName;
@@ -231,7 +232,6 @@ BOOL CFragmentedFile::Open(LPCTSTR pszFile, QWORD nOffset, QWORD nLength,
 
 	(*pItr).m_nSize = nLength;
 	(*pItr).m_pFile = pFile;
-	(*pItr).m_nPriority = nPriority;
 
 	std::sort( m_oFile.begin(), m_oFile.end(), Less() );
 
