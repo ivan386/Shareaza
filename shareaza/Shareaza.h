@@ -406,6 +406,39 @@ inline __int64 GetRandomNum<__int64>(const __int64& min, const __int64& max)
 #define WEB_SITE			"http://shareaza.sourceforge.net/"
 #define WEB_SITE_T			_T( WEB_SITE )
 
+// URLs used by Shareaza
+// -----------------------------------------------------------------------
+// ID					URL								Notes
+// -----------------------------------------------------------------------
+//
+// Help
+//
+// ID_HELP_FAQ		help/?faq
+// ID_HELP_TEST		help/test/?port=x&lang=x&Version=x.x.x.x
+//
+// Help/Guides
+//
+// ID_HELP_GUIDE	help/?guide
+// ID_HELP_ROUTER	help/?router
+// ID_HELP_SECURITY	help/?security
+// ID_HELP_CODEC	help/?codec
+//
+// Help/Websites
+//
+// ID_HELP_HOMEPAGE	?Version=x.x.x.x
+// ID_HELP_FORUMS	help/?forum
+// ID_HELP_UPDATE	help/update/?Version=x.x.x.x			unused
+// ID_HELP_WEB_1	help/external/?link1					unused
+// ID_HELP_WEB_2	help/external/?link1					unused
+// ID_HELP_WEB_3	help/external/?link1					unused
+// ID_HELP_WEB_4	help/external/?link1					unused
+// ID_HELP_WEB_5	help/external/?link1					unused
+// ID_HELP_WEB_6	help/external/?link1					Skin Guide
+//
+// ID_HELP_TORRENT	help/?torrentencoding					Torrent Encoding Help
+// -				?id=support								BugTrap
+// -				version/?Version=x.x.x.x&&Platform=x	CVersionChecker
+
 
 // Drag-n-drop stuff
 

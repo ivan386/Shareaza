@@ -212,7 +212,7 @@ CShareazaApp::CShareazaApp() :
 	BT_SetFlags( BTF_INTERCEPTSUEF | BTF_SHOWADVANCEDUI | BTF_DESCRIBEERROR |
 		BTF_DETAILEDMODE | BTF_ATTACHREPORT | BTF_EDITMAIL );
 	BT_SetSupportEMail( _T("shareaza-bugtrap@lists.sourceforge.net") );
-	BT_SetSupportURL( _T("http://shareaza.sourceforge.net/?id=support") );
+	BT_SetSupportURL( WEB_SITE_T _T("?id=support") );
 	BT_AddRegFile( _T("settings.reg"), _T("HKEY_CURRENT_USER\\Software\\Shareaza\\Shareaza") );
 #endif
 }
@@ -339,13 +339,12 @@ BOOL CShareazaApp::InitInstance()
 	// Beta expiry. Remember to re-compile to update the time, and remove this
 	// section for final releases and public betas.
 	COleDateTime tCurrent = COleDateTime::GetCurrentTime();
-	//COleDateTimeSpan tTimeOut( 31 * 2, 0, 0, 0);	// Betas that aren't on sourceforge
 	COleDateTimeSpan tTimeOut( 7, 0, 0, 0);			// Daily builds
 	if ( ( tCompileTime + tTimeOut )  < tCurrent )
 	{
-		CString strMessage;
-		LoadString( strMessage, IDS_BETA_EXPIRED);
-		AfxMessageBox( strMessage, MB_ICONQUESTION|MB_OK );
+		AfxMessageBox(
+		L"This is a pre-release version of Shareaza, and the beta testing period has ended.  "
+		L"Please download the full, official release from " WEB_SITE_T L".", MB_ICONQUESTION|MB_OK );
 		//return FALSE;
 	}
 	//*/
@@ -358,7 +357,7 @@ BOOL CShareazaApp::InitInstance()
 		L"It is NOT FOR GENERAL USE, and is only for testing specific features in a controlled "
 		L"environment. It will frequently stop running, or display debug information to assist testing.\n\n"
 		L"If you wish to actually use this software, you should download "
-		L"the current stable release from http://shareaza.sourceforge.net/\n"
+		L"the current stable release from " WEB_SITE_T L"\n"
 		L"If you continue past this point, you may experience system instability, lose downloads, "
 		L"or corrupt system files. Corrupted downloads/files may not be recoverable. "
 		L"Do you wish to continue?", MB_ICONEXCLAMATION|MB_YESNO ) == IDNO )

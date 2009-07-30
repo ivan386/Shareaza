@@ -107,7 +107,7 @@ void CSettings::Load()
 	Add( _T("VersionCheck"), _T("NextCheck"), &VersionCheck.NextCheck, 0 );
 	Add( _T("VersionCheck"), _T("Quote"), &VersionCheck.Quote );
 	Add( _T("VersionCheck"), _T("UpdateCheck"), &VersionCheck.UpdateCheck, true );
-	Add( _T("VersionCheck"), _T("UpdateCheckURL"), &VersionCheck.UpdateCheckURL, _T("http://shareaza.sourceforge.net/version/") );
+	Add( _T("VersionCheck"), _T("UpdateCheckURL"), &VersionCheck.UpdateCheckURL, WEB_SITE_T _T("version/") );
 	Add( _T("VersionCheck"), _T("UpgradeFile"), &VersionCheck.UpgradeFile );
 	Add( _T("VersionCheck"), _T("UpgradePrompt"), &VersionCheck.UpgradePrompt );
 	Add( _T("VersionCheck"), _T("UpgradeSHA1"), &VersionCheck.UpgradeSHA1 );

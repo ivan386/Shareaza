@@ -820,7 +820,6 @@
 #define IDS_TABBAR_CONNECTED            8007
 #define IDS_UPGRADE_LAUNCH              8008
 #define IDS_SKIN_DELETE                 8009
-#define IDS_BETA_EXPIRED                8010
 #define IDS_VIEW_MODE_CONFIRM           8011
 #define IDS_UPGRADE_NO_NEW              8013
 #define IDS_DOWNLOAD_PROPERTIES         8014
@@ -1845,12 +1844,11 @@
 #define ID_HELP_SECURITY                33125
 #define ID_HELP_CODEC                   33126
 #define ID_HELP_TEST                    33127
-#define ID_HELP_DONATE                  33128
+#define ID_HELP_TORRENT                 33128
 #define ID_HELP_DISKSPACE               33130
 #define ID_HELP_DISKWRITEFAIL           33131
 #define ID_HELP_CONNECTIONFAIL          33132
 #define ID_HELP_DONKEYSERVERS           33133
-#define ID_HELP_FAKESHAREAZA            33134
 #define ID_MEDIA_PROPERTIES             33137
 #define ID_MEDIA_RATE                   33138
 #define ID_MEDIA_STATE_STOP             33200

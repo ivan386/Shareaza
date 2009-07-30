@@ -170,7 +170,6 @@ BEGIN_MESSAGE_MAP(CMainWnd, CMDIFrameWnd)
 	ON_COMMAND(ID_HELP_ABOUT, OnHelpAbout)
 	ON_COMMAND(ID_HELP_VERSION_CHECK, OnHelpVersionCheck)
 	ON_COMMAND(ID_HELP_HOMEPAGE, OnHelpHomepage)
-	ON_COMMAND(ID_HELP_FAKESHAREAZA, OnHelpFakeShareaza)
 	ON_COMMAND(ID_HELP_WEB_1, OnHelpWeb1)
 	ON_COMMAND(ID_HELP_WEB_2, OnHelpWeb2)
 	ON_COMMAND(ID_HELP_WEB_3, OnHelpWeb3)
@@ -184,7 +183,7 @@ BEGIN_MESSAGE_MAP(CMainWnd, CMDIFrameWnd)
 	ON_COMMAND(ID_HELP_ROUTER, OnHelpRouter)
 	ON_COMMAND(ID_HELP_SECURITY, OnHelpSecurity)
 	ON_COMMAND(ID_HELP_CODEC, OnHelpCodec)
-	ON_COMMAND(ID_HELP_DONATE, OnHelpDonate)
+	ON_COMMAND(ID_HELP_TORRENT, OnHelpTorrent)
 	ON_UPDATE_COMMAND_UI(ID_VIEW_TRAFFIC, OnUpdateViewTraffic)
 	ON_COMMAND(ID_VIEW_TRAFFIC, OnViewTraffic)
 	ON_COMMAND(ID_WINDOW_CASCADE, OnWindowCascade)
@@ -2543,8 +2542,7 @@ void CMainWnd::OnHelpHomepage()
 {
 	const CString strWebSite(WEB_SITE_T);
 
-	ShellExecute( GetSafeHwnd(), _T("open"),
-		strWebSite + _T("?Version=") + theApp.m_sVersion,
+	ShellExecute( GetSafeHwnd(), _T("open"), strWebSite + _T("?Version=") + theApp.m_sVersion,
 		NULL, NULL, SW_SHOWNORMAL );
 }
 
@@ -2600,19 +2598,15 @@ void CMainWnd::OnHelpFaq()
 {
 	const CString strWebSite(WEB_SITE_T);
 
-	ShellExecute( GetSafeHwnd(), _T("open"),
-		strWebSite + _T("help/?faq"),
+	ShellExecute( GetSafeHwnd(), _T("open"), strWebSite + _T("help/?faq"),
 		NULL, NULL, SW_SHOWNORMAL );
 }
 
 void CMainWnd::OnHelpConnectiontest()
 {
-	const CString strWebSite(WEB_SITE_T);
-	CString strTestUrl;
-
-	strTestUrl.Format( strWebSite + _T("help/test/?port=%d&lang=%s&Version=") + theApp.m_sVersion, Settings.Connection.InPort, Settings.General.Language );
-	ShellExecute( GetSafeHwnd(), _T("open"),
-		strTestUrl,
+	CString strWebSite;
+	strWebSite.Format( _T("%shelp/test/?port=%d&lang=%s&Version=%s"), WEB_SITE_T, Settings.Connection.InPort, Settings.General.Language, theApp.m_sVersion );
+	ShellExecute( GetSafeHwnd(), _T("open"), strWebSite,
 		NULL, NULL, SW_SHOWNORMAL );
 }
 
@@ -2620,8 +2614,7 @@ void CMainWnd::OnHelpGuide()
 {
 	const CString strWebSite(WEB_SITE_T);
 
-	ShellExecute( GetSafeHwnd(), _T("open"),
-		strWebSite + _T("help/?guide"),
+	ShellExecute( GetSafeHwnd(), _T("open"), strWebSite + _T("help/?guide"),
 		NULL, NULL, SW_SHOWNORMAL );
 }
 
@@ -2629,8 +2622,7 @@ void CMainWnd::OnHelpForums()
 {
 	const CString strWebSite(WEB_SITE_T);
 
-	ShellExecute( GetSafeHwnd(), _T("open"),
-		strWebSite + _T("help/?forum"),
+	ShellExecute( GetSafeHwnd(), _T("open"), strWebSite + _T("help/?forum"),
 		NULL, NULL, SW_SHOWNORMAL );
 }
 
@@ -2638,8 +2630,7 @@ void CMainWnd::OnHelpUpdate()
 {
 	const CString strWebSite(WEB_SITE_T);
 
-	ShellExecute( GetSafeHwnd(), _T("open"),
-		strWebSite + _T("help/update/?Version=") + theApp.m_sVersion,
+	ShellExecute( GetSafeHwnd(), _T("open"), strWebSite + _T("help/update/?Version=") + theApp.m_sVersion,
 		NULL, NULL, SW_SHOWNORMAL );
 }
 
@@ -2667,11 +2658,11 @@ void CMainWnd::OnHelpCodec()
 		NULL, NULL, SW_SHOWNORMAL );
 }
 
-void CMainWnd::OnHelpDonate()
+void CMainWnd::OnHelpTorrent()
 {
 	const CString strWebSite(WEB_SITE_T);
 
-	ShellExecute( GetSafeHwnd(), _T("open"), strWebSite + _T("donations"),
+	ShellExecute( GetSafeHwnd(), _T("open"), strWebSite + _T("help/?torrentencoding"),
 		NULL, NULL, SW_SHOWNORMAL );
 }
 
@@ -2692,21 +2683,6 @@ void CMainWnd::OnHelpPromote()
 		Settings.Windows.RunPromote = true;
 		CPromoteDlg dlg;
 		dlg.DoModal();
-	}
-}
-
-void CMainWnd::OnHelpFakeShareaza()
-{
-	if ( Settings.General.Language == _T("en") )
-	{
-		ShellExecute( GetSafeHwnd(), _T("open"), _T("http://fakeshareaza.com"),
-		NULL, NULL, SW_SHOWNORMAL );
-	}
-	else
-	{
-		ShellExecute( GetSafeHwnd(), _T("open"),
-		_T("http://translate.google.com/translate?u=fakeshareaza.com&hl=en&tl=") + Settings.General.Language.Left(2),
-		NULL, NULL, SW_SHOWNORMAL );
 	}
 }
 

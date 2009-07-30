@@ -388,12 +388,11 @@
 	<resource code="33125" id="ID_HELP_SECURITY"/>
 	<resource code="33126" id="ID_HELP_CODEC"/>
 	<resource code="33127" id="ID_HELP_TEST"/>
-	<resource code="33128" id="ID_HELP_DONATE"/>
+	<resource code="33128" id="ID_HELP_TORRENT"/>
   <resource code="33130" id="ID_HELP_DISKSPACE"/>
   <resource code="33131" id="ID_HELP_DISKWRITEFAIL"/>
   <resource code="33132" id="ID_HELP_CONNECTIONFAIL"/>
   <resource code="33133" id="ID_HELP_DONKEYSERVERS"/>
-  <resource code="33134" id="ID_HELP_FAKESHAREAZA"/>
   <resource code="33137" id="ID_MEDIA_PROPERTIES"/>
 	<resource code="33138" id="ID_MEDIA_RATE"/>
 	<resource code="33200" id="ID_MEDIA_STATE_STOP"/>

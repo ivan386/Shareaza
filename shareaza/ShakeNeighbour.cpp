@@ -1298,7 +1298,7 @@ BOOL CShakeNeighbour::OnHeadersCompleteG2()
 			{
 				// We don't allow these to act as a leaf. (resource use, etc)
 				theApp.Message( MSG_ERROR, _T("Rejecting bad leaf client %s") , (LPCTSTR)m_sUserAgent );
-				Write( _P("GNUTELLA/0.6 503 Refused. http://sourceforge.net/projects/shareaza/\r\n") );
+				Write( _P("GNUTELLA/0.6 503 Refused\r\n") );
 
 				SendMinimalHeaders();  
 				DelayClose( IDS_HANDSHAKE_SURPLUS );
