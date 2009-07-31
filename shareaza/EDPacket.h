@@ -484,9 +484,6 @@ public:
 // Name of incomplete virtual folder
 #define OP_INCOMPLETE_SHARED_FILES	"!Incomplete Files"
 
-// Client ID
-#define ED2K_COMPATIBLECLIENT_ID	ED2K_CLIENT_ID
-
 // "Unknown" and "Unknown mod" client ID for compatible client variable
 #define ED2K_CLIENT_UNKNOWN			0xFF
 #define ED2K_CLIENT_MOD				0xFE

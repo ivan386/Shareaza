@@ -830,7 +830,7 @@ BOOL CEDTag::Read(CFile* pFile)
 
 ED2K_PACKET_DESC CEDPacket::m_pszTypes[] =
 {
-	{ ED2K_C2S_LOGINREQUEST,		_T("Login") },
+	{ ED2K_C2S_LOGINREQUEST,		_T("Hello") },
 	{ ED2K_C2S_GETSERVERLIST,		_T("GetServerList") },
 	{ ED2K_C2S_OFFERFILES,			_T("ShareFiles") },
 	{ ED2K_C2S_SEARCHREQUEST,		_T("Search") },
@@ -859,8 +859,8 @@ ED2K_PACKET_DESC CEDPacket::m_pszTypes[] =
 	{ ED2K_S2CG_FOUNDSOURCES,		_T("Sources") },
 	{ ED2K_C2SG_CALLBACKREQUEST,	_T("Push1") },
 
-	{ ED2K_C2C_HELLO,				_T("Handshake 1") },
-	{ ED2K_C2C_HELLOANSWER,			_T("Handshake 2") },
+//	{ ED2K_C2C_HELLO,				_T("Handshake 1") },
+	{ ED2K_C2C_HELLOANSWER,			_T("Hello Answer") },
 	{ ED2K_C2C_FILEREQUEST,			_T("FileRequest") },
 	{ ED2K_C2C_FILEREQANSWER,		_T("FileName") },
 	{ ED2K_C2C_FILENOTFOUND,		_T("FileNotFound") },
@@ -878,9 +878,17 @@ ED2K_PACKET_DESC CEDPacket::m_pszTypes[] =
 	{ ED2K_C2C_ASKSHAREDFILES,		_T("Browse") },
 	{ ED2K_C2C_ASKSHAREDFILESANSWER,_T("BrowseResp") },
 	{ ED2K_C2C_MESSAGE,				_T("Message") },
+
+// eMule Client - Client TCP
+	{ ED2K_C2C_COMPRESSEDPART,		_T("CompFragment") },
+	{ ED2K_C2C_QUEUERANKING,		_T("QueueRanking") },
+	{ ED2K_C2C_FILEDESC,			_T("FileDescription") },
+	{ ED2K_C2C_REQUESTSOURCES,		_T("RequestSources") },
+	{ ED2K_C2C_ANSWERSOURCES,		_T("Sources") },
 	{ ED2K_C2C_REQUESTPREVIEW,		_T("Request Preview") },
 	{ ED2K_C2C_PREVIEWANWSER,		_T("Preview") },
-	{ ED2K_C2C_COMPRESSEDPART,		_T("CompFragment") },
+
+// eMule Client - Client TCP (64Bit LargeFile support)
 	{ ED2K_C2C_COMPRESSEDPART_I64,	_T("CompFragment64") },
 	{ ED2K_C2C_REQUESTPARTS_I64,	_T("RequestFrag64") },
 	{ ED2K_C2C_SENDINGPART_I64,		_T("Fragment64") },

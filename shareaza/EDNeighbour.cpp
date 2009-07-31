@@ -208,11 +208,11 @@ BOOL CEDNeighbour::OnConnected()
 
 	// 4 - Software Version ('Client Version').
 	CEDTag( ED2K_CT_SOFTWAREVERSION,
-		( ( ( ED2K_COMPATIBLECLIENT_ID & 0xFF ) << 24 ) |
-			( ( theApp.m_nVersion[0] & 0x7F ) << 17 ) |
-			( ( theApp.m_nVersion[1] & 0x7F ) << 10 ) |
-			( ( theApp.m_nVersion[2] & 0x07 ) << 7  ) |
-			( ( theApp.m_nVersion[3] & 0x7F )       ) ) ).Write( pPacket );
+		( ( ( ED2K_CLIENT_ID & 0xFF ) << 24 ) |
+		( ( theApp.m_nVersion[0] & 0x7F ) << 17 ) |
+		( ( theApp.m_nVersion[1] & 0x7F ) << 10 ) |
+		( ( theApp.m_nVersion[2] & 0x07 ) << 7  ) |
+		( ( theApp.m_nVersion[3] & 0x7F )       ) ) ).Write( pPacket );
 	
 	// 5 - Port
 	if ( Settings.eDonkey.SendPortServer )

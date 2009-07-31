@@ -304,6 +304,8 @@ void CEDClient::Send(CEDPacket* pPacket, BOOL bRelease)
 
 		if ( IsValid() )
 		{
+			pPacket->SmartDump( &m_pHost, FALSE, TRUE );
+
 			Write( pPacket );
 			OnWrite();
 		}
@@ -628,7 +630,7 @@ CHostBrowser* CEDClient::GetBrowser() const
 
 BOOL CEDClient::OnPacket(CEDPacket* pPacket)
 {
-	// pPacket->Debug( _T("CEDClient::OnPacket") );
+	pPacket->SmartDump( &m_pHost, FALSE, FALSE );
 
 	if ( pPacket->m_nEdProtocol == ED2K_PROTOCOL_EDONKEY )
 	{
@@ -852,7 +854,7 @@ void CEDClient::SendHello(BYTE nType)
 	//		Note we're likely to corrupt the beta number, since there's only 3 bits available,
 	//		but it's the least important anyway.
 	//		Note: Including this stops the remote client sending the eMuleInfo packet.
-	DWORD nVersion = ( ( ( ED2K_COMPATIBLECLIENT_ID & 0xFF ) << 24 ) |
+	DWORD nVersion = ( ( ( ED2K_CLIENT_ID & 0xFF ) << 24 ) |
 					   ( ( theApp.m_nVersion[0] & 0x7F ) << 17 ) |
 					   ( ( theApp.m_nVersion[1] & 0x7F ) << 10 ) |
 					   ( ( theApp.m_nVersion[2] & 0x07 ) << 7  ) |
@@ -1028,14 +1030,14 @@ void CEDClient::SendEmuleInfo(BYTE nType)
 {
 	CEDPacket* pPacket = CEDPacket::New( nType, ED2K_PROTOCOL_EMULE );
 
-	pPacket->WriteByte( 0x40 );		// eMule version
-	pPacket->WriteByte( 0x01 );		// eMule protocol
+	pPacket->WriteByte( ED2K_CLIENT_ID );	// eMule version
+	pPacket->WriteByte( 0x01 );				// eMule protocol
 
 	// Write number of tags
 	pPacket->WriteLongLE( Settings.eDonkey.ExtendedRequest ? 7 : 6 );
 
 	// Write tags
-	CEDTag( ED2K_ET_COMPATIBLECLIENT, ED2K_COMPATIBLECLIENT_ID ).Write( pPacket );
+	CEDTag( ED2K_ET_COMPATIBLECLIENT, ED2K_CLIENT_ID ).Write( pPacket );
 	CEDTag( ED2K_ET_COMPRESSION, ED2K_VERSION_COMPRESSION ).Write( pPacket );
 	CEDTag( ED2K_ET_SOURCEEXCHANGE, ED2K_VERSION_SOURCEEXCHANGE ).Write( pPacket );
 	CEDTag( ED2K_ET_UDPVER, ED2K_VERSION_UDP ).Write( pPacket );
@@ -1055,13 +1057,16 @@ BOOL CEDClient::OnEmuleInfo(CEDPacket* pPacket)
 	}
 
 	m_nEmVersion	= pPacket->ReadByte();
-	BYTE nProtocol	= pPacket->ReadByte();
+	if ( m_nEmVersion == 0x2B ) m_nEmVersion = 0x22;
 
-	if ( nProtocol != 1 ) return TRUE;
+	BYTE nProtocol	= pPacket->ReadByte();
+	if ( nProtocol != 1 )
+		return TRUE;
 
 	// Have to assume capabilities for these versions
 	if ( m_nEmVersion > 0x22 && m_nEmVersion < 0x25 ) m_bEmSources = 1;
 	if ( m_nEmVersion == 0x24 ) m_bEmComments = 1;
+
 	// Set the client ID to unknown
 	m_nEmCompatible = ED2K_CLIENT_UNKNOWN;
 
