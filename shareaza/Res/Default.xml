@@ -1660,22 +1660,22 @@
 		<icon res="236" width="32" height="32"/><gap size="8"/>
 		<heading align="middle">C U S T O M I S E &#160; S H A R E A Z A</heading>
 		<newline gap="12" indent="42"/>
-		<icon res="237" width="32" height="32" target="raza:command:ID_TOOLS_SKIN"/>
+		<icon res="237" width="16" height="16" target="raza:command:ID_TOOLS_SKIN"/>
 		<gap size="8"/>
 		<link target="raza:command:ID_TOOLS_SKIN" format="bu" align="middle">Skins</link>
 		<text align="middle">&#160;- Change Shareaza's look &amp; feel</text>
 		<newline gap="8"/>
-		<icon res="236" width="32" height="32" target="raza:command:ID_TOOLS_WIZARD"/>
+		<icon res="236" width="16" height="16" target="raza:command:ID_TOOLS_WIZARD"/>
 		<gap size="8"/>
 		<link target="raza:command:ID_TOOLS_WIZARD" format="bu" align="middle">Settings Wizard</link>
 		<text align="middle">&#160;- Edit Shareaza Settings</text>
 		<newline gap="8"/>
-		<icon res="147" width="32" height="32" target="raza:command:ID_HELP_FAQ"/>
+		<icon res="147" width="16" height="16" target="raza:command:ID_HELP_FAQ"/>
 		<gap size="8"/>
 		<link target="raza:command:ID_HELP_FAQ" format="bu" align="middle">Quick Help</link>
 		<text align="middle">&#160;- Get some basic help using Shareaza</text>
 		<newline gap="8"/>
-		<icon res="141" width="32" height="32" target="raza:command:ID_VIEW_SECURITY"/>
+		<icon res="141" width="16" height="16" target="raza:command:ID_VIEW_SECURITY"/>
 		<gap size="8"/>
 		<link target="raza:command:ID_VIEW_SECURITY" format="bu" align="middle">Security Filters</link>
 		<text align="middle">&#160;- Add/Remove filters to improve your search results</text>
