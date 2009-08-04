@@ -1,7 +1,7 @@
 //
 // Uploads.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -35,9 +35,6 @@
 #include "Neighbours.h"
 #include "Statistics.h"
 #include "Remote.h"
-
-#include "WndMain.h"
-#include "WndMedia.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -415,40 +412,12 @@ BOOL CUploads::OnAccept(CConnection* pConnection)
 	return FALSE;
 }
 
-//////////////////////////////////////////////////////////////////////
-// CUploads rename handler
-
-bool CUploads::OnRename(const CString& strSource, LPCTSTR pszTarget, bool bRemoving)
+void CUploads::OnRename(LPCTSTR pszSource, LPCTSTR pszTarget)
 {
-	if ( GetIterator() == NULL )
-		return true;
-
-	CSingleLock oTransfersLock( &Transfers.m_pSection );
-	if ( ! oTransfersLock.Lock( 250 ) )
-		return false;
+	CQuickLock oTransfersLock( Transfers.m_pSection );
 
 	for ( POSITION pos = GetIterator() ; pos ; )
-		GetNext( pos )->OnRename( strSource, pszTarget );
-
-	oTransfersLock.Unlock();
-
-	if ( ! bRemoving )
-		return true;
-
-	CSingleLock otheAppLock( &theApp.m_pSection );
-	if ( ! otheAppLock.Lock( 250 ) )
-		return false;
-
-	if ( CMainWnd* pMainWnd = theApp.SafeMainWnd() )
-	{
-		CMediaWnd* pMediaWnd = (CMediaWnd*)pMainWnd->m_pWindows.Find(
-			RUNTIME_CLASS(CMediaWnd) );
-
-		if ( pMediaWnd )
-			pMediaWnd->OnFileDelete( strSource );
-	}
-
-	return true;
+		GetNext( pos )->OnRename( pszSource, pszTarget );
 }
 
 //////////////////////////////////////////////////////////////////////

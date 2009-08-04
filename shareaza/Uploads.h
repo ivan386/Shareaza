@@ -1,7 +1,7 @@
 //
 // Uploads.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -58,7 +58,9 @@ public:
 	DWORD		GetBandwidth() const;
 	void		OnRun();
 	BOOL		OnAccept(CConnection* pConnection);
-	bool		OnRename(const CString& strSource, LPCTSTR pszTarget = (LPCTSTR)1, bool bRemoving = false);
+	// Rename, delete or release uploading file.
+	// pszTarget == 0 - delete file; pszTarget == 1 - release file.
+	void		OnRename(LPCTSTR pszSource, LPCTSTR pszTarget);
 public:
 	void		Add(CUploadTransfer* pUpload);
 	void		Remove(CUploadTransfer* pUpload);

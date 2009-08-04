@@ -101,6 +101,9 @@ public:
 	BOOL		OnPush(const Hashes::Guid& oGUID, CConnection* pConnection);
 	bool		OnQueryHits(const CQueryHit* pHits);
 	void		OnVerify(LPCTSTR pszPath, BOOL bVerified);
+	// Rename, delete or release downloading file.
+	// pszTarget == 0 - delete file; pszTarget == 1 - release file.
+	void		OnRename(LPCTSTR pszSource, LPCTSTR pszTarget);
 	void		SetPerHostLimit(IN_ADDR* pAddress, DWORD nLimit);
 	BOOL		IsSpaceAvailable(QWORD nVolume, int nPath = dlPathNull);
 

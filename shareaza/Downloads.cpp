@@ -1148,6 +1148,19 @@ void CDownloads::OnVerify(LPCTSTR pszPath, BOOL bVerified)
 	}
 }
 
+void CDownloads::OnRename(LPCTSTR pszSource, LPCTSTR /*pszTarget*/)
+{
+	CQuickLock oTransfersLock( Transfers.m_pSection );
+
+	if ( CDownload* pDownload = Downloads.FindByPath( pszSource ) )
+	{
+		if ( ! pDownload->IsMoving() )
+		{
+			pDownload->Remove( false );
+		}
+	}
+}
+
 //////////////////////////////////////////////////////////////////////
 // CDownloads load and save
 

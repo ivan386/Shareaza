@@ -75,6 +75,8 @@ public:
 	virtual void	Remove(BOOL bMessage = TRUE);
 	virtual void	Close(BOOL bMessage = FALSE);
 	virtual BOOL	Promote();
+	// Rename, delete or release uploading file.
+	// pszTarget == 0 - delete file; pszTarget == 1 - release file.
 	virtual BOOL	OnRename(LPCTSTR pszSource, LPCTSTR pszTarget);
 
 	virtual float	GetProgress() const;

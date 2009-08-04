@@ -32,7 +32,6 @@
 #include "HashDatabase.h"
 
 #include "Network.h"
-#include "Uploads.h"
 #include "Download.h"
 #include "Downloads.h"
 #include "ShareazaURL.h"
@@ -308,17 +307,17 @@ BOOL CLibraryFile::Rename(LPCTSTR pszName)
 	CString strNew = m_pFolder->m_sPath + '\\' + pszName;
 
 	// Close the file handle
-	while( !Uploads.OnRename( GetPath() ) );
+	theApp.OnRename( GetPath() );
 
 	if ( MoveFile( GetPath(), strNew ) )
 	{
 		// Success. Tell the file to use its new name
-		while( !Uploads.OnRename( GetPath(), strNew ) );
+		theApp.OnRename( GetPath(), strNew );
 	}
 	else
 	{
 		// Failure. Continue using its old name
-		while( !Uploads.OnRename( GetPath(), GetPath() ) );
+		theApp.OnRename( GetPath(), GetPath() );
 		return FALSE;
 	}
 

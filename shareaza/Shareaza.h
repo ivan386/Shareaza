@@ -179,6 +179,10 @@ public:
 	CString				GetAppDataFolder() const;
 	CString				GetLocalAppDataFolder() const;
 
+	// Rename, delete or release file.
+	// pszTarget == 0 - delete file; pszTarget == 1 - release file.
+	void				OnRename(LPCTSTR strSource, LPCTSTR pszTarget = (LPCTSTR)1);
+
 protected:
 	CSplashDlg*					m_dlgSplash;
 	CShareazaCommandLineInfo	m_ocmdInfo;

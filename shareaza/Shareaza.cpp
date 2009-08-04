@@ -21,13 +21,12 @@
 
 #include "StdAfx.h"
 #include "Shareaza.h"
+
 #include "BTClients.h"
 #include "BTInfo.h"
 #include "CoolInterface.h"
 #include "DDEServer.h"
 #include "DiscoveryServices.h"
-#include "DlgHelp.h"
-#include "DlgSplash.h"
 #include "DownloadGroups.h"
 #include "Downloads.h"
 #include "EDClients.h"
@@ -61,8 +60,14 @@
 #include "Uploads.h"
 #include "VendorCache.h"
 #include "VersionChecker.h"
+
+#include "DlgHelp.h"
+#include "DlgSplash.h"
+
 #include "WndMain.h"
+#include "WndMedia.h"
 #include "WndSystem.h"
+
 #include "revision.h"		// to update build time
 
 #ifdef _DEBUG
@@ -2134,6 +2139,30 @@ CString CShareazaApp::GetLocalAppDataFolder() const
 	return GetAppDataFolder();
 }
 
+void CShareazaApp::OnRename(LPCTSTR pszSource, LPCTSTR pszTarget)
+{
+	LibraryBuilder.Remove( pszSource );
+
+	Uploads.OnRename( pszSource, pszTarget );
+
+	Downloads.OnRename( pszSource, pszTarget );
+
+	// Notify built-in MediaPlayer
+	if ( pszTarget == NULL )
+	{
+		CQuickLock otheAppLock( theApp.m_pSection );
+
+		if ( CMainWnd* pMainWnd = theApp.SafeMainWnd() )
+		{
+			if ( CMediaWnd* pMediaWnd =
+				(CMediaWnd*)pMainWnd->m_pWindows.Find( RUNTIME_CLASS( CMediaWnd ) ) )
+			{
+				pMediaWnd->OnFileDelete( pszSource );
+			}
+		}
+	}
+}
+
 BOOL CreateDirectory(LPCTSTR szPath)
 {
 	DWORD dwAttr = GetFileAttributes( CString( _T("\\\\?\\") ) + szPath );
@@ -2174,11 +2203,8 @@ BOOL DeleteFileEx(LPCTSTR szFileName, BOOL bShared, BOOL bToRecycleBin, BOOL bEn
 		{
 			if ( bShared )
 			{
-				// Stop builder
-				LibraryBuilder.Remove( szPath.get() );
-
 				// Stop uploads
-				while( ! Uploads.OnRename( szPath.get(), NULL, true ) );
+				theApp.OnRename( szPath.get(), NULL );
 			}
 
 			if ( bToRecycleBin )

@@ -26,7 +26,6 @@
 #include "LibraryFolders.h"
 #include "SharedFolder.h"
 #include "SharedFile.h"
-#include "Uploads.h"
 #include "DlgFileCopy.h"
 #include "CtrlSharedFolder.h"
 #include "Skin.h"
@@ -429,13 +428,13 @@ bool CFileCopyDlg::ProcessMove(const CString& strSource, const CString& strTarge
 		return false;
 
 	// Close the file handle
-	while( !Uploads.OnRename( strSource ) );
+	theApp.OnRename( strSource );
 
 	// Try moving the file
 	if ( MoveFile( strSource, strTarget ) )
 	{
 		// Success. Tell the file to use its new name
-		while( !Uploads.OnRename( strSource, strTarget ) );
+		theApp.OnRename( strSource, strTarget );
 		return true;
 	}
 
@@ -443,12 +442,12 @@ bool CFileCopyDlg::ProcessMove(const CString& strSource, const CString& strTarge
 	if ( ProcessCopy( strSource, strTarget ) )
 	{
 		// Success. Tell the file to use its new name
-		while( !Uploads.OnRename( strSource, strTarget ) );
+		theApp.OnRename( strSource, strTarget );
 		return DeleteFileEx( strSource, TRUE, FALSE, FALSE ) != 0;
 	}
 
 	// Failure. Continue using its old name
-	while( !Uploads.OnRename( strSource, strSource ) );
+	theApp.OnRename( strSource, strSource );
 
 	return false;
 }
