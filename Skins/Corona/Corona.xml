@@ -502,16 +502,4 @@
 	</windowSkin>
 
 </windowSkins>
-
-<toolbars>
-	<!-- Monitor window -->
-	<toolbar name="CMonitorBar">
-		<button id="ID_MEDIA_PLAY"/>
-		<button id="ID_MEDIA_PAUSE" visible="false"/>
-		<button id="ID_MEDIA_PREVIOUS"/>
-		<button id="ID_MEDIA_NEXT"/>
-		<button id="ID_MEDIA_OPEN"/>
-	</toolbar>
-</toolbars>
-
 </skin>
