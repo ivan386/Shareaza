@@ -382,11 +382,17 @@ void CFolderPropertiesDlg::DoApply(BOOL bMetaToFiles)
 
 void CFolderPropertiesDlg::OnCancel()
 {
-	if ( m_pFolder->m_sSchemaURI && m_pFolder->m_sSchemaURI.IsEmpty() )
-	{ 
-		// "New Folder" created and Cancel button was pressed
-		// By default only OK button asigns schema
-		m_pFolder->Delete();
+	CQuickLock oLock( Library.m_pSection );
+
+	if ( LibraryFolders.CheckAlbum( m_pFolder ) )
+	{
+		if ( m_pFolder->m_sSchemaURI && m_pFolder->m_sSchemaURI.IsEmpty() )
+		{ 
+			// "New Folder" created and Cancel button was pressed
+			// By default only OK button asigns schema
+			m_pFolder->Delete();
+		}
 	}
+
 	return CSkinDialog::OnCancel();
 }
