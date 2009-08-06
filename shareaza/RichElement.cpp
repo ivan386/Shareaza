@@ -134,7 +134,7 @@ void CRichElement::Delete()
 
 void CRichElement::PrePaint(CDC* pDC, BOOL bHover)
 {
-	if ( m_pDocument->m_fntNormal.m_hObject == NULL ) m_pDocument->CreateFonts();
+	ASSERT( m_pDocument->m_fntNormal.m_hObject != NULL );
 
 	CFont* pFont = &m_pDocument->m_fntNormal;
 

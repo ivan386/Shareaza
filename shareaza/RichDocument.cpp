@@ -1,7 +1,7 @@
 //
 // RichDocument.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -37,14 +37,16 @@ static char THIS_FILE[]=__FILE__;
 //////////////////////////////////////////////////////////////////////
 // CRichDocument construction
 
-CRichDocument::CRichDocument() : m_szMargin( 8, 8 )
+CRichDocument::CRichDocument()
+	: m_nCookie		( 0 )
+	, m_szMargin	( 8, 8 )
+	, m_crBackground( CoolInterface.m_crRichdocBack )
+	, m_crText		( CoolInterface.m_crRichdocText )
+	, m_crLink		( CoolInterface.m_crTextLink )
+	, m_crHover		( CoolInterface.m_crTextLinkHot )
+	, m_crHeading	( CoolInterface.m_crRichdocHeading )
 {
-	m_nCookie		= 0;
-	m_crBackground	= CoolInterface.m_crRichdocBack;
-	m_crText		= CoolInterface.m_crRichdocText;
-	m_crLink		= CoolInterface.m_crTextLink;
-	m_crHover		= CoolInterface.m_crTextLinkHot;
-	m_crHeading		= CoolInterface.m_crRichdocHeading;
+	CreateFonts();
 }
 
 CRichDocument::~CRichDocument()
@@ -160,51 +162,56 @@ void CRichDocument::Clear()
 //////////////////////////////////////////////////////////////////////
 // CRichDocument font construction
 
-void CRichDocument::CreateFonts(LPCTSTR pszFaceName, int nSize)
+void CRichDocument::CreateFonts(const LOGFONT* lpDefault, const LOGFONT* lpHeading)
 {
 	CSingleLock pLock( &m_pSection, TRUE );
 
-	if ( ! pszFaceName || ! *pszFaceName )
-		pszFaceName = Settings.Fonts.DefaultFont;
+	LOGFONT lfDefault = {};
+	if ( lpDefault )
+	{
+		CopyMemory( &lfDefault, lpDefault, sizeof( lfDefault ) );
+	}
+	else
+	{
+		CoolInterface.m_fntRichDefault.GetLogFont( &lfDefault );
+	}
 
-	if ( nSize == 0 )
-		nSize = Settings.Fonts.FontSize + 1;
-	
+	lfDefault.lfWeight = FW_NORMAL;
+	lfDefault.lfItalic = FALSE;
+	lfDefault.lfUnderline = FALSE;
 	if ( m_fntNormal.m_hObject ) m_fntNormal.DeleteObject();
-	
-	m_fntNormal.CreateFontW( -nSize, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE,
-		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
-		DEFAULT_PITCH|FF_DONTCARE, pszFaceName );
-	
+	m_fntNormal.CreateFontIndirect( &lfDefault );
+
+	lfDefault.lfWeight = FW_BOLD;
 	if ( m_fntBold.m_hObject ) m_fntBold.DeleteObject();
-	
-	m_fntBold.CreateFontW( -nSize, 0, 0, 0, FW_BOLD, FALSE, FALSE, FALSE,
-		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
-		DEFAULT_PITCH|FF_DONTCARE, pszFaceName );
-	
+	m_fntBold.CreateFontIndirect( &lfDefault );
+
+	lfDefault.lfWeight = FW_NORMAL;
+	lfDefault.lfItalic = TRUE;
 	if ( m_fntItalic.m_hObject ) m_fntItalic.DeleteObject();
-	
-	m_fntItalic.CreateFontW( -nSize, 0, 0, 0, FW_NORMAL, TRUE, FALSE, FALSE,
-		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
-		DEFAULT_PITCH|FF_DONTCARE, pszFaceName );
-	
+	m_fntItalic.CreateFontIndirect( &lfDefault );
+
+	lfDefault.lfItalic = FALSE;
+	lfDefault.lfUnderline = TRUE;
 	if ( m_fntUnder.m_hObject ) m_fntUnder.DeleteObject();
-	
-	m_fntUnder.CreateFontW( -nSize, 0, 0, 0, FW_NORMAL, FALSE, TRUE, FALSE,
-		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
-		DEFAULT_PITCH|FF_DONTCARE, pszFaceName );
-	
+	m_fntUnder.CreateFontIndirect( &lfDefault );
+
+	lfDefault.lfWeight = FW_BOLD;
 	if ( m_fntBoldUnder.m_hObject ) m_fntBoldUnder.DeleteObject();
-	
-	m_fntBoldUnder.CreateFontW( -nSize, 0, 0, 0, FW_BOLD, FALSE, TRUE, FALSE,
-		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
-		DEFAULT_PITCH|FF_DONTCARE, pszFaceName );
-	
+	m_fntBoldUnder.CreateFontIndirect( &lfDefault );
+
+	LOGFONT lfHeading = {};
+	if ( lpHeading )
+	{
+		CopyMemory( &lfHeading, lpHeading, sizeof( lfHeading) );
+	}
+	else
+	{
+		CoolInterface.m_fntRichHeading.GetLogFont( &lfHeading );
+	}
+
 	if ( m_fntHeading.m_hObject ) m_fntHeading.DeleteObject();
-	
-	m_fntHeading.CreateFontW( -( nSize + 6 ), 0, 0, 0, FW_EXTRABOLD, FALSE, FALSE, FALSE,
-		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
-		DEFAULT_PITCH|FF_DONTCARE, pszFaceName );
+	m_fntHeading.CreateFontIndirect( &lfHeading );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -221,7 +228,19 @@ BOOL CRichDocument::LoadXML(CXMLElement* pBase, CMap< CString, const CString&, C
 	if ( pBase->IsNamed( _T("document") ) )
 	{
 		strTemp = pBase->GetAttributeValue( _T("fontFace") );
-		if ( strTemp.GetLength() ) CreateFonts( strTemp );
+		if ( strTemp.GetLength() )
+		{
+			// Change font face
+			LOGFONT lfDefault = {};
+			CoolInterface.m_fntRichDefault.GetLogFont( &lfDefault );
+			_tcsncpy( lfDefault.lfFaceName, strTemp, LF_FACESIZE );
+
+			LOGFONT lfHeading = {};
+			CoolInterface.m_fntRichHeading.GetLogFont( &lfHeading );
+			_tcsncpy( lfHeading.lfFaceName, strTemp, LF_FACESIZE );
+
+			CreateFonts( &lfDefault, &lfHeading );
+		}
 		
 		m_crBackground	= CoolInterface.m_crRichdocBack;
 		m_crText		= CoolInterface.m_crRichdocText;
@@ -414,40 +433,62 @@ BOOL CRichDocument::LoadXMLStyles(CXMLElement* pParent)
 		if ( ! pXML->IsNamed( _T("style") ) ) continue;
 		
 		CString strName = pXML->GetAttributeValue( _T("name") );
-		ToLower( strName );
-		
-		CString strFontFace = Settings.Fonts.DefaultFont;
-		int nFontSize = Settings.Fonts.FontSize + 1;
-		int nFontWeight = FW_BOLD;
-		
+		strName.MakeLower();
+		bool bDefault = ( strName == _T("default") || strName.IsEmpty() );
+		bool bHeading = ( strName == _T("heading") );
+
+		LOGFONT lf = {};
+		if ( bDefault )
+		{
+			CoolInterface.m_fntRichDefault.GetLogFont( &lf );
+		}
+		else if ( bHeading )
+		{
+			CoolInterface.m_fntRichHeading.GetLogFont( &lf );
+		}
+
 		if ( CXMLElement* pFont = pXML->GetElementByName( _T("font") ) )
 		{
-			strFontFace = pFont->GetAttributeValue( _T("face") );
-			CString strTemp = pFont->GetAttributeValue( _T("size") );
-			_stscanf( strTemp, _T("%i"), &nFontSize );
-			strTemp = pFont->GetAttributeValue( _T("weight") );
-			_stscanf( strTemp, _T("%i"), &nFontWeight );
+			CString strFontFace = pFont->GetAttributeValue( _T("face") );
+			if ( ! strFontFace.IsEmpty() )
+			{
+				_tcsncpy( lf.lfFaceName, strFontFace, LF_FACESIZE );
+			}
+			CString strSize = pFont->GetAttributeValue( _T("size") );
+			if ( ! strSize.IsEmpty() )
+			{
+				if ( _stscanf( strSize, _T("%i"), &lf.lfHeight ) == 1 )
+				{
+					lf.lfHeight = - lf.lfHeight;
+				}
+			}
+			CString strWeight = pFont->GetAttributeValue( _T("weight") );
+			if ( ! strWeight.IsEmpty() )
+			{
+				_stscanf( strWeight, _T("%i"), &lf.lfWeight );
+			}
 		}
 		
 		CXMLElement* pColours = pXML->GetElementByName( _T("colours") );
 		if ( pColours == NULL ) pColours = pXML->GetElementByName( _T("colors") );
 		if ( pColours == NULL ) pColours = pXML;
 		
-		if ( strName == _T("default") || strName.IsEmpty() )
+		if ( bDefault )
 		{
 			LoadXMLColour( pColours, _T("text"), &m_crText );
 			LoadXMLColour( pColours, _T("link"), &m_crLink );
 			LoadXMLColour( pColours, _T("hover"), &m_crHover );
-			CreateFonts( strFontFace, nFontSize );
+
+			// Create specified fonts (using default font as heading font)
+			CreateFonts( &lf, NULL );
 		}
-		else if ( strName == _T("heading") )
+		else if ( bHeading )
 		{
 			LoadXMLColour( pColours, _T("text"), &m_crHeading );
-			
+
+			// Create heading font
 			if ( m_fntHeading.m_hObject ) m_fntHeading.DeleteObject();
-			m_fntHeading.CreateFontW( -nFontSize, 0, 0, 0, nFontWeight, FALSE, FALSE, FALSE,
-				DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
-				DEFAULT_PITCH|FF_DONTCARE, strFontFace );
+			m_fntHeading.CreateFontIndirect( &lf );
 		}
 	}
 	
