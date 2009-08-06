@@ -101,7 +101,6 @@
 #define IDI_FILE                        191
 #define IDD_FILE_GENERAL                191
 #define IDD_FILE_SOURCES                192
-#define IDB_FORTYEIGHT                  193
 #define IDC_COPY                        194
 #define IDC_MOVE                        195
 #define IDR_LARGE_LOGO                  196
