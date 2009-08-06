@@ -1416,7 +1416,7 @@ STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Networks"
 FONT 8, "Tahoma", 0, 0, 0x1
 BEGIN
-    LTEXT           "Shareaza is a general-purpose file-sharing application that can access many P2P networks at the same time.  On this page you can select which P2P networks you want to connect to, and then adjust specific settings for each network.",IDC_STATIC,5,5,270,30
+    LTEXT           "Shareaza is a general-purpose file-sharing application that can access many P2P networks at the same time. On this page you can select which networks you want to connect to, and then adjust specific settings for each network.",IDC_STATIC,5,5,270,30
     GROUPBOX        "Gnutella2 Network:",IDC_STATIC,5,35,270,55,WS_GROUP
     LTEXT           "The Gnutella2 network is Shareaza's premiere network, offering more features and performance than any other P2P net.  Highly recommended.",IDC_STATIC,15,50,250,18
     CONTROL         "Connect to Gnutella2 (G2)",IDC_G2_ENABLE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,73,145,10
