@@ -61,7 +61,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
               <title language="tr">Collection</title>
        </titles>
        <images>
-               <icon path="collectionsFolder.ico"/>
+               <icon path="collection.ico"/>
        </images>
        <members>
                <member name="title" search="generic">
