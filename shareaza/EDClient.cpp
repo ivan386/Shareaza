@@ -1239,6 +1239,12 @@ void CEDClient::DetermineUserAgent()
 					( ( m_nSoftwareVersion >> 17 ) &0x7F ), ( ( m_nSoftwareVersion >> 10 ) &0x7F ),
 					( ( m_nSoftwareVersion >>  7 ) &0x07 ), ( ( m_nSoftwareVersion ) &0x7F ) );
 				break;
+			case 80:		// PeerProject
+				//Note- 2nd last number (Beta build #) may be truncated, since it's only 3 bits.
+				m_sUserAgent.Format( _T("PeerProject %i.%i.%i.%i"),
+					( ( m_nSoftwareVersion >> 17 ) &0x7F ), ( ( m_nSoftwareVersion >> 10 ) &0x7F ),
+					( ( m_nSoftwareVersion >>  7 ) &0x07 ), ( ( m_nSoftwareVersion ) &0x7F ) );
+				break;
 			case 203:		// ShareazaPlus with RazaCB core
 				//Note- 2nd last number (Beta build #) may be truncated, since it's only 3 bits.
 				m_sUserAgent.Format( _T("ShareazaPlus %i.%i.%i.%i"),
@@ -1302,6 +1308,9 @@ void CEDClient::DetermineUserAgent()
 						break;
 					}
 					m_sUserAgent = _T("Shareaza");
+					break;
+				case 80:		// PeerProject
+					m_sUserAgent = _T("PeerProject");
 					break;
 				case 203:		// ShareazaPlus with RazaCB core
 					m_sUserAgent.Format( _T("ShareazaPlus") );
