@@ -772,8 +772,28 @@ BOOL CLibraryTreeView::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
 {
 	// Scroll window under cursor
 	if ( CWnd* pWnd = WindowFromPoint( pt ) )
+	{
 		if ( pWnd != this )
-			return pWnd->SendMessage( WM_MOUSEWHEEL, MAKEWPARAM( nFlags, zDelta ), MAKELPARAM( pt.x, pt.y ) );
+		{
+			const LPCTSTR szScrollable[] = {
+				_T("CPanelCtrl"),
+				_T("CLibraryTreeView"),
+				_T("CLibraryAlbumView"),
+				_T("CLibraryThumbView"),
+				_T("CLibraryTileView"),
+				_T("CLibraryDetailView"),
+				NULL
+			};
+			for ( int i = 0; szScrollable[ i ]; ++i )
+			{
+				if ( pWnd == FindWindowEx(
+					GetParent()->GetSafeHwnd(), NULL, NULL, szScrollable[ i ] ) )
+				{
+					return pWnd->PostMessage( WM_MOUSEWHEEL, MAKEWPARAM( nFlags, zDelta ), MAKELPARAM( pt.x, pt.y ) );
+				}
+			}
+		}
+	}
 
 	ScrollBy( zDelta * 3 * -ITEM_HEIGHT / WHEEL_DELTA );
 	return TRUE;

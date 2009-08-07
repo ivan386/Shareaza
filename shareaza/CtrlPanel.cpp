@@ -62,8 +62,31 @@ BOOL CPanelCtrl::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
 {
 	// Scroll window under cursor
 	if ( CWnd* pWnd = WindowFromPoint( pt ) )
+	{
 		if ( pWnd != this )
-			return pWnd->SendMessage( WM_MOUSEWHEEL, MAKEWPARAM( nFlags, zDelta ), MAKELPARAM( pt.x, pt.y ) );
+		{
+			const LPCTSTR szScrollable[] = {
+				// Search window
+				_T("CMatchCtrl"),
+				// Library window
+				_T("CLibraryTreeView"),
+				_T("CLibraryAlbumView"),
+				_T("CLibraryThumbView"),
+				_T("CLibraryTileView"),
+				_T("CLibraryFileView"),
+				_T("CLibraryDetailView"),
+				NULL
+			};
+			for ( int i = 0; szScrollable[ i ]; ++i )
+			{
+				if ( pWnd == FindWindowEx(
+					GetParent()->GetSafeHwnd(), NULL, NULL, szScrollable[ i ] ) )
+				{
+					return pWnd->PostMessage( WM_MOUSEWHEEL, MAKEWPARAM( nFlags, zDelta ), MAKELPARAM( pt.x, pt.y ) );
+				}
+			}
+		}
+	}
 
 	PostMessage( WM_VSCROLL, MAKEWPARAM( SB_THUMBPOSITION, GetScrollPos( SB_VERT ) -
 		zDelta / WHEEL_DELTA * m_nScrollWheelLines * 8 ), NULL );

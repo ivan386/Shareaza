@@ -536,12 +536,20 @@ void CMatchCtrl::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* /*pScrollBar*/)
 	RedrawWindow( NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW );
 }
 
-BOOL CMatchCtrl::OnMouseWheel(UINT /*nFlags*/, short zDelta, CPoint /*pt*/) 
+BOOL CMatchCtrl::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt) 
 {
 	// Scroll window under cursor
-//	if ( CWnd* pWnd = WindowFromPoint( pt ) )
-//		if ( pWnd != this )
-//			return pWnd->SendMessage( WM_MOUSEWHEEL, MAKEWPARAM( nFlags, zDelta ), MAKELPARAM( pt.x, pt.y ) );	// Causes App Freeze
+	if ( CWnd* pWnd = WindowFromPoint( pt ) )
+	{
+		if ( pWnd != this )
+		{
+			if ( pWnd == FindWindowEx(
+				GetParent()->GetSafeHwnd(), NULL, NULL, _T("CPanelCtrl") ) )
+			{
+				return pWnd->PostMessage( WM_MOUSEWHEEL, MAKEWPARAM( nFlags, zDelta ), MAKELPARAM( pt.x, pt.y ) );
+			}
+		}
+	}
 
 	ScrollBy( zDelta / WHEEL_DELTA * -m_nScrollWheelLines );
 	return TRUE;

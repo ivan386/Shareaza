@@ -364,8 +364,19 @@ BOOL CLibraryView::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
 {
 	// Scroll window under cursor
 	if ( CWnd* pWnd = WindowFromPoint( pt ) )
+	{
 		if ( pWnd != this )
-			return pWnd->SendMessage( WM_MOUSEWHEEL, MAKEWPARAM( nFlags, zDelta ), MAKELPARAM( pt.x, pt.y ) );
+		{
+			if ( pWnd == FindWindowEx(
+				GetParent()->GetSafeHwnd(), NULL, NULL, _T("CPanelCtrl") ) ||
+				pWnd == FindWindowEx(
+				GetParent()->GetSafeHwnd(), NULL, NULL, _T("CLibraryTreeView") ) )
+			{
+				pWnd->PostMessage( WM_MOUSEWHEEL, MAKEWPARAM( nFlags, zDelta ), MAKELPARAM( pt.x, pt.y ) );
+				return TRUE;
+			}
+		}
+	}
 
 	return CWnd::OnMouseWheel( nFlags, zDelta, pt );
 }
