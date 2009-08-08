@@ -520,7 +520,7 @@ void CUploadTransfer::StartSending(int nState)
 
 void CUploadTransfer::AllocateBaseFile()
 {
-	m_pBaseFile = UploadFiles.GetFile( this, m_oSHA1, m_sName, m_sPath, m_nSize );
+	m_pBaseFile = UploadFiles.GetFile( this );
 }
 
 BOOL CUploadTransfer::IsFileOpen() const

@@ -42,7 +42,7 @@ protected:
 // Operations
 public:
 	void			Clear();
-	CUploadFile*	GetFile(CUploadTransfer* pUpload, const Hashes::Sha1Hash& oSHA1, LPCTSTR pszName, LPCTSTR pszPath, QWORD nSize);
+	CUploadFile*	GetFile(CUploadTransfer* pUpload);
 	void			Remove(CUploadTransfer* pTransfer);
 	void			MoveToHead(CUploadTransfer* pTransfer);
 	void			MoveToTail(CUploadTransfer* pTransfer);

@@ -32,7 +32,7 @@ class CUploadTransfer;
 class CUploadFile : public CShareazaFile
 {
 public:
-    CUploadFile(CUploadTransfer* pUpload, const Hashes::Sha1Hash& oSHA1, LPCTSTR pszName, LPCTSTR pszPath, QWORD nSize);
+    CUploadFile(CUploadTransfer* pUpload);
 	virtual ~CUploadFile();
 
 	void				Add(CUploadTransfer* pUpload);
