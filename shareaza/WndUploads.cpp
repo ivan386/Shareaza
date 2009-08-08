@@ -212,19 +212,30 @@ void CUploadsWnd::OnTimer(UINT_PTR nIDEvent)
 
 void CUploadsWnd::OnContextMenu(CWnd* /*pWnd*/, CPoint point)
 {
-	CSingleLock pLock( &UploadQueues.m_pSection, TRUE );
-	CUploadQueue* pQueue;
-	CUploadFile* pUpload;
+	BOOL bHit = FALSE;
+	CUploadQueue* pQueue = NULL;
+	CUploadFile* pUpload = NULL;
 
 	CPoint ptLocal( point );
 	m_wndUploads.ScreenToClient( &ptLocal );
 	m_tSel = 0;
 
-	if ( m_wndUploads.HitTest( ptLocal, &pQueue, &pUpload, NULL, NULL ) )
+	{
+		CSingleLock pTransfersLock( &Transfers.m_pSection, FALSE );
+		if ( pTransfersLock.Lock( 250 ) )
+		{
+			CSingleLock pUploadQueuesLock( &UploadQueues.m_pSection, FALSE );
+			if ( pUploadQueuesLock.Lock( 250 ) )
+			{
+				bHit = m_wndUploads.HitTest( ptLocal, &pQueue, &pUpload, NULL, NULL );
+			}
+		}
+	}
+
+	if ( bHit )
 	{
 		if ( pUpload != NULL )
 		{
-			pLock.Unlock();
 			Skin.TrackPopupMenu( _T("CUploadsWnd.Upload"), point, ID_UPLOADS_LAUNCH );
 			return;
 		}
@@ -235,8 +246,6 @@ void CUploadsWnd::OnContextMenu(CWnd* /*pWnd*/, CPoint point)
 		Skin.TrackPopupMenu( _T("CUploadsWnd.Nothing"), point, ID_UPLOADS_HELP );
 	else
 		Skin.TrackPopupMenu( _T("CUploadsWnd.Queue"), point, ID_UPLOADS_EDIT_QUEUE );
-
-	pLock.Unlock();
 }
 
 void CUploadsWnd::OnMDIActivate(BOOL bActivate, CWnd* pActivateWnd, CWnd* pDeactivateWnd)
