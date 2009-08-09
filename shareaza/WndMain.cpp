@@ -529,12 +529,6 @@ void CMainWnd::OnClose()
 {
 	CWaitCursor pCursor;
 
-	int nSplashSteps = 6
-		+ ( Settings.Connection.DeleteFirewallException ? 1 : 0 )
-		+ ( theApp.m_pUPnPFinder ? 1 : 0 )
-		+ ( theApp.m_bLive ? 1 : 0 );
-	theApp.SplashStep( L"Closing Server Processes", nSplashSteps, true );
-
 	if ( theApp.m_bBusy )
 	{
 		// Delayed close
@@ -562,6 +556,12 @@ void CMainWnd::OnClose()
 		Shell_NotifyIcon( NIM_DELETE, &m_pTray );
 		m_bTrayIcon = FALSE;
 	}
+
+	int nSplashSteps = 6
+		+ ( Settings.Connection.DeleteFirewallException ? 1 : 0 )
+		+ ( theApp.m_pUPnPFinder ? 1 : 0 )
+		+ ( theApp.m_bLive ? 1 : 0 );
+	theApp.SplashStep( L"Closing Server Processes", nSplashSteps, true );
 
 	SaveState();
 	m_pWindows.SaveSearchWindows();
@@ -2721,7 +2721,7 @@ void CMainWnd::OnNcPaint()
 
 BOOL CMainWnd::OnNcActivate(BOOL bActive)
 {
-	if ( m_pSkin )
+	if ( m_pSkin && ! theApp.m_bClosing )
 	{
 		m_pSkin->OnNcActivate( this, IsWindowEnabled() && ( bActive || ( m_nFlags & WF_STAYACTIVE ) ) );
 		return TRUE;
