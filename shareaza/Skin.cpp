@@ -601,8 +601,6 @@ CMenu* CSkin::GetMenu(LPCTSTR pszName) const
 			break;
 		}
 	}
-	ASSERT_VALID( pMenu );
-	ASSERT( pMenu->GetMenuItemCount() > 0 );
 	return pMenu;
 }
 
