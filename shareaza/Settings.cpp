@@ -420,7 +420,7 @@ void CSettings::Load()
 	Add( _T("eDonkey"), _T("RequestPipe"), &eDonkey.RequestPipe, 3, 1, 1, 10 );
 	Add( _T("eDonkey"), _T("RequestSize"), &eDonkey.RequestSize, 180*1024/2, 1024, 10, 1000, _T(" KB") );
 	Add( _T("eDonkey"), _T("SendPortServer"), &eDonkey.SendPortServer, false );
-	Add( _T("eDonkey"), _T("ServerListURL"), &eDonkey.ServerListURL, _T("http://ocbmaurice.dyndns.org/pl/slist.pl/server.met?download/server-best.met") );
+	Add( _T("eDonkey"), _T("ServerListURL"), &eDonkey.ServerListURL, _T("http://peerates.net/servers.php") );
 	Add( _T("eDonkey"), _T("ServerWalk"), &eDonkey.ServerWalk, true );
 	Add( _T("eDonkey"), _T("SourceThrottle"), &eDonkey.SourceThrottle, 1000, 1, 250, 5000, _T(" ms") );
 	Add( _T("eDonkey"), _T("StatsGlobalThrottle"), &eDonkey.StatsGlobalThrottle, 30*60*1000, 60*1000, 30, 120, _T(" m") );
