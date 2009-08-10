@@ -145,7 +145,7 @@
 #define IDD_WIZARD_NETWORKS             231
 #define IDD_FILE_SHARING                232
 #define IDD_DONKEY_IMPORT               235
-#define IDI_CLIPBOARD                   236
+#define IDI_TOOLS_WIZARD                236
 #define IDD_DOWNLOAD_GROUP              236
 #define IDI_PAINTBRUSHES                237
 #define IDR_TORRENT_ICON                239
