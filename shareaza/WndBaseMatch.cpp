@@ -568,15 +568,15 @@ void CBaseMatchWnd::OnSecurityBan()
 		while ( pos )
 		{
 			CMatchFile* pFile = m_pMatches->m_pSelectedFiles.GetNext( pos );
-		pFile->Ban( banForever );
-	}
+			pFile->Ban( banForever );
+		}
 	}
 	else if ( POSITION pos = m_pMatches->m_pSelectedHits.GetHeadPosition() )
 	{
 		while ( pos )
 		{
 			CQueryHit* pHit = m_pMatches->m_pSelectedHits.GetNext( pos );
-		pHit->Ban( banForever );
+			pHit->Ban( banForever );
 		}
 	}
 }

@@ -315,28 +315,28 @@ void CUploadsCtrl::SelectTo(int nIndex)
 void CUploadsCtrl::DeselectAll(CUploadFile* /*pExcept*/)
 {
 	{
-		CSingleLock pLock( &UploadQueues.m_pSection, TRUE );
-		
-		UploadQueues.m_pTorrentQueue->m_bSelected = FALSE;
-		UploadQueues.m_pHistoryQueue->m_bSelected = FALSE;
-		
+	CSingleLock pLock( &UploadQueues.m_pSection, TRUE );
+	
+	UploadQueues.m_pTorrentQueue->m_bSelected = FALSE;
+	UploadQueues.m_pHistoryQueue->m_bSelected = FALSE;
+	
 		for ( POSITION pos = UploadQueues.GetIterator() ; pos ; )
-		{
-			CUploadQueue* pQueue = UploadQueues.GetNext( pos );
-			pQueue->m_bSelected = FALSE;
-		}
+	{
+		CUploadQueue* pQueue = UploadQueues.GetNext( pos );
+		pQueue->m_bSelected = FALSE;
 	}
-
+	}
+	
 	{
 		CSingleLock pLock( &Transfers.m_pSection, TRUE );
 
 		for ( POSITION pos = UploadFiles.GetIterator() ; pos ; )
-		{
-			CUploadFile* pFile = UploadFiles.GetNext( pos );
-			pFile->m_bSelected = FALSE;
-		}
+	{
+		CUploadFile* pFile = UploadFiles.GetNext( pos );
+		pFile->m_bSelected = FALSE;
 	}
-
+	}
+	
 	Invalidate();
 }
 
@@ -691,7 +691,7 @@ void CUploadsCtrl::OnSize(UINT nType, int cx, int cy)
 	
 	int nScroll = GetScrollPos( SB_HORZ );
 	m_wndHeader.SetWindowPos( NULL, -nScroll, 0, rcClient.right + nScroll, HEADER_HEIGHT, SWP_SHOWWINDOW );
-
+	
 	CSingleLock pTransfersLock( &Transfers.m_pSection, FALSE );
 	if ( ! pTransfersLock.Lock( 250 ) )
 		return;
@@ -768,32 +768,12 @@ void CUploadsCtrl::OnPaint()
 	CFont* pfOld = (CFont*)dc.SelectObject( &CoolInterface.m_fntNormal );
 	BOOL bFocus = ( GetFocus() == this );
 
-	for ( POSITION posQueue = GetQueueIterator() ; posQueue && rcItem.top < rcClient.bottom ; )
-	{
-		CUploadQueue* pQueue = GetNextQueue( posQueue );
-		
-		POSITION posFile = GetFileIterator( pQueue );
-		if ( posFile == NULL ) continue;
-		
-		if ( nScroll > 0 )
+		for ( POSITION posQueue = GetQueueIterator() ; posQueue && rcItem.top < rcClient.bottom ; )
 		{
-			nScroll --;
-		}
-		else
-		{
-			PaintQueue( dc, rcItem, pQueue, bFocus && ( m_nFocus == nIndex ) );
-			rcItem.OffsetRect( 0, ITEM_HEIGHT );
-		}
-		
-		nIndex ++;
-		
-		if ( ! pQueue->m_bExpanded ) continue;
-		
-		while ( posFile && rcItem.top < rcClient.bottom && rcItem.top < rcClient.bottom )
-		{
-			int nPosition;
-			CUploadFile* pFile = GetNextFile( pQueue, posFile, &nPosition );
-			if ( pFile == NULL ) continue;
+			CUploadQueue* pQueue = GetNextQueue( posQueue );
+			
+			POSITION posFile = GetFileIterator( pQueue );
+			if ( posFile == NULL ) continue;
 			
 			if ( nScroll > 0 )
 			{
@@ -801,17 +781,37 @@ void CUploadsCtrl::OnPaint()
 			}
 			else
 			{
-				PaintFile( dc, rcItem, pQueue, pFile, nPosition, bFocus && ( m_nFocus == nIndex ) );
+				PaintQueue( dc, rcItem, pQueue, bFocus && ( m_nFocus == nIndex ) );
 				rcItem.OffsetRect( 0, ITEM_HEIGHT );
 			}
 			
 			nIndex ++;
+			
+			if ( ! pQueue->m_bExpanded ) continue;
+			
+			while ( posFile && rcItem.top < rcClient.bottom && rcItem.top < rcClient.bottom )
+			{
+				int nPosition;
+				CUploadFile* pFile = GetNextFile( pQueue, posFile, &nPosition );
+				if ( pFile == NULL ) continue;
+				
+				if ( nScroll > 0 )
+				{
+					nScroll --;
+				}
+				else
+				{
+					PaintFile( dc, rcItem, pQueue, pFile, nPosition, bFocus && ( m_nFocus == nIndex ) );
+					rcItem.OffsetRect( 0, ITEM_HEIGHT );
+				}
+				
+				nIndex ++;
+			}
 		}
-	}
 	
 	pUploadQueuesLock.Unlock();
 	pTransfersLock.Unlock();
-
+	
 	dc.SelectObject( pfOld );
 	
 	rcClient.top = rcItem.top;
@@ -1456,21 +1456,21 @@ void CUploadsCtrl::OnMouseMove(UINT nFlags, CPoint point)
 		CSingleLock pLock( &Transfers.m_pSection, FALSE );
 		if ( pLock.Lock( 250 ) )
 		{
-			CUploadFile* pFile;
-			CRect rcItem;
-
-			if ( HitTest( point, NULL, &pFile, NULL, &rcItem ) )
+		CUploadFile* pFile;
+		CRect rcItem;
+		
+		if ( HitTest( point, NULL, &pFile, NULL, &rcItem ) )
+		{
+			// [+] or [-] Hoverstates
+			if ( point.x < rcItem.left + 18 )
 			{
-				// [+] or [-] Hoverstates
-				if ( point.x < rcItem.left + 18 )
-				{
-					CRect rcRefresh( 1, rcItem.top - 32, 18, rcItem.bottom + 32 );
-					RedrawWindow(rcRefresh);
-				}
-				if ( pFile != NULL )
-				{
-					m_wndTip.Show( pFile );
-					return;
+				CRect rcRefresh( 1, rcItem.top - 32, 18, rcItem.bottom + 32 );
+				RedrawWindow(rcRefresh);
+			}
+			if ( pFile != NULL )
+			{
+				m_wndTip.Show( pFile );
+				return;
 				}
 			}
 		}
