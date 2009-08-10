@@ -1443,9 +1443,11 @@ CSkinWindow* CSkin::GetWindowSkin(CWnd* pWnd)
 	for ( CRuntimeClass* pClass = pWnd->GetRuntimeClass() ; pClass ; pClass = pClass->m_pBaseClass )
 	#endif
 	{
+		CA2T sClassName( pClass->m_lpszClassName );
+
 		if ( bPanel )
 		{
-			CSkinWindow* pSkin = GetWindowSkin( CString( pClass->m_lpszClassName ), _T(".Panel") );
+			CSkinWindow* pSkin = GetWindowSkin( (LPCTSTR)sClassName, _T(".Panel") );
 			if ( pSkin != NULL ) return pSkin;
 		}
 
@@ -1453,8 +1455,7 @@ CSkinWindow* CSkin::GetWindowSkin(CWnd* pWnd)
 		{
 			if ( pszModeSuffix[ nSuffix ][0] != 0 || ! bPanel )
 			{
-				CSkinWindow* pSkin = GetWindowSkin(
-					CString( pClass->m_lpszClassName ), pszModeSuffix[ nSuffix ] );
+				CSkinWindow* pSkin = GetWindowSkin( (LPCTSTR)sClassName, pszModeSuffix[ nSuffix ] );
 				if ( pSkin != NULL ) return pSkin;
 			}
 		}
@@ -1814,9 +1815,9 @@ BOOL CSkin::LoadFonts(CXMLElement* pBase, const CString& strPath)
 				_stscanf( strSize, _T("%i"), &nFontSize );
 				_stscanf( strWeight, _T("%i"), &nFontWeight );
 
-				pFont->CreateFontW( -nFontSize, 0, 0, 0, nFontWeight, FALSE, FALSE, FALSE,
+				pFont->CreateFont( -nFontSize, 0, 0, 0, nFontWeight, FALSE, FALSE, FALSE,
 					DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS,
-					theApp.m_bIsVistaOrNewer ? DEFAULT_QUALITY : ANTIALIASED_QUALITY,
+					theApp.m_nFontQuality,
 					DEFAULT_PITCH|FF_DONTCARE, strFace );
 
 				if ( strName.CompareNoCase( _T("system.plain") ) == 0 )
@@ -1824,17 +1825,17 @@ BOOL CSkin::LoadFonts(CXMLElement* pBase, const CString& strPath)
 					pFont = &CoolInterface.m_fntUnder;
 					if ( pFont->m_hObject ) pFont->DeleteObject();
 
-					pFont->CreateFontW( -nFontSize, 0, 0, 0, nFontWeight, FALSE, TRUE, FALSE,
+					pFont->CreateFont( -nFontSize, 0, 0, 0, nFontWeight, FALSE, TRUE, FALSE,
 							DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS,
-							theApp.m_bIsVistaOrNewer ? DEFAULT_QUALITY : ANTIALIASED_QUALITY,
+							theApp.m_nFontQuality,
 							DEFAULT_PITCH|FF_DONTCARE, strFace );
 
 					pFont = &CoolInterface.m_fntItalic;
 					if ( pFont->m_hObject ) pFont->DeleteObject();
 
-					pFont->CreateFontW( -nFontSize, 0, 0, 0, nFontWeight, TRUE, FALSE, FALSE,
+					pFont->CreateFont( -nFontSize, 0, 0, 0, nFontWeight, TRUE, FALSE, FALSE,
 							DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS,
-							theApp.m_bIsVistaOrNewer ? DEFAULT_QUALITY : ANTIALIASED_QUALITY,
+							theApp.m_nFontQuality,
 							DEFAULT_PITCH|FF_DONTCARE, strFace );
 				}
 				else if ( strName.CompareNoCase( _T("system.bold") ) == 0 )
@@ -1842,9 +1843,9 @@ BOOL CSkin::LoadFonts(CXMLElement* pBase, const CString& strPath)
 					pFont = &CoolInterface.m_fntBoldItalic;
 					if ( pFont->m_hObject ) pFont->DeleteObject();
 
-					pFont->CreateFontW( -nFontSize, 0, 0, 0, nFontWeight, TRUE, FALSE, FALSE,
+					pFont->CreateFont( -nFontSize, 0, 0, 0, nFontWeight, TRUE, FALSE, FALSE,
 							DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS,
-							theApp.m_bIsVistaOrNewer ? DEFAULT_QUALITY : ANTIALIASED_QUALITY,
+							theApp.m_nFontQuality,
 							DEFAULT_PITCH|FF_DONTCARE, strFace );
 				}
 			}

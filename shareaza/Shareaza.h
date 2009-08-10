@@ -75,6 +75,7 @@ public:
 	CString				m_sSmartAgent;				// Shareaza x.x.x.x
 	CString				m_sBuildDate;
 	CString				m_strBinaryPath;			// Shareaza.exe path
+	BYTE				m_nFontQuality;
 	CFont				m_gdiFont;
 	CFont				m_gdiFontBold;
 	CFont				m_gdiFontLine;

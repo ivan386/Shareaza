@@ -158,6 +158,7 @@ CShareazaApp theApp;
 
 CShareazaApp::CShareazaApp() :
 	m_pMutex				( NULL )
+,	m_nFontQuality			( DEFAULT_QUALITY )
 ,	m_pSafeWnd				( NULL )
 ,	m_bBusy					( 0 )
 ,	m_bInteractive			( false )
@@ -952,6 +953,16 @@ void CShareazaApp::InitResources()
 	}
 
 	// Set up the default fonts
+	BOOL bFontSmoothing = FALSE;
+	UINT nSmoothingType = 0;
+	if ( SystemParametersInfo( SPI_GETFONTSMOOTHING, 0, &bFontSmoothing, 0 ) &&
+		 bFontSmoothing &&
+		 SystemParametersInfo( SPI_GETFONTSMOOTHINGTYPE, 0, &nSmoothingType, 0 ) )
+	{
+		m_nFontQuality = ( nSmoothingType == FE_FONTSMOOTHINGSTANDARD ) ?
+			ANTIALIASED_QUALITY : ( ( nSmoothingType == FE_FONTSMOOTHINGCLEARTYPE ) ?
+			CLEARTYPE_QUALITY : DEFAULT_QUALITY );
+	}
 	if ( Settings.Fonts.DefaultFont.IsEmpty() )
 	{
 		// Get font from current theme
@@ -982,15 +993,15 @@ void CShareazaApp::InitResources()
 	}
 
 	m_gdiFont.CreateFont( -(int)Settings.Fonts.FontSize, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE,
-		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
+		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, m_nFontQuality,
 		DEFAULT_PITCH|FF_DONTCARE, Settings.Fonts.DefaultFont );
 
 	m_gdiFontBold.CreateFont( -(int)Settings.Fonts.FontSize, 0, 0, 0, FW_BOLD, FALSE, FALSE, FALSE,
-		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
+		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, m_nFontQuality,
 		DEFAULT_PITCH|FF_DONTCARE, Settings.Fonts.DefaultFont );
 
 	m_gdiFontLine.CreateFont( -(int)Settings.Fonts.FontSize, 0, 0, 0, FW_NORMAL, FALSE, TRUE, FALSE,
-		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
+		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, m_nFontQuality,
 		DEFAULT_PITCH|FF_DONTCARE, Settings.Fonts.DefaultFont );
 
 	CryptAcquireContext( &m_hCryptProv, NULL, NULL, PROV_RSA_FULL, CRYPT_VERIFYCONTEXT );

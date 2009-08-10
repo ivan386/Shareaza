@@ -109,8 +109,8 @@ int CPacketWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_wndList.SetExtendedStyle(
 		LVS_EX_DOUBLEBUFFER|LVS_EX_FULLROWSELECT|LVS_EX_HEADERDRAGDROP|LVS_EX_LABELTIP );
 
-	m_pFont.CreateFontW( -(int)(Settings.Fonts.FontSize - 1), 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE,
-		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
+	m_pFont.CreateFont( -(int)(Settings.Fonts.FontSize - 1), 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE,
+		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, theApp.m_nFontQuality,
 		DEFAULT_PITCH|FF_DONTCARE, Settings.Fonts.PacketDumpFont );
 
 	m_wndList.SetFont( &m_pFont );

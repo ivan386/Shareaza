@@ -286,7 +286,7 @@ BOOL CSkinWindow::Parse(CXMLElement* pBase, const CString& strPath)
 			lf.lfHeight			= nFontSize;
 			lf.lfWeight			= nFontWeight;
 			lf.lfCharSet		= DEFAULT_CHARSET;
-			lf.lfQuality		= DEFAULT_QUALITY;
+			lf.lfQuality		= theApp.m_nFontQuality;
 			lf.lfOutPrecision	= OUT_DEFAULT_PRECIS;
 			lf.lfClipPrecision	= CLIP_DEFAULT_PRECIS;
 			lf.lfPitchAndFamily	= DEFAULT_PITCH|FF_DONTCARE;

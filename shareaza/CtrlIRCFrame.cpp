@@ -260,16 +260,16 @@ void CIRCFrame::SetFonts()
 	int nHeight = 10;
 
 	m_fntEdit.CreateFont( -13, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE,
-		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
+		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, theApp.m_nFontQuality,
 		DEFAULT_PITCH|FF_DONTCARE, Settings.Fonts.DefaultFont );
 
 	// Find optimal font size values for the starting point
 	// Code adjusted for the majority of fonts for different languages
 	CDC* pDC = GetDC();
 	
-	LOGFONT lf;
-	memset( &lf, 0, sizeof(LOGFONT) );
+	LOGFONT lf = {};
 	lf.lfCharSet = DEFAULT_CHARSET;
+	lf.lfQuality = theApp.m_nFontQuality;
 	lstrcpy( lf.lfFaceName, Settings.IRC.ScreenFont );
 
 	CFont pFont;
@@ -313,7 +313,7 @@ void CIRCFrame::SetFonts()
 	ReleaseDC( pDC );
 
 	m_pContent.m_fntNormal.CreateFont( nHeight, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE,
-		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
+		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, theApp.m_nFontQuality,
 		DEFAULT_PITCH|FF_DONTCARE, Settings.IRC.ScreenFont );
 	m_wndEdit.SetFont( &m_fntEdit, TRUE );
 	m_wndTab.SetFont( &theApp.m_gdiFont, TRUE );

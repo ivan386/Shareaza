@@ -73,8 +73,8 @@ CTextCtrl::CTextCtrl() :
 	m_crBackground[2] = RGB( 224, 255, 224 );	// light green	- MSG_FACILITY_INCOMING
 	m_crBackground[3] = RGB( 224, 240, 255 );	// light blue	- MSG_FACILITY_OUTGOING
 
-	m_pFont.CreateFontW( -(int)Settings.Fonts.FontSize, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE,
-		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
+	m_pFont.CreateFont( -(int)Settings.Fonts.FontSize, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE,
+		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, theApp.m_nFontQuality,
 		DEFAULT_PITCH|FF_DONTCARE, Settings.Fonts.SystemLogFont );
 	m_cCharacter = CSize( 0, 0 );
 

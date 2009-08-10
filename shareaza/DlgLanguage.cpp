@@ -89,16 +89,16 @@ BOOL CLanguageDlg::OnInitDialog()
 
 	m_bmHeader.LoadBitmap( IDB_WIZARD );
 
-	m_fntNormal.CreateFontW( -(int)(Settings.Fonts.FontSize + 1), 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE,
-		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
+	m_fntNormal.CreateFont( -(int)(Settings.Fonts.FontSize + 1), 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE,
+		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, theApp.m_nFontQuality,
 		DEFAULT_PITCH|FF_DONTCARE, Settings.Fonts.DefaultFont );
 
-	m_fntBold.CreateFontW( -(int)(Settings.Fonts.FontSize + 3), 0, 0, 0, FW_BOLD, FALSE, FALSE, FALSE,
-		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
+	m_fntBold.CreateFont( -(int)(Settings.Fonts.FontSize + 3), 0, 0, 0, FW_BOLD, FALSE, FALSE, FALSE,
+		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, theApp.m_nFontQuality,
 		DEFAULT_PITCH|FF_DONTCARE, Settings.Fonts.DefaultFont );
 
-	m_fntSmall.CreateFontW( -(int)(Settings.Fonts.FontSize - 1), 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE,
-		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
+	m_fntSmall.CreateFont( -(int)(Settings.Fonts.FontSize - 1), 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE,
+		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, theApp.m_nFontQuality,
 		DEFAULT_PITCH|FF_DONTCARE, Settings.Fonts.DefaultFont );
 
 	m_pImages.Create( 32, 32, ILC_COLOR32|ILC_MASK, 1, 1 ) ||
