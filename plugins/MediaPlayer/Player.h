@@ -4,6 +4,24 @@
 
 #include "MediaPlayer_h.h"
 
+// CPlayerWindow
+
+class CPlayerWindow : 
+	public CWindowImpl< CPlayerWindow >
+{
+public:
+	CPlayerWindow();
+
+	HBITMAP	m_hLogo;
+
+	BEGIN_MSG_MAP(CPlayerWindow)
+		MESSAGE_HANDLER(WM_PAINT,OnPaint)
+		MESSAGE_HANDLER(WM_ERASEBKGND,OnErase)
+	END_MSG_MAP()
+
+	LRESULT OnErase(UINT nMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
+	LRESULT OnPaint(UINT nMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
+};
 
 // CPlayer
 
@@ -31,6 +49,7 @@ protected:
 
 	BOOLEAN				m_bAudioOnly;
 	HWND				m_hwndOwner;
+	CPlayerWindow		m_wndPlayer;
 	RECT				m_rcWindow;
 	CComPtr< IGraphBuilder >	m_pGraph;
 	CComQIPtr< IMediaControl >	m_pControl;

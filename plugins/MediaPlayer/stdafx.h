@@ -25,6 +25,7 @@
 #include <atlcom.h>
 #include <atlstr.h>
 #include <atltypes.h>
+#include <atlwin.h>
 
 #include <dshow.h>
 #include <mmreg.h>

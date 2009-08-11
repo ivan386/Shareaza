@@ -3,9 +3,48 @@
 #include "stdafx.h"
 #include "Player.h"
 
-#define SAFE_RELEASE(comPtr)  \
-              if ((comPtr))  \
-                { (comPtr).Release(); }
+// CPlayerWindow
+
+CPlayerWindow::CPlayerWindow() :
+	m_hLogo( NULL )
+{
+}
+
+LRESULT CPlayerWindow::OnErase(UINT /*nMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& bHandled)
+{
+	bHandled = TRUE;
+	return 0;   
+}
+
+LRESULT CPlayerWindow::OnPaint(UINT /*nMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& bHandled)
+{
+	RECT rc;
+	GetClientRect( &rc );
+
+	HDC hDC = GetWindowDC();
+	
+	FillRect( hDC, &rc, (HBRUSH)GetStockObject( BLACK_BRUSH ) );
+
+	if ( m_hLogo )
+	{
+		BITMAP bm = {};
+		GetObject( m_hLogo, sizeof( BITMAP ), &bm );
+		HDC hMemDC = CreateCompatibleDC( hDC );
+		HBITMAP hOldDitmap = (HBITMAP)SelectObject( hMemDC, m_hLogo );
+		BitBlt( hDC, ( rc.right - rc.left - bm.bmWidth ) / 2,
+			( rc.bottom - rc.top - bm.bmHeight ) / 2,
+			bm.bmWidth, bm.bmHeight, hMemDC, 0, 0, SRCCOPY );
+		SelectObject( hMemDC, hOldDitmap );
+		DeleteDC( hMemDC );
+	}
+
+	ReleaseDC( hDC );
+
+	ValidateRect( &rc );
+
+	bHandled = TRUE;
+	return 0;   
+}
 
 // CPlayer
 
@@ -43,38 +82,38 @@ STDMETHODIMP CPlayer::Create(
 	if ( SUCCEEDED( hr ) )
 	{
 		m_pControl = m_pGraph;
-		if (!m_pControl)
+		if ( ! m_pControl )
 			hr = E_NOINTERFACE;
 	}
 
 	if ( SUCCEEDED( hr ) )
 	{
 		m_pEvent = m_pGraph;
-		if (!m_pEvent)
+		if ( ! m_pEvent )
 			hr = E_NOINTERFACE;
 	}
 
 	if ( SUCCEEDED( hr ) )
 	{
 		m_pVideo = m_pGraph;
-		if (!m_pVideo)
+		if ( ! m_pVideo )
 			hr = E_NOINTERFACE;
 	}
 
 	if ( SUCCEEDED( hr ) )
 	{
 		m_pWindow = m_pGraph;
-		if (!m_pWindow)
+		if ( ! m_pWindow )
 			hr = E_NOINTERFACE;
 	}
 
 	if ( FAILED( hr ) )
 	{
-		SAFE_RELEASE(m_pControl);
-		SAFE_RELEASE(m_pEvent);
-		SAFE_RELEASE(m_pVideo);
-		SAFE_RELEASE(m_pWindow);
-		SAFE_RELEASE(m_pGraph);
+		m_pControl.Release();
+		m_pEvent.Release();
+		m_pVideo.Release();
+		m_pWindow.Release();
+		m_pGraph.Release();
 	}
 
 	return hr;
@@ -87,7 +126,11 @@ STDMETHODIMP CPlayer::Destroy(void)
 
 	Close();
 
-	m_pWindow->put_Owner( NULL );
+	if ( m_wndPlayer.m_hWnd )
+		m_wndPlayer.DestroyWindow();
+
+	if ( m_pWindow )
+		m_pWindow->put_Owner( NULL );
 
 	m_pWindow.Release();
 	m_pVideo.Release();
@@ -107,16 +150,17 @@ STDMETHODIMP CPlayer::Reposition(
 	if ( ! m_pGraph )
 		return E_INVALIDARG;
 
-	if ( m_bAudioOnly )
-		return S_OK;
-
 	m_rcWindow = *prcWnd;
 
-	HRESULT hr = m_pWindow->SetWindowPosition( m_rcWindow.left, m_rcWindow.top,
-		m_rcWindow.right - m_rcWindow.left, m_rcWindow.bottom - m_rcWindow.top );
-
-	if ( FAILED( hr ) )
-		return hr;
+	if ( m_bAudioOnly )
+		m_wndPlayer.SetWindowPos( NULL, &m_rcWindow, SWP_NOZORDER );
+	else
+	{
+		HRESULT hr = m_pWindow->SetWindowPosition( m_rcWindow.left, m_rcWindow.top,
+			m_rcWindow.right - m_rcWindow.left, m_rcWindow.bottom - m_rcWindow.top );
+		if ( FAILED( hr ) )
+			return hr;
+	}
 
 	return AdjustVideoPosAndZoom();
 }
@@ -124,7 +168,9 @@ STDMETHODIMP CPlayer::Reposition(
 STDMETHODIMP CPlayer::SetLogoBitmap(
 	/* [in] */ HBITMAP hLogo)
 {
-	return E_NOTIMPL;
+	m_wndPlayer.m_hLogo = hLogo;
+
+	return S_OK;
 }
 
 STDMETHODIMP CPlayer::GetVolume(
@@ -282,27 +328,27 @@ STDMETHODIMP CPlayer::Open(
 	if ( FAILED( hr ) )
 		return hr;
 
-	if ( ! m_pVideo || ! m_pWindow )
+	if ( ! m_pVideo || ! m_pWindow ||
+		   m_pWindow->get_Visible( &lVisible ) == E_NOINTERFACE )
 	{
 		m_bAudioOnly = TRUE;
+
+		if ( ! m_wndPlayer.m_hWnd )
+		{
+			m_wndPlayer.Create( m_hwndOwner, &m_rcWindow, NULL, WS_CHILD | WS_VISIBLE |
+				WS_CLIPSIBLINGS | WS_CLIPCHILDREN );
+		}
 	}
 	else
 	{
-		hr = m_pWindow->get_Visible(&lVisible);
-		if ( hr == E_NOINTERFACE )
-		{
-			m_bAudioOnly = TRUE;
-		}
-		else
-		{
-			m_bAudioOnly = FALSE;
-			hr = m_pWindow->put_WindowStyle( WS_CHILD | WS_VISIBLE |
-				WS_CLIPSIBLINGS | WS_CLIPCHILDREN );
-			m_pWindow->put_Owner( (OAHWND)m_hwndOwner );
-		}
+		m_bAudioOnly = FALSE;
+
+		hr = m_pWindow->put_WindowStyle( WS_CHILD | WS_VISIBLE |
+			WS_CLIPSIBLINGS | WS_CLIPCHILDREN );
+		m_pWindow->put_Owner( (OAHWND)m_hwndOwner );
 	}
 
-	return Play();
+	return S_OK;
 }
 
 STDMETHODIMP CPlayer::Close(void)
@@ -322,6 +368,8 @@ STDMETHODIMP CPlayer::Play(void)
 
 	if ( m_bAudioOnly )
 	{
+		m_wndPlayer.SetWindowPos( NULL, &m_rcWindow, SWP_NOZORDER | SWP_SHOWWINDOW );
+
 		HRESULT hr = m_pControl->Run();
 		if ( FAILED( hr ) )
 			return hr;
@@ -355,7 +403,9 @@ STDMETHODIMP CPlayer::Stop(void)
 	if ( ! m_pGraph )
 		return E_INVALIDARG;
 
-	if ( ! m_bAudioOnly )
+	if ( m_bAudioOnly )
+		m_wndPlayer.ShowWindow( SW_HIDE );
+	else
 		m_pWindow->put_Visible( OAFALSE );
 
 	return m_pControl->Stop();
