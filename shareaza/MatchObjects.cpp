@@ -2610,8 +2610,7 @@ void CMatchFile::Ban(int nBanLength)
 {
 	// Ban by hit host IPs
 	for ( CQueryHit* pHit = m_pHits ; pHit ; pHit = pHit->m_pNext )
+	{
 		pHit->Ban( nBanLength );
-
-	// Ban hashes
-	Security.Ban( this, nBanLength );
+	}
 }
