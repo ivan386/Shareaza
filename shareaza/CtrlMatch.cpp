@@ -864,7 +864,7 @@ void CMatchCtrl::DrawItem(CDC& dc, CRect& rcRow, CMatchFile* pFile, CQueryHit* p
 			if ( pFile->m_bDRM )
 				// Draw DRM status
 				CoolInterface.Draw( &dc, IDI_COMMERCIAL, 16,
-					rcCol.left, rcCol.top, CLR_NONE, bSelected );
+					rcCol.left - 16, rcCol.top, CLR_NONE, bSelected );
 
 			dc.FillSolidRect( rcCol.left, rcCol.top, 1, ITEM_HEIGHT, crLeftAligned );
 			rcCol.left += 1;
