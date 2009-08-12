@@ -150,10 +150,11 @@ Source: "plugins\SWFPlugin\{#PlatformName}\{#ConfigurationName}\SWFPlugin.dll"; 
 
 Source: "plugins\ZIPBuilder\{#PlatformName}\{#ConfigurationName}\ZIPBuilder.dll";   DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
 
-Source: "plugins\MediaPlayer.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
+Source: "plugins\MediaPlayer\{#PlatformName}\{#ConfigurationName}\MediaPlayer.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
 
 ; Don't register RazaWebHook.dll since it will setup Shareaza as download manager
-Source: "plugins\RazaWebHook.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+Source: "plugins\RazaWebHook\Win32\{#ConfigurationName}\RazaWebHook32.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+Source: "plugins\RazaWebHook\x64\{#ConfigurationName}\RazaWebHook64.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 
 Source: "plugins\VirusTotal\{#PlatformName}\{#ConfigurationName}\VirusTotal.dll";   DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
 
