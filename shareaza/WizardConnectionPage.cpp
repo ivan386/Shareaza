@@ -229,10 +229,9 @@ LRESULT CWizardConnectionPage::OnWizardNext()
 	Settings.Connection.InSpeed = nDownloadSpeed;
 	Settings.Connection.OutSpeed = nUploadSpeed;
 
-	// Set upload limit to 90% of capacity, trimmed down to the nearest KB. (Usually works out at ~85% total)
-	Settings.Bandwidth.Uploads = (DWORD)( Settings.Connection.OutSpeed * (100 - Settings.Uploads.FreeBandwidthFactor) / 100 );
-	Settings.Bandwidth.Uploads >>= 3;
-	Settings.Bandwidth.Uploads *= 1024;
+	// Set upload limit to 90% of capacity, trimmed down to the nearest KB.
+	Settings.Bandwidth.Uploads = ( ( ( Settings.Connection.OutSpeed *
+		( 100 - Settings.Uploads.FreeBandwidthFactor ) ) / 100 ) / 8 ) * 1024;
 
 	Settings.eDonkey.MaxLinks = nSpeed < 100 ? 35 : 250;
 	Settings.OnChangeConnectionSpeed();

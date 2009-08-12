@@ -149,6 +149,7 @@ BOOL CUploadsSettingsPage::OnInitDialog()
 	m_bQueuesChanged = FALSE;
 
 	// Update value in limit combo box
+	m_nOldUploads = Settings.Bandwidth.Uploads;
 	if ( Settings.Bandwidth.Uploads )
 		m_sBandwidthLimit = Settings.SmartSpeed( Settings.Bandwidth.Uploads );
 	else
@@ -361,17 +362,22 @@ void CUploadsSettingsPage::OnOK()
 {
 	UpdateData();
 
-	DWORD nOldLimit = Settings.Bandwidth.Uploads;
+	DWORD nNewLimit = static_cast< DWORD >( Settings.ParseVolume( m_sBandwidthLimit ) );
+	if ( Settings.Bandwidth.Uploads == m_nOldUploads ||
+		 nNewLimit != m_nOldUploads )
+		Settings.Bandwidth.Uploads		= nNewLimit;
+	m_nOldUploads = Settings.Bandwidth.Uploads;
 
 	Settings.Uploads.MaxPerHost			= m_nMaxPerHost;
 	Settings.Uploads.SharePartials		= m_bSharePartials != FALSE;
 	Settings.Uploads.SharePreviews		= m_bSharePreviews != FALSE;
 	Settings.Uploads.HubUnshare			= m_bHubUnshare != FALSE;
-	Settings.Bandwidth.Uploads			= static_cast< DWORD >( Settings.ParseVolume( m_sBandwidthLimit ) );
 	Settings.Uploads.ThrottleMode		= m_bThrottleMode != FALSE;
 
 	// Warn the user about the effects of upload limiting
-	if ( !Settings.Live.UploadLimitWarning && Settings.Bandwidth.Uploads > 0 && Settings.Bandwidth.Uploads != nOldLimit )
+	if ( ! Settings.Live.UploadLimitWarning &&
+		   Settings.Bandwidth.Uploads > 0 &&
+		   Settings.Bandwidth.Uploads != m_nOldUploads )
 	{
 		QWORD nDownload = max( Settings.Bandwidth.Downloads, Settings.Connection.InSpeed  * Kilobits / Bytes );
 		QWORD nUpload	= min( Settings.Bandwidth.Uploads,   Settings.Connection.OutSpeed * Kilobits / Bytes );

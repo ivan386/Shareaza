@@ -69,9 +69,12 @@ public:
 
 // Implementation
 protected:
+	DWORD	m_nOldUploads;
+
 	bool IsLimited(CString& strText) const;
-	DECLARE_MESSAGE_MAP()
+
 	virtual BOOL OnInitDialog();
+
 	afx_msg void OnSelChangeAgentList();
 	afx_msg void OnEditChangeAgentList();
 	afx_msg void OnAgentAdd();
@@ -83,4 +86,6 @@ protected:
 	afx_msg void OnDblClkQueues(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnQueueDrop(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnShowWindow(BOOL bShow, UINT nStatus);
+
+	DECLARE_MESSAGE_MAP()
 };

@@ -294,6 +294,8 @@ void CConnectionSettingsPage::OnOK()
 			Settings.Connection.InPort = m_nInPort;
 	}
 
+	DWORD nOldOutSpeed	= Settings.Connection.OutSpeed;
+
 	Settings.Connection.RandomPort			= ( m_bInRandom && m_nInPort == 0 );
 	Settings.Connection.EnableUPnP			= m_bEnableUPnP != FALSE;
 	Settings.Connection.InBind				= m_bInBind != FALSE;
@@ -303,6 +305,13 @@ void CConnectionSettingsPage::OnOK()
 	Settings.Connection.IgnoreLocalIP		= m_bIgnoreLocalIP != FALSE;
 	Settings.Connection.TimeoutConnect		= m_nTimeoutConnection * 1000;
 	Settings.Connection.TimeoutHandshake	= m_nTimeoutHandshake  * 1000;
+
+	if ( nOldOutSpeed != Settings.Connection.OutSpeed )
+	{
+		// Reset upload limit to 90% of capacity, trimmed down to the nearest KB.
+		Settings.Bandwidth.Uploads = ( ( ( Settings.Connection.OutSpeed *
+			( 100 - Settings.Uploads.FreeBandwidthFactor ) ) / 100 ) / 8 ) * 1024;
+	}
 
 	UpdateData();
 
