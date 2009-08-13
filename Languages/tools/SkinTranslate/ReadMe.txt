@@ -2,6 +2,8 @@ Skin translate utility
 
 ==== Usage ====
 
+In third parameter you can use meta symbol "#" to specify file name from second parameter, i.e. "SkinTranslate.exe default-en.xml default-XX.po #.xml"
+
 1. Creating .pot-file from default English xml-file:
 
 	SkinTranslate.exe default-en.xml default-en.pot

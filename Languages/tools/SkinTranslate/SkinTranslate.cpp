@@ -1548,9 +1548,14 @@ int _tmain(int argc, _TCHAR* argv[])
 	}
 
 	bool bResult = false;
-	LPCTSTR szTemplate = argv[ 1 ];
-	LPCTSTR szOutput = argv[ argc - 1 ];
-	LPCTSTR szExt = _tcsrchr( szOutput, _T('.') );
+	CString sTemplate = argv[ 1 ];
+	CString sFile = argv[ 2 ];
+	CString sFilenameOnly = PathFindFileName( argv[ 2 ] );
+	sFilenameOnly = sFilenameOnly.Mid( 0,
+		( PathFindExtension( sFilenameOnly ) - (LPCTSTR)sFilenameOnly ) );
+	CString sOutput = argv[ argc - 1 ];
+	sOutput.Replace( _T("#"), sFilenameOnly );
+	LPCTSTR szExt = _tcsrchr( sOutput, _T('.') );
 	bool bPoMode = ( argc == 4 ) && szExt && ( _tcsicmp( szExt, _T(".po") ) == 0 );
 	bool bXMLMode = ( argc == 4 ) && szExt && ( _tcsicmp( szExt, _T(".xml") ) == 0 );
 
@@ -1563,12 +1568,12 @@ int _tmain(int argc, _TCHAR* argv[])
 			if ( bPoMode )
 			{
 				// Load translated text as XML
-				bResult = oTranslated.LoadXML( argv[ 2 ] );
+				bResult = oTranslated.LoadXML( sFile );
 			}
 			else if ( bXMLMode )
 			{
 				// Load translated text as PO
-				bResult = oTranslated.LoadPO( argv[ 2 ] );
+				bResult = oTranslated.LoadPO( sFile );
 			}
 			else
 				bResult = true;
@@ -1576,12 +1581,12 @@ int _tmain(int argc, _TCHAR* argv[])
 			if ( bResult )
 			{
 				// Load template
-				if ( oTemplate.LoadXML( szTemplate, bXMLMode ? &oTranslated : NULL ) )
+				if ( oTemplate.LoadXML( sTemplate, bXMLMode ? &oTranslated : NULL ) )
 				{
 					if ( bXMLMode )
 					{
 						// Generate .xml-file from template XML and translated .po-file
-						bResult = oTemplate.SaveXML( szOutput );
+						bResult = oTemplate.SaveXML( sOutput );
 					}
 					else
 					{
@@ -1590,7 +1595,7 @@ int _tmain(int argc, _TCHAR* argv[])
 							// ...  and translated XML
 							oTemplate.Translate( oTranslated );
 
-						bResult = oTemplate.SavePO( szOutput );
+						bResult = oTemplate.SavePO( sOutput );
 					}
 				}
 			}
