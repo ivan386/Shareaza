@@ -2372,8 +2372,6 @@
 	<tip id="ID_HELP_WEB_4" message="Visit this website"/>
 	<tip id="ID_HELP_WEB_5" message="Visit this website"/>
 	<tip id="ID_HELP_WEB_6" message="Visit this website"/>
-	<tip id="ID_HELP_DONATE" message="If you want, you can donate to our legal fund and show your appreciation."/>
-	<tip id="ID_HELP_FAKESHAREAZA" message="Translate FakeShareaza.com to learn more about recent events."/>
 	<tip id="ID_HITMONITOR_CLEAR" message="Clear the hit monitor buffer."/>
 	<tip id="ID_HITMONITOR_PAUSE" message="Pause hit monitoring."/>
 	<tip id="ID_HITMONITOR_SEARCH" message="Search the network for the selected term."/>
