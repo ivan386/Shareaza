@@ -227,21 +227,6 @@ BOOL CFilePreviewDlg::OnInitDialog()
 	return TRUE;
 }
 
-void CFilePreviewDlg::OnCancel()
-{
-	if ( IsThreadAlive() )
-	{
-		m_pSection.Lock();
-		m_bCancel = TRUE;
-		if ( m_pPlugin != NULL ) m_pPlugin->Cancel();
-		m_pSection.Unlock();
-	}
-	else
-	{
-		PostMessage( WM_CLOSE );
-	}
-}
-
 void CFilePreviewDlg::OnTimer(UINT_PTR nIDEvent)
 {
 	if ( nIDEvent == 3 )
@@ -278,7 +263,17 @@ void CFilePreviewDlg::OnTimer(UINT_PTR nIDEvent)
 
 void CFilePreviewDlg::OnClose()
 {
-	DestroyWindow();
+	if ( IsThreadAlive() )
+	{
+		m_pSection.Lock();
+		m_bCancel = TRUE;
+		if ( m_pPlugin != NULL ) m_pPlugin->Cancel();
+		m_pSection.Unlock();
+	}
+	else
+	{
+		DestroyWindow();
+	}
 }
 
 void CFilePreviewDlg::OnDestroy()
@@ -287,11 +282,11 @@ void CFilePreviewDlg::OnDestroy()
 
 	if ( m_pDownload != NULL )
 	{
-		if ( Transfers.m_pSection.Lock( 1000 ) )
+		CSingleLock oLock( &Transfers.m_pSection, FALSE );
+		if ( oLock.Lock( 1000 ) )
 		{
 			if ( Downloads.Check( (CDownload*)m_pDownload ) )
 				m_pDownload->m_pPreviewWnd = NULL;
-			Transfers.m_pSection.Unlock();
 		}
 		m_pDownload = NULL;
 	}
@@ -301,7 +296,6 @@ void CFilePreviewDlg::OnDestroy()
 
 void CFilePreviewDlg::PostNcDestroy()
 {
-	CSkinDialog::PostNcDestroy();
 	delete this;
 }
 
