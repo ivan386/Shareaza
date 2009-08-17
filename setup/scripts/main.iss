@@ -664,7 +664,7 @@ begin
     hService := OpenService(hSCManager, ServiceName, SERVICE_QUERY_STATUS);
     if (hService <> 0) then begin
       if (QueryServiceStatus(hService, sStatus)) then
-        Result := (sStatus.dwCurrentState = SERVICE_RUNNING)
+        Result := (sStatus.dwCurrentState = SERVICE_RUNNING);
       CloseServiceHandle(hService);
     end;
     CloseServiceHandle(hSCManager);
