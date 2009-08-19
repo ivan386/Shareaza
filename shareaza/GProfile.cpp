@@ -97,7 +97,7 @@ void CGProfile::CreateBT()
 	// Convert Gnutella GUID (128 bits) to BitTorrent GUID (160 bits)
 	Hashes::BtGuid tmp_bt;
 	CopyMemory( &tmp_bt[0], &((Hashes::Guid)oGUID)[0], ((Hashes::Guid)oGUID).byteCount );
-	for ( int nByte = ((Hashes::Guid)oGUID).byteCount ; nByte < tmp_bt.byteCount ; nByte++ )
+	for ( size_t nByte = ((Hashes::Guid)oGUID).byteCount ; nByte < tmp_bt.byteCount ; nByte++ )
 		tmp_bt[ nByte ] = GetRandomNum( 0ui8, _UI8_MAX );
 	
 	VERIFY( tmp_bt.validate() );

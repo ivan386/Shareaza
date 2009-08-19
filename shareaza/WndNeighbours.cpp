@@ -352,7 +352,7 @@ void CNeighboursWnd::Update()
 		pItem->Set( 11, pNeighbour->m_sCountry );
 		int nFlag = Flags.GetFlagIndex( pNeighbour->m_sCountry );
 		if ( nFlag >= 0 )
-			pItem->SetImage( &m_wndList, (int)pNeighbour, 11, m_nProtocolRev + nFlag + 1 );
+			pItem->SetImage( &m_wndList, (LPARAM)pNeighbour, 11, m_nProtocolRev + nFlag + 1 );
 	}
 
 	pLiveList.Apply( &m_wndList, TRUE );

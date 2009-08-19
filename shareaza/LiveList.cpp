@@ -1,7 +1,7 @@
 //
 // LiveList.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -292,7 +292,7 @@ BOOL CLiveItem::Update(CListCtrl* pCtrl, int nItem, int nColumns)
 	return bModified;
 }
 
-BOOL CLiveItem::SetImage(CListCtrl* pCtrl, int nParam, int nColumn, int nImageIndex)
+BOOL CLiveItem::SetImage(CListCtrl* pCtrl, LPARAM nParam, int nColumn, int nImageIndex)
 {
 	ASSERT_VALID( this );
 	ASSERT_VALID( pCtrl );

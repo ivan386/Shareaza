@@ -1,7 +1,7 @@
 //
 // LiveList.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -18,9 +18,6 @@
 // along with Shareaza; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
-
-#if !defined(AFX_LIVELIST_H__D1A833C9_1477_43C7_9644_DB0C85370511__INCLUDED_)
-#define AFX_LIVELIST_H__D1A833C9_1477_43C7_9644_DB0C85370511__INCLUDED_
 
 #pragma once
 
@@ -48,7 +45,7 @@ public:
 	void	Format(int nColumn, LPCTSTR pszFormat, ...);
 	int		Add(CListCtrl* pCtrl, int nItem, int nColumns);
 	BOOL	Update(CListCtrl* pCtrl, int nItem, int nColumns);
-	BOOL	SetImage(CListCtrl* pCtrl, int nParam, int nColumn, int nImageIndex);
+	BOOL	SetImage(CListCtrl* pCtrl, LPARAM nParam, int nColumn, int nImageIndex);
 
 public:
 	DWORD_PTR	m_nParam;
@@ -185,5 +182,3 @@ protected:
 	afx_msg void OnLvnOdfinditemA(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnLvnOdcachehint(NMHDR *pNMHDR, LRESULT *pResult);
 };
-
-#endif // !defined(AFX_LIVELIST_H__D1A833C9_1477_43C7_9644_DB0C85370511__INCLUDED_)
