@@ -299,9 +299,6 @@ void CEDClient::Send(CEDPacket* pPacket, BOOL bRelease)
 {
 	if ( pPacket != NULL )
 	{
-		ASSERT( pPacket->m_nProtocol == PROTOCOL_ED2K );
-		ASSERT( pPacket->m_nEdProtocol == ED2K_PROTOCOL_EDONKEY || m_bEmule || pPacket->m_nType == ED2K_C2C_EMULEINFO );
-
 		if ( IsValid() )
 		{
 			pPacket->SmartDump( &m_pHost, FALSE, TRUE );
