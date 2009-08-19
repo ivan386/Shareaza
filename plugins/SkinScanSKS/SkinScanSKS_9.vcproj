@@ -109,7 +109,7 @@
 			<Tool
 				Name="VCPostBuildEventTool"
 				Description="Performing registration"
-				CommandLine="if exist &quot;..\..\zlib\$(PlatformName)\$(ConfigurationName)\zlibwapi.dll&quot; goto zlib1&#x0D;&#x0A;copy &quot;..\..\zlib\$(PlatformName)\Release\zlibwapi.dll&quot; &quot;$(TargetDir)&quot; /b /y&#x0D;&#x0A;goto zlib2&#x0D;&#x0A;:zlib1&#x0D;&#x0A;copy &quot;..\..\zlib\$(PlatformName)\Release\zlibwapi.dll&quot; &quot;$(TargetDir)&quot; /b /y&#x0D;&#x0A;:zlib2&#x0D;&#x0A;regsvr32 /s /c &quot;$(TargetPath)&quot;"
+				CommandLine="if exist &quot;..\..\zlib\$(PlatformName)\$(ConfigurationName)\zlibwapi.dll&quot; goto zlib1&#x0D;&#x0A;copy &quot;..\..\zlib\$(PlatformName)\Release\zlibwapi.dll&quot; &quot;$(TargetDir)&quot; /b /y&#x0D;&#x0A;goto zlib2&#x0D;&#x0A;:zlib1&#x0D;&#x0A;copy &quot;..\..\zlib\$(PlatformName)\Release\zlibwapi.dll&quot; &quot;$(TargetDir)&quot; /b /y&#x0D;&#x0A;:zlib2&#x0D;&#x0A;regsvr32 /s /c &quot;$(TargetPath)&quot;&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
@@ -202,7 +202,7 @@
 			<Tool
 				Name="VCPostBuildEventTool"
 				Description="Performing registration"
-				CommandLine="if exist &quot;..\..\zlib\$(PlatformName)\$(ConfigurationName)\zlibwapi.dll&quot; goto zlib1&#x0D;&#x0A;copy &quot;..\..\zlib\$(PlatformName)\Release\zlibwapi.dll&quot; &quot;$(TargetDir)&quot; /b /y&#x0D;&#x0A;goto zlib2&#x0D;&#x0A;:zlib1&#x0D;&#x0A;copy &quot;..\..\zlib\$(PlatformName)\Release\zlibwapi.dll&quot; &quot;$(TargetDir)&quot; /b /y&#x0D;&#x0A;:zlib2&#x0D;&#x0A;regsvr32 /s /c &quot;$(TargetPath)&quot;"
+				CommandLine="if exist &quot;..\..\zlib\$(PlatformName)\$(ConfigurationName)\zlibwapi.dll&quot; goto zlib1&#x0D;&#x0A;copy &quot;..\..\zlib\$(PlatformName)\Release\zlibwapi.dll&quot; &quot;$(TargetDir)&quot; /b /y&#x0D;&#x0A;goto zlib2&#x0D;&#x0A;:zlib1&#x0D;&#x0A;copy &quot;..\..\zlib\$(PlatformName)\Release\zlibwapi.dll&quot; &quot;$(TargetDir)&quot; /b /y&#x0D;&#x0A;:zlib2&#x0D;&#x0A;regsvr32 /s /c &quot;$(TargetPath)&quot;&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
@@ -269,6 +269,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				IgnoreImportLibrary="true"
+				LinkIncremental="1"
 				AdditionalLibraryDirectories="../zlib"
 				ModuleDefinitionFile="$(ProjectName).def"
 				SubSystem="2"
@@ -300,7 +301,7 @@
 			<Tool
 				Name="VCPostBuildEventTool"
 				Description="Performing registration"
-				CommandLine="if exist &quot;..\..\zlib\$(PlatformName)\$(ConfigurationName)\zlibwapi.dll&quot; goto zlib1&#x0D;&#x0A;copy &quot;..\..\zlib\$(PlatformName)\Release\zlibwapi.dll&quot; &quot;$(TargetDir)&quot; /b /y&#x0D;&#x0A;goto zlib2&#x0D;&#x0A;:zlib1&#x0D;&#x0A;copy &quot;..\..\zlib\$(PlatformName)\Release\zlibwapi.dll&quot; &quot;$(TargetDir)&quot; /b /y&#x0D;&#x0A;:zlib2&#x0D;&#x0A;regsvr32 /s /c &quot;$(TargetPath)&quot;"
+				CommandLine="if exist &quot;..\..\zlib\$(PlatformName)\$(ConfigurationName)\zlibwapi.dll&quot; goto zlib1&#x0D;&#x0A;copy &quot;..\..\zlib\$(PlatformName)\Release\zlibwapi.dll&quot; &quot;$(TargetDir)&quot; /b /y&#x0D;&#x0A;goto zlib2&#x0D;&#x0A;:zlib1&#x0D;&#x0A;copy &quot;..\..\zlib\$(PlatformName)\Release\zlibwapi.dll&quot; &quot;$(TargetDir)&quot; /b /y&#x0D;&#x0A;:zlib2&#x0D;&#x0A;regsvr32 /s /c &quot;$(TargetPath)&quot;&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
@@ -368,6 +369,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				IgnoreImportLibrary="true"
+				LinkIncremental="1"
 				AdditionalLibraryDirectories="../zlib"
 				ModuleDefinitionFile="$(ProjectName).def"
 				SubSystem="2"
@@ -398,7 +400,7 @@
 			<Tool
 				Name="VCPostBuildEventTool"
 				Description="Performing registration"
-				CommandLine="if exist &quot;..\..\zlib\$(PlatformName)\$(ConfigurationName)\zlibwapi.dll&quot; goto zlib1&#x0D;&#x0A;copy &quot;..\..\zlib\$(PlatformName)\Release\zlibwapi.dll&quot; &quot;$(TargetDir)&quot; /b /y&#x0D;&#x0A;goto zlib2&#x0D;&#x0A;:zlib1&#x0D;&#x0A;copy &quot;..\..\zlib\$(PlatformName)\Release\zlibwapi.dll&quot; &quot;$(TargetDir)&quot; /b /y&#x0D;&#x0A;:zlib2&#x0D;&#x0A;regsvr32 /s /c &quot;$(TargetPath)&quot;"
+				CommandLine="if exist &quot;..\..\zlib\$(PlatformName)\$(ConfigurationName)\zlibwapi.dll&quot; goto zlib1&#x0D;&#x0A;copy &quot;..\..\zlib\$(PlatformName)\Release\zlibwapi.dll&quot; &quot;$(TargetDir)&quot; /b /y&#x0D;&#x0A;goto zlib2&#x0D;&#x0A;:zlib1&#x0D;&#x0A;copy &quot;..\..\zlib\$(PlatformName)\Release\zlibwapi.dll&quot; &quot;$(TargetDir)&quot; /b /y&#x0D;&#x0A;:zlib2&#x0D;&#x0A;regsvr32 /s /c &quot;$(TargetPath)&quot;&#x0D;&#x0A;"
 			/>
 		</Configuration>
 	</Configurations>

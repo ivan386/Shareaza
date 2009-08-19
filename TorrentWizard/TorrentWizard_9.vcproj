@@ -252,6 +252,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="version.lib"
+				LinkIncremental="1"
 				GenerateManifest="false"
 				IgnoreDefaultLibraryNames=""
 				SubSystem="2"
@@ -342,6 +343,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="version.lib"
+				LinkIncremental="1"
 				GenerateManifest="false"
 				IgnoreDefaultLibraryNames=""
 				SubSystem="2"

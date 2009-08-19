@@ -231,6 +231,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				LinkIncremental="1"
 				IgnoreDefaultLibraryNames=""
 				ModuleDefinitionFile="zlib.def"
 				OptimizeReferences="2"
@@ -315,6 +316,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				LinkIncremental="1"
 				ModuleDefinitionFile="zlib.def"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
