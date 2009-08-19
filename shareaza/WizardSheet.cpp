@@ -24,8 +24,8 @@
 #include "Settings.h"
 #include "CoolInterface.h"
 #include "GProfile.h"
+#include "WndMain.h"
 #include "WizardSheet.h"
-
 #include "WizardWelcomePage.h"
 #include "WizardInterfacePage.h"
 #include "WizardConnectionPage.h"
@@ -76,6 +76,22 @@ BOOL CWizardSheet::RunWizard(CWnd* pParent)
 	pSheet.AddPage( &pFinished );
 
 	bSuccess = ( pSheet.DoModal() == IDOK );
+
+	CWaitCursor pCursor;
+	CMainWnd* pMainWnd = (CMainWnd*)AfxGetMainWnd();
+
+	if ( pInterface.m_bExpert && Settings.General.GUIMode == GUI_BASIC )
+	{
+		Settings.General.GUIMode = GUI_TABBED;
+		Settings.BitTorrent.AdvancedInterface = TRUE;
+		pMainWnd->SetGUIMode( Settings.General.GUIMode, FALSE );
+	}
+	else if ( ! pInterface.m_bExpert && Settings.General.GUIMode != GUI_BASIC )
+	{
+		Settings.General.GUIMode = GUI_BASIC;
+		pMainWnd->SetGUIMode( Settings.General.GUIMode, FALSE );
+	}
+
 	Settings.Save();
 
 	return bSuccess;
