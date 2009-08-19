@@ -212,15 +212,16 @@ CShareazaApp::CShareazaApp() :
 	ZeroMemory( m_pBTVersion, sizeof( m_pBTVersion ) );
 
 // BugTrap http://www.intellesoft.net/
-#ifdef _DEBUG
-	BT_InstallSehFilter();
-	BT_SetTerminate();
+	BT_SetAppName( _T(CLIENT_NAME) );
 	BT_SetFlags( BTF_INTERCEPTSUEF | BTF_SHOWADVANCEDUI | BTF_DESCRIBEERROR |
 		BTF_DETAILEDMODE | BTF_ATTACHREPORT | BTF_EDITMAIL );
+	BT_SetExitMode( BTEM_CONTINUESEARCH );
+	BT_SetDumpType( 0x00001851 /* MiniDumpWithDataSegs | MiniDumpScanMemory | MiniDumpWithIndirectlyReferencedMemory | MiniDumpWithFullMemoryInfo | MiniDumpWithThreadInfo */ );
 	BT_SetSupportEMail( _T("shareaza-bugtrap@lists.sourceforge.net") );
 	BT_SetSupportURL( WEB_SITE_T _T("?id=support") );
-	BT_AddRegFile( _T("settings.reg"), _T("HKEY_CURRENT_USER\\Software\\Shareaza\\Shareaza") );
-#endif
+	BT_AddRegFile( _T("settings.reg"), _T("HKEY_CURRENT_USER\\Software\\") _T(CLIENT_NAME) );
+	BT_InstallSehFilter();
+	BT_SetTerminate();
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -235,18 +236,18 @@ BOOL CShareazaApp::InitInstance()
 
 	CWinApp::InitInstance();
 
-	SetRegistryKey( _T("Shareaza") );
-	GetVersionNumber();
-#ifdef _DEBUG
+	SetRegistryKey( _T(CLIENT_NAME) );
+
+	InitResources();			// Loads theApp settings.
+
 	CString strVersion;
-	BT_SetAppName( _T(CLIENT_NAME) );
 	strVersion.Format( _T("%s (rev. %s %s)"), m_sVersion, _T(__REVISION__),
 		m_sBuildDate );
 	BT_SetAppVersion( strVersion );
-#endif
-	Settings.Load();			// Loads settings. Depends on GetVersionNumber()
-	InitResources();			// Loads theApp settings. Depends on Settings::Load()
-	CoolInterface.Load();		// Loads colors and fonts. Depends on InitResources()
+
+	Settings.Load();			// Loads settings. Depends on InitResources()
+	InitFonts();				// Loads default fonts. Depends on Settings.Load()
+	CoolInterface.Load();		// Loads colors and fonts. Depends on InitFonts()
 
 	AfxOleInit();
 //	m_pFontManager = new CFontManager();
@@ -306,12 +307,14 @@ BOOL CShareazaApp::InitInstance()
 			m_pMutex = NULL;
 
 			// Popup first instance
-			if ( CWnd* pWnd = CWnd::FindWindow( _T("ShareazaMainWnd"), NULL ) )
+			if ( HWND hWnd = FindWindow( _T("ShareazaMainWnd"), NULL ) )
 			{
-				pWnd->SendMessage( WM_SYSCOMMAND, SC_RESTORE );
-				pWnd->ShowWindow( SW_SHOWNORMAL );
-				pWnd->BringWindowToTop();
-				pWnd->SetForegroundWindow();
+				DWORD_PTR dwResult;
+				SendMessageTimeout( hWnd, WM_SYSCOMMAND, SC_RESTORE, 0,
+					SMTO_NORMAL, 250, &dwResult );
+				ShowWindow( hWnd, SW_SHOWNORMAL );
+				BringWindowToTop( hWnd );
+				SetForegroundWindow( hWnd );
 			}
 			else
 			{
@@ -746,28 +749,25 @@ BOOL CShareazaApp::OpenURL(LPCTSTR lpszFileName, BOOL bDoIt, BOOL bSilent)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// CShareazaApp version
+// CShareazaApp resources
 
-void CShareazaApp::GetVersionNumber()
+void CShareazaApp::InitResources()
 {
-	DWORD dwSize;
-
-	m_nVersion[0] = m_nVersion[1] = m_nVersion[2] = m_nVersion[3] = 0;
-
+	// Get .exe-file name
 	GetModuleFileName( NULL, m_strBinaryPath.GetBuffer( MAX_PATH ), MAX_PATH );
 	m_strBinaryPath.ReleaseBuffer( MAX_PATH );
-	dwSize = GetFileVersionInfoSize( m_strBinaryPath, &dwSize );
 
+	// Load version from .exe-file properties
+	m_nVersion[0] = m_nVersion[1] = m_nVersion[2] = m_nVersion[3] = 0;
+	DWORD dwSize;
+	dwSize = GetFileVersionInfoSize( m_strBinaryPath, &dwSize );
 	if ( dwSize )
 	{
-		BYTE* pBuffer = new BYTE[ dwSize ];
-
-		if ( pBuffer )
+		if ( BYTE* pBuffer = new BYTE[ dwSize ] )
 		{
 			if ( GetFileVersionInfo( m_strBinaryPath, NULL, dwSize, pBuffer ) )
 			{
 				VS_FIXEDFILEINFO* pTable;
-
 				if ( VerQueryValue( pBuffer, _T("\\"), (VOID**)&pTable, (UINT*)&dwSize ) )
 				{
 					m_nVersion[0] = (WORD)( pTable->dwFileVersionMS >> 16 );
@@ -776,7 +776,6 @@ void CShareazaApp::GetVersionNumber()
 					m_nVersion[3] = (WORD)( pTable->dwFileVersionLS & 0xFFFF );
 				}
 			}
-
 			delete [] pBuffer;
 		}
 	}
@@ -794,8 +793,8 @@ void CShareazaApp::GetVersionNumber()
 	m_pBTVersion[ 2 ] = (BYTE)m_nVersion[ 0 ];
 	m_pBTVersion[ 3 ] = (BYTE)m_nVersion[ 1 ];
 
-	//Determine the version of Windows
-	OSVERSIONINFOEX pVersion;
+	// Determine the version of Windows
+	OSVERSIONINFOEX pVersion = {};
 	pVersion.dwOSVersionInfoSize = sizeof(OSVERSIONINFOEX);
 	GetVersionEx( (OSVERSIONINFO*)&pVersion );
 
@@ -820,21 +819,16 @@ void CShareazaApp::GetVersionNumber()
 	// Set some variables for different Windows OSes
 	if ( m_nWindowsVersion == 5 )
 	{
-		// Windows 2000
-		if ( m_nWindowsVersionMinor == 0 )
+		if ( m_nWindowsVersionMinor == 0 )		// Windows 2000
 			m_bIsWin2000 = true;
-
-		// Windows XP
-		else if ( m_nWindowsVersionMinor == 1 )
+		else if ( m_nWindowsVersionMinor == 1 )	// Windows XP
 		{
 			// 10 Half-open concurrent TCP connections limit was introduced in SP2
 			// Windows Server will never compare this value though.
 			if ( !sp || sp[ 13 ] == '1' )
 				m_bLimitedConnections = false;
 		}
-
-		// Windows 2003 or Windows XP64
-		else if ( m_nWindowsVersionMinor == 2 )
+		else if ( m_nWindowsVersionMinor == 2 )	// Windows 2003 or Windows XP64
 		{
 			if ( !sp )
 				m_bLimitedConnections = false;
@@ -884,13 +878,7 @@ void CShareazaApp::GetVersionNumber()
 	if ( pVersion.wProductType == VER_NT_SERVER && 
 		( pVersion.wSuiteMask & VER_SUITE_SMALLBUSINESS ) == 0 )
 		m_bLimitedConnections = false;
-}
 
-/////////////////////////////////////////////////////////////////////////////
-// CShareazaApp resources
-
-void CShareazaApp::InitResources()
-{
 	// Get pointers to some functions that require Windows Vista or greater
 	if ( HMODULE hKernel32 = GetModuleHandle( _T("kernel32.dll") ) )
 	{
@@ -952,6 +940,17 @@ void CShareazaApp::InitResources()
 		RegCloseKey( hKey );
 	}
 
+	CryptAcquireContext( &m_hCryptProv, NULL, NULL, PROV_RSA_FULL, CRYPT_VERIFYCONTEXT );
+
+	srand( GetTickCount() );
+
+	m_hHookKbd   = SetWindowsHookEx( WH_KEYBOARD, (HOOKPROC)KbdHook, NULL, AfxGetThread()->m_nThreadID );
+	m_hHookMouse = SetWindowsHookEx( WH_MOUSE, (HOOKPROC)MouseHook, NULL, AfxGetThread()->m_nThreadID );
+	m_nLastInput = (DWORD)time( NULL );
+}
+
+void CShareazaApp::InitFonts()
+{
 	// Set up the default fonts
 	BOOL bFontSmoothing = FALSE;
 	UINT nSmoothingType = 0;
@@ -1003,14 +1002,6 @@ void CShareazaApp::InitResources()
 	m_gdiFontLine.CreateFont( -(int)Settings.Fonts.FontSize, 0, 0, 0, FW_NORMAL, FALSE, TRUE, FALSE,
 		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, m_nFontQuality,
 		DEFAULT_PITCH|FF_DONTCARE, Settings.Fonts.DefaultFont );
-
-	CryptAcquireContext( &m_hCryptProv, NULL, NULL, PROV_RSA_FULL, CRYPT_VERIFYCONTEXT );
-
-	srand( GetTickCount() );
-
-	m_hHookKbd   = SetWindowsHookEx( WH_KEYBOARD, (HOOKPROC)KbdHook, NULL, AfxGetThread()->m_nThreadID );
-	m_hHookMouse = SetWindowsHookEx( WH_MOUSE, (HOOKPROC)MouseHook, NULL, AfxGetThread()->m_nThreadID );
-	m_nLastInput = (DWORD)time( NULL );
 }
 
 /////////////////////////////////////////////////////////////////////////////

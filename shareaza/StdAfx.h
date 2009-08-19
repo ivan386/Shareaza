@@ -66,11 +66,6 @@
 #define _CRT_SECURE_NO_DEPRECATE
 #define _CRT_NON_CONFORMING_SWPRINTFS
 
-// For detecting Memory Leaks
-#ifdef _DEBUG
-#define _CRTDBG_MAP_ALLOC
-#endif
-
 #endif
 
 // Target features available from Windows Vista onwards.
@@ -215,9 +210,7 @@ using augment::IUnknownImplementation;
 #include "../HashLib/HashLib.h"
 
 // BugTrap http://www.intellesoft.net/
-#ifdef _DEBUG
-	#include "../BugTrap/BugTrap.h"
-#endif
+#include "../BugTrap/BugTrap.h"
 
 // GeoIP http://geolite.maxmind.com/
 #include "../GeoIP/GeoIP.h"

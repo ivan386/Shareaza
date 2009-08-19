@@ -192,8 +192,8 @@ protected:
 	virtual int			ExitInstance();
 	virtual void		WinHelp(DWORD dwData, UINT nCmd = HELP_CONTEXT);
 
-	void				GetVersionNumber();
-	void				InitResources();
+	void				InitResources();	// Initialize Shareaza version, system info, load DLLs, etc.
+	void				InitFonts();		// Create default fonts
 
 	DECLARE_MESSAGE_MAP()
 };
