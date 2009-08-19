@@ -44,7 +44,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="../shareaza/zlib"
+				AdditionalIncludeDirectories="../zlib"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;NOCRYPT;ZLIB_DLL;ZLIB_WINAPI;_CRT_SECURE_NO_DEPRECATE"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="1"
@@ -96,7 +96,7 @@
 			<Tool
 				Name="VCPostBuildEventTool"
 				Description="Performing registration"
-				CommandLine="copy &quot;..\shareaza\zlib\$(PlatformName)\$(ConfigurationName)\zlibwapi.dll&quot; &quot;$(TargetDir)&quot; /b /y&#x0D;&#x0A;&quot;$(TargetPath)&quot; /installsilent&#x0D;&#x0A;"
+				CommandLine="if exist &quot;..\zlib\$(PlatformName)\$(ConfigurationName)\zlibwapi.dll&quot; goto zlib1&#x0D;&#x0A;copy &quot;..\zlib\$(PlatformName)\Release\zlibwapi.dll&quot; &quot;$(TargetDir)&quot; /b /y&#x0D;&#x0A;goto zlib2&#x0D;&#x0A;:zlib1&#x0D;&#x0A;copy &quot;..\zlib\$(PlatformName)\Release\zlibwapi.dll&quot; &quot;$(TargetDir)&quot; /b /y&#x0D;&#x0A;:zlib2&#x0D;&#x0A;&quot;$(TargetPath)&quot; /installsilent"
 			/>
 		</Configuration>
 		<Configuration
@@ -126,7 +126,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="../shareaza/zlib"
+				AdditionalIncludeDirectories="../zlib"
 				PreprocessorDefinitions="WIN64;_DEBUG;_WINDOWS;NOCRYPT;ZLIB_DLL;ZLIB_WINAPI;_CRT_SECURE_NO_DEPRECATE"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="1"
@@ -176,7 +176,7 @@
 			<Tool
 				Name="VCPostBuildEventTool"
 				Description="Performing registration"
-				CommandLine="copy &quot;..\shareaza\zlib\$(PlatformName)\$(ConfigurationName)\zlibwapi.dll&quot; &quot;$(TargetDir)&quot; /b /y&#x0D;&#x0A;&quot;$(TargetPath)&quot; /installsilent&#x0D;&#x0A;"
+				CommandLine="if exist &quot;..\zlib\$(PlatformName)\$(ConfigurationName)\zlibwapi.dll&quot; goto zlib1&#x0D;&#x0A;copy &quot;..\zlib\$(PlatformName)\Release\zlibwapi.dll&quot; &quot;$(TargetDir)&quot; /b /y&#x0D;&#x0A;goto zlib2&#x0D;&#x0A;:zlib1&#x0D;&#x0A;copy &quot;..\zlib\$(PlatformName)\Release\zlibwapi.dll&quot; &quot;$(TargetDir)&quot; /b /y&#x0D;&#x0A;:zlib2&#x0D;&#x0A;&quot;$(TargetPath)&quot; /installsilent"
 			/>
 		</Configuration>
 		<Configuration
@@ -211,7 +211,7 @@
 				FavorSizeOrSpeed="1"
 				OmitFramePointers="true"
 				EnableFiberSafeOptimizations="true"
-				AdditionalIncludeDirectories="../shareaza/zlib"
+				AdditionalIncludeDirectories="../zlib"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;NOCRYPT;ZLIB_DLL;ZLIB_WINAPI;_CRT_SECURE_NO_DEPRECATE"
 				StringPooling="true"
 				RuntimeLibrary="0"
@@ -263,7 +263,7 @@
 			<Tool
 				Name="VCPostBuildEventTool"
 				Description="Performing registration"
-				CommandLine="copy &quot;..\shareaza\zlib\$(PlatformName)\$(ConfigurationName)\zlibwapi.dll&quot; &quot;$(TargetDir)&quot; /b /y&#x0D;&#x0A;&quot;$(TargetPath)&quot; /installsilent&#x0D;&#x0A;"
+				CommandLine="if exist &quot;..\zlib\$(PlatformName)\$(ConfigurationName)\zlibwapi.dll&quot; goto zlib1&#x0D;&#x0A;copy &quot;..\zlib\$(PlatformName)\Release\zlibwapi.dll&quot; &quot;$(TargetDir)&quot; /b /y&#x0D;&#x0A;goto zlib2&#x0D;&#x0A;:zlib1&#x0D;&#x0A;copy &quot;..\zlib\$(PlatformName)\Release\zlibwapi.dll&quot; &quot;$(TargetDir)&quot; /b /y&#x0D;&#x0A;:zlib2&#x0D;&#x0A;&quot;$(TargetPath)&quot; /installsilent"
 			/>
 		</Configuration>
 		<Configuration
@@ -299,7 +299,7 @@
 				FavorSizeOrSpeed="1"
 				OmitFramePointers="true"
 				EnableFiberSafeOptimizations="true"
-				AdditionalIncludeDirectories="../shareaza/zlib"
+				AdditionalIncludeDirectories="../zlib"
 				PreprocessorDefinitions="WIN64;NDEBUG;_WINDOWS;NOCRYPT;ZLIB_DLL;ZLIB_WINAPI;_CRT_SECURE_NO_DEPRECATE"
 				StringPooling="true"
 				RuntimeLibrary="0"
@@ -350,7 +350,7 @@
 			<Tool
 				Name="VCPostBuildEventTool"
 				Description="Performing registration"
-				CommandLine="copy &quot;..\shareaza\zlib\$(PlatformName)\$(ConfigurationName)\zlibwapi.dll&quot; &quot;$(TargetDir)&quot; /b /y&#x0D;&#x0A;&quot;$(TargetPath)&quot; /installsilent&#x0D;&#x0A;"
+				CommandLine="if exist &quot;..\zlib\$(PlatformName)\$(ConfigurationName)\zlibwapi.dll&quot; goto zlib1&#x0D;&#x0A;copy &quot;..\zlib\$(PlatformName)\Release\zlibwapi.dll&quot; &quot;$(TargetDir)&quot; /b /y&#x0D;&#x0A;goto zlib2&#x0D;&#x0A;:zlib1&#x0D;&#x0A;copy &quot;..\zlib\$(PlatformName)\Release\zlibwapi.dll&quot; &quot;$(TargetDir)&quot; /b /y&#x0D;&#x0A;:zlib2&#x0D;&#x0A;&quot;$(TargetPath)&quot; /installsilent"
 			/>
 		</Configuration>
 	</Configurations>

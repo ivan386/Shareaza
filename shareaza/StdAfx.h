@@ -189,7 +189,7 @@
 // Standard headers
 //
 
-#include "zlib/zlib.h"
+#include <zlib.h>
 
 #include "RegExp/regexpr2.h"
 

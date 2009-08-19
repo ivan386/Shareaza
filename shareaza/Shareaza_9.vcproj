@@ -30,8 +30,8 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
-				Description="Copy SQLite DLL, zlib DLL, HashLib DLL ..."
-				CommandLine="copy /b /y &quot;..\sqlite3\$(PlatformName)\$(ConfigurationName)\sqlite3.dll&quot; &quot;$(TargetDir)&quot;&#x0D;&#x0A;copy /b /y &quot;zlib\$(PlatformName)\$(ConfigurationName)\zlibwapi.dll&quot; &quot;$(TargetDir)&quot;&#x0D;&#x0A;copy /b /y &quot;..\HashLib\$(PlatformName)\$(ConfigurationName)\HashLib.dll&quot; &quot;$(TargetDir)&quot;&#x0D;&#x0A;copy /b /y &quot;..\GeoIP\$(PlatformName)\$(ConfigurationName)\GeoIP.dll&quot; &quot;$(TargetDir)&quot;&#x0D;&#x0A;copy /b /y &quot;..\GeoIP\GeoIP.dat&quot; &quot;$(TargetDir)&quot;&#x0D;&#x0A;copy /b /y &quot;..\BugTrap\BugTrapU.dll&quot; &quot;$(TargetDir)&quot;&#x0D;&#x0A;cscript.exe //nologo revision.js&#x0D;&#x0A;"
+				Description="Pre-Building..."
+				CommandLine="Pre-Build.cmd $(PlatformName) $(ConfigurationName)"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -52,8 +52,8 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/Wall"
 				Optimization="0"
-				AdditionalIncludeDirectories="zlib"
-				PreprocessorDefinitions="_DEBUG;WIN32;_WINDOWS;_SHAREAZA;SHAREAZA_USE_ASM;ZLIB_WINAPI;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS"
+				AdditionalIncludeDirectories="..\zlib"
+				PreprocessorDefinitions="_DEBUG;WIN32;_WINDOWS;_SHAREAZA;SHAREAZA_USE_ASM;ZLIB_WINAPI;ZLIB_DLL;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="1"
 				EnableFunctionLevelLinking="true"
@@ -80,12 +80,10 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="winmm.lib version.lib ws2_32.lib wininet.lib Iphlpapi.lib msi.lib powrprof.lib"
-				LinkIncremental="2"
 				GenerateManifest="false"
 				IgnoreDefaultLibraryNames=""
 				GenerateDebugInformation="true"
 				SubSystem="2"
-				DataExecutionPrevention="0"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -123,8 +121,8 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
-				Description="Copy SQLite DLL, zlib DLL, HashLib DLL ..."
-				CommandLine="copy /b /y &quot;..\sqlite3\$(PlatformName)\$(ConfigurationName)\sqlite3.dll&quot; &quot;$(TargetDir)&quot;&#x0D;&#x0A;copy /b /y &quot;zlib\$(PlatformName)\$(ConfigurationName)\zlibwapi.dll&quot; &quot;$(TargetDir)&quot;&#x0D;&#x0A;copy /b /y &quot;..\HashLib\$(PlatformName)\$(ConfigurationName)\HashLib.dll&quot; &quot;$(TargetDir)&quot;&#x0D;&#x0A;copy /b /y &quot;..\GeoIP\$(PlatformName)\$(ConfigurationName)\GeoIP.dll&quot; &quot;$(TargetDir)&quot;&#x0D;&#x0A;copy /b /y &quot;..\GeoIP\GeoIP.dat&quot; &quot;$(TargetDir)&quot;&#x0D;&#x0A;copy /b /y &quot;..\BugTrap\BugTrapU-x64.dll&quot; &quot;$(TargetDir)&quot;&#x0D;&#x0A;cscript.exe //nologo revision.js&#x0D;&#x0A;"
+				Description="Pre-Building..."
+				CommandLine="Pre-Build.cmd $(PlatformName) $(ConfigurationName)"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -146,8 +144,8 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/Wall"
 				Optimization="0"
-				AdditionalIncludeDirectories="zlib"
-				PreprocessorDefinitions="_DEBUG;WIN64;_WINDOWS;_SHAREAZA;ZLIB_WINAPI;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS"
+				AdditionalIncludeDirectories="..\zlib"
+				PreprocessorDefinitions="_DEBUG;WIN64;_WINDOWS;_SHAREAZA;ZLIB_WINAPI;ZLIB_DLL;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="1"
 				DefaultCharIsUnsigned="true"
@@ -173,12 +171,10 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="winmm.lib version.lib ws2_32.lib wininet.lib Iphlpapi.lib msi.lib powrprof.lib"
-				LinkIncremental="2"
 				GenerateManifest="false"
 				IgnoreDefaultLibraryNames=""
 				GenerateDebugInformation="true"
 				SubSystem="2"
-				DataExecutionPrevention="0"
 				TargetMachine="17"
 				KeyFile=""
 			/>
@@ -218,8 +214,8 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
-				Description="Copy SQLite DLL, zlib DLL, HashLib DLL ..."
-				CommandLine="copy /b /y &quot;..\sqlite3\$(PlatformName)\$(ConfigurationName)\sqlite3.dll&quot; &quot;$(TargetDir)&quot;&#x0D;&#x0A;copy /b /y &quot;zlib\$(PlatformName)\$(ConfigurationName)\zlibwapi.dll&quot; &quot;$(TargetDir)&quot;&#x0D;&#x0A;copy /b /y &quot;..\HashLib\$(PlatformName)\$(ConfigurationName)\HashLib.dll&quot; &quot;$(TargetDir)&quot;&#x0D;&#x0A;copy /b /y &quot;..\GeoIP\$(PlatformName)\$(ConfigurationName)\GeoIP.dll&quot; &quot;$(TargetDir)&quot;&#x0D;&#x0A;copy /b /y &quot;..\GeoIP\GeoIP.dat&quot; &quot;$(TargetDir)&quot;&#x0D;&#x0A;cscript.exe //nologo revision.js&#x0D;&#x0A;"
+				Description="Pre-Building..."
+				CommandLine="Pre-Build.cmd $(PlatformName) $(ConfigurationName)"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -244,9 +240,8 @@
 				EnableIntrinsicFunctions="true"
 				FavorSizeOrSpeed="1"
 				OmitFramePointers="true"
-				EnableFiberSafeOptimizations="true"
-				AdditionalIncludeDirectories="zlib"
-				PreprocessorDefinitions="NDEBUG;WIN32;_WINDOWS;_SHAREAZA;SHAREAZA_USE_ASM;ZLIB_WINAPI;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS"
+				AdditionalIncludeDirectories="..\zlib"
+				PreprocessorDefinitions="NDEBUG;WIN32;_WINDOWS;_SHAREAZA;SHAREAZA_USE_ASM;ZLIB_WINAPI;ZLIB_DLL;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS"
 				StringPooling="true"
 				RuntimeLibrary="0"
 				DefaultCharIsUnsigned="true"
@@ -255,6 +250,7 @@
 				PrecompiledHeaderThrough="StdAfx.h"
 				PrecompiledHeaderFile="$(IntDir)/$(ProjectName).pch"
 				WarningLevel="4"
+				DebugInformationFormat="3"
 				DisableSpecificWarnings="4710;4711;4738"
 			/>
 			<Tool
@@ -271,13 +267,14 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="winmm.lib version.lib ws2_32.lib wininet.lib Iphlpapi.lib msi.lib powrprof.lib"
+				LinkIncremental="1"
 				GenerateManifest="false"
 				IgnoreDefaultLibraryNames=""
+				GenerateDebugInformation="true"
 				SubSystem="2"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				SetChecksum="true"
-				DataExecutionPrevention="0"
 				TargetMachine="1"
 				KeyFile=""
 			/>
@@ -317,8 +314,8 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
-				Description="Copy SQLite DLL, zlib DLL, HashLib DLL ..."
-				CommandLine="copy /b /y &quot;..\sqlite3\$(PlatformName)\$(ConfigurationName)\sqlite3.dll&quot; &quot;$(TargetDir)&quot;&#x0D;&#x0A;copy /b /y &quot;zlib\$(PlatformName)\$(ConfigurationName)\zlibwapi.dll&quot; &quot;$(TargetDir)&quot;&#x0D;&#x0A;copy /b /y &quot;..\HashLib\$(PlatformName)\$(ConfigurationName)\HashLib.dll&quot; &quot;$(TargetDir)&quot;&#x0D;&#x0A;copy /b /y &quot;..\GeoIP\$(PlatformName)\$(ConfigurationName)\GeoIP.dll&quot; &quot;$(TargetDir)&quot;&#x0D;&#x0A;copy /b /y &quot;..\GeoIP\GeoIP.dat&quot; &quot;$(TargetDir)&quot;&#x0D;&#x0A;cscript.exe //nologo revision.js&#x0D;&#x0A;"
+				Description="Pre-Building..."
+				CommandLine="Pre-Build.cmd $(PlatformName) $(ConfigurationName)"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -344,9 +341,8 @@
 				EnableIntrinsicFunctions="true"
 				FavorSizeOrSpeed="1"
 				OmitFramePointers="true"
-				EnableFiberSafeOptimizations="true"
-				AdditionalIncludeDirectories="zlib"
-				PreprocessorDefinitions="NDEBUG;WIN64;_WINDOWS;_SHAREAZA;ZLIB_WINAPI;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS"
+				AdditionalIncludeDirectories="..\zlib"
+				PreprocessorDefinitions="NDEBUG;WIN64;_WINDOWS;_SHAREAZA;ZLIB_WINAPI;ZLIB_DLL;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS"
 				StringPooling="true"
 				RuntimeLibrary="0"
 				DefaultCharIsUnsigned="true"
@@ -355,6 +351,7 @@
 				PrecompiledHeaderThrough="StdAfx.h"
 				PrecompiledHeaderFile="$(IntDir)/$(ProjectName).pch"
 				WarningLevel="4"
+				DebugInformationFormat="3"
 				DisableSpecificWarnings="4710;4711;4738"
 			/>
 			<Tool
@@ -371,13 +368,14 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="winmm.lib version.lib ws2_32.lib wininet.lib Iphlpapi.lib msi.lib powrprof.lib"
+				LinkIncremental="1"
 				GenerateManifest="false"
 				IgnoreDefaultLibraryNames=""
+				GenerateDebugInformation="true"
 				SubSystem="2"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				SetChecksum="true"
-				DataExecutionPrevention="0"
 				TargetMachine="17"
 				KeyFile=""
 			/>
@@ -1185,626 +1183,6 @@
 				RelativePath="ZLib.cpp"
 				>
 			</File>
-			<Filter
-				Name="zlib"
-				>
-				<File
-					RelativePath="zlib\adler32.c"
-					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							DefaultCharIsUnsigned="false"
-							TreatWChar_tAsBuiltInType="false"
-							ForceConformanceInForLoopScope="false"
-							UsePrecompiledHeader="0"
-							WarningLevel="3"
-							DisableSpecificWarnings="4127;4131;4242;4244;4255;4668;4820"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Debug|x64"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							DefaultCharIsUnsigned="false"
-							TreatWChar_tAsBuiltInType="false"
-							ForceConformanceInForLoopScope="false"
-							UsePrecompiledHeader="0"
-							WarningLevel="3"
-							DisableSpecificWarnings="4127;4131;4242;4244;4255;4668;4820"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							DefaultCharIsUnsigned="false"
-							TreatWChar_tAsBuiltInType="false"
-							ForceConformanceInForLoopScope="false"
-							UsePrecompiledHeader="0"
-							WarningLevel="3"
-							DisableSpecificWarnings="4127;4131;4242;4244;4255;4668;4711;4820"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|x64"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							DefaultCharIsUnsigned="false"
-							TreatWChar_tAsBuiltInType="false"
-							ForceConformanceInForLoopScope="false"
-							UsePrecompiledHeader="0"
-							WarningLevel="3"
-							DisableSpecificWarnings="4127;4131;4242;4244;4255;4668;4711;4820"
-						/>
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath="zlib\compress.c"
-					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							DefaultCharIsUnsigned="false"
-							TreatWChar_tAsBuiltInType="false"
-							ForceConformanceInForLoopScope="false"
-							UsePrecompiledHeader="0"
-							WarningLevel="3"
-							DisableSpecificWarnings="4127;4131;4242;4244;4255;4668;4820"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Debug|x64"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							DefaultCharIsUnsigned="false"
-							TreatWChar_tAsBuiltInType="false"
-							ForceConformanceInForLoopScope="false"
-							UsePrecompiledHeader="0"
-							WarningLevel="3"
-							DisableSpecificWarnings="4127;4131;4242;4244;4255;4668;4820"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							DefaultCharIsUnsigned="false"
-							TreatWChar_tAsBuiltInType="false"
-							ForceConformanceInForLoopScope="false"
-							UsePrecompiledHeader="0"
-							WarningLevel="3"
-							DisableSpecificWarnings="4127;4131;4242;4244;4255;4668;4711;4820"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|x64"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							DefaultCharIsUnsigned="false"
-							TreatWChar_tAsBuiltInType="false"
-							ForceConformanceInForLoopScope="false"
-							UsePrecompiledHeader="0"
-							WarningLevel="3"
-							DisableSpecificWarnings="4127;4131;4242;4244;4255;4668;4711;4820"
-						/>
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath="zlib\crc32.c"
-					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							DefaultCharIsUnsigned="false"
-							TreatWChar_tAsBuiltInType="false"
-							ForceConformanceInForLoopScope="false"
-							UsePrecompiledHeader="0"
-							WarningLevel="3"
-							DisableSpecificWarnings="4127;4131;4242;4244;4255;4668;4820"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Debug|x64"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							DefaultCharIsUnsigned="false"
-							TreatWChar_tAsBuiltInType="false"
-							ForceConformanceInForLoopScope="false"
-							UsePrecompiledHeader="0"
-							WarningLevel="3"
-							DisableSpecificWarnings="4127;4131;4242;4244;4255;4668;4820"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							DefaultCharIsUnsigned="false"
-							TreatWChar_tAsBuiltInType="false"
-							ForceConformanceInForLoopScope="false"
-							UsePrecompiledHeader="0"
-							WarningLevel="3"
-							DisableSpecificWarnings="4127;4131;4242;4244;4255;4668;4711;4820"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|x64"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							DefaultCharIsUnsigned="false"
-							TreatWChar_tAsBuiltInType="false"
-							ForceConformanceInForLoopScope="false"
-							UsePrecompiledHeader="0"
-							WarningLevel="3"
-							DisableSpecificWarnings="4127;4131;4242;4244;4255;4668;4711;4820"
-						/>
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath="zlib\deflate.c"
-					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							DefaultCharIsUnsigned="false"
-							TreatWChar_tAsBuiltInType="false"
-							ForceConformanceInForLoopScope="false"
-							UsePrecompiledHeader="0"
-							WarningLevel="3"
-							DisableSpecificWarnings="4127;4131;4242;4244;4255;4668;4820"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Debug|x64"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							DefaultCharIsUnsigned="false"
-							TreatWChar_tAsBuiltInType="false"
-							ForceConformanceInForLoopScope="false"
-							UsePrecompiledHeader="0"
-							WarningLevel="3"
-							DisableSpecificWarnings="4127;4131;4242;4244;4255;4668;4820"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							DefaultCharIsUnsigned="false"
-							TreatWChar_tAsBuiltInType="false"
-							ForceConformanceInForLoopScope="false"
-							UsePrecompiledHeader="0"
-							WarningLevel="3"
-							DisableSpecificWarnings="4127;4131;4242;4244;4255;4668;4711;4820"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|x64"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							DefaultCharIsUnsigned="false"
-							TreatWChar_tAsBuiltInType="false"
-							ForceConformanceInForLoopScope="false"
-							UsePrecompiledHeader="0"
-							WarningLevel="3"
-							DisableSpecificWarnings="4127;4131;4242;4244;4255;4668;4711;4820"
-						/>
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath="zlib\infback.c"
-					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							DefaultCharIsUnsigned="false"
-							TreatWChar_tAsBuiltInType="false"
-							ForceConformanceInForLoopScope="false"
-							UsePrecompiledHeader="0"
-							WarningLevel="3"
-							DisableSpecificWarnings="4127;4131;4242;4244;4255;4668;4820"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Debug|x64"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							DefaultCharIsUnsigned="false"
-							TreatWChar_tAsBuiltInType="false"
-							ForceConformanceInForLoopScope="false"
-							UsePrecompiledHeader="0"
-							WarningLevel="3"
-							DisableSpecificWarnings="4127;4131;4242;4244;4255;4668;4820"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							DefaultCharIsUnsigned="false"
-							TreatWChar_tAsBuiltInType="false"
-							ForceConformanceInForLoopScope="false"
-							UsePrecompiledHeader="0"
-							WarningLevel="3"
-							DisableSpecificWarnings="4127;4131;4242;4244;4255;4668;4711;4820"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|x64"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							DefaultCharIsUnsigned="false"
-							TreatWChar_tAsBuiltInType="false"
-							ForceConformanceInForLoopScope="false"
-							UsePrecompiledHeader="0"
-							WarningLevel="3"
-							DisableSpecificWarnings="4127;4131;4242;4244;4255;4668;4711;4820"
-						/>
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath="zlib\inffast.c"
-					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							DefaultCharIsUnsigned="false"
-							TreatWChar_tAsBuiltInType="false"
-							ForceConformanceInForLoopScope="false"
-							UsePrecompiledHeader="0"
-							WarningLevel="3"
-							DisableSpecificWarnings="4127;4131;4242;4244;4255;4668;4820"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Debug|x64"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							DefaultCharIsUnsigned="false"
-							TreatWChar_tAsBuiltInType="false"
-							ForceConformanceInForLoopScope="false"
-							UsePrecompiledHeader="0"
-							WarningLevel="3"
-							DisableSpecificWarnings="4127;4131;4242;4244;4255;4668;4820"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							DefaultCharIsUnsigned="false"
-							TreatWChar_tAsBuiltInType="false"
-							ForceConformanceInForLoopScope="false"
-							UsePrecompiledHeader="0"
-							WarningLevel="3"
-							DisableSpecificWarnings="4127;4131;4242;4244;4255;4668;4711;4820"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|x64"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							DefaultCharIsUnsigned="false"
-							TreatWChar_tAsBuiltInType="false"
-							ForceConformanceInForLoopScope="false"
-							UsePrecompiledHeader="0"
-							WarningLevel="3"
-							DisableSpecificWarnings="4127;4131;4242;4244;4255;4668;4711;4820"
-						/>
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath="zlib\inflate.c"
-					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							DefaultCharIsUnsigned="false"
-							TreatWChar_tAsBuiltInType="false"
-							ForceConformanceInForLoopScope="false"
-							UsePrecompiledHeader="0"
-							WarningLevel="3"
-							DisableSpecificWarnings="4127;4131;4242;4244;4255;4668;4820"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Debug|x64"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							DefaultCharIsUnsigned="false"
-							TreatWChar_tAsBuiltInType="false"
-							ForceConformanceInForLoopScope="false"
-							UsePrecompiledHeader="0"
-							WarningLevel="3"
-							DisableSpecificWarnings="4127;4131;4242;4244;4255;4668;4820"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							DefaultCharIsUnsigned="false"
-							TreatWChar_tAsBuiltInType="false"
-							ForceConformanceInForLoopScope="false"
-							UsePrecompiledHeader="0"
-							WarningLevel="3"
-							DisableSpecificWarnings="4127;4131;4242;4244;4255;4668;4711;4820"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|x64"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							DefaultCharIsUnsigned="false"
-							TreatWChar_tAsBuiltInType="false"
-							ForceConformanceInForLoopScope="false"
-							UsePrecompiledHeader="0"
-							WarningLevel="3"
-							DisableSpecificWarnings="4127;4131;4242;4244;4255;4668;4711;4820"
-						/>
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath="zlib\inftrees.c"
-					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							DefaultCharIsUnsigned="false"
-							TreatWChar_tAsBuiltInType="false"
-							ForceConformanceInForLoopScope="false"
-							UsePrecompiledHeader="0"
-							WarningLevel="3"
-							DisableSpecificWarnings="4127;4131;4242;4244;4255;4668;4820"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Debug|x64"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							DefaultCharIsUnsigned="false"
-							TreatWChar_tAsBuiltInType="false"
-							ForceConformanceInForLoopScope="false"
-							UsePrecompiledHeader="0"
-							WarningLevel="3"
-							DisableSpecificWarnings="4127;4131;4242;4244;4255;4668;4820"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							DefaultCharIsUnsigned="false"
-							TreatWChar_tAsBuiltInType="false"
-							ForceConformanceInForLoopScope="false"
-							UsePrecompiledHeader="0"
-							WarningLevel="3"
-							DisableSpecificWarnings="4127;4131;4242;4244;4255;4668;4711;4820"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|x64"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							DefaultCharIsUnsigned="false"
-							TreatWChar_tAsBuiltInType="false"
-							ForceConformanceInForLoopScope="false"
-							UsePrecompiledHeader="0"
-							WarningLevel="3"
-							DisableSpecificWarnings="4127;4131;4242;4244;4255;4668;4711;4820"
-						/>
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath="zlib\trees.c"
-					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							DefaultCharIsUnsigned="false"
-							TreatWChar_tAsBuiltInType="false"
-							ForceConformanceInForLoopScope="false"
-							UsePrecompiledHeader="0"
-							WarningLevel="3"
-							DisableSpecificWarnings="4127;4131;4242;4244;4255;4668;4820"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Debug|x64"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							DefaultCharIsUnsigned="false"
-							TreatWChar_tAsBuiltInType="false"
-							ForceConformanceInForLoopScope="false"
-							UsePrecompiledHeader="0"
-							WarningLevel="3"
-							DisableSpecificWarnings="4127;4131;4242;4244;4255;4668;4820"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							DefaultCharIsUnsigned="false"
-							TreatWChar_tAsBuiltInType="false"
-							ForceConformanceInForLoopScope="false"
-							UsePrecompiledHeader="0"
-							WarningLevel="3"
-							DisableSpecificWarnings="4127;4131;4242;4244;4255;4668;4711;4820"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|x64"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							DefaultCharIsUnsigned="false"
-							TreatWChar_tAsBuiltInType="false"
-							ForceConformanceInForLoopScope="false"
-							UsePrecompiledHeader="0"
-							WarningLevel="3"
-							DisableSpecificWarnings="4127;4131;4242;4244;4255;4668;4711;4820"
-						/>
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath="zlib\uncompr.c"
-					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							DefaultCharIsUnsigned="false"
-							TreatWChar_tAsBuiltInType="false"
-							ForceConformanceInForLoopScope="false"
-							UsePrecompiledHeader="0"
-							WarningLevel="3"
-							DisableSpecificWarnings="4127;4131;4242;4244;4255;4668;4820"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Debug|x64"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							DefaultCharIsUnsigned="false"
-							TreatWChar_tAsBuiltInType="false"
-							ForceConformanceInForLoopScope="false"
-							UsePrecompiledHeader="0"
-							WarningLevel="3"
-							DisableSpecificWarnings="4127;4131;4242;4244;4255;4668;4820"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							DefaultCharIsUnsigned="false"
-							TreatWChar_tAsBuiltInType="false"
-							ForceConformanceInForLoopScope="false"
-							UsePrecompiledHeader="0"
-							WarningLevel="3"
-							DisableSpecificWarnings="4127;4131;4242;4244;4255;4668;4711;4820"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|x64"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							DefaultCharIsUnsigned="false"
-							TreatWChar_tAsBuiltInType="false"
-							ForceConformanceInForLoopScope="false"
-							UsePrecompiledHeader="0"
-							WarningLevel="3"
-							DisableSpecificWarnings="4127;4131;4242;4244;4255;4668;4711;4820"
-						/>
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath="zlib\zutil.c"
-					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							DefaultCharIsUnsigned="false"
-							TreatWChar_tAsBuiltInType="false"
-							ForceConformanceInForLoopScope="false"
-							UsePrecompiledHeader="0"
-							WarningLevel="3"
-							DisableSpecificWarnings="4127;4131;4242;4244;4255;4668;4820"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Debug|x64"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							DefaultCharIsUnsigned="false"
-							TreatWChar_tAsBuiltInType="false"
-							ForceConformanceInForLoopScope="false"
-							UsePrecompiledHeader="0"
-							WarningLevel="3"
-							DisableSpecificWarnings="4127;4131;4242;4244;4255;4668;4820"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							DefaultCharIsUnsigned="false"
-							TreatWChar_tAsBuiltInType="false"
-							ForceConformanceInForLoopScope="false"
-							UsePrecompiledHeader="0"
-							WarningLevel="3"
-							DisableSpecificWarnings="4127;4131;4242;4244;4255;4668;4711;4820"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|x64"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							DefaultCharIsUnsigned="false"
-							TreatWChar_tAsBuiltInType="false"
-							ForceConformanceInForLoopScope="false"
-							UsePrecompiledHeader="0"
-							WarningLevel="3"
-							DisableSpecificWarnings="4127;4131;4242;4244;4255;4668;4711;4820"
-						/>
-					</FileConfiguration>
-				</File>
-			</Filter>
 			<Filter
 				Name="Controls"
 				>
@@ -3383,50 +2761,6 @@
 				>
 			</File>
 			<Filter
-				Name="zlib"
-				>
-				<File
-					RelativePath="zlib\crc32.h"
-					>
-				</File>
-				<File
-					RelativePath="zlib\deflate.h"
-					>
-				</File>
-				<File
-					RelativePath="zlib\inffast.h"
-					>
-				</File>
-				<File
-					RelativePath="zlib\inffixed.h"
-					>
-				</File>
-				<File
-					RelativePath="zlib\inflate.h"
-					>
-				</File>
-				<File
-					RelativePath="zlib\inftrees.h"
-					>
-				</File>
-				<File
-					RelativePath="zlib\trees.h"
-					>
-				</File>
-				<File
-					RelativePath="zlib\zconf.h"
-					>
-				</File>
-				<File
-					RelativePath="zlib\zlib.h"
-					>
-				</File>
-				<File
-					RelativePath="zlib\zutil.h"
-					>
-				</File>
-			</Filter>
-			<Filter
 				Name="Controls"
 				>
 				<File
@@ -4984,66 +4318,10 @@
 				>
 			</File>
 		</Filter>
-		<Filter
-			Name="Library Files"
+		<File
+			RelativePath=".\Pre-Build.cmd"
 			>
-			<File
-				RelativePath="..\BugTrap\BugTrapU-x64.lib"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|x64"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\BugTrap\BugTrapU.lib"
-				>
-				<FileConfiguration
-					Name="Debug|x64"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|x64"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-					/>
-				</FileConfiguration>
-			</File>
-		</Filter>
+		</File>
 		<File
 			RelativePath="revision.js"
 			>

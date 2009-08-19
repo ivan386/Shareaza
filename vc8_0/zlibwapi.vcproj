@@ -71,7 +71,7 @@
 				Name="VCLinkerTool"
 				OutputFile="$(OutDir)$(ProjectName).dll"
 				GenerateManifest="false"
-				ModuleDefinitionFile="&quot;$(SolutionDir)..\shareaza\zlib\zlib.def&quot;"
+				ModuleDefinitionFile="&quot;$(SolutionDir)..\zlib\zlib.def&quot;"
 				GenerateDebugInformation="true"
 			/>
 			<Tool
@@ -150,7 +150,7 @@
 				Name="VCLinkerTool"
 				OutputFile="$(OutDir)$(ProjectName).dll"
 				GenerateManifest="false"
-				ModuleDefinitionFile="&quot;$(SolutionDir)..\shareaza\zlib\zlib.def&quot;"
+				ModuleDefinitionFile="&quot;$(SolutionDir)..\zlib\zlib.def&quot;"
 				GenerateDebugInformation="true"
 				TargetMachine="17"
 			/>
@@ -228,7 +228,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				OutputFile="$(OutDir)$(ProjectName).dll"
-				ModuleDefinitionFile="&quot;$(SolutionDir)..\shareaza\zlib\zlib.def&quot;"
+				ModuleDefinitionFile="&quot;$(SolutionDir)..\zlib\zlib.def&quot;"
 				GenerateDebugInformation="true"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
@@ -308,7 +308,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				OutputFile="$(OutDir)$(ProjectName).dll"
-				ModuleDefinitionFile="&quot;$(SolutionDir)..\shareaza\zlib\zlib.def&quot;"
+				ModuleDefinitionFile="&quot;$(SolutionDir)..\zlib\zlib.def&quot;"
 				GenerateDebugInformation="true"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
@@ -350,23 +350,23 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath="..\shareaza\zlib\adler32.c"
+				RelativePath="..\zlib\adler32.c"
 				>
 			</File>
 			<File
-				RelativePath="..\shareaza\zlib\compress.c"
+				RelativePath="..\zlib\compress.c"
 				>
 			</File>
 			<File
-				RelativePath="..\shareaza\zlib\crc32.c"
+				RelativePath="..\zlib\crc32.c"
 				>
 			</File>
 			<File
-				RelativePath="..\shareaza\zlib\deflate.c"
+				RelativePath="..\zlib\deflate.c"
 				>
 			</File>
 			<File
-				RelativePath="..\shareaza\zlib\gvmat32.asm"
+				RelativePath="..\zlib\gvmat32.asm"
 				>
 				<FileConfiguration
 					Name="Debug|x64"
@@ -386,7 +386,7 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\shareaza\zlib\gvmat32c.c"
+				RelativePath="..\zlib\gvmat32c.c"
 				>
 				<FileConfiguration
 					Name="Debug|x64"
@@ -406,7 +406,7 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\shareaza\zlib\gvmat64.asm"
+				RelativePath="..\zlib\gvmat64.asm"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
@@ -446,15 +446,15 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\shareaza\zlib\gzio.c"
+				RelativePath="..\zlib\gzio.c"
 				>
 			</File>
 			<File
-				RelativePath="..\shareaza\zlib\infback.c"
+				RelativePath="..\zlib\infback.c"
 				>
 			</File>
 			<File
-				RelativePath="..\shareaza\zlib\inffas32.asm"
+				RelativePath="..\zlib\inffas32.asm"
 				>
 				<FileConfiguration
 					Name="Debug|x64"
@@ -474,7 +474,7 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\shareaza\zlib\inffas8664.c"
+				RelativePath="..\zlib\inffas8664.c"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
@@ -494,7 +494,7 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\shareaza\zlib\inffast.c"
+				RelativePath="..\zlib\inffast.c"
 				>
 				<FileConfiguration
 					Name="Debug|x64"
@@ -514,7 +514,7 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\shareaza\zlib\inffasx64.asm"
+				RelativePath="..\zlib\inffasx64.asm"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
@@ -554,43 +554,43 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\shareaza\zlib\inflate.c"
+				RelativePath="..\zlib\inflate.c"
 				>
 			</File>
 			<File
-				RelativePath="..\shareaza\zlib\inftrees.c"
+				RelativePath="..\zlib\inftrees.c"
 				>
 			</File>
 			<File
-				RelativePath="..\shareaza\zlib\ioapi.c"
+				RelativePath="..\zlib\ioapi.c"
 				>
 			</File>
 			<File
-				RelativePath="..\shareaza\zlib\iowin32.c"
+				RelativePath="..\zlib\iowin32.c"
 				>
 			</File>
 			<File
-				RelativePath="..\shareaza\zlib\trees.c"
+				RelativePath="..\zlib\trees.c"
 				>
 			</File>
 			<File
-				RelativePath="..\shareaza\zlib\uncompr.c"
+				RelativePath="..\zlib\uncompr.c"
 				>
 			</File>
 			<File
-				RelativePath="..\shareaza\zlib\unzip.c"
+				RelativePath="..\zlib\unzip.c"
 				>
 			</File>
 			<File
-				RelativePath="..\shareaza\zlib\zip.c"
+				RelativePath="..\zlib\zip.c"
 				>
 			</File>
 			<File
-				RelativePath="..\shareaza\zlib\zlib.def"
+				RelativePath="..\zlib\zlib.def"
 				>
 			</File>
 			<File
-				RelativePath="..\shareaza\zlib\zutil.c"
+				RelativePath="..\zlib\zutil.c"
 				>
 			</File>
 		</Filter>
@@ -600,59 +600,59 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath="..\shareaza\zlib\crc32.h"
+				RelativePath="..\zlib\crc32.h"
 				>
 			</File>
 			<File
-				RelativePath="..\shareaza\zlib\crypt.h"
+				RelativePath="..\zlib\crypt.h"
 				>
 			</File>
 			<File
-				RelativePath="..\shareaza\zlib\deflate.h"
+				RelativePath="..\zlib\deflate.h"
 				>
 			</File>
 			<File
-				RelativePath="..\shareaza\zlib\inffast.h"
+				RelativePath="..\zlib\inffast.h"
 				>
 			</File>
 			<File
-				RelativePath="..\shareaza\zlib\inflate.h"
+				RelativePath="..\zlib\inflate.h"
 				>
 			</File>
 			<File
-				RelativePath="..\shareaza\zlib\inftrees.h"
+				RelativePath="..\zlib\inftrees.h"
 				>
 			</File>
 			<File
-				RelativePath="..\shareaza\zlib\ioapi.h"
+				RelativePath="..\zlib\ioapi.h"
 				>
 			</File>
 			<File
-				RelativePath="..\shareaza\zlib\iowin32.h"
+				RelativePath="..\zlib\iowin32.h"
 				>
 			</File>
 			<File
-				RelativePath="..\shareaza\zlib\trees.h"
+				RelativePath="..\zlib\trees.h"
 				>
 			</File>
 			<File
-				RelativePath="..\shareaza\zlib\unzip.h"
+				RelativePath="..\zlib\unzip.h"
 				>
 			</File>
 			<File
-				RelativePath="..\shareaza\zlib\zconf.h"
+				RelativePath="..\zlib\zconf.h"
 				>
 			</File>
 			<File
-				RelativePath="..\shareaza\zlib\zip.h"
+				RelativePath="..\zlib\zip.h"
 				>
 			</File>
 			<File
-				RelativePath="..\shareaza\zlib\zlib.h"
+				RelativePath="..\zlib\zlib.h"
 				>
 			</File>
 			<File
-				RelativePath="..\shareaza\zlib\zutil.h"
+				RelativePath="..\zlib\zutil.h"
 				>
 			</File>
 		</Filter>
@@ -662,7 +662,7 @@
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
 			>
 			<File
-				RelativePath="..\shareaza\zlib\zlib.rc"
+				RelativePath="..\zlib\zlib.rc"
 				>
 			</File>
 		</Filter>
