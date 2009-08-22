@@ -2028,12 +2028,12 @@ int CIRCFrame::ParseMessageID()
 		}
 		else if ( strMessage1 == "PRIVMSG" )
 		{
-			char pszFirst = (char)m_pWords.GetAt( 8 ).GetAt( 0 );
+			TCHAR pszFirst = m_pWords.GetAt( 8 ).GetAt( 0 );
 			CString str = m_pWords.GetAt( 8 ).Right( 1 );
-			char pszEnd = (char)str.GetAt( 0 );
+			TCHAR pszEnd = str.GetAt( 0 );
 			str = m_pWords.GetAt( 8 );
 			str = str.Mid( 1, str.GetLength() - 2 ).MakeLower();
-			if ( pszFirst == char( 0x1 ) )
+			if ( pszFirst == TCHAR( 0x1 ) )
 			{
 				if ( m_pWords.GetAt( 6 ) == m_sNickname )
 				{
@@ -2054,11 +2054,11 @@ int CIRCFrame::ParseMessageID()
 				{
 				if ( m_pWords.GetAt( 6 ) == m_sNickname )
 				{
-					if ( pszFirst != char( 0x1 ) ) nMessageType = ID_MESSAGE_USER_MESSAGE;
+					if ( pszFirst != TCHAR( 0x1 ) ) nMessageType = ID_MESSAGE_USER_MESSAGE;
 		}
 		else
 				{
-					if ( pszFirst != char( 0x1 ) ) nMessageType = ID_MESSAGE_CHANNEL_MESSAGE;
+					if ( pszFirst != TCHAR( 0x1 ) ) nMessageType = ID_MESSAGE_CHANNEL_MESSAGE;
 				}
 			}
 		}
