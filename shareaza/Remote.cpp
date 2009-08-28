@@ -1069,9 +1069,10 @@ void CRemote::PageDownloads()
 		
 		if ( pDownload->m_bExpanded && CDownloadsCtrl::IsExpandable( pDownload ) )
 		{
-			for ( CDownloadSource* pSource = pDownload->GetFirstSource(), *pNext = NULL ; pSource != NULL ; pSource = pNext )
+			for ( POSITION posSource = pDownload->GetIterator(); posSource ; )
 			{
-				pNext = pSource->m_pNext;
+				CDownloadSource* pSource = pDownload->GetNext( posSource );
+
 				str.Format( _T("%i"), pSource );
 				
 				if ( GetKey( _T("modify_id") ) == str )

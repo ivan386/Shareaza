@@ -36,9 +36,9 @@ public:
 		, m_nNegativeVotes( 0 )
 		, m_sURL( pszURL )
 		, m_bLocal( bLocal )
-		, m_bOffline( bOffline ) { }
-
-	virtual ~CFailedSource() { };
+		, m_bOffline( bOffline )
+	{
+	}
 
 	DWORD	m_nTimeAdded;
 	int		m_nPositiveVotes;
@@ -57,16 +57,14 @@ protected:
 	
 // Attributes
 private:
-	CDownloadSource*	m_pSourceFirst;
-	CList< CFailedSource* >	m_pFailedSources; // Failed source with a timestamp when added
-	CDownloadSource*	m_pSourceLast;
+	CList< CDownloadSource* >	m_pSources;			// Download sources
+	CList< CFailedSource* >		m_pFailedSources;	// Failed source with a timestamp when added
 	int					m_nG1SourceCount;
 	int					m_nG2SourceCount;
 	int					m_nEdSourceCount;
 	int					m_nHTTPSourceCount;
 	int					m_nBTSourceCount;
 	int					m_nFTPSourceCount;
-	int					m_nSourceCount;
 	CXMLElement*		m_pXML;
 
 // Operations
@@ -90,7 +88,10 @@ public:
     BOOL				AddSourceBT(const Hashes::BtGuid& oGUID, IN_ADDR* pAddress, WORD nPort);
 	BOOL				AddSourceURL(LPCTSTR pszURL, BOOL bURN = FALSE, FILETIME* pLastSeen = NULL, int nRedirectionCount = 0, BOOL bFailed = FALSE);
 	int					AddSourceURLs(LPCTSTR pszURLs, BOOL bURN = FALSE, BOOL bFailed = FALSE);
+
+	// Remove source from list, add it to failed sources if bBan == TRUE, and destroy source itself
 	void				RemoveSource(CDownloadSource* pSource, BOOL bBan);
+
 	virtual BOOL		OnQueryHits(const CQueryHit* pHits);
 	virtual void		Serialize(CArchive& ar, int nVersion);
 	int					GetSourceColour();
@@ -102,22 +103,23 @@ protected:
 	void				SortSource(CDownloadSource* pSource, BOOL bTop);
 	void				SortSource(CDownloadSource* pSource);
 
+	// Add new source to list, updating counters
+	void				InternalAdd(CDownloadSource* pSource);
+	// Remove existing source from list, updating counters
+	void				InternalRemove(CDownloadSource* pSource);
+
 private:
 	void				VoteSource(LPCTSTR pszUrl, bool bPositively);
 
 public:
-	inline CDownloadSource* GetFirstSource() const
-	{
-		return m_pSourceFirst;
-	}
+	// Get source iterator (first source position)
+	POSITION GetIterator() const;
 
-	inline int GetCount() const
-	{
-		return m_nSourceCount;
-	}
+	// Get next source
+	CDownloadSource* GetNext(POSITION& rPosition) const;
 
-	inline CXMLElement* GetMetadata() const
-	{
-		return m_pXML;
-	}
+	// Get source count
+	INT_PTR GetCount() const;
+
+	CXMLElement* GetMetadata() const;
 };

@@ -1,7 +1,7 @@
 //
 // DownloadSource.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -18,9 +18,6 @@
 // along with Shareaza; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
-
-#if !defined(AFX_DOWNLOADSOURCE_H__F0391D3E_0376_4F0F_934A_2E80260C4ECA__INCLUDED_)
-#define AFX_DOWNLOADSOURCE_H__F0391D3E_0376_4F0F_934A_2E80260C4ECA__INCLUDED_
 
 #pragma once
 
@@ -47,8 +44,6 @@ private:
 // Attributes
 public:
 	CDownload*			m_pDownload;
-	CDownloadSource*	m_pPrev;
-	CDownloadSource*	m_pNext;
 	CDownloadTransfer*	m_pTransfer;
 	BOOL				m_bSelected;
 public:
@@ -136,7 +131,7 @@ public:
 
 // Inlines
 public:
-	inline bool CDownloadSource::Equals(CDownloadSource* pSource) const
+	inline bool Equals(const CDownloadSource* pSource) const
 	{
 		if ( m_oGUID.isValid() && pSource->m_oGUID.isValid() )
 			return m_oGUID == pSource->m_oGUID;
@@ -147,11 +142,13 @@ public:
 		}
 		else if ( m_nServerPort > 0 )
 		{
+			// Push
 			if ( m_pServerAddress.S_un.S_addr != pSource->m_pServerAddress.S_un.S_addr ) return FALSE;
 			if ( m_pAddress.S_un.S_addr != pSource->m_pAddress.S_un.S_addr ) return FALSE;
 		}
 		else
 		{
+			// Direct
 			if ( m_pAddress.S_un.S_addr != pSource->m_pAddress.S_un.S_addr ) return FALSE;
 			if ( m_nPort != pSource->m_nPort ) return FALSE;
 		}
@@ -159,10 +156,13 @@ public:
 		return TRUE;
 	}
 
-	inline bool CDownloadSource::IsOnline() const
+	inline bool IsOnline() const
 	{
 		return m_nBusyCount || ( m_pTransfer && m_pTransfer->m_nState > dtsConnecting );
 	}
-};
 
-#endif // !defined(AFX_DOWNLOADSOURCE_H__F0391D3E_0376_4F0F_934A_2E80260C4ECA__INCLUDED_)
+	inline bool IsHTTPSource() const
+	{
+		return ( m_nProtocol == PROTOCOL_HTTP || m_nProtocol == PROTOCOL_G2 );
+	}
+};

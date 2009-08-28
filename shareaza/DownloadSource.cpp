@@ -65,8 +65,6 @@ void CDownloadSource::Construct(const CDownload* pDownload)
 	GetSystemTime( &pTime );
 
 	m_pDownload		= const_cast< CDownload* >( pDownload );
-	m_pPrev			= NULL;
-	m_pNext			= NULL;
 	m_pTransfer		= NULL;
 	m_bSelected		= FALSE;
 
@@ -107,6 +105,7 @@ void CDownloadSource::Construct(const CDownload* pDownload)
 
 CDownloadSource::~CDownloadSource()
 {
+	ASSUME_LOCK( Transfers.m_pSection );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -434,6 +433,7 @@ void CDownloadSource::Serialize(CArchive& ar, int nVersion /* DOWNLOAD_SER_VERSI
 
 CDownloadTransfer* CDownloadSource::CreateTransfer()
 {
+	ASSUME_LOCK( Transfers.m_pSection );
 	ASSERT( m_pTransfer == NULL );
 	
 	switch ( m_nProtocol )
@@ -446,8 +446,8 @@ CDownloadTransfer* CDownloadSource::CreateTransfer()
 	case PROTOCOL_BT:	return ( m_pTransfer = new CDownloadTransferBT( this, NULL ) );
 	case PROTOCOL_NULL:
 	case PROTOCOL_ANY:
-	default:			theApp.Message( MSG_ERROR, _T("Invalid protocol in CDownloadSource::CreateTransfer()") );
-						return ( NULL );
+	default:
+		return ( NULL );
 	}
 }
 

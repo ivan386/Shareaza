@@ -72,6 +72,7 @@ CDownloadTransfer::CDownloadTransfer(CDownloadSource* pSource, PROTOCOLID nProto
 
 CDownloadTransfer::~CDownloadTransfer()
 {
+	ASSUME_LOCK( Transfers.m_pSection );
 	ASSERT( m_pSource == NULL );
 }
 
@@ -244,14 +245,21 @@ void CDownloadTransfer::SetState(int nState)
 				m_pSource->m_nSortOrder = ~0u;
 			}
 			else
-			{	//All other sources should be properly sorted
-
-				if ( ( nState == dtsTorrent ) && ( m_pSource->m_pTransfer ) )    //Torrent states
-				{       //Choked torrents after queued, requesting = requesting, uninterested near end
-					CDownloadTransferBT* pBT = (CDownloadTransferBT*)m_pSource->m_pTransfer;
-					if ( ! pBT->m_bInterested ) m_pSource->m_nSortOrder = 11;
-					else if ( pBT->m_bChoked ) m_pSource->m_nSortOrder = 7;
-					else m_pSource->m_nSortOrder = 10;
+			{
+				// All other sources should be properly sorted
+				if ( ( nState == dtsTorrent ) &&
+					 ( m_pSource->m_pTransfer ) &&
+					 ( m_pSource->m_pTransfer->m_nProtocol == PROTOCOL_BT ) )    // Torrent states
+				{
+					// Choked torrents after queued, requesting = requesting, uninterested near end
+					CDownloadTransferBT* pBT =
+						static_cast< CDownloadTransferBT* >( m_pSource->m_pTransfer );
+					if ( ! pBT->m_bInterested )
+						m_pSource->m_nSortOrder = 11;
+					else if ( pBT->m_bChoked )
+						m_pSource->m_nSortOrder = 7;
+					else
+						m_pSource->m_nSortOrder = 10;
 				}
 				m_pSource->m_nSortOrder <<=  8;									//Sort by state
 

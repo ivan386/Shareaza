@@ -267,9 +267,9 @@ BOOL CDownloadWithTransfers::StartNewTransfer(DWORD tNow)
 	if ( static_cast< CDownloadWithTorrent* >( this )->IsTorrent() &&
 		( Settings.BitTorrent.PreferenceBTSources ) )
 	{
-		for ( CDownloadSource* pSource = GetFirstSource() ; pSource ; )
+		for ( POSITION posSource = GetIterator(); posSource ; )
 		{
-			CDownloadSource* pNext = pSource->m_pNext;
+			CDownloadSource* pSource = GetNext( posSource );
 
 			if ( ( pSource->m_pTransfer == NULL ) &&		// does not have a transfer
 				 ( pSource->m_bPushOnly == FALSE ) &&		// Not push
@@ -282,13 +282,12 @@ BOOL CDownloadWithTransfers::StartNewTransfer(DWORD tNow)
 					return pTransfer != NULL && pTransfer->Initiate();
 				}
 			}
-			pSource = pNext;
 		}
 	}
 
-	for ( CDownloadSource* pSource = GetFirstSource() ; pSource ; )
+	for ( POSITION posSource = GetIterator(); posSource ; )
 	{
-		CDownloadSource* pNext = pSource->m_pNext;
+		CDownloadSource* pSource = GetNext( posSource );
 
 		if ( pSource->m_pTransfer != NULL )
 		{
@@ -328,7 +327,6 @@ BOOL CDownloadWithTransfers::StartNewTransfer(DWORD tNow)
 				pSource->Remove( TRUE, FALSE );
 			}
 		}
-		pSource = pNext;
 	}
 
 	if ( pConnectHead != NULL )
@@ -424,9 +422,14 @@ BOOL CDownloadWithTransfers::OnAcceptPush(const Hashes::Guid& oClientID, CConnec
 
 	CDownloadSource* pSource = NULL;
 
-	for ( pSource = GetFirstSource() ; pSource ; pSource = pSource->m_pNext )
+	for ( POSITION posSource = GetIterator(); posSource ; )
 	{
-		if ( pSource->m_nProtocol == PROTOCOL_HTTP && pSource->CheckPush( oClientID ) ) break;
+		pSource = GetNext( posSource );
+
+		if ( pSource->m_nProtocol == PROTOCOL_HTTP && pSource->CheckPush( oClientID ) )
+			break;
+
+		pSource = NULL;
 	}
 
 	if ( pSource == NULL ) return FALSE;
@@ -453,11 +456,15 @@ BOOL CDownloadWithTransfers::OnDonkeyCallback(CEDClient* pClient, CDownloadSourc
 	if ( pDownload->IsMoving() || pDownload->IsPaused() ) return FALSE;
 
 	CDownloadSource* pSource = NULL;
-//	DWORD tNow = GetTickCount();
 
-	for ( pSource = GetFirstSource() ; pSource ; pSource = pSource->m_pNext )
+	for ( POSITION posSource = GetIterator(); posSource ; )
 	{
-		if ( pExcept != pSource && pSource->CheckDonkey( pClient ) ) break;
+		pSource = GetNext( posSource );
+
+		if ( pExcept != pSource && pSource->CheckDonkey( pClient ) )
+			break;
+
+		pSource = NULL;
 	}
 
 	if ( pSource == NULL ) return FALSE;

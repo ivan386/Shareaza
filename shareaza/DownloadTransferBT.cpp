@@ -46,6 +46,7 @@ static char THIS_FILE[]=__FILE__;
 
 CDownloadTransferBT::CDownloadTransferBT(CDownloadSource* pSource, CBTClient* pClient) : CDownloadTransfer( pSource, PROTOCOL_BT )
 {
+	ASSUME_LOCK( Transfers.m_pSection );
 	ASSERT( m_pDownload->IsTorrent() );
 	ASSERT( m_pDownload->m_nSize != SIZE_UNKNOWN );
 	
@@ -64,6 +65,7 @@ CDownloadTransferBT::CDownloadTransferBT(CDownloadSource* pSource, CBTClient* pC
 
 CDownloadTransferBT::~CDownloadTransferBT()
 {
+	ASSUME_LOCK( Transfers.m_pSection );
 	ASSERT( m_pClient == NULL );
 
 	// This never happens

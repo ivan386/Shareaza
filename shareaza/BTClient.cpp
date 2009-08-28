@@ -999,8 +999,10 @@ BOOL CBTClient::OnSourceRequest(CBTPacket* /*pPacket*/)
 	CBENode pRoot;
 	CBENode* pPeers = pRoot.Add( "peers" );
 	
-	for ( CDownloadSource* pSource = m_pDownload->GetFirstSource() ; pSource ; pSource = pSource->m_pNext )
+	for ( POSITION posSource = m_pDownload->GetIterator(); posSource ; )
 	{
+		CDownloadSource* pSource = m_pDownload->GetNext( posSource );
+
 		if ( pSource->m_pTransfer == NULL ) continue;
 		if ( pSource->m_pTransfer->m_nState < dtsRequesting ) continue;
 		

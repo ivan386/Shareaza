@@ -601,10 +601,14 @@ CDownloadTransferBT* CDownloadWithTorrent::CreateTorrentTransfer(CBTClient* pCli
 	CDownloadSource* pSource = NULL;
 
 	Hashes::Guid tmp = transformGuid( pClient->m_oGUID );
-	for ( pSource = GetFirstSource() ; pSource ; pSource = pSource->m_pNext )
+	for ( POSITION posSource = GetIterator(); posSource ; )
 	{
+		pSource = GetNext( posSource );
+
 		if ( pSource->m_nProtocol == PROTOCOL_BT &&
 			validAndEqual( pSource->m_oGUID, tmp ) ) break;
+
+		pSource = NULL;
 	}
 
 	if ( pSource == NULL )

@@ -51,47 +51,71 @@ static char THIS_FILE[]=__FILE__;
 //////////////////////////////////////////////////////////////////////
 // CDownloadWithSources construction
 
-CDownloadWithSources::CDownloadWithSources() :
-	m_pSourceFirst		( NULL )
-,	m_pSourceLast		( NULL )
-
-,	m_nSourceCount		( 0 )
-,	m_pXML				( NULL )
-
-,	m_nBTSourceCount	( 0 )
-,	m_nG1SourceCount	( 0 )
-,	m_nG2SourceCount	( 0 )
-,	m_nEdSourceCount	( 0 )
-,	m_nHTTPSourceCount	( 0 )
-,	m_nFTPSourceCount	( 0 )
+CDownloadWithSources::CDownloadWithSources()
+	: m_nG1SourceCount	( 0 )
+	, m_nG2SourceCount	( 0 )
+	, m_nEdSourceCount	( 0 )
+	, m_nHTTPSourceCount( 0 )
+	, m_nBTSourceCount	( 0 )
+	, m_nFTPSourceCount	( 0 )
+	, m_pXML			( NULL )
 {
 }
 
 CDownloadWithSources::~CDownloadWithSources()
 {
 	ClearSources();
-	if ( m_pXML != NULL ) delete m_pXML;
-	
+
+	delete m_pXML;
+
 	for ( POSITION pos = m_pFailedSources.GetHeadPosition() ; pos ; )
 		delete m_pFailedSources.GetNext( pos );
-
 	m_pFailedSources.RemoveAll();
 }
 
 //////////////////////////////////////////////////////////////////////
 // CDownloadWithSources list access
 
+POSITION CDownloadWithSources::GetIterator() const
+{
+	ASSUME_LOCK( Transfers.m_pSection );
+
+	return m_pSources.GetHeadPosition();
+}
+
+CDownloadSource* CDownloadWithSources::GetNext(POSITION& rPosition) const
+{
+	ASSUME_LOCK( Transfers.m_pSection );
+
+	return m_pSources.GetNext( rPosition );
+}
+
+INT_PTR CDownloadWithSources::GetCount() const
+{
+	ASSUME_LOCK( Transfers.m_pSection );
+
+	return m_pSources.GetCount();
+}
+
+CXMLElement* CDownloadWithSources::GetMetadata() const
+{
+	return m_pXML;
+}
+
 DWORD CDownloadWithSources::GetSourceCount(BOOL bNoPush, BOOL bSane) const
 {
 	CQuickLock pLock( Transfers.m_pSection );
 
-	if ( ! bNoPush && ! bSane ) return m_nSourceCount;
+	if ( ! bNoPush && ! bSane )
+		return GetCount();
 	
 	DWORD tNow = GetTickCount();
 	DWORD nCount = 0;
 	
-	for ( CDownloadSource* pSource = m_pSourceFirst ; pSource ; pSource = pSource->m_pNext )
+	for ( POSITION posSource = GetIterator() ; posSource ; )
 	{
+		CDownloadSource* pSource = GetNext( posSource );
+
 		if ( ! bNoPush || ! pSource->m_bPushOnly )
 		{
 			if ( ! bSane || (
@@ -109,16 +133,23 @@ DWORD CDownloadWithSources::GetSourceCount(BOOL bNoPush, BOOL bSane) const
 
 DWORD CDownloadWithSources::GetEffectiveSourceCount() const
 {
+	bool bIsG1Allowed = Settings.Gnutella1.EnableToday  || ! Settings.Connection.RequireForTransfers;
+	bool bIsG2Allowed = Settings.Gnutella2.EnableToday  || ! Settings.Connection.RequireForTransfers;
+	bool bIsEdAllowed = Settings.eDonkey.EnableToday    || ! Settings.Connection.RequireForTransfers;
+	bool bIsBtAllowed = Settings.BitTorrent.EnableToday || ! Settings.Connection.RequireForTransfers;
+
 	DWORD nResult = 0;
-	if ( Settings.IsG1Allowed() )
+	if ( bIsG1Allowed )
 		nResult += m_nG1SourceCount;
-	if ( Settings.IsG2Allowed() )
+	if ( bIsG2Allowed )
 		nResult += m_nG2SourceCount;
-	if ( Settings.IsEdAllowed() )
+	if ( bIsEdAllowed )
 		nResult += m_nEdSourceCount;
-	if ( Settings.IsG1Allowed() || Settings.IsG2Allowed() )
+	if ( bIsG1Allowed || bIsG2Allowed )
 		nResult += m_nHTTPSourceCount;
-	return nResult + m_nBTSourceCount + m_nFTPSourceCount;
+	if ( bIsBtAllowed )
+		nResult += m_nBTSourceCount;
+	return nResult + m_nFTPSourceCount;
 }
 
 DWORD CDownloadWithSources::GetBTSourceCount(BOOL bNoPush) const
@@ -128,8 +159,10 @@ DWORD CDownloadWithSources::GetBTSourceCount(BOOL bNoPush) const
 	DWORD tNow = GetTickCount();
 	DWORD nCount = 0;
 	
-	for ( CDownloadSource* pSource = m_pSourceFirst ; pSource ; pSource = pSource->m_pNext )
+	for ( POSITION posSource = GetIterator() ; posSource ; )
 	{
+		CDownloadSource* pSource = GetNext( posSource );
+
 		if ( ( pSource->m_nProtocol == PROTOCOL_BT ) &&									// Only counting BT sources
 			 ( pSource->m_tAttempt < tNow || pSource->m_tAttempt - tNow <= 900000 ) &&	// Don't count dead sources
 			 ( ! pSource->m_bPushOnly || ! bNoPush ) )									// Push sources might not be counted
@@ -148,8 +181,10 @@ DWORD CDownloadWithSources::GetED2KCompleteSourceCount() const
 	DWORD tNow = GetTickCount();
 	DWORD nCount = 0;
 	
-	for ( CDownloadSource* pSource = m_pSourceFirst ; pSource ; pSource = pSource->m_pNext )
+	for ( POSITION posSource = GetIterator() ; posSource ; )
 	{
+		CDownloadSource* pSource = GetNext( posSource );
+
 		if ( ( ! pSource->m_bPushOnly ) &&						// Push sources shouldn't be counted since you often cannot reach them
 			 ( pSource->m_tAttempt < tNow || pSource->m_tAttempt - tNow <= 900000 ) &&	// Only count sources that are probably active
 			 ( pSource->m_nProtocol == PROTOCOL_ED2K ) &&		// Only count ed2k sources
@@ -166,13 +201,8 @@ DWORD CDownloadWithSources::GetED2KCompleteSourceCount() const
 BOOL CDownloadWithSources::CheckSource(CDownloadSource* pCheck) const
 {
 	CQuickLock pLock( Transfers.m_pSection );
-
-	for ( CDownloadSource* pSource = m_pSourceFirst ; pSource ; pSource = pSource->m_pNext )
-	{
-		if ( pSource == pCheck ) return TRUE;
-	}
 	
-	return FALSE;
+	return ( m_pSources.Find( pCheck ) != NULL );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -180,17 +210,21 @@ BOOL CDownloadWithSources::CheckSource(CDownloadSource* pCheck) const
 
 void CDownloadWithSources::ClearSources()
 {
-	for ( CDownloadSource* pSource = m_pSourceFirst ; pSource ; )
-	{
-		CDownloadSource* pNext = pSource->m_pNext;
-		delete pSource;
-		pSource = pNext;
-	}
+	ASSUME_LOCK( Transfers.m_pSection );
 
-	m_pSourceFirst = m_pSourceLast = NULL;
-	m_nSourceCount = m_nEdSourceCount = m_nG1SourceCount = m_nFTPSourceCount = 0;
-	m_nG2SourceCount = m_nHTTPSourceCount = m_nBTSourceCount = 0;
-	
+	for ( POSITION posSource = GetIterator() ; posSource ; )
+	{
+		delete GetNext( posSource );
+	}
+	m_pSources.RemoveAll();
+
+	m_nG1SourceCount	= 0;
+	m_nG2SourceCount	= 0;
+	m_nEdSourceCount	= 0;
+	m_nHTTPSourceCount	= 0;
+	m_nBTSourceCount	= 0;
+	m_nFTPSourceCount	= 0;
+
 	SetModified();
 }
 
@@ -531,8 +565,9 @@ BOOL CDownloadWithSources::AddSourceInternal(CDownloadSource* pSource)
 		//Reject if source is the local IP/port
 		if ( Network.IsSelfIP( pSource->m_pAddress ) )
 		{
-			if ( ( ( pSource->m_nServerPort == 0 ) && (Settings.Connection.InPort == pSource->m_nPort ) )
-				|| ( Settings.Connection.IgnoreOwnIP ) )
+			if ( ( pSource->m_nServerPort == 0 &&
+				Settings.Connection.InPort == pSource->m_nPort ) ||
+				Settings.Connection.IgnoreOwnIP )
 			{	
 				delete pSource;
 				return FALSE;
@@ -548,144 +583,89 @@ BOOL CDownloadWithSources::AddSourceInternal(CDownloadSource* pSource)
 			return FALSE;
 		}
 	}
-	
-	bool bG2Exists = false;
-	bool bExistingIsRaza = false;
-	bool bDeleteSource = false;
-	CDownloadSource* pCopy = NULL;
+
 	CQuickLock pLock( Transfers.m_pSection );
 
 	if ( pSource->m_nRedirectionCount == 0 ) // Don't check for existing sources if source is a redirection
 	{
-		for ( CDownloadSource* pExisting = m_pSourceFirst ; pExisting ; )
-		{	
+		bool bDeleteSource = false;
+		bool bHTTPSource = pSource->IsHTTPSource();
+		bool bNeedHTTPSource = ! bHTTPSource &&
+			Settings.Gnutella2.EnableToday &&
+			VendorCache.IsExtended( pSource->m_sServer );
+
+		// Remove unneeded sources
+		for ( POSITION posSource = GetIterator() ; posSource ; )
+		{
+			CDownloadSource* pExisting = GetNext( posSource );
+
+			ASSERT( pSource != pExisting );
 			if ( pExisting->Equals( pSource ) ) // IPs and ports are equal
-			{	
-				if ( !bExistingIsRaza )
-					bExistingIsRaza = VendorCache.IsExtended( pExisting->m_sServer );
+			{
+				bool bExistingHTTPSource = pExisting->IsHTTPSource();
 
-				if ( !bG2Exists )
-					bG2Exists = ( pExisting->m_nProtocol == PROTOCOL_HTTP || pExisting->m_nProtocol == PROTOCOL_G2 );
+				if ( bNeedHTTPSource && bExistingHTTPSource )
+					bNeedHTTPSource = false;
 
-				// Point to non-HTTP source which is Shareaza
-				if ( bExistingIsRaza )
-					pCopy = bG2Exists ? NULL : pExisting;
-				
-				if ( pExisting->m_nProtocol == pSource->m_nProtocol )
+				if ( ( pExisting->m_nProtocol == pSource->m_nProtocol ) ||
+					 ( bExistingHTTPSource && bHTTPSource ) )
+				{
+					// Same protocol
 					bDeleteSource = true;
-
-				if ( pExisting->m_pTransfer != NULL ) // We already downloading
-				{
-					// Remove new source which is not HTTP and return
-					if ( ( pExisting->m_nProtocol == PROTOCOL_HTTP || pExisting->m_nProtocol == PROTOCOL_G2 ) && 
-						 ( pSource->m_nProtocol != PROTOCOL_HTTP && pSource->m_nProtocol != PROTOCOL_G2 ) )
-						bDeleteSource = true;
 				}
-				else // We are not downloading
+				else if ( pExisting->m_pTransfer != NULL )
 				{
-					// Replace non-HTTP source with a new one (we will add it later)
-					if ( ( pExisting->m_nProtocol != PROTOCOL_HTTP && pExisting->m_nProtocol != PROTOCOL_G2 ) && 
-						 ( pSource->m_nProtocol == PROTOCOL_HTTP || pSource->m_nProtocol == PROTOCOL_G2 ) )
+					// We already downloading so we can remove new non-HTTP source
+					if ( bExistingHTTPSource && ! bHTTPSource )
+					{
+						bDeleteSource = true;
+					}
+				}
+				else
+				{
+					// We are not downloading so we can replace non-HTTP source with a new one
+					if ( ! bExistingHTTPSource && bHTTPSource )
 					{
 						// Set connection delay the same as for the old source
 						pSource->m_tAttempt = pExisting->m_tAttempt;
-						pCopy = NULL;	// We are adding HTTP source, thus no need to make G2
-
-						if ( pExisting->m_pNext )
-						{
-							pExisting = pExisting->m_pNext;
-							pExisting->m_pPrev->Remove( TRUE, FALSE );
-						}
-						else
-						{
-							pExisting->Remove( TRUE, FALSE );
-							pExisting = NULL;
-						}
-						// We are already pointing to the next existing source, continue loop
-						continue;
+						pExisting->Remove( TRUE, FALSE );
 					}
 				}
 			}
-			pExisting = pExisting->m_pNext;
 		}
-	}
-
-	// We don't need to make G2 source
-	if ( pCopy && ( pCopy->m_bPushOnly || bExistingIsRaza && bG2Exists ) )
-		pCopy = NULL;
-
-	// Make G2 source from the existing non-HTTP Shareaza source
-	if ( pCopy && Settings.Gnutella2.EnableToday )
-	{
-		CString strURL = GetURL( pCopy->m_pAddress, pCopy->m_nPort );
-		if ( strURL.GetLength() )
+	
+		if ( bDeleteSource )
 		{
-			CDownloadSource* pG2Source  = new CDownloadSource( (CDownload*)this, strURL );
-			pG2Source->m_sServer = pCopy->m_sServer;	// Copy user-agent
-			pG2Source->m_tAttempt = pCopy->m_tAttempt;	// Set the same connection delay
-			pG2Source->m_nProtocol = PROTOCOL_HTTP;
+			delete pSource;
 
-			m_nSourceCount++;
-			m_nHTTPSourceCount++;
+			SetModified();
 
-			pG2Source->m_pPrev = m_pSourceLast;
-			pG2Source->m_pNext = NULL;
-				
-			if ( m_pSourceLast != NULL )
-			{
-				m_pSourceLast->m_pNext = pG2Source;
-				m_pSourceLast = pG2Source;
-			}
-			else
-			{
-				m_pSourceFirst = m_pSourceLast = pG2Source;
-			}
+			return FALSE;
+		}
 
-			if ( pG2Source->m_pTransfer == NULL )
+		// Make additional G2 source from the existing non-HTTP Shareaza source
+		if ( bNeedHTTPSource )
+		{
+			CString strURL = GetURL( pSource->m_pAddress, pSource->m_nPort );
+			if ( strURL.GetLength() )
 			{
-				if ( CDownloadTransfer* pTransfer = pG2Source->CreateTransfer() )
-					pTransfer->Initiate();
+				if ( CDownloadSource* pG2Source  = new CDownloadSource(
+					(CDownload*)this, strURL ) )
+				{
+					pG2Source->m_sServer = pSource->m_sServer;		// Copy user-agent
+					pG2Source->m_tAttempt = pSource->m_tAttempt;	// Set the same connection delay
+					pG2Source->m_nProtocol = PROTOCOL_HTTP;
+
+					InternalAdd( pG2Source );
+				}
 			}
 		}
 	}
-	
-	if ( bDeleteSource )
-	{
-		delete pSource;
-		SetModified();
-		return FALSE;
-	}
 
-	m_nSourceCount++;
+	InternalAdd( pSource );
 
-	if ( pSource->m_nProtocol == PROTOCOL_G1 )
-		m_nG1SourceCount++;
-	else if ( pSource->m_nProtocol == PROTOCOL_G2 )
-		m_nG2SourceCount++;
-	else if ( pSource->m_nProtocol == PROTOCOL_ED2K )
-		m_nEdSourceCount++;
-	else if ( pSource->m_nProtocol == PROTOCOL_HTTP )
-		m_nHTTPSourceCount++;
-	else if ( pSource->m_nProtocol == PROTOCOL_BT )
-		m_nBTSourceCount++;
-	else if ( pSource->m_nProtocol == PROTOCOL_FTP )
-		m_nFTPSourceCount++;
-
-	pSource->m_pPrev = m_pSourceLast;
-	pSource->m_pNext = NULL;
-		
-	if ( m_pSourceLast != NULL )
-	{
-		m_pSourceLast->m_pNext = pSource;
-		m_pSourceLast = pSource;
-	}
-	else
-	{
-		m_pSourceFirst = m_pSourceLast = pSource;
-	}
-	
 	SetModified();
-	
+
 	return TRUE;
 }
 
@@ -698,8 +678,10 @@ CString CDownloadWithSources::GetSourceURLs(CList< CString >* pState, int nMaxim
 
 	CString strSources;
 	
-	for ( CDownloadSource* pSource = m_pSourceFirst ; pSource ; pSource = pSource->m_pNext )
+	for ( POSITION posSource = GetIterator() ; posSource ; )
 	{
+		CDownloadSource* pSource = GetNext( posSource );
+
 		if ( pSource != pExcept && pSource->m_bPushOnly == FALSE &&
 			 pSource->m_nFailures == 0 && pSource->m_bReadContent &&
 			 ( pSource->m_bSHA1 || pSource->m_bED2K || pSource->m_bBTH  || pSource->m_bMD5 ) &&
@@ -813,9 +795,9 @@ void CDownloadWithSources::RemoveOverlappingSources(QWORD nOffset, QWORD nLength
 {
 	CQuickLock pLock( Transfers.m_pSection );
 
-	for ( CDownloadSource* pSource = m_pSourceFirst ; pSource ; )
+	for ( POSITION posSource = GetIterator() ; posSource ; )
 	{
-		CDownloadSource* pNext = pSource->m_pNext;
+		CDownloadSource* pSource = GetNext( posSource );
 		
 		if ( pSource->TouchedRange( nOffset, nLength ) )
 		{
@@ -825,8 +807,6 @@ void CDownloadWithSources::RemoveOverlappingSources(QWORD nOffset, QWORD nLength
 				nOffset, nOffset + nLength - 1 );
 			pSource->Remove( TRUE, FALSE );
 		}
-		
-		pSource = pNext;
 	}
 }
 
@@ -944,45 +924,88 @@ void CDownloadWithSources::ClearFailedSources()
 	}
 }
 
+void CDownloadWithSources::InternalAdd(CDownloadSource* pSource)
+{
+	ASSUME_LOCK( Transfers.m_pSection );
+
+	ASSERT( m_pSources.Find( pSource ) == NULL );
+	m_pSources.AddTail( pSource );
+
+	switch ( pSource->m_nProtocol )
+	{
+	case PROTOCOL_G1:
+		m_nG1SourceCount++;
+		break;
+	case PROTOCOL_G2:
+		m_nG2SourceCount++;
+		break;
+	case PROTOCOL_ED2K:
+		m_nEdSourceCount++;
+		break;
+	case PROTOCOL_HTTP:
+		m_nHTTPSourceCount++;
+		break;
+	case PROTOCOL_BT:
+		m_nBTSourceCount++;
+		break;
+	case PROTOCOL_FTP:
+		m_nFTPSourceCount++;
+		break;
+	default:
+		ASSERT( FALSE );
+	}
+}
+
+void CDownloadWithSources::InternalRemove(CDownloadSource* pSource)
+{
+	ASSUME_LOCK( Transfers.m_pSection );
+
+	POSITION posSource = m_pSources.Find( pSource );
+	ASSERT( posSource != NULL );
+	m_pSources.RemoveAt( posSource );
+
+	switch ( pSource->m_nProtocol )
+	{
+	case PROTOCOL_G1:
+		m_nG1SourceCount--;
+		break;
+	case PROTOCOL_G2:
+		m_nG2SourceCount--;
+		break;
+	case PROTOCOL_ED2K:
+		m_nEdSourceCount--;
+		break;
+	case PROTOCOL_HTTP:
+		m_nHTTPSourceCount--;
+		break;
+	case PROTOCOL_BT:
+		m_nBTSourceCount--;
+		ASSERT( m_nBTSourceCount >= 0 );
+		break;
+	case PROTOCOL_FTP:
+		m_nFTPSourceCount--;
+		break;
+	default:
+		ASSERT( FALSE );
+	}
+}
+
 //////////////////////////////////////////////////////////////////////
 // CDownloadWithSources remove a source
 
 void CDownloadWithSources::RemoveSource(CDownloadSource* pSource, BOOL bBan)
 {
-	CQuickLock pLock( Transfers.m_pSection );
+	ASSUME_LOCK( Transfers.m_pSection );
+
+	InternalRemove( pSource );
 
 	if ( bBan && pSource->m_sURL.GetLength() )
 	{
 		AddFailedSource( pSource );
 	}
-	
-	ASSERT( m_nSourceCount > 0 );
-	m_nSourceCount --;
 
-	if ( pSource->m_nProtocol == PROTOCOL_G1 )
-		m_nG1SourceCount--;
-	else if ( pSource->m_nProtocol == PROTOCOL_G2 )
-		m_nG2SourceCount--;
-	else if ( pSource->m_nProtocol == PROTOCOL_ED2K )
-		m_nEdSourceCount--;
-	else if ( pSource->m_nProtocol == PROTOCOL_HTTP )
-		m_nHTTPSourceCount--;
-	else if ( pSource->m_nProtocol == PROTOCOL_BT )
-		m_nBTSourceCount--;
-	else if ( pSource->m_nProtocol == PROTOCOL_FTP )
-		m_nFTPSourceCount--;
-
-	if ( pSource->m_pPrev != NULL )
-		pSource->m_pPrev->m_pNext = pSource->m_pNext;
-	else
-		m_pSourceFirst = pSource->m_pNext;
-	
-	if ( pSource->m_pNext != NULL )
-		pSource->m_pNext->m_pPrev = pSource->m_pPrev;
-	else
-		m_pSourceLast = pSource->m_pPrev;
-	
 	delete pSource;
+
 	SetModified();
 }
 
@@ -993,48 +1016,19 @@ void CDownloadWithSources::SortSource(CDownloadSource* pSource, BOOL bTop)
 {
 	CQuickLock pLock( Transfers.m_pSection );
 
-	ASSERT( m_nSourceCount > 0 );
-	
-	if ( pSource->m_pPrev != NULL )
-		pSource->m_pPrev->m_pNext = pSource->m_pNext;
+	if ( m_pSources.GetCount() == 1 )
+		// No sorting
+		return;
+
+	POSITION posSource = m_pSources.Find( pSource );
+	ASSERT( posSource );
+
+	m_pSources.RemoveAt( posSource );
+
+	if ( bTop )
+		m_pSources.AddHead( pSource );
 	else
-		m_pSourceFirst = pSource->m_pNext;
-	
-	if ( pSource->m_pNext != NULL )
-		pSource->m_pNext->m_pPrev = pSource->m_pPrev;
-	else
-		m_pSourceLast = pSource->m_pPrev;
-	
-	if ( ! bTop )
-	{
-		pSource->m_pPrev = m_pSourceLast;
-		pSource->m_pNext = NULL;
-		
-		if ( m_pSourceLast != NULL )
-		{
-			m_pSourceLast->m_pNext = pSource;
-			m_pSourceLast = pSource;
-		}
-		else
-		{
-			m_pSourceFirst = m_pSourceLast = pSource;
-		}
-	}
-	else
-	{
-		pSource->m_pPrev = NULL;
-		pSource->m_pNext = m_pSourceFirst;
-		
-		if ( m_pSourceFirst != NULL )
-		{
-			m_pSourceFirst->m_pPrev = pSource;
-			m_pSourceFirst = pSource;
-		}
-		else
-		{
-			m_pSourceFirst = m_pSourceLast = pSource;
-		}
-	}
+		m_pSources.AddTail( pSource );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -1044,53 +1038,27 @@ void CDownloadWithSources::SortSource(CDownloadSource* pSource)
 {
 	CQuickLock pLock( Transfers.m_pSection );
 
-	ASSERT( m_nSourceCount > 0 );
+	if ( m_pSources.GetCount() == 1 )
+		// No sorting
+		return;
 
-	//Remove source from current position. (It's unsorted, and would interfere with sort)
-	if ( pSource->m_pPrev != NULL )
-		pSource->m_pPrev->m_pNext = pSource->m_pNext;
-	else
-		m_pSourceFirst = pSource->m_pNext;
-	
-	if ( pSource->m_pNext != NULL )
-		pSource->m_pNext->m_pPrev = pSource->m_pPrev;
-	else
-		m_pSourceLast = pSource->m_pPrev;
-	
+	POSITION posSource = m_pSources.Find( pSource );
+	ASSERT( posSource );
 
+	m_pSources.RemoveAt( posSource );
 
-	if ( ( m_pSourceFirst == NULL ) || ( m_pSourceLast == NULL ) )
-	{	//Only one source
-		m_pSourceFirst = m_pSourceLast = pSource;
-		pSource->m_pNext = pSource->m_pPrev = NULL;
+	// Run through the sources to the correct position
+	for ( POSITION posCompare = GetIterator() ; posCompare ; )
+	{
+		posSource = posCompare;
+		CDownloadSource* pCompare = GetNext( posCompare );
+
+		if ( pCompare->m_nSortOrder >= pSource->m_nSortOrder )
+			break;
 	}
-	else
-	{	//Sort sources
-		CDownloadSource* pCompare = m_pSourceFirst;
 
-		while ( ( pCompare != NULL ) && (pCompare->m_nSortOrder < pSource->m_nSortOrder) )
-			pCompare = pCompare->m_pNext; //Run through the sources to the correct position
-
-		if ( pCompare == NULL )
-		{	//Source is last on list
-			m_pSourceLast->m_pNext = pSource;
-			pSource->m_pPrev = m_pSourceLast;
-			pSource->m_pNext = NULL;
-			m_pSourceLast = pSource;
-		}
-		else
-		{	//Insert source in front of current compare source
-			if ( pCompare->m_pPrev == NULL )
-				m_pSourceFirst = pSource;
-			else
-				pCompare->m_pPrev->m_pNext = pSource;
-
-			pSource->m_pNext = pCompare;
-			pSource->m_pPrev = pCompare->m_pPrev;
-			pCompare->m_pPrev= pSource;
-		}
-
-	}
+	// Insert source in front of current compare source
+	m_pSources.InsertBefore( posSource, pSource );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -1105,8 +1073,10 @@ int CDownloadWithSources::GetSourceColour()
 	BOOL bTaken[SRC_COLOURS] = {};
 	unsigned int nFree = SRC_COLOURS;
 	
-	for ( CDownloadSource* pSource = m_pSourceFirst ; pSource ; pSource = pSource->m_pNext )
+	for ( POSITION posSource = GetIterator() ; posSource ; )
 	{
+		CDownloadSource* pSource = GetNext( posSource );
+
 		if ( pSource->m_nColour >= 0 )
 		{
 			if ( bTaken[ pSource->m_nColour ] == FALSE )
@@ -1143,10 +1113,12 @@ void CDownloadWithSources::Serialize(CArchive& ar, int nVersion)
 	
 	if ( ar.IsStoring() )
 	{
-		ar.WriteCount( (DWORD)m_nSourceCount );
+		ar.WriteCount( (DWORD)GetCount() );
 		
-		for ( CDownloadSource* pSource = m_pSourceFirst ; pSource ; pSource = pSource->m_pNext )
+		for ( POSITION posSource = GetIterator() ; posSource ; )
 		{
+			CDownloadSource* pSource = GetNext( posSource );
+
 			pSource->Serialize( ar, nVersion );
 		}
 		
@@ -1159,38 +1131,9 @@ void CDownloadWithSources::Serialize(CArchive& ar, int nVersion)
 		{
 			// Create new source
 			CDownloadSource* pSource = new CDownloadSource( (CDownload*)this );
-			
-			// Add to the list
-			m_nSourceCount++;
-
-			pSource->m_pPrev = m_pSourceLast;
-			pSource->m_pNext = NULL;
-			
-			if ( m_pSourceLast != NULL )
-			{
-				m_pSourceLast->m_pNext = pSource;
-				m_pSourceLast = pSource;
-			}
-			else
-			{
-				m_pSourceFirst = m_pSourceLast = pSource;
-			}
 
 			// Load details from disk
 			pSource->Serialize( ar, nVersion );
-
-			if ( pSource->m_nProtocol == PROTOCOL_G1 )
-				m_nG1SourceCount++;
-			else if ( pSource->m_nProtocol == PROTOCOL_G2 )
-				m_nG2SourceCount++;
-			else if ( pSource->m_nProtocol == PROTOCOL_ED2K )
-				m_nEdSourceCount++;
-			else if ( pSource->m_nProtocol == PROTOCOL_HTTP )
-				m_nHTTPSourceCount++;
-			else if ( pSource->m_nProtocol == PROTOCOL_BT )
-				m_nBTSourceCount++;
-			else if ( pSource->m_nProtocol == PROTOCOL_FTP )
-				m_nFTPSourceCount++;
 
 			// Extract ed2k client ID from url (m_pAddress) because it wasn't saved
 			if ( ( !pSource->m_nPort ) && ( _tcsnicmp( pSource->m_sURL, _T("ed2kftp://"), 10 ) == 0 )  )
@@ -1199,6 +1142,9 @@ void CDownloadWithSources::Serialize(CArchive& ar, int nVersion)
 				if ( strURL.GetLength())
 					_stscanf( strURL, _T("%lu"), &pSource->m_pAddress.S_un.S_addr );
 			}
+
+			// Add to the list
+			InternalAdd( pSource );
 		}
 		
 		if ( ar.ReadCount() )

@@ -2055,8 +2055,10 @@ BOOL CEDClient::OnSourceRequest(CEDPacket* pPacket)
 
 	if ( CDownload* pDownload = Downloads.FindByED2K( oHash, TRUE ))
 	{
-		for ( CDownloadSource* pSource = pDownload->GetFirstSource() ; pSource ; pSource = pSource->m_pNext )
+		for ( POSITION posSource = pDownload->GetIterator(); posSource ; )
 		{
+			CDownloadSource* pSource = pDownload->GetNext( posSource );
+
 			if ( pSource->m_nProtocol == PROTOCOL_ED2K && pSource->m_bReadContent )
 			{
 				pReply->WriteLongLE( pSource->m_pAddress.S_un.S_addr );
