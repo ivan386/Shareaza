@@ -229,21 +229,13 @@ CShareazaApp::CShareazaApp() :
 
 BOOL CShareazaApp::InitInstance()
 {
-	// Set Build Date
-	COleDateTime tCompileTime;
-	tCompileTime.ParseDateTime( _T(__DATE__), LOCALE_NOUSEROVERRIDE, 1033 );
-	m_sBuildDate = tCompileTime.Format( _T("%Y%m%d") );
-
 	CWinApp::InitInstance();
 
 	SetRegistryKey( _T(CLIENT_NAME) );
 
 	InitResources();			// Loads theApp settings.
 
-	CString strVersion;
-	strVersion.Format( _T("%s (rev. %s %s)"), m_sVersion, _T(__REVISION__),
-		m_sBuildDate );
-	BT_SetAppVersion( strVersion );
+	BT_SetAppVersion( m_sVersionLong );
 
 	Settings.Load();			// Loads settings. Depends on InitResources()
 	InitFonts();				// Loads default fonts. Depends on Settings.Load()
@@ -347,6 +339,8 @@ BOOL CShareazaApp::InitInstance()
 	//*
 	// Beta expiry. Remember to re-compile to update the time, and remove this
 	// section for final releases and public betas.
+	COleDateTime tCompileTime;
+	tCompileTime.ParseDateTime( _T(__DATE__), LOCALE_NOUSEROVERRIDE, 1033 );
 	COleDateTime tCurrent = COleDateTime::GetCurrentTime();
 	COleDateTimeSpan tTimeOut( 7, 0, 0, 0);			// Daily builds
 	if ( ( tCompileTime + tTimeOut )  < tCurrent )
@@ -753,6 +747,11 @@ BOOL CShareazaApp::OpenURL(LPCTSTR lpszFileName, BOOL bDoIt, BOOL bSilent)
 
 void CShareazaApp::InitResources()
 {
+	// Set Build Date
+	COleDateTime tCompileTime;
+	tCompileTime.ParseDateTime( _T(__DATE__), LOCALE_NOUSEROVERRIDE, 1033 );
+	m_sBuildDate = tCompileTime.Format( _T("%Y%m%d") );
+
 	// Get .exe-file name
 	GetModuleFileName( NULL, m_strBinaryPath.GetBuffer( MAX_PATH ), MAX_PATH );
 	m_strBinaryPath.ReleaseBuffer( MAX_PATH );
@@ -784,8 +783,23 @@ void CShareazaApp::InitResources()
 		m_nVersion[0], m_nVersion[1],
 		m_nVersion[2], m_nVersion[3] );
 
-	m_sSmartAgent = _T( CLIENT_NAME );
-	m_sSmartAgent += _T(" ");
+	m_sVersionLong = m_sVersion + 
+#ifdef _DEBUG
+		_T(" Debug")
+#else
+		_T(" Release")
+#endif
+#ifdef _WIN64
+		_T(" 64-bit")
+#else
+		_T(" 32-bit")
+#endif
+#ifdef LAN_MODE
+		_T(" LAN")
+#endif		
+		_T(" (r") _T(__REVISION__) _T(" ") + m_sBuildDate + _T(")");
+
+	m_sSmartAgent = _T( CLIENT_NAME ) _T(" ");
 	m_sSmartAgent += m_sVersion;
 
 	m_pBTVersion[ 0 ] = BT_ID1;

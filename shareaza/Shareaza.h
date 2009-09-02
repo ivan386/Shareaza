@@ -72,6 +72,7 @@ public:
 	WORD				m_nVersion[4];
 	BYTE				m_pBTVersion[4];			// SZxx
 	CString				m_sVersion;					// x.x.x.x
+	CString				m_sVersionLong;				// x.x.x.x Release/Debug 32-bit/64-bit (rXXXX date)
 	CString				m_sSmartAgent;				// Shareaza x.x.x.x
 	CString				m_sBuildDate;
 	CString				m_strBinaryPath;			// Shareaza.exe path
