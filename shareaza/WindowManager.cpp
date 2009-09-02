@@ -614,7 +614,7 @@ void CWindowManager::PostSkinRemove()
 {
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
-		GetNext( pos )->m_pSkin = NULL;
+		GetNext( pos )->RemoveSkin();
 	}
 }
 

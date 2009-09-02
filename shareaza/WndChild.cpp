@@ -37,7 +37,6 @@ static char THIS_FILE[] = __FILE__;
 IMPLEMENT_DYNCREATE(CChildWnd, CMDIChildWnd)
 
 BEGIN_MESSAGE_MAP(CChildWnd, CMDIChildWnd)
-	//{{AFX_MSG_MAP(CChildWnd)
 	ON_WM_CREATE()
 	ON_WM_DESTROY()
 	ON_WM_ERASEBKGND()
@@ -55,7 +54,6 @@ BEGIN_MESSAGE_MAP(CChildWnd, CMDIChildWnd)
 	ON_WM_NCLBUTTONDBLCLK()
 	ON_MESSAGE(WM_SETTEXT, OnSetText)
 	ON_WM_HELPINFO()
-	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 CChildWnd* CChildWnd::m_pCmdMsg = NULL;
@@ -77,6 +75,11 @@ CChildWnd::CChildWnd()
 {
 }
 
+void CChildWnd::RemoveSkin()
+{
+	m_pSkin = NULL;
+}
+
 /////////////////////////////////////////////////////////////////////////////
 // CChildWnd operations
 
@@ -96,6 +99,7 @@ CMainWnd* CChildWnd::GetMainWnd()
 {
 	if ( ! m_pMainWndCache )
 		m_pMainWndCache = (CMainWnd*)GetMDIFrame();
+
 	return m_pMainWndCache;
 }
 
@@ -289,7 +293,8 @@ BOOL CChildWnd::OnEraseBkgnd(CDC* /*pDC*/)
 
 void CChildWnd::OnSize(UINT nType, int cx, int cy)
 {
-	if ( m_pSkin ) m_pSkin->OnSize( this );
+	if ( m_pSkin )
+		m_pSkin->OnSize( this );
 
 	CMDIChildWnd::OnSize( nType, cx, cy );
 
@@ -402,8 +407,8 @@ LRESULT CChildWnd::OnNcHitTest(CPoint point)
 {
 	if ( m_pSkin )
 		return m_pSkin->OnNcHitTest( this, point, ! m_bPanelMode );
-	else
-		return CMDIChildWnd::OnNcHitTest( point );
+
+	return CMDIChildWnd::OnNcHitTest( point );
 }
 
 void CChildWnd::OnNcPaint()
@@ -416,9 +421,7 @@ void CChildWnd::OnNcPaint()
 
 BOOL CChildWnd::OnNcActivate(BOOL bActive)
 {
-	// if ( bActive ) OnMDIActivate( TRUE, this, NULL );
-
-	if ( m_pSkin != NULL )
+	if ( m_pSkin )
 	{
 		BOOL bVisible = IsWindowVisible();
 		if ( bVisible ) ModifyStyle( WS_VISIBLE, 0 );
@@ -427,51 +430,56 @@ BOOL CChildWnd::OnNcActivate(BOOL bActive)
 		m_pSkin->OnNcActivate( this, bActive || ( m_nFlags & WF_STAYACTIVE ) );
 		return bResult;
 	}
-	else
-	{
-		return CMDIChildWnd::OnNcActivate( bActive );
-	}
+
+	return CMDIChildWnd::OnNcActivate( bActive );
 }
 
 void CChildWnd::OnNcMouseMove(UINT nHitTest, CPoint point)
 {
-	if ( m_pSkin ) m_pSkin->OnNcMouseMove( this, nHitTest, point );
+	if ( m_pSkin )
+		m_pSkin->OnNcMouseMove( this, nHitTest, point );
+
 	CMDIChildWnd::OnNcMouseMove(nHitTest, point);
 }
 
 void CChildWnd::OnNcLButtonDown(UINT nHitTest, CPoint point)
 {
-	if ( m_pSkin && m_pSkin->OnNcLButtonDown( this, nHitTest, point ) ) return;
+	if ( m_pSkin && m_pSkin->OnNcLButtonDown( this, nHitTest, point ) )
+		return;
+
 	CMDIChildWnd::OnNcLButtonDown( nHitTest, point );
 }
 
 void CChildWnd::OnNcLButtonUp(UINT nHitTest, CPoint point)
 {
-	if ( m_pSkin && m_pSkin->OnNcLButtonUp( this, nHitTest, point ) ) return;
+	if ( m_pSkin && m_pSkin->OnNcLButtonUp( this, nHitTest, point ) )
+		return;
+
 	CMDIChildWnd::OnNcLButtonUp( nHitTest, point );
 }
 
 void CChildWnd::OnNcLButtonDblClk(UINT nHitTest, CPoint point)
 {
-	if ( m_pSkin && m_pSkin->OnNcLButtonDblClk( this, nHitTest, point ) ) return;
+	if ( m_pSkin && m_pSkin->OnNcLButtonDblClk( this, nHitTest, point ) )
+		return;
+
 	CMDIChildWnd::OnNcLButtonDblClk( nHitTest, point );
 }
 
 LRESULT CChildWnd::OnSetText(WPARAM /*wParam*/, LPARAM /*lParam*/)
 {
-	if ( m_pSkin != NULL )
+	if ( m_pSkin )
 	{
 		BOOL bVisible = IsWindowVisible();
 		if ( bVisible ) ModifyStyle( WS_VISIBLE, 0 );
 		LRESULT lResult = Default();
 		if ( bVisible ) ModifyStyle( 0, WS_VISIBLE );
-		if ( m_pSkin ) m_pSkin->OnSetText( this );
+		if ( m_pSkin )
+			m_pSkin->OnSetText( this );
 		return lResult;
 	}
-	else
-	{
-		return Default();
-	}
+
+	return Default();
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -497,7 +505,8 @@ void CChildWnd::OnSkinChange()
 		SetWindowRgn( NULL, FALSE );
 		SetWindowPos( NULL, 0, 0, 0, 0,
 			SWP_NOMOVE|SWP_NOSIZE|SWP_NOACTIVATE|SWP_NOZORDER|SWP_FRAMECHANGED );
-		if ( m_pSkin ) m_pSkin->OnSize( this );
+		if ( m_pSkin )
+			m_pSkin->OnSize( this );
 	}
 }
 
@@ -522,6 +531,7 @@ BOOL CChildWnd::OnPush(const Hashes::Guid& /*oClientID*/, CConnection* /*pConnec
 HRESULT CChildWnd::GetGenericView(IGenericView** ppView)
 {
 	*ppView = NULL;
+
 	return S_FALSE;
 }
 
@@ -545,5 +555,13 @@ BOOL CChildWnd::PreTranslateMessage(MSG* pMsg)
 		if ( IsDialogMessage( pMsg ) )
 			return TRUE;
 	}
+
 	return CMDIChildWnd::PreTranslateMessage( pMsg );
+}
+
+BOOL CChildWnd::DestroyWindow()
+{
+	RemoveSkin();
+
+	return CMDIChildWnd::DestroyWindow();
 }
