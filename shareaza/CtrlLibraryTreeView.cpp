@@ -1603,7 +1603,17 @@ void CLibraryTreeView::OnContextMenu(CWnd* /*pWnd*/, CPoint point)
 	}
 	else
 	{
-		Skin.TrackPopupMenu( _T("CLibraryTree.Physical"), point, ID_LIBRARY_EXPLORE );
+		CStringList oFiles;
+		{
+			CSingleLock pLock( &Library.m_pSection, TRUE );
+			for ( CLibraryTreeItem* pItem = m_pSelFirst ; pItem ; pItem = pItem->m_pSelNext )
+			{
+				if ( LibraryFolders.CheckFolder( pItem->m_pPhysical, TRUE ) )
+					oFiles.AddTail( pItem->m_pPhysical->m_sPath );
+			}
+		}
+		Skin.TrackPopupMenu( _T("CLibraryTree.Physical"), point,
+			ID_LIBRARY_EXPLORE, 0, oFiles );
 	}
 }
 

@@ -2051,7 +2051,8 @@ UINT_PTR CSkin::TrackPopupMenu(LPCTSTR pszMenu, const CPoint& point,
 		// Change ID_SHELL_MENU item to shell submenu
 		MENUITEMINFO pInfo = {};
 		pInfo.cbSize = sizeof( pInfo );
-		pInfo.fMask = MIIM_SUBMENU;
+		pInfo.fMask = MIIM_SUBMENU | MIIM_STATE;
+		pInfo.fState = MFS_ENABLED;
 		HMENU hSubMenu = pInfo.hSubMenu = ::CreatePopupMenu();
 		ASSERT( hSubMenu );
 		if( pPopup->SetMenuItemInfo( ID_SHELL_MENU, &pInfo ) )
