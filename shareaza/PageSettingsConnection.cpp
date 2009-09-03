@@ -280,15 +280,11 @@ void CConnectionSettingsPage::OnOK()
 			!Settings.Connection.EnableUPnP ) )
 		{
 			Settings.Connection.InPort = m_nInPort;
-			try
-			{
-				if ( !theApp.m_pUPnPFinder )
-					theApp.m_pUPnPFinder.Attach( new CUPnPFinder );
-				if ( theApp.m_pUPnPFinder->AreServicesHealthy() )
-					theApp.m_pUPnPFinder->StartDiscovery();
-			}
-			catch ( CUPnPFinder::UPnPError& ) {}
-			catch ( CException* e ) { e->Delete(); }
+
+			if ( !theApp.m_pUPnPFinder )
+				theApp.m_pUPnPFinder.Attach( new CUPnPFinder );
+			if ( theApp.m_pUPnPFinder->AreServicesHealthy() )
+				theApp.m_pUPnPFinder->StartDiscovery();
 		}
 		else
 			Settings.Connection.InPort = m_nInPort;
@@ -388,28 +384,22 @@ void CConnectionSettingsPage::OnClickedEnableUpnp()
 {
 	if ( !m_bEnableUPnP )
 	{
-		try
+		if ( !theApp.m_pUPnPFinder )
+			theApp.m_pUPnPFinder.Attach( new CUPnPFinder );
+
+		// If the UPnP Device Host service is not running ask the user to
+		// start it. It is not wise to have a delay up to 1 minute,
+		// especially that we would need to wait until this and SSDP
+		// service are started. If the upnphost service can not be started
+		// Shareaza will lock up.
+		if ( !theApp.m_pUPnPFinder->AreServicesHealthy() )
 		{
-			if ( !theApp.m_pUPnPFinder )
-				theApp.m_pUPnPFinder.Attach( new CUPnPFinder );
-
-			// If the UPnP Device Host service is not running ask the user to
-			// start it. It is not wise to have a delay up to 1 minute,
-			// especially that we would need to wait until this and SSDP
-			// service are started. If the upnphost service can not be started
-			// Shareaza will lock up.
-			if ( !theApp.m_pUPnPFinder->AreServicesHealthy() )
-			{
-				CString strMessage;
-				LoadString( strMessage, IDS_UPNP_SERVICES_ERROR );
-				CButton* pBox =  (CButton*)GetDlgItem( IDC_ENABLE_UPNP );
-				pBox->SetCheck( BST_UNCHECKED );
-				AfxMessageBox( strMessage, MB_OK | MB_ICONEXCLAMATION );
-			}
+			CString strMessage;
+			LoadString( strMessage, IDS_UPNP_SERVICES_ERROR );
+			CButton* pBox =  (CButton*)GetDlgItem( IDC_ENABLE_UPNP );
+			pBox->SetCheck( BST_UNCHECKED );
+			AfxMessageBox( strMessage, MB_OK | MB_ICONEXCLAMATION );
 		}
-		catch ( CUPnPFinder::UPnPError& ) {}
-		catch ( CException* e ) { e->Delete(); }
-
 	}
 	UpdateData();
 }

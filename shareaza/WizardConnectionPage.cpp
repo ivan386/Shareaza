@@ -256,15 +256,10 @@ LRESULT CWizardConnectionPage::OnWizardNext()
 		m_nProgressSteps += 30;	// UPnP device detection
 
 		// Create UPnP finder object if it doesn't exist
-		try
-		{
-			if ( !theApp.m_pUPnPFinder )
-				theApp.m_pUPnPFinder.Attach( new CUPnPFinder );
-			if ( theApp.m_pUPnPFinder->AreServicesHealthy() )
-				theApp.m_pUPnPFinder->StartDiscovery();
-		}
-		catch ( CUPnPFinder::UPnPError& ) {}
-		catch ( CException* e ) { e->Delete(); }
+		if ( !theApp.m_pUPnPFinder )
+			theApp.m_pUPnPFinder.Attach( new CUPnPFinder );
+		if ( theApp.m_pUPnPFinder->AreServicesHealthy() )
+			theApp.m_pUPnPFinder->StartDiscovery();
 	}
 
 	BeginThread( "WizardConnectionPage" );

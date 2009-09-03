@@ -30,9 +30,6 @@ HRESULT UPnPMessage(HRESULT hr);
 
 class CUPnPFinder
 {
-// Exceptions
-public:
-	struct UPnPError : std::exception {};
 // Construction
 public:
 	CUPnPFinder();
@@ -45,7 +42,7 @@ public:
 	void AddDevice(DevicePointer pDevice, bool bAddChilds, int nLevel = 0);
 	void RemoveDevice(CComBSTR bsUDN);
 	bool OnSearchComplete();
-	void Init();
+	bool Init();
 	inline bool IsAsyncFindRunning()
 	{
 		if ( m_pDeviceFinder && m_bAsyncFindRunning && GetTickCount() - m_tLastEvent > 20000 )
@@ -61,7 +58,8 @@ public:
 
 // Implementation
 private:
-	static FinderPointer CreateFinderInstance();
+	static FinderPointer CreateFinderInstance() throw();
+
 	struct FindDevice : std::unary_function< DevicePointer, bool >
 	{
 		FindDevice(const CComBSTR& udn) : m_udn( udn ) {}
@@ -78,7 +76,7 @@ private:
 		CComBSTR m_udn;
 	};
 
-	void	ProcessAsyncFind(CComBSTR bsSearchType);
+	void	ProcessAsyncFind(BSTR bsSearchType) throw();
 	HRESULT	GetDeviceServices(DevicePointer pDevice);
 	void	StartPortMapping();
 	HRESULT	MapPort(const ServicePointer& service);

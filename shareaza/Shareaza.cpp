@@ -434,14 +434,9 @@ BOOL CShareazaApp::InitInstance()
 	if ( Settings.Connection.EnableUPnP && ! Settings.Live.FirstRun )
 	{
 		SplashStep( L"Firewall/Router Setup" );
-		try
-		{
-			m_pUPnPFinder.Attach( new CUPnPFinder );
-			if ( m_pUPnPFinder->AreServicesHealthy() )
-				m_pUPnPFinder->StartDiscovery();
-		}
-		catch ( CUPnPFinder::UPnPError& ) {}
-		catch ( CException* e ) { e->Delete(); }
+		m_pUPnPFinder.Attach( new CUPnPFinder );
+		if ( m_pUPnPFinder->AreServicesHealthy() )
+			m_pUPnPFinder->StartDiscovery();
 	}
 
 	SplashStep( L"GUI" );

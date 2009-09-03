@@ -49,28 +49,28 @@ CUPnPFinder::CUPnPFinder()
 	m_bDisableWANPPPSetup( Settings.Connection.SkipWANPPPSetup == TRUE )
 {}
 
-void CUPnPFinder::Init()
+bool CUPnPFinder::Init()
 {
-	if ( !m_bInited )
+	if ( ! m_bInited )
 	{
 		HRESULT hr = CoInitialize( NULL );
 		m_bCOM = ( hr == S_OK || hr == S_FALSE );
 		m_pDeviceFinder = CreateFinderInstance();
 		m_pServiceCallback = new CServiceCallback( *this );
 		m_pDeviceFinderCallback = new CDeviceFinderCallback( *this );
-		m_bInited = true;
+		m_bInited = ( m_pDeviceFinder && m_pServiceCallback && m_pDeviceFinderCallback );
 	}
+
+	return m_bInited;
 }
 
-FinderPointer CUPnPFinder::CreateFinderInstance()
+FinderPointer CUPnPFinder::CreateFinderInstance() throw()
 {
 	FinderPointer pNewDeviceFinder;
 	if ( FAILED( pNewDeviceFinder.CoCreateInstance( CLSID_UPnPDeviceFinder ) ) )
 	{
 		// Should we ask to disable auto-detection?
 		theApp.Message( MSG_INFO, L"UPnP discovery is not supported or not installed." );
-
-		throw UPnPError();
 	}
 	return pNewDeviceFinder;
 }
@@ -88,32 +88,27 @@ CUPnPFinder::~CUPnPFinder()
 // This will result in application lockup when we call any methods of IUPnPDeviceFinder.
 bool CUPnPFinder::AreServicesHealthy()
 {
-	Init();
-
-	bool bResult = false;
-
-	SC_HANDLE schSCManager;
-	SC_HANDLE schService;
+	if ( ! Init() )
+		return false;
 
 	// Open a handle to the Service Control Manager database
-	schSCManager = OpenSCManager(
+	SC_HANDLE schSCManager = OpenSCManager(
 		NULL,				// local machine
 		NULL,				// ServicesActive database
 		GENERIC_READ );		// for enumeration and status lookup
-
 	if ( schSCManager == NULL )
 		return false;
 
-	schService = OpenService( schSCManager, _T("upnphost"), GENERIC_READ );
+	SC_HANDLE schService = OpenService( schSCManager, _T("upnphost"), GENERIC_READ );
 	if ( schService == NULL )
 	{
 		CloseServiceHandle( schSCManager );
 		return false;
 	}
 
+	bool bResult = false;
 	SERVICE_STATUS_PROCESS ssStatus;
 	DWORD nBytesNeeded;
-
 	if ( QueryServiceStatusEx( schService, SC_STATUS_PROCESS_INFO,
 		(LPBYTE)&ssStatus, sizeof(SERVICE_STATUS_PROCESS), &nBytesNeeded ) )
 	{
@@ -145,26 +140,62 @@ bool CUPnPFinder::AreServicesHealthy()
 }
 
 // Helper function for processing the AsyncFind search
-void CUPnPFinder::ProcessAsyncFind(CComBSTR bsSearchType)
+void CUPnPFinder::ProcessAsyncFind(BSTR bsSearchType) throw()
 {
-	// We have to start the AsyncFind.
-	if ( !m_pDeviceFinderCallback )
-		return theApp.Message( MSG_ERROR, L"DeviceFinderCallback object is not available." );
+	HRESULT hr;
 
-	if ( FAILED( m_pDeviceFinder->CreateAsyncFind( bsSearchType, NULL,
-				 m_pDeviceFinderCallback, &m_nAsyncFindHandle ) ) )
-		return theApp.Message( MSG_ERROR, L"CreateAsyncFind failed in UPnP finder." );
+	// We have to start the AsyncFind.
+	if ( ! m_pDeviceFinderCallback || ! m_pDeviceFinder )
+	{
+		theApp.Message( MSG_ERROR, L"UPnP is not available." );
+		return;
+	}
+
+	__try
+	{
+		hr = m_pDeviceFinder->CreateAsyncFind( bsSearchType, NULL,
+			m_pDeviceFinderCallback, &m_nAsyncFindHandle );
+	}
+	__except( EXCEPTION_EXECUTE_HANDLER )
+	{
+		hr = E_FAIL;
+	}
+
+	if ( FAILED( hr ) )
+	{
+		theApp.Message( MSG_ERROR, L"CreateAsyncFind failed in UPnP finder." );
+		return;
+	}
 
 	m_bAsyncFindRunning = true;
 	m_tLastEvent = GetTickCount();
 
-	if ( FAILED( m_pDeviceFinder->StartAsyncFind( m_nAsyncFindHandle ) ) )
+	__try
 	{
-		if ( FAILED( m_pDeviceFinder->CancelAsyncFind( m_nAsyncFindHandle ) ) )
+		hr = m_pDeviceFinder->StartAsyncFind( m_nAsyncFindHandle );
+	}
+	__except( EXCEPTION_EXECUTE_HANDLER )
+	{
+		hr = E_FAIL;
+	}
+
+	if ( FAILED( hr ) )
+	{
+		__try
+		{
+			hr = m_pDeviceFinder->CancelAsyncFind( m_nAsyncFindHandle );
+		}
+		__except( EXCEPTION_EXECUTE_HANDLER )
+		{
+			hr = E_FAIL;
+		}
+
+		if ( FAILED( hr ) )
+		{
 			theApp.Message( MSG_ERROR, L"CancelAsyncFind failed in UPnP finder." );
+		}
 
 		m_bAsyncFindRunning = false;
-		return;
 	}
 }
 
@@ -190,7 +221,8 @@ void CUPnPFinder::StartDiscovery(bool bSecondTry)
 	if ( bSecondTry && m_bSecondTry ) // already did 2 tries
 		return;
 
-	Init();
+	if ( ! Init() )
+		return;
 
 	if ( !bSecondTry )
 		theApp.Message( MSG_INFO, L"Trying to setup port forwardings with UPnP...");
@@ -1094,7 +1126,6 @@ HRESULT CDeviceFinderCallback::SearchComplete(LONG /*nFindData*/)
 		{
 			m_instance.StartDiscovery( true );
 		}
-		catch ( CUPnPFinder::UPnPError& ) {}
 		catch ( CException* e ) { e->Delete(); }
 	}
 	return S_OK;
