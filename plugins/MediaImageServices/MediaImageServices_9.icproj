@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<VisualStudioProject
+	ProjectType="Intel C++ Project"
+	Version="11.0"
+	Name="MediaImageServices"
+	ProjectGUID="{B73B15DE-679C-427E-83F6-8E860524FDEB}"
+	VCNestedProjectGUID="{4351215D-CBA6-4F34-A99E-2FA87F969CA5}"
+	VCNestedProjectFileName="MediaImageServices_9.vcproj">
+	<Configurations>
+		<Configuration
+			Name="Release|Win32">
+			<Tool
+				Name="CppCmplrTool"
+				GlobalOptimizations="true"
+				OptimizationDiagnosticLevel="1"/>
+		</Configuration>
+		<Configuration
+			Name="Release|x64">
+			<Tool
+				Name="CppCmplrTool"
+				GlobalOptimizations="true"
+				OptimizationDiagnosticLevel="1"/>
+		</Configuration>
+	</Configurations>
+	<Files/>
+</VisualStudioProject>

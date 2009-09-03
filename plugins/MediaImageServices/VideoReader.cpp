@@ -1,8 +1,8 @@
 //
 // VideoReader.cpp : Implementation of CVideoReader
 //
-// Copyright (c) Nikolay Raspopov, 2005-2007.
-// This file is part of SHAREAZA (www.shareaza.com)
+// Copyright (c) Nikolay Raspopov, 2005-2009.
+// This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
 // and/or modify it under the terms of the GNU General Public License
@@ -22,7 +22,7 @@
 #include "stdafx.h"
 #include "VideoReader.h"
 
-void CopyBitmap(char* pDestination, const char* pSource,
+void CVideoReader::CopyBitmap(char* pDestination, const char* pSource,
 	const int width, const int height, const int line_size)
 {
 	// Down-up bitmap copying and BGR -> RGB converting
@@ -41,7 +41,7 @@ void CopyBitmap(char* pDestination, const char* pSource,
 	}
 }
 
-HRESULT LoadFrame(IMediaDet* pDet, double total_time,
+HRESULT CVideoReader::LoadFrame(IMediaDet* pDet, double total_time,
 	const IMAGESERVICEDATA* pParams, SAFEARRAY** ppImage)
 {
 	ULONG line_size = ((pParams->nWidth * pParams->nComponents) + 3) & (-4);
@@ -54,43 +54,46 @@ HRESULT LoadFrame(IMediaDet* pDet, double total_time,
 		hr = SafeArrayAccessData (*ppImage, (void**) &pDestination);
 		if ( SUCCEEDED( hr ) )
 		{
-			hr = E_OUTOFMEMORY;
-			char* buf =
-				new char [ total_size +sizeof( BITMAPINFOHEADER ) ];
-			if (buf)
+			if ( char* buf = new char [ total_size + sizeof( BITMAPINFOHEADER ) ] )
 			{
 				// Getting 25% frame
-				__try {
-					hr = pDet->GetBitmapBits ( total_time / 4.0,
-						NULL, buf, pParams->nWidth, pParams->nHeight);
+				__try
+				{
+					hr = pDet->GetBitmapBits ( total_time / 4.0, NULL, buf,
+						pParams->nWidth, pParams->nHeight);
 					if ( SUCCEEDED( hr ) )
 					{
 						CopyBitmap( pDestination, buf,
-							pParams->nWidth, pParams->nHeight,
-							line_size );
+							pParams->nWidth, pParams->nHeight, line_size );
 					}
-				} __except ( EXCEPTION_EXECUTE_HANDLER )
+				}
+				__except ( EXCEPTION_EXECUTE_HANDLER )
 				{
+					hr = E_FAIL;
 				}
 				if ( FAILED( hr ) )
 				{
 					// Getting first frame
-					__try {
-						hr = pDet->GetBitmapBits ( 0.0,
-							NULL, buf, pParams->nWidth,
-							pParams->nHeight );
+					__try
+					{
+						hr = pDet->GetBitmapBits ( 0.0, NULL, buf,
+							pParams->nWidth, pParams->nHeight );
 						if ( SUCCEEDED( hr ) )
 						{
 							CopyBitmap( pDestination, buf,
-								pParams->nWidth, pParams->nHeight,
-								line_size );
+								pParams->nWidth, pParams->nHeight, line_size );
 						}
-					} __except ( EXCEPTION_EXECUTE_HANDLER )
+					}
+					__except ( EXCEPTION_EXECUTE_HANDLER )
 					{
+						hr = E_FAIL;
 					}
 				}
 				delete [] buf;
 			}
+			else
+				hr = E_OUTOFMEMORY;
+
 			SafeArrayUnaccessData (*ppImage);
 		}
 	}

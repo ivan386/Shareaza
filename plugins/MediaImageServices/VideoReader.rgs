@@ -15,10 +15,8 @@ HKCR
 		{
 			ProgID = s 'MediaImageServices.VideoReader.1'
 			VersionIndependentProgID = s 'MediaImageServices.VideoReader'
-			InprocServer32 = s '%MODULE%'
-			{
-				val ThreadingModel = s 'Both'
-			}
+			LocalServer32 = s '%MODULE%'
+			ForceRemove 'Programmable'
 			val AppID = s '%APPID%'
 			'TypeLib' = s '{FD6EB3A2-CE8A-4A12-A065-0490816DF11F}'
 		}

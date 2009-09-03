@@ -1,8 +1,8 @@
 //
 // MediaImageServices.cpp : Implementation of DLL Exports.
 //
-// Copyright (c) Nikolay Raspopov, 2005.
-// This file is part of SHAREAZA (www.shareaza.com)
+// Copyright (c) Nikolay Raspopov, 2005-2009.
+// This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
 // and/or modify it under the terms of the GNU General Public License
@@ -20,10 +20,9 @@
 //
 
 #include "stdafx.h"
-#include "resource.h"
 #include "MediaImageServices.h"
 
-class CMediaImageServicesModule : public CAtlDllModuleT< CMediaImageServicesModule >
+class CMediaImageServicesModule : public CAtlExeModuleT< CMediaImageServicesModule >
 {
 public :
 	DECLARE_LIBID(LIBID_MediaImageServicesLib)
@@ -32,27 +31,8 @@ public :
 
 CMediaImageServicesModule _AtlModule;
 
-extern "C" BOOL WINAPI DllMain(HINSTANCE /*hInstance*/, DWORD dwReason, LPVOID lpReserved)
+extern "C" int WINAPI _tWinMain(HINSTANCE /*hInstance*/, HINSTANCE /*hPrevInstance*/, 
+                                LPTSTR /*lpCmdLine*/, int nShowCmd)
 {
-    return _AtlModule.DllMain(dwReason, lpReserved); 
-}
-
-STDAPI DllCanUnloadNow(void)
-{
-    return _AtlModule.DllCanUnloadNow();
-}
-
-STDAPI DllGetClassObject(REFCLSID rclsid, REFIID riid, LPVOID* ppv)
-{
-    return _AtlModule.DllGetClassObject(rclsid, riid, ppv);
-}
-
-STDAPI DllRegisterServer(void)
-{
-    return _AtlModule.DllRegisterServer();
-}
-
-STDAPI DllUnregisterServer(void)
-{
-	return _AtlModule.DllUnregisterServer();
+	return _AtlModule.WinMain( nShowCmd );
 }

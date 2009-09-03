@@ -1,8 +1,8 @@
 //
 // VideoReader.h : Declaration of the CVideoReader
 //
-// Copyright (c) Nikolay Raspopov, 2005.
-// This file is part of SHAREAZA (www.shareaza.com)
+// Copyright (c) Nikolay Raspopov, 2005-2009.
+// This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
 // and/or modify it under the terms of the GNU General Public License
@@ -39,6 +39,12 @@ DECLARE_REGISTRY_RESOURCEID(IDR_VIDEOREADER)
 BEGIN_COM_MAP(CVideoReader)
 	COM_INTERFACE_ENTRY(IImageServicePlugin)
 END_COM_MAP()
+
+protected:
+	void CopyBitmap(char* pDestination, const char* pSource,
+		const int width, const int height, const int line_size);
+	HRESULT LoadFrame(IMediaDet* pDet, double total_time,
+		const IMAGESERVICEDATA* pParams, SAFEARRAY** ppImage);
 
 // IImageServicePlugin
 public:
