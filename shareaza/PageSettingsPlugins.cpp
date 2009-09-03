@@ -1,7 +1,7 @@
 //
 // PageSettingsPlugins.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2006.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -36,15 +36,12 @@ static char THIS_FILE[] = __FILE__;
 IMPLEMENT_DYNCREATE(CPluginsSettingsPage, CSettingsPage)
 
 BEGIN_MESSAGE_MAP(CPluginsSettingsPage, CSettingsPage)
-	//{{AFX_MSG_MAP(CPluginsSettingsPage)
 	ON_WM_TIMER()
 	ON_NOTIFY(LVN_ITEMCHANGING, IDC_PLUGINS, OnItemChangingPlugins)
 	ON_NOTIFY(LVN_ITEMCHANGED, IDC_PLUGINS, OnItemChangedPlugins)
 	ON_NOTIFY(NM_DBLCLK, IDC_PLUGINS, OnNMDblclkPlugins)
-	ON_NOTIFY(NM_CUSTOMDRAW, IDC_PLUGINS, OnCustomDrawPlugins)
 	ON_BN_CLICKED(IDC_PLUGINS_SETUP, OnPluginsSetup)
 	ON_BN_CLICKED(IDC_PLUGINS_WEB, OnPluginsWeb)
-	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 
@@ -53,23 +50,16 @@ END_MESSAGE_MAP()
 
 CPluginsSettingsPage::CPluginsSettingsPage() : CSettingsPage( CPluginsSettingsPage::IDD )
 {
-	//{{AFX_DATA_INIT(CPluginsSettingsPage)
-	//}}AFX_DATA_INIT
-}
-
-CPluginsSettingsPage::~CPluginsSettingsPage()
-{
 }
 
 void CPluginsSettingsPage::DoDataExchange(CDataExchange* pDX)
 {
 	CSettingsPage::DoDataExchange(pDX);
-	//{{AFX_DATA_MAP(CPluginsSettingsPage)
+
 	DDX_Control(pDX, IDC_PLUGINS_SETUP, m_wndSetup);
 	DDX_Control(pDX, IDC_SKIN_DESC, m_wndDesc);
 	DDX_Control(pDX, IDC_SKIN_NAME, m_wndName);
 	DDX_Control(pDX, IDC_PLUGINS, m_wndList);
-	//}}AFX_DATA_MAP
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -79,8 +69,10 @@ BOOL CPluginsSettingsPage::OnInitDialog()
 {
 	CSettingsPage::OnInitDialog();
 
-	m_gdiImageList.Create( 16, 16, ILC_COLOR32|ILC_MASK, 2, 1 );
-	AddIcon( IDI_FILE, m_gdiImageList );
+	m_gdiImageList.Create( 16, 16, ILC_COLOR32|ILC_MASK, 6, 1 ) ||
+	m_gdiImageList.Create( 16, 16, ILC_COLOR24|ILC_MASK, 6, 1 ) ||
+	m_gdiImageList.Create( 16, 16, ILC_COLOR16|ILC_MASK, 6, 1 );
+
 	AddIcon( IDI_EXECUTABLE, m_gdiImageList );
 
 	m_wndList.SetImageList( &m_gdiImageList, LVSIL_SMALL );
@@ -88,7 +80,8 @@ BOOL CPluginsSettingsPage::OnInitDialog()
 	m_wndList.InsertColumn( 1, _T("CLSID"), LVCFMT_LEFT, 0, 1 );
 	m_wndList.InsertColumn( 2, _T("Extensions"), LVCFMT_LEFT, 0, 2 );
 
-	m_wndList.SetExtendedStyle( LVS_EX_FULLROWSELECT|LVS_EX_CHECKBOXES );
+	m_wndList.SetExtendedStyle( LVS_EX_FULLROWSELECT | LVS_EX_CHECKBOXES |
+		LVS_EX_DOUBLEBUFFER );
 
 	/*
 	LVGROUP pGroup;
@@ -174,28 +167,6 @@ void CPluginsSettingsPage::OnItemChangedPlugins(NMHDR* pNMHDR, LRESULT* pResult)
 	}
 }
 
-void CPluginsSettingsPage::OnCustomDrawPlugins(NMHDR *pNMHDR, LRESULT *pResult)
-{
-	NMLVCUSTOMDRAW* pDraw = (NMLVCUSTOMDRAW*)pNMHDR;
-	*pResult = CDRF_DODEFAULT;
-
-	if ( pDraw->nmcd.dwDrawStage == CDDS_PREPAINT )
-	{
-		*pResult = CDRF_NOTIFYITEMDRAW;
-	}
-	else if ( pDraw->nmcd.dwDrawStage == CDDS_ITEMPREPAINT )
-	{
-		if ( pDraw->nmcd.lItemlParam != 0 )
-		{
-			pDraw->clrText = CoolInterface.m_crText ;			//Interface Elements (Temp Color, was ACTIVECAPTION)
-		}
-		else
-		{
-			pDraw->clrText = CoolInterface.m_crNetworkNull ;	//Hidden Plugin (Temp Color, was 3DDKSHADOW)
-		}
-	}
-}
-
 void CPluginsSettingsPage::OnPluginsSetup()
 {
 	CString strExt;
@@ -229,7 +200,8 @@ void CPluginsSettingsPage::OnOK()
 {
 	BOOL bChanged = FALSE;
 
-	for ( int nItem = 0 ; nItem < m_wndList.GetItemCount() ; nItem++ )
+	int nCount = m_wndList.GetItemCount();
+	for ( int nItem = 0 ; nItem < nCount ; nItem++ )
 	{
 		CPlugin* pPlugin = (CPlugin*)m_wndList.GetItemData( nItem );
 		CString strCLSID = m_wndList.GetItemText( nItem, 1 );
@@ -261,54 +233,62 @@ void CPluginsSettingsPage::OnOK()
 /////////////////////////////////////////////////////////////////////////////
 // CPluginsSettingsPage plugin enumeration
 
-void CPluginsSettingsPage::InsertPlugin(LPCTSTR pszCLSID, LPCTSTR pszName, int nImage, TRISTATE bEnabled, 
-										LPVOID pPlugin, LPCTSTR pszExtension)
+void CPluginsSettingsPage::InsertPlugin(LPCTSTR pszCLSID, LPCTSTR pszName, 
+	CPlugin* pPlugin, LPCTSTR pszExtension)
 {
     int nItem = 0;
-	CString strCurrAssoc, strAssocAdd;
-
-	for ( ; nItem < m_wndList.GetItemCount() ; nItem++ )
+	CString strAssocAdd;
+	if ( pszExtension && *pszExtension )
 	{
-		LPVOID pExisting = (LPVOID)m_wndList.GetItemData( nItem );
-		CString strExisting = m_wndList.GetItemText( nItem, 0 );
+		strAssocAdd = _T("|");
+		strAssocAdd += pszExtension;
+		strAssocAdd += _T("|");
+	}
 
-		if ( pPlugin != NULL && pExisting == NULL ) break;
-		if ( pPlugin == NULL && pExisting != NULL ) continue;
+	int nCount = m_wndList.GetItemCount();
+	for ( ; nItem < nCount ; nItem++ )
+	{
+		CString strExisting = m_wndList.GetItemText( nItem, 0 );
 		if ( strExisting.Compare( pszName ) == 0 )
 		{
-			if ( pszExtension && _tcslen( pszExtension ) )
+			if ( ! strAssocAdd.IsEmpty() )
 			{
-				strCurrAssoc = m_wndList.GetItemText( nItem, 2 );
-				strAssocAdd.Format( _T("|%s|"), pszExtension );
-
+				CString strCurrAssoc = m_wndList.GetItemText( nItem, 2 );
 				if ( strCurrAssoc.Find( strAssocAdd ) == -1 )
 				{
-					strCurrAssoc.Append( strAssocAdd );
-					strCurrAssoc.Replace( _T("||"), _T("|") );
+					strCurrAssoc.Append( (LPCTSTR)strAssocAdd + 1 );
 					m_wndList.SetItemText( nItem, 2, strCurrAssoc );
 				}
 			}
 			return;
 		}
-		if ( strExisting.Compare( pszName ) > 0 ) break;
+		if ( strExisting.Compare( pszName ) > 0 )
+			break;
 	}
 
-	nItem = m_wndList.InsertItem( LVIF_IMAGE|LVIF_TEXT|LVIF_PARAM, nItem,
-		pszName, 0, 0, nImage, (LPARAM)pPlugin );
+	CLSID pCLSID = {};
+	TRISTATE bEnabled = ( pPlugin && pPlugin->m_pPlugin ) ? TRI_TRUE :
+		( ( Hashes::fromGuid( pszCLSID, &pCLSID ) && Plugins.LookupEnable( pCLSID ) ) ?
+		TRI_TRUE : TRI_FALSE );
+	HICON hIcon = LoadCLSIDIcon( pszCLSID );
+	int nImage = hIcon ? AddIcon( hIcon, m_gdiImageList ) : -1;
+
+	nItem = m_wndList.InsertItem( LVIF_IMAGE | LVIF_TEXT | LVIF_PARAM, nItem,
+		pszName, 0, 0, ( ( nImage != -1 ) ? nImage : 0 ), (LPARAM)pPlugin );
 
 	m_wndList.SetItemText( nItem, 1, pszCLSID );
 
-	if ( pszExtension && _tcslen( pszExtension ) )
-	{
-		strAssocAdd.Format( _T("|%s|"), pszExtension );
+	if ( pszExtension && *pszExtension )
 		m_wndList.SetItemText( nItem, 2, strAssocAdd );
-	}
-	else m_wndList.SetItemText( nItem, 2, bEnabled < TRI_TRUE ? _T("-") : _T("") );
+	else
+		m_wndList.SetItemText( nItem, 2, bEnabled < TRI_TRUE ? _T("-") : _T("") );
 
 	if ( bEnabled != TRI_UNKNOWN )
 	{
 		m_wndList.SetItemState( nItem, bEnabled << 12, LVIS_STATEIMAGEMASK );
 	}
+
+	m_wndList.UpdateWindow();
 }
 
 void CPluginsSettingsPage::EnumerateGenericPlugins()
@@ -319,14 +299,7 @@ void CPluginsSettingsPage::EnumerateGenericPlugins()
 	{
 		CPlugin* pPlugin = Plugins.GetNext( pos );
 
-		if ( pPlugin->m_sName.GetLength() )
-		{
-			int nImage = AddIcon( pPlugin->LookupIcon(), m_gdiImageList );
-
-			InsertPlugin( pPlugin->GetStringCLSID(), pPlugin->m_sName,
-				( ( nImage == -1 ) ? 0 : nImage ),
-				pPlugin->m_pPlugin != NULL ? TRI_TRUE : TRI_FALSE, pPlugin );
-		}
+		InsertPlugin( pPlugin->GetStringCLSID(), pPlugin->m_sName, pPlugin );
 	}
 }
 
@@ -441,24 +414,18 @@ void CPluginsSettingsPage::AddMiscPlugin(LPCTSTR /*pszType*/, LPCTSTR pszCLSID, 
 {
 	HKEY hClass = NULL;
 	CString strClass;
-	CLSID pCLSID;
 
 	strClass.Format( _T("CLSID\\%s"), pszCLSID );
 
 	if ( ERROR_SUCCESS == RegOpenKeyEx( HKEY_CLASSES_ROOT, strClass, 0, KEY_READ, &hClass ) )
 	{
-		DWORD nValue = 256 * sizeof(TCHAR), nType = REG_SZ;
-		TCHAR szValue[256];
+		DWORD nValue = MAX_PATH * sizeof(TCHAR), nType = REG_SZ;
+		TCHAR szValue[ MAX_PATH ];
 
 		if ( ERROR_SUCCESS == RegQueryValueEx( hClass, NULL, NULL, &nType,
 			(LPBYTE)szValue, &nValue ) )
 		{
-			if ( Hashes::fromGuid( pszCLSID, &pCLSID ) )
-			{
-				TRISTATE bEnabled = TRI_UNKNOWN;
-				bEnabled = Plugins.LookupEnable( pCLSID ) ? TRI_TRUE : TRI_FALSE;
-				InsertPlugin( pszCLSID, szValue, 1, bEnabled, NULL, pszExtension );
-			}
+			InsertPlugin( pszCLSID, szValue, NULL, pszExtension );
 		}
 
 		RegCloseKey( hClass );
@@ -470,60 +437,55 @@ void CPluginsSettingsPage::AddMiscPlugin(LPCTSTR /*pszType*/, LPCTSTR pszCLSID, 
 CString CPluginsSettingsPage::GetPluginComments(LPCTSTR pszCLSID) const
 {
 	CString strPath;
-	HKEY hClassServer = NULL;
-
+	HKEY hKey;
 	strPath.Format( _T("CLSID\\%s\\InProcServer32"), pszCLSID );
-
-	if ( ERROR_SUCCESS == RegOpenKeyEx( HKEY_CLASSES_ROOT, strPath, 0, KEY_READ, &hClassServer ) )
+	if ( RegOpenKeyEx( HKEY_CLASSES_ROOT, strPath, 0, KEY_READ, &hKey ) != ERROR_SUCCESS )
 	{
-		DWORD nValue = MAX_PATH * sizeof(TCHAR), nType = REG_SZ;
-		TCHAR szPluginPath[ MAX_PATH ];
+		strPath.Format( _T("CLSID\\%s\\LocalServer32"), pszCLSID );
+		if ( RegOpenKeyEx( HKEY_CLASSES_ROOT, strPath, 0, KEY_READ, &hKey ) != ERROR_SUCCESS )
+			return CString();
+	}
 
-		if ( ERROR_SUCCESS == RegQueryValueEx( hClassServer, NULL, NULL, &nType,
-			(LPBYTE)szPluginPath, &nValue ) && nType == REG_SZ )
+	DWORD dwType = REG_SZ, dwSize = MAX_PATH * sizeof( TCHAR );
+	LONG lResult = RegQueryValueEx( hKey, NULL, NULL, &dwType,
+		(LPBYTE)strPath.GetBuffer( MAX_PATH ), &dwSize );
+	strPath.ReleaseBuffer( dwSize / sizeof( TCHAR ) );
+	RegCloseKey( hKey );
+
+	if ( lResult != ERROR_SUCCESS )
+		return CString();
+
+	strPath.Trim( _T(" \"") );
+
+	CString strValue;
+	dwSize = GetFileVersionInfoSize( strPath, &dwSize );
+	if ( dwSize )
+	{
+		if ( BYTE* pBuffer = new BYTE[ dwSize ] )
 		{
-			strPath.SetString( szPluginPath );
+			if ( GetFileVersionInfo( strPath, NULL, dwSize, pBuffer ) )
+			{
+				WCHAR* pLanguage = (WCHAR*)pBuffer + 20 + 26 + 18 + 3;
+				if ( wcslen( pLanguage ) == 8 )
+				{
+					CString strKey = _T("\\StringFileInfo\\");
+					strKey.Append( pLanguage );
+					strKey.Append( _T("\\Comments") );
+					BYTE* pValue = NULL;
+					dwSize = 0;
+					if ( VerQueryValue( pBuffer, (LPTSTR)(LPCTSTR)strKey,
+						(void**)&pValue, (UINT*)&dwSize ) )
+					{
+						if ( pValue[1] )
+							strValue = (LPCSTR)pValue;
+						else
+							strValue = (LPCTSTR)pValue;
+					}
+				}
+			}
+			delete [] pBuffer;
 		}
-		else return CString();
 	}
-	else return CString();
-
-	DWORD nSize = GetFileVersionInfoSize( strPath, &nSize );
-	BYTE* pBuffer = new BYTE[ nSize ];
-
-	if ( ! GetFileVersionInfo( strPath, NULL, nSize, pBuffer ) )
-	{
-		delete [] pBuffer;
-		return CString();
-	}
-
-	WCHAR* pLanguage = (WCHAR*)pBuffer + 20 + 26 + 18 + 3;
-	
-	if ( wcslen( pLanguage ) != 8 )
-	{
-		delete [] pBuffer;
-		return CString();
-	}
-
-	CString strKey, strValue;
-
-	strKey = _T("\\StringFileInfo\\");
-	strKey.Append( pLanguage );
-	strKey.Append( _T("\\Comments") );
-
-	BYTE* pValue = NULL;
-	nSize = 0;
-
-	if ( VerQueryValue( pBuffer, (LPTSTR)(LPCTSTR)strKey, (void**)&pValue, (UINT*)&nSize ) )
-	{
-		if ( pValue[1] )
-			strValue = (LPCSTR)pValue;
-		else
-			strValue = (LPCTSTR)pValue;
-	}
-
-	delete [] pBuffer;
-
 	return strValue;
 }
 
@@ -534,6 +496,8 @@ void CPluginsSettingsPage::UpdateList()
 	if ( ! IsWindowVisible() || m_wndList.GetItemCount() == 0 )
 	{
 		m_bRunning = FALSE;
+
+		CWaitCursor wc;
 
 		m_wndList.DeleteAllItems();
 		EnumerateGenericPlugins();

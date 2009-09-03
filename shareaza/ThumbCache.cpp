@@ -1,7 +1,7 @@
 //
 // ThumbCache.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -248,8 +248,8 @@ BOOL CThumbCache::Cache(LPCTSTR pszPath, CImageFile* pImage, BOOL bLoadFromFile)
 		return FALSE;
 
 	// Load from file
-	if ( ! pImage->LoadFromFile( pszPath, FALSE, TRUE ) || ! pImage->EnsureRGB() ||
-		pImage->m_nHeight <= 0 || pImage->m_nWidth <= 0 )
+	if ( ! pImage->LoadFromFile( pszPath, FALSE, TRUE ) || ! pImage->EnsureRGB() )
+		// Failed
 		return FALSE;
 
 	// Resample to desired size

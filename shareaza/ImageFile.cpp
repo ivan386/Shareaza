@@ -462,7 +462,7 @@ BOOL CImageFile::Resample(int nNewWidth, int nNewHeight)
 
 BOOL CImageFile::EnsureRGB(COLORREF crBack)
 {
-	if ( ! m_bLoaded || m_nWidth <= 0 || m_nHeight <= 0 )
+	if ( ! m_bLoaded || m_nWidth <= 0 || m_nHeight <= 0 || ! m_pImage )
 	{
 		return FALSE;
 	}

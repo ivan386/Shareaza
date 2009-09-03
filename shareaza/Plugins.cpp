@@ -498,22 +498,5 @@ CString CPlugin::GetStringCLSID() const
 
 HICON CPlugin::LookupIcon() const
 {
-	CString strName;
-	HKEY hKey;
-
-	strName.Format( _T("CLSID\\%s\\InprocServer32"), (LPCTSTR)GetStringCLSID() );
-
-	if ( RegOpenKeyEx( HKEY_CLASSES_ROOT, strName, 0, KEY_QUERY_VALUE, &hKey ) )
-		return NULL;
-
-	DWORD dwType = REG_SZ, dwSize = 256 * sizeof(TCHAR);
-	LONG lResult = RegQueryValueEx( hKey, _T(""), NULL, &dwType, (LPBYTE)strName.GetBuffer( 256 ), &dwSize );
-	strName.ReleaseBuffer( dwSize / sizeof(TCHAR) );
-	RegCloseKey( hKey );
-
-	if ( lResult != ERROR_SUCCESS ) return NULL;
-
-	HICON hIcon = NULL;
-	ExtractIconEx( strName, 0, NULL, &hIcon, 1 );
-	return hIcon;
+	return LoadCLSIDIcon( GetStringCLSID() );
 }
