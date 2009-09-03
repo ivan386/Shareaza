@@ -7,9 +7,6 @@
 //
 // Generated from the TEXTINCLUDE 2 resource.
 //
-#ifndef APSTUDIO_INVOKED
-#include "targetver.h"
-#endif
 #include "winres.h"
 
 /////////////////////////////////////////////////////////////////////////////
@@ -46,9 +43,9 @@ BEGIN
     BEGIN
         BLOCK "000004b0"
         BEGIN
-            VALUE "Comments", "Shareaza Media Services Plugin"
+            VALUE "Comments", "Play audio and video files."
             VALUE "CompanyName", "Shareaza Development Team"
-            VALUE "FileDescription", "Shareaza Media Services Plugin"
+            VALUE "FileDescription", "Shareaza Media Player"
             VALUE "FileVersion", "1, 0, 0, 1"
             VALUE "InternalName", "MediaPlayer"
             VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2009. All rights reserved."
@@ -71,7 +68,15 @@ END
 
 IDR_MEDIAPLAYER         REGISTRY                "MediaPlayer.rgs"
 IDR_PLAYER              REGISTRY                "Player.rgs"
-IDR_FILTER              REGISTRY                "Filter.rgs"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDR_MEDIAPLAYER          ICON                    "icon.ico"
 
 #ifdef APSTUDIO_INVOKED
 /////////////////////////////////////////////////////////////////////////////
@@ -86,9 +91,6 @@ END
 
 2 TEXTINCLUDE 
 BEGIN
-    "#ifndef APSTUDIO_INVOKED\r\n"
-    "#include ""targetver.h""\r\n"
-    "#endif\r\n"
     "#include ""winres.h""\r\n"
     "\0"
 END
@@ -115,8 +117,6 @@ END
 #endif    // Neutral resources
 /////////////////////////////////////////////////////////////////////////////
 
-
-
 #ifndef APSTUDIO_INVOKED
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -126,4 +126,3 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 #endif    // not APSTUDIO_INVOKED
-

@@ -573,6 +573,10 @@
 				RelativePath=".\Class.rgs"
 				>
 			</File>
+			<File
+				RelativePath=".\icon.ico"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Generated Files"

@@ -548,6 +548,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\resource.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Shareaza.h"
 				>
 			</File>
@@ -567,6 +571,10 @@
 			>
 			<File
 				RelativePath=".\Class.rgs"
+				>
+			</File>
+			<File
+				RelativePath=".\icon.ico"
 				>
 			</File>
 			<File

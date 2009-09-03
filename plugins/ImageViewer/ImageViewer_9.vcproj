@@ -569,6 +569,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\grabmove.cur"
+				>
+			</File>
+			<File
+				RelativePath=".\image.ico"
+				>
+			</File>
+			<File
 				RelativePath="ImageViewer.rgs"
 				>
 			</File>

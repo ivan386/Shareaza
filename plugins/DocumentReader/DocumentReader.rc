@@ -53,7 +53,7 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 1,0,0,8
+ FILEVERSION 1,0,0,10
  PRODUCTVERSION 2,4,0,0
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
@@ -69,10 +69,10 @@ BEGIN
     BEGIN
         BLOCK "000004e9"
         BEGIN
-            VALUE "Comments", "Shareaza Document Reader Plugin"
+            VALUE "Comments", "Extract metadata and previews from MS Office and Open Office files."
             VALUE "CompanyName", "Shareaza Development Team"
             VALUE "FileDescription", "Shareaza Document Reader Plugin"
-            VALUE "FileVersion", "1, 0, 0, 8"
+            VALUE "FileVersion", "1, 0, 0, 10"
             VALUE "InternalName", "DocumentReader"
             VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2002-2009. All rights reserved."
             VALUE "OriginalFilename", "DocumentReader.dll"

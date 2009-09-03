@@ -1,6 +1,6 @@
 //{{NO_DEPENDENCIES}}
 // Microsoft Visual C++ generated include file.
-// Used by MediaLibraryBuilder.rc
+// Used by RARBuilder.rc
 //
 #define IDS_PROJNAME                    100
 #define IDR_CLASS                       101

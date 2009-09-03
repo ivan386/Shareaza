@@ -6,7 +6,6 @@
 #define IDR_MEDIAPLAYER                 101
 #define IDR_PLAYER                      102
 #define IDR_FFTFILTER                   103
-#define IDR_FILTER                      104
 
 // Next default values for new objects
 // 

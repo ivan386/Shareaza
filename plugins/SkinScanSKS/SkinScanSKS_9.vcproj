@@ -551,6 +551,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Resource.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Shareaza.h"
 				>
 			</File>

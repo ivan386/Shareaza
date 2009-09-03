@@ -53,7 +53,7 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 1,0,0,3
+ FILEVERSION 1,0,0,10
  PRODUCTVERSION 2,4,0,0
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
@@ -69,12 +69,12 @@ BEGIN
     BEGIN
         BLOCK "00000000"
         BEGIN
-            VALUE "Comments", "Shareaza RatDVD Reader Plugin"
+            VALUE "Comments", "Extract metadata and previews from RatDVD disks."
             VALUE "CompanyName", "Shareaza Development Team"
             VALUE "FileDescription", "Shareaza RatDVD Reader Plugin"
-            VALUE "FileVersion", "1, 0, 0, 3"
+            VALUE "FileVersion", "1, 0, 0, 10"
             VALUE "InternalName", "RatDVDReader"
-            VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2006-2008. All rights reserved."
+            VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2006-2009. All rights reserved."
             VALUE "OriginalFilename", "RatDVDReader.dll"
             VALUE "ProductName", "Shareaza"
             VALUE "ProductVersion", "2, 4, 0, 0"

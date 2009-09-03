@@ -81,12 +81,12 @@ BEGIN
     BEGIN
         BLOCK "0c0904b0"
         BEGIN
-            VALUE "Comments", "Shareaza Image Viewer Plugin"
+            VALUE "Comments", "Show images."
             VALUE "CompanyName", "Shareaza Development Team"
             VALUE "FileDescription", "Shareaza Image Viewer Plugin"
             VALUE "FileVersion", "1, 2, 1, 7"
             VALUE "InternalName", "ImageViewer"
-            VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2002-2008. All rights reserved."
+            VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2002-2009. All rights reserved."
             VALUE "OriginalFilename", "ImageViewer.dll"
             VALUE "ProductName", "Shareaza"
             VALUE "ProductVersion", "2, 4, 0, 0"
