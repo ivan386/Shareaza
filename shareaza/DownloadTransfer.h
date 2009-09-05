@@ -1,7 +1,7 @@
 //
 // DownloadTransfer.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -19,9 +19,6 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_DOWNLOADTRANSFER_H__DB393F56_C75B_424C_85E5_FF44300E255B__INCLUDED_)
-#define AFX_DOWNLOADTRANSFER_H__DB393F56_C75B_424C_85E5_FF44300E255B__INCLUDED_
-
 #pragma once
 
 #include "Transfer.h"
@@ -30,36 +27,32 @@
 class CDownload;
 class CDownloadSource;
 
+
 class CDownloadTransfer : public CTransfer
 {
-// Construction
 public:
 	CDownloadTransfer(CDownloadSource* pSource, PROTOCOLID nProtocol);
 	virtual ~CDownloadTransfer();
 
-// Attributes
-public:
 	CDownload*			m_pDownload;
 	CDownloadTransfer*	m_pDlPrev;
 	CDownloadTransfer*	m_pDlNext;
 	CDownloadSource*	m_pSource;
-public:
-	int			m_nState;
-	DWORD		m_nQueuePos;
-	DWORD		m_nQueueLen;
-	CString		m_sQueueName;
-	DWORD		m_nBandwidth;			// Bandwidth allocated
-public:
-	QWORD		m_nOffset;
-	QWORD		m_nLength;
-	QWORD		m_nPosition;
-	QWORD		m_nDownloaded;
-public:
-	BOOL		m_bWantBackwards;
-	BOOL		m_bRecvBackwards;		// Got "Content-Encoding: backwards"
 
-// Operations
-public:
+	int					m_nState;
+	DWORD				m_nQueuePos;
+	DWORD				m_nQueueLen;
+	CString				m_sQueueName;
+	DWORD				m_nBandwidth;		// Bandwidth allocated
+
+	QWORD				m_nOffset;			// Fragment offset
+	QWORD				m_nLength;			// Fragment length
+	QWORD				m_nPosition;		// Fragment position
+	QWORD				m_nDownloaded;
+
+	BOOL				m_bWantBackwards;
+	BOOL				m_bRecvBackwards;	// Got "Content-Encoding: backwards"
+
 	virtual BOOL	Initiate() = 0;
 	virtual void	Close(TRISTATE bKeepSource, DWORD nRetryAfter = 0);
 	virtual void	Boost();
@@ -69,12 +62,12 @@ public:
 	virtual BOOL	UnrequestRange(QWORD /*nOffset*/, QWORD /*nLength*/) { return FALSE; }
 	virtual CString	GetStateText(BOOL bLong);
 	virtual BOOL	OnRun();
-	void	SetState(int nState);
+	void			SetState(int nState);
+
 protected:
 	CTimeAverage< DWORD, 2000 > m_AverageSpeed;
 
-	void	ChunkifyRequest(QWORD* pnOffset, QWORD* pnLength, QWORD nChunk, BOOL bVerifyLock);
-
+	void			ChunkifyRequest(QWORD* pnOffset, QWORD* pnLength, QWORD nChunk, BOOL bVerifyLock);
 };
 
 enum
@@ -88,6 +81,3 @@ enum
 	dtsCountNotConnecting = -3,
 	dtsCountTorrentAndActive = -4
 };
-
-
-#endif // !defined(AFX_DOWNLOADTRANSFER_H__DB393F56_C75B_424C_85E5_FF44300E255B__INCLUDED_)

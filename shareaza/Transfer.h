@@ -1,7 +1,7 @@
 //
 // Transfer.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -28,27 +28,20 @@ class CBuffer;
 
 class CTransfer : public CConnection
 {
-// Construction
 public:
-	CTransfer();
+	CTransfer(PROTOCOLID nProtocol = PROTOCOL_ANY);
 	virtual ~CTransfer();
 
-// Attributes
-public:
-	DWORD			m_nRunCookie;
-public:
-	CList< CString >		m_pSourcesSent;
+	DWORD				m_nRunCookie;
+	CList< CString >	m_pSourcesSent;
 	CArray< CString >	m_pHeaderName;
 	CArray< CString >	m_pHeaderValue;
 
-// Operations
-public:
 	virtual BOOL	ConnectTo(IN_ADDR* pAddress, WORD nPort);
 	virtual void	AttachTo(CConnection* pConnection);
 	virtual void	Close();
+
 protected:
 	void			ClearHeaders();
 	virtual BOOL	OnHeaderLine(CString& strHeader, CString& strValue);
-
 };
-

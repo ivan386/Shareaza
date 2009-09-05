@@ -34,7 +34,7 @@ class CConnection
 {
 // Construction
 public:
-	CConnection();
+	CConnection(PROTOCOLID nProtocol = PROTOCOL_ANY);
 	CConnection(CConnection& other);
 	virtual ~CConnection();
 

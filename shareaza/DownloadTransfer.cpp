@@ -44,28 +44,23 @@ static char THIS_FILE[]=__FILE__;
 // CDownloadTransfer construction
 
 CDownloadTransfer::CDownloadTransfer(CDownloadSource* pSource, PROTOCOLID nProtocol)
+	: CTransfer			( nProtocol )
+	, m_pDownload		( pSource->m_pDownload )
+	, m_pDlPrev			( NULL )
+	, m_pDlNext			( NULL )
+	, m_pSource			( pSource )
+	, m_nState			( dtsNull )
+	, m_nQueuePos		( 0 )
+	, m_nQueueLen		( 0 )
+	, m_nBandwidth		( 0 )
+	, m_nDownloaded		( 0 )
+	, m_bWantBackwards	( FALSE )
+	, m_bRecvBackwards	( FALSE )
+	, m_nOffset			( SIZE_UNKNOWN )
+	, m_nLength			( 0 )
+	, m_nPosition		( 0 )
 {
 	ASSUME_LOCK( Transfers.m_pSection );
-
-	m_nProtocol		= nProtocol;
-	m_pDownload		= pSource->m_pDownload;
-	m_pDlPrev		= NULL;
-	m_pDlNext		= NULL;
-	m_pSource		= pSource;
-
-	m_nState		= dtsNull;
-
-	m_nQueuePos		= 0;
-	m_nQueueLen		= 0;
-
-	m_nBandwidth	= 0;
-
-	m_nOffset		= SIZE_UNKNOWN;
-	m_nLength		= 0;
-	m_nPosition		= 0;
-	m_nDownloaded	= 0;
-
-	m_bWantBackwards = m_bRecvBackwards = FALSE;
 
 	m_pDownload->AddTransfer( this );
 }

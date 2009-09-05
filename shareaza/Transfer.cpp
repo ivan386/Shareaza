@@ -1,7 +1,7 @@
 //
 // Transfer.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -35,9 +35,10 @@ static char THIS_FILE[]=__FILE__;
 //////////////////////////////////////////////////////////////////////
 // CTransfer construction
 
-CTransfer::CTransfer()
+CTransfer::CTransfer(PROTOCOLID nProtocol)
+	: CConnection		( nProtocol )
+	, m_nRunCookie		( 0 )
 {
-	m_nRunCookie = 0;
 }
 
 CTransfer::~CTransfer()

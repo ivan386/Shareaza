@@ -42,7 +42,7 @@ static char THIS_FILE[]=__FILE__;
 // CConnection construction
 
 // Make a new CConnection object
-CConnection::CConnection()
+CConnection::CConnection(PROTOCOLID nProtocol)
 	: m_bInitiated( FALSE )
 	, m_bConnected( FALSE )
 	, m_tConnected( 0 )
@@ -51,7 +51,7 @@ CConnection::CConnection()
 	, m_pOutput( NULL )
 	, m_bClientExtended( FALSE )
 	, m_nQueuedRun( 0 )				// DoRun sets it to 0, QueueRun sets it to 2 (do)
-	, m_nProtocol( PROTOCOL_ANY )
+	, m_nProtocol( nProtocol )
 {
 	ZeroMemory( &m_pHost, sizeof( m_pHost ) );
 	m_pHost.sin_family = AF_INET;
