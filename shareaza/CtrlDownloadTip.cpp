@@ -648,11 +648,11 @@ void CDownloadTipCtrl::OnCalcSize(CDC* pDC, CDownloadSource* pSource)
 	}
 
 	// Or an active transfer
-	else if ( pSource->m_pTransfer != NULL )
+	else if ( ! pSource->IsIdle() )
 	{
 		m_sName.Format( _T("%s:%u"),
-			pSource->m_pTransfer->m_sAddress,
-			ntohs( pSource->m_pTransfer->m_pHost.sin_port ) );
+			pSource->GetAddress(),
+			ntohs( pSource->GetPort() ) );
 	}
 
 	// Or just queued
@@ -678,12 +678,13 @@ void CDownloadTipCtrl::OnCalcSize(CDC* pDC, CDownloadSource* pSource)
 	m_pHeaderName.RemoveAll();
 	m_pHeaderValue.RemoveAll();
 
-	if ( pSource->m_pTransfer != NULL && Settings.General.GUIMode != GUI_BASIC )
+	if ( ! pSource->IsIdle() && Settings.General.GUIMode != GUI_BASIC )
 	{
-		for ( int nHeader = 0 ; nHeader < pSource->m_pTransfer->m_pHeaderName.GetSize() ; nHeader++ )
+		const CDownloadTransfer* pTransfer = pSource->GetTransfer();
+		for ( int nHeader = 0 ; nHeader < pTransfer->m_pHeaderName.GetSize() ; nHeader++ )
 		{
-			CString strName		= pSource->m_pTransfer->m_pHeaderName.GetAt( nHeader );
-			CString strValue	= pSource->m_pTransfer->m_pHeaderValue.GetAt( nHeader );
+			CString strName		= pTransfer->m_pHeaderName.GetAt( nHeader );
+			CString strValue	= pTransfer->m_pHeaderValue.GetAt( nHeader );
 
 			if ( strValue.GetLength() > 64 ) strValue = strValue.Left( 64 ) + _T("...");
 
@@ -759,22 +760,20 @@ void CDownloadTipCtrl::OnPaint(CDC* pDC, CDownloadSource* pSource)
 	CString strOf;
 	LoadString( strOf, IDS_GENERAL_OF );
 
-	if ( pSource->m_pTransfer != NULL )
+	if ( ! pSource->IsIdle() )
 	{
-		CDownloadTransfer* pDownload = pSource->m_pTransfer;
+		strStatus = pSource->GetState( TRUE );
 
-		strStatus = pDownload->GetStateText( TRUE );
-
-		if ( pDownload->m_mInput.pLimit != NULL )
+		if ( DWORD nLimit = pSource->GetLimit() )
 		{
 			strSpeed.Format( _T("%s %s %s"),
-				Settings.SmartSpeed( pDownload->GetMeasuredSpeed() ),
+				Settings.SmartSpeed( pSource->GetMeasuredSpeed() ),
 				strOf,
-				Settings.SmartSpeed( *pDownload->m_mInput.pLimit ) );
+				Settings.SmartSpeed( nLimit ) );
 		}
 		else
 		{
-			strSpeed = Settings.SmartSpeed( pSource->m_pTransfer->GetMeasuredSpeed() );
+			strSpeed = Settings.SmartSpeed( pSource->GetMeasuredSpeed() );
 		}
 	}
 	else
@@ -857,7 +856,7 @@ void CDownloadTipCtrl::DrawProgressBar(CDC* pDC, CPoint* pPoint, CDownloadSource
 	pDC->Draw3dRect( &rcCell, CoolInterface.m_crTipBorder, CoolInterface.m_crTipBorder );
 	rcCell.DeflateRect( 1, 1 );
 
-	CFragmentBar::DrawSource( pDC, &rcCell, pSource, CoolInterface.m_crTransferRanges );
+	pSource->Draw( pDC, &rcCell, CoolInterface.m_crTransferRanges );
 
 	rcCell.InflateRect( 1, 1 );
 	pDC->ExcludeClipRect( &rcCell );
@@ -888,9 +887,9 @@ void CDownloadTipCtrl::OnTimer(UINT_PTR nIDEvent)
 	{
 		CDownloadSource* pSource = (CDownloadSource*)m_pContext;
 
-		if ( pSource->m_pTransfer )
+		if ( ! pSource->IsIdle() )
 		{
-			DWORD nSpeed = pSource->m_pTransfer->GetMeasuredSpeed();
+			DWORD nSpeed = pSource->GetMeasuredSpeed();
 			m_pItem->Add( nSpeed );
 			m_pGraph->m_nUpdates++;
 			m_pGraph->m_nMaximum = max( m_pGraph->m_nMaximum, nSpeed );

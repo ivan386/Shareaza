@@ -1,7 +1,7 @@
 //
 // FragmentBar.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -19,9 +19,6 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_FRAGMENTBAR_H__7BAEB279_99A8_411E_AE38_C45853059F19__INCLUDED_)
-#define AFX_FRAGMENTBAR_H__7BAEB279_99A8_411E_AE38_C45853059F19__INCLUDED_
-
 #pragma once
 
 class CDownload;
@@ -38,11 +35,5 @@ public:
 	static void DrawStateBar(CDC* pDC, CRect* prcBar, QWORD nTotal, QWORD nOffset, QWORD nLength, COLORREF crFill, BOOL bTop = FALSE);
 	static void DrawDownload(CDC* pDC, CRect* prcBar, CDownload* pDownload, COLORREF crNatural);
 	static void DrawDownloadSimple(CDC* pDC, CRect* prcBar, CDownload* pDownload, COLORREF crNatural);
-	static void DrawSource(CDC* pDC, CRect* prcBar, CDownloadSource* pSource, COLORREF crNatural);
 	static void DrawUpload(CDC* pDC, CRect* prcBar, CUploadFile* pFile, COLORREF crNatural);
-protected:
-	static void DrawSourceImpl(CDC* pDC, CRect* prcBar, CDownloadSource* pSource);
-
 };
-
-#endif // !defined(AFX_FRAGMENTBAR_H__7BAEB279_99A8_411E_AE38_C45853059F19__INCLUDED_)

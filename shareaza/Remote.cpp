@@ -1085,7 +1085,7 @@ void CRemote::PageDownloads()
 						pDownload->Resume();
 						if ( pSource->m_bPushOnly )
 							pSource->PushRequest();
-						else if ( pSource->m_pTransfer == NULL ) // Only create a new Transfer if there isn't already one 
+						else if ( pSource->IsIdle() ) // Only create a new Transfer if there isn't already one 
 						{	
 							if ( CDownloadTransfer* pTransfer = pSource->CreateTransfer() )
 								pTransfer->Initiate();
@@ -1100,21 +1100,21 @@ void CRemote::PageDownloads()
 					str.Format( _T("%i"), pSource );
 				}
 				
-				if ( Settings.Downloads.ShowSources || ( pSource->m_pTransfer != NULL && pSource->m_pTransfer->m_nState > dtsConnecting ) )
+				if ( Settings.Downloads.ShowSources || pSource->IsConnected() )
 				{
 					Add( _T("source_id"), str );
 					Add( _T("source_agent"), pSource->m_sServer );
 					Add( _T("source_nick"), pSource->m_sNick );
 					
-					if ( pSource->m_pTransfer != NULL )
+					if ( ! pSource->IsIdle() )
 					{
-						Add( _T("source_status"), pSource->m_pTransfer->GetStateText( FALSE ) );
-						Add( _T("source_volume"), Settings.SmartVolume( pSource->m_pTransfer->m_nDownloaded ) );
-						DWORD nSpeed = pSource->m_pTransfer->GetMeasuredSpeed();
+						Add( _T("source_status"), pSource->GetState( FALSE ) );
+						Add( _T("source_volume"), Settings.SmartVolume( pSource->GetDownloaded() ) );
+						DWORD nSpeed = pSource->GetMeasuredSpeed();
 						if ( nSpeed )
 							Add( _T("source_speed"), Settings.SmartSpeed( nSpeed ) );
-						Add( _T("source_address"), pSource->m_pTransfer->m_sAddress );
-						Add( _T("source_caption"), pSource->m_pTransfer->m_sAddress + _T(" - ") + pSource->m_sNick );
+						Add( _T("source_address"), pSource->GetAddress() );
+						Add( _T("source_caption"), pSource->GetAddress() + _T(" - ") + pSource->m_sNick );
 					}
 					else
 					{

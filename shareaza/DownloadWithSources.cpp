@@ -613,7 +613,7 @@ BOOL CDownloadWithSources::AddSourceInternal(CDownloadSource* pSource)
 					// Same protocol
 					bDeleteSource = true;
 				}
-				else if ( pExisting->m_pTransfer != NULL )
+				else if ( ! pExisting->IsIdle() )
 				{
 					// We already downloading so we can remove new non-HTTP source
 					if ( bExistingHTTPSource && ! bHTTPSource )
@@ -848,7 +848,7 @@ CFailedSource* CDownloadWithSources::LookupFailedSource(LPCTSTR pszUrl, bool bRe
 	return pResult;
 }
 
-void CDownloadWithSources::AddFailedSource(CDownloadSource* pSource, bool bLocal, bool bOffline)
+void CDownloadWithSources::AddFailedSource(const CDownloadSource* pSource, bool bLocal, bool bOffline)
 {
 	CString strURL;
 	if ( pSource->m_nProtocol == PROTOCOL_BT && pSource->m_oGUID )

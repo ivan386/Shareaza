@@ -271,7 +271,7 @@ BOOL CDownloadWithTransfers::StartNewTransfer(DWORD tNow)
 		{
 			CDownloadSource* pSource = GetNext( posSource );
 
-			if ( ( pSource->m_pTransfer == NULL ) &&		// does not have a transfer
+			if (   pSource->IsIdle() &&						// does not have a transfer
 				 ( pSource->m_bPushOnly == FALSE ) &&		// Not push
 				 ( pSource->m_nProtocol == PROTOCOL_BT ) &&	// Is a BT source
 				 ( pSource->m_tAttempt == 0 ) )				// Is a "fresh" source from the tracker
@@ -289,7 +289,7 @@ BOOL CDownloadWithTransfers::StartNewTransfer(DWORD tNow)
 	{
 		CDownloadSource* pSource = GetNext( posSource );
 
-		if ( pSource->m_pTransfer != NULL )
+		if ( ! pSource->IsIdle() )
 		{
 			// Already has a transfer
 		}
@@ -434,10 +434,12 @@ BOOL CDownloadWithTransfers::OnAcceptPush(const Hashes::Guid& oClientID, CConnec
 
 	if ( pSource == NULL ) return FALSE;
 
-	if ( pSource->m_pTransfer != NULL )
+	if ( ! pSource->IsIdle() )
 	{
-		if ( pSource->m_pTransfer->m_nState > dtsConnecting ) return FALSE;
-		pSource->m_pTransfer->Close( TRI_TRUE );
+		if ( pSource->IsConnected() )
+			return FALSE;
+
+		pSource->Close();
 	}
 
 	if ( ! pConnection->IsValid() ) return FALSE;
@@ -469,10 +471,12 @@ BOOL CDownloadWithTransfers::OnDonkeyCallback(CEDClient* pClient, CDownloadSourc
 
 	if ( pSource == NULL ) return FALSE;
 
-	if ( pSource->m_pTransfer != NULL )
+	if ( ! pSource->IsIdle() )
 	{
-		if ( pSource->m_pTransfer->m_nState > dtsConnecting ) return FALSE;
-		pSource->m_pTransfer->Close( TRI_TRUE );
+		if ( pSource->IsConnected() )
+			return FALSE;
+
+		pSource->Close();
 	}
 
 	CDownloadTransferED2K* pTransfer = (CDownloadTransferED2K*)pSource->CreateTransfer();

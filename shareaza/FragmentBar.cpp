@@ -178,7 +178,7 @@ void CFragmentBar::DrawDownload(CDC* pDC, CRect* prcBar, CDownload* pDownload, C
 	{
 		CDownloadSource* pSource = pDownload->GetNext( posSource );
 
-		DrawSourceImpl( pDC, prcBar, pSource );
+		pSource->Draw( pDC, prcBar );
 	}
 
 	pDC->FillSolidRect( prcBar, pDownload->IsStarted() ? CoolInterface.m_crFragmentComplete : crNatural );
@@ -193,130 +193,6 @@ void CFragmentBar::DrawDownloadSimple(CDC* pDC, CRect* prcBar, CDownload* pDownl
 	{
 		DrawFragment( pDC, prcBar, pDownload->m_nSize,0, pDownload->GetVolumeComplete(), 
 			CoolInterface.m_crFragmentComplete, FALSE );
-	}
-}
-
-
-//////////////////////////////////////////////////////////////////////
-// CFragmentBar download source
-
-void CFragmentBar::DrawSource(CDC* pDC, CRect* prcBar, CDownloadSource* pSource, COLORREF crNatural)
-{
-	if ( pSource->m_pTransfer != NULL )
-	{
-		if ( pSource->m_pTransfer->m_nLength < SIZE_UNKNOWN )
-		{
-			DrawStateBar( pDC, prcBar, pSource->m_pDownload->m_nSize,
-				pSource->m_pTransfer->m_nOffset, pSource->m_pTransfer->m_nLength,
-				CoolInterface.m_crFragmentRequest, TRUE );
-		}
-
-		switch( pSource->m_pTransfer->m_nProtocol )
-		{
-		case PROTOCOL_G1:
-		case PROTOCOL_G2:
-		case PROTOCOL_HTTP:
-		case PROTOCOL_FTP:
-			// Do nothing more
-			break;
-		case PROTOCOL_ED2K:
-			for ( Fragments::Queue::const_iterator pRequested
-				= static_cast< CDownloadTransferED2K* >( pSource->m_pTransfer )->m_oRequested.begin();
-				pRequested
-				!= static_cast< CDownloadTransferED2K* >( pSource->m_pTransfer )->m_oRequested.end();
-				++pRequested )
-			{
-				DrawStateBar( pDC, prcBar, pSource->m_pDownload->m_nSize,
-					pRequested->begin(), pRequested->size(), CoolInterface.m_crFragmentRequest, TRUE );
-			}
-			break;
-		case PROTOCOL_BT:
-			for ( Fragments::Queue::const_iterator pRequested
-				= static_cast< CDownloadTransferBT* >( pSource->m_pTransfer )->m_oRequested.begin();
-				pRequested
-				!= static_cast< CDownloadTransferBT* >( pSource->m_pTransfer )->m_oRequested.end();
-				++pRequested )
-			{
-				DrawStateBar( pDC, prcBar, pSource->m_pDownload->m_nSize,
-					pRequested->begin(), pRequested->size(), CoolInterface.m_crFragmentRequest, TRUE );
-			}
-			break;
-		case PROTOCOL_NULL:
-		case PROTOCOL_ANY:
-		default:
-			;
-		}
-	}
-
-	DrawSourceImpl( pDC, prcBar, pSource );
-
-	if ( !pSource->m_oAvailable.empty() )
-	{
-		for ( Fragments::List::const_iterator pFragment = pSource->m_oAvailable.begin();
-			pFragment != pSource->m_oAvailable.end(); ++pFragment )
-		{
-			DrawFragment( pDC, prcBar, pSource->m_pDownload->m_nSize,
-				pFragment->begin(), pFragment->size(), crNatural, FALSE );
-		}
-		
-		pDC->FillSolidRect( prcBar, CoolInterface.m_crWindow );
-	}
-	else if ( pSource->IsOnline() && pSource->HasUsefulRanges() || !pSource->m_oPastFragments.empty() )
-	{
-		pDC->FillSolidRect( prcBar, crNatural );
-	}
-	else
-	{
-		pDC->FillSolidRect( prcBar, CoolInterface.m_crWindow );
-	}
-}
-
-void CFragmentBar::DrawSourceImpl(CDC* pDC, CRect* prcBar, CDownloadSource* pSource)
-{
-	static COLORREF crFill[] =
-	{
-		CoolInterface.m_crFragmentSource1, CoolInterface.m_crFragmentSource2, CoolInterface.m_crFragmentSource3,
-		CoolInterface.m_crFragmentSource4, CoolInterface.m_crFragmentSource5, CoolInterface.m_crFragmentSource6
-	};
-	
-	COLORREF crTransfer;
-	
-	if ( pSource->m_bReadContent )
-	{
-		crTransfer = crFill[ pSource->GetColour() ];
-	}
-	else
-	{
-		crTransfer = CoolInterface.m_crFragmentComplete;
-	}
-	
-	crTransfer = CCoolInterface::CalculateColour( crTransfer, CoolInterface.m_crHighlight, 90 );
-	
-	if ( pSource->m_pTransfer != NULL )
-	{
-		if ( pSource->m_pTransfer->m_nState == dtsDownloading &&
-			 pSource->m_pTransfer->m_nOffset < SIZE_UNKNOWN )
-		{
-			if ( pSource->m_pTransfer->m_bRecvBackwards )
-			{
-				DrawFragment( pDC, prcBar, pSource->m_pDownload->m_nSize,
-					pSource->m_pTransfer->m_nOffset + pSource->m_pTransfer->m_nLength - pSource->m_pTransfer->m_nPosition,
-					pSource->m_pTransfer->m_nPosition, crTransfer, TRUE );
-			}
-			else
-			{
-				DrawFragment( pDC, prcBar, pSource->m_pDownload->m_nSize,
-					pSource->m_pTransfer->m_nOffset,
-					pSource->m_pTransfer->m_nPosition, crTransfer, TRUE );
-			}
-		}
-	}
-	
-	for ( Fragments::List::const_iterator pFragment = pSource->m_oPastFragments.begin();
-		pFragment != pSource->m_oPastFragments.end(); ++pFragment )
-	{
-		DrawFragment( pDC, prcBar, pSource->m_pDownload->m_nSize,
-			pFragment->begin(), pFragment->size(), crTransfer, TRUE );
 	}
 }
 

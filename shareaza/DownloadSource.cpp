@@ -22,24 +22,25 @@
 #include "StdAfx.h"
 #include "Shareaza.h"
 #include "Settings.h"
+#include "CoolInterface.h"
 #include "Download.h"
-#include "Downloads.h"
 #include "DownloadSource.h"
-#include "DownloadTransferHTTP.h"
-#include "DownloadTransferFTP.h"
-#include "DownloadTransferED2K.h"
 #include "DownloadTransferBT.h"
-#include "FragmentedFile.h"
-
-#include "Neighbours.h"
-#include "QueryHit.h"
-#include "Network.h"
-#include "VendorCache.h"
-#include "EDClients.h"
+#include "DownloadTransferED2K.h"
+#include "DownloadTransferFTP.h"
+#include "DownloadTransferHTTP.h"
+#include "Downloads.h"
 #include "EDClient.h"
+#include "EDClients.h"
 #include "EDPacket.h"
+#include "FragmentBar.h"
+#include "FragmentedFile.h"
+#include "Neighbours.h"
+#include "Network.h"
+#include "QueryHit.h"
 #include "ShareazaURL.h"
 #include "Transfers.h"
+#include "VendorCache.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -431,23 +432,27 @@ void CDownloadSource::Serialize(CArchive& ar, int nVersion /* DOWNLOAD_SER_VERSI
 //////////////////////////////////////////////////////////////////////
 // CDownloadSource create transfer
 
-CDownloadTransfer* CDownloadSource::CreateTransfer()
+CDownloadTransfer* CDownloadSource::CreateTransfer(LPVOID pParam)
 {
 	ASSUME_LOCK( Transfers.m_pSection );
 	ASSERT( m_pTransfer == NULL );
 	
 	switch ( m_nProtocol )
 	{
-	case PROTOCOL_G1:	return ( m_pTransfer = new CDownloadTransferHTTP( this ) );
-	case PROTOCOL_G2:	return ( m_pTransfer = new CDownloadTransferHTTP( this ) );
-	case PROTOCOL_ED2K:	return ( m_pTransfer = new CDownloadTransferED2K( this ) );
-	case PROTOCOL_HTTP:	return ( m_pTransfer = new CDownloadTransferHTTP( this ) );
-	case PROTOCOL_FTP:	return ( m_pTransfer = new CDownloadTransferFTP( this ) );
-	case PROTOCOL_BT:	return ( m_pTransfer = new CDownloadTransferBT( this, NULL ) );
-	case PROTOCOL_NULL:
-	case PROTOCOL_ANY:
+	case PROTOCOL_G1:
+		return ( m_pTransfer = new CDownloadTransferHTTP( this ) );
+	case PROTOCOL_G2:
+		return ( m_pTransfer = new CDownloadTransferHTTP( this ) );
+	case PROTOCOL_ED2K:
+		return ( m_pTransfer = new CDownloadTransferED2K( this ) );
+	case PROTOCOL_HTTP:
+		return ( m_pTransfer = new CDownloadTransferHTTP( this ) );
+	case PROTOCOL_FTP:
+		return ( m_pTransfer = new CDownloadTransferFTP( this ) );
+	case PROTOCOL_BT:
+		return ( m_pTransfer = new CDownloadTransferBT( this, (CBTClient*)pParam ) );
 	default:
-		return ( NULL );
+		return NULL;
 	}
 }
 
@@ -510,7 +515,19 @@ BOOL CDownloadSource::CanInitiate(BOOL bNetwork, BOOL bEstablished)
 	{
 		// Don't try to connect to sources which we determined were bad
 		// We will check them later after 2 hours cleanup
-		RemoveIf( TRUE, !m_pDownload->IsSeeding() );
+		Close();
+
+		if ( Settings.Downloads.NeverDrop )
+		{
+			m_bKeep = TRUE;
+			m_tAttempt = CalcFailureDelay();
+
+			m_pDownload->SetModified();
+		}
+		else
+			// Add to the bad sources list (X-NAlt) if bBan == TRUE
+			m_pDownload->RemoveSource( this, ! m_pDownload->IsSeeding() );
+
 		return FALSE;
 	}
 
@@ -518,6 +535,24 @@ BOOL CDownloadSource::CanInitiate(BOOL bNetwork, BOOL bEstablished)
 		return FALSE;
 	
 	return bEstablished || Downloads.AllowMoreTransfers( (IN_ADDR*)&m_pAddress );
+}
+
+bool CDownloadSource::IsPreviewCapable() const
+{
+	ASSUME_LOCK( Transfers.m_pSection );
+
+	switch ( m_nProtocol )
+	{
+	case PROTOCOL_HTTP:
+		return ( m_bPreview != FALSE );
+
+	case PROTOCOL_ED2K:
+		return ( m_pTransfer &&
+			static_cast< CDownloadTransferED2K* >( m_pTransfer )->m_pClient->m_bEmPreview );
+
+	default:
+		return false;
+	}	
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -531,12 +566,13 @@ void CDownloadSource::Remove(BOOL bCloseTransfer, BOOL bBan)
 	{
 		if ( bCloseTransfer )
 		{
-			m_pTransfer->Close( TRI_TRUE );
+			Close();
 			ASSERT( m_pTransfer == NULL );
 		}
 		else
 		{
-			m_pTransfer->m_pSource = NULL;
+			// Transfer already closed
+			ASSERT( m_pTransfer->m_pSource == NULL );
 			m_pTransfer = NULL;
 		}
 	}
@@ -553,8 +589,8 @@ void CDownloadSource::OnFailure(BOOL bNondestructive, DWORD nRetryAfter)
 
 	if ( m_pTransfer != NULL )
 	{
-		m_pTransfer->SetState(dtsNull);
-		m_pTransfer->m_pSource = NULL;
+		// Transfer already closed
+		ASSERT( m_pTransfer->m_pSource == NULL );
 		m_pTransfer = NULL;
 	}
 
@@ -565,7 +601,9 @@ void CDownloadSource::OnFailure(BOOL bNondestructive, DWORD nRetryAfter)
 
 	int nMaxFailures = Settings.Downloads.MaxAllowedFailures;
 
-	if ( nMaxFailures < 20 && m_pDownload->GetSourceCount() > Settings.Downloads.StartDroppingFailedSourcesNumber ) nMaxFailures = 0;
+	if ( nMaxFailures < 20 &&
+		m_pDownload->GetSourceCount() > Settings.Downloads.StartDroppingFailedSourcesNumber )
+		nMaxFailures = 0;
 
 	if ( bNondestructive || ( ++m_nFailures < nMaxFailures ) )
 	{
@@ -574,39 +612,16 @@ void CDownloadSource::OnFailure(BOOL bNondestructive, DWORD nRetryAfter)
 	}
 	else
 	{
-		RemoveIf( TRUE, ! m_pDownload->IsSeeding() );
-	}
-}
-
-void CDownloadSource::RemoveIf(BOOL bCloseTransfer, BOOL bBan)
-{
-	ASSUME_LOCK( Transfers.m_pSection );
-
-	if ( m_pTransfer != NULL )
-	{
-		if ( bCloseTransfer )
+		if ( Settings.Downloads.NeverDrop )
 		{
-			m_pTransfer->Close( TRI_TRUE );
-			ASSERT( m_pTransfer == NULL );
+			// Keep source
+			m_bKeep = TRUE;
+			m_tAttempt = CalcFailureDelay();
+			m_pDownload->SetModified();
 		}
 		else
-		{
-			m_pTransfer->m_pSource = NULL;
-			m_pTransfer = NULL;
-		}
-	}
-
-	if ( Settings.Downloads.NeverDrop )
-	{
-		m_bKeep = TRUE;
-		m_tAttempt = CalcFailureDelay();
-
-		m_pDownload->SetModified();
-	}
-	else
-	{
-		// Add to the bad sources list (X-NAlt) if bBan == TRUE
-		m_pDownload->RemoveSource( this, bBan );
+			// Add to the bad sources list (X-NAlt) if bBan == TRUE
+			m_pDownload->RemoveSource( this, ! m_pDownload->IsSeeding() );
 	}
 }
 
@@ -654,8 +669,8 @@ void CDownloadSource::OnResumeClosed()
 
 	if ( m_pTransfer != NULL )
 	{
-		m_pTransfer->SetState(dtsNull);
-		m_pTransfer->m_pSource = NULL;
+		// Transfer already closed
+		ASSERT( m_pTransfer->m_pSource == NULL );
 		m_pTransfer = NULL;
 	}
 
@@ -939,4 +954,133 @@ int CDownloadSource::GetColour()
 	if ( m_nColour >= 0 ) return m_nColour;
 	m_nColour = m_pDownload->GetSourceColour();
 	return m_nColour;
+}
+
+void CDownloadSource::Close()
+{
+	ASSUME_LOCK( Transfers.m_pSection );
+
+	if ( m_pTransfer )
+	{
+		m_pTransfer->Close( TRI_TRUE );
+		ASSERT( m_pTransfer == NULL );
+	}
+}
+
+void CDownloadSource::Draw(CDC* pDC, CRect* prcBar, COLORREF crNatural)
+{
+	if ( ! IsIdle() )
+	{
+		if ( m_pTransfer->m_nLength < SIZE_UNKNOWN )
+		{
+			CFragmentBar::DrawStateBar( pDC, prcBar, m_pDownload->m_nSize,
+				m_pTransfer->m_nOffset, m_pTransfer->m_nLength,
+				CoolInterface.m_crFragmentRequest, TRUE );
+		}
+
+		switch( GetTransferProtocol() )
+		{
+		case PROTOCOL_ED2K:
+			for ( Fragments::Queue::const_iterator pRequested
+				= static_cast< CDownloadTransferED2K* >( m_pTransfer )->m_oRequested.begin();
+				pRequested
+				!= static_cast< CDownloadTransferED2K* >( m_pTransfer )->m_oRequested.end();
+				++pRequested )
+			{
+				CFragmentBar::DrawStateBar( pDC, prcBar, m_pDownload->m_nSize,
+					pRequested->begin(), pRequested->size(), CoolInterface.m_crFragmentRequest, TRUE );
+			}
+			break;
+
+		case PROTOCOL_BT:
+			for ( Fragments::Queue::const_iterator pRequested
+				= static_cast< CDownloadTransferBT* >( m_pTransfer )->m_oRequested.begin();
+				pRequested
+				!= static_cast< CDownloadTransferBT* >( m_pTransfer )->m_oRequested.end();
+				++pRequested )
+			{
+				CFragmentBar::DrawStateBar( pDC, prcBar, m_pDownload->m_nSize,
+					pRequested->begin(), pRequested->size(), CoolInterface.m_crFragmentRequest, TRUE );
+			}
+			break;
+
+		default:
+			// Do nothing more
+			;
+		}
+	}
+
+	Draw( pDC, prcBar );
+
+	if ( ! m_oAvailable.empty() )
+	{
+		for ( Fragments::List::const_iterator pFragment = m_oAvailable.begin();
+			pFragment != m_oAvailable.end(); ++pFragment )
+		{
+			CFragmentBar::DrawFragment( pDC, prcBar, m_pDownload->m_nSize,
+				pFragment->begin(), pFragment->size(), crNatural, FALSE );
+		}
+		
+		pDC->FillSolidRect( prcBar, CoolInterface.m_crWindow );
+	}
+	else if ( IsOnline() && HasUsefulRanges() || !m_oPastFragments.empty() )
+	{
+		pDC->FillSolidRect( prcBar, crNatural );
+	}
+	else
+	{
+		pDC->FillSolidRect( prcBar, CoolInterface.m_crWindow );
+	}
+}
+
+void CDownloadSource::Draw(CDC* pDC, CRect* prcBar)
+{
+	ASSUME_LOCK( Transfers.m_pSection );
+
+	static COLORREF crFill[] =
+	{
+		CoolInterface.m_crFragmentSource1, CoolInterface.m_crFragmentSource2,
+		CoolInterface.m_crFragmentSource3, CoolInterface.m_crFragmentSource4,
+		CoolInterface.m_crFragmentSource5, CoolInterface.m_crFragmentSource6
+	};
+	
+	COLORREF crTransfer;
+	
+	if ( m_bReadContent )
+	{
+		crTransfer = crFill[ GetColour() ];
+	}
+	else
+	{
+		crTransfer = CoolInterface.m_crFragmentComplete;
+	}
+	
+	crTransfer = CCoolInterface::CalculateColour( crTransfer, CoolInterface.m_crHighlight, 90 );
+	
+	if ( ! IsIdle() )
+	{
+		if ( GetState() == dtsDownloading &&
+			 m_pTransfer->m_nOffset < SIZE_UNKNOWN )
+		{
+			if ( m_pTransfer->m_bRecvBackwards )
+			{
+				CFragmentBar::DrawFragment( pDC, prcBar, m_pDownload->m_nSize,
+					m_pTransfer->m_nOffset + m_pTransfer->m_nLength - m_pTransfer->m_nPosition,
+					m_pTransfer->m_nPosition, crTransfer, TRUE );
+			}
+			else
+			{
+				CFragmentBar::DrawFragment( pDC, prcBar, m_pDownload->m_nSize,
+					m_pTransfer->m_nOffset,
+					m_pTransfer->m_nPosition, crTransfer, TRUE );
+			}
+		}
+	}
+	
+	for ( Fragments::List::const_iterator pFragment = m_oPastFragments.begin();
+		pFragment != m_oPastFragments.end(); ++pFragment )
+	{
+		CFragmentBar::DrawFragment( pDC, prcBar, m_pDownload->m_nSize,
+			pFragment->begin(), pFragment->size(), crTransfer, TRUE );
+	}
 }

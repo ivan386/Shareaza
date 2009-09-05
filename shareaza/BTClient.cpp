@@ -1003,8 +1003,7 @@ BOOL CBTClient::OnSourceRequest(CBTPacket* /*pPacket*/)
 	{
 		CDownloadSource* pSource = m_pDownload->GetNext( posSource );
 
-		if ( pSource->m_pTransfer == NULL ) continue;
-		if ( pSource->m_pTransfer->m_nState < dtsRequesting ) continue;
+		if ( ! pSource->IsConnected() ) continue;
 		
 		if ( pSource->m_nProtocol == PROTOCOL_BT )
 		{

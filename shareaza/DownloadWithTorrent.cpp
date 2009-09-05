@@ -620,15 +620,11 @@ CDownloadTransferBT* CDownloadWithTorrent::CreateTorrentTransfer(CBTClient* pCli
 		if ( ! AddSourceInternal( pSource ) ) return NULL;
 	}
 
-	if ( pSource->m_pTransfer != NULL )
-	{
+	if ( ! pSource->IsIdle() )
 		// A download transfer already exists
 		return NULL;
-	}
 
-	pSource->m_pTransfer = new CDownloadTransferBT( pSource, pClient );
-
-	return (CDownloadTransferBT*)pSource->m_pTransfer;
+	return (CDownloadTransferBT*)pSource->CreateTransfer( pClient );
 }
 
 void CDownloadWithTorrent::OnFinishedTorrentBlock(DWORD nBlock)

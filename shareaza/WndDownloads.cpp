@@ -583,7 +583,7 @@ void CDownloadsWnd::Prepare()
 				m_bSelAny = TRUE;
 				m_bSelSource = TRUE;
 				m_bSelSourceExtended = pSource->m_bClientExtended;
-				if ( pSource->m_pTransfer == NULL )
+				if ( pSource->IsIdle() )
 					m_bSelIdleSource = TRUE;
 				else
 					m_bSelActiveSource = TRUE;
@@ -596,18 +596,13 @@ void CDownloadsWnd::Prepare()
 			}
 
 			// Check if we could get remote previews (only from the connected sources for the efficiency)
-			if ( !bPreviewDone && pDownload->m_bSelected && !pDownload->m_bRemotePreviewCapable &&
-				 !pSource->m_bPreviewRequestSent && pSource->IsOnline() )
+			if ( ! bPreviewDone &&
+				   pDownload->m_bSelected &&
+				 ! pDownload->m_bRemotePreviewCapable &&
+				 ! pSource->m_bPreviewRequestSent &&
+				   pSource->IsOnline() )
 			{
-				if ( pSource->m_nProtocol == PROTOCOL_ED2K )
-				{
-					// m_pTransfer is checked for validity by pSource->IsOnline()
-					if ( static_cast< CDownloadTransferED2K* >( pSource->m_pTransfer )->m_pClient->m_bEmPreview )
-					{
-						pDownload->m_bRemotePreviewCapable = TRUE;
-					}
-				}
-				else if ( pSource->m_nProtocol == PROTOCOL_HTTP && pSource->m_bPreview )
+				if ( pSource->IsPreviewCapable() )
 				{
 					pDownload->m_bRemotePreviewCapable = TRUE;
 				}
@@ -904,7 +899,8 @@ void CDownloadsWnd::OnDownloadsRemotePreview()
 				if ( pSource->m_nProtocol == PROTOCOL_ED2K )
 				{
 					// m_pTransfer is checked for validity by pSource->IsOnline()
-					CDownloadTransferED2K* pEDTransfer = static_cast< CDownloadTransferED2K* >( pSource->m_pTransfer );
+					const CDownloadTransferED2K* pEDTransfer =
+						static_cast< const CDownloadTransferED2K* >( pSource->GetTransfer() );
 					if ( pEDTransfer->m_pClient->m_bEmPreview )
 					{
 						pEDTransfer->m_pClient->SendPreviewRequest( pDownload );
@@ -1359,7 +1355,7 @@ void CDownloadsWnd::OnTransfersConnect()
 		{
 			CDownloadSource* pSource = pDownload->GetNext( posSource );
 
-			if ( pSource->m_bSelected && pSource->m_pTransfer == NULL )
+			if ( pSource->m_bSelected && pSource->IsIdle() )
 			{
 				if ( pSource->m_nProtocol != PROTOCOL_ED2K )
 				{
@@ -1399,9 +1395,9 @@ void CDownloadsWnd::OnTransfersDisconnect()
 		{
 			CDownloadSource* pSource = pDownload->GetNext( posSource );
 
-			if ( pSource->m_bSelected && pSource->m_pTransfer != NULL )
+			if ( pSource->m_bSelected && ! pSource->IsIdle() )
 			{
-				pSource->m_pTransfer->Close( TRI_TRUE );
+				pSource->Close();
 			}
 		}
 	}
