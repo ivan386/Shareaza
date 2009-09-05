@@ -104,10 +104,6 @@ Source: "Remote\en\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritere
 ; Albanian
 Source: "Remote\sq\*"; DestDir: "{app}\Remote"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Excludes: ".svn"; Languages: sq; Tasks: language
 
-
-; Common files
-Source: "setup\license\default.rtf"; DestDir: "{app}\Uninstall"; DestName: "Official license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension
-
 ; Install default license
 Source: "setup\license\default.rtf"; DestDir: "{app}\Uninstall"; DestName: "license.rtf"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Tasks: not language
 ; Install localized license

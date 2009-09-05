@@ -632,6 +632,25 @@ void CSettings::Load()
 	CreateDirectory( Downloads.TorrentPath );
 	CreateDirectory( Downloads.CollectionPath );
 
+	if ( Live.FirstRun )
+	{
+		// Delete old Shareaza installers
+		CFileFind ff;
+		BOOL res = ff.FindFile( Downloads.CompletePath + _T("\\Shareaza_*.exe") );
+		while ( res )
+		{
+			res = ff.FindNextFile();
+			DeleteFile( ff.GetFilePath() );
+		}
+
+		// Copy installer to complete folder
+		CString strInstaller = CRegistry::GetString( _T(""), _T("Installer") );
+		if ( PathFileExists( strInstaller ) )
+		{
+			CopyFile( strInstaller, Downloads.CompletePath + _T("\\") + PathFindFileName( strInstaller ), FALSE );
+		}
+	}
+
 	// Set interface
 	Interface.LowResMode		= ! ( GetSystemMetrics( SM_CYSCREEN ) > 600 );
 	if ( Live.FirstRun ) Search.AdvancedPanel = ! Interface.LowResMode;
