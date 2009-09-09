@@ -176,6 +176,9 @@ protected:
 	friend class CDeleteFileDlg;
 };
 
+typedef CList< const CLibraryFile* > CFileList;
+typedef CMap< DWORD_PTR, DWORD_PTR, CLibraryFile*, CLibraryFile* > CIndexMap;
+typedef CMap< CString, const CString&, CLibraryFile*, CLibraryFile* > CFileMap;
 
 class CSharedSource
 {

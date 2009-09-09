@@ -247,13 +247,13 @@ bool CLibrary::OnQueryHits(const CQueryHit* pHits)
 //////////////////////////////////////////////////////////////////////
 // CLibrary search
 
-CList< const CLibraryFile* >* CLibrary::Search(CQuerySearch* pSearch, int nMaximum, bool bLocal, bool bAvailableOnly)
+CFileList* CLibrary::Search(CQuerySearch* pSearch, int nMaximum, bool bLocal, bool bAvailableOnly)
 {
 	CSingleLock oLock( &m_pSection );
 
 	if ( !oLock.Lock( 50 ) ) return NULL;
 
-	CList< const CLibraryFile* >* pHits = LibraryMaps.Search( pSearch, nMaximum, bLocal, bAvailableOnly );
+	CFileList* pHits = LibraryMaps.Search( pSearch, nMaximum, bLocal, bAvailableOnly );
 
 	if ( pHits == NULL && pSearch != NULL )
 	{

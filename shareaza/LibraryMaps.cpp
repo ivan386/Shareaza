@@ -23,8 +23,6 @@
 #include "Shareaza.h"
 #include "Library.h"
 #include "LibraryMaps.h"
-#include "SharedFile.h"
-
 #include "Application.h"
 #include "QuerySearch.h"
 
@@ -752,9 +750,9 @@ void CLibraryMaps::CullDeletedFiles(CLibraryFile* pMatch)
 //////////////////////////////////////////////////////////////////////
 // CLibraryMaps search
 
-CList< const CLibraryFile* >* CLibraryMaps::Search(CQuerySearch* pSearch, int nMaximum, BOOL bLocal, BOOL bAvailableOnly)
+CFileList* CLibraryMaps::Search(CQuerySearch* pSearch, int nMaximum, BOOL bLocal, BOOL bAvailableOnly)
 {
-	CList< const CLibraryFile* >* pHits = NULL;
+	CFileList* pHits = NULL;
 	if ( pSearch == NULL )
 	{
 		for ( POSITION pos = GetFileIterator() ; pos ; )
@@ -766,7 +764,7 @@ CList< const CLibraryFile* >* CLibraryMaps::Search(CQuerySearch* pSearch, int nM
 				if ( bLocal || ( pFile->IsShared() && pFile->m_oSHA1 ) )
 				{
 					if ( !pHits )
-						pHits = new CList< const CLibraryFile* >( 64 );
+						pHits = new CFileList( 64 );
 
 					pHits->AddTail( pFile );
 					if ( nMaximum && pHits->GetCount() >= nMaximum ) break;
@@ -779,7 +777,7 @@ CList< const CLibraryFile* >* CLibraryMaps::Search(CQuerySearch* pSearch, int nM
 		if ( CLibraryFile* pFile = LookupFileBySHA1( pSearch->m_oSHA1, ! bLocal, bAvailableOnly ) )
 		{
 			if ( !pHits )
-				pHits = new CList< const CLibraryFile* >( 64 );
+				pHits = new CFileList( 64 );
 
 			pHits->AddTail( pFile );
 			if ( ! bLocal )
@@ -794,7 +792,7 @@ CList< const CLibraryFile* >* CLibraryMaps::Search(CQuerySearch* pSearch, int nM
 		if ( CLibraryFile* pFile = LookupFileByTiger( pSearch->m_oTiger, ! bLocal, bAvailableOnly ) )
 		{
 			if ( !pHits )
-				pHits = new CList< const CLibraryFile* >( 64 );
+				pHits = new CFileList( 64 );
 
 			pHits->AddTail( pFile );
 			if ( ! bLocal )
@@ -809,7 +807,7 @@ CList< const CLibraryFile* >* CLibraryMaps::Search(CQuerySearch* pSearch, int nM
 		if ( CLibraryFile* pFile = LookupFileByED2K( pSearch->m_oED2K, ! bLocal, bAvailableOnly ) )
 		{
 			if ( !pHits )
-				pHits = new CList< const CLibraryFile* >( 64 );
+				pHits = new CFileList( 64 );
 
 			pHits->AddTail( pFile );
 			if ( ! bLocal )
@@ -824,7 +822,7 @@ CList< const CLibraryFile* >* CLibraryMaps::Search(CQuerySearch* pSearch, int nM
 		if ( CLibraryFile* pFile = LookupFileByBTH( pSearch->m_oBTH, ! bLocal, bAvailableOnly ) )
 		{
 			if ( !pHits )
-				pHits = new CList< const CLibraryFile* >( 64 );
+				pHits = new CFileList( 64 );
 
 			pHits->AddTail( pFile );
 			if ( ! bLocal )
@@ -848,7 +846,7 @@ CList< const CLibraryFile* >* CLibraryMaps::Search(CQuerySearch* pSearch, int nM
 				if ( validAndEqual( pFile->m_oMD5, pSearch->m_oMD5 ) )
 				{
 					if ( !pHits )
-						pHits = new CList< const CLibraryFile* >( 64 );
+						pHits = new CFileList( 64 );
 
 					pHits->AddTail( pFile );
 				}
@@ -859,7 +857,7 @@ CList< const CLibraryFile* >* CLibraryMaps::Search(CQuerySearch* pSearch, int nM
 			if ( CLibraryFile* pFile = LookupFileByMD5( pSearch->m_oMD5, ! bLocal, bAvailableOnly ) )
 			{
 				if ( !pHits )
-					pHits = new CList< const CLibraryFile* >( 64 );
+					pHits = new CFileList( 64 );
 
 				pHits->AddTail( pFile );
 				if ( ! bLocal )
@@ -934,7 +932,7 @@ void CLibraryMaps::Serialize2(CArchive& ar, int nVersion)
 
 		for ( POSITION pos = m_pDeleted.GetHeadPosition() ; pos ; )
 		{
-			CLibraryFile* pFile = m_pDeleted.GetNext( pos );
+			CLibraryFile* pFile = const_cast< CLibraryFile* >( m_pDeleted.GetNext( pos ) );
 			pFile->Serialize( ar, nVersion );
 		}
 	}

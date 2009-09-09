@@ -1152,7 +1152,7 @@ void CLibraryFrame::RunLocalSearch(auto_ptr< CQuerySearch > pSearch)
 	{
 		CQuickLock oLock( Library.m_pSection );
 
-		CList< const CLibraryFile* >* pFiles = Library.Search( pSearch.get(), 0, TRUE );
+		CFileList* pFiles = Library.Search( pSearch.get(), 0, TRUE );
 
 		if ( pFiles != NULL )
 		{

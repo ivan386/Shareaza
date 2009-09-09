@@ -21,8 +21,9 @@
 
 #pragma once
 
+#include "SharedFile.h"
+
 class CLibrary;
-class CLibraryFile;
 class CQuerySearch;
 
 
@@ -37,15 +38,15 @@ public:
 
 // Attributes
 protected:
-	CMap< DWORD_PTR, DWORD_PTR, CLibraryFile*, CLibraryFile* > m_pIndexMap;
-	CMap< CString, const CString&, CLibraryFile*, CLibraryFile* > m_pNameMap;
-	CMap< CString, const CString&, CLibraryFile*, CLibraryFile* > m_pPathMap;
+	CIndexMap			m_pIndexMap;
+	CFileMap			m_pNameMap;
+	CFileMap			m_pPathMap;
 	CLibraryFile**		m_pSHA1Map;
 	CLibraryFile**		m_pTigerMap;
 	CLibraryFile**		m_pED2KMap;
 	CLibraryFile**		m_pBTHMap;
 	CLibraryFile**		m_pMD5Map;
-	CList< CLibraryFile* >	m_pDeleted;
+	CFileList			m_pDeleted;
 	DWORD				m_nNextIndex;
 	DWORD				m_nFiles;
 	QWORD				m_nVolume;
@@ -75,7 +76,7 @@ protected:
 	void			OnFileAdd(CLibraryFile* pFile);
 	void			OnFileRemove(CLibraryFile* pFile);
 	void			CullDeletedFiles(CLibraryFile* pMatch);
-	CList< const CLibraryFile* >* Search(CQuerySearch* pSearch, int nMaximum, BOOL bLocal, BOOL bAvailableOnly);
+	CFileList*		Search(CQuerySearch* pSearch, int nMaximum, BOOL bLocal, BOOL bAvailableOnly);
 	BOOL			CheckFileAttributes(CLibraryFile* pFile, bool bMinSize, bool bMaxSize, QWORD nMinSize, QWORD nMaxSize, BOOL bSharedOnly, BOOL bAvailableOnly) const;
 	void			Serialize1(CArchive& ar, int nVersion);
 	void			Serialize2(CArchive& ar, int nVersion);

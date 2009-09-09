@@ -21,11 +21,10 @@
 
 #pragma once
 
-class CLibraryFile;
+#include "SharedFile.h"
+
 class CQueryHashTable;
 class CQuerySearch;
-
-typedef CList< const CLibraryFile* > CFilePtrList;
 
 
 class CLibraryDictionary
@@ -40,16 +39,16 @@ public:
 	void					Invalidate();						// Force dictionary and hash table to re-build
 	const CQueryHashTable*	GetHashTable();
 	void					Clear();
-	CFilePtrList*			Search(const CQuerySearch& oSearch, int nMaximum = 0, bool bLocal = false, bool bAvailableOnly = true);
+	CFileList*			Search(const CQuerySearch& oSearch, int nMaximum = 0, bool bLocal = false, bool bAvailableOnly = true);
 	void					Serialize(CArchive& ar, int nVersion);
 
 private:
 	class CWord
 	{
 	public:
-		CWord(CFilePtrList* pList = NULL) : m_pList( pList ), m_nCount( 1 ) {}
+		CWord(CFileList* pList = NULL) : m_pList( pList ), m_nCount( 1 ) {}
 		CWord(const CWord& oWord) : m_pList( oWord.m_pList ), m_nCount( oWord.m_nCount ) {}
-		CFilePtrList*	m_pList;
+		CFileList*	m_pList;
 		DWORD			m_nCount;
 	};
 	typedef CMap< CString, const CString&, CWord, CWord& > CWordMap;

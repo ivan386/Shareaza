@@ -23,10 +23,10 @@
 
 #include "ComObject.h"
 #include "ThreadImpl.h"
+#include "SharedFile.h"
 
 class CQueryHit;
 class CQuerySearch;
-class CLibraryFile;
 class CLibraryFolder;
 class CAlbumFolder;
 
@@ -84,7 +84,7 @@ protected:
 public:
 	// Update library files alternate sources
 	bool			OnQueryHits(const CQueryHit* pHits);
-	CList< const CLibraryFile* >*	Search(CQuerySearch* pSearch, int nMaximum = 0, bool bLocal = false, bool bAvailableOnly = false);
+	CFileList*		Search(CQuerySearch* pSearch, int nMaximum = 0, bool bLocal = false, bool bAvailableOnly = false);
 	void			Clear();
 	BOOL			Load();
 	BOOL			Save();

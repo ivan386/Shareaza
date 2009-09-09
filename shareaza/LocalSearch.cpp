@@ -233,7 +233,7 @@ INT_PTR CLocalSearch::ExecuteSharedFiles(INT_PTR nMaximum)
 	if ( ! oLock.Lock( 1000 ) )
 		return 0;
 
-	CList< const CLibraryFile* >* pFiles = Library.Search(
+	CFileList* pFiles = Library.Search(
 		m_pSearch, static_cast< int >( nMaximum ), FALSE,
 		// Ghost files only for G2
 		m_nProtocol != PROTOCOL_G2 );
@@ -243,7 +243,7 @@ INT_PTR CLocalSearch::ExecuteSharedFiles(INT_PTR nMaximum)
 		return 0;
 
 	INT_PTR nHits = 0;
-	CList< const CLibraryFile* > oFilesInPacket;
+	CFileList oFilesInPacket;
 
 	for ( POSITION pos = pFiles->GetHeadPosition() ;
 		pos && ( ! nMaximum || ( nHits + oFilesInPacket.GetCount() < nMaximum ) ); )
