@@ -638,7 +638,7 @@ BOOL CUploadTransferHTTP::OnHeadersComplete()
 					pFile = NULL;
 			}
 			if ( ! pFile )
-				pFile = LibraryMaps.LookupFileByName( strFile, TRUE, TRUE );
+				pFile = LibraryMaps.LookupFileByName( strFile, m_nSize, TRUE, TRUE );
 			if ( pFile )
 				return RequestSharedFile( pFile, oLock );
 		}
@@ -656,7 +656,7 @@ BOOL CUploadTransferHTTP::OnHeadersComplete()
 		CSingleLock oLock( &Library.m_pSection );
 		if ( oLock.Lock( 1000 ) )
 		{
-			if ( CLibraryFile* pFile = LibraryMaps.LookupFileByName( strFile, TRUE, TRUE ) )
+			if ( CLibraryFile* pFile = LibraryMaps.LookupFileByName( strFile, m_nSize, TRUE, TRUE ) )
 				return RequestSharedFile( pFile, oLock );
 		}
 		else

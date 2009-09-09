@@ -51,9 +51,7 @@ CExistingFileDlg::Action CExistingFileDlg::CheckExisting(const CShareazaFile* pF
 	if ( ! pLock.Lock( 1000 ) )
 		return Download;
 
-	CLibraryFile* pLibFile = LibraryMaps.LookupFileByHash( pFile->m_oSHA1, pFile->m_oTiger,
-		pFile->m_oED2K, pFile->m_oBTH, pFile->m_oMD5, pFile->m_nSize, pFile->m_nSize );
-
+	CLibraryFile* pLibFile = LibraryMaps.LookupFileByHash( pFile );
 	if ( pLibFile == NULL )
 		return Download;
 

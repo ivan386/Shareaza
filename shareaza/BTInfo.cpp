@@ -119,8 +119,7 @@ CString	CBTInfo::CBTFile::FindFile()
 
 	// Try find file by hash/size
 	CString strFile;
-	CLibraryFile* pShared = LibraryMaps.LookupFileByHash( m_oSHA1, m_oTiger,
-		m_oED2K, m_oBTH, m_oMD5, m_nSize, m_nSize, FALSE, TRUE );
+	CLibraryFile* pShared = LibraryMaps.LookupFileByHash( this, FALSE, TRUE );
 	if ( pShared )
 		strFile = pShared->GetPath();
 	if ( ! pShared ||
@@ -151,7 +150,7 @@ CString	CBTInfo::CBTFile::FindFile()
 						GetFileSize( CString( _T("\\\\?\\") ) + strFile ) != m_nSize )
 					{
 						// Try find by name only
-						pShared = LibraryMaps.LookupFileByName( m_sName, FALSE, TRUE );
+						pShared = LibraryMaps.LookupFileByName( m_sName, m_nSize, FALSE, TRUE );
 						if ( pShared )
 							strFile = pShared->GetPath();
 						if ( ! pShared ||

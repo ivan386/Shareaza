@@ -73,9 +73,7 @@ BOOL CLibraryTipCtrl::OnPrepare()
 			reinterpret_cast< CShareazaFile* >( m_pContext );
 
 		if ( ! pLibraryFile )
-			if ( CLibraryFile* pShared = LibraryMaps.LookupFileByHash(
-				pFile->m_oSHA1, pFile->m_oTiger, pFile->m_oED2K, pFile->m_oBTH,
-				pFile->m_oMD5, pFile->m_nSize, pFile->m_nSize, FALSE, TRUE ) )
+			if ( CLibraryFile* pShared = LibraryMaps.LookupFileByHash( pFile, FALSE, TRUE ) )
 				pLibraryFile = pShared;
 
 		CSingleLock pLock( &m_pSection, TRUE );

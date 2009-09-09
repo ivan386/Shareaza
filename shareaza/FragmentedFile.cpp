@@ -268,10 +268,7 @@ BOOL CFragmentedFile::Open(const CShareazaFile& oSHFile, BOOL bWrite)
 	{
 		// Open existing file from library
 		CSingleLock oLock( &Library.m_pSection, TRUE );
-		if ( CLibraryFile* pFile = LibraryMaps.LookupFileByHash(
-			oSHFile.m_oSHA1, oSHFile.m_oTiger, oSHFile.m_oED2K,
-			oSHFile.m_oBTH, oSHFile.m_oMD5, oSHFile.m_nSize,
-			oSHFile.m_nSize, TRUE, TRUE ) )
+		if ( CLibraryFile* pFile = LibraryMaps.LookupFileByHash( &oSHFile, TRUE, TRUE ) )
 		{
 			strSource = pFile->GetPath();
 		}

@@ -84,6 +84,7 @@ public:
 	virtual CString	GetSearchName() const;
 	bool			IsShared(bool bIgnoreOverride = false) const;
 	void			SetShared(bool bShared, bool bOverride = false);
+	BOOL			CheckFileAttributes(QWORD nSize, BOOL bSharedOnly, BOOL bAvailableOnly) const;
 	inline BOOL		IsSharedOverride() const { return m_bShared != TRI_UNKNOWN; }
 	inline BOOL		IsGhost() const { return m_pFolder == NULL; }
 	inline BOOL		IsAvailable() const { return m_pFolder != NULL; }

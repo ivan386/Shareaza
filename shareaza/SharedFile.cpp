@@ -227,6 +227,13 @@ void CLibraryFile::SetShared(bool bShared, bool bOverride)
 	}
 }
 
+BOOL CLibraryFile::CheckFileAttributes(QWORD nSize, BOOL bSharedOnly, BOOL bAvailableOnly) const
+{
+	return ( nSize == SIZE_UNKNOWN || nSize == 0 || nSize == m_nSize ) &&
+		( ! bSharedOnly || IsShared() ) &&
+		( ! bAvailableOnly || IsAvailable() );
+}
+
 //////////////////////////////////////////////////////////////////////
 // CLibraryFile schema URI test
 
