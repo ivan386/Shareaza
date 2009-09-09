@@ -126,7 +126,6 @@ CIRCFrame::CIRCFrame()
 	m_nLocalTextLimit		= 300;
 	m_nLocalLinesLimit		= 14;
 	m_pszLineJoiner			= _T("\x200D");
-	m_pTray					= ((CMainWnd*)AfxGetMainWnd())->m_pTray;
 }
 
 CIRCFrame::~CIRCFrame()
@@ -1445,7 +1444,13 @@ void CIRCFrame::ActivateMessageByID(CString strMessage, CIRCNewMessage* oNewMess
 			oNewMessage->nColorID		= ID_COLOR_TEXT;
 			CString strSender = "<" + oNewMessage->m_sTargetName + "> ";
 			CString strText = GetStringAfterParsedItem( 7 );
-			ShowTrayPopup( strText, oNewMessage->m_sTargetName, NIIF_NONE, 30 );
+
+			if ( CMainWnd* pWnd = theApp.CShareazaApp::SafeMainWnd() )
+			{
+				if ( ! pWnd->IsForegroundWindow() )
+					pWnd->ShowTrayPopup( strText, oNewMessage->m_sTargetName, NIIF_NONE, 30 );
+			}
+
 			oNewMessage->m_pMessages.Add( strSender + GetStringAfterParsedItem( 7 ) );
 			return;
 		}
@@ -2478,70 +2483,6 @@ int CIRCFrame::IsUserInList(CString strUser)
 		if ( strNick.MakeLower().Trim() == strUser.MakeLower().Trim() ) return nUser;
 	}
 	return -1;
-}
-
-BOOL CIRCFrame::ShowTrayPopup(LPCTSTR szText, LPCTSTR szTitle, DWORD dwIcon, UINT uTimeout)
-{
-	BOOL bMinimized = ( (CMainWnd*)AfxGetMainWnd() )->m_bTrayHide;
-	if ( ! bMinimized ) return FALSE;
-
-	OSVERSIONINFO pVersion;
-	pVersion.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
-	GetVersionEx( &pVersion );
-
-	if ( pVersion.dwMajorVersion > 4 )
-	{
-		// Verify input parameters
-		// The balloon tooltip text can be up to 255 chars long.
-		CString strText( szText );
-
-		if ( strText.GetLength() > 255 )
-		{
-			if ( strText.GetAt( 256 ) == ' ' )
-				strText = strText.Left( 255 );
-			else
-			{
-				if ( strText.GetAt( 255 ) == ' ' )
-					strText = strText.Left( 254 ) + _T("\x2026");
-				else
-				{
-					strText = strText.Left( 254 );
-					int nLastWord = strText.ReverseFind( ' ' );
-					strText = strText.Left( nLastWord ) + _T("\x2026");
-				}
-			}
-		}
-		// The balloon title text can be up to 63 chars long.
-		CString strTitle;
-		if ( szTitle )
-		{
-			strTitle.SetString( szTitle, 63 );
-			strTitle.ReleaseBuffer( 63 );
-		}
-
-		// dwBalloonIcon must be valid.
-		if ( NIIF_NONE		!= dwIcon && NIIF_INFO	!= dwIcon &&
-			NIIF_WARNING	!= dwIcon && NIIF_ERROR	!= dwIcon ) return FALSE;
-
-		// The timeout must be between 10 and 30 seconds.
-		if ( uTimeout < 10 || uTimeout > 30 ) return FALSE;
-
-		m_pTray.uFlags = NIF_INFO;
-		_tcsncpy( m_pTray.szInfo, strText.GetBuffer(), 256 );
-		if ( szTitle )
-			_tcsncpy( m_pTray.szInfoTitle, strTitle.GetBuffer(), 64 );
-		else
-			m_pTray.szInfoTitle[0] = _T('\0');
-		m_pTray.dwInfoFlags = dwIcon;
-		m_pTray.uTimeout = uTimeout * 1000;   // convert time to ms
-
-		BOOL bSuccess = Shell_NotifyIcon( NIM_MODIFY, &m_pTray );
-
-		m_pTray.szInfo[0] = _T('\0');
-
-		return bSuccess;
-	}
-	else return FALSE; // We do not support Win9x/Me/NT
 }
 
 BEGIN_MESSAGE_MAP(CIRCTabCtrl, CTabCtrl)

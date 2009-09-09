@@ -28,14 +28,16 @@ class CSkinWindow
 {
 public:
 	CSkinWindow();
-	virtual ~CSkinWindow();
+	~CSkinWindow();
+
+	typedef CMap< CString, const CString&, CRect*, CRect* > CRectMap;
 
 	CString			m_sTargets;
 	CString			m_sLanguage;
 	CDC				m_dcSkin;
 	CBitmap			m_bmSkin;
 	CBitmap			m_bmWatermark;
-	CMap< CString, const CString&, CRect*, CRect* > m_pAnchorList;
+	CRectMap		m_pAnchorList;
 	CFont			m_fnCaption;
 	COLORREF		m_crCaptionText;
 	COLORREF		m_crCaptionInactive;
@@ -71,7 +73,7 @@ protected:
 	CRect*			m_rcPart;
 	BOOL*			m_bAnchor;
 	CRect*			m_rcAnchor;
-	CMap< CString, const CString&, CRect*, CRect* > m_pPartList;
+	CRectMap		m_pPartList;
 	CSize			m_szMinSize;
 	CRect			m_rcMaximise;
 	CRect			m_rcResize;

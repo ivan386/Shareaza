@@ -243,7 +243,7 @@ BOOL CChildWnd::SetAlert(BOOL bAlert)
 
 	m_bAlert = bAlert;
 
-	pMainWnd->OnUpdateFrameTitle( FALSE );
+	pMainWnd->OnUpdateCmdUI();
 
 	return TRUE;
 }
@@ -424,10 +424,13 @@ BOOL CChildWnd::OnNcActivate(BOOL bActive)
 	if ( m_pSkin )
 	{
 		BOOL bVisible = IsWindowVisible();
-		if ( bVisible ) ModifyStyle( WS_VISIBLE, 0 );
+		if ( bVisible )
+			ModifyStyle( WS_VISIBLE, 0 );
 		BOOL bResult = CMDIChildWnd::OnNcActivate( bActive );
-		if ( bVisible ) ModifyStyle( 0, WS_VISIBLE );
-		m_pSkin->OnNcActivate( this, bActive || ( m_nFlags & WF_STAYACTIVE ) );
+		if ( bVisible )
+			ModifyStyle( 0, WS_VISIBLE );
+		if ( m_pSkin )
+			m_pSkin->OnNcActivate( this, bActive || ( m_nFlags & WF_STAYACTIVE ) );
 		return bResult;
 	}
 

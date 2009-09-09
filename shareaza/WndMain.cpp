@@ -279,15 +279,13 @@ END_MESSAGE_MAP()
 // CMainWnd construction
 
 CMainWnd::CMainWnd() :
-	m_hInstance ( AfxGetResourceHandle() ),
 	m_bTrayHide ( FALSE ),
 	m_bTrayIcon ( FALSE ),
 	m_bTimer ( FALSE ),
 	m_pSkin ( NULL ),
 	m_pURLDialog ( NULL ),
 	m_tURLTime ( 0 ),
-	m_nAlpha ( 255 ),
-	m_bNoNetWarningShowed ( FALSE )
+	m_nAlpha ( 255 )
 {
 	ZeroMemory( &m_pTray, sizeof( NOTIFYICONDATA ) );
 	m_pTray.cbSize = sizeof( NOTIFYICONDATA );
@@ -569,6 +567,8 @@ void CMainWnd::OnClose()
 
 	theApp.HideApplication();
 
+	m_pSkin = NULL;
+
 	m_pWindows.Close();
 
 	CDownloadMonitorDlg::CloseAll();
@@ -728,7 +728,7 @@ void CMainWnd::OnSysColorChange()
 	CoolInterface.OnSysColourChange();
 }
 
-void CMainWnd::OnUpdateFrameTitle(BOOL /*bAddToTitle*/)
+void CMainWnd::OnUpdateCmdUI()
 {
 	m_wndTabBar.OnUpdateCmdUI( this, FALSE );
 	m_wndNavBar.OnUpdateCmdUI( this, FALSE );
@@ -783,12 +783,6 @@ void CMainWnd::OnTimer(UINT_PTR nIDEvent)
 		return;
 	}
 
-	// Fix resource handle
-
-	ASSERT( AfxGetResourceHandle() == m_hInstance );
-	//if ( AfxGetResourceHandle() != m_hInstance )
-	//	AfxSetResourceHandle( m_hInstance );
-
 	// Propagate to children
 
 	if ( m_bTimer )
@@ -824,8 +818,9 @@ void CMainWnd::OnTimer(UINT_PTR nIDEvent)
 		m_pTray.uID					= 0;
 		m_pTray.uFlags				= NIF_ICON | NIF_MESSAGE | NIF_TIP;
 		m_pTray.uCallbackMessage	= WM_TRAY;
-
+		m_pTray.uVersion			= NOTIFYICON_VERSION_4;
 		_tcsncpy( m_pTray.szTip, Settings.SmartAgent(), _countof( m_pTray.szTip ) );
+
 		m_bTrayIcon = Shell_NotifyIcon( NIM_ADD, &m_pTray );
 	}
 	else if ( m_bTrayIcon && ! bNeedTrayIcon )
@@ -890,7 +885,8 @@ void CMainWnd::OnGetMinMaxInfo(MINMAXINFO FAR* lpMMI)
 	lpMMI->ptMinTrackSize.x = 320;
 	lpMMI->ptMinTrackSize.y = 240;
 
-	if ( m_pSkin ) m_pSkin->OnGetMinMaxInfo( lpMMI );
+	if ( m_pSkin )
+		m_pSkin->OnGetMinMaxInfo( lpMMI );
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1114,7 +1110,7 @@ LRESULT CMainWnd::OnSkinChanged(WPARAM /*wParam*/, LPARAM /*lParam*/)
 
 	SetWindowRgn( NULL, TRUE );
 
-	if ( m_pSkin != NULL )
+	if ( m_pSkin )
 		m_pSkin->OnSize( this );
 
 	m_wndRemoteWnd.OnSkinChange();
@@ -1229,11 +1225,14 @@ LRESULT CMainWnd::OnVersionCheck(WPARAM wParam, LPARAM /*lParam*/)
 			CUpgradeDlg dlg;
 			dlg.DoModal();
 		}
-		else if ( VersionChecker.IsVerbose() )
+		else
 		{
 			CString strMessage;
 			LoadString( strMessage, IDS_UPGRADE_NO_NEW );
-			AfxMessageBox( strMessage, MB_ICONINFORMATION | MB_OK );
+			if ( VersionChecker.IsVerbose() )
+				AfxMessageBox( strMessage, MB_ICONINFORMATION | MB_OK );
+			else
+				ShowTrayPopup( strMessage );
 		}
 	}
 
@@ -1380,10 +1379,6 @@ void CMainWnd::UpdateMessages()
 		if( !Settings.Gnutella1.EnableToday && !Settings.Gnutella2.EnableToday && !Settings.eDonkey.EnableToday )
 		{
 			LoadString( strFormat, IDS_STATUS_BAR_CONNECTED_SIMPLE );
-			if( !m_bNoNetWarningShowed )
-			{
-				m_bNoNetWarningShowed = TRUE;
-			}
 		}
 		else	//Trying to connect
 			LoadString( strMessage, IDS_STATUS_BAR_CONNECTING );
@@ -1391,7 +1386,6 @@ void CMainWnd::UpdateMessages()
 	else
 	{	//Idle
 		LoadString( strMessage, IDS_STATUS_BAR_DISCONNECTED );
-		m_bNoNetWarningShowed = FALSE;
 	}
 
 	if ( Settings.VersionCheck.Quote.GetLength() )
@@ -1429,8 +1423,8 @@ void CMainWnd::UpdateMessages()
 		if ( strMessage != m_pTray.szTip )
 		{
 			m_pTray.uFlags = NIF_TIP;
-			_tcsncpy( m_pTray.szTip, strMessage, 63 );
-			if ( ! Shell_NotifyIcon( NIM_MODIFY, &m_pTray ) ) m_bTrayIcon = FALSE;
+			_tcsncpy( m_pTray.szTip, strMessage, _countof( m_pTray.szTip ) );
+			m_bTrayIcon = Shell_NotifyIcon( NIM_MODIFY, &m_pTray );
 		}
 	}
 
@@ -2691,7 +2685,9 @@ void CMainWnd::OnHelpPromote()
 
 void CMainWnd::OnSize(UINT nType, int cx, int cy)
 {
-	if ( m_pSkin ) m_pSkin->OnSize( this );
+	if ( m_pSkin )
+		m_pSkin->OnSize( this );
+
 	CMDIFrameWnd::OnSize( nType, cx, cy );
 }
 
@@ -2721,41 +2717,48 @@ void CMainWnd::OnNcPaint()
 
 BOOL CMainWnd::OnNcActivate(BOOL bActive)
 {
-	if ( m_pSkin && ! theApp.m_bClosing )
+	if ( m_pSkin )
 	{
 		m_pSkin->OnNcActivate( this, IsWindowEnabled() && ( bActive || ( m_nFlags & WF_STAYACTIVE ) ) );
 		return TRUE;
 	}
 	else
-	{
 		return CMDIFrameWnd::OnNcActivate( bActive );
-	}
 }
 
 void CMainWnd::OnNcMouseMove(UINT nHitTest, CPoint point)
 {
-	if ( m_pSkin ) m_pSkin->OnNcMouseMove( this, nHitTest, point );
+	if ( m_pSkin )
+		m_pSkin->OnNcMouseMove( this, nHitTest, point );
+
 	CMDIFrameWnd::OnNcMouseMove( nHitTest, point );
 }
 
 void CMainWnd::OnNcLButtonDown(UINT nHitTest, CPoint point)
 {
-	if ( m_pSkin && m_pSkin->OnNcLButtonDown( this, nHitTest, point ) ) return;
+	if ( m_pSkin && m_pSkin->OnNcLButtonDown( this, nHitTest, point ) )
+		return;
+
 	CMDIFrameWnd::OnNcLButtonDown( nHitTest, point );
 
 	// Windows Vista skinning workaround (system caption buttons over skin drawing)
-	if ( m_pSkin && ::IsWindow( m_hWnd ) ) m_pSkin->OnNcPaint( this );
+	if ( m_pSkin )
+		m_pSkin->OnNcPaint( this );
 }
 
 void CMainWnd::OnNcLButtonUp(UINT nHitTest, CPoint point)
 {
-	if ( m_pSkin && m_pSkin->OnNcLButtonUp( this, nHitTest, point ) ) return;
+	if ( m_pSkin && m_pSkin->OnNcLButtonUp( this, nHitTest, point ) )
+		return;
+
 	CMDIFrameWnd::OnNcLButtonUp( nHitTest, point );
 }
 
 void CMainWnd::OnNcLButtonDblClk(UINT nHitTest, CPoint point)
 {
-	if ( m_pSkin && m_pSkin->OnNcLButtonDblClk( this, nHitTest, point ) ) return;
+	if ( m_pSkin && m_pSkin->OnNcLButtonDblClk( this, nHitTest, point ) )
+		return;
+
 	CMDIFrameWnd::OnNcLButtonDblClk( nHitTest, point );
 }
 
@@ -2764,10 +2767,13 @@ LRESULT CMainWnd::OnSetText(WPARAM /*wParam*/, LPARAM /*lParam*/)
 	if ( m_pSkin )
 	{
 		BOOL bVisible = IsWindowVisible();
-		if ( bVisible ) ModifyStyle( WS_VISIBLE, 0 );
+		if ( bVisible )
+			ModifyStyle( WS_VISIBLE, 0 );
 		LRESULT lResult = Default();
-		if ( bVisible ) ModifyStyle( 0, WS_VISIBLE );
-		if ( m_pSkin ) m_pSkin->OnSetText( this );
+		if ( bVisible )
+			ModifyStyle( 0, WS_VISIBLE );
+		if ( m_pSkin )
+			m_pSkin->OnSetText( this );
 		return lResult;
 	}
 	else
@@ -2862,4 +2868,40 @@ BOOL CMainWnd::OnDrop(IDataObject* pDataObj, DWORD /* grfKeyState */, POINT /* p
 	}
 
 	return FALSE;
+}
+
+void CMainWnd::ShowTrayPopup(LPCTSTR szText, LPCTSTR szTitle, DWORD dwIcon, UINT uTimeout)
+{
+	if ( ! m_bTrayIcon )
+		return;
+
+	m_pTray.uFlags = NIF_INFO;
+
+	_tcsncpy( m_pTray.szInfo, szText, _countof( m_pTray.szInfo ) );
+	if ( lstrlen( szText ) > _countof( m_pTray.szInfo ) - 1 )
+	{
+		m_pTray.szInfo[ _countof( m_pTray.szInfo ) - 1 ] = _T('\0');
+		if ( szText[ _countof( m_pTray.szInfo ) - 1 ] != _T(' ') )
+		{
+			if ( LPTSTR pWordEnd = _tcsrchr( m_pTray.szInfo, _T(' ') ) )
+			{
+				pWordEnd[ 0 ] = _T('\x2026');
+				pWordEnd[ 1 ] = _T('\0');
+			}
+		}
+	}
+
+	if ( szTitle )
+		_tcsncpy( m_pTray.szInfoTitle, szTitle, _countof( m_pTray.szInfoTitle ) );
+	else
+		m_pTray.szInfoTitle[ 0 ] = _T('\0');
+
+	m_pTray.dwInfoFlags = dwIcon;
+
+	m_pTray.uTimeout = uTimeout * 1000;   // convert time to ms
+
+	m_bTrayIcon = Shell_NotifyIcon( NIM_MODIFY, &m_pTray );
+
+	m_pTray.szInfo[ 0 ] = _T('\0');
+	m_pTray.szInfoTitle[ 0 ] = _T('\0');
 }

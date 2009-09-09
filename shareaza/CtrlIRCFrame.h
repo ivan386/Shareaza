@@ -120,7 +120,6 @@ public:
 // Attributes
 protected:
 	#define			MAX_CHANNELS					10
-	NOTIFYICONDATA	m_pTray;
 	int             m_nSelectedTab;
 	CString			m_sStatus;
 	int				m_nMsgsInSec;
@@ -209,7 +208,6 @@ protected:
 	void			PaintHeader(CRect rcHeader, CDC &dc);
 	void			DrawText(CDC* pDC, int nX, int nY, LPCTSTR pszText);
 	CString			RemoveModeOfNick(CString strNick) const;
-	BOOL			ShowTrayPopup(LPCTSTR szText, LPCTSTR szTitle, DWORD dwIcon, UINT uTimeout);
 // Operations
 	CString         m_sUser;
 public:
