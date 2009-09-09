@@ -24,6 +24,8 @@
 #include "DlgSkinDialog.h"
 
 class CLibraryFile;
+class CShareazaFile;
+class CShareazaURL;
 
 
 class CExistingFileDlg : public CSkinDialog
@@ -36,7 +38,8 @@ public:
 	enum { IDD = IDD_EXISTING_FILE };
 	enum Action { ShowInLibrary, Download, DontDownload, Cancel };
 
-	static Action CheckExisting(const CShareazaFile* pFile);
+	static Action CheckExisting(const CShareazaURL* pURL, BOOL bInteracive = TRUE);
+	static Action CheckExisting(const CShareazaFile* pFile, BOOL bInteracive = TRUE);
 
 	inline Action GetResult() const
 	{

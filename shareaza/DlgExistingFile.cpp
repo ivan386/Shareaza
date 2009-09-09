@@ -22,9 +22,11 @@
 #include "StdAfx.h"
 #include "Shareaza.h"
 #include "Settings.h"
+#include "BTInfo.h"
 #include "CoolInterface.h"
 #include "Library.h"
 #include "SharedFile.h"
+#include "ShareazaURL.h"
 #include "DlgExistingFile.h"
 #include "WndMain.h"
 #include "WndLibrary.h"
@@ -44,8 +46,24 @@ BEGIN_MESSAGE_MAP(CExistingFileDlg, CSkinDialog)
 	ON_BN_CLICKED(IDC_ACTION_2, OnAction2)
 END_MESSAGE_MAP()
 
+CExistingFileDlg::Action CExistingFileDlg::CheckExisting(const CShareazaURL* pURL, BOOL bInteracive)
+{
+	// Check files inside torrent
+	if ( pURL->m_pTorrent )
+	{
+		for ( POSITION pos = pURL->m_pTorrent->m_pFiles.GetHeadPosition() ; pos ; )
+		{
+			CBTInfo::CBTFile* pBTFile = pURL->m_pTorrent->m_pFiles.GetNext( pos );
 
-CExistingFileDlg::Action CExistingFileDlg::CheckExisting(const CShareazaFile* pFile)
+			return CheckExisting( static_cast< const CShareazaFile* >( pBTFile ), bInteracive );
+		}
+	}
+
+	// Check as common file
+	return CheckExisting( static_cast< const CShareazaFile* >( pURL ), bInteracive );
+}
+
+CExistingFileDlg::Action CExistingFileDlg::CheckExisting(const CShareazaFile* pFile, BOOL bInteracive)
 {
 	CSingleLock pLock( &Library.m_pSection );
 	if ( ! pLock.Lock( 1000 ) )
@@ -54,6 +72,9 @@ CExistingFileDlg::Action CExistingFileDlg::CheckExisting(const CShareazaFile* pF
 	CLibraryFile* pLibFile = LibraryMaps.LookupFileByHash( pFile );
 	if ( pLibFile == NULL )
 		return Download;
+
+	if ( ! bInteracive )
+		return ShowInLibrary;
 
 	DWORD nIndex = pLibFile->m_nIndex;
 

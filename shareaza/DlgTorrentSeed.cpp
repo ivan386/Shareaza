@@ -88,73 +88,97 @@ BOOL CTorrentSeedDlg::OnInitDialog()
 	m_wndProgress.SetRange( 0, 1000 );
 	m_wndProgress.SetPos( 0 );
 
-	if ( m_bForceSeed )
+	if ( m_pInfo.LoadTorrentFile( m_sTorrent ) )
 	{
-		m_wndDownload.EnableWindow( FALSE );
-		if ( Settings.BitTorrent.AutoSeed ) PostMessage( WM_TIMER, 4 );
+		if ( Downloads.FindByBTH( m_pInfo.m_oBTH ) )
+		{
+			// We are already seeding the torrent
+			CString strMessage;
+			strMessage.Format( LoadString( IDS_BT_SEED_ALREADY ), (LPCTSTR)m_pInfo.m_sName );
+			theApp.Message( MSG_ERROR, LoadString( IDS_BT_SEED_ALREADY ), (LPCTSTR)m_pInfo.m_sName );
+			AfxMessageBox( strMessage, MB_ICONEXCLAMATION );
 
+			EndDialog( IDOK );
+		}
+		else
+		{
+			if ( m_pInfo.HasEncodingError() )		// Check the torrent is valid
+			{
+				CHelpDlg::Show( _T("GeneralHelp.BadTorrentEncoding") );
+			}
+
+			if ( m_bForceSeed )
+			{
+				m_wndDownload.EnableWindow( FALSE );
+				if ( Settings.BitTorrent.AutoSeed )
+					PostMessage( WM_TIMER, 4 );
+			}
+			else
+			{
+				// Check for already downloaded file (first one only)
+				CShareazaURL oURL( new CBTInfo ( m_pInfo ) );
+				CExistingFileDlg::Action action = CExistingFileDlg::CheckExisting( &oURL, FALSE );
+				if ( action == CExistingFileDlg::Download )
+				{
+					PostMessage( WM_TIMER, 5 );
+				}
+			}
+		}
 	}
-	// if ( m_bForceSeed ) m_wndDownload.ShowWindow( SW_HIDE );
+	else
+	{
+		// We couldn't load the .torrent file
+		CString strMessage;
+		strMessage.Format( LoadString( IDS_BT_SEED_PARSE_ERROR ), (LPCTSTR)m_sTorrent );
+		theApp.Message( MSG_ERROR, LoadString( IDS_BT_SEED_PARSE_ERROR ), (LPCTSTR)m_sTorrent );
+		AfxMessageBox( strMessage, MB_ICONEXCLAMATION );
+
+		EndDialog( IDOK );
+	}
 
 	return TRUE;
 }
 
 void CTorrentSeedDlg::OnDownload()
 {
-	/*CWnd* pWnd =*/ AfxGetMainWnd();
-	CBTInfo* pTorrent = new CBTInfo();
+	CShareazaURL oURL( new CBTInfo ( m_pInfo ) );
 
-	if ( pTorrent->LoadTorrentFile( m_sTorrent ) )
+	CSingleLock oLibraryLock( &Library.m_pSection, TRUE );
+	
+	CExistingFileDlg::Action action = CExistingFileDlg::CheckExisting( &oURL );
+	if ( action == CExistingFileDlg::Cancel )
+		return;
+	else if ( action != CExistingFileDlg::Download )
 	{
-		if ( pTorrent->HasEncodingError() )		// Check the torrent is valid
-		{
-			CHelpDlg::Show( _T("GeneralHelp.BadTorrentEncoding") );
-		}
-
-		CShareazaURL oURL( pTorrent );
-
-		CSingleLock oLibraryLock( &Library.m_pSection, TRUE );
-		
-		CExistingFileDlg::Action action = CExistingFileDlg::CheckExisting( &oURL );
-		if ( action == CExistingFileDlg::Cancel )
-			return;
-		else if ( action != CExistingFileDlg::Download )
-		{
-			EndDialog( IDOK );
-			return;
-		}
-
-		oLibraryLock.Unlock();
-
-		CDownload* pDownload = Downloads.Add( oURL );
-
-		if ( pDownload == NULL )
-		{
-			EndDialog( IDOK );
-			return;
-		}
-
-		if ( ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 ) == 0 &&
-			! Network.IsWellConnected() )
-		{
-			Network.Connect( TRUE );
-		}
-
-		CMainWnd* pMainWnd = (CMainWnd*)AfxGetMainWnd();
-		pMainWnd->m_pWindows.Open( RUNTIME_CLASS(CDownloadsWnd) );
-
-		if ( Settings.Downloads.ShowMonitorURLs )
-		{
-			CSingleLock pTransfersLock( &Transfers.m_pSection, TRUE );
-			if ( Downloads.Check( pDownload ) ) pDownload->ShowMonitor( &pTransfersLock );
-		}
-
 		EndDialog( IDOK );
 		return;
 	}
-	else
-		delete pTorrent;
-	theApp.Message( MSG_ERROR, IDS_BT_PREFETCH_ERROR, (LPCTSTR)m_sTorrent );
+
+	oLibraryLock.Unlock();
+
+	CDownload* pDownload = Downloads.Add( oURL );
+
+	if ( pDownload == NULL )
+	{
+		EndDialog( IDOK );
+		return;
+	}
+
+	if ( ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 ) == 0 &&
+		! Network.IsWellConnected() )
+	{
+		Network.Connect( TRUE );
+	}
+
+	CMainWnd* pMainWnd = (CMainWnd*)AfxGetMainWnd();
+	pMainWnd->m_pWindows.Open( RUNTIME_CLASS(CDownloadsWnd) );
+
+	if ( Settings.Downloads.ShowMonitorURLs )
+	{
+		CSingleLock pTransfersLock( &Transfers.m_pSection, TRUE );
+		if ( Downloads.Check( pDownload ) ) pDownload->ShowMonitor( &pTransfersLock );
+	}
+
 	EndDialog( IDOK );
 }
 
@@ -164,55 +188,28 @@ void CTorrentSeedDlg::OnSeed()
 	m_wndSeed.EnableWindow( FALSE );
 	m_bCancel = FALSE;
 
-	if ( m_pInfo.LoadTorrentFile( m_sTorrent ) )
+	// Connect if (we aren't)
+	if ( ! Network.IsConnected() ) Network.Connect();
+
+	// Update the last seeded torrent
+	CSingleLock pLock( &Library.m_pSection );
+	if ( pLock.Lock( 250 ) )
 	{
-		if ( m_pInfo.HasEncodingError() )		// Check the torrent is valid
-		{
-			CHelpDlg::Show( _T("GeneralHelp.BadTorrentEncoding") );
-		}
-		if ( Downloads.FindByBTH( m_pInfo.m_oBTH ) == NULL || m_pInfo.GetCount() == 1 )
-		{
-			// Connect if (we aren't)
-			if ( ! Network.IsConnected() ) Network.Connect();
+		LibraryHistory.LastSeededTorrent.m_sName		= m_pInfo.m_sName.Left( 40 );
+		LibraryHistory.LastSeededTorrent.m_sPath = m_sTorrent;
+		LibraryHistory.LastSeededTorrent.m_tLastSeeded = static_cast< DWORD >( time( NULL ) );
 
-			// Update the last seeded torrent
-			CSingleLock pLock( &Library.m_pSection );
-			if ( pLock.Lock( 250 ) )
-			{
-				LibraryHistory.LastSeededTorrent.m_sName		= m_pInfo.m_sName.Left( 40 );
-				LibraryHistory.LastSeededTorrent.m_sPath = m_sTorrent;
-				LibraryHistory.LastSeededTorrent.m_tLastSeeded = static_cast< DWORD >( time( NULL ) );
-
-				// If it's a 'new' torrent, reset the counters
-				if ( !validAndEqual( LibraryHistory.LastSeededTorrent.m_oBTH, m_pInfo.m_oBTH ) )
-				{
-					LibraryHistory.LastSeededTorrent.m_nUploaded	= 0;
-					LibraryHistory.LastSeededTorrent.m_nDownloaded	= 0;
-					LibraryHistory.LastSeededTorrent.m_oBTH 		= m_pInfo.m_oBTH;
-				}
-			}
-
-			// Start the torrent seed process
-			BeginThread( "DlgTorrentSeed" );
-		}
-		else	// We are already seeding the torrent
+		// If it's a 'new' torrent, reset the counters
+		if ( !validAndEqual( LibraryHistory.LastSeededTorrent.m_oBTH, m_pInfo.m_oBTH ) )
 		{
-			CString strFormat, strMessage;
-			LoadString(strFormat, IDS_BT_SEED_ALREADY );
-			strMessage.Format( strFormat, (LPCTSTR)m_pInfo.m_sName );
-			AfxMessageBox( strMessage, MB_ICONEXCLAMATION );
-			EndDialog( IDOK );
+			LibraryHistory.LastSeededTorrent.m_nUploaded	= 0;
+			LibraryHistory.LastSeededTorrent.m_nDownloaded	= 0;
+			LibraryHistory.LastSeededTorrent.m_oBTH 		= m_pInfo.m_oBTH;
 		}
 	}
-	else
-	{
-		// We couldn't load the .torrent file
-		CString strFormat, strMessage;
-		LoadString(strFormat, IDS_BT_SEED_PARSE_ERROR );
-		strMessage.Format( strFormat, (LPCTSTR)m_sTorrent );
-		AfxMessageBox( strMessage, MB_ICONEXCLAMATION );
-		EndDialog( IDOK );
-	}
+
+	// Start the torrent seed process
+	BeginThread( "DlgTorrentSeed" );
 }
 
 void CTorrentSeedDlg::OnCancel()
@@ -259,6 +256,10 @@ void CTorrentSeedDlg::OnTimer(UINT_PTR nIDEvent)
 	else if ( nIDEvent == 4 )
 	{
 		OnSeed();
+	}
+	else if ( nIDEvent == 5 )
+	{
+		OnDownload();
 	}
 }
 

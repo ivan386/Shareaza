@@ -672,28 +672,16 @@ BOOL CShareazaApp::OpenInternetShortcut(LPCTSTR lpszFileName, BOOL bDoIt)
 
 BOOL CShareazaApp::OpenTorrent(LPCTSTR lpszFileName, BOOL bDoIt)
 {
-	// Test torrent
-	auto_ptr< CBTInfo > pTorrent( new CBTInfo() );
-	if ( pTorrent.get() )
-	{
-		if ( pTorrent->LoadTorrentFile( lpszFileName ) )
-		{
-			auto_ptr< CShareazaURL > pURL( new CShareazaURL( pTorrent.release() ) );
-			if ( pURL.get() )
-			{
-				if ( ! bDoIt )
-					return TRUE;
+	if ( ! bDoIt )
+		return TRUE;
 
-				// Open torrent
-				auto_array< TCHAR > pszPath( new TCHAR[ lstrlen( lpszFileName ) + 1 ] );
-				if ( pszPath.get() )
-				{
-					lstrcpy( pszPath.get(), lpszFileName );
-					if ( PostMainWndMessage( WM_TORRENT, (WPARAM)pszPath.release() ) )
-						return TRUE;
-				}
-			}
-		}
+	// Open torrent
+	auto_array< TCHAR > pszPath( new TCHAR[ lstrlen( lpszFileName ) + 1 ] );
+	if ( pszPath.get() )
+	{
+		lstrcpy( pszPath.get(), lpszFileName );
+		if ( PostMainWndMessage( WM_TORRENT, (WPARAM)pszPath.release() ) )
+			return TRUE;
 	}
 
 	return FALSE;
