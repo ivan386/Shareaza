@@ -750,44 +750,86 @@ void CLibraryFolder::Maintain(BOOL bAdd)
 {
 	ASSERT_VALID( this );
 
+	CString sIconIndex, sIconFile;
+	CString sIconResource = Skin.GetImagePath( IDR_LIBRARYFRAME );
+	int nPos = sIconResource.ReverseFind( _T(',') );
+	if ( nPos != -1 && nPos > sIconResource.ReverseFind( _T('\\') ) )
+	{
+		sIconIndex = sIconResource.Mid( nPos + 1 );
+		sIconFile = sIconResource.Left( nPos );
+	}
+	else
+	{
+		sIconIndex = _T("0");
+		sIconFile = sIconResource;
+	}
+	sIconFile.Trim( _T("\"") );
+	CString sTip = LoadString( IDS_FOLDER_TIP );
+
 	CString sDesktopINI( m_sPath + _T("\\desktop.ini") );
 	DWORD dwDesktopINIAttr = GetFileAttributes( sDesktopINI );
+	BOOL bPresent = ( dwDesktopINIAttr != INVALID_FILE_ATTRIBUTES );
 
 	// Check if this is our desktop.ini
-	CString sPath;
-	GetPrivateProfileString( _T(".ShellClassInfo"), _T("IconFile"), _T(""),
-		sPath.GetBuffer( MAX_PATH ), MAX_PATH, sDesktopINI );
-	sPath.ReleaseBuffer();
-	sPath.MakeLower();
-	BOOL bOur = ( sPath.Find( _T("shareaza") ) != -1 );
+	BOOL bOur = FALSE;
+	if ( bPresent )
+	{
+		// Windows 2000/XP
+		CString sPath;
+		GetPrivateProfileString( _T(".ShellClassInfo"), _T("IconFile"), _T(""),
+			sPath.GetBuffer( MAX_PATH ), MAX_PATH, sDesktopINI );
+		sPath.ReleaseBuffer();
+		if ( sPath.IsEmpty() )
+		{
+			// Windows Vista
+			GetPrivateProfileString( _T(".ShellClassInfo"), _T("IconResource"), _T(""),
+				sPath.GetBuffer( MAX_PATH ), MAX_PATH, sDesktopINI );
+			sPath.ReleaseBuffer();
+			if ( sPath.IsEmpty() )
+			{
+				bPresent = FALSE;
+			}
+			else
+				bOur = ( sPath.CompareNoCase( sIconResource ) == 0 ) || ( sPath.MakeLower().Find( _T("shareaza") ) != -1 );
+		}
+		else
+			bOur = ( sPath.CompareNoCase( sIconFile ) == 0 ) || ( sPath.MakeLower().Find( _T("shareaza") ) != -1 );
+	}
 
 	if ( ! Settings.Library.UseCustomFolders )
 		bAdd = FALSE;
 
-	if ( bAdd && ( bOur || dwDesktopINIAttr == INVALID_FILE_ATTRIBUTES ) )
+	if ( bAdd && ( bOur || ! bPresent ) )
 	{
 		// Remove Hidden and System attributes
 		BOOL bChanged = FALSE;
 		if ( ( dwDesktopINIAttr != INVALID_FILE_ATTRIBUTES ) &&
 			 ( dwDesktopINIAttr & ( FILE_ATTRIBUTE_HIDDEN | FILE_ATTRIBUTE_SYSTEM ) ) )
 			bChanged = SetFileAttributes( sDesktopINI, dwDesktopINIAttr &
-				~( FILE_ATTRIBUTE_HIDDEN | FILE_ATTRIBUTE_SYSTEM ) );
+				~( FILE_ATTRIBUTE_HIDDEN | FILE_ATTRIBUTE_SYSTEM | FILE_ATTRIBUTE_READONLY ) );
 
-		CString sIconFile = Skin.GetImagePath( IDI_COLLECTION );
-		CString sIconIndex( _T("0") );
-		int nPos = sIconFile.ReverseFind( _T(',') );
-		if ( nPos != -1 && nPos > sIconFile.ReverseFind( _T('\\') ) )
+		// Remove non-unicode file
+		CFile file;
+		WORD wMark;
+		BOOL bUnicode = file.Open( sDesktopINI, CFile::modeRead | CFile::shareDenyNone ) &&
+			file.Read( &wMark, 2 ) == 2 && ( wMark == 0xfeff || wMark == 0xfffe );
+		file.Close();
+		if ( ! bUnicode )
 		{
-			sIconIndex = sIconFile.Mid( nPos + 1 );
-			sIconFile = sIconFile.Left( nPos );
+			wMark = 0xfeff;
+			file.Open( sDesktopINI, CFile::modeCreate | CFile::modeWrite );
+			file.Write( &wMark, 2 );
+			file.Close();
 		}
-		CString sTip;
-		LoadString( sTip, IDS_FOLDER_TIP );
 
+		// Windows 2000/XP
 		WritePrivateProfileString( _T(".ShellClassInfo"), _T("ConfirmFileOp"), _T("0"), sDesktopINI );
 		WritePrivateProfileString( _T(".ShellClassInfo"), _T("IconFile"), sIconFile, sDesktopINI );
 		WritePrivateProfileString( _T(".ShellClassInfo"), _T("IconIndex"), sIconIndex, sDesktopINI );
 		WritePrivateProfileString( _T(".ShellClassInfo"), _T("InfoTip"), sTip, sDesktopINI );
+
+		// Windows Vista
+		WritePrivateProfileString( _T(".ShellClassInfo"), _T("IconResource"), sIconResource, sDesktopINI );
 
 		if ( bChanged )
 			SetFileAttributes( sDesktopINI, dwDesktopINIAttr |
@@ -799,13 +841,10 @@ void CLibraryFolder::Maintain(BOOL bAdd)
 	{
 		PathUnmakeSystemFolder( m_sPath );
 
-		if ( dwDesktopINIAttr != INVALID_FILE_ATTRIBUTES )
-		{
-			SetFileAttributes( sDesktopINI, dwDesktopINIAttr &
-				~( FILE_ATTRIBUTE_HIDDEN | FILE_ATTRIBUTE_SYSTEM ) );
+		SetFileAttributes( sDesktopINI, dwDesktopINIAttr &
+			~( FILE_ATTRIBUTE_HIDDEN | FILE_ATTRIBUTE_SYSTEM | FILE_ATTRIBUTE_READONLY ) );
 
-			DeleteFileEx( sDesktopINI, FALSE, FALSE, FALSE );
-		}
+		DeleteFileEx( sDesktopINI, FALSE, FALSE, FALSE );
 	}
 }
 
