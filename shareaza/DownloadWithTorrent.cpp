@@ -240,7 +240,7 @@ BOOL CDownloadWithTorrent::SetTorrent(const CBTInfo& oTorrent)
 	if ( IsTorrent() ) return FALSE;
 	if ( ! oTorrent.IsAvailable() ) return FALSE;
 
-	m_pTorrent.Copy( oTorrent );
+	m_pTorrent = oTorrent;
 
 	m_oBTH = m_pTorrent.m_oBTH;
 	m_bBTHTrusted = true;
@@ -275,7 +275,7 @@ BOOL CDownloadWithTorrent::SetTorrent(const CBTInfo& oTorrent)
 	if ( CreateDirectory( Settings.Downloads.TorrentPath ) )
 	{
 		LibraryFolders.AddFolder( Settings.Downloads.TorrentPath, FALSE );
-		oTorrent.SaveTorrentFile( Settings.Downloads.TorrentPath );
+		m_pTorrent.SaveTorrentFile( Settings.Downloads.TorrentPath );
 	}
 
 	if ( ! Settings.BitTorrent.AdvancedInterfaceSet )

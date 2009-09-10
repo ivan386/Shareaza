@@ -84,7 +84,7 @@ CBTInfo::CBTInfo(const CBTInfo& oSource) :
 ,	m_bEncodingError	( false )
 ,	m_nTestByte			( 0ul )
 {
-	Copy( oSource );
+	*this = oSource;
 }
 
 CBTInfo::~CBTInfo()
@@ -101,15 +101,7 @@ CBTInfo::CBTFile::CBTFile(const CBTInfo* pInfo, const CBTFile* pBTFile) :
 {
 	if ( pBTFile )
 	{
-		m_sName			= pBTFile->m_sName;
-		m_nSize			= pBTFile->m_nSize;
-		m_oSHA1			= pBTFile->m_oSHA1;
-		m_oTiger		= pBTFile->m_oTiger;
-		m_oED2K			= pBTFile->m_oED2K;
-		m_oBTH			= pBTFile->m_oBTH;
-		m_oMD5			= pBTFile->m_oMD5;
-		m_sPath			= pBTFile->m_sPath;
-		m_sURL			= pBTFile->m_sURL;
+		CShareazaFile::operator=( *pBTFile );
 	}
 }
 
@@ -190,52 +182,41 @@ CString	CBTInfo::CBTFile::FindFile()
 void CBTInfo::Clear()
 {
 	delete [] m_pBlockBTH;
+	m_pBlockBTH = NULL;
 
 	for ( POSITION pos = m_pFiles.GetHeadPosition(); pos; )
 		delete m_pFiles.GetNext( pos );
 	m_pFiles.RemoveAll();
-
-	m_oBTH.clear();
-	m_oSHA1.clear();
-	m_oTiger.clear();
-	m_oED2K.clear();
-	m_oMD5.clear();
-	m_nTotalSize	= 0;
-	m_nBlockSize	= 0;
-	m_nBlockCount	= 0;
-	m_pBlockBTH 	= NULL;
-	m_oTrackers.RemoveAll();
-	m_nTrackerIndex	= -1;
-	m_nTrackerMode	= tNull;
 }
 
 //////////////////////////////////////////////////////////////////////
 // CBTInfo copy
 
-CBTInfo& CBTInfo::Copy(const CBTInfo& oSource)
+CBTInfo& CBTInfo::operator=(const CBTInfo& oSource)
 {
 	Clear();
 
-	m_bEncodingError	= oSource.m_bEncodingError;
-	m_oBTH				= oSource.m_oBTH;
-	m_oSHA1				= oSource.m_oSHA1;
-	m_oED2K				= oSource.m_oED2K;
-	m_oTiger			= oSource.m_oTiger;
-	m_oMD5				= oSource.m_oMD5;
+	CShareazaFile::operator=( oSource );
+
+	m_sURLs.RemoveAll();
+	for ( POSITION pos = oSource.m_sURLs.GetHeadPosition(); pos; )
+		m_sURLs.AddTail( oSource.m_sURLs.GetNext( pos ) );
+
 	m_nTotalSize		= oSource.m_nTotalSize;
 	m_nBlockSize		= oSource.m_nBlockSize;
 	m_nBlockCount		= oSource.m_nBlockCount;
+	if ( oSource.m_pBlockBTH )
+	{
+		m_pBlockBTH = new Hashes::BtPureHash[ m_nBlockCount ];
+		std::copy( oSource.m_pBlockBTH, oSource.m_pBlockBTH + m_nBlockCount, m_pBlockBTH );
+	}
+
 	m_nTotalUpload		= oSource.m_nTotalUpload;
 	m_nTotalDownload	= oSource.m_nTotalDownload;
-	m_sName				= oSource.m_sName;
-	m_sPath				= oSource.m_sPath;
 
-	m_oTrackers.RemoveAll();
-	for ( INT_PTR i = 0; i < oSource.m_oTrackers.GetCount(); ++i )
-		m_oTrackers.Add( oSource.m_oTrackers[ i ] );
+	for ( POSITION pos = oSource.m_pFiles.GetHeadPosition(); pos; )
+		m_pFiles.AddTail( new CBTFile( this, oSource.m_pFiles.GetNext( pos ) ) );
 
-	m_nTrackerIndex		= oSource.m_nTrackerIndex;
-	m_nTrackerMode		= oSource.m_nTrackerMode;
 	m_nEncoding			= oSource.m_nEncoding;
 	m_sComment			= oSource.m_sComment;
 	m_tCreationDate		= oSource.m_tCreationDate;
@@ -243,18 +224,18 @@ CBTInfo& CBTInfo::Copy(const CBTInfo& oSource)
 	m_bPrivate			= oSource.m_bPrivate;
 	m_nStartDownloads	= oSource.m_nStartDownloads;
 
-	if ( oSource.m_pBlockBTH != NULL )
-	{
-		m_pBlockBTH = new Hashes::BtPureHash[ m_nBlockCount ];
-		std::copy( oSource.m_pBlockBTH, oSource.m_pBlockBTH + m_nBlockCount, m_pBlockBTH );
-	}
+	m_oTrackers.RemoveAll();
+	for ( INT_PTR i = 0; i < oSource.m_oTrackers.GetCount(); ++i )
+		m_oTrackers.Add( oSource.m_oTrackers[ i ] );
 
-	// Copy files
-	for ( POSITION pos = oSource.m_pFiles.GetHeadPosition(); pos; )
-	{
-		CBTFile* pBTFile = new CBTFile( this, oSource.m_pFiles.GetNext( pos ) );
-		m_pFiles.AddTail( pBTFile );
-	}
+	m_nTrackerIndex		= oSource.m_nTrackerIndex;
+	m_nTrackerMode		= oSource.m_nTrackerMode;
+	m_bEncodingError	= oSource.m_bEncodingError;
+	m_pTestSHA1			= oSource.m_pTestSHA1;
+	m_nTestByte			= oSource.m_nTestByte;
+
+	m_pSource.Clear();
+	m_pSource.Add( oSource.m_pSource.m_pBuffer, oSource.m_pSource.m_nLength );
 
 	return *this;
 }
@@ -589,7 +570,7 @@ BOOL CBTInfo::LoadTorrentFile(LPCTSTR pszFile)
 //////////////////////////////////////////////////////////////////////
 // CBTInfo save .torrent file
 
-BOOL CBTInfo::SaveTorrentFile(LPCTSTR pszPath) const
+BOOL CBTInfo::SaveTorrentFile(LPCTSTR pszPath)
 {
 	ASSERT( pszPath != NULL );
 	if ( ! IsAvailable() ) return FALSE;
@@ -599,6 +580,10 @@ BOOL CBTInfo::SaveTorrentFile(LPCTSTR pszPath) const
 	strPath.Format( _T("%s\\%s.torrent"), pszPath,
 		(LPCTSTR)CDownloadTask::SafeFilename( m_sName ) );
 
+	if ( m_sPath.CompareNoCase( strPath ) == 0 )
+		// Same file
+		return TRUE;
+
 	CFile pFile;
 	if ( ! pFile.Open( strPath, CFile::modeWrite | CFile::modeCreate ) )
 		return FALSE;
@@ -606,13 +591,15 @@ BOOL CBTInfo::SaveTorrentFile(LPCTSTR pszPath) const
 	pFile.Write( m_pSource.m_pBuffer, m_pSource.m_nLength );
 	pFile.Close();
 
+	m_sPath = strPath;
+
 	return TRUE;
 }
 
 //////////////////////////////////////////////////////////////////////
 // CBTInfo load torrent info from buffer
 
-BOOL CBTInfo::LoadTorrentBuffer(CBuffer* pBuffer)
+BOOL CBTInfo::LoadTorrentBuffer(const CBuffer* pBuffer)
 {
 	CBENode* pNode = CBENode::Decode( pBuffer );
 	if ( pNode == NULL ) return FALSE;
@@ -624,9 +611,9 @@ BOOL CBTInfo::LoadTorrentBuffer(CBuffer* pBuffer)
 //////////////////////////////////////////////////////////////////////
 // CBTInfo load torrent info from tree
 
-BOOL CBTInfo::LoadTorrentTree(CBENode* pRoot)
+BOOL CBTInfo::LoadTorrentTree(const CBENode* pRoot)
 {
-	Clear();
+	ASSERT( m_sName.IsEmpty() && m_nSize == SIZE_UNKNOWN );	// Assume empty object
 
 	if ( ! pRoot->IsType( CBENode::beDict ) ) return FALSE;
 

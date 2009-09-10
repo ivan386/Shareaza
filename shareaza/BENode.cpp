@@ -1,7 +1,7 @@
 //
 // BENode.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -194,7 +194,7 @@ CBENode* CBENode::GetNode(const LPBYTE pKey, int nKey) const
 //////////////////////////////////////////////////////////////////////
 // CBENode Extract a string from a node under this one. (Checks both normal and .utf-8)
 
-CString CBENode::GetStringFromSubNode(LPCSTR pszKey, UINT nEncoding, bool& bEncodingError)
+CString CBENode::GetStringFromSubNode(LPCSTR pszKey, UINT nEncoding, bool& bEncodingError) const
 {
 	CBENode*	pSubNode;
 	CString		strValue;
@@ -256,7 +256,7 @@ CString CBENode::GetStringFromSubNode(LPCSTR pszKey, UINT nEncoding, bool& bEnco
 
 // CBENode Extract a string from a list/dictionary
 
-CString CBENode::GetStringFromSubNode(int nItem, UINT nEncoding, bool& bEncodingError)
+CString CBENode::GetStringFromSubNode(int nItem, UINT nEncoding, bool& bEncodingError) const
 {
 	CBENode*	pSubNode;
 	CString		strValue;
@@ -421,7 +421,7 @@ const CString CBENode::Encode() const
 //////////////////////////////////////////////////////////////////////
 // CBENode decoding
 
-CBENode* CBENode::Decode(CBuffer* pBuffer)
+CBENode* CBENode::Decode(const CBuffer* pBuffer)
 {
 	ASSERT( pBuffer != NULL );
 
