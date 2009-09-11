@@ -109,7 +109,7 @@ STDMETHODIMP CVideoReader::LoadFromFile (
 	/* [in,out] */ IMAGESERVICEDATA* pParams,
 	/* [out] */ SAFEARRAY** ppImage )
 {
-	ATLTRACE( _T("MediaImageServices::LoadFromFile (\"%s\", 0x%08x, 0x%08x)\n"), sFile, pParams, ppImage);
+	ATLTRACE( _T("MediaImageServices::LoadFromFile (\"%hs\", 0x%08x, 0x%08x)\n"), (LPCSTR)CT2A( sFile ), pParams, ppImage);
 
 	if ( ! pParams || ! ppImage )
 		return E_POINTER;
