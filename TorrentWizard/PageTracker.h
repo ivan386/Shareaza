@@ -1,7 +1,7 @@
 //
 // PageTracker.h
 //
-// Copyright (c) Shareaza Development Team, 2007.
+// Copyright (c) Shareaza Development Team, 2007-2009.
 // This file is part of Shareaza Torrent Wizard (shareaza.sourceforge.net).
 //
 // Shareaza Torrent Wizard is free software; you can redistribute it
@@ -19,9 +19,6 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_PAGETRACKER_H__98B08251_6D7C_4028_943D_5E483220F28D__INCLUDED_)
-#define AFX_PAGETRACKER_H__98B08251_6D7C_4028_943D_5E483220F28D__INCLUDED_
-
 #pragma once
 
 #include "WizardSheet.h"
@@ -29,43 +26,27 @@
 
 class CTrackerPage : public CWizardPage
 {
-// Construction
-public:
-	CTrackerPage();
-	virtual ~CTrackerPage();
-
 	DECLARE_DYNCREATE(CTrackerPage)
 
-// Dialog Data
 public:
-	//{{AFX_DATA(CTrackerPage)
-	enum { IDD = IDD_TRACKER_PAGE };
-	CComboBox	m_wndTracker;
-	CString	m_sTracker;
-	//}}AFX_DATA
+	CTrackerPage();
 
-// Overrides
-public:
-	//{{AFX_VIRTUAL(CTrackerPage)
-	public:
+	enum { IDD = IDD_TRACKER_PAGE };
+
+	CString		m_sTracker;
+
+protected:
+	CComboBox	m_wndTracker;
+
+	void SaveTrackers();
+
+	virtual BOOL OnInitDialog();
 	virtual BOOL OnSetActive();
 	virtual LRESULT OnWizardBack();
 	virtual LRESULT OnWizardNext();
-	protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
 
-// Implementation
-protected:
-	//{{AFX_MSG(CTrackerPage)
-	virtual BOOL OnInitDialog();
 	afx_msg void OnClearTrackers();
-	//}}AFX_MSG
 
 	DECLARE_MESSAGE_MAP()
-
 };
-
-//{{AFX_INSERT_LOCATION}}
-
-#endif // !defined(AFX_PAGETRACKER_H__98B08251_6D7C_4028_943D_5E483220F28D__INCLUDED_)

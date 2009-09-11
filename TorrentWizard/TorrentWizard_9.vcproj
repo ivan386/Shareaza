@@ -554,10 +554,6 @@
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
 			>
 			<File
-				RelativePath="res\Hand.cur"
-				>
-			</File>
-			<File
 				RelativePath="res\TorrentWizard.ico"
 				>
 			</File>
@@ -574,7 +570,7 @@
 				>
 			</File>
 			<File
-				RelativePath="Res\Wizard.bmp"
+				RelativePath="..\shareaza\Res\Wizard.bmp"
 				>
 			</File>
 		</Filter>

@@ -1,7 +1,7 @@
 //
 // WizardSheet.cpp
 //
-// Copyright (c) Shareaza Development Team, 2007.
+// Copyright (c) Shareaza Development Team, 2007-2009.
 // This file is part of Shareaza Torrent Wizard (shareaza.sourceforge.net).
 //
 // Shareaza Torrent Wizard is free software; you can redistribute it
@@ -42,14 +42,11 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // CWizardSheet
 
+IMPLEMENT_DYNAMIC(CWizardSheet, CPropertySheet)
+
 BEGIN_MESSAGE_MAP(CWizardSheet, CPropertySheet)
-	//{{AFX_MSG_MAP(CWizardSheet)
 	ON_WM_PAINT()
-	ON_WM_ERASEBKGND()
 	ON_WM_SIZE()
-	ON_WM_SETCURSOR()
-	ON_WM_LBUTTONUP()
-	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -94,14 +91,12 @@ BOOL CWizardSheet::Run(CWnd* pParent)
 
 CWizardSheet::CWizardSheet(CWnd *pParentWnd, UINT iSelectPage)
 {
+	m_bmHeader.LoadBitmap( IDB_WIZARD );
+
 	m_psh.dwFlags &= ~PSP_HASHELP;
 
 	Construct( _T(""), pParentWnd, iSelectPage );
 	SetWizardMode();
-}
-
-CWizardSheet::~CWizardSheet()
-{
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -162,8 +157,6 @@ BOOL CWizardSheet::OnInitDialog()
 	if ( GetDlgItem( 0x0009 ) ) GetDlgItem( 0x0009 )->ShowWindow( SW_HIDE );
 	if ( GetDlgItem( 0x3026 ) ) GetDlgItem( 0x3026 )->ShowWindow( SW_HIDE );
 	
-	m_bmHeader.LoadBitmap( IDB_WIZARD );
-	
 	return TRUE;
 }
 
@@ -214,77 +207,57 @@ void CWizardSheet::OnSize(UINT nType, int cx, int cy)
 	if ( CWnd* pWnd = GetWindow( GW_CHILD ) )
 	{
 		GetClientRect( &m_rcPage );
+	
+		BITMAP bm;
+		m_bmHeader.GetBitmap( &bm );
 		
-		m_rcPage.top += 51;	// 50
-		m_rcPage.bottom -= 48;
-		
+		m_rcPage.top += bm.bmHeight + 1;
+		m_rcPage.bottom -= bm.bmHeight - 2;
+
 		pWnd->SetWindowPos( NULL, m_rcPage.left, m_rcPage.top, m_rcPage.Width(),
 			m_rcPage.Height(), SWP_NOSIZE );
 	}
 }
 
-BOOL CWizardSheet::OnEraseBkgnd(CDC* /*pDC*/) 
-{
-	return TRUE;
-}
-
 void CWizardSheet::OnPaint() 
 {
 	CPaintDC dc( this );
+	dc.SetBkMode( TRANSPARENT );
+	dc.SetTextColor( RGB( 255, 255, 255 ) );
+
 	CRect rc;
-	
 	GetClientRect( &rc );
-	
+
+	BITMAP bm;
+	m_bmHeader.GetBitmap( &bm );
+
+	CRect rcHeader = rc;
+	rcHeader.bottom = rcHeader.top + bm.bmHeight;
+
 	CDC mdc;
 	mdc.CreateCompatibleDC( &dc );
 	CBitmap* pOldBitmap = (CBitmap*)mdc.SelectObject( &m_bmHeader );
-	dc.BitBlt( 0, 0, 520, 50, &mdc, 0, 0, SRCCOPY );
+	dc.BitBlt( rcHeader.left, rcHeader.top, rcHeader.Width(), rcHeader.Height(),
+		&mdc, 0, 0, SRCCOPY );
 	mdc.SelectObject( pOldBitmap );
 	mdc.DeleteDC();
-	
-	dc.Draw3dRect( 0, 50, rc.Width() + 1, 1,
-		RGB( 128, 128, 128 ), RGB( 128, 128, 128 ) );
-	
-	dc.Draw3dRect( 0, rc.bottom - 48, rc.Width() + 1, 2,
+
+	dc.Draw3dRect( rc.left, rc.top + rcHeader.Height() - 2, rc.Width() + 1, 2,
 		RGB( 128, 128, 128 ), RGB( 255, 255, 255 ) );
-	
-	rc.top = rc.bottom - 46;
-	
-	CFont* pOldFont = (CFont*)dc.SelectObject( &theApp.m_fntTiny );
-	CString str = _T("v") + theApp.m_sVersion;
-	CSize sz = dc.GetTextExtent( str );
-	
-	dc.SetBkMode( OPAQUE );
-	dc.SetBkColor( GetSysColor( COLOR_BTNFACE ) );
-	dc.SetTextColor( GetSysColor( COLOR_BTNSHADOW ) );
-	dc.ExtTextOut( rc.right - sz.cx - 2, rc.bottom - sz.cy - 1, ETO_CLIPPED|ETO_OPAQUE, &rc, str, NULL );
+
+	dc.Draw3dRect( rc.left, rc.bottom - 48, rc.Width() + 1, 2,
+		RGB( 128, 128, 128 ), RGB( 255, 255, 255 ) );
+
+	rcHeader.left += 180;
+	CFont* pOldFont = (CFont*)dc.SelectObject( &theApp.m_fntHeader );
+	dc.DrawText( theApp.m_sName, &rcHeader, DT_VCENTER | DT_CENTER | DT_SINGLELINE );
+
+	rcHeader.left = rcHeader.right - 50;
+	rcHeader.bottom = rcHeader.top + 20;
+	dc.SelectObject( &theApp.m_fntTiny );
+	dc.DrawText( theApp.m_sVersion, &rcHeader, DT_VCENTER | DT_CENTER | DT_SINGLELINE );
+
 	dc.SelectObject( pOldFont );
-}
-
-BOOL CWizardSheet::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)
-{
-	CPoint pt;
-	CRect rc;
-	
-	GetCursorPos( &pt );
-	GetClientRect( &rc );
-	ScreenToClient( &pt );
-	
-	if ( rc.PtInRect( pt ) && pt.y <= 50 )
-	{
-		SetCursor( theApp.LoadCursor( IDC_HAND ) );
-		return TRUE;
-	}
-	
-	return CPropertySheet::OnSetCursor( pWnd, nHitTest, message );
-}
-
-void CWizardSheet::OnLButtonUp(UINT /*nFlags*/, CPoint point)
-{
-	if ( point.y <= 50 )
-	{
-		ShellExecute( NULL, NULL, _T("http://shareaza.sourceforge.net/TorrentAid/"), NULL, NULL, SW_SHOWNORMAL );
-	}
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -293,12 +266,9 @@ void CWizardSheet::OnLButtonUp(UINT /*nFlags*/, CPoint point)
 IMPLEMENT_DYNCREATE(CWizardPage, CPropertyPage)
 
 BEGIN_MESSAGE_MAP(CWizardPage, CPropertyPage)
-	//{{AFX_MSG_MAP(CWizardPage)
 	ON_WM_SIZE()
 	ON_WM_CTLCOLOR()
-	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
-
 
 /////////////////////////////////////////////////////////////////////////////
 // CWizardPage construction
@@ -307,10 +277,6 @@ CWizardPage::CWizardPage(UINT nID) : CPropertyPage( nID )
 {
 	m_crWhite = RGB( 255, 255, 255 );
 	m_brWhite.CreateSolidBrush( m_crWhite );
-}
-
-CWizardPage::~CWizardPage()
-{
 }
 
 /////////////////////////////////////////////////////////////////////////////

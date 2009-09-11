@@ -2,8 +2,6 @@
 // Microsoft Visual C++ generated include file.
 // Used by TorrentWizard.rc
 //
-#define IDR_MANIFEST                    1
-#define IDD_TORRENTWIZARD_DIALOG        102
 #define IDD_WELCOME_PAGE                107
 #define IDD_SINGLE_PAGE                 108
 #define IDD_PACKAGE_PAGE                109
@@ -14,7 +12,6 @@
 #define IDD_COMMANDLINE_PAGE            114
 #define IDR_MAINFRAME                   128
 #define IDB_WIZARD                      130
-#define IDC_HAND                        131
 #define IDC_TYPE_SINGLE                 1000
 #define IDC_TYPE_PACKAGE                1001
 #define IDC_FILE_NAME                   1001
@@ -43,7 +40,6 @@
 #define IDC_TITLE                       1023
 #define IDC_COMMENT                     1025
 #define IDC_AUTO_PIECE_SIZE             1026
-#define IDC_EDIT1                       1027
 #define IDC_PIECE_SIZE                  1028
 #define IDC_CHECK_SHA1                  1029
 #define IDC_TORRENT_SEED                1030

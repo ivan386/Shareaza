@@ -33,33 +33,22 @@ static char THIS_FILE[] = __FILE__;
 IMPLEMENT_DYNCREATE(CTrackerPage, CWizardPage)
 
 BEGIN_MESSAGE_MAP(CTrackerPage, CWizardPage)
-	//{{AFX_MSG_MAP(CTrackerPage)
-	ON_BN_CLICKED(IDC_CLEAR_TRACKERS, OnClearTrackers)
-	//}}AFX_MSG_MAP
+	ON_BN_CLICKED(IDC_CLEAR_TRACKERS, &CTrackerPage::OnClearTrackers)
 END_MESSAGE_MAP()
-
 
 /////////////////////////////////////////////////////////////////////////////
 // CTrackerPage property page
 
 CTrackerPage::CTrackerPage() : CWizardPage(CTrackerPage::IDD)
 {
-	//{{AFX_DATA_INIT(CTrackerPage)
-	m_sTracker = _T("");
-	//}}AFX_DATA_INIT
-}
-
-CTrackerPage::~CTrackerPage()
-{
 }
 
 void CTrackerPage::DoDataExchange(CDataExchange* pDX)
 {
 	CWizardPage::DoDataExchange(pDX);
-	//{{AFX_DATA_MAP(CTrackerPage)
+
 	DDX_Control(pDX, IDC_TRACKER, m_wndTracker);
 	DDX_CBString(pDX, IDC_TRACKER, m_sTracker);
-	//}}AFX_DATA_MAP
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -80,8 +69,11 @@ BOOL CTrackerPage::OnInitDialog()
 	}
 	
 	m_sTracker = theApp.GetProfileString( _T("Trackers"), _T("Last") );
+	if ( m_sTracker.IsEmpty() )
+		m_sTracker = _T("http://tracker.openbittorrent.com/announce");
+
 	UpdateData( FALSE );
-	
+
 	return TRUE;
 }
 
@@ -103,13 +95,18 @@ void CTrackerPage::OnClearTrackers()
 LRESULT CTrackerPage::OnWizardBack() 
 {
 	GET_PAGE( CWelcomePage, pWelcome );
+
+	UpdateData( TRUE );
+
+	SaveTrackers();
+
 	return pWelcome->m_nType ? IDD_PACKAGE_PAGE : IDD_SINGLE_PAGE;
 }
 
 LRESULT CTrackerPage::OnWizardNext() 
 {
 	UpdateData( TRUE );
-	
+
 	if ( m_sTracker.IsEmpty() || m_sTracker.Find( _T("http") ) != 0 )
 	{
 		if ( IDYES != AfxMessageBox( IDS_TRACKER_NEED_URL, MB_ICONQUESTION|MB_YESNO ) )
@@ -119,6 +116,13 @@ LRESULT CTrackerPage::OnWizardNext()
 		}
 	}
 	
+	SaveTrackers();
+
+	return IDD_COMMENT_PAGE;
+}
+
+void CTrackerPage::SaveTrackers()
+{
 	if ( m_sTracker.GetLength() > 0 && m_wndTracker.FindStringExact( -1, m_sTracker ) < 0 )
 	{
 		m_wndTracker.AddString( m_sTracker );
@@ -131,7 +135,4 @@ LRESULT CTrackerPage::OnWizardNext()
 	}
 	
 	theApp.WriteProfileString( _T("Trackers"), _T("Last"), m_sTracker );
-	
-	return IDD_COMMENT_PAGE;
 }
-

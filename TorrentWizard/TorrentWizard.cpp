@@ -1,7 +1,7 @@
 //
 // TorrentWizard.cpp
 //
-// Copyright (c) Shareaza Development Team, 2003-2007.
+// Copyright (c) Shareaza Development Team, 2003-2009.
 // This file is part of Shareaza Torrent Wizard (shareaza.sourceforge.net).
 //
 // Shareaza Torrent Wizard is free software; you can redistribute it
@@ -31,7 +31,7 @@ static char THIS_FILE[] = __FILE__;
 #endif
 
 BEGIN_MESSAGE_MAP(CTorrentWizardApp, CWinApp)
-	ON_COMMAND(ID_HELP, CWinApp::OnHelp)
+	ON_COMMAND(ID_HELP, CTorrentWizardApp::OnHelp)
 END_MESSAGE_MAP()
 
 CTorrentWizardApp theApp;
@@ -40,8 +40,14 @@ CTorrentWizardApp theApp;
 /////////////////////////////////////////////////////////////////////////////
 // CTorrentWizardApp construction
 
-CTorrentWizardApp::CTorrentWizardApp()
+CTorrentWizardApp::CTorrentWizardApp() :
+	m_sName( _T("Torrent Wizard") )
 {
+}
+
+void CTorrentWizardApp::OnHelp()
+{
+	ShellExecute( NULL, NULL, _T("http://shareaza.sourceforge.net/?id=torrentwizard/home"), NULL, NULL, SW_SHOWNORMAL );
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -111,12 +117,6 @@ void CTorrentWizardApp::InitEnvironment()
 
 	m_sVersion.Format( _T("%i.%i.%i.%i"),
 		m_nVersion[0], m_nVersion[1], m_nVersion[2], m_nVersion[3] );
-
-	OSVERSIONINFO pVersion;
-	pVersion.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
-	GetVersionEx( &pVersion );
-
-	m_bNT = ( pVersion.dwPlatformId == VER_PLATFORM_WIN32_NT );
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -136,7 +136,11 @@ void CTorrentWizardApp::InitResources()
 		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
 		DEFAULT_PITCH|FF_DONTCARE, _T("Tahoma") );
 	
-	m_fntTiny.CreateFont( -8, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE,
+	m_fntTiny.CreateFont( -9, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE,
+		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
+		DEFAULT_PITCH|FF_DONTCARE, _T("Tahoma") );
+
+	m_fntHeader.CreateFont( -28, 0, 0, 0, FW_NORMAL, TRUE, FALSE, FALSE,
 		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
 		DEFAULT_PITCH|FF_DONTCARE, _T("Tahoma") );
 

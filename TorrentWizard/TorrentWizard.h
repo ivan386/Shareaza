@@ -1,7 +1,7 @@
 //
 // TorrentWizard.h
 //
-// Copyright (c) Shareaza Development Team, 2007.
+// Copyright (c) Shareaza Development Team, 2007-2009.
 // This file is part of Shareaza Torrent Wizard (shareaza.sourceforge.net).
 //
 // Shareaza Torrent Wizard is free software; you can redistribute it
@@ -19,28 +19,24 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_TORRENTWIZARD_H__5756891D_0476_49ED_A2B2_4889DE191BA3__INCLUDED_)
-#define AFX_TORRENTWIZARD_H__5756891D_0476_49ED_A2B2_4889DE191BA3__INCLUDED_
-
 #pragma once
 
 #include "Resource.h"
 
 class CTorrentWizardApp : public CWinApp
 {
-// Construction
 public:
 	CTorrentWizardApp();
 
-// Attributes
 public:
 	CString		m_sPath;
+	CString		m_sName;
 	CString		m_sVersion;
 	WORD		m_nVersion[4];
-	BOOL		m_bNT;
 	CFont		m_fntNormal;
 	CFont		m_fntBold;
 	CFont		m_fntLine;
+	CFont		m_fntHeader;
 	CFont		m_fntTiny;
 
 	BOOL		m_bCommandLine;
@@ -48,29 +44,17 @@ public:
 	CString		m_sCommandLineDestination;
 	CString		m_sCommandLineTracker;
 	
-// Operations
 protected:
 	void		InitEnvironment();
 	void		InitResources();
 	
-// Overrides
-public:
-	//{{AFX_VIRTUAL(CTorrentWizardApp)
-	public:
 	virtual BOOL InitInstance();
-	//}}AFX_VIRTUAL
 
-// Implementation
-protected:
-	//{{AFX_MSG(CTorrentWizardApp)
-	//}}AFX_MSG
+	afx_msg void OnHelp();
+
 	DECLARE_MESSAGE_MAP()
 };
-
-//{{AFX_INSERT_LOCATION}}
 
 extern CTorrentWizardApp theApp;
 
 CString SmartSize(QWORD nVolume);
-
-#endif // !defined(AFX_TORRENTWIZARD_H__5756891D_0476_49ED_A2B2_4889DE191BA3__INCLUDED_)
