@@ -810,16 +810,20 @@ void CLibraryFolder::Maintain(BOOL bAdd)
 
 		// Remove non-unicode file
 		CFile file;
-		WORD wMark;
-		BOOL bUnicode = file.Open( sDesktopINI, CFile::modeRead | CFile::shareDenyNone ) &&
-			file.Read( &wMark, 2 ) == 2 && ( wMark == 0xfeff || wMark == 0xfffe );
-		file.Close();
-		if ( ! bUnicode )
+		if ( file.Open( sDesktopINI, CFile::modeRead | CFile::shareDenyNone ) )
 		{
-			wMark = 0xfeff;
-			file.Open( sDesktopINI, CFile::modeCreate | CFile::modeWrite );
-			file.Write( &wMark, 2 );
+			WORD wMark;
+			BOOL bUnicode = file.Read( &wMark, 2 ) == 2 && ( wMark == 0xfeff || wMark == 0xfffe );
 			file.Close();
+			if ( ! bUnicode )
+			{
+				wMark = 0xfeff;
+				if ( file.Open( sDesktopINI, CFile::modeCreate | CFile::modeWrite ) )
+				{
+					file.Write( &wMark, 2 );
+					file.Close();
+				}
+			}
 		}
 
 		// Windows 2000/XP
