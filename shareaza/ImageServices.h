@@ -50,7 +50,13 @@ protected:
 
 	BOOL		PostLoad(CImageFile* pFile, const IMAGESERVICEDATA* pParams, SAFEARRAY* pArray);
 	SAFEARRAY*	ImageToArray(CImageFile* pFile);
-	bool		GetService(LPCTSTR szFilename, IImageServicePlugin** pIImageServicePlugin);
+
+	// Get plugin interface for specified extension
+	bool		GetService(LPCTSTR pszType, IImageServicePlugin** pIImageServicePlugin);
+
+	// (Re)Load plugin in plugin cache for specified file extension
+	bool		ReloadService(LPCTSTR pszType);
+
 	virtual void OnRun();
 };
 

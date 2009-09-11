@@ -61,7 +61,13 @@ void CImageServices::OnRun()
 		if ( ! IsThreadEnabled() )
 			break;
 
-		ASSERT( m_services.find( m_inCLSID ) == m_services.end() );
+		// Revoke interface
+		services_map::iterator i = m_services.find( m_inCLSID );
+		if ( i != m_services.end() )
+		{
+			CComGITPtr< IImageServicePlugin > oGIT( (*i).second );
+			m_services.erase( i );
+		}
 
 		// Create plugin
 		CComPtr< IImageServicePlugin > pService;
@@ -124,10 +130,15 @@ BOOL CImageServices::LoadFromMemory(CImageFile* pFile, LPCTSTR pszType, LPCVOID 
 					pParams.cbSize = sizeof( pParams );
 					if ( bScanOnly ) pParams.nFlags |= IMAGESERVICE_SCANONLY;
 					if ( bPartialOk ) pParams.nFlags |= IMAGESERVICE_PARTIAL_IN;
-					if ( SUCCEEDED( pService->LoadFromMemory( bstrType, pInput,
-						&pParams, &pArray ) ) )
+					HRESULT hr = pService->LoadFromMemory( bstrType, pInput, &pParams, &pArray );
+					if ( SUCCEEDED( hr ) )
 					{
 						bSuccess = PostLoad( pFile, &pParams, pArray );
+					}
+					else if ( hr == MAKE_HRESULT( SEVERITY_ERROR, FACILITY_WIN32, RPC_S_SERVER_UNAVAILABLE ) )
+					{
+						// Plugin died
+						ReloadService( pszType );
 					}
 					if ( pArray )
 					{
@@ -152,8 +163,12 @@ BOOL CImageServices::LoadFromFile(CImageFile* pFile, LPCTSTR szFilename, BOOL bS
 
 	BOOL bSuccess = FALSE;
 
+	// Get file extension
+	CString strType( PathFindExtension( szFilename ) ); // ".ext"
+	strType.MakeLower();
+
 	CComPtr< IImageServicePlugin> pService;
-	if ( GetService( szFilename, &pService ) )
+	if ( GetService( strType, &pService ) )
 	{
 		CComBSTR bstrFile( szFilename );
 		HINSTANCE hRes = AfxGetResourceHandle();
@@ -168,8 +183,13 @@ BOOL CImageServices::LoadFromFile(CImageFile* pFile, LPCTSTR szFilename, BOOL bS
 		{
 			bSuccess = PostLoad( pFile, &pParams, pArray );
 		}
-		if ( pArray )
+		else if ( hr == MAKE_HRESULT( SEVERITY_ERROR, FACILITY_WIN32, RPC_S_SERVER_UNAVAILABLE ) )
 		{
+			// Plugin died
+			ReloadService( strType );
+		}
+		if ( pArray )
+		{ 
 			VERIFY( SUCCEEDED( SafeArrayDestroy( pArray ) ) );
 		}
 
@@ -380,36 +400,30 @@ BOOL CImageServices::IsFileViewable(LPCTSTR pszPath)
 /////////////////////////////////////////////////////////////////////////////
 // CImageServices service discovery and control
 
-bool CImageServices::GetService(LPCTSTR szFilename, IImageServicePlugin** ppIImageServicePlugin)
+bool CImageServices::GetService(LPCTSTR pszType, IImageServicePlugin** ppIImageServicePlugin)
 {
-	// Get file extension
-	CString strType( PathFindExtension( szFilename ) ); // ".ext"
-	strType.MakeLower();
-
-	// Get plugin CLSID
-	CLSID oCLSID;
-	if ( ! Plugins.LookupCLSID( L"ImageService", strType, oCLSID ) )
-		// Unknown or disabled extension
-		return false;
-
 	// Check cached one
 	DWORD dwCachedIndex;
 	{
 		CQuickLock oLock( m_pSection );
+
+		// Get plugin CLSID
+		CLSID oCLSID;
+		if ( ! Plugins.LookupCLSID( L"ImageService", pszType, oCLSID ) )
+			// Unknown or disabled extension
+			return false;
+
 		services_map::iterator i = m_services.find( oCLSID );
 		if ( i == m_services.end() )
 		{
-			// Create new one
-			m_inCLSID = oCLSID;							// Set input parameter
-			if ( ! BeginThread( "ImageServices" ) )
-				return false;
-			Wakeup();									// Start process
-			WaitForSingleObject( m_pReady, INFINITE );	// Wait for result
-			i = m_services.find( oCLSID );				// Get result
+			ReloadService( pszType );
+
+			i = m_services.find( oCLSID ); // Get result
 			if ( i == m_services.end() )
 				// No plugin
 				return false;
 		}
+
 		dwCachedIndex = (*i).second;
 	}
 
@@ -434,4 +448,25 @@ bool CImageServices::GetService(LPCTSTR szFilename, IImageServicePlugin** ppIIma
 	oGIT.Detach();
 
 	return SUCCEEDED( hr );
+}
+
+bool CImageServices::ReloadService(LPCTSTR pszType)
+{
+	CQuickLock oLock( m_pSection );
+
+	// Get plugin CLSID
+	if ( ! Plugins.LookupCLSID( L"ImageService", pszType, m_inCLSID ) )
+		// Unknown or disabled extension
+		return false;
+
+	// Create new one
+	if ( ! BeginThread( "ImageServices" ) )
+		// Something really bad
+		return false;
+
+	Wakeup();									// Start process
+	WaitForSingleObject( m_pReady, INFINITE );	// Wait for result
+
+	// Ok
+	return true;
 }
