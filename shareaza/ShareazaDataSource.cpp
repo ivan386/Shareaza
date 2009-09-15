@@ -244,7 +244,9 @@ protected:
 IMPLEMENT_DYNCREATE(CShareazaDataSource, CComObject)
 
 // {34791E02-51DC-4CF4-9E34-018166D91D0E}
-IMPLEMENT_OLECREATE_FLAGS(CShareazaDataSource, "Shareaza.DataSource", afxRegFreeThreading|afxRegApartmentThreading, 0x34791e02, 0x51dc, 0x4cf4, 0x9e, 0x34, 0x1, 0x81, 0x66, 0xd9, 0x1d, 0xe);
+IMPLEMENT_OLECREATE_FLAGS(CShareazaDataSource, "Shareaza.DataSource",
+	afxRegFreeThreading|afxRegApartmentThreading,
+	0x34791e02, 0x51dc, 0x4cf4, 0x9e, 0x34, 0x1, 0x81, 0x66, 0xd9, 0x1d, 0xe);
 
 CShareazaDataSource::CShareazaDataSource() :
 	m_rgde (NULL ),

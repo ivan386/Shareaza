@@ -45,7 +45,9 @@ static char THIS_FILE[] = __FILE__;
 IMPLEMENT_DYNCREATE(CApplication, CComObject)
 
 // {E9B2EF9B-4A0C-451e-801F-257861B87FAD}
-IMPLEMENT_OLECREATE_FLAGS(CApplication, "Shareaza.Application", afxRegFreeThreading|afxRegApartmentThreading, 0xe9b2ef9b, 0x4a0c, 0x451e, 0x80, 0x1f, 0x25, 0x78, 0x61, 0xb8, 0x7f, 0xad);
+IMPLEMENT_OLECREATE_FLAGS(CApplication, "Shareaza.Application",
+	afxRegFreeThreading|afxRegApartmentThreading,
+	0xe9b2ef9b, 0x4a0c, 0x451e, 0x80, 0x1f, 0x25, 0x78, 0x61, 0xb8, 0x7f, 0xad);
 
 BEGIN_MESSAGE_MAP(CApplication, CComObject)
 END_MESSAGE_MAP()

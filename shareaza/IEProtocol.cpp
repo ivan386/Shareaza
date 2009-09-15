@@ -105,7 +105,7 @@ BOOL CIEProtocol::Create()
 
 	for ( int nProtocol = 0 ; pszProtocols[ nProtocol ] != NULL ; nProtocol++ )
 	{
-		if ( FAILED( pSession->RegisterNameSpace( &m_xClassFactory, CLSID_IEProtocol,
+		if ( FAILED( pSession->RegisterNameSpace( &m_xClassFactory, CLSID_ShareazaIEProtocol,
 			 pszProtocols[ nProtocol ], 0, NULL, 0 ) ) ) return FALSE;
 	}
 

@@ -628,6 +628,26 @@ library Shareaza
 	};
 
 	//
+	//  Shareaza XML
+	//
+
+	[ uuid(30FC662A-D72A-4f79-B63A-ACD4FBFE68A3) ]
+	coclass ShareazaXML
+	{
+		[default] interface ISXMLNode;
+		interface ISXMLElement;
+		interface ISXMLAttribute;
+	};
+
+	[ uuid(D73ABD28-3A2A-4e36-AD6F-2AA8F011FBE3) ]
+	coclass ShareazaXMLCollection
+	{
+		[default] interface ISXMLElements;
+		interface ISXMLAttributes;
+		interface IEnumVARIANT;
+	};
+
+	//
 	//  Shareaza Data Source
 	//
 
@@ -643,7 +663,7 @@ library Shareaza
 	//
 
 	[ uuid(18D11ED9-1264-48A1-9E14-20F2C633242B) ]
-	coclass IEProtocol
+	coclass ShareazaIEProtocol
 	{
 		[default] interface IClassFactory;
 	};
@@ -653,7 +673,7 @@ library Shareaza
 	//
 
 	[ uuid(E1A67AE5-7041-4AE1-94F7-DE03EF759E27) ]
-	coclass IEProtocolRequest
+	coclass ShareazaIEProtocolRequest
 	{
 		[default] interface IInternetProtocol;
 		interface IInternetProtocolInfo;

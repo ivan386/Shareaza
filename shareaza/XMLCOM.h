@@ -1,7 +1,7 @@
 //
 // XMLCOM.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -19,9 +19,6 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_XMLCOM_H__0B25B479_D7BF_452C_BB49_FAB08B746E0A__INCLUDED_)
-#define AFX_XMLCOM_H__0B25B479_D7BF_452C_BB49_FAB08B746E0A__INCLUDED_
-
 #pragma once
 
 class CXMLNode;
@@ -32,9 +29,10 @@ class CXMLCOMCol;
 
 class CXMLCOM : public CComObject
 {
-// Construction
+	DECLARE_DYNCREATE(CXMLCOM)
+
 public:
-	CXMLCOM(CXMLNode* pNode);
+	CXMLCOM(CXMLNode* pNode = NULL);
 	virtual ~CXMLCOM();
 
 // Attributes
@@ -103,6 +101,8 @@ public:
 		STDMETHOD(Clone)(ISXMLAttribute FAR* FAR* ppClone);
 	END_INTERFACE_PART(XMLAttribute)
 
+	DECLARE_OLECREATE(CXMLCOM)
+
 	DECLARE_INTERFACE_MAP()
 
 	friend class CXMLCOMCol;
@@ -111,9 +111,10 @@ public:
 
 class CXMLCOMCol : public CComObject
 {
-// Construction
+	DECLARE_DYNCREATE(CXMLCOMCol)
+
 public:
-	CXMLCOMCol(CXMLElement* pElement);
+	CXMLCOMCol(CXMLElement* pElement = NULL);
 	virtual ~CXMLCOMCol();
 
 // Attributes
@@ -161,8 +162,7 @@ protected:
 		BOOL		m_bAttributes;
 	END_INTERFACE_PART(EnumVARIANT)
 
+	DECLARE_OLECREATE(CXMLCOMCol)
+
 	DECLARE_INTERFACE_MAP()
-
 };
-
-#endif // !defined(AFX_XMLCOM_H__0B25B479_D7BF_452C_BB49_FAB08B746E0A__INCLUDED_)
