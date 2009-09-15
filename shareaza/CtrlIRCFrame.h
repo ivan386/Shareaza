@@ -1,7 +1,7 @@
 //
 // CtrlIRCFrame.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -295,6 +295,7 @@ protected:
 #define	ID_MESSAGE_CHANNEL_LIST			230
 #define	ID_MESSAGE_CHANNEL_ME           231
 #define	ID_MESSAGE_CHANNEL_LISTEND      232
+#define ID_MESSAGE_CHANNEL_PART_FORCED  244
 
 #define	ID_MESSAGE_USER_MESSAGE			233
 #define	ID_MESSAGE_USER_CTCPTIME		234
