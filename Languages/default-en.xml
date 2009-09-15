@@ -936,6 +936,7 @@
 		<separator/>
 		<item id="ID_SEARCH_FILTER" text="_Filter Results..."/>
 		<item id="ID_SEARCH_FILTER_REMOVE" text="_Remove Filter"/>
+		<separator/>
 		<item id="ID_SEARCH_CLEAR" text="C_lear Results"/>
 		<separator/>
 		<item id="ID_SEARCH_COLUMNS" text="Edit C_olumns..."/>
@@ -1155,6 +1156,8 @@
 		<item id="ID_LIBRARY_SHARED_FOLDER" text="_Shared"/>
 		<item id="ID_LIBRARY_REMOVE" text="_Remove"/>
 		<separator/>
+		<item id="ID_SHELL_MENU" text="S_hell menu"/>
+		<separator/>
 		<item id="ID_LIBRARY_FOLDERS" text="Share _Files..."/>
 	</menu>
 	<menu name="CLibraryTree.Physical">
@@ -1166,6 +1169,8 @@
 		<item id="ID_LIBRARY_SCAN" text="S_can"/>
 		<item id="ID_LIBRARY_REBUILD" text="Re_build"/>
 		<item id="ID_LIBRARY_FOLDERS" text="Share _Files..."/>
+		<separator/>
+		<item id="ID_SHELL_MENU" text="S_hell menu"/>
 		<separator/>
 		<item id="ID_LIBRARY_FOLDER_FILE_PROPERTIES" text="File _Properties"/>
 	</menu>
@@ -1297,6 +1302,8 @@
 		<item id="ID_LIBRARY_REBUILD_ANSI" text="_Localise Metadata"/>
 		<item id="ID_LIBRARY_REFRESH_METADATA" text="_Refresh Metadata"/>
 		<separator/>
+		<item id="ID_SHELL_MENU" text="S_hell menu"/>
+		<separator/>
 		<item id="ID_LIBRARY_PROPERTIES" text="_Properties"/>
 	</menu>
 	<menu name="CLibraryFileView.Virtual">
@@ -1333,6 +1340,8 @@
 		<item id="ID_LIBRARY_REFRESH_METADATA" text="_Refresh Metadata"/>
 		<separator/>
 		<item id="ID_LIBRARY_COLUMNS" text="Choose _Columns..."/>
+		<separator/>
+		<item id="ID_SHELL_MENU" text="S_hell menu"/>
 		<separator/>
 		<item id="ID_LIBRARY_PROPERTIES" text="_Properties"/>
 	</menu>

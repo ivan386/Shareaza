@@ -907,6 +907,7 @@
 		<separator/>
 		<item id="ID_SEARCH_FILTER" text="_Filter Results..."/>
 		<item id="ID_SEARCH_FILTER_REMOVE" text="_Remove Filter"/>
+		<separator/>
 		<item id="ID_SEARCH_CLEAR" text="C_lear Results"/>
 		<separator/>
 		<item id="ID_SEARCH_COLUMNS" text="Edit C_olumns..."/>

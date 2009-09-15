@@ -1,0 +1,28 @@
+// SearchExport.idl : IDL source for SearchExport
+//
+
+// This file will be processed by the MIDL tool to
+// produce the type library (SearchExport.tlb) and marshalling code.
+
+import "oaidl.idl";
+import "ocidl.idl";
+import "Shareaza.idl";
+
+[
+	uuid(44BF6E4B-B782-4752-B004-CF3260C27730),
+	version(1.0),
+	helpstring("SearchExport 1.0 Type Library")
+]
+library SearchExportLib
+{
+	importlib("stdole2.tlb");
+
+	[
+		uuid(DF7CED9C-198A-4acd-A42F-BB34EAA15C02)
+	]
+	coclass Plugin
+	{
+		[default] interface IGeneralPlugin;
+		interface ICommandPlugin;
+	};
+};
