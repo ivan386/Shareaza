@@ -82,6 +82,11 @@ public:
 	virtual INT_PTR	OnToolHitTest(CPoint point, TOOLINFO* pTI) const;
 	virtual void	DoPaint(CDC* pDC);
 
+	inline void		RemoveSkin()
+	{
+		m_pSkin = NULL;
+	}
+
 // Implementation
 protected:
 	afx_msg int  OnCreate(LPCREATESTRUCT lpCreateStruct);

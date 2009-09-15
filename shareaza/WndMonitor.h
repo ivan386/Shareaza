@@ -65,6 +65,12 @@ public:
 	BOOL		Create(CMonitorBarCtrl* pMonitor);
 	BOOL		IsVisible();
 	void		OnSkinChange();
+
+	inline void	RemoveSkin()
+	{
+		m_pSkin = NULL;
+	}
+
 protected:
 	CmdButton*	HitTestButtons(const CPoint& ptIn, BOOL bAll = FALSE) const;
 	void		UpdateCmdButtons();

@@ -99,6 +99,9 @@ protected:
 	// Save all windows states
 	void		SaveState();
 
+	// Remove skin from window (primarily for shutdown)
+	void		RemoveSkin();
+
 	virtual BOOL Create(LPCTSTR lpszClassName, LPCTSTR lpszWindowName, DWORD dwStyle, const RECT& rect, CWnd* pParentWnd, LPCTSTR lpszMenuName, DWORD dwExStyle, CCreateContext* pContext);
 	virtual BOOL OnCreateClient(LPCREATESTRUCT lpcs, CCreateContext* pContext);
 	virtual void GetMessageString(UINT nID, CString& rMessage) const;

@@ -200,7 +200,10 @@ void CWindowManager::Close()
 
 	for ( POSITION pos = GetIterator() ; pos ; )
 	{
-		pClose.AddTail( GetNext( pos ) );
+		CChildWnd* pChild = GetNext( pos );
+		pClose.AddTail( pChild );
+
+		pChild->RemoveSkin();
 	}
 
 	for ( POSITION pos = pClose.GetHeadPosition() ; pos ; )

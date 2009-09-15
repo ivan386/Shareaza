@@ -567,7 +567,7 @@ void CMainWnd::OnClose()
 
 	theApp.HideApplication();
 
-	m_pSkin = NULL;
+	RemoveSkin();
 
 	m_pWindows.Close();
 
@@ -585,6 +585,13 @@ void CMainWnd::OnClose()
 
 	// Destroy main window
 	CMDIFrameWnd::OnClose();
+}
+
+void CMainWnd::RemoveSkin()
+{
+	m_pSkin = NULL;
+	m_wndRemoteWnd.RemoveSkin();
+	m_wndNavBar.RemoveSkin();
 }
 
 // TODO: Replace this with OnQueryEndSession()
