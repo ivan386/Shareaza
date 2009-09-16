@@ -34,6 +34,16 @@ static char THIS_FILE[]=__FILE__;
 
 #define SMART_VERSION	59
 
+#define Kilo	( 1024 )
+#define Mega	( Kilo * 1024 )
+#define Giga	( Mega * 1024 )
+#define fKilo	( 1024.0f )
+#define fMega	( fKilo * 1024.0f )
+#define fGiga	( fMega * 1024.0f )
+#define fTera	( fGiga * 1024.0f )
+#define fPeta	( fTera * 1024.0f )
+#define fExa	( fPeta * 1024.0f )
+
 CSettings Settings;
 
 //////////////////////////////////////////////////////////////////////
@@ -78,7 +88,7 @@ void CSettings::Load()
 	Add( _T(""), _T("DiskSpaceWarning"), &General.DiskSpaceWarning, 500, 1, 5, 2000 , _T(" M") );
 	Add( _T(""), _T("HashIntegrity"), &General.HashIntegrity, true );
 	Add( _T(""), _T("ItWasLimited"), &General.ItWasLimited, false, true );
-	Add( _T(""), _T("MaxDebugLogSize"), &General.MaxDebugLogSize, 10*1024*1024, 1024*1024, 0, 100, _T(" MB") );
+	Add( _T(""), _T("MaxDebugLogSize"), &General.MaxDebugLogSize, 10*Mega, Mega, 0, 100, _T(" MB") );
 	Add( _T(""), _T("MinTransfersRest"), &General.MinTransfersRest, 15, 1, 1, 100, _T(" ms") );
 	Add( _T(""), _T("Path"), &General.Path );
 	Add( _T(""), _T("LogLevel"), &General.LogLevel, MSG_INFO, 1, MSG_ERROR, MSG_DEBUG, _T(" level") );
@@ -147,7 +157,7 @@ void CSettings::Load()
 	Add( _T("Library"), _T("HistoryTotal"), &Library.HistoryTotal, 32, 1, 0, 100, _T(" files") );
 	Add( _T("Library"), _T("LowPriorityHashing"), &Library.LowPriorityHashing, 2, 1, 1, 100, _T(" MB/s") );
 	Add( _T("Library"), _T("MarkFileAsDownload"), &Library.MarkFileAsDownload, true );
-	Add( _T("Library"), _T("MaxMaliciousFileSize"), &Library.MaxMaliciousFileSize, 1024, 1, 1024, 1024*5, _T(" B") );
+	Add( _T("Library"), _T("MaxMaliciousFileSize"), &Library.MaxMaliciousFileSize, Kilo, 1, Kilo, 5*Kilo, _T(" B") );
 	Add( _T("Library"), _T("PanelSize"), &Library.PanelSize, 120, 1, 0, 1024, _T(" px") );
 	Add( _T("Library"), _T("PreferAPETags"), &Library.PreferAPETags, true );
 	Add( _T("Library"), _T("PrivateTypes"), &Library.PrivateTypes, _T("|vbs|js|jc!|fb!|bc!|!ut|dbx|part|partial|pst|reget|getright|pif|lnk|sd|url|wab|m4p|infodb|racestats|chk|tmp|temp|ini|inf|log|old|manifest|met|bak|$$$|---|~~~|###|__incomplete___|") );
@@ -205,7 +215,7 @@ void CSettings::Load()
 	Add( _T("Search"), _T("HideSearchPanel"), &Search.HideSearchPanel, false );
 	Add( _T("Search"), _T("HighlightNew"), &Search.HighlightNew, true );
 	Add( _T("Search"), _T("LastSchemaURI"), &Search.LastSchemaURI );
-	Add( _T("Search"), _T("MaxPreviewLength"), &Search.MaxPreviewLength, 20*1024, 1024, 1, 4096, _T(" KB") );
+	Add( _T("Search"), _T("MaxPreviewLength"), &Search.MaxPreviewLength, 20*Kilo, Kilo, 1, 4*Kilo, _T(" KB") );
 	Add( _T("Search"), _T("MonitorFilter"), &Search.MonitorFilter );
 	Add( _T("Search"), _T("MonitorQueue"), &Search.MonitorQueue, 128, 1, 1, 4096 );
 	Add( _T("Search"), _T("MonitorSchemaURI"), &Search.MonitorSchemaURI, CSchema::uriAudio );
@@ -271,7 +281,7 @@ void CSettings::Load()
 	Add( _T("Connection"), _T("OutSpeed"), &Connection.OutSpeed, 256 );
 	Add( _T("Connection"), _T("RandomPort"), &Connection.RandomPort, false );
 	Add( _T("Connection"), _T("RequireForTransfers"), &Connection.RequireForTransfers, true );
-	Add( _T("Connection"), _T("SendBuffer"), &Connection.SendBuffer, 2048, 1, 64, 10240 );
+	Add( _T("Connection"), _T("SendBuffer"), &Connection.SendBuffer, 2*Kilo, 1, 64, 10*Kilo );
 	Add( _T("Connection"), _T("SkipWANIPSetup"), &Connection.SkipWANIPSetup, false );
 	Add( _T("Connection"), _T("SkipWANPPPSetup"), &Connection.SkipWANPPPSetup, false );
 	Add( _T("Connection"), _T("SlowConnect"), &Connection.SlowConnect, false );
@@ -319,7 +329,7 @@ void CSettings::Load()
 	Add( _T("Gnutella"), _T("HostCacheSize"), &Gnutella.HostCacheSize, 1024, 1, 32, 16384, _T(" hosts") );
 	Add( _T("Gnutella"), _T("HostCacheView"), &Gnutella.HostCacheView, PROTOCOL_ED2K );
 	Add( _T("Gnutella"), _T("MaxHits"), &Gnutella.MaxHits, 64, 1, 0, 4096, _T(" files") );
-	Add( _T("Gnutella"), _T("MaximumPacket"), &Gnutella.MaximumPacket, 64 * 1024, 1024, 32, 256, _T(" KB") );
+	Add( _T("Gnutella"), _T("MaximumPacket"), &Gnutella.MaximumPacket, 64 * Kilo, Kilo, 32, 256, _T(" KB") );
 	Add( _T("Gnutella"), _T("MaxResults"), &Gnutella.MaxResults, 150, 1, 1, 300, _T(" hits") );
 	Add( _T("Gnutella"), _T("RouteCache"), &Gnutella.RouteCache, 600, 60, 1, 120, _T(" m") );
 	Add( _T("Gnutella"), _T("SpecifyProtocol"), &Gnutella.SpecifyProtocol, true );
@@ -387,7 +397,7 @@ void CSettings::Load()
 	Add( _T("Gnutella2"), _T("UdpGlobalThrottle"), &Gnutella2.UdpGlobalThrottle, 1, 1, 0, 10000 );
 	Add( _T("Gnutella2"), _T("UdpInExpire"), &Gnutella2.UdpInExpire, 30000, 1000, 1, 300, _T(" s") );
 	Add( _T("Gnutella2"), _T("UdpInFrames"), &Gnutella2.UdpInFrames, 256, 1, 16, 2048 );
-	Add( _T("Gnutella2"), _T("UdpMTU"), &Gnutella2.UdpMTU, 500, 1, 16, 10240 );
+	Add( _T("Gnutella2"), _T("UdpMTU"), &Gnutella2.UdpMTU, 500, 1, 16, 10*Kilo, _T(" B") );
 	Add( _T("Gnutella2"), _T("UdpOutExpire"), &Gnutella2.UdpOutExpire, 26000, 1000, 1, 300, _T(" s") );
 	Add( _T("Gnutella2"), _T("UdpOutFrames"), &Gnutella2.UdpOutFrames, 256, 1, 16, 2048 );
 	Add( _T("Gnutella2"), _T("UdpOutResend"), &Gnutella2.UdpOutResend, 6000, 1000, 1, 300, _T(" s") );
@@ -399,7 +409,7 @@ void CSettings::Load()
 	Add( _T("eDonkey"), _T("ExtendedRequest"), &eDonkey.ExtendedRequest, 2, 1, 0, 2 );
 	Add( _T("eDonkey"), _T("FastConnect"), &eDonkey.FastConnect, false );
 	Add( _T("eDonkey"), _T("ForceHighID"), &eDonkey.ForceHighID, true );
-	Add( _T("eDonkey"), _T("FrameSize"), &eDonkey.FrameSize, 10240, 1024, 1, 500, _T(" KB") );
+	Add( _T("eDonkey"), _T("FrameSize"), &eDonkey.FrameSize, 10*Kilo, Kilo, 1, 500, _T(" KB") );
 	Add( _T("eDonkey"), _T("GetSourcesThrottle"), &eDonkey.GetSourcesThrottle, 8*60*60*1000, 60*60*1000, 1, 24, _T(" h") );
 	Add( _T("eDonkey"), _T("LargeFileSupport"), &eDonkey.LargeFileSupport, true );
 	Add( _T("eDonkey"), _T("LearnNewServers"), &eDonkey.LearnNewServers, false );
@@ -418,7 +428,7 @@ void CSettings::Load()
 	Add( _T("eDonkey"), _T("QueueRankThrottle"), &eDonkey.QueueRankThrottle, 2*60*1000, 1000, 60, 600, _T(" s") );
 	Add( _T("eDonkey"), _T("ReAskTime"), &eDonkey.ReAskTime, 29*60, 60, 20, 360, _T(" m") );
 	Add( _T("eDonkey"), _T("RequestPipe"), &eDonkey.RequestPipe, 3, 1, 1, 10 );
-	Add( _T("eDonkey"), _T("RequestSize"), &eDonkey.RequestSize, 180*1024/2, 1024, 10, 1000, _T(" KB") );
+	Add( _T("eDonkey"), _T("RequestSize"), &eDonkey.RequestSize, 90*Kilo, Kilo, 10, 1000, _T(" KB") );
 	Add( _T("eDonkey"), _T("SendPortServer"), &eDonkey.SendPortServer, false );
 	Add( _T("eDonkey"), _T("ServerListURL"), &eDonkey.ServerListURL, _T("http://peerates.net/servers.php") );
 	Add( _T("eDonkey"), _T("ServerWalk"), &eDonkey.ServerWalk, true );
@@ -443,9 +453,9 @@ void CSettings::Load()
 	Add( _T("BitTorrent"), _T("LinkTimeout"), &BitTorrent.LinkTimeout, 180*1000, 1000, 10, 60*10, _T(" s") );
 	Add( _T("BitTorrent"), _T("PreferenceBTSources"), &BitTorrent.PreferenceBTSources, true );
 	Add( _T("BitTorrent"), _T("RandomPeriod"), &BitTorrent.RandomPeriod, 30*1000, 1000, 1, 60*5, _T(" s") );
-	Add( _T("BitTorrent"), _T("RequestLimit"), &BitTorrent.RequestLimit, 128*1024, 1024, 1, 1024, _T(" KB") );
+	Add( _T("BitTorrent"), _T("RequestLimit"), &BitTorrent.RequestLimit, 128*Kilo, Kilo, 1, 1024, _T(" KB") );
 	Add( _T("BitTorrent"), _T("RequestPipe"), &BitTorrent.RequestPipe, 4, 1, 1, 10 );
-	Add( _T("BitTorrent"), _T("RequestSize"), &BitTorrent.RequestSize, 16*1024, 1024, 8, 128, _T(" KB") );
+	Add( _T("BitTorrent"), _T("RequestSize"), &BitTorrent.RequestSize, 16*Kilo, Kilo, 8, 128, _T(" KB") );
 	Add( _T("BitTorrent"), _T("SourceExchangePeriod"), &BitTorrent.SourceExchangePeriod, 10, 1, 1, 60*5, _T(" m") );
 	Add( _T("BitTorrent"), _T("TorrentCodePage"), &BitTorrent.TorrentCodePage, 0, 1, 0, 9999999 );
 	Add( _T("BitTorrent"), _T("TorrentCreatorPath"), &BitTorrent.TorrentCreatorPath, _T("TorrentWizard.exe") );
@@ -456,9 +466,9 @@ void CSettings::Load()
 	Add( _T("Downloads"), _T("AllowBackwards"), &Downloads.AllowBackwards, true );
 	Add( _T("Downloads"), _T("AutoClear"), &Downloads.AutoClear, false );
 	Add( _T("Downloads"), _T("AutoExpand"), &Downloads.AutoExpand, false );
-	Add( _T("Downloads"), _T("BufferSize"), &Downloads.BufferSize, 80*1024, 1024, 0, 512, _T(" KB") );
-	Add( _T("Downloads"), _T("ChunkSize"), &Downloads.ChunkSize, 512*1024, 1024, 0, 10240, _T(" KB") );
-	Add( _T("Downloads"), _T("ChunkStrap"), &Downloads.ChunkStrap, 128*1024, 1024, 0, 10240, _T(" KB") );
+	Add( _T("Downloads"), _T("BufferSize"), &Downloads.BufferSize, 80*Kilo, Kilo, 0, 512, _T(" KB") );
+	Add( _T("Downloads"), _T("ChunkSize"), &Downloads.ChunkSize, 512*Kilo, Kilo, 0, 10*Kilo, _T(" KB") );
+	Add( _T("Downloads"), _T("ChunkStrap"), &Downloads.ChunkStrap, 128*Kilo, Kilo, 0, 10*Kilo, _T(" KB") );
 	Add( _T("Downloads"), _T("ClearDelay"), &Downloads.ClearDelay, 30*1000, 1000, 1, 30*60, _T(" s") );
 	Add( _T("Downloads"), _T("CollectionPath"), &Downloads.CollectionPath );
 	Add( _T("Downloads"), _T("CompletePath"), &Downloads.CompletePath );
@@ -492,7 +502,7 @@ void CSettings::Load()
 	Add( _T("Downloads"), _T("SortColumns"), &Downloads.SortColumns, true );
 	Add( _T("Downloads"), _T("SortSources"), &Downloads.SortSources, true );
 	Add( _T("Downloads"), _T("SourcesWanted"), &Downloads.SourcesWanted, 500 );
-	Add( _T("Downloads"), _T("SparseThreshold"), &Downloads.SparseThreshold, 8*1024, 1024, 0, 256, _T(" MB") );
+	Add( _T("Downloads"), _T("SparseThreshold"), &Downloads.SparseThreshold, 8*Kilo, Kilo, 0, 256, _T(" MB") );
 	Add( _T("Downloads"), _T("StaggardStart"), &Downloads.StaggardStart, false );
 	Add( _T("Downloads"), _T("StartDroppingFailedSourcesNumber"), &Downloads.StartDroppingFailedSourcesNumber, 20, 1, 0, 50 );
 	Add( _T("Downloads"), _T("StarveGiveUp"), &Downloads.StarveGiveUp, 3, 1, 3, 120, _T(" h") );
@@ -521,7 +531,7 @@ void CSettings::Load()
 	Add( _T("Uploads"), _T("QueuePollMax"), &Uploads.QueuePollMax, 120*1000, 1000, 30, 180, _T(" s") );
 	Add( _T("Uploads"), _T("QueuePollMin"), &Uploads.QueuePollMin, 45*1000, 1000, 0, 60, _T(" s") );
 	Add( _T("Uploads"), _T("RewardQueuePercentage"), &Uploads.RewardQueuePercentage, 10, 1, 0, 99, _T("%") );
-	Add( _T("Uploads"), _T("RotateChunkLimit"), &Uploads.RotateChunkLimit, 1024*1024, 1024, 0, 10*1024, _T(" KB") );
+	Add( _T("Uploads"), _T("RotateChunkLimit"), &Uploads.RotateChunkLimit, Mega, Kilo, 0, 10*Kilo, _T(" KB") );
 	Add( _T("Uploads"), _T("ShareHashset"), &Uploads.ShareHashset, true );
 	Add( _T("Uploads"), _T("ShareMetadata"), &Uploads.ShareMetadata, true );
 	Add( _T("Uploads"), _T("SharePartials"), &Uploads.SharePartials, true );
@@ -1449,12 +1459,12 @@ const CString CSettings::SmartSpeed(QWORD nVolume, int nVolumeUnits, bool bTrunc
 
 	// Kilobits - KiloBytes
 	case 2:
-		strVolume.Format( _T("%.2lf K%s"), nVolume / 1024.0f, strUnit );
+		strVolume.Format( _T("%.2lf K%s"), nVolume / fKilo, strUnit );
 		break;
 
 	// Megabits - MegaBytes
 	case 3:
-		strVolume.Format( _T("%.2lf M%s"), nVolume / pow( 1024.0f, 2 ), strUnit );
+		strVolume.Format( _T("%.2lf M%s"), nVolume / fMega, strUnit );
 		break;
 
 	default:
@@ -1485,45 +1495,45 @@ const CString CSettings::SmartVolume(QWORD nVolume, int nVolumeUnits, bool bTrun
 	// nVolume is in bits - Bytes
 	case bits:
 	case Bytes:
-		if ( nVolume < 1024 )						// bits - Bytes
+		if ( nVolume < Kilo )						// bits - Bytes
 		{
 			strVolume.Format( _T("%I64i %s"), nVolume, strUnit );
 			break;
 		}
-		else if ( nVolume < 10 * 1024 )				// 10 Kilobits - KiloBytes
+		else if ( nVolume < 10 * Kilo )				// 10 Kilobits - KiloBytes
 		{
 			if ( !bTruncate )
 				strTruncate = _T("%.2f");
-			strVolume.Format( strTruncate + _T(" K%s"), nVolume / 1024.0f, strUnit );
+			strVolume.Format( strTruncate + _T(" K%s"), nVolume / fKilo, strUnit );
 			break;
 		}
 
 		// Convert to KiloBytes and drop through to next case
-		nVolume /= 1024;
+		nVolume /= Kilo;
 
 	// nVolume is in Kilobits - Kilobytes
 	case Kilobits:
 	case KiloBytes:
-		if ( nVolume < 1024 )						// Kilo
+		if ( nVolume < Kilo )			// Kilo
 			strVolume.Format( _T("%I64i K%s"), nVolume, strUnit );
-		else if ( nVolume < pow( 1024.0f, 2 ) )		// Mega
+		else if ( nVolume < fMega )		// Mega
 		{
 			if ( !bTruncate )
 				strTruncate = _T("%.2f");
-			strVolume.Format( strTruncate + _T(" M%s"), nVolume / 1024.0f, strUnit );
+			strVolume.Format( strTruncate + _T(" M%s"), nVolume / fKilo, strUnit );
 		}
 		else
 		{
 			if ( !bTruncate )
 				strTruncate = _T("%.2f");
-			if ( nVolume < pow( 1024.0f, 3 ) )		// Giga
-				strVolume.Format( strTruncate + _T(" G%s"), nVolume / pow( 1024.0f, 2 ), strUnit );
-			else if ( nVolume < pow( 1024.0f, 4 ) )	// Tera
-				strVolume.Format( strTruncate + _T(" T%s"), nVolume / pow( 1024.0f, 3 ), strUnit );
-			else if ( nVolume < pow( 1024.0f, 5 ) )	// Peta
-				strVolume.Format( strTruncate + _T(" P%s"), nVolume / pow( 1024.0f, 4 ), strUnit );
-			else									// Exa
-				strVolume.Format( strTruncate + _T(" E%s"), nVolume / pow( 1024.0f, 5 ), strUnit );
+			if ( nVolume < fGiga )		// Giga
+				strVolume.Format( strTruncate + _T(" G%s"), nVolume / fMega, strUnit );
+			else if ( nVolume < fTera )	// Tera
+				strVolume.Format( strTruncate + _T(" T%s"), nVolume / fGiga, strUnit );
+			else if ( nVolume < fPeta )	// Peta
+				strVolume.Format( strTruncate + _T(" P%s"), nVolume / fTera, strUnit );
+			else						// Exa
+				strVolume.Format( strTruncate + _T(" E%s"), nVolume / fPeta, strUnit );
 		}
 	}
 
@@ -1554,17 +1564,17 @@ const QWORD CSettings::ParseVolume(const CString& strVolume, int nReturnUnits) c
 
 	// Work out what units are represented in the string
 	if ( _tcsstr( strSize, _T("K") ) || _tcsstr( strSize, _T("k") ) )		// Kilo
-		val *= 1024.0f;
+		val *= fKilo;
 	else if ( _tcsstr( strSize, _T("M") ) || _tcsstr( strSize, _T("m") ) )	// Mega
-		val *= pow( 1024.0f, 2 );
+		val *= fMega;
 	else if ( _tcsstr( strSize, _T("G") ) || _tcsstr( strSize, _T("g") ) )	// Giga
-		val *= pow( 1024.0f, 3 );
+		val *= fGiga;
 	else if ( _tcsstr( strSize, _T("T") ) || _tcsstr( strSize, _T("t") ) )	// Tera
-		val *= pow( 1024.0f, 4 );
+		val *= fTera;
 	else if ( _tcsstr( strSize, _T("P") ) || _tcsstr( strSize, _T("p") ) )	// Peta
-		val *= pow( 1024.0f, 5 );
+		val *= fPeta;
 	else if ( _tcsstr( strSize, _T("E") ) || _tcsstr( strSize, _T("e") ) )	// Exa
-		val *= pow( 1024.0f, 6 );
+		val *= fExa;
 
 	// Convert to required Units
 	val /= nReturnUnits;
@@ -1581,7 +1591,7 @@ DWORD CSettings::GetOutgoingBandwidth() const
 	if ( Settings.Bandwidth.Uploads == 0 )
 		return ( Settings.Connection.OutSpeed / 8 );
 
-	return ( min( ( Settings.Connection.OutSpeed / 8 ), ( Settings.Bandwidth.Uploads / 1024 ) ) );
+	return ( min( ( Settings.Connection.OutSpeed / 8 ), ( Settings.Bandwidth.Uploads / Kilo ) ) );
 }
 
 bool CSettings::GetValue(LPCTSTR pszPath, VARIANT* value)
