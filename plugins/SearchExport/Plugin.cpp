@@ -297,18 +297,23 @@ HRESULT CPlugin::Export(IGenericView* pGenericView, LONG nCount)
 
 		// Remove dups
 		bool bFake;
-		if ( oSHA1Map.Lookup( bstrSHA1, bFake ) )
+		if ( bstrSHA1.Length() && oSHA1Map.Lookup( bstrSHA1, bFake ) )
 			continue;
-		if ( oTigerMap.Lookup( bstrTiger, bFake ) )
+		if ( bstrTiger.Length() && oTigerMap.Lookup( bstrTiger, bFake ) )
 			continue;
-		if ( oED2KMap.Lookup( bstrED2K, bFake ) )
+		if ( bstrED2K.Length() && oED2KMap.Lookup( bstrED2K, bFake ) )
 			continue;
-		if ( oMD5Map.Lookup( bstrMD5, bFake ) )
+		if ( bstrMD5.Length() && oMD5Map.Lookup( bstrMD5, bFake ) )
 			continue;
-		oSHA1Map.SetAt( bstrSHA1, true );
-		oTigerMap.SetAt( bstrTiger, true );
-		oED2KMap.SetAt( bstrED2K, true );
-		oMD5Map.SetAt( bstrMD5, true );
+
+		if ( bstrSHA1.Length() )
+			oSHA1Map.SetAt( bstrSHA1, true );
+		if ( bstrTiger.Length() )
+			oTigerMap.SetAt( bstrTiger, true );
+		if ( bstrED2K.Length() )
+			oED2KMap.SetAt( bstrED2K, true );
+		if ( bstrMD5.Length() )
+			oMD5Map.SetAt( bstrMD5, true );
 
 		CString str;
 		str.Format( _T("\t\t<div class=\"f%d\">")
