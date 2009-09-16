@@ -350,6 +350,7 @@ void CWizardCtrl::OnShowWindow(BOOL bShow, UINT /*nStatus*/)
 
 		// Sort Files
 		// TODO: make sure all CLibraryFile*s remain valid throughout
+		CQuickLock oLibraryLock( Library.m_pSection );
 		std::vector< CLibraryFile* > pList;
 		pList.reserve( m_pFolder->GetFolderCount() );
 		for ( POSITION pos = m_pFolder->GetFileIterator(); pos; )
