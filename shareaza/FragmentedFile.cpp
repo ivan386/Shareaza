@@ -583,7 +583,7 @@ DWORD CFragmentedFile::Move(DWORD nIndex, LPCTSTR pszDestination, LPPROGRESS_ROU
 	theApp.OnRename( sPath );
 
 	// Create directory for file recursively
-	BOOL bSuccess = CreateDirectory( strTargetDir );
+	BOOL bSuccess = CreateDirectory( strTarget.Left( strTarget.ReverseFind( _T('\\') ) ) );
 	DWORD dwError = ::GetLastError();
 	if ( bSuccess )
 	{

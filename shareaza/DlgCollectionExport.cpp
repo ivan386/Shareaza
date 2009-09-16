@@ -494,7 +494,7 @@ void CCollectionExportDlg::OnOK()
 								if ( GetFileAttributes( strTarget ) == 0xFFFFFFFF )
 								{
 									// create dirs recursively
-									CreateDirectory( strTarget );
+									CreateDirectory( strTarget.Left( strTarget.ReverseFind( _T('\\') ) ) );
 									if ( ! CopyFile( strSourceFile, strTarget, TRUE ) )
 										AfxMessageBox( _T("TODO: File disappeared: \n") + strReplace );
 								}
@@ -555,7 +555,7 @@ void CCollectionExportDlg::OnOK()
 					if ( GetFileAttributes( strSource ) != 0xFFFFFFFF )
 					{
 						// create dirs recursively
-						CreateDirectory( strTarget );
+						CreateDirectory( strTarget.Left( strTarget.ReverseFind( _T('\\') ) ) );
 						if ( ! CopyFile( strSource, strTarget, TRUE ) )
 							AfxMessageBox( _T("TODO: Can't write to ") + strFile );
 					}

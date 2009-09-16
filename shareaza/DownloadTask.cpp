@@ -478,16 +478,8 @@ CString CDownloadTask::SafeFilename(LPCTSTR pszName)
 
 void CDownloadTask::CreatePathForFile(const CString& strBase, const CString& strPath)
 {
-	CreateDirectory( strBase );
-
-	for ( int nPos = 0 ; nPos < strPath.GetLength() ; nPos++ )
-	{
-		if ( strPath.GetAt( nPos ) == '\\' )
-		{
-			CString strFolder = strBase + '\\' + strPath.Left( nPos );
-			CreateDirectory( strFolder );
-		}
-	}
+	CString strFolder = strBase + _T('\\') + strPath;
+	CreateDirectory( strFolder.Left( strFolder.ReverseFind( _T('\\') ) ) );
 }
 
 CBuffer* CDownloadTask::IsPreviewAnswerValid()
