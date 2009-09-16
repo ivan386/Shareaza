@@ -555,20 +555,20 @@ void CMainWnd::OnClose()
 		m_bTrayIcon = FALSE;
 	}
 
+	SaveState();
+
+	theApp.HideApplication();
+
+	RemoveSkin();
+
 	int nSplashSteps = 6
 		+ ( Settings.Connection.DeleteFirewallException ? 1 : 0 )
 		+ ( theApp.m_pUPnPFinder ? 1 : 0 )
 		+ ( theApp.m_bLive ? 1 : 0 );
 	theApp.SplashStep( L"Closing Server Processes", nSplashSteps, true );
 
-	SaveState();
 	m_pWindows.SaveSearchWindows();
 	m_pWindows.SaveBrowseHostWindows();
-
-	theApp.HideApplication();
-
-	RemoveSkin();
-
 	m_pWindows.Close();
 
 	CDownloadMonitorDlg::CloseAll();
