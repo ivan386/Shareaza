@@ -18,13 +18,9 @@
 
 #include <atlbase.h>
 #include <atlcom.h>
-#include <atlsafe.h>
-#include <ExDisp.h>
 #include <atlstr.h>
 #include <atlcoll.h>
 #include <atlenc.h>
 #include <atlfile.h>
-#include <shlwapi.h>
-#include <commdlg.h>
 
 using namespace ATL;

@@ -555,6 +555,14 @@
 				</FileConfiguration>
 			</File>
 		</Filter>
+		<File
+			RelativePath=".\SearchExport_32.nsi"
+			>
+		</File>
+		<File
+			RelativePath=".\SearchExport_64.nsi"
+			>
+		</File>
 	</Files>
 	<Globals>
 	</Globals>

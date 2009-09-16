@@ -1,0 +1,11 @@
+body { font: 10pt Tahoma; text-align: center; background-color: #ffffff; }
+img { padding: 0px; margin: 0px; }
+a { text-decoration: none; }
+.pg { width: 752px; border: 1px solid #999999; padding: 0px; margin: 0px; }
+.hd { width: 750px; height: 125px; background: url(head.jpg); }
+.ft { width: 750px; height: 15px; }
+.f0 { width: 745px; background-color: #f0f0f0; }
+.f1 { width: 745px; background-color: #ffffff; }
+.f_ { width: 45px;  padding: 2px; overflow: hidden; text-align: center; }
+.fn { width: 580px; padding: 2px; overflow: hidden; text-align: left; }
+.fs { width: 110px; padding: 2px; overflow: hidden; text-align: left; }
