@@ -24,6 +24,7 @@
 #include "Settings.h"
 #include "Library.h"
 #include "LibraryBuilder.h"
+#include "LibraryHistory.h"
 #include "AlbumFolder.h"
 #include "SharedFile.h"
 #include "QuerySearch.h"
@@ -823,30 +824,35 @@ void CLibraryFrame::UpdatePanel(BOOL bForce)
 {
 	CQuickLock oLock( Library.m_pSection );
 
-	if ( ! bForce && ! m_bViewSelection ) return;
+	if ( ! bForce && ! m_bViewSelection )
+		return;
+
 	m_bViewSelection = FALSE;
-
-	m_pViewSelection			= m_pView ? &m_pView->m_pSelection : &m_pViewEmpty;
-
-	CLibraryTreeItem* pFolders = m_wndTree.GetFirstSelected();
-	BOOL bMetaPanelAvailable = pFolders &&
-		( pFolders->m_pSelNext == NULL ) &&
-		( pFolders->m_pVirtual == NULL ||
-		// Do not display meta panel for the collection folder
-		( ! ( pFolders->m_pVirtual->m_oCollSHA1 &&
-		  pFolders->m_pVirtual->GetBestView().Find( _T("Collection") ) > 0 ||
-		  CheckURI( pFolders->m_pVirtual->m_sSchemaURI, CSchema::uriCollectionsFolder ) ) &&
-		  pFolders->m_pVirtual->GetFileCount() != 0 ) );
-	BOOL bHistoryPanelAvailable = ( pFolders == NULL );
+	m_pViewSelection = m_pView ? &m_pView->m_pSelection : &m_pViewEmpty;
 
 	if ( m_bPanelShow )
 	{
-		if ( m_pPanel == NULL ||
-			( m_pPanel == &m_pMetaPanel    && ! bMetaPanelAvailable ) ||
-			( m_pPanel == &m_pHistoryPanel && ! bHistoryPanelAvailable ) )
+		CLibraryTreeItem* pFolders = m_wndTree.GetFirstSelected();
+		CLibraryList* pFiles = GetViewSelection();
+
+		BOOL bMetaPanelAvailable = ( pFolders != NULL );
+		BOOL bHistoryPanelAvailable = ( LibraryHistory.GetCount() > 0 );
+		
+		// Do not display any panel for the collection folder
+		if ( pFolders && pFolders->m_pVirtual && pFolders->m_pVirtual->m_oCollSHA1 ) 
+			bMetaPanelAvailable = bHistoryPanelAvailable = FALSE;
+
+		// Prefer history panel if no files selected for meta panel
+		if ( bMetaPanelAvailable && bHistoryPanelAvailable && pFiles && pFiles->GetCount() <= 0 )
+			bMetaPanelAvailable = FALSE;
+
+		CPanelCtrl* pBestPanel = bMetaPanelAvailable ?
+			static_cast< CPanelCtrl* >( &m_pMetaPanel ) : ( bHistoryPanelAvailable ?
+			static_cast< CPanelCtrl* >( &m_pHistoryPanel ) : NULL );
+
+		if ( m_pPanel == NULL || m_pPanel != pBestPanel )
 		{
-			SetPanel( bMetaPanelAvailable ? static_cast< CPanelCtrl* >( &m_pMetaPanel ) :
-				( bHistoryPanelAvailable ? static_cast< CPanelCtrl* >( &m_pHistoryPanel ) : NULL ) );
+			SetPanel( pBestPanel );
 		}
 		else
 		{
