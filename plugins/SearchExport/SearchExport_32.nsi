@@ -18,7 +18,7 @@ VIAddVersionKey LegalCopyright "${COPYRIGHT}"
 
 CRCCheck On
 XPStyle On
-BrandingText "${COPYRIGHT}"
+BrandingText "Shareaza Development Team"
 SetOverwrite On
 OutFile "${FILENAME}"
 InstallDir "$PROGRAMFILES32\Shareaza"
@@ -37,12 +37,12 @@ Var STARTMENU_FOLDER
 ; !define MUI_COMPONENTSPAGE_NODESC
 ; !define MUI_FINISHPAGE_NOAUTOCLOSE
 ; !define MUI_UNFINISHPAGE_NOAUTOCLOSE
-; !define MUI_ICON "..\..\setup\misc\install.ico"
-; !define MUI_UNICON "..\..\setup\misc\uninstall.ico"
-; !define MUI_HEADERIMAGE_BITMAP "..\..\setup\misc\corner.bmp"
-; !define MUI_HEADERIMAGE_BITMAP_NOSTRETCH
-; !define MUI_HEADERIMAGE_UNBITMAP "..\..\setup\misc\corner.bmp"
-; !define MUI_HEADERIMAGE_UNBITMAP_NOSTRETCH
+!define MUI_ICON "..\..\setup\misc\install.ico"
+!define MUI_UNICON "..\..\setup\misc\uninstall.ico"
+!define MUI_HEADERIMAGE_BITMAP "..\..\setup\misc\corner_150x57.bmp"
+!define MUI_HEADERIMAGE_BITMAP_NOSTRETCH
+!define MUI_HEADERIMAGE_UNBITMAP "..\..\setup\misc\corner_150x57.bmp"
+!define MUI_HEADERIMAGE_UNBITMAP_NOSTRETCH
 !define MUI_WELCOMEFINISHPAGE_BITMAP "..\..\setup\misc\sidebar.bmp"
 !define MUI_UNWELCOMEFINISHPAGE_BITMAP "..\..\setup\misc\sidebar.bmp"
 !define MUI_STARTMENUPAGE_DEFAULTFOLDER "Shareaza"
