@@ -100,15 +100,12 @@ int CSecurityWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		LVS_EX_DOUBLEBUFFER|LVS_EX_FULLROWSELECT|LVS_EX_HEADERDRAGDROP|LVS_EX_LABELTIP,
 		LVS_EX_DOUBLEBUFFER|LVS_EX_FULLROWSELECT|LVS_EX_HEADERDRAGDROP|LVS_EX_LABELTIP );
 	
-	CBitmap bmBase;
-	bmBase.LoadBitmap( IDB_SECURITY );
-	if ( Settings.General.LanguageRTL ) 
-		bmBase.m_hObject = CreateMirroredBitmap( (HBITMAP) bmBase.m_hObject );
-
 	m_gdiImageList.Create( 16, 16, ILC_MASK|ILC_COLOR32, 3, 1 ) ||
 	m_gdiImageList.Create( 16, 16, ILC_MASK|ILC_COLOR24, 3, 1 ) ||
 	m_gdiImageList.Create( 16, 16, ILC_MASK|ILC_COLOR16, 3, 1 );
-	m_gdiImageList.Add( &bmBase, RGB( 0, 255, 0 ) );
+	m_gdiImageList.Add( CoolInterface.ExtractIcon( IDR_SECURITYFRAME, FALSE ) );
+	m_gdiImageList.Add( CoolInterface.ExtractIcon( IDI_GRANTED, FALSE ) );
+	m_gdiImageList.Add( CoolInterface.ExtractIcon( IDI_FIREWALLED, FALSE ) );
 	m_wndList.SetImageList( &m_gdiImageList, LVSIL_SMALL );
 
 	m_wndList.InsertColumn( 0, _T("Address / Content"), LVCFMT_LEFT, 200, -1 );

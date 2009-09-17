@@ -2630,6 +2630,7 @@
 	<icon res="IDI_TICK" id="IDI_TICK" types="16" rtl="0"/>
 	<icon res="IDI_BUSY" id="IDI_BUSY" types="16" rtl="0"/>
 	<icon res="IDI_FIREWALLED" id="IDI_FIREWALLED" types="16,32,48" rtl="0"/>
+	<icon res="IDI_GRANTED" id="IDI_GRANTED" types="16,32,48" rtl="0"/>
 	<icon res="IDI_UNSTABLE" id="IDI_UNSTABLE" types="16" rtl="0"/>
 	<icon res="IDI_COMPUTER" id="IDI_COMPUTER" types="16,32,48" rtl="0"/>
 	<icon res="IDI_EXECUTABLE" id="IDI_EXECUTABLE" types="16,32,48" rtl="0"/>

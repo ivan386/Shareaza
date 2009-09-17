@@ -66,7 +66,6 @@
 #define IDI_WIZARD_DOT                  158
 #define IDB_CHILDFRAME                  159
 #define IDD_FOLDER_SCAN                 160
-#define IDB_SECURITY                    160
 #define IDI_BROWSE                      160
 #define IDD_DOWNLOAD                    162
 #define IDD_BITZI_DOWNLOAD              163
@@ -163,6 +162,7 @@
 #define IDD_SETTINGS_SCHEDULER          250
 #define IDD_DOWNLOAD_REVIEWS            251
 #define IDI_FIREWALLED                  252
+#define IDI_GRANTED                     253
 #define IDR_HOME_HEADER_1               257
 #define IDR_HOME_HEADER_2               258
 #define IDB_PANEL_MARK                  262

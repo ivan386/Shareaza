@@ -47,6 +47,7 @@
 	<resource code="239" id="IDR_TORRENT_ICON"/>
 	<resource code="243" id="IDI_COLLECTION_MASK"/>
 	<resource code="252" id="IDI_FIREWALLED"/>
+	<resource code="253" id="IDI_GRANTED"/>
 	<resource code="263" id="IDR_BITTORRENT_ICON"/>
 	<resource code="281" id="IDI_UPDOWN_ARROW"/>
 	<resource code="301" id="IDI_PLUS"/>
