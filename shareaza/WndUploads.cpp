@@ -39,6 +39,8 @@
 #include "ChatWindows.h"
 #include "WindowManager.h"
 #include "WndDownloads.h"
+#include "WndLibrary.h"
+#include "WndMain.h"
 #include "WndUploads.h"
 #include "WndBrowseHost.h"
 #include "DlgSettingsManager.h"
@@ -466,26 +468,30 @@ void CUploadsWnd::OnUpdateUploadsLaunch(CCmdUI* pCmdUI)
 
 void CUploadsWnd::OnUploadsLaunch()
 {
-	CSingleLock pLock( &Transfers.m_pSection, TRUE );
-	CList<CUploadFile*> pList;
+	CSingleLock pTransfersLock( &Transfers.m_pSection, TRUE );
 
 	for ( POSITION pos = UploadFiles.GetIterator() ; pos ; )
 	{
 		CUploadFile* pFile = UploadFiles.GetNext( pos );
-		if ( IsSelected( pFile ) ) pList.AddTail( pFile );
-	}
 
-	while ( ! pList.IsEmpty() )
-	{
-		CUploadFile* pFile = pList.RemoveHead();
-
-		if ( UploadFiles.Check( pFile ) )
+		if ( IsSelected( pFile ) )
 		{
-			CString strPath = pFile->m_sPath;
+			CShareazaFile oFile = *pFile;
+			pTransfersLock.Unlock();
 
-			pLock.Unlock();
-			if ( ! CFileExecutor::Execute( strPath ) ) break;
-			pLock.Lock();
+			CSingleLock pLibraryLock( &Library.m_pSection, TRUE );
+			if ( CLibraryFile* pLibFile = LibraryMaps.LookupFileByHash( &oFile ) )
+			{
+				if ( CMainWnd* pMainWnd = theApp.SafeMainWnd() )
+				{	
+					if ( CLibraryWnd* pLibrary = (CLibraryWnd*)(
+						pMainWnd->m_pWindows.Open( RUNTIME_CLASS(CLibraryWnd) ) ) )
+					{
+						pLibrary->Display( pLibFile );
+					}
+				}
+			}
+			break;
 		}
 	}
 }

@@ -480,7 +480,13 @@ QWORD CFragmentedFile::GetCompleted(DWORD nIndex) const
 
 int CFragmentedFile::SelectFile(CSingleLock* pLock) const
 {
-	if ( GetCount() > 1 )
+	int nCount = GetCount();
+	if ( nCount == 1 )
+	{
+		// Single file download
+		return 0;
+	}
+	else if ( nCount > 1 )
 	{
 		CSelectDialog dlg;
 
@@ -503,8 +509,11 @@ int CFragmentedFile::SelectFile(CSingleLock* pLock) const
 
 		return (int)dlg.Get();
 	}
-
-	return 0;
+	else
+	{
+		// File closed
+		return -1;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////

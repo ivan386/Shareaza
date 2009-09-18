@@ -818,7 +818,7 @@ BOOL CDownload::Launch(int nIndex, CSingleLock* pLock, BOOL bForceOriginal)
 	if ( nIndex < 0 )
 		nIndex = SelectFile( pLock );
 	if ( nIndex < 0 || ! Downloads.Check( this ) )
-		return TRUE;
+		return FALSE;
 
 	BOOL bResult = TRUE;
 	CString strPath = GetPath( nIndex );
