@@ -79,7 +79,7 @@ DWORD CEDNeighbour::GetID() const
 //////////////////////////////////////////////////////////////////////
 // CEDNeighbour connect to
 
-BOOL CEDNeighbour::ConnectTo(IN_ADDR* pAddress, WORD nPort, BOOL bAutomatic)
+BOOL CEDNeighbour::ConnectTo(const IN_ADDR* pAddress, WORD nPort, BOOL bAutomatic)
 {
 	if ( CConnection::ConnectTo( pAddress, nPort ) )
 	{
@@ -573,7 +573,7 @@ bool CEDNeighbour::OnCallbackRequested(CEDPacket* pPacket)
 	// Check that remote client has a port number, isn't firewalled or using a
 	// reserved address
 	if ( !nPort
-		|| Network.IsFirewalledAddress( &nAddress )
+		|| Network.IsFirewalledAddress( (IN_ADDR*)&nAddress )
 		|| Network.IsReserved( (IN_ADDR*)&nAddress ) )
 	{
 		// Can't push open a connection, ignore packet and return that it was

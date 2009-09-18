@@ -37,7 +37,7 @@ public:
 	CArray< CString >	m_pHeaderName;
 	CArray< CString >	m_pHeaderValue;
 
-	virtual BOOL	ConnectTo(IN_ADDR* pAddress, WORD nPort);
+	virtual BOOL	ConnectTo(const IN_ADDR* pAddress, WORD nPort);
 	virtual void	AttachTo(CConnection* pConnection);
 	virtual void	Close();
 

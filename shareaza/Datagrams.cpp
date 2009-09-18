@@ -1515,7 +1515,7 @@ BOOL CDatagrams::OnQueryKeyRequest(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 	theApp.Message( MSG_DEBUG, _T("Node %s asked for a query key for node %s:%i"),
 		(LPCTSTR)CString( inet_ntoa( pHost->sin_addr ) ), (LPCTSTR)strNode, nRequestedPort );
 
-	if ( Network.IsFirewalledAddress( &nRequestedAddress, TRUE ) || 0 == nRequestedPort ) return TRUE;
+	if ( Network.IsFirewalledAddress( (IN_ADDR*)&nRequestedAddress, TRUE ) || 0 == nRequestedPort ) return TRUE;
 
 	DWORD nKey = Network.QueryKeys->Create( nRequestedAddress );
 
@@ -1637,7 +1637,7 @@ BOOL CDatagrams::OnPush(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 	WORD nPort		= pPacket->ReadShortBE();
 
 	if ( Security.IsDenied( (IN_ADDR*)&nAddress ) ||
-		 Network.IsFirewalledAddress( &nAddress ) )
+		 Network.IsFirewalledAddress( (IN_ADDR*)&nAddress ) )
 	{
 		Statistics.Current.Gnutella2.Dropped++;
 		return TRUE;
@@ -1855,7 +1855,7 @@ BOOL CDatagrams::OnKHLA(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 		&(pHost->sin_addr) , ntohs(pHost->sin_port), CDiscoveryService::dsGnutella2UDPKHL );
 
 	if (	pService == NULL &&
-		(	Network.IsFirewalledAddress( (LPVOID*)&pHost->sin_addr, TRUE ) ||
+		(	Network.IsFirewalledAddress( &pHost->sin_addr, TRUE ) ||
 			Network.IsReserved( &pHost->sin_addr ) ||
 			Security.IsDenied( &pHost->sin_addr ) )
 		)
@@ -1947,7 +1947,8 @@ BOOL CDatagrams::OnKHLR(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 {
 	UNUSED_ALWAYS(pPacket);
 
-	if ( Security.IsDenied( &pHost->sin_addr ) || Network.IsFirewalledAddress( (LPVOID*)&pHost->sin_addr, TRUE ) ||
+	if ( Security.IsDenied( &pHost->sin_addr ) ||
+		Network.IsFirewalledAddress( &pHost->sin_addr, TRUE ) ||
 		Network.IsReserved( &pHost->sin_addr ) )
 	{
 		Statistics.Current.Gnutella2.Dropped++;

@@ -93,7 +93,7 @@ protected:
 
 // Operations
 public:
-	BOOL		IsSelfIP(IN_ADDR nAddress) const;
+	BOOL		IsSelfIP(const IN_ADDR& nAddress) const;
 	bool		IsAvailable() const;
 	bool		IsConnected() const;
 	bool		IsListening() const;
@@ -101,7 +101,7 @@ public:
 	bool		IsStable() const;
 	BOOL		IsFirewalled(int nCheck = CHECK_UDP) const;
 	DWORD		GetStableTime() const;
-	BOOL		IsConnectedTo(IN_ADDR* pAddress) const;
+	BOOL		IsConnectedTo(const IN_ADDR* pAddress) const;
 	BOOL		ReadyToTransfer(DWORD tNow) const;		// Are we ready to start downloading?
 public:
 	BOOL		Connect(BOOL bAutoConnect = FALSE);
@@ -110,10 +110,10 @@ public:
 	void		AcquireLocalAddress(LPCTSTR pszHeader);
 	BOOL		Resolve(LPCTSTR pszHost, int nPort, SOCKADDR_IN* pHost, BOOL bNames = TRUE) const;
 	BOOL		AsyncResolve(LPCTSTR pszAddress, WORD nPort, PROTOCOLID nProtocol, BYTE nCommand);
-	BOOL		IsReserved(IN_ADDR* pAddress, bool bCheckLocal=true);
+	BOOL		IsReserved(const IN_ADDR* pAddress, bool bCheckLocal=true) const;
 	WORD		RandomPort() const;
 	void		CreateID(Hashes::Guid& oID);
-	BOOL		IsFirewalledAddress(LPVOID pAddress, BOOL bIncludeSelf = FALSE);
+	BOOL		IsFirewalledAddress(const IN_ADDR* pAddress, BOOL bIncludeSelf = FALSE) const;
 public:
 	BOOL		GetNodeRoute(const Hashes::Guid& oGUID, CNeighbour** ppNeighbour, SOCKADDR_IN* pEndpoint);
 	BOOL		RoutePacket(CG2Packet* pPacket);

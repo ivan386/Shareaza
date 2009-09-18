@@ -57,7 +57,7 @@ protected:
 			CTransfer::Close();
 		}*/
 
-		virtual BOOL ConnectTo(SOCKADDR_IN* pHost)
+		virtual BOOL ConnectTo(const SOCKADDR_IN* pHost)
 		{
 			m_sData.Empty ();
 			return CConnection::ConnectTo( pHost );
@@ -150,7 +150,7 @@ protected:
 			CTransfer::Close();
 		}*/
 
-		virtual BOOL ConnectTo(SOCKADDR_IN* pHost)
+		virtual BOOL ConnectTo(const SOCKADDR_IN* pHost)
 		{
 			m_tContent = GetTickCount();
 			m_nTotal = 0;

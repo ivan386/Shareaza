@@ -260,7 +260,7 @@ BOOL CHandshakes::PushTo(IN_ADDR* pAddress, WORD nPort, DWORD nIndex)
 // Takes an IP address
 // Searches the list of handshake objects to see if we are connected to it
 // Returns true if its in the list, false if we couldn't find it
-BOOL CHandshakes::IsConnectedTo(IN_ADDR* pAddress) const
+BOOL CHandshakes::IsConnectedTo(const IN_ADDR* pAddress) const
 {
 	// Make sure only one thread can execute the code of this method at a time
 	CSingleLock pLock( &m_pSection, TRUE );
@@ -269,7 +269,7 @@ BOOL CHandshakes::IsConnectedTo(IN_ADDR* pAddress) const
 	for ( POSITION pos = m_pList.GetHeadPosition() ; pos ; )
 	{
 		// Get the handshake object here in the list, and move the position iterator to the next one
-		CHandshake* pHandshake = m_pList.GetNext( pos );
+		const CHandshake* pHandshake = m_pList.GetNext( pos );
 
 		// If the IP address in the list handshake object matches the one given this method, we've found it
 		if ( pHandshake->m_pHost.sin_addr.S_un.S_addr == pAddress->S_un.S_addr ) return TRUE;

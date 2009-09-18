@@ -723,9 +723,8 @@ BOOL CG1Neighbour::OnPong(CG1Packet* pPacket)
 	}
 
 	// If the pong said it's port number is 0, or we know it's IP address is firewalled, set bLocal to true
-	BOOL bLocal =
-		! nPort ||                                // The pong specified no port number, or
-		Network.IsFirewalledAddress( &nAddress ); // The network object knows that the pong's IP address is firewalled
+	BOOL bLocal = ! nPort ||                                // The pong specified no port number, or
+		Network.IsFirewalledAddress( (IN_ADDR*)&nAddress ); // The network object knows that the pong's IP address is firewalled
 
 	// If the packet has travelled across the Internet, but the computer that made it is firewalled
 	if ( pPacket->m_nHops != 0 && bLocal )
@@ -738,7 +737,7 @@ BOOL CG1Neighbour::OnPong(CG1Packet* pPacket)
 	}
 
 	// If the IP address and port number in the pong is reachable
-	if ( ! bLocal && ! Network.IsFirewalledAddress( &nAddress, TRUE ) )
+	if ( ! bLocal && ! Network.IsFirewalledAddress( (IN_ADDR*)&nAddress, TRUE ) )
 	{
 		// If the pong hasn't hopped at all yet, and the address in it is the address of this remote computer
 		if ( pPacket->m_nHops == 0 && nAddress == m_pHost.sin_addr.S_un.S_addr )
@@ -1180,7 +1179,7 @@ bool CG1Neighbour::OnPush(CG1Packet* pPacket)
 	// Check that remote client has a port number, isn't firewalled or using a
 	// reserved address
 	if ( !nPort
-		|| Network.IsFirewalledAddress( &nAddress )
+		|| Network.IsFirewalledAddress( (IN_ADDR*)&nAddress )
 		|| Network.IsReserved( (IN_ADDR*)&nAddress ) )
 	{
 		// Can't push open a connection, ignore packet and return that it was

@@ -312,7 +312,7 @@ CHostCacheHostPtr CHostCacheList::Add(IN_ADDR* pAddress, WORD nPort, DWORD tSeen
 		return NULL;
 
 	// Don't add own firewalled IPs
-	if ( Network.IsFirewalledAddress( &pAddress->S_un.S_addr, TRUE ) ) 
+	if ( Network.IsFirewalledAddress( pAddress, TRUE ) ) 
 		return NULL;
 
 	// check against IANA Reserved address.

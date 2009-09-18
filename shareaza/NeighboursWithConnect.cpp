@@ -74,7 +74,7 @@ CNeighboursWithConnect::~CNeighboursWithConnect()
 // Takes an IP address and port number from the host cache, and connects to it
 // Returns a pointer to the new neighbour in the connected list, or null if no connection was made
 CNeighbour* CNeighboursWithConnect::ConnectTo(
-	IN_ADDR*   pAddress,     // IP address from the host cache to connect to, like 67.163.208.23
+	const IN_ADDR* pAddress, // IP address from the host cache to connect to, like 67.163.208.23
 	WORD       nPort,        // Port number that goes with that IP address, like 6346
 	PROTOCOLID nProtocol,    // Protocol name, like PROTOCOL_G1 for Gnutella
 	BOOL       bAutomatic,   // True to (do)

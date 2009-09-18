@@ -489,7 +489,7 @@ BOOL CG2Neighbour::OnPing(CG2Packet* pPacket, BOOL bTCP)
 		}
 	}
 	else if ( ! nPort ||
-		 Network.IsFirewalledAddress( &nAddress ) ||
+		 Network.IsFirewalledAddress( (IN_ADDR*)&nAddress ) ||
 		 Network.IsReserved( (IN_ADDR*)&nAddress ) ||
 		 Security.IsDenied( (IN_ADDR*)&nAddress ) )
 	{
@@ -950,7 +950,7 @@ BOOL CG2Neighbour::ParseKHLPacket(CG2Packet* pPacket, SOCKADDR_IN* pHost)
 				}
 
 				if ( nPort &&
-					! Network.IsFirewalledAddress( &nAddress, TRUE ) &&
+					! Network.IsFirewalledAddress( (IN_ADDR*)&nAddress, TRUE ) &&
 					! Network.IsReserved( (IN_ADDR*)&nAddress ) &&
 					! Security.IsDenied( (IN_ADDR*)&nAddress ) )
 				{
@@ -1094,7 +1094,7 @@ BOOL CG2Neighbour::OnHAW(CG2Packet* pPacket)
 	if ( pPacket->GetRemaining() < 2 + 16 ) return TRUE;
 
 	if ( ! nPort ||
-		Network.IsFirewalledAddress( &nAddress, TRUE ) ||
+		Network.IsFirewalledAddress( (IN_ADDR*)&nAddress, TRUE ) ||
 		Network.IsReserved( (IN_ADDR*)&nAddress ) ||
 		Security.IsDenied( (IN_ADDR*)&nAddress ) ) return TRUE;
 
@@ -1300,7 +1300,7 @@ BOOL CG2Neighbour::OnQueryKeyReq(CG2Packet* pPacket)
 	}
 
 	if ( ! nPort ||
-		Network.IsFirewalledAddress( &nAddress, TRUE ) ||
+		Network.IsFirewalledAddress( (IN_ADDR*)&nAddress, TRUE ) ||
 		Network.IsReserved( (IN_ADDR*)&nAddress ) ||
 		Security.IsDenied( (IN_ADDR*)&nAddress ) ) return TRUE;
 
@@ -1417,7 +1417,7 @@ bool CG2Neighbour::OnPush(CG2Packet* pPacket)
 	// Check that remote client has a port number, isn't firewalled or using a
 	// reserved address
 	if ( !nPort
-		|| Network.IsFirewalledAddress( &nAddress )
+		|| Network.IsFirewalledAddress( (IN_ADDR*)&nAddress )
 		|| Network.IsReserved( (IN_ADDR*)&nAddress ) )
 	{
 		// Can't push open a connection, ignore packet and return that it was

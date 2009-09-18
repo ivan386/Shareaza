@@ -86,7 +86,7 @@ CNeighbour* CNeighboursBase::Get(DWORD_PTR nUnique) const
 	return NULL;
 }
 
-CNeighbour* CNeighboursBase::Get(IN_ADDR* pAddress) const
+CNeighbour* CNeighboursBase::Get(const IN_ADDR* pAddress) const
 {
 	ASSUME_LOCK( Network.m_pSection );
 

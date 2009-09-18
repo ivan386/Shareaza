@@ -50,7 +50,7 @@ CTransfer::~CTransfer()
 //////////////////////////////////////////////////////////////////////
 // CTransfer operations
 
-BOOL CTransfer::ConnectTo(IN_ADDR* pAddress, WORD nPort)
+BOOL CTransfer::ConnectTo(const IN_ADDR* pAddress, WORD nPort)
 {
 	if ( CConnection::ConnectTo( pAddress, nPort ) )
 	{

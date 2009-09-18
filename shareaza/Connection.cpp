@@ -108,7 +108,7 @@ CConnection::~CConnection()
 // Connect this CConnection object to a remote computer on the Internet
 // Takes pHost, a pointer to a SOCKADDR_IN structure, which is MFC's way of holding an IP address and port number
 // Returns true if connected
-BOOL CConnection::ConnectTo(SOCKADDR_IN* pHost)
+BOOL CConnection::ConnectTo(const SOCKADDR_IN* pHost)
 {
 	// Call the next ConnectTo method, and return the result
 	return ConnectTo( &pHost->sin_addr, htons( pHost->sin_port ) );
@@ -117,7 +117,7 @@ BOOL CConnection::ConnectTo(SOCKADDR_IN* pHost)
 // Connect this CConnection object to a remote computer on the Internet
 // Takes pAddress, a Windows Sockets structure that holds an IP address, and takes the port number seprately
 // Returns true if connected
-BOOL CConnection::ConnectTo(IN_ADDR* pAddress, WORD nPort)
+BOOL CConnection::ConnectTo(const IN_ADDR* pAddress, WORD nPort)
 {
 	// Make sure the socket isn't already connected somehow
 	if ( IsValid() )
