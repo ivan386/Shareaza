@@ -351,9 +351,12 @@ BOOL CDownloadWithTransfers::StartNewTransfer(DWORD tNow)
 			CDownloadTransfer* pTransfer = pConnectHead->CreateTransfer();
 			if ( pTransfer && pTransfer->Initiate() )
 			{
-				pTransfer->m_pSource->m_sCountry = pTransfer->m_sCountry;
-				pTransfer->m_pSource->m_sCountryName = pTransfer->m_sCountryName;
-				return TRUE;
+				if ( CDownloadSource* pSource = pTransfer->GetSource() )
+				{
+					pSource->m_sCountry = pTransfer->m_sCountry;
+					pSource->m_sCountryName = pTransfer->m_sCountryName;
+					return TRUE;
+				}
 			}
 		}
 	}

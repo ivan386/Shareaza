@@ -360,7 +360,7 @@ BOOL CEDClient::AttachDownload(CDownloadTransferED2K* pDownload)
 
 void CEDClient::OnDownloadClose()
 {
-	CDownloadSource* pExcept = m_pDownload ? m_pDownload->m_pSource : NULL;
+	CDownloadSource* pExcept = GetSource();
 	m_pDownload = NULL;
 	m_mInput.pLimit = &Settings.Bandwidth.Request;
 	SeekNewDownload( pExcept );
@@ -620,6 +620,11 @@ CHostBrowser* CEDClient::GetBrowser() const
 		}
 	}
 	return NULL;
+}
+
+CDownloadSource* CEDClient::GetSource() const
+{
+	return m_pDownload ? m_pDownload->GetSource() : NULL;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -931,7 +936,7 @@ BOOL CEDClient::OnHello(CEDPacket* pPacket)
 				m_bEmBrowse		= ! ( ( pTag.m_nValue >> 2 ) & 0x01 );
 				m_bEmMultiPacket= (pTag.m_nValue >> 1 ) & 0x01;
 				m_bEmPreview	= (pTag.m_nValue) & 0x01;
-				if ( m_pDownload && m_pDownload->m_pSource && m_pDownload->m_pSource->m_bClientExtended )
+				if ( GetSource() && GetSource()->m_bClientExtended )
 					;
 				else
 					m_bEmPreview = m_bEmPreview && m_bEmBrowse;
@@ -1358,7 +1363,7 @@ void CEDClient::DetermineUserAgent()
 	//Client allows G2 browse, etc
 	m_bClientExtended = VendorCache.IsExtended( m_sUserAgent );
 	if ( m_pUpload ) m_pUpload->m_bClientExtended = m_bClientExtended;
-	if ( m_pDownload && m_pDownload->m_pSource ) m_pDownload->m_pSource->m_bClientExtended = m_bClientExtended;
+	if ( CDownloadSource* pSource = GetSource() ) pSource->m_bClientExtended = m_bClientExtended;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -2249,7 +2254,7 @@ BOOL CEDClient::OnUdpQueueFull(CEDPacket* /*pPacket*/)
 {
 	if ( m_pDownload != NULL )
 	{
-		m_pDownload->m_pSource->m_tAttempt = GetTickCount() + Settings.eDonkey.ReAskTime * 1000;
+		if ( CDownloadSource* pSource = GetSource() ) pSource->m_tAttempt = GetTickCount() + Settings.eDonkey.ReAskTime * 1000;
 		m_pDownload->Close( TRI_UNKNOWN );
 	}
 

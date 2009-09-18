@@ -182,7 +182,7 @@ protected:
 					// Measuring speed
 					DWORD nCurrent = GetTickCount();
 					if ( nCurrent - m_tContent != 0) {
-						m_pOwner->m_pSource->m_nSpeed =
+						m_pOwner->GetSource()->m_nSpeed =
 							(DWORD) ( ( ( pInput->m_nLength + m_nTotal ) /
 							( nCurrent - m_tContent ) ) * 1000 );
 						m_tContent = nCurrent;	
@@ -192,7 +192,7 @@ protected:
 					pInput->Clear();
 					if ( m_pOwner->m_nPosition >= m_pOwner->m_nLength )
 					{
-						m_pOwner->m_pSource->AddFragment( m_pOwner->m_nOffset,
+						m_pOwner->GetSource()->AddFragment( m_pOwner->m_nOffset,
 							m_pOwner->m_nLength );
 						Close();
 					}

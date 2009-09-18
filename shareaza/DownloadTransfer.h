@@ -34,10 +34,8 @@ public:
 	CDownloadTransfer(CDownloadSource* pSource, PROTOCOLID nProtocol);
 	virtual ~CDownloadTransfer();
 
-	CDownload*			m_pDownload;
 	CDownloadTransfer*	m_pDlPrev;
 	CDownloadTransfer*	m_pDlNext;
-	CDownloadSource*	m_pSource;
 
 	int					m_nState;
 	DWORD				m_nQueuePos;
@@ -64,8 +62,16 @@ public:
 	virtual BOOL	OnRun();
 	void			SetState(int nState);
 
+	// Get owner download
+	CDownload*		 GetDownload() const;
+
+	// Get associated source
+	CDownloadSource* GetSource() const;
+
 protected:
-	CTimeAverage< DWORD, 2000 > m_AverageSpeed;
+	CDownload*					m_pDownload;
+	CDownloadSource*			m_pSource;
+	CTimeAverage< DWORD, 2000 >	m_AverageSpeed;
 
 	void			ChunkifyRequest(QWORD* pnOffset, QWORD* pnLength, QWORD nChunk, BOOL bVerifyLock);
 };

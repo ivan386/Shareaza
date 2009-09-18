@@ -143,6 +143,20 @@ DWORD CDownloadTransfer::GetMeasuredSpeed()
 	return m_mInput.nMeasure;
 }
 
+CDownload* CDownloadTransfer::GetDownload() const
+{
+	ASSUME_LOCK( Transfers.m_pSection );
+	ASSERT( Downloads.Check( m_pDownload ) );
+	return m_pDownload;
+}
+
+CDownloadSource* CDownloadTransfer::GetSource() const
+{
+	ASSUME_LOCK( Transfers.m_pSection );
+	ASSERT( ! m_pSource || GetDownload()->CheckSource( m_pSource ) );
+	return m_pSource;
+}
+
 //////////////////////////////////////////////////////////////////////
 // CDownloadTransfer state
 
@@ -223,7 +237,7 @@ void CDownloadTransfer::SetState(int nState)
 {
 	ASSUME_LOCK( Transfers.m_pSection );
 
-	if ( m_pDownload != NULL )
+	if ( m_pDownload && m_pDownload->CheckSource( m_pSource ) )
 	{
 		if ( Settings.Downloads.SortSources )
 		{	//Proper sort
@@ -244,12 +258,11 @@ void CDownloadTransfer::SetState(int nState)
 			else
 			{
 				// All other sources should be properly sorted
-				if ( ( nState == dtsTorrent ) &&
-					 ( m_pSource->GetTransferProtocol() == PROTOCOL_BT ) )    // Torrent states
+				if ( nState == dtsTorrent && m_nProtocol == PROTOCOL_BT )    // Torrent states
 				{
 					// Choked torrents after queued, requesting = requesting, uninterested near end
 					const CDownloadTransferBT* pBT =
-						static_cast< const CDownloadTransferBT* >( m_pSource->GetTransfer() );
+						static_cast< const CDownloadTransferBT* >( this );
 					if ( ! pBT->m_bInterested )
 						m_pSource->m_nSortOrder = 11;
 					else if ( pBT->m_bChoked )

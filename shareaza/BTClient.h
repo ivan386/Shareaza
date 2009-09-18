@@ -25,6 +25,7 @@
 
 class CBTPacket;
 class CDownload;
+class CDownloadSource;
 class CDownloadTransferBT;
 class CUploadTransferBT;
 
@@ -77,4 +78,7 @@ protected:
 	BOOL			OnSourceRequest(CBTPacket* pPacket);
 	BOOL			OnDHTPort(CBTPacket* pPacket);
 	void			DetermineUserAgent();						// Figure out the other client name/version from the peer ID
+
+	// Get download transfer source
+	CDownloadSource* GetSource() const;
 };

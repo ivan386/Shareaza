@@ -113,6 +113,9 @@ protected:
 	void	NotifyDropped();
 	CHostBrowser*	GetBrowser() const;
 
+	// Get download transfer source
+	CDownloadSource* GetSource() const;
+
 public:
 	virtual void	AttachTo(CConnection* pConnection);
 	virtual void	Close();

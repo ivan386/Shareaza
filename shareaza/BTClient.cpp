@@ -80,6 +80,11 @@ CBTClient::~CBTClient()
 	BTClients.Remove( this );
 }
 
+CDownloadSource* CBTClient::GetSource() const
+{
+	return m_pDownloadTransfer ? m_pDownloadTransfer->GetSource() : NULL;
+}
+
 //////////////////////////////////////////////////////////////////////
 // CBTClient initiate a new connection
 
@@ -91,11 +96,11 @@ BOOL CBTClient::Connect(CDownloadTransferBT* pDownloadTransfer)
 	ASSERT( ! IsValid() );
 	ASSERT( m_pDownload == NULL );
 
-	CDownloadSource* pSource = pDownloadTransfer->m_pSource;
+	const CDownloadSource* pSource = pDownloadTransfer->GetSource();
 
 	if ( ! CTransfer::ConnectTo( &pSource->m_pAddress, pSource->m_nPort ) ) return FALSE;
 	
-	m_pDownload			= pDownloadTransfer->m_pDownload;
+	m_pDownload			= pDownloadTransfer->GetDownload();
 	m_pDownloadTransfer	= pDownloadTransfer;
 
 	theApp.Message( MSG_INFO, IDS_BT_CLIENT_CONNECTING, m_sAddress );
@@ -457,13 +462,13 @@ BOOL CBTClient::OnHandshake2()
 
 	ASSERT( m_pDownload != NULL );
 
-	if ( m_pDownloadTransfer != NULL )	// Transfer exist, so must be initiated from this side
+	if ( CDownloadSource* pSource = GetSource() )	// Transfer exist, so must be initiated from this side
 	{
-		m_pDownloadTransfer->m_pSource->m_oGUID = transformGuid( m_oGUID );
+		pSource->m_oGUID = transformGuid( m_oGUID );
 
 		/*
 		//ToDo: This seems to trip when it shouldn't. Should be investigated...
-		if ( memcmp( &m_pGUID, &m_pDownloadTransfer->m_pSource->m_pGUID, 16 ) != 0 )
+		if ( memcmp( &m_pGUID, &pSource->m_pGUID, 16 ) != 0 )
 		{
 			theApp.Message( MSG_ERROR, IDS_BT_CLIENT_WRONG_GUID, (LPCTSTR)m_sAddress );
 			Close();
@@ -780,11 +785,11 @@ void CBTClient::DetermineUserAgent()
 	{
 		m_pDownloadTransfer->m_sUserAgent = m_sUserAgent;
 		m_pDownloadTransfer->m_bClientExtended = m_bClientExtended;
-		if ( m_pDownloadTransfer->m_pSource != NULL )
+		if ( CDownloadSource* pSource = GetSource() )
 		{
-			m_pDownloadTransfer->m_pSource->m_sServer = m_sUserAgent;
-			if ( strNick.GetLength() ) m_pDownloadTransfer->m_pSource->m_sNick = strNick;
-			m_pDownloadTransfer->m_pSource->m_bClientExtended = ( m_bClientExtended && ! m_pDownloadTransfer->m_pSource->m_bPushOnly);
+			pSource->m_sServer = m_sUserAgent;
+			if ( strNick.GetLength() ) pSource->m_sNick = strNick;
+			pSource->m_bClientExtended = ( m_bClientExtended && ! pSource->m_bPushOnly);
 		}
 	}
 
@@ -939,10 +944,10 @@ BOOL CBTClient::OnBeHandshake(CBTPacket* pPacket)
 		if ( m_pDownloadTransfer != NULL )
 		{
 			m_pDownloadTransfer->m_sUserAgent = m_sUserAgent;
-			if ( m_pDownloadTransfer->m_pSource != NULL )
+			if ( CDownloadSource* pSource = GetSource() )
 			{
-				m_pDownloadTransfer->m_pSource->m_sServer = m_sUserAgent;
-				m_pDownloadTransfer->m_pSource->m_bClientExtended = TRUE;
+				pSource->m_sServer = m_sUserAgent;
+				pSource->m_bClientExtended = TRUE;
 			}
 		}
 		
@@ -957,9 +962,9 @@ BOOL CBTClient::OnBeHandshake(CBTPacket* pPacket)
 	
 	if ( pNick->IsType( CBENode::beString ) )
 	{
-		if ( m_pDownloadTransfer != NULL )
+		if ( CDownloadSource* pSource = GetSource() )
 		{
-			m_pDownloadTransfer->m_pSource->m_sNick = pNick->GetString();
+			pSource->m_sNick = pNick->GetString();
 		}
 	}
 	

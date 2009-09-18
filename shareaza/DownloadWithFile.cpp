@@ -465,7 +465,7 @@ BOOL CDownloadWithFile::GetFragment(CDownloadTransfer* pTransfer)
 	Fragments::Fragment oLargest( SIZE_UNKNOWN, SIZE_UNKNOWN );
 
 	Fragments::List oPossible = GetPossibleFragments(
-		pTransfer->m_pSource->m_oAvailable, oLargest );
+		pTransfer->GetSource()->m_oAvailable, oLargest );
 
 	if ( oLargest.begin() == SIZE_UNKNOWN )
 	{

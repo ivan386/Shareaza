@@ -572,7 +572,7 @@ void CDownloadSource::Remove(BOOL bCloseTransfer, BOOL bBan)
 		else
 		{
 			// Transfer already closed
-			ASSERT( m_pTransfer->m_pSource == NULL );
+			ASSERT( m_pTransfer->GetSource() == NULL );
 			m_pTransfer = NULL;
 		}
 	}
@@ -590,7 +590,7 @@ void CDownloadSource::OnFailure(BOOL bNondestructive, DWORD nRetryAfter)
 	if ( m_pTransfer != NULL )
 	{
 		// Transfer already closed
-		ASSERT( m_pTransfer->m_pSource == NULL );
+		ASSERT( m_pTransfer->GetSource() == NULL );
 		m_pTransfer = NULL;
 	}
 
@@ -670,7 +670,7 @@ void CDownloadSource::OnResumeClosed()
 	if ( m_pTransfer != NULL )
 	{
 		// Transfer already closed
-		ASSERT( m_pTransfer->m_pSource == NULL );
+		ASSERT( m_pTransfer->GetSource() == NULL );
 		m_pTransfer = NULL;
 	}
 
