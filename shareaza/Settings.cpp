@@ -32,7 +32,7 @@ static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
 #endif
 
-#define SMART_VERSION	59
+#define SMART_VERSION	60
 
 #define Kilo	( 1024 )
 #define Mega	( Kilo * 1024 )
@@ -1115,11 +1115,16 @@ void CSettings::SmartUpgrade()
 			eDonkey.LargeFileSupport = true;
 		}
 
-		if ( General.SmartVersion < 58 )
+		if ( General.SmartVersion < 59 )
 		{
 			Fonts.DefaultFont.Empty();
 			Fonts.SystemLogFont.Empty();
 			Fonts.FontSize = 11;
+		}
+
+		if ( General.SmartVersion < 60 )
+		{
+			SetDefault( &eDonkey.ServerListURL );
 		}
 	}
 
