@@ -106,35 +106,48 @@ END_MESSAGE_MAP()
 #define SIZE_BARSLIDE	1983
 #define NEWLINE_FORMAT	_T("2")
 #define DEST_PORT		6667
+
 CIRCFrame* CIRCFrame::g_pIrcFrame = NULL;
 
 /////////////////////////////////////////////////////////////////////////////
 // CIRCFrame construction
 
 CIRCFrame::CIRCFrame()
+	: m_bConnected( FALSE )
+	, m_nSelectedTab( 0 )
+	, m_nMsgsInSec( 0 )
+	, m_nTimerVal( 0 )
+	, m_nSelectedTabType( 0 )
+	, m_nRSelectedTab( 0 )
+	, m_bFloodProtectionRunning( FALSE )
+	, m_nFloodLimit( 0 )
+	, m_nFloodingDelay( 4000 )
+	, m_nUpdateFrequency( 40 )
+	, m_nUpdateChanListFreq( 100000 )
+	, m_nBufferCount( 0 )
+	, m_nHeaderIcon( 0 )
+	, m_hBuffer( NULL )
+	, m_pszLineJoiner( _T("\x200D") )
+	, m_ptCursor( 0, 0 )
+	, m_nListWidth( 170 )
+	, m_nSocket( INVALID_SOCKET )
+	, m_nLocalTextLimit( 300 )
+	, m_nLocalLinesLimit( 14 )
 {
 	if ( g_pIrcFrame == NULL ) g_pIrcFrame = this;
-	m_nBufferCount			= 0;
-	m_nListWidth			= 170;
-	m_nFloodingDelay		= 4000;
-	m_nFloodLimit			= 0;
-	m_nUpdateFrequency		= 40;
-	m_nUpdateChanListFreq	= 100000;
-	m_bConnected			= FALSE;
-	m_nLocalTextLimit		= 300;
-	m_nLocalLinesLimit		= 14;
-	m_pszLineJoiner			= _T("\x200D");
-	m_bFloodProtectionRunning = FALSE;
-    m_nRSelectedTab			= 0;
-	m_nSelectedTab			= 0;
-	m_nSelectedTabType		= 0;
-	m_nTimerVal				= 0;
-	m_nMsgsInSec			= 0;
+
+	for ( int nChannel = 0; nChannel < MAX_CHANNELS; ++nChannel )
+		m_nCurrentPosLineBuffer[ nChannel ] = -1;
 }
 
 CIRCFrame::~CIRCFrame()
 {
 	if ( g_pIrcFrame == this ) g_pIrcFrame = NULL;
+}
+
+CIRCNewMessage::CIRCNewMessage()
+	: nColorID( 0 )
+{
 }
 
 BOOL CIRCNewMessage::operator =(const CIRCNewMessage &rhs)
@@ -325,11 +338,17 @@ void CIRCFrame::SetFonts()
 void CIRCFrame::OnDestroy() 
 {
 	OnIrcChanCmdSave();
+
 	SendString( _T("QUIT") );
+
 	KillTimer( 9 );
 	KillTimer( 7 );
+
 	m_pChanList.RemoveAll();
+
 	closesocket( m_nSocket );
+	m_nSocket = INVALID_SOCKET;
+
 	CWnd::OnDestroy();
 }
 
@@ -889,18 +908,26 @@ void CIRCFrame::OnIrcDisconnect()
 {
 	m_wndPanel.m_boxUsers.m_wndUserList.ResetContent();
 	m_wndPanel.m_boxChans.m_wndChanList.DeleteAllItems();
+
 	OnStatusMessage( _T("Disconnected."), ID_COLOR_NOTICE );
+
 	SendString( _T("QUIT") );
+
 	closesocket( m_nSocket );
+	m_nSocket = INVALID_SOCKET;
+
 	KillTimer( 9 );
 	KillTimer( 7 );
+
 	m_wndTab.DeleteAllItems();
+
 	for ( int nChannel = 0 ; nChannel < MAX_CHANNELS ; nChannel++ )
 	{
 		m_pIrcBuffer[ nChannel ].RemoveAll();
 		m_pIrcUsersBuffer[ nChannel ].RemoveAll();
 		m_nBufferCount = 0;
 	}
+
 	m_bConnected = FALSE;
 }
 
@@ -1853,7 +1880,7 @@ void CIRCFrame::ActivateMessageByID(CString strMessage, CIRCNewMessage* oNewMess
 			int nListUser;
 
 
-			oNewMessage->m_pMessages.Add( "<-- " + strNick + " has quit: (" + strUserMsg + ")" );
+			oNewMessage->m_pMessages.Add( "* " + strNick + " has quit: (" + strUserMsg + ")" );
 			oNewMessage->m_sTargetName	= currentTabName;
 			oNewMessage->nColorID		= ID_COLOR_SERVERMSG;
 
@@ -2595,7 +2622,8 @@ BEGIN_MESSAGE_MAP(CIRCTabCtrl, CTabCtrl)
 //	ON_WM_ERASEBKGND()
 END_MESSAGE_MAP()
 
-CIRCTabCtrl::CIRCTabCtrl() : m_hTheme( NULL )
+CIRCTabCtrl::CIRCTabCtrl()
+	: m_hTheme( NULL )
 {
 }
 
@@ -2857,11 +2885,12 @@ void CIRCTabCtrl::DrawTabControl(CDC* pDC)
 	DrawXPTabItem( pDC->m_hDC, nSel, rcItem, paintSelected );
 }
 
-void CIRCChannelList::Initialize()
+CIRCChannelList::CIRCChannelList()
+	: m_nCountUserDefined( 0 )
+	, m_nCount( 0 )
 {
-	m_nCount = 0;
-	m_nCountUserDefined = 0;
 }
+
 void CIRCChannelList::AddChannel(CString strDisplayName, CString strName, BOOL bUserDefined)
 {
 	m_bUserDefined.Add( bUserDefined );

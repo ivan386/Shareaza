@@ -31,8 +31,10 @@
 class CIRCNewMessage
 {
 public:
+	CIRCNewMessage();
+
 	BOOL operator =(const CIRCNewMessage &rhs );
-public:
+
 	int             nColorID;
 	CString         m_sTargetName;
     CStringArray    m_pMessages;
@@ -73,8 +75,9 @@ public:
 
 class CIRCChannelList
 {
-// Operations
 public:
+	CIRCChannelList();
+
 	void			AddChannel(CString strDisplayName, CString strName, BOOL bUserDefined = FALSE );
 	void			RemoveChannel(CString strDisplayName);
 	void			RemoveAll(int nType = -1);
@@ -82,10 +85,9 @@ public:
 	BOOL			GetType(CString strDisplayName);
 	int				GetIndexOfDisplay(CString strDisplayName);
 	int				GetIndexOfName(CString strName);
-	void			Initialize();
 	CString			GetDisplayOfIndex(int nIndex) const;
 	CString			GetNameOfIndex(int nIndex) const;
-// Attributes
+
 protected:
 	int				m_nCountUserDefined;
 	int				m_nCount;
@@ -96,6 +98,20 @@ protected:
 
 class CIRCFrame : public CWnd
 {
+	DECLARE_DYNAMIC(CIRCFrame)
+
+public:
+	CIRCFrame();
+	virtual ~CIRCFrame();
+
+	static CIRCFrame*	g_pIrcFrame;
+
+	virtual BOOL	Create(CWnd* pParentWnd);
+	virtual BOOL	PreTranslateMessage(MSG* pMsg);
+
+	void			OnSkinChange();
+	void			OnUpdateCmdUI();
+
 protected:
 	static const int IRCHEADER_HEIGHT   = 70;
 	static const int TOOLBAR_HEIGHT	    = 28;
@@ -104,22 +120,10 @@ protected:
 	static const int SMALLHEADER_HEIGHT = 24;
 	static const int SEPERATOR_HEIGHT	= 3;
 	static const int STATUSBOX_WIDTH	= 330;
-// Construction
-public:
-	CIRCFrame();
-	virtual ~CIRCFrame();
-	DECLARE_DYNAMIC(CIRCFrame)
-// Operations
-public:
-	void	OnSkinChange();
-	void	OnUpdateCmdUI();
-protected:
-	void	PaintListHeader(CDC& dc, CRect& rcBar, CString strText);
-public:
-	BOOL			m_bConnected;
-// Attributes
-protected:
+
 	#define			MAX_CHANNELS					10
+
+	BOOL			m_bConnected;
 	int             m_nSelectedTab;
 	CString			m_sStatus;
 	int				m_nMsgsInSec;
@@ -133,8 +137,7 @@ protected:
 	int				m_nUpdateChanListFreq;
 	CString			m_sDestinationIP;
 	CString			m_sDestinationPort;
-	int				m_nBuiltInChanCount;
-protected:
+
 	CString			m_sFile;
 	CString			m_sNickname;
 	CStringArray	m_pIrcBuffer[ MAX_CHANNELS ];
@@ -143,7 +146,7 @@ protected:
 	CStringArray	m_pIrcUsersBuffer[ MAX_CHANNELS ];
 	CStringArray	m_pLastLineBuffer[ MAX_CHANNELS ];
 	CIRCChannelList	m_pChanList;
-protected:
+
 	// Header
 	CBitmap			m_bmWatermark;
 	int				m_nHeaderIcon;
@@ -152,7 +155,7 @@ protected:
 	HBITMAP			m_hBuffer;
 	CIRCPanel		m_wndPanel;
 	TCHAR*			m_pszLineJoiner;
-	// Controls
+
 	CEdit			m_wndEdit;
 	CRichDocument	m_pContent;
 	CRichViewCtrl	m_wndView;
@@ -160,22 +163,21 @@ protected:
 	CRichViewCtrl	m_wndViewStatus;
 	CIRCTabCtrl		m_wndTab;
 	CCoolBarCtrl	m_wndMainBar;
-protected:
+
 	CString			m_sCurrent;
 	CPoint			m_ptCursor;
 	int				m_nListWidth;
-	int				m_nUserListHeight;
-	int				m_nChanListHeight;
 	SOCKET			m_nSocket;
 	int				m_nLocalTextLimit;
 	int				m_nLocalLinesLimit;
 	CEvent 			m_pWakeup;
 	CString         m_sWsaBuffer;
 	CMutex			m_pSection;
-protected:
+
 	CFont			m_fntEdit;
-public:
-	static CIRCFrame* g_pIrcFrame;
+	CStringArray	m_pWords;
+	CString         m_sUser;
+
 	void			ConnectIrc();
 	void			SetFonts();
 	void            SendString(CString strMessage);
@@ -195,8 +197,7 @@ public:
 	void			ReloadViewText();
 	CString			GetTabText(int nTabIndex = -1);
 	int				FindInList(CString strName, int nList=0, int nTab=0);
-protected:
-	CStringArray	m_pWords;
+	void			PaintListHeader(CDC& dc, CRect& rcBar, CString strText);
 	int				ParseMessageID();
 	void			ActivateMessageByID(CString strMessage, CIRCNewMessage* oNewMessage, int nMessageID);
 	CString			GetTextFromRichPoint();
@@ -208,19 +209,10 @@ protected:
 	void			PaintHeader(CRect rcHeader, CDC &dc);
 	void			DrawText(CDC* pDC, int nX, int nY, LPCTSTR pszText);
 	CString			RemoveModeOfNick(CString strNick) const;
-// Operations
-	CString         m_sUser;
-public:
-	virtual void OnLocalText(LPCTSTR pszText);
-// Overrides
-public:
-	virtual BOOL Create(CWnd* pParentWnd);
-	virtual BOOL PreTranslateMessage(MSG* pMsg);
-	virtual void OnStatusMessage(LPCTSTR pszText, int nFlags);
 
-// Implementation
-protected:
-	DECLARE_MESSAGE_MAP()
+	virtual void	OnLocalText(LPCTSTR pszText);
+	virtual void	OnStatusMessage(LPCTSTR pszText, int nFlags);
+
 	afx_msg int  OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg void OnRichCursorMove(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnRichClk(NMHDR* pNMHDR, LRESULT* pResult);
@@ -234,36 +226,30 @@ protected:
 	afx_msg void OnUpdateIrcConnect(CCmdUI* pCmdUI);
 	afx_msg void OnIrcShowSettings();
 	afx_msg void OnIrcChanCmdOpen();
-
 	afx_msg void OnIrcUserCmdWhois();
 	afx_msg void OnUpdateIrcUserCmd(CCmdUI* pCmdUI);
-
 	afx_msg void OnIrcUserCmdTime();
-
 	afx_msg void OnIrcUserCmdVersion();
 	afx_msg void OnIrcUserCmdIgnore();
 	afx_msg void OnIrcUserCmdUnignore();
-
 	afx_msg void OnIrcUserCmdOp();
 	afx_msg void OnIrcUserCmdDeop();
 	afx_msg void OnIrcUserCmdVoice();
 	afx_msg void OnIrcUserCmdDevoice();
-
 	afx_msg void OnIrcUserCmdKick();
 	afx_msg void OnIrcUserCmdUnban();
 	afx_msg void OnIrcUserCmdBan();
 	afx_msg void OnIrcUserCmdBanKick();
 	afx_msg void OnIrcUserCmdBanKickWhy();
 	afx_msg void OnIrcUserCmdKickWhy();
-
 	afx_msg void OnIrcChanCmdSave();
-
 	afx_msg void OnIrcConnect();
 	afx_msg void OnUpdateIrcDisconnect(CCmdUI* pCmdUI);
 	afx_msg void OnIrcDisconnect();
 	afx_msg void OnUpdateIrcCloseTab(CCmdUI* pCmdUI);
 	afx_msg void OnIrcCloseTab();
 
+	DECLARE_MESSAGE_MAP()
 };
 
 //{{AFX_INSERT_LOCATION}}
