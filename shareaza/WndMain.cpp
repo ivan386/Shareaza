@@ -590,6 +590,10 @@ void CMainWnd::OnClose()
 void CMainWnd::RemoveSkin()
 {
 	m_pSkin = NULL;
+	m_pWindows.PostSkinRemove();
+	CDownloadMonitorDlg::OnSkinChange( FALSE );
+	CSettingsManagerDlg::OnSkinChange( FALSE );
+	CFilePreviewDlg::OnSkinChange( FALSE );
 	m_wndRemoteWnd.RemoveSkin();
 	m_wndNavBar.RemoveSkin();
 }
@@ -1080,15 +1084,10 @@ LRESULT CMainWnd::OnSkinChanged(WPARAM /*wParam*/, LPARAM /*lParam*/)
 {
 	CWaitCursor pCursor;
 
-	m_pSkin = NULL;
+	RemoveSkin();
 
-	m_pWindows.PostSkinRemove();
 	m_wndMenuBar.SetMenu( NULL );
 	m_wndToolBar.Clear();
-
-	CDownloadMonitorDlg::OnSkinChange( FALSE );
-	CSettingsManagerDlg::OnSkinChange( FALSE );
-	CFilePreviewDlg::OnSkinChange( FALSE );
 
 	Skin.Apply();
 
