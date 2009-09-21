@@ -30,7 +30,7 @@ SetCompressor /SOLID lzma
 
 Var STARTMENU_FOLDER
 
-!include "MUI.nsh"
+!include "MUI2.nsh"
 
 !define MUI_ABORTWARNING
 !define MUI_HEADERIMAGE
@@ -62,16 +62,38 @@ Var STARTMENU_FOLDER
 !insertmacro MUI_UNPAGE_FINISH
 
 !insertmacro MUI_LANGUAGE "English"
+!insertmacro MUI_LANGUAGE "Russian"
+!insertmacro MUI_LANGUAGE "French"
+!insertmacro MUI_LANGUAGE "German"
+!insertmacro MUI_LANGUAGE "Spanish"
+!insertmacro MUI_LANGUAGE "Japanese"
+!insertmacro MUI_LANGUAGE "SimpChinese"
+
+LangString AGAIN_WARN ${LANG_ENGLISH}     "Setup already running."
+LangString AGAIN_WARN ${LANG_Russian}     "Установка уже запущена."
+LangString AGAIN_WARN ${LANG_French}      "Setup already running."
+LangString AGAIN_WARN ${LANG_German}      "Setup already running."
+LangString AGAIN_WARN ${LANG_Spanish}     "Setup already running."
+LangString AGAIN_WARN ${LANG_Japanese}    "Setup already running."
+LangString AGAIN_WARN ${LANG_SimpChinese} "Setup already running."
+
+LangString CLOSE_WARN ${LANG_ENGLISH}     "Please close Shareaza and try again."
+LangString CLOSE_WARN ${LANG_Russian}     "Пожалуйста закройте Shareaza и попробуйте снова."
+LangString CLOSE_WARN ${LANG_French}      "Please close Shareaza and try again."
+LangString CLOSE_WARN ${LANG_German}      "Please close Shareaza and try again."
+LangString CLOSE_WARN ${LANG_Spanish}     "Please close Shareaza and try again."
+LangString CLOSE_WARN ${LANG_Japanese}    "Please close Shareaza and try again."
+LangString CLOSE_WARN ${LANG_SimpChinese} "Please close Shareaza and try again."
 
 Function .onInit
 	SetShellVarContext all
 	SetRegView 64
 
 	; Disable second run
-	System::Call 'kernel32::CreateMutexA(i 0, i 0, t "${TITLE}") i .r1 ?e'
+	System::Call 'kernel32::CreateMutexA(i 0, i 0, t "Global\${TITLE}") i .r1 ?e'
 	Pop $R0
 	StrCmp $R0 0 +3
-	MessageBox MB_ICONSTOP|MB_OK "Setup already running."
+	MessageBox MB_ICONSTOP|MB_OK "$(AGAIN_WARN)"
 	Quit
 
 FunctionEnd
@@ -81,10 +103,10 @@ Function un.onInit
 	SetRegView 64
 
 	; Disable second run
-	System::Call 'kernel32::CreateMutexA(i 0, i 0, t "${TITLE}") i .r1 ?e'
+	System::Call 'kernel32::CreateMutexA(i 0, i 0, t "Global\${TITLE}") i .r1 ?e'
 	Pop $R0
 	StrCmp $R0 0 +3
-	MessageBox MB_ICONSTOP|MB_OK "Setup already running."
+	MessageBox MB_ICONSTOP|MB_OK "$(AGAIN_WARN)"
 	Quit
 
 FunctionEnd
@@ -93,11 +115,11 @@ Section "Install"
 	SetOutPath $INSTDIR
 
 	; Close Shareaza before installation
-	DetailPrint "Checking for Shareaza..."
 	System::Call 'kernel32::CreateMutexA(i 0, i 0, t "Global\Shareaza") i .r1 ?e'
+	System::Call 'kernel32::CloseHandle(i $1) i .r1'
 	Pop $R0
 	StrCmp $R0 0 +3
-	MessageBox MB_ICONSTOP|MB_OK "Please close Shareaza and run setup again."
+	MessageBox MB_ICONEXCLAMATION|MB_ABORTRETRYIGNORE "$(CLOSE_WARN)" IDRETRY -4 IDIGNORE +2
 	Quit
 
 	; Install plugin
@@ -105,11 +127,13 @@ Section "Install"
 	File "x64\Release\SearchExport.dll"
 	RegDLL "$INSTDIR\SearchExport.dll"
 
-	; Install Uninstaller
+	; Install shortcuts
 	!insertmacro MUI_STARTMENU_WRITE_BEGIN Application
 	CreateDirectory "$SMPROGRAMS\$STARTMENU_FOLDER"
-	CreateShortCut  "$SMPROGRAMS\$STARTMENU_FOLDER\Uninstall ${TITLE}.lnk" "$INSTDIR\${UNINST}" "" "$INSTDIR\${UNINST}" 0
+	CreateShortCut  "$SMPROGRAMS\$STARTMENU_FOLDER\$(^UninstallCaption).lnk" "$INSTDIR\${UNINST}" "" "$INSTDIR\${UNINST}" 0
 	!insertmacro MUI_STARTMENU_WRITE_END
+
+	; Install Uninstaller
 	WriteRegStr   HKCU "Software\Shareaza\Shareaza" "Path" $INSTDIR
 	WriteRegStr   HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${TITLE}" "DisplayName"     "${TITLE}"
 	WriteRegStr   HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${TITLE}" "UninstallString" "$INSTDIR\${UNINST}"
@@ -126,11 +150,11 @@ Section "Uninstall"
 	SetOutPath $TEMP
 
 	; Close Shareaza before uninstallation
-	DetailPrint "Checking for Shareaza..."
 	System::Call 'kernel32::CreateMutexA(i 0, i 0, t "Global\Shareaza") i .r1 ?e'
+	System::Call 'kernel32::CloseHandle(i $1) i .r1'
 	Pop $R0
 	StrCmp $R0 0 +3
-	MessageBox MB_ICONSTOP|MB_OK "Please close Shareaza and run setup again."
+	MessageBox MB_ICONEXCLAMATION|MB_ABORTRETRYIGNORE "$(CLOSE_WARN)" IDRETRY -4 IDIGNORE +2
 	Quit
 
 	; Uninstall plugin
@@ -138,10 +162,12 @@ Section "Uninstall"
 	Delete   "$INSTDIR\SearchExport.dll"
 	RmDir /r "$INSTDIR\SearchExport Templates"
 
-	; Uninstall uninstaller
+	; Uninstall shortcuts
 	!insertmacro MUI_STARTMENU_GETFOLDER Application $STARTMENU_FOLDER
-	Delete "$SMPROGRAMS\$STARTMENU_FOLDER\Uninstall ${TITLE}.lnk"
+	Delete "$SMPROGRAMS\$STARTMENU_FOLDER\$(^UninstallCaption).lnk"
 	RmDir  "$SMPROGRAMS\$STARTMENU_FOLDER"
+
+	; Uninstall Uninstaller
 	DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${TITLE}"
 	Delete "$INSTDIR\${UNINST}"
 	RmDir  "$INSTDIR"
