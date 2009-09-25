@@ -106,9 +106,9 @@ Source: "zlib\{#PlatformName}\Release\zlibwapi.dll"; DestDir: "{app}"; Flags: ov
 ; BugTrap
 Source: "BugTrap\{#PlatformName}\Release\BugTrap.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 #if PlatformName == "Win32"
-Source: "BugTrap\dbghelp.dll";     DestDir: "{sys}"; DestName: "dbghelp.dll"; Flags: overwritereadonly restartreplace uninsneveruninstall sortfilesbyextension
+Source: "BugTrap\dbghelp.dll";     DestDir: "{app}"; DestName: "dbghelp.dll"; Flags: overwritereadonly restartreplace uninsneveruninstall sortfilesbyextension
 #elif PlatformName == "x64"
-Source: "BugTrap\dbghelp-x64.dll"; DestDir: "{sys}"; DestName: "dbghelp.dll"; Flags: overwritereadonly restartreplace uninsneveruninstall sortfilesbyextension
+Source: "BugTrap\dbghelp-x64.dll"; DestDir: "{app}"; DestName: "dbghelp.dll"; Flags: overwritereadonly restartreplace uninsneveruninstall sortfilesbyextension
 #endif
 
 ; HashLib
