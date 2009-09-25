@@ -691,7 +691,7 @@ void CLibraryFrame::SetPanel(CPanelCtrl* pPanel)
 	CPanelCtrl* pOld = m_pPanel;
 	m_pPanel = pPanel;
 
-	if ( m_pPanel )
+	if ( m_pPanel && ! m_pPanel->m_hWnd )
 		m_pPanel->Create( this );
 	OnSize( 1982, 0, 0 );
 
