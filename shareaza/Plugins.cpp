@@ -60,10 +60,6 @@ void CPlugins::Register()
 		bWorking = finder.FindNextFile();
 		CString sDllPath = finder.GetFilePath().MakeLower();
 
-		if ( sDllPath.Find( _T("razawebhook.dll") ) != -1 )
-			// Skip RazaWebHook.dll
-			continue;
-
 		if ( HINSTANCE hDll = LoadLibrary( sDllPath ) )
 		{
 			HRESULT hr = S_FALSE;
