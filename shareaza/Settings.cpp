@@ -190,7 +190,7 @@ void CSettings::Load()
 	Add( _T("Library"), _T("VirtualFiles"), &Library.VirtualFiles, false );
 	Add( _T("Library"), _T("WatchFolders"), &Library.WatchFolders, true );
 	Add( _T("Library"), _T("WatchFoldersTimeout"), &Library.WatchFoldersTimeout, 5, 1, 1, 60, _T(" s") );
-	Add( _T("Library"), _T("SmartSeriesDetection"), &Library.SmartSeriesDetection, false );
+	Add( _T("Library"), _T("SmartSeriesDetection"), &Library.SmartSeriesDetection, true );
 	Add( _T("Library"), _T("LastUsedView"), &Library.LastUsedView );
 	Add( _T("Library"), _T("URLExportFormat"), &Library.URLExportFormat, _T("<a href=\"magnet:?xt=urn:bitprint:[SHA1].[TIGER]&amp;xt=urn:ed2khash:[ED2K]&amp;xt=urn:md5:[MD5]&amp;xl=[ByteSize]&amp;dn=[NameURI]\">[Name]</a><br>") );
 
@@ -276,9 +276,14 @@ void CSettings::Load()
 	Add( _T("Connection"), _T("InBind"), &Connection.InBind, false );
 	Add( _T("Connection"), _T("InHost"), &Connection.InHost );
 	Add( _T("Connection"), _T("InPort"), &Connection.InPort, GNUTELLA_DEFAULT_PORT, 1, 1, 65535 );
+#ifdef LAN_MODE
+	Add( _T("Connection"), _T("InSpeed"), &Connection.InSpeed, 40960 );
+	Add( _T("Connection"), _T("OutSpeed"), &Connection.OutSpeed, 40960 );
+#else  // LAN_MODE
 	Add( _T("Connection"), _T("InSpeed"), &Connection.InSpeed, 2048 );
-	Add( _T("Connection"), _T("OutHost"), &Connection.OutHost );
 	Add( _T("Connection"), _T("OutSpeed"), &Connection.OutSpeed, 256 );
+#endif // LAN_MODE
+	Add( _T("Connection"), _T("OutHost"), &Connection.OutHost );
 	Add( _T("Connection"), _T("RandomPort"), &Connection.RandomPort, false );
 	Add( _T("Connection"), _T("RequireForTransfers"), &Connection.RequireForTransfers, true );
 	Add( _T("Connection"), _T("SendBuffer"), &Connection.SendBuffer, 2*Kilo, 1, 64, 10*Kilo );
