@@ -44,8 +44,6 @@ public:
 	virtual ~CRichViewCtrl();
 
 // Attributes
-public:
-	TCHAR*			m_szSign;
 protected:
 	CSyncObject*	m_pSyncRoot;
 	BOOL			m_bSelectable;

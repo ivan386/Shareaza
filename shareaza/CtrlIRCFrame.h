@@ -66,11 +66,13 @@ public:
 	void DrawXPTabItem(HDC dc, int nItem, const RECT& rcItem, UINT flags);
 	void DrawTabItem(HDC dc, int nItem, const RECT& rcItem, UINT flags);
 
-	DECLARE_MESSAGE_MAP()
-	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
 //	virtual BOOL OnEraseBkgnd(CDC* pDC);
 	virtual LRESULT WindowProc(UINT message, WPARAM wParam, LPARAM lParam);
+
+	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
+
+	DECLARE_MESSAGE_MAP()
 };
 
 class CIRCChannelList
@@ -78,13 +80,13 @@ class CIRCChannelList
 public:
 	CIRCChannelList();
 
-	void			AddChannel(CString strDisplayName, CString strName, BOOL bUserDefined = FALSE );
-	void			RemoveChannel(CString strDisplayName);
+	void			AddChannel(LPCTSTR strDisplayName, LPCTSTR strName, BOOL bUserDefined = FALSE );
+	void			RemoveChannel(const CString& strDisplayName);
 	void			RemoveAll(int nType = -1);
-	int				GetCount(int nType = -1);
-	BOOL			GetType(CString strDisplayName);
-	int				GetIndexOfDisplay(CString strDisplayName);
-	int				GetIndexOfName(CString strName);
+	int				GetCount(int nType = -1) const;
+	BOOL			GetType(const CString& strDisplayName) const;
+	int				GetIndexOfDisplay(const CString& strDisplayName) const;
+	int				GetIndexOfName(const CString& strName) const;
 	CString			GetDisplayOfIndex(int nIndex) const;
 	CString			GetNameOfIndex(int nIndex) const;
 
@@ -121,7 +123,7 @@ protected:
 	static const int SEPERATOR_HEIGHT	= 3;
 	static const int STATUSBOX_WIDTH	= 330;
 
-	#define			MAX_CHANNELS					10
+	#define			 MAX_CHANNELS		  10
 
 	BOOL			m_bConnected;
 	int             m_nSelectedTab;
@@ -141,10 +143,10 @@ protected:
 	CString			m_sFile;
 	CString			m_sNickname;
 	CStringArray	m_pIrcBuffer[ MAX_CHANNELS ];
-	int				m_nBufferCount;
 	int				m_nCurrentPosLineBuffer[ MAX_CHANNELS ];
 	CStringArray	m_pIrcUsersBuffer[ MAX_CHANNELS ];
 	CStringArray	m_pLastLineBuffer[ MAX_CHANNELS ];
+	int				m_nBufferCount;
 	CIRCChannelList	m_pChanList;
 
 	// Header
@@ -154,7 +156,6 @@ protected:
 	CBitmap			m_bmBuffer;
 	HBITMAP			m_hBuffer;
 	CIRCPanel		m_wndPanel;
-	TCHAR*			m_pszLineJoiner;
 
 	CEdit			m_wndEdit;
 	CRichDocument	m_pContent;
@@ -183,7 +184,7 @@ protected:
 	void            SendString(CString strMessage);
 	BOOL            OnNewMessage(CString strMessage);
 	int				FindParsedItem(CString strMessage, int nFirst = 0);
-	int				IsTabExist(CString strTabName);
+	int				IsTabExist(const CString& strTabName) const;
 	void            LoadBufferForWindow(int nTab);
 	void			ParseString(CString strMessage, CIRCNewMessage* oNewMessage);
 	CString			TrimString(CString strMessage) const;
@@ -193,22 +194,22 @@ protected:
 	int				AddTab(CString TabName, int nKindOfTab);
 	void			TabClick();
 	void			SortUserList();
-	int				CompareUsers(CString strUser1, CString strUser2);
+	int				CompareUsers(const CString& strUser1, const CString& strUser2) const;
 	void			ReloadViewText();
-	CString			GetTabText(int nTabIndex = -1);
+	CString			GetTabText(int nTabIndex = -1) const;
 	int				FindInList(CString strName, int nList=0, int nTab=0);
 	void			PaintListHeader(CDC& dc, CRect& rcBar, CString strText);
 	int				ParseMessageID();
 	void			ActivateMessageByID(CString strMessage, CIRCNewMessage* oNewMessage, int nMessageID);
 	CString			GetTextFromRichPoint();
-	int				IsUserInList(CString strUser);
+	CString			RemoveModeOfNick(CString strNick) const;
+	int				IsUserInList(CString strUser) const;
 	void			UserListDblClick();
 	void			ChanListDblClick();
 	void			FillChanList();
-	void			FillCountChanList(CString strUserCount, CString strChannelName);
+	void			FillCountChanList(const CString& strUserCount, const CString& strChannelName);
 	void			PaintHeader(CRect rcHeader, CDC &dc);
 	void			DrawText(CDC* pDC, int nX, int nY, LPCTSTR pszText);
-	CString			RemoveModeOfNick(CString strNick) const;
 
 	virtual void	OnLocalText(LPCTSTR pszText);
 	virtual void	OnStatusMessage(LPCTSTR pszText, int nFlags);

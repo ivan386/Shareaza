@@ -127,7 +127,6 @@ CIRCFrame::CIRCFrame()
 	, m_nBufferCount( 0 )
 	, m_nHeaderIcon( 0 )
 	, m_hBuffer( NULL )
-	, m_pszLineJoiner( _T("\x200D") )
 	, m_ptCursor( 0, 0 )
 	, m_nListWidth( 170 )
 	, m_nSocket( INVALID_SOCKET )
@@ -142,7 +141,8 @@ CIRCFrame::CIRCFrame()
 
 CIRCFrame::~CIRCFrame()
 {
-	if ( g_pIrcFrame == this ) g_pIrcFrame = NULL;
+	if ( g_pIrcFrame == this )
+		g_pIrcFrame = NULL;
 }
 
 CIRCNewMessage::CIRCNewMessage()
@@ -170,8 +170,12 @@ BOOL CIRCFrame::Create(CWnd* pParentWnd)
 
 int CIRCFrame::OnCreate(LPCREATESTRUCT lpCreateStruct) 
 {
-	if ( CWnd::OnCreate( lpCreateStruct ) == -1 ) return -1;
-	if ( ! m_wndPanel.Create( this ) ) return -1;
+	if ( CWnd::OnCreate( lpCreateStruct ) == -1 )
+		return -1;
+
+	if ( ! m_wndPanel.Create( this ) )
+		return -1;
+
 	CRect rectDefault;
 	SetOwner( GetParent() );
 
@@ -180,7 +184,6 @@ int CIRCFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	FillChanList();
 	m_wndView.Create( WS_CHILD|WS_VISIBLE, rectDefault, this, IDC_CHAT_TEXT );
-	m_wndView.m_szSign = m_pszLineJoiner + '  ';
 
 	m_pContent.m_crBackground = Settings.IRC.Colors[ ID_COLOR_CHATBACK ];
 	m_wndView.SetDocument( &m_pContent );
@@ -209,62 +212,74 @@ int CIRCFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 // if strUserCount = 0 it will increase the current number
 // if strUserCount = -1 it will decrease current number
 // otherwise, it sets the number
-void CIRCFrame::FillCountChanList(CString strUserCount, CString strChannelName)
+void CIRCFrame::FillCountChanList(const CString& strUserCount, const CString& strChannelName)
 {
 	CString strCurrentChannel, strList, strUsers, strDisplay;
 	BOOL bFound = FALSE;
-	int nCount = _tstoi( (LPCTSTR)strUserCount ), nList, nIndex, nCountWnd;
+	int nCount = _tstoi( strUserCount ), nList, nIndex, nCountWnd;
 	CListCtrl* pChannelList = (CListCtrl*)&(m_wndPanel.m_boxChans.m_wndChanList);
 	nIndex = m_pChanList.GetIndexOfName( strChannelName );
-	if ( nIndex == -1 ) return;
+	if ( nIndex == -1 )
+		return;
+
 	strDisplay = m_pChanList.GetDisplayOfIndex( nIndex );
 	for ( nList = 0 ; nList < pChannelList->GetItemCount() ; nList++ )
 	{
 		strList = pChannelList->GetItemText( nList, 0 );
-		if ( strDisplay.CompareNoCase( strList ) == 0 ) { bFound = TRUE; break; }
+		if ( strDisplay.CompareNoCase( strList ) == 0 )
+		{
+			bFound = TRUE;
+			break;
+		}
 	}
 	if ( bFound ) 
 		strList = pChannelList->GetItemText( nList, 1 );
 	else
 		strList = strUserCount;
-	nCountWnd = _tstoi( (LPCTSTR)strList );
-	if ( strUserCount == "0"  ) nCountWnd++;
-	else if ( strUserCount == "-1" ) nCountWnd--;
-	else nCountWnd = nCount;
-	strUserCount.Format( _T("%d"), nCountWnd );
-	if ( !bFound ) 
+
+	nCountWnd = _tstoi( strList );
+	if ( strUserCount == _T("0")  )
+		nCountWnd++;
+	else if ( strUserCount == _T("-1") )
+		nCountWnd--;
+	else
+		nCountWnd = nCount;
+
+	CString strCount;
+	strCount.Format( _T("%d"), nCountWnd );
+	if ( ! bFound ) 
 		nList = pChannelList->InsertItem( pChannelList->GetItemCount() , strDisplay );
-	pChannelList->SetItemText( nList, 1, strUserCount.GetBuffer() );
+	pChannelList->SetItemText( nList, 1, strCount );
 }
 
 void CIRCFrame::FillChanList()
 {
 	m_pChanList.RemoveAll();
-	m_pChanList.AddChannel( _T("^Support"), _T("#Shareaza") );
- 	m_pChanList.AddChannel( _T("^Admins"), _T("#Shareaza-Admin") );
-	m_pChanList.AddChannel( _T("^English"), _T("#Shareaza-Chat") );
-	m_pChanList.AddChannel( _T("^Developers"), _T("#Shareaza-dev") );
- 	m_pChanList.AddChannel( _T("Afrikaans"), _T("#Shareaza-Afrikaans") );
-	m_pChanList.AddChannel( _T("Arabic"), _T("#Shareaza-Arabic") );
- 	m_pChanList.AddChannel( _T("Chinese"), _T("#Shareaza-Chinese") );
-	m_pChanList.AddChannel( _T("Croatian"), _T("#Shareaza-Croatian") );
- 	m_pChanList.AddChannel( _T("Czech"), _T("#Shareaza-Czech") );
-	m_pChanList.AddChannel( _T("Dutch"), _T("#Shareaza-Dutch") );
- 	m_pChanList.AddChannel( _T("Finish"), _T("#Shareaza-Finish") );
-	m_pChanList.AddChannel( _T("French"), _T("#Shareaza-French") );
- 	m_pChanList.AddChannel( _T("German"), _T("#Shareaza-German") );
-	m_pChanList.AddChannel( _T("Greek"), _T("#Shareaza-Greek") );
- 	m_pChanList.AddChannel( _T("Hebrew"), _T("#Shareaza-Hebrew") );
-	m_pChanList.AddChannel( _T("Hungarian"), _T("#Shareaza-Hungarian") );
- 	m_pChanList.AddChannel( _T("Italian"), _T("#Shareaza-Italian") );
- 	m_pChanList.AddChannel( _T("Japanese"), _T("#Shareaza-Japanese") );
-	m_pChanList.AddChannel( _T("Lithuanian"), _T("#Shareaza-Lithuanian") );
- 	m_pChanList.AddChannel( _T("Norwegian"), _T("#Shareaza-Norwegian") );
-	m_pChanList.AddChannel( _T("Polish"), _T("#Shareaza-Polish") );
- 	m_pChanList.AddChannel( _T("Portuguese"), _T("#Shareaza-Portuguese") );
-	m_pChanList.AddChannel( _T("Russian"), _T("#Shareaza-Russian") );
- 	m_pChanList.AddChannel( _T("Spanish"), _T("#Shareaza-Spanish") );
- 	m_pChanList.AddChannel( _T("Swedish"), _T("#Shareaza-Swedish") );
+	m_pChanList.AddChannel( _T("^Support"),		_T("#Shareaza") );
+ 	m_pChanList.AddChannel( _T("^Admins"),		_T("#Shareaza-Admin") );
+	m_pChanList.AddChannel( _T("^English"),		_T("#Shareaza-Chat") );
+	m_pChanList.AddChannel( _T("^Developers"),	_T("#Shareaza-dev") );
+ 	m_pChanList.AddChannel( _T("Afrikaans"),	_T("#Shareaza-Afrikaans") );
+	m_pChanList.AddChannel( _T("Arabic"),		_T("#Shareaza-Arabic") );
+ 	m_pChanList.AddChannel( _T("Chinese"),		_T("#Shareaza-Chinese") );
+	m_pChanList.AddChannel( _T("Croatian"),		_T("#Shareaza-Croatian") );
+ 	m_pChanList.AddChannel( _T("Czech"),		_T("#Shareaza-Czech") );
+	m_pChanList.AddChannel( _T("Dutch"),		_T("#Shareaza-Dutch") );
+ 	m_pChanList.AddChannel( _T("Finish"),		_T("#Shareaza-Finish") );
+	m_pChanList.AddChannel( _T("French"),		_T("#Shareaza-French") );
+ 	m_pChanList.AddChannel( _T("German"),		_T("#Shareaza-German") );
+	m_pChanList.AddChannel( _T("Greek"),		_T("#Shareaza-Greek") );
+ 	m_pChanList.AddChannel( _T("Hebrew"),		_T("#Shareaza-Hebrew") );
+	m_pChanList.AddChannel( _T("Hungarian"),	_T("#Shareaza-Hungarian") );
+ 	m_pChanList.AddChannel( _T("Italian"),		_T("#Shareaza-Italian") );
+ 	m_pChanList.AddChannel( _T("Japanese"),		_T("#Shareaza-Japanese") );
+	m_pChanList.AddChannel( _T("Lithuanian"),	_T("#Shareaza-Lithuanian") );
+ 	m_pChanList.AddChannel( _T("Norwegian"),	_T("#Shareaza-Norwegian") );
+	m_pChanList.AddChannel( _T("Polish"),		_T("#Shareaza-Polish") );
+ 	m_pChanList.AddChannel( _T("Portuguese"),	_T("#Shareaza-Portuguese") );
+	m_pChanList.AddChannel( _T("Russian"),		_T("#Shareaza-Russian") );
+ 	m_pChanList.AddChannel( _T("Spanish"),		_T("#Shareaza-Spanish") );
+ 	m_pChanList.AddChannel( _T("Swedish"),		_T("#Shareaza-Swedish") );
 }
 
 void CIRCFrame::SetFonts()
@@ -492,6 +507,7 @@ void CIRCFrame::PaintHeader(CRect rcHeader, CDC &dc)
 	dc.BitBlt( rcHeader.left, rcHeader.top, rcHeader.Width(),
 		rcHeader.Height(), &m_dcBuffer, 0, 0, SRCCOPY );
 }
+
 void CIRCFrame::DrawText(CDC* pDC, int nX, int nY, LPCTSTR pszText)
 {
 	CSize sz = pDC->GetTextExtent( pszText );
@@ -504,6 +520,7 @@ void CIRCFrame::DrawText(CDC* pDC, int nX, int nY, LPCTSTR pszText)
 
 /////////////////////////////////////////////////////////////////////////////
 // CIRCFrame interaction message handlers
+
 void CIRCFrame::OnContextMenu(CWnd* pWnd, CPoint point) 
 {
 	if ( pWnd->m_hWnd == m_wndView.m_hWnd ) 
@@ -536,32 +553,22 @@ void CIRCFrame::OnContextMenu(CWnd* pWnd, CPoint point)
 
 void CIRCFrame::OnIrcConnect() 
 {
-	struct hostent* host;
-	WSADATA WsaData;
 	m_sDestinationIP = Settings.IRC.ServerName;
 	m_sDestinationPort = Settings.IRC.ServerPort;
 	WORD nPort = (WORD)_tstoi( (LPCTSTR)m_sDestinationPort );
 	m_sWsaBuffer.Empty();
-	if ( WSAStartup( MAKEWORD( 1, 1 ), &WsaData ) != 0 ) return;
 
-    struct sockaddr_in dest_addr;   // will hold the destination addr
-    dest_addr.sin_family = AF_INET;          // host byte order
+	struct sockaddr_in dest_addr = {};   // will hold the destination addr
+    dest_addr.sin_family = AF_INET;      // host byte order
 	dest_addr.sin_port	= (u_short)ntohs( nPort ); // Copy the port number into the m_pHost structure
 	m_nSocket = socket( AF_INET, SOCK_STREAM, IPPROTO_TCP ) ; // do some error checking!
-
 	if ( m_nSocket == INVALID_SOCKET )
 	{
 		OnStatusMessage( _T("Error: Cannot open a socket."), ID_COLOR_NOTICE );
 	 	return;
 	}
-	int nBytes = WideCharToMultiByte( CP_ACP, 0, m_sDestinationIP, m_sDestinationIP.GetLength(), 
-		NULL, 0, NULL, NULL );
-	LPSTR pBytes = new CHAR[ nBytes + 1 ];
-	WideCharToMultiByte( CP_ACP, 0, m_sDestinationIP, m_sDestinationIP.GetLength(), pBytes, nBytes, NULL, NULL );
-	pBytes[nBytes] = '\0';
 	
-	host = gethostbyname( pBytes );
-	delete [] pBytes;
+	struct hostent* host = gethostbyname( (LPCSTR)CT2A( m_sDestinationIP ) );
 	if ( host == NULL ) return;
 
 	memcpy( &( dest_addr.sin_addr.s_addr ), host->h_addr, sizeof(int) );
@@ -678,11 +685,9 @@ void CIRCFrame::OnIrcUserCmdDeop()
 
 void CIRCFrame::OnIrcChanCmdOpen()
 {
-	CString strPath, strItem;
+	CString strPath = Settings.General.UserPath + _T("\\Data\\ChatChanlist.dat");
+
 	CFile pFile;
-	
-	strPath = Settings.General.UserPath + _T("\\Data\\ChatChanlist.dat");
-	
 	if ( ! pFile.Open( strPath, CFile::modeRead ) ) return;
 	
 	CBuffer pBuffer;
@@ -690,13 +695,14 @@ void CIRCFrame::OnIrcChanCmdOpen()
 	pBuffer.m_nLength = (DWORD)pFile.GetLength();
 	pFile.Read( pBuffer.m_pBuffer, pBuffer.m_nLength );
 	pFile.Close();
-	
+
+	CString strItem;
 	while ( pBuffer.ReadLine( strItem ) )
 	{
 		strItem.TrimLeft();
 		strItem.TrimRight();
 
-		if ( strItem.GetLength() && strItem.GetAt( 0 ) == '#' )
+		if ( strItem.GetLength() && strItem.GetAt( 0 ) == _T('#') )
 		{
 			m_pChanList.AddChannel( strItem.Mid( 1 ), strItem, TRUE );
 			m_wndPanel.m_boxChans.m_wndChanList.InsertItem( m_wndPanel.m_boxChans.m_wndChanList.GetItemCount(),
@@ -704,6 +710,7 @@ void CIRCFrame::OnIrcChanCmdOpen()
 		}
 	}
 }
+
 void CIRCFrame::OnIrcChanCmdSave()
 {
 	CString strFile, strPath, strItem;
@@ -723,10 +730,9 @@ void CIRCFrame::OnIrcChanCmdSave()
 	}
 	if ( ! pFile.Open( strPath, CFile::modeWrite|CFile::modeCreate ) ) return;
 
-	USES_CONVERSION;
-	LPCSTR pszFile = T2CA( (LPCTSTR)strFile );
-	
-	pFile.Write( pszFile, (DWORD)strlen( pszFile ) );
+	CT2A pszFile( (LPCTSTR)strFile );
+
+	pFile.Write( (LPCSTR)pszFile, (DWORD)strlen( pszFile ) );
 	pFile.Close();
 }
 
@@ -924,9 +930,11 @@ void CIRCFrame::OnIrcDisconnect()
 	for ( int nChannel = 0 ; nChannel < MAX_CHANNELS ; nChannel++ )
 	{
 		m_pIrcBuffer[ nChannel ].RemoveAll();
+		m_nCurrentPosLineBuffer[ nChannel ] = -1;
 		m_pIrcUsersBuffer[ nChannel ].RemoveAll();
-		m_nBufferCount = 0;
+		m_pLastLineBuffer[ nChannel ].RemoveAll();
 	}
+	m_nBufferCount = 0;
 
 	m_bConnected = FALSE;
 }
@@ -940,19 +948,19 @@ void CIRCFrame::OnUpdateIrcDisconnect(CCmdUI* pCmdUI)
 /* Return the title of a tab.
  * If no argument is supplied, the currently selected tab is returned
  */
-CString CIRCFrame::GetTabText(int nTabIndex)
+CString CIRCFrame::GetTabText(int nTabIndex) const
 {
-	const int BUFFER_SIZE = 100;
-	if ( nTabIndex == -1 ) nTabIndex = m_wndTab.GetCurSel();
-	TCHAR* pszBuffer = new TCHAR[ BUFFER_SIZE ];
-	TCITEM item;
-	item.mask = TCIF_IMAGE | TCIF_PARAM | TCIF_TEXT;
-	item.pszText = pszBuffer;
-	item.cchTextMax = BUFFER_SIZE/sizeof(TCHAR);
-	m_wndTab.GetItem( nTabIndex, &item );
-	CString strTmp = pszBuffer;
-	delete[] pszBuffer;
-	return strTmp;
+	if ( nTabIndex == -1 )
+		nTabIndex = m_wndTab.GetCurSel();
+
+	CString sBuffer;
+	TCITEM item = { TCIF_IMAGE | TCIF_PARAM | TCIF_TEXT };
+	item.pszText = sBuffer.GetBuffer( 1024 );
+	item.cchTextMax = 1023;
+	BOOL ret = m_wndTab.GetItem( nTabIndex, &item );
+	sBuffer.ReleaseBuffer();
+
+	return ret ? sBuffer : CString();
 }
 
 /* When locally created text needs to be sent to the server or displayed on the client.
@@ -1112,11 +1120,10 @@ void CIRCFrame::OnTimer(UINT_PTR nIDEvent)
 		if ( WaitForSingleObject( m_pWakeup, 0 ) == WAIT_OBJECT_0 )
 		{
 			int nRetVal = SOCKET_ERROR;
-			char* pszData = new char[102];
-			nRetVal = recv( m_nSocket, (char*)pszData, 100, 0 );
+			auto_array< char > pszData( new char[ 102 ] );
+			nRetVal = recv( m_nSocket, pszData.get(), 100, 0 );
 			if ( nRetVal > 0 ) pszData[ nRetVal + 1 ] = '\0';
-			CString strTmp = TrimString( m_sWsaBuffer + pszData );
-			delete[] pszData;
+			CString strTmp = TrimString( m_sWsaBuffer + pszData.get() );
 			m_sWsaBuffer.Empty();
 
 			if ( nRetVal == 0 )
@@ -1164,7 +1171,6 @@ void CIRCFrame::OnTimer(UINT_PTR nIDEvent)
 						m_sWsaBuffer.Empty();
 				}
 			}
-			strTmp.ReleaseBuffer();
 		}
 		pLock.Unlock();
 	} 
@@ -1693,16 +1699,14 @@ void CIRCFrame::ActivateMessageByID(CString strMessage, CIRCNewMessage* oNewMess
 		case ID_MESSAGE_CLIENT_NOTICE:
 		{
 			int nTab = m_wndTab.GetCurSel();
-			TCHAR pszBuffer[ 20 ];
 			CString strChannelName;
 
-			TCITEM item;
-			item.mask = TCIF_IMAGE | TCIF_PARAM | TCIF_TEXT;
-			item.pszText = pszBuffer;
-			item.cchTextMax = sizeof(pszBuffer) / sizeof(TCHAR);
+			TCITEM item = { TCIF_IMAGE | TCIF_PARAM | TCIF_TEXT };
+			item.pszText = strChannelName.GetBuffer( 1024 );
+			item.cchTextMax = 1023;
 			m_wndTab.GetItem( nTab, &item );
+			strChannelName.ReleaseBuffer();
 
-			strChannelName = pszBuffer;
 			oNewMessage->m_pMessages.Add( "-" + m_pWords.GetAt( 0 ) + "- " + GetStringAfterParsedItem ( 7 ) );
 			oNewMessage->m_sTargetName = strChannelName;
 			oNewMessage->nColorID = ID_COLOR_NOTICE;
@@ -2292,7 +2296,7 @@ CString CIRCFrame::TrimString(CString strMessage) const
 	return strTmp;
 }
 
-int CIRCFrame::IsTabExist(CString strTabName)
+int CIRCFrame::IsTabExist(const CString& strTabName) const
 {
 	for ( int nTab = 0 ; nTab < m_wndTab.GetItemCount() ; nTab++ )
 	{
@@ -2304,7 +2308,8 @@ int CIRCFrame::IsTabExist(CString strTabName)
 
 void CIRCFrame::LoadBufferForWindow(int nTab)
 {
-	if ( nTab == -1 ) return;
+	if ( nTab == -1 )
+		return;
 	m_pContent.Clear();
 	CString str;
 	int nFlag;
@@ -2350,28 +2355,29 @@ void CIRCFrame::SortUserList()
 	}
 	m_wndPanel.m_boxUsers.UpdateCaptionCount();
 }
-int CIRCFrame::CompareUsers(CString str1, CString str2)
+
+int CIRCFrame::CompareUsers(const CString& str1, const CString& str2) const
 {
 	int nModeColumn1 = 0, nModeColumn2 = 0;
 	CString strUser1 = str1, strUser2 = str2;
 
-	switch ( (char)strUser1.GetAt( 0 ) )
+	switch ( strUser1.GetAt( 0 ) )
 	{
-		case '+': nModeColumn1 = 1; break;
-		case '%': nModeColumn1 = 2; break;
-		case '@': nModeColumn1 = 3;
+		case _T('+'): nModeColumn1 = 1; break;
+		case _T('%'): nModeColumn1 = 2; break;
+		case _T('@'): nModeColumn1 = 3;
 	}
-	switch ( (char)strUser2.GetAt( 0 ) )
+	switch ( strUser2.GetAt( 0 ) )
 	{
-		case '+': nModeColumn2 = 1; break;
-		case '%': nModeColumn2 = 2; break;
-		case '@': nModeColumn2 = 3;
+		case _T('+'): nModeColumn2 = 1; break;
+		case _T('%'): nModeColumn2 = 2; break;
+		case _T('@'): nModeColumn2 = 3;
 	}
 	if ( nModeColumn1 == nModeColumn2 )
 	{
 		if ( nModeColumn1 != 0 ) strUser1 = strUser1.Mid( 1 );
 		if ( nModeColumn2 != 0 ) strUser2 = strUser2.Mid( 1 );
-		return _tcsicmp( strUser1.GetBuffer(), strUser2.GetBuffer() );
+		return strUser1.CompareNoCase( strUser2 );
 	}
 	return ( nModeColumn2 - nModeColumn1 );
 }
@@ -2390,8 +2396,8 @@ void CIRCFrame::TabClick()
 		nMode = int( str.GetAt( 0 ) ) - 48;
 		if ( nMode == 0 ) str = str.Mid( 1 );
 		if ( nMode == 2 || nMode == 3 || nMode == 6 || nMode == 7 ) str = "@" + str.Mid( 1 );
-		if ( nMode == 1 ) str = "+" + str.Mid( 1 );
-		if ( nMode == 4 || nMode == 5 ) str = "%" + str.Mid( 1 );
+		if ( nMode == 1 ) str = _T("+") + str.Mid( 1 );
+		if ( nMode == 4 || nMode == 5 ) str = _T("%") + str.Mid( 1 );
 		m_wndPanel.m_boxUsers.m_wndUserList.AddString( str );
 	}
 	LoadBufferForWindow( nTab );
@@ -2406,8 +2412,11 @@ int CIRCFrame::AddTab(CString strTabName, int nKindOfTab)
 		OnStatusMessage( _T("You have exceeded the maximum number of opened channels"), ID_COLOR_NOTICE );
 		return -1;
 	}
+
 	int m_nTab = IsTabExist( strTabName );
-	if ( m_nTab != -1 ) return -1;
+	if ( m_nTab != -1 )
+		return -1;
+
 	int nNewTab = m_wndTab.InsertItem( TCIF_TEXT | ( Settings.General.LanguageRTL ? TCIF_RTLREADING : 0 ), 
 		m_nBufferCount, strTabName, NULL, NULL );
 	m_pIrcBuffer[ m_nBufferCount ].RemoveAll();
@@ -2427,10 +2436,14 @@ void CIRCFrame::OnRichCursorMove(NMHDR* /* pNMHDR */, LRESULT* pResult)
 	CString strText = GetTextFromRichPoint();
 	if ( strText.IsEmpty() ) return;
 	int nIndex = IsUserInList( strText );
-	if ( nIndex != -1 || strText.Left( 1 ) == "#" ||
-		strText.Left( 7 ) == "http://" || strText.Left( 4 ) == "www." ||
-		strText.Left( 7 ) == "magnet:" || strText.Left( 4 ) == "ed2k:" ||
-		strText.Mid( 1, 7 ) == "http://" || strText.Mid( 1, 4 ) == "www." )
+	if ( nIndex != -1 ||
+		strText.Left( 1 )   == _T("#") ||
+		strText.Left( 7 )   == _T("http://") ||
+		strText.Left( 4 )   == _T("www.") ||
+		strText.Left( 7 )   == _T("magnet:") ||
+		strText.Left( 4 )   == _T("ed2k:") ||
+		strText.Mid( 1, 7 ) == _T("http://") ||
+		strText.Mid( 1, 4 ) == _T("www.") )
 	{
 		pNotify->pResult = (LRESULT*)theApp.LoadCursor( IDC_HAND );
 	}
@@ -2449,25 +2462,33 @@ void CIRCFrame::OnRichDblClk(NMHDR* /* pNMHDR */, LRESULT* pResult)
 	{
 		UserListDblClick();
 	}
-	else if ( strText.Left( 1 ) == "#" ) 
+	else if ( strText.Left( 1 ) == _T("#") ) 
 	{
 		CString strJoinChan = _T("JOIN ") + strText;
 		SendString( strJoinChan );
 	}
-	else if ( strText.Left( 7 ) == "http://" || strText.Left( 4 ) == "www." ||
-		strText.Mid( 1, 7 ) == "http://" || strText.Mid( 1, 4 ) == "www." )	
+	else if ( strText.Left( 7 )   == _T("http://") ||
+			  strText.Left( 4 )   == _T("www.") ||
+			  strText.Mid( 1, 7 ) == _T("http://") ||
+			  strText.Mid( 1, 4 ) == _T("www.") )	
 	{
-		if ( strText.Mid( 1, 7 ) == "http://" || strText.Mid( 1, 4 ) == "www." )
+		if ( strText.Mid( 1, 7 ) == _T("http://") ||
+			 strText.Mid( 1, 4 ) == _T("www.") )
 			strText = strText.Mid( 1 );
-		if ( strText.Right( 1 ) == ")" ) strText = strText.Mid( 0, strText.GetLength() - 1 );
+		if ( strText.Right( 1 ) == _T(")") )
+			strText = strText.Mid( 0, strText.GetLength() - 1 );
 		theApp.InternalURI(	strText );
 	}
-	else if ( strText.Left( 7 ) == "magnet:" || strText.Left( 4 ) == "ed2k:" ||
-		strText.Mid( 1, 7 ) == "magnet:" || strText.Mid( 1, 4 ) == "ed2k:" )	
+	else if ( strText.Left( 7 )   == _T("magnet:") ||
+			  strText.Left( 4 )   == _T("ed2k:") ||
+			  strText.Mid( 1, 7 ) == _T("magnet:") ||
+			  strText.Mid( 1, 4 ) == _T("ed2k:") )
 	{
-		if ( strText.Mid( 1, 7 ) == "magnet:" || strText.Mid( 1, 4 ) == "ed2k:" )
+		if ( strText.Mid( 1, 7 ) == _T("magnet:") ||
+			 strText.Mid( 1, 4 ) == _T("ed2k:") )
 			strText = strText.Mid( 1 );
-		if ( strText.Right( 1 ) == ")" ) strText = strText.Mid( 0, strText.GetLength() - 1 );
+		if ( strText.Right( 1 ) == _T(")") )
+			strText = strText.Mid( 0, strText.GetLength() - 1 );
 		theApp.InternalURI(	strText );
 	}
 	*pResult = 0;
@@ -2549,7 +2570,7 @@ CString CIRCFrame::GetTextFromRichPoint()
 		int nFrag = rp.nFragment - 1;
 		while ( nStart == -1 && nFrag != -1 ) 
 		{
-			if ( _tcscmp( strTemp.Left( 1 ), m_pszLineJoiner ) != 0 ) break;
+			if ( strTemp[ 0 ] != _T('\x200D') ) break;
 			pFragment = (CRichFragment*)m_wndView.m_pFragments.GetAt( nFrag );
 			strText = pFragment->m_pElement->m_sText;
 			if ( strText.IsEmpty() ) break;
@@ -2564,7 +2585,7 @@ CString CIRCFrame::GetTextFromRichPoint()
 			pFragment = (CRichFragment*)m_wndView.m_pFragments.GetAt( nFrag );
 			strText = pFragment->m_pElement->m_sText;
 			if ( strText.IsEmpty() ) break;
-			if ( _tcscmp( strText.Left( 1 ), m_pszLineJoiner ) != 0 ) break;
+			if ( strText[ 0 ] != _T('\x200D') ) break;
 			strText = strText.Mid( 1 );
 			nEnd  = strText.Find( ' ' );
 			strTemp += strText.Mid( nEnd == -1 ? 0 : nEnd );
@@ -2598,21 +2619,21 @@ void CIRCFrame::UserListDblClick()
 	TabClick();
 }
 
-static const wchar_t IrcModeChars[] = { '@', '%', '+', '~', '&' };
-
 CString CIRCFrame::RemoveModeOfNick(CString strNick) const
 {
-	return strNick.TrimLeft( IrcModeChars );
+	return strNick.TrimLeft( _T("@%+~&") );
 }
 
-int CIRCFrame::IsUserInList(CString strUser)
+int CIRCFrame::IsUserInList(CString strUser) const
 {
-	CString strNick;
-	for ( int nUser = 0 ; nUser <= m_wndPanel.m_boxUsers.m_wndUserList.GetCount() - 1 ; nUser++ )
+	strUser.Trim();
+	int nCount = m_wndPanel.m_boxUsers.m_wndUserList.GetCount() - 1;
+	for ( int nUser = 0 ; nUser <= nCount ; nUser++ )
 	{
+		CString strNick;
 		m_wndPanel.m_boxUsers.m_wndUserList.GetText( nUser, strNick );
-		strNick = RemoveModeOfNick( strNick );
-		if ( strNick.MakeLower().Trim() == strUser.MakeLower().Trim() ) return nUser;
+		if ( RemoveModeOfNick( strNick ).Trim().CompareNoCase( strUser ) == 0 )
+			return nUser;
 	}
 	return -1;
 }
@@ -2662,8 +2683,9 @@ BOOL CIRCTabCtrl::OnEraseBkgnd(CDC* pDC)
 HRESULT CIRCTabCtrl::DrawThemesPart(HDC dc, int nPartID, int nStateID, LPRECT prcBox)
 {
 	HRESULT hr = E_FAIL;
-	if ( theApp.m_pfnIsThemeActive && theApp.m_pfnIsThemeActive() &&
-		 m_hTheme != NULL && theApp.m_pfnDrawThemeBackground )
+	if ( m_hTheme != NULL &&
+		 theApp.m_pfnIsThemeActive && theApp.m_pfnIsThemeActive() &&
+		 theApp.m_pfnDrawThemeBackground )
 	{
 		hr = theApp.m_pfnDrawThemeBackground( m_hTheme, dc, nPartID, nStateID, prcBox, NULL );
 	}
@@ -2672,7 +2694,8 @@ HRESULT CIRCTabCtrl::DrawThemesPart(HDC dc, int nPartID, int nStateID, LPRECT pr
 
 void CIRCTabCtrl::DrawXPTabItem(HDC dc, int nItem, const RECT& rcItem, UINT flags)
 {
-	if ( m_hTheme == NULL || theApp.m_pfnIsThemeActive == NULL || !theApp.m_pfnIsThemeActive() ||
+	if ( m_hTheme == NULL ||
+		 theApp.m_pfnIsThemeActive == NULL || ! theApp.m_pfnIsThemeActive() ||
 		 theApp.m_pfnDrawThemeBackground == NULL )
 	{
 		COLORREF m_cBack = CoolInterface.m_crBackNormal;
@@ -2692,9 +2715,8 @@ void CIRCTabCtrl::DrawXPTabItem(HDC dc, int nItem, const RECT& rcItem, UINT flag
 		FillRect( dc, &rc, (HBRUSH)cbr.m_hObject );
 		SetTextColor( dc, GetTabColor( nItem ) );
 
-		TC_ITEM tci;
-		TCHAR pszBuffer[ 128 + 4 ];
-		tci.mask = TCIF_TEXT|TCIF_IMAGE;
+		TC_ITEM tci = { TCIF_TEXT | TCIF_IMAGE };
+		TCHAR pszBuffer[ 128 + 4 ] = {};
 		tci.pszText = pszBuffer;
 		tci.cchTextMax = 127;
 		if ( !TabCtrl_GetItem( m_hWnd, nItem, &tci ) ) return;
@@ -2731,9 +2753,8 @@ void CIRCTabCtrl::DrawXPTabItem(HDC dc, int nItem, const RECT& rcItem, UINT flag
 	else
 		DrawThemesPart( dcMem, 1, bSel ? 3 : ( bHot ? 2 : 1 ), &rcMem );
 
-	BITMAPINFO bmiOut;
+	BITMAPINFO bmiOut = {};
 	BITMAPINFOHEADER& bmihOut = bmiOut.bmiHeader;
-	ZeroMemory( &bmiOut, sizeof( BITMAPINFO ) );
 	bmihOut.biSize = sizeof( BITMAPINFOHEADER );
 	bmihOut.biCompression = BI_RGB;
 	bmihOut.biPlanes = 1;
@@ -2758,9 +2779,9 @@ void CIRCTabCtrl::DrawXPTabItem(HDC dc, int nItem, const RECT& rcItem, UINT flag
 
 void CIRCTabCtrl::DrawTabItem(HDC dc, int nItem, const RECT& rcItem, UINT flags)
 {
-	TC_ITEM item;
-	TCHAR pszBuffer[ 128 + 4 ];
-	item.mask = TCIF_TEXT | TCIF_IMAGE;
+	TCHAR pszBuffer[ 128 + 4 ] = {};
+
+	TC_ITEM item = { TCIF_TEXT | TCIF_IMAGE };
 	item.pszText = pszBuffer;
 	item.cchTextMax = 127;
 	TabCtrl_GetItem( m_hWnd, nItem, &item );
@@ -2803,8 +2824,7 @@ void CIRCTabCtrl::DrawTabItem(HDC dc, int nItem, const RECT& rcItem, UINT flags)
 
 void CIRCTabCtrl::SetTabColor(int nItem, COLORREF cRGB)
 {
-	TC_ITEM tci;
-	tci.mask = TCIF_PARAM;
+	TC_ITEM tci = { TCIF_PARAM };
 	tci.lParam = cRGB;
 	SetItem( nItem, &tci );
 	RedrawWindow();
@@ -2812,8 +2832,7 @@ void CIRCTabCtrl::SetTabColor(int nItem, COLORREF cRGB)
 
 COLORREF CIRCTabCtrl::GetTabColor(int nItem)
 {
-	TC_ITEM tci;
-	tci.mask = TCIF_PARAM;
+	TC_ITEM tci = { TCIF_PARAM };
 	GetItem( nItem, &tci );
 	return tci.lParam;
 }
@@ -2836,12 +2855,13 @@ BOOL CIRCTabCtrl::PreTranslateMessage(MSG* pMsg)
 
 LRESULT CIRCTabCtrl::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 {
-	PAINTSTRUCT ps;
-	CDC* pDC;
 	if ( message == WM_PAINT )
 	{
-		if ( ( pDC = BeginPaint( &ps ) ) != NULL ) 
+		PAINTSTRUCT ps = {};
+		if ( CDC* pDC = BeginPaint( &ps ) ) 
+		{
 			DrawTabControl( pDC );
+		}
 		EndPaint( &ps );
 		return 0;
 	} 
@@ -2864,8 +2884,7 @@ void CIRCTabCtrl::DrawTabControl(CDC* pDC)
 	if( tabCount == 0 ) return;
 
 	// Now paint inactive tabs.
-	TCHITTESTINFO hti;
-	hti.flags = 0;
+	TCHITTESTINFO hti = {};
 	GetCursorPos( &hti.pt );
 	ScreenToClient( &hti.pt );
 	int nHot = TabCtrl_HitTest( m_hWnd, &hti );
@@ -2891,7 +2910,7 @@ CIRCChannelList::CIRCChannelList()
 {
 }
 
-void CIRCChannelList::AddChannel(CString strDisplayName, CString strName, BOOL bUserDefined)
+void CIRCChannelList::AddChannel(LPCTSTR strDisplayName, LPCTSTR strName, BOOL bUserDefined)
 {
 	m_bUserDefined.Add( bUserDefined );
 	m_sChannelDisplayName.Add( strDisplayName );
@@ -2900,7 +2919,7 @@ void CIRCChannelList::AddChannel(CString strDisplayName, CString strName, BOOL b
 	if ( bUserDefined ) m_nCountUserDefined++;
 }
 
-int CIRCChannelList::GetCount(int nType)
+int CIRCChannelList::GetCount(int nType) const
 {
 	if ( nType == -1 ) return m_nCount;
 	if ( nType == 0  ) return m_nCount - m_nCountUserDefined;
@@ -2935,14 +2954,14 @@ void CIRCChannelList::RemoveAll(int nType)
 	}
 }
 
-BOOL CIRCChannelList::GetType(CString strDisplayName)
+BOOL CIRCChannelList::GetType(const CString& strDisplayName) const
 {
 	int nIndex = GetIndexOfDisplay( strDisplayName );
 	if ( nIndex == -1 ) return FALSE;
 	return m_bUserDefined.GetAt( nIndex );
 }
 
-void CIRCChannelList::RemoveChannel(CString strDisplayName)
+void CIRCChannelList::RemoveChannel(const CString& strDisplayName)
 {
 	int nIndex = GetIndexOfDisplay( strDisplayName );
 	if ( nIndex == -1 ) return;
@@ -2953,7 +2972,7 @@ void CIRCChannelList::RemoveChannel(CString strDisplayName)
 	m_sChannelName.RemoveAt( nIndex );
 }
 
-int CIRCChannelList::GetIndexOfDisplay(CString strDisplayName)
+int CIRCChannelList::GetIndexOfDisplay(const CString& strDisplayName) const
 {
 	int nChannel, nCount = GetCount();
 	BOOL bFoundChannel = FALSE;
@@ -2969,7 +2988,7 @@ int CIRCChannelList::GetIndexOfDisplay(CString strDisplayName)
 	return nChannel;
 }
 
-int CIRCChannelList::GetIndexOfName(CString strName)
+int CIRCChannelList::GetIndexOfName(const CString& strName) const
 {
 	int nChannel;
 	int ChannelCount = GetCount();

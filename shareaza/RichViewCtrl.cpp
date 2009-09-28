@@ -59,23 +59,26 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CRichViewCtrl construction
 
-CRichViewCtrl::CRichViewCtrl()
+CRichViewCtrl::CRichViewCtrl() 
+	: m_pSyncRoot( NULL )
+	, m_bSelectable( FALSE )
+	, m_bFollowBottom( FALSE )
+	, m_bDefaultLink( TRUE )
+	, m_pDocument( NULL )
+	, m_nCookie( 0 )
+	, m_nLength( 0 )
+	, m_nScrollWheelLines( 3 )
+	, m_pHover( NULL )
+	, m_bSelecting( FALSE )
+	, m_pSelStart()
+	, m_pSelEnd()
+	, m_pSelAbsStart()
+	, m_pSelAbsEnd()
+	, m_hcHand( NULL )
+	, m_hcText( NULL )
 {
-	m_bSelectable	= FALSE;
-	m_bFollowBottom	= FALSE;
-	m_bDefaultLink	= TRUE;
-
-	m_pDocument		= NULL;
-	m_nLength		= 0;
-	m_pHover		= NULL;
-	m_bSelecting	= FALSE;
-	m_szSign		= _T("\x200D");
-
 	// Try to get the number of lines to scroll when the mouse wheel is rotated
-	if( !SystemParametersInfo ( SPI_GETWHEELSCROLLLINES, 0, &m_nScrollWheelLines, 0) )
-	{
-		m_nScrollWheelLines = 3;
-	}
+	SystemParametersInfo( SPI_GETWHEELSCROLLLINES, 0, &m_nScrollWheelLines, 0 );
 }
 
 CRichViewCtrl::~CRichViewCtrl()
@@ -942,14 +945,16 @@ void CRichViewCtrl::CopySelection()
 	}
 
 	// the following block is required for IRC functionality
-	if ( _tcscmp( m_szSign, _T("\x200D") ) == 0 )
 	{
 		CString strTemp;
-		for ( int nPos = 1 ; nPos < str.GetLength() ; nPos++ )
-			if ( _tcscmp( str.Mid( nPos, 1 ), m_szSign ) != 0 )
-				strTemp += str.Mid( nPos, 1 );
+		for ( int nPos = 1; nPos < str.GetLength(); nPos++ )
+		{
+			TCHAR ñ = str.GetAt( nPos );
+			if ( ñ != _T('\x200D') )	// Zero Width Joiner
+				strTemp += ñ;
 			else
 				nPos += 2;
+		}
 		str = strTemp;
 	}
 	// end of block

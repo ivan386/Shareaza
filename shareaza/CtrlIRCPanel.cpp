@@ -300,9 +300,8 @@ void CIRCChannelsBox::OnSize(UINT nType, int cx, int cy)
 	
 	EndDeferWindowPos( hDWP );
 
-	int nScrollbarWidth = 17;
-	int nUserCountWidth = 40;
-	int nChanCountWidth = cx - 2 - nUserCountWidth - nScrollbarWidth;
+	const int nUserCountWidth = 40;
+	int nChanCountWidth = cx - 6 - nUserCountWidth - GetSystemMetrics( SM_CXVSCROLL );
 	m_wndChanList.SetColumnWidth( 0, nChanCountWidth );
 	m_wndChanList.SetColumnWidth( 1, nUserCountWidth );
 }
