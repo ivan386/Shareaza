@@ -1190,8 +1190,6 @@
 		<menu text="_Web Services">
 			<item id="ID_LIBRARY_BITZI_WEB" text="View _Bitzi Ticket"/>
 			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Download Metadata"/>
-			<separator/>
-			<item id="ID_LIBRARY_URL" text=""/>
 		</menu>
 		<menu text="O_rganise">
 			<item id="ID_LIBRARY_RENAME" text="_Rename File"/>
@@ -1209,7 +1207,7 @@
 		<separator/>
 		<item id="ID_LIBRARY_SHARED_FILE" text="_Shared"/>
 		<separator/>
-		<item id="ID_LIBRARY_URL" text=""/>
+		<item id="ID_LIBRARY_URL" text="Copy _URI"/>
 		<item id="ID_LIBRARY_DELETE" text="_Delete"/>
 		<separator/>
 		<menu text="S_earch For">
@@ -1260,8 +1258,6 @@
 		<menu text="_Web Services">
 			<item id="ID_LIBRARY_BITZI_WEB" text="View _Bitzi Ticket"/>
 			<item id="ID_LIBRARY_BITZI_DOWNLOAD" text="_Download Metadata"/>
-			<separator/>
-			<item id="ID_LIBRARY_URL" text=""/>
 		</menu>
 		<menu text="O_rganise">
 			<item id="ID_LIBRARY_RENAME" text="_Rename File"/>
@@ -1283,7 +1279,7 @@
 		<separator/>
 		<item id="ID_LIBRARY_SHARED_FILE" text="_Shared"/>
 		<separator/>
-		<item id="ID_LIBRARY_URL" text=""/>
+		<item id="ID_LIBRARY_URL" text="Copy _URI"/>
 		<item id="ID_LIBRARY_DELETE" text="_Delete"/>
 		<separator/>
 		<menu text="S_earch For">
