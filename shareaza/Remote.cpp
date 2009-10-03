@@ -940,7 +940,8 @@ void CRemote::PageDownloads()
 			}
 			else if ( str == _T("cancel") )
 			{
-				pDownload->Remove();
+				if ( ! pDownload->IsMoving() )
+					pDownload->Remove();
 				continue;
 			}
 			else if ( str == _T("clear") )

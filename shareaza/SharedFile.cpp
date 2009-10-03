@@ -360,10 +360,12 @@ BOOL CLibraryFile::Delete(BOOL bDeleteGhost)
 
 		// Close download handler
 		CQuickLock pLock( Transfers.m_pSection );
-		CDownload* pDownload = Downloads.FindByPath( GetPath() );
-		if ( pDownload )
+		if ( CDownload* pDownload = Downloads.FindByPath( GetPath() ) )
+		{
 			// Also deletes file and closes upload handlers
-			pDownload->Remove( true );
+			if ( ! pDownload->IsMoving() )
+				pDownload->Remove( true );
+		}
 		else
 		{
 			// Delete file and close upload handlers

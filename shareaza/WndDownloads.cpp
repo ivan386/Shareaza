@@ -700,7 +700,7 @@ void CDownloadsWnd::OnDownloadsClear()
 	{
 		CDownload* pDownload = pList.RemoveHead();
 
-		if ( Downloads.Check( pDownload ) )
+		if ( Downloads.Check( pDownload ) && ! pDownload->IsMoving() )
 		{
 			if ( pDownload->IsPreviewVisible() )
 			{
@@ -721,7 +721,7 @@ void CDownloadsWnd::OnDownloadsClear()
 					break;
 				pLock.Lock();
 
-				if ( Downloads.Check( pDownload ) )
+				if ( Downloads.Check( pDownload ) && ! pDownload->IsMoving() )
 				{
 					dlg.Create( pDownload, bShared );
 					pDownload->Remove();
@@ -780,7 +780,7 @@ void CDownloadsWnd::OnDownloadsClearIncomplete()
 						dlg.Create( pDownload, bShared );
 				}
 
-				if ( Downloads.Check( pDownload ) )
+				if ( Downloads.Check( pDownload ) && ! pDownload->IsMoving() )
 					pDownload->Remove();
 			}
 		}

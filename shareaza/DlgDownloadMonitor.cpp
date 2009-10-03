@@ -564,7 +564,7 @@ void CDownloadMonitorDlg::OnDownloadStop()
 		pLock.Lock();
 	}
 
-	if ( Downloads.Check( m_pDownload ) )
+	if ( Downloads.Check( m_pDownload ) && ! m_pDownload->IsMoving() )
 	{
 		m_pDownload->Remove();
 		PostMessage( WM_CLOSE );
