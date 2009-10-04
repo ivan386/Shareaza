@@ -214,7 +214,9 @@ void CDownloadWithSources::ClearSources()
 
 	for ( POSITION posSource = GetIterator() ; posSource ; )
 	{
-		delete GetNext( posSource );
+		CDownloadSource* pSource = GetNext( posSource );
+
+		pSource->Remove();
 	}
 	m_pSources.RemoveAll();
 
@@ -924,12 +926,12 @@ void CDownloadWithSources::ClearFailedSources()
 	}
 }
 
-void CDownloadWithSources::InternalAdd(CDownloadSource* pSource)
+void CDownloadWithSources::InternalAdd(const CDownloadSource* pSource)
 {
 	ASSUME_LOCK( Transfers.m_pSection );
 
-	ASSERT( m_pSources.Find( pSource ) == NULL );
-	m_pSources.AddTail( pSource );
+	ASSERT( m_pSources.Find( const_cast< CDownloadSource* >( pSource ) ) == NULL );
+	m_pSources.AddTail( const_cast< CDownloadSource* >( pSource ) );
 
 	switch ( pSource->m_nProtocol )
 	{
@@ -956,11 +958,11 @@ void CDownloadWithSources::InternalAdd(CDownloadSource* pSource)
 	}
 }
 
-void CDownloadWithSources::InternalRemove(CDownloadSource* pSource)
+void CDownloadWithSources::InternalRemove(const CDownloadSource* pSource)
 {
 	ASSUME_LOCK( Transfers.m_pSection );
 
-	POSITION posSource = m_pSources.Find( pSource );
+	POSITION posSource = m_pSources.Find( const_cast< CDownloadSource* >( pSource ) );
 	ASSERT( posSource != NULL );
 	m_pSources.RemoveAt( posSource );
 
@@ -980,7 +982,6 @@ void CDownloadWithSources::InternalRemove(CDownloadSource* pSource)
 		break;
 	case PROTOCOL_BT:
 		m_nBTSourceCount--;
-		ASSERT( m_nBTSourceCount >= 0 );
 		break;
 	case PROTOCOL_FTP:
 		m_nFTPSourceCount--;
@@ -993,7 +994,7 @@ void CDownloadWithSources::InternalRemove(CDownloadSource* pSource)
 //////////////////////////////////////////////////////////////////////
 // CDownloadWithSources remove a source
 
-void CDownloadWithSources::RemoveSource(CDownloadSource* pSource, BOOL bBan)
+void CDownloadWithSources::RemoveSource(const CDownloadSource* pSource, BOOL bBan)
 {
 	ASSUME_LOCK( Transfers.m_pSection );
 
@@ -1003,8 +1004,6 @@ void CDownloadWithSources::RemoveSource(CDownloadSource* pSource, BOOL bBan)
 	{
 		AddFailedSource( pSource );
 	}
-
-	delete pSource;
 
 	SetModified();
 }

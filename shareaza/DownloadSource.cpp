@@ -107,6 +107,7 @@ void CDownloadSource::Construct(const CDownload* pDownload)
 CDownloadSource::~CDownloadSource()
 {
 	ASSUME_LOCK( Transfers.m_pSection );
+	ASSERT( m_pTransfer == NULL );
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -525,8 +526,7 @@ BOOL CDownloadSource::CanInitiate(BOOL bNetwork, BOOL bEstablished)
 			m_pDownload->SetModified();
 		}
 		else
-			// Add to the bad sources list (X-NAlt) if bBan == TRUE
-			m_pDownload->RemoveSource( this, ! m_pDownload->IsSeeding() );
+			Remove( TRUE, TRUE );
 
 		return FALSE;
 	}
@@ -578,6 +578,8 @@ void CDownloadSource::Remove(BOOL bCloseTransfer, BOOL bBan)
 	}
 	
 	m_pDownload->RemoveSource( this, m_pDownload->IsSeeding() ? FALSE : bBan );
+
+	delete this;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -620,8 +622,7 @@ void CDownloadSource::OnFailure(BOOL bNondestructive, DWORD nRetryAfter)
 			m_pDownload->SetModified();
 		}
 		else
-			// Add to the bad sources list (X-NAlt) if bBan == TRUE
-			m_pDownload->RemoveSource( this, ! m_pDownload->IsSeeding() );
+			Remove( TRUE, TRUE );
 	}
 }
 

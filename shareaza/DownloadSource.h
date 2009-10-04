@@ -95,7 +95,7 @@ public:
 	void		Serialize(CArchive& ar, int nVersion);
 	BOOL		CanInitiate(BOOL bNetwork, BOOL bEstablished);
 	// Remove source from download, add it to failed sources if bBan == TRUE, and destroy source itself
-	void		Remove(BOOL bCloseTransfer, BOOL bBan);
+	void		Remove(BOOL bCloseTransfer = TRUE, BOOL bBan = FALSE);
 	void		OnFailure(BOOL bNondestructive, DWORD nRetryAfter = 0);
 	DWORD		CalcFailureDelay(DWORD nRetryAfter = 0) const;
 	void		OnResume();
