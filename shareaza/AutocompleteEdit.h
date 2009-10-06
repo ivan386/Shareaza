@@ -25,14 +25,12 @@ class CRegEnum : public CComObject
 {
 public:
 	CRegEnum();
+	virtual ~CRegEnum();
 
 	// Create IAutoComplete object and attach HWND to it
-	BOOL AttachTo(HWND hWnd);
-
-	// Set registry key and value template
 	//	szSection	: HKCU\SOFTWARE\{CompanyKey}\{ApplicationKey}\{szSection}
 	//	szRoot		: Must contain inside a "%i" format specifier (n = 1,2..200)
-	void SetRegistryKey(LPCTSTR szSection, LPCTSTR szRoot);
+	BOOL AttachTo(HWND hWnd, LPCTSTR szSection, LPCTSTR szRoot);
 
 	// Add new string to autocomplete list
 	void AddString(const CString& rString) const;
@@ -67,16 +65,17 @@ class CAutocompleteEdit : public CEdit
 
 public:
 	CAutocompleteEdit();
+	virtual ~CAutocompleteEdit();
 
-	void SetRegistryKey(LPCTSTR szSection, LPCTSTR szRoot);
+	BOOL Create(DWORD dwStyle, const RECT& rect, CWnd* pParentWnd, UINT nID,
+		LPCTSTR szSection, LPCTSTR szRoot);
 
 	virtual int GetWindowText(LPTSTR lpszStringBuf, int nMaxCount) const;
 	virtual void GetWindowText(CString& rString) const;
 
 protected:
-	CRegEnum m_oData;
+	CRegEnum*	m_pData;
 
-	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg void OnDestroy();
 
 	DECLARE_MESSAGE_MAP()

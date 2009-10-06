@@ -156,9 +156,8 @@ int CLibraryFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_wndBottomDynamic.SetBarStyle( m_wndBottomDynamic.GetBarStyle() | CBRS_TOOLTIPS|CBRS_BORDER_TOP );
 	m_wndBottomDynamic.SetOwner( GetOwner() );
 
-	if ( ! m_wndSearch.Create( WS_CHILD|WS_CLIPSIBLINGS|WS_TABSTOP|ES_AUTOHSCROLL, rcTypes, &m_wndViewBottom, IDC_SEARCH_BOX ) ) return -1;
+	if ( ! m_wndSearch.Create( WS_CHILD|WS_CLIPSIBLINGS|WS_TABSTOP|ES_AUTOHSCROLL, rcTypes, &m_wndViewBottom, IDC_SEARCH_BOX, _T("Search"), _T("Search.%.2i") ) ) return -1;
 	m_wndSearch.SetFont( &CoolInterface.m_fntNormal );
-	m_wndSearch.SetRegistryKey( _T("Search"), _T("Search.%.2i") );
 
 	if ( ! m_wndSaveOption.Create( NULL, WS_CHILD|WS_CLIPSIBLINGS|WS_TABSTOP|BS_AUTOCHECKBOX, rcTypes, &m_wndBottomDynamic,
 		ID_SHAREMONKEY_SAVE_OPTION ) ) return -1;

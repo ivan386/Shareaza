@@ -29,10 +29,12 @@ BEGIN_INTERFACE_MAP(CRegEnum, CComObject)
 	INTERFACE_PART(CRegEnum, IID_IEnumString, EnumString)
 END_INTERFACE_MAP()
 
-CRegEnum::CRegEnum() :
-	m_sect( _T("Autocomplete") ),
-	m_root( _T("%.2i") ),
-	m_iter( 0 )
+CRegEnum::CRegEnum()
+	: m_iter( 0 )
+{
+}
+
+CRegEnum::~CRegEnum()
 {
 }
 
@@ -120,6 +122,7 @@ STDMETHODIMP CRegEnum::XEnumString::Clone(
 		CRegEnum* p = new CRegEnum();
 		if ( p )
 		{
+			p->m_sect = pThis->m_sect;
 			p->m_root = pThis->m_root;
 			p->m_iter = pThis->m_iter;
 			hr = p->InternalQueryInterface( &IID_IEnumString, (void**)ppEnum );
@@ -129,48 +132,40 @@ STDMETHODIMP CRegEnum::XEnumString::Clone(
 	return hr;
 }
 
-BOOL CRegEnum::AttachTo(HWND hWnd)
+BOOL CRegEnum::AttachTo(HWND hWnd, LPCTSTR szSection, LPCTSTR szRoot)
 {
-	HRESULT hr;
+	m_pIAutoComplete.Release();
 
 	if ( ! hWnd )
-	{
-		m_pIAutoComplete.Release();
 		return TRUE;
-	}
 
-	if ( ! m_pIAutoComplete )
-	{
-		hr = m_pIAutoComplete.CoCreateInstance( CLSID_AutoComplete );
-		if ( FAILED( hr ) )
-			return FALSE;
-	}
+	m_sect = szSection;
+	m_root = szRoot;
+	m_iter = 0;
 
-	CComPtr< IUnknown > pIUnknown;
-	hr = InternalQueryInterface( &IID_IUnknown, (LPVOID*)&pIUnknown );
+	HRESULT hr = m_pIAutoComplete.CoCreateInstance( CLSID_AutoComplete );
 	if ( SUCCEEDED( hr ) )
 	{
-		hr = m_pIAutoComplete->Init( hWnd, pIUnknown, NULL, NULL );
-		if ( FAILED( hr ) )
-			return FALSE;
-
-		CComPtr< IAutoComplete2 > pIAutoComplete2;
-		hr = m_pIAutoComplete->QueryInterface( IID_IAutoComplete2,
-			(LPVOID*)&pIAutoComplete2 );
+		CComPtr< IUnknown > pIUnknown;
+		hr = InternalQueryInterface( &IID_IUnknown, (LPVOID*)&pIUnknown );
 		if ( SUCCEEDED( hr ) )
 		{
-			hr = pIAutoComplete2->SetOptions( ACO_AUTOSUGGEST |
-				ACO_AUTOAPPEND | ACO_UPDOWNKEYDROPSLIST );
+			hr = m_pIAutoComplete->Init( hWnd, pIUnknown, NULL, NULL );
+			if ( SUCCEEDED( hr ) )
+			{
+				CComPtr< IAutoComplete2 > pIAutoComplete2;
+				hr = m_pIAutoComplete->QueryInterface( IID_IAutoComplete2,
+					(LPVOID*)&pIAutoComplete2 );
+				if ( SUCCEEDED( hr ) )
+				{
+					hr = pIAutoComplete2->SetOptions( ACO_AUTOSUGGEST |
+						ACO_AUTOAPPEND | ACO_UPDOWNKEYDROPSLIST );
+				}
+			}
 		}
 	}
 
-	return TRUE;
-}
-
-void CRegEnum::SetRegistryKey(LPCTSTR szSection, LPCTSTR szRoot)
-{
-	m_sect = szSection;
-	m_root = szRoot;
+	return SUCCEEDED( hr );
 }
 
 void CRegEnum::AddString(const CString& rString) const
@@ -214,35 +209,42 @@ void CRegEnum::AddString(const CString& rString) const
 IMPLEMENT_DYNCREATE(CAutocompleteEdit, CEdit)
 
 CAutocompleteEdit::CAutocompleteEdit()
+	: m_pData( NULL )
 {
 #ifndef _WIN32_WCE
 	EnableActiveAccessibility();
 #endif
 }
 
+CAutocompleteEdit::~CAutocompleteEdit()
+{
+}
+
 BEGIN_MESSAGE_MAP(CAutocompleteEdit, CEdit)
-	ON_WM_CREATE()
 	ON_WM_DESTROY()
 END_MESSAGE_MAP()
 
-void CAutocompleteEdit::SetRegistryKey(LPCTSTR szSection, LPCTSTR szRoot)
+BOOL CAutocompleteEdit::Create(DWORD dwStyle, const RECT& rect, CWnd* pParentWnd, UINT nID,
+	LPCTSTR szSection, LPCTSTR szRoot)
 {
-	m_oData.SetRegistryKey( szSection, szRoot );
-}
+	if ( ! CEdit::Create( dwStyle, rect, pParentWnd, nID ) )
+		return FALSE;
 
-int CAutocompleteEdit::OnCreate(LPCREATESTRUCT lpCreateStruct)
-{
-	if ( CEdit::OnCreate( lpCreateStruct ) == -1 )
-		return -1;
+	m_pData = static_cast< CRegEnum* >( CRegEnum::CreateObject() );
+	if ( m_pData )
+		m_pData->AttachTo( GetSafeHwnd(), szSection, szRoot );
 
-	m_oData.AttachTo( GetSafeHwnd() );
-
-	return 0;
+	return TRUE;
 }
 
 void CAutocompleteEdit::OnDestroy()
 {
-	m_oData.AttachTo( NULL );
+	if ( m_pData )
+	{
+		m_pData->AttachTo( NULL, NULL, NULL );
+		m_pData->InternalRelease();
+		m_pData = NULL;
+	}
 
 	CEdit::OnDestroy();
 }
@@ -250,10 +252,10 @@ void CAutocompleteEdit::OnDestroy()
 int CAutocompleteEdit::GetWindowText(LPTSTR lpszStringBuf, int nMaxCount) const
 {
 	int n = CEdit::GetWindowText( lpszStringBuf, nMaxCount );
-	if ( n > 0 )
+	if ( m_pData && n > 0 )
 	{
 		CString tmp( lpszStringBuf );
-		m_oData.AddString( tmp );
+		m_pData->AddString( tmp );
 	}
 	return n;
 }
@@ -261,5 +263,7 @@ int CAutocompleteEdit::GetWindowText(LPTSTR lpszStringBuf, int nMaxCount) const
 void CAutocompleteEdit::GetWindowText(CString& rString) const
 {
 	CEdit::GetWindowText( rString );
-	m_oData.AddString( rString );
+
+	if ( m_pData )
+		m_pData->AddString( rString );
 }

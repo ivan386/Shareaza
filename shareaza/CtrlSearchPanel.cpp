@@ -497,11 +497,10 @@ int CSearchInputBox::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	CString strCaption;
 	
 	if ( ! m_wndSearch.Create( ES_AUTOHSCROLL | WS_TABSTOP | WS_GROUP, rc,
-		this, IDC_SEARCH ) ) return -1;
+		this, IDC_SEARCH, _T("Search"), _T("Search.%.2i") ) ) return -1;
 	
 	m_wndSearch.SetFont( &theApp.m_gdiFont );
 	m_wndSearch.ModifyStyleEx( 0, WS_EX_CLIENTEDGE );
-	m_wndSearch.SetRegistryKey( _T("Search"), _T("Search.%.2i") );
 	
 	if ( ! m_wndSchemas.Create( WS_TABSTOP, rc, this, IDC_SCHEMAS ) ) return -1;
 	

@@ -169,8 +169,7 @@ int CBaseMatchWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_wndToolBar.SetBarStyle( m_wndToolBar.GetBarStyle() | CBRS_TOOLTIPS | CBRS_BORDER_TOP );
 	m_wndToolBar.ModifyStyleEx( 0, WS_EX_CONTROLPARENT );
 
-	if ( ! m_wndFilter.Create( WS_CHILD|WS_TABSTOP|WS_VISIBLE|ES_AUTOHSCROLL, rectDefault, &m_wndToolBar, IDC_FILTER_BOX ) ) return -1;
-	m_wndFilter.SetRegistryKey( _T("Search"), _T("Filter.%.2i") );
+	if ( ! m_wndFilter.Create( WS_CHILD|WS_TABSTOP|WS_VISIBLE|ES_AUTOHSCROLL, rectDefault, &m_wndToolBar, IDC_FILTER_BOX, _T("Search"), _T("Filter.%.2i") ) ) return -1;
 
 	SetTimer( 2, 500, NULL );
 
