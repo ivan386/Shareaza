@@ -321,7 +321,7 @@ BOOL CDownloadsCtrl::IsExpandable(CDownload* pDownload)
 
 void CDownloadsCtrl::SelectTo(int nIndex)
 {
-	CSingleLock pLock( &Transfers.m_pSection, TRUE );
+	ASSUME_LOCK( Transfers.m_pSection );
 
 	BOOL bShift		= GetAsyncKeyState( VK_SHIFT ) & 0x8000;
 	BOOL bControl	= GetAsyncKeyState( VK_CONTROL ) & 0x8000;
@@ -406,7 +406,7 @@ void CDownloadsCtrl::SelectTo(int nIndex)
 
 void CDownloadsCtrl::SelectAll(CDownload* /*pDownload*/, CDownloadSource* /*pSource*/)
 {
-	CSingleLock pLock( &Transfers.m_pSection, TRUE );
+	ASSUME_LOCK( Transfers.m_pSection );
 
 	BOOL bSelected = FALSE;
 
@@ -463,7 +463,9 @@ void CDownloadsCtrl::SelectAll(CDownload* /*pDownload*/, CDownloadSource* /*pSou
 
 void CDownloadsCtrl::DeselectAll(CDownload* pExcept1, CDownloadSource* pExcept2)
 {
-	CSingleLock pLock( &Transfers.m_pSection, TRUE );
+	CSingleLock pLock( &Transfers.m_pSection );
+	if ( ! pLock.Lock( 250 ) )
+		return;
 
 	for ( POSITION pos = Downloads.GetIterator() ; pos != NULL ; )
 	{
@@ -485,7 +487,7 @@ void CDownloadsCtrl::DeselectAll(CDownload* pExcept1, CDownloadSource* pExcept2)
 
 int CDownloadsCtrl::GetSelectedCount()
 {
-	CSingleLock pLock( &Transfers.m_pSection, TRUE );
+	ASSUME_LOCK( Transfers.m_pSection );
 	int nCount = 0;
 
 	for ( POSITION pos = Downloads.GetIterator() ; pos ; )
@@ -504,13 +506,13 @@ int CDownloadsCtrl::GetSelectedCount()
 		}
 	}
 
-	pLock.Unlock();
-
 	return nCount;
 }
 
 BOOL CDownloadsCtrl::HitTest(const CPoint& point, CDownload** ppDownload, CDownloadSource** ppSource, int* pnIndex, RECT* prcItem)
 {
+	ASSUME_LOCK( Transfers.m_pSection );
+
 	CRect rcClient, rcItem;
 
 	GetClientRect( &rcClient );
@@ -596,6 +598,8 @@ BOOL CDownloadsCtrl::HitTest(const CPoint& point, CDownload** ppDownload, CDownl
 
 BOOL CDownloadsCtrl::GetAt(int nSelect, CDownload** ppDownload, CDownloadSource** ppSource)
 {
+	ASSUME_LOCK( Transfers.m_pSection );
+
 	/*int nScroll =*/ GetScrollPos( SB_VERT );
 	int nIndex = 0;
 
@@ -637,6 +641,8 @@ BOOL CDownloadsCtrl::GetAt(int nSelect, CDownload** ppDownload, CDownloadSource*
 
 BOOL CDownloadsCtrl::GetRect(CDownload* pSelect, RECT* prcItem)
 {
+	ASSUME_LOCK( Transfers.m_pSection );
+
 	CRect rcClient, rcItem;
 
 	GetClientRect( &rcClient );
@@ -858,7 +864,7 @@ void CDownloadsCtrl::OnSize(UINT nType, int cx, int cy)
 
 void CDownloadsCtrl::OnPaint()
 {
-	CSingleLock pTransfersLock( &Transfers.m_pSection, FALSE );
+	CSingleLock pTransfersLock( &Transfers.m_pSection );
 	if ( ! pTransfersLock.Lock( 250 ) )
 		return;
 
@@ -1808,7 +1814,10 @@ void CDownloadsCtrl::OnSortPanelItems(NMHDR* pNotifyStruct, LRESULT* /*pResult*/
 
 void CDownloadsCtrl::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
-	CSingleLock pLock( &Transfers.m_pSection, TRUE );
+	CSingleLock pLock( &Transfers.m_pSection );
+	if ( ! pLock.Lock( 250 ) )
+		return;
+
 	CDownloadSource* pSource;
 	CDownload* pDownload;
 	
@@ -1939,7 +1948,10 @@ void CDownloadsCtrl::OnEnterKey()
 
 void CDownloadsCtrl::OnLButtonDown(UINT nFlags, CPoint point)
 {
-	CSingleLock pLock( &Transfers.m_pSection, TRUE );
+	CSingleLock pLock( &Transfers.m_pSection );
+	if ( ! pLock.Lock( 250 ) )
+		return;
+
 	CDownloadSource* pSource;
 	CDownload* pDownload;
 	CRect rcItem;
@@ -2016,7 +2028,10 @@ void CDownloadsCtrl::OnRButtonDown(UINT nFlags, CPoint point)
 
 void CDownloadsCtrl::OnLButtonDblClk(UINT nFlags, CPoint point)
 {
-	CSingleLock pLock( &Transfers.m_pSection, TRUE );
+	CSingleLock pLock( &Transfers.m_pSection );
+	if ( ! pLock.Lock( 250 ) )
+		return;
+
 	CDownloadSource* pSource;
 	CDownload* pDownload;
 	CRect rcItem;
@@ -2067,7 +2082,10 @@ void CDownloadsCtrl::OnMouseMove(UINT nFlags, CPoint point)
 	
 	if ( ( nFlags & ( MK_LBUTTON|MK_RBUTTON) ) == 0 )
 	{
-		CSingleLock pLock( &Transfers.m_pSection, TRUE );
+		CSingleLock pLock( &Transfers.m_pSection );
+		if ( ! pLock.Lock( 250 ) )
+			return;
+
 		CDownloadSource* pSource;
 		CDownload* pDownload;
 		CRect rcItem;
@@ -2157,11 +2175,14 @@ void CDownloadsCtrl::OnKillFocus(CWnd* pNewWnd)
 
 void CDownloadsCtrl::OnBeginDrag(CPoint ptAction)
 {
+	CSingleLock pLock( &Transfers.m_pSection );
+	if ( ! pLock.Lock( 250 ) )
+		return;
+
 	m_wndTip.Hide();
 	m_pDeselect1 = NULL;
 	m_pDeselect2 = NULL;
 	
-	CSingleLock pLock( &Transfers.m_pSection, TRUE );
 	CList< CDownload* >* pSel = new CList< CDownload* >;
 	
 	for ( POSITION pos = Downloads.GetIterator() ; pos ; )
@@ -2198,7 +2219,8 @@ void CDownloadsCtrl::OnBeginDrag(CPoint ptAction)
 
 CImageList* CDownloadsCtrl::CreateDragImage(CList< CDownload* >* pSel, const CPoint& ptMouse)
 {
-	CSingleLock pLock( &Transfers.m_pSection, TRUE );
+	ASSUME_LOCK( Transfers.m_pSection );
+
 	CRect rcClient, rcOne, rcAll( 32000, 32000, -32000, -32000 );
 	
 	GetClientRect( &rcClient );
@@ -2279,8 +2301,6 @@ CImageList* CDownloadsCtrl::CreateDragImage(CList< CDownload* >* pSel, const CPo
 	pAll->Add( &bmDrag, DRAG_COLOR_KEY ); 
 	
 	bmDrag.DeleteObject();
-
-	pLock.Unlock();
 	
 	pAll->BeginDrag( 0, ptMouse - rcAll.TopLeft() );
 	
