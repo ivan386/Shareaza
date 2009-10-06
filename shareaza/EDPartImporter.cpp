@@ -25,8 +25,10 @@
 #include "EDPartImporter.h"
 #include "EDPacket.h"
 #include "Transfers.h"
-#include "Downloads.h"
 #include "Download.h"
+#include "Downloads.h"
+#include "DownloadGroups.h"
+#include "DownloadTask.h"
 #include "FragmentedFile.h"
 #include "CtrlText.h"
 
@@ -135,7 +137,7 @@ void CEDPartImporter::ImportFolder(LPCTSTR pszPath)
 		if ( m_pTextCtrl == NULL ) break;
 
 		if ( pFind.cFileName[0] == '.' ) continue;
-		if ( pFind.dwFileAttributes & (FILE_ATTRIBUTE_DIRECTORY|FILE_ATTRIBUTE_HIDDEN|FILE_ATTRIBUTE_SYSTEM) ) continue;
+		if ( ( pFind.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY ) ) continue;
 
 		strPath = pFind.cFileName;
 		int nPos = strPath.Find( _T(".part.met") );
@@ -161,86 +163,99 @@ void CEDPartImporter::ImportFolder(LPCTSTR pszPath)
 
 BOOL CEDPartImporter::ImportFile(LPCTSTR pszPath, LPCTSTR pszFile)
 {
-	CString strPath;
-	CFile pFile;
-
 	Message( IDS_ED2K_EPI_FILE_START, pszFile );
 
+	CString strPath;
 	strPath.Format( _T("%s\\%s.part.met"), pszPath, pszFile );
+
+	CFile pFile;
 	if ( ! pFile.Open( strPath, CFile::modeRead ) )
 	{
 		Message( IDS_ED2K_EPI_CANT_OPEN_PART, (LPCTSTR)strPath );
 		return FALSE;
 	}
 
-	BYTE nMagic = 0;
-	pFile.Read( &nMagic, 1 );
-	if ( nMagic != 0xE0 ) return FALSE;
+	BYTE nMagic;
+	if ( pFile.Read( &nMagic, 1 ) != 1 )
+		return FALSE;
+	if ( nMagic != 0xE0 )
+		return FALSE;
 
-	LONG nDate = 0;
-	WORD nParts = 0;
-	CED2K pED2K;
+	LONG nDate;
+	if ( pFile.Read( &nDate, 4 ) != 4 )
+		return FALSE;
+
 	Hashes::Ed2kHash oED2K;
-
-	pFile.Read( &nDate, 4 );
-	pFile.Read( oED2K.begin(), Hashes::Ed2kHash::byteCount );
+	if ( pFile.Read( oED2K.begin(), Hashes::Ed2kHash::byteCount )
+		!= Hashes::Ed2kHash::byteCount )
+		return FALSE;
 	oED2K.validate();
-	pFile.Read( &nParts, 2 );
 
-	if ( Transfers.m_pSection.Lock() )
+	WORD nParts;
+	if ( pFile.Read( &nParts, 2 ) != 2 )
+		return FALSE;
+
 	{
-		CDownload* pDownload = Downloads.FindByED2K( oED2K );
-		Transfers.m_pSection.Unlock();
+		CSingleLock pLock( &Transfers.m_pSection, TRUE );
 
-		if ( pDownload != NULL )
+		if ( Downloads.FindByED2K( oED2K ) )
 		{
 			Message( IDS_ED2K_EPI_ALREADY );
 			return FALSE;
 		}
 	}
 
+	CED2K pED2K;
 	if ( nParts == 0 )
 	{
 		pED2K.FromRoot( &oED2K[ 0 ] );
 	}
 	else if ( nParts > 0 )
 	{
-		CMD4::Digest* pHashset = new CMD4::Digest[ nParts ];
-		pFile.Read( pHashset, sizeof( CMD4::Digest ) * nParts );
-		BOOL bSuccess = pED2K.FromBytes( (BYTE*)pHashset, sizeof(  CMD4::Digest ) * nParts );
-		delete [] pHashset;
-		if ( ! bSuccess ) return FALSE;
+		UINT len = sizeof( CMD4::Digest ) * nParts;
+		auto_array< CMD4::Digest > pHashset( new CMD4::Digest[ nParts ] );
+		if ( pFile.Read( pHashset.get(), len ) != len )
+			return FALSE;
+
+		BOOL bSuccess = pED2K.FromBytes( (BYTE*)pHashset.get(), len );
+		if ( ! bSuccess )
+			return FALSE;
 
 		Hashes::Ed2kHash pCheck;
 		pED2K.GetRoot( &pCheck[ 0 ] );
 		pCheck.validate();
-		if ( validAndUnequal( pCheck, oED2K ) ) return FALSE;
+		if ( validAndUnequal( pCheck, oED2K ) )
+			return FALSE;
 	}
-	else
-	{
+
+	if ( ! pED2K.IsAvailable() )
 		return FALSE;
-	}
 
-	if ( ! pED2K.IsAvailable() ) return FALSE;
+	DWORD nCount;
+	if ( pFile.Read( &nCount, 4 ) != 4 )
+		return FALSE;
+	if ( nCount > 2048 )
+		return FALSE;
 
-	DWORD nCount = 0;
-	pFile.Read( &nCount, 4 );
-	if ( nCount > 2048 ) return FALSE;
-
-	CMap< DWORD, DWORD, QWORD, QWORD > pGapStart, pGapStop;
-	CArray< WORD > pGapIndex;
+	CMap< int, int, QWORD, QWORD > pGapStart, pGapStop;
+	CArray< int > pGapIndex;
 	BOOL bPaused = FALSE;
-	CString strName;
+	CString strName, strPartName;
 	QWORD nSize = 0;
 
 	while ( nCount-- )
 	{
 		CEDTag pTag;
-		if ( ! pTag.Read( &pFile ) ) return FALSE;
+		if ( ! pTag.Read( &pFile ) )
+			return FALSE;
 
 		if ( pTag.Check( ED2K_FT_FILENAME, ED2K_TAG_STRING ) )
 		{
 			strName = pTag.m_sValue;
+		}
+		else if ( pTag.Check( ED2K_FT_PARTFILENAME, ED2K_TAG_STRING ) )
+		{
+			strPartName = pTag.m_sValue;
 		}
 		else if ( pTag.Check( ED2K_FT_FILESIZE, ED2K_TAG_INT ) )
 		{
@@ -252,38 +267,45 @@ BOOL CEDPartImporter::ImportFile(LPCTSTR pszPath, LPCTSTR pszFile)
 		}
 		else if ( pTag.m_nType == ED2K_TAG_INT && pTag.m_sKey.GetLength() > 1 )
 		{
-			if ( pTag.m_sKey.GetAt( 0 ) == 0x09 )
+			if ( pTag.m_sKey.GetAt( 0 ) == 0x09 )		// Start of gap
 			{
-				int niPart = 0;
-				_stscanf( (LPCTSTR)pTag.m_sKey + 1, _T("%i"), &niPart );
-				WORD nPart = WORD( niPart );
+				int nPart = 0;
+				_stscanf( (LPCTSTR)pTag.m_sKey + 1, _T("%i"), &nPart );
 				pGapStart.SetAt( nPart, pTag.m_nValue );
 				pGapIndex.Add( nPart );
 			}
-			else if ( pTag.m_sKey.GetAt( 0 ) == 0x0A )
+			else if ( pTag.m_sKey.GetAt( 0 ) == 0x0A )	// End of gap
 			{
-				int niPart = 0;
-				_stscanf( (LPCTSTR)pTag.m_sKey + 1, _T("%i"), &niPart );
-				WORD nPart = WORD( niPart );
+				int nPart = 0;
+				_stscanf( (LPCTSTR)pTag.m_sKey + 1, _T("%i"), &nPart );
 				pGapStop.SetAt( nPart, pTag.m_nValue );
 			}
 		}
 
-		if ( m_pTextCtrl == NULL ) return FALSE;
+		if ( m_pTextCtrl == NULL )
+			return FALSE;
 	}
 
-	if ( strName.IsEmpty() || nSize == 0 || pGapStart.IsEmpty() ) return FALSE;
+	if ( strName.IsEmpty() || nSize == SIZE_UNKNOWN || nSize == 0 ||
+		pGapStart.IsEmpty() )
+		return FALSE;
 
+	// Test gap list
+	Fragments::List oGaps( nSize );
 	for ( int nGap = 0 ; nGap < pGapIndex.GetSize() ; nGap++ )
 	{
-		WORD nPart = pGapIndex.GetAt( nGap );
-		QWORD nStart = 0, nStop = 0;
+		int nPart = pGapIndex.GetAt( nGap );
+		QWORD nStart, nStop;
+		if ( ! pGapStart.Lookup( nPart, nStart ) )
+			return FALSE;
+		if ( nStart >= nSize )
+			return FALSE;
+		if ( ! pGapStop.Lookup( nPart, nStop ) )
+			return FALSE;
+		if ( nStop > nSize || nStop <= nStart )
+			return FALSE;
 
-		if ( ! pGapStart.Lookup( nPart, nStart ) ) return FALSE;
-		if ( nStart >= nSize ) return FALSE;
-
-		if ( ! pGapStop.Lookup( nPart, nStop ) ) return FALSE;
-		if ( nStop > nSize || nStop <= nStart ) return FALSE;
+		oGaps.insert( Fragments::Fragment( nStart, nStop ) );
 	}
 
 	Message( IDS_ED2K_EPI_DETECTED, strName, Settings.SmartVolume( nSize ) );
@@ -294,13 +316,20 @@ BOOL CEDPartImporter::ImportFile(LPCTSTR pszPath, LPCTSTR pszFile)
 		return FALSE;
 	}
 
-	CFileStatus pStatus;
-	CFile pData;
+	if ( strPartName.IsEmpty() )
+		strPath.Format( _T("%s\\%s.part"), pszPath, pszFile );
+	else
+		strPath.Format( _T("%s\\%s"), pszPath, strPartName );
 
-	strPath.Format( _T("%s\\%s.part"), pszPath, pszFile );
-	if ( ! pData.Open( strPath, CFile::modeRead ) ) return FALSE;
-	pData.GetStatus( pStatus );
+	CFile pData;
+	if ( ! pData.Open( strPath, CFile::modeRead ) )
+		return FALSE;
+
+	CFileStatus pStatus;
+	if ( ! pData.GetStatus( pStatus ) )
+		return FALSE;
 	pData.Close();
+
 	struct tm ptmTemp = {};
 	if ( nDate > mktime( pStatus.m_mtime.GetLocalTm( &ptmTemp ) ) )
 	{
@@ -308,60 +337,42 @@ BOOL CEDPartImporter::ImportFile(LPCTSTR pszPath, LPCTSTR pszFile)
 		return FALSE;
 	}
 
-	CString strTarget;
-	strTarget.Format( _T("%s\\ed2k_%s"),
-		(LPCTSTR)Settings.Downloads.IncompletePath,
-		(LPCTSTR)oED2K.toString() );
-
-	Message( IDS_ED2K_EPI_COPY_START, (LPCTSTR)strPath, (LPCTSTR)strTarget );
-
-	if ( m_pTextCtrl == NULL ) return FALSE;
-	if ( ! CopyFile( strPath, strTarget ) ) return FALSE;
-	if ( m_pTextCtrl == NULL ) return FALSE;
-
 	Message( IDS_ED2K_EPI_COPY_FINISHED );
 
-	Transfers.m_pSection.Lock();
+	CSingleLock pLock( &Transfers.m_pSection, TRUE );
 
 	CDownload* pDownload = Downloads.Add();
-	
+	if ( ! pDownload )
+		return FALSE;
+
 	pDownload->m_oED2K			= oED2K;
 	pDownload->m_bED2KTrusted	= true; // .part use trusted hashes
 	pDownload->m_nSize			= nSize;
 	pDownload->m_sName			= strName;
-	pDownload->m_sPath			= strTarget;
 	pDownload->Pause();
+
+	BYTE* pHashset = NULL;
+	DWORD nHashset = 0;
+	if ( pED2K.ToBytes( &pHashset, &nHashset ) )
+	{
+		pDownload->SetHashset( pHashset, nHashset );
+		GlobalFree( pHashset );
+	}
+
 	pDownload->Save();
 
-	for ( int nGap = 0 ; nGap < pGapIndex.GetSize() ; nGap++ )
-	{
-		WORD nPart = pGapIndex.GetAt( nGap );
-		QWORD nStart = 0, nStop = 0;
+	DownloadGroups.Link( pDownload );
 
-		pGapStart.Lookup( nPart, nStart );
-		pGapStop.Lookup( nPart, nStop );
-		
-		pDownload->InvalidateFileRange( nStart, nStop - nStart );
-	}
+	Message( IDS_ED2K_EPI_COPY_START, (LPCTSTR)strPath, (LPCTSTR)pDownload->m_sPath );
 
-	if ( pED2K.IsAvailable() )
-	{
-		BYTE* pHashset = NULL;
-		DWORD nHashset = 0;
-		if ( pED2K.ToBytes( &pHashset, &nHashset ) )
-		{
-			pDownload->SetHashset( pHashset, nHashset );
-			GlobalFree( pHashset );
-		}
-	}
+	CDownloadTask::MergeFile( pDownload, strPath, FALSE, &oGaps );
 
-	if ( ! bPaused ) pDownload->Resume();
-
-	Transfers.m_pSection.Unlock();
+	if ( ! bPaused )
+		pDownload->Resume();
 
 	Message( IDS_ED2K_EPI_FILE_CREATED,
 		Settings.SmartVolume( pDownload->GetVolumeRemaining() ) );
-	
+
 	return TRUE;
 }
 

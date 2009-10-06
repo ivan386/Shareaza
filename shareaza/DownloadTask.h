@@ -22,54 +22,31 @@
 #pragma once
 
 #include "ShareazaThread.h"
+#include "FileFragments.hpp"
 
 class CDownload;
 class CHttpRequest;
 
 class CDownloadTask : public CRazaThread
 {
+	DECLARE_DYNAMIC(CDownloadTask)
+
 public:
 	enum dtask
 	{
 //		dtaskAllocate,
 		dtaskCopy,
 		dtaskPreviewRequest,
-		dtaskCheckHash,
 		dtaskMergeFile
 	};
 
-// Construction
-public:
-	CDownloadTask(CDownload* pDownload, dtask nTask, LPCTSTR szParam1 = NULL);
-	virtual ~CDownloadTask();
+	static void			Copy(CDownload* pDownload);
+	static void			PreviewRequest(CDownload* pDownload, LPCTSTR szURL);
+	static void			MergeFile(CDownload* pDownload, LPCTSTR szPath,
+		BOOL bValidation = TRUE, const Fragments::List* pGaps = NULL);
 
-	DECLARE_DYNAMIC(CDownloadTask)
+	static CString		SafeFilename(LPCTSTR pszName);
 
-// Attributes
-private:
-	dtask			m_nTask;
-	CHttpRequest*	m_pRequest;
-	bool			m_bSuccess;
-	CString			m_sFilename;
-	CString			m_sDestination;
-	DWORD			m_nFileError;
-	CDownload*		m_pDownload;
-	QWORD			m_nSize;
-	CString			m_sMergeFilename;
-	POSITION		m_posTorrentFile;	// Torrent file list current position
-	CEvent*			m_pEvent;
-
-// Statics
-public:
-	static CString	SafeFilename(LPCTSTR pszName);
-	static DWORD	CALLBACK CopyProgressRoutine(LARGE_INTEGER TotalFileSize,
-		LARGE_INTEGER TotalBytesTransferred, LARGE_INTEGER StreamSize,
-		LARGE_INTEGER StreamBytesTransferred, DWORD dwStreamNumber,
-		DWORD dwCallbackReason, HANDLE hSourceFile, HANDLE hDestinationFile,
-		LPVOID lpData);
-
-// Operations
-public:
 	bool				HasSucceeded() const;
 	void				Abort();
 	bool				WasAborted() const;
@@ -77,7 +54,31 @@ public:
 	DWORD				GetTaskType() const;
 	const CHttpRequest*	GetRequest() const;
 	CBuffer*			IsPreviewAnswerValid();
-private:
+
+protected:
+	CDownloadTask(CDownload* pDownload, dtask nTask);
+	virtual ~CDownloadTask();
+
+	dtask				m_nTask;
+	CHttpRequest*		m_pRequest;
+	bool				m_bSuccess;
+	CString				m_sFilename;
+	CString				m_sDestination;
+	DWORD				m_nFileError;
+	CDownload*			m_pDownload;
+	QWORD				m_nSize;
+	CString				m_sMergeFilename;	// Source filename
+	Fragments::List		m_oMergeGaps;		// Missed ranges in source file
+	BOOL				m_bMergeValidation;	// Run validation after merging
+	POSITION			m_posTorrentFile;	// Torrent file list current position
+	CEvent*				m_pEvent;
+
+	static DWORD CALLBACK CopyProgressRoutine(LARGE_INTEGER TotalFileSize,
+		LARGE_INTEGER TotalBytesTransferred, LARGE_INTEGER StreamSize,
+		LARGE_INTEGER StreamBytesTransferred, DWORD dwStreamNumber,
+		DWORD dwCallbackReason, HANDLE hSourceFile, HANDLE hDestinationFile,
+		LPVOID lpData);
+
 	void				Construct(CDownload* pDownload);
 //	void				RunAllocate();
 	void				RunCopy();
@@ -88,9 +89,7 @@ private:
 	BOOL				MakeBatchTorrent();
 	BOOL				CopyFileToBatch(HANDLE hSource, QWORD nOffset, QWORD nLength, LPCTSTR pszPath);
 
-// Overrides
-protected:
-	virtual int	Run();
+	virtual int			Run();
 
 	DECLARE_MESSAGE_MAP()
 };

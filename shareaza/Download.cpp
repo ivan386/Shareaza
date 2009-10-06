@@ -486,8 +486,7 @@ void CDownload::OnDownloaded()
 
 	SetMoving( true );
 
-	ASSERT( !IsTasking() );
-	SetTask( new CDownloadTask( this, CDownloadTask::dtaskCopy ) );
+	CDownloadTask::Copy( this );
 
 	SetModified();
 }
