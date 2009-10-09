@@ -46,7 +46,6 @@ public:
 protected:
 	int				m_nSelected;
 	DWORD			m_nIndex;
-	BOOL			m_bNewFile;			// flag used to switch off thread if thumbnail can not be extracted
 	CString			m_sName;
 	CString			m_sPath;			// Current file path
 	CString			m_sFolder;

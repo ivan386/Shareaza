@@ -681,10 +681,15 @@ void CLibraryFrame::SetPanel(CPanelCtrl* pPanel)
 	{
 		if ( m_pPanel )
 		{
-			m_pPanel->Update();
-			m_pPanel->ShowWindow( SW_SHOW );
+			if ( m_pPanel->m_hWnd )
+			{
+				m_pPanel->Update();
+				m_pPanel->ShowWindow( SW_SHOW );
+				return;
+			}
 		}
-		return;
+		else
+			return;
 	}
 
 	CPanelCtrl* pOld = m_pPanel;
@@ -697,10 +702,14 @@ void CLibraryFrame::SetPanel(CPanelCtrl* pPanel)
 	if ( m_pPanel )
 		m_pPanel->Update();
 
-	if ( pOld ) pOld->ShowWindow( SW_HIDE );
+	if ( pOld && pOld != m_pPanel )
+		pOld->ShowWindow( SW_HIDE );
+
 	if ( m_pPanel )
 		m_pPanel->ShowWindow( SW_SHOW );
-	if ( pOld ) pOld->DestroyWindow();
+
+	if ( pOld && pOld != m_pPanel )
+		pOld->DestroyWindow();
 }
 
 CMetaPanel*	CLibraryFrame::GetPanelData()

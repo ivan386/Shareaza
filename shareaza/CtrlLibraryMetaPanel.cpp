@@ -77,7 +77,13 @@ CLibraryMetaPanel::~CLibraryMetaPanel()
 
 CLibraryList* CLibraryMetaPanel::GetViewSelection()
 {
+	if ( ! m_hWnd )
+		return NULL;
+
 	CLibraryFrame* pFrame = (CLibraryFrame*)GetOwner();
+	if ( ! pFrame )
+		return NULL;
+
 	ASSERT_KINDOF(CLibraryFrame, pFrame);
 	return pFrame->GetViewSelection();
 }
@@ -88,7 +94,7 @@ void CLibraryMetaPanel::Update()
 	CSingleLock pLock2( &m_pSection, TRUE );
 
 	CLibraryList* pSel = GetViewSelection();
-	m_nSelected = static_cast< int >( pSel->GetCount() );
+	m_nSelected = pSel ? static_cast< int >( pSel->GetCount() ) : 0;
 
 	// Show info for library files only
 	CLibraryFile* pFirst = NULL;
@@ -154,14 +160,17 @@ void CLibraryMetaPanel::Update()
 
 	m_pSchema = NULL;
 
-	for ( POSITION pos = pSel->GetHeadPosition() ; pos ; )
+	if ( pSel )
 	{
-		const CLibraryListItem& pItem = pSel->GetNext( pos );
-		if ( pItem.Type != CLibraryListItem::LibraryFile ) continue;
-		CLibraryFile* pFile = Library.LookupFile( pItem );
-		if ( pFile == NULL ) continue;
-		m_pSchema = pFile->m_pSchema;
-		if ( m_pSchema ) break;
+		for ( POSITION pos = pSel->GetHeadPosition() ; pos ; )
+		{
+			const CLibraryListItem& pItem = pSel->GetNext( pos );
+			if ( pItem.Type != CLibraryListItem::LibraryFile ) continue;
+			CLibraryFile* pFile = Library.LookupFile( pItem );
+			if ( pFile == NULL ) continue;
+			m_pSchema = pFile->m_pSchema;
+			if ( m_pSchema ) break;
+		}
 	}
 
 	if ( m_pServiceData )
@@ -172,7 +181,7 @@ void CLibraryMetaPanel::Update()
 	{
 		m_pMetadata->Setup( m_pSchema );
 
-		if ( m_pSchema != NULL )
+		if ( m_pSchema && pSel )
 		{
 			for ( POSITION pos = pSel->GetHeadPosition() ; pos ; )
 			{
