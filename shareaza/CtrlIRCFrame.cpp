@@ -971,17 +971,13 @@ void CIRCFrame::OnLocalText(LPCTSTR pszText)
 	CString strSend; //text		// the line sent to the server
 	CString strDisp; //line		// the line displayed on the client
 
-	CString strTabTitle = GetTabText(); // () -> ( -1 ) -> currently selected tab
-	CString strBufferMsg, strStatusMessage;
+	const CString strTabTitle = GetTabText(); // () -> ( -1 ) -> currently selected tab
+	CString strBufferMsg;
 
 	BOOL isActionMsg = FALSE;
 
 	// -1 if no CRLF, otherwise the position of CRLF
-	int nIndex = strMessage.Find( _T("\r\n"), 0 );
-
-	// SendString appends CRLF
-	if ( nIndex != -1 )
-		strMessage = strMessage.Left( nIndex );
+	strMessage.TrimRight( _T("\r\n") );
 			
 	// Expand short commands to full-length commands
 	if ( strMessage.GetLength() > 2 )
@@ -1115,74 +1111,71 @@ void CIRCFrame::OnTimer(UINT_PTR nIDEvent)
 			m_nMsgsInSec = 0;
 		}
 
-		CString strMessage;
-		CSingleLock pLock( &m_pSection );
 		if ( WaitForSingleObject( m_pWakeup, 0 ) == WAIT_OBJECT_0 )
 		{
-			int nRetVal = SOCKET_ERROR;
-			auto_array< char > pszData( new char[ 102 ] );
-			nRetVal = recv( m_nSocket, pszData.get(), 100, 0 );
-			if ( nRetVal > 0 ) pszData[ nRetVal + 1 ] = '\0';
-			CString strTmp = TrimString( m_sWsaBuffer + pszData.get() );
+			auto_array< char > pszData( new char[ 4096 ] );
+			int nRetVal = recv( m_nSocket, pszData.get(), 4094, 0 );
+			if ( nRetVal > 0 )
+				pszData[ nRetVal + 1 ] = '\0';
+			CString strTmp = TrimString( m_sWsaBuffer + UTF8Decode( pszData.get() ) );
 			m_sWsaBuffer.Empty();
 
-			if ( nRetVal == 0 )
+			switch ( nRetVal )
 			{
+			case 0:
 				OnStatusMessage( strTmp, ID_COLOR_NOTICE );
 				OnIrcDisconnect();
 				return;
-			}
-			// Error
-			if ( nRetVal == -1 )
-			{
-				int nError = WSAGetLastError();
+			
+			case -1:
+				// Error
 				KillTimer( 9 );
-				if ( nError == WSAETIMEDOUT )
+				if ( WSAGetLastError() == WSAETIMEDOUT )
 					OnStatusMessage( _T("QUIT: Connection reset by peer." ), ID_COLOR_NOTICE );
-				else if ( nError == WSAENOTCONN )
+				else if ( WSAGetLastError() == WSAENOTCONN )
 					OnStatusMessage( _T("QUIT: Connection dropped."), ID_COLOR_NOTICE );
 				else 
 					OnStatusMessage( _T("QUIT: Server is busy, please try again in a minute."), ID_COLOR_NOTICE );
 				OnIrcDisconnect();
 				return;
 			}
-			if ( nRetVal != -1 && !strTmp.IsEmpty() )
+
+			if ( ! strTmp.IsEmpty() )
 			{
-				int nIndex = strTmp.Find( _T("\r\n") );
 				m_nMsgsInSec++;
+
 				// If it's not a complete line, add it to the buffer until we get the rest
-				if ( nIndex == -1 ) 
+				int nIndex = strTmp.Find( _T("\r\n") );
+				if ( nIndex == -1 )
+				{
 					m_sWsaBuffer = strTmp;
+				}
 				else
 				{
-					while ( nIndex != -1 && !strTmp.IsEmpty() )
+					while ( nIndex != -1 && ! strTmp.IsEmpty() )
 					{
-						strMessage = strTmp.Left( nIndex + 1 );
-						strMessage = strMessage.TrimLeft();
-						if ( strMessage.Find( ' ' ) != -1 && !strMessage.IsEmpty() )
-							OnNewMessage( UTF8Decode( CStringA( strMessage ) ) );
-						strTmp = strTmp.Mid( nIndex + 1 );
+						CString strMessage = strTmp.Left( nIndex );
+						strMessage.TrimLeft();
+
+						if ( ! strMessage.IsEmpty() )
+							OnNewMessage( strMessage );
+
+						strTmp = strTmp.Mid( nIndex + 2 );
 						nIndex = strTmp.Find( _T("\r\n") );
 					}
 
-					if ( !strTmp.IsEmpty() ) 
-						m_sWsaBuffer.Append( strTmp );
-					else
-						m_sWsaBuffer.Empty();
+					if ( ! strTmp.IsEmpty() ) 
+						m_sWsaBuffer = strTmp;
 				}
 			}
 		}
-		pLock.Unlock();
 	} 
 	CWnd::OnTimer( nIDEvent );
 }
 
-void CIRCFrame::SendString(CString strMessage)
+void CIRCFrame::SendString(const CString& strMessage)
 {
-	//strMessage = strMessage.Trim();
-	//strMessage = strMessage + _T("\x000D\x000A");
-	strMessage = strMessage.Trim() + _T("\r\n");
-	CStringA strEncoded = UTF8Encode( strMessage );
+	CStringA strEncoded = UTF8Encode( strMessage + _T("\r\n") );
 	send( m_nSocket, (LPCSTR)strEncoded, strEncoded.GetLength(), 0 );
 }
 
@@ -1440,7 +1433,7 @@ void CIRCFrame::ChanListDblClick()
 	}
 }
 	
-BOOL CIRCFrame::OnNewMessage(CString strMessage)
+BOOL CIRCFrame::OnNewMessage(const CString& strMessage)
 {
 	int nTargetWindow;
 	CString strTargetName;
@@ -1474,7 +1467,7 @@ BOOL CIRCFrame::OnNewMessage(CString strMessage)
 }
 
 
-void CIRCFrame::ActivateMessageByID(CString strMessage, CIRCNewMessage* oNewMessage, int nMessageType)
+void CIRCFrame::ActivateMessageByID(CIRCNewMessage* oNewMessage, int nMessageType)
 {
 	switch ( nMessageType )
 	{
@@ -1745,7 +1738,7 @@ void CIRCFrame::ActivateMessageByID(CString strMessage, CIRCNewMessage* oNewMess
 		}
 		case ID_MESSAGE_SERVER_NOTICE:
 		{
-			oNewMessage->m_pMessages.Add( GetStringAfterParsedItem ( FindParsedItem( ":", 2 ) ) + 
+			oNewMessage->m_pMessages.Add( GetStringAfterParsedItem ( FindParsedItem( _T(":"), 2 ) ) + 
 				" (" + m_pWords.GetAt( 2 ) + ")" );
 			oNewMessage->m_sTargetName	= m_sStatus;
 			oNewMessage->nColorID		= ID_COLOR_NOTICE;
@@ -1942,7 +1935,7 @@ void CIRCFrame::ActivateMessageByID(CString strMessage, CIRCNewMessage* oNewMess
 		}
 		case ID_MESSAGE_SERVER_DISCONNECT:
 		{		
-			OnStatusMessage( GetStringAfterParsedItem( FindParsedItem( ":", 2 ) ), ID_COLOR_SERVERMSG );
+			OnStatusMessage( GetStringAfterParsedItem( FindParsedItem( _T(":"), 2 ) ), ID_COLOR_SERVERMSG );
 			OnIrcDisconnect();
 			return;
 		}
@@ -2190,7 +2183,7 @@ int CIRCFrame::ParseMessageID()
 	return nMessageType;
 }
 
-void CIRCFrame::ParseString(CString strMessage, CIRCNewMessage* oNewMessage)
+void CIRCFrame::ParseString(const CString& strMessage, CIRCNewMessage* oNewMessage)
 {
 	m_pWords.RemoveAll(); //Class-wide variable
 	
@@ -2201,9 +2194,9 @@ void CIRCFrame::ParseString(CString strMessage, CIRCNewMessage* oNewMessage)
 
 	// Tokens in user ID, for e.g. nick!ident@domain.com
 	int nFirstToken, nSecondToken, nThirdToken;
-	if ( strMessage.Left( 1 ) == ":" ) nOldPos = 0;
+	if ( strMessage.GetAt( 0 ) == _T(':') ) nOldPos = 0;
 	nPos = strMessage.Find( ' ' );
-	nThirdToken = strMessage.ReverseFind( ':' );
+	nThirdToken = strMessage.ReverseFind( _T(':') );
 	if ( nThirdToken == 0 ) nThirdToken = strMessage.GetLength() - 1;
 	while ( nPos != -2 )
 	{
@@ -2211,11 +2204,11 @@ void CIRCFrame::ParseString(CString strMessage, CIRCNewMessage* oNewMessage)
 			str = strMessage.Mid( nOldPos + 1 );
 		else 
 			str = strMessage.Mid( nOldPos + 1, nPos - nOldPos - 1 );
-		nFirstToken = str.Find( '!', 1 );
-		nSecondToken = str.Find( '@', 1 );
-		if ( str.Mid( 0, 1 ) == ":" && nOldPos <= nThirdToken )
+		nFirstToken = str.Find( _T('!'), 1 );
+		nSecondToken = str.Find( _T('@'), 1 );
+		if ( str.GetAt( 0 ) == _T(':') && nOldPos <= nThirdToken )
 		{
-			incomingWords.Add( ":" );
+			incomingWords.Add( _T(":") );
 			str = str.Mid( 1 );
 		}
 		if ( nFirstToken != -1 && nSecondToken != -1 && nFirstToken < nSecondToken && 
@@ -2224,10 +2217,10 @@ void CIRCFrame::ParseString(CString strMessage, CIRCNewMessage* oNewMessage)
 		{	
 			strNick = str.Mid( 0, nFirstToken );
 			incomingWords.Add( strNick );
-			incomingWords.Add( "!" );
+			incomingWords.Add( _T("!") );
 			strNick = str.Mid( nFirstToken + 1, nSecondToken - nFirstToken - 1 );
 			incomingWords.Add( strNick );
-			incomingWords.Add( "@" );
+			incomingWords.Add( _T("@") );
 			strNick = str.Mid( nSecondToken + 1 );
 			incomingWords.Add( strNick );
 		}
@@ -2235,7 +2228,7 @@ void CIRCFrame::ParseString(CString strMessage, CIRCNewMessage* oNewMessage)
 			incomingWords.Add( str );
 		if ( nPos == -1 ) break;
 		nOldPos = nPos;
-		nPos = strMessage.Find( ' ', nPos + 1 );
+		nPos = strMessage.Find( _T(' '), nPos + 1 );
 	}
 
 	for( int index = 0; index < incomingWords.GetCount(); index++ ) {
@@ -2243,10 +2236,10 @@ void CIRCFrame::ParseString(CString strMessage, CIRCNewMessage* oNewMessage)
 	}	
 
 	int nMessageID = ParseMessageID();
-	ActivateMessageByID( strMessage, oNewMessage, nMessageID );
+	ActivateMessageByID( oNewMessage, nMessageID );
 
 	// Drop messages if flood protection is running
-	// Seems rather indescriminate, plus useless since the message is already active
+	// Seems rather indiscriminate, plus useless since the message is already active
 	if ( m_bFloodProtectionRunning && nMessageID != 0 )
 	{
 		if ( nMessageID > 203 )
@@ -2258,11 +2251,11 @@ void CIRCFrame::ParseString(CString strMessage, CIRCNewMessage* oNewMessage)
 	}
 }
 
-int CIRCFrame::FindParsedItem(CString strMessage, int nFirst)
+int CIRCFrame::FindParsedItem(LPCTSTR szMessage, int nFirst)
 {
 	for ( int nItem = nFirst ; nItem < m_pWords.GetCount() - 1 ; nItem++ )
 	{
-		if ( strMessage == m_pWords.GetAt( nItem ) ) return nItem;
+		if ( m_pWords.GetAt( nItem ).Compare( szMessage ) == 0 ) return nItem;
 	}
 	return -1;
 }

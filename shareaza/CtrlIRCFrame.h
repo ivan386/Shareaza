@@ -173,7 +173,6 @@ protected:
 	int				m_nLocalLinesLimit;
 	CEvent 			m_pWakeup;
 	CString         m_sWsaBuffer;
-	CMutex			m_pSection;
 
 	CFont			m_fntEdit;
 	CStringArray	m_pWords;
@@ -181,12 +180,12 @@ protected:
 
 	void			ConnectIrc();
 	void			SetFonts();
-	void            SendString(CString strMessage);
-	BOOL            OnNewMessage(CString strMessage);
-	int				FindParsedItem(CString strMessage, int nFirst = 0);
+	void            SendString(const CString& strMessage);
+	BOOL            OnNewMessage(const CString& strMessage);
+	int				FindParsedItem(LPCTSTR szMessage, int nFirst = 0);
 	int				IsTabExist(const CString& strTabName) const;
 	void            LoadBufferForWindow(int nTab);
-	void			ParseString(CString strMessage, CIRCNewMessage* oNewMessage);
+	void			ParseString(const CString& strMessage, CIRCNewMessage* oNewMessage);
 	CString			TrimString(CString strMessage) const;
 	CString			GetStringAfterParsedItem(int nItem) const;
 	void			OnSettings();
@@ -200,7 +199,7 @@ protected:
 	int				FindInList(CString strName, int nList=0, int nTab=0);
 	void			PaintListHeader(CDC& dc, CRect& rcBar, CString strText);
 	int				ParseMessageID();
-	void			ActivateMessageByID(CString strMessage, CIRCNewMessage* oNewMessage, int nMessageID);
+	void			ActivateMessageByID(CIRCNewMessage* oNewMessage, int nMessageID);
 	CString			GetTextFromRichPoint();
 	CString			RemoveModeOfNick(CString strNick) const;
 	int				IsUserInList(CString strUser) const;
