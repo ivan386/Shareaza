@@ -368,7 +368,7 @@ void CChildWnd::OnSysCommand(UINT nID, LPARAM lParam)
 
 void CChildWnd::OnMDIActivate(BOOL bActivate, CWnd* pActivateWnd, CWnd* pDeactivateWnd)
 {
-	if ( GetManager()->m_bIgnoreActivate ) return;
+	if ( theApp.m_bClosing || GetManager()->m_bIgnoreActivate ) return;
 
 	if ( bActivate && m_bAlert ) SetAlert( FALSE );
 
