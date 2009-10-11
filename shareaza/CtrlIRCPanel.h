@@ -1,7 +1,7 @@
 //
 // CtrlIRCPanel.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -18,14 +18,13 @@
 // along with Shareaza; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
-// Author: peer_l_@hotmail.com
-//
 
 #pragma once
 
 #include "CtrlTaskPanel.h"
 #include "CtrlCoolBar.h"
 #include "CtrlIconButton.h"
+
 
 class CIRCUsersBox : public CTaskBox
 {
@@ -44,15 +43,18 @@ public:
 	void	UpdateCaptionCount();
 
 protected:
+	int HitTest(const CPoint& pt) const;
+
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg void OnSize(UINT nType, int cx, int cy);
 	afx_msg void OnPaint();
 	afx_msg void OnUsersDoubleClick();
 	afx_msg void OnContextMenu(CWnd* pWnd, CPoint point);
-	int			 HitTest(const CPoint& pt) const;
+	afx_msg int OnCompareItem(int nIDCtl, LPCOMPAREITEMSTRUCT lpCompareItemStruct);
 
 	DECLARE_MESSAGE_MAP()
 };
+
 
 class CIRCChannelsBox : public CTaskBox
 {
@@ -83,6 +85,7 @@ protected:
 
 	DECLARE_MESSAGE_MAP()
 };
+
 
 typedef struct
 {

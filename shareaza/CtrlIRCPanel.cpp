@@ -1,7 +1,7 @@
 //
 // CtrlIRCPanel.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -17,8 +17,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Shareaza; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-//
-// Author: peer_l_@hotmail.com
 //
 
 #include "StdAfx.h"
@@ -50,8 +48,8 @@ BEGIN_MESSAGE_MAP(CIRCUsersBox, CTaskBox)
 	ON_WM_PAINT()
 	ON_WM_CONTEXTMENU()
 	ON_LBN_DBLCLK(IDC_IRC_USERS, OnUsersDoubleClick)
+	ON_WM_COMPAREITEM()
 END_MESSAGE_MAP()
-
 
 IMPLEMENT_DYNAMIC(CIRCChannelsBox, CTaskBox)
 BEGIN_MESSAGE_MAP(CIRCChannelsBox, CTaskBox)
@@ -148,7 +146,7 @@ int CIRCUsersBox::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	CRect rc( 0, 0, 0, 0 );
 	m_wndUserList.Create( WS_CHILD | WS_VISIBLE | WS_VSCROLL | WS_TABSTOP |
-		LBS_NOTIFY | LBS_NOINTEGRALHEIGHT, rc, this, IDC_IRC_USERS );
+		LBS_NOTIFY | LBS_NOINTEGRALHEIGHT | LBS_SORT | LBS_HASSTRINGS, rc, this, IDC_IRC_USERS );
 	if ( Settings.General.LanguageRTL )
 		m_wndUserList.ModifyStyleEx( WS_EX_LAYOUTRTL, 0, 0 );
 	m_wndUserList.ModifyStyleEx( 0, WS_EX_CLIENTEDGE );
@@ -227,6 +225,43 @@ int CIRCUsersBox::HitTest(const CPoint& pt) const
 		if ( !bOutside ) return nItem;
 	}
 	return -1;
+}
+
+int CIRCUsersBox::OnCompareItem(int nIDCtl, LPCOMPAREITEMSTRUCT lpCompareItemStruct)
+{
+	if ( nIDCtl != IDC_IRC_USERS )
+		return CTaskBox::OnCompareItem( nIDCtl, lpCompareItemStruct );
+
+	ASSERT( lpCompareItemStruct->CtlType == ODT_LISTBOX );
+	LPCTSTR lpszUser1 = (LPCTSTR) lpCompareItemStruct->itemData1;
+	ASSERT( lpszUser1 != NULL );
+	LPCTSTR lpszUser2 = (LPCTSTR) lpCompareItemStruct->itemData2;
+	ASSERT( lpszUser2 != NULL );
+
+	// Sort by user status
+	int nModeColumn1 = 0, nModeColumn2 = 0;
+	switch ( *lpszUser1 )
+	{
+		case _T('+'): nModeColumn1 = 1; break;
+		case _T('%'): nModeColumn1 = 2; break;
+		case _T('@'): nModeColumn1 = 3; break;
+		case _T('&'): nModeColumn1 = 4;
+	}
+	switch ( *lpszUser2 )
+	{
+		case _T('+'): nModeColumn2 = 1; break;
+		case _T('%'): nModeColumn2 = 2; break;
+		case _T('@'): nModeColumn2 = 3; break;
+		case _T('&'): nModeColumn2 = 4;
+	}
+	if ( nModeColumn1 == nModeColumn2 )
+	{
+		// Sort by user name
+		if ( nModeColumn1 ) lpszUser1++;
+		if ( nModeColumn2 ) lpszUser2++;
+		return _tcsicmp( lpszUser1, lpszUser2 );
+	}
+	return ( nModeColumn2 - nModeColumn1 );
 }
 
 /////////////////////////////////////////////////////////////////////////////

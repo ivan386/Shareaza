@@ -18,8 +18,6 @@
 // along with Shareaza; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
-// Author: peer_l_@hotmail.com
-//
 
 #pragma once
 
@@ -30,14 +28,45 @@
 
 class CIRCNewMessage
 {
+protected:
+	class CIRCMessage
+	{
+	public:
+		CIRCMessage(LPCTSTR szMessage = _T(""), LPCTSTR szTargetName = _T(""), int nColor = 0)
+			: sMessage( szMessage )
+			, sTargetName( szTargetName )
+			, nColorID( nColor )
+		{
+		}
+
+		CIRCMessage(const CIRCMessage& msg)
+			: sMessage( msg.sMessage )
+			, sTargetName( msg.sTargetName )
+			, nColorID( msg.nColorID )
+		{
+		}
+
+		CIRCMessage& operator=(const CIRCMessage& msg)
+		{
+			sMessage = msg.sMessage;
+			sTargetName = msg.sTargetName;
+			nColorID = msg.nColorID;
+			return *this;
+		}
+
+		CString	sMessage;
+		CString	sTargetName;
+		int		nColorID;
+	};
+
 public:
-	CIRCNewMessage();
+	inline void Add(LPCTSTR szMessage, LPCTSTR szTargetName, int nColor)
+	{
+		CIRCMessage msg( szMessage, szTargetName, nColor );
+		m_pMessages.Add( msg );
+	}
 
-	BOOL operator =(const CIRCNewMessage &rhs );
-
-	int             nColorID;
-	CString         m_sTargetName;
-    CStringArray    m_pMessages;
+	CArray< CIRCMessage > m_pMessages;
 };
 
 class CIRCTabCtrl : public CTabCtrl
@@ -185,7 +214,7 @@ protected:
 	int				FindParsedItem(LPCTSTR szMessage, int nFirst = 0);
 	int				IsTabExist(const CString& strTabName) const;
 	void            LoadBufferForWindow(int nTab);
-	void			ParseString(const CString& strMessage, CIRCNewMessage* oNewMessage);
+	void			ParseString(const CString& strMessage, CIRCNewMessage& oNewMessage);
 	CString			TrimString(CString strMessage) const;
 	CString			GetStringAfterParsedItem(int nItem) const;
 	void			OnSettings();
@@ -193,13 +222,12 @@ protected:
 	int				AddTab(CString TabName, int nKindOfTab);
 	void			TabClick();
 	void			SortUserList();
-	int				CompareUsers(const CString& strUser1, const CString& strUser2) const;
 	void			ReloadViewText();
 	CString			GetTabText(int nTabIndex = -1) const;
 	int				FindInList(CString strName, int nList=0, int nTab=0);
 	void			PaintListHeader(CDC& dc, CRect& rcBar, CString strText);
 	int				ParseMessageID();
-	void			ActivateMessageByID(CIRCNewMessage* oNewMessage, int nMessageID);
+	void			ActivateMessageByID(CIRCNewMessage& oNewMessage, int nMessageID);
 	CString			GetTextFromRichPoint();
 	CString			RemoveModeOfNick(CString strNick) const;
 	int				IsUserInList(CString strUser) const;
@@ -209,6 +237,47 @@ protected:
 	void			FillCountChanList(const CString& strUserCount, const CString& strChannelName);
 	void			PaintHeader(CRect rcHeader, CDC &dc);
 	void			DrawText(CDC* pDC, int nX, int nY, LPCTSTR pszText);
+
+	inline CString GetSelectedUser() const
+	{
+		CString strUser;
+		int nItem = m_wndPanel.m_boxUsers.m_wndUserList.GetCurSel();
+		if ( nItem >= 0 )
+			m_wndPanel.m_boxUsers.m_wndUserList.GetText( nItem, strUser );
+		return strUser;
+	}
+
+	inline void SetSelectedUser(int nIndex)
+	{
+		m_wndPanel.m_boxUsers.m_wndUserList.SetCurSel( nIndex );
+	}
+
+	inline void ClearUserList()
+	{
+		m_wndPanel.m_boxUsers.m_wndUserList.ResetContent();
+	}
+
+	inline void AddUser(LPCTSTR szUser)
+	{
+		m_wndPanel.m_boxUsers.m_wndUserList.AddString( szUser );
+	}
+
+	inline void DeleteUser(int nIndex)
+	{
+		m_wndPanel.m_boxUsers.m_wndUserList.DeleteString( nIndex );
+	}
+
+	inline int GetUserCount() const
+	{
+		return m_wndPanel.m_boxUsers.m_wndUserList.GetCount();
+	}
+
+	inline CString GetUser(int nIndex) const
+	{
+		CString strUser;
+		m_wndPanel.m_boxUsers.m_wndUserList.GetText( nIndex, strUser );
+		return strUser;
+	}
 
 	virtual void	OnLocalText(LPCTSTR pszText);
 	virtual void	OnStatusMessage(LPCTSTR pszText, int nFlags);
