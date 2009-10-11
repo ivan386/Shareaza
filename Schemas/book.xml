@@ -772,6 +772,7 @@ Shareaza Turkish Schemas File translated by F. Doğru, F.A. Saraçoğulları
                <type extension="html"/>
                <type extension="kml"/>
                <type extension="lit"/>
+               <type extension="lrf"/>
                <type extension="odt"/>
                <type extension="pdb"/>
                <type extension="pdf"/>
