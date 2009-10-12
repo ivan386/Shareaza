@@ -1,7 +1,7 @@
 //
 // Application.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -26,6 +26,7 @@
 #include "CoolInterface.h"
 #include "Library.h"
 #include "Plugins.h"
+#include "ImageServices.h"
 #include "Skin.h"
 #include "ComMenu.h"
 #include "ComToolbar.h"
@@ -162,6 +163,14 @@ STDMETHODIMP CApplication::XApplication::get_Settings(ISettings FAR* FAR* ppSett
 	METHOD_PROLOGUE( CApplication, Application )
 	if ( ppSettings == NULL ) return E_INVALIDARG;
 	*ppSettings = (ISettings*)pThis->GetInterface( IID_ISettings, TRUE );
+	return S_OK;
+}
+
+STDMETHODIMP CApplication::XApplication::get_ImageService(IImageServicePlugin FAR* FAR* ppIImageService)
+{
+	METHOD_PROLOGUE( CApplication, Application )
+	if ( ppIImageService == NULL ) return E_INVALIDARG;
+	*ppIImageService = (IImageServicePlugin*)ImageServices.GetInterface( IID_IImageServicePlugin, TRUE );
 	return S_OK;
 }
 

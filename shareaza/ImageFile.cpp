@@ -164,6 +164,78 @@ BOOL CImageFile::LoadFromURL(LPCTSTR pszURL)
 	return FALSE;
 }
 
+BOOL CImageFile::LoadFromBitmap(HBITMAP hBitmap, BOOL bScanOnly)
+{
+	BITMAP bmInfo;
+	if ( ! GetObject( hBitmap, sizeof( BITMAP ), &bmInfo ) )
+		return FALSE;
+
+	if ( bmInfo.bmType != 0 || bmInfo.bmPlanes != 1 || ! bmInfo.bmBits ||
+		bmInfo.bmWidth <= 0 || bmInfo.bmHeight <= 0 )
+		// Unsupported format
+		return FALSE;
+
+	switch ( bmInfo.bmBitsPixel )
+	{
+	case 24:
+		m_nComponents = 3;
+		break;
+	case 32:
+		m_nComponents = 4;
+		break;
+	default:
+		// Unsupported format
+		return FALSE;
+	}
+
+	m_bScanned = TRUE;
+	m_nWidth = bmInfo.bmWidth;
+	m_nHeight = bmInfo.bmHeight;
+
+	if ( bScanOnly )
+		return TRUE;
+
+	DWORD line_size = ( m_nWidth * m_nComponents + 3 ) & ~3;
+	m_pImage = new BYTE[ line_size * m_nHeight ];
+	if ( ! m_pImage )
+		// Out of memory
+		return FALSE;
+
+	// Down-up bitmap copying and BGR -> RGB converting
+	// (it is not a simple reverse copy!)
+	BYTE* dst = m_pImage;
+	const BYTE* src = (BYTE*)bmInfo.bmBits + sizeof( BITMAPINFOHEADER ) +
+		line_size * ( m_nHeight - 1 );
+	for ( LONG j = 0; j < m_nHeight; ++j, dst += line_size, src -= line_size )
+	{
+		if ( m_nComponents == 3 )
+		{
+			// 24-bit bitmap
+			for ( LONG i = 0; i < m_nWidth * 3; i += 3 )
+			{
+				dst[i + 0] = src[i + 2];
+				dst[i + 1] = src[i + 1];
+				dst[i + 2] = src[i + 0];
+			}
+		}
+		else
+		{
+			// 32-bit bitmap
+			for ( LONG i = 0; i < m_nWidth * 4; i += 4 )
+			{
+				dst[i + 0] = src[i + 2];
+				dst[i + 1] = src[i + 1];
+				dst[i + 2] = src[i + 0];
+				dst[i + 3] = src[i + 3];	// Alpha
+			}
+		}
+	}
+
+	m_bLoaded = TRUE;
+
+	return TRUE;
+}
+
 /////////////////////////////////////////////////////////////////////////////
 // CImageFile save operations
 
@@ -221,7 +293,7 @@ void CImageFile::Serialize(CArchive& ar)
 		DWORD nCompositeValue = ( m_nFlags << 16 ) | ( m_nComponents );
 		ar << nCompositeValue;
 
-		ar.Write( m_pImage, ( ( m_nWidth * m_nComponents + 3) & ~3 ) * m_nHeight );
+		ar.Write( m_pImage, ( ( m_nWidth * m_nComponents + 3 ) & ~3 ) * m_nHeight );
 	}
 	else
 	{
@@ -238,7 +310,7 @@ void CImageFile::Serialize(CArchive& ar)
 		// Clear high bits for components
 		m_nComponents = nCompositeValue & 0x0000FFFF;
 
-		int nPitch = ( ( m_nWidth * m_nComponents+ 3 ) & ~3 ) * m_nHeight;
+		int nPitch = ( ( m_nWidth * m_nComponents + 3 ) & ~3 ) * m_nHeight;
 
 		m_pImage = new BYTE[ nPitch  ];
 		ReadArchive( ar, m_pImage, nPitch );

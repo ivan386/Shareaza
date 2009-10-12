@@ -361,6 +361,8 @@ library Shareaza
 		[id(20),propget] HRESULT UserInterface( [out,retval] IUserInterface** ppUserInterface );
 		[id(21),propget] HRESULT Library( [out,retval] ILibrary** ppLibrary );
 		[id(22),propget] HRESULT Settings( [out,retval] ISettings** ppSettings );
+
+		[id(23),propget] HRESULT ImageService( [out,retval] IImageServicePlugin** ppImageService );
 	};
 
 	//

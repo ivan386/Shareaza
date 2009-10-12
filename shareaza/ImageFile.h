@@ -44,6 +44,8 @@ public:
 	BOOL	LoadFromFile(LPCTSTR pszFile, BOOL bScanOnly = FALSE, BOOL bPartialOk = FALSE);
 	BOOL	LoadFromURL(LPCTSTR pszURL);
 	BOOL	LoadFromResource(HINSTANCE hInstance, UINT nResourceID, LPCTSTR pszType, BOOL bScanOnly = FALSE, BOOL bPartialOk = FALSE);
+	// Get image copy from HBITMAP (24/32-bit only)
+	BOOL	LoadFromBitmap(HBITMAP hBitmap, BOOL bScanOnly = FALSE);
 	BOOL	SaveToMemory(LPCTSTR pszType, int nQuality, LPBYTE* ppBuffer, DWORD* pnLength);
 //	BOOL	SaveToFile(LPCTSTR pszType, int nQuality, HANDLE hFile, DWORD* pnLength = NULL);
 //	BOOL	SaveToFile(LPCTSTR pszFile, int nQuality);
