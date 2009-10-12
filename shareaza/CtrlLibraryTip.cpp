@@ -255,8 +255,7 @@ void CLibraryTipCtrl::OnPaint(CDC* pDC)
 
 	CRect rcThumb( pt.x, pt.y,
 		pt.x + Settings.Library.ThumbSize + 2, pt.y + Settings.Library.ThumbSize + 2 );
-	CRect rcWork( &rcThumb );
-	CoolInterface.DrawThumbnail( pDC, rcWork, IsThreadAlive(), FALSE, m_bmThumb, m_nIcon, -1 );
+	CoolInterface.DrawThumbnail( pDC, rcThumb, IsThreadAlive(), FALSE, m_bmThumb, m_nIcon, -1 );
 	pDC->ExcludeClipRect( &rcThumb );
 
 	int nCount = 0;

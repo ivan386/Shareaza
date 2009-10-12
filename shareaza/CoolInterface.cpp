@@ -418,7 +418,7 @@ void CCoolInterface::DrawThumbnail(CDC* pDC, const CRect& rcThumb,
 		if ( info.bmWidth > info.bmHeight )
 			cy = ( cx * info.bmHeight ) / info.bmWidth;
 		else
-			cx = ( cx * info.bmWidth ) / info.bmHeight;
+			cx = ( cy * info.bmWidth ) / info.bmHeight;
 
 		int x = rcFrame.left + ( rcFrame.Width() - cx ) / 2;
 		int y = rcFrame.top + ( rcFrame.Height() - cy ) / 2;
