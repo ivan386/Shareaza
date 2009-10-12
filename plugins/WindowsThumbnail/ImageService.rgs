@@ -1,0 +1,43 @@
+HKCR
+{
+	ForceRemove WindowsThumbnail.ImageService.1 = s 'Windows Thumbnail Plugin'
+	{
+		CLSID = s '{0EEA2A0F-AD1F-4555-9827-0DD9335611A4}'
+	}
+	ForceRemove WindowsThumbnail.ImageService = s 'Windows Thumbnail Plugin'
+	{
+		CLSID = s '{0EEA2A0F-AD1F-4555-9827-0DD9335611A4}'
+		CurVer = s 'WindowsThumbnail.ImageService.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {0EEA2A0F-AD1F-4555-9827-0DD9335611A4} = s 'Windows Thumbnail Plugin'
+		{
+			ProgID = s 'WindowsThumbnail.ImageService.1'
+			VersionIndependentProgID = s 'WindowsThumbnail.ImageService'
+			LocalServer32 = s '%MODULE%'
+			ForceRemove 'Programmable'
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{E3481FE3-E062-4E1C-A23A-62A6D13CBFB8}'
+		}
+	}
+}
+HKCU
+{
+	NoRemove Software
+	{
+		NoRemove Shareaza
+		{
+			NoRemove Shareaza
+			{
+				NoRemove Plugins
+				{
+					NoRemove ImageService
+					{
+						ForceRemove val 'Windows Thumbnail Plugin' = s '{0EEA2A0F-AD1F-4555-9827-0DD9335611A4}'
+					}
+				}
+			}
+		}
+	}
+}
