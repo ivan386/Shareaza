@@ -819,20 +819,28 @@ void CIRCFrame::OnIrcCloseTab()
 
 	CString strChannelName = GetTabText( nTab );
 	FillCountChanList( "-1", strChannelName );
-	if ( strChannelName == m_sStatus ) return;
+	if ( strChannelName == m_sStatus )
+		return;
+
 	m_wndTab.DeleteItem( nTab );
 	m_pIrcBuffer[ nTab ].RemoveAll();
 	m_pIrcUsersBuffer[ nTab ].RemoveAll();
 
 	for ( ; nTab < m_nBufferCount - 1 ; nTab++ )
+	{
 		m_pIrcBuffer[ nTab ].Append( m_pIrcBuffer[ nTab + 1 ] );
-	if ( strChannelName.Left( 1 ) == "#" ) SendString( "PART " + strChannelName );
+		m_pIrcUsersBuffer[ nTab ].Append( m_pIrcUsersBuffer[ nTab + 1 ] );
+	}
+	if ( strChannelName.Left( 1 ) == "#" )
+		SendString( "PART " + strChannelName );
 
 	m_nBufferCount--;
+
 	if ( nOldTab <= 1 )
 		m_wndTab.SetCurSel( 0 );
 	else
 		m_wndTab.SetCurSel( nOldTab - 1 );
+
 	TabClick();
 }
 
