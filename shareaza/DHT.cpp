@@ -45,7 +45,7 @@ CDHT DHT;
 BOOL CDHT::OnPacket(SOCKADDR_IN* pHost, const CBENode* pRoot)
 {
 	// TODO: SmartDump( pHost, TRUE, FALSE );
-	theApp.Message( MSG_DEBUG, _T("Recieved UDP BitTorrent packet from %s: %s"),
+	theApp.Message( MSG_DEBUG | MSG_FACILITY_INCOMING, _T("DHT: Recieved BitTorrent packet from %s: %s"),
 		(LPCTSTR)CString( inet_ntoa( pHost->sin_addr ) ), (LPCTSTR)pRoot->Encode() );
 
 	CQuickLock oLock( m_pSection );
@@ -210,7 +210,7 @@ BOOL CDHT::Pong(SOCKADDR_IN* pHost, LPCSTR szTransID, size_t nTransIDLength)
 	pPong.Add( "v" )->SetString( theApp.m_pBTVersion, 4 );
 	CBuffer pOutput;
 	pPong.Encode( &pOutput );
-	theApp.Message( MSG_DEBUG, _T("UDP: Sent BitTorrent pong packet to %s: %s"),
+	theApp.Message( MSG_DEBUG | MSG_FACILITY_OUTGOING, _T("DHT: Sent BitTorrent pong packet to %s: %s"),
 		(LPCTSTR)CString( inet_ntoa( pHost->sin_addr ) ), (LPCTSTR)pPong.Encode() );
 	return Datagrams.Send( pHost, pOutput );
 }

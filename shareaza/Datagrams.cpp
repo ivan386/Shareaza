@@ -771,7 +771,7 @@ BOOL CDatagrams::OnDatagram(SOCKADDR_IN* pHost, BYTE* pBuffer, DWORD nLength)
 			strText += _T(": ");
 		strText += ( ( pBuffer[ i ] < ' ' ) ? '.' : (char)pBuffer[ i ] );
 	}
-	theApp.Message( MSG_DEBUG, _T("%s"), strText );
+	theApp.Message( MSG_DEBUG | MSG_FACILITY_INCOMING, _T("%s"), strText );
 
 	return FALSE;
 }
