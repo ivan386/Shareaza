@@ -31,8 +31,10 @@ public :
 
 CMediaImageServicesModule _AtlModule;
 
-extern "C" int WINAPI _tWinMain(HINSTANCE /*hInstance*/, HINSTANCE /*hPrevInstance*/, 
-                                LPTSTR /*lpCmdLine*/, int nShowCmd)
+extern "C" int WINAPI _tWinMain(HINSTANCE /*hInstance*/, HINSTANCE /*hPrevInstance*/, LPTSTR /*lpCmdLine*/, int nShowCmd)
 {
+	SetErrorMode( SEM_NOGPFAULTERRORBOX | SEM_NOOPENFILEERRORBOX |
+		SEM_NOALIGNMENTFAULTEXCEPT | SEM_FAILCRITICALERRORS );
+
 	return _AtlModule.WinMain( nShowCmd );
 }
