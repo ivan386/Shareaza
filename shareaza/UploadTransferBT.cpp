@@ -306,7 +306,7 @@ BOOL CUploadTransferBT::ServeRequests()
 	if ( m_bChoked ) return TRUE;
 	if ( m_pClient->GetOutputLength() > Settings.BitTorrent.RequestSize / 3 ) return TRUE;
 	
-	while ( !m_oRequested.empty() && m_nLength == SIZE_UNKNOWN )
+	while ( ! m_oRequested.empty() && ( m_nLength == SIZE_UNKNOWN || m_nLength == 0 ) )
 	{
 		if ( std::find( m_oServed.begin(), m_oServed.end(), *m_oRequested.begin() ) == m_oServed.end()
 			// This should be redundant
@@ -320,7 +320,7 @@ BOOL CUploadTransferBT::ServeRequests()
 		m_oRequested.pop_front();
 	}
 	
-	if ( m_nLength < SIZE_UNKNOWN )
+	if ( m_nLength != SIZE_UNKNOWN && m_nLength != 0 )
 	{
 		if ( ! OpenFile() ) return FALSE;
 		
