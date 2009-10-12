@@ -2022,10 +2022,10 @@ int CIRCFrame::ParseMessageID()
 						nMessageType = ID_MESSAGE_USER_CTCPVERSION;
 					else if ( str == "time" )
 						nMessageType = ID_MESSAGE_USER_CTCPTIME;
-					else if ( str == "action" )
+					else if ( str == "action" || str == "actio" )
 						nMessageType = ID_MESSAGE_USER_ME;
 				}
-				else if ( str == "action" )
+				else if ( str == "action" || str == "actio" )
 				{
 					nMessageType = ID_MESSAGE_CHANNEL_ME;
 				}
