@@ -433,11 +433,10 @@ BOOL CDownloadTransferBT::SendRequests()
 			
 			m_oRequested.push_back( Selected );
 			
-			int nType	= ( m_nDownloaded == 0 || ( nOffset % nBlockSize ) == 0 )
-						? MSG_INFO : MSG_DEBUG;
-			theApp.Message( (WORD)nType, IDS_DOWNLOAD_FRAGMENT_REQUEST,
-				nOffset, nOffset + nLength - 1,
-				(LPCTSTR)m_pDownload->GetDisplayName(), (LPCTSTR)m_sAddress );
+			if ( m_nDownloaded == 0 || ( nOffset % nBlockSize ) == 0 )
+				theApp.Message( MSG_INFO, IDS_DOWNLOAD_FRAGMENT_REQUEST,
+					nOffset, nOffset + nLength - 1,
+					(LPCTSTR)m_pDownload->GetDisplayName(), (LPCTSTR)m_sAddress );
 #ifdef _DEBUG
 			DWORD ndBlock1 = (DWORD)( nOffset / nBlockSize );
 			DWORD ndBlock2 = (DWORD)( ( nOffset + nLength - 1 ) / nBlockSize );
