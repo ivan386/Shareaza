@@ -117,7 +117,7 @@ void CMediaVisDlg::Enumerate()
 	HKEY hKey;
 
 	if ( RegOpenKeyEx( HKEY_CURRENT_USER,
-		_T("Software\\Shareaza\\Shareaza\\Plugins\\AudioVis"),
+		_T(REGISTRY_KEY) _T("\\Plugins\\AudioVis"),
 		NULL, KEY_READ, &hKey ) != ERROR_SUCCESS ) return;
 
 	for ( DWORD nKey = 0 ; ; nKey++ )

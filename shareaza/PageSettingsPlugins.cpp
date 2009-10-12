@@ -308,7 +308,7 @@ void CPluginsSettingsPage::EnumerateMiscPlugins()
 	HKEY hPlugins = NULL;
 
 	if ( ERROR_SUCCESS != RegOpenKeyEx( HKEY_CURRENT_USER,
-		_T("Software\\Shareaza\\Shareaza\\Plugins"), 0, KEY_READ, &hPlugins ) )
+		_T(REGISTRY_KEY) _T("\\Plugins"), 0, KEY_READ, &hPlugins ) )
 		return;
 
 	for ( DWORD nIndex = 0 ; ; nIndex++ )
@@ -337,7 +337,7 @@ void CPluginsSettingsPage::EnumerateMiscPlugins()
 void CPluginsSettingsPage::EnumerateMiscPlugins(LPCTSTR pszType, HKEY hRoot)
 {
 	CMap< CString, const CString&, CString, CString& >	pCLSIDs;
-	CString strPath = _T("Software\\Shareaza\\Shareaza\\Plugins");
+	CString strPath = _T(REGISTRY_KEY) _T("\\Plugins");
 
 	for ( DWORD nIndex = 0 ; ; nIndex++ )
 	{

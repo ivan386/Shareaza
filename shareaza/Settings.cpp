@@ -891,7 +891,7 @@ void CSettings::SmartUpgrade()
 
 		if ( General.SmartVersion < 33 )
 		{
-			RegDeleteKey( HKEY_CURRENT_USER, _T("Software\\Shareaza\\Shareaza\\Plugins\\LibraryBuilder") );
+			RegDeleteKey( HKEY_CURRENT_USER, _T(REGISTRY_KEY) _T("\\Plugins\\LibraryBuilder") );
 		}
 
 		if ( General.SmartVersion < 34 )
@@ -1100,7 +1100,7 @@ void CSettings::SmartUpgrade()
 			theApp.WriteProfileString( L"", L"ShareMonkeyCid", NULL );
 			theApp.WriteProfileString( L"Library", L"BitziWebView", NULL );
 			SHDeleteValue( HKEY_CURRENT_USER,
-				_T("SOFTWARE\\Shareaza\\Shareaza\\Library"), _T("BitziOkay") );
+				_T(REGISTRY_KEY) _T("\\Library"), _T("BitziOkay") );
 		}
 
 		if ( General.SmartVersion < 56 )
@@ -1112,7 +1112,7 @@ void CSettings::SmartUpgrade()
 		{
 			// Delete old values
 			SHDeleteValue( HKEY_CURRENT_USER,
-				_T("SOFTWARE\\Shareaza\\Shareaza\\Toolbars"), _T("CRemoteWnd") );
+				_T(REGISTRY_KEY) _T("\\Toolbars"), _T("CRemoteWnd") );
 		}
 
 		if ( General.SmartVersion < 58 )

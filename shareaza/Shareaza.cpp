@@ -2274,7 +2274,7 @@ void PurgeDeletes()
 {
 	HKEY hKey = NULL;
 	LSTATUS nResult = RegOpenKeyEx( HKEY_CURRENT_USER,
-		_T("Software\\Shareaza\\Shareaza\\Delete"), 0, KEY_ALL_ACCESS, &hKey );
+		_T(REGISTRY_KEY) _T("\\Delete"), 0, KEY_ALL_ACCESS, &hKey );
 	if ( ERROR_SUCCESS == nResult )
 	{
 		CList< CString > pRemove;
