@@ -73,19 +73,7 @@ HRESULT CImageService::LoadFromBitmap(HBITMAP hBitmap, IMAGESERVICEDATA* pParams
 		// Unsupported format
 		return E_FAIL;
 
-	switch ( bmInfo.bmBitsPixel )
-	{
-	case 24:
-		pParams->nComponents = 3;
-		break;
-	case 32:
-		pParams->nComponents = 4;
-		break;
-	default:
-		// Unsupported format
-		return E_FAIL;
-	}
-
+	pParams->nComponents = 3;
 	pParams->nWidth = bmInfo.bmWidth;
 	pParams->nHeight = bmInfo.bmHeight;
 
@@ -103,32 +91,19 @@ HRESULT CImageService::LoadFromBitmap(HBITMAP hBitmap, IMAGESERVICEDATA* pParams
 	if ( FAILED( SafeArrayAccessData( *ppImage, (void**)&dst ) ) )
 		return E_OUTOFMEMORY;
 
-	// Down-up bitmap copying and BGR -> RGB converting
-	// (it is not a simple reverse copy!)
-	const BYTE* src = (BYTE*)bmInfo.bmBits + sizeof( BITMAPINFOHEADER ) +
-		line_size * ( bmInfo.bmHeight - 1 );
-	for ( LONG j = 0; j < bmInfo.bmHeight; ++j, dst += line_size, src -= line_size )
+	HDC hDC = GetDC( NULL );
+	BITMAPINFOHEADER bmi = { sizeof( BITMAPINFOHEADER ), bmInfo.bmWidth, - bmInfo.bmHeight, 1, 24, BI_RGB };
+	GetDIBits( hDC, hBitmap, 0, bmInfo.bmHeight, dst, (BITMAPINFO*)&bmi, DIB_RGB_COLORS );
+	ReleaseDC( NULL, hDC );
+
+	// BGR -> RGB
+	for ( LONG j = 0; j < bmInfo.bmHeight; ++j, dst += line_size )
 	{
-		if ( bmInfo.bmBitsPixel == 24 )
+		for ( LONG i = 0; i < bmInfo.bmWidth * 3; i += 3 )
 		{
-			// 24-bit bitmap
-			for ( LONG i = 0; i < bmInfo.bmWidth * 3; i += 3 )
-			{
-				dst[i + 0] = src[i + 2];
-				dst[i + 1] = src[i + 1];
-				dst[i + 2] = src[i + 0];
-			}
-		}
-		else
-		{
-			// 32-bit bitmap
-			for ( LONG i = 0; i < bmInfo.bmWidth * 4; i += 4 )
-			{
-				dst[i + 0] = src[i + 2];
-				dst[i + 1] = src[i + 1];
-				dst[i + 2] = src[i + 0];
-				dst[i + 3] = src[i + 3];	// Alpha
-			}
+			BYTE c = dst[i + 0];
+			dst[i + 0] = dst[i + 2];
+			dst[i + 2] = c;
 		}
 	}
 

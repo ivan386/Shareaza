@@ -175,20 +175,8 @@ BOOL CImageFile::LoadFromBitmap(HBITMAP hBitmap, BOOL bScanOnly)
 		// Unsupported format
 		return FALSE;
 
-	switch ( bmInfo.bmBitsPixel )
-	{
-	case 24:
-		m_nComponents = 3;
-		break;
-	case 32:
-		m_nComponents = 4;
-		break;
-	default:
-		// Unsupported format
-		return FALSE;
-	}
-
 	m_bScanned = TRUE;
+	m_nComponents = 3;
 	m_nWidth = bmInfo.bmWidth;
 	m_nHeight = bmInfo.bmHeight;
 
@@ -201,33 +189,20 @@ BOOL CImageFile::LoadFromBitmap(HBITMAP hBitmap, BOOL bScanOnly)
 		// Out of memory
 		return FALSE;
 
-	// Down-up bitmap copying and BGR -> RGB converting
-	// (it is not a simple reverse copy!)
-	BYTE* dst = m_pImage;
-	const BYTE* src = (BYTE*)bmInfo.bmBits + sizeof( BITMAPINFOHEADER ) +
-		line_size * ( m_nHeight - 1 );
-	for ( LONG j = 0; j < m_nHeight; ++j, dst += line_size, src -= line_size )
+	HDC hDC = GetDC( NULL );
+	BITMAPINFOHEADER bmi = { sizeof( BITMAPINFOHEADER ), bmInfo.bmWidth, - bmInfo.bmHeight, 1, 24, BI_RGB };
+	GetDIBits( hDC, hBitmap, 0, bmInfo.bmHeight, m_pImage, (BITMAPINFO*)&bmi, DIB_RGB_COLORS );
+	ReleaseDC( NULL, hDC );
+
+	// BGR -> RGB
+	LPBYTE dst = m_pImage;
+	for ( LONG j = 0; j < bmInfo.bmHeight; ++j, dst += line_size )
 	{
-		if ( m_nComponents == 3 )
+		for ( LONG i = 0; i < bmInfo.bmWidth * 3; i += 3 )
 		{
-			// 24-bit bitmap
-			for ( LONG i = 0; i < m_nWidth * 3; i += 3 )
-			{
-				dst[i + 0] = src[i + 2];
-				dst[i + 1] = src[i + 1];
-				dst[i + 2] = src[i + 0];
-			}
-		}
-		else
-		{
-			// 32-bit bitmap
-			for ( LONG i = 0; i < m_nWidth * 4; i += 4 )
-			{
-				dst[i + 0] = src[i + 2];
-				dst[i + 1] = src[i + 1];
-				dst[i + 2] = src[i + 0];
-				dst[i + 3] = src[i + 3];	// Alpha
-			}
+			BYTE c = dst[i + 0];
+			dst[i + 0] = dst[i + 2];
+			dst[i + 2] = c;
 		}
 	}
 
