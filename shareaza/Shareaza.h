@@ -242,8 +242,13 @@ LRESULT CALLBACK MouseHook(int nCode, WPARAM wParam, LPARAM lParam);
 // Create directory. If one or more of the intermediate folders do not exist, they are created as well.
 BOOL CreateDirectory(LPCTSTR szPath);
 
+// Delete file(s) with user confirmation
+void DeleteFiles(CStringList& pList);
+
 // Delete file in many ways
 BOOL DeleteFileEx(LPCTSTR szFileName, BOOL bShared, BOOL bToRecycleBin, BOOL bEnableDelayed);
+
+// Delete postponed file
 void PurgeDeletes();
 
 // Loads RT_HTML or RT_GZIP resource as string

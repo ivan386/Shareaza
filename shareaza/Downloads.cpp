@@ -1156,7 +1156,7 @@ void CDownloads::OnRename(LPCTSTR pszSource, LPCTSTR /*pszTarget*/)
 	{
 		if ( ! pDownload->IsMoving() )
 		{
-			pDownload->Remove( false );
+			pDownload->Remove();
 		}
 	}
 }

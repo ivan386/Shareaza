@@ -152,7 +152,7 @@ void CDownload::Resume()
 //////////////////////////////////////////////////////////////////////
 // CDownload control : remove
 
-void CDownload::Remove(bool bDelete)
+void CDownload::Remove()
 {
 	CloseTorrent();
 	CloseTransfers();
@@ -161,13 +161,12 @@ void CDownload::Remove(bool bDelete)
 	if ( IsTrying() && !IsSeeding() )
 		Downloads.StopTrying( IsTorrent() );
 
-	if ( bDelete || ! IsCompleted() )
-	{
-		theApp.Message( MSG_NOTICE, IDS_DOWNLOAD_REMOVE, (LPCTSTR)GetDisplayName() );
-		DeleteFile();
-	}
-	else
+	theApp.Message( MSG_NOTICE, IDS_DOWNLOAD_REMOVE, (LPCTSTR)GetDisplayName() );
+
+	if ( IsCompleted() )
 		CloseFile();
+	else
+		DeleteFile();
 
 	DeletePreviews();
 

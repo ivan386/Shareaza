@@ -355,25 +355,11 @@ BOOL CLibraryFile::Delete(BOOL bDeleteGhost)
 {
 	if ( m_pFolder != NULL )
 	{
-		// Close builder handler
-		LibraryBuilder.Remove( this );
-
-		// Close download handler
-		CQuickLock pLock( Transfers.m_pSection );
-		if ( CDownload* pDownload = Downloads.FindByPath( GetPath() ) )
+		// Delete file
+		BOOL bToRecycleBin = ( ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 ) == 0 );
+		if ( ! DeleteFileEx( GetPath(), TRUE, bToRecycleBin, TRUE ) )
 		{
-			// Also deletes file and closes upload handlers
-			if ( ! pDownload->IsMoving() )
-				pDownload->Remove( true );
-		}
-		else
-		{
-			// Delete file and close upload handlers
-			BOOL bToRecycleBin = ( ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 ) == 0 );
-			if ( ! DeleteFileEx( GetPath(), TRUE, bToRecycleBin, TRUE ) )
-			{
-				return FALSE;
-			}
+			return FALSE;
 		}
 	}
 

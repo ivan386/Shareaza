@@ -67,7 +67,7 @@ private:
 public:
 	void		Pause(BOOL bRealPause = TRUE);
 	void		Resume();
-	void		Remove(bool bDelete = false);
+	void		Remove();
 	void		Boost();
 	void		Share(BOOL bShared);
 	bool		Rename(const CString& strName);
