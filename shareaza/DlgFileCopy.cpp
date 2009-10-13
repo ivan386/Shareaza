@@ -103,7 +103,7 @@ BOOL CFileCopyDlg::OnInitDialog()
 	{
 		CQuickLock oLock( Library.m_pSection );
 
-		m_nCookie = Library.m_nUpdateCookie;
+		m_nCookie = Library.GetCookie();
 		m_wndTree.Update();
 
 		if ( CLibraryFolder* pFolder = LibraryFolders.GetFolder( m_sTarget ) )
@@ -136,13 +136,13 @@ void CFileCopyDlg::OnTimer(UINT_PTR /*nIDEvent*/)
 
 	if ( ! m_wndTree.IsWindowEnabled() ) return;
 
-	if ( m_nCookie != Library.m_nUpdateCookie )
+	if ( m_nCookie != Library.GetCookie() )
 	{
 		CSingleLock pLock( &Library.m_pSection );
 
 		if ( pLock.Lock( 500 ) )
 		{
-			m_nCookie = Library.m_nUpdateCookie;
+			m_nCookie = Library.GetCookie();
 			m_wndTree.Update();
 		}
 	}

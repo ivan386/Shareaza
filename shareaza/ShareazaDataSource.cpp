@@ -159,7 +159,7 @@ UINT AsyncFileOperationThread(LPVOID param)
 	}
 	SHChangeNotify( SHCNE_UPDATEDIR, SHCNF_PATH, (LPCVOID)(LPCTSTR)pAFOP->sTo.GetData(), 0 );
 
-	Library.Update();
+	Library.Update( true );
 
 	delete pAFOP;
 
@@ -796,7 +796,7 @@ BOOL CShareazaDataSource::DropToAlbum(IDataObject* pIDataObject, DWORD grfKeySta
 	{
 		if ( bDrop )
 		{
-			Library.Update();
+			Library.Update( true );
 
 			if ( *pdwEffect == DROPEFFECT_MOVE )
 			{

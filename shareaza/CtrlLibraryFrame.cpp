@@ -750,8 +750,8 @@ BOOL CLibraryFrame::Update(BOOL bForce, BOOL bBestView)
 	CSingleLock pLock( &Library.m_pSection );
 	if ( ! pLock.Lock( bForce ? 500 : 50 ) ) return FALSE;
 
-	if ( ! bForce && m_nLibraryCookie == Library.m_nUpdateCookie ) return FALSE;
-	m_nLibraryCookie = Library.m_nUpdateCookie;
+	if ( ! bForce && m_nLibraryCookie == Library.GetCookie() ) return FALSE;
+	m_nLibraryCookie = Library.GetCookie();
 
 	m_bUpdating = TRUE;
 

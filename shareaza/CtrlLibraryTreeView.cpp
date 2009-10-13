@@ -1947,7 +1947,7 @@ void CLibraryTreeView::OnLibraryRebuild()
 		}
 	}
 
-	Library.Update();
+	Library.Update( true );
 }
 
 void CLibraryTreeView::OnUpdateLibraryFolderProperties(CCmdUI* pCmdUI)

@@ -619,6 +619,8 @@ DWORD CFragmentedFile::Move(DWORD nIndex, LPCTSTR pszDestination, LPPROGRESS_ROU
 		// ReEnable uploads
 		theApp.OnRename( sPath, bSuccess ? strTarget : sPath );
 
+	Library.Update( true );
+
 	return ( bSuccess ? ERROR_SUCCESS : dwError );
 }
 

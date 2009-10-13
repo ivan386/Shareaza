@@ -235,7 +235,7 @@ bool CAlbumFolder::OnFolderDelete(CAlbumFolder* pFolder)
 
 	pFolder->m_pParent = NULL;
 
-	Library.m_nUpdateCookie++;
+	Library.Update();
 	m_nUpdateCookie++;
 	Delete( TRUE );
 	return true;
@@ -268,7 +268,7 @@ void CAlbumFolder::AddFile(CLibraryFile* pFile)
 	}
 
 	m_nUpdateCookie++;
-	Library.m_nUpdateCookie++;
+	Library.Update();
 }
 
 POSITION CAlbumFolder::GetFileIterator() const
@@ -313,7 +313,7 @@ void CAlbumFolder::RemoveFile(CLibraryFile* pFile)
 	{
 		m_pFiles.RemoveAt( pos );
 		m_nUpdateCookie++;
-		Library.m_nUpdateCookie++;
+		Library.Update();
 		Delete( TRUE );
 	}
 }
@@ -328,7 +328,7 @@ void CAlbumFolder::OnFileDelete(CLibraryFile* pFile, BOOL bDeleteGhost)
 	if ( ! bDeleteGhost && CheckURI( m_sSchemaURI, CSchema::uriGhostFolder ) )
 	{
 		m_nUpdateCookie++;
-		Library.m_nUpdateCookie++;
+		Library.Update();
 		return;
 	}
 
@@ -336,7 +336,7 @@ void CAlbumFolder::OnFileDelete(CLibraryFile* pFile, BOOL bDeleteGhost)
 	{
 		m_pFiles.RemoveAt( pos );
 		m_nUpdateCookie++;
-		Library.m_nUpdateCookie++;
+		Library.Update();
 		Delete( TRUE );
 	}
 }
@@ -416,7 +416,7 @@ void CAlbumFolder::Delete(BOOL bIfEmpty)
 BOOL CAlbumFolder::SetMetadata(CXMLElement* pXML)
 {
 	m_nUpdateCookie++;
-	Library.m_nUpdateCookie++;
+	Library.Update();
 
 	if ( m_pXML != NULL )
 	{
@@ -460,7 +460,7 @@ BOOL CAlbumFolder::MetaFromFile(CLibraryFile* pFile)
 	pChild->MemberCopy( m_pXML, pFile->m_pMetadata );
 
 	m_nUpdateCookie++;
-	Library.m_nUpdateCookie++;
+	Library.Update();
 
 	return TRUE;
 }
@@ -573,7 +573,7 @@ BOOL CAlbumFolder::MountCollection(const Hashes::Sha1Hash& oSHA1, CCollectionFil
 				pFolder->SetCollection( oSHA1, pCollection );
 
 				m_nUpdateCookie++;
-				Library.m_nUpdateCookie++;
+				Library.Update();
 				bResult = TRUE;
 			}
 		}
@@ -620,7 +620,7 @@ void CAlbumFolder::SetCollection(const Hashes::Sha1Hash& oSHA1, CCollectionFile*
 	}
 
 	m_nUpdateCookie++;
-	Library.m_nUpdateCookie++;
+	Library.Update();
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -648,7 +648,7 @@ CCollectionFile* CAlbumFolder::GetCollection()
 
 	m_oCollSHA1.clear();
 	m_nUpdateCookie++;
-	Library.m_nUpdateCookie++;
+	Library.Update();
 
 	return NULL;
 }

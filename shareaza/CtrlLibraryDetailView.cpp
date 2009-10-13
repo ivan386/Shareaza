@@ -812,7 +812,7 @@ void CLibraryDetailView::OnEndLabelEditW(NMHDR* pNotify, LRESULT* pResult)
 			LPCTSTR pszType = _tcsrchr( pFile->m_sName, '.' );
 			if ( pszType ) strName += pszType;
 			*pResult = pFile->Rename( strName );
-			Library.Update();
+			Library.Update( true );
 			oLock.Unlock();
 
 			if ( *pResult == FALSE )
@@ -843,7 +843,7 @@ void CLibraryDetailView::OnEndLabelEditA(NMHDR* pNotify, LRESULT* pResult)
 			LPCTSTR pszType = _tcsrchr( pFile->m_sName, '.' );
 			if ( pszType ) strName += pszType;
 			*pResult = pFile->Rename( strName );
-			Library.Update();
+			Library.Update( true );
 			oLock.Unlock();
 
 			if ( *pResult == FALSE )

@@ -58,7 +58,7 @@ CFolderScanDlg::CFolderScanDlg(CWnd* pParent) : CSkinDialog(CFolderScanDlg::IDD,
 	if ( oLock.Lock( 500 ) )
 	{
 		m_pDialog	= this;
-		m_nCookie	= Library.m_nScanCount;
+		m_nCookie	= Library.GetScanCount();
 	}
 }
 
@@ -102,7 +102,7 @@ void CFolderScanDlg::OnTimer(UINT_PTR /*nIDEvent*/)
 {
 	CSingleLock pLock( &Library.m_pSection );
 
-	if ( pLock.Lock( 50 ) && m_nCookie != Library.m_nScanCount )
+	if ( pLock.Lock( 50 ) && m_nCookie != Library.GetScanCount() )
 	{
 		pLock.Unlock();
 		CSkinDialog::OnCancel();

@@ -61,14 +61,15 @@ CLibrary Library;
 //////////////////////////////////////////////////////////////////////
 // CLibrary construction
 
-CLibrary::CLibrary() :
-	m_nUpdateCookie				( 0ul )
-,	m_nForcedUpdateCookie		( 0ul )
-,	m_nScanCount				( 0ul )
-,	m_nScanCookie				( 1ul )
-,	m_nScanTime					( 0ul )
-,	m_nUpdateSaved				( 0ul )
-,	m_nFileSwitch				( 0 )
+CLibrary::CLibrary()
+	:	m_nUpdateCookie	( 0 )
+	,	m_nForcedUpdate	( FALSE )
+	,	m_nScanCount	( 0 )
+	,	m_nScanCookie	( 1 )
+	,	m_nScanTime		( 0 )
+	,	m_nSaveCookie	( 0 )
+	,	m_nSaveTime		( 0 )
+	,	m_nFileSwitch	( 0 )
 {
 	EnableDispatch( IID_ILibrary );
 }
@@ -395,7 +396,9 @@ BOOL CLibrary::Load()
 	LibraryBuilder.BoostPriority( Settings.Library.HighPriorityHash );
 
 	Update();
-	m_nUpdateSaved = GetTickCount();
+
+	m_nSaveCookie = m_nUpdateCookie;
+	m_nSaveTime = GetTickCount();
 
 	BeginThread( "Library" );
 
@@ -418,34 +421,41 @@ BOOL CLibrary::Save()
 		(LPCTSTR)Settings.General.UserPath, m_nFileSwitch + 1 );
 
 	m_nFileSwitch = ( m_nFileSwitch == 0 ) ? 1 : 0;
+	m_nSaveTime = GetTickCount();
 
-	if ( ! pFile.Open( strFile, CFile::modeWrite|CFile::modeCreate ) ) return FALSE;
-
-	try
+	if ( pFile.Open( strFile, CFile::modeWrite|CFile::modeCreate ) )
 	{
-		pFile.Write( &pFileTime, sizeof(FILETIME) );
+		try
+		{
+			pFile.Write( &pFileTime, sizeof(FILETIME) );
 
-		CArchive ar( &pFile, CArchive::store, 40960 );
-		Serialize( ar );
-		ar.Close();
-		pFile.Flush();
+			CArchive ar( &pFile, CArchive::store, 40960 );
+			Serialize( ar );
+			ar.Close();
+			pFile.Flush();
 
-		GetSystemTime( &pSystemTime );
-		SystemTimeToFileTime( &pSystemTime, &pFileTime );
-		pFile.Seek( 0, 0 );
-		pFile.Write( &pFileTime, sizeof(FILETIME) );
+			GetSystemTime( &pSystemTime );
+			SystemTimeToFileTime( &pSystemTime, &pFileTime );
+			pFile.Seek( 0, 0 );
+			pFile.Write( &pFileTime, sizeof(FILETIME) );
 
-		pFile.Close();
+			pFile.Close();
 
-		theApp.Message( MSG_DEBUG, _T("Library successfully saved to: %s"), strFile );
-		return TRUE;
+			theApp.Message( MSG_DEBUG, _T("Library successfully saved to: %s"), strFile );
+
+			m_nSaveCookie = m_nUpdateCookie;
+
+			return TRUE;
+		}
+		catch ( CException* pException )
+		{
+			pException->Delete();
+		}
 	}
-	catch ( CException* pException )
-	{
-		pException->Delete();
 
-		return FALSE;
-	}
+	theApp.Message( MSG_ERROR, _T("Library save error to: %s"), strFile );
+
+	return FALSE;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -499,37 +509,32 @@ BOOL CLibrary::ThreadScan()
 		return FALSE;
 	}
 
-	BOOL bForcedScan = FALSE, bPeriodicScan = FALSE;
-	DWORD tNow = GetTickCount();
+	// Scan was requested by Library.Update( true ) call
+	BOOL bForcedScan = InterlockedCompareExchange( &m_nForcedUpdate, FALSE, TRUE );
 
-	if ( !Settings.Library.WatchFolders )
-	{
-		bForcedScan = ( m_nForcedUpdateCookie == 0 );
-	}
-	else
-	{
-		bPeriodicScan = ( m_nScanTime < tNow - Settings.Library.WatchFoldersTimeout * 1000 );
-	}
+	// If folders not watched then scan them at periodic basis
+	// (default is one time per 5 seconds)
+	BOOL bPeriodicScan = ! Settings.Library.WatchFolders &&
+		( m_nScanTime <  GetTickCount() - Settings.Library.WatchFoldersTimeout * 1000 );
 
 	BOOL bChanged = LibraryFolders.ThreadScan( bPeriodicScan || bForcedScan );
 
 	if ( bPeriodicScan || bForcedScan || bChanged )
 	{
-		m_nScanTime = GetTickCount();
+		m_nScanTime =  GetTickCount();
 
-		if ( bForcedScan )
-			m_nForcedUpdateCookie = m_nUpdateCookie;
-
+		// Mark library as changed
 		if ( bChanged )
 			Update();
 	}
 
 	m_nScanCount++;
 
-	if ( m_nUpdateCookie > m_nUpdateSaved && tNow - m_nUpdateSaved > 30000 )
+	// Save library changes but not frequently
+	// (one time per 30 seconds)
+	if ( m_nUpdateCookie != m_nSaveCookie && GetTickCount() - m_nSaveTime > 30000 )
 	{
-		if ( Save() )
-			m_nUpdateSaved = GetTickCount();
+		Save();
 	}
 
 	return bChanged;

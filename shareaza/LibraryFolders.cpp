@@ -171,7 +171,7 @@ CLibraryFolder* CLibraryFolders::AddFolder(LPCTSTR pszPath)
 
 		pFolder->Maintain( TRUE );
 
-		Library.Update();
+		Library.Update( true );
 	}
 
 	return pFolder;
@@ -293,7 +293,7 @@ BOOL CLibraryFolders::RemoveFolder(CLibraryFolder* pFolder)
 	pFolder->OnDelete( Settings.Library.CreateGhosts ? TRI_TRUE : TRI_FALSE );
 	m_pFolders.RemoveAt( pos );
 
-	Library.Update();
+	Library.Update( true );
 
 	return TRUE;
 }

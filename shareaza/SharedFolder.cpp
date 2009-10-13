@@ -381,7 +381,7 @@ BOOL CLibraryFolder::ThreadScan(DWORD nScanCookie)
 
 	pLock.Lock();
 	m_nScanCookie	= nScanCookie;
-	nScanCookie		= ++Library.m_nScanCookie;
+	nScanCookie		= Library.GetScanCookie();
 	pLock.Unlock();
 
 	BOOL bChanged = FALSE;
@@ -557,8 +557,8 @@ BOOL CLibraryFolder::IsChanged()
 	{
 		// Enable monitor
 		m_hMonitor = FindFirstChangeNotification( m_sPath, TRUE,
-			FILE_NOTIFY_CHANGE_FILE_NAME | FILE_NOTIFY_CHANGE_DIR_NAME|
-			FILE_NOTIFY_CHANGE_LAST_WRITE );
+			FILE_NOTIFY_CHANGE_FILE_NAME | FILE_NOTIFY_CHANGE_DIR_NAME |
+			FILE_NOTIFY_CHANGE_ATTRIBUTES | FILE_NOTIFY_CHANGE_LAST_WRITE );
 	}
 	else if ( m_hMonitor != INVALID_HANDLE_VALUE && ! Settings.Library.WatchFolders )
 	{
