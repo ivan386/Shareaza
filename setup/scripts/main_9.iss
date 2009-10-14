@@ -122,44 +122,30 @@ Source: "GeoIP\{#PlatformName}\{#ConfigurationName}\GeoIP.dll"; DestDir: "{app}"
 Source: "GeoIP\GeoIP.dat"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 
 ; Plugins
-Source: "plugins\7ZipBuilder\{#PlatformName}\{#ConfigurationName}\7ZipBuilder.dll";   DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
-Source: "plugins\7ZipBuilder\{#PlatformName}\{#ConfigurationName}\7zxr.dll"; DestDir: "{app}";         Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
-
-Source: "plugins\DocumentReader\{#PlatformName}\{#ConfigurationName}\DocumentReader.dll";   DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
-
-Source: "plugins\GFLImageServices\{#PlatformName}\{#ConfigurationName}\GFLImageServices.dll";   DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
-Source: "plugins\GFLImageServices\{#PlatformName}\{#ConfigurationName}\libgfl290.dll"; DestDir: "{app}";         Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
-
-Source: "plugins\GFLLibraryBuilder\{#PlatformName}\{#ConfigurationName}\GFLLibraryBuilder.dll";   DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
-
-Source: "plugins\ImageViewer\{#PlatformName}\{#ConfigurationName}\ImageViewer.dll";   DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
-
+Source: "plugins\7ZipBuilder\{#PlatformName}\{#ConfigurationName}\7ZipBuilder.dll";                 DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
+Source: "plugins\7ZipBuilder\{#PlatformName}\{#ConfigurationName}\7zxr.dll";                        DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+Source: "plugins\DocumentReader\{#PlatformName}\{#ConfigurationName}\DocumentReader.dll";           DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
+Source: "plugins\GFLImageServices\{#PlatformName}\{#ConfigurationName}\GFLImageServices.dll";       DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
+Source: "plugins\GFLImageServices\{#PlatformName}\{#ConfigurationName}\libgfl290.dll";              DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+Source: "plugins\GFLLibraryBuilder\{#PlatformName}\{#ConfigurationName}\GFLLibraryBuilder.dll";     DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
+Source: "plugins\ImageViewer\{#PlatformName}\{#ConfigurationName}\ImageViewer.dll";                 DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
 Source: "plugins\MediaImageServices\{#PlatformName}\{#ConfigurationName}\MediaImageServices.exe";   DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
-
-Source: "plugins\MediaLibraryBuilder\{#PlatformName}\{#ConfigurationName}\MediaLibraryBuilder.dll";   DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
-
-Source: "plugins\RARBuilder\{#PlatformName}\{#ConfigurationName}\RARBuilder.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
+Source: "plugins\MediaLibraryBuilder\{#PlatformName}\{#ConfigurationName}\MediaLibraryBuilder.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
+Source: "plugins\MediaPlayer\{#PlatformName}\{#ConfigurationName}\MediaPlayer.dll";                 DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
+Source: "plugins\RARBuilder\{#PlatformName}\{#ConfigurationName}\RARBuilder.dll";                   DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
 #if PlatformName == "Win32"
-Source: "plugins\RARBuilder\unrar.dll";   DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+Source: "plugins\RARBuilder\unrar.dll";                                                             DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 #elif PlatformName == "x64"
-Source: "plugins\RARBuilder\unrar64.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+Source: "plugins\RARBuilder\unrar64.dll";                                                           DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
 #endif
-
-Source: "plugins\RatDVDPlugin\{#PlatformName}\{#ConfigurationName}\RatDVDReader.dll";   DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
-
-Source: "plugins\SkinScanSKS\{#PlatformName}\{#ConfigurationName}\SkinScanSKS.dll";   DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
-
-Source: "plugins\SWFPlugin\{#PlatformName}\{#ConfigurationName}\SWFPlugin.dll";   DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
-
-Source: "plugins\ZIPBuilder\{#PlatformName}\{#ConfigurationName}\ZIPBuilder.dll";   DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
-
-Source: "plugins\MediaPlayer\{#PlatformName}\{#ConfigurationName}\MediaPlayer.dll"; DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
-
-Source: "plugins\RazaWebHook\Win32\{#ConfigurationName}\RazaWebHook32.dll"; DestDir: "{app}"; Flags: noregerror overwritereadonly replacesameversion restartreplace uninsremovereadonly uninsrestartdelete sortfilesbyextension regserver
-Source: "plugins\RazaWebHook\x64\{#ConfigurationName}\RazaWebHook64.dll"; DestDir: "{app}"; Flags: noregerror overwritereadonly replacesameversion restartreplace uninsremovereadonly uninsrestartdelete sortfilesbyextension regserver
-
-Source: "plugins\VirusTotal\{#PlatformName}\{#ConfigurationName}\VirusTotal.dll";   DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
-
+Source: "plugins\RatDVDPlugin\{#PlatformName}\{#ConfigurationName}\RatDVDReader.dll";               DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
+Source: "plugins\RazaWebHook\Win32\{#ConfigurationName}\RazaWebHook32.dll";                         DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly uninsrestartdelete sortfilesbyextension regserver noregerror
+Source: "plugins\RazaWebHook\x64\{#ConfigurationName}\RazaWebHook64.dll";                           DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly uninsrestartdelete sortfilesbyextension regserver noregerror
+Source: "plugins\SkinScanSKS\{#PlatformName}\{#ConfigurationName}\SkinScanSKS.dll";                 DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
+Source: "plugins\SWFPlugin\{#PlatformName}\{#ConfigurationName}\SWFPlugin.dll";                     DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
+Source: "plugins\VirusTotal\{#PlatformName}\{#ConfigurationName}\VirusTotal.dll";                   DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
+Source: "plugins\WindowsThumbnail\{#PlatformName}\{#ConfigurationName}\WindowsThumbnail.exe";       DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension
+Source: "plugins\ZIPBuilder\{#PlatformName}\{#ConfigurationName}\ZIPBuilder.dll";                   DestDir: "{app}"; Flags: overwritereadonly replacesameversion restartreplace uninsremovereadonly sortfilesbyextension regserver
 
 ;--== Debug Databases ==--
 #if ConfigurationName == "Debug"
@@ -244,6 +230,7 @@ SetupAppTitle=Setup - {#internal_name}
 [Run]
 ; Register EXE servers
 Filename: "{app}\MediaImageServices.exe"; Parameters: "/RegServer"; WorkingDir: "{app}"
+Filename: "{app}\WindowsThumbnail.exe";   Parameters: "/RegServer"; WorkingDir: "{app}"
 
 ; Run the skin installer at end of installation
 Filename: "{app}\skin.exe"; Parameters: "/installsilent"; WorkingDir: "{app}"; StatusMsg: "{cm:run_skinexe}"
