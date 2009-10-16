@@ -750,24 +750,11 @@ void CG2Neighbour::SendKHL()
 	m_nCountKHLOut ++;
 }
 
-CG2Packet* CG2Neighbour::CreateKHLPacket(CG2Neighbour* pOwner, BOOL nIncludeSelf)
+CG2Packet* CG2Neighbour::CreateKHLPacket(CG2Neighbour* pOwner)
 {
 	CG2Packet* pPacket = CG2Packet::New( G2_PACKET_KHL, TRUE );
 	int nCount = Settings.Gnutella2.KHLHubCount;
 	DWORD tNow = static_cast< DWORD >( time( NULL ) );
-	BOOL bIsHub = ( ! Neighbours.IsG2Leaf() ) && ( Neighbours.IsG2Hub() || Neighbours.IsG2HubCapable() );
-
-	if ( nIncludeSelf && bIsHub )
-	{
-		// For DIS reply
-		pPacket->WritePacket( G2_PACKET_CACHED_HUB, 18, TRUE );			// 4
-		pPacket->WritePacket( G2_PACKET_VENDOR, 4 );					// 3
-		pPacket->WriteString( VENDOR_CODE );							// 5
-		pPacket->WriteLongLE( Network.m_pHost.sin_addr.S_un.S_addr );	// 4
-		pPacket->WriteShortBE( htons( Network.m_pHost.sin_port ) );		// 2
-		pPacket->WriteLongBE( tNow );									// 4
-		nCount--;
-	}
 
 	for ( POSITION pos = Neighbours.GetIterator() ; pos ; )
 	{
@@ -990,6 +977,13 @@ BOOL CG2Neighbour::ParseKHLPacket(CG2Packet* pPacket, SOCKADDR_IN* pHost)
 			else if ( nType == G2_PACKET_TIMESTAMP && nLength >= 4 )
 			{
 				tAdjust = (LONG)tNow - (LONG)pPacket->ReadLongBE();
+			}
+			else if ( nType == G2_PACKET_YOURIP && nLength >= 4 )
+			{
+				IN_ADDR pMyAddress;
+				pMyAddress.s_addr = pPacket->ReadLongLE();
+				if ( Network.m_pHost.sin_addr.s_addr == 0 )
+					Network.AcquireLocalAddress( pMyAddress );
 			}
 			else
 				bInvalid = TRUE;

@@ -1831,7 +1831,27 @@ BOOL CDatagrams::OnCrawlAnswer(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 
 BOOL CDatagrams::OnDiscovery(SOCKADDR_IN* pHost, CG2Packet* /*pPacket*/)
 {
-	Send( pHost, CG2Neighbour::CreateKHLPacket( NULL, TRUE ), TRUE, 0, FALSE );
+	if ( CG2Packet* pKHL = CG2Neighbour::CreateKHLPacket() )
+	{
+		// Add myself
+		if ( ! Neighbours.IsG2Leaf() &&
+			 ( Neighbours.IsG2Hub() ||
+			   Neighbours.IsG2HubCapable( HostCache.Gnutella2.IsEmpty() ) ) &&
+			   Network.IsListening() )
+		{
+			pKHL->WritePacket( G2_PACKET_CACHED_HUB, 18, TRUE );		// 4
+			pKHL->WritePacket( G2_PACKET_VENDOR, 4 );					// 3
+			pKHL->WriteString( VENDOR_CODE );							// 5
+			pKHL->WriteLongLE( Network.m_pHost.sin_addr.S_un.S_addr );	// 4
+			pKHL->WriteShortBE( htons( Network.m_pHost.sin_port ) );	// 2
+			pKHL->WriteLongBE( static_cast< DWORD >( time( NULL ) ) );	// 4
+		}
+
+		pKHL->WritePacket( G2_PACKET_YOURIP, 4 );
+		pKHL->WriteLongLE( pHost->sin_addr.S_un.S_addr );				// 4
+
+		Send( pHost, pKHL, TRUE, 0, FALSE );
+	}
 
 	return TRUE;
 }
@@ -1928,6 +1948,13 @@ BOOL CDatagrams::OnKHLA(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 		else if ( nType == G2_PACKET_TIMESTAMP && nLength >= 4 )
 		{
 			tAdjust = (LONG)tNow - (LONG)pPacket->ReadLongBE();
+		}
+		else if ( nType == G2_PACKET_YOURIP && nLength >= 4 )
+		{
+			IN_ADDR pMyAddress;
+			pMyAddress.s_addr = pPacket->ReadLongLE();
+			if ( Network.m_pHost.sin_addr.s_addr == 0 )
+				Network.AcquireLocalAddress( pMyAddress );
 		}
 
 		pPacket->m_nPosition = nNext;
@@ -2030,6 +2057,10 @@ BOOL CDatagrams::OnKHLR(SOCKADDR_IN* pHost, CG2Packet* pPacket)
 			}
 		}
 	}
+
+	pKHLA->WritePacket( G2_PACKET_YOURIP, 4 );
+	pKHLA->WriteLongLE( pHost->sin_addr.S_un.S_addr );	// 4
+
 	Send( pHost, pKHLA );
 
 	return TRUE;
