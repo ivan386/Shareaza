@@ -213,13 +213,10 @@ BOOL CShareMonkeyData::BuildRequest()
 
 	if ( m_nRequestType == stProductMatch || m_nRequestType == stComparison )
 	{
-		if ( theApp.m_nUPnPExternalAddress != ADDR_ANY )
+		if ( theApp.m_nUPnPExternalAddress.s_addr != INADDR_NONE )
 		{
-			CString strIP;
-			DWORD ip = theApp.m_nUPnPExternalAddress;
-			strIP.Format( L"%d.%d.%d.%d", ( ip & 0x0000ff ), ( ( ip & 0x00ff00 ) >> 8 ),
-						  ( ( ip & 0xff0000 ) >> 16 ), ( ip >> 24 ) );
-			m_sURL += L"&user_ip_address=" + strIP;
+			m_sURL += L"&user_ip_address=";
+			m_sURL += inet_ntoa( theApp.m_nUPnPExternalAddress );
 		}
 		else
 		{

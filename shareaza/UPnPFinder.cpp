@@ -608,7 +608,6 @@ CString CUPnPFinder::GetLocalRoutableIP(ServicePointer pService)
 		return CString();
 
 	DWORD nCount = ipAddr->dwNumEntries;
-	DWORD nSearchIP = 0;
 	CString strLocalIP;
 
 	// Look for IP associated with the interface in the address table
@@ -617,12 +616,8 @@ CString CUPnPFinder::GetLocalRoutableIP(ServicePointer pService)
 	{
 		if ( ipAddr->table[ nIf ].dwIndex == nInterfaceIndex )
 		{
-			nSearchIP = ipAddr->table[ nIf ].dwAddr;
-			strLocalIP.Format( L"%d.%d.%d.%d", ( nSearchIP & 0x0000ff ),
-				( ( nSearchIP & 0x00ff00 ) >> 8 ), ( ( nSearchIP & 0xff0000 ) >> 16 ),
-				( nSearchIP >> 24 ) );
-
-			theApp.m_nUPnPExternalAddress = ip;
+			strLocalIP = inet_ntoa( *(IN_ADDR*)&ipAddr->table[ nIf ].dwAddr );
+			theApp.m_nUPnPExternalAddress.s_addr = ip;
 			break;
 		}
 	}
@@ -1167,7 +1162,9 @@ HRESULT CServiceCallback::StateVariableChanged(IUPnPService* pService,
 		}
 		else if ( _wcsicmp( pszStateVarName, L"ExternalIPAddress" ) == 0 )
 		{
-			theApp.m_nUPnPExternalAddress = inet_addr( CT2CA( strValue.Trim() ) );
+			theApp.m_nUPnPExternalAddress.s_addr = inet_addr( CT2A( strValue.Trim() ) );
+			if ( theApp.m_nUPnPExternalAddress.s_addr == INADDR_ANY )
+				theApp.m_nUPnPExternalAddress.s_addr = INADDR_NONE;
 		}
 	}
 

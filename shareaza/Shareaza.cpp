@@ -176,7 +176,6 @@ CShareazaApp::CShareazaApp() :
 ,	m_bMenuWasVisible		( FALSE )
 ,	m_bUPnPPortsForwarded	( TRI_UNKNOWN )
 ,	m_bUPnPDeviceConnected	( TRI_UNKNOWN )
-,	m_nUPnPExternalAddress	( 0ul )
 ,	m_nLastInput			( 0ul )
 ,	m_hHookKbd				( NULL )
 ,	m_hHookMouse			( NULL )
@@ -211,6 +210,7 @@ CShareazaApp::CShareazaApp() :
 {
 	ZeroMemory( m_nVersion, sizeof( m_nVersion ) );
 	ZeroMemory( m_pBTVersion, sizeof( m_pBTVersion ) );
+	m_nUPnPExternalAddress.s_addr = INADDR_NONE;
 
 // BugTrap http://www.intellesoft.net/
 	BT_SetAppName( _T(CLIENT_NAME) );

@@ -96,11 +96,8 @@ CNetwork::~CNetwork()
 
 BOOL CNetwork::IsSelfIP(const IN_ADDR& nAddress) const
 {
-	const IN_ADDR* nUPnPAddr = (const IN_ADDR*)&theApp.m_nUPnPExternalAddress;
-	if ( nUPnPAddr->S_un.S_addr == nAddress.S_un.S_addr )
-		return TRUE;
-
-	if ( nAddress.s_addr == INADDR_ANY || nAddress.s_addr == INADDR_NONE )
+	if ( nAddress.s_addr == INADDR_ANY ||
+		 nAddress.s_addr == INADDR_NONE )
 	{
 		return FALSE;
 	}
@@ -109,6 +106,11 @@ BOOL CNetwork::IsSelfIP(const IN_ADDR& nAddress) const
 		return TRUE;
 	}
 	if ( nAddress.s_net == 127 )
+	{
+		return TRUE;
+	}
+	if ( theApp.m_nUPnPExternalAddress.s_addr != INADDR_NONE &&
+		 theApp.m_nUPnPExternalAddress.s_addr == nAddress.s_addr )
 	{
 		return TRUE;
 	}
@@ -164,6 +166,10 @@ bool CNetwork::IsStable() const
 
 BOOL CNetwork::IsFirewalled(int nCheck) const
 {
+#ifdef LAN_MODE
+	UNUSED_ALWAYS( nCheck );
+	return FALSE;
+#else // LAN_MODE
 	if ( Settings.Connection.FirewallState == CONNECTION_OPEN )	// CHECK_BOTH, CHECK_TCP, CHECK_UDP
 		return FALSE;		// We know we are not firewalled on both TCP and UDP
 	else if ( Settings.Connection.FirewallState == CONNECTION_OPEN_TCPONLY && nCheck == CHECK_TCP )
@@ -181,8 +187,8 @@ BOOL CNetwork::IsFirewalled(int nCheck) const
 		else if ( nCheck == CHECK_UDP && bUDPOpened )
 			return FALSE;	// We know we are not firewalled on UDP port
 	}
-
 	return TRUE;			// We know we are firewalled
+#endif // LAN_MODE
 }
 
 DWORD CNetwork::GetStableTime() const
@@ -288,7 +294,7 @@ BOOL CNetwork::ConnectTo(LPCTSTR pszAddress, int nPort, PROTOCOLID nProtocol, BO
 //////////////////////////////////////////////////////////////////////
 // CNetwork local IP acquisition and sending
 
-void CNetwork::AcquireLocalAddress(LPCTSTR pszHeader)
+BOOL CNetwork::AcquireLocalAddress(LPCTSTR pszHeader)
 {
 	int nIPb1, nIPb2, nIPb3, nIPb4;
 
@@ -297,7 +303,7 @@ void CNetwork::AcquireLocalAddress(LPCTSTR pszHeader)
 		nIPb2 < 0 || nIPb2 > 255 ||
 		nIPb3 < 0 || nIPb3 > 255 ||
 		nIPb4 < 0 || nIPb4 > 255 )
-		return;
+		return FALSE;
 
 	IN_ADDR pAddress;
 
@@ -306,13 +312,21 @@ void CNetwork::AcquireLocalAddress(LPCTSTR pszHeader)
 	pAddress.S_un.S_un_b.s_b3 = (BYTE)nIPb3;
 	pAddress.S_un.S_un_b.s_b4 = (BYTE)nIPb4;
 
-	if ( IsFirewalledAddress( &pAddress ) ) return;
+	return AcquireLocalAddress( pAddress );
+}
+
+BOOL CNetwork::AcquireLocalAddress(const IN_ADDR& pAddress)
+{
+	if ( IsFirewalledAddress( &pAddress, TRUE ) )
+		return FALSE;
 
 	// Add new address to address list
 	if ( ! m_pHostAddresses.Find( pAddress.s_addr ) )
 		m_pHostAddresses.AddTail( pAddress.s_addr );
 
 	m_pHost.sin_addr = pAddress;
+
+	return TRUE;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -408,12 +422,14 @@ BOOL CNetwork::IsFirewalledAddress(const IN_ADDR* pAddress, BOOL bIncludeSelf) c
 	if ( ! pAddress->S_un.S_addr ) return TRUE;							// 0.0.0.0
 #ifdef LAN_MODE
 	if ( ( pAddress->S_un.S_addr & 0xFFFF ) == 0xA8C0 ) return FALSE;	// 192.168.0.0/16
+	if ( ( pAddress->S_un.S_addr & 0xFFFF ) == 0xFEA9 ) return FALSE;	// 169.254.0.0/16
 	if ( ( pAddress->S_un.S_addr & 0xF0FF ) == 0x10AC ) return FALSE;	// 172.16.0.0/12
 	if ( ( pAddress->S_un.S_addr & 0xFF ) == 0x0A ) return FALSE;		// 10.0.0.0/8
 	return TRUE;
 #else // LAN_MODE
 	if ( ! Settings.Connection.IgnoreLocalIP ) return FALSE;
 	if ( ( pAddress->S_un.S_addr & 0xFFFF ) == 0xA8C0 ) return TRUE;	// 192.168.0.0/16
+	if ( ( pAddress->S_un.S_addr & 0xFFFF ) == 0xFEA9 ) return TRUE;	// 169.254.0.0/16
 	if ( ( pAddress->S_un.S_addr & 0xF0FF ) == 0x10AC ) return TRUE;	// 172.16.0.0/12
 	if ( ( pAddress->S_un.S_addr & 0xFF ) == 0x0A ) return TRUE;		// 10.0.0.0/8
 	if ( ( pAddress->S_un.S_addr & 0xFF ) == 0x7F ) return TRUE;		// 127.0.0.0/8
@@ -568,8 +584,8 @@ BOOL CNetwork::PreRun()
 	NodeRoute->SetDuration( Settings.Gnutella.RouteCache );
 	QueryRoute->SetDuration( Settings.Gnutella.RouteCache );
 
-	Neighbours.IsG2HubCapable( TRUE );
-	Neighbours.IsG1UltrapeerCapable( TRUE );
+	Neighbours.IsG2HubCapable( FALSE, TRUE );
+	Neighbours.IsG1UltrapeerCapable( FALSE, TRUE );
 
 	// It will check if it is needed inside the function
 	DiscoveryServices.Execute( TRUE, PROTOCOL_NULL, FALSE );

@@ -107,7 +107,8 @@ public:
 	BOOL		Connect(BOOL bAutoConnect = FALSE);
 	void		Disconnect();
 	BOOL		ConnectTo(LPCTSTR pszAddress, int nPort = 0, PROTOCOLID nProtocol = PROTOCOL_NULL, BOOL bNoUltraPeer = FALSE);
-	void		AcquireLocalAddress(LPCTSTR pszHeader);
+	BOOL		AcquireLocalAddress(LPCTSTR pszHeader);
+	BOOL		AcquireLocalAddress(const IN_ADDR& pAddress);
 	BOOL		Resolve(LPCTSTR pszHost, int nPort, SOCKADDR_IN* pHost, BOOL bNames = TRUE) const;
 	BOOL		AsyncResolve(LPCTSTR pszAddress, WORD nPort, PROTOCOLID nProtocol, BYTE nCommand);
 	BOOL		IsReserved(const IN_ADDR* pAddress, bool bCheckLocal=true) const;

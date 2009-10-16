@@ -273,7 +273,7 @@ BOOL CNeighboursWithConnect::IsG2Hub()
 // Takes true if we are running the program in debug mode, and this method should write out debug information
 // Determines if the computer and Internet connection here are strong enough for this program to run as a Gnutella2 hub
 // Returns false, which is 0, if we can't be a hub, or a number 1+ that is higher the better hub we'd be
-DWORD CNeighboursWithConnect::IsG2HubCapable(BOOL bDebug)
+DWORD CNeighboursWithConnect::IsG2HubCapable(BOOL bIgnoreTime, BOOL bDebug)
 {
 	// Start the rating at 0, which means we can't be a hub
 	DWORD nRating = 0; // We'll make this number bigger if we find signs we can be a hub
@@ -351,30 +351,33 @@ DWORD CNeighboursWithConnect::IsG2HubCapable(BOOL bDebug)
 		}
 
 		// Confirm how long the node has been running.
-		if ( Settings.Gnutella2.HubVerified )
+		if ( ! bIgnoreTime )
 		{
-			// Systems that have been good hubs before can promote in 2 hours
-			if ( Network.GetStableTime() < 7200 )
+			if ( Settings.Gnutella2.HubVerified )
 			{
-				if ( bDebug ) theApp.Message( MSG_DEBUG, _T("NO: not stable for 2 hours") );
-				return FALSE;
+				// Systems that have been good hubs before can promote in 2 hours
+				if ( Network.GetStableTime() < 7200 )
+				{
+					if ( bDebug ) theApp.Message( MSG_DEBUG, _T("NO: not stable for 2 hours") );
+					return FALSE;
+				}
+				else
+				{
+					if ( bDebug ) theApp.Message( MSG_DEBUG, _T("OK: stable for 2 hours") );
+				}
 			}
 			else
 			{
-				if ( bDebug ) theApp.Message( MSG_DEBUG, _T("OK: stable for 2 hours") );
-			}
-		}
-		else
-		{
-			// Untested hubs need 3 hours uptime to be considered
-			if ( Network.GetStableTime() < 10800 )
-			{
-				if ( bDebug ) theApp.Message( MSG_DEBUG, _T("NO: not stable for 3 hours") );
-				return FALSE;
-			}
-			else
-			{
-				if ( bDebug ) theApp.Message( MSG_DEBUG, _T("OK: stable for 3 hours") );
+				// Untested hubs need 3 hours uptime to be considered
+				if ( Network.GetStableTime() < 10800 )
+				{
+					if ( bDebug ) theApp.Message( MSG_DEBUG, _T("NO: not stable for 3 hours") );
+					return FALSE;
+				}
+				else
+				{
+					if ( bDebug ) theApp.Message( MSG_DEBUG, _T("OK: stable for 3 hours") );
+				}
 			}
 		}
 
@@ -506,7 +509,7 @@ BOOL CNeighboursWithConnect::IsG1Ultrapeer()
 // Takes true if we are running the program in debug mode, and this method should write out debug information
 // Determines if the computer and Internet connection here are strong enough for this program to run as a Gnutella ultrapeer
 // Returns false, which is 0, if we can't be an ultrapeer, or a number 1+ that is higher the better ultrapeer we'd be
-DWORD CNeighboursWithConnect::IsG1UltrapeerCapable(BOOL bDebug)
+DWORD CNeighboursWithConnect::IsG1UltrapeerCapable(BOOL bIgnoreTime, BOOL bDebug)
 {
 	// Start out the rating as 0, meaning we can't be a Gnutella ultrapeer
 	DWORD nRating = 0; // If we can be an ultrapeer, we'll set this to 1, and then make it higher if we'd be an even better ultrapeer
@@ -602,15 +605,18 @@ DWORD CNeighboursWithConnect::IsG1UltrapeerCapable(BOOL bDebug)
 		}
 
 		// We can only become an ultrapeer if we've been connected for 4 hours or more, it takes awhile for ultrapeers to get leaves, so stability is important
-		if ( Network.GetStableTime() < 14400 ) // 14400 seconds is 4 hours
+		if ( ! bIgnoreTime )
 		{
-			if ( bDebug ) theApp.Message( MSG_DEBUG, _T("NO: not stable for 4 hours") );
-			return FALSE;
+			if ( Network.GetStableTime() < 14400 ) // 14400 seconds is 4 hours
+			{
+				if ( bDebug ) theApp.Message( MSG_DEBUG, _T("NO: not stable for 4 hours") );
+				return FALSE;
 
-		} // We have been connected to the Gnutella network for more than 4 hours
-		else
-		{
-			if ( bDebug ) theApp.Message( MSG_DEBUG, _T("OK: stable for 4 hours") );
+			} // We have been connected to the Gnutella network for more than 4 hours
+			else
+			{
+				if ( bDebug ) theApp.Message( MSG_DEBUG, _T("OK: stable for 4 hours") );
+			}
 		}
 
 		// Make sure the datagram is stable (do)

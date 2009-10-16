@@ -97,7 +97,7 @@ public:
 	CAutoPtr< CUPnPFinder > m_pUPnPFinder;
 	TRISTATE			m_bUPnPPortsForwarded;		// UPnP values are assigned when the discovery is complete
 	TRISTATE			m_bUPnPDeviceConnected;		// or when the service notifies
-	DWORD				m_nUPnPExternalAddress;
+	IN_ADDR				m_nUPnPExternalAddress;		// UPnP current external address
 	DWORD				m_nLastInput;				// Time of last input event (in secs)
 	HHOOK				m_hHookKbd;
 	HHOOK				m_hHookMouse;
