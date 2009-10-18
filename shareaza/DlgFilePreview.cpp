@@ -282,12 +282,9 @@ void CFilePreviewDlg::OnDestroy()
 
 	if ( m_pDownload != NULL )
 	{
-		CSingleLock oLock( &Transfers.m_pSection, FALSE );
-		if ( oLock.Lock( 1000 ) )
-		{
-			if ( Downloads.Check( (CDownload*)m_pDownload ) )
-				m_pDownload->m_pPreviewWnd = NULL;
-		}
+		CSingleLock oLock( &Transfers.m_pSection, TRUE );
+		if ( Downloads.Check( (CDownload*)m_pDownload ) )
+			m_pDownload->m_pPreviewWnd = NULL;
 		m_pDownload = NULL;
 	}
 
