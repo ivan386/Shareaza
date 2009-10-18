@@ -113,7 +113,7 @@ int CUploadQueues::GetPosition(CUploadTransfer* pUpload, BOOL bStart)
 	ASSERT( pUpload != NULL );
 
 	CSingleLock oLock1( &Network.m_pSection );
-	if ( oLock1.Lock( 1000 ) )
+	if ( oLock1.Lock( 250 ) )
 	{
 		CQuickLock oLock2( m_pSection );
 
@@ -125,6 +125,11 @@ int CUploadQueues::GetPosition(CUploadTransfer* pUpload, BOOL bStart)
 		{
 			pUpload->m_pQueue = NULL;
 		}
+	}
+	else
+	{
+		theApp.Message( MSG_ERROR, _T("Rejecting upload connection from %s, network core overloaded."),
+			(LPCTSTR)pUpload->m_sAddress );
 	}
 
 	// Upload has no valid queue, or network core overloaded, or shutdown

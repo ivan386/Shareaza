@@ -80,7 +80,7 @@ BOOL CBTClients::OnAccept(CConnection* pConnection)
 	CSingleLock pLock( &Transfers.m_pSection );
 	if ( ! pLock.Lock( 250 ) )
 	{
-		theApp.Message( MSG_DEBUG, _T("Rejecting BitTorrent connection from %s, network core overloaded."),
+		theApp.Message( MSG_ERROR, _T("Rejecting BitTorrent connection from %s, network core overloaded."),
 			(LPCTSTR)pConnection->m_sAddress );
 		return FALSE;
 	}
