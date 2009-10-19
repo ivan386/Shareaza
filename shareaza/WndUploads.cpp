@@ -631,6 +631,7 @@ void CUploadsWnd::OnEditQueue()
 
 		if ( pQueue->m_bSelected )
 		{
+			pLock.Unlock();
 			CSettingsManagerDlg::Run( _T("CUploadsSettingsPage") );
 			return;
 		}

@@ -315,7 +315,9 @@ void CUploadTransfer::LongTermAverage(DWORD tNow)
 
 void CUploadTransfer::RotatingQueue(DWORD tNow)
 {
-	CSingleLock pLock( &UploadQueues.m_pSection, TRUE );
+	CSingleLock pLock( &UploadQueues.m_pSection );
+	if ( ! pLock.Lock( 250 ) )
+		return;
 
 	if ( m_pQueue != NULL && UploadQueues.Check( m_pQueue ) &&	//Is this queue able to rotate?
 		 m_pQueue->m_bRotate && m_pQueue->IsActive( this ) && ! m_bStopTransfer )
