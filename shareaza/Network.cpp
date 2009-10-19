@@ -317,7 +317,7 @@ BOOL CNetwork::AcquireLocalAddress(LPCTSTR pszHeader)
 
 BOOL CNetwork::AcquireLocalAddress(const IN_ADDR& pAddress)
 {
-	if ( IsFirewalledAddress( &pAddress, TRUE ) )
+	if ( IsFirewalledAddress( &pAddress ) )
 		return FALSE;
 
 	// Add new address to address list
