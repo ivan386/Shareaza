@@ -916,7 +916,7 @@ BOOL CDiscoveryServices::Execute(BOOL bDiscovery, PROTOCOLID nProtocol, USHORT n
 		// Broadcast discovery
 		static bool bBroadcast = true;	// test, broadcast, cache, broadcast, cache, ...
 		bBroadcast = ! bBroadcast;
-		if ( bBroadcast && bG2Required && Neighbours.NeedMoreHubs( PROTOCOL_G2 ) )
+		if ( bBroadcast && bG2Required )
 		{
 			theApp.Message( MSG_NOTICE, IDS_DISCOVERY_QUERY, _T("BROADCAST") );
 			SOCKADDR_IN addr = { AF_INET, Network.m_pHost.sin_port };
