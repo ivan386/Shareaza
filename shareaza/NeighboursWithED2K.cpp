@@ -61,7 +61,10 @@ CNeighboursWithED2K::~CNeighboursWithED2K()
 // Returns a pointer to the first one found, or null if none found in the list
 CEDNeighbour* CNeighboursWithED2K::GetDonkeyServer() const // Here, const means this method doesn't change the value of any member variables
 {
-	CSingleLock pLock( &Network.m_pSection, TRUE );
+	CSingleLock pLock( &Network.m_pSection );
+	if ( ! pLock.Lock( 250 ) )
+		// TODO: Fix this synchronization
+		return NULL;
 
 	// Loop through the list of neighbours
 	for ( POSITION pos = GetIterator() ; pos ; )
