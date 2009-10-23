@@ -389,6 +389,82 @@
 			<File
 				RelativePath=".\SearchExport.idl"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCMIDLTool"
+						InterfaceIdentifierFileName="$(InputName)_i.c"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|x64"
+					>
+					<Tool
+						Name="VCMIDLTool"
+						InterfaceIdentifierFileName="$(InputName)_i.c"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCMIDLTool"
+						InterfaceIdentifierFileName="$(InputName)_i.c"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|x64"
+					>
+					<Tool
+						Name="VCMIDLTool"
+						InterfaceIdentifierFileName="$(InputName)_i.c"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\shareaza\Shareaza.idl"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCMIDLTool"
+						TypeLibraryName="$(IntDir)/Shareaza.tlb"
+						HeaderFileName="Shareaza.h"
+						InterfaceIdentifierFileName="Shareaza_i.c"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|x64"
+					>
+					<Tool
+						Name="VCMIDLTool"
+						TypeLibraryName="$(IntDir)/Shareaza.tlb"
+						HeaderFileName="Shareaza.h"
+						InterfaceIdentifierFileName="Shareaza_i.c"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCMIDLTool"
+						TypeLibraryName="$(IntDir)/Shareaza.tlb"
+						HeaderFileName="Shareaza.h"
+						InterfaceIdentifierFileName="Shareaza_i.c"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|x64"
+					>
+					<Tool
+						Name="VCMIDLTool"
+						TypeLibraryName="$(IntDir)/Shareaza.tlb"
+						HeaderFileName="Shareaza.h"
+						InterfaceIdentifierFileName="Shareaza_i.c"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\stdafx.cpp"
@@ -438,10 +514,6 @@
 			</File>
 			<File
 				RelativePath=".\Resource.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Shareaza.h"
 				>
 			</File>
 			<File
@@ -519,7 +591,7 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\..\shareaza\Shareaza_i.c"
+				RelativePath=".\Shareaza_i.c"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
