@@ -1060,7 +1060,7 @@ LRESULT CMediaFrame::OnMediaKey(WPARAM wParam, LPARAM lParam)
 /////////////////////////////////////////////////////////////////////////////
 // CMediaFrame thumb bars
 
-void CMediaFrame::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
+void CMediaFrame::OnHScroll(UINT nSBCode, UINT /* nPos */, CScrollBar* pScrollBar)
 {
 	if ( pScrollBar == (CScrollBar*)&m_wndVolume )
 	{
@@ -1127,13 +1127,16 @@ void CMediaFrame::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 			break;
 		case TB_THUMBPOSITION:
 		case TB_THUMBTRACK:
-			nPosition = (int)nPos;
+			nPosition = m_wndPosition.GetPos();
 			break;
 		}
 
-		if ( nState == smsOpen ) nPosition = 0;
-		if ( nPosition < 0 ) nPosition = 0;
-		if ( nPosition > nLength ) nPosition = nLength;
+		if ( nState == smsOpen )
+			nPosition = 0;
+		if ( nPosition < 0 )
+			nPosition = 0;
+		if ( nPosition > nLength )
+			nPosition = nLength;
 
 		if ( nState == smsPlaying )
 		{
