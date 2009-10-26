@@ -1,4 +1,23 @@
+//
 // Player.h : Declaration of the CPlayer
+//
+// Copyright (c) Nikolay Raspopov, 2009.
+// This file is part of SHAREAZA (shareaza.sourceforge.net)
+//
+// Shareaza is free software; you can redistribute it
+// and/or modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2 of
+// the License, or (at your option) any later version.
+//
+// Shareaza is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Shareaza; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+//
 
 #pragma once
 
@@ -45,6 +64,7 @@ DECLARE_PROTECT_FINAL_CONSTRUCT()
 	void FinalRelease();
 
 protected:
+	// Adjusts video position and zoom according to aspect ratio, zoom level and zoom type
 	HRESULT AdjustVideoPosAndZoom(void);
 
 	BOOLEAN				m_bAudioOnly;
@@ -52,12 +72,10 @@ protected:
 	CPlayerWindow		m_wndPlayer;
 	RECT				m_rcWindow;
 	CComPtr< IGraphBuilder >	m_pGraph;
-	CComQIPtr< IMediaControl >	m_pControl;
-	CComQIPtr< IMediaEvent >	m_pEvent;
-	CComQIPtr< IBasicVideo >	m_pVideo;
-	CComQIPtr< IVideoWindow >	m_pWindow;
-	MediaZoom			m_nZoom;
-	DOUBLE				m_dAspect;
+	MediaZoom			m_nZoom;	// Last set zoom
+	DOUBLE				m_dAspect;	// Last set aspect ratio
+	DOUBLE				m_dVolume;	// Last set volume level
+	DOUBLE				m_dSpeed;	// Last set speed
 
 // IMediaPlayer
 public:

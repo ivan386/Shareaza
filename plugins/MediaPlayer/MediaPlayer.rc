@@ -27,7 +27,7 @@ LANGUAGE LANG_NEUTRAL, SUBLANG_NEUTRAL
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 1,0,0,1
+ FILEVERSION 1,0,0,2
  PRODUCTVERSION 2,4,0,0
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
@@ -46,7 +46,7 @@ BEGIN
             VALUE "Comments", "Play audio and video files."
             VALUE "CompanyName", "Shareaza Development Team"
             VALUE "FileDescription", "Shareaza Media Player"
-            VALUE "FileVersion", "1, 0, 0, 1"
+            VALUE "FileVersion", "1, 0, 0, 2"
             VALUE "InternalName", "MediaPlayer"
             VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2009. All rights reserved."
             VALUE "OriginalFilename", "MediaPlayer.dll"
@@ -76,7 +76,7 @@ IDR_PLAYER              REGISTRY                "Player.rgs"
 
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
-IDR_MEDIAPLAYER          ICON                    "icon.ico"
+IDR_MEDIAPLAYER         ICON                    "icon.ico"
 
 #ifdef APSTUDIO_INVOKED
 /////////////////////////////////////////////////////////////////////////////
@@ -117,6 +117,8 @@ END
 #endif    // Neutral resources
 /////////////////////////////////////////////////////////////////////////////
 
+
+
 #ifndef APSTUDIO_INVOKED
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -126,3 +128,4 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 #endif    // not APSTUDIO_INVOKED
+

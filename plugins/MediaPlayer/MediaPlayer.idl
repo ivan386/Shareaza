@@ -1,4 +1,22 @@
+//
 // MediaPlayer.idl : IDL source for MediaPlayer
+//
+// Copyright (c) Nikolay Raspopov, 2009.
+// This file is part of SHAREAZA (shareaza.sourceforge.net)
+//
+// Shareaza is free software; you can redistribute it
+// and/or modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2 of
+// the License, or (at your option) any later version.
+//
+// Shareaza is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Shareaza; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
 import "oaidl.idl";
@@ -7,79 +25,10 @@ import "strmif.idl";
 import "control.odl";
 import "Shareaza.idl";
 
-/*[
-	odl,
-	uuid(A9EFAB80-0A60-4C3F-BBD1-4558DD2A9769),
-	helpstring("IWMPEffectsCtrl: Public interface for skin object model."),
-	dual,
-	oleautomation
-]
-interface IWMPEffectsCtrl : IDispatch
-{
-	[id(0x0000157c), propget, helpstring("property windowed")]
-		HRESULT windowed([out, retval] VARIANT_BOOL* pVal);
-	[id(0x0000157c), propput, helpstring("property windowed")]
-		HRESULT windowed([in] VARIANT_BOOL pVal);
-	[id(0x0000157d), propget, helpstring("property allowAll")]
-		HRESULT allowAll([out, retval] VARIANT_BOOL* pVal);
-	[id(0x0000157d), propput, helpstring("property allowAll")]
-		HRESULT allowAll([in] VARIANT_BOOL pVal);
-	[id(0x00001583), propput, helpstring("property currentEffectType")]
-		HRESULT currentEffectType([in] BSTR pVal);
-	[id(0x00001583), propget, helpstring("property currentEffectType")]
-		HRESULT currentEffectType([out, retval] BSTR* pVal);
-	[id(0x00001582), propget, helpstring("property currentEffectTitle")]
-		HRESULT currentEffectTitle([out, retval] BSTR* pVal);
-	[id(0x0000157e), helpstring("method next")]
-		HRESULT next();
-	[id(0x0000157f), helpstring("method previous")]
-		HRESULT previous();
-	[id(0x00001580), helpstring("method settings")]
-		HRESULT settings();
-	[id(0x00001581), propget, helpstring("property currentEffect")]
-		HRESULT currentEffect([out, retval] IDispatch** p);
-	[id(0x00001581), propput, helpstring("property currentEffect")]
-		HRESULT currentEffect([in] IDispatch* p);
-	[id(0x00001585), helpstring("method nextEffect")]
-		HRESULT nextEffect();
-	[id(0x00001586), helpstring("method previousEffect")]
-		HRESULT previousEffect();
-	[id(0x00001587), helpstring("method nextPreset")]
-		HRESULT nextPreset();
-	[id(0x00001588), helpstring("method previousPreset")]
-		HRESULT previousPreset();
-	[id(0x00001589), propget, helpstring("property currentPreset")]
-		HRESULT currentPreset([out, retval] long* pVal);
-	[id(0x00001589), propput, helpstring("property currentPreset")]
-		HRESULT currentPreset([in] long pVal);
-	[id(0x0000158a), propget, helpstring("property currentPresetTitle")]
-		HRESULT currentPresetTitle([out, retval] BSTR* pVal);
-	[id(0x0000158b), propget, helpstring("property currentEffectPresetCount")]
-		HRESULT currentEffectPresetCount([out, retval] long* pVal);
-	[id(0x0000158c), propget, helpstring("property fullScreen")]
-		HRESULT fullScreen([out, retval] VARIANT_BOOL* pbFullScreen);
-	[id(0x0000158c), propput, helpstring("property fullScreen")]
-		HRESULT fullScreen([in] VARIANT_BOOL pbFullScreen);
-	[id(0x0000158d), propget, helpstring("property canGoFullScreen")]
-		HRESULT effectCanGoFullScreen([out, retval] VARIANT_BOOL* pbFullScreen);
-	[id(0x0000158e), propget, helpstring("property canGoFullScreen")]
-		HRESULT effectHasPropertyPage([out, retval] VARIANT_BOOL* pbPropertyPage);
-	[id(0x00001590), propget, helpstring("property effectCount")]
-		HRESULT effectCount([out, retval] long* pVal);
-	[id(0x00001591), propget, helpstring("property effectTitle(index)")]
-		HRESULT effectTitle(
-			[in] long index,
-			[out, retval] BSTR* pVal);
-	[id(0x00001592), propget, helpstring("property effectType(index)")]
-		HRESULT effectType(
-			[in] long index,
-			[out, retval] BSTR* pVal);
-};*/
-
 [
 	uuid(4E7B260F-E3A4-42DD-89D8-E0372158626E),
 	version(1.0),
-	helpstring("Shareaza MediaPlayer 1.0 Type Library")
+	helpstring("Shareaza Media Player 1.0 Type Library")
 ]
 library MediaPlayerLib
 {
@@ -87,7 +36,7 @@ library MediaPlayerLib
 
 	[
 		uuid(3DC28AA6-A597-4E03-96DF-ADA19155B0BE),
-		helpstring("Shareaza Media Services Plugin")
+		helpstring("Shareaza Media Player")
 	]
 	coclass MediaPlayer
 	{

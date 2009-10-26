@@ -125,9 +125,6 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GeoIP", "..\GeoIP\GeoIP_9.vcproj", "{DFAB04E0-9275-42FB-BCBB-2F153EB7D253}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MediaPlayer", "..\plugins\MediaPlayer\MediaPlayer_9.vcproj", "{10123040-AFB5-4741-9548-36C6B7B337C4}"
-	ProjectSection(ProjectDependencies) = postProject
-		{F9C719B3-35FB-427D-A795-91105DFECAAF} = {F9C719B3-35FB-427D-A795-91105DFECAAF}
-	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VirusTotal", "..\plugins\VirusTotal\VirusTotal.vcproj", "{F61F2F18-7F7A-4C44-8762-8D4565CC987F}"
 	ProjectSection(ProjectDependencies) = postProject
