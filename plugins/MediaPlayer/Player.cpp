@@ -417,7 +417,7 @@ STDMETHODIMP CPlayer::Play(void)
 	SetSpeed( m_dSpeed );
 
 	// Restore zoom and aspect ratio
-	if ( m_bAudioOnly )
+	if ( ! m_bAudioOnly )
 		AdjustVideoPosAndZoom();
 
 	return S_OK;
