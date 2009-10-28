@@ -165,12 +165,16 @@ public:
 	BOOL	Open(const CBTInfo& oInfo, BOOL bWrite, CString& sErrorMessage);
 	ULONG	AddRef();
 	ULONG	Release();
-	BOOL	Flush();
+	// Close all subfiles
 	void	Close();
+	// Close all subfiles, clear its list but save all other data
+	void	Clear();
+	// Flush unsaved data to disk
+	BOOL	Flush();
 	BOOL	MakeComplete();
 	void	Serialize(CArchive& ar, int nVersion);
 	BOOL	EnsureWrite();
-	// Delete file(s)
+	// Delete all subfiles
 	void	Delete();
 	// Move file to destination. Returns 0 on success or file error number.
 	DWORD	Move(DWORD nIndex, LPCTSTR pszDestination, LPPROGRESS_ROUTINE lpProgressRoutine = NULL, LPVOID lpData = NULL);

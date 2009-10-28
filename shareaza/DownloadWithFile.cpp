@@ -22,23 +22,12 @@
 #include "StdAfx.h"
 #include "Shareaza.h"
 #include "Settings.h"
-#include "Downloads.h"
-#include "DownloadWithFile.h"
-#include "DownloadWithTorrent.h"
 #include "DownloadSource.h"
-#include "DownloadTransfer.h"
-#include "DownloadGroups.h"
-#include "FragmentedFile.h"
-#include "Uploads.h"
-#include "Transfers.h"
-
-#include "ID3.h"
-#include "XML.h"
-#include "SchemaCache.h"
+#include "DownloadWithFile.h"
+#include "Downloads.h"
 #include "Library.h"
 #include "LibraryBuilder.h"
 #include "LibraryHistory.h"
-#include "SharedFile.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -225,6 +214,15 @@ void CDownloadWithFile::CloseFile()
 {
 	if ( m_pFile.get() )
 		m_pFile->Close();
+}
+
+//////////////////////////////////////////////////////////////////////
+// CDownloadWithFile clear the file
+
+void CDownloadWithFile::ClearFile()
+{
+	if ( m_pFile.get() )
+		m_pFile->Clear();
 }
 
 //////////////////////////////////////////////////////////////////////

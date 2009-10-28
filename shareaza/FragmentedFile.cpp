@@ -239,9 +239,12 @@ BOOL CFragmentedFile::Open(LPCTSTR pszFile, QWORD nOffset, QWORD nLength,
 	m_oFList.ensure( ( nLastBlockLength == SIZE_UNKNOWN ) ? SIZE_UNKNOWN :
 		( m_oFile.back().m_nOffset + nLastBlockLength ) );
 
-	// Add empty fragment for new file
 	if ( ! pFile || ! pFile->IsExists() || ( m_oFList.empty() && nRealLength != nLength ) )
-		InvalidateRange( nOffset, nLength );
+		// Add empty fragment for new file
+		m_oFList.insert( Fragments::Fragment( nOffset, nOffset + nLength ) );
+	else if ( pFile && pFile->IsExists() && ! bWrite && ! m_oFList.empty() )
+		// Remove empty fragment (if any) for complete file
+		m_oFList.erase( Fragments::Fragment( nOffset, nOffset + nRealLength ) );
 
 	ASSERT_VALID( this );
 
@@ -665,6 +668,21 @@ void CFragmentedFile::Close()
 }
 
 //////////////////////////////////////////////////////////////////////
+// CFragmentedFile clear
+
+void CFragmentedFile::Clear()
+{
+	if ( m_oFile.empty() )
+		return;
+
+	CQuickLock oLock( m_pSection );
+
+	Close();
+
+	m_oFile.clear();
+}
+
+//////////////////////////////////////////////////////////////////////
 // CFragmentedFile make complete
 
 BOOL CFragmentedFile::MakeComplete()
@@ -721,7 +739,18 @@ void CFragmentedFile::Serialize(CArchive& ar, int nVersion)
 	{
 		SerializeIn1( ar, m_oFList, nVersion );
 
-		if ( nVersion >= 40 )
+		if ( nVersion < 40 )
+		{
+			// Converting to new file system
+			CString sPath = m_pDownload->m_sPath.Left(
+				m_pDownload->m_sPath.GetLength() - 3 );
+			if ( ! Open( sPath, 0, m_pDownload->m_nSize, TRUE, m_pDownload->m_sName ) )
+			{
+				theApp.Message( MSG_ERROR, IDS_DOWNLOAD_FILE_OPEN_ERROR, sPath );
+				AfxThrowFileException( CFileException::fileNotFound );
+			}
+		}
+		else
 		{
 			DWORD count = 0;
 			ar >> count;

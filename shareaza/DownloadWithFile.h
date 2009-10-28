@@ -77,10 +77,17 @@ public:
 	void				ClearFileError();
 	DWORD				MoveFile(LPCTSTR pszDestination, LPPROGRESS_ROUTINE lpProgressRoutine = NULL, LPVOID lpData = NULL);
 protected:
+	// Open files of this download
 	BOOL				OpenFile();
+	// Close files of this download
 	void				CloseFile();
+	// Close files of this download, clear its list but save all other data
+	void				ClearFile();
+	// Replace files by specified ones, old one will be dropped
 	void				AttachFile(auto_ptr< CFragmentedFile >& pFile);
+	// Delete files of this download
 	void				DeleteFile();
+	// Flush unsaved data to disk
 	BOOL				FlushFile();
 	BOOL				ReadFile(QWORD nOffset, LPVOID pData, QWORD nLength, QWORD* pnRead = NULL);
 	BOOL				WriteFile(QWORD nOffset, LPCVOID pData, QWORD nLength, QWORD* pnWritten = NULL);

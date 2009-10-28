@@ -26,14 +26,10 @@
 #include "BENode.h"
 #include "Buffer.h"
 #include "DownloadTask.h"
-#include "Download.h"
-#include "Downloads.h"
-#include "FragmentedFile.h"
 #include "Transfers.h"
 #include "SharedFile.h"
 #include "SharedFolder.h"
 #include "Library.h"
-#include "DlgProgressBar.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -389,98 +385,7 @@ void CBTInfo::Serialize(CArchive& ar)
 		}
 
 		SetTrackerNext();
-
-		if ( nVersion < 8 )
-			ConvertOldTorrents();
 	}
-}
-
-void CBTInfo::ConvertOldTorrents()
-{
-	if ( m_pFiles.GetCount() < 2 )
-		return;
-
-	if ( !Downloads.IsSpaceAvailable( m_nTotalSize, Downloads.dlPathComplete ) )
-		AfxThrowFileException( CFileException::diskFull );
-
-	CString strSource;
-	strSource.Format( _T("\\\\?\\%s\\%s.partial"),
-		Settings.Downloads.IncompletePath, GetFilename());
-
-	if ( GetFileAttributes( strSource ) == INVALID_FILE_ATTRIBUTES )
-		return;
-
-	CFile oSource( strSource,
-		CFile::modeRead | CFile::osSequentialScan | CFile::shareDenyNone);
-
-	const DWORD BUFFER_SIZE = 8ul * 1024ul * 1024ul;
-	BYTE* pBuffer = new BYTE[ BUFFER_SIZE ];
-	if ( !pBuffer )
-		AfxThrowMemoryException();
-
-	CString strTargetTemplate;
-	strTargetTemplate.Format( _T("\\\\?\\%s\\%s"),
-		Settings.Downloads.IncompletePath, GetFilename() );
-
-	CString strText;
-	CProgressBarDlg oProgress( CWnd::GetDesktopWindow() );
-	strText.LoadString( IDS_BT_UPDATE_TITLE );
-	oProgress.SetWindowText( strText );
-	strText.LoadString( IDS_BT_UPDATE_CONVERTING );
-	oProgress.SetActionText( strText );
-	oProgress.SetEventText( m_sName );
-	oProgress.SetEventRange( 0, int( m_nTotalSize / 1024ull ) );
-	oProgress.CenterWindow();
-	oProgress.ShowWindow( SW_SHOW );
-	oProgress.UpdateWindow();
-	oProgress.UpdateData( FALSE );
-
-	CString strOf;
-	strOf.LoadString( IDS_GENERAL_OF );
-	QWORD nTotal = 0ull;
-	DWORD nCount = 0ul;
-	for ( POSITION pos = m_pFiles.GetHeadPosition() ; pos ; ++nCount )
-	{
-		CBTFile* pFile = m_pFiles.GetNext( pos );
-
-		CString strTarget;
-		strTarget.Format( _T("%s_%lu.partial"), strTargetTemplate, nCount );
-
-		CFile oTarget( strTarget,
-			CFile::modeCreate | CFile::modeWrite | CFile::osSequentialScan );
-
-		strText.Format( _T("%lu %s %i"), nCount + 1ul, strOf,
-			m_pFiles.GetCount() );
-
-		if ( Settings.General.LanguageRTL )
-			strText = _T("\x202B") + strText;
-
-		oProgress.SetSubActionText( strText );
-		oProgress.SetSubEventText( pFile->m_sPath );
-		oProgress.SetSubEventRange( 0, int( pFile->m_nSize / 1024ull ) );
-		oProgress.UpdateData( FALSE);
-		oProgress.UpdateWindow();
-
-		QWORD nLength = pFile->m_nSize;
-		while ( nLength )
-		{
-			DWORD nBuffer = min( nLength, BUFFER_SIZE );
-
-			nBuffer = oSource.Read( pBuffer, nBuffer );
-			if ( nBuffer )
-				oTarget.Write( pBuffer, nBuffer );
-
-			nLength -= nBuffer;
-			nTotal += nBuffer;
-
-			oProgress.StepSubEvent( int( nBuffer / 1024ul ) );
-			oProgress.SetEventPos( int( nTotal / 1024ull ) );
-			oProgress.UpdateWindow();
-		}
-	}
-	ASSERT( nTotal == m_nTotalSize );
-
-	delete [] pBuffer;
 }
 
 //////////////////////////////////////////////////////////////////////

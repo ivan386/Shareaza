@@ -128,7 +128,6 @@ private:
 // Operations
 public:
 	void		Serialize(CArchive& ar);
-	void		ConvertOldTorrents();
 
 	BOOL		LoadTorrentFile(LPCTSTR pszFile);
 	BOOL		LoadTorrentBuffer(const CBuffer* pBuffer);

@@ -22,27 +22,20 @@
 #include "StdAfx.h"
 #include "Shareaza.h"
 #include "Settings.h"
-#include "Network.h"
-#include "BTPacket.h"
 #include "BTClient.h"
-#include "BTClients.h"
-#include "Download.h"
-#include "DownloadTask.h"
+#include "BTPacket.h"
+#include "DlgProgressBar.h"
 #include "DownloadSource.h"
-#include "DownloadWithTorrent.h"
 #include "DownloadTransferBT.h"
-#include "UploadTransferBT.h"
-#include "BTTrackerRequest.h"
-#include "Transfers.h"
+#include "DownloadWithTorrent.h"
+#include "Downloads.h"
 #include "FragmentedFile.h"
-#include "Buffer.h"
-#include "LibraryFolders.h"
 #include "GProfile.h"
-#include "Uploads.h"
-#include "UploadTransfer.h"
 #include "Library.h"
-#include "LibraryMaps.h"
-#include "SharedFile.h"
+#include "LibraryFolders.h"
+#include "Network.h"
+#include "UploadTransferBT.h"
+#include "Uploads.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -188,6 +181,8 @@ void CDownloadWithTorrent::Serialize(CArchive& ar, int nVersion)
 	}
 	else
 	{
+		CString sServingFileName;
+
 		m_nTorrentSize	= m_pTorrent.m_nBlockSize;
 		m_nTorrentBlock	= m_pTorrent.m_nBlockCount;
 
@@ -200,9 +195,7 @@ void CDownloadWithTorrent::Serialize(CArchive& ar, int nVersion)
 
 			if ( nVersion < 41 )
 			{
-				CString strServingFileName;
-				ar >> strServingFileName;
-				GetFile()->Delete();
+				ar >> sServingFileName;
 			}
 		}
 		GenerateTorrentDownloadID();
@@ -229,8 +222,91 @@ void CDownloadWithTorrent::Serialize(CArchive& ar, int nVersion)
 			m_oMD5 = m_pTorrent.m_oMD5;
 			m_bMD5Trusted = true;
 		}
+
+		if ( nVersion < 40 )
+		{
+			// Convert old multifile torrent to new file system
+
+			// Get old file name
+			ASSERT( GetFileCount() == 1 );
+			CString sPath = GetPath( 0 );
+			if ( sServingFileName.IsEmpty() )
+				sServingFileName = sPath;
+
+			CProgressBarDlg oProgress( CWnd::GetDesktopWindow() );
+			oProgress.SetWindowText( LoadString( IDS_BT_UPDATE_TITLE ) );
+			oProgress.SetActionText( LoadString( IDS_BT_UPDATE_CONVERTING ) );
+			oProgress.SetEventText( m_sName );
+			oProgress.SetEventRange( 0, (int)( m_pTorrent.m_nTotalSize / 1024ull ) );
+			oProgress.SetSubEventText( sServingFileName );
+			oProgress.SetSubEventRange( 0, (int)( m_pTorrent.m_nTotalSize / 1024ull ) );
+
+			oProgress.CenterWindow();
+			oProgress.ShowWindow( SW_SHOW );
+			oProgress.UpdateWindow();
+			oProgress.UpdateData( FALSE );
+
+			// Close old files
+			ClearFile();
+
+			// Create a bunch of new empty files
+			CString sErrorMessage;
+			CComPtr< CFragmentedFile > pFragFile = GetFile();
+			if ( ! pFragFile )
+				AfxThrowMemoryException();
+			if ( ! pFragFile->Open( m_pTorrent, ! IsSeeding(), sErrorMessage ) )
+				AfxThrowFileException( CFileException::genericException );
+
+			if ( ! IsSeeding() )
+			{
+				// Check for free space
+				if ( ! Downloads.IsSpaceAvailable( m_pTorrent.m_nTotalSize,
+					Downloads.dlPathIncomplete ) )
+					AfxThrowFileException( CFileException::diskFull );
+
+				// Open old file
+				CFile oSource( sServingFileName,
+					CFile::modeRead | CFile::shareDenyWrite | CFile::osSequentialScan );
+
+				// Copy data from old file to new files
+				const QWORD BUFFER_SIZE = 4ul * 1024ul * 1024ul;	// 4 MB
+				auto_array< BYTE > pBuffer( new BYTE[ BUFFER_SIZE ] );
+				if ( ! pBuffer.get() )
+					AfxThrowMemoryException();
+				// TODO: Optimize this by reading only available data
+				QWORD nTotal = 0ull;
+				for ( QWORD nLength = m_pTorrent.m_nTotalSize; nLength; )
+				{
+					DWORD nBuffer = (DWORD)min( nLength, BUFFER_SIZE );
+					nBuffer = oSource.Read( pBuffer.get(), nBuffer );
+					if ( nBuffer )
+					{
+						if ( ! pFragFile->Write( nTotal, pBuffer.get(), nBuffer ) )
+							AfxThrowFileException( CFileException::genericException );
+					}
+					nLength -= nBuffer;
+					nTotal += nBuffer;
+
+					CString strText;
+					strText.Format( _T("%s %s %s"),
+						Settings.SmartVolume( nTotal, KiloBytes ),
+						LoadString( IDS_GENERAL_OF ),
+						Settings.SmartVolume( m_pTorrent.m_nTotalSize, KiloBytes ) );
+					oProgress.SetSubActionText( strText );
+					oProgress.StepSubEvent( (int)( nBuffer / 1024ul ) );
+					oProgress.SetEventPos( (int)( nTotal / 1024ull ) );
+					oProgress.UpdateWindow();
+				}
+			}
+
+			// Delete old files
+			DeleteFileEx( sServingFileName, FALSE, FALSE, TRUE );
+			if ( sServingFileName != sPath )
+				DeleteFileEx( sPath, FALSE, FALSE, TRUE );
+		}
 	}
 }
+
 
 //////////////////////////////////////////////////////////////////////
 // CDownloadWithTorrent set torrent
