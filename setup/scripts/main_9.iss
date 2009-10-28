@@ -174,10 +174,6 @@ Source: "Skins\*"; DestDir: "{app}\Skins"; Flags: ignoreversion overwritereadonl
 ; Templates
 Source: "Templates\*"; DestDir: "{app}\Templates"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Excludes: ".svn"
 
-; Languages
-Source: "Languages\*"; DestDir: "{app}\Skins\Languages"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension; Tasks: "language"; Excludes: "default-en.xml,*.bak"
-
-
 ;--== Copy files ==--
 ; Copy skins back from {userappdata}\Shareaza\Skins
 Source: "{userappdata}\Shareaza\Skins\*"; DestDir: "{app}\Skins"; Flags: ignoreversion uninsremovereadonly sortfilesbyextension external onlyifdoesntexist skipifsourcedoesntexist recursesubdirs; AfterInstall: DeleteFolder('{userappdata}\Shareaza\Skins')
@@ -897,3 +893,5 @@ End;
 #include "pages.iss"
 
 #expr SaveToFile("builds\Preprocessed.iss")
+
+
