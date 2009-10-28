@@ -1,7 +1,7 @@
 //
 // CtrlMediaFrame.h
 //
-// Copyright (c) Shareaza Development Team, 2002-2007.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -45,6 +45,8 @@ public:
 	float	GetVolume();
 	BOOL	SeekTo(float nPosition);
 	BOOL	SetVolume(float nVolume);
+	void	OffsetVolume(int nVolumeOffset);
+	void	OffsetPosition(int nPositionOffset);
 	BOOL	PaintStatusMicro(CDC& dc, CRect& rcBar);
 	void	UpdateScreenSaverStatus(BOOL bWindowActive);
 

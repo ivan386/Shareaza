@@ -177,7 +177,7 @@ CMediaFrame::~CMediaFrame()
 BOOL CMediaFrame::Create(CWnd* pParentWnd)
 {
 	CRect rect;
-	return CWnd::Create( NULL, _T("CMediaFrame"), WS_CHILD|WS_VISIBLE|WS_CLIPCHILDREN,
+	return CWnd::Create( NULL, _T("CMediaFrame"), WS_CHILD | WS_VISIBLE,
 		rect, pParentWnd, 0, NULL );
 }
 
@@ -273,34 +273,54 @@ BOOL CMediaFrame::OnCmdMsg(UINT nID, int nCode, void* pExtra, AFX_CMDHANDLERINFO
 
 BOOL CMediaFrame::PreTranslateMessage(MSG* pMsg)
 {
-	if ( pMsg->message == WM_KEYDOWN && pMsg->wParam == VK_ESCAPE )
+	switch ( pMsg->message )
 	{
-		if ( m_bFullScreen )
+	case WM_KEYDOWN:
+		switch( pMsg->wParam )
 		{
-			SetFullScreen( FALSE );
+		case VK_ESCAPE:
+			if ( m_bFullScreen )
+			{
+				SetFullScreen( FALSE );
+				return TRUE;
+			}
+			break;
+
+		case VK_UP:
+			OffsetVolume( VOLUME_KEY_MULTIPLIER );
+			return TRUE;
+
+		case VK_DOWN:
+			OffsetVolume( - VOLUME_KEY_MULTIPLIER );
+			return TRUE;
+
+		case VK_LEFT:
+			if ( GetAsyncKeyState( VK_CONTROL ) & 0x8000 )
+				m_wndList.PostMessage( WM_COMMAND, ID_MEDIA_PREVIOUS );
+			else if ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 )
+				OffsetPosition( -2 );
+			return TRUE;
+
+		case VK_RIGHT:
+			if ( GetAsyncKeyState( VK_CONTROL ) & 0x8000 )
+				m_wndList.PostMessage( WM_COMMAND, ID_MEDIA_NEXT );
+			else if ( GetAsyncKeyState( VK_SHIFT ) & 0x8000 )
+				OffsetPosition( 2 );
+			return TRUE;
+
+		case VK_SPACE:
+			PostMessage( WM_COMMAND, m_nState == smsPlaying ? ID_MEDIA_PAUSE : ID_MEDIA_PLAY );
 			return TRUE;
 		}
-	}
-	else if ( pMsg->message == WM_SYSKEYDOWN && pMsg->wParam == VK_RETURN )
-	{
-		SetFullScreen( ! m_bFullScreen );
-		return TRUE;
-	}
-	else if ( pMsg->message == WM_KEYDOWN && pMsg->wParam == VK_LEFT )
-	{
-		if ( GetAsyncKeyState( VK_CONTROL ) & 0x8000 )
+		break;
+
+	case WM_SYSKEYDOWN:
+		if ( pMsg->wParam == VK_RETURN )
 		{
-			m_wndList.PostMessage( WM_COMMAND, ID_MEDIA_PREVIOUS );
+			SetFullScreen( ! m_bFullScreen );
 			return TRUE;
 		}
-	}
-	else if ( pMsg->message == WM_KEYDOWN && pMsg->wParam == VK_RIGHT )
-	{
-		if ( GetAsyncKeyState( VK_CONTROL ) & 0x8000 )
-		{
-			m_wndList.PostMessage( WM_COMMAND, ID_MEDIA_NEXT );
-			return TRUE;
-		}
+		break;
 	}
 
 	return CWnd::PreTranslateMessage( pMsg );
@@ -958,20 +978,20 @@ LRESULT CMediaFrame::OnMediaKey(WPARAM wParam, LPARAM lParam)
 	if ( wParam != 1 && !IsTopParentActive() ) return 0;
 	if ( mixerGetNumDevs() < 1 ) return 0;
 
-	int nVolumeTick = 0;
-	int nVolumeDir = ( GET_APPCOMMAND_LPARAM( lParam ) == APPCOMMAND_VOLUME_DOWN ? -1 : 1 );
-
 	switch ( GET_APPCOMMAND_LPARAM( lParam ) )
 	{
 	case APPCOMMAND_MEDIA_NEXTTRACK:
-		GetOwner()->PostMessage( WM_COMMAND, ID_MEDIA_NEXT );
+		m_wndList.PostMessage( WM_COMMAND, ID_MEDIA_NEXT );
 		return 1;
+
 	case APPCOMMAND_MEDIA_PREVIOUSTRACK:
-		GetOwner()->PostMessage( WM_COMMAND, ID_MEDIA_PREVIOUS );
+		m_wndList.PostMessage( WM_COMMAND, ID_MEDIA_PREVIOUS );
 		return 1;
+
 	case APPCOMMAND_MEDIA_STOP:
-		GetOwner()->PostMessage( WM_COMMAND, ID_MEDIA_STOP );
+		OnMediaStop();
 		return 1;
+
 	case APPCOMMAND_VOLUME_MUTE:
 	{
 		MMRESULT result;
@@ -1031,26 +1051,20 @@ LRESULT CMediaFrame::OnMediaKey(WPARAM wParam, LPARAM lParam)
 		delete [] pmcd_b;
 
 		// now mute Shareaza player control ( probably, not needed )
-		GetOwner()->PostMessage( WM_COMMAND, ID_MEDIA_MUTE );
+		PostMessage( WM_COMMAND, ID_MEDIA_MUTE );
 		return 1;
 	}
+
 	case APPCOMMAND_VOLUME_DOWN:
-	case APPCOMMAND_VOLUME_UP:
-		KillTimer( 1 );
-		nVolumeTick = m_wndVolume.GetPos() + (nVolumeDir * VOLUME_KEY_MULTIPLIER);
-		if ( nVolumeDir == -1 && nVolumeTick >= 0 ||
-			 nVolumeDir == 1 && nVolumeTick <= 100 )
-			 m_wndVolume.SetPos( nVolumeTick );
-		else
-			nVolumeTick = nVolumeDir == -1 ? 0 : 100;
-		Settings.MediaPlayer.Volume = (double)nVolumeTick / 100.0f;
-		if ( m_pPlayer != NULL )
-			m_pPlayer->SetVolume( Settings.MediaPlayer.Volume );
-		UpdateState();
-		SetTimer( 1, 200, NULL );
+		OffsetVolume( - VOLUME_KEY_MULTIPLIER );
 		return 1;
+
+	case APPCOMMAND_VOLUME_UP:
+		OffsetVolume( VOLUME_KEY_MULTIPLIER );
+		return 1;
+
 	case APPCOMMAND_MEDIA_PLAY_PAUSE:
-		GetOwner()->PostMessage( WM_COMMAND, m_nState == smsPlaying ? ID_MEDIA_PAUSE : ID_MEDIA_PLAY );
+		PostMessage( WM_COMMAND, m_nState == smsPlaying ? ID_MEDIA_PAUSE : ID_MEDIA_PLAY );
 		return 1;
 	}
 
@@ -1485,6 +1499,38 @@ BOOL CMediaFrame::SetVolume(float nVolume)
 	return ( m_pPlayer != NULL );
 }
 
+void CMediaFrame::OffsetVolume(int nVolumeOffset)
+{
+	KillTimer( 1 );
+	int nVolumeTick = max( min( m_wndVolume.GetPos() + nVolumeOffset, 100 ), 0 );
+	m_wndVolume.SetPos( nVolumeTick );
+	Settings.MediaPlayer.Volume = (double)nVolumeTick / 100.0f;
+	if ( m_pPlayer != NULL )
+		m_pPlayer->SetVolume( Settings.MediaPlayer.Volume );
+	UpdateState();
+	SetTimer( 1, 200, NULL );
+}
+
+void CMediaFrame::OffsetPosition(int nPositionOffset)
+{
+	KillTimer( 1 );
+	if ( m_pPlayer != NULL )
+	{
+		bool bPlaing = ( m_nState == smsPlaying );
+		if ( m_nState == smsPlaying )
+			m_pPlayer->Pause();
+		LONGLONG nPos = 0, nLen = 0;
+		m_pPlayer->GetPosition( &nPos );
+		m_pPlayer->GetLength( &nLen );
+		nPos = max( min( nPos + nPositionOffset * TIME_FACTOR, nLen ), 0 );
+		m_pPlayer->SetPosition( nPos );
+		if ( m_nState == smsPlaying )
+			m_pPlayer->Play();
+	}
+	UpdateState();
+	SetTimer( 1, 200, NULL );
+}
+
 /////////////////////////////////////////////////////////////////////////////
 // CMediaFrame private media operations
 
@@ -1585,7 +1631,8 @@ BOOL CMediaFrame::PrepareVis()
 
 BOOL CMediaFrame::OpenFile(LPCTSTR pszFile)
 {
-	if ( ! Prepare() ) return FALSE;
+	if ( ! Prepare() )
+		return FALSE;
 
 	if ( m_sFile == pszFile )
 	{
@@ -1600,10 +1647,7 @@ BOOL CMediaFrame::OpenFile(LPCTSTR pszFile)
 
 	HINSTANCE hRes = AfxGetResourceHandle();
 
-	BSTR bsFile = CString( pszFile ).AllocSysString();
-	HRESULT hr = PluginPlay( bsFile );
-
-	SysFreeString( bsFile );
+	HRESULT hr = PluginPlay( CComBSTR( pszFile ) );
 
 	AfxSetResourceHandle( hRes );
 
@@ -1663,7 +1707,7 @@ HRESULT CMediaFrame::PluginPlay(BSTR bsFilePath)
 	HRESULT hr = E_FAIL;
 	__try
 	{
-		hr = m_pPlayer->Stop();
+		hr = m_pPlayer->Close();
 		hr = m_pPlayer->Open( bsFilePath );
 	}
 	__except( EXCEPTION_EXECUTE_HANDLER )

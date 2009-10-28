@@ -359,8 +359,9 @@ STDMETHODIMP CPlayer::Open(
 	{
 		hr = pWindow->put_WindowStyle( WS_CHILD | WS_VISIBLE |
 			WS_CLIPSIBLINGS | WS_CLIPCHILDREN );
-
+		hr = pWindow->put_WindowStyleEx( WS_EX_TOPMOST );
 		hr = pWindow->put_Owner( (OAHWND)m_hwndOwner );
+		hr = pWindow->put_MessageDrain( (OAHWND)m_hwndOwner );
 	}
 
 	return S_OK;
