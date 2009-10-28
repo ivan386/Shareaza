@@ -4426,7 +4426,7 @@ msgstr "Информация о торренте"
 
 #: string;8013
 msgid "No new Shareaza version detected."
-msgstr "Нет новых Shareaza версия обнаружено."
+msgstr "Новых версий Shareaza не обнаружено."
 
 #: string;8014 dialog;cdownloadeditpage
 msgid "Download Properties"
