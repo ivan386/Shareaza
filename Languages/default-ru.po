@@ -6984,7 +6984,9 @@ msgstr "из"
 msgid ""
 "Changing interface direction requires restart. \\n"
 "You will need to start Shareaza manually. Exit now?"
-msgstr "Для смены направления интерфейса Вы должны вручную перезапустить Shareaza.\\?Выйти сейчас?"
+msgstr ""
+"Для смены направления интерфейса Вы должны перезапустить Shareaza. \\n"
+"Выйти сейчас?"
 
 #: string;20005
 msgid "No"
