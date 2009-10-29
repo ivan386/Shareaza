@@ -71,12 +71,14 @@ BOOL CFolderTipCtrl::OnPrepare()
 	m_sVolume = Settings.SmartVolume( pFolder->m_nVolume );
 
 	QWORD nTotal;
-	CString strText;
 	LibraryMaps.GetStatistics( NULL, &nTotal );
 
-	LoadString( strText, IDS_TIP_LIBRARY_PERCENT );
-	m_sPercentage.Format( _T("%.2f%% %s"),
-		100.0 * ( pFolder->m_nVolume >> 10 ) / nTotal, strText );
+	if ( nTotal )
+		m_sPercentage.Format( _T("%.2f%% %s"),
+			100.0 * ( pFolder->m_nVolume >> 10 ) / nTotal,
+			LoadString( IDS_TIP_LIBRARY_PERCENT ) );
+	else
+		m_sPercentage.Empty();
 
 	CalcSizeHelper();
 
@@ -95,8 +97,8 @@ void CFolderTipCtrl::OnCalcSize(CDC* pDC)
 
 	m_sz.cy += TIP_RULE;
 
-	AddSize( pDC, m_sFiles, 120 );
-	AddSize( pDC, m_sVolume, 120 );
+	AddSize( pDC, m_sFiles, 150 );
+	AddSize( pDC, m_sVolume, 150 );
 	AddSize( pDC, m_sPercentage, 40 );
 
 	m_sz.cy += TIP_TEXTHEIGHT * 4;
