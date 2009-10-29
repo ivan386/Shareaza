@@ -178,7 +178,11 @@ int CRichViewCtrl::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_hcText = theApp.LoadStandardCursor( IDC_IBEAM );
 
 	SetScrollRange( SB_VERT, 0, 0 );
-	if ( Settings.General.LanguageRTL ) ModifyStyleEx( 0, WS_EX_LAYOUTRTL, 0 );
+
+	if ( Settings.General.LanguageRTL )
+		ModifyStyleEx( 0, WS_EX_LAYOUTRTL | WS_EX_RTLREADING );
+	else
+		ModifyStyleEx( WS_EX_LAYOUTRTL | WS_EX_RTLREADING, 0 );
 
 	return 0;
 }

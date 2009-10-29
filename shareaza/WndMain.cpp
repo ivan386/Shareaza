@@ -2322,11 +2322,20 @@ void CMainWnd::OnToolsLanguage()
 	theApp.WriteProfileInt( _T("Windows"), _T("RunLanguage"), TRUE );
 
 	CLanguageDlg dlg;
-
 	if ( dlg.DoModal() == IDOK )
 	{
+		bool bRestart = Settings.General.LanguageRTL != dlg.m_bLanguageRTL &&
+			AfxMessageBox( IDS_GENERAL_RTL_WARNING, MB_ICONQUESTION | MB_YESNO ) == IDYES;
+
 		CWaitCursor pCursor;
-		SetGUIMode( Settings.General.GUIMode );
+
+		Settings.General.Language = dlg.m_sLanguage;
+		Settings.General.LanguageRTL = dlg.m_bLanguageRTL;
+
+		if ( bRestart )
+			PostMessage( WM_CLOSE );
+		else
+			SetGUIMode( Settings.General.GUIMode );
 	}
 }
 

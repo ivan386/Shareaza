@@ -60,3 +60,6 @@ protected:
 
 	DECLARE_MESSAGE_MAP()
 };
+
+#define BANNER_CX		600
+#define BANNER_CY		50

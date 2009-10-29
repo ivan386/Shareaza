@@ -376,6 +376,10 @@ BOOL CSkinWindow::Parse(CXMLElement* pBase, const CString& strPath)
 					 nResID = IDB_NAVBAR_IMAGE_RTL;
 				else if ( nResID == IDB_NAVBAR_ALPHA && Settings.General.LanguageRTL )
 					 nResID = IDB_NAVBAR_ALPHA_RTL;
+				else if ( nResID == IDB_NAVBAR_IMAGE_RTL && ! Settings.General.LanguageRTL )
+					 nResID = IDB_NAVBAR_IMAGE;
+				else if ( nResID == IDB_NAVBAR_ALPHA_RTL && ! Settings.General.LanguageRTL )
+					 nResID = IDB_NAVBAR_ALPHA;
 				hBitmap = (HBITMAP)LoadImage( AfxGetInstanceHandle(),
 					MAKEINTRESOURCE(nResID), IMAGE_BITMAP, 0, 0, 0 );
 			}
@@ -854,7 +858,7 @@ void CSkinWindow::Prepare(CDC* pDC)
 	if ( m_hoSkin == NULL )
 		m_hoSkin = (HBITMAP)m_dcSkin.SelectObject( &m_bmSkin )->GetSafeHandle();
 	if ( Settings.General.LanguageRTL )
-		SetLayout( m_dcSkin.m_hDC, LAYOUT_BITMAPORIENTATIONPRESERVED );
+		m_dcSkin.SetLayout( LAYOUT_BITMAPORIENTATIONPRESERVED );
 }
 
 void CSkinWindow::Paint(CWnd* pWnd, TRISTATE bActive)
@@ -865,8 +869,7 @@ void CSkinWindow::Paint(CWnd* pWnd, TRISTATE bActive)
 
 	CWindowDC dc( pWnd );
 
-	if ( Settings.General.LanguageRTL )
-		SetLayout( dc.m_hDC, LAYOUT_RTL );
+	dc.SetLayout( Settings.General.LanguageRTL ? LAYOUT_RTL : 0 );
 
 	Prepare( &dc );
 
@@ -910,6 +913,7 @@ void CSkinWindow::Paint(CWnd* pWnd, TRISTATE bActive)
 	if ( m_bPart[ SKINPART_TOP_RIGHT ] ) nCaptionHeight = max( nCaptionHeight, m_rcPart[ SKINPART_TOP_RIGHT ].Height() );
 	CSize size( rc.Width(), nCaptionHeight );
 	CDC* pDC = CoolInterface.GetBuffer( dc, size );
+	pDC->SetLayout( Settings.General.LanguageRTL ? LAYOUT_RTL : 0 );
 	COLORREF crOldTextColor = pDC->GetTextColor();
 
 	for ( int nAnchor = SKINANCHOR_SYSTEM ; nAnchor <= SKINANCHOR_CLOSE ; nAnchor++ )
@@ -1451,8 +1455,7 @@ BOOL CSkinWindow::PreBlend(CBitmap* pbmTarget, const CRect& rcTarget, const CRec
 	pAlphaInfo.bmiHeader.biSize	= sizeof(BITMAPINFOHEADER);
 
 	HDC hDC = ::GetDC( 0 );
-	if ( Settings.General.LanguageRTL )
-		SetLayout( hDC, LAYOUT_BITMAPORIENTATIONPRESERVED );
+	SetLayout( hDC, Settings.General.LanguageRTL ? LAYOUT_BITMAPORIENTATIONPRESERVED : 0 );
 
 	if ( 0 == GetDIBits( hDC, m_bmSkin, 0, 0, NULL, &pImageInfo, DIB_RGB_COLORS ) ||
 		 0 == GetDIBits( hDC, *pbmTarget, 0, 0, NULL, &pTargeInfo, DIB_RGB_COLORS ) )

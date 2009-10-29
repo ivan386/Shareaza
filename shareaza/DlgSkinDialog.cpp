@@ -33,13 +33,9 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 
-#define BANNER_CX		600
-#define BANNER_CY		50
-
 IMPLEMENT_DYNAMIC(CSkinDialog, CDialog)
 
 BEGIN_MESSAGE_MAP(CSkinDialog, CDialog)
-	//{{AFX_MSG_MAP(CSkinDialog)
 	ON_WM_NCCALCSIZE()
 	ON_WM_NCHITTEST()
 	ON_WM_NCACTIVATE()
@@ -55,7 +51,6 @@ BEGIN_MESSAGE_MAP(CSkinDialog, CDialog)
 	ON_WM_WINDOWPOSCHANGING()
 	ON_WM_CREATE()
 	ON_WM_HELPINFO()
-	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 
@@ -200,6 +195,19 @@ void CSkinDialog::OnNcMouseMove(UINT nHitTest, CPoint point)
 
 void CSkinDialog::OnSize(UINT nType, int cx, int cy)
 {
+	CStatic* pBanner = (CStatic*)GetDlgItem( IDC_BANNER );
+	if ( pBanner && Settings.General.LanguageRTL )
+	{
+		// Adjust banner width
+		CRect rcBanner;
+		GetClientRect( &rcBanner );
+		rcBanner.left -= BANNER_CX - rcBanner.Width();
+		rcBanner.right = rcBanner.left + BANNER_CX;
+		rcBanner.bottom = rcBanner.top + BANNER_CY;
+		pBanner->MoveWindow( &rcBanner );
+		pBanner->ModifyStyle( SS_CENTERIMAGE, SS_REALSIZEIMAGE );
+	}
+
 	if ( m_pSkin ) m_pSkin->OnSize( this );
 
 	CDialog::OnSize( nType, cx, cy );
@@ -275,7 +283,9 @@ int CSkinDialog::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		return -1;
 
 	if ( Settings.General.LanguageRTL )
-		ModifyStyleEx( 0, WS_EX_LAYOUTRTL | WS_EX_RTLREADING, 0 );
+		ModifyStyleEx( 0, WS_EX_LAYOUTRTL | WS_EX_RTLREADING );
+	else
+		ModifyStyleEx( WS_EX_LAYOUTRTL | WS_EX_RTLREADING, 0 );
 
 	return 0;
 }
@@ -314,20 +324,6 @@ BOOL CSkinDialog::OnInitDialog()
 			SS_REALSIZEIMAGE, rcBanner, this, IDC_BANNER ) );
 		m_oBanner.SetBitmap( (HBITMAP)LoadImage( AfxGetResourceHandle(),
 			MAKEINTRESOURCE( IDB_WIZARD ), IMAGE_BITMAP, BANNER_CX, BANNER_CY, 0 ) );
-
-		pBanner = &m_oBanner;
-	}
-	
-	if ( pBanner && Settings.General.LanguageRTL )
-	{
-		// Adjust banner width
-		CRect rcBanner;
-		GetClientRect( &rcBanner );
-		rcBanner.left -= BANNER_CX - rcBanner.Width();
-		rcBanner.right = rcBanner.left + BANNER_CX;
-		rcBanner.bottom = rcBanner.top + BANNER_CY;
-		pBanner->MoveWindow( &rcBanner );
-		pBanner->ModifyStyle( SS_CENTERIMAGE, SS_REALSIZEIMAGE );
 	}
 
 	return TRUE;

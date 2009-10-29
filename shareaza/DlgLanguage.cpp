@@ -1,7 +1,7 @@
 //
 // DlgLanguage.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -25,7 +25,6 @@
 #include "CoolInterface.h"
 #include "DlgLanguage.h"
 #include "XML.h"
-#include "SkinWindow.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -34,7 +33,6 @@ static char THIS_FILE[] = __FILE__;
 #endif
 
 BEGIN_MESSAGE_MAP(CLanguageDlg, CSkinDialog)
-	//{{AFX_MSG_MAP(CLanguageDlg)
 	ON_WM_ERASEBKGND()
 	ON_WM_PAINT()
 	ON_WM_VSCROLL()
@@ -47,11 +45,8 @@ BEGIN_MESSAGE_MAP(CLanguageDlg, CSkinDialog)
 	ON_WM_SETCURSOR()
 	ON_WM_DESTROY()
 	ON_WM_CLOSE()
-	ON_WM_CREATE()
-	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
-#define HEADING_HEIGHT	50
 #define ITEM_HEIGHT		38
 #define ITEM_WIDTH		200
 #define TEXT_MARGIN		0
@@ -60,17 +55,16 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CLanguageDlg dialog
 
-CLanguageDlg::CLanguageDlg(CWnd* pParent) : CSkinDialog(CLanguageDlg::IDD, pParent)
+CLanguageDlg::CLanguageDlg(CWnd* pParent)
+	: CSkinDialog(CLanguageDlg::IDD, pParent)
+	, m_sLanguage( _T("en") )
+	, m_bLanguageRTL( false )
 {
-	//{{AFX_DATA_INIT(CLanguageDlg)
-	//}}AFX_DATA_INIT
 }
 
 void CLanguageDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CSkinDialog::DoDataExchange(pDX);
-	//{{AFX_DATA_MAP(CLanguageDlg)
-	//}}AFX_DATA_MAP
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -86,8 +80,6 @@ BOOL CLanguageDlg::OnInitDialog()
 
 	m_hArrow	= theApp.LoadStandardCursor( IDC_ARROW );
 	m_hHand		= theApp.LoadCursor( IDC_HAND );
-
-	m_bmHeader.LoadBitmap( IDB_WIZARD );
 
 	m_fntNormal.CreateFont( -(int)(Settings.Fonts.FontSize + 1), 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE,
 		DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, theApp.m_nFontQuality,
@@ -114,7 +106,7 @@ BOOL CLanguageDlg::OnInitDialog()
 	m_nDown		= 0;
 	m_bKeyMode	= FALSE;
 
-	CRect rc( 0, 0, ITEM_WIDTH * 3 + GetSystemMetrics( SM_CXVSCROLL ), HEADING_HEIGHT );
+	CRect rc( 0, 0, ITEM_WIDTH * 3 + GetSystemMetrics( SM_CXVSCROLL ), BANNER_CY );
 
 	m_nRows = 10;
 
@@ -164,14 +156,7 @@ void CLanguageDlg::OnPaint()
 	GetClientRect( &rc );
 	GetClientRect( &rcDlg );
 
-	CDC mdc;
-	mdc.CreateCompatibleDC( &dc );
-	CBitmap* pOldBmp = (CBitmap*)mdc.SelectObject( &m_bmHeader );
-	dc.BitBlt( 0, 0, rc.Width(), HEADING_HEIGHT, &mdc, 0, 0, SRCCOPY );
-	mdc.SelectObject( pOldBmp );
-	mdc.DeleteDC();
-
-	rc.top += HEADING_HEIGHT;
+	rc.top += BANNER_CY;
 	rc.right = rc.left + ITEM_WIDTH;
 	CFont* pOldFont = (CFont*)dc.SelectObject( &m_fntNormal );
 
@@ -340,7 +325,7 @@ void CLanguageDlg::OnMouseMove(UINT nFlags, CPoint point)
 	int nScroll = GetScrollPos( SB_VERT );
 
 	GetClientRect( &rc );
-	rc.top += HEADING_HEIGHT;
+	rc.top += BANNER_CY;
 
 	if ( rc.PtInRect( point ) )
 	{
@@ -372,7 +357,7 @@ BOOL CLanguageDlg::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)
 		GetCursorPos( &pt );
 		ScreenToClient( &pt );
 
-		SetCursor( pt.y > HEADING_HEIGHT && m_nHover - 2 < m_pGUIDirs.GetSize() ? m_hHand : m_hArrow );
+		SetCursor( pt.y > BANNER_CY && m_nHover - 2 < m_pGUIDirs.GetSize() ? m_hHand : m_hArrow );
 		return TRUE;
 	}
 
@@ -677,8 +662,11 @@ BOOL CLanguageDlg::AddSkin(LPCTSTR pszPath, LPCTSTR pszName)
 void CLanguageDlg::Execute(int nSelected)
 {
 	// Don't try to process selections past the end of the list
-	if ( nSelected - 2 >= m_pGUIDirs.GetSize() ) return;
-	BOOL bRTL = ( nSelected > 1 ) ? ( m_pGUIDirs.GetAt( nSelected - 2 ) == "rtl" ) : FALSE;
+	if ( nSelected - 2 >= m_pGUIDirs.GetSize() )
+		return;
+
+	m_bLanguageRTL = ( nSelected > 1 ) &&
+		( m_pGUIDirs.GetAt( nSelected - 2 ) == _T("rtl") );
 
 	for ( int nItem = 0 ; nItem < m_pPaths.GetSize() ; nItem++ )
 	{
@@ -686,37 +674,13 @@ void CLanguageDlg::Execute(int nSelected)
 			( nSelected - 1 ) == nItem );
 	}
 
-	CString strLangCode = _T("en");
-	if ( nSelected > 1 ) strLangCode = m_pLangCodes.GetAt( nSelected - 2 );
+	if ( nSelected > 1 )
+		m_sLanguage = m_pLangCodes.GetAt( nSelected - 2 );
 
-	// required to have schemas reloaded after restart
-	Settings.General.Language = strLangCode;
-
-	if ( Settings.General.LanguageRTL != ( bRTL != FALSE ) )
-	{
-		CString str;
-		LoadString( str, IDS_GENERAL_RTL_WARNING );
-
-		Settings.General.LanguageRTL = bRTL != FALSE;
-
-		if ( AfxMessageBox( str, MB_ICONQUESTION|MB_YESNO ) == IDYES )
-		{
-			GetParent()->PostMessage( WM_CLOSE, NULL, NULL );
-			EndDialog( IDCANCEL );
-		}
-	}
 	EndDialog( IDOK );
 }
 
 void CLanguageDlg::OnClose()
 {
 	EndDialog( IDCANCEL );
-}
-
-int CLanguageDlg::OnCreate(LPCREATESTRUCT lpCreateStruct)
-{
-	if (CDialog::OnCreate(lpCreateStruct) == -1)
-		return -1;
-
-	return 0;
 }
