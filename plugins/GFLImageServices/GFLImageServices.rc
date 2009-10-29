@@ -27,8 +27,8 @@ LANGUAGE LANG_NEUTRAL, SUBLANG_NEUTRAL
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 1,0,0,10
- PRODUCTVERSION 2,4,0,0
+ FILEVERSION 1,0,0,11
+ PRODUCTVERSION 2,5,0,0
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -46,12 +46,12 @@ BEGIN
             VALUE "Comments", "Extract previews from images of insane amount of formats."
             VALUE "CompanyName", "Shareaza Development Team"
             VALUE "FileDescription", "GFL Image Service Plugin"
-            VALUE "FileVersion", "1, 0, 0, 10"
+            VALUE "FileVersion", "1, 0, 0, 11"
             VALUE "InternalName", "GFLImageServices"
             VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2005-2009. All rights reserved."
             VALUE "OriginalFilename", "GFLImageServices.dll"
             VALUE "ProductName", "Shareaza"
-            VALUE "ProductVersion", "2, 4, 0, 0"
+            VALUE "ProductVersion", "2, 5, 0, 0"
         END
     END
     BLOCK "VarFileInfo"
@@ -117,6 +117,8 @@ END
 #endif    // Neutral resources
 /////////////////////////////////////////////////////////////////////////////
 
+
+
 #ifndef APSTUDIO_INVOKED
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -126,3 +128,4 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 #endif    // not APSTUDIO_INVOKED
+

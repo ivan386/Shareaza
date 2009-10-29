@@ -282,33 +282,6 @@ IDR_MAINFRAME           ICON                    "res\\TorrentWizard.ico"
 
 IDB_WIZARD              BITMAP                  "..\\Shareaza\\Res\\Wizard.bmp"
 
-/////////////////////////////////////////////////////////////////////////////
-//
-// String Table
-//
-
-STRINGTABLE 
-BEGIN
-    IDS_WELCOME_NEED_TYPE   "You have not selected the type of Torrent file you want to create.  Please select from one of the two options."
-    IDS_SINGLE_NEED_FILE    "You have not selected a file to include in the Torrent.  Please click the Browse button and choose a file."
-    IDS_PACKAGE_NEED_FILES  "You have not selected any files to include in the Torrent.  Please click the Add Folder button to choose a folder of files to add."
-    IDS_PACKAGE_RECURSIVE   "This folder contains one or more sub-folders.  Should the wizard include all files recursively?"
-    IDS_TRACKER_NEED_URL    "You have not typed or selected a tracker URL.\n\nAlthough some BitTorrent software such as Shareaza can download torrents without a centralised tracker, other BitTorrent software depends on trackers to work properly.\n\nAre you sure you want to make a trackerless torrent?"
-    IDS_OUTPUT_NEED_FOLDER  "You have not selected a folder to save the Torrent file to.  Please click the Browse button and select a folder, or choose one from the recently used list."
-    IDS_OUTPUT_NEED_FILE    "You have not provided a name for the Torrent file.  Please type a name for the file before clicking Next."
-    IDS_OUTPUT_CREATE_FOLDER 
-                            "The folder ""%s"" does not exist.  Would you like to create it?"
-    IDS_OUTPUT_CANT_CREATE_FOLDER "Unable to create folder ""%s""."
-    IDS_OUTPUT_REPLACE_FILE "The file ""%s"" exists.  Would you like to replace it?"
-    IDS_SINGLE_CANT_OPEN    "Unable to open ""%s""."
-    IDS_PACKAGE_CANT_OPEN   "Unable to open ""%s""."
-    IDS_BUILDER_CANT_OPEN   "Unable to open ""%s"" while building Torrent."
-    IDS_BUILDER_CANT_SAVE   "Unable to save Torrent file ""%s""."
-    IDS_OUTPUT_EXTENSION    "The Torrent filename you selected does not end with "".torrent"".  Would you like to add it automatically?"
-END
-
-/////////////////////////////////////////////////////////////////////////////
-
 #ifdef APSTUDIO_INVOKED
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -352,8 +325,8 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 1,0,2,0
- PRODUCTVERSION 2,4,0,0
+ FILEVERSION 1,0,2,1
+ PRODUCTVERSION 2,5,0,0
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -371,18 +344,44 @@ BEGIN
             VALUE "Comments", "Shareaza Torrent Wizard"
             VALUE "CompanyName", "Shareaza Development Team"
             VALUE "FileDescription", "Shareaza Torrent Wizard"
-            VALUE "FileVersion", "1, 0, 2, 0"
+            VALUE "FileVersion", "1, 0, 2, 1"
             VALUE "InternalName", "TorrentWizard"
-            VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2003-2009."
+            VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2003-2009. All rights reserved."
             VALUE "OriginalFilename", "TorrentWizard.exe"
             VALUE "ProductName", "Shareaza"
-            VALUE "ProductVersion", "2, 4, 0, 0"
+            VALUE "ProductVersion", "2, 5, 0, 0"
         END
     END
     BLOCK "VarFileInfo"
     BEGIN
         VALUE "Translation", 0x0, 1200
     END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE 
+BEGIN
+    IDS_WELCOME_NEED_TYPE   "You have not selected the type of Torrent file you want to create.  Please select from one of the two options."
+    IDS_SINGLE_NEED_FILE    "You have not selected a file to include in the Torrent.  Please click the Browse button and choose a file."
+    IDS_PACKAGE_NEED_FILES  "You have not selected any files to include in the Torrent.  Please click the Add Folder button to choose a folder of files to add."
+    IDS_PACKAGE_RECURSIVE   "This folder contains one or more sub-folders.  Should the wizard include all files recursively?"
+    IDS_TRACKER_NEED_URL    "You have not typed or selected a tracker URL.\n\nAlthough some BitTorrent software such as Shareaza can download torrents without a centralised tracker, other BitTorrent software depends on trackers to work properly.\n\nAre you sure you want to make a trackerless torrent?"
+    IDS_OUTPUT_NEED_FOLDER  "You have not selected a folder to save the Torrent file to.  Please click the Browse button and select a folder, or choose one from the recently used list."
+    IDS_OUTPUT_NEED_FILE    "You have not provided a name for the Torrent file.  Please type a name for the file before clicking Next."
+    IDS_OUTPUT_CREATE_FOLDER 
+                            "The folder ""%s"" does not exist.  Would you like to create it?"
+    IDS_OUTPUT_CANT_CREATE_FOLDER "Unable to create folder ""%s""."
+    IDS_OUTPUT_REPLACE_FILE "The file ""%s"" exists.  Would you like to replace it?"
+    IDS_SINGLE_CANT_OPEN    "Unable to open ""%s""."
+    IDS_PACKAGE_CANT_OPEN   "Unable to open ""%s""."
+    IDS_BUILDER_CANT_OPEN   "Unable to open ""%s"" while building Torrent."
+    IDS_BUILDER_CANT_SAVE   "Unable to save Torrent file ""%s""."
+    IDS_OUTPUT_EXTENSION    "The Torrent filename you selected does not end with "".torrent"".  Would you like to add it automatically?"
 END
 
 #endif    // Neutral resources

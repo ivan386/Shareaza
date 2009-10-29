@@ -7,10 +7,7 @@
 //
 // Generated from the TEXTINCLUDE 2 resource.
 //
-#ifndef APSTUDIO_INVOKED
-#include "targetver.h"
-#endif
-#include "winres.h"
+#include "afxres.h"
 
 /////////////////////////////////////////////////////////////////////////////
 #undef APSTUDIO_READONLY_SYMBOLS
@@ -30,9 +27,9 @@ LANGUAGE LANG_NEUTRAL, SUBLANG_NEUTRAL
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 1,0,0,2
+ FILEVERSION 1,2,3,0
  PRODUCTVERSION 2,5,0,0
- FILEFLAGSMASK 0x3fL
+ FILEFLAGSMASK 0x17L
 #ifdef _DEBUG
  FILEFLAGS 0x1L
 #else
@@ -46,13 +43,13 @@ BEGIN
     BEGIN
         BLOCK "000004b0"
         BEGIN
-            VALUE "Comments", "Export search results to .mht-file."
-            VALUE "CompanyName", "Shareaza Development Team"
-            VALUE "FileDescription", "Search Export plugin for Shareaza"
-            VALUE "FileVersion", "1, 0, 0, 2"
-            VALUE "InternalName", "SearchExport.dll"
-            VALUE "LegalCopyright", "Copyright © Shareaza Development Team, 2009. All rights reserved."
-            VALUE "OriginalFilename", "SearchExport.dll"
+            VALUE "Comments", "DLL support by Alessandro Iacopetti & Gilles Vollant"
+            VALUE "CompanyName", "Jean-loup Gailly & Mark Adler"
+            VALUE "FileDescription", "zlib data compression library"
+            VALUE "FileVersion", "1, 2, 3, 0"
+            VALUE "InternalName", "zlib"
+            VALUE "LegalCopyright", "Copyright © Jean-loup Gailly & Mark Adler, 1995-2003. All rights reserved."
+            VALUE "OriginalFilename", "zlib.dll"
             VALUE "ProductName", "Shareaza"
             VALUE "ProductVersion", "2, 5, 0, 0"
         END
@@ -63,45 +60,17 @@ BEGIN
     END
 END
 
-
-/////////////////////////////////////////////////////////////////////////////
-//
-// REGISTRY
-//
-
-IDR_SearchExport        REGISTRY                "SearchExport.rgs"
-IDR_PLUGIN              REGISTRY                "Plugin.rgs"
-
-/////////////////////////////////////////////////////////////////////////////
-//
-// Icon
-//
-
-// Icon with lowest ID value placed first to ensure application icon
-// remains consistent on all systems.
-IDI_ICON                ICON                    "icon.ico"
-
-/////////////////////////////////////////////////////////////////////////////
-//
-// String Table
-//
-
-STRINGTABLE 
-BEGIN
-    IDS_PROJNAME            "Search Export plugin for Shareaza"
-END
-
 #endif    // Neutral resources
 /////////////////////////////////////////////////////////////////////////////
 
 
 /////////////////////////////////////////////////////////////////////////////
-// English (U.S.) resources
+// Russian resources
 
-#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_RUS)
 #ifdef _WIN32
-LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
-#pragma code_page(1252)
+LANGUAGE LANG_RUSSIAN, SUBLANG_DEFAULT
+#pragma code_page(1251)
 #endif //_WIN32
 
 #ifdef APSTUDIO_INVOKED
@@ -117,22 +86,19 @@ END
 
 2 TEXTINCLUDE 
 BEGIN
-    "#ifndef APSTUDIO_INVOKED\r\n"
-    "#include ""targetver.h""\r\n"
-    "#endif\r\n"
-    "#include ""winres.h""\r\n"
+    "#include ""afxres.h""\r\n"
     "\0"
 END
 
 3 TEXTINCLUDE 
 BEGIN
-    "1 TYPELIB ""SearchExport.tlb""\r\n"
+    "\r\n"
     "\0"
 END
 
 #endif    // APSTUDIO_INVOKED
 
-#endif    // English (U.S.) resources
+#endif    // Russian resources
 /////////////////////////////////////////////////////////////////////////////
 
 
@@ -142,7 +108,7 @@ END
 //
 // Generated from the TEXTINCLUDE 3 resource.
 //
-1 TYPELIB "SearchExport.tlb"
+
 
 /////////////////////////////////////////////////////////////////////////////
 #endif    // not APSTUDIO_INVOKED

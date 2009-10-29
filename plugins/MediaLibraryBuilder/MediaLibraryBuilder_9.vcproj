@@ -574,6 +574,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\icon.ico"
+				>
+			</File>
+			<File
 				RelativePath=".\MediaLibraryBuilder.rc"
 				>
 			</File>

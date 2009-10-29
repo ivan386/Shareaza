@@ -28,7 +28,7 @@ LANGUAGE LANG_NEUTRAL, SUBLANG_NEUTRAL
 
 VS_VERSION_INFO VERSIONINFO
  FILEVERSION 1,4,6,0
- PRODUCTVERSION 1,4,6,0
+ PRODUCTVERSION 2,5,0,0
  FILEFLAGSMASK 0x17L
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -50,8 +50,8 @@ BEGIN
             VALUE "InternalName", "GeoIP"
             VALUE "LegalCopyright", "Copyright (C) 2009 MaxMind LLC"
             VALUE "OriginalFilename", "GeoIP.dll"
-            VALUE "ProductName", "GeoIP Dynamic Link Library"
-            VALUE "ProductVersion", "1, 4, 6, 0"
+            VALUE "ProductName", "Shareaza"
+            VALUE "ProductVersion", "2, 5, 0, 0"
         END
     END
     BLOCK "VarFileInfo"

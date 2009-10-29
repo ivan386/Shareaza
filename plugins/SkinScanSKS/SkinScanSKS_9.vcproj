@@ -577,6 +577,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\icon.ico"
+				>
+			</File>
+			<File
 				RelativePath=".\SkinScanSKS.rc"
 				>
 			</File>

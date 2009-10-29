@@ -569,6 +569,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\icon.ico"
+				>
+			</File>
+			<File
 				RelativePath=".\ZIPBuilder.rc"
 				>
 			</File>

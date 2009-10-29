@@ -638,6 +638,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\resource.h"
+				>
+			</File>
+			<File
 				RelativePath="trees.h"
 				>
 			</File>
@@ -668,7 +672,7 @@
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
 			>
 			<File
-				RelativePath="zlib.rc"
+				RelativePath=".\zlibwapi.rc"
 				>
 			</File>
 		</Filter>
