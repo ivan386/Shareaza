@@ -1595,14 +1595,14 @@
     <!-- Home View -->
     <document name="CHomeViewCtrl" leftMargin="16" topMargin="0">
       <styles>
-        <style name="الإفتراضي">
+        <style name="default">
           <font face="Tahoma" size="12" />
         </style>
-        <style name="المقدمة">
+        <style name="heading">
           <font face="Tahoma" size="16" weight="800" />
         </style>
       </styles>
-      <anchor id="المقدمة" width="32" height="172" />
+      <anchor id="Header" width="32" height="172" />
       <newline gap="0" />
       <group id="1">
         <icon res="130" width="32" height="32" target="raza:command:ID_NETWORK_CONNECT" />
@@ -1632,7 +1632,7 @@
         <gap size="8" />
         <heading align="middle">ملاحظة عن الترقية</heading>
         <newline gap="8" indent="42" />
-        <text id="ترقية" />
+        <text id="Upgrade" />
         <newline gap="6" />
         <link target="raza:upgrade">اضغط هنا للتحديث</link>
         <newline gap="18" indent="0" />
@@ -1912,14 +1912,14 @@
     </document>
     <!--تصفح وضعية المستخدم-->
     <document name="CBrowseHostProfile.1">
-      <heading id="اللقب" />
+      <heading id="Nick" />
       <heading>ملفي الخاص</heading>
       <newline gap="8" />
       <group id="1">
         <newline gap="8" indent="0" />
         <text format="b">الاسم</text>
         <newline gap="2" indent="8" />
-        <text id="الإسم بالكامل" />
+        <text id="FullName" />
       </group>
       <group id="2">
         <newline gap="8" indent="0" />
@@ -1934,7 +1934,7 @@
         <text id="GenderMale">ذكر</text>
         <text id="GenderFemale">أنثى</text>
         <text>, </text>
-        <text id="العمر" />
+        <text id="Age" />
       </group>
       <group id="4">
         <newline gap="8" indent="0" />
@@ -1981,7 +1981,7 @@
         <newline gap="8" indent="0" />
         <text format="b">الإهتمامات</text>
         <newline gap="2" indent="8" />
-        <text id="الإهتمامات" />
+        <text id="Interests" />
       </group>
       <group id="6">
         <newline gap="8" indent="0" />
@@ -2007,7 +2007,7 @@
       <group id="3">
         <newline gap="16" indent="0" />
         <text format="b">المفضلة</text>
-        <newline gap="4" indent="8" id="العلامات" />
+        <newline gap="4" indent="8" id="Bookmarks" />
       </group>
       <newline gap="16" indent="0" />
     </document>
