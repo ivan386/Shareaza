@@ -1516,15 +1516,15 @@ void CMediaFrame::OffsetPosition(int nPositionOffset)
 	KillTimer( 1 );
 	if ( m_pPlayer != NULL )
 	{
-		bool bPlaing = ( m_nState == smsPlaying );
-		if ( m_nState == smsPlaying )
+		bool bPlaying = ( m_nState == smsPlaying );
+		if ( bPlaying )
 			m_pPlayer->Pause();
 		LONGLONG nPos = 0, nLen = 0;
 		m_pPlayer->GetPosition( &nPos );
 		m_pPlayer->GetLength( &nLen );
 		nPos = max( min( nPos + nPositionOffset * TIME_FACTOR, nLen ), 0 );
 		m_pPlayer->SetPosition( nPos );
-		if ( m_nState == smsPlaying )
+		if ( bPlaying )
 			m_pPlayer->Play();
 	}
 	UpdateState();
