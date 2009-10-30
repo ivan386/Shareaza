@@ -169,7 +169,12 @@ Source: "Schemas\*"; DestDir: "{app}\Schemas"; Flags: ignoreversion overwriterea
 Source: "plugins\MediaVis\*"; DestDir: "{app}\Vis"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Excludes: ".svn"
 
 ; Skins
-Source: "Skins\*"; DestDir: "{app}\Skins"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Excludes: ".svn,\Arcadia's Call\*,\Green Moon\*,\LiquidMetal*\*,\NucleoX\*,\Raza-Ablaze\*"
+Source: "Skins\BlueStreak\*"; DestDir: "{app}\Skins\BlueStreak"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Excludes: ".svn"
+Source: "Skins\CleanBlue\*";  DestDir: "{app}\Skins\CleanBlue";  Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Excludes: ".svn"
+Source: "Skins\Corona\*";     DestDir: "{app}\Skins\Corona";     Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Excludes: ".svn"
+Source: "Skins\Halloween\*";  DestDir: "{app}\Skins\Halloween";  Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Excludes: ".svn"
+Source: "Skins\Shareaza2\*";  DestDir: "{app}\Skins\Shareaza2";  Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Excludes: ".svn"
+Source: "Skins\ShareazaOS\*"; DestDir: "{app}\Skins\ShareazaOS"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Excludes: ".svn"
 
 ; Templates
 Source: "Templates\*"; DestDir: "{app}\Templates"; Flags: ignoreversion overwritereadonly uninsremovereadonly sortfilesbyextension recursesubdirs; Excludes: ".svn"
@@ -338,6 +343,9 @@ Root: HKCU; Subkey: "Software\Shareaza\Shareaza\BitTorrent"; ValueType: string; 
 
 ; Turn on ShareazaOS skin
 Root: HKCU; Subkey: "Software\Shareaza\Shareaza\Skins"; ValueType: dword; ValueName: "ShareazaOS\ShareazaOS.xml"; ValueData: "{ini:{param:SETTINGS|},Skins,ShareazaOS|1}"; Flags: createvalueifdoesntexist uninsdeletekey
+
+; Turn on Halloween skin
+Root: HKCU; Subkey: "Software\Shareaza\Shareaza\Skins"; ValueType: dword; ValueName: "Halloween\Halloween.xml"; ValueData: "{ini:{param:SETTINGS|},Skins,Halloween|1}"; Flags: createvalueifdoesntexist uninsdeletekey
 
 ; Disable extensions for plugins which make trouble
 ; Since it is image services plugin we need to add extensions required for the first run
@@ -893,5 +901,8 @@ End;
 #include "pages.iss"
 
 #expr SaveToFile("builds\Preprocessed.iss")
+
+
+
 
 
