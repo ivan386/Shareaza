@@ -828,7 +828,7 @@ void CSettings::SmartUpgrade()
 
 		if ( General.SmartVersion < 21 )
 		{
-			Library.ThumbSize				= 96;
+			Library.ThumbSize				= 128;
 			Library.SourceExpire			= 86400;
 
 			Gnutella1.TranslateTTL			= 2;
