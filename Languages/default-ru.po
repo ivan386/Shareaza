@@ -8044,11 +8044,11 @@ msgstr "_Глобальный поиск:"
 
 #: cdonkeysettingspage;control;5
 msgid "Search known remote servers in the server cache:"
-msgstr "Поиск в кэше известных удаленных серверов:"
+msgstr "Искать по списку известных серверов:"
 
 #: cdonkeysettingspage;control;6
 msgid "Stop searching after:"
-msgstr "Стоп поиска после:"
+msgstr "Останов поиска после:"
 
 #: cdonkeysettingspage;control;9
 msgid "search results."
@@ -8056,7 +8056,7 @@ msgstr "результатов."
 
 #: cdonkeysettingspage;control;10
 msgid "Receive and update server list from the connected server"
-msgstr "Получать и обновлять список серверов с соединенного сервера"
+msgstr "Получать и обновлять список серверов с сервера"
 
 #: cdonkeysettingspage;control;11
 msgid "_Client Link Connections:"
@@ -8068,7 +8068,7 @@ msgstr "Соединять не более чем с:"
 
 #: cdonkeysettingspage;control;15
 msgid "other eDonkey clients."
-msgstr "другими eDonkey клиентами."
+msgstr "eDonkey-клиентами."
 
 #: cdonkeysettingspage;control;16
 msgid "eDonkey _Tools:"
@@ -8076,7 +8076,7 @@ msgstr "eDonkey _утилиты:"
 
 #: cdonkeysettingspage;control;17
 msgid "Download eDonkey server list from the web:"
-msgstr "Загрузить список серверов из вба:"
+msgstr "Загрузить список серверов из интернета:"
 
 #: cdonkeysettingspage;control;18
 msgid "Download..."
@@ -8108,7 +8108,7 @@ msgstr "Клиентских соединений"
 
 #: cbittorrentsettingspage;control;10
 msgid "Clear downloaded torrents     When the share ratio reaches:"
-msgstr " Убрать загружен. торренты при достижении соотношения"
+msgstr "Остановить раздачу торрентов при достижении ими:"
 
 #: cbittorrentsettingspage;control;13
 msgid "%"
@@ -8120,11 +8120,11 @@ msgstr " Предпочитать источники торрентов"
 
 #: cbittorrentsettingspage;control;15
 msgid "_EndGame:"
-msgstr "_ЕndGame (ускорение):"
+msgstr "_Режим \"Конец Игры\":"
 
 #: cbittorrentsettingspage;control;16
 msgid "Enable EndGame mode when completing torrents"
-msgstr "Переходить в режим EndGame при завершении торрентов"
+msgstr "Использовать режим \"Конец Игры\" при завершении торрентов"
 
 #: cbittorrentsettingspage;control;17
 msgid "_Store Torrents Here:"
@@ -8132,11 +8132,11 @@ msgstr "_Держать торренты в папке:"
 
 #: cbittorrentsettingspage;control;20
 msgid "_Torrent Creator:"
-msgstr "_Программа для создания торрентов"
+msgstr "_Программа для создания торрентов:"
 
 #: cbittorrentsettingspage;control;23
 msgid "Default Tracker: "
-msgstr "Трекер по умолч.: "
+msgstr "Трекер: "
 
 #: dialog;cprotocolssettingspage
 msgid "Protocols"
