@@ -1,7 +1,7 @@
 ﻿//
 // CtrlWndTabBar.cpp
 //
-// Copyright (c) Shareaza Development Team, 2002-2008.
+// Copyright (c) Shareaza Development Team, 2002-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -502,28 +502,30 @@ void CWndTabBar::OnLButtonDown(UINT nFlags, CPoint point)
 
 	if ( TabItem* pItem = HitTest( point, &rc ) )
 	{
-		CChildWnd* pChild = (CChildWnd*)CWnd::FromHandle( pItem->m_hWnd );
-
-        if ( m_pSelected == pItem &&
-			 Settings.General.GUIMode != GUI_WINDOWED &&
-			 point.x >= rc.right - 18 )
+		if ( ::IsWindow( pItem->m_hWnd ) )
 		{
-			pChild->PostMessage( WM_SYSCOMMAND, SC_CLOSE, 0 );
-			return;
-		}
-		else if ( pChild->IsIconic() )
-		{
-			pChild->ShowWindow( SW_SHOWNORMAL );
-		}
-		else if ( m_pSelected == pItem && ! pChild->m_bPanelMode )
-		{
-			pChild->ShowWindow( SW_HIDE );
-			pChild->ShowWindow( SW_MINIMIZE );
-			return;
-		}
+			CChildWnd* pChild = (CChildWnd*)CWnd::FromHandle( pItem->m_hWnd );
 
-		pChild->MDIActivate();
+			if ( m_pSelected == pItem &&
+				 Settings.General.GUIMode != GUI_WINDOWED &&
+				 point.x >= rc.right - 18 )
+			{
+				pChild->PostMessage( WM_SYSCOMMAND, SC_CLOSE, 0 );
+				return;
+			}
+			else if ( pChild->IsIconic() )
+			{
+				pChild->ShowWindow( SW_SHOWNORMAL );
+			}
+			else if ( m_pSelected == pItem && ! pChild->m_bPanelMode )
+			{
+				pChild->ShowWindow( SW_HIDE );
+				pChild->ShowWindow( SW_MINIMIZE );
+				return;
+			}
 
+			pChild->MDIActivate();
+		}
 		return;
 	}
 	else if ( m_nMessage == IDS_TABBAR_CONNECTED )
