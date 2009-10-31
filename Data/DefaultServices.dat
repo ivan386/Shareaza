@@ -1,40 +1,35 @@
-M http://gwc.pantheraproject.net/gwc.php
-M http://grantgalitz.com/Beacon/gwc.php
-M http://gwc.cluephone.com/skulls.php
-M http://gwc.frodoslair.net/skulls/skulls
-M http://gwc.mitigated.net/gwc.php
-M http://gweb.4octets.co.uk/skulls.php
-M http://gweb2.4octets.co.uk/gwc.php
-M http://silvers.servehttp.com/Beacon/gwc.php
-M http://wc.neoboffins.com/
-M http://gwc.lame.net/gwcii.php
 M http://gofoxy.net/gwc/cgi-bin/fc
+M http://grantgalitz.com/Beacon/gwc.php
 M http://gwc.iblinx.com:2108/gwc/cgi-bin/fc
+M http://gwc.lame.net/gwcii.php
+M http://gwc.frodoslair.net/skulls/skulls
 M http://gwc.gofoxy.net:2108/gwc/cgi-bin/fc
-M http://figgn.net/gwc/
+M http://gweb.4octets.co.uk/skulls.php
+M http://leite4.uni.cc/gwc.php
 
-2 http://cache2.bazookanetworks.com/g2/bazooka.php
-2 http://bbs.robertwoolley.co.uk/GWebCache/skulls.php
+2 http://aniraws.com/bootstrap/skulls.php
 2 http://cache.trillinux.org/g2/bazooka.php
+2 http://dkac.trillinux.org/dkac/dkac.php
 2 http://dogma.cloud.bishopston.net:33559/
-2 http://gwc2.wodi.org/skulls.php
+2 http://gwc.acidjunkie.co.cc/skulls.php
+2 http://gwc.dyndns.info:28960/gwc.php
 2 http://gwc.guufshop.com/skulls/skulls.php
+2 http://gwc2.wodi.org/skulls.php
+2 http://gwebcache.spearforensics.com:80/
+2 http://hub.dynoisp.com/skulls/skulls.php
 2 http://karma.cloud.bishopston.net:33559/
 2 http://midian.jayl.de/g2/bazooka.php
-2 http://dkac.trillinux.org/dkac/dkac.php
-2 http://cache.pongwar.com/
-2 http://gwebcache.ns1.net/
-2 http://gwc.dyndns.info:28960/gwc.php
 
-1 http://gwc.chickenkiller.com:8080/gwc/
 1 http://gwc.ak-electron.eu:12050/
-1 http://sissy.gtkg.org:8080/gwc/
-1 http://leet.gtkg.org:8080/gwc/
-1 http://ein.gtkg.net:8080/gwc/
-1 http://gwc.glucolene.com:8080/
 1 http://gwc.dietpac.com:8080/
+1 http://gwc.glucolene.com:8080/
+
+1 http://ein.gtkg.net:8080/gwc/
 1 http://zwei.gtkg.net:8080/gwc/
 1 http://drei.gtkg.net:8080/gwc/
+1 http://leet.gtkg.org:8080/gwc/
+1 http://sissy.gtkg.org:8080/gwc/
+
 1 http://secondary.udp-host-cache.com:8080/gwc/
 1 http://tertiary.udp-host-cache.com:8080/gwc/
 1 http://gnutelladev1.udp-host-cache.com:8080/gwc/
@@ -42,49 +37,50 @@ M http://figgn.net/gwc/
 U uhc:ec2-67-202-41-17.compute-1.amazonaws.com:1337
 U uhc:ec2-72-44-40-255.z-2.compute-1.amazonaws.com:9999
 U uhc:ec2-72-44-47-123.z-2.compute-1.amazonaws.com:9999
-U uhc:ein.gtkg.net:60666
-U uhc:drei.gtkg.net:62666
-U uhc:leet.gtkg.org:1337
 U uhc:sissy.gtkg.org:51557
 U uhc:yin.cloud.bishopston.net:33558
 U uhc:yang.cloud.bishopston.net:33558
+
+U uhc:ein.gtkg.net:60666
 U uhc:zwei.gtkg.net:61666
+U uhc:drei.gtkg.net:62666
+U uhc:leet.gtkg.org:1337
 
 D http://ocbmaurice.dyndns.org/pl/slist.pl/server.met?download/server-best.met
 D http://peerates.net/servers.php
 D http://www.gruk.org/server.met
 
-X http://gwc.eod.cc/skulls.php
-X http://gwebcache.spearforensics.com/
-X http://gwc.movingpages.org/skulls.php
+X http://aniraws.com.http.l2.l1.l0.nyucd.net/bootstrap/skulls.php
 X http://bbs.robertwoolley.co.uk/gwebcache/gcache.php
 X http://bbs.robertwoolley.co.uk/GWebCache/gcache.php
+X http://beacon.awardspace.com/gwc.php
+X http://cache.wru.pl/skulls.php
+X http://filez.commorragh.org/gwc/
+X http://fischaleck.net/cache/mcache.php
 X http://flox-network.com/Beacon/gwc.php
+X http://g2.tjtech.org/g2/
 X http://geocities.com/prae2rian/GNUTELLA.net
+X http://gwc.ak-electron.eu/gcache.cgi
 X http://gwc.eod.cc.nyud.net/skulls.php
+X http://gwc.eod.cc/skulls.php
 X http://gwc.frodoslair.net.nyud.net/skulls/skulls.php
 X http://gwc.iblinx.com:2108/gwc/cgi-bin/fc
+X http://gwc.movingpages.org/skulls.php
 X http://gwc.nickstallman.net/
-X http://gwc1.nickstallman.net/
-X http://gwc2.nickstallman.net/
 X http://gwc.nickstallman.net/gcache
 X http://gwc.nickstallman.net.nyud.net/
 X http://gwc.nickstallman.net/beta.php
-X http://g2.tjtech.org/g2/
+X http://gwc1.nickstallman.net/
+X http://gwc2.nickstallman.net/
+X http://home.no.net/dforsb/gnet/gcache.php
 X http://reukiodo.dyndns.org/gwebcache/gwcii.php 
 X http://wc.neoboffins.com.nyud.net/
 X http://www.dom2porno.info/skulls/skulls.php
 X http://www.k33bz.com/g2/bazooka.php
 X http://www.lo7.wroc.pl/~stash/g2-moved/bazooka.php
-X http://cache.wru.pl/skulls.php
-X http://home.no.net/dforsb/gnet/gcache.php
-X http://filez.commorragh.org/gwc/
-X http://gwc.ak-electron.eu/gcache.cgi
-X http://beacon.awardspace.com/gwc.php
 X http://www.pietroam.net/script/gnutella/phpgnucacheII/gwcii.php
-X http://fischaleck.net/cache/mcache.php
 
-#Duplicates:
+# Duplicates:
 # X http://gwc.frodoslair.net/skulls/skulls.php
 # X http://gwebcache.ns1.net/index.php
 # X http://wc.neoboffins.com/index.php
@@ -93,7 +89,9 @@ X http://fischaleck.net/cache/mcache.php
 
 #
 # Keep these comments at the end
-# Last updated December 2008
+# Last updated October 2009
+#
+# Make sure the different lists are kept sorted in alphabetical order.
 #
 # Be sure to have at least one link to a .met file and four gwebcache links
 # or else they'll keep getting added every time they're removed
@@ -105,7 +103,7 @@ X http://fischaleck.net/cache/mcache.php
 #
 # Delete this file and Shareaza will use internal defaults.
 #
-#Web Cache Trackers:
+# Web Cache Trackers:
 # Gnutella - Specification 1 Protocol : http://gcachescan.jonatkins.com/
 # (Gnutella / Gnutella2) - Specification 2 Protocol: http://kevogod.trillinux.org/
 # Get latest version at http://shareaza.svn.sourceforge.net/viewvc/*checkout*/shareaza/trunk/Data/DefaultServices.dat
