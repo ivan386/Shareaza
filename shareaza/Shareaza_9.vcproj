@@ -3966,6 +3966,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Res\Granted.ico"
+				>
+			</File>
+			<File
 				RelativePath="Res\Hand.cur"
 				>
 			</File>
@@ -4111,6 +4115,10 @@
 			</File>
 			<File
 				RelativePath="Res\Preview.ico"
+				>
+			</File>
+			<File
+				RelativePath=".\Res\Properties.ico"
 				>
 			</File>
 			<File
@@ -4279,6 +4287,10 @@
 			</File>
 			<File
 				RelativePath="Res\TimeSlices.bmp"
+				>
+			</File>
+			<File
+				RelativePath=".\Res\ToolsWizard.ico"
 				>
 			</File>
 			<File
