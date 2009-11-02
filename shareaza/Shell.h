@@ -1,7 +1,7 @@
 //
 // CoolMenu.cpp
 //
-// Copyright (c) Shareaza Development Team, 2008.
+// Copyright (c) Shareaza Development Team, 2008-2009.
 // This file is part of SHAREAZA (shareaza.sourceforge.net)
 //
 // Shareaza is free software; you can redistribute it
@@ -57,7 +57,7 @@ public:
 		}
 	}
 
-	~CShellItem()
+	virtual ~CShellItem()
 	{
 		if ( m_pidl )
 			CoTaskMemFree( m_pidl );
@@ -106,7 +106,7 @@ public:
 			m_pID[ i ] = GetNext( pos )->m_pLastId;
 	}
 
-	~CShellList()
+	virtual ~CShellList()
 	{
 		for ( POSITION pos = GetHeadPosition(); pos; )
 			delete GetNext( pos );
@@ -114,10 +114,10 @@ public:
 	}
 
 	// Creates menu from file paths list
-	bool GetMenu(HWND hWnd, void** ppContextMenu)
+	bool GetMenu(HWND hWnd, void** ppContextMenu) const
 	{
-		return SUCCEEDED( m_pFolder->GetUIObjectOf( hWnd, (UINT)GetCount(),
-			m_pID.get(), IID_IContextMenu, NULL, ppContextMenu ) );
+		return GetCount() && m_pFolder && SUCCEEDED( m_pFolder->GetUIObjectOf( hWnd,
+			(UINT)GetCount(), m_pID.get(), IID_IContextMenu, NULL, ppContextMenu ) );
 	}
 
 protected:
