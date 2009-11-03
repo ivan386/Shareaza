@@ -1485,13 +1485,13 @@ BOOL CSkinWindow::PreBlend(CBitmap* pbmTarget, const CRect& rcTarget, const CRec
 	pAlphaInfo.bmiHeader.biCompression	= BI_RGB;
 	pAlphaInfo.bmiHeader.biSizeImage	= -pAlphaInfo.bmiHeader.biHeight * nAlphaPitch;
 
-	BYTE* pTargeData = new BYTE[ pTargeInfo.bmiHeader.biSizeImage ];
-	BYTE* pImageData = new BYTE[ pImageInfo.bmiHeader.biSizeImage ];
-	BYTE* pAlphaData = bAlpha ? new BYTE[ pAlphaInfo.bmiHeader.biSizeImage ] : NULL;
+	auto_array< BYTE > pTargeData( new BYTE[ pTargeInfo.bmiHeader.biSizeImage ] );
+	auto_array< BYTE > pImageData( new BYTE[ pImageInfo.bmiHeader.biSizeImage ] );
+	auto_array< BYTE > pAlphaData( bAlpha ? new BYTE[ pAlphaInfo.bmiHeader.biSizeImage ] : NULL );
 
-	GetDIBits( hDC, *pbmTarget, 0, -pTargeInfo.bmiHeader.biHeight, pTargeData, &pTargeInfo, DIB_RGB_COLORS );
-	GetDIBits( hDC, m_bmSkin, 0, -pImageInfo.bmiHeader.biHeight, pImageData, &pImageInfo, DIB_RGB_COLORS );
-	if ( bAlpha ) GetDIBits( hDC, m_bmAlpha, 0, -pAlphaInfo.bmiHeader.biHeight, pAlphaData, &pAlphaInfo, DIB_RGB_COLORS );
+	GetDIBits( hDC, *pbmTarget, 0, -pTargeInfo.bmiHeader.biHeight, pTargeData.get(), &pTargeInfo, DIB_RGB_COLORS );
+	GetDIBits( hDC, m_bmSkin, 0, -pImageInfo.bmiHeader.biHeight, pImageData.get(), &pImageInfo, DIB_RGB_COLORS );
+	if ( bAlpha ) GetDIBits( hDC, m_bmAlpha, 0, -pAlphaInfo.bmiHeader.biHeight, pAlphaData.get(), &pAlphaInfo, DIB_RGB_COLORS );
 
 	int nSrcY = rcSource.top, nSrcLeft = rcSource.left * 3;
 	int nDstY = rcTarget.top, nDstLeft = rcTarget.left * 3;
@@ -1500,46 +1500,44 @@ BOOL CSkinWindow::PreBlend(CBitmap* pbmTarget, const CRect& rcTarget, const CRec
 	nWidth = min( nWidth, pTargeInfo.bmiHeader.biWidth - rcTarget.left );
 	nWidth = min( nWidth, pImageInfo.bmiHeader.biWidth - rcSource.left );
 	nWidth = min( nWidth, pAlphaInfo.bmiHeader.biWidth - rcSource.left );
-
-	for ( int nY = min( rcTarget.Height(), rcSource.Height() ) ; nY ; nY--, nSrcY++, nDstY++ )
+	if ( nWidth > 0 )
 	{
-		BYTE* pTargePtr = pTargeData + nDstY * nTargePitch + nDstLeft;
-		BYTE* pImagePtr = pImageData + nSrcY * nImagePitch + nSrcLeft;
+		for ( int nY = min( rcTarget.Height(), rcSource.Height() ) ; nY ; nY--, nSrcY++, nDstY++ )
+		{
+			BYTE* pTargePtr = pTargeData.get() + nDstY * nTargePitch + nDstLeft;
+			BYTE* pImagePtr = pImageData.get() + nSrcY * nImagePitch + nSrcLeft;
 
-		if ( nDstY < 0 || nDstY >= -pTargeInfo.bmiHeader.biHeight )
-		{
-			// Out of bounds on destination
-		}
-		else if ( nSrcY < 0 || nSrcY >= -pImageInfo.bmiHeader.biHeight )
-		{
-			// Out of bounds on source
-		}
-		else if ( bAlpha && nSrcY < -pAlphaInfo.bmiHeader.biHeight )
-		{
-			BYTE* pAlphaPtr = pAlphaData + nSrcY * nAlphaPitch + nSrcLeft;
-			for ( int nX = nWidth ; nX ; nX-- )
+			if ( nDstY < 0 || nDstY >= -pTargeInfo.bmiHeader.biHeight )
 			{
-				register BYTE nAlpha = *pAlphaPtr; pAlphaPtr += 3;
-				*pTargePtr = (BYTE)( ( (DWORD)(*pTargePtr) * ( 255 - nAlpha ) + (*pImagePtr) * nAlpha ) / 255 );
-				pTargePtr++; pImagePtr++;
-				*pTargePtr = (BYTE)( ( (DWORD)(*pTargePtr) * ( 255 - nAlpha ) + (*pImagePtr) * nAlpha ) / 255 );
-				pTargePtr++; pImagePtr++;
-				*pTargePtr = (BYTE)( ( (DWORD)(*pTargePtr) * ( 255 - nAlpha ) + (*pImagePtr) * nAlpha ) / 255 );
-				pTargePtr++; pImagePtr++;
+				// Out of bounds on destination
 			}
-		}
-		else
-		{
-			CopyMemory( pTargePtr, pImagePtr, nWidth * 3 );
+			else if ( nSrcY < 0 || nSrcY >= -pImageInfo.bmiHeader.biHeight )
+			{
+				// Out of bounds on source
+			}
+			else if ( bAlpha && nSrcY < -pAlphaInfo.bmiHeader.biHeight )
+			{
+				BYTE* pAlphaPtr = pAlphaData.get() + nSrcY * nAlphaPitch + nSrcLeft;
+				for ( int nX = nWidth ; nX ; nX-- )
+				{
+					register BYTE nAlpha = *pAlphaPtr; pAlphaPtr += 3;
+					*pTargePtr = (BYTE)( ( (DWORD)(*pTargePtr) * ( 255 - nAlpha ) + (*pImagePtr) * nAlpha ) / 255 );
+					pTargePtr++; pImagePtr++;
+					*pTargePtr = (BYTE)( ( (DWORD)(*pTargePtr) * ( 255 - nAlpha ) + (*pImagePtr) * nAlpha ) / 255 );
+					pTargePtr++; pImagePtr++;
+					*pTargePtr = (BYTE)( ( (DWORD)(*pTargePtr) * ( 255 - nAlpha ) + (*pImagePtr) * nAlpha ) / 255 );
+					pTargePtr++; pImagePtr++;
+				}
+			}
+			else
+			{
+				CopyMemory( pTargePtr, pImagePtr, nWidth * 3 );
+			}
 		}
 	}
 
-	SetDIBits( hDC, *pbmTarget, 0, -pTargeInfo.bmiHeader.biHeight, pTargeData,
+	SetDIBits( hDC, *pbmTarget, 0, -pTargeInfo.bmiHeader.biHeight, pTargeData.get(),
 		&pTargeInfo, DIB_RGB_COLORS );
-
-	if ( bAlpha ) delete [] pAlphaData;
-	delete [] pImageData;
-	delete [] pTargeData;
 
 	::ReleaseDC( 0, hDC );
 
