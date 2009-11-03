@@ -48,8 +48,16 @@ HRESULT CPlugin::Request(LPCWSTR szHash)
 		vPost.parray = pPost;
 		CComVariant vHeaders( CComBSTR( L"Content-Type: application/x-www-form-urlencoded\r\n") );
 		hr = pWebBrowserApp->Navigate( bstrURL, &vFlags, &vFrame, &vPost, &vHeaders );
-		if ( FAILED( hr ) )
+		if ( SUCCEEDED( hr ) )
+		{
+			pWebBrowserApp->put_Visible( VARIANT_TRUE );
+		}
+		else
+		{
+			pWebBrowserApp->Quit();
+
 			ATLTRACE( _T("CPlugin::Request() : Internet Explorer navigate error: 0x%08x\n"), hr );
+		}
 	}
 	else
 		ATLTRACE( _T("CPlugin::Request() : Create Internet Explorer instance error: 0x%08x\n"), hr );
