@@ -521,6 +521,8 @@ BOOL CHomeDownloadsBox::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)
 
 void CHomeDownloadsBox::OnLButtonUp(UINT nFlags, CPoint point) 
 {
+	m_wndTip.Hide();
+
 	if ( Item* pItem = HitTest( point ) )
 	{
 		m_pHover = NULL;
@@ -599,6 +601,8 @@ int CHomeLibraryBox::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		DEFAULT_PITCH|FF_DONTCARE, Settings.Fonts.DefaultFont );
 	
 	m_hHand = theApp.LoadCursor( IDC_HAND );
+	
+	m_wndTip.Create( this, &Settings.Interface.TipLibrary );
 	
 	return 0;
 }
@@ -873,6 +877,11 @@ BOOL CHomeLibraryBox::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)
 	
 	Item* pItem = HitTest( point );
 	
+	if ( pItem != NULL )
+		m_wndTip.Show( pItem->m_nIndex );
+	else
+		m_wndTip.Hide();
+	
 	if ( pItem != m_pHover )
 	{
 		if ( pItem != NULL && m_pHover == NULL )
@@ -895,6 +904,8 @@ BOOL CHomeLibraryBox::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)
 
 void CHomeLibraryBox::OnLButtonUp(UINT nFlags, CPoint point) 
 {
+	m_wndTip.Hide();
+
 	if ( Item* pItem = HitTest( point ) )
 	{
 		CSingleLock oLock( &Library.m_pSection, TRUE );

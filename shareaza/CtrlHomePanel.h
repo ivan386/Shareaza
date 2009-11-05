@@ -19,13 +19,11 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#if !defined(AFX_CTRLHOMEPANEL_H__02E64581_B110_4491_9F14_A0363005626E__INCLUDED_)
-#define AFX_CTRLHOMEPANEL_H__02E64581_B110_4491_9F14_A0363005626E__INCLUDED_
-
 #pragma once
 
 #include "CtrlRichTaskBox.h"
 #include "CtrlDownloadTip.h"
+#include "CtrlLibraryTip.h"
 
 class CDownload;
 class CLibraryRecent;
@@ -76,19 +74,14 @@ public:
 	Item*	HitTest(const CPoint& point) const;
 	BOOL	ExecuteDownload(CDownload* pDownload);
 
-	//{{AFX_VIRTUAL(CHomeDownloadsBox)
-	//}}AFX_VIRTUAL
-
 // Implementation
 protected:
-	//{{AFX_MSG(CHomeDownloadsBox)
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg void OnSize(UINT nType, int cx, int cy);
 	afx_msg void OnPaint();
 	afx_msg BOOL OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message);
 	afx_msg void OnLButtonUp(UINT nFlags, CPoint point);
 	afx_msg void OnTimer(UINT_PTR nIDEvent);
-	//}}AFX_MSG
 
 	DECLARE_MESSAGE_MAP()
 };
@@ -125,6 +118,7 @@ protected:
 	CFont			m_pFont;
 	HCURSOR			m_hHand;
 	Item*			m_pHover;
+	CLibraryTipCtrl	m_wndTip;
 
 // Operations
 public:
@@ -132,19 +126,14 @@ public:
 	void	Update();
 	Item*	HitTest(const CPoint& point) const;
 
-	//{{AFX_VIRTUAL(CHomeLibraryBox)
-	//}}AFX_VIRTUAL
-
 // Implementation
 protected:
-	//{{AFX_MSG(CHomeLibraryBox)
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg void OnSize(UINT nType, int cx, int cy);
 	afx_msg void OnPaint();
 	afx_msg BOOL OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message);
 	afx_msg void OnLButtonUp(UINT nFlags, CPoint point);
 	afx_msg void OnTimer(UINT_PTR nIDEvent);
-	//}}AFX_MSG
 
 	DECLARE_MESSAGE_MAP()
 };
@@ -175,13 +164,8 @@ public:
 	void		OnSkinChange();
 	void		Update();
 
-	//{{AFX_VIRTUAL(CHomeUploadsBox)
-	//}}AFX_VIRTUAL
-
 // Implementation
 protected:
-	//{{AFX_MSG(CHomeUploadsBox)
-	//}}AFX_MSG
 
 	DECLARE_MESSAGE_MAP()
 };
@@ -207,14 +191,8 @@ public:
 	void	OnSkinChange();
 	void	Update();
 
-	//{{AFX_VIRTUAL(CHomeConnectionBox)
-	//}}AFX_VIRTUAL
-
 // Implementation
 protected:
-	//{{AFX_MSG(CHomeConnectionBox)
-	//}}AFX_MSG
-
 	DECLARE_MESSAGE_MAP()
 };
 
@@ -240,14 +218,8 @@ public:
 	void	OnSkinChange();
 	void	Update();
 
-	//{{AFX_VIRTUAL(CHomeTorrentsBox)
-	//}}AFX_VIRTUAL
-
 // Implementation
 protected:
-	//{{AFX_MSG(CHomeTorrentsBox)
-	//}}AFX_MSG
-
 	DECLARE_MESSAGE_MAP()
 };
 
@@ -260,7 +232,6 @@ public:
 	DECLARE_DYNAMIC(CHomePanel)
 
 // Attributes
-public:
 	CHomeDownloadsBox	m_boxDownloads;
 	CHomeUploadsBox		m_boxUploads;
 	CHomeConnectionBox	m_boxConnection;
@@ -269,26 +240,15 @@ public:
 	CHomeTorrentsBox	m_boxTorrents;
 #endif // LAN_MODE
 
-// Operations
-public:
+	virtual BOOL Create(CWnd* pParentWnd);
+
 	void	OnSkinChange();
 	void	Update();
 
-// Overrides
-public:
-	//{{AFX_VIRTUAL(CHomePanel)
-	virtual BOOL Create(CWnd* pParentWnd);
-	//}}AFX_VIRTUAL
-
-// Implementation
 protected:
-	//{{AFX_MSG(CHomePanel)
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
-	//}}AFX_MSG
 
 	DECLARE_MESSAGE_MAP()
 };
 
 #define IDC_HOME_PANEL	111
-
-#endif // !defined(AFX_CTRLHOMEPANEL_H__02E64581_B110_4491_9F14_A0363005626E__INCLUDED_)
